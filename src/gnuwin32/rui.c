@@ -101,35 +101,8 @@ static void menusource(control m)
 
 static void menudisplay(control m)
 {
-    SEXP pager = GetOption(install("pager"), R_NilValue);
-    int count, i;
-    char **files, *p, *path, list[32016];
-    char *vmax = vmaxget();
-
-    askfilenames("Select files to show", "", list, 32000);
-    Rwin_fpset();
-    count = countFilenames(list);
-    if (count == 1) {
-	/* fixslash(list); seems unneeded */
-	internal_ShowFile(list, list);
-    } else if (count > 1) {
-	count--;
-	files = (char **) R_alloc(count, sizeof(char *));
-	p = path = list;
-	p += strlen(path) + 1;
-	for (i = 0; i < count; i++) {
-	    if(strchr(p, ':') || strchr(p, '/') || strchr(p, '\\')) {
-		files[i] = p;
-	    } else {
-		files[i] = R_alloc(strlen(path)+strlen(p)+2, sizeof(char *));
-		sprintf(files[i], "%s\\%s", path, p);
-	    }
-	    p += strlen(p) + 1;
-	}
-	R_ShowFiles(count, files, files, "File", 0, 
-		    CHAR(STRING_ELT(pager, 0)));
-	vmaxset(vmax);
-    }
+    if (!ConsoleAcceptCmd) return;
+    consolecmd(RConsole,"local({fn<-choose.files(filters=Filters[c('R','q','txt','All'),],index=4)\nfile.show(fn,header=fn,title='')})");
 }
 
 static void menuloadimage(control m)
@@ -319,7 +292,7 @@ static void menupkgload(control m)
 {
     if (!ConsoleAcceptCmd) return;
     consolecmd(RConsole,
-	       "{pkg <- select.list(sort(.packages(all.available = TRUE)))\nif(nchar(pkg)) library(pkg, character.only=TRUE)}");
+	       "local({pkg <- select.list(sort(.packages(all.available = TRUE)))\nif(nchar(pkg)) library(pkg, character.only=TRUE)})");
 /*    show(RConsole); */
 }
 
@@ -341,9 +314,7 @@ static void menupkginstallcran(control m)
 static void menupkginstalllocal(control m)
 {
     if (!ConsoleAcceptCmd) return;
-    setuserfilter("zip files (*.zip)\0*.zip\0\0All files (*.*)\0*.*\0\0");
-    consolecmd(RConsole,"install.packages(choose.files(''), .libPaths()[1], CRAN = NULL)");
-    setuserfilter("All files (*.*)\0*.*\0\0"); /* reset */
+    consolecmd(RConsole,"install.packages(choose.files('',filters=Filters[c('zip','All'),]), .libPaths()[1], CRAN = NULL)");
 }
 
 static void menuconsolehelp(control m)

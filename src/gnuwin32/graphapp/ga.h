@@ -81,7 +81,8 @@ void 	setuserfilter(char *);
 void    askchangedir();
 char *	askcdstring(char *question, char *default_string);
 char *	askfilesavewithdir(char *title, char *default_name, char *dir);
-char *  askfilenames(char *title, char *default_name, char *strbuf, int bufsize);
+char *  askfilenames(char *title, char *default_name, int multi,
+			       char *filters, int filterindex, char *strbuf, int bufsize);
 int	    countFilenames(char *strbuf); /* Note that first name is path when there are multiple names */
 
 /*  rgb.c */

@@ -1,14 +1,26 @@
-choose.files <- function(mask = '*.*', caption = 'Select files') {
-	list <- .Internal(chooseFiles(mask,caption))
-	if (length(list) < 2) list
-	else {
-		path <- list[1]
-		if (substr(path,nchar(path),nchar(path)) == '\\') sep <- ''
-		else sep <- '\\'
-		list <- list[-1]
-		full <- rep(FALSE, length(list))
-		full[grep(':',list)] <- TRUE
-		full[substr(list,1,1) %in% c('/','\\')] <- TRUE
-		ifelse(full,list,paste(path,list,sep=sep))
-	}
+Filters <- 
+structure(c("R or S files (*.R,*.q)", 
+            "Enhanced metafiles (*.emf)", 
+			"Postscript files (*.ps)", 
+			"PDF files (*.pdf)", 
+			"Png files (*.png)", 
+			"Windows bitmap files (*.bmp)", 
+			"Jpeg files (*.jpeg,*.jpg)", 
+			"Text files (*.txt)", 
+			"R images (*.RData,*.rda)", 
+			"Zip files (*.zip)", 
+			"All files (*.*)", 
+			"*.R;*.q", "*.emf", 
+			"*.ps", "*.pdf", "*.png", 
+			"*.bmp", "*.jpeg;*.jpg", "*.txt", 
+			"*.RData;*.rda", "*.zip", "*.*"),
+       .Dim = c(11, 2), 
+       .Dimnames = list(c("R", "emf", 
+       					"ps","pdf", "png", 
+       					"bmp", "jpeg", "txt", 
+       					"RData", "zip", "All"), NULL))
+
+choose.files <- function(default = '', caption = 'Select files', multi = TRUE,
+                         filters=Filters, index = nrow(Filters) ) {
+	.Internal(chooseFiles(default,caption,multi,filters,index))
 }

@@ -1006,25 +1006,65 @@ SEXP do_writeClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, mask, caption;
-    char *temp, list[32016];
-    int i, count;
+    SEXP ans, def, caption, filters;
+    char *temp, *cfilters, list[65520];
+    char path[MAX_PATH], filename[MAX_PATH];
+    int multi, filterindex, i, count, lfilters, pathlen;
     checkArity(op, args);
-    mask = CAR(args);
+    def = CAR(args);
     caption = CADR(args);
-    if(!isString(mask) || length(mask) != 1 )
-	errorcall(call, "mask must be a character string");
-    if(!isString(caption) || length(caption) != 1 )
-	errorcall(call, "caption must be a character string");
-    askfilenames(CHAR(STRING_ELT(caption, 0)), CHAR(STRING_ELT(mask, 0)),
-                 list, 32000);  /* list declared larger to protect against overwrites */
+    multi = asLogical(CADDR(args));
+    filters = CADDDR(args);
+    filterindex = asInteger(CAD4R(args));
+    if(length(def) != 1 )
+		errorcall(call, "default must be a character string");
+    if(length(caption) != 1 )
+		errorcall(call, "caption must be a character string");
+	if(multi == NA_LOGICAL)
+		errorcall(call, "multi must be a logical value");
+	if(filterindex == NA_INTEGER)
+		errorcall(call, "filterindex must be an integer value");
+    lfilters = 1+length(filters);
+    for (i=0; i<length(filters); i++) lfilters += strlen(CHAR(STRING_ELT(filters,i)));
+    cfilters = R_alloc(lfilters, sizeof(char));
+    temp = cfilters;
+    for (i=0; i<length(filters)/2; i++) {
+		strcpy(temp,CHAR(STRING_ELT(filters,i)));
+		temp += strlen(temp)+1;
+		strcpy(temp,CHAR(STRING_ELT(filters,i+length(filters)/2)));
+		temp += strlen(temp)+1;
+	}
+	*temp = 0;
+
+    askfilenames(CHAR(STRING_ELT(caption, 0)), CHAR(STRING_ELT(def, 0)),
+    			 multi, cfilters, filterindex,
+                 list, 65500);  /* list declared larger to protect against overwrites */
     Rwin_fpset();
     count = countFilenames(list);
-    PROTECT(ans = allocVector(STRSXP, count));
-    temp = list;
-    for (i = 0; i < count; i++) {
-	SET_STRING_ELT(ans, i, mkChar(temp));
-	temp += strlen(temp) + 1;
+
+    if (count < 2) PROTECT(ans = allocVector(STRSXP, count));
+    else PROTECT(ans = allocVector(STRSXP, count-1));
+
+    switch (count) {
+	case 0: break;
+	case 1: SET_STRING_ELT(ans, 0, mkChar(list));
+			break;
+	default:
+		strncpy(path,list,sizeof(path));
+		pathlen = strlen(path);
+		if (path[pathlen-1] == '\\') path[--pathlen] = '\0';
+    	temp = list;
+    	for (i = 0; i < count-1; i++) {
+			temp += strlen(temp) + 1;
+			if (strchr(temp,':') || *temp == '\\' || *temp == '/')
+				SET_STRING_ELT(ans, i, mkChar(temp));
+			else {
+				strncpy(filename,path,sizeof(filename));
+				filename[pathlen] = '\\';
+				strncpy(filename+pathlen+1,temp,sizeof(filename)-pathlen-1);
+				SET_STRING_ELT(ans, i, mkChar(filename));
+			}
+		}
     }
     UNPROTECT(1);
     return ans;
