@@ -30,6 +30,7 @@
    Menu shortcut keys re-enabled
    Handle WM_CONTEXTMENU events for right-clicking on a (rich) edit control
    Handle mouse wheel scrolling
+   Remove assumption that current->dest is non-NULL
  */
 
 #include "internal.h"
@@ -637,7 +638,7 @@ app_doc_proc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 			(LPARAM)(mdi?(mdi->handle):0));
                 DrawMenuBar(hwndFrame);
             }
-            updatestatus(obj->status);
+            if (obj) updatestatus(obj->status);
             RedrawWindow(hwndFrame,NULL,NULL,
                          RDW_UPDATENOW|RDW_ALLCHILDREN);
             SetFocus(hwnd);

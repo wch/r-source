@@ -26,7 +26,11 @@
    See the file COPYLIB.TXT for details.
 */
 
-/* Changes for R:  allow 32 contexts not 4 */
+/* Copyright (C) 2004 	The R Foundation
+
+      Changes for R:  allow 32 contexts not 4
+      Remove assumption that current->dest is non-NULL
+*/
 
 #include "internal.h"
 
@@ -332,7 +336,8 @@ static unsigned long set_win_rgb(rgb c, int width)
 	g = (int) ((c >>  8) & 0x000000FFL);
 	b = (int) ((c >>  0) & 0x000000FFL);
 
-	depth = getdepth(current->dest);
+	if (current->dest) depth = getdepth(current->dest);
+	else depth = 2;  /* set default minimal depth if no current window */
 
 	if (depth <= 2)	/* map to black or white, or grey if c == Grey */
 	{
