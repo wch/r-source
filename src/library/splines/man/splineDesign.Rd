@@ -31,7 +31,7 @@ spline.des(knots, x, ord, derivs)
   Each B-spline is defined by a set of \code{ord} successive knots so
   the total number of B-splines is \code{length(knots)-ord}.
 }
-\note{The older \code{spline.des} function takes the same argument but
+\note{The older \code{spline.des} function takes the same arguments but
   returns a list with several components including \code{knots},
   \code{ord}, \code{derivs}, and \code{design}.  The \code{design}
   component is the same as the value of the \code{splineDesign}
