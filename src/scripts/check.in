@@ -11,7 +11,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.5 $ ';
+my $revision = ' $Revision: 1.6 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -21,9 +21,10 @@ $version = $1;
 $latex = "@LATEX@";
 $make = "@MAKE@";
 
-
+$opt_clean = $opt_examples = $opt_tests = $opt_latex = 1;
 my @knownoptions = ("help|h", "version|v", "outdir|o:s",
-		    "nsize:s", "vsize:s", "library|l:s");
+		    "nsize:s", "vsize:s", "library|l:s",
+		    "clean!", "examples!", "tests!", "latex!");
 
 GetOptions (@knownoptions) || usage();
 
@@ -32,8 +33,8 @@ usage() if $opt_help;
 
 my $startdir=getcwd();
 $opt_outdir=$startdir unless $opt_outdir;
-chdir($opt_outdir);
-my $logdir=getcwd();
+chdir($opt_outdir) || die "Cannot change to directory $opt_outdir\n";
+my $outdir=getcwd();
 chdir($startdir);
 
 my $tmpdir = R_getenv("TMPDIR", "/tmp");
@@ -62,20 +63,20 @@ foreach $pkg (@ARGV){
     my $pkgname = basename($pkg);
     chdir($startdir);
 
-    my $pkglogdir="$logdir/$pkgname.Rcheck";
-    if(! -d $pkglogdir){
-	print "creating log dir \`$pkglogdir'";
-	if(! mkdir($pkglogdir, 0755)){
-	    error("could not create directory");
+    my $pkgoutdir="$outdir/$pkgname.Rcheck";
+    system("rm -rf $pkgoutdir") if ($opt_clean && (-d $pkgoutdir)) ;
+    if(! -d $pkgoutdir){
+	if(! mkdir($pkgoutdir, 0755)){
+	    die("could not create directory $pkgoutdir\n");
 	    exit(1);
 	}
     }
 
-    my $log = new R::Logfile("$pkglogdir/check.log");
-    $log->message("using log directory $pkglogdir");
+    my $log = new R::Logfile("$pkgoutdir/check.log");
+    $log->message("using log directory $pkgoutdir");
 
     if(! $opt_library){
-	$library = $pkglogdir;
+	$library = $pkgoutdir;
 	$ENV{'R_LIBS'} = "$library:$R_libs";
     }
 
@@ -118,8 +119,9 @@ foreach $pkg (@ARGV){
     print("\n");
 
     if(!$is_bundle){
-	chdir($pkglogdir);
-	if(-d "$library/$pkgname/R-ex"){
+	chdir($pkgoutdir);
+
+	if($opt_examples && (-d "$library/$pkgname/R-ex")){
 	    $log->creating("examples.R");
 	    if(system("${R_HOME}/bin/massage-Examples ".
 		      "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
@@ -136,7 +138,7 @@ foreach $pkg (@ARGV){
 	    $log->result("OK");
 	}
 
-	if(-d "$startdir/$pkg/tests"){
+	if($opt_tests && (-d "$startdir/$pkg/tests")){
 	    my $testdir="$startdir/$pkg/tests";
 	    $log->checking("tests");
 	    my $makefiles="-f ${R_HOME}/etc/Makeconf-tests";
@@ -178,7 +180,7 @@ foreach $pkg (@ARGV){
 
 
 		
-	if(-d "$library/$pkgname/latex"){
+	if($opt_latex && (-d "$library/$pkgname/latex")){
 	    $ENV{'TEXINPUTS'}="$R_HOME/doc/manual:$ENV{'TEXINPUTS'}";
 	    $log->creating("manual.tex");
 	    open manual, "> manual.tex";
@@ -455,12 +457,21 @@ options to increase R's memory (\`--vanilla' is used by default).
 Options:
   -h, --help		print short help message and exit
   -v, --version		print version info and exit
-  -o, --outdir=dir      directory used for logfiles, R output, etc.
-                        (default is \`pkg.Rcheck' in current directory)
+
   --vsize=N		set R's vector heap size to N bytes
   --nsize=N		set R's number of cons cells to N
   -l, --library         library directory used for test installation
                         of packages (default is outdir)
+
+  -o, --outdir=dir      directory used for logfiles, R output, etc.
+                        (default is \`pkg.Rcheck' in current directory)
+  --clean --noclean     Clean outdir before using it?
+
+  --examples --noexamples    Run all examples in the Rd files?
+  --tests --notests     Run code in tests subdirectory?
+  --latex --nolatex     Run latex on help files?
+
+By default, all test sections are turned on.
 
 Email bug reports to <r-bugs\@lists.r-project.org>.
 END
