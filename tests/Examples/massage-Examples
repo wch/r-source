@@ -67,6 +67,6 @@ do
 done
 ## 3) ---- Footer ----
 cat <<_EOF_
-cat("Time elapsed:\t", proc.time() - .ptime,"\n")
+cat("Time elapsed: ", proc.time() - .ptime,"\n")
 dev.off(); quit('no')
 _EOF_
