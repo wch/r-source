@@ -25,7 +25,10 @@ actual reference number, of course!).
 
 Directory:  Accuracy
 
-none
+* PR# 1218 *
+Subject:  behavior of r* and d* functions at boundaries 
+From: Ben Bolker <bolker@zoo.ufl.edu>
+Date: Mon, 17 Dec 2001 11:04:27 -0500
 
 Directory:  Add-ons
 
@@ -294,14 +297,7 @@ Date: Mon, 05 Nov 2001 10:05:27 -0500
 
 Directory:  Models
 
-* PR# 1184 *
-Subject: ltsreg warnings
-From: charlie@stat.umn.edu
-Date: Thu, 29 Nov 2001 17:02:33 +0100 (MET)
---This has no data to reproduce the problem, nor a system 
---on which it was done (bug.report was *not* used)
---
---More likely a numerical problem on the particular machine used.
+none
 
 Directory:  Startup
 
@@ -362,7 +358,7 @@ Directory:  incoming
 Subject: a patch to tapply
 From: Vadim Ogranovich <vograno@arbitrade.com>
 Date: Thu, 29 Nov 2001 14:48:35 -0600
-* PR# 1217 *
-Subject: problem
-From: "Jean-Michel Barani" <jmbarani@wanadoo.fr>
-Date: Sat, 15 Dec 2001 16:54:16 +0100
+* PR# 1219 *
+Subject: write.table
+From: olshena@mskcc.org
+Date: Tue, 18 Dec 2001 00:02:05 +0100 (MET)
