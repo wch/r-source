@@ -3,6 +3,7 @@
 \alias{glm.fit}
 \alias{glm.fit.null}
 \alias{weights.glm}
+
 \title{Fitting Generalized Linear Models}
 \description{
   \code{glm} is used to fit generalized linear models, specified by
@@ -11,17 +12,17 @@
 }
 \usage{
 glm(formula, family = gaussian, data, weights = NULL, subset = NULL,
-    na.action, start = NULL, offset = NULL,
-    control = glm.control(\dots), model = TRUE, method = "glm.fit",
-    x = FALSE, y = TRUE, contrasts = NULL, \dots)
+    na.action, start = NULL, etastart = NULL, mustart = NULL,
+    offset = NULL, control = glm.control(\dots), model = TRUE,
+    method = "glm.fit", x = FALSE, y = TRUE, contrasts = NULL, \dots)
 
 glm.fit(x, y, weights = rep(1, nrow(x)),
-        start = NULL, etastart  =  NULL, mustart = NULL,
+        start = NULL, etastart = NULL, mustart = NULL,
         offset = rep(0, nrow(x)),
         family = gaussian(), control = glm.control(),
         intercept = TRUE)
 glm.fit.null(x, y, weights = rep(1, nrow(x)),
-        start = NULL, etastart  =  NULL, mustart = NULL,
+        start = NULL, etastart = NULL, mustart = NULL,
         offset = rep(0, nrow(x)),
         family = gaussian(), control = glm.control(),
         intercept = FALSE)

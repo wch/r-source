@@ -21,6 +21,10 @@
   These functions are all \code{\link{methods}} for class \code{glm} or
   \code{summary.glm} objects.
 }
+\details{
+  The partial residuals are a matrix of working residuals, with each
+  column formed by omitting a term from the model.
+}
 \seealso{
   \code{\link{glm}} for computing \code{glm.obj}, \code{\link{anova.glm}};
   the corresponding \emph{generic} functions, \code{\link{summary.glm}},

@@ -4,7 +4,9 @@
 ### glm.fit modified by Thomas Lumley, Apr 1997, and then others..
 
 glm <- function(formula, family=gaussian, data=list(), weights=NULL,
-		subset=NULL, na.action=na.fail, start=NULL, offset=NULL,
+		subset=NULL, na.action=na.fail,
+                start=NULL, etastart=NULL, mustart=NULL,
+                offset=NULL,
 		control=glm.control(...), model=TRUE, method="glm.fit",
 		x=FALSE, y=TRUE, contrasts = NULL, ...)
 {
@@ -59,7 +61,9 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
     fit <-
 	(if (is.empty.model(mt))
 	 glm.fit.null else glm.fit)(x=X, y=Y, weights=weights, start=start,
-				    offset=offset,family=family,control=control,
+                                    etastart=etastart, mustart=mustart,
+				    offset=offset, family=family,
+                                    control=control,
 				    intercept=attr(mt, "intercept") > 0)
 
     if(any(offset) && attr(mt, "intercept") > 0) {

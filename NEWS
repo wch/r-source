@@ -164,6 +164,9 @@ NEW FEATURES
      o	rchisq() now has a non-centrality parameter `ncp', and there's a
 	C API for rnchisq().
 
+     o	glm() now accepts `etastart' and `mustart' as alternative ways
+	to express starting values.
+
 
 INSTALLATION CHANGES
 
