@@ -1,19 +1,23 @@
 \name{Hypergeometric}
+\alias{dhyper}
+\alias{phyper}
+\alias{qhyper}
+\alias{rhyper}
 \title{The Hypergeometric Distribution}
+\description{
+  Density, distribution function, quantile function and random
+  generation for the hypergeometric distribution.
+}
 \usage{
 dhyper(x, m, n, k)
 phyper(q, m, n, k)
 qhyper(p, m, n, k)
 rhyper(nn, m, n, k)
 }
-\alias{dhyper}
-\alias{phyper}
-\alias{qhyper}
-\alias{rhyper}
 \arguments{
-  \item{x,q}{vector of quantiles representing the number of white
-  balls drawn without replacement from an urn which contains both
-  black and white balls.}
+  \item{x, q}{vector of quantiles representing the number of white balls
+    drawn without replacement from an urn which contains both black and
+    white balls.}
   \item{m}{the number of white balls in the urn.}
   \item{n}{the number of black balls in the urn.}
   \item{k}{the number of balls drawn from the urn.}
@@ -21,27 +25,25 @@ rhyper(nn, m, n, k)
   \item{nn}{the number of observations to be generated.}
 }
 \value{
-  These functions provide information about the hypergeometric
-  distribution with parameters \code{m}, \code{n} and \code{k}
-  (named \eqn{Np}, \eqn{N-Np}, and \eqn{n}, respectively in
-   the reference below).
-  \code{dhyper} gives the density, \code{phyper} gives the distribution
-  function \code{qhyper} gives the quantile function and \code{rhyper}
-  generates random deviates.
-
-  The hypergeometric distribution is used for sampling \bold{without}
-  replacement.  It has density
+  \code{dhyper} gives the density,
+  \code{phyper} gives the distribution function,
+  \code{qhyper} gives the quantile function, and
+  \code{rhyper} generates random deviates.
+}
+\details{
+  The hypergeometric distribution is used for sampling \emph{without}
+  replacement.  The density of this distribution with parameters
+  \code{m}, \code{n} and \code{k} (named \eqn{Np}, \eqn{N-Np}, and
+  \eqn{n}, respectively in the reference below) is given by
   \deqn{
     p(x) = \left. {m \choose x}{n \choose k-x} \right/ {m+n \choose k}%
   }{p(x) =	choose(m, x) choose(n, k-x) / choose(m+n, k)}
   for \eqn{x = 0, \ldots, k}{x = 0, ..., k}.
 }
-\details{
-For large values of \code{k},
-}
 \references{
-Johnson, N.L., Kotz, S. and Kemp, A.W. (1992).
-\emph{Univariate Discrete Distributions}, 2nd Ed., Wiley.
+  Johnson, N. L., Kotz, S., & Kemp, A. W. (1992).
+  \emph{Univariate Discrete Distributions},
+  2nd Ed., Wiley.
 }
 \examples{
 m <- 10; n <- 7; k <- 8

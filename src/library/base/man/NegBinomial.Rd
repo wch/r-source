@@ -1,39 +1,42 @@
 \name{NegBinomial}
+\alias{dnbinom}
+\alias{pnbinom}
+\alias{qnbinom}
+\alias{rnbinom}
 \title{The Negative Binomial Distribution}
+\description{
+  Density, distribution function, quantile function and random
+  generation for the negative binomial distribution with parameters
+  \code{size} and \code{prob}.
+}
 \usage{
 dnbinom(x, size, prob)
 pnbinom(q, size, prob)
 qnbinom(p, size, prob)
 rnbinom(n, size, prob)
 }
-\alias{dnbinom}
-\alias{pnbinom}
-\alias{qnbinom}
-\alias{rnbinom}
 \arguments{
-\item{x,q}{vector of quantiles representing the number of failures
-which occur in a sequence of Bernoulli trials before a target number of
-successes is reached, or alternately the probability distribution
-of a compound Poisson process whose intensity is distributed
-as a gamma (\code{\link{pgamma}}) distribution with scale parameter
-\code{(1-prob)/prob} and shape parameter \code{size} (this definition
- allows non-integer values of \code{size}).}
-\item{x}{vector of (non-negative integer) quantiles.}
-\item{q}{vector of quantiles.}
-\item{p}{vector of probabilities.}
-\item{n}{number of observations to generate.}
-\item{size}{target for number of successful trials /\cr
-    shape parameter of gamma distribution.}
-\item{prob}{probability of success in each trial /\cr
-    determines scale of gamma distribution
-    (\code{prob} = \code{scale/(1+scale)}).}
+  \item{x, q}{vector of quantiles representing the number of failures
+    which occur in a sequence of Bernoulli trials before a target number
+    of successes is reached, or alternately the probability distribution
+    of a compound Poisson process whose intensity is distributed as a
+    gamma (\code{\link{pgamma}}) distribution with scale parameter
+    \code{(1-prob)/prob} and shape parameter \code{size} (this
+    definition allows non-integer values of \code{size}).}
+  \item{x}{vector of (non-negative integer) quantiles.}
+  \item{q}{vector of quantiles.}
+  \item{p}{vector of probabilities.}
+  \item{n}{number of observations to generate.}
+  \item{size}{target for number of successful trials, or shape parameter
+    of gamma distribution.}
+  \item{prob}{probability of success in each trial, or scale of gamma
+    distribution (\code{prob} = \code{scale/(1+scale)}).}
 }
-\description{
-  These functions provide information about the negative binomial
-  distribution with parameters \code{size} and \code{prob}.  \code{dnbinom}
-  gives the density, \code{pnbinom} gives the distribution function,
-  \code{qnbinom} gives the quantile function and \code{rnbinom}
-  generates random deviates.
+\value{
+  \code{dnbinom} gives the density,
+  \code{pnbinom} gives the distribution function,
+  \code{qnbinom} gives the quantile function, and
+  \code{rnbinom} generates random deviates.
 }
 \details{
   The negative binomial distribution with \code{size} \eqn{= n} and
@@ -47,7 +50,7 @@ as a gamma (\code{\link{pgamma}}) distribution with scale parameter
   is zero, with a warning.
 
   The quantile is left continuous: \code{qnbinom(q, \dots)} is the 
-  largest integer x such that P(X <= x) < q.
+  largest integer \eqn{x} such that \eqn{P(X \le x) < q}.
 }
 \seealso{
   \code{\link{dbinom}} for the binomial, \code{\link{dpois}} for the

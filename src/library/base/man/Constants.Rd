@@ -1,5 +1,11 @@
 \name{Constants}
+\alias{LETTERS}
+\alias{letters}
+\alias{month.abb}
+\alias{month.name}
+\alias{pi}
 \title{Built-in Constants}
+\description{Constants built into \R.}
 \usage{
 LETTERS
 letters
@@ -7,23 +13,24 @@ month.abb
 month.name
 pi
 }
-\alias{LETTERS}
-\alias{letters}
-\alias{month.abb}
-\alias{month.name}
-\alias{pi}
-\value{
+\details{
   \R has a limited number of built-in constants (there is also a rather
   larger library of data sets which can be loaded with the function
-  \code{data}).
+  \code{\link{data}}).
 
   The following constants are available:
-  \item{LETTERS}{the 26 upper-case letters of the Roman alphabet;}
-  \item{letters}{the 26 lower-case letters of the Roman alphabet;}
-  \item{month.abb}{the three-letter abbreviations for the English
-    month-names;}
-  \item{month.name}{The English names for the months of the year;}
-  \item{pi}{the ratio of the circumference of a circle to its diameter.}
+  \itemize{
+    \item \code{LETTERS}: the 26 upper-case letters of the Roman
+    alphabet;
+    \item \code{letters}: the 26 lower-case letters of the Roman
+    alphabet;
+    \item \code{month.abb}: the three-letter abbreviations for the
+    English month names;
+    \item \code{month.name}: the English names for the months of the
+    year;
+    \item \code{pi}: the ratio of the circumference of a circle to its
+    diameter.
+  }
 }
 \seealso{
   \code{\link{data}}.

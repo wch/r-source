@@ -1,30 +1,33 @@
 \name{Cauchy}
+\alias{dcauchy}
+\alias{pcauchy}
+\alias{qcauchy}
+\alias{rcauchy}
 \title{The Cauchy Distribution}
+\description{
+  Density, distribution function, quantile function and random
+  generation for the Cauchy distribution with location parameter
+  \code{location} and scale parameter \code{scale}.
+}
 \usage{
 dcauchy(x, location = 0, scale = 1)
 pcauchy(q, location = 0, scale = 1)
 qcauchy(p, location = 0, scale = 1)
 rcauchy(n, location = 0, scale = 1)
 }
-\alias{dcauchy}
-\alias{pcauchy}
-\alias{qcauchy}
-\alias{rcauchy}
 \arguments{
-\item{x,q}{vector of quantiles.}
-\item{p}{vector of probabilities.}
-\item{n}{number of observations to generate.}
-\item{location,scale}{location and scale parameters.}
+  \item{x, q}{vector of quantiles.}
+  \item{p}{vector of probabilities.}
+  \item{n}{number of observations to generate.}
+  \item{location, scale}{location and scale parameters.}
 }
 \value{
-  These functions provide information about the Cauchy distribution with
-  location parameter \code{location} and scale parameter \code{scale}.
-
   \code{dcauchy}, \code{pcauchy}, and \code{qcauchy} are respectively
   the density, distribution function and quantile function of the Cauchy
   distribution.  \code{rcauchy} generates random deviates from the
   Cauchy.
-
+}  
+\details{
   If \code{location} or \code{scale} are not specified, they assume
   the default values of \code{0} and \code{1} respectively.
 

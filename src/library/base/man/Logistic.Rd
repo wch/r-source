@@ -1,36 +1,39 @@
 \name{Logistic}
-\title{The Logistic Distribution}
-\usage{
-dlogis(x, location=0, scale=1)
-plogis(q, location=0, scale=1)
-qlogis(p, location=0, scale=1)
-rlogis(n, location=0, scale=1)
-}
 \alias{dlogis}
 \alias{plogis}
 \alias{qlogis}
 \alias{rlogis}
+\title{The Logistic Distribution}
+\description{
+  Density, distribution function, quantile function and random
+  generation for the logistic distribution with parameters
+  \code{location} and \code{scale}.
+}
+\usage{
+dlogis(x, location = 0, scale = 1)
+plogis(q, location = 0, scale = 1)
+qlogis(p, location = 0, scale = 1)
+rlogis(n, location = 0, scale = 1)
+}
 \arguments{
-\item{x,q}{vector of quantiles.}
-\item{p}{vector of probabilities.}
-\item{n}{number of observations to generate.}
-\item{location,scale}{location and scale parameters.}
+  \item{x, q}{vector of quantiles.}
+  \item{p}{vector of probabilities.}
+  \item{n}{number of observations to generate.}
+  \item{location, scale}{location and scale parameters.}
 }
 
-\description{
-  These functions provide information about the logistic distribution
-  with parameters \code{location} and \code{scale}.  \code{dlogis} gives
-  the density, \code{plogis} gives the distribution function
-  \code{qlogis} gives the quantile function and \code{rlogis} generates
-  random deviates.
+\value{
+  \code{dlogis} gives the density,
+  \code{plogis} gives the distribution function,
+  \code{qlogis} gives the quantile function, and
+  \code{rlogis} generates random deviates.
 }
 \details{
   If \code{location} or \code{scale} are omitted, they assume the
   default values of \code{0} and \code{1} respectively.
 
   The Logistic distribution with \code{location} \eqn{= \mu}{= m} and
-  \code{scale} \eqn{= \sigma}{= s} has
-  distribution function
+  \code{scale} \eqn{= \sigma}{= s} has distribution function
   \deqn{F(x) = \frac{1}{1 + e^{(x-\mu)/\sigma}}}{F(x) = 1 / (1 + exp(-(x-m)/s))}
   and density
   \deqn{

@@ -1,27 +1,31 @@
 \name{Weibull}
+\alias{dweibull}
+\alias{pweibull}
+\alias{qweibull}
+\alias{rweibull}
 \title{The Weibull Distribution}
+\description{
+  Density, distribution function, quantile function and random
+  generation for the Weibull distribution with parameters \code{shape}
+  and \code{scale}.
+}
 \usage{
 dweibull(x, shape, scale = 1)
 pweibull(q, shape, scale = 1)
 qweibull(p, shape, scale = 1)
 rweibull(n, shape, scale = 1)
 }
-\alias{dweibull}
-\alias{pweibull}
-\alias{qweibull}
-\alias{rweibull}
 \arguments{
-\item{x,q}{vector of quantiles.}
-\item{p}{vector of probabilities.}
-\item{n}{number of observations to generate.}
-\item{shape,scale}{shape and scale parameters.}
+  \item{x, q}{vector of quantiles.}
+  \item{p}{vector of probabilities.}
+  \item{n}{number of observations to generate.}
+  \item{shape, scale}{shape and scale parameters.}
 }
-\description{
-  These functions provide information about the Weibull distribution
-  with parameters \code{shape} and \code{scale}.  \code{dweibull} gives
-  the density, \code{pweibull} gives the distribution function,
-  \code{qweibull} gives the quantile function and \code{rweibull}
-  generates random deviates.
+\value{
+  \code{dweibull} gives the density,
+  \code{pweibull} gives the distribution function,
+  \code{qweibull} gives the quantile function, and
+  \code{rweibull} generates random deviates.
 }
 \details{
   If \code{scale} is omitted it assumes the default value of \code{1}.

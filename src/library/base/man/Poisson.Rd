@@ -1,42 +1,46 @@
 \name{Poisson}
+\alias{dpois}
+\alias{ppois}
+\alias{qpois}
+\alias{rpois}
 \title{The Poisson Distribution}
+\description{
+  Density, distribution function, quantile function and random
+  generation for the Poisson distribution with parameter \code{lambda}.
+}
 \usage{
 dpois(x, lambda)
 ppois(q, lambda)
 qpois(p, lambda)
 rpois(n, lambda)
 }
-\alias{dpois}
-\alias{ppois}
-\alias{qpois}
-\alias{rpois}
 \arguments{
-\item{x}{vector of (non-negative integer) quantiles.}
-\item{q}{vector of quantiles.}
-\item{p}{vector of probabilities.}
-\item{n}{number of random values to return.}
-\item{lambda}{vector of positive means.}
+  \item{x}{vector of (non-negative integer) quantiles.}
+  \item{q}{vector of quantiles.}
+  \item{p}{vector of probabilities.}
+  \item{n}{number of random values to return.}
+  \item{lambda}{vector of positive means.}
 }
-\description{
-These functions provide information about the Poisson distribution
-with parameter \code{lambda}.  \code{dpois} gives the density,
-\code{ppois} gives the distribution function \code{qpois} gives the
-quantile function and \code{rpois} generates random deviates.
+\value{
+  \code{dpois} gives the density,
+  \code{ppois} gives the distribution function,
+  \code{qpois} gives the quantile function, and
+  \code{rpois} generates random deviates.
 }
 \details{
-The Poisson distribution has density
-\deqn{p(x) = \frac{{\lambda}^{x} {e}^{-\lambda}}{x!}}{p(x) = lambda^x exp(-lambda)/x!}
-for \eqn{x = 0, 1, 2, \ldots}.
+  The Poisson distribution has density \deqn{p(x) = \frac{{\lambda}^{x}
+      {e}^{-\lambda}}{x!}}{p(x) = lambda^x exp(-lambda)/x!} 
+  for \eqn{x = 0, 1, 2, \ldots}.
 
-If an element of \code{x} is not integer, the result of \code{dpois} is zero,
-with a warning.
+  If an element of \code{x} is not integer, the result of \code{dpois}
+  is zero, with a warning.
 
-The quantile is left continuous: \code{qpois(q, lambda)} is the largest
-integer x such that P(X <= x) < q.
+  The quantile is left continuous: \code{qpois(q, lambda)} is the
+  largest integer \eqn{x} such that \eqn{P(X \le x) < q}.
 }
 \seealso{
-\code{\link{dbinom}} for the binomial and \code{\link{dnbinom}} for
-the negative binomial distribution.
+  \code{\link{dbinom}} for the binomial and \code{\link{dnbinom}} for
+  the negative binomial distribution.
 }
 \examples{
 -log(dpois(0:7, lambda=1) * gamma(1+ 0:7))

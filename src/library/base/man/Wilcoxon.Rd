@@ -1,28 +1,32 @@
 \name{Wilcoxon}
+\alias{dwilcox}
+\alias{pwilcox}
+\alias{qwilcox}
+\alias{rwilcox}
 \title{Distribution of the Wilcoxon Rank Sum Statistic}
+\description{
+  Density, distribution function, quantile function and random
+  generation for the distribution of the Wilcoxon rank sum statistic
+  obtained from samples with size \code{m} and \code{n}, respectively.
+}
 \usage{
 dwilcox(x, m, n)
 pwilcox(q, m, n)
 qwilcox(p, m, n)
 rwilcox(nn, m, n)
 }
-\alias{dwilcox}
-\alias{pwilcox}
-\alias{qwilcox}
-\alias{rwilcox}
 \arguments{
-  \item{x,q}{vector of quantiles.}
+  \item{x, q}{vector of quantiles.}
   \item{p}{vector of probabilities.}
   \item{nn}{number of observations to generate.}
-  \item{m,n}{numbers of observations in the first and second sample,
-    respectively.  Must be positive integers less than 50.}
+  \item{m, n}{numbers of observations in the first and second sample,
+    respectively.}
 }
-\description{
-  These functions provide information about the distribution of the
-  Wilcoxon rank sum statistic obtained from samples with size \code{m}
-  and \code{n}, respectively.  \code{dwilcox} gives the density,
-  \code{pwilcox} gives the distribution function, \code{qwilcox} gives
-  the quantile function, and \code{rwilcox} generates random deviates.
+\value{
+  \code{dwilcox} gives the density,
+  \code{pwilcox} gives the distribution function,
+  \code{qwilcox} gives the quantile function, and
+  \code{rwilcox} generates random deviates.
 }
 \details{
   This distribution is obtained as follows.  Let \code{x} and \code{y}

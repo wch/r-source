@@ -1,30 +1,34 @@
 \name{Geometric}
+\alias{dgeom}
+\alias{pgeom}
+\alias{qgeom}
+\alias{rgeom}
 \title{The Geometric Distribution}
+\description{
+  Density, distribution function, quantile function and random
+  generation for the geometric distribution with parameter \code{prob}.
+}
 \usage{
 dgeom(x, prob)
 pgeom(q, prob)
 qgeom(p, prob)
 rgeom(n, prob)
 }
-\alias{dgeom}
-\alias{pgeom}
-\alias{qgeom}
-\alias{rgeom}
 \arguments{
-\item{x,q}{vector of quantiles representing the number of failures in
-a sequence of Bernoulli trials before success occurs.}
-\item{p}{vector of probabilities.}
-\item{n}{number of observations to generate.}
-\item{prob}{probability of success in each trial.} 
+  \item{x, q}{vector of quantiles representing the number of failures in
+    a sequence of Bernoulli trials before success occurs.}
+  \item{p}{vector of probabilities.}
+  \item{n}{number of observations to generate.}
+  \item{prob}{probability of success in each trial.} 
 }
-\description{
-  These functions provide information about the geometric distribution
-  with parameter \code{prob}.  \code{dgeom} gives the density, \code{pgeom}
-  gives the distribution function, \code{qgeom} gives the quantile
-  function, and \code{rgeom} generates random deviates.
+\value{
+  \code{dgeom} gives the density,
+  \code{pgeom} gives the distribution function,
+  \code{qgeom} gives the quantile function, and
+  \code{rgeom} generates random deviates.
 }
 \details{
-The geometric distribution with \code{prob} \eqn{= p} has density
+  The geometric distribution with \code{prob} \eqn{= p} has density
   \deqn{p(x) = p {(1-p)}^{x}}{p(x) = p (1-p)^x}
   for \eqn{x = 0, 1, 2, \ldots}{x = 0, 1, 2, ...}
 
@@ -32,11 +36,11 @@ The geometric distribution with \code{prob} \eqn{= p} has density
   is zero, with a warning.
 
   The quantile is left continuous: \code{qgeom(q, prob)} is the largest
-  integer x such that P(X <= x) < q.
+  integer \eqn{x} such that \eqn{P(X \le x) < q}.
 }
 \seealso{
-\code{\link{dnbinom}} for the negative binomial which generalizes
-the geometric distribution.
+  \code{\link{dnbinom}} for the negative binomial which generalizes
+  the geometric distribution.
 }
 \examples{
 pp <- sort(c((1:9)/10, 1 - .2^(2:8)))

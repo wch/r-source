@@ -1,32 +1,35 @@
 \name{FDist}
+\alias{df}
+\alias{pf}
+\alias{qf}
+\alias{rf}
 \title{The F Distribution}
+\description{
+  Density, distribution function, quantile function and random
+  generation for the F distribution with \code{df1} and \code{df2}
+  degrees of freedom (and optional non-centrality parameter
+  \code{ncp}).
+}
 \usage{
 df(x, df1, df2)
 pf(q, df1, df2, ncp=0)
 qf(p, df1, df2)
 rf(n, df1, df2)
 }
-\alias{df}
-\alias{pf}
-\alias{qf}
-\alias{rf}
 \arguments{
-\item{x,q}{vector of quantiles.}
-\item{p}{vector of probabilities.}
-\item{n}{number of observations to generate.}
-\item{df1,df2}{degrees of freedom.}
-\item{ncp}{non-centrality parameter.}
+  \item{x, q}{vector of quantiles.}
+  \item{p}{vector of probabilities.}
+  \item{n}{number of observations to generate.}
+  \item{df1, df2}{degrees of freedom.}
+  \item{ncp}{non-centrality parameter.}
 }
 \value{
-  These functions provide information about the F distribution with
-  \code{df1} and \code{df2} degrees of freedom (and optional non-centrality
-  parameter \code{ncp}).
   \code{df} gives the density,
   \code{pf} gives the distribution function
-  \code{qf} gives the quantile function
-  and
+  \code{qf} gives the quantile function, and
   \code{rf} generates random deviates.
-
+}
+\details{
   The F distribution with \code{df1 =} \eqn{n_1}{n1} and \code{df2 =}
   \eqn{n_2}{n2} degrees of freedom has density
   \deqn{
