@@ -491,10 +491,9 @@ int main(int ac, char **av)
 		}
 		value = Decode2Long(p,&ierr);
 		if(ierr) {
-		    if(ierr < 0) goto badargs;
-		    /* if(*p) goto badargs; */
+		    if(ierr < 0) goto badargs; /* if(*p) goto badargs; */
 		    REprintf("--vsize %ld'%c': too large", value,
-			     (ierr == 1)?'M':'K');
+			     (ierr == 1)?'M':((ierr == 2)?'K':'k'));
 		}
 		if (value < 1000) {
 		    REprintf("WARNING: vsize ridiculously low, Megabytes assumed\n");
@@ -522,7 +521,7 @@ int main(int ac, char **av)
 		if(ierr) {
 		    if(ierr < 0) goto badargs;
 		    REprintf("--nsize %ld'%c': too large", value,
-			     (ierr == 1)?'M':'K');
+			     (ierr == 1)?'M':((ierr == 2)?'K':'k'));
 		}
 		if(value < R_NSize || value > Max_Nsize)
 		    REprintf("WARNING: invalid language heap (n)size '%d' ignored,"

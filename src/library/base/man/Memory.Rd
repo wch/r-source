@@ -4,7 +4,7 @@
 R --vsize v --nsize n
 }
 \arguments{
-    \item{v}{Use \code{v} megabytes of heap memory}
+    \item{v}{Use \code{v} bytes of heap memory}
     \item{n}{Use \code{n} cons cells.}
 }
 \description{
@@ -15,24 +15,30 @@ R --vsize v --nsize n
     starts up, it asks the operating system to reserve a fixed amount of
     memory for it.  The size of this chunk cannot be changed
     subsequently.  Hence, it can happen that not enough memory was
-    allocated, e.g., when trying to read large data sets into R.
+    allocated, e.g., when trying to read large data sets into \R.
 
     In these cases, you should restart \R (after saving your current
     workspace) with more memory available, using the command line
-    options \code{--nsize} and \code{--vsize}. To understand these
-    options, one needs to know that R maintains separate areas for fixed
-    and variable sized objects. The first of these is allocated as an
-    array of ``cons cells'' (Lisp programmers will know what they are,
+    options \code{--nsize} and \code{--vsize}.  To understand these
+    options, one needs to know that \R maintains separate areas for fixed
+    and variable sized objects.  The first of these is allocated as an
+    array of ``\bold{cons cells}'' (Lisp programmers will know what they are,
     others may think of them as the building blocks of the language
     itself, parse trees, etc.), and the second are thrown on a
-    ``heap''.  The \code{--nsize} option can be used to specify the
+    ``\bold{heap}''.
+
+    The \code{--nsize} option can be used to specify the
     number of cons cells (each occupying 16 bytes) which \R is to use
     (the default is 200000), and the \code{--vsize} option to  specify
-    the size of the vector heap in million bytes (the default is
-    2).  Only integers are allowed for both options.
-
+    the size of the vector heap in bytes (the default is 2 MB).  
+    Boths options must either be integers or integers ending with
+    \code{M}, \code{K}, or \code{k} meaning \emph{Mega}
+    (= \eqn{2^{20}} = 1048576), (computer) \emph{Kilo} (= \eqn{2^{10}} = 1024),
+    or regular \emph{kilo} (=1000).
+    \cr
     E.g., to read in a table of 5000 observations on 40 numeric
-    variables, \code{R --vsize 6} should do.
+    variables, \code{R --vsize 6M} should do;  For
+    \code{\link{source}()}ing a large file, you'd use \code{R --nsize 500k}.
     
     Note that the information on where to find vectors and strings on
     the heap is stored using cons cells.  Thus, it may also be necessary
@@ -45,7 +51,7 @@ R --vsize v --nsize n
     \code{--vsize} or \code{--nsize}.  Note that following
     \code{\link{gcinfo}(TRUE)}, automatic garbage collection always
     prints memory use statistics.
-    
+    \cr
     \R will tell you whether you ran out of cons or heap memory. 
 
     When using \code{\link{read.table}}, the memory requirements are in
@@ -59,6 +65,6 @@ R --vsize v --nsize n
 \examples{
 # Start R with 15MB of heap memory and 1 million cons cells
 \dontrun{
-R --vsize 15 --nsize 1000000
+R --vsize 15M --nsize 1000k
 }
 }

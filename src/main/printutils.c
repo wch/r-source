@@ -66,7 +66,7 @@ long Decode2Long(char *p, int *ierr)
     long v = strtol(p, &p, 10);
     *ierr = 0;
     if(p[0] == '\0') return v;
-    /* else */
+    /* else look for letter-code ending : */
     if(R_Verbose)
         REprintf("Decode2Long(): v=%ld\n", v);
     if(p[0] == 'M') {
@@ -76,6 +76,10 @@ long Decode2Long(char *p, int *ierr)
     else if(p[0] == 'K') {
 	if((1024 * (double)v) > LONG_MAX) { *ierr = 2; return(v); }
 	return (1024*v);
+    }
+    else if(p[0] == 'k') {
+	if((1000 * (double)v) > LONG_MAX) { *ierr = 3; return(v); }
+	return (1000*v);
     }
     else {
 	*ierr = -1;
