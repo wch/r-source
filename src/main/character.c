@@ -190,12 +190,15 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(regcomp(&reg, split, eflags))
 		errorcall(call, "invalid split pattern");
 	    bufp = buff;
-	    while(regexec(&reg, bufp, 1, regmatch, eflags) == 0) {
-		/* Empty matches get the next char, so move by one. */
-		bufp += MAX(regmatch[0].rm_eo, 1);
-		ntok++;
-		if (*bufp == '\0')
-		    break;
+	    if(*bufp != '\0') {
+		while(regexec(&reg, bufp, 1, regmatch, eflags) == 0) {
+		    /* Empty matches get the next char, so move by
+		       one. */
+		    bufp += MAX(regmatch[0].rm_eo, 1);
+		    ntok++;
+		    if (*bufp == '\0')
+			break;
+		}
 	    }
 	    if(*bufp == '\0')
 		PROTECT(t = allocVector(STRSXP, ntok));
