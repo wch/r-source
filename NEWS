@@ -244,6 +244,8 @@ BUG FIXES
     o	kmeans() now ensures that the initial cluster centers it chooses
 	are distinct.
 
+    o	text()'s default method could segfault if passed 0-length coordinates.
+
 
 
 		CHANGES IN R VERSION 2.0.1

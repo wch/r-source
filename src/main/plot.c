@@ -2150,6 +2150,8 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     Rf_gpptr(dd)->xpd = (xpd == NA_INTEGER)? 2 : xpd;
 
     GMode(1, dd);
+    if (n == 0 && ntxt > 0)
+	errorcall(call, "no coordinates were supplied");
     for (i = 0; i < imax2(n,ntxt); i++) {
 	xx = x[i % n];
 	yy = y[i % n];
