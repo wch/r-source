@@ -4290,11 +4290,11 @@ void InitColors(void)
 
 typedef struct {
     char *name;
-    unsigned int pattern;
+    int pattern;
 } LineTYPE;
 
 static LineTYPE linetype[] = {
-    { "blank",   LTY_BLANK   },/* 0 */
+    { "blank",   LTY_BLANK   },/* -1 */
     { "solid",	 LTY_SOLID   },/* 1 */
     { "dashed",	 LTY_DASHED  },/* 2 */
     { "dotted",	 LTY_DOTTED  },/* 3 */

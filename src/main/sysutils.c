@@ -299,7 +299,8 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, x;
     iconv_t obj;
     int i;
-    char *inbuf, *outbuf, buff[BUFSIZE];
+    const char *inbuf; /* Solaris headers care here */
+    char *outbuf, buff[BUFSIZE];
     size_t inb, outb, res;
     
     checkArity(op, args);

@@ -278,9 +278,9 @@ static Rboolean cprod(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
 SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, a;
-    double tmp, s;
+    double tmp = 0.0, s;
     Rcomplex z, ztmp, zcum;
-    int itmp, icum=0, int_a, empty;
+    int itmp = 0, icum=0, int_a, empty;
     short iop;
     SEXPTYPE ans_type;/* only INTEGER, REAL, or COMPLEX here */
 

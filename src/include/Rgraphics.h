@@ -43,19 +43,20 @@ extern "C" {
  *		blue  = ((color >> 16) & 255)
  */
 /*
- *	Changes from 1.4.0: use top 8 bits as an alpha channel.
+ *	Changes as from 1.4.0: use top 8 bits as an alpha channel.
  * 	0 = opaque, 255 = transparent.
  *	At present only 0 and >0 are used, with no semi-transparent.
  */
 /*
- * Changes from 2.0.0:  use top 8 bits as full alpha channel
+ * Changes as from 2.0.0:  use top 8 bits as full alpha channel
  *      1 = opaque, 0 = transparent
  *      [to conform with SVG, PDF and others]
  *      and everything in between is used
  *      [which means that NA is not stored as an internal colour;
  *       it is converted to R_RGBA(255, 255, 255, 0)]
  */
-#define R_RGB(r,g,b)	((r)|((g)<<8)|((b)<<16)|(255<<24))
+/* #define R_RGB(r,g,b)	((r)|((g)<<8)|((b)<<16)|(255<<24)) overflows */
+#define R_RGB(r,g,b)	((r)|((g)<<8)|((b)<<16)|0xFF000000)
 #define R_RGBA(r,g,b,a)	((r)|((g)<<8)|((b)<<16)|((a)<<24))
 #define R_RED(col)	(((col)	   )&255)
 #define R_GREEN(col)	(((col)>> 8)&255)
