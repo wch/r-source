@@ -723,14 +723,23 @@ but not single-precision nor complex routines.
 
 @cindex LAPACK library
 As from @R{} 1.7.0, provision is made for using an external LAPACK
-library, principally to cope with BLAS libraries which contain a copy
-of LAPACK (such as @code{libsunperf} on Solaris and @code{vecLib} on
-MacOS 10.2.2).  However, the likely performance gains are thought to
-be small, and the default is not to search for a suitable LAPACK
-library.  You can specify a specific LAPACK library or a search for a
-generic library by the configuration option @option{--with-lapack}.
-The default for @option{--with-lapack} is to check the BLAS library and 
-then look for an external library @code{-llapack}.
+library, principally to cope with BLAS libraries which contain a copy of
+LAPACK (such as @code{libsunperf} on Solaris and @code{vecLib} on MacOS
+10.2.2).  However, the likely performance gains are thought to be small
+(and may be negative), and the default is not to search for a suitable
+LAPACK library.  You can specify a specific LAPACK library or a search
+for a generic library by the configuration option
+@option{--with-lapack}.  The default for @option{--with-lapack} is to
+check the BLAS library and then look for an external library
+@code{-llapack}.  Sites searching for the fastest possible linear
+algebra may want to build a LAPACK library using the ATLAS-optimized
+subset of LAPACK.  To do so specify something like
+@smallexample
+--with-lapack="-L/path/to/libs -llapack -lcblas"
+@end smallexample
+@noindent
+since the ATLAS subset of LAPACK depends on @code{libcblas}.
+
 
 If you do use @option{--with-lapack}, be aware of potential problems
 with bugs in the LAPACK 3.0 sources (or in the posted corrections to those
