@@ -62,13 +62,8 @@ void VectorIndex(int, int);
 void CustomPrintValue(SEXP s);
 void PrintValue(SEXP);
 void PrintValueRec(SEXP);
-/*
-int REprintf(char*, ...);
-int REvprintf(const char*, va_list);
-int Rprintf(char*, ...);
-int Rstrlen(char*);
-int Rvprintf(const char*, va_list);
-*/
+
+/*  REprintf(char*, ...); ... --> all in Defn.h */
 
 void printArray(SEXP, int);
 void printDataFrame(SEXP);
