@@ -141,12 +141,12 @@ static void xbufaddc(xbuf p, char c)
       case '\a':
 	gabeep();
 	break;
-      case '\b':
+/*      case '\b':
 	if (strlen(p->s[p->ns - 1])) {
 	    p->free -= 1;
 	    p->av += 1;
 	}
-	break;
+	break; */
       case '\r':
 	break;
       case '\t':
@@ -258,7 +258,7 @@ struct structConsoleData {
     char *kbuf;
     int   already;              /* number of keys in buffer to be processed
 				   before clipb. */
-    char *clp;            /*data from the clipboard */
+    char *clp;                  /* data from the clipboard */
     int  pclp;
 
     int   lazyupdate, needredraw, newfv, newfc;	/* updating and redrawing */
@@ -387,55 +387,61 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
 			    rgb fgr, rgb bgr, int j, int len, char *s)
 {
     rect  r;
-    char  chf, chl, ch;
+    char  chf, chl, ch, buf[500], *s1, *s2;
     int   last;
 
     r = rect(BORDERX + fch * FW, BORDERY + j * FH, (lch - fch + 1) * FW, FH);
     gfillrect(p->bm, bgr, r);
+    if (s[0] == '_' && s[1] == '\b') fgr = DarkRed;
+    for (s1 = s, s2 = buf; *s1 != '\0'; s1++)
+	if (*s1 != '_' || *(s1 + 1) != '\b') *s2++ = *s1; else s1++;
+    *s2 = '\0';
+    len = strlen(buf);
+
     if (len > fch) {
 	if (FC && (fch == 0)) {
-	    chf = s[0];
-	    s[0] = '$';
+	    chf = buf[0];
+	    buf[0] = '$';
 	} else
 	    chf = '\0';
 	if ((len > COLS) && (lch == COLS - 1)) {
-	    chl = s[lch];
-	    s[lch] = '$';
+	    chl = buf[lch];
+	    buf[lch] = '$';
 	} else
 	    chl = '\0';
 	last = lch + 1;
 	if (len > last) {
-	    ch = s[last];
-	    s[last] = '\0';
+	    ch = buf[last];
+	    buf[last] = '\0';
 	} else
 	    ch = '\0';
-	gdrawstr(p->bm, p->f, fgr, pt(r.x, r.y), &s[fch]);
+	gdrawstr(p->bm, p->f, fgr, pt(r.x, r.y), &buf[fch]);
 	if (ch)
-	    s[last] = ch;
+	    buf[last] = ch;
 	if (chl)
-	    s[lch] = chl;
+	    buf[lch] = chl;
 	if (chf)
-	    s[fch] = chf;
+	    buf[fch] = chf;
     }
 }
 
 #define WLHELPER(a, b, c, d) writelineHelper(p, a, b, c, d, j, len, s)
 
-static void writeline(ConsoleData p, int i, int j)
+static int writeline(ConsoleData p, int i, int j)
 {
     char *s;
     int   insel, len, col1, d;
     int   c1, c2, c3, x0, y0, x1, y1;
 
     if ((i < 0) || (i >= NUMLINES))
-	FVOIDRETURN;
+	FRETURN(0);
     s = VLINE(i);
     len = strlen(s);
     col1 = COLS - 1;
     insel = p->sel ? ((i - p->my0) * (i - p->my1)) : 1;
     if (insel < 0) {
 	WLHELPER(0, col1, White, DarkBlue);
-	FVOIDRETURN;
+	FRETURN(len);
     }
     if ((USER(i) >= 0) && (USER(i) < FC + COLS)) {
 	if (USER(i) <= FC)
@@ -450,7 +456,7 @@ static void writeline(ConsoleData p, int i, int j)
     if ((p->r >= 0) && (p->c >= FC) && (p->c < FC + COLS) &&
 	(i == NUMLINES - 1))
 	WLHELPER(p->c - FC, p->c - FC, p->bg, p->ufg);
-    if (insel != 0) FVOIDRETURN;
+    if (insel != 0) FRETURN(len);
     c1 = (p->my0 < p->my1);
     c2 = (p->my0 == p->my1);
     c3 = (p->mx0 < p->mx1);
@@ -462,30 +468,39 @@ static void writeline(ConsoleData p, int i, int j)
 	x1 = p->mx0; y1 = p->my0;
     }
     if (i == y0) {
-	if (FC + COLS < x0) FVOIDRETURN;
+	if (FC + COLS < x0) FRETURN(len);
 	c1 = (x0 > FC) ? (x0 - FC) : 0;
     } else
 	c1 = 0;
     if (i == y1) {
-	if (FC > x1) FVOIDRETURN;
+	if (FC > x1) FRETURN(len);
 	c2 = (x1 > FC + COLS) ? (COLS - 1) : (x1 - FC);
     } else
 	c2 = COLS - 1;
     WLHELPER(c1, c2, White, DarkBlue);
+    return len;
 }
 
 static void drawconsole(control c, rect r)
 FBEGIN
 PBEGIN
-    int i, ll;
+    int i, ll, wd, maxwd = 0;
 
     ll = min(NUMLINES, ROWS);
     gfillrect(BM, p->bg, getrect(BM));
     if(!ll) FVOIDRETURN;
-    for (i = 0; i < ll; i++) WRITELINE(NEWFV + i, i);
+    for (i = 0; i < ll; i++) {
+	wd = WRITELINE(NEWFV + i, i);
+	if(wd > maxwd) maxwd = wd;
+    }
     RSHOW(getrect(c));
     FV = NEWFV;
     p->needredraw = 0;
+/* always display scrollbar if FC > 0 */
+    if(maxwd < COLS - 1) maxwd = COLS -1;
+    maxwd += FC;
+    gchangescrollbar(c, HWINSB, FC, maxwd, COLS,
+                     p->kind == CONSOLE || NUMLINES > ROWS);
     gchangescrollbar(c, VWINSB, FV, NUMLINES - 1 , ROWS, p->kind == CONSOLE);
 PEND
 FVOIDEND
@@ -1209,8 +1224,11 @@ FVOIDEND
 
 static void sbf(control c, int pos)
 FBEGIN
-    if (pos < 0) return;
-    if (FV != pos) setfirstvisible(c, pos);
+    if (pos < 0) {
+	pos = -pos - 1 ;
+	if (FC != pos) setfirstcol(c, pos);
+    } else 
+        if (FV != pos) setfirstvisible(c, pos);
 FVOIDEND
 
 void Rconsolesetwidth(int);
@@ -1402,13 +1420,14 @@ console newconsole(char *name, int flags)
                      CONSOLE);
     if (!p) return NULL;
     c = (console) newwindow(name, rect(0, 0, WIDTH, HEIGHT),
-			    flags | TrackMouse | VScrollbar);
+			    flags | TrackMouse | VScrollbar | HScrollbar);
     HEIGHT = getheight(c);
     WIDTH  = getwidth(c);
     COLS = WIDTH / FW - 1;
     ROWS = HEIGHT / FH - 1;
     gsetcursor(c, ArrowCursor);
     gchangescrollbar(c, VWINSB, 0, 0, ROWS, 1);
+    gchangescrollbar(c, HWINSB, 0, COLS-1, COLS, 1);
     BORDERX = (WIDTH - COLS*FW) / 2;
     BORDERY = (HEIGHT - ROWS*FH) / 2;
     setbackground(c, consolebg);
@@ -1663,8 +1682,8 @@ static pager pagercreate()
 	y = (deviceheight(NULL) - h) / 2 ;
     }
     c = (pager) newwindow("PAGER", rect(x, y, w, h),
-				 Document | StandardWindow | Menubar |
-				 VScrollbar | TrackMouse);
+			  Document | StandardWindow | Menubar |
+			  VScrollbar | HScrollbar | TrackMouse);
     if (!c) {
          freeConsoleData(p);
          return NULL;
@@ -1678,6 +1697,7 @@ static pager pagercreate()
     BORDERY = (HEIGHT - ROWS*FH) / 2;
     gsetcursor(c, ArrowCursor);
     gchangescrollbar(c, VWINSB, 0, 0, ROWS, 0);
+    gchangescrollbar(c, HWINSB, 0, COLS-1, COLS, 1);
     setbackground(c, consolebg);
     if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
         int btsize = 24;

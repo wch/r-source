@@ -23,7 +23,8 @@
 
 /* (Long) Integers */
 
-#define SIZEOF_LONG 4
+/* Byte order */
+#undef WORDS_BIGENDIAN
 
 /* Floating Point Arithmetic */
 #undef HAVE_MATHERR		/* System V */
@@ -79,6 +80,8 @@ extern int _finite(double);
 
 /* General String Comparison */
 #undef HAVE_STRCOLL
+/* String duplication */
+#define HAVE_STRDUP 1
 
 /* Inverse Hyperbolics */
 #define HAVE_ASINH 1
