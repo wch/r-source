@@ -59,8 +59,11 @@ various useful features of the value returned by \code{lm}.
 \value{
   The function \code{summary.lm} computes and returns a list of summary
   statistics of the fitted linear model given in \code{lm.obj}, using
-  the slots (list elements) \code{"call"}, \code{"terms"}, and
-  \code{"residuals"} from its argument, plus
+  the components (list elements) \code{"call"} and \code{"terms"}
+  from its argument, plus
+  \item{residuals}{the \emph{weighted} residuals, the usual residuals
+    rescaled by the square root of the weights specified in the call to
+    \code{lm}.}
   \item{coefficients}{a \eqn{p \times 4}{p x 4} matrix with columns for
     the estimated coefficient, its standard error, t-statistic and
     corresponding (two-sided) p-value.}
