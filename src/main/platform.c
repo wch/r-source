@@ -35,11 +35,11 @@
  */
 static char *R_OSType = OSTYPE;
 static char *R_FileSep = FILESEP;
-static char *R_DynLoadExt = DYNLOADEXT;
 
 SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP value, names;
+    char *tmp;
     checkArity(op, args);
     PROTECT(value = allocVector(VECSXP, 5));
     PROTECT(names = allocVector(STRSXP, 5));
@@ -50,7 +50,12 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(names, 4, mkChar("endian"));
     SET_VECTOR_ELT(value, 0, mkString(R_OSType));
     SET_VECTOR_ELT(value, 1, mkString(R_FileSep));
-    SET_VECTOR_ELT(value, 2, mkString(R_DynLoadExt));
+    tmp = (char *) malloc(strlen(SHLIB_EXT) + 2);
+    if(!tmp) {
+	error("Could not allocate memory");
+    }
+    sprintf(tmp, ".%s", SHLIB_EXT);
+    SET_VECTOR_ELT(value, 2, mkString(tmp));
     SET_VECTOR_ELT(value, 3, mkString(R_GUIType));
 #ifdef WORDS_BIGENDIAN
     SET_VECTOR_ELT(value, 4, mkString("big"));

@@ -70,24 +70,21 @@
 #ifdef Unix
 # define OSTYPE      "unix"
 # define FILESEP     "/"
-# define DYNLOADEXT  "." ## SHLIB_EXT
 #endif /* Unix */
 
 #ifdef Macintosh
 # define OSTYPE      "mac"
 # define FILESEP     ":"
-# define DYNLOADEXT  ".dll"
 #endif /* Macintosh */
 
 #ifdef Win32
 # define OSTYPE      "windows"
 # define FILESEP     "/"
-# define DYNLOADEXT  ".dll"
 #endif /* Win32 */
 
 #ifdef HAVE_F77_UNDERSCORE
 # define F77_SYMBOL(x)	x ## _
-# define F77_QSYMBOL(x)	#x ## "_"
+# define F77_QSYMBOL(x)	#x "_"
 #else
 # define F77_SYMBOL(x)	x
 # define F77_QSYMBOL(x) #x
