@@ -24,5 +24,12 @@ given value(s).
 dim(diag(3))
 diag(10,3,4) # guess what?
 all(diag(1:3) == {m <- matrix(0,3,3); diag(m) <- 1:3; m})
-}
+\testonly{
+## test behaviour with 0 row or columns
+diag(0)
+z <- matrix(0, 0, 4)
+diag(z)
+diag(z) <- numeric(0)
+z
+}}
 \keyword{array}
