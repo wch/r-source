@@ -37,9 +37,9 @@ extern "C" {
  *  Types.
  */
 
-#ifndef byte
-  typedef unsigned char byte;
-#endif
+typedef unsigned char GAbyte;
+
+#define byte GAbyte
 
 #ifndef objptr
   typedef struct { int kind; } gui_obj;
@@ -264,15 +264,18 @@ void	setrgb(rgb c);
 #define	setcolor(c)  setrgb(c)
 #define	setcolour(c) setrgb(c)
 
+/* changed to avoid clashes with w32api 2.0 */
+#define gaRed 		0x00FF0000UL
+#define gaGreen		0x0000FF00UL
+#define gaBlue		0x000000FFUL
+
+
 #define Transparent     0xFFFFFFFFUL
 
 #define Black		0x00000000UL
 #define White		0x00FFFFFFUL
-#define Blue		0x000000FFUL
 #define Yellow		0x00FFFF00UL
-#define Green		0x0000FF00UL
 #define Magenta		0x00FF00FFUL
-#define Red 		0x00FF0000UL
 #define Cyan		0x0000FFFFUL
 
 #define Grey		0x00808080UL

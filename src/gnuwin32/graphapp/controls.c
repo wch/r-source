@@ -604,7 +604,7 @@ void setbackground(control obj, rgb bg)
 #if USE_NATIVE_CONTROLS
 	COLORREF wincolour;
 
-	wincolour = RGB((bg&Red)>>16,(bg&Green)>>8,(bg&Blue));
+	wincolour = RGB((bg&gaRed)>>16,(bg&gaGreen)>>8,(bg&gaBlue));
 
 	if (! obj)
 		return;
