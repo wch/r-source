@@ -15,7 +15,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
         P <- Pn <- matrix(0, 1, 1)
         h <- 1
         V <- diag(1)
-        return(Z, a, P, T, V, h, Pn)
+        return(list(Z=Z, a=a, P=P, T=T, V=V, h=h, Pn=Pn))
     }
     makeTrend <- function(x)
     {
@@ -25,7 +25,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
         P <- Pn <- matrix(0, 2, 2)
         h <- 1
         V <- diag(2)
-        return(Z, a, P, T, V, h, Pn)
+        return(list(Z=Z, a=a, P=P, T=T, V=V, h=h, Pn=Pn))
     }
     makeBSM <- function(x, nf)
     {
@@ -40,7 +40,7 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
         P <- Pn <- matrix(0, nf+1, nf+1)
         h <- 1
         V <- diag(c(1, 1, 1, rep(0, nf-2)))
-        return(Z, a, P, T, V, h, Pn)
+        return(list(Z=Z, a=a, P=P, T=T, V=V, h=h, Pn=Pn))
     }
     getLike <- function(par)
     {
@@ -142,7 +142,7 @@ predict.StructTS <- function(object, n.ahead = 1, se.fit = TRUE, ...)
     if (se.fit) {
         se <- ts(sqrt(z[[2]]), start = xtsp[2] + 1/xtsp[3],
                  frequency = xtsp[3])
-        return(pred, se)
+        return(list(pred=pred, se=se))
     }
     else return(pred)
 }

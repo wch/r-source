@@ -298,7 +298,7 @@ predict.arima0 <-
     if(se.fit) {
         se <- ts(sqrt(z[[2]]),
                  start = xtsp[2] + deltat(data), frequency = xtsp[3])
-        return(pred, se)
+        return(list(pred=pred, se=se))
     } else return(pred)
 }
 
