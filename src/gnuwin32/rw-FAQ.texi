@@ -548,7 +548,11 @@ you forget, you can set the variable inside R by something like
 @smallexample
     Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.3")
 @end smallexample
-.)
+.)  Similarly, you can set the path if needed by something like
+@smallexample
+    Sys.putenv(PATH=paste(Sys.getenv("PATH"), "c:/Tcl/bin", sep = ";"))
+@end smallexample
+
 
 
 @node  Hyperlinks in Compiled HTML do not work., update.packages() fails, Package TclTk does not work., Packages

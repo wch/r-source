@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta name="generator" content=
-"HTML Tidy for Linux/x86 (vers 1st April 2002), see www.w3.org">
+"HTML Tidy for Windows (vers 1st April 2002), see www.w3.org">
 <title>R for Windows FAQ</title>
 <meta http-equiv="Content-Type" content="text/html">
 <meta name="description" content="R for Windows FAQ">
@@ -726,8 +726,13 @@ something like<br>
     Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.3")
 </pre>
 
-.) <a name=
-"Hyperlinks%20in%20Compiled%20HTML%20do%20not%20work."></a> 
+.) Similarly, you can set the path if needed by something like <br>
+<pre>
+    Sys.putenv(PATH=paste(Sys.getenv("PATH"), "c:/Tcl/bin", sep = ";"))
+</pre>
+
+<a name="Hyperlinks%20in%20Compiled%20HTML%20do%20not%20work."></a>
+
 <h3>3.7 Hyperlinks in Compiled HTML sometimes do not work.</h3>
 
 <p>They may well not work between packages installed in different

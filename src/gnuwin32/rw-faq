@@ -474,7 +474,8 @@ will warn you if this is unset, and Q3.2 explains how to set them.  NB:
 do not quote the path, even if as here it contains spaces. If you
 forget, you can set the variable inside R by something like
          Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.3")
-.)
+.)  Similarly, you can set the path if needed by something like
+         Sys.putenv(PATH=paste(Sys.getenv("PATH"), "c:/Tcl/bin", sep = ";"))
 
 3.7 Hyperlinks in Compiled HTML sometimes do not work.
 ======================================================
