@@ -367,6 +367,9 @@ void R_CleanUp(int saveact, int status, int runLast)
     case SA_SAVE:
 	if(runLast) R_dot_Last();
 	if(R_DirtyImage) R_SaveGlobalEnv();
+	if (CharacterMode == RGui || 
+	    (R_Interactive && CharacterMode == RTerm))
+	    gl_savehistory(R_HistoryFile);
 	break;
     case SA_NOSAVE:
 	if(runLast) R_dot_Last();
@@ -379,9 +382,6 @@ void R_CleanUp(int saveact, int status, int runLast)
     closeAllHlpFiles();
     KillAllDevices();
     AllDevicesKilled = 1;
-    if (CharacterMode == RGui || 
-	(R_Interactive && CharacterMode == RTerm))
-	gl_savehistory(R_HistoryFile);
     if (R_Interactive && CharacterMode == RTerm)
 	SetConsoleTitle("");
     UnLoad_Unzip_Dll();
