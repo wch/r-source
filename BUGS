@@ -43,10 +43,6 @@ From: bonneau@epi.roazhon.inra.fr (en148)
 Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
 --base R has no est.variogram function.
 --This appears to be a bug report on sgeostat.
-* PR# 563 *
-From: Setzer.Woodrow@epamail.epa.gov
-Date: Tue, 06 Jun 2000 14:21:35 -0400
---gls{nlme}; should formula.default() look for attr(*,"formula") ?
 
 Directory:  Analyses
 
@@ -192,10 +188,19 @@ none
 
 Directory:  incoming
 
-* PR# 584 *
-Subject: par(lty = "1") -- lty storage-etc bug
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 27 Jun 2000 09:11:36 +0200 (CEST)
+* PR# 586 *
+Subject: system.file on Windows, / vs \\
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Thu, 29 Jun 2000 09:49:39 -0700 (PDT)
+* PR# 536 *
+Subject: Problem with match.arg()
+From: kjetikj@astro.uio.no
+Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
+--1.0.0 bug fixed for 1.0.1 ??
+* PR# 578 *
+Subject: Re: [R] R 1.1 congrat; undocumented behaviour of recordPlot
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 22 Jun 2000 17:07:05 +0200
 * PR# 577 *
 Subject: de on w95b crash rterm with long strings
 From: p.malewski@tu-bs.de
@@ -204,19 +209,6 @@ Date: Thu, 22 Jun 2000 16:43:16 +0200 (MET DST)
 Subject: Bus Error crash
 From: kjetikj@astro.uio.no
 Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
-* PR# 536 *
-Subject: Problem with match.arg()
-From: kjetikj@astro.uio.no
-Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
---1.0.0 bug fixed for 1.0.1 ??
-* PR# 579 *
-Subject: possible bug, anova.glm(), family="gaussian"
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Sun, 25 Jun 2000 12:31:22 -0400 (EDT)
-* PR# 578 *
-Subject: Re: [R] R 1.1 congrat; undocumented behaviour of recordPlot
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 22 Jun 2000 17:07:05 +0200
 * PR# 581 *
 Subject: help screens: typos, suggestions
 From: Rashid Nassar <rnassar@duke.edu>
@@ -225,6 +217,10 @@ Date: Sun, 25 Jun 2000 15:59:57 -0400 (EDT)
 Subject: dotplot() colors reversed
 From: Rashid Nassar <rnassar@duke.edu>
 Date: Sun, 25 Jun 2000 15:36:00 -0400 (EDT)
+* PR# 579 *
+Subject: possible bug, anova.glm(), family="gaussian"
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Sun, 25 Jun 2000 12:31:22 -0400 (EDT)
 * PR# 583 *
 Subject: persp greek label problem
 From: ramin.nakisa@ncr.com
@@ -233,3 +229,11 @@ Date: Mon, 26 Jun 2000 20:06:38 +0200 (MET DST)
 Subject: lm.{w}fit(x,y,*) : fails when x has no column names
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 26 Jun 2000 15:50:58 +0200 (CEST)
+* PR# 585 *
+Subject:  Missing SearchEngine.html 
+From: Thomas J Vogels <tov@bavaria.ece.cmu.edu>
+Date: Thu, 29 Jun 2000 08:12:06 -0400
+* PR# 584 *
+Subject: par(lty = "1") -- lty storage-etc bug
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 27 Jun 2000 09:11:36 +0200 (CEST)
