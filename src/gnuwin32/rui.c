@@ -38,6 +38,7 @@
 #include "rui.h"
 #include "opt.h"
 #include "Rversion.h"
+#include "getline/getline.h"  /* for gl_load/savehistory */
 
 #define TRACERUI(a)
 
@@ -146,11 +147,11 @@ static void menuloadhistory(control m)
 
     if (!ConsoleAcceptCmd) return;
     setuserfilter("All files (*.*)\0*.*\0\0");
-    fn = askfilename("Load history from", ".Rhistory");
+    fn = askfilename("Load history from", R_HistoryFile);
     show(RConsole);
     if (fn) {
 	fixslash(fn);
-	readhistory(RConsole, fn);
+	gl_loadhistory(fn);
     }
 }
 
@@ -160,11 +161,11 @@ static void menusavehistory(control m)
 
     if (!ConsoleAcceptCmd) return;
     setuserfilter("All files (*.*)\0*.*\0\0");
-    fn = askfilesave("Save history in", ".Rhistory");
+    fn = askfilesave("Save history in", R_HistoryFile);
     show(RConsole);
     if (fn) {
 	fixslash(fn);
-	savehistory(RConsole, fn);
+	gl_savehistory(fn);
     }
 }
 
@@ -725,7 +726,8 @@ int setupui()
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(newmenuitem("About", 0, menuabout));
     consolesetbrk(RConsole, menukill, ESC, 0);
-    readhistory(RConsole, ".Rhistory");
+    gl_hist_init(R_HistorySize, 0);
+    gl_loadhistory(R_HistoryFile);
     show(RConsole);
     return 1;
 }

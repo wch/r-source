@@ -18,6 +18,9 @@ void            gl_histadd(char *);		/* adds entries to hist */
 void		gl_strwidth(gl_strwidth_proc);	/* to bind gl_strlen */
 void		gl_loadhistory(char *);
 void		gl_savehistory(char *);
+void            gl_hist_init(int, int);		/* set up history buffer */
+char    	*gl_hist_next();	/* return ptr to next item */
+char    	*gl_hist_prev();	/* return ptr to prev item */
 
 extern int 	(*gl_in_hook)(char *);
 extern int 	(*gl_out_hook)(char *);
@@ -34,6 +37,11 @@ char           *getline();
 void            gl_setwidth();
 void            gl_histadd();
 void		gl_strwidth();
+void		gl_loadhistory();
+void		gl_savehistory();
+void            gl_hist_init();
+char    	*gl_hist_next();
+char    	*gl_hist_prev();
 
 extern int 	(*gl_in_hook)();
 extern int 	(*gl_out_hook)();

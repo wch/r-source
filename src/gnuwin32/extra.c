@@ -453,7 +453,6 @@ void Rwin_fpset()
     _controlfp(_MCW_EM, _MCW_EM);    
 }
 
-#include "console.h"  /* for read/savehistory */
 #include "getline/getline.h"  /* for gl_load/savehistory */
 SEXP do_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -463,9 +462,7 @@ SEXP do_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, "invalid file argument");
-    if (CharacterMode == RGui)    
-	savehistory(RConsole, CHAR(STRING(sfile)[0]));
-    else if (CharacterMode == RTerm)
+    if (CharacterMode == RGui || (R_Interactive && CharacterMode == RTerm))
 	gl_savehistory(CHAR(STRING(sfile)[0]));
     else
 	errorcall(call, "savehistory can only be used in Rgui and Rterm");
@@ -480,9 +477,7 @@ SEXP do_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, "invalid file argument");
-    if (CharacterMode == RGui)    
-	readhistory(RConsole, CHAR(STRING(sfile)[0]));
-    else if (CharacterMode == RTerm)
+    if (CharacterMode == RGui || (R_Interactive && CharacterMode == RTerm))
 	gl_loadhistory(CHAR(STRING(sfile)[0]));
     else
 	errorcall(call, "savehistory can only be used in Rgui and Rterm");

@@ -93,10 +93,10 @@ static void     gl_transpose();		/* transpose two chars */
 static void     gl_yank();		/* yank killed text */
 static void     gl_word();		/* move a word */
 
-static void     hist_init();	/* initializes hist pointers */
-static char    *hist_next();	/* return ptr to next item */
-static char    *hist_prev();	/* return ptr to prev item */
-static char    *hist_save();	/* makes copy of a string, without NL */
+void     gl_hist_init(int, int);	/* initializes hist pointers */
+char    *gl_hist_next();		/* return ptr to next item */
+char    *gl_hist_prev();		/* return ptr to prev item */
+static char    *hist_save();		/* makes copy of a string, without NL */
 
 static void     search_addchar();	/* increment search string */
 static void     search_term();		/* reset with current contents */
@@ -360,12 +360,13 @@ gl_getc()
       st = r.Event.KeyEvent.dwControlKeyState;
       vk = r.Event.KeyEvent.wVirtualKeyCode;
       if (r.Event.KeyEvent.bKeyDown) {
-	if (vk == VK_MENU) { 
+	if (vk == VK_MENU && (st & LEFT_ALT_PRESSED)) { /* VK_MENU is
+							   Alt or AltGr */
 	  AltIsDown = 1;
 	  nAlt = 0;
 	  bbb  = 0;
 	} 
-	else if (st > CAPSLOCK_ON) { 
+	else if (st & ENHANCED_KEY) { 
 	  switch(vk) {
 	  case VK_LEFT: c=2 ;break;
 	  case VK_RIGHT: c=6;break;
@@ -376,7 +377,7 @@ gl_getc()
 	  case VK_DELETE:  c='\004';break;
 	  }
 	} 
-	else if (AltIsDown) {
+	else if (AltIsDown) { /* Interpret Alt+xxx entries */
 	  switch (vk) {
 	  case VK_INSERT: n = 0; break;
 	  case VK_END: n = 1; break;
@@ -401,7 +402,9 @@ gl_getc()
 	else 
 	  c = r.Event.KeyEvent.uChar.AsciiChar;
       }
-      else if (vk == VK_MENU) {
+      else if (vk == VK_MENU && AltIsDown) { 
+           /* Alt key up event: could be AltGr, but let's hope users 
+	      only press one of them at a time. */
 	AltIsDown = 0;
 	c = (bbb < 256) && (bbb > 0) ? bbb : 0;
 	bbb = 0;
@@ -462,7 +465,7 @@ gl_init()
 /* set up variables and terminal */
 {
     if (gl_init_done < 0) {		/* -1 only on startup */
-        hist_init();
+        gl_hist_init(512, 1);
     }
     if (isatty(0) == 0 || isatty(1) == 0)
 	gl_error("\n*** Error: getline(): not interactive, use stdio.\n");
@@ -583,7 +586,7 @@ int  buflen;
 	      case '\014': gl_redraw();				/* ^L */
 		break;
 	      case '\016': 					/* ^N */
-		strncpy(gl_buf, hist_next(), BUF_SIZE-2);
+		strncpy(gl_buf, gl_hist_next(), BUF_SIZE-2);
 		gl_buf[BUF_SIZE-2] = '\0';
                 if (gl_in_hook)
 	            gl_in_hook(gl_buf);
@@ -592,7 +595,7 @@ int  buflen;
 	      case '\017': gl_overwrite = !gl_overwrite;       	/* ^O */
 		break;
 	      case '\020': 					/* ^P */
-		strncpy(gl_buf, hist_prev(),BUF_SIZE-2);
+		strncpy(gl_buf, gl_hist_prev(),BUF_SIZE-2);
 		gl_buf[BUF_SIZE-2] = '\0';
                 if (gl_in_hook)
 	            gl_in_hook(gl_buf);
@@ -613,14 +616,14 @@ int  buflen;
 		if (c == '[') {
 		    switch(c = gl_getc()) {
 		      case 'A':             			/* up */
-		        strncpy(gl_buf, hist_prev(),BUF_SIZE-2);
+		        strncpy(gl_buf, gl_hist_prev(), BUF_SIZE-2);
 		        gl_buf[BUF_SIZE-2] = '\0';
 		        if (gl_in_hook)
 	                    gl_in_hook(gl_buf);
 		        gl_fixup(gl_prompt, 0, BUF_SIZE);
 		        break;
 		      case 'B':                         	/* down */
-		        strncpy(gl_buf, hist_next(),BUF_SIZE-2);
+		        strncpy(gl_buf, gl_hist_next(), BUF_SIZE-2);
 		        gl_buf[BUF_SIZE-2] = '\0';
                         if (gl_in_hook)
 	                    gl_in_hook(gl_buf);
@@ -994,22 +997,24 @@ size_t (*func)();
 
 /******************* History stuff **************************************/
 
-#ifndef HIST_SIZE
-#define HIST_SIZE 100
-#endif
+static int	HIST_SIZE = 512;
+static int      hist_pos = 0, hist_last = 0, gl_beep = 1;
+static char    **hist_buf;
 
-static int      hist_pos = 0, hist_last = 0;
-static char    *hist_buf[HIST_SIZE];
-
-static void
-hist_init()
+void
+gl_hist_init(int size, int beep)
 {
     int i;
 
+    hist_buf = (char **) malloc(size * sizeof(char *));
+    if(!hist_buf)
+	gl_error("\n*** Error: gl_hist_init() failed on malloc\n");
     hist_buf[0] = "";
-    for (i=1; i < HIST_SIZE; i++)
+    for (i = 1; i < HIST_SIZE; i++)
 	hist_buf[i] = (char *)0;
     hist_pos = hist_last = 0;
+    gl_init_done = 0;
+    gl_beep = beep;
 }
 
 void
@@ -1018,16 +1023,17 @@ char *buf;
 {
     static char *prev = 0;
     char *p = buf;
-    int len;
 
     /* in case we call gl_histadd() before we call getline() */
     if (gl_init_done < 0) {		/* -1 only on startup */
-        hist_init();
+        gl_hist_init(512, 1);
         gl_init_done = 0;
     }
     while (*p == ' ' || *p == '\t' || *p == '\n') 
 	p++;
     if (*p) {
+#ifdef SKIP_DUPLICATES
+	int len;
 	len = strlen(buf);
 	if (strchr(p, '\n')) 	/* previously line already has NL stripped */
 	    len--;
@@ -1041,12 +1047,21 @@ char *buf;
             }
 	    hist_buf[hist_last] = "";
 	}
+#else
+	hist_buf[hist_last] = hist_save(buf);
+	prev = hist_buf[hist_last];
+	hist_last = (hist_last + 1) % HIST_SIZE;
+	if (hist_buf[hist_last] && *hist_buf[hist_last]) {
+	    free(hist_buf[hist_last]);
+	}
+	hist_buf[hist_last] = "";
+#endif
     }
     hist_pos = hist_last;
 }
 
-static char *
-hist_prev()
+char *
+gl_hist_prev()
 /* loads previous hist entry into input buffer, sticks on first */
 {
     char *p = 0;
@@ -1058,13 +1073,13 @@ hist_prev()
     } 
     if (p == 0) {
 	p = "";
-	gl_putc('\007');
+	if(gl_beep) gl_putc('\007');
     }
     return p;
 }
 
-static char *
-hist_next()
+char *
+gl_hist_next()
 /* loads next hist entry into input buffer, clears on last */
 {
     char *p = 0;
@@ -1075,7 +1090,7 @@ hist_next()
     } 
     if (p == 0) {
 	p = "";
-	gl_putc('\007');
+	if(gl_beep) gl_putc('\007');
     }
     return p;
 }
@@ -1131,7 +1146,7 @@ void gl_loadhistory(char *file)
 {
     FILE *fp;
     int i;
-    char buf[250];
+    char buf[1000];
 
     if (!file) return;
     fp = fopen(file, "r");
@@ -1139,7 +1154,7 @@ void gl_loadhistory(char *file)
        return;
     }
     for(i = 0;; i++) {
-	if(!fgets(buf, 250, fp)) break;
+	if(!fgets(buf, 1000, fp)) break;
 	gl_histadd(buf);
     }
     fclose(fp); 
@@ -1243,7 +1258,7 @@ int new_search;
 	gl_fixup(search_prompt, 0, 0);
     } else if (search_pos > 0) {
 	while (!found) {
-	    p = hist_prev();
+	    p = gl_hist_prev();
 	    if (*p == 0) {		/* not found, done looking */
 	       gl_buf[0] = 0;
 	       gl_fixup(search_prompt, 0, 0);
@@ -1278,7 +1293,7 @@ int new_search;
 	gl_fixup(search_prompt, 0, 0);
     } else if (search_pos > 0) {
 	while (!found) {
-	    p = hist_next();
+	    p = gl_hist_next();
 	    if (*p == 0) {		/* not found, done looking */
 	       gl_buf[0] = 0;
 	       gl_fixup(search_prompt, 0, 0);

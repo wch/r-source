@@ -38,7 +38,6 @@ struct structConsoleData {
     bitmap bm;
 
     int   cur_pos, max_pos, prompt_len;	/* editing */
-    xbuf  history;
 
     char  chbrk, modbrk;	/* hook for user's break */
     void  (*fbrk) ();
@@ -73,8 +72,6 @@ typedef struct structConsoleData *ConsoleData;
 #define cur_pos (p->cur_pos)
 #define max_pos (p->max_pos)
 #define prompt_len (p->prompt_len)
-#define HISTORY(i) (p->history->s[p->history->ns - i - 1])
-#define NHISTORY   (p->history->ns)
 
 #define WRITELINE(i, j) writeline(p, i, j)
 
@@ -119,9 +116,6 @@ rgb consolebg, consolefg, consoleuser, pagerhighlight;
 #define DIMLBUF 64*1024         /* console buffer size in chars */
 #define MLBUF   8*1024          /* console buffer size in lines */
 #define SLBUF   512             /* console buffer shift in lines */
-#define DIMHIST 16*1024         /* history buffer size in chars */
-#define MHIST   512             /* history buffer size in lines */
-#define SHIST   128             /* history buffer shift in lines */
 #define NKEYS   512		/* 8Kb paste buffer */
 #define TABSIZE 8
 

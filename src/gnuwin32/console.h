@@ -44,8 +44,6 @@ int  consolegetlazy(console c);
 void consoleflush(console c);
 void consoleprint(console c);
 void drawconsole(control c, rect r);
-void savehistory(control c, char *s);
-void readhistory(control c, char *s);
 
 extern int setWidthOnResize;
 int consolecols(console c);

@@ -379,10 +379,9 @@ void R_CleanUp(int saveact, int status, int runLast)
     closeAllHlpFiles();
     KillAllDevices();
     AllDevicesKilled = 1;
-    if (CharacterMode == RGui)
-	savehistory(RConsole, ".Rhistory");
-    if (R_Interactive && CharacterMode == RTerm)
-	gl_savehistory(".Rhistory");
+    if (CharacterMode == RGui || 
+	(R_Interactive && CharacterMode == RTerm))
+	gl_savehistory(R_HistoryFile);
     UnLoad_Unzip_Dll();
     UnLoad_Rbitmap_Dll();
     if (R_CollectWarnings && saveact != SA_SUICIDE
@@ -738,6 +737,18 @@ int cmdlineoptions(int ac, char **av)
         (!(EhiWakeUp = CreateEvent(NULL, FALSE, FALSE, NULL)) ||
 	 (_beginthread(ReaderThread, 0, NULL) == -1)))
       R_Suicide("impossible to create 'reader thread'; you must free some system resources");
+
+    if ((R_HistoryFile = getenv("R_HISTFILE")) == NULL)
+	R_HistoryFile = ".Rhistory";
+    R_HistorySize = 512;
+    if ((p = getenv("R_HISTSIZE"))) {
+	int value, ierr;
+	value = Decode2Long(p, &ierr);
+	if (ierr != 0 || value < 0)
+	    REprintf("WARNING: invalid R_HISTSIZE ignored;");
+	else
+	    R_HistorySize = value;
+    }
     return 0;
 }
 
