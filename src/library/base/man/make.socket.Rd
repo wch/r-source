@@ -39,6 +39,6 @@ daytime<-function(host="localhost"){
   read.socket(a)
 }
 \dontrun{daytime()}  ## only works if your computer runs this service
-daytime("chime.cac.washington.edu")
+\dontrun{daytime("chime.cac.washington.edu")}
 }
 \keyword{ ~keyword }%-- one or more ...
