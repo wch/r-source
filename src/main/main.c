@@ -648,10 +648,6 @@ void mainloop(void)
 {
     setup_Rmainloop();
     run_Rmainloop();
-    /* NO! Don't do that! It ends up in a longjmp for which the
-       setjmp is inside run_Rmainloop! -pd
-    end_Rmainloop();
-    */
 }
 
 /*this functionality now appears in 3

@@ -23,7 +23,7 @@
 # include <config.h>
 #endif
 
-int Rf_initialize_R(int ac, char **av); /* in system.c */
+int Rf_initialize_R(int ac, char **av); /* in ../unix/system.c */
 void setup_Rmainloop(void); /* in main.c */
 
 
@@ -44,7 +44,7 @@ void setup_Rmainloop(void); /* in main.c */
 
  Example:
 	 0) name of executable
-	 1) don't load the X11 graphics library
+	 1) don't load the X11 module
 	 2) don't show the banner at startup.
 
 
