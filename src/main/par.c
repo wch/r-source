@@ -27,71 +27,82 @@
  *
  *	"The horror, the horror ..."
  *		Marlon Brando in Apocalypse Now.
+ *
+ * Main functions:
+ *	do_par(.)	and
+ *	do_layout(.)	implement R's  par(.), layout()rely on
+ *
+ *	Specify(.)	[ par(what = value) ]
+ *	Specify2(.)	[ <highlevelplot>(what = value) ]
+ *	Query(.)	[ par(what) ]
  */
 
 #include "Defn.h"
 #include "Mathlib.h"
-#include "Graphics.h"
+#include "Graphics.h"/* ../include/Graphics.h :	 "GPar" structure + COMMENTS */
 
-static SEXP gcall;
+
+static SEXP gcall;/* par(.)'s call */
 
 SEXP LTYget(int);
 char *col2name(unsigned int);
 
 static void par_error(char *what)
 {
-	error("attempt to set invalid value for graphics parameter \"%s\".\n", what);
+ error("attempt to set invalid value for graphics parameter \"%s\".\n", what);
 }
 
 static void lengthCheck(char *what, SEXP v, int n)
 {
-	if (length(v) != n)
-		errorcall(gcall, "parameter \"%s\" has the wrong length\n", what);
+ if (length(v) != n)
+	errorcall(gcall, "parameter \"%s\" has the wrong length\n", what);
 }
 
 static void nonnegIntCheck(int x, char *s)
 {
-	if (x == NA_INTEGER || x < 0)
-		par_error(s);
+ if (x == NA_INTEGER || x < 0)
+	par_error(s);
 }
 
 static void posIntCheck(int x, char *s)
 {
-	if (x == NA_INTEGER || x <= 0)
-		par_error(s);
+ if (x == NA_INTEGER || x <= 0)
+	par_error(s);
 }
 
 static void posRealCheck(double x, char *s)
 {
-	if (!FINITE(x) || x <= 0)
-		par_error(s);
+ if (!FINITE(x) || x <= 0)
+	par_error(s);
 }
 
 static void nonnegRealCheck(double x, char *s)
 {
-	if (!FINITE(x) || x < 0)
-		par_error(s);
+ if (!FINITE(x) || x < 0)
+	par_error(s);
 }
 
 static void naRealCheck(double x, char *s)
 {
-	if (!FINITE(x))
-		par_error(s);
+ if (!FINITE(x))
+	par_error(s);
 }
 
 static void BoundsCheck(double x, double a, double b, char *s)
 {
-	if (!FINITE(x) || (FINITE(a) && x < a) || (FINITE(b) && x > b))
-		par_error(s);
+ if (!FINITE(x) || (FINITE(a) && x < a) || (FINITE(b) && x > b))
+	par_error(s);
 }
 
 
-/* when any one of the layout parameters (which can only be set */
-/* via par(...)) is modified, must call GReset() to update the */
-/* layout and the transformations between coordinate systems */
+/* when any one of the layout parameters (which can only be set via par(...))
+ * is modified, must call GReset()
+ * to update the layout and the transformations between coordinate systems
+ */
 
-/* If you ADD a NEW par then do NOT forget to update */
-/* the code in ../library/base/R/par.R */
+/* If you ADD a NEW par then do NOT forget to update
+ * the code in ../library/base/R/par.R
+ */
 
 static int Specify(char *what, SEXP value, DevDesc *dd)
 {
@@ -99,25 +110,21 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
     int ix=0;
 
     if (streql(what, "adj")) {
-	lengthCheck(what, value, 1);
-	x = asReal(value);
+	lengthCheck(what, value, 1);	x = asReal(value);
 	if (0.0 <= x && x <= 1.0)
 	    dd->dp.adj = dd->gp.adj = x;
 	else par_error(what);
     }
     else if (streql(what, "ann")) {
-	lengthCheck(what, value, 1);
-	ix = asInteger(value);
+	lengthCheck(what, value, 1);	ix = asInteger(value);
 	dd->dp.ann = dd->gp.ann = (ix != 0);
     }
     else if (streql(what, "ask")) {
-	lengthCheck(what, value, 1);
-	ix = asLogical(value);
+	lengthCheck(what, value, 1);	ix = asLogical(value);
 	dd->dp.ask = dd->gp.ask = (ix != 0);
     }
     else if (streql(what, "bg")) {
-	lengthCheck(what, value, 1);
-	ix = RGBpar(value, 0, dd);
+	lengthCheck(what, value, 1);	ix = RGBpar(value, 0, dd);
 	if (ix != NA_INTEGER) {
 	    dd->dp.bg = dd->gp.bg = ix;
 	    dd->dp.new = dd->gp.new = 0;
@@ -133,8 +140,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	}
     }
     else if (streql(what, "cex")) {
-	lengthCheck(what, value, 1);
-	x = asReal(value);
+	lengthCheck(what, value, 1);	x = asReal(value);
 	if (FINITE(x) && 0.0 < x) {
 	    dd->dp.cex = dd->gp.cex = 1.0;
 	    dd->dp.cexbase = dd->gp.cexbase = x;
@@ -583,8 +589,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	GReset(dd);
     }
     else if (streql(what, "ps")) {
-	lengthCheck(what, value, 1);
-	ix = asInteger(value);
+	lengthCheck(what, value, 1);	ix = asInteger(value);
 	if (ix != NA_INTEGER && ix >= 0)
 	    dd->dp.ps = dd->gp.ps = ix;
 	else par_error(what);
@@ -598,26 +603,25 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	else par_error(what);
     }
     else if (streql(what, "smo")) {
-	lengthCheck(what, value, 1);
-	ix = asInteger(value);
+	lengthCheck(what, value, 1);	ix = asInteger(value);
 	if (ix == NA_INTEGER || ix <= 0)
 	    par_error(what);
 	dd->dp.smo = dd->gp.smo = ix;
     }
     else if (streql(what, "srt")) {
-	lengthCheck(what, value, 1);
-	x = asReal(value);
+	lengthCheck(what, value, 1);	x = asReal(value);
 	if (FINITE(x))
 	    dd->dp.srt = dd->gp.srt = x;
 	else par_error(what);
     }
-	/* NOTE: tck and tcl must be treated in parallel. */
-	/* If one is NA the other must be non NA.  If tcl */
-	/* is NA then setting tck to NA will reset tck to */
-	/* its initial default value.  See also graphics.c */
+	/* NOTE: tck and tcl must be treated in parallel.
+	 * If one is NA, the other must be non NA.
+	 * If tcl is NA then setting tck to NA will reset tck to
+	 * its initial default value.
+	 * See also graphics.c
+	 */
     else if (streql(what, "tck")) {
-	lengthCheck(what, value, 1);
-	x = asReal(value);
+	lengthCheck(what, value, 1);	x = asReal(value);
 	dd->dp.tck = dd->gp.tck = x;
 	if (FINITE(x))
 	    dd->dp.tcl = dd->gp.tcl = NA_REAL;
@@ -625,8 +629,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	    dd->dp.tcl = dd->gp.tcl = -0.5;
     }
     else if (streql(what, "tcl")) {
-	lengthCheck(what, value, 1);
-	x = asReal(value);
+	lengthCheck(what, value, 1);	x = asReal(value);
 	dd->dp.tcl = dd->gp.tcl = x;
 	if (FINITE(x))
 	    dd->dp.tck = dd->gp.tck = NA_REAL;
@@ -634,8 +637,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	    dd->dp.tck = dd->gp.tck = 0.02;	/* S Default */
     }
     else if (streql(what, "tmag")) {
-	lengthCheck(what, value, 1);
-	x = asReal(value);
+	lengthCheck(what, value, 1);	x = asReal(value);
 	posRealCheck(x, what);
 	dd->dp.tmag = dd->gp.tmag = x;
     }
@@ -728,15 +730,13 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	else par_error(what);
     }
     else if (streql(what, "xlog")) {
-	lengthCheck(what, value, 1);
-	ix = asLogical(value);
+	lengthCheck(what, value, 1);	ix = asLogical(value);
 	if (ix == NA_LOGICAL)
 	    par_error(what);
 	dd->dp.xlog = dd->gp.xlog = (ix != 0);
     }
     else if (streql(what, "xpd")) {
-	lengthCheck(what, value, 1);
-	ix = asInteger(value);
+	lengthCheck(what, value, 1);	ix = asInteger(value);
 	if (ix == NA_INTEGER)
 	    par_error(what);
 	dd->dp.xpd = dd->gp.xpd = (ix != 0);
@@ -768,13 +768,12 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	else par_error(what);
     }
     else if (streql(what, "ylog")) {
-	lengthCheck(what, value, 1);
-	ix = asLogical(value);
+	lengthCheck(what, value, 1);	ix = asLogical(value);
 	if (ix == NA_LOGICAL)
 	    par_error(what);
 	dd->dp.ylog = dd->gp.ylog = (ix != 0);
     }
-    /* else errorcall(gcall, "parameter \"%s\" is not setable\n", what); */
+    else warningcall(gcall, "parameter \"%s\" can't be set\n", what);
     return 0;/* never used; to keep -Wall happy */
 }
 
@@ -785,20 +784,17 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	int ix=0;
 
 	if (streql(what, "adj")) {
-		lengthCheck(what, value, 1);
-		x = asReal(value);
+		lengthCheck(what, value, 1);	x = asReal(value);
 		if (0.0 <= x && x <= 1.0)
 			dd->gp.adj = x;
 		else par_error(what);
 	}
 	else if (streql(what, "ann")) {
-		lengthCheck(what, value, 1);
-		ix = asInteger(value);
+		lengthCheck(what, value, 1);	ix = asInteger(value);
 		dd->gp.ann = (ix != 0);
 	}
 	else if (streql(what, "bg")) {
-		lengthCheck(what, value, 1);
-		ix = RGBpar(value, 0, dd);
+		lengthCheck(what, value, 1);	ix = RGBpar(value, 0, dd);
 		if (ix != NA_INTEGER)
 			dd->gp.bg = ix;
 		else par_error(what);
@@ -812,8 +808,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 		}
 	}
 	else if (streql(what, "cex")) {
-		lengthCheck(what, value, 1);
-		x = asReal(value);
+		lengthCheck(what, value, 1);	x = asReal(value);
 		if (FINITE(x) && 0.0 < x) {
 			dd->gp.cex = x;
 			/* dd->gp.cexbase = x; */
@@ -821,120 +816,103 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 		else par_error(what);
 	}
 	else if (streql(what, "cex.main")) {
-		lengthCheck(what, value, 1);
-		x = asReal(value);
+		lengthCheck(what, value, 1);	x = asReal(value);
 		if (FINITE(x) && 0.0 < x)
 			dd->gp.cexmain = x;
 		else par_error(what);
 	}
 	else if (streql(what, "cex.lab")) {
-		lengthCheck(what, value, 1);
-		x = asReal(value);
+		lengthCheck(what, value, 1);	x = asReal(value);
 		if (FINITE(x) && 0.0 < x)
 			dd->gp.cexlab = x;
 		else par_error(what);
 	}
 	else if (streql(what, "cex.sub")) {
-		lengthCheck(what, value, 1);
-		x = asReal(value);
+		lengthCheck(what, value, 1);	x = asReal(value);
 		if (FINITE(x) && 0.0 < x)
 			dd->gp.cexsub = x;
 		else par_error(what);
 	}
 	else if (streql(what, "cex.axis")) {
-		lengthCheck(what, value, 1);
-		x = asReal(value);
+		lengthCheck(what, value, 1);	x = asReal(value);
 		if (x != NA_INTEGER && 0.0 < x)
 			dd->gp.cexaxis = x;
 		else par_error(what);
 	}
 	else if (streql(what, "col")) {
-		lengthCheck(what, value, 1);
-		ix = RGBpar(value, 0, dd);
+		lengthCheck(what, value, 1);	ix = RGBpar(value, 0, dd);
 		if (ix != NA_INTEGER)
 			dd->gp.col = ix;
 		else par_error(what);
 	}
 	else if (streql(what, "col.main")) {
-		lengthCheck(what, value, 1);
-		ix = RGBpar(value, 0, dd);
+		lengthCheck(what, value, 1);	ix = RGBpar(value, 0, dd);
 		if (ix != NA_INTEGER)
 			dd->gp.colmain = ix;
 		else par_error(what);
 	}
 	else if (streql(what, "col.lab")) {
-		lengthCheck(what, value, 1);
-		ix = RGBpar(value, 0, dd);
+		lengthCheck(what, value, 1);	ix = RGBpar(value, 0, dd);
 		if (ix != NA_INTEGER)
 			dd->gp.collab = ix;
 		else par_error(what);
 	}
 	else if (streql(what, "col.sub")) {
-		lengthCheck(what, value, 1);
-		ix = RGBpar(value, 0, dd);
+		lengthCheck(what, value, 1);	ix = RGBpar(value, 0, dd);
 		if (ix != NA_INTEGER)
 			dd->gp.colsub = ix;
 		else par_error(what);
 	}
 	else if (streql(what, "col.axis")) {
-		lengthCheck(what, value, 1);
-		ix = RGBpar(value, 0, dd);
+		lengthCheck(what, value, 1);	ix = RGBpar(value, 0, dd);
 		if (ix != NA_INTEGER)
 			dd->gp.colaxis = ix;
 		else par_error(what);
 	}
 	else if (streql(what, "crt")) {
-		lengthCheck(what, value, 1);
-		x = asReal(value);
+		lengthCheck(what, value, 1);	x = asReal(value);
 		if (FINITE(x))
 			dd->gp.crt = x;
 		else par_error(what);
 	}
 	else if (streql(what, "err")) {
-		lengthCheck(what, value, 1);
-		ix = asInteger(value);
+		lengthCheck(what, value, 1);	ix = asInteger(value);
 		if (ix == 0 || ix == -1)
 			dd->gp.err = ix;
 		else par_error(what);
 	}
 	else if (streql(what, "fg")) {
-		lengthCheck(what, value, 1);
-		ix = RGBpar(value, 0, dd);
+		lengthCheck(what, value, 1);	ix = RGBpar(value, 0, dd);
 		if (ix != NA_INTEGER)
 			dd->gp.fg = ix;
 		else par_error(what);
 	}
 	else if (streql(what, "font")) {
-		lengthCheck(what, value, 1);
-		ix = asInteger(value);
+		lengthCheck(what, value, 1);	ix = asInteger(value);
 		if (ix != NA_INTEGER && ix > 0)
 			dd->gp.font = ix;
 		else par_error(what);
 	}
 	else if (streql(what, "font.main")) {
-		lengthCheck(what, value, 1);
-		ix = asInteger(value);
+		lengthCheck(what, value, 1);	ix = asInteger(value);
 		if (ix != NA_INTEGER && ix > 0)
 			dd->gp.fontmain = ix;
 		else par_error(what);
 	}
 	else if (streql(what, "font.lab")) {
-		lengthCheck(what, value, 1);
-		ix = asInteger(value);
+		lengthCheck(what, value, 1);	ix = asInteger(value);
 		if (ix != NA_INTEGER && ix > 0)
 			dd->gp.fontlab = ix;
 		else par_error(what);
 	}
 	else if (streql(what, "font.sub")) {
-		lengthCheck(what, value, 1);
-		ix = asInteger(value);
+		lengthCheck(what, value, 1);	ix = asInteger(value);
 		if (ix != NA_INTEGER && ix > 0)
 			dd->gp.fontsub = ix;
 		else par_error(what);
 	}
 	else if (streql(what, "font.axis")) {
-		lengthCheck(what, value, 1);
-		ix = asInteger(value);
+		lengthCheck(what, value, 1);	ix = asInteger(value);
 		if (ix != NA_INTEGER && ix > 0)
 			dd->gp.fontaxis = ix;
 		else par_error(what);
@@ -950,19 +928,16 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 		dd->gp.lab[2] = INTEGER(value)[2];
 	}
 	else if (streql(what, "las")) {
-		lengthCheck(what, value, 1);
-		ix = asInteger(value);
+		lengthCheck(what, value, 1);	ix = asInteger(value);
 		if (0 <= ix && ix <= 2)
 			dd->gp.las = ix;
 		else par_error(what);
 	}
 	else if (streql(what, "lty")) {
-		lengthCheck(what, value, 1);
-		dd->gp.lty = LTYpar(value, 0);
+		lengthCheck(what, value, 1);	dd->gp.lty = LTYpar(value, 0);
 	}
 	else if (streql(what, "lwd")) {
-		lengthCheck(what, value, 1);
-		x = asReal(value);
+		lengthCheck(what, value, 1);	x = asReal(value);
 		if (FINITE(x) && 0.0 < x)
 			dd->gp.lwd = x;
 		else par_error(what);
@@ -978,8 +953,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 		dd->gp.mgp[2] = REAL(value)[2];
 	}
 	else if (streql(what, "mkh")) {
-		lengthCheck(what, value, 1);
-		x = asReal(value);
+		lengthCheck(what, value, 1);	x = asReal(value);
 		posRealCheck(x, what);
 		dd->gp.mkh = x;
 	}
@@ -998,36 +972,31 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 		dd->gp.pch = ix;
 	}
 	else if (streql(what, "smo")) {
-		lengthCheck(what, value, 1);
-		ix = asInteger(value);
+		lengthCheck(what, value, 1);	ix = asInteger(value);
 		if (ix == NA_INTEGER || ix <= 0)
 			par_error(what);
 		dd->gp.smo = ix;
 	}
 	else if (streql(what, "srt")) {
-		lengthCheck(what, value, 1);
-		x = asReal(value);
+		lengthCheck(what, value, 1);	x = asReal(value);
 		if (FINITE(x))
 			dd->gp.srt = x;
 		else par_error(what);
 	}
 	else if (streql(what, "tck")) {
-		lengthCheck(what, value, 1);
-		x = asReal(value);
+		lengthCheck(what, value, 1);	x = asReal(value);
 		if (FINITE(x))
 			dd->gp.tck = x;
 		else par_error(what);
 	}
 	else if (streql(what, "tcl")) {
-		lengthCheck(what, value, 1);
-		x = asReal(value);
+		lengthCheck(what, value, 1);	x = asReal(value);
 		if (FINITE(x))
 			dd->gp.tcl = x;
 		else par_error(what);
 	}
 	else if (streql(what, "tmag")) {
-		lengthCheck(what, value, 1);
-		x = asReal(value);
+		lengthCheck(what, value, 1);	x = asReal(value);
 		posRealCheck(x, what);
 		dd->gp.tmag = x;
 	}
@@ -1078,8 +1047,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 		else par_error(what);
 	}
 	else if (streql(what, "xpd")) {
-		lengthCheck(what, value, 1);
-		ix = asInteger(value);
+		lengthCheck(what, value, 1);	ix = asInteger(value);
 		if (ix == NA_INTEGER)
 			par_error(what);
 		dd->gp.xpd = (ix != 0);
@@ -1110,10 +1078,11 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 			dd->gp.yaxt = ix;
 		else par_error(what);
 	}
-	/* else errorcall(gcall, "parameter \"%s\" is not setable\n", what); */
-}
+	else warning("parameter \"%s\" couldn't be set in high-level plot() function\n",
+		     what);
+}/* end Specify2(.) */
 
-/* Do NOT forget to update  ../library/base/R/par if you  ADD a NEW  par !! */
+/* Do NOT forget to update  ../library/base/R/par.R if you  ADD a NEW  par !! */
 
 static SEXP Query(char *what, DevDesc *dd)
 {
