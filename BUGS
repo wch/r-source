@@ -163,6 +163,14 @@ Subject: get.hist.quote not connecting to yahoo
 From: alexg@trwim.com
 Date: Wed, 4 Jun 2003 13:51:46 +0200 (MET DST)
 ..That's not a bug, but there is one in get.hist.quote ...
+* PR# 3197 *
+Subject: split.AffyBatch
+From: johannes.freudenberg@imise.uni-leipzig.de
+Date: Thu, 5 Jun 2003 16:05:00 +0200 (MET DST)
+..about BioConductor package affy
+* PR# 3198 *
+From: "Johannes Freudenberg" <johannes.freudenberg@imise.uni-leipzig.de>
+..part of 3197
 
 Directory:  Analyses
 
@@ -682,11 +690,3 @@ Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
 Subject: sweave provoked segfault
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
 Date: Mon, 21 Apr 2003 17:01:53 -0400
-* PR# 3189 *
-Subject: (광고)제일편한대출제일싼이자로 받아드립니다        >>13492-060503465948036-06050121346487-0603212504send
-From: 13492-060503465948036-06050121346487-0603212504send@aijsoft.com
-Date: Wed, 4 Jun 2003 20:47:07 +0200 (MET DST)
-* PR# 3190 *
-Subject: RE: Your application
-From: "Taylor, Sam" <Sam.Taylor@chh.co.nz>
-Date: Thu, 5 Jun 2003 07:24:37 +1200 
