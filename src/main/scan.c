@@ -381,7 +381,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 	    filled = c;
 	    goto donefill;
 	}
-	if ((type == STRSXP || type == NILSXP) && strchr(d->quoteset, c)) {
+	if ((type == STRSXP || type == NILSXP) && Rf_strchr(d->quoteset, c)) {
 	    quote = c;
 	    while ((c = scanchar(TRUE, d)) != R_EOF && c != quote) {
 		if (m >= nbuf - 2) {
@@ -428,7 +428,7 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 			}
 		/* CSV style quoted string handling */
 		if ((type == STRSXP || type == NILSXP)
-		    && strchr(d->quoteset, c)) {
+		    && Rf_strchr(d->quoteset, c)) {
 		    quote = c;
 		inquote:
 		    while ((c = scanchar(TRUE, d)) != R_EOF && c != quote) {
@@ -1099,7 +1099,7 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    if (inquote && c == quote)
 		inquote = 0;
-	    else if (strchr(data.quoteset, c)) {
+	    else if (Rf_strchr(data.quoteset, c)) {
 		inquote = 1;
 		quote = c;
 	    }
@@ -1107,7 +1107,7 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 		nfields++;
 	}
 	else if (!isspace(c)) {
-	    if (strchr(data.quoteset, c)) {
+	    if (Rf_strchr(data.quoteset, c)) {
 		quote = c;
 		inquote = 1;
 		while ((c = scanchar(inquote, &data)) != quote) {
@@ -1513,7 +1513,7 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    error("cannot allocate buffer in readTableHead");
 	    }
 	    if(quote && c == quote) quote = 0;
-	    else if(!quote && !skip && strchr(data.quoteset, c)) quote = c;
+	    else if(!quote && !skip && Rf_strchr(data.quoteset, c)) quote = c;
 	    if(empty && !skip)
 		if(c != ' ' && c != '\t' && c != data.comchar) empty = FALSE;
 	    if(!quote && !skip && c == data.comchar) skip = TRUE;

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2005  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 
 /* <UTF8> 
    char here is mainly either ASCII or handled as a whole.
-   isBlankString is probably OK, but maybe could be improved.
+   isBlankString has been be improved.
 */
 
 
@@ -727,8 +727,18 @@ void UNIMPLEMENTED_TYPE(char *s, SEXP x)
 
 Rboolean isBlankString(char *s)
 {
-    while (*s)
-	if (!isspace((int)*s++)) return FALSE;
+#ifdef SUPPORT_MBCS
+    if(mbcslocale) {
+	wchar_t wc; int used; mbstate_t mb_st;
+	mbs_init(&mb_st);
+	while( (used = Mbrtowc(&wc, s, MB_CUR_MAX, &mb_st)) ) {
+	    if(!iswspace(wc)) return FALSE;
+	    s += used;
+	}
+    } else
+#endif
+	while (*s)
+	    if (!isspace((int)*s++)) return FALSE;
     return TRUE;
 }
 
@@ -957,10 +967,7 @@ SEXP do_getwd(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef R_GETCWD
     R_GETCWD(buf, PATH_MAX);
 #ifdef Win32
-    {
-	char *p;
-	for(p = buf; *p; p++) if(*p == '\\') *p = '/';
-    }
+    R_fixslash(buf);
 #endif
     rval = mkString(buf);
 #endif
@@ -1005,12 +1012,11 @@ SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    errorcall(call, "path too long");
 	strcpy (buf, p);
 #ifdef Win32
-	for (p = buf; *p != '\0'; p++)
-	    if (*p == '\\') *p = '/';
+	R_fixslash(buf);
 #endif
 	/* remove trailing file separator(s) */
 	while ( *(p = buf + strlen(buf) - 1) == fsp ) *p = '\0';
-	if ((p = strrchr(buf, fsp)))
+	if ((p = Rf_strrchr(buf, fsp)))
 	    p++;
 	else
 	    p = buf;
@@ -1040,22 +1046,21 @@ SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    errorcall(call, "path too long");
 	strcpy (buf, p);
 #ifdef Win32
-	for(p = buf; *p != '\0'; p++)
-	    if(*p == '\\') *p = '/';
+	R_fixslash(buf);
 #endif
 	/* remove trailing file separator(s) */
 	while ( *(p = buf + strlen(buf) - 1) == fsp  && p > buf
 #ifdef Win32
-		&& *(p-1) != ':'
+		&& (p > buf+2 || *(p-1) != ':')
 #endif
 	    ) *p = '\0';
-	p = strrchr(buf, fsp);
+	p = Rf_strrchr(buf, fsp);
 	if(p == NULL)
 	    strcpy(buf, ".");
 	else {
 	    while(p > buf && *p == fsp
 #ifdef Win32
-		  && *(p-1) != ':'
+		  && (p > buf+2 || *(p-1) != ':')
 #endif
 		) --p;
 	    p[1] = '\0';
@@ -1170,6 +1175,73 @@ void mbcsToLatin1(char *in, char *out)
 	else out[i] = (char) wbuff[i];
     }
     out[res] = '\0';
+}
+
+/* MBCS-aware versions of common comparisons. Only used for ASCII c */
+char *Rf_strchr(const char *s, int c)
+{
+    char *p = (char *)s;
+    mbstate_t mb_st;
+    int used;
+
+    if(!mbcslocale || utf8locale) return strchr(s, c);
+    mbs_init(&mb_st);
+    while( (used = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st)) ) {
+	if(*p == c) return p;
+	p += used;
+    }
+    return (char *)NULL;
+}
+
+char *Rf_strrchr(const char *s, int c)
+{
+    char *p = (char *)s, *plast = NULL;
+    mbstate_t mb_st;
+    int used;
+
+    if(!mbcslocale || utf8locale) return strrchr(s, c);
+    mbs_init(&mb_st);
+    while( (used = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st)) ) {
+	if(*p == c) plast = p;
+	p += used;
+    }
+    return plast;
+}
+#endif
+
+#ifdef Win32
+void R_fixslash(char *s)
+{
+    char *p = s;
+
+#ifdef SUPPORT_MBCS
+    if(mbcslocale) {
+	mbstate_t mb_st; int used;
+	mbs_init(&mb_st);
+	while(used = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st)) {
+	    if(*p == '\\') *p = '/';
+	    p += used;
+	}
+    } else
+#endif
+	for (; *p; p++) if (*p == '\\') *p = '/';
+}
+
+void R_fixbackslash(char *s)
+{
+    char *p = s;
+
+#ifdef SUPPORT_MBCS
+    if(mbcslocale) {
+	mbstate_t mb_st; int used;
+	mbs_init(&mb_st);
+	while(used = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st)) {
+	    if(*p == '/') *p = '\\';
+	    p += used;
+	}
+    } else
+#endif
+	for (; *p; p++) if (*p == '/') *p = '\\';
 }
 #endif
 

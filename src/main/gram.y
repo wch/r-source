@@ -39,11 +39,6 @@
 #include "Fileio.h"
 #include "Parse.h"
 
-#ifdef SUPPORT_UTF8
-# include <wchar.h>
-# include <wctype.h>
-#endif
-
 
 #define yyconst const
 
@@ -81,6 +76,46 @@ static int	EndOfFile = 0;
 static int	xxgetc();
 static int	xxungetc();
 static int 	xxcharcount, xxcharsave;
+
+#ifdef SUPPORT_MBCS
+# include <wchar.h>
+# include <wctype.h>
+
+static int mbcs_get_next(int c, wchar_t *wc)
+{
+    int i, res, clen = 1; char s[9];
+    mbstate_t mb_st;
+
+    s[0] = c;
+    if((unsigned int)c < 0x80) {
+	*wc = (wchar_t) c;
+	return 1;
+    }
+    if(utf8locale) {
+	clen = utf8clen(c);
+	for(i = 1; i < clen; i++) {
+	    s[i] = xxgetc();
+	    if(s[i] == R_EOF) error("EOF whilst reading MBCS char");
+	}
+	res = mbrtowc(wc, s, clen, NULL);
+	if(res == -1) error("invalid multibyte character in mbcs_get_next");
+    } else {
+	while(clen <= MB_CUR_MAX) {
+	    mbs_init(&mb_st);
+	    res = mbrtowc(wc, s, clen, &mb_st);
+	    if(res >= 0) break;
+	    if(res == -1) 
+		error("invalid multibyte character in mbcs_get_next");
+	    /* so res == -2 */
+	    c = xxgetc();
+	    if(c == R_EOF) error("EOF whilst reading MBCS char");
+	    s[clen++] = c;
+	} /* we've tried enough, so must be complete or invalid by now */
+    }
+    for(i = clen - 1; i > 0; i--) xxungetc(s[i]);
+    return clen;
+}
+#endif
 
 /* Handle function source */
 
@@ -299,9 +334,17 @@ cr	:					{ EatLines = 1; }
 static int (*ptr_getc)(void);
 static int (*ptr_ungetc)(int);
 
+/* Private pushback, since file ungetc only guarantees one byte.
+   We need up to one MBCS-worth */
+
+static int pushback[16];
+static unsigned int npush = 0;
+
 static int xxgetc(void)
 {
-    int c = ptr_getc();
+    int c;
+
+    if(npush) c = pushback[--npush]; else c = ptr_getc();
     if (c == EOF) {
         EndOfFile = 1;
         return R_EOF;
@@ -322,7 +365,10 @@ static int xxungetc(int c)
     if ( KeepSource && GenerateCode && FunctionLevel > 0 )
 	SourcePtr--;
     xxcharcount--;
-    return ptr_ungetc(c);
+/*    return ptr_ungetc(c); */
+    if(npush >= 16) return EOF;
+    pushback[npush++] = c;
+    return c;
 }
 
 static int xxvalue(SEXP v, int k)
@@ -1329,40 +1375,15 @@ static void ifpop(void)
 	*contextp-- = 0;
 }
 
+/* This is only called following ., so we only care if it is 
+   an ANSI digit or not */
 static int typeofnext(void)
 {
     int k, c;
-#ifdef SUPPORT_UTF8
-    int clen;
-#endif
 
     c = xxgetc();
-#ifdef SUPPORT_UTF8
-    if(utf8locale && (clen = utf8clen(c)) > 1) {
-	wchar_t wc; int i; char s[6];
-
-	s[0] = c; s[clen] = '\0';
-	for(i = 1; i < clen; i++) s[i] = xxgetc();
-	Mbrtowc(&wc, s, clen, NULL);
- 	if (iswdigit(wc))
-	    k = 1;
-	else if (iswalpha(wc) || c == '.')
-	    k = 2;
-	else
-	    k = 3;
-	/* <FIXME> is it clear multiple ungets are allowed? */
-	for(i = clen - 1; i > 0; i--) xxungetc(s[i]);   
-    } else
-#endif
-    {
-	if (isdigit(c))
-	    k = 1;
-	else if (isalpha(c) || c == '.')
-	    k = 2;
-	else
-	    k = 3;
-	xxungetc(c);
-    }
+    if (isdigit(c)) k = 1; else k = 2;
+    xxungetc(c);
     return k;
 }
 
@@ -1563,6 +1584,7 @@ static int NumericValue(int c)
     int seenexp = 0;
     DECLARE_YYTEXT_BUFP(yyp);
     YYTEXT_PUSH(c, yyp);
+    /* We don't care about other than ASCII digits */
     while (isdigit(c = xxgetc()) || c == '.' || c == 'e' || c == 'E') {
 	if (c == 'E' || c == 'e') {
 	    if (seenexp)
@@ -1733,8 +1755,9 @@ int isValidName(char *name)
 	if(used == 0) return 0;
 	if (wc != L'.' && !iswalpha(wc) ) return 0;
 	if (wc == L'.') {
-	    Mbrtowc(&wc, p, n, NULL);
-	    if(iswdigit(wc)) return 0;
+	    /* We don't care about other than ASCII digits */
+	    if(isdigit(*p)) return 0;
+	    /* Mbrtowc(&wc, p, n, NULL); if(iswdigit(wc)) return 0; */
 	}
 	while((used = Mbrtowc(&wc, p, n, NULL))) {
 	    if (!(iswalnum(wc) || wc == L'.' || wc == L'_')) break;
@@ -1764,28 +1787,21 @@ static int SymbolValue(int c)
 {
     int kw;
     DECLARE_YYTEXT_BUFP(yyp);
-#ifdef SUPPORT_UTF8
-    if(utf8locale) {
+#ifdef SUPPORT_MBCS
+    if(mbcslocale) {
+	wchar_t wc; int i, clen;
+	clen = utf8locale ? utf8clen(c) : mbcs_get_next(c, &wc);
 	while(1) {
-	    wchar_t wc; int i, clen; char s[6];
-	    clen = utf8clen(c);
+	    /* at this point we have seen one char, so push its bytes 
+	       and get one more */
 	    for(i = 0; i < clen; i++) {
 	        YYTEXT_PUSH(c, yyp);
 	        c = xxgetc();
             }
 	    if(c == R_EOF) break;
 	    if(c == '.' || c == '_') continue;
-	    /* FIXME add validity checks here */
-	    clen = utf8clen(c);
-	    if(clen > 1) {
-		s[0] = c; s[clen] = '\0';
-		for(i = 1; i < clen; i++) s[i] = xxgetc();
-		Mbrtowc(&wc, s, clen, NULL);
-		/* <FIXME> is it clear multiple ungets are allowed? */
-		for(i = clen - 1; i > 0; i--) xxungetc(s[i]);
-		if(!iswalnum(wc)) break;
-	    } else 
-		if(!isalnum(c)) break;
+	    clen = mbcs_get_next(c, &wc);
+	    if(!iswalnum(wc)) break;
 	}
     } else
 #endif
@@ -1819,9 +1835,9 @@ static int SymbolValue(int c)
 
 static int token()
 {
-    int c, kw;
-#ifdef SUPPORT_UTF8
-    wchar_t wc; int i, clen; char s[6];
+    int c;
+#ifdef SUPPORT_MBCS
+    wchar_t wc;
 #endif
 
     if (SavedToken) {
@@ -1841,25 +1857,13 @@ static int token()
     /* so we need to decide which it is and jump to  */
     /* the correct spot. */
 
-    if (c == '.') {
-	kw = typeofnext();
-	if (kw >= 2) goto symbol;
-    }
+    if (c == '.' && typeofnext() >= 2) goto symbol;
 
     /* literal numbers */
 
     if (c == '.') return NumericValue(c);
-#ifdef SUPPORT_UTF8
-    if(utf8locale && (clen = utf8clen(c)) > 1) {
-	s[0] = c; s[clen] = '\0';
-	for(i = 1; i < clen; i++) s[i] = xxgetc();
-	Mbrtowc(&wc, s, clen, NULL);
-	/* <FIXME> is it clear multiple ungets are allowed? */
-	for(i = clen - 1; i > 0; i--) xxungetc(s[i]);   
- 	if (iswdigit(wc)) return NumericValue(c);
-    } else
-#endif
-	if (isdigit(c)) return NumericValue(c);
+    /* We don't care about other than ASCII digits */
+    if (isdigit(c)) return NumericValue(c);
 
     /* literal strings */
 
@@ -1878,14 +1882,10 @@ static int token()
  symbol:
 
     if (c == '.') return SymbolValue(c);
-#ifdef SUPPORT_UTF8
-    if(utf8locale && (clen = utf8clen(c)) > 1) {
-	s[0] = c; s[clen] = '\0';
-	for(i = 1; i < clen; i++) s[i] = xxgetc();
-	Mbrtowc(&wc, s, clen, NULL);
-	/* <FIXME> is it clear multiple ungets are allowed? */
-	for(i = clen - 1; i > 0; i--) xxungetc(s[i]);   
- 	if (iswalpha(wc)) return SymbolValue(c);
+#ifdef SUPPORT_MBCS
+    if(mbcslocale) {
+	mbcs_get_next(c, &wc);
+	if (iswalpha(wc)) return SymbolValue(c);
     } else
 #endif
 	if (isalpha(c)) return SymbolValue(c);

@@ -52,7 +52,7 @@ static char *findterm(char *s)
     if(s[strlen(s) - 1] != '}') return "";
     s[strlen(s) - 1] = '\0';
     s += 2;
-    p = strchr(s, '-');
+    p = Rf_strchr(s, '-');
     if(!p) return "";
     q = p + 1; /* start of value */
     if(p - s > 1 && *(p-1) == ':') *(p-1) = '\0'; else *p = '\0';
@@ -115,7 +115,7 @@ static int process_Renviron(char *filename)
         sm[BUF_SIZE-1] = '\0';
 	s = rmspace(sm);
 	if(strlen(s) == 0 || s[0] == '#') continue;
-	if(!(p = strchr(s, '='))) {
+	if(!(p = Rf_strchr(s, '='))) {
 	    errs++;
 	    if(strlen(msg) < MSG_SIZE) {
 		strcat(msg, "\n      "); strcat(msg, s);

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2004  The R Development Core Team.
+ *  Copyright (C) 1998--2005  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -904,6 +904,15 @@ int utf8clen(char c);
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
 void mbcsToLatin1(char *in, char *out);
+char *Rf_strchr(const char *s, int c);
+char *Rf_strrchr(const char *s, int c);
+#else
+#define Rf_strchr(s, c) strchr(s, c)
+#define Rf_strrchr(s, c) strrchr(s, c)
+#endif
+#ifdef Win32
+void R_fixslash(char *s);
+void R_fixbackslash(char *s);
 #endif
 
 /* Macros for suspending interrupts */

@@ -161,8 +161,8 @@ SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 				error("Could not allocate memory for read.dcf");
 			    buflen = need;
 			}
-			strncpy(buf, line, strchr(line, ':')-line);
-			buf[strchr(line, ':')-line] = '\0';
+			strncpy(buf, line, Rf_strchr(line, ':')-line);
+			buf[Rf_strchr(line, ':')-line] = '\0';
 			SET_STRING_ELT(what, nwhat, mkChar(buf));
 			nwhat++;
 			/* lastm uses C indexing, hence nwhat-1 */
