@@ -412,7 +412,7 @@ function(file, text = NULL)
         lines <- Rd_pp(.read_Rd_lines_quietly(file))
     }
 
-    lines <- .Rd_iconv_if_necessary(lines)
+    lines <- .Rd_iconv_if_necessary(lines, check = TRUE)
     
     ## Get meta data (need to agree on what precisely these are), and
     ## remove the corresponding lines (assuming that these entries are
@@ -424,6 +424,10 @@ function(file, text = NULL)
              keywords = .get_Rd_metadata_from_Rd_lines(lines, "keyword"),
              doc_type = .get_Rd_metadata_from_Rd_lines(lines, "docType"),
              encoding = .get_Rd_metadata_from_Rd_lines(lines, "encoding"))
+    ## Use NA encoding meta-data to indicate that we re-encoded a file
+    ## not in ISO-8859 as Latin1.
+    if(identical(attr(lines, "encoding"), NA))
+        meta$encoding <- NA
     ## (Use the same regexp as in .get_Rd_metadata_from_Rd_lines().)
     i <- grep(paste("^[[:space:]]*\\\\",
                     "(alias|concept|keyword|docType|encoding)",
@@ -734,16 +738,37 @@ function(db)
 ### .Rd_iconv_if_necessary
 
 .Rd_iconv_if_necessary <-
-function(lines)
+function(lines, check = FALSE)
 {
     ## Recode if necessary (and possible).
     encoding <- .get_Rd_metadata_from_Rd_lines(lines, "encoding")
-    if(length(encoding) && (Sys.getlocale("LC_CTYPE") != "C")) {
-        encoding <- encoding[1]         # Just making sure ...
-        utils::iconv(lines, encoding, "")
+    if(length(encoding)) {
+        if(Sys.getlocale("LC_CTYPE") != "C") {
+            encoding <- encoding[1]     # Just making sure ...
+            lines <- utils::iconv(lines, encoding, "")
+        }
     }
-    else
-        lines
+    else if(check) {
+        ## No \encoding meta-data.
+        ## Determine whether we can assume Latin1.
+        raw_ub <- charToRaw("\x7f")
+        raw_lb <- charToRaw("\xa0")
+        if(!all(sapply(lines,
+                       function(c) {
+                           raw <- charToRaw(c)
+                           all(raw <= raw_ub | raw >= raw_lb)
+                       })))
+            encoding <- NA
+    }
+    if(any(is.na(nchar(lines, "c")))) {
+        ## Ouch, invalid in the current locale.
+        ## (Can only happen in a MBCS locale.)
+        ## Try re-encoding from Latin1.
+        ## Could this fail in a non-C locale?            
+        lines <- utils::iconv(lines, "latin1", "")
+    }
+    attr(lines, "encoding") <- encoding
+    lines
 }
 
 
