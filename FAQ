@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-2, 2000-07-09
+Version 1.1-3, 2000-07-12
 Kurt Hornik
 
 
@@ -466,8 +466,8 @@ include information on the system and version of R being used.  See *Note R
 Bugs:: for more details.
 
    Archives of the above three mailing lists are made available on the net
-in a monthly schedule via the `doc/mail/mail.html' file in CRAN.  An HTML
-archive of the lists are available via
+in a monthly schedule via the `doc/html/mail.html' file in CRAN.
+Searchable archives of the lists are available via
 `http://www.ens.gu.edu.au/robertk/R/'.
 
    The R Core Team can be reached at <r-core@lists.r-project.org> for
