@@ -21,7 +21,8 @@ read.table <-
 	      na.strings = "NA", colClasses = NA,
               nrows = -1, skip = 0,
               check.names = TRUE, fill = !blank.lines.skip,
-              strip.white = FALSE, blank.lines.skip = TRUE)
+              strip.white = FALSE, blank.lines.skip = TRUE,
+              comment.char = "#")
 {
     if(is.character(file)) {
         file <- file(file, "r")
@@ -36,7 +37,9 @@ read.table <-
 
     if(skip > 0) readLines(file, skip)
     ## read a few lines to determine header, no of cols.
-    lines <- readLines(file, 5)
+#    lines <- readLines(file, 5)
+    lines <- scan(file, what = "", nmax = 5, sep = "\n",
+                  blank.lines.skip = blank.lines.skip, quiet = TRUE)
     nlines <- length(lines)
     if(!nlines) {
         if(missing(col.names))
@@ -52,14 +55,18 @@ read.table <-
     pushBack(c(lines, lines), file)
     first <- scan(file, what = "", sep = sep, quote = quote,
                   nlines = 1, quiet = TRUE, skip = 0,
-                  strip.white = TRUE)
+                  strip.white = TRUE,
+                  blank.lines.skip = blank.lines.skip,
+                  comment.char = comment.char)
     col1 <- if(missing(col.names)) length(first) else length(col.names)
     col <- numeric(nlines - 1)
     for (i in seq(along=col))
         col[i] <- length(scan(file, what = "", sep = sep,
                               quote = quote,
                               nlines = 1, quiet = TRUE, skip = 0,
-                              strip.white = strip.white))
+                              strip.white = strip.white,
+                              blank.lines.skip = blank.lines.skip,
+                              comment.char = comment.char))
     cols <- max(col1, col)
 
     ##	basic column counting and header determination;
@@ -107,7 +114,8 @@ read.table <-
                  dec = dec, nmax = nrows, skip = 0,
 		 na.strings = na.strings, quiet = TRUE, fill = fill,
                  strip.white = strip.white,
-                 blank.lines.skip = blank.lines.skip, multi.line = FALSE)
+                 blank.lines.skip = blank.lines.skip, multi.line = FALSE,
+                 comment.char = comment.char)
 
     nlines <- length(data[[1]])
 

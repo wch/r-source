@@ -17,9 +17,9 @@ NEW FEATURES
         users.  All "array-like" packages can use a standard method for
         calculating subscripts.
 
-    o   new.env() is now internal and allows you to set hashing. Also,
-        parent.env() and parent.env<-() are included to provide direct access
-        to setting and retrieving environments.
+    o	new.env() is now internal and allows you to set hashing. Also,
+        parent.env() and parent.env<-() are included to provide direct
+        access to setting and retrieving environments.
 
     o	Function identical(), a fast and reliable way to test for exact
 	equality of two objects.
@@ -54,8 +54,8 @@ NEW FEATURES
     o	scan() allows unlimited (by R) lengths of input lines, instead
 	of a limit of 8190 chars.
 
-    o	Ops(), cbind(), diff() and na.omit() methods for time series objects
-	moved from package ts to package base.
+    o	Ops(), cbind(), diff() and na.omit() methods for time series
+	objects moved from package ts to package base.
 
     o   Started work on new package management system: package.status()
 	and friends.
@@ -85,12 +85,12 @@ NEW FEATURES
     o   The C routine type2symbol, similar to type2str, returns a symbol
         corresponding to the type supplied as an argument.
     
-    o   data.frame() now longer converts logical arguments to factors
+    o   data.frame() no longer converts logical arguments to factors
 	(following S4 rather than S3).  
 
     o   model.matrix() treats logical variables as a factors with 
 	levels c(FALSE, TRUE) (rather than 0-1 valued numerical
-	variables.)  This makes R compatible with all S versions.
+	variables).  This makes R compatible with all S versions.
 
     o   Modified `save' internals to improve performance when saving large
 	collections of code.
@@ -113,7 +113,7 @@ NEW FEATURES
 	devices (postscript, XFig, PDF, Windows metafile and printer)
 	that previously treated bg = "white" as transparent now have
 	"transparent" as the default and will actually print "white".
-	(NB: you may have bg="white" saved in .Postscript.options in
+	(NB: you may have bg = "white" saved in .Postscript.options in
 	your workspace.)
 
     o	Unix x11() devices can now have a canvas color set, which can
@@ -126,7 +126,7 @@ NEW FEATURES
     o	barplot() now respects an inline `cex.axis' argument and has a
 	separate `cex.names' argument so names and the numeric axis 
 	labels can be scaled separately.  Also, graphics parameters
-	intended for axix() such as `las' can now be used.
+	intended for axis() such as `las' can now be used.
 
     o   Three new primitive functions have been added to base:
         dataClass(), objWithClass(), and as.environment().  The first two
@@ -177,7 +177,7 @@ NEW FEATURES
 
     o   is.xxx reached through do_is are now generic
 
-    o   arrows() now allows length = 0 (and draws no arrows).
+    o   arrows() now allows length = 0 (and draws no arrowheads).
 
     o	The formula interface to mosaicplot() now allows a contingency
 	table as data argument.
@@ -188,10 +188,9 @@ NEW FEATURES
     o	Using lm/glm/... with `data' a matrix rather than a data frame
 	now gives a specific error message.
 
-    o	scan() and count.fields() have a new argument `comment.char',
-	default `#', that can be used to start comments on a line.
-	[read.table() will make proper use of this in due course: for
-	now do not use comments in the first few lines of a file.]
+    o	read.table(), scan() and count.fields() have a new argument
+	`comment.char', default `#', that can be used to start
+	comments on a line.
 
 
 

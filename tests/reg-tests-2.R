@@ -222,12 +222,12 @@ e # == .GlobalEnv (in R 1.3.[01]  but not (yet?!) in 1.4.0).
 
 oldCon <- options("contrasts")
 y <- rnorm(10)
-x <- rep(c(TRUE,FALSE), 5)
+x <- rep(c(TRUE, FALSE), 5)
 model.matrix(y ~ x)
 lm(y ~ x)
 DF <- data.frame(x, y)
 lm(y ~ x, data=DF)
-options(contrasts=c("contr.helmert", "contr.tratment"))
+options(contrasts=c("contr.helmert", "contr.poly"))
 model.matrix(y ~ x)
 lm(y ~ x, data=DF)
 z <- 1:10
@@ -247,3 +247,4 @@ detach("package:ts")
 as.numeric(as.character(NaN))
 as.numeric(as.character(Inf))
 ## were NA on Windows at least under 1.3.0.
+

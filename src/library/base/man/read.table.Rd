@@ -14,7 +14,8 @@ read.table(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
            row.names, col.names, as.is = FALSE, na.strings = "NA",
            colClasses = NA, nrows = -1,
            skip = 0, check.names = TRUE, fill = FALSE,
-           strip.white = FALSE, blank.lines.skip = TRUE)
+           strip.white = FALSE, blank.lines.skip = TRUE,
+           comment.char = "#")
 
 read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".",
          fill = TRUE, \dots)
@@ -118,6 +119,10 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
   \item{blank.lines.skip}{logical: if \code{TRUE} blank lines in the
     input are ignored.}
+  
+  \item{comment.char}{character: a character vector of length one
+    containing a single character or an empty string.  Use \code{""} to
+    turn off the interpretation of comments altogether.}
 
   \item{\dots}{Further arguments to \code{read.table}.}
 }
@@ -150,6 +155,11 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \code{read.delim2} are for reading delimited files, defaulting to the
   TAB character for the delimiter.  Notice that \code{header = TRUE} and
   \code{fill = TRUE} in these variants.
+
+  Comment characters are allowed unless \code{comment.char = ""}, and
+  complete comment lines are allowed provided \item{blank.lines.skip = TRUE}
+  However, comment lines prior to the header must have
+  the comment character in the first column.
 }
 \note{
   The columns referred to in \code{as.is} and \code{colClasses} include

@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-09-06)
+Version 1.4.0 Under development (unstable) (2001-09-14)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -501,7 +501,7 @@ NULL
 > f(structure(1,class = "bar"))
 NULL
 > e # == .GlobalEnv (in R 1.3.[01]  but not (yet?!) in 1.4.0).
-<environment: 0x8d4f280>
+<environment: d39958>
 > 
 > 
 > ## some tests that R supports logical variables in formula
@@ -510,7 +510,7 @@ NULL
 > 
 > oldCon <- options("contrasts")
 > y <- rnorm(10)
-> x <- rep(c(TRUE,FALSE), 5)
+> x <- rep(c(TRUE, FALSE), 5)
 > model.matrix(y ~ x)
    (Intercept) xTRUE
 1            1     1
@@ -548,7 +548,7 @@ Coefficients:
 (Intercept)        xTRUE  
      0.1230       0.3170  
 
-> options(contrasts=c("contr.helmert", "contr.tratment"))
+> options(contrasts=c("contr.helmert", "contr.poly"))
 > model.matrix(y ~ x)
    (Intercept) x1
 1            1  1
@@ -621,4 +621,5 @@ Frequency = 1
 > as.numeric(as.character(Inf))
 [1] Inf
 > ## were NA on Windows at least under 1.3.0.
+> 
 > 

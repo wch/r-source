@@ -60,4 +60,22 @@ unlink("foo7")
 # should be logical
 type.convert(character(0))
 
+# test of comments in data files
+cat("# a test file",
+    "# line 2",
+    "# line 3",
+    "#line 4",
+    "# line 5",
+    "## now the header",
+    " a b c",
+    "# some more comments",
+    "1 2 3",
+    "4 5 6# this is the second data row of the file",
+    "  # some more comments",
+    "7 8 9",
+    "# trailing comment\n",
+    file= "ex.data", sep="\n")
+read.table("ex.data", header = T)
+unlink("ex.data")
+
 ## end of tests
