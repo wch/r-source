@@ -622,7 +622,9 @@ Date: Mon, 14 Oct 2002 01:34:45 +0200 (MET DST)
 Subject:  Nesting of readline input 
 From: j.c.rougier@durham.ac.uk
 Date: Tue, 19 Nov 2002 14:24:41 GMT
-* PR# 2334 *
-Subject: mgcv fails to compile in R-1.6.1
-From: bjw34032@mh.uk.sbphrd.com
-Date: Fri, 29 Nov 2002 16:45:06 +0100 (MET)
+..Unix-specific bug.
+..apparently fixed in R-devel now
+* PR# 2335 *
+Subject: 最新國際行銷email名單  三千七百五十萬筆
+From: 521g5e1v110c@detemobil.de
+Date: 30 Nov 2002 21:11:39 +0800
