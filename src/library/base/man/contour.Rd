@@ -3,7 +3,9 @@
 \usage{
 contour(x=, y=, z, nlevels = 10,
         levels = pretty(range(z, na.rm = TRUE), nlevels),
-        labcex = 0, col = par("fg"), lty = par("lty"), add = FALSE)
+        labcex = 0,
+        xlim = range(x), ylim = range(y),
+        col = par("fg"), lty = par("lty"), add = FALSE)
 }
 \alias{contour}
 \arguments{
@@ -17,6 +19,7 @@ contour(x=, y=, z, nlevels = 10,
   \item{levels}{numeric vector of levels at which to draw contour
     lines.}
   \item{labcex}{\code{cex} for contour labelling. (not yet used)}
+  \item{xlim, ylim}{x- and y-limits}
   \item{col}{color for the lines drawn}
   \item{lty}{line type for the lines drawn}
   \item{add}{logical. if \code{TRUE}, add to a current plot.}
@@ -24,14 +27,22 @@ contour(x=, y=, z, nlevels = 10,
 \description{
   Draws contour lines for the desired levels.
   There is currently no documentation about the algorithm.
-  The source code is currently in
-  \emph{\$RHOME/src/library/main/plot3d.c}.
+  The source code is in \emph{\$RHOME/src/main/plot3d.c}.
 }
 \seealso{
   \code{\link{image}} and the graphics demo which can be invoked as
   \code{demo(graphics)}.
 }
 \examples{
+x <- -6:16 ; z <- outer(x, sqrt(abs(x)), FUN="/")
+op <- par(mfrow=c(2,2))
+contour(z=outer(x, x))
+  image(x,x, z)
+contour(x,x, z, col="pink", add=T)
+contour(x,x, z, ylim=c(1,6))
+contour(x,x, z, ylim=c(-6,6), nlev = 20, lty=2)
+par(op)
+
 ## Persian Rug Art:
 x <- y <- seq(-4*pi, 4*pi, len=27)
 r <- sqrt(outer(x^2, y^2, "+"))
