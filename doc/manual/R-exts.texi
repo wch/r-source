@@ -981,7 +981,8 @@ can be put in a @file{unix}, @file{windows} or @file{mac} subdirectory.
 @section Processing Rd format
 @cindex Processing Rd format
 
-Under UNIX versions of @R{} there are several commands to process Rd files.
+Under UNIX versions of @R{} there are several commands to process Rd
+files.
 
 @findex R CMD Rdconv
 Using @code{R CMD Rdconv} one can convert @R{} documentation format to
@@ -1016,8 +1017,11 @@ Finally, @code{R CMD Sd2Rd} converts @Sl{} version 3 documentation files
 (which use an extended Nroff format) to Rd format.  This is useful when
 porting a package orginally written for the @Sl{} system to @R{}.
 
-Use each of the above commands with the @option{--help} option to obtain
-usage information.
+The exact usage and a detailed list of available options for each of the
+above commands can be obtained by running @code{R CMD command --help},
+e.g., @code{R CMD Rdconv --help}. All available commands can be listed
+using @code{R --help}.
+
 
 @node System and foreign language interfaces, The R API, Writing R documentation, Top
 @chapter System and foreign language interfaces
