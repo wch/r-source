@@ -79,6 +79,11 @@ Date: Wed, 16 Jan 2002 14:15:21 +0800 (GMT-8)
 Subject:  typo and user-proofing in odesolve() 
 From: Ben Bolker <bolker@zoo.ufl.edu>
 Date: Fri, 1 Feb 2002 12:42:25 -0500
+* PR# 1361 *
+Subject: Matrix identification bug
+From: hyu@stats.uwo.ca
+Date: Tue, 5 Mar 2002 21:19:46 +0100 (MET)
+--seems to be about Matrix package, not solve
 
 Directory:  Analyses
 
@@ -225,10 +230,6 @@ Date: Thu, 3 Jan 2002 15:29:02 +0100 (MET)
 Subject: abline and log plots
 From: stephen@cogsci.ed.ac.uk
 Date: Sat, 5 Jan 2002 01:11:47 +0100 (MET)
-* PR# 1248 *
-Subject: piechart default colour
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 07 Jan 2002 18:54:02 +0100
 * PR# 1300 *
 Subject: FW: layout and piechart diameter problem
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
@@ -332,11 +333,6 @@ Date: Tue, 11 Dec 2001 17:34:07 -0500 (EST)
 Subject: Mishandling missing "..."
 From: David Brahm  <brahm@alum.mit.edu>
 Date: Mon, 7 Jan 2002 10:52:09 -0500
-* PR# 1267 *
-Subject: hashing NaN
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Wed, 16 Jan 2002 16:29:35 -0800 (PST)
---Patch put in R-devel for further testing.
 * PR# 1301 *
 Subject: incorrect handling of arrays of list elements
 From: =?iso-8859-1?Q?Jens=20Oehlschl=E4gel?= <joehl@web.de>
@@ -366,7 +362,10 @@ Date: Mon, 05 Nov 2001 10:05:27 -0500
 
 Directory:  Models
 
-none
+* PR# 1331 *
+Subject: Bug in glm.fit?
+From: Berwin Turlach <berwin@maths.uwa.edu.au>
+Date: Wed, 27 Feb 2002 16:15:24 +0800 (WST)
 
 Directory:  Startup
 
@@ -469,19 +468,23 @@ Date: Sat, 16 Feb 2002 01:35:20 +0100 (MET)
 Subject:  itemize/item crashes R CMD check 
 From: Ben Bolker <bolker@zoo.ufl.edu>
 Date: Tue, 26 Feb 2002 15:13:04 -0500
-* PR# 1331 *
-Subject: Bug in glm.fit?
-From: Berwin Turlach <berwin@maths.uwa.edu.au>
-Date: Wed, 27 Feb 2002 16:15:24 +0800 (WST)
-* PR# 1333 *
-Subject: Failed file("foo", "r") keeps file open?
-From: hb@maths.lth.se
-Date: Thu, 28 Feb 2002 17:20:02 +0100 (MET)
 * PR# 1356 *
 Subject: bessel_i
 From: martin.schlather@uni-bayreuth.de
 Date: Mon, 4 Mar 2002 09:04:50 +0100 (MET)
-* PR# 1361 *
-Subject: Matrix identification bug
-From: hyu@stats.uwo.ca
-Date: Tue, 5 Mar 2002 21:19:46 +0100 (MET)
+* PR# 1362 *
+Subject: Maritime Newsletter (Week 10)
+From: "MarineDigital Inc."<newsletter@marinedigital.com>
+Date: Fri, 8 Mar 2002 00:49:33 +0900
+* PR# 1363 *
+Subject: svd, La.svd
+From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
+Date: Thu, 07 Mar 2002 13:41:46 -0400
+* PR# 1364 *
+Subject: An introduction to R
+From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
+Date: Thu, 07 Mar 2002 16:02:05 -0400
+* PR# 1365 *
+Subject: Your password
+From: saikat <saikat@stat.wisc.edu>
+Date: Thu,  7 Mar 2002 23:06:07 +0100 (CET)
