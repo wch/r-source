@@ -9,8 +9,6 @@ top_builddir = ../../..
 subdir = src/nmath/standalone
 
 include $(top_builddir)/Makeconf
-.c.lo:
-	$(LIBTOOL) --mode=compile $(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o $@
 
 includedir = ${prefix}/include
 
@@ -60,13 +58,15 @@ Rexeclibdir_LIBRARIES = libRmath.a
 libRmath_a_SOURCES = $(SOURCES)
 libRmath_a_OBJECTS = $(OBJECTS)
 
+## <FIXME>
 ## Change to 'libRmath.la' when using libtool for shlibs.
 ## Remove when using automake ...
-libRmath_la = libRmath.la
+libRmath_la = libRmath$(DYLIB_EXT)
+## </FIXME>
 Rexeclibdir_LTLIBRARIES = $(libRmath_la)
 libRmath_la_SOURCES = $(SOURCES)
 libRmath_la_OBJECTS = $(OBJECTS:.o=.lo)
-libRmath_la_LDFLAGS = -release $(VERSION)
+libRmath_la_LDFLAGS =
 
 CLEANFILES = Makedeps *.d *.o *.lo test $(SOURCES)
 DISTCLEANFILES = Makefile $(Rexeclibdir_LIBRARIES) $(Rexeclibdir_LTLIBRARIES)
@@ -116,14 +116,14 @@ libRmath.a: $(libRmath_a_OBJECTS)
 	$(RANLIB) $@
 
 $(libRmath_la): $(libRmath_la_OBJECTS)
-	$(LIBTOOL) --mode=link $(DYLIB_LINK) -o $@ $(libRmath_la_LDFLAGS) $(libRmath_la_OBJECTS) -rpath $(libdir)
+	$(DYLIB_LINK) -o $@ $(libRmath_la_LDFLAGS) $(libRmath_la_OBJECTS)
 
 test: $(srcdir)/test.c
-	$(LIBTOOL) --mode=link $(CC) -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $(srcdir)/test.c \
+	$(CC) -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $(srcdir)/test.c \
 	  -L. -lRmath -lm
 
 install: installdirs install-header
-	@!(test -f $(libRmath_la)) || $(LIBTOOL) --mode=install install $(libRmath_la) $(libdir)/$(libRmath_la)
+	@!(test -f $(libRmath_la)) || $(SHELL) $(top_srcdir)/tools/copy-if-change $(libRmath_la) $(libdir)/$(libRmath_la)
 	@!(test -f libRmath.a) || $(SHELL) $(top_srcdir)/tools/copy-if-change libRmath.a $(libdir)/libRmath.a
 
 install-header:
@@ -136,7 +136,7 @@ installdirs:
 	@$(MKINSTALLDIRS) $(libdir)
 
 uninstall:
-	@rm -f $(includedir)/Rmath.h $(libdir)/libRmath.*
+	@rm -f $(includedir)/Rmath.h $(libdir)/$(libRmath_la) $(libdir)/libRmath.a
 
 mostlyclean: clean
 clean:
