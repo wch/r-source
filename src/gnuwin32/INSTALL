@@ -33,7 +33,7 @@ use our tool set, and make sure it is at the front of your path.
 
 To compile this version you need a recent version of the Mingw port of
 gcc from http://sourceforge.net/projects/mingw/.  You will need
-binutils, gcc-3.1, mingw-runtime-2.0 and w32api-1.4.tar.gz.
+binutils, gcc-3.1, mingw-runtime-2.0 and w32api-1.5.tar.gz.
 (Earlier versions may work, but mingw-runtime-2.0 is definitely needed.)
 
 No earlier Mingw compiler has been tested and support for using the
