@@ -54,8 +54,8 @@ install: all installdirs
 	@if test -x bin/R.gnome; then \
 	  $(INSTALL_PROGRAM) bin/R.gnome $(rhome)/bin; \
 	fi
-	@cat bin/R | sed "s@R_HOME=.*@R_HOME=$(rhome)@" > $(rhome)/bin/R
-	@cat bin/R | sed "s@R_HOME=.*@R_HOME=$(rhome)@" > $(bindir)/R
+	@cat bin/R | sed "s@R_HOME=.*@R_HOME=$(rhome)\}@" > $(rhome)/bin/R
+	@cat bin/R | sed "s@R_HOME=.*@R_HOME=$(rhome)\}@" > $(bindir)/R
 	@chmod 755 $(bindir)/R $(rhome)/bin/R
 	@for f in `ls bin/* | grep -v '^bin/R\**$$' \
                             | grep -v '^bin/R.X11\**$$' \
