@@ -905,7 +905,7 @@ static SEXP modqr_qy_real(SEXP Q, SEXP Bin, SEXP trans)
 static SEXP moddet_ge_real(SEXP Ain, SEXP logarithm)
 {
     int i, n, *Adims, info, *jpvt, sign, useLog;
-    double modulus;
+    double modulus = 0.0; /* -Wall */
     SEXP val, nm, A;
 
     if (!(isMatrix(Ain) && isReal(Ain)))
