@@ -3,7 +3,7 @@ function(..., list = character(0),
          package = .packages(), lib.loc = NULL,
          verbose = getOption("verbose"))
 {
-    sQuote <- function(s) paste("`", s, "'", sep = "")
+    sQuote <- function(s) paste("'", s, "'", sep = "")
 
     names <- c(as.character(substitute(list(...))[-1]), list)
     if(!missing(package))
@@ -20,8 +20,8 @@ function(..., list = character(0),
     paths <- unique(paths[file.exists(paths)])
 
     ## Find the directories with a 'data' subdirectory.
-    nodata <- !file.exists(file.path(paths, "data"))
-    nodata[!file.info(file.path(paths, "data"))$isdir] <- TRUE
+    nodata <- !(file.exists(file.path(paths, "data"))
+                & file.info(file.path(paths, "data"))$isdir)
     if(any(nodata)) {
         if(!missing(package) && (length(package) > 0)) {
             ## Warn about given packages which do not have a 'data'

@@ -98,14 +98,14 @@ pkgVignettes <- function(package, dir, lib.loc = NULL)
         if(missing(dir))
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
-        if(!file.exists(dir))
+        if(!(file.exists(dir) && file.info(dir)$isdir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
             ## maybe perform tilde expansion on @code{dir}
             docdir <- file.path(dirname(dir), basename(dir), "inst", "doc")
     }
     
-    if(!file.exists(docdir)) return(NULL)
+    if(!(file.exists(docdir) && file.info(docdir)$isdir)) return(NULL)
 
     exts <- outer(c("r", "s", "R", "S"), c("nw","tex"), paste, sep="")
     docs <- .listFilesWithExts(docdir, exts)

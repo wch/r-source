@@ -6,7 +6,7 @@ function(pattern, fields = c("alias", "title"),
          verbose = getOption("verbose"),
          rebuild = FALSE, agrep = NULL)
 {
-    sQuote <- function(s) paste("`", s, "'", sep = "")
+    sQuote <- function(s) paste("'", s, "'", sep = "")
 
     ### Argument handling.
     TABLE <- c("name", "alias", "title", "keyword")
@@ -93,7 +93,9 @@ function(pattern, fields = c("alias", "title"),
         if(nchar(dir) == 0) dir <- getwd()
         dir <- file.path(dir, ".R")
         dbfile <- file.path(dir, "help.db")
-        if((file.exists(dir) || dir.create(dir)) && (unlink(dbfile) == 0))
+        if(((file.exists(dir) && file.info(dir)$isdir)
+            || ((unlink(dir) == 0) && dir.create(dir)))
+           && (unlink(dbfile) == 0))
             save.db <- TRUE
         ## Create the help db
         db <- NULL
@@ -209,7 +211,7 @@ function(pattern, fields = c("alias", "title"),
 print.hsearch <-
 function(x, ...)
 {
-    sQuote <- function(s) paste("`", s, "'", sep = "")
+    sQuote <- function(s) paste("'", s, "'", sep = "")
     fields <- paste(x$fields, collapse = " or ")
     db <- x$matches
     if(NROW(db) > 0) {
