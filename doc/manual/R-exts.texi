@@ -5551,8 +5551,8 @@ Note that this memory will be freed on error or user interrupt
 (if allowed: @pxref{Allowing interrupts}).
 
 Note that although @var{n} is @code{long}, there are limits imposed by
-@R{}'s internal allocation.  These will only come into play on 64-bit
-systems, where the current limit for @var{n} is 8*(2^31 - 1).
+@R{}'s internal allocation mechanism.  These will only come into play on
+64-bit systems, where the current limit for @var{n} is just under 16Gb.
 
 @node User-controlled,  , Transient, Memory allocation
 @subsection User-controlled memory
