@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.20 2002/06/13 10:03:23 ripley Exp $
+### $Id: nls.R,v 1.20.2.1 2002/11/15 18:23:29 bates Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -614,7 +614,7 @@ logLik.nls <- function(object, REML = FALSE, ...)
         w <- rep(1, N)
     }
     val <-  -N * (log(2 * pi) + 1 - log(N) - sum(log(w)) + log(sum(w*res^2)))/2
-    attr(val, "df") <- length(object[["parameters"]]) + 1
+    attr(val, "df") <- length(coef(object))
     attr(val, "nobs") <- attr(val, "nall") <- N
     class(val) <- "logLik"
     val
