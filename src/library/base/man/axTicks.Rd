@@ -37,7 +37,7 @@ i.e. the \code{at} values which
   numeric vector of coordinate values at which axis tickmarks can be
   drawn.  By default, when only the first argument is specified,
   these values should be identical to those that
-  \code{\link{axis(side)}} would use or has used.
+  \code{\link{axis}(side)} would use or has used.
 }
 \seealso{\code{\link{axis}},\code{\link{par}}.}
 
