@@ -929,7 +929,7 @@ static void NHelpKeyIn(control w,int key)
     DevDesc *dd = (DevDesc *) getdata(w);
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
-    if (getkeystate() != CtrlKey)
+    if (ggetkeystate() != CtrlKey)
 	return;
     key = 'A' + key - 1;
     if (key == 'C')

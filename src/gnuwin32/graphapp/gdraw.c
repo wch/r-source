@@ -585,7 +585,7 @@ font gnewfont(drawing d, char *face, int style, int size, double rot)
 	obj->rect.height = tm.tmHeight;
 	obj->rect.x = tm.tmAscent - tm.tmInternalLeading;
 	obj->rect.y = tm.tmDescent;
-	SelectObject(dc, old);
+	SelectObject((HDC)d->handle, old);
     }
 
     return (font) obj;
