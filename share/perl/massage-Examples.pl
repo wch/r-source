@@ -50,32 +50,11 @@ print <<_EOF_;
 ###
 attach(NULL, name = "CheckExEnv")
 assign(".CheckExEnv", as.environment(2), pos = length(search())) # base
-## add some hooks to label plot pages, at least for base graphics
-.newplot.hook <- function()
-{
-    pp <- par(c("mfg","mfcol","oma","mar"))
-    if(all(pp\$mfg[1:2] == c(1, pp\$mfcol[2]))) {
-	outer <- (oma4 <- pp\$oma[4]) > 0; mar4 <- pp\$mar[4]
-	mtext(paste("help(", ..nameEx, ")"), side = 4,
-	      line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
-	      outer = outer, adj = 1, cex = .8, col = "orchid", las=3)
-    }
-}
-setHook("plot.new", .newplot.hook)
-setHook("persp", .newplot.hook)
-rm(.newplot.hook)
-## add some hooks to label plot pages for grid graphics
-.gridplot.hook <- function()
-{
-    pushViewport(viewport(width=unit(1, "npc") - unit(1, "lines"),
-			  x=0, just="left"))
-    grid.text(paste("help(", ..nameEx, ")"), 
-	      x=unit(1, "npc") + unit(0.5, "lines"),
-	      y=unit(0.8, "npc"), rot=90, 
-	      gp=gpar(col="orchid"))
-}
-setHook("grid.newpage", .gridplot.hook)
-rm(.gridplot.hook)
+## add some hooks to label plot pages for base and grid graphics
+setHook("plot.new", ".newplot.hook")
+setHook("persp", ".newplot.hook")
+setHook("grid.newpage", ".gridplot.hook")
+
 assign("cleanEx",
        function(env = .GlobalEnv) {
 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
