@@ -19,8 +19,9 @@ edit.int <- c("fix", "edit", "edit.data.frame", "edit.matrix",
               "edit.default", "vi",
               "emacs", "pico", "xemacs", "xedit")
 ## warning: readLines will work, but read all the rest of the script
+## warning: trace will load methods.
 misc.int <- c("browser", "bug.report", "menu", "repeat", "readLines",
-              "package.skeleton")
+              "package.skeleton", "trace", "recover")
 stop.list[["base"]] <-
     if(nchar(Sys.getenv("R_TESTLOTS"))) {## SEVERE TESTING, try almost ALL
 	c(edit.int, misc.int)
