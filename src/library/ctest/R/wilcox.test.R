@@ -265,10 +265,10 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 attr(cint, "conf.level") <- conf.level
                 wmean <- n.x*n.y/2
                 if(floor(wmean) != wmean)
-                    ESTIMATE <- mean(diffs[floor(wmean)],
-                                     diffs[ceiling(wmean)])
+                    ESTIMATE <- mean(c(diffs[floor(wmean)],
+                                       diffs[ceiling(wmean)]))
                 else 
-                    ESTIMATE <- mean(diffs[wmean-1], diffs[wmean+1])
+                    ESTIMATE <- mean(c(diffs[wmean-1], diffs[wmean+1]))
                 names(ESTIMATE) <- "difference in location"
             }
         }
