@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-57 2004-04-05
+Version 1.8-58 2004-04-06
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1452,6 +1452,9 @@ distributions of R.)
      Database Interface R driver for SQLite.  Embeds the SQLite database
      engine in R.
 
+*RScaLAPACK*
+     An interface to ScaLAPACK functions from R.
+
 *RSvgDevice*
      A graphics device for R that uses the new w3.org XML standard for
      Scalable Vector Graphics.
@@ -1470,6 +1473,11 @@ distributions of R.)
 
 *RmSQL*
      An interface between R and the mSQL database system.
+
+*Rmpi*
+     An interface (wrapper) to MPI (Message-Passing Interface) APIs.  It
+     also provides an interactive R slave environment in which distributed
+     statistical computing can be carried out.
 
 *Rwave*
      An environment for the time-frequency analysis of 1-D signals (and
@@ -1975,6 +1983,9 @@ distributions of R.)
      scaling each column by its SD, or scaling each column by its MAD).
      The finished classifier will consist of a classification tree with one
      such k-nn classifier in each leaf.
+
+*knncat*
+     Nearest-neighbor classification with categorical variables.
 
 *labstatR*
      Functions for the book "Laboratorio di statistica con R" by S. M.
@@ -2618,11 +2629,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *RPgSQL*
      Provides methods for accessing data stored in PostgreSQL tables.
-
-*Rmpi*
-     An interface (wrapper) to MPI (Message-Passing Interface) APIs.  It
-     also provides interactive R slave functionalities to make MPI
-     programming easier in R than in C(++) or FORTRAN.
 
 *dseplus*
      Extensions to *dse*, the Dynamic Systems Estimation multivariate time
