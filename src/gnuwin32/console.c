@@ -2183,6 +2183,7 @@ extern void de_mouseup(control c, int buttons, point xy);
 extern void de_closewin();
 extern void de_copy(control c);
 extern void de_paste(control c);
+extern void de_delete(control c);
 extern void de_autosize(control c);
 extern void de_sbf(control c, int pos);
 
@@ -2240,6 +2241,10 @@ static void depopupact(control m)
     /* use this to customize the menu */
 }
 
+menuitem de_mvw;
+extern void menudecellwidth(control m);
+
+
 dataeditor newdataeditor()
 {
     ConsoleData p;
@@ -2293,6 +2298,12 @@ dataeditor newdataeditor()
 /*    MCHECK(m = newmenuitem("-", 0, NULL));*/
     MCHECK(m = newmenuitem("Close", 0, declose));
     newmdimenu();
+    MCHECK(newmenu("Edit"));
+    MCHECK(m = newmenuitem("Copy  \tCTRL+C", 0, de_copy));
+    MCHECK(m = newmenuitem("Paste \tCTRL+V", 0, de_paste));
+    MCHECK(m = newmenuitem("Delete\tDEL", 0, de_delete));
+    MCHECK(m = newmenuitem("-", 0, NULL));
+    MCHECK(de_mvw = newmenuitem("Cell widths ...", 0, menudecellwidth));
     MCHECK(m = newmenu("Help"));
     MCHECK(newmenuitem("Data editor", 0, menudehelp));
  

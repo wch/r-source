@@ -157,6 +157,12 @@ de(\dots, Modes = NULL, Names = NULL)
   
   Control-L will refresh the display, recalculating field widths to fit
   the current entries.
+
+  In the default mode the column widths are chosen to fit the contents
+  of each column, with a default of 10 characters for empty columns.
+  you can specify fixed column widths by setting option
+  \code{de.cellwidth} to the required fixed width (in characters).
+  (set it to zero to return to variable widths).
 }
 \seealso{
   \code{\link{vi}}, \code{\link{edit}}: \code{edit} uses

@@ -46,7 +46,7 @@ extern int R_de_up;
 #ifndef min
 #define min(a, b) (((a)<(b))?(a):(b))
 #endif
-#define BOXW(x) (x<100?boxw[x]:box_w)
+#define BOXW(x) ((x<100 && nboxchars==0)?boxw[x]:box_w)
 
 #define FIELDWIDTH 10
 
@@ -83,7 +83,8 @@ static void printstring(char*, int, int, int, int);
 static void printelt(SEXP, int, int, int);
 void de_copy(control c);
 void de_paste(control c);
-
+void de_delete(control c);
+extern menuitem de_mvw;
 
 static SEXP inputlist;  /* each element is a vector for that row */
 static SEXP ssNA_STRING;
@@ -131,6 +132,7 @@ static field celledit;
 static int newcol;
 static int xmaxused, ymaxused;
 static int oldWIDTH=0, oldHEIGHT=0;
+static int nboxchars=0;
 
 
 char *demenuitems[20];
@@ -448,16 +450,18 @@ static char *get_col_name(int col)
 
 static int get_col_width(int col)
 {
-    int i, w = 0, w1;
+    int i, w = 0, w1, fw = FIELDWIDTH;
     char *strp;
     SEXP tmp;
+
+    if (nboxchars > 0) return nboxchars;
     if (col <= length(inputlist)) {
 	tmp = nthcdr(inputlist, col - 1);
-	if (tmp == R_NilValue) return FIELDWIDTH;
+	if (tmp == R_NilValue) return fw;
 	PrintDefaults(R_NilValue);
 	if (TAG(tmp) != R_NilValue)
 	    w = strlen(CHAR(PRINTNAME(TAG(tmp))));
-	else w = FIELDWIDTH;
+	else w = fw;
 	tmp = CAR(tmp);
 	PrintDefaults(R_NilValue);
 	for (i = 0; i < (int)LEVELS(tmp); i++) {
@@ -469,7 +473,7 @@ static int get_col_width(int col)
 	if(w < 8) w++;
 	return w;
     }
-    return FIELDWIDTH;
+    return fw;
 }
 
 typedef enum {UNKNOWNN, NUMERIC, CHARACTER} CellType;
@@ -1048,7 +1052,7 @@ void de_ctrlkeyin(control c, int key)
 	    clength--;
 	    bufp--;
 	    printstring(buf, clength, crow, ccol, 1);
-	} else bell();
+	} else de_delete(de);
 	break;
      case ENTER:
 	 advancerect(DOWN);
@@ -1265,7 +1269,10 @@ static int  initwin()
     if(!de) return 1;
     p = getdata(de);
 
-    box_w = FIELDWIDTH*FW + 8;
+    nboxchars = asInteger(GetOption(install("de.cellwidth"), R_GlobalEnv));
+    if (nboxchars == NA_INTEGER || nboxchars < 0) nboxchars = 0;
+    if (nboxchars > 0) check(de_mvw);
+    box_w = ((nboxchars >0)?nboxchars:FIELDWIDTH)*FW + 8;
     boxw[0] = 5*FW + 8;
     for(i = 1; i < 100; i++) boxw[i] = get_col_width(i)*FW + 8;
     box_h = FH + 4;
@@ -1314,7 +1321,7 @@ static int  initwin()
 
 /* Menus */
 
-static window wconf;
+static window wconf, devw;
 static radiobutton rb_num, rb_char;
 static label lwhat, lrb;
 static field varname;
@@ -1352,11 +1359,15 @@ static void popupclose(control c)
     TAG(tvec) = install(buf);
     hide(wconf);
     del(wconf);
-    addto(de);
-    /* drawwindow(); forced by redraw */
+//    addto(de);
 }
 
 void getscreenrect(control, rect *);
+
+static void nm_hit_key(window w, int key)
+{
+    if(key == '\n') popupclose(wconf);
+}
 
 static void de_popupmenu(int x_pos, int y_pos, int col)
 {
@@ -1368,7 +1379,7 @@ static void de_popupmenu(int x_pos, int y_pos, int col)
     getscreenrect(de, &r);
     wconf = newwindow("Variable editor",
 		      rect(x_pos + r.x-150, y_pos + r.y-50, 300, 100),
-		      Titlebar | Modal | Closebox);
+		      Titlebar | Closebox);
     setclose(wconf, popupclose);
     setbackground(wconf, LightGrey);
     lwhat = newlabel("variable name", rect(10, 20, 90, 20), AlignLeft);
@@ -1378,6 +1389,7 @@ static void de_popupmenu(int x_pos, int y_pos, int col)
     rb_char = newradiobutton("character", rect(180, 60 , 80, 20), NULL);
     isnumeric = (get_col_type(popupcol) == NUMERIC);
     if (isnumeric) check(rb_num); else check(rb_char);
+    setkeydown(wconf, nm_hit_key);
     show(wconf);
 }
 
@@ -1428,6 +1440,17 @@ void de_paste(control c)
 	bufp = buf + clength;
 	closerect();
     }
+    highlightrect();
+}
+
+void de_delete(control c)
+{
+    CellModified = 1;
+    buf[0] = '\0';
+    clength = -1;
+    bufp = buf + clength;
+    closerect();
+    highlightrect();
 }
 
 void de_autosize(control c)
@@ -1448,4 +1471,59 @@ void de_sbf(control c, int pos)
 	if(rowmin > ymaxused - nhigh + 2) rowmin = ymaxused - nhigh + 2;
     }
     drawwindow();
+}
+
+extern menuitem de_mvw;
+static checkbox varwidths;
+
+static void vw_close(control c)
+{
+    int x;
+    if (ischecked(varwidths)) x = 0;
+    else x = atoi(gettext(varname)); /* 0 if error */
+    if (x != nboxchars) {
+	nboxchars = x;
+	deredraw();
+    }
+    hide(devw);
+    del(devw);
+    if (nboxchars > 0) check(de_mvw);
+}
+
+static void vw_hit_key(window w, int key)
+{
+    if(key == '\n') vw_close(w);
+}
+
+static void vw_callback(control c)
+{
+    if (ischecked(varwidths)) disable(varname);
+    else enable(varname);
+}
+
+
+static void de_popup_vw()
+{
+    char blah[25];
+
+    devw = newwindow("Cell width(s)",
+		      rect(0, 0, 250, 60),
+		      Titlebar | Centered | Closebox);
+    setclose(devw, vw_close);
+    setbackground(devw, LightGrey);
+    lwhat = newlabel("Cell width", rect(10, 20, 70, 20), AlignLeft);
+    sprintf(blah, "%d", nboxchars);
+    varname = newfield(blah, rect(80, 20, 40, 20));
+    varwidths = newcheckbox("variable", rect(150, 20, 80, 20), vw_callback);
+    if (nboxchars == 0) {
+	check(varwidths);
+	disable(varname);
+    }
+    setkeydown(devw, vw_hit_key);
+    show(devw);
+}
+
+void menudecellwidth(control m)
+{
+    de_popup_vw();
 }

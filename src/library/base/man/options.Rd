@@ -139,6 +139,10 @@ getOption(x)
     Defaults to "internal" when the internal unzip DLL is used.
 #endif
   }
+  \item{de.cellwidth}{integer: the cell widths (number of  characters)
+    to be used in the data editor \code{\link{dataentry}}.  If this is
+    unset, 0, negative or \code{NA}, variable cell widths are used.}
+
   \item{x}{a character string holding one of the above option names.}
 }
 \description{

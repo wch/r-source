@@ -15,6 +15,7 @@ another front end. To build it
 	lib /def:R.exp /machine:ix86 /out:Rdll.lib
 	cl /MT /Ox /I..\..\include /I.. rtest.c Rdll.lib
 
+
 This provides an rterm-like test front end. The main loop is in the
 main program here: R_ReplDLLdo1() parses one line (up to ; or \n) and
 returns 1 if complete, 2 if incomplete as an R expression.
@@ -37,6 +38,10 @@ be as easy to generate a SIGINT directly from a GUI front end. For
 this to be useful you will want to set R_Interactive to be true, and
 you will need to use SETJMP to jump back to somewhere useful in your
 code.
+
+You will not (easily) be able to use Borland C++, as that uses leading
+underscores in its library functions, and R.dll is built without.
+
 
 
 A R proxy DLL
