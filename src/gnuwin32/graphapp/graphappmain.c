@@ -2,7 +2,7 @@
  * GraphApp - Cross-Platform Graphics Programming Library.
  *
  * File: graphappmain.c (original routines in init.c)
- * Platform: Windows  Version: 2.40  
+ * Platform: Windows  Version: 2.40
  *
  * Version: 1.00  Changes: Original version by Lachlan Patrick.
  * Version: 1.60  Changes: drawarc/fillarc(r,0,360) now encloses.
@@ -40,7 +40,7 @@ static void check_max_mem(int argc, char **argv)
     int ac = argc;
     char *p = NULL, **av = argv;
     long v;
-    
+
     while (--ac) {
 	++av;
 	if(strncmp(*av, "--max-mem-size", 14) == 0) {
@@ -58,7 +58,9 @@ static void check_max_mem(int argc, char **argv)
 		if((1000 * (double)v) > LONG_MAX) return;
 		v = 1000*v;
 	    }
+#ifdef LEA_MALLOC
 	    if (v > R_reserved_size) R_reserved_size = v;
+#endif
 	    return;
 	}
     }
@@ -74,7 +76,7 @@ static void check_max_mem(int argc, char **argv)
  */
 
 int PASCAL
-WinMain (HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CmdLine, 
+WinMain (HINSTANCE Instance, HINSTANCE PrevInstance, LPSTR CmdLine,
 	 int CmdShow)
 {
 #if (PASS_ARGS > 1) /* define argc, argv, environ */
