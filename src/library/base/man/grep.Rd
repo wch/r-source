@@ -120,6 +120,9 @@ txt <- c("The", "licenses", "for", "most", "software", "are",
    "free", "for", "all", "its", "users")
 ( i <- grep("[gu]", txt) ) # indices
 stopifnot( txt[i] == grep("[gu]", txt, value = TRUE) )
+
+## Note that is locales such as en_US this includes B as the the
+## collation order is aAbBcCdEe ...
 (ot <- sub("[b-e]",".", txt))
 txt[ot != gsub("[b-e]",".", txt)]#- gsub does "global" substitution
 
