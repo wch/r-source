@@ -63,6 +63,8 @@ BUG FIXES
 
     o	str(x) gives better output when x is of mode "(".
 
+    o	Lapack error messages corrected (PR#3494)
+
 
 
 		CHANGES IN R VERSION 1.7.1
