@@ -111,11 +111,6 @@ Directory:  Installation
 Subject: gnome-support problems
 From: olav@melvin.jordforsk.no
 Date: Fri, 10 Nov 2000 10:55:31 +0100 (MET)
-* PR# 697 *
-Subject: build errors in configure script
-From: flip@skidmore.edu
-Date: Mon, 16 Oct 2000 03:03:59 +0200 (MET DST)
---Mac OS X / Dylan lacks a -lm
 * PR# 597 *
 Subject: multiply defined symbols
 From: plucas@csd.abdn.ac.uk
@@ -278,10 +273,10 @@ none
 
 Directory:  incoming
 
-* PR# 761 *
-Subject:  Minor error in ?read.table 
-From: J.C.Rougier@durham.ac.uk
-Date: Thu, 7 Dec 2000 15:53:10 GMT
+* PR# 762 *
+Subject: nmath bug
+From: spoon <spoon@hilbert.maths.utas.edu.au>
+Date: Fri, 8 Dec 2000 18:29:22 +1100 (EST)
 * PR# 741 *
 Subject: match() is not correct for "close numerics"
 From: Martin Maechler <maechler@stat.math.ethz.ch>
