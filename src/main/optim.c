@@ -749,6 +749,9 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
 	case 3:
 	    Rprintf("Method: Beale Sorenson\n");
 	    break;
+
+	default:
+	    error("unknown type in CG method of optim");
 	}
     *fail = 0;
     cyclimit = n;
@@ -814,6 +817,9 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
 			G1 += g[i] * (g[i] - c[i]);
 			G2 += t[i] * (g[i] - c[i]);
 			break;
+
+		    default:
+			error("unknown type in CG method of optim");
 		    }
 		    c[i] = g[i];
 		}
