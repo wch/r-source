@@ -1,4 +1,4 @@
-\name{dyn.load}
+\name{dynload}
 \title{Foreign Function Interface}
 \usage{
 dyn.load(libname)

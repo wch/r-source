@@ -1,4 +1,4 @@
-\name{\%*\%}
+\name{matmult}
 \title{Matrix Multiplication}
 \usage{
 a\%*\%b
