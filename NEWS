@@ -9,6 +9,11 @@
 		CHANGES IN R VERSION 1.6.1
 
 
+NEW FEATURES
+
+    o   Added a few "trivial and obviously missing" functions to tcltk:
+        tkchooseDirectory, tkpopup, tkdialog, tkread 
+
 BUG FIXES
 
     o	hist(<datetime>, cex.axis = f)	now works for x-axis too.
@@ -39,6 +44,11 @@ BUG FIXES
     o   Sweave.sty was not installed to $R_HOME/share/texmf when
         builddir != srcdir 
 
+    o   a memory leak in deparsing was introduced when eliminating
+        static variables (thanks to Achim Zeileis for spotting this).
+
+    o   TclInterface.Rd incorrectly used \synopsis for \usage so that
+        the usage section wasn't output.
 
 
 		CHANGES IN R VERSION 1.6.0
