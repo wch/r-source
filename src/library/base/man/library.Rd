@@ -20,12 +20,13 @@ library.dynam(chname)
 \alias{library.dynam}
 \alias{provide}
 \alias{require}
-\alias{.lib.loc}
-\alias{.Library}
-\alias{.Provided}
+\alias{RLIBS}
 \alias{.Autoloaded}
 \alias{.First.lib}
-\alias{RLIBS}
+\alias{.Library}
+\alias{.Provided}
+\alias{.packages}
+\alias{.lib.loc}
 \arguments{
  \item{name, help}{\code{name} or character string giving the name of a
   package}
@@ -74,7 +75,7 @@ library.dynam(chname)
   \code{library.dynam()}. It is invoked after \code{\link{search()}} has
   been updated, so \code{pos.to.env(match("package:name"),search())}
   will return the environment in which the package is stored.
-  
+
   \code{library.dynam} loads the specified (shared) object file if it
   has not been loaded already.	It is designed to be used inside a
   package rather than at the command line.  The system-specific
@@ -82,7 +83,7 @@ library.dynam(chname)
   not be added.
 
   \code{.packages()} returns the ``base names'' of the currently attached
-  packages.
+  packages \emph{invisibly}.
 
   \code{.Autoloaded} contains the ``base names'' of the packages for
   which autoloading has been promised.
@@ -155,12 +156,13 @@ library.dynam(chname)
   \code{\link{objects}}, \code{\link{autoload}}.
 }
 \examples{
+print(.packages())	    # maybe just "base"
 library()		    # list all available packages
 library(lib = .Library)	    # list all packages in the default library
 library(help = eda)	    # documentation on package "eda"
 library(eda)		    # load package "eda"
 require(eda)		    # the same
+print(.packages())	    # "eda", too
 require(nonexistent)	    # FALSE
-
 }
 \keyword{data}
