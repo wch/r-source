@@ -1044,6 +1044,7 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
 	 int canvascolor)
 {
     /* if we have to bail out with "error", then must free(dd) and free(xd) */
+    /* That means the *caller*: the X11DeviceDriver code frees xd, for example */
 
     XEvent event;
     int iw, ih;
@@ -1094,8 +1095,10 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
     /* initialize the X11 device driver data structures. */
 
     if (!displayOpen) {
-	if ((display = XOpenDisplay(p)) == NULL)
+	if ((display = XOpenDisplay(p)) == NULL) {
+	    warning("unable to open connection to X11 display`%s'", p);
 	    return FALSE;
+	}
 	DisplayOpened = TRUE;
 	Rf_setX11Display(display, gamma_fac, colormodel, maxcube, TRUE);
 	displayOpen = TRUE;
@@ -1119,7 +1122,7 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
     xd->fg =  dd->dp.fg	 = R_RGB(0, 0, 0);
     xd->col = dd->dp.col = xd->fg;
     xd->canvas = canvascolor;
-    if(type == JPEG & !R_OPAQUE(xd->canvas)) {
+    if(type == JPEG && !R_OPAQUE(xd->canvas)) {
 	warning("jpeg() does not support transparency: using white bg");
 	xd->canvas = 0xffffff;
     }
@@ -1150,8 +1153,10 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
 		InputOutput,
 		DefaultVisual(display, screen),
 		CWEventMask | CWBackPixel | CWBorderPixel | CWBackingStore,
-		&attributes)) == 0)
+		&attributes)) == 0) {
+		warning("unable to create X11 window");
 		return FALSE;
+	    }
 	    
 	    XChangeProperty(display, xd->window, XA_WM_NAME, XA_STRING,
 			    8, PropModeReplace, 
@@ -1190,8 +1195,10 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
 	xd->windowHeight = ih = h;
 	if ((xd->window = XCreatePixmap(
 	    display, rootwin,
-	    iw, ih, DefaultDepth(display, screen))) == 0)
+	    iw, ih, DefaultDepth(display, screen))) == 0) {
+	    warning("unable to create pixmap");
 	    return FALSE;
+	}
 	/* Save the devDesc* with the window for event dispatching */
 	/* Is this needed? */
 	XSaveContext(display, xd->window, devPtrContext, (caddr_t) dd);

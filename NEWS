@@ -226,6 +226,9 @@ NEW FEATURES
 
     o	predict.ppr() now predicts on `newdata' containing NAs.
 
+    o	X11(), png() and jpeg() now give informative warnings if 
+	they fail to open the device.
+
 
 
 BUG FIXES
@@ -265,6 +268,11 @@ BUG FIXES
 
     o	cor(*, use = "all.obs") <= 1 is now guaranteed which ensures
 	that sqrt(1 - r^2) is always ok in cor.test(). (PR#1099)
+
+    o	anova.glm() had a missing drop=FALSE and so failed for some
+	intercept-less models.
+
+
 
 
 	**************************************************

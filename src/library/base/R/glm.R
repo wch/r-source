@@ -381,7 +381,7 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
 	    ## explanatory variables up to i are kept in the model
 	    ## use method from glm to find residual deviance
 	    ## and df for each sequential fit
-	    fit <- method(x=x[, varseq <= i],
+	    fit <- method(x=x[, varseq <= i, drop = FALSE],
 			  y=object$y,
 			  weights=object$prior.weights,
 			  start	 =object$start,
