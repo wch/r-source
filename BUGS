@@ -171,19 +171,6 @@ Date: Wed, 1 Sep 1999 11:58:51 +0200 (MET DST)
 
 Directory:  Low-level
 
-* PR# 101 *
-Subject: Re: [R] Re: R-0.63.2 for Windows - some comments
-From: Guido Masarotto <guido@hal.stat.unipd.it>
-Date: Fri, 22 Jan 1999 12:40:26 +0100
---This is really about fixed buffer sizes in printutils.c
---Does anyone know how to compute the size of a print statement? vsnprintf? 
-* PR# 135 *
-Subject: summary() of lm() problem
-From: Simon Fear <fears@roycastle.liv.ac.uk>
-Date: Tue, 9 Mar 1999 13:18:37 -0000 
---lm (?) AND Windows problem;  Win solved (fudged) for 0.63.3
---
---Another low-level buffer-size problem
 * PR# 197 *
 Subject: glm crash
 From: Cor en Aylin <Cor.Berrevoets@gironet.nl>
@@ -252,6 +239,13 @@ Date: Mon, 12 Oct 1998 09:43:51 +0200 (MET DST)
 Subject: R-0.63.0
 From: Rashid Nassar <rnassar@acpub.duke.edu>
 Date: Fri, 11 Dec 1998 23:20:08 -0500 (EST)
+* PR# 410 *
+Subject: Bugs and comments.
+From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
+Date: Wed, 2 Feb 2000 13:41:50 +0100 (MET)
+--1) is fixed for 0.99.0
+--2) Use ctrl+arrows, as documented: rw0990 has a horizontal scrollbar
+--3) ?
 
 Directory:  Windows
 
@@ -259,11 +253,6 @@ none
 
 Directory:  incoming
 
-* PR# 385 *
-Subject: Apply dimnames
-From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
-Date: Wed, 22 Dec 1999 11:22:27 +0000 (GMT)
---(+ patch proposal)
 * PR# 391 *
 Subject: Segfault in dataentry()
 From: Peter Dalgaard BSA <p.dalgaard@pubhealth.ku.dk>
@@ -276,10 +265,6 @@ Date: Tue, 4 Jan 2000 10:31:53 +0100
 Subject: a +1 shift overlaying lines/points on a boxplot
 From: acuster@nature.berkeley.edu
 Date: Tue, 11 Jan 2000 02:53:56 +0100 (MET)
-* PR# 405 *
-Subject: error in dweibull
-From: setzer.woodrow@epa.gov
-Date: Thu, 27 Jan 2000 16:37:06 +0100 (MET)
 * PR# 406 *
 Subject: handling of dimension-attribute in density
 From: polzehl@wias-berlin.de
@@ -292,21 +277,6 @@ Date: Thu, 27 Jan 2000 18:47:38 +0100
 Subject: convolution bug
 From: wsimpson@gcal.ac.uk
 Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
-* PR# 409 *
-Subject: Segmentation fault in recursion, 0.90.1
-From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
-Date: Tue, 1 Feb 2000 12:12:41 +0000 (GMT)
-* PR# 410 *
-Subject: Bugs and comments.
-From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
-Date: Wed, 2 Feb 2000 13:41:50 +0100 (MET)
-* PR# 411 *
-Subject: constrained optimiser doesn't obey constraints 
-Subject: constrained optimiser doesn't obey constraints
-From: Thomas Lumley <thomas@biostat.washington.edu>
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Fri, 4 Feb 2000 16:45:52 +0000 (GMT)
-Date: Fri, 4 Feb 2000 01:58:44 +0000 (GMT)
 * PR# 412 *
 Subject: anomalies with call objects
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
