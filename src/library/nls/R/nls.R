@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.8.4.1 2001/01/08 22:26:33 bates Exp $
+### $Id: nls.R,v 1.8.4.2 2001/03/22 12:54:19 maechler Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -22,6 +22,7 @@
 ### Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
 ### MA 02111-1307, USA
 
+### Force loading of the nls dynamic library in R
 .First.lib <- function(lib, pkg) library.dynam( "nls", pkg, lib )
 
 numericDeriv <- function(expr, theta, rho = parent.frame()) {
@@ -56,9 +57,9 @@ nlsModel.plinear <- function( form, data, start ) {
     storage.mode( lhs ) <- "double"
     rhs <- eval( form[[3]], envir = env )
     storage.mode( rhs ) <- "double"
-    p1 <- if( is.matrix( rhs ) ) { ncol( rhs ) } else { 1 }
+    p1 <- if( is.matrix(rhs) ) { ncol(rhs) } else { 1 }
     p <- p1 + p2
-    n <- length( lhs )
+    n <- length(lhs)
     fac <- ( n -  p )/p
     cc <- QR.B <- NA
     useParams <- rep(TRUE, p2)
@@ -371,8 +372,7 @@ nlsModel <- function( form, data, start ) {
            getPars = function() getPars(),
            getAllPars = function() getPars(),
            getEnv = function() env,
-           trace = function() cat( format( dev ),": ", format( getPars() ),
-             "\n"),
+           trace = function() cat( format(dev),": ", format( getPars() ), "\n"),
            Rmat = function() qr.R( QR ),
            predict = function(newdata = list(), qr = FALSE)
            {
@@ -465,7 +465,6 @@ summary.nls <- function (object, ...)
     p1 <- 1:p
     r <- resid(z)
     f <- fitted(z)
-    w <- weights(z)
     R <- z$m$Rmat()
     w <- weights(z)
     if (!is.null(w)) {
@@ -540,10 +539,6 @@ predict.nls <-
     if (missing(newdata)) return(as.vector(fitted(object)))
     object$m$predict(newdata)
 }
-
-### Force loading of the nls dynamic library in R
-.First.lib <- function(lib, pkg) library.dynam( "nls", pkg, lib )
-
 
 fitted.nls <-
   function(object, ...)
