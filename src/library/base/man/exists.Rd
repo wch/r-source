@@ -15,11 +15,14 @@ exists(x, where = NULL, envir = parent.frame(),
 \description{
   Search for an \R object of the given name on the search path.
 }
+\value{
+  Logical, true if and only if the object is found on the search path.
+}
 \details{
   This function looks to see if the name \code{x} has a value bound to it.
   If \code{inherits} is \code{TRUE} and a value is not found for \code{x},
   then the parent frames of \code{envir} are searched until the name
-  \code{x} is encountered. \bold{Warning:} This is the default behaviour
+  \code{x} is encountered.  \bold{Warning:} This is the default behaviour
   for \R but not for S.
 
   If \code{mode} is specified then only objects of that mode are sought.
