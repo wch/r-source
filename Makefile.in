@@ -65,7 +65,8 @@ install: all installdirs
 	  $(INSTALL_DATA) $${f} $(rhome)/include; \
 	done
 	@echo "Installing library ..."
-	@cd library; $(TAR) cf - [a-z]* | (cd $(rhome)/library; tar xf -)
+	@cd library; \
+	  $(TAR) cf - [a-z]* | (cd $(rhome)/library; $(TAR) xf -)
 	@echo "  Building help index ..."
 	@(cd $(rhome)/library; cat */TITLE > LibIndex 2> /dev/null)
 	@echo "  Building HTML index ..."
@@ -80,7 +81,7 @@ install-strip:
 uninstall:
 	@echo "Uninstalling library ..."
 	@(cd $(rhome)/library; \
-	  for p in base eda modreg mva stepfun; do rm -rf $${p}; done)
+	  for p in base eda lqs modreg mva stepfun; do rm -rf $${p}; done)
 	@echo "  Rebuilding help index ..."
 	@(cd $(rhome)/library; cat */TITLE > LibIndex 2> /dev/null)
 	@echo "  Rebuilding HTML index ..."
