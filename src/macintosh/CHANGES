@@ -8,7 +8,7 @@ rm140
   .Renviron can be still used to simulate the Environment
   for the Sys.getenv() call.
 * Added the item "Link Packages Help" to the "Help" menu.
-* Fixed a big that leaves help menu items ghosted after
+* Fixed a bug that leaves help menu items ghosted after
   using them.
 * Some MRC Apple's Compiler specific fixing.
 * Fixed problems with current working directory in different
@@ -24,8 +24,8 @@ rm140
 * This version of R is slower at startup but faster than
   then previous release (by a factor of 10%) in calculations.
 * The initial window at startup has been suppressed in this
-  in the hope to provide am applescript analogous to pass
-  initial arguments to R.
+  release in the hope to provide am applescript analogous to 
+  pass initial arguments to R.
 * The about box now reports informations on the current
   release of R
 * Added the zlib capability so now R can manage gzipped 
