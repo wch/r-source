@@ -485,8 +485,16 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 	n <- nrows
     p <- length(jseq)
     m <- length(value)
-    value <- as.data.frame(value)
-    dimv <- dim(value)
+## careful, as.data.frame turns things into factors.
+##    value <- as.data.frame(value)
+    if(!is.list(value) && (missing(j) || !missing(i))) { # [i, ] or [i,j]
+        value <- matrix(value, n, p)
+        dimv <- c(n, p)
+        value <- split(value, col(value))
+    } else {
+        value <- as.data.frame(value)
+        dimv <- dim(value)
+    }
     nrowv <- dimv[[1]]
     if(nrowv < n) {
 	if(n %% nrowv == 0)
