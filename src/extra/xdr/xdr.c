@@ -60,7 +60,7 @@ static char sccsid[] = "@(#)xdr.c 1.35 87/08/12";
 #include <rpc/xdr.h>
 
 /* R-specific */
-#define fprintf(a, b) Rprintf(b)
+#define fprintf(a, b) REprintf(b)
 
 
 /*
