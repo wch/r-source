@@ -14,10 +14,11 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
 ## subdirectories of R_HOME/share
-SUBDIRS = perl
+SUBDIRS = glade perl sh
 ## subdirectories of R_HOME/share/perl
 SUBDIRS_PERL = R Text
 
+GNOME_IF_FILES = @GNOME_IF_FILES@
 
 all: Makefile R
 
@@ -34,17 +35,24 @@ R:
 docs:
 
 install: install-message installdirs install-sources
-
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/share
+	@if test -n "$(GNOME_IF_FILES)"; then \
+	  $(MKINSTALLDIRS) $(rhome)/share/glade; \
+	fi
 	@$(MKINSTALLDIRS) $(rhome)/share/perl
 	@for d in $(SUBDIRS_PERL); do \
 	  $(MKINSTALLDIRS) $(rhome)/share/perl/$${d}; \
 	done
-
+	@$(MKINSTALLDIRS) $(rhome)/share/sh
 install-message:
 	@echo "installing share ..."
 install-sources: installdirs
+	@if test -n "$(GNOME_IF_FILES)"; then \
+	  for f in $(srcdir)/glade/*.glade; do \
+	    $(INSTALL_DATA) $${f} $(rhome)/share/glade; \
+	  done; \
+	fi
 	@for d in $(SUBDIRS_PERL); do \
 	  for f in $(srcdir)/perl/$${d}/*.pm; do \
 	    $(INSTALL_DATA) $${f} $(rhome)/share/perl/$${d}; \
@@ -53,7 +61,11 @@ install-sources: installdirs
 	@for f in $(srcdir)/perl/*.pl; do \
 	  $(INSTALL_DATA) $${f} $(rhome)/share/perl; \
 	done
+	@for f in $(srcdir)/sh/*.sh; do \
+	  $(INSTALL_DATA) $${f} $(rhome)/share/sh; \
+	done
 install-strip: install
+
 uninstall:
 	@echo "uninstalling share ..."
 	@rm -rf $(rhome)/share
