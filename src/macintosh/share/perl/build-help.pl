@@ -24,7 +24,7 @@ use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
 
-my $revision = ' $Revision: 1.2 $ ';
+my $revision = ' $Revision: 1.3 $ ';
 my $version;
 my $name;
 
@@ -40,16 +40,13 @@ GetOptions (@knownoptions) || usage();
 
 $OSdir ="mac";
 
-$sep = "/";
-$updir = "/..";
-$curdir = ".";
 
-if($OSdir eq "mac"){
- $sep = ":";
- $updir = "::";
- $curdir = ":";
- }
- 
+if($OSdir eq "mac") {
+    $sep = ":"; $updir = "::";  $curdir = ":";
+} else {
+    $sep = "/";	$updir = "/.."; $curdir = ".";
+}
+
 $dir_mod = 0755;#- Permission ('mode') of newly created directories.
 
 if($opt_dosnames){$HTML="htm";} else{$HTML="html";}
@@ -74,10 +71,10 @@ print STDERR "Current directory (cwd): `$current'\n" if $opt_debug;
 # exit
 
 if($opt_htmllists){
-    build_htmlpkglist("$R_HOME$sep"."library");
+    build_htmlpkglist("$R_HOME${sep}library");
 
-    %anindex = read_anindex("$R_HOME$sep"."library");
-    %htmlindex = read_htmlindex("$R_HOME$sep"."library");
+    %anindex = read_anindex("$R_HOME${sep}library");
+    %htmlindex = read_htmlindex("$R_HOME${sep}library");
 
     exit 0;
 }
@@ -96,12 +93,18 @@ print STDERR "Destination `dest'= `$dest'\n" if $opt_debug;
 
 build_index($lib, $dest, "");
 if ($opt_latex) {
-    $latex_d="$dest$sep"."latex";
-    mkdir "$latex_d", $dir_mod || die "Could not create $latex_d: $!\n";
+    $latex_d="$dest${sep}latex";
+    if(! -d $latex_d) {
+	mkdir "$latex_d", $dir_mod
+	  or die "Could not create $latex_d: $!\n";
+    }
 }
 if ($opt_example) {
-    $Rex_d="$dest$sep"."R-ex";
-    mkdir "$Rex_d", $dir_mod || die "Could not create $Rex_d: $!\n";
+    $Rex_d="$dest/R-ex";
+    if(! -d $Rex_d) {
+	mkdir "$Rex_d", $dir_mod
+	  or die "Could not create $Rex_d: $!\n";
+    }
 }
 
 print " >>> Building/Updating help pages for package `$pkg'\n";
@@ -118,8 +121,8 @@ print "\n";
 %anindex = read_anindex($lib);
 if($opt_html){
     %htmlindex = read_htmlindex($lib);
-    if ($lib ne "$R_HOME$sep"."library") {
-	%basehtmlindex = read_htmlindex("$R_HOME$sep"."library");
+    if ($lib ne "$R_HOME${sep}library") {
+	%basehtmlindex = read_htmlindex("$R_HOME${sep}library");
 	foreach $topic (keys %htmlindex) {
 	    $basehtmlindex{$topic} = $htmlindex{$topic};
 	}
@@ -142,7 +145,7 @@ foreach $manfile (@mandir) {
 
 	if($opt_txt){
 	    my $targetfile = $filenm{$manfilebase};
-	    $destfile = $dest.$sep."help".$sep.$targetfile;
+	    $destfile = "$dest${sep}help${sep}$targetfile";
 	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
 		Rdconv(":$manfile", "txt", "", "$destfile", $pkg);
@@ -152,7 +155,7 @@ foreach $manfile (@mandir) {
 	if($opt_html){
 	    my $targetfile = $filenm{$manfilebase};
 	    $misslink = "";
-	    $destfile = "$dest$sep"."html"."$sep$targetfile.$HTML";
+	    $destfile = "$dest${sep}html${sep}$targetfile.$HTML";
 	    if(fileolder($destfile,$manage)) {
 		$htmlflag = "html";
 		print "\t$destfile" if $opt_debug;
@@ -162,7 +165,7 @@ foreach $manfile (@mandir) {
 
 	if($opt_latex){
 	    my $targetfile = $filenm{$manfilebase};
-	    $destfile = "$dest$sep"."latex"."$sep$targetfile.tex";
+	    $destfile = "$dest${sep}latex${sep}$targetfile.tex";
 	    if(fileolder($destfile,$manage)) {
 		$latexflag = "latex";
 		Rdconv(":$manfile", "latex", "", "$destfile");
@@ -170,7 +173,7 @@ foreach $manfile (@mandir) {
 	}
 	if($opt_example){
 	    my $targetfile = $filenm{$manfilebase};
-	    $destfile = "$dest$sep"."R-ex"."$sep$targetfile.R";
+	    $destfile = "$dest${sep}R-ex${sep}$targetfile.R";
 	    if(fileolder($destfile,$manage)) {
 		Rdconv(":$manfile", "example", "", "$destfile");
 		if(-f$destfile) {$exampleflag = "example";}
@@ -178,7 +181,7 @@ foreach $manfile (@mandir) {
 	}
 
 	write if ($textflag || $htmlflag || $latexflag || $exampleflag);
-	print "     missing link(s): $misslink\n" 
+	print "     missing link(s): $misslink\n"
 	    if $htmlflag && length($misslink);
     }
 }
@@ -186,48 +189,48 @@ foreach $manfile (@mandir) {
 # remove files not in source directory
 if($opt_txt){
     my @destdir;
-    opendir dest,  "$dest$sep"."help";
+    opendir dest,  "$dest${sep}help";
     @destdir = sort(readdir(dest));
     closedir dest;
     foreach $destfile (@destdir) {
 	if($destfile eq "." || $destfile eq ".." ||
 	   $destfile eq "AnIndex") { next; }
-#	print "$dest/help/$destfile\n" unless defined $manfiles{$destfile};
-	unlink "$dest$sep"."help"."$sep$destfile" unless defined $manfiles{$destfile};
+#	print "$dest${sep}help${sep}$destfile\n" unless defined $manfiles{$destfile};
+	unlink "$dest${sep}help${sep}$destfile" unless defined $manfiles{$destfile};
     }
 }
 if($opt_html){
     my @destdir;
-    opendir dest,  "$dest$sep"."html";
+    opendir dest,  "$dest${sep}html";
     @destdir = sort(readdir(dest));
     closedir dest;
     foreach $destfile (@destdir) {
 	$destfilebase = basename($destfile, (".html"));
 	if($destfile eq "." || $destfile eq ".." ||
 	   $destfile eq "00Index.html") { next; }
-	unlink "$dest$sep"."html"."$sep$destfile" unless defined $manfiles{$destfilebase};
+	unlink "$dest${sep}html${sep}$destfile" unless defined $manfiles{$destfilebase};
     }
 }
 if($opt_latex){
     my @destdir;
-    opendir dest,  "$dest$sep"."latex";
+    opendir dest,  "$dest${sep}latex";
     @destdir = sort(readdir(dest));
     closedir dest;
     foreach $destfile (@destdir) {
 	$destfilebase = basename($destfile, (".tex"));
 	if($destfile eq "." || $destfile eq "..") { next; }
-	unlink "$dest$sep"."latex"."$sep$destfile" unless defined $manfiles{$destfilebase};
+	unlink "$dest${sep}latex${sep}$destfile" unless defined $manfiles{$destfilebase};
     }
 }
 if($opt_example){
     my @destdir;
-    opendir dest,  "$dest$sep"."R-ex";
+    opendir dest,  "$dest${sep}R-ex";
     @destdir = sort(readdir(dest));
     closedir dest;
     foreach $destfile (@destdir) {
 	$destfilebase = basename($destfile, (".R"));
 	if($destfile eq "." || $destfile eq "..") { next; }
-	unlink "$dest$sep"."R-ex"."$sep$destfile" unless defined $manfiles{$destfilebase};
+	unlink "$dest${sep}R-ex${sep}$destfile" unless defined $manfiles{$destfilebase};
     }
 }
 
@@ -248,9 +251,9 @@ Options:
   --example             build example files (default is all)
   --htmllists           build HTML function and package lists
   --dosnames            use 8.3 filenames
-  
-      
+
+
 Email bug reports to <r-bugs\@r-project.org>.
 END
-  exit 0; 
+  exit 0;
 }

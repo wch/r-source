@@ -4,7 +4,7 @@ use Text::DelimMatch;
 use Exporter;
 
 @ISA = qw(Exporter);
-@EXPORT = qw(get_section get_usages);
+@EXPORT = qw(get_section get_usages get_arglist);
 
 my $delimcurly = new Text::DelimMatch("\\{", "\\}");
 $delimcurly->escape("\\");
@@ -32,12 +32,12 @@ sub get_section {
 
 sub get_usages {
 
-    my ($text) = @_;
+    my ($text, $mode) = @_;
     
     ## remove comments
     $text =~ s/([^\\])%.*\n/$1\n/g;
 
-    ## FIXME:
+    ## <FIXME>
     ## This apparently gets quoted args wrong, e.g. in read.table().
     ##   $delimround->quote("\"");
     ##   $delimround->quote("\'");
@@ -46,6 +46,7 @@ sub get_usages {
     my %usages;
     my @text;
     my $name;
+    my $maybe_is_data_set_doc = 0;
 
     ## Get the \name documented.
     $name = $delimcurly->match(substr($text, index($text, "\\name")));
@@ -81,9 +82,10 @@ sub get_usages {
 	while($usage) {
 	    $usage =~ s/^[\s\n]*//g;
 
-	    ## FIXME:
+	    ## <FIXME>
 	    ## Need to do something smarter about documentation for
 	    ## assignment objects.
+	    ## </FIXME>
 
 	    ## Try to match the next `(...)' arglist from $usage.
 	    my ($prefix, $match, $rest) = $delimround->match($usage);
@@ -92,7 +94,8 @@ sub get_usages {
 	    $prefix =~ s/[\s\n]*$//;
 	    $prefix =~ s/^([\s\n\{]*)//;
 	    $prefix =~ s/(.*\n)*//g;
-	    ## FIXME: Leading semicolons?
+	    ## <FIXME>
+	    ## Leading semicolons?
 	    ##   $prefix =~ s/^;//;
 	    ## </FIXME>
 	    ## FIXME:
@@ -102,7 +105,8 @@ sub get_usages {
 	    ## $prefix =~ s/\]//g;
 	    ## </FIXME>
 	    $prefix =~
-		s/\\method\{([a-zA-Z0-9.]+)\}\{([a-zA-Z0-9.]+)\}/$1\.$2/g;
+		s/\\method\{([a-zA-Z0-9.]+)\}\{([a-zA-Z0-9.]+)\}/$1\.$2/g
+		    unless($mode eq "style");
 
 	    ## Play with $match.
 	    $match =~ s/=\s*([,\)])/$1/g;

@@ -51,7 +51,7 @@ sub buildinit {
 	die("Package $pkg does not exist\n") unless (-d $pkg);
     }
     else{
-	$pkg = $main::R_HOME.$main::sep."src".$main::sep."library".$main::sep."base";
+	$pkg="$main::R_HOME${main::sep}src${main::sep}library${main::sep}base";
     }
 
     chdir $currentdir;
@@ -63,7 +63,7 @@ sub buildinit {
 	chdir $currentdir;
     }
     else{
-	$lib = $main::R_HOME.$main::sep."library";
+	$lib = "$main::R_HOME${main::sep}library";
     }
 
     chdir $currentdir;
@@ -72,7 +72,7 @@ sub buildinit {
     $tmp = cwd();
     if($main::OSdir eq "windows") {
 	$tmp =~ s+\\+/+g; # need Unix-style path here
-    }    
+    }
     $pkg = basename($tmp);
 #    $pkg = basename(cwd());
 
@@ -86,7 +86,7 @@ sub buildinit {
 	opendir man, $main::OSdir;
 	foreach $file (readdir(man)) {
 	    delete $Rds{$file};
-	    $RdsOS{$file} = $main::OSdir.":".$file;
+	    $RdsOS{$file} = $main::OSdir.$main::sep.$file;
 	}
 	@mandir = sort(values %Rds);
 	push @mandir, sort(values %RdsOS);
@@ -208,7 +208,7 @@ sub build_htmlpkglist {
     print htmlfile html_pagehead("Package Index", ".",
 				 "index.$HTML", "Top",
 				 "", "",
-				 "", "");
+				 "", "", "./R.css");
 
     print htmlfile "<table align=\"center\" summary=\"R Package list\">\n";
 
@@ -271,7 +271,8 @@ sub build_index { # lib, dest
     my $nmanfiles;
     my %firstlettersfound;
     my %internal;
-                           
+    my $tfile;
+
     foreach $manfile (@mandir) {
 	if($manfile =~ /\.Rd$/i){
 
@@ -302,8 +303,8 @@ sub build_index { # lib, dest
 		$main::title2file{$rdtitle} = $manfilebase;
 	    }
 
-	    while($text =~ s/\\(alias|name)\{\s*(.*)\s*\}//){
-		$alias = $2;
+	    while($text =~ s/\\alias\{\s*(.*)\s*\}//){
+		$alias = $1;
 		$alias =~ s/\\%/%/g;
 		if ($internal){
 		    $internal{$alias} = 1;
@@ -333,19 +334,18 @@ sub build_index { # lib, dest
     }
     close anindex;
 
-
     open(anindex, "< $anindex");
-    open(htmlfile, "> $dest$main::sep"."html"."$main::sep"."00Index.$HTML")
-	|| die "Could not open $dest$main::sep"."help"."$main::sep"."00Index.$HTML";
+    $tfile = "$dest${main::sep}html${main::sep}00Index.$HTML";
+    open(htmlfile, "> $tfile") || die "Could not open $tfile";
     if($main::opt_chm) {
-	open(chmfile, "> $chmdir"."$main::sep"."00Index.$HTML") ||
-	    die "Could not open $chmdir"."$main::sep"."00Index.$HTML";
+	$tfile = "$chmdir${main::sep}00Index.$HTML";
+	open(chmfile, "> $tfile") || die "Could not open $tfile";
     }
 
     print htmlfile html_pagehead("$title", "../../../doc/html",
 				 "../../../doc/html/index.$HTML", "Top",
 				 "../../../doc/html/packages.$HTML",
-				 "Package List");
+				 "Package List", "", "", "../../R.css");
 
     if($main::opt_chm) {
 	print chmfile chm_pagehead("$title");
@@ -380,16 +380,16 @@ sub build_index { # lib, dest
 		$firstletter = $aliasfirst;
 	    }
             ## skip method aliases.
-	    $generic = $alias;  
+	    $generic = $alias;
 	    $generic =~ s/\.data\.frame$/.dataframe/o;
 	    $generic =~ s/\.model\.matrix$/.modelmatrix/o;
 	    $generic =~ s/\.[^.]+$//o;
 
 	    next if $alias =~ /<-$/o || $generic =~ /<-$/o;
-	    if ($generic ne "" && $generic eq $current && 
-		$file eq $currentfile && $generic ne "ar") { 
+	    if ($generic ne "" && $generic eq $current &&
+		$file eq $currentfile && $generic ne "ar") {
 
-		next; 
+		next;
 	    } else { $current = $alias; $currentfile = $file;}
 
 	    my $title = striptitle($main::alltitles{$alias});
@@ -422,11 +422,11 @@ sub fileolder {
 
 
 ## Return the first letter in uppercase, empty string for <=A and
-## "misc" for >=Z 
+## "misc" for >=Z
 ## used for indexing various HTML lists.
 sub firstLetterCategory {
     my ($x) = @_;
-    
+
     $x = uc substr($x, 0, 1);
     if($x lt "A") { $x = ""; }
     if($x gt "Z") { $x = "misc"; }
@@ -449,10 +449,11 @@ sub html_alphabet
 
 sub html_pagehead
 {
-    my ($title, $top, $up, $uptext, $prev, $prevtext, $next, $nextext) = @_;
+    my ($title, $top, $up, $uptext, $prev, $prevtext, $next, $nextext,
+	$cssloc) = @_;
 
     my $retval = "<html><head><title>R: $title</title>\n" .
-	"<link rel=\"stylesheet\" type=\"text/css\" href=\"../../R.css\">\n" .
+	"<link rel=\"stylesheet\" type=\"text/css\" href=\"$cssloc\">\n" .
 	"</head><body>\n" .
 	"<h1>$title " .
 	"<img class=\"toplogo\" src=\"$top/logo.jpg\" alt=\"[R logo]\"></h1>\n\n" .

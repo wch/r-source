@@ -61,7 +61,6 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
     $Rdname = $_[0];
     open rdfile, "<$Rdname" || die "Rdconv(): Couldn't open '$Rdfile':$!\n";
 
-
     $type = $_[1];
     $debug = $_[2];
     $pkgname = $_[4];
@@ -75,12 +74,16 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	$dirname = $_[3]; # The super-directory , such as  <Rlib>/library/<pkg>
 	die "Rdconv(): '$dirname' is NOT a valid directory:$!\n"
 	  unless -d $dirname;
-	$htmlfile = $dirname .$main::sep."html".$main::sep .$Rdname.".html" if $type =~ /html/i;
-	$txtfile= $dirname .$main::sep."help".$main::sep . $Rdname	        if $type =~ /txt/i;
+	$htmlfile = $dirname .$main::sep."html".$main::sep .$Rdname.".html"
+	  if $type =~ /html/i;
+	$txtfile= $dirname .$main::sep."help".$main::sep . $Rdname
+	  if $type =~ /txt/i;
 	die "Rdconv(): type 'Sd' must not be used with other types (',')\n"
 	  if $type =~ /Sd/i;
-	$latexfile= $dirname .$main::sep."latex".$main::sep. $Rdname.".tex"	if $type =~ /tex/i;
-	$Exfile	  = $dirname .$main::sep."R-ex".$main::sep . $Rdname.".R"	if $type =~ /example/i;
+	$latexfile= $dirname .$main::sep."latex".$main::sep. $Rdname.".tex"
+	  if $type =~ /tex/i;
+	$Exfile	  = $dirname .$main::sep."R-ex".$main::sep . $Rdname.".R"
+	  if $type =~ /example/i;
     }
 
 
@@ -96,7 +99,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
     #-- remove comments (everything after a %)
     while(<rdfile>){
 	$_ = expand $_;
-	
+
 	if (/^#ifdef\s+([A-Za-z0-9]+)/o) {
 	    if ($1 ne $main::OSdir) { $skipping = 1; }
 	    next;
@@ -590,7 +593,7 @@ sub text2html {
 	    }
 	}
 	else {
-	    $main::misslink = $main::misslink . " " . $argkey 
+	    $main::misslink = $main::misslink . " " . $argkey
 		unless $opt ne "";
 	    if($using_chm){
 		if($opt ne "") {
@@ -716,7 +719,7 @@ sub code2html {
 	    }
 	}
 	else{
-	    $main::misslink = $main::misslink . " " . $argkey 
+	    $main::misslink = $main::misslink . " " . $argkey
 		unless $opt ne "";
 	    if($using_chm){
 		if($opt ne "") {
@@ -2223,6 +2226,7 @@ sub latex_code_trans {
     $c =~ /HYPERLINK\(([^)]*)\)/;
     my $link = latex_link_trans($1);
     $c =~ s/HYPERLINK\([^)]*\)/\\Link{$link}/go;
+    $c =~ s/,,/,{},/g; # ,, is a ligature in the ae font.
     $c;
 }
 
@@ -2230,7 +2234,7 @@ sub latex_link_trans {
     my $c = $_[0];
     $c =~ s/<-\./<\\Rdash\./go;
     $c =~ s/<-$/<\\Rdash/go;
-    $c
+    $c;
 }
 
 sub latex_code_cmd {
