@@ -339,15 +339,11 @@ echo '	''{'LibFiles'} ¶' >> MakeR
 echo '	'-sym on -mf -d -t "'APPL'" -c "'OFFF'" ¶
 -m __appstart  -@export ¶
 expvar >> MakeR
-
 echo " " >> MakeR
-
 echo " " >> MakeR
-
 echo "R ÄÄ  :res:RCarbon.r" >> MakeR
 echo '	'"Rez :res:RCarbon.r -o :::R -a" >>MakeR
 echo " " >> MakeR
-
 echo "R ÄÄ :res:Size.r" >>MakeR
 echo '	'"Rez :res:Size.r -o :::R -a" >>MakeR
 echo " " >> MakeR
@@ -436,4 +432,5 @@ echo " "
 echo "Make -f MakeR R > MyMake"
 echo "MyMake"
 echo " "
+
 
