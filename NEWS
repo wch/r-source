@@ -289,6 +289,23 @@ NEW FEATURES
 
     o   reshape() extends reshapeLong, reshapeWide, which are deprecated.
 
+    o   duplicated() and unique() are now generic functions with
+	methods for data frames (as well as atomic vectors).
+
+    o   New option `download.file.method' can be used to set the
+	default method for download.file() and functions which use it
+	such as update.packages().
+
+    o   Changes to the tcltk package:
+
+        - New interface for accessing Tcl variables, effectively
+          making the R representations lexically scoped.
+
+    o   For compatibility with S4, any arithmetic operation using a
+	zero-length vector has a zero-length result.  (This was
+	already true for logical operations, which were compatible
+	with S4 rather than S3.)
+
     o   step() is now closer to stepAIC() and so handles a wider range
 	of objects (but stepAIC [in MASS] is still more powerful).
 
@@ -398,10 +415,14 @@ BUG FIXES
 	in strptime() which were seen only on glibc-based systems
 	(PR#1155).
 
+    o	promax() was returning the wrong rotation matrix (PR#1149).
+
     o	The [pqr]signrank and [pqr]wilcox functions failed to check that
 	memory has been allocated (PR#1149), and had (often large)
-	memory leaks if interrupted.  They now make use of R_alloc,
-	can be interrupted on Windows and MacOS and don't leak memory.
+	memory leaks if interrupted.  They now can be interrupted on
+	Windows and MacOS and don't leak memory.
+
+    o	range(numeric(0)) is now c(NA, NA) not NA.
 
     o	round(x, digits) for digits <= 0 always gives an integral
 	answer.  Previously it might not due to rounding errors in
