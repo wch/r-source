@@ -57,10 +57,17 @@ library <-
 	    .Internal(lib.fixup(env, .GlobalEnv))
 	    if(exists(".First.lib", envir = env, inherits = FALSE)) {
 		firstlib <- get(".First.lib", envir = env, inherits = FALSE)
-		firstlib(which.lib.loc, package)
+                tt<- try(firstlib(which.lib.loc, package))
+                if(inherits(tt, "try-error"))
+                    if (logical.return) return(FALSE)
+                    else stop(".First.lib failed")
 	    }
-            if(!is.null(firstlib <- getOption(".First.lib")[[package]]))
-                firstlib(which.lib.loc, package)
+            if(!is.null(firstlib <- getOption(".First.lib")[[package]])){
+                tt<- try(firstlib(which.lib.loc, package))
+                if(inherits(tt, "try-error"))
+                    if (logical.return) return(FALSE)
+                    else stop(".First.lib failed")
+            }
 	    if (warn.conflicts &&
 		!exists(".conflicts.OK",  envir = env, inherits = FALSE)) {
 		##-- Check for conflicts

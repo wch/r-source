@@ -1,6 +1,6 @@
 # Interactive density plots. Based on TCL version by Guido Masarotto
 
-require(tcltk)
+require(tcltk) || stop("tcltk support is absent")
 local({
     y <- NULL
     xlim <-NULL

@@ -25,7 +25,7 @@ try(expr, first = T)
 }
 \value{
   \code{try} returns the value of the expression if it succeeds, and an
-  invisible object of class \code{"try_error"} containing the error
+  invisible object of class \code{"try-error"} containing the error
   message if it if fails. The normal error handling will print the same
   message unless \code{options("show.error.messages")} is false.
 }

@@ -1,4 +1,4 @@
-require(tcltk)
+require(tcltk) || stop("tcltk support is absent")
 
 dialog.t.test <- function(){
     tt <- tktoplevel()
@@ -44,7 +44,7 @@ dialog.t.test <- function(){
     ## capture destroy (e.g. from window controls
     ## otherwise the tkwait hangs with nowhere to go
     tkbind(tt, "<Destroy>", function()tclvar$done<-2)
-     
+
     tkwait.variable("done")
 
     if(tclvar$done=="2") stop("aborted")
