@@ -6,7 +6,12 @@
 
 include $(RHOME)/src/gnuwin32/MkRules
 
+REXs=$(wildcard $(RLIB)/$(PKG)/R-ex/*)
+ifneq ($(strip $(REXs)),)
 all: run
+else 
+all:
+endif
 
 R = $(RHOME)/bin/Rterm --vanilla LC_ALL=C
 RDIFF = $(RHOME)/bin/Rcmd Rdiff.sh
