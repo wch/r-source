@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-15, 2003-06-03
+Version 1.7-16, 2003-06-04
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -220,8 +220,8 @@ and bug reports.
 modify the R source code CVS archive.  The group currently consists of Doug
 Bates, John Chambers, Peter Dalgaard, Robert Gentleman, Kurt Hornik,
 Stefano Iacus, Ross Ihaka, Friedrich Leisch, Thomas Lumley, Martin
-Maechler, Guido Masarotto, Paul Murrell, Brian Ripley, Duncan Temple Lang,
-and Luke Tierney.
+Maechler, Guido Masarotto, Duncan Murdoch, Paul Murrell, Martyn Plummer,
+Brian Ripley, Duncan Temple Lang, and Luke Tierney.
 
    R has a home page at `http://www.r-project.org/'.  It is free software
 distributed under a GNU-style copyleft, and an official part of the GNU
@@ -397,8 +397,7 @@ Once you have added that line the programs `apt-get', `apt-cache', and
 `dselect' (using the apt access method) will automatically detect and
 install updates of the R packages.
 
-   No other binary distributions have thus far been made publically
-available.
+   No other binary distributions are currently publically available.
 
 2.7 What documentation exists for R?
 ====================================
@@ -872,8 +871,8 @@ optimizer supports this.
 
    Lexical scoping allows using function closures and maintaining local
 state.  A simple example (taken from Abelson and Sussman) is obtained by
-typing `demo(scoping)' at the R prompt.  Further information is provided in
-the standard R reference "R: A Language for Data Analysis and Graphics"
+typing `demo("scoping")' at the R prompt.  Further information is provided
+in the standard R reference "R: A Language for Data Analysis and Graphics"
 (*note What documentation exists for R?::) and in Robert Gentleman and Ross
 Ihaka (2000), "Lexical Scope and Statistical Computing", _Journal of
 Computational and Graphical Statistics_, *9*, 491-508.
@@ -975,7 +974,7 @@ the same time being as compatible as possible with S.
      levels `"T"' or `"F"'.)  Hence, when writing code you should always
      use `TRUE' and `FALSE'.
 
-   * In R, `dyn.load()' can only load _shared libraries_, as created for
+   * In R, `dyn.load()' can only load _shared objects_, as created for
      example by `R CMD SHLIB'.
 
    * In R, `attach()' currently only works for lists and data frames, but
@@ -2855,10 +2854,10 @@ also replace `\' by `/' (`"c:/data/money.dat"').
 7.11 Why does plotting give a color allocation error?
 =====================================================
 
-   Sometimes plotting, e.g., when running `demo(image)', results in "Error:
-color allocation error".  This is an X problem, and only indirectly related
-to R.  It occurs when applications started prior to R have used all the
-available colors.  (How many colors are available depends on the X
+   Sometimes plotting, e.g., when running `demo("image")', results in
+"Error: color allocation error".  This is an X problem, and only indirectly
+related to R.  It occurs when applications started prior to R have used all
+the available colors.  (How many colors are available depends on the X
 configuration; sometimes only 256 colors can be used.)
 
    One application which is notorious for "eating" colors is Netscape.  If
@@ -3066,7 +3065,7 @@ is
 If you define the general function
 
      wrapper <- function(x, y, my.fun, ...) {
-       sapply(seq(along=x), FUN = function(i) my.fun(x[i], y[i], ...))
+       sapply(seq(along = x), FUN = function(i) my.fun(x[i], y[i], ...))
      }
 
 then you can use `outer()' by writing, e.g.,
@@ -3101,7 +3100,7 @@ single terms.
 =================================================
 
    Under Unix, the `png()' device uses the X11 driver, which is a problem
-in batch mode or for remote operation.  If you have ghostscript you can use
+in batch mode or for remote operation.  If you have Ghostscript you can use
 `bitmap()', which produces a PostScript file then converts it to any bitmap
 format supported by ghostscript.  On some installations this produces ugly
 output, on others it is perfectly satisfactory.  In theory one could also

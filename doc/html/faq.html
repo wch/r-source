@@ -20,7 +20,7 @@ Up:<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
    <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.7-15, 2003-06-03</h2>
+<h2>Version 1.7-16, 2003-06-04</h2>
 <h2>ISBN 3-901167-51-X</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -240,8 +240,8 @@ by sending code and bug reports.
 modify the R source code CVS archive.  The group currently consists of
 Doug Bates, John Chambers, Peter Dalgaard, Robert Gentleman, Kurt
 Hornik, Stefano Iacus, Ross Ihaka, Friedrich Leisch, Thomas Lumley,
-Martin Maechler, Guido Masarotto, Paul Murrell, Brian Ripley, Duncan
-Temple Lang, and Luke Tierney.
+Martin Maechler, Guido Masarotto, Duncan Murdoch, Paul Murrell, Martyn
+Plummer, Brian Ripley, Duncan Temple Lang, and Luke Tierney.
 
    <p>R has a home page at <a href="http://www.r-project.org/">http://www.r-project.org/</a>.  It is free
 software distributed under a <small>GNU</small>-style copyleft, and an
@@ -494,8 +494,7 @@ programs <code>apt-get</code>, <code>apt-cache</code>, and <code>dselect</code>
 (using the apt access method) will automatically detect and install
 updates of the R packages.
 
-   <p>No other binary distributions have thus far been made publically
-available.
+   <p>No other binary distributions are currently publically available.
 
 <div class="node">
 <p><hr>
@@ -1118,7 +1117,7 @@ work if the optimizer supports this.
 
    <p>Lexical scoping allows using function closures and maintaining local
 state.  A simple example (taken from Abelson and Sussman) is obtained by
-typing <kbd>demo(scoping)</kbd> at the R prompt.  Further information is
+typing <kbd>demo("scoping")</kbd> at the R prompt.  Further information is
 provided in the standard R reference "R: A Language for Data Analysis
 and Graphics" (see <a href="#What%20documentation%20exists%20for%20R%3f">What documentation exists for R?</a>) and in Robert
 Gentleman and Ross Ihaka (2000), "Lexical Scope and Statistical
@@ -1240,8 +1239,8 @@ hence can be overwritten by the user.  (This helps e.g. when you have
 factors with levels <code>"T"</code> or <code>"F"</code>.)  Hence, when writing code
 you should always use <code>TRUE</code> and <code>FALSE</code>.
 
-     <li>In R, <code>dyn.load()</code> can only load <em>shared libraries</em>, as
-created for example by <kbd>R CMD SHLIB</kbd>.
+     <li>In R, <code>dyn.load()</code> can only load <em>shared objects</em>, as created
+for example by <kbd>R CMD SHLIB</kbd>.
 
      <li>In R, <code>attach()</code> currently only works for lists and data frames,
 but not for directories.  (In fact, <code>attach()</code> also works for R
@@ -3194,7 +3193,7 @@ Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 
 <h3 class="section">7.11 Why does plotting give a color allocation error?</h3>
 
-   <p>Sometimes plotting, e.g., when running <code>demo(image)</code>, results in
+   <p>Sometimes plotting, e.g., when running <code>demo("image")</code>, results in
 "Error: color allocation error".  This is an X problem, and only
 indirectly related to R.  It occurs when applications started prior to R
 have used all the available colors.  (How many colors are available
@@ -3485,7 +3484,7 @@ function is
 <p>If you define the general function
 
 <pre class="smallexample">     wrapper &lt;- function(x, y, my.fun, ...) {
-       sapply(seq(along=x), FUN = function(i) my.fun(x[i], y[i], ...))
+       sapply(seq(along = x), FUN = function(i) my.fun(x[i], y[i], ...))
      }
      </pre>
 
@@ -3540,7 +3539,7 @@ Up:<a rel="up" accesskey="u" href="#R%20Miscellanea">R Miscellanea</a>
 <h3 class="section">7.21 How do I produce PNG graphics in batch mode?</h3>
 
    <p>Under Unix, the <code>png()</code> device uses the X11 driver, which is a
-problem in batch mode or for remote operation.  If you have ghostscript
+problem in batch mode or for remote operation.  If you have Ghostscript
 you can use <code>bitmap()</code>, which produces a PostScript file then
 converts it to any bitmap format supported by ghostscript.  On some
 installations this produces ugly output, on others it is perfectly

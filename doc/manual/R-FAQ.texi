@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-15, @value{FAQ-YEAR}-06-03
+@set FAQ-VERSION 1.7-16, @value{FAQ-YEAR}-06-04
 @set REL-VERSION 1.7.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -244,8 +244,8 @@ Since mid-1997 there has been a core group (the ``R Core Team'') who can
 modify the R source code CVS archive.  The group currently consists of
 Doug Bates, John Chambers, Peter Dalgaard, Robert Gentleman, Kurt
 Hornik, Stefano Iacus, Ross Ihaka, Friedrich Leisch, Thomas Lumley,
-Martin Maechler, Guido Masarotto, Paul Murrell, Brian Ripley, Duncan
-Temple Lang, and Luke Tierney.
+Martin Maechler, Guido Masarotto, Duncan Murdoch, Paul Murrell, Martyn
+Plummer, Brian Ripley, Duncan Temple Lang, and Luke Tierney.
 
 R has a home page at @uref{http://www.r-project.org/}.  It is free
 software distributed under a @acronym{GNU}-style copyleft, and an
@@ -484,8 +484,7 @@ updates of the R packages.
 @c platforms in @file{bin/nextstep/i386} and @file{bin/nextstep/m68k},
 @c created by Stephen Shiboski <steve@biostat.ucsf.edu>.
 
-No other binary distributions have thus far been made publically
-available.
+No other binary distributions are currently publically available.
 
 @node What documentation exists for R?, Citing R, Are there Unix binaries for R?, R Basics
 @section What documentation exists for R?
@@ -1126,7 +1125,7 @@ work if the optimizer supports this.
 
 Lexical scoping allows using function closures and maintaining local
 state.  A simple example (taken from Abelson and Sussman) is obtained by
-typing @kbd{demo(scoping)} at the R prompt.  Further information is
+typing @kbd{demo("scoping")} at the R prompt.  Further information is
 provided in the standard R reference ``R: A Language for Data Analysis
 and Graphics'' (@pxref{What documentation exists for R?}) and in Robert
 Gentleman and Ross Ihaka (2000), ``Lexical Scope and Statistical
@@ -1247,8 +1246,8 @@ factors with levels @code{"T"} or @code{"F"}.)  Hence, when writing code
 you should always use @code{TRUE} and @code{FALSE}.
 
 @item
-In R, @code{dyn.load()} can only load @emph{shared libraries}, as
-created for example by @kbd{R CMD SHLIB}.
+In R, @code{dyn.load()} can only load @emph{shared objects}, as created
+for example by @kbd{R CMD SHLIB}.
 
 @item
 In R, @code{attach()} currently only works for lists and data frames,
@@ -3200,7 +3199,7 @@ can also replace @samp{\} by @samp{/} (@code{"c:/data/money.dat"}).
 @node Why does plotting give a color allocation error?, How do I convert factors to numeric?, How do file names work in Windows?, R Miscellanea
 @section Why does plotting give a color allocation error?
 
-Sometimes plotting, e.g., when running @code{demo(image)}, results in
+Sometimes plotting, e.g., when running @code{demo("image")}, results in
 ``Error: color allocation error''.  This is an X problem, and only
 indirectly related to R.  It occurs when applications started prior to R
 have used all the available colors.  (How many colors are available
@@ -3461,7 +3460,7 @@ If you define the general function
 
 @smallexample
 wrapper <- function(x, y, my.fun, ...) @{
-  sapply(seq(along=x), FUN = function(i) my.fun(x[i], y[i], ...))
+  sapply(seq(along = x), FUN = function(i) my.fun(x[i], y[i], ...))
 @}
 @end smallexample
 
@@ -3502,7 +3501,7 @@ squares resulting from dropping single terms.
 @section How do I produce PNG graphics in batch mode?
 
 Under Unix, the @code{png()} device uses the X11 driver, which is a
-problem in batch mode or for remote operation.  If you have ghostscript
+problem in batch mode or for remote operation.  If you have Ghostscript
 you can use @code{bitmap()}, which produces a PostScript file then
 converts it to any bitmap format supported by ghostscript.  On some
 installations this produces ugly output, on others it is perfectly
