@@ -57,6 +57,7 @@
 #endif /* __APPLE_CC__ */
 
 #if defined(HAVE_AQUA) && defined(HAVE_DYNAMIC_LOADING)
+#define __DEBUGGING__
 
 #include <R_ext/eventloop.h>
 
