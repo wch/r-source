@@ -1,10 +1,10 @@
 \name{getLoadedDLLs}
 \alias{getLoadedDLLs}
-\title{Get DLLs loaded in current session}
+\title{Get DLLs Loaded in Current Session}
 \description{
   This function provides a way to get a list of all the
   Dynamically Loadable Libraries (DLLs) that are currently loaded
-  in the current R session.
+  in the current \R session.
 }
 \usage{
 getLoadedDLLs()
@@ -28,16 +28,16 @@ getLoadedDLLs()
     This is an object of class \code{DLLHandle}.
   }
 }
-\author{Duncan Temple Lang <duncan@wald.ucdavis.edu>}
+\author{Duncan Temple Lang \email{duncan@wald.ucdavis.edu}.}
 \note{We are starting to use the \code{handle} elements
-in the DLL object to resolve symbols more directly in R.}
+in the DLL object to resolve symbols more directly in \R.}
 
 
 \seealso{
 \code{\link{getNativeSymbolInfo}}
 }
 \examples{
- getLoadedDLLs()
+getLoadedDLLs()
 }
 \keyword{interface}
 
