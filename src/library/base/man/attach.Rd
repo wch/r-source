@@ -16,7 +16,8 @@ attach(what, pos = 2, name = deparse(substitute(what)))
   database is searched by \R when evaluating a variable, so objects in
   the database can be accessed by simply giving their names.}
 
-\details{When evaluating a variable or function name \R searches for
+\details{
+  When evaluating a variable or function name \R searches for
   that name in the databases listed by \code{\link{search}}. The first
   name of the appropriate type is used.
 
@@ -34,8 +35,10 @@ attach(what, pos = 2, name = deparse(substitute(what)))
   Note that by default assignment is not performed in an attached
   database. Attempting to modify a variable or function in an attached
   database will actually create a modified version in the user's
-  workspace (the \R global environment). For this reason \code{attach}
-  can lead to confusion.
+  workspace (the \R global environment).  If you use
+  \code{\link{assign}} to assign to an attached list or data frame, you
+  only alter the attached copy, not the original object.
+  For this reason \code{attach} can lead to confusion.
 }
 \value{
   The \code{\link{environment}} is returned invisibly with a

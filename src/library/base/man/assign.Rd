@@ -30,6 +30,9 @@ assign(x, value, pos = -1, envir = as.environment(pos),
 
   \code{assign} does not dispatch assignment methods, so it cannot be
   used to set elements of vectors, names, attributes, etc.
+
+  Note that assignment to an attached list or data frame changes the
+  attached copy and not the orginal object: see \code{\link{attach}}.
 }
 \value{
   This function is invoked for its side effect, which is assigning
