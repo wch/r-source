@@ -2,11 +2,13 @@ menu <- function(choices, graphics = FALSE, title = "")
 {
     if(!interactive()) stop("menu() cannot be used non-interactively")
     if(graphics) {
-        if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
-            return(select.list(choices, multiple=FALSE, title=title))
-        else if(.Platform$OS.type == "unix"
+        if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
+            res <- select.list(choices, multiple=FALSE, title=title)
+            return(match(res, choices, nomatch = 0))
+        } else if(.Platform$OS.type == "unix"
                 && capabilities("tcltk") && capabilities("X11"))
-            return(tcltk::tk_select.list(choices, multiple=FALSE, title=title))
+            res <- tcltk::tk_select.list(choices, multiple=FALSE, title=title)
+            return(match(res, choices, nomatch = 0))
     }
     nc <- length(choices)
     if(length(title) && nchar(title[1])) cat(title[1], "\n")
