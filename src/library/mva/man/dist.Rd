@@ -27,7 +27,8 @@ as.matrix.dist(dist.obj)
   This function computes and returns the distance matrix computed by
   using the specified distance measure to compute the distances between
   the rows of \code{x}.
-
+}
+\details{
   Available distance measures are (written for two vectors \eqn{x} and
   \eqn{y}): 
   \itemize{
@@ -36,7 +37,7 @@ as.matrix.dist(dist.obj)
     and \eqn{y} (supremum norm)
     \item Manhattan: Absolute distance between the two vectors (1
     norm).
-    \item Canberra: \eqn{sum(|x_i - y_i| / |x_i + y_i|)}
+    \item Canberra: \eqn{\sum_i |x_i - y_i| / |x_i + y_i|}{sum(|x_i - y_i| / |x_i + y_i|)}
     \item Count the number of different bits in \eqn{x} and \eqn{y}
     where at least one of the two bits is 1, i.e., components where both
     bits are zero are ignored.
@@ -56,7 +57,7 @@ as.matrix.dist(dist.obj)
   \code{\link{hclust}}.
 }
 \examples{
-x<-matrix(rnorm(100),nrow=5)
+x <- matrix(rnorm(100),nrow=5)
 dist(x)
 dist(x, diag = TRUE)
 dist(x, upper = TRUE)
