@@ -45,6 +45,9 @@ kmeans <- function(x, centers, iter.max = 10)
 	   )
     centers <- matrix(Z$centers, k)
     dimnames(centers) <- list(1:k, dimnames(x)[[2]])
-    list(cluster = Z$c1, centers = centers, withinss = Z$wss, size = Z$nc)
+    out <- list(cluster = Z$c1, centers = centers, withinss = Z$wss,
+                size = Z$nc)
+    class(out) <- "kmeans"
+    out
 }
 

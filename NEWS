@@ -86,6 +86,8 @@ NEW FEATURES
 	and graphics output together on graphics engine display list.
 	To be used with care.
 
+    o	kmeans() now returns an object of class "kmeans".
+
 
 UTILITIES
 

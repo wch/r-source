@@ -10,28 +10,24 @@ K-Means Clustering
 kmeans(x, centers, iter.max = 10)
 }
 \arguments{
-\item{x}{
-  A numeric matrix of data, or an object that can be coerced to such a
-  matrix (such as a numeric vector or a data frame with all numeric columns).
+  \item{x}{A numeric matrix of data, or an object that can be coerced to
+    such a matrix (such as a numeric vector or a data frame with all
+    numeric columns).}
+  \item{centers}{Either the number of clusters or a set of initial
+    cluster centers.  If the first, a random set of rows in \code{x} are
+    chosen as the initial centers.}
+  \item{iter.max}{The maximum number of iterations allowed.}
 }
-\item{centers}{
-  Either the number of clusters or a set of initial cluster centers.
-  If the first, a random set of rows in \code{x} are chosen as the initial
-  centers.
-}
-\item{iter.max}{
-  The maximum number of iterations allowed.
-}}
 \details{
-  The data given by \code{x} is clustered by the k-means algorithm.
-  When this terminates, all cluster centres are at the mean of
-  their Voronoi sets (the set of data points which are nearest to
-  the cluster centre).
+  The data given by \code{x} is clustered by the \eqn{k}-means algorithm.
+  When this terminates, all cluster centres are at the mean of their
+  Voronoi sets (the set of data points which are nearest to the cluster
+  centre).
 
   The algorithm of Hartigan and Wong (1979) is used.
 }
 \value{
-  A list with components:
+  An object of class \code{"kmeans"} which is a list with components:
 
   \item{cluster}{
     A vector of integers indicating the cluster to which each point is
