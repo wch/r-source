@@ -64,7 +64,10 @@ BUG FIXES
     o	Unused directory src/f2clib and header src/include/R_ext/f2c.h
 	have been removed.
 
-    o   A problem with "..." substitutions has been fixed. 
+    o   A problem with "..." in substitutions has been fixed. 
+
+    o   We now use match.fun() in tapply() so that it won't get trapped
+        by non-functions masking FUN.
 
 
 	**************************************************
