@@ -312,10 +312,10 @@ finalDefaultMethod <-
   ## returning the function definition.  (This feature is used in standardGeneric to
   ## ensure that a definition for the function can be found when method searching is
   ## turned off.)
-  function(mlist, fname = "")
+  function(mlist, fname = "NULL")
 {
-    if(is.null(mlist)) ## not a generic function; will fail if fname missing (& should)
-        getFunction(fname)
+    if(is.null(mlist)) ## return the function, or NULL
+        getFunction(fname, mustFind = FALSE)
     else {
         while(is(mlist, "MethodsList"))
             mlist <- elNamed(slot(mlist, "methods"), "ANY")

@@ -36,7 +36,7 @@ listFromMlist(mlist, prefix = list())
 
 linearizeMlist(mlist, inherited = TRUE)
 
-finalDefaultMethod(mlist, fname = "")
+finalDefaultMethod(mlist, fname = "NULL")
 
 mergeMethods(m1, m2)
 
@@ -120,7 +120,10 @@ selected classes.
   \item{\code{finalDefaultMethod}}{
     The true default method for the methods list object \code{mlist}
     (the method that matches class \code{"ANY"} for as many arguments as
-    are used in methods matching for this generic function).}
+    are used in methods matching for this generic function). If
+    \code{mlist} is null, returns the function called \code{fname}, or
+    \code{NULL} if there is no such function.
+  }
 
   \item{\code{mergeMethods}}{
     Merges the methods in the second MethodsList object into the first,
