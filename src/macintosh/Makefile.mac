@@ -101,16 +101,17 @@ demofiles Ä $OutOfDate
 help Ä $OutOfDate
 	for pkg in {PACKAGES}
 	 Begin
-	  SetDirectory :share:perl
-	  perl  build-help.pl -txt -html -example -latex ::::library:{pkg} :::::library
-	  perl Rd2contents.pl --os="mac" >:::::library:{pkg}:CONTENTS ::::library:{pkg} 
-      SetDirectory :::
+	  SetDirectory {RHOME}share:perl
+	  perl  build-help-mac.pl -txt -html -example -latex :::src:library:{pkg} :::library
+	  perl Rd2contents.pl --os="mac" >:::library:{pkg}:CONTENTS :::src:library:{pkg}
+      SetDirectory :::src:macintosh:
 	 end
 	end 
 	catenate {RHOME}library:Å:CONTENTS > {RHOME}doc:html:search:index.txt
-	SetDirectory :share:perl
-	perl build-help.pl  -htmllists -rhome ::::
-    SetDirectory :::
+	SetDirectory {RHOME}share:perl
+	perl build-help-mac.pl  -htmllists -rhome ::
+    SetDirectory :::src:macintosh:
+
 
 
 ## ------------- html -----------
