@@ -1,4 +1,4 @@
-### $Id: pkg2tex.pl,v 1.2 2001/01/15 14:52:16 pd Exp $
+### $Id: pkg2tex.pl,v 1.3 2002/11/03 17:32:29 hornik Exp $
 
 ## Create a single pkgname-pkg.tex file from the Latex subdirectories
 ## Copyright (C) 1998 Douglas M. Bates <bates@stat.wisc.edu>
@@ -20,6 +20,10 @@
 
 ## Send any bug reports to bates@stat.wisc.edu
 
+## <NOTE>
+## Could use &file_path() to make this portable.
+## </NOTE>
+
 use strict;
 use FileHandle;
 use Carp;
@@ -27,7 +31,7 @@ use Getopt::Long;
 
 my $help;
 
-my $revision = ' $Revision: 1.2 $ ';
+my $revision = ' $Revision: 1.3 $ ';
 my $version;
 my $name;
 
@@ -41,6 +45,7 @@ GetOptions("help|h" => \$help);
 
 my $RLIB;
 if ($ENV{'RLIB'}) {
+    ## Set under Windows, but also useful to override the default.
     $RLIB = $ENV{'RLIB'};
 } else {
     $RLIB = "../../library";
@@ -78,7 +83,7 @@ sub do_tex_files {
 	$fh->open( $latexDir . $fname ) 
 	    or croak "unable to open file $_:$!\n";
 	$fline = <$fh>;
-	# first line is \Header{object}{...}
+	## first line is \Header{object}{...}
 	$fline =~ s/\\Header\{\s*([^}]*)\}//;
 	$filenames{$1} = $fname;
     }
