@@ -423,7 +423,9 @@ function(file)
     if(!inherits(file, "connection"))
         stop(paste("argument", sQuote("file"),
                    "must be a character string or connection"))
-    lines <- Rdpp(readLines(file))
+    ## Try to suppress "incomplete final line found by readLines"
+    ## warnings.
+    lines <- .try_quietly(Rdpp(readLines(file)))
     ## Get meta data (need to agree on what precisely these are), and
     ## remove the corresponding lines (assuming that these entries are
     ## all one-liners).  We mostly do this because \alias (see Paren.Rd)
@@ -466,10 +468,14 @@ function(file)
             txt <- substring(txt, pos + attr(pos, "match.length"))
             ## Should 'txt' now really start with an open brace?
             if(substring(txt, 1, 1) != "{")
-                stop("incomplete section", sQuote(tag))
+                stop(paste("incomplete section",
+                           sQuote(paste("section{", tmp, "}",
+                                        sep = ""))))
             pos <- delimMatch(txt)
             if(pos == -1)
-                stop(paste("unterminated section", sQuote(tag)))
+                stop(paste("unterminated section",
+                           sQuote(paste("section{", tmp, "}",
+                                        sep = ""))))
             tag <- c(tag, tmp)
         }
         if(regexpr("^[[:space:]]*(^|\n)[[:space:]]*$", start) == -1) {
