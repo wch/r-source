@@ -17,7 +17,7 @@ chooseCRANmirror(graphics = TRUE)
 #endif
 }
 \details{
-  The list of mirrors is stored in file \file{R_HOME/doc/CRAN_mirrors.csv}.
+  The list of mirrors is stored in file \file{R\_HOME/doc/CRAN\_mirrors.csv}.
 
   This function was originally written to support a Windows GUI menu
   item, but is also called by \code{\link{contrib.url}} if it finds the
@@ -28,6 +28,6 @@ chooseCRANmirror(graphics = TRUE)
   \code{options("repos")}
 }
 \seealso{
-  \code{\link{contrib.url}}.
+  \code{\link{setRepositories}}, \code{\link{contrib.url}}.
 }
 \keyword{ utilities }
