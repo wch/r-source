@@ -26,7 +26,7 @@ DOCUMENTATION
     o	Manual `Writing R Extensions' has new sections on writing
 	portable packages and on writing new front-ends for R -- the
 	latter will be more comprehensive in R 2.1.0 which has new
-	public header files. 
+	public header files.
 
 
 DEPRECATED & DEFUNCT
@@ -38,7 +38,7 @@ DEPRECATED & DEFUNCT
     o	The GNOME GUI on Unix-alikes is deprecated as part of R;
 	it will be available in another form as from R 2.1.0.
 
-    o	The undocumented use of UseMethod() with no argument is now 
+    o	The undocumented use of UseMethod() with no argument is now
 	formally deprecated.
 
 
