@@ -2,6 +2,11 @@
 
 NEW FEATURES
 
+    o   New function plot.formula().
+        plot.factor() now produces boxplots when given 2 arguments.
+
+    o   New function write.table().
+
     o   Old-style long command line options (`-save' etc) changed to
 	GNU-style (`--save' etc).
 	Debugging options (`-ddd', `-gdb', `-xxgdb') unified into the
