@@ -11,12 +11,12 @@
 
 NEW FEATURES
 
-    o   get() and assign() allow position in search list to be a
+    o	get() and assign() allow position in search list to be a
 	character string. (e.g. get("delete.response","package:base") 
 
-    o   HTML search now works for all packages (after new installation).
+    o	HTML search now works for all packages (after new installation).
 
-    o   R INSTALL now also copies DESCRIPTION file to target dir.
+    o	R INSTALL now also copies DESCRIPTION file to target dir.
 
     o	offsets should work with lm as well as with glm now
 
@@ -47,33 +47,35 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   plot.formula now allows ylab to be set
+    o	qqnorm() uses ppoints() and returns list with x sorted along y.
 
-    o   plotmath had trouble with paste()'ing expressions
+    o	plot.formula now allows ylab to be set
 
-    o   plotting math expressions now also works for objects of mode
-        "call" (in particular on the result of substitute())
+    o	plotmath had trouble with paste()'ing expressions
 
-    o   locator() on log axes: value antilogged twice
+    o	plotting math expressions now also works for objects of mode
+	"call" (in particular on the result of substitute())
 
-    o   (a real oldie - and trival too) is.recursive now TRUE for
-    	expressions 
+    o	locator() on log axes: value antilogged twice
 
-    o   sanitised delete.response
+    o	(a real oldie - and trival too) is.recursive now TRUE for
+	expressions 
 
-    o   x[["a",]] could crash R
+    o	sanitised delete.response
 
-    o   strwidth() crashed R if no device open
+    o	x[["a",]] could crash R
 
-    o   predict inconsistencies with offsets straightened out
+    o	strwidth() crashed R if no device open
+
+    o	predict inconsistencies with offsets straightened out
 
     o	tapply goofed when FUN returned named scalar
 
-    o   [.factor now retains contrasts attrib.
+    o	[.factor now retains contrasts attrib.
 
-    o   hist() had trouble with plotting math
+    o	hist() had trouble with plotting math
 
-    o   HTML indices get only built when installing a package to RHOME
+    o	HTML indices get only built when installing a package to RHOME
 
     o	subscripting with a length zero logical no longer bombs.
 
