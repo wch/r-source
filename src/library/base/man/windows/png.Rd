@@ -40,6 +40,12 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
   \code{png} supports transparent backgrounds on 16-bit
   (\sQuote{High Color}) or better screens: use \code{bg = "transparent"}.
   Not all PNG viewers render files with transparency correctly.
+
+  Windows imposes limits on the size of bitmaps: these are not
+  documented in the SDK and may depend on the version of Windows.
+  It seems \code{width} and \code{height} are limited to
+  \eqn{2^{15}-1}{2^15-1} and there is a 16Mb limit on the total amount
+  of memory in Windows 95/98/Me.
 }
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.
