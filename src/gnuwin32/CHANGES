@@ -94,7 +94,8 @@ Rterm is now only regarded as interactive if both stdin and stdout are
 a terminal: this overcomes a problem with getline.
 
 System error messages (those which would appear in a dialog box in
-Rgui) are written on stderr rather than stdin.
+Rgui) are written on stderr rather than stdout, as are R warnings and
+error mesages.
 
 Installing packages
 -------------------
