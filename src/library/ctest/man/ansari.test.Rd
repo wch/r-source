@@ -7,7 +7,7 @@
 }
 \usage{
 ansari.test(x, y, alternative = c("two.sided", "less", "greater"),
-            exact = NULL)
+            exact = NULL, conf.int = TRUE, conf.level = 0.95)
 }
 \arguments{
   \item{x}{numeric vector of data values.}
@@ -17,6 +17,9 @@ ansari.test(x, y, alternative = c("two.sided", "less", "greater"),
     can specify just the initial letter.}
   \item{exact}{a logical indicating whether an exact p-value should be
     computed.}
+  \item{conf.int}{a logical,indicating whether a confidence interval
+    should be computed.}
+  \item{conf.level}{confidence level of the interval.}
 }
 \details{
   Suppose that \code{x} and \code{y} are independent samples from
@@ -32,6 +35,11 @@ ansari.test(x, y, alternative = c("two.sided", "less", "greater"),
   By default (if \code{exact} is not specified), an exact p-value is
   computed if both samples contain less than 50 finite values and there
   are no ties.  Otherwise, a normal approximation is used.
+
+  Optionally, a nonparametric confidence interval for \eqn{s} is
+  computed.  If exact p-values are available, an exact confidence
+  interval is obtained by the algorithm described in Bauer (1972).
+  Otherwise, an asymptotic confidence interval is returned.
 }
 \value{
   A list with class \code{"htest"} containing the following components:
@@ -41,12 +49,19 @@ ansari.test(x, y, alternative = c("two.sided", "less", "greater"),
     hypothesis.}
   \item{method}{the string \code{"Ansari-Bradley test"}.}
   \item{data.name}{a character string giving the names of the data.}
+  \item{conf.int}{a confidence interval for the scale parameter.
+    (Only present if argument \code{conf.int = TRUE}.)}
 }
 \references{
   Myles Hollander & Douglas A. Wolfe (1973),
   \emph{Nonparametric statistical inference}.
   New York: John Wiley & Sons.
   Pages 83--92.
+
+  David F. Bauer (1972),
+  Constructing confidence sets using rank statistics.
+  \emph{Journal of the American Statistical Association}
+  \bold{67}, 687--690.
 }
 \seealso{
   \code{\link{fligner.test}} for a rank-based (nonparametric) k-sample
@@ -64,5 +79,7 @@ ramsay <- c(111, 107, 100, 99, 102, 106, 109, 108, 104, 99,
 jung.parekh <- c(107, 108, 106, 98, 105, 103, 110, 105, 104,
             100, 96, 108, 103, 104, 114, 114, 113, 108, 106, 99)
 ansari.test(ramsay, jung.parekh)
+
+ansari.test(rnorm(10), rnorm(10, 0, 2), conf.int = TRUE)
 }
 \keyword{htest}

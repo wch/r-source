@@ -6,7 +6,8 @@
 }
 \usage{
 wilcox.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
-            mu = 0, paired = FALSE, exact = NULL, correct = TRUE)
+            mu = 0, paired = FALSE, exact = NULL, correct = TRUE, 
+            conf.int = FALSE, conf.level = 0.95)
 }
 \arguments{
   \item{x}{numeric vector of data values.}
@@ -20,6 +21,9 @@ wilcox.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
     computed.}
   \item{correct}{a logical indicating whether to apply continuity
     correction in the normal approximation for the p-value.}
+  \item{conf.int}{a logical indicating whether a confidence interval
+    should be computed.}
+  \item{conf.level}{confidence level of the interval.}
 }
 \details{
   If only \code{x} is given, or if both \code{x} and \code{y} are given
@@ -37,6 +41,13 @@ wilcox.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
   By default (if \code{exact} is not specified), an exact p-value is
   computed if the samples contain less than 50 finite values and there
   are no ties.  Otherwise, a normal approximation is used.
+
+  Optionally (if argument \code{conf.int} is true), a nonparametric
+  confidence interval for the median (one-sample case) or for the
+  difference of the location parameters \code{x-y} is computed.  If
+  exact p-values are available, an exact confidence interval is obtained
+  by the algorithm described in Bauer (1972).  Otherwise, an asymptotic
+  confidence interval is returned.
 }
 \value{
   A list with class \code{"htest"} containing the following components:
@@ -50,12 +61,19 @@ wilcox.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
     hypothesis.}
   \item{method}{the type of test applied.}
   \item{data.name}{a character string giving the names of the data.}
+  \item{conf.int}{a confidence interval for the location parameter.
+    (Only present if argument \code{conf.int = TRUE}.)}
 }
 \references{
   Myles Hollander & Douglas A. Wolfe (1973),
   \emph{Nonparametric statistical inference}.
   New York: John Wiley & Sons.
   Pages 27--33 (one-sample), 68--75 (two-sample).
+
+  David F. Bauer (1972),
+  Constructing confidence sets using rank statistics.
+  \emph{Journal of the American Statistical Association}
+  \bold{67}, 687--690.
 }
 \seealso{
   \code{\link{kruskal.test}} for testing homogeneity in location
@@ -86,9 +104,11 @@ wilcox.test(y - x, alternative = "less",
 ##  of the human chorioamnion for the term pregnancy.
 x <- c(0.80, 0.83, 1.89, 1.04, 1.45, 1.38, 1.91, 1.64, 0.73, 1.46)
 y <- c(1.15, 0.88, 0.90, 0.74, 1.21)
-wilcox.test(x, y, alternative = "g")# greater
+wilcox.test(x, y, alternative = "g")        # greater
 wilcox.test(x, y, alternative = "greater",
             exact = FALSE, correct = FALSE) # H&W large sample
                                             # approximation
+
+wilcox.test(rnorm(10), rnorm(10, 2), conf.int = TRUE)
 }
 \keyword{htest}
