@@ -285,6 +285,7 @@ sub get_multi {
 	print STDERR " $k:$arg" if $debug;
 	$arg =~ s/^\s*(\S)/$1/;
 	$arg =~ s/\n[ \t]*(\S)/\n$1/g;
+	$arg =~ s/\s*$//;
 	$res[$k++] = $arg;
 	$text =~ s/\\$name//s;
     }
