@@ -9,7 +9,7 @@
 
 NEW FEATURES
 
-    o   par(xpd) now has three settings:  FALSE (clip to plot region), 
+    o   par(xpd) now has three settings:  FALSE (clip to plot region),
         TRUE (clip to figure region), or NA (clip to device region).
 
     o	zapsmall(x) works for complex x.
@@ -23,6 +23,8 @@ NEW FEATURES
 
 
 BUG FIXES
+
+    o	library() gave wrong "masked" warnings in some cases.
 
     o   par(xpd) semantics were not compatible with S.
 

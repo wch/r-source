@@ -28,7 +28,8 @@ library <-
                 }
                 else stop(txt)
             }
-            which.lib.loc <- lib.loc[match(packagedir[1], file.path(lib.loc, name))]
+	    which.lib.loc <-
+		lib.loc[match(packagedir[1], file.path(lib.loc, name))]
             if (length(packagedir) > 1) {
                 warning(paste("Package `", name, "' found more than once,\n  ",
                               "using the one found in `", which.lib.loc,
@@ -53,30 +54,31 @@ library <-
                                ".Random.seed")
                 ## Currently, package is ALWAYS at "pos=2"
                 lib.pos <- 2
-                ob <- objects(lib.pos)
-                ipos <- seq(along = sp <- search())[-c(lib.pos,
-                            match("Autoloads", sp))]
-                for (i in ipos) {
-                    obj.same <- match(objects(i), ob, nomatch = 0)
-                    fst <- TRUE
-                    if (any(obj.same > 0) && length(same <- (ob <- ob[obj.same])[!ob %in% dont.mind])) {
+		ob <- objects(lib.pos)
+		fst <- TRUE
+		ipos <- seq(along = sp <- search())[-c(lib.pos,
+			    match("Autoloads", sp))]
+		for (i in ipos) {
+		    obj.same <- match(objects(i), ob, nomatch = 0)
+		    if (any(obj.same > 0) &&
+			length(same <- (obs <- ob[obj.same])
+			       [!obs %in% dont.mind])) {
                         if (fst) {
                             fst <- FALSE
                             cat("\nAttaching Package \"", pkgname,
                                 "\":\n\n", sep = "")
                         }
-                        cat("\n\tThe following object(s) are masked",
-                            if (i < lib.pos)
-                            "by"
-                            else "from", sp[i], ":\n\n\t", same, "\n\n")
-                    }
-                }
-            }
-        }
-        else {
-            if (options()$verbose)
-                warning(paste("Package", pkgname, "already present in search()"))
-        }
+			cat("\n\tThe following object(s) are masked",
+			    if (i < lib.pos) "_by_" else "from", sp[i],
+			    ":\n\n\t", same, "\n\n")
+		    }
+		}
+	    }
+	}
+	else {
+	    if (options()$verbose)
+		warning(paste("Package",pkgname,"already present in search()"))
+	}
     }
     else if (!missing(help)) {
         if (!character.only)
