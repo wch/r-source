@@ -6,28 +6,28 @@
 
     setClass("MethodsList",
              representation(methods = "list", argument = "name", allMethods = "list"),
-             where = envir)
+             sealed = TRUE, where = envir)
     setClass("EmptyMethodsList", representation(argument = "name", sublist = "list"),
-             where = envir)
+             sealed = TRUE, where = envir)
 
     setClass("LinearMethodsList", representation(methods = "list", arguments = "list",
                                                  classes = "list", fromClasses = "list"),
-             where = envir)
+             sealed = TRUE, where = envir)
     ## the classes for method definitions
-    setClass("PossibleMethod", where = envir)
+    setClass("PossibleMethod", sealed = TRUE, where = envir)
     ## functions (esp. primitives) are methods
     setIs("function", "PossibleMethod", where = envir)
 
     ## signatures -- used mainly as named character vectors
-    setClass("signature", representation("character", names = "character"), where = envir)
+    setClass("signature", representation("character", names = "character"), sealed = TRUE, where = envir)
     
     ## formal method definition for all but primitives
     setClass("MethodDefinition",
              representation("function", "PossibleMethod",
                             target = "signature", defined = "signature"),
-             where = envir)
+             sealed = TRUE, where = envir)
     setClass("MethodWithNext",
-             representation("MethodDefinition", nextMethod = "PossibleMethod", excluded = "list"), where = envir)
+             representation("MethodDefinition", nextMethod = "PossibleMethod", excluded = "list"), sealed = TRUE, where = envir)
     setClass("genericFunction",
              representation("function", generic = "character", package = "character",
                             group = "list", valueClass = "character",

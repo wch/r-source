@@ -1,6 +1,6 @@
 ## the executable code to complete the list of basic functions.
 
-## uses the primitive list and the function .addBasicFunction
+## uses the primitive list and the function .addBasicGeneric
 ## defined (earlier) in BasicFunsList.S
 
 .makeBasicFunsList<- function(where)
@@ -98,3 +98,19 @@
     rm(.addBasicGeneric, envir=where)
 }
 
+.BasicFunsMethods <- list()
+
+.InitSubsetMethods <- function(where) {
+    ## create some methods for the functions in .BasicFunsList.
+    ##
+    ## The strategy on initialization is to create the methods list objects by
+    ## setMethod calls, and then move them to the .BasicFunsMethods list, from
+    ## which they will be retrieved when the generic is installed; see getGeneric.
+    ## The mlist objects can not be left in the methods library itself after initialization,
+    ## since the basic functions are not "turned on" as generics until some other
+    ## package or user defines methods for them.
+    ##
+    ## This facility is not currently instantiated, though there are some desirable changes
+    ## to the "[" and related functions, to untangle the current messing with "drop" and
+    ## multiple subscripts, in the vector case.
+}

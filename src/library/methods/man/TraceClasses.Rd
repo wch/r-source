@@ -4,6 +4,9 @@
 \alias{functionWithTrace-class}
 \alias{MethodDefinitionWithTrace-class}
 \alias{MethodWithNextWithTrace-class}
+\alias{MethodWithNextWithTrace-class}
+\alias{genericFunctionWithTrace-class}
+\alias{groupGenericFunctionWithTrace-class}
 %% private
 \alias{.untracedFunction}
 \alias{.makeTracedFunction}
@@ -27,6 +30,8 @@ Objects will be created from these classes by calls to \code{trace}.
 "functionWithTrace"
 "MethodDefinitionWithTrace"
 "MethodWithNextWithTrace"
+"genericFunctionWithTrace"
+"groupGenericFunctionWithTrace"
 
 ### the following is a virtual class extended by each of the
 ### classes above

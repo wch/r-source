@@ -133,7 +133,10 @@ setAs <-
  "environment",  "expression",  "factor",  "formula",  "function",  "integer", 
  "list",  "logical",  "matrix",  "name",  "numeric",  "ordered", 
   "single",  "table",  "ts",  "vector")
+  basics <- basics[!is.na(match(basics,.BasicClasses))]
   for(what in basics) {
+      ## if the class is a basic class and there exists an as.<class> function,
+      ## use it as the coerce method.
       method  <- eval(function(from, to, strict)NULL, .GlobalEnv)
       body(method) <- substitute(AS(from),
                               list(AS = as.name(paste("as.", what, sep=""))))

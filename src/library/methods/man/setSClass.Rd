@@ -1,39 +1,47 @@
-\name{setSClass}
-\alias{setSClass}
-\title{ Low-level Class definition }
+\name{makeClassRepresentation}
+\alias{makeClassRepresentation}
+\title{ Create a Class Definition }
 \description{
-  This is the lower-level version of \code{\link{setClass}}.  Unless you
-  really know why you are calling it, use \code{setClass} instead.
+Constructs a \code{\link{classRepresentation-class}} object to
+describe a particular class.  Mostly a utility function, but you can
+call it to create a class definition without assigning it, as
+\code{\link{setClass}} would do.
 }
 \usage{
-setSClass(name, properties=list(), extends=character(),
-          prototype=NULL, where=1, virtual=NA, validity, access)
+makeClassRepresentation(name, slots=list(), superClasses=character(),
+          prototype=NULL, package, validity, access, virtual=NA)
 }
 \arguments{
   \item{name}{ character string name for the class }
-  \item{properties}{ the \code{representation} argument to \code{setClass} }
-  \item{extends}{ what classes does this class extend }
-  \item{prototype}{ an object (usually a list) providing the default
-    data for the slots specified in the representation. }
-  \item{where}{ where to store the resulting definition (as metadata).
-    By default, uses the global environment. }
+  \item{slots}{ named list of slot classes as would be supplied to
+  \code{setClass}, but \emph{without} the unnamed arguments for superClasses if any. }
+  \item{superClasses}{ what classes does this class extend }
+  \item{prototype}{ an object providing the default
+    data for the class, e.g, the result of a call to \code{\link{prototype}}. }
+  \item{package}{ The character string name for the package in which
+  the class will be stored; see \code{\link{getPackageName}}. }
+  \item{validity}{Optional validity method.  See
+      \code{\link{validObject}}, and the discussion of validity
+      methods in the reference.}
+   \item{access}{Access information.  Not currently used.
+       }
   \item{virtual}{ Is this known to be a virtual class? }
-  \item{validity, access}{Optional arguments for validity method and
-    access restrictions.  At the time of writing, these are included for
-    compatibility and are not used.  In the future, however, the
-    validity method is likely to be relevant.  See \emph{Programming
-      with Data} for its interpretation.}
 }
 \references{
-  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
-  primary documentation.
+  The R package \code{methods} implements, with a few exceptions, the
+  programming interface for classes
+  and methods in the book \emph{Programming with Data} (John
+  M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
+  and chapters 7 and 8.
 
-  The functions in this package emulate the facility for classes and
-  methods described in \emph{Programming with Data} (John M. Chambers,
-  Springer, 1998).  See this book for further details and examples.
-}
-\author{
-  John Chambers
+  While the programming interface for the methods package follows the reference,
+  the R software is an original implementation, so details in
+  the reference that reflect the S4 implementation may appear
+  differently in R.  Also, there are extensions to the programming
+  interface developed more recently than the reference.  For a
+  discussion of details and ongoing development, see the web page 
+  \url{http://developer.r-project.org/methodsPackage.html} and the
+  pointers from that page.
 }
 \seealso{ \code{\link{setClass}} }
 \keyword{programming}

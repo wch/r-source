@@ -379,6 +379,12 @@ getGeneric <-
               ## initialize the generic function in the list on base
               value <- makeGeneric(f, makeStandardGeneric(f, value), value, package = "base")
               elNamed(.BasicFunsList, f) <<- value
+              mlist <- elNamed(.BasicFunsMethods, f)
+              if(!is.null(mlist)) {
+                  ## initialize the methods for this generic with precomputed mlist
+                  where <- find(".BasicFunsMethods")
+                  assign(mlistMetaName(value), mlist, where)
+              }
           }
       }
     }

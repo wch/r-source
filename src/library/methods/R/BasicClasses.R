@@ -4,31 +4,30 @@
     ## setClass won't allow redefining basic classes,
     ## so make the list of these empty for now.
     assign(".BasicClasses", character(), envir)
-    assign(".OldClasses", character(), envir)
     ## hide some functions that would break because the basic
     ## classes are not yet defined
     real.reconcileP <- reconcilePropertiesAndPrototype
     assign("reconcilePropertiesAndPrototype", function(name, properties, prototype, extends) {
         list(properties=properties, prototype = prototype, extends = extends)
     }, envir)
-    setClass("VIRTUAL", where = envir)
-    setClass("ANY", where = envir)
-    setClass("vector", where = envir)
-    setClass("missing", where = envir)
+    setClass("VIRTUAL", sealed = TRUE, where = envir)
+    setClass("ANY", sealed = TRUE, where = envir)
+    setClass("vector", sealed = TRUE, where = envir)
+    setClass("missing", sealed = TRUE, where = envir)
     vClasses <- c("logical", "numeric", "character",
                 "complex", "integer", "single", "double",
                 "expression", "list")
     for(.class in vClasses) {
-        setClass(.class, prototype = newBasic(.class), where = envir)
+        setClass(.class, prototype = newBasic(.class), sealed = TRUE, where = envir)
     }
     clList <- c(vClasses, "VIRTUAL", "ANY", "vector", "missing")
     nullF <- function()NULL; environment(nullF) <- .GlobalEnv
-    setClass("function", prototype = nullF, where = envir); clList <- c(clList, "function")
+    setClass("function", prototype = nullF, sealed = TRUE, where = envir); clList <- c(clList, "function")
 
-    setClass("language", where = envir); clList <- c(clList, "language")
-    setClass("environment", prototype = new.env(), where = envir); clList <- c(clList, "environment")
+    setClass("language", sealed = TRUE, where = envir); clList <- c(clList, "language")
+    setClass("environment", prototype = new.env(), sealed = TRUE, where = envir); clList <- c(clList, "environment")
 
-    setClass("externalptr", prototype = .newExternalptr(), where = envir); clList <- c(clList, "externalptr")
+    setClass("externalptr", prototype = .newExternalptr(), sealed = TRUE, where = envir); clList <- c(clList, "externalptr")
              
 
     ## NULL is weird in that it has NULL as a prototype, but is not virtual
@@ -36,10 +35,10 @@
     assignClassDef("NULL", nullClass, where = envir); clList <- c(clList, "NULL")
 
     
-    setClass("structure", where = envir); clList <- c(clList, "structure")
+    setClass("structure", sealed = TRUE, where = envir); clList <- c(clList, "structure")
     stClasses <- c("matrix", "array", "ts")
     for(.class in stClasses) {
-        setClass(.class, prototype = newBasic(.class), where = envir)
+        setClass(.class, prototype = newBasic(.class), sealed = TRUE, where = envir)
     }
     clList <- c(clList, stClasses)
     assign(".BasicClasses", clList, envir)
@@ -63,34 +62,34 @@
 
     ## Some class definitions extending "language", delayed to here so
     ## setIs will work.
-    setClass("name", "language", prototype = as.name("<UNDEFINED>"), where = envir); clList <- c(clList, "name")
-    setClass("call", "language", prototype = quote("<undef>"()), where = envir); clList <- c(clList, "call")
-    setClass("{", "language", prototype = quote({}), where = envir); clList <- c(clList, "{")
-    setClass("if", "language", prototype = quote(if(NA) TRUE else FALSE), where = envir); clList <- c(clList, "if")
-    setClass("<-", "language", prototype = quote("<undef>"<-NULL), where = envir); clList <- c(clList, "<-")
-    setClass("for", "language", prototype = quote(for(NAME in logical()) NULL), where = envir); clList <- c(clList, "for") 
-    setClass("while", "language", prototype = quote(while(FALSE) NULL), where = envir); clList <- c(clList, "while") 
-    setClass("repeat", "language", prototype = quote(repeat{break}), where = envir); clList <- c(clList, "repeat") 
-    setClass("(", "language", prototype = quote((NULL)), where = envir); clList <- c(clList, "(") 
+    setClass("name", "language", prototype = as.name("<UNDEFINED>"), sealed = TRUE, where = envir); clList <- c(clList, "name")
+    setClass("call", "language", prototype = quote("<undef>"()), sealed = TRUE, where = envir); clList <- c(clList, "call")
+    setClass("{", "language", prototype = quote({}), sealed = TRUE, where = envir); clList <- c(clList, "{")
+    setClass("if", "language", prototype = quote(if(NA) TRUE else FALSE), sealed = TRUE, where = envir); clList <- c(clList, "if")
+    setClass("<-", "language", prototype = quote("<undef>"<-NULL), sealed = TRUE, where = envir); clList <- c(clList, "<-")
+    setClass("for", "language", prototype = quote(for(NAME in logical()) NULL), sealed = TRUE, where = envir); clList <- c(clList, "for") 
+    setClass("while", "language", prototype = quote(while(FALSE) NULL), sealed = TRUE, where = envir); clList <- c(clList, "while") 
+    setClass("repeat", "language", prototype = quote(repeat{break}), sealed = TRUE, where = envir); clList <- c(clList, "repeat") 
+    setClass("(", "language", prototype = quote((NULL)), sealed = TRUE, where = envir); clList <- c(clList, "(") 
 
     ## a virtual class used to allow NULL as an indicator that a possible function
     ## is not supplied (used, e.g., for the validity slot in classRepresentation
-    setClass("OptionalFunction", where = envir)
+    setClass("OptionalFunction", sealed = TRUE, where = envir)
     setIs("function", "OptionalFunction", where = envir)
     setIs("NULL", "OptionalFunction")
     
     ## some heuristics to find known old-style classes by looking for plausible
     ## method names (!)  We can't guarantee anything about this list, but it's used
     ## to avoid annoying warning message from matchSignature
-    clList <- unique(c(
+    oldClasses <-  unique(c(
            substring(objects("package:base", pat = "^plot[.]"), 6),
            substring(objects("package:base", pat = "^summary[.]"), 9),
            substring(objects("package:base", pat = "^predict[.]"), 9),
            substring(objects("package:base", pat = "^Ops[.]"), 5),
            substring(objects("package:base", pat = "^print[.]"), 7)))
     ## there are no known old classes with >1 dot in the name??
-    clList <- clList[-grep("[.].*[.]", clList)]
-    assign(".OldClasses", clList, envir)
+    oldClasses <- oldClasses[-grep("[.].*[.]", clList)]
+    assign(".BasicClasses", c(clList, oldClasses), envir)
     ## restore the true definition of the hidden functions
     assign("reconcilePropertiesAndPrototype", real.reconcileP, envir)
 }

@@ -17,10 +17,10 @@
     value
 }
 
-callNextMethod <- function() {
+callNextMethod <- function(...) {
     envir <- parent.frame()
     if(exists(".nextMethod", envir = envir, inherits = FALSE))
-        nextMethod <- get(".nextMethod", envir = envir, inherits = FALSE)
+        method <- get(".nextMethod", envir = envir)
     else {
         ## set up the nextMethod object, load it
         ## into the calling environment, and maybe cache it
@@ -53,7 +53,14 @@ callNextMethod <- function() {
         else
             stop("Can't use NextMethod:  the method isn't a MethodDefinition object")
     }
-    .Call("R_nextMethodCall", formalArgs(nextMethod), envir, PACKAGE="methods")
+    if(nargs()>0)
+        eval(substitute(.nextMethod(...)), envir)
+    else 
+        .Call("R_nextMethodCall",
+              match.call(
+                   if(is.primitive(method)) get(".Method", envir = envir)
+                   else method, sys.call(-1)),
+              envir, PACKAGE="methods")
 }
 
 loadMethod <- function(method, fname, envir)

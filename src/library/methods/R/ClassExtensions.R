@@ -5,7 +5,7 @@
                                                replace = "function",
                                                simple = "logical", by = "character",
                                                dataPart = "logical"),
-             where = where)
+             sealed = TRUE, where = where)
 }
 
 .simpleExtCoerce <- function(from, strict = TRUE)from
@@ -45,7 +45,7 @@ makeExtends <- function(Class, to,
                         coerce = NULL, test = NULL, replace = NULL,
                         by = character(), package = getPackageName(findClass(to)),
                         slots = getSlots(classDef1),
-                        classDef1 = getClass(Class), classDef2 = getClass(to)) {
+                        classDef1 = getClass(Class, TRUE), classDef2 = getClass(to, TRUE)) {
     simple <- is.null(coerce) && is.null(test) && is.null(replace) && (length(by)==0)
     dataPartClass <- elNamed(slots, ".Data")
     dataPart <- simple && !is.null(dataPartClass) && extends(to, dataPartClass)

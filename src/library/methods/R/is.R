@@ -77,8 +77,15 @@ setIs <-
     ## during the setClass computations to record simple contained classes &
     ## completeClassDefinition may get into a loop then.
     classDef1 <- getClassDef(class1)
+    ## But, we want at least a minimal definition to allow for relations with old-style
+    ## classes: so,
+    if(!is(classDef1, "classRepresentation"))
+        classDef1 <- getClass(class1, TRUE)
     classDef2 <- getClassDef(class2)
-    if(is.null(classDef1) || is.null(classDef2))
+    if(!is(classDef2, "classRepresentation"))
+        classDef2 <- getClass(class2, TRUE)
+    if((is.null(classDef1) || is.null(classDef2)) &&
+       !(isVirtualClass(class1) && isVirtualClass(class2)))
         stop(paste("Both \"", class1, "\" nor \"", class2,
              "\" must be defined to create an is relation between them", sep=""))
     obj <- makeExtends(class1, class2, coerce, test, replace, by,

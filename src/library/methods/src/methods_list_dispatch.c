@@ -735,30 +735,45 @@ SEXP R_M_setPrimitiveMethods(SEXP fname, SEXP op, SEXP code_vec,
     return R_set_prim_method(fname, op, code_vec, fundef, mlist);
 }
 
-SEXP R_nextMethodCall(SEXP argNames, SEXP ev) {
-    SEXP e, val, args = FRAME(ev);
-    int nprotect = 0, n = length(args), i, extras, nargs = length(argNames);
-    PROTECT(e = allocVector(LANGSXP, nargs+1)); nprotect++;
-    SETCAR(e, R_dot_nextMethod); val = CDR(e);
-    /* the arguments are the formal name, or missing, and we assume
-       the first n elements of the frame are the arguments, since the
-       method definition is required to have the same args (this can
-       be checked by comparing to argNames).
+SEXP R_nextMethodCall(SEXP matched_call, SEXP ev) {
+    SEXP e, val, args, arg1, this_sym;
+    int nprotect = 0, i, extras, nargs = length(matched_call)-1, error_flag;
+    Rboolean prim_case, set_tag;
+    PROTECT(e = duplicate(matched_call)); nprotect++;
+    /* for primitive .nextMethod's, unset the object bit of the first
+       argument, to avoid  going into an infinite loop of method calls
     */
-    extras = n - nargs;
-    /* we assume (can we?) that the last nargs elements in the frame
-       are the arguments, everything else gets pushed down before */
-    for(i=0; i< extras; i++)
-	args = CDR(args);
+    val = findVar(R_dot_nextMethod, ev);
+    prim_case = isPrimitive(val);
+    if(!prim_case)
+	SETCAR(e, R_dot_nextMethod); val = CDR(e);
+    /* else, retain the call to the C code for special magic in
+       argument handling, etc.  (esp. for "[" and friends).  The
+       mangling of the object bit should prevent recursive looping.  */
+    args = CDR(e);
+    set_tag = FALSE;
     for(i=0; i<nargs; i++) {
-	if(MISSING(args))
-	    SETCAR(val, R_MissingArg);
-	else
-	    SETCAR(val, TAG(args));
+	this_sym = TAG(args);
+	if(prim_case && i == 0) {
+	    PROTECT(arg1 = R_tryEval(this_sym, ev, &error_flag)); nprotect++;
+	    if(error_flag)
+		    Rf_error("Error in finding first argument  for primitive next method");
+	    SET_OBJECT(arg1, 0);
+	    SETCAR(val, arg1);
+	}
+	else 
+	    SETCAR(val, this_sym);
 	val = CDR(val);
 	args = CDR(args);
     }
-    val = eval(e, ev);
+    if(prim_case) {
+	    val = R_tryEval(e, ev, &error_flag);
+	    SET_OBJECT(arg1, 1);
+	    if(error_flag)
+		    Rf_error("Error in evaluating a primitive next method");
+    }
+    else
+	    val = eval(e, ev);
     UNPROTECT(nprotect);
     return val;
 }

@@ -122,9 +122,6 @@ completeClassDefinition <-
   ## and is returned as the value of the call.
   function(Class, ClassDef = getClassDef(Class))
 {
-    if(ClassDef@sealed) {
-        ## no further completion allowed (true of the classes in the methods package)
-    }
     if(isClass(Class) || !missing(ClassDef)) {
         properties <- getProperties(ClassDef)
         immediate <- .mergeExtends(extendsMetaName(ClassDef))
@@ -203,14 +200,15 @@ completeClassDefinition <-
         if(is.na(virtual))
             ## compute it from the immediate extensions, but all the properties
             virtual <- testVirtual(properties, immediate, prototype)
-        ClassDef  <-  newClassRepresentation(className = Class, slots = properties,
-                                     contains = extends,
-                                     prototype = prototype,
-                                     subclasses = subclasses,
-                                     virtual = virtual,
-                                     validity = validity,
-                                     access = access,
-                                     package = package)
+        ## modify the initial class definition object, rather than creating
+        ## a new one, to allow extensions of "classRepresentation"
+        ## Done by a separate function to allow a bootstrap version.
+        ClassDef <- .mergeClassDefSlots(ClassDef,
+        slots = properties,
+        contains = extends,
+        prototype = prototype,
+        virtual = virtual,
+        subclasses = subclasses)
     }
     else {
         ## create a class definition of an empty virtual class
@@ -453,7 +451,7 @@ assignClassDef <-
 
 .initClassSupport <- function(where) {
     setClass("classPrototypeDef", representation(object = "ANY", slots = "character"),
-             where = where)
+             sealed = TRUE, where = where)
 }
 
 
@@ -645,7 +643,7 @@ reconcilePropertiesAndPrototype <-
              is.null(attr(prototype, propName)))
               slot(prototype, propName, FALSE) <- tryNew(el(props, i))
       }
-      list(properties = properties, prototype = prototype, superClasses = superClasses)
+      list(properties = properties, prototype = prototype)
   }
 
 tryNew <-
@@ -675,7 +673,7 @@ isClassDef <-
 showClass <-
   ## print the information about a class definition.  If complete==TRUE, include the
   ## indirect information about extensions.
-  function(Class, complete = TRUE, propertiesAreCalled = "Properties") {
+  function(Class, complete = TRUE, propertiesAreCalled = "Slots") {
     if(isClassDef(Class)) {
       ClassDef <- Class
       Class <- getClassName(ClassDef)
@@ -718,20 +716,24 @@ showExtends <-
       how <- character(length(ext))
       for(i in seq(along=ext)) {
           eli <- el(ext, i)
-          if(length(eli$by) > 0)
-              how[i] <- paste("by class", paste("\"", eli$by, "\"", sep="", collapse = ", "))
-          else if(identical(eli$dataPart, TRUE))
-              how[i] <- "from data part"
-          else
-              how[i] <- "directly"
-          if(is.function(eli$test)) {
-              if(is.function(eli$coerce))
-                  how[i] <- paste(how[i], ", with explicit test and coerce", sep="")
+          if(is(eli, "SClassExtension")) {
+              if(length(eli@by) > 0)
+                  how[i] <- paste("by class", paste("\"", eli@by, "\"", sep="", collapse = ", "))
+              else if(identical(eli@dataPart, TRUE))
+                  how[i] <- "from data part"
               else
-                  how[i] <- paste(how[i], ", with explicit test", sep="")
+                  how[i] <- "directly"
+              if(!eli@simple) {
+                  if(is.function(eli@test)) {
+                      if(is.function(eli@coerce))
+                          how[i] <- paste(how[i], ", with explicit test and coerce", sep="")
+                      else
+                          how[i] <- paste(how[i], ", with explicit test", sep="")
+                  }
+                  else if(is.function(eli@coerce))
+                      how[i] <- paste(how[i], ", with explicit coerce", sep="")
+              }
           }
-          else if(is.function(eli$coerce))
-              how[i] <- paste(how[i], ", with explicit coerce", sep="")
       }
       if(identical(printTo, FALSE))
           list(what = what, how = how)
@@ -1098,7 +1100,8 @@ setDataPart <- function(object, value) {
 }
 
 ## construct the expression that copies slots into the new object
-## The fromSlots argument is provided for calls from setSClass and completeClassDefinition,
+## The fromSlots argument is provided for calls from makeClassRepresentation
+## and completeClassDefinition,
 ## when the fromClass is in the process of being defined, so slotNames() would fail
 .simpleCoerceExpr <- function(fromClass, toClass, fromSlots = slotNames(fromClass)) {
     toSlots <-  slotNames(toClass)
@@ -1219,4 +1222,20 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
         validity <- substituteFunctionArgs(validity, "object")
     }
     validity
+}
+
+# the bootstrap version of setting slots in completeClassDefinition
+.mergeClassDefSlots <- function(ClassDef, ...) {
+    slots <- list(...); slotNames <- names(slots)
+    for(i in seq(along = slots))
+        slot(ClassDef, slotNames[[i]], FALSE) <- slots[[i]]
+    ClassDef
+}
+
+## the real version:  differs only in checking the slot values
+..mergeClassDefSlots <- function(ClassDef, ...) {
+    slots <- list(...); slotNames <- names(slots)
+    for(i in seq(along = slots))
+        slot(ClassDef, slotNames[[i]]) <- slots[[i]]
+    ClassDef
 }

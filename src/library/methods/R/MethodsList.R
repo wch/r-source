@@ -386,10 +386,8 @@ matchSignature <-
         stop("Internal error: matchSignature was not called with a generic function object")
     names <- fun@signature
     sigClasses <- as.character(signature)
-    if(length(sigClasses) > 0) {
+    if(length(sigClasses) > 0)
         unknown <- !sapply(sigClasses, function(x)isClass(x))
-        unknown <- unknown & is.na(match(sigClasses, .OldClasses))
-    }
     else
         unknown <- logical()
     signature <- as.list(signature)

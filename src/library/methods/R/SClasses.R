@@ -1,20 +1,44 @@
 setClass <-
-  ## Define Class to be an S-style class.
-  function(Class, representation = list(), prototype = NULL,
-                     contains = character(), validity = NULL, access = list(),
-                     where = 1, version = FALSE)
+    ## Define Class to be an S-style class.
+    function(Class, representation = list(), prototype = NULL,
+             contains = character(), validity = NULL, access = list(),
+             where = 1, version = .newExternalptr(), sealed = FALSE, package = getPackageName(where))
 {
-    if(!is.na(match(Class, .BasicClasses)))
-        stop(paste("\"", Class, "\" is a basic class and cannot be redefined", sep=""))
-    ## catch the special case of a single class name as the representation
-    if(is.character(representation) && length(representation) == 1 &&
-       is.null(names(representation)))
-        representation <- list(representation)
-    slots <- nchar(allNames(representation))>0
-    extends <- c(as.character(representation[!slots]), contains)
-    properties <- representation[slots]
-    setSClass(Class, properties,extends, prototype, where=where,
-              validity = validity, access = access)
+    if(isClass(Class) && getClassDef(Class)@sealed)
+        stop(paste("\"", Class, "\" has a sealed class definition and cannot be redefined", sep=""))
+    if(is(representation, "classRepresentation")) {
+        ## supplied a class definition object
+        classDef <- representation
+        if(!(missing(prototype) && missing(contains) && missing(validity) && missing(access)
+             && missing(version) && missing(package)))
+            stop("Only arguments Class and where can be supplied when argument \"representation\" is a classRepresentation object")
+        if(length(classDef@package)==0)
+            classDef@package <- package # the default
+        superClasses <- allNames(classDef@contains)
+    }
+    else { 
+        ## catch the special case of a single class name as the representation
+        if(is.character(representation) && length(representation) == 1 &&
+           is.null(names(representation)))
+            representation <- list(representation)
+        slots <- nchar(allNames(representation))>0
+        superClasses <- c(as.character(representation[!slots]), contains)
+        properties <- representation[slots]
+        classDef <- makeClassRepresentation(Class, properties,superClasses, prototype, package,
+                                             validity, access, version, sealed)
+        superClasses <- names(classDef@contains)
+    }
+    assignClassDef(Class, classDef, where)
+    for(class2 in superClasses)
+        setIs(Class, class2, where = where)
+    ## confirm the validity of the class definition (it may be incomplete)
+    msg <- trySilent(completeClassDefinition(Class, classDef))
+    if(is(msg, "try-error")) {
+        removeClass(Class, where=where)
+        stop(paste("Cannot complete class definition for \"", name, "\" (",
+                   msg, ")", sep=""))
+    }
+    Class
 }
 
 representation <-
@@ -37,11 +61,17 @@ representation <-
         stop(paste("Duplicate class names among superclasses:", paste(includes[duplicated(includes)], collapse = ", ")), sep="")
     slots <- anames[nchar(anames)>0]
     if(any(duplicated(slots)))
-       stop(paste("Duplicated slot names: ", paste(slots[duplicated(slots)], collapse="")), sep="")
+       stop(paste("Duplicated slot names: ", paste(slots[duplicated(slots)], collapse=""), sep=""))
     value
 }
 
-prototype <- function(...) {
+### the version called prototype is the external interface.  But functions with argument
+### named prototype in R cannot call the prototype function (until there is a methods namespace
+### to allow methods::prototype(...)
+prototype <- function(...)
+    .prototype(...)
+
+.prototype <- function(...) {
     props <- list(...)
     names <- allNames(props)
     data <- nchar(names) == 0
@@ -59,53 +89,44 @@ prototype <- function(...) {
     new("classPrototypeDef", object = obj, slots = names)
 }
 
-setSClass <-
+makeClassRepresentation <-
   ## Set the Class Definition.
   ## The formal definition of the class is set according to the arguments.
   ##
   ## Users should call setClass instead of this function.
-  function(name, properties = list(), extends = character(), prototype = NULL, where = 1, virtual = NA, validity = NULL, access = list())
+  function(name, slots = list(), superClasses = character(), prototype = NULL, package, validity = NULL, access = list(), version = .newExternalptr(), sealed = FALSE, virtual = NA)
 {
     ## remove from the cached definition (only) right away
     removeClass(name, where = 0)
-    superClasses <- extends
-    if(!is.null(prototype) || length(properties)>0 || length(extends) >0) {
+    if(!is.null(prototype) || length(slots)>0 || length(superClasses) >0) {
         ## collect information about slots, create prototype if needed
-        pp <- reconcilePropertiesAndPrototype(name, properties, prototype, superClasses)
-        properties <- pp$properties
+        pp <- reconcilePropertiesAndPrototype(name, slots, prototype, superClasses)
+        slots <- pp$properties
         prototype <- pp$prototype
-        superClasses <- pp$superClasses
     }
-    extends <- list();
+    contains <- list();
     for(what in superClasses) {
         whatClassDef <- getClass(what)
         ## Create the SClassExtension objects (will be simple, possibly dataPart).
         ## The slots are supplied explicitly, since `name' is currently an undefined class
-        elNamed(extends, what) <- makeExtends(name, what, slots = properties,
+        elNamed(contains, what) <- makeExtends(name, what, slots = slots,
                                               classDef2 = whatClassDef)
     }
     validity <- .makeValidityMethod(name, validity)
-    if(is.na(virtual))
-        virtual <- testVirtual(properties, superClasses, prototype)
-    package <- getPackageName(where)
-    classDef  <-  newClassRepresentation(className = name, slots = properties,
-                      contains = extends,
-                      prototype = prototype,
-                      virtual = virtual,
-                      validity = validity,
-                      access = access,
-                      package = package)
-    assignClassDef(name, classDef, where)
-    for(class2 in superClasses)
-        setIs(name, class2, where = where)
-    ## confirm the validity of the class definition (it may be incomplete)
-    msg <- trySilent(completeClassDefinition(name, classDef))
-    if(is(msg, "try-error")) {
-        removeClass(name, where=where)
-        stop(paste("Cannot complete class definition for \"", name, "\" (",
-                   msg, ")", sep=""))
+    if(is.na(virtual)) {
+        virtual <- testVirtual(slots, contains, prototype)
+        if(virtual && !is.na(match("VIRTUAL", superClasses)))
+            elNamed(contains, "VIRTUAL") <- NULL
     }
-    name
+    newClassRepresentation(className = name, slots = slots,
+                           contains = contains,
+                           prototype = prototype,
+                           virtual = virtual,
+                           validity = validity,
+                           access = access,
+                           package = package,
+                           versionKey = version,
+                           sealed = sealed)
 }
 
 getClassDef <-
@@ -143,7 +164,9 @@ getClass <-
         if(is.null(value)) {
             if(!.Force)
                 stop(paste("\"", Class, "\" is not a defined class", sep=""))
-        } ## else return NULL
+            else
+                value <- makeClassRepresentation(Class, package = "base", virtual = TRUE)
+        }
         else
             value <- completeClassDefinition(Class, value)
       }
@@ -264,7 +287,7 @@ isClass <-
 new <-
   ## Generate an object from the specified class.
   ##
-  ## If other arguments are included, these are the values for named properties
+  ## If other arguments are included, these are the values for named slots
   ## in the object, or an object that can be coerced into this class.
   ## Note that the basic vector classes, `"numeric"', etc. are implicitly defined,
   ## so one can use `new' for these classes.
@@ -326,9 +349,9 @@ validObject <- function(object, test = FALSE) {
   extends <- names(extendType); i <- 1
   while(length(errors) == 0 && i <= length(extends)) {
     superClass <- extends[[i]]
-    test <- extendType[[i]]$test
+    testFun <- extendType[[i]]$test
     i <- i+1
-    if(is.function(test) && !is(object, superClass))
+    if(is.function(testFun) && !is(object, superClass))
       next ## skip conditional relations that don't hold for this object
     validityMethod <- getValidity(getClassDef(superClass))
     if(is(validityMethod, "function"))
@@ -405,6 +428,9 @@ initialize <- function(.Object, ...) {
         elements <- args[which]
         supers <- args[!which]
         thisExtends <- names(getExtends(ClassDef))
+        slotDefs <- getProperties(ClassDef)
+        dataPart <- elNamed(slotDefs, ".Data")
+        if(is.null(dataPart)) dataPart <- "missing"
         if(length(supers) > 0) {
             for(i in rev(seq(along = supers))) {
                 obj <- el(supers, i)
@@ -413,6 +439,8 @@ initialize <- function(.Object, ...) {
                     .Object <- obj
                 else if(extends(Classi, Class))
                     .Object <- as(obj, Class, strict=FALSE)
+                else if(extends(Classi, dataPart))
+                    .Object@.Data <- obj
                 else if(extends(Class, Classi))
                     as(.Object, Classi) <- obj
                 else {
@@ -434,14 +462,13 @@ initialize <- function(.Object, ...) {
             }
         }
         if(length(elements)>0) {
-            slotDefs <- getProperties(ClassDef)
             snames <- names(elements)
             if(any(duplicated(snames)))
                 stop(paste("Duplicated slot names:",
                            paste(snames[duplicated(snames)], collapse = ", ")), sep="")
             which  <- match(snames, names(slotDefs))
             if(any(is.na(which)))
-                stop(paste("Invalid names for properties of class ",
+                stop(paste("Invalid names for slots of class ",
                            Class, ": ", paste(snames[is.na(which)], collapse=", "), sep=""))
             for(i in seq(along=snames)) {
                 slotName <- el(snames, i)
