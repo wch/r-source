@@ -11,13 +11,15 @@ Alternative installer based on Inno Setup 2.0.x.
 
 The windows() device no longer rounds width and height to the nearest inch.
 
-File extract-usage needed for codoc was missing from rw1022sp.zip.
+File `extract-usage' needed for codoc was missing from rw1022sp.zip.
 
-The default memory limit is set to at least 16Mb, to allow R to start
-on 8Mb machines.
+The default memory limit (as reset by --max-mem-size) is set to at
+least 16Mb, to allow R to start on 8Mb machines.
 
 link.html.help() has been re-written using connections and so is
 several times faster.
+
+Rcmd INSTALL now allows Windows-style paths to a tar file.
 
 
 
