@@ -191,7 +191,7 @@ function(package, dir, lib.loc = NULL)
         }
         if(length(files) > 0)
             dataObjs <- c(dataObjs,
-                          basename(sub("\\.[A-Za-z]*$", "", files)))
+			  sapply(sub("\\.[A-Za-z]*$", "", files), basename))
     }
 
     ## Undocumented objects?
