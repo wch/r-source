@@ -15,7 +15,7 @@ export("?", CRAN.packages, Rprof, apropos, assignInNamespace,
        packageDescription, packageStatus, page, person, personList,
        pico, prompt, promptData, readCitationFile, read.fwf,
        read.fortran, read.socket, recover, remove.packages,
-       savehistory, shQuote, str, summaryRprof, tail, topicName,
+       savehistory, str, summaryRprof, tail, topicName,
        update.packageStatus, update.packages, upgrade, url.show, vi,
        vignette, write.socket, wsbrowser, xedit, xemacs)
 
