@@ -151,8 +151,8 @@ Unix, see @ref{Configure and cleanup}.
 
 @cindex COPYING file
 
-The optional file @file{COPYING} contains a copy of the license to the package,
-e.g. a copy of the GNU public license.
+The optional file @file{COPYING} contains a copy of the license to the
+package, e.g.@: a copy of the GNU public license.
 
 The package subdirectory should be given the same name as the package.
 Because some file systems (e.g., those on Windows) are not
@@ -1791,14 +1791,15 @@ of the form
 
 @noindent
 where @var{signature_list} contains the names of the classes in the
-signature of the method (without quotes) separated by @samp{,}, with
-@samp{ANY} used for arguments without an explicit specification.  E.g.,
-@samp{genericFunction-class} is the topic name for documentation for the
-S4 class @code{"genericFunction"}, and @samp{coerce,ANY,NULL-method} is
-the topic name for documentation for the S4 method for @code{coerce} for
-signature @code{c("ANY", "NULL")}.  It is crucial not to use different
-topic names, as otherwise the facilities for getting on-line
-documentation on S4 classes and methods via @samp{?} are bypassed.
+signature of the method (without quotes) separated by @samp{,} (without
+whitespace), with @samp{ANY} used for arguments without an explicit
+specification.  E.g., @samp{genericFunction-class} is the topic name for
+documentation for the S4 class @code{"genericFunction"}, and
+@samp{coerce,ANY,NULL-method} is the topic name for documentation for
+the S4 method for @code{coerce} for signature @code{c("ANY", "NULL")}.
+It is crucial not to use different topic names, as otherwise the
+facilities for getting on-line documentation on S4 classes and methods
+via @samp{?} are bypassed.
 
 Skeletons of documentation for S4 classes and methods can be generated
 by using the functions @code{promptClass()} and @code{promptMethods()},
