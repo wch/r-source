@@ -590,9 +590,9 @@ se.contrast.aovlist <-
                 uasgn <- unique(asgn)
                 nm <- c("(Intercept)", attr(strata$terms, "term.labels"))
                 res.i <-
-                    matrix(0, length(asgn), ncol(effects),
+                    matrix(0, length(uasgn), ncol(effects),
                            dimnames = list(nm[1 + uasgn], colnames(contrast)))
-                for(i in seq(along = asgn)) {
+                for(i in seq(along = uasgn)) {
                     select <- (asgn == uasgn[i])
                     res.i[i, ] <-
                         colSums(effects[seq(along=asgn)[select], , drop = FALSE]^2)
@@ -659,8 +659,13 @@ se.contrast.aovlist <-
                           if(sum(temp) == 1) temp
                           else max(ind[temp]) == ind
                       })
-    strata.nms <- rownames(effic)[row(eff.used)[eff.used]]
-    var.nms <- colnames(effic)[col(eff.used)[eff.used]]
+    if(is.matrix(eff.used)) {
+        strata.nms <- rownames(effic)[row(eff.used)[eff.used]]
+        var.nms <- colnames(effic)[col(eff.used)[eff.used]]
+    } else {
+        strata.nms <- rownames(effic)
+        var.nms <- colnames(effic)
+    }
     rse.list <- sapply(object[unique(strata.nms)], SS)
     wgt <- matrix(0, nrow = length(var.nms), ncol = ncol(contrast),
                   dimnames = list(var.nms, colnames(contrast)))
