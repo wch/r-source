@@ -71,7 +71,8 @@ distclean:
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
-	@rm -f Makefile
+	@rm -f Makefile	*/DESCRIPTION
+
 maintainer-clean: distclean
 
 install install-strip uninstall TAGS info dvi check::
