@@ -28,7 +28,8 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                         call. = FALSE)
             }
             if(.Platform$OS.type == "unix") {
-                if(!is.na(platform <- builtFields[2])) {
+                platform <- builtFields[2]
+                if(length(grep("\\w", platform))) {
                     ## allow for small mismatches, e.g. OS version number.
                     m <- agrep(platform, R.version$platform)
                     if(!length(m))
