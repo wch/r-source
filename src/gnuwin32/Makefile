@@ -36,7 +36,8 @@ PKGCLEAN = $(foreach i, $(ALLPACKAGES), pkgclean-$i)
 all: rbuild rdemo rpackage
 
 # separate as Tcl/Tk headers are needed.
-tcl: pkg-tcltk
+tcl: 
+	$(MAKE) STAMP=NO pkg-tcltk
 
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H
 FFLAGS = $(OPTFLAGS)

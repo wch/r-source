@@ -1,17 +1,17 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-09-07)
+Version 1.2.0 Under development (unstable) (2000-11-24)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type	"?license" or "?licence" for distribution details.
+Type `license()' or `licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type	"?contributors" for a list.
+Type `contributors()' for more information.
 
-Type	"demo()" for some demos, "help()" for on-line help, or
-    	"help.start()" for a HTML browser interface to help.
-Type	"q()" to quit R.
+Type `demo()' for some demos, `help()' for on-line help, or
+`help.start()' for a HTML browser interface to help.
+Type `q()' to quit R.
 
 > #### Testing print(), format()	and the like --- mainly with numeric()
 > ####
@@ -385,4 +385,33 @@ b 1.2+10i 2.4+20.000000i
 a 1.0+ 2i 2.0+ 5.141593i
 b 1.2+11i 2.4+23.141593i
 > 
+> #--- format checks after incorrect changes in Nov 2000
+> zz <- data.frame("(row names)" = c("aaaaa", "b"), check.names = FALSE)
+> format(zz)
+  (row names)
+1       aaaaa
+2           b
+> format(zz, justify = "left")
+  (row names)
+1       aaaaa
+2       b    
+> zz <- data.frame(a = I("abc"), b = I("def\"gh"))
+> format(zz)
+    a      b
+1 abc def"gh
+> # test format.data.frame on former AsIs's.
+> set.seed(321)
+> dd <- data.frame(x = 1:5, y = rnorm(5), z = c(1, 2, NA, 4, 5))
+> model <- glm(y ~ x, data = dd, subset = 1:4, na.action = na.omit)
+> expand.model.frame(model, "z", na.expand = FALSE)
+           y x z
+1  0.9976322 1 1
+2 -0.5900230 2 2
+4 -0.3715109 4 4
+> expand.model.frame(model, "z", na.expand = TRUE)
+           y x  z
+1  0.9976322 1  1
+2 -0.5900230 2  2
+3  1.6192917 3 NA
+4 -0.3715109 4  4
 > 
