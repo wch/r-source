@@ -58,6 +58,10 @@ noinst_LIBRARIES = libnmath.a
 libnmath_a_SOURCES = $(SOURCES)
 libnmath_a_OBJECTS = $(OBJECTS)
 
+## FIXME:
+## We most likely will not want a seperate shared library.
+## If we have a final decision, remove libnmath.la target.
+## </FIXME>
 noinst_LTLIBRARIES = libnmath.la
 libnmath_la_SOURCES = $(SOURCES)
 libnmath_la_OBJECTS = $(OBJECTS:.o=.lo)

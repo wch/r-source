@@ -53,6 +53,10 @@ noinst_LIBRARIES = libappl.a
 libappl_a_SOURCES = $(SOURCES)
 libappl_a_OBJECTS = $(OBJECTS)
 
+## FIXME:
+## We most likely will not want a seperate shared library.
+## If we have a final decision, remove libappl.la target.
+## </FIXME>
 noinst_LTLIBRARIES = libappl.la
 libappl_la_SOURCES = $(SOURCES)
 libappl_la_OBJECTS = $(OBJECTS:.o=.lo)
