@@ -1860,6 +1860,7 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
     gpnewsave = dd->gp.new;
     dpnewsave = dd->dp.new;
     cexsave = dd->gp.cex;
+    fontsave = dd->gp.font;
 
     /* override par("xpd") and force clipping to figure region */
     /* NOTE: don't override to _reduce_ clipping region */
