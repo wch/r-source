@@ -149,6 +149,9 @@ NEW FEATURES
     o	Function file.edit() function added: like file.show(), but
 	allows editing.
 
+    o	Function file.info() can return file sizes > 2G if the
+	underlying OS supports such.
+
     o	fisher.test(*, conf.int=FALSE) allows the confidence interval
 	computation to be skipped.
 

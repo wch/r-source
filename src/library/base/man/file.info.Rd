@@ -25,7 +25,7 @@ file.info(\dots)
 }
 \value{
   A data frame with row names the file names and columns
-  \item{size}{integer: File size in bytes.}
+  \item{size}{double: File size in bytes.}
   \item{isdir}{logical: Is the file a directory?}
   \item{mode}{integer of class \code{"octmode"}.  The file permissions,
     printed in octal, for example \code{644}.}

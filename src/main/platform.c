@@ -522,7 +522,7 @@ SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ans = allocVector(VECSXP, 6));
     PROTECT(ansnames = allocVector(STRSXP, 6));
 #endif
-    fsize = SET_VECTOR_ELT(ans, 0, allocVector(INTSXP, n));
+    fsize = SET_VECTOR_ELT(ans, 0, allocVector(REALSXP, n));
     SET_STRING_ELT(ansnames, 0, mkChar("size"));
     isdir = SET_VECTOR_ELT(ans, 1, allocVector(LGLSXP, n));
     SET_STRING_ELT(ansnames, 1, mkChar("isdir"));
@@ -547,7 +547,7 @@ SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < n; i++) {
 	if (STRING_ELT(fn, i) != R_NilValue &&
 	    stat(R_ExpandFileName(CHAR(STRING_ELT(fn, i))), &sb) == 0) {
-	    INTEGER(fsize)[i] = (int) sb.st_size;
+	    REAL(fsize)[i] = (double) sb.st_size;
 	    LOGICAL(isdir)[i] = (sb.st_mode & S_IFDIR) > 0;
 	    INTEGER(mode)[i]  = (int) sb.st_mode & 0007777;
 	    REAL(mtime)[i] = (double) sb.st_mtime;
@@ -564,7 +564,7 @@ SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else SET_STRING_ELT(grname, i, NA_STRING);
 #endif
 	} else {
-	    INTEGER(fsize)[i] = NA_INTEGER;
+	    REAL(fsize)[i] = NA_REAL;
 	    LOGICAL(isdir)[i] = NA_INTEGER;
 	    INTEGER(mode)[i]  = NA_INTEGER;
 	    REAL(mtime)[i] = NA_REAL;
