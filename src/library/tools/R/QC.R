@@ -513,14 +513,16 @@ function(package, dir, lib.loc = NULL,
 
     db <- lapply(db,
                  function(f) paste(Rdpp(f), collapse = "\n"))
-    names(db) <- dbNames <- sapply(db, get_Rd_section, "name")
+    names(db) <- dbNames <- .get_Rd_names_from_Rd_db(db)
     if(isBase || basename(dir) == "graphics") {
         ind <- dbNames %in% c("Defunct", "Devices")
         db <- db[!ind]
         dbNames <- dbNames[!ind]
     }
-    dbUsageTexts <- lapply(db, get_Rd_section, "usage")
-    dbSynopses <- lapply(db, get_Rd_section, "synopsis")
+    dbUsageTexts <-
+        .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "usage")
+    dbSynopses <-
+        .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "synopsis")
     ind <- sapply(dbSynopses, length) > 0
     dbUsageTexts[ind] <- dbSynopses[ind]
     withSynopsis <- as.character(dbNames[ind])
@@ -835,23 +837,15 @@ function(package, lib.loc = NULL)
     db <- db[idx]; aliases <- aliases[idx]
     ## Now collapse.
     db <- lapply(db, paste, collapse = "\n")
-    RdSlots <- lapply(db, get_Rd_section, "Slots", FALSE)
+    RdSlots <-
+        .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "Slots", FALSE)
     idx <- !sapply(RdSlots, identical, character())
     if(!any(idx)) return(badRdObjects)
     db <- db[idx]
     aliases <- unlist(aliases[idx])
     RdSlots <- RdSlots[idx]
 
-    dbNames <- sapply(db, .get_Rd_name)
-    if(length(dbNames) < length(db)) {
-        ## <FIXME>
-        ## What should we really do in this case?
-        ## (We cannot refer to the bad Rd objects because we do not know
-        ## their names, and have no idea which file they came from ...)
-        stop("cannot deal with Rd objects with missing/empty names")
-        ## </FIXME>
-    }
-    names(db) <- dbNames
+    names(db) <- dbNames <- .get_Rd_names_from_Rd_db(db)
 
     .getSlotNamesFromSlotSectionText <- function(txt) {
         ## Get \describe (inside user-defined section 'Slots'
@@ -979,6 +973,7 @@ function(package, lib.loc = NULL)
     db <- db[idx]; aliases <- aliases[idx]
     ## Now collapse.
     db <- lapply(db, paste, collapse = "\n")
+    names(db) <- .get_Rd_names_from_Rd_db(db)
 
     .getDataFrameVarNamesFromRdText <- function(txt) {
         txt <- get_Rd_section(txt, "format")
@@ -1001,21 +996,14 @@ function(package, lib.loc = NULL)
         txt
     }
 
-    RdVarNames <- lapply(db, .getDataFrameVarNamesFromRdText)
+    RdVarNames <-
+        .apply_Rd_filter_to_Rd_db(db, .getDataFrameVarNamesFromRdText)
     idx <- (sapply(RdVarNames, length) > 0)
     if(!length(idx)) return(badRdObjects)
     aliases <- unlist(aliases[idx])
     RdVarNames <- RdVarNames[idx]
 
-    dbNames <- sapply(db[idx], .get_Rd_name)
-    if(length(dbNames) < length(aliases)) {
-        ## <FIXME>
-        ## What should we really do in this case?
-        ## (We cannot refer to the bad Rd objects because we do not know
-        ## their names, and have no idea which file they came from ...)
-        stop("cannot deal with Rd objects with missing/empty names")
-        ## </FIXME>
-    }
+    dbNames <- names(db)[idx]
 
     dataEnv <- new.env()
     dataDir <- file.path(dir, "data")
@@ -1128,16 +1116,7 @@ function(package, dir, lib.loc = NULL)
     dbKeywords <- lapply(db, .get_Rd_metadata_from_Rd_lines, "keyword")
     ## Now collapse.
     db <- lapply(db, paste, collapse = "\n")
-    dbNames <- sapply(db, .get_Rd_name)
-    ## Safeguard against missing/empty names.
-    if(length(dbNames) < length(db)) {
-        ## <FIXME>
-        ## What should we really do in this case?
-        ## (We cannot refer to the bad Rd objects because we do not know
-        ## their names, and have no idea which file they came from ...)
-        stop("cannot deal with Rd objects with missing/empty names")
-        ## </FIXME>
-    }
+    dbNames <- .get_Rd_names_from_Rd_db(db)
     ind <- sapply(dbKeywords,
                   function(x) any(grep("^ *internal *$", x)))
     if(isBase || basename(dir) == "graphics")
@@ -1148,12 +1127,15 @@ function(package, dir, lib.loc = NULL)
         dbAliases <- dbAliases[!ind]
     }
     names(db) <- names(dbAliases) <- dbNames
-    dbUsageTexts <- lapply(db, get_Rd_section, "usage")
+    dbUsageTexts <-
+        .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "usage")
     dbUsages <- lapply(dbUsageTexts, .parse_usage_as_much_as_possible)
     ind <- as.logical(sapply(dbUsages,
                              function(x) !is.null(attr(x, "badLines"))))
     badLines <- sapply(dbUsages[ind], attr, "badLines")
-    dbArgumentNames <- lapply(db, .get_Rd_argument_names)
+
+    dbArgumentNames <-
+        .apply_Rd_filter_to_Rd_db(db, .get_Rd_argument_names)
 
     functions_to_be_ignored <-
         .functions_to_be_ignored_from_usage(basename(dir))
@@ -1491,9 +1473,10 @@ function(package, dir, lib.loc = NULL)
 
     db <- lapply(db,
                  function(f) paste(Rdpp(f), collapse = "\n"))
-    names(db) <- dbNames <- sapply(db, get_Rd_section, "name")
+    names(db) <- dbNames <- .get_Rd_names_from_Rd_db(db)
 
-    dbUsageTexts <- lapply(db, get_Rd_section, "usage")
+    dbUsageTexts <-
+        .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "usage")
     dbUsages <- lapply(dbUsageTexts, .parse_usage_as_much_as_possible)
     ind <- sapply(dbUsages,
                   function(x) !is.null(attr(x, "badLines")))

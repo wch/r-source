@@ -386,6 +386,8 @@ function(package, dir, lib.loc = NULL)
                               rep(seq(along = eofPos),
                                   times = diff(c(0, eofPos)))))
         }
+        ## Remove the artificial names attribute.
+        names(db) <- NULL
     }
     else {
         if(missing(dir))
@@ -402,7 +404,7 @@ function(package, dir, lib.loc = NULL)
                        "does not contain Rd sources"))
         docsFiles <- listFilesWithType(docsDir, "docs")
         db <- lapply(docsFiles, readLines)
-
+        names(db) <- docsFiles
     }
 
     db
@@ -676,6 +678,58 @@ function(txt)
     }
     paste(c(out, txt), collapse = "")
 }
+
+### .apply_Rd_filter_to_Rd_db
+
+.apply_Rd_filter_to_Rd_db <-
+function(db, FUN, ...)
+{
+    db <- lapply(db, function(t) try(FUN(t, ...), silent = TRUE))
+    idx <- as.logical(sapply(db, inherits, "try-error"))
+    if(any(idx)) {
+        msg <- "Rd syntax errors found"
+        for(i in which(idx))
+            msg <- c(msg, 
+                     paste("Syntax error in documentation object ",
+                           sQuote(names(db)[i]), ":", sep = ""),
+                     db[[i]])
+        stop(paste(msg, collapse = "\n"), call. = FALSE)
+    }
+    db
+}
+
+### .get_Rd_names_from_Rd_db
+
+.get_Rd_names_from_Rd_db <-
+function(db)
+{
+    Rd_names <- lapply(db, .get_Rd_name)
+    ## If the Rd db was obtained from an installed package, we know that
+    ## all Rd objects must have a \name entry---otherwise, Rdinfo() and
+    ## hence installing the package Rd contents db would have failed.
+    ## For Rd dbs created from a package source directory, we now add
+    ## the Rd file paths as the names attribute, so that we can point to
+    ## the files with missing \name entries.
+    idx <- as.numeric(sapply(Rd_names, length)) == 0
+    if(any(idx)) {
+        Rd_paths <- names(db)
+        if(is.null(Rd_paths)) {
+            ## This should not happen.
+            ## We cannot refer to the bad Rd objects because we do not
+            ## know their names, and have no idea which file they came
+            ## from ...) 
+            stop("cannot deal with Rd objects with missing/empty names")
+        }
+        else {
+            stop(paste("missing/empty \\name field in Rd file(s)",
+                       paste(" ", Rd_paths[idx], collapse = "\n"),
+                       sep = "\n"),
+                 call. = FALSE)
+        }
+    }
+    unlist(Rd_names)
+}
+
 
 ### Local variables: ***
 ### mode: outline-minor ***
