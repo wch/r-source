@@ -535,7 +535,7 @@ fi
 
 
 . ${srcdir}/config.site
-if test -f ~/.Rconf; then . ~/.Rconf; fi
+if test -f $HOME/.Rconf; then . $HOME/.Rconf; fi
 
 ac_aux_dir=
 for ac_dir in aux $srcdir/aux; do

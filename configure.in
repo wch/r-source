@@ -26,7 +26,7 @@ AC_INIT(src/include/Defn.h)
 AC_CONFIG_HEADER(src/include/Platform.h)
 
 . ${srcdir}/config.site
-if test -f ~/.Rconf; then . ~/.Rconf; fi
+if test -f $HOME/.Rconf; then . $HOME/.Rconf; fi
 
 AC_CONFIG_AUX_DIR(aux)
 
@@ -116,7 +116,7 @@ AC_PROG_INSTALL
 case ${INSTALL} in
   *install-sh*)
     INSTALL="\$\(top_srcdir\)/${INSTALL}" ;;
-esac    
+esac
 
 AC_PROG_LN_S
 AC_PROG_RANLIB
@@ -171,7 +171,7 @@ cc_is_gcc=false
 cc_output=`${CC} -v 2>&1 | grep gcc`
 if test -n "${cc_output}"; then
   cc_is_gcc=true
-fi  
+fi
 
 case ${host} in
   *hpux*)
@@ -587,7 +587,7 @@ AC_OUTPUT(Makeconf Makefile
   src/library/base/Makefile src/library/profile/Makefile
   src/library/eda/Makefile src/library/eda/src/Makefile
   src/library/mva/Makefile src/library/mva/src/Makefile
-  src/library/stepfun/Makefile  
+  src/library/stepfun/Makefile
   src/scripts/COMPILE src/scripts/INSTALL src/scripts/REMOVE
   src/scripts/R.sh src/scripts/Rdconv src/scripts/Rdindex
   src/scripts/Rman2Rd src/scripts/SHLIB src/scripts/Sd2Rd
