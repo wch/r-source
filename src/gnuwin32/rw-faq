@@ -112,15 +112,10 @@ If you want to build packages from sources, we recommend that you choose
 an installation path not containing spaces.  (Using a path with spaces
 in will probably work, but is little-tested.)
 
-The simplest way is to use `rw1062.exe' or `miniR.exe'.  Just
-double-click on the icon and follow the instructions.  If you installed
-R this way you can uninstall it from the Control Panel or Start Menu
-(unless you supressed making a group for R).
-
-For a manual installation, choose a location and unzip the zip files
-(with a tool that preserves long file names and the directory structure:
-we recommend the INFO-ZIP project's `unzip').  All the files will
-unpack into a directory `rw1062'.
+To use `rw1062.exe' or `miniR.exe'.  Just double-click on the icon and
+follow the instructions.  If you installed R this way you can uninstall
+it from the Control Panel or Start Menu (unless you supressed making a
+group for R).
 
 Choose a working directory for R.  If you installed manually, make a
 shortcut to `rw1062\bin\Rgui.exe' on your desktop or somewhere on the
@@ -561,7 +556,7 @@ shortcuts to frequent operations.
 If you resize the R console the `options(width=)' is automatically set
 to the console width (unless disabled in the configuration file).
 
-The graphics has a history mechanism.  As README.rw1062 says:
+The graphics has a history mechanism.  As `README.rw1062' says:
 
      `The History menu allows the recording of plots.  When plots have
      been recorded they can be reviewed by <PgUp> and <PgDn>, saved and
@@ -874,6 +869,6 @@ then `R_ProcessEvents()'.
 
 
 
-Last edited 2002 July 26 by Professor B. D. Ripley
+Last edited 2002 December 24 by Professor B. D. Ripley
 <ripley@stats.ox.ac.uk>
 
