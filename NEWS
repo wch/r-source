@@ -11,8 +11,6 @@
 
 DEPRECATED & DEFUNCT
 
-    o	printNoClass() is defunct.
-
     o	print.coefmat() is defunct, replaced by printCoefmat().
 
     o	codes() and codes<-() are defunct.
