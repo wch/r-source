@@ -74,7 +74,7 @@ help html latex examples: FORCE
 FORCE:
 
 stamp-recommended: R docs
-	-@(cd src/library/Recommended && $(MAKE) )
+	@(cd src/library/Recommended && $(MAKE))
 
 install: installdirs
 	@for d in $(SUBDIRS); do \
