@@ -67,6 +67,7 @@ struct stat
 
 int stat(char *fileName,struct stat *statbuf);
 int fstat(int fd,struct stat *statbuf);
+int mkdir_mac(const char *path);
 
 #endif	_STAT_MRC_
 
