@@ -3,12 +3,12 @@
 \usage{
 beta(a, b)
 lbeta(a, b)
-gamma(a)
-lgamma(a)
-digamma(a)
-trigamma(a)
-tetragamma(a)
-pentagamma(a)
+gamma(x)
+lgamma(x)
+digamma(x)
+trigamma(x)
+tetragamma(x)
+pentagamma(x)
 choose(n,k)
 lchoose(n,k)
 }
