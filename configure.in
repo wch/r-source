@@ -455,6 +455,8 @@ if ${use_readline}; then
   AC_CHECK_LIB(readline, rl_callback_read_char)
 fi
 
+GNOME_INIT_HOOK([],cont)
+
 ### Library functions.
 
 AC_FUNC_VFORK
