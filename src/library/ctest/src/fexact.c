@@ -1995,16 +1995,17 @@ int prterr(int icode, char *mes)
   */
 Sint iwork(Sint *iwkmax, Sint *iwkpt, Sint *number, Sint *itype)
 {
-    Sint i;
+    Sint i, j;
 
     i = *iwkpt;
+    j = *number + 1;
     if (*itype == 2 || *itype == 3) {
-	*iwkpt += *number;
+	*iwkpt += j;
     } else {
 	if (i % 2 != 0) {
 	    ++i;
 	}
-	*iwkpt += *number << 1;
+	*iwkpt += j << 1;
 	i /= 2;
     }
     if (*iwkpt > *iwkmax + 1) {
