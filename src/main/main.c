@@ -547,6 +547,7 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 	    R_run_onexits(NULL);
 	    /* this is really dynamic state that should be managed as such */
 	    R_BrowseLevel = 0;
+	    R_restore_globals(&R_Toplevel);
             LONGJMP(R_Toplevel.cjmpbuf, CTXT_TOPLEVEL);
 	}
 	if (!strcmp(CHAR(PRINTNAME(CExpr)),"where")) {

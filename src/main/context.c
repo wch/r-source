@@ -135,6 +135,20 @@ void R_run_onexits(RCNTXT *cptr)
 }
 
 
+/* R_restore_globals - restore global variables from a target context
+   before a LONGJMP.  The target context itself is not restored here
+   since this is done slightly differently in jumpfun below, in
+   errors.c:jump_now, and in main.c:ParseBrwoser.  Eventually these
+   three should be unified so there is only one place where a LONGJMP
+   occurs. */
+
+void R_restore_globals(RCNTXT *cptr)
+{
+    R_PPStackTop = cptr->cstacktop;
+    R_EvalDepth = cptr->evaldepth;
+}
+
+
 /* jumpfun - jump to the named context */
 
 static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
@@ -148,8 +162,8 @@ static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
     UNPROTECT(1);
     R_Visible = savevis;
 
-    R_PPStackTop = cptr->cstacktop;
-    R_EvalDepth = cptr->evaldepth;
+    R_restore_globals(cptr);
+
     R_ReturnedValue = val;
     if (cptr != R_ToplevelContext)
 	R_GlobalContext = cptr->nextcontext;

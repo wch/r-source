@@ -684,6 +684,7 @@ int R_GetMaxNSize(void);
 void R_SetMaxNSize(int);
 
 void R_run_onexits(RCNTXT *);
+void R_restore_globals(RCNTXT *);
 
 
 /* gram.y & gram.c : */

@@ -464,10 +464,11 @@ void Rf_resetStack(int topLevelReset) {
 	REprintf("Lost warning messages\n");
     inError=0;
     inWarning=0;
-    R_PPStackTop = R_ToplevelContext->cstacktop;
-    R_EvalDepth = R_ToplevelContext->evaldepth;
     R_Warnings = R_NilValue;
     R_CollectWarnings = 0;
+
+    R_restore_globals(R_ToplevelContext);
+
     if(topLevelReset) {
         R_GlobalContext = R_ToplevelContext;
     }
