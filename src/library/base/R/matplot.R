@@ -8,8 +8,8 @@ matlines  <- function(x, y, lty=1:5, lwd = 1, pch=NULL, col=1:6, ...)
             add=TRUE, ...)
 
 matplot <- function(x, y, type="p",
-		    lty = 1:5, lwd = 1, pch=NULL, col=1:6,
-		    xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL,
+		    lty = 1:5, lwd = 1, pch=NULL, col=1:6, cex=NULL,
+		    xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL, 
 		    ..., add= FALSE, verbose = .Options$verbose)
 {
     types <- c("p", "l", "b", "o", "h", "n")
@@ -62,19 +62,20 @@ matplot <- function(x, y, type="p",
     if(length(lwd) < k) lwd <- rep(lwd, length= k)
     if(length(pch) < k) pch <- rep(pch, length= k)
     if(length(col) < k) col <- rep(col, length= k)
+    if(length(cex) < k) cex <- rep(cex, length= k)
     ii <- 1:k
     if(!add) {
 	ii <- ii[-1]
 	plot(x[,1],y[,1], type=type[1], xlab=xlab, ylab=ylab,
 	     xlim = xlim, ylim = ylim,
-	     lty=lty[1], lwd=lwd[1], pch=pch[1], col=col[1], ...)
+	     lty=lty[1], lwd=lwd[1], pch=pch[1], col=col[1], cex=cex[1], ...)
     }
     for (i in ii) {
 	tp <- type[i]
 	if(tp=='l' || tp=='b'|| tp=='o'|| tp=='h')
 	    lines(x[,i],y[,i], type=tp,
-                  lty=lty[i], lwd=lwd[i],pch=pch[i],col=col[i])
+                  lty=lty[i], lwd=lwd[i],pch=pch[i],col=col[i], cex=cex[i])
 	if(do.points && tp=='p')
-	    points(x[,i],y[,i], pch=pch[i], col=col[i])
+	    points(x[,i],y[,i], pch=pch[i], col=col[i], cex=cex[i])
     }
 }

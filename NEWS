@@ -15,6 +15,8 @@ NEW FEATURES
 
     o	.Platform$OS.type is standardized.
 
+    o	matplot(matrix(1:25,5), cex=1:5) now works
+
 BUG FIXES
 
     o  segfault in rbind of a vector without names fixed. cbind, too.
