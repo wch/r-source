@@ -103,7 +103,7 @@ FROM:	R@stat.auckland.ac.nz
 
 ----------------------------------------------------------------------
 TASK:	"paste" problem
-STATUS:	Open
+STATUS:	Closed
 FROM:	maechler@stat.math.ethz.ch
 	in S,
 		paste(....., collapse = string)
@@ -116,7 +116,7 @@ FROM:	maechler@stat.math.ethz.ch
 		[1] ""
 	Again, I think	R  is more logical than S here, but it was decided
 	that in minor cases, compatibility comes first...
-	[ Low priority.	 Complain if you really need it. ]
+	[ We now return "" in the zero length case. ]
 
 ----------------------------------------------------------------------
 TASK:	missing functionality - modelling
@@ -539,7 +539,7 @@ FROM:	<bates@stat.wisc.edu>
 	nested anonymous functions are welcome.	 I'll try to work out a
 	corresponding all.vars function.
 
-	### $Id: TASKS,v 1.1 1997/09/18 04:36:42 r Exp $
+	### $Id: TASKS,v 1.2 1997/10/04 22:26:29 ihaka Exp $
 	### Some replacement functions that are missing in R
 
 	### Determine all the names (symbols) occuring in an object.
@@ -1478,7 +1478,7 @@ FROM:	<bates@stat.wisc.edu>
 	nested anonymous functions are welcome.	 I'll try to work out a
 	corresponding all.vars function.
 
-	### $Id: TASKS,v 1.1 1997/09/18 04:36:42 r Exp $
+	### $Id: TASKS,v 1.2 1997/10/04 22:26:29 ihaka Exp $
 	### Some replacement functions that are missing in R
 
 	### Determine all the names (symbols) occuring in an object.
