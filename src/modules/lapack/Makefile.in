@@ -35,7 +35,7 @@ DISTFILES = \
 ## Change to 'lapack.la' when using libtool for shlibs.
 ## Remove when using automake ... also fix target 'install' then.
 lapack_la = lapack$(SHLIB_EXT)
-Rlapack_la = libRlapack$(SHLIB_EXT)
+Rlapack_la = libRlapack$(LIBR_EXT)
 ## </FIXME>
 Rexecmodulesdir_LTLIBRARIES = $(lapack_la)
 lapack_la_SOURCES = $(SOURCES)
@@ -71,8 +71,12 @@ $(lapack_la): $(lapack_la_OBJECTS) $(lapack_la_DEPENDENCIES)
 
 ## Include BLAS here, as with (static) ATLAS that pulls all the
 ## BLAS routines into one place.
+## <FIXME>
+## This is not yet right.  Prefer not to include FLIBS, but MacOSX seems
+## to require it.
+## </FIXME>
 $(Rlapack_la): $(Rlapack_la_OBJECTS)
-	$(SHLIB_LD) $(LIBR_LDFLAGS) $(LDFLAGS) -o $@ $(Rlapack_la_OBJECTS) @BLAS_LIBS@
+	$(SHLIB_LD) @RLAPACK_LDFLAGS@ $(LDFLAGS) -o $@ $(Rlapack_la_OBJECTS) @BLAS_LIBS@ $(FLIBS)
 
 Rlapack_install: $(Rlapack_la) 
 	@$(top_srcdir)/tools/copy-if-change $(Rlapack_la) \
@@ -81,7 +85,7 @@ Rlapack_install: $(Rlapack_la)
 install: installdirs
 @USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(lapack_la) $(Rexecmodulesdir)/lapack$(SHLIB_EXT)
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(lapack_la) $(Rexecmodulesdir)
-@USE_EXTERNAL_LAPACK_FALSE@	$(top_srcdir)/tools/copy-if-change $(Rlapack_la) $(Rexeclibdir)/libRlapack$(SHLIB_EXT)
+@USE_EXTERNAL_LAPACK_FALSE@	$(top_srcdir)/tools/copy-if-change $(Rlapack_la) $(Rexeclibdir)/libRlapack$(LIBR_EXT)
 installdirs:
 	@$(MKINSTALLDIRS) $(Rexecmodulesdir)
 install-strip:
@@ -92,7 +96,8 @@ uninstall:
 mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f Makedeps *.d *.o *.a *.lo *.la *$(SHLIB_EXT)
+	@-rm -f Makedeps *.d *.o *.a *.lo *.la \
+	  lapack$(SHLIB_EXT) @USE_EXTERNAL_LAPACK_FALSE@ libRlapack$(LIBR_EXT)
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

@@ -24,7 +24,7 @@
 
 AC_PREREQ(2.57)
 
-AC_REVISION($Revision: 1.82 $)
+AC_REVISION($Revision: 1.83 $)
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
@@ -988,6 +988,7 @@ fi
 ## difference, but e.g. on Mach-O for Darwin there is.
 LIBR_EXT="${SHLIB_EXT}"
 LIBR_LDFLAGS="${SHLIB_LDFLAGS}"
+RLAPACK_LDFLAGS="${SHLIB_LDFLAGS}"
 case "${host_os}" in
   darwin*)
     LIBR_EXT=".dylib"
@@ -996,6 +997,7 @@ case "${host_os}" in
     ## driver gets linked to the main binary and hence also the R dylib.
     ## Change once the driver is modularized.
     LIBR_LDFLAGS="-dynamiclib -flat_namespace -undefined suppress -install_name \$(Rexeclibdir)/libR.dylib -framework Carbon"
+    RLAPACK_LDFLAGS="-dynamiclib -flat_namespace -undefined suppress -install_name \$(Rexeclibdir)/libRlapack.dylib"
     ## </FIXME>
     ;;
 esac
@@ -1017,6 +1019,7 @@ system.])
 AM_CONDITIONAL(USE_EXPORTFILE, [test "x${use_exportfile}" = xyes])
 AC_SUBST(LIBR_EXT)
 AC_SUBST(LIBR_LDFLAGS)
+AC_SUBST(RLAPACK_LDFLAGS)
 
 ### * Checks for library functions.
 
