@@ -101,10 +101,10 @@ int main(int ac, char **av)
     return 0;
 }
 
-#ifdef HAVE_AQUA
+
 /* this should be a global variable as it used in unix/devQuartz.c */
 Rboolean useaqua = FALSE;
-#endif
+
 
 int Rf_initialize_R(int ac, char **av)
 {
