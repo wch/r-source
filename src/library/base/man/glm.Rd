@@ -35,8 +35,10 @@ glm.fit.null(x, y, weights = rep(1, nrow(x)),
     The details of model specification are given below.}
 
   \item{family}{a description of the error distribution and link
-    function to be used in the model.
-    See \code{\link{family}} for details.}
+    function to be used in the model. This can be a character string
+    naming a family function, a family function or the result of a call
+    to a family function.  (See \code{\link{family}} for details of
+    family functions.)}
 
   \item{data}{an optional data frame containing the variables
     in the model.  By default the variables are taken from
@@ -73,8 +75,9 @@ glm.fit.null(x, y, weights = rep(1, nrow(x)),
     should be included as a component of the returned value.}
 
   \item{method}{the method to be used in fitting the model.
-    The default (and presently only) method \code{glm.fit}
-    uses iteratively reweighted least squares (IWLS).}
+    The default method \code{"glm.fit"} uses iteratively reweighted
+    least squares (IWLS).  The only current alternative is
+    \code{"model.frame"} which returns the model frame and does no fitting.}
 
   \item{x, y}{For \code{glm}:
     logical values indicating whether the response
