@@ -53,11 +53,6 @@ NEW FEATURES
     o   The use of UseMethod() with no argument was not documented on
 	the help page and is now regarded as an error.
 
-    o   The assignment form of split() allows recycling of vectors 
-        within the value list. In particular, things like 
-            split(x, g) <- lapply(split(x, g), mean)
-        now work.
-
     o   Added colorRamp() and colorRampPalette() for color interpolation.
 
     o	install.packages() and friends now accept a vector of URLs for
@@ -137,9 +132,6 @@ BUG FIXES
 
     o   Collected warnings had messages with unneeded trailing space.
 
-    o   The ave() function had trouble if the grouping contained 
-        unused levels. 
-
     o   Methods for primitive functions must be exported from
         namespaces; this is now done automatically.
 
@@ -160,6 +152,11 @@ NEW FEATURES
     o	Platform equivalence in library() is tested by a new function
 	testPlatformEquivalence() which ignores the 'vendor' field and
 	can be customized by cognescenti.
+
+    o   The assignment form of split() allows recycling of vectors 
+        within the value list. In particular, things like 
+            split(x, g) <- lapply(split(x, g), mean)
+        now work.
 
 
 DOCUMENTATION
@@ -341,6 +338,9 @@ BUG FIXES
 	'decreasing' or 'index.return' or supplying a factor are now
 	errors.
 	
+    o   The ave() function had trouble if the grouping contained 
+        unused levels. 
+
 
 
 
