@@ -2,7 +2,7 @@
 # build Bioconductor packages and their
 # help files
 #
-# Jago June 2002, Stefano M. Iacus
+# Jago November 2002, Stefano M. Iacus
 #
 #
 
@@ -18,14 +18,14 @@ all Ä library
 
 
 ## ------------- library -----------
-PACKAGES =  tkWidgets ROC multtest marrayNorm marrayInput marrayClasses 
-             geneplotter genefilter edd Biobase annotate affy
-LIBF = multtest genefilter affy
+PACKAGES =  marrayPlots marrayTools AnnBuilder tkWidgets ROC multtest marrayNorm marrayInput marrayClasses ¶
+             hexbin graph geneplotter genefilter edd Biobase annotate affy vsn reposTools
+LIBF = multtest genefilter affy hexbin
 
-DATA = multtest marrayInput genefilter Biobase annotate affy
-DEMO = affy
-INST = tkWidgets ROC multtest marrayNorm marrayInput marrayClasses 
-       geneplotter genefilter edd Biobase annotate affy
+DATA = AnnBuilder multtest marrayInput genefilter Biobase annotate affy hexbin reposTools vsn
+DEMO = marrayPlots affy
+INST = AnnBuilder marrayPlots #tkWidgets ROC multtest marrayNorm marrayInput marrayClasses ¶
+       geneplotter genefilter edd Biobase annotate affy graph hexbin reposTools vsn
 
 
 
@@ -127,7 +127,7 @@ help Ä $OutOfDate
 	for pkg in {PACKAGES}
 	 Begin
 	  SetDirectory {RHOME}share:perl
-	  perl  build-help-mac.pl -txt -html -example -latex :::src:library:{pkg} :::library
+	  perl  build-help-mac.pl -txt -html -example  :::src:library:{pkg} :::library
 	  perl Rd2contents.pl --os="mac" >:::library:{pkg}:CONTENTS :::src:library:{pkg}
       SetDirectory :::src:macintosh:
       if {pkg} == base
