@@ -572,3 +572,7 @@ Subject: FIX FOR OLD AND NEW PROBLEMS with order(): order fails with na.last=NA
 From: oehl_list@gmx.de
 Date: Tue, 3 Sep 2002 21:12:47 +0200 (MEST)
 --1 and 2 were already fixed for 1.6.0
+* PR# 1985 *
+Subject: Contents
+From: sales <sales@canada-av.com>
+Date: Wed, 4 Sep 2002 23:35:44 -0500 (CDT)
