@@ -252,11 +252,11 @@ AC_PROG_AWK
 AC_PROG_LN_S
 AC_PROG_RANLIB
 AC_PROG_YACC
+
 R_PROG_AR
 R_PROG_ECHO_N
 R_PROG_INSTALL
 AC_PATH_PROG(JAVAC, javac)
-
 ## Libtool
 AM_DISABLE_STATIC
 AM_PROG_LIBTOOL
@@ -407,16 +407,6 @@ AC_CHECK_LIB(ncurses, main,,
 ))
 AC_CHECK_LIB(dl, dlopen)
 
-## Special checks for odd OS specific things
-AC_CHECK_FUNC(gethostbyname)
-if test "${ac_cv_func_gethostbyname}" = no; then
-  AC_CHECK_LIB(nsl, gethostbyname)
-fi
-AC_CHECK_FUNC(connect)
-if test "${ac_cv_func_connect}" = no; then
-  AC_CHECK_LIB(socket, connect)
-fi
-
 ## BLAS.
 if ${use_blas}; then
   R_BLAS_LIBS
@@ -444,6 +434,8 @@ AC_CHECK_FUNCS(access acosh asinh atanh bcopy finite ftruncate getcwd \
   popen putenv rint setenv snprintf strcoll stat strptime system times \
   unsetenv vsnprintf)
 AC_REPLACE_FUNCS(strdup)
+R_FUNC_GETHOSTBYNAME
+R_FUNC_CONNECT
 R_FUNC___SETFPUCW
 R_FUNC_CALLOC
 R_FUNC_FINITE
@@ -1058,6 +1050,8 @@ AC_OUTPUT_COMMANDS(
   test -f src/include/stamp-h || echo timestamp > src/include/stamp-h
 )
 
+C_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
+CXX_compiler="${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
 if test -z "${F77}"; then
   FORTRAN_compiler="${F2C} ${F2CFLAGS}"
 else
@@ -1070,8 +1064,8 @@ R is now configured for ${host}
 
   Source directory:          ${srcdir}
   Installation directory:    ${prefix}
-  C compiler:                ${CC} ${R_XTRA_CFLAGS} ${CFLAGS}
-  C++ compiler:              ${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}
+  C compiler:                ${C_compiler}
+  C++ compiler:              ${CXX_compiler}
   FORTRAN compiler:          ${FORTRAN_compiler}
 
   X11 support:               ${use_X11}
