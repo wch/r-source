@@ -532,7 +532,8 @@ Rboolean innerQuartzDeviceDriver(NewDevDesc *dd, char *display,
     if (!(xd = (QuartzDesc *)malloc(sizeof(QuartzDesc))))
 	return 0;
 
-    Quartz_Open(dd, xd, display, width, height);
+    if(!Quartz_Open(dd, xd, display, width, height))
+     return(FALSE);
     
     ps = pointsize;
     if (ps < 6 || ps > 24) ps = 10;
@@ -653,8 +654,10 @@ static Rboolean	Quartz_Open(NewDevDesc *dd, QuartzDesc *xd, char *dsp,
 	int 		devnum = devNumber((DevDesc *)dd);
 
 #ifdef Macintosh
-    if(!CanInitCoreGraphics())
-     Rprintf("\nCoreGraphics not available");
+    if(!CanInitCoreGraphics()){
+     Rprintf("\nCoreGraphics not available\n");
+     return(FALSE);
+     }
 #endif
     
     xd->windowWidth = wid*72;
