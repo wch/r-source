@@ -45,8 +45,14 @@ test-Examples-Base: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(EX_OUT_BASE)
 
+## <NOTE>
+## We do *not* want this to be added to test-Examples conditional on
+## @USE_RECOMMENDED_PACKAGES_TRUE.
+## 'make fullcheck' is used for running test-Examples-Recommended in
+## addition to 'make check'.
 test-Examples-Recommended: test-Examples-Base
 	@$(MAKE) $(EX_OUT_RECOMMENDED)
+## </NOTE>
 
 R:
 	@cd $(top_builddir) && $(MAKE) R
