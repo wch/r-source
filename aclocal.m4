@@ -2,23 +2,23 @@ dnl aclocal.m4 -- extra macros for configuring R
 dnl
 dnl Copyright (C) 1998, 1999 R Core Team
 dnl
-dnl This file is part of R.
-dnl
-dnl R is free software; you can redistribute it and/or modify it under
-dnl the terms of the GNU General Public License as published by the Free
-dnl Software Foundation; either version 2 of the License, or (at your
-dnl option) any later version.
-dnl
-dnl R is distributed in the hope that it will be useful, but WITHOUT ANY
-dnl WARRANTY; without even the implied warranty of MERCHANTABILITY or
-dnl FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
-dnl License for more details.
-dnl
-dnl You should have received a copy of the GNU General Public License
-dnl along with R; if not, you can obtain it via the World Wide Web at
-dnl `http://www.gnu.org/copyleft/gpl.html', or by writing to the Free
-dnl Software Foundation, 59 Temple Place -- Suite 330, Boston, MA
-dnl 02111-3307, USA.
+### This file is part of R.
+###
+### R is free software; you can redistribute it and/or modify it under
+### the terms of the GNU General Public License as published by the Free
+### Software Foundation; either version 2 of the License, or (at your
+### option) any later version.
+###
+### R is distributed in the hope that it will be useful, but WITHOUT ANY
+### WARRANTY; without even the implied warranty of MERCHANTABILITY or
+### FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+### License for more details.
+###
+### You should have received a copy of the GNU General Public License
+### along with R; if not, you can obtain it via the World Wide Web at
+### `http://www.gnu.org/copyleft/gpl.html', or by writing to the Free
+### Software Foundation, 59 Temple Place -- Suite 330, Boston, MA
+### 02111-3307, USA.
 dnl
 dnl
 dnl R_PROG_ECHO_N
@@ -75,10 +75,6 @@ AC_DEFUN(R_PROG_TEXMF,
   AC_PATH_PROG(LATEX, [${LATEX} latex], false)
   AC_PATH_PROG(MAKEINDEX, [${MAKEINDEX} makeindex], false)
   AC_PATH_PROG(PDFLATEX, [${PDFLATEX} pdflatex], false)
-  AC_PATH_PROG(KPSEWHICH, [${KPSEWHICH} kpsewhich], false)
-  AE=`${KPSEWHICH} ae.sty`
-  if test -z "${AE}"; then AE="."; else AE=ae; fi
-  AC_SUBST(AE)
   AC_PATH_PROG(MAKEINFO, [${MAKEINFO} makeinfo], false)
   if test -n "${PERL}"; then
     INSTALL_INFO="\$(top_builddir)/tools/install-info"
