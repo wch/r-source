@@ -119,16 +119,16 @@ Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
 for a list), navigate to the @code{bin/windows/base} directory and
 collect the files you need.  There are two versions of the distribution.
 
-1) @code{@RWVER@.exe} is about 22Mb.  This contains all the components
+1) @code{@RWVER@.exe} is about 23Mb.  This contains all the components
 and allows as complete as installation as you choose.
 
-2) Directory @code{miniR} contains @code{miniR.exe} and nine files
+2) Directory @code{miniR} contains @code{miniR.exe} and seven files
 @code{miniR-?.bin}.  You can put @code{miniR.exe} and @code{miniR-1.bin}
 on one floppy and the remaining @code{miniR-?.bin} on a floppy each.
-This is a small installation, containing the text and compiled HTML
-versions of the help files and the @emph{An Introduction to R} and
-@emph{Data Import/Export} manuals in PDF.  There is no support for
-@code{tcltk} in this version.
+This is a small installation, containing the text versions of the help
+files and the @emph{An Introduction to R} and @emph{Data Import/Export}
+manuals in PDF.  There is no support for @code{tcltk} in this version,
+and no documentation for packages @code{grid} or @code{survival}.
 
 
 
@@ -137,16 +137,18 @@ versions of the help files and the @emph{An Introduction to R} and
 
 You need Windows 95/98/ME/NT4/2000/XP/2003 Server: Windows 3.11+win32s
 will not work.  Your file system must allow long file names (as is
-likely except perhaps for some network-mounted systems).
+likely except perhaps for some network-mounted systems).  A full
+installation takes up about 50Mb of disk space and a minimal one about
+15Mb.
 
 If you want to build packages from sources, we recommend that you choose
 an installation path not containing spaces.  (Using a path with spaces
 in will probably work, but is little-tested.)
 
-To use @code{@RWVER@.exe} or @code{miniR.exe}.  Just double-click on the
-icon and follow the instructions.  If you installed R this way you can
-uninstall it from the Control Panel or Start Menu (unless you supressed
-making a group for R).
+To install use @code{@RWVER@.exe} or @code{miniR.exe}.  Just
+double-click on the icon and follow the instructions.  If you installed
+R this way you can uninstall it from the Control Panel or Start Menu
+(unless you supressed making a group for R).
 
 Choose a working directory for R.  If you installed manually, make a
 shortcut to @code{@RWVER@\bin\Rgui.exe} on your desktop or somewhere on
@@ -178,7 +180,8 @@ set the default Start-menu group name
 @item /COMPONENTS="comma separated list of component names"
 set the initial list of components.  This is only useful with
 @code{@RWVER@.exe}, which has components @code{main}, @code{chtml},
-@code{html}, @code{latex}, @code{manuals}, @code{devel} and @code{tcl}.
+@code{html}, @code{latex}, @code{manuals},  @code{refman},
+@code{libdocs}, @code{devel}, @code{tcl} and @code{Rd}.
 @end table
 
 @noindent

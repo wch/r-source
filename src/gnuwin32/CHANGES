@@ -7,6 +7,9 @@ See the file NEWS for changes that affect all versions of R.
 rw2000
 ======
 
+The miniR distribution no longer included compiled HTML help (to stop
+it needing 10 floppies rather than 7).
+
 Added Rgui script editor by Chris Jackson.  Supports object name
 in window caption in edit() and fix().
 
@@ -65,6 +68,14 @@ READMEs are) and run
 	bin\md5check MD5
 
 Any changed files will be reported (but not any missing ones).
+
+The `Manuals' menu item is renamed to `Manuals (in PDF)', and now
+greyed out if no manuals are present (which GraphApp was not doing
+correctly).
+
+There is a new component in the main installer for the sources of the
+help pages (the man subdirectories of the libraries) -- these were
+not installed under Windows before.
 
 
 

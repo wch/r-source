@@ -114,9 +114,11 @@ Name: "chtml"; Description: "Compiled HTML Help Files"; Types: user full custom
 Name: "html"; Description: "HTML Help Files"; Types: user full custom
 Name: "latex"; Description: "Latex Help Files"; Types: full custom
 Name: "manuals"; Description: "On-line (PDF) Manuals"; Types: user full custom
-Name: "refman"; Description: "Reference Manual"; Types: full custom
+Name: "refman"; Description: "PDF Reference Manual"; Types: full custom
+Name: "libdocs"; Description: "Docs for packages grid and survival"; Types: user full custom
 Name: "devel"; Description: "Source Package Installation Files"; Types: user full custom
 Name: "tcl"; Description: "Support Files for library(tcltk)"; Types: user full custom
+Name: "Rd"; Description: "Source files for help pages"; Types: full custom
 
 [Files]
 END
@@ -131,7 +133,6 @@ Name: "custom"; Description: "Custom installation"; Flags: iscustom
 
 [Components]
 Name: "main"; Description: "Main Files"; Types: compact custom; Flags: fixed
-Name: "chtml"; Description: "Compiled HTML Help Files"; Types: custom
 Name: "manuals"; Description: "On-line (PDF) Manuals"; Types: custom
 
 [Files]
@@ -170,12 +171,13 @@ sub listFiles {
 	$dir =~ s/\\$//;
 	$_ = $fn;
 	
-	if (m/^library\\tcltk/ || m/^MD5/) {
+	if (m/^library\\tcltk/ || m/^MD5/ || m/^bin\\md5check.exe/) {
 	    $mini = 0;
 	}
 	if ($_ eq "bin\\Rchtml.dll" 
 	    || m/^library\\[^\\]*\\chtml/) {
 	    $component = "chtml";
+	    $mini = 0;
 	} elsif ($_ eq "doc\\html\\logo.jpg") {
 	    $component = "html devel";
 	    $mini = 0;
@@ -186,6 +188,7 @@ sub listFiles {
 	} elsif (m/^doc\\html/
 		 || m/^doc\\manual\\[^\\]*\.html/
 		 || m/^library\\[^\\]*\\html/
+		 || m/^library\\[^\\]*\\CONTENTS/
 		 || $_ eq "library\\R.css") {
 	    $component = "html";
 	    $mini = 0;
@@ -200,6 +203,9 @@ sub listFiles {
 	} elsif (m/^library\\[^\\]*\\latex/) {
 	    	$component = "latex";
 	    	$mini = 0;
+	} elsif (m/^library\\[^\\]*\\man/) {
+	    	$component = "Rd";
+	    	$mini = 0;
 	} elsif (m/^Tcl/) {
 	    $component = "tcl";
 	    $mini = 0;
@@ -212,16 +218,27 @@ sub listFiles {
 		 || m/^share\\perl/
 		 || m/^share\\R/
 		 || m/^share\\texmf/
+		 || m/^bin\\build/
+		 || m/^bin\\check/
+		 || m/^bin\\INSTALL/
+		 || m/^bin\\massage-Examples/
+		 || m/^bin\\Rd2dvi.sh/
+		 || m/^bin\\Rd2txt/
+		 || m/^bin\\Rdconv/
+		 || m/^bin\\Rdiff.sh/
+		 || m/^bin\\REMOVE/
+		 || m/^bin\\Rprof/
+		 || m/^bin\\Sd2Rd/
+		 || m/^bin\\SHLIB/
 		 || m/^lib\\/) {
 	    $component = "devel";
 	    $mini = 0;
+	} elsif (m/^library\\grid\\doc/
+		 || $_ eq "library\\survival\\survival.ps.gz") {
+	    $component = "libdocs";
+	    $mini = 0;
 	} else {
 	    $component = "main";
-	    if ( m/^library\\[^\\]*\\man/
-		 || m/^library\\grid\\doc/
-		 || $_ eq "library\\survival\\survival.ps.gz") {
-		$mini = 0;
-	    }
 	}
 
 	$lines="Source: \"$path\\$fn\"; DestDir: \"{app}$dir\"; Flags: ignoreversion; Components: $component\n";

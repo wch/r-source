@@ -64,7 +64,7 @@ static popup RConsolePopup;
 static menuitem msource, mdisplay, mload, msave, mloadhistory,
     msavehistory, mpaste, mpastecmds, mcopy, mcopypaste, mlazy, mconfig,
     mls, mrm, msearch, mhelp, mmanintro, mmanref, mmandata,
-    mmanext, mmanlang, mapropos, mhelpstart, mhelpsearch, mFAQ,
+    mmanext, mmanlang, mman0, mapropos, mhelpstart, mhelpsearch, mFAQ,
     mrwFAQ, mpkgl, mpkgi, mpkgil, mpkgb, mpkgu, mpkgbu, mde, mCRAN;
 static int lmanintro, lmanref, lmandata, lmanlang, lmanext;
 static menu m, mman;
@@ -915,23 +915,33 @@ int RguiCommonHelp(menu m)
     MCHECK(mrwFAQ = newmenuitem("FAQ on R for &Windows", 0, menurwFAQ));
     if (!check_doc_file("doc\\html\\rw-faq.html")) disable(mrwFAQ);
 
-    MCHECK(mman = newsubmenu(m, "Manuals"));
-    MCHECK(mmanintro = newmenuitem("An &Introduction to R", 0, menumainman));
     lmanintro = check_doc_file("doc\\manual\\R-intro.pdf");
-    if (!lmanintro) disable(mmanintro);
-    MCHECK(mmanref = newmenuitem("R &Reference Manual", 0, menumainref));
     lmanref = check_doc_file("doc\\manual\\refman.pdf");
-    if (!lmanref) disable(mmanref);
-    MCHECK(mmandata = newmenuitem("R Data Import/Export", 0, menumaindata));
     lmandata = check_doc_file("doc\\manual\\R-data.pdf");
-    if (!lmandata) disable(mmandata);
-    MCHECK(mmanlang = newmenuitem("R Language Definition", 0, menumainlang));
     lmanlang = check_doc_file("doc\\manual\\R-lang.pdf");
-    if (!lmanlang) disable(mmanlang);
-    MCHECK(mmanext = newmenuitem("Writing R Extensions", 0, menumainext));
     lmanext = check_doc_file("doc\\manual\\R-exts.pdf");
-    if (!lmanext) disable(mmanext);
-    if (!lmanintro && !lmanref && !lmanlang && !lmanext) disable(mman);
+    if (!lmanintro && !lmanref && !lmandata && !lmanlang && !lmanext) {
+	MCHECK(mman0 = newmenuitem("Manuals (in PDF)", 0, NULL));
+	disable(mman0);
+    } else {
+	MCHECK(mman = newsubmenu(m, "Manuals (in PDF)"));
+	MCHECK(mmanintro = newmenuitem("An &Introduction to R", 0, 
+				       menumainman));
+	if (!lmanintro) disable(mmanintro);
+	MCHECK(mmanref = newmenuitem("R &Reference Manual", 0, 
+				     menumainref));
+	if (!lmanref) disable(mmanref);
+	MCHECK(mmandata = newmenuitem("R Data Import/Export", 0, 
+				      menumaindata));
+	if (!lmandata) disable(mmandata);
+	MCHECK(mmanlang = newmenuitem("R Language Definition", 0, 
+				      menumainlang));
+	if (!lmanlang) disable(mmanlang);
+	MCHECK(mmanext = newmenuitem("Writing R Extensions", 0, 
+				     menumainext));
+	if (!lmanext) disable(mmanext);
+    }
+    
 
     addto(m);
     MCHECK(newmenuitem("-", 0, NULL));

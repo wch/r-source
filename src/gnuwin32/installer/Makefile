@@ -18,7 +18,7 @@ GW32_FILES = R.exp Rblas.def MkRules MakePkg MakeDll \
 # we don't want share/{Makefile.in,glade,sh} installed
 SHARE_DIRS = R make perl texmf
 
-all: $(RPREFIX).exe
+all: $(RPREFIX).exe miniR.exe
 
 imagedir:
 	$(RM) -r $(RPREFIX)
@@ -41,6 +41,7 @@ imagedir:
 #	html copies of these are in doc/html, and we don't have PDFs on menus
 	$(RM) $(RPREFIX)/doc/manual/R-FAQ.html $(RPREFIX)/doc/manual/R-FAQ.pdf
 	$(RM) $(RPREFIX)/doc/html/R-admin.html $(RPREFIX)/doc/manual/R-admin.pdf
+	$(RM) $(RPREFIX)/doc/html/index.html $(RM) $(RPREFIX)/doc/html/index-default.html
 #
 	$(CP) -p $(foreach i,$(INFO_FILES),$(R_HOME)/$i) $(RPREFIX)
 	$(CP) -p $(foreach i,$(GW_INFO_FILES),../$i) $(RPREFIX)
@@ -83,7 +84,6 @@ md5sums:
 	  ../../../../bin/Rterm.exe --vanilla --slave)
 
 fixups:
-	rm -rf $(RPREFIX)/library/*/man
 	$(CAT) $(RPREFIX)/library/*/CONTENTS >  \
 	  $(RPREFIX)/doc/html/search/index.txt
 	echo "make.packages.html(.Library)" | $(RPREFIX)/bin/rterm --vanilla --slave LC_COLLATE=C
@@ -94,6 +94,7 @@ R.iss Rsmall.iss: JRins.pl imagedir fixups md5sums
 
 $(RPREFIX).exe: R.iss
 	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log
+miniR.exe: Rsmall.iss
 	"$(ISDIR)/iscc" Rsmall.iss > miniR.log
 
 clean:
