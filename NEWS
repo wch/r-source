@@ -88,6 +88,14 @@ BUG FIXES
     o	plot(multiple time series, plot.type = "single") was computing
 	`ylim' from the first series only.
 
+    o	plot.acf() has a new `xpd = par("xpd")' argument which by default
+	*does* clipping (of the horizontal lines) as desired (xpd = NA was
+	used before, erronously in most cases).
+
+    o	predict(smooth.spline(.), deriv = 1) now works.
+
+    o	identify() failed when x is a structure/matrix. (PR#1238)
+
 
 
 		CHANGES IN R VERSION 1.4.0
