@@ -7,6 +7,7 @@
 }
 \usage{
 colors()
+colours()
 }
 \details{
   These color names can be used with a \code{col=} specification in
