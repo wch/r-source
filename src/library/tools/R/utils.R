@@ -76,6 +76,33 @@ function(x)
     sub("\\.[[:alpha:]]+$", "", x)
 }
 
+### * .getNamespaceS3methodNames
+
+.getNamespaceS3methodNames <-
+function(ns, dir, nsInfo)
+{
+    ## Get the names of the registered S3 methods for a namespace 'ns',
+    ## or a @file{NAMESPACE} file in directory 'dir', or an 'nsInfo'
+    ## object returned by parseNamespaceFile().  (Note that when doing
+    ## QC on non-installed packages with a @file{NAMESPACE} file, we
+    ## parse the @file{NAMESPACE} file anyway to determine the exports.
+    S3methods <- if(!missing(ns))
+        sapply(getNamespaceInfo(ns, "S3methods"), "[[", 3)
+    else {
+        if(!missing(dir))
+            nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
+        sapply(nsInfo$S3methods,
+               function(x) {
+                   if(length(x) > 2)
+                       x[3]
+                   else
+                       paste(x, collapse = ".")
+               })
+    }
+    if(!length(S3methods)) S3methods <- character(0) # list() if empty
+    S3methods
+}
+
 ### * .isS3Generic
 
 .isS3Generic <-
