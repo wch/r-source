@@ -13,8 +13,9 @@ lm.influence(lm.obj)
   checking the quality of regression fits.
 }
 \details{
-  The functions listed in \bold{See Also} give a more direct way
-  of computing a variety of regression diagnostics.
+  The \code{\link{influence.measures}()} and other functions listed in
+  \bold{See Also} provide a more user oriented way of computing a
+  variety of regression diagnostics.
 }
 \value{
   A list containing the following components:
@@ -52,15 +53,14 @@ lm.influence(lm.obj)
 \code{\link{lm}}.
 }
 \examples{
-## Analysis of the life-cycle savings data given in Belsley, Kuh
-## and Welsch.
+## Analysis of the life-cycle savings data
+## given in Belsley, Kuh and Welsch.
 data(LifeCycleSavings)
 summary(lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi,
                     data = LifeCycleSavings),
         corr = TRUE)
-rstudent(lm.SR)
-dfbetas(lm.SR)
-dffits(lm.SR)
-covratio(lm.SR)
-}
+str(lmI <- lm.influence(lm.SR))
+
+## For more `user level' examples, use example(influence.measures)
+
 \keyword{regression}
