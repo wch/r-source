@@ -23,7 +23,7 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
     update <- NULL
     for(k in 1:nrow(instp)){
         ok <- (instp[k, "Priority"] != "base") &
-              (cranp[,"Package"] == instp[k, "Package"]) 
+              (cranp[,"Package"] == instp[k, "Package"])
         if(any(cranp[ok, "Version"] > instp[k, "Version"]))
         {
             cat(instp[k, "Package"], ":\n",
@@ -53,7 +53,11 @@ install.packages <- function(pkglist, lib, CRAN=.Options$CRAN,
 {
     localcran <- length(grep("^file:", CRAN)) > 0
     pkgs <- NULL
-    tmpd <- tempfile("dir")
+    if(missing(lib) || is.null(lib)) {
+        lib <- .lib.loc[1]
+        warning(paste("argument `lib' is missing: using", lib))
+    }
+    tmpd <- tempfile("Rinstdir")
     system(paste("mkdir", tmpd))
     pkgs <- download.packages(pkglist, destdir=tmpd,
                               available=available,

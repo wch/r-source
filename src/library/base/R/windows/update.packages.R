@@ -67,6 +67,10 @@ install.packages <- function(pkglist, lib, CRAN=.Options$CRAN,
 {
     localcran <- length(grep("^file:", CRAN)) > 0
     pkgs <- NULL
+    if(missing(lib) || is.null(lib)) {
+        lib <- .lib.loc[1]
+        warning(paste("argument `lib' is missing: using", lib))
+    }
     tmpd <- tempfile("Rinstdir")
     shell(paste("mkdir", tmpd))
     pkgs <- download.packages(pkglist, destdir=tmpd,
@@ -74,6 +78,7 @@ install.packages <- function(pkglist, lib, CRAN=.Options$CRAN,
                               CRAN=CRAN, method=method)
     update <- cbind(pkglist, lib)
     colnames(update) <- c("Package", "LibPath")
+
     if(!is.null(pkgs))
     {
         for(lib in unique(update[,"LibPath"]))
@@ -95,6 +100,7 @@ install.packages <- function(pkglist, lib, CRAN=.Options$CRAN,
                 cat("The packages are in", tmpd)
             cat("\n")
         }
+        link.html.help()
     }
     else
         unlink(tmpd)

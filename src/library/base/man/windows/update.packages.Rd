@@ -83,9 +83,11 @@ parse.description <- function(desc)
     downloaded from CRAN and installed in the respective library path (or
     \code{instlib} if specified).
 
-    \code{install.packages()} can be used to install new packages, it
-    takes a vector of package names and a destination directory,
-    downloads the packages from CRAN and installs them.
+  \code{install.packages()} can be used to install new packages, it
+  takes a vector of package names and a destination directory,
+  downloads the packages from CRAN and installs them. If the destination
+  directory is omitted it defaults to the first directory in
+  \code{.lib.loc}, with a warning.
 }
 \seealso{
     \code{\link{library}}, \code{\link{.packages}}
