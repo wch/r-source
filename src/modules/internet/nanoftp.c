@@ -71,9 +71,6 @@ extern void R_ProcessEvents(void);
 #ifdef HAVE_SYS_SELECT_H
 #include <sys/select.h>
 #endif
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
 
 
 #define xmlFree free
