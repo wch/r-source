@@ -1051,6 +1051,7 @@ SEXP do_log(SEXP call, SEXP op, SEXP args, SEXP env)
     int n;
     if (DispatchGroup("Math", call, op, args, env, &s))
 	return s;
+    lcall = call;
     switch (n = length(args)) {
     case 1:
 	if (isComplex(CAR(args)))
