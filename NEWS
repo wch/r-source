@@ -572,6 +572,10 @@ BUG FIXES
 	ISOLatin1 encoding is now derived from WinAnsi rather than
 	PDFDocEncoding.
 
+    o	xfig() had not been updated for the 2.0.0 alpha changes.
+	Using more than one plot with a non-white background and with
+	onefile=FALSE could segfault.
+
 
 
 		CHANGES IN R VERSION 2.0.1
