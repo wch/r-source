@@ -19,7 +19,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Rmath.h"
+ *    #include <Rmath.h>
  *    double dnbeta(double x, double a, double b, double lambda, int give_log);
  *
  *  DESCRIPTION

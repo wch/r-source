@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) Martin Maechler, 1994, 1998
- *  Copyright (C) 2001 the R Development Core Team
+ *  Copyright (C) 2001-2002 the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -63,19 +63,19 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 #include <stdio.h>
 #include <string.h>
 #ifndef Macintosh
-#include <math.h>
+# include <math.h>
 #else
-#include <fp.h>
-#endif /* mac */
+# include <fp.h>
+#endif /* Macintosh */
 
-#include "R_ext/Error.h" /* error */
-#include "R_ext/Memory.h" /* R_alloc */
-#include "R_ext/Applic.h"
+#include <R_ext/Error.h>	/* error */
+#include <R_ext/Memory.h>	/* R_alloc */
+#include <R_ext/Applic.h>
 
 void str_signif(char *x, int *n, char **type, int *width, int *digits,
 		char **format, char **flag, char **result)

@@ -28,7 +28,7 @@
 
 #include "Defn.h"
 #include "Graphics.h"
-#include "R_ext/Error.h"
+#include <R_ext/Error.h>
 #include "Fileio.h"
 #include <Rdevices.h>
 

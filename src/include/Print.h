@@ -21,7 +21,7 @@
 #ifndef PRINT_H_
 #define PRINT_H_
 
-#include "R_ext/PrtUtil.h"
+#include <R_ext/PrtUtil.h>
 #include "Defn.h"
 
 #ifndef R_NO_REMAP

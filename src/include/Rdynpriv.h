@@ -47,7 +47,7 @@ typedef void *HINSTANCE;
 
 
 #include "Defn.h"
-#include "R_ext/Rdynload.h"
+#include <R_ext/Rdynload.h>
 
   /*
      A name-routine pair.

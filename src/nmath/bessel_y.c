@@ -27,7 +27,7 @@
 #include "nmath.h"
 
 #ifndef MATHLIB_STANDALONE
-#include "R_ext/Memory.h"
+#include <R_ext/Memory.h>
 #endif
 
 static void Y_bessel(double *x, double *alpha, long *nb,

@@ -23,8 +23,8 @@
  * Martin Maechler.
  */
 
-#include "R_ext/Applic.h"
-#include "R_ext/Boolean.h"
+#include <R_ext/Applic.h>
+#include <R_ext/Boolean.h>
 
 /* This is called from bvalue() and others in ../library/modreg/src/ : */
 int F77_SUB(interv)(double *xt, int *n, double *x,

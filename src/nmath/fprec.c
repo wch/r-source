@@ -19,7 +19,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Rmath.h"
+ *    #include <Rmath.h>
  *    double fprec(double x, double digits);
  *
  *  DESCRIPTION

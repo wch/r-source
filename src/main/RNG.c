@@ -24,13 +24,13 @@
 #endif
 
 #include "Defn.h"
-#include "R_ext/Random.h"
+#include <R_ext/Random.h>
 
 #define RNG_DEFAULT MARSAGLIA_MULTICARRY
 #define N01_DEFAULT KINDERMAN_RAMAGE
 
 
-#include "R_ext/Rdynload.h"
+#include <R_ext/Rdynload.h>
 
 static DL_FUNC User_unif_fun, User_unif_init, User_unif_nseed, 
     User_unif_seedloc;

@@ -7,7 +7,7 @@
   in the regular REPL. 
  */
 
-#include "Rinternals.h"
+#include <Rinternals.h>
 /**
   The signature of the C routine that a callback must implement.
   expr - the expression for the top-level task that was evaluated.

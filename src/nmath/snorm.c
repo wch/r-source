@@ -19,7 +19,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Rmath.h"
+ *    #include <Rmath.h>
  *    double norm_rand(void);
  *
  *  DESCRIPTION
@@ -30,7 +30,7 @@
  */
 
 #include "nmath.h"
-#include "R_ext/Random.h"
+#include <R_ext/Random.h>
 
 #define repeat for(;;)
 

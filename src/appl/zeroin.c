@@ -79,7 +79,7 @@
 #include <fp.h>
 #endif /* mac */
 
-#include "R_ext/Applic.h"
+#include <R_ext/Applic.h>
 
 #define EPSILON DBL_EPSILON
 

@@ -28,7 +28,7 @@
 #include "Print.h"
 #include "arithmetic.h"
 
-#include "R_ext/RConverters.h"
+#include <R_ext/RConverters.h>
 
 /* Table of  .Internal(.) and .Primitive(.)  R functions
  * =====     =========	      ==========

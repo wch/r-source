@@ -17,9 +17,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "R.h"
+#include <R.h>
 #include "eda.h"
-#include "R_ext/Rdynload.h"
+#include <R_ext/Rdynload.h>
 
 R_CMethodDef CEntries[] = {
     {"Rsm_3RSR", (DL_FUNC) &Rsm_3RSR, 5},  

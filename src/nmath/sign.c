@@ -18,7 +18,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Rmath.h"
+ *    #include <Rmath.h>
  *    double sign(double x);
  *
  *  DESCRIPTION

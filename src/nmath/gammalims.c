@@ -19,7 +19,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Rmath.h"
+ *    #include <Rmath.h>
  *    void gammalims(double *xmin, double *xmax);
  *
  *  DESCRIPTION

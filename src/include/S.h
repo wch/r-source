@@ -45,8 +45,8 @@ extern "C" {
 #endif
 
 #include <Rconfig.h>
-#include "R_ext/Constants.h"
-#include "R_ext/Memory.h"	/* S_alloc */
+#include <R_ext/Constants.h>
+#include <R_ext/Memory.h>	/* S_alloc */
 
 /* Not quite full compatibility: beware! */
 /* void	call_R(char*, long, void**, char**, long*, char**, long, char**);*/
@@ -60,7 +60,7 @@ extern double norm_rand(void);
 
 /* Macros for S/R Compatibility */
 
-#include "R_ext/RS.h"
+#include <R_ext/RS.h>
 /* for PROBLEM ... Calloc, Realloc, Free, Memcpy, F77_xxxx */
 
 /* S's complex is different, and is a define to S_complex now */

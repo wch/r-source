@@ -1,5 +1,5 @@
 /*
- *  $Id: nls.c,v 1.14 2001/06/08 20:48:32 duncan Exp $
+ *  $Id: nls.c,v 1.15 2002/04/30 18:01:17 hornik Exp $
  *
  *  Routines used in calculating least squares solutions in a
  *  nonlinear model in nls library for R.
@@ -247,7 +247,7 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho)
     return ans;
 }
 
-#include "R_ext/Rdynload.h"
+#include <R_ext/Rdynload.h>
 
 const static R_CallMethodDef R_CallDef  [] = {
    {"numeric_deriv", (DL_FUNC)&numeric_deriv, 3},

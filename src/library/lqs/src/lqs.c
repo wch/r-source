@@ -30,8 +30,8 @@
 #include <limits.h> */
 
 #include <R.h>
-#include "R_ext/Applic.h"	/* for the QR	  routines */
-#include "R_ext/Utils.h"	/* for the *sort() routines */
+#include <R_ext/Applic.h>	/* for the QR	  routines */
+#include <R_ext/Utils.h>	/* for the *sort() routines */
 #define BIG DBL_MAX
 
 #ifdef WIN32
@@ -425,8 +425,8 @@ mve_fitlots(double *x, int *n, int *p, int *qn, int *mcd,
     /* mve_free(); */
 }
 
-#include "Rinternals.h"
-#include "R_ext/Rdynload.h"
+#include <Rinternals.h>
+#include <R_ext/Rdynload.h>
 
 static R_CMethodDef R_CDef[] = {
    {"lqs_fitlots", (DL_FUNC)&lqs_fitlots, 16},

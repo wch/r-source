@@ -20,7 +20,7 @@
 #ifndef R_LINPACK_H_
 #define R_LINPACK_H_
 
-#include "R_ext/RS.h"		/* for F77_... */
+#include <R_ext/RS.h>		/* for F77_... */
 
 #ifdef  __cplusplus
 extern "C" {

@@ -20,7 +20,7 @@
  *
  *  SYNOPSIS
  *
- *	#include "Rmath.h"
+ *	#include <Rmath.h>
  *	double qtukey(p, rr, cc, df, lower_tail, log_p);
  *
  *  DESCRIPTION

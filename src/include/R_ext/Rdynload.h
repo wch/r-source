@@ -20,7 +20,7 @@
 #ifndef  R_EXT_DYNLOAD_H_
 #define  R_EXT_DYNLOAD_H_
 
-#include "R_ext/Boolean.h"
+#include <R_ext/Boolean.h>
 
 typedef void * (*DL_FUNC)();
 

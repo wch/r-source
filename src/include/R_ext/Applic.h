@@ -25,8 +25,8 @@
 #ifndef R_APPLIC_H_
 #define R_APPLIC_H_
 
-#include "R_ext/Boolean.h"
-#include "R_ext/RS.h"		/* F77_... */
+#include <R_ext/Boolean.h>
+#include <R_ext/RS.h>		/* F77_... */
 
 #ifdef  __cplusplus
 extern "C" {

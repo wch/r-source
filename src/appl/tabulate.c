@@ -24,8 +24,8 @@
 #include <config.h>
 #endif
 
-#include "R_ext/Arith.h"
-#include "R_ext/Applic.h"
+#include <R_ext/Arith.h>
+#include <R_ext/Applic.h>
 
 void R_tabulate(int *x, int *n, int *nbin, int *ans)
 {

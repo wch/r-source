@@ -1,4 +1,4 @@
-#include "Rinternals.h"
+#include <Rinternals.h>
 
 static void doCtestExample();
 static void doMVAExample();

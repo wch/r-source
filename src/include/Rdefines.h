@@ -22,8 +22,8 @@
 
 #if !defined(R_R_H) && !defined(R_S_H)
 /* user forget to include R.h or S.h */
-#include "R_ext/Memory.h"
-#include "R_ext/RS.h"
+#include <R_ext/Memory.h>
+#include <R_ext/RS.h>
 #endif
 
 /*

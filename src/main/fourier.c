@@ -26,7 +26,7 @@
 #endif
 
 #include "Defn.h"
-#include "R_ext/Applic.h"
+#include <R_ext/Applic.h>
 
 /* Fourier Transform for Univariate Spatial and Time Series */
 

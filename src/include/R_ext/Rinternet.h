@@ -2,7 +2,7 @@
 #define R_INTERNET_MODULE_H
 
 
-#include "Rinternals.h"
+#include <Rinternals.h>
 
 
 typedef SEXP (*R_DownloadRoutine)(SEXP call, SEXP op, SEXP args, SEXP env);

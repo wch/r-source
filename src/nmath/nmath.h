@@ -24,21 +24,21 @@
 
 #include <Rconfig.h>
 #define MATHLIB_PRIVATE
-#include "R_ext/Mathlib.h"
+#include <R_ext/Mathlib.h>
 #undef  MATHLIB_PRIVATE
-#include "R_ext/RS.h"
+#include <R_ext/RS.h>
 
 #ifndef MATHLIB_STANDALONE
 /* Mathlib in R */
 
-#include "R_ext/Error.h"
+#include <R_ext/Error.h>
 # define MATHLIB_ERROR(fmt,x)		error(fmt,x);
 # define MATHLIB_WARNING(fmt,x)		warning(fmt,x)
 # define MATHLIB_WARNING2(fmt,x,x2)	warning(fmt,x,x2)
 # define MATHLIB_WARNING3(fmt,x,x2,x3)	warning(fmt,x,x2,x3)
 # define MATHLIB_WARNING4(fmt,x,x2,x3,x4) warning(fmt,x,x2,x3,x4)
 
-#include "R_ext/Arith.h"
+#include <R_ext/Arith.h>
 #define ML_POSINF	R_PosInf
 #define ML_NEGINF	R_NegInf
 #define ML_NAN		R_NaN

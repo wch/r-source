@@ -20,7 +20,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 /*
@@ -39,22 +39,22 @@
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
 #include <X11/cursorfont.h>
-#include <X11/Intrinsic.h>/*->	Xlib.h	Xutil.h Xresource.h .. */
+#include <X11/Intrinsic.h>	/*->	Xlib.h	Xutil.h Xresource.h .. */
 
 
 #include "Defn.h"
 #include "Graphics.h"
-#include "Fileio.h" /* R_fopen */
-#include "rotated.h"/* 'Public' routines from here */
+#include "Fileio.h"		/* R_fopen */
+#include "rotated.h"		/* 'Public' routines from here */
 /* For the input handlers of the event loop mechanism: */
-#include "R_ext/eventloop.h" 
-#include "R_ext/Memory.h" /* vmaxget */
+#include <R_ext/eventloop.h> 
+#include <R_ext/Memory.h>	/* vmaxget */
 #include "Rdevices.h"
 
 #define R_X11_DEVICE 1
 #include "devX11.h"
 
-#include "R_ext/RX11.h"
+#include <R_ext/RX11.h>
 
 #define CURSOR		XC_crosshair		/* Default cursor */
 #define MM_PER_INCH	25.4			/* mm -> inch conversion */

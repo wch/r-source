@@ -19,7 +19,7 @@
  *
  *  SYNOPSIS
  *
- *	#include "Rmath.h"
+ *	#include <Rmath.h>
  *	double log1p(double x);
  *
  *  DESCRIPTION

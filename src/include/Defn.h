@@ -174,7 +174,7 @@ extern int vsnprintf (char *str, size_t count, const char *fmt, va_list arg);
 # define _R_HAVE_TIMING_ 1
 #endif
 
-#include "R_ext/Rdynload.h"
+#include <R_ext/Rdynload.h>
 
 #define HSIZE	   4119	/* The size of the hash table for symbols */
 #define MAXELTSIZE 8192 /* The largest string size */

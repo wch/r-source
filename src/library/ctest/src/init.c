@@ -18,7 +18,7 @@
  */
 
 #include "ctest.h"
-#include "R_ext/Rdynload.h"
+#include <R_ext/Rdynload.h>
 
 static const R_CMethodDef cmethods[]  = {
   {"chisqsim", (DL_FUNC) &chisqsim, 11},  

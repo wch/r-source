@@ -4,8 +4,8 @@
  We also provide an on.exit() also.
  */
 
-#include "R.h"
-#include "Rdefines.h"
+#include <R.h>
+#include <Rdefines.h>
 
 #include "Startup.h"
 

@@ -11,9 +11,9 @@
 */
 
 #include <Rinternals.h>
-#include "R_ext/PrtUtil.h"
+#include <R_ext/PrtUtil.h>
 #ifndef Win32
-#include "R_ext/eventloop.h"
+#include <R_ext/eventloop.h>
 #endif
 
 /* From Parse.h -- must find better solution: */

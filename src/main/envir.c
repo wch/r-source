@@ -94,7 +94,7 @@
 #endif
 
 #include "Defn.h"
-#include "R_ext/Callbacks.h"
+#include <R_ext/Callbacks.h>
 
 #define IS_USER_DATABASE(rho)  OBJECT((rho)) && inherits((rho), "UserDefinedDatabase")
 

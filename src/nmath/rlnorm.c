@@ -19,7 +19,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Rmath.h"
+ *    #include <Rmath.h>
  *    double rlnorm(double logmean, double logsd);
  *
  *  DESCRIPTION

@@ -1,7 +1,7 @@
 
-#include "R.h"
-#include "Rinternals.h"
-#include "Rdefines.h"
+#include <R.h>
+#include <Rinternals.h>
+#include <Rdefines.h>
 
 #include "embeddedRCall.h"
 #include "Defn.h"

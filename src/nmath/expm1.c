@@ -18,7 +18,7 @@
  *
  *  SYNOPSIS
  *
- *	#include "Rmath.h"
+ *	#include <Rmath.h>
  *	double expm1(double x);
  *
  *  DESCRIPTION

@@ -85,7 +85,7 @@ void Rstd_Suicide(char *s)
 
 
 #define __SYSTEM__
-#include "R_ext/eventloop.h"
+#include <R_ext/eventloop.h>
 #undef __SYSTEM__
 
 /*

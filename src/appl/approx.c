@@ -22,9 +22,9 @@
 #include <config.h>
 #endif
 
-#include "R_ext/Arith.h"
-#include "R_ext/Error.h"
-#include "R_ext/Applic.h"
+#include <R_ext/Arith.h>
+#include <R_ext/Error.h>
+#include <R_ext/Applic.h>
 
 /* Linear and Step Function Interpolation */
 

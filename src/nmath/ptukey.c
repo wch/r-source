@@ -19,7 +19,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Rmath.h"
+ *    #include <Rmath.h>
  *    double ptukey(q, rr, cc, df, lower_tail, log_p);
  *
  *  DESCRIPTION

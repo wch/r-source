@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2001   Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1999-2002   Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -20,15 +20,15 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
-#include <Rmath.h> /* fmax2, imin2, imax2 */
-#include "R_ext/Applic.h" /* prototypes for lowess and clowess */
-#include "R_ext/Boolean.h"
-#include "R_ext/Utils.h"  /* rPsort() */
+#include <Rmath.h>		/* fmax2, imin2, imax2 */
+#include <R_ext/Applic.h>	/* prototypes for lowess and clowess */
+#include <R_ext/Boolean.h>
+#include <R_ext/Utils.h>	/* rPsort() */
 #ifdef DEBUG_lowess
-# include "R_ext/Print.h"
+# include <R_ext/Print.h>
 #endif
 
 static double fsquare(double x)

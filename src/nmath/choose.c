@@ -18,7 +18,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Rmath.h"
+ *    #include <Rmath.h>
  *    double choose(double n, double k);
  *    double lchoose(double n, double k);
  *    (and private)

@@ -34,7 +34,7 @@
 #define MATHLIB_PRIVATE
 #include <Rmath.h>
 #undef MATHLIB_PRIVATE
-#include "R_ext/Applic.h"		/* machar */
+#include <R_ext/Applic.h>		/* machar */
 #include "arithmetic.h"
 
 /* Error Handling for Floating Point Errors */

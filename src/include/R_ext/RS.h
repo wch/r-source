@@ -21,7 +21,7 @@
 #define R_RS_H
 
 #include <string.h>		/* for memcpy */
-#include "Rconfig.h"		/* for F77_APPEND_UNDERSCORE */
+#include <Rconfig.h>		/* for F77_APPEND_UNDERSCORE */
 
 #ifdef  __cplusplus
 extern "C" {
@@ -29,7 +29,7 @@ extern "C" {
 
 /* S Like Error Handling */
 
-#include "R_ext/Error.h"	/* for error and warning */
+#include <R_ext/Error.h>	/* for error and warning */
 
 #define R_PROBLEM_BUFSIZE	4096
 #define PROBLEM			{char R_problem_buf[R_PROBLEM_BUFSIZE];sprintf(R_problem_buf,

@@ -18,7 +18,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Rmath.h"
+ *    #include <Rmath.h>
  *    int imin2(int x, int y);
  *
  *  DESCRIPTION

@@ -19,7 +19,7 @@
  *
  *  SYNOPSIS
  *
- *	#include "Rmath.h"
+ *	#include <Rmath.h>
  *	double qnbinom(double p, double n, double pr, int lower_tail, int log_p)
  *
  *  DESCRIPTION

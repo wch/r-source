@@ -614,8 +614,8 @@ static SEXP modLa_rg_cmplx(SEXP x, SEXP only_values)
 #endif
 }
 
-#include "R_ext/Rlapack.h"
-#include "R_ext/Rdynload.h"
+#include <R_ext/Rlapack.h>
+#include <R_ext/Rdynload.h>
 
 void
 R_init_lapack(DllInfo *info)

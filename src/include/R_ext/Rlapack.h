@@ -1,7 +1,7 @@
 #ifndef R_LAPACK_MODULE_H
 #define R_LAPACK_MODULE_H
 
-#include "Rinternals.h"
+#include <Rinternals.h>
 
 typedef SEXP (*Rf_La_svd)(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, 
 			  SEXP v, SEXP method);

@@ -17,9 +17,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "R.h"
+#include <R.h>
 #include "mva.h"
-#include "R_ext/Rdynload.h"
+#include <R_ext/Rdynload.h>
 
 static const R_CMethodDef CEntries[] = {
     {"dblcen", (DL_FUNC) &dblcen, 2},  

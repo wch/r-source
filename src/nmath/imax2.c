@@ -18,7 +18,7 @@
  *
  *  SYNOPSIS
  *
- *    #include "Rmath.h"
+ *    #include <Rmath.h>
  *    int imax2(int x, int y);
  *
  *  DESCRIPTION

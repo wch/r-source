@@ -1,7 +1,7 @@
 /* C declarations of principal Lapack routines */
 
-#include "Rinternals.h"
-#include "R_ext/RS.h"
+#include <Rinternals.h>
+#include <R_ext/RS.h>
 
 /* Level 3 BLAS */
 

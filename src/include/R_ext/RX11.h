@@ -1,7 +1,7 @@
 #ifndef R_X11_MODULE_H
 #define R_X11_MODULE_H
 
-#include "R_ext/Boolean.h"
+#include <R_ext/Boolean.h>
 
 /*
  We have problems here in that the X11 and relevant R header files 
@@ -51,7 +51,7 @@ typedef SEXP (*R_X11DataEntryRoutine)(SEXP call, SEXP op, SEXP args, SEXP rho);
 typedef Rboolean (*R_GetX11ImageRoutine)(int d, XImage **pximage, int *pwidth, int *pheight);
 #else
 
-#include "R_ext/Rdynload.h"
+#include <R_ext/Rdynload.h>
 
 typedef DL_FUNC R_X11DeviceDriverRoutine;
 typedef DL_FUNC R_X11DataEntryRoutine;

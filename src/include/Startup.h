@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2001  The R Development Core Team
+ *  Copyright (C) 1999-2002  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 #ifndef STARTUP_H_
 #define STARTUP_H_
 
-#include "R_ext/Boolean.h" /* TRUE/FALSE */
+#include <R_ext/Boolean.h>	/* TRUE/FALSE */
 
 #ifdef Win32
 typedef int (*blah1) (char *, char *, int, int);

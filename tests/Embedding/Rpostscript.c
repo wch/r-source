@@ -6,9 +6,9 @@
     plot(1:100)
     q()
  */
-#include "R.h"
-#include "Rinternals.h"
-#include "Rdefines.h"
+#include <R.h>
+#include <Rinternals.h>
+#include <Rdefines.h>
 
 #include "embeddedRCall.h"
 

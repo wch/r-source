@@ -2,12 +2,12 @@
 
 #include <stdlib.h> /* for abs */
 #include <math.h>
-#include "R_ext/Boolean.h"
-#include "R_ext/Error.h"
-#include "R_ext/Memory.h"
+#include <R_ext/Boolean.h>
+#include <R_ext/Error.h>
+#include <R_ext/Memory.h>
 
 #ifdef DEBUG_smooth
-# include "R_ext/PrtUtil.h"
+# include <R_ext/PrtUtil.h>
 #endif
 
 #include "eda.h"

@@ -82,7 +82,7 @@
 
 /* Need "" rather than <> for the Macintosh, apparently. */
 #include "Defn.h"
-#include "Rmath.h"
+#include <Rmath.h>
 
 #include <Rdynpriv.h>
 
@@ -132,7 +132,7 @@ int nCPFun = 0;
 
 static int CountDLL = 0;
 
-#include "R_ext/Rdynload.h"
+#include <R_ext/Rdynload.h>
 
 static DllInfo LoadedDLL[MAX_NUM_DLLS];
 

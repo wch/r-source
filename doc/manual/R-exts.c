@@ -129,7 +129,7 @@ SEXP convolveE(SEXP args)
 
 /* ----- Show arguments  ----- */
 
-#include "R_ext/PrtUtil.h"
+#include <R_ext/PrtUtil.h>
 
 SEXP showArgs(SEXP args)
 {

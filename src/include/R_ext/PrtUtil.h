@@ -26,8 +26,8 @@
 #ifndef PRTUTIL_H_
 #define PRTUTIL_H_
 
-#include "R_ext/Complex.h"
-#include "R_ext/Print.h"
+#include <R_ext/Complex.h>
+#include <R_ext/Print.h>
 
 #ifndef R_NO_REMAP
 #define formatLogical      Rf_formatLogical

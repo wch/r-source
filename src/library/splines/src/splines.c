@@ -210,7 +210,7 @@ spline_basis(SEXP knots, SEXP order, SEXP xvals, SEXP derivs)
     return val;
 }
 
-#include "R_ext/Rdynload.h"
+#include <R_ext/Rdynload.h>
 
 
 const static R_CallMethodDef R_CallDef[] = {

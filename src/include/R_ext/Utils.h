@@ -24,8 +24,8 @@
 #ifndef R_EXT_UTILS_H_
 #define R_EXT_UTILS_H_
 
-#include "R_ext/Boolean.h"
-#include "R_ext/Complex.h"
+#include <R_ext/Boolean.h>
+#include <R_ext/Complex.h>
 
 #ifndef R_NO_REMAP
 #define revsort       Rf_revsort

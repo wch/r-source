@@ -61,8 +61,8 @@
 #include <float.h>
 
 #include <Rmath.h> /* for R_pow_di */
-#include "R_ext/Arith.h"
-#include "R_ext/Applic.h"
+#include <R_ext/Arith.h>
+#include <R_ext/Applic.h>
 
 
 #ifndef HAVE_HYPOT

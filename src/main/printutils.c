@@ -60,7 +60,7 @@
 #include <Defn.h>
 #include <Rmath.h>
 #include <Print.h>
-#include "R_ext/RS.h"
+#include <R_ext/RS.h>
 #include <Rconnections.h>
 extern int R_OutputCon; /* from connections.c */
 

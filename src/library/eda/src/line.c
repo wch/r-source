@@ -1,4 +1,4 @@
-#include "R_ext/Utils.h"/* R_rsort() */
+#include <R_ext/Utils.h>	/* R_rsort() */
 #include <math.h>
 
 #include "eda.h"

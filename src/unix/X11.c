@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2001 The R Development Core Team
+ *  Copyright (C) 1999-2002 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #include <Defn.h>
@@ -53,7 +53,7 @@
 
 #if defined(HAVE_X11) && defined(HAVE_DYNAMIC_LOADING)
 
-#include "R_ext/RX11.h" /* typedefs for the module routine types */
+#include <R_ext/RX11.h>	     /* typedefs for the module routine types */
 
 /*
   This is now only used to find R_init_X11 in the module.
