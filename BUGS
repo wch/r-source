@@ -223,10 +223,10 @@ none
 
 Directory:  incoming
 
-* PR# 684 *
-Subject: gamma and lgamma functions
-From: Jim Lindsey <james.lindsey@luc.ac.be>
-Date: Wed, 4 Oct 2000 13:59:21 +0200 (MET DST)
+* PR# 685 *
+Subject: documentation bug in readline()
+From: Peter Perkins <pperkins@ucsd.edu>
+Date: Fri, 06 Oct 2000 19:09:31 -0700
 * PR# 640 *
 Subject: diff.default / diff.ts in wrong package bug
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -315,10 +315,6 @@ Date: Fri, 29 Sep 2000 14:20:47 -0700 (PDT)
 Subject:  pretty not covering the range properly 
 From: David Paul McLaughlin <david@orion-10.cs.byu.edu>
 Date: Fri, 25 Aug 2000 14:16:42 -0400
-* PR# 677 *
-Subject: R build on i86pc Solaris 2.7
-From: albrecht.gebhardt@uni-klu.ac.at
-Date: Mon, 2 Oct 2000 17:52:46 +0200 (MET DST)
 * PR# 676 *
 Subject: documentation error for deriv; MASS scripts ch8;
 From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
@@ -327,16 +323,6 @@ Date: Mon, 02 Oct 2000 11:23:19 -0400
 Subject: several documentation problems
 From: sws96srb@met.rdg.ac.uk
 Date: Mon, 2 Oct 2000 14:24:37 +0200 (MET DST)
-* PR# 680 *
-Subject: Returned mail: User unknown
-Subject: Notification: incoming/678
-Subject: typo in documentation for read.table
-From: Mail Delivery Subsystem <MAILER-DAEMON@biostat.ku.dk>
-From: R-bugs@biostat.ku.dk
-From: htang@hpl.hp.com
-Date: Tue, 3 Oct 2000 08:34:25 +0200
-Date: Tue, 3 Oct 2000 08:34:25 +0200
-Date: Mon, 2 Oct 2000 19:58:55 +0200 (MET DST)
 * PR# 679 *
 Subject: Returned mail: User unknown
 Subject: Notification: incoming/678
@@ -347,11 +333,29 @@ From: htang@hpl.hp.com
 Date: Tue, 3 Oct 2000 08:34:25 +0200
 Date: Tue, 3 Oct 2000 08:34:24 +0200
 Date: Mon, 2 Oct 2000 19:58:55 +0200 (MET DST)
-* PR# 682 *
-Subject: This mail was found after problem with mailserver Oct 3rd - postmaster@hh.umu.se
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 03 Oct 2000 11:57:32 +0200
+* PR# 677 *
+Subject: R build on i86pc Solaris 2.7
+From: albrecht.gebhardt@uni-klu.ac.at
+Date: Mon, 2 Oct 2000 17:52:46 +0200 (MET DST)
 * PR# 681 *
 Subject: This mail was found after problem with mailserver Oct 3rd - postmaster@hh.umu.se
 From: maechler@stat.math.ethz.ch
 Date: Tue, 3 Oct 2000 11:16:59 +0200 (MET DST)
+* PR# 680 *
+Subject: Returned mail: User unknown
+Subject: Notification: incoming/678
+Subject: typo in documentation for read.table
+From: Mail Delivery Subsystem <MAILER-DAEMON@biostat.ku.dk>
+From: R-bugs@biostat.ku.dk
+From: htang@hpl.hp.com
+Date: Tue, 3 Oct 2000 08:34:25 +0200
+Date: Tue, 3 Oct 2000 08:34:25 +0200
+Date: Mon, 2 Oct 2000 19:58:55 +0200 (MET DST)
+* PR# 684 *
+Subject: gamma and lgamma functions
+From: Jim Lindsey <james.lindsey@luc.ac.be>
+Date: Wed, 4 Oct 2000 13:59:21 +0200 (MET DST)
+* PR# 682 *
+Subject: This mail was found after problem with mailserver Oct 3rd - postmaster@hh.umu.se
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 03 Oct 2000 11:57:32 +0200
