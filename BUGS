@@ -307,3 +307,7 @@ From: Thomas Lumley <thomas@biostat.washington.edu>
 From: Thomas Lumley <thomas@biostat.washington.edu>
 Date: Fri, 4 Feb 2000 16:45:52 +0000 (GMT)
 Date: Fri, 4 Feb 2000 01:58:44 +0000 (GMT)
+* PR# 412 *
+Subject: anomalies with call objects
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 06 Feb 2000 01:18:50 +0100
