@@ -508,7 +508,7 @@ sub text2html {
 
     $text = replace_command($text, "emph", "<EM>", "</EM>");
     $text = replace_command($text, "bold", "<B>", "</B>");
-    $text = replace_command($text, "file", "`", "'");
+    $text = replace_command($text, "file", "`<tt>", "<tt>'");
 
     $text = html_tables($text);
     $text =~ s/\\cr/<BR>/sgo;
@@ -617,7 +617,7 @@ sub code2html {
 		    $tmp = $htmlfile;
 		    ($base, $topic) = ($tmp =~ m+(.*)/(.*)+);
 		    $base =~ s+/html$++;
-		    $htmlfile = "ms-its:../../$base/winhlp/$base.chm::/$topic";
+		    $htmlfile = "ms-its:../../$base/chtml/$base.chm::/$topic";
 #		    print "$htmlfile\n";
 		}
 		$text =~
@@ -695,10 +695,10 @@ sub html_print_argblock {
 		$text =~ s/.*$id//s;
 	    }
 	    print htmlout "</TABLE>\n";
-	    print htmlout text2html($text);
+	    print htmlout "<P>\n", text2html($text), "</P>\n";
 	}
 	else{
-	    print htmlout text2html($text);
+	    print htmlout "<P>\n", text2html($text), "</P>\n";
 	}
     }
 }
@@ -710,7 +710,7 @@ sub html_print_sections {
 
     for($section=0; $section<$max_section; $section++){
 	print htmlout html_title3($section_title[$section]);
-	print htmlout text2html($section_body[$section]);
+	print htmlout "<P>\n", text2html($section_body[$section]), "</P>\n";
     }
 }
 

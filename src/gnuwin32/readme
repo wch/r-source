@@ -17,10 +17,10 @@ The simplest way is to run the installer (double-click on the icon for
 rwinst.exe and navigate its wizard-like pages).
 
 To install manually, unpack rw0650b.zip anywhere you like. It will
-unpack to a directory tree under rw0650. The help, HTML and latex help
-files are in separate files rw0650h.zip, rw0650w.zip and rw0650l.zip
-which should be unpacked in the same directory you unpacked
-rw0650b.zip.
+unpack to a directory tree under rw0650. The help, HTML, Compiled
+HTML, Windows and latex help files are in separate files rw0650h.zip,
+rw0650w.zip, rw0650ch.zip, rw0650wh.zip and rw0650l.zip which should
+be unpacked in the same directory in which you unpacked rw0650b.zip.
 
 Usage
 =====

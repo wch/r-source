@@ -6,7 +6,7 @@
 #   `Freeware. You may not resell it or claim you wrote it. 
 #    You can use it for anything, commercial or otherwise.'
 #
-# Modifications for R (C) 1998, 1999 B. D. Ripley
+# Modifications for R (C) 1999 B. D. Ripley
 #
 # Restriction: tables are hardwired for arguments etc.
 #
@@ -102,7 +102,7 @@ close HHP;
 
 $language =~ s/ / 0x0 0x0 \;/o;
 
-open HPJ or die "Can't open help workshop file $HPJ for output: $!\n";
+open HPJ or die "Can't open help project file $HPJ for output: $!\n";
 
 print HPJ "[OPTIONS]\n";
 print HPJ "HCW=0\n";
@@ -111,13 +111,28 @@ print HPJ "REPORT=Yes\n";
 print HPJ "HLP=.\\$HLP\n\n";
 print HPJ "CNT=.\\$basename.cnt\n";
 print HPJ "COMPRESS=true\n";
-print HPJ "TITLE=Help for Package $HLP\n";
+print HPJ "TITLE=Help for Package $basename\n";
+print HPJ "[CONFIG]\nBrowseButtons()\n";
 print HPJ "[FILES]\n";
 print HPJ ".\\$basename.rtf\n";
 
-@filelist = keys %filehash;
+@filelist = sort keys %filehash;
 $numfiles = @filelist;
 close HPJ;
+
+# set up browse sequence
+sub browseorder {lc($a) cmp lc($b) or $a cmp $b;}
+$seq=1000;
+$browse{"Contents"} = $seq;
+foreach $file (sort browseorder @filelist) {
+    $kw = $file;
+    $kw =~ s/\.html$//o;
+    if($kw ne "00Index") { 
+	$seq += 1; 
+	$browse{$kw} = $seq; 
+    }
+}
+
 
 if(defined $contentshtm) {
     print STDERR "Translating $contentshtm to $basename.cnt\n";
@@ -206,7 +221,7 @@ close BAT;
 
 print STDERR "Graphics conversions written to convert.bat\n";
 print STDERR "Written RTF to $basename.rtf\n";
-print STDERR "Written Help Workshop file to $basename.hpj\n";
+print STDERR "Written Help Project file to $basename.hpj\n";
 $nummissingfiles = keys %missingfiles;
 if($nummissingfiles) {
     print STDERR "\n$nummissingfiles files missing from $HHP\n\nAdding";

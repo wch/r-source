@@ -6,7 +6,7 @@
 #   `Freeware. You may not resell it or claim you wrote it. 
 #    You can use it for anything, commercial or otherwise.'
 #
-# Modifications for R (C) 1998, 1999 B. D. Ripley
+# Modifications for R (C) 1999 B. D. Ripley
 #
 # Routines for HTML to RTF
 #
@@ -35,6 +35,7 @@ sub begin_head {
     $key =~ s/\.html$//o;
     if($key eq "00Index") {$key = "Contents";}
     print RTF "K{\\footnote $key}\n";
+    print RTF "+{\\footnote $browse{$key}}\n";
 
     $ignore_text = 1;}
 
@@ -126,6 +127,7 @@ $End{"A"} = "end_a";
 
 sub begin_a {
     local ($element, $tag, %attributes) = @_;
+    $in_a = 1;
     if(exists $attributes{"name"}) { # It's a link target
 	$tmp = $attributes{"name"};
 	print RTF "#{\\footnote ";
@@ -158,7 +160,7 @@ sub end_a {
 		$popup = $1;
 		$popup =~ s/&#32;/ /og;
 		print STDERR "Popup: $popup\n";
-		print RTF "}{\\v _popup_$pcnt}";
+		print RTF "}{\\v _popup_$pcnt} ";
 		$popuplist{$pcnt} = $popup;
 		$pcnt++;
 	    } else {
@@ -166,7 +168,7 @@ sub end_a {
 	    }
 	} else {
 	    if(index($href, ":") >= 0) { # It's an absolute URL
-		print RTF "\\cf0}{\\v *!EF(`$href',`',1,`');}";
+		print RTF "\\cf0}{\\v *!EF(`$href',`',1,`');} ";
 	    } else { # It's internal
 		$hash = index($href, "#");
 		if($hash >= 0) { # It's an internal pageref
@@ -174,9 +176,9 @@ sub end_a {
 			$href = $filename . $href;
 		    }
 		    $href =~ s/#/_hash_/og;
-		    print RTF "}{\\v _label_$href}";
+		    print RTF "}{\\v _label_$href} ";
 		} else {
-		    print RTF "}{\\v _label_$href}";
+		    print RTF "}{\\v _label_$href} ";
 		}
 		$href =~ s/_hash_.*//o;
 		if(! exists $filehash{$href}) {
@@ -186,7 +188,7 @@ sub end_a {
 	    }
 	}
     }
-    undef $href;
+    undef $href; undef $in_a;
 }
 
 $Begin{"BLOCKQUOTE"} = "begin_blockquote";
@@ -436,7 +438,10 @@ sub html_content {
 	$buildtitle .= $string;
     }
     unless ($ignore_text) {
-	print RTF $string, " ";
+	$string =~ s/\{/\\{/o;
+	$string =~ s/\}/\\}/o;
+	print RTF $string;
+	if(!(defined $in_a)) {print RTF " ";}
 #	&print_word_wrap ($string);
     }
 }

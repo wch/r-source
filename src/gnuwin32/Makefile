@@ -9,7 +9,7 @@ ifdef DEBUG
  OPTFLAGS=-g -O2
  DLLFLAGS=
 else
- OPTFLAGS=-O2 -Wall
+ OPTFLAGS=-O2 -Wall -pedantic
  DLLFLAGS=-s 
 endif
 
@@ -104,7 +104,8 @@ pkg-%:  libR.a #../include/globalvar.h
 	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) -C ../library/$* PKG=$* -f ../../gnuwin32/MakePkg
 ifeq ($(strip $(HELP)),YES)
 	$(MAKE) -C ./help $($*-HELP)help-$*
-	$(MAKE) -C ./help chm-$*
+#	$(MAKE) -C ./help chm-$*
+	$(MAKE) -C ./help winhlp-$* # also makes chm
 	$(MAKE) -C ./help contents-$*
 endif
 
@@ -188,6 +189,9 @@ bindist:
 	unzip anindex.zip
 	$(RM) anindex.zip
 	zip -rmX $(RPREFIX)w.zip $(RPREFIX)/doc/html $(RPREFIX)/library/*/html
+	zip -rmX $(RPREFIX)ch.zip $(RPREFIX)/library/*/chtml  $(RPREFIX)/bin/Rchtml.dll
+	$(RM)  $(RPREFIX)/library/*/winhlp/*.GID
+	zip -rmX $(RPREFIX)wh.zip $(RPREFIX)/library/*/winhlp
 	zip -rmX $(RPREFIX)l.zip $(RPREFIX)/library/*/latex $(RPREFIX)/doc/manual
 	zip -rX $(RPREFIX)b.zip $(RPREFIX)
 	$(RM) -rf $(RPREFIX)

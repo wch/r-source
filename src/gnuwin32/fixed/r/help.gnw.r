@@ -47,13 +47,15 @@ help <-
                     ".Rd'\n", sep = "")
             if (!offline) {
                 if(chmhelp) {
+                    chm.dll <- file.path(R.home(), "bin", "Rchtml.dll")
+                    if(!file.exists(chm.dll))
+                        stop("Compiled HTML is not installed")
                     if(!is.loaded(symbol.C("Rchtml")))
-                        dyn.load(file.path(R.home(), "bin", "Rchtml.dll"))
+                        dyn.load(chm.dll)
                     wfile <- sub("/help/([^/]*)$", "", file)
                     thispkg <- sub(".*/([^/]*)$", "\\1", wfile)
-                    hlpfile <- paste(wfile, "/winhlp/", thispkg, ".chm",
+                    hlpfile <- paste(wfile, "/chtml/", thispkg, ".chm",
                                      sep = "")
-#                   hlpfile <- gsub("/", "\\\\", hlpfile)
                     if(verbose) print(hlpfile)
                     if(file.exists(hlpfile)) {
                         err <- .C("Rchtml", hlpfile, topic, err=integer(1))$err
@@ -65,6 +67,7 @@ help <-
                     } else {
                        if(verbose)
                            cat("No `", thispkg, ".chm' is available\n", sep="")
+                        file <- index.search(topic, INDICES, "AnIndex", "help")
                     }
                 }
                 if(htmlhelp) {
@@ -97,6 +100,7 @@ help <-
                     } else {
                        if(verbose)
                            cat("No `", thispkg, ".hlp' is available\n", sep="")
+                        file <- index.search(topic, INDICES, "AnIndex", "help")
                     }
                 }
                 ## experimental code

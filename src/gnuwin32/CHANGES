@@ -5,9 +5,15 @@ New function savePlot() to save plots to wmf, gif or ps.
 
 There is now support for help via compiled HTML files (as used by
 current Microsoft products): set options(chmhelp=TRUE) to use this.
-You will probably need IE4 or later installed to use this.
+You will probably need IE4 or later installed to use this, or you
+can install hhupd.exe from the Windows-NT/etc folder on CRAN.
 
-Rotated text on a windows/win.* device is placed more accurately.
+There is support for building Windows help files (as in Windows 95) and
+compiled HTML files (as in Windows 98) and both are available for the
+standard libraries.
+
+Rotated text on a windows / win.* device is placed more accurately,
+especially for non-multiples of 90 degrees.
 
 A windows() device reports itself as `windows' not `X11'.
 

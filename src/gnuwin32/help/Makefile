@@ -13,15 +13,15 @@ help-%:
 
 chm-%: 
 	$(PERL) build.help ${DOS} -chm $*
-	cp ../../../doc/html/logo.jpg ../../library/$*/chm
-	-(cd ../../library/$*/chm; hhc $*.hhp)
+# hhc always gives an error code
+	$(MAKE) -C ../../library/$*/chm -f ../../../gnuwin32/help/Makefile $*.chm
+	mkdir -p ../../../library/$*/chtml
+	cp ../../library/$*/chm/$*.chm ../../../library/$*/chtml
+
+winhlp-%: chm-%
+	$(MAKE) -C ../../library/$*/chm -f ../../../gnuwin32/help/Makefile $*.hlp
 	mkdir -p ../../../library/$*/winhlp
-	cp ../../library/$*/chm/$*.chm ../../../library/$*/winhlp
-#
-#hlp-%: chm-%
-	cp logo.bmp ../../library/$*/chm
-	(cd ../../library/$*/chm; perl ../../../gnuwin32/help/html-to-rtf.pl $*.hhp; hcrtf /x $*.hpj)
-	cp ../../library/$*/chm/$*.cnt   ../../library/$*/chm/$*.hlp ../../../library/$*/winhlp
+	cp ../../library/$*/chm/$*.cnt ../../library/$*/chm/$*.hlp ../../../library/$*/winhlp
 
 contents-%:
 	$(PERL) Rd2contents ../../library/$* ../../../library/$*/CONTENTS
@@ -43,19 +43,23 @@ winhelp-%:
 clean:
 	$(RM) -fr *~
 
-# to be run from src/library/pkg
+# to be run from src/library/pkg/chm
 
-win: $(PKG).rtf
-	-mkdir ../../../library/$(PKG)/winhlp
-	$(CP) -p $(PKG).hlp $(PKG).cnt ../../../library/$(PKG)/winhlp
+HTM = $(filter-out 00Index.html, $(wildcard *.html))
+%.chm: $(HTM) logo.jpg
+	-hhc $*.hhp
 
-%.rtf: man/*.Rd
-	-$(RM) -f $*.rtf
-	$(PERL) ../../gnuwin32/help/Rd2Sd.pl -p $* man/*.Rd
-	$(PERL) -S nr2hlp $* $*.Sd
-	hcp505 $*
-	$(RM) -f $*.ph $*.hpj $*.rtf
+%.hlp: %.rtf logo.bmp
+	 hcrtf /x $*.hpj
 
+%.rtf: $(HTM)
+	perl ../../../gnuwin32/help/html-to-rtf.pl $*.hhp
+
+logo.jpg: ../../../../doc/html/logo.jpg
+	$(CP) $^ $@
+
+logo.bmp: ../../../gnuwin32/help/logo.bmp
+	$(CP) $^ $@
 
 # following are designed to be run from the library/pkg directory:
 
