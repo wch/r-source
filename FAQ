@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-34, 2004-01-23
+Version 1.8-35, 2004-01-28
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1835,6 +1835,10 @@ distributions of R.)
      GTK graphics device driver that may be used independently of the
      R-GNOME interface and can be used to create R devices as embedded
      components in a GUI using a Gtk drawing area widget, e.g., using RGtk.
+
+*hapassoc*
+     Likelihood inference of trait associations with SNP haplotypes and
+     other attributes using the EM Algorithm.
 
 *haplo.score*
      Score tests for association of traits with haplotypes when linkage
