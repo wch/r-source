@@ -1320,11 +1320,11 @@ static Rboolean GA_Open(DevDesc *dd, gadesc *xd, char *dsp,
 	  irrelevant,i.e., depth of the bitmap is the one of graphic card
 	  if required depth > 1
 	*/
-	if(((xd->gawin = newbitmap(w, h, 256)) == NULL) {
+	if ((xd->gawin = newbitmap(w, h, 256)) == NULL) {
 	    warning("Unable to allocate bitmap");
 	    return FALSE;
 	}  
-	if (((xd->fp = fopen(&dsp[4],"wb")) == NULL )) {
+	if ((xd->fp = fopen(&dsp[4],"wb")) == NULL ) {
 	    del(xd->gawin);
 	    warning("Unable to open file `%s' for writing", &dsp[4]);
 	    fclose(xd->fp);
