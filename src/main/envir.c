@@ -811,7 +811,7 @@ static SEXP findVarLocInFrame(SEXP rho, SEXP symbol, Rboolean *canCache)
         table = (R_ObjectTable *) R_ExternalPtrAddr(HASHTAB(rho));
 	/* Better to use exists() here if we don't actually need the value! */
         val = table->get(CHAR(PRINTNAME(symbol)), canCache, table);
-        if(val != R_NilValue) {
+        if(val != R_UnboundValue) {
 	    tmp = allocSExp(LISTSXP); 
 	    SETCAR(tmp, val);
 	    SET_TAG(tmp, symbol);
