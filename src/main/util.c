@@ -174,7 +174,7 @@ Rcomplex asComplex(SEXP x)
 
 SEXP asChar(SEXP x)
 {
-    int w, d, e;
+    int w, d, e, wi, di, ei;
     char buf[MAXELTSIZE];
 
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {
@@ -203,8 +203,9 @@ SEXP asChar(SEXP x)
 #else
 	    return mkChar(EncodeReal(REAL(x)[0], w, d, e));
 #endif
-        /* case CPLXSXP: --- FIXME here */
-
+        case CPLXSXP:
+	    formatComplex(COMPLEX(x), 1, &w, &d, &e, &wi, &di, &ei);
+	    return mkChar(EncodeComplex(COMPLEX(x)[0], w, d, e, wi, di, ei));
 	case STRSXP:
 	    return STRING(x)[0];
 	default:
