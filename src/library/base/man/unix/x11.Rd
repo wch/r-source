@@ -23,7 +23,7 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
     possibilities are \code{"mono"}, \code{"gray"}, \code{"pseudo"},
     \code{"pseudo.cube"} and \code{"true"}. Ignored if an \code{X11} is
     already open.}
-  \item{maxcubesize}{can be used to limited the size of color
+  \item{maxcubesize}{can be used to limit the size of color
     cube allocated for pseudocolor devices.}
 }
 \description{
@@ -49,6 +49,11 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
   set by the first device to be opened.  To change the \code{colortype}
   you need to close \emph{all} open \code{X11} devices then open one
   with the desired \code{colortype}.
+
+  With \code{colortype} equal to \code{"pseudo.cube"} or \code{"gray"}
+  successively smaller palettes are tried until one is completely
+  allocated. If allocation of the smallest attempt fails the device will
+  revert to \code{"mono"}.
 }
 \seealso{
   \code{\link{Devices}}.
