@@ -1591,14 +1591,16 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else */
 	if (isOrdered(var_i)) {
 	    LOGICAL(ordered)[i] = 1;
-	    if((INTEGER(nlevs)[i] = nlevels(var_i)) < 2)
-		errorcall(call, "variable %d has fewer than 2 levels", i+1);
+	    if((INTEGER(nlevs)[i] = nlevels(var_i)) < 1)
+		errorcall(call, "variable %d has no levels", i+1);
+	    /* will get updated later when contrasts are set */
 	    INTEGER(columns)[i] = ncols(var_i);
 	}
 	else if (isUnordered(var_i)) {
 	    LOGICAL(ordered)[i] = 0;
-	    if((INTEGER(nlevs)[i] = nlevels(var_i)) < 2)
-		errorcall(call, "variable %d has fewer than 2 levels", i+1);
+	    if((INTEGER(nlevs)[i] = nlevels(var_i)) < 1)
+		errorcall(call, "variable %d has no levels", i+1);
+	    /* will get updated later when contrasts are set */
 	    INTEGER(columns)[i] = ncols(var_i);
 	}
 	else if (isLogical(var_i)) {

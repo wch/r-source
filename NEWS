@@ -122,8 +122,9 @@ BUG FIXES
     o   filter() did not use init in reverse order as documented. (PR#5017)
 
     o	contrasts<-() and model.matrix() now have sanity checks that
-	factors having at least 2 levels: model.matrix() gave
-	nonsensical results for 0-level factors.
+	factors having at least 2 levels (or one level and a contrast
+	matrix): model.matrix() gave nonsensical results for 0-level
+	factors.
 
 
 
