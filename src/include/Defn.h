@@ -428,10 +428,6 @@ extern Rboolean	R_Verbose	INI_as(FALSE);	/* Be verbose */
 extern FILE*	R_Inputfile	INI_as(NULL);	/* Current input flag */
 extern FILE*	R_Consolefile	INI_as(NULL);	/* Console output file */
 extern FILE*	R_Outputfile	INI_as(NULL);	/* Output file */
-extern FILE*	R_Sinkfile	INI_as(NULL);	/* Sink file */
-extern int	R_OutputCon	INI_as(1);	/* Output connection */
-extern int	R_SinkCon	INI_as(1);	/* Sink connection */
-extern int	R_SinkCon_to_close	INI_as(0);
 
 /* Objects Used In Parsing  */
 extern SEXP	R_CommentSxp;	    /* Comments accumulate here */

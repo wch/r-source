@@ -149,17 +149,6 @@ searchpaths <- function()
     unlist(paths)
 }
 
-sink <- function(file=NULL, append = FALSE)
-{
-    closeOnExit <- FALSE
-    if(is.null(file)) file <- 1
-    else if(is.character(file)) {
-        file <- file(file, ifelse(append, "a", "w"))
-        closeOnExit <- TRUE
-    } else if(!inherits(file, "connection"))
-        stop("`file' must be NULL, a connection or a character string")
-    .Internal(sink(file, append, closeOnExit))
-}
 
 ##-- DANGER ! ---   substitute(list(...))  inside functions !!!
 ##substitute <- function(expr, env=NULL).Internal(substitute(expr, env))

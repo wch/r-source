@@ -31,7 +31,8 @@ typedef struct Rconn
     int (*vfprintf)(struct Rconn *, const char *, va_list);
     int (*fgetc)(struct Rconn *);
     int (*ungetc)(int c, struct Rconn *);
-    long (*seek)(struct Rconn *, int);
+    long (*seek)(struct Rconn *, int, int);
+    void (*truncate)(struct Rconn *);
     int (*fflush)(struct Rconn *);
     size_t (*read)(void *, size_t, size_t, struct Rconn *);
     size_t (*write)(const void *, size_t, size_t, struct Rconn *);
@@ -65,8 +66,10 @@ int Rconn_fgetc(Rconnection con);
 int Rconn_ungetc(int c, Rconnection con);
 int Rconn_printf(Rconnection con, const char *format, ...);
 Rconnection getConnection(int n);
-void switch_stdout(int icon);
+Rboolean switch_stdout(int icon, int closeOnExit);
 SEXP R_ParseConn(Rconnection con, int n, int *status);
 void con_close(int i);
 void Rconn_setEncoding(Rconnection con, SEXP enc);
+void R_SinkReset(void);
 
+int R_OutputCon, R_ErrorCon;

@@ -753,6 +753,7 @@ FUNTAB R_FunTab[] =
 {"file", 	do_file,	0,      11,     4,      PP_FUNCALL},
 {"pipe", 	do_pipe,	0,      11,     3,      PP_FUNCALL},
 {"seek", 	do_seek,	0,      11,     3,      PP_FUNCALL},
+{"truncate", 	do_truncate,	0,      11,     1,      PP_FUNCALL},
 {"pushBack", 	do_pushback,	0,      11,     3,      PP_FUNCALL},
 {"pushBackLength",do_pushbacklength,0,  11,     1,      PP_FUNCALL},
 {"textConnection",do_textconnection,0,	11,     3,      PP_FUNCALL},

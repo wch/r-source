@@ -13,15 +13,28 @@ NEW FEATURES
 
     o	Changes to connections:
 
+	-  Text input from file and pipe connections can be read with
+	   a user-specified encoding.
+
 	-  New functions readChar() and writeChar() to read
            character strings with known lengths and no terminators,
-	   and to write used-specified lengths from strings.
+	   and to write user-specified lengths from strings.
+
+	-  sink() now has a stack of output connections, following S4.
+
+	-  sink() can also be applied to the message stream, to
+           capture error messages to a connection.  Use carefully!
+
+	-  seek() has a new `origin' argument.
+
+	-  New function truncate() to truncate a connection open for
+	   writing at the current position.
 
 	-  More to come.
 
-    o	hessian argument added to deriv and its methods.  A new function
-	deriv3 provides identical capabilities to deriv except that
-	hessian is TRUE by default.
+    o	`hessian' argument added to deriv and its methods.  A new function
+	deriv3() provides identical capabilities to deriv() except that
+	`hessian' is TRUE by default.
 
     o	New components in .Machine give the sizes of long, long long
 	and long double C types (or 0 if they do not exist).
@@ -30,12 +43,9 @@ NEW FEATURES
 	files supplied for Windows, Mac, Unicode and various others,
 	and with an appropriate platform-specific default.
 
-    o	pdf() graphics driver.
+    o	New pdf() graphics driver.
 
     o	eigen() tests for symmetry with a numerical tolerance.
-
-    o	file and pipe connections can be read with a user-specified
-	encoding.
 
     o	New function checkFF() for checking foreign function calls.
 

@@ -182,7 +182,7 @@ static void cat_printsep(SEXP sep, int ntot)
 SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP objs, file, fill, sepr, labs, s;
-    int ifile, savecon;
+    int ifile, savecon, changedcon;
     Rboolean wasopen;
     Rconnection con;
     int append;
@@ -232,9 +232,11 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (append == NA_LOGICAL)
 	errorcall(call, "invalid append specification");
 
-    savecon = R_OutputCon;
     wasopen = con->isopen;
-    switch_stdout(ifile); /* will open new connection if required */
+
+    savecon = R_OutputCon;
+    changedcon = switch_stdout(ifile, 0); 
+    /* will open new connection if required */
 
     nobjs = length(objs);
     /*
@@ -312,7 +314,8 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     con->fflush(con);
     if(!wasopen) con->close(con);
-    switch_stdout(savecon);
+    if(changedcon) switch_stdout(-1, 0);
+
     return R_NilValue;
 }
 

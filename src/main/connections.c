@@ -27,6 +27,10 @@
 #include <R_ext/Complex.h>
 /* #include <fcntl.h> not yet */
 
+#ifdef HAVE_UNISTD_H
+# include <unistd.h>
+#endif
+
 /* Win32 does have popen, but it does not work in GUI applications,
    so test that later */
 #ifdef Win32
@@ -36,8 +40,13 @@
 #endif
 
 #define NCONNECTIONS 50
+#define NSINKS 11
 
 static Rconnection Connections[NCONNECTIONS];
+
+static int R_SinkNumber, R_SinkSaved;
+static int SinkCons[NSINKS], SinkConsClose[NSINKS];
+
 
 /* ------------- admin functions (see also at end) ----------------- */
 
@@ -99,10 +108,15 @@ static int null_ungetc(int c, Rconnection con)
     return 0; /* -Wall */
 }
 
-static long null_seek(Rconnection con, int where)
+static long null_seek(Rconnection con, int where, int origin)
 {
     error("seek not enabled for this connection");
     return 0; /* -Wall */
+}
+
+static void null_truncate(Rconnection con)
+{
+    error("truncate not enabled for this connection");
 }
 
 static int null_fflush(Rconnection con)
@@ -180,13 +194,41 @@ static int file_ungetc(int c, Rconnection con)
     return ungetc(c, fp);
 }
 
-static long file_seek(Rconnection con, int where)
+static long file_seek(Rconnection con, int where, int origin)
 {
     FILE *fp = ((Rfileconn)(con->private))->fp;
     long pos = ftell(fp);
-
-    if(where >= 0) fseek(fp, where, SEEK_SET);
+    int whence = SEEK_SET;
+    
+    switch(origin) {
+    case 2: whence = SEEK_CUR;
+    case 3: whence = SEEK_END;
+    default: whence = SEEK_SET;
+    }
+    if(where >= 0) fseek(fp, where, whence);
     return pos;
+}
+
+static void file_truncate(Rconnection con)
+{
+    FILE *fp = ((Rfileconn)(con->private))->fp;
+    int fd = fileno(fp);
+    int size = lseek(fd, 0, SEEK_CUR);
+
+    if(!con->isopen || !con->canwrite)
+	error("can only truncate connections open for writing");
+    
+#ifdef HAVE_FTRUNCATE
+    if(ftruncate(fd, size))
+	error("file truncation failed");
+#else
+# ifdef Win32
+    if(chsize(fd, size))
+	error("file truncation failed");
+# else
+    error("Unavailable on this platform");
+# endif
+#endif
 }
 
 static int file_fflush(Rconnection con)
@@ -239,6 +281,7 @@ static Rconnection newfile(char *description, char *mode)
     new->fgetc = &file_fgetc;
     new->ungetc = &file_ungetc;
     new->seek = &file_seek;
+    new->truncate = &file_truncate;
     new->fflush = &file_fflush;
     new->read = &file_read;
     new->write = &file_write;
@@ -352,6 +395,7 @@ static Rconnection newpipe(char *description, char *mode)
     new->fgetc = &file_fgetc;
     new->ungetc = &file_ungetc;
     new->seek = &null_seek;
+    new->truncate = &null_truncate;
     new->fflush = &file_fflush;
     new->read = &file_read;
     new->write = &file_write;
@@ -523,6 +567,7 @@ static Rconnection newterminal(char *description, char *mode)
     new->fgetc = &null_fgetc;
     new->ungetc = &null_ungetc;
     new->seek = &null_seek;
+    new->truncate = &null_truncate;
     new->fflush = &null_fflush;
     new->read = &null_read;
     new->write = &null_write;
@@ -563,28 +608,6 @@ SEXP do_stdout(SEXP call, SEXP op, SEXP args, SEXP env)
     classgets(ans, class);
     UNPROTECT(2);
     return ans;
-}
-
-/* Switch output to connection number icon.
-   We don't close the old connection.
- */
-void switch_stdout(int icon)
-{
-    if(icon == R_OutputCon) return;
-    if(icon >= 3) {
-	Rconnection con = getConnection(icon); /* checks validity */
-	if(!con->isopen) {
-	    con->open(con);
-	    if(R_SinkCon_to_close == 0) R_SinkCon_to_close = 2;
-	}
-	R_OutputCon = icon;
-    } else if(icon == 0)
-	error("cannot switch output to stdin");
-    else if(icon == 2)
-	error("cannot switch output to stderr");
-    else {
-	R_OutputCon = 1;
-    }
 }
 
 
@@ -665,7 +688,7 @@ static int text_ungetc(int c, Rconnection con)
     return c;
 }
 
-static long text_seek(Rconnection con, int where)
+static long text_seek(Rconnection con, int where, int origin)
 {
     if(where >= 0) error("seek is not relevant for text connection");
     return 0; /* if just asking, always at the beginning */
@@ -700,6 +723,7 @@ static Rconnection newtext(char *description, SEXP text)
     new->fgetc = &text_fgetc;
     new->ungetc = &text_ungetc;
     new->seek = &text_seek;
+    new->truncate = &null_truncate;
     new->fflush = &null_fflush;
     new->read = &null_read;
     new->write = &null_write;
@@ -855,6 +879,7 @@ static Rconnection newouttext(char *description, SEXP sfile, char *mode)
     new->fgetc = &null_fgetc;
     new->ungetc = &null_ungetc;
     new->seek = &text_seek;
+    new->truncate = &null_truncate;
     new->fflush = &null_fflush;
     new->read = &null_read;
     new->write = &null_write;
@@ -996,31 +1021,47 @@ void con_close(int i)
 
 SEXP do_close(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int i;
+    int i, j;
 
     checkArity(op, args);
     i = asInteger(CAR(args));
     if(i < 3) error("cannot close standard connections");
-    if(i == R_SinkCon) error("cannot close sink connection");
+    for(j = 0; j < R_SinkNumber; j++)
+	if(i == SinkCons[j]) 
+	    error("cannot close output sink connection");
+    if(i == R_ErrorCon) 
+	error("cannot close messages sink connection");
     con_close(i);
     return R_NilValue;
 }
 
-/* seek(con, where = numeric(), rw = "") */
+/* seek(con, where = numeric(), origin = "start") */
 SEXP do_seek(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int where;
+    int where, origin;
     SEXP ans;
     Rconnection con = NULL;
 
     checkArity(op, args);
     con = getConnection(asInteger(CAR(args)));
     where = asInteger(CADR(args));
+    origin = asInteger(CADDR(args));
     if(where == NA_INTEGER || where < 0) where = -1;
     PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = con->seek(con, where);
+    INTEGER(ans)[0] = con->seek(con, where, origin);
     UNPROTECT(1);
     return ans;
+}
+
+/* truncate(con) */
+SEXP do_truncate(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    Rconnection con = NULL;
+
+    checkArity(op, args);
+    con = getConnection(asInteger(CAR(args)));
+    con->truncate(con);
+    return R_NilValue;
 }
 
 /* ------------------- read, write  text --------------------- */
@@ -1733,9 +1774,83 @@ SEXP do_pushbacklength(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+
 /* ------------------- sink functions  --------------------- */
 
-static int R_SinkNumber, R_SinkErrNumber;
+/* Switch output to connection number icon, or popd stack if icon < 0
+ */
+Rboolean switch_stdout(int icon, int closeOnExit)
+{
+    int toclose;
+    
+    if(icon == R_OutputCon) return FALSE;
+
+    if(icon >= 0 && R_SinkNumber >= NSINKS - 1)
+	error("sink stack is full");
+
+    if(icon == 0)
+	error("cannot switch output to stdin");
+    else if(icon == 1) {
+	R_OutputCon = SinkCons[++R_SinkNumber] = 1;
+	SinkConsClose[R_SinkNumber] = 0;
+    } else if(icon == 2)
+	error("cannot switch output to stderr");
+    else if(icon >= 3) {
+	Rconnection con = getConnection(icon); /* checks validity */
+	toclose = 2*closeOnExit;
+	if(!con->isopen) {
+	    con->open(con);
+	    toclose = 1;
+	}
+	R_OutputCon = SinkCons[++R_SinkNumber] = icon;
+	SinkConsClose[R_SinkNumber] = toclose;
+    } else { /* removing a sink */
+	if (R_SinkNumber <= 0) {
+	    warning("no sink to remove");
+	    return FALSE;
+	} else {
+	    R_SinkNumber--;
+	    if((icon = SinkCons[R_SinkNumber + 1]) >= 3) {
+		Rconnection con = getConnection(icon);
+		if(SinkConsClose[R_SinkNumber + 1] == 1) /* close it */
+		    con->close(con);
+		else if (SinkConsClose[R_SinkNumber + 1] == 2) /* destroy it */
+		    con_close(icon);
+	    }
+	    R_OutputCon = SinkCons[R_SinkNumber];
+	}
+    }
+    return TRUE;
+}
+
+SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    int icon, closeOnExit, errcon;
+
+    checkArity(op, args);
+    icon = asInteger(CAR(args));
+    closeOnExit = asLogical(CADR(args));
+    if(closeOnExit == NA_LOGICAL)
+	error("invalid value for closeOnExit");
+    errcon = asLogical(CADDR(args));
+    if(errcon == NA_LOGICAL) error("invalid value for type");
+
+    if(!errcon) {
+	/* allow space for cat() to use sink() */
+	if(icon >= 0 && R_SinkNumber >= NSINKS - 2)
+	    error("sink stack is full");
+	switch_stdout(icon, closeOnExit);
+	R_SinkSaved = R_SinkNumber;
+    } else {
+	if(icon < 0) R_ErrorCon = 2;
+	else {
+	    getConnection(icon); /* check validity */
+	    R_ErrorCon = icon;
+	}
+    }
+    
+    return R_NilValue;
+}
 
 SEXP do_sinknumber(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1747,10 +1862,17 @@ SEXP do_sinknumber(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(errcon == NA_LOGICAL)
 	error("invalid value for type");
     PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = errcon ? R_SinkNumber : R_SinkErrNumber;
+    INTEGER(ans)[0] = errcon ? R_SinkNumber : R_ErrorCon;
     UNPROTECT(1);
     return ans;
 }
+
+void R_SinkReset()
+{
+    R_SinkNumber = R_SinkSaved;
+}
+
+
 /* ------------------- admin functions  --------------------- */
 
 void InitConnections()
@@ -1766,6 +1888,9 @@ void InitConnections()
     Connections[2]->vfprintf = stderr_vfprintf;
     Connections[2]->fflush = stderr_fflush;
     for(i = 3; i < NCONNECTIONS; i++) Connections[i] = NULL;
+    R_OutputCon = 1;
+    R_SinkSaved = R_SinkNumber = 0;
+    SinkCons[0] = 1; R_ErrorCon = 2;
 }
 
 SEXP do_getallconnections(SEXP call, SEXP op, SEXP args, SEXP env)

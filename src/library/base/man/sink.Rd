@@ -1,29 +1,56 @@
 \name{sink}
 \alias{sink}
+\alias{sink.number}
 \title{Send R Output to a File}
 \usage{
-sink(file = NULL, append = FALSE)
+sink(file = NULL, append = FALSE, type = c("output", "message"))
+sink.number(type = c("output", "message"))
 }
 \arguments{
   \item{file}{a connection or a character string naming the
-    file to write to, or \code{NULL} to stop ``sink''ing.}
-  \item{append}{if \code{TRUE}, output will be appended to
+    file to write to, or \code{NULL} to stop sink-ing.}
+  \item{append}{logical. If \code{TRUE}, output will be appended to
     \code{file}; otherwise, it will overwrite the contents of
     \code{file}.}
+  \item{type}{character. Either the output stream of the messages stream.}
 }
 \description{
-    Diverts all \R output to \code{file}, overwriting the file unless
-    \code{append} is \code{TRUE}.
+  \code{sink} diverts \R output to a connection.
+
+  \code{sink.number()} reports how many diversions are in use.
+  \code{sink.number(type = "message")} reports the number of the
+  connection currently being used for error messages.
 }
 \details{
-    Only prompts and error messages continue to appear on the terminal.
+  \code{sink} diverts \R output to a connection. If \code{file} is a
+  character string, a file connection with that name will be established
+  for the duration of the diversion.
 
-    \code{sink()} or \code{sink(file=NULL)} ends the diversion.
+  Normal \R output is diverted by the default \code{type = "output"}.
+  Only prompts and warning/error messages continue to appear on the terminal.
+  These too can diverted by \code{type = "message"} (see below).
 
-    If \code{file} is a connection if will be opened if necessary.
-    Switching to another file or connection closes and destroys the
-    current sink connection if it is a file connection opened by the
-    last call to \code{sink}. 
+  \code{sink()} or \code{sink(file=NULL)} ends the last diversion (of
+  the specified type).  As from \R version 1.3.0 there is a stack of
+  diversions for normal output, so output reverts to the previous
+  diversion (if there was one).  The stack is of up to 21 connections
+  (20 diversions).
+  
+  If \code{file} is a connection if will be opened if necessary.
+  Switching to another file or connection closes and destroys the
+  current sink connection if it is a file connection opened by an
+  earlier call to \code{sink}.
+
+  Sink-ing the messages stream should be done only with great care.
+  For that stream \code{file} must be an already open connection, and
+  there is no stack of connections.
+}
+\section{Warning}{
+  Don't use a connection that is open for \code{sink} for any other
+  purpose.  The software will stop you closing one such inadvertently.
+
+  Do not sink the messages stream unless you understand the source code
+  implementing it and hence the pitfalls.
 }
 \examples{
 sink("sink-examp.txt")
@@ -31,6 +58,16 @@ i <- 1:10
 outer(i,i,"*")
 sink()
 unlink("sink-examp.txt")
-}
+\dontrun{
+## capture all the output to a file.
+zz <- file("all.Rout", open="wt")
+sink(zz)
+sink(zz, type="message")
+try(log("a"))
+## back to the console
+sink(type="message")
+sink()
+try(log("a"))
+}}
 \keyword{file}
 \keyword{connection}

@@ -44,6 +44,8 @@
  *			 and the Encode.. utils.
  *
  *  Also ./printvector.c,  ./printarray.c
+ *
+ *  do_sink.c moved to connections.c as of 1.3.0
  */
 
 #ifdef HAVE_CONFIG_H
@@ -74,27 +76,6 @@ void PrintDefaults(SEXP rho)
     R_print.digits = GetOptionDigits(rho);
     R_print.gap = 1;
     R_print.width = GetOptionWidth(rho);
-}
-
-SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    int ifile, closeOnExit;
-
-    ifile = asInteger(CAR(args));
-    closeOnExit = asLogical(CADDR(args));
-    if(closeOnExit == NA_LOGICAL)
-	error("invalid value for closeOnExit");
-    switch_stdout(ifile); /* will open new connection if required */
-    if (R_SinkCon >= 3) {
-	if(R_SinkCon_to_close == 1) con_close(R_SinkCon);
-	else if (R_SinkCon_to_close == 2) {
-	    Rconnection con = getConnection(R_SinkCon);
-	    con->close(con);
-	}
-    }
-    R_SinkCon = R_OutputCon = ifile;
-    R_SinkCon_to_close = closeOnExit;
-    return R_NilValue;
 }
 
 SEXP do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)

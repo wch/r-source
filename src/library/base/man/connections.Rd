@@ -11,6 +11,8 @@
 \alias{close.connection}
 \alias{seek}
 \alias{seek.connection}
+\alias{truncate}
+\alias{truncate.connection}
 \alias{print.connection}
 \alias{summary.connection}
 \alias{ISOLatin1}
@@ -27,7 +29,8 @@ pipe(description, open = "", encoding = getOption("encoding"))
 
 \method{open}{connection}(con, open = "rt", blocking = TRUE)
 \method{close}{connection}(con, type = "rw")
-\method{seek}{connection}(con, where = NA, rw = "")
+\method{seek}{connection}(con, where = NA, origin="start", \dots)
+\method{truncate}{connection}(con)
 
 isOpen(con, rw = "")
 isIncomplete(con)
@@ -43,8 +46,11 @@ isSeekable(con)
   \item{blocking}{logical. Currently ignored.}
   \item{encoding}{An integer vector of length 256.}
   \item{type}{character. Currently ignored.}
-  \item{where}{integer.  A file position, or \code{NA}.}
+  \item{where}{integer.  A file position (relative to the origin
+    specified by \code{origin}), or \code{NA}.}
   \item{rw}{character.  Currently ignored.}
+  \item{origin}{character.  One of \code{"start"}, \code{"current"},
+    \code{"end"}.}
 }
 \details{
   The first two functions create connections.  By default the connection
@@ -69,6 +75,10 @@ isSeekable(con)
   The value returned by \code{seek(where=NA)} appears to be unreliable
   on Windows systems, at least for text files.
 #endif
+
+  \code{truncate} truncates a file opened for writing at its current
+  position.  It works only for \code{file} connections, and is not
+  implemented on all platforms.
 
   Possible values for the mode \code{open} to open a connection are
   \describe{

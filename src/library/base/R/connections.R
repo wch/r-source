@@ -65,8 +65,22 @@ textConnection <- function(object, open = "r")
 seek <- function(con, ...)
     UseMethod("seek")
 
-seek.connection <- function(con, where = NA, rw = "")
-    .Internal(seek(con, as.integer(where), rw))
+seek.connection <- function(con, where = NA, origin = "start", ...)
+{
+    origin <- pmatch(origin, c("start", "current", "end"))
+    if(is.na(origin))
+        stop("`origin' must be one of `start', `current` or `end'")
+    .Internal(seek(con, as.integer(where), origin))
+}
+
+truncate <- function(con, ...)
+    UseMethod("truncate")
+
+truncate.connection <- function(con, ...)
+{
+    if(!isOpen(con)) stop("can only truncate an open connection")
+    .Internal(truncate(con))
+}
 
 pushBack <- function(data, connection, newLine = TRUE)
     invisible(.Internal(pushBack(data, connection, newLine)))
