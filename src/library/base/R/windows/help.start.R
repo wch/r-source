@@ -14,7 +14,7 @@ help.start <- function(update = TRUE, gui = "irrelevant",
     }
     a <- gsub("/", "\\\\", a)
     cat("If nothing happens, you should open `", a, "' yourself\n")
-    browseURL(a, browser = browser())
+    browseURL(a, browser = browser)
     invisible("")
 }
 
