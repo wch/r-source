@@ -16,7 +16,8 @@ lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7,
 }
 \arguments{
   \item{x}{design matrix of dimension \code{n * p}.}
-  \item{y}{vector of observations of length \code{n}.}
+  \item{y}{vector of observations of length \code{n}, or a matrix with
+    \code{n}} rows.}
   \item{w}{vector of weights (length \code{n}) to be used in the fitting
     process for the \code{wfit} functions.  Weighted least squares is
     used with weights \code{w}, i.e., \code{sum(w * e^2)} is minimized.}
@@ -34,17 +35,13 @@ lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7,
   
   \item{\dots}{currently disregarded.}
 }
-\details{
-  The functions \code{lm.\{w\}fit.null} are called by \code{lm.fit} or
-  \code{lm.wfit} respectively, when \code{x} has zero columns.
-}
 \value{
 %% S(-PLUS) returns an object of class "lm"
 %% such that print.lm, summary,... work; but that'd need more changes for R.
   a list with components
   \item{coefficients}{\code{p} vector}
-  \item{residuals}{\code{n} vector}
-  \item{fitted.values}{\code{n} vector}
+  \item{residuals}{\code{n} vector or matrix}
+  \item{fitted.values}{\code{n} vector or matrix}
   \item{effects}{(not null fits)\code{n} vector of orthogonal single-df
     effects.  The first \code{rank} of them correspond to non-aliased
     coeffcients, and are named accordingly.}
