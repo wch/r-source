@@ -5,7 +5,13 @@
   Use command line options to set the memory available for \R.
 }
 \usage{
+#ifdef unix
 R --vsize=v --nsize=n
+#endif
+#ifdef windows
+Rgui --vsize=v --nsize=n
+Rterm --vsize=v --nsize=n
+#endif
 }
 \arguments{
   \item{v}{Use \code{v} bytes of heap memory}
@@ -27,7 +33,7 @@ R --vsize=v --nsize=n
   others may think of them as the building blocks of the language
   itself, parse trees, etc.), and the second are thrown on a
   ``\emph{heap}'' of ``Vcells'' (see
-  \code{\link{gc}()["Vcells","total"]}) of 8 bytes each.  Effectively,
+ \code{\link{gc}()["Vcells","total"]}) of 8 bytes each.  Effectively,
   the input \code{v} is therefore truncated to the nearest multiple of
   8.
 
@@ -42,7 +48,7 @@ R --vsize=v --nsize=n
 
   E.g., to read in a table of 10000 observations on 40 numeric
   variables, \code{R --vsize=10M} should do; for sourcing a large file,
-  you'd use \code{R --nsize=500k}.
+  you would use \code{R --nsize=500k}.
 
   Note that the information on where to find vectors and strings on the
   heap is stored using cons cells.  Thus, it may also be necessary to
@@ -71,9 +77,16 @@ R --vsize=v --nsize=n
 \seealso{
   \code{\link{gc}} for information on the garbage collector.
 }
+#ifdef windows
+\note{
+  When using the Rgui console it is simplest to make a shortcut and
+  put these command-line flags at the end of the Target field.
+}
+#endif
 \examples{
 # Start R with 15MB of heap memory and 1 million cons cells
 \dontrun{
+## Unix
 R --vsize=15M --nsize=1000k
 }
 }
