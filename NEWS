@@ -18,7 +18,7 @@ NEW FEATURES
 
     o	A new function filled.contour() has been added.	 It produces
 	a variant of contour plots where the area between contours
-	is filled with a solid colour.  The function (currently)
+	is filled with a solid colour.	The function (currently)
 	uses the layout() function and so is restricted to a full
 	page display.
 
@@ -53,7 +53,7 @@ NEW FEATURES
 	color cube at startup and approximates requested colors
 	by those in the cube.  On truecolor displays, there is no
 	limit on the number of colors which can be displayed and
-	you get exactly the color you request.  (Note that
+	you get exactly the color you request.	(Note that
 	Directcolor and staticcolor displays are not supported yet).
 
     o	The "persp" function now allows shading of the rendered
@@ -72,6 +72,9 @@ NEW FEATURES
 	values when the example script is run.
 
 BUG FIXES
+
+    o	rbind(x1,x2) doesn't lose dimnames anymore, when xi are 
+	character or complex.
 
     o	readline() accidentally inherited menu()'s prompt.
 
