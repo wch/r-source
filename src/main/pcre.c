@@ -53,6 +53,38 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(pat) || length(pat) < 1 || !isString(vec))
 	errorcall(call, R_MSG_IA);
 
+    /* special case: NA pattern matches only NAs in vector */
+    if (STRING_ELT(pat,0)==NA_STRING){
+	n = length(vec);\
+	nmatches=0;
+	PROTECT(ind = allocVector(LGLSXP, n));
+	for(i=0; i<n; i++){
+	    if(STRING_ELT(vec,i)==NA_STRING){
+		INTEGER(ind)[i]=1;
+		nmatches++;
+	    } 
+	    else
+		INTEGER(ind)[i]=0;
+	}
+	if (value_opt) {
+	    ans = allocVector(STRSXP, nmatches);
+	    j = 0;
+	    for (i = 0 ; i < n ; i++)
+		if (INTEGER(ind)[i]) {
+		    SET_STRING_ELT(ans, j++, STRING_ELT(vec, i));
+		}
+	}
+	else {
+	    ans = allocVector(INTSXP, nmatches);
+	    j = 0;
+	    for (i = 0 ; i < n ; i++)
+		if (INTEGER(ind)[i]) INTEGER(ans)[j++] = i + 1;
+	}
+	UNPROTECT(1);
+    return ans;
+    }
+    /* end NA pattern handling */
+
     if (igcase_opt) options |= PCRE_CASELESS;
 
     re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), options, &errorptr, 
@@ -193,10 +225,19 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	int ovector[30];
 	offset = 0;
 	nmatch = 0;
-	if (STRING_ELT(vec,i) == NA_STRING){
-	    SET_STRING_ELT(ans, i, NA_STRING);
+	/* NA matches only itself */
+        if (STRING_ELT(vec,i)==NA_STRING){
+	    if (STRING_ELT(pat,0)==NA_STRING) 
+		SET_STRING_ELT(ans, i, STRING_ELT(rep,0));
+	    else
+		SET_STRING_ELT(ans, i, NA_STRING);
 	    continue;
 	}
+	if (STRING_ELT(pat, 0)==NA_STRING){
+	    SET_STRING_ELT(ans, i, STRING_ELT(vec,i));
+	    continue;
+	}
+	/* end NA handling */
 	s = CHAR(STRING_ELT(vec, i));
 	t = CHAR(STRING_ELT(rep, 0));
 	ns = strlen(s);

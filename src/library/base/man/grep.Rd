@@ -43,6 +43,9 @@ regexpr(pattern, text,  extended=TRUE, perl=FALSE)
   only the first occurrence of a \code{pattern} whereas \code{gsub}
   replaces all occurrences.
 
+  For \code{regexpr} it is an error for \code{pattern} to be \code{NA},
+  otherwise \code{NA} is permitted and matches only itself.
+
   The regular expressions used are those specified by POSIX 1003.2,
   either extended or basic, depending on the value of the
   \code{extended} argument, unless \code{perl = TRUE} when they are
@@ -60,7 +63,7 @@ regexpr(pattern, text,  extended=TRUE, perl=FALSE)
   For \code{regexpr} an integer vector of the same length as \code{text}
   giving the starting position of the first match, or \eqn{-1} if there
   is none, with attribute \code{"match.length"} giving the length of the
-  matched text (or \eqn{-1} for no match).
+  matched text (or \eqn{-1} for no match). 
 }
 \note{
   \code{perl=TRUE} will only be available if \R was compiled against 

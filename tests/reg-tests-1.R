@@ -2206,24 +2206,42 @@ bar()
 ## the call to body() failed in 1.7.0
 
 
-## string NAs shouldn't be substringable.(PR#3078)
-a<-c("NA",NA)
-a1<-substr(a,1,1)
+## string NAs shouldn't have any internal structure.(PR#3078)
+a <- c("NA", NA, "BANANA")
+na <- as.character(NA)
+a1 <- substr(a,1,1)
 stopifnot(is.na(a1)==is.na(a))
-a2<-substring(a,1,1)
+a2 <- substring(a,1,1)
 stopifnot(is.na(a2)==is.na(a))
-a3<-sub("A","X",a)
+a3 <- sub("NA","na",a)
 stopifnot(is.na(a3)==is.na(a))
-a3<-gsub("A","X",a)
+a3 <- gsub("NA","na",a)
 stopifnot(is.na(a3)==is.na(a))
-substr(a3,1,1)<-"A"
+substr(a3, 1, 2) <- "na"
 stopifnot(is.na(a3)==is.na(a))
-stopifnot(agrep("A",a)==1)
-stopifnot(grep("A",a)==1)
-a4<-abbreviate(a)
+substr(a3, 1, 2) <- na
+stopifnot(all(is.na(a3)))
+stopifnot(agrep("NA", a) == c(1, 3))
+stopifnot(grep("NA", a) == c(1, 3))
+stopifnot(grep("NA", a, perl=TRUE)==c(1, 3))
+stopifnot(agrep(na, a) == 2)
+stopifnot(grep(na, a) == 2)
+stopifnot(grep(na, a, perl=TRUE) == 2)
+a4 <- abbreviate(a)
 stopifnot(is.na(a4)==is.na(a))
-a5<-chartr("A","B",a)
+a5 <- chartr("NA", "na", a)
 stopifnot(is.na(a5)==is.na(a))
+a6 <- gsub(na, "na", a)
+stopifnot(all(!is.na(a6)))
+a7 <- a; substr(a7, 1, 2) <- "na"
+stopifnot(is.na(a7)==is.na(a))
+a8 <- a; substr(a8, 1, 2) <- na
+stopifnot(all(is.na(a8)))
+stopifnot(identical(a, toupper(tolower(a))))
+a9<-strsplit(a, "NA")
+stopifnot(identical(a9, list("",na,c("BA",""))))
+a10<-strsplit(a, na)
+stopifnot(identical(a10, as.list(a)))
 ## but nchar doesn't fit this pattern
 stopifnot(all(!is.na(nchar(a))))
 
