@@ -3,9 +3,6 @@
 #
 .First.lib <- function(lib, pkg) {
     library.dynam("modreg", pkg, lib)
-    ## Generic in non-base package:
-    autoload("as.stepfun", "stepfun")
-    invisible()
 }
 
 .noGenerics <- TRUE
