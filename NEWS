@@ -25,10 +25,12 @@ NEW FEATURES
      o	file and pipe connections can be read with a user-specified
 	encoding.
 
+     o	New function checkFF() for checking foreign function calls.
+
 
 BUG FIXES
 
-     o	Unused entry points in src/appl/fortran.c and Fortran.h
+     o	Unused entry points in `src/appl/fortran.c' and `Fortran.h'
 	have been removed.
 
 
