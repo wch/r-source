@@ -4,6 +4,10 @@ show <-
   ## This function exists to be specialized by methods; the definition stored here
   ## is intended as the default method.  In S-Plus, but not currently in R, `show'
   ## is called for automatic display of the result of an evaluated expression.
+    function(object)
+    showDefault(object, oldMethods = FALSE)
+
+showDefault <-
   function(object, printTo = stdout(), oldMethods = TRUE)
 {
       if(identical(printTo, FALSE)) {
@@ -48,11 +52,10 @@ show <-
 
 printNoClass <- get("print.default", "package:base")
 
-print.default <- function(x, ..., printTo = stdout()) {
+print.default <- function(x, ...) {
     cl <- attr(x, "class") # pick off old-style objects
     if(length(cl) == 1 && isClass(cl) && length(list(...)) == 0)
-        ## use show, but don't honor print.*, for danger of recursion
-        show(x, printTo, FALSE)
+        show(x)
     else
         printNoClass(x, ...)
 }

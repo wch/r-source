@@ -100,11 +100,11 @@ setMethod("plotData", signature(y = "track"),
 setMethod("plotData", "track",
  function(x, y, ...) plotData(slot(x, "y"), y,  ...)
 )
-t1 <- new("track", x=1:30, y=sort(rnorm(30)))
+t1 <- new("track", x=1:20, y=(1:20)^2)
 tc1 <- new("trackCurve", t1)
 slot(tc1, "smooth") <- smooth.spline(slot(tc1, "x"), slot(tc1, "y"))$y #$
 plotData(t1)
-plotData(qnorm(ppoints(30)), t1)
+plotData(qnorm(ppoints(20)), t1)
 ## An example of inherited methods.
 setMethod("plotData", c("trackCurve", "missing"),
 function(x, y, ...) {
@@ -116,7 +116,7 @@ function(x, y, ...) {
 ## the plot of tc1 alone has an added curve; other uses of tc1
 ## are treated as if it were a "track" object.
 plotData(tc1)
-plotData(qnorm(ppoints(30)), tc1)
+plotData(qnorm(ppoints(20)), tc1)
 
 ## defining methods for a special function.
 ## Although "[" and "length" are not ordinary functions
