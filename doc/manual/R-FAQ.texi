@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-25, 2001-02-03
+@set FAQ-VERSION 1.2-26, 2001-02-04
 @set REL-VERSION 1.2.1
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -249,7 +249,10 @@ If you know about other platforms, please drop us a note.
 The current stable Unix/Windows version is @value{REL-VERSION}, the
 unstable one is @value{DEV-VERSION}.  Typically, new features are
 introduced in the development versions; updates of stable versions are
-for bug fixes mostly.  The version for the Mac is pre-alpha.
+for bug fixes mostly.
+@c <FIXME> 1.2.2
+There is also a beta Mac port of 1.2.1.
+@c </FIXME>
 
 @node How can R be obtained?, How can R be installed?, What is the current version of R?, R Basics
 @section How can R be obtained?
@@ -388,23 +391,12 @@ See the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, R Windows
 @node How can R be installed (Macintosh),  , How can R be installed (Windows), How can R be installed?
 @subsection How can R be installed (Macintosh)
 
-@c The CRAN @file{bin/macos} directory contains @file{R.sea.hqx}, a
-@c binhexed self-extracting archive, and installation instructions in
-@c @file{README.MACINTOSH}.  Note that the version in it is nowhere near
-@c the quality of the current Unix/Windows version.
-
-@c The Power Macintosh port is temporarily on hold, and currently no binary
-@c distribution is available.  We hope that this will change soon.
-
-@c Mac
-@c On 2000-09-11, Stefano Iacus <jago@mclink.it> said on r-devel that he
-@c has finished a port of 1.1.1 and 1.2.0 to the Power Mac under Mac OS.
-@c Prerelease mentioned on 2000-11-08, not announced yet.
-
-A binhexed self-extracting archive containing a pre-alpha port of R
-1.1.1 for MacOS has recently been made available by
+@c <FIXME> 1.2.2
+A binhexed self-extracting archive containing a beta port of R 1.2.1 for
+MacOS has recently been made available by
 @email{stefano.iacus@@unimi.it, Stefano Iacus} at
 @uref{http://www.eco-dip.unimi.it/R/}.
+@c </FIXME>
 
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
