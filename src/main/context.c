@@ -46,6 +46,7 @@
  *			at exit from the closure (normal or abnormal).
  *	cend		a pointer to function which executes if there is
  *			non-local return (i.e. an error)
+ *	cenddata	a void pointer do data for cend to use
  *	vmax		the current setting of the R_alloc stack
  *
  *  Context types can be one of:
@@ -121,9 +122,9 @@ void R_run_onexits(RCNTXT *cptr)
 	    error("bad target context--should NEVER happen;\n"
 		  "please bug.report() [R_run_onexits]");
 	if (c->cend != NULL) {
-	    void (*cend)() = c->cend;
+	    void (*cend)(void *) = c->cend;
 	    c->cend = NULL; /* prevent recursion */
-	    cend();
+	    cend(c->cenddata);
 	}
 	if (c->cloenv != R_NilValue && c->conexit != R_NilValue) {
 	    SEXP s = c->conexit;

@@ -143,6 +143,11 @@ static void eventloop()
     while (R_de_up) R_ProcessEvents();
 }
 
+static void de_closewin_cend(void *data)
+{
+    de_closewin();
+}
+
 SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP tvec2, tvec, colmodes, indata;
@@ -224,7 +229,8 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* set up a context which will close the window if there is an error */
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
 		 R_NilValue);
-    cntxt.cend = &de_closewin;
+    cntxt.cend = &de_closewin_cend;
+    cntxt.cenddata = NULL;
 
     highlightrect();
 
