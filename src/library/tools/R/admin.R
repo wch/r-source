@@ -7,17 +7,12 @@ function(dir, outDir)
     ## at least partially checking it, and installing it with the
     ## 'Built:' fields added.  Note that from 1.7.0 on, packages without
     ## compiled code are not marked as being from any platform.
-    dfile <- file.path(dir, "DESCRIPTION")
-    if(!fileTest("-f", dfile))
-        stop(paste("file", sQuote(dfile), "does not exist"))
-    db <- try(read.dcf(dfile)[1, ])
-    if(inherits(db, "try-error"))
-        stop(paste("file", sQuote(dfile), "is not in valid DCF format"))
+    db <- .read_description(file.path(dir, "DESCRIPTION"))
     ## Check for fields needed for what follows.
     ## <FIXME>
     ## In fact, more fields are 'required' as per R CMD check.
     ## Eventually we should have the same tests here.
-    ## Maybe have .checkDescription() for this?
+    ## Maybe have .check_package_description() for this?
     ## Should also include the above, of course.
     requiredFields <- c("Package", "Title", "Description")
     if(any(i <- which(is.na(match(requiredFields, names(db)))))) {
@@ -75,11 +70,8 @@ function(dir, outDir)
     }
 
     ## We definitely need a valid DESCRIPTION file.
-    db <- try(read.dcf(file.path(dir, "DESCRIPTION"))[1, ],
-              silent = TRUE)
-    if(inherits(db, "try-error"))
-        stop(paste("package directory", sQuote(dir),
-                   "has no valid DESCRIPTION file"))
+    db <- .read_description(file.path(dir, "DESCRIPTION"))
+    
     codeDir <- file.path(dir, "R")
     if(!fileTest("-d", codeDir)) return(invisible())
 
@@ -227,20 +219,21 @@ function(dir, outDir)
 
     contents <- Rdcontents(listFilesWithType(docsDir, "docs"))
 
-    .writeContentsRDS(contents, file.path(outDir, "Meta", "Rd.rds"))
+    .write_contents_as_RDS(contents,
+                           file.path(outDir, "Meta", "Rd.rds"))
 
     .saveRDS(.buildHsearchIndex(contents, packageName, outDir),
              file.path(outDir, "Meta", "hsearch.rds"))
 
-    .writeContentsDCF(contents, packageName,
-                      file.path(outDir, "CONTENTS"))
+    .write_contents_as_DCF(contents, packageName,
+                           file.path(outDir, "CONTENTS"))
 
     ## If there is no @file{INDEX} file in the package sources, we
     ## build one.
     ## <FIXME>
     ## Maybe also save this in RDS format then?
     if(!fileTest("-f", file.path(dir, "INDEX")))
-        writeLines(formatDL(.buildRdIndex(contents)),
+        writeLines(formatDL(.build_Rd_index(contents)),
                    file.path(outDir, "INDEX"))
     ## </FIXME>
 
@@ -371,16 +364,24 @@ function(dir, outDir)
         if(.Platform$OS.type == "windows") {
             ## may not have texi2dvi
             res <- system(paste("pdflatex", texfile))
-            if(res) stop(paste("unable to run pdflatex on", sQuote(texfile)))
+            if(res)
+                stop(paste("unable to run pdflatex on",
+                           sQuote(texfile)))
             if(length(grep("\\bibdata",
                            readLines(paste(base, ".aux", sep = ""))))) {
                 res <- system(paste("bibtex", base))
-                if(res) stop(paste("unable to run bibtex on", sQuote(base)))
+                if(res)
+                    stop(paste("unable to run bibtex on",
+                               sQuote(base)))
                 res <- system(paste("pdflatex", texfile))
-                if(res) stop(paste("unable to run pdflatex on", sQuote(texfile)))
+                if(res)
+                    stop(paste("unable to run pdflatex on",
+                               sQuote(texfile)))
             }
             res <- system(paste("pdflatex", texfile))
-            if(res) stop(paste("unable to run pdflatex on", sQuote(texfile)))
+            if(res)
+                stop(paste("unable to run pdflatex on",
+                           sQuote(texfile)))
         } else
             texi2dvi(texfile, pdf = TRUE, quiet = TRUE)
         pdffile <-

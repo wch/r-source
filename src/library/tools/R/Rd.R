@@ -10,7 +10,7 @@ function(lines)
                    "must be a character vector"))
 
     ## Strip Rd comments first.
-    lines <- .stripRdComments(lines)
+    lines <- .strip_Rd_comments(lines)
 
     ppLineIndices <- grep("^#(endif|ifn?def[[:space:]]+[[:alnum:]]+)",
                           lines)
@@ -18,8 +18,8 @@ function(lines)
     ## This is based on the Perl code in R::Rdtools::Rdpp().
     ## What should we do with #ifn?def lines not matching the above?
     ## </NOTE>
-    nOfPpLines <- length(ppLineIndices)
-    if(nOfPpLines == 0) return(lines)
+    n_of_pp_lines <- length(ppLineIndices)
+    if(n_of_pp_lines == 0) return(lines)
 
     OS <- .Platform$OS.type
     ppLines <- lines[ppLineIndices]
@@ -27,7 +27,7 @@ function(lines)
     ## Record the preprocessor line type: starts of conditionals with
     ## TRUE/FALSE according to whether they increase the skip level or
     ## not, and NA for ends of conditionals.
-    ppTypes <- rep(NA, nOfPpLines)
+    ppTypes <- rep(NA, n_of_pp_lines)
     if(any(i <- grep("^#ifdef", ppLines))) {
         ppTypes[i] <- gsub("^#ifdef[[:space:]]+([[:alnum:]]+).*",
                            "\\1", ppLines[i]) != OS
@@ -68,9 +68,9 @@ function(lines)
     lines[-skipIndices]
 }
 
-### * .stripRdComments
+### * .strip_Rd_comments
 
-.stripRdComments <-
+.strip_Rd_comments <-
 function(lines)
 {
     gsub("(^|[^\\])((\\\\\\\\)*)%.*", "\\1\\2", lines)
@@ -100,17 +100,17 @@ function(file)
 
     lines <- Rdpp(readLines(file))
 
-    aliases <- .getRdMetaDataFromRdLines(lines, "alias")
-    concepts <- .getRdMetaDataFromRdLines(lines, "concept")
-    keywords <- .getRdMetaDataFromRdLines(lines, "keyword")
+    aliases <- .get_Rd_metadata_from_Rd_lines(lines, "alias")
+    concepts <- .get_Rd_metadata_from_Rd_lines(lines, "concept")
+    keywords <- .get_Rd_metadata_from_Rd_lines(lines, "keyword")
 
     ## Could be none or more than one ... argh.
-    RdType <- c(.getRdMetaDataFromRdLines(lines, "docType"), "")[1]
+    RdType <- c(.get_Rd_metadata_from_Rd_lines(lines, "docType"), "")[1]
 
     txt <- paste(lines, collapse = "\n")
 
-    RdName <- .getRdName(txt)
-    if(!length(RdName))
+    Rd_name <- .get_Rd_name(txt)
+    if(!length(Rd_name))
         stop(paste("missing/empty \\name field in ",
                    sQuote(summary(file)$description), "\n",
                    "Rd files must have a non-empty \\name.\n",
@@ -118,8 +118,8 @@ function(file)
                    " in manual ", sQuote("Writing R Extensions"),
                    ".", sep = ""))
 
-    RdTitle <- .getRdTitle(txt)
-    if(!length(RdTitle))
+    Rd_title <- .get_Rd_title(txt)
+    if(!length(Rd_title))
         stop(paste("missing/empty \\title field in ",
                    sQuote(summary(file)$description), "\n",
                    "Rd files must have a non-empty \\title.\n",
@@ -127,7 +127,7 @@ function(file)
                    " in manual ", sQuote("Writing R Extensions"),
                    ".", sep = ""))
 
-    list(name = RdName, type = RdType, title = RdTitle,
+    list(name = Rd_name, type = RdType, title = Rd_title,
          aliases = aliases, concepts = concepts, keywords = keywords)
 }
 
@@ -187,9 +187,9 @@ function(RdFiles)
                row.names = NULL)  # avoid trying to compute row names
 }
 
-### * .writeContentsRDS
+### * .write_contents_as_RDS
 
-.writeContentsRDS <-
+.write_contents_as_RDS <-
 function(contents, outFile)
 {
     ## Save Rd contents db to @file{outFile}.
@@ -201,9 +201,9 @@ function(contents, outFile)
     ## </NOTE>
 }
 
-### * .writeContentsDCF
+### * .write_contents_as_DCF
 
-.writeContentsDCF <-
+.write_contents_as_DCF <-
 function(contents, packageName, outFile)
 {
     ## Write a @file{CONTENTS} DCF file from an Rd contents db.
@@ -243,9 +243,9 @@ function(contents, packageName, outFile)
         file = outFile)
 }
 
-### * .buildRdIndex
+### * .build_Rd_index
 
-.buildRdIndex <-
+.build_Rd_index <-
 function(contents, type = NULL)
 {
     ## Build an Rd 'index' containing Rd "names" (see below) and titles,
@@ -270,7 +270,8 @@ function(contents, type = NULL)
 
     index <- contents[idx, c("Name", "Title"), drop = FALSE]
     if(nrow(index)) {
-        ## If a \name is not a valid \alias, replace it by the first alias.
+        ## If a \name is not a valid \alias, replace it by the first
+        ## alias. 
         aliases <- contents[idx, "Aliases"]
         bad <- which(!mapply("%in%", index[, 1], aliases))
         if(any(bad)) {
@@ -314,7 +315,7 @@ function(RdFiles, outFile = "", type = NULL,
         stop(paste("argument", sQuote("outFile"),
                    "must be a character string or connection"))
 
-    index <- .buildRdIndex(Rdcontents(RdFiles), type = type)
+    index <- .build_Rd_index(Rdcontents(RdFiles), type = type)
 
     writeLines(formatDL(index, width = width, indent = indent),
                outFile)
@@ -353,7 +354,7 @@ function(dir, outFile = "")
 
     contents <- Rdcontents(listFilesWithType(docsDir, "docs"))
 
-    .writeContentsDCF(contents, packageName, outFile)
+    .write_contents_as_DCF(contents, packageName, outFile)
 }
 
 ### * Rddb
@@ -426,11 +427,11 @@ function(file)
     ## all one-liners).  We mostly do this because \alias (see Paren.Rd)
     ## has non-standard syntax.
     meta <-
-        list(aliases = .getRdMetaDataFromRdLines(lines, "alias"),
-             concepts = .getRdMetaDataFromRdLines(lines, "concept"),
-             keywords = .getRdMetaDataFromRdLines(lines, "keyword"),
-             doc_type = .getRdMetaDataFromRdLines(lines, "docType"))
-    ## (Use the same regexp as in .getRdMetaDataFromRdLines().)
+        list(aliases = .get_Rd_metadata_from_Rd_lines(lines, "alias"),
+             concepts = .get_Rd_metadata_from_Rd_lines(lines, "concept"),
+             keywords = .get_Rd_metadata_from_Rd_lines(lines, "keyword"),
+             doc_type = .get_Rd_metadata_from_Rd_lines(lines, "docType"))
+    ## (Use the same regexp as in .get_Rd_metadata_from_Rd_lines().)
     i <- grep(paste("^[[:space:]]*\\\\",
                     "(alias|concept|keyword|docType)",
                     "{[[:space:]]*(.*)[[:space:]]*}.*", sep = ""),
@@ -488,9 +489,9 @@ function(file)
          rest = rest)
 }
 
-### * getRdSection
+### * get_Rd_section
 
-getRdSection <-
+get_Rd_section <-
 function(txt, type, predefined = TRUE)
 {
     ## Extract Rd section(s) 'type' from (preprocessed) Rd markup in the
@@ -543,9 +544,9 @@ function(txt, type, predefined = TRUE)
     out
 }
 
-### * getRdItems
+### * get_Rd_items
 
-getRdItems <-
+get_Rd_items <-
 function(txt)
 {
     ## Extract names of Rd \item{}{} markup in the character string
@@ -583,9 +584,9 @@ function(txt)
     out
 }
 
-### * .getRdMetaDataFromRdLines
+### * .get_Rd_metadata_from_Rd_lines
 
-.getRdMetaDataFromRdLines <-
+.get_Rd_metadata_from_Rd_lines <-
 function(lines, kind) {
     pattern <- paste("^[[:space:]]*\\\\", kind,
                      "{[[:space:]]*(.*)[[:space:]]*}.*", sep = "")
@@ -595,13 +596,13 @@ function(lines, kind) {
     lines
 }
 
-### * .getRdArgumentNames
+### * .get_Rd_argument_names
 
-.getRdArgumentNames <-
+.get_Rd_argument_names <-
 function(txt)
 {
-    txt <- getRdSection(txt, "arguments")
-    txt <- unlist(sapply(txt, getRdItems))
+    txt <- get_Rd_section(txt, "arguments")
+    txt <- unlist(sapply(txt, get_Rd_items))
     if(!length(txt)) return(character())
     txt <- unlist(strsplit(txt, ", *"))
     txt <- gsub("\\\\l?dots", "...", txt)
@@ -610,40 +611,40 @@ function(txt)
     txt
 }
 
-### * .getRdName
+### * .get_Rd_name
 
-.getRdName <-
+.get_Rd_name <-
 function(txt)
 {
     start <- regexpr("\\\\name{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
     if(start == -1) return(character())
-    RdName <- gsub("[[:space:]]*", " ",
-                   substr(txt,
-                          start + 6,
-                          start + attr(start, "match.length") - 2))
-    RdName
+    Rd_name <- gsub("[[:space:]]*", " ",
+                    substr(txt,
+                           start + 6,
+                           start + attr(start, "match.length") - 2))
+    Rd_name
 }
 
-### * .getRdTitle
+### * .get_Rd_title
 
-.getRdTitle <-
+.get_Rd_title <-
 function(txt)
 {
     start <- regexpr("\\\\title{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
     if(start == -1) return(character())
-    RdTitle <- gsub("[[:space:]]*", " ",
-                    substr(txt,
-                           start + 7,
-                           start + attr(start, "match.length") - 2))
-    RdTitle
+    Rd_title <- gsub("[[:space:]]*", " ",
+                     substr(txt,
+                            start + 7,
+                            start + attr(start, "match.length") - 2))
+    Rd_title
 }
 
-### * .getRdExampleCode
+### * .get_Rd_example_code
 
-.getRdExampleCode <-
+.get_Rd_example_code <-
 function(txt)
 {
-    txt <- getRdSection(txt, "examples")
+    txt <- get_Rd_section(txt, "examples")
     if(length(txt) != 1) return(character())
     txt <- gsub("\\\\l?dots", "...", txt)
     txt <- gsub("\\\\%", "%", txt)

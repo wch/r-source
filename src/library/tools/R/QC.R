@@ -19,11 +19,22 @@ function(package, dir, lib.loc = NULL)
         ## Find all documented topics from the help index.
         allDocTopics <- sort(scan(file = helpIndex,
                                   what = list("", ""),
-                                  quiet = TRUE, sep="\t")[[1]])
+                                  quiet = TRUE, sep = "\t")[[1]])
+        ## <NOTE>
+        ## This gets all topics the same way as index.search() would
+        ## find individual ones.  We could also use
+        ##   unlist(.readRDS(file.path(dir, "Meta", "Rd.rds"))$Aliases)
+        ## which is marginally slower.
+        ## A real gain in efficiency would come from reading in Rd.rds
+        ## *once* (e.g., the first time help() is called), and storing
+        ## it in some known place, e.g. an attribute of the package env,
+        ## or a dynamic variable with the help entries indexed for fast
+        ## lookup by topic.
+        ## </NOTE>
 
         ## Load package into codeEnv.
         if(!isBase)
-            .loadPackageQuietly(package, lib.loc)
+            .load_package_quietly(package, lib.loc)
         codeEnv <- .packageEnv(package)
 
         codeObjs <- ls(envir = codeEnv, all.names = TRUE)
@@ -60,11 +71,13 @@ function(package, dir, lib.loc = NULL)
             ## Collect code in codeFile.
             codeFile <- tempfile("Rcode")
             on.exit(unlink(codeFile))
-            if(!file.create(codeFile)) stop("unable to create ", codeFile)
-            if(!all(file.append(codeFile, listFilesWithType(codeDir, "code"))))
+            if(!file.create(codeFile))
+                stop("unable to create ", codeFile)
+            if(!all(file.append(codeFile,
+                                listFilesWithType(codeDir, "code"))))
                 stop("unable to write code files")
             ## Read code from codeFile into codeEnv.
-            yy <- try(.sourceAssignments(codeFile, env = codeEnv))
+            yy <- try(.source_assignments(codeFile, env = codeEnv))
             if(inherits(yy, "try-error")) {
                 stop("cannot source package code")
             }
@@ -119,9 +132,9 @@ function(package, dir, lib.loc = NULL)
             ## <NOTE>
             ## Non-standard evaluation for argument 'package' to data()
             ## gone in R 1.9.0.
-            .tryQuietly(data(list = f, package = packageName,
-                             lib.loc = libPath, envir = dataEnv))
-            ## (We use .tryQuietly() because a .R data file using scan()
+            .try_quietly(data(list = f, package = packageName,
+                              lib.loc = libPath, envir = dataEnv))
+            ## (We use .try_quietly() because a .R data file using scan()
             ## to read in data from some other place may do this without
             ## 'quiet = TRUE', giving output which R CMD check would
             ## think to indicate a problem.)
@@ -341,7 +354,7 @@ function(package, dir, lib.loc = NULL,
 
         ## Load package into codeEnv.
         if(!isBase)
-            .loadPackageQuietly(package, lib.loc)
+            .load_package_quietly(package, lib.loc)
         codeEnv <- .packageEnv(package)
 
         objectsInCode <- objects(envir = codeEnv, all.names = TRUE)
@@ -377,15 +390,17 @@ function(package, dir, lib.loc = NULL,
         ## Collect code in codeFile.
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
-        if(!file.create(codeFile)) stop("unable to create ", codeFile)
-        if(!all(file.append(codeFile, listFilesWithType(codeDir, "code"))))
+        if(!file.create(codeFile))
+            stop("unable to create ", codeFile)
+        if(!all(file.append(codeFile,
+                            listFilesWithType(codeDir, "code"))))
             stop("unable to write code files")
 
         ## Read code from codeFile into codeEnv.
         codeEnv <- new.env()
         if(verbose)
             cat("Reading code from", sQuote(codeFile), "\n")
-        yy <- try(.sourceAssignments(codeFile, env = codeEnv))
+        yy <- try(.source_assignments(codeFile, env = codeEnv))
         if(inherits(yy, "try-error")) {
             stop("cannot source package code")
         }
@@ -426,7 +441,7 @@ function(package, dir, lib.loc = NULL,
         objectsInCode <-
             c(objectsInCode,
               objectsInBase[sapply(objectsInBase,
-                                   .isPrimitive,
+                                   .is_primitive,
                                    NULL)],
               c(".First.lib", ".Last.lib", ".Random.seed",
                 ".onLoad", ".onAttach", ".onUnload"))
@@ -498,14 +513,14 @@ function(package, dir, lib.loc = NULL,
 
     db <- lapply(db,
                  function(f) paste(Rdpp(f), collapse = "\n"))
-    names(db) <- dbNames <- sapply(db, getRdSection, "name")
+    names(db) <- dbNames <- sapply(db, get_Rd_section, "name")
     if(isBase || basename(dir) == "graphics") {
         ind <- dbNames %in% c("Defunct", "Devices")
         db <- db[!ind]
         dbNames <- dbNames[!ind]
     }
-    dbUsageTexts <- lapply(db, getRdSection, "usage")
-    dbSynopses <- lapply(db, getRdSection, "synopsis")
+    dbUsageTexts <- lapply(db, get_Rd_section, "usage")
+    dbSynopses <- lapply(db, get_Rd_section, "synopsis")
     ind <- sapply(dbSynopses, length) > 0
     dbUsageTexts[ind] <- dbSynopses[ind]
     withSynopsis <- as.character(dbNames[ind])
@@ -519,9 +534,9 @@ function(package, dir, lib.loc = NULL,
     ## and S3 methods for subscripting and subassigning.  Hence, we
     ## cannot reliably distinguish between usage for the generic and
     ## that of a method ...
-    functionsToBeIgnored <-
-        c(.functionsToBeIgnoredFromUsage(basename(dir)),
-          .functionsWithNoUsefulS3methodMarkup)
+    functions_to_be_ignored <-
+        c(.functions_to_be_ignored_from_usage(basename(dir)),
+          .functions_with_no_useful_S3_method_markup)
     ## </FIXME>
 
     badDocObjects <- list()
@@ -559,8 +574,8 @@ function(package, dir, lib.loc = NULL,
             exprs <- exprs[!ind]
         }
         functions <- sapply(exprs, function(e) as.character(e[[1]]))
-        functions <- .transformS3methodMarkup(as.character(functions))
-        ind <- (! functions %in% functionsToBeIgnored
+        functions <- .transform_S3_method_markup(as.character(functions))
+        ind <- (! functions %in% functions_to_be_ignored
                 & functions %in% functionsInCode)
         badFunctions <-
             mapply(functions[ind],
@@ -578,7 +593,7 @@ function(package, dir, lib.loc = NULL,
                              function(e) as.character(e[[2]][[1]])),
                       "<-",
                       sep = "")
-            replaceFuns <- .transformS3methodMarkup(replaceFuns)
+            replaceFuns <- .transform_S3_method_markup(replaceFuns)
             functions <- c(functions, replaceFuns)
             ind <- (replaceFuns %in% functionsInCode)
             if(any(ind)) {
@@ -618,7 +633,8 @@ function(package, dir, lib.loc = NULL,
         ## </FIXME>
         badFunctions <-
             functions[! functions %in%
-                      c(objectsInCodeOrNamespace, functionsToBeIgnored)]
+                      c(objectsInCodeOrNamespace,
+                        functions_to_be_ignored)]
         if(length(badFunctions) > 0)
             functionsInUsagesNotInCode[[docObj]] <- badFunctions
 
@@ -784,7 +800,7 @@ function(package, lib.loc = NULL)
 
     ## Load package into codeEnv.
     if(!isBase)
-        .loadPackageQuietly(package, lib.loc)
+        .load_package_quietly(package, lib.loc)
     codeEnv <- .packageEnv(package)
 
     if(!.isMethodsDispatchOn())
@@ -809,24 +825,24 @@ function(package, lib.loc = NULL)
     ## we do the vectorized metadata computations first, and try to
     ## subscript whenever possible.
 
-    aliases <- lapply(db, .getRdMetaDataFromRdLines, "alias")
+    aliases <- lapply(db, .get_Rd_metadata_from_Rd_lines, "alias")
     idx <- (sapply(aliases, length) == 1)
     if(!any(idx)) return(badRdObjects)
     db <- db[idx]; aliases <- aliases[idx]
-    idx <- sapply(lapply(db, .getRdMetaDataFromRdLines, "docType"),
+    idx <- sapply(lapply(db, .get_Rd_metadata_from_Rd_lines, "docType"),
                   identical, "class")
     if(!any(idx)) return(badRdObjects)
     db <- db[idx]; aliases <- aliases[idx]
     ## Now collapse.
     db <- lapply(db, paste, collapse = "\n")
-    RdSlots <- lapply(db, getRdSection, "Slots", FALSE)
+    RdSlots <- lapply(db, get_Rd_section, "Slots", FALSE)
     idx <- !sapply(RdSlots, identical, character())
     if(!any(idx)) return(badRdObjects)
     db <- db[idx]
     aliases <- unlist(aliases[idx])
     RdSlots <- RdSlots[idx]
 
-    dbNames <- sapply(db, .getRdName)
+    dbNames <- sapply(db, .get_Rd_name)
     if(length(dbNames) < length(db)) {
         ## <FIXME>
         ## What should we really do in this case?
@@ -839,10 +855,10 @@ function(package, lib.loc = NULL)
 
     .getSlotNamesFromSlotSectionText <- function(txt) {
         ## Get \describe (inside user-defined section 'Slots'
-        txt <- unlist(sapply(txt, getRdSection, "describe"))
+        txt <- unlist(sapply(txt, get_Rd_section, "describe"))
         ## Suppose this worked ...
         ## Get the \items inside \describe
-        txt <- unlist(sapply(txt, getRdItems))
+        txt <- unlist(sapply(txt, get_Rd_items))
         if(!length(txt)) return(character())
         ## And now strip enclosing '\code{...}:'
         txt <- gsub("\\\\code\{(.*)\}:?", "\\1", as.character(txt))
@@ -934,7 +950,7 @@ function(package, lib.loc = NULL)
 
     ## Load package into codeEnv.
     if(!isBase)
-        .loadPackageQuietly(package, lib.loc)
+        .load_package_quietly(package, lib.loc)
     codeEnv <- .packageEnv(package)
 
     ## Could check here whether the package has any variables or data
@@ -957,7 +973,7 @@ function(package, lib.loc = NULL)
     ## As going through the db to extract sections can take some time,
     ## we do the vectorized metadata computations first, and try to
     ## subscript whenever possible.
-    aliases <- lapply(db, .getRdMetaDataFromRdLines, "alias")
+    aliases <- lapply(db, .get_Rd_metadata_from_Rd_lines, "alias")
     idx <- sapply(aliases, length) == 1
     if(!any(idx)) return(badRdObjects)
     db <- db[idx]; aliases <- aliases[idx]
@@ -965,17 +981,17 @@ function(package, lib.loc = NULL)
     db <- lapply(db, paste, collapse = "\n")
 
     .getDataFrameVarNamesFromRdText <- function(txt) {
-        txt <- getRdSection(txt, "format")
+        txt <- get_Rd_section(txt, "format")
         ## Was there just one \format section?
         if(length(txt) != 1) return(character())
         ## What did it start with?
         if(!length(grep("^[ \n\t]*(A|This) data frame", txt)))
             return(character())
         ## Get \describe inside \format
-        txt <- getRdSection(txt, "describe")
+        txt <- get_Rd_section(txt, "describe")
         ## Suppose this worked ...
         ## Get the \items inside \describe
-        txt <- unlist(sapply(txt, getRdItems))
+        txt <- unlist(sapply(txt, get_Rd_items))
         if(!length(txt)) return(character())
         txt <- gsub("(.*):$", "\\1", as.character(txt))
         txt <- gsub("\\\\code\{(.*)\}:?", "\\1", txt)
@@ -991,7 +1007,7 @@ function(package, lib.loc = NULL)
     aliases <- unlist(aliases[idx])
     RdVarNames <- RdVarNames[idx]
 
-    dbNames <- sapply(db[idx], .getRdName)
+    dbNames <- sapply(db[idx], .get_Rd_name)
     if(length(dbNames) < length(aliases)) {
         ## <FIXME>
         ## What should we really do in this case?
@@ -1108,11 +1124,11 @@ function(package, dir, lib.loc = NULL)
 
     db <- lapply(db, Rdpp)
     ## Do vectorized computations for metadata first.
-    dbAliases <- lapply(db, .getRdMetaDataFromRdLines, "alias")
-    dbKeywords <- lapply(db, .getRdMetaDataFromRdLines, "keyword")
+    dbAliases <- lapply(db, .get_Rd_metadata_from_Rd_lines, "alias")
+    dbKeywords <- lapply(db, .get_Rd_metadata_from_Rd_lines, "keyword")
     ## Now collapse.
     db <- lapply(db, paste, collapse = "\n")
-    dbNames <- sapply(db, .getRdName)
+    dbNames <- sapply(db, .get_Rd_name)
     ## Safeguard against missing/empty names.
     if(length(dbNames) < length(db)) {
         ## <FIXME>
@@ -1126,21 +1142,21 @@ function(package, dir, lib.loc = NULL)
                   function(x) any(grep("^ *internal *$", x)))
     if(isBase || basename(dir) == "graphics")
         ind <- ind | dbNames %in% c("Defunct", "Deprecated", "Devices")
-    if(any(ind)) {# exclude them
+    if(any(ind)) {                      # exclude them
         db <- db[!ind]
         dbNames <- dbNames[!ind]
         dbAliases <- dbAliases[!ind]
     }
     names(db) <- names(dbAliases) <- dbNames
-    dbUsageTexts <- lapply(db, getRdSection, "usage")
+    dbUsageTexts <- lapply(db, get_Rd_section, "usage")
     dbUsages <- lapply(dbUsageTexts, .parse_usage_as_much_as_possible)
     ind <- as.logical(sapply(dbUsages,
                              function(x) !is.null(attr(x, "badLines"))))
     badLines <- sapply(dbUsages[ind], attr, "badLines")
-    dbArgumentNames <- lapply(db, .getRdArgumentNames)
+    dbArgumentNames <- lapply(db, .get_Rd_argument_names)
 
-    functionsToBeIgnored <-
-        .functionsToBeIgnoredFromUsage(basename(dir))
+    functions_to_be_ignored <-
+        .functions_to_be_ignored_from_usage(basename(dir))
 
     badDocObjs <- list()
 
@@ -1167,7 +1183,7 @@ function(package, dir, lib.loc = NULL)
                                          as.character(e[[1]])))
         ## (Note that as.character(sapply(exprs, "[[", 1)) does not do
         ## what we want due to backquotifying.)
-        ind <- ! functions %in% functionsToBeIgnored
+        ind <- ! functions %in% functions_to_be_ignored
         functions <- functions[ind]
         argNamesInUsage <-
             unlist(sapply(exprs[ind],
@@ -1194,7 +1210,7 @@ function(package, dir, lib.loc = NULL)
         ## <NOTE>
         ## If we were really picky, we would worry about possible
         ## namespace renaming.
-        functions <- .transformS3methodMarkup(functions)
+        functions <- .transform_S3_method_markup(functions)
         ## </NOTE>
 
         ## Now analyze what we found.
@@ -1238,8 +1254,9 @@ function(package, dir, lib.loc = NULL)
             ## so the corresponding generics and methods need to be
             ## excluded from this test (e.g., the usage for '+' in
             ## 'DateTimeClasses.Rd' ...).
-            functions <- functions[!functions %in%
-                                   .functionsWithNoUsefulS3methodMarkup]
+            functions <-
+                functions[!functions %in%
+                          .functions_with_no_useful_S3_method_markup]
             ## Argh.  There are good reasons for keeping \S4method{}{}
             ## as is, but of course this is not what the aliases use ...
             ## <FIXME>
@@ -1338,7 +1355,7 @@ function(package, dir, lib.loc = NULL)
 
         ## Load package into codeEnv.
         if(!isBase)
-            .loadPackageQuietly(package, lib.loc)
+            .load_package_quietly(package, lib.loc)
         codeEnv <- .packageEnv(package)
 
         objectsInCode <- objects(envir = codeEnv, all.names = TRUE)
@@ -1375,13 +1392,15 @@ function(package, dir, lib.loc = NULL)
         ## Collect code into codeFile.
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
-        if(!file.create(codeFile)) stop("unable to create ", codeFile)
-        if(!all(file.append(codeFile, listFilesWithType(codeDir, "code"))))
+        if(!file.create(codeFile))
+            stop("unable to create ", codeFile)
+        if(!all(file.append(codeFile,
+                            listFilesWithType(codeDir, "code"))))
            stop("unable to write code files")
 
         ## Read code from codeFile into codeEnv.
         codeEnv <- new.env()
-        yy <- try(.sourceAssignments(codeFile, env = codeEnv))
+        yy <- try(.source_assignments(codeFile, env = codeEnv))
         if(inherits(yy, "try-error")) {
             stop("cannot source package code")
         }
@@ -1401,7 +1420,7 @@ function(package, dir, lib.loc = NULL)
             objectsInCode <- unique(OK)
             ## Determine names of declared S3 methods and associated S3
             ## generics.
-            nsS3methodsList <- .getNamespaceS3methodsList(nsInfo)
+            nsS3methodsList <- .get_namespace_S3_methods_list(nsInfo)
             nsS3generics <- nsS3methodsList[, 1]
             nsS3methods <- nsS3methodsList[, 3]
         }
@@ -1431,13 +1450,14 @@ function(package, dir, lib.loc = NULL)
         if(length(objectsInEnv))
             allGenerics <-
                 c(allGenerics,
-                  objectsInEnv[sapply(objectsInEnv, .isS3Generic, env)==TRUE])
+                  objectsInEnv[sapply(objectsInEnv, .is_S3_generic, env)
+                               == TRUE])
     }
     ## Add internal S3 generics and S3 group generics.
     allGenerics <-
         c(allGenerics,
           .getInternalS3generics(),
-          .getS3groupGenerics())
+          .get_S3_group_generics())
 
     ## Find all methods in the given package for the generic functions
     ## determined above.  Store as a list indexed by the names of the
@@ -1471,9 +1491,9 @@ function(package, dir, lib.loc = NULL)
 
     db <- lapply(db,
                  function(f) paste(Rdpp(f), collapse = "\n"))
-    names(db) <- dbNames <- sapply(db, getRdSection, "name")
+    names(db) <- dbNames <- sapply(db, get_Rd_section, "name")
 
-    dbUsageTexts <- lapply(db, getRdSection, "usage")
+    dbUsageTexts <- lapply(db, get_Rd_section, "usage")
     dbUsages <- lapply(dbUsageTexts, .parse_usage_as_much_as_possible)
     ind <- sapply(dbUsages,
                   function(x) !is.null(attr(x, "badLines")))
@@ -1507,7 +1527,7 @@ function(package, dir, lib.loc = NULL)
         methodsWithFullName <-
             functions[functions %in% allMethodsInPackage]
 
-        functions <- .transformS3methodMarkup(functions)
+        functions <- .transform_S3_method_markup(functions)
 
         methodsWithGeneric <-
             sapply(functions[functions %in% allGenerics],
@@ -1574,7 +1594,7 @@ function(package, dir, file, lib.loc = NULL,
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         if(basename(dir) != "base")
-            .loadPackageQuietly(package, dirname(dir))
+            .load_package_quietly(package, dirname(dir))
         codeEnv <- if(packageHasNamespace(package, dirname(dir)))
             asNamespace(package)
         else
@@ -1721,7 +1741,7 @@ function(package, dir, lib.loc = NULL)
 
         ## Load package into codeEnv.
         if(!isBase)
-            .loadPackageQuietly(package, lib.loc)
+            .load_package_quietly(package, lib.loc)
         codeEnv <- .packageEnv(package)
 
         objectsInCode <- objects(envir = codeEnv, all.names = TRUE)
@@ -1756,13 +1776,15 @@ function(package, dir, lib.loc = NULL)
         ## Collect code into codeFile.
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
-        if(!file.create(codeFile)) stop("unable to create ", codeFile)
-        if(!all(file.append(codeFile, listFilesWithType(codeDir, "code"))))
+        if(!file.create(codeFile))
+            stop("unable to create ", codeFile)
+        if(!all(file.append(codeFile,
+                            listFilesWithType(codeDir, "code"))))
             stop("unable to write code files")
 
         ## Read code from codeFile into codeEnv.
         codeEnv <- new.env()
-        yy <- try(.sourceAssignments(codeFile, env = codeEnv))
+        yy <- try(.source_assignments(codeFile, env = codeEnv))
         if(inherits(yy, "try-error")) {
             stop("cannot source package code")
         }
@@ -1782,7 +1804,7 @@ function(package, dir, lib.loc = NULL)
             objectsInCode <- unique(OK)
             ## Determine names of declared S3 methods and associated S3
             ## generics.
-            nsS3methodsList <- .getNamespaceS3methodsList(nsInfo)
+            nsS3methodsList <- .get_namespace_S3_methods_list(nsInfo)
             nsS3generics <- nsS3methodsList[, 1]
             nsS3methods <- nsS3methodsList[, 3]
         }
@@ -1797,7 +1819,7 @@ function(package, dir, lib.loc = NULL)
                       == TRUE]
 
     methodsStopList <- .makeS3MethodsStopList(basename(dir))
-    S3groupGenerics <- .getS3groupGenerics()
+    S3groupGenerics <- .get_S3_group_generics()
 
     checkArgs <- function(g, m, env) {
         ## Do the arguments of method m (in codeEnv) 'extend' those of
@@ -1892,11 +1914,7 @@ function(package, dir, lib.loc = NULL)
         ## R CMD check), or we could simply attach every package listed
         ## as a dependency ... or perhaps do both.
         if(!missing(package)) {
-            db <- try(read.dcf(file.path(dir, "DESCRIPTION"))[1, ],
-                      silent = TRUE)
-            if(inherits(db, "try-error"))
-                stop(paste("package directory", sQuote(dir),
-                           "has no valid DESCRIPTION file"))
+            db <- .read_description(file.path(dir, "DESCRIPTION"))
             if(!is.na(depends <- db["Depends"])) {
                 depends <- unlist(strsplit(depends, ","))
                 depends <-
@@ -1925,7 +1943,8 @@ function(package, dir, lib.loc = NULL)
         else
             objects(envir = env, all.names = TRUE)
         S3generics <- if(length(objectsInEnv))
-            objectsInEnv[sapply(objectsInEnv, .isS3Generic, env) == TRUE]
+            objectsInEnv[sapply(objectsInEnv, .is_S3_generic, env)
+                         == TRUE]
         else character(0)
 
         ## For base, also add the internal S3 generics which are not
@@ -1934,7 +1953,8 @@ function(package, dir, lib.loc = NULL)
             internalS3generics <- .getInternalS3generics()
             internalS3generics <-
                 internalS3generics[sapply(internalS3generics,
-                                          .isPrimitive, NULL)
+                                          .is_primitive,
+                                          NULL)
                                    == FALSE]
             S3generics <- c(S3generics, internalS3generics)
         }
@@ -2010,7 +2030,7 @@ function(package, dir, lib.loc = NULL)
 
         ## Load package into codeEnv.
         if(!isBase)
-            .loadPackageQuietly(package, lib.loc)
+            .load_package_quietly(package, lib.loc)
         ## In case the package has a namespace, we really want to check
         ## all replacement functions in the package.  (If not, we need
         ## to change the code for the non-installed case to only look at
@@ -2042,13 +2062,15 @@ function(package, dir, lib.loc = NULL)
         ## Collect code into codeFile.
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
-        if(!file.create(codeFile)) stop("unable to create ", codeFile)
-        if(!all(file.append(codeFile, listFilesWithType(codeDir, "code"))))
+        if(!file.create(codeFile))
+            stop("unable to create ", codeFile)
+        if(!all(file.append(codeFile,
+                            listFilesWithType(codeDir, "code"))))
             stop("unable to write code files")
 
         ## Read code from codeFile into codeEnv.
         codeEnv <- new.env()
-        yy <- try(.sourceAssignments(codeFile, env = codeEnv))
+        yy <- try(.source_assignments(codeFile, env = codeEnv))
         if(inherits(yy, "try-error")) {
             stop("cannot source package code")
         }
@@ -2059,7 +2081,7 @@ function(package, dir, lib.loc = NULL)
         if(file.exists(file.path(dir, "NAMESPACE"))) {
             hasNamespace <- TRUE
             nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
-            nsS3methodsList <- .getNamespaceS3methodsList(nsInfo)
+            nsS3methodsList <- .get_namespace_S3_methods_list(nsInfo)
         }
     }
 
@@ -2235,7 +2257,7 @@ function(package, dir, file, lib.loc = NULL)
     }
     for(file in docsFiles) {
         txt <- paste(Rdpp(readLines(file)), collapse = "\n")
-        txt <- .getRdExampleCode(txt)
+        txt <- .get_Rd_example_code(txt)
         exprs <- findTnFInCode(file, txt)
         if(length(exprs) > 0) {
             exprs <- list(exprs)
@@ -2275,11 +2297,7 @@ function(package)
     dir <- .find.package(package)
 
     ## We definitely need a valid DESCRIPTION file.
-    db <- try(read.dcf(file.path(dir, "DESCRIPTION"))[1, ],
-              silent = TRUE)
-    if(inherits(db, "try-error"))
-        stop(paste("package directory", sQuote(dir),
-                   "has no valid DESCRIPTION file"))
+    db <- .read_description(file.path(dir, "DESCRIPTION"))
 
     packageName <- basename(dir)
     ## (Should really use db["Package"], but then we need to check
@@ -2327,7 +2345,7 @@ function(package)
 
     ## Are all namespace dependencies listed as package dependencies?
     if(fileTest("-f", file.path(dir, "NAMESPACE"))) {
-        reqs <- .getNamespacePackageDepends(dir)
+        reqs <- .get_namespace_package_depends(dir)
         ## <FIXME>
         ## Not clear whether we want to require *all* namespace package
         ## dependencies listed in DESCRIPTION, or e.g. just the ones on
@@ -2406,9 +2424,9 @@ function(x)
     y
 }
 
-### * .functionsToBeIgnoredFromUsage
+### * .functions_to_be_ignored_from_usage
 
-.functionsToBeIgnoredFromUsage <-
+.functions_to_be_ignored_from_usage <-
 function(packageName)
 {
     c("<-", "=",
@@ -2418,9 +2436,9 @@ function(packageName)
       if(packageName == "methods") "@")
 }
 
-### * .functionsWithNoUsefulS3methodMarkup
+### * .functions_with_no_useful_S3_method_markup
 
-.functionsWithNoUsefulS3methodMarkup <-
+.functions_with_no_useful_S3_method_markup <-
     ## Currently there is no useful markup for S3 Ops group methods and
     ## S3 methods for subscripting and subassigning.
     c("+", "-", "*", "/", "^", "<", ">", "<=", ">=", "!=",
@@ -2445,9 +2463,9 @@ function(x)
 function(packageName)
     as.environment(paste("package", packageName, sep = ":"))
 
-### * .parseTextAsMuchAsPossible
+### * .parse_text_as_much_as_possible
 
-.parseTextAsMuchAsPossible <-
+.parse_text_as_much_as_possible <-
 function(txt)
 {
     exprs <- try(parse(text = txt), silent = TRUE)
@@ -2484,7 +2502,7 @@ function(txt)
     txt <- gsub("\\\\%", "%", txt)
     txt <- gsub(.S3_method_markup_regexp, "\"\\\\\\1\"", txt)
     txt <- gsub(.S4_method_markup_regexp, "\"\\\\\\1\"", txt)
-    .parseTextAsMuchAsPossible(txt)
+    .parse_text_as_much_as_possible(txt)
 }
 
 ### * .prettyPrint
@@ -2496,9 +2514,9 @@ function(x)
                        indent = 2, exdent = 2))
 }
 
-### * .transformS3methodMarkup
+### * .transform_S3_method_markup
 
-.transformS3methodMarkup <-
+.transform_S3_method_markup <-
 function(x)
 {
     ## Note how we deal with S3 replacement methods found.

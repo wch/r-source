@@ -184,9 +184,11 @@ function()
       )
 }
 
-### ** .getNamespacePackageDepends
+### ** .get_namespace_package_depends
 
-.getNamespacePackageDepends <- function(dir) {
+.get_namespace_package_depends <-
+function(dir)
+{
     nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
     depends <- c(sapply(nsInfo$imports, "[[", 1),
                  sapply(nsInfo$importClasses, "[[", 1),
@@ -194,9 +196,9 @@ function()
     unique(sort(as.character(depends)))
 }
 
-### ** .getNamespaceS3methodsList
+### ** .get_namespace_S3_methods_list
 
-.getNamespaceS3methodsList <-
+.get_namespace_S3_methods_list <-
 function(nsInfo)
 {
     ## Get the list of the registered S3 methods for an 'nsInfo' object
@@ -212,13 +214,15 @@ function(nsInfo)
            })
 }
 
-### ** .getS3groupGenerics
+### ** .get_S3_group_generics
 
-.getS3groupGenerics <- function() c("Ops", "Math", "Summary", "Complex")
+.get_S3_group_generics <-
+function()
+    c("Ops", "Math", "Summary", "Complex")
 
-### ** .isPrimitive
+### ** .is_primitive
 
-.isPrimitive <-
+.is_primitive <-
 function(fname, envir)
 {
     ## Determine whether object named 'fname' found in environment
@@ -227,9 +231,9 @@ function(fname, envir)
     is.function(f) && any(grep("^\\.Primitive", deparse(f)))
 }
 
-### ** .isS3Generic
+### ** .is_S3_generic
 
-.isS3Generic <-
+.is_S3_generic <-
 function(fname, envir, mustMatch = TRUE)
 {
     ## Determine whether object named 'fname' found in environment
@@ -284,16 +288,16 @@ function(fname, envir, mustMatch = TRUE)
     if(mustMatch) res == fname else nchar(res) > 0
 }
 
-### ** .loadPackageQuietly
+### ** .load_package_quietly
 
-.loadPackageQuietly <-
+.load_package_quietly <-
 function(package, lib.loc)
 {
     ## Load (reload if already loaded) @code{package} from
     ## @code{lib.loc}, capturing all output and messages.  All QC
     ## functions use this for loading packages because R CMD check
     ## interprets all output as indicating a problem.
-    .tryQuietly({
+    .try_quietly({
         pos <- match(paste("package", package, sep = ":"), search())
         if(!is.na(pos))
             detach(pos = pos)
@@ -378,9 +382,29 @@ function(packages = NULL, FUN, ...)
     out
 }
 
-### ** .sourceAssignments
+### ** .read_description
 
-.sourceAssignments <-
+.read_description <-
+function(dfile)
+{
+    ## Try reading in package metadata from a DESCRIPTION file.
+    ## (Never clear whether this should work on the path of the file
+    ## itself, or on that of the directory containing it.)
+    ## <NOTE>
+    ## As we do not have character "frames", we return a named character
+    ## vector.
+    ## </NOTE>
+    if(!fileTest("-f", dfile))
+        stop(paste("file", sQuote(dfile), "does not exist"))
+    db <- try(read.dcf(dfile)[1, ], silent = TRUE)
+    if(inherits(db, "try-error"))
+        stop(paste("file", sQuote(dfile), "is not in valid DCF format"))
+    db
+}
+    
+### ** .source_assignments
+
+.source_assignments <-
 function(file, envir)
 {
     ## Read and parse expressions from @code{file}, and then
@@ -401,9 +425,9 @@ function(file, envir)
     invisible()
 }
 
-### ** .tryQuietly
+### ** .try_quietly
 
-.tryQuietly <-
+.try_quietly <-
 function(expr)
 {
     ## Try to run an expression, suppressing all 'output'.  In case of
