@@ -267,7 +267,7 @@ fixInNamespace <- function (x, ns, pos = -1, envir = as.environment(pos), ...)
 
 getAnywhere <- function(x)
 {
-    if(!is.character(x)) x <- deparse(substitute(x))
+    x <- as.character(substitute(x))
     objs <- list(); where <- character(0); visible <- logical(0)
     ## first look on search path
     if(length(pos <- find(x, numeric=TRUE))) {
