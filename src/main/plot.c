@@ -1385,7 +1385,8 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* polygon(x, y, col, border) */
     SEXP sx, sy, col, border, lty;
-    int nx=1, ny=1, ncol, nborder, nlty, xpd;
+    int nx=1, ny=1, ncol, nborder, nlty, xpd, i, start;
+    double *x, *y, xx, yy, xold, yold;
 
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
@@ -1430,8 +1431,31 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd->gp.lty = dd->dp.lty;
     else
 	dd->gp.lty = INTEGER(lty)[0];
-    GPolygon(nx, REAL(sx), REAL(sy), USER,
-	     INTEGER(col)[0], INTEGER(border)[0], dd);
+    
+    x = REAL(sx);
+    y = REAL(sy);
+    xold = NA_REAL;
+    yold = NA_REAL;
+    for (i=0; i<nx; i++) {
+	xx = x[i];
+	yy = y[i];
+	GConvert(&xx, &yy, USER, DEVICE, dd);
+	if ((FINITE(xx) && FINITE(yy)) &&
+	    !(FINITE(xold) && FINITE(yold)))
+	    start = i;
+	else if ((FINITE(xold) && FINITE(yold)) &&
+		 !(FINITE(xx) && FINITE(yy))) {
+	    if (i-start > 1)
+		GPolygon(i-start, x+start, y+start, USER, 
+			 INTEGER(col)[0], INTEGER(border)[0], dd);
+	}
+	else if ((FINITE(xold) && FINITE(yold)) &&
+		 (i==nx-1))
+	    GPolygon(nx-start, x+start, y+start, USER, 
+		     INTEGER(col)[0], INTEGER(border)[0], dd);
+	xold = xx;
+	yold = yy;
+    }
 
     GMode(dd, 0);
 

@@ -19,7 +19,7 @@ dvi: build-dvi
 build-docs build-help build-latex build-html build-dvi::
 	-@cd etc; MANSRC=`echo ../src/library/*/man/*.Rd` $(MAKE) $@
 
-tests test-Examples::
+test-All test-Examples::
 	-@cd tests; $(MAKE) $@
 
 patches:
@@ -54,13 +54,13 @@ realclean:
 	$(MAKE) acclean
 
 install: all
-	$(INSTALL) -d $(bindir)
-	$(INSTALL) -d $(mandir)/man1
-	$(INSTALL) -d $(rhome)/bin
-	$(INSTALL) -d $(rhome)/cmd
-	$(INSTALL) -d $(rhome)/etc
-	$(INSTALL) -d $(rhome)/include
-	$(INSTALL) -d $(rhome)/library
+	$(INSTALL_DIR) $(bindir)
+	$(INSTALL_DIR) $(mandir)/man1
+	$(INSTALL_DIR) $(rhome)/bin
+	$(INSTALL_DIR) $(rhome)/cmd
+	$(INSTALL_DIR) $(rhome)/etc
+	$(INSTALL_DIR) $(rhome)/include
+	$(INSTALL_DIR) $(rhome)/library
 	$(INSTALL_DATA) R.1 $(mandir)/man1
 	$(INSTALL_DATA) Rdconv.1 $(mandir)/man1
 	(cd $(mandir)/man1; \

@@ -1,14 +1,5 @@
-###-*- R -*- Windows Specific ----
-.GlobalEnv <- globalenv()
-attach(NULL, name = "Autoloads")
-.AutoloadEnv <- pos.to.env(2)
-T <- TRUE
-F <- FALSE
-version <- Version()
-.Machine <- Machine()
-options(na.action = "na.omit")
-options(show.signif.stars = TRUE)
-
+###-*- R -*- MS-Windows Specific ----
+>>>>>>> 1.1.1.1.6.2
 .Library <- paste(getenv("RHOME"), "library", sep = "\\")
 
 .lib.loc <- unique(c(unlist(strsplit(getenv("RLIBS"), ":")), .Library))

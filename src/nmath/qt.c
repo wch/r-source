@@ -44,7 +44,7 @@ double qt(double p, double ndf)
 #ifdef IEEE_754
 	if (ISNAN(p) || ISNAN(ndf))
 		return p + ndf;
-	if(!FINITE(ndf) || ndf < 1 || p > 1 || p < 0) {
+	if(ndf < 1 || p > 1 || p < 0) {
 	    ML_ERROR(ME_DOMAIN);
 	    return ML_NAN;
 	}

@@ -1,4 +1,3 @@
-###-*- R -*- MacIntosh Specific ----
-
+###-*- R -*- Macintosh Specific ----
 .First <- function() if(interactive()) macintosh()
 

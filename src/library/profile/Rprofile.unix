@@ -1,15 +1,4 @@
 ###-*- R -*- Unix Specific ----
-.GlobalEnv <- globalenv()
-attach(NULL, name = "Autoloads")
-.AutoloadEnv <- pos.to.env(2)
-assign(".Autoloaded",NULL,env=.AutoloadEnv)
-T <- TRUE
-F <- FALSE
-version <- Version()
-.Machine <- Machine()
-options(na.action = "na.omit")
-options(show.signif.stars = TRUE)
-
 .Library <- paste(getenv("RHOME"), "library", sep = "/")
 
 .lib.loc <- unique(c(unlist(strsplit(getenv("RLIBS"), ":")), .Library))

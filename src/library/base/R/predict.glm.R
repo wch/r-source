@@ -14,19 +14,19 @@ function(object, newdata=NULL, type = c("link", "response"), se.fit = FALSE,
                      link = object$linear.predictors,
                      response = object$fitted)
     else {
-      pred <- predict.lm(object, newdata, se.fit)
+      pred <- predict.lm(object, newdata, se.fit, scale = 1)
       switch(type,
              response = {pred <- family(object)$linkinv(pred)},
              link = )
     }
   } else {
-    pred <- predict.lm(object, newdata, se.fit)
+    pred <- predict.lm(object, newdata, se.fit, scale = 1)
     ## summary.survreg has no ... argument.
     if(inherits(object, "survreg")) dispersion <- 1.
     if(is.null(dispersion) || dispersion == 0)
       dispersion <- summary(object, dispersion=dispersion)$dispersion
     fit <- pred$fit
-    se.fit <- pred$se * sqrt(dispersion)
+    se.fit <- pred$se.fit * sqrt(dispersion)
     residual.scale <- as.vector(sqrt(dispersion))
     switch(type,
 	   response = {

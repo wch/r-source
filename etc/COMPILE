@@ -8,7 +8,7 @@ MAKEOPTS=
 for i in $*; do
   case ${i} in
     *.[cfr])
-      obj=`echo $i|sed 's/\.[^\.]\+$/.o/'`
+      obj=`echo $i|sed 's/\.[^\.][^\.]*$/.o/'`
       ${MAKE} -f ${RHOME}/etc/Makeconf ${MAKEOPTS} ${obj}
       ;;
     -D*|*=*)

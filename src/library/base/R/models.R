@@ -198,6 +198,8 @@ model.matrix.default <- function(formula, data, contrasts = NULL)
 	vars[[1]] <- as.name("data.frame")
 	data <- eval(vars, sys.frame(sys.parent()))
  }
+ else if (is.null(attr(data, "terms")))
+     data <- model.frame(formula, data)
  contrastsL <- contrasts
  rm(contrasts)
  if (!is.null(contrastsL)) {
