@@ -47,22 +47,19 @@ static void prterr(int icode, char *mes);
 static Sint iwork(Sint iwkmax, Sint *iwkpt, Sint number, Sint itype);
 
 #ifdef USING_R
-
 # define isort(n, ix)		R_isort(ix, *n)
-# include <R_ext/Mathlib.h> /* -> pgamma() */
-
+# include <R_ext/Mathlib.h>	/* -> pgamma() */
 #else
  static void isort(Sint *n, Sint *ix);
-
  static double gammds(double *y, double *p, Sint *ifault);
  static double alogam(double *x, Sint *ifault);
 #endif
 
 /* The only public function : */
-void fexact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
-	    double *expect, double *percnt, double *emin,
-	    double *prt, double *pre,
-	    /* new in C : */ Sint *workspace)
+void
+fexact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
+       double *expect, double *percnt, double *emin, double *prt,
+       double *pre, /* new in C : */ Sint *workspace)
 {
 
 /*
@@ -74,19 +71,19 @@ void fexact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
   Purpose:    Computes Fisher's exact test probabilities and a hybrid
 	      approximation to Fisher exact test probabilities for a
 	      contingency table using the network algorithm.
-  Usage:      CALL FEXACT (NROW, NCOL, TABLE, LDTABL,
-			   EXPECT, PERCNT, EMIN,
-			   PRT, PRE)
+  Usage:      CALL FEXACT (NROW, NCOL, TABLE, LDTABL, EXPECT, PERCNT,
+                           EMIN, PRT, PRE)
   Arguments:
-     NROW   - The number of rows in the table.	(Input)
-     NCOL   - The number of columns in the table.  (Input)
-     TABLE  - NROW by NCOL matrix containing the contingency table.
-	      (Input)
-     LDTABL - Leading dimension of TABLE exactly as specified in the
-	      dimension statement in the calling program.  (Input)
-     EXPECT - Expected value used in the hybrid algorithm for
-	      deciding when to use asymptotic theory probabilities.
-	      (Input)
+    NROW    - The number of rows in the table.			(Input)
+    NCOL    - The number of columns in the table.		(Input)
+    TABLE   - NROW by NCOL matrix containing the contingency
+              table.						(Input)
+    LDTABL  - Leading dimension of TABLE exactly as specified
+              in the dimension statement in the calling
+	      program.						(Input)
+    EXPECT  - Expected value used in the hybrid algorithm for
+	      deciding when to use asymptotic theory
+	      probabilities.					(Input)
 	      If EXPECT <= 0.0 then asymptotic theory probabilities
 	      are not used and Fisher exact test probabilities are
 	      computed.	 Otherwise, if PERCNT or more of the cells in
@@ -96,21 +93,20 @@ void fexact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
 	      probabilities are used.  See the algorithm section of the
 	      manual document for details.
 	      Use EXPECT = 5.0 to obtain the 'Cochran' condition.
-     PERCNT - Percentage of remaining cells that must have estimated
-	      expected	values greater than EXPECT before asymptotic
-	      probabilities can be used.  (Input)
+    PERCNT  - Percentage of remaining cells that must have
+              estimated expected values greater than EXPECT
+	      before asymptotic probabilities can be used.	(Input)
 	      See argument EXPECT for details.
 	      Use PERCNT = 80.0 to obtain the 'Cochran' condition.
-     EMIN   - Minimum cell estimated expected value allowed for
+    EMIN    - Minimum cell estimated expected value allowed for
 	      asymptotic chi-squared probabilities to be used.	(Input)
 	      See argument EXPECT for details.
 	      Use EMIN = 1.0 to obtain the 'Cochran' condition.
-
-     PRT    - Probability of the observed table for fixed marginal
-	      totals.  (Output)
-     PRE    - Table p-value.  (Output)
-	      PRE is the probability of a more extreme table, where
-	      'extreme' is in a probabilistic sense.
+    PRT     - Probability of the observed table for fixed
+              marginal totals.					(Output)
+    PRE     - Table p-value.					(Output)
+	      PRE is the probability of a more extreme table,
+	      where `extreme' is in a probabilistic sense.
 	      If EXPECT < 0 then the Fisher exact probability
 	      is returned.  Otherwise, an approximation to the
 	      Fisher exact probability is computed based upon
@@ -173,15 +169,8 @@ void fexact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
     Sint i3a, i3b, i3c, i9a, iwkmax, iwkpt;
 
     /* Workspace Allocation (freed at end) */
-
     double *equiv;
-    /* To increase workspace, increase the size of rwrk and set the
-       value of IWKMAX to the new dimension.
-       When changing precision, the following declarations should not be
-       changed.
-       */
     iwkmax = 2 * (Sint) (*workspace / 2);
-
     equiv = Calloc(iwkmax / 2, double);
     if (!equiv) {
 	prterr(0, "Can not allocate specified workspace");
@@ -194,7 +183,7 @@ void fexact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
     table -= *ldtabl + 1;
 
     /* Function Body */
-    iwkpt = 1;
+    iwkpt = 0;
 
     if (*nrow > *ldtabl)
 	prterr(1, "NROW must be less than or equal to LDTABL.");
@@ -231,13 +220,36 @@ void fexact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
     iiwk= iwork(iwkmax, &iwkpt, ikh, i_int);
     ikh = max(nco + 401, k);
     irwk= iwork(iwkmax, &iwkpt, ikh, i_real);
-    if (i_real == 4) { /* Double precision */
-	numb = mult * 10 + 18;
-    } else { /* Real (single) workspace */
+
+    /* NOTE:
+       What follows below splits the remaining amount iwkmax - iwkpt of
+       (int) workspace into hash tables as follows.
+           type  size       index
+	   INT   2 * ldkey  i4 i5 i11
+	   REAL  2 * ldkey  i8 i9 i10
+	   REAL  2 * ldstp  i6
+	   INT   6 * ldstp  i7
+       Hence, we need ldkey times
+           3 * 2 + 3 * 2 * s + 2 * mult * s + 6 * mult
+       chunks of integer memory, where s = sizeof(REAL) / sizeof(INT).
+       If doubles are used and are twice as long as ints, this gives
+           18 + 10 * mult
+       so that the value of ldkey can be obtained by dividing available
+       (int) workspace by this number.
+
+       In fact, because iwork() can actually s * n + s - 1 int chunks
+       when allocating a REAL, we use ldkey = available / numb - 1.
+
+       FIXME:
+       Can we always assume that sizeof(double) / sizeof(int) is 2?
+       */
+    
+    if (i_real == 4) {		/* Double precision reals */
+	numb = 18 + 10 * mult;
+    } else {			/* Single precision reals */
 	numb = (mult << 3) + 12;
     }
-    ldkey = (iwkmax - iwkpt + 1) / numb;
-
+    ldkey = (iwkmax - iwkpt) / numb - 1;
     ldstp = mult * ldkey;
     ikh = ldkey << 1;	i4  = iwork(iwkmax, &iwkpt, ikh, i_int);
     ikh = ldkey << 1;	i5  = iwork(iwkmax, &iwkpt, ikh, i_int);
@@ -248,9 +260,8 @@ void fexact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
     ikh = ldkey << 1;	i9a = iwork(iwkmax, &iwkpt, ikh, i_real);
     ikh = ldkey << 1;	i10 = iwork(iwkmax, &iwkpt, ikh, i_int);
 
-    /*
-      To convert to double precision, change RWRK to DWRK in the next CALL.
-    */
+    /* To convert to double precision, change RWRK to DWRK in the next CALL.
+     */
     f2xact(nrow,
 	   ncol,
 	   &table[*ldtabl + 1],
@@ -260,24 +271,24 @@ void fexact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
 	   emin,
 	   prt,
 	   pre,
-	   &dwrk[i1 - 1],
-	   &iwrk[i2 - 1],
-	   &iwrk[i3 - 1],
-	   &iwrk[i3a - 1],
-	   &iwrk[i3b - 1],
-	   &iwrk[i3c - 1],
-	   &iwrk[i4 - 1],
+	   dwrk + i1,
+	   iwrk + i2,
+	   iwrk + i3,
+	   iwrk + i3a,
+	   iwrk + i3b,
+	   iwrk + i3c,
+	   iwrk + i4,
 	   &ldkey,
-	   &iwrk[i5 - 1],
-	   &dwrk[i6 - 1],
+	   iwrk + i5,
+	   dwrk + i6,
 	   &ldstp,
-	   &iwrk[i7 - 1],
-	   &dwrk[i8 - 1],
-	   &dwrk[i9 - 1],
-	   &dwrk[i9a - 1],
-	   &iwrk[i10 - 1],
-	   &iwrk[iiwk - 1],
-	   &dwrk[irwk - 1]);
+	   iwrk + i7,
+	   dwrk + i8,
+	   dwrk + i9,
+	   dwrk + i9a,
+	   iwrk + i10,
+	   iwrk + iiwk,
+	   dwrk + irwk);
 
 L_End:
     Free(equiv);
@@ -300,13 +311,13 @@ L_End:
 			DLP, DSP, TM, KEY2, IWK, RWK)
   -----------------------------------------------------------------------
   */
-void f2xact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
-	    double *expect, double *percnt, double *emin,
-	    double *prt, double *pre, double *fact,
-	    Sint *ico, Sint *iro, Sint *kyy, Sint *idif, Sint *irn,
-	    Sint *key, Sint *ldkey, Sint *ipoin, double *stp, Sint *ldstp,
-	    Sint *ifrq, double *dlp, double *dsp,
-	    double *tm, Sint *key2, Sint *iwk, double *rwk)
+void
+f2xact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
+       double *expect, double *percnt, double *emin, double *prt,
+       double *pre, double *fact, Sint *ico, Sint *iro, Sint *kyy,
+       Sint *idif, Sint *irn, Sint *key, Sint *ldkey, Sint *ipoin,
+       double *stp, Sint *ldstp, Sint *ifrq, double *dlp, double *dsp,
+       double *tm, Sint *key2, Sint *iwk, double *rwk)
 {
     /* IMAX is the largest representable Sint on the machine. */
     const Sint imax = SINT_MAX;
@@ -328,7 +339,8 @@ void f2xact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
 	i31, i32, i33, i34, i35, i36, i37, i38, i39,
 	i41, i42, i43, i44, i45, i46, i47, i48, i310, i311,
 	nco, nrb, ipn, ipo, itp, nro, nro2;
-    static double dspt, dd, df,ddf, drn,dro, emn, obs,obs2,obs3, pastp, pv, tmp;
+    static double dspt, dd, df,ddf, drn,dro, emn, obs, obs2, obs3,
+	pastp, pv, tmp;
     double d1;
 #ifndef USING_R
     double d2;
@@ -802,37 +814,37 @@ L310:
   Usage:      F3XACT (NROW, IROW, NCOL, ICOL, DLP, MM, FACT, ICO, IRO,
 		      IT, LB, NR, NT, NU, ITC, IST, STV, ALEN, TOL)
   Arguments:
-     NROW   - The number of rows in the table.	(Input)
-     IROW   - Vector of length NROW containing the row sums for the
-	      table.  (Input)
-     NCOL   - The number of columns in the table.  (Input)
-     ICOL   - Vector of length K containing the column sums for the
-	      table.  (Input)
-     DLP    - The longest path for the table.  (Output)
-     MM	    - The total count in the table.  (Output)
-     FACT   - Vector containing the logarithms of factorials.  (Input)
-     ICO    - Work vector of length MAX(NROW,NCOL).
-     IRO    - Work vector of length MAX(NROW,NCOL).
-     IT	    - Work vector of length MAX(NROW,NCOL).
-     LB	    - Work vector of length MAX(NROW,NCOL).
-     NR	    - Work vector of length MAX(NROW,NCOL).
-     NT	    - Work vector of length MAX(NROW,NCOL).
-     NU	    - Work vector of length MAX(NROW,NCOL).
-     ITC    - Work vector of length 400.
-     IST    - Work vector of length 400.
-     STV    - Work vector of length 400.
-     ALEN   - Work vector of length MAX(NROW,NCOL).
-     TOL    - Tolerance.  (Input)
+    NROW    - The number of rows in the table.			(Input)
+    IROW    - Vector of length NROW containing the row sums
+              for the table.					(Input)
+    NCOL    - The number of columns in the table.		(Input)
+    ICOL    - Vector of length K containing the column sums
+              for the table.					(Input)
+    DLP     - The longest path for the table.			(Output)
+    MM	    - The total count in the table.			(Output)
+    FACT    - Vector containing the logarithms of factorials.	(Input)
+    ICO     - Work vector of length MAX(NROW,NCOL).
+    IRO     - Work vector of length MAX(NROW,NCOL).
+    IT	    - Work vector of length MAX(NROW,NCOL).
+    LB	    - Work vector of length MAX(NROW,NCOL).
+    NR	    - Work vector of length MAX(NROW,NCOL).
+    NT	    - Work vector of length MAX(NROW,NCOL).
+    NU	    - Work vector of length MAX(NROW,NCOL).
+    ITC     - Work vector of length 400.
+    IST     - Work vector of length 400.
+    STV     - Work vector of length 400.
+    ALEN    - Work vector of length MAX(NROW,NCOL).
+    TOL     - Tolerance.					(Input)
   -----------------------------------------------------------------------
   */
 
-void f3xact(Sint *nrow, Sint *irow, Sint *ncol, Sint *icol, double *dlp,
-	   Sint *mm, double *fact, Sint *ico, Sint *iro, Sint *it, Sint
-	   *lb, Sint *nr, Sint *nt, Sint *nu, Sint *itc, Sint *ist,
-	   double *stv, double *alen, double *tol)
+void
+f3xact(Sint *nrow, Sint *irow, Sint *ncol, Sint *icol, double *dlp,
+       Sint *mm, double *fact, Sint *ico, Sint *iro, Sint *it,
+       Sint *lb, Sint *nr, Sint *nt, Sint *nu, Sint *itc, Sint *ist,
+       double *stv, double *alen, double *tol)
 {
     /* Initialized data */
-
     static Sint ldst = 200;
     static Sint nst = 0;
     static Sint nitc = 0;
@@ -1172,9 +1184,10 @@ L200: /* Pop item from stack */
   -----------------------------------------------------------------------
   */
 
-void f4xact(Sint *nrow, Sint *irow, Sint *ncol, Sint *icol, double *dsp,
-	    double *fact, Sint *icstk, Sint *ncstk, Sint *lstk, Sint *mstk,
-	    Sint *nstk, Sint *nrstk, Sint *irstk, double *ystk, double *tol)
+void
+f4xact(Sint *nrow, Sint *irow, Sint *ncol, Sint *icol, double *dsp,
+       double *fact, Sint *icstk, Sint *ncstk, Sint *lstk, Sint *mstk,
+       Sint *nstk, Sint *nrstk, Sint *irstk, double *ystk, double *tol)
 {
     /* System generated locals */
     Sint ikh;
@@ -1368,27 +1381,27 @@ L100:
 			  LDSTP, IFRQ, NPOIN, NR, NL, IFREQ, ITOP,
 			  IPSH)
   Arguments:
-     PASTP  - The past path length.					(Input)
-     TOL    - Tolerance for equivalence of past path lengths.  		(Input)
-     KVAL   - Key value.  						(Input)
-     KEY    - Vector of length LDKEY containing the key values.		(in/out)
-     LDKEY  - Length of vector KEY.  					(Input)
+     PASTP  - The past path length.				(Input)
+     TOL    - Tolerance for equivalence of past path lengths.  	(Input)
+     KVAL   - Key value.  					(Input)
+     KEY    - Vector of length LDKEY containing the key values.	(in/out)
+     LDKEY  - Length of vector KEY.  				(Input)
      IPOIN  - Vector of length LDKEY pointing to the
-	      linked list of past path lengths.  			(in/out)
+	      linked list of past path lengths.  		(in/out)
      STP    - Vector of length LSDTP containing the
-	      linked lists of past path lengths.  			(in/out)
-     LDSTP  - Length of vector STP.  					(Input)
+	      linked lists of past path lengths.  		(in/out)
+     LDSTP  - Length of vector STP.  				(Input)
      IFRQ   - Vector of length LDSTP containing the past path
-	      frequencies.  						(in/out)
+	      frequencies.  					(in/out)
      NPOIN  - Vector of length LDSTP containing the pointers to
-	      the next past path length.  				(in/out)
+	      the next past path length.  			(in/out)
      NR	    - Vector of length LDSTP containing the right object
-	      pointers in the tree of past path lengths.        	(in/out)
+	      pointers in the tree of past path lengths.        (in/out)
      NL	    - Vector of length LDSTP containing the left object
-	      pointers in the tree of past path lengths.        	(in/out)
-     IFREQ  - Frequency of the current path length.             	(Input)
-     ITOP   - Pointer to the top of STP.  				(Input)
-     IPSH   - Option parameter.	 					(Input)
+	      pointers in the tree of past path lengths.        (in/out)
+     IFREQ  - Frequency of the current path length.             (Input)
+     ITOP   - Pointer to the top of STP.  			(Input)
+     IPSH   - Option parameter.	 				(Input)
 	      If IPSH is true, the past path length is found in the
 	      table KEY.  Otherwise the location of the past path
 	      length is assumed known and to have been found in
@@ -1396,9 +1409,10 @@ L100:
   -----------------------------------------------------------------------
   */
 
-void f5xact(double *pastp, double *tol, Sint *kval, Sint *key, Sint *ldkey,
-	    Sint *ipoin, double *stp, Sint *ldstp, Sint *ifrq, Sint *npoin,
-	    Sint *nr, Sint *nl, Sint *ifreq, Sint *itop, Sint *ipsh)
+void
+f5xact(double *pastp, double *tol, Sint *kval, Sint *key, Sint *ldkey,
+       Sint *ipoin, double *stp, Sint *ldstp, Sint *ifrq, Sint *npoin,
+       Sint *nr, Sint *nl, Sint *ifreq, Sint *itop, Sint *ipsh)
 {
     /* Local variables */
     static Sint itmp, ird, ipn, itp;
@@ -1540,18 +1554,23 @@ L60:
   Purpose:    Pop a node off the stack.
   Usage:      CALL F6XACT (NROW, IROW, IFLAG, KYY, KEY, LDKEY, LAST, IPN)
   Arguments:
-     NROW   - The number of rows in the table.				(Input)
-     IROW   - Vector of length nrow containing the row sums on output.  (Output)
-     IFLAG  - Set to 3 if there are no additional nodes to process.     (Output)
-     KYY    - Constant mutlipliers used in forming the hash table key.  (Input)
-     KEY    - Vector of length LDKEY containing the hash table keys.    (In/out)
-     LDKEY  - Length of vector KEY.  					(Input)
-     LAST   - Index of the last key popped off the stack.	        (In/out)
-     IPN    - Pointer to the linked list of past path lengths.	        (Output)
+    NROW    - The number of rows in the table.			(Input)
+    IROW    - Vector of length nrow containing the row sums on
+              output.						(Output)
+    IFLAG   - Set to 3 if there are no additional nodes to process.
+								(Output)
+    KYY     - Constant mutlipliers used in forming the hash
+              table key.					(Input)
+    KEY     - Vector of length LDKEY containing the hash table
+              keys.						(In/out)
+    LDKEY   - Length of vector KEY.				(Input)
+    LAST    - Index of the last key popped off the stack.	(In/out)
+    IPN     - Pointer to the linked list of past path lengths.	(Output)
   -----------------------------------------------------------------------
   */
-void f6xact(Sint *nrow, Sint *irow, Sint *iflag, Sint *kyy,
-	    Sint *key, Sint *ldkey, Sint *last, Sint *ipn)
+void
+f6xact(Sint *nrow, Sint *irow, Sint *iflag, Sint *kyy, Sint *key, Sint
+       *ldkey, Sint *last, Sint *ipn)
 {
     Sint kval, j;
 
@@ -1589,18 +1608,21 @@ L10:
   Purpose:    Generate the new nodes for given marinal totals.
   Usage:      CALL F7XACT (NROW, IMAX, IDIF, K, KS, IFLAG)
   Arguments:
-     NROW   - The number of rows in the table.				(Input)
-     IMAX   - The row marginal totals.					(Input)
-     IDIF   - The column counts for the new column.  			(in/out)
-     K	    - Indicator for the row to decrement.  			(in/out)
-     KS	    - Indicator for the row to increment.  			(in/out)
-     IFLAG  - Status indicator.	 					(Output)
+    NROW    - The number of rows in the table.			(Input)
+    IMAX    - The row marginal totals.				(Input)
+    IDIF    - The column counts for the new column.		(in/out)
+    K	    - Indicator for the row to decrement.		(in/out)
+    KS	    - Indicator for the row to increment.		(in/out)
+    IFLAG   - Status indicator.					(Output)
 	      If IFLAG is zero, a new table was generated.  For
 	      IFLAG = 1, no additional tables could be generated.
   -----------------------------------------------------------------------
   */
 
-void f7xact(Sint *nrow, Sint *imax, Sint *idif, Sint *k, Sint *ks, Sint *iflag)
+void
+f7xact(Sint *nrow, Sint *imax, Sint *idif, Sint *k, Sint *ks,
+       Sint *iflag)
+    
 {
     Sint i, m, k1, mm;
 
@@ -1692,15 +1714,16 @@ void f7xact(Sint *nrow, Sint *imax, Sint *idif, Sint *k, Sint *ks, Sint *iflag)
 	      element.
   Usage:      CALL F8XACT (IROW, IS, I1, IZERO, NEW)
   Arguments:
-     IROW   - Vector containing the row counts.		(Input)
-     IS	    - Indicator.				(Input)
-     I1	    - Indicator.				(Input)
-     IZERO  - Position of the zero.			(Input)
-     NEW    - Vector of new row counts.			(Output)
+     IROW   - Vector containing the row counts.			(Input)
+     IS	    - Indicator.					(Input)
+     I1	    - Indicator.					(Input)
+     IZERO  - Position of the zero.				(Input)
+     NEW    - Vector of new row counts.				(Output)
   -----------------------------------------------------------------------
   */
 
-void f8xact(Sint *irow, Sint *is, Sint *i1, Sint *izero, Sint *new)
+void
+f8xact(Sint *irow, Sint *is, Sint *i1, Sint *izero, Sint *new)
 {
     int i;
 
@@ -1734,16 +1757,17 @@ void f8xact(Sint *irow, Sint *is, Sint *i1, Sint *izero, Sint *new)
   Purpose:    Computes the log of a multinomial coefficient.
   Usage:      F9XACT(N, MM, IR, FACT)
   Arguments:
-     N	    - Length of IR.  (Input)
-     MM	    - Number for factorial in numerator.  (Input)
-     IR	    - Vector of length N containing the numebers for the
-	      denominator of the factorial.  (Input)
-     FACT   - Table of log factorials.	(Input)
-     F9XACT  - The log of the multinomal coefficient.  (Output)
+     N	    - Length of IR.					(Input)
+     MM	    - Number for factorial in numerator.		(Input)
+     IR	    - Vector of length N containing the numbers for
+              the denominator of the factorial.			(Input)
+     FACT   - Table of log factorials.				(Input)
+     F9XACT - The log of the multinomal coefficient.		(Output)
   -----------------------------------------------------------------------
   */
 
-double f9xact(Sint *n, Sint *mm, Sint *ir, double *fact)
+double
+f9xact(Sint *n, Sint *mm, Sint *ir, double *fact)
 {
     double d;
     int k;
@@ -1775,8 +1799,9 @@ double f9xact(Sint *n, Sint *mm, Sint *ir, double *fact)
   -----------------------------------------------------------------------
   */
 
-void f10act(Sint *nrow, Sint *irow, Sint *ncol, Sint *icol, double *val,
-	    Sint *xmin, double *fact, Sint *nd, Sint *ne, Sint *m)
+void
+f10act(Sint *nrow, Sint *irow, Sint *ncol, Sint *icol, double *val,
+       Sint *xmin, double *fact, Sint *nd, Sint *ne, Sint *m)
 {
     /* Local variables */
     Sint i, is, ix, nrw1;
@@ -1842,7 +1867,8 @@ void f10act(Sint *nrow, Sint *irow, Sint *ncol, Sint *icol, double *val,
      NEW    - Vector containing the row totals.	(Output)
   -----------------------------------------------------------------------
   */
-void f11act(Sint *irow, Sint *i1, Sint *i2, Sint *new)
+void
+f11act(Sint *irow, Sint *i1, Sint *i2, Sint *new)
 {
     Sint i;
 
@@ -1858,15 +1884,16 @@ void f11act(Sint *irow, Sint *i1, Sint *i2, Sint *new)
 
 /*
   -----------------------------------------------------------------------
-  Name:	      ERPRT
+  Name:	      prterr
   Purpose:    Print an error message and stop.
-  Usage:      CALL ERPRT (ICODE, MES)
+  Usage:      prterr(icode, mes)
   Arguments:
-     ICODE  - Integer code for the error message.  (Input)
-     MES    - Character string containing the error message.  (Input)
+     icode  - Integer code for the error message.		(Input)
+     mes    - Character string containing the error message.	(Input)
   -----------------------------------------------------------------------
   */
-void prterr(int icode, char *mes)
+void
+prterr(int icode, char *mes)
 {
     PROBLEM "FEXACT error %d.\n%s", icode, mes RECOVER(NULL_ENTRY);
     return;
@@ -1874,37 +1901,37 @@ void prterr(int icode, char *mes)
 
 /*
   -----------------------------------------------------------------------
-  Name:	      IWORK
+  Name:	      iwork
   Purpose:    Routine for allocating workspace.
-  Usage:      IWORK (IWKMAX, IWKPT, NUMBER, ITYPE)
+  Usage:      iwork (iwkmax, iwkpt, number, itype)
   Arguments:
-     IWKMAX - Maximum length of workspace.			(Input)
-     IWKPT  - Amount of workspace currently allocated.		(in/out)
-     NUMBER - Number of elements of workspace desired.		(Input)
-     ITYPE  - Workspace type.					(Input)
+     iwkmax - Maximum (int) amount of workspace.		(Input)
+     iwkpt  - Amount of (int) workspace currently allocated.	(in/out)
+     number - Number of elements of workspace desired.		(Input)
+     itype  - Workspace type.					(Input)
 	      ITYPE  TYPE
-		2    Integer
-		3    Real
-		4    Double Precision
-     IWORK(): Index in RWRK, DWRK, or IWRK of the beginning
-	      of the first element in the workspace array.	(Output)
+		2    integer
+		3    float
+		4    double
+     iwork(): Index in rwrk, dwrk, or iwrk of the beginning of
+              the first free element in the workspace array.	(Output)
   -----------------------------------------------------------------------
   */
-Sint iwork(Sint iwkmax, Sint *iwkpt, Sint number, Sint itype)
+Sint
+iwork(Sint iwkmax, Sint *iwkpt, Sint number, Sint itype)
 {
-    Sint i, j;
+    Sint i;
 
     i = *iwkpt;
-    j = number + 1;
     if (itype == 2 || itype == 3)
-	*iwkpt += j;
+	*iwkpt += number;
     else { /* double */
 	if (i % 2 != 0)
 	    ++i;
-	*iwkpt += j << 1;
+	*iwkpt += (number << 1);
 	i /= 2;
     }
-    if (*iwkpt > iwkmax + 1)
+    if (*iwkpt > iwkmax)
 	prterr(40, "Out of workspace.");
 
     return i;
@@ -1994,9 +2021,6 @@ L40:
     j = iu[m - 1];
     goto L10;
 }
-#endif
-
-#ifndef USING_R
 
 double gammds(double *y, double *p, Sint *ifault)
 {
@@ -2120,5 +2144,4 @@ L30:
 	   (((-a2 * z + a3) * z - a4) * z + a5) / y);
 }
 
-#endif
-/*the above is only used when *not* in R */
+#endif /* not USING_R */
