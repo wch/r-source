@@ -186,7 +186,7 @@ OSErr DoSource(void);
 OSErr SourceFile(FSSpec  	*myfss);
 int GetTextSize(void);
 int GetScreenRes(void);
-static Boolean RunningOnCarbonX(void);
+Boolean RunningOnCarbonX(void);
 
 
 void consolecmd(char *cmd);
@@ -1801,7 +1801,7 @@ cleanup :
 
 
 
-static Boolean RunningOnCarbonX(void)
+Boolean RunningOnCarbonX(void)
 {
     UInt32 response;
     
