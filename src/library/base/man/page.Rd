@@ -1,4 +1,4 @@
-\name{edit}
+\name{page}
 \title{Invoke a Pager on an R Object}
 \usage{
 page(x)
