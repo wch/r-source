@@ -1004,6 +1004,21 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for (i = 0 ; i < n ; i++) {
       /* NA `pat' are removed in R code */
+      /* the C code is left in case we change our minds again, 
+	 but this code _is_ used if 'x' contains NAs */
+      /* NA matches only itself */
+        if (STRING_ELT(vec,i) == NA_STRING) {
+	    if (STRING_ELT(pat, 0) == NA_STRING)
+		SET_STRING_ELT(ans, i, STRING_ELT(rep, 0));
+	    else
+		SET_STRING_ELT(ans, i, NA_STRING);
+	    continue;
+	}
+	if (STRING_ELT(pat, 0) == NA_STRING) {
+	    SET_STRING_ELT(ans, i, STRING_ELT(vec,i));
+	    continue;
+	}
+	/* end NA handling */
 	offset = 0;
 	nmatch = 0;
 	s = CHAR(STRING_ELT(vec, i));
