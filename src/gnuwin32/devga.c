@@ -180,7 +180,7 @@ static void SetColor(int, DevDesc *);
 static void SetFont(int, int, double, DevDesc *);
 static void SetLinetype(int, double, DevDesc *);
 static int Load_Rbitmap_Dll();
-void Unload_Rbitmap_Dll();
+void UnLoad_Rbitmap_Dll();
 static void SaveAsPng(DevDesc *dd,char *fn);
 static void SaveAsJpeg(DevDesc *dd,int quality,char *fn);
 static void SaveAsBmp(DevDesc *dd,char *fn);
@@ -2021,7 +2021,7 @@ static int Load_Rbitmap_Dll()
  return (RbitmapAlreadyLoaded>0);    
 }
 
-void Unload_Rbitmap_Dll()
+void UnLoad_Rbitmap_Dll()
 {
     if (RbitmapAlreadyLoaded) FreeLibrary(hRbitmapDll);
     RbitmapAlreadyLoaded = 0;

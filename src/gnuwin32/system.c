@@ -33,7 +33,7 @@
 #include "rui.h"
 #include "getline/getline.h"
 #include <windows.h>  /* for CreateEvent,.. */
-#include <process.h> /* for _begithread,... */
+#include <process.h> /* for _beginthread,... */
 #include "run.h"
 #include "Startup.h"
 
@@ -377,7 +377,7 @@ void R_CleanUp(int saveact, int status, int runLast)
     if (CharacterMode == RGui)
 	savehistory(RConsole, ".Rhistory");
     UnLoad_Unzip_Dll();
-    Unload_Rbitmap_Dll();
+    UnLoad_Rbitmap_Dll();
     app_cleanup();
     exit(status);
 }
@@ -699,8 +699,8 @@ int cmdlineoptions(int ac, char **av)
 	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
 
     if (InThreadReadConsole && 
-        (!(EhiWakeUp = CreateEvent(NULL,FALSE,FALSE,NULL)) ||
-	 (_beginthread(ReaderThread,0,NULL)==-1)))
+        (!(EhiWakeUp = CreateEvent(NULL, FALSE, FALSE, NULL)) ||
+	 (_beginthread(ReaderThread, 0, NULL) == -1)))
       R_Suicide("impossible to create 'reader thread'; you must free some system resources");
     return 0;
 }
