@@ -120,23 +120,23 @@ install.packages <-
     if(depends) { # check for dependencies, recursively
         p0 <- p1 <- unique(pkgs) # this is ok, as 1 lib only
         have <- .packages(all.available = TRUE)
-        repeat {
-            if(any(miss <- ! p1 %in% row.names(available))) {
-                cat(sprintf(ngettext(sum(miss),
-                                     "dependency %s is not available",
-                                     "dependencies %s are not available"),
-                    paste(sQuote(p1[miss]), sep=", ")), "\n\n", sep ="")
-                flush.console()
-            }
-            p1 <- p1[!miss]
-            deps <- as.vector(available[p1, dependencies])
-            deps <- .clean_up_dependencies(deps, available)
-            if(!length(deps)) break
-            toadd <- deps[! deps %in% c("R", have, pkgs)]
-            if(length(toadd) == 0) break
-            pkgs <- c(toadd, pkgs)
-            p1 <- toadd
-        }
+	repeat {
+	    if(any(miss <- ! p1 %in% row.names(available))) {
+		cat(sprintf(ngettext(sum(miss),
+				     "dependency %s is not available",
+				     "dependencies %s are not available"),
+		    paste(sQuote(p1[miss]), collapse=", ")), "\n\n", sep ="")
+		flush.console()
+	    }
+	    p1 <- p1[!miss]
+	    deps <- as.vector(available[p1, dependencies])
+	    deps <- .clean_up_dependencies(deps, available)
+	    if(!length(deps)) break
+	    toadd <- deps[! deps %in% c("R", have, pkgs)]
+	    if(length(toadd) == 0) break
+	    pkgs <- c(toadd, pkgs)
+	    p1 <- toadd
+	}
         for(bundle in names(bundles))
             pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
         pkgs <- unique(pkgs)
