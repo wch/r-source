@@ -14,10 +14,10 @@ Frequently Asked Questions for R for Windows</h1>
 specific to that version. The main R FAQ can be found at <a
 href="http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html">http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html</a>.
 
-<p>There are two versions of R for Windows, but only is under active
+<p>There have been two versions of R for Windows, but only is under active
 development, that described here. It is often called something like
 <tt>rw0990</tt> (although not officially).  The information here
-applies only to recent versions (rw0642 or later).
+applies only to recent versions (<tt>rw0901</tt> or later).
 
 <p>There is also information on the use of R for Windows in the
 Venables & Ripley `R Complements' at <a
@@ -50,7 +50,7 @@ for different projects in different directories?</a></dd>
 <a href="#q17"><b>Q1.6.</b> Can I use <tt>R BATCH</tt>?</a></dd>
 
 <dd>
-<a href="#q18"><b>Q1.7. </b>Can I use <tt>rw0xxx</tt> with ESS and
+<a href="#q18"><b>Q1.7. </b>Can I use <tt>rwXxxx</tt> with ESS and
 <tt>emacs</tt>?</a></dd>
 
 <dd>
@@ -66,7 +66,7 @@ for different projects in different directories?</a></dd>
 (libraries) in this version?</a></dd>
 
 <dd>
-<a href="#q22"><b>Q2.2. </b>I don't have permission to write to the <tt>rw0xxx\library</tt>
+<a href="#q22"><b>Q2.2. </b>I don't have permission to write to the <tt>rwXxxx\library</tt>
 directory. Is this fatal?</a></dd>
 
 <dd>
@@ -155,13 +155,13 @@ for a list), navigate to the <tt>bin/windows/windows-NT/base</tt>
 directory and collect the files you need. You will need at least the
 files
 <pre>
-      rw0xxxb1.zip rw0xxxb2.zip
-      rw0xxxh.zip (text help) or rw0xxxch.zip (Compiled HTML help)
+      rwXxxxb1.zip rwXxxxb2.zip
+      rwXxxxh.zip (text help) or rwXxxxch.zip (Compiled HTML help)
 </pre>
-and you may want <tt>rw0xxxw.zip</tt> (the HTML format help files) or
-<tt>rw0xxxwh.zip</tt> (the Windows help files), <tt>rw0xxxl.zip</tt>
+and you may want <tt>rwXxxxw.zip</tt> (the HTML format help files) or
+<tt>rwXxxxwh.zip</tt> (the Windows help files), <tt>rwXxxxl.zip</tt>
 (the LaTeX format help files, used for offline printing), or
-<tt>rw0xxxd.zip</tt> (the draft manuals, in PDF).
+<tt>rwXxxxd.zip</tt> (the draft manuals, in PDF).
 
 <p>
 Optionally, you can download the installer, <tt>rwinst.exe</tt>.
@@ -178,10 +178,10 @@ for rwinst.exe and navigate its wizard-like pages).  Alternatively,
 choose a location and unzip the zip files (with a tool that preserves
 long file names and the directory structure: we recommend the INFO-ZIP
 project's <tt>unzip</tt>). All the files will unpack into a directory
-called <tt>rw0xxx</tt>, for some `xxx'.
+called <tt>rwXxxx</tt>, for some `xxx'.
 
 <p>Choose a working directory for R. Make a shortcut to
-<tt>rw0xxx\bin\Rgui.exe</tt> on your desktop or somewhere on the <tt>Start
+<tt>rwXxxx\bin\Rgui.exe</tt> on your desktop or somewhere on the <tt>Start
 menu</tt> file tree. Right-click the shortcut, select
 <tt>Properties...</tt> and change the <tt>`Start in'</tt> field to
 your working directory.
@@ -233,11 +233,11 @@ offline=T)</tt>.</li>
 No, but you can set up a batch file using <tt>rterm.exe</tt>. A sample
 batch file might contain (as one line)
 <pre>
-path_to_R\bin\rterm.exe --vsize=10M --nsize=300k --no-restore --no-save < %1 > %1.out
+path_to_R\bin\rterm.exe --vsize=10M --nsize=500k --no-restore --no-save < %1 > %1.out
 </pre>
 
 <h3>
-1.7)&nbsp;<a NAME="q18"></a>Can I use <tt>rw0xxx</tt> with ESS and emacs?</h3>
+1.7)&nbsp;<a NAME="q18"></a>Can I use <tt>rwXxxx</tt> with ESS and emacs?</h3>
 
 <p>
 Yes. The latest versions of ESS (e.g. 5.1.11) come with support for
@@ -286,12 +286,14 @@ version?</h3>
 Yes, of course. The easy way is to see if a pre-compiled binary
 version of the package is available: look on CRAN at
 <tt>bin/windows/windows-NT/contrib</tt>.  If there is, download the
-zip file and unpack it in the <tt>rw0xxx\library</tt> directory, using
-<tt>unzip</tt> or similar.
+zip file and unpack it in the <tt>rwXxxx\library</tt> directory, using
+<tt>unzip</tt> or similar.  Perhaps even easier is to use the R
+function <tt>install.packages</tt>: check out its help page.
+
 
 <p>If there is not a binary version or that is not up-to-date or you
-prefer compiling from source, get <tt>rw0xxxsp.zip</tt> from the
-distribution (see Q1.1) and unpack it in <tt>rw0xxx</tt>. Then cd
+prefer compiling from source, get <tt>rwXxxxsp.zip</tt> from the
+distribution (see Q1.1) and unpack it in <tt>rwXxxx</tt>. Then cd
 <tt>src\gnuwin32</tt> and read <tt>README.packages</tt>. You will need
 to collect and install several tools to use this. Once you have done
 so, installation is easy: just run <tt>`make pkg-pkgname'</tt>.  To
@@ -300,7 +302,7 @@ check the package (run all the examples on its help pages) use
 
 <h3>
 2.2)&nbsp;<a NAME="q22"></a>I don't have permission to write to the
-<tt>rw0xxx\library</tt> directory. Is this fatal?</h3>
+<tt>rwXxxx\library</tt> directory. Is this fatal?</h3>
 
 <p>You can install packages anywhere and use the environment variable
 <tt>R_LIBS</tt> to point to the library location(s). You can also set
@@ -323,7 +325,7 @@ you launch <tt>Rgui/Rterm</tt>.  Under Windows NT you can use the control
 panel.  You can also set them on the command line, for example in the
 shortcut you could have
 <pre>
-path_to_R\bin\rgui.exe --vsize=10M --nsize=400k R_LIBS=e:/R/library
+path_to_R\bin\rgui.exe --vsize=10M R_LIBS=e:/R/library
 </pre>
 and you can set variables in a file <tt>.Renviron</tt> in the working
 directory or your home directory, for example
@@ -343,17 +345,18 @@ is simpler to install a private copy of R to do the building.
 2.3)&nbsp;<a NAME="q23"></a>The packages I installed do not appear in the
 HTML help system.</h3>
 
-HTML help only works for packages installed in <tt>rw0xxx\library</tt>.
+HTML help only works for packages installed in <tt>rwXxxx\library</tt>.
 
 <p>To update the HTML help files after you have installed a binary
 package, run at the R prompt
 <pre>
       > link.html.help()
 </pre>
-(The source-code installation does this automatically,
-and if you have that installed you can use (preferably)
+(Using <tt>install.packages()</tt> does this for you.  The source-code
+installation also does this automatically, and if you have that
+installed you can use (preferably)
 <pre>
-      cd rw0xxx\src\gnuwin32\help
+      cd rwXxxx\src\gnuwin32\help
       make indices
 </pre>
 instead.)
@@ -365,7 +368,7 @@ not found by the HTML help search system.</h3>
 The following conditions need to hold:
 <ul>
 <li>
-the package is installed in <tt>rw0xxx\library</tt>.</li>
+the package is installed in <tt>rwXxxx\library</tt>.</li>
 
 <li>
 the package contains a <tt>CONTENTS</tt> file in top-level directory
@@ -542,15 +545,15 @@ and make a debug version of your package by
 
 Then you can debug by
 <pre>
-      gdb /path/to/rw0xxx/bin/Rgui.exe
+      gdb /path/to/rwXxxx/bin/Rgui.exe
 </pre>
 
 However, note
 <ul>
 <li> <tt>gdb</tt> will only be able to find the source code if we run
      in the location where the source was compiled 
-     (<tt>rw0xxx/src/gnuwin32</tt> for the main system, 
-     <tt>rw0xxx/src/library/mypkg/src</tt> for a package), 
+     (<tt>rwXxxx/src/gnuwin32</tt> for the main system, 
+     <tt>rwXxxx/src/library/mypkg/src</tt> for a package), 
      unless told otherwise by the <tt>`directory'</tt> command. It is
      most convenient to set a list of code locations via 
      <tt>`directory'</tt> commands in the file <tt>.gdbinit</tt> in the
@@ -591,6 +594,11 @@ If you have an X server available on the PC, there is a version of
 (follow the links at <a
 href="http://sourceware.cygnus.com/cygwin">sourceware.cygnus.com/cygwin</a>)
 and provides a graphical user interface to <tt>gdb</tt>.
+Another (Windows-native) GUI for <tt>gdb</tt> is
+<a
+href="ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin/ports/">Insight</a>
+.
+
 </p>
 
 <h3>
@@ -638,7 +646,7 @@ console. (This <em>will</em> work with <tt>Rterm.exe</tt>.)  Use
 
 <hr WIDTH="100%">
 <address>
-Last edited 9 December 1999 by Brian Ripley
+Last edited 29 January 2000 by Brian Ripley
 <code><a href="mailto:ripley@stats.ox.ac.uk">ripley@stats.ox.ac.uk</a></code>
 </address>
 
