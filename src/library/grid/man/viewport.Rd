@@ -31,12 +31,15 @@ vpTree(parent, children)
   \item{default.units}{A string indicating the default units to use
     if \code{x}, \code{y}, \code{width}, or \code{height}
     are only given as numeric vectors.}  
-  \item{just}{A string vector specifying the justification of the viewport
+  \item{just}{A string or numeric
+    vector specifying the justification of the viewport
     relative to its (x, y) location.  If there are two values, the first
     value specifes horizontal justification and the second value specifies
-    vertical justification.  Possible values are: \code{"left"},
+    vertical justification.  Possible string values are: \code{"left"},
     \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"},
-    and \code{"top"}.}
+    and \code{"top"}.  For numeric values, 0 means left alignment
+    and 1 means right alignment.
+  }
   \item{gp}{An object of class \code{gpar}, typically the output
     from a call to the function \code{gpar}.  This is basically
     a list of graphical parameter settings.}

@@ -506,17 +506,23 @@ validDetails.rect <- function(x) {
       !is.unit(x$height))
     stop("x, y, width, and height must be units")
   valid.just(x$just)
+  if (!is.null(x$hjust))
+    x$hjust <- as.numeric(x$hjust)
+  if (!is.null(x$vjust))
+    x$vjust <- as.numeric(x$vjust)
   x
 }
 
 drawDetails.rect <- function(x, recording=TRUE) {
   grid.Call.graphics("L_rect", x$x, x$y, x$width, x$height,
-                     valid.just(x$just))
+                     resolveHJust(x$just, x$hjust),
+                     resolveVJust(x$just, x$vjust))
 }
 
 widthDetails.rect <- function(x) {
   bounds <- grid.Call("L_rectBounds", x$x, x$y, x$width, x$height,
-                      valid.just(x$just))
+                      resolveHJust(x$just, x$hjust),
+                      resolveVJust(x$just, x$vjust))
   if (is.null(bounds))
     unit(0, "inches")
   else
@@ -525,7 +531,8 @@ widthDetails.rect <- function(x) {
 
 heightDetails.rect <- function(x) {
   bounds <- grid.Call("L_rectBounds", x$x, x$y, x$width, x$height,
-                      valid.just(x$just))
+                      resolveHJust(x$just, x$hjust),
+                      resolveVJust(x$just, x$vjust))
   if (is.null(bounds))
     unit(0, "inches")
   else
@@ -534,7 +541,8 @@ heightDetails.rect <- function(x) {
 
 rectGrob <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
                      width=unit(1, "npc"), height=unit(1, "npc"),
-                     just="centre", default.units="npc",
+                     just="centre", hjust=NULL, vjust=NULL,
+                     default.units="npc",
                      name=NULL, gp=gpar(), vp=NULL) {
   if (!is.unit(x))
     x <- unit(x, default.units)
@@ -545,14 +553,17 @@ rectGrob <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
   if (!is.unit(height))
     height <- unit(height, default.units)
   grob(x=x, y=y, width=width, height=height, just=just,
+       hjust=hjust, vjust=vjust,
        name=name, gp=gp, vp=vp, cl="rect")
 }
 
 grid.rect <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
                       width=unit(1, "npc"), height=unit(1, "npc"),
-                      just="centre", default.units="npc",
+                     just="centre", hjust=NULL, vjust=NULL,
+                     default.units="npc",
                       name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
   rg <- rectGrob(x=x, y=y, width=width, height=height, just=just,
+                 hjust=hjust, vjust=vjust,
                  default.units=default.units,
                  name=name, gp=gp, vp=vp)
   if (draw)
@@ -564,7 +575,7 @@ grid.rect <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
 # TEXT primitive
 ######################################
 validDetails.text <- function(x) {
-  if (!is.expression(x$label))
+  if (!is.language(x$label))
     x$label <- as.character(x$label)
   if (!is.unit(x$x) ||
       !is.unit(x$y))
@@ -573,18 +584,26 @@ validDetails.text <- function(x) {
   if (!all(is.finite(x$rot)) || length(x$rot) == 0)
     stop("Invalid rot value")
   valid.just(x$just)
+  if (!is.null(x$hjust))
+    x$hjust <- as.numeric(x$hjust)
+  if (!is.null(x$vjust))
+    x$vjust <- as.numeric(x$vjust)
   x$check.overlap <- as.logical(x$check.overlap)
   x
 }
 
 drawDetails.text <- function(x, recording=TRUE) {
   grid.Call.graphics("L_text", x$label, x$x, x$y,
-                     valid.just(x$just), x$rot, x$check.overlap)
+                     resolveHJust(x$just, x$hjust),
+                     resolveVJust(x$just, x$vjust),
+                     x$rot, x$check.overlap)
 }
 
 widthDetails.text <- function(x) {
   bounds <- grid.Call("L_textBounds", x$label, x$x, x$y,
-                      valid.just(x$just), x$rot)
+                      resolveHJust(x$just, x$hjust),
+                      resolveVJust(x$just, x$vjust),
+                      x$rot)
   if (is.null(bounds))
     unit(0, "inches")
   else
@@ -593,7 +612,9 @@ widthDetails.text <- function(x) {
 
 heightDetails.text <- function(x) {
   bounds <- grid.Call("L_textBounds", x$label, x$x, x$y,
-                      valid.just(x$just), x$rot)
+                      resolveHJust(x$just, x$hjust),
+                      resolveVJust(x$just, x$vjust),
+                      x$rot)
   if (is.null(bounds))
     unit(0, "inches")
   else
@@ -601,23 +622,26 @@ heightDetails.text <- function(x) {
 }
 
 textGrob <- function(label, x=unit(0.5, "npc"), y=unit(0.5, "npc"),
-                     just="centre", rot=0, check.overlap=FALSE,
+                     just="centre", hjust=NULL, vjust=NULL,
+                     rot=0, check.overlap=FALSE,
                      default.units="npc",
                      name=NULL, gp=gpar(), vp=NULL) {
   if (!is.unit(x))
     x <- unit(x, default.units)
   if (!is.unit(y))
     y <- unit(y, default.units)
-  grob(label=label, x=x, y=y,
-       just=just, rot=rot, check.overlap=check.overlap,
+  grob(label=label, x=x, y=y, just=just, hjust=hjust, vjust=vjust,
+       rot=rot, check.overlap=check.overlap,
        name=name, gp=gp, vp=vp, cl="text")
 }
 
 grid.text <- function(label, x=unit(0.5, "npc"), y=unit(0.5, "npc"),
-                      just="centre", rot=0, check.overlap=FALSE,
+                      just="centre", hjust=NULL, vjust=NULL,
+                      rot=0, check.overlap=FALSE,
                       default.units="npc",
                       name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
-  tg <- textGrob(label=label, x=x, y=y, just=just, rot=rot,
+  tg <- textGrob(label=label, x=x, y=y, just=just,
+                 hjust=hjust, vjust=vjust, rot=rot,
                  check.overlap=check.overlap,
                  default.units=default.units,
                  name=name, gp=gp, vp=vp)

@@ -8,7 +8,7 @@
   number of lines of text.
 }
 \usage{
-plotViewport(margins, ...)
+plotViewport(margins=c(5.1, 4.1, 4.1, 2.1), ...)
 }
 \arguments{
   \item{margins}{ A numeric vector interpreted in the same way

@@ -28,7 +28,11 @@
  * is not L_BOTTOM or L_TOP (i.e., meaningless).  Ditto for checking
  * vertical justification.
  */
-double justifyX(double x, double width, int hjust) {
+double justifyX(double x, double width, double hjust) {
+    return x - width*hjust;
+    /*
+     * From when hjust and vjust were enums
+     *
     double result = 0;
     switch (hjust) {
     case L_LEFT: 
@@ -43,9 +47,14 @@ double justifyX(double x, double width, int hjust) {
 	break;
     }
     return result;
+    */
 }
 
-double justifyY(double y, double height, int vjust) {
+double justifyY(double y, double height, double vjust) {
+    return y - height*vjust;
+    /*
+     * From when hjust and vjust were enums
+     *
     double result = 0;
     switch (vjust) {
     case L_BOTTOM:  
@@ -60,6 +69,7 @@ double justifyY(double y, double height, int vjust) {
 	break;
     }
     return result;
+    */
 }
 
 /* Convert enum justification into 0..1 justification */
@@ -84,9 +94,13 @@ double convertJust(int just) {
 
 /* Return the amount of justification required 
  */
-void justification(double width, double height, int hjust, int vjust,
+void justification(double width, double height, double hjust, double vjust,
 		   double *hadj, double *vadj)
 {
+    *hadj = -width*hjust;
+    *vadj = -height*vjust;
+    /*
+     * From when hjust and vjust were enums
     switch (hjust) {
     case L_LEFT: 
 	*hadj = 0;
@@ -111,4 +125,5 @@ void justification(double width, double height, int hjust, int vjust,
 	*vadj = -height/2;
 	break;
     }
+     */
 }

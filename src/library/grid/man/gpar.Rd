@@ -35,6 +35,7 @@ get.gpar(names = NULL)
     alpha \tab Alpha channel for transparency \cr
     lty \tab Line type \cr
     lwd \tab Line width \cr
+    lex \tab Multiplier applied to line width \cr
     lineend \tab Line end style (round, butt, square) \cr
     linejoin \tab Line join style (round, mitre, bevel) \cr
     linemitre \tab Line mitre limit (number greater than 1) \cr
@@ -57,6 +58,8 @@ get.gpar(names = NULL)
   The \code{cex} setting is cumulative;  if a viewport is pushed
   with a \code{cex} of 0.5 then another viewport is pushed with a
   \code{cex} of 0.5, the effective \code{cex} is 0.25.
+
+  The \code{alpha} and \code{lex} settings are also cumulative.
   
   Changes to the \code{fontfamily} may be ignored by some devices,
   but is supported by PostScript, PDF, X11, Windows, and Quartz.  The
@@ -85,6 +88,8 @@ get.gpar(names = NULL)
   not always make sense -- for example, viewports will only take
   notice of the first parameter value.)
 
+  The \code{gamma} parameter is deprecated.
+  
   \code{get.gpar()} returns all current graphical parameter settings.
 }
 \value{

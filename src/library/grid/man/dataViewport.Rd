@@ -14,7 +14,10 @@ dataViewport(xData = NULL, yData = NULL, xscale = NULL,
   \item{yData}{ A numeric vector of data. }
   \item{xscale}{ A numeric vector (length 2). }
   \item{yscale}{ A numeric vector (length 2). }
-  \item{extension}{ A numeric. }
+  \item{extension}{ A numeric.  If length greater than 1, then
+    first value is used to extend the xscale and second value
+    is used to extend the yscale.
+  }
   \item{\dots}{ All other arguments will be passed to a call to
     the \code{viewport()} function. }
 }

@@ -338,7 +338,7 @@ explodePath <- function(path) {
 #############
 
 # Create a viewport with margins given in number of lines
-plotViewport <- function(margins, ...) {
+plotViewport <- function(margins=c(5.1, 4.1, 4.1, 2.1), ...) {
   margins <- rep(as.numeric(margins), length.out=4)
   viewport(x=unit(margins[2], "lines"),
            width=unit(1, "npc") - unit(sum(margins[c(2,4)]), "lines"),
@@ -353,15 +353,16 @@ plotViewport <- function(margins, ...) {
 # If yscale not specified then determine from y
 dataViewport <- function(xData=NULL, yData=NULL, xscale=NULL, yscale=NULL,
                          extension=0.05, ...) {
+  extension <- rep(extension, length.out=2)
   if (is.null(xscale)) {
     if (is.null(xData))
       stop("Must specify at least one of x or xscale")
-    xscale <- range(xData) + c(-1, 1)*diff(range(xData))*extension
+    xscale <- range(xData) + c(-1, 1)*diff(range(xData))*extension[1]
   }
   if (is.null(yscale)) {
     if (is.null(yData))
       stop("Must specify at least one of y or yscale")
-    yscale <- range(yData) + c(-1, 1)*diff(range(yData))*extension
+    yscale <- range(yData) + c(-1, 1)*diff(range(yData))*extension[2]
   }
   viewport(xscale=xscale, yscale=yscale, ...)
 }

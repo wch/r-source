@@ -203,8 +203,8 @@ typedef struct {
     SEXP y;
     SEXP width;
     SEXP height;
-    LJustification hjust;
-    LJustification vjust;
+    double hjust;
+    double vjust;
 } LViewportLocation;
 
 /* Components of a viewport which provide coordinate information
@@ -269,8 +269,8 @@ SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn,
 	      SEXP angle, SEXP length, SEXP ends, SEXP type);
 SEXP L_polygon(SEXP x, SEXP y, SEXP index);
 SEXP L_circle(SEXP x, SEXP y, SEXP r);
-SEXP L_rect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP just); 
-SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP just, 
+SEXP L_rect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust); 
+SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust, 
 	    SEXP rot, SEXP checkOverlap);
 SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size);
 SEXP L_pretty(SEXP scale);
@@ -389,13 +389,13 @@ double transformWidthHeightFromINCHES(double value, int unit,
 				      GEDevDesc *dd);
 
 /* From just.c */
-double justifyX(double x, double width, int hjust);
+double justifyX(double x, double width, double hjust);
 
-double justifyY(double y, double height, int vjust);
+double justifyY(double y, double height, double vjust);
 
 double convertJust(int vjust);
 
-void justification(double width, double height, int hjust, int vjust,
+void justification(double width, double height, double hjust, double vjust,
 		   double *hadj, double *vadj);
 
 /* From util.c */
@@ -488,9 +488,9 @@ double viewportYScaleMin(SEXP vp);
 
 double viewportYScaleMax(SEXP vp);
 
-int viewportHJust(SEXP v);
+double viewportHJust(SEXP v);
 
-int viewportVJust(SEXP vp);
+double viewportVJust(SEXP vp);
 
 SEXP viewportLayout(SEXP vp);
 

@@ -7,12 +7,12 @@
 }
 \usage{
 grid.text(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"), 
-          just = "centre", rot = 0,
+          just = "centre", hjust = NULL, vjust = NULL, rot = 0,
           check.overlap = FALSE, default.units = "npc",
           name = NULL, gp = gpar(), draw = TRUE, vp = NULL)
 
 textGrob(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"), 
-          just = "centre", rot = 0,
+          just = "centre", hjust = NULL, vjust = NULL, rot = 0,
           check.overlap = FALSE, default.units = "npc",
           name = NULL, gp = gpar(), vp = NULL)
 }
@@ -20,10 +20,18 @@ textGrob(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
   \item{label}{A vector of strings or expressions to draw.}
   \item{x}{A numeric vector or unit object specifying x-values.}
   \item{y}{A numeric vector or unit object specifying y-values.}
-  \item{just}{The justification of the text about its (x, y)
-    location.  If two values are given, the first specifies
-    horizontal justification and the second specifies vertical
-    justification.}
+  \item{just}{The justification of the text 
+    relative to its (x, y) location.  If there are two values, the first
+    value specifes horizontal justification and the second value specifies
+    vertical justification.  Possible string values are: \code{"left"},
+    \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"},
+    and \code{"top"}.  For numeric values, 0 means left alignment
+    and 1 means right alignment.
+  }
+  \item{hjust}{A numeric vector specifying horizontal justification.
+    If specified, overrides the \code{just} setting.}
+  \item{vjust}{A numeric vector specifying vertical justification.
+    If specified, overrides the \code{just} setting.}
   \item{rot}{The angle to rotate the text.}
   \item{check.overlap}{A logical value to indicate whether to
     check for and omit overlapping text.}

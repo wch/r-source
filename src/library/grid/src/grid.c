@@ -1837,7 +1837,8 @@ SEXP L_circleBounds(SEXP x, SEXP y, SEXP r)
 /* We are assuming here that the R code has checked that 
  * x, y, w, and h are all unit objects and that vp is a viewport
  */
-static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP just, Rboolean draw) 
+static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h, 
+		     SEXP hjust, SEXP vjust, Rboolean draw) 
 {
     double xx, yy, ww, hh;
     double vpWidthCM, vpHeightCM;
@@ -1893,8 +1894,8 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP just, Rboolean draw)
 	 * Otherwise we have to draw a polygon equivalent.
 	 */
 	if (rotationAngle == 0) {
-	    xx = justifyX(xx, ww, INTEGER(just)[0]);
-	    yy = justifyY(yy, hh, INTEGER(just)[1]);
+	    xx = justifyX(xx, ww, REAL(hjust)[i % LENGTH(hjust)]);
+	    yy = justifyY(yy, hh, REAL(vjust)[i % LENGTH(vjust)]);
 	    if (draw) {
 		/* The graphics engine only takes device coordinates
 		 */
@@ -1937,7 +1938,9 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP just, Rboolean draw)
 	    SEXP www, hhh;
 	    int tmpcol;
 	    /* Find bottom-left location */
-	    justification(ww, hh, INTEGER(just)[0], INTEGER(just)[1], 
+	    justification(ww, hh, 
+			  REAL(hjust)[i % LENGTH(hjust)], 
+			  REAL(vjust)[i % LENGTH(vjust)], 
 			  &xadj, &yadj);
 	    www = unit(xadj, L_INCHES);
 	    hhh = unit(yadj, L_INCHES);
@@ -2052,27 +2055,26 @@ static SEXP gridRect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP just, Rboolean draw)
     return result;
 }
 
-SEXP L_rect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP just) 
+SEXP L_rect(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust) 
 {
-    gridRect(x, y, w, h, just, TRUE);
+    gridRect(x, y, w, h, hjust, vjust, TRUE);
     return R_NilValue;    
 }
 
-SEXP L_rectBounds(SEXP x, SEXP y, SEXP w, SEXP h, SEXP just) 
+SEXP L_rectBounds(SEXP x, SEXP y, SEXP w, SEXP h, SEXP hjust, SEXP vjust) 
 {
-    return gridRect(x, y, w, h, just, FALSE);
+    return gridRect(x, y, w, h, hjust, vjust, FALSE);
 }
 
 /*
  * Code to draw OR size text
  * Combined to avoid code replication
  */
-static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP just, 
+static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust, 
 		     SEXP rot, SEXP checkOverlap, Rboolean draw)
 {
     int i, nx, ny;
     double *xx, *yy;
-    double hjust, vjust;
     double vpWidthCM, vpHeightCM;
     double rotationAngle;
     LViewportContext vpc;
@@ -2106,8 +2108,6 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP just,
     ny = unitLength(y);
     if (ny > nx) 
 	nx = ny;
-    hjust = convertJust(INTEGER(just)[0]);
-    vjust = convertJust(INTEGER(just)[1]);
     vmax = vmaxget();
     xx = (double *) R_alloc(nx, sizeof(double));
     yy = (double *) R_alloc(nx, sizeof(double));
@@ -2150,7 +2150,8 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP just,
 	    if (overlapChecking || !draw) {
 		int j = 0;
 		textRect(xx[i], yy[i], txt, i, &gc,
-			 hjust, vjust, 
+			 REAL(hjust)[i % LENGTH(hjust)], 
+			 REAL(vjust)[i % LENGTH(vjust)], 
 			 /*
 			  * When calculating bounding rect for text
 			  * only consider rotation of text within 
@@ -2177,14 +2178,16 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP just,
 		    if (isExpression(txt))
 			GEMathText(xx[i], yy[i],
 				   VECTOR_ELT(txt, i % LENGTH(txt)),
-				   hjust, vjust, 
+				   REAL(hjust)[i % LENGTH(hjust)], 
+				   REAL(vjust)[i % LENGTH(vjust)], 
 				   numeric(rot, i % LENGTH(rot)) + 
 				   rotationAngle, 
 				   &gc, dd);
 		    else
 			GEText(xx[i], yy[i], 
 			       CHAR(STRING_ELT(txt, i % LENGTH(txt))), 
-			       hjust, vjust, 
+			       REAL(hjust)[i % LENGTH(hjust)], 
+			       REAL(vjust)[i % LENGTH(vjust)], 
 			       numeric(rot, i % LENGTH(rot)) + 
 			       rotationAngle, 
 			       &gc, dd);
@@ -2236,10 +2239,10 @@ static SEXP gridText(SEXP label, SEXP x, SEXP y, SEXP just,
     return result;
 }
 
-SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP just, 
+SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP hjust, SEXP vjust, 
 	    SEXP rot, SEXP checkOverlap)
 {
-    gridText(label, x, y, just, rot, checkOverlap, TRUE);
+    gridText(label, x, y, hjust, vjust, rot, checkOverlap, TRUE);
     return R_NilValue;    
 }
 
@@ -2252,11 +2255,12 @@ SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP just,
  *
  * Return NULL if no text to draw;  R code will generate unit from that
  */
-SEXP L_textBounds(SEXP label, SEXP x, SEXP y, SEXP just, SEXP rot)
+SEXP L_textBounds(SEXP label, SEXP x, SEXP y, 
+		  SEXP hjust, SEXP vjust, SEXP rot)
 {
     SEXP checkOverlap = allocVector(LGLSXP, 1);
     LOGICAL(checkOverlap)[0] = FALSE;
-    return gridText(label, x, y, just, rot, checkOverlap, FALSE);
+    return gridText(label, x, y, hjust, vjust, rot, checkOverlap, FALSE);
 }
 
 SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)

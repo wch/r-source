@@ -114,6 +114,30 @@ Changes from grid_2.0.1 to grid_2.1.0:
 
     This (along with cex) provides support for "zooming" a grid scene.
 
+14. grid.text() now handles any language object as mathematical
+    annotation (instead of just expressions).  For example ...
+
+      grid.text(call("sin", pi))
+ 
+15. plotViewport() has default value for "margins" argument (that match
+    the default value for par(mar)).
+
+16. The "extension" argument to dataViewport() can now be vector, 
+    in which case the first value is used to extend the xscale and
+    the second value is used to extend the y scale.
+    (suggested by Ross Ihaka).
+
+17. All "just" arguments (for viewports, layouts, rectangles, text)
+    can now be numeric values (typically between 0 [left] and 1 [right])
+    as well as character values ("left", "right", ...).
+
+    For rectangles and text, there are additional "hjust" and "vjust"
+    arguments which allow numeric vectors of justification in
+    each direction (e.g., so that several pieces of text can have 
+    different justifications).  If these are specified, they
+    override the "just" argument.
+    (suggested by Ross Ihaka)
+
 
 Changes from grid_2.0.0 to grid_2.0.1:
 ------------------------------------

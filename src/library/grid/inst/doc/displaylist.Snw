@@ -84,14 +84,14 @@ grid.rect(width=0.5, height=0.5, gp=gpar(lwd=3), name="gr")
 
 <<ex1, echo=FALSE, fig=TRUE, width=4, height=3, include=FALSE>>=
 <<guts1>>
-grid.rect(w=0.99, h=0.99, gp=gpar(lty="dashed"))
+grid.rect(width=0.99, height=0.99, gp=gpar(lty="dashed"))
 
 @
 \includegraphics[width=4in, height=3in]{displaylist-ex1}
 
 <<ex2, echo=FALSE, fig=TRUE, width=4, height=3, include=FALSE>>=
 grid.rect(width=0.5, height=0.5, gp=gpar(col="red", lwd=3))
-grid.rect(w=0.99, h=0.99, gp=gpar(lty="dashed"))
+grid.rect(width=0.99, height=0.99, gp=gpar(lty="dashed"))
 
 <<eval=FALSE>>=
 grid.edit("gr", gp=gpar(col="red", lwd=3))
