@@ -78,3 +78,70 @@ unlink("test.dat")
 tmp <- array(list(3), c(2, 3))
 tmp[[2, 3]] <- "fred"
 all.equal(t(tmp), aperm(tmp))
+
+## PR 860 (Context problem with ... and rbind) Prof Brian D Ripley, 2001-03-03,
+f <- function(x, ...)
+{
+   g <- function(x, ...) x
+   rbind(numeric(), g(x, ...))
+}
+f(1:3)
+## Error in 1.2.2
+f <- function(x, ...) h(g(x, ...))
+g <- function(x, ...) x
+h <- function(...)substitute(list(...))
+f(1)
+## Error in 1.2.2
+substitute(list(...))
+## Error in 1.2.2
+
+
+## Martin Maechler, 2001-03-07 [1.2.2 and in parts earlier]
+tf <- tempfile()
+cat(1:3,"\n", file = tf)
+for(line in list(4:6, "", 7:9)) cat(line,"\n", file = tf, append = TRUE)
+
+count.fields(tf) # 3 3 3 : ok {blank line skipped}
+z <- scan(tf, what=rep(list(""),3), nmax = 3)
+all(sapply(z, length) == 3)
+## FALSE in 1.2.2
+z <- as.data.frame(scan(tf, what=rep(list(""),3), n=9))
+dim(z)
+## should be 3 3.  Was 2 3 in 1.2.2.
+read.table(tf)
+## gave error in 1.2.2
+unlink(tf)
+
+## PR 870 (as.numeric and NAs)  Harald Fekjær, 2001-03-08,
+is.na(as.numeric(" "))
+is.na(as.integer(" "))
+is.na(as.complex(" "))
+## all false in 1.2.2
+
+## PR 871 (deparsing of attribute names) Harald Fekjær, 2001-03-08,
+midl <- 4
+attr(midl,"Object created") <- date()
+deparse(midl)
+dump("midl", "midl.R")
+source("midl.R") ## syntax error in 1.2.2
+unlink("midl.R")
+
+## PR 872 (surprising behavior of match.arg()) Setzer Woodrow, 2001-03-08,
+fun1 <- function(x, A=c("power","constant")) {
+  arg <- match.arg(A)
+  formals()
+}
+topfun <- function(x, Fun=fun1) {
+  a1 <- fun1(x)
+  print(a1)
+  a2 <- Fun(x,A="power")
+  stopifnot(all.equal(a1, a2))
+  print(a2)
+}
+topfun(2, fun1)
+## a1 printed without defaults in 1.2.2
+
+## PR 873 (long formulas in terms()) Jerome Asselin, 2001-03-08,
+form <- cbind(log(inflowd1),log(inflowd2),log(inflowd3),
+    log(inflowd4),log(inflowd5),log(inflowd6)) ~ precip*I(Tmax^2)
+terms(form) # error in 1.2.2

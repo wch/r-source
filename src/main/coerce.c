@@ -162,7 +162,7 @@ int IntegerFromString(SEXP x, int *warn)
 {
     double xdouble;
     char *endp;
-    if (x != R_NaString) {
+    if (x != R_NaString && !isBlankString(CHAR(x))) {
 	xdouble = strtod(CHAR(x), &endp);
 	if (isBlankString(endp)) {
 	    if (xdouble > INT_MAX) {
@@ -208,7 +208,7 @@ double RealFromString(SEXP x, int *warn)
 {
     double xdouble;
     char *endp;
-    if (x != R_NaString) {
+    if (x != R_NaString && !isBlankString(CHAR(x))) {
 	xdouble = strtod(CHAR(x), &endp);
 	if (isBlankString(endp))
 	    return xdouble;
@@ -266,7 +266,7 @@ Rcomplex ComplexFromString(SEXP x, int *warn)
     Rcomplex z;
     char *endp = CHAR(x);;
     z.r = z.i = NA_REAL;
-    if (x != R_NaString) {
+    if (x != R_NaString && !isBlankString(endp)) {
 	xr = strtod(endp, &endp);
 	if (isBlankString(endp)) {
 	    z.r = xr;
@@ -1749,10 +1749,12 @@ SEXP substituteList(SEXP el, SEXP rho)
     if (isNull(el))
 	return el;
     if (CAR(el) == R_DotsSymbol) {
-	h = findVar(CAR(el), rho);
+	h = findVarInFrame(rho, CAR(el));
 	if (h == R_NilValue)
 	    return substituteList(CDR(el), rho);
 	if (TYPEOF(h) != DOTSXP) {
+	    if (h == R_UnboundValue)
+		return el;
 	    if (h == R_MissingArg)
 		return substituteList(CDR(el), rho);
 	    error("... used in an incorrect context");

@@ -72,7 +72,7 @@ summary(data.frame(x))
 ## Comments:
 ## All entries show all 3 digits after the decimal point now.
 
-## Chong Gu 2000-Feb-16.  step on binomials
+## Chong Gu 2001-Feb-16.  step on binomials
 "detg1" <-
 structure(list(Temp = structure(c(2, 1, 2, 1, 2, 1, 2, 1, 2,
 1, 2, 1), .Label = c("High", "Low"), class = "factor"), M.user = structure(c(1,
@@ -136,7 +136,7 @@ gofX.df<-
 
 gofX.manova <- manova(formula = cbind(A, B, C, D) ~ groups, data = gofX.df)
 try(summary(gofX.manova))
-## should fail with error message
+## should fail with an error message `residuals have rank 3 < 4'
 
 ## F. Tusell 2001-03-07.  printing kernels.
 library(ts)
