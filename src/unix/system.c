@@ -17,6 +17,92 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+/*
+ *  SYSTEM DEPENDENT CODE
+ *
+ *  This source file contains the platform dependent code for
+ *  the Unix (reference) port of R.
+ *
+ *  The first group of functions is concerned with reading and
+ *  writing to the system console.
+ *
+ *    int   R_ReadConsole(char *prompt, char *buf, int buflen, int hist)
+ *
+ *  This function prints the given prompt at the console and then
+ *  does a gets(3)-like operation, transfering up to "buflen" characters
+ *  into the buffer "buf".  The last two characters are set to "\n\0"
+ *  to preserve sanity.  If "hist" is non-zero, then the line is added
+ *  to any command history which is being maintained.  Note that this
+ *  is one natural place from which to run an event loop.
+ *
+ *    void  R_WriteConsole(char *buf, int buflen)
+ *
+ *  This function writes the given buffer out to the console.  No
+ *  special actions are required.  Under Unix the characters are
+ *  just appended to stdout.
+ *
+ *    void  R_ResetConsole(void)
+ *
+ *  This function is called when the system is reset after an error.
+ *  It probably isn't really needed.
+ *
+ *    void  R_FlushConsole(void)
+ *
+ *  This called to flush any output to the system console.  Under Unix
+ *  this is just fflush(stdout).  Other systems may not need this.
+ *
+ *    void  R_ClearerrConsole(void)
+ *
+ *  This function clears any errors associated with reading from the
+ *  console.  In Unix is is used to clear any EOF condition associated
+ *  with stdin.
+ *  
+ *    void  R_Suicide(char *msg)
+ *
+ *  This function displays the given message and the causes R to
+ *  die immediately.  It is used for non-recoverable errors such as
+ *  not having enough memory to launch etc.  The phrase "dialog box"
+ *  springs to mind for non-unix platforms.
+ *
+ *    void  R_Busy(int which)
+ *
+ *  This function invokes actions (such as change of cursor) when
+ *  R embarks on an extended computation (which=1) and when such a
+ *  state terminates (which=0).
+ *
+ *    void  R_CleanUp(int ask)
+ *
+ *  This function invokes any actions which occur at system termination.
+ *  
+ *    char* R_ExpandFileName(char *s)
+ *
+ *  This is a utility function which can be used to expand special
+ *  characters in file names.  In Unix it's sole function is to expand
+ *  and "~"s which occur in filenames (and then only when the readline
+ *  library is available.  The minimal action is to return the argument
+ *  unaltered.
+ *  
+ *    void  R_InitialData(void)
+ *    FILE* R_OpenInitFile(void)
+ *    FILE* R_OpenLibraryFile(char *file)
+ *    FILE* R_OpenSysInitFile(void)
+ *  
+ *  The following two functions save and restore the user's global
+ *  environment.  The system specific aspect of this what files
+ *  are used for this.
+ *
+ *    void  R_RestoreGlobalEnv(void)
+ *    void  R_SaveGlobalEnv(void)
+ *  
+ *  Platform dependent functions.
+ *
+ *    SEXP  do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
+ *    SEXP  do_machine(SEXP call, SEXP op, SEXP args, SEXP rho)
+ *    SEXP  do_proctime(SEXP call, SEXP op, SEXP args, SEXP rho)
+ *    SEXP  do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
+ *    SEXP  do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
+ */
+
 #include "Defn.h"
 #include "Fileio.h"
 
@@ -25,7 +111,10 @@
 #include <readline/history.h>
 #endif
 
-	/*--- I / O -- S u p p o r t -- C o d e ---*/
+static int UsingReadline = 1;
+static int DefaultSaveAction = 3;
+
+	/*--- I/O Support Code ---*/
 
 	/* These routines provide hooks for supporting console */
 	/* I/O.	 Under raw Unix these routines simply provide a */
@@ -35,8 +124,6 @@
 
 
 	/* Fill a text buffer with user typed console input. */
-
-static int R_UsingReadline = 1;
 
 int R_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
@@ -51,7 +138,7 @@ int R_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
 		return 1;
 	}
 #ifdef HAVE_LIBREADLINE
-	else if(R_UsingReadline) {
+	else if(UsingReadline) {
 		rline = readline(prompt);
 		if (rline) {
 			if (strlen(rline) && addtohistory)
@@ -67,10 +154,10 @@ int R_ReadConsole(char *prompt, char *buf, int len, int addtohistory)
 	}
 #endif
 	else {
+		if(!R_Quiet) fputs(prompt, stdout);
 		if(fgets(buf, len, stdin) == NULL)
 			return 0;
-		else
-			return 1;
+		else return 1;
 	}
 }
 
@@ -83,7 +170,7 @@ void R_WriteConsole(char *buf, int len)
 }
 
 
-	/* Indicate that input is redirected from the console */
+	/* Indicate that input is coming from the console */
 
 void R_ResetConsole()
 {
@@ -91,8 +178,7 @@ void R_ResetConsole()
 }
 
 
-	/* This is stdio support to ensure that console file buffers */
-	/* are flushed. */
+	/* Stdio support to ensure the console file buffer is flushed */
 
 void R_FlushConsole()
 {
@@ -101,8 +187,7 @@ void R_FlushConsole()
 }
 
 
-	/* This is stdio support to reset if the used types EOF */
-	/* on the console. */
+	/* Reset stdin if the user types EOF on the console. */
 
 void R_ClearerrConsole()
 {
@@ -111,9 +196,8 @@ void R_ClearerrConsole()
 }
 
 
-	/*--- F i l e	 H an d l i n g	   C o d e ---*/
+	/*--- File Handling Code ---*/
 
-	/* Note: Readline has code to do expansion of ~ */
 
 #ifdef HAVE_LIBREADLINE
 char *tilde_expand(char*);
@@ -169,7 +253,7 @@ FILE *R_OpenInitFile(void)
 }
 
 
-	/*--- I n i t i a l i z a t i o n    C o d e ---*/
+	/*--- Initialization Code ---*/
 
 #ifdef HAVE_TIMES
 #include <sys/times.h>
@@ -198,8 +282,20 @@ int main(int ac, char **av)
 
 	while(--ac) {
 	 if(**++av == '-') {
-		switch((*av)[1]) {
-		case 'v':
+		if(!strcmp(*av, "-save")) {
+			DefaultSaveAction = 3;
+		}
+		else if(!strcmp(*av, "-nosave")) {
+			DefaultSaveAction = 2;
+		}
+		else if(!strcmp(*av, "-noreadline")) {
+			UsingReadline = 0;
+		}
+		else if(!strcmp(*av, "-quiet") || !strcmp(*av, "-q")) {
+			R_Quiet = 1;
+			break;
+		}
+		else if((*av)[1] == 'v') {
 			if((*av)[2] == '\0') {
 				ac--; av++; p = *av;
 			}
@@ -210,8 +306,8 @@ int main(int ac, char **av)
 			 REprintf("warning: invalid vector heap size ignored\n");
 			else
 			  R_VSize = value * 1048576; /* 1 MByte := 2^20 Bytes*/
-			break;
-		case 'n':
+		}
+		else if((*av)[1] == 'n') {
 			if((*av)[2] == '\0') {
 				ac--; av++; p = *av;
 			}
@@ -222,11 +318,8 @@ int main(int ac, char **av)
 			 REprintf("warning: invalid language heap size ignored\n");
 			else
 			 R_NSize = value;
-			break;
-		case 'q':
-			R_Quiet = 1;
-			break;
-		default:
+		}
+		else {
 			REprintf("warning: unknown option %s\n", *av);
 			break;
 		}
@@ -253,7 +346,7 @@ int main(int ac, char **av)
 #endif
 
 #ifdef HAVE_LIBREADLINE
-	if(isatty(0))
+	if(isatty(0) && UsingReadline)
 		read_history(".Rhistory");
 #endif
 	mainloop();
@@ -270,6 +363,15 @@ void R_InitialData(void)
 	R_RestoreGlobalEnv();
 }
 
+	/* R_CleanUp is invoked at the end of the session to give */
+	/* the user the option of saving their data.  If ask=1 the */
+	/* user is asked their preference, if ask=2 the answer is */
+	/* assumed to be "no" and if ask=3 the answer is assumed to */
+	/* be "yes".  When R is being used non-interactively, and */
+	/* ask=1, the value is changed to 3.  The philosophy is */
+	/* that saving unwanted data is less bad than non saving */
+	/* data that is wanted. */
+
 void R_CleanUp(int ask)
 {
 	char buf[128];
@@ -280,7 +382,7 @@ qask:
 		R_ClearerrConsole();
 		R_FlushConsole();
 		if(!isatty(0) && ask==1)
-			ask = 3;
+			ask = DefaultSaveAction;
 
 		if( ask==1 ) {
 			R_ReadConsole("Save workspace image? [y/n/c]: ",
@@ -296,7 +398,7 @@ qask:
 		case 'Y':
 			R_SaveGlobalEnv();
 #ifdef HAVE_LIBREADLINE
-			if(isatty(0))
+			if(isatty(0) && UsingReadline)
 				write_history(".Rhistory");
 #endif
 			break;
@@ -351,7 +453,9 @@ void R_RestoreGlobalEnv(void)
 	FRAME(R_GlobalEnv) = R_LoadFromFile(fp);
 }
 
-	/*--- P l a t f o r m -- D e p e n d e n t -- F u n c t i o n s ---*/
+
+	/*--- Platform Dependent Functions ---*/
+
 
 #ifdef HAVE_TIMES
 #ifndef CLK_TCK
@@ -460,7 +564,7 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/*NOTREACHED*/
 }
 
-void suicide(char *s)
+void R_Suicide(char *s)
 {
 	REprintf("Fatal error: %s\n", s);
 	R_CleanUp(2);
