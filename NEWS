@@ -11,13 +11,13 @@
 
 NEW FEATURES
 
-    o   Enhancements to mathematical annotation:
+    o   Enhancements to mathematical annotation of plots:
 
 	- expressions involving dot(<something>) now produce a dot accent
 	  above the <something> (initial patch from Ben Bolker).  
 
 	- within an expression, the symbol partialdiff is now converted 
-	  to a partial differential symbol (greek delta)
+	  to a partial differential symbol (greek delta).
 
 
 BUG FIXES
@@ -36,6 +36,9 @@ BUG FIXES
 
     o   On Unix, R_PAPERSIZE was set to '' instead of 'a4' as default on
 	systems without paperconf.
+
+    o	Under GNOME, capabilities() now reports correctly that X11, png
+	and jpeg are available (if they are under X11).
 
 
 
