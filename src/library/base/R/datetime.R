@@ -422,7 +422,7 @@ seq.POSIXt <-
         to <- unclass(as.POSIXct(to))
         incr <- (to - from)/length.out
         res <- seq.default(from, to, incr)
-        return(structure(res, class=c("POSIXt", "POSIXct")))
+        return(structure(res, class = c("POSIXt", "POSIXct")))
     }
 
     if (length(by) != 1) stop("`by' must be of length 1")
@@ -457,7 +457,7 @@ seq.POSIXt <-
         r1 <- as.POSIXlt(from)
         if(valid == 7) {
             if(missing(to)) {
-                yr <- seq(r1$year, by=by, length=length.out)
+                yr <- seq(r1$year, by = by, length = length.out)
             } else {
                 to <- as.POSIXlt(to)
                 yr <- seq(r1$year, to$year, by)
@@ -465,7 +465,7 @@ seq.POSIXt <-
             r1$year <- yr
         } else {
             if(missing(to)) {
-                mon <- seq(r1$mon, by=by, length=length.out)
+                mon <- seq(r1$mon, by = by, length = length.out)
             } else {
                 to <- as.POSIXlt(to)
                 mon <- seq(r1$mon, 12*(to$year - r1$year) + to$mon, by)
@@ -494,17 +494,17 @@ cut.POSIXt <-
         if(is.na(valid)) stop("invalid specification of `breaks'")
         start <- as.POSIXlt(min(x))
         incr <- 1
-        if(valid > 1) { start$sec <- 0; incr <- 59.99}
-        if(valid > 2) { start$min <- 0; incr <- 3600-1}
-        if(valid > 3) {start$hour <- 0; incr <- 86400-1}
+        if(valid > 1) { start$sec <- 0; incr <- 59.99 }
+        if(valid > 2) { start$min <- 0; incr <- 3600 - 1 }
+        if(valid > 3) { start$hour <- 0; incr <- 86400 - 1 }
         if(valid == 5) {
             start$mday <- start$mday - start$wday
             if(start.on.monday)
                 start$mday <- start$mday + ifelse(start$wday > 0, 1, -6)
             incr <- 7*86400
         }
-        if(valid == 6) {start$mday <- 1; incr <- 31*86400}
-        if(valid == 7) {start$mon <- 0; incr <- 366*86400}
+        if(valid == 6) { start$mday <- 1; incr <- 31*86400 }
+        if(valid == 7) { start$mon <- 0; incr <- 366*86400 }
         breaks <- seq(start, max(x) + incr, breaks)
         breaks <- breaks[1:(1+max(which(breaks < max(x))))]
     } else stop("invalid specification of `breaks'")
@@ -518,12 +518,12 @@ julian <- function(x, ...) UseMethod("julian")
 julian.POSIXt <- function(x, origin = as.POSIXct("1970-01-01", tz="GMT"))
 {
     if(length(origin) != 1) stop("`origin' must be of length one")
-    res <- difftime(as.POSIXct(x), origin, units="days")
-    structure(res, "origin"=origin)
+    res <- difftime(as.POSIXct(x), origin, units = "days")
+    structure(res, "origin" = origin)
 }
 
-weekday <- function(x, abbreviate) UseMethod("weekday")
-weekday.POSIXt <- function(x, abbreviate = FALSE)
+weekdays <- function(x, abbreviate) UseMethod("weekdays")
+weekdays.POSIXt <- function(x, abbreviate = FALSE)
 {
     format(x, ifelse(abbreviate, "%a", "%A"))
 }
@@ -538,7 +538,7 @@ quarters <- function(x, abbreviate) UseMethod("quarters")
 quarters.POSIXt <- function(x)
 {
     x <- (as.POSIXlt(x)$mon)%/%3
-    paste("Q", x+1, sep="")
+    paste("Q", x+1, sep = "")
 }
 
 trunc.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"))
@@ -558,12 +558,7 @@ round.POSIXt <- function(x, units=c("secs", "mins", "hours", "days"))
 {
     units <- match.arg(units)
     x <- as.POSIXct(x)
-    x <- x +
-    switch(units,
-           "secs" = 0.5,
-           "mins" = 30,
-           "hours"= 1800,
-           "days" = 43200
-           )
+    x <- x + switch(units,
+                    "secs" = 0.5, "mins" = 30, "hours"= 1800, "days" = 43200)
     trunc.POSIXt(x, units = units)
 }

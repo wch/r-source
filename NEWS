@@ -71,7 +71,7 @@ NEW FEATURES
 	-  Methods for cut(), seq(), round() and trunc() for date/time
 	   classes.
 
-	-  Convenience generic functions weekday(), months(), quarters()
+	-  Convenience generic functions weekdays(), months(), quarters()
 	   and julian() with methods for "POSIXt" objects.
 
     o	`hessian' argument added to deriv and its methods.  A new function
