@@ -1,19 +1,24 @@
 factor <- function (x, levels = sort(unique(x), na.last = TRUE),
 		    labels=levels, exclude = NA, ordered = is.ordered(x))
 {
-    if (length(x) == 0)
-	return(character(0))
-    exclude <- as.vector(exclude, typeof(x))
-    levels <- levels[is.na(match(levels, exclude))]
-    f <- match(x, levels)
-    names(f) <- names(x)
-    attr(f, "levels") <- if (length(labels) == length(levels))
-	as.character(labels)
-    else if(length(labels) == 1)
-	paste(labels, seq(along = levels), sep = "")
+    if (length(x)) {
+	exclude <- as.vector(exclude, typeof(x))
+	levels <- levels[is.na(match(levels, exclude))]
+	f <- match(x, levels)
+	names(f) <- names(x)
+	nl <- length(labels)
+	attr(f, "levels") <-
+	    if (nl == length(levels))
+		as.character(labels)
+	    else if(nl == 1)
+		paste(labels, seq(along = levels), sep = "")
+	    else
+		stop(paste("invalid labels; length", nl,
+			   "should be 1 or",length(levels)))
+    }
     else
-	stop("invalid labels argument in \"factor\"")
-    attr(f, "class") <- c(if(ordered)"ordered", "factor")
+	f <- numeric(0)
+    class(f) <- c(if(ordered)"ordered", "factor")
     f
 }
 
@@ -109,7 +114,7 @@ Ops.factor <- function(e1, e2)
     ok <- switch(.Generic, "=="=, "!="=TRUE, FALSE)
     if(!ok) {
 	warning(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
-        return(rep(NA, max(length(e1),if(!missing(e2))length(e2))))
+	return(rep(NA, max(length(e1),if(!missing(e2))length(e2))))
     }
     nas <- is.na(e1) | is.na(e2)
     if (nchar(.Method[1])) {
@@ -156,31 +161,10 @@ Ops.factor <- function(e1, e2)
 
 ## ordered factors ...
 
-ordered <-
-    function(x, levels = sort(unique(x), na.last = TRUE), labels = levels,
-	     exclude = NA, ordered = TRUE)
-{
-    if (length(x) == 0)
-        f <- numeric(0)
-    else {
-        exclude <- as.vector(exclude, typeof(x))
-        levels <- levels[is.na(match(levels, exclude))]
-        f <- match(as.character(x), levels)
-        names(f) <- names(x)
-        attr(f, "levels") <-
-            if (length(labels) == length(levels))
-                as.character(labels)
-            else if (length(labels) == 1)
-                paste(labels, seq(along = levels), sep = "")
-            else
-                stop("invalid labels argument in \"ordered\"")
-    }
-    class(f) <- c(if (ordered) "ordered", "factor")
-    f
-}
+ordered <- function(x, ...) factor(x, ..., ordered=TRUE)
 
 is.ordered <- function(x) inherits(x, "ordered")
-as.ordered <- function(x) if (is.ordered(x)) x else ordered(x)
+as.ordered <- function(x) if(is.ordered(x)) x else ordered(x)
 
 print.ordered <- function (x, quote=FALSE)
 {
@@ -196,36 +180,36 @@ Ops.ordered <-
 function (e1, e2)
 {
     ok <- switch(.Generic,
-                 "<" = , ">" = , "<=" = , ">=" = ,"=="=, "!=" =TRUE,
-                 FALSE)
+		 "<" = , ">" = , "<=" = , ">=" = ,"=="=, "!=" =TRUE,
+		 FALSE)
     if(!ok) {
 	warning(paste('"',.Generic,'"', " not meaningful for ordered factors", sep=""))
-        return(rep(NA, max(length(e1),if(!missing(e2))length(e2))))
+	return(rep(NA, max(length(e1),if(!missing(e2))length(e2))))
     }
     nas <- is.na(e1) | is.na(e2)
     ord1 <- FALSE
     ord2 <- FALSE
     if (nchar(.Method[1])) {
-        l1 <- levels(e1)
-        ord1 <- TRUE
+	l1 <- levels(e1)
+	ord1 <- TRUE
     }
     if (nchar(.Method[2])) {
-        l2 <- levels(e2)
-        ord2 <- TRUE
+	l2 <- levels(e2)
+	ord2 <- TRUE
     }
     if (all(nchar(.Method)) && (length(l1) != length(l2) || !all(l2 == l1)))
-        stop("Level sets of factors are different")
+	stop("Level sets of factors are different")
     if (ord1 && ord2) {
-        e1 <- codes(e1)
-        e2 <- codes(e2)
+	e1 <- codes(e1)
+	e2 <- codes(e2)
     }
     else if (!ord1) {
-        e1 <- match(e1, l2)
-        e2 <- codes(e2)
+	e1 <- match(e1, l2)
+	e2 <- codes(e2)
     }
     else if (!ord2) {
-        e2 <- match(e2, l1)
-        e1 <- codes(e1)
+	e2 <- match(e2, l1)
+	e1 <- codes(e1)
     }
     value <- get(.Generic, mode = "function")(e1, e2)
     value[nas] <- NA

@@ -25,7 +25,15 @@ NEW FEATURES
 
 BUG FIXES
 
-    o	plot.factor or plot(<factor>) now obeys axes=FALSE and xaxt="n"
+    o	factor(list()) *is* now a factor;
+	ordered does NOT allow an `ordered' argument anymore
+	and is now defined as trivial call to factor.
+
+    o	gl(6,3,12) and gl(6,3,2) now both work
+
+    o	split(x,f) now works even when f is a factor with unused levels (PR#294)
+
+    o	plot.factor {plot(<factor>)} now obeys axes=FALSE and xaxt="n"
 
     o	Problems with realloc on some systems in AllocBuffer
 
