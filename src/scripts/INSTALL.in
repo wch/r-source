@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.155 $'
+revision='$Revision: 1.156 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -126,7 +126,7 @@ get_packages () {
 	  echo) | sed '/^ *$/d' > "${1}/${p}/DESCRIPTION"
       fi
     done
-  else 
+  else
     pkgs="${pkgs} \"`cd "${1}" && ${GETWD}`\""
   fi
 }
@@ -143,7 +143,7 @@ fi
 pkgs=
 clean=false
 debug=false
-error=false
+has_error=false
 build_text=true
 build_html=true
 build_latex=true
@@ -228,7 +228,7 @@ while test -n "${1}"; do
 	else
 	  error "cannot extract package from '${1}'"
 	  exit 1
-	fi    
+	fi
       elif test -f "${1}/DESCRIPTION"; then
         get_packages "${1}"
       else
@@ -294,7 +294,7 @@ fi
 is_first_package=yes
 
 ### 
-### Install a *binary* package from the current directory. 
+### Install a *binary* package from the current directory.
 
 do_install_binary () {
   pkg="${1}"
@@ -312,7 +312,7 @@ do_install_binary () {
     mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}"
     ${MKDIR_P} "${R_PACKAGE_DIR}"
   fi
-  
+
   cp -r . "${R_PACKAGE_DIR}" || \
     (${TAR} cf - . | (cd "${R_PACKAGE_DIR}" && ${TAR} xf -))
 
@@ -401,7 +401,7 @@ do_install_source () {
       fi
       eval ${MAKE} ${makefiles} \
 	&& cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs" \
-        || error=true; \
+        || has_error=true; \
       cd ..
     else
       cd src;
@@ -409,13 +409,13 @@ do_install_source () {
       if test -n "${srcs}"; then
 	sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
           && cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs" \
-	  || error=true; \
+	  || has_error=true; \
       else
 	warning "no source files found"
       fi
       cd ..
     fi
-    if ${error}; then
+    if ${has_error}; then
       error "compilation failed for package '${pkg_name}'"
       do_exit_on_error
     fi
@@ -693,7 +693,7 @@ do_install () {
   if test "`cd \"${R_PACKAGE_DIR}\" && ${GETWD}`" = "`${GETWD}`"; then
     error "cannot install to srcdir"
     do_exit_on_error no
-  fi  
+  fi
 
   ## Figure out whether this is a source or binary package.
   ## <NOTE>
@@ -722,7 +722,7 @@ do_install () {
     ## This is a source package ... hopefully.
     do_install_source \
       "${pkg_name}" "${R_PACKAGE_DIR}" "${R_PACKAGE_NAME}" "${pkg_dir}"
-  else  
+  else
     ## This is a binary package ... hopefully.
     do_install_binary \
       "${pkg_name}" "${R_PACKAGE_DIR}" "${R_PACKAGE_NAME}"
@@ -762,7 +762,7 @@ do_cleanup () {
 
   if test "${is_first_package}" = no; then
     ## Only need to do this in case we successfully installed  at least
-    ## *one* package ... 
+    ## *one* package ...
     cp "${R_HOME}/doc/html/R.css" "${lib}"
     chmod 644 "${lib}/R.css"
     if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then
