@@ -6,6 +6,15 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.1.1
+
+
+BUG FIXES
+
+    o	data() works correctly with data-only packages.
+
+
+
 		CHANGES IN R VERSION 1.1.0
 
 

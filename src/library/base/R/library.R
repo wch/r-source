@@ -46,8 +46,7 @@ library <-
 	    env <- attach(NULL, name = pkgname)
             ## detach does not allow character vector args
             on.exit(detach(2))
-            lastbit<- file.path("", "R", package)
-            path <- gsub(paste(lastbit, "$", sep=""), "", file)
+            path <- system.file(pkg = package, lib = lib.loc)
             attr(env, "path") <- path
 	    ## "source" file into env
 	    if (file == "")
