@@ -954,7 +954,7 @@ SEXP do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  out efficiently using previously computed components.
  */
 
-static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal, SEXP tmploc)
+static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal, R_varloc_t tmploc)
 {
     SEXP val, nval, nexpr;
     if (isNull(expr))
@@ -973,8 +973,8 @@ static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal, SEXP tmploc)
     else if (isLanguage(expr)) {
 	PROTECT(expr);
 	PROTECT(val = evalseq(CADR(expr), rho, forcelocal, tmploc));
-	SETCAR(tmploc, CAR(val));
-	PROTECT(nexpr = LCONS(TAG(tmploc), CDDR(expr)));
+	R_SetVarLocValue(tmploc, CAR(val));
+	PROTECT(nexpr = LCONS(R_GetVarLocSymbol(tmploc), CDDR(expr)));
 	PROTECT(nexpr = LCONS(CAR(expr), nexpr));
 	nval = eval(nexpr, rho);
 	UNPROTECT(4);
@@ -992,7 +992,8 @@ static char *asym[] = {":=", "<-", "<<-", "="};
 
 static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP expr, lhs, rhs, saverhs, tmp, tmp2, tmploc;
+    SEXP expr, lhs, rhs, saverhs, tmp, tmp2;
+    R_varloc_t tmploc;
     char buf[32];
 
     expr = CAR(args);
@@ -1024,12 +1025,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (rho == R_NilValue)
 	errorcall(call, "cannot do complex assignments in NULL environment");
     defineVar(R_TmpvalSymbol, R_NilValue, rho);
-    tmploc = findVarLocInFrame(rho, R_TmpvalSymbol);
-#ifdef OLD
-    tmploc = FRAME(rho);
-    while(tmploc != R_NilValue && TAG(tmploc) != R_TmpvalSymbol)
-	tmploc = CDR(tmploc);
-#endif
+    tmploc = R_findVarLocInFrame(rho, R_TmpvalSymbol);
 
     /*  Do a partial evaluation down through the LHS. */
     lhs = evalseq(CADR(expr), rho, PRIMVAL(op)==1, tmploc);
@@ -1041,10 +1037,11 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	sprintf(buf, "%s<-", CHAR(PRINTNAME(CAR(expr))));
 	tmp = install(buf);
 	UNPROTECT(1);
-	SETCAR(tmploc, CAR(lhs));
+	R_SetVarLocValue(tmploc, CAR(lhs));
 	PROTECT(tmp2 = mkPROMISE(rhs, rho));
 	SET_PRVALUE(tmp2, rhs);
-	PROTECT(rhs = replaceCall(tmp, TAG(tmploc), CDDR(expr), tmp2));
+	PROTECT(rhs = replaceCall(tmp, R_GetVarLocSymbol(tmploc), CDDR(expr),
+				  tmp2));
 	rhs = eval(rhs, rho);
 	UNPROTECT(2);
 	PROTECT(rhs);
@@ -1052,11 +1049,12 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	expr = CADR(expr);
     }
     sprintf(buf, "%s<-", CHAR(PRINTNAME(CAR(expr))));
-    SETCAR(tmploc, CAR(lhs));
+    R_SetVarLocValue(tmploc, CAR(lhs));
     PROTECT(tmp = mkPROMISE(CADR(args), rho));
     SET_PRVALUE(tmp, rhs);
     PROTECT(expr = assignCall(install(asym[PRIMVAL(op)]), CDR(lhs),
-			      install(buf), TAG(tmploc), CDDR(expr), tmp));
+			      install(buf), R_GetVarLocSymbol(tmploc),
+			      CDDR(expr), tmp));
     expr = eval(expr, rho);
     UNPROTECT(5);
     unbindVar(R_TmpvalSymbol, rho);

@@ -493,7 +493,6 @@ R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t new); /* set method */
 #define FetchMethod		Rf_FetchMethod
 #define findcontext		Rf_findcontext
 #define findVar1		Rf_findVar1
-#define findVarLocInFrame	Rf_findVarLocInFrame
 #define FrameClassFix		Rf_FrameClassFix
 #define framedepth		Rf_framedepth
 #define frameSubscript		Rf_frameSubscript
@@ -581,6 +580,13 @@ char*	R_HomeDir(void);
 Rboolean R_FileExists(char*);
 Rboolean R_HiddenFile(char*);
 
+/* environment cell access */
+typedef struct R_varloc_st *R_varloc_t;
+R_varloc_t R_findVarLocInFrame(SEXP, SEXP);
+SEXP R_GetVarLocValue(R_varloc_t);
+SEXP R_GetVarLocSymbol(R_varloc_t);
+void R_SetVarLocValue(R_varloc_t, SEXP);
+
 /* Other Internally Used Functions */
 
 void begincontext(RCNTXT*, int, SEXP, SEXP, SEXP, SEXP);
@@ -600,7 +606,6 @@ int factorsConform(SEXP, SEXP);
 SEXP FetchMethod(char *, char *, SEXP);
 void findcontext(int, SEXP, SEXP);
 SEXP findVar1(SEXP, SEXP, SEXPTYPE, int);
-SEXP findVarLocInFrame(SEXP, SEXP);
 void FrameClassFix(SEXP);
 int framedepth(RCNTXT*);
 SEXP frameSubscript(int, SEXP, SEXP);

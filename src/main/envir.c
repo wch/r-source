@@ -675,7 +675,7 @@ void unbindVar(SEXP symbol, SEXP rho)
 
 */
 
-SEXP findVarLocInFrame(SEXP rho, SEXP symbol)
+static SEXP findVarLocInFrame(SEXP rho, SEXP symbol)
 {
     int hashcode;
     SEXP frame, c;
@@ -693,11 +693,38 @@ SEXP findVarLocInFrame(SEXP rho, SEXP symbol)
 	}
 	hashcode = HASHVALUE(c) % HASHSIZE(HASHTAB(rho));
 	/* Will return 'R_NilValue' if not found */
-	return(R_HashGetLoc(hashcode, symbol, HASHTAB(rho)));
+	return R_HashGetLoc(hashcode, symbol, HASHTAB(rho));
     }
 }
 
 
+/*
+  External version and accessor functions. Returned value is cast as
+  an opaque pointer to insure it is only used by routines in this
+  group.  This allows the implementation to be changed without needing
+  to change other files.
+*/
+
+R_varloc_t R_findVarLocInFrame(SEXP rho, SEXP symbol)
+{
+    SEXP binding = findVarLocInFrame(rho, symbol);
+    return binding == R_NilValue ? NULL : (R_varloc_t) binding;
+}
+
+SEXP R_GetVarLocValue(R_varloc_t vl)
+{
+    return CAR((SEXP) vl);
+}
+
+SEXP R_GetVarLocSymbol(R_varloc_t vl)
+{
+    return TAG((SEXP) vl);
+}
+
+void R_SetVarLocValue(R_varloc_t vl, SEXP value)
+{
+    SETCAR((SEXP) vl, value);
+}
 
 
 /*----------------------------------------------------------------------
