@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 beta (2004-03-22), ISBN 3-900051-00-3
+Version 1.9.0 beta (2004-03-27), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -273,7 +273,7 @@ Warning messages:
 +     cat("df =", formatC(df, wid=3))
 +     xx <- c(10^-(5:1), .9, 1.2, df + c(3,7,20,30,35,38))
 +     pp <- pchisq(xx, df=df, ncp = 1) #print(pp)
-+     dtol <- 1e-12 *(if(1 < df && df <= 50) 64 else if(df > 50) 20000 else 500)
++     dtol <- 1e-12 *(if(2 < df && df <= 50) 64 else if(df > 50) 20000 else 500)
 +     print(all.equal(xx, qchisq(pp, df=df, ncp=1), tol = dtol))# TRUE
 +     ##or print(mapply(rErr, xx, qchisq(pp, df=df,ncp=1)), digits = 3)
 + }
@@ -922,5 +922,5 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 [1] TRUE
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  6.98 0.14 11.66 0 0 
+Time elapsed:  6.63 0.09 6.73 0 0 
 > 
