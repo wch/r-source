@@ -435,15 +435,19 @@ BUG FIXES
 	needed, so e.g. dev.print(file="junk.ps", horizontal=F) will
 	work (previously =FALSE was needed).
 
-    o	qnorm(0) and qnorm(1) now give -/+ Inf (again!).
+    o	The math functions now (again!) return NaN (not NA)
+	when the warning message says so (e.g. gamma(-1)).
 
-    o	The math functions now (again!) return NaN when the warning
-	message says so (e.g. gamma(-1)).
+    o	qnorm(0) and qnorm(1) now give -/+ Inf (again!).
 
     o	qt(*, log = TRUE) has a somewhat extended working range.
 
+    o	pnorm() should be somewhat more accurate (SIXTEN=16; PR#699).
+
     o	Specifying col.names in read.table() now overrides any header
 	line in the data file.
+
+    o	barplot() passes "..." down to plot.window as documented.
 
 
 	**************************************************

@@ -73,10 +73,14 @@ double pnorm5(double x, double mu, double sigma, int lower_tail, int log_p)
     return(lower_tail ? p : cp);
 }
 
-#define SIXTEN	1.6	/* Magic Cutoff */
+#define SIXTEN	16 /* Cutoff allowing exact "*" and "/" */
 
 void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
 {
+/* i_tail in {0,1,2} means: "lower", "upper", or "both" :
+   if(lower) return  *cum := P[X <= x]
+   if(upper) return *ccum := P[X >  x] = 1 - P[X <= x]
+*/
     const double a[5] = {
 	2.2352520354606839287,
 	161.02823106855587881,
@@ -144,20 +148,21 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
 
     y = fabs(x);
     if (y <= 0.66291) {
-	if (y > eps)
+	if (y > eps) {
 	    xsq = x * x;
-	else xsq = 0.0;
-	xnum = a[4] * xsq;
-	xden = xsq;
-	for (i = 0; i < 3; ++i) {
-	    xnum = (xnum + a[i]) * xsq;
-	    xden = (xden + b[i]) * xsq;
-	}
+	    xnum = a[4] * xsq;
+	    xden = xsq;
+	    for (i = 0; i < 3; ++i) {
+		xnum = (xnum + a[i]) * xsq;
+		xden = (xden + b[i]) * xsq;
+	    }
+	} else xnum = xden = 0.0;
+
 	temp = x * (xnum + a[3]) / (xden + b[3]);
-	if(lower) *cum = 0.5 + temp;
+	if(lower)  *cum = 0.5 + temp;
 	if(upper) *ccum = 0.5 - temp;
 	if(log_p) {
-	    if(lower) *cum = log(*cum);
+	    if(lower)  *cum = log(*cum);
 	    if(upper) *ccum = log(*ccum);
 	}
     }
@@ -179,7 +184,7 @@ void pnorm_both(double x, double *cum, double *ccum, int i_tail, int log_p)
 	if(log_p) {							\
 	    *cum = (-xsq * xsq * 0.5) + (-del * 0.5) + log(*cum);	\
 	    if((lower && x > 0.) || (upper && x <= 0.))			\
-		*ccum = log(1.0 - exp(*cum));				\
+		*ccum = log1p( - exp(*cum));				\
 	}								\
 	else {								\
 	    *cum = exp(-xsq * xsq * 0.5) * exp(-del * 0.5) * *cum;	\
