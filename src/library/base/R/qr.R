@@ -67,9 +67,7 @@ qr.qy <- function(qr, y)
     if(is.complex(qr$qr)){
         y <- as.matrix(y)
         if(!is.complex(y)) y[] <- as.complex(y)
-        res <- .Call("qr_qy_cmplx", qr, y, 0, PACKAGE = "base")
-        res[, qr$pivot] <- res
-        return(res)
+        return(.Call("qr_qy_cmplx", qr, y, 0, PACKAGE = "base"))
     }
     n <- as.integer(nrow(qr$qr))
     p <- as.integer(ncol(qr$qr))
@@ -95,9 +93,7 @@ qr.qty <- function(qr, y)
     if(is.complex(qr$qr)){
         y <- as.matrix(y)
         if(!is.complex(y)) y[] <- as.complex(y)
-        res <- .Call("qr_qy_cmplx", qr, y, 1, PACKAGE = "base")
-        res[, qr$pivot] <- res
-        return(res)
+        return(.Call("qr_qy_cmplx", qr, y, 1, PACKAGE = "base"))
     }
     n <- as.integer(nrow(qr$qr))
     p <- as.integer(ncol(qr$qr))
@@ -120,6 +116,7 @@ qr.qty <- function(qr, y)
 qr.resid <- function(qr, y)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
+    if(is.complex(qr$qr)) stop("implemented for complex qr")
     k <- as.integer(qr$rank)
     if (k==0) return(y)
     n <- as.integer(nrow(qr$qr))
@@ -142,6 +139,7 @@ qr.resid <- function(qr, y)
 qr.fitted <- function(qr, y, k=qr$rank)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
+    if(is.complex(qr$qr)) stop("implemented for complex qr")
     n <- as.integer(nrow(qr$qr))
     p <- as.integer(ncol(qr$qr))
     k <- as.integer(k)
@@ -204,5 +202,7 @@ qr.X <- function (qr, complete = FALSE,
 	tmp[, 1:p] <- R
 	R <- tmp
     }
-    qr.qy(qr, R)
+    res <- qr.qy(qr, R)
+    res[, qr$pivot] <- res[, seq(along=qr$pivot)]
+    res
 }

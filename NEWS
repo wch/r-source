@@ -252,14 +252,15 @@ NEW FEATURES
 	and this may lead to sign reversals in some of the output of
 	those functions.
 
-    o   Provided the Fortran compiler have handle COMPLEX*16, the
+    o   Provided the Fortran compiler can handle COMPLEX*16, the
 	following routines now handle complex arguments, based on
  	LAPACK code.
 
-	qr, qr.coef, qr.solve, qr.qy, qr.qty, solve.default, La.svd.
+	qr, qr.coef, qr.solve, qr.qy, qr.qty, solve.default, svd, La.svd.
 
     o	Contingency tables created by xtabs() or table() now have a
 	summary() method.
+
 
 
 BUG FIXES
@@ -315,6 +316,9 @@ BUG FIXES
 
     o	ks.test() in package ctest now had the one-sided alternatives in
 	the one-sample case reversed (PR#934).
+
+    o	qr.X() was ignoring pivoting (which happens only in
+	rank-deficient cases).
 
 
 
