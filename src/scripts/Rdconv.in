@@ -27,7 +27,7 @@ use Getopt::Long;
 use R::Rdconv;
 use R::Utils;
 
-my $revision = ' $Revision: 1.21 $ ';
+my $revision = ' $Revision: 1.22 $ ';
 my $version;
 my $name;
 
@@ -52,8 +52,8 @@ Options:
       --OS=NAME		the same as \`--os\'.
 
 Possible format specifications are \`txt\' (plain text), \`html\',
-\`latex\', \`Sd\' (S documentation format), and \`example\' (extract R
-code in the examples).
+\`latex\', \`Sd\' (old S documentation format), \`Ssgm\' 
+(new S documentation format) and \`example\' (extract R code in the examples).
 
 The default is to send output to stdout, which is also given by \`-o -\'.
 Using \`-o \"\"\' will choose an output filename by removing a \`.Rd\'
@@ -94,6 +94,10 @@ elsif($opt_type =~ /txt/i){
 }
 elsif($opt_type =~ /Sd/i){
     if(defined $opt_o && length($opt_o) == 0) { $out = $out . ".d"; }
+    Rdconv($ARGV[0],$opt_type,$opt_debug, $out);
+}
+elsif($opt_type =~ /Ssgm/i){
+    if(defined $opt_o && length($opt_o) == 0) { $out = $out . ".sgml"; }
     Rdconv($ARGV[0],$opt_type,$opt_debug, $out);
 }
 elsif($opt_type =~ /latex/i){

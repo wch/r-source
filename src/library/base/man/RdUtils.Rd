@@ -36,15 +36,16 @@ Rcmd Sd2Rd [options] file
 }
 \details{
   \code{Rdconv} converts Rd format to other formats.  Currently,
-  plain text, HTML, LaTeX, S version 3 (Sd) format are supported.  It
-  can also extract the examples for run-time testing.
+  plain text, HTML, LaTeX, S version 3 (Sd), and S version 4 (.sgml)
+  formats are supported.  It can also extract the examples for
+  run-time testing.
 
   \code{Rd2dvi} and \code{Rd2txt} are user-level programs
   for producing DVI/PDF output or pretty text output from Rd sources.
 
   \code{Rdindex} creates an index table from Rd files.
 
-  \code{Sd2Rd} converts S version 3 documentation format to Rd
+  \code{Sd2Rd} converts S (version 3 or 4) documentation formats to Rd
   format.
 
   Use
@@ -55,6 +56,11 @@ Rcmd Sd2Rd [options] file
   \code{Rcmd foo --help}
 #endif
   to obtain usage information on utility \code{foo}.  
+}
+\note{
+  Conversion to S version 3/4 formats is rough: there are some
+  \code{.Rd} constructs for which there is no natural analogue.
+  They are intended as a starting point for hand-tuning.
 }
 \seealso{
   The chapter ``Processing Rd format'' in ``Writing \R Extensions''

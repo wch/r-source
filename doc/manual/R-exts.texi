@@ -1328,7 +1328,7 @@ All of these need Perl to be installed.
 Using @code{R CMD Rdconv} one can convert @R{} documentation format to
 other formats, or extract the executable examples for run-time testing.
 Currently, conversions to plain text, @HTML{}, La@TeX{}, and @Sl{}
-version 3 documentation formats are supported.
+version 3 or 4 documentation formats are supported.
 
 In addition to this low-level conversion tool, the @R{} distribution
 provides two user-level programs for processing Rd format.
