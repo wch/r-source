@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-26, 2001-02-04
+Version 1.2-27, 2001-02-20
 Kurt Hornik
 
 
@@ -1288,6 +1288,9 @@ works, was published in the Journal of Statistical Software
 *mvtnorm*
      Multivariate normal and t distributions.
 
+*netCDF*
+     Read data from netCDF files.
+
 *nlme*
      Fit and compare Gaussian linear and nonlinear mixed-effects models.
 
@@ -1443,9 +1446,6 @@ these a try, of course.  This area of CRAN currently contains
 *multidim*
      Code for correspondence analysis and other multidimensional descriptive
      statistics.
-
-*netCDF*
-     Read data from netCDF files.
 
 *npConfRatio*
      Nonparametric confidence intervals for the ratios of medians.
