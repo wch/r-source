@@ -63,8 +63,12 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
 char *R_Date()
 {
     time_t t;
+    static char s[26];/* own space */
+
     time(&t);
-    return strtok(ctime(&t), "\n");/* drop final \n */
+    strcpy(s, ctime(&t));
+    s[24] = '\0'; /* overwriting the final \n */
+    return s;
 }
 
 SEXP do_date(SEXP call, SEXP op, SEXP args, SEXP rho)
