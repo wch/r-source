@@ -1,11 +1,10 @@
-\name{graphics-defunct}
-%------ NOTE:  ../R/graphics-defunct.R   must be synchronized with this!
-\alias{graphics-defunct}
+\name{grDevices-defunct}
+\alias{grDevices-defunct}
 #ifdef unix
 \alias{GNOME}
 \alias{gnome}
 #endif
-\title{Defunct Functions in Package graphics}
+\title{Defunct Functions in Package grDevices}
 \description{
   The functions or variables listed here are no longer part of \R as
   they are not needed (any more).

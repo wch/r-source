@@ -1,4 +1,4 @@
-## An environment not exported from namespace:graphics used to
+## An environment not exported from namespace:grDevices used to
 ## pass .X11.Fonts to the X11 device.
 .X11env <- new.env()
 
@@ -17,7 +17,7 @@ X11 <- function(display = "", width = 7, height = 7, pointsize = 12,
 x11 <- X11
 
 gnome <- function(display = "", width = 7, height = 7, pointsize = 12)
-    .Defunct(package="graphics")
+    .Defunct(package="grDevices")
 
 ## no Gnome <- .Alias(gnome)
 GNOME <- gnome
@@ -101,7 +101,7 @@ X11Font <- function(font) {
   checkX11Font(font)
 }
 
-X11Fonts(# Default Serif font is Times 
+X11Fonts(# Default Serif font is Times
          serif=X11Font("-*-times-%s-%s-*-*-%d-*-*-*-*-*-*-*"),
          # Default Sans Serif font is Helvetica
          sans=X11Font("-*-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*"),

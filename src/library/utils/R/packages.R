@@ -10,8 +10,9 @@ CRAN.packages <- function(CRAN=getOption("CRAN"), method,
         download.file(url=paste(contriburl, "PACKAGES", sep="/"),
                       destfile=tmpf, method=method, cacheOK=FALSE)
     }
-    read.dcf(file=tmpf, fields=c("Package", "Version",
-                       "Priority", "Bundle", "Depends"))
+    read.dcf(file = tmpf,
+             fields = c("Package", "Version", "Priority", "Bundle", "Depends",
+             "Suggests", "Contains"))
 }
 
 update.packages <- function(lib.loc=NULL, CRAN=getOption("CRAN"),
@@ -136,7 +137,7 @@ installed.packages <- function(lib.loc = NULL, priority = NULL)
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
-    pkgFlds <- c("Version", "Priority", "Bundle", "Depends")
+    pkgFlds <- c("Version", "Priority", "Bundle", "Depends", "Suggests")
     if(!is.null(priority)) {
         if(!is.character(priority))
             stop("`priority' must be character or NULL")
