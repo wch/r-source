@@ -1038,6 +1038,21 @@ stripchart(Sepal ~ iris$Species, method="stack")
 stopifnot(is.ts(log(as.ts(1:10))))
 ## failed for integer original as here in 1.6.1.
 
+## formatC ignored rounding up (PR#2299)
+stopifnot(formatC(99.9, 1, format="fg") == "100")
+stopifnot(formatC(99.9, 2, format="fg") == "100")
+stopifnot(formatC(99.9, 3, format="fg") == "99.9")
+## gave exponential format on 1.6.1
+
+## full/partial matching in attr.
+tmp <- list(id=1)
+attr(tmp,"n.ch") <- 2
+attr(tmp,"n") <- 1
+attributes(tmp)
+(res <- attr(tmp, "n"))
+stopifnot(length(res) == 1 && res == 1)
+## gave NULL in 1.6.1
+
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
