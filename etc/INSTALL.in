@@ -4,6 +4,14 @@
 # Usage:
 #	R INSTALL pkg [lib]
 
+
+# we don't need these, so they are simply read and ignored
+if [ "$1" = "+help" ]; then shift; IHELP=y; fi
+if [ "$1" = "-help" ]; then shift; IHELP=;  fi
+if [ "$1" = "+html" ]; then shift; IHTML=y; fi
+if [ "$1" = "-html" ]; then shift; IHTML=;  fi
+
+
 if [ "$1" ]
 then
     pkg=$1
