@@ -230,6 +230,9 @@ NEW FEATURES
 
 	sprintf() now does limited coercion of its arguments.
 
+	sprintf() now accepts vector arguments and operates on them in
+	parallel (after re-cycling if needed).
+
     o   pbeta() now uses a different algorithm for large values of at
 	least one of the shape parameters, which is much faster and is
 	accurate and reliable for very large values.  (This affects
@@ -525,12 +528,6 @@ PACKAGE INSTALLATION CHANGES
 
 BUG FIXES
 
-    o   par(omd) is now of the form c(x1, x2, y1, y2) to match the
-	documentation and for S-Plus compatibility.  
-
-	[Previously, par(omd) was of the form c(bottom, left, top, right)
-	 like par(oma) and par(omi)]
-
     o	Configuring for Tcl/Tk makes use of ${TK_LIB_SPEC} ${TK_LIBS}
 	not ${TK_LIB_SPEC} ${TK_XLIBSW}, which is correct for
 	recent versions of Tk, but conceivably not for old
@@ -628,6 +625,12 @@ BUG FIXES
     o   eval() was not handling values from return() correctly.
 
     o	str(<S4.object>) was misleading for the case of a single slot.
+
+    o   par(omd) is now of the form c(x1, x2, y1, y2) to match the
+	documentation and for S-PLUS compatibility.  
+
+	[Previously, par(omd) was of the form c(bottom, left, top, right)
+	 like par(oma) and par(omi)]
 
     o	formatC() did not check its 'flag' argument, and could
 	segfault if it was incorrect. (PR#7686)

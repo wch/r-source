@@ -13,14 +13,16 @@ sprintf(fmt, \dots)
   \item{fmt}{a format string, which should be single-byte characters in
     a non-UTF-8 multibyte locale.}
   \item{\dots}{values to be passed into \code{fmt}.  Only logical,
-    integer, real and character vectors are accepted, and only the first
-    element is read from each vector.}
+    integer, real and character vectors are accepted.}
 }
 \details{
   This is a wrapper for the system \code{sprintf} C-library function.  
   Attempts are made to check that the mode of the values passed match
   the format supplied, and \R's special values (\code{NA}, \code{Inf},
   \code{-Inf} and \code{NaN}) are handled correctly.
+
+  The arguments (including \code{fmt}) are recycled if possible to the
+  length of the longest, and then the formatting is done in parallel.
   
   The following is abstracted from K&R (see References, below).  The
   string \code{fmt} contains normal characters, which are passed through
@@ -80,8 +82,8 @@ sprintf(fmt, \dots)
 }
 
 \value{
-  A character vector of length one.  Character \code{NA}s are converted
-  to \code{"NA"}.
+  A character vector of length that of the longest input.
+  Character \code{NA}s are converted to \code{"NA"}.
 }
 
 \references{
@@ -107,9 +109,9 @@ sprintf(fmt, \dots)
 ## be careful with the format: most things in R are floats
 ## only integer-valued reals get coerced to integer.
 
-sprintf("\%s is \%f feet tall\n", "Sven", 7.1) # OK
+sprintf("\%s is \%f feet tall\n", "Sven", 7.1)      # OK
 try(sprintf("\%s is \%i feet tall\n", "Sven", 7.1)) # not OK
-try(sprintf("\%s is \%i feet tall\n", "Sven", 7)) # OK
+try(sprintf("\%s is \%i feet tall\n", "Sven", 7))   # OK
 
 ## use a literal \% :
 
@@ -124,7 +126,7 @@ sprintf("\%5.1f", pi)
 sprintf("\%05.1f", pi)
 sprintf("\%+f", pi)
 sprintf("\% f", pi)
-sprintf("\%-10f", pi)# left justified
+sprintf("\%-10f", pi) # left justified
 sprintf("\%e", pi)
 sprintf("\%E", pi)
 sprintf("\%g", pi)
@@ -137,15 +139,17 @@ sprintf("\%1.f",101)
 
 ## More sophisticated:
 
-lapply(c("a", "ABC", "and an even longer one"),
-       function(ch) sprintf("10-string '\%10s'", ch))
+sprintf("min 10-char string '\%10s'",
+        c("a", "ABC", "and an even longer one"))
 
-sapply(1:18, function(n)
-       sprintf(paste("e with \%2d digits = \%.",n,"g",sep=""),
-               n, exp(1)))
+n <- 1:18
+sprintf(paste("e with \%2d digits = \%.",n,"g",sep=""), n, exp(1))
 
 ## Using arguments out of order
 sprintf("second \%2$1.0f, first \%1$5.2f, third \%3$1.0f", pi, 2, 3)
+
+## re-cycle arguments 
+sprintf("\%s \%d", "test", 1:3)
 }
 \keyword{print}
 \keyword{character}
