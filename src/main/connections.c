@@ -21,6 +21,11 @@
 #include <config.h>
 #endif
 
+/* override for this file only */
+#ifndef HAVE_ZLIB
+# define HAVE_ZLIB 1
+#endif
+
 #include <Defn.h>
 #include <Fileio.h>
 #include <Rconnections.h>

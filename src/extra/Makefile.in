@@ -13,7 +13,10 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
-SUBDIRS = @BUILD_XDR_TRUE@ xdr
+SUBDIRS = xdr
+LIBZ = @BUILD_ZLIB_TRUE@ zlib
+LIBXDR = @BUILD_XDR_TRUE@ xdr
+EXTRA_LIBS = $(LIBZ) $(LIBXDR)
 
 all: Makefile R
 
@@ -22,18 +25,21 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
+## zlib won't have target `R'
 R: Makefile
-	@list='$(SUBDIRS)'; for d in $${list}; do \
-	  (cd $${d} && $(MAKE) $@) || exit 1; \
-	done
+#	@list='$(EXTRA_LIBS)'; for d in $${list}; do \
+#	  (cd $${d} && $(MAKE) $@) || exit 1; \
+#	done
+	@ @BUILD_XDR_TRUE@ (cd xdr && $(MAKE) $@) || exit 1;
+	@ @BUILD_ZLIB_TRUE@ (cd zlib && $(MAKE)) || exit 1;
 
 mostlyclean: clean
 clean:
-	@list='$(SUBDIRS)'; for d in $${list}; do \
+	@list='$(EXTRA_LIBS)'; for d in $${list}; do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 distclean: clean
-	@list='$(SUBDIRS)'; for d in $${list}; do \
+	@list='$(EXTRA_LIBS)'; for d in $${list}; do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@rm -f Makefile
@@ -47,7 +53,7 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-	@for d in "$(SUBDIRS)"; do \
+	@for d in $(SUBDIRS); do \
 	  test -d $(distdir)/$${d} \
 	    || mkdir $(distdir)/$${d} \
 	    || exit 1; \

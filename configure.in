@@ -979,7 +979,6 @@ R_BITMAPS
 
 ## XDR headers and library routines.
 R_XDR
-AM_CONDITIONAL(BUILD_XDR, test "${r_cv_xdr}" = no)
 
 ## zlib headers and libraries.
 R_ZLIB

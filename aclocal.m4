@@ -1,4 +1,4 @@
-dnl aclocal.m4 generated automatically by aclocal 1.4-p4
+dnl aclocal.m4 generated automatically by aclocal 1.4
 
 dnl Copyright (C) 1994, 1995-8, 1999 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -1195,8 +1195,10 @@ AC_CACHE_CHECK([for XDR support],
 if test "${r_cv_xdr}" = yes; then
   AC_DEFINE(HAVE_XDR)
 fi
+AM_CONDITIONAL(BUILD_XDR, test "${r_cv_xdr}" = no)
 ])
 AC_DEFUN([R_ZLIB], [
+  AC_CHECKING(if zlib is installed or needs to be compiled)
   have_zlib=no
   AC_CHECK_LIB(z, gzopen, [
     AC_CHECK_HEADER(zlib.h, [
@@ -1220,7 +1222,14 @@ int main() {
   if test "${have_zlib}" = yes; then
     AC_DEFINE(HAVE_ZLIB)
     LIBS="-lz ${LIBS}"
+  else
+    if test -f src/extra/zlib/Makefile ; then
+      AC_CHECKING(we will build zlib for you)
+    else
+      AC_MSG_ERROR(neither zlib nor its sources were found)
+    fi
   fi
+  AM_CONDITIONAL(BUILD_ZLIB, test "${have_zlib}" = no)
 ])
 AC_DEFUN([R_SYS_POSIX_LEAPSECONDS],
 [AC_CACHE_CHECK([whether leap seconds are treated according to POSIX],
@@ -4845,6 +4854,19 @@ AC_DEFUN([AM_PROG_NM],        [AC_PROG_NM])
 # This is just to silence aclocal about the macro not being used
 ifelse([AC_DISABLE_FAST_INSTALL])
 
+# Define a conditional.
+
+AC_DEFUN(AM_CONDITIONAL,
+[AC_SUBST($1_TRUE)
+AC_SUBST($1_FALSE)
+if $2; then
+  $1_TRUE=
+  $1_FALSE='#'
+else
+  $1_TRUE='#'
+  $1_FALSE=
+fi])
+
 #
 # Check to make sure that the build environment is sane.
 #
@@ -4887,19 +4909,6 @@ Check your system clock])
 fi
 rm -f conftest*
 AC_MSG_RESULT(yes)])
-
-# Define a conditional.
-
-AC_DEFUN(AM_CONDITIONAL,
-[AC_SUBST($1_TRUE)
-AC_SUBST($1_FALSE)
-if $2; then
-  $1_TRUE=
-  $1_FALSE='#'
-else
-  $1_TRUE='#'
-  $1_FALSE=
-fi])
 
 # Like AC_CONFIG_HEADER, but automatically create stamp file.
 

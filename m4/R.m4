@@ -1403,6 +1403,7 @@ AC_CACHE_CHECK([for XDR support],
 if test "${r_cv_xdr}" = yes; then
   AC_DEFINE(HAVE_XDR)
 fi
+AM_CONDITIONAL(BUILD_XDR, test "${r_cv_xdr}" = no)
 ])
 ##
 ## Try finding zlib library and headers.
@@ -1413,6 +1414,7 @@ fi
 ## R_ZLIB()
 ##
 AC_DEFUN([R_ZLIB], [
+  AC_CHECKING(if zlib is installed or needs to be compiled)
   have_zlib=no
   AC_CHECK_LIB(z, gzopen, [
     AC_CHECK_HEADER(zlib.h, [
@@ -1436,7 +1438,14 @@ int main() {
   if test "${have_zlib}" = yes; then
     AC_DEFINE(HAVE_ZLIB)
     LIBS="-lz ${LIBS}"
+  else
+    if test -f src/extra/zlib/Makefile ; then
+      AC_CHECKING(we will build zlib for you)
+    else
+      AC_MSG_ERROR(neither zlib nor its configured sources were found)
+    fi
   fi
+  AM_CONDITIONAL(BUILD_ZLIB, test "${have_zlib}" = no)
 ])
 ##
 ## R_SYS_POSIX_LEAPSECONDS

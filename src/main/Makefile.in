@@ -57,6 +57,10 @@ DISTFILES = Makefile.in Makefile.win \
 	$(SOURCES_F) \
 	gram.y
 
+ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib
+## use an explicit library: there might be an unsatisfactory -lz around
+R_ZLIBS = @BUILD_ZLIB_TRUE@ ../extra/zlib/libz.a
+
 ## <FIXME>
 ## Names in here should use `$(top_builddir)' instead ...
 RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a @BUILD_XDR_TRUE@ ../extra/xdr/libxdr.a
@@ -70,7 +74,7 @@ R_bin_OBJECTS = $(OBJECTS)
 ## -export-symbols SYMFILE.
 @USE_LIBTOOL_TRUE@R_bin_LDFLAGS = -export-dynamic
 ## </FIXME>
-R_bin_LDADD = @LIBOBJS@ @ALLOCA@ $(RLIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
+R_bin_LDADD = @LIBOBJS@ @ALLOCA@ $(RLIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) $(R_ZLIBS)
 ## <NOTE>
 ## Automake would figure this out itself.
 R_bin_DEPENDENCIES = @LIBOBJS@ @ALLOCA@ $(RLIBS) @EXPORTFILE@
@@ -88,7 +92,7 @@ libR_la_OBJECTS = $(OBJECTS:.o=.lo)
 ## <FIXME>
 ## This should also have `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo`, but
 ## of course this will not work when the files do not exist yet :-)
-libR_la_LIBADD = @LTLIBOBJS@ @LTALLOCA@ $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
+libR_la_LIBADD = @LTLIBOBJS@ @LTALLOCA@ $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) @BUILD_XDR_TRUE@ ../extra/xdr/libxdr.a
 libR_la_DEPENDENCIES = @LTLIBOBJS@ @LTALLOCA@ ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo
 ## </FIXME>
 @USE_LIBTOOL_TRUE@libR_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
@@ -151,6 +155,9 @@ $(srcdir)/gram.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gram.y
 	@echo "re-making gram.c"
 	$(YACC) $(YFLAGS) $(srcdir)/gram.y
 	$(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gram.c
+
+connections.o: $(srcdir)/connections.c
+	$(CC) $(ZLIB_CPPFLAGS) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
 
 install: installdirs
 	@$(MAKE) install-bin
