@@ -49,3 +49,9 @@ zip.file.extract <- function(file, zipname="R.zip")
     file
 }
 
+applescript <-function (path , scriptname) 
+{
+  rc <- .Internal(applescript(path,scriptname))
+  if (rc != 0) 
+    warning("Error in AppleScript")
+}
