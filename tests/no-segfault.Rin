@@ -9,9 +9,10 @@ core.pkgs <-
     x[x[,"Priority"]=="base", "Package"]}
 ## c("base", "eda", "lqs", "modreg", "mva", "stepfun", "ts", "nls","splines")
 ## .packages(all=TRUE,lib.loc = .lib.loc[length(.lib.loc)])
+core.pkgs <- core.pkgs[- match("tcltk", core.pkgs)]
 stop.list <- vector("list", length(core.pkgs))
 names(stop.list) <- core.pkgs
-stop.list$tcltk <- NULL
+
 
 ## -- Stop List for "base" :
 edit.int <- c("fix", "edit", "edit.data.frame", "edit.matrix",
