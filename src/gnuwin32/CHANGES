@@ -29,6 +29,10 @@ Profiling (as described in `Writing R Extensions') is now available.
 
 There is a new `Save as PDF' option on the graphics device menu.
 
+The default graphics device is now windows() only in interactive use:
+otherwise it is postscript().  (This affects the DCOM interface, which
+is not interactive use.)
+
 Support for earlier (pre-Feb 2000) mingw compilers has been dropped:
 you must use a compiler system that supports --shared and has an
 in-memory dlltool.
