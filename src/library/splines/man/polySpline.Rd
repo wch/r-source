@@ -38,11 +38,10 @@ as.polySpline(object, \dots)
   \code{\link{splineOrder}}
 }
 \examples{
-library( splines )
 data( women )
-ispl <- polySpline( interpSpline( weight ~ height,  women ) )
+ispl <- polySpline( interpSpline( weight ~ height,  women, bSpline = TRUE ) )
 print( ispl )   # print the piecewise polynomial representation
 plot( ispl )    # plots over the range of the knots
-points( women$weight, women$height )
+points( women$height, women$weight )
 }
 \keyword{ models }

@@ -1,4 +1,4 @@
-%% $Id: xyVector.Rd,v 1.4 1999/12/15 17:20:29 pd Exp $
+%% $Id: xyVector.Rd,v 1.5 2000/08/06 03:30:52 bates Exp $
 \name{xyVector}
 \title{Construct an xyVector Object}
 \usage{
@@ -28,7 +28,6 @@ xyVector(x, y)
 }
 \author{Douglas Bates and Bill Venables}
 \examples{
-library( splines )
 data( women )
 ispl <- interpSpline( weight ~ height, women )
 weights <- predict( ispl, seq( 55, 75, len = 51 ))

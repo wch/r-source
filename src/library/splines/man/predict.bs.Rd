@@ -29,7 +29,6 @@ predict.ns(object, newx, \dots)
   \code{bs}, \code{ns}, \code{poly}, \code{lo}, \code{s}
 }
 \examples{
-library(splines)
 data(women)
 basis <- ns(women$height, df = 5)
 newX <- seq(58, 72, len = 51)

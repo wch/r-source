@@ -50,7 +50,6 @@ ns(x, df, knots, intercept = FALSE, Boundary.knots)
   \code{bs}, \code{poly}, \code{predict.ns}
 }
 \examples{
-library(splines)
 data(women)
 ns(women$height, df = 5)
 summary(fm1 <- lm(weight ~ ns(height, df = 5), data = women))

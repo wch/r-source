@@ -33,7 +33,6 @@ periodicSpline(obj1, obj2, knots, period, ord)
   \code{\link{interpSpline}}
 }
 \examples{
-library( splines )
 xx <- seq( -pi, pi, len = 16 )[-1]
 yy <- sin( xx )
 frm <- data.frame( xx, yy )
