@@ -6,7 +6,8 @@ legend(x, y = NULL, legend, fill = NULL, col = "black", lty, lwd, pch,
        angle = NULL, density = NULL, bty = "o", bg = par("bg"),
        pt.bg = NA, cex = 1, xjust = 0, yjust = 1,
        x.intersp = 1, y.intersp = 1, adj = c(0, 0.5),
-       text.width = NULL, merge = do.lines && has.pch, trace = FALSE,
+       text.width = NULL, text.col = par("col"),
+       merge = do.lines && has.pch, trace = FALSE,
        plot = TRUE, ncol = 1, horiz = FALSE)
 }
 \description{
@@ -53,6 +54,7 @@ legend(x, y = NULL, legend, fill = NULL, col = "black", lty, lwd, pch,
   \item{text.width}{the width of the legend text in x (\code{"user"})
     coordinates.
     Defaults to the proper value computed by \code{\link{strwidth}(legend)}.}
+  \item{text.col}{the color used for the legend text.}
   \item{merge}{logical; if \code{TRUE}, \dQuote{merge} points and lines but
     not filled boxes.  Defaults to \code{TRUE} if there are points and lines.}
   \item{trace}{logical; if \code{TRUE}, shows how \code{legend} does all
@@ -134,7 +136,7 @@ points(x, cos(x), pch = 3, col = 4)
 lines(x, tan(x), type = "b", lty = 1, pch = 4, col = 6)
 title("legend(..., lty = c(2, -1, 1), pch = c(-1,3,4), merge = TRUE)",
       cex.main = 1.1)
-legend(-1, 1.9, c("sin", "cos", "tan"), col = c(3,4,6),
+legend(-1, 1.9, c("sin", "cos", "tan"), col = c(3,4,6), text.col= "green4",
        lty = c(2, -1, 1), pch = c(-1, 3, 4), merge = TRUE, bg='gray90')
 
 ## right-justifying a set of labels: thanks to Uwe Ligges
