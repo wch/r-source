@@ -489,6 +489,9 @@ static void errorcall_dflt(SEXP call, const char *format,...)
 
 void errorcall(SEXP call, const char *format,...)
 {
+
+	PrintValue(R_GetTraceback(0));   /* DJM debugging */
+	
     va_list(ap);
 
 #ifdef NEW_CONDITION_HANDLING

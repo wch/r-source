@@ -864,7 +864,7 @@ SEXP findVarInFrame3(SEXP rho, SEXP symbol, Rboolean doGet)
     int hashcode;
     SEXP frame, c;
 
-    if (rho == R_BaseNamespace)
+    if (rho == R_BaseNamespace || rho == R_BaseEnv)
 	return SYMBOL_BINDING_VALUE(symbol);
 	
     if (rho == R_EmptyEnv)
@@ -2596,7 +2596,8 @@ SEXP do_as_environment(SEXP call, SEXP op, SEXP args, SEXP rho)
     case REALSXP: case INTSXP:
 	return do_pos2env(call, op, args, rho);
     default:
-	errorcall(call, _("invalid object for as.environment"));
+    	PrintValue(R_GetTraceback(0));
+	errorcall(R_GetTraceback(0), _("invalid object for as.environment"));
 	return R_NilValue;	/* -Wall */
     }
 }

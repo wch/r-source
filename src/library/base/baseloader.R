@@ -12,7 +12,7 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter) {
         if (! is.character(file)) halt("bad file name")
         con <- gzfile(file, "rb")
         on.exit(close(con))
-        .Internal(unserializeFromConn(con, NULL))
+        .Internal(unserializeFromConn(con, baseenv()))
     }
     "parent.env<-" <-
         function (env, value) .Internal("parent.env<-"(env, value))

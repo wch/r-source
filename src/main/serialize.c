@@ -638,6 +638,8 @@ static int HashGet(SEXP item, SEXP ht)
 #define BCREPDEF          244
 #define BCREPREF          243
 #endif
+#define EMPTYENV_SXP	  242
+#define BASEENV_SXP	  241
 
 /*
  * Type/Flag Packing and Unpacking
@@ -724,6 +726,8 @@ static SEXP GetPersistentName(R_outpstream_t stream, SEXP s)
 	case EXTPTRSXP: break;
 	case ENVSXP:
 	    if (s == R_GlobalEnv ||
+	    	s == R_BaseEnv ||
+	    	s == R_EmptyEnv ||
 		R_IsNamespaceEnv(s) ||
 		R_IsPackageEnv(s))
 		return R_NilValue;
@@ -752,6 +756,8 @@ static SEXP PersistentRestore(R_inpstream_t stream, SEXP s)
 static int SaveSpecialHook(SEXP item)
 {
     if (item == R_NilValue)      return NILVALUE_SXP;
+    if (item == R_EmptyEnv) 	 return EMPTYENV_SXP;
+    if (item == R_BaseEnv) 	 return BASEENV_SXP;
     if (item == R_GlobalEnv)     return GLOBALENV_SXP;
     if (item == R_UnboundValue)  return UNBOUNDVALUE_SXP;
     if (item == R_MissingArg)    return MISSINGARG_SXP;
@@ -1087,7 +1093,7 @@ void R_Serialize(SEXP s, R_outpstream_t stream)
     case 2:
 	OutInteger(stream, version);
 	OutInteger(stream, R_VERSION);
-	OutInteger(stream, R_Version(1,4,0));
+	OutInteger(stream, R_Version(2,1,0));
 	break;
     default: error(_("version %d not supported"), version);
     }
@@ -1184,6 +1190,8 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 
     switch(type) {
     case NILVALUE_SXP:      return R_NilValue;
+    case EMPTYENV_SXP:	    return R_EmptyEnv;
+    case BASEENV_SXP:	    return R_BaseEnv;
     case GLOBALENV_SXP:     return R_GlobalEnv;
     case UNBOUNDVALUE_SXP:  return R_UnboundValue;
     case MISSINGARG_SXP:    return R_MissingArg;
@@ -2117,7 +2125,7 @@ SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
     Rboolean force;
     int i, len;
 
-    if (TYPEOF(env) != NILSXP && TYPEOF(env) != ENVSXP)
+    if (TYPEOF(env) != ENVSXP)
         error(_("bad environment"));
     if (TYPEOF(vars) != STRSXP)
         error(_("bad variable names"));
@@ -2127,12 +2135,13 @@ SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
     PROTECT(val = allocVector(VECSXP, len));
     for (i = 0; i < len; i++) {
 	sym = install(CHAR(STRING_ELT(vars, i)));
-        if (TYPEOF(env) == NILSXP)
-	    tmp = findVar(sym, env);
-	else
-	    tmp = findVarInFrame(env, sym);
-	if (tmp == R_UnboundValue)
+
+	tmp = findVarInFrame(env, sym);
+	if (tmp == R_UnboundValue) {
+		PrintValue(env);
+		PrintValue(R_GetTraceback(0));   /* DJM debugging */
 	    error(_("object '%s' not found"), CHAR(STRING_ELT(vars, i)));
+	    }
         if (force && TYPEOF(tmp) == PROMSXP) {
             PROTECT(tmp);
             tmp = eval(tmp, R_GlobalEnv);
