@@ -8,10 +8,36 @@ RHOME= ..
 
 R= $(RHOME)/bin/rterm  --vanilla
 RDIFF = $(RHOME)/tools/Rdiff
+RVAL_IF_DIFF=0
 
-TESTsrc = arith-true.R arith.R d-p-q-r-tests.R eval-etc.R \
-	is-things.R lm-tests.R primitive-funs.R simple-true.R \
-	mode-methods.R isas-tests.R print-tests.R
+TESTsrc-strict-1 = \
+	arith-true.R \
+	arith.R \
+	d-p-q-r-tests.R \
+	eval-etc.R \
+	is-things.R \
+	lm-tests.R \
+	primitive-funs.R \
+	mode-methods.R \
+	simple-true.R
+TESTsrc-strict-auto = \
+	isas-tests.R
+TESTsrc-sloppy-1 = \
+	print-tests.R
+TESTsrc-sloppy-auto = \
+	no-segfault.R
+
+TESTsrc-strict = $(TESTsrc-strict-1) $(TESTsrc-strict-auto)
+TESTsrc-sloppy = $(TESTsrc-sloppy-1) #$(TESTsrc-sloppy-auto)
+TESTsrc = $(TESTsrc-strict) $(TESTsrc-sloppy)
+TESTsrc-auto = $(TESTsrc-strict-auto) $(TESTsrc-sloppy-auto)
+
+TESTout-strict = $(TESTsrc-strict:.R=.Rout)
+TESTout-sloppy = $(TESTsrc-sloppy:.R=.Rout)
+
+.SUFFIXES:
+.SUFFIXES: .R .Rout
+
 
 %.R : $(srcdir)/make-%.R
 	$(R) < $< > /dev/null
@@ -27,9 +53,16 @@ TESTsrc = arith-true.R arith.R d-p-q-r-tests.R eval-etc.R \
 	  echo "OK"; \
 	fi
 
-TESTout = $(TESTsrc:.R=.Rout)
-
-strict-tests: $(TESTout)
+all: test-Specific
+test-Specific-strict: $(TESTout-strict)
+test-Specific-sloppy: $(TESTout-sloppy)
+test-Specific:
+	@echo "running strict specific tests"
+	@$(MAKE) -f $(RHOME)/src/gnuwin32/check/Maketests \
+	  test-Specific-strict RVAL_IF_DIFF=1
+	@echo "running sloppy specific tests"
+	@$(MAKE) -f $(RHOME)/src/gnuwin32/check/Maketests \
+	  test-Specific-sloppy RVAL_IF_DIFF=0
 
 clean:
-	@rm -f *.Rout *.Rout.fail
+	@rm -f *.Rout *.Rout.fail $(TESTsrc-auto)
