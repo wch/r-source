@@ -656,7 +656,7 @@ function(txt)
 {
     start <- regexpr("\\\\name\\{[[:space:]]*([^\}]+)[[:space:]]*\\}", txt)
     if(start == -1) return(character())
-    Rd_name <- gsub("[[:space:]]*", " ",
+    Rd_name <- gsub("[[:space:]]+", " ",
                     substr(txt,
                            start + 6,
                            start + attr(start, "match.length") - 2))
@@ -670,7 +670,7 @@ function(txt)
 {
     start <- regexpr("\\\\title\\{[[:space:]]*([^\}]+)[[:space:]]*\\}", txt)
     if(start == -1) return(character())
-    Rd_title <- gsub("[[:space:]]*", " ",
+    Rd_title <- gsub("[[:space:]]+", " ",
                      substr(txt,
                             start + 7,
                             start + attr(start, "match.length") - 2))
