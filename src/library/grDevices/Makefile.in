@@ -58,18 +58,16 @@ all: Makefile DESCRIPTION
 	@if test -d src; then \
 	  (cd src && $(MAKE)) || exit 1; \
 	fi
-	@$(MAKE) RfilesLazy
+	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
+	@echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-RfilesLazy:
-	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
-	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
-	@echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
-	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null
 
 mostlyclean: clean
 clean:

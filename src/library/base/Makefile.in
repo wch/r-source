@@ -58,7 +58,10 @@ all: Makefile DESCRIPTION
 	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/$(pkg)/man/$(pkg).Rd)
 	@$(INSTALL_DATA) $(srcdir)/inst/CITATION $(top_builddir)/library/$(pkg)
-	@$(MAKE) RfilesLazy
+	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+	@(cat $(srcdir)/../tools/R/makeLazyLoad.R $(srcdir)/makebasedb.R; \
+	  echo "makeLazyLoading(\"$(pkg)\")") | \
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave
 
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -66,11 +69,6 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-RfilesLazy:
-	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
-	@(cat $(srcdir)/../tools/R/makeLazyLoad.R $(srcdir)/makebasedb.R; \
-	  echo "makeLazyLoading(\"$(pkg)\")") | \
-	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave
 
 mostlyclean: clean
 clean:
