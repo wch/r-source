@@ -50,7 +50,7 @@ extern char *getDLLVersion();
 extern void R_DefParams(Rstart);
 extern void R_SetParams(Rstart);
 extern void setup_term_ui(void);
-
+extern char *getRHOME();
 extern void setup_Rmainloop(), end_Rmainloop(), R_ReplDLLinit();
 extern void askok(char *);
 
