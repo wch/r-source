@@ -19,7 +19,7 @@ expand.grid <- function(...)
     orep <- prod(d)
     for(i in 1:nargs) {
 	x <- args[[i]]
-        dn[[i]] <- paste(nmc[i], "=", if(is.numeric(x) format(x) else x),
+        dn[[i]] <- paste(nmc[i], "=", if(is.numeric(x)) format(x) else x,
                          sep = "")
 	nx <- length(x)
 	orep <- orep/nx
