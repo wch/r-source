@@ -6,7 +6,7 @@
 }
 \usage{
 scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
-     quote = if (sep=="\n") "" else "'\"", dec = ".",
+     quote = if(identical(sep, "\n")) "" else "'\"", dec = ".",
      skip = 0, nlines = 0, na.strings = "NA",
      flush = FALSE, fill = FALSE, strip.white = FALSE,
      quiet = FALSE, blank.lines.skip = TRUE, multi.line = TRUE,
@@ -54,8 +54,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     character which delimits fields.  A field is always delimited by an
     end-of-line marker unless it is quoted.
 
-    If specified this should be the empty character string or \code{NULL}
-    (the default) or a character string containing just one single-byte
+    If specified this should be the empty character string (the default)
+    or \code{NULL} or a character string containing just one single-byte
     character.
   }
 
