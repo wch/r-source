@@ -4,6 +4,17 @@
 See the file NEWS for changes that affect all versions of R.
 
 
+rw1031
+======
+
+help.start() now updates the HTML search index (as well as the
+packages index) when it is started up.
+
+Rcmd INSTALL now rejects invalid options for --docs (rather than
+ignoring them).
+
+
+
 rw1030
 ======
 
@@ -62,7 +73,8 @@ Make targets such as test-Reg have been moved to directory rw1030\tests.
 The default internet module modules\internet.dll is built using basic
 WinSock calls.  There is an alternative modules\internet2.dll which uses
 WinInet calls (and so needs Internet Explorer installed) which can be
-used as a replacemnet.
+used as a replacement.  (Remove modules\internet.dll and then
+rename modules\internet2.dll to modules\internet.dll.)
  
 
 
