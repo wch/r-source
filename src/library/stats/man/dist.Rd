@@ -144,7 +144,7 @@ dist(rbind(x,y), method="canberra")
 ## answer 2 * (6/5)
 
 ## Examples involving "Inf" :
-
+## These will not work on a non-IEEE 754 system.
 ## 1)
 x[6] <- Inf
 (m2 <- rbind(x,y))

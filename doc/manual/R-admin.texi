@@ -1584,8 +1584,10 @@ CXXFLAGS='-O -qstrict'
 @end smallexample
 
 @noindent
-and the X11() device worked.  His system required the Makeconf file to
-be edited to replace /lib/crt0.o by /lib/crt0_64.o.
+and the @code{X11()} device worked.  His system required the
+@file{Makeconf} file to be edited to replace @code{/lib/crt0.o} by
+@code{/lib/crt0_64.o} in @code{R_XTRA_LIBS}, and @command{configure} now
+tries to detect this.
 
 We understand that @option{--enable-R-shlib} does not work under AIX.
 
