@@ -85,7 +85,8 @@ FILE *R_OpenInitFile(void)
 
 
 #ifdef HAVE_LIBREADLINE
-char *tilde_expand(char*);
+/* FIXME only define this prior to readline 4.2 */
+char *tilde_expand(const char*);
 
 char *R_ExpandFileName(char *s)
 {

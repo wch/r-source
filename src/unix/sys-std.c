@@ -310,7 +310,7 @@ static int readline_len;
 static int readline_eof;
 static unsigned char *readline_buf;
 
-static void readline_handler(unsigned char *line)
+static void readline_handler(char *line)
 {
     int l;
     rl_callback_handler_remove();
@@ -318,12 +318,12 @@ static void readline_handler(unsigned char *line)
 	return;
     if (line[0]) {
 #ifdef HAVE_READLINE_HISTORY_H
-	if (strlen((char *)line) && readline_addtohistory)
-	    add_history((char *)line);
+	if (strlen(line) && readline_addtohistory)
+	    add_history(line);
 #endif
-	l = (((readline_len-2) > strlen((char *)line))?
-	     strlen((char *)line): (readline_len-2));
-	strncpy((char *)readline_buf, (char *)line, l);
+	l = (((readline_len-2) > strlen(line))?
+	     strlen(line): (readline_len-2));
+	strncpy((char *)readline_buf, line, l);
 	readline_buf[l] = '\n';
 	readline_buf[l+1] = '\0';
     }
