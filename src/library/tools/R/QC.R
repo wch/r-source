@@ -2441,7 +2441,8 @@ function(db)
     unique_tags <-
         c("name", "title", "description", "usage", "arguments",
           "format", "details", "value", "references", "source",
-          "seealso", "examples", "note", "author", "synopsis")
+          "seealso", "examples", "note", "author", "synopsis",
+          "docType", "encoding")
 
     files_with_surely_bad_Rd <- list()
     files_with_likely_bad_Rd <- list()
