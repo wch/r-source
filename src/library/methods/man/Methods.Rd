@@ -1,6 +1,5 @@
 \name{Methods}
 \alias{Methods}
-\alias{plot}
 \title{General Information on Methods}
 \non_function{}
 \description{
