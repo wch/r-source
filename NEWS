@@ -361,9 +361,9 @@ BUG FIXES
     o	Printing a dataframe with a column called "row.names" or
 	"check.names" omitted the column.
 
-    o	data.frame(a=1, b=2)[1, -(1:2)]  now works, giving an empty
-	data frame.  as.matrix(df), deparse() and dput() now work for
-	empty data frames.
+    o	data.frame(a=1, b=2)[1, -(1:2)]	 now works, giving an empty
+	data frame.  as.matrix(df), deparse(), dput() and str() now work
+	for empty data frames.
 
     o	dbeta() could return zero erroneously on some platforms where
 	roundoff makes e.g. 1.3 - 1 > (1.3 + 1) - 2 (Solaris and HP-UX
