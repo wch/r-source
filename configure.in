@@ -21,7 +21,7 @@ host_vendor=$2
 host_os=$3
 
 AC_DEFINE(R_MAJOR, "0")
-AC_DEFINE(R_MINOR, "61.0")
+AC_DEFINE(R_MINOR, "62.0")
 AC_DEFINE(R_STATUS, "Alpha")
 AC_DEFINE(R_STATUS_REV, "0")
 AC_DEFINE(R_DAY, "21")
