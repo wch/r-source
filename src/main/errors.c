@@ -99,12 +99,8 @@ void onsigusr1()
 	
     inError = 1;
 
-    if( R_CollectWarnings ) {
-	inError = 2;
-	REprintf("In addition: ");
+    if( R_CollectWarnings )
 	PrintWarnings();
-	inError = 1;
-    }
 
     R_ResetConsole();
     R_FlushConsole();
@@ -141,13 +137,8 @@ void onsigusr2()
 	return;
     }
 	
-    if( R_CollectWarnings ) {
-	inError = 2;
-	REprintf("In addition: ");
+    if( R_CollectWarnings )
 	PrintWarnings();
-	inError = 1;
-    }
-
 
     R_ResetConsole();
     R_FlushConsole();
@@ -278,6 +269,15 @@ void warningcall(SEXP call, const char *format, ...)
     inWarning = 0;
 }
 
+static void cleanup_PrintWarnings(void *data)
+{
+    if (R_Warnings != R_NilValue)
+	REprintf("Lost warning messages\n");
+    inWarning = 0;
+    R_CollectWarnings = 0;
+    R_Warnings = R_NilValue;
+}
+
 void PrintWarnings(void)
 {
     int i;
@@ -287,7 +287,7 @@ void PrintWarnings(void)
     /* set up a context which will restore inWarning if there is an exit */
     begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
 		 R_NilValue, R_NilValue);
-    cntxt.cend = &reset_inWarning;
+    cntxt.cend = &cleanup_PrintWarnings;
 
     inWarning = 1;
     if( R_CollectWarnings == 1 ) {
@@ -413,6 +413,12 @@ void errorcall(SEXP call, const char *format,...)
     p = errbuf + strlen(errbuf) - 1;
     if(*p != '\n') strcat(errbuf, "\n");
     if (R_ShowErrorMessages) REprintf("%s", errbuf);
+
+    if( R_ShowErrorMessages && R_CollectWarnings ) {
+	REprintf("In addition: ");
+	PrintWarnings();
+    }
+
     jump_to_toplevel();
 
     /* not reached */
@@ -473,13 +479,6 @@ void jump_to_toplevel()
 
 	inError = 1;
 
-	if( R_ShowErrorMessages && R_CollectWarnings ) {
-	    inError = 2;
-	    REprintf("In addition: ");
-	    PrintWarnings();
-	    inError = 1;
-	}
-
 	/*now see if options("error") is set */
 	s = GetOption(install("error"), R_NilValue);
 	haveHandler = ( s != R_NilValue );
@@ -499,6 +498,10 @@ void jump_to_toplevel()
 		inError = 1;
 	    }
 	}
+
+	/* print warnings if there are any left to be printed */
+	if( R_CollectWarnings )
+	    PrintWarnings();
 
 	/* reset some stuff--not sure (all) this belongs here */
 	R_ResetConsole();
@@ -558,12 +561,8 @@ void jump_to_toplevel()
 	UNPROTECT(1);
     }
 
-    if( inError == 2 )
-	REprintf("Lost warning messages\n");
     inError=0;
     inWarning=0;
-    R_Warnings = R_NilValue;
-    R_CollectWarnings = 0;
 
     R_GlobalContext = R_ToplevelContext;
     R_restore_globals(R_GlobalContext);
