@@ -5,11 +5,13 @@ is.finite(x)
 is.infinite(x)
 Inf
 NaN
+is.nan(x)
 }
 \alias{is.finite}
 \alias{is.infinite}
 \alias{Inf}
 \alias{NaN}
+\alias{is.nan}
 \description{
 \code{is.finite} returns a vector of the same length as \code{x}
 the jth element of which is \code{TRUE} if the jth element of \code{x} is
@@ -35,12 +37,17 @@ exp(-Inf) == 0
 ## 		 corrected in newer 'libc6' based Linuxen).
 
 is.na(0/0) # T
-is.na(Inf) # F
+!is.na(Inf)# T
 is.nan(0/0)# T
 
 (!is.nan(NA))  &&  (!is.infinite(NA))  && (!is.finite(NA)) # TRUE!!
 ( is.nan(NaN)) &&  (!is.infinite(NaN)) && (!is.finite(NaN))# TRUE!!
 
+!is.nan(NA)
+all(!is.nan(c(1,NA)))
+all(c(F,T,F) == is.nan(c   (1,NaN,NA)))
+all(c(F,T,F) == is.nan(list(1,NaN,NA)))#-> FALSE  'BUG' [coerce.c]
+				# However, S is different anyway.
 
 ( weird.values <- c(-20.9/0, 1/0, 0/0, NA) )
 
@@ -78,8 +85,6 @@ cos(Inf)
 tan(Inf)
 all(atan(Inf*pm) == pm*pi/2) # TRUE
 
-sin(Inf) == NaN
-
 
 x <- c(100,-1e-13,Inf,-Inf, NaN, pi, NA)
 x #  1.000000 -3.000000       Inf      -Inf        NA  3.141593        NA
@@ -104,15 +109,17 @@ all(is.na(x) != is.finite(x) | is.infinite(x)) # TRUE
 all(is.nan(x) != is.finite(x) | is.infinite(x)) # FALSE: have 'real' NA
 
 ##--- Integer
-print(ix <- structure(as.integer(x),names= names(x)))
+(ix <- structure(as.integer(x),names= names(x)))
 ##-   100 -1e-13        Inf        -Inf NaN 3.14 NA
 ##-   100      . 2147483647 -2147483648  NA    3 NA
 all(is.na(ix) != is.finite(ix) | is.infinite(ix)) # TRUE (still)
 
-ix[3] == (iI <- as.integer(Inf))
+ix[3] == (iI <- as.integer(Inf))#> warning: inaccurate integer conversion!
 ix[4] == (imI<- as.integer(-Inf))
-iI == .Machine$integer.max # TRUE
+iI  == .Machine$integer.max # TRUE
+imI == -.Machine$integer.max # TRUE
 
+##--- Overflow in simple integer arithmetic:
 as.integer(2)*iI #  -2
 as.integer(3)*iI #  2147483645
 as.integer(3)*iI == iI-2 # TRUE
@@ -122,15 +129,11 @@ storage.mode(zm <- outer(ii,ii, FUN="*"))# integer
 storage.mode(zd <- outer(ii,ii, FUN="/"))# double
 range(zd, na.rm=T)# -Inf  Inf
 zd[,ii==0]
-## S  [1] -Inf -Inf -Inf   NA  Inf  Inf  Inf  Inf  Inf
 
-print(storage.mode(print(1:1 / 0:0)))
-
-print(storage.mode(print(1:1 / 1:1)))# 1 "double"
-print(storage.mode(print(1:1 + 1:1)))# 2 "integer"
-print(storage.mode(print(2:2 * 2:2)))# 4 "integer"
-
-
+(storage.mode(print(1:1 / 0:0)))# Inf "double"
+(storage.mode(print(1:1 / 1:1)))# 1 "double"
+(storage.mode(print(1:1 + 1:1)))# 2 "integer"
+(storage.mode(print(2:2 * 2:2)))# 4 "integer"
 }
 \keyword{programming}
 \keyword{math}
