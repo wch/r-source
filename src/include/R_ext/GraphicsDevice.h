@@ -1,7 +1,3 @@
-/**************************
- * A first hack at a possible new device API
- **************************
- */
 
 /* New device driver structure
  * NOTES:
@@ -25,21 +21,15 @@
  *    to decide when to ask for which sort of value, and to decide
  *    what to do when font metric information is not available.
  *    And why not a dev_StrHeight?
- * 4. Replaced dev_Resize with dev_Size
- * 5. Do I make "cex" and "ps" part of the graphics engine or
- *    part of R base graphics?  If not part of the graphics engine,
- *    then how should the graphics engine specify text size?
- *    For now, they are part of the graphics engine.
- *    Similar comments apply for "font".
- * 6. Should "ipr", "asp", and "cra" be in the device description?
+ * 4. Should "ipr", "asp", and "cra" be in the device description?
  *    If not, then where?
  *    I guess they don't need to be if no device makes use of them.
  *    On the other hand, they would need to be replaced by a device
  *    call that R base graphics could use to get enough information
  *    to figure them out.  (e.g., some sort of dpi() function to
  *    complement the size() function.)
- * 7. Is dev_Dot used anywhere?
  */
+
 typedef struct {
     /* The first element is a boolean indicating whether this is 
      * a new device driver (always 1) -- the old device driver structure
@@ -168,6 +158,8 @@ typedef struct {
      *                        R_GE_gcontext *gc,
      *                        NewDevDesc *dd);
      *
+     * R_GE_gcontext parameters that should be honoured (if possible):
+     *   col, fill, gamma, lty, lwd
      */
     void (*circle)();
     /*
@@ -239,6 +231,8 @@ typedef struct {
      *                      R_GE_gcontext *gc,
      *                      NewDevDesc *dd);
      *
+     * R_GE_gcontext parameters that should be honoured (if possible):
+     *   col, gamma, lty, lwd
      */
     void (*line)();
     /*
@@ -255,6 +249,9 @@ typedef struct {
      *                            R_GE_gcontext *gc,
      *                            double* ascent, double* descent,
      *                            double* width, NewDevDesc *dd);
+     *
+     * R_GE_gcontext parameters that should be honoured (if possible):
+     *   font, cex, ps
      */
     void (*metricInfo)();
     /*
@@ -312,6 +309,8 @@ typedef struct {
      *                         R_GE_gcontext *gc,
      *                         NewDevDesc *dd);
      *
+     * R_GE_gcontext parameters that should be honoured (if possible):
+     *   col, fill, gamma, lty, lwd
      */
     void (*polygon)();
     /*
@@ -324,6 +323,8 @@ typedef struct {
      *                          R_GE_gcontext *gc,
      *                          NewDevDesc *dd);
      *
+     * R_GE_gcontext parameters that should be honoured (if possible):
+     *   col, gamma, lty, lwd
      */
     void (*polyline)();
     /*
@@ -358,6 +359,8 @@ typedef struct {
      *                      double *bottom, double *top,
      *                      NewDevDesc *dd);
      *
+     * R_GE_gcontext parameters that should be honoured (if possible):
+     *   col, fill, gamma, lty, lwd
      */
     void (*size)();
     /*
@@ -369,6 +372,8 @@ typedef struct {
      *                            R_GE_gcontext *gc,
      *                            NewDevDesc *dd)
      *
+     * R_GE_gcontext parameters that should be honoured (if possible):
+     *   font, cex, ps
      */
     double (*strWidth)();
     /*
@@ -382,6 +387,8 @@ typedef struct {
      *                      R_GE_gcontext *gc,
      * 	                    NewDevDesc *dd);
      *
+     * R_GE_gcontext parameters that should be honoured (if possible):
+     *   font, cex, ps, col, gamma
      */
     void (*text)();
 } NewDevDesc;
