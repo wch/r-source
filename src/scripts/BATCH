@@ -2,7 +2,7 @@
 #
 # ${RHOME}/bin/BATCH
 
-OPTS="--restore --save"
+OPTS="--restore --save --no-readline"
 
 while test -n "${1}"; do
     case ${1} in
@@ -17,7 +17,7 @@ done
 IN=${1}
 OUT=${2-`basename ${1} .R`.Rout}
 
-(echo "invisible(options(echo = TRUE))"; \
-    cat ${IN}; \
-    echo "proc.time()") \
-    | ${RHOME}/bin/R ${OPTS} >${OUT} 2>&1
+(echo "invisible(options(echo = TRUE))"
+ cat ${IN}
+ echo "proc.time()"
+) | ${RHOME}/bin/R ${OPTS} >${OUT} 2>&1

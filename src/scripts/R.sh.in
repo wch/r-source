@@ -15,27 +15,45 @@ case "${ARG}" in
     -d|--debugger)
 	exec "$2" ${RHOME}/bin/R.binary ;;
     -h|--help|-\?)
-        echo "Usage:  R [OPTIONS] [< INFILE] [> OUTFILE]"
-        echo ""
-        echo "Options:"
-        echo "  --save                     Do save data sets at the end of the session."
-        echo "  --no-save                  Don't save them."
-        echo "  --restore                  Do restore previously saved data sets at startup."
-        echo "  --no-restore               Don't restore them."
-        echo "  --no-readline              Don't use readline for command-line editing."
-        echo "  --no-site-file             Don't read the site-wide Rprofile."
-        echo "  --no-init-file             Don't read the .Rprofile or ~/.Rprofile files."
-        echo "  --vsize N                  Set the vector heap size to N megabytes."
-        echo "  --nsize N                  Set the number of cons cells to N."
-        echo "  -h, --help, -?             Print short help message and exit."
-        echo "  -q, --quiet, --silent      Make R run as quietly as possible."
-        echo "  --version                  Print version info and exit."
-	echo "  --verbose                  Print more information about progress."
-        echo "  -d NAME, --debugger NAME   Run R through debugger NAME."
-	echo ""
-	echo "Report bugs to R-bugs@biostat.ku.dk."
+	cat <<_EOF_
+
+Usage:  R [OPTIONS] [< INFILE] [> OUTFILE]
+   or   R command      [arguments]
+   or   R CMD Rcommand [arguments]
+
+Options:
+  --save                    Do save data sets at the end of the session.
+  --no-save                 Don't save them.
+  --restore                 Do restore previously saved data sets at startup.
+  --no-restore              Don't restore them.
+  --no-readline             Don't use readline for command-line editing.
+  --no-site-file            Don't read the site-wide Rprofile.
+  --no-init-file            Don't read the .Rprofile or ~/.Rprofile files.
+  --vanilla		    = --no-save, no-restore, no-site-file, no-init-file
+  --vsize N                 Set the vector heap size to N (>= 1)  megabytes.
+  --nsize N                 Set the number of cons cells to N (>= 200000).
+  -h, --help, -?            Print short help message and exit.
+  -q, --quiet, --silent     Make R run as quietly as possible.
+  --version                 Print version info and exit.
+  --verbose                 Print more information about progress.
+  -d NAME, --debugger NAME  Run R through debugger NAME.
+
+Commands:
+  RHOME				Give R's home directory
+  BATCH infile [ outfile ]	Run Batch job
+  COMPILE|INSTALL|REMOVE|SHLIB  Package management & dyn.load compilation
+
+Rcommands:
+  Rdconv
+  Rdindex, Sd2Rd
+  Rd2dvi, Rd2txt
+   ...
+
+Report bugs to R-bugs@biostat.ku.dk."
+
+_EOF_
 	exit 0 ;;
-esac	
+esac
 
 # Default Printer Paper Size
 # Choose one of the following
