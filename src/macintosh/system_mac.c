@@ -555,7 +555,7 @@ int Mac_initialize_R(int ac, char **av)
 
     R_HistorySize = 512;
     if ((p = mac_getenv("R_HISTSIZE"))) {
-	value = Decode2Long(p, &ierr);
+	value = R_Decode2Long(p, &ierr);
 	if (ierr != 0 || value < 0)
 	    REprintf("WARNING: invalid R_HISTSIZE ignored;");
 	else
@@ -1845,7 +1845,7 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 		    R_ShowMessage("WARNING: no nsize given\n");
 		    break;
 		}
-		value = Decode2Long(p, &ierr);
+		value = R_Decode2Long(p, &ierr);
 		if(ierr) {
 		    if(ierr < 0) /* R_common_badargs(); */
 			sprintf(msg, "WARNING: --nsize value is invalid: ignored\n");
