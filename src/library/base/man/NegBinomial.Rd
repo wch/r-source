@@ -13,11 +13,18 @@ rnbinom(n, size, prob)
 \arguments{
 \item{x,q}{vector of quantiles representing the number of failures
 which occur in a sequence of Bernoulli trials before a target number of
-successes is reached.}
+successes is reached, or alternately the probability distribution
+of a heterogeneous Poisson process whose intensity is distributed
+as a gamma distribution with scale parameter \code{prob/(1-prob)} and
+shape parameter \code{size} (this definition allows non-integer
+values of \code{size}).}
 \item{p}{vector of probabilities.}
 \item{n}{number of observations to generate.}
-\item{size}{target for number of successful trials.}
-\item{prob}{probability of success in each trial.}
+\item{size}{target for number of successful trials /\cr
+    shape parameter of gamma distribution.}
+\item{prob}{probability of success in each trial /\cr
+    determines scale of gamma distribution
+    (\code{prob} = \code{scale/(1+scale)}).} 
 }
 \description{
   These functions provide information about the negative binomial
@@ -25,12 +32,13 @@ successes is reached.}
   gives the density, \code{pnbinom} gives the distribution function,
   \code{qnbinom} gives the quantile function and \code{rnbinom}
   generates random deviates.
-
+}
+\details{
   The negative binomial distribution with \code{size} \eqn{= n} and
   \code{prob} \eqn{= p} has density
   \deqn{
-    p(x) = {x+n-1 \choose x} p^n (1-p)^x}{
-    p(x) = Choose(x+n-1,x) p^n (1-p)^x}
+    p(x) = \frac{\Gamma(x+n)}{\Gamma(n) x!} p^n (1-p)^x}{%
+    p(x) = Gamma(x+n)/(Gamma(n) x!) p^n (1-p)^x}
   for \eqn{x = 0, 1, 2, \ldots}
 }
 \seealso{
@@ -46,5 +54,14 @@ dnbinom(x, size = 1, prob = 1/2) * 2^(1 + x) # == 1
 ## Cumulative ('p') = Sum of discrete prob.s ('d');  Relative error :
 summary(1 - cumsum(dnbinom(x, size = 2, prob = 1/2)) /
 	          pnbinom(x, size  = 2, prob = 1/2))
+
+x <- seq(0,6, len=21)
+size <- (1:20)/4
+persp(x,size, dnb <- outer(x,size,function(x,s)dnbinom(x,s, pr= 0.4)))
+title(tit <- "negative binomial density(x,s, pr = 0.4)  vs.  x & s")
+## if persp() only could label axes ....
+
+image  (x,size, log10(dnb), main= paste("log [",tit,"]"))
+contour(x,size, log10(dnb),add=TRUE)
 }
 \keyword{distribution}

@@ -45,7 +45,6 @@
 
 double rnbinom(double n, double p)
 {
-    n = floor(n + 0.5);
     if(
 #ifdef IEEE_754
 	!finite(n) || !finite(p) ||
