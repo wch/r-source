@@ -65,15 +65,23 @@ arima0 <- function(x, order = c(0, 0, 0),
                ncond - (n - n.used), PACKAGE = "ts")
     on.exit(.Call("free_starma", G, PACKAGE = "ts"))
     .Call("Starma_method", G, method == "CSS", PACKAGE = "ts")
-    init <- rep(0, sum(arma[1:4]))
-    if(ncxreg > 0)
-        init <- c(init, coef(lm(x ~ xreg+0)))
+    narma <- sum(arma[1:4])
+    init <- rep(0, narma)
+    parscale <- rep(1, narma)
+    if (ncxreg > 0) {
+        fit <- lm(x ~ xreg - 1)
+        init <- c(init, coef(fit))
+        ses <- summary(fit)$coef[,2]
+        parscale <- c(parscale, ses)
+     }
+
     if (is.null(fixed)) fixed <- rep(NA, length(init))
     mask <- is.na(fixed)
     if(!any(mask)) stop("all parameters were fixed")
     .Call("Starma_method", G, method == "CSS", PACKAGE = "ts")
     res <- optim(init[mask], arma0f, method = "BFGS",
-                 hessian = !transform.pars)
+                 hessian = !transform.pars,
+                 control = list(parscale = parscale))
     if(res$convergence > 0)
         warning(paste("possible convergence problem: optim gave code=",
                       res$convergence))
@@ -84,8 +92,7 @@ arima0 <- function(x, order = c(0, 0, 0),
     if(transform.pars) {
         .Call("set_trans", G, 0, PACKAGE = "ts")
         res <- optim(coef, arma0f, method = "BFGS", hessian = TRUE,
-                     control = list(maxit = 0))
-        coef <- res$par
+                     control = list(maxit = 0, parscale = parscale))
     }
     arma0f(coef)  # reset pars
     sigma2 <- .Call("get_s2", G, PACKAGE = "ts")
