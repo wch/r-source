@@ -2832,7 +2832,7 @@ data(infert)
 @noindent
 In most cases this will load an @R{} object of the same name, usually a
 data frame.  However, in a few cases it loads several objects, so see the
-on-line help for the object to see what to expect.
+on-line help for the object to see what to expect.  
 
 @subsection Loading data from other R packages
 
@@ -2840,8 +2840,8 @@ To access data from another package, use the @code{package} argument,
 for example
 
 @example
-data(package="stats")
-data(Puromycin, package="stats")
+data(package="rpart")
+data(Puromycin, package="datasets")
 @end example
 
 If a package has been attached by @code{library}, its datasets are

@@ -1700,7 +1700,7 @@ specific directories).  As from @R{} 1.8.0, code included in
 
 Data needed for making the examples executable can be obtained by random
 number generation (for example, @code{x <- rnorm(100)}), or by using
-standard data sets loadable via @code{data()} (see @code{?data} for more
+standard data sets listed by @code{data()} (see @code{?data} for more
 info).
 
 @findex \keyword
@@ -2359,7 +2359,6 @@ As an example, consider the following code (from Venables & Ripley,
 @smallexample
 @group
 library(MASS); library(boot)
-data(stormer)
 storm.fm <- nls(Time ~ b*Viscosity/(Wt - c), stormer,
                 start = c(b=29.401, c=2.2183))
 st <- cbind(stormer, fit=fitted(storm.fm))
