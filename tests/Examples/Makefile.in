@@ -51,14 +51,14 @@ R:
 
 .R.Rout:
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
-	@if [ -f $@ ];     then cp $@     $@.bak  ; fi
+	@if [ -f $@ ];     then cp -p $@     $@.bak  ; fi
 	@echo "running code in $< ..."
 	$(R) < $< > $@
 
 $(EX_IN): FORCE
 	@(pkg=`echo $@ | sed -e 's/-Ex.R$$//g'`; \
 	  if test -f $@.bak ; then mv $@.bak $@.bakk ; fi; \
-	  if test -f $@     ; then cp $@     $@.bak  ; fi; \
+	  if test -f $@     ; then cp -p $@     $@.bak  ; fi; \
 	  echo "updating $@ ..."; \
 	  (cd $(top_builddir)/src/library && \
 	    OPTS="--nroff --example" $(MAKE) PKGS="$${pkg}" DOCS); \
