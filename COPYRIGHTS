@@ -78,18 +78,18 @@ share/texmf/upquote.sty
 	Copyright 2000 Michael A. Covington.
 	Copyright 2003 Michael A. Covington, Frank Mittelbach.
 
-src/library/base/R/mosaicplot.R
+src/library/graphics/R/mosaicplot.R
 
 	Copyright (C) 1998 John W. Emerson
 
 
-src/library/base/R/aov.R
-src/library/base/R/bandwidths.R
-src/library/base/R/contr.poly.R
+src/library/stats/R/aov.R
+src/library/stats/R/bandwidths.R
+src/library/stats/R/contr.poly.R
 src/library/base/R/expand.grid.R
-src/library/base/R/predict.glm.R
-src/library/base/R/update.R
-src/library/base/*/max.col.R*
+src/library/stats/R/predict.glm.R
+src/library/stats/R/update.R
+src/library/stats/*/max.col.R*
 src/library/stats/R/biplot.R
 src/library/stats/R/princomp-add.R
 src/appl/bandwidths.c
@@ -110,15 +110,15 @@ src/library/stats:
 	Copyright (c) 1989, 1992 by AT&T.
 
 
-src/library/ts/R/diffinv.R
-src/library/ts/R/embed.R
-src/library/ts/R/kernel.R
-src/library/ts/src/PPsum.c
+src/library/stats/R/diffinv.R
+src/library/stats/R/embed.R
+src/library/stats/R/kernel.R
+src/library/stats/src/PPsum.c
 
 	Copyright (C) 1997-1999	 Adrian Trapletti
 
 
-src/library/ts/src/carray.c, mburg.c, myw.c, qr.c
+src/library/stats/src/carray.c, mburg.c, myw.c, qr.c
 
 	Copyright (C) 1999 Martyn Plummer
 
