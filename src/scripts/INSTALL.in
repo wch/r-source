@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.47 $'
+revision='$Revision: 1.48 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}"
 
@@ -218,7 +218,7 @@ do_install () {
       if ${debug}; then set -x; fi
       mkdir -p ${lib}/${pkg}/libs
       if test -f src/Makefile; then
-        (cd src;
+        cd src;
           makefiles="-f ${R_HOME}/etc/Makeconf -f Makefile"
 	  if test -r Makevars; then
 	    makefiles="-f Makevars ${makefiles}"
@@ -228,16 +228,18 @@ do_install () {
 	    || error=true; \
 	  if ${clean}; then
 	    ${MAKE} clean
-	  fi)
+	  fi
+	cd ..
       else
-        (cd src;
+        cd src;
           srcs=`ls *.[cfC] *.cc *.cpp 2>/dev/null`
 	  sh ${R_HOME}/bin/SHLIB -o ${pkg}.@SHLIB_EXT@ ${srcs} \
 	    && cp *.@SHLIB_EXT@ ${lib}/${pkg}/libs \
   	    || error=true; \
 	  if ${clean}; then
 	    rm -f .libs _libs *.o *.@SHLIB_EXT@
-	  fi)
+	  fi
+	cd ..
       fi
       if ${error}; then
 	echo "ERROR: Compilation failed for package \`${pkg}'"
