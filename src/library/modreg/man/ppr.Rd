@@ -159,6 +159,9 @@ method functions.
   SMART User's Guide.
   Laboratory for Computational Statistics, Stanford University Technical
   Report No. 1.
+
+  Venables, W. N. & Ripley, B. D. (1999)
+  \emph{Modern Applied Statistics with S-PLUS.}  Springer.
 }
 \seealso{
   \code{\link{plot.ppr}}, \code{\link{supsmu}}, \code{\link{smooth.spline}}
