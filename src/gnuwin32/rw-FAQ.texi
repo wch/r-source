@@ -124,7 +124,7 @@ for a list), navigate to the @code{bin/windows/base}
 directory and collect the files you need.  There are three versions of
 the distribution.
 
-1) @code{SetupR.exe}, is about 15Mb and gives a complete installation.
+1) @code{SetupR.exe}, is about 16Mb and gives a complete installation.
 
 2) Directory @code{miniR} contains @code{miniR.exe} and seven files
 @code{miniR-?.bin}.  You can put  @code{miniR.exe} and @code{miniR-1.bin}
@@ -198,6 +198,10 @@ reserve it.
 Use @code{?Memory} and @code{?memory.size} for information about memory
 usage.  The limit can be raised by calling @code{memory.limit} from a
 running R session.
+
+We have found that starting R with too large a value of
+@code{--max-mem-size} may fail: the limit seemed to be about 1.7Mb on
+Windows 2000 Professional.
 
 R can be compiled to use a different memory manager which might be better
 at using large amounts of memory, but is substantially slower (making R
@@ -295,7 +299,7 @@ tried to make R work on paths with spaces in, but lots of people writing
 packages for Unix do not bother.  So it is worth trying the alternative
 short name (something like @code{PROGRA~1}; you can get it as the
 `MS-DOS name' from the Properties of the file on most versions of
-Windows, and from @code{dir /X} is a @code{Command Prompt} window on 2000/XP).
+Windows, and from @code{dir /X} in a @code{Command Prompt} window on 2000/XP).
 
 
 @node Does R use the Registry?, Entering certain characters crashes Rgui., R can't find my file, Installation and Usage
@@ -377,13 +381,16 @@ Note that the pre-compiled versions on CRAN are unsupported: see
 
 If there is not a pre-compiled version or that is not up-to-date or you
 prefer compiling from source, get @code{@RWVER@sp.zip} from the
-distribution (see Q1.1; you may already have installed this from
-@code{SetupR.exe}) and unpack it in the parent of @code{@RWVER@}.  Then
-read the file @file{readme.packages}.  You will need to collect and
-install several tools to use this.  Once you have done so, just run
-@code{Rcmd INSTALL pkgname}.  To check the package (including running
-all the examples on its help pages and in its test suite, if any) use
-@code{Rcmd check pkgname}: see the @emph{`Writing R Extensions'} manual.
+distribution (@pxref{Where can I find the latest version?}; you may
+already have installed this from @code{SetupR.exe}) and unpack it in the
+parent of @code{@RWVER@}.  Then read the file @file{readme.packages}.
+You will need to collect and install several tools to use this: you can
+download them via the portal at
+@uref{http://www.stats.ox.ac.uk/pub/Rtools/}.  Once you have done so,
+just run @code{Rcmd INSTALL pkgname}.  To check the package (including
+running all the examples on its help pages and in its test suite, if
+any) use @code{Rcmd check pkgname}: see the @emph{`Writing R
+Extensions'} manual.
 
 
 @node I don't have permission to write to the @RWVER@\library directory, The packages I installed do not appear in the HTML help system, Can I install packages (libraries) in this version?, Packages
@@ -413,7 +420,7 @@ library(MASS, lib.loc="p:/mylibs")
 
 How you set an environment variable is system specific: in Windows 9x
 you can set them in @file{autoexec.bat} or in an MS-DOS window from
-which you launch @code{Rgui} / @code{Rterm}.  Under Windows NT/2000 you
+which you launch @code{Rgui} / @code{Rterm}.  Under Windows NT/2000/XP you
 can use the control panel or the properties of `My Computer'.  Under
 Windows Me you need to use the System Configuration Utility (under
 Programs, Accessories, System Tools on the Start menu).  You can also
@@ -488,14 +495,14 @@ For package @code{tcltk} to work (try @code{demo(tkdensity)} or
 @code{demo(tkttest)} after @code{library(tcltk)}) you need to have Tcl
 installed.  Download either ActiveTcl 8.3.3 from
 @uref{http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/} or
-@file{tcl832.exe} from @uref{dev.scriptics.com} and install it.  (That
-will put the @file{bin} directory containing the Tcl and Tk DLLs in your
-path).  You then need to set the environment variable
-@code{TCL_LIBRARY}, to something like @code{c:/Program
-Files/Tcl/lib/tcl8.3}.  (The startup code for the package will warn you
-if this is unset, and Q3.2 explains how to set them.  NB: do not quote
-the path, even if as here it contains spaces. If you forget, you can set
-the variable inside R by something like
+@file{tcl832.exe} from @uref{dev.scriptics.com} and install it.  (Most
+versions of the installer will put the @file{bin} directory containing
+the Tcl and Tk DLLs in your path, but you should check.)  You then need
+to set the environment variable @code{TCL_LIBRARY}, to something like
+@code{c:/Program Files/Tcl/lib/tcl8.3}.  (The startup code for the
+package will warn you if this is unset, and Q3.2 explains how to set
+them.  NB: do not quote the path, even if as here it contains spaces. If
+you forget, you can set the variable inside R by something like
 @smallexample
     Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.3")
 @end smallexample
@@ -522,7 +529,7 @@ They may well not work between packages installed in different libraries.
 * What should I expect to behave differently from the Unix version::  
 * I hear about some nifty features.::  
 * Circles appear as ovals on screen::  
-* How do I more focus to a graphics window or the console?::  
+* How do I move focus to a graphics window or the console?::  
 @end menu
 
 
@@ -588,7 +595,7 @@ There is a Preferences editor invoked from the @code{Edit} menu which
 can be used to edit the file @file{Rconsole}.
 
 
-@node Circles appear as ovals on screen, How do I more focus to a graphics window or the console?, I hear about some nifty features., Windows Features
+@node Circles appear as ovals on screen, How do I move focus to a graphics window or the console?, I hear about some nifty features., Windows Features
 @section Circles appear as ovals on screen
 
 The graphics system asks Windows for the number of pixels per inch in
@@ -603,8 +610,8 @@ On one of our systems, the screen height is reported as 240mm, and the
 width as 300mm in 1280 x 1024 mode and 320mm in 1280 x 960 and 1600 x 1200
 modes.  In fact it is a 21" monitor and 400mm x 300mm!
 
-@node How do I more focus to a graphics window or the console?,  , Circles appear as ovals on screen, Windows Features
-@section How do I more focus to a graphics window or the console?
+@node How do I move focus to a graphics window or the console?,  , Circles appear as ovals on screen, Windows Features
+@section How do I move focus to a graphics window or the console?
 
 You may want to do this from within a function, for example when calling
 @samp{idenitfy} or @samp{readline}.  Use the function
@@ -727,7 +734,6 @@ scrollbar or the @key{CTRL + left/right arrow} keys to scroll horizontally.
 * The output from my C code disappears.::  
 * The output from my Fortran code disappears.::  
 * The console freezes when my compiled code is running::  
-* The Perl scripts don't seem to work under Windows 9x/ME.::  
 @end menu
 
 
@@ -914,7 +920,7 @@ output before returning to the R prompt even when using the @code{xxxpr}
 subroutines.
 
 
-@node  The console freezes when my compiled code is running, The Perl scripts don't seem to work under Windows 9x/ME., The output from my Fortran code disappears., Building from Source
+@node  The console freezes when my compiled code is running,  , The output from my Fortran code disappears., Building from Source
 @section The console freezes when my compiled code is running.
 
 The console, pagers and graphics window all run in the same thread
@@ -924,26 +930,18 @@ If you want output to be updated on the console, call
 @code{R_FlushConsole()} and then @code{R_ProcessEvents()}.
 
 
-@node The Perl scripts don't seem to work under Windows 9x/ME.,  , The console freezes when my compiled code is running, Building from Source
-@section The Perl scripts don't seem to work under Windows 9x/ME.
-
-This has been seen under some versions of Perl and Windows versions
-(95/98/ME) which use a 16-bit shell.  Hopefully rw1030 and later are
-more robust in this respect: it @emph{may} help to upgrade your Perl
-version (5.6.1, build 628 was current at the time of writing).
-
 @ifhtml
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2001 November 3 by Professor B. D. Ripley
+Last edited 2001 November 18 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2001 November 3 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2001 November 18 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

@@ -38,7 +38,7 @@ Table of Contents
   4.1 What should I expect to behave differently from the Unix version of R?
   4.2 I hear about some nifty features: please tell me about them!
   4.3 Circles appear as ovals on screen
-  4.4 How do I more focus to a graphics window or the console?
+  4.4 How do I move focus to a graphics window or the console?
 
 5 Workspaces
   5.1 My workspace gets saved in a strange place: how do I stop this?
@@ -59,7 +59,6 @@ Table of Contents
   7.5 The output from my C code disappears.  Why?
   7.6 The output from my Fortran code disappears.  Why?
   7.7 The console freezes when my compiled code is running.
-  7.8 The Perl scripts don't seem to work under Windows 9x/ME.
 
 
 
@@ -87,7 +86,7 @@ Go to any CRAN site (see `http://cran.r-project.org/mirrors.html' for a
 list), navigate to the `bin/windows/base' directory and collect the
 files you need.  There are three versions of the distribution.
 
-1) `SetupR.exe', is about 15Mb and gives a complete installation.
+1) `SetupR.exe', is about 16Mb and gives a complete installation.
 
 2) Directory `miniR' contains `miniR.exe' and seven files
 `miniR-?.bin'.  You can put  `miniR.exe' and `miniR-1.bin' on one
@@ -154,6 +153,10 @@ free memory but R will not be able to reserve it.
 Use `?Memory' and `?memory.size' for information about memory usage.
 The limit can be raised by calling `memory.limit' from a running R
 session.
+
+We have found that starting R with too large a value of
+`--max-mem-size' may fail: the limit seemed to be about 1.7Mb on
+Windows 2000 Professional.
 
 R can be compiled to use a different memory manager which might be
 better at using large amounts of memory, but is substantially slower
@@ -244,7 +247,7 @@ tried to make R work on paths with spaces in, but lots of people writing
 packages for Unix do not bother.  So it is worth trying the alternative
 short name (something like `PROGRA~1'; you can get it as the `MS-DOS
 name' from the Properties of the file on most versions of Windows, and
-from `dir /X' is a `Command Prompt' window on 2000/XP).
+from `dir /X' in a `Command Prompt' window on 2000/XP).
 
 2.11 Does R use the Registry?
 =============================
@@ -311,13 +314,15 @@ Note that the pre-compiled versions on CRAN are unsupported: see
 
 If there is not a pre-compiled version or that is not up-to-date or you
 prefer compiling from source, get `rw1040sp.zip' from the distribution
-(see Q1.1; you may already have installed this from `SetupR.exe') and
-unpack it in the parent of `rw1040'.  Then read the file
-`readme.packages'.  You will need to collect and install several tools
-to use this.  Once you have done so, just run `Rcmd INSTALL pkgname'.
-To check the package (including running all the examples on its help
-pages and in its test suite, if any) use `Rcmd check pkgname': see the
-_`Writing R Extensions'_ manual.
+(*note Where can I find the latest version?::; you may already have
+installed this from `SetupR.exe') and unpack it in the parent of
+`rw1040'.  Then read the file `readme.packages'.  You will need to
+collect and install several tools to use this: you can download them
+via the portal at `http://www.stats.ox.ac.uk/pub/Rtools/'.  Once you
+have done so, just run `Rcmd INSTALL pkgname'.  To check the package
+(including running all the examples on its help pages and in its test
+suite, if any) use `Rcmd check pkgname': see the _`Writing R
+Extensions'_ manual.
 
 3.2 I don't have permission to write to the `rw1040\library' directory.
 =======================================================================
@@ -341,7 +346,7 @@ OR use a package by, e.g.
 
 How you set an environment variable is system specific: in Windows 9x
 you can set them in `autoexec.bat' or in an MS-DOS window from which
-you launch `Rgui' / `Rterm'.  Under Windows NT/2000 you can use the
+you launch `Rgui' / `Rterm'.  Under Windows NT/2000/XP you can use the
 control panel or the properties of `My Computer'.  Under Windows Me you
 need to use the System Configuration Utility (under Programs,
 Accessories, System Tools on the Start menu).  You can also set them on
@@ -405,13 +410,14 @@ For package `tcltk' to work (try `demo(tkdensity)' or `demo(tkttest)'
 after `library(tcltk)') you need to have Tcl installed.  Download
 either ActiveTcl 8.3.3 from
 `http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/' or `tcl832.exe'
-from `dev.scriptics.com' and install it.  (That will put the `bin'
-directory containing the Tcl and Tk DLLs in your path).  You then need
-to set the environment variable `TCL_LIBRARY', to something like
-`c:/Program Files/Tcl/lib/tcl8.3'.  (The startup code for the package
-will warn you if this is unset, and Q3.2 explains how to set them.  NB:
-do not quote the path, even if as here it contains spaces. If you
-forget, you can set the variable inside R by something like
+from `dev.scriptics.com' and install it.  (Most versions of the
+installer will put the `bin' directory containing the Tcl and Tk DLLs
+in your path, but you should check.)  You then need to set the
+environment variable `TCL_LIBRARY', to something like `c:/Program
+Files/Tcl/lib/tcl8.3'.  (The startup code for the package will warn you
+if this is unset, and Q3.2 explains how to set them.  NB: do not quote
+the path, even if as here it contains spaces. If you forget, you can
+set the variable inside R by something like
          Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.3")
 .)
 
@@ -502,7 +508,7 @@ On one of our systems, the screen height is reported as 240mm, and the
 width as 300mm in 1280 x 1024 mode and 320mm in 1280 x 960 and 1600 x
 1200 modes.  In fact it is a 21" monitor and 400mm x 300mm!
 
-4.4 How do I more focus to a graphics window or the console?
+4.4 How do I move focus to a graphics window or the console?
 ============================================================
 
 You may want to do this from within a function, for example when calling
@@ -748,16 +754,8 @@ call `R_ProcessEvents()' periodically from your compiled code.  If you
 want output to be updated on the console, call `R_FlushConsole()' and
 then `R_ProcessEvents()'.
 
-7.8 The Perl scripts don't seem to work under Windows 9x/ME.
-============================================================
-
-This has been seen under some versions of Perl and Windows versions
-(95/98/ME) which use a 16-bit shell.  Hopefully rw1030 and later are
-more robust in this respect: it _may_ help to upgrade your Perl version
-(5.6.1, build 628 was current at the time of writing).
 
 
-
-Last edited 2001 November 3 by Professor B. D. Ripley
+Last edited 2001 November 18 by Professor B. D. Ripley
 <ripley@stats.ox.ac.uk>
 

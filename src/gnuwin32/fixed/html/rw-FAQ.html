@@ -122,8 +122,8 @@ hear about some nifty features: please tell me about them!</a></li>
 Circles appear as ovals on screen</a></li>
 
 <li><a href=
-"#How%20do%20I%20more%20focus%20to%20a%20graphics%20window%20or%20the%20console%3f">
-4.4 How do I more focus to a graphics window or the
+"#How%20do%20I%20move%20focus%20to%20a%20graphics%20window%20or%20the%20console%3f">
+4.4 How do I move focus to a graphics window or the
 console?</a></li>
 </ul>
 </li>
@@ -196,11 +196,6 @@ output from my Fortran code disappears. Why?</a></li>
 <li><a href=
 "#The%20console%20freezes%20when%20my%20compiled%20code%20is%20running">
 7.7 The console freezes when my compiled code is running.</a></li>
-
-<li><a href=
-"#The%20Perl%20scripts%20don't%20seem%20to%20work%20under%20Windows%209x%2fME.">
-7.8 The Perl scripts don't seem to work under Windows
-9x/ME.</a></li>
 </ul>
 </li>
 </ul>
@@ -240,7 +235,7 @@ http://cran.r-project.org/mirrors.html</a> for a list), navigate to
 the <code>bin/windows/base</code> directory and collect the files
 you need. There are three versions of the distribution.</p>
 
-<p>1) <code>SetupR.exe</code>, is about 15Mb and gives a complete
+<p>1) <code>SetupR.exe</code>, is about 16Mb and gives a complete
 installation.</p>
 
 <p>2) Directory <code>miniR</code> contains <code>miniR.exe</code>
@@ -322,6 +317,10 @@ but R will not be able to reserve it.</p>
 <p>Use <code>?Memory</code> and <code>?memory.size</code> for
 information about memory usage. The limit can be raised by calling
 <code>memory.limit</code> from a running R session.</p>
+
+<p>We have found that starting R with too large a value of <code>
+--max-mem-size</code> may fail: the limit seemed to be about 1.7Mb
+on Windows 2000 Professional.</p>
 
 <p>R can be compiled to use a different memory manager which might
 be better at using large amounts of memory, but is substantially
@@ -433,7 +432,7 @@ people writing packages for Unix do not bother. So it is worth
 trying the alternative short name (something like <code>
 PROGRA~1</code>; you can get it as the `MS-DOS name' from the
 Properties of the file on most versions of Windows, and from <code>
-dir /X</code> is a <code>Command Prompt</code> window on 2000/XP).
+dir /X</code> in a <code>Command Prompt</code> window on 2000/XP).
 <a name="Does%20R%20use%20the%20Registry%3f"></a></p>
 
 <h2>2.11 Does R use the Registry?</h2>
@@ -517,15 +516,19 @@ http://cran.r-project.org/bin/windows/contrib/ReadMe</a>.</p>
 
 <p>If there is not a pre-compiled version or that is not up-to-date
 or you prefer compiling from source, get <code>rw1040sp.zip</code>
-from the distribution (see Q1.1; you may already have installed
-this from <code>SetupR.exe</code>) and unpack it in the parent of
-<code>rw1040</code>. Then read the file <code>
-readme.packages</code>. You will need to collect and install
-several tools to use this. Once you have done so, just run <code>
-Rcmd INSTALL pkgname</code>. To check the package (including
-running all the examples on its help pages and in its test suite,
-if any) use <code>Rcmd check pkgname</code>: see the <em>`Writing R
-Extensions'</em> manual. <a name=
+from the distribution (see <a href=
+"#Where%20can%20I%20find%20the%20latest%20version%3f">Where can I
+find the latest version?</a>; you may already have installed this
+from <code>SetupR.exe</code>) and unpack it in the parent of <code>
+rw1040</code>. Then read the file <code>readme.packages</code>. You
+will need to collect and install several tools to use this: you can
+download them via the portal at <a href=
+"http://www.stats.ox.ac.uk/pub/Rtools/">
+http://www.stats.ox.ac.uk/pub/Rtools/</a>. Once you have done so,
+just run <code>Rcmd INSTALL pkgname</code>. To check the package
+(including running all the examples on its help pages and in its
+test suite, if any) use <code>Rcmd check pkgname</code>: see the
+<em>`Writing R Extensions'</em> manual. <a name=
 "I%20don't%20have%20permission%20to%20write%20to%20the%20rw1040%5clibrary%20directory">
 </a></p>
 
@@ -560,11 +563,11 @@ library(MASS, lib.loc="p:/mylibs")
 <p>How you set an environment variable is system specific: in
 Windows 9x you can set them in <code>autoexec.bat</code> or in an
 MS-DOS window from which you launch <code>Rgui</code> / <code>
-Rterm</code>. Under Windows NT/2000 you can use the control panel
-or the properties of `My Computer'. Under Windows Me you need to
-use the System Configuration Utility (under Programs, Accessories,
-System Tools on the Start menu). You can also set them on the
-command line, for example in the shortcut you could have</p>
+Rterm</code>. Under Windows NT/2000/XP you can use the control
+panel or the properties of `My Computer'. Under Windows Me you need
+to use the System Configuration Utility (under Programs,
+Accessories, System Tools on the Start menu). You can also set them
+on the command line, for example in the shortcut you could have</p>
 
 <pre>
 path_to_R\bin\Rgui.exe R_LIBS=p:/mylibs
@@ -644,14 +647,15 @@ either ActiveTcl 8.3.3 from <a href=
 "http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/">
 http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/</a> or <code>
 tcl832.exe</code> from <a href="dev.scriptics.com">
-dev.scriptics.com</a> and install it. (That will put the <code>
-bin</code> directory containing the Tcl and Tk DLLs in your path).
-You then need to set the environment variable <code>
-TCL_LIBRARY</code>, to something like <code>c:/Program
-Files/Tcl/lib/tcl8.3</code>. (The startup code for the package will
-warn you if this is unset, and Q3.2 explains how to set them. NB:
-do not quote the path, even if as here it contains spaces. If you
-forget, you can set the variable inside R by something like</p>
+dev.scriptics.com</a> and install it. (Most versions of the
+installer will put the <code>bin</code> directory containing the
+Tcl and Tk DLLs in your path, but you should check.) You then need
+to set the environment variable <code>TCL_LIBRARY</code>, to
+something like <code>c:/Program Files/Tcl/lib/tcl8.3</code>. (The
+startup code for the package will warn you if this is unset, and
+Q3.2 explains how to set them. NB: do not quote the path, even if
+as here it contains spaces. If you forget, you can set the variable
+inside R by something like</p>
 
 <pre>
     Sys.putenv("TCL_LIBRARY"="c:/Program Files/Tcl/lib/tcl8.3")
@@ -764,10 +768,10 @@ these are of the order of 80.)</p>
 and the width as 300mm in 1280 x 1024 mode and 320mm in 1280 x 960
 and 1600 x 1200 modes. In fact it is a 21" monitor and 400mm x
 300mm! <a name=
-"How%20do%20I%20more%20focus%20to%20a%20graphics%20window%20or%20the%20console%3f">
+"How%20do%20I%20move%20focus%20to%20a%20graphics%20window%20or%20the%20console%3f">
 </a></p>
 
-<h2>4.4 How do I more focus to a graphics window or the
+<h2>4.4 How do I move focus to a graphics window or the
 console?</h2>
 
 <p>You may want to do this from within a function, for example when
@@ -1075,21 +1079,10 @@ thread as the R engine. To allow the console etc to respond to
 Windows events, call <code>R_ProcessEvents()</code> periodically
 from your compiled code. If you want output to be updated on the
 console, call <code>R_FlushConsole()</code> and then <code>
-R_ProcessEvents()</code>. <a name=
-"The%20Perl%20scripts%20don't%20seem%20to%20work%20under%20Windows%209x%2fME.">
-</a></p>
-
-<h2>7.8 The Perl scripts don't seem to work under Windows
-9x/ME.</h2>
-
-<p>This has been seen under some versions of Perl and Windows
-versions (95/98/ME) which use a 16-bit shell. Hopefully rw1030 and
-later are more robust in this respect: it <em>may</em> help to
-upgrade your Perl version (5.6.1, build 628 was current at the time
-of writing).</p>
+R_ProcessEvents()</code>.</p>
 
 <hr width="100%">
-<address>Last edited 2001 November 3 by Professor B. D. Ripley
+<address>Last edited 2001 November 18 by Professor B. D. Ripley
 <code><a href="mailto:ripley@stats.ox.ac.uk">
 ripley@stats.ox.ac.uk</a></code></address>
 </body>
