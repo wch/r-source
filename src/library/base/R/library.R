@@ -114,9 +114,9 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
         headers <- c("", "Description:\n\n", "Index:\n\n")
         footers <- c("\n", "\n", "")
         for(i in which(file.exists(docFiles))) {
-            cat(headers[i], file = outConn, append = TRUE)
+            writeLines(headers[i], outConn)
             writeLines(readLines(docFiles[i]), outConn)
-            cat(footers[i], file = outConn, append = TRUE)
+            writeLines(footers[i], outConn)
         }
         close(outConn)
         file.show(outFile, delete.file = TRUE,
@@ -145,7 +145,7 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
 		    if(file.exists(title))
                         writeLines(readLines(title), outConn)
 		    else
-                        cat(i, "\n", file = outConn, append = TRUE)
+                        writeLines(i, outConn)
 		}
 	    }
 	    avail <- c(avail, a)
