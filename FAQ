@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-5, 2002-05-20
+Version 1.5-6, 2002-05-21
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1089,8 +1089,7 @@ users without writing CGI scripts.  Graphical output is possible in
 PostScript or GIF formats and the executed code is presented to the user
 for revision.
 
-   Demo and download are available from
-`http://www.mth.uea.ac.uk/~h089/Rcgi/'.
+   See `http://stats.mth.uea.ac.uk/Rcgi/' for more information.
 
    *Rweb* is developed and maintained by Jeff Banfield
 <jeff@math.montana.edu>.  The Rweb Home Page
@@ -1252,6 +1251,9 @@ works, was published in the Journal of Statistical Software
      A collection of programs for reading and plotting SKEW-T,log p diagrams
      and wind profiles for data collected by radiosondes (the typical
      weather balloon-borne instrument).
+
+*RandomFields*
+     Creating random fields using various methods.
 
 *RmSQL*
      An interface between R and the mSQL database system.
@@ -1801,9 +1803,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *RODBC*
      An ODBC database interface.
-
-*RandomFields*
-     Creating random fields using various methods.
 
 *StatDataML*
      Read and write StatDataML.
