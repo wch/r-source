@@ -30,12 +30,12 @@
   Johnson (1981).  It is a k-sample simple linear rank which uses the
   ranks of the absolute values of the centered samples and weights
   \eqn{a(i) = qnorm((1 + i/(n+1))/2)}.  The version implemented here
-  uses median centering in each of the samples (F-K:med X^2 in the
+  uses median centering in each of the samples (F-K:med \eqn{X^2} in the
   reference).
 }
 \value{
   A list of class \code{"htest"} containing the following components:
-  \item{statistic}{the Fligner-Killeen:med X^2 test statistic.}
+  \item{statistic}{the Fligner-Killeen:med \eqn{X^2} test statistic.}
   \item{parameter}{the degrees of freedom of the approximate chi-square
     distribution of the test statistic.}
   \item{p.value}{the p-value of the test.}
