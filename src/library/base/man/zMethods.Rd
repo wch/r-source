@@ -38,7 +38,6 @@
   \code{\link{is.complex}},
   \code{\link{is.double}},
   \code{\link{is.environment}},
-  \code{\link{is.factor}},
   \code{\link{is.function}},
   \code{\link{is.integer}},
   \code{\link{is.language}},
@@ -53,8 +52,7 @@
   \code{\link{is.pairlist}},
   \code{\link{is.recursive}},
   \code{\link{is.single}},
-  \code{\link{is.symbol}},
-  \code{\link{is.ts}}.
+  \code{\link{is.symbol}}.
 }
 \seealso{
   \code{\link{methods}} for the methods of non-Internal generic functions.

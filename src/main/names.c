@@ -481,12 +481,10 @@ FUNTAB R_FunTab[] =
 {"is.expression",do_is,		EXPRSXP,1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"is.object",	do_is,		50,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"is.factor",	do_is,		75,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"is.numeric",	do_is,		100,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"is.matrix",	do_is,		101,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"is.array",	do_is,		102,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"is.ts",	do_is,		103,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 {"is.atomic",	do_is,		200,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"is.recursive",do_is,		201,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
