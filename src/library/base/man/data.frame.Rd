@@ -75,7 +75,7 @@ row.names(x) <- names
   \code{row.names} can be used to set and retrieve the row names of a
   data frame, similarly to \code{\link{rownames}} for arrays (and
   it is a generic function that calls \code{rownames} for an
-  array argument.} 
+  array argument.}
 
   \code{plot.data.frame}, a method of the \code{\link{plot}} generic,
   uses \code{\link{stripchart}} for \emph{one} variable,
@@ -118,7 +118,32 @@ is.data.frame(d)
 ## do not convert to factor, using I() :
 str(cbind(d, char = I(letters[1:10])), vec.len = 10)
 
-all(1:10 == row.names(d))# TRUE (coercion)
+stopifnot(1:10 == row.names(d))# {coercion}
+
+(d0  <- d[, FALSE]) # NULL dataframe with 10 rows
+(d.0 <- d[FALSE, ]) # <0 rows> dataframe  (3 cols)
+(d00 <- d0[FALSE,])  # NULL dataframe with 0 rows
+\testonly{% failed before ver. 1.4:
+(d000 <- data.frame()) #but not quite the same as d00:
+!identical(d00, d000)
+dput(d00)
+dput(d000)
+stopifnot(identical(d, cbind(d, d0)),
+          identical(d, cbind(d0, d)),
+          identical(d, rbind(d,d.0)),
+          identical(d, rbind(d.0,d)),
+          identical(d, rbind(d00,d)),
+          identical(d, rbind(d,d00)),
+
+          TRUE )
+## These are not true: dim is ok, but names() not {seen via dput}
+##          identical(d0, rbind(d0,d00)),
+#         identical(d0, rbind(d00,d0)),
+#          identical(d00,rbind(d00,d00)),
+#          identical(d00,cbind(d00,d00)),
+
+
+}
 }
 \keyword{classes}
 \keyword{methods}

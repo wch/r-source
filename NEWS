@@ -229,7 +229,7 @@ NEW FEATURES
 
     o	predict.ppr() now predicts on `newdata' containing NAs.
 
-    o	X11(), png() and jpeg() now give informative warnings if 
+    o	X11(), png() and jpeg() now give informative warnings if
 	they fail to open the device.
 
 
@@ -278,7 +278,7 @@ BUG FIXES
     o	predict.arima0() now accepts vector as well as matrix
 	`newxreg' arguments.
 
-
+    o	cbind(d,f) now works for 0-column dataframes. This fixes PR#1102.
 
 
 	**************************************************
