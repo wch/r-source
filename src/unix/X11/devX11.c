@@ -45,9 +45,11 @@
 #include "Graphics.h"
 #include "rotated.h"/* 'Public' routines from here */
 
+#include "../eventloop.h" /* For the input handlers of the event loop mechanism. */
+
 /* external routines from here */
 int X11ConnectionNumber();
-void R_ProcessEvents(void);
+void R_ProcessEvents(void *data);
 int X11DeviceDriver(DevDesc*, char*, double, double, double, double, int, int);
 
 /* These are the currently supported device "models" */
@@ -624,7 +626,7 @@ static void handleEvent(XEvent event)
 	}
 }
 
-void R_ProcessEvents(void)
+void R_ProcessEvents(void *data)
 {
     XEvent event;
     while (displayOpen && XPending(display)) {
@@ -1037,6 +1039,7 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
     XEvent event;
     int iw, ih;
     XGCValues gcv;
+    int DisplayOpened = 0; /* Indicates whether the display is created within this particular call. */
 
     /* If there is no server connection, establish one and */
     /* initialize the X11 device driver data structures. */
@@ -1061,6 +1064,7 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
 	SetupX11Color();
 	devPtrContext = XUniqueContext();
 	displayOpen = 1;
+        DisplayOpened = 1;
     }
     whitepixel = GetX11Pixel(255, 255, 255);
     blackpixel = GetX11Pixel(0, 0, 0);
@@ -1141,6 +1145,11 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
     /* graphics call */
     xd->lty = -1;
     xd->lwd = -1;
+
+
+    if(DisplayOpened) {
+        addInputHandler(InputHandlers, ConnectionNumber(display),  R_ProcessEvents, XActivity);
+    }
 
     numX11Devices++;
     return 1;
@@ -1302,7 +1311,7 @@ static void X11_Close(DevDesc *dd)
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
     /* process pending events */
-    R_ProcessEvents();
+    R_ProcessEvents((void*) NULL);
 
     XFreeCursor(display, xd->gcursor);
     XFreeGC(display, xd->wgc);
@@ -1638,7 +1647,7 @@ static int X11_Locator(double *x, double *y, DevDesc *dd)
     DevDesc *ddEvent;
     caddr_t temp;
     int done = 0;
-    R_ProcessEvents();	/* discard pending events */
+    R_ProcessEvents((void*)NULL);	/* discard pending events */
     XSync(display, 1);
     /* handle X events as normal until get a button */
     /* click in the desired device */
@@ -1851,7 +1860,7 @@ int X11DeviceDriver(DevDesc *dd,
 
     dd->displayListOn = 1;
 
-    R_ProcessEvents();
+    R_ProcessEvents((void*) NULL);
 
     return 1;
 }
