@@ -96,6 +96,8 @@ BUG FIXES
     o	Deparsing or dumping attributes with non-standard names was
 	not quoting the name (PR#871).
 
+    o   Overflow in deparse() in terms(formula) with very long left-hand
+	side fixed (PR#873)
 
 
 	**************************************************
