@@ -135,7 +135,7 @@ void mem_err_heap(long size)
 
 void mem_err_cons()
 {
-    error("cons memory (%ld cells) exhausted\n       See \"help(Memory)\" on how to increase the number of cons cells.", R_NSize);
+    errorcall(R_NilValue, "cons memory (%ld cells) exhausted\n       See \"help(Memory)\" on how to increase the number of cons cells.", R_NSize);
 }
 
 #ifdef OLD_Macintosh
