@@ -27,7 +27,9 @@ p.adjust.methods # c("holm", "hochberg", "bonferroni","none")
 \value{
   A vector of corrected p values.
 }
-\references{ [Biocs, 1992] }
+\references{ S Paul Wright: Adjusted P-values for simultaneous
+  inference,  Biometrics 48, 1005--1013
+ }
 \seealso{pairwise}
 \note{The Hochberg method is only proved to work if the p values are
   independent, although simulations have indicated that it works in
