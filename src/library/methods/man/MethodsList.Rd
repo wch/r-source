@@ -15,6 +15,12 @@
 \alias{mergeMethods}
 \alias{loadMethod}
 \title{MethodsList Objects}
+\description{
+  These functions create and manipulate \code{MethodsList} objects, the
+  objects used in R to store methods for dispatch.  You should not call
+  any of these functions from code that you want to port to S-Plus.
+  Instead, use the functions described in the references.
+}
 \usage{
 MethodsList(.ArgName, ...)
 
@@ -43,96 +49,91 @@ loadMethod(method, fname, envir)
 
 }
 
-\description{
-  
-These functions create and manipulate \code{MethodsList} objects, the
-objects used in R to store methods for dispatch.
-You should not call any of these functions from code that you want to
-port to S-Plus.  Instead, use the functions described in the
-references.
-
-  }
-
 \section{Details}{
 
-\describe{
+  \describe{
   
-  \item{\code{MethodsList}:}{ 
-  Create a MethodsList object out of the arguments.
+    \item{\code{MethodsList}:}{ 
+      Create a MethodsList object out of the arguments.
 
-Conceptually, this object is a named collection of methods to be dispatched
-when the (first) argument in a function call matches the class corresponding to
-one of the names.  A final, unnamed element (i.e., with name \code{""}) corresponds
-to the default method.
+      Conceptually, this object is a named collection of methods to be
+      dispatched when the (first) argument in a function call matches
+      the class corresponding to one of the names.  A final, unnamed
+      element (i.e., with name \code{""}) corresponds to the default
+      method.
 
-The elements can be either a function, or another MethodsList.  In the second case,
-this list implies dispatching on the second argument to the function using that
-list, given a selection of this element on the first argument.  Thus, method dispatching
-on an arbitrary number of arguments is defined.
+      The elements can be either a function, or another MethodsList.  In
+      the second case, this list implies dispatching on the second
+      argument to the function using that list, given a selection of
+      this element on the first argument.  Thus, method dispatching on
+      an arbitrary number of arguments is defined.
 
-MethodsList objects are used primarily to dispatch OOP-style methods and, in R,
-to emulate S4-style methods.
-
-  
-  }
-\item{\code{SignatureMethod}:}{ 
-  construct a MethodsList object containing (only) this method, corresponding
-to the signature; i.e., such that signature[[1]] is the match for the first
-argument, signature[[2]] for the second argument, and so on.  The string
-"missing" means a match for a missing argument, and "ANY" means use this as the
-default setting at this level.
-
-The first argument is the argument names to be used for dispatch corresponding to
-the signatures.
-
-  
-  }
-\item{\code{insertMethod}:}{ 
-  insert the definition \code{def} into the MethodsList object, \code{mlist}, corresponding to
-the signature. By default, insert it in the slot \code{which="methods"},
-but \code{\link{cacheMethod}} inserts it into the
-\code{which="allMethods"}} slot (used for dispatch but not saved).
-
-  
-  }
-
-\item{\code{matchArg}:}{ 
-  Utility function to match the object  or the class (if the object is
-  \code{NULL})
-  to the elements of a methods list.
-  Used in finding inherited methods, and not meant to be called directly.
-
-  }
-\item{\code{showMlist}:}{ 
-  Prints the contents of the MethodsList.  If \code{includeDefs} the signatures and the
-corresonding definitions will be printed; otherwise, only the signatures.
-
-The function calls itself recursively.  \code{prev} is the previously
-selected classes.
-}
-\item{\code{listFromMlistForPrint}:}{
-  Undo the recursive nature of the methods list, making a list of function
-  defintions, with the names of the list being the corresponding signatures
-  (designed for printing; for looping over the methods, use \code{\link{listFromMlist}} instead).
-  
-  The function calls itself recursively:  \code{prev} is the previously
-  selected classes.
-  }
-
-  \item{\code{finalDefaultMethod}}{
-    The true default method for the methods list object \code{mlist}
-    (the method that matches class \code{"ANY"} for as many arguments as
-    are used in methods matching for this generic function). If
-    \code{mlist} is null, returns the function called \code{fname}, or
-    \code{NULL} if there is no such function.
-  }
-
-  \item{\code{mergeMethods}}{
-    Merges the methods in the second MethodsList object into the first,
-    and returns the merged result.  Called from
-    \code{\link{getAllMethods}}.
+      MethodsList objects are used primarily to dispatch OOP-style
+      methods and, in R, to emulate S4-style methods.
     }
-    \item{\code{loadMethod}}{
+
+    \item{\code{SignatureMethod}:}{ 
+      construct a MethodsList object containing (only) this method,
+      corresponding to the signature; i.e., such that signature[[1]] is
+      the match for the first argument, signature[[2]] for the second
+      argument, and so on.  The string \code{"missing"} means a match
+      for a missing argument, and \code{"ANY"} means use this as the
+      default setting at this level.
+
+      The first argument is the argument names to be used for dispatch
+      corresponding to the signatures.
+    }
+
+    \item{\code{insertMethod}:}{ 
+      insert the definition \code{def} into the MethodsList object,
+      \code{mlist}, corresponding to the signature.  By default, insert
+      it in the slot \code{which="methods"}, but
+      \code{\link{cacheMethod}} inserts it into the
+      \code{which="allMethods"} slot (used for dispatch but not
+      saved).
+    }
+
+    \item{\code{matchArg}:}{ 
+      Utility function to match the object  or the class (if the object
+      is \code{NULL}) to the elements of a methods list.
+      Used in finding inherited methods, and not meant to be called
+      directly.
+    }
+
+    \item{\code{showMlist}:}{ 
+      Prints the contents of the MethodsList.  If \code{includeDefs} the
+      signatures and the corresonding definitions will be printed;
+      otherwise, only the signatures.
+
+      The function calls itself recursively: \code{prev} is the
+      previously selected classes.
+    }
+    
+    \item{\code{listFromMlistForPrint}:}{
+      Undo the recursive nature of the methods list, making a list of
+      function defintions, with the names of the list being the
+      corresponding signatures (designed for printing; for looping over
+      the methods, use \code{\link{listFromMlist}} instead).
+  
+      The function calls itself recursively: \code{prev} is the
+      previously selected classes.
+    }
+
+    \item{\code{finalDefaultMethod}:}{
+      The true default method for the methods list object \code{mlist}
+      (the method that matches class \code{"ANY"} for as many arguments
+      as are used in methods matching for this generic function).  If
+      \code{mlist} is null, returns the function called \code{fname}, or
+      \code{NULL} if there is no such function.
+    }
+
+    \item{\code{mergeMethods}:}{
+      Merges the methods in the second MethodsList object into the
+      first, and returns the merged result.  Called from
+      \code{\link{getAllMethods}}.
+    }
+
+    \item{\code{loadMethod}:}{
       Called, if necessary, just before a call to \code{method} is
       dispatched in the frame \code{envir}.  The function exists so that
       methods can be defined for special classes of objects.  Usually
@@ -144,9 +145,8 @@ selected classes.
       Any methods defined for \code{loadMethod} must return the function
       definition to be used for this call; typically, this is just the
       \code{method} argument.
-      }
-}
-
+    }
+  }
 }
 \details{
   Note that \code{MethodsList} objects represent methods only in the \R
@@ -154,16 +154,15 @@ selected classes.
   methods, but avoid doing so if you want your code to port to S-Plus.
 }
 \references{
-The web page \url{http://www.omegahat.org/RSMethods/index.html} is the primary documentation.
+  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
+  primary documentation.
 
-The functions in this package emulate the facility for classes and methods described in
-\emph{Programming with Data}, (John M. Chambers, Springer, 1998).  See this book
-for further details and examples.
+  The functions in this package emulate the facility for classes and
+  methods described in \emph{Programming with Data}, (John M. Chambers,
+  Springer, 1998).  See this book for further details and examples.
 }
 \author{
   John Chambers
-}
-\examples{
 }
 \keyword{internal}
 

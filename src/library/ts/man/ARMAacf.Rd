@@ -19,7 +19,7 @@ ARMAacf(ar = numeric(0), ma = numeric(0), lag.max = r, pacf = FALSE)
 \details{
   The methods used follow Brockwell \& Davis (1991, section 3.3).  Their
   equations (3.3.8) are solved for the autocovariances at lags
-  \eqn{0, \dots, max(p, q+1)}, and the remaining autocorrelations are
+  \eqn{0, \dots, \max(p, q+1)}, and the remaining autocorrelations are
   given by a recursive filter.
 }
 \value{
@@ -36,7 +36,7 @@ ARMAacf(ar = numeric(0), ma = numeric(0), lag.max = r, pacf = FALSE)
 \examples{
 ARMAacf(c(1.0, -0.25), 1.0, lag.max = 10)
 ## Example from Brockwell & Davis (1991, pp.92-4)
-## answer
+## answer 2^(-n) * (32/3 + 8 * n) /(32/3)
 n <- 1:10; 2^(-n) * (32/3 + 8 * n) /(32/3)
 ARMAacf(c(1.0, -0.25), 1.0, lag.max = 10, pacf = TRUE)
 ARMAacf(c(1.0, -0.25), lag.max = 10, pacf = TRUE)

@@ -24,8 +24,8 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
     prediction, so \code{Pn} should not be computed at the first step.}
   \item{n.ahead}{The number of steps ahead for which prediction is
     required.}
-  \item{phi, theta}{numeric vectors of length >=0 giving AR and MA
-    parameters.}
+  \item{phi, theta}{numeric vectors of length \eqn{\ge 0}{>=0} giving AR
+    and MA parameters.}
   \item{Delta}{vector of differencing coefficients, so an ARMA model is
     fitted to \code{y[t] - Delta[1]*y[t-1] - \dots}.}
   \item{kappa}{the prior variance (as a multiple of the innovations
@@ -33,8 +33,8 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 }
 \details{
   These functions work with a general univariate state-space model
-  with state vector \code{a}, transitions \code{a <- Ta + e}, \eqn{e ~
-    N(0, \kappa Q)} and observation equation \code{y = Z'a + Reta},
+  with state vector \code{a}, transitions \code{a <- T a + e}, \eqn{e ~
+    N(0, \kappa Q)} and observation equation \code{y = Z'a + R eta},
   \eqn{eta ~ N(0, \kappa h)}.  The likelihood is a profile likelihood
   after estimation of \eqn{\kappa}.
 
@@ -67,9 +67,10 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
   a matrix with one row for each time.
 
   For \code{KalmanSmooth}, a list with two components.
-  Component \code{smooth} is a \code{n x p} matrix of state estimates
-  based on all the observations, with one row for each time.  Component
-  \code{smooth} is a \code{n x p x p} array of variance matrices.
+  Component \code{smooth} is a \code{n} by \code{p} matrix of state
+  estimates based on all the observations, with one row for each time.
+  Component \code{smooth} is a \code{n} by \code{p} by \code{p} array of
+  variance matrices.
   
   For \code{KalmanForecast}, a list with components \code{pred}, the
   predictions, and \code{var}, the unscaled variances of the prediction
