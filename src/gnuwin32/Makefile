@@ -140,7 +140,7 @@ distclean veryclean: clean
 
 cleanwin:
 	$(RM) *.o *.exe *.dll *.a *~ \#*\# *.zip R.def R.exp1 \
-	.RData .Rhistory Makedeps *.d
+	.RData .Rhistory Makedeps *.d edit.c
 	$(MAKE) -C graphapp clean
 	$(MAKE) -C fixed clean
 	$(MAKE) -C regex clean
@@ -196,6 +196,7 @@ srcdist:
 	$(CP)  -pr ./* ../src/gnuwin32
 	$(RM) -r ../src/gnuwin32/old ../src/gnuwin32/*.zip
 	$(RM) -r ../src/gnuwin32/installer/unzip
+	$(RM) -f ../src/gnuwin32/unzip/*.dll
 	$(MAKE) -C ../src/gnuwin32 cleanwin
 	mv ../src .
 	$(RM) $(RPREFIX)s.zip
