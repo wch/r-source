@@ -1201,7 +1201,9 @@ void R_set_quick_method_check(R_stdGen_ptr_t value)
    to evaluate the default (which would get us into a loop). */
 SEXP R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP fundef, value, mlist; int offset; prim_methods_t current;
+    SEXP fundef, value, mlist=R_NilValue; 
+    int offset; 
+    prim_methods_t current;
     offset = PRIMOFFSET(op);
     if(offset < 0 || offset > curMaxOffset)
 	error("Invalid primitive operation given for dispatch");
