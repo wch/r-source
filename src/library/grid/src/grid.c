@@ -637,8 +637,15 @@ SEXP L_unsetviewport(SEXP last)
     SEXP gvp = gridStateElement(dd, GSS_VP);
     /* NOTE that the R code has already checked that .grid.viewport$parent
      * is non-NULL
+     * 
+     * BUT this may not be called from R code !!
+     * (e.g., when the graphics engine display list is replayed;
+     *  problems can occur when grid output is mixed with base output;
+     *  for example, plot.new() is called between a viewport push and pop)
      */
     PROTECT(newvp = VECTOR_ELT(gvp, PVP_PARENT));
+    if (isNull(newvp))
+      error("Cannot pop the top-level viewport (grid and graphics output mixed?)");
     /* 
      * Remove the parent from the child
      * This is not strictly necessary, but it is conceptually
@@ -730,6 +737,8 @@ SEXP L_upviewport(SEXP last)
      * is non-NULL
      */
     PROTECT(newvp = VECTOR_ELT(gvp, PVP_PARENT));
+    if (isNull(newvp))
+      error("Cannot up the top-level viewport (grid and graphics output mixed?)");
     if (LOGICAL(last)[0]) {
 	double devWidthCM, devHeightCM;
 	/* Get the current device size 
