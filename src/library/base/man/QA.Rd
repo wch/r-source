@@ -1,5 +1,6 @@
 \name{QA}
 \alias{checkDocArgs}
+\alias{checkDocStyle}
 \alias{checkMethods}
 \title{QA checks for R code and documentation}
 \description{
@@ -7,6 +8,7 @@
 }
 \usage{
 checkDocArgs(dir)
+checkDocStyle(dir)
 checkMethods(dir)
 }
 \arguments{
@@ -20,6 +22,13 @@ checkMethods(dir)
   arguments shown in the usage sections of the Rd file are documented in
   its arguments section.  It also reports duplicated entries in the
   arguments section.
+
+  \code{checkDocStyle} investigates how (S3) methods are shown in the
+  usages of the Rd files in a package.  It reports if methods are shown
+  along with their generic, which typically causes problems for the
+  documentation of the primary argument of the generic.  It also finds
+  the methods shown by their full name (rather than that of the generic
+  using the Rd \code{\\method} markup).
 
   \code{checkMethods} checks whether all methods defined in the package
   R code have all arguments of the corresponding generic, with
