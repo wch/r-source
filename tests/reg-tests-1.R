@@ -2200,6 +2200,14 @@ power.t.test(n=10, delta=NULL, power=.9, alternative="two.sided")
 ## failed in 1.7.0
 
 
+## PR#3221 eigenvectors be a matrix even in the 1x1 case
+A <- matrix(1)
+stopifnot(is.matrix(eigen(A)$vectors))
+stopifnot(is.matrix(eigen(A, EISPACK = TRUE)$vectors))
+stopifnot(is.matrix(La.eigen(A)$vectors))
+## gave vector in 1.7.0
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

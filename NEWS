@@ -190,8 +190,11 @@ BUG FIXES
     o   Usage of methods in dist.Rd is now correctly documented
         (as.matrix.dist() is not an exported symbol).
 
-    o   The preduct() method for ar fits was not retrieving the series
+    o   The predict() method for ar fits was not retrieving the series
 	from the parent environment.
+
+    o   eigen() and La.eigen() were not returning a matrix of
+	eigenvectors for a 1x1 input.
 
 
 
