@@ -68,10 +68,11 @@ local({
         "The source for this demo can be found in the file:\n",
         file.path(system.file(package = "tcltk"), "demo", "tkttest.R"),
         "\n******************************************************\n")
-    
+
     data(airquality)
     attach(airquality)
     xvar <- tclVar("Ozone[Month==5]")
     yvar <- tclVar("Ozone[Month==8]")
     dialog.t.test()
+    detach("airquality")
 })
