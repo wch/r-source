@@ -17,6 +17,8 @@ x \%/\% y
 \alias{\%\%}
 \alias{\%/\%}
 \alias{Arithmetic}
+\concept{remainder}
+\concept{modulo}
 \description{
   These binary operators perform arithmetic on numeric or complex vectors
   (or objects which can be coerced to them).
