@@ -93,7 +93,10 @@ function(package, dir, lib.loc = NULL)
         files <- listFilesWithType(dataDir, "data")
         files <- unique(basename(filePathSansExt(files)))
         for(f in files) {
-            yy <- try(data(list = f, envir = dataEnv))
+            yy <- try(data(list = f,
+                           package = basename(dir),
+                           lib.loc = dirname(dir),
+                           envir = dataEnv))
             if(inherits(yy, "try-error"))
                 stop(paste("cannot load data set", sQuote(f)))
                 new <- ls(envir = dataEnv, all.names = TRUE)
@@ -170,12 +173,19 @@ function(package, dir, lib.loc = NULL)
         S4methods <-
             sapply(getGenerics(codeEnv),
                    function(f) {
-                       meths <-
-                           linearizeMlist(getMethods(f, codeEnv))
+                       meths <- linearizeMlist(getMethods(f, codeEnv))
+                       if(!length(sigs <- meths@classes))
+                           return(character())
+                       ## For the time being, exclude methods with
+                       ## all-ANY signature (most likely automatically
+                       ## generated as default methods).
                        sigs <-
-                           sapply(meths@classes, paste, collapse = ",")
+                           sigs[!sapply(sigs,
+                                        function(x) all(x == "ANY"))]
                        if(length(sigs))
-                           paste(f, ",", sigs, sep = "")
+                           paste(f, ",",
+                                 sapply(sigs, paste, collapse = ","),
+                                 sep = "")
                        else
                            character()
                    })
@@ -349,8 +359,9 @@ function(package, dir, lib.loc = NULL,
     ## Build a list with the formals of the functions in the code
     ## indexed by the names of the functions.
     functionArgsInCode <-
-        sapply(functionsInCode,
+        lapply(functionsInCode,
                function(f) formals(get(f, envir = codeEnv)))
+    names(functionArgsInCode) <- functionsInCode
     if(!is.na(match("package:methods", search()))) {
         lapply(getGenerics(codeEnv),
                function(f) {
@@ -660,15 +671,20 @@ function(package, lib.loc = NULL)
     ## Currently, we only return the names of all classes checked.
     ## </NOTE>
 
-    ## Add sanity checking later ...
-
     badRdObjects <- list()
     class(badRdObjects) <- "codocClasses"
 
-    if(is.na(match("package:methods", search())))
-        return(badRdObjects)
-
+    ## Argument handling.
+    if(length(package) != 1)
+        stop(paste("argument", sQuote("package"),
+                   "must be of length 1"))
     dir <- .find.package(package, lib.loc)
+    if(!fileTest("-d", file.path(dir, "R")))
+        stop(paste("directory", sQuote(dir),
+                   "does not contain R code"))
+    if(!fileTest("-d", file.path(dir, "man")))
+        stop(paste("directory", sQuote(dir),
+                   "does not contain Rd sources"))
     isBase <- basename(dir) == "base"
 
     ## Load package into codeEnv.
@@ -676,6 +692,9 @@ function(package, lib.loc = NULL)
         .loadPackageQuietly(package, lib.loc)
     codeEnv <-
         as.environment(paste("package", package, sep = ":"))
+
+    if(is.na(match("package:methods", search())))
+        return(badRdObjects)
 
     S4classes <- getClasses(codeEnv)
     if(!length(S4classes)) return(badRdObjects)
@@ -803,12 +822,18 @@ function(package, lib.loc = NULL)
     ## Currently, we only return the names of all data frames checked.
     ## </NOTE>
 
-    ## Add sanity checking later ...
-
     badRdObjects <- list()
     class(badRdObjects) <- "codocData"
 
+    ## Argument handling.
+    if(length(package) != 1)
+        stop(paste("argument", sQuote("package"),
+                   "must be of length 1"))
+    
     dir <- .find.package(package, lib.loc)
+    if(!fileTest("-d", file.path(dir, "man")))
+       stop(paste("directory", sQuote(dir),
+                  "does not contain Rd sources"))
     isBase <- basename(dir) == "base"
 
     ## Load package into codeEnv.
@@ -881,14 +906,10 @@ function(package, lib.loc = NULL)
         ## </FIXME>
     }
 
-#    .fileExt <- function(x) sub(".*\\.", "", x)
-
     dataEnv <- new.env()
     dataDir <- file.path(dir, "data")
     hasData <- tools::fileTest("-d", dataDir)
     dataExts <- .makeFileExts("data")
-#     dataExtsRE <-
-#        paste("(", paste(dataExts, collapse = "|"), ")", sep = "")
 
     ## Now go through the aliases.
     dataFramesChecked <- character()
@@ -2112,6 +2133,7 @@ function(x, ...)
 }
 
 ### * as.alist.call
+
 as.alist.call <-
 function(x)
 {
@@ -2128,6 +2150,7 @@ function(x)
 }
 
 ### * as.alist.symbol
+
 as.alist.symbol <-
 function(x)
 {
@@ -2135,6 +2158,7 @@ function(x)
 }
 
 ### * .argNamesFromCall
+
 .argNamesFromCall <-
 function(x)
 {
@@ -2168,6 +2192,7 @@ function(packageName)
 
 
 ### * .isCallFromReplacementFunctionUsage
+
 .isCallFromReplacementFunctionUsage <-
 function(x)
 {
@@ -2178,6 +2203,7 @@ function(x)
 }
 
 ### * .parseTextAsMuchAsPossible
+
 .parseTextAsMuchAsPossible <-
 function(txt)
 {
@@ -2216,6 +2242,7 @@ function(x)
 }
 
 ### * .transformS3methodMarkup
+
 .transformS3methodMarkup <-
 function(x)
 {
