@@ -38,7 +38,7 @@
       definitions.
     }
     \item{\code{warnIncomplete}}{
-      Some exotic objects such as \link[environment]{environments},
+      Some exotic objects such as \link{environment}s,
       external pointers, etc. can not be deparsed properly.  This option
       causes a warning to be issued if any of those may give problems.
     }
@@ -48,7 +48,7 @@
       default for \code{dump}.
     }
     \item{\code{delayPromises}}{
-      Deparse \link[delay]{promises} as calls to \code{\link{delay}}
+      Deparse promises as calls to \code{\link{delay}}
       rather than evaluating them.  If the environment of a promise is
       other than the base or global environments, it is represented by
       \code{<environment>} and the deparsed code cannot be sourced.
