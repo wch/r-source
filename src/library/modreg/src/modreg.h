@@ -76,29 +76,29 @@ void F77_SUB(qsbart)(double *penalt, double *dofoff,
 void F77_NAME(sbart)
     (double *penalt, double *dofoff,
      double *xs, double *ys, double *ws, double *ssw,
-     long *n, double *knot, long *nk, double *coef,
-     double *sz, double *lev, double *crit, long *icrit,
-     double *spar, long *ispar, long *iter, double *lspar,
-     double *uspar, double *tol, double *eps, long *isetup,
+     int *n, double *knot, int *nk, double *coef,
+     double *sz, double *lev, double *crit, int *icrit,
+     double *spar, int *ispar, int *iter, double *lspar,
+     double *uspar, double *tol, double *eps, int *isetup,
      double *xwy, double *hs0, double *hs1, double *hs2,
      double *hs3, double *sg0, double *sg1, double *sg2,
      double *sg3, double *abd, double *p1ip, double *p2ip,
-     long *ld4, long *ldnk, long *ier);
+     int *ld4, int *ldnk, int *ier);
 
 void F77_NAME(sgram)(double *sg0, double *sg1, double *sg2, double *sg3,
-		     double *tb, long *nb);
+		     double *tb, int *nb);
 void F77_NAME(stxwx)(double *x, double *z, double *w,
-		     long *k, double *xknot, long *n, double *y,
+		     int *k, double *xknot, int *n, double *y,
 		     double *hs0, double *hs1, double *hs2, double *hs3);
 void F77_NAME(sslvrg)(double *penalt, double *dofoff,
-		      double *x, double *y, double *w, double *ssw, long *n,
-		      double *knot, long *nk, double *coef, double *sz,
-		      double *lev, double *crit, long *icrit, double *lambda,
+		      double *x, double *y, double *w, double *ssw, int *n,
+		      double *knot, int *nk, double *coef, double *sz,
+		      double *lev, double *crit, int *icrit, double *lambda,
 		      double *xwy,
 		      double *hs0, double *hs1, double *hs2, double *hs3,
 		      double *sg0, double *sg1, double *sg2, double *sg3,
 		      double *abd, double *p1ip, double *p2ip,
-		      long *ld4, long *ldnk, long *info);
+		      int *ld4, int *ldnk, int *info);
 
 void F77_SUB(bvalus)(int *n, double *knot, double *coef,
 		     int *nk, double *x, double *s, int *order);
