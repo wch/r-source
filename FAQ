@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-2, 2002-05-03
+Version 1.5-3, 2002-05-12
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1215,6 +1215,11 @@ works, was published in the Journal of Statistical Software
      obtained from PDSIMUL in package PDAP) and phylogenetically-based
      analyses using GLS.
 
+*PTAk*
+     A multiway method to decompose a tensor (array) of any order, as a
+     generalisation of SVD also supporting non-identity metrics and
+     penalisations.  Also includes some other multiway methods.
+
 *RArcInfo*
      Functions to import Arc/Info V7.x coverages and data.
 
@@ -1786,11 +1791,6 @@ these a try, of course.  This area of CRAN currently contains
      based on starting R from within the GRASS environment and chosen
      LOCATION and MAPSET.  Wrapper and helper functions are provided for a
      range of R functions to match the interface metadata structures.
-
-*PTAk*
-     A multiway method to decompose a tensor (array) of any order, as a
-     generalisation of SVD also supporting non-identity metrics and
-     penalisations.  Also includes some other multiway methods.
 
 *R2HTML*
      Functions for exporting R objects & graphics in an HTML document.
