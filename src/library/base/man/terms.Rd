@@ -20,10 +20,12 @@ from various kinds of \R data objects.
 All the functions above produce an object
 of class \code{terms} which contains the
 \emph{terms} representation of a symbolic model.
+The object has class \code{c("terms", "formula")}: see
+\code{\link{terms.object}} for its structure.
 }
 \seealso{
-  \code{\link{terms.object}, \code{\link{terms.formula}}\link{lm}},
-  \code{\link{glm}}, \code{\link{formula}}.
+  \code{\link{terms.object}}, \code{\link{terms.formula}},
+  \code{\link{lm}}, \code{\link{glm}}, \code{\link{formula}}.
 }
 %%--- MM: I would really like instructive examples here...
 \keyword{models}

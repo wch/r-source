@@ -27,14 +27,15 @@
   \item{specials}{If the \code{specials} argument was given to
       \code{\link{terms.formula}} there is a \code{specials}
       attribute, a list of vectors indicating the terms that contain
-      these special functions.} 
+      these special functions.}
+
+    The object has class \code{c("terms", "formula")}.
 }
 \note{
     These objects are different from those found in S. In particular there
     is no \code{formula} attribute, instead the object is itself a
     formula. Thus, the mode of a terms object is different as well.
-}
-\note{
+
     An example of the \code{specials} argument can be seen in the
     \code{\link{aov}} function.
 }
