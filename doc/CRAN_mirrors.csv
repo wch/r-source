@@ -1,0 +1,23 @@
+country, host, URL
+Australia,PlanetMirror,http://cran.au.r-project.org/
+Austria,Technische UniversitÅ‰t Wien,http://cran.at.r-project.org/
+Brasil,,http://cran.br.r-project.org/
+Canada,,http://probability.ca/cran/
+Denmark,,http://cran.dk.r-project.org/
+France,,http://cran.fr.r-project.org/
+Germany,,http://cran.r-mirror.de/
+Hungary,,http://cran.hu.r-project.org/
+Italy,,http://microarrays.unife.it/CRAN/
+Japan,,ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN
+Poland,,http://r.meteo.uni.wroc.pl/
+Portugal,,http://cran.pt.r-project.org/
+Slovenia,,http://www.fastmirrors.org/cran/
+South Africa,,http://cran.za.r-project.org/
+Spain,,http://cran.es.r-project.org/
+Switzerland,,http://cran.ch.r-project.org/
+Taiwan,,http://cran.csie.ntu.edu.tw/
+UK,University of Bristol,http://cran.uk.r-project.org/
+USA(PA),Pair Networks,http://cran.us.r-project.org/
+USA(CA),,http://cran.stat.ucla.edu/
+USA(MA),,http://www.bioconductor.org/CRAN/
+USA(TX),,http://www.binarycode.org/cran
