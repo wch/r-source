@@ -126,6 +126,9 @@ NEW FEATURES
     o	help() has an additional `pager' argument which may be passed to
 	file.show()  {useful for ESS fans}.
 
+    o	There is now an R `Hershey' list object for Hershey vector font
+	computations and documentation.
+
     o	hist() now returns a "histogram" object and calls the new
 	function plot.histogram() for plotting.
 	It now also allows character labels.
@@ -378,9 +381,6 @@ NEW FEATURES
 	There is also a linker front-end `R CMD LINK' which is useful
 	for creating executable programs linked against the R shared
 	library.
-
-    o	There's now a `Hershey' (list object)
-	for Hershey vector font computations and documentation.
 
 
 BUG FIXES
