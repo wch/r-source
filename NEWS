@@ -135,6 +135,9 @@ BUG FIXES
     o   data editor did not handle factors properly in numeric-edit
         mode. 
 
+    o   table() misbehaved on empty (or all-NA) data
+
+
 		CHANGES IN R VERSION 1.1.0
 
 
