@@ -74,6 +74,8 @@ BUG FIXES
 	(these days it is only passed to the linker and was only
 	invoked for compilation steps).
 
+    o   The GNOME interface under Linux/Unix was broken. (PR#7276)
+
 
 
 
