@@ -1,5 +1,5 @@
 \name{QR auxillaries}
-\title{Reconstruct the {Q}, {R}, or {X} Matrices from a QR Object}
+\title{Reconstruct the Q, R, or X Matrices from a QR Object}
 \usage{
 qr.X(qrstr, complete=FALSE, ncol=)
 qr.Q(qrstr, complete=FALSE, Dvec=1)
