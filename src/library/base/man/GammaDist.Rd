@@ -10,16 +10,17 @@
   \code{scale}.
 }
 \usage{
-dgamma(x, shape, scale=1, log = FALSE)
-pgamma(q, shape, scale=1, lower.tail = TRUE, log.p = FALSE)
-qgamma(p, shape, scale=1, lower.tail = TRUE, log.p = FALSE)
-rgamma(n, shape, scale=1)
+dgamma(x, shape, rate = 1, scale = 1/rate, log = FALSE)
+pgamma(q, shape, rate = 1, scale = 1/rate, lower.tail = TRUE, log.p = FALSE)
+qgamma(p, shape, rate = 1, scale = 1/rate, lower.tail = TRUE, log.p = FALSE)
+rgamma(n, shape, rate = 1, scale = 1/rate)
 }
 \arguments{
   \item{x, q}{vector of quantiles.}
   \item{p}{vector of probabilities.}
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
+  \item{rate}{an alternative way to specify the scale.}
   \item{shape, scale}{shape and scale parameters.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
@@ -45,6 +46,9 @@ rgamma(n, shape, scale=1)
   \eqn{Var(X) = \alpha\sigma^2}{Var(X) = a*s^2}.
 }
 \note{
+  The S parametrization is via \code{shape} and \code{rate}: S has no
+  \code{scale} parameter.  Prior to 1.4.0 \R only had \code{scale}.
+  
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
   is \code{-pgamma(t, ..., lower = FALSE, log = TRUE)}.
 }

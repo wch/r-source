@@ -168,6 +168,10 @@ NEW FEATURES
 
     o   readline() allows up to 256 chars for the prompt.
 
+    o   [dpqr]gamma now has third argument `rate' for S-compatibility
+	(and for compatibility with exponentials).  Calls which use
+	positional matching may need to be altered.
+
 
 
 BUG FIXES
@@ -182,6 +186,9 @@ BUG FIXES
 	were a factor.
 
     o	diffinv() could get the time base wrong in some cases.
+
+    o	file.append() was opening all files in text mode: mattered
+	on Windows and classic Macintosh. (PR#1085)
 
 
 

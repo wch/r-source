@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.3.0 Under development (unstable) (2001-03-13)
+Version 1.4.0 Under development (unstable) (2001-09-07)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -238,15 +238,15 @@ n= 48 : ......................
 + 		"\n  shape,scale=",formatC(c(sh, sig)),"\n")
 +     }
 + }
-> pgamma(1,Inf,Inf) == 0
+> pgamma(1,Inf,scale=Inf) == 0
 [1] TRUE
-> all(is.nan(c(pgamma(Inf,1,Inf), pgamma(Inf,Inf,1), pgamma(Inf,Inf,Inf))))
+> all(is.nan(c(pgamma(Inf,1,scale=Inf), pgamma(Inf,Inf,scale=1), pgamma(Inf,Inf,scale=Inf))))
 [1] TRUE
 Warning messages: 
 1: NaNs produced in: pgamma(q, shape, scale, lower.tail, log.p) 
 2: NaNs produced in: pgamma(q, shape, scale, lower.tail, log.p) 
 3: NaNs produced in: pgamma(q, shape, scale, lower.tail, log.p) 
-> pgamma(Inf,1,xMax) == 1 && pgamma(xMax,1,Inf) == 0
+> pgamma(Inf,1,scale=xMax) == 1 && pgamma(xMax,1,scale=Inf) == 0
 [1] TRUE
 > 
 > ##--- Beta (need more):
@@ -796,5 +796,5 @@ Warning messages:
 [1] TRUE
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  14.45 0.39 15.95 0 0 
+Time elapsed:  44.99 7.5 53.2 0 0 
 > 

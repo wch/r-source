@@ -375,7 +375,7 @@ Gamma <- function (link = "inverse")
 	disp <- dev/n
 #	2*((sum(wt*(y/mu+log(mu)-log(y)))+n*log(disp))/disp+
 #	   n*lgamma(1/disp)+sum(log(y)*wt)+1)
-	-2*sum(dgamma(y, 1/disp, mu*disp, log=TRUE)*wt) + 2
+	-2*sum(dgamma(y, 1/disp, scale=mu*disp, log=TRUE)*wt) + 2
     }
     initialize <- expression({
 	if (any(y <= 0))

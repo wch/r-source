@@ -13,7 +13,7 @@ readline(prompt="")
 }
 \details{
   The prompt string will be truncated to a maximum allowed length,
-  currently 32 chars.
+  normally 256 chars (but can be changed in the source code).
 }
 \value{
   A character vector of length one.

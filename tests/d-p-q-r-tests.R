@@ -151,9 +151,9 @@ for(sh in round(rlnorm(30),2)) {
 		"\n  shape,scale=",formatC(c(sh, sig)),"\n")
     }
 }
-pgamma(1,Inf,Inf) == 0
-all(is.nan(c(pgamma(Inf,1,Inf), pgamma(Inf,Inf,1), pgamma(Inf,Inf,Inf))))
-pgamma(Inf,1,xMax) == 1 && pgamma(xMax,1,Inf) == 0
+pgamma(1,Inf,scale=Inf) == 0
+all(is.nan(c(pgamma(Inf,1,scale=Inf), pgamma(Inf,Inf,scale=1), pgamma(Inf,Inf,scale=Inf))))
+pgamma(Inf,1,scale=xMax) == 1 && pgamma(xMax,1,scale=Inf) == 0
 
 ##--- Beta (need more):
 

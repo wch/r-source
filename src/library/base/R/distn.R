@@ -31,13 +31,16 @@ qcauchy <-
 rcauchy <-
     function(n, location=0, scale=1) .Internal(rcauchy(n, location, scale))
 
-dgamma <- function(x, shape, scale=1, log = FALSE)
+dgamma <- function(x, shape, rate = 1, scale = 1/rate, log = FALSE)
     .Internal(dgamma(x, shape, scale, log))
-pgamma <- function(q, shape, scale=1, lower.tail = TRUE, log.p = FALSE)
+pgamma <- function(q, shape, rate = 1, scale = 1/rate,
+                   lower.tail = TRUE, log.p = FALSE)
     .Internal(pgamma(q, shape, scale, lower.tail, log.p))
-qgamma <- function(p, shape, scale=1, lower.tail = TRUE, log.p = FALSE)
+qgamma <- function(p, shape, rate = 1, scale = 1/rate,
+                   lower.tail = TRUE, log.p = FALSE)
     .Internal(qgamma(p, shape, scale, lower.tail, log.p))
-rgamma <- function(n, shape, scale=1) .Internal(rgamma(n, shape, scale))
+rgamma <- function(n, shape, rate = 1, scale = 1/rate)
+    .Internal(rgamma(n, shape, scale))
 
 dlnorm <- function(x, meanlog=0, sdlog=1, log=FALSE)
     .Internal(dlnorm(x, meanlog, sdlog, log))
