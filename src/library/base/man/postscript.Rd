@@ -12,51 +12,51 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
 \alias{ps.options}
 \alias{.PostScript.Options}
 \arguments{
-\item{file}{a character string giving the name of the file.  If it is
-  \code{""}, the output is piped to the command given by
-  the argument \code{command}.
+  \item{file}{a character string giving the name of the file.  If it is
+    \code{""}, the output is piped to the command given by
+    the argument \code{command}.
 #ifdef unix
-  If it is \code{"|cmd"}, the output is piped to the command given
+If it is \code{"|cmd"}, the output is piped to the command given
   by \file{cmd}.
 #endif
 
-For use with \code{onefile=FALSE} give a
-  \code{printf} format such as \code{"Rplot%d.fig"} (the default in that
-  case).
-}
-\item{\dots}{further options for \code{postscript()}.}
-\item{paper}{the size of paper in the printer.  The choices are
-  \code{"a4"}, \code{"letter"}, \code{"legal"} and
-  \code{"executive"} (and these can be capitalized).
-  Also, \code{"special"} can be used, when the \code{width}
-  and \code{height} specify the paper size.  A further choice is
-  \code{"default"}, which is the default.  If this is selected, the
-  papersize is taken from the option \code{"papersize"}
-  if that is set and to \code{"a4"} if it is unset or empty.}
-\item{horizontal}{the orientation of the printed image, a
+    For use with \code{onefile=FALSE} give a
+    \code{printf} format such as \code{"Rplot\%d.fig"} (the default in that
+    case).
+  }
+  \item{\dots}{further options for \code{postscript()}.}
+  \item{paper}{the size of paper in the printer.  The choices are
+    \code{"a4"}, \code{"letter"}, \code{"legal"} and
+    \code{"executive"} (and these can be capitalized).
+    Also, \code{"special"} can be used, when the \code{width}
+    and \code{height} specify the paper size.  A further choice is
+    \code{"default"}, which is the default.  If this is selected, the
+    papersize is taken from the option \code{"papersize"}
+    if that is set and to \code{"a4"} if it is unset or empty.}
+  \item{horizontal}{the orientation of the printed image, a
     logical. Defaults to true, that is landscape orientation.}
-\item{width, height}{the width and height of the graphics region in inches.
-  The default is to use the entire page less a 0.25 inch border.}
-\item{family}{the font family to be used.
-  This must be one of \code{"AvantGarde"},
-  \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
-  \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
-  \code{"Palatino"} or \code{"Times"}.}
-\item{pointsize}{the default point size to be used.}
-\item{bg}{the default background color to be used.}
-\item{fg}{the default foreground color to be used.}
-\item{onefile}{logical: if true (the default) allow multiple figures
-  in one file. If false, generate a
-  file number containing the page number and give EPSF header
-  and no \code{DocumentMedia} comment.}
-\item{pagecentre}{logical: should the device region be centred on the page:
-  defaults to true.}
-\item{print.it}{logical: should the file be printed when the device is
-  closed?  (This only applies if \code{file} is a real file name.)}
-\item{command}{the command to be used for ``printing''. Defaults to
-  option \code{"printcmd"}; this can also be selected as \code{"default"}.}
-\item{append}{logical; currently \bold{disregarded}; just there for
-  compatibility reasons.}
+  \item{width, height}{the width and height of the graphics region in inches.
+    The default is to use the entire page less a 0.25 inch border.}
+  \item{family}{the font family to be used.
+    This must be one of \code{"AvantGarde"},
+    \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
+    \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
+    \code{"Palatino"} or \code{"Times"}.}
+  \item{pointsize}{the default point size to be used.}
+  \item{bg}{the default background color to be used.}
+  \item{fg}{the default foreground color to be used.}
+  \item{onefile}{logical: if true (the default) allow multiple figures
+    in one file. If false, generate a
+    file number containing the page number and give EPSF header
+    and no \code{DocumentMedia} comment.}
+  \item{pagecentre}{logical: should the device region be centred on the page:
+    defaults to true.}
+  \item{print.it}{logical: should the file be printed when the device is
+    closed?  (This only applies if \code{file} is a real file name.)}
+  \item{command}{the command to be used for ``printing''. Defaults to
+    option \code{"printcmd"}; this can also be selected as \code{"default"}.}
+  \item{append}{logical; currently \bold{disregarded}; just there for
+    compatibility reasons.}
 }
 %%>>> REAL DOC in SOURCE:    ../../../main/devices.c  &   ../../../unix/devPS.c
 \description{
