@@ -11,6 +11,9 @@ BUG FIXES
     o   `make install' copied the R shell script a second time without
 	getting RHOME right (thus also breaking R CMD check).  Fixed.
 
+    o   help() after help.start() did not work if topic was not equal
+        to filename (e.g. rnorm is found in Normal.html)
+
 
 		CHANGES IN R VERSION 0.63.1
 

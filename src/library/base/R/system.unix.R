@@ -126,10 +126,12 @@ help <- function(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
 		     ".Rd'\n", sep = "")
 	    if (!offline) {
 		if(!is.null(htmlhelp) && htmlhelp){
-		    file <- gsub(paste("/help/", topic, sep=""),
-				 paste("/html/", topic, sep=""),
-				 file)
+
+                    ## replace the last occurence of /help/ in the
+                    ## path with /html/, then append .html
+		    file <- gsub("/help/([^/]*)$", "/html/\\1", file)
 		    file <- paste("file:", file, ".html", sep="")
+                    
 		    if(is.null(.Options$browser))
 			stop("options(\"browser\") not set")
 		    browser <- .Options$browser
