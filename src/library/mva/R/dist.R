@@ -31,14 +31,14 @@ dist <- function(x, method="euclidean", diag=FALSE, upper=FALSE)
     return(d)
 }
 
-names.dist <- function(d) attr(d, "Labels")
+names.dist <- function(x) attr(x, "Labels")
 
-"names<-.dist" <- function(d, n)
+"names<-.dist" <- function(x, value)
 {
-    if(length(n) != attr(d, "Size"))
+    if(length(n) != attr(x, "Size"))
 	stop("invalid names for dist object")
-    attr(d, "Labels") <- n
-    d
+    attr(x, "Labels") <- value
+    x
 }
 
 ## Because names(d) != length(d) for "dist"-object d, we need
