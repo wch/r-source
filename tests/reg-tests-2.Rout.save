@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Foundation for Statistical Computing
-Version 1.8.1 alpha (2003-10-30), ISBN 3-900051-00-3
+Version 1.8.1 alpha (2003-11-04), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3274,6 +3274,7 @@ b
 2 
 > ## both dim and dimnames lost in 1.8.0
 > 
+> 
 > ## print.dist() didn't show NA's prior to 1.8.1
 > x <- cbind(c(1,NA,2,3), c(NA,2,NA,1))
 > (d <- dist(x))
@@ -3287,4 +3288,38 @@ b
 2       NA 0.000000                  
 3 1.414214       NA 0.000000         
 4 2.828427 1.414214 1.414214 0.000000
+> ##
+> 
+> 
+> ## offsets in model terms where sometimes not deleted correctly
+> attributes(terms(~ a + b + a:b + offset(c)))[c("offset", "term.labels")]
+$offset
+[1] 4
+
+$term.labels
+[1] "a"   "b"   "a:b"
+
+> attributes(terms(y ~ a + b + a:b + offset(c)))[c("offset", "term.labels")]
+$offset
+[1] 5
+
+$term.labels
+[1] "a"   "b"   "a:b"
+
+> attributes(terms(~ offset(c) + a + b + a:b))[c("offset", "term.labels")]
+$offset
+[1] 1
+
+$term.labels
+[1] "a"   "b"   "a:b"
+
+> attributes(terms(y ~ offset(c) + a + b + a:b))[c("offset", "term.labels")]
+$offset
+[1] 2
+
+$term.labels
+[1] "a"   "b"   "a:b"
+
+> ## errors prior to 1.8.1
+> 
 > 

@@ -88,6 +88,9 @@ BUG FIXES
     o	.setOldIs (methods) contained a typo stopping POSIXct objects
 	being included in formal classes.
 
+    o	terms() sometimes removed offset() terms incorrectly, since it
+	counted by variables and not terms.
+
 
 
 		CHANGES IN R VERSION 1.8.0
