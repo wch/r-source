@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-1, 2003-10-07
+Version 1.8-2, 2003-10-08
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -114,13 +114,13 @@ R FAQ
 1 Introduction
 **************
 
-   This document contains answers to some of the most frequently asked
+This document contains answers to some of the most frequently asked
 questions about R.
 
 1.1 Legalese
 ============
 
-   This document is copyright (C) 1998-2003 by Kurt Hornik.
+This document is copyright (C) 1998-2003 by Kurt Hornik.
 
    This document is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the Free
@@ -142,7 +142,7 @@ Temple Place -- Suite 330, Boston, MA 02111-1307, USA.
 1.2 Obtaining this document
 ===========================
 
-   The latest version of this document is always available from
+The latest version of this document is always available from
 
      `http://www.ci.tuwien.ac.at/~hornik/R/'
 
@@ -157,19 +157,19 @@ site (*note What is CRAN?::).
 1.3 Citing this document
 ========================
 
-   In publications, please refer to this FAQ as Hornik (2003), "The R FAQ",
+In publications, please refer to this FAQ as Hornik (2003), "The R FAQ",
 and give the above, _official_ URL and the ISBN 3-901167-51-X.
 
 1.4 Notation
 ============
 
-   Everything should be pretty standard.  `R>' is used for the R prompt,
-and a `$' for the shell prompt (where applicable).
+Everything should be pretty standard.  `R>' is used for the R prompt, and a
+`$' for the shell prompt (where applicable).
 
 1.5 Feedback
 ============
 
-   Feedback is of course most welcome.
+Feedback is of course most welcome.
 
    In particular, note that I do not have access to Windows or Mac systems.
 Features specific to the Windows and Mac OS ports of R are described in the
@@ -185,8 +185,8 @@ this document, please let me know.
 2.1 What is R?
 ==============
 
-   R is a system for statistical computation and graphics.  It consists of
-a language plus a run-time environment with graphics, a debugger, access to
+R is a system for statistical computation and graphics.  It consists of a
+language plus a run-time environment with graphics, a debugger, access to
 certain system functions, and the ability to run programs stored in script
 files.
 
@@ -230,7 +230,7 @@ project ("GNU S").
 2.2 What machines does R run on?
 ================================
 
-   R is being developed for the Unix, Windows and Mac families of operating
+R is being developed for the Unix, Windows and Mac families of operating
 systems.  Support for Mac OS Classic will end with the 1.7 series.
 
    The current version of R will configure and build under a number of
@@ -245,7 +245,7 @@ hppa-hp-hpux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current released version is 1.8.0.  Based on this
+The current released version is 1.8.0.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
 versions of R, working towards the next patch (`r-patched') and minor or
 eventually major (`r-devel') releases of R, respectively.  Version
@@ -255,7 +255,7 @@ in r-devel.
 2.4 How can R be obtained?
 ==========================
 
-   Sources, binaries and documentation for R can be obtained via CRAN, the
+Sources, binaries and documentation for R can be obtained via CRAN, the
 "Comprehensive R Archive Network" (see *Note What is CRAN?::).
 
    Sources are also available via anonymous rsync.  Use
@@ -277,7 +277,7 @@ command is to cause it to skip the CVS directories.  Further information on
 2.5.1 How can R be installed (Unix)
 -----------------------------------
 
-   If binaries are available for your platform (see *Note Are there Unix
+If binaries are available for your platform (see *Note Are there Unix
 binaries for R?::), you can use these, following the instructions that come
 with them.
 
@@ -346,7 +346,7 @@ install-dvi', `make install-info' and `make install-pdf', respectively.
 2.5.2 How can R be installed (Windows)
 --------------------------------------
 
-   The `bin/windows' directory of a CRAN site contains binaries for a base
+The `bin/windows' directory of a CRAN site contains binaries for a base
 distribution and a large number of add-on packages from CRAN to run on
 Windows 95, 98, ME, NT4, 2000, and XP (at least) on Intel and clones (but
 not on other platforms).  The Windows version of R was created by Robert
@@ -362,7 +362,7 @@ tool to use.
 2.5.3 How can R be installed (Macintosh)
 ----------------------------------------
 
-   The `bin/macosx' directory of a CRAN site contains a standard Apple
+The `bin/macosx' directory of a CRAN site contains a standard Apple
 installer package named `RAqua.pkg.sit' compressed in Aladdin Stuffit
 format.  Once downloaded, uncompressed and executed, the installer will
 install the current non-developer release of R.  RAqua is a native MacOSX
@@ -385,7 +385,7 @@ port of R for Macintosh is no longer supported.
 2.6 Are there Unix binaries for R?
 ==================================
 
-   The `bin/linux' directory of a CRAN site contains Debian stable/testing
+The `bin/linux' directory of a CRAN site contains Debian stable/testing
 packages for the i386 platform (now part of the Debian distribution and
 maintained by Dirk Eddelbuettel), Mandrake 8.0/8.1/8.2/9.0/9.1 i386
 packages by Michele Alzetta, Red Hat 7.x/8.x/9 i386 and 7.x alpha packages
@@ -409,11 +409,11 @@ install updates of the R packages.
 2.7 What documentation exists for R?
 ====================================
 
-   Online documentation for most of the functions and variables in R
-exists, and can be printed on-screen by typing `help(NAME)' (or `?NAME') at
-the R prompt, where NAME is the name of the topic help is sought for.  (In
-the case of unary and binary operators and control-flow special forms, the
-name may need to be be quoted.)
+Online documentation for most of the functions and variables in R exists,
+and can be printed on-screen by typing `help(NAME)' (or `?NAME') at the R
+prompt, where NAME is the name of the topic help is sought for.  (In the
+case of unary and binary operators and control-flow special forms, the name
+may need to be be quoted.)
 
    This documentation can also be made available as one reference manual
 for on-line reading in HTML and PDF formats, and as hardcopy via LaTeX, see
@@ -508,7 +508,7 @@ which includes most of the above references can be found at
 2.8 Citing R
 ============
 
-   To cite R in publications, use
+To cite R in publications, use
 
      @article{,
        author =    {Ross Ihaka and Robert Gentleman},
@@ -523,8 +523,8 @@ which includes most of the above references can be found at
 2.9 What mailing lists exist for R?
 ===================================
 
-   Thanks to Martin Maechler <Martin.Maechler@R-project.org>, there are
-four mailing lists devoted to R.
+Thanks to Martin Maechler <Martin.Maechler@R-project.org>, there are four
+mailing lists devoted to R.
 
 `R-announce'
      A moderated list for announcements about the development of R and the
@@ -587,8 +587,8 @@ comments and reports.
 2.10 What is CRAN?
 ==================
 
-   The "Comprehensive R Archive Network" (CRAN) is a collection of sites
-which carry identical material, consisting of the R distribution(s), the
+The "Comprehensive R Archive Network" (CRAN) is a collection of sites which
+carry identical material, consisting of the R distribution(s), the
 contributed extensions, documentation for R, and binaries.
 
    The CRAN master site at TU Wien, Austria, can be found at the URL
@@ -632,10 +632,10 @@ of precompiled binaries due to security reasons.
 2.11 Can I use R for commercial purposes?
 =========================================
 
-   R is released under the GNU General Public License (GPL).  If you have
-any questions regarding the legality of using R in any particular situation
-you should bring it up with your legal counsel.  We are in no position to
-offer legal advice.
+R is released under the GNU General Public License (GPL).  If you have any
+questions regarding the legality of using R in any particular situation you
+should bring it up with your legal counsel.  We are in no position to offer
+legal advice.
 
    It is the opinion of the R Core Team that one can use R for commercial
 purposes (e.g., in business or in consulting).  The GPL, like all Open
@@ -670,7 +670,7 @@ Core Team does not provide legal advice under any circumstances.
 3.1 What is S?
 ==============
 
-   S is a very high level language and an environment for data analysis and
+S is a very high level language and an environment for data analysis and
 graphics.  In 1998, the Association for Computing Machinery (ACM) presented
 its Software System Award to John M. Chambers, the principal designer of S,
 for
@@ -721,8 +721,8 @@ S Repository (http://lib.stat.cmu.edu/S/) at CMU.
 3.2 What is S-PLUS?
 ===================
 
-   S-PLUS is a value-added version of S sold by Insightful Corporation.
-Based on the S language, S-PLUS provides functionality in a wide variety of
+S-PLUS is a value-added version of S sold by Insightful Corporation.  Based
+on the S language, S-PLUS provides functionality in a wide variety of
 areas, including robust regression, modern non-parametric regression, time
 series, survival analysis, multivariate analysis, classical statistical
 tests, quality control, and graphics drivers.  Add-on modules add
@@ -735,7 +735,7 @@ models, and design of experiments.
 3.3 What are the differences between R and S?
 =============================================
 
-   We can regard S as a language with three current implementations or
+We can regard S as a language with three current implementations or
 "engines", the "old S engine" (S version 3; S-PLUS 3.x and 4.x), the "new S
 engine" (S version 4; S-PLUS 5.x and above), and R.  Given this
 understanding, asking for "the differences between R and S" really amounts
@@ -748,7 +748,7 @@ the S language.
 3.3.1 Lexical scoping
 ---------------------
 
-   Contrary to other implementations of the S language, R has adopted the
+Contrary to other implementations of the S language, R has adopted the
 evaluation model of Scheme.
 
    This difference becomes manifest when _free_ variables occur in a
@@ -923,7 +923,7 @@ read in using `source()'.
 3.3.2 Models
 ------------
 
-   There are some differences in the modeling code, such as
+There are some differences in the modeling code, such as
 
    * Whereas in S, you would use `lm(y ~ x^3)' to regress `y' on `x^3', in
      R, you have to insulate powers of numeric vectors (using `I()'), i.e.,
@@ -950,12 +950,12 @@ read in using `source()'.
 3.3.3 Others
 ------------
 
-   Apart from lexical scoping and its implications, R follows the S
-language definition in the Blue and White Books as much as possible, and
-hence really is an "implementation" of S.  There are some intentional
-differences where the behavior of S is considered "not clean".  In general,
-the rationale is that R should help you detect programming errors, while at
-the same time being as compatible as possible with S.
+Apart from lexical scoping and its implications, R follows the S language
+definition in the Blue and White Books as much as possible, and hence
+really is an "implementation" of S.  There are some intentional differences
+where the behavior of S is considered "not clean".  In general, the
+rationale is that R should help you detect programming errors, while at the
+same time being as compatible as possible with S.
 
    Some known differences are the following.
 
@@ -1090,9 +1090,9 @@ to implement the change yourself and make sure it works.
 3.4 Is there anything R can do that S-PLUS cannot?
 ==================================================
 
-   Since almost anything you can do in R has source code that you could
-port to S-PLUS with little effort there will never be much you can do in R
-that you couldn't do in S-PLUS if you wanted to.  (Note that using lexical
+Since almost anything you can do in R has source code that you could port
+to S-PLUS with little effort there will never be much you can do in R that
+you couldn't do in S-PLUS if you wanted to.  (Note that using lexical
 scoping may simplify matters considerably, though.)
 
    R offers several graphics features that S-PLUS does not, such as finer
@@ -1107,12 +1107,12 @@ Computational and Graphical Statistics_, *9*, 582-599.
 3.5 What is R-plus?
 ===================
 
-   There is no such thing.
+There is no such thing.
 
 4 R Web Interfaces
 ******************
 
-   *Rweb* is developed and maintained by Jeff Banfield
+*Rweb* is developed and maintained by Jeff Banfield
 <jeff@math.montana.edu>.  The Rweb Home Page
 (http://www.math.montana.edu/Rweb/) provides access to all three versions
 of Rweb--a simple text entry form that returns output and graphs, a more
@@ -1160,7 +1160,7 @@ the author or find the package have failed.
 5.1.1 Add-on packages in R
 --------------------------
 
-   The R distribution comes with the following extra packages:
+The R distribution comes with the following extra packages:
 
 *ctest*
      A collection of Classical TESTs, including the Ansari-Bradley,
@@ -1216,7 +1216,7 @@ the author or find the package have failed.
 5.1.2 Add-on packages from CRAN
 -------------------------------
 
-   The following packages are available from the CRAN `src/contrib' area.
+The following packages are available from the CRAN `src/contrib' area.
 (Packages denoted as _Recommended_ are to be included in all binary
 distributions of R.)
 
@@ -1271,13 +1271,6 @@ distributions of R.)
 *Devore6*
      Data sets and sample analyses from "Probability and Statistics for
      Engineering and the Sciences (6th ed)" by Jay L. Devore, 2003, Duxbury.
-
-*EMV*
-     Estimation of missing values in a matrix by a k-th nearest neighboors
-     algorithm.
-
-*GLMMGibbs*
-     Generalised Linear Mixed Models by Gibbs sampling.
 
 *GRASS*
      An interface between the GRASS geographical information system and R,
@@ -1747,10 +1740,8 @@ distributions of R.)
 *gregmisc*
      Miscellaneous functions written/maintained by Gregory R. Warnes.
 
-*grid*
-     The Grid graphics package, a rewrite of the graphics layout
-     capabilities, plus some support for interaction.  _Recommended_ (will
-     be integrated into the R distribution for version 1.8.0).
+*gridBase*
+     Integration of base and grid graphics.
 
 *gss*
      A comprehensive package for structural multivariate function estimation
@@ -1902,10 +1893,6 @@ distributions of R.)
      analysis (FDA), penalized discriminant analysis (PDA), multivariate
      additive regression splines (MARS), adaptive back-fitting splines
      (BRUTO), and penalized regression.
-
-*meanscore*
-     Mean Score method for missing covariate data in logistic regression
-     models.
 
 *merror*
      Accuracy and precision of measurements.
@@ -2276,10 +2263,6 @@ distributions of R.)
 *tseries*
      Package for time series analysis with emphasis on non-linear modelling.
 
-*twostage*
-     Functions for optimal design of two-stage-studies using the Mean Score
-     method.
-
 *udunits*
      Interface to Unidata's routines to convert units.
 
@@ -2319,6 +2302,13 @@ these a try, of course.  This area of CRAN currently contains
 *Dopt*
      Finding D-optimal experimental designs.
 
+*EMV*
+     Estimation of missing values in a matrix by a k-th nearest neighboors
+     algorithm.
+
+*GLMMGibbs*
+     Generalised Linear Mixed Models by Gibbs sampling.
+
 *RPgSQL*
      Provides methods for accessing data stored in PostgreSQL tables.
 
@@ -2339,8 +2329,16 @@ these a try, of course.  This area of CRAN currently contains
      including some latent class models via EM and Fisher scoring
      approaches.
 
+*meanscore*
+     Mean Score method for missing covariate data in logistic regression
+     models.
+
 *runStat*
      Running median and mean.
+
+*twostage*
+     Functions for optimal design of two-stage-studies using the Mean Score
+     method.
 
 *write.snns*
      Function for writing a SNNS pattern file from a data frame or matrix.
@@ -2348,8 +2346,8 @@ these a try, of course.  This area of CRAN currently contains
 5.1.3 Add-on packages from Omegahat
 -----------------------------------
 
-   The `src/contrib/Omegahat' Directory of a CRAN site contains yet
-unreleased packages from the Omegahat Project for Statistical Computing
+The `src/contrib/Omegahat' Directory of a CRAN site contains yet unreleased
+packages from the Omegahat Project for Statistical Computing
 (http://www.omegahat.org/).  Currently, there are
 
 *CORBA*
@@ -2470,7 +2468,7 @@ unreleased packages from the Omegahat Project for Statistical Computing
 5.1.4 Add-on packages from BioConductor
 ---------------------------------------
 
-   The Bioconductor Project (http://www.bioconductor.org) produces an open
+The Bioconductor Project (http://www.bioconductor.org) produces an open
 source software framework that will assist biologists and statisticians
 working in bioinformatics, with primary emphasis on inference using DNA
 microarrays.  The following R packages are contained in the current release
@@ -2597,8 +2595,8 @@ of BioConductor, with more packages under development.
 5.1.5 Other add-on packages
 ---------------------------
 
-   Jim Lindsey <jlindsey@luc.ac.be> has written a collection of R packages
-for nonlinear regression and repeated measurements, consisting of *event*
+Jim Lindsey <jlindsey@luc.ac.be> has written a collection of R packages for
+nonlinear regression and repeated measurements, consisting of *event*
 (event history procedures and models), *gnlm* (generalized nonlinear
 regression models), *growth* (multivariate normal and
 elliptically-contoured repeated measurements models), *repeated*
@@ -2617,10 +2615,10 @@ obtained from the mailing list archive.
 5.2 How can add-on packages be installed?
 =========================================
 
-   (Unix only.)  The add-on packages on CRAN come as gzipped tar files
-named `PKG_VERSION.tar.gz', which may in fact be "bundles" containing more
-than one package.  Provided that `tar' and `gzip' are available on your
-system, type
+(Unix only.)  The add-on packages on CRAN come as gzipped tar files named
+`PKG_VERSION.tar.gz', which may in fact be "bundles" containing more than
+one package.  Provided that `tar' and `gzip' are available on your system,
+type
 
      $ R CMD INSTALL /path/to/PKG_VERSION.tar.gz
 
@@ -2659,7 +2657,7 @@ information.)
 5.3 How can add-on packages be used?
 ====================================
 
-   To find out which additional packages are available on your system, type
+To find out which additional packages are available on your system, type
 
      library()
 
@@ -2719,7 +2717,7 @@ at the R prompt.
 5.4 How can add-on packages be removed?
 =======================================
 
-   Use
+Use
 
      $ R CMD REMOVE PKG_1 ... PKG_N
 
@@ -2735,11 +2733,11 @@ the default library by default.)
 5.5 How can I create an R package?
 ==================================
 
-   A package consists of a subdirectory containing the files `DESCRIPTION'
-and `INDEX', and the subdirectories `R', `data', `demo', `exec', `inst',
-`man', `src', and `tests' (some of which can be missing).  Optionally the
-package can also contain script files `configure' and `cleanup' which are
-executed before and after installation.
+A package consists of a subdirectory containing the files `DESCRIPTION' and
+`INDEX', and the subdirectories `R', `data', `demo', `exec', `inst', `man',
+`src', and `tests' (some of which can be missing).  Optionally the package
+can also contain script files `configure' and `cleanup' which are executed
+before and after installation.
 
    See section "Creating R packages" in `Writing R Extensions', for details.
 This manual is included in the R distribution, *note What documentation
@@ -2755,10 +2753,10 @@ a set of R functions and datasets.
 5.6 How can I contribute to R?
 ==============================
 
-   R is in active development and there is always a risk of bugs creeping
-in.  Also, the developers do not have access to all possible machines
-capable of running R.  So, simply using it and communicating problems is
-certainly of great value.
+R is in active development and there is always a risk of bugs creeping in.
+Also, the developers do not have access to all possible machines capable of
+running R.  So, simply using it and communicating problems is certainly of
+great value.
 
    One place where functionality is still missing is the modeling software
 as described in "Statistical Models in S" (see *Note What is S?::);
@@ -2782,7 +2780,7 @@ Kurt Hornik <Kurt.Hornik@R-project.org>.
 6.1 Is there Emacs support for R?
 =================================
 
-   There is an Emacs package called ESS ("Emacs Speaks Statistics") which
+There is an Emacs package called ESS ("Emacs Speaks Statistics") which
 provides a standard interface between statistical programs and statistical
 processes.  It is intended to provide assistance for interactive
 statistical programming and data analysis.  Languages supported include: S
@@ -2827,10 +2825,10 @@ pulldown menus.
 6.2 Should I run R from within Emacs?
 =====================================
 
-   Yes, _definitely_.  Inferior R mode provides a readline/history
-mechanism, object name completion, and syntax-based highlighting of the
-interaction buffer using Font Lock mode, as well as a very convenient
-interface to the R help system.
+Yes, _definitely_.  Inferior R mode provides a readline/history mechanism,
+object name completion, and syntax-based highlighting of the interaction
+buffer using Font Lock mode, as well as a very convenient interface to the
+R help system.
 
    Of course, it also integrates nicely with the mechanisms for editing R
 source using Emacs.  One can write code in one Emacs buffer and send whole
@@ -2848,7 +2846,7 @@ M-x R' for starting R.
 6.3 Debugging R from within Emacs
 =================================
 
-   To debug R "from within Emacs", there are several possibilities.  To use
+To debug R "from within Emacs", there are several possibilities.  To use
 the Emacs GUD (Grand Unified Debugger) library with the recommended
 debugger GDB, type `M-x gdb' and give the path to the R _binary_ as
 argument.  At the `gdb' prompt, set `R_HOME' and other environment
@@ -2889,9 +2887,9 @@ as follows:
 7.1 Why does R run out of memory?
 =================================
 
-   Versions of R prior to 1.2.0 used a _static_ memory model.  At startup,
-R asked the operating system to reserve a fixed amount of memory for it.
-The size of this chunk could not be changed subsequently.  Hence, it could
+Versions of R prior to 1.2.0 used a _static_ memory model.  At startup, R
+asked the operating system to reserve a fixed amount of memory for it.  The
+size of this chunk could not be changed subsequently.  Hence, it could
 happen that not enough memory was allocated, e.g., when trying to read
 large data sets into R.  In such cases, it was necessary to restart R with
 more memory available, as controlled by the command line options `--nsize'
@@ -2910,14 +2908,14 @@ them.
 7.2 Why does sourcing a correct file fail?
 ==========================================
 
-   Versions of R prior to 1.2.1 may have had problems parsing files not
-ending in a newline.  Earlier R versions had a similar problem when reading
-in data files.  This should no longer happen.
+Versions of R prior to 1.2.1 may have had problems parsing files not ending
+in a newline.  Earlier R versions had a similar problem when reading in
+data files.  This should no longer happen.
 
 7.3 How can I set components of a list to NULL?
 ===============================================
 
-   You can use
+You can use
 
      x[i] <- list(NULL)
 
@@ -2931,7 +2929,7 @@ remove the corresponding component from the list.
 7.4 How can I save my workspace?
 ================================
 
-   `save.image()' saves the objects in the user's `.GlobalEnv' to the file
+`save.image()' saves the objects in the user's `.GlobalEnv' to the file
 `.RData' in the R startup directory.  (This is also what happens after
 `q("yes")'.)  Using `save.image(FILE)' one can save the image under a
 different name.
@@ -2939,7 +2937,7 @@ different name.
 7.5 How can I clean up my workspace?
 ====================================
 
-   To remove all objects in the currently active environment (typically
+To remove all objects in the currently active environment (typically
 `.GlobalEnv'), you can do
 
      rm(list = ls(all = TRUE))
@@ -2950,7 +2948,7 @@ are removed.)
 7.6 How can I get eval() and D() to work?
 =========================================
 
-   Strange things will happen if you use `eval(print(x), envir = e)' or
+Strange things will happen if you use `eval(print(x), envir = e)' or
 `D(x^2, "x")'.  The first one will either tell you that "`x'" is not found,
 or print the value of the wrong `x'.  The other one will likely return zero
 if `x' exists, and an error otherwise.
@@ -2982,7 +2980,7 @@ or
 7.7 Why do my matrices lose dimensions?
 =======================================
 
-   When a matrix with a single row or column is created by a subscripting
+When a matrix with a single row or column is created by a subscripting
 operation, e.g., `row <- mat[2, ]', it is by default turned into a vector.
 In a similar way if an array with dimension, say, 2 x 3 x 1 x 4 is created
 by subscripting it will be coerced into a 2 x 3 x 4 array, losing the
@@ -3009,11 +3007,11 @@ will return a vector rather than a matrix if `index' happens to have length
 7.8 How does autoloading work?
 ==============================
 
-   R has a special environment called `.AutoloadEnv'.  Using
-`autoload(NAME, PKG)', where NAME and PKG are strings giving the names of
-an object and the package containing it, stores some information in this
-environment.  When R tries to evaluate NAME, it loads the corresponding
-package PKG and reevaluates NAME in the new package's environment.
+R has a special environment called `.AutoloadEnv'.  Using `autoload(NAME,
+PKG)', where NAME and PKG are strings giving the names of an object and the
+package containing it, stores some information in this environment.  When R
+tries to evaluate NAME, it loads the corresponding package PKG and
+reevaluates NAME in the new package's environment.
 
    Using this mechanism makes R behave as if the package was loaded, but
 does not occupy memory (yet).
@@ -3023,8 +3021,8 @@ does not occupy memory (yet).
 7.9 How should I set options?
 =============================
 
-   The function `options()' allows setting and examining a variety of
-global "options" which affect the way in which R computes and displays its
+The function `options()' allows setting and examining a variety of global
+"options" which affect the way in which R computes and displays its
 results.  The variable `.Options' holds the current values of these
 options, but should never directly be assigned to unless you want to drive
 yourself crazy--simply pretend that it is a "read-only" variable.
@@ -3055,9 +3053,9 @@ silently disregarded.
 7.10 How do file names work in Windows?
 =======================================
 
-   As R uses C-style string handling, `\' is treated as an escape
-character, so that for example one can enter a newline as `\n'.  When you
-really need a `\', you have to escape it with another `\'.
+As R uses C-style string handling, `\' is treated as an escape character,
+so that for example one can enter a newline as `\n'.  When you really need
+a `\', you have to escape it with another `\'.
 
    Thus, in filenames use something like `"c:\\data\\money.dat"'.  You can
 also replace `\' by `/' (`"c:/data/money.dat"').
@@ -3065,10 +3063,10 @@ also replace `\' by `/' (`"c:/data/money.dat"').
 7.11 Why does plotting give a color allocation error?
 =====================================================
 
-   Sometimes plotting, e.g., when running `demo("image")', results in
-"Error: color allocation error".  This is an X problem, and only indirectly
-related to R.  It occurs when applications started prior to R have used all
-the available colors.  (How many colors are available depends on the X
+Sometimes plotting, e.g., when running `demo("image")', results in "Error:
+color allocation error".  This is an X problem, and only indirectly related
+to R.  It occurs when applications started prior to R have used all the
+available colors.  (How many colors are available depends on the X
 configuration; sometimes only 256 colors can be used.)
 
    One application which is notorious for "eating" colors is Netscape.  If
@@ -3083,9 +3081,9 @@ information.
 7.12 How do I convert factors to numeric?
 =========================================
 
-   It may happen that when reading numeric data into R (usually, when
-reading in a file), they come in as factors.  If `f' is such a factor
-object, you can use
+It may happen that when reading numeric data into R (usually, when reading
+in a file), they come in as factors.  If `f' is such a factor object, you
+can use
 
      as.numeric(as.character(f))
 
@@ -3099,7 +3097,7 @@ task at hand (as `as.numeric()' or `unclass()' give the internal codes).
 7.13 Are Trellis displays implemented in R?
 ===========================================
 
-   The recommended package *lattice* (which is based on another recommended
+The recommended package *lattice* (which is based on another recommended
 package, *grid*) provides graphical functionality that is compatible with
 most Trellis commands.
 
@@ -3115,7 +3113,7 @@ use it in R.  The name "lattice" has been chosen for the R equivalent.)
 7.14 What are the enclosing and parent environments?
 ====================================================
 
-   Inside a function you may want to access variables in two additional
+Inside a function you may want to access variables in two additional
 environments: the one that the function was defined in ("enclosing"), and
 the one it was invoked in ("parent").
 
@@ -3161,9 +3159,9 @@ created.
 7.15 How can I substitute into a plot label?
 ============================================
 
-   Often, it is desired to use the value of an R object in a plot label,
-e.g., a title.  This is easily accomplished using `paste()' if the label is
-a simple character string, but not always obvious in case the label is an
+Often, it is desired to use the value of an R object in a plot label, e.g.,
+a title.  This is easily accomplished using `paste()' if the label is a
+simple character string, but not always obvious in case the label is an
 expression (for refined mathematical annotation).  In such a case, either
 use `parse()' on your pasted character string or use `substitute()' on an
 expression.  For example, if `ahat' is an estimator of your parameter a of
@@ -3177,7 +3175,7 @@ mailing list achives.
 7.16 What are valid names?
 ==========================
 
-   When creating data frames using `data.frame()' or `read.table()', R by
+When creating data frames using `data.frame()' or `read.table()', R by
 default ensures that the variable names are syntactically valid.  (The
 argument `check.names' to these functions controls whether variable names
 are checked and adjusted by `make.names()' if needed.)
@@ -3217,7 +3215,7 @@ language:
 7.17 Are GAMs implemented in R?
 ===============================
 
-   There is a `gam()' function for Generalized Additive Models in package
+There is a `gam()' function for Generalized Additive Models in package
 *mgcv*, but it is not an exact clone of what is described in the White Book
 (no `lo()' for example).  Package *gss* can fit spline-based GAMs too.  And
 if you can accept regression splines you can use `glm()'.  For gaussian
@@ -3226,7 +3224,7 @@ GAMs you can use `bruto()' from package *mda*.
 7.18 Why is the output not printed when I source() a file?
 ==========================================================
 
-   Most R commands do not generate any output. The command
+Most R commands do not generate any output. The command
 
      1+1
 
@@ -3256,7 +3254,7 @@ instead, or use `source(FILE, echo=TRUE)'.
 7.19 Why does outer() behave strangely with my function?
 ========================================================
 
-   As the help for `outer()' indicates, it does not work on arbitrary
+As the help for `outer()' indicates, it does not work on arbitrary
 functions the way the `apply()' family does.  It requires functions that
 are vectorized to work elementwise on arrays.  As you can see by looking at
 the code, `outer(x, y, FUN)' creates two large vectors containing every
@@ -3287,7 +3285,7 @@ then you can use `outer()' by writing, e.g.,
 7.20 Why does the output from anova() depend on the order of factors in the model?
 ==================================================================================
 
-   In a model such as `~A+B+A:B', R will report the difference in sums of
+In a model such as `~A+B+A:B', R will report the difference in sums of
 squares between the models `~1', `~A', `~A+B' and `~A+B+A:B'.  If the model
 were `~B+A+A:B', R would report differences between `~1', `~B', `~A+B', and
 `~A+B+A:B' . In the first case the sum of squares for `A' is comparing `~1'
@@ -3311,8 +3309,8 @@ single terms.
 7.21 How do I produce PNG graphics in batch mode?
 =================================================
 
-   Under Unix, the `png()' device uses the X11 driver, which is a problem
-in batch mode or for remote operation.  If you have Ghostscript you can use
+Under Unix, the `png()' device uses the X11 driver, which is a problem in
+batch mode or for remote operation.  If you have Ghostscript you can use
 `bitmap()', which produces a PostScript file then converts it to any bitmap
 format supported by ghostscript.  On some installations this produces ugly
 output, on others it is perfectly satisfactory.  In theory one could also
@@ -3321,8 +3319,8 @@ use Xvfb, which provides an X server with no display.
 7.22 How can I get command line editing to work?
 ================================================
 
-   The Unix command-line interface to R can only provide the inbuilt
-command line editor which allows recall, editing and re-submission of prior
+The Unix command-line interface to R can only provide the inbuilt command
+line editor which allows recall, editing and re-submission of prior
 commands provided that the GNU readline library is available at the time R
 is configured for compilation.  Note that the `development' version of
 readline including the appropriate headers is needed: users of Linux binary
@@ -3332,7 +3330,7 @@ distributions will need to install packages such as `libreadline-dev'
 7.23 How can I turn a string into a variable?
 =============================================
 
-   If you have
+If you have
 
      varname <- c("a", "b", "d")
 
@@ -3372,19 +3370,19 @@ without any of this messing about.
 7.24 Why do lattice/trellis graphics not work?
 ==============================================
 
-   The most likely reason is that you forgot to tell R to display the
-graph.  Lattice functions such as `xyplot()' create a graph object, but do
-not display it (the same is true of Trellis graphics in S-PLUS).  The
-`print()' method for the graph object produces the actual display.  When
-you use these functions interactively at the command line, the result is
+The most likely reason is that you forgot to tell R to display the graph.
+Lattice functions such as `xyplot()' create a graph object, but do not
+display it (the same is true of Trellis graphics in S-PLUS).  The `print()'
+method for the graph object produces the actual display.  When you use
+these functions interactively at the command line, the result is
 automatically printed, but in `source()' or inside your own functions you
 will need an explicit `print()' statement.
 
 7.25 How can I sort the rows of a data frame?
 =============================================
 
-   To sort the rows within a data frame, with respect to the values in one
-or more of the columns, simply use `order()'.
+To sort the rows within a data frame, with respect to the values in one or
+more of the columns, simply use `order()'.
 
 8 R Programming
 ***************
@@ -3392,7 +3390,7 @@ or more of the columns, simply use `order()'.
 8.1 How should I write summary methods?
 =======================================
 
-   Suppose you want to provide a summary method for class `"foo"'.  Then
+Suppose you want to provide a summary method for class `"foo"'.  Then
 `summary.foo()' should not print anything, but return an object of class
 `"summary.foo"', _and_ you should write a method `print.summary.foo()'
 which nicely prints the summary information and invisibly returns its
@@ -3404,8 +3402,8 @@ such cases you don't want anything printed.
 8.2 How can I debug dynamically loaded code?
 ============================================
 
-   Roughly speaking, you need to start R inside the debugger, load the
-code, send an interrupt, and then set the required breakpoints.
+Roughly speaking, you need to start R inside the debugger, load the code,
+send an interrupt, and then set the required breakpoints.
 
    See section "Finding entry points in dynamically loaded code" in
 `Writing R Extensions'.  This manual is included in the R distribution,
@@ -3414,7 +3412,7 @@ code, send an interrupt, and then set the required breakpoints.
 8.3 How can I inspect R objects when debugging?
 ===============================================
 
-   The most convenient way is to call `R_PV' from the symbolic debugger.
+The most convenient way is to call `R_PV' from the symbolic debugger.
 
    See section "Inspecting R objects when debugging" in `Writing R
 Extensions'.
@@ -3422,9 +3420,9 @@ Extensions'.
 8.4 How can I change compilation flags?
 =======================================
 
-   Suppose you have C code file for dynloading into R, but you want to use
-`R CMD SHLIB' with compilation flags other than the default ones (which
-were determined when R was built).  You could change the file
+Suppose you have C code file for dynloading into R, but you want to use `R
+CMD SHLIB' with compilation flags other than the default ones (which were
+determined when R was built).  You could change the file
 ``R_HOME'/etc/Makeconf' to reflect your preferences.  If you are a Bourne
 shell user, you can also pass the desired flags to Make (which is used for
 controlling compilation) via the Make variable `MAKEFLAGS', as in
@@ -3437,7 +3435,7 @@ controlling compilation) via the Make variable `MAKEFLAGS', as in
 9.1 What is a bug?
 ==================
 
-   If R executes an illegal instruction, or dies with an operating system
+If R executes an illegal instruction, or dies with an operating system
 error message that indicates a problem in the program (as opposed to
 something like "disk full"), then it is certainly a bug.  If you call
 `.C()', `.Fortran()', `.External()' or `.Call()' (or `.Internal()')
@@ -3477,7 +3475,7 @@ of them must be wrong, so report the bug.
 9.2 How to report a bug
 =======================
 
-   When you decide that there is a bug, it is important to report it and to
+When you decide that there is a bug, it is important to report it and to
 report it in a way which is useful.  What is most useful is an exact
 description of what commands you type, starting with the shell command to
 run R, until the problem happens.  Always include the version of R,
@@ -3535,8 +3533,8 @@ package maintainer rather than to R-bugs.
 10 Acknowledgments
 ******************
 
-   Of course, many many thanks to Robert and Ross for the R system, and to
-the package writers and porters for adding to it.
+Of course, many many thanks to Robert and Ross for the R system, and to the
+package writers and porters for adding to it.
 
    Special thanks go to Doug Bates, Peter Dalgaard, Paul Gilbert, Stefano
 Iacus, Fritz Leisch, Jim Lindsey, Thomas Lumley, Martin Maechler, Brian D.
