@@ -85,9 +85,16 @@ BUG FIXES
     o   Macros NEW_OBJECT (aka NEW) and MAKE_CLASS added; required by
         the .Call interface to generate arbitrary objects.
 
-    o   Problem that prevented package tcltk from working with 
-        Tcl/Tk 8.4 (crash on init) resolved. (Notice that binaries
-	may still require an older Tcl, esp. on Windows).
+    o	Problem that prevented package tcltk from working with Tcl/Tk
+        8.4 (crash on initialization) resolved.  (Notice that binaries
+        may still require an older Tcl/Tk, for example on Windows).
+
+    o   type.convert() was not getting the levels right if passed a
+	character vector containing <NA>s, and `na.strings' did not
+	contain "NA".  This affected read.table().
+
+    o   Internal match function did not check for nor handle 0-length
+	vectors.  (The R function match() did.)
 
 
 

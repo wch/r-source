@@ -414,8 +414,17 @@ SEXP match(SEXP table, SEXP x, int nmatch)
 {
     SEXP ans;
     HashData data;
+    int i, n = length(x);
 
-    data.nomatch=nmatch;
+    /* handle zero length arguments */
+    if (n == 0) return allocVector(INTSXP, 0);
+    if (length(table) == 0) {
+	ans = allocVector(INTSXP, n);
+	for (i = 0; i < n; i++)
+	    INTEGER(ans)[i] = nmatch;
+	return ans;
+    }
+    data.nomatch = nmatch;
     HashTableSetup(table, &data);
     PROTECT(data.HashTable);
     DoHashing(table, &data);

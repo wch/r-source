@@ -1089,6 +1089,28 @@ stopifnot(identical(dimnames(z), dimnames(a)))
 ## 1.6.1 only transferred dimnames if both components were non-null
 
 
+## internal conversion to factor in type.convert was not right
+## if a character string NA was involved.
+x <- c(NA, "NA", "foo")
+(z <- type.convert(x))
+stopifnot(identical(levels(z), "foo"))
+(z <- type.convert(x, na.strings=character(0)))
+stopifnot(identical(levels(z), c("foo", "NA")))
+(z <- type.convert(x, na.strings="foo"))
+stopifnot(identical(levels(z), "NA"))
+## extra level in 1.6.1
+
+
+## related example
+tmp <- tempfile()
+cat(c("1", "foo", "\n", "2", "NA", "\n"), file = tmp)
+(z <- read.table(tmp, na.strings="foo"))
+unlink(tmp)
+stopifnot(identical(levels(z$V2), "NA"),
+          identical(is.na(z$V2), c(TRUE, FALSE)))
+## 1.6.1 had V2 as NA NA.
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
