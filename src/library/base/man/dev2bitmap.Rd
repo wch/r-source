@@ -30,7 +30,7 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
   \code{postscript} device and postprocessing the output as
   \dQuote{printing}.
 
-  You will need a recent version of \code{ghostscript} (5.10 and
+  You will need a version of \code{ghostscript} (5.10 and
   later have been tested): the full path to the executable can be set by
   the environment variable \env{R\_GSCMD}.
 
@@ -50,6 +50,9 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
 
   Note: despite the name of the functions they can produce PDF \emph{via}
   \code{type = "pdfwrite"}, and the PDF produced is not bitmapped.
+
+  For formats which contain a single image, a file specification like
+  \code{Rplots\%03d.png} can be used: this is intepreted by GhostScript.
 
   For \code{dev2bitmap} if just one of \code{width} and \code{height} is
   specified, the other is chosen to preserve aspect ratio of the
