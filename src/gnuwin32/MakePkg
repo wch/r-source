@@ -147,6 +147,10 @@ endif
 	  $(ECHO) "A package must contain a DESCRIPTION file"; \
 	  exit 27; \
 	fi
+	@if test -f ${SPKG}/NAMESPACE; then \
+	  $(ECHO) "  installing NAMESPACE file"; \
+	  $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
+	fi
 ifeq ($(strip $(BUILD)),CROSS)
 	@(cat DESCRIPTION; $(ECHO); $(ECHO) "Built: R" $(RVER)\;  Win32\;  `date`) \
 	  | $(SED) '/^\s*$$/d' > ${DPKG}/DESCRIPTION
