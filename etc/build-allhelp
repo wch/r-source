@@ -3,8 +3,6 @@
 # ${RHOME}/etc/build-allhelp
 # Should work from anywhere in the R source tree.
 
-# FIXME when the new directory structure is here!
-
 RHOME=`dirname $0`/..		# relative
 RHOME=`cd ${RHOME}; pwd`	# absolute
 PKGS=`cd ${RHOME}/src/library; ls | sed '
@@ -14,8 +12,7 @@ PKGS=`cd ${RHOME}/src/library; ls | sed '
 /Makefile/d
 /profile/d'`
 
-mkdir -p ${RHOME}/help
-cp /dev/null ${RHOME}/help/LibIndex
+cp /dev/null ${RHOME}/library/LibIndex
 
 cd ${RHOME}/src/library
 for pkg in ${PKGS}
