@@ -24,8 +24,10 @@ PKGS = $(R_PKGS)
 ## See e.g. `src/gnuwin32/help/Makefile'.
 R_CMD_BUILD_HELP = $(top_builddir)/bin/R CMD perl $(top_srcdir)/share/perl/build-help.pl
 R_CMD_RD2CONTENTS = $(top_builddir)/bin/R CMD perl $(top_srcdir)/share/perl/Rd2contents.pl
-R_INSTALL = $(top_builddir)/bin/R INSTALL -c -l $(top_builddir)/library
 ## </NOTE>
+
+## This won't work unless building in the srcdir
+R_INSTALL = $(top_builddir)/bin/R INSTALL -c -l $(top_builddir)/library
 
 all: Makefile R
 
@@ -39,9 +41,10 @@ R:
 	@for pkg in $(SUBDIRS); do \
 	  (cd $${pkg} && $(MAKE)) || exit 1; \
 	done
-	@for pkg in $(R_REGULAR_PKGS); do \
-	  $(R_INSTALL) $${pkg} || exit 1 ; echo "$${pkg} installed";\
-	done
+# fails with Bourne shell if $(R_REGULAR_PKGS) is empty, which it is
+#	@for pkg in $(R_REGULAR_PKGS); do \
+#	  $(R_INSTALL) $${pkg} || exit 1 ; echo "$${pkg} installed";\
+#	done
 	@$(INSTALL_DATA) $(top_srcdir)/doc/html/R.css \
 	  $(top_builddir)/library
 
