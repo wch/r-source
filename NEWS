@@ -177,6 +177,39 @@ UTILITIES
 
 BUG FIXES
 
+    o	axis() was not listening to par("mgp")[3] by default.
+	(PR#916)
+
+    o	tcltk back-compatibility fix for tcl8.0	 <<Peter fixme>>
+
+    o	hist.POSIXct(*, breaks) now works for `breaks = #{breaks}' and
+	when `x' has NAs; the latter applies to cut.POSIXct() as well.
+
+    o	The internal download.file() methods were setting the proxy
+	port to 0 unless it was specified.
+
+    o	poly() did not work for >=3 column matrices.
+
+    o	cut.default() was not handling infinite values with infinite
+	breaks.	 (PR#1694)
+
+    o	ks.test() could fail due to integer overflow if n.x and n.y
+	were both large.
+
+    o	all.equal(3., 3:3) wasn't TRUE when the methods package was
+	present.
+
+    o	read.table() could remap non-syntactic names to duplicates,
+	and did not check for duplicated names.
+
+    o	ls.str(envir = environment(F)) now works (when F is a function).
+
+    o	pie() now has a `border' (and 'lty') argument which allows empty
+	slice borders and makes pie() useable for hundreds of slices.
+
+    o	all.equal.character() now works correctly also when NAs don't
+	match (PR#1767).
+
     o	read.dcf() had a memory leak.
 
     o	Setting "tcl = a" in a highlevel graphic function worked almost
@@ -232,50 +265,12 @@ BUG FIXES
     o   abline() on log scale doesn't draw -ve points (PR#1243)
 
 
+
 	**************************************************
 	*						 *
 	*	       1.5 SERIES NEWS			 *
 	*						 *
 	**************************************************
-
-
-		CHANGES IN R VERSION 1.5.2
-
-
-BUG FIXES
-
-    o	axis() was not listening to par("mgp")[3] by default.
-	(PR#916)
-
-    o	tcltk back-compatibility fix for tcl8.0	 <<Peter fixme>>
-
-    o	hist.POSIXct(*, breaks) now works for `breaks = #{breaks}' and
-	when `x' has NAs; the latter applies to cut.POSIXct() as well.
-
-    o	The internal download.file() methods were setting the proxy
-	port to 0 unless it was specified.
-
-    o	poly() did not work for >=3 column matrices.
-
-    o	cut.default() was not handling infinite values with infinite
-	breaks.	 (PR#1694)
-
-    o	ks.test() could fail due to integer overflow if n.x and n.y
-	were both large.
-
-    o	all.equal(3., 3:3) wasn't TRUE when the methods package was
-	present.
-
-    o	read.table() could remap non-syntactic names to duplicates,
-	and did not check for duplicated names.
-
-    o	ls.str(envir = environment(F)) now works (when F is a function).
-
-    o	pie() now has a `border' (and 'lty') argument which allows empty
-	slice borders and makes pie() useable for hundreds of slices.
-
-    o	all.equal.character() now works correctly also when NAs dont'
-	match (PR#1767).
 
 
 		CHANGES IN R VERSION 1.5.1
