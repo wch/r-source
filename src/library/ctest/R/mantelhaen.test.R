@@ -24,8 +24,8 @@ function(x, y = NULL, z = NULL,
         DNAME <- paste(DNAME, "and", deparse(substitute(y)), "and",
                        deparse(substitute(z)))
         OK <- complete.cases(x, y, z)
-        x <- as.factor(x[OK])
-        y <- as.factor(y[OK])
+        x <- factor(x[OK])
+        y <- factor(y[OK])
         if((nlevels(x) < 2) || (nlevels(y) < 2))
             stop("x and y must have at least 2 levels")
         else

@@ -2,7 +2,7 @@ pairwise.t.test <-
 function(x, g, p.adjust.method = p.adjust.methods, pool.sd = TRUE, ...)
 {
     DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(g)))
-    g <- as.factor(g)
+    g <- factor(g)
     p.adjust.method <- match.arg(p.adjust.method)
     if (pool.sd)
     {
@@ -40,7 +40,7 @@ function(x, g, p.adjust.method = p.adjust.methods, ...)
 {
     p.adjust.method <- match.arg(p.adjust.method)
     DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(g)))
-    g <- as.factor(g)
+    g <- factor(g)
     METHOD <- "Wilcoxon rank sum test"
     compare.levels <- function(i, j) {
         xi <- x[as.integer(g) == i]

@@ -652,8 +652,8 @@ BUG FIXES
     o	fifo() no longer tries to truncate on opening in modes
 	including "w". (Caused the fifo example to fail on HP-UX.)
 
-    o	Output over 1024 characters was discarded from the
-	GNOME console.
+    o	Output over 1024 characters was discarded from the GNOME
+	console.
 
     o	rug() now correctly warns about clipped values also for logarithmic
 	axes and has a `quiet' argument for suppressing these (PR#1188).
@@ -669,6 +669,9 @@ BUG FIXES
         distribution. (PR#1190)
 
     o   pt(t, , ncp=0) was wrong if t was +/-Inf.
+
+    o	Subsetting grouping factors gave incorrect degrees of freedom
+	for some tests in package ctests (PR#1124).
 
 
 

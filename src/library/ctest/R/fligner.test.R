@@ -14,7 +14,7 @@ function(x, g, ...)
         l <- sapply(x, "length")
         if (any(l == 0))
             stop("all groups must contain data")
-        g <- as.factor(rep(1 : k, l))
+        g <- factor(rep(1 : k, l))
         x <- unlist(x)
     }
     else {
@@ -27,7 +27,7 @@ function(x, g, ...)
         g <- g[OK]
         if (!all(is.finite(g)))
             stop("all group levels must be finite")
-        g <- as.factor(g)
+        g <- factor(g)
         k <- nlevels(g)
         if (k < 2)
             stop("all observations are in the same group")

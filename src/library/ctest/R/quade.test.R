@@ -5,8 +5,8 @@ function(y, groups, blocks, ...)
 {
     DNAME <- deparse(substitute(y))
     if(is.matrix(y)) {
-        groups <- as.factor(c(col(y)))
-        blocks <- as.factor(c(row(y)))
+        groups <- factor(c(col(y)))
+        blocks <- factor(c(row(y)))
     }
     else {
         if(any(is.na(groups)) || any(is.na(blocks))) 
@@ -18,8 +18,8 @@ function(y, groups, blocks, ...)
                        deparse(substitute(blocks)), sep = "")
         if(any(table(groups, blocks) != 1))
             stop("Not an unreplicated complete block design")
-        groups <- as.factor(groups)
-        blocks <- as.factor(blocks)
+        groups <- factor(groups)
+        blocks <- factor(blocks)
     }
     k <- nlevels(groups)
     b <- nlevels(blocks)

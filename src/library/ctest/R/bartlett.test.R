@@ -21,7 +21,7 @@ function(x, g, ...)
                        deparse(substitute(g)))
         OK <- complete.cases(x, g)
         x <- x[OK]
-        g <- as.factor(g[OK])
+        g <- factor(g[OK])
         k <- nlevels(g)
         if (k < 2)
             stop("all observations are in the same group")
