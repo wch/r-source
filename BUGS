@@ -309,3 +309,15 @@ Date: Wed, 26 May 1999 14:55:00 +0000
 Subject: Factor structures not preserved after dump/dput
 From: msa@biostat.mgh.harvard.edu
 Date: Thu, 27 May 1999 18:40:01 +0200 (MET DST)
+* PR# 201 *
+Subject: RedHat Linux 6.0 Problems
+From: jacobm@magnet.drcmr.dk
+Date: Wed, 2 Jun 1999 10:58:45 +0200 (MET DST)
+* PR# 202 *
+Subject: persp box occlusion bug
+From: wsi@gcal.ac.uk
+Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
+* PR# 203 *
+Subject: dput and options()$digits
+From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
+Date: Wed, 02 Jun 1999 13:24:32 -0400
