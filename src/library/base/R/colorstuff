@@ -1,5 +1,5 @@
-rgb <- function(r, g, b, names=NULL)
-.Internal(rgb(r, g, b, names))
+rgb <- function(red, green, blue, names=NULL)
+.Internal(rgb(red, green, blue, names))
 
 hsv <- function(h=1,s=1,v=1,gamma=1)
 .Internal(hsv(h,s,v,gamma))
