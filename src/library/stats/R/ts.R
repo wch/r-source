@@ -643,7 +643,7 @@ window.default <- function(x, start = NULL, end = NULL,
 
 window.ts <- function (x, ...) as.ts(window.default(x, ...))
 
-"window<-" <- function(x, start, end, ...) UseMethod("window<-")
+"window<-" <- function(x, ..., value) UseMethod("window<-")
 
 "window<-.ts" <- function(x, start, end, frequency, deltat, ..., value)
 {

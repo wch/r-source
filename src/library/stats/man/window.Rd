@@ -5,6 +5,16 @@
 \alias{window<-}
 \alias{window<-.ts}
 \title{Time Windows}
+\synopsis{
+window(x, \dots)
+window(x, ...) <- value
+
+\method{window}{ts}(x, \dots)
+
+\method{window}{default}(x, start = NULL, end = NULL,
+       frequency = NULL, deltat = NULL, extend = FALSE, \dots)
+}
+}
 \usage{
 window(x, \dots)
 window(x, start, end, frequency, deltat, ...) <- value
@@ -24,6 +34,7 @@ window(x, start, end, frequency, deltat, ...) <- value
     are allowed to extend the series. If false, attempts to extend the
     series give a warning and are ignored.}
   \item{\dots}{further arguments passed to or from other methods.}
+  \item{value}{replacement values.}
 }
 \description{
   \code{window} is a generic function which
