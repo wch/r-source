@@ -95,7 +95,8 @@ start.default <- function(x, ...)
     ts.eps <- getOption("ts.eps")
     tsp <- attr(hasTsp(x), "tsp")
     is <- tsp[1]*tsp[3]
-    if(abs(is-round(is)) < ts.eps) {
+    if(abs(tsp[3] - round(tsp[3])) < ts.eps &&
+       abs(is - round(is)) < ts.eps) {
 	is <- floor(tsp[1]+ts.eps)
 	fs <- floor(tsp[3]*(tsp[1] - is)+0.001)
 	c(is,fs+1)
@@ -108,7 +109,8 @@ end.default <- function(x, ...)
     ts.eps <- getOption("ts.eps")
     tsp <- attr(hasTsp(x), "tsp")
     is <- tsp[2]*tsp[3]
-    if(abs(is-round(is)) < ts.eps) {
+    if(abs(tsp[3] - round(tsp[3])) < ts.eps &&
+       abs(is - round(is)) < ts.eps) {
 	is <- floor(tsp[2]+ts.eps)
 	fs <- floor(tsp[3]*(tsp[2] - is)+0.001)
 	c(is, fs+1)

@@ -98,6 +98,10 @@ BUG FIXES
 
     o	plot.lm will now work with rlm objects.
 
+    o	start and end behave better when the frequency is not an integer.
+
+    o	aggregate.ts is closer to S-PLUS's aggregate.rts.
+
 
 	*********************************************************
 	*							*
