@@ -48,14 +48,15 @@ but are provided for their usefulness.
 Nothing, for efficiency reasons.
 The obvious side effect is output to the terminal.
 }
-\author{Martin Maechler, since 1990, currently at\cr
-Seminar fuer Statistik, ETH Zurich, Switzerland\cr
-\code{maechler@stat.math.ethz.ch}}
+\author{
+  Martin Maechler \email{maechler@stat.math.ethz.ch} since 1990.
+  Currently at Seminar für Statistik, ETH Zürich, Switzerland.
+}
 \seealso{
   \code{\link{summary}}, \code{\link{args}}.
 }
 \examples{
-## The following examples show some of \code{str} capabilities
+## The following examples show some of `str' capabilities
 str(1:12)
 str(ls)
 str(args)#- more useful than  args(args) !
