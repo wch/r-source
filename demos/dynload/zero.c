@@ -1,3 +1,6 @@
+/* A version for R of the example in 
+        Becker, Chambers & Wilks (1998) pp. 205-211. */
+
 #include <S.h>
 
 static void *func;

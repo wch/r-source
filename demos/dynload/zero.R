@@ -1,3 +1,6 @@
+## A version for R of the example in
+##    Becker, Chambers & Wilks (1998) pp. 205-211.
+##
 ## Notes:
 ##
 ## 1. Because of the difference in scoping rules between R and S it is
@@ -11,11 +14,9 @@
 ##    Correspondingly, the underlying C code does not need to extract
 ##    the function from the passed "list".
 
-dyn.load(paste("zero", .Platform$dynlib.ext, sep=""))
-##-- you may need to change this to
-## dyn.load("<R_HOME>/demos/dynload/zero.so")
-##-- substituting the proper path for <R_HOME>,
-## unless you are executing R from the directory containing zero.so
+dyn.load(file.path(R.home(), "demos", "dynload",
+                   paste("zero", .Platform$dynlib.ext, sep="")))
+##-- you might need to change this
 
 zero <- function(f, guesses, tol = 1e-7) {
     f.check <- function(x) {
