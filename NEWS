@@ -158,8 +158,13 @@ BUG FIXES
     o   tkpager() wasn't quite using its title and header arguments in
         the way prescribed by file.show()
 
-    o	legend(*, pch=p, lty=l) now works better when `p' or `l' have NAs.
+    o	legend(*, pch=p, lty=l) now works better when `p' or `l' have
+        NAs.
 
+    o   All braces in regular expressions used by Sweave() are now
+        escaped by a backslash.
+
+	
 
 		CHANGES IN R VERSION 1.7.0
 

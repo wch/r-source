@@ -96,10 +96,10 @@ SweaveSyntaxNoweb <-
     list(doc = "^@",
          code = "^<<(.*)>>=.*",
          coderef = "^<<(.*)>>.*",
-         docopt = "\\\\SweaveOpts{([^}]*)}",
-         docexpr = "\\\\Sexpr{([^}]*)}",
+         docopt = "\\\\SweaveOpts\\{([^\\}]*)\\}",
+         docexpr = "\\\\Sexpr\\{([^\\}]*)\\}",
          extension = "\\.[rsRS]?nw$",
-         syntaxname = "\\\\SweaveSyntax{([^}]*)}",
+         syntaxname = "\\\\SweaveSyntax\\{([^\\}]*)\\}",
          trans = list(
              doc = "@",
              code = "<<\\1>>=",
@@ -113,9 +113,9 @@ SweaveSyntaxNoweb <-
 class(SweaveSyntaxNoweb) <- "SweaveSyntax"
 
 SweaveSyntaxLatex <- SweaveSyntaxNoweb
-SweaveSyntaxLatex$doc <-  "^[[:space:]]*\\\\end{Scode}"
-SweaveSyntaxLatex$code <- "^[[:space:]]*\\\\begin{Scode}{?([^}]*)}?.*"
-SweaveSyntaxLatex$coderef <- "^[[:space:]]*\\\\Scoderef{([^}]*)}.*"
+SweaveSyntaxLatex$doc <-  "^[[:space:]]*\\\\end\\{Scode\\}"
+SweaveSyntaxLatex$code <- "^[[:space:]]*\\\\begin\\{Scode\\}\\{?([^\\}]*)\\}?.*"
+SweaveSyntaxLatex$coderef <- "^[[:space:]]*\\\\Scoderef\\{([^\\}]*)\\}.*"
 SweaveSyntaxLatex$extension <- "\\.[rsRS]tex$"
 
 SweaveSyntaxLatex$trans$doc <-  "\\\\end{Scode}"
@@ -436,7 +436,7 @@ RweaveLatexRuncode <- function(object, chunk, options)
 
 RweaveLatexWritedoc <- function(object, chunk)
 {
-    if(any(grep("\\usepackage[^\}]*Sweave.*\}", chunk)))
+    if(any(grep("\\usepackage[^\\}]*Sweave.*\\}", chunk)))
         object$havesty <- TRUE
 
     if(!object$havesty){
