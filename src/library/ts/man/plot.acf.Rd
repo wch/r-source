@@ -13,6 +13,7 @@
               mar = if(nser > 2) c(3,2,2,0.8) else par("mar"),
               oma = if(nser > 2) c(1,1.2,1,1) else par("oma"),
               mgp = if(nser > 2) c(1.5,0.6,0) else par("mgp"),
+              xpd = par("xpd"),
               cex.main = if(nser > 2) 1 else par("cex.main"),
               verbose = getOption("verbose"),
               \dots)
@@ -24,7 +25,7 @@
     negative.}
   \item{type}{the type of plot to be drawn, default to histogram like
     vertical lines.}
-  \item{xlab}{the x label of the plot.}  
+  \item{xlab}{the x label of the plot.}
   \item{ylab}{the y label of the plot.}
   \item{ylim}{numeric of length 2 giving the y limits for the plot.}
   \item{main}{overall title for the plot.}
@@ -36,9 +37,12 @@
     page, using \code{\link{par}(mfrow = c(m,m))}.}
   \item{ask}{logical; if \code{TRUE}, the user is asked before a new
     page is started.}
-  \item{mar, oma, mgp, cex.main}{graphics parameters as in
+  \item{mar, oma, mgp, xpd, cex.main}{graphics parameters as in
     \code{\link{par}(*)}, by default adjusted to use smaller than
-    default margins for multivariate \code{x} only.}
+    default margins for multivariate \code{x} only.
+    % drop the following line after year 2002
+    \code{xpd = NA} used to be the default for R version <= 1.4.0.
+  }
   \item{verbose}{logical.  Should \R report extra information on
     progress?}
   \item{\dots}{graphics parameters to be passed to the plotting

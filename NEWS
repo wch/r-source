@@ -33,6 +33,10 @@ BUG FIXES
     o	plot(multiple time series, plot.type = "single") was computing
 	`ylim' from the first series only.
 
+    o	plot.acf() has a new `xpd = par("xpd")' argument which by default
+	*does* clipping (of the horizontal lines) as desired (xpd = NA was
+	used before, erronously in most cases).
+
 
 
 		CHANGES IN R VERSION 1.4.0

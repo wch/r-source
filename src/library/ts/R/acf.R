@@ -116,6 +116,7 @@ plot.acf <-
               mar = if(nser > 2) c(3,2,2,0.8) else par("mar"),
               oma = if(nser > 2) c(1,1.2,1,1) else par("oma"),
               mgp = if(nser > 2) c(1.5,0.6,0) else par("mgp"),
+              xpd = par("xpd"),
               cex.main = if(nser > 2) 1 else par("cex.main"),
               verbose = getOption("verbose"),
               ...)
@@ -142,20 +143,20 @@ plot.acf <-
         if(nser > max.mfrow) {
             ##  We need more than one page: The plots are laid out
             ##  such that we can manually paste the paper pages and get a
-            ##  nice square layout with diagonal !   
+            ##  nice square layout with diagonal !
             ## NB: The same applies to pairs() where we'd want several pages
             Npgs <- ceiling(nser / max.mfrow)
             nr <- ceiling(nser / Npgs)  # <= max.mfrow
         }
         opar <- par(mfrow = rep(nr, 2), mar = mar, oma = oma, mgp = mgp,
-                    ask = ask, xpd = NA, cex.main = cex.main)
+                    ask = ask, xpd = xpd, cex.main = cex.main)
         on.exit(par(opar))
         if(verbose) {
             cat("par(*) : ")
             str(par("mfrow","cex", "cex.main","cex.axis","cex.lab","cex.sub"))
         }
     }
-    
+
     for (I in 1:Npgs) for (J in 1:Npgs) {
         ## Page [ I , J ] : Now do   nr x nr  `panels' on this page
         iind <- (I-1)*nr + 1:nr
