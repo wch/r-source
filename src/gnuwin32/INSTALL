@@ -288,9 +288,9 @@ Then: untar R-1.x.y.tgz somewhere, and
 Edit MkRules to set BUILD=CROSS and the appropriate paths (including
 HEADER) as needed.
 
-Edit MkRules to set the type(s) of help that you want built. (You
-will not be able to cross-build .chm or .hlp files,
-so WINHELP is automatically set to NO.)
+Edit MkRules to set the type(s) of help that you want built. (You will
+not be able to cross-build .chm files, so WINHELP is automatically set
+to NO.)
 
 You also need a working copy of this version of R on Linux: set
 R_EXE in MkRules to point to it.
