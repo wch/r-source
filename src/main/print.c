@@ -639,13 +639,20 @@ void CustomPrintValue(SEXP s, SEXP env)
 }
 
 
-/* dblepr and intpr are mostly for S compatibility */
-/* (as mentioned in V&R) */
+/* xxxpr are mostly for S compatibility (as mentioned in V&R) */
 
 int F77_SYMBOL(dblepr) (char *label, int *nchar, double *data, int *ndata)
 {
-    int k;
-    for (k = 0; k < *nchar; k++){
+    int k, nc = *nchar;
+
+    if(nc < 0) {
+	nc = strlen(label);
+	if(nc > 255) {
+	    warning("invalid character length in dblepr");
+	    nc = 0;
+	}
+    }
+    for (k = 0; k < nc; k++){
 	Rprintf("%c", label[k]);
     }
     Rprintf("\n");
@@ -655,8 +662,16 @@ int F77_SYMBOL(dblepr) (char *label, int *nchar, double *data, int *ndata)
 
 int F77_SYMBOL(intpr) (char *label, int *nchar, int *data, int *ndata)
 {
-    int k;
-    for (k = 0; k < *nchar; k++){
+    int k, nc = *nchar;
+
+    if(nc < 0) {
+	nc = strlen(label);
+	if(nc > 255) {
+	    warning("invalid character length in intpr");
+	    nc = 0;
+	}
+    }
+    for (k = 0; k < nc; k++){
 	Rprintf("%c", label[k]);
     }
     Rprintf("\n");
@@ -666,13 +681,20 @@ int F77_SYMBOL(intpr) (char *label, int *nchar, int *data, int *ndata)
 
 int F77_SYMBOL(realpr) (char *label, int *nchar, float *data, int *ndata)
 {
-    int k;
+    int k, nc = *nchar;
     double *ddata;
     
+    if(nc < 0) {
+	nc = strlen(label);
+	if(nc > 255) {
+	    warning("invalid character length in realpr");
+	    nc = 0;
+	}
+    }
     ddata = malloc((*ndata)*sizeof(double));
     if(!ddata) error("memory allocation error in realpr");
     for (k = 0; k < *ndata; k++) ddata[k] = (double) data[k];
-    for (k = 0; k < *nchar; k++) {
+    for (k = 0; k < nc; k++) {
 	Rprintf("%c", label[k]);
     }
     Rprintf("\n");

@@ -23,6 +23,9 @@ NEW FEATURES
     o   ar.ols() has separate demean and intercept arguments, uses
         internal scaling for greater accuracy.
 
+    o   xxxPR functions allow NCHAR=-1 for S compatibility, at least
+	on many Unix platforms.
+
 
 BUG FIXES
 
