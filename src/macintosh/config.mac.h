@@ -6,6 +6,9 @@
 #ifndef _CONFIG_H
 #define _CONFIG_H
 
+#define HAVE_DOUBLE_COMPLEX
+
+
 /* Define if on AIX 3.
    System headers sometimes define this.
    We just want to avoid a redefinition error message.  */
@@ -27,7 +30,7 @@
 #undef HAVE_ALLOCA
 
 /* Define if you have <alloca.h> and it should be used (not on Ultrix).  */
-#define HAVE_ALLOCA_H 1
+//#define HAVE_ALLOCA_H 1
 
 /* Define if you have the <errno.h> header file.  */
 #define HAVE_ERRNO_H 1
@@ -42,7 +45,8 @@
 #undef HAVE_VFORK_H
 
 /* Define if you have the vprintf function.  */
-#undef HAVE_VPRINTF
+//#undef HAVE_VPRINTF
+#define  HAVE_VPRINTF 1
 
 /* Define to `int' if <sys/types.h> doesn't define.  */
 #undef pid_t
@@ -256,7 +260,7 @@
 #undef HAVE_SETITIMER
 
 /* Define if you have the stat function.  */
-#define HAVE_STAT 1
+//#define HAVE_STAT 1
 
 /* Define if you have the strcoll function.  */
 #define HAVE_STRCOLL 1
@@ -277,7 +281,7 @@
 #undef HAVE_UNSETENV
 
 /* Define if you have the vsnprintf function.  */
-#define HAVE_VSNPRINTF 1
+//#define HAVE_VSNPRINTF 1
 
 /* Define if you have the <dirent.h> header file.  */
 #undef HAVE_DIRENT_H
@@ -364,7 +368,7 @@
 #define HAVE_SYS_UTSNAME_H 1
 
 /* Define if you have the <unistd.h> header file.  */
-#define HAVE_UNISTD_H 1
+//#define HAVE_UNISTD_H 1
 
 /* Define if you have the dl library (-ldl).  */
 #undef HAVE_LIBDL
