@@ -643,6 +643,11 @@ if specified by @code{--with-zlib}, @code{--with-bzlib} or
 compiled in.  As the latter suffice and are tested with @R{} you should
 not need to change this.
 
+Remember that some package management systems (such as @acronym{RPM} and
+deb) make a distinction between the user version of a package and the
+developer version.  The latter usually has the same name but with the
+extension @samp{-devel} or  @samp{-dev}: you need both versions
+installed.
 
 @menu
 * Tcl/Tk::                      
@@ -1068,6 +1073,7 @@ of support software; your results may differ if you have other versions
 of compilers and support libraries.
 
 @menu
+* Linux::                       
 * MacOS X::                     
 * Solaris::                     
 * HP-UX::                       
@@ -1077,7 +1083,28 @@ of compilers and support libraries.
 * AIX::                         
 @end menu
 
-@node MacOS X, Solaris, Platform notes, Platform notes
+@node Linux, MacOS X, Platform notes, Platform notes
+@subsection Linux
+@cindex Linux
+
+Linux is the main development platform for @R{}, so compilation from the
+sources is normally straightforward.
+
+Remember that some package management systems (such as @acronym{RPM} and
+deb) make a distinction between the user version of a package and the
+developer version.  The latter usually has the same name but with the
+extension @samp{-devel} or  @samp{-dev}: you need both versions
+installed.  So please check the @code{configure} output to see if the
+expected features are detected: if for example @samp{readline} is
+missing add the package containing its headers.
+
+When @R{} has been installed from a binary distribution there are
+sometimes problems with missing components such as the Fortran
+compiler.  Searching the @samp{R-help} archives will normally reveal
+what is needed.
+
+
+@node MacOS X, Solaris, Linux, Platform notes
 @subsection MacOS X
 @cindex MacOS X
 
@@ -1130,7 +1157,7 @@ The Solaris versions of several of the tools needed to build @R{}
 path.
 
 @command{gcc} 3.2.1 and 3.2.2 generate incorrect code on 32-bit Solaris
-builds with optimization, but versions 3.1, 3.2, 3.2.3  and 3.3 work
+builds with optimization, but versions 3.1, 3.2, 3.2.3  and 3.3.x work
 correctly.  At least files @file{src/main/engine.c},
 @file{src/main/graphics.c} and @file{src/modules/devX11.c} are affected.
 
@@ -1177,7 +1204,7 @@ CXXFLAGS="-xO5 -xlibmil -dalign"
 in @file{config.site}.
 
 
-For 64-bit compilation with @command{gcc} 3.2.x we used
+For 64-bit compilation with @command{gcc} 3.2.x and 3.3.x we used
 
 @smallexample
 CC="gcc -m64"
@@ -1185,6 +1212,9 @@ FFLAGS="-m64 -g -O2"
 CXXFLAGS="-m64 -g -O2"
 LDFLAGS="-L/usr/local/lib/sparcv9 -L/usr/local/lib"
 @end smallexample
+
+Note that @samp{/usr/local/lib/sparcv9} will need to be in the
+@samp{LD_LIBRARY_PATH} during configuration.
 
 
 @cindex BLAS library
