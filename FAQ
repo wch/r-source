@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-31, 2000-11-28
+Version 1.1-32, 2000-11-30
 Kurt Hornik
 
 
@@ -1420,6 +1420,9 @@ these a try, of course.  This area of CRAN currently contains
 
 *npConfRatio*
      Nonparametric confidence intervals for the ratios of medians.
+
+*regexp*
+     Simple regular expression interface.
 
 *timeslab*
      Time series routines.
