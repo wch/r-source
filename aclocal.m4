@@ -81,7 +81,7 @@ AC_DEFUN([R_PROG_PAGER], [
 changequote(<<, >>)dnl
 define(PERL5_CHECK,
 <<
-  if ${PERL} -e 'exit 1 if $]<5'
+  if ${PERL} -e 'require 5.004 or exit 1'
   then
     r_cv_prog_perl_v5=yes
   else
@@ -92,7 +92,7 @@ changequote([, ]) dnl
 AC_DEFUN([R_PROG_PERL],
  [AC_PATH_PROGS(PERL, [${PERL} perl])
   if test -n "${PERL}"; then
-    AC_CACHE_CHECK([whether perl version is at least 5],
+    AC_CACHE_CHECK([whether perl version is at least 5.004],
       r_cv_prog_perl_v5, [PERL5_CHECK()] )
   else
     AC_PATH_PROGS(FALSE, false)

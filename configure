@@ -5949,13 +5949,13 @@ test -n "$PERL" && break
 done
 
   if test -n "${PERL}"; then
-    echo $ac_n "checking whether perl version is at least 5""... $ac_c" 1>&6
-echo "configure:5954: checking whether perl version is at least 5" >&5
+    echo $ac_n "checking whether perl version is at least 5.004""... $ac_c" 1>&6
+echo "configure:5954: checking whether perl version is at least 5.004" >&5
 if eval "test \"`echo '$''{'r_cv_prog_perl_v5'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   
-  if ${PERL} -e 'exit 1 if $]<5'
+  if ${PERL} -e 'require 5.004 or exit 1'
   then
     r_cv_prog_perl_v5=yes
   else
