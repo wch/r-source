@@ -759,6 +759,10 @@ FBEGIN
 	REDRAW;
     }
     if (st == -1) return;
+    if (p->kind == PAGER) {
+	if(k == 'q' || k == 'Q') pagerbclose(c);
+	return;
+    }
     storekey(c, k);
 FVOIDEND
 

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file pager.c
- *  Copyright (C) 1998--2001  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998--2002  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -121,7 +121,7 @@ static void delpager(control m)
     freeConsoleData(getdata(m));
 }
 
-static void pagerbclose(control m)
+void pagerbclose(control m)
 {
     show(RConsole);
     if (!pagerMultiple) {

@@ -7,6 +7,9 @@ See the file NEWS for changes that affect all versions of R.
 rw1070
 ======
 
+Hitting the key q (or Q) with an internal pager window in focus will
+close the pager.
+
 A site-wide environment file R_HOME/etc/Renviron.site (or as set by
 the `R_ENVIRON' environment variable) is now implemented on Windows.
 
@@ -25,7 +28,7 @@ is changed.
 
 The output when building R or source packages is much quieter.
 
-Rcmd.exe and Rprof have been moved to the main distribution (although 
+Rcmd.exe and Rprof have been moved to the main distribution (although
 to use them you will need perl installed).
 
 
@@ -163,7 +166,7 @@ different but generally more accurate results.
 rw1041
 ======
 
-Updating HTML indices, e.g. in help.start(), is done within a 
+Updating HTML indices, e.g. in help.start(), is done within a
 try() construct.
 
 help.start() has a new argument `update'.
@@ -347,7 +350,7 @@ WinSock calls.  There is an alternative modules\internet2.dll which uses
 WinInet calls (and so needs Internet Explorer installed) which can be
 used as a replacement.  (Remove modules\internet.dll and then
 rename modules\internet2.dll to modules\internet.dll.)
- 
+
 
 
 rw1023
@@ -476,7 +479,7 @@ need to be re-compiled for 1.2.0 on all platforms, and any that used
 malloc directly need to be recompiled on this one.)
 
 
-This release has a number of changes to bring its behaviour closer to that 
+This release has a number of changes to bring its behaviour closer to that
 of Unix versions of R.
 
 -   The default font for graphics on windows(), win.printer() and
@@ -504,7 +507,7 @@ of Unix versions of R.
     environment, although this is not usually supported by Windows,
     and setting individual LC_* such as LC_COLLATE will also work.)
 
--   It is possible to make DVI and HTML versions of the manuals: 
+-   It is possible to make DVI and HTML versions of the manuals:
     see file INSTALL in the source distribution.
 
 -   New utility Rcmd.exe to emulate R CMD : see below.
@@ -647,7 +650,7 @@ The range of allowed text sizes in a windows/win.print device has been
 increased, so smaller values of cex will work.  (The smallest allowed
 text size is 2pt not 8pt.)
 
-Interactive use of Rterm.exe on Windows 2000 systems is now possible 
+Interactive use of Rterm.exe on Windows 2000 systems is now possible
 (including under ESS).
 
 Better rendering of wide (lwd > 1) and dashed (lty != "solid") lines
@@ -686,7 +689,7 @@ Characters using the AltGr key now work in interactive use of Rterm.
 
 Ctrl+V now works as described in a pager (pasting to the console).
 
-Other versions of Tcl/Tk may be used by setting TCL_VERSION in 
+Other versions of Tcl/Tk may be used by setting TCL_VERSION in
 MkRules (but only 8.31 and 8.32 have been tested).
 
 A file Makevars.win in the src directory of a package will be used in
@@ -720,7 +723,7 @@ There is a new item on the File menu in Rgui to save the commands
 history at that point in a session, and a new function savehistory()
 (only applicable in Rgui and Rterm).
 
-Colours in Rconsole can be specified as "Windows" and will be taken 
+Colours in Rconsole can be specified as "Windows" and will be taken
 from the current Windows colour scheme. (The preferences editor will
 save the actual colour, though.)
 
