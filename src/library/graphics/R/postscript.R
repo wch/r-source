@@ -146,7 +146,7 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
 
 pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
                  width = 6, height = 6, onefile = TRUE,
-                 title = "R Graphics Output", fonts = NULL, version="1.4", ...)
+                 title = "R Graphics Output", fonts = NULL, version="1.1", ...)
 {
     new <- list(onefile=onefile, ...)# eval
     old <- check.options(new = new, envir = .PSenv,

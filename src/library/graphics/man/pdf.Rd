@@ -10,12 +10,12 @@
 \synopsis{
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     width = 6, height = 6, onefile = TRUE, title = "R Graphics Output",
-    fonts = NULL, version = "1.4", \dots)
+    fonts = NULL, version = "1.1", \dots)
 }
 \usage{
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     width = 6, height = 6, onefile = TRUE, family = "Helvetica",
-    title = "R Graphics Output", fonts = NULL, version = "1.4",
+    title = "R Graphics Output", fonts = NULL, version = "1.1",
     encoding, bg, fg, pointsize)
 }
 \arguments{

@@ -23,6 +23,9 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
+    o   'version' argument added to pdf() device.  If this is set
+	to "1.4", the device will support transparent colours.
+
     o	Function file.edit() function added: like file.show(), but
 	allows editing.
 
