@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# ${RHOME}/tools/GETVERSION
+
+TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
+(cd ${TOOLS_DIR}/..
+  ver=`sed 's/\([^ .]*\).\([^ .]*\).\([^ .]*\) *\(.*\)/\1\2\3/' < VERSION`
+  echo "#define R_VERSION  ${ver}"
+)

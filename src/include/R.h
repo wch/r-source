@@ -42,6 +42,7 @@ extern "C" {
 #include <math.h>
 #endif
 
+#include "R_ext/Rver.h"
 #include "R_ext/Arith.h"
 #include "R_ext/Complex.h"
 #include "R_ext/Constants.h"
