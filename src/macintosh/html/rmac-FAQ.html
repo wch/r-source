@@ -5,25 +5,30 @@
 
 
 <h1 align="center">R for Macintosh FAQ/DOC</h1>
-<h2>Version for <tt>R 1.5.0</tt></h2>
+<h2>Version for <tt>R 1.6.0</tt></h2>
 <address>S. M. Iacus</address>
 <p>
 Changes and bug fixing specific to this version:
 <ul>
-<li>  using dev.off() when a user close a windows instead
-  of killing directly the device</li>
-<li>  changed MPWBuild to take care of changes in the src/include   
-  directory</li>
-<li>  fixed a bug with path length (Thanks to T.Lumley)    </li>
-<li> fixed a problem with building help files. In particular,
-  html help files now have correct links</li>
-<li> added system() functionality under MacOS X. When R is
-  running under MacOS X, it is now possibile to run BSD
-  shell commands via the system() R command. Very limited
-  at the moment but working.</li>
-<li> Fixed the problem with the error message: "negative length vectors 
-    are not allowed". Now you should not experiment this anymore.  </li>
-<li> MacZip is not needed anymore</li>    
+<li>  new scripts to build packages: makeAdd, makeRcmd, makeBio
+  all the makefiles have been moved to src/macintosh/makefiles
+  folder</li>
+<li> implemented the Quartz device (when running under OSX only)</li>
+<li> brand new worskspace browser, see Tools menu</li>
+<li> added and/or fixed internally mkdir and rmdir. Now
+  unlink(), dir.create() etc work correctly</li>
+<li> html help handled via applescript. More stable and
+  almost browser independent</li>
+<li> improved applescript support</li>
+<li> implemented browseURL</li>
+<li> implemented tempdir and tempfile according to Unix/Windows
+  behaviour</li>
+<li> Date arithmetic fails (PR#1819). This bug have been partially
+  fixed. Arithmetic is fine now but there is still a problem 
+  with the TZ (Time Zone) settings.</li>
+<li> fixed a bug in Locator of Macintosh device. Now it is possible
+  to interrupt it.</li>
+<li> From this version WasteLib 2.1x is required</li>
   </ul>
 
 
@@ -419,6 +424,16 @@ a certain line</td>
 </tr>
 
 <tr>
+<td> </td>
+
+<td>Browse Workspace</td>
+
+<td></td>
+
+<td>   It is equivalent to "browseEnv(html=FALSE)"</td>
+</tr>
+
+<tr>
 <td></td>
 
 <td>Load Workspace</td>
@@ -726,9 +741,9 @@ called S+/R.
 <br>When you open a file in Alpha with the extension ".s"  or 
 ".r"  this new mode will be installed and you will in the Alpha menu
 bar the "S+/R" menu. Of this menu you can use "Process File" or "Process
-Selection" to interact with R. By default Alpha sends an “open” command
+Selection" to interact with R. By default Alpha sends an `open' command
 to R and by default R opens a file in a non editable window (equivalent
-to the “File Show” menu). If you want R to source a file you should modify
+to the `File Show' menu). If you want R to source a file you should modify
 activate the option "OnOpenSource" that
 is set by default to "FALSE".  You can change
 this at runtime running via the Config/OnOpenSource menu or accessing 
@@ -820,9 +835,9 @@ Several functions to manipulate the user menu are previewed: <p>
 <p><a NAME="HELPERS"></a><b>R HELPERS</b>
 <br>* If you want to use an external editor we suggest you to use Alpha
 version  7.4.1 or newer that contains a S+/R mode. Alpha home page
-is
-<br><a href="ftp://ftp.ucsd.edu/pub/alpha/"> ftp://ftp.ucsd.edu/pub/alpha/</a>
+is located at <a href="http://www.kelehers.org/alpha/"> http://www.kelehers.org/alpha/</a>.
 <br>
+
 
 <br> 
 <br> 
@@ -980,7 +995,7 @@ directions. So, <i>merci</i>, in random order, to  P. Macdonald, P. Flint, R. Gi
 J. DeLeeuw, G. Sawitzki and half of the R-Core.
 <p><hr WIDTH="100%">
 <address>
-Last edited 2002 March 24th, Stefano M. Iacus
+Last edited 2002 Sep 7th, Stefano M. Iacus
 <code><a
 href="mailto:stefano.iacus@unimi.it">stefano.iacus@unimi.it</a></code>
 </address>
