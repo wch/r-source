@@ -52,7 +52,7 @@ NEW FEATURES
 
     o	The four bessel[IJKY](x,nu) functions are now defined for nu < 0.
 
-    o	New functions substr<-() and substring<-().
+    o	New replacement functions substr<-() and substring<-().
 
     o	Under Unix, shlib modules for add-on packages are now linked
 	against R as a shared library (`libR') if this exists.	(This
@@ -67,8 +67,10 @@ NEW FEATURES
 	records (lines) read in.
 
     o   plot.mts() has a new argument `panel' providing the same
-        functionality as in coplot()
+        functionality as in coplot().
 	
+    o   outer() has a speed-up in the default case of a matrix 
+	outer product (by Jonathan Rougier).
 
 
 BUG FIXES
@@ -81,12 +83,10 @@ BUG FIXES
 
     o	plot(1:2, xaxs = "i") now gives both "1.0" and "2.0" x-axis labels.
 
-    o	lowess(c(1:3, 7:5)) now should give the same on different platforms,
-	since now as.integer(f*n + 1e-7) is used.
-
     o	qchisq(0.025, 31, ncp=1, lower.tail=FALSE) now works.  (PR#875)
 
-    o	curve(*, add = TRUE) now properly works with active log scales.
+    o	curve(*, add = TRUE) now works properly with active log scales.
+
 
 
 	**************************************************
@@ -133,6 +133,9 @@ BUG FIXES
 
     o	Overflow in deparse() in terms(formula) with very long left-hand
 	side fixed (PR#873)
+
+    o	lowess(c(1:3, 7:5)) now should give the same on different platforms,
+	since now in the C code (int)(f*n + 1e-7) is used.
 
     o	rt() could give different results on different platforms as
 	the order of evaluation of calls to random numbers was not
@@ -283,6 +286,12 @@ BUG FIXES
 
     o	which.min() and which.max() now properly work for 0-length and
 	NA-only arguments.
+
+    o   cancelling a quit caused quit() not to ask next time it was called
+
+    o   some convolved operations with "..." didn't work
+
+    o   missingness was not correctly propagated in some cases
 
 
 		CHANGES IN R VERSION 1.2.1
