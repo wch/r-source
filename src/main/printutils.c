@@ -466,7 +466,12 @@ void REvprintf(const char *format, va_list arg)
 	}
     }
     if(R_Consolefile) {
-	vfprintf(R_Consolefile, format, arg);
+	/* try to interleave stdout and stderr carefully */
+	if(R_Outputfile && (R_Outputfile != R_Consolefile)) {
+	    fflush(R_Outputfile);
+	    vfprintf(R_Consolefile, format, arg);
+	    fflush(R_Consolefile);
+	} else vfprintf(R_Consolefile, format, arg);
     } else {
 	char buf[BUFSIZE];
 	int slen;
