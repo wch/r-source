@@ -379,3 +379,11 @@ Date: Wed, 8 Dec 1999 12:50:44 +0100 (MET)
 Subject: plot math - segfault and "frac", "^" bug(s)..
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Wed, 8 Dec 1999 17:27:46 +0100 (MET)
+* PR# 369 *
+Subject: R for Macintosh?  Where?
+From: rbl@hal.EPBI.CWRU.Edu
+Date: Thu, 9 Dec 1999 14:47:31 +0100 (MET)
+* PR# 370 *
+Subject:  	estonly confuses examples 
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Thu, 9 Dec 1999 13:54:06 GMT
