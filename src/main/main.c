@@ -559,7 +559,7 @@ void end_Rmainloop(void)
     R_CleanUp(SA_DEFAULT, 0, 1);
 }
 
-static void onpipe()
+static void onpipe(int dummy)
 {
 #ifndef __MRC__
     /* do nothing */
