@@ -28,11 +28,11 @@ test-src-strict-auto = \
 	isas-tests.R
 test-src-sloppy-1 = \
 	print-tests.R
-test-src-sloppy-auto = \
-	no-segfault.R
+test-src-sloppy-auto =
 
 test-src-1 = $(test-src-strict-1) $(test-src-sloppy-1)
-test-src-auto = $(test-src-strict-auto) $(test-src-sloppy-auto)
+test-src-auto = $(test-src-strict-auto) $(test-src-sloppy-auto) \
+  ${test-src-segfault}
 test-src-sloppy = $(test-src-sloppy-1) $(test-src-sloppy-auto)
 test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
 test-src = $(test-src-strict) $(test-src-sloppy)
@@ -44,13 +44,14 @@ test-src-nafns = nafns.R
 test-src-random = p-r-random-tests.R
 test-src-postscript = ps-tests.R
 test-src-ts = ts-tests.R
+test-src-segfault = no-segfault.R
 
 test-src-reg-1 = \
 	reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R reg-plot.R
 test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
 
-all-basic-tests = Examples Specific Reg Demo
+all-basic-tests = Examples Specific Reg Demo Segfault
 all-extra-tests = Internet Lapack Nafns Postscript Random \
   DocArgs FF Methods codoc undoc
 
@@ -86,13 +87,14 @@ test-out-nafns = $(test-src-nafns:.R=.Rout)
 test-out-postscript = $(test-src-postscript:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
+test-out-segfault = $(test-src-segfault:.R=.Rout)
 test-out-ts = $(test-src-ts:.R=.Rout)
 
 ## This macro is used only for dependencies
 test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-internet) $(test-out-lapack) $(test-out-nafns) \
 	$(test-out-random) $(test-out-postscript) $(test-out-reg) \
-	$(test-out-ts)
+	$(test-out-segfault) $(test-out-ts)
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct
@@ -224,6 +226,9 @@ test-Random:
 test-Reg:
 	@echo "running regression tests"
 	@$(MAKE) $(test-out-reg) RVAL_IF_DIFF=0
+test-Segfault:
+	@echo "running tests to possibly trigger segfaults"
+	@$(MAKE) $(test-out-segfault) RVAL_IF_DIFF=0
 test-Ts:
 	@echo "running tests of package ts functions"
 	@$(MAKE) $(test-out-ts) RVAL_IF_DIFF=0
