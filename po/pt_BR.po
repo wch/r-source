@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-03 12:50+0000\n"
+"POT-Creation-Date: 2005-03-08 13:44+0000\n"
 "PO-Revision-Date: 2005-02-26 18:12-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -128,8 +128,8 @@ msgstr "muitos arquivos .hlp abertos"
 msgid "type not yet implemented"
 msgstr "tipo ainda não implementado"
 
-#: src/gnuwin32/extra.c:403 src/gnuwin32/extra.c:620 src/gnuwin32/extra.c:635
-#: src/main/platform.c:850 src/unix/sys-std.c:897 src/unix/sys-std.c:919
+#: src/gnuwin32/extra.c:403 src/gnuwin32/extra.c:620 src/gnuwin32/extra.c:636
+#: src/main/platform.c:850 src/unix/sys-std.c:898 src/unix/sys-std.c:920
 msgid "invalid 'file' argument"
 msgstr "argumento 'file' inválido"
 
@@ -182,105 +182,105 @@ msgstr "menu não existe"
 msgid "unable to delete menu item (%s)"
 msgstr "não foi possivel deletar o item do menu (%s)"
 
-#: src/gnuwin32/extra.c:624
+#: src/gnuwin32/extra.c:625
 msgid "savehistory can only be used in Rgui and Rterm"
 msgstr "savehistory só pode ser utilizado no Rgui e Rterm"
 
-#: src/gnuwin32/extra.c:639
+#: src/gnuwin32/extra.c:640
 msgid "loadhistory can only be used in Rgui and Rterm"
 msgstr "loadhistory só pode ser utilizado no Rgui e Rterm"
 
-#: src/gnuwin32/extra.c:707 src/unix/sys-std.c:968
+#: src/gnuwin32/extra.c:708 src/unix/sys-std.c:970
 msgid "invalid 'time' value"
 msgstr "valor inválido para 'time'"
 
-#: src/gnuwin32/extra.c:762 src/gnuwin32/extra.c:772
+#: src/gnuwin32/extra.c:763 src/gnuwin32/extra.c:773
 msgid "incorrect argument"
 msgstr "argumento incorreto"
 
-#: src/gnuwin32/extra.c:765
+#: src/gnuwin32/extra.c:766
 msgid "don't be silly!: your machine has a 4Gb address limit"
 msgstr "não seja tolo!: seu computador tem um limite de endereçamento de 4Gb"
 
-#: src/gnuwin32/extra.c:768
+#: src/gnuwin32/extra.c:769
 msgid "cannot decrease memory limit"
 msgstr "não foi possível diminuir o limite de memória"
 
-#: src/gnuwin32/extra.c:786 src/main/platform.c:890 src/main/platform.c:1154
+#: src/gnuwin32/extra.c:787 src/main/platform.c:890 src/main/platform.c:1154
 #: src/main/platform.c:1371 src/main/platform.c:1406
 msgid "invalid 'path' argument"
 msgstr "argumento 'path' inválido"
 
-#: src/gnuwin32/extra.c:870
+#: src/gnuwin32/extra.c:871
 msgid "invalid 'list' argument"
 msgstr "argumento 'list' inválido"
 
-#: src/gnuwin32/extra.c:873 src/gnuwin32/extra.c:878
+#: src/gnuwin32/extra.c:874 src/gnuwin32/extra.c:879
 msgid "invalid 'preselect' argument"
 msgstr "argumento 'preselect' inválido"
 
-#: src/gnuwin32/extra.c:1052
+#: src/gnuwin32/extra.c:1053
 msgid "argument must be a character vector"
 msgstr "argumento deve ser um vetor de caracteres"
 
-#: src/gnuwin32/extra.c:1067 src/main/connections.c:1330
+#: src/gnuwin32/extra.c:1068 src/main/connections.c:1330
 msgid "Unable to open the clipboard"
 msgstr "impossível abrir a área de transferência "
 
-#: src/gnuwin32/extra.c:1072 src/main/connections.c:1334
+#: src/gnuwin32/extra.c:1073 src/main/connections.c:1334
 msgid "Unable to write to the clipboard"
 msgstr "impossível escrever na área de transferência"
 
-#: src/gnuwin32/extra.c:1198
+#: src/gnuwin32/extra.c:1199
 msgid "'default' must be a character string"
 msgstr "'default' deve ser uma string de caracteres"
 
-#: src/gnuwin32/extra.c:1200
+#: src/gnuwin32/extra.c:1201
 msgid "'default' is overlong"
 msgstr "'default' muito longo"
 
-#: src/gnuwin32/extra.c:1209
+#: src/gnuwin32/extra.c:1210
 msgid "'caption' must be a character string"
 msgstr "'caption' deve ser uma string de caracteres"
 
-#: src/gnuwin32/extra.c:1211
+#: src/gnuwin32/extra.c:1212
 msgid "'multi' must be a logical value"
 msgstr "'multi' deve ser um valor lógico"
 
-#: src/gnuwin32/extra.c:1213
+#: src/gnuwin32/extra.c:1214
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' deve ser um valor inteiro"
 
-#: src/gnuwin32/extra.c:1347
+#: src/gnuwin32/extra.c:1348
 msgid "'title' must be a character string"
 msgstr "'title' deve ser uma string de caracteres"
 
-#: src/gnuwin32/extra.c:1379
+#: src/gnuwin32/extra.c:1380
 msgid "'which' must be length 1"
 msgstr "'which' deve ter comprimento 1"
 
-#: src/gnuwin32/extra.c:1409
+#: src/gnuwin32/extra.c:1410
 msgid "invalid value of 'which'"
 msgstr "valor inválido para 'which'"
 
-#: src/gnuwin32/extra.c:1411 src/gnuwin32/extra.c:1413
-#: src/gnuwin32/extra.c:1453
+#: src/gnuwin32/extra.c:1412 src/gnuwin32/extra.c:1414
+#: src/gnuwin32/extra.c:1454
 msgid "invalid device"
 msgstr "dispositivo inválido"
 
-#: src/gnuwin32/extra.c:1414
+#: src/gnuwin32/extra.c:1415
 msgid "requires SDI mode"
 msgstr "modo SDI requerido"
 
-#: src/gnuwin32/extra.c:1447
+#: src/gnuwin32/extra.c:1448
 msgid "invalid graphical device number"
 msgstr "número de dispositivo gráfico inválido"
 
-#: src/gnuwin32/extra.c:1457
+#: src/gnuwin32/extra.c:1458
 msgid "bad device"
 msgstr "dispositivo defeituoso "
 
-#: src/gnuwin32/extra.c:1696 src/gnuwin32/extra.c:1704
+#: src/gnuwin32/extra.c:1697 src/gnuwin32/extra.c:1705
 msgid "invalid input in Rmbstowcs"
 msgstr "entrada inválida em Rmbstowcs"
 
@@ -353,58 +353,54 @@ msgstr "codificação '%s' não reconhecida"
 msgid "<ERROR: invalid input in encoding> "
 msgstr "<ERRO: entrada inválida para codificação> "
 
-#: src/gnuwin32/system.c:496
+#: src/gnuwin32/system.c:498
 #, c-format
 msgid "Unable to open file '%s'"
 msgstr "Impossível abrir o arquivo '%s'"
 
-#: src/gnuwin32/system.c:510
+#: src/gnuwin32/system.c:512
 #, c-format
 msgid "file.show(): file '%s' does not exist\n"
 msgstr "file.show(): arquivo '%s' não existe\n"
 
-#: src/gnuwin32/system.c:857
+#: src/gnuwin32/system.c:874
 msgid "WARNING: no max-mem-size given\n"
 msgstr "ATENÇÃO: faltando argumento max-mem-size\n"
 
-#: src/gnuwin32/system.c:863
+#: src/gnuwin32/system.c:880
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "ATENÇÃO: valor de --max-mem-size é inválido: ignorado\n"
 
-#: src/gnuwin32/system.c:865
+#: src/gnuwin32/system.c:882
 #, c-format
 msgid "WARNING: --max-mem-size=%lu'%c': too large and ignored\n"
 msgstr "ATENÇÃO: --max-mem-size=%lu'%c': muito grande e ignorado\n"
 
-#: src/gnuwin32/system.c:870
+#: src/gnuwin32/system.c:887
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "ATENÇÃO: max-mem-size =%4.1fM muito pequeno e ignorado\n"
 
-#: src/gnuwin32/system.c:880 src/unix/system.c:235
+#: src/gnuwin32/system.c:897 src/unix/system.c:235
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "ATENÇÃO: opção desconhecida '%s'\n"
 
-#: src/gnuwin32/system.c:905 src/unix/system.c:239
+#: src/gnuwin32/system.c:922 src/unix/system.c:239
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGUMENTO '%s' __ignorado__\n"
 
-#: src/gnuwin32/system.c:923 src/unix/system.c:277
+#: src/gnuwin32/system.c:940 src/unix/system.c:277
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "você deve especificar '--save', '--no-save' ou '--vanilla'"
 
-#: src/gnuwin32/system.c:928
+#: src/gnuwin32/system.c:945
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
 "impossível criar 'reader thread'; você deve liberar algum recurso do sistema"
-
-#: src/gnuwin32/system.c:937
-msgid "WARNING: invalid R_HISTSIZE ignored;"
-msgstr "ATENÇÃO: R_HISTSIZE inválido ignorado;"
 
 #: src/include/Errormsg.h:31
 msgid "NaNs produced"
@@ -414,7 +410,7 @@ msgstr "NaNs produzidos"
 msgid "Non-numeric argument to mathematical function"
 msgstr "Argumento não-numérico para função matemática"
 
-#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3666
+#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3668
 #: src/main/scan.c:1475
 msgid "invalid argument"
 msgstr "argumento inválido"
@@ -1882,7 +1878,7 @@ msgstr "conexão não está aberta"
 msgid "Line longer than buffer size"
 msgstr "Linha mais longa que o tamanho do buffer"
 
-#: src/main/connections.c:2335
+#: src/main/connections.c:2335 src/main/context.c:488 src/main/context.c:558
 msgid "invalid value for 'n'"
 msgstr "valor inválido para 'n'"
 
@@ -2146,40 +2142,27 @@ msgstr "nenhuma função da qual retornar, pulando para o nível superior"
 msgid "target context is not on the stack"
 msgstr "contexto de destino não está na pilha"
 
-#: src/main/context.c:310
-#, fuzzy
-msgid "not that many enclosing environments"
-msgstr "não há tantos ambientes abrangentes"
+#: src/main/context.c:310 src/main/context.c:326 src/main/context.c:391
+#: src/main/context.c:403 src/main/context.c:415 src/main/context.c:427
+msgid "not that many frames on the stack"
+msgstr ""
 
-#: src/main/context.c:325
+#: src/main/context.c:343
 #, fuzzy
-msgid "sys.frame: not that many enclosing functions"
-msgstr "sys.frame: não há tantas funções abrangentes"
-
-#: src/main/context.c:342
-msgid "only positive arguments are allowed"
+msgid "only positive values of 'n' are allowed"
 msgstr "somente argumentos positivos são pertimidos"
 
-#: src/main/context.c:389 src/main/context.c:412
-msgid "invalid frame number"
-msgstr "número de frame inválido"
-
-#: src/main/context.c:401 src/main/context.c:424
-#, fuzzy
-msgid "not that many enclosing functions"
-msgstr "não há tantas funções abrangentes"
-
-#: src/main/context.c:450
+#: src/main/context.c:453
 msgid "no function to restart"
 msgstr "nenhuma função para reiniciar"
 
-#: src/main/context.c:483 src/main/context.c:549
-msgid "invalid number of environment levels"
-msgstr "número de níveis de ambiente inválido"
+#: src/main/context.c:500 src/main/context.c:504 src/main/context.c:539
+msgid "invalid value for 'which'"
+msgstr "valor inválido para 'which'"
 
-#: src/main/context.c:533
-msgid "internal error in do_sys"
-msgstr "erro interno em do_sys"
+#: src/main/context.c:542
+msgid "internal error in 'do_sys'"
+msgstr "erro interno em 'do_sys'"
 
 #: src/main/cov.c:330
 msgid "missing observations in cov/cor"
@@ -2238,11 +2221,11 @@ msgstr "não foi possível alocar memória para read.dcf"
 msgid "Could not allocate memory for Encodebuf"
 msgstr "Não foi possível alocar memória para Encodebuf "
 
-#: src/main/deparse.c:184 src/main/plot.c:951 src/main/plot.c:1447
-#: src/main/plot.c:1733 src/main/plot.c:1798 src/main/plot.c:1886
-#: src/main/plot.c:2011 src/main/plot.c:2101 src/main/plot.c:2391
-#: src/main/plot.c:2591 src/main/plot.c:2834 src/main/plot.c:3428
-#: src/main/plot.c:3504 src/main/plot.c:3757 src/main/plot3d.c:1383
+#: src/main/deparse.c:184 src/main/plot.c:953 src/main/plot.c:1449
+#: src/main/plot.c:1735 src/main/plot.c:1800 src/main/plot.c:1888
+#: src/main/plot.c:2013 src/main/plot.c:2103 src/main/plot.c:2393
+#: src/main/plot.c:2593 src/main/plot.c:2836 src/main/plot.c:3430
+#: src/main/plot.c:3506 src/main/plot.c:3759 src/main/plot3d.c:1383
 #: src/main/sprintf.c:117
 msgid "too few arguments"
 msgstr "muitos poucos argumentos"
@@ -2822,50 +2805,49 @@ msgstr "detach de \"package:base\" não é permitido"
 msgid "argument must be an environment"
 msgstr "argumento deve ser um ambiente"
 
-#: src/main/envir.c:2432 src/main/random.c:34 src/main/random.c:488
+#: src/main/envir.c:2434 src/main/random.c:34 src/main/random.c:488
 msgid "invalid arguments"
 msgstr "argumentos inválidos"
 
-#: src/main/envir.c:2490
-#, fuzzy
+#: src/main/envir.c:2492
 msgid "no enclosing environment"
 msgstr "nenhum ambiente abrangente"
 
-#: src/main/envir.c:2513
+#: src/main/envir.c:2515
 msgid "invalid 'pos' argument"
 msgstr "argumento 'pos' inválido"
 
-#: src/main/envir.c:2537
+#: src/main/envir.c:2539
 #, c-format
 msgid "no item called \"%s\" on the search list"
 msgstr "nenhum item \"%s\" na lista de procura"
 
-#: src/main/envir.c:2554
+#: src/main/envir.c:2556
 msgid "invalid object for as.environment"
 msgstr "objeto inválido para as.environment"
 
-#: src/main/envir.c:2562
+#: src/main/envir.c:2564
 msgid "locking the NULL (base) environment is not supported yet"
 msgstr "bloqueamento do ambiente NULL (base) não é suportado ainda"
 
-#: src/main/envir.c:2564 src/main/envir.c:2589 src/main/envir.c:2618
-#: src/main/envir.c:2636 src/main/envir.c:2654 src/main/envir.c:2686
-#: src/main/envir.c:2702
+#: src/main/envir.c:2566 src/main/envir.c:2591 src/main/envir.c:2620
+#: src/main/envir.c:2638 src/main/envir.c:2656 src/main/envir.c:2688
+#: src/main/envir.c:2704
 msgid "not an environment"
 msgstr "não é um ambiente"
 
-#: src/main/envir.c:2616 src/main/envir.c:2634 src/main/envir.c:2650
-#: src/main/envir.c:2684 src/main/envir.c:2700 src/main/envir.c:2792
+#: src/main/envir.c:2618 src/main/envir.c:2636 src/main/envir.c:2652
+#: src/main/envir.c:2686 src/main/envir.c:2702 src/main/envir.c:2794
 msgid "not a symbol"
 msgstr "não é um símbolo"
 
-#: src/main/envir.c:2624 src/main/envir.c:2642 src/main/envir.c:2692
-#: src/main/envir.c:2708
+#: src/main/envir.c:2626 src/main/envir.c:2644 src/main/envir.c:2694
+#: src/main/envir.c:2710
 #, c-format
 msgid "no binding for \"%s\""
 msgstr "nenhuma vinculação para \"%s\""
 
-#: src/main/envir.c:2625
+#: src/main/envir.c:2627
 msgid ""
 "saved workspaces with locked bindings may not work properly when loaded into "
 "older versions of R"
@@ -2873,15 +2855,15 @@ msgstr ""
 "áreas de trabalho salvas com vinculações bloqueadas podem não funcionar "
 "devidamente quando carregadas em versões antigas do R"
 
-#: src/main/envir.c:2652
+#: src/main/envir.c:2654
 msgid "not a function"
 msgstr "não é uma função"
 
-#: src/main/envir.c:2657 src/main/envir.c:2673
+#: src/main/envir.c:2659 src/main/envir.c:2675
 msgid "symbol already has a regular binding"
 msgstr "símbolo já tem uma vinculação regular"
 
-#: src/main/envir.c:2666
+#: src/main/envir.c:2668
 msgid ""
 "saved workspaces with active bindings may not work properly when loaded into "
 "older versions of R"
@@ -2889,56 +2871,56 @@ msgstr ""
 "áreas de trabalho salvadas com vinculações ativas podem não funcionar "
 "devidamente quando carregadas em versões antigas do R"
 
-#: src/main/envir.c:2753
+#: src/main/envir.c:2755
 msgid "unknown op"
 msgstr "operador não conhecido"
 
-#: src/main/envir.c:2794
+#: src/main/envir.c:2796
 msgid "cannot unbind a locked binding"
 msgstr "não é possível desvincular uma vinculação bloqueada"
 
-#: src/main/envir.c:2796
+#: src/main/envir.c:2798
 msgid "cannot unbind an active binding"
 msgstr "não é possível desvincular uma vinculação ativa"
 
-#: src/main/envir.c:2856
+#: src/main/envir.c:2858
 #, c-format
 msgid "using .GlobalEnv instead of '%s'"
 msgstr "usando .GlobalEnv ao invés de '%s'"
 
-#: src/main/envir.c:2923
+#: src/main/envir.c:2925
 msgid "namespaces not available; using .GlobalEnv"
 msgstr "espaço de nomes não disponível; usando .GlobalEnv"
 
-#: src/main/envir.c:2945
+#: src/main/envir.c:2947
 msgid "bad name space name"
 msgstr "nome de espaço de nomes inválido"
 
-#: src/main/envir.c:2957
+#: src/main/envir.c:2959
 msgid "name space already registered"
 msgstr "espaço de nomes já registrado"
 
-#: src/main/envir.c:2969
+#: src/main/envir.c:2971
 msgid "name space not registered"
 msgstr "espaço de nomes não registrado"
 
-#: src/main/envir.c:3013
+#: src/main/envir.c:3015
 msgid "bad import environment argument"
 msgstr "argumento de importação de ambiente inválido"
 
-#: src/main/envir.c:3015
+#: src/main/envir.c:3017
 msgid "bad export environment argument"
 msgstr "argumento de exportação de ambiente inválido"
 
-#: src/main/envir.c:3017
+#: src/main/envir.c:3019
 msgid "bad 'names' argument"
 msgstr "argumento 'names' inválido"
 
-#: src/main/envir.c:3019
+#: src/main/envir.c:3021
 msgid "length of import and export names must match"
 msgstr "comprimentos dos nomes de importação e exportação devem ser iguais"
 
-#: src/main/envir.c:3042
+#: src/main/envir.c:3044
 #, c-format
 msgid "exported symbol '%s' has no value"
 msgstr "símbolo exportado '%s' não tem valor"
@@ -3955,31 +3937,31 @@ msgstr ""
 msgid "term names will be truncated"
 msgstr "nomes dos termos serão truncados"
 
-#: src/main/names.c:913
+#: src/main/names.c:914
 msgid "string argument required"
 msgstr "argumento string requerido"
 
-#: src/main/names.c:921
+#: src/main/names.c:922
 msgid "no such primitive function"
 msgstr "não existe tal função primitiva"
 
-#: src/main/names.c:1034
+#: src/main/names.c:1035
 msgid "attempt to use zero-length variable name"
 msgstr "tentativa de usar um nome de variável com comprimento zero"
 
-#: src/main/names.c:1036
+#: src/main/names.c:1037
 msgid "symbol print-name too long"
 msgstr "nome de impressão de símbolo muito longo"
 
-#: src/main/names.c:1062
+#: src/main/names.c:1063
 msgid "invalid .Internal() argument"
 msgstr "argumento .Internal() inválido"
 
-#: src/main/names.c:1065
+#: src/main/names.c:1066
 msgid "invalid internal function"
 msgstr "função interna inválida"
 
-#: src/main/names.c:1067
+#: src/main/names.c:1068
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "nenhuma função interna \"%s\""
@@ -4792,264 +4774,264 @@ msgstr "valores finitos são necessários para 'ylim'"
 msgid "Logarithmic axis must have positive limits"
 msgstr "Eixos logarítmicos devem ter limites positivos"
 
-#: src/main/plot.c:756
+#: src/main/plot.c:758
 msgid "invalid type for axis labels"
 msgstr "tipo inválido para rótulos dos eixos"
 
-#: src/main/plot.c:960
+#: src/main/plot.c:962
 #, c-format
 msgid "invalid axis number %d"
 msgstr "número de eixo inválido %d"
 
-#: src/main/plot.c:1057 src/main/plot.c:2444
+#: src/main/plot.c:1059 src/main/plot.c:2446
 msgid "zero length 'padj' specified"
 msgstr "'padj' de comprimento zero especificado"
 
-#: src/main/plot.c:1108
+#: src/main/plot.c:1110
 #, c-format
 msgid "'at' and 'label' lengths differ, %d != %d"
 msgstr "comprimentos de 'at' e 'label' diferem, %d != %d"
 
-#: src/main/plot.c:1126
+#: src/main/plot.c:1128
 msgid "no locations are finite"
 msgstr "nenhuma localização é finita"
 
-#: src/main/plot.c:1463
+#: src/main/plot.c:1465
 msgid "invalid plotting structure"
 msgstr "estrutura de gráfico inválida"
 
-#: src/main/plot.c:1465
+#: src/main/plot.c:1467
 #, c-format
 msgid "'x' and 'y' lengths differ in %s()"
 msgstr "comprimentos de 'x' e 'y' diferem em %s()"
 
-#: src/main/plot.c:1477
+#: src/main/plot.c:1479
 #, c-format
 msgid "plot type '%s' will be truncated to first character"
 msgstr "gráfico do tipo '%s' vai ser truncado para o primeiro caractere"
 
-#: src/main/plot.c:1481 src/main/plot.c:3094
+#: src/main/plot.c:1483 src/main/plot.c:3096
 msgid "invalid plot type"
 msgstr "tipo de gráfico inválido"
 
-#: src/main/plot.c:1657
+#: src/main/plot.c:1659
 #, c-format
 msgid "invalid plot type '%c'"
 msgstr "tipo de gráfico inválido '%c'"
 
-#: src/main/plot.c:1698
+#: src/main/plot.c:1700
 msgid "first argument invalid"
 msgstr "primeiro argumento inválido"
 
-#: src/main/plot.c:1704
+#: src/main/plot.c:1706
 msgid "second argument invalid"
 msgstr "segundo argumento inválido"
 
-#: src/main/plot.c:1710
+#: src/main/plot.c:1712
 msgid "third argument invalid"
 msgstr "terceiro argumento inválido"
 
-#: src/main/plot.c:1716
+#: src/main/plot.c:1718
 msgid "fourth argument invalid"
 msgstr "quarto argumento inválido"
 
-#: src/main/plot.c:1898
+#: src/main/plot.c:1900
 msgid "invalid arrow head length"
 msgstr "comprimento de ponta da flexa inválido"
 
-#: src/main/plot.c:1903
+#: src/main/plot.c:1905
 msgid "invalid arrow head angle"
 msgstr "ângulo de ponta da flexa inválido"
 
-#: src/main/plot.c:1908
+#: src/main/plot.c:1910
 msgid "invalid arrow head specification"
 msgstr "especificação de ponta da flexa inválida"
 
-#: src/main/plot.c:1928
+#: src/main/plot.c:1930
 msgid "'lwd' must be numeric of length >=1"
 msgstr "'lwd' deve ser numérico e de comprimento >=1"
 
-#: src/main/plot.c:2113
+#: src/main/plot.c:2115
 msgid "zero length 'labels'"
 msgstr "'labels' de comprimento zero"
 
-#: src/main/plot.c:2141
+#: src/main/plot.c:2143
 msgid "invalid 'adj' value"
 msgstr "valor de 'adj' inválido"
 
-#: src/main/plot.c:2148
+#: src/main/plot.c:2150
 msgid "invalid 'pos' value"
 msgstr "valor de 'pos' inválido"
 
-#: src/main/plot.c:2191
+#: src/main/plot.c:2193
 msgid "no coordinates were supplied"
 msgstr "nenhuma coordenada foi especificada"
 
-#: src/main/plot.c:2402
+#: src/main/plot.c:2404
 msgid "zero length 'text' specified"
 msgstr "'text' de comprimento zero foi especificado"
 
-#: src/main/plot.c:2408
+#: src/main/plot.c:2410
 msgid "zero length 'side' specified"
 msgstr "'side' de comprimento zero foi especificado"
 
-#: src/main/plot.c:2415
+#: src/main/plot.c:2417
 msgid "zero length 'line' specified"
 msgstr "'line' de comprimento zero foi especificado"
 
-#: src/main/plot.c:2423
+#: src/main/plot.c:2425
 msgid "zero length 'outer' specified"
 msgstr "'outer' de comprimento zero foi especificado"
 
-#: src/main/plot.c:2430
+#: src/main/plot.c:2432
 msgid "zero length 'at' specified"
 msgstr "'at' de comprimento zero foi especificado"
 
-#: src/main/plot.c:2437
+#: src/main/plot.c:2439
 msgid "zero length 'adj' specified"
 msgstr "'adj' de comprimento zero foi especificado"
 
-#: src/main/plot.c:2451
+#: src/main/plot.c:2453
 msgid "zero length 'cex' specified"
 msgstr "'cex' de comprimento zero foi especificado"
 
-#: src/main/plot.c:2459
+#: src/main/plot.c:2461
 msgid "zero length 'col' specified"
 msgstr "'col' de comprimento zero foi especificado"
 
-#: src/main/plot.c:2466
+#: src/main/plot.c:2468
 msgid "zero length 'font' specified"
 msgstr "'font' de comprimento zero foi especificado"
 
-#: src/main/plot.c:2539
+#: src/main/plot.c:2541
 msgid "Hershey fonts not yet implemented for mtext()"
 msgstr "Fontes Hershey ainda não implementadas para mtext()"
 
-#: src/main/plot.c:2875
+#: src/main/plot.c:2877
 msgid "invalid a=, b= specification"
 msgstr "especificação a=, b= inválida"
 
-#: src/main/plot.c:2884
+#: src/main/plot.c:2886
 msgid "'a' and 'b' must be finite"
 msgstr "'a' e 'b' devem ser finitos"
 
-#: src/main/plot.c:3016
+#: src/main/plot.c:3018
 msgid "invalid 'which' specification"
 msgstr "especificação 'which' inválida"
 
-#: src/main/plot.c:3089
+#: src/main/plot.c:3091
 msgid "invalid number of points in locator()"
 msgstr "número de pontos inválidos em locator()"
 
-#: src/main/plot.c:3210
+#: src/main/plot.c:3212
 msgid "invalid number of points in identify()"
 msgstr "número de pontos inválidos em identify()"
 
-#: src/main/plot.c:3212
+#: src/main/plot.c:3214
 msgid "incorrect argument type"
 msgstr "tipo de argumento inválido"
 
-#: src/main/plot.c:3214
+#: src/main/plot.c:3216
 msgid "different argument lengths"
 msgstr "argumentos de comprimentos diferentes"
 
-#: src/main/plot.c:3249
+#: src/main/plot.c:3251
 #, c-format
 msgid "warning: no point with %.2f inches\n"
 msgstr "aviso: nenhum ponto com %.2f polegadas\n"
 
-#: src/main/plot.c:3254
+#: src/main/plot.c:3256
 msgid "warning: nearest point already identified\n"
 msgstr "aviso: ponto mais próximo já identificado\n"
 
-#: src/main/plot.c:3329
+#: src/main/plot.c:3331
 msgid "invalid units"
 msgstr "unidades inválidas"
 
-#: src/main/plot.c:3335
+#: src/main/plot.c:3337
 msgid "invalid 'cex' value"
 msgstr "valor de 'cex' inválido"
 
-#: src/main/plot.c:3488 src/main/plot.c:3597
+#: src/main/plot.c:3490 src/main/plot.c:3599
 msgid "invalid dendrogram input"
 msgstr "entrada inválida de dendograma"
 
-#: src/main/plot.c:3628
+#: src/main/plot.c:3630
 msgid "cannot take snapshot of old-style device"
 msgstr "não foi possível fazer uma imagem do dispositivo de modo antigo"
 
-#: src/main/plot.c:3641
+#: src/main/plot.c:3643
 msgid "cannot play snapshot on old-style device"
 msgstr "não é possível usar uma imagem em um dispositivo de modo antigo"
 
-#: src/main/plot.c:3697
+#: src/main/plot.c:3699
 msgid "invalid graphics parameter list"
 msgstr "lista de parâmetros gráficos inválidos"
 
-#: src/main/plot.c:3739
+#: src/main/plot.c:3741
 msgid "invalid symbol parameter vector"
 msgstr "vetor de parâmetros de símbolos inválido"
 
-#: src/main/plot.c:3762
+#: src/main/plot.c:3764
 msgid "invalid symbol coordinates"
 msgstr "coordenadas de símbolo inválidas"
 
-#: src/main/plot.c:3770
+#: src/main/plot.c:3772
 msgid "x/y/parameter length mismatch"
 msgstr "comprimento dos parâmetros x/y incompatíveis"
 
-#: src/main/plot.c:3789
+#: src/main/plot.c:3791
 msgid "invalid circles data"
 msgstr "dados circulares inválidos"
 
-#: src/main/plot.c:3791 src/main/plot.c:3809 src/main/plot.c:3835
-#: src/main/plot.c:3864
+#: src/main/plot.c:3793 src/main/plot.c:3811 src/main/plot.c:3837
+#: src/main/plot.c:3866
 msgid "invalid symbol parameter"
 msgstr "parâmetro de símbolo inválido"
 
-#: src/main/plot.c:3807
+#: src/main/plot.c:3809
 msgid "invalid squares data"
 msgstr "dados quadrados inválidos"
 
-#: src/main/plot.c:3833
+#: src/main/plot.c:3835
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "dados retangulares inválidos (2 colunas necessárias)"
 
-#: src/main/plot.c:3862
+#: src/main/plot.c:3864
 msgid "invalid stars data"
 msgstr "dados de estrela inválidos"
 
-#: src/main/plot.c:3904
+#: src/main/plot.c:3906
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "dados de termômetro inválidos (3 ou 4 colunas necessárias)"
 
-#: src/main/plot.c:3907
+#: src/main/plot.c:3909
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "thermometers[,%s] inválidos"
 
-#: src/main/plot.c:3911
+#: src/main/plot.c:3913
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr "thermometers[,%s] não estão em [0,1] - pode não dar um bom resultado"
 
-#: src/main/plot.c:3914
+#: src/main/plot.c:3916
 msgid "invalid thermometers[,1:2]"
 msgstr "thermometers[,1:2] inválidos"
 
-#: src/main/plot.c:3953
+#: src/main/plot.c:3955
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "dados de boxplots inválidos (5 colunas necessárias)"
 
-#: src/main/plot.c:3963
+#: src/main/plot.c:3965
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "boxplots[,5] fora do intervalo [0,1] - pode não dar um bom resultado"
 
-#: src/main/plot.c:3965
+#: src/main/plot.c:3967
 msgid "invalid boxplots[, 1:4]"
 msgstr "boxplots[, 1:4] inválidos"
 
-#: src/main/plot.c:4011
+#: src/main/plot.c:4013
 msgid "invalid symbol type"
 msgstr "tipo de símbolo inválido"
 
@@ -6282,7 +6264,6 @@ msgid "no index specified"
 msgstr "nenhum índice especificado"
 
 #: src/main/subset.c:740
-#, fuzzy
 msgid "wrong arguments for subsetting an environment"
 msgstr "argumentos errados para obtenção de subconjuntos de um ambiente"
 
@@ -6361,63 +6342,67 @@ msgstr "'iconv' não está disponível nesse sistema"
 msgid "length %d is too large for hashing"
 msgstr "comprimento %d é muito grande para uso de hash"
 
-#: src/main/unique.c:383
+#: src/main/unique.c:350
+msgid "'duplicated' applies only to vectors"
+msgstr "'duplicated' pode ser aplicada somente a vetores"
+
+#: src/main/unique.c:386
 #, c-format
 msgid "%s() applies only to vectors"
 msgstr "%s() pode ser aplicada somente a vetores"
 
-#: src/main/unique.c:493
+#: src/main/unique.c:496
 msgid "match requires vector arguments"
 msgstr "match requer argumentos vetoriais"
 
-#: src/main/unique.c:558
+#: src/main/unique.c:582
 msgid "invalid 'duplicates.ok' argument"
 msgstr "argumento 'duplicates.ok' inválido"
 
-#: src/main/unique.c:561 src/main/unique.c:627
+#: src/main/unique.c:585 src/main/unique.c:651
 msgid "argument is not of mode character"
 msgstr "argumento não é de modo caractere"
 
-#: src/main/unique.c:715
+#: src/main/unique.c:739
 msgid "... used in a situation where it doesn't exist"
 msgstr "... usado em uma situação onde ele não existe"
 
-#: src/main/unique.c:754
+#: src/main/unique.c:778
 #, c-format
 msgid "'%s' is not a valid call"
 msgstr "'%s' não é uma chamada válida"
 
-#: src/main/unique.c:811
+#: src/main/unique.c:835
 #, c-format
 msgid "'%s' is not a function"
 msgstr "'%s' não é uma função"
 
-#: src/main/unique.c:819
+#: src/main/unique.c:843
 #, c-format
 msgid "'%s' is not a logical"
 msgstr "'%s' não é do tipo lógico"
 
-#: src/main/unique.c:955
+#: src/main/unique.c:979
 msgid "non-numeric matrix in rowsum(): this cannot happen"
 msgstr "matrix não numérica em rowsum(): isso não pode acontecer"
 
-#: src/main/unique.c:986
+#: src/main/unique.c:1010
 msgid "non-numeric data frame in rowsum"
 msgstr "data frame não numérico em rowsum"
 
-#: src/main/unique.c:1011
+#: src/main/unique.c:1035
 msgid "this cannot happen"
 msgstr "isso não pode acontecer"
 
-#: src/main/unique.c:1067
+#: src/main/unique.c:1091
 msgid "'names' must be a character vector"
 msgstr "'names' deve ser um vetor de caracteres"
 
-#: src/main/unique.c:1071
+#: src/main/unique.c:1095
 msgid "'sep' must be a character string"
 msgstr "'sep' deve ser uma string de caracteres"
 
-#: src/main/unique.c:1140
+#: src/main/unique.c:1164
 msgid "csduplicated not called on a STRSXP"
 msgstr "csduplicated não chamado dentro de uma STRSXP"
 
@@ -6474,7 +6459,6 @@ msgid "\"nthcdr\" list shorter than %d"
 msgstr "lista \"nthcdr\" é menor que %d"
 
 #: src/main/util.c:823
-#, fuzzy
 msgid "\"nthcdr\" needs a list to CDR down"
 msgstr "\"nthcdr\" requer uma lista para aplicar o CDR"
 
@@ -7048,7 +7032,6 @@ msgid "invalid value of 'fonts'"
 msgstr "valor de 'fonts' inválido"
 
 #: src/modules/X11/devX11.c:2389
-#, fuzzy
 msgid "unable to contact X11 display"
 msgstr "não foi possível abrir conexão com o dispositivo X11"
 
@@ -7247,19 +7230,19 @@ msgstr ""
 msgid "re-encoding is not available on this system"
 msgstr "recodificação não está disponível nesse sistema"
 
-#: src/unix/sys-std.c:900 src/unix/sys-std.c:922
+#: src/unix/sys-std.c:901 src/unix/sys-std.c:923
 msgid "'file' argument is too long"
 msgstr "argumento 'file' é muito longo"
 
-#: src/unix/sys-std.c:906 src/unix/sys-std.c:908
+#: src/unix/sys-std.c:907 src/unix/sys-std.c:909
 msgid "no history mechanism available"
 msgstr "nenhum mecanismo de histórico disponível"
 
-#: src/unix/sys-std.c:930 src/unix/sys-std.c:932
+#: src/unix/sys-std.c:932 src/unix/sys-std.c:934
 msgid "no history available to save"
 msgstr "nenhum histórico disponível pra salvar"
 
-#: src/unix/sys-std.c:997
+#: src/unix/sys-std.c:999
 msgid "Sys.sleep is not implemented on this system"
 msgstr "Sys.sleep não está implementado nesse sistema"
 
@@ -7321,3 +7304,6 @@ msgstr "módulo X11 não pode ser carregado"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 não está disponível"
+
+#~ msgid "WARNING: invalid R_HISTSIZE ignored;"
+#~ msgstr "ATENÇÃO: R_HISTSIZE inválido ignorado;"
