@@ -49,6 +49,6 @@ distdir:
 	    || exit 1; \
 	done
 	@((cd $(srcdir); \
-	      $(TAR) -c -f - --exclude=CVS f2clib gnuwin32) \
+	      $(TAR) -c -f - --exclude=CVS f2clib gnuwin32 macintosh) \
 	    | (cd $(distdir); $(TAR) -x -f -)) \
 	  || exit 1
