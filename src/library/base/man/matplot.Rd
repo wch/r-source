@@ -42,8 +42,9 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL, col = 1:6, \dots)
   \item{cex}{vector of character expansion sizes, used cyclically.}
   \item{xlab, ylab}{titles for x and y axes, as in \code{\link{plot}}.}
   \item{xlim, ylim}{ranges of x and y axes, as in \code{\link{plot}}.}
-  \item{\dots}{Graphical parameters (see \code{\link{par}}) may also be
-    supplied as arguments to this function.  In addition, the high-level
+  \item{\dots}{Graphical parameters (see \code{\link{par}}) and any further
+    arguments of \code{plot}, typically \code{\link{plot.default}}, may also be
+    supplied as arguments to this function.  Hence, the high-level
     graphics control arguments described under \code{\link{par}} and the
     arguments to \code{\link{title}} may be supplied to this function.}
   \item{add}{logical.  If \code{TRUE}, plots are added to current one,
