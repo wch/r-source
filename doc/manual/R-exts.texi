@@ -959,7 +959,7 @@ variables in the package should be @emph{exported} to make them
 available to package users, and which variables should be
 @emph{imported} from other packages.
 
-The current mechanism@footnote{Alternate approaches are under
+The current mechanism@footnote{Alternative approaches are under
 consideration and may replace this approach in future @R{} releases.}
 for specifying a name space for a package is to place a @file{NAMESPACE}
 file in the top level package directory.  This file contains @emph{name
@@ -4430,7 +4430,7 @@ useful when porting code from @Sl{}.  This includes rather less than
 the @code{S_complex} type from @Sl{}).
 
 The defines used for compatibility with @Sl{} sometimes causes
-conflicts@footnote{notably with Windows headers}, and the known
+conflicts (notably with Windows headers), and the known
 problematic defines can be removed by defining @code{STRICT_R_HEADERS}.
 
 Most of these header files, including all those included by @file{R.h},
@@ -4442,7 +4442,7 @@ clashes with user code, it is @emph{essential} to include the
 appropriate header files when using these entry points.
 @end quotation
 
-This remapping can cause problems@footnote{known problems are redefining
+This remapping can cause problems@footnote{Known problems are redefining
 @code{error}, @code{length}, @code{vector} and @code{warning}}, and can
 be eliminated by defining @code{R_NO_REMAP} and prepending @code{Rf_} to
 @emph{all} the function names used from @file{Rinternals.h} and
@@ -4769,6 +4769,7 @@ rely on this.
 For example, suppose we want to call R's normal random numbers from
 FORTRAN.  We need a C wrapper along the lines of
 
+@cindex Random numbers in FORTRAN
 @smallexample
 @group
 #include <R.h>
@@ -5108,9 +5109,8 @@ use @code{ln(x)} for the natural logarithm (@code{log(x)} in @R{}).
 @end quotation
 
 There are a set of constants (@code{PI}, @code{DOUBLE_EPS}) (and so on)
-defined@footnote{unless @code{STRICT_R_HEADERS} is defined} in the
-included header @file{R_ext/Constants.h}, mainly for compatibility with
-@Sl{}.
+defined (unless @code{STRICT_R_HEADERS} is defined) in the included
+header @file{R_ext/Constants.h}, mainly for compatibility with @Sl{}.
 
 @findex TRUE
 @findex FALSE
