@@ -37,6 +37,12 @@
 #include <Graphics.h> /* display lists */
 #include <Rdevices.h> /* GetDevice */
 
+/* malloc uses size_t.  We are assuming here that size_t is at least
+   as large as unsigned long.  Changed from int at 1.6.0 to (i) allow
+   2-4Gb objects on 32-bit system and (ii) objects limited only by
+   length on a 64-bit system.
+*/
+
 static int gc_reporting = 0;
 static int gc_count = 0;
 
@@ -53,8 +59,8 @@ extern SEXP framenames;
 #define GC_PROT(X) {int __t = gc_inhibit_torture; \
 	gc_inhibit_torture = 1 ; X ; gc_inhibit_torture = __t;}
 
-static void R_gc_internal(int size_needed);
-static void mem_err_heap(long size);
+static void R_gc_internal(R_size_t size_needed);
+static void mem_err_heap(R_size_t size);
 
 static SEXPREC UnmarkedNodeTemplate;
 #define NODE_IS_MARKED(s) (MARK(s)==1)
@@ -144,35 +150,33 @@ static int R_VGrowIncrMin = 80000, R_VShrinkIncrMin = 0;
 
 /* Maximal Heap Limits.  These variables contain upper limits on the
    heap sizes.  They could be made adjustable from the R level,
-   perhaps by a handler for a recoverable error.  For now both are set
-   to INT_MAX to insure that the heap counters do not wrap on systems
-   with that much memory.
+   perhaps by a handler for a recoverable error.
 
    Access to these values is provided with reader and writer
    functions; the writer function insures that the maximal values are
    never set below the current ones. */
-static int R_MaxVSize = INT_MAX;
-static int R_MaxNSize = INT_MAX;
+static R_size_t R_MaxVSize = R_SIZE_T_MAX;
+static R_size_t R_MaxNSize = R_SIZE_T_MAX;
 static int vsfac = 1; /* current units for vsize: changes at initialization */
 
-int R_GetMaxVSize(void) 
+R_size_t R_GetMaxVSize(void) 
 {
-    if (R_MaxVSize == INT_MAX) return INT_MAX;
+    if (R_MaxVSize == R_SIZE_T_MAX) return R_SIZE_T_MAX;
     return R_MaxVSize*vsfac;
 }
 
-void R_SetMaxVSize(int size)
+void R_SetMaxVSize(R_size_t size)
 {
-    if (size == INT_MAX) return;
+    if (size == R_SIZE_T_MAX) return;
     if (size / vsfac >= R_VSize) R_MaxVSize = (size+1)/sizeof(VECREC);
 }
 
-int R_GetMaxNSize(void) 
+R_size_t R_GetMaxNSize(void) 
 { 
     return R_MaxNSize;
 }
 
-void R_SetMaxNSize(int size)
+void R_SetMaxNSize(R_size_t size)
 {
     if (size >= R_NSize) R_MaxNSize = size;
 }
@@ -181,10 +185,10 @@ void R_SetMaxNSize(int size)
 /* Miscellaneous Globals. */
 
 static SEXP R_VStack = NULL;		/* R_alloc stack pointer */
-static int R_LargeVallocSize = 0;
-static int R_SmallVallocSize = 0;
-static int orig_R_NSize;
-static int orig_R_VSize;
+static R_size_t R_LargeVallocSize = 0;
+static R_size_t R_SmallVallocSize = 0;
+static R_size_t orig_R_NSize;
+static R_size_t orig_R_VSize;
 
 
 /* Node Classes.  Non-vector nodes are of class zero. Small vector
@@ -294,7 +298,7 @@ static struct {
     PAGE_HEADER *pages;
 } R_GenHeap[NUM_NODE_CLASSES];
 
-static int R_NodesInUse = 0;
+static R_size_t R_NodesInUse = 0;
 
 #define NEXT_NODE(s) (s)->gengc_next_node
 #define PREV_NODE(s) (s)->gengc_prev_node
@@ -485,7 +489,7 @@ static void DEBUG_CHECK_NODE_COUNTS(char *where)
 static void DEBUG_GC_SUMMARY(int full_gc)
 {
     int i, gen, OldCount;
-    REprintf("\n%s, VSize = %d", full_gc ? "Full" : "Minor",
+    REprintf("\n%s, VSize = %lu", full_gc ? "Full" : "Minor",
 	     R_SmallVallocSize + R_LargeVallocSize);
     for (i = 1; i < NUM_NODE_CLASSES; i++) {
 	for (gen = 0, OldCount = 0; gen < NUM_OLD_GENERATIONS; gen++)
@@ -502,15 +506,15 @@ static void DEBUG_GC_SUMMARY(int full_gc)
 static void DEBUG_ADJUST_HEAP_PRINT(double node_occup, double vect_occup)
 {
     int i;
-    int alloc;
+    R_size_t alloc;
     REprintf("Node occupancy: %.0f%%\nVector occupancy: %.0f%%\n",
 	     100.0 * node_occup, 100.0 * vect_occup);
     alloc = R_LargeVallocSize +
 	sizeof(SEXPREC_ALIGN) * R_GenHeap[LARGE_NODE_CLASS].AllocCount;
     for (i = 0; i < NUM_SMALL_NODE_CLASSES; i++)
 	alloc += R_PAGE_SIZE * R_GenHeap[i].PageCount;
-    REprintf("Total allocation: %d\n", alloc);
-    REprintf("Ncells %d\nVcells %d\n", R_NSize, R_VSize);
+    REprintf("Total allocation: %lu\n", alloc);
+    REprintf("Ncells %lu\nVcells %lu\n", R_NSize, R_VSize);
 }
 #else
 #define DEBUG_ADJUST_HEAP_PRINT(node_occup, vect_occup)
@@ -547,7 +551,7 @@ static void GetNewPage(int node_class)
 
     page = malloc(R_PAGE_SIZE);
     if (page == NULL)
-	mem_err_heap(NodeClassSize[node_class]);
+	mem_err_heap((R_size_t) NodeClassSize[node_class]);
     page->next = R_GenHeap[node_class].pages;
     R_GenHeap[node_class].pages = page;
     R_GenHeap[node_class].PageCount++;
@@ -644,7 +648,7 @@ static void ReleaseLargeFreeVectors(void)
     while (s != R_GenHeap[LARGE_NODE_CLASS].New) {
 	SEXP next = NEXT_NODE(s);
 	if (CHAR(s) != NULL) {
-	    int size;
+	    R_size_t size;
 	    switch (TYPEOF(s)) {	/* get size in bytes */
 	    case CHARSXP:
 		size = LENGTH(s) + 1;
@@ -680,23 +684,23 @@ static void ReleaseLargeFreeVectors(void)
 
 /* Heap Size Adjustment. */
 
-static void AdjustHeapSize(int size_needed)
+static void AdjustHeapSize(R_size_t size_needed)
 {
-    int R_MinNFree = orig_R_NSize * R_MinFreeFrac;
-    int R_MinVFree = orig_R_VSize * R_MinFreeFrac;
-    int NNeeded = R_NodesInUse + R_MinNFree;
-    int VNeeded = R_SmallVallocSize + R_LargeVallocSize
+    R_size_t R_MinNFree = orig_R_NSize * R_MinFreeFrac;
+    R_size_t R_MinVFree = orig_R_VSize * R_MinFreeFrac;
+    R_size_t NNeeded = R_NodesInUse + R_MinNFree;
+    R_size_t VNeeded = R_SmallVallocSize + R_LargeVallocSize
 	+ size_needed + R_MinVFree;
     double node_occup = ((double) NNeeded) / R_NSize;
     double vect_occup =	((double) VNeeded) / R_VSize;
 
     if (node_occup > R_NGrowFrac) {
-	int change = R_NGrowIncrMin + R_NGrowIncrFrac * R_NSize;
-	if (R_MaxNSize - R_NSize >= change)
+	R_size_t change = R_NGrowIncrMin + R_NGrowIncrFrac * R_NSize;
+	if (R_MaxNSize >= R_NSize + change)
 	    R_NSize += change;
     }
     else if (node_occup < R_NShrinkFrac) {
-	R_NSize -= R_NShrinkIncrMin + R_NShrinkIncrFrac * R_NSize;
+	R_NSize -= (R_NShrinkIncrMin + R_NShrinkIncrFrac * R_NSize);
 	if (R_NSize < NNeeded)
 	    R_NSize = (NNeeded < R_MaxNSize) ? NNeeded: R_MaxNSize;
 	if (R_NSize < orig_R_NSize)
@@ -706,7 +710,7 @@ static void AdjustHeapSize(int size_needed)
     if (vect_occup > 1.0 && VNeeded < R_MaxVSize)
 	R_VSize = VNeeded;
     if (vect_occup > R_VGrowFrac) {
-	int change = R_VGrowIncrMin + R_VGrowIncrFrac * R_NSize;
+	R_size_t change = R_VGrowIncrMin + R_VGrowIncrFrac * R_NSize;
 	if (R_MaxVSize - R_VSize >= change)
 	    R_VSize += change;
     }
@@ -1081,7 +1085,7 @@ SEXP do_regFinaliz(SEXP call, SEXP op, SEXP args, SEXP rho)
     } \
 } while (0)
 
-static void RunGenCollect(int size_needed)
+static void RunGenCollect(R_size_t size_needed)
 {
     int i, gen, gens_collected;
     DevDesc *dd;
@@ -1256,7 +1260,7 @@ static void RunGenCollect(int size_needed)
 
     if (num_old_gens_to_collect < NUM_OLD_GENERATIONS) {
 	if (R_Collected < R_MinFreeFrac * R_NSize ||
-	    VHEAP_FREE() - size_needed < R_MinFreeFrac * R_VSize) {
+	    VHEAP_FREE() < size_needed + R_MinFreeFrac * R_VSize) {
 	    num_old_gens_to_collect++;
 	    if (R_Collected <= 0 || VHEAP_FREE() < size_needed)
 		goto again;
@@ -1321,7 +1325,8 @@ SEXP do_gcinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP value;
-    int ogc, onsize=R_NSize;
+    int ogc;
+    R_size_t onsize = R_NSize;
 
     checkArity(op, args);
     ogc = gc_reporting;
@@ -1333,23 +1338,24 @@ SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(value = allocVector(INTSXP, 10));
     INTEGER(value)[0] = onsize - R_Collected;
     INTEGER(value)[1] = R_VSize - VHEAP_FREE();
-    INTEGER(value)[4] = R_NSize;
-    INTEGER(value)[5] = R_VSize;
-    /* next four are in 0.1Mb, rounded up; Mega = 1048576.; Mega/8 = 131072. */
+    /* carefully here: we can't report large sizes in R's integer */
+    INTEGER(value)[4] = (R_NSize < INT_MAX) ? R_NSize : NA_INTEGER;
+    INTEGER(value)[5] = (R_VSize < INT_MAX) ? R_VSize : NA_INTEGER;
+    /* next four are in 0.1Mb, rounded up */
     INTEGER(value)[2] = 10. * (onsize - R_Collected)/Mega * sizeof(SEXPREC) + 0.999;
-    INTEGER(value)[3] = 10. * (R_VSize - VHEAP_FREE())/131072. + 0.999;
+    INTEGER(value)[3] = 10. * (R_VSize - VHEAP_FREE())/Mega * vsfac + 0.999;
     INTEGER(value)[6] = 10. * R_NSize/Mega * sizeof(SEXPREC) + 0.999;
-    INTEGER(value)[7] = 10. * R_VSize/131072. + 0.999;
-    INTEGER(value)[8] = (R_MaxNSize < INT_MAX) ? 
+    INTEGER(value)[7] = 10. * R_VSize/Mega * vsfac + 0.999;
+    INTEGER(value)[8] = (R_MaxNSize < R_SIZE_T_MAX) ? 
 	(10. * R_MaxNSize/Mega * sizeof(SEXPREC) + 0.999) : NA_INTEGER;
-    INTEGER(value)[9] = (R_MaxVSize < INT_MAX) ? 
-	(10. * R_MaxVSize/131072. + 0.999) : NA_INTEGER;
+    INTEGER(value)[9] = (R_MaxVSize < R_SIZE_T_MAX) ? 
+	(10. * R_MaxVSize/Mega * vsfac + 0.999) : NA_INTEGER;
     UNPROTECT(1);
     return value;
 }
 
 
-static void mem_err_heap(long size)
+static void mem_err_heap(R_size_t size)
 {
     errorcall(R_NilValue, "vector memory exhausted (limit reached?)");
 }
@@ -1437,7 +1443,7 @@ void vmaxset(char *ovmax)
 
 char *R_alloc(long nelem, int eltsize)
 {
-  unsigned int size = nelem * eltsize;
+  R_size_t size = nelem * eltsize;
   if (size > 0) {
     SEXP s = allocString(size); /**** avoid extra null byte?? */
     ATTRIB(s) = R_VStack;
@@ -1451,7 +1457,7 @@ char *R_alloc(long nelem, int eltsize)
 
 char *S_alloc(long nelem, int eltsize)
 {
-    unsigned int i, size  = nelem * eltsize;
+    R_size_t i, size  = nelem * eltsize;
     char *p = R_alloc(nelem, eltsize);
     for(i = 0; i < size; i++)
 	p[i] = 0;
@@ -1625,10 +1631,8 @@ SEXP allocVector(SEXPTYPE type, int length)
 		   work in terms of a VECSEXP here, but that would
 		   require several casts below... */
     int i;
-    long size=0;
-    int alloc_size;
+    R_size_t size = 0, alloc_size, old_R_VSize;
     int node_class;
-    int old_R_VSize;
 
     if (length < 0 )
 	errorcall(R_GlobalContext->call,
@@ -1645,7 +1649,7 @@ SEXP allocVector(SEXPTYPE type, int length)
 	if (length <= 0)
 	    size = 0;
 	else {
-	    if (length > INT_MAX / sizeof(int))
+	    if (length > R_SIZE_T_MAX / sizeof(int))
 		errorcall(R_GlobalContext->call,
 			  "cannot allocate vector of length %d", length);
 	    size = INT2VEC(length);
@@ -1655,7 +1659,7 @@ SEXP allocVector(SEXPTYPE type, int length)
 	if (length <= 0)
 	    size = 0;
 	else {
-	    if (length > INT_MAX / sizeof(double))
+	    if (length > R_SIZE_T_MAX / sizeof(double))
 		errorcall(R_GlobalContext->call,
 			  "cannot allocate vector of length %d", length);
 	    size = FLOAT2VEC(length);
@@ -1665,7 +1669,7 @@ SEXP allocVector(SEXPTYPE type, int length)
 	if (length <= 0)
 	    size = 0;
 	else {
-	    if (length > INT_MAX / sizeof(Rcomplex))
+	    if (length > R_SIZE_T_MAX / sizeof(Rcomplex))
 		errorcall(R_GlobalContext->call,
 			  "cannot allocate vector of length %d", length);
 	    size = COMPLEX2VEC(length);
@@ -1677,7 +1681,7 @@ SEXP allocVector(SEXPTYPE type, int length)
 	if (length <= 0)
 	    size = 0;
 	else {
-	    if (length > INT_MAX / sizeof(SEXP))
+	    if (length > R_SIZE_T_MAX / sizeof(SEXP))
 		errorcall(R_GlobalContext->call,
 			  "cannot allocate vector of length %d", length);
 	    size = PTR2VEC(length);
@@ -1714,7 +1718,7 @@ SEXP allocVector(SEXPTYPE type, int length)
     old_R_VSize = R_VSize;
 
     /* we need to do the gc here so allocSExp doesn't! */
-    if (FORCE_GC || NO_FREE_NODES() || alloc_size > VHEAP_FREE()) {
+    if (FORCE_GC || NO_FREE_NODES() || VHEAP_FREE() < alloc_size) {
 	R_gc_internal(alloc_size);
 	if (NO_FREE_NODES())
 	    mem_err_cons();
@@ -1736,12 +1740,12 @@ SEXP allocVector(SEXPTYPE type, int length)
 		== NULL) {
 		/* reset the vector heap limit */
 		R_VSize = old_R_VSize;
-		errorcall(R_NilValue, "cannot allocate vector of size %ld Kb",
+		errorcall(R_NilValue, "cannot allocate vector of size %lu Kb",
 			  (size * sizeof(VECREC))/1024);
 	    }
 	    s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
 	    SET_NODE_CLASS(s, LARGE_NODE_CLASS);
-	    R_LargeVallocSize += alloc_size;
+	    R_LargeVallocSize += size;
 	    R_GenHeap[LARGE_NODE_CLASS].AllocCount++;
 	    SNAP_NODE(s, R_GenHeap[LARGE_NODE_CLASS].New);
 	}
@@ -1839,9 +1843,9 @@ static void gc_end_timing(void)
 #endif /* _R_HAVE_TIMING_ */
 }
 
-static void R_gc_internal(int size_needed)
+static void R_gc_internal(R_size_t size_needed)
 {
-    int vcells;
+    R_size_t vcells;
     double vfrac;
     Rboolean first = TRUE;
 
@@ -1884,18 +1888,19 @@ static void R_gc_internal(int size_needed)
 SEXP do_memlimits(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    int nsize, vsize, tmp;
+    int nsize, vsize;
+    R_size_t tmp;
     
     checkArity(op, args);
     nsize = asInteger(CAR(args));
     vsize = asInteger(CADR(args));
-    if(nsize != NA_INTEGER) R_SetMaxNSize(nsize);
-    if(vsize != NA_INTEGER) R_SetMaxVSize(vsize);
+    if(nsize != NA_INTEGER) R_SetMaxNSize((R_size_t) nsize);
+    if(vsize != NA_INTEGER) R_SetMaxVSize((R_size_t) vsize);
     PROTECT(ans = allocVector(INTSXP, 2));
     tmp = R_GetMaxNSize();
-    INTEGER(ans)[0] = (tmp == INT_MAX) ? NA_INTEGER : tmp;
+    INTEGER(ans)[0] = (tmp < INT_MAX) ? tmp : NA_INTEGER;
     tmp = R_GetMaxVSize();
-    INTEGER(ans)[1] = (tmp == INT_MAX) ? NA_INTEGER : tmp;
+    INTEGER(ans)[1] = (tmp < INT_MAX) ? tmp : NA_INTEGER;
     UNPROTECT(1);
     return ans;
 }

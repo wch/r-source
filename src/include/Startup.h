@@ -54,10 +54,10 @@ typedef struct
     Rboolean DebugInitFile;
     SA_TYPE RestoreAction;
     SA_TYPE SaveAction;
-    int vsize;
-    int nsize;
-    int max_vsize;
-    int max_nsize;
+    unsigned long vsize;
+    unsigned long nsize;
+    unsigned long max_vsize;
+    unsigned long max_nsize;
     int NoRenviron;
 
       /* Permanent copy of the command line arguments and the number

@@ -86,6 +86,9 @@ void R_ProcessEvents(void);
 
 /*  Heap and Pointer Protection Stack Sizes.  */
 
+typedef unsigned long R_size_t;
+#define R_SIZE_T_MAX ULONG_MAX
+
 #define Mega 1048576. /* 1 Mega Byte := 2^20 (= 1048576) Bytes */
 
 /*	R_PPSSIZE  The pointer protection stack size  */
@@ -408,11 +411,11 @@ extern int	gc_inhibit_torture INI_as(1);
 extern char*	R_Home;		    /* Root of the R tree */
 
 /* Memory Management */
-extern int	R_NSize		INI_as(R_NSIZE);/* Size of cons cell heap */
-extern int	R_VSize		INI_as(R_VSIZE);/* Size of the vector heap */
+extern R_size_t	R_NSize		INI_as(R_NSIZE);/* Size of cons cell heap */
+extern R_size_t	R_VSize		INI_as(R_VSIZE);/* Size of the vector heap */
 extern SEXP	R_NHeap;	    /* Start of the cons cell heap */
 extern SEXP	R_FreeSEXP;	    /* Cons cell free list */
-extern long	R_Collected;	    /* Number of free cons cells (after gc) */
+extern R_size_t	R_Collected;	    /* Number of free cons cells (after gc) */
 LibExtern SEXP	R_PreciousList;	    /* List of Persistent Objects */
 LibExtern int	R_Is_Running;	    /* for Windows memory manager */
 
@@ -729,10 +732,11 @@ void warningcall(SEXP, const char*,...);
 void ErrorMessage(SEXP, int, ...);
 void WarningMessage(SEXP, R_WARNING, ...);
 
-int R_GetMaxVSize(void);
-void R_SetMaxVSize(int);
-int R_GetMaxNSize(void);
-void R_SetMaxNSize(int);
+R_size_t R_GetMaxVSize(void);
+void R_SetMaxVSize(R_size_t);
+R_size_t R_GetMaxNSize(void);
+void R_SetMaxNSize(R_size_t);
+R_size_t R_Decode2Long(char *p, int *ierr);
 
 void R_run_onexits(RCNTXT *);
 void R_restore_globals(RCNTXT *);

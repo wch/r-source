@@ -59,6 +59,11 @@ NEW FEATURES
     o	duplicated() and unique() have methods for matrices and arrays
 	(based on ideas from Jens Oehlschlägel).
 
+    o	Internally memory sizes and counts of cons cells are now stored
+	in unsigned longs.  This allows memory limits to be set and
+	objects created in the range 2-4Gb on 32-bit platforms, and
+	allows 64-bit platforms to use much larger amounts of memory.
+
 
 DEPRECATED & DEFUNCT
 

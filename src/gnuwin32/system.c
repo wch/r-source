@@ -39,7 +39,7 @@
 #include "Startup.h"
 #include <stdlib.h>		/* for exit */
 
-unsigned int R_max_memory = INT_MAX;
+R_size_t R_max_memory = INT_MAX;
 Rboolean UseInternet2 = FALSE;
 
 SA_TYPE SaveAction = SA_DEFAULT;
@@ -623,7 +623,7 @@ static void env_command_line(int *pac, char **argv)
 int cmdlineoptions(int ac, char **av)
 {
     int   i, ierr;
-    long value;
+    R_size_t value;
     char *p;
     char  s[1024];
     structRstart rstart;
@@ -725,7 +725,7 @@ int cmdlineoptions(int ac, char **av)
 		    R_ShowMessage("WARNING: no max-mem-size given\n");
 		    break;
 		}
-		value = Decode2Long(p, &ierr);
+		value = R_Decode2Long(p, &ierr);
 		if(ierr) {
 		    if(ierr < 0)
 			sprintf(s, "WARNING: --max-mem-size value is invalid: ignored\n");
@@ -808,7 +808,7 @@ int cmdlineoptions(int ac, char **av)
     R_HistorySize = 512;
     if ((p = getenv("R_HISTSIZE"))) {
 	int value, ierr;
-	value = Decode2Long(p, &ierr);
+	value = R_Decode2Long(p, &ierr);
 	if (ierr != 0 || value < 0)
 	    REprintf("WARNING: invalid R_HISTSIZE ignored;");
 	else
