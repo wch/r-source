@@ -16,7 +16,7 @@ USER-VISIBLE CHANGES
 	quartile ones.
 
     o	Unix-alike versions of R can now be used in UTF-8 locales on
-	suitably equipped OSes.  See the internationalization section
+	suitably equipped OSes.	 See the internationalization section
 	below.
 
     o	The meaning of 'encoding' for a connection has changed: See the
@@ -205,11 +205,13 @@ NEW FEATURES
 
     o	gsub/sub() have a new 'fixed' method.
 
+    o	sunflowerplot() has new arguments 'col' and 'bg'.
+
 
 INTERNATIONALIZATION
 
     o	Unix-alike versions of R can now be used in UTF-8 locales on
-	suitably equipped OSes.  [This is incomplete at present, and
+	suitably equipped OSes.	 [This is incomplete at present, and
 	only switched on at all by configure flag --enable-utf8. The
 	changes to font handling in the X11 module are based on the
 	Japanization patches of Eiji Nakama.]
@@ -239,11 +241,11 @@ INTERNATIONALIZATION
 	values.	 It has options "chars" and "width" to give the number
 	of character or the display width instead.
 
-    o   Characters can be entered in hexadecimal as e.g. \x9c, and in
+    o	Characters can be entered in hexadecimal as e.g. \x9c, and in
 	UTF-8 locales as \uxxxx or \Uxxxx (with up to 8 hexadecimals).
 
     o	LC_MONETARY is set to the locale, which affects the result of
-	Sys.localeconv(), but nothing else in R itself.  (It could
+	Sys.localeconv(), but nothing else in R itself.	 (It could
 	affect addon packages.)
 
     o	source() now has an 'encoding' argument which can be used to
@@ -320,8 +322,8 @@ C-LEVEL FACILITIES
     o	Added an onExit() function to graphics devices, to be executed
 	upon user break if non-NULL.
 
-    o   ISNAN now works even in C++ code that undefines the 
-        isnan macro. 
+    o	ISNAN now works even in C++ code that undefines the
+	isnan macro.
 
 
 DEPRECATED & DEFUNCT
@@ -490,8 +492,8 @@ BUG FIXES
     o	'methods' initialization was calling a function intended for
 	.Call() with .C().
 
-    o   optim() needed a check that the objective function returns a
-        value of length 1 (spotted by Ben Bolker).
+    o	optim() needed a check that the objective function returns a
+	value of length 1 (spotted by Ben Bolker).
 
 
 
@@ -571,7 +573,7 @@ BUG FIXES
 
     o	write.table() assumed dec = "," if it was not ".".
 
-    o   morley.tab used by R-intro was not installed on Unix since 2.0.0
+    o	morley.tab used by R-intro was not installed on Unix since 2.0.0
 	(it was on Windows).
 
     o	gsub(perl=TRUE) returned a string which printed with trailing

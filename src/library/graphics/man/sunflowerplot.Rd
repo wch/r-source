@@ -10,7 +10,7 @@
 sunflowerplot(x, y = NULL, number, log = "", digits = 6,
               xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
               add = FALSE, rotate = FALSE,
-              pch = 16, cex = 0.8, cex.fact = 1.5,
+              pch = 16, cex = 0.8, cex.fact = 1.5, col = par("col"), bg = NA,
               size = 1/8, seg.col = 2, seg.lwd = 1.5, \dots)
 }
 \arguments{
@@ -40,6 +40,8 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
   \item{cex.fact}{numeric \emph{shrinking} factor to be used for the
     center points \emph{when there are flower leaves},
     i.e., \code{cex / cex.fact} is used for these.}
+  \item{col, bg}{colors for the plot symbols, passed to
+    \code{\link{plot.default}}.}
   \item{size}{of sunflower leaves in inches, 1[in] := 2.54[cm].
     Default: 1/8\", approximately 3.2mm.}
   \item{seg.col}{color to be used for the \bold{seg}ments which make the
@@ -90,11 +92,11 @@ sunflowerplot(iris[, 3:4])
 sunflowerplot(iris[, 3:4],cex=.2, cex.f=1, size=.035, seg.lwd=.8)
 
 sunflowerplot(x=sort(2*round(rnorm(100))), y= round(rnorm(100),0),
-             main = "Sunflower Plot of Rounded N(0,1)")
+              main = "Sunflower Plot of Rounded N(0,1)")
 
 ## A 'point process' {explicit 'number' argument}:
 sunflowerplot(rnorm(100),rnorm(100), number=rpois(n=100,lambda=2),
-                        rotate=TRUE, main="Sunflower plot")
+              rotate=TRUE, main="Sunflower plot", col = "blue4")
 }
 \keyword{hplot}
 \keyword{smooth}

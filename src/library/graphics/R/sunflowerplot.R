@@ -2,7 +2,7 @@ sunflowerplot <-
     function(x, y = NULL, number, log = "", digits = 6,
              xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
              add = FALSE, rotate = FALSE,
-             pch = 16, cex = 0.8, cex.fact =  1.5,
+             pch = 16, cex = 0.8, cex.fact =  1.5, col = par("col"), bg = NA,
              size = 1/8, seg.col = 2, seg.lwd = 1.5, ...)
 {
     ## Argument "checking" as plot.default:
@@ -42,9 +42,9 @@ sunflowerplot <-
 
     n.is1 <- number == 1
     if(any(n.is1))
-        points(x[ n.is1], y[ n.is1], pch = pch, cex = cex)
+        points(x[ n.is1], y[ n.is1], pch=pch, col=col, bg=bg, cex= cex)
     if(any(!n.is1)) {
-        points(x[!n.is1], y[!n.is1], pch = pch, cex = cex / cex.fact)
+        points(x[!n.is1], y[!n.is1], pch=pch, col=col, bg=bg, cex= cex/cex.fact)
         i.multi <- (1:n)[number > 1]
         ppin <- par("pin")
         pusr <- par("usr")
