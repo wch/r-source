@@ -61,27 +61,24 @@ SEXP do_dircreate(SEXP, SEXP, SEXP, SEXP);
 
 /* Function Names */
 
-#if defined(Win32)
-SEXP do_unlink(SEXP, SEXP, SEXP, SEXP);
+#if Win32
+SEXP do_bringtotop(SEXP, SEXP, SEXP, SEXP);
+SEXP do_devga(SEXP, SEXP, SEXP, SEXP);
+SEXP do_dllversion(SEXP, SEXP, SEXP, SEXP);
+SEXP do_dircreate(SEXP, SEXP, SEXP, SEXP);
+SEXP do_flushconsole(SEXP, SEXP, SEXP, SEXP);
 SEXP do_helpstart(SEXP, SEXP, SEXP, SEXP);
 SEXP do_helpitem(SEXP, SEXP, SEXP, SEXP);
-SEXP do_dircreate(SEXP, SEXP, SEXP, SEXP);
-#endif
-
-#ifdef Win32
-SEXP do_flushconsole(SEXP, SEXP, SEXP, SEXP);
-SEXP do_winver(SEXP, SEXP, SEXP, SEXP);
-SEXP do_devga(SEXP, SEXP, SEXP, SEXP);
+SEXP do_memsize(SEXP, SEXP, SEXP, SEXP);
 SEXP do_saveDevga(SEXP, SEXP, SEXP, SEXP);
+SEXP do_selectlist(SEXP, SEXP, SEXP, SEXP);
 SEXP do_shellexec(SEXP, SEXP, SEXP, SEXP);
+SEXP do_unlink(SEXP, SEXP, SEXP, SEXP);
 SEXP do_windialog(SEXP, SEXP, SEXP, SEXP);
 SEXP do_windialogstring(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winmenuadd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_winmenudel(SEXP, SEXP, SEXP, SEXP);
-SEXP do_memsize(SEXP, SEXP, SEXP, SEXP);
-SEXP do_dllversion(SEXP, SEXP, SEXP, SEXP);
-SEXP do_bringtotop(SEXP, SEXP, SEXP, SEXP);
-SEXP do_selectlist(SEXP, SEXP, SEXP, SEXP);
+SEXP do_winver(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 SEXP do_abbrev(SEXP, SEXP, SEXP, SEXP);
@@ -203,6 +200,7 @@ SEXP do_first_max(SEXP, SEXP, SEXP, SEXP);
 SEXP do_first_min(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fft(SEXP, SEXP, SEXP, SEXP);
 SEXP do_flatContour(SEXP, SEXP, SEXP, SEXP);
+SEXP do_flush(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fmin(SEXP, SEXP, SEXP, SEXP);
 SEXP do_for(SEXP, SEXP, SEXP, SEXP);
 SEXP do_format(SEXP, SEXP, SEXP, SEXP);

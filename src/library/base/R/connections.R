@@ -52,6 +52,14 @@ close.connection <- function (con, type = "rw", ...)
     invisible(.Internal(close(con, type)))
 }
 
+flush <- function(con) UseMethod("flush")
+
+flush.connection <- function (con)
+{
+    if(!inherits(con, "connection")) stop("argument is not a connection")
+    invisible(.Internal(flush(con)))
+}
+
 file <- function(description = "", open = "", blocking = TRUE,
                  encoding = getOption("encoding"))
     .Internal(file(description, open, blocking, encoding))
