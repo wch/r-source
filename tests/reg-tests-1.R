@@ -2215,6 +2215,15 @@ stopifnot(inherits(.Last.value, "try-error"))
 ## succeeded in 1.7.0
 
 
+## pacf on n x 1 matrix: Paul Gilbert, R-devel, 2003-06-18
+z <- as.ts(matrix(rnorm(100), , 1))
+class(z) # not "mts"
+is.matrix(z) # TRUE in 1.7.1
+pacf(z)
+pacf(matrix(rnorm(100), , 1))
+## both failed in 1.7.1.
+
+
 ## body() and formals() looked in different places
 bar <- function(x=NULL)
 {
