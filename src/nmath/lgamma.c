@@ -70,7 +70,7 @@ double lgammafn(double x)
     if(ISNAN(x)) return x;
 #endif
 
-    if (x <= 0 && x == (int)x) { /* Negative integer argument */
+    if (x <= 0 && x == trunc(x)) { /* Negative integer argument */
 	ML_ERROR(ME_RANGE);
 	return ML_POSINF;/* +Inf, since lgamma(x) = log|gamma(x)| */
     }
@@ -108,7 +108,7 @@ double lgammafn(double x)
 
     ans = M_LN_SQRT_PId2 + (x - 0.5) * log(y) - x - log(sinpiy) - lgammacor(y);
 
-    if(fabs((x - (int)(x - 0.5)) * ans / x) < dxrel) {
+    if(fabs((x - trunc(x - 0.5)) * ans / x) < dxrel) {
 
 	/* The answer is less than half precision because
 	 * the argument is too near a negative integer. */
