@@ -23,10 +23,16 @@ while test -n "${1}"; do
     -l)
       lib=${2}; shift ;;
     *)
-      PKGS="${PKGS} ${1}" ;;
+      if test -d ${1}; then
+        PKGS="${PKGS} `cd ${1}; pwd`"
+      else
+        echo "WARNING: package \`${1}' does not exist"
+      fi
+      ;;
   esac
   shift
 done
+
 if ${DEBUG}; then set -x; fi
 
 if test -z "${PKGS}"; then
@@ -42,12 +48,7 @@ else
 fi
 
 for pkg in ${PKGS}; do
-  if test -d $pkg; then
-    cd ${pkg}
-  else
-    echo "WARNING: No subdirectory ${pkg} in "`pwd`' ... skipping'
-    break
-  fi
+  cd ${pkg}
   pkg=`basename ${pkg}`
   echo "Checking package \`${pkg}' ..."
 
@@ -74,7 +75,7 @@ for pkg in ${PKGS}; do
   if test ${?} -eq 0; then
     echo " OK"
   else
-    echo " ERROR"
+    echo " ERROR" && exit 1
   fi
   if ${CLEAN}; then cd .. && rm -rf check; fi
 
