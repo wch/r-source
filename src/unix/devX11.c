@@ -1187,10 +1187,6 @@ static void X11_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
 {
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
-    /* There are still a couple of bugs in this area. Xservers seem to
-       not quite agree on which parts of the outer boundary are contained
-       in the clip region */
-
     if (x0 < x1) {
 	xd->clip.x = (int) x0 ;
 	xd->clip.width = (int) x1 - (int) x0 + 1;
@@ -1818,8 +1814,6 @@ int X11DeviceDriver(DevDesc *dd,
     dd->dp.ipr[1] = pixelHeight();
 
     /* Device capabilities */
-    /* Clipping is problematic for X11 */
-    /* Graphics is clipped, text is not */
 
     dd->dp.canResizePlot = 1;
     dd->dp.canChangeFont = 0;
