@@ -1974,14 +1974,14 @@ static SEXP appendStringToFile(SEXP file, SEXP string)
 	error("not a proper file name");
     if (! IS_PROPER_STRING(string))
 	error("not a proper string");
-#ifdef Win32
-    /* Windows returns position 0 with "ab" */
-    if ((fp = fopen(CHAR(STRING_ELT(file, 0)), "r+b")) == NULL)
-	error("file open failed");
-    fseek(fp, 0, SEEK_END);
-#else
+#ifdef HAVE_WORKING_FTELL
+    /* Windows' ftell returns position 0 with "ab" */
     if ((fp = fopen(CHAR(STRING_ELT(file, 0)), "ab")) == NULL)
 	error("file open failed");
+#else
+    if ((fp = fopen(CHAR(STRING_ELT(file, 0)), "r+b")) == NULL)
+	 error("file open failed");
+    fseek(fp, 0, SEEK_END);
 #endif
 
     len = LENGTH(STRING_ELT(string, 0));
