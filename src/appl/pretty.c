@@ -88,10 +88,10 @@ double pretty0(double *lo, double *up, int *ndiv, int min_n,
     }
 
     if(cell < 20*DBL_MIN) {
-      warning("Internal(pretty()): very small range.. corrected\n");
+      warning("Internal(pretty()): very small range.. corrected");
       cell = 20*DBL_MIN;
     } else if(cell * 10 > DBL_MAX) {
-      warning("Internal(pretty()): very large range.. corrected\n");
+      warning("Internal(pretty()): very large range.. corrected");
       cell = .1*DBL_MAX;
     }
     base = pow(10., floor(log10(cell))); /* base <= cell < 10*base */
