@@ -629,26 +629,19 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
     return val;
 }
 
-/* this is a partial implementation of isMissing in envir.c
-   The use of opaque pointers to findVarLocInFrame, etc. seems to
-   prevent external code from doing a correct implementation.
+/* Is the argument missing?  This implements the classic S sense of
+   the question (is the argument missing in the call), rather than the
+   R semantics (is the value of the argument R_MissingArg)
 */
-Rboolean is_missing_arg(SEXP arg, SEXP symbol, SEXP ev)
+Rboolean is_missing_arg(SEXP symbol, SEXP ev)
 {
-    if(arg == NULL) {
-	arg = findVarInFrame(ev, symbol);
-	if(arg == R_UnboundValue)
-	    error("Couldn't find variable needed for dispatch: \"%s\"",
-		  CHAR_STAR(symbol));
+    SEXP args = FRAME(ev);
+    while(args != R_NilValue) {
+	if(TAG(args) == symbol)
+	    return MISSING(args);
+	args = CDR(args);
     }
-    if(arg == R_MissingArg)
-	return TRUE;
-    if(TYPEOF(arg) == PROMSXP &&
-       PRVALUE(arg) == R_UnboundValue &&
-       TYPEOF(PREXPR(arg)) == SYMSXP)
-	return is_missing_arg(NULL, PREXPR(arg), PRENV(arg));
-    else
-	return FALSE;
+    error("Couldn't find symbol \"%s\" in frame of call", CHAR_STAR(symbol));
 }
     
 
@@ -660,8 +653,8 @@ SEXP R_selectMethod(SEXP fname, SEXP ev, SEXP mlist)
 static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
 			int evalArgs)
 {
-    char *arg_name, *class;
-    SEXP arg_slot, arg_sym, arg, method, value = R_NilValue;
+    char *class;
+    SEXP arg_slot, arg_sym, method, value = R_NilValue;
     int nprotect = 0;
     PROTECT(arg_slot = R_do_slot(mlist, s_argument)); nprotect++;
     if(arg_slot == R_NilValue) {
@@ -670,12 +663,10 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
     }
     if(TYPEOF(arg_slot) == SYMSXP)
 	arg_sym = arg_slot;
-    else {
-	arg_name = CHAR(asChar(arg_slot));
+    else
 	/* shouldn't happen, since argument in class MethodsList has class
 	   "name" */
-	arg_sym = install(arg_name);
-    }
+	arg_sym = install(CHAR(asChar(arg_slot)));
     if(arg_sym == R_DotsSymbol || DDVAL(arg_sym) > 0)
 	error("... and related variables can't be used for methods dispatch");
     if(TYPEOF(ev) != ENVSXP) {
@@ -684,28 +675,21 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
     }
     /* find the symbol in the frame, but don't use eval, yet, because
        missing arguments are ok & don't require defaults */
-    arg = findVarInFrame(ev, arg_sym);
     if(evalArgs) {
-      SEXP class_obj;
-      if(arg == R_UnboundValue) {
-	error("The specified argument (\"%s\") not found in the environment",
-	      CHAR(PRINTNAME(arg_sym)));
-	return(R_NilValue); /* -Wall */
-      }
-      if(is_missing_arg(arg, arg_sym, ev)) {
-	class_obj = s_missing;
-      }
-      else {
-	/* should be a formal argument in the frame, get its class */
-	  PROTECT(arg = eval(arg_sym, ev)); nprotect++;
-	  PROTECT(class_obj = R_data_class(arg, TRUE)); nprotect++;
-      }
-      class = CHAR_STAR(class_obj);
+	if(is_missing_arg(arg_sym, ev))
+	    class = "missing";
+	else {
+	    /*  get its class */
+	    SEXP arg, class_obj;
+	    PROTECT(arg = eval(arg_sym, ev)); nprotect++;
+	    PROTECT(class_obj = R_data_class(arg, TRUE)); nprotect++;
+	    class = CHAR_STAR(class_obj);
+	}
     }
     else {
-      if(arg == R_UnboundValue)
-	class = "ANY";
-      else
+	/* the arg contains the class as a string */
+	SEXP arg;
+	PROTECT(arg = eval(arg_sym, ev)); nprotect++;
 	class = CHAR_STAR(arg);
     }
     method = R_find_method(mlist, class, fname);
