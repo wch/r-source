@@ -224,9 +224,28 @@
     \myaddcontentsline{toc}{chapter}{Index}
     \thispagestyle{plain}\parindent\z@
     \parskip\z@ \@plus .3\p@\relax
+    \raggedright
     \let\item\@idxitem}
   {\if@restonecol\onecolumn\else\clearpage\fi}
-  }{}
+  }{
+  \renewenvironment{theindex}
+  {\if@twocolumn
+    \@restonecolfalse
+    \else
+    \@restonecoltrue
+    \fi
+    \columnseprule \z@
+    \columnsep 35\p@
+    \twocolumn[\@makeschapterhead{\indexname}]%
+    \@mkboth{\MakeUppercase\indexname}%
+    {\MakeUppercase\indexname}%
+    \addcontentsline{toc}{chapter}{Index}
+    \thispagestyle{plain}\parindent\z@
+    \parskip\z@ \@plus .3\p@\relax
+    \raggedright
+    \let\item\@idxitem}
+  {\if@restonecol\onecolumn\else\clearpage\fi}
+  }
 
 
 \InputIfFileExists{Rd.cfg}{%
