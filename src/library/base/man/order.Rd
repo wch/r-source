@@ -26,6 +26,8 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE)
   In the case of ties in the first vector, values in the second are used
   to break the ties.  If the values are still tied, values in the later
   arguments are used to break the tie (see the first example).
+  The sort used is \emph{stable}, so any unresolved ties will be left in
+  their original ordering.
 
   When the ordering of ties does not matter in the one argument case
   (e.g., in \code{sort.list}), \code{\link{sort}(x, method="quick",

@@ -42,13 +42,14 @@ is.unsorted(x, na.rm = FALSE)
 
   \code{method = "shell"} uses Shellsort and was the only method
   before \R version 1.5.x (although improved there to an
-  \eqn{O(n^{4/3})} variant of Sedgewick (1996)).
+  \eqn{O(n^{4/3})} variant of Sedgewick (1996)).  It is \emph{stable},
+  that is ties are never re-ordered.
 
   Method \code{"quick"} uses Singleton's Quicksort implementation and is
   only available when \code{x} is numeric, the sort is increasing and
   \code{partial} is \code{NULL}.  It is normally somewhat faster than
   Shellsort (perhaps twice as fast on vectors of length a million) but
-  has poor performance in the rare worst case.
+  has poor performance in the rare worst case and is not stable.
   (Peto's modification using a pseudo-random midpoint is used to make
   the worst case rarer.)
 }
