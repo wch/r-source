@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-03-06)
+Version 1.7.0 Under development (unstable) (2003-04-01)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -897,14 +897,14 @@ $B$subset
 > ## Marc Feldesman 2001-Feb-01.  Precision in summary.data.frame & *.matrix
 > data(attenu)
 > summary(attenu)
-     event            mag           station         dist       
- Min.   : 1.00   Min.   :5.000   117    :  5   Min.   :  0.50  
- 1st Qu.: 9.00   1st Qu.:5.300   1028   :  4   1st Qu.: 11.32  
- Median :18.00   Median :6.100   113    :  4   Median : 23.40  
- Mean   :14.74   Mean   :6.084   112    :  3   Mean   : 45.60  
- 3rd Qu.:20.00   3rd Qu.:6.600   135    :  3   3rd Qu.: 47.55  
- Max.   :23.00   Max.   :7.700   (Other):147   Max.   :370.00  
-                                 NA's   : 16                   
+     event              mag             station             dist        
+ Min.   : 1.00     Min.   :5.000     117    :  5       Min.   :  0.50   
+ 1st Qu.: 9.00     1st Qu.:5.300     1028   :  4       1st Qu.: 11.32   
+ Median :18.00     Median :6.100     113    :  4       Median : 23.40   
+ Mean   :14.74     Mean   :6.084     112    :  3       Mean   : 45.60   
+ 3rd Qu.:20.00     3rd Qu.:6.600     135    :  3       3rd Qu.: 47.55   
+ Max.   :23.00     Max.   :7.700     (Other):147       Max.   :370.00   
+                                     NA's   : 16                        
      accel        
  Min.   :0.00300  
  1st Qu.:0.04425  
@@ -914,14 +914,14 @@ $B$subset
  Max.   :0.81000  
                   
 > summary(attenu, digits = 5)
-     event             mag            station         dist        
- Min.   : 1.000   Min.   :5.0000   117    :  5   Min.   :  0.500  
- 1st Qu.: 9.000   1st Qu.:5.3000   1028   :  4   1st Qu.: 11.325  
- Median :18.000   Median :6.1000   113    :  4   Median : 23.400  
- Mean   :14.742   Mean   :6.0841   112    :  3   Mean   : 45.603  
- 3rd Qu.:20.000   3rd Qu.:6.6000   135    :  3   3rd Qu.: 47.550  
- Max.   :23.000   Max.   :7.7000   (Other):147   Max.   :370.000  
-                                   NA's   : 16                    
+     event              mag             station             dist        
+ Min.   : 1.000    Min.   :5.0000    117    :  5       Min.   :  0.500  
+ 1st Qu.: 9.000    1st Qu.:5.3000    1028   :  4       1st Qu.: 11.325  
+ Median :18.000    Median :6.1000    113    :  4       Median : 23.400  
+ Mean   :14.742    Mean   :6.0841    112    :  3       Mean   : 45.603  
+ 3rd Qu.:20.000    3rd Qu.:6.6000    135    :  3       3rd Qu.: 47.550  
+ Max.   :23.000    Max.   :7.7000    (Other):147       Max.   :370.000  
+                                     NA's   : 16                        
      accel        
  Min.   :0.00300  
  1st Qu.:0.04425  
@@ -931,14 +931,14 @@ $B$subset
  Max.   :0.81000  
                   
 > summary(data.matrix(attenu), digits = 5)# the same for matrix
-     event             mag            station             dist        
- Min.   : 1.000   Min.   :5.0000   Min.   :  1.000   Min.   :  0.500  
- 1st Qu.: 9.000   1st Qu.:5.3000   1st Qu.: 24.250   1st Qu.: 11.325  
- Median :18.000   Median :6.1000   Median : 56.500   Median : 23.400  
- Mean   :14.742   Mean   :6.0841   Mean   : 56.928   Mean   : 45.603  
- 3rd Qu.:20.000   3rd Qu.:6.6000   3rd Qu.: 86.750   3rd Qu.: 47.550  
- Max.   :23.000   Max.   :7.7000   Max.   :117.000   Max.   :370.000  
-                                   NA's   : 16.000                    
+     event              mag             station             dist        
+ Min.   : 1.000    Min.   :5.0000    Min.   :  1.000   Min.   :  0.500  
+ 1st Qu.: 9.000    1st Qu.:5.3000    1st Qu.: 24.250   1st Qu.: 11.325  
+ Median :18.000    Median :6.1000    Median : 56.500   Median : 23.400  
+ Mean   :14.742    Mean   :6.0841    Mean   : 56.928   Mean   : 45.603  
+ 3rd Qu.:20.000    3rd Qu.:6.6000    3rd Qu.: 86.750   3rd Qu.: 47.550  
+ Max.   :23.000    Max.   :7.7000    Max.   :117.000   Max.   :370.000  
+                                     NA's   : 16.000                    
      accel        
  Min.   :0.00300  
  1st Qu.:0.04425  
@@ -1471,7 +1471,7 @@ argument is not numeric or logical: returning NA in: mean.default(as.factor(x))
 > z <- table(x = 1:2, y = 1:2)
 > z - 1
    y
-x    1  2
+x   1  2 
   1  0 -1
   2 -1  0
 > unclass(z - 1)
@@ -1923,13 +1923,13 @@ y    2    5 8
 > x <- data.frame(1:10)
 > x$z <- data.frame(x=1:10,yyy=11:20)
 > summary(x)
-     X1.10             z.x             z.yyy     
- Min.   : 1.00   Min.   : 1.00    Min.   :11.00  
- 1st Qu.: 3.25   1st Qu.: 3.25    1st Qu.:13.25  
- Median : 5.50   Median : 5.50    Median :15.50  
- Mean   : 5.50   Mean   : 5.50    Mean   :15.50  
- 3rd Qu.: 7.75   3rd Qu.: 7.75    3rd Qu.:17.75  
- Max.   :10.00   Max.   :10.00    Max.   :20.00  
+     X1.10                              z.x             z.yyy     
+ Min.   : 1.00                    Min.   : 1.00    Min.   :11.00  
+ 1st Qu.: 3.25                    1st Qu.: 3.25    1st Qu.:13.25  
+ Median : 5.50                    Median : 5.50    Median :15.50  
+ Mean   : 5.50                    Mean   : 5.50    Mean   :15.50  
+ 3rd Qu.: 7.75                    3rd Qu.: 7.75    3rd Qu.:17.75  
+ Max.   :10.00                    Max.   :10.00    Max.   :20.00  
 > ## 1.6.2 had NULL labels on output with z columns stacked.
 > 
 > 
@@ -2272,7 +2272,7 @@ S4 print method
 > 
 > 
 > ## scoping rules calling step inside a function
-> if(require(MASS)) {
+> if(require(MASS)) { # only for "cement"
 +     teststep <- function(formula, data)
 +     {
 +         d2 <- data
@@ -2316,4 +2316,34 @@ Step:  AIC= 24.97
 > str(levels(ff))
  chr [1:3] "1" "2" NA
 > ## not quite ok previous to 1.7.0
+> 
+> ## str() for character & factors with NA (levels), and for Surv objects:
+> ff <- factor(c(2:1,  NA),  exclude = NULL)
+> str(levels(ff))
+ chr [1:3] "1" "2" NA
+> str(ff)
+ Factor w/ 3 levels "1","2",NA: 2 1 3
+> str(ordered(ff, exclude=NULL))
+ Ord.factor w/ 3 levels "1"<"2"<NA: 2 1 3
+> if(require(survival)) {
++     data(aml)
++     (sa <- Surv(aml$time, aml$status))
++     str(sa)
++     detach("package:survival")
++ }
+Loading required package: survival 
+
+Attaching package 'survival':
+
+
+	The following object(s) are masked from package:base :
+
+	 [.terms 
+
+ Surv [1:23, 1:2]  9  13  13+ 18  23  28+ 31  34  45+ 48  ...
+ - attr(*, "dimnames")=List of 2
+  ..$ : NULL
+  ..$ : chr [1:2] "time" "status"
+ - attr(*, "type")= chr "right"
+> ## were different, the last one failed in 1.6.2 (at least)
 > 

@@ -361,7 +361,8 @@ NEW FEATURES
 	have no effect unless specifically asked for.
 
     o	str() now shows ordered factors different from unordered ones.
-	It also differentiates "NA" and as.character(NA).
+	It also differentiates "NA" and as.character(NA), also for factor
+	levels.
 
     o	princomp.factor() now has principal argument `formula', so
 	update() can be used.
@@ -619,6 +620,7 @@ BUG FIXES
 	the way the latest versions require. (PR#2530)
 
     o	str(array(1)) now does show the array.
+	str(Surv(...)) now works again.
 
     o	step(), add1.default() and drop1.default() now work somewhat
 	better if called from a function.

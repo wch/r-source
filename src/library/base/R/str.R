@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
-    ## $Id: str.R,v 1.27 2003/03/15 17:38:48 maechler Exp $
+    ## $Id: str.R,v 1.28 2003/04/01 16:11:05 maechler Exp $
     if(! is.data.frame(object)) {
 	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
 	object <- data.frame(object)
@@ -33,19 +33,18 @@ str.default <-
 	     ...)
 {
     ## Purpose: Display STRucture of any R - object (in a compact form).
-    ## ------------------------------------------------------------------------
-    ## Arguments: --- see HELP file --
-    ##	max.level: Maximal level of nesting to be reported (0: as many as nec.)
-    ##
+    ## --- see HELP file --
     ## ------------------------------------------------------------------------
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
     ## ------ Please send Bug-reports, -fixes and improvements !
     ## ------------------------------------------------------------------------
-    ## $Id: str.R,v 1.27 2003/03/15 17:38:48 maechler Exp $
 
     oo <- options(digits = digits.d); on.exit(options(oo))
     le <- length(object)
     P0 <- function(...) paste(..., sep="")
+    pasteCh <- function(x)
+	sapply(x, function(a) if(is.na(a)) "NA" else P0('"',a,'"'),
+	       USE.NAMES = FALSE)
     ## le.str: not used for arrays:
     le.str <-
 	if(is.na(le)) " __no length(.)__ "
@@ -114,7 +113,7 @@ str.default <-
 		if(is.array(object)) {
 		    di <- dim(object)
 		    di <- P0(ifelse(di>1, "1:",""), di,
-                             ifelse(di>0, "" ," "))
+			     ifelse(di>0, "" ," "))
 		    le.str <- paste(c("[", P0(di[-length(di)], ", "),
 				      di[length(di)], "]"), collapse = "")
 		    std.attr <- "dim" #- "names"
@@ -123,8 +122,8 @@ str.default <-
 		    std.attr <- std.attr[std.attr != "names"]
 		}
 		str1 <-
-                    if(le == 1 && !is.array(object)) paste(NULL, mod)
-                    else P0(" ", mod, if(le>0)" ", le.str)
+		    if(le == 1 && !is.array(object)) paste(NULL, mod)
+		    else P0(" ", mod, if(le>0)" ", le.str)
 	    } else { ##-- not atomic, but vector: #
 		mod <- typeof(object)#-- typeof(.) is more precise than mode!
 		str1 <- switch(mod,
@@ -159,7 +158,7 @@ str.default <-
 	} else if(is.ts(object)) {
 	    tsp.a <- tsp(object)
 	    str1 <- P0(" Time-Series ", le.str, " from ", format(tsp.a[1]),
-                       " to ", format(tsp.a[2]), ":")
+		       " to ", format(tsp.a[2]), ":")
 	    std.attr <- c("tsp","class") #- "names"
 	} else if (is.factor(object)) {
 	    nl <- length(lev.att <- levels(object))
@@ -175,17 +174,18 @@ str.default <-
 		    nl else which(lenl > 13)[1]
 		if((d <- lenl[ml] - if(ml>1)18 else 14) >= 3)# truncate last
 		    lev.att[ml] <-
-                        P0(substring(lev.att[ml],1, nchar(lev.att[ml])-d), "..")
+			P0(substring(lev.att[ml],1, nchar(lev.att[ml])-d), "..")
 	    }
 	    else # nl == 0
 		ml <- length(lev.att <- "")
 
-            lsep <- if(ord) "<" else ","
+	    lsep <- if(ord) "<" else ","
 	    str1 <- P0(if(ord)" Ord.f" else " F",
-                       "actor w/ ", nl, " level",if(nl != 1) "s",
-                       if(nl)' "', paste(lev.att[1:ml], collapse =
-                                         paste('"', '"', sep=lsep)),
-                       if(nl)'"', if(ml < nl) P0(lsep,".."), ":")
+		       "actor w/ ", nl, " level",if(nl != 1) "s",
+		       if(nl) " ",
+		       if(nl) P0(pasteCh(lev.att[1:ml]), collapse = lsep),
+		       if(ml < nl) P0(lsep,".."), ":")
+
 	    std.attr <- c("levels","class")
 	} else if(has.class) {
 	    cat("Class", if(length(cl) > 1) "es",
@@ -239,13 +239,15 @@ str.default <-
 	    format.fun <- format
 	} else if(is.numeric(object)) {
 	    iv.len <- round(2.5 * v.len)
-	    if(!is.integer(object)){
+	    if(iSurv <- inherits(object, "Surv"))
+		std.attr <- c(std.attr, "class")
+	    int.surv <- iSurv || is.integer(object)
+	    if(!int.surv) {
 		ob <- if(le > iv.len) object[seq(len=iv.len)] else object
 		ao <- abs(ob <- ob[!is.na(ob)])
 	    }
-	    if(is.integer(object) || mod == "Surv" ||
-	       (all(ao > 1e-10 | ao==0) && all(ao < 1e10| ao==0) &&
-		all(ob == signif(ob, digits.d)))) {
+	    if(int.surv || (all(ao > 1e-10 | ao==0) && all(ao < 1e10| ao==0) &&
+			    all(ob == signif(ob, digits.d)))) {
 		v.len <- iv.len
 		format.fun <- function(x)x
 	    } else {
@@ -257,7 +259,7 @@ str.default <-
 	    format.fun <- format
 	}
 
-        ## Not sure, this is ever triggered:
+	## Not sure, this is ever triggered:
 	if(is.na(le)) { warning("'str.default': 'le' is NA !!"); le <- 0}
 
 	if(char.like) {
@@ -272,28 +274,22 @@ str.default <-
 		nc <- nchar(object[1:ile])
 		if(any((ii <- nc > nchar.max)))
 		    object[ii] <- P0(substr(object[ii], 1, nchar.max),
-                                     "| __truncated__")
+				     "| __truncated__")
 	    }
-	    ## bracket <- if (le>0) '"' else ""
-            ## formObj < - function(x)
-            ##    P0(bracket, paste(x, collapse = P0(bracket, " ", bracket)),
-            ##       bracket)
-            formObj <- function(x)
-                P0(sapply(x, function(a)if(is.na(a)) "NA" else P0('"',a,'"'),
-                          USE.NAMES=FALSE), collapse=" ")
+	    formObj <- function(x) P0(pasteCh(x), collapse=" ")
 	}
-        else {
+	else {
 	    if(!exists("format.fun", inherits=TRUE)) #-- define one --
 		format.fun <-
 		    if(mod == 'num' || mod == 'cplx') format else as.character
-            ## v.len <- max(1,round(v.len))
-            ile <- min(v.len, le)
-            formObj <- function(x) paste(format.fun(x), collapse = " ")
+	    ## v.len <- max(1,round(v.len))
+	    ile <- min(v.len, le)
+	    formObj <- function(x) paste(format.fun(x), collapse = " ")
 	}
 
 	cat(str1, " ", formObj(if(ile >= 1) object[1:ile] else
-                               if(v.len > 0) object),
-            if(le > v.len) " ...", "\n", sep="")
+			       if(v.len > 0) object),
+	    if(le > v.len) " ...", "\n", sep="")
 
     } ## else (not function nor list)----------------------------------------
 

@@ -861,7 +861,7 @@ if(!hasMethods) detach("package:methods")
 
 
 ## scoping rules calling step inside a function
-if(require(MASS)) {
+if(require(MASS)) { # only for "cement"
     teststep <- function(formula, data)
     {
         d2 <- data
@@ -880,3 +880,16 @@ str(array(1))# not a scalar
 identical(levels(ff), dimnames(tf)[[1]])
 str(levels(ff))
 ## not quite ok previous to 1.7.0
+
+## str() for character & factors with NA (levels), and for Surv objects:
+ff <- factor(c(2:1,  NA),  exclude = NULL)
+str(levels(ff))
+str(ff)
+str(ordered(ff, exclude=NULL))
+if(require(survival)) {
+    data(aml)
+    (sa <- Surv(aml$time, aml$status))
+    str(sa)
+    detach("package:survival")
+}
+## were different, the last one failed in 1.6.2 (at least)
