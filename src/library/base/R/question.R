@@ -7,9 +7,20 @@
     if(is.name(substitute(e2)))
       e2 <- substitute(e2)
     e2 <- as.character(e2)
-    e1 <- topicName(e1, e2)
+    topic <- topicName(e1, e2)
+    opts <- options(error= function()TRUE, show.error.messages = FALSE)
+    on.exit(options(opts))
+    doHelp <- try(eval(substitute(help(TOPIC), list(TOPIC = topic))))
+    if(inherits(doHelp, "try-error")) {
+        options(opts)
+        on.exit()
+        stop(paste("no documentation of type \"", e1,
+                   "\" and topic \"", e2,
+                   "\" (or error in processing help)", sep=""))
+    }
   }
-  eval(substitute(help(TOPIC), list(TOPIC = e1)))
+  else
+      eval(substitute(help(TOPIC), list(TOPIC = e1)))
 }
 
 topicName <- function(type, topic)
