@@ -1,9 +1,10 @@
+\def\R{R} % needed for pdftex processing of hyperlinks
 \input texinfo @c -*-texinfo-*-
 @c %**start of header
 @setfilename external.info
 @settitle Guide to using .Call and .External in R
-@set VERSION 0.0-0
-@set CVS-version $Id: R-external.texi,v 1.1 1999/11/12 17:39:03 ripley Exp $
+@set VERSION 1.0
+@set CVS-version $Id: R-external.texi,v 1.2 1999/11/13 15:12:32 ripley Exp $
 @setchapternewpage on
 @c %**end of header
 
@@ -49,7 +50,7 @@
 
 @titlepage
 @title Guide to using .Call and .External in R
-@subtitle Version @value{VERSION} (CVS @value{CVS-version})
+@subtitle Version @value{VERSION}
 @author R Development Core Team
 @page
 @vskip 0pt plus 1filll
