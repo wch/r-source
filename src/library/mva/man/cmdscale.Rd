@@ -46,7 +46,6 @@ loc <- cmdscale(eurodist)
 x <- loc[,1]
 y <- -loc[,2]
 plot(x, y, type="n",
-	xlim=c(-2500,2500), ylim=c(-2000,2000),
 	xlab="", ylab="")
-text(x, y, text=names(eurodist), cex=0.5)
+text(x, y, names(eurodist), cex=0.5)
 }

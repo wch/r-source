@@ -16,8 +16,9 @@ function(d, k = 2, eig = FALSE)
 
 	storage.mode(x) <- "double"
 	e <- eigen(.C("dblcen", x, as.integer(n))[[1]])
-	ev <- e$values[n:(n-k+1)]
-	points <- e$vectors[,n:(n-k+1)] %*% diag(sqrt(ev))
+	ev <- e$values[1:k]
+	points <- e$vectors[,1:k] %*% diag(sqrt(ev))
+	dimnames(points) <- list(dimnames(d)[[1]], NULL)
 	if(eig) list(points=points, eig=ev)
 	else points
 }

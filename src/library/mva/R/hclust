@@ -25,13 +25,13 @@
 hclust <-
 function(d, method="complete")
 {
-        method <-  pmatch(method, c("ward", "single",
+	method <-  pmatch(method, c("ward", "single",
 			"complete", "average", "mcquitty",
 			"median", "centroid"))
-        if(is.na(method))
-                stop("invalid clustering method")
-        if(method == -1)
-                stop("ambiguous clustering method")
+	if(is.na(method))
+		stop("invalid clustering method")
+	if(method == -1)
+		stop("ambiguous clustering method")
 
 	n <- attr(d, "Size")
 	if(is.null(n))
@@ -73,31 +73,23 @@ function(d, method="complete")
 }
 
 plot.hclust <-
-function(tree, hang=0.1, ...)
+function (tree, hang = 0.1, ...)
 {
 	merge <- tree$merge
-	if(!is.matrix(merge) || ncol(merge) != 2)
+	if (!is.matrix(merge) || ncol(merge) != 2)
 		stop("invalid dendrogram")
 	n <- nrow(merge)
 	height <- as.double(tree$height)
 	order <- as.double(order(tree$order))
 	labels <- tree$labels
-	if(is.null(labels)) labels <- 1:n
+	if (is.null(labels))
+		labels <- 1:n
 	labels <- as.character(labels)
-
-	if(hang < 0) ylim <- range(height, 0)
-	else {
-		ylim <- range(height)
-		hang <- hang * diff(ylim)
-		ylim <- ylim - c(hang, 0)
-	}
-
 	plot.new()
-	par2(...)
-	plot.window(c(1, n+1), ylim, log="")
-
-	.Internal(dend(n, merge, height, order, hang, labels))
-
-	axis(2)
+	.Internal(dend.window(n, merge, height, order, hang,
+		labels, ...))
+	.Internal(dend(n, merge, height, order, hang, labels,
+		...))
+	axis(2, at=pretty(range(height)))
 	invisible()
 }
