@@ -465,6 +465,8 @@ BUG FIXES
 
     o   demo() was using `topic' as a regexp rather than an exact match.
 
+    o   Added some buffer overflow checking in gram.y.
+
 
 
 

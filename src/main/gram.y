@@ -1482,6 +1482,13 @@ static void CheckFormalArgs(SEXP formlist, SEXP new)
 
 static char yytext[MAXELTSIZE];
 
+#define DECLARE_YYTEXT_BUFP(bp) char *bp = yytext
+#define YYTEXT_PUSH(c, bp) do { \
+    if ((bp) - yytext >= sizeof(yytext) - 1) \
+        error("input buffer overflow"); \
+	*(bp)++ = (c); \
+} while(0)
+
 static int SkipSpace(void)
 {
     int c;
@@ -1498,13 +1505,12 @@ static int SkipSpace(void)
 
 static int SkipComment(void)
 {
-    char *p;
+    DECLARE_YYTEXT_BUFP(yyp);
     int c;
-    p = yytext;
-    *p++ = '#';
+    YYTEXT_PUSH('#', yyp);
     while ((c = xxgetc()) != '\n' && c != R_EOF)
-	*p++ = c;
-    *p = '\0';
+	YYTEXT_PUSH(c, yyp);
+    YYTEXT_PUSH('\0', yyp);
     if (c == R_EOF) EndOfFile = 2;
     return c;
 }
@@ -1513,15 +1519,15 @@ static int NumericValue(int c)
 {
     int seendot = (c == '.');
     int seenexp = 0;
-    char *p = yytext;
-    *p++ = c;
+    DECLARE_YYTEXT_BUFP(yyp);
+    YYTEXT_PUSH(c, yyp);
     while (isdigit(c = xxgetc()) || c == '.' || c == 'e' || c == 'E') {
 	if (c == 'E' || c == 'e') {
 	    if (seenexp)
 		break;
 	    seenexp = 1;
 	    seendot = 1;
-	    *p++ = c;
+	    YYTEXT_PUSH(c, yyp);
 	    c = xxgetc();
 	    if (!isdigit(c) && c != '+' && c != '-')
 		break;
@@ -1531,9 +1537,9 @@ static int NumericValue(int c)
 		break;
 	    seendot = 1;
 	}
-	*p++ = c;
+	YYTEXT_PUSH(c, yyp);
     }
-    *p = '\0';
+    YYTEXT_PUSH('\0', yyp);
     if(c == 'i') {
 	yylval = mkComplex(yytext);
     }
@@ -1552,7 +1558,7 @@ static int NumericValue(int c)
 static int StringValue(int c)
 {
     int quote = c;
-    char *p = yytext;
+    DECLARE_YYTEXT_BUFP(yyp);
     while ((c = xxgetc()) != R_EOF && c != quote) {
 	if (c == '\n') {
 	    xxungetc(c);
@@ -1601,9 +1607,9 @@ static int StringValue(int c)
 		}
 	    }
 	}
-	*p++ = c;
+	YYTEXT_PUSH(c, yyp);
     }
-    *p = '\0';
+    YYTEXT_PUSH('\0', yyp);
     PROTECT(yylval = mkString(yytext));
     return STR_CONST;
 }
@@ -1618,18 +1624,18 @@ static int QuotedSymbolValue(int c)
 
 static int SpecialValue(int c)
 {
-    char *p = yytext;
-    *p++ = c;
+    DECLARE_YYTEXT_BUFP(yyp);
+    YYTEXT_PUSH(c, yyp);
     while ((c = xxgetc()) != R_EOF && c != '%') {
 	if (c == '\n') {
 	    xxungetc(c);
 	    return ERROR;
 	}
-	*p++ = c;
+	YYTEXT_PUSH(c, yyp);
     }
     if (c == '%')
-	*p++ = c;
-    *p++ = '\0';
+	YYTEXT_PUSH(c, yyp);
+    YYTEXT_PUSH('\0', yyp);
     yylval = install(yytext);
     return SPECIAL;
 }
@@ -1668,13 +1674,13 @@ int isValidName(char *name)
 static int SymbolValue(int c)
 {
     int kw;
-    char *p = yytext;
+    DECLARE_YYTEXT_BUFP(yyp);
     do {
-	*p++ = c;
+	YYTEXT_PUSH(c, yyp);
     }
     while ((c = xxgetc()) != R_EOF && (isalnum(c) || c == '.'));
     xxungetc(c);
-    *p = '\0';
+    YYTEXT_PUSH('\0', yyp);
     if ((kw = KeywordLookup(yytext))) {
 	if ( kw == FUNCTION ) {
 	    if (FunctionLevel >= MAXNEST)
