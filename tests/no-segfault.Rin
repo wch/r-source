@@ -48,6 +48,7 @@ stop.list[["base"]] <-
                         "choose.files")
 	c(inet.list, socket.fun, dev.int, edit.int, misc.int, misc.2)
     }
+## warning: browseAll will tend to read all the script and/or loop forever
 stop.list[["methods"]] <- c("browseAll", "recover")
 stop.list[["ts"]] <- c("arma0f", "KalmanLike")
 
@@ -67,20 +68,20 @@ cat(".proctime00 <- proc.time()\n",
 for (pkg in core.pkgs) {
   cat("### Package ", pkg, "\n",
       "###         ", rep("~",nchar(pkg)), "\n", collapse="", sep="")
-  if(pkg == "base") {
-      this.pos <- length(search())
-  }
-  else {
+  pkgname <- paste("package", pkg, sep=":")
+  this.pos <- match(paste("package", pkg, sep=":"), search())
+  lib.not.loaded <- is.na(this.pos)
+  if(lib.not.loaded) {
       library(pkg, character = TRUE, warn.conflicts = FALSE)
-      cat("library(",pkg,")\n")
-      this.pos <- match(paste("package", pkg, sep=":"), search())
+      cat("library(", pkg, ")\n")
   }
+  this.pos <- match(paste("package", pkg, sep=":"), search())
 
-  for(nm in ls(pos = this.pos)) {
+  for(nm in ls(pkgname)) {
       if(!(nm %in% stop.list[[pkg]]) &&
-	 is.function(f <- get(nm,pos = this.pos))) {
+	 is.function(f <- get(nm, pos = pkgname))) {
 	  cat("\n## ", nm, " :\n")
-	  cat("f <- get(\"",nm,"\", pos = ", this.pos, ")\n", sep="")
+	  cat("f <- get(\"",nm,"\", pos = '", pkgname, "')\n", sep="")
 	  cat("f()\nf(NULL)\nf(,NULL)\nf(NULL,NULL)\n",
 	      "f(list())\nf(l0)\nf(c0)\nf(m0)\nf(df0)\nf(FALSE)\n",
 	      "f(list(),list())\nf(l0,l0)\nf(c0,c0)\n",
@@ -88,9 +89,9 @@ for (pkg in core.pkgs) {
 	      sep="")
       }
   }
-  if(pkg != "base") {
+  if(lib.not.loaded) {
       detach(pos=this.pos)
-      cat("detach(pos=",this.pos,")\n")
+      cat("detach(pos=", this.pos, ")\n", sep="")
   }
 
   cat("\n##__________\n\n")
