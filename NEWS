@@ -180,9 +180,8 @@ NEW FEATURES
     o   lapply() is now internal and substantially faster (7% overall
 	speed-up on the tests for the base package).
 
-    o	apply() also has a substantial internal component. It no
-	longer names the output dimensions unless FUN returns a result
-	with names, and the same names for every result.
+    o	apply() no longer names the output dimensions unless FUN returns
+	a result with names, and the same names for every result.
 
     o	contour() can (at last) label contours by level.
 
@@ -197,7 +196,7 @@ NEW FEATURES
         made optional.
 
     o	HDF5 support is gone from the R distribution, and provided by an
-	add-on package.
+	add-on package available from CRAN.
 
     o	New function getOption() for retrieving the value of a single
 	option.
@@ -209,10 +208,13 @@ NEW FEATURES
     o	pairs.default() has an oma argument to allow users to override
 	the internal setting of that graphics parameter.
 
+    o	princomp() in package mva allows the user to specify the
+	covariance matrix (and hence use, e.g. cov.mve).
+
 
 BUG FIXES
 
-    o   predict.glm(,type="link",se.fit=T) works
+    o   predict.glm(, type="link", se.fit=T) works
 
     o	str() now works with Surv(.) objects from library(survival5).
 

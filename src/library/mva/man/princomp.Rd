@@ -8,23 +8,27 @@
 \alias{screeplot}
 \title{Principal Components Analysis}
 \usage{
-princomp(x, cor = FALSE, scores = TRUE,
+princomp(x, cor = FALSE, scores = TRUE, covmat = NULL,
          subset = rep(TRUE, nrow(as.matrix(x))))
 loadings(x)
 plot(x, npcs = min(10, length(x$sdev)),
-          type = c("barplot", "lines"), ...) 
+          type = c("barplot", "lines"), \dots) 
 screeplot(x, npcs = min(10, length(x$sdev)),
-          type = c("barplot", "lines"), ...) 
+          type = c("barplot", "lines"), \dots) 
 
-print(x,\dots)  summary(object)  predict(object,\dots)
+print(x, \dots)  summary(object)  predict(object, \dots)
 }
 \arguments{
   \item{x}{a matrix (or data frame) which provides the data for the
     principal components analysis.}
   \item{cor}{a logical value indicating whether the calculation should
     use the correlation matrix or the covariance matrix.}
-  \item{score}{a logical value indicating whether the score on each
+  \item{scores}{a logical value indicating whether the score on each
     principal component should be calculated.}
+  \item{covmat}{a covariance matrix, or a covariance list as returned by
+    \code{\link{cov.wt}}, \code{\link{cov.mve}} or \code{\link{cov.mcd}}.
+    If supplied, this is used rather than the covariance matrix of
+    \code{x}.}
   \item{subset}{a vector used to select rows (observations) of the
     data matrix \code{x}.}
       
@@ -47,9 +51,7 @@ print(x,\dots)  summary(object)  predict(object,\dots)
 \value{
   \code{princomp} returns a list with class \code{"princomp"}
   containing the following components:
-  \item{sdev}{the standard deviations of the principal components
-    (i.e., the square roots of the eigenvalues, rescaled by
-    \code{(N-1)/N})}
+  \item{sdev}{the standard deviations of the principal components.}
   \item{loadings}{the matrix of variable loadings (i.e., a matrix
     whose columns contain the eigenvectors).}
   \item{center}{the means that were subtracted.}
@@ -62,17 +64,11 @@ print(x,\dots)  summary(object)  predict(object,\dots)
 \details{
   The calculation is done using \code{\link{eigen}} on the correlation or
   covariance matrix, as determined by \code{\link{cor}}.  This is done for
-  compatibility with the S-PLUS result (even though alternate forms for
-  \code{x}---e.g., a covariance matrix---are not supported as they are
-  in S-PLUS).  A preferred method of calculation is to use svd on
-  \code{x}, as is done in \code{prcomp}.
+  compatibility with the S-PLUS result.  A preferred method of
+  calculation is to use svd on \code{x}, as is done in \code{prcomp}.
 
-  Note that the scaling of results is affected by the setting of
-  \code{cor}.  If \code{cor} is \code{TRUE} then the divisor in the
-  calculation of the sdev is N-1, otherwise it is N.  This has the
-  effect that the result is slightly different depending on whether
-  scaling is done first on the data and cor set to \code{FALSE}, or 
-  done automatically in \code{princomp} with \code{cor = TRUE}.
+  Note that the default calculation uses divisor \code{N} for the
+  covariance matrix.
   
   The \code{\link{print}} method for the these objects prints the
   results in a nice format and the \code{\link{plot}} method produces
