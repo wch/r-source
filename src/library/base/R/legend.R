@@ -104,6 +104,7 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
         top  <- y[2]
         w <- diff(x)# width
         h <- diff(y)# height
+	w0 <- w/ncol # column width
 
 	x <- mean(x)
 	y <- mean(y)
