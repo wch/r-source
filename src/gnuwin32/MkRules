@@ -25,7 +25,7 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_PII
 HHWDIR=C:/Program Files/HTML Help Workshop
 
 # Where does Tcl/Tk live? Spaces allowed.
-TCL_HOME = c:/packages/Tcl
+TCL_HOME = C:/packages/Tcl
 TCL_VERSION = 83
 
 ## ====== configuration macros for building installers ===========
@@ -34,6 +34,15 @@ TCL_VERSION = 83
 ISDIR=C:/packages/Inno
 # location where zip files of binary packages are kept
 PKGS=C:/R/Rdist/libs
+
+## =================== cross-compiler settings  =================
+
+ifeq ($(strip $(BUILD)),CROSS)
+# Next two might be i386-mingw32msvc- or i586- depending on the cross-compiler.
+BINPREF=mingw32-
+# Set this to where the mingw32 include files are
+HEADER=/users/ripley/R/cross-tools/mingw32/include
+endif
 
 ## =============== end of user-customizable parts  ===================
 
@@ -46,10 +55,6 @@ AWK=gawk
 endif
 
 ifeq ($(strip $(BUILD)),CROSS)
-# Next two might be i386-mingw32- or i586- depending on the cross-compiler.
-BINPREF=i386-mingw32msvc-
-# Set this to where the mingw32 include files are
-HEADER=/users/ripley/R/R-X-msvc/i386-mingw32msvc/include
 MINGW32CFLAG=-isystem $(HEADER)
 MINGW32LDFLAG=
 FLIBS=-lg2c
@@ -101,7 +106,7 @@ RESCOMP=$(BINPREF)windres
 %.exe:
 	$(LINKER) $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LIBS)
 
-%.dll %.def:
+%.dll:
 	@$(ECHO) ------- Building $@ from $^ --------
 	$(ECHO) LIBRARY $* > $*.def
 	$(ECHO) EXPORTS >> $*.def
@@ -109,6 +114,7 @@ RESCOMP=$(BINPREF)windres
 	$(SED) -n '/^........ [BCDRT] _/s/^........ [BCDRT] _/ /p' Defs >> $*.def
 	$(RM) Defs
 	$(DLL) --shared $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.def $^ $($*-DLLLIBS) $(DLLLIBS)
+	$(RM) $*.def
 
 lib%.a: %.def
 	@$(ECHO) -------- Building $@ from $^ --------
