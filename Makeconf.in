@@ -6,7 +6,7 @@ BLAS = @BLAS@
 CC = @CC@
 CFLAGS = @CFLAGS@
 CPICFLAGS = @CPICFLAGS@
-CPPFLAGS = -I../include -I$(top_srcdir)/src/include @CPPFLAGS@
+CPPFLAGS = -I. -I../include -I$(top_srcdir)/src/include @CPPFLAGS@
 DLLFLAGS = @DLLFLAGS@
 DVIPS = @DVIPS@
 FC = @FC@
@@ -41,7 +41,10 @@ X_EXTRA_LIBS = @X_EXTRA_LIBS@
 YACC = @YACC@
 
 .SUFFIXES:
-.SUFFIXES: .c .f .o
+.SUFFIXES: .c .f .d .o
+.c.d:
+	@echo "making $@ from $<"
+	@$(CC) -M $(CPPFLAGS) $< -o $@
 .c.o:
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 @f77_rules_frag_top@
