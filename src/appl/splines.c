@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -95,8 +95,8 @@ void natural_spline(int n, double *x, double *y, double *b, double *c, double *d
 	}
 
 	/* Backward substitution */
-	
-	c[n-1] = c[n-1]/b[n-1];
+
+	c[nm1] = c[nm1]/b[nm1];
 	for(i=n-2 ; i>1 ; i--)
 		c[i] = (c[i]-d[i]*c[i+1])/b[i];
 
@@ -105,18 +105,18 @@ void natural_spline(int n, double *x, double *y, double *b, double *c, double *d
 	c[1] = c[n] = 0.0;
 
 	/* Get cubic coefficients */
-	
+
 	b[1] = (y[2] - y[1])/d[1] - d[i] * c[2];
 	c[1] = 0.0;
 	d[1] = c[2]/d[1];
-	b[n] = (y[n] - y[n-1])/d[n-1] + 2.0 * d[n-1] * c[n-1];
+	b[n] = (y[n] - y[nm1])/d[nm1] + 2.0 * d[nm1] * c[nm1];
 	for(i=2 ; i<n ; i++) {
 		b[i] = (y[i+1]-y[i])/d[i] - d[i]*(c[i+1]+2.0*c[i]);
 		d[i] = (c[i+1]-c[i])/d[i];
 		c[i] = 3.0*c[i];
 	}
 	c[n] = 0.0;
-	d[n] = d[n-1];
+	d[n] = d[nm1];
 
 	return;
 }
@@ -134,16 +134,16 @@ void fmm_spline(int n, double *x, double *y, double *b, double *c, double *d)
 {
 	int nm1, i;
 	double t;
-	
+
 	/* Adjustment for 1-based arrays */
 
 	x--; y--; b--; c--; d--;
-	
+
 	if(n < 2) {
 		errno = EDOM;
 		return;
 	}
-	
+
 	if(n < 3) {
 		t = (y[2] - y[1]);
 		b[1] = t / (x[2]-x[1]);
@@ -153,31 +153,31 @@ void fmm_spline(int n, double *x, double *y, double *b, double *c, double *d)
 	}
 
 	nm1 = n - 1;
-	
+
 	/* Set up tridiagonal system */
 	/* b = diagonal, d = offdiagonal, c = right hand side */
-	
-	d[1] = (x[2] - x[1]);
-	c[2] = (y[2] - y[1])/d[1];
+
+	d[1] = x[2] - x[1];
+	c[2] = (y[2] - y[1])/d[1];/* = +/- Inf	for x[1]=x[2] -- problem? */
 	for(i=2 ; i<n ; i++) {
 		d[i] = x[i+1] - x[i];
 		b[i] = 2.0 * (d[i-1] + d[i]);
 		c[i+1] = (y[i+1] - y[i])/d[i];
 		c[i] = c[i+1] - c[i];
 	}
-	
+
 	/* End conditions. */
 	/* Third derivatives at x[0] and x[n-1] obtained */
 	/* from divided differences */
-	
+
 	b[1] = -d[1];
-	b[n] = -d[n-1];
+	b[n] = -d[nm1];
 	c[1] = c[n] = 0.0;
 	if(n > 3) {
 		c[1] = c[3]/(x[4]-x[2]) - c[2]/(x[3]-x[1]);
-		c[n] = c[n-1]/(x[n] - x[n-2]) - c[n-2]/(x[n-1]-x[n-3]);
+		c[n] = c[nm1]/(x[n] - x[n-2]) - c[n-2]/(x[nm1]-x[n-3]);
 		c[1] = c[1]*d[1]*d[1]/(x[4]-x[1]);
-		c[n] = -c[n]*d[n-1]*d[n-1]/(x[n]-x[n-3]);
+		c[n] = -c[n]*d[nm1]*d[nm1]/(x[n]-x[n-3]);
 	}
 
 	/* Gaussian elimination */
@@ -187,16 +187,16 @@ void fmm_spline(int n, double *x, double *y, double *b, double *c, double *d)
 		b[i] = b[i] - t*d[i-1];
 		c[i] = c[i] - t*c[i-1];
 	}
-	
+
 	/* Backward substitution */
-	
+
 	c[n] = c[n]/b[n];
-	for(i=n-1 ; i>=1 ; i--)
+	for(i=nm1 ; i>=1 ; i--)
 		c[i] = (c[i]-d[i]*c[i+1])/b[i];
-		
+
 	/* c[i] is now the sigma[i-1] of the text */
 	/* Compute polynomial coefficients */
-	
+
 	b[n] = (y[n] - y[n-1])/d[n-1] + d[n-1]*(c[n-1]+ 2.0*c[n]);
 	for(i=1 ; i<=nm1 ; i++) {
 		b[i] = (y[i+1]-y[i])/d[i] - d[i]*(c[i+1]+2.0*c[i]);
@@ -204,7 +204,7 @@ void fmm_spline(int n, double *x, double *y, double *b, double *c, double *d)
 		c[i] = 3.0*c[i];
 	}
 	c[n] = 3.0*c[n];
-	d[n] = d[n-1];
+	d[n] = d[nm1];
 	return;
 }
 
@@ -223,7 +223,7 @@ void periodic_spline(int n, double *x, double *y, double *b, double *c, double *
 {
 	double s;
 	int i, nm1;
-	
+
 	/* Adjustment for 1-based arrays */
 
 	x--; y--; b--; c--; d--; e--;
@@ -234,19 +234,19 @@ void periodic_spline(int n, double *x, double *y, double *b, double *c, double *
 	}
 
 	nm1 = n-1;
-	
+
 	/* Set up the matrix system */
-	/* A = diagonal  B = off-diagonal  C = rhs */
+	/* A = diagonal	 B = off-diagonal  C = rhs */
 
 #define A	b
 #define B	d
 #define C	c
-	
-	B[1] = x[2] - x[1];
-	B[n-1] = (x[n] - x[n-1]);
-	A[1] = 2.0 * (B[1] + (x[n-1] - x[n-2]));
-	C[1] = (y[2] - y[1])/B[1] - (y[n] - y[n-1])/B[n-1];
-	
+
+	B[1]  = x[2] - x[1];
+	B[nm1]= x[n] - x[nm1];
+	A[1] = 2.0 * (B[1] + (x[nm1] - x[n-2]));
+	C[1] = (y[2] - y[1])/B[1] - (y[n] - y[nm1])/B[nm1];
+
 	for(i=2 ; i<n ; i++) {
 		B[i] = x[i+1] - x[i];
 		A[i] = 2.0 * (B[i] + B[i-1]);
@@ -254,7 +254,7 @@ void periodic_spline(int n, double *x, double *y, double *b, double *c, double *
 	}
 
 	/* Choleski decomposition */
-		
+
 #define L	b
 #define M	d
 #define E	e
@@ -275,7 +275,7 @@ void periodic_spline(int n, double *x, double *y, double *b, double *c, double *
 
 #define Y	c
 #define D	c
-	
+
 	Y[1] = D[1]/L[1];
 	s = 0.0;
 	for(i=2 ; i<=nm1-1 ; i++) {
@@ -283,7 +283,7 @@ void periodic_spline(int n, double *x, double *y, double *b, double *c, double *
 		s = s + E[i-1] * Y[i-1];
 	}
 	Y[nm1] = (D[nm1] - M[nm1-1] * Y[nm1-1] - s) / L[nm1];
-	
+
 #define X	c
 
 	/*
@@ -297,9 +297,9 @@ void periodic_spline(int n, double *x, double *y, double *b, double *c, double *
 	X[nm1-1] = (Y[nm1-1] - M[nm1-1] * X[nm1])/L[nm1-1];
 	for(i=nm1-2 ; i>=1 ; i--)
 		X[i] = (Y[i] - M[i] * X[i+1] - E[i] * X[nm1])/L[i];
-	
-	/* Compute polynomial coefficients */ 
-	
+
+	/* Compute polynomial coefficients */
+
 	for(i=1 ; i<=nm1 ; i++) {
 		s = x[i+1] - x[i];
 		b[i] = (y[i+1]-y[i])/s - s*(c[i+1]+2.0*c[i]);
@@ -311,9 +311,18 @@ void periodic_spline(int n, double *x, double *y, double *b, double *c, double *
 	d[n] = d[1];
 	return;
 }
+#undef A
+#undef B
+#undef C
+#undef L
+#undef M
+#undef E
+#undef Y
+#undef D
+#undef X
 
 int spline_coef(int *method, int *n, double *x, double *y,
-double *b, double *c, double *d, double *e)
+	double *b, double *c, double *d, double *e)
 {
 	switch(*method) {
 		case 1:
@@ -343,7 +352,7 @@ int spline_eval(int *method, int *nu, double *u, double *v,
 
 	if(*method == 1) {
 		dx = x[*n] - x[1];
-		for( l=1 ; l<=*nu ; l++) { 
+		for( l=1 ; l<=*nu ; l++) {
 			v[l] = fmod(u[l]-x[1], dx);
 			if(v[l] < 0.0) v[l] += dx;
 			v[l] = v[l] + x[1];
