@@ -26,6 +26,7 @@
   New York: Wiley.
 }
 \examples{
+require(stats)
 data(Formaldehyde)
 plot(optden ~ carb, data = Formaldehyde,
      xlab = "Carbohydrate (ml)", ylab = "Optical Density",

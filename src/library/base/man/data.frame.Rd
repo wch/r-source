@@ -79,6 +79,7 @@ data.frame(\dots, row.names = NULL, check.rows = FALSE, check.names = TRUE)
   \code{\link{make.names}}.
 }
 \examples{
+require(utils)
 L3 <- LETTERS[1:3]
 str(d <- data.frame(cbind(x=1, y=1:10), fac=sample(L3, 10, repl=TRUE)))
 

@@ -105,6 +105,7 @@ data(\dots, list = character(0), package = .packages(),
   of data, typically the most efficient one.
 }
 \examples{
+require(utils)
 data()                      # list all available data sets
 data(package = "base")      # list the data sets in the base package
 data(USArrests, "VADeaths") # load the data sets 'USArrests' and 'VADeaths'

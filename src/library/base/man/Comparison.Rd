@@ -62,7 +62,7 @@ x != y
   \code{\link{Syntax}} for operator precedence.
 }
 \examples{
-x <- rnorm(20)
+x <- stats::rnorm(20)
 x < 1
 x[x > 0]
 

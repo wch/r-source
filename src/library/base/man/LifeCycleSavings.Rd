@@ -40,6 +40,7 @@
   New York: Wiley.
 }
 \examples{
+require(stats)
 data(LifeCycleSavings)
 pairs(LifeCycleSavings, panel = panel.smooth,
       main = "LifeCycleSavings data")

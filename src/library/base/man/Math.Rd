@@ -31,6 +31,6 @@ special mathematical functions.
 \examples{
 xx <- -9:9
 plot(xx, sqrt(abs(xx)),  col = "red")
-lines(spline(xx, sqrt(abs(xx)), n=101), col = "pink")
+lines(stats::spline(xx, sqrt(abs(xx)), n=101), col = "pink")
 }
 \keyword{math}

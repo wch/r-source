@@ -61,7 +61,7 @@ cut(x, \dots)
   \code{\link{findInterval}()}.
 }
 \examples{
-Z <- rnorm(10000)
+Z <- stats::rnorm(10000)
 table(cut(Z, br = -6:6))
 sum(table(cut(Z, br = -6:6, labels=FALSE)))
 sum(   hist  (Z, br = -6:6, plot=FALSE)$counts)
@@ -83,7 +83,7 @@ which(is.na(cxl)); x[is.na(cxl)] #-- the last  5  values  8
 
 
 ## Label construction:
-y <- rnorm(100)
+y <- stats::rnorm(100)
 table(cut(y, breaks = pi/3*(-3:3)))
 table(cut(y, breaks = pi/3*(-3:3), dig.lab=4))
 

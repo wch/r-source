@@ -25,6 +25,7 @@
   \emph{American Statistician}, \bold{27}, 17--21.
 }
 \examples{
+require(stats)
 data(anscombe)
 summary(anscombe)
 

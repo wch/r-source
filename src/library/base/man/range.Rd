@@ -44,7 +44,7 @@ range(\dots, na.rm = FALSE)
   \code{\link[base]{Methods}}.
 }
 \examples{
-print(r.x <- range(rnorm(100)))
+(r.x <- range(stats::rnorm(100)))
 diff(r.x) # the SAMPLE range
 
 x <- c(NA, 1:3, -1:1/0); x

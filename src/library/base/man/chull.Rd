@@ -39,7 +39,8 @@ chull(x, y=NULL)
 \seealso{\code{\link[graphics]{xy.coords}},\code{\link[graphics]{polygon}}}
 
 \examples{
-X <- matrix(rnorm(2000), ncol=2)
+require(graphics)
+X <- matrix(stats::rnorm(2000), ncol=2)
 plot(X, cex=0.5)
 hpts <- chull(X)
 hpts <- c(hpts, hpts[1])

@@ -43,6 +43,7 @@ deparse(expr, width.cutoff = 60,
   \code{\link{expression}}.
 }
 \examples{
+require(stats)
 deparse(args(lm))
 deparse(args(lm), width = 500)
 myplot <-

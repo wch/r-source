@@ -23,6 +23,6 @@
 \examples{
 data(USPersonalExpenditure)
 USPersonalExpenditure
-medpolish(log10(USPersonalExpenditure))
+stats::medpolish(log10(USPersonalExpenditure))
 }
 \keyword{datasets}

@@ -30,6 +30,7 @@ by(data, INDICES, FUN, \dots)
 \seealso{\code{\link{tapply}}}
 
 \examples{
+require(stats)
 data(warpbreaks)
 attach(warpbreaks)
 by(warpbreaks[, 1:2], tension, summary)

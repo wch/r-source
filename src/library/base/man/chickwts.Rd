@@ -29,6 +29,7 @@
   New York: Wiley.
 }
 \examples{
+require(stats)
 data(chickwts)
 boxplot(weight ~ feed, data = chickwts, col = "lightgray",
     varwidth = TRUE, notch = TRUE, main = "chickwt data",

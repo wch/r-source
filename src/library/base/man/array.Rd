@@ -57,6 +57,6 @@ array(1:3, c(2,4)) # recycle 1:3 "2 2/3 times"
 #[2,]    2    1    3    2
 
 # funny object:
-str(a0 <- array(1:3, 0))
+utils::str(a0 <- array(1:3, 0))
 }
 \keyword{array}

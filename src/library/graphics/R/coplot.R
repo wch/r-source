@@ -23,7 +23,8 @@ panel.smooth <- function(x, y, col = par("col"), bg = NA, pch = par("pch"),
     points(x, y, pch=pch, col=col, bg=bg, cex=cex)
     ok <- is.finite(x) & is.finite(y)
     if (any(ok))
-	lines(lowess(x[ok], y[ok], f=span, iter=iter), col = col.smooth, ...)
+	lines(stats::lowess(x[ok], y[ok], f=span, iter=iter),
+              col = col.smooth, ...)
 }
 
 coplot <-

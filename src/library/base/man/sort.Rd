@@ -98,7 +98,7 @@ Sim <- 20
 rep <- 50 # << adjust to your CPU
 c1 <- c2 <- numeric(Sim)
 for(is in 1:Sim){
-  x <- rnorm(N)
+  x <- stats::rnorm(N)
   gc()  ## sort should not have to pay for gc
   c1[is] <- system.time(for(i in 1:rep) sort(x, method = "shell"))[1]
   c2[is] <- system.time(for(i in 1:rep) sort(x, method = "quick"))[1]
@@ -109,7 +109,7 @@ cat("Speedup factor of quick sort():\n")
 summary({qq <- c1 / c2; qq[is.finite(qq)]})
 
 ## A larger test
-x <- rnorm(1e6)
+x <- stats::rnorm(1e6)
 gc()
 system.time(x1 <- sort(x, method = "shell"))
 gc()

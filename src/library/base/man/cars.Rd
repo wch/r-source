@@ -25,6 +25,7 @@
   Wiley.
 }
 \examples{
+require(stats)
 data(cars)
 plot(cars, xlab = "Speed (mph)", ylab = "Stopping distance (ft)",
      las = 1)

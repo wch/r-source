@@ -29,6 +29,7 @@
   (Section 3.7, p.68ff of 2nd ed.(1991).)
 }
 \examples{
+require(stats)
 data(attitude)
 pairs(attitude, main = "attitude data")
 summary(attitude)

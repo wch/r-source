@@ -64,6 +64,7 @@ pmin(\dots, na.rm=FALSE)
   i.e., the location where an extreme value occurs.
 }
 \examples{
+require(stats)
 min(5:1,pi)
 pmin(5:1, pi)
 x <- sort(rnorm(100));  cH <- 1.35

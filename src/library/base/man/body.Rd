@@ -37,6 +37,6 @@ f <- function(x) x^5
 body(f) <- expression(5^x)
 ## or equivalently  body(f) <- list(quote(5^x))
 f(3) # = 125
-str(body(f))
+utils::str(body(f))
 }
 \keyword{programming}

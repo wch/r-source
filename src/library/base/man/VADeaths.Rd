@@ -27,6 +27,7 @@
   Wiley.
 }
 \examples{
+require(stats)
 data(VADeaths)
 n <- length(dr <- c(VADeaths))
 nam <- names(VADeaths)

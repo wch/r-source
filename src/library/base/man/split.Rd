@@ -55,6 +55,7 @@ unsplit(value, f)
   Wadsworth \& Brooks/Cole.
 }
 \examples{
+require(stats)
 n <- 10; nn <- 100
 g <- factor(round(n * runif(n * nn)))
 x <- rnorm(n * nn) + sqrt(as.numeric(g))

@@ -52,7 +52,7 @@ next
 \examples{
 for(i in 1:5) print(1:i)
 for(n in c(2,5,10,20,50)) {
-   x <- rnorm(n)
+   x <- stats::rnorm(n)
    cat(n,":", sum(x^2),"\n")
 }
 }
