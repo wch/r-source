@@ -153,6 +153,8 @@ BUG FIXES
 
     o   missingness was not correctly propagated in some cases.
 
+    o   eigen() segfaulted on 0-dimensional matrices.
+
 
 
 

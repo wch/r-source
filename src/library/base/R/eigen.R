@@ -2,6 +2,8 @@ eigen <- function(x, symmetric, only.values=FALSE)
 {
     x <- as.matrix(x)
     n <- nrow(x)
+    if (!n)
+        stop("0 x 0 matrix")
     if (n != ncol(x))
 	stop("non-square matrix in eigen")
     complex.x <- is.complex(x)
