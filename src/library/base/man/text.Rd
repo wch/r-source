@@ -53,7 +53,8 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
   \code{\link{par}}); this rotates about the centre set by \code{adj}.
 }
 \seealso{
-  \code{\link{mtext}}, \code{\link{title}}.
+  \code{\link{mtext}}, \code{\link{title}};
+  \code{\link{plotmath}} for details on mathematical annotation.
 }
 \examples{
 plot(-1:1,-1:1, type = "n", xlab = "Re", ylab = "Im")
@@ -81,7 +82,3 @@ text(5,10.2,"Le français, c'est façile: Règles, Liberté, Egalité, Fraternité..")
 text(5,9.8, "Jetz no chli züritüütsch: (noch ein bißchen Zürcher deutsch)")
 }
 \keyword{aplot}
-
-
-
-
