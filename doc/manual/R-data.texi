@@ -87,13 +87,14 @@ Many volunteers have contributed to the packages used here.  The
 principal authors of the packages mentioned are
 
 @quotation
-@multitable {stataread  xxxx} {A longggggggggggggggggggggggggggggggggg description}
+@multitable {foreign  xxxx} {A longggggggggggggggggggggggggggggggggg description}
 @item @pkg{CORBA} @tab Duncan Temple Lang
 @item @pkg{e1071} @tab Friedrich Leisch
 @item @pkg{foreign} @tab Thomas Lumley, Saikat DebRoy, Douglas Bates and Duncan Murdoch
 @item @pkg{hdf5} @tab Marcus Daniels
 @item @pkg{Java} @tab John Chambers and Duncan Temple Lang
-@item @pkg{netCDF} @tab Thomas Lumley
+@item @pkg{ncdf} @tab David Pierce
+@item @pkg{RNetCDF} @tab Pavel Michna
 @item @pkg{RMySQL} @tab David James and Saikat DebRoy
 @item @pkg{RODBC} @tab Michael Lapsley and Brian Ripley
 @item @pkg{RSPerl} @tab Duncan Temple Lang
@@ -1433,19 +1434,17 @@ handle binary files.
 @findex netCDF
 @cindex network Common Data Form
 
-Packages @pkg{hdf5} and @pkg{netCDF} on @acronym{CRAN} provide
-experimental interfaces to @acronym{NASA}'s HDF5 (Hierarchical Data
-Format, see @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's netCDF
-data files (network Common Data Form, see
-@uref{http://www.unidata.ucar.edu/packages/netcdf/}), respectively.
+Packages @pkg{hdf5}, @pkg{RNetCDF} and @pkg{ncdf} on @acronym{CRAN}
+provide experimental interfaces to @acronym{NASA}'s HDF5 (Hierarchical
+Data Format, see @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's
+netCDF data files (network Common Data Form, see
+@uref{http://www.unidata.ucar.edu/packages/netcdf/}).
 
 Both of these are systems to store scientific data in array-oriented
 ways, including descriptions, labels, formats, units, @dots{}.  HDF5 also
 allows @emph{groups} of arrays, and the @R{} interface maps lists
 to HDF5 groups, and can write numeric and character vectors and
 matrices.
-
-The @R{} interface can only read netCDF, not write it (yet).
 
 
 @node Connections, Network interfaces, Binary files, Top
