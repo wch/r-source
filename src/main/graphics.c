@@ -2411,6 +2411,7 @@ void GClip(DevDesc *dd)
 	double x1, y1, x2, y2;
 	setClipRect(&x1, &y1, &x2, &y2, DEVICE, dd);
 	GESetClip(x1, y1, x2, y2, (GEDevDesc*) dd);
+	Rf_gpptr(dd)->oldxpd = Rf_gpptr(dd)->xpd;
     }
 }
 
