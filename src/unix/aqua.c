@@ -73,11 +73,12 @@ static DL_FUNC Rdlsym(void *handle, char const *name)
 extern DL_FUNC 	ptr_R_ReadConsole, ptr_R_WriteConsole, ptr_R_ResetConsole, 
                 ptr_R_FlushConsole, ptr_R_ClearerrConsole, ptr_R_StartConsole, 
                 ptr_R_ShowFiles, ptr_R_loadhistory,  ptr_R_savehistory,
-                ptr_R_ChooseFile;
+                ptr_R_ChooseFile, ptr_R_CleanUp, ptr_R_ShowMessage, ptr_R_Suicide;
 
 
 DL_FUNC ptr_do_wsbrowser, ptr_DoCloseHandler, ptr_GetQuartzParameters, 
         ptr_Raqua_Edit, ptr_do_dataentry, ptr_do_browsepkgs;
+
 
 void R_ProcessEvents(void);
 
@@ -108,11 +109,9 @@ void R_load_aqua_shlib(void)
 	sprintf(buf, "The AQUA shared library could not be loaded.\n  The error was %s\n", dlerror());
 	R_Suicide(buf);
     }
-   /* ptr_R_Suicide = Rdlsym(handle, "Rgnome_Suicide");
-    if(!ptr_R_Suicide) Rstd_Suicide("Cannot load R_Suicide");
-    ptr_R_ShowMessage = Rdlsym(handle, "Rgnome_ShowMessage");
-    if(!ptr_R_ShowMessage) R_Suicide("Cannot load R_ShowMessage");
-    */
+
+    ptr_R_Suicide = Rdlsym(handle, "Raqua_Suicide");
+    if(!ptr_R_Suicide) Rstd_Suicide("Cannot load Raqua_Suicide");
     ptr_R_StartConsole = Rdlsym(handle, "Raqua_StartConsole");
     if(!ptr_R_StartConsole) R_Suicide("Cannot load R_StartConsole");
     ptr_R_ReadConsole = Rdlsym(handle, "Raqua_ReadConsole");
@@ -145,6 +144,11 @@ void R_load_aqua_shlib(void)
     if(!ptr_do_dataentry) R_Suicide("Cannot load Raqua_dataentry");
     ptr_do_browsepkgs = Rdlsym(handle, "Raqua_browsepkgs");
     if(!ptr_do_browsepkgs) R_Suicide("Cannot load Raqua_browsepkgs");
+    ptr_R_ShowMessage = Rdlsym(handle, "Raqua_ShowMessage");
+    if(!ptr_R_ShowMessage) R_Suicide("Cannot load Raqua_ShowMessage");
+    ptr_R_CleanUp = Rdlsym(handle, "Raqua_CleanUp");
+    if(!ptr_R_CleanUp) R_Suicide("Cannot load Raqua_CleanUp");
+ 
 
 }
 
@@ -174,7 +178,6 @@ void R_ProcessEvents(void)
    if(CheckEventQueueForUserCancel())
       onintr();
 }
-
 
 #else
 

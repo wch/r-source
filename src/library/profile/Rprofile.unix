@@ -44,10 +44,14 @@ if(.Platform$GUI == "AQUA"){
 # sets initial current working directory to user's root
 # as RAqua is installed at system level
 
- setwd("~/")
-
 # this is to allow g77 compiler to work
  Sys.putenv("PATH" = paste(Sys.getenv("PATH"),":/usr/local/bin",sep=""))
+
+if( !file.exists("~/.R") )
+ dir.create("~/.R")
+
+if( !file.exists("~/.R/library") )
+ dir.create("~/.R/library")
 
 .libPaths("~/.R/library")
  

@@ -459,7 +459,7 @@ static void 	Quartz_Activate(NewDevDesc *dd)
    We add a property to the Window each time we activate it.
    We should only make this the first time we open the device.
 */
-        err = SetWindowProperty(xd->window,kRAppSignature,1,sizeof(int),&devnum);
+        err = SetWindowProperty(xd->window,kRAppSignature,'QRTZ',sizeof(int),&devnum);
 
 	ShowWindow(xd->window);
 
