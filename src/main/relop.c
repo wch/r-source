@@ -97,7 +97,10 @@ SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 		  PRIMVAL(op));
     }
 
-    /* ELSE :  x and y are both atomic */
+    if (TYPEOF(x) == EXPRSXP || TYPEOF(y) == EXPRSXP)
+	errorcall(call, "comparison is not allowed for expressions");
+
+    /* ELSE :  x and y are both atomic, no not currently */
 
     if (LENGTH(x) <= 0 || LENGTH(y) <= 0) {
 	UNPROTECT(2);
@@ -166,14 +169,16 @@ SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
 	REPROTECT(y = coerceVector(y, CPLXSXP), ypi);
 	x = complex_relop(PRIMVAL(op), x, y, call);
     }
-    else if (TYPEOF(x) == REALSXP || TYPEOF(y) == REALSXP) {
+    else if (isReal(x) || isReal(y)) {
 	REPROTECT(x = coerceVector(x, REALSXP), xpi);
 	REPROTECT(y = coerceVector(y, REALSXP), ypi);
 	x = real_relop(PRIMVAL(op), x, y);
     }
-    else {
+    else if((isInteger(x) || isLogical(x)) &&
+	    (isInteger(y) || isLogical(y)))
 	x = integer_relop(PRIMVAL(op), x, y);
-    }
+    else errorcall(call, "comparison of these types is not implemented");
+
 
     PROTECT(x);
     if (dims != R_NilValue) {
