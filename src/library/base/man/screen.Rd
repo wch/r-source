@@ -69,7 +69,7 @@ such as \code{coplot}, which make use of these other mechanisms.
 
 The functions should not be used with multiple devices.}
 
-\seealso{\code{\link{par}}, \code{\link{layout}, \code{\link{Devices}},
+\seealso{\code{\link{par}}, \code{\link{layout}}, \code{\link{Devices}},
 \code{dev.*}}}
 
 \examples{
