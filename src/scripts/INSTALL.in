@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.123 $'
+revision='$Revision: 1.124 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -150,8 +150,6 @@ with_package_versions=false
 save="CHECK"
 save_args="--no-site-file --no-init-file";
 
-safe=yes
-
 while test -n "${1}"; do
   case ${1} in
     -h|--help)
@@ -235,7 +233,8 @@ if test -z "${pkgs}"; then
   exit 1
 fi
 
-if test -d "${lib}" -a -w "${lib}" || mkdir "${lib}" 2> /dev/null; then
+if (test -d "${lib}" && test -w "${lib}") || \
+    mkdir "${lib}" 2> /dev/null; then
   lib=`cd "${lib}" && ${GETWD}`
 else
   echo "ERROR: cannot write to or create directory '${lib}'"
@@ -285,8 +284,20 @@ do_install_binary () {
     message "Installing *binary* package '${pkg}' ..."
   else
     message "Installing *binary* package '${pkg}' as '${R_PACKAGE_NAME}' ..."
-  fi  
+  fi
+
+  if test -f "${R_PACKAGE_DIR}/DESCRIPTION"; then
+    ## Back up previous version.
+    mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}"
+    mkdir -p "${R_PACKAGE_DIR}"
+  fi
+  
   cp -r . "${R_PACKAGE_DIR}"
+
+  if test "${?}" -ne 0; then
+    echo "ERROR: installing binary package failed"
+    do_exit_on_error
+  fi
 }
 
 ### 
@@ -312,17 +323,18 @@ do_install_source () {
 
   stars="**"
 
-  if test "${safe}" = yes; then
-    if test -f "${R_PACKAGE_DIR}/DESCRIPTION"; then
-      ## Back up previous version.
-      mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}"
-      ## Preserve man pages to speed up installation?  Only makes sense
-      ## if we install from a non-temporary directory.
-      if test `dirname "${pkg}"` = "${tempdir}"; then :; else
-        mkdir -p "${R_PACKAGE_DIR}"
-        (cd "${lockdir}/${R_PACKAGE_NAME}" && tar cf - R-ex help html latex) |
-	  (cd "${R_PACKAGE_DIR}" && tar xf -)
-      fi
+  if test -f "${R_PACKAGE_DIR}/DESCRIPTION"; then
+    ## Back up previous version.
+    mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}"
+    mkdir -p "${R_PACKAGE_DIR}"
+    ## Preserve man pages to speed up installation?  Only makes sense
+    ## if we install from a non-temporary directory.
+    if test -d "${tmpdir}" \
+        && test "`cd .. && ${GETWD}`" = \
+	        "`cd \"${tmpdir}\" && ${GETWD}`"; then :; else
+      (cd "${lockdir}/${R_PACKAGE_NAME}" \
+          && tar cf - R-ex help html latex) | \
+	(cd "${R_PACKAGE_DIR}" && tar xf -)
     fi
   fi
 
@@ -395,8 +407,8 @@ do_install_source () {
     cp data/* "${R_PACKAGE_DIR}/data" 2>/dev/null
     chmod 644 "${R_PACKAGE_DIR}/data/"*
     if test -n "${use_zip_data}" \
-        -a -n "${R_UNZIPCMD}" \
-        -a -n "${R_ZIPCMD}"; then
+        && test -n "${R_UNZIPCMD}" \
+        && test -n "${R_ZIPCMD}"; then
       (cd "${R_PACKAGE_DIR}/data";
         find . -type f -print > filelist
         ${R_ZIPCMD} -m Rdata * -x filelist 00Index)
@@ -467,7 +479,7 @@ do_install_source () {
         loader_file=nsrdaload.R
         R_SAVE_EXE="${R_EXE} --slave"
     else
-        code_cmd="cat ${code_file}"
+        code_cmd="cat \"${code_file}\""
         loader_file=firstlib.R
         R_SAVE_EXE="${R_EXE} --slave --save"
     fi
@@ -479,9 +491,7 @@ do_install_source () {
       echo "ERROR: execution of package source for '${pkg}' failed"
       do_exit_on_error
     fi
-    if test ! -f NAMESPACE; then
-        mv .RData ${rda_file}
-    fi
+    test -f NAMESPACE || mv .RData "${rda_file}"
     mv "${code_file}" "${R_PACKAGE_DIR}/R/${pkg}.R"
     cat "${R_HOME}/share/R/${loader_file}" > "${code_file}"
     ## If install.R is non-empty, arrange to evaluate the R code it
@@ -519,8 +529,8 @@ do_install_source () {
         fi
       fi
       if test -n "${use_zip_help}" \
-	  -a -n "${R_UNZIPCMD}" \
-	  -a -n "${R_ZIPCMD}"; then
+	  && test -n "${R_UNZIPCMD}" \
+	  && test -n "${R_ZIPCMD}"; then
 	(cd "${R_PACKAGE_DIR}"
 	  if test -d R-ex; then
 	    (cd R-ex; ${R_ZIPCMD} -m Rex *.R)
@@ -659,11 +669,9 @@ do_exit_on_error () {
     message "Removing '${R_PACKAGE_DIR}'"
     rm -rf "${R_PACKAGE_DIR}"
   fi
-  if test "${safe}" = yes; then
-    if test -d "${lockdir}/${R_PACKAGE_NAME}"; then
-      message "Restoring previous '${R_PACKAGE_DIR}'"
-      mv "${lockdir}/${R_PACKAGE_NAME}" "${R_PACKAGE_DIR}"
-    fi
+  if test -d "${lockdir}/${R_PACKAGE_NAME}"; then
+    message "Restoring previous '${R_PACKAGE_DIR}'"
+    mv "${lockdir}/${R_PACKAGE_NAME}" "${R_PACKAGE_DIR}"
   fi
   do_cleanup
   exit 1
@@ -687,6 +695,7 @@ do_cleanup () {
       ${R_CMD} perl "${R_HOME}/share/perl/build-help.pl" --htmllists
     fi
   fi
+  ## </NOTE>
 
   rm -rf "${lockdir}"
 }
