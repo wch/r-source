@@ -256,8 +256,8 @@ function(topic, device = getOption("device"),
 }
 
 example <-
-function(topic, package = .packages(), lib.loc = NULL,
-         echo = TRUE, verbose = getOption("verbose"), local = FALSE,
+function(topic, package = .packages(), lib.loc = NULL, local = FALSE,
+         echo = TRUE, verbose = getOption("verbose"),
          prompt.echo = paste(abbreviate(topic, 6), "> ", sep = ""))
 {
     sQuote <- function(s) paste("'", s, "'", sep = "")
