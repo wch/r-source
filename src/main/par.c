@@ -573,8 +573,12 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	lengthCheck(what, value, 4);
 	nonnegRealCheck(REAL(value)[0], what);
 	nonnegRealCheck(REAL(value)[1], what);
+	nonnegRealCheck(REAL(value)[2], what);
+	nonnegRealCheck(REAL(value)[3], what);
 	dd->dp.plt[0] = dd->gp.plt[0] = REAL(value)[0];
-	dd->dp.plt[1] = dd->gp.plt[1] = REAL(value)[0];
+	dd->dp.plt[1] = dd->gp.plt[1] = REAL(value)[1];
+	dd->dp.plt[2] = dd->gp.plt[2] = REAL(value)[2];
+	dd->dp.plt[3] = dd->gp.plt[3] = REAL(value)[3];
 	dd->dp.pUnits = dd->gp.pUnits = NFC;
 	dd->dp.defaultPlot = dd->gp.defaultPlot = 0;
 	GReset(dd);
@@ -1551,7 +1555,7 @@ SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
 		dd->dp.cmWidths[j] = dd->gp.cmWidths[j] = 0;
 	for (j=0; j<ncmcol; j++)
 		dd->dp.cmWidths[INTEGER(CAR(args))[j]-1] =
-                dd->gp.cmWidths[INTEGER(CAR(args))[j]-1] = 1;
+		dd->gp.cmWidths[INTEGER(CAR(args))[j]-1] = 1;
 	args = CDR(args);
 
 	ncmrow = length(CAR(args));
@@ -1570,18 +1574,18 @@ SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
 			dd->dp.respect[i][j] = dd->gp.respect[i][j] =
 				REAL(CAR(args))[i + j*nrow];
 
-        if (nrow > 2 || ncol > 2) {
-                dd->gp.cexbase = dd->dp.cexbase = 0.5;
-                dd->gp.mex = dd->dp.mex = 1.0;
-        }
-        else if (nrow == 2 && ncol == 2) {
-                dd->gp.cexbase = dd->dp.cexbase = 0.8;
-                dd->gp.mex = dd->dp.mex = 1.0;
-        }
-        else {
-                dd->gp.cexbase = dd->dp.cexbase = 1.0;
-                dd->gp.mex = dd->dp.mex = 1.0;
-        }
+	if (nrow > 2 || ncol > 2) {
+		dd->gp.cexbase = dd->dp.cexbase = 0.5;
+		dd->gp.mex = dd->dp.mex = 1.0;
+	}
+	else if (nrow == 2 && ncol == 2) {
+		dd->gp.cexbase = dd->dp.cexbase = 0.8;
+		dd->gp.mex = dd->dp.mex = 1.0;
+	}
+	else {
+		dd->gp.cexbase = dd->dp.cexbase = 1.0;
+		dd->gp.mex = dd->dp.mex = 1.0;
+	}
 
 	dd->dp.defaultFigure = dd->gp.defaultFigure = 1;
 	dd->dp.layout = dd->gp.layout = 1;
