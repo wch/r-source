@@ -1,6 +1,0 @@
-tempfile <- function(pattern = "file") {
-  system(paste("for p in",
-	       paste(pattern, collapse = " "),
-	       "; do echo /tmp/$p$$; done"),
-	 intern = TRUE)
-}
