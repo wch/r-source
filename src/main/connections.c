@@ -249,8 +249,10 @@ SEXP do_file(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     sfile = CAR(args);
-    if(!isString(sfile) || length(sfile) != 1)
-	error("invalid `description' argument");
+    if(!isString(sfile) || length(sfile) < 1)
+	errorcall(call, "invalid `description' argument");
+    if(length(sfile) > 1)
+	warning("only first element of `description' argument used");
     file = CHAR(STRING_ELT(sfile, 0));
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
@@ -356,12 +358,14 @@ SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     scmd = CAR(args);
-    if(!isString(scmd) || length(scmd) != 1)
-	errorcall(call, "invalid `description' argument");
+    if(!isString(scmd) || length(scmd) < 1)
+	error("invalid `description' argument");
+    if(length(scmd) > 1)
+	warning("only first element of `description' argument used");
     file = CHAR(STRING_ELT(scmd, 0));
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
-	errorcall(call, "invalid `open' argument");
+	error("invalid `open' argument");
     open = CHAR(STRING_ELT(sopen, 0));
 #ifdef Win32
     if(CharacterMode != RTerm) {

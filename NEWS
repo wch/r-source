@@ -17,6 +17,9 @@ NEW FEATURES
     o	The Unix front-end shell script now ignores a value for R_HOME
         found in the environment.
 
+    o	Connections functions such as file() accept a description of
+	length > 1, with a warning.
+
 
 BUG FIXES
     
