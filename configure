@@ -22164,6 +22164,11 @@ done
 
   READLINE_LIBS="${LIBS}"
   LIBS="${r_save_LIBS}"
+  if test "${use_readline}" = no; then
+    { { echo "$as_me:$LINENO: error: --with-readline=yes (default) and headers/libs are not available" >&5
+echo "$as_me: error: --with-readline=yes (default) and headers/libs are not available" >&2;}
+   { (exit 1); exit 1; }; }
+  fi
 fi
 
 
@@ -25917,7 +25922,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_verb"
-(eval echo $as_me:25920: \"$ac_link\") >&5
+(eval echo $as_me:25925: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -25995,7 +26000,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_cv_prog_f77_v"
-(eval echo $as_me:25998: \"$ac_link\") >&5
+(eval echo $as_me:26003: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -26241,7 +26246,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26244: \"$ac_link\") >&5
+(eval echo $as_me:26249: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26323,7 +26328,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:26326: \"$ac_link\") >&5
+(eval echo $as_me:26331: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -35316,7 +35321,15 @@ done
   LIBS=${r_save_LIBS}
 else
   use_X11="no"
+  if test "x${with_x}" != "xno"; then
+    { { echo "$as_me:$LINENO: error: --with-x=yes (default) and X11 headers/libs are not available" >&5
+echo "$as_me: error: --with-x=yes (default) and X11 headers/libs are not available" >&2;}
+   { (exit 1); exit 1; }; }
+  fi
 fi
+  echo "$as_me:$LINENO: result: using X11 ... ${use_X11}" >&5
+echo "${ECHO_T}using X11 ... ${use_X11}" >&6
+
 if test "${use_X11}" = yes; then
   R_MODULES=X11
 else

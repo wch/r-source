@@ -182,10 +182,10 @@ NEW FEATURES
 
     o	New convenience wrappers write.csv() and write.csv2().
 
-    o	The regular expression code is now based on that in glibc
-	2.3.3.  It has a stricter conformance to POSIX, so braces may
-	need to be escaped where before they did not (but could have
-	been).
+    o	The regular expression code is now based on that in glibc 2.3.3.
+	It has stricter conformance to POSIX, so metachars such as 
+	{ } + * may need to be escaped where before they did not 
+	(but could have been).
 
     o	abbreviate() now warns if used with non-ASCII chars, as the 
 	algorithm is designed for English words.
@@ -209,7 +209,6 @@ NEW FEATURES
 	character sets.
 
     o   gc() now reports maximum as well as current memory use.
-
 
 
 UTILITIES
@@ -323,7 +322,10 @@ INSTALLATION CHANGES
     o	The GNOME GUI is unbundled, currently available by Subversion only.
 
     o	Configuring without having the recommended packages is now an
-	error unless --with-recommended-packages=no is used.
+	error unless --with-recommended-packages=no (or equivalent) is used.
+
+    o	Configuring without having the X11 headers and libraries is now
+	an error unless --with-x=no (or equivalent) is used.
 
     o	Configure tries harder to find a minimal set of FLIBS.	Under
 	some circumstances this may remove from R_LD_LIBRARY_PATH

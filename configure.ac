@@ -532,6 +532,9 @@ if test "${use_readline}" = yes; then
   AC_CHECK_FUNCS(history_truncate_file)
   READLINE_LIBS="${LIBS}"
   LIBS="${r_save_LIBS}"
+  if test "${use_readline}" = no; then
+    AC_MSG_ERROR([--with-readline=yes (default) and headers/libs are not available])
+  fi
 fi
 AC_SUBST(READLINE_LIBS)
 

@@ -1619,7 +1619,13 @@ if test -z "${no_x}"; then
   LIBS=${r_save_LIBS}
 else
   use_X11="no"
-fi])# R_X11
+  if test "x${with_x}" != "xno"; then
+    AC_MSG_ERROR(
+      [--with-x=yes (default) and X11 headers/libs are not available])
+  fi
+fi
+  AC_MSG_RESULT([using X11 ... ${use_X11}])
+])# R_X11
 
 ## R_AQUA
 ## ------

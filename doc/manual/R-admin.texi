@@ -790,16 +790,24 @@ You need a means of compiling C and FORTRAN 77 (see @ref{Using
 FORTRAN}).  Some add-on packages also need a C++ compiler.
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
-installed, including its headers and client libraries.  (On Fedora Core 2 Linux
-this means the @samp{xorg-x11-devel} and @samp{xorg-x11-libs} RPMs, for
-example.  Older Linuxen used @samp{XFree86-}.)
+installed, including its headers and client libraries.  (On Fedora Core
+2 Linux this means the @samp{xorg-x11-devel} and @samp{xorg-x11-libs}
+RPMs, for example.  Older Linuxen used @samp{XFree86-}.)  If you
+really do not want these you will need to explicitly configure
+@R{} without X11, using @option{--with-x=no}.
+
+The command-line editing depends on the @code{readline} library
+available from any GNU mirror: you will need a fairly recent version.
+Otherwise you will need to configure with @option{--with-readline=no}
+(or equivalent).
 
 You will need Perl version 5.004 or later, available via
 @uref{http://www.perl.com/CPAN/}, to build any of the on-line
 documentation.
 
 You will not be able to build the info files unless you have
-@command{makeinfo} version 4.5 or later installed.
+@command{makeinfo} version 4.5 or later installed, and if not some of
+the HTML manuals will be linked to @acronym{CRAN}.
 
 @cindex vignettes
 The typeset documentation and building vignettes needs @command{tex} and
@@ -811,9 +819,6 @@ If you want to build from the R Subversion repository you need Perl,
 
 @node Useful libraries and programs,  , Essential programs, Essential and useful other programs
 @section Useful libraries and programs
-
-The command-line editing depends on the @code{readline} library
-available from any GNU mirror: you will need a fairly recent version.
 
 The use of encodings and the @R{} @code{iconv} function depend on having
 the system @code{iconv} function: this is part of recent versions of
@@ -1020,7 +1025,7 @@ elsewhere are (defaults in brackets)
 
 @table @option
 @item --with-x
-use the X Window System
+use the X Window System [yes]
 @item --x-includes=@var{DIR}
 X include files are in @var{DIR}
 @item --x-libraries=@var{DIR}
