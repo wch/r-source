@@ -183,15 +183,19 @@ SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
  return(ptr_do_wsbrowser(call, op, args, env));
 }
 
+#if defined(HAVE_X11)
 extern SEXP X11_do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho); /* from src/unix/X11.c */
+#endif
 extern Rboolean useaqua; /* from src/unix/system.c */
 
 SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	if(useaqua)
 		return(ptr_do_dataentry(call, op, args, env));
+#if defined(HAVE_X11)
 	else
 	    return(X11_do_dataentry(call, op, args, env));	
+#endif
 }
 
 SEXP do_browsepkgs(SEXP call, SEXP op, SEXP args, SEXP env)
