@@ -41,7 +41,12 @@ else
  DLLFLAGS=-s
 endif
 
+ifneq ($(strip $(BUILD)),CROSS)
+## needed for gcc-3.2.2 but not earlier: may need to adjust
 R-DLLFLAGS = -mwindows -Wl,--allow-multiple-definition
+else
+R-DLLFLAGS = -mwindows
+endif
 R-DLLLIBS =-L. $(FLIBS) -lRblas -lcomctl32 -lversion
 SOURCES = $(filter-out malloc.c blas00.c,$(wildcard *.c *.f))
 OBJS = $(SOURCES:.c=.o)
