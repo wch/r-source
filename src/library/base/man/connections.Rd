@@ -133,12 +133,6 @@ isIncomplete(con)
   If for a \code{file} connection the description is \code{""}, the file
   is immediately opened in \code{"w+"} mode and unlinked from the file
   system.  This provides a temporary file to write to and then read from.
-  
-  The encoding vector is used to map the input to
-  the platform's native character set.  Supplied examples are
-  \code{native.enc} as well as \code{MacRoman}, \code{WinAnsi} and
-  \code{ISOLatin1}, whose actual encoding is platform-dependent.  Missing
-  characters are mapped to a space in these encodings.
 }
 \value{
   \code{file}, \code{pipe}, \code{fifo}, \code{url}, \code{gzfile},
@@ -179,8 +173,8 @@ isIncomplete(con)
   input, it will most likely be all or some of the input up to the
   error.
 
-  The encoding for \code{\link{stdin}} when a file can be set by the
-  command-line flag \code{--encoding}.
+  The encoding for \code{\link{stdin}} when redirected from a file can
+  be set by the command-line flag \code{--encoding}.
 }
 \section{Blocking}{
   The default condition for all but fifo and socket connections is to be in
@@ -237,11 +231,21 @@ isIncomplete(con)
   Unicode wide characters, so encodings are likely not to work
   as one might expect.
 #endif
+#ifdef unix
+  Unix users wishing to \emph{write} to the primary selection may be
+  able to do so via \code{xclip}
+  (\url{http://people.debian.org/~kims/xclip/}), for example by
+  \code{pipe("xclip -i", "w")}.
+
+  MacOS X users can use \code{pipe("pbpaste")} and
+  \code{pipe("pbcopy", "w")} to read from and write to that system's
+  clipboard.
+#endif
 }
 \note{
   \R's connections are modelled on those in S version 4 (see Chambers,
   1998).  However \R goes well beyond the Svr4 model, for example in
-  output text connections and URL, gzfile, bzfile and socket
+  output text connections and URL, \code{gzfile}, \code{bzfile} and socket
   connections.
 
   The default mode in \R is \code{"r"} except for socket connections.
