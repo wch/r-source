@@ -1,7 +1,7 @@
 include MkRules
 
 HELP = YES
-WINHELP = BOTH# NO, CHM, BOTH
+WINHELP = CHM# NO, CHM, BOTH
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
@@ -83,12 +83,7 @@ fixed/fixdesc:
 
 dllversion.o: ../include/Rversion.h
 
-R1.a: R.a $(OBJS-EXTRA)
-	$(CP) R.a R1.a
-	$(AR) cr R1.a $(OBJS-EXTRA)
-	$(RANLIB) R1.a
-
-R.dll: R1.a $(MAINLIBS) $(EXTRALIBS) dllversion.o
+R.dll: R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
 
 Rdll: makeMakedeps ../../bin/R.dll
 

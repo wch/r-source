@@ -4,7 +4,7 @@ include ../gnuwin32/MkRules
 CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H
 FFLAGS=$(OPTFLAGS)
 CSOURCES=$(wildcard *.c)
-FSOURCES=$(filter-out $(wildcard z*.f), $(wildcard *.f))
+FSOURCES=$(wildcard *.f)
 OBJS=$(foreach i, $(CSOURCES) $(FSOURCES), $(basename $i).o)
 
 all: makeMakedeps ../gnuwin32/libappl.a
