@@ -50,7 +50,9 @@ type?topic
   \item{chmhelp}{logical (or \code{NULL}).  If \code{TRUE} the
     Compiled HTML version of the help will be shown in a help viewer.}
   \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE}, the HTML
-    version of the help will be shown in a browser.}
+    version of the help will be shown in a browser specified by
+    \code{options("browser")} or the file-association mechanism.
+  }
   \item{winhelp}{logical (or \code{NULL}).  If \code{TRUE}, a Windows
     \code{.hlp} file will be used if one is available.}
 #endif

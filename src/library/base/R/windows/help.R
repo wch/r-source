@@ -65,7 +65,7 @@ help <-
                 if(htmlhelp) {
                     file <- gsub("/", "\\\\", file)
                     if(file.exists(file)) {
-                        .Internal(show.help.item(file, 1, ""))
+                        browseURL(file)
                         cat("help() for `", topic, "' is shown in browser\n",
                             sep="")
                         return(invisible())

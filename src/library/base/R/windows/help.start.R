@@ -13,12 +13,8 @@ help.start <- function(update = TRUE, gui = "irrelevant",
         try(make.search.html(.Library))
     }
     a <- gsub("/", "\\\\", a)
-    cat("If nothing happens, you have to open `", a, "' yourself\n")
-    if(is.null(browser)) .Internal(help.start())
-    else {
-        cmd <- paste('"', browser, '" ', a, sep="")
-        system(cmd, wait=FALSE)
-    }
+    cat("If nothing happens, you should open `", a, "' yourself\n")
+    browseURL(a, browser = browser())
     invisible("")
 }
 
