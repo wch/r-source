@@ -24,78 +24,79 @@
 #endif
 
 #ifdef Macintosh
- #ifndef HAVE_STRDUP
- extern char *strdup();
- #endif
+# ifndef HAVE_STRDUP
+  extern char *strdup();
+# endif
 #endif
 
 #include <Defn.h>
 #include <R_ext/RConverters.h>
 
 /* head of the linked list of converters. Typically, NULL.*/
-static R_toCConverter   *StoCConverters = NULL; 
+static R_toCConverter   *StoCConverters = NULL;
 
 /* Convert an R object to a non-moveable C/Fortran object and return
    a pointer to it.  This leaves pointers for anything other
    than vectors and lists unaltered.
    This is is accessed in do_dotCode() in dotcode.c. It is not for public use.
 */
-void *Rf_convertToC(SEXP s, R_CConvertInfo *info, int *success, R_toCConverter **converter) 
+void *Rf_convertToC(SEXP s, R_CConvertInfo *info, int *success, R_toCConverter **converter)
 {
-  void *ans;
-  R_toCConverter *tmp = StoCConverters;
- 
-  while(tmp) {
-    if(tmp->active) {
-      if(tmp->matcher(s, info, tmp)) {
-	*success = 1;
-	ans =tmp->converter(s, info, tmp);
-	if(converter)
-	  *converter = tmp;
-	return(ans);
-      }
-    }
-    tmp = tmp->next;
-  }
+    void *ans;
+    R_toCConverter *tmp = StoCConverters;
 
-  *success = 0;
-  return((void*) NULL);
+    while(tmp) {
+	if(tmp->active) {
+	    if(tmp->matcher(s, info, tmp)) {
+		*success = 1;
+		ans =tmp->converter(s, info, tmp);
+		if(converter)
+		    *converter = tmp;
+		return(ans);
+	    }
+	}
+	tmp = tmp->next;
+    }
+
+    *success = 0;
+    return((void*) NULL);
 }
 
 
 /**************** R-to-C converter management routines ******************/
 
 /*
-  Create a new element for the R-to-C converters and add it to the 
+  Create a new element for the R-to-C converters and add it to the
   end of the converter list.
 */
-R_toCConverter *R_addToCConverter(R_ToCPredicate matcher, R_ToCConverter converter,
-                                  R_FromCConverter reverse, void *userData, char *desc)
+R_toCConverter
+*R_addToCConverter(R_ToCPredicate matcher, R_ToCConverter converter,
+		   R_FromCConverter reverse, void *userData, char *desc)
 {
-  R_toCConverter *tmp = StoCConverters;
-  R_toCConverter *el; 
-  /* Create and populate the new entry. */
-  el = malloc(sizeof(R_toCConverter));
-  el->matcher = matcher;
-  el->converter = converter;
-  el->userData = userData;
-  el->reverse = reverse;
-  el->active = TRUE;
-  if(desc)
-      el->description = strdup(desc);
-  el->next = (R_toCConverter*) NULL;
+    R_toCConverter *tmp = StoCConverters;
+    R_toCConverter *el;
+    /* Create and populate the new entry. */
+    el = malloc(sizeof(R_toCConverter));
+    el->matcher = matcher;
+    el->converter = converter;
+    el->userData = userData;
+    el->reverse = reverse;
+    el->active = TRUE;
+    if(desc)
+	el->description = strdup(desc);
+    el->next = (R_toCConverter*) NULL;
 
-  /* Add the entry to the end of the list. */
-  if(StoCConverters == NULL)
-    StoCConverters = el;
-  else {
-    while(tmp->next) {
-      tmp = tmp->next;
+    /* Add the entry to the end of the list. */
+    if(StoCConverters == NULL)
+	StoCConverters = el;
+    else {
+	while(tmp->next) {
+	    tmp = tmp->next;
+	}
+	tmp->next = el;
     }
-    tmp->next = el;
-  }
 
-  return(el);
+    return(el);
 }
 
 /*
@@ -103,33 +104,33 @@ R_toCConverter *R_addToCConverter(R_ToCPredicate matcher, R_ToCConverter convert
 */
 R_toCConverter *R_getToCConverterByIndex(int which)
 {
-  R_toCConverter *tmp = StoCConverters;
-  int n = 0;
-  while(tmp) {
-    if(n == which)
-      return(tmp);
-    n++;
-    tmp = tmp->next;
-  }
+    R_toCConverter *tmp = StoCConverters;
+    int n = 0;
+    while(tmp) {
+	if(n == which)
+	    return(tmp);
+	n++;
+	tmp = tmp->next;
+    }
 
-  return((R_toCConverter*) NULL);
+    return((R_toCConverter*) NULL);
 }
 
 
 /*
-   Find the first element in the S-to-C converter list 
+   Find the first element in the S-to-C converter list
    that has the specified description string.
  */
 R_toCConverter *R_getToCConverterByDescription(const char *desc)
 {
-  R_toCConverter *tmp = StoCConverters;
-  while(tmp) {
-    if(tmp->description && strcmp(tmp->description, desc) == 0)
-      return(tmp);
-    tmp = tmp->next;
-  }
+    R_toCConverter *tmp = StoCConverters;
+    while(tmp) {
+	if(tmp->description && strcmp(tmp->description, desc) == 0)
+	    return(tmp);
+	tmp = tmp->next;
+    }
 
-  return((R_toCConverter*) NULL);
+    return((R_toCConverter*) NULL);
 }
 
 /*
@@ -137,18 +138,18 @@ R_toCConverter *R_getToCConverterByDescription(const char *desc)
 */
 void R_removeToCConverter(R_toCConverter *el)
 {
-  R_toCConverter *tmp = StoCConverters;
-  if(el == StoCConverters)
-    StoCConverters = el->next;
-  else {
-    while(tmp) {
-      if(tmp->next == el) {
-	tmp->next = el->next;
-	return;
-      }
-      tmp = tmp->next;
+    R_toCConverter *tmp = StoCConverters;
+    if(el == StoCConverters)
+	StoCConverters = el->next;
+    else {
+	while(tmp) {
+	    if(tmp->next == el) {
+		tmp->next = el->next;
+		return;
+	    }
+	    tmp = tmp->next;
+	}
     }
-  }
 }
 
 /*
@@ -169,21 +170,22 @@ void freeCConverter(R_toCConverter *el)
 /*
  converter predicate used to check whether the object is an "instance"
  of the class whose name is stored in as a string in the userData field of the
- converter element (`el'). Called as 
+ converter element (`el'). Called as
   R_addToCConverter(R_converterMatchClass, converter, reverse, "class-name", "description...")
 */
-Rboolean R_converterMatchClass(SEXP obj, R_CConvertInfo *inf, R_toCConverter *el)
+Rboolean
+R_converterMatchClass(SEXP obj, R_CConvertInfo *inf, R_toCConverter *el)
 {
-  SEXP klasses = getAttrib(obj, R_ClassSymbol);
-  int i, n;
-  n = length(klasses);
-  for(i = 0; i < n ; i++) {
-    if(strcmp(CHAR(STRING_ELT(klasses,i)), (char *)el->userData) == 0) {
-      return(TRUE);
+    SEXP klasses = getAttrib(obj, R_ClassSymbol);
+    int i, n;
+    n = length(klasses);
+    for(i = 0; i < n ; i++) {
+	if(strcmp(CHAR(STRING_ELT(klasses,i)), (char *)el->userData) == 0) {
+	    return(TRUE);
+	}
     }
-  } 
 
-  return(FALSE);
+    return(FALSE);
 }
 
 /**********  S-level entry points. ***************/
@@ -195,19 +197,19 @@ Rboolean R_converterMatchClass(SEXP obj, R_CConvertInfo *inf, R_toCConverter *el
 
 /*
   Determine the number of R-to-C converters currently registered,
-  including the inactive ones. 
+  including the inactive ones.
 */
 
 static int Rf_getNumRtoCConverters()
 {
-  int n = 0;
-  R_toCConverter *tmp = StoCConverters;
+    int n = 0;
+    R_toCConverter *tmp = StoCConverters;
 
-  while(tmp) {
-    n++;
-    tmp = tmp->next;
-  }
-  return(n);
+    while(tmp) {
+	n++;
+	tmp = tmp->next;
+    }
+    return(n);
 }
 
 /*
@@ -217,11 +219,11 @@ static int Rf_getNumRtoCConverters()
 SEXP
 do_getNumRtoCConverters(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-  SEXP ans;
-  checkArity(op, args);
-  ans = allocVector(INTSXP, 1);
-  INTEGER(ans)[0] = Rf_getNumRtoCConverters();
-  return(ans);
+    SEXP ans;
+    checkArity(op, args);
+    ans = allocVector(INTSXP, 1);
+    INTEGER(ans)[0] = Rf_getNumRtoCConverters();
+    return(ans);
 }
 
 /*
@@ -230,23 +232,23 @@ do_getNumRtoCConverters(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP
 do_getRtoCConverterDescriptions(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-  int n = 0, i;
-  R_toCConverter *tmp = StoCConverters;
-  SEXP ans;
+    int n = 0, i;
+    R_toCConverter *tmp = StoCConverters;
+    SEXP ans;
 
-  checkArity(op, args);
+    checkArity(op, args);
 
-  n = Rf_getNumRtoCConverters();
-    
-  PROTECT(ans = allocVector(STRSXP, n));
-  tmp = StoCConverters;
-  for(i = 0; i < n ; i++) {
-      if(tmp->description)
-	  SET_STRING_ELT(ans, i, mkChar(tmp->description));
-      tmp = tmp->next;
-  }
-  UNPROTECT(1);
-  return(ans); 
+    n = Rf_getNumRtoCConverters();
+
+    PROTECT(ans = allocVector(STRSXP, n));
+    tmp = StoCConverters;
+    for(i = 0; i < n ; i++) {
+	if(tmp->description)
+	    SET_STRING_ELT(ans, i, mkChar(tmp->description));
+	tmp = tmp->next;
+    }
+    UNPROTECT(1);
+    return(ans);
 }
 
 /*
@@ -256,21 +258,21 @@ do_getRtoCConverterDescriptions(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP
 do_getRtoCConverterStatus(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-  int n = 0, i;
-  R_toCConverter *tmp = StoCConverters;
-  SEXP ans;
+    int n = 0, i;
+    R_toCConverter *tmp = StoCConverters;
+    SEXP ans;
 
-  checkArity(op, args);
-  n = Rf_getNumRtoCConverters();
-    
-  PROTECT(ans = allocVector(LGLSXP, n));
-  tmp = StoCConverters;
-  for(i = 0; i < n ; i++) {
-    LOGICAL(ans)[i] = tmp->active;
-    tmp = tmp->next;
-  }
-  UNPROTECT(1);
-  return(ans); 
+    checkArity(op, args);
+    n = Rf_getNumRtoCConverters();
+
+    PROTECT(ans = allocVector(LGLSXP, n));
+    tmp = StoCConverters;
+    for(i = 0; i < n ; i++) {
+	LOGICAL(ans)[i] = tmp->active;
+	tmp = tmp->next;
+    }
+    UNPROTECT(1);
+    return(ans);
 }
 
 
@@ -302,7 +304,7 @@ do_setToCConverterActiveStatus(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     PROTECT(status = allocVector(LGLSXP, 1));
-    if(PRIMVAL(op) == 0) {   
+    if(PRIMVAL(op) == 0) {
 	LOGICAL(status)[0] = el->active;
 	el->active = LOGICAL(CADR(args))[0];
     } else {
