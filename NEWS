@@ -18,7 +18,8 @@ NEW FEATURES
 	function plot.histogram() for plotting.
 	It now also allows character labels.
 
-    o	The more recent GNU regex from grep-2.4.2 is used.
+    o	The more recent GNU regex from grep-2.4.2 is used.  This uses
+	locale-based ordering for ranges on platforms with strcoll.
 
     o   `where' command added to debug.
 
@@ -149,6 +150,12 @@ BUG FIXES
 
     o   data(state)'s  state.abb  has been corrected to use official
         2-letter abbrevations.
+
+    o   c(0.099999994, 0.2) prints as 0.1 0.2 not 0.10 0.20 after
+	correcting the precision calculations.
+
+    o	Internal function fprec was overflowing for numbers around
+        1e-305.
 
 
 
