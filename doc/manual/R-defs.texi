@@ -14,31 +14,16 @@ S
 @sc{html}
 @end macro
 
-@c NOTE: The "%" after the closing '$' in the tex part is important to
-@c	 suppress an extraneous line break !
 @macro eqn {t, a}
 @iftex
 @tex
-$ \t\ $%
+$\t\$%
 @end tex
 @end iftex
 @ifnottex
-\a\
+\a\@c
 @end ifnottex
 @end macro
-
-@c Kurt, why does this fail ?
-@c @macro plusminus
-@c @eqn{\pm, +/-}
-@c @end macro
-@macro plusminus
-@ifinfo
-+/-
-@end ifinfo
-@tex $\\pm$%
-@end tex
-@end macro
-
 
 @macro pkg {p}
 @strong{\p\}
