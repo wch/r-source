@@ -68,7 +68,7 @@ Rdconv($ARGV[0],$opt_type,$opt_debug);
 
 sub usage {
 
-    print "Rdconv version $VERSION\n";
+    print "Rdconv\n";
     print "Usage: Rdconv [--debug/-d] [--help/-h]";
     print " [--type/-t html|nroff|Sd|latex|examp] file\n\n";
 
