@@ -1233,13 +1233,13 @@ if test "x$BLAS_LIBS" = x; then
   fi
 fi
 
-if test "x$BLAS_LIBS" = x; then
-  # Check for BLAS in SCSL and SGIMATH libraries (prefer SCSL):
-  AC_CHECK_LIB(scs, $dgemm_func,
-               BLAS_LIBS="-lscs", 
-	       AC_CHECK_LIB(complib.sgimath, $dgemm_func,
-			    BLAS_LIBS="-lcomplib.sgimath", , $FLIBS), $FLIBS)
-fi
+# if test "x$BLAS_LIBS" = x; then
+#   # Check for BLAS in SCSL and SGIMATH libraries (prefer SCSL):
+#   AC_CHECK_LIB(scs, $dgemm_func,
+#                BLAS_LIBS="-lscs", 
+# 	       AC_CHECK_LIB(complib.sgimath, $dgemm_func,
+# 			    BLAS_LIBS="-lcomplib.sgimath", , $FLIBS), $FLIBS)
+# fi
 
 if test "x$BLAS_LIBS" = x; then
   # Checks for BLAS in IBM ESSL library.  We must also link
