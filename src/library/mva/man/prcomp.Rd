@@ -56,8 +56,8 @@ prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
   \code{print} method for the these objects prints the results in a nice
   format and the \code{plot} method produces a scree plot.
 
-  If the input has more variables than units then \code{\link{LA.svd}}
-  is used, and the results may differ in size from versions prior to 1.7.0.
+  If the input has more variables than units then \code{\link{La.svd}}
+  is used, and the results may differ in sign from versions prior to 1.7.0.
 }
 \note{
   The signs of the columns of the rotation matrix are arbitrary, and
