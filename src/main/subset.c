@@ -530,7 +530,8 @@ SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (type == LANGSXP) {
 	ax = ans;
 	PROTECT(ans = allocList(LENGTH(ax)));
-	TYPEOF(ans) = LANGSXP;
+	if ( LENGTH(ax) > 0 )
+	    TYPEOF(ans) = LANGSXP;
 	for(px = ans, i = 0 ; px != R_NilValue ; px = CDR(px))
 	    CAR(px) = VECTOR(ax)[i++];
 	setAttrib(ans, R_DimSymbol, getAttrib(ax, R_DimSymbol));

@@ -354,15 +354,15 @@ SEXP NewName(SEXP base, SEXP tag, int i, int n, int seqno)
     base = EnsureString(base);
     tag = EnsureString(tag);
     if (*CHAR(base) && *CHAR(tag)) {
-	ans = allocString(strlen(CHAR(base)) + strlen(CHAR(tag)) + 1);
+	ans = allocString(strlen(CHAR(base)) + strlen(CHAR(tag)));
 	sprintf(CHAR(ans), "%s.%s", CHAR(base), CHAR(tag));
     }
     else if (*CHAR(base)) {
-	ans = allocString(strlen(CHAR(base)) + IndexWidth(seqno) + 1);
+	ans = allocString(strlen(CHAR(base)) + IndexWidth(seqno));
 	sprintf(CHAR(ans), "%s%d", CHAR(base), seqno);
     }
     else if (*CHAR(tag)) {
-	ans = allocString(strlen(CHAR(tag)) + 1);
+	ans = allocString(strlen(CHAR(tag)));
 	sprintf(CHAR(ans), "%s", CHAR(tag));
     }
     else ans = R_BlankString;
