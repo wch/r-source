@@ -9,6 +9,9 @@
 
 NEW FEATURES
 
+    o   new global variable R.version.string (for plots & reports).
+	Deprecated version & Version for new  R.version & R.Version. 
+
 BUG FIXES
 
     o   logical binops tried to set time series parameters before dimensions
