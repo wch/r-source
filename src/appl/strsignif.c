@@ -61,11 +61,13 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
-#include "R_ext/Error.h" /* error */
-#include "R_ext/RS.h" /* Calloc */
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+
+#include "R_ext/Error.h" /* error */
+#include "R_ext/RS.h" /* Calloc */
+#include "R_ext/Applic.h"
 
 void str_signif(char *x, int *n, char **type, int *width, int *digits,
 		char **format, char **flag, char **result)
