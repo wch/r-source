@@ -12,6 +12,7 @@ RtangleSetup(file, syntax, output=NULL, annotate=TRUE, split=FALSE,
 }
 \arguments{
   \item{file}{Name of Sweave source file.}
+  \item{syntax}{An object of class \code{SweaveSyntax}.}
   \item{output}{Name of output file, default is to remove extension \file{.nw},
     \file{.Rnw} or \file{.Snw} and to add extension \file{.R}. Any
     directory names in \code{file} are also removed such that the output

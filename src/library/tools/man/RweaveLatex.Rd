@@ -14,6 +14,7 @@ RweaveLatexSetup(file, syntax, output=NULL, quiet=FALSE, debug=FALSE,
 }
 \arguments{
   \item{file}{Name of Sweave source file.}
+  \item{syntax}{An object of class \code{SweaveSyntax}.}
   \item{output}{Name of output file, default is to remove extension
     \file{.nw}, \file{.Rnw} or \file{.Snw} and to add extension
     \file{.tex}. Any 
