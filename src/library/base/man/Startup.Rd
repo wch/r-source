@@ -25,7 +25,8 @@
   files to process for setting environment variables.  The name of the
   site file is the one pointed to by the environment variable
   \code{R\_ENVIRON}; if this is unset or empty,
-  \file{\$R\_HOME/etc/Renviron.site} is used (if it exists).
+  \file{\$R\_HOME/etc/Renviron.site} is used (if it exists, which it
+  does not in a ``factory-fresh'' installation).
   The user files searched for are \file{.Renviron} in the
   current or in the user's home directory (in that order).
   See \bold{Details} for how the files are read.
@@ -44,7 +45,8 @@
   line option \code{--no-site-file} was given.  The name of this file is
   taken from the value of the \code{R\_PROFILE} environment variable.
   If this variable is unset, the default is
-  \file{\$R\_HOME/etc/Rprofile.site}.
+  \file{\$R\_HOME/etc/Rprofile.site}, which is used if it exists
+  (which it does not in a ``factory-fresh'' installation).
   This code is loaded into package \code{base}.
 
   Then, unless \code{--no-init-file} was given, \R searches for a file
@@ -81,8 +83,8 @@
   unless \code{--no-restore-history} was specified (or
   \code{--no-restore}).
 
-  The command-line flag \code{--vanilla} implies \code{--no-init-file},
-  \code{--no-restore} and \code{--no-environ}.
+  The command-line flag \code{--vanilla} implies \code{--no-site-file},
+  \code{--no-init-file}, \code{--no-restore} and \code{--no-environ}.
 }
 \details{
   Note that there are two sorts of files used in startup:
