@@ -1,4 +1,4 @@
-/* Copyright (C) 1999 Guido Masarotto
+/* Copyright (C) 1999, 2000 Guido Masarotto
 
    Generalized version of widgets in buttons.c
 
