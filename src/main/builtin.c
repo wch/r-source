@@ -44,7 +44,7 @@ SEXP do_delay(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_delayed(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP name, expr, eenv, aenv;
+    SEXP name = R_NilValue /* -Wall */, expr, eenv, aenv;
     checkArity(op, args);
     
     if (!isString(CAR(args)) || length(CAR(args)) == 0)
