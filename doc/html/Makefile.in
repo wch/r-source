@@ -21,6 +21,10 @@ INSTFILES = \
 	resources.html \
 	template.html \
 	thanks.html
+## FIXME:
+## Update when releasing 1.3.0
+CLEANFILES = $(INSTFILES) resource.html
+## </FIXME>
 DISTFILES = Makefile.in $(INSTFILES) index-default.html
 SUBDIRS = search
 
@@ -76,7 +80,7 @@ clean:
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	@if [ "$(srcdir)" != "." ]; then \
-	  rm -f $(INSTFILES); \
+	  rm -f $(CLEANFILES); \
 	fi
 	@rm -f $(OBJECTS)
 distclean: clean
