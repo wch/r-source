@@ -897,10 +897,10 @@ SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
     v = vals;
     while (!isNull(a)) {
 	nv += 1;
+	if (CAR(a) == R_DotsSymbol)
+	    error("... not allowed in return");
 	if (isNull(TAG(a)) && isSymbol(CAR(a)))
 	    SET_TAG(v, CAR(a));
-	if (NAMED(CAR(v)) > 1)
-	    SETCAR(v, duplicate(CAR(v)));
 	a = CDR(a);
 	v = CDR(v);
     }
@@ -913,13 +913,14 @@ SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
 	v = CAR(vals);
 	break;
     default:
+	for (v = vals; v != R_NilValue; v = CDR(v))
+	    if (NAMED(CAR(v)))
+		SETCAR(v, duplicate(CAR(v)));
 	v = PairToVectorList(vals);
 	break;
     }
-    if (R_BrowseLevel)
-	findcontext(CTXT_BROWSER | CTXT_FUNCTION, rho, v);
-    else
-	findcontext(CTXT_FUNCTION, rho, v);
+    findcontext(CTXT_BROWSER | CTXT_FUNCTION, rho, v);
+
     return R_NilValue; /*NOTREACHED*/
 }
 
