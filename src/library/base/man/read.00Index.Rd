@@ -4,7 +4,7 @@
 \description{
   Read item/description information from 00Index-style files.  Such
   files are description lists rendered in tabular form, and currently
-  used for the object, data and demo indices and \file{TITLE} files of
+  used for the \file{INDEX} and \file{demo/00Index} files of
   add-on packages.
 }
 \usage{
