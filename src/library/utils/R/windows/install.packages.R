@@ -247,7 +247,7 @@ menuInstallLocal <- function()
 
 menuInstallBioc <- function()
 {
-    a <- available.packages(contriburl(getOption("BIOC")))
+    a <- available.packages(contrib.url(getOption("BIOC")))
     install.packages(select.list(a[,1], , TRUE), .libPaths()[1],
                      available = a, repos = getOption("BIOC"),
                      dependencies = TRUE)
