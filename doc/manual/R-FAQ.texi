@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-3, 2000-07-12
+@set FAQ-VERSION 1.1-4, 2000-07-17
 @set REL-VERSION 1.1.0
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -1456,6 +1456,8 @@ contains
 @table @strong
 @item HTML
 Functions for exporting R objects as @HTML{} tables.
+@item Matrix
+A Matrix package.
 @item RMySQL
 An interface between R and the MySQL database system.
 @item RPgSQL
