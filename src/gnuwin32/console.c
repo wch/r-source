@@ -29,6 +29,7 @@
 #include "graphapp/ga.h"
 #include "graphapp/stdimg.h"
 #include "console.h"
+#include "consolestructs.h"
 #include "rui.h"
 
 
@@ -42,18 +43,6 @@
 #define TABSIZE 8
 
 /* xbuf */
-
-typedef unsigned int xint;
-typedef unsigned long xlong;
-
-struct structXBUF {
-    xint  ns, ms, shift;
-    xlong dim, av;
-    char *b, **s, *free;
-    int  *user;
-};
-
-typedef struct structXBUF *xbuf;
 
 static xbuf newxbuf(xlong dim, xint ms, xint shift)
 {
@@ -250,88 +239,6 @@ static xbuf file2xbuf(char *name, int del)
 }
 
 /* console */
-
-struct structConsoleData {
-    int   kind;			/* console or pager */
-    int   rows, cols;		/* dimension in char */
-    int   w, h;			/* dimensions in pixel */
-
-    font  f;			/* font */
-    int   fw, fh;
-    int   top, right;           /* borders */
-    rgb   bg, fg, ufg;		/* colours */
-    int   fv, fc;		/* first line and first char visible */
-    int   r, c;			/* cursor position */
-    int   sel, mx0, my0, mx1, my1;	/* selection */
-    xbuf  lbuf;			/* lines buffer */
-    int   firstkey, numkeys;	/* keys buffer */
-    char *kbuf;
-    int   already;              /* number of keys in buffer to be processed
-				   before clipb. */
-    char *clp;                  /* data from the clipboard */
-    int  pclp;
-
-    int   lazyupdate, needredraw, newfv, newfc;	/* updating and redrawing */
-    bitmap bm;
-
-    int   cur_pos, max_pos, prompt_len;	/* editing */
-    xbuf  history;
-
-    char  chbrk, modbrk;	/* hook for user's break */
-    void  (*fbrk) ();
-
-    menuitem mcopy, mpaste, mpopcopy, mpoppaste;
-};
-
-typedef struct structConsoleData *ConsoleData;
-
-#define CONSOLE 1
-#define PAGER 2
-
-#define BM  (p->bm)
-#define ROWS (p->rows)
-#define COLS (p->cols)
-#define WIDTH (p->w)
-#define HEIGHT (p->h)
-#define BORDERX (p->right)
-#define BORDERY (p->top)
-#define FW (p->fw)
-#define FH (p->fh)
-#define FV (p->fv)
-#define FC (p->fc)
-#define NEWFV (p->newfv)
-#define NEWFC (p->newfc)
-#define NUMLINES (p->lbuf->ns)
-#define LINE(i)  (p->lbuf->s[i])
-#define USER(i)  (p->lbuf->user[i])
-#define VLINE(i) ((strlen(LINE(i))>FC) ? &LINE(i)[FC] : "")
-#define RLINE(i) (rect(0, BORDERY + (i)*FH, WIDTH, FH))
-#define RMLINES(i,j) (rect(0, BORDERY + (i)*FH, WIDTH, (j-i+1)*FH))
-#define cur_pos (p->cur_pos)
-#define max_pos (p->max_pos)
-#define prompt_len (p->prompt_len)
-#define HISTORY(i) (p->history->s[p->history->ns - i - 1])
-#define NHISTORY   (p->history->ns)
-
-#define WRITELINE(i, j) writeline(p, i, j)
-
-#define REDRAW drawconsole(c, getrect(c))
-
-#define FBEGIN { \
-                 ConsoleData p; \
-                 p = getdata(c); \
-               {
-
-#define FEND(result) } return result;}
-#define FVOIDEND }}
-#define FVOIDRETURN { return; }
-#define FRETURN(result) {return result;}
-
-#define PBEGIN
-
-#define PEND
-
-#define RSHOW(r) {gbitblt(c, p->bm, topleft(r), r);}
 
 static rgb consolebg = White, consolefg = Black, consoleuser = Red,
     pagerhighlight = Red;
@@ -2258,4 +2165,90 @@ void Rgui_configure()
     bCancel = newbutton("Cancel", rect(430, 360, 70, 25), cancel); 
     show(wconfig);
     getGUIstate(&curGUI);
+}
+
+/* data editor support */
+
+int R_de_up;
+
+extern void de_redraw(control c, rect r);
+extern void de_normalkeyin(control c, int k);
+extern void de_ctrlkeyin(control c, int k);
+extern void de_mousedown(control c, int buttons, point xy);
+extern void de_closewin();
+
+static void deldataeditor(control m)
+{
+    ConsoleData p = getdata(m);
+    xbufdel(p->lbuf);
+    freeConsoleData(getdata(m));
+}
+
+static void declose(control m)
+{
+    de_closewin();
+    show(RConsole);
+    R_de_up =0;
+}
+
+static void deresize(console c, rect r)
+FBEGIN
+    if (((WIDTH  == r.width) &&
+	 (HEIGHT == r.height)) ||
+	(r.width == 0) || (r.height == 0) ) /* minimize */
+        FVOIDRETURN;
+    WIDTH = r.width;
+    HEIGHT = r.height;
+    clear(c);
+FVOIDEND
+
+
+dataeditor newdataeditor()
+{
+    ConsoleData p;
+    int w, h, x, y;
+    dataeditor c;
+
+    p = newconsoledata((consolefn) ? consolefn : FixedFont,
+		       pagerrow, pagercol,
+		       consolefg, consoleuser, consolebg,
+		       DATAEDITOR);
+    if (!p) return NULL;
+
+    if (ismdi()) {
+	x = y = w = h = 0;
+    } else {
+	w = WIDTH ;
+	h = HEIGHT;
+	x = (devicewidth(NULL) - w) / 1.5;
+	y = (deviceheight(NULL) - h) / 1.5 ;
+    }
+    c = (dataeditor) newwindow("R Data Editor", rect(x, y, w, h),
+			       Document | StandardWindow |
+			       TrackMouse | Modal);
+    if (!c) {
+         freeConsoleData(p);
+         return NULL;
+    }
+    setdata(c, p);
+    if(h == 0) HEIGHT = getheight(c);
+    if(w == 0) WIDTH  = getwidth(c);
+    COLS = WIDTH / FW - 1;
+    ROWS = HEIGHT / FH - 1;
+    BORDERX = (WIDTH - COLS*FW) / 2;
+    BORDERY = (HEIGHT - ROWS*FH) / 2;
+    gsetcursor(c, ArrowCursor);
+    gchangescrollbar(c, VWINSB, 0, 0, ROWS, 0);
+    gchangescrollbar(c, HWINSB, 0, COLS-1, COLS, 1);
+    setbackground(c, consolebg);
+    addto(c);
+    setdata(c, p);
+    setresize(c, deresize);
+    setredraw(c, de_redraw);
+    setdel(c, deldataeditor);
+    setclose(c, declose);
+    setkeyaction(c, de_ctrlkeyin);
+    setkeydown(c, de_normalkeyin);
+    setmousedown(c, de_mousedown);
+    return(c);
 }
