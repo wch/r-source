@@ -1303,10 +1303,10 @@ AC_EGREP_CPP([yes],
 AC_DEFUN([_R_PATH_TCL_CONFIG],
 [AC_MSG_CHECKING([for tclConfig.sh in library (sub)directories])
 AC_CACHE_VAL([r_cv_path_TCL_CONFIG],
-[for libdir in /opt/lib /usr/local/lib /usr/lib /lib; do
+[for ldir in /opt/lib /usr/local/lib /usr/lib /lib; do
   for dir in \
-      ${libdir} \
-      `ls -d ${libdir}/tcl[[8-9]].[[0-9]]* 2>/dev/null`; do
+      ${ldir} \
+      `ls -d ${ldir}/tcl[[8-9]].[[0-9]]* 2>/dev/null`; do
     if test -f ${dir}/tclConfig.sh; then
       r_cv_path_TCL_CONFIG="${dir}/tclConfig.sh"
       break 2
@@ -1329,10 +1329,10 @@ fi
 AC_DEFUN([_R_PATH_TK_CONFIG],
 [AC_MSG_CHECKING([for tkConfig.sh in library (sub)directories])
 AC_CACHE_VAL([r_cv_path_TK_CONFIG],
-[for libdir in /opt/lib /usr/local/lib /usr/lib /lib; do
+[for ldir in /opt/lib /usr/local/lib /usr/lib /lib; do
   for dir in \
-      ${libdir} \
-      `ls -d ${libdir}/tk[[8-9]].[[0-9]]* 2>/dev/null`; do
+      ${ldir} \
+      `ls -d ${ldir}/tk[[8-9]].[[0-9]]* 2>/dev/null`; do
     if test -f ${dir}/tkConfig.sh; then
       r_cv_path_TK_CONFIG="${dir}/tkConfig.sh"
       break 2
