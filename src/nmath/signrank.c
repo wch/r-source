@@ -20,8 +20,8 @@
  *
  *    #include "Mathlib.h"
  *    double dsignrank(double x, double n)
- *    double dsignrank(double x, double n)
- *    double dsignrank(double x, double n)
+ *    double psignrank(double x, double n)
+ *    double qsignrank(double x, double n)
  *    double rsignrank(double n) 
  *
  *  DESCRIPTION
@@ -106,18 +106,19 @@ dsignrank(double x, double n)
 
 #ifdef IEEE_754
     /* NaNs propagated correctly */
-    if (ISNAN(x) || ISNAN(n)) return x + n;
+    if (ISNAN(x) || ISNAN(n)) return(x + n);
 #endif
     n = floor(n + 0.5);
     if (n <= 0) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 
+    if (fabs(x - floor(x + 0.5)) > 1e-7)
+	return(0);
     x = floor(x + 0.5);
-
     if ((x < 0) || (x > (n * (n + 1) / 2)))
-	return 0;
+	return(0);
 
     w_init_maybe(n);
     d = exp(log(csignrank(x, n)) - n * log(2));
@@ -134,23 +135,23 @@ psignrank(double x, double n)
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(n))
-    return x + n;
+    return(x + n);
     if (!FINITE(n)) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 #endif
     n = floor(n + 0.5);
     if (n <= 0) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
     
-    x = floor(x + 0.5);
+    x = floor(x + 1e-7);
     if (x < 0.0)
-	return 0;
+	return(0);
     if (x >= n * (n + 1) / 2)
-	return 1;
+	return(1);
 
     w_init_maybe(n);
     f = exp(- log(n) * 2);
@@ -176,20 +177,20 @@ qsignrank(double x, double n)
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(n))
-	return x + n;
+	return(x + n);
     if (!FINITE(x) || !FINITE(n)) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 #endif
     n = floor(n + 0.5);
     if (x < 0 || x > 1 || n <= 0) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 
     if (x == 0)
-	return(0.0);
+	return(0);
     if (x == 1)
 	return(n * (n + 1) / 2);
 
@@ -234,7 +235,7 @@ rsignrank(double n)
     n = floor(n + 0.5);
     if (n < 0) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 
     if (n == 0)

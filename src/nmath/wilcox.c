@@ -133,19 +133,20 @@ dwilcox(double x, double m, double n)
 #ifdef IEEE_754
     /* NaNs propagated correctly */
     if (ISNAN(x) || ISNAN(m) || ISNAN(n))
-	return x + m + n;
+	return(x + m + n);
 #endif
     m = floor(m + 0.5);
     n = floor(n + 0.5);
     if (m <= 0 || n <= 0) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 
+    if (fabs(x - floor(x + 0.5)) > 1e-7)
+	return(0);
     x = floor(x + 0.5);
-
     if ((x < 0) || (x > m * n))
-	return 0;
+	return(0);
 
     w_init_maybe(m, n);
     d = cwilcox(x, m, n) / choose(m + n, n);
@@ -162,25 +163,25 @@ pwilcox(double x, double m, double n)
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(m) || ISNAN(n))
-	return x + m + n;
+	return(x + m + n);
     if (!FINITE(m) || !FINITE(n)) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 #endif
     m = floor(m + 0.5);
     n = floor(n + 0.5);
     if (m <= 0 || n <= 0) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 
-    x = floor(x + 0.5);
+    x = floor(x + 1e-7);
 
     if (x < 0.0)
-	return 0;
+	return(0);
     if (x >= m * n)
-	return 1;
+	return(1);
 
     w_init_maybe(m, n);
     c = choose(m + n, n);
@@ -207,21 +208,21 @@ qwilcox(double x, double m, double n)
 
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(m) || ISNAN(n))
-	return x + m + n;
+	return(x + m + n);
     if(!FINITE(x) || !FINITE(m) || !FINITE(n)) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 #endif
     m = floor(m + 0.5);
     n = floor(n + 0.5);
     if (x < 0 || x > 1 || m <= 0 || n <= 0) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 
     if (x == 0)
-	return(0.0);
+	return(0);
     if (x == 1)
 	return(m * n);
 
@@ -269,7 +270,7 @@ rwilcox(double m, double n)
     n = floor(n + 0.5);
     if ((m < 0) || (n < 0)) {
 	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
+	return(ML_NAN);
     }
 
     if ((m == 0) || (n == 0))
