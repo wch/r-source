@@ -53,6 +53,7 @@ static Rboolean sock_open(Rconnection con)
 	sock = R_SockListen(sock1, buf, 256);
 	if(sock < 0) {
 	    warning("problem in listening on this socket");
+	    R_SockClose(sock1);
 	    return FALSE;
 	}
 	free(con->description);
