@@ -463,6 +463,7 @@ crandir:
 	$(MKDIR) -p cran/mini
 	$(CP) installer/rw*.exe cran
 	$(CP) CHANGES cran/CHANGES.$(RPREFIX)
+	$(CP) ../../NEWS cran/NEWS.$(RPREFIX)
 	(cd cran;\
 	 $(ECHO) 'cat(md5sum("$(RPREFIX).exe"),"*$(RPREFIX).exe")' \
          | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=tools >md5sum.txt)
