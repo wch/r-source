@@ -845,7 +845,7 @@ static void RemakeNextSEXP(FILE *fp)
 {
     unsigned int j, idx, type;
     int len;
-    SEXP s;
+    SEXP s = R_NilValue;	/* -Wall */
 
     idx = InInteger(fp),
     type = FixupType(InInteger(fp));
