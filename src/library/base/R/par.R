@@ -25,6 +25,8 @@ function (...)
 	}
 	else {
 		args <- list(...)
+                if (all(unlist(lapply(args, is.character))))
+                  args <- as.list(unlist(args))
 		if (length(args) == 1) {
 			if (is.list(args[[1]]) | is.null(args[[1]]))
 				args <- args[[1]]
@@ -37,3 +39,8 @@ function (...)
 	else .Internal(par(args))
 	if(!is.null(names(args))) invisible(value) else value
 }
+
+
+
+
+
