@@ -831,6 +831,8 @@ BUG FIXES
 	the response, which should have been transferred to the
 	residuals and fitted values.
 
+    o   print.ts() could get the year wrong because rounding issue
+        (PR#7255)
 
 
 	**************************************************

@@ -660,6 +660,7 @@ tt1 <- ts(x,start=c(1960,2), freq=12)
 tt2 <- ts(10+x,start=c(1960,2), freq=12)
 cbind(tt1, tt2)
 ## 1.4.1 had `Jan 1961' as `NA 1961'
+## ...and 1.9.1 had it as `Jan 1960'!!
 
 ## glm boundary bugs (related to PR#1331)
 x <- c(0.35, 0.64, 0.12, 1.66, 1.52, 0.23, -1.99, 0.42, 1.86, -0.02,
