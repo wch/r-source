@@ -1,11 +1,10 @@
 include MkRules
 
 HELP=YES
-WINHELP=CHM # NO, CHM, BOTH
+WINHELP=BOTH # NO, CHM, BOTH
 
 PACKAGES=base ctest eda lqs modreg mva nls splines stepfun ts
 RPREFIX=rw1010
-RVER=$(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
 
 RHOME=$(shell cd ../..; perl src/gnuwin32/pwd.pl)# must be absolute path
 RLIB=$(RHOME)/library
@@ -39,7 +38,7 @@ CFLAGS=$(OPTFLAGS) -I../include -I../include/R_ext -I. -DHAVE_CONFIG_H
 FFLAGS=$(OPTFLAGS)
 
 rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a CHTML \
-	../include/globalvar.h front-ends docfiles
+	../include/globalvar.h front-ends COPYRIGHTS
 
 rpackage: fixed/fixdesc $(PKGS)
 
@@ -59,24 +58,8 @@ rlibs:
 	$(MAKE) -C ./math
 
 
-docfiles: INSTALL COPYRIGHTS FAQs
-SEDVER= -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
-
 COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
-
-INSTALL: INSTALL.in ../../VERSION
-	$(SED) $(SEDVER) INSTALL.in > INSTALL
-
-FAQs: rw-faq fixed/r/rw-FAQ.html
-
-fixed/r/rw-FAQ.html: rw-FAQ.texi ../../VERSION
-	$(SED) $(SEDVER) $< | \
-	  makeinfo --html --no-headers --number-sections -o $@
-
-rw-faq: rw-FAQ.texi ../../VERSION
-	$(SED) $(SEDVER) $< | \
-	  makeinfo --no-headers --number-sections -o $@
 
 
 fixfiles:
@@ -211,7 +194,60 @@ cleanwin:
 	$(MAKE) -C bitmap clean
 	-$(MAKE) -C installer clean
 
-bindist:
+
+# tests
+check: all test
+test: test-Specific pkgtests
+
+test-Specific:
+	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests clean
+	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests RHOME=$(RHOME)
+
+PKGS-CHK=$(foreach i, $(PACKAGES), pkgcheck-$i)
+pkgtests: $(PKGS-CHK)
+
+pkgcheck-base:
+	@$(ECHO) -------- Testing package base --------
+	@(cd ../../library/base/R-ex; unzip -oq Rex)
+	-@mkdir -p ../library/base/check
+	-@$(MAKE) -C ../library/base/check \
+	  PKG=base RHOME=$(RHOME) RLIB=$(RLIB) \
+	  -f ../../../gnuwin32/check/PkgCheck
+	@(cd ../../library/base/R-ex; rm -f *.R)
+
+bundle-%:
+	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
+
+docs manuals:
+	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win clean
+	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win R_PKGS="$(PACKAGES)"
+	@$(MAKE) ziponly-base
+
+
+## ============= Maintainer targets ========================
+
+RVER=$(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
+
+docfiles: INSTALL FAQs
+SEDVER= -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
+
+INSTALL: INSTALL.in ../../VERSION
+	$(SED) $(SEDVER) INSTALL.in > INSTALL
+
+FAQs: rw-faq fixed/r/rw-FAQ.html
+
+fixed/r/rw-FAQ.html: rw-FAQ.texi ../../VERSION
+	$(SED) $(SEDVER) $< | \
+	  makeinfo --html --no-headers --number-sections -o $@
+
+rw-faq: rw-FAQ.texi ../../VERSION
+	$(SED) $(SEDVER) $< | \
+	  makeinfo --no-headers --number-sections -o $@
+
+
+distribution: bindist packagedist docsdist
+
+bindist: docfiles
 	$(RM) -rf $(RPREFIX)
 	$(MKDIR) $(RPREFIX)
 	$(CP) -pr ../../bin ../../afm ../../demos  ../../unzip $(RPREFIX)
@@ -253,8 +289,7 @@ bindist:
 	zip -r9X $(RPREFIX)b1.zip $(RPREFIX)
 	$(RM) -rf $(RPREFIX)
 
-
-
+## currently unused
 srcdist:
 	$(RM) -r ../src src
 	$(MKDIR) ../src
@@ -300,38 +335,6 @@ packagedist:
 	zip -rX $(RPREFIX)sp.zip $(RPREFIX)
 	$(RM) -r $(RPREFIX)
 
-
-distribution: bindist packagedist docsdist
-
-# tests
-check: all test
-test: test-Specific pkgtests
-
-test-Specific:
-	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests clean
-	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests RHOME=$(RHOME)
-
-PKGS-CHK=$(foreach i, $(PACKAGES), pkgcheck-$i)
-pkgtests: $(PKGS-CHK)
-
-pkgcheck-base:
-	@$(ECHO) -------- Testing package base --------
-	@(cd ../../library/base/R-ex; unzip -oq Rex)
-	-@mkdir -p ../library/base/check
-	-@$(MAKE) -C ../library/base/check \
-	  PKG=base RHOME=$(RHOME) RLIB=$(RLIB) \
-	  -f ../../../gnuwin32/check/PkgCheck
-	@(cd ../../library/base/R-ex; rm -f *.R)
-
-bundle-%:
-	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
-
-docs manuals:
-	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win clean
-	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win R_PKGS="$(PACKAGES)"
-#	$(RM) $(RHOME)/library/base/latex/*.tex
-	@$(MAKE) ziponly-base
-
 docsdist:
 	$(RM) -rf $(RPREFIX)
 	$(RM) -f $(RPREFIX)d1.zip $(RPREFIX)d2.zip
@@ -342,6 +345,7 @@ docsdist:
 	  -x $(RPREFIX)/doc/manual/R-FAQ.pdf
 	$(RM) -rf $(RPREFIX)
 
+## ============= End of maintainer targets ========================
 
 # Dependencies
 CSOURCES=$(wildcard *.c)
