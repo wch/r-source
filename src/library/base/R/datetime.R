@@ -653,6 +653,7 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
     x <- as.POSIXct(x)
     incr <- 1
     ## handle breaks ourselves
+    brks.number <- is.numeric(breaks) && length(breaks) == 1
     if (inherits(breaks, "POSIXt")) {
         breaks <- as.POSIXct(breaks)
         d <- min(abs(diff(unclass(breaks))))
@@ -665,7 +666,6 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
     } else {
         start <- as.POSIXlt(min(x, na.rm = TRUE))
         maxx <- max(x, na.rm = TRUE)
-        brks.number <- is.numeric(breaks) && length(breaks) == 1
         if(brks.number) {
         ## specified number of breaks
         } else if(is.character(breaks) && length(breaks) == 1) {
