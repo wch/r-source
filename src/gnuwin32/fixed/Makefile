@@ -30,10 +30,17 @@ fixh: h/config.h ../../include/FFDecl.h ../../include/FFTab.h \
 	$(ECHO) done > fixh
 
 ../../include/Rconfig.h: h/config.h
-	sh ./GETCONFIG > ../../include/Rconfig.h
+#	sh ./GETCONFIG > ../../include/Rconfig.h
+	sed -e 1d ../../../tools/GETCONFIG > GC
+	(cd h; sh ../GC > ../../../include/Rconfig.h)
+	rm GC
 
 ../../include/Rversion.h: ../../../date-stamp ../../../VERSION
-	sh ./GETVERSION > ../../include/Rversion.h
+#	sh ./GETVERSION > ../../include/Rversion.h
+	sed -e 1d ../../../tools/GETVERSION > ../../../tools/GV
+	sh ../../../tools/GV > ../../include/Rversion.h
+	rm ../../../tools/GV
+
 
 fixbin: $(filter-out ./bin/CVS, $(wildcard ./bin/*))
 	zip -q bins $^
