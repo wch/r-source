@@ -19,7 +19,9 @@ seq.default <-
 	if(missing(by))
 	    from:to
 	else { # dealing with 'by'
-	    n <- (del <- to - from)/by
+	    del <- to - from
+	    if(del == 0 && to == 0) return(to)
+	    n <- del/by
 	    if(!(length(n) && is.finite(n))) {
 		if(length(by) && by == 0 && length(del) && del == 0)
 		    return(from)

@@ -342,6 +342,7 @@ BUG FIXES
     o	integer(2^30+1) and similar ones do not segfault anymore but duly
 	report allocation errors.
 
+    o	seq(0,0,1) now works (PR#1133).
 
 
 	**************************************************
