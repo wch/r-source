@@ -1994,9 +1994,9 @@ SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, nms;
     int i;
 
-    PROTECT(ans = allocVector(INTSXP, 24));
-    PROTECT(nms = allocVector(STRSXP, 24));
-    for (i = 0; i < 24; i++) {
+    PROTECT(ans = allocVector(INTSXP, 25));
+    PROTECT(nms = allocVector(STRSXP, 25));
+    for (i = 0; i < 25; i++) {
         INTEGER(ans)[i] = 0;
         SET_STRING_ELT(nms, i, R_BlankString);
     }
