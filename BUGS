@@ -231,10 +231,10 @@ none
 
 Directory:  incoming
 
-* PR# 620 *
-Subject: crash with winDialogString("ABC", 1)
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Fri, 28 Jul 2000 20:38:30 +0200
+* PR# 621 *
+Subject: anova() on three or more objects behaves inconsistently
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Tue, 1 Aug 2000 10:02:18 +0100 (BST)
 * PR# 614 *
 Subject: scoping problems
 From: halvorsen <kjetilh@umsanet.edu.bo>
@@ -252,10 +252,6 @@ Date: Tue, 25 Jul 2000 17:50:56 -0400
 Subject: binomial()
 From: halvorsen <kjetilh@umsanet.edu.bo>
 Date: Mon, 24 Jul 2000 18:11:17 -0400
-* PR# 619 *
-Subject: Re: [R] gremlin in rep()
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Fri, 28 Jul 2000 08:20:21 -0700 (PDT)
 * PR# 618 *
 Subject: min(c()) = inf ???
 From: Peter Malewski <y0004379@tu-bs.de>
@@ -264,3 +260,11 @@ Date: Wed, 26 Jul 2000 13:57:32 +0200 (METDST)
 Subject: Bug in stem?
 From: "Trenkler, Dietrich" <dtrenkler@nts6.oec.uni-osnabrueck.de>
 Date: Wed, 26 Jul 2000 11:28:04 +0200
+* PR# 620 *
+Subject: crash with winDialogString("ABC", 1)
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Fri, 28 Jul 2000 20:38:30 +0200
+* PR# 619 *
+Subject: Re: [R] gremlin in rep()
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Fri, 28 Jul 2000 08:20:21 -0700 (PDT)
