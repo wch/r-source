@@ -9,6 +9,8 @@
 #define CURSOR		GDK_CROSSHAIR		/* Default cursor */
 #define MM_PER_INCH	25.4			/* mm -> inch conversion */
 
+/* FIXME: font handling */
+
 typedef struct {
     /* R Graphics Parameters */
     /* local device copy so that we can detect */
@@ -337,7 +339,6 @@ static gint expose_event(GtkWidget *widget, GdkEventExpose *event, gpointer data
 static gint delete_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
   DevDesc *dd;
-  gtkDesc *gtkd;
 
   dd = (DevDesc *) data;
   g_return_val_if_fail(dd != NULL, FALSE);
@@ -369,9 +370,6 @@ static GnomeUIInfo graphics_toolbar[] =
 {
   { GNOME_APP_UI_ITEM, "Activate", "Make this window the current device", tb_activate_cb, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_JUMP_TO, 0, (GdkModifierType) 0, NULL },
   GNOMEUIINFO_SEPARATOR,
-  { GNOME_APP_UI_ITEM, "Save As", "Save as a PS file", NULL, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_SAVE_AS, 0, (GdkModifierType) 0, NULL },
-  { GNOME_APP_UI_ITEM, "Print", "Print graphics", NULL, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_PRINT, 0, (GdkModifierType) 0, NULL },
-  GNOMEUIINFO_SEPARATOR,
   { GNOME_APP_UI_ITEM, "Close", "Close this graphics device", tb_close_cb, NULL, NULL, GNOME_APP_PIXMAP_STOCK, GNOME_STOCK_PIXMAP_CLOSE, 0, (GdkModifierType) 0, NULL },
   GNOMEUIINFO_END
 };
@@ -380,9 +378,8 @@ static GnomeUIInfo graphics_toolbar[] =
 static int GTK_Open(DevDesc *dd, gtkDesc *gtkd, char *dsp, double w, double h)
 {
   GdkColor bg;
-  GtkStyle *wstyle;
 
-  gint iw, ih, result;
+  gint iw, ih;
 
   /* initialise colour */
   gdk_rgb_init();
@@ -551,7 +548,6 @@ static void GTK_NewPage(DevDesc *dd)
 /* kill off the window etc */
 static void GTK_Close(DevDesc *dd)
 {
-  gint i, j;
   gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
 
   gtk_widget_destroy(gtkd->window);
@@ -595,7 +591,7 @@ static void GTK_Deactivate(DevDesc *dd)
   devnum = deviceNumber(dd);
   devnum++;
 
-  title_text = g_strdup_printf(title_text_active, devnum);
+  title_text = g_strdup_printf(title_text_inactive, devnum);
 
   gtk_window_set_title(GTK_WINDOW(gtkd->window), title_text);
 
@@ -784,7 +780,6 @@ double deg2rad = 0.01745329251994329576;
 static void GTK_Text(double x, double y, int coords,
 		       char *str, double xc, double yc, double rot, DevDesc *dd)
 {
-  GnomeCanvasItem *item;
   gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
   GdkColor gcol_fill;
   gint size;
@@ -818,6 +813,7 @@ static int GTK_Locator(double *x, double *y, DevDesc *dd)
 {
   /* FIXME: implement this */
   g_message("locator");
+  return 0;
 }
 
 static void GTK_Mode(gint mode)
