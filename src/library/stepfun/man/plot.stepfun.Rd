@@ -1,7 +1,7 @@
 \name{plot.stepfun}
 \title{Plot Step Functions}
 \usage{
-plot.stepfun(Fn, xval, xlim, xlab = "x", ylab = "f(x)", main = NULL,
+plot.stepfun(x, xval, xlim, xlab = "x", ylab = "f(x)", main = NULL,
      add = FALSE, verticals = TRUE, do.points = TRUE,
      pch = par("pch"), col.points=par("col"), cex.points=par("cex"),
      col.hor = par("col"), col.vert= par("col"),
@@ -9,9 +9,9 @@ plot.stepfun(Fn, xval, xlim, xlab = "x", ylab = "f(x)", main = NULL,
 }
 \alias{plot.stepfun}
 \arguments{
-  \item{Fn}{an \R object inheriting from \code{"stepfun"}.}
+  \item{x}{an \R object inheriting from \code{"stepfun"}.}
   \item{xval}{numeric vector of abscissa values at which to evaluate
-    \code{Fn}.  Defaults to \code{\link{knots}(Fn)} restricted to \code{xlim}.}
+    \code{x}.  Defaults to \code{\link{knots}(x)} restricted to \code{xlim}.}
   \item{xlim}{numeric(2); range of \code{x} values to use.}
   \item{xlab,ylab}{labels of x and y axis.}
   \item{main}{main title.}
