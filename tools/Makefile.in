@@ -11,6 +11,7 @@ subdir = tools
 include $(top_builddir)/Makeconf
 
 SCRIPT_SOURCES = \
+	Rdnewer.in \
 	install-info.in \
 	keyword-test.in \
 	pkg2tex.in
@@ -31,14 +32,13 @@ DISTFILES = Makefile.in \
 	texi2dvi \
 	$(SCRIPT_SOURCES)
 
-
 .SUFFIXES:
 .SUFFIXES: .in
 
 .in:
-        @cd $(top_builddir) && \
-          CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
-          $(SHELL) ./config.status
+	@cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
 	@chmod +x $@
 
 all: Makefile R
