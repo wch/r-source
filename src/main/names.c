@@ -548,6 +548,9 @@ FUNTAB R_FunTab[] =
 {"wsbrowser",	do_wsbrowser,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
 {"truepath",	do_truepath,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
+#if defined(Unix) && defined(HAVE_AQUA)
+{"wsbrowser",	do_wsbrowser,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
+#endif
 {"parse",	do_parse,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"save",	do_save,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"saveToConn",	do_saveToConn,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},
