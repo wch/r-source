@@ -11,14 +11,11 @@ subdir = doc/html
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-## <FIXME>
-## Remove function.html eventually ...
 INSTFILES = \
 	R.css \
 	left.jpg logo.jpg logosm.jpg right.jpg up.jpg \
 	about.html \
 	faq.html \
-	function.html \
 	packages-head.html \
 	resources.html \
 	template.html \
@@ -29,7 +26,8 @@ SUBDIRS = search
 OBJECTS = index.html
 ## <FIXME>
 ## build-help really should not create packages.html in *this* directory.
-CLEANFILES = packages.html packages-foot.html $(OBJECTS)
+## Remove 'function.html' eventually ...
+CLEANFILES = packages.html packages-foot.html $(OBJECTS) function.html
 ## </FIXME>
 DISTCLEANFILES = Makefile
 
