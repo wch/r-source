@@ -51,7 +51,8 @@ plot.default(x, y = NULL, type = "p",  xlim = NULL, ylim = NULL,
     specified so that each point can be given its own color.  If there
     are fewer colors than points they are recycled in the standard
     fashion.}
-  \item{bg}{background color of ???}
+  \item{bg}{background color for open plot symbols, see
+    \code{\link{points}}.}
   \item{pch}{a vector of plotting characters or symbols.}
   \item{cex}{a numerical value giving the amount by which plotting text
     and symbols should be scaled relative to the default}
