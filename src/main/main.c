@@ -494,12 +494,6 @@ void setup_Rmainloop(void)
 	R_LoadProfile(R_fopen(buf, "r"), R_GlobalEnv);
     }
 
-   if (strcmp(R_GUIType, "AQUA") == 0) {
-	char buf[256];
-
-	sprintf(buf, "%s/library/base/aqua/aqua.R", R_Home);
-	R_LoadProfile(R_fopen(buf, "r"), R_GlobalEnv);
-    }
     /* Print a platform and version dependent */
     /* greeting and a pointer to the copyleft. */
 
