@@ -38,6 +38,7 @@ These calls are typically made in conjunction with
 \code{\link{dyn.load}} which links DLLs to \R.
 }
 %%-- This note based on BDR's understanding
+%% edited TSL
 \section{Argument types}{
     The mapping of the types of \R arguments to C or Fortran arguments
     in \code{.C} or \code{.Fortran} is
@@ -48,6 +49,8 @@ real \tab double * \tab double precision\cr
 complex \tab complex * \tab double precision\cr
 logical \tab int * \tab integer \cr
 character \tab char ** \tab [compiler dependent]\cr
+list \tab void * (SEXP *)\tab \cr
+other \tab void * (SEXP)\tab \cr
 }
     The C type \code{complex} is defined in \file{Complex.h} as a
     \code{typedef struct {double r; double i;}}.
@@ -58,6 +61,11 @@ character \tab char ** \tab [compiler dependent]\cr
     Character strings are passed as C arrays of character strings to
     Fortran: the first string may be usable if its length is passed
     separately.
+
+    Lists, functions, expressions, environments and other language
+elements are passed as generic pointers (\code{void *}). R functions can
+be invoked using \code{call_S} or \code{call_R} and can be passed
+lists or the simple types as arguments.
 }
 %%-- This note by Thomas Lumley, (minimally edited by MM):
 \note{\emph{\code{DUP=FALSE} is dangerous.}
