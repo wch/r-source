@@ -228,6 +228,7 @@ SEXP do_gctorture(SEXP, SEXP, SEXP, SEXP);
 SEXP do_get(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_geterrmessage(SEXP, SEXP, SEXP, SEXP);
+SEXP do_getGraphicsEvent(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getlocale(SEXP, SEXP, SEXP, SEXP);
 #ifdef NEW_CONDITION_HANDLING
 SEXP do_getRestart(SEXP, SEXP, SEXP, SEXP);

@@ -169,6 +169,10 @@ int dummy;
 #define curDevice		Rf_curDevice
 #define CurrentDevice		Rf_CurrentDevice
 #define currentFigureLocation	Rf_currentFigureLocation
+#define doKeybd			Rf_doKeybd
+#define doMouseDown		Rf_doMouseDown
+#define doMouseMove		Rf_doMouseMove
+#define	doMouseUp		Rf_doMouseUp
 #define FixupCex		Rf_FixupCex
 #define FixupCol		Rf_FixupCol
 #define FixupFont		Rf_FixupFont

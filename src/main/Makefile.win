@@ -16,7 +16,7 @@ CSOURCES=\
 	devices.c devNull.c dotcode.c dounzip.c dstruct.c duplicate.c \
 	engine.c envir.c errors.c eval.c \
 	format.c fourier.c \
-	gram.c gram-ex.c graphics.c \
+	gevents.c gram.c gram-ex.c graphics.c \
 	identical.c internet.c iosupport.c \
 	lapack.c list.c logic.c \
 	main.c mapply.c match.c memory.c model.c \

@@ -129,6 +129,29 @@ typedef struct {
 				 * just prior to when the display list
 				 * was last initialised
 				 */
+
+    /********************************************************				 
+     * Event handling entries
+     ********************************************************/
+     
+    /* These determine whether getGraphicsEvent will try to set an event handler */
+    
+    Rboolean canGenMouseDown; /* can the device generate mousedown events */
+    Rboolean canGenMouseMove; /* can the device generate mousemove events */
+    Rboolean canGenMouseUp;   /* can the device generate mouseup events */
+    Rboolean canGenKeybd;     /* can the device generate keyboard events */
+    
+    Rboolean gettingEvent;    /* This is set while getGraphicsEvent is actively looking for events */
+    SEXP eventRho;	      /* This is the environment of getGraphicsEvent in which to evaluate the handlers */
+    SEXP eventResult;	      /* The result of the last event handler is stored here, unprotected */
+    
+    /* These are the event handlers */
+    
+    SEXP mouseDownHandler;
+    SEXP mouseMoveHandler;
+    SEXP mouseUpHandler;
+    SEXP keybdHandler;
+    
     /********************************************************
      * Device procedures.
      ********************************************************/
@@ -422,6 +445,17 @@ typedef struct {
      * static void X11_onExit(NewDevDesc *dd);
     */    
     void (*onExit)();
+    /*
+     * device_getEvent is called by do_getGraphicsEvent to get a modal
+     * graphics event.  It should call R_ProcessEvents() until one
+     * of the event handlers sets eventResult to a non-null value,
+     * and then return it
+     * An example is ...
+     *
+     * static SEXP GA_getEvent(char *prompt);
+     */
+    SEXP (*getEvent)();
+    
 } NewDevDesc;
 
 	/********************************************************/

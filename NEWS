@@ -143,6 +143,11 @@ NEW FEATURES
 	to be "matrix"/"array" followed by the class(es) of the
 	underlying vector.
 
+    o	A new function getGraphicsEvent() has been added which will allow
+	mouse or keyboard input from a graphics device. (NB: currently
+	only mouse input in the Windows screen device has been
+	implemented.  This should improve before the 2.1.0 release..) 
+
 
 UTILITIES
 

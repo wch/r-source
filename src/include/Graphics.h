@@ -431,4 +431,10 @@ GPar* Rf_dpptr(DevDesc *dd);
 GPar* Rf_dpSavedptr(DevDesc *dd);
 SEXP Rf_displayList(DevDesc *dd);
 
+/* Graphics events */
+
+void doMouseDown(NewDevDesc *dd, int buttons, double x, double y);
+void doMouseUp  (NewDevDesc *dd, int buttons, double x, double y);
+void doMouseMove(NewDevDesc *dd, int buttons, double x, double y);
+
 #endif /* GRAPHICS_H_ */

@@ -163,7 +163,9 @@ typedef struct {
     font  font;
     char fontfamily[50];
 
-    Rboolean locator, confirmation;
+    Rboolean locator;
+    Rboolean confirmation;
+    
     int clicked; /* {0,1,2} */
     int	px, py, lty, lwd;
     int resizing; /* {1,2,3} */
@@ -239,6 +241,7 @@ static void GA_Clip(double x0, double x1, double y0, double y1,
 		     NewDevDesc *dd);
 static void GA_Close(NewDevDesc *dd);
 static void GA_Deactivate(NewDevDesc *dd);
+static SEXP GA_getEvent(char* prompt);
 static void GA_Hold(NewDevDesc *dd);
 static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd);
 static void GA_Line(double x1, double y1, double x2, double y2,
@@ -822,7 +825,7 @@ static void HelpMouseClick(window w, int button, point pt)
 	NewDevDesc *dd = (NewDevDesc *) getdata(w);
 	gadesc *xd = (gadesc *) dd->deviceSpecific;
 
-	if (!xd->locator && !xd->confirmation)
+	if (!xd->locator && !xd->confirmation && !dd->gettingEvent)
 	    return;
 	if (button & LeftButton) {
 	    int useBeep = xd->locator && asLogical(GetOption(install("locatorBell"),
@@ -833,6 +836,30 @@ static void HelpMouseClick(window w, int button, point pt)
 	    xd->py = pt.y;
 	} else
 	    xd->clicked = 2;
+	if (dd->gettingEvent && dd->mouseDownHandler)  
+	    doMouseDown(dd, button, pt.x, pt.y);
+    }
+}
+
+static void HelpMouseMove(window w, int button, point pt)
+{
+    if (AllDevicesKilled) return;
+    {
+	NewDevDesc *dd = (NewDevDesc *) getdata(w);
+
+	if (dd->gettingEvent && dd->mouseMoveHandler)  
+	    doMouseMove(dd, button, pt.x, pt.y);
+    }
+}
+
+static void HelpMouseUp(window w, int button, point pt)
+{
+    if (AllDevicesKilled) return;
+    {
+	NewDevDesc *dd = (NewDevDesc *) getdata(w);
+
+	if (dd->gettingEvent && dd->mouseUpHandler)  
+	    doMouseUp(dd, button, pt.x, pt.y);
     }
 }
 
@@ -1610,12 +1637,21 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     setresize(xd->gawin, HelpResize);
     setredraw(xd->gawin, HelpExpose);
     setmousedown(xd->gawin, HelpMouseClick);
+    setmousemove(xd->gawin, HelpMouseMove);
+    setmouseup(xd->gawin, HelpMouseUp);
     setkeydown(xd->gawin, NHelpKeyIn);
     setkeyaction(xd->gawin, CHelpKeyIn);
     setclose(xd->gawin, HelpClose);
     xd->recording = recording;
     xd->replaying = FALSE;
     xd->resizing = resize;
+
+    dd->getEvent = GA_getEvent;
+    
+    dd->canGenMouseDown = TRUE;
+    dd->canGenMouseMove = TRUE;
+    dd->canGenMouseUp = TRUE;
+    dd->canGenKeybd = FALSE;
 
     return 1;
 }
@@ -2021,6 +2057,11 @@ static void GA_Close(NewDevDesc *dd)
     GEDevDesc *gdd = (GEDevDesc *) GetDevice(devNumber((DevDesc*) dd));
     SEXP vDL;
 
+    if (dd->onExit) {
+	dd->onExit(dd);
+	UserBreak = TRUE;
+    }
+    
     if (xd->kind == SCREEN) {
 	if(xd->recording) {
 	    AddtoPlotHistory(GEcreateSnapshot(gdd), 0);
@@ -2030,6 +2071,7 @@ static void GA_Close(NewDevDesc *dd)
 			      when a windows() device is opened */
 	}
 	hide(xd->gawin);
+	
 	del(xd->bm);
 	if (xd == GA_xd) GA_xd = NULL;
 	deleteGraphMenus(devNumber((DevDesc*) dd) + 1);
@@ -2893,18 +2935,24 @@ menu getGraphMenu(char* menuname)
     else return(NULL);
 }
 
-static void GA_confirm_onExit(NewDevDesc *dd)
+static void GA_onExit(NewDevDesc *dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
+    
     dd->onExit = NULL;
+    xd->confirmation = FALSE;
+    dd->gettingEvent = FALSE;
+    dd->mouseDownHandler = NULL;
+    dd->mouseMoveHandler = NULL;
+    dd->mouseUpHandler = NULL;
+    dd->keybdHandler = NULL;    
+    
     addto(xd->gawin);
     gchangemenubar(xd->mbar);
     gchangepopup(xd->gawin, xd->grpopup);
     addto(xd->gawin);
     setstatus("R Graphics");
     GA_Activate(dd);
-    
-    xd->confirmation = FALSE;
 }
 
 Rboolean winNewFrameConfirm()
@@ -2933,7 +2981,7 @@ Rboolean winNewFrameConfirm()
     R_WriteConsole("\n", 1);
     R_FlushConsole();
     settext(xd->gawin, "Click or hit ENTER for next page");
-    dd->dev->onExit = GA_confirm_onExit;  /* install callback for cleanup */
+    dd->dev->onExit = GA_onExit;  /* install callback for cleanup */
     while (!xd->clicked && !xd->enterkey) {
 	if(xd->buffered) SHOW;
         WaitMessage();
@@ -2942,4 +2990,33 @@ Rboolean winNewFrameConfirm()
     dd->dev->onExit(dd->dev);
 
     return TRUE;
+}
+
+static SEXP GA_getEvent(char* prompt)
+{
+    gadesc *xd;
+    GEDevDesc *dd = GEcurrentDevice();
+
+    xd = dd->dev->deviceSpecific;
+
+    dd->dev->gettingEvent = TRUE;
+    show(xd->gawin);
+    addto(xd->gawin);
+    gchangemenubar(xd->mbarconfirm);
+    gchangepopup(xd->gawin, NULL);
+    setstatus(prompt);
+    R_WriteConsole(prompt, strlen(prompt));
+    R_WriteConsole("\n", 1);
+    R_FlushConsole();
+    settext(xd->gawin, prompt);
+    dd->dev->eventResult = NULL;
+    dd->dev->onExit = GA_onExit;  /* install callback for cleanup */
+    while (!dd->dev->eventResult || dd->dev->eventResult == R_NilValue) {
+	if(xd->buffered) SHOW;
+        WaitMessage();
+	R_ProcessEvents(); /* May not return if user interrupts */
+    }
+    dd->dev->onExit(dd->dev);
+
+    return dd->dev->eventResult;
 }
