@@ -456,7 +456,12 @@ SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
     args = pkgtrim(args);
 
     if (!(fun=R_FindSymbol(CHAR(STRING_ELT(op, 0)), DLLname, NULL)))
-	errorcall(call, "C function name not in load table");
+	if(strlen(DLLname))
+	    errorcall(call,
+		      ".External function name not in DLL for package %s", 
+		      DLLname);
+	else
+	    errorcall(call, ".External function name not in load table");
 
     if(symbol.symbol.external && symbol.symbol.external->numArgs > -1) {
 	if(symbol.symbol.external->numArgs != length(args))
@@ -486,7 +491,11 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     args = pkgtrim(args);
 
     if (!(fun=R_FindSymbol(CHAR(STRING_ELT(op, 0)), DLLname, &symbol)))
-        errorcall(call, ".Call function name not in load table");
+	if(strlen(DLLname))
+	    errorcall(call, ".Call function name not in DLL for package %s", 
+		      DLLname);
+	else
+	    errorcall(call, ".Call function name not in load table");
     args = CDR(args);
 
     for(nargs = 0, pargs = args ; pargs != R_NilValue; pargs = CDR(pargs)) {
@@ -1232,7 +1241,12 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if (!(fun = R_FindSymbol(buf, DLLname, &symbol)))
-	errorcall(call, "C/Fortran function name not in load table");
+	if(strlen(DLLname))
+	    errorcall(call, "%s function name not in DLL for package %s",
+		      which ? "Fortran" : "C", DLLname);
+	else
+	    errorcall(call, "%s function name not in load table",
+		      which ? "Fortran" : "C");
 
     if(symbol.symbol.c && symbol.symbol.c->numArgs > -1) {
 	if(symbol.symbol.c->numArgs != nargs)
