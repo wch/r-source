@@ -713,6 +713,10 @@ BUG FIXES
 
     o	table(factor(c(2,NA), exclude=NULL)) prints better now.
 
+    o	predict(foo, type = "terms") and hence
+	residuals(foo, type = "partial") now work for lm and glm objects
+	with weights zero.
+
 
 
 	**************************************************

@@ -16,6 +16,13 @@ roller.lm9 <-  lm(weight~depression, data=roller[-1,],weights= 1:9)
 roller.glm <- glm(weight~depression, data=roller, weights= 1:10)
 roller.glm0<- glm(weight~depression, data=roller, weights= 0:9)
 
+predict(roller.glm0, type="terms")# failed till 2003-03-31
+
+## FIXME : glm()$residual [1] is NA,  lm()'s is ok.
+## all.equal(residuals(roller.glm0, type = "partial"),
+##          residuals(roller.lm0,  type = "partial") )
+
+
 all.equal(deviance(roller.lm),
           deviance(roller.glm))
 all.equal(weighted.residuals(roller.lm),
@@ -40,8 +47,26 @@ all.equal(rstandard(roller.lm9),
           rstandard(roller.lm0),tol=1e-15)
 all.equal(rstudent(roller.lm9),
           rstudent(roller.lm0),tol=1e-15)
+all.equal(rstudent(roller.lm),
+          rstudent(roller.glm))
+all.equal(cooks.distance(roller.lm),
+          cooks.distance(roller.glm))
+
 
 all.equal(summary(roller.lm0)$coef,
           summary(roller.lm9)$coef, tol=1e-15)
 all.equal(print(anova(roller.lm0), signif.st=FALSE),
                 anova(roller.lm9), tol=1e-15)
+
+
+###  more regression tests for lm(), glm(), etc :
+
+## moved from ?influence.measures:
+data(LifeCycleSavings)
+lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
+(IM <- influence.measures(lm.SR))
+summary(IM)
+all(dfbetas(lm.SR) == IM$infmat[, 1:5])
+
+signif(dfbeta(lm.SR), 3)
+covratio (lm.SR)

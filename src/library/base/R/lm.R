@@ -570,36 +570,20 @@ anovalist.lm <- function (object, ..., test = NULL)
 ## code from John Maindonald 26Jul2000
 predict.lm <-
     function(object, newdata,
-             se.fit = FALSE, scale = NULL, df = Inf,
-             interval = c("none", "confidence", "prediction"),
-             level = .95,  type = c("response", "terms"),
-             terms = NULL, ...)
+	     se.fit = FALSE, scale = NULL, df = Inf,
+	     interval = c("none", "confidence", "prediction"),
+	     level = .95,  type = c("response", "terms"),
+	     terms = NULL, ...)
 {
-## june 24 2000 (3 minor changes from JM's May 7 version)
-    attrassign <- function (object, ...) UseMethod("attrassign")
-    attrassign.lm <- function (lmobj)
-        attrassign(model.matrix(lmobj), terms(lmobj))
-    attrassign.default <- function (mmat, tt) {
-      if (!inherits(tt, "terms"))
-        stop("need terms object")
-      aa <- attr(mmat, "assign")
-      if (is.null(aa))
-        stop("argument is not really a model matrix")
-      ll <- attr(tt, "term.labels")
-      if (attr(tt, "intercept") > 0)
-        ll <- c("(Intercept)", ll)
-      aaa <- factor(aa, labels = ll)
-      split(order(aa), aaa)
-    }
     tt <- terms(object)
     if(missing(newdata) || is.null(newdata)) {
-        X <- model.matrix(object)
-        offset <- object$offset
+	X <- model.matrix(object)
+	offset <- object$offset
     }
     else {
-        X <- model.matrix(delete.response(tt), newdata,
+	X <- model.matrix(delete.response(tt), newdata,
 			  contrasts = object$contrasts,
-                          xlev = object$xlevels)
+			  xlev = object$xlevels)
 	offset <- if (!is.null(off.num <- attr(tt, "offset")))
 	    eval(attr(tt, "variables")[[off.num+1]], newdata)
 	else if (!is.null(object$offset))
@@ -610,7 +594,7 @@ predict.lm <-
     p1 <- 1:p
     piv <- object$qr$pivot[p1]
     if(p < ncol(X) && !(missing(newdata) || is.null(newdata)))
-        warning("prediction from a rank-deficient fit may be misleading")
+	warning("prediction from a rank-deficient fit may be misleading")
 ### NB: Q[p1,] %*% X[,piv] = R[p1,p1]
     beta <- object$coefficients
     predictor <- drop(X[, piv, drop = FALSE] %*% beta[piv])
@@ -628,92 +612,110 @@ predict.lm <-
 	} else {
 	    res.var <- scale^2
 	}
-        if(type != "terms") {
-            if(missing(newdata))
-                XRinv <- qr.Q(object$qr)[, p1 , drop=FALSE]
-            else {
-                Rinv <- qr.solve(qr.R(object$qr)[p1, p1])
-                XRinv <- X[, piv] %*% Rinv
-            }
-            ip <- drop(XRinv^2 %*% rep(res.var, p))
-        }
+	if(type != "terms") {
+	    if(missing(newdata))
+		XRinv <- qr.Q(object$qr)[, p1 , drop = FALSE]
+	    else {
+		Rinv <- qr.solve(qr.R(object$qr)[p1, p1])
+		XRinv <- X[, piv] %*% Rinv
+	    }
+	    ip <- drop(XRinv^2 %*% rep(res.var, p))
+	}
     }
-## type=="terms"
-    if (type == "terms") {
-      asgn <- attrassign(object)
-      hasintercept <- attr(tt, "intercept")>0
-      if (hasintercept){
-        asgn$"(Intercept)" <- NULL
-        avx <- rep(1/n, n)%*%model.matrix(object)
-	termsconst <- sum(avx[piv]*beta[piv])
-      }
-      nterms <- length(asgn)
-      predictor <- matrix(ncol=nterms, nrow=NROW(X))
-      dimnames(predictor) <- list(rownames(X), names(asgn))
 
-      if (se.fit||interval!="none"){
-        ip <- matrix(ncol=nterms, nrow=NROW(X))
-        dimnames(ip) <- list(rownames(X), names(asgn))
-	Rinv <- qr.solve(qr.R(object$qr)[p1, p1])
-      }
-      if(hasintercept)
-          X <- sweep(X, 2, avx)
-      unpiv <- rep(0, NCOL(X))
-      unpiv[piv] <- p1
-## Predicted values will be set to 0 for any term that
-## corresponds to columns of the X-matrix that are
-## completely aliased with earlier columns.
-      for (i in seq(1, nterms, length=nterms)) {
-        iipiv <- asgn[[i]]  # Columns of X, ith term
-	ii <- unpiv[iipiv]  # Corresponding rows of Rinv
-        iipiv[ii==0] <- 0
-	predictor[, i] <-
-            if(any(iipiv) > 0) X[, iipiv, drop=FALSE] %*% beta[iipiv]
-            else 0
-        if (se.fit || interval != "none")
-            ip[, i] <-
-                if(any(iipiv)>0)
-                    as.matrix(X[, iipiv, drop=FALSE] %*%
-                              Rinv[ii, , drop=FALSE])^2 %*% rep(res.var, p)
-                else 0
-      }
+    if (type == "terms") { ## type == "terms" ------------
 
-      if (!is.null(terms)){
-        predictor <- predictor[, terms, drop=FALSE]
-        if (se.fit)
-          ip <- ip[, terms, drop=FALSE]
-      }
-      attr(predictor, 'constant') <- if (hasintercept) termsconst else 0
+	## MM: The following is not efficient:	model.matrix() computed 2 x !
+	attrassign <- function (object, ...) UseMethod("attrassign")
+	attrassign.lm <- function (lmobj)
+	    attrassign(model.matrix(lmobj), terms(lmobj))
+	attrassign.default <- function (mmat, tt) {
+	    if (!inherits(tt, "terms")) stop("need terms object")
+	    aa <- attr(mmat, "assign")
+	    if (is.null(aa)) stop("argument is not really a model matrix")
+	    ll <- attr(tt, "term.labels")
+	    if (attr(tt, "intercept") > 0)
+		ll <- c("(Intercept)", ll)
+	    aaa <- factor(aa, labels = ll)
+	    split(order(aa), aaa)
+	}
+
+	asgn <- attrassign(object)
+	hasintercept <- attr(tt, "intercept") > 0
+	if (hasintercept) {
+	    asgn$"(Intercept)" <- NULL
+	    avx <- colMeans(model.matrix(object))
+	    termsconst <- sum(avx[piv] * beta[piv])
+	}
+	nterms <- length(asgn)
+	predictor <- matrix(ncol = nterms, nrow = NROW(X))
+	dimnames(predictor) <- list(rownames(X), names(asgn))
+
+	if (se.fit||interval != "none") {
+	    ip <- matrix(ncol = nterms, nrow = NROW(X))
+	    dimnames(ip) <- list(rownames(X), names(asgn))
+	    Rinv <- qr.solve(qr.R(object$qr)[p1, p1])
+	}
+	if(hasintercept)
+	    X <- sweep(X, 2, avx)
+	unpiv <- rep(0, NCOL(X))
+	unpiv[piv] <- p1
+	## Predicted values will be set to 0 for any term that
+	## corresponds to columns of the X-matrix that are
+	## completely aliased with earlier columns.
+	for (i in seq(1, nterms, length = nterms)) {
+	    iipiv <- asgn[[i]]		# Columns of X, ith term
+	    ii <- unpiv[iipiv]		# Corresponding rows of Rinv
+	    iipiv[ii == 0] <- 0
+	    predictor[, i] <-
+		if(any(iipiv) > 0) X[, iipiv, drop = FALSE] %*% beta[iipiv]
+		else 0
+	    if (se.fit || interval != "none")
+		ip[, i] <-
+		    if(any(iipiv) > 0)
+			as.matrix(X[, iipiv, drop = FALSE] %*%
+				  Rinv[ii, , drop = FALSE])^2 %*% rep(res.var, p)
+		    else 0
+	}
+
+	if (!is.null(terms)) {
+	    predictor <- predictor[, terms, drop = FALSE]
+	    if (se.fit)
+		ip <- ip[, terms, drop = FALSE]
+	}
+	attr(predictor, 'constant') <- if (hasintercept) termsconst else 0
     }
-## Now construct elements of the list that will be returned
+
+### Now construct elements of the list that will be returned
+
     if(interval != "none") {
 	tfrac <- qt((1 - level)/2, df)
 	w <- tfrac * switch(interval,
-			    confidence=sqrt(ip),
-			    prediction=sqrt(ip+res.var)
+			    confidence = sqrt(ip),
+			    prediction = sqrt(ip+res.var)
 			    )
-        if(type!="terms") {
-            predictor <- cbind(predictor, predictor + w %o% c(1, -1))
-            colnames(predictor) <- c("fit", "lwr", "upr")
-        }
-        else {
-            lwr <- predictor + w
-            upr <- predictor - w
-        }
+	if(type != "terms") {
+	    predictor <- cbind(predictor, predictor + w %o% c(1, -1))
+	    colnames(predictor) <- c("fit", "lwr", "upr")
+	}
+	else {
+	    lwr <- predictor + w
+	    upr <- predictor - w
+	}
     }
     if(missing(newdata) && !is.null(na.act <- object$na.action)) {
-        predictor <- napredict(na.act, predictor)
-        if(se.fit) se.fit <- napredict(na.act, sqrt(ip))
+	predictor <- napredict(na.act, predictor)
+	if(se.fit) se.fit <- napredict(na.act, sqrt(ip))
     }
     if(type == "terms" && interval != "none") {
-        if(missing(newdata) && !is.null(na.act)) {
-            lwr <- napredict(na.act, lwr)
-            upr <- napredict(na.act, upr)
-        }
-	list(fit = predictor, se.fit = sqrt(ip), lwr=lwr,upr=upr,
+	if(missing(newdata) && !is.null(na.act)) {
+	    lwr <- napredict(na.act, lwr)
+	    upr <- napredict(na.act, upr)
+	}
+	list(fit = predictor, se.fit = sqrt(ip), lwr = lwr, upr = upr,
 	     df = df, residual.scale = sqrt(res.var))
     } else if (se.fit)
-        list(fit = predictor, se.fit = sqrt(ip),
+	list(fit = predictor, se.fit = sqrt(ip),
 	     df = df, residual.scale = sqrt(res.var))
     else predictor
 }
