@@ -659,6 +659,11 @@ case "${host_os}" in
     fi
     ## </NOTE>
     ;;
+  openbsd*)
+    if test -z "`echo __ELF__ | $CC -E - | grep __ELF__`"; then
+      AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
+    fi
+    ;;
   osf*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     ;;  
@@ -885,6 +890,12 @@ case "${host_os}" in
       shlib_ldflags="-Bshareable"
     fi
     ;;
+  openbsd*)
+    if test -z "`echo __ELF__ | $CC -E - | grep __ELF__`"; then
+      main_ldflags="${wl}-export-dynamic"
+      shlib_ldflags="-shared -fPIC"
+    fi
+    ;;
   osf*)
     cpicflags=
     cxxpicflags=
@@ -1040,6 +1051,13 @@ case "${host_os}" in
     else
       LAPACK_LDFLAGS="+s"
     fi
+    ;;
+  openbsd*)
+    PACKAGE_VERSION_MAJOR=`echo "${PACKAGE_VERSION}" | \
+      sed -e "s/\.//" -e "s/\..*$//"`
+    PACKAGE_VERSION_MINOR=`echo "${PACKAGE_VERSION}" | \
+      sed -e "s/.*\.\([^.][^.]*$\)/\1/"`
+    DYLIB_EXT=".so.${PACKAGE_VERSION_MAJOR}.${PACKAGE_VERSION_MINOR}"
     ;;
 esac
 
