@@ -549,62 +549,82 @@ function(mlist, includeDefs = TRUE, inherited = TRUE, classes = NULL, useArgName
 }
 
 promptMethods <-
-  ## generate information in the style of `prompt' for the methods of the generic
-  ## named `f'.
-  ##
-  ## `filename' can be a logical or the name of a file to print to.  If `file' is `FALSE',
-  ## the methods skeleton is returned, to be included in other printing (typically,
-  ## the output from `prompt'.
-  function(f, filename = TRUE, methods) {
-      paste0 <- function(...)paste(..., sep="")
-      packageString = ""
-      if(missing(methods)) {
-          where <- find(mlistMetaName(f))
-          if(length(where) == 0)
-              stop("No methods found for generic \"", f, "\"")
-          where <- where[1]
-          methods <- getMethods(f, where)
-          if(where != 1)
-              packageString <- paste("in package", getPackageName(where))
-      }
-      object <- linearizeMlist(methods, FALSE)
-      methods <- object@methods; n <- length(methods)
-      args <- object@arguments
-      signatures <- object@classes
-      labels <- character(n)
-      aliases <- character(n)
-      fullName <- topicName("methods", f)
-      for(i in seq(length = n)) {
-          sigi <- paste("\"", signatures[[i]], "\"", sep ="")
-          labels[[i]] <- paste(args[[i]], sigi, collapse = ", ", sep = " = ")
-          aliases[[i]] <- paste0("\\alias{", topicName("method", c(f, signatures[[i]])),
-                                "}")
-      }
-      text <- paste0("\n\\item{", labels, "}{ ~~describe this method here }")
-      text <- c("\\section{Methods}{\\describe{", text, "}}")
-      aliasText <- c(paste0("\\alias{", fullName, "}"), aliases)
-      endText <- c("\\keyword{methods}", "\\keyword{ ~~ other possible keyword(s)}")
-      if(identical(filename, FALSE))
-          return(c(aliasText, text))
-      beginText <-  c(paste0("\\name{", fullName, "}"), paste0("\\docType{methods}"),
-                paste("\\title{ ~~ Methods for Function", f, packageString, "~~}"))
-      if(identical(filename, TRUE))
-          filename <- paste0(fullName, ".Rd")
-      text <-c(beginText, aliasText, text, endText)
-      cat(text, file = filename, sep="\n")
-      filename
-  }
+function(f, filename = NULL, methods)
+{
+    ## Generate information in the style of 'prompt' for the methods of
+    ## the generic named 'f'.
+    ##
+    ## 'filename' can be a logical or NA or the name of a file to print
+    ## to.  If it 'FALSE', the methods skeleton is returned, to be
+    ## included in other printing (typically, the output from 'prompt').
+  
+    paste0 <- function(...) paste(..., sep = "")
+    packageString <- ""
 
+    if(missing(methods)) {
+        where <- find(mlistMetaName(f))
+        if(length(where) == 0)
+            stop(paste("No methods found for generic", sQuote(f)))
+        where <- where[1]
+        methods <- getMethods(f, where)
+        if(where != 1)
+            packageString <-
+                paste0("in Package `", getPackageName(where), "'")
+        ## (We want the '`' for LaTeX, as we currently cannot have
+        ## \sQuote{} inside a \title.)
+    }
+    
+    object <- linearizeMlist(methods, FALSE)
+    methods <- object@methods; n <- length(methods)
+    args <- object@arguments
+    signatures <- object@classes
+    labels <- character(n)
+    aliases <- character(n)
+    fullName <- topicName("methods", f)
+    for(i in seq(length = n)) {
+        sigi <- paste("\"", signatures[[i]], "\"", sep ="")
+        labels[[i]] <-
+            paste(args[[i]], sigi, collapse = ", ", sep = " = ")
+        aliases[[i]] <-
+            paste0("\\alias{", topicName("method", c(f, signatures[[i]])),
+                   "}")
+    }
+    text <- paste0("\n\\item{", labels, "}{ ~~describe this method here }")
+    text <- c("\\section{Methods}{\\describe{", text, "}}")
+    aliasText <- c(paste0("\\alias{", fullName, "}"), aliases)
+    if(identical(filename, FALSE))
+        return(c(aliasText, text))
+
+    if(is.null(filename) || identical(filename, TRUE))
+        filename <- paste0(fullName, ".Rd")
+
+    Rdtxt <-
+        list(name = paste0("\\name{", fullName, "}"),
+             type = "\\docType{methods}",
+             aliases = aliasText,
+             title = paste("\\title{ ~~ Methods for Function", f,
+             packageString, "~~}"),
+             "section{Methods}" = text,
+             keywords = c("\\keyword{methods}",
+             "\\keyword{ ~~ other possible keyword(s)}"))
+
+    if(is.na(filename)) return(Rdtxt)
+    
+    cat(unlist(Rdtxt), file = filename, sep = "\n")
+    invisible(filename)
+}
 
 linearizeMlist <-
-    ## Undo the recursive nature of the methods list, making a list of function
-    ## defintions, with the names of the list being the corresponding signatures
-    ## (designed for printing; for looping over the methods, use `listFromMlist' instead).
+    ## Undo the recursive nature of the methods list, making a list of
+    ## function defintions, with the names of the list being the
+    ## corresponding signatures (designed for printing; for looping over
+    ## the methods, use `listFromMlist' instead).
     ##
-    ## The function calls itself recursively.  `prev' is the previously selected class names
+    ## The function calls itself recursively.  `prev' is the previously
+    ## selected class names.
     ##
-    ## If argument `classes' is provided, only signatures containing one of these classes
-    ## will be included.
+    ## If argument `classes' is provided, only signatures containing one
+    ## of these classes will be included.
     function(mlist, inherited = TRUE) {
         methods <- mlist@methods
         allMethods <- mlist@allMethods

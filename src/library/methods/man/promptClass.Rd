@@ -6,23 +6,24 @@
   minimal markup for Rd processing; no QC facilities at present.
 }
 \usage{
-promptClass(clName, filename, type = "class", keywords = "classes", where)
+promptClass(clName, filename = NULL, type = "class",
+            keywords = "classes", where = -1)
 }
 \arguments{
-  \item{clName}{ character string naming the class to be documented. }
-  \item{filename}{ Usually, the filename on which the documentation
-    shell should be written.  By default it is the topic name for
-    the class documentation, followed by \code{".Rd"}.  See the
-    example below.  The argument can also be any writable
-    \link{connection}.}
+  \item{clName}{a character string naming the class to be documented.}
+  \item{filename}{usually, a connection or a character string giving the
+    name of the file to which the documentation shell should be written.
+    The default corresponds to a file whose name is the topic name for
+    the class documentation, followed by \code{".Rd"}.  Can also be
+    \code{NA} (see below).}
   \item{type}{The documentation type to be declared in the output
     file.}
   \item{keywords}{The keywords to include in the shell of the
     documentation.  The keyword \code{"classes"} should be one of
-    them.  }
+    them.}
   \item{where}{ where to look for the definition of the class and of
     methods that use it:  by default, anywhere in the current search
-    list.  }
+    list.}
 }
 \details{ 
   The class definition is found on the search list.  Using that
@@ -35,16 +36,22 @@ promptClass(clName, filename, type = "class", keywords = "classes", where)
   particular, this part of the output may depend on which packages are
   currently in the search list.
 
-  As with other prompt-style functions, the documentation shell is
-  written to a file, which will need editing to give information about
-  the \emph{meaning} of the class.  The output of \code{promptClass} can
-  only contain information from the metadata about the formal definition
-  and how it is used.
+  As with other prompt-style functions, unless \code{filename} is
+  \code{NA}, the documentation shell is written to a file, and a message
+  about this is given.  The file will need editing to give information
+  about the \emph{meaning} of the class.  The output of
+  \code{promptClass} can only contain information from the metadata
+  about the formal definition and how it is used.
+
+  If \code{filename} is \code{NA}, a list-style representation of the
+  documentation shell is created and returned.  Writing the shell to a
+  file amounts to \code{cat(unlist(x), file = filename, sep = "\\n")},
+  where \code{x} is the list-style representation.
 }
 \value{
-  The name of the file to which the shell is written (the value is
-  \code{\link{invisible}}).
-  A message is also printed notifying the user about the file.
+  If \code{filename} is \code{NA}, a list-style representation of the
+  documentation shell.  Otherwise, the name of the file written to is
+  returned invisibly.
 }
 \author{
   VJ Carey \email{stvjc@channing.harvard.edu} and John Chambers
@@ -57,7 +64,8 @@ promptClass(clName, filename, type = "class", keywords = "classes", where)
   methods described in \emph{Programming with Data} (John M. Chambers,
   Springer, 1998).  See this book for further details and examples.
 }
-\seealso{\code{\link{prompt}} for documentation of functions, 
+\seealso{
+  \code{\link{prompt}} for documentation of functions,
   \code{\link{promptMethods}} for documentation of method definitions.
 
   For processing of the edited documentation, either use \code{R CMD
