@@ -49,8 +49,10 @@ rlogis(n, location = 0, scale = 1)
 \examples{
 eps <- 100 * .Machine$double.eps
 x <- c(0:4, rlogis(100))
-all.equal(plogis(x, loc = 0), 1/(1 + exp(-x)),          tol = eps)
-all.equal(dlogis(x, loc = 0), exp(x) * (1 + exp(x))^-2, tol = eps)
+all.equal(plogis(x),                 1 / (1 + exp(-x)), tol = eps)
+all.equal(plogis(x, lower=F),   exp(-x)/ (1 + exp(-x)), tol = eps)
+all.equal(plogis(x, lower=F, log=T), -log(1 + exp(x)),  tol = eps)
+all.equal(dlogis(x), exp(x) * (1 + exp(x))^-2, tol = eps)
 
 var(rlogis(4000, 0, s = 5))# approximately (+/- 3)
 pi^2/3 * 5^2
