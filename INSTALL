@@ -169,9 +169,7 @@ path.
 
 You must set whatever compilation flags (if any) are needed to ensure
 that FORTRAN `integer' is equivalent to a C int pointer and FORTRAN
-`double precision' is equivalent to a C double pointer.  (Beware of
-f2c and compilers whose integer type is by default equivalent to C
-long on platforms where long != int.)
+`double precision' is equivalent to a C double pointer.
 
 
 BUILDING THE GNOME INTERFACE
