@@ -163,11 +163,13 @@ lines(predict(s02, xx), col = 3); mtext(deparse(s02$call), col = 3)
 (s2m <- smooth.spline(y18, cv=TRUE, con=list(trace=TRUE,tol=1e-6, low= -2)))
 ## both above do quite similarly (Df = 8.5 +- 0.2)
 
-s2. <- smooth.spline(y18, cv=TRUE, con=list(trace=TRUE,tol=1e-6, low= -3))
-s2. ## Linux: Df=18: interpolating -- much smaller PRESS
-    ## {Solaris may end quite differently!}
-lines(predict(s2., xx), col = 4)
-mtext(deparse(s2.$call,200), side= 1, line= -1, cex= 0.8, col= 4)
+try({ ## have seen problems here:
+ s2. <- smooth.spline(y18, cv=TRUE, con=list(trace=TRUE,tol=1e-6, low= -3))
+ s2. ## Linux: Df=18: interpolating -- much smaller PRESS
+     ## {Solaris may end quite differently!}
+ lines(predict(s2., xx), col = 4)
+ mtext(deparse(s2.$call,200), side= 1, line= -1, cex= 0.8, col= 4)
+})
 
 \testonly{
   sdf8 <- smooth.spline(y18, df = 8, con=list(trace=TRUE))
