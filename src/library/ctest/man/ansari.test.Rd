@@ -6,7 +6,8 @@
   parameters.
 }
 \usage{
-ansari.test(x, y, alternative = c("two.sided", "less", "greater"), exact = NULL)
+ansari.test(x, y, alternative = c("two.sided", "less", "greater"),
+            exact = NULL)
 }
 \arguments{
   \item{x}{numeric vector of data values.}

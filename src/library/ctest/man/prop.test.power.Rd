@@ -2,7 +2,9 @@
 \alias{prop.test.power}
 \title{Power calculations two sample test for of proportions}
 \usage{
-prop.test.power(n=NULL, p1=NULL, p2=NULL, sig.level=0.05, power=NULL, alternative=c("two.sided", "one.sided"))
+prop.test.power(n = NULL, p1 = NULL, p2 = NULL, sig.level = 0.05,
+                power = NULL,
+                alternative = c("two.sided", "one.sided"))
 }
 %- maybe also `usage' for other objects documented here.
 \arguments{
