@@ -42,6 +42,13 @@
 #define AS_COMPLEX(x)		coerceVector(x,CPLXSXP)
 #define AS_VECTOR(x)		coerceVector(x,VECSXP)
 
+#define IS_LOGICAL(x)		isLogical(x)
+#define IS_INTEGER(x)		isInteger(x)
+#define IS_NUMERIC(x)		isReal(x)
+#define IS_CHARACTER(x)		isString(x)
+#define IS_COMPLEX(x)		isComplex(x)
+#define IS_VECTOR(x)		isVector(x)
+
 #define NEW_LIST(n)		allocVector(VECSXP,n)
 #define NEW_LOGICAL(n)		allocVector(LGLSXP,n)
 #define NEW_INTEGER(n)		allocVector(INTSXP,n)
@@ -52,11 +59,19 @@
 
 #define GET_LENGTH(x)		length(x)
 
-#define LOGICAL_DATA(x)		LOGICAL(x)
-#define INTEGER_DATA(x)		INTEGER(x)
-#define NUMERIC_DATA(x)		REAL(x)
-#define COMPLEX_DATA(x)		COMPLEX(x)
-#define STRING_DATA(x)		STRING(x)
+#define LOGICAL_POINTER(x)	LOGICAL(x)
+#define INTEGER_POINTER(x)	INTEGER(x)
+#define NUMERIC_POINTER(x)	REAL(x)
+#define COMPLEX_POINTER(x)	COMPLEX(x)
+#define STRING_POINTER(x)	STRING(x)
+
+/* The following are not defined in `Programming with Data' but are
+   defined in S.h in Svr4 */
+#define LOGICAL_DATA(x)		(LOGICAL(x))
+#define INTEGER_DATA(x)		(INTEGER(x))
+#define NUMERIC_DATA(x)		(REAL(x))
+#define COMPLEX_DATA(x)		(COMPLEX(x))
+#define STRING_DATA(x)		(STRING(x))
 
 #define R_PROBLEM_BUFSIZE	4096
 #define PROBLEM			{char R_problem_buf[R_PROBLEM_BUFSIZE];sprintf(R_problem_buf,
