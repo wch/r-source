@@ -58,7 +58,7 @@ HTM = $(filter-out 00Index.html, $(wildcard *.html))
 	-hhc $*.hhp
 
 %.hlp: %.rtf logo.bmp
-	 hcrtf /x $*.hpj
+	hcrtf /x $*.hpj
 
 %.rtf: $(HTM)
 	perl $(RHOME)/src/gnuwin32/help/html-to-rtf.pl $*.hhp

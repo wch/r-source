@@ -74,7 +74,8 @@ SEDP='/^[	 ]*$$/d;s/$(DLLNAME).so/$(DLLNAME).dll/'
 $(DPKG)/R/$(PKG): $(PKGRFILES)
 ifneq ($(strip $(PKGRFILES)),)
 	$(MKDIR) -p $(DPKG)/R
-	$(CAT) $(PKGRFILES) | sed $(SEDP)  > $@
+#	$(CAT) $(PKGRFILES) | $(SED) $(SEDP)  > $@
+	$(CAT) $(PKGRFILES)   > $@
 else
 	@$(ECHO) "  no R files in this package"
 endif
