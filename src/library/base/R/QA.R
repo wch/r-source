@@ -248,24 +248,65 @@ function(dir) {
 }
 
 checkTnF <-
-function(file, package, lib.loc = .lib.loc)
+function(file, package, dir, lib.loc = .lib.loc)
 {
     fQuote <- function(s) paste("`", s, "'", sep = "")
-    if(missing(file)) {
-        if(missing(package))
-            stop("you must specify `file' or `package'")
-        file <- file.path(.find.package(package, lib.loc), "R", package)
+    listFilesWithExts <- function(dir, exts, path = TRUE) {
+        ## Return the paths or names of the files in `dir' with
+        ## extension in `exts'.
+        files <- list.files(dir)
+        files <- files[sub(".*\\.", "", files) %in% exts]
+        if(path)
+            files <- if(length(files) > 0)
+                file.path(dir, files)
+            else
+                character(0)
+        files
     }
-    if(!file.exists(file))
-        stop(paste("file", fQuote(file), "does not exist"))
-    badTnF <- c("T", "F")
+
     checkTnFandPrint <- function(e, p) {
+        badTnF <- c("T", "F")
         if(is.name(e) && (as.character(e) %in% badTnF) && !is.null(p))
             writeLines(paste("found T/F in:", deparse(p)))
         else if(is.recursive(e)) {
             for(i in seq(along = e)) Recall(e[[i]], e)
         }
     }
+
+    if(missing(file)) {
+        if(!missing(package)) {
+            packageDir <- .find.package(package, lib.loc)
+            if(file.exists(file.path(packageDir, "R", "all.rda"))) {
+                warning("cannot check R code installed as image")
+                return(invisible())
+            }
+            file <- file.path(packageDir, "R", package)
+        }
+        else if(!missing(dir)) {
+            if(!file.exists(dir))
+                stop(paste("directory", fQuote(dir), "does not exist"))
+            else
+                ## tilde expansion
+                dir <- file.path(dirname(dir), basename(dir))
+            if(!file.exists(codeDir <- file.path(dir, "R")))
+                stop(paste("directory", fQuote(dir),
+                           "does not contain R code"))
+            codeExts <- c("R", "r", "S", "s", "q")
+            codeFiles <- listFilesWithExts(codeDir, codeExts)
+            if(file.exists(codeOSDir <- file.path(codeDir, .Platform$OS)))
+                codeFiles <- c(codeFiles,
+                               listFilesWithExts(codeOSDir, codeExts))
+            file <- tempfile()
+            on.exit(unlink(file))
+            file.create(file)
+            file.append(file, codeFiles)
+        }
+        else
+            stop("you must specify `file', `package' or `dir'")
+    }
+    
+    if(!file.exists(file))
+        stop(paste("file", fQuote(file), "does not exist"))
     exprs <- parse(file = file, n = -1)
     for(i in seq(along = exprs)) checkTnFandPrint(exprs[[i]], NULL)
 }
