@@ -13,7 +13,7 @@ indices:
 	$(PERL) build.help ${DOS} -htmllists
 
 pkg-% help-%: 
-	$(PERL) build.help ${DOS} -nroff -html -example -latex $(PKGDIR)/$* $(RLIB)
+	$(PERL) build.help ${DOS} -txt -html -example -latex $(PKGDIR)/$* $(RLIB)
 
 chm-%: 
 	$(PERL) build.help ${DOS} -chm $(PKGDIR)/$* $(RLIB)

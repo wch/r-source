@@ -61,7 +61,7 @@ R:
 	  if test -f $@     ; then cp -p $@  $@.bak  ; fi; \
 	  echo "updating $@ ..."; \
 	  (cd $(top_builddir)/src/library && \
-	    OPTS="--nroff --example" $(MAKE) R_PKGS="$*" DOCS); \
+	    OPTS="--txt --example" $(MAKE) R_PKGS="$*" DOCS); \
 	  f=$${TMPDIR:-/tmp}/R$$$$; \
 	  $(top_builddir)/bin/massage-Examples $* \
 	    $(top_builddir)/library/$*/R-ex/*.R > $${f}; \

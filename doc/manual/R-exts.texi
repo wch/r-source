@@ -260,7 +260,7 @@ Author: S original by Venables & Ripley.
   earlier work by Kurt Hornik and Albrecht Gebhardt.
 BundleDescription: Various functions from the libraries of
   Venables and Ripley, `Modern Applied Statistics with S-PLUS'
- (3rd edition).
+  (3rd edition).
 License: GPL (version 2 or later)
 @end smallexample
 @end cartouche
@@ -408,7 +408,7 @@ of the @R{} package builder. There is no Windows equivalent.
 @R{} objects are documented in files written in ``@R{} documentation''
 (Rd) format, a simple markup language closely resembling (La)@TeX{},
 which can be processed into a variety of formats, including La@TeX{},
-[TN]roff, and @HTML{}.  The translation is carried out by the Perl
+@HTML{} and plain text.  The translation is carried out by the Perl
 script @code{Rdconv} in @file{$R_HOME/bin} and by the installation
 scripts for packages.
 
@@ -987,7 +987,7 @@ files.
 @findex R CMD Rdconv
 Using @code{R CMD Rdconv} one can convert @R{} documentation format to
 other formats, or extract the executable examples for run-time testing.
-Currently, conversions to plain text, Nroff, HTML, La@TeX{}, and @Sl{}
+Currently, conversions to plain text, HTML, La@TeX{}, and @Sl{}
 documentation formats are supported.
 
 In addition to this low-level conversion tool, the @R{} distribution

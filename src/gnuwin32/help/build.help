@@ -34,7 +34,7 @@ fileparse_set_fstype; # Unix, in case one gets anything else.
 $OSdir = "windows";
 
 
-@knownoptions = ("rhome:s", "html", "nroff", "latex", "example", "debug",
+@knownoptions = ("rhome:s", "html", "txt", "latex", "example", "debug",
 		 "dosnames", "htmllists", "chm");
 GetOptions (@knownoptions) || usage();
 
@@ -76,9 +76,9 @@ if($opt_htmllists){
 }
 
 # default is to build all documentation formats
-if(!$opt_html && !$opt_nroff && !$opt_latex && !$opt_example && !$opt_chm){
+if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example && !$opt_chm){
     $opt_html = 1;
-    $opt_nroff = 1;
+    $opt_txt = 1;
     $opt_latex = 1;
     $opt_example = 1;
     $opt_chm = 1;
@@ -108,7 +108,7 @@ if ($opt_example) {
 
 print " >>> Building/Updating help pages for package `$pkg'\n";
 print "     Formats: ";
-print "text " if $opt_nroff;
+print "text " if $opt_txt;
 print "html " if $opt_html;
 print "latex " if $opt_latex;
 print "example " if $opt_example;
@@ -139,7 +139,7 @@ foreach $manfile (@mandir) {
 
 	$textflag = $htmlflag = $latexflag = $exampleflag = $chmflag = "";
 
-	if($opt_nroff){
+	if($opt_txt){
 	    my $targetfile = $filenm{$manfilebase};
 	    $destfile = "$dest/help/$targetfile";
 	    if(fileolder($destfile, $manage)) {
@@ -196,7 +196,7 @@ foreach $manfile (@mandir) {
 }
 
 # remove files not in source directory
-if($opt_nroff){
+if($opt_txt){
     my @destdir;
     opendir dest,  "$dest/help";
     @destdir = sort(readdir(dest));
@@ -261,7 +261,7 @@ if($opt_chm){
 
 sub usage {
 
-    print "Usage:  build-help [--rhome dir] [--html] [--nroff] [--latex]\n" .
+    print "Usage:  build-help [--rhome dir] [--html] [--txt] [--latex]\n" .
       "                   [--example] [--dosnames] [--htmllists] [--debug]\n" .
       "                   [pkg] [lib]\n";
 

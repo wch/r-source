@@ -1,7 +1,7 @@
 #! @PERL@
 #-*- perl -*- (for Rdconv.in ..)
 
-# Convert R documentation into HTML, LaTeX and nroff format
+# Convert R documentation into HTML, LaTeX and text format
 
 # Copyright (C) 1997 Friedrich Leisch
 #
@@ -26,7 +26,7 @@ use Getopt::Long;
 use File::Basename;
 use Cwd;
 
-my $revision = ' $Revision: 1.12 $ ';
+my $revision = ' $Revision: 1.13 $ ';
 my $version;
 my $name;
 
