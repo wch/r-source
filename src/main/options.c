@@ -53,7 +53,6 @@
  *	"contrasts"
  *	"echo"
  *	"verbose"
- *	"check.bounds"
  *	"keep.source"
  *	"keep.source.pkgs"
 
@@ -62,6 +61,7 @@
  *	"pager"
  *	"paper.size"		./devPS.c
 
+ *	"check.bounds"
  *	"error"
  *	"error.messages"
  *	"show.error.messages"
@@ -393,6 +393,13 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (TYPEOF(argi) != STRSXP || LENGTH(argi) != 2)
 		    errorcall(call, "contrasts parameter invalid");
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
+	    }
+	    else if (streql(CHAR(namei), "check.bounds")) {
+		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
+		    errorcall(call, "check.bounds parameter invalid");
+		k = asInteger(argi);
+		/* R_CheckBounds = k; */
+		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
 	    }
 	    else if (streql(CHAR(namei), "warn")) {
 		if (!isNumeric(argi) || length(argi) != 1)

@@ -77,24 +77,24 @@
 
 static SEXP gcall;
 
-/* "EnlargeVector" takes a vector "x" and changes its length to */
-/* "newlen".  This makes it possible to assign values "past the */
-/* end" of the vector or list although, unlike S, we only extend */
-/* as much as is necessary. */
-
+/* EnlargeVector() takes a vector "x" and changes its length to "newlen".  
+   This allows to assign values "past the end" of the vector or list.
+   Note that, unlike S, we only extend as much as is necessary. 
+*/
 static SEXP EnlargeVector(SEXP x, int newlen)
 {
     int i, len;
     SEXP newx, names, newnames;
 
     /* Sanity Checks */
-    if (LOGICAL(GetOption(install("check.bounds"), R_NilValue))[0])
-	warning("assignment outside vector/list limits");
     if (!isVector(x))
 	error("attempt to enlarge non-vector");
 
     /* Enlarge the vector itself. */
     len = length(x);
+    if (LOGICAL(GetOption(install("check.bounds"), R_NilValue))[0])
+	warning("assignment outside vector/list limits (extending from %d to %d)",
+		len, newlen);
     PROTECT(x);
     PROTECT(newx = allocVector(TYPEOF(x), newlen));
 

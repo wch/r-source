@@ -261,6 +261,9 @@ NEW FEATURES
 
     o	mad() has new (logical) arguments "low" and "high" (the first giving
         S compatibility).
+	
+    o	options(check.bounds = TRUE)  makes each vector extension
+	by sub-assignment ("x[.] <- .") produce a warning.
 
 
 BUG FIXES
