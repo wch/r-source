@@ -120,11 +120,13 @@ na.exclude.data.frame <- function(object, ...)
 naresid <- function(omit, x, ...) UseMethod("naresid")
 naresid.default <- function(omit, x, ...) x
 
+## naresid.exclude (same as napredict...) *reconstruct* original size values:
 naresid.exclude <- function(omit, x, ...)
 {
     if (length(omit) == 0 || !is.numeric(omit))
-	stop("Invalid argument for 'omit'")
-    if(length(x) == 0) return(x)
+	stop("Invalid argument for ", sQuote('omit'))
+    if(length(x) == 0)## << FIXME? -- reconstructing all NA object
+        return(x)
 
     if (is.matrix(x)) {
 	n <- nrow(x)
@@ -136,7 +138,7 @@ naresid.exclude <- function(omit, x, ...)
 	    temp[omit] <- names(omit)
 	    rownames(x) <- temp
         }
-    } else {
+    } else {# vector *or* data.frame !
 	n <- length(x)
 	keep <- rep.int(NA, n+length(omit))
 	keep[-omit] <- 1:n
