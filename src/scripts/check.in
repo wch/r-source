@@ -37,7 +37,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.190 $ ';
+my $revision = ' $Revision: 1.191 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -505,8 +505,6 @@ sub check_pkg {
 	exit(1);
     }
 
-    $log->result("OK");
-
     ## next check for name clashes on case-insensitive file systems
     ## (that is on Windows).
     my @seen = (), @duplicated = ();
@@ -536,6 +534,8 @@ sub check_pkg {
 			  "in manual 'Writing R Extensions'.\n")));
 	exit(1);
     }
+
+    $log->result("OK");
 
     ## Check for sufficient file permissions (Unix only).
 
