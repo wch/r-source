@@ -335,7 +335,7 @@ stop("test it")
 options(error=dump.frames)
 ## A possible setting for non-interactive sessions
 options(error=quote({dump.frames(to.file=TRUE); q()}))
-}
+}}
 \keyword{environment}
 \keyword{error}
 \keyword{print}
