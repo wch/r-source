@@ -13,11 +13,11 @@ kmeans <- function(x, centers, iter.max = 10)
 	centers <- as.matrix(centers)
 	k <- nrow(centers)
     }
-    if(iter.max < 1) stop("iter.max must be positive.")
+    if(iter.max < 1) stop("iter.max must be positive")
     if(m < k)
-	stop("more cluster centers than data points.")
+	stop("more cluster centers than data points")
     if(ncol(x) != ncol(centers))
-	stop("must have same number of columns in x and centers.")
+	stop("must have same number of columns in x and centers")
     Z <- .Fortran("kmns",
 		  as.double(x),
 		  as.integer(m),
@@ -37,9 +37,11 @@ kmeans <- function(x, centers, iter.max = 10)
 		  wss = double(k),
 		  ifault = as.integer(0), PACKAGE="mva")
     switch(Z$ifault,
-	   stop("empty cluster: try a better set of initial centers"),
-	   warning("did not converge in iter.max iterations"),
-	   stop("number of cluster centres must lie between 1 and nrow(x)")
+	   stop("empty cluster: try a better set of initial centers",
+                call.=FALSE),
+	   warning("did not converge in iter.max iterations", call.=FALSE),
+	   stop("number of cluster centres must lie between 1 and nrow(x)",
+                call.=FALSE)
 	   )
     centers <- matrix(Z$centers, k)
     dimnames(centers) <- list(1:k, dimnames(x)[[2]])
