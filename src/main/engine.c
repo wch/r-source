@@ -2216,6 +2216,20 @@ SEXP GEcreateSnapshot(GEDevDesc *dd)
 
 /* Recreate a saved display using the information in a structure
  * created by GEcreateSnapshot.
+ *
+ * The graphics engine assumes that it is getting a snapshot
+ * that was created in THE CURRENT R SESSION
+ * (Thus, it can assume that registered graphics systems are 
+ *  in the same order as they were when the snapshot was 
+ *  created -- in patricular, state information will be sent
+ *  to the appropriate graphics system)
+ *
+ * It is possible to save a snapshot to an R variable 
+ * (and therefore save and reload it between sessions and
+ *  even possibly into a different R version),
+ * BUT this is strongly discouraged 
+ * (in the documentation for recordPlot() and replayPlot()
+ *  and in the documentation for the Rgui interface on Windows)
  */
 
 void GEplaySnapshot(SEXP snapshot, GEDevDesc* dd)

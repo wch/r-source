@@ -1,8 +1,14 @@
+rversion <- function() {
+  paste(R.Version()[c("major", "minor")],
+                                  collapse=".")
+}
+
 recordPlot <- function()
 {
     if(dev.cur() == 1)
         stop("no current device to record from")
     res <- .Internal(getSnapshot())
+    attr(res, "version") <- rversion()
     class(res) <- "recordedplot"
     res
 }
@@ -17,7 +23,15 @@ replayPlot <- function(x)
         ## pre-1.4.0 save
         .Internal(setGPar(x[[2]]))
         .Internal(playDL(x[[1]]))
-    } else .Internal(playSnapshot(x))
+    } else {
+      version <- attr(x, "version")
+      if (is.null(version))
+        warning("loading snapshot from pre-2.0.0 R version")
+      else if (version != rversion())
+        warning(paste("loading snapshot from different R version (",
+                      version, ")", sep=""))
+      .Internal(playSnapshot(x))
+    }
 }
 
 print.recordedplot <- function(x, ...)

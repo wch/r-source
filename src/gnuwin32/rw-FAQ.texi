@@ -773,6 +773,9 @@ replaced.  Recording can be turned on automatically (the Recording item
 on the list) or individual plots can be added (Add or the @key{INS}
 key).  The whole plot history can be saved to or retrieved from an R
 variable in the global environment.
+  The format of recorded plots may change between R versions.
+  Recorded plots should @strong{not} be used as a permanent
+  storage format for R plots.
 
 There is only one graphics history shared by all the windows devices.'
 @end quotation

@@ -18,15 +18,17 @@ replayPlot(x)
   graphics device.  The returned object is of class
   \code{"recordedplot"}, and \code{replayPlot} acts as a \code{print}
   method for that class.
+}
+\section{WARNING}{
+  The format of recorded plots may change between \R versions.
+  Recorded plots should \strong{not} be used as a permanent
+  storage format for \R plots.
 
-  The format of recorded plots was changed in \R 1.4.0: plots saved in
-  earlier versions can still be replayed.
+  \R will always attempt to replay a recorded plot, but if the plot was 
+  recorded with a different \R version then bad things may happen.
 }
 \value{
-  \code{recordPlot} returns an object of class \code{"recordedplot"}, a
-  list with components:
-  \item{displaylist}{The saved display list, as a pairlist.}
-  \item{gpar}{The graphics state, as an integer vector.}
+  \code{recordPlot} returns an object of class \code{"recordedplot"}.
 
   \code{replayPlot} has no return value.
 }

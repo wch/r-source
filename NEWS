@@ -213,6 +213,12 @@ NEW FEATURES
     o	Replaying a plot (with replayPlot() or via autoprinting) now
 	automagically opens a device if none is open.
 
+    o   replayPlot() issues a warning if an attempt is made to replay
+	a plot that was recorded using a different R version (the 
+	format for recorded plots is not guaranteed to be stable 
+	across different R versions).  The Windows-menu equivalent 
+	(History...Get from variable) issues a similar warning.
+
     o	reshape() can handle multiple 'id' variables.
 
     o	source() with 'echo = TRUE' uses the function source attribute
