@@ -17,7 +17,7 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
     (and optionally y) adjustment of the labels.}
   \item{pos}{a position specifier for the text.  If specified this
     overrides any \code{adj} value given.  Values of \code{1},
-    \code{1}, \code{1} and \code{1}, respectively indicate
+    \code{2}, \code{3} and \code{4}, respectively indicate
     positions below, to the left of, above and to the right of
     the specified coordinates.}
   \item{offset}{when \code{pos} is specified, this value gives the
@@ -70,3 +70,7 @@ text(5,10.2,"Le français, c'est façile: Règles, Liberté, Egalité, Fraternité..")
 text(5,9.8, "Jetz no chli züritüütsch: (noch ein bißchen Zürcher deutsch)")
 }
 \keyword{aplot}
+
+
+
+
