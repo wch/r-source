@@ -1,14 +1,14 @@
 \name{vector}
+\alias{vector}
+\alias{as.vector}
+\alias{as.vector.factor}
+\alias{is.vector}
 \title{Vectors}
 \usage{
 vector(mode = "logical", length = 0)
 as.vector(x, mode = "any")
 is.vector(x, mode = "any")
 }
-\alias{vector}
-\alias{as.vector}
-\alias{as.vector.factor}
-\alias{is.vector}
 \arguments{
   \item{mode}{A character string giving an atomic mode, or \code{"any"}.}
   \item{length}{A non-negative integer specifying the desired length.}
@@ -22,7 +22,7 @@ is.vector(x, mode = "any")
   is most convenient).  The attributes of \code{x} are removed.
 
   \code{is.vector} returns \code{TRUE} if \code{x} is a vector (of mode
-  logical, integer, real, complex, character or list if not specified)
+  logical, integer, real, complex, character, raw or list if not specified)
   and \code{FALSE} otherwise.
 }
 \details{
@@ -36,7 +36,8 @@ is.vector(x, mode = "any")
 \value{
   For \code{vector}, a vector of the given length and mode.  Logical
   vector elements are initialized to \code{FALSE}, numeric vector
-  elements to \code{0} and character vector elements to \code{""}.
+  elements to \code{0}, character vector elements to \code{""}, raw
+  vector elements to \code{nul} bytes and list elements to \code{NULL}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
