@@ -3,7 +3,7 @@
 # Copyright 1997-2003 by Douglas Bates <bates@stat.wisc.edu> 
 #                    and Dirk Eddelbuettel <edd@debian.org>
 
-# $Id: rules,v 1.47 2003/04/05 13:45:45 bates Exp $
+# $Id: rules,v 1.48 2003/04/05 14:24:53 bates Exp $
 
 corepackage	= r-base-core
 latexpackage	= r-base-latex
@@ -44,7 +44,6 @@ export DH_COMPAT  = 3
 
 # edd 15 Aug 2001: default to blas, atlas can override it 
 atlas 		= --with-blas
-atlas           = 
 # edd 08 Mar 2003: use the new lapack feature
 lapack		= --with-lapack
 
