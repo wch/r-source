@@ -23,12 +23,18 @@ kmeans(x, centers, iter.max = 10)
   The maximum number of iterations allowed.
 }}
 \details{
-  The data given by \code{x} is clustered by the k-means algorithm.
-  When this terminates, all cluster centres are at the mean of
-  their Voronoi sets (the set of data points which are nearest to
-  the cluster centre).
-
-  The algorithm of Hartigan and Wong (1979) is used.
+  The data given by \code{x} is clustered by the \eqn{k}-means method,
+  which aims to partition the points into \eqn{k} groups such that the
+  sum of squares from points to the assigned cluster centres is minimized.
+  At the minimum, all cluster centres are at the mean of their Voronoi
+  sets (the set of data points which are nearest to the cluster centre).
+ 
+  The algorithm of Hartigan and Wong (1979) is used.  Note that some
+  authors use \eqn{k}-means to refer to a specific algorithm rather than
+  the general method: most commonly the algorithm given by MacQueen but
+  sometimes that given by Lloyd and later by Forgy.  The Hartigan--Wong
+  algorithm generally does a better job than either of those, but trying
+  several random starts is often recommended.
 }
 \value{
   A list with components:
