@@ -92,7 +92,7 @@ extract_one(unzFile uf, char *dest, char *filename)
     p = outname + strlen(outname) - 1;
     if(*p == '/') { /* Don't know how these are stored in Mac zip files */
 	*p = '\0';
-	err = R_mkdir(outname);
+	if (!R_FileExists(outname)) err = R_mkdir(outname);
     } else {
 	/* make parents as required: have already checked dest exists */
 	pp = outname + strlen(dest) + 1;
