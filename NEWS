@@ -388,6 +388,7 @@ BUG FIXES
 
     o	The `ask' argument of plot.new() can now be used... <<<<not yet>>
 
+    o   hsv() truncation bug fixed (hopefully correctly this time...)
 
 
 	**************************************************
