@@ -66,6 +66,9 @@
 # can be overriden by means of this variable.
 # LDCMD=
 
+# For `-l' and `-L' options to pass to the linker.
+# LIBS=
+
 # The flags which are necessary for loading main program which will load
 # DLLs at runtime.  HP-UX and Linux-elf are examples of platforms which
 # use this.  These platforms are already taken care of by configure.
