@@ -65,10 +65,8 @@ ppr.default(x, y, weights = rep(1,n),
   }
   \item{na.action}{
     a function to specify the action to be taken if \code{\link{NA}}s are
-    found. The default action is for the procedure to fail.  An
-    alternative is \code{\link{na.omit}}, which leads to rejection of cases
-    with missing values on any required variable.  (NOTE: If given, this
-    argument must be named.)
+    found. The default action is given by \code{getOption("na.action")}.
+    (NOTE: If given, this argument must be named.)
   }
   \item{contrasts}{
     the contrasts to be used when any factor explanatory variables are coded.
