@@ -2685,8 +2685,8 @@ other function calls.  The syntax of a call to it is
 the name of the generic function, @var{object} is the object used to
 determine which method should be chosen.  @code{UseMethod} can only be
 called from inside a function.  The @Sl{} definition of @code{UseMethod}
-contains an additional argument of @samp{...} that appears to have no
-effect on any subsequent computations.  @R{} produces a warning if there
+contains an additional argument of @samp{...} that can affect the
+default values for subsequent methods.  @R{} produces a warning if there
 are more than two arguments to @code{UseMethod} and ignores these
 additional arguments.
 
