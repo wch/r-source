@@ -1005,8 +1005,14 @@ SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-/* use hashing to improve object.size. Here we want equal CHARSXPs, 
-   not equal contents. */
+/* Use hashing to improve object.size. Here we want equal CHARSXPs, 
+   not equal contents.  This only uses the bottom 32 bits of the pointer, 
+   but for now that's almost certainly OK */
+
+static int cshash(SEXP x, int indx, HashData *d)
+{
+    return scatter((unsigned int) STRING_ELT(x, indx), d);
+}
 
 static int csequal(SEXP x, int i, SEXP y, int j)
 {
@@ -1015,7 +1021,7 @@ static int csequal(SEXP x, int i, SEXP y, int j)
 
 static void HashTableSetup1(SEXP x, HashData *d)
 {
-    d->hash = shash;
+    d->hash = cshash;
     d->equal = csequal;
     MKsetup(LENGTH(x), d);
     d->HashTable = allocVector(INTSXP, d->M);
