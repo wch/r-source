@@ -87,6 +87,9 @@ NEW FEATURES
 
    o    New na.action function na.pass() passes through NAs.
 
+   o    piechart() has been renamed to pie(), as piechart is a Trellis
+	function for arrays of pie charts.
+
    o	Changes in package ts:
 
 	-  arima0() now handles missing values internally so the
@@ -105,7 +108,7 @@ NEW FEATURES
 	-  Function acf() now accepts missing values.
 
 	-  New datasets Nile, UKgas and WWWusage, and a expanded
-           version of UKDriverDeaths (as a multiple time series SeatBelts).
+           version of UKDriverDeaths (as a multiple time series Seatbelts).
 
 	-  New generic function tsdiag() and an `arima0' method for
 	   diagnostic plots.
@@ -123,6 +126,8 @@ DEPRECATED & DEFUNCT
     o	.Alias, reshapeLong(), reshapeWide() are defunct.
 
     o	arima0.diag() (package ts) is deprecated: use tsdiag() instead.
+
+    o	piechart() is deprecated.
 
 
 DOCUMENTATION CHANGES

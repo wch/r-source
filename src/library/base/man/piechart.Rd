@@ -1,13 +1,14 @@
-\name{piechart}
+\name{pie}
 \title{Pie Charts}
-\alias{piechart}
+\alias{pie}
+\alias{old-piechart}
 \description{
   Draw a pie chart.
 }
 \usage{
-piechart(x, labels = names(x), edges = 200, radius = 0.8,
-         density = NULL, angle = 45, col = NULL,
-         main = NULL, \dots)
+pie(x, labels = names(x), edges = 200, radius = 0.8,
+    density = NULL, angle = 45, col = NULL,
+    main = NULL, \dots)
 }
 \arguments{
   \item{x}{a vector of positive quantities.
@@ -30,7 +31,7 @@ piechart(x, labels = names(x), edges = 200, radius = 0.8,
     when \code{par("fg")} is used.}
   \item{main}{an overall title for the plot.}
   \item{\dots}{graphical parameters can be given as arguments to
-    \code{piechart}.}
+    \code{pie}.}
 }
 \note{
   Pie charts are a very bad way of displaying information.
@@ -39,22 +40,22 @@ piechart(x, labels = names(x), edges = 200, radius = 0.8,
 
   A bar chart or dot chart is a preferable way of displaying this
   type of data.
+
+  Prior to \R 1.5.0 this was known as \code{piechart}, which is the name
+  of a Trellis function, so the name was changed to be compatible with S.
 }
 \seealso{
   \code{\link{dotchart}}.
 }
 \examples{
-piechart(rep(1,24), col=rainbow(24), radius=0.9)
+pie(rep(1, 24), col = rainbow(24), radius = 0.9)
 
 pie.sales <- c(0.12, 0.3, 0.26, 0.16, 0.04, 0.12)
 names(pie.sales) <- c("Blueberry", "Cherry",
     "Apple", "Boston Cream", "Other", "Vanilla Cream")
-piechart(pie.sales,
-    col=c("purple", "violetred1", "green3",
-    "cornsilk", "cyan", "white"))
-piechart(pie.sales,
-    col=gray(seq(0.4,1.0,length=6)))
-piechart(pie.sales,
-    density=10, angle=15+10*1:6)
+pie(pie.sales,
+    col = c("purple", "violetred1", "green3", "cornsilk", "cyan", "white"))
+pie(pie.sales, col = gray(seq(0.4,1.0,length=6)))
+pie(pie.sales, density = 10, angle = 15 + 10 * 1:6)
 }
 \keyword{hplot}

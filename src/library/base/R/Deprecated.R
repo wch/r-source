@@ -6,8 +6,17 @@
 		  if (!missing(new))
 		  paste("Use `", new, "' instead.\n", sep = ""),
 		  "See ?Deprecated.",
-		  sep = ""))
+		  sep = ""), call. = FALSE)
 }
 
-## Deprecated in 1.4.0
+## Deprecated in 1.5.0
+piechart <- function(x, labels = names(x), edges = 200, radius = 0.8,
+              density = NULL, angle = 45, col = NULL,
+              main = NULL, ...)
+{
+    .Deprecated("pie")
+    mcall <- match.call()
+    mcall[[1]] <- as.name("pie")
+    eval(mcall, parent.frame())
+}
 ## </Deprecated>
