@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000-2001 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,14 +39,26 @@
 
 double beta(double a, double b)
 {
-    static double xmax = 0;  /*-> typically = 171.61447887 for IEEE */
-    static double alnsml = 0;/*-> typically = -708.3964185 */
-    double val, xmin;
+    double val;
+
+#ifdef NOMORE_FOR_THREADS
+    static double xmin, xmax = 0;/*-> typically = 171.61447887 for IEEE */
+    static double lnsml = 0;/*-> typically = -708.3964185 */
 
     if (xmax == 0) {
 	    gammalims(&xmin, &xmax);
-	    alnsml = log(d1mach(1));
+	    lnsml = log(d1mach(1));
     }
+#else
+/* For IEEE double precision DBL_EPSILON = 2^-52 = 2.220446049250313e-16 :
+ *   xmin, xmax : see ./gammalims.c
+ *   lnsml = log(DBL_MIN) = log(2 ^ -1022) = -1022 * log(2)
+*/
+# define xmin  -170.5674972726612
+# define xmax   171.61447887182298
+# define lnsml -708.39641853226412
+#endif
+
 
 #ifdef IEEE_754
     /* NaNs propagated correctly */
@@ -66,7 +78,7 @@ double beta(double a, double b)
 	return gammafn(a) * gammafn(b) / gammafn(a+b);
 
     val = lbeta(a, b);
-    if (val < alnsml) {
+    if (val < lnsml) {
 	/* a and/or b so big that beta underflows */
 	ML_ERROR(ME_UNDERFLOW);
 	return ML_UNDERFLOW;

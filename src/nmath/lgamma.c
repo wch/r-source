@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000-2001 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -44,14 +45,24 @@ int signgam;
 
 double lgammafn(double x)
 {
+    double ans, y, sinpiy;
+
+#ifdef NOMORE_FOR_THREADS
     static double xmax = 0.;
     static double dxrel = 0.;
-    double ans, y, sinpiy;
 
     if (xmax == 0) {/* initialize machine dependent constants _ONCE_ */
 	xmax = d1mach(2)/log(d1mach(2));/* = 2.533 e305	 for IEEE double */
 	dxrel = sqrt (d1mach(4));/* sqrt(Eps) ~ 1.49 e-8  for IEEE double */
     }
+#else
+/* For IEEE double precision DBL_EPSILON = 2^-52 = 2.220446049250313e-16 :
+   xmax  = DBL_MAX / log(DBL_MAX) = 2^1024 / (1024 * log(2)) = 2^1014 / log(2)
+   dxrel = sqrt(DBL_EPSILON) = 2^-26 = 5^26 * 1e-26 (is *exact* below !)
+ */
+#define xmax  2.5327372760800758e+305
+#define dxrel 1.490116119384765696e-8
+#endif
 
     signgam = 1;
 
