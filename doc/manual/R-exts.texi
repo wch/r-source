@@ -782,7 +782,8 @@ supplying a file @file{Makevars}: also one of the commonest uses of a
 @file{Makevars.in}.
 
 The most common use of a @file{Makevars} file is to set additional
-compiler flags (for example include paths) by setting @code{PKG_CFLAGS},
+preprocessor (for example include paths) flags via @code{PKG_CPPFLAGS},
+and additional compiler flags by setting @code{PKG_CFLAGS},
 @code{PKG_CXXFLAGS} and @code{PKG_FFLAGS}, for C, C++, or FORTRAN
 respectively (@pxref{Creating shared objects}).
 
