@@ -25,16 +25,21 @@ OBJS = arithmetic.o array.o attrib.o bind.o builtin.o character.o       \
 	unique.o util.o version.o
 
 RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libmath.a
+RGNOMELIBS = ../gnome/libRgnome.a ../appl/libappl.a ../nmath/libmath.a
 
 ALL_LIBS = $(RLIBS) $(X_PRE_LIBS) $(X_LIBS) $(X_EXTRA_LIBS) $(LIBS)
 
 all: R
 
-R: $(top_builddir)/bin/R.binary
+R: $(top_builddir)/bin/R.binary @RGNOMEBIN@
 
 $(top_builddir)/bin/R.binary: $(OBJS) $(RLIBS)
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
 	$(LDCMD) $(DLLFLAGS) -o $@ $(OBJS) $(ALL_LIBS)
+
+$(top_builddir)/bin/R.gnome: $(OBJS) $(RLIBS)
+	@$(MKINSTALLDIRS) $(top_builddir)/bin
+	$(LDCMD) $(DLLFLAGS) $(GNOME_LIBDIR) -o $@ $(OBJS) $(ALL_LIBS) $(GNOMEUI_LIBS)
 
 ../unix/libunix.a:
 	(cd ../unix;  $(MAKE) $(@F))

@@ -459,11 +459,14 @@ GNOME_INIT_HOOK([],cont)
 if test "$GNOMEUI_LIBS" = ""; then
   GNOME_ENABLED="no"
   RGNOMEDIR=""
+  RGNOMEBIN=""
 else
   GNOME_ENABLED="yes"
   RGNOMEDIR="gnome"
+  RGNOMEBIN="\$(top_builddir)/bin/R.gnome"
 fi
 AC_SUBST(RGNOMEDIR)
+AC_SUBST(RGNOMEBIN)
 
 ### Library functions.
 
