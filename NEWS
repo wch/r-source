@@ -673,6 +673,10 @@ BUG FIXES
     o	formatC() did not check its 'flag' argument, and could
 	segfault if it was incorrect. (PR#7686)
 
+    o	Contrasts needed to be coerced to numeric (e.g. from integer)
+	inside model.matrix.  (PR#7695)
+
+
 
 
 	**************************************************

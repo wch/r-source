@@ -3485,3 +3485,14 @@ stopifnot(identical(res, c(235, 335, 535, 735, 115, 135, 175)))
 ## PR#7686 formatC does not pick up on incorrect 'flag' inputs
 try(formatC(1, flag="s"))
 ## segfaulted in 2.0.1
+
+
+## PR#7695 contrasts needed coercion to double
+c <- matrix(c(0,1,2), nrow=3)
+storage.mode(c) <- "integer"
+f <- factor(1:3)
+contrasts(f, 1) <- c
+x <- model.matrix(~f)
+stopifnot(x == c(1,1,1,0,1,2))
+## gave machine-dependendent silly numbers in 2.0.1
+

@@ -1867,12 +1867,13 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (fik) {
 		switch(fik) {
 		case 1:
-		    contrast = VECTOR_ELT(contr1, i);
+		    contrast = coerceVector(VECTOR_ELT(contr1, i), REALSXP);
 		    break;
 		case 2:
-		    contrast = VECTOR_ELT(contr2, i);
+		    contrast = coerceVector(VECTOR_ELT(contr2, i), REALSXP);
 		    break;
 		}
+		PROTECT(contrast);
 		if (jnext == jstart) {
 		    if (INTEGER(nlevs)[i] > 0) {
 			int adj = isLogical(var_i)?1:0;
@@ -1901,6 +1902,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 			jnext = jnext + (jnext - jstart) * (ncols(var_i) - 1);
 		    }
 		}
+		UNPROTECT(1);
 	    }
 	}
 	jstart = jnext;
