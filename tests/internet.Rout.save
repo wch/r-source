@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2004-10-28), ISBN 3-900051-07-0
+Version 2.1.0 Under development (unstable) (2004-12-27), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -30,13 +30,7 @@ Type 'q()' to quit R.
 > 
 > # test do_download.
 > nrow(CRAN.packages())
-trying URL `http://cran.r-project.org/src/contrib/PACKAGES'
-Content type `text/plain; charset=iso-8859-1' length 210037 bytes
-opened URL
-==================================================
-downloaded 205Kb
-
-[1] 412
+[1] 433
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
@@ -72,7 +66,7 @@ downloaded 205Kb
 > ## check graceful failure:
 > try(zz <- url("http://foo.bar", "r"))
 Error in url("http://foo.bar", "r") : unable to open connection
-In addition: Warning message: 
+In addition: Warning message:
 unable to resolve 'foo.bar'. 
 > 
 > # and via read.table, test http and ftp.
