@@ -9,7 +9,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         current <- getRversion()
         pkgname <- sQuote(pkgInfo$DESCRIPTION["Package"])
         ## depends on R version?
-        if(!is.null(Rdeps <- pkgInfo$Rdepends)) {
+        if(length(Rdeps <- pkgInfo$Rdepends) > 1) {
             target <- Rdeps$version
             res <- eval(parse(text=paste("current", Rdeps$op, "target")))
             if(!res)
