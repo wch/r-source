@@ -535,7 +535,7 @@ sub replace_prepend_command {
 	my ($id, $arg) = get_arguments($cmd, $text, 1);
 	$text =~ /\\$cmd$id(.*)$id/s;
 	$arg = $1;
-	if ($arg =~ /\n/m) {
+	if ($prepend == "" || $arg =~ /\n/m) {
 	    $arg = "\n" . $arg unless $arg =~ /^\n/m;
 	    $arg =~ s/^/$prepend/gmo;# prepend at all line beginnings
 	    $arg =~ s/^$prepend//;   # but NOT the very beginning..
@@ -2265,7 +2265,7 @@ sub code2examp {
 
     $text = replace_prepend_command($text, "dontshow", "## Don't show: ", 
 				    "## End Don't show", "");
-    $text = replace_prepend_command($text, "testonly", "## Don't show: ", 
+    $text = replace_prepend_command($text, "testonly", "## Don't show:", 
 				    "## End Don't show", "");
 
     $text = replace_prepend_command($text, "dontrun","## Don't run: ", 
