@@ -308,10 +308,16 @@ BUG FIXES
 	on a fresh device.
 
     o	hasArg() used wrong logic to get the parent function. (sys.function()
-	behaves differently from what is documented
+	behaves differently from what is documented.
 
     o	prompt(f) now gives proper \usage{..} for
 	f <- function(x, g = function(u) { v <- u^2 ; sin(v)/v }) { g(x) }
+
+    o	package.skeleton() now uses the supplied name in the DESCRIPTION
+	file.
+
+    o	options(list('digits', 'scipen')) no longer seg.faults (PR#7078).
+
 
 
 

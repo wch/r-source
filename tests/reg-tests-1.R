@@ -3083,6 +3083,13 @@ stopifnot(identical(trunc(x), xx)) # must not truncate towards 0.
 
 ### end of tests added in 1.9.1 ###
 
+## 1.9.1 patched
+
+## options(list('..', '..'))
+try(options(list('digits', 'width')))# give an error
+## gave a segfault in 1.9.1
+
+
 
 ## names in columns of data frames
 x <- 1:10
@@ -3156,7 +3163,7 @@ local({
   jold<-j<-7
   gold<-g<-e
   a<-"B"
-  
+
   e[2]<<-e[2]+1
   names(f)[2]<<-a
   g<<-1
@@ -3178,4 +3185,3 @@ stopifnot(identical(g, 1))
 stopifnot(identical(h, list(a=1,list(b=2, list(B=2,d=4), list(e=5)))))
 stopifnot(identical(as.vector(j), c(1,1,1,2)))
 stopifnot(identical(colnames(j), c(NA,"B")))
-
