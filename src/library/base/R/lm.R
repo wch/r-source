@@ -20,7 +20,6 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     else if (method != "qr")
 	warning("method = ", method, " is not supported. Using \"qr\".")
     mt <- attr(mf, "terms") # allow model.frame to update it
-    na.act <- attr(mf, "na.action")
     xvars <- as.character(attr(mt, "variables"))[-1]
     if((yvar <- attr(mt, "response")) > 0) xvars <- xvars[-yvar]
     xlev <-
@@ -28,8 +27,6 @@ lm <- function (formula, data = list(), subset, weights, na.action,
 	    xlev <- lapply(mf[xvars], levels)
 	    xlev[!sapply(xlev, is.null)]
 	}
-    if (!singular.ok)
-	warning("only `singular.ok = TRUE' is currently implemented.")
     y <- model.response(mf, "numeric")
     w <- model.weights(mf)
     offset <- model.offset(mf)
@@ -51,7 +48,7 @@ lm <- function (formula, data = list(), subset, weights, na.action,
 	else lm.wfit(x, y, w, offset = offset, singular.ok=singular.ok, ...)
     }
     class(z) <- c(if(is.matrix(y)) "mlm", "lm")
-    if(!is.null(na.act)) z$na.action <- na.act
+    z$na.action <- attr(mf, "na.action")
     z$offset <- offset
     z$contrasts <- attr(x, "contrasts")
     z$xlevels <- xlev
@@ -90,7 +87,7 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
     if(method != "qr")
 	warning("method = ",method, " is not supported. Using \"qr\".")
     if(length(list(...)))
-	warning("Extra arguments ", deparse(substitute(...)),
+	warning("Extra arguments ", paste(names(list(...)), sep=", "),
                 " are just disregarded.")
     storage.mode(x) <- "double"
     storage.mode(y) <- "double"
@@ -102,8 +99,7 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
 		  residuals = y, effects = y, rank = integer(1),
 		  pivot = 1:p, qraux = double(p), work = double(2*p),
                   PACKAGE="base")
-    if(!singular.ok && z$rank == 0)
-        stop("singular fit encountered")
+    if(!singular.ok && z$rank < p) stop("singular fit encountered")
     coef <- z$coefficients
     pivot <- z$pivot
     ## careful here: the rank might be 0
@@ -150,7 +146,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
     if(method != "qr")
 	warning("method = ",method, " is not supported. Using \"qr\".")
     if(length(list(...)))
-	warning("Extra arguments ", deparse(substitute(...)),
+	warning("Extra arguments ", paste(names(list(...)), sep=", "),
                 " are just disregarded.")
     x.asgn <- attr(x, "assign")# save
     zero.weights <- any(w == 0)
@@ -185,8 +181,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
 		  rank = integer(1), pivot = 1:p, qraux = double(p),
 		  work = double(2 * p),
                   PACKAGE="base")
-    if(!singular.ok && z$rank == 0)
-        stop("singular fit encountered")
+    if(!singular.ok && z$rank < p) stop("singular fit encountered")
     coef <- z$coefficients
     pivot <- z$pivot
     r1 <- seq(len=z$rank)
@@ -419,24 +414,17 @@ residuals.lm <-
                   if(is.null(object$weights)) r else r * sqrt(object$weights),
                   partial = r + predict(object,type="terms")
            )
-    if(is.null(object$na.action)) res
-    else naresid(object$na.action, res)
+    naresid(object$na.action, res)
 }
 
-fitted.lm <- function(object, ...)
-{
-    if(is.null(object$na.action)) object$fitted.values
-    else napredict(object$na.action, object$fitted.values)
-}
+#fitted.lm <- function(object, ...)
+#    napredict(object$na.action, object$fitted.values)
 
 coef.lm <- function(object, ...) object$coefficients
 
 ## need this for results of lm.fit() in drop1():
 weights.default <- function(object, ...)
-{
-    if(is.null(object$na.action)) object$weights
-    else naresid(object$na.action, object$weights)
-}
+    naresid(object$na.action, object$weights)
 
 
 deviance.lm <- function(object, ...)

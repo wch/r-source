@@ -41,7 +41,6 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	   ## else
 	   stop("invalid `method': ", method))
     mt <- attr(mf, "terms") # allow model.frame to update it
-    na.act <- attr(mf, "na.action")
     xvars <- as.character(attr(mt, "variables"))[-1]
     if((yvar <- attr(mt, "response")) > 0) xvars <- xvars[-yvar]
     xlev <- if(length(xvars) > 0) {
@@ -78,7 +77,7 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
                     control=control, intercept=TRUE)$deviance
     }
     if(model) fit$model <- mf
-    if(!is.null(na.act)) fit$na.action <- na.act
+    fit$na.action <- attr(mf, "na.action")
     if(x) fit$x <- X
     if(!y) fit$y <- NULL
     fit <- c(fit, list(call=call, formula=formula,

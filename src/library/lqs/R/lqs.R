@@ -16,7 +16,6 @@ lqs.formula <-
     mf <- eval(mf, parent.frame())
     if (method == "model.frame") return(mf)
     mt <- attr(mf, "terms")
-    na.act <- attr(mf, "na.action")
     y <- model.extract(mf, "response")
     x <- model.matrix(mt, mf, contrasts)
     xvars <- as.character(attr(mt, "variables"))[-1]
@@ -34,7 +33,7 @@ lqs.formula <-
     fit$call <- match.call()
     fit$contrasts <- attr(x, "contrasts")
     fit$xlevels <- xlev
-    if(!is.null(na.act)) fit$na.action <- na.act
+    fit$na.action <- attr(mf, "na.action")
     if(model) fit$model <- mf
     if(x.ret) fit$x <- x
     if(y.ret) fit$y <- y

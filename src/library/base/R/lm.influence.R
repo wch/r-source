@@ -92,7 +92,7 @@ influence.lm  <- function(model, do.coef = TRUE, ...)
 influence.glm <- function(model, do.coef = TRUE, ...) {
     res <- lm.influence(model, do.coef = do.coef, ...)
     pRes <- na.omit(residuals(model, type = "pearson"))[model$prior.weights != 0]
-    if(!is.null(model$na.action)) pRes <- naresid(model$na.action, pRes)
+    pRes <- naresid(model$na.action, pRes)
     names(res)[names(res) == "wt.res"] <- "dev.res"
     c(res, list(pear.res = pRes))
 }

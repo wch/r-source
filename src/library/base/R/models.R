@@ -162,10 +162,7 @@ coefficients <- coef
 
 residuals <- function(object, ...) UseMethod("residuals")
 residuals.default <- function(object, ...)
-{
-    if(is.null(object$na.action)) object$residuals
-    else naresid(object$na.action, object$residuals)
-}
+    naresid(object$na.action, object$residuals)
 resid <- residuals
 
 deviance <- function(object, ...) UseMethod("deviance")
@@ -173,10 +170,7 @@ deviance.default <- function(object, ...) object$deviance
 
 fitted <- function(object, ...) UseMethod("fitted")
 fitted.default <- function(object, ...)
-{
-    if(is.null(object$na.action)) object$fitted
-    else napredict(object$na.action, object$fitted)
-}
+    napredict(object$na.action, object$fitted)
 fitted.values <- fitted
 
 anova <- function(object, ...)UseMethod("anova")

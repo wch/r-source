@@ -57,7 +57,7 @@ NEW FEATURES
     o	model.frame() methods, for example those for "lm" and "glm", pass
 	relevant parts of ... onto the default method.  (This has
 	long been documented but not done.)  The default method is now
-	able to code with model classes such as "lqs" and "ppr".
+	able to cope with model classes such as "lqs" and "ppr".
 
     o	ppr() has a `model' argument to allow the model frame to be
 	returned as part of the fitted object.
@@ -113,6 +113,11 @@ BUG FIXES
 
     o	model.frame()'s lm and glm methods had 'data' and 'na.action'
 	arguments which they ignored and have been removed.
+
+    o	When lm.{w}fit() disregarded arguments in ... they reported
+	the values and not the names.
+
+    o	lm(singular.ok=FALSE) was looking for 0 rank, not rank < p. 
 
 
 
