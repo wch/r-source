@@ -31,7 +31,7 @@ plot.default(x, y = NULL, type = "p",  xlim = NULL, ylim = NULL,
   \item{xlab}{a label for the x axis.}
   \item{ylab}{a label for the y axis.}
 
-  \item{ann}{an logical value indicating whether the default annotation
+  \item{ann}{a logical value indicating whether the default annotation
     (title and x and y axis labels) should appear on the plot.}
   \item{axes}{a logical value indicating whether axes should be drawn on
     the plot.}
