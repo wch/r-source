@@ -1,7 +1,7 @@
 #ifndef R_BUFFER_UTILS
 #define R_BUFFER_UTILS
 
-/* used in deparse.c, printutils.c, saveload.c & scan.c */
+/* used in character.c deparse.c, printutils.c, saveload.c scan.c */
 
 /* We can make these uint's rather than ordinary int's. */
 typedef struct {

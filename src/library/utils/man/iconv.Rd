@@ -37,9 +37,7 @@ iconvlist()
   
   Elements which cannot be converted (perhaps because they are invalid
   or because they cannot be represented in the target encoding)
-  will be returned as \code{NA}.  Converted strings are currently
-  limited to 1000 bytes.
-}
+  will be returned as \code{NA}.
 \value{
   A character vector of the same length and the same attributes as \code{x}.
 }

@@ -22,6 +22,7 @@
    byte-level access needed checks.
    I think it is mainly OK provided quotes, comment, sep and dec 
    chars are ASCII.
+
    It does use isspace, and there are non-ASCII Unicode space chars.
    There is also the possibility of other digits.
 */

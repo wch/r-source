@@ -353,8 +353,8 @@ write_one (unsigned int namescount, char * *names, void *data)
 }
 #endif
 
-/* FIXME: remove line limit */
-#define BUFSIZE 1001
+#include "RBufferUtils.h"
+
 /* iconv(x, from, to) */
 SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -363,8 +363,9 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
     iconv_t obj;
     int i;
     char *inbuf; /* Solaris headers have const char*  here */
-    char *outbuf, buff[BUFSIZE];
+    char *outbuf;
     size_t inb, outb, res;
+    R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
     
     checkArity(op, args);
 #ifdef Win32
@@ -393,20 +394,27 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(obj == (iconv_t)(-1))
 	    errorcall(call, "unsupported conversion");
 	PROTECT(ans = duplicate(x));
+	R_AllocStringBuffer(0, &cbuff);  /* just default */
 	for(i = 0; i < LENGTH(x); i++) {
+	top_of_loop:
 	    inbuf = CHAR(STRING_ELT(x, i)); inb = strlen(inbuf);
-	    outbuf = buff; outb = BUFSIZE;
+	    outbuf = cbuff.data; outb = cbuff.bufsize - 1;
 	    /* First initialize output */
 	    iconv (obj, NULL, NULL, &outbuf, &outb);
-	    /* Then convert input 
-	       <FIXME> check error conditions */
+	    /* Then convert input  */
 	    res = iconv(obj, &inbuf , &inb, &outbuf, &outb);
 	    *outbuf = '\0';
+	    if(res == -1 && errno == E2BIG) {
+		R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
+		goto top_of_loop;
+	    } /* other possible error conditions are incomplete 
+		 and invalid mutibyte chars */
 	    if(res != -1 && inb == 0)
-		SET_STRING_ELT(ans, i, mkChar(buff));
+		SET_STRING_ELT(ans, i, mkChar(cbuff.data));
 	    else SET_STRING_ELT(ans, i, NA_STRING);
 	}
 	iconv_close(obj);
+	R_FreeStringBuffer(&cbuff);
     }
     UNPROTECT(1);
     return ans;
