@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-02-05)
+Version 1.7.0 Under development (unstable) (2003-03-01)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -309,6 +309,7 @@ IS: [1] TRUE
 > res <- try(as.environment( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.environment(res))
 [1] FALSE
+Error: x is not TRUE
 > res <- try(as.expression( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.expression(res))
 [1] TRUE
@@ -354,6 +355,7 @@ IS: [1] TRUE
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
 [1] FALSE
+Error: x is not TRUE
 > 
 > res <- try(as.array( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
@@ -388,6 +390,7 @@ IS: [1] TRUE
 +    report({if(is.environment(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 [1] FALSE
+Error: x is not TRUE
 > res <- try(as.expression( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.expression(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -469,6 +472,7 @@ IS: [1] TRUE
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 [1] FALSE
+Error: x is not TRUE
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -1562,6 +1566,7 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.difftime( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.difftime( f )))
+Error in strptime(tim, format = format) : invalid `x' argument
 > f <- try(as.double( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.double( f )))
 [1] TRUE
@@ -1961,6 +1966,7 @@ IS: [1] TRUE
 > res <- try(as.vector( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.vector(res))
 [1] FALSE
+Error: x is not TRUE
 > 
 > res <- try(as.array( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
@@ -2021,6 +2027,7 @@ IS: [1] TRUE
 IS: [1] "Attributes: < Lengths: 2, 0 >"                                    
 [2] "Attributes: < names for target but not for current >"             
 [3] "Attributes: < Length mismatch: comparison on first 0 components >"
+Error: x is not TRUE
 > res <- try(as.logical( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.logical(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -2080,6 +2087,7 @@ IS: [1] "Attributes: < Lengths: 2, 0 >"
 +    report({if(is.vector(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 [1] FALSE
+Error: x is not TRUE
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -2159,6 +2167,6 @@ IS: [1] "Attributes: < Lengths: 2, 0 >"
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.54 0.01 0.56 0 0 
+Time elapsed:  0.44 0.03 0.47 NA NA 
 > 
 > 
