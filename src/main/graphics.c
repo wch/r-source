@@ -1129,7 +1129,7 @@ static void widthsRespectingHeights(double widths[],
     }
     for (i = 0; i < nr; i++)
 	for (j = 0; j < Rf_gpptr(dd)->numcols; j++)
-	    if (Rf_gpptr(dd)->respect[i + j * nr] && 
+	    if (Rf_gpptr(dd)->respect[i + j * nr] &&
 		!Rf_gpptr(dd)->cmWidths[j]) respectedCols[j] = 1;
     for (j = 0; j < Rf_gpptr(dd)->numcols; j++)
 	if (!respectedCols[j])
@@ -1164,7 +1164,7 @@ static void heightsRespectingWidths(double heights[],
     }
     for (i = 0; i < nr; i++)
 	for (j = 0; j < Rf_gpptr(dd)->numcols; j++)
-	    if (Rf_gpptr(dd)->respect[i + j*nr] && 
+	    if (Rf_gpptr(dd)->respect[i + j*nr] &&
 		!Rf_gpptr(dd)->cmHeights[i]) respectedRows[i] = 1;
     for (i = 0; i < Rf_gpptr(dd)->numrows; i++)
 	if (!respectedRows[i])
@@ -1751,7 +1751,7 @@ static void invalidError(char* message, DevDesc *dd)
 }
 
 Rboolean GRecording(SEXP call, DevDesc *dd)
-{  
+{
     return GErecording(call, (GEDevDesc *) dd);
 }
 
@@ -1825,15 +1825,15 @@ DevDesc *GNewPlot(Rboolean recording)
     } else {
 	Rf_dpptr(dd)->valid = Rf_gpptr(dd)->valid = TRUE;
 	/*
-	 * At this point, base output has been successfully 
+	 * At this point, base output has been successfully
 	 * produced on the device, so mark the device "dirty"
 	 * with respect to base graphics.
-	 * This is used when checking whether the device is 
+	 * This is used when checking whether the device is
 	 * "valid" with respect to base graphics
 	 */
 	Rf_setBaseDevice(TRUE, dd);
 	GEdirtyDevice((GEDevDesc*) dd);
-    } 
+    }
 
     return dd;
 }
@@ -1843,13 +1843,14 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 {
 /* GScale: used to default axis information
  *	   i.e., if user has NOT specified par(usr=...)
+ * NB: can have min > max !
  */
 #define EPS_FAC_1  16
 #define EPS_FAC_2 100
 
     Rboolean swap, is_xaxis = (axis == 1 || axis == 3);
     int log, n, style;
-    double temp;
+    double temp, /* for logscale : */ min_o = 0., max_o = 0., tmp2 = 0.;/*-Wall*/
 
     if(is_xaxis) {
 	n = Rf_gpptr(dd)->lab[0];
@@ -1863,6 +1864,8 @@ void GScale(double min, double max, int axis, DevDesc *dd)
     }
 
     if (log) {
+	/*  keep original  min, max - to use in extremis */
+	min_o = min; max_o = max;
 	min = log10(min);
 	max = log10(max);
     }
@@ -1900,29 +1903,44 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	error(_("axis style \"%c\" unimplemented"), style);
     }
 
+    if (log) { /* 10^max may have gotten +Inf ; or  10^min has become 0 */
+	if((temp = pow(10., min)) == 0.) {/* or < 1.01*DBL_MIN */
+	    temp = fmin2(min_o, 1.01* DBL_MIN); /* allow smaller non 0 */
+	    min = log10(temp);
+	}
+	if((tmp2 = pow(10., max)) == R_PosInf) { /* or  > .95*DBL_MAX */
+	    tmp2 = fmax2(max_o, .99 * DBL_MAX);
+	    max = log10(tmp2);
+	}
+    }
     if(is_xaxis) {
 	if (log) {
-	    Rf_gpptr(dd)->usr[0] = Rf_dpptr(dd)->usr[0] = pow(10.,min);
-	    Rf_gpptr(dd)->usr[1] = Rf_dpptr(dd)->usr[1] = pow(10.,max);
+	    Rf_gpptr(dd)->usr[0] = Rf_dpptr(dd)->usr[0] = temp;
+	    Rf_gpptr(dd)->usr[1] = Rf_dpptr(dd)->usr[1] = tmp2;
 	    Rf_gpptr(dd)->logusr[0] = Rf_dpptr(dd)->logusr[0] = min;
 	    Rf_gpptr(dd)->logusr[1] = Rf_dpptr(dd)->logusr[1] = max;
 	} else {
 	    Rf_gpptr(dd)->usr[0] = Rf_dpptr(dd)->usr[0] = min;
 	    Rf_gpptr(dd)->usr[1] = Rf_dpptr(dd)->usr[1] = max;
+/* MM: logusr is only used " when (log)" : */
+#ifdef NEVER_USED
 	    Rf_gpptr(dd)->logusr[0] = Rf_dpptr(dd)->logusr[0] = log10(min);
 	    Rf_gpptr(dd)->logusr[1] = Rf_dpptr(dd)->logusr[1] = log10(max);
+#endif
 	}
     } else {
 	if (log) {
-	    Rf_gpptr(dd)->usr[2] = Rf_dpptr(dd)->usr[2] = pow(10.,min);
-	    Rf_gpptr(dd)->usr[3] = Rf_dpptr(dd)->usr[3] = pow(10.,max);
+	    Rf_gpptr(dd)->usr[2] = Rf_dpptr(dd)->usr[2] = temp;
+	    Rf_gpptr(dd)->usr[3] = Rf_dpptr(dd)->usr[3] = tmp2;
 	    Rf_gpptr(dd)->logusr[2] = Rf_dpptr(dd)->logusr[2] = min;
 	    Rf_gpptr(dd)->logusr[3] = Rf_dpptr(dd)->logusr[3] = max;
 	} else {
 	    Rf_gpptr(dd)->usr[2] = Rf_dpptr(dd)->usr[2] = min;
 	    Rf_gpptr(dd)->usr[3] = Rf_dpptr(dd)->usr[3] = max;
+#ifdef NEVER_USED
 	    Rf_gpptr(dd)->logusr[2] = Rf_dpptr(dd)->logusr[2] = log10(min);
 	    Rf_gpptr(dd)->logusr[3] = Rf_dpptr(dd)->logusr[3] = log10(max);
+#endif
 	}
     }
 
@@ -2197,7 +2215,7 @@ static int	collabsave;	/* col.lab */
 static int	colsubsave;	/* col.sub */
 static int	colaxissave;	/* col.axis */
 static double	crtsave;	/* character rotation */
-static char     familysave[50]; 
+static char     familysave[50];
 static int	fontsave;	/* font */
 static int	fontmainsave;	/* font.main */
 static int	fontlabsave;	/* font.lab */
@@ -3013,7 +3031,7 @@ void GBox(int which, DevDesc *dd)
 	switch(Rf_gpptr(dd)->bty) {
 	case 'o':
 	case 'O':
-	    GPolygon(4, x, y, NFC, 
+	    GPolygon(4, x, y, NFC,
 		     R_TRANWHITE, Rf_gpptr(dd)->col, dd);
 	    break;
 	case 'l':
@@ -3044,15 +3062,15 @@ void GBox(int which, DevDesc *dd)
 	}
 	break;
     case 2: /* Figure */
-	GPolygon(4, x, y, NFC, 
+	GPolygon(4, x, y, NFC,
 		 R_TRANWHITE, Rf_gpptr(dd)->col, dd);
 	break;
     case 3: /* Inner Region */
-	GPolygon(4, x, y, NIC, 
+	GPolygon(4, x, y, NIC,
 		 R_TRANWHITE, Rf_gpptr(dd)->col, dd);
 	break;
     case 4: /* "outer": Device border */
-	GPolygon(4, x, y, NDC, 
+	GPolygon(4, x, y, NDC,
 		 R_TRANWHITE, Rf_gpptr(dd)->col, dd);
 	break;
     default:
@@ -3083,6 +3101,7 @@ void GLPretty(double *ul, double *uh, int *n)
 	*n = -*n;
     }
     else { /* extra tickmarks --> CreateAtVector() in ./plot.c */
+	/* round to nice "1e<N>" */
 	*ul = pow(10., (double)p1);
 	*uh = pow(10., (double)p2);
 	if (p2 - p1 <= LPR_SMALL)
@@ -3145,7 +3164,7 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	 2 = always perpendicular to the axis.
 	 3 = always vertical.
 */
-    double angle, xadj; 
+    double angle, xadj;
     int coords, subcoords;
 
     /* Init to keep -Wall happy: */
@@ -3173,11 +3192,11 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
     }
     /* Note: I changed Rf_gpptr(dd)->yLineBias to 0.3 here. */
     /* Purely visual tuning. RI */
-    /* This has been replaced by a new argument padj (=yadj here) to axis() 
-       and mtext() and that can either be set manually or is determined in 
-       a somehow fuzzy manner in repsect to current side and las settings. 
-       Uwe L. 
-    */  
+    /* This has been replaced by a new argument padj (=yadj here) to axis()
+       and mtext() and that can either be set manually or is determined in
+       a somehow fuzzy manner in repsect to current side and las settings.
+       Uwe L.
+    */
     switch(side) {
     case 1:
 	if(las == 2 || las == 3) {
@@ -4074,7 +4093,7 @@ unsigned int rgb2col(char *rgb)
     }
     if (strlen(rgb) == 7)
 	return R_RGB(r, g, b);
-    else 
+    else
 	return R_RGBA(r, g, b, a);
 }
 
@@ -4212,7 +4231,7 @@ unsigned int RGBpar(SEXP x, int i)
 	return str2col(CHAR(STRING_ELT(x, i)));
     }
     else if(isInteger(x) || isLogical(x)) {
-	if(INTEGER(x)[i] == NA_INTEGER) 
+	if(INTEGER(x)[i] == NA_INTEGER)
 	    /*
 	     * Paul 01/07/04
 	     * Used to be set to NA_INTEGER (see comment in name2col).
@@ -4223,7 +4242,7 @@ unsigned int RGBpar(SEXP x, int i)
 	else return R_ColorTable[indx % R_ColorTableSize];
     }
     else if(isReal(x)) {
-	if(!R_FINITE(REAL(x)[i])) 
+	if(!R_FINITE(REAL(x)[i]))
 	    /*
 	     * Paul 01/07/04
 	     * Used to be set to NA_INTEGER (see comment in name2col).
@@ -4239,7 +4258,7 @@ unsigned int RGBpar(SEXP x, int i)
 /*
  * Is element i of a colour object NA (or NULL)?
  */
-Rboolean isNAcol(SEXP col, int index, int ncol) 
+Rboolean isNAcol(SEXP col, int index, int ncol)
 {
     Rboolean result = TRUE; /* -Wall */
 

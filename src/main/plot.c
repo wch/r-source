@@ -52,7 +52,7 @@ void NewFrameConfirm(void)
 
     for(i = 0; i < curDevice(); i++)  /* 0-based */
 	dotDevices = CDR(dotDevices);
-    haveWindowsDevice = 
+    haveWindowsDevice =
 	strcmp(CHAR(STRING_ELT(CAR(dotDevices), 0)), "windows") == 0;
     if (!haveWindowsDevice || !winNewFrameConfirm())
 #endif
@@ -210,8 +210,8 @@ SEXP FixupPch(SEXP pch, int dflt)
 #ifdef SUPPORT_MBCS
 		if(mbcslocale) {
 		    wchar_t wc;
-		    if(mbrtowc(&wc, CHAR(STRING_ELT(pch, i)), MB_CUR_MAX, 
-			       NULL) > 0) INTEGER(ans)[i] = wc; 
+		    if(mbrtowc(&wc, CHAR(STRING_ELT(pch, i)), MB_CUR_MAX,
+			       NULL) > 0) INTEGER(ans)[i] = wc;
 		    else
 			error(_("invalid multibyte char in pch=\"c\""));
 		} else
@@ -665,7 +665,7 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 	GScale(xmin - xadd, xmax + xadd, 1, dd);
 	GScale(ymin - yadd, ymax + yadd, 2, dd);
     }
-    else {
+    else { /* asp <= 0 or not finite -- includes logscale ! */
 	GScale(xmin, xmax, 1, dd);
 	GScale(ymin, ymax, 2, dd);
     }
@@ -787,7 +787,7 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
     }
     else { /* ------ log axis ----- */
 	n = (axp[2] + 0.5);
-	/* {xy}axp[2] for 'log': GLpretty() [../graphics.c] sets
+	/* {xy}axp[2] for 'log': GLpretty() [./graphics.c] sets
 	   n < 0: very small scale ==> linear axis, above, or
 	   n = 1,2,3.  see switch() below */
 	umin = usr[0];
@@ -797,7 +797,7 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
 	    warning("CreateAtVector \"log\"(from axis()): "
 		    "usr[0] = %g > %g = usr[1] !", umin, umax);
 	dn = axp[0];
-	if (dn < 1e-300)
+	if (dn < DBL_MIN)/* was 1e-300; now seems too cautious */
 	    warning("CreateAtVector \"log\"(from axis()): axp[0] = %g !", dn);
 
 	/* You get the 3 cases below by
@@ -1470,7 +1470,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (isString(CAR(args)) && LENGTH(CAR(args)) == 1 &&
 	    LENGTH(pch = STRING_ELT(CAR(args), 0)) >= 1) {
 	    if(LENGTH(pch) > 1)
-		warningcall(call, 
+		warningcall(call,
 			    _("plot type '%s' will be truncated to first character"),
 			    CHAR(pch));
 	    type = CHAR(pch)[0];
@@ -3896,14 +3896,14 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
     case 5: /* thermometers */
 	if (nc != 3 && nc != 4)
-	    errorcall(call, 
+	    errorcall(call,
 		      _("invalid thermometers data (need 3 or 4 columns)"));
 	SymbolRange(REAL(p)+2*nr/* <-- pointer arith*/, nr, &pmax, &pmin);
 	if (pmax < pmin)
 	    errorcall(call, _("invalid thermometers[,%s]"),
 		      (nc == 4)? "3:4" : "3");
 	if (pmin < 0. || pmax > 1.) /* S-PLUS has an error here */
-	    warningcall(call, 
+	    warningcall(call,
 			_("thermometers[,%s] not in [0,1] -- may look funny"),
 			(nc == 4)? "3:4" : "3");
 	if (!SymbolRange(REAL(p), 2 * nr, &pmax, &pmin))
@@ -3955,7 +3955,7 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (pmin > p4) pmin = p4;
 	}
 	if (pmin < 0. || pmax > 1.) /* S-PLUS has an error here */
-	    warningcall(call, 
+	    warningcall(call,
 			_("boxplots[,5] outside [0,1] -- may look funny"));
 	if (!SymbolRange(REAL(p), 4 * nr, &pmax, &pmin))
 	    errorcall(call, _("invalid boxplots[, 1:4]"));

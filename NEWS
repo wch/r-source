@@ -710,11 +710,14 @@ BUG FIXES
 	simple cases that were effectively not multistratum designs,
 	e.g. only one treatment occurring in only one stratum.
 
-    o	pgamma() uses completely re-written algorithms, and should now work
+    o	pgamma() uses completely re-written algorithms, and should work
 	for all (even very extreme) arguments; this is based on Morten
 	Welinder's contribution related to PR#7307.
 
     o	dpois(10, 2e-308, log=TRUE) and similar cases gave -Inf.
+
+    o	x <- 2^(0:1000);    plot(x, x^.9, type="l", log="xy")# and
+	x <- 2^-(1070:170); plot(x, x^.9, type="l", log="xy")# now both work
 
 
 
