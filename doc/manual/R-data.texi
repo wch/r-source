@@ -1181,7 +1181,7 @@ Alaska           10.0     263       48 44.5
 7 Nevada       12.2
 8 Florida      15.4
 ## remove the table
-> sqlDrop(channel, "usarrests")
+> sqlDrop(channel, "USArrests")
 ## close the connection
 > odbcClose(channel)
 @end smallexample
