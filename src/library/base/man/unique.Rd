@@ -3,7 +3,7 @@
 \alias{unique.default}
 \alias{unique.data.frame}
 \alias{unique.matrix}
-\alias{unique.arrau}
+\alias{unique.array}
 \title{Extract Unique Elements}
 \description{
   \code{unique} returns a vector, data frame or array like \code{x}
