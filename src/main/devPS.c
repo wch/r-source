@@ -621,7 +621,7 @@ void PostScriptText(FILE *fp, double x, double y,
 /* Part 3.  Device Driver State. */
 
 typedef struct {
-    char filename[128];
+    char filename[PATH_MAX];
 
     char papername[64];	 /* paper name */
     int paperwidth;	 /* paper width in inches */
@@ -716,9 +716,9 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 
     /* Check and extract the device parameters */
 
-    if(strlen(file) > 127) {
+    if(strlen(file) > PATH_MAX - 1) {
 	free(dd);
-	error("filename to long in postscript");
+	error("filename too long in postscript");
     }
 
     /* allocate new postscript device description */
