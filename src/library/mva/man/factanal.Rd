@@ -124,6 +124,8 @@ factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
   \item{n.obs}{The number of observations if available, or \code{NA}.}
   \item{call}{The matched call.}
   \item{na.action}{If relevant.}
+  \item{STATISTIC, PVAL}{The significance-test statistic and P value, if
+    if can be computed.}
 }
 
 \note{

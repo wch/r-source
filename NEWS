@@ -34,6 +34,9 @@ NEW FEATURES
 
     o	Arguments `unit' and `hmin' of pclust() are now implemented.
 
+    o	factanal() now returns the test statistic and P-value formerly
+	computed in the print method.
+
 
 DEPRECATED & DEFUNCT
 
@@ -70,6 +73,7 @@ BUG FIXES
     o	data.matrix() was documented to replace factors by their
 	codes, but in fact re-coded into the alphabetical ordering of
 	the levels.
+
 
 
 	**************************************************
