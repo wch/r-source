@@ -117,6 +117,7 @@ as.hclust.twins <- function(x)
                    height = sort(x$height),
                    order = x$order,
                    call = match.call(),
+                   method = NA,
                    dist.method = attr(x$diss, "Metric"),
                    labels = rownames(x$data))
     class(retval) <- "hclust"
