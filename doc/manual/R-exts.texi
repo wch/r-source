@@ -139,13 +139,14 @@ in the following format:
 
 @smallexample
 Package: e1071
-Version: 0.7-3
-Date: 1999/06/07
-Author: Compiled by Fritz Leisch <Friedrich.Leisch@@ci.tuwien.ac.at>.
-Description: Miscellaneous functions used at the Department of
-        Statistics at TU Wien (E1071). 
-License: GPL version 2 or later
-Depends:
+Version: 0.9-3
+Date: 2000/01/04
+Title: Misc Functions collected at TU Wien, Department E1071
+Author: Compiled by Friedrich Leisch <Friedrich.Leisch@ci.tuwien.ac.at>.
+Description: Miscellaneous functions written by members of the Department of
+        Statistics at TU Wien (E1071). Includes independent component
+        analysis, reading and writing of pnm/pbm/ppm images, ...
+License: GPL version 2 or newer
 URL: http://www.ci.tuwien.ac.at, http://www.tuwien.ac.at
 @end smallexample
 
@@ -162,13 +163,17 @@ file.  It is very important that you include this information!
 Otherwise, it may not even be legally correct for others to distribute
 copies of the package.
 
+The title field should give a short description of the package and not
+have any continuation lines. This information has been contained in a
+seperate @file{TITLE} file in older versions of R, please use the title
+field in the @file{DESCRIPTION} file from now on.
+
 The optional URL field may give a comma (or whitespace)-separated list
 of URL's, e.g., the homepage of the author or a page where additional
 material describing the software can be found.  These URL's are converted
 to active hyperlinks on CRAN.
 
-The @file{TITLE} file contains a line giving the name of the package and
-a brief description.  @file{INDEX} contains a line for each sufficiently
+The file @file{INDEX} contains a line for each sufficiently
 interesting object in the package, giving its name and a description
 (functions such as print methods not usually called explicitly might not
 be included).  Note that you can automatically create this file using
