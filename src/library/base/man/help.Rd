@@ -2,6 +2,8 @@
 \alias{help}
 \alias{?}
 \alias{topicName}               % internal
+\alias{.helpForCall}		% internal
+\alias{.tryHelp}		% internal
 \title{Documentation}
 \description{
   These functions provide access to documentation.
