@@ -29,7 +29,7 @@
 /* locate and return the row names and column names from the */
 /* dimnames attribute of a matrix.  They are useful because */
 /* old versions of R used pair-based lists for dimnames */
-/* whereas recent versions use vector bassed lists */
+/* whereas recent versions use vector based lists */
 
 /* FIXME : This is nonsense.  When the "dimnames" attribute is */
 /* grabbed off an array it is always adjusted to be a vector. */
@@ -701,6 +701,7 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+#ifdef OLD
 /* swap works by finding for a index i, the position */
 /* in the array with dimensions dims1 in terms of */
 /* (i, j, k, l, m, ...); i.e. component-wise position, */
@@ -729,73 +730,178 @@ static int swap(int ival, SEXP dims1, SEXP dims2, SEXP perm,
     }
     return t1;
 }
+#endif
 
+/*
+ New version of aperm, using strides for speed.
+ Jonathan Rougier <J.C.Rougier@durham.ac.uk>
+
+ v1.0 30.01.01
+
+ M.Maechler : expanded	all ../include/Rdefines.h macros
+ */
+
+/* this increments iip and sets j using strides */
+
+#define CLICKJ						\
+    for (itmp=0; itmp<n; itmp++)			\
+	if (iip[itmp] == INTEGER(dimsr)[itmp]-1)	\
+	    iip[itmp] = 0;				\
+	else {						\
+	    iip[itmp]++;				\
+	    break;					\
+	}						\
+    for (j=0, itmp=0; itmp<n; itmp++)			\
+	j += iip[itmp] * stride[itmp];
+	    
+/* aperm (a, perm, resize = TRUE) */
 SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP a, perm, r, dimsa, dimsr, ind1, ind2;
-    int i, j, len;
+    SEXP a, perm, resize, r, dimsa, dimsr, dna;
+    int i, j, n, len, itmp;
+    int *pp, *iip, *stride;
+    char *vmax;
 
     checkArity(op, args);
 
     a = CAR(args);
+    if (!isArray(a))
+	errorcall(call,"invalid first argument, must be an array");
+
     PROTECT(dimsa = getAttrib(a, R_DimSymbol));
-    if (dimsa == R_NilValue)
-	error("aperm: invalid first argument, must be an array");
+    n = LENGTH(dimsa);
+
+    /* check the permutation */
 
     PROTECT(perm = coerceVector(CADR(args), INTSXP));
+#ifdef OLD
     if (!isVector(perm) || (length(perm) != length(dimsa)))
-	error("aperm: invalid second argument, must be a vector of the appropriate length");
+	errorcall(call,
+	 "invalid second argument, must be a vector of the appropriate length");
+#else
+    vmax = vmaxget();
+    pp = (int *) R_alloc(n, sizeof(int));
+    if (length(perm) == 0) {
+	for (i=0; i<n; i++)
+	    pp[i] = n-1-i;
+    } else if (length(perm) == n) {
+	for (i=0; i<n; i++)
+	    pp[i] = INTEGER(perm)[i] - 1; /* no offset! */
+    } else
+	errorcall(call, "`perm' is of wrong length");
 
+    iip = (int *) R_alloc(n, sizeof(int));
+    for (i=0; i<n; iip[i++] = 0);
+    for (i=0; i<n; i++)
+	if (pp[i] >= 0 && pp[i] < n)
+	    iip[pp[i]]++;
+	else
+	    errorcall(call, "value of out range in `perm'");
+    for (i=0; i<n; i++)
+	if (iip[i]==0)
+	    errorcall(call, "invalid permutation (`perm')");
+#endif
+
+    /* create the stride object and permute */
+
+    stride = (int *) R_alloc(n, sizeof(int));
+
+    for (iip[0] = 1, i = 1; i<n; i++)
+	iip[i] = iip[i-1] * INTEGER(dimsa)[i-1];
+
+    for (i=0; i<n; i++)
+	stride[i] = iip[pp[i]];
+
+    /* also need to have the dimensions of r */
+
+    PROTECT(dimsr = allocVector(INTSXP,n));
+    for (i=0; i<n; i++)
+	INTEGER(dimsr)[i] = INTEGER(dimsa)[pp[i]];
+
+    /* and away we go! iip will hold the incrementer */
+
+    len = LENGTH(a);
     len = length(a);
-
-    PROTECT(dimsr = allocVector(INTSXP, length(dimsa)));
-    for (i = 0; i < length(dimsa); i++)
-	INTEGER(dimsr)[i] = INTEGER(dimsa)[(INTEGER(perm)[i] - 1)];
-
     PROTECT(r = allocVector(TYPEOF(a), len));
-    PROTECT(ind1 = allocVector(INTSXP, LENGTH(dimsa)));
-    PROTECT(ind2 = allocVector(INTSXP, LENGTH(dimsa)));
+
+    for (i=0; i<n; iip[i++] = 0);
 
     switch (TYPEOF(a)) {
+
     case INTSXP:
     case LGLSXP:
-	for (i = 0; i < len; i++) {
-	    j = swap(i, dimsa, dimsr, perm, ind1, ind2);
-	    INTEGER(r)[j] = INTEGER(a)[i];
+	for (j=0, i=0; i<len; i++) {
+	    INTEGER(r)[i] = INTEGER(a)[j];
+	    CLICKJ;
 	}
 	break;
-    case REALSXP:
-	for (i = 0; i < len; i++) {
-	    j = swap(i, dimsa, dimsr, perm, ind1, ind2);
-	    REAL(r)[j] = REAL(a)[i];
-	}
-	break;
-    case CPLXSXP:
-	for (i = 0; i < len; i++) {
-	    j = swap(i, dimsa, dimsr, perm, ind1, ind2);
-	    COMPLEX(r)[j] = COMPLEX(a)[i];
-	}
-	break;
-    case STRSXP:
-	for (i = 0; i < len; i++) {
-	    j = swap(i, dimsa, dimsr, perm, ind1, ind2);
-	    SET_STRING_ELT(r, j, STRING_ELT(a, i));
-	}
-	break;
-    case VECSXP:
-	for (i = 0; i < len; i++) {
-	    j = swap(i, dimsa, dimsr, perm, ind1, ind2);
-	    SET_VECTOR_ELT(r, j, VECTOR_ELT(a, i));
-	}
-	break;
-    default:
-	errorcall(call, R_MSG_IA);
-    }
 
-    if (INTEGER(CAR(CDDR(args)))[0])
+    case REALSXP:
+	for (j=0, i=0; i<len; i++) {
+	    REAL(r)[i] = REAL(a)[j];
+	    CLICKJ;
+	}
+	break;
+
+    case CPLXSXP:
+	for (j=0, i=0; i<len; i++) {
+	    COMPLEX(r)[i].r = COMPLEX(a)[j].r;
+	    COMPLEX(r)[i].i = COMPLEX(a)[j].i;
+	    CLICKJ;
+	}
+	break;
+
+    case STRSXP:
+	for (j=0, i=0; i<len; i++) {
+	    SET_STRING_ELT(r, i, STRING_ELT(a, j));
+	    CLICKJ;
+	}
+	break;
+
+    case VECSXP:
+	for (j=0, i=0; i<len; i++) {
+	    SET_VECTOR_ELT(r, i, VECTOR_ELT(a, j));
+	    CLICKJ;
+	}
+	break;
+
+    default:
+	errorcall(call, "unsupported type of array");
+    }
+ 
+    /* handle the resize */
+    PROTECT(resize = coerceVector(CADDR(args), INTSXP));
+    if (LOGICAL(resize)[0])
 	setAttrib(r, R_DimSymbol, dimsr);
     else
 	setAttrib(r, R_DimSymbol, dimsa);
-    UNPROTECT(6);
+
+    /* and handle the dimnames */
+
+    PROTECT(dna = getAttrib(a, R_DimNamesSymbol));
+
+    if (LOGICAL(resize)[0] && dna != R_NilValue) {
+
+	SEXP dnna, dnr, dnnr;
+
+	PROTECT(dnna = getAttrib(dna, R_NamesSymbol));
+	PROTECT(dnnr = allocVector(STRSXP,n));
+	PROTECT(dnr  = allocVector(VECSXP,n));
+
+	for (i=0; i<n; i++) {
+	    SET_VECTOR_ELT(dnr, i, VECTOR_ELT(dna, pp[i]));
+	    if (dnna != R_NilValue)
+		SET_STRING_ELT(dnnr, i, STRING_ELT(dnna, pp[i]));
+	}
+
+	if (dnna != R_NilValue)
+	    setAttrib(dnr, R_NamesSymbol, dnnr);
+	setAttrib(r, R_DimNamesSymbol, dnr);
+	UNPROTECT(3); /* dnna, dnr, dnnr */
+    }
+    /* free temporary memory */
+    vmaxset(vmax);
+  
+    UNPROTECT(6); /* dimsa, perm, r, dimsr, resize, dna */
     return r;
 }

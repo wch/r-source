@@ -72,6 +72,9 @@ NEW FEATURES
     o   outer() has a speed-up in the default case of a matrix 
 	outer product (by Jonathan Rougier).
 
+    o	aperm() uses strides in the internal C code and so is substantially
+	sped up (by Jonathan Rougier).
+
 
 BUG FIXES
 
@@ -153,8 +156,7 @@ BUG FIXES
 
     o   missingness was not correctly propagated in some cases.
 
-    o   eigen() segfaulted on 0-dimensional matrices.
-
+    o	eigen() segfaulted on 0-dimensional matrices.
 
 
 
