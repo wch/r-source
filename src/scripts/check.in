@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.158 $ ';
+my $revision = ' $Revision: 1.159 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -133,7 +133,7 @@ if($opt_latex) {
 my %standard_keywords = ();
 open(KEYWORDS,
      "< " . &file_path(${R::Vars::R_HOME}, "doc", "KEYWORDS.db"))
-  or die "Error: cannot open 'doc/KEYWORDS.db'";
+  or die "Error: cannot open 'doc/KEYWORDS.db'\n";
 while(<KEYWORDS>) {
     if(/^.*\|([^:]*):.*/) {
 	$standard_keywords{$1} = 1;
@@ -146,7 +146,7 @@ my @R_pkgs_base = ();
 my @R_pkgs_recommended = ();
 open(MAKEVARS,
      "< " . &file_path(${R::Vars::R_HOME}, "share", "make", "vars.mk"))
-  or die "Error: cannot open 'share/make/vars.mk'";
+  or die "Error: cannot open 'share/make/vars.mk'\n";
 while(<MAKEVARS>) {
     @R_pkgs_base =
 	split(/ +/, $2) if(/^(R_PKGS_BASE *=)(.*)/);
@@ -169,7 +169,7 @@ $ENV{'R_CHECK_WITH_T_N_F_AS_NULL'} = "yes";
 ## </FIXME>
 
 ## This is the main loop over all packages to be checked.
-($#ARGV >= 0) or die "Error: no packages were specified";
+($#ARGV >= 0) or die "Error: no packages were specified\n";
 foreach my $pkg (@ARGV) {
     ## $pkg should be the path to the package (bundle) root source
     ## directory, either absolute or relative to $startdir.
@@ -177,7 +177,7 @@ foreach my $pkg (@ARGV) {
     ## $pkgname is the name of the package (bundle).
     chdir($startdir);
     $pkg =~ s/\/$//;
-    (-d $pkg) or die "Error: package dir '$pkg' does not exist";
+    (-d $pkg) or die "Error: package dir '$pkg' does not exist\n";
     chdir($pkg)
 	or die "Error: cannot change to directory '$pkg'\n";
     my $pkgdir = cwd();
@@ -243,21 +243,35 @@ foreach my $pkg (@ARGV) {
 	    $log->print("Only *source* packages can be checked.\n");
 	    exit(1);
 	}
-	unlink(&file_path($pkgoutdir, "00install.out"));
+	## Option '--no-install' turns off installation and the tests
+	## which require the package to be installed.  When testing
+	## recommended packages bundled with R we can skip installation,
+	## and do so if '--install=skip' was given.  If command line
+	## option '--install' is of the form 'check:FILE', it is assumed
+	## that installation was already performed with stdout/stderr to
+	## FILE, the contents of which need to be checked (without
+	## repeating the installation).
+	## <NOTE>
+	## In this case, one also needs to specify *where* the package
+	## was installed to using command line option '--library'.
+	## Perhaps we should check for that, although '--install=check'
+	## is really only meant for repository maintainers.
+	## </NOTE>
 	if($opt_install) {
-	    if($opt_install ne "skip") {
+	    if($opt_install eq "skip") {
+		$log->message("skipping installation test");
+	    }
+	    else {
 		my $use_install_log =
-		    ($ENV{"R_CHECK_USE_INSTALL_LOG"} ||
+		    (($opt_install =~ /^check/) ||
+		     $ENV{"R_CHECK_USE_INSTALL_LOG"} ||
 		     !(-t STDIN && -t STDOUT));
-		## Option '--no-install' turns off installation and the
-		## tests which require the package to be installed.  When
-		## testing recommended packages bundled with R we can
-		## skip installation, and do so if '--install=skip' was
-		## given.
 		my $cmd = "${R::Vars::R_CMD} INSTALL -l ${library}";
 		$cmd .= " --fake" if($opt_install eq "fake");
 		$cmd .= " ${pkgdir}";
 		if(!$use_install_log) {
+		    ## Case A: No redirection of stdout/stderr from
+		    ## installation.
 		    print("\n");
 		    if(R_system($cmd)) {
 			$log->error();
@@ -267,11 +281,25 @@ foreach my $pkg (@ARGV) {
 		    print("\n");
 		}
 		else {
-		    my $out = &file_path($pkgoutdir, "00install.out");
-		    $cmd .= " > $out 2>&1";
+		    ## Case B. All output from installation redirected,
+		    ## or already available in the log file.
 		    $log->checking("whether package '$pkgname' " .
 				   "can be installed");
-		    if(R_system($cmd)) {
+		    my $out = &file_path($pkgoutdir, "00install.out");
+		    my $install_error;
+		    my @lines;
+		    if($opt_install =~ /^check/) {
+			copy(substr($opt_install, 6), $out);
+			$opt_install = "check";
+			@lines = &read_lines($out);
+			$install_error =
+			    ($lines[$#lines] !~ /^\* DONE/);
+		    }
+		    else {
+			$cmd .= " > $out 2>&1";
+			$install_error = &R_system($cmd);
+		    }
+		    if($install_error) {
 			$log->error();
 			$log->print("Installation failed.\n");
 			$log->print("See '$out' for details.\n");
@@ -282,24 +310,19 @@ foreach my $pkg (@ARGV) {
 		    ## with compiler warnings about non ISO C code (Or
 		    ## at least, what looks like it.)  In theory, we
 		    ## should only do this when using GCC ...
-		    open(FILE, "< $out");
-		    my @lines = <FILE>;
-		    close(FILE);
+		    @lines = &read_lines($out)
+			unless($opt_install eq "check");
 		    @lines = grep(/: warning: .*ISO C/, @lines);
 		    if(scalar(@lines) > 0) {
 			$log->warning();
 			$log->print("Found the following " .
 				    "significant warnings:\n");
-			$log->print("  " . join("\n  ", @lines));
+			$log->print("  " . join("\n  ", @lines) . "\n");
 		    }
 		    else {
-			$log->print("OK");
+			$log->result("OK");
 		    }
-		    print("\n");
 		}
-	    }
-	    else {
-		$log->message("skipping installation test");
 	    }
 	}
 
@@ -900,7 +923,7 @@ sub check_pkg {
 	foreach my $file (@R_files) {
 	    last if $any;
 	    open(FILE, "< $file")
-	      or die "Error: cannot open file '$file' for reading";
+	      or die "Error: cannot open file '$file' for reading\n";
 	    while(<FILE>) {
 		if(/library.dynam\(\"(.*?)\"/o) {
 		    my $arg = $1;
@@ -1618,7 +1641,7 @@ sub check_pkg {
 	    $log->creating("${pkgname}-manual.tex");
 	    open(MANUAL, "> ${pkgname}-manual.tex")
 	      or die("Error: cannot open file '${pkgname}-manual.tex'" .
-		     "for writing");
+		     "for writing\n");
 	    print MANUAL "\\documentclass\{article\}\n" .
 	      "\\usepackage[ae,hyper]\{Rd\}\n\\begin\{document\}\n";
 	    my @tex_files =
@@ -1627,7 +1650,7 @@ sub check_pkg {
 				    "tex");
 	    foreach my $file (@tex_files) {
 		open(FILE, "< $file")
-		  or die("Error: cannot open file '$file' for reading");
+		  or die("Error: cannot open file '$file' for reading\n");
 		while(<FILE>) {
 		    print MANUAL $_;
 		}
