@@ -335,11 +335,9 @@ forkal(Starma G, int id, int il, double *delta, double *y, double *amse,
 /*     invoking this routine will calculate the finite sample predictions */
 /*     and their conditional mean square errors for any arima process. */
 
-    a = (double *) R_alloc(ird, sizeof(double));
-    P = (double *) R_alloc(irz, sizeof(double));
     store = (double *) R_alloc(ird, sizeof(double));
-    Free(G->a); G->a = a;
-    Free(G->P); G->P = P;
+    Free(G->a); G->a = a = Calloc(ird, double);
+    Free(G->P); G->P = P = Calloc(irz, double);
     --store;
     --a;
     --P;

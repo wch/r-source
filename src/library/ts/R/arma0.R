@@ -58,7 +58,7 @@ arima0 <- function(x, order = c(0, 0, 0),
     G <- .Call("setup_starma", as.integer(arma), x, n.used, xreg,
                ncxreg, delta, transform.pars > 0, PACKAGE = "ts")
     on.exit(.Call("free_starma", G, PACKAGE = "ts"))
-    .Call("Starma_method", G, method == "CSS")
+    .Call("Starma_method", G, method == "CSS", PACKAGE = "ts")
     init <- rep(0, sum(arma[1:4]))
     if(ncxreg > 0)
         init <- c(init, coef(lm(x ~ xreg+0)))
@@ -75,7 +75,7 @@ arima0 <- function(x, order = c(0, 0, 0),
     if(transform.pars)
         coef <- .Call("Dotrans", G, as.double(coef), PACKAGE = "ts")
     if(transform.pars == 2) {
-        .Call("set_trans", G, 0)
+        .Call("set_trans", G, 0, PACKAGE = "ts")
         res <- optim(coef, arma0f, method = "BFGS", hessian = TRUE)
         coef <- res$par
     }
@@ -180,7 +180,7 @@ predict.arima0 <-
     G <- .Call("setup_starma", as.integer(arma), data, n, rep(0, n),
                0, -1, 0, 0, PACKAGE = "ts")
     on.exit(.Call("free_starma", G, PACKAGE = "ts"))
-    .Call("Starma_method", G, TRUE)
+    .Call("Starma_method", G, TRUE, PACKAGE = "ts")
     .Call("arma0fa", G, as.double(coefs), PACKAGE = "ts")
     z <- .Call("arma0_kfore", G, arma[6], arma[7], n.ahead, PACKAGE = "ts")
     pred <- ts(z[[1]] + xm, start = xtsp[2] + deltat(data),
