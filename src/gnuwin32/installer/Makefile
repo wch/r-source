@@ -35,9 +35,11 @@ clean:
 
 # section for JR software installer.
 
+RECOMMENDED=KernSmooth Matrix VR boot cluster foreign mgcv nlme rpart survival5
 IS: SetupR.exe
 # location where Inno Setup was installed
 ISDIR=C:/packages/Inno
+PKGS=C:/R/Rdist/libs
 
 R.iss: JRins.pl ../$(PREFIX)b1.zip ../$(PREFIX)b2.zip ../$(PREFIX)h.zip \
 ../$(PREFIX)ch.zip ../$(PREFIX)d1.zip ../$(PREFIX)d2.zip \
@@ -51,6 +53,18 @@ R.iss: JRins.pl ../$(PREFIX)b1.zip ../$(PREFIX)b2.zip ../$(PREFIX)h.zip \
 	unzip -qo ../$(PREFIX)l -d $(PREFIX)l
 	unzip -qo ../$(PREFIX)sp -d $(PREFIX)sp
 	unzip -qo ../$(PREFIX)w -d $(PREFIX)w
+	for p in $(RECOMMENDED); do \
+	  unzip -qo $(PKGS)/$${p} -d $(PREFIX)/library; \
+	done
+	zip -rmq foo.zip $(PREFIX)/library/*/html
+	unzip -q foo -d $(PREFIX)w
+	rm foo.zip
+	zip -rmq foo.zip $(PREFIX)/library/*/chtml
+	unzip -q foo -d $(PREFIX)ch
+	rm foo.zip
+	zip -rmq foo.zip $(PREFIX)/library/*/latex
+	unzip -q foo -d $(PREFIX)l
+	rm foo.zip
 	perl JRins.pl $(PREFIX)
 
 SetupR.exe: R.iss
