@@ -26,6 +26,7 @@ OBJS = \
 	$(BLAS) \
 	ch2inv.o \
 	chol.o \
+	chull.o \
 	cpoly.o \
 	cumsum.o \
 	distance.o \
