@@ -147,6 +147,8 @@ before and after installation, @xref{Configure and cleanup}.
 The @file{DESCRIPTION} file contains basic information about the package
 in the following format:
 
+@quotation
+@cartouche
 @smallexample
 Package: e1071
 Version: 0.9-3
@@ -160,6 +162,8 @@ Description: Miscellaneous functions written by members of the
 License: GPL version 2 or newer
 URL: http://www.ci.tuwien.ac.at, http://www.tuwien.ac.at
 @end smallexample
+@end cartouche
+@end quotation
 
 @noindent
 Continuation lines (e.g., for descriptions longer than one line) start
@@ -209,7 +213,7 @@ The @file{man} subdirectory should contain documentation files for the
 objects in the package in ``R documentation'' (Rd) format.  The
 documentation files to be installed must also start with a (lower or
 upper case) letter and have the extension @file{.Rd} (the default) or
-@file{.rd}.  @pxref{Writing R documentation} for more information.
+@file{.rd}.  @xref{Writing R documentation}, for more information.
 
 The @file{R} and @file{man} subdirectories may contain OS-specific
 subdirectories named @code{unix}, @code{windows} or @code{mac}.
@@ -251,18 +255,23 @@ handle package bundles as from @R{} 0.90.1.
 The @file{DESCRIPTION} file of a bundle has an extra @samp{Bundle}
 field, as in
 
+@quotation
+@cartouche
 @smallexample
 Bundle: VR
 Contains: MASS class nnet spatial
 Version: 6.1-6
 Date: 1999/11/26
 Author: S original by Venables & Ripley.
-  R port by Brian Ripley <ripley@@stats.ox.ac.uk>, following earlier
-  work by Kurt Hornik and Albrecht Gebhardt.
-BundleDescription: Various functions from the libraries of Venables
-  and Ripley, `Modern Applied Statistics with S-PLUS' (3rd edition).
+  R port by Brian Ripley <ripley@@stats.ox.ac.uk>, following
+  earlier work by Kurt Hornik and Albrecht Gebhardt.
+BundleDescription: Various functions from the libraries of
+  Venables and Ripley, `Modern Applied Statistics with S-PLUS'
+ (3rd edition).
 License: GPL (version 2 or later)
 @end smallexample
+@end cartouche
+@end quotation
 
 The @samp{Contains} field lists the packages, which should be contained
 in separate subdirectories with the names given.  These are standard
@@ -379,10 +388,10 @@ of the @R{} package builder. There is no Windows equivalent.
 @cindex Documentation, writing
 
 @menu
-* The documentation source tree::  
-* Documentation format::        
+* Rd format::                   
 * Sectioning::                  
 * Marking text::                
+* Lists and tables::            
 * Cross-references::            
 * Mathematics::                 
 * Insertions::                  
@@ -390,197 +399,317 @@ of the @R{} package builder. There is no Windows equivalent.
 * Processing Rd format::        
 @end menu
 
-@node The documentation source tree, Documentation format, Writing R documentation, Writing R documentation
-@section The documentation source tree
+@node Rd format, Sectioning, Writing R documentation, Writing R documentation
+@section Rd format
 
-The help files containing detailed documentation for (potentially) all
-@R{} objects are in the @file{src/library/*/man} subdirectories of the
-@R{} source tree, where @samp{*} stands for @strong{base} where all the
-standard objects are, and for ``standard'' packages such as @pkg{eda}
-and @pkg{mva}.  The @file{doc/manual} subdirectory contains code for
-running the translated help files through La@TeX{} and further documents
-pertaining to @R{}.
+@R{} objects are documented in files written in ``@R{} documentation''
+(Rd) format, a simple markup language closely resembling (La)@TeX{},
+which can be processed into a variety of formats, including La@TeX{},
+[TN]roff, and @HTML{}.  The translation is carried out by the Perl
+script @code{Rdconv} in @file{$R_HOME/bin} and by the installation
+scripts for packages.
 
-@node Documentation format, Sectioning, The documentation source tree, Writing R documentation
-@section Documentation format
-@cindex Documentation format
+The @R{} distribution contains more than 600 such files which can be
+found in the @file{src/library/@var{pkg}/man} directories of the @R{}
+source tree, where @var{pkg} stands for package @strong{base} where all
+the standard objects are, and for the add-on packages such as @pkg{eda}
+and @pkg{mva} which are included in the @R{} distribution.
 
-The help files are written in a form and syntax---closely resembling
-@TeX{} and La@TeX{}---which can be processed into a variety of formats,
-including La@TeX{}, [TN]roff, and @HTML{}.  The translation is carried
-out by the Perl script @code{Rdconv} in @file{$R_HOME/bin} and by the
-installation scripts for packages.
+As an example, let us look at @file{src/library/base/man/rle.Rd} which
+documents the @R{} function @code{rle}.
 
-For a given @R{} function @code{myfun}, use the @R{} command
-@code{prompt(myfun)} to produce the file @file{myfun.Rd}, a ``raw''
-documentation file that can now be filled in with information.  The
-basic layout of such a file is as follows.
-
-@table @code
-@item \name@{myfun@}
-@findex \name
-@var{myfun} is the basename of the file.
-
-@item \alias@{myfun@}
-@itemx \alias@{@var{more_aliases_1}@}
-@itemx \alias@{@var{more_aliases_2}@}
-@findex \alias
-etc.  Need one @code{\alias@{@}} for each topic explained in the help
-file.
 @quotation
-@strong{Note:} Each file should contain at least the
-@code{\alias@{@var{name}@}} line.
+@cartouche
+@smallexample
+\name@{rle@}
+\alias@{rle@}
+\title@{Run Length Encoding@}
+\description@{
+  Compute the lengths and values of runs of equal values in
+  a vector.
+@}
+\usage@{
+rle(x)
+@}
+\arguments@{
+  \item@{x@}@{a vector.@}
+@}
+\value@{
+  A list with components
+  \item@{lengths@}@{a vector containing the length of each run.@}
+  \item@{values@}@{a vector of the same length as \code@{lengths@}
+    with the corresponding values.@}
+@}
+\examples@{
+x <- rev(rep(6:10, 1:5))
+rle(x)
+## $lengths
+## [1] 5 4 3 2 1
+## $values
+## [1] 10  9  8  7  6
+@}
+\keyword@{manip@}
+@end smallexample
+@end cartouche
 @end quotation
 
+An Rd file consists of three parts.  The header gives basic information
+about the name of the file, the topics documented, a title, a short
+textual description and @R{} usage information for the objects
+documented.  The body gives further information (e.g., on the function's
+arguments and return value, as in the above example).  Finally, there is
+a footer with keyword information.  The header and footer are mandatory.
+
+See @uref{http://developer.r-project.org/Rds.html, ``Guidelines for Rd
+files''} for guidelines for writing documentation in Rd format which
+should be useful for package writers.
+
+The basic markup commands for structuring Rd files are as follows.
+
+@table @code
+@item \name@{@var{file}@}
+@findex \name
+@var{file} is the basename of the file.
+
+@item \alias@{@var{topic}@}
+@findex \alias
+The @code{\alias} entries specify all ``topics'' the file documents.
+This information (together with the file name) is collected into index
+data bases for lookup by the on-line (plain text and @HTML{}) help
+systems.
+
+There may be several @code{\alias} entries.  Quite often it is
+convenient to document several @R{} objects in one file.  E.g., file
+@file{Normal.Rd} documents the density, distribution function, quantile
+function and generation of random variates for the normal distribution,
+and hence starts with
+
+@smallexample
+\name@{Normal@}
+\alias@{dnorm@}
+\alias@{pnorm@}
+\alias@{qnorm@}
+\alias@{rnorm@}
+@end smallexample
+
+Note that the name of the file is not necessarily a topic documented.
 
 @item \title@{@var{Title}@}
 @findex \title
-This should be capitalized, and not end in a period.
+Title information for the Rd file.  This should be capitalized, not end
+in a period, and not use any markup (which would cause problems for
+hypertext search).
 
 @item \description@{@dots{}@}
 @findex \description
 A short description of what the function(s) do(es) (one paragraph, a few
-lines only).
+lines only).  (If a description is ``too long'' and cannot easily be
+shortened, the file probably tries to document too much at once.)
 
-@item \usage@{myfun(@var{arg1}, @var{arg2}, @dots{})@}
+@item \usage@{@var{fun}(@var{arg1}, @var{arg2}, @dots{})@}
 @findex \usage
 One or more lines showing the synopsis of the function(s) and variables
 documented in the file.  These are set verbatim in typewriter font.
 
+The usage information specified should in general match the function
+definition @emph{exactly} (such that automatic checking for consistency
+between code and documentation is possible).  Otherwise, include a
+@code{\synopsis}
+@findex \synopsis
+section with the actual definition.
+
+For example, @code{abline} is a function for adding a straight line to a
+plot which can be used in several different ways, depending on the named
+arguments specified.  Hence, @file{abline.Rd} contains
+
+@smallexample
+\synopsis@{
+abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL, 
+       coef = NULL, untf = FALSE, col = par("col"),
+       lty = par("lty"), lwd = NULL, ...)
+@}
+\usage@{
+abline(a, b, \dots)
+abline(h=, \dots)
+abline(v=, \dots)
+@r{@dots{}}
+@}
+@end smallexample
+
 @item \arguments@{@dots{}@}
 @findex \arguments
-Description of the function's arguments, in the following form:
+Description of the function's arguments, using an entry of the form
 
-@display
-@var{Some optional text @emph{before} the optional list.} 
-@code{\item@{@var{arg1}@}@{@var{Description of arg1.}@}}
-@code{\item@{@var{arg2}@}@{@var{Description of arg2.}@}}
-@r{  etc.} 
-@var{Some optional text @emph{after} the list.}
-@end display
+@smallexample
+\item@{@var{arg_i}@}@{@var{Description of arg_i}.@}
+@end smallexample
 
+@noindent
+for each element of the argument list.  There may be optional text
+before and after these entries.
 
 @item \details@{@dots{}@}
 @findex \details
 A detailed if possible precise description of the functionality
-provided.  Sometimes, precise @code{\references@{@}} can be given
-instead.
+provided, extending the basic information in the @code{\description}
+slot.
 
 @item \value@{@dots{}@}
 @findex \value
-Description of the function's return value.  If a list with multiple
-values is returned, you can use
+Description of the function's return value.
 
-@display
-@code{\item@{comp1@}@{@var{Description of result component `comp1'}@}}
-@code{\item@{comp2@}@{@var{Description of result component `comp2'}@}}
-@end display
-etc.
+If a list with multiple values is returned, you can use entries of the
+form
+
+@smallexample
+\item@{@var{comp_i}@}@{@var{Description of comp_i}.@}
+@end smallexample
+
+@noindent
+for each component of the list returned.  Optional text may precede this
+list (see the introductory example for @code{rle}).
 
 @item \references@{@dots{}@}
 @findex \references
-Section of references to the literature; use @code{\url@{@}} for web
-pointers.  Optional as well as all the following sections.
+A section with references to the literature.  Use @code{\url@{@}} for
+web pointers.
 
-@item \section@{@var{name}@}@{@var{text}@}
-and maybe more @code{\section@{@}} environments.  For consistency with
-the pre-assigned sections, @var{name} should be capitalized (but not all
-upper case).
-
-@item \note@{@var{Some note you want to have pointed out.}@}
+@item \note@{...@}
 @findex \note
+Use this for a special note you want to have pointed out.
+
+For example, @file{piechart.Rd} contains
+
+@smallexample
+\note@{
+  Pie charts are a very bad way of displaying information.
+  The eye is good at judging linear measures and bad at
+  judging relative areas.
+  ...
+@}
+@end smallexample
 
 @item \author@{@dots{}@}
 @findex \author
-Who you are.  Use @code{\email@{@}} without extra delimiters (@samp{( )}
-or @samp{< >}) or @code{\url@{@}}.
+Information about the author(s) of the Rd file.  Use @code{\email@{@}}
+without extra delimiters (@samp{( )} or @samp{< >}) to specify email
+addresses, or @code{\url@{@}} for web pointers.
 
 @item \seealso@{@dots{}@}
 @findex \seealso
-Pointers to related @R{} objects, using @code{\link@{@}}, usually as
-@code{\code@{\link@{@}@}}.
+Pointers to related @R{} objects, using @code{\code@{\link@{...@}@}} to
+refer to them (@code{\code} is the correct markup for @R{} object names,
+and @code{\link} produces hyperlinks in output formats which support
+this.  @xref{Marking text}, and @ref{Cross-references}).
 
 @findex \examples
-@findex \testonly
-@findex \dontrun
 @item \examples@{@dots{}@}
 Examples of how to use the function.  These are set verbatim in
 typewriter font.
 
-@quotation
-@strong{Note:} Use examples which are @emph{directly} executable!  Use
-random number generators (e.g., @code{x <- rnorm(100)}), or a standard
-data set loadable via @code{data(@dots{})} (see @code{data()} for info) to
-define data!
-@end quotation
-
-By default, text inside @code{\examples@{@}} will be displayed in the
-output of the help page and run by @kbd{make check}.  You can use
-@code{\dontrun@{@}} for commands that should only be shown, but not run,
-and @code{\testonly@{@}} for extra commands for testing @R{} that should
-not be shown to users.
+Examples are not only useful for documentation purposes, but also
+provide test code used for diagnostic checking of @R{}.  By default,
+text inside @code{\examples@{@}} will be displayed in the output of the
+help page and run by @kbd{make check}.  You can use @code{\dontrun@{@}}
+@findex \dontrun
+for commands that should only be shown, but not run, and
+@code{\testonly@{@}}
+@findex \testonly
+for extra commands for testing @R{} that should not be shown to users.
 
 For example,
 
 @example
-x <- runif(10)       @r{Shown and run.}
-\dontrun@{plot(x)@}    @r{Only shown.}
-\testonly@{log(x@}     @r{Only run.}
+x <- runif(10)       # @r{Shown and run.}
+\dontrun@{plot(x)@}    # @r{Only shown.}
+\testonly@{log(x@}     # @r{Only run.}
 @end example
 
-@item \keyword@{@var{key_1}@}
-@itemx \keyword@{@var{key_2}@}
-@findex \keyword
-Use at least one keyword from the list in @file{$R_HOME/doc/KEYWORDS}.
+Thus, example code not included in @code{\dontrun} must be executable!
+In addition, it should not use any system-specific features or require
+special facilities (such as Internet access or write permission to
+specific directories).
 
+Data needed for making the examples executable can e.g.@: be obtained by
+random number generation (e.g., @code{x <- rnorm(100)}), or by using
+standard data sets loadable via @code{data()} (see @code{data()} for
+info).
+
+@item \keyword@{@var{key}@}
+The @code{\keyword} entries should specify all standard keywords (as
+listed in file @file{$R_HOME/doc/KEYWORDS}) matching the Rd file's
+contents.  There must be at least one @code{\keyword} entry.
 @end table
 
-The same process applies to @R{} datasets, and many of the same fields
-are used, plus a few others.
+@findex prompt
+The @R{} function @code{prompt} facilitates the construction of files
+documenting @R{} objects.  If @code{foo} is an @R{} function, then
+@code{prompt(foo)} produces file @file{prompt.Rd} which already contains
+the proper function and argument names of @code{foo}, and a structure
+which can be filled in with information.
+
+The structure of Rd files which document @R{} data sets is slightly
+different.  Whereas e.g.@: sections @code{\arguments} and @code{\value}
+are not needed, the format and source of the data should be explained.
+
+As an example, let us look at @file{src/library/base/man/rivers.Rd}
+which documents the standard @R{} data set @code{rivers}.
+
+@quotation
+@cartouche
+@smallexample
+\name@{rivers@}
+\alias@{rivers@}
+\title@{Lengths of Major North American Rivers@}
+\description@{
+  This data set gives the lengths (in miles) of 141 ``major''
+  rivers in North America, as compiled by the US Geological
+  Survey.
+@}
+\usage@{data(rivers)@}
+\format@{A vector containing 141 observations.@}
+\source@{World Almanac and Book of Facts, 1975, page 406.@}
+\references@{
+  McNeil, D. R. (1977) \emph@{Interactive Data Analysis@}.
+  New York: Wiley.
+@}
+\keyword@{datasets@}
+@end smallexample
+@end cartouche
+@end quotation
+
+This uses the following additional markup commands.
 
 @table @code
-@item \name@{mydata@}
-@findex \name
-@var{mydata} is the basename of the file.
-
-@item \alias@{mydata@}
-@findex \alias
-
-@item \non_function@{@}
-Indicates that this is a dataset (for future use).
-
-@item \title@{@var{Title}@}
-@findex \title
-
-@item \description@{@dots{}@}
-@findex \description
-A short description of the dataset.
+@c @item \non_function@{@}
+@c Indicates that this is a dataset (for future use).
 
 @item \format@{@dots{}@}
 @findex \format
 A description of the format of the dataset (as a vector, matrix, data
 frame, time series, @dots{}).  For matrices and data frames this should
-give a description of each column.
+give a description of each column, preferably as a list or table.
+@xref{Lists and tables}, for more information.
 
 @item \source@{@dots{}@}
 @findex \source
-Details of the original source (a reference or URL).  There may also be a
-@code{\references} section giving secondary sources and usages.
-
-@item \details@{@dots{}@}
-If required, for example to describe an experiment.
-
-@item \examples@{@dots{}@}
-Examples of analyses using the dataset.
-
-@item \keyword@{datasets@}
-The keyword for a dataset is always @code{datasets}.
-
+Details of the original source (a reference or URL).  In addition,
+section @code{\references} could give secondary sources and usages.
 @end table
 
+Note also that when documenting data set @var{bar},
 
+@itemize @bullet
+@item 
+The @code{\usage} entry always is @code{data(@var{bar})}.
+@item
+The @code{\keyword} entry always is @code{datasets}.
+@end itemize
 
-@node Sectioning, Marking text, Documentation format, Writing R documentation
+If @code{bar} is a data frame, documenting it as a data set can again be
+initiated via @code{prompt(bar)}.
+
+@node Sectioning, Marking text, Rd format, Writing R documentation
 @section Sectioning
 
 To begin a new paragraph or leave a blank in an example, just insert an
@@ -596,11 +725,16 @@ E.g.,
 @code{\section@{Warning@}@{You must not call this function unless @dots{}@}}
 @end display
 
-@noindent Note that the additonal named sections are always inserted at
-fixed positions in the output (before @code{\note}, @code{\seealso} and
-the examples), no matter where they appear in the input.
+@noindent
+For consistency with the pre-assigned sections, the section name (the
+first argument to @code{\section}) should be capitalized (but not all
+upper case).
 
-@node Marking text, Cross-references, Sectioning, Writing R documentation
+Note that the additonal named sections are always inserted at fixed
+positions in the output (before @code{\note}, @code{\seealso} and the
+examples), no matter where they appear in the input.
+
+@node Marking text, Lists and tables, Sectioning, Writing R documentation
 @section Marking text
 @cindex Marking text in documentation
 
@@ -637,8 +771,27 @@ Fragments of @R{} code, including the names of @R{} objects, should be
 marked using @code{\code}.  Only backslashes and percent signs need to be
 escaped (by a backslash) inside @code{\code}.
 
-There are also some markup commands which apply to paragraphs, modeled
-on La@TeX{} environments.
+@node Lists and tables, Cross-references, Marking text, Writing R documentation
+@section Lists and tables
+@cindex Lists and tables in documentation
+
+@findex \itemize
+@findex \enumerate
+The @code{\itemize} and @code{\enumerate} commands take a single
+argument, within which there may be one or more @code{\item} commands.
+The text following each @code{\item} is formatted as one or more
+paragraphs, suitably indented and with the first paragraph marked with
+a bullet point (@code{\itemize}) or a number (@code{\enumerate}).
+
+@code{\itemize} and @code{\enumerate} commands may be nested.
+
+@findex \describe
+The @code{\describe} command is similar to @code{\itemize} but allows
+initial labels to be specified. The @code{\item}s take two arguments,
+the label and the body of the item, in exactly the same way as argument
+and value @code{\item}s.
+@code{\describe} commands are mapped to @code{<DL>} lists in @HTML{} and
+@code{\description} lists in La@TeX{}.
 
 @findex \tabular
 The @code{\tabular} command takes two arguments.  The first gives for
@@ -663,35 +816,16 @@ example:
 There must be the same number of fields on each line as there are
 alignments in the first argument, and they must be non-empty.
 
-@findex \itemize
-@findex \enumerate
-The @code{\itemize} and @code{\enumerate} commands take a single
-argument, within which there may be one or more @code{\item} commands.
-The text following each @code{\item} is formatted as one or more
-paragraphs, suitably indented and with the first paragraph marked with
-a bullet point (@code{\itemize}) or a number (@code{\enumerate}).
-
-@code{\itemize} and @code{\enumerate} commands may be nested.
-
-@findex \describe
-The @code{\describe} command is similar to @code{\itemize} but allows
-initial labels to be specified. The @code{\item}s take two arguments,
-the label and the body of the item, in exactly the same way as argument
-and value @code{\item}s.
-@code{\describe} commands are mapped to @code{<DL>} lists in @HTML{} and
-@code{\description} lists in La@TeX{}.
-
-
-@node Cross-references, Mathematics, Marking text, Writing R documentation
+@node Cross-references, Mathematics, Lists and tables, Writing R documentation
 @section Cross-references
 @cindex Cross-references in documentation
 
 @code{\link@{@var{foo}@}} (usually in the combination
 @code{\code@{\link@{@var{foo}@}@}}) produces a hyperlink to the help
 page for object @var{foo}.  One main usage of @code{\link} is in the
-@code{\seealso} section of the help page, @pxref{Documentation format},
-above.  (This only affects the creation of hyperlinks, for example in
-the @HTML{} pages used by @code{help.start()}.)
+@code{\seealso} section of the help page, @pxref{Rd format}.  (This only
+affects the creation of hyperlinks, for example in the @HTML{} pages
+used by @code{help.start()}.)
 
 @node Mathematics, Insertions, Cross-references, Writing R documentation
 @section Mathematics
@@ -725,21 +859,28 @@ for \eqn@{x = 0, 1, 2, ...@}.
 
 @iftex
 For the La@TeX{} manual, this becomes
-@display
+
+@quotation
+@cartouche
 @tex
 $$ p(x) = \lambda^x\ {e^{-\lambda} \over x!} $$
 for $x = 0, 1, 2, \ldots$.
 @end tex
-@end display
+@end cartouche
+@end quotation
 @end iftex
 
 For the @HTML{} and the ``direct'' (man-like) on-line help we get
 
+@quotation
+@cartouche
 @example
     p(x) = lambda^x exp(-lambda)/x!
 
 for x = 0, 1, 2, ....
 @end example
+@end cartouche
+@end quotation
 
 @c  For historic reasons mostly, the @TeX{}/La@TeX{} commands @code{\alpha},
 @c  @code{\Alpha}, @code{\beta}, @code{\Gamma}, @code{\epsilon},
@@ -770,9 +911,8 @@ After a @samp{%}, you can put your own comments regarding the help
 text.  This will be completely disregarded, normally.  Therefore, you can
 also use it to make part of the ``help'' invisible.
 
-@noindent @strong{Escaping Special Characters.}  You can produce a
-backslash (@samp{\} by escaping it by another backslash.  (Note that
-@code{\cr} is used for generating line breaks.)
+You can produce a backslash (@samp{\} by escaping it by another
+backslash.  (Note that @code{\cr} is used for generating line breaks.)
 
 The ``comment'' and ``control'' characters @samp{%} and @samp{\}
 @emph{always} need to be escaped.  Inside the verbatim-like commands
@@ -983,9 +1123,11 @@ void convolve(double *a, int *na, double *b, int *nb, double *ab)
 @{
   int i, j, nab = *na + *nb - 1;
 
-  for(i = 0; i < nab; i++) ab[i] = 0.0;
+  for(i = 0; i < nab; i++)
+    ab[i] = 0.0;
   for(i = 0; i < *na; i++)
-    for(j = 0; j < *nb; j++) ab[i + j] += a[i] * b[j];
+    for(j = 0; j < *nb; j++)
+      ab[i + j] += a[i] * b[j];
 @}
 @end example
 
@@ -994,8 +1136,11 @@ called from @R{} by
 
 @example
 conv <- function(a, b)
-  .C("convolve", as.double(a), as.integer(length(a)),
-     as.double(b), as.integer(length(b)),
+  .C("convolve",
+     as.double(a),
+     as.integer(length(a)),
+     as.double(b),
+     as.integer(length(b)),
      ab = double(length(a) + length(b) - 1))$ab
 @end example
 
