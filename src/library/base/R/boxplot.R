@@ -84,15 +84,19 @@ boxplot.formula <- function(formula, data = NULL, subset, na.action, ...)
 boxplot.stats <- function(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
 {
     nna <- !is.na(x)
-    n <- length(nna)                    # including +/- Inf
+    n <- length(nna) # including +/- Inf
     stats <- fivenum(x, na.rm = TRUE)
     iqr <- diff(stats[c(2, 4)])
-    out <- x < (stats[2] - coef * iqr) | x > (stats[4] + coef * iqr)
-    if(coef > 0) stats[c(1, 5)] <- range(x[!out], na.rm = TRUE)
+    if(coef == 0)
+	do.out <- FALSE
+    else if(do.out) {
+	out <- x < (stats[2] - coef * iqr) | x > (stats[4] + coef * iqr)
+	if(any(out[nna])) stats[c(1, 5)] <- range(x[!out], na.rm = TRUE)
+    }
     conf <- if(do.conf)
-        stats[3] + c(-1.58, 1.58) * diff(stats[c(2, 4)]) / sqrt(n)
+	stats[3] + c(-1.58, 1.58) * diff(stats[c(2, 4)]) / sqrt(n)
     list(stats = stats, n = n, conf = conf,
-         out = if(do.out) x[out & nna] else numeric(0))
+	 out = if(do.out) x[out & nna] else numeric(0))
 }
 
 bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
