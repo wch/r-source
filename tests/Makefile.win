@@ -48,7 +48,8 @@ test-src-postscript = ps-tests.R
 test-src-ts = ts-tests.R
 test-src-segfault = no-segfault.R
 
-test-src-reg-1 = reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R reg-plot.R
+test-src-reg-1 = reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R \
+  reg-plot.R reg-win.R
 test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
 test-src-reg3 = reg-tests-3.R

@@ -64,6 +64,7 @@ DISTFILES = Makefile.in Makefile.win README \
 	$(test-src-reg) $(test-src-reg3) \
 	  reg-IO.Rout.save reg-IO2.Rout.save reg-plot.Rout.save \
 	  reg-plot.ps.save reg-tests-2.Rout.save reg-tests-3.Rout.save \
+	  reg-win.R \
 	$(test-src-ts) \
 	gct-foot.R \
 	nanbug.rda
