@@ -126,14 +126,13 @@ function (name, help, lib.loc = .lib.loc, character.only = FALSE,
       file <- system.file(paste("R", name, sep = "/"), name, lib.loc)
       env <- attach(NULL, name = pkgname)
       if (file == "")
-	warning(paste("Package	`",
-		      name, "' contains no R code", sep = ""))
+	warning(paste("Package `", name, "' contains no R code", sep = ""))
       else
 	lib.source(file, env)
       lib.fixup(env, .GlobalEnv)
-      if (exists(".First.lib",env=env,inherits=F)){
-	firstlib<-get(".First.lib",envir=env,inherits=FALSE)
-	firstlib(section=which.lib.loc,libname=name)
+      if (exists(".First.lib", envir = env, inherits = FALSE)) {
+	firstlib <- get(".First.lib", envir = env, inherits = FALSE)
+	firstlib(which.lib.loc, name)
       }
     }
   } else if (!missing(help)) {
@@ -166,21 +165,22 @@ function (name, help, lib.loc = .lib.loc, character.only = FALSE,
   else invisible(.packages())
 }
 
-library.dynam <- function(name, package = .packages(), lib.loc = .lib.loc) {
+library.dynam <-
+function(chname, package = .packages(), lib.loc = .lib.loc) {
   if (!exists(".Dyn.libs"))
     assign(".Dyn.libs", character(0), envir = .GlobalEnv)
-  LEN <- nchar(name)
-  if (substr(name, LEN - 2, LEN) == ".so") {
-    name <- substr(name, 1, LEN - 3)
+  LEN <- nchar(chname)
+  if (substr(chname, LEN - 2, LEN) == ".so") {
+    chname <- substr(chname, 1, LEN - 3)
   }
-  if (is.na(match(name, .Dyn.libs))) {
-    file <- system.file(paste("libs", "/", name, ".", "so", sep = ""),
+  if (is.na(match(chname, .Dyn.libs))) {
+    file <- system.file(paste("libs", "/", chname, ".", "so", sep = ""),
 			package, lib.loc)
     if (file == "") {
-      stop(paste("dynamic library `", name, "' not found", sep = ""))
+      stop(paste("dynamic library `", chname, "' not found", sep = ""))
     }
     .Internal(dyn.load(file))
-    assign(".Dyn.libs", c(.Dyn.libs, name), envir = .GlobalEnv)
+    assign(".Dyn.libs", c(.Dyn.libs, chname), envir = .GlobalEnv)
   }
   invisible(.Dyn.libs)
 }
@@ -216,11 +216,11 @@ system.time <- function(expr) {
 unix.time <- system.time
 
 tempfile <- function(pattern = "file") {
-	system(paste("for p in", paste(pattern, collapse = " "), ";",
-		     "do echo /tmp/$p$$; done"),
-	       intern = TRUE)
+  system(paste("for p in", paste(pattern, collapse = " "), ";",
+               "do echo /tmp/$p$$; done"),
+         intern = TRUE)
 }
 
 unlink <- function(x) {
-	system(paste("rm -rf ", paste(x, collapse = " ")))
+  system(paste("rm -rf ", paste(x, collapse = " ")))
 }
