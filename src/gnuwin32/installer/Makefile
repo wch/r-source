@@ -80,8 +80,7 @@ endif
 	$(CP) -pr ../../include/R_ext $(RPREFIX)/src/include
 	$(SED) -e 3,5d ../readme.packages > $(RPREFIX)/readme.packages
 	$(CP) ../../../COPYING.LIB $(RPREFIX)
-	$(CP) -r ../../../share/make ../../../share/perl ../../../share/texmf \
-	   $(RPREFIX)/share
+	$(CP) -r ../../../share/make ../../../share/perl $(RPREFIX)/share
 	$(CP) ../../../bin/INSTALL ../../../bin/REMOVE ../../../bin/SHLIB \
 	  ../../../bin/build ../../../bin/check ../../../bin/massage-Examples \
 	  ../../../bin/Rd2dvi.sh ../../../bin/Rd2txt ../../../bin/Rdconv \
@@ -102,7 +101,7 @@ endif
 	$(CP) -pr ../../../library/$$p $(RPREFIX)/library ; \
 	done	
 #
-	find $(RPREFIX) -name CVS -prune -exec rm -rf \{\} \;
+	find $(RPREFIX) -name .svn -prune -exec rm -rf \{\} \;
 
 R.iss Rsmall.iss: JRins.pl imagedir
 	rm -rf $(RPREFIX)/library/*/man
