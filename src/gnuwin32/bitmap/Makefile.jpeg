@@ -53,7 +53,7 @@ JPEG_LIB_VERSION = 62
 SYSDEPMEM= jmemnobs.$(O)
 
 # miscellaneous OS-dependent stuff
-SHELL= /bin/sh
+#SHELL= /bin/sh
 # linker
 LN= $(CC)
 # file deletion command
