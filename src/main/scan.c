@@ -1304,7 +1304,7 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    error("cannot allocate buffer in readTableHead");
 	    }
 	    if(quote && c == quote) quote = 0;
-	    else if(!skip && strchr(data.quoteset, c)) quote = c;
+	    else if(!quote && !skip && strchr(data.quoteset, c)) quote = c;
 	    if(empty && !skip)
 		if(c != ' ' && c != '\t' && c != data.comchar) empty = FALSE;
 	    if(!quote && !skip && c == data.comchar) skip = TRUE;
