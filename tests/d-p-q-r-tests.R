@@ -95,10 +95,14 @@ all.equal(qnorm(0.25),-0.6744897501960817, tol = 1e-14)
 all.equal(qnorm(0.001),-3.090232306168, tol = 1e-12)
 
 z <- rnorm(1000); all.equal(pnorm(z),  1 - pnorm(-z), tol= 1e-15)
-z <- rt(1000,3)
+z <- c(-Inf,Inf,NA,NaN, rt(1000, df=2))
+zsml <- z > -37.5 || !is.finite(z)
 for(df in 1:10) if(!is.logical(all.equal(pt(z, df), 1 - pt(-z,df), tol= 1e-15)))
     cat("ERROR -- df = ", df, "\n")
+all.equal(pz <- pnorm(z), 1 - pnorm(z, lower=FALSE), tol= 5e-16)
+all.equal(pz,               pnorm(-z, lower=FALSE),  tol= 5e-16)
+all.equal(log(pz[zsml]),  pnorm(z[zsml], log=TRUE),  tol= 5e-16)
 
 ###==========  p <-> q  Inversion consistency =====================
-p <- pnorm(z); ok <- 1e-5 < p & p < 1 - 1e-5
-all.equal(z[ok], qnorm(p[ok]), tol= 1e-12)
+ok <- 1e-5 < pz & pz < 1 - 1e-5
+all.equal(z[ok], qnorm(pz[ok]), tol= 1e-12)

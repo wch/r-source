@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 0.99.0 Under development (unstable) (January 17, 2000)
+Version 0.99.0 Under development (unstable) (January 18, 2000)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -130,12 +130,19 @@ n= 50 : ......................
 > 
 > z <- rnorm(1000); all.equal(pnorm(z),  1 - pnorm(-z), tol= 1e-15)
 [1] TRUE
-> z <- rt(1000,3)
+> z <- c(-Inf,Inf,NA,NaN, rt(1000, df=2))
+> zsml <- z > -37.5 || !is.finite(z)
 > for(df in 1:10) if(!is.logical(all.equal(pt(z, df), 1 - pt(-z,df), tol= 1e-15)))
 +     cat("ERROR -- df = ", df, "\n")
+> all.equal(pz <- pnorm(z), 1 - pnorm(z, lower=FALSE), tol= 5e-16)
+[1] TRUE
+> all.equal(pz,               pnorm(-z, lower=FALSE),  tol= 5e-16)
+[1] TRUE
+> all.equal(log(pz[zsml]),  pnorm(z[zsml], log=TRUE),  tol= 5e-16)
+[1] TRUE
 > 
 > ###==========  p <-> q  Inversion consistency =====================
-> p <- pnorm(z); ok <- 1e-5 < p & p < 1 - 1e-5
-> all.equal(z[ok], qnorm(p[ok]), tol= 1e-12)
+> ok <- 1e-5 < pz & pz < 1 - 1e-5
+> all.equal(z[ok], qnorm(pz[ok]), tol= 1e-12)
 [1] TRUE
 > 
