@@ -2,6 +2,8 @@
 
 NEW FEATURES
 
+    o   new function loglin().
+
     o   sink() has new `append' argument.
 
     o   new function rle().
@@ -18,9 +20,9 @@ BUG FIXES
     o   help() after help.start() did not work if topic was not equal
         to filename (e.g. rnorm is found in Normal.html)
 
-    o   fix the 0.63.1 fix for abbreviate(.);  improved doc.
+    o   fix the 0.63.1 fix for abbreviate(.); improved doc.
 
-    o   predict.mlm(.) couldn't have worked with 'newdata'.
+    o   predict.mlm(.) couldn't have worked with `newdata'.
 
     o   model.frame/na.omit bug for matrices and Surv objects.
 
@@ -28,10 +30,10 @@ BUG FIXES
 
     o   str(.) doesn't give extraneous "..." in rare cases anymore.
 
-    o   Added documentation for group methods ("Math", "Ops","Summary").
+    o   Added documentation for group methods ("Math", "Ops", "Summary").
 
     o   R_PAPERSIZE is used for Rd2dvi and at configure time for the 
-	'make dvi' parts.
+	`make dvi' parts.
 
     o   hist(i) now also works for e.g., i = -1, 0, or 1.
 
@@ -42,7 +44,7 @@ NEW FEATURES
 
     o   new function mosaicplot().
 
-    o	xy.coords(.) has a  "recycle = FALSE" argument,	 used in text().
+    o	xy.coords(.) has a "recycle = FALSE" argument, used in text().
 
     o	RNGtype() allows to choose different Random Number Generators.
 		__EXPERIMENTAL__
@@ -59,7 +61,7 @@ NEW FEATURES
     o	backsolve(.) has new arguments "upper.tri = TRUE, transpose = FALSE"
 
     o	hist() has new "right = TRUE" argument;	 
-	"right = FALSE" gives  [a,b) intervals
+	"right = FALSE" gives [a,b) intervals
 
     o	help() has "htmlhelp" argument, allowing to suppress htmlhelp after
 	help.start().  This is desired for ESS.
