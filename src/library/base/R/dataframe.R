@@ -157,11 +157,16 @@ as.data.frame.matrix <- function(x, row.names = NULL, optional = FALSE)
     row.names <- dn[[1]]
     collabs <- dn[[2]]
     value <- vector("list", ncols)
-    for(i in 1:ncols)
-	value[[i]] <- as.vector(x[,i])
-    if(length(row.names)==nrows) {}
-    else if(optional) row.names <- character(nrows)
-    else row.names <- as.character(1:nrows)
+    if(mode(x) == "character" || mode(x) == "logical") {
+        for(i in 1:ncols)
+            value[[i]] <- as.factor(x[,i])
+    } else {
+        for(i in 1:ncols)
+            value[[i]] <- as.vector(x[,i])
+    }
+    if(length(row.names) != nrows)
+        if(optional) row.names <- character(nrows)
+        else row.names <- as.character(1:nrows)
     if(length(collabs) == ncols) names(value) <- collabs
     else if(!optional) names(value) <- paste("V", 1:ncols, sep="")
     attr(value, "row.names") <- row.names

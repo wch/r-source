@@ -12,9 +12,15 @@ NEW FEATURES
 
     o	residuals.lm() has "type" argument, as S does.
 
+
 BUG FIXES
 
-    o
+    o	adding matrices to data frames now happens column by column as
+	documented, so character or logical matrices generate factor
+	columns.
+
+    o	formulae containing interactions with the response were
+	handled incorrectly by model.matrix, giving wrong answers or crashes.
 
 
 

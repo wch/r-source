@@ -90,9 +90,9 @@ plot (data.frame.obj, \dots)
   character and logical variables, in particular. It also applies to
   adding columns to a data frame.
 
-  If a data frame or matrix is passed to \code{data.frame} it is as if
-  each column had been passed as a separate argument, which the
-  exception of matrices of class \code{\link{model.matrix}}.
+  If a list or data frame or matrix is passed to \code{data.frame}
+  it is as if each column had been passed as a separate argument,
+  with the exception of matrices of class \code{\link{model.matrix}}.
 }
 \seealso{
   \code{\link{read.table}}, \code{\link{Math.data.frame}},etc, about
