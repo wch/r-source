@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.0-0, 2000/02/27
+Version 1.0-1, 2000/02/28
 Kurt Hornik
 
 
@@ -986,10 +986,6 @@ works, was published in the Journal of Statistical Software
 
 *RmSQL*
      An interface between R and the mSQL database system.
-
-*Rnotes*
-     The data sets for the exercises in "An Introduction to R" (*note What
-     documentation exists for R?::).
 
 *SASmixed*
      Data sets and sample linear mixed effects analyses corresponding to the
