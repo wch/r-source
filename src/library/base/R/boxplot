@@ -25,11 +25,8 @@ boxplot <- function(x, ..., range=1.5, width=NULL, varwidth=FALSE,
 	n <- length(groups)
 	if(!missing(names.x)) attr(groups, "names") <- names.x
 	else if(is.null(attr(groups, "names"))) attr(groups, "names") <- 1:n
-## just a workaround for the  ``names loss in list assignment'' bug:
-gn <- names(groups)
 	for(i in 1:n)
 		groups[i] <- list(boxplot.stats(groups[[i]], range))
-names(groups) <- gn
 	if(plot) {
 		bxp(groups, width, varwidth=varwidth, notch=notch,
 			border=border, col=col, log=log, pars=pars)
