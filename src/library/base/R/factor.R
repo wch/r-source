@@ -33,7 +33,7 @@ function(x, value)
   attr(x, "levels") <- value
   x
 }
- 
+
 "levels<-.factor" <-
 function (x, value)
 {
@@ -84,13 +84,13 @@ as.vector.factor <- function(x, type="any")
 }
 
 
-print.factor <- function (x, quote=FALSE)
+print.factor <- function (x, quote=FALSE, ...)
 {
     if(length(x) <= 0)
 	cat("factor(0)\n")
     else
-	print(levels(x)[x], quote=quote)
-    cat("Levels: ",paste(levels(x), collapse=" "), "\n")
+	print(levels(x)[x], quote=quote, ...)
+    cat("Levels: ", paste(levels(x), collapse=" "), "\n")
     invisible(x)
 }
 
@@ -157,7 +157,7 @@ ordered <-
     function(x, levels = sort(unique(x), na.last = TRUE), labels = levels,
 	     exclude = NA, ordered = TRUE)
 {
-    if (length(x) == 0) 
+    if (length(x) == 0)
         f <- numeric(0)
     else {
         exclude <- as.vector(exclude, typeof(x))

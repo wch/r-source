@@ -9,6 +9,9 @@
 
 NEW FEATURES
 
+    o   If HTML help files are asked for but not available, text help 
+	is used. 
+
     o   HTML help file conversion reports unsatisified \link{..}s. 
 
     o   `vsize' and `nsize' can be set by the environment variables
@@ -24,6 +27,11 @@ NEW FEATURES
 
 
 BUG FIXES
+
+    o   many argument name changes, add ... for method functions for
+	consistency with the gneric function.
+
+    o   example() will allow aliased topic names. 
 
     o   HTML help file conversions will find hyperlinks in the main 
 	library as well as the current library.

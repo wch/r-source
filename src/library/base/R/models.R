@@ -1,5 +1,5 @@
 formula <- function(x, ...) UseMethod("formula")
-formula.default <- function (x)
+formula.default <- function (x, ...)
 {
     if (!is.null(x$formula))		eval(x$formula)
     else if (!is.null(x$call$formula))	eval(x$call$formula)
@@ -9,15 +9,15 @@ formula.default <- function (x)
 		character = formula(eval(parse(text = x)[[1]])),
 		call = eval(x), stop("invalid formula"))
 }
-formula.formula <- function(x) x
-formula.terms <- function(x) {
+formula.formula <- function(x, ...) x
+formula.terms <- function(x, ...) {
     attributes(x) <- list(class="formula")
     x
 }
 
-formula.data.frame<- function (df)
+formula.data.frame<- function (x, ...)
 {
-    nm <- sapply(names(df), as.name)
+    nm <- sapply(names(x), as.name)
     lhs <- nm[1]
     if (length(nm) > 1) {
        rhs <- nm[-1]
@@ -30,7 +30,7 @@ formula.data.frame<- function (df)
     eval(ff)
 }
 
-print.formula <- function(x) print.default(unclass(x))
+print.formula <- function(x, ...) print.default(unclass(x), ...)
 
 "[.formula" <- function(x,i) {
     ans <- NextMethod("[")
@@ -40,9 +40,9 @@ print.formula <- function(x) print.default(unclass(x))
 }
 
 terms <- function(x, ...) UseMethod("terms")
-terms.default <- function(x) x$terms
+terms.default <- function(x, ...) x$terms
 terms.terms <- function(x, ...) x
-print.terms <- function(x) print.default(unclass(x))
+print.terms <- function(x, ...) print.default(unclass(x))
 #delete.response <- function (termobj)
 #{
 #    intercept <- if (attr(termobj, "intercept")) "1" else "0"
@@ -119,28 +119,28 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
     terms
 }
 
-coef <- function(x, ...) UseMethod("coef")
-coef.default <- function(x, ...) x$coefficients
+coef <- function(object, ...) UseMethod("coef")
+coef.default <- function(object, ...) object$coefficients
 coefficients <- .Alias(coef)
 
-residuals <- function(x, ...) UseMethod("residuals")
-residuals.default <- function(x) x$residuals
+residuals <- function(object, ...) UseMethod("residuals")
+residuals.default <- function(object, ...) object$residuals
 resid <- .Alias(residuals)
 
-deviance <- function(x, ...) UseMethod("deviance")
-deviance.default <- function(x) x$deviance
+deviance <- function(object, ...) UseMethod("deviance")
+deviance.default <- function(object, ...) object$deviance
 
-fitted <- function(x, ...) UseMethod("fitted")
-fitted.default <- function(x) x$fitted
+fitted <- function(object, ...) UseMethod("fitted")
+fitted.default <- function(object, ...) object$fitted
 fitted.values <- .Alias(fitted)
 
-anova <- function(x, ...)UseMethod("anova")
+anova <- function(object, ...)UseMethod("anova")
 
-effects <- function(x, ...)UseMethod("effects")
+effects <- function(object, ...)UseMethod("effects")
 
-weights <- function(x, ...)UseMethod("weights")
+weights <- function(object, ...)UseMethod("weights")
 
-df.residual <- function(x, ...)UseMethod("df.residual")
+df.residual <- function(object, ...)UseMethod("df.residual")
 
 variable.names <-function(object, ...) UseMethod("variable.names")
 variable.names.default <- .Alias(colnames)
@@ -148,11 +148,11 @@ variable.names.default <- .Alias(colnames)
 case.names <-function(object, ...) UseMethod("case.names")
 case.names.default <- .Alias(rownames)
 
-offset <- function(x) x
+offset <- function(object) object
 ## ?
 
-na.action <- function(x, ...)UseMethod("na.action")
-na.action.default <- function(x) attr(x, "na.action")
+na.action <- function(object, ...)UseMethod("na.action")
+na.action.default <- function(object, ...) attr(object, "na.action")
 
 na.fail <- function(frame)
 {

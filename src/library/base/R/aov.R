@@ -284,9 +284,9 @@ print.summary.aov <- function(x, digits = max(3, .Options$digits - 3),
     invisible(x)
 }
 
-coef.aov <- function(x)
+coef.aov <- function(object, ...)
 {
-    z <- x$coef
+    z <- object$coef
     z[!is.na(z)]
 }
 
@@ -418,7 +418,7 @@ print.summary.aovlist <- function(x, ...)
     invisible(x)
 }
 
-coef.listof <- function(object)
+coef.listof <- function(object, ...)
 {
     val <- vector("list", length(object))
     names(val) <- names(object)
@@ -427,11 +427,11 @@ coef.listof <- function(object)
     val
 }
 
-se.contrast <- function(x, ...) UseMethod("se.contrast")
+se.contrast <- function(object, ...) UseMethod("se.contrast")
 
 se.contrast.aov <-
     function(object, contrast.obj, coef = contr.helmert(ncol(contrast))[, 1],
-             data = NULL)
+             data = NULL, ...)
 {
     contrast.weight.aov <- function(object, contrast)
     {
@@ -486,7 +486,7 @@ se.contrast.aov <-
 
 se.contrast.aovlist <-
     function(object, contrast.obj, coef = contr.helmert(ncol(contrast))[, 1],
-             data = NULL)
+             data = NULL, ...)
 {
     contrast.weight.aovlist <- function(object, contrast, onedf = TRUE)
     {
