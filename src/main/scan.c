@@ -143,14 +143,28 @@ static void unscanchar(int c)
     save = c;
 }
 
-static char *growBuffer(char *buffer, int *nbuf)
+static char *buffer=NULL;		/* Buffer for character strings */
+
+static void AllocBuffer(int len)
 {
-    int old = *nbuf, new = 2*old;
-    char *newbuf;
-    
-    newbuf = S_realloc(buffer, new, old, sizeof(char));
-    *nbuf = new;
-    return newbuf;
+    static int bufsize = 0;
+
+    if(len >= 0 ) {
+	if(len*sizeof(char) < bufsize) return;
+	len = (len+1)*sizeof(char);
+	if(len < MAXELTSIZE) len = MAXELTSIZE;
+	buffer = (char *) realloc(buffer, len);
+	bufsize = len;
+	if(!buffer) {
+	    bufsize = 0;
+	    error("Could not allocate memory for substr / strsplit");
+	}
+    } else {
+	if(bufsize == MAXELTSIZE) return;
+	free(buffer);
+	buffer = (char *) malloc(MAXELTSIZE);
+	bufsize = MAXELTSIZE;
+    }
 }
 
 
@@ -159,10 +173,9 @@ static char * fillBuffer(SEXPTYPE type, int strip, int *bch)
 /* The basic reader function, called from scanVector() and scanFrame().
    Reads into _buffer_	which later will be read out by extractItem().
 */
-    char *buffer, *bufp;
+    char *bufp;
     int c, quote, filled, nbuf = MAXELTSIZE, m;
 
-    buffer = (char *) R_alloc(MAXELTSIZE, sizeof(char));
     m = 0;
 
     filled = 1;
@@ -177,7 +190,10 @@ static char * fillBuffer(SEXPTYPE type, int strip, int *bch)
 	if (type == STRSXP && strchr(quoteset, c)) {
 	    quote = c;
 	    while ((c = scanchar()) != R_EOF && c != quote) {
-		if (m >= nbuf - 2) buffer = growBuffer(buffer, &nbuf);
+		if (m >= nbuf - 2) {
+		    nbuf *= 2;
+		    AllocBuffer(nbuf);
+		}
 		if (c == '\\') {
 		    c = scanchar();
 		    if (c == R_EOF) break;
@@ -196,7 +212,10 @@ static char * fillBuffer(SEXPTYPE type, int strip, int *bch)
 	}
 	else { /* not a char string */
 	    do {
-		if (m >= nbuf - 2) buffer = growBuffer(buffer, &nbuf);
+		if (m >= nbuf - 2) {
+		    nbuf *= 2;
+		    AllocBuffer(nbuf);
+		}
 		buffer[m++] = c;
 	    } while (!isspace(c = scanchar()) && c != R_EOF);
 	    while (c == ' ' || c == '\t')
@@ -224,12 +243,18 @@ static char * fillBuffer(SEXPTYPE type, int strip, int *bch)
 		    quote = c;
 		inquote:
 		    while ((c = scanchar()) != R_EOF && c != quote) {
-			if (m >= nbuf - 2) buffer = growBuffer(buffer, &nbuf);
+			if (m >= nbuf - 2) {
+			    nbuf *= 2;
+			    AllocBuffer(nbuf);
+			}
 			buffer[m++] = c;
 		    }
 		    c = scanchar();
 		    if (c == quote) {
-			if (m >= nbuf - 2) buffer = growBuffer(buffer, &nbuf);
+			if (m >= nbuf - 2) {
+			    nbuf *= 2;
+			    AllocBuffer(nbuf);
+			}
 			buffer[m++] = quote;
 			goto inquote; /* FIXME: Ick! Clean up logic */
 		    }
@@ -243,7 +268,10 @@ static char * fillBuffer(SEXPTYPE type, int strip, int *bch)
 		    }
 		}
 		if (!strip || m > 0 || !isspace(c)) {
-		    if (m >= nbuf - 2) buffer = growBuffer(buffer, &nbuf);
+		    if (m >= nbuf - 2) {
+			nbuf *= 2;
+			AllocBuffer(nbuf);
+		    }
 		    buffer[m++] = c;
 		}
 	    }
@@ -343,6 +371,7 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
     if (maxitems > 0) blocksize = maxitems;
     else blocksize = SCAN_BLOCKSIZE;
 
+    AllocBuffer(0);
     PROTECT(ans = allocVector(type, blocksize));
 
     nprev = 0; n = 0; linesread = 0; bch = 1;
@@ -428,6 +457,7 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
 	break;
     }
     UNPROTECT(1);
+    AllocBuffer(-1);
     return bns;
 }
 
@@ -450,6 +480,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
     else if (maxlines > 0) blksize = maxlines;
     else blksize = SCAN_BLOCKSIZE;
 
+    AllocBuffer(0);
     PROTECT(ans = allocVector(VECSXP, nc));
     for (i = 0; i < nc; i++) {
 	w = VECTOR_ELT(what, i);
@@ -580,6 +611,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 	SET_VECTOR_ELT(ans, i, new);
     }
     UNPROTECT(1);
+    AllocBuffer(-1);
     return ans;
 }
 
