@@ -24,22 +24,6 @@
 #include <R_ext/Rdynload.h>
 #include "grid.h"
 
-void grid_init(char **path)
-{
-#ifdef ENABLE_NLS
-    char localedir[PATH_MAX];
-
-    strcpy(localedir, path[0]);
-    strcat(localedir, "/po");
-    bindtextdomain("grid", localedir);
-#endif   
-}
-
-static const R_CMethodDef CEntries[]  = {
-    {"grid_init", (DL_FUNC) &grid_init, 1},
-    {NULL, NULL, 0}
-};
-
 static const R_CallMethodDef callMethods[] = {
     {"L_initGrid", (DL_FUNC) &L_initGrid, 1},
     {"L_killGrid", (DL_FUNC) &L_killGrid, 0},
@@ -99,6 +83,6 @@ void R_init_grid(DllInfo *dll)
 {
     /* No .C, .Fortran, or .External routines => NULL
      */
-    R_registerRoutines(dll, CEntries, callMethods, NULL, NULL);
+    R_registerRoutines(dll, NULL, callMethods, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

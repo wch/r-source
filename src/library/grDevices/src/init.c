@@ -23,23 +23,6 @@
 #include "grDevices.h"
 #include <R_ext/Rdynload.h>
 
-
-void grDevices_init(char **path)
-{
-#ifdef ENABLE_NLS
-    char localedir[PATH_MAX];
-
-    strcpy(localedir, path[0]);
-    strcat(localedir, "/po");
-    bindtextdomain("grDevices", localedir);
-#endif   
-}
-
-static const R_CMethodDef CEntries[]  = {
-    {"grDevices_init", (DL_FUNC) &grDevices_init, 1},
-    {NULL, NULL, 0}
-};
-
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
 static R_CallMethodDef CallEntries[] = {
@@ -66,6 +49,6 @@ static R_ExternalMethodDef ExtEntries[] = {
 
 void R_init_grDevices(DllInfo *dll)
 {
-    R_registerRoutines(dll, CEntries, CallEntries, NULL, ExtEntries);
+    R_registerRoutines(dll, NULL, CallEntries, NULL, ExtEntries);
     R_useDynamicSymbols(dll, FALSE);
 }

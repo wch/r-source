@@ -23,22 +23,6 @@
 #include "methods.h"
 #include <R_ext/Rdynload.h>
 
-void methods_init(char **path)
-{
-#ifdef ENABLE_NLS
-    char localedir[PATH_MAX];
-
-    strcpy(localedir, path[0]);
-    strcat(localedir, "/po");
-    bindtextdomain("methods", localedir);
-#endif   
-}
-
-static const R_CMethodDef CEntries[]  = {
-    {"methods_init", (DL_FUNC) &methods_init, 1},
-    {NULL, NULL, 0}
-};
-
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
 static R_CallMethodDef CallEntries[] = {
@@ -67,6 +51,6 @@ static R_CallMethodDef CallEntries[] = {
 
 void R_init_methods(DllInfo *dll)
 {
-    R_registerRoutines(dll, CEntries, CallEntries, NULL, NULL);
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }
