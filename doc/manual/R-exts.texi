@@ -129,8 +129,8 @@ URL: http://www.r-project.org, http://www.another.url
 @end quotation
 
 @noindent
-Continuation lines (e.g., for descriptions longer than one line) start
-with a whitespace character.  The @samp{Package}, @samp{Version},
+Continuation lines (for example, for descriptions longer than one line)
+start with a space or tab.  The @samp{Package}, @samp{Version},
 @samp{Author}, and @samp{Description} fields are mandatory, the
 remaining fields (@samp{Date}, @samp{Depends}, @samp{Address},
 @samp{URL}, @dots{}) are optional.  The @samp{Author} field should
@@ -150,9 +150,9 @@ contained in a separate @file{TITLE} file in older versions of @R{}, please
 use the title field in the @file{DESCRIPTION} file from now on.
 
 The optional @samp{URL} field may give a list of URL's separated by
-commas or whitespace, e.g., the homepage of the author or a page where
-additional material describing the software can be found.  These URLs
-are converted to active hyperlinks on CRAN.
+commas or whitespace, for example the homepage of the author or a page
+where additional material describing the software can be found.  These
+URLs are converted to active hyperlinks on CRAN.
 
 The optional @samp{Depends} field gives a comma-separated list of
 package names which this package depends on. The package name may be
@@ -306,7 +306,7 @@ script which checks for the library, sets variable @code{HAVEFOO} to
 @code{TRUE} if it was found and with @code{FALSE} otherwise, and then
 substitutes this value into output files (by replacing instances of
 @samp{@@HAVEFOO@@} in input files with the value of @code{HAVEFOO}).
-E.g., if a function named @code{bar} is to be made available by linking
+for example, if a function named @code{bar} is to be made available by linking
 against library @code{foo} (i.e., using @option{-lfoo}), one could use
 
 @smallexample
@@ -365,8 +365,9 @@ of the @R{} package checker.  Under Windows the equivalent command is
 @code{make pkgcheck-mypkg}.
 
 @findex R CMD build
+@cindex Package builder
 Using @code{R CMD build}, the @R{} package builder, one can build R
-packages from their sources (e.g., for subsequent release).  Prior to
+packages from their sources (for example, for subsequent release).  Prior to
 actually building the package in the common gzipped tar file format, a
 variety of diagnostic checks and cleanups are performed.  In particular,
 it is tested whether the @file{DESCRIPTION} file contains the required
@@ -408,12 +409,13 @@ scripts for packages.
 
 The @R{} distribution contains more than 600 such files which can be
 found in the @file{src/library/@var{pkg}/man} directories of the @R{}
-source tree, where @var{pkg} stands for package @strong{base} where all
-the standard objects are, and for the add-on packages such as @pkg{eda}
+source tree, where @var{pkg} stands for package @pkg{base} where all
+the standard objects are, and for the standard packages such as @pkg{eda}
 and @pkg{mva} which are included in the @R{} distribution.
 
-As an example, let us look at @file{src/library/base/man/rle.Rd} which
-documents the @R{} function @code{rle}.
+As an example, let us look at the file
+@file{src/library/base/man/rle.Rd} which documents the @R{} function
+@code{rle}.
 
 @quotation
 @cartouche
@@ -453,7 +455,7 @@ rle(x)
 An Rd file consists of three parts.  The header gives basic information
 about the name of the file, the topics documented, a title, a short
 textual description and @R{} usage information for the objects
-documented.  The body gives further information (e.g., on the function's
+documented.  The body gives further information (for example, on the function's
 arguments and return value, as in the above example).  Finally, there is
 a footer with keyword information.  The header and footer are mandatory.
 
@@ -461,7 +463,10 @@ See @uref{http://developer.r-project.org/Rds.html, ``Guidelines for Rd
 files''} for guidelines for writing documentation in Rd format which
 should be useful for package writers.
 
-The basic markup commands for structuring Rd files are as follows.
+@subsection Documenting functions
+
+The basic markup commands used for documenting @R{} objects (in
+particular, functions) are given in this subsection.
 
 @table @code
 @item \name@{@var{file}@}
@@ -476,10 +481,10 @@ data bases for lookup by the on-line (plain text and @HTML{}) help
 systems.
 
 There may be several @code{\alias} entries.  Quite often it is
-convenient to document several @R{} objects in one file.  E.g., file
-@file{Normal.Rd} documents the density, distribution function, quantile
-function and generation of random variates for the normal distribution,
-and hence starts with
+convenient to document several @R{} objects in one file.  For example,
+file @file{Normal.Rd} documents the density, distribution function,
+quantile function and generation of random variates for the normal
+distribution, and hence starts with
 
 @smallexample
 \name@{Normal@}
@@ -627,15 +632,16 @@ In addition, it should not use any system-specific features or require
 special facilities (such as Internet access or write permission to
 specific directories).
 
-Data needed for making the examples executable can e.g.@: be obtained by
-random number generation (e.g., @code{x <- rnorm(100)}), or by using
+Data needed for making the examples executable can be obtained by
+random number generation (for example, @code{x <- rnorm(100)}), or by using
 standard data sets loadable via @code{data()} (see @code{data()} for
 info).
 
 @item \keyword@{@var{key}@}
-The @code{\keyword} entries should specify all standard keywords (as
-listed in file @file{$R_HOME/doc/KEYWORDS}) matching the Rd file's
-contents.  There must be at least one @code{\keyword} entry.
+Each @code{\keyword} entry should specify one of the standard keywords
+(as listed in thefile @file{$R_HOME/doc/KEYWORDS}).  There must be at
+least one @code{\keyword} entry, but can be more that one if the @R{}
+object being documented falls into more than one category.
 @end table
 
 @findex prompt
@@ -645,8 +651,10 @@ documenting @R{} objects.  If @code{foo} is an @R{} function, then
 the proper function and argument names of @code{foo}, and a structure
 which can be filled in with information.
 
+@subsection Documenting datasets
+
 The structure of Rd files which document @R{} data sets is slightly
-different.  Whereas e.g.@: sections @code{\arguments} and @code{\value}
+different.  Whereas sections such as @code{\arguments} and @code{\value}
 are not needed, the format and source of the data should be explained.
 
 As an example, let us look at @file{src/library/base/man/rivers.Rd}
@@ -709,14 +717,15 @@ initiated via @code{prompt(bar)}.
 @node Sectioning, Marking text, Rd format, Writing R documentation
 @section Sectioning
 
-To begin a new paragraph or leave a blank in an example, just insert an
-empty line (as in (La)@TeX{}).	To break a line, use @code{\cr}.
+To begin a new paragraph or leave a blank line in an example, just
+insert an empty line (as in (La)@TeX{}). To break a line, use
+@code{\cr}.
 
 In addition to the predefined sections (such as @code{\description@{@}},
 @code{\value@{@}}, etc.), you can ``define'' arbitrary ones by
 @code{\section@{@var{section_title}@}@{@dots{}@}}.
 @findex \section
-E.g.,
+For example
 
 @display
 @code{\section@{Warning@}@{You must not call this function unless @dots{}@}}
@@ -811,35 +820,34 @@ example:
 
 @noindent
 There must be the same number of fields on each line as there are
-alignments in the first argument, and they must be non-empty.
+alignments in the first argument, and they must be non-empty (but can 
+contain only spaces).
 
 @node Cross-references, Mathematics, Lists and tables, Writing R documentation
 @section Cross-references
 @cindex Cross-references in documentation
 
-@code{\link@{@var{foo}@}} (usually in the combination
+The markup @code{\link@{@var{foo}@}} (usually in the combination
 @code{\code@{\link@{@var{foo}@}@}}) produces a hyperlink to the help
 page for object @var{foo}.  One main usage of @code{\link} is in the
 @code{\seealso} section of the help page, @pxref{Rd format}.  (This only
 affects the creation of hyperlinks, for example in the @HTML{} pages
-used by @code{help.start()}.)
+used by @code{help.start()} and the PDF version of the reference manual.)
 
 @node Mathematics, Insertions, Cross-references, Writing R documentation
 @section Mathematics
 @cindex Mathematics in documentation
-
-Mathematical formula are something we want ``perfectly'' for printed
-documentation (i.e., for the conversion to La@TeX{} and PostScript
-subsequently) and still want something useful for ASCII and @HTML{}
-online help.
-
 @findex \eqn
 @findex \deqn
+
+Mathematical formulae should be set beautifully for printed
+documentation yet we still want something useful for text and @HTML{}
+online help.
 To this end, the two commands @code{\eqn@{@var{latex}@}@{@var{ascii}@}}
 and @code{\deqn@{@var{latex}@}@{@var{ascii}@}} are used.  Where
 @code{\eqn} is used for ``inline'' formula (corresponding to
-(La)@TeX{}'s @code{$@dots{}$}, @code{\deqn} gives ``displayed
-equations'' (a la La@TeX{}'s @code{displaymath} environment, or @TeX{}'s
+@TeX{}'s @code{$@dots{}$}, @code{\deqn} gives ``displayed
+equations'' (as in La@TeX{}'s @code{displaymath} environment, or @TeX{}'s
 @code{$$@dots{}$$}).
 
 Both commands can also be used as @code{\eqn@{@var{latexascii}@}} (only
@@ -902,18 +910,22 @@ for x = 0, 1, 2, ....
 @findex \R
 Use @code{\R} for the @R{} system itself (you don't need extra
 @samp{@{@}} or @samp{\}).  Use @code{\dots} for the dots in function
-argument lists @samp{@dots{}}, and @code{\ldots} for ellipsis dots.
+argument lists @samp{@dots{}}, and @code{\ldots} for ellipsis dots in
+ordinary text.
 
-After a @samp{%}, you can put your own comments regarding the help
-text.  This will be completely disregarded, normally.  Therefore, you can
-also use it to make part of the ``help'' invisible.
+After a @samp{%}, you can put your own comments regarding the help text.
+The rest of the line will be completely disregarded, normally.
+Therefore, you can also use it to make part of the ``help'' invisible.
 
 You can produce a backslash (@samp{\} by escaping it by another
 backslash.  (Note that @code{\cr} is used for generating line breaks.)
 
 The ``comment'' and ``control'' characters @samp{%} and @samp{\}
 @emph{always} need to be escaped.  Inside the verbatim-like commands
-(@code{\code} and @code{\examples}), no other characters are special.
+(@code{\code} and @code{\examples}), no other@footnote{This is not quite
+true. Unpaired braces will give problems and should be escaped. See the
+examples section in the file @file{Paren.Rd} for an example.} characters
+are special. Note that @code{\file} is @strong{not} a verbatim-like command.
 
 In ``regular'' text (no verbatim, no @code{\eqn}, @dots{}), you
 currently must escape all La@TeX{} special characters, i.e., besides
@@ -963,8 +975,8 @@ Under UNIX versions of @R{} there are several commands to process Rd files.
 @findex R CMD Rdconv
 Using @code{R CMD Rdconv} one can convert R documentation format to
 other formats, or extract the executable examples for run-time testing.
-Currently, conversions to plain text, Nroff, HTML, La@TeX{}, and S
-documentation format are supported.
+Currently, conversions to plain text, Nroff, HTML, La@TeX{}, and @Sl{}
+documentation formats are supported.
 
 In addition to this low-level conversion tool, the @R{} distribution
 provides two user-level programs for processing Rd format.
@@ -985,8 +997,8 @@ Using @code{R CMD Rdindex} one can produce nicely formatted index files
 displaying names and titles of the Rd files specified as arguments.
 This can be used to create the @file{INDEX} of an add-on package and, if
 it also contains data, the @file{00Index} data index in the @file{data}
-directory.  Note that the R package builder can be used to automatically
-create these indices when building a package.
+directory.  Note that the R package builder @code{R CMD build} can be
+used to automatically create these indices when building a package.
 
 @findex R CMD Sd2Rd
 Finally, @code{R CMD Sd2Rd} converts @Sl{} version 3 documentation files
@@ -1352,7 +1364,7 @@ structures, then that can be done using the @code{.Call} and
 @code{.External} function.  The syntax for the calling function in @R{}
 in each case is similar to that of @code{.C}, but the two functions have
 rather different C interfaces.	Generally the @code{.Call} interface
-(which is modelled on the interface of the same name in S version 4) is
+(which is modelled on the interface of the same name in @Sl{} version 4) is
 a little simpler to use, but @code{.External} is a little more general.
 @findex .Call
 @findex .External
@@ -1370,6 +1382,7 @@ can passed as arguments.  The C side of the interface is
 
 @example
 #include <R.h>
+#include <Rinternals.h>
 
 SEXP convolve2(SEXP a, SEXP b)
  ...
@@ -1406,7 +1419,7 @@ look at other alternatives.  First, consider working in interpreted @R{}
 code; if this is fast enough, this is normally the best option.	 You
 should also see if using @code{.C} is enough.  If the task to be
 performed in C is simple enough requiring no call to @R{}, @code{.C}
-suffices.  The new interfaces are recent additions to S and @R{}, and a
+suffices.  The new interfaces are recent additions to @Sl{} and @R{}, and a
 great deal of useful code has been written using just @code{.C} before
 they were available.  The @code{.Call} and @code{.External} interfaces
 allow much more control, but they also impose much greater
@@ -1421,10 +1434,10 @@ the header file @file{Rinternals.h} in the directory
 installation.
 
 A more recent approach is to use @R{} versions of the macros and
-functions defined for the S version 4 interface @code{.Call}, which are
+functions defined for the @Sl{} version 4 interface @code{.Call}, which are
 defined in the header file @file{Rdefines.h}.
 This is a somewhat simpler approach, and is certainly to be preferred if
-the code might be shared with S at any stage.
+the code might be shared with @Sl{} at any stage.
 
 A substantial amount of @R{} is implemented using the functions and
 macros described here, so the @R{} source code provides a rich source of
@@ -1880,7 +1893,7 @@ value, envir = rho, inherits = TRUE)} respectively.
 In this section we consider the details of the @R{}/C interfaces.
 
 These two interfaces have almost the same functionality. @code{.Call} is
-based on the interface of the same name in S version 4, and
+based on the interface of the same name in @Sl{} version 4, and
 @code{.External} is based on @code{.Internal}.	@code{.External} is more
 complex but allows a variable number of arguments.
 
@@ -1908,7 +1921,7 @@ must be transferred to the C code, which is
 
 @example
 #include <R.h>
-#include <Rinternals.h>
+#include <Rdefines.h>
 
 SEXP convolve2(SEXP a, SEXP b)
 @{
@@ -1930,7 +1943,7 @@ SEXP convolve2(SEXP a, SEXP b)
 @}
 @end example
 
-Note that unlike the macros in S version 4, the @R{} versions of these
+Note that unlike the macros in @Sl{} version 4, the @R{} versions of these
 macros do check that coercion can be done and raise an error if it
 fails.	They will raise warnings if missing values are introduced by
 coercion.  Although we illustrate doing the coercion in the C code here,
@@ -2283,7 +2296,7 @@ SEXP zero(SEXP f, SEXP guesses, SEXP stol, SEXP rho)
 @end example
 
 @noindent
-The C code is essentially unchanged for the @code{call_R} version, just
+The C code is essentially unchanged from the @code{call_R} version, just
 using a couple of functions to convert from @code{double} to @code{SEXP}
 and to evaluate @code{f.check}.
 
@@ -2592,7 +2605,7 @@ R> DF <- data.frame(a = 1:3, b = 4:6)
 
 @noindent
 By setting a breakpoint at @code{do_get} and typing @kbd{get("DF")} at
-the R prompt, one can find out the address in memory of @code{DF}, e.g.
+the R prompt, one can find out the address in memory of @code{DF}, for example
 
 @smallexample
 Value returned is $1 = (SEXPREC *) 0x40583e1c
@@ -2622,7 +2635,7 @@ $2 = @{
 (Debugger output reformatted for better legibility).
 
 Using @code{PrintValue()} one can ``inspect'' the values of the various
-elements of the SEXP, e.g.,
+elements of the SEXP, for example,
 
 @smallexample
 (gdb) p PrintValue($1->attrib)
@@ -2641,9 +2654,6 @@ $3 = void
 @noindent
 (Make sure, however, to use @code{PrintValue()} on SEXPs with the `obj'
 bit turned on only.)
-@c FIXME
-@c Maybe we could have a safe PrintValue() which returns e.g.  NULL when
-@c given a SEXP with the `obj' bit not turned on?
 
 To find out where exactly the corresponding information is stored, one
 needs to go ``deeper'':
@@ -2741,7 +2751,7 @@ usage (from package @pkg{mva}) is
 x = (int *) R_alloc(nrows(merge)+2, sizeof(int));
 @end example
 
-There is a similar call, @code{S_alloc} for compatibility with @Sl{}
+There is a similar call, @code{S_alloc}, for compatibility with @Sl{}
 which differs only in zeroing the memory allocated, and
 
 @example
@@ -2934,12 +2944,15 @@ The function @code{REprintf} is similar but writes on the error stream
 output stream. Functions @code{Rvprintf} and @code{REvprintf} are the
 analogues using the @code{vprintf} interface.
 
+@subsection Printing from Fortran
+@cindex Printing from C
+
+In theory Fortran @code{write} and @code{print} statements can be used,
+but its output may not interleave well with that of C, and will be
+invisible on GUI interfaces.  They are best avoided.
 
 Three subroutines are provided to ease the output of information from
-Fortran code.  (In theory Fortran I/O can be used, but its output may
-not interleave well with that of C, and will be invisible on GUI
-interfaces.  It is best avoided.)
-
+Fortran code.  
 @example
 subroutine dblepr(label, nchar, data, ndata)
 subroutine realpr(label, nchar, data, ndata)
@@ -2966,17 +2979,19 @@ underscore.  To help cover up the platform-specific differences there is
 a set of macros that should be used.
 
 @table @code
-@item F77_SUB(x)
+@item F77_SUB(name)
 to define a function in C to be called from Fortran
-@item F77_NAME(x)
-to declare a Fortran routine in C
-@item F77_CALL(x)
+@item F77_NAME(name)
+to declare a Fortran routine in C before use
+@item F77_CALL(name)
 to call a Fortran routine from C
-@item F77_COMDECL(x)
+@item F77_COMDECL(name)
 to declare a Fortran common block in C
-@item F77_COM(x)
+@item F77_COM(name)
 to access a Fortran common block from C
 @end table
+
+
 
 @node Numerical analysis subroutines, Distribution functions, Calling C from Fortran, The R API
 @section Numerical analysis subroutines
@@ -3003,7 +3018,8 @@ The routines used to calculate densities,
 cumulative distribution functions and quantile functions for the
 standard statistical distributions are available as entry points. 
 
-The arguments for the entry points follow those for the normal.
+The arguments for the entry points follow the pattern of those for the
+normal distribution:
 @example
 double	dnorm(double x, double mu, double sigma, int give_log);
 double	pnorm(double x, double mu, double sigma, int lower_tail,
@@ -3015,14 +3031,15 @@ double	rnorm(double mu, double sigma);
 @noindent
 That is, the first argument gives the position for the density and CDF
 and probability for the quantile function, followed by the
-distribution's parameters.  Argument @code{loser_tail} should be
-@code{1} for nomral use, but can be @code{0} if the probability of the
+distribution's parameters.  Argument @code{lower_tail} should be
+@code{1} for normal use, but can be @code{0} if the probability of the
 upper tail is desired or specified. Finally, @code{give_log} should be
 non-zero if the result is required on log scale, and @code{log_p}
 should be non-zero if @code{p} has been specified on log scale.
 
 The random-variate generation routine @code{rnorm} returns one normal
-variate. @xref{Random numbers}, for how to use this.
+variate. @xref{Random numbers}, for the protocol in using the
+random-variate routines.
 @cindex Random numbers in C
 
 
@@ -3118,26 +3135,28 @@ compatibility with @Sl{}.
 @node Version information,  , Utility functions, The R API
 @section Version information
 @cindex Version information from C
+@findex R_Version
 
 The header files define @code{USING_R}, which should be used to test if
 the code is indeed being used with @R{}.
 
-@file{R.h} defines a macro @code{R_VERSION} giving the version number as
-a three or four digit number, for example @code{990} or
-@code{1012}. This can be used to test if the version of @R{} is late
-enough, or to include back-compatibility features. For protection
-against earlier versions of @R{} which did not have this macro, use a
-construction such as
+Header file @file{Rversion.h} (included by @file{R.h}) defines a macro
+@code{R_VERSION} giving the version number encoded as an integer, plus a
+macro @code{R_Version} to do the encoding.  This can be used to test if
+the version of @R{} is late enough, or to include back-compatibility
+features. For protection against earlier versions of @R{} which did not
+have this macro, use a construction such as
 
 @example
-#if( defined(R_VERSION) && R_VERSION >= 990)
+#if defined(R_VERSION) && R_VERSION >= R_Version(0,99,0)
   ...
 #endif
 @end example
 
 More detailed information is available in the macros @code{R_MAJOR},
 @code{R_MINOR}, @code{R_YEAR}, @code{R_MONTH} and @code{R_DAY}: see the
-header file @file{Rversion.h} for their format.
+header file @file{Rversion.h} for their format. Note that the minor
+version includes the patchlevel (as in @code{99.0}).
 
 
 
@@ -3313,7 +3332,7 @@ When you (as @R{} developer) add new functions to the R base (all the
 packages distributed with @R{}), be careful to check if @code{make
 test-Specific} or particularly, @code{cd tests; make no-segfault.Rout}
 still works (without interactive user intervention, and on a standalone
-computer).  If the new function, e.g., accesses the internet, or
+computer).  If the new function, for example, accesses the internet, or
 requires GUI interaction, please add its name to the ``stop list'' in
 @file{tests/make-no-segfault.R}.
 
