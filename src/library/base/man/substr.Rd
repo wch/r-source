@@ -18,12 +18,15 @@ substring(text, first, last = 1000000)
   expands the arguments cyclically.
 }
 \seealso{
-  \code{\link{paste}}, \code{\link{nchar}}, \code{\link{strsplit}}
+ \code{\link{strsplit}}, \code{\link{paste}}, \code{\link{nchar}}.
 }
 \examples{
+substr("abcdef",2,4)
+substring("abcdef",1:6,1:6)
+substr(rep("abcdef",4),1:4,4:5)
 x <- c("asfef", "qwerty", "yuiop[", "b", "stuff.blah.yech")
-substr(x, 3, 5)
-substring(x, 3, 5)
-substring(x, 3, 3:5)
+all(substr(x, 2, 5) == substring(x, 2, 5)) #> TRUE
+substr(x, 2, 5)
+substring(x, 2, 4:6)
 }
 \keyword{character}
