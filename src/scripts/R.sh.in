@@ -151,22 +151,30 @@ if test -z "${debugger}"; then
 else
   ## Ideally, we would like the debugger to start R with additional
   ## ('inferior') arguments, but not all debuggers can do this.  We know
-  ## about GDB and valgrind, and deal with these.  Otherwise, to be on
-  ## the safe side, we disregard non-debugger command line args.
+  ## about valgrind and some versions of GDB , and deal with these.
+  ## Otherwise, to be on the safe side, we disregard non-debugger
+  ## command line args.
+  args_ok=no
   case "`${debugger} --version 2>/dev/null`" in
     "GNU gdb"*)
-      exec ${debugger} ${debugger_args} --args ${R_binary} ${args} ;;
-    valgrind*)
-      exec ${debugger} ${debugger_args} ${R_binary} ${args} ;;
-    *)
-      if test -n "${args}"; then
-        echo "*** Further command line arguments ('${args}') disregarded"
-        echo "*** (maybe use 'run ${args}' from *inside* ${debugger})"
-        echo ""
+      if ${debugger} --help 2>/dev/null | \
+          grep -e --args >/dev/null; then
+	args_ok=yes
+	debugger_args="${debugger_args} --args"
       fi
-      exec ${debugger} ${debugger_args} ${R_binary}
+      ;;
+    valgrind*)
+      args_ok=yes
       ;;
   esac
+  if test -n "${args}" && test "${args_ok}" = no; then
+    echo "*** Further command line arguments ('${args}') disregarded"
+    echo "*** (maybe use 'run ${args}' from *inside* ${debugger})"
+    echo ""
+    exec ${debugger} ${debugger_args} ${R_binary}
+  else
+    exec ${debugger} ${debugger_args} ${R_binary} ${args}
+  fi
 fi
 
 ### Local Variables: ***
