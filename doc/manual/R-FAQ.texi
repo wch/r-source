@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.3-5, 2001-06-27
+@set FAQ-VERSION 1.3-6, 2001-06-29
 @set REL-VERSION 1.3.0
 @set DEV-VERSION 1.4.0
 @c %**end of header
@@ -393,10 +393,10 @@ Windows @acronym{FAQ}''} for more details.
 @subsection How can R be installed (Macintosh)
 
 The @file{bin/macos} directory of a @acronym{CRAN} site contains
-bin-hexed (@file{hqx}) and stuffit (@file{sit}) self-extracting binaries
-for a base distribution and a large number of add-on packages to run
-under MacOS 8.6 to MacOS 9.1 or MacOS X under Classic Environment.  The
-Mac version of R and the Mac binaries are maintained by
+bin-hexed (@file{hqx}) and stuffit (@file{sit}) archives for a base
+distribution and a large number of add-on packages to run under MacOS
+8.6 to MacOS 9.1 or MacOS X natively.  The Mac version of R and the Mac
+binaries are maintained by
 @c @email{stefano.iacus@@unimi.it, Stefano Iacus}.
 @email{Stefano.Iacus@@r-project.org, Stefano Iacus}.
 
@@ -404,8 +404,9 @@ The @uref{http://www.eco-dip.unimi.it/R/rmac-FAQ.html, ``R for Macintosh
 @acronym{FAQ}/DOC''} has more details.
 
 Binaries of base distributions for MacOS X (Darwin) with X11 are made
-available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} at
-@uref{http://www.stat.ucla.edu/~deleeuw/R/}.
+available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
+@file{bin/macosx} directory of a @acronym{CRAN} site.
+@c @uref{http://www.stat.ucla.edu/~deleeuw/R/}.
 
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
@@ -2909,10 +2910,10 @@ package maintainer rather than to r-bugs.
 Of course, many many thanks to Robert and Ross for the R system, and to
 the package writers and porters for adding to it.
 
-Special thanks go to Doug Bates, Peter Dalgaard, Paul Gilbert, Fritz
-Leisch, Jim Lindsey, Thomas Lumley, Martin Maechler, Brian D. Ripley,
-Anthony Rossini, and Andreas Weingessel for their comments which helped
-me improve this @acronym{FAQ}.
+Special thanks go to Doug Bates, Peter Dalgaard, Paul Gilbert, Stefano
+Iacus, Fritz Leisch, Jim Lindsey, Thomas Lumley, Martin Maechler, Brian
+D. Ripley, Anthony Rossini, and Andreas Weingessel for their comments
+which helped me improve this @acronym{FAQ}.
 
 More to some soon @dots{}
 
