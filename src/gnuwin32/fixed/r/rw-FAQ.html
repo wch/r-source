@@ -58,6 +58,9 @@ use rwXxxx with ESS and emacs?</a></li>
 
 <li><a href="#What%20are%20HOME%20and%20working%20directories%3f">
 2.9 What are HOME and working directories?</a></li>
+
+<li><a href="#R%20can't%20find%20my%20file">2.10 R can't find my
+file, but I know it is there!</a></li>
 </ul>
 </li>
 
@@ -273,7 +276,7 @@ Properties. <a name=
 physical RAM in the machine and 256Mb. It can be set to any amount
 over 10M. Be aware though that Windows has (in most versions) a
 maximum amount of user virtual memory of 2Gb, and parts of this can
-be reserved by processes but not used, R itself reserves 256Mb on
+be reserved by processes but not used. R itself reserves 256Mb on
 startup. Because of the way the memory manager works, it is
 possible that there will be free memory but R will not be able to
 reserve it.</p>
@@ -365,7 +368,22 @@ ${HOMEDRIVE}${HOMEPATH}</code>.<br>
 If all of these fail, the current working directory is used.</p>
 
 <p>You can find this from R code by <code>
-Sys.getenv("R_USER")</code>.</p>
+Sys.getenv("R_USER")</code>. <a name=
+"R%20can't%20find%20my%20file"></a></p>
+
+<h2>2.10 R can't find my file, but I know it is there!</h2>
+
+<p>How did you specify it? Backslashes have to be doubled in R
+character strings, so for example one needs <code>
+"d:\\rw1021\\library\\xgobi\\scripts\\xgobi.bat"</code>. Make life
+easier for yourself by using forward slashes as path separators:
+they do work under Windows.</p>
+
+<p>Another possible source of grief is spaces in folder names. We
+have tried to make R work on paths with spaces in, but lots of
+people writing for Unix do not bother. So it is worth trying the
+alternative short name (something like <code>PROGRA~1</code>; you
+can get if from the Properties).</p>
 
 <hr>
 <a name="Packages"></a> 

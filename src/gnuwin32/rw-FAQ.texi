@@ -108,6 +108,7 @@ The information here applies only to recent versions of R for Windows,
 * Can I use R BATCH?::          
 * Can I use rwXxxx with ESS and emacs?::  
 * What are HOME and working directories?::  
+* R can't find my file::        
 @end menu
 
 @node Where can I find the latest version?, How do I install R for Windows?, Installation and Usage, Installation and Usage
@@ -232,7 +233,7 @@ For help with ESS, please send email to @email{ESS-help@@stat.ethz.ch},
 not the R mailing lists.
 
 
-@node What are HOME and working directories?,  , Can I use rwXxxx with ESS and emacs?, Installation and Usage
+@node What are HOME and working directories?, R can't find my file, Can I use rwXxxx with ESS and emacs?, Installation and Usage
 @section What are HOME and working directories?
 
 Several places in the documentation use these terms.
@@ -251,6 +252,19 @@ If all of these fail, the current working directory is used.
 
 You can find this from R code by @code{Sys.getenv("R_USER")}.
 
+@node R can't find my file,  , What are HOME and working directories?, Installation and Usage
+@section R can't find my file, but I know it is there!
+
+How did you specify it?  Backslashes have to be doubled in R character
+strings, so for example one needs
+@code{"d:\\rw1021\\library\\xgobi\\scripts\\xgobi.bat"}.
+Make life easier for yourself by using forward slashes as path
+separators: they do work under Windows.
+
+Another possible source of grief is spaces in folder names.  We have
+tried to make R work on paths with spaces in, but lots of people writing
+for Unix do not bother. So it is worth trying the alternative short name
+(something like @code{PROGRA~1}; you can get if from the Properties).
 
 @newchap{}
 @node Packages, Windows Features, Installation and Usage, Top

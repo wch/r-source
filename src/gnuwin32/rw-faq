@@ -20,6 +20,7 @@ Table of Contents
   2.7 Can I use `R BATCH'?
   2.8 Can I use rwXxxx with ESS and emacs?
   2.9 What are HOME and working directories?
+  2.10 R can't find my file, but I know it is there!
 
 3 Packages
   3.1 Can I install packages (libraries) in this version?
@@ -129,7 +130,7 @@ and defaults to the smaller of the amount of physical RAM in the
 machine and 256Mb.  It can be set to any amount over 10M.  Be aware
 though that Windows has (in most versions) a maximum amount of user
 virtual memory of 2Gb, and parts of this can be reserved by processes
-but not used,  R itself reserves 256Mb on startup.  Because of the way
+but not used.  R itself reserves 256Mb on startup.  Because of the way
 the memory manager works, it is possible that there will be free memory
 but R will not be able to reserve it.
 
@@ -203,6 +204,20 @@ the value is `${HOMEDRIVE}${HOMEPATH}'.
 If all of these fail, the current working directory is used.
 
 You can find this from R code by `Sys.getenv("R_USER")'.
+
+2.10 R can't find my file, but I know it is there!
+==================================================
+
+How did you specify it?  Backslashes have to be doubled in R character
+strings, so for example one needs
+`"d:\\rw1021\\library\\xgobi\\scripts\\xgobi.bat"'.  Make life easier
+for yourself by using forward slashes as path separators: they do work
+under Windows.
+
+Another possible source of grief is spaces in folder names.  We have
+tried to make R work on paths with spaces in, but lots of people writing
+for Unix do not bother. So it is worth trying the alternative short name
+(something like `PROGRA~1'; you can get if from the Properties).
 
 
 3 Packages
