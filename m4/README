@@ -20,16 +20,6 @@ The files are as follows.
 	naming scheme.  These test for `features' such as GNOME, zlib,
 	etc., are named R_$FEATURE, and typically define HAVE_$FEATURE.
 
-  am-fixes.m4
-  	contains R specific versions of
-	    AM_INIT_AUTOMAKE
-	    AM_MISSING_PROG
-	These are necessary to work around a problem in the current
-	release version of automake/aclocal in determining missing_dir
-	with zsh (problem with CDPATH and pwd; see the docs in the
-	autoconf CVS for more info).  Note that the current (2001-04-27)
-	automake CVS has a 2-arg only version of AM_MISSING_PROG.
-
   gnome-gnorba-check.m4
   gnome-orbit-check.m4
   gnome.m4

@@ -13,7 +13,6 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in README \
 	R.m4 \
-	am-fixes.m4 \
 	gnome-gnorba-check.m4 \
 	gnome-orbit-check.m4 \
 	gnome.m4 \
