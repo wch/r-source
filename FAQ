@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-01-24
+Version 2.0.2005-01-25
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2475,6 +2475,9 @@ distributions of R.)
      data from a random transposon mutagenesis experiment, through the use
      of a Gibbs sampler.
 
+*nice*
+     Get or set UNIX priority (niceness) of running R process.
+
 *nlme*
      Fit and compare Gaussian linear and nonlinear mixed-effects models.
      _Recommended_.
@@ -2637,6 +2640,9 @@ distributions of R.)
 
 *qtl*
      Analysis of experimental crosses to identify QTLs.
+
+*qtlDesign*
+     Tools for the design of QTL experiments.
 
 *quadprog*
      For solving quadratic programming problems.

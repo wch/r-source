@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-24
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-25
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2611,6 +2611,8 @@ a Gibbs sampler.
 @c @item netCDF
 @c Read data from netCDF files.
 @c </COMMENT>
+@item nice
+Get or set UNIX priority (niceness) of running R process.
 @item nlme
 Fit and compare Gaussian linear and nonlinear mixed-effects models.
 @emph{Recommended}.
@@ -2739,6 +2741,8 @@ characteristic curves.  Process capability analysis.  Pareto chart and
 cause-and-effect chart.
 @item qtl
 Analysis of experimental crosses to identify QTLs.
+@item qtlDesign
+Tools for the design of QTL experiments.
 @item quadprog
 For solving quadratic programming problems.
 @item quantreg
