@@ -852,6 +852,7 @@ FUNTAB R_FunTab[] =
 #endif
 #ifdef FANCY_BINDINGS
 {"lockBinding", do_lockBnd,		0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
+{"unlockBinding", do_lockBnd,		1, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
 {"bindingIsLocked", do_bndIsLocked,	0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},
 {"makeActiveBinding", do_mkActiveBnd,	0, 11,	3,      {PP_FUNCALL, PREC_FN,	0}},
 {"bindingIsActive", do_bndIsActive,	0, 11,	2,      {PP_FUNCALL, PREC_FN,	0}},

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2002 the R Development Core Group.
+ *  Copyright (C) 1999-2003 the R Development Core Group.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -122,6 +122,7 @@
 #define BINDING_IS_LOCKED(b) ((b)->sxpinfo.gp & BINDING_LOCK_MASK)
 #define SET_ACTIVE_BINDING_BIT(b) ((b)->sxpinfo.gp |= ACTIVE_BINDING_MASK)
 #define LOCK_BINDING(b) ((b)->sxpinfo.gp |= BINDING_LOCK_MASK)
+#define UNLOCK_BINDING(b) ((b)->sxpinfo.gp &= (~BINDING_LOCK_MASK))
 
 #define BINDING_VALUE(b) ((IS_ACTIVE_BINDING(b) ? getActiveValue(CAR(b)) : CAR(b)))
 
@@ -2385,6 +2386,26 @@ void R_LockBinding(SEXP sym, SEXP env)
     }
 }
 
+static void R_unLockBinding(SEXP sym, SEXP env)
+{
+    if (TYPEOF(sym) != SYMSXP)
+	error("not a symbol");
+    if (env != R_NilValue && TYPEOF(env) != ENVSXP)
+	error("not an environment");
+#ifdef EXPERIMENTAL_NAMESPACES
+    if (env == R_NilValue || env == R_BaseNamespace)
+#else
+    if (env == R_NilValue)
+#endif
+	UNLOCK_BINDING(sym);
+    else {
+	SEXP binding = findVarLocInFrame(env, sym, NULL);
+	if (binding == R_NilValue)
+	    error("no binding for \"%s\"", CHAR(PRINTNAME(sym)));
+	UNLOCK_BINDING(binding);
+    }
+}
+
 void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env)
 {
     if (TYPEOF(sym) != SYMSXP)
@@ -2495,7 +2516,16 @@ SEXP do_lockBnd(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     sym = CAR(args);
     env = CADR(args);
-    R_LockBinding(sym, env);
+    switch(PRIMVAL(op)) {
+    case 0:
+	R_LockBinding(sym, env);
+	break;
+    case 1:
+	R_unLockBinding(sym, env);
+	break;
+    default:
+	errorcall(call, "unknown op");
+    }
     return R_NilValue;
 }
 
@@ -2665,7 +2695,7 @@ SEXP R_FindNamespace(SEXP info)
     PROTECT(info);
     fun = install("getNamespace");
     if (findVar(fun, R_GlobalEnv) == R_UnboundValue) { /* not a perfect test */
-	warning("namespaces not abailable; using .GlobalEnv");
+	warning("namespaces not available; using .GlobalEnv");
 	UNPROTECT(1);
 	return R_GlobalEnv;
     }

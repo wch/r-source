@@ -373,6 +373,10 @@ NEW FEATURES
 
     o	as.dist(.) is now idempotent, i.e., works for "dist" objects.
 
+    o	New functions getFromNamespace(), fixInNamespace() and
+	getS3method() to facilitate developing code in packages with
+	namespaces.
+
 
 INSTALLATION CHANGES
 
