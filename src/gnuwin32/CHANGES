@@ -166,6 +166,12 @@ The windows() graphics device has a new argument `record' to set the
 initial state of the recording flag, and this defaults to the setting
 of the option "graphics.record" (and that defaults to FALSE).
 
+The windows() graphics device has new options for what happens when it
+is resized, both from the command line and the menu.
+
+New function bringToTop() to bring a graphics window to the top of the
+windows stack (useful from menu actions, ...).
+
 If the options setting for a pager or editor (or the editor argument
 to edit.default) is a path containing a space, it is automatically
 quoted if not already quoted.
