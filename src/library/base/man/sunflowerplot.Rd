@@ -98,5 +98,5 @@ sunflowerplot(rnorm(100),rnorm(100), number=rpois(n=100,lambda=2),
                         rotate=TRUE, main="Sunflower plot")
 }
 \keyword{hplot}
-\keyword{density}
+\keyword{smooth}
 \keyword{nonparametric}
