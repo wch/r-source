@@ -102,11 +102,15 @@ function(pattern, fields = c("alias", "title"),
 	    || ((unlink(dir) == 0) && dir.create(dir)))
 	   && (unlink(dbfile) == 0))
 	    save.db <- TRUE
-	## If we cannot save the help db only use the given packages.
-	packagesInHelpDB <- if(!is.null(package) && !save.db)
+	## If packages were given, only use these.
+        ## <NOTE>
+        ## Earlier versions were more aggresive, using the given
+        ## packages only if the help db cannot be saved.
+        ## </NOTE>
+	packagesInHelpDB <- if(is.null(package))
+            .packages(all.available = TRUE, lib.loc = lib.loc)
+        else
 	    package
-	else
-	    .packages(all.available = TRUE, lib.loc = lib.loc)
 	## Create the help db.
 	contentsEnv <- new.env()
 	contentsDCFFields <-
@@ -312,7 +316,6 @@ function(pattern, fields = c("alias", "title"),
 
     i <- NULL
     for(f in fields) i <- c(i, searchDbField(f))
-    ## print(i)
     db <- dbBase[sort(unique(i)),
 		 c("topic", "title", "Package", "LibPath"),
 		 drop = FALSE]
