@@ -412,15 +412,15 @@ fi
 
 if ${use_gnome}; then
   GNOME_INIT_HOOK([], cont)
-fi
-if test -z "${GNOMEUI_LIBS}"; then
-  use_gnome="no"
-  RGNOMEDIR=""
-  RGNOMEBIN=""
 else
-  use_gnome="yes"
-  RGNOMEDIR="gnome"
-  RGNOMEBIN="\$(top_builddir)/bin/R.gnome"
+  use_gnome="no"
+fi
+if test "${GNOMEUI_LIBS}"; then
+  AM_PATH_LIBGLADE(
+    [ use_gnome="yes"; RGNOMEDIR="gnome"; RGNOMEBIN="\$(top_builddir)/bin/R.gnome" ],
+    [ AC_MSG_WARN([GNOME support requires libglade >= 0.3])
+      use_gnome="no (because libglade was not found)"; RGNOMEDIR=""; RGNOMEBIN="" ],
+    gnome)
 fi
 AC_SUBST(RGNOMEDIR)
 AC_SUBST(RGNOMEBIN)
