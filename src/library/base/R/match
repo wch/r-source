@@ -12,22 +12,22 @@ pmatch <- function(x, table, nomatch=NA) {
 }
 
 match.arg <- function(arg, choices) {
-        if (missing(choices)) {
-                formal.args <- formals(sys.function(sys.parent()))
-                choices <- eval(formal.args[[deparse(substitute(arg))]])
-        }
-        rval <- choices[pmatch(arg, choices)]
-        if (is.na(rval)) {
-                stop(paste("argument should be one of",
-			paste(choices,collapse=", "), sep = " "))
-        }
-	if( length(rval) > 1 ) {
-		if(arg==choices)
-			rval<-choices[1]
-		else
-			stop("there is more than one match in match.arg")
-	}
-        return(rval)
+  if (missing(choices)) {
+    formal.args <- formals(sys.function(sys.parent()))
+    choices <- eval(formal.args[[deparse(substitute(arg))]])
+  }
+  i <- pmatch(arg, choices)
+  if (is.na(i))
+    stop(paste("ARG should be one of",
+	       paste(choices, collapse=", "), sep = " "))
+  else if (i == 0)
+    if (arg == choices)
+      rval <- choices[1]
+    else
+      stop("there is more than one match in match.arg")
+  else
+    rval <- choices[i]
+  return(rval)
 }
 
 	
