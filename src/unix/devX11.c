@@ -385,7 +385,7 @@ static void FreeColors()
 
 static void SetLinetype(int newlty, double nlwd)
 {
-	unsigned char dashlist[8];
+	char dashlist[8];
 	int i, ndash, newlwd;
 
 	newlwd = nlwd;
@@ -486,7 +486,7 @@ static int X11_Open(char *dsp, double w, double h)
 		return 0;
 
 	XChangeProperty( display, window, XA_WM_NAME, XA_STRING,
-		8, PropModeReplace, "R Graphics", 13);
+		8, PropModeReplace, (unsigned char*)"R Graphics", 13);
 
 	gcursor = XCreateFontCursor(display, CURSOR);
 	XDefineCursor(display, window, gcursor);

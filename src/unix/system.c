@@ -180,10 +180,10 @@ FILE *R_OpenInitFile(void)
 	/*--- I n i t i a l i z a t i o n    C o d e ---*/
 
 #ifdef HAVE_TIMES
-#include <time.h>
 #include <sys/times.h>
 
-static int StartTime;
+static clock_t StartTime;
+static struct tms timeinfo;
 #endif
 
 #ifdef __FreeBSD__
@@ -200,7 +200,7 @@ int main(int ac, char **av)
 	char *p;
 
 #ifdef HAVE_TIMES
-	StartTime = time(NULL);
+	StartTime = times(&timeinfo);
 #endif
 	R_Quiet = 0;
 
@@ -374,10 +374,8 @@ void R_RestoreGlobalEnv(void)
 SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP ans;
-	struct tms timeinfo;
 	clock_t elapsed;
-	elapsed = time((clock_t)NULL) - StartTime;
-	(void)times(&timeinfo) ;
+	elapsed = (times(&timeinfo) - StartTime) / (double)CLK_TCK;
 	ans = allocVector(REALSXP, 5);
 	REAL(ans)[0] = timeinfo.tms_utime / (double)CLK_TCK;
 	REAL(ans)[1] = timeinfo.tms_stime / (double)CLK_TCK;
