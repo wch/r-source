@@ -92,6 +92,6 @@ print.dist <- function(x, diag = NULL, upper = NULL, ...)
 	df[row(df) < col(df)] <- NA
     if(!diag)
 	df[row(df) == col(df)] <- NA
-    print(if(diag || upper) df else df[-1, -size], na = "")
+    print(if(diag || upper) df else df[-1, -size], na = "", ...)
     invisible(x)
 }

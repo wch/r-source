@@ -27,6 +27,7 @@ as.dist(m, diag = NULL, upper = NULL)
       distance matrix should be printed by \code{print.dist}.}
     \item{m}{A matrix of distances to be converted to a \code{"dist"}
       object (only the lower triangle is used, the rest is ignored).}
+  \item{\dots}{further arguments, passed to the (next) \code{print} method.}
 }
 \description{
   This function computes and returns the distance matrix computed by
@@ -72,7 +73,8 @@ dist(x)
 dist(x, diag = TRUE)
 dist(x, upper = TRUE)
 m <- as.matrix(dist(x))
-as.dist(m)
+d <- as.dist(m)
+print(d, digits = 3)
 }
 \keyword{multivariate}
 \keyword{cluster}

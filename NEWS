@@ -604,6 +604,8 @@ BUG FIXES
         (PR#743). Also coercing functions to lists was wrong when the
 	body was a single constant.
  
+    o	print.dist() {mva} now passes "..." to print.default.
+
 
 	**************************************************
 	*						 *
