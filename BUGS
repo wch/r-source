@@ -312,3 +312,7 @@ Date: Thu, 30 Aug 2001 01:40:13 +0200 (MET DST)
 Subject: --quiet flag sets echo option to TRUE
 From: "David Kane  <David Kane" <a296180@mica.fmr.com>
 Date: Fri, 31 Aug 2001 13:07:19 -0400
+* PR# 1085 *
+Subject: file.copy() problems on WinNT
+From: Uwe Ligges <ligges@amadeus.statistik.uni-dortmund.de>
+Date: Thu, 06 Sep 2001 15:07:26 +0200
