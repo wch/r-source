@@ -66,8 +66,12 @@ methods <- function (generic.function, class)
         info <- info[grep(name, row.names(info)), ]
         info <- info[! row.names(info) %in% S3MethodsStopList, ]
         ## check that there are all functions
-        keep <- sapply(row.names(info), function(nm) exists(nm, mode="function"))
-        info <- info[keep, ]
+        ## might be none at this point
+        if(nrow(info)) {
+            keep <- sapply(row.names(info),
+                           function(nm) exists(nm, mode="function"))
+            info <- info[keep, ]
+        }
 
         ## also look for registered methods from namespaces
         ## we assume that only functions get registered.

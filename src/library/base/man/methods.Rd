@@ -59,6 +59,7 @@ methods(generic.function, class)
 methods(summary)
 methods(class = "aov")
 methods("[[")    ##- does not list the C-internal ones...
+methods("$")     # currently none
 methods("$<-")   # replacement function
 methods("+")     # binary operator
 methods("Math")  # group generic
