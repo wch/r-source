@@ -214,6 +214,16 @@ function(package, dir, lib.loc = NULL,
          ignore.generic.functions = FALSE,
          verbose = getOption("verbose"))
 {
+    ## <FIXME>
+    ## Improvements worth considering:
+    ## * Parallelize the actual checking (it is not necessary to loop
+    ##   over the Rd files);
+    ## * In case of a namespace, always use the namespace for codoc
+    ##   computations (as it is also used for determining the usages for
+    ##   which no corresponding object in the package exists), rather
+    ##   than just the exported objects.
+    ## </FIXME>
+    
     hasNamespace <- FALSE
 
     ## Argument handling.
@@ -332,6 +342,7 @@ function(package, dir, lib.loc = NULL,
                                    tools:::.isPrimitive,
                                    NULL)],
               c(".First.lib", ".Last.lib", ".Random.seed"))
+        objectsInCodeOrNamespace <- objectsInCode
     }
     ## </FIXME>
 
@@ -408,13 +419,14 @@ function(package, dir, lib.loc = NULL,
                   function(x) !is.null(attr(x, "badLines")))
     badLines <- sapply(dbUsages[ind], attr, "badLines")
 
-    functionsToBeIgnored <-
-        c("<-", "=", if(isBase) c("(", "{", "function"))
     ## <FIXME>
-    ## Currently there is no convenient markup for subscripting and
-    ## subassigning methods.
+    ## Currently, there is no useful markup for S3 Ops group methods
+    ## and S3 methods for subscripting and subassigning.  Hence, we
+    ## cannot reliably distinguish between usage for the generic and
+    ## that of a method ...
     functionsToBeIgnored <-
-        c(functionsToBeIgnored, "[", "[[", "$", "[<-", "[[<-", "$<-")
+        c(.functionsToBeIgnoredFromUsage(basename(dir)),
+          .functionsWithNoUsefulS3methodMarkup)
     ## </FIXME>
 
     badDocObjects <- list()
@@ -568,8 +580,12 @@ function(x, ...)
     ##         }
     ##     }
     ## </COMMENT>
-    ## Hmm.  But why not mention the exported *functions* without \usage
-    ## information?  Activate at least this eventually ...
+    ## Hmm.  But why not mention the exported *functions* without \usage 
+    ## information?  Note that currently there is no useful markup for
+    ## S3 Ops group methods and S3 methods for subscripting and
+    ## subassigning, so the corresponding generics and methods cannot
+    ## reliably be distinguished, and hence would need to be excluded
+    ## here as well.
     ## <COMMENT>
     ##     functionsInCodeNotInUsages <-
     ##         attr(x, "functionsInCodeNotInUsages")
@@ -1020,12 +1036,7 @@ function(package, dir, lib.loc = NULL)
     dbArgumentNames <- lapply(db, .getRdArgumentNames)
 
     functionsToBeIgnored <-
-        c("<-", "=", if(isBase) c("(", "{", "function"))
-    ## <FIXME>
-    ## Currently there is no convenient markup for subscripting and
-    ## subassigning methods.
-    functionsToBeIgnored <-
-        c(functionsToBeIgnored, "[", "[[", "$", "[<-", "[[<-", "$<-")
+        .functionsToBeIgnoredFromUsage(basename(dir))
 
     badDocObjs <- list()
 
@@ -1108,6 +1119,13 @@ function(package, dir, lib.loc = NULL)
         ## have aliases, provided that there is no alias which ends in
         ## '-deprecated' (see Deprecated.Rd). 
         if(!any(grep("-deprecated$", aliases))) {
+            ## Currently, there is no useful markup for S3 Ops group
+            ## methods and S3 methods for subscripting and subassigning,
+            ## so the corresponding generics and methods need to be
+            ## excluded from this test (e.g., the usage for '+' in
+            ## 'DateTimeClasses.Rd' ...).
+            functions <- functions[!functions %in%
+                                   .functionsWithNoUsefulS3methodMarkup]
             ## Argh.  There are good reasons for keeping \S4method{}{} 
             ## as is, but of course this is not what the aliases use ...
             ## <FIXME>
@@ -2127,6 +2145,27 @@ function(x)
     }
     y
 }
+
+### * .functionsToBeIgnoredFromUsage
+
+.functionsToBeIgnoredFromUsage <-
+function(packageName)
+{
+    c("<-", "=",
+      if(packageName == "base")
+      c("(", "{", "function", "if", "for", "while", "repeat"),
+      if(packageName == "methods") "@")
+}
+
+### * .functionsWithNoUsefulS3methodMarkup
+
+.functionsWithNoUsefulS3methodMarkup <-
+    ## Currently there is no useful markup for S3 Ops group methods and
+    ## S3 methods for subscripting and subassigning.
+    c("+", "-", "*", "/", "^", "<", ">", "<=", ">=", "!=",
+      "==", "%%", "%/%", "&", "|", "!",
+      "[", "[[", "$", "[<-", "[[<-", "$<-")
+      
 
 ### * .isCallFromReplacementFunctionUsage
 .isCallFromReplacementFunctionUsage <-
