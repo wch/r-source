@@ -231,7 +231,7 @@ data.frame <- function(..., row.names = NULL, check.rows = FALSE, check.names = 
 	    else vnames[[i]] <- paste(vnames[[i]], namesi, sep=".")
 	}
 	else if(length(namesi) > 0) vnames[[i]] <- namesi
-	else if(no.vn[[i]]) vnames[[i]] <- deparse(object[[i]])
+	else if(no.vn[[i]]) vnames[[i]] <- deparse(object[[i]])[1]
 	nrows[[i]] <- length(rowsi)
 	if(missing(row.names) && rowsi[[1]]!="")
 	    row.names <- data.row.names(row.names, rowsi, i)
