@@ -2,6 +2,8 @@
 
 NEW FEATURES
 
+    o   Many more help(.) pages.
+
     o   The top level Makefile now supports the usual
 	   ./configure; make; make install
 	procedure (new make targets `all' and `install').
@@ -48,10 +50,11 @@ NEW FEATURES
 	provide multiple names for the same object.  Example:
 		lm2 <- .Alias(lm)
 	This is dangerous because it can be used to defeat the
-	call-by-value illusion.	 Should it be documented?
+	call-by-value illusion.
 
     o	Many functions changed from <primitive> to .Internal(..).
 	Currently, new .Internal(.)s in ..library/base/R/New-Internal.R
+	Primitive functions are now printed as ``.Primitive(..)''.
 
     o	[dpqr]hyper(.) now also work with some 0 arguments.
 
@@ -209,6 +212,12 @@ NEW FEATURES
     o	matrices and arrays can have zero extents
 
 BUG FIXES (many of which resulted from the added features...)
+
+    o	atanh(.) now works
+
+    o   summary(glm) and summary(lm) now use compatible names.
+
+    o   [pq]tukey(.) now working.
 
     o	title() now handles main=, sub=, xlab=, ylab= with embedded
 	newlines correctly.  This is partly a change in title and
