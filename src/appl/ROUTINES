@@ -93,3 +93,5 @@ C_FUNCTION(band_den_bin)
 C_FUNCTION(R_getTaskCallbackNames)
 C_FUNCTION(R_removeTaskCallback)
 C_FUNCTION(R_addTaskCallback)
+# Reflectance for the dynamically loaded native symbols
+C_FUNCTION(R_getSymbolInfo)

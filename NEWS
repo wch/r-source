@@ -72,6 +72,11 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
+    o	Function getNativeSymbolInfo() returns details about a native
+        routine, potentially including its address, the library in which it is
+	located, the interface by which it can be called and the
+	number of parameters.
+
     o	One can register R functions and C routines to be called at the
         end of the successful evaluation of each top-level expression,
         for example to perform auto-saves, update displays, etc. See
@@ -483,6 +488,9 @@ C-LEVEL FACILITIES
 	routine. This is used in embedding R in other applications and
 	languages.
 
+    o	Support for attach()'ing user-defined tables of variables
+        is available and accessed via the RObjectTables package
+	currently at http://www.omegahat.org/RObjectTables.
 
 
 BUG FIXES

@@ -583,6 +583,7 @@ DL_FUNC R_getDLLRegisteredSymbol(DllInfo *info, const char *name,
             if(symbol) {
                 symbol->type = R_C_SYM;
                 symbol->symbol.c = sym;
+		symbol->dll = info;
 	    }
  
 	    return((DL_FUNC) sym->fun);
@@ -598,6 +599,7 @@ DL_FUNC R_getDLLRegisteredSymbol(DllInfo *info, const char *name,
             if(symbol) {
                 symbol->type = R_CALL_SYM;
                 symbol->symbol.call = sym;
+		symbol->dll = info;
 	    }
 	    return((DL_FUNC) sym->fun);
 	}
@@ -612,6 +614,7 @@ DL_FUNC R_getDLLRegisteredSymbol(DllInfo *info, const char *name,
             if(symbol) {
                 symbol->type = R_FORTRAN_SYM;
                 symbol->symbol.fortran = sym;
+		symbol->dll = info;
 	    }
 	    return((DL_FUNC) sym->fun);
 	}
@@ -626,6 +629,7 @@ DL_FUNC R_getDLLRegisteredSymbol(DllInfo *info, const char *name,
             if(symbol) {
                 symbol->type = R_EXTERNAL_SYM;
                 symbol->symbol.external = sym;
+		symbol->dll = info;
 	    }
 	    return((DL_FUNC) sym->fun);
 	}
@@ -698,6 +702,8 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg,
 	if(doit) {
   	    fcnptr = R_dlsym(&LoadedDLL[i], name, symbol); /* R_osDynSymbol->dlsym */
 	    if (fcnptr != (DL_FUNC) NULL) {
+		if(symbol)
+		    symbol->dll = LoadedDLL+i;
 #ifdef CACHE_DLL_SYM
 		if(strlen(pkg) <= 20 && strlen(name) <= 20 && nCPFun < 100) {
 		    strcpy(CPFun[nCPFun].pkg, LoadedDLL[i].name);
@@ -779,6 +785,112 @@ int moduleCdynload(char *module, int local, int now)
 	    module, SHLIB_EXT);
     return AddDLL(dllpath, local, now);
 }
+
+
+SEXP
+Rf_MakeNativeSymbolRef(DL_FUNC f)
+{
+  SEXP ref, klass;
+
+  PROTECT(ref = R_MakeExternalPtr(f, Rf_install("native symbol"), NULL));
+
+  PROTECT(klass = allocVector(STRSXP, 1));
+  SET_STRING_ELT(klass, 0, mkChar("NativeSymbol"));
+  setAttrib(ref, R_ClassSymbol, klass);
+
+  UNPROTECT(2);
+  return(ref);
+}
+
+SEXP
+Rf_MakeDLLInfo(DllInfo *info)
+{
+    SEXP ref, klass, elNames, tmp;
+    int i, n;
+    const char *const names[] = {"name", "path", "dynamicLookup"};
+
+    n = sizeof(names)/sizeof(names[0]);
+
+    PROTECT(ref = allocVector(VECSXP, n));
+    SET_VECTOR_ELT(ref, 0, tmp = allocVector(STRSXP, 1));
+    if(info->name)
+	SET_STRING_ELT(tmp, 0, mkChar(info->name));
+    SET_VECTOR_ELT(ref, 1, tmp = allocVector(STRSXP, 1));
+    if(info->path)
+	SET_STRING_ELT(tmp, 0, mkChar(info->path));
+    SET_VECTOR_ELT(ref, 2, ScalarLogical(info->useDynamicLookup));
+
+    PROTECT(elNames = allocVector(STRSXP, n));
+    for(i = 0; i < n; i++)
+	SET_STRING_ELT(elNames, i, mkChar(names[i]));
+    setAttrib(ref, R_NamesSymbol, elNames);
+    UNPROTECT(2);
+
+    return(ref);
+}
+
+
+SEXP
+R_getSymbolInfo(SEXP sname, SEXP spackage)
+{
+    char *package, *name;
+    R_RegisteredNativeSymbol symbol = {R_ANY_SYM, {NULL}, NULL};
+    SEXP sym = R_NilValue;
+    DL_FUNC f;
+
+    name = CHAR(STRING_ELT(sname, 0));
+    if(length(spackage))
+	package = CHAR(STRING_ELT(spackage, 0));
+    else 
+	package = "";
+    f = R_FindSymbol(name, package, &symbol);
+    if(f) {
+	SEXP tmp, klass;
+	int n = (symbol.type != R_ANY_SYM) ? 4 : 3;
+	PROTECT(sym = allocVector(VECSXP, n));
+
+	SET_VECTOR_ELT(sym, 0, sname);
+	SET_VECTOR_ELT(sym, 1, Rf_MakeNativeSymbolRef(f));
+	if(symbol.dll)
+	    SET_VECTOR_ELT(sym, 2, Rf_MakeDLLInfo(symbol.dll));
+
+	PROTECT(klass = allocVector(STRSXP, (symbol.type != R_ANY_SYM ? 2 : 1)));
+	SET_STRING_ELT(klass, length(klass)-1, mkChar("NativeSymbolInfo"));
+
+	if(n > 3) {
+             /* Add the registration information: the number of arguments and the classname. */
+	    int nargs;
+	    char *className;
+	    switch(symbol.type) {
+	    case R_C_SYM:
+		nargs = symbol.symbol.c->numArgs;
+		className = "CRoutine";
+		break;
+	    case R_CALL_SYM:
+		nargs = symbol.symbol.call->numArgs;
+		className = "CallRoutine";
+		break;
+	    case R_FORTRAN_SYM:
+		nargs = symbol.symbol.fortran->numArgs;
+		className = "FortranRoutine";
+		break;
+	    case R_EXTERNAL_SYM:
+		nargs = symbol.symbol.external->numArgs;
+		className = "ExternalRoutine";
+		break;
+	    }
+	    SET_VECTOR_ELT(sym, 3, tmp = ScalarInteger(nargs));
+	    SET_STRING_ELT(klass, 0, mkChar(className));
+	}
+	setAttrib(sym, R_ClassSymbol, klass);
+	UNPROTECT(2);
+    }
+
+    return(sym);
+}
+
+
+
 
 #else /* no dyn.load support */
 

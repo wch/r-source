@@ -15,3 +15,22 @@ dyn.load <- function(x, local=TRUE, now=TRUE)
 
 dyn.unload <- function(x)
     .Internal(dyn.unload(x))
+
+getNativeSymbolInfo <-
+function(name, PACKAGE)
+{
+ if(missing(PACKAGE))
+   PACKAGE <- ""
+ 
+ v <- .Call("R_getSymbolInfo", as.character(name), as.character(PACKAGE))
+ if(is.null(v)) {
+   msg <- paste("no such symbol",name)
+   if(length(PACKAGE) && nchar(PACKAGE[1]))
+     msg <- paste(msg, "in package",PACKAGE[1])
+   stop(msg)
+ }
+
+ names(v) <- c("name", "address", "package", "numParameters")[1:length(v)]
+
+ v
+}

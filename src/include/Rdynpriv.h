@@ -135,6 +135,7 @@ struct Rf_RegisteredNativeSymbol {
 	Rf_DotFortranSymbol  *fortran;
 	Rf_DotExternalSymbol *external;
     } symbol;
+    DllInfo *dll;
 };
 
 

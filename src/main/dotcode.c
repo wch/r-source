@@ -424,7 +424,7 @@ SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DL_FUNC fun;
     SEXP retval;
-    R_RegisteredNativeSymbol symbol = {R_EXTERNAL_SYM, {NULL}};
+    R_RegisteredNativeSymbol symbol = {R_EXTERNAL_SYM, {NULL}, NULL};
     /* I don't like this messing with vmax <TSL> */
     /* But it is needed for clearing R_alloc and to be like .Call <BDR>*/
     char *vmax = vmaxget();
@@ -455,7 +455,7 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DL_FUNC fun;
     SEXP retval, cargs[MAX_ARGS], pargs;
-    R_RegisteredNativeSymbol symbol = {R_CALL_SYM, {NULL}};
+    R_RegisteredNativeSymbol symbol = {R_CALL_SYM, {NULL}, NULL};
     int nargs;
     char *vmax = vmaxget();
     op = CAR(args);
@@ -1174,7 +1174,7 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     DL_FUNC fun;
     SEXP ans, pargs, s;
     R_toCConverter  *argConverters[65];
-    R_RegisteredNativeSymbol symbol = {R_C_SYM, {NULL}};
+    R_RegisteredNativeSymbol symbol = {R_C_SYM, {NULL}, NULL};
 
     char buf[128], *p, *q, *vmax;
     if (NaokSymbol == NULL || DupSymbol == NULL || PkgSymbol == NULL) {
