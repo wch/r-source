@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-3, 2003-10-09
+Version 1.8-4, 2003-10-10
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -270,6 +270,9 @@ released version), `r-patched' (patched released version), and `r-devel'
 master CVS archive and are updated hourly.  The `-C' and in the `rsync'
 command is to cause it to skip the CVS directories.  Further information on
 `rsync' is available at `http://rsync.samba.org/rsync/'.
+
+   The sources of the development version are also available via anonymous
+CVS.  See `http://anoncvs.R-project.org' for more information.
 
 2.5 How can R be installed?
 ===========================
