@@ -15,8 +15,12 @@ setGeneric <-
              genericFunction = NULL)
 {
     if(isGeneric(name)) {
-        message("Function \"", name, "\" is already a generic; no change (use removeMethods or removeGeneric to force reset)")
-        return(name)
+        others <- character()
+        for(old in seq(along=search()))
+            if(exists(name,  old, inherits=FALSE) && is(get(name, old, inherits=FALSE), "genericFunction"))
+                others <- c(others, getPackageName(old))
+        warning("Function  \"", name, "\" is already a generic function (package: ",
+                paste(others, collapse = ", "), ")")
     }
     if(exists(name, "package:base") &&
          typeof(get(name, "package:base")) != "closure") {
