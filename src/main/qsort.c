@@ -10,7 +10,8 @@
 #include <config.h>
 #endif
 
-#include <Defn.h> /* => Utils.h and Applic.h with the protos from here */
+#include <Defn.h> /* => Utils.h with the C protos from here */
+#include <R_ext/Applic.h> /* F77_.. protos from here */
 #include <Rmath.h>
 
 #include <R_ext/RS.h>
@@ -22,18 +23,22 @@ SEXP do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP x, sx;
     int indx_ret, n;
     double *vx;
+    int *ivx;
+    Rboolean x_real, x_int;
 
     checkArity(op, args);
     x = CAR(args);
     if (!isNumeric(x))
 	errorcall(call, "Argument is not a numeric vector");
-    PROTECT(sx = (TYPEOF(x) == REALSXP) ? duplicate(x) : coerceVector(x, REALSXP));
+    x_real= TYPEOF(x) == REALSXP;
+    x_int = !x_real && (TYPEOF(x) == INTSXP || TYPEOF(x) == LGLSXP);
+    PROTECT(sx = (x_real || x_int) ? duplicate(x) : coerceVector(x, REALSXP));
     /* if x has names, drop them, since they won't be ordered : */
     if (!isNull(getAttrib(x, R_NamesSymbol)))
 	setAttrib(x, R_NamesSymbol, R_NilValue);
     indx_ret = asLogical(CADR(args));
     n = LENGTH(x);
-    vx = REAL(sx);
+    if(x_int) ivx = INTEGER(sx); else vx = REAL(sx);
     if(indx_ret) {
 	SEXP ans, ansnames, indx;
 	int i, *ix;
@@ -45,8 +50,11 @@ SEXP do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for(i = 0; i < n; i++)
 	    ix[i] = i+1;
 
-	R_qsorti(vx, ix, 1, n);
-	/*=====*/
+	if(x_int)
+	    R_qsort_int_I(ivx, ix, 1, n);
+	else
+	    R_qsort_I(vx, ix, 1, n);
+
 	SET_VECTOR_ELT(ans, 0, sx);
 	SET_VECTOR_ELT(ans, 1, indx);
 	SET_VECTOR_ELT(ansnames, 0, mkChar("x"));
@@ -56,8 +64,11 @@ SEXP do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return ans;
     }
     else {
-	R_qsort(vx, 1, n);
-	/*=====*/
+	if(x_int)
+	    R_qsort_int(ivx, 1, n);
+	else
+	    R_qsort(vx, 1, n);
+
 	UNPROTECT(1);
 	return sx;
     }
@@ -69,7 +80,7 @@ SEXP do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
  */
 int F77_NAME(qsort4)(double *v, int *indx, int *ii, int *jj)
 {
-    R_qsorti(v, indx, *ii, *jj);
+    R_qsort_I(v, indx, *ii, *jj);
     return 0;
 }
 int F77_NAME(qsort3)(double *v, int *ii, int *jj)
@@ -80,12 +91,26 @@ int F77_NAME(qsort3)(double *v, int *ii, int *jj)
 
 
 #define qsort_Index
-void R_qsorti(double *v, int *I, int i, int j)
+#define NUMERIC double
+void R_qsort_I(double *v, int *I, int i, int j)
 #include "qsort-body.c"
+
+#define NUMERIC int
+void R_qsort_int_I(int *v, int *I, int i, int j)
+#include "qsort-body.c"
+
 #undef qsort_Index
 
+#define NUMERIC double
 void R_qsort(double *v, int i, int j)
 #include "qsort-body.c"
+
+#define NUMERIC int
+void R_qsort_int(int *v, int i, int j)
+#include "qsort-body.c"
+
+
+#undef NUMERIC
 
 /* Local variables:
  * mode: c

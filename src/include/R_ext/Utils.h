@@ -56,8 +56,11 @@ void	rPsort(double*, int, int);
 void	cPsort(Rcomplex*, int, int);
 
 /* ../../main/qsort.c : */
-void R_qsort (double *v,         int i, int j);
-void R_qsorti(double *v, int *I, int i, int j);
+void R_qsort    (double *v,         int i, int j);
+void R_qsort_I  (double *v, int *I, int i, int j);
+void R_qsort_int  (int *iv,         int i, int j);
+void R_qsort_int_I(int *iv, int *I, int i, int j);
+
 
 /* ../../main/printutils.c : */
 int	IndexWidth(int);

@@ -17,7 +17,7 @@
      * originally k = 20 -> n_max =    2'097'151
      * now        k = 31 -> n_max = 4294'967'295
      */
-    double vt, vtt;
+    NUMERIC vt, vtt;
     int ii, ij, k, l, m;
 #ifdef qsort_Index
     int it, tt;
