@@ -20,7 +20,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
   \item{init}{initial values of the variance parameters.}
 
   \item{fixed}{optional numeric vector of the same length as the total
-    number of parameters.  If supplied, only non-\code{NA} entries in
+    number of parameters.  If supplied, only \code{NA} entries in
     \code{fixed} will be varied.  Probably most useful for setting
     variances to zero.}
 
@@ -91,10 +91,10 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
   \item{residuals}{the standardized residuals.}
   \item{fitted}{a multiple time series with one component for the level,
     slope and seasonal components, estimated contemporaneously (that is
-    at time \eqn{t} and not at the end of the series.}
+    at time \eqn{t} and not at the end of the series).}
   \item{call}{the matched call.}
   \item{series}{the name of the series \code{x}.}
-  \item{convergence}{the value returned by \code{\link{optim}}.}
+  \item{code}{the convergence value returned by \code{\link{optim}}.}
   \item{model, model0}{Lists representing the Kalman Filter used in the
     fitting.  See \code{\link{KalmanLike}}.  \code{model0} is the
     initial state of the filter, \code{model} its final state.}
