@@ -169,6 +169,9 @@
 /* Define to 1 if you have the `hypot' function. */
 #undef HAVE_HYPOT
 
+/* Define to 1 if you have the `iconv' function. */
+#undef HAVE_ICONV
+
 /* Define to 1 if you have the <ieee754.h> header file. */
 #undef HAVE_IEEE754_H
 
@@ -234,6 +237,12 @@
 
 /* Define to 1 if you have the `matherr' function. */
 #undef HAVE_MATHERR
+
+/* Define to 1 if you have the `mbrtowc' function. */
+#undef HAVE_MBRTOWC
+
+/* Define to 1 if you have the `mbsrtowcs' function. */
+#undef HAVE_MBSRTOWCS
 
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
@@ -392,6 +401,21 @@
 
 /* Define to 1 if you have the <wchar.h> header file. */
 #undef HAVE_WCHAR_H
+
+/* Define to 1 if you have the `wcrtomb' function. */
+#undef HAVE_WCRTOMB
+
+/* Define to 1 if you have the `wcscoll' function. */
+#undef HAVE_WCSCOLL
+
+/* Define to 1 if you have the `wcsrtombs' function. */
+#undef HAVE_WCSRTOMBS
+
+/* Define to 1 if you have the `wcswidth' function. */
+#undef HAVE_WCSWIDTH
+
+/* Define to 1 if you have the <wctype.h> header file. */
+#undef HAVE_WCTYPE_H
 
 /* Define if calloc(0) returns a null pointer. */
 #undef HAVE_WORKING_CALLOC

@@ -540,7 +540,7 @@ AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
   fpu_control.h grp.h ieee754.h ieeefp.h limits.h locale.h \
   netdb.h netinet/in.h pwd.h strings.h \
   sys/param.h sys/select.h sys/socket.h sys/stat.h sys/time.h \
-  sys/times.h sys/utsname.h unistd.h wchar.h)
+  sys/times.h sys/utsname.h unistd.h wchar.h wctype.h)
 ## </NOTE>
 ## <NOTE>
 ## These are ANSI C headers but some C code (written to work also
@@ -1204,9 +1204,10 @@ fi
 AC_CHECK_TYPES([off_t])
 AC_FUNC_ALLOCA
 AC_CHECK_FUNCS(access chdir expm1 fcntl finite fseeko ftello ftruncate getcwd \
-  getgrgid getpwuid getuid hypot isascii log1p matherr mkfifo \
+  getgrgid getpwuid getuid hypot iconv isascii log1p \
+  matherr mbrtowc mbsrtowcs mkfifo \
   popen putenv rint setenv strcoll stat strptime symlink \
-  system times unsetenv)
+  system times unsetenv wcrtomb wcscoll wcsrtombs wcswidth)
 ## isfinite and isnan are in math.h but might be macros
 AC_CHECK_DECLS([isfinite, isnan], , , [#include <math.h>])
 ## <NOTE>
