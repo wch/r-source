@@ -410,7 +410,7 @@ int main(int ac, char **av)
 	    if (!strcmp(*av, "--version")) {
 		Rprintf("Version %s.%s %s (%s %s, %s)\n",
 			R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR);
-		Rprintf("Copyright (C) %s R Core Team\n", R_YEAR);
+		Rprintf("Copyright (C) %s R Core Team\n\n", R_YEAR);
 		Rprintf("R is free software and comes with ABSOLUTELY NO WARRANTY.\n");
 		Rprintf("You are welcome to redistribute it under the terms of the\n");
 		Rprintf("GNU General Public License.  For more information about\n");
