@@ -13,9 +13,6 @@ R_HOME = $(top_builddir)
 
 SHLIB = $(pkg).@SHLIBEXT@
 OBJS = alnorm.o ansari.o fexact.o kendall.o ks.o prho.o swilk.o
-##	swilk-f.o ppnd.o nscor.o \
-# OBJS = alnorm.o ansari.o fexact.o kendall.o ks.o nscor.o ppnd.o \
-# 	prho.o swilk.o
 
 all: Makefile $(SHLIB)
 	@$(top_srcdir)/tools/mkinstalldirs \

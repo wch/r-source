@@ -74,8 +74,7 @@ uninstall:
 	  rmdir $(rhome)/doc 2> /dev/null \
 	    || echo "  subdir doc not removed"; \
 	fi
-	@(cd $(mandir)/man1; \
-	  rm -f R.1 Rdconv.1 Rd2txt.1 Rdindex.1 Sd2Rd.1)
+	@rm -f $(mandir)/man1/R.1
 
 dvi info pdf::
 	@(cd manual && $(MAKE) $@)

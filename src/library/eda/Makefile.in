@@ -15,7 +15,7 @@ DISTFILES = INDEX TITLE DESCRIPTION.in Makefile.in
 
 pkg = eda
 
-all: Makefile
+all: Makefile DESCRIPTION
 	@echo "building package \`$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
@@ -29,7 +29,7 @@ all: Makefile
 	fi; \
 	done
 	@if test -f $(top_builddir)/$(subdir)/DESCRIPTION; then \
-	  $(INSTALL_DATA)  $(top_builddir)/$(subdir)/DESCRIPTION \
+	  $(INSTALL_DATA) $(top_builddir)/$(subdir)/DESCRIPTION \
 	    $(top_builddir)/library/eda; \
 	fi
 	@if test -d $(srcdir)/data; then \
@@ -43,6 +43,10 @@ all: Makefile
 	fi
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
+DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status

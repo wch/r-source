@@ -10,17 +10,13 @@ subdir = src/include
 
 include $(top_builddir)/Makeconf
 
-#SRC_HEADERS = Applic.h Arith.h Complex.h Error.h \
-#	Fortran.h Linpack.h Mathlib.h Memory.h PrtUtil.h Random.h \
-#	Rdefines.h Rinternals.h S.h S_compat.h Utils.h f2c.h \
-#	R.h RS.h Constants.h # Blas.h
 SRC_HEADERS = R.h S.h Rdefines.h Rinternals.h S_compat.h
 R_EXT_HEADERS = Applic.h Arith.h Complex.h Constants.h Error.h \
-	Linpack.h Mathlib.h Memory.h PrtUtil.h Random.h RS.h Utils.h f2c.h
-OBJ_HEADERS = Rconfig.h Rversion.h # config.h
+	Linpack.h Mathlib.h Memory.h PrtUtil.h Random.h RS.h \
+	Utils.h f2c.h
+OBJ_HEADERS = Rconfig.h Rversion.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-## FIXME: get this right when restructuring is done!
 DISTFILES = Makefile.in README \
 	Defn.h Errormsg.h Fileio.h Fortran.h Graphics.h IOStuff.h \
 	Parse.h Print.h Startup.h \
@@ -35,7 +31,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-R: Makefile config.h Rconfig.h Rversion.h FFDecl.h FFTab.h
+R: Makefile Rconfig.h Rversion.h FFDecl.h FFTab.h
 	@$(MKINSTALLDIRS) $(top_builddir)/include
 	@$(MKINSTALLDIRS) $(top_builddir)/include/R_ext
 	@for f in $(SRC_HEADERS); do \
@@ -62,9 +58,9 @@ FFDecl.h FFTab.h:: $(top_srcdir)/src/appl/ROUTINES $(top_srcdir)/tools/GETSYMBOL
 
 mostlyclean:
 clean:
+	@rm -f Rconfig.h Rversion.h FFDecl.h FFTab.h
 distclean:
-	@rm -f Makefile config.h Rconfig.h Rversion.h FFDecl.h FFTab.h
-	@rm -f GETSYMBOLS
+	@rm -f Makefile config.h
 maintainer-clean: distclean
 
 install install-strip uninstall::

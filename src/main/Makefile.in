@@ -167,7 +167,7 @@ gram.c: $(srcdir)/gram.y
 mostlyclean: clean
 clean:
 	@echo "cleaning in $(subdir)"
-	@-rm -f R.binary R.X11 R.GNOME R-Image *core Makedeps *.d *.o
+	@-rm -f *core Makedeps *.d *.o
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

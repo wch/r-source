@@ -20,11 +20,19 @@ SUBDIRS = src afm demos doc etc tests tools
 
 GZIP = --best
 
-all: Makefile R docs
+all: Makefile Makeconf R docs
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
+Makeconf: $(srcdir)/Makeconf.in $(top_builddir)/config.status
+	cd $(top_builddir) \
+	  && CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
+
+config.status: $(srcdir)/configure
+	$(SHELL) ./config.status --recheck
+$(srcdir)/configure: $(srcdir)/configure.in $(srcdir)/aclocal.m4
+	cd $(srcdir) && autoconf
 
 R:
 	@if [ "$(srcdir)" != "." ]; then \
@@ -107,11 +115,6 @@ uninstall:
 	@echo "uninstalling executables ..."
 	@rm -rf $(rhome)/bin
 	@rm -f $(bindir)/R
-## FIXME: old stuff
-	@for f in R Rd2txt Rdconv Rdindex Sd2Rd; do \
-	  rm -f $(bindir)/$${f}; \
-	done
-##
 	@for f in $(INSTFILES); do \
 	  rm -f $(rhome)/$${f}; \
 	done

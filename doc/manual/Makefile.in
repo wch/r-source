@@ -222,7 +222,7 @@ mostlyclean: clean
 clean:
 	@echo "cleaning in doc/manual"
 	@if [ "$(srcdir)" != "." ]; then \
-	  rm -rf Rd.sty Rd2dvi.tex images; \
+	  rm -rf Rd.sty images; \
 	fi
 	@-rm -f *.aux *.cp *.cps *.dvi *.fn *.fns *.info* *.ky *.kys \
 	  *.log *.out *.pdf *.pg *.pgs *.ps *.ps-2 *.tmp *.toc *.tp  \
