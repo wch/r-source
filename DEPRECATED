@@ -1,0 +1,2 @@
+The R-1-releases branch is deprecated, use "cvs up -PdA" to
+retrieve r-devel. You may want to rename the directory as well.

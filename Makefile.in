@@ -20,6 +20,9 @@ DISTFILES = $(INSTFILES) \
 SUBDIRS = m4 tools afm doc etc share src tests
 
 GZIP = --best
+default:
+	echo "This is the deprecated R-1-releases branch"
+	false
 
 all: Makefile Makeconf R docs
 
