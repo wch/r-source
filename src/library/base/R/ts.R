@@ -86,7 +86,7 @@ hasTsp <- function(x)
     x
 }
 
-is.ts <- function (x) inherits(x, "ts")
+is.ts <- function (x) inherits(x, "ts") && length(x)
 
 as.ts <- function (x)
 {

@@ -402,6 +402,8 @@ BUG FIXES
     o	replicate() now understands data frames to which na.omit() has
 	been applied.
 
+    o	is.ts() was too liberal: a time series must have at least one point.
+
 
 
 	**************************************************
