@@ -50,3 +50,42 @@ get.menu.cmd <-
 
 }
 
+del.num.cmd <-
+    function(menunum){
+         
+    if( missing(menunum) ){
+        warning("please specify a number for the menu item")
+         return(invisible())
+    }
+         
+          
+         
+    return( .Internal(del.num.cmd(as.integer(menunum))) )
+
+
+}
+
+get.num.cmd <-
+    function(menunum){
+         
+    if( missing(menunum) ){
+        warning("please specify a number for the menu item")
+         return(invisible())
+    }
+                  
+         
+    return( .Internal(get.num.cmd(as.integer(menunum))) )
+
+
+}
+
+
+del.usr.cmd <-
+    function(){
+                  
+    return( .Internal( del.usr.cmd() ) )
+
+
+}
+
+

@@ -235,6 +235,10 @@ SEXP do_newfile(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_addmenucmd(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_delmenucmd(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_getmenucmd(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP do_getnumcmd(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP do_delnumcmd(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP do_delusrcmd(SEXP call, SEXP op, SEXP args, SEXP rho);
+
 
 Boolean HaveUserMenu = false;
 
@@ -415,7 +419,7 @@ SEXP do_delmenucmd(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 /* This function returns the user command associated
-   to one menu item in the User's menu. 
+   to one menu item in the User's menu and its number.
    One parameter only: the menu label.
    Added in R 1.4 Nov 2001 Jago, Stefano M. Iacus
 */
@@ -423,10 +427,11 @@ SEXP do_delmenucmd(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_getmenucmd(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-	 SEXP ml, ans;
+	 SEXP ml, ans, nms;
      char *mlabel, *vm; 
      Str255	mbuf;
      SInt16 item;
+     int	warn = 0;
      
      checkArity(op, args);
      vm = vmaxget();
@@ -461,8 +466,178 @@ SEXP do_getmenucmd(SEXP call, SEXP op, SEXP args, SEXP rho)
      } 
 
 	
-	PROTECT(ans = allocVector(STRSXP, 1));
-    SET_STRING_ELT(ans, 0, mkChar(UserMenuCmds[item]));
+	PROTECT(nms = allocVector(VECSXP, 1));
+	PROTECT(ans = allocVector(INTSXP, 1));
+	
+    SET_STRING_ELT(nms, 0, mkChar(UserMenuCmds[item]));
+    INTEGER(ans)[0] = item;
+        
+    setAttrib(ans, R_NamesSymbol, nms);
+ 
+    UNPROTECT(2);
+
+
+    vmaxset(vm);
+	
+    return( ans );
+}
+
+
+/* This function deletes thw whole User's menu.
+   Added in R 1.4 Nov 2001 Jago, Stefano M. Iacus
+*/
+
+SEXP do_delusrcmd(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+	 SEXP ml, ans;
+     char *vm; 
+     int mnum, totitems;
+     char mlabel[260];
+     Str255 itemtxt;
+     int i;
+     
+     checkArity(op, args);
+     vm = vmaxget();
+         
+	if( ! HaveUserMenu ){
+	 errorcall(call,"there is no user menu !");
+
+	if( (UserMenu = GetMenuHandle(kMenuUser)) == NULL)
+      	 errorcall(call,"cannot find user menu !");
+    }
+    
+    totitems = CountMenuItems(UserMenu);
+ 	
+ 	/* first we release all the memory */	
+	
+	for(i = 1; i <= totitems+1; i++)
+   	  if(UserMenuCmds[i])
+   	   free(UserMenuCmds[i]);
+
+     DeleteMenu(kMenuUser);
+     HaveUserMenu = false;
+	  
+     return( R_NilValue );
+}
+
+
+
+/* This function deletes a user menu item. One paramter
+   only: the menu number.
+   Added in R 1.4 Nov 2001 Jago, Stefano M. Iacus
+*/
+
+
+SEXP do_delnumcmd(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+	 SEXP ml, ans;
+     char *vm; 
+     int mnum, totitems;
+     char mlabel[260];
+     Str255 itemtxt;
+     int i;
+     
+     checkArity(op, args);
+     vm = vmaxget();
+     ml = CAR(args); args = CDR(args);
+
+     if (!isInteger(ml))
+ 	  errorcall(call, "invalid menu number specification");
+
+     /* we get the menu item number */
+ 	 if (length(ml) > 0)
+	   mnum = INTEGER(ml)[0];
+	 else
+	   errorcall(call,"no menu number specified");
+
+    /* we have a menu label now and we can search
+       the items in the User menu if any
+    */
+       
+	if( ! HaveUserMenu ){
+	 errorcall(call,"there is no user menu !");
+
+	if( (UserMenu = GetMenuHandle(kMenuUser)) == NULL)
+      	 errorcall(call,"cannot find user menu !");
+    }
+    
+    totitems = CountMenuItems(UserMenu);
+    
+    if ( (mnum > totitems) || (mnum < 1))
+     errorcall(call,"menu number out of range !");
+	
+	
+    /* first we release some memory */	
+	free(UserMenuCmds[mnum]);
+	
+	for(i = mnum; i < totitems; i++)
+	{
+	 UserMenuCmds[i] = UserMenuCmds[i+1];
+	 UserMenuCmds[i+1] = NULL;
+	}
+	UserMenuCmds[i+1] = NULL;
+	
+	DeleteMenuItem(UserMenu,mnum);
+
+    if( CountMenuItems(UserMenu) == 0){
+     DeleteMenu(kMenuUser);
+     HaveUserMenu = false;
+     }
+	
+	vmaxset(vm);
+	
+    return( R_NilValue );
+}
+
+/* This function returns the user command associated
+   to one menu item in the User's menu and its label.
+   One parameter only: the menu number.
+   Added in R 1.4 Nov 2001 Jago, Stefano M. Iacus
+*/
+
+
+SEXP do_getnumcmd(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+	 SEXP ml, ans;
+     char *vm; 
+     int mnum, totitems;
+     char mlabel[260];
+     Str255 itemtxt;
+     
+     checkArity(op, args);
+     vm = vmaxget();
+     ml = CAR(args); args = CDR(args);
+
+     if (!isInteger(ml))
+ 	  errorcall(call, "invalid menu number specification");
+
+     /* we get the menu item number */
+ 	 if (length(ml) > 0)
+	   mnum = INTEGER(ml)[0];
+	 else
+	   errorcall(call,"no menu number specified");
+
+    /* we have a menu label now and we can search
+       the items in the User menu if any
+    */
+       
+	if( ! HaveUserMenu ){
+	 errorcall(call,"there is no user menu !");
+
+	if( (UserMenu = GetMenuHandle(kMenuUser)) == NULL)
+      	 errorcall(call,"cannot find user menu !");
+    }
+    
+    totitems = CountMenuItems(UserMenu);
+    
+    if ( (mnum > totitems) || (mnum < 1))
+     errorcall(call,"menu number out of range !");
+	
+	PROTECT(ans = allocVector(STRSXP, 2));
+    SET_STRING_ELT(ans, 0, mkChar(UserMenuCmds[mnum]));
+    GetMenuItemText(UserMenu, mnum, itemtxt);
+    CopyPascalStringToC(itemtxt,mlabel);
+    SET_STRING_ELT(ans, 1, mkChar(mlabel));
     UNPROTECT(1);
 
     vmaxset(vm);
