@@ -33,7 +33,7 @@ as.qr(x)
 \description{
   \code{qr} computes the QR decomposition of a matrix.  It provides an
   interface to the techniques used in the LINPACK routine DQRDC
-  or the LAPACK routine ZGEQP3.
+  or (for complex matrices) the LAPACK routine ZGEQP3.
 }
 \details{
   The QR decomposition plays an important role in many
@@ -60,7 +60,7 @@ as.qr(x)
 \value{
   The QR decomposition of the matrix as computed by LINPACK or LAPACK.
   The components in the returned value correspond directly
-  to the values returned by DQRDC.
+  to the values returned by DQRDC/ZGEQP3.
   \item{qr}{a matrix with the same dimensions as \code{x}.
     The upper triangle contains the \eqn{\bold{R}} of the decomposition
     and the lower triangle contains information on the \eqn{\bold{Q}} of
@@ -84,8 +84,10 @@ as.qr(x)
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
   \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
 
-  Anderson. E. and ten others (1995)
-  \emph{LAPACK Users' Guide}. Second Edition. SIAM.
+  Anderson. E. and ten others (1999)
+  \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
+  Available on-line at
+  \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
 }
 \seealso{
   \code{\link{qr.Q}},  \code{\link{qr.R}},  \code{\link{qr.X}} for
