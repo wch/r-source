@@ -255,6 +255,10 @@ BUG FIXES
     o	curve(* , add = FALSE) now works correctly again if used when
 	par("xlog") is true.
 
+    o	Eliminate or warn on use of .Last.value in help examples, since
+	.Last.value is only set from top-level expressions (and was
+	incorrectly documented).
+
 
 
 
