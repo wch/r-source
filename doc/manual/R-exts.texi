@@ -1081,7 +1081,7 @@ value of its arguments if they are vector types.
 SEXP showArgs(SEXP args)
 @{
   int i, nargs;
-  complex cpl;
+  Rcomplex cpl;
   char *name;
 
   if((nargs = length(args) - 1) > 0) @{
