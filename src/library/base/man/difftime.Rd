@@ -7,7 +7,7 @@
 \alias{*.difftime}
 \alias{Math.difftime}
 \alias{Summary.difftime}
-
+\alias{[.difftime}
 \title{Time Intervals}
 \description{
   Create, print and round time intervals.

@@ -347,7 +347,8 @@ setting the environment variable <code>R_LIBS</code> or using the R function
 
 <h3>5.1 Installing packages</h3>
 
-<p>Installing source packages requires that Perl 5.005 or later be installed.
+<p>Installing source packages requires that Perl 5.004 or later be
+installed.
 
 <p>Note that you need to specify implicitly or explicitly the library to
 which the package is to be installed.  This is only an issue if you have
@@ -427,6 +428,7 @@ can be removed by
 </pre>
 
 <p>(Unix) or
+
 <br><pre>Rcmd REMOVE -l /path/to/library <var>pkg1</var> <var>pkg2</var> <small>...</small>
 </pre>
 
@@ -463,7 +465,8 @@ Unix-like platforms, or which will be used by R if found by
 
 <p>You will need Perl version 5.004 or later, available via
 <a href="http://www.perl.com/CPAN/">http://www.perl.com/CPAN/</a>, to build any of the on-line
-documentation, and version 5.005 is needed for some of the utilities,
+documentation.  (The <code>Rdindex</code> utility requires version 5.005 or
+later, but has an R equivalent in package <strong>tools</strong>.)
 
 <p>You will not be able to build the info files unless you have
 <code>makeinfo</code> version 4 or later installed (and some Linux
@@ -1008,6 +1011,7 @@ libraries.  If you cannot install shared versions you will need to tell
 not in the library path.  The symptom will the linker error shown in the
 last paragraph.  Static libraries that might be found and would cause
 problems are
+
 <br><pre>BLAS                   use --without-blas
 Tcl/Tk                 use --without-tcltk
 GNOME                  not built by default

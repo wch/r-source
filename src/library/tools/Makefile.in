@@ -11,7 +11,7 @@ subdir = src/library/tools
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = INDEX DESCRIPTION.in Makefile.in
+DISTFILES = DESCRIPTION.in Makefile.in
 
 pkg = tools
 
@@ -22,16 +22,15 @@ all: Makefile DESCRIPTION
 	  cat `ls $(srcdir)/R/*.R` > $${f}; \
 	  $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/$(pkg)/R/$(pkg))
-	@for f in INDEX; do \
-	if test -f $(srcdir)/$${f}; then \
-	  $(INSTALL_DATA) $(srcdir)/$${f} \
-	    $(top_builddir)/library/$(pkg); \
-	fi; \
+	@for f in COPYRIGHTS INDEX SOURCES; do \
+	  if test -f $(srcdir)/$${f}; then \
+	    $(INSTALL_DATA) $(srcdir)/$${f} \
+	      $(top_builddir)/library/$(pkg); \
+	  fi; \
 	done
-	@if test -f $(top_builddir)/$(subdir)/DESCRIPTION; then \
-	  $(INSTALL_DATA) $(top_builddir)/$(subdir)/DESCRIPTION \
-	    $(top_builddir)/library/$(pkg); \
-	  echo "Built: R" @VERSION@\;  @R_PLATFORM@\;  `date` >> \
+	@if test -f DESCRIPTION; then \
+	  $(INSTALL_DATA) DESCRIPTION $(top_builddir)/library/$(pkg); \
+	  echo "Built: R" $(VERSION)\;  $(R_PLATFORM)\;  `date` >> \
 	    $(top_builddir)/library/$(pkg)/DESCRIPTION; \
 	fi
 	@if test -d $(srcdir)/data; then \

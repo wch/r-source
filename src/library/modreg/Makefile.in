@@ -22,16 +22,15 @@ all: Makefile DESCRIPTION
 	  cat `ls $(srcdir)/R/*.R` > $${f}; \
 	  $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/$(pkg)/R/$(pkg))
-	@for f in COPYRIGHTS INDEX; do \
-	if test -f $(srcdir)/$${f}; then \
-	  $(INSTALL_DATA) $(srcdir)/$${f} \
-	    $(top_builddir)/library/$(pkg); \
-	fi; \
+	@for f in COPYRIGHTS INDEX SOURCES; do \
+	  if test -f $(srcdir)/$${f}; then \
+	    $(INSTALL_DATA) $(srcdir)/$${f} \
+	      $(top_builddir)/library/$(pkg); \
+	  fi; \
 	done
-	@if test -f $(top_builddir)/$(subdir)/DESCRIPTION; then \
-	  $(INSTALL_DATA) $(top_builddir)/$(subdir)/DESCRIPTION \
-	    $(top_builddir)/library/$(pkg); \
-	  echo "Built: R" @VERSION@\;  @R_PLATFORM@\;  `date` >> \
+	@if test -f DESCRIPTION; then \
+	  $(INSTALL_DATA) DESCRIPTION $(top_builddir)/library/$(pkg); \
+	  echo "Built: R" $(VERSION)\;  $(R_PLATFORM)\;  `date` >> \
 	    $(top_builddir)/library/$(pkg)/DESCRIPTION; \
 	fi
 	@if test -d $(srcdir)/data; then \
@@ -70,7 +69,7 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-	@for d in R data exec man src; do \
+	@for d in R data demo exec inst man src; do \
 	  if test -d $(srcdir)/$${d}; then \
 	    ((cd $(srcdir); \
 	          $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \

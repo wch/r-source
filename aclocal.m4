@@ -87,9 +87,9 @@ AC_SUBST(NO_PERL5)
 ])# R_PROG_PERL
 
 AC_DEFUN([_R_PROG_PERL_VERSION],
-[AC_CACHE_CHECK([whether perl version is at least 5.005],
+[AC_CACHE_CHECK([whether perl version is at least 5.004],
                 [r_cv_prog_perl_v5],
-[if ${PERL} -e 'require 5.005 or exit 1'; then
+[if ${PERL} -e 'require 5.004 or exit 1'; then
   r_cv_prog_perl_v5=yes
 else
   r_cv_prog_perl_v5=no

@@ -7,7 +7,7 @@
   Facilitate the constructing of files documenting \R objects.
 }
 \usage{
-prompt(object, \dots)
+prompt(object, filename = NULL, name = NULL, \dots)
 prompt.default(object, filename = NULL, name = NULL,
                force.function = FALSE, \dots)
 prompt.data.frame(object, filename = NULL, name = NULL, \dots)
