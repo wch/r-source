@@ -315,10 +315,10 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 981 *
-Subject: read.xport() bug
-From: abroman@jhu.edu
-Date: Fri, 15 Jun 2001 00:25:54 +0200 (MET DST)
+* PR# 982 *
+Subject: R CMD check
+From: Roger Bivand <Roger.Bivand@nhh.no>
+Date: Fri, 15 Jun 2001 21:29:33 +0200 (CEST)
 * PR# 972 *
 Subject: update.packages fails again
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
@@ -335,10 +335,6 @@ Date: Mon, 11 Jun 2001 20:08:27 +0200 (MET DST)
 Subject: Lattice: panel.superpose with ordered factor groups
 From: John Maindonald <john.maindonald@anu.edu.au>
 Date: Sat, 9 Jun 2001 11:08:51 +1000 (EST)
-* PR# 980 *
-Subject: RE: [Rd] expand.model.frame() fails when subset is specified (PR#
-From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
-Date: Thu, 14 Jun 2001 17:31:14 -0400
 * PR# 979 *
 Subject: expand.model.frame() fails when subset is specified
 From: gregory_r_warnes@groton.pfizer.com
@@ -346,3 +342,11 @@ Date: Thu, 14 Jun 2001 20:15:52 +0200 (MET DST)
 * PR# 978 *
 From: "Gregory R. Warnes" <warneg@gsun124.pfizer.com>
 Date: Mon, 11 Jun 2001 16:44:35 -0400 (EDT)
+* PR# 981 *
+Subject: read.xport() bug
+From: abroman@jhu.edu
+Date: Fri, 15 Jun 2001 00:25:54 +0200 (MET DST)
+* PR# 980 *
+Subject: RE: [Rd] expand.model.frame() fails when subset is specified (PR#
+From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
+Date: Thu, 14 Jun 2001 17:31:14 -0400
