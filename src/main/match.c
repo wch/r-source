@@ -117,7 +117,7 @@ SEXP matchPar(char *tag, SEXP * list)
     SEXP *l, s;
 
     for (l = list; *l != R_NilValue; l = &CDR(*l))
-	if (TAG(*l) != R_NilValue && 
+	if (TAG(*l) != R_NilValue &&
 	    psmatch(tag, CHAR(PRINTNAME(TAG(*l))), 0)) {
 	    s = *l;
 	    *l = CDR(*l);
@@ -216,7 +216,7 @@ SEXP matchArgs(SEXP formals, SEXP supplied)
 			    error("formal argument \"%s\" matched by multiple actual arguments", CHAR(PRINTNAME(TAG(f))));
 			CAR(a) = CAR(b);
 			if (CAR(b) != R_MissingArg)
-			    MISSING(a) = 0;         /* not missing this arg */
+			    MISSING(a) = 0;	    /* not missing this arg */
 			ARGUSED(b) = 1;
 			ARGUSED(f) = 1;
 		    }
@@ -298,8 +298,9 @@ SEXP matchArgs(SEXP formals, SEXP supplied)
 	for (b = supplied; b != R_NilValue; b = CDR(b))
 	    if (!ARGUSED(b) && CAR(b) != R_MissingArg)
 		errorcall(R_GlobalContext->call,
-			  "unused argument(s) (%s ...)", 
-			  CHAR(PRINTNAME(TAG(b))));
+			  "unused argument(s) (%s ...)",
+			  /* anything better when b is "untagged" ? : */
+			  TAG(b) != R_NilValue ? CHAR(PRINTNAME(TAG(b))) : "");
     }
     UNPROTECT(1);
     return(actuals);
