@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-43, 2001-04-19
+Version 1.2-44, 2001-04-20
 Kurt Hornik
 
 
@@ -2032,8 +2032,8 @@ might do at least some of what you want.  Note also that the R version of
 `splom()', and that R's default plot method has an argument `asp' allowing
 to specify (and fix against device resizing) the aspect ratio of the plot.
 
-   (By the way, "Trellis" is a trademark which cannot be used in R;
-instead, the term "lattice" has been proposed for the R equivalent.)
+   (Because the word "Trellis" has been claimed as a trademark we do not
+use it in R.  The name "lattice" has been proposed for the R equivalent.)
 
 7.15 What are the enclosing and parent environments?
 ====================================================
