@@ -2,6 +2,15 @@
 
 BUG FIXES
 
+    o	hist() now is more compatible to S, has a new `labels' argument,
+	and should work ok for non-equidistant breaks.
+
+    o   lgamma(-1e7) segfaulted.
+
+    o   formatC(pi,dig=20,wid=2) segfaulted.
+
+    o   quantile(..., pr = c(1,2,5)/1000)  gave all names as "0%".
+
     o   In 0.61.1, model.matrix was fixed to pay attention to the names of
 	the names of its data arg, but the data arg was defaulting to an
 	unnamed list, so  model.matrix(~x)  failed...
