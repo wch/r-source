@@ -302,13 +302,25 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define PRINTNAME(x)	((x)->u.symsxp.pname)
 #define SYMVALUE(x)	((x)->u.symsxp.value)
 #define INTERNAL(x)	((x)->u.symsxp.internal)
+#define NEW_SYMBOL_FLAGS
+#ifdef NEW_SYMBOL_FLAGS
+#define DDVAL_MASK	1
+#define DDVAL(x)	((x)->sxpinfo.gp & DDVAL_MASK) /* for ..1, ..2 etc */
+#else
 #define DDVAL(x)	((x)->sxpinfo.gp) /* for ..1, ..2 etc */
+#endif
 #ifndef USE_WRITE_BARRIER
 #define SET_PRINTNAME(x,v)	(((x)->u.symsxp.pname)=(v))
 #define SET_SYMVALUE(x,v)	(((x)->u.symsxp.value)=(v))
 #define SET_INTERNAL(x,v)	(((x)->u.symsxp.internal)=(v))
 #endif
+#ifdef NEW_SYMBOL_FLAGS
+#define SET_DDVAL_BIT(x) (((x)->sxpinfo.gp) |= DDVAL_MASK)
+#define UNSET_DDVAL_BIT(x) (((x)->sxpinfo.gp) &= ~DDVAL_MASK)
+#define SET_DDVAL(x,v) ((v) ? SET_DDVAL_BIT(x) : UNSET_DDVAL_BIT(x)) /* for ..1, ..2 etc */
+#else
 #define SET_DDVAL(x,v)	(((x)->sxpinfo.gp)=(v)) /* for ..1, ..2 etc */
+#endif
 
 /* Environment Access Macros */
 #define FRAME(x)	((x)->u.envsxp.frame)
