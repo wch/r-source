@@ -3,8 +3,10 @@
 # ${RHOME}/bin/check for checking installed add-on packages
 USAGE_MSG="Usage: R CMD check [options] [-l lib] pkg_1 ... pkg_n"
 VERSION="0.1-0"
+
 OPTS=
 PKGS=
+CLEAN=false
 DEBUG=false
 lib=${RHOME}/library
 
@@ -14,6 +16,8 @@ while test -n "${1}"; do
       echo "${USAGE_MSG}"; exit 0 ;;
     -V|--version)
       echo "${VERSION}"; exit 0 ;;
+    -c|--clean)
+      CLEAN=true ;;
     --debug)
       DEBUG=true; OPTS="${OPTS} --debug" ;;
     -l)
@@ -72,5 +76,6 @@ for pkg in ${PKGS}; do
   else
     echo " ERROR"
   fi
+  if ${CLEAN}; then cd .. && rm -rf check; fi
 
 done
