@@ -131,8 +131,9 @@ help <-
                         file = tFILE, append = TRUE)
                     file.append(tFILE, zfile)
                     cat("\\end{document}\n", file = tFILE, append = TRUE)
-                    system(paste(paste(R.home(), "bin", "helpPRINT", sep="/"),
-                                 FILE, topic), wait=F)
+                    system(paste('"',
+                                 paste(R.home(), "bin", "helpPRINT", sep="/"),
+                                 '" "', FILE, '" ', topic, sep=""), wait=F)
                     return(invisible())
                 }
                 else
