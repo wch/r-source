@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.6-8, 2002-10-23
+@set FAQ-VERSION 1.6-10, 2002-10-28
 @set REL-VERSION 1.6.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -2025,6 +2025,8 @@ optimal under various criteria.
 @item survival
 Functions for survival analysis, including penalised likelihood.
 @emph{Recommended}.
+@item survrec
+Survival analysis for recurrent event data.
 @item systemfit
 Contains functions for fitting simultaneous systems of equations using
 Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
