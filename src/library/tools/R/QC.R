@@ -220,8 +220,8 @@ function(package, dir, lib.loc = NULL,
                                  search()))
         ## if there is a NAMESPACE,
         ## find non-exported methods declared in S3methods directives.
-        if(exists(file.path(.find.package(package, lib.loc, quiet = TRUE),
-                            "NAMESPACE"))) {
+        if(file.exists(file.path(.find.package(package, lib.loc, quiet = TRUE),
+                                 "NAMESPACE"))) {
             S3reg <- sapply(getNamespaceInfo(package, "S3methods"),
                              function(x) x[[3]])
             S3reg <- S3reg[! S3reg %in% ls(codeEnv, all.names = TRUE) ]
@@ -274,7 +274,9 @@ function(package, dir, lib.loc = NULL,
         lsCode <- unique(OK)
         ## S3reg are unexported but declared S3 methods
         S3m <- sapply(nsInfo$S3methods,
-                      function(x) if(length(x) > 2) x[3] else paste(x, sep="."))
+                      function(x) {
+                          if(length(x) > 2) x[3] else paste(x, collapse=".")
+                      })
         if(length(S3m)) S3reg <- S3m[! S3m %in% lsCode]
     }
 
@@ -456,8 +458,8 @@ function(package, dir, lib.loc = NULL)
                                  search()))
         ## if there is a NAMESPACE, we want to test any non-exported
         ## replacement methods declared in S3method directives.
-        if(exists(file.path(.find.package(package, lib.loc, quiet = TRUE),
-                            "NAMESPACE"))) {
+        if(file.exists(file.path(.find.package(package, lib.loc, quiet = TRUE),
+                                 "NAMESPACE"))) {
             S3reg <- sapply(getNamespaceInfo(package, "S3methods"),
                              function(x) x[[3]])
             S3reg <- S3reg[! S3reg %in% ls(codeEnv, all.names = TRUE)]
@@ -979,8 +981,8 @@ function(package, dir, lib.loc = NULL)
                                  search()))
         ## if there is a NAMESPACE, we want to test any non-exported
         ## methods declared in S3method directives.
-        if(exists(file.path(.find.package(package, lib.loc, quiet = TRUE),
-                            "NAMESPACE"))) {
+        if(file.exists(file.path(.find.package(package, lib.loc, quiet = TRUE),
+                                 "NAMESPACE"))) {
             S3reg <- sapply(getNamespaceInfo(package, "S3methods"),
                              function(x) x[[3]])
             S3reg <- S3reg[! S3reg %in% ls(codeEnv, all.names = TRUE)]
