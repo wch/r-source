@@ -46,7 +46,7 @@ static int NTotal;		/* NSymbol + NSave */
 static int NVSize;		/* Number of vector cells */
 
 static int *OldOffset;		/* Offsets in previous incarnation */
-static SEXP *NewAddress;	/* Addresses in this incarnation */
+static SEXP NewAddress;		/* Addresses in this incarnation */
 
 static int VersionId;
 static int DLstartup;		/* Allows different error action on startup */
@@ -531,63 +531,6 @@ static void BinarySave(SEXP s, FILE *fp)
 #endif /* HAVE_RPC_XDR_H */
 
 
-static void ReallocVector(SEXP s, int length)
-{
-    long size;
-    switch (TYPEOF(s)) {
-    case CHARSXP:
-	size = 1 + BYTE2VEC(length + 1);
-	break;
-    case LGLSXP:
-    case INTSXP:
-	if (length <= 0) size = 0;
-	else size = 1 + INT2VEC(length);
-	break;
-    case REALSXP:
-	if (length <= 0) size = 0;
-	else size = 1 + FLOAT2VEC(length);
-	break;
-    case CPLXSXP:
-	if (length <= 0) size = 0;
-	else size = 1 + COMPLEX2VEC(length);
-	break;
-    case STRSXP:
-    case VECSXP:
-    case EXPRSXP:
-	if (length <= 0) size = 0;
-	else size = 1 + PTR2VEC(length);
-	break;
-    default:
-	error("invalid type in ReallocVector"); size=0;
-    }
-    if (R_VMax - R_VTop < size)
-	error("restore memory exhausted (should not happen)");
-
-    LENGTH(s) = length;
-    if (size > 0) {
-	CHAR(s) = (char *) (R_VTop + 1);
-	BACKPOINTER(*R_VTop) = s;
-	R_VTop += size;
-    }
-    else CHAR(s) = (char*)0;
-}
-
-static void ReallocString(SEXP s, int length)
-{
-    long size = 1 + BYTE2VEC(length + 1);
-    if (R_VMax - R_VTop < size)
-	error("restore memory exhausted (should not happen)");
-    if (TYPEOF(s) != CHARSXP)
-	error("ReallocString: type conflict");
-    CHAR(s) = (char*)(R_VTop + 1);
-    LENGTH(s) = length;
-    TAG(s) = R_NilValue;
-    NAMED(s) = 0;
-    ATTRIB(s) = R_NilValue;
-    BACKPOINTER(*R_VTop) = s;
-    R_VTop += size;
-}
-
 static void MarkSave(SEXP s)
 {
     int i, len;
@@ -684,7 +627,7 @@ static SEXP OffsetToNode(int offset)
 	    l = m + 1;
     }
     while (offset != OldOffset[m] && l <= r);
-    if (offset == OldOffset[m]) return NewAddress[m];
+    if (offset == OldOffset[m]) return VECTOR(NewAddress)[m];
 
     /* Not supposed to happen: */
     warning("unresolved node during restore");
@@ -864,13 +807,8 @@ static void DataSave(SEXP s, FILE *fp)
   } END_SUSPEND_INTERRUPTS;
 }
 
-static void RestoreSEXP(SEXP s, FILE *fp)
+static unsigned int FixupType(unsigned int type)
 {
-    unsigned int j;
-    int len;
-
-    TYPEOF(s) = InInteger(fp);
-
     if (VersionId) {
 	switch(VersionId) {
 
@@ -879,20 +817,112 @@ static void RestoreSEXP(SEXP s, FILE *fp)
 	    /* we really introduced complex values */
 	    /* and found that numeric/complex numbers */
 	    /* had to be contiguous.  Hence this switch */
-	    if (TYPEOF(s) == STRSXP)
-		TYPEOF(s) = CPLXSXP;
-	    else if (TYPEOF(s) == CPLXSXP)
-		TYPEOF(s) = STRSXP;
+	    if (type == STRSXP)
+		type = CPLXSXP;
+	    else if (type == CPLXSXP)
+		type = STRSXP;
 	    break;
 
 	default:
-	    error("restore compatibility error - no version %d compatibility", VersionId);
+	    error("restore compatibility error - no version %d compatibility",
+		  VersionId);
 	}
     }
 
     /* Map old factors to new ...  (0.61->0.62) */
-    if (TYPEOF(s) == 11 || TYPEOF(s) == 12)
-	TYPEOF(s) = 13;
+    if (type == 11 || type == 12)
+	type = 13;
+
+    return type;
+}
+
+static void RemakeNextSEXP(FILE *fp)
+{
+    unsigned int j, idx, type;
+    int len;
+    SEXP s;
+
+    idx = InInteger(fp),
+    type = FixupType(InInteger(fp));
+
+    /* skip over OBJECT, LEVELS, and ATTRIB */
+    /* OBJECT(s) = */ InInteger(fp);
+    /* LEVELS(s) = */ InInteger(fp);
+    /* ATTRIB(s) = */ InInteger(fp);
+    switch (type) {
+    case LISTSXP:
+    case LANGSXP:
+    case CLOSXP:
+    case PROMSXP:
+    case ENVSXP:
+	s = allocSExp(type);
+	/* skip over CAR, CDR, and TAG */
+	/* CAR(s) = */ InInteger(fp);
+	/* CDR(s) = */ InInteger(fp);
+	/* TAG(s) = */ InInteger(fp);
+	break;
+    case SPECIALSXP:
+    case BUILTINSXP:
+	s = allocSExp(type);
+	/* skip over length and name fields */
+	/* length = */ InInteger(fp);
+	AllocBuffer(MAXELTSIZE - 1);
+	/* name = */ InString(fp);
+	break;
+    case CHARSXP:
+	len = InInteger(fp);
+	s = allocString(len);
+	AllocBuffer(len);
+	/* skip over the string */
+	/* string = */ InString(fp);
+	break;
+    case REALSXP:
+        len = InInteger(fp);
+	s = allocVector(type, len);
+	/* skip over the vector content */
+	for (j = 0; j < len; j++)
+	    /*REAL(s)[j] = */ InReal(fp);
+	break;
+    case CPLXSXP:
+	len = InInteger(fp);
+	s = allocVector(type, len);
+	/* skip over the vector content */
+	for (j = 0; j < len; j++)
+	    /* COMPLEX(s)[j] = */ InComplex(fp);
+	break;
+    case INTSXP:
+    case LGLSXP:
+	len = InInteger(fp);;
+	s = allocVector(type, len);
+	/* skip over the vector content */
+	for (j = 0; j < len; j++)
+	    /* INTEGER(s)[j] = */ InInteger(fp);
+	break;
+    case STRSXP:
+    case VECSXP:
+    case EXPRSXP:
+	len = InInteger(fp);
+	s = allocVector(type, len);
+	/* skip over the vector content */
+	for (j = 0; j < len; j++) {
+	    /* VECTOR(s)[j] = */ InInteger(fp);
+	}
+	break;
+    default: error("bad SEXP type in data file");
+    }
+
+    /* install the new SEXP */
+    VECTOR(NewAddress)[idx] = s;
+}
+
+static void RestoreSEXP(SEXP s, FILE *fp)
+{
+    unsigned int j, type;
+    int len;
+
+    type = FixupType(InInteger(fp));
+    if (type != TYPEOF(s))
+      error("mismatch on types");
 
     OBJECT(s) = InInteger(fp);
     LEVELS(s) = InInteger(fp);
@@ -914,46 +944,51 @@ static void RestoreSEXP(SEXP s, FILE *fp)
 	PRIMOFFSET(s) = StrToInternal(InString(fp));
 	break;
     case CHARSXP:
-	LENGTH(s) = len = InInteger(fp);
-	ReallocString(s, len);
+	len = InInteger(fp);
 	AllocBuffer(len);
 	strcpy(CHAR(s), InString(fp));
 	break;
     case REALSXP:
-	LENGTH(s) = len = InInteger(fp);
-	ReallocVector(s, len);
+	len = InInteger(fp);
 	for (j = 0; j < len; j++)
 	    REAL(s)[j] = InReal(fp);
 	break;
     case CPLXSXP:
-	LENGTH(s) = len = InInteger(fp);
-	ReallocVector(s, len);
+	len = InInteger(fp);
 	for (j = 0; j < len; j++)
 	    COMPLEX(s)[j] = InComplex(fp);
 	break;
     case INTSXP:
     case LGLSXP:
-	LENGTH(s) = len = InInteger(fp);;
-	ReallocVector(s, len);
+	len = InInteger(fp);;
 	for (j = 0; j < len; j++)
 	    INTEGER(s)[j] = InInteger(fp);
 	break;
     case STRSXP:
     case VECSXP:
     case EXPRSXP:
-	LENGTH(s) = len = InInteger(fp);
-	ReallocVector(s, len);
+	len = InInteger(fp);
 	for (j = 0; j < len; j++) {
 	    VECTOR(s)[j] = OffsetToNode(InInteger(fp));
 	}
 	break;
+    default: error("bad SEXP type in data file");
     }
 }
 
+static void RestoreError(char *msg)
+{
+    if(DLstartup)
+	R_Suicide(msg);
+    else
+	error(msg);
+}
+  
 static SEXP DataLoad(FILE *fp)
 {
     int i, j, vsmall, nsmall;
-    char *vmaxsave, msg[512], s[256];;
+    char *vmaxsave;
+    fpos_t savepos;
 
     /* read in the size information */
 
@@ -970,10 +1005,10 @@ static SEXP DataLoad(FILE *fp)
 
     vmaxsave = vmaxget();
     OldOffset = (int*)R_alloc(NSymbol+NSave, sizeof(int));
-    NewAddress = (SEXP*)R_alloc(NSymbol+NSave, sizeof(SEXP));
+    PROTECT(NewAddress = allocVector(VECSXP, NSymbol+NSave));
     for (i = 0 ; i < NTotal ; i++) {
 	OldOffset[i] = 0;
-	NewAddress[i] = R_NilValue;
+	VECTOR(NewAddress)[i] = R_NilValue;
     }
 
     /* read in the required symbols */
@@ -984,59 +1019,44 @@ static SEXP DataLoad(FILE *fp)
 	j = InInteger(fp);
 	OldOffset[j] = InInteger(fp);
 	AllocBuffer(MAXELTSIZE - 1);
-	NewAddress[j] = install(InString(fp));
+	VECTOR(NewAddress)[j] = install(InString(fp));
     }
-
-    /* symbols are all installed */
-    /* gc() and check space */
-
-    R_gc();
-
-    /* a gc after this point will be a disaster */
-    /* because nothing will have been protected */
-
-    if(DLstartup) {
-	vsmall = NVSize - ((VECREC *)vmaxget() - R_VTop) ;
-	nsmall = NSave - R_Collected;
-	msg[0] = '\0';
-	if(vsmall > 0) {
-	    sprintf(s, "vector heap is too small to restore data -- need about %dM\n", (int)ceil((16.*(R_VSize + vsmall))/Mega));
-	    strcat(msg, s);
-	}
-	if (nsmall > 0) {
-	    sprintf(s, "cons heap is too small to restore data -- need about %dk\n", (int)ceil((R_NSize + nsmall)/1000.));
-		    strcat(msg, s);
-	}
-	if(vsmall > 0 || nsmall > 0)
-	   R_Suicide(msg);
-    } else {
-	if ((VECREC *)vmaxget() - R_VTop < NVSize)
-	    error("vector heap is too small to restore data");
-
-	if (R_Collected < NSave)
-	    error("cons heap is too small to restore data");
-    }
-
 
     /* build the full forwarding table */
-    /* allocating SEXPs from the free list */
 
     for (i = 0 ; i < NSave ; i++) {
 	j = InInteger(fp);
 	OldOffset[j] = InInteger(fp);
-	NewAddress[j] = R_FreeSEXP;
-	R_FreeSEXP = CDR(R_FreeSEXP);
     }
 
-    /* restore the saved nodes */
+
+    /* save the file position */
+    if (fgetpos(fp, &savepos))
+	RestoreError("can't save file position while restoring data");
+
+
+    /* first pass: allocate nodes */
+
+    for (i = 0 ; i < NSave ; i++) {
+        RemakeNextSEXP(fp);
+    }
+
+
+    /* restore the file position */
+    if (fsetpos(fp, &savepos))
+	RestoreError("can't restore file position while restoring data");
+
+
+    /* second pass: restore the contents of the nodes */
 
     for (i = 0 ; i < NSave ;  i++) {
-	RestoreSEXP(NewAddress[InInteger(fp)], fp);
+	RestoreSEXP(VECTOR(NewAddress)[InInteger(fp)], fp);
     }
 
     /* restore the heap */
 
     vmaxset(vmaxsave);
+    UNPROTECT(1);
 
     /* clean the string buffer */
     AllocBuffer(-1);
