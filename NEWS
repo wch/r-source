@@ -11,6 +11,9 @@
 
 NEW FEATURES
 
+    o   get() and assign() allow position in search list to be a
+	character string. (e.g. get("delete.response","package:base") 
+
     o   HTML search now works for all packages (after new installation).
 
     o   R INSTALL now also copies DESCRIPTION file to target dir.
