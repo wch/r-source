@@ -75,7 +75,7 @@ extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_ReadConsole,
 */
 
 extern DL_FUNC ptr_R_ReadConsole, ptr_R_WriteConsole, ptr_R_ResetConsole, 
-    ptr_R_FlushConsole, ptr_R_ClearerrConsole, ptr_R_StartConsole;
+    ptr_R_FlushConsole, ptr_R_ClearerrConsole, ptr_R_StartConsole, ptr_R_ShowFiles;
 
 DL_FUNC ptr_do_wsbrowser, ptr_DoCloseHandler;
 
@@ -127,6 +127,9 @@ void R_load_aqua_shlib(void)
     if(!ptr_do_wsbrowser) R_Suicide("Cannot load do_wsbrowser");
     ptr_DoCloseHandler = Rdlsym(handle, "DoCloseHandler");
     if(!ptr_DoCloseHandler) R_Suicide("Cannot load DoCloseHandler");
+    ptr_R_ShowFiles = Rdlsym(handle, "RAqua_R_ShowFiles");
+    if(!ptr_R_ShowFiles) R_Suicide("Cannot load R_ShowFiles");
+
     
     
 /*
