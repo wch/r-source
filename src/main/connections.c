@@ -148,7 +148,7 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 	b = R_alloc(10*BUFSIZE, sizeof(char));
 	res = vsnprintf(b, 10*BUFSIZE, format, ap);
 	if (res < 0) {
-	    *(b + 10*BUFSIZE) = '\0';
+	    *(b + 10*BUFSIZE - 1) = '\0';
 	    warning("printing of extremely long output is truncated");
 	    res = 10*BUFSIZE;
 	}
@@ -1590,11 +1590,18 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 	already = strlen(this->lastline);
     SEXP tmp;
 
-    strcpy(b, this->lastline);
-    p = b + already;
-    buffree = BUFSIZE - already;
-
-    res = vsnprintf(p, buffree, format, ap);
+    if(already >= BUFSIZE) {
+	/* This will fail so just call vsnprintf to get the length of
+	   the new piece */
+	res = vsnprintf(buf, 0, format, ap);
+	if(res > 0) res += already;
+	buffree = 0;
+    } else {
+	strcpy(b, this->lastline);
+	p = b + already;
+	buffree = BUFSIZE - already;
+	res = vsnprintf(p, buffree, format, ap);
+    }
     if(res >= buffree) { /* res is the desired output length */
 	usedRalloc = TRUE;
 	b = R_alloc(res + already + 1, sizeof(char));
@@ -1602,20 +1609,21 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 	p = b + already;
 	vsprintf(p, format, ap);
     } else if(res < 0) { /* just a failure indication */
+#define NBUFSIZE (already + 10*BUFSIZE)
 	usedRalloc = TRUE;
-	b = R_alloc(10*BUFSIZE, sizeof(char));
-	strncpy(b, this->lastline, 10*BUFSIZE);
-	*(b + 10*BUFSIZE - 1) = '\0';
+	b = R_alloc(NBUFSIZE, sizeof(char));
+	strncpy(b, this->lastline, NBUFSIZE);
+	*(b + NBUFSIZE - 1) = '\0';
 	p = b + already;
-	res = vsnprintf(p, 10*BUFSIZE - already, format, ap);
+	res = vsnprintf(p, NBUFSIZE - already, format, ap);
 	if (res < 0) {
-	    *(b + 10*BUFSIZE - 1) = '\0';
+	    *(b + NBUFSIZE - 1) = '\0';
 	    warning("printing of extremely long output is truncated");
 	}
     }
 
     /* copy buf line-by-line to object */
-    for(p = buf; ; p = q+1) {
+    for(p = b; ; p = q+1) {
 	q = strchr(p, '\n');
 	if(q) {
 	    *q = '\0';
