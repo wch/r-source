@@ -94,4 +94,4 @@ lib%.a: %.exp
 
 
 %.o:    %.rc
-	$(RESCOMP) $(RESFLAGS) $($*-RESFLAGS) -i $^ -o $@
+	$(RESCOMP) $(RESFLAGS) $($*-RESFLAGS) -i $< -o $@

@@ -35,7 +35,7 @@ Rgui.exe: graphappmain.o  rgui.o rgico.o
 
 Rterm.exe: graphappmain.o rterm.o rtico.o
 
-rgui.o rterm.o rproxy_impl.o: ../../include/Rversion.h
+rgui.o rterm.o rproxy_impl.o rgico.o rtico.o: ../../include/Rversion.h
 
 clean:
 	$(RM) *.o *.obj *.exe *~ *.exp *.def *.dll *.lib
