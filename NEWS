@@ -92,6 +92,9 @@ NEW FEATURES
 	The help for pmatch and charmatch now gives more precise
 	descriptions, including of their differences.
 
+    o   new print.hclust(), hclust() and dist() store the method
+	that has been used. 
+
 
 BUG FIXES
 
