@@ -17,7 +17,8 @@ setWindowTitle(title)
 
   This sets the title of the frame in MDI mode, the title of the console
   for \code{RGui --sdi}, and the title of the window from which it was
-  launched for \code{Rterm}.  It has no effect in embedded uses of \R.
+  launched for \code{Rterm} (only if used interactively).
+  It has no effect in embedded uses of \R.
 }
 \value{
   \code{NULL} (invisible).
