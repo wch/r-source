@@ -84,7 +84,7 @@ rbuild: fixfiles rlibs makeMakedeps libRblas.a ../../bin/R.dll libR.a \
 ## need ctest as it is in the main .Rprofile.
 INITPACKAGES = base tools ctest
 Rcode:
-	@$(ECHO) "  making bootstrap versions of packages"
+	@$(ECHO) "  making bootstrap versions of packages ..."
 	@for pkg in $(INITPACKAGES); do \
 	  if ! test -f $(RHOME)/library/$${pkg}/DESCRIPTION ; then \
 	  $(ECHO) "  --" $$pkg; \
@@ -92,6 +92,7 @@ Rcode:
 	    RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg Rcode; \
 	  fi; \
 	done
+	@$(ECHO) "  ... done"
 
 
 rpackage: fixed/fixdesc ../../library/R.css
@@ -270,7 +271,7 @@ pkg-%:
 	  $(MAKE) --no-print-directory $($*-ZIPDATA)data-$* ; \
 	fi
 ifeq ($(strip $(HELP)),YES)
-	@$(ECHO) "installing help"
+	@$(ECHO) "  installing help"
 	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$*
 	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
 ifeq ($(strip $(WINHELP)),CHM)

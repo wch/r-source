@@ -193,7 +193,7 @@ indices:
 	@$(ECHO) "  installing indices"
 ifeq ($(strip $(BUILD)),CROSS)
 	@$(ECHO) "library(tools); .installPackageIndices('.', '"$(DPKG)"')" | \
-	  R --vanilla  --slave > /dev/null
+	  $(R_EXE) --vanilla  --slave > /dev/null
 else
 	@$(ECHO) "library(tools); .installPackageIndices('.', '"$(DPKG)"')" | \
 	  $(RHOME)/bin/rterm.exe --vanilla --slave > /dev/null

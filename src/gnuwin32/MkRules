@@ -26,15 +26,15 @@ ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 HHWDIR=C:/Program Files/HTML Help Workshop
 
 # Where does Tcl/Tk live? Spaces allowed.
-TCL_HOME = C:/packages/Tcl
-TCL_VERSION = 83
+TCL_HOME = C:/packages/Tcl84
+TCL_VERSION = 84
 
 ## ====== configuration macros for building installers ===========
 
-# location where Inno Setup 2.0.x was installed
-ISDIR=C:/packages/Inno
+# location where Inno Setup was installed
+ISDIR=C:/packages/Inno3
 
-## =================== cross-compiler settings  =================
+## =================== cross-compilation settings  =================
 
 ifeq ($(strip $(BUILD)),CROSS)
 # Next two might be i386-mingw32msvc- or i586- depending on the cross-compiler.
@@ -42,6 +42,8 @@ BINPREF=mingw32-
 # Set this to where the mingw32 include files are. It must be accurate.
 HEADER=/users/ripley/R/cross-tools/mingw32/include
 endif
+# path (possibly full path) to seme version of R on the host system
+R_EXE=R
 
 ## =============== end of user-customizable parts  ===================
 

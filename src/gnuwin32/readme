@@ -263,21 +263,21 @@ Using package tcltk
 ===================
 
 The package tcltk supports building graphical interfaces with Tcl/Tk.
-To use this you need to install ActiveTcl 8.3.x from
+To use this you need to install ActiveTcl 8.4.x from
 http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/ and you will
 need to have the Tcl and Tk dlls in your path (which the installer
 will probably do for you).  Also, you need to set the environment
-variable TCL_LIBRARY, to something like c:/Program Files/Tcl/lib/tcl8.3.
+variable TCL_LIBRARY, to something like c:/Program Files/Tcl/lib/tcl8.4.
 
 How you set environmental variables under Windows is system-dependent,
 but with R you can always use the form
-TCL_LIBRARY="c:/Program Files/Tcl/lib/tcl8.3"
+TCL_LIBRARY="c:/Program Files/Tcl/lib/tcl8.4"
 at the end of the command line or Target field of a shortcut.
 
 The demos(tk*) (available after loading the tcltk library) will work
 on Windows.
 
-N.B. ActiveTcl 8.4.x will not work with the binary releases, but the
+N.B. ActiveTcl 8.3.x will not work with the binary releases, but the
 sources can be configured to build against it.
 
 
