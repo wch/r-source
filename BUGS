@@ -616,14 +616,6 @@ Date: Thu, 19 Sep 2002 18:26:55 +0200 (MET DST)
 Subject: Install with 64-bit GCC 3.2
 From: Kev Buckley <k.buckley@lancaster.ac.uk>
 Date: Fri, 20 Sep 2002 17:33:33 +0100 (BST)
-* PR# 2049 *
-Subject: Install with 64-bit GCC 3.2 : FIX
-From: Kev Buckley <k.buckley@lancaster.ac.uk>
-Date: Fri, 20 Sep 2002 18:07:06 +0100 (BST)
-* PR# 2056 *
-Subject: socket bug ???
-From: Ralf Wieland <rwieland@zalf.de>
-Date: Mon, 23 Sep 2002 16:29:33 +0200
 * PR# 2057 *
 Subject: Rgui.exe crashes on startup
 From: zhenliu66@hotmail.com
