@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-22, 2001-01-20
+Version 1.2-23, 2001-01-23
 Kurt Hornik
 
 
@@ -1259,6 +1259,10 @@ works, was published in the Journal of Statistical Software
      additive regression splines (MARS), adaptive back-fitting splines
      (BRUTO), and penalized regression.
 
+*meanscore*
+     Mean Score method for missing covariate data in logistic regression
+     models.
+
 *mgcv*
      Routines for GAMs and other genralized ridge regression problems with
      multiple smoothing parameter selection by GCV or UBRE.
@@ -1294,6 +1298,10 @@ works, was published in the Journal of Statistical Software
 
 *norm*
      Analysis of multivariate normal datasets with missing values.
+
+*optimal*
+     Functions for optimal design of two-stage-studies using the Mean Score
+     method.
 
 *oz*
      Functions for plotting Australia's coastline and state boundaries.
