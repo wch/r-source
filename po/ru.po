@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version:        R 2.1.0\n"
-"Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-24 11:41+0000\n"
+"Report-Msgid-Bugs-To:      bugs@R-project.org\n"
+"POT-Creation-Date:         2005-03-24 11:41+0000\n"
 "PO-Revision-Date:          2005-03-15 00:00-0600\n"
 "Last-Translator:           Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net\n"
 "Language-Team:             Russian\n"
@@ -2906,8 +2906,9 @@ msgstr ""
 #: src/main/errors.c:357
 msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Предупреждающее сообщение:\n"
+msgstr[1] "Предупреждающие сообщения:\n"
+msgstr[2] "Предупреждающие сообщения:\n"
 
 #: src/main/errors.c:381
 #, c-format
@@ -6307,19 +6308,19 @@ msgstr ""
 
 #: src/main/util.c:254 src/main/util.c:258
 msgid "vector size cannot be NA"
-msgstr ""
+msgstr "размер вектора не может быть NA"
 
 #: src/main/util.c:262
 msgid "vector size cannot be negative"
-msgstr ""
+msgstr "размер вектора не может быть отрицательным"
 
 #: src/main/util.c:263
 msgid "vector size specified is too large"
-msgstr ""
+msgstr "указанный размер вектора слишком велик"
 
 #: src/main/util.c:523 src/main/util.c:541
 msgid "object is not a matrix"
-msgstr ""
+msgstr "объект не является матрицей"
 
 #: src/main/util.c:701
 #, c-format
@@ -6349,13 +6350,14 @@ msgstr ""
 #, c-format
 msgid "%d argument passed to '%s' which requires %d"
 msgid_plural "%d arguments passed to '%s' which requires %d"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d аргумент передан '%s' (требуется %d)"
+msgstr[1] "%d аргумента передано '%s' (требуется %d)"
+msgstr[2] "%d аргументов передано '%s' (требуется %d)"
 
 #: src/main/util.c:818
 #, c-format
 msgid "\"nthcdr\" list shorter than %d"
-msgstr ""
+msgstr "список \"nthcdr\" короче, чем %d"
 
 #: src/main/util.c:823
 msgid "\"nthcdr\" needs a list to CDR down"
@@ -6363,23 +6365,23 @@ msgstr ""
 
 #: src/main/util.c:911
 msgid "invalid 'xinds' argument"
-msgstr ""
+msgstr "неправильный аргумент для 'xinds'"
 
 #: src/main/util.c:914
 msgid "invalid 'yinds' argument"
-msgstr ""
+msgstr "неправильный аргумент для 'yinds'"
 
 #: src/main/util.c:916
 msgid "'all.x' must be TRUE or FALSE"
-msgstr ""
+msgstr "'all.x' должно быть TRUE или FALSE"
 
 #: src/main/util.c:918
 msgid "'all.y' must be TRUE or FALSE"
-msgstr ""
+msgstr "'all.y' должно быть TRUE или FALSE"
 
 #: src/main/util.c:1005
 msgid "cannot change working directory"
-msgstr ""
+msgstr "невозможно сменить рабочий каталог"
 
 #: src/main/util.c:1019 src/main/util.c:1053 src/main/util.c:1097
 msgid "a character vector argument expected"
@@ -6387,27 +6389,28 @@ msgstr ""
 
 #: src/main/util.c:1024 src/main/util.c:1058
 msgid "path too long"
-msgstr ""
+msgstr "слишком длинный путь"
 
 #: src/main/util.c:1100
 msgid "invalid value for 'w'"
-msgstr ""
+msgstr "неправильное значение для 'w'"
 
 #: src/main/util.c:1104
 msgid "invalid value for 'quote'"
-msgstr ""
+msgstr "неправильное значение для 'quote'"
 
 #: src/main/util.c:1109
 msgid "only the first character of 'quote' will be used"
-msgstr ""
+msgstr "будет использован только первый символ 'quote'"
 
 #: src/main/util.c:1112
 msgid "invalid value for 'justify'"
-msgstr ""
+msgstr "неправильное значение для 'justify'"
 
+# DIG: многобайтный (emacs) или многобайтовый (glibc)?
 #: src/main/util.c:1165
 msgid "invalid multibyte string"
-msgstr ""
+msgstr "неправильная многобайтовая строка"
 
 #: src/main/util.c:1182 src/main/util.c:1190
 msgid "invalid input in mbcsToLatin1"
@@ -6419,11 +6422,11 @@ msgstr ""
 
 #: src/main/util.c:1289
 msgid "error message truncated to 255 chars"
-msgstr ""
+msgstr "сообщение об ошибке сокращено до 255 символов"
 
 #: src/main/util.c:1302
 msgid "warning message truncated to 255 chars"
-msgstr ""
+msgstr "предупреждающее сообщение сокращено до 255 символов"
 
 #: src/main/version.c:34
 msgid ""
