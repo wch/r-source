@@ -1512,6 +1512,9 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
 	expr = tmp;
     }
+    else if( TYPEOF(expr) == PROMSXP ) {
+        expr = eval(expr, rho);
+    }
     if (PRIMVAL(op)) { /* eval.with.vis(*) : */
 	PROTECT(expr);
 	PROTECT(env = allocVector(VECSXP, 2));
