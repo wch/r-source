@@ -180,6 +180,10 @@ Date: Sun, 03 Aug 2003 23:41:39 -0700
 Subject: Re: [Rd] R package {genetics} function summary.genotype -- H and
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 Date: Mon, 04 Aug 2003 10:12:14 +0200
+* PR# 4384 *
+Subject: wrong results in dist.binary (library ade4)
+From: c.duering@threads.de
+Date: Wed, 1 Oct 2003 22:48:23 +0200 (MET DST)
 
 Directory:  Analyses
 
@@ -681,6 +685,10 @@ Subject: File in use error
 From: oakeley@fmi.ch
 Date: Tue, 2 Sep 2003 11:06:16 +0200 (MET DST)
 ..Windows / R(D)COM
+* PR# 4246 *
+Subject: creates directory that can't be deleted
+From: xiaobao_wang@yahoo.com
+Date: Mon, 22 Sep 2003 02:26:31 +0200 (MET DST)
 
 Directory:  incoming
 
@@ -715,10 +723,6 @@ From:   "methods"       "methods" "methods" "methods"  "methods"
 From:   "methods"    "methods"
 Date: Tue, 16 Sep 2003 12:39:16 +0100 (BST)
 ..body<- is fixed. Should Compare and Complex show up as base?
-* PR# 4193 *
-Subject: How does "subset" replace arguments?
-From: axel.benz@iao.fhg.de
-Date: Tue, 16 Sep 2003 21:39:01 +0200 (MET DST)
 * PR# 4195 *
 Subject: hclust: median, centroid
 From: Peter Kleiweg <kleiweg@let.rug.nl>
@@ -727,22 +731,6 @@ Date: Tue, 16 Sep 2003 22:22:53 +0200 (CEST)
 Subject: strptime
 From: pliu3@ncsu.edu
 Date: Wed, 17 Sep 2003 17:13:23 +0200 (MET DST)
-* PR# 4212 *
-Subject: dwilcox
-From: mark.lamias@grizzard.com
-Date: Thu, 18 Sep 2003 01:20:18 +0200 (MET DST)
-* PR# 4231 *
-Subject: grep in version 1.8
-From: gblevins@mn.rr.com
-Date: Sat, 20 Sep 2003 19:59:29 +0200 (MET DST)
-* PR# 4246 *
-Subject: creates directory that can't be deleted
-From: xiaobao_wang@yahoo.com
-Date: Mon, 22 Sep 2003 02:26:31 +0200 (MET DST)
-* PR# 4254 *
-Subject: documentation search: problem with links
-From: kvanhorn@ksvanhorn.com
-Date: Mon, 22 Sep 2003 20:19:08 +0200 (MET DST)
 * PR# 4266 *
 Subject: RODBC access to MS-Excel
 From: michael.hecht@geocities.com
@@ -755,10 +743,6 @@ Date: Wed, 24 Sep 2003 18:06:02 +1000
 Subject: Calling C fn crashes
 From: ashenfluff@yahoo.com
 Date: Wed, 24 Sep 2003 17:54:21 +0200 (MET DST)
-* PR# 4285 *
-Subject: k-means
-From: dquintero@epm.net
-Date: Wed, 24 Sep 2003 23:42:19 +0200 (MET DST)
 * PR# 4289 *
 Subject: tkinsert
 From: <Mark.Bravington@csiro.au>
@@ -787,35 +771,23 @@ Date: Tue, 30 Sep 2003 19:28:27 +0200 (CEST)
 Subject: Re: [Rd] another dump/source problem?
 From: Ross Ihaka <ihaka@stat.auckland.ac.nz>
 Date: Wed, 01 Oct 2003 07:45:41 +1200
-* PR# 4384 *
-Subject: wrong results in dist.binary (library ade4)
-From: c.duering@threads.de
-Date: Wed, 1 Oct 2003 22:48:23 +0200 (MET DST)
-* PR# 4389 *
-Subject: warnings() generates error if there never were any
-From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
-Date: Thu, 2 Oct 2003 02:45:55 -0400 
-* PR# 4390 *
-Subject: Pills to Enlarge Your Penis
-From: "Vivian Brewster" <rlh34cm@hotmail.com>
-Date: Fri, 03 Oct 03 01:24:02 GMT
-* PR# 4391 *
-Subject: (±¤°í) º¯°­¼è¸¦ ²Þ²Ù´Â ¾Æ´ãÀ» À§ÇÏ¿©... @
-From: "ÀÌºê¿Í¾Æ´ã" <pcm5201@pluslife.net>
-Date: Thu, 2 Oct 2003 19:33:29 +0900
-* PR# 4392 *
-Subject: No Libído? Try this!
-From: Corbin White <cherrine@nicholastse.net>
-Date: Thu, 02 Oct 2003 04:19:39 +0700
-* PR# 4393 *
-Subject: PARTNER NEEDED
-From: "ZAMANI BULU" <zamanibulu113@netscape.net>
-Date: Thu, 2 Oct 2003 16:34:46 -0700
-* PR# 4394 *
-Subject: Better than a Loan
-From: "Clair Hobbs" <h9cuecd@bestspotsontheinternet.com>
-Date: Fri, 03 Oct 03 00:21:47 GMT
-* PR# 4395 *
-Subject: hist
-From: mittal@math.arizona.edu
-Date: Thu,  2 Oct 2003 11:48:30 -0700
+* PR# 4398 *
+Subject: Leaving 'Package:' out of description deletes entire library
+From: ellis@stat.harvard.edu
+Date: Fri, 3 Oct 2003 03:32:58 +0200 (MET DST)
+* PR# 4401 *
+Subject: Re: Bug#213857: r-base-core: xfig plot fails with invalid line type
+From: Dirk Eddelbuettel <edd@debian.org>
+Date: Fri, 3 Oct 2003 07:16:38 -0500
+* PR# 4402 *
+Subject: Awarded Best DVD Copier Software 2003 hvi swswz y 
+From: "Murray Stinson" <773kyh@hotmail.com>
+Date: Fri, 03 Oct 03 20:08:38 GMT
+* PR# 4403 *
+Subject: misprint  in Leaps $size
+From: paulluo@cs.cmu.edu
+Date: Fri, 3 Oct 2003 22:17:24 +0200 (MET DST)
+* PR# 4404 *
+Subject: Sensational Software to Backup DVD Movies... ssvvpjfqw rad ytjb
+From: "Jackson Cho" <mpvnno@hotmail.com>
+Date: Fri, 03 Oct 03 21:17:41 GMT
