@@ -22,7 +22,7 @@
 use Getopt::Long;
 use R::Utils;
 
-my $revision = ' $Revision: 1.15 $ ';
+my $revision = ' $Revision: 1.16 $ ';
 my $version;
 my $name;
 
@@ -161,7 +161,7 @@ while (<>) {
     } elsif ($word[1] =~ /SUMMARY/) {
       &section(0, "\\description\{");
     } elsif ($word[1] =~ /Warning/) {
-      &section(0, "\\secion{Warning}\{");
+      &section(0, "\\section{Warning}\{");
     } elsif (join(" ", @word[1..2]) =~ /DATA DESCRIPTION/) {
       &section(0, "\\usage\{\ndata($fun)");
       &section(0, "\\format\{");
