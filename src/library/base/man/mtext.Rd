@@ -1,7 +1,7 @@
 \name{mtext}
 \title{Write text into the margins of a plot}
 \usage{
-mtext(text, side=3, line=0, outer=FALSE, at=NULL, \dots)
+mtext(text, side=3, line=0, outer=FALSE, at=NULL, adj = NA, \dots)
 }
 \alias{mtext}
 \arguments{
@@ -9,9 +9,12 @@ mtext(text, side=3, line=0, outer=FALSE, at=NULL, \dots)
 \item{side}{on which side of the plot (1=bottom, 2=left, 3=top, 4=right).}
 \item{line}{on which MARgin line, starting at 0 counting outwards.}
 \item{outer}{use outer margins if available.}
-\item{at}{give location in user-coordinates.}
+\item{at}{give location in user-coordinates.  If \code{length(at)==0}
+  (default), the location will correspond to \code{par("adj")}.}
+\item{adj}{length = 1 or 2 : adjustment in x- (and optionally y-)
+  direction.  If \code{adj} isn't finite (default), a default is setup,
+  using \code{par("las")} (and \emph{not} \code{par("adj")}!}
 \item{\dots}{Further graphical parameters; currently supported are:}
-\item{adj}{length = 1 or 2 : adjustment in x- (and optionally y-) direction.}
 \item{cex}{character expansion factor (default = 1).}
 \item{col}{color to use.}
 \item{font}{font for text.}
