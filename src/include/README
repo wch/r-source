@@ -51,7 +51,7 @@ Mathlib.h
 
 S_compat.h
 	-> S.h		-> Rconfig.h , Error.h , Memory.h
-	-> Fortran.h
+	-> Fortran.h	-> Mathlib.h , Complex.h , Rconfig.h
 	-> Linpack.h	-> Blas.h ,	Rconfig.h
 
 S.h
@@ -66,6 +66,7 @@ Arith.h
 	-> Rconfig.h
 
 Fortran.h
+	-> Mathlib.h
 	-> Rconfig.h
 	-> Complex.h
 
