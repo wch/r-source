@@ -32,6 +32,8 @@ BUG FIXES
 
     o   several fixes in *.c code to make -Wall happy
 
+    o   curve() [and plot.function()] now use proper `x' values with log="x"
+
 
 		CHANGES IN R VERSION 0.63.3
 

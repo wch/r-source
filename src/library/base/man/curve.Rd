@@ -1,7 +1,7 @@
 \name{curve}
 \title{Draw Function Plots}
 \usage{
-curve(expr, from, to, n=101, \dots)
+curve(expr, from, to, n=101, add=FALSE, type="l", ylab = NULL, log=NULL, \dots)
 plot.function(fn, from=0, to=1, n=101, \dots)
 }
 \alias{curve}
@@ -12,7 +12,9 @@ plot.function(fn, from=0, to=1, n=101, \dots)
 \item{fn}{a `vectorizing' numeric \R function.}
 \item{from,to}{the range over which the function will be plotted.}
 \item{n}{integer; the number of x values at which to evaluate.}
-\item{\dots}{graphical parameters can also be specified as arguments.}
+\item{add}{logical; if \code{TRUE} add to already existing plot.}
+\item{\dots}{graphical parameters can also be specified as arguments.
+ \code{plot.function} passes all these to \code{curve}.}
 }
 \description{
     Draws a curve corresponding to the given function or expression 
@@ -44,5 +46,8 @@ curve(sin, -pi, 3*pi)
 plot(cos)
 chippy <- function(x) sin(cos(x)*exp(-x/2))
 curve(chippy, -8, 7, n=2001)
+
+for(ll in c("","x","y","xy"))
+   curve(log(1+x), 1,100, log=ll, sub=paste("log=",ll))
 }
 \keyword{hplot}
