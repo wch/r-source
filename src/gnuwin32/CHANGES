@@ -18,8 +18,7 @@ quantreg amongst those on CRAN) need to be re-built.  The advantage is
 that less space is taken up overall, and ATLAS can be used just by
 rebuilding Rblas.dll.
 
-The installers now use bzip compression, so make smaller packages
-(which take a little longer to install).
+The installers now use bzip2 compression, so make smaller packages.
 
 Cross-building automatically uses STAMP=NO for packages.
 
@@ -33,11 +32,6 @@ All the configuration options are now in file MkRules.
 
 Unzipping is now handled by internal code based on zlib: unzip.dll is
 no longer required.
-
-
-
-rw1042
-======
 
 Launching HTML files from the menus was not working with Netscape 6.2.1,
 so a workaround has been provided.
