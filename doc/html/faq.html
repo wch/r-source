@@ -18,7 +18,7 @@ Up:<a rel=up href="#dir">(dir)</a>
 <h2>R FAQ</h2>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.5-1, 2002-04-30</h2>
+<h2>Version 1.5-2, 2002-05-03</h2>
 <h2>ISBN 3-901167-51-X</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -151,8 +151,9 @@ Up:<a rel=up href="#Introduction">Introduction</a>
 <p>In particular, note that I do not have access to Windows or Mac systems. 
 Features specific to the Windows and Mac OS ports of R are described in
 the <a href="http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html">"R for Windows <small>FAQ</small>"</a> and the
-<a href="http://www.eco-dip.unimi.it/R/rmac-FAQ.html">"R for Macintosh <small>FAQ</small>/DOC"</a>.  If you have information on Mac or Windows systems
-that you think should be added to this document, please let me know.
+<a href="http://cran.r-project.org/bin/macos/rmac-FAQ.html">"R for Macintosh <small>FAQ</small>/DOC"</a>.  If you have information on Mac or
+Windows systems that you think should be added to this document, please
+let me know.
 
 <p><hr>
 Node:<a name="R%20Basics">R Basics</a>,
@@ -446,8 +447,8 @@ potato/woody packages for the i386 platform (now part of the Debian
 distribution and maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x
 i386 and 7.x alpha packages (maintained by Stephen Eglen, Martyn Plummer
 and Naoki Takebayashi, respectively), SuSE 7.2 i386 packages by Albrecht
-Gebhardt, Mandrake 8.1 and 7.2 i386 packages by Michele Alzetta and
-Maximino Ameneiro Gomez, and LinuxPPC 5.0 RPMs by Alex Buerkle.
+Gebhardt, Mandrake 8.1 and 8.2 i386 packages by Michele Alzetta, and
+LinuxPPC 5.0 RPMs by Alex Buerkle.
 
 <p>The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -1802,6 +1803,8 @@ APIs, and examples and documentation for its use.
 <dd>Functions for fitting general linear Structural Equation Models (with
 observed and unobserved variables) by the method of maximum likelihood
 using the RAM approach. 
+<br><dt><strong>serialize</strong>
+<dd>Simple interfce for serializing to connections. 
 <br><dt><strong>sgeostat</strong>
 <dd>An object-oriented framework for geostatistical modeling. 
 <br><dt><strong>sm</strong>
@@ -1988,6 +1991,67 @@ from C objects, call graphs, etc.
 <dd>An extension module for libxslt, the XML-XSL document translator, that
 allows XSL functions to be implemented via R functions. 
 </dl>
+
+<p>The <a href="http://www.bioconductor.org">Bioconductor Project</a> produces an
+open source software framework that will assist biologists and
+statisticians working in bioinformatics, with primary emphasis on
+inference using DNA microarrays.  Currently, the following R packages
+can be obtained from
+&lt;<code>http://www.bioconductor.org/packages/devel/html/</code>&gt;, with more
+packages in development.
+
+<dl>
+<dt><strong>AnnBuilder</strong>
+<dd>Processing information from Unigene, LocusLink, and Gene Ontology
+Consortium, storing the data to tables in a local database, and
+generating XML annotation files. 
+<br><dt><strong>Biobase</strong>
+<dd>Base functions for Bioconductor. 
+<br><dt><strong>ROC</strong>
+<dd>Utilities for ROC, with uarray focus. 
+<br><dt><strong>affy</strong>
+<dd>Methods for Affymetrix Oligonucleotide Arrays. 
+<br><dt><strong>annotate</strong>
+<dd>Annotation for microarrays. 
+<br><dt><strong>edd</strong>
+<dd>Expression density diagnostics. 
+<br><dt><strong>genefilter</strong>
+<dd>Basic functions for filtering genes. 
+<br><dt><strong>geneplotter</strong>
+<dd>Basic functions for plotting genetic data. 
+<br><dt><strong>marrayClasses</strong>
+<dd>Class definitions for pre-normalized and normalized cDNA microarray
+data.  Basic methods for accessing/replacing, printing, and subsetting. 
+<br><dt><strong>marrayInput</strong>
+<dd>Functions for reading microarray data into R from different image
+analysis output files, and probe and target description files.  Widgets
+are supplied to facilitate and automate data input and the creation of
+microarray specific R objects for storing these data. 
+<br><dt><strong>marrayNorm</strong>
+<dd>Functions for location and scale normalization procedures based on
+robust local regression. 
+<br><dt><strong>marrayPlots</strong>
+<dd>Functions for diagnostic plots for pre- and post-normalization cDNA
+microarray intensity data: boxplots, scatter-plots, color images. 
+<br><dt><strong>multtest</strong>
+<dd>Multiple testing procedures.  Includes resampling-based multiple testing
+procedures for controlling the family-wise error rate (FWER):
+Bonferroni, Hochberg (1988), Holm (1979), Sidak, Westfall &amp; Young (1993)
+(referred to as minP and maxT).  Also includes procedures for
+controlling the false discovery rate (FDR): Benjamini &amp; Hochberg (1995),
+Benjamini &amp; Yekutieli (2001) step-up procedures.  These procedures are
+implemented for tests based on t-statistics, F-statistics, paired
+t-statistics,  block F-statistics, Wilcoxon statistics.  Results are
+reported in terms of adjusted p-values.  The procedures are directly
+applicable to identify differentially expressed genes in DNA microarray
+experiments. 
+<br><dt><strong>rhdf5</strong>
+<dd>An HDF5 interface for R. 
+<br><dt><strong>tkWidgets</strong>
+<dd>R based Tk widgets to provide user interfaces. 
+</dl>
+
+<p>These packages will soon be made available via <small>CRAN</small> as well.
 
 <a href="mailto:jlindsey@luc.ac.be">Jim Lindsey</a> has written a collection of R
 packages for nonlinear regression and repeated measurements, consisting
