@@ -1,7 +1,5 @@
 \name{data.class}
-\title{
-  Object Classes
-}
+\title{Object Classes}
 \usage{
 data.class(x)
 }
@@ -12,7 +10,8 @@ data.class(x)
 \value{
   character string giving the ``class'' of \code{x}.
 
-  The ``class'' is the (first element) of the class attribute if this is
+  The ``class'' is the (first element) of the \code{\link{class}}
+  attribute if this is
   non-\code{NULL}, or inferred from the object's \code{dim} attribute if
   this is non-\code{NULL}, or \code{mode(x)}.
 
