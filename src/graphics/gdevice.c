@@ -64,6 +64,9 @@ GPar *DP = &DParams;
 int PSDeviceDriver(char**, int, double*, int);
 int X11DeviceDriver(char**, int, double*, int);
 int PicTeXDeviceDriver(char**, int, double*, int);
+#ifdef SOON
+int XFigDeviceDriver(char**, int, double*, int);
+#endif
 #endif
 
 #ifdef Win32
@@ -117,6 +120,14 @@ int SetDevice(char *name, char **cpars, int ncpars, double *npars, int nnpars)
 	if( !strcmp(name, "Win32") )
 		if(WinDeviceDriver(cpars, ncpars, npars, nnpars)) goto have_device;
 #endif
+
+#ifdef Unix
+#ifdef SOON
+	if( !strcmp(name, "XFig") )
+		if(XFigDeviceDriver(cpars, ncpars, npars, nnpars)) goto have_device;
+#endif
+#endif
+
 	/* Other Device Drivers Go Here */
 
 	/* Device not found */
