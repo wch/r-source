@@ -87,7 +87,7 @@ ControlRef BrowsePkgControl = NULL;
 #define MaxCols  65000 
 int NumOfPkgs=0;
 int *PkgID;
-
+Boolean *InstallPkg;
 
 extern bool		EditingFinished;
 
@@ -134,6 +134,7 @@ Boolean OpenBrowsePkg(void)
 		{ kEventClassWindow,	kEventWindowBoundsChanged }, 
 		{ kEventClassWindow,	kEventWindowGetClickActivation }
 			};
+  
     
      CreateNewWindow(kDocumentWindowClass,  kWindowStandardHandlerAttribute |
             kWindowStandardDocumentAttributes, &bpBounds, &BrowsePkgWindow);
@@ -180,9 +181,11 @@ Boolean OpenBrowsePkg(void)
 	
    NumOfPkgs = LENGTH(cpkgs);	
    PkgID = (int*)malloc(NumOfPkgs * sizeof(int));
-   for(i=1;i<=NumOfPkgs;i++)
+   InstallPkg = (int*)malloc(NumOfPkgs * sizeof(Boolean));
+   for(i=1;i<=NumOfPkgs;i++){
     PkgID[i-1] = i;
-    
+    InstallPkg[i-1] = false;
+   }
   AddDataBrowserItems(BrowsePkgControl, kDataBrowserNoItem, 
 				NumOfPkgs, PkgID, kDataBrowserItemNoProperty);
 
@@ -203,15 +206,8 @@ void EmptyBrowsePkg(void)
 
 void CloseBrowsePkg(void)
 {
-
-    if(BrowsePkgWindow){
-     if( GetWindowBounds(BrowsePkgWindow,kWindowStructureRgn,&bpBounds) != noErr)
-      SetRect(&bpBounds, 400, 400, 600, 800);
-    }
-    else 
-     SetRect(&bpBounds, 400, 400, 600, 800);
+int i;
       
-	
     DisposeWindow(BrowsePkgWindow);
     BrowsePkgWindow = NULL;
     
@@ -219,8 +215,7 @@ void CloseBrowsePkg(void)
     BrowsePkgControl = NULL;
     if(PkgID)
      free(PkgID);
-    
-} 
+   } 
 
 static void CreateBrowsePkg(WindowRef window, ControlRef *browser)
 {
@@ -244,7 +239,7 @@ static void CreateBrowsePkg(WindowRef window, ControlRef *browser)
 		sizeof(frameAndFocus), &frameAndFocus);
 }
 
-char *bpNames[] = { "CRAN PACKAGES", "CRAN version", "Installed version"};
+char *bpNames[] = { "Install/Update", "CRAN PACKAGES", "CRAN version", "Installed version"};
 
 
 static void ConfigureBrowsePkg(ControlRef browser)
@@ -275,6 +270,38 @@ static void ConfigureBrowsePkg(ControlRef browser)
 			
 			columnDesc.headerBtnDesc.btnContentInfo.contentType = kControlNoContent;
 			
+                        columnDesc.headerBtnDesc.minimumWidth = 50;
+			columnDesc.headerBtnDesc.maximumWidth = 150;
+			
+			columnDesc.headerBtnDesc.btnFontStyle.just = teFlushLeft;
+			
+			columnDesc.headerBtnDesc.btnFontStyle.font = kControlFontViewSystemFont;
+			columnDesc.headerBtnDesc.btnFontStyle.style = normal;
+		
+			columnDesc.propertyDesc.propertyType = kDataBrowserCheckboxType;
+                        
+                        
+                        columnDesc.propertyDesc.propertyID = 10000;
+			
+                        
+                        columnDesc.headerBtnDesc.titleString = CFStringCreateWithCString(
+				CFAllocatorGetDefault(),bpNames[0], kCFStringEncodingMacRoman);
+                        
+                        columnDesc.propertyDesc.propertyFlags = kDataBrowserPropertyIsMutable;
+			AddDataBrowserListViewColumn(browser, 
+				&columnDesc, kDataBrowserListViewAppendColumn);
+		
+                        
+                        columnDesc.headerBtnDesc.titleOffset = 0;
+			
+			columnDesc.headerBtnDesc.version = 
+				kDataBrowserListViewLatestHeaderDesc;
+				
+			columnDesc.headerBtnDesc.btnFontStyle.flags	= 
+				kControlUseFontMask | kControlUseJustMask;
+			
+			columnDesc.headerBtnDesc.btnContentInfo.contentType = kControlNoContent;
+			
                         columnDesc.headerBtnDesc.minimumWidth = 30;
 			columnDesc.headerBtnDesc.maximumWidth = 200;
 			
@@ -284,6 +311,7 @@ static void ConfigureBrowsePkg(ControlRef browser)
 			columnDesc.headerBtnDesc.btnFontStyle.style = normal;
 		
 			columnDesc.propertyDesc.propertyType = kDataBrowserTextType;
+                        
 			columnDesc.propertyDesc.propertyFlags = kDataBrowserPropertyIsMutable |									  		kDataBrowserListViewDefaultColumnFlags;
 			for(i=1;i<=3;i++){
                      
@@ -293,7 +321,7 @@ static void ConfigureBrowsePkg(ControlRef browser)
 		
                         
                         columnDesc.headerBtnDesc.titleString = CFStringCreateWithCString(
-				CFAllocatorGetDefault(),bpNames[i-1], kCFStringEncodingMacRoman);
+				CFAllocatorGetDefault(),bpNames[i], kCFStringEncodingMacRoman);
                         
                         
 			AddDataBrowserListViewColumn(browser, 
@@ -366,42 +394,45 @@ static pascal OSStatus bpGetSetItemData(ControlRef browser,
 
         if(!changeValue) {
        
-         if(property>=1000 & row>0 & row<=NumOfPkgs){  
-          switch(property)
-          {
+         if(property>=1000 & property<10000 & row>0 & row<=NumOfPkgs){  
+            switch(property)
+            {
           
-            case 1000:
-             strcpy( buf, CHAR(STRING_ELT(cpkgs, row-1)) );
-            break;
-            case 2000:
-             strcpy( buf, CHAR(STRING_ELT(cvers, row-1)) );
-            break;
-            case 3000:
-             strcpy( buf, CHAR(STRING_ELT(ivers, row-1)) );
-            break;
+                case 1000:
+                    strcpy( buf, CHAR(STRING_ELT(cpkgs, row-1)) );
+                break;
+                case 2000:
+                    strcpy( buf, CHAR(STRING_ELT(cvers, row-1)) );
+                break;
+                case 3000:
+                    strcpy( buf, CHAR(STRING_ELT(ivers, row-1)) );
+                break;
+                default:
+                break;
           }       
-             CopyCStringToPascal(buf,pascalString);
-             text = CFStringCreateWithPascalString(CFAllocatorGetDefault(), pascalString, kCFStringEncodingMacRoman);
-             err = SetDataBrowserItemDataText(itemData, text); 
-             CFRelease(text); 
+          CopyCStringToPascal(buf,pascalString);
+          text = CFStringCreateWithPascalString(CFAllocatorGetDefault(), pascalString, kCFStringEncodingMacRoman);
+          err = SetDataBrowserItemDataText(itemData, text); 
+          CFRelease(text); 
          }
            
-        switch (property)
-	{
-                
-                
-		case kDataBrowserItemIsEditableProperty:
-		{	err = SetDataBrowserItemDataBooleanValue(itemData, false);
-		}	break;
-		
-		
-
-		default:
-		{	err = errDataBrowserPropertyNotSupported;
-		}	break;
+   //     if(property == 10000){ 
+   //     Boolean issel;
+   //     err = GetDataBrowserItemDataBooleanValue(itemData,&issel);
+   //       fprintf(stderr,"\n row=%d, install=%d",row,issel); 
+   //     }   
+        
+        
+         
+        } else {
+        
+        if(property == 10000){
+         InstallPkg[row-1] = !InstallPkg[row-1];
+         err = SetDataBrowserItemDataBooleanValue(itemData, InstallPkg[row-1]);
+        }
+        else 
+        err = errDataBrowserPropertyNotSupported;
 	}
-}
-	
         
 	return err;
 }
@@ -482,7 +513,8 @@ pascal OSStatus bpEventHandler(
 SEXP Raqua_browsepkgs(SEXP call, SEXP op, SEXP args, SEXP env)
 {
   char *vm;
-   
+  SEXP ans; 
+  int i;
   checkArity(op, args);
 
   vm = vmaxget();
@@ -503,9 +535,16 @@ SEXP Raqua_browsepkgs(SEXP call, SEXP op, SEXP args, SEXP env)
   QuitApplicationEventLoop();
     
   RunApplicationEventLoop();  /* waits till the user closes the dataentry window */
-
+  PROTECT(ans = NEW_LOGICAL(NumOfPkgs));
+  for(i=1;i<=NumOfPkgs;i++)
+   LOGICAL(ans)[i-1] = InstallPkg[i-1];
+   
   vmaxset(vm);
-  return R_NilValue;
+  
+  if(InstallPkg)
+     free(InstallPkg);
+  UNPROTECT(1);
+  return ans;
 }
 
 
