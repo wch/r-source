@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.3-32, 2001-12-01
+@set FAQ-VERSION 1.3-33, 2001-12-03
 @set REL-VERSION 1.3.1
 @c %**end of header
 
@@ -721,13 +721,18 @@ Please always use the @acronym{URL} of the master site when referring to
 @node Can I use R for commercial purposes?,  , What is CRAN?, R Basics
 @section Can I use R for commercial purposes?
 
-Yes, one can use R for commercial purposes (e.g., in business or in
-consulting).  The GPL, like all Open Source licenses, permits all and
-any use of the package.  It only restricts distribution of R or of other
-programs containing code from R.  This is made clear in clause 6 (``No
-Discrimination Against Fields of Endeavor'') of the
-@uref{http://www.opensource.org/docs/definition.html, Open Source
-Definition}:
+R is released under the GNU General Public License (GPL).  If you have
+any questions regarding the legality of using R in any particular
+situation you should bring it up with your legal counsel.  We are in no
+position to offer legal advice.
+
+It is the opinion of the R Core Team that one can use R for commercial
+purposes (e.g., in business or in consulting).  The GPL, like all Open
+Source licenses, permits all and any use of the package.  It only
+restricts distribution of R or of other programs containing code from R.
+This is made clear in clause 6 (``No Discrimination Against Fields of
+Endeavor'') of the @uref{http://www.opensource.org/docs/definition.html,
+Open Source Definition}:
 
 @quotation
 The license must not restrict anyone from making use of the program in a
@@ -748,8 +753,11 @@ covered only if its contents constitute a work based on the Program.
 
 Most add-on packages, including all recommended ones, also explicitly
 allow commercial use in this way.  A few packages are restricted to
-``non-commercial use''; you may need contact the author to clarify
-whether these may be used.
+``non-commercial use''; you should contact the author to clarify whether
+these may be used or seek the advice of your legal counsel.
+
+None of the discussion in this section constitutes legal advice.  The R
+Core Team does not provide legal advice under any circumstances.
 
 @node R and S, R Web Interfaces, R Basics, Top
 @chapter R and S
