@@ -348,6 +348,7 @@ mosaicplot.formula <-
 function(formula, data = NULL, ...,
          main = deparse(substitute(data)), subset)
 {
+    main # force evaluation here
     m <- match.call(expand.dots = FALSE)
     edata <- eval(m$data, parent.frame())
     if(inherits(edata, "ftable")
