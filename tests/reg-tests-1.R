@@ -899,7 +899,7 @@ order(c(1,2,3,NA), na.last=NA, decreasing=TRUE)
 ## as.list() coerced logical to integer (PR#1926)
 x <- c(TRUE,FALSE,NA)
 stopifnot(identical(x, unlist(as.list(x))))
-## the 2nd was 1:1 in before 1.6
+## the 2nd was (1,0,NA) before 1.6
 
 
 ## test of long Error expression in aov(): PR#1315 and later,
