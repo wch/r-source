@@ -189,6 +189,23 @@ test-DocArgs:
 	    echo "@ECHO_T@ OK"; \
 	  fi; \
 	done
+test-DocStyle:
+	@echo "checking usages for method documentation style"
+	@for p in $(R_PKGS); do \
+	  out="package"; \
+	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
+	  dir="$(top_srcdir)/src/library/$${p}"; \
+	  out=`echo "checkDocStyle(\"$${dir}\")" | \
+	       $(R) -q | sed '/^>/d'`; \
+	  if test -n "$${out}"; then \
+	    echo "@ECHO_T@ WARNING"; \
+	    echo; \
+	    echo "$${out}"; \
+	    echo; \
+	  else \
+	    echo "@ECHO_T@ OK"; \
+	  fi; \
+	done
 test-FF:
 	@echo "checking foreign function calls"
 	@for p in $(R_PKGS); do \
