@@ -26,7 +26,6 @@
 extern void R_ProcessEvents(void);
 #endif
 
-
 #include <Defn.h>
 /* -> Errormsg.h */
 #include <Startup.h> /* rather cleanup ..*/
@@ -92,7 +91,6 @@ void onintr()
 	return;
     }
     else R_interrupts_pending = 0;
-
     signalInterrupt();
 
     REprintf("\n");
@@ -628,7 +626,6 @@ static void jump_to_top_ex(Rboolean traceback,
     /* jump to a browser/try if one is on the stack */
     if (! ignoreRestartContexts)
 	try_jump_to_restart();
-
     /* at this point, i.e. if we have not exited in
        try_jump_to_restart, we are heading for R_ToplevelContext */
 
@@ -667,9 +664,7 @@ static void jump_to_top_ex(Rboolean traceback,
 
     R_GlobalContext = R_ToplevelContext;
     R_restore_globals(R_GlobalContext);
-
     LONGJMP(R_ToplevelContext->cjmpbuf, 0);
-
     /* not reached */
     endcontext(&cntxt);
     inError = oldInError;
