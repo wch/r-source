@@ -28,7 +28,7 @@ gsub <-
 regexpr <- function(pattern, text, extended=TRUE, perl=FALSE)
 {
     if(perl)
-        .Internal(regexpr(pattern, text))
+        .Internal(regexpr.perl(pattern, text))
     else
         .Internal(regexpr(pattern, text, extended))
 }
