@@ -19,6 +19,14 @@
   A list of length \code{length(x)} the \code{i}-th element of which
   contains the vector of splits of \code{x[i]}.
 }
+\details{
+  Arguments \code{x} and \code{split} will be coerced to character, so
+  you will see uses with \code{split=NULL} to mean
+  \code{split=character(0)}, including in the examples below.
+
+  Note that spltting into single characters can be done via
+  \code{split=character(0)} or \code{split=""}; the first is more efficient.
+}
 \seealso{
   \code{\link{paste}} for the reverse,
   \code{\link{grep}} and \code{\link{sub}} for string search and
