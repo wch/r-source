@@ -96,6 +96,8 @@ BUG FIXES
     o	loessf.f in modreg defined DSIGN unecessarily and this caused
 	a conflict on AIX.
 
+    o	plot.lm will now work with rlm objects.
+
 
 	*********************************************************
 	*							*
