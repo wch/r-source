@@ -1,7 +1,7 @@
 merge <- function(x, y, ...) UseMethod("merge")
 
 merge.default <- function(x, y, ...)
-    merge(as.data.frame(x), as.data.frame(x), ...)
+    merge(as.data.frame(x), as.data.frame(y), ...)
 
 merge.data.frame <-
     function(x, y, by = intersect(names(x), names(y)),
@@ -50,22 +50,23 @@ merge.data.frame <-
     by <- drop(apply(by, 1, function(x) paste(x, collapse="\r")))
     comm <- match(bx, by, 0)
     bxy <- bx[comm > 0]
-    ty <- match(by, bxy, 0)
-    if(any(tabulate(ty[ty > 0]) > 1))
-        warning("this version does not allow multiple matches in y")
-    key.y <- match(bxy, by, 0)
+    xinds <- match(bx, bxy, 0)
+    yinds <- match(by, bxy, 0)
+    o <- outer(xinds, yinds, function(x, y) (x > 0) & x==y)
+    xi <- row(o)[o]
+    yi <- col(o)[o]
     nm <- nm.x <- names(x)[-by.x]
     nm.y <- names(y)[-by.y]
     cnm <- match(nm.x, nm.y, 0)
     nm.x[cnm > 0] <- paste(nm.x[cnm > 0], "x", sep=".")
-    x <- x[comm > 0, c(by.x, seq(length=ncol(x))[-by.x]), drop=FALSE]
+    x <- x[xi, c(by.x, seq(length=ncol(x))[-by.x]), drop=FALSE]
     names(x) <- c(names(x)[seq(along=by.x)], nm.x)
     cnm <- match(nm.y, nm, 0)
     nm.y[cnm > 0] <- paste(nm.y[cnm > 0], "y", sep=".")
-    y <- y[key.y, -by.y, drop=FALSE]
+    y <- y[yi, -by.y, drop=FALSE]
     names(y) <- nm.y
     res <- cbind(x, y)
-    if (sort) res  <- res[sort.list(bxy),, drop=FALSE]
+    if (sort) res  <- res[sort.list(bx[xi]),, drop=FALSE]
     row.names(res) <- seq(length=nrow(res))
     res
 }

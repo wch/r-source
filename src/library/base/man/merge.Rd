@@ -21,12 +21,8 @@ merge(x, y, by, by.x, by.y, sort = TRUE)
   or by a logical vector: the name \code{"row.names"} or the number
   \code{0} specifies the row names.  The rows in the two data frames
   that match on the specified columns are extracted, and joined
-  together.
-
-  The algorithm used assumes that the specification gives a unique row
-  in \code{y} for each row in \code{x}, but the first match found will
-  be used, with a warning if more than one is found. (It is possible to
-  have multiple rows in \code{x} matching a row in \code{y}.)
+  together. If there is more than one match, all possible matches
+  contribute one row each.
 
   If the remaining columns in the data frames have any common names,
   these have \code{".x"} and \code{".y"} appended to make the names
@@ -51,15 +47,14 @@ authors <- data.frame(
     retired = c("yes", rep("no", 4)))
 books <- data.frame(
     name = c("Tukey", "Venables", "Tierney", "Ripley", "Ripley", "McNeil"),
-    title = c("Explorarory Data Analysis",
+    title = c("Exploratory Data Analysis",
               "Modern Applied Statistics ...",
               "LISP-STAT",
               "Spatial Statistics", "Stochastic Simulation",
                "Interactive Data Analysis"),
     other.author = c(NA, "Ripley", NA, NA, NA, NA))
 
-merge(books, authors, by.x="name", by.y="surname")
-## next one will give a warning as there is a 1:2 match
 merge(authors, books, by.x="surname", by.y="name")
+merge(books, authors, by.x="name", by.y="surname")
 }
 \keyword{iteration}
