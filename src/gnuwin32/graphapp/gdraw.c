@@ -471,26 +471,45 @@ int ghasfixedwidth(font f)
 void gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 		 int *width)
 {
-    int first, last;
+    int first, last, extra;
     TEXTMETRIC tm;
     HFONT old;
     HDC dc = GETHDC(d);
-
     old = SelectObject(dc, (HFONT)f->handle);
     GetTextMetrics(dc, &tm);
     first = tm.tmFirstChar;
     last = tm.tmLastChar;
-    *ascent = tm.tmAscent;
-    *descent = tm.tmDescent;
-    if(c == 0)
-	*width = tm.tmMaxCharWidth;
-    else if((first <= c) && (c <= last)) {
-	char xx[2];
-	xx[0] = c;
-	xx[1] = '\0';
-	*width = gstrwidth(d, f, xx);
-    }
-    else {
+    extra = tm.tmExternalLeading + tm.tmInternalLeading - 1;
+    if(c == 0) {
+	*descent = tm.tmDescent ;
+        *ascent = tm.tmHeight - *descent - extra ;
+	*width = tm.tmMaxCharWidth ;
+    } else if((first <= c) && (c <= last)) {
+      SIZE size;
+      GetTextExtentPoint32(dc,(LPSTR) &c, 1, &size);
+      *descent = tm.tmDescent ;
+      *ascent = size.cy - *descent - extra ;
+      *width = size.cx;
+      /* 
+	 Under NT, ' ' gives 0 ascent and descent, which seems
+	 correct but this : (i) makes R engine to center in random way;
+	 (ii) doesn't correspond to what 98 and X do (' ' is there
+	 high as the full font)
+      */
+      if ((c!=' ') && (tm.tmPitchAndFamily & TMPF_TRUETYPE)) {
+        GLYPHMETRICS gm;
+        MAT2 m2;
+	m2.eM11.value = m2.eM22.value = (WORD) 1 ; 
+	m2.eM21.value = m2.eM12.value = (WORD) 0 ;
+	m2.eM11.fract = m2.eM12.fract = 
+	  m2.eM21.fract = m2.eM22.fract =  (short) 0 ;
+        if (GetGlyphOutline(dc,c,GGO_METRICS,&gm,0,NULL,&m2) !=
+	    GDI_ERROR) { 
+	  *descent = gm.gmBlackBoxY - gm.gmptGlyphOrigin.y ;
+	  *ascent  = gm.gmptGlyphOrigin.y + 1;
+        } 
+      }
+    } else {
 	*ascent = 0;
 	*descent = 0;
 	*width = 0;

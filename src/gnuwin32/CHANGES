@@ -5,6 +5,13 @@ We made a determined attempt to quote paths which might contain spaces,
 and almost all cases work. Be careful with external unzip, page and editor
 that these do handle quoted paths.
 
+Rterm can be interrupted by Ctrl+C. 'Fast typing' should not give
+problems under interactive use.
+
+Better formatting of math expressions in graphics labels, legends,...
+(but only if font is True Type since it seems not possible to get
+per-char font metric information for raster fonts).    
+
 rw0651
 ======
 
