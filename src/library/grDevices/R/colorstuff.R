@@ -45,6 +45,22 @@ hsv <- function(h=1, s=1, v=1, gamma=1, alpha) {
   result
 }
 
+hcl <-
+function (h = 0, c = 35, l = 85, alpha, fixup = TRUE)
+{
+    if (missing(alpha)) {
+        alphaspec <- FALSE
+        alpha <- 1
+    }
+    else {
+        alphaspec <- TRUE
+    }
+    result <- .Internal(hcl(h, c, l, alpha, fixup))
+    if (!alphaspec)
+        result <- substr(result, 1, 7)
+    result
+}
+
 rgb2hsv <- function(r, g = NULL, b = NULL, gamma = 1, maxColorValue = 255)
 {
     rgb <-

@@ -170,6 +170,117 @@ SEXP do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
     return c;
 }
 
+/* D65 White Point */
+                                                                                
+#define WHITE_X 95.047
+#define WHITE_Y 100.000
+#define WHITE_Z 108.883
+#define WHITE_u 0.1978398
+#define WHITE_v 0.4683363
+                                                                                
+/* Standard CRT Gamma */
+                                                                                
+#define GAMMA 2.4
+
+static double gtrans(double u)
+{
+    if (u > 0.00304)
+        return 1.055 * pow(u, (1 / GAMMA)) - 0.055;
+    else
+        return 12.92 * u;
+}
+
+static int FixupColor(int *r, int *g, int *b)
+{
+    int fix = 0;
+    if (*r < 0) { *r = 0; fix = 1; } else if (*r > 255) { *r = 255; fix = 1; }
+    if (*g < 0) { *g = 0; fix = 1; } else if (*g > 255) { *g = 255; fix = 1; }
+    if (*b < 0) { *b = 0; fix = 1; } else if (*b > 255) { *b = 255; fix = 1; }
+    return fix;
+}
+
+static hcl2rgb(double h, double c, double l, double *R, double *G, double *B)
+{
+    double L, U, V;
+    double u, v, uN, vN;
+    double X, Y, Z;
+                                                                                
+    /* Step 1 : Convert to CIE-LUV */
+                                                                                
+    h = DEG2RAD * h;
+    L = l;
+    U = c * cos(h);
+    V = c * sin(h);
+                                                                                
+    /* Step 2 : Convert to CIE-XYZ */
+                                                                                
+    if (L <= 0 && U == 0 && V == 0) {
+        X = 0; Y = 0; Z = 0;
+    }
+    else {
+        Y = WHITE_Y * ((L > 7.999592) ? pow((L + 16)/116, 3) : L / 903.3);
+        u = U / (13 * L) + WHITE_u;
+        v = V / (13 * L) + WHITE_v;
+        X =  9.0 * Y * u / (4 * v);
+        Z =  - X / 3 - 5 * Y + 3 * Y / v;
+    }
+                                                                                
+    /* Step 4 : CIE-XYZ to sRGB */
+                                                                                
+    *R = gtrans(( 3.240479 * X - 1.537150 * Y - 0.498535 * Z) / WHITE_Y);
+    *G = gtrans((-0.969256 * X + 1.875992 * Y + 0.041556 * Z) / WHITE_Y);
+    *B = gtrans(( 0.055648 * X - 0.204043 * Y + 1.057311 * Z) / WHITE_Y);
+}
+
+SEXP do_hcl(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP h, c, l, a, ans;
+    double H, C, L, A, r, g, b;
+    int nh, nc, nl, na, max, i;
+    int ir, ig, ib;
+    int fixup;
+                                                                                
+    checkArity(op, args);
+                                                                                
+    PROTECT(h = coerceVector(CAR(args),REALSXP)); args = CDR(args);
+    PROTECT(c = coerceVector(CAR(args),REALSXP)); args = CDR(args);
+    PROTECT(l = coerceVector(CAR(args),REALSXP)); args = CDR(args);
+    PROTECT(a = coerceVector(CAR(args),REALSXP)); args = CDR(args);
+    fixup = asLogical(CAR(args));
+    nh = LENGTH(h);
+    nc = LENGTH(c);
+    nl = LENGTH(l);
+    na = LENGTH(a);
+    if (nh <= 0 || nc <= 0 || nl <= 0 || na <= 0) {
+        UNPROTECT(4);
+        return(allocVector(STRSXP, 0));
+    }
+    max = nh;
+    if (max < nc) max = nc;
+    if (max < nl) max = nl;
+    if (max < na) max = na;
+    PROTECT(ans = allocVector(STRSXP, max));
+    for (i = 0; i < max; i++) {
+        H = REAL(h)[i % nh];
+        C = REAL(c)[i % nc];
+        L = REAL(l)[i % nl];
+        A = REAL(a)[i % na];
+        if (!finite(A)) A = 1;
+        if (L < 0 || L > WHITE_Y || C < 0 || A < 0 || A > 1)
+            errorcall(call, "invalid hcl color");
+        hcl2rgb(H, C, L, &r, &g, &b);
+        ir = 255 * r + .5;
+        ig = 255 * g + .5;
+        ib = 255 * b + .5;
+        if (FixupColor(&ir, &ig, &ib) && !fixup)
+            SET_STRING_ELT(ans, i, NA_STRING);
+        else
+            SET_STRING_ELT(ans, i, mkChar(RGBA2rgb(ir, ig, ib,
+                                          ScaleAlpha(A))));
+    }
+    UNPROTECT(5);
+    return ans;
+}
 
 SEXP do_rgb(SEXP call, SEXP op, SEXP args, SEXP env)
 {

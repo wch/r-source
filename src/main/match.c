@@ -184,9 +184,15 @@ SEXP matchArgs(SEXP formals, SEXP supplied)
 {
     int i, seendots;
     SEXP f, a, b, dots, actuals;
+#ifdef MULTIPLE_MATCHES
+    int havedots = 0;
+#endif
 
     actuals = R_NilValue;
     for (f = formals ; f != R_NilValue ; f = CDR(f)) {
+#ifdef MULTIPLE_MATCHES
+	if (TAG(f) ==  R_DotsSymbol) havedots = 1;
+#endif
 	actuals = CONS(R_MissingArg, actuals);
 	SET_MISSING(actuals, 1);
 	SET_ARGUSED(f, 0);
@@ -209,7 +215,14 @@ SEXP matchArgs(SEXP formals, SEXP supplied)
 	    for (b = supplied; b != R_NilValue; b = CDR(b)) {
 		if (TAG(b) != R_NilValue && pmatch(TAG(f), TAG(b), 1)) {
 		    if (ARGUSED(f) == 2)
+#ifdef MULTIPLE_MATCHES
+{
+			if (havedots) goto nextarg1;
+#endif
 			error("formal argument \"%s\" matched by multiple actual arguments", CHAR(PRINTNAME(TAG(f))));
+#ifdef MULTIPLE_MATCHES
+		    }
+#endif
 		    if (ARGUSED(b) == 2)
 			error("argument %d matches multiple formal arguments", i);
 		    SETCAR(a, CAR(b));
@@ -219,6 +232,10 @@ SEXP matchArgs(SEXP formals, SEXP supplied)
 		    SET_ARGUSED(f, 2);
 		}
 		i++;
+#ifdef MULTIPLE_MATCHES
+nextarg1:
+		;
+#endif
 	    }
 	}
 	f = CDR(f);
@@ -248,7 +265,14 @@ SEXP matchArgs(SEXP formals, SEXP supplied)
 			if (ARGUSED(b))
 			    error("argument %d matches multiple formal arguments", i);
 			if (ARGUSED(f) == 1)
+#ifdef MULTIPLE_MATCHES
+			{
+			    if (havedots) goto nextarg2;
+#endif
 			    error("formal argument \"%s\" matched by multiple actual arguments", CHAR(PRINTNAME(TAG(f))));
+#ifdef MULTIPLE_MATCHES
+			}
+#endif
 			SETCAR(a, CAR(b));
 			if (CAR(b) != R_MissingArg)
 			    SET_MISSING(a, 0);       /* not missing this arg */
@@ -256,6 +280,10 @@ SEXP matchArgs(SEXP formals, SEXP supplied)
 			SET_ARGUSED(f, 1);
 		    }
 		    i++;
+#ifdef MULTIPLE_MATCHES
+nextarg2:
+		    ;
+#endif
 		}
 	    }
 	}

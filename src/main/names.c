@@ -741,6 +741,7 @@ FUNTAB R_FunTab[] =
 {"rgb256",	do_rgb,		1,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"rgb2hsv",	do_RGB2hsv,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"hsv",		do_hsv,		0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
+{"hcl",		do_hcl,		0,	11,	5,	{PP_FUNCALL, PREC_FN,	0}},
 {"gray",	do_gray,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"colors",	do_colors,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"col2rgb",	do_col2RGB,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
