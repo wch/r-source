@@ -22,12 +22,8 @@
 #endif
 
 #include <ctype.h>
-#ifdef __MRC__
-#include <types.h>
-#include <SizeTDef.h>
-#else
 #include <sys/types.h>
-#endif
+
 /* This version uses locale-specific case folding */
 
 int strncasecmp(const char *s1, const char *s2, size_t n)

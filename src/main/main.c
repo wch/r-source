@@ -602,10 +602,8 @@ void end_Rmainloop(void)
 
 static void onpipe(int dummy)
 {
-#ifndef __MRC__
     /* do nothing */
     signal(SIGPIPE, onpipe);
-#endif
 }
 
 void run_Rmainloop(void)

@@ -48,11 +48,6 @@ int R_fgetc(FILE *fp)
 #else
     int c = fgetc(fp);
 #endif
-#ifdef __MRC__
-   /* MRC needs to convert from Mac to Unix line endings */
-   if(c == '\r')
-    return('\n');
-#endif
     /* get rid of  CR in CRLF line termination */
     if (c == '\r') {
 	c = fgetc(fp);
@@ -69,35 +64,4 @@ int R_fgetc(FILE *fp)
 #endif
 }
 
-#ifdef __MRC__
-char *R_fgets(char *buf, int i, FILE *fp);
-
-char * R_fgets(char * s, int n, FILE * file)
-{
-	char *	p = s;
-	int			c;
-	
-	if (--n < 0)
-		return(NULL);
-	
-	if (n)
-		do
-		{
-			c = R_fgetc(file);
-			
-			if (c == EOF)
-				if (feof(file) && p != s)
-					break;
-				else
-					return(NULL);
-			
-			*p++ = c;
-		}
-		while (c != '\n' && --n);
-	
-	*p = 0;
-	
-	return(s);
-}
-#endif
 

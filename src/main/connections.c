@@ -292,10 +292,6 @@ static int file_fgetc(Rconnection con)
 	fseek(this->fp, this->rpos, SEEK_SET);
     }
     c = fgetc(fp);
-#ifdef __MRC__
-    /* MRC needs to convert from Mac to Unix line endings */
-    if(c == '\r') return('\n');
-#endif
     return feof(fp) ? R_EOF : con->encoding[c];
 }
 
