@@ -441,7 +441,7 @@ void mainloop(void)
 	UNPROTECT(1);
     }
 
-    gc_inhibit_torture = 0;
+    /* gc_inhibit_torture = 0; */
 
     /* Here is the real R read-eval-loop. */
     /* We handle the console until end-of-file. */
