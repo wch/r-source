@@ -94,11 +94,12 @@ void
 pansari(Sint *len, double *x, Sint *m, Sint *n)
 {
     Sint i, j, l, u;
-    double p, q;
+    double c, p, q;
 
     w_init(*m, *n);
     l = (*m + 1) * (*m + 1) / 4;
     u = l + *m * *n / 2;
+    c = choose(*m + *n, *m);
     for (i = 0; i < *len; i++) {
 	q = floor(x[i] + 1e-7);
 	if (q < l)
@@ -110,7 +111,40 @@ pansari(Sint *len, double *x, Sint *m, Sint *n)
 	    for (j = l; j <= q; j++) {
 		p += cansari((Sint)j, (Sint)*m, (Sint)*n);
 	    }
-	    x[i] = p / choose(*m + *n, *m);
+	    x[i] = p / c;
+	}
+    }
+    w_free(*m, *n);
+}
+
+void
+qansari(Sint *len, double *x, Sint *m, Sint *n)
+{
+    Sint i, l, u;
+    double c, p, q, xi;
+
+    w_init(*m, *n);
+    l = (*m + 1) * (*m + 1) / 4;
+    u = l + *m * *n / 2;
+    c = choose(*m + *n, *m);    
+    for (i = 0; i < *len; i++) {
+	xi = x[i];
+        if(xi < 0 || xi > 1)
+	    errmsg("probabilities outside [0,1] in qansari()");
+	if(xi == 0)
+	    x[i] = l;
+	else if(xi == 1)
+	    x[i] = u;
+	else {
+	    p = 0;
+	    q = 0;
+	    for(;;) {
+		p += cansari(q, (Sint)*m, (Sint)*n) / c;
+		if (p >= xi)
+		    break;
+		q++;
+	    }
+	    x[i] = q;
 	}
     }
     w_free(*m, *n);
