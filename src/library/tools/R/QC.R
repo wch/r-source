@@ -6,8 +6,7 @@ function(package, dir, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
+            stop(.wrong_args("package", "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         helpIndex <- file.path(dir, "help", "AnIndex")
@@ -337,8 +336,7 @@ function(package, dir, lib.loc = NULL,
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
+            stop(.wrong_args("package", "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         codeDir <- file.path(dir, "R")
@@ -786,8 +784,7 @@ function(package, lib.loc = NULL)
 
     ## Argument handling.
     if(length(package) != 1)
-        stop(paste("argument", sQuote("package"),
-                   "must be of length 1"))
+        stop(.wrong_args("package", "must be of length 1"))
     dir <- .find.package(package, lib.loc)
     if(!file_test("-d", file.path(dir, "R")))
         stop(paste("directory", sQuote(dir),
@@ -930,8 +927,7 @@ function(package, lib.loc = NULL)
 
     ## Argument handling.
     if(length(package) != 1)
-        stop(paste("argument", sQuote("package"),
-                   "must be of length 1"))
+        stop(.wrong_args("package", "must be of length 1"))
 
     dir <- .find.package(package, lib.loc)
     if(!file_test("-d", file.path(dir, "man")))
@@ -1080,8 +1076,7 @@ function(package, dir, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
+            stop(.wrong_args("package", "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
     }
@@ -1315,8 +1310,7 @@ function(package, dir, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
+            stop(.wrong_args("package", "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in 'dir' ...
         codeDir <- file.path(dir, "R")
@@ -1562,8 +1556,7 @@ function(package, dir, file, lib.loc = NULL,
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
+            stop(.wrong_args("package", "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         codeDir <- file.path(dir, "R")
@@ -1706,8 +1699,7 @@ function(package, dir, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
+            stop(.wrong_args("package", "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         codeDir <- file.path(dir, "R")
@@ -1995,8 +1987,7 @@ function(package, dir, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
+            stop(.wrong_args("package", "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         codeDir <- file.path(dir, "R")
@@ -2148,8 +2139,7 @@ function(package, dir, file, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
+            stop(.wrong_args("package", "must be of length 1"))
         ## Using package installed in @code{dir} ...
         dir <- .find.package(package, lib.loc)
         if(file.exists(file.path(dir, "R", "all.rda"))) {
@@ -2268,8 +2258,7 @@ function(x, ...)
 function(package)
 {
     if(length(package) != 1)
-        stop(paste("argument", sQuote("package"),
-                   "must be of length 1"))
+        stop(.wrong_args("package", "must be of length 1"))
     dir <- .find.package(package)
 
     ## We definitely need a valid DESCRIPTION file.
@@ -2402,7 +2391,12 @@ function(dir)
         ## Let's not worry about named sections for the time being ...
         bad_tags <- c(mandatory_tags %w/o% tags,
                       if(!length(x$meta$aliases)) "alias",
-                      if(!length(x$meta$keywords)) "keyword")
+                      ## Allow for empty keywords (these do not make it
+                      ## into the metadata).
+                      if(!(length(x$meta$keywords)
+                           || any(grep("^[[:space:]]*$",
+                                       x$data$vals[tags == "keyword"]))))
+                      "keyword")
         if(length(bad_tags))
             files_with_missing_mandatory_tags <-
                 rbind(files_with_missing_mandatory_tags,
