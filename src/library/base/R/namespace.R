@@ -387,9 +387,10 @@ unloadNamespace <- function(ns) {
     pos <- match(paste("package", nsname, sep=":"), search())
     if (! is.na(pos)) detach(pos = pos)
     users <- getNamespaceUsers(ns)
+    print(ns)
     if (length(users) != 0)
-        stop(paste("name space", ns, "still used by:",
-                   paste(users, collapse = ", ")))
+        stop(paste("name space", sQuote(getNamespaceName(ns)),
+                   "still used by:", paste(sQuote(users), collapse = ", ")))
     nspath <- getNamespaceInfo(ns, "path")
     hook <- getHook(packageEvent(nsname, "onUnload")) # might be list()
     for(fun in rev(hook)) try(fun(nsname, nspath))
