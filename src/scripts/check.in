@@ -284,10 +284,10 @@ foreach my $pkg (@ARGV) {
 	    exit(1);
 	}
 	if($description->{"Type"}) { # standard packages do not have this
-	    $log->checking("Package type");
+	    $log->checking("package type");
 	    $log->result($description->{"Type"});
 	    if($description->{"Type"} ne "Package") {
-		$log->print("Only Type=Package packages can be checked.\n");
+		$log->print("Only Type = Package packages can be checked.\n");
 		exit(0);
 	    }
 	}
