@@ -27,7 +27,10 @@ BUG FIXES
 	particularly when log.p = TRUE. (PR#6756)
 
     o	pgeom(q, prob, lower.tail, log.p) is now (sometimes much) more
-	accurate when prob is very small (PR#6792).
+	accurate when prob is very small. (PR#6792)
+
+	The code for pgeom(prob=1) assumed IEEE 754 arithmetic, and
+	gave NaNs under gcc 3.4.0 -fPIC, for example.
 
     o	makeARIMA() was not handling an ARMA(0, 0) model correctly.
 
