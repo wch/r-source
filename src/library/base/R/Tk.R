@@ -5,7 +5,7 @@ TkOpt <- function() {
     val2string <- function(x) {
         if (is.function(x)) return(.Tkcallback(x))
         if (is.environment(x)) return (TkID(x))
-        if (x != "") paste("{",x,"}",sep="")
+        if (x != "") paste("{",x,"}",sep="", collapse=" ")
     }
     m <- evalq(match.call(expand.dots=F),parent.frame())$...
     nm <- names(m)
@@ -25,8 +25,10 @@ TkNew.win <- function(ID){
 }
 
 TkNew.subwin <- function(parent) {
-    ID <- evalq({num.subwin<-num.subwin+1;
-           paste(ID,num.subwin,sep=".")}, parent)
+    ID <- evalq({
+        num.subwin<-num.subwin+1
+        paste(ID, num.subwin, sep=".")
+    }, parent)
     TkNew.win(ID)
 }
 
@@ -42,6 +44,13 @@ TkInit <- function() {
 
 
 # ------ Widgets ------
+
+TkWidget <- function (parent, type, ...)
+{
+    win <- TkNew.subwin(parent)
+    .Tk(paste(type, TkID(win), TkOpt()))
+    win
+}
 
 TkToplevel <- function(parent = .TkRoot, ...)
 {
@@ -70,7 +79,10 @@ TkRadioButton <- function(parent, ...)
     win
 }
 
-# ------ Window & Geometry managers ------
+# ------ Window & Geometry managers &c ------
+
+
+TkCmd <- function(...).Tk(TkOpt()) # generic "catchall"
 
 TkPack <- function(...) {
     .Tk(paste("pack",TkOpt()))
