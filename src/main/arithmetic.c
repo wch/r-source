@@ -39,7 +39,7 @@ static RETSIGTYPE handle_fperror(int dummy)
     signal(SIGFPE, handle_fperror);
 #endif
 }
-#endif
+#endif /* not IEEE_754 */
 
 #ifdef HAVE_MATHERR
 
@@ -72,10 +72,10 @@ typedef union
   unsigned int word[2];
 } ieee_double;
 
-static int little_endian;
 static int hw;
 static int lw;
 
+#ifdef OLD
 static void establish_endianness()
 {
     ieee_double x;
@@ -92,6 +92,7 @@ static void establish_endianness()
     }
     else R_Suicide("couldn't determine endianness for IEEE 754!\n");
 }
+#endif
 
 static double R_ValueOfNA(void)
 {
@@ -120,7 +121,75 @@ int R_IsNaN(double x)
     }
     return 0;
 }
+
+int R_IsNaNorNA(double x)
+{
+/* True for *both* NA and NaN.  
+   NOTE: some systems do not return 1 for TRUE. */
+    return (isnan(x) != 0);
+}
+
+/* Include the header file defining finite() */
+#ifdef HAVE_IEEE754_H
+# include <ieee754.h>		/* newer Linuxen */
+#else
+# ifdef HAVE_IEEEFP_H
+#  include <ieeefp.h>		/* others [Solaris 2.5.x], .. */
+# endif
 #endif
+#if defined(Win32) && defined(_MSC_VER)
+#include <float.h>
+#endif 
+
+int R_finite(double x)
+{
+#ifdef Macintosh
+    return isfinite(x);
+#endif
+#ifndef FINITE_BROKEN
+    return finite(x);
+# else
+#  ifdef _AIX
+#   include <fp.h>
+     return FINITE(x);
+#  else
+    return (!isnan(x) & (x != R_PosInf) & (x != R_NegInf));
+#  endif
+#endif
+}
+
+#else /* not IEEE_754 */
+
+int R_IsNA(double x)
+{
+    return (x == R_NaReal);
+}
+
+/* NaN but not NA: never true */
+int R_IsNaN(double x)
+{
+    return 0;
+}
+
+int R_IsNaNorNA(double x)
+{
+# ifndef HAVE_ISNAN
+    return (x == R_NaReal);
+# else
+    return (isnan(x) != 0 || x == R_NaReal);
+# endif
+}
+
+int R_finite(double x)
+{
+# ifndef HAVE_FINITE
+    return (x != R_NaReal && x != R_PosInf && x != R_NegInf);
+# else
+    int finite(double);
+    return finite(x);
+# endif
+}
+#endif /* IEEE_754 */
 
 /* Arithmetic Initialization */
 
@@ -129,7 +198,14 @@ void InitArithmetic()
     R_NaInt = INT_MIN;
 
 #ifdef IEEE_754
-    establish_endianness();
+    /* establish_endianness(); */
+#  ifdef WORDS_BIGENDIAN
+    hw = 0;
+    lw = 1;
+#  else
+    hw = 1;
+    lw = 0;
+#  endif
     R_NaN = 0.0/R_Zero_Hack;
     R_NaReal = R_ValueOfNA();
     R_PosInf = 1.0/R_Zero_Hack;

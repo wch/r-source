@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-1998  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1995-2000  Robert Gentleman, Ross Ihaka and the
  *			     R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1376,10 +1376,6 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-/* Convenience for using LIST_VEC_NAN macro later */
-#ifndef IEEE_754
-# define R_IsNaN(x) (0)
-#endif
 SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, dims, names, x;
@@ -1419,12 +1415,8 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     case CPLXSXP:
 	for (i = 0; i < n; i++)
-#ifdef IEEE_754
 	    LOGICAL(ans)[i] = (R_IsNaN(COMPLEX(x)[i].r) ||
 			       R_IsNaN(COMPLEX(x)[i].i));
-#else
-	    LOGICAL(ans)[i] = 0;
-#endif
 	break;
 
 /* Same code for LISTSXP and VECSXP : */
@@ -1479,9 +1471,6 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return ans;
 }
-#ifndef IEEE_754
-# undef R_isNaN
-#endif
 
 SEXP do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1535,7 +1524,9 @@ SEXP do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x, names, dims;
+#ifdef IEEE_754
     double xr, xi;
+#endif
     int i, n;
     checkArity(op, args);
 #ifdef stringent_is
