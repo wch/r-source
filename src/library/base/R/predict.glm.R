@@ -25,6 +25,7 @@ predict.glm <-
 	if(is.null(dispersion) || dispersion == 0)
 	    dispersion <- summary(object, dispersion=dispersion)$dispersion
 	residual.scale <- as.vector(sqrt(dispersion))
+	if ( missing(newdata) ) newdata <- model.frame(object)
 	pred <- predict.lm(object, newdata, se.fit, scale = residual.scale)
 	fit <- pred$fit
 	se.fit <- pred$se.fit

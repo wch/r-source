@@ -19,6 +19,11 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	glm had wrong init code for models with offsets. Also fixed
+    	so that linear predictor includes offset, also when predicting. 
+
+    o	predict.glm didn't work with se=T
+
     o   backsolve() now returns a vector when x is a vector.
 
     o	string tags now converted to symbols and strange symbolic
