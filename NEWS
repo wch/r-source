@@ -9,8 +9,8 @@
 
 NEW FEATURES
 
-    o   par(xpd) now has three settings:  FALSE (clip to plot region),
-        TRUE (clip to figure region), or NA (clip to device region).
+    o	par(xpd) now has three settings:  FALSE (clip to plot region),
+	TRUE (clip to figure region), or NA (clip to device region).
 
     o	zapsmall(x) works for complex x.
 
@@ -24,11 +24,15 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   allow trailing space in character->numeric coercion
+    o	printing of complex matrices sometimes was horribly wrong.
+
+    o	printing of complex named vectors had a wrong initial space.
+
+    o	allow trailing space in character->numeric coercion
 
     o	library() gave wrong "masked" warnings in some cases.
 
-    o   par(xpd) semantics were not compatible with S.
+    o	par(xpd) semantics were not compatible with S.
 
     o   rect() output was not clipped in PostScript.
 

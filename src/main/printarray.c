@@ -200,7 +200,7 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
     PROTECT(sdi = allocVector(INTSXP, c));
     PROTECT(sei = allocVector(INTSXP, c));
     PROTECT(swi = allocVector(INTSXP, c));
-    PROTECT(sw = allocVector(INTSXP, c));
+    PROTECT(sw  = allocVector(INTSXP, c));
     UNPROTECT(7);
     x = COMPLEX(sx) + offset;
     dr = INTEGER(sdr);
@@ -246,7 +246,7 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
 		else
 		    Rprintf("%s", EncodeComplex(x[i + j * r],
 						wr[j] + PRINT_GAP, dr[j], er[j],
-						wi[j], dr[j], er[j]));
+						wi[j], di[j], ei[j]));
 	    }
 	}
 	Rprintf("\n");
