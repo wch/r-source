@@ -8,6 +8,12 @@
 
 		CHANGES IN R VERSION 1.2.3
 
+NEW FEATURES
+
+    o	Support for configuration and building the Unix version of R
+	 under Mac OS X.  (The `classic' Macintosh port is
+	`Carbonized' and also runs under that OS.)
+
 
 BUG FIXES
 

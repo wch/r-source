@@ -310,6 +310,22 @@ MAIN_CFLAGS=-pg, MAIN_FFLAGS=-pg, MAIN_LDFLAGS=-pg on platforms where
 -pg cannot be used with position-independent code.
 
 
+BUILDING ON MAC OS X
+
+You can build R as a Unix application on MacOS X.  You will need the
+DevTools,
+
+  f2c (ftp://netlib.bell-labs.com/netlib/f2c.tar)
+     Compile with c++ or  comment out sigcatch(0) in line 520 of main.c.
+
+  dlcompat libraries 
+     (http://fink.sourceforge.net/files/dlcompat-20010123.tar.gz)
+
+and either install a X sub-system or configure with --without-x.
+If you want them, you will need to install readline and Tcl/Tk.
+
+
+
 NEW PLATFORMS (Standards Hah!)
 
 There are a number of sources of problems when installing R on a new
