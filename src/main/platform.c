@@ -185,10 +185,10 @@ static int R_AppendFile(char *file1, char *file2)
     FILE *fp1, *fp2;
     char buf[APPENDBUFSIZE];
     int nchar, status = 0;
-    if((fp1 = R_fopen(R_ExpandFileName(file1), "a")) == NULL) {
+    if((fp1 = R_fopen(R_ExpandFileName(file1), "ab")) == NULL) {
         return 0;
     }
-    if((fp2 = R_fopen(R_ExpandFileName(file2), "r")) == NULL) {
+    if((fp2 = R_fopen(R_ExpandFileName(file2), "rb")) == NULL) {
         fclose(fp1);
         return 0;
     }
