@@ -2785,7 +2785,7 @@ fi
 ## UTF-8 locales - support for MBCS and specifically UTF-8
 AC_DEFUN([R_UTF8],
 [
-if test "$want_utf8_support" == yes ; then
+if test "$want_utf8_support" = yes ; then
 ## Wide character support -- need to include headers in case of macros?
 AC_CHECK_HEADERS(wchar.h wctype.h)
 AC_CHECK_FUNCS(mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \

@@ -35906,7 +35906,7 @@ cat >>confdefs.h <<\_ACEOF
 _ACEOF
 
   r_save_LIBS=${LIBS}
-  if test "$want_utf8_support" == yes ; then
+  if test "$want_utf8_support" = yes ; then
     LIBS="${LIBS} ${X_LIBS}"
 
 
