@@ -18,7 +18,7 @@ Up:<a rel=up accesskey=u href="#dir">(dir)</a>
 <h2>R FAQ</h2>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.5-18, 2002-08-09</h2>
+<h2>Version 1.5-19, 2002-08-22</h2>
 <h2>ISBN 3-901167-51-X</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -259,13 +259,12 @@ Up:<a rel=up accesskey=u href="#R%20Basics">R Basics</a>
 
 <h3>2.3 What is the current version of R?</h3>
 
-<p>The current released version is 1.5.1.  Conforming to this
-`major.minor.patchlevel' numbering scheme, there are three development
-versions of R, working towards the next patch (`r-patched'), minor
-(`r-devel'), and major (`r-ng') releases of R, respectively.  Version
+<p>The current released version is 1.5.1.  Based on this
+`major.minor.patchlevel' numbering scheme, there are two development
+versions of R, working towards the next patch (`r-patched') and minor or
+eventually major (`r-devel') releases of R, respectively.  Version
 r-patched is for bug fixes mostly.  New features are typically
-introduced in r-devel.  Version r-ng will eventually become the next
-generation of R.
+introduced in r-devel.
 
 <p><hr>
 Node:<a name="How%20can%20R%20be%20obtained%3f">How can R be obtained?</a>,
@@ -286,13 +285,12 @@ Up:<a rel=up accesskey=u href="#R%20Basics">R Basics</a>
 
 <p>to create a copy of the source tree specified by <var>module</var> in the
 subdirectory <code>R</code> of the current directory, where <var>module</var>
-specifies one of the four existing flavors of the R sources, and can be
+specifies one of the three existing flavors of the R sources, and can be
 one of <code>r-release</code> (current released version), <code>r-patched</code>
-(patched released version), and <code>r-devel</code> (development version,
-less stable), and <code>r-ng</code> (next generation, unstable).  The rsync
-trees are created directly from the master CVS archive and are updated
-hourly.  The <code>-C</code> option in the <code>rsync</code> command is to
-cause it to skip the CVS directories.  Further information on
+(patched released version), and <code>r-devel</code> (development version). 
+The rsync trees are created directly from the master CVS archive and are
+updated hourly.  The <code>-C</code> option in the <code>rsync</code> command
+is to cause it to skip the CVS directories.  Further information on
 <code>rsync</code> is available at <a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsync/</a>.
 
 <p><hr>
@@ -443,12 +441,11 @@ Up:<a rel=up accesskey=u href="#R%20Basics">R Basics</a>
 <h3>2.6 Are there Unix binaries for R?</h3>
 
 <p>The <code>bin/linux</code> directory of a <small>CRAN</small> site contains Debian
-potato/woody packages for the i386 platform (now part of the Debian
-distribution and maintained by Doug Bates and Dirk Eddelbuettel,
-respectively), Red Hat 6.x i386, 7.x i386 and 7.x alpha packages
-(maintained by Stephen Eglen, Martyn Plummer and Naoki Takebayashi,
-respectively), SuSE 7.3/8.0 i386 packages by Detlef Steuer, and Mandrake
-8.1 and 8.2 i386 packages by Michele Alzetta.
+stable/testing packages for the i386 platform (now part of the Debian
+distribution and maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x
+i386 and 7.x alpha packages (maintained by Stephen Eglen, Martyn Plummer
+and Naoki Takebayashi, respectively), SuSE 7.3/8.0 i386 packages by
+Detlef Steuer, and Mandrake 8.2 i386 packages by Michele Alzetta.
 
 <p>The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -511,10 +508,20 @@ language, and so forth.
 <li>"R Installation and Administration" (<code>R-admin</code>). 
 </ul>
 
-<p>In addition to material written specifically for R, documentation for
-S/<small>S-PLUS</small> (see <a href="#R%20and%20S">R and S</a>) can be used in combination with this
-<small>FAQ</small> (see <a href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>).  We
-recommend
+<p>Books on R include
+
+<blockquote>
+Peter Dalgaard (2002), "Introductory Statistics with R", Springer: New
+York, ISBN 0-387-95475-9.
+
+<p>J. Fox (2002), "An R and <small>S-PLUS</small> Companion to Applied Regression",
+Sage Publications
+(<a href="http://www.socsci.mcmaster.ca/jfox/Books/Companion/">http://www.socsci.mcmaster.ca/jfox/Books/Companion/</a>). 
+</blockquote>
+
+<p>In addition to material written specifically or explicitly for R,
+documentation for S/<small>S-PLUS</small> (see <a href="#R%20and%20S">R and S</a>) can be used in
+combination with this <small>FAQ</small> (see <a href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">What are the differences between R and S?</a>).  We recommend
 
 <blockquote>
 W. N. Venables and B. D. Ripley (1999), "Modern Applied Statistics with
@@ -1993,7 +2000,7 @@ and widget hierarchies, S source file contents, etc.
 <small>API</small>s. 
 <br><dt><strong>RSMethods</strong>
 <dd>An implementation of S version 4 methods and classes for R, consistent
-with the basic material in "Programming with data" by John
+with the basic material in "Programming with Data" by John
 M. Chambers, 1998, Springer NY. 
 <br><dt><strong>RSPerl</strong>
 <dd>An interface from R to an embedded, persistent Perl interpreter,
@@ -2001,6 +2008,8 @@ allowing one to call arbitrary Perl subroutines, classes and methods.
 <br><dt><strong>RSPython</strong>
 <dd>Allows Python programs to invoke S functions, methods, etc., and S code
 to call Python functionality. 
+<br><dt><strong>RXLisp</strong>
+<dd>An interface to call XLisp-Stat functions from within R. 
 <br><dt><strong>SASXML</strong>
 <dd>Example for reading XML files in SAS 8.2 manner. 
 <br><dt><strong>SJava</strong>

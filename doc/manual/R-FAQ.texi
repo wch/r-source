@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-18, 2002-08-09
+@set FAQ-VERSION 1.5-19, 2002-08-22
 @set REL-VERSION 1.5.1
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
@@ -258,13 +258,12 @@ If you know about other platforms, please drop us a note.
 @node What is the current version of R?, How can R be obtained?, What machines does R run on?, R Basics
 @section What is the current version of R?
  
-The current released version is @value{REL-VERSION}.  Conforming to this
-`major.minor.patchlevel' numbering scheme, there are three development
-versions of R, working towards the next patch (`r-patched'), minor
-(`r-devel'), and major (`r-ng') releases of R, respectively.  Version
+The current released version is @value{REL-VERSION}.  Based on this
+`major.minor.patchlevel' numbering scheme, there are two development
+versions of R, working towards the next patch (`r-patched') and minor or
+eventually major (`r-devel') releases of R, respectively.  Version
 r-patched is for bug fixes mostly.  New features are typically
-introduced in r-devel.  Version r-ng will eventually become the next
-generation of R.
+introduced in r-devel.
 
 @node How can R be obtained?, How can R be installed?, What is the current version of R?, R Basics
 @section How can R be obtained?
@@ -282,13 +281,12 @@ rsync -rC rsync.r-project.org::@var{module} R
 @noindent
 to create a copy of the source tree specified by @var{module} in the
 subdirectory @file{R} of the current directory, where @var{module}
-specifies one of the four existing flavors of the R sources, and can be
+specifies one of the three existing flavors of the R sources, and can be
 one of @samp{r-release} (current released version), @samp{r-patched}
-(patched released version), and @samp{r-devel} (development version,
-less stable), and @samp{r-ng} (next generation, unstable).  The rsync
-trees are created directly from the master CVS archive and are updated
-hourly.  The @option{-C} option in the @command{rsync} command is to
-cause it to skip the CVS directories.  Further information on
+(patched released version), and @samp{r-devel} (development version).
+The rsync trees are created directly from the master CVS archive and are
+updated hourly.  The @option{-C} option in the @command{rsync} command
+is to cause it to skip the CVS directories.  Further information on
 @command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
 
 @node How can R be installed?, Are there Unix binaries for R?, How can R be obtained?, R Basics
@@ -424,25 +422,23 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2002-06-28:
+@c Linux binaries as of 2002-08-22:
 @c
-@c debian   2.2 i386  1.5.1  Douglas Bates <bates@stat.wisc.edu>
-@c          3.0 i386  1.5.1  Dirk Eddelbuettel <edd@debian.org>
-@c mandrake 8.1 i386  1.5.0  Michele Alzetta <mikalzet@libero.it>
-@c          8.2 i386  1.5.1  Michele Alzetta <mikalzet@libero.it>
-@c redhat   6.x i386  1.5.1  Stephen Eglen <stephen@gnu.org>
-@c          7.x alpha 1.5.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c              i386  1.5.1  Martyn Plummer <plummer@iarc.fr>
-@c suse     7.3 i386  1.5.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c          8.0 i386  1.5.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c debian   woody i386  1.5.1  Dirk Eddelbuettel <edd@debian.org>
+@c          sarge i386  1.5.1  Dirk Eddelbuettel <edd@debian.org>
+@c mandrake 8.2   i386  1.5.1  Michele Alzetta <mikalzet@libero.it>
+@c redhat   6.x   i386  1.5.1  Stephen Eglen <stephen@gnu.org>
+@c          7.x   alpha 1.5.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
+@c                i386  1.5.1  Martyn Plummer <plummer@iarc.fr>
+@c suse     7.3   i386  1.5.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c          8.0   i386  1.5.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 
 The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
-potato/woody packages for the i386 platform (now part of the Debian
-distribution and maintained by Doug Bates and Dirk Eddelbuettel,
-respectively), Red Hat 6.x i386, 7.x i386 and 7.x alpha packages
-(maintained by Stephen Eglen, Martyn Plummer and Naoki Takebayashi,
-respectively), SuSE 7.3/8.0 i386 packages by Detlef Steuer, and Mandrake
-8.1 and 8.2 i386 packages by Michele Alzetta.
+stable/testing packages for the i386 platform (now part of the Debian
+distribution and maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x
+i386 and 7.x alpha packages (maintained by Stephen Eglen, Martyn Plummer
+and Naoki Takebayashi, respectively), SuSE 7.3/8.0 i386 packages by
+Detlef Steuer, and Mandrake 8.2 i386 packages by Michele Alzetta.
 
 The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -505,10 +501,21 @@ language, and so forth.
 @item ``R Installation and Administration'' (@file{R-admin}).
 @end itemize
 
-In addition to material written specifically for R, documentation for
-S/@SPLUS{} (see @ref{R and S}) can be used in combination with this
-@acronym{FAQ} (@pxref{What are the differences between R and S?}).  We
-recommend
+Books on R include
+
+@quotation
+Peter Dalgaard (2002), ``Introductory Statistics with R'', Springer: New
+York, ISBN 0-387-95475-9.
+
+J. Fox (2002), ``An R and @SPLUS{} Companion to Applied Regression'',
+Sage Publications
+(@uref{http://www.socsci.mcmaster.ca/jfox/Books/Companion/}).
+@end quotation
+
+In addition to material written specifically or explicitly for R,
+documentation for S/@SPLUS{} (see @ref{R and S}) can be used in
+combination with this @acronym{FAQ} (@pxref{What are the differences
+between R and S?}).  We recommend
 
 @quotation
 W. N. Venables and B. D. Ripley (1999), ``Modern Applied Statistics with
@@ -2116,7 +2123,7 @@ A graphics device for R that uses Java components and graphics
 @acronym{API}s.
 @item RSMethods
 An implementation of S version 4 methods and classes for R, consistent
-with the basic material in ``Programming with data'' by John
+with the basic material in ``Programming with Data'' by John
 M. Chambers, 1998, Springer NY.
 @item RSPerl
 An interface from R to an embedded, persistent Perl interpreter,
@@ -2124,6 +2131,8 @@ allowing one to call arbitrary Perl subroutines, classes and methods.
 @item RSPython
 Allows Python programs to invoke S functions, methods, etc., and S code
 to call Python functionality.
+@item RXLisp
+An interface to call XLisp-Stat functions from within R.
 @item SASXML
 Example for reading XML files in SAS 8.2 manner.
 @item SJava
