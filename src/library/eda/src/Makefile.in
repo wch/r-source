@@ -18,7 +18,7 @@ OBJS = line.o smooth.o
 
 all: $(LIB)
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/libs
-	@cp $< $(top_builddir)/library/$(pkg)/libs
+	@cp $(LIB) $(top_builddir)/library/$(pkg)/libs
 
 $(LIB): $(OBJS)
 	$(SHLIBLD) $(SHLIBLDFLAGS) -o $@ $(OBJS)

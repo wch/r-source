@@ -1142,36 +1142,37 @@ SEXP do_updateform(SEXP call, SEXP op, SEXP args, SEXP rho)
     new = CADR(args) = duplicate(CADR(args));
 
     /* Check of new and old formulae. */
-    /* The old one must be a valid model */
-    /* formula with an lhs and rhs. */
-
     if (TYPEOF(old) != LANGSXP ||
        (TYPEOF(new) != LANGSXP && CAR(old) != tildeSymbol) ||
        CAR(new) != tildeSymbol)
 	errorcall(call, "formula expected\n");
-    if (length(old) != 3)
-	errorcall(call, "invalid first formula\n");
-    lhs = CADR(old);
-    rhs = CADDR(old);
 
-    /* We now check that new formula has a */
-    /* valid lhs.  If it doesn't, we add one */
-    /* and set it to the rhs of the old formula. */
-
-    if (length(new) == 2)
-	CDR(new) = CONS(lhs, CDR(new));
-
-    /* Now we check the left and right sides */
-    /* of the new formula and substitute the */
-    /* correct value for any "." templates. */
-    /* We must parenthesize the rhs or we */
-    /* might upset arity and precedence. */
-
-    PROTECT(rhs);
-
-    CADR(new) = ExpandDots(CADR(new), lhs);
-    CADDR(new) = ExpandDots(CADDR(new), rhs);
-    UNPROTECT(1);
+    if (length(old) == 3) {
+	lhs = CADR(old);
+	rhs = CADDR(old);
+	/* We now check that new formula has a valid lhs.
+	   If it doesn't, we add one and set it to the rhs of the old
+	   formula. */
+	if (length(new) == 2)
+	    CDR(new) = CONS(lhs, CDR(new));
+	/* Now we check the left and right sides of the new formula
+	   and substitute the correct value for any "." templates.
+	   We must parenthesize the rhs or we might upset arity and
+	   precedence. */
+	PROTECT(rhs);
+	CADR(new) = ExpandDots(CADR(new), lhs);
+	CADDR(new) = ExpandDots(CADDR(new), rhs);
+	UNPROTECT(1);
+    }
+    else {
+	/* The old formula had no lhs, so we only expand the rhs of the
+	   new formula. */
+	rhs = CADR(old);
+	if (length(new) == 3)
+	    CADDR(new) = ExpandDots(CADDR(new), rhs);
+	else
+	    CADR(new) = ExpandDots(CADR(new), rhs);
+    }
 
     /* It might be overkill to zero the */
     /* the attribute list of the returned */
@@ -1211,7 +1212,7 @@ SEXP do_updateform(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP terms, data, names, variables, varnames, dots, dotnames, na_action;
-    SEXP ans, row_names, subset, tmp;
+    SEXP ans, row_names, subset, tmp,tmp2;
     char buf[256];
     int i, nr, nc;
     int nvars, ndots;
@@ -1266,7 +1267,7 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     nc = length(data);
     nr = 0;			/* -Wall */
-    if (!isNull(data)) {
+    if (nc > 0) {
 	nr = nrows(VECTOR(data)[0]);
 	for (i = 0; i < nc; i++) {
 	    ans = VECTOR(data)[i];
@@ -1302,11 +1303,20 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     /* Do the subsetting, if required. */
+    /* Need to save and restore 'most' attributes */
 
     if (subset != R_NilValue) {
+        PROTECT(tmp2=allocVector(VECSXP, length(data)));
+	for (i =length(data); i--;){
+	    VECTOR(tmp2)[i]=allocVector(INTSXP,1);
+	    copyMostAttrib(VECTOR(data)[i],VECTOR(tmp2)[i]);
+	}
 	PROTECT(tmp = lang4(install("["), data, subset, R_MissingArg));
-	data = eval(tmp, rho);
-	UNPROTECT(1);
+	PROTECT(data = eval(tmp, rho));
+	for (i =length(data); i--;){
+	    copyMostAttrib(VECTOR(tmp2)[i],VECTOR(data)[i]);
+	}
+	UNPROTECT(3);
     }
     UNPROTECT(2);
     PROTECT(data);
@@ -1320,8 +1330,15 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    na_action = install(CHAR(STRING(na_action)[0]));
 	PROTECT(na_action);
 	PROTECT(tmp = lang2(na_action, data));
-	ans = eval(tmp, rho);
-	UNPROTECT(2);
+	PROTECT(ans = eval(tmp, rho));
+	if (!isNewList(ans) || length(ans) != length(data))
+	    errorcall(call, "invalid result from na.action\n");
+	/* need to transfer _all but dim_ attributes, possibly lost 
+	   by subsetting in na.action.  */     
+	for ( i = length(ans) ; i-- ; )
+	  	copyMostAttrib(VECTOR(data)[i],VECTOR(ans)[i]);
+	/*	ATTRIB(VECTOR(ans)[i]) = ATTRIB(VECTOR(data)[i]); */
+	UNPROTECT(3);
     }
     else ans = data;
     UNPROTECT(1);

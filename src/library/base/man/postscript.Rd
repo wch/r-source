@@ -48,7 +48,9 @@ compatible, and can be included into other documents, e.g. into LaTeX, using
 \code{\epsfig{file=<filename>}}.
 }
 \seealso{
-\code{\link{x11}}, \code{\link{macintosh}}, \code{\link{Devices}}.
+    \code{\link{x11}}, \code{\link{macintosh}}, \code{\link{Devices}}.
+    {\code{\link{check.options}} which is called from both
+	\code{ps.options} and \code{postscript}.}
 }
 \examples{
 \dontrun{
@@ -60,11 +62,13 @@ plot(xx,yy)# produce the desired graph(s)
 \dontrun{dev.off()# turn off the postscript device}
 
 all(unlist(ps.options()) == unlist(.PostScript.Options))
+ps.options(bg = "pink")
 str(ps.options(reset = TRUE))
 
 ##- error checking of arguments:
-ps.options(width=0:12, onefile=1, bg=pi)
-%% If  override.check  was an argument to ps.options:
-%%> str(ps.options(width=0:12, onefile=1, bg=pi, override.check = c(F,T,F)))
+ps.options(width=0:12, onefile=0, bg=pi)
+
+## override the check for 'onefile', but not the others:
+str(ps.options(width=0:12, onefile=1, bg=pi, override.check = c(F,T,F)))
 }
 \keyword{device}

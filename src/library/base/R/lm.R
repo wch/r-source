@@ -63,6 +63,12 @@ lm.fit <- function (x, y, method = "qr", tol = 1e-07, ...)
 {
     if(is.null(n <- nrow(x))) stop("'x' must be a matrix")
     p <- ncol(x)
+    if (p == 0) {
+        ## oops, null model
+        cc <- match.call()
+        cc[[1]] <- as.name("lm.fit.null")
+        return(eval(cc, sys.frame(sys.parent())))
+    }
     ny <- NCOL(y)
     ## treat one-col matrix as vector
     if ( is.matrix(y) && ny == 1 ) y <- drop(y)
@@ -137,6 +143,12 @@ lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
 	y  <- if (ny > 1) y[ ok, , drop = FALSE] else y[ok]
     }
     p <- ncol(x)
+    if (p == 0) {
+        ## oops, null model
+        cc <- match.call()
+        cc[[1]] <- as.name("lm.wfit.null")
+        return(eval(cc, sys.frame(sys.parent())))
+    }
     storage.mode(y) <- "double"
     wts <- sqrt(w) 
     z <- .Fortran("dqrls",
@@ -545,13 +557,14 @@ model.matrix.lm <- function(object, ...)
     }
 }
 
-predict.mlm <- function(fit, newdata, se.fit = FALSE)
+##---> SEE ./mlm.R  for more methods, etc. !! 
+predict.mlm <- function(object, newdata, se.fit = FALSE)
 {
-    if(missing(newdata)) return(fit$fitted)
+    if(missing(newdata)) return(object$fitted)
     if(se.fit)
 	stop("The 'se.fit' argument is not yet implemented for mlm objects")
-    x <- model.matrix(fit, newdata) # will use model.matrix.lm
+    x <- model.matrix(object, newdata) # will use model.matrix.lm
     piv <- object$qr$pivot[1:object$rank]
     pred <- X[, piv, drop = FALSE] %*% object$coefficients[piv,]
-    if(inherits(fit, "mlm")) pred else pred[, 1]
+    if(inherits(object, "mlm")) pred else pred[, 1]
 }

@@ -50,4 +50,4 @@ datadir = @datadir@
 libdir = @libdir@
 mandir = @mandir@
 
-rhome = @datadir@/R
+rhome = @libdir@/R

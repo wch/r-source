@@ -1,4 +1,4 @@
-eigen <- function (x, symmetric, only.values=FALSE)
+eigen <- function(x, symmetric, only.values=FALSE)
 {
     x <- as.matrix(x)
     n <- nrow(x)
@@ -21,8 +21,7 @@ eigen <- function (x, symmetric, only.values=FALSE)
 	if(complex.x) {
 	    xr <- Re(x)
 	    xi <- Im(x)
-	    z <- .Fortran(
-			  "ch",
+	    z <- .Fortran("ch",
 			  n,
 			  n,
 			  xr,
@@ -42,8 +41,7 @@ eigen <- function (x, symmetric, only.values=FALSE)
 					    im=z$ivectors), nc=n)
 	}
 	else {
-	    z <- .Fortran(
-			  "rs",
+	    z <- .Fortran("rs",
 			  n,
 			  n,
 			  x,
@@ -62,8 +60,7 @@ eigen <- function (x, symmetric, only.values=FALSE)
 	if(complex.x) {
 	    xr <- Re(x)
 	    xi <- Im(x)
-	    z <- .Fortran(
-			  "cg",
+	    z <- .Fortran("cg",
 			  n,
 			  n,
 			  xr,
@@ -85,8 +82,7 @@ eigen <- function (x, symmetric, only.values=FALSE)
 					    im=z$ivectors), nc=n)
 	}
 	else {
-	    z <- .Fortran(
-			  "rg",
+	    z <- .Fortran("rg",
 			  n,
 			  n,
 			  x,
@@ -112,10 +108,6 @@ eigen <- function (x, symmetric, only.values=FALSE)
 	}
 	ord <- rev(order(Mod(z$values)))
     }
-    z$values <- z$values[ord]
-    if(!only.values) {
-	z$vectors <- z$vectors[,ord]
-	z[c("values", "vectors")]
-    }
-    else z["values"]
+    list(values = z$values[ord],
+	 vectors = if(!only.values) z$vectors[,ord])
 }

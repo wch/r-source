@@ -44,9 +44,13 @@ values minus one.
 \value{
 The centered, scaled matrix.
 }
+\seealso{
+    \code{\link{sweep}} which allows centering (and scaling) with
+    arbitrary statistics.
+}
 \examples{
 x <- matrix(1:10, nc=2)
-centered.x <- scale(x, scale=FALSE)
-centered.scaled.x <- scale(x)
+(centered.x <- scale(x, scale=FALSE))
+cov(centered.scaled.x <- scale(x))# all 1
 }
 \keyword{array}

@@ -14,12 +14,28 @@ is.vector(x, mode = "any")
   vector elements are initialized to \code{FALSE}, numeric vector
   elements to \code{0} and character vector elements to \code{""}.
 
-  \code{as.vector} attempts to coerce its argument into a vector of mode
-  \code{mode} (the default is to coerce to whichever mode is most
-  convenient).  The attributes of \code{x} are removed.
+  \code{as.vector}, a generic, attempts to coerce its argument into a
+  vector of mode \code{mode} (the default is to coerce to whichever mode
+  is most convenient).  The attributes of \code{x} are removed.
 
   \code{is.vector} returns \code{TRUE} if \code{x} is a vector (of mode
   logical, factor, integer, real or character) and \code{FALSE}
   otherwise.
+}
+\seealso{
+\code{\link{c}}, \code{\link{is.numeric}}, \code{\link{is.list}}, etc.
+}
+\examples{
+df <- data.frame(x=1:3, y=5:7)
+\dontrun{## Error:
+  as.vector(data.frame(x=1:3, y=5:7), mode="numeric")
+}
+###-- All the following are TRUE:
+is.list(df)
+! is.vector(df)
+! is.vector(df, mode="list")
+
+is.vector(list(), mode="list")
+is.vector(NULL,   mode="NULL")
 }
 \keyword{classes}

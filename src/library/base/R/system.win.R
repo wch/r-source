@@ -2,31 +2,27 @@
     list(OS.type = "Windows",
          file.sep = "\\\\",
          dynlib.ext = ".dll",
-         show.file = function(file) .NotYetImplemented(),
-         append.file = function(f1,f2) .NotYetImplemented(), # concat(f1,f2)
-         show.libraries = function(lib.loc, fsep) .NotYetImplemented(),
+         ## The next few are from Guido's:
+	 show.file = function(filename) {
+                       a <- scan(filename,what="c",sep="\n",quiet=TRUE)
+                       for (i in 1:length(a))
+                       cat(a[i],"\n")},
+	 append.file = function(f1,f2) {# append to 'f1' the file 'f2':
+             a <- scan(f1, what = "c", sep = "\n", quiet = TRUE)
+             for (i in 1:length(a)) cat(a[i], "\n",file=f2,append=TRUE)
+         },
+	 show.data = function(package,lib.loc,fsep) {
+	 ## give `index' of all possible data sets
+             for (lib in lib.loc)
+             for (pkg in package) {
+	      INDEX <- system.file(paste("data", "index.doc", sep = fsep),
+			      pkg, lib)
+	      if (INDEX != "") {
+	       cat(paste("\n\nData sets in package `", pkg, "':\n\n",
+                         sep = fsep))
+               .Platform$ show.file(INDEX)
+              }}},	 
          )
-
-data <- function(..., list = character(0), package = .packages(),
-		 lib.loc = .lib.loc) {
-    ## FIXME add support for package and lib.loc args
-    names <- c(as.character(substitute(list(...))[-1]), list)
-    if (length(names) == 0) {
-	datafile<-system.file("data","index.doc")
-	if( datafile == "" )
-	    stop("no index file for data")
-	xx<-scan(datafile,skip=3,what="",sep="\t")
-	cat("	R DATA SETS \n")
-	cat(t(matrix(xx[!is.na(xx)],nc=2,byrow=TRUE)),sep=c("\t\t","\n"))
-    }
-    else
-	for (name in names) {
-	    file <- system.file("data", name)
-	    if(file == "") stop(paste("no data set called", name))
-	    else source(file)
-	}
-    invisible(names)
-}
 
 getenv <- function(names) .Internal(getenv(names))
 
@@ -37,28 +33,6 @@ help <- function(topic, package = .packages(), lib.loc = .lib.loc) {
 library <- function(name, help, lib.loc = .lib.loc,
 		    character.only = FALSE, logical.return = FALSE) {
     .NotYetImplemented()
-}
-
-library.dynam <- function(chname, package = .packages(), lib.loc = .lib.loc) {
-    ## FIXME (this is == Unix  with changes 
-    ## ----- 1) .dll instead of .so	 2) "\\" for "/"
-    if (!exists(".Dyn.libs"))
-	assign(".Dyn.libs", character(0), envir = .AutoloadEnv)
-    if(missing(chname) || (LEN <- nchar(chname)) == 0)
-	return(.Dyn.libs)
-    if (substr(chname, LEN - 3, LEN) == ".dll") {
-	chname <- substr(chname, 1, LEN - 4)
-    }
-    if (is.na(match(chname, .Dyn.libs))) {
-	file <- system.file(paste("libs", "\\", chname, ".", "dll", sep = ""),
-			    package, lib.loc)
-	if (file == "") {
-	    stop(paste("dynamic library `", chname, "' not found", sep = ""))
-	}
-	.Internal(dyn.load(file))
-	assign(".Dyn.libs", c(.Dyn.libs, chname), envir = .AutoloadEnv)
-    }
-    invisible(.Dyn.libs)
 }
 
 system <- function(call, intern = FALSE)

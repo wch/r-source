@@ -183,29 +183,6 @@ void InitOptions(void)
     UNPROTECT(2);
 }
 
-/* FIXME : This functionality should be universal */
-/* See also in bind.c. */
-
-static SEXP EnsureString(SEXP s)
-{
-    switch(TYPEOF(s)) {
-    case SYMSXP:
-	s = PRINTNAME(s);
-	break;
-    case STRSXP:
-	s = STRING(s)[0];
-	break;
-    case CHARSXP:
-	break;
-    case NILSXP:
-	s = R_BlankString;
-	break;
-    default:
-	error("invalid tag in name extraction\n");
-    }
-    return s;
-}
-
 SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP argi= R_NilValue, argnames= R_NilValue, namei= R_NilValue,

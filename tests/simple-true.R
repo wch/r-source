@@ -1,4 +1,3 @@
-##-*- R -*-
 ##-- These should all return  'TRUE'
 
 all(1:12 == cumsum(rep(1,12)))

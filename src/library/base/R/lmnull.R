@@ -89,3 +89,18 @@ summary.lm.null <- function (z, correlation = FALSE)
     class(ans) <- "summary.lm.null"
     ans
 }
+
+### The next two are used by lm.fit when it detects a null design
+### matrix. A bit of a kludge, but it makes drop1 and friends work
+### with no-intercept models
+
+lm.fit.null <-
+function (x, y, method = "qr", tol = 1e-07, ...) 
+list(coefficients = numeric(0), residuals = y, fitted.values = 0 * 
+    y, weights = NULL, rank = 0, df.residual = length(y))
+
+
+lm.wfit.null <-
+function (x, y, w, method = "qr", tol = 1e-07, ...) 
+list(coefficients = numeric(0), residuals = y, fitted.values = 0 * 
+    y, weights = w, rank = 0, df.residual = length(y))

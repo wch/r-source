@@ -8,5 +8,6 @@ text.default <- function(x, y = NULL, labels = seq(along = x), adj =
     if (!missing(y) && (is.character(y) || is.expression(y))) {
 	labels <- y; y <- NULL
     }
-    .Internal(text(xy.coords(x,y), as.char.or.expr(labels), adj, ...))
+    .Internal(text(xy.coords(x,y, recycle=TRUE),
+		   as.char.or.expr(labels), adj, ...))
 }

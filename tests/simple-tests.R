@@ -19,7 +19,7 @@ abs(Im(asin(sin(1i))) -	 1) < 2*Meps
 ##P (1 - Im(sin(asin(Ii))))/Meps
 ##P (1 - Im(cos(acos(Ii))))/Meps
 
-.Random.seed <- c(629, 6137, 22167) # want reproducible output
+.Random.seed <- c(0, 629, 6137, 22167) # want reproducible output
 Isi <- Im(sin(asin(1i + rnorm(100))))
 all(abs(Isi-1) < 100* Meps)
 ##P table(2*abs(Isi-1)	/ Meps)

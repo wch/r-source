@@ -6,7 +6,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 		   lower.triangular = corr & is.matrix(x),
 		   diag.lower.tri = corr & !is.null(show.max))
 {
-  ## Martin Maechler, 21 Jan 94;  Dedicated to	Benjamin Schaad,  born that day
+  ## Martin Maechler, 21 Jan 1994;  Dedicated to Benjamin Schaad, born that day
 
   ##--------------- Argument checking -----------------------------
   eval(corr)
@@ -37,12 +37,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
     stop(paste("number of cutpoints must be  ONE",
 	       if(corr)"LESS" else "MORE", "than number of symbols"))
 
-  ##: Scor <- as.character(cut(x, breaks= cutpoints, labels= symbols))
-  ##:-- more efficiently, using the function from within  cut :
-  iS <-
-    .C("bincode2", x= as.double(x), length(x),
-       as.double(cutpoints), as.integer(ns+1),
-       code= integer(length(x)), include = TRUE, NAOK = TRUE)$code
+  iS <- cut(x, breaks=cutpoints, include.lowest=TRUE, labels= FALSE)
   if(any(ii <- is.na(iS))) {
 	  ##-- can get 0, if x[i]== minc  --- only case ?
 	  iS[which(ii)[abs(x[ii] - minc) < eps]] <- 1 #-> symbol[1]

@@ -7,6 +7,7 @@ is.null(x)
 }
 \alias{NULL}
 \alias{as.null}
+\alias{as.null.default}
 \alias{is.null}
 \description{
 \code{NULL} represents the null object in R.

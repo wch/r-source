@@ -46,7 +46,8 @@ plot (data.frame.obj, \dots)
     consistency of length and names.}
   \item{check.names}{if \code{TRUE} then the names of the variables
     in the data frame are checked to ensure that they are valid
-    variable names.  If necessary they are adjusted so that they are.}
+    variable names.  If necessary they are adjusted (by
+    \code{\link{make.names}}) so that they are.}
   \item{data.frame.obj}{objects of class \code{data.frame}.}
   \item{\dots}{optional arguments to \code{print} or \code{plot} methods.}
 }
@@ -76,7 +77,7 @@ plot (data.frame.obj, \dots)
   \code{\link{print.matrix}}.
 }
 \seealso{
-  \code{\link{read.table}}.
+  \code{\link{read.table}}, \code{\link{make.names}}.
 }
 \examples{
 L3 <- LETTERS[1:3]

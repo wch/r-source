@@ -34,14 +34,12 @@ find <- function(what, mode = "any", numeric. = FALSE, simple.words=TRUE) {
     }
     ## found name in  search()[ ind ]
 
+    ii <- which(ind)
     if(check.mode && any(ind)) {
-	ii <- which(ind)
 	mode.ok <- sapply(ii, function(i) exists(nam[i], where = i,
 						 mode = mode, inherits=FALSE))
 	ii <- ii[mode.ok]
-	if(numeric.) structure(ii, names=sp[ii]) else sp[ii]
-    } else {
-	if(numeric.) structure(which(ind), names=sp[ind]) else sp[ind]
     }
+    if(numeric.) structure(ii, names=sp[ii]) else sp[ii]
 }
 

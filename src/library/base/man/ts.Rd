@@ -66,5 +66,13 @@ print( ts(1:10, freq = 7, start = c(12, 2)), calendar = TRUE) # print.ts(.)
 gnp <- ts(cumsum(1 + round(rnorm(100), 2)),
           start = c(1954, 7), frequency = 12)
 plot(gnp) # using `plot.ts' for time-series plot
+\testonly{
+ts(1:5, start=2, end=4) # truncate
+ts(1:5, start=3, end=17)# repeat
+}
+## A phase plot:
+data(nhtemp)
+plot(nhtemp, c(nhtemp[-1],NA), cex = .8, col="blue",
+	main="Lag plot of New Haven temperatures")
 }
 \keyword{ts}

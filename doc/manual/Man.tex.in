@@ -1,0 +1,57 @@
+\documentclass[@R_PAPERSIZE@paper]{book}
+\usepackage{Rd}
+\usepackage{makeidx}
+
+\makeindex
+\sloppy{}
+
+\begin{document}\pagenumbering{roman}
+
+\title{\fbox{\Huge The \R\ Manual}}
+\date{\vspace*{15ex}\textsc{\small\input{Version}}}
+\author{\textbf{Note:}
+  This is material from a preliminary draft of the \R\ manual and is \\[1ex]
+  Copyright 1994, 1995, 1996 \\ by Robert Gentleman and Ross Ihaka. \\[1.5ex]
+  Copyright 1997 \\ by Robert Gentleman and Ross Ihaka and the \R\ core team.
+}
+\maketitle
+\pagestyle{empty}
+%%-- for ``2 pages on 1'' printing (make Manbooks):
+\ \ \clearpage \ \ \clearpage
+
+\pagestyle{headings}
+\pagenumbering{roman}
+\tableofcontents
+\cleardoublepage
+
+\pagenumbering{arabic}
+
+\appendix
+
+\chapter{Writing \R\ Documentation}
+\begin{center}\Large
+  \begin{tabular}{l@{\qquad\qquad}c@{\qquad\qquad}r}
+    Ross Ihaka        & Martin M{\"a}chler & Kurt Hornik \\
+    U. Auckland, NZ   & ETH Z{\"u}rich, CH & TU Wien, AT \\
+  \end{tabular}
+  \par\bigskip{\normalsize 1996 \large -- Nov.\ 1998}
+\end{center}
+\input{writing-Rd}
+
+\chapter{Mathematical Annotation in \R\ Graphics}
+\input{plotmath}
+
+\chapter{\R (Internal) Programming Miscellania}
+\input{primitive-funs}
+
+\chapter[Function Documentation]{Detailed Function Documentation}
+\input{pkg-base}
+\input{pkg-eda}
+\input{pkg-modreg}
+\input{pkg-mva}
+\input{pkg-stepfun}
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Index}
+\printindex
+\end{document}

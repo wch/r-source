@@ -32,9 +32,12 @@ void bakslv(double *, int *, int *,
 	    double *, int *, int *,
 	    double *, int *, int *);
 
-void bincode (double *, int *, double *, int *, int *, int *, int *);
+void bincode (double *x, int *n, double *breaks, int *nb,
+	      int *code, int *right, int *include_border, int *naok);
+void bincount(double *x, int *n, double *breaks, int *nb, int *count,
+	      int *right, int *include_border, int *naok);
+/*unused*/
 void bincode2(double *, int *, double *, int *, int *, int *, int *);
-void bincount(double *, int *, double *, int *, int *, int *, int *);
 
 /* cpoly.c : */
 int F77_SYMBOL(cpoly)(double *opr, double *opi, int *degree,
@@ -98,7 +101,12 @@ void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep, int *negep,
 /* ...............*/
 
 /* pretty.c */
-/* ...............*/
+double pretty0(double *lo, double *up, int *ndiv, int min_n,
+	       double shrink_sml, double high_u_fact[],
+	       int eps_correction, int return_bounds);
+void pretty(double *lo, double *up, int *ndiv, int *min_n,
+	    double *shrink_sml, double *high_u_fact, int *eps_correction);
+
 
 /* pythag.c */
 double pythag(double, double);
@@ -110,7 +118,9 @@ void spline_eval(int *method, int *nu, double *u, double *v,
 		 int *n, double *x, double *y,
 		 double *b, double *c, double *d);
 
-/* stem.c      (??) */
+/* stem.c */
+int stemleaf(double *x, int *n, double *scale, int *width, double *atom);
+
 /* ...............*/
 
 /* strsignif.c  (??) */

@@ -64,12 +64,11 @@ else {
 
 
 
+
 sub usage {
 
     print "Rdconv\n";
     print "Usage: Rdconv [--debug/-d] [--help/-h]";
-    print " [--type/-t html|nroff|Sd|latex|examp] file\n\n";
-
+    print " [--type/-t html|nroff|Sd|latex|example] file\n\n";
     exit 0;
 }
-

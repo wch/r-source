@@ -74,7 +74,9 @@ par.o:		$(top_srcdir)/src/include/Graphics.h
 plot.o:		$(top_srcdir)/src/include/Graphics.h
 
 arithmetic.o:	$(top_srcdir)/src/include/Mathlib.h
-random.o:	$(top_srcdir)/src/include/Mathlib.h
+format.o:	$(top_srcdir)/src/include/Mathlib.h
+random.o:	$(top_srcdir)/src/include/Mathlib.h \
+			$(top_srcdir)/src/include/Random.h
 
 deparse.o:	names.h
 names.o:	names.h

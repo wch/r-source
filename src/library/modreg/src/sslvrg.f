@@ -1,13 +1,13 @@
       subroutine sslvrg(penalt,dofoff,x,y,w,n,knot,nk,coef,sz,lev,crit,
-&     icrit,spar,ratio,xwy,hs0,hs1,hs2,hs3,sg0,sg1,sg2,sg3,abd,p1ip,
-&     p2ip,ld4,ldnk,info)
+     &icrit,spar,ratio,xwy,hs0,hs1,hs2,hs3,sg0,sg1,sg2,sg3,abd,p1ip,
+     &p2ip,ld4,ldnk,info)
       implicit double precision(a-h,o-z)
       integer n,nk,icrit,ld4,ldnk,i,icoef,ileft,ilo,info,j,mflag
       double precision penalt,dofoff,x(n),y(n),w(n),knot(nk+4),coef(nk),
-&     sz(n),lev(n),crit,ratio,spar,xwy(nk),hs0(nk),hs1(nk),hs2(nk),hs3(
-&     nk), sg0(nk),sg1(nk),sg2(nk),sg3(nk),abd(ld4,nk),p1ip(ld4,nk),
-&     p2ip(ldnk,nk),lambda,b0,b1,b2,b3,eps,vnikx(4,1),work(16),xv,
-&     bvalue,rss,df
+     &sz(n),lev(n),crit,ratio,spar,xwy(nk),hs0(nk),hs1(nk),hs2(nk),hs3(
+     &nk), sg0(nk),sg1(nk),sg2(nk),sg3(nk),abd(ld4,nk),p1ip(ld4,nk),
+     &p2ip(ldnk,nk),lambda,b0,b1,b2,b3,eps,vnikx(4,1),work(16),xv,
+     &bvalue,rss,df
       lenkno=nk+4
       ilo = 1 
       eps = .1e-10
@@ -59,9 +59,9 @@
       b2=vnikx(3,1)
       b3=vnikx(4,1)
       lev(i) = (p1ip(4,j)*b0**2 + 2.*p1ip(3,j)*b0*b1 +2.*p1ip(2,j)*b0*
-&     b2 + 2.*p1ip(1,j)*b0*b3 +p1ip(4,j+1)*b1**2 + 2.*p1ip(3,j+1)*b1*b2 
-&     +2.*p1ip(2,j+1)*b1*b3 +p1ip(4,j+2)*b2**2 + 2.*p1ip(3,j+2)*b2*b3 +
-&     p1ip(4,j+3)*b3**2 )*w(i)**2 
+     &b2 + 2.*p1ip(1,j)*b0*b3 +p1ip(4,j+1)*b1**2 + 2.*p1ip(3,j+1)*b1*b2 
+     &+2.*p1ip(2,j+1)*b1*b3 +p1ip(4,j+2)*b2**2 + 2.*p1ip(3,j+2)*b2*b3 +
+     &p1ip(4,j+3)*b3**2 )*w(i)**2 
 23016 continue
       if(.not.(icrit.eq.1))goto 23022
       rss = 0e0 

@@ -1,4 +1,4 @@
-xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log = NULL)
+xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
 {
     if(is.null(y)) {
 	ylab <- xlab
@@ -57,7 +57,16 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log = NULL)
 	}
     }
 
-    if(length(x) != length(y)) stop("x and y lengths differ")
+    if(length(x) != length(y)) {
+	if(recycle) {
+	    if((nx <- length(x)) < (ny <- length(y)))
+		x <- rep(x, length= ny)
+	    else
+		y <- rep(y, length= nx)
+	}
+	else
+	    stop("x and y lengths differ")
+    }
 
     if(length(log) && log != "") {
 	log <- strsplit(log, NULL)[[1]]
@@ -77,7 +86,19 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log = NULL)
     return(list(x=as.real(x), y=as.real(y), xlab=xlab, ylab=ylab))
 }
 
-plot <- function(x, ...) UseMethod("plot")
+plot <- function(x, ...) {
+    if(is.null(class(x)) && is.function(x)) {
+        if("ylab" %in% names(list(...)))
+            plot.function(x, ...)
+        else
+            plot.function(x, ylab=paste(deparse(substitute(x)),"(x)"), ...)
+    }
+    else UseMethod("plot")
+}
+
+plot.function <- function(fn, from=0, to=1, ...) {
+    curve(fn, from, to, ...)
+}
 
 plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
 			 log="", main=NULL, sub=NULL, xlab=NULL, ylab=NULL,
@@ -110,10 +131,12 @@ plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
     invisible()
 }
 
-plot.factor <- function(x, y, ...)
+plot.factor <- function(x, y, legend.text=levels(y), ...)
 {
     if (missing(y))
 	barplot(table(x), ...)
+    else if (is.factor(y)) 
+        barplot(table(y, x), legend.text=legend.text, ...)
     else if (is.numeric(y))
 	boxplot(y ~ x, ...)
     else NextMethod("plot")

@@ -2,8 +2,9 @@ print <- function(x, ...)UseMethod("print")
 
 ##- Need '...' such that it can be called as  NextMethod("print", ...):
 print.default <-
-    function(x,digits=NULL,quote=TRUE,na.print=NULL,print.gap=NULL, ...)
-    .Internal(print.default(x,digits,quote,na.print,print.gap))
+    function(x,digits=NULL,quote=TRUE,na.print=NULL,print.gap=NULL,right=FALSE,
+             ...)
+    .Internal(print.default(x,digits,quote,na.print,print.gap,right))
 
 print.atomic <- function(x,quote=TRUE,...) print.default(x,quote=quote)
 
@@ -86,10 +87,10 @@ print.coefmat <-
 	stop("'P.values is TRUE, but has.Pvalue not!")
 
     if(has.Pvalue && !P.values) {# P values are there, but not wanted
-	d <- dim(xm <- as.matrix(x[,-nc]))
+	d <- dim(xm <- data.matrix(x[,-nc , drop = FALSE]))
 	nc <- nc - 1
 	has.Pvalue <- FALSE
-    } else xm <- as.matrix(x)
+    } else xm <- data.matrix(x)
 
     k <- nc - has.Pvalue - (if(missing(tst.ind)) 1 else length(tst.ind))
     if(!missing(cs.ind) && length(cs.ind) > k) stop("wrong k / cs.ind")
@@ -125,7 +126,7 @@ print.coefmat <-
 		Signif <- symnum(pv, corr = FALSE, na = FALSE,
 				 cutpoints = c(0,  .001,.01,.05, .1, 1),
 				 symbols   =  c("***","**","*","."," "))
-		Cf <- cbind(Cf, Signif)
+		Cf <- cbind(Cf, format.char(Signif)) #format.ch: right=TRUE
 	    }
 	} else signif.stars <- FALSE
     } else signif.stars <- FALSE

@@ -2,7 +2,10 @@
 \title{Double Precision Vectors}
 \alias{double}
 \alias{as.double}
+\alias{as.double.default}
 \alias{is.double}
+\alias{as.single}
+\alias{as.single.default}
 \usage{
 double(length = 0)
 as.double(x)

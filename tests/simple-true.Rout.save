@@ -11,8 +11,8 @@ Type	"?contributors" for a list.
 
 Type	"demo()" for some demos, "help()" for on-line help, or
 	"help.start()" for a HTML browser interface to help.
+Type	"q()" to quit R.
 
-> ##-*- R -*-
 > ##-- These should all return  'TRUE'
 > 
 > all(1:12 == cumsum(rep(1,12)))

@@ -26,8 +26,10 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
 	@for pkg in $(PKGS) profile; do \
-	  (cd $${pkg} && $(MAKE)); \
+	  (cd $${pkg} && $(MAKE)) || exit 1; \
 	done
+	@(cd $(top_builddir)/library; \
+	  cat */TITLE > LibIndex 2> /dev/null)
 
 docs: stamp-docs
 help: stamp-help

@@ -9,6 +9,7 @@ as.expression(expr)
 \alias{expression}
 \alias{is.expression}
 \alias{as.expression}
+\alias{as.expression.default}
 \value{
 
 \code{expression} returns a vector of mode \code{"expression"}

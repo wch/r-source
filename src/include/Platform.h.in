@@ -3,6 +3,10 @@
 
 #define Unix
 
+/* (Long) Integers */
+
+#undef LONG_32_BITS
+
 /* Floating Point Arithmetic */
 #undef HAVE_MATHERR		/* System V */
 #undef HAVE_ISNAN		/* IEEE Arith indicator */

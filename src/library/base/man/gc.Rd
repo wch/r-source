@@ -13,16 +13,20 @@ gcinfo(verbose)
 \value{
 A call of \code{gc} causes a garbage collection to take place.
 This usually takes place automagically without user intervention.
-\code{gc} returns a  2*2 matrix giving
+\code{gc} returns a 2*2 matrix with rows \code{"Ncells"} (\emph{cons
+    cells}) and \code{"Vcells"} (\emph{vector cells}),
+and columns \code{"free"} and \code{"total"}.
 
 The associated function \code{gcinfo} sets a flag so that
 automatic collection is either silent (\code{verbose=FALSE}) or
 prints memory use statistics (\code{verbose=TRUE}).
 }
+\seealso{\code{\link{Memory}} on \R's memory management  and
+    \code{\link{gctorture}} if you are an \R hacker.}
 \examples{
 gc() #- do it now
 gcinfo(TRUE) #-- in the future, show when you do it
-x _ integer(0); for(i in 1:18) x _ c(x,i,x)
+x <- integer(0); for(i in 1:18) x _ c(x,i,x)
 gcinfo(verbose = FALSE)#-- don't show it anymore
 
 ( rgc <- gc(TRUE) )
