@@ -720,6 +720,9 @@ BUG FIXES
 	residuals(foo, type = "partial") now work for lm and glm objects
 	with weights zero.  Further, model.matrix() is now only called once.
 
+    o	R CMD config now works correctly when called from a Makefile
+	using GNU make.
+
 
 
 	**************************************************
