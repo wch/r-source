@@ -8,7 +8,7 @@ data <- function(..., list = character(0), package = .packages(),
       stop("no index file for data")
     xx<-scan(datafile,skip=3,what="",sep="\t")
     cat("   R DATA SETS \n")
-    cat(t(matrix(xx[!is.na(xx)],nc=2,byrow=T)),sep=c("\t\t","\n"))
+    cat(t(matrix(xx[!is.na(xx)],nc=2,byrow=TRUE)),sep=c("\t\t","\n"))
   }
   else
     for (name in names) {

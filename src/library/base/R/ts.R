@@ -227,12 +227,12 @@ window.ts <- function(x, start, end)
  }
  i <- trunc((start - xtsp[1]) * freq + 1.5):
       trunc(( end  - xtsp[1]) * freq + 1.5)
- x <- if(is.matrix(x)) x[i, , drop = F] else x[i]
+ x <- if(is.matrix(x)) x[i, , drop = FALSE] else x[i]
  tsp(x) <- c(start, end, freq)
  x
 }
 
-"[.ts" <- function (x, i, j, drop = T)
+"[.ts" <- function (x, i, j, drop = TRUE)
 {
  y <- NextMethod("[")
  if (missing(i))

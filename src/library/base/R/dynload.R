@@ -7,7 +7,7 @@
 #	}
 #	else {
 #		.Internal(dyn.load(
-#		paste(system("pwd", intern = T), x, sep = "/", collapse="")))
+#		paste(system("pwd", intern = TRUE), x, sep = "/", collapse="")))
 #	}
 #}
 dyn.load <- function(x)

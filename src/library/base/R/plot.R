@@ -106,7 +106,7 @@ function(x, y, ...) {
 plot.formula <-
 function(formula, data = NULL, subset, na.action, ..., ask = TRUE) {
   if (missing(na.action)) na.action <- options()$na.action
-  m <- match.call(expand.dots = F)
+  m <- match.call(expand.dots = FALSE)
   if (is.matrix(eval(m$data, sys.parent())))
     m$data <- as.data.frame(data)
   m$... <- NULL

@@ -101,7 +101,7 @@ Ops.factor <- function(e1, e2)
   value
 }
 
-"[.factor" <- function(x, i, drop=F)
+"[.factor" <- function(x, i, drop=FALSE)
 {
   y <- NextMethod("[")
   class(y)<-class(x)

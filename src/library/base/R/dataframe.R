@@ -132,7 +132,7 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE)
 }
 
 as.data.frame.ts <-
-function(x, row.names=NULL, optional=F)
+function(x, row.names=NULL, optional=FALSE)
 {
   if(is.matrix(x)) as.data.frame.matrix(x, row.names, optional)
   else as.data.frame.vector(x, row.names, optional)

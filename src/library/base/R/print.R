@@ -49,3 +49,15 @@ print.noquote <- function(obj,...) {
 ## used for version:
 print.simple.list <-
 function(x, ...) print(noquote(cbind("_"=unlist(x))), ...)
+
+print.coefmat <- function(x, digits = max(3, .Options$digits - 2),
+                        signif.stars= .Options$show.signif.stars, ...)
+{
+  ## Used to print ``coefficient matrices'' as they are in summary.xxx(.) where
+  ## xxx in {lm, glm, aov, ..}. (Note: summary.aov(.) gives a class "anova").
+
+  ## Assume: columns 1--k = numbers, such as coefficients & std.err
+  ## ------  column  k+1  = test-statistic ("z", "t", or "F")
+  ##         column  k+2  = its P-value
+
+}

@@ -1,11 +1,11 @@
-print.htest<-function(x, digits = 4, quote = T, prefix = "")
+print.htest<-function(x, digits = 4, quote = TRUE, prefix = "")
 {
         cat("\n\t", x$method, "\n\n")
         cat("data: ", x$data.name, "\n")
         if(!is.null(x$statistic))
-                cat(names(x$statistic), " = ", format(round(x$statistic, 4)), 
+                cat(names(x$statistic), " = ", format(round(x$statistic, 4)),
                         ", ", sep = "")
-	if(!is.null (x$parameter))	
+	if(!is.null (x$parameter))
 		cat(paste(names(x$parameter), " = ", format(round(x$parameter,
 			3)), ",", sep = ""), "")
         cat("p-value =", format.pval(x$p.value, digits= digits), "\n")
@@ -19,11 +19,11 @@ print.htest<-function(x, digits = 4, quote = T, prefix = "")
 				else if( x$alternative == "greater" )
                                   	alt.char <- "greater than"
                                 cat("alternative hypothesis:", "true", names(x$
-                                  null.value), "is", alt.char, x$null.value, 
+                                  null.value), "is", alt.char, x$null.value,
                                   "\n")
                         }
                         else {
-                                cat("alternative hypothesis:", x$alternative, 
+                                cat("alternative hypothesis:", x$alternative,
                                   "\n")
                                 cat("null values:\n")
                                 print(x$null.value)
@@ -32,7 +32,7 @@ print.htest<-function(x, digits = 4, quote = T, prefix = "")
                 else cat("alternative hypothesis:", x$alternative, "\n")
         }
         if(!is.null(x$conf.int)) {
-                cat(format(100 * attr(x$conf.int, "conf.level")), 
+                cat(format(100 * attr(x$conf.int, "conf.level")),
                         "percent confidence interval:\n", format(c(x$conf.int[1
                         ], x$conf.int[2])), "\n")
         }

@@ -11,7 +11,7 @@ function(formula, data = list(), subset, weights, na.action,
 	mf$model <- NULL
 	mf$method <- NULL
         mf$x <- mf$y <- mf$qr <- mf$contrasts <- NULL
-        mf$drop.unused.levels <- T
+        mf$drop.unused.levels <- TRUE
 	mf[[1]] <- as.name("model.frame")
 	mf <- eval(mf, sys.frame(sys.parent()))
 	if (method == "model.frame")
@@ -40,14 +40,16 @@ function(formula, data = list(), subset, weights, na.action,
 		z <- list(coefficients = numeric(0), residuals = y,
 			fitted.values = 0 * y, weights = w, rank = 0,
 			df.residual = length(y))
-		class(z) <- if (is.matrix(y))
-			c("mlm.null", "lm.null", "mlm", "lm")
-		else c("lm.null", "lm")
+		class(z) <-
+                  if (is.matrix(y))
+                    c("mlm.null", "lm.null", "mlm", "lm")
+                  else c("lm.null", "lm")
 	} else {
 		x <- model.matrix(mt, mf, contrasts)
-		z <- if (is.null(w))
-			lm.fit(x, y)
-		else lm.wfit(x, y, w)
+		z <-
+                  if (is.null(w))
+                        lm.fit(x, y)
+                  else lm.wfit(x, y, w)
 		class(z) <- c(if (is.matrix(y)) "mlm", "lm")
 	}
         z$contrasts <- attr(x, "contrasts")
@@ -257,7 +259,6 @@ print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
 {
 	cat("\nCall:\n")#S: ' ' instead of '\n'
 	cat(paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
-	##0.61: dput(x$call)
 	resid <- x$residuals
 	df <- x$df
 	rdf <- df[2]
@@ -277,8 +278,7 @@ print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
 		cat("\nCoefficients: (", nsingular, " not defined because of singularities)\n",
 			sep = "")
 	else cat("\nCoefficients:\n")
-	##O R 0.61:
-	##O print(roundfun(x$coefficients, digits = digits), quote = FALSE, ...)
+
 	##- Splus3.{1-4}: Coefs <- format(round(x$coef, digits = digits))
 	##- ============   CANNOT be good for funny scales of Y
 	acs <- abs(coef.se <- x$coef[, 1:2, drop=FALSE])
@@ -427,14 +427,14 @@ anovalist.lm <- function (object, ..., test = NULL)
 			deparse(responses[!sameresp]),
 			"removed because response differs from", "model 1"))
 	}
-	# calculate the number of models
+	## calculate the number of models
 	nmodels <- length(objects)
 	if (nmodels == 1)
 		return(anova.lm(object))
 
 	models <- as.character(lapply(objects, function(x) x$terms))
 
-	# extract statistics
+	## extract statistics
 	df.r <- unlist(lapply(objects, df.residual))
 	ss.r <- unlist(lapply(objects, deviance))
 	df <- c(NA, -diff(df.r))
@@ -455,12 +455,12 @@ anovalist.lm <- function (object, ..., test = NULL)
 	dimnames(table) <- list(1:nmodels, c("Res.Df", "Res.Sum-Sq", "Df",
 		"Sum-Sq", "F", "Pr(>F)"))
 
-	# construct table and title
+	## construct table and title
 	title <- "Analysis of Variance Table"
 	topnote <- paste("Model ", format(1:nmodels),": ",
 				models, sep="", collapse="\n")
 
-	# calculate test statistic if needed
+	## calculate test statistic if needed
 	output <- list(table = table, title = title, topnote=topnote)
 	class(output) <- "tabular"
 	return(output)
@@ -487,7 +487,7 @@ predict.lm <- function(object, newdata,
   p1 <- 1:p
   piv <- object$qr$pivot[p1]
   est <- object$coefficients[piv]
-  predictor <- drop(X[, piv, drop = F] %*% est)
+  predictor <- drop(X[, piv, drop = FALSE] %*% est)
   interval <- match.arg(interval)
   if(se.fit || interval != "none") {
     if (is.null(scale)){
@@ -525,8 +525,8 @@ predict.lm <- function(object, newdata,
   else predictor
 }
 
-effects.lm <- 
-function(object, set.sign = F)
+effects.lm <-
+function(object, set.sign = FALSE)
 {
   eff <- object$effects
   if(set.sign) {
@@ -569,7 +569,7 @@ model.matrix.lm <- function(object, ...)
   }
 }
 
-predict.mlm <- 
+predict.mlm <-
 function(fit, newdata, se.fit = FALSE)
 {
   if(missing(newdata)) return(fit$fitted)
@@ -577,6 +577,6 @@ function(fit, newdata, se.fit = FALSE)
     stop("The\"se.fit\" argument is not currently implemented for mlm objects")
   x <- model.matrix(fit, newdata) # will use model.matrix.lm
   piv <- object$qr$pivot[1:object$rank]
-  pred <- X[, piv, drop = F] %*% object$coefficients[piv,]
+  pred <- X[, piv, drop = FALSE] %*% object$coefficients[piv,]
   if(inherits(fit, "mlm")) pred else pred[, 1]
 }
