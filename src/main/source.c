@@ -140,7 +140,10 @@ SEXP parse(FILE *fp, int number)
 		R_SetInput(R_FILE);
 		R_Inputfile = fp;
 	}
-	else R_SetInput(R_TEXT);
+	else {
+		R_SetInput(R_TEXT);
+		R_Inputfile = NULL;
+	}
 
 	R_CurrentExpr = R_NilValue;
 	pflag = 3;

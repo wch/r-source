@@ -664,7 +664,7 @@ void yyerror(char *s)
 		REprintf(" ");
 	}
 	REprintf("^\n");
-	if (R_Console == 0) {
+	if (R_Console == 0 && R_Inputfile != NULL) {
 		fclose(R_Inputfile);
 		ResetConsole();
 	}

@@ -843,7 +843,7 @@ SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_subsetdf(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP frame;
-	int drop = 1;
+	int drop = 0;
 
 	PROTECT(args = EvalArgs(args, rho, 0));
 	ExtractDropArg(args, &drop);
@@ -855,13 +855,13 @@ SEXP do_subsetdf(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_subsetdf2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP frame;
-	int drop = 1;
+	int drop = 0;
 
 	PROTECT(args = EvalArgs(args, rho, 0));
 	ExtractDropArg(args, &drop);
 	frame = frameSubset(CAR(args), CDR(args), call, drop);
+	UNPROTECT(1);
 	if(isFrame(frame))
 		return CAR(frame);
-	UNPROTECT(1);
 	return frame;
 }

@@ -89,7 +89,8 @@ void jump_to_toplevel()
 	int nback=0;
 
 	inError = 1;
-	if (R_Console == 0) fclose(R_Inputfile);
+	if (R_Console == 0 && R_Inputfile != NULL)
+		fclose(R_Inputfile);
 #ifdef OLD
 #else
 	R_SetInput(0);
