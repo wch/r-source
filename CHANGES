@@ -1,13 +1,34 @@
 		CHANGES IN R VERSION 0.62.2
 
+NEW FEATURES
+
+    o   options(show.signif.stars = TRUE).  If FALSE,
+	summary.lm and similar functions do *not* print significance stars
+	anymore.
+
+    o	poly() for [g]lm modelling.
+
+    o   ................ tons of other additions from BDR.................
+	..................................................................
+	..... These should get help pages !! ....
+
+    o   new  src/library/profile/Common.R   for  OS-independent intialization.
+
 BUG FIXES
 
-    o   Tick marks acting up on log axes (fix from Martyn Plummer)
+    o	print.[summary.][g]lm() functions print numbers better formatted.
+
+    o   legend() now also works properly in  log coordinates.
+
+    o   backsolve() now working;  bakslv.c not depending on
+	Fortran_underscores.
+
+    o   Tick marks acting up on log axes in postscript (fix from Martyn Plummer)
 
     o   The Rd format has a new section \details{} (needed for proper
         Sd2Rd translation). \R was not understood for nroff
 	conversions, longer dashes (-- and --- in latex syntax) are
-	now converted properly. 
+	now converted properly.
 
     o   R [ SHLIB | COMPILE ] were broken on some Solaris systems
         due to use of bash syntax. R [ INSTALL | COMPILE | SHLIB ]
@@ -19,10 +40,10 @@ BUG FIXES
 
 BUG FIXES
 
-    o   Accidentally shipped R-0.62 without the tests and  etc/Rdoc 
+    o   Accidentally shipped R-0.62 without the tests and  etc/Rdoc
 	directories.
 
-    
+
 		CHANGES IN R VERSION 0.62
 
 NEW FEATURES
