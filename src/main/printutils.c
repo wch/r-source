@@ -223,6 +223,7 @@ char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei)
 
 #ifdef SUPPORT_UTF8
 #include <wchar.h>
+#include <wctype.h>
 #endif
 /* strlen() using escaped rather than literal form,
    and allows for embedded nuls */
@@ -354,7 +355,7 @@ char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 #ifdef Win32 /* It seems Windows does not know what is printable! */
 	    *q++ = *p;
 #else
-	    if(!isprint((int)*p) {
+	    if(!isprint((int)*p)) {
 		/* print in octal */
 		snprintf(buf, 5, "\\%03o", (unsigned char) *p);
 		for(j = 0; j < 4; j++) *q++ = buf[j];
