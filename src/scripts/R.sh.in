@@ -36,6 +36,45 @@ export R_UNZIPCMD R_ZIPCMD
 : ${R_ENVIRON="${HOME}/.Renviron"}
 USE_R_ENVIRON=true
 
+USAGE_MSG="
+Usage: R [OPTIONS] [< INFILE] [> OUTFILE]
+   or  R command      [arguments]
+   or  R CMD Rcommand [arguments]
+
+Options:
+  --gnome                   Run the gnome binary.
+  --save                    Do save data sets at the end of the session.
+  --no-save                 Don't save them.
+  --restore                 Do restore previously saved data sets at startup.
+  --no-restore              Don't restore them.
+  --no-readline             Don't use readline for command-line editing.
+  --no-site-file            Don't read the site-wide Rprofile.
+  --no-init-file            Don't read the .Rprofile or ~/.Rprofile files.
+  --no-environ              Don't read the .Renviron or ~/.Renviron files.
+  --vanilla		    Combine --no-save, --no-restore, --no-site-file,
+                            --no-init-file, and --no-environ.
+  --vsize N                 Set vector heap size to N bytes; \`4M' = 4 MegaB.
+  --nsize N                 Set number of cons cells to N.
+  -h, --help, -?            Print short help message and exit.
+  -q, --quiet, --silent     Don't print startup message.
+  --slave                   Make R run as quietly as possible.
+  --version                 Print version info and exit.
+  --verbose                 Print more information about progress.
+  -d NAME, --debugger NAME  Run R through debugger NAME.
+
+Commands:
+  RHOME				Give R's home directory
+  BATCH infile [ outfile ]	Run Batch job
+  COMPILE|INSTALL|REMOVE|SHLIB  Package management & dyn.load compilation
+
+Rcommands:
+  Rdconv
+  Rdindex, Sd2Rd
+  Rd2dvi, Rd2txt
+  ...
+
+Report bugs to <R-bugs@biostat.ku.dk>."
+
 # Argument loop
 DBG=
 while test -n "${1}"; do
@@ -57,47 +96,7 @@ while test -n "${1}"; do
       USE_R_ENVIRON=false ;;
     -h|--help|-\?)
       $0 --version
-      cat <<_EOF_
-
-Usage: R [OPTIONS] [< INFILE] [> OUTFILE]
-   or  R command      [arguments]
-   or  R CMD Rcommand [arguments]
-
-Options:
-  --gnome                   Run the gnome binary.
-  --save                    Do save data sets at the end of the session.
-  --no-save                 Don't save them.
-  --restore                 Do restore previously saved data sets at startup.
-  --no-restore              Don't restore them.
-  --no-readline             Don't use readline for command-line editing.
-  --no-site-file            Don't read the site-wide Rprofile.
-  --no-init-file            Don't read the .Rprofile or ~/.Rprofile files.
-  --no-environ              Don't read the .Renviron or ~/.Renviron files.
-  --vanilla		    Combine --no-save, --no-restore, --no-site-file,
-                            --no-init-file, and --no-environ.
-  --vsize N                 Set vector heap size to N bytes; \`4M' = 4 MegaB.
-  --nsize N                 Set number of cons cells to N. ___See ?Memory___
-  -h, --help, -?            Print short help message and exit.
-  -q, --quiet, --silent     Don't print startup message.
-  --slave                   Make R run as quietly as possible.
-  --version                 Print version info and exit.
-  --verbose                 Print more information about progress.
-  -d NAME, --debugger NAME  Run R through debugger NAME.
-
-Commands:
-  RHOME				Give R's home directory
-  BATCH infile [ outfile ]	Run Batch job
-  COMPILE|INSTALL|REMOVE|SHLIB  Package management & dyn.load compilation
-
-Rcommands:
-  Rdconv
-  Rdindex, Sd2Rd
-  Rd2dvi, Rd2txt
-   ...
-
-Report bugs to R-bugs@biostat.ku.dk.
-
-_EOF_
+      echo "${USAGE_MSG}"
       exit 0 ;;
     *)
       ARGS="${ARGS} ${1}" ;;
