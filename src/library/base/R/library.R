@@ -445,22 +445,19 @@ function(chname, package = NULL, lib.loc = NULL, verbose =
         for(pkg in .find.package(package, lib.loc, verbose = verbose)) {
             file <- file.path(pkg, "libs",
                               paste(chname, file.ext, sep = ""))
-            if(file.exists(file)) break
-            else
-                file <- ""
+            if(file.exists(file)) break else file <- ""
         }
-        if(file == "") {
+        if(file == "")
             stop(paste("shared library", sQuote(chname), "not found"))
-        }
-        which = sapply(.Dyn.libs, function(x) x$path == file)
+        which <- sapply(.Dyn.libs, function(x) x$path == file)
         if(any(which)) {
-          if(verbose)
-            cat("DLL", file, "already loaded\n")
-          return(.Dyn.libs[[which]])
+            if(verbose)
+                cat("DLL", file, "already loaded\n")
+            return(.Dyn.libs[[ seq(along=.Dyn.libs)[which] ]])
         }
         if(verbose)
             cat("now dyn.load(", file, ") ...\n", sep = "")
-        dll = dyn.load(file, ...)
+        dll <- dyn.load(file, ...)
         .dynLibs(c(.Dyn.libs, chname))
         return(dll)
     }
