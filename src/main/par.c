@@ -389,20 +389,8 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 		dd->gp.numcols = dd->dp.numcols = ncol;
 		dd->gp.currentFigure = dd->dp.currentFigure = nrow*ncol;
 		dd->gp.lastFigure = dd->dp.lastFigure = nrow*ncol;
-		for (i=0; i<nrow; i++) {
-			dd->gp.heights[i] = dd->dp.heights[i] = 1;
-			dd->gp.cmHeights[i] = dd->dp.cmHeights[i] = 0;
-		}
-		for (j=0; j<ncol; j++) {
-			dd->gp.widths[j] = dd->dp.widths[j] = 1;
-			dd->gp.cmWidths[j] = dd->dp.cmWidths[j] = 0;
-		}
-		for (i=0; i<nrow; i++)
-			for (j=0; j<ncol; j++)
-				dd->gp.order[i][j] = dd->dp.order[i][j] =
-					i*ncol + j + 1;
-		dd->gp.rspct = dd->dp.rspct = 0;
 		dd->gp.defaultFigure = dd->dp.defaultFigure = 1;
+		dd->gp.layout = dd->dp.layout = 0;
 		if (nrow > 2 || ncol > 2) {
 			dd->gp.cexbase = dd->dp.cexbase = 0.5;
 			dd->gp.mex = dd->dp.mex = 1.0;
@@ -430,20 +418,8 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 		dd->gp.numcols = dd->dp.numcols = ncol;
 		dd->gp.currentFigure = dd->dp.currentFigure = nrow*ncol;
 		dd->gp.lastFigure = dd->dp.lastFigure = nrow*ncol;
-		for (i=0; i<nrow; i++) {
-			dd->gp.heights[i] = dd->dp.heights[i] = 1;
-			dd->gp.cmHeights[i] = dd->dp.cmHeights[i] = 0;
-		}
-		for (j=0; j<ncol; j++) {
-			dd->gp.widths[j] = dd->dp.widths[j] = 1;
-			dd->gp.cmWidths[j] = dd->dp.cmWidths[j] = 0;
-		}
-		for (i=0; i<nrow; i++)
-			for (j=0; j<ncol; j++)
-				dd->gp.order[i][j] = dd->dp.order[i][j] =
-					j*nrow + i + 1;
-		dd->gp.rspct = dd->dp.rspct = 0;
 		dd->gp.defaultFigure = dd->dp.defaultFigure = 1;
+		dd->gp.layout = dd->dp.layout = 0;
 		if (nrow > 2 || ncol > 2) {
 			dd->gp.cexbase = dd->dp.cexbase = 0.5;
 			dd->gp.mex = dd->dp.mex = 1.0;
@@ -474,26 +450,10 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 		dd->gp.numrows = dd->dp.numrows = nrow;
 		dd->gp.numcols = dd->dp.numcols = ncol;
 		dd->gp.lastFigure = dd->dp.lastFigure = nrow*ncol;
-		for (i=0; i<nrow; i++) {
-			dd->gp.heights[i] = dd->dp.heights[i] = 1;
-			dd->gp.cmHeights[i] = dd->dp.cmHeights[i] = 0;
-		}
-		for (j=0; j<ncol; j++) {
-			dd->gp.widths[j] = dd->dp.widths[j] = 1;
-			dd->gp.cmWidths[j] = dd->dp.cmWidths[j] = 0;
-		}
-		for (i=0; i<nrow; i++)
-			for (j=0; j<ncol; j++)
-				if (dd->gp.mfind == 0)
-					dd->gp.order[i][j]=dd->dp.order[i][j] =
-						i*ncol + j + 1;
-				else
-					dd->gp.order[i][j]=dd->dp.order[i][j] =
-						j*nrow + i + 1;
 		dd->gp.currentFigure = dd->dp.currentFigure = 
 			dd->gp.order[row-1][col-1] - 1;
-		dd->gp.rspct = dd->dp.rspct = 0;
 		dd->gp.defaultFigure = dd->dp.defaultFigure = 1;
+		dd->gp.layout = dd->dp.layout = 0;
 		if (nrow > 2 || ncol > 2) {
 			dd->gp.cexbase = dd->dp.cexbase = 0.5;
 			dd->gp.mex = dd->dp.mex = 1.0;
@@ -1598,6 +1558,7 @@ SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
         }
 
 	dd->dp.defaultFigure = dd->gp.defaultFigure = 1;
+	dd->dp.layout = dd->gp.layout = 1;
 
 	GReset(dd);
 

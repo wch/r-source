@@ -260,6 +260,8 @@ typedef struct {
 
 		/* Layout Parameters */
 
+	int     layout;		/* has a layout been specified */
+
 	int 	numrows;
 	int 	numcols;
 	int 	currentFigure;
