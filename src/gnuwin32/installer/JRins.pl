@@ -110,7 +110,7 @@ Name: "html"; Description: "HTML Help Files"; Types: user full custom
 Name: "latex"; Description: "Latex Help Files"; Types: full custom
 Name: "manuals"; Description: "On-line (PDF) Manuals"; Types: user full custom
 Name: "refman"; Description: "Reference Manual"; Types: full custom
-Name: "devel"; Description: "Source Package Installation Files"; Types: full custom
+Name: "devel"; Description: "Source Package Installation Files"; Types: user full custom
 Name: "tcl"; Description: "Support Files for library(tcltk)"; Types: user full custom
 
 [Files]

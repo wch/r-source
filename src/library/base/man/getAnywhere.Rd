@@ -14,8 +14,14 @@ getAnywhere(x)
 \arguments{
   \item{x}{a character string or name.}
 }
-%\details{
-%}
+\details{
+  The function looks at all loaded namespaces, whether or not they are
+  associated with a package on the search list.
+
+  Where functions are found as an S3 method, an attempt is made to find
+  which namespace registered them.  This may not be correct, especially
+  if a namespace is unloaded.
+}
 \value{
   An object of class \code{"getAnywhere"}.  This is a list with components
   \item{name}{the name searched for.}
