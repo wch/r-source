@@ -607,7 +607,7 @@ do_install_source () {
   ## beware: the wc format is not portable -- some systems give
   ## size in a left-space-padded first field, and some do not pad. 
   if test "x$thislazy" = "xauto" ; then
-    Rcodesize=`cat ${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME} | wc -c`
+    Rcodesize=`cat ${R_PACKAGE_DIR}/R/${pkg_name} | wc -c`
     if test ${Rcodesize} -gt 50000 ; then
       thislazy=true
     else
