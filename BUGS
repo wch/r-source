@@ -277,6 +277,18 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
+* PR# 920 *
+Subject: bugs, doc bugs, comments
+From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
+Date: Sun, 22 Apr 2001 23:33:19 -0400 (EDT)
+* PR# 919 *
+Subject: barplot documentation bug
+From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
+Date: Sun, 22 Apr 2001 23:24:01 -0400 (EDT)
+* PR# 918 *
+Subject: several bugs
+From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
+Date: Sun, 22 Apr 2001 23:13:38 -0400 (EDT)
 * PR# 877 *
 Subject: segmentation fault of unknown cause
 From: Martin Schlather <Martin.Schlather@uni-bayreuth.de>
