@@ -34,11 +34,6 @@
 
 #include <regex.h>
 
-/* for strncasecmp, possibly */
-#if defined(HAVE_STRINGS_H)
-# include <strings.h>
-#endif
-
 #define ERRBUF_SIZE 500
 #define MSGBUF_SIZE 2000
 
@@ -272,11 +267,12 @@ int find_update_line_cache(GnomeFindDialog *find_dialog)
     for (tmp_find_pos = line_cache_start; tmp_find_pos <= line_cache_end; tmp_find_pos++) {
       if (find_params.case_sensitive == TRUE) {
 	strcmp_result = strncmp(find_params.find_text,
-				find_text_cache + tmp_find_pos, find_text_len);
+				find_text_cache + tmp_find_pos,	find_text_len);
       }
       else {
-	strcmp_result = strncasecmp(find_params.find_text,
-				    find_text_cache + tmp_find_pos, find_text_len);
+	strcmp_result = g_strncasecmp(find_params.find_text,
+				      find_text_cache + tmp_find_pos, 
+				      find_text_len);
       }
 
       /* construct list item if found */

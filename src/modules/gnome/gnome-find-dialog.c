@@ -18,9 +18,18 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include "gnome-find-dialog.h"
 
-#include <string.h>
+#if defined (HAVE_STRING_H)
+# include <string.h>
+#elif defined (HAVE_STRINGS_H)
+# include <strings.h>
+#endif
+
 #include <gtk/gtk.h>
 #include <libgnomeui/gnome-stock.h>
 #include <libgnomeui/gnome-uidefs.h>

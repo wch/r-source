@@ -653,7 +653,7 @@ static void GNOME_Activate(NewDevDesc *dd)
 
     g_return_if_fail(title_text != NULL);
 
-    snprintf(title_text, text_len + numdigits + 1, title_text_active, devnum);
+    g_snprintf(title_text, text_len + numdigits + 1, title_text_active, devnum);
     *(title_text + text_len + numdigits) = '\0';
 
     gtk_window_set_title(GTK_WINDOW(gd->window), title_text);
@@ -681,7 +681,7 @@ static void GNOME_Deactivate(NewDevDesc *dd)
 
     g_return_if_fail(title_text != NULL);
 
-    snprintf(title_text, text_len + numdigits + 1, title_text_inactive, devnum);
+    g_snprintf(title_text, text_len + numdigits + 1, title_text_inactive, devnum);
     *(title_text + text_len + numdigits) = '\0';
 
     gtk_window_set_title(GTK_WINDOW(gd->window), title_text);
