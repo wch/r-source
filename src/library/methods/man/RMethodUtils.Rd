@@ -109,8 +109,6 @@ unRematchDefinition(definition)
 
 asMethodDefinition(def, signature, sealed = FALSE)
 
-addNextMethod(method, f, mlist, optional = FALSE, envir)
-
 addNextMethod(method, f, mlist, optional, envir)
 }
 \section{Summary of Functions}{
