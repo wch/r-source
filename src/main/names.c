@@ -773,7 +773,7 @@ static void SymbolShortcuts()
     R_SourceSymbol = install("source");
 }
 
-extern SEXP framenames;
+extern SEXP framenames; /* from model.c */
 
 /* initialize the symbol table */
 void InitNames()
@@ -781,7 +781,7 @@ void InitNames()
     int i;
     /* R_NilValue */
     /* THIS MUST BE THE FIRST CONS CELL ALLOCATED */
-    /* OR ARMAGEDON HAPPENS. */
+    /* OR ARMAGEDDON HAPPENS. */
     R_NilValue = allocSExp(NILSXP);
     CAR(R_NilValue) = R_NilValue;
     CDR(R_NilValue) = R_NilValue;

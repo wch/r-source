@@ -139,30 +139,8 @@ void mem_err_cons()
     errorcall(R_NilValue, "cons memory (%ld cells) exhausted\n       See \"help(Memory)\" on how to increase the number of cons cells.", R_NSize);
 }
 
-#ifdef OLD_Macintosh
-Handle  gStackH;
-Handle  gNHeapH;
-Handle  gVHeapH;
-
-/* CleanUpRMemory : This routine releases the memory that R has */
-/* allocated.  This is only needed for the Mac because the memory */
-/* is in system memory so not naturally cleaned up at the end of */
-/* the application execution. */
-
-void CleanUpMemory( void )
-{
-    OSErr result;
-    if (gStackH != nil)	TempDisposeHandle(gStackH, &result);
-    if (gNHeapH != nil)	TempDisposeHandle(gNHeapH, &result);
-    if (gVHeapH != nil)	TempDisposeHandle(gVHeapH, &result);
-}
-
-#endif
-
-
 /* InitMemory : Initialise the memory to be used in R. */
 /* This includes: stack space, node space and vector space */
-/* This is a ghastly mess and the Mac code needs to be separated. */
 
 void InitMemory()
 {
@@ -189,25 +167,10 @@ void InitMemory()
     CDR(&R_NHeap[R_NSize - 1]) = NULL;
     R_FreeSEXP = &R_NHeap[0];
 
-#if 0 
+/* setting framenames and  R_PreciousList moved to InitNames after
+   R_NilValue is allocated  */
 
-/* This can't be right! R_NilValue is defined by the first allocSExp
-   call so is undefined here -pd Apr 1, 2000 */
-
-    /* This is not making the mess smaller, but it has to be done
-       somewhere between the creation of R_NilValue and the first
-       garbage collection... -pd */
-
-    framenames = R_NilValue;
-
-    /* This will ensure that state variables needed by R CorbaServers
-       will persist across garbage collects... -ihaka */
-
-    R_PreciousList =  R_NilValue;
-
-#endif
-
-    /* unmark all nodes to preserver the invariant */
+    /* unmark all nodes to preserve the invariant */
     /* not really needed as long as allocSExp unmarks on allocation */
     unmarkPhase();
 }
