@@ -1068,11 +1068,20 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)(), SEXP lcall)
     if (!isNumeric(sa) || !isNumeric(sb))
 	errorcall(lcall, R_MSG_NONNUM_MATH);
 
+    /* for 0-length a we want the attributes of a, not those of b 
+       as no recycling will occur */
 #define SETUP_Math2				\
     na = LENGTH(sa);				\
     nb = LENGTH(sb);				\
-    if ((na == 0) || (nb == 0))			\
-	return(allocVector(REALSXP, 0));	\
+    if ((na == 0) || (nb == 0))	{		\
+        PROTECT(sy = allocVector(REALSXP, 0));	\
+        if (na == 0) {				\
+	    SET_ATTRIB(sy, duplicate(ATTRIB(sa)));\
+	    SET_OBJECT(sy, sao);		\
+        }					\
+        UNPROTECT(1);				\
+	return(sy);				\
+    }						\
     n = (na < nb) ? nb : na;			\
     PROTECT(sa = coerceVector(sa, REALSXP));	\
     PROTECT(sb = coerceVector(sb, REALSXP));	\

@@ -138,6 +138,7 @@ NEW FEATURES
 	still build the tcltk package against Tcl 8.0 but the resulting
 	package will not load.
 
+
 BUG FIXES
 
     o	symnum(x) now behaves as documented when length(x) == 0 and uses
@@ -223,6 +224,9 @@ BUG FIXES
 
     o   writeChar() could segfault if more characters were requested
 	than exist. (PR#5090)
+
+    o   round() and signif() dropped attributes with 0-length inputs,
+	only. (PR#4710)
 
 
 
