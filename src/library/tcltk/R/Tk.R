@@ -57,7 +57,7 @@
 .Tk.ID <- function(win) win$ID
 
 .Tk.newwin <- function(ID){
-    win <- list(ID=ID,  evalq(env=new.env(),.GlobalEnv))
+    win <- list(ID=ID, env=evalq(new.env(),.GlobalEnv))
     evalq(num.subwin <- 0, win$env)
     class(win) <- "tkwin"
     win
