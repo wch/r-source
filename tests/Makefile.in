@@ -49,7 +49,8 @@ DISTFILES = Makefile.in README \
 	$(test-src-sloppy-1) $(test-src-sloppy-1:.R=.Rout.save) \
 	$(test-src-auto:.R=.Rin) isas-tests.Rout.save \
 	$(test-src-reg) reg-tests-2.Rout.save \
-	$(test-src-random)  p-r-random-tests.Rout.save
+	$(test-src-random)  p-r-random-tests.Rout.save \
+	gct-tail
 SUBDIRS = Examples
 
 R = LC_ALL=C $(top_builddir)/bin/R --vanilla
