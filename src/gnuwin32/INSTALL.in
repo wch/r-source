@@ -171,8 +171,9 @@ will make the info files.
 There is no provision to make DVI versions of the manuals, although
 ../../doc/manuals/Makefile.win could easily be edited to do so.
 
-The fptex distribution of TeX (from any of the CTAN sites,
-e.g. www.tug.org) includes both pdftex and makeinfo 4.0.  (The cygwin
+The fptex distribution of TeX (from
+ftp://ftp.ese-metz.fr/pub/tex/win32-beta/fptex-0.4alpha3/ at present)
+includes both pdftex and makeinfo 4.0 (in texinfo.zip).  (The cygwin
 one, even in release 1.1, is 3.12.)
 
 
