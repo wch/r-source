@@ -173,6 +173,8 @@ remove.packages <- function(pkgs, lib, version) {
         }
     }
 
+    if(!length(pkgs)) return(invisible())
+
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
         warning(paste("argument", sQuote("lib"),
