@@ -51,3 +51,4 @@ clean:
 		@-rm -f *.o *.a
 
 realclean:	clean
+		@-rm -f Makefile

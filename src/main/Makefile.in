@@ -95,6 +95,7 @@ clean:
 		@-rm -f R.binary R-Image *core *.o
 
 realclean:	clean
+		@-rm -f Makefile
 
 dotcode.o:	../include/FFDecl.h ../include/FFTab.h
 

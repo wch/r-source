@@ -5,7 +5,7 @@ include ../Makeconf
 
 CleanMe1 = SHLIB INSTALL REMOVE COMPILE 
 CleanMe2 = Rdconv Rdindex Rman2Rd Sd2Rd
-CleanMe3 = build-help help.pretty html2dos
+CleanMe3 = build-help help.pretty html2dos Makeconf
 CleanMe  = $(CleanMe1) $(CleanMe2) $(CleanMe3)
 
 #MANSRC = ../src/library/*/man/*.Rd
