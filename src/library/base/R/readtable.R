@@ -42,8 +42,8 @@ function (file, header=FALSE, sep="", row.names, col.names, as.is=FALSE,
 	if (rlabp)
 		col.names <- c("row.names", col.names)
 	names(what) <- col.names
-	data <- scan(file=file, what=what, sep=sep, nlines=nlines, skip=skip,
-			na.strings=na.strings, quiet=TRUE)
+	data <- scan(file=file, what=what, sep=sep, skip=skip,
+                     na.strings=na.strings, quiet=TRUE)
 
 	##  now we have the data;
 	##  convert to numeric or factor variables
