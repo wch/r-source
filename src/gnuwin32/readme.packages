@@ -339,16 +339,17 @@ Cross-building packages on Linux
 
 It is straightforward to build a package on a ix86-linux system,
 although it is not possible (and we have tried, including using WINE)
-to cross-build .chm files.  For a package without compiled code you
-can just zip up the Linux installation of the package.
+to cross-build .chm files.  For a package without compiled code and no
+OS-specific files you can just zip up the Linux installation of the
+package.
 
 First you need to set up the cross-compilers and tools (see file
 src/gnuwin32/INSTALL in the full source distribution) and have them
-in your path. We will assume that your Linux installation has Perl5,
+in your path.  We will assume that your Linux installation has Perl5,
 unzip and zip.
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths (including
-HEADER) as needed, and check that Makefile has WINHELP set to NO.
+HEADER) as needed.
 
 Then packages can be made as natively, for example by
 

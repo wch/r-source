@@ -255,9 +255,12 @@ Cross-building on ix86 Linux
 You will need i386-mingw32 cross-compilers installed and in your path.
 There is currently a complete set of tools at
 
-    http://www.stats.ox.ac.uk/pub/Rtools/mingw-cross.tar.bz2
+    http://www.stats.ox.ac.uk/pub/Rtools/mingw-cross2.tar.bz2
 
 (Just unpack this somewhere and put its bin directory in your path.)
+Note that as from R 1.7.0 you do need versions >= 2.0 of mingw-runtime
+and w32api and so a later set of cross-compilers than is needed for R
+1.6.x.
 
 You will need Perl, zip and unzip installed, as well as makeinfo >=
 4.2 (part of GNU texinfo) and tidy (via http://tidy.sourceforge.net).
