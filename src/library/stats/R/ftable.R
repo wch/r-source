@@ -203,23 +203,58 @@ print.ftable <- function(x, digits = getOption("digits"), ...)
 read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
                         col.vars, skip = 0)
 {
-    ## <NOTE>
-    ## Currently, 'file' must really be a character string naming a
-    ## file, connections are not supported.  We need to count.fields()
-    ## on the whole thing, so we could extend this to connections which
-    ## can seek the origin (file connections only, it seems).
-    ## </NOTE>
-
+    if(is.character(file)) {
+        file <- file(file, "r")
+        on.exit(close(file))
+    }
+    if(!inherits(file, "connection"))
+        stop(paste("argument", sQuote("file"),
+                   "must be a character string or connection"))
+    if(!isSeekable(file)) {
+        ## We really need something seekable, see below.  If it is not,
+        ## the best we can do is write everything to a tempfile.
+        tmpf <- tempfile()
+        cat(file, file = tmpf)
+        file <- tmpf
+        on.exit(unlink(file))
+    }
+        
     z <- count.fields(file, sep, quote, skip)
     n.row.vars <- z[max(which(z == max(z)))] - z[length(z)] + 1
+
+    seek(file, where = 0)
+    if(skip > 0) readLines(file, skip)
+    lines <- readLines(file)
+    seek(file, where = 0)
+    if(skip > 0) readLines(file, skip)    
+    
     i <- which(z == n.row.vars)
-
-    ## Open a file connection so that we do not have to play with skips.
-    file <- file(file, "r")
-    on.exit(close(file))
-    readLines(file, skip)
-
-    if((length(i) != 1) || (i == 1)) {
+    ## For an ftable, we have
+    ##                     cv.1.nm cv.1.l1 .........
+    ##                     cv.2.nm cv.2.l1 .........
+    ## rv.1.nm ... rv.k.nm
+    ## rv.1.l1 ... rv.k.l1         ...     ...
+    ##
+    ## so there is exactly one line which does not start with a space
+    ## and has n.row.vars fields (and it cannot be the first one).
+    j <- i[grep("^[^[:space:]]", lines[i])]
+    if((length(j) == 1) && (j > 1)) {
+        ## An ftable: we can figure things out ourselves.
+        n.col.vars <- j - 1
+        col.vars <- vector("list", length = n.col.vars)
+        n <- c(1, z[1 : n.col.vars] - 1)
+        for(k in seq(from = 1, to = n.col.vars)) {
+            s <- scan(file, what = "", sep = sep, quote = quote,
+                      nlines = 1, quiet = TRUE)
+            col.vars[[k]] <- s[-1]
+            names(col.vars)[k] <- s[1]
+        }
+        row.vars <- vector("list", length = n.row.vars)
+        names(row.vars) <- scan(file, what = "", sep = sep, quote =
+                                quote, nlines = 1, quiet = TRUE)
+        z <- z[-(1 : (n.col.vars + 1))]
+    }
+    else {
         ## This is not really an ftable.
         if((z[1] == 1) && z[2] == max(z)) {
             ## Case A.  File looks like
@@ -269,22 +304,7 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
             }
         }
     }
-    else {
-        ## We can figure things out ourselves.
-        n.col.vars <- i - 1
-        col.vars <- vector("list", length = n.col.vars)
-        n <- c(1, z[1 : n.col.vars] - 1)
-        for(k in seq(from = 1, to = n.col.vars)) {
-            s <- scan(file, what = "", sep = sep, quote = quote,
-                      nlines = 1, quiet = TRUE)
-            col.vars[[k]] <- s[-1]
-            names(col.vars)[k] <- s[1]
-        }
-        row.vars <- vector("list", length = n.row.vars)
-        names(row.vars) <- scan(file, what = "", sep = sep, quote =
-                                quote, nlines = 1, quiet = TRUE)
-        z <- z[-(1 : (n.col.vars + 1))]
-    }
+    
     p <- 1
     n <- integer(n.row.vars)
     for(k in seq(from = 1, to = n.row.vars)) {
