@@ -80,7 +80,6 @@ Edit Makefile to set the type(s) of help that you want built.
 
 and run
 
-	make Rpwd.exe
 	make
 
 

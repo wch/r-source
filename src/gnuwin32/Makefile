@@ -1,7 +1,16 @@
 include MkRules
 include RWVERSION
 
+ifneq ($(strip $(BUILD)),CROSS)
+ifneq ($(strip $(wildcard Rpwd.exe)),)
 all: Rpwd.exe rbuild rpackage rdocs
+else
+all: Rpwd.exe
+	$(MAKE) rbuild rpackage rdocs
+endif
+else
+all: Rpwd.exe rbuild rpackage rdocs
+endif
 
 ## configuration macros
 HELP = YES
@@ -71,7 +80,7 @@ Rpwd.exe: front-ends/Rpwd.exe
 	$(CP) $< $@
 
 front-ends/Rpwd.exe:
-	$(MAKE) -C front-ends Rpwd.exe
+	$(MAKE) -C front-ends Rpwd
 
 ## watch out: R.dll and Rblas.dll depend on each other.
 rbuild: fixfiles rlibs makeMakedeps libRblas.a ../../bin/R.dll libR.a \
@@ -290,24 +299,25 @@ clean: cleanwin $(PKGCLEAN)
 	$(RM) -f ../library/methods/R/methods
 
 distclean veryclean: clean
-	$(RM) COPYRIGHTS R.exp Rm.exp Rpwd.exe
 	$(RM) -r ../../bin ../../library ../../modules
 	$(RM) ../include/config.h ../include/psignal.h \
-	../include/Rconfig.h ../include/version.h 
+	../include/Rconfig.h ../include/Rversion.h ../include/Rmath.h
 	$(RM) ../library/*/src/*.o ../library/*/src/*.a
 	$(RM) ../library/*/src/*.dll
 	$(RM) -r ../library/*/check
+	$(RM) R.exp Rm.exp
 	$(RM) ../../doc/html/search/index.txt ../../doc/html/index.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
 	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html
 	$(RM) ../../etc/Rconsole ../../etc/Rdevga ../../etc/Rprofile \
-	../../etc/rgb.txt ../../share/make/tests.mk \
+	../../etc/rgb.txt ../../share/make/wintests.mk \
 	../include/Platform.h ../../tests/*.Rout ../../tests/*.Rout.fail
 	$(MAKE) -C fixed distclean
 	-$(MAKE) -C installer ISdistclean
 	@for pkg in $(ALLPACKAGES); do \
 	  $(RM) ../library/$${pkg}/DESCRIPTION; \
 	done
+	$(RM) Rpwd.exe # do this last of all
 
 cleanwin:
 	$(RM) *.o *.dll *.a *~ \#*\# rw*.zip R.def R.exp1 Rm.exp1\
@@ -469,7 +479,7 @@ packagedist:
 	  ../../bin/Rdindex ../../bin/Rdiff.sh \
 	  ../../bin/Sd2Rd ../../bin/Rprof ../../bin/Rcmd.exe \
           $(RPREFIX)/bin
-	$(CP) ../../share/make/tests.mk $(RPREFIX)/share/make
+	$(CP) ../../share/make/wintests.mk $(RPREFIX)/share/make
 	$(CP) -p graphapp/graphapp.h graphapp/ga.h $(RPREFIX)/src/include
 	$(MAKE) PKGDIR=. pkgclean-windlgs
 	$(CP) -pr windlgs $(RPREFIX)/src/library
