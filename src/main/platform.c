@@ -284,6 +284,10 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 #include <errno.h>
 #endif
 
+#ifdef Win32
+# include <io.h>  /* for unlink */
+#endif
+
 SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     char from[PATH_MAX], to[PATH_MAX], *p;
