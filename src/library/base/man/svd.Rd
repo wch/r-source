@@ -18,9 +18,11 @@ statistical techniques.
 }
 \value{
 The SVD decomposition of the matrix as computed by LINPACK,
-\deqn{ \bold{X = U D V}}, where \eqn{\bold{U}} and \eqn{\bold{V}} are
-orthogonal, and \eqn{\bold{D}} is a diagonal matrix with the singular
-values \eqn{D_{ii}}{D[i,i]}.
+\deqn{ \bold{X = U D V'},} where \eqn{\bold{U}} and \eqn{\bold{V}} are
+orthogonal, \eqn{\bold{V'}} means \emph{V transposed}, and
+\eqn{\bold{D}} is a diagonal matrix with the singular
+values \eqn{D_{ii}}{D[i,i]}.  Equivalently, \eqn{\bold{D = U' X V}},
+which is veryfied in the examples, below.
 
 The components in the returned value correspond directly
 to the values returned by DSVDC.
@@ -39,11 +41,14 @@ str(X <- hilbert(9)[,1:6])
 str(s <- svd(X))
 Eps <- 10 * .Machine$double.eps
 
-all(abs(diag(s$d) - t(s$u)\%*\% X \%*\% s$v) < Eps)# TRUE:  D = U' X V
+D <- diag(s$d)
+all(abs(X - s$u \%*\% D \%*\% t(s$v)) < Eps)# TRUE:  X = U D V'
+all(abs(D - t(s$u) \%*\% X \%*\% s$v) < Eps)# TRUE:  D = U' X V
 
 X <- cbind(1,1:7)
-str(s <- svd(X))
-all(abs(diag(s$d) - t(s$u)\%*\% X \%*\% s$v) < Eps)# TRUE:  D = U' X V
+str(s <- svd(X)); D <- diag(s$d)
+all(abs(X - s$u \%*\% D \%*\% t(s$v)) < Eps)# TRUE:  X = U D V'
+all(abs(D - t(s$u) \%*\% X \%*\% s$v) < Eps)# TRUE:  D = U' X V
 }
 \keyword{algebra}
 \keyword{array}
