@@ -723,6 +723,14 @@ installed, it can be used by one of
 Multi-threaded versions of Goto's BLAS are available, so please note the
 @emph{caveat} in the previous paragraph.
 
+For Intel processors under Linux, Intel's Math Kernel Library
+@uref{http://www.intel.com/software/products/mkl/}
+can be used by
+@smallexample
+--with-blas="-lmkl -lguide -lpthread"
+@end smallexample
+with the same caveat on multi-threading.  (Thanks to Andy Liaw for the
+information.)
 
 Note that the BLAS library will be used for several add-on packages as
 well as for @R{} itself.  This means that it is better to use a shared
