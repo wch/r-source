@@ -1,4 +1,4 @@
-long	lat	depth	mag	stations
+lat	long	depth	mag	stations
 -20.42	181.62	562	4.8	41
 -20.62	181.03	650	4.2	15
 -26	184.1	42	5.4	43

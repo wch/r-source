@@ -111,12 +111,12 @@ co.intervals(x, number = 6, overlap = 0.5)
 \examples{
 ## Tonga Trench Earthquakes
 data(quakes)
-coplot(long ~ lat | depth, data = quakes)
+coplot(lat ~ long | depth, data = quakes)
 given.depth <- co.intervals(quakes$depth, number=4, overlap=.1)
-coplot(long ~ lat | depth, data = quakes, given.v=given.depth, rows=1)
+coplot(lat ~ long | depth, data = quakes, given.v=given.depth, rows=1)
 
 ## Conditioning on 2 variables:
-ll.dm <- long ~ lat | depth * mag
+ll.dm <- lat ~ long | depth * mag
 coplot(ll.dm, data = quakes)
 coplot(ll.dm, data = quakes, number=c(4,7), show.given=c(TRUE,FALSE))
 coplot(ll.dm, data = quakes, number=c(3,7),

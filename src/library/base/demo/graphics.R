@@ -143,7 +143,7 @@ mtext("10 Meter Contour Spacing", side=3, line=0.35, outer=FALSE,
 
 par(bg="cornsilk")
 data(quakes)
-coplot(long ~ lat | depth, data=quakes, pch=21, bg="green3")
+coplot(lat ~ long | depth, data=quakes, pch=21, bg="green3")
 
 ## --- "math annotation" in plots :
 example(plotmath)
