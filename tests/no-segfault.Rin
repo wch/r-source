@@ -11,7 +11,7 @@ core.pkgs <-
 ## generic overrides
 core.pkgs <-
     core.pkgs[- match(c("ctest", "eda", "lqs", "modreg", "mva", "methods",
-                        "nls", "tcltk", "ts", "mle"), core.pkgs)]
+                        "nls", "stepfun", "tcltk", "ts", "mle"), core.pkgs)]
 ## move methods to the end because it has side effects (overrides primitives)
 core.pkgs <- c(core.pkgs, "methods")
 
