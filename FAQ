@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-60, 2001-05-25
+Version 1.2-61, 2001-05-27
 Kurt Hornik
 
 
@@ -1286,8 +1286,15 @@ works, was published in the Journal of Statistical Software
      An implementation of the Liang/Zeger generalized estimating equation
      approach to GLMs for dependent data.
 
+*geoR*
+     Functions to perform geostatistical data analysis including model-based
+     methods.
+
 *gld*
      Basic functions for the generalised (Tukey) lambda distribution.
+
+*gregmisc*
+     Miscellaneous functions written/maintained by Gregory R. Warnes.
 
 *gss*
      A comprehensive package for structural multivariate function estimation
@@ -1447,6 +1454,12 @@ works, was published in the Journal of Statistical Software
 *sn*
      Functions for manipulating skew-normal probability distributions and
      for fitting them to data, in the scalar and the multivariate case.
+
+*sna*
+     A range of tools for social network analysis, including node and
+     graph-level indices, structural distance and covariance methods,
+     structural equivalence detection, p* modeling, and network
+     visualization.
 
 *spatial*
      Functions for kriging and point pattern analysis from "Modern Applied
