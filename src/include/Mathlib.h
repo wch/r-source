@@ -30,6 +30,7 @@
 /*-- Mathlib as part of R --  undefine this for standalone : */
 #define MATHLIB_IN_R
 
+#include "Rconfig.h"
 #include "Arith.h"
 #include "Random.h"
 
@@ -175,15 +176,6 @@
 
 
 #ifdef IEEE_754
-
-# ifdef HAVE_IEEE754_H
-#  include <ieee754.h> /* newer Linuxen */
-# else
-#  ifdef HAVE_IEEEFP_H
-#   include <ieeefp.h> /* others [Solaris 2.5.x], .. */
-#  endif
-# endif
-
 extern double m_zero;
 extern double m_one;
 /* extern double m_tiny; */

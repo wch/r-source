@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--1999  The R Development Core Team.
+ *  Copyright (C) 1998--2000  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -68,6 +68,19 @@
 #include <locale.h>
 #endif
 */
+
+/* Formerly in Arith.h */
+#ifdef IEEE_754
+# define MATH_CHECK(call)	(call)
+#else
+# ifdef __MAIN__
+    double R_tmp;
+# else
+    extern double R_tmp;
+# endif
+#  define MATH_CHECK(call)	(errno=0,R_tmp=call,(errno==0)?R_tmp:R_NaN)
+#endif
+
 
 /* Getting the working directory */
 #if defined(HAVE_GETCWD)
