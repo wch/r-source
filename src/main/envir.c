@@ -825,7 +825,7 @@ SEXP R_GetVarLocSymbol(R_varloc_t vl)
     return TAG((SEXP) vl);
 }
 
-int R_GetVarLocMISSING(R_varloc_t vl)
+Rboolean R_GetVarLocMISSING(R_varloc_t vl)
 {
     return MISSING((SEXP) vl);
 }

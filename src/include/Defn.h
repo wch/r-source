@@ -636,7 +636,7 @@ typedef struct R_varloc_st *R_varloc_t;
 R_varloc_t R_findVarLocInFrame(SEXP, SEXP);
 SEXP R_GetVarLocValue(R_varloc_t);
 SEXP R_GetVarLocSymbol(R_varloc_t);
-int R_GetVarLocMISSING(R_varloc_t);
+Rboolean R_GetVarLocMISSING(R_varloc_t);
 void R_SetVarLocValue(R_varloc_t, SEXP);
 
 /* Other Internally Used Functions */
