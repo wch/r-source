@@ -91,6 +91,11 @@ NEW FEATURES
         strings (such as the names vector) rather than assuming these
         are passed in
 
+    o   new functions in the tools package: pkgDepends, getDepList and
+        installFoundDepends. These provide functionality for assessing
+        dependencies and the availability of them (either locally or
+        from on line repositories).
+
 UTILITIES
 
     o	R CMD check  now runs the (Rd) examples with default RNGkind
