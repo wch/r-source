@@ -50,6 +50,11 @@ quote(expr)
   \code{\link{expression}} constructor function and needs to be evaluated
   with \code{\link{eval}} to give the actual expression object.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{missing}} for argument ``missingness''.
 }

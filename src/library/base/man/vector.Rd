@@ -38,6 +38,11 @@ is.vector(x, mode = "any")
   vector elements are initialized to \code{FALSE}, numeric vector
   elements to \code{0} and character vector elements to \code{""}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
 \code{\link{c}}, \code{\link{is.numeric}}, \code{\link{is.list}}, etc.
 }

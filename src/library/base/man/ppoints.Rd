@@ -24,6 +24,11 @@ ppoints(n, a = ifelse(n <= 10, 3/8, 1/2))
  \code{ppoints()} is used in \code{qqplot} and \code{qqnorm} to generate
  the set of probabilities at which to evaluate the inverse distribution.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
 \code{\link{qqplot}}, \code{\link{qqnorm}}.
 }

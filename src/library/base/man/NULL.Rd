@@ -28,6 +28,11 @@ is \code{NULL} and \code{FALSE} otherwise.
   \item{x}{an object to be tested or coerced.}
   \item{\dots}{ignored.}
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 is.null(list())    # FALSE (on purpose!)
 is.null(integer(0))# F

@@ -72,6 +72,10 @@ symbols(x, y, circles, squares, rectangles, stars,
 #endif
 }
 \references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+
   W. S. Cleveland (1985)
   \emph{The Elements of Graphing Data.}
   Monterey, California: Wadsworth.

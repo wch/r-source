@@ -57,6 +57,11 @@ cov(x, y = NULL, use = "all.obs")
   observation (whereas S-plus has been returning \code{NaN}),
   and from \R 1.2.3 fail if \code{x} has length zero.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link[ctest]{cor.test}} (pkg \code{ctest}) for confidence
   intervals (and tests).\cr

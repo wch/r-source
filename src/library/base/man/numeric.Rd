@@ -37,6 +37,11 @@ is.numeric(x)
   \code{as.numeric} for factors yields the codes underlying the factor
     levels, not the numeric representation of the labels.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 as.numeric(c("-.1"," 2.7 ","B")) # (-0.1, 2.7, NA)  +  warning
 as.numeric(factor(5:10))

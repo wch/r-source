@@ -17,6 +17,11 @@ If necessary, the values in \code{values} are recycled.
 \value{
   A vector with the values replaced.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \note{
   \code{x} is unchanged: remember to assign the result.
 }

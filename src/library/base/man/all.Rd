@@ -23,6 +23,11 @@ all(\dots, na.rm = FALSE)
   If \code{x} consists of a mix of \code{TRUE} and \code{NA} values,
   then value is \code{NA}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{\code{\link{any}}, the ``complement'' of \code{all}, and
   \code{\link{stopifnot}(*)} which is an \code{all(*)}
   ``insurance''.

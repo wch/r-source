@@ -44,6 +44,15 @@ zapsmall(x, digits= getOption("digits"))
   \item{x}{a numeric vector.}
   \item{digits}{integer indicating the precision to be used.}
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole. (except \code{zapsmall}.)
+
+  Chambers, J. M. (1998)
+  \emph{Programming with Data. A Guide to the S Language}.
+  Springer. (\code{zapsmall}.)
+}
 \seealso{
   \code{\link{as.integer}}.
 }

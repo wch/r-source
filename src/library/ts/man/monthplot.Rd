@@ -58,6 +58,11 @@ monthplot(x, labels = NULL, times, phase, base, choice, \ldots)
   window.
 }
 \author{Duncan Murdoch}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{ts}}, \code{\link{stl}}, \code{\link{StructTS}}
 }

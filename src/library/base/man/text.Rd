@@ -73,6 +73,11 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
   Labels whose \code{x}, \code{y}, \code{labels}, \code{cex} or \code{xol}
   value is \code{NA} are omitted from the plot.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{mtext}}, \code{\link{title}},
   \code{\link{Hershey}} for details on Hershey vector fonts,

@@ -87,6 +87,11 @@ legend(x, y, legend, fill, col = "black", lty, lwd, pch,
     }
   }
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{plot}}, \code{\link{barplot}} which uses \code{legend()}, and
   \code{\link{text}} for more examples of math expressions.

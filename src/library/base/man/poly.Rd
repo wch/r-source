@@ -52,6 +52,10 @@ polym(..., degree = 1)
   machine accuracy.
 }
 \references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S}.
+  Wadsworth \& Brooks/Cole.
+
   Kennedy, W. J. Jr and Gentle, J. E. (1980)
   \emph{Statistical Computing} Marcel Dekker.
 }

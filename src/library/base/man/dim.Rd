@@ -27,6 +27,11 @@ dim(x) <- value
   the \code{dim} attribute of the object.  It is \code{NULL} or a vector
   of mode \code{\link{integer}}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{ncol}}, \code{\link{nrow}} and \code{\link{dimnames}}.
 }

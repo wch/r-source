@@ -96,6 +96,11 @@ persp.default(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
   Changing \code{theta} will vary the azimuth and changing \code{phi}
   the colatitude.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{contour}} and \code{\link{image}}.
 }

@@ -57,6 +57,11 @@ identical(x, y)
 }
 \author{John Chambers}
 
+\references{
+  Chambers, J. M. (1998)
+  \emph{Programming with Data. A Guide to the S Language}.
+  Springer.
+}
 \seealso{
   \code{\link{all.equal}} for descriptions of how two objects differ;
   \link{Comparison} for operators that generate elementwise comparisons.

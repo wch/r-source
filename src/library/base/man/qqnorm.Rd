@@ -38,7 +38,12 @@ qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
   For \code{qqnorm} and \code{qqplot}, a list with components
   \item{x}{The x coordinates of the points that were/would be plotted}
   \item{y}{The corresponding y coordinates}
-  }
+}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
 \code{\link{ppoints}}.
 }

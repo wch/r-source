@@ -48,6 +48,10 @@
   efficiency of the plant.
 }
 \references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+
   Dodge, Y. (1996)
   The guinea pig of multiple regression. In:
   \emph{Robust Statistics, Data Analysis, and Computer Intensive

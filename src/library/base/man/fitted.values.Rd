@@ -31,6 +31,11 @@ fitted.values(object, \dots)
 \value{
   Fitted values extracted from the object \code{x}.
 }
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{coefficients}}, \code{\link{glm}}, \code{\link{lm}},
   \code{\link{residuals}}.

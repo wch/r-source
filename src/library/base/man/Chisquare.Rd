@@ -62,13 +62,17 @@ rchisq(n, df, ncp=0)
 %  \code{qchisq} is unreliable for
 %  values of \code{ncp} above approximately 290.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+
+  Johnson, Kotz and Balakrishnan (1995). \emph{Continuous Univariate
+    Distributions}, Vol \bold{2}; Wiley NY;
+}
 \seealso{
   \code{\link{dgamma}} for the Gamma distribution which generalizes the
   chi-squared one.
-}
-\references{
-  Johnson, Kotz and Balakrishnan (1995). \emph{Continuous Univariate
-    Distributions}, Vol \bold{2}; Wiley NY;
 }
 \examples{
 dchisq(1, df=1:3)

@@ -7,6 +7,11 @@
   arguments supplied to that function, \emph{including} positional
   arguments left blank. 
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{\code{\link{args}}, \code{\link{formals}} and \code{\link{sys.call}}.}
 \examples{
 tst <- function(a, b = 3, ...) {nargs()}

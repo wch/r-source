@@ -21,6 +21,11 @@ match.call(definition = NULL, call = sys.call(sys.parent()),
 \value{
   An object of class \code{call}.
 }
+\references{
+  Chambers, J. M. (1998)
+  \emph{Programming with Data. A Guide to the S Language}.
+  Springer.
+}
 \seealso{
   \code{\link{call}}, \code{\link{pmatch}}, \code{\link{match.arg}},
   \code{\link{match.fun}}.

@@ -153,6 +153,11 @@ symbol.For(name)
   Schwarte.  The compatibility code for HP-UX was provided by Luke
   Tierney.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{library.dynam}} to be used inside a package's
   \code{\link{.First.lib}} initialization.

@@ -58,6 +58,10 @@ La.svd(x, nu = min(n, p), nv = min(n, p), method = c("dgesdd", "dgesvd"))
   (conjugated if complex) transpose of \code{v}.
 }
 \references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
   \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
 

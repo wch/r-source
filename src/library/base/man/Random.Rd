@@ -150,6 +150,10 @@ set.seed(seed, kind = NULL)
   \code{set.seed} returns \code{NULL}, invisibly.
 }
 \references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole. (\code{set.seed}, storing in \code{.Random.seed}.)
+
   Wichmann, B. A.  and Hill, I. D. (1982)
   \emph{Algorithm AS 183: An Efficient and Portable Pseudo-random Number
     Generator}, Applied Statistics, \bold{31}, 188--190; Remarks:

@@ -51,6 +51,11 @@ pretty(x, n = 5, min.n = n \%/\% 3,  shrink.sml = 0.75,
 %%-- fixme: give even more details
 
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 pretty(1:15)     # 0  2  4  6  8 10 12 14 16
 pretty(1:15, h=2)# 0  5 10 15

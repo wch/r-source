@@ -45,6 +45,11 @@ tempdir()
   shortnames version of the path. 
 #endif
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{\code{\link{unlink}} for deleting files.}
 \examples{
 tempfile(c("ab", "a b c"))   # give file name with spaces in!

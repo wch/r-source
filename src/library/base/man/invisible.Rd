@@ -13,6 +13,11 @@
   return values which can be assigned, but which do not print when they
   are not assigned.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{return}},
   \code{\link{function}}.

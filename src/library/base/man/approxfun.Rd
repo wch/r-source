@@ -69,6 +69,11 @@ approxfun(x, y = NULL,       method="linear",
   \code{\link{spline}} and \code{\link{splinefun}} for spline
   interpolation.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 x <- 1:10
 y <- rnorm(10)

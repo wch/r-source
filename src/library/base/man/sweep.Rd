@@ -22,6 +22,11 @@ sweep(x, MARGIN, STATS, FUN="-", \dots)
   An array with the same shape as \code{x}, but with the summary
   statistics swept out.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{apply}} on which \code{sweep} is based;
   \code{\link{scale}} for centering and scaling.

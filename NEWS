@@ -99,6 +99,13 @@ BUG FIXES
 		CHANGES IN R VERSION 1.7.1
 
 
+NEW FEATURES
+
+    o	The help pages give appropriate references to the Blue,
+	White or Green books for functions based on the descriptions
+	of S functions given there. (E&OE)
+
+
 BUG FIXES
 
     o	print.table() has used too much white space in some cases

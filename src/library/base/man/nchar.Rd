@@ -21,6 +21,11 @@
   The number of characters as the string will be printed (integer
   \code{2} for a missing string).
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{strwidth}} giving width of strings for plotting;
   \code{\link{paste}}, \code{\link{substr}}, \code{\link{strsplit}}

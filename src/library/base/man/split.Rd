@@ -49,6 +49,11 @@ unsplit(value, f)
 \seealso{
   \code{\link{cut}}
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 n <- 10; nn <- 100
 g <- factor(round(n * runif(n * nn)))

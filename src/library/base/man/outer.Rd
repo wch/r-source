@@ -31,6 +31,11 @@ x \%o\% y
   cannot be changed from \code{"*"}).
 }
 \author{Jonathan Rougier}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{\%*\%}} for usual (\emph{inner}) matrix vector
   multiplication;

@@ -32,6 +32,11 @@ geterrmessage()
   \code{geterrmessage} gives the last error message, as character string
   ending in \code{"\n"}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{warning}}, \code{\link{try}} to catch errors and retry,
   and \code{\link{options}} for setting error handlers.

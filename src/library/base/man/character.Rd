@@ -47,6 +47,11 @@ is.character(x)
   \code{\link{deparse}}, which is normally preferable to
   \code{as.character} for language objects.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 form <- y ~ a + b + c
 as.character(form)  ## length 3

@@ -25,5 +25,10 @@ labels.lm(object, \dots)
   a \code{terms} object it is the term labels and for an \code{lm}
   object it is the term labels for estimable terms.
 }
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S.}
+  Wadsworth \& Brooks/Cole.
+}
 \keyword{print}
 \keyword{models}

@@ -37,6 +37,11 @@ title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
   a selection of the optional modifying graphical parameters
   \code{cex=}, \code{col=}, \code{font=}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{mtext}}, \code{\link{text}};
   \code{\link{plotmath}} for details on mathematical annotation.

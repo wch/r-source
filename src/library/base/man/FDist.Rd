@@ -60,6 +60,11 @@ rf(n, df1, df2)
   the means.  See \code{\link{Chisquare}} for further details on
   non-central distributions.  
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{dchisq}} for chi-squared and \code{\link{dt}} for Student's
   t distributions.

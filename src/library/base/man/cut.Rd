@@ -48,6 +48,11 @@ cut.default(x, breaks, labels = NULL,
   Instead of \code{table(cut(x, br))}, \code{hist(x, br, plot = FALSE)} is
   more efficient and less memory hungry.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{split}} for splitting a variable according to a group factor;
   \code{\link{factor}}, \code{\link{tabulate}}, \code{\link{table}}.

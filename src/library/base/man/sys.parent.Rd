@@ -77,6 +77,11 @@ parent.frame(n = 1)
   \code{parent.frame(n)} is a convenient shorthand for
   \code{sys.frame(sys.parent(n))} (implemented slightly more efficiently).
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole. (not \code{parent.frame}.)
+}
 \seealso{
   \code{\link{eval}} for the usage of \code{sys.frame} and \code{parent.frame}.
 }

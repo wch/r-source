@@ -80,6 +80,11 @@ rbind(\dots, deparse.level = 1)
    If you want to combine other objects with data frames, it may be
    necessary to coerce them to data frames first.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{c}} to combine vectors (and lists) as vectors,
   \code{\link{data.frame}} to combine vectors and matrices as a data

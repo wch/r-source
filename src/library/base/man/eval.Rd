@@ -48,6 +48,11 @@ local(expr, envir = new.env())
   functions and as a kind of limited namespace feature since variables
   defined in the environment are not visible from the outside.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole. (\code{eval} only.)
+}
 \seealso{
   \code{\link{expression}}, \code{quote}, \code{\link{sys.frame}},
   \code{\link{parent.frame}}, \code{\link{environment}}.

@@ -42,6 +42,11 @@ rexp(n, rate = 1)
     f(x) = lambda e^(- lambda x)}
   for \eqn{x \ge 0}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{exp}} for the exponential function,
   \code{\link{dgamma}} for the gamma distribution and

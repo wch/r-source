@@ -64,6 +64,11 @@ pairs.default(x, labels = colnames(x), panel = points, \dots,
   Enhancements for \R 1.0.0 contributed by Dr. Jens
   Oehlschlaegel-Akiyoshi and R-core members.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 data(iris)
 pairs(iris[1:4], main = "Anderson's Iris Data -- 3 species", 

@@ -58,6 +58,11 @@ deltat.default(x, \dots)
   \code{\link{date}} for clock time, \code{\link{system.time}}
   for CPU usage.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 data(presidents)
 cycle(presidents)

@@ -17,6 +17,11 @@ If \code{yes} or \code{no} are too short, their elements are recycled.
   \item{yes}{return values for true elements of \code{test}.}
   \item{no}{return values for false elements of \code{test}.}
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
 \code{\link{if}}.
 }

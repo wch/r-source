@@ -13,6 +13,11 @@ median(x, na.rm=FALSE)
 \description{
   Compute the sample median of the vector of values given as its argument.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{\code{\link{quantile}} for general quantiles.}
 \examples{
 median(1:4)# = 2.5 [even number]

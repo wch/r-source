@@ -49,12 +49,18 @@ assign(x, value, pos = -1, envir = as.environment(pos),
   If \code{inherits} is \code{FALSE}, assignment takes place in the
   initial frame of \code{envir}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 
 \seealso{
   \code{\link{<-}},
   \code{\link{get}},
   \code{\link{exists}},
-  \code{\link{environment}}.}
+  \code{\link{environment}}.
+}
 \examples{
 for(i in 1:6) { #-- Create objects  'r1', 'r2', ... 'r6' --
  nam <- paste("r",i, sep=".")

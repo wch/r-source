@@ -114,6 +114,11 @@ type?topic
   Similarly, all the files in the
   \file{latex} directory can be zipped to \file{Rhelp.zip}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{help.search}()} for finding help pages on a ``vague'' topic.
   \code{\link{help.start}()} which opens the HTML version of the \R

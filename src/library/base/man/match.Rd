@@ -47,12 +47,17 @@ x \%in\% table
   in R's ordering, logical < integer < numeric < complex < character)
   before matching.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
-\code{\link{pmatch}} and \code{\link{charmatch}} for (\emph{partial})
-string matching, \code{\link{match.arg}}, etc for function argument
-matching.
+  \code{\link{pmatch}} and \code{\link{charmatch}} for (\emph{partial})
+  string matching, \code{\link{match.arg}}, etc for function argument
+  matching.
 
-\code{\link{is.element}} for an S-compatible equivalent of \code{\%in\%}.
+  \code{\link{is.element}} for an S-compatible equivalent of \code{\%in\%}.
 }
 \examples{
 ## The intersection of two sets :

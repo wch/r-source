@@ -24,7 +24,12 @@ which.max(x)
   respectively.
 }
 \author{Martin Maechler}
-\seealso{\code{\link{which}}, \code{\link{max.col}}, \code{\link{max}}, etc.}
+\seealso{
+  \code{\link{which}}, \code{\link{max.col}}, \code{\link{max}}, etc.
+
+  \code{\link[nnet]{which.is.max}} in package \code{nnet} differs in
+  breaking ties at random (and having a ``fuzz'' in the definition of ties).
+}
 \examples{
 x <- c(1:4,0:5,11)
 which.min(x)

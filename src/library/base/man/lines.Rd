@@ -31,6 +31,11 @@ lines.default(x, y=NULL, type="l", col=par("col"), lty=par("lty"), \dots)
   the plot, and lines are not drawn to or from such points.  Thus
   missing values can be used to achieve breaks in lines.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{points}},
   \code{\link{plot}},

@@ -175,9 +175,6 @@ de(\dots, Modes = list(), Names = NULL)
   \code{\link{vi}}, \code{\link{edit}}: \code{edit} uses
   \code{dataentry} to edit data frames.
 }
-\note{
-    At present the data editor is limited to 65535 rows.
-}
 \examples{
 # call data entry with variables x and y
 \dontrun{data.entry(x,y)}

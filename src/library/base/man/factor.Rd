@@ -108,6 +108,11 @@ as.ordered(x)
   may well depend on the locale at the time of creation, and should
   not be assumed to be ASCII.
 }
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{gl}} for construction of ``balanced'' factors and
   \code{\link{C}} for factors with specified contrasts.

@@ -79,7 +79,11 @@
   \item{names}{a vector of names for the groups}
 }
 \references{
-  See \code{\link{boxplot.stats}}.
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+
+  See also \code{\link{boxplot.stats}}.
 }
 \seealso{
   \code{\link{boxplot.formula}} for the formula interface;

@@ -34,6 +34,11 @@ sample(x, size, replace = FALSE, prob = NULL)
   proportional to the probabilities amongst the remaining items. The number
   of nonzero weights must be at least \code{size} in this case.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 x <- 1:12
 # a random permutation

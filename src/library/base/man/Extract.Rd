@@ -85,6 +85,11 @@ x$name
   unclassing in order to apply the default method to an object.  They
   should not normally be invoked by end users.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{list}}, \code{\link{array}}, \code{\link{matrix}}.
 

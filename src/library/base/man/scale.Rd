@@ -49,6 +49,11 @@ scale(x, center = TRUE, scale = TRUE)
   square-root of the sum-of-squares of the non-missing values in the
   column divided by the number of non-missing values minus one.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{sweep}} which allows centering (and scaling) with
   arbitrary statistics.

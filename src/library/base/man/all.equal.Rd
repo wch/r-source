@@ -59,6 +59,11 @@ all.equal.numeric(target, current,
 
   Numerical differences are reported by relative error
 }
+\references{
+  Chambers, J. M. (1998)
+  \emph{Programming with Data. A Guide to the S Language}.
+  Springer (for \code{=}).
+}
 \seealso{\code{\link{==}}, and \code{\link{all}} for exact equality testing.}
 \examples{
 all.equal(pi, 355/113) # not precise enough (default tol) > relative error

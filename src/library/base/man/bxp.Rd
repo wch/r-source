@@ -64,6 +64,11 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, outline = TRUE,
   with the coordinates ("x" if horizontal is false, "y" otherwise) of
   box centers, useful for adding to the plot.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 set.seed(753)
 str(bx.p <- boxplot(split(rt(100, 4), gl(5,20))))

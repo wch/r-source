@@ -57,6 +57,11 @@ points.default(x, y=NULL, type="p", pch=par("pch"), col=par("col"),
   
   Graphical parameters are permitted as arguments to this function.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{plot}}, \code{\link{lines}}, and the underlying
   ``primitive'' \code{\link{plot.xy}}.

@@ -37,6 +37,11 @@ arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
   arrowheads are omitted (with a warning) on any arrow of length less
   than 1/1000 inch.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{segments}} to draw segments.
 }

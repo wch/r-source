@@ -28,6 +28,11 @@ prmatrix(x, rowlab = character(0), collab = character(0),
 \value{
   Invisibly returns its argument, \code{x}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{print.default}}, and other \code{\link{print}} methods.
 }

@@ -211,6 +211,11 @@ ps.options(paper, horizontal, width, height, family, encoding,
   the other encodings.  Hyphen is available as character 173 (octal
   0255) in ISOLatin1.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{Devices}},
   {\code{\link{check.options}} which is called from both

@@ -31,6 +31,11 @@ resid(object, \dots)
   Methods can make use of \code{\link{naresid}} methods to compensate
   for the omission of missing values.  The default method does.
 }
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{coefficients}}, \code{\link{fitted.values}},
   \code{\link{glm}}, \code{\link{lm}}.

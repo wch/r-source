@@ -71,6 +71,10 @@ La.eigen(x, symmetric, only.values = FALSE,
   }
 }
 \references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+
   Smith, B. T, Boyle, J. M., Dongarra, J. J., Garbow, B. S., Ikebe,Y.,
   Klema, V., and  Moler, C. B. (1976).
   \emph{Matrix Eigensystems Routines -- EISPACK Guide}.
@@ -81,6 +85,7 @@ La.eigen(x, symmetric, only.values = FALSE,
   Available on-line at
   \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
 }
+
 \seealso{
   \code{\link{svd}}, a generalization of \code{eigen}; \code{\link{qr}}, and
   \code{\link{chol}} for related decompositions.
