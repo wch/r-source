@@ -175,7 +175,7 @@ AC_ARG_WITH(tk-config,
   TK_CONFIG="")
 
 AC_ARG_WITH(libtool,
-  [  --with-libtool       use libtool for building shared libraries],
+  [  --with-libtool          use libtool for building shared libraries],
   use_libtool=${withval},
   use_libtool=no)
 AM_CONDITIONAL(USE_LIBTOOL, test "${use_libtool}" = yes)
