@@ -49,7 +49,8 @@ install.packages(pkgs, lib, repos = CRAN,
                  method, available = NULL, destdir = NULL,
 		 installWithVers = FALSE, dependencies = FALSE,
                  type = getOption("pkgType"))
-}
+
+contrib.url(repos, type = getOption("pkgType"))
 \arguments{
   \item{lib.loc}{character vector describing the location of R
     library trees to search through (and update packages therein).}
@@ -64,10 +65,10 @@ install.packages(pkgs, lib, repos = CRAN,
     Can be \code{NULL} to install from local \code{.zip} files.
 #endif
   }
-  \item{contriburl}{URL(s) of the contrib section of the repositories.
-    Use this argument only if your CRAN mirror is incomplete, e.g.,
-    because you burned
-    only the contrib section on a CD.  Overrides argument \code{repos}.
+  \item{contriburl}{URL(s) of the contrib section of the
+    repositories. Use this argument only if your CRAN mirror is
+    incomplete, e.g., because you burned only the \file{contrib} section on a
+    CD.  Overrides argument \code{repos}.
 #ifdef unix
     Can be \code{NULL} to install from local \code{.tar.gz} files.
 #endif
@@ -109,14 +110,14 @@ install.packages(pkgs, lib, repos = CRAN,
     install.
 #ifdef unix
     Possible values are \code{"source"} (the default except under the
-    AQUA GUI), \code{"mac.binary"} and \code{"win.binary"} (which can be
-    downloaded but not installed).
+    CRAN Mac OS X build), \code{"mac.binary"} and \code{"win.binary"}
+    (which can be downloaded but not installed).
 #endif
 #ifdef windows
-    Possible values are \code{"win.binary"} (the default) and \code{"source"},
-    for which suitable tools need to be installed: see the \sQuote{rw-FAQ}.
-    Value \code{"mac.binary"} can be used to explore and download MacOS
-    X binaries.
+    Possible values are \code{"win.binary"} (the default) and
+    \code{"source"} (for which suitable tools need to be installed: see
+    the \sQuote{rw-FAQ}).  Value \code{"mac.binary"} can be used to
+    explore and download Mac OS X binaries.
 #endif
   }
 }
@@ -192,6 +193,9 @@ install.packages(pkgs, lib, repos = CRAN,
   \code{lib} are on the default library path for installs (set by
   \code{R_LIBS}). 
 #endif
+
+  \code{contrib.url} adds the appropriate type-specific path within a
+  repository to each URL in \code{repos}.
 
   For \code{install.packages} and \code{update.packages}, \code{destdir}
   is the directory to which packages will be downloaded.  If it is

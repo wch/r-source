@@ -23,4 +23,3 @@ options(windowsTimeouts=as.integer(c(100,500)))
 
 options(repos = c(CRAN="@CRAN@",
         CRANextra="http://www.stats.ox.ac.uk/pub/RWin"))
-options(pkgType = "win.binary")

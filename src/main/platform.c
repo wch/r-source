@@ -130,13 +130,14 @@ static void Init_R_Platform(SEXP rho)
 {
     SEXP value, names;
 
-    PROTECT(value = allocVector(VECSXP, 5));
-    PROTECT(names = allocVector(STRSXP, 5));
+    PROTECT(value = allocVector(VECSXP, 6));
+    PROTECT(names = allocVector(STRSXP, 6));
     SET_STRING_ELT(names, 0, mkChar("OS.type"));
     SET_STRING_ELT(names, 1, mkChar("file.sep"));
     SET_STRING_ELT(names, 2, mkChar("dynlib.ext"));
     SET_STRING_ELT(names, 3, mkChar("GUI"));
     SET_STRING_ELT(names, 4, mkChar("endian"));
+    SET_STRING_ELT(names, 5, mkChar("pkgType"));
     SET_VECTOR_ELT(value, 0, mkString(R_OSType));
     SET_VECTOR_ELT(value, 1, mkString(R_FileSep));
     SET_VECTOR_ELT(value, 2, mkString(SHLIB_EXT));
@@ -145,6 +146,14 @@ static void Init_R_Platform(SEXP rho)
     SET_VECTOR_ELT(value, 4, mkString("big"));
 #else
     SET_VECTOR_ELT(value, 4, mkString("little"));
+#endif
+#ifdef Win32
+    SET_VECTOR_ELT(value, 5, mkString("win.binary"));
+#else
+#ifdef HAVE_AQUA
+    SET_VECTOR_ELT(value, 5, mkString("mac.binary"));
+#endif
+    SET_VECTOR_ELT(value, 5, mkString("source"));
 #endif
     setAttrib(value, R_NamesSymbol, names);
     defineVar(install(".Platform"), value, rho);

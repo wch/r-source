@@ -33,6 +33,11 @@
     character, \code{"big"} or \code{"little"}, giving the
     endianness of the processor in use.
   }
+  \item{pkgType}{
+    character, the preferred setting for \code{\link{options}("pkgType")}.
+    Values \code{"source"}, \code{"mac.binary"} and \code{"win.binary"}
+    are currently in use.
+  }
 }
 \seealso{
   \code{\link{R.version}} and \code{\link{Sys.info}} give more details

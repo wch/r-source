@@ -122,17 +122,16 @@ getDepMtrx <- function(pkg, instPkgs, local=TRUE) {
     pkgDeps  ## Either a matrix, NA if no deps or NULL if not found
 }
 
-getRemotePkgDepends <- function(pkg, contriburl=getOption("repositories")()[1]) {
+getRemotePkgDepends <- function(pkg, contriburl=getOption("repos")) {
     ## Will get the dependencies of a package from
     ## online repositories.  Returns NULL if it
-    ## can not be found, otherwise returns the row provided
-    ## in CRAN.packages().  Defaults to getting packages from CRAN,
-    ## but other URLs can be specified.
+    ## cannot be found, otherwise returns the row provided
+    ## by available.packages().
 
     if(is.null(contriburl))
-        contriburl <- contrib.url(getOption("CRAN"))
+        contriburl <- contrib.url(getOption("repos"))
 
-    cran <- CRAN.packages(contriburl=contriburl)
+    cran <- available.packages(contriburl=contriburl)
     whichRow <- which(pkg == cran[,"Package"])
     if (length(whichRow) > 0) {
         return(package.dependencies(cran[whichRow,])[[1]])
@@ -171,18 +170,18 @@ installedDepends <- function(depMtrx, instPkgs) {
     return(numeric())
 }
 
-foundDepends <- function(depMtrx, contriburl=getOption("repositories")()) {
+foundDepends <- function(depMtrx, contriburl=getOption("repos")) {
     out <- list(Found=list())
     foundRows <- numeric()
 
     if(is.null(contriburl))
-        contriburl <- contrib.url(c(CRAN = getOption("CRAN"),
-                                      BIOC = getOption("BIOC")))
+        contriburl <- contrib.url(c(CRAN = getOption("repos")["CRAN"],
+                                    BIOC = getOption("BIOC")))
 
 
     for (j in 1:length(contriburl)) {
         cur <- character()
-        cran <- CRAN.packages(contriburl=contriburl[j])
+        cran <- available.packages(contriburl=contriburl[j])
 
         if (nrow(depMtrx) > 0) {
             for (i in 1:nrow(depMtrx)) {
@@ -192,10 +191,9 @@ foundDepends <- function(depMtrx, contriburl=getOption("repositories")()) {
                     ## Found it in repos
                     if (is.na(depMtrx[i,2])) ## no version, automatically okay
                         found <- TRUE
-                    else if(compareDependsPkgVersion(cran[cranRow,
-                                                                  "Version"],
-                                                             depMtrx[i,2],
-                                                             depMtrx[i,3]))
+                    else if(compareDependsPkgVersion(cran[cranRow, "Version"],
+                                                     depMtrx[i,2],
+                                                     depMtrx[i,3]))
                         found <- TRUE
                 }
                 if (found) {

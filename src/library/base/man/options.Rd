@@ -32,7 +32,7 @@ getOption(x)
   \code{options("width")} which is a \emph{list} of length one.
 
   \code{.Options} also always contains the \code{options()} list (as a
-  pairlist) , for S compatibility.  You must use it \dQuote{read only}
+  pairlist), for S compatibility.  You must use it \dQuote{read only}
   however.
 }
 \value{
@@ -227,7 +227,7 @@ getOption(x)
 #endif
 #ifdef unix
       Possible values are \code{"source"} (the default except under the
-      AQUA GUI) and \code{"mac.binary"}.
+      CRAN Mac OS X build) and \code{"mac.binary"}.
 #endif
     }
 
