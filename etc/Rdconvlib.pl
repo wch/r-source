@@ -579,7 +579,7 @@ sub text2html {
 	    if($using_chm){
 		if($opt ne "") {
 		    $opt =~ s/:.*$//o;
-		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$arg";
+		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$arg.html";
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<A HREF=\"$htmlfile\">$arg<\/A>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/$arg/s;
