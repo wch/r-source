@@ -866,6 +866,9 @@ R_BSD_NETWORKING
 ## Bitmap headers and libraries
 R_BITMAPS
 
+## zlib headers and libraries
+R_ZLIB
+
 ## POSIX times
 R_USES_LEAPSECONDS
 

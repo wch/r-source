@@ -734,7 +734,7 @@ SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- gzipped file connections --------------------- */
 
-#if defined(HAVE_LIBZ) && defined(HAVE_ZLIB_H)
+#if defined(HAVE_ZLIB)
 #include <zlib.h>
 
 static void gzfile_open(Rconnection con)
