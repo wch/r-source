@@ -2926,7 +2926,7 @@ void GPretty(double *s, double *u, int *ndiv)
 	 || *s == R_NegInf || *u == R_NegInf || *ndiv == 0 )
 		error("infinite axis extents\n");
 
-	cell = FLT_EPSILON + (*u-*s) / *ndiv;
+	cell = DBL_EPSILON + (*u-*s) / *ndiv;
 	base = pow(10.0, floor(log10(cell)));
 	unit = base;
 	if(fabs((tmp = 2.0*base)-cell) < fabs(unit-cell)) unit = tmp;
@@ -2934,12 +2934,12 @@ void GPretty(double *s, double *u, int *ndiv)
 	if(fabs((tmp = 10.0*base)-cell) < fabs(unit-cell)) unit = tmp;
 	
 	ns = floor(*s/unit);
-	while(ns*unit > *s - FLT_EPSILON) ns--;
+	while(ns*unit > *s - DBL_EPSILON) ns--;
 	ns++;
 	*s = unit*ns;
 	
 	nu = ceil(*u/unit);
-	while(nu*unit < *u + FLT_EPSILON) nu++;
+	while(nu*unit < *u + DBL_EPSILON) nu++;
 	nu--;
 	*u = unit*nu;
 	
