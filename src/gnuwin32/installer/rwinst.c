@@ -29,6 +29,7 @@ extern int Load_Unzip_Dll();
 extern int do_unzip(char *zipname, char *dest, int nfiles, char **files,
 		    int nxfiles, char **xfiles, int over);
 
+/* text control for unzip output */
 char *unztext;
 int nunztext = 0;
 #define NTEXT 16000
@@ -36,6 +37,7 @@ int nunztext = 0;
 
 HINSTANCE hUnzipDll;
 
+/* graphapp objects */
 window w;
 button bBack, bNext, bFinish, bCancel, bSrc, bDest;
 radiobutton sys, pkg;
@@ -45,17 +47,15 @@ textbox unzout;
 label lVer, lsrc, ldest, lwhat1, lwhat2, lwarn2, lwarn3, lwarn4, lwarn5,
     lres3, lresp2, lwhat3;
 field fRver, fSrc, fDest;
+
+
 int FullInstall = 1, over;
 char Rver[10]="", src[MAX_PATH], dest[MAX_PATH];
 char selpkg[30], *pkglist[100];
 int npkgs, rwb=1, rwh=1, rww=1, rwl=1, rwwh=0, rwsp=0;
 int prwb=1, prww=1, prwl=1, prwwh=0;
 
-#include <sys/stat.h>
-
-
-/* SHELLsort -- corrected from R. Sedgewick `Algorithms in C'
- */
+/* SHELLsort -- corrected from R. Sedgewick `Algorithms in C' */
 
 void ssort(char **x, int n)
 {
@@ -91,6 +91,8 @@ void dosslash(char *s)
     if(*(p + strlen(s)) == '\\') *p = '\0';
 }
 
+#include <sys/stat.h>
+
 int direxists(char * dir)
 {
     struct stat sb;
@@ -116,7 +118,6 @@ int fexists(char * file)
     return stat(str, &sb) == 0;
 }
 
-
 void page1(), page2(), page3(), pagepkg1(), pagepkg2(), pagepkg3();
 void cleanpage1(), cleanpage2(), cleanpage3(), cleanpagepkg1(),
     cleanpagepkg2(), cleanpagepkg3();
@@ -125,7 +126,6 @@ void finish(button b)
 {
     exitapp();
 }
-
 
 void next1(button b)
 {
@@ -254,7 +254,7 @@ void next2(button b)
     rwsp = ischecked(srcsp);
     if(!rwb) {
 	strcpy(str, dest);
-	strcat(str, "/rw");
+	strcat(str, "/");
 	strcat(str, Rver);
 	strcat(str, "/bin");
 
@@ -322,14 +322,12 @@ void cSys(button b)
     enable(fRver);
 }
 
-
 void cPkg(button b)
 {
     disable(fRver);
 }
 
 char selfile[50];
-
 
 void browsesrc(button b)
 {
@@ -405,7 +403,6 @@ void browsedest(button b)
     }
 }
 
-
 void header()
 {
     label l;
@@ -473,7 +470,8 @@ void page2()
     }
 
     ypos += 20;
-    texthelp  = newcheckbox("plain text help", rect(xpos, ypos, 150, 20), NULL);
+    texthelp  = newcheckbox("plain text help", 
+			    rect(xpos, ypos, 150, 20), NULL);
     strcpy(str, Rver); strcat(str, "h.zip");
     if(!fexists(str)) {
 	uncheck(texthelp); disable(texthelp);
@@ -541,7 +539,7 @@ void page2()
     }
     if(!isenabled(basepkg)) {
 	strcpy(str, dest);
-	strcat(str, "/rw");
+	strcat(str, "/");
 	strcat(str, Rver);
 	strcat(str, "/bin");
 	if(!direxists(str)) {
@@ -560,7 +558,7 @@ void page2()
 
 void page3()
 {
-    char str[MAX_PATH], lab[100] = "", dest1[MAX_PATH];
+    char str[MAX_PATH], lab[100] = "", lab2[100], dest1[MAX_PATH];
     int rc;
 
     clear(w); redraw(w); header();
@@ -583,63 +581,69 @@ void page3()
     show(w);
 
     if(rwb) {
+	strcpy(lab2, lab); delobj(lres3); strcat(lab, "base files . . . ");
+	lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
 	strcpy(str, src); strcat(str, "/");
 	strcat(str, Rver); strcat(str, "b.zip");
 	rc = do_unzip(str, dest, 0, NULL, 0, NULL, over);
 	if(!rc) {
-	    delobj(lres3);
-	    strcat(lab, "base files  ");
+	    strcpy(lab, lab2); delobj(lres3); strcat(lab, "base files  ");
 	    lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
 	}
     }
     if(rwh) {
+	strcpy(lab2, lab); delobj(lres3); strcat(lab, "text help . . .");
+	lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
 	strcpy(str, src); strcat(str, "/");
 	strcat(str, Rver); strcat(str, "h.zip");
 	rc = do_unzip(str, dest, 0, NULL, 0, NULL, over);
 	if(!rc) {
-	    delobj(lres3);
-	    strcat(lab, "text help  ");
+	    strcpy(lab, lab2); delobj(lres3); strcat(lab, "text help  ");
 	    lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
 	}
     }
     if(rww) {
+	strcpy(lab2, lab); delobj(lres3); strcat(lab, "HTML help . . .");
+	lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
 	strcpy(str, src); strcat(str, "/");
 	strcat(str, Rver); strcat(str, "w.zip");
 	rc = do_unzip(str, dest, 0, NULL, 0, NULL, over);
 	if(!rc) {
-	    delobj(lres3);
-	    strcat(lab, "HTML help  ");
+	    strcpy(lab, lab2); delobj(lres3); strcat(lab, "HTML help  ");
 	    lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
 	}
     }
     if(rwl) {
+	strcpy(lab2, lab); delobj(lres3); strcat(lab, "latex files . . .");
+	lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
 	strcpy(str, src); strcat(str, "/");
 	strcat(str, Rver); strcat(str, "l.zip");
 	rc = do_unzip(str, dest, 0, NULL, 0, NULL, over);
 	if(!rc) {
-	    delobj(lres3);
-	    strcat(lab, "latex files  ");
+	    strcpy(lab, lab2); delobj(lres3); strcat(lab, "latex files  ");
 	    lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
 	}
     }
     if(rwwh) {
+	strcpy(lab2, lab); delobj(lres3); strcat(lab, "winhelp . . .");
+	lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
 	strcpy(str, src); strcat(str, "/");
 	strcat(str, Rver); strcat(str, "wh.zip");
 	rc = do_unzip(str, dest, 0, NULL, 0, NULL, over);
 	if(!rc) {
-	    delobj(lres3);
-	    strcat(lab, "winhelp  ");
+	    strcpy(lab, lab2); delobj(lres3); strcat(lab, "winhelp  ");
 	    lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
 	}
     }
     if(rwsp) {
+	strcpy(lab2, lab); delobj(lres3); strcat(lab, "source . . .");
+	lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
 	strcpy(str, src); strcat(str, "/");
 	strcat(str, Rver); strcat(str, "sp.zip");
 	strcpy(dest1, dest); strcat(dest1, "/"); strcat(dest1, Rver);
 	rc = do_unzip(str, dest, 0, NULL, 0, NULL, over);
 	if(rc) {
-	    delobj(lres3);
-	    strcat(lab, "source ");
+	    strcpy(lab, lab2); delobj(lres3); strcat(lab, "source ");
 	    lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
 	}
     }
@@ -825,14 +829,18 @@ void init_interface(void)
 
 int WINAPI UnzDisplayBuf(LPSTR buf, unsigned long size)
 {
-    int total;
+    int total, firstvis;
 
     total = strlen(unztext) + 1 + size;
-    if(total >= nunztext)
-	memmove(unztext, unztext + UNZSCROLL, strlen(unztext) + 1 - UNZSCROLL);
+    if(total >= nunztext) {
+	firstvis = UNZSCROLL;
+	for (firstvis = UNZSCROLL; firstvis < total; firstvis++)
+	    if(*(unztext + firstvis) == '\n') break;
+	memmove(unztext, unztext + firstvis, strlen(unztext) + 1 - firstvis);
+    }
     strncat(unztext, (char *) buf, size);
     settext(unzout, unztext);
-    scrolltext(unzout, 8);
+    scrolltext(unzout, 8); /* show bottom 8 lines */
     show(unzout);
     return (unsigned int) size;
 }
