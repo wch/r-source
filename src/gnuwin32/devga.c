@@ -1378,7 +1378,7 @@ static void X11_Activate(DevDesc *dd)
 
     if (xd->replaying || xd->kind)
 	return;
-    strcpy(t, title);
+    strcpy(t, (char *) title);
     strcat(t, ": Device ");
     sprintf(num, "%i", deviceNumber(dd) + 1);
     strcat(t, num);
@@ -1402,7 +1402,7 @@ static void X11_Deactivate(DevDesc *dd)
 
     if (xd->replaying || xd->kind)
 	return;
-    strcpy(t, title);
+    strcpy(t, (char *) title);
     strcat(t, ": Device ");
     sprintf(num, "%i", deviceNumber(dd) + 1);
     strcat(t, num);
