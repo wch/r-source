@@ -7,12 +7,6 @@ eval <-
                        parent.frame())
     .Internal(eval(expr, envir,enclos))
 
-eval.with.vis <-
-    function (expr, envir = parent.frame(),
-              enclos = if (is.list(envir) || is.pairlist(envir))
-              parent.frame())
-    .Internal(eval.with.vis(expr, envir, enclos))
-
 quote <- function(x) substitute(x)
 
 

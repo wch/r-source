@@ -3,6 +3,12 @@ source <-
             verbose = .Options$verbose, prompt.echo = .Options$prompt,
             max.deparse.length = 150, chdir = FALSE)
 {
+    eval.with.vis <-
+        function (expr, envir = parent.frame(),
+		  enclos = if (is.list(envir) || is.pairlist(envir))
+                  parent.frame())
+        .Internal(eval.with.vis(expr, envir, enclos))
+
     envir <- if (local)
         sys.frame(sys.parent())
     else .GlobalEnv
