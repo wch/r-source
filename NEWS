@@ -65,6 +65,9 @@ NEW FEATURES
 	including lm() and glm().  See ?poly, ?cars and ?ns for
 	examples.
 
+   o	Argument `split' of summary.{aov,aovlist} is now implemented. 
+
+
 
 DEPRECATED & DEFUNCT
 
