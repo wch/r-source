@@ -336,6 +336,11 @@ Date: Sun, 25 May 2003 18:33:49 +0200
 Subject: Incorrect tick mark length when `tck' != NA
 From: BoersN@pac.dfo-mpo.gc.ca
 Date: Thu, 17 Jul 2003 19:54:26 +0200 (MET DST)
+* PR# 3550 *
+Subject: bug?
+From: Yashaswini Mittal <mittal@math.arizona.edu>
+Date: Thu, 24 Jul 2003 10:28:34 -0700
+..problem is with legend()
 
 Directory:  In-Out
 
@@ -706,14 +711,6 @@ Date: Tue, 10 Jun 2003 01:23:42 +0200 (MET DST)
 Subject: optim with constraints 
 From: aa@tango.stat.unipd.it (Adelchi Azzalini)
 Date: Mon, 23 Jun 2003 17:51:19 +0200 (CEST)
-* PR# 3394 *
-Subject: bug? exactRankTests install anomaly
-From: mwgrant@adelphia.net
-Date: Fri, 4 Jul 2003 04:04:12 +0200 (MET DST)
-* PR# 3399 *
-Subject: R crashes when installing package from CRAN
-From: renaud.lancelot@cirad.fr
-Date: Fri, 4 Jul 2003 14:17:52 +0200 (MET DST)
 * PR# 3400 *
 Subject: R documentation -- buffer overflow?
 From: Martin.Schlather@uni-bayreuth.de
@@ -722,10 +719,6 @@ Date: Fri, 04 Jul 2003 15:01:14 +0200
 Subject: feature enhancement request & patch:  dev.control(displaylist='en
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Mon, 7 Jul 2003 13:49:48 -0400 
-* PR# 3443 *
-Subject: I am puzzled about something in pnorm in R
-From: Henrik.Seidel@schering.de
-Date: Wed, 9 Jul 2003 18:21:32 +0200
 * PR# 3485 *
 Subject: Undefined subroutine &R::Rdconv::fill
 From: michael.t.klinglesmith@intel.com
@@ -738,79 +731,55 @@ Date: Wed, 16 Jul 2003 01:27:25 +0200 (MET DST)
 Subject: missing permissions in reference manual copyright page
 From: Brian Gough <bjg@network-theory.co.uk>
 Date: Mon, 21 Jul 2003 15:12:30 +0100
-* PR# 3542 *
-Subject: Want to make love like a teen?
-From: "Tyrone Leon" <pz4d4whryuo3@aeicorp.com>
-Date: Wed, 23 Jul 03 19:38:51 GMT
-* PR# 3543 *
-Subject: Develop a Larger Penis in Weeks  balloon
-From: "Elias Gipson" <xyfs2ykz530@netease.com>
-Date: Wed, 23 Jul 03 15:33:21 GMT
-* PR# 3544 *
-Subject: Make your penis thicker, harder and bigger  paranoia
-From: "Eugene Mitchell" <ek8v6vh1wg49@eyou.com>
-Date: Thu, 24 Jul 03 09:58:43 GMT
-* PR# 3545 *
-Subject: Re: I am puzzled about something in pnorm in R
-From: James Michael Rath <organism@ices.utexas.edu>
-Date: Wed, 23 Jul 2003 21:14:57 -0500 (CDT)
-* PR# 3546 *
-Subject: Quit for your love ones!
-From: "Marquita Cormier" <30m0pu153tk@foho.com>
-Date: Thu, 24 Jul 03 10:25:39 GMT
-* PR# 3547 *
-Subject: Add size to your Penis  allis
-From: "Jose Cruz" <pucwmh3vysg7@elong.com>
-Date: Thu, 24 Jul 03 15:28:21 GMT
-* PR# 3548 *
-Subject: [±¤°í]¢Æ¢ÆÈ«º¸¢Æ¢ÆCD Å¸ÀÌÆ² Á¦ÀÛ,È¸»çÈ«º¸ CD Á¦ÀÛ,Á¹¾÷¾Ù¹ü CD ROM Á¦ÀÛ,CD COPY,VCD
-From: HadaSolution<y2krdh@empal.com>
-Date: Thu, 24 Jul 2003 23:19:47 +0900
-* PR# 3549 *
-Subject: INTERNATIONAL
-From: "Mr. Steve L." <meplottery1113@netscape.net>
-Date: Thu, 24 Jul 2003 19:08:29 +0200
-* PR# 3550 *
-Subject: bug?
-From: Yashaswini Mittal <mittal@math.arizona.edu>
-Date: Thu, 24 Jul 2003 10:28:34 -0700
-* PR# 3551 *
-Subject: REQUEST FOR URGENT CONFIDENTIAL BUSINESS RELATIONSHIP 
-From: "DR. SAMUEL OKEKE" <johnadim@netscape.net>
-Date: Thu, 24 Jul 2003 20:51:45 +0100
-* PR# 3552 *
-Subject: It's A Shame For You Not To Take A Dream Vacation  -- When These People Do It So Easily! h tenncxc
-From: "Priscilla Morales" <zqp359nwl@yahoo.com>
-Date: Thu, 24 Jul 03 14:48:19 GMT
-* PR# 3553 *
-Subject: For your attention
-From: Marcus Moyo <marcmoyo@netscape.net>
-Date: Fri, 25 Jul 2003 01:33:14 +0200
-* PR# 3554 *
-Subject: fountain of youth
-From: "Dr. Jorge Pratas" <J-Pratas@yahoo.com>
-Date: Sun, 24 Aug 03 01:08:34 GMT
-* PR# 3555 *
-Subject: Viagra online - save 50%
-From: "Nolan Mercado" <9m7cud6ic77@imagination-center.com>
-Date: Fri, 25 Jul 03 01:50:34 GMT
-* PR# 3556 *
-Subject: Develop a Larger Penis in Weeks  crumple
-From: "Molly Little" <ba2hpfrr3lu4@163.net>
-Date: Fri, 25 Jul 03 16:22:29 GMT
-* PR# 3557 *
-Subject: Maritime Newsletter (Week 30)
-From: "Marine Digital Inc."<newsletter@marinedigital.com>
-Date: Fri, 25 Jul 2003 18:50:20 +0900
-* PR# 3558 *
-Subject: R won't use http_proxy
-From: michael.watson@bbsrc.ac.uk
-Date: Fri, 25 Jul 2003 14:20:57 +0200 (MET DST)
-* PR# 3559 *
-Subject: Be one of the 5 Leaders to show others how to make 15K per month.  rqabjcqziuaj 
-From: "Mohammed Cummings" <r3jg01tj@redones.net>
-Date: Sat, 26 Jul 03 00:25:29 GMT
-* PR# 3560 *
+* PR# 3567 *
+Subject:                       PLEASE I NEED YOUR ASSISTANCE.
+From: PETERS BAHTAN <bahtan2002@netscape.net>
+Date: Sat, 26 Jul 2003 17:15:42 +0100
+* PR# 3568 *
 Subject: Worldwide Partners program
 From: "The TechNews" <editor@the-tech-news.com>
-Date: Fri, 25 Jul 2003 19:02:00 +0200
+Date: Sat, 26 Jul 2003 21:31:13 +0200
+* PR# 3569 *
+Subject: FWD: best solution to "that" problem mipslewqq 
+From: "Pedro Prather" <hmaa0yl@centralpets.com>
+Date: Sun, 27 Jul 03 17:07:22 GMT
+* PR# 3570 *
+Subject: HELP US
+From: "KUKU BIO" <kukubio@netscape.net>
+Date: Sun, 27 Jul 2003 02:49:25 +0100
+* PR# 3571 *
+Subject: Put 15K in Your Pocket Every Month! cl
+From: "Ezra Allred" <dsm2xts9um@redones.net>
+Date: Sun, 27 Jul 03 20:43:30 GMT
+* PR# 3572 *
+Subject: Make your penis thicker, harder and bigger  colosseum
+From: "Kerri Bravo" <gpe84h6f6aa@163.net>
+Date: Sun, 27 Jul 03 08:09:20 GMT
+* PR# 3573 *
+Subject: How about feeling & looking 20 years younger?
+From: "Lavern Drummond" <7fff4phn2zz@bscinet.com>
+Date: Sun, 27 Jul 03 17:50:52 GMT
+* PR# 3574 *
+Subject: No Perscription Required Cheap Prices
+From: "Brett Costello" <0hfalr6osz@uymail.com>
+Date: Sun, 27 Jul 03 19:50:18 GMT
+* PR# 3575 *
+Subject: You need to update your computer
+From: "" <adrawen@keromail.com>
+Date: Sun, 27 Jul 03 22:42:22 GMT
+* PR# 3576 *
+Subject: Develop a Larger Penis in Weeks  demountable
+From: "Kelli Mcgowan" <bv6r4w5gtt@eyou.com>
+Date: Mon, 28 Jul 03 14:10:49 GMT
+* PR# 3577 *
+Subject: Having sleep trouble? Ambien/Sonata online no prescription required
+From: "Archie Medina" <h42dm6n9@aei-sandiego.com>
+Date: Mon, 28 Jul 03 13:05:14 GMT
+* PR# 3578 *
+Subject: Here is the latest craze urd
+From: "Katina Benoit" <iyz908eyry@bigblue.net.au>
+Date: Mon, 28 Jul 03 14:44:50 GMT
+* PR# 3579 *
+Subject: Low Mortgage Rates gx bgci
+From: "Alfonso Contreras" <nsrqnbr@csc.com>
+Date: Mon, 28 Jul 03 13:17:52 GMT
