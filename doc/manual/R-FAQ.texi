@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-53, 2001-05-11
+@set FAQ-VERSION 1.2-54, 2001-05-15
 @set REL-VERSION 1.2.3
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1392,6 +1392,8 @@ A Matrix package.
 @item NISTnls
 A set of test nonlinear least squares examples from @acronym{NIST}, the
 U.S. National Institute for Standards and Technology.
+@item Oarray
+Arrays with arbitrary offsets.
 @item PHYLOGR
 Manipulation and analysis of phylogenetically simulated data sets (as
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
