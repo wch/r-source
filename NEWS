@@ -16,6 +16,9 @@ NEW FEATURES
 
     o	diag(x) now keeps names when appropriate and barfs when x is an array.
 
+    o   functions source.url, url.show, read.table.url, scan.url to read
+	from an http server instead of a file.
+
 BUG FIXES
 
     o	arguments after --no-readline in the Unix version were ignored.
