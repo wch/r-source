@@ -124,6 +124,15 @@ AC_ARG_WITH(dxml,
     fi],
   use_dxml=true)
 
+AC_ARG_WITH(atlas,
+  [  --with-atlas            use ATLAS library (if available)],
+  [ if test "${withval}" = no; then
+      use_atlas=false;
+    else
+      use_atlas=true;
+    fi],
+  use_atlas=true)
+
 AC_ARG_WITH(readline,
   [  --with-readline         use readline library (if available)],
   [ if test "${withval}" = no; then
@@ -330,16 +339,39 @@ AC_CHECK_LIB(ncurses, main,,
 ))
 AC_CHECK_LIB(dl, dlopen)
 AC_CHECK_LIB(z, main)
+
+## Special checks for odd OS specific things
+AC_CHECK_FUNC(gethostbyname)
+if test "${ac_cv_func_gethostbyname}" = no; then
+  AC_CHECK_LIB(nsl, gethostbyname)
+fi
+AC_CHECK_FUNC(connect)
+if test "${ac_cv_func_connect}" = no; then
+  AC_CHECK_LIB(socket, connect)
+fi
+
+## BLAS
 BLAS="blas.o"
+if test "${r_cv_prog_f77_append_underscore}" = yes; then
+  fun=dgemm_
+else
+  fun=dgemm
+fi
 if ${use_dxml}; then
-  AC_CHECK_LIB(dxml, main, FLIBS="-ldxml ${FLIBS}" BLAS="")
+  AC_CHECK_LIB(dxml, ${fun}, FLIBS="-ldxml ${FLIBS}" BLAS="")
+fi
+if test -n "${BLAS}" && ${use_atlas}; then
+  AC_CHECK_LIB(atlas, ATL_xerbla,
+    [ FLIBS="-latlas ${FLIBS}" BLAS=""
+      AC_CHECK_LIB(cblas, cblas_dgemm,
+        [ FLIBS="-lcblas ${FLIBS}"
+	  AC_CHECK_LIB(f77blas, ${fun},
+            FLIBS="-lf77blas ${FLIBS}", , ${FLIBS}),
+	], ,${FLIBS})
+    ], ,
+    ${FLIBS})
 fi
 if test -n "${BLAS}" && ${use_blas}; then
-  if test "${r_cv_prog_f77_append_underscore}" = yes; then
-    fun=daxpy_
-  else
-    fun=daxpy
-  fi
   AC_CHECK_LIB(blas, ${fun},
     [ FLIBS="-lblas ${FLIBS}" BLAS=""
       if ${use_blas_risc}; then
@@ -478,7 +510,7 @@ AC_SUBST(R_XTRA_LIBS)
 
 ## We need to determine the following:
 ##
-## LDCMD, DLLFLAGS
+## MAINLD, MAINLDFLAGS
 ##   command and flags for loading the main binary so that it will load
 ##   shared libraries (DLLs) at runtime
 ## CPICFLAGS, FPICFLAGS
@@ -493,7 +525,7 @@ AC_SUBST(R_XTRA_LIBS)
 ## *) As a final safeguard, values from the environment (as specified in
 ##    one of the configuration files) override anything we figure out.
 
-ldcmd=${CC}
+mainld=${CC}
 shlibld=${CC}
 SHLIBEXT=so
 
@@ -525,26 +557,26 @@ AC_MSG_RESULT(done)
 case "${host}" in
   *aix4.[[2-9]]*)
     EXPORTFILE="\$(top_builddir)/etc/R.exp"
-    ldcmd=ld
-    dllflags="-bdynamic -bE:${EXPORTFILE} -bM:SRE"
+    mainld=ld
+    mainldflags="-bdynamic -bE:${EXPORTFILE} -bM:SRE"
     if test "${GCC}" = yes; then
-      dllflags="${dllflags} `${CC} -print-libgcc-file-name`"
+      mainldflags="${mainldflags} `${CC} -print-libgcc-file-name`"
     fi
     shlibld=ld
     shlibldflags="-bM:SRE -H512 -T512 -bnoentry -bexpall \
       -bI:\$(R_HOME)/etc/R.exp"
     ;;
   alpha*osf*)
-    ldcmd="${FC} -g -nofor_main -fpe3 "
+    mainld="${FC} -g -nofor_main -fpe3 "
     cpicflags=
     shlibld=${FC}
     shlibldflags=-shared
     ;;
   alpha*linux*)
-    dllflags=-export-dynamic
+    mainldflags=-export-dynamic
     ;;
   *freebsd3.*)
-    dllflags=-export-dynamic
+    mainldflags=-export-dynamic
     shlibldflags="-shared"
     ;;
   *hpux*)
@@ -556,7 +588,7 @@ case "${host}" in
       f77|fort77)
         fpicflags="+z" ;;
     esac
-    dllflags="-Wl,-E"
+    mainldflags="-Wl,-E"
     shlibld=ld
     shlibldflags="-b"
     SHLIBEXT=sl
@@ -565,11 +597,11 @@ case "${host}" in
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
     ;;
   *linux*)
-    dllflags=-export-dynamic
+    mainldflags=-export-dynamic
     ;;
   *netbsd*)
     if ${CPP} - -dM < /dev/null | grep -q __ELF__; then
-      dllflags="-export-dynamic"
+      mainldflags="-export-dynamic"
       shlibldflags="-shared"
     else
       shlibldflags="-Bshareable"
@@ -595,7 +627,7 @@ case "${host}" in
       ld=`${CC} -print-prog-name=ld`
       ldoutput=`${ld} -v 2>&1 | grep GNU`
       if test -n "${ldoutput}"; then
-	dllflags="-Wl,-export-dynamic"
+	mainldflags="-Wl,-export-dynamic"
 	shlibldflags="-shared"
       fi
     else
@@ -609,8 +641,8 @@ case "${host}" in
     ;;
 esac
 
-: ${LDCMD=${ldcmd}}
-: ${DLLFLAGS=${dllflags}}
+: ${MAINLD=${mainld}}
+: ${MAINLDFLAGS=${mainldflags}}
 : ${CPICFLAGS=${cpicflags}}
 if test -z "${CPICFLAGS}"; then
   case "${host}" in
@@ -630,8 +662,8 @@ if test -z "${SHLIBLDFLAGS}"; then
   AC_MSG_ERROR([See the file INSTALL for more information.])
 fi
 
-AC_SUBST(LDCMD)
-AC_SUBST(DLLFLAGS)
+AC_SUBST(MAINLD)
+AC_SUBST(MAINLDFLAGS)
 AC_SUBST(CPICFLAGS)
 AC_SUBST(FPICFLAGS)
 AC_SUBST(SHLIBLDFLAGS)
