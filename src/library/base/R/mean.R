@@ -10,6 +10,7 @@ mean.default <- function(x, trim = 0, na.rm = FALSE) {
 	lo <- floor(n*trim)+1
 	hi <- n+1-lo
 	x <- sort(x, partial=unique(c(lo, hi)))[lo:hi]
+        n <- hi-lo+1
     }
     sum(x)/n
 }
