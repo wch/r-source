@@ -24,8 +24,9 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   \item{n}{the maximum number of data values to be read, defaulting to
     no limit.}
   \item{sep}{by default, scan expects to read white-space delimited
-    input fields.  Alternatively, \code{sep} can be used to specify a
-    character which delimits fields.}
+      input fields.  Alternatively, \code{sep} can be used to specify a
+      character which delimits fields.} 
+  \item{quote}{the set of quoting characters}
   \item{dec}{decimal point character.}
   \item{skip}{this many lines of the input file should be skipped before
     starting to read data values.}

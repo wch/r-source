@@ -63,6 +63,7 @@ static int ConsoleGetchar()
 static int save = 0;
 static int sepchar = 0;
 static int decchar = '.';
+static char *quoteset;
 static FILE *fp;
 static int ttyflag;
 static int quiet;
@@ -154,7 +155,7 @@ static int fillBuffer(char *buffer, SEXPTYPE type, int strip)
 	    filled = c;
 	    goto donefill;
 	}
-	if (type == STRSXP && (c == '\"' || c == '\'')) {
+	if (type == STRSXP && index(quoteset, c)) {
 	    quote = c;
 	    while ((c = scanchar()) != R_EOF && c != quote) {
 		if (bufp >= &buffer[MAXELTSIZE - 2])
@@ -202,7 +203,7 @@ static int fillBuffer(char *buffer, SEXPTYPE type, int strip)
 			    goto donefill;
 			}
 		/* CSV style quoted string handling */
-		if (type == STRSXP && (c == '\"' || c == '\'')) {
+		if (type == STRSXP && index(quoteset, c)) {
 		    quote = c;
 		inquote:
 		    while ((c = scanchar()) != R_EOF && c != quote) {
@@ -558,7 +559,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 
 SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, file, sep, what, stripwhite, dec;
+    SEXP ans, file, sep, what, stripwhite, dec, quotes;
     int i, c, nlines, nmax, nskip, flush;
     char *filename;
 
@@ -569,6 +570,7 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     nmax = asInteger(CAR(args));   args = CDR(args);
     sep = CAR(args);		   args = CDR(args);
     dec = CAR(args);		   args = CDR(args);
+    quotes = CAR(args);		   args = CDR(args);
     nskip = asInteger(CAR(args));  args = CDR(args);
     nlines = asInteger(CAR(args)); args = CDR(args);
     NAstrings = CAR(args);	   args = CDR(args);
@@ -597,6 +599,14 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     }						
     else					
 	errorcall(call, "invalid decimal separator");
+
+    if (isString(quotes))
+	quoteset = CHAR(STRING(quotes)[0]);
+    else if (isNull(quotes)) 
+	quoteset = ""; 
+    else
+	errorcall(call, "invalid quote symbol set");
+
 
     filename = NULL;
     if (isValidString(file)) {
@@ -639,8 +649,8 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, file, sep,  bns;
-    int nfields, nskip, i, c, inquote, quote;
+    SEXP ans, file, sep,  bns, quotes;
+    int nfields, nskip, i, c, inquote, quote = 0;
     int blocksize, nlines;
     char *filename = "";	/* -Wall */
 
@@ -648,11 +658,20 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     file = CAR(args);	args = CDR(args);
     sep = CAR(args);	args = CDR(args);
+    quotes = CAR(args);	 args = CDR(args);
     nskip = asInteger(CAR(args));
 
     if (nskip < 0 || nskip == NA_INTEGER) nskip = 0;
 
     scan_sep_check
+
+    if (isString(quotes))
+	quoteset = CHAR(STRING(quotes)[0]);
+    else if (isNull(quotes)) 
+	quoteset = ""; 
+    else
+	errorcall(call, "invalid quote symbol set");
+
 
     if (isValidStringF(file)) {
 	filename = CHAR(STRING(file)[0]);
@@ -700,9 +719,13 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else if (sepchar) {
 	    if (nfields == 0)
 		nfields++;
+	    if (inquote && (c == R_EOF || c == '\n')) {
+		fclose(fp);
+		errorcall(call, "string terminated by newline or EOF");
+	    }
 	    if (inquote && c == quote)
 		inquote = 0;
-	    else if (c == '\"' || c == '\'') {
+	    else if (index(quoteset, c)) {
 		inquote = 1;
 		quote = c;
 	    }
@@ -710,8 +733,8 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 		nfields++;
 	}
 	else if (!isspace(c)) {
-	    if (c == '"' || c == '\'') {
-		int quote = c;
+	    if (index(quoteset, c)) {
+		quote = c;
 		while ((c=scanchar()) != quote) {
 		    if (c == R_EOF || c == '\n') {
 			fclose(fp);

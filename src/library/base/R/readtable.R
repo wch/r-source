@@ -1,10 +1,10 @@
-count.fields <- function(file, sep = "", skip = 0)
-    .Internal(count.fields(file, sep,  skip))
+count.fields <- function(file, sep = "", quote = "", skip = 0)
+    .Internal(count.fields(file, sep, quote, skip))
 
 
 read.table <-
-    function (file, header=FALSE, sep="", dec=".", row.names,
-              col.names, as.is=FALSE,
+    function (file, header=FALSE, sep="", quote="\"\'", dec=".",
+              row.names, col.names, as.is=FALSE,
 	      na.strings="NA", skip=0)
 {
     type.convert <- function(x, na.strings = "NA",
@@ -14,14 +14,14 @@ read.table <-
     ##	basic column counting and header determination;
     ##	rlabp (logical) := it looks like we have column names
 
-    row.lens <- count.fields(file, sep, skip)
+    row.lens <- count.fields(file, sep, quote, skip)
     nlines <- length(row.lens)
     rlabp <- nlines > 1 && (row.lens[2] - row.lens[1]) == 1
     if(rlabp && missing(header))
 	header <- TRUE
 
     if (header) { # read in the header
-	col.names <- scan(file, what="", sep=sep, nlines=1,
+	col.names <- scan(file, what="", sep=sep, quote=quote, nlines=1,
 			  quiet=TRUE, skip=skip)
 	skip <- skip + 1
 	row.lens <- row.lens[-1]
@@ -44,7 +44,7 @@ read.table <-
     if (rlabp)
 	col.names <- c("row.names", col.names)
     names(what) <- col.names
-    data <- scan(file=file, what=what, sep=sep, skip=skip,
+    data <- scan(file=file, what=what, sep=sep, quote=quote, skip=skip,
 		 na.strings=na.strings, quiet=TRUE)
 
     ##	now we have the data;

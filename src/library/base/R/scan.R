@@ -1,6 +1,6 @@
 scan <-
-    function(file="", what= double(0), nmax=-1, n=-1, sep="",
-             dec=".", skip=0, nlines=0,
+    function(file="", what= double(0), nmax=-1, n=-1, sep="", quote="", 
+             dec=".", skip=0, nlines=0, 
 	     na.strings="NA", flush=FALSE, strip.white=FALSE, quiet=FALSE) {
 	if(!missing(sep) && missing(na.strings))
 	    na.strings <- c(na.strings,"")
@@ -11,6 +11,6 @@ scan <-
 	    else
 		stop("Either specify `nmax' or `n', but not both.")
 	}
-	.Internal(scan(file, what, nmax, sep, dec, skip, nlines,
+	.Internal(scan(file, what, nmax, sep, dec, quote, skip, nlines,
 		       na.strings,flush,strip.white, quiet))
     }

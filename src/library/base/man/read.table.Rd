@@ -6,8 +6,9 @@
   cases corresponding to lines and variables to fields in the file.
 }
 \usage{
-read.table(file, header = FALSE, sep = "", dec = ".", row.names,
-        col.names, as.is = FALSE, na.strings = "NA", skip = 0)
+read.table(file, header = FALSE, sep = "", dec = ".", quote = "\"\'",
+           row.names, col.names, as.is = FALSE, na.strings = "NA",
+           skip = 0)
 }
 \arguments{
   \item{file}{the name of the file which the data are to be read from.
@@ -18,7 +19,9 @@ read.table(file, header = FALSE, sep = "", dec = ".", row.names,
   \item{header}{a logical value indicating whether the file contains the
     names of the variables as its first line.}
   \item{sep}{the field separator character.  Values on each line of the
-    file are separated by this character.}
+      file are separated by this character.}
+  \item{quote}{the set of quoting characters. To disable quoting
+      altogether, use \code{quote=""}}
   \item{dec}{the decimal point}
   \item{row.names}{a vector of row names.  This can be a vector giving
     the actual row names, or a single number giving the column of the

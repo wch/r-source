@@ -1,7 +1,7 @@
 \name{count.fields}
 \title{Count the Number of Fields per Line}
 \usage{
-count.fields(file, sep = "", skip = 0)
+count.fields(file, sep = "", quote = "", skip = 0)
 }
 \alias{count.fields}
 \arguments{
@@ -9,6 +9,7 @@ count.fields(file, sep = "", skip = 0)
   \item{sep}{the field separator character.  Values on each line of the
     file are separated by this character.  By default, arbitrary amounts
     of whitespace can separate fields.}
+  \item{quote}{the set of quoting characters}
   \item{skip}{the number of lines of the data file to skip before
     beginning to read data.}
 }
