@@ -991,7 +991,7 @@ static void RestoreError(char *msg)
   
 static SEXP DataLoad(FILE *fp)
 {
-    int i, j, vsmall, nsmall;
+    int i, j;
     char *vmaxsave;
     fpos_t savepos;
 
