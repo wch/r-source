@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998--2000  Guido Masarotto
+ *  Copyright (C) 1998--2001  Guido Masarotto
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -650,6 +650,6 @@ int devicepixelsy(drawing dev) MEASUREDEV(LOGPIXELSY)
 
 void BringToTop(window c)
 {
-/*    SetForegroundWindow(c->handle); in 1.2.0/1 */
-    BringWindowToTop(c->handle);
+    SetForegroundWindow(c->handle); /* needed in Rterm */
+    BringWindowToTop(c->handle);    /* needed in Rgui --mdi */
 }
