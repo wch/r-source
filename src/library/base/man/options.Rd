@@ -27,6 +27,7 @@ options(\dots)
 \item{expressions}{sets a limit on the number of nested expressions that
   will be evaluated.   This is especially important on the Macintosh
   since stack overflow is likely if this is set too high.}
+\item{keep.source}{When \code{TRUE}, the default, the source code for functions loaded by is stored in their \code{"source"} attribute, allowing comments to be kept in the right places. This does not apply to functions loaded by \code{library}.  }
 \item{na.action}{the name of a function for treating missing values
   (\code{\link{NA}}'s) for certain situations.}
 \item{pager}{the (standalone) program used for displaying ASCII files on
