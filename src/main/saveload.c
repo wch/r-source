@@ -1381,6 +1381,7 @@ permute (struct permute_info *pinfo, unsigned dimnum)
 	    break;
 	  default:
 	    errorcall (pinfo->call, "No support for R type: %d", pinfo->type);
+	    pointaddr = &offset;/* unreached; -Wall */
 	  }
 
 	if (pinfo->writeflag)
@@ -1457,28 +1458,28 @@ vector_io (SEXP call, int writeflag, hid_t dataset, hid_t space, SEXP obj)
   if ((tid = H5Dget_type (dataset)) < 0)
     errorcall (call, "Unable to get type for dataset");
 
-  if (type == STRSXP)
-    {
+  switch (type) {
+
+  case STRSXP:
       memtid = make_sexp_ref_type (call);
       buf = STRING (obj);
-    }
-  else if (type == REALSXP)
-    {
+      break;
+  case REALSXP:
       memtid = H5T_NATIVE_DOUBLE;
       buf = REAL (obj);
-    }
-  else if (type == INTSXP)
-    {
+      break;
+  case INTSXP:
       memtid = H5T_NATIVE_INT;
       buf = INTEGER (obj);
-    }
-  else if (type == LGLSXP)
-    {
+      break;
+  case LGLSXP:
       memtid = H5T_NATIVE_UINT;
       buf = INTEGER (obj);
-    }
-  else
+      break;
+  default:
       errorcall (call, "Can't get type for R type: %d (IO)", type);
+      /* unreached (-Wall): */ memtid = tid;  buf = &tid;
+  }
 
   if (H5Sget_simple_extent_dims (space, dims, maxdims) < 0)
     errorcall (call, "Unable to get dimensions of space");
@@ -1508,8 +1509,7 @@ vector_io (SEXP call, int writeflag, hid_t dataset, hid_t space, SEXP obj)
   if (H5Sclose (mspace) < 0)
     errorcall (call, "Unable to close point space");
 
-  if (type == STRSXP)
-    {
+  if (type == STRSXP) {
       if (H5Tclose (memtid) < 0)
 	errorcall (call, "Unable to close string reference type");
     }
@@ -1529,7 +1529,7 @@ hdf5_save_attributes (SEXP call, hid_t loc_id, SEXP val)
       hid_t tid, memtid;
       hid_t sid, aid;
       unsigned count = LENGTH (attr);
-      SEXPREC *stringptrs[count];
+      /*SEXPREC *stringptrs[count];*/
 
       if (TAG (l) == R_RowNamesSymbol
 	  || TAG (l) == R_ClassSymbol
@@ -1607,7 +1607,7 @@ hdf5_write_vector (SEXP call, hid_t id, const char *symname, SEXP val)
   unsigned i, rank;
   SEXP dimvec;
   hid_t space, dataset;
-  int type = TYPEOF (val);
+  SEXPTYPE type = TYPEOF (val);
   hid_t tid;
 
   dimvec = getAttrib (val, R_DimSymbol);
@@ -1620,7 +1620,7 @@ hdf5_write_vector (SEXP call, hid_t id, const char *symname, SEXP val)
       for (i = 0; i < rank; i++)
 	dims[i] = INTEGER (dimvec)[i];
     else
-      dims[0] = LENGTH (val);
+      dims[0] = length(val);
 
     if ((space = H5Screate_simple (rank, dims, NULL)) < 0)
       errorcall (call, "Unable to create file dataspace");
@@ -1637,8 +1637,10 @@ hdf5_write_vector (SEXP call, hid_t id, const char *symname, SEXP val)
       tid = H5T_NATIVE_INT;
     else if (type == REALSXP)
       tid = H5T_NATIVE_DOUBLE;
-    else
+    else {
       errorcall (call, "Can't get type for R type: %d (Creating)", type);
+      tid = H5T_NATIVE_INT;/*unreached; -Wall*/
+    }
 
     if ((dataset = H5Dcreate (id,
 			      symname,
@@ -1713,7 +1715,7 @@ create_rownames_dataset_attribute (SEXP call, hid_t dataset, SEXP rownames)
 {
   hid_t stringtid = get_string_type (call, rownames);
   hid_t rtid = make_sexp_ref_type (call);
-  hid_t rnattrib, rndataspace, itemdata;
+  hid_t rnattrib, rndataspace;
   unsigned rowcount = LENGTH (rownames);
   hsize_t dims[1];
 
@@ -1850,7 +1852,7 @@ hdf5_save_object (SEXP call, hid_t fid, const char *symname, SEXP val)
 		  case STRSXP:
 		    {
 		      SEXP stritem = STRING (item)[ri];
-		      size_t len = LENGTH (stritem);
+		      /*size_t len = LENGTH (stritem);*/
 
 		      memset (ptr, 0, H5Tget_size (hdftypes[pos]));
 		      strcpy ((char *)ptr, CHAR (stritem));
@@ -1897,7 +1899,7 @@ hdf5_save_object (SEXP call, hid_t fid, const char *symname, SEXP val)
     }
   else
     {
-      int type = TYPEOF (val);
+      SEXPTYPE type = TYPEOF (val);
 
       switch (type)
 	{
@@ -1975,15 +1977,13 @@ static void
 hdf5_save_symbol (SEXP call, hid_t fid, SEXP sym, SEXP env)
 {
   SEXP val;
-  int type;
 
   val = findVar (sym, env);
 
   hdf5_save_object (call, fid, CHAR (PRINTNAME (sym)), val);
 }
 
-SEXP
-do_hdf5save (SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_hdf5save (SEXP call, SEXP op, SEXP args, SEXP env)
 {
   const char *path;
   hid_t fid;
@@ -2285,8 +2285,8 @@ hdf5_process_object (hid_t id, const char *name, void *client_data)
     {
       hid_t dataset, space, tid;
       int rank;
-      int type;
-      H5T_class_t class;
+      SEXPTYPE type = NILSXP;
+      /*H5T_class_t class;*/
 
       if ((dataset = H5Dopen (id, name)) < 0)
 	errorcall (iinfo->call, "unable to load dataset `%s'", name);
@@ -2356,7 +2356,7 @@ hdf5_process_object (hid_t id, const char *name, void *client_data)
 		size_t csize = H5Tget_size (ctid);
 		size_t coffset = H5Tget_member_offset (tid, ci);
 		SEXPREC **rowptr = &VECTOR (vec)[ci];
-		unsigned char itembuf[size]; // for overrun
+		unsigned char itembuf[size]; /* for overrun */
 
 #define VECLOOP(vectype, vecref, dtid) \
   { \
@@ -2376,8 +2376,7 @@ hdf5_process_object (hid_t id, const char *name, void *client_data)
 		  if (colname)
 		    STRING (names)[ci] = mkChar (colname);
 		}
-		switch (class)
-		  {
+		switch (class) {
 		  case H5T_INTEGER:
 		    {
 		      SEXPTYPE type = (csize == 1) ? LGLSXP : INTSXP;
@@ -2454,13 +2453,11 @@ add_to_return_list (struct hdf5_iterate_info *iinfo,
   UNPROTECT (1);
 }
 
-SEXP
-do_hdf5load (SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_hdf5load (SEXP call, SEXP op, SEXP args, SEXP env)
 {
   const char *path;
   hid_t fid;
   int restore_syms;
-  SEXP rl;
   struct hdf5_iterate_info iinfo;
 
   checkArity (op, args);
@@ -2499,20 +2496,19 @@ do_hdf5load (SEXP call, SEXP op, SEXP args, SEXP env)
   if (H5Fclose (fid) < 0)
     errorcall (call, "unable to close HDF file");
 
-
   return iinfo.ret;
 }
+
 #else
-SEXP
-do_hdf5save (SEXP call, SEXP op, SEXP args, SEXP env)
+
+SEXP do_hdf5save (SEXP call, SEXP op, SEXP args, SEXP env)
 {
     errorcall(call, "HDF5 support unavailable\n");
-    return(R_NilValue);		      /* -Wall */
+    return(R_NilValue);/* -Wall */
 }
-SEXP
-do_hdf5load (SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_hdf5load (SEXP call, SEXP op, SEXP args, SEXP env)
 {
     errorcall(call, "HDF5 support unavailable\n");
-    return(R_NilValue);		      /* -Wall */
+    return(R_NilValue);/* -Wall */
 }
 #endif
