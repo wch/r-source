@@ -7,7 +7,7 @@ legend(x, y, legend, fill, col = "black", lty, lwd, pch,
        bty = "o", bg = par("bg"), pt.bg = NA, cex = 1,
        xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1, adj = 0,
        text.width = NULL, merge = do.lines && has.pch, trace = FALSE,
-       ncol = 1, horiz = FALSE)
+       plot = TRUE, ncol = 1, horiz = FALSE)
 }
 \description{
   This function can be used to add legends to plots.  Note that a call
@@ -55,6 +55,8 @@ legend(x, y, legend, fill, col = "black", lty, lwd, pch,
     not filled boxes.  Defaults to \code{TRUE} if there are points and lines.}
   \item{trace}{logical; if \code{TRUE}, shows how \code{legend} does all
     its magical computations.}
+  \item{plot}{logical.  If \code{FALSE}, nothing is plotted but the
+    sizes are returned.}
   \item{ncol}{the number of columns in which to set the legend items
     (default is 1, a vertical legend).}
   \item{horiz}{logical; if \code{TRUE}, set the legend horizontally rather than
@@ -133,7 +135,8 @@ plot(x, sin(x), type="l", col = 2,xlab=expression(phi),ylab=expression(f(phi)))
 abline(h=-1:1, v=pi/2*(-6:6), col="gray90")
 lines(x, cos(x), col = 3, lty = 2)
 ex.cs1 <- expression(plain(sin) * phi,  paste("cos", phi))# 2 ways
-str(legend(-3, .9, ex.cs1, lty=1:2, col=2:3, adj = c(0, .6)))# adj y !
+str(legend(-3, .9, ex.cs1, lty=1:2, plot=FALSE, adj = c(0, .6)))# adj y !
+    legend(-3, .9, ex.cs1, lty=1:2, col=2:3,    adj = c(0, .6))
 
 x <- rexp(100, rate = .5)
 hist(x, main = "Mean and Median of a Skewed Distribution")

@@ -125,6 +125,9 @@ NEW FEATURES
 	instead of mtext().
 	This also addresses "bugs" PR#820, PR#1305, PR#1899.
 
+     o	legend() has a new `plot' argument.  Setting it `FALSE' gives
+	size information without plotting (suggested by U.Ligges).
+
 
 INSTALLATION CHANGES
 
