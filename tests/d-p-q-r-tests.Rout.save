@@ -1,6 +1,6 @@
 
-R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-11-15)
+R : Copyright 2001, The R Development Core Team
+Version 1.2.1 Patched (2001-02-09)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -44,6 +44,13 @@ Type `q()' to quit R.
 > all(dpois(0:5,0)	   == c(1, rep(0,5)))
 [1] TRUE
 > all(dpois(0:5,0, log=TRUE) == c(0, rep(-Inf, 5)))
+[1] TRUE
+> 
+> ## PR #842
+> all.equal(cumsum(dnbinom(0:5, .9, .5)),
++          (pnb <- pnbinom(0:5, .9, .5)))
+[1] TRUE
+> All.eq(pnb[c(2,4)], c(0.777035760338812, 0.946945347071519))
 [1] TRUE
 > 
 > ## Currently, just Wilcoxon  [should do this for all !]
@@ -694,5 +701,5 @@ Warning messages:
 [1] TRUE
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  7.5 0.23 7.73 0 0 
+Time elapsed:  7.81 0.23 8.09 0 0 
 > 

@@ -20,6 +20,9 @@ R_UNZIPCMD=${R_UNZIPCMD-@R_UNZIPCMD@}
 R_ZIPCMD=${R_ZIPCMD-@R_ZIPCMD@}
 ## Default editor
 EDITOR=${EDITOR-${VISUAL-vi}}
+## Use configure values
+AWK=${AWK-@AWK@}
+PERL=${PERL-@PERL@}
 
 ### Local Variables: ***
 ### mode: sh ***

@@ -33,7 +33,6 @@
       S and S-PLUS}, Springer.
 }
 \examples{
-library(nls)
 data(DNase)
 coplot(density ~ conc | Run, data = DNase,
     show = FALSE, type = "b")

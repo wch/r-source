@@ -4,7 +4,7 @@
 # Alternatives CYGWIN (-mno-cygwin), MINGW32 (mingw32 gcc), CROSS (Linux)
 BUILD=MINGW32
 # Set this to YES if you use MINGW32 and gcc-2.95.2.1 or later, or cygwin-1.1.
-# HAVE_SHARED=YES
+HAVE_SHARED=YES
 
 # Where does 'HTML Help Workshop' live? (unused if compiled HTML help is
 # not requested. Spaces allowed.)
@@ -16,7 +16,7 @@ TCL_VERSION = 83
 
 ifeq ($(strip $(BUILD)),CYGWIN)
 BINPREF=
-MINGW32CFLAG=-mno-cygwin -DWIN32
+MINGW32CFLAG=-mno-cygwin -mwin32
 MINGW32LDFLAG=-mno-cygwin
 FLIBS=-lg2c
 AWK=gawk

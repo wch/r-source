@@ -1,12 +1,18 @@
 \name{sort}
+\alias{sort}
 \title{Sort a Vector}
+\description{
+  Sort a numeric or complex vector (partially) into ascending order.
+}
 \usage{
 sort(x, partial = NULL, na.last = NA)
 }
-\alias{sort}
-\description{
-  Sort \code{\link{numeric}} or  \code{\link{complex}}  \code{x}
-  (partially) into ascending order.
+\arguments{
+  \item{x}{a numeric or complex vector.}
+  \item{partial}{a vector of indices for partial sorting.}
+  \item{na.last}{for controlling the treatment of \code{NA}s.
+    If \code{TRUE}, missing values in the data are put last; if
+    \code{FALSE}, they are put first; if \code{NA}, they are removed.}
 }
 \details{
   If \code{partial} is non \code{NULL}, it is taken to contain indexes
@@ -16,10 +22,6 @@ sort(x, partial = NULL, na.last = NA)
   values smaller than these values are guaranteed to have a smaller
   index in the sorted array and any values which are greater are
   guaranteed to have a bigger index in the sorted array.
-
-  If \code{na.last} is \code{NA}, \code{sort} removes missing values.
-  If \code{na.last} is \code{TRUE}, missing values are put last, if
-  \code{FALSE}, missing values are put first.
 }
 \seealso{
   \code{\link{order}}, \code{\link{rank}}.
@@ -27,7 +29,7 @@ sort(x, partial = NULL, na.last = NA)
 \examples{
 data(swiss)
 x <- swiss$Education[1:25]
-x; sort(x); sort(x, partial = c(10,15))
+x; sort(x); sort(x, partial = c(10, 15))
 median # shows you another example for `partial'
 }
 \keyword{univar}

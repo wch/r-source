@@ -14,22 +14,22 @@
   CRAN and update outdated packages on the fly.}
 }
 \usage{
-update.packages(lib.loc = .lib.loc, CRAN = options("CRAN"),
+update.packages(lib.loc = .lib.loc, CRAN = getOption("CRAN"),
                 contriburl = contrib.url(CRAN),
                 method = "auto", instlib = NULL,
                 ask=TRUE, available=NULL, destdir=NULL)
 
 installed.packages(lib.loc = .lib.loc)
-CRAN.packages(CRAN = options("CRAN"), method = "auto",
+CRAN.packages(CRAN = getOption("CRAN"), method = "auto",
               contriburl = contrib.url(CRAN))
 old.packages(lib.loc = .lib.loc, CRAN = getOption("CRAN"),
              contriburl = contrib.url(CRAN),
              method = "auto", available = NULL)
 
 download.packages(pkgs, destdir, available = NULL,
-                  CRAN = options("CRAN"), 
+                  CRAN = getOption("CRAN"), 
                   contriburl = contrib.url(CRAN), method = "auto")
-install.packages(pkgs, lib, CRAN = options("CRAN"),
+install.packages(pkgs, lib, CRAN = getOption("CRAN"),
                  contriburl = contrib.url(CRAN),
                  method = "auto", available = NULL, destdir = NULL)
 newerVersion(a, b)
@@ -38,7 +38,7 @@ newerVersion(a, b)
   \item{lib.loc}{A character vector describing the location of R
     library trees to search through (and update packages therein).}
   \item{CRAN}{The base URL of the CRAN mirror to use, i.e., the URL of a
-    CRAN root such as \code{"http://www.r-project.org"} (the default) or
+    CRAN root such as \code{"http://cran.r-project.org"} (the default) or
     its Statlib mirror, \code{"http://lib.stat.cmu.edu/R/CRAN"}.}
   \item{contriburl}{URL of the contrib section of CRAN. Use this argument
     only if your CRAN mirror is incomplete, e.g., because you burned

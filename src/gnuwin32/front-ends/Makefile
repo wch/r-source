@@ -12,7 +12,8 @@ endif
 CFLAGS=$(OPTFLAGS) -I../../include
 
 all: ../../../bin/Rgui.exe ../../../bin/Rterm.exe \
-     ../../../bin/Rcmd.exe  ../../../bin/Rproxy.dll
+     ../../../bin/Rcmd.exe  ../../../bin/RSetReg.exe  \
+    ../../../bin/Rproxy.dll
 
 ../../../bin/Rgui.exe: Rgui.exe
 	$(MKDIR) -p ../../../bin
@@ -26,10 +27,12 @@ all: ../../../bin/Rgui.exe ../../../bin/Rterm.exe \
 	$(MKDIR) -p ../../../bin
 	$(CP) $^ $@
 
+../../../bin/RSetReg.exe: RSetReg.exe
+	$(MKDIR) -p ../../../bin
+	$(CP) $^ $@
+
 graphappmain.o: ../graphapp/graphappmain.c
 	$(CC) -c -o $@ -I../graphapp $(CFLAGS) $^
-
-#LIBS=-L.. -lR
 
 Rgui-LINKFLAGS=-mwindows
 Rterm-LIBS=-luser32 -L.. -lR
@@ -43,6 +46,8 @@ Rterm.exe: graphappmain.o rterm.o rtico.o
 
 Rcmd.exe: rcmd.o ../rhome.o rcico.o
 
+RSetReg.exe: RSetReg.o ../rhome.o rcico.o
+
 rgui.o rterm.o rproxy_impl.o rgico.o rtico.o rcico.o: ../../include/Rversion.h
 
 clean:
@@ -51,9 +56,7 @@ clean:
 bdx-CFLAGS=-I../../include
 rproxy-DLLFLAGS=-mwindows
 rproxy-DLLLIBS=-L.. -lR
-rproxy.dll: rproxy.o rproxy_impl.o bdx.o rtico.o
-rprx.exe: rprx.o
-rprx-LIBS=-L.. -lR
+rproxy.dll: rproxy.o rproxy_dev.o rproxy_impl.o bdx.o rtico.o
 
 ../../../bin/Rproxy.dll: rproxy.dll
 	$(MKDIR) -p ../../../bin

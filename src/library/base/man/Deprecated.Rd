@@ -11,6 +11,8 @@ getenv(x)
 %------ PLEASE: put \alias{.} here for  EACH !
 %
 \alias{getenv}
+\alias{dotplot}
+\alias{stripplot}
 \description{
   These functions are provided for compatibility with older versions of
   \R only, and may be defunct as soon as of the next release.
@@ -19,6 +21,9 @@ getenv(x)
 
   \code{getenv} is a deprecated alternative name for
   \code{\link{Sys.getenv}}.
+
+  \code{dotplot} and \code{stripplot} are deprecated names for
+  \code{\link{dotchart}} and \code{\link{stripchart}}, respectively.
 }
 \seealso{\code{\link{Defunct}}}
 %\examples{

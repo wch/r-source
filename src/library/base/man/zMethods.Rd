@@ -103,6 +103,7 @@ Summary.factor(x, \dots)
             % /*NOMORE:\code{mean}, */
             \item \code{min}, \code{max}
             %   do_summary() [summary.c:322]: if(DispatchGroup("Summary",...))
+            \item \code{range}
         }
     }
 }
@@ -128,13 +129,13 @@ Summary.factor(x, \dots)
     \code{\link{is.nan}}%do_isnan()    [coerce.c:1332]
 }
 \references{
-    Appendix A, \emph{Classes and Methods} of\cr
-    Chambers, J. M.  and Hastie, T. J. eds (1992)
-    \emph{Statistical Models in S.}
-    Wadsworth & Brooks/Cole.
+  Appendix A, \emph{Classes and Methods} of\cr
+  Chambers, J. M.  and Hastie, T. J. eds (1992)
+  \emph{Statistical Models in S.}
+  Wadsworth & Brooks/Cole.
 }
 \seealso{
-\code{\link{methods}} for methods of non-Internal generic functions.
+  \code{\link{methods}} for methods of non-Internal generic functions.
 }
 \examples{
 methods("Math")

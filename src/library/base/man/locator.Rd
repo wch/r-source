@@ -40,4 +40,7 @@ locator(n = 512, type = "n", \dots)
   recorded in the device's display list until the input process has
   terminated.
 }
+\seealso{
+  \code{\link{identify}}
+}
 \keyword{iplot}

@@ -1,17 +1,19 @@
-===============================================================================
-IMPORTANT: Tested only with zlib ver. 1.13, libpng ver. 1.0.{5,6,8}, jpeg ver. 6b
-===============================================================================
+==============================================
+IMPORTANT: Tested only with zlib ver. 1.1.3, 
+           libpng ver. 1.0.{5,6,8,9,10}, 
+           jpeg ver. 6b
+==============================================
 
 1) You need libpng, zlib and jpeg sources (available, e.g., from
    ftp.uu.net/graphics/[png,jpeg].
 
 2) Their sources must be unpacked in sub-directories of this dir.
-   zlib and libpng sources must be in  sub-dirs named 'zlib' and
+   zlib and libpng sources must be in sub-dirs named 'zlib' and
    'libpng' (these fixed names are required by libpng documentation).
    Example:
    > unzip -d zlib zlib113.zip
-   > tar xzvf libpng-1.0.8.tar.gz
-   > mv libpng-1.0.8 libpng
+   > tar xzvf libpng-1.0.10.tar.gz
+   > mv libpng-1.0.10 libpng
    > tar xzvf jpegsrc.v6b.tar.gz
    If jpeg version is different from 6b, edit 'Makefile' and change 
    the definition of JPEGDIR.

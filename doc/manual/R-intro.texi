@@ -17,12 +17,26 @@
 @include R-defs.texi
 @include version.texi
 
-@macro Rcopyright{}
-Copyright @copyright{} 1990, 1992 W.@: Venables
-Copyright @copyright{} 1997, R.@: Gentleman & R.@: Ihaka
-Copyright @copyright{} 1997, 1998 M.@: M@"achler
-Copyright @copyright{} 1999, 2000 R Development Core Team
+@ifnottex
+@macro RIcopyright{}
+Copyright @copyright{} 1990 W.@: N.@: Venables@*
+Copyright @copyright{} 1992 W.@: N.@: Venables & D.@: M.@: Smith@*
+Copyright @copyright{} 1997 R.@: Gentleman & R.@: Ihaka@*
+Copyright @copyright{} 1997, 1998 M.@: Maechler@*
+@Rcopyright{1999}
 @end macro
+@end ifnottex
+
+@iftex
+@macro RIcopyright{}
+@noindent
+Copyright @copyright{} 1990 W.@: N.@: Venables
+Copyright @copyright{} 1992 W.@: N.@: Venables & D.@: M.@: Smith
+Copyright @copyright{} 1997 R.@: Gentleman & R.@: Ihaka
+Copyright @copyright{} 1997, 1998 M.@: Maechler
+@Rcopyright{1999}
+@end macro
+@end iftex
 
 @c NOTE:
 @c Conversion to PDF fails if sectioning titles contain (user-defined)
@@ -32,7 +46,7 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 @ifinfo
 This is an introduction to R.
 
-@Rcopyright{}
+@RIcopyright{}
 
 @permission{}
 
@@ -42,27 +56,40 @@ This is an introduction to R.
 @title An Introduction to R
 @subtitle Notes on @R{}: A Programming Environment for Data Analysis and Graphics
 @subtitle Version @value{VERSION}
-@author R Development Core Team
+@author W. N. Venables, D. M. Smith 
+@author and the R Development Core Team
 
 @page
 @vskip 0pt plus 1filll
 
 @flushleft
-@c - This FAILS (for the @"achler part in make R-intro.dvi) :
-@c - @Rcopyright{}
-Copyright @copyright{} 1990, 1992 W.@: Venables
-Copyright @copyright{} 1997, R.@: Gentleman & R.@: Ihaka
-Copyright @copyright{} 1997, 1998 M.@: M@"achler
-Copyright @copyright{} 1999, 2000 R Development Core Team
+@RIcopyright{}
 @end flushleft
 
 @permission{}
 
 @end titlepage
 
+@ifnothtml
 @contents
+@end ifnothtml
 
+@ifnottex
 @node Top, Preface, (dir), (dir)
+@top An Introduction to R
+
+This is an introduction to R (``GNU S''), a language and environment for
+statistical computing and graphics.  R is similar to the award-winning S
+system, which was developed at Bell Laboratories by John Chambers et al.
+It provides a wide variety of statistical and graphical techniques
+(linear and nonlinear modelling, statistical tests, time series
+analysis, classification, clustering, ...).
+
+This manual provides information on data types, programming elements,
+statistical modeling and graphics.
+
+The current version of this document is @value{VERSION}.
+@end ifnottex
 
 @menu
 * Preface::                     
@@ -91,9 +118,9 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 
 This introduction to @R{} is derived from an original set of notes
 describing the @Sl{} and @SPLUS{} environments written by Bill Venables
-and Dave Smith.  We have made a number of small changes to reflect
-differences between the @R{} and @Sl{} programs, and expanded some of
-the material.
+and David M. Smith (Insightful Corporation).  We have made a number of
+small changes to reflect differences between the @R{} and @Sl{}
+programs, and expanded some of the material.
 
 @c FIXME:
 @c Would something like this still be needed?  There are certainly no
@@ -3900,18 +3927,19 @@ ross$withdraw(500)
 @cindex Customizing the environment
 
 Users can customize their environment in several different ways.  There
-is a system initialization file and every directory can have its own
+is a site initialization file and every directory can have its own
 special initialization file.  Finally, the special functions
 @code{.First} and @code{.Last} can be used.
 
-The system initialization file is called @file{Rprofile} and it is found
-in the @R{} home subdirectory @file{library/base/R}.  This file should
-contain the commands that you want to execute every time @R{} is started
-under your system.  A second, personal, profile file named
-@file{.Rprofile}@footnote{So it is hidden under UNIX.} can be placed in
-any directory.  If @R{} is invoked in that directory then that file will
-be sourced.  This file gives individual users control over their
-workspace and allows for different startup procedures in different
+The location of the site initialization file is taken from the value of
+the @env{R_PROFILE} environment variable.  If that variable is unset,
+file @file{Rprofile} in the @R{} home subdirectory @file{etc} is used.
+This file should contain the commands that you want to execute every
+time @R{} is started under your system.  A second, personal, profile
+file named @file{.Rprofile}@footnote{So it is hidden under UNIX.} can be
+placed in any directory.  If @R{} is invoked in that directory then that
+file will be sourced.  This file gives individual users control over
+their workspace and allows for different startup procedures in different
 working directories.  If no @file{.Rprofile} file is found in the
 startup directory, than @R{} looks for a @file{.Rprofile} file in the
 user's home directory and uses that (if it exists).
@@ -3946,7 +3974,7 @@ of the session.  An example is given below.
 @example
 > .Last <- function() @{
   graphics.off()                        # @r{a small safety measure.}
-  cat(paste(system.date(),"\nAdios\n")) # @r{Is it time for lunch?}
+  cat(paste(date(),"\nAdios\n"))        # @r{Is it time for lunch?}
 @}
 @end example
 @findex .Last
@@ -5146,8 +5174,8 @@ most cases, interactive use is more productive.  Interactive use is also
 easy because at startup time @R{} initiates a graphics @emph{device
 driver} which opens a special @emph{graphics window} for the display of
 interactive graphics.  Although this is done automatically, it is useful
-to know that the command used is @code{X11()} under UNIX and
-@code{windows()} under Windows.
+to know that the command used is @code{X11()} under UNIX,
+@code{windows()} under Windows and @code{macintosh()} on MacOS 8/9.
 
 Once the device driver is running, @R{} plotting commands can be used to
 produce a variety of graphical displays and to create entirely new kinds
@@ -5332,8 +5360,8 @@ specified exactly with the @code{breaks=} argument.  If the
 @code{probability=TRUE} argument is given, the bars represent relative
 frequencies instead of counts.
 
-@item dotplot(x, @dots{})
-@findex dotplot
+@item dotchart(x, @dots{})
+@findex dotchart
 Constructs a dotchart of the data in @code{x}.  In a dotchart the
 @math{y}-axis gives a labelling of the data in @code{x} and the
 @math{x}-axis gives its value.  For example it allows easy visual
@@ -6075,6 +6103,8 @@ meanings are as follows:
 [Unix]
 @item windows()
 [Windows]
+@item Macintosh()
+[MaxOS 8/9]
 @item postscript()
 @itemx pictex()
 @itemx @dots{}
@@ -6378,6 +6408,7 @@ want to save it.
 @menu
 * Invoking R under UNIX::       
 * Invoking R under Windows::    
+* Invoking R on a Macintosh::   
 @end menu
 
 @node Invoking R under UNIX, Invoking R under Windows, Invoking R, Invoking R
@@ -6405,12 +6436,13 @@ Unless @option{--no-environ} was given, @R{} searches for the file
 @file{.Renviron} in the current directory, or failing that the file
 pointed to by the environment variable @env{R_ENVIRON}, or if that is
 not set, the file @file{.Renviron} in the user's home directory.  The
-first of these files found is sourced to set environment variables.  The
-variables are exported automatically, provided that they are set in
-lines of the form @samp{@var{name}=@var{value}}.  Variables you might
-want to set include @env{R_PAPERSIZE} (the default paper size),
-@env{R_PRINTCMD} (the default print command) and @env{R_LIBS} (specifies
-the list of @R{} library trees searched for add-on packages).
+first of these files found is processed to set environment variables. It
+should contain lines of the form @samp{@var{name}=@var{value}}.
+(See @code{help(Startup)} for a precise description.)
+Variables you might want to set include @env{R_PAPERSIZE} (the default
+paper size), @env{R_PRINTCMD} (the default print command) and
+@env{R_LIBS} (specifies the list of @R{} library trees searched for
+add-on packages).
 
 @item
 Then @R{} searches for the site-wide startup profile unless the command
@@ -6580,7 +6612,7 @@ La@TeX{}, plain text, and S documentation format.
 @item Rd2dvi
 Convert Rd format to DVI/PDF.
 @item Rd2txt
-Convert Rd format to pretty text.
+Convert Rd format to text.
 @item Rdindex
 Extract index information from Rd files.
 @item Sd2Rd
@@ -6602,7 +6634,7 @@ R CMD @var{command} --help
 to obtain usage information for each of the tools accessible via the
 @code{R CMD} interface.
 
-@node Invoking R under Windows,  , Invoking R under UNIX, Invoking R
+@node Invoking R under Windows, Invoking R on a Macintosh, Invoking R under UNIX, Invoking R
 @section Invoking R under Windows
 
 The startup procedure under Windows is very similar to that under UNIX,
@@ -6628,9 +6660,10 @@ If a file @file{.Renviron} in the current directory, or if that is not
 set, the file @file{.Renviron} in the user's home directory, exists, it
 is read to set environment variables.  Reading is suppressed by the flag
 @option{--no-environ}.  The variables are set by separate lines of the
-form @samp{@var{name}=@var{value}}.  Variables you might want to set
-include @env{R_PAPERSIZE} (the default paper size) and @env{R_LIBS}
-(controls the list of @R{} library trees searched for add-on packages).
+form @samp{@var{name}=@var{value}}.  (See @code{help(Startup)} for a
+precise description.)  Variables you might want to set include
+@env{R_PAPERSIZE} (the default paper size) and @env{R_LIBS} (controls
+the list of @R{} library trees searched for add-on packages).
 
 Environment variables can also be supplied as
 @samp{@var{name}=@var{value}} pairs at the end of  the command line.
@@ -6659,13 +6692,9 @@ reside in @file{.RData}.
 
 In addition, there are options for controlling the memory available to
 the @R{} process (see the on-line help for topic @samp{Memory} for more
-information).  Currently, @R{} uses a @emph{static} memory model.  This
-means that when it starts up, it asks the operating system to reserve a
-fixed amount of memory for it.  The size of this chunk cannot be changed
-subsequently. Hence, it can happen that not enough memory was allocated,
-e.g., when trying to read large data sets into @R{}.  The command line
-options @option{--nsize} and @option{--vsize} can be used for
-controlling the memory available for fixed and variable sized objects.
+information).  Users will not normally need to use these.  @R{} for
+Windows has an additional flag @code{--max-mem-size} described below,
+which by default does limit the memory usage of an @R{} process.
 
 @R{} for Windows accepts the following command line options.
 
@@ -6677,7 +6706,7 @@ Print version info and exit.
 @itemx --sdi
 @itemx --no-mdi
 Control whether @code{Rgui} will operate as an MDI program (the default,
-with multiple child windows within on main window) or an SDI application
+with multiple child windows within one main window) or an SDI application
 (with multiple top-level windows for the console, graphics and pager).
 
 @item --save
@@ -6688,7 +6717,7 @@ asked for the desired behavior when ending the session with @kbd{q()};
 in batch mode, one of these must be specified.
 
 @item --no-site-file
-Suppress reading of the site-wide startup profile
+Suppress reading of the site-wide startup profile.
 
 @item --no-init-file
 Suppress reading of the directory or user's @file{.Rprofile} file.
@@ -6741,12 +6770,12 @@ default to the smaller of 256Mb and the amount of physical RAM in the machine.
 Don't print startup message.
 
 @item --slave
-Make @R{} run as quietly as possible, and in particular set @R{}'s
-option @code{verbose} to @code{TRUE}.  @R{} code uses this option to
-control the printing of diagnostic messages.
+Make @R{} run as quietly as possible.
 
 @item --verbose
-Print more information about progress.
+Print more information about progress, and in particular set @R{}'s
+option @code{verbose} to @code{TRUE}.  @R{} code uses this option to
+control the printing of diagnostic messages.
 
 @item --ess
 Set @code{Rterm} up for use by @code{R-inferior-mode} in @acronym{ESS}.
@@ -6785,7 +6814,7 @@ La@TeX{}, plain text, and S documentation format.
 @item Rd2dvi.sh
 Convert Rd format to DVI/PDF.
 @item Rd2txt
-Convert Rd format to pretty text.
+Convert Rd format to text.
 @item Rdindex
 Extract index information from Rd files.
 @item Sd2Rd
@@ -6801,6 +6830,134 @@ Rcmd @var{command} --help
 @noindent
 to obtain usage information for each of the tools accessible via the
 @code{Rcmd} interface.
+
+@node Invoking R on a Macintosh,  , Invoking R under Windows, Invoking R
+@section Invoking R on a Macintosh
+
+The @R{} application startup is similar to that of UNIX and Windows
+systems.  Only a console-based version of @R{} for Macintosh exists, and
+there is no equivalent to the @code{R CMD} engine.
+ 
+When you double-click on the @R{} application icon a small window will
+appear.  This is equivalent to the command line under other ports.  You
+can enter the startup options, or simply press @key{RET} on the keyboard
+to start @R{} running with default options.  The main @R{} program can be
+started with a variety of options in the form
+
+@display
+@code{R} [@var{options}]
+@end display
+
+@noindent
+as listed later in this section.  Using [@code{<}@var{infile}]
+[@code{>}@var{outfile}] equivalent to UNIX can be selected at startup
+using the standard Macintosh interface but they are not currently fully
+implemented, so you can ignore these.
+
+Most options control what happens at the beginning and at the end of an
+@R{} session.  The startup mechanism is as follows (see also the on-line
+help for topic @samp{Startup} for more information).
+
+@itemize @bullet
+@item
+Unless @option{--no-environ} was given, @R{} looks for the file
+@file{.Renviron} in the @file{etc} subdirectory of @R{} application
+folder. The file found is processed to set environment variables. It
+should contain lines of the form @samp{@var{name}=@var{value}}.  (See
+@code{help(Startup)} for a precise description.)
+
+@item
+Then, unless @option{--no-init-file} was given, @R{} looks for a file
+called @file{.Rprofile} in the @file{etc} subdirectory of @R{}
+application folder and processes it (as @R{} code).
+
+@item
+It then loads a saved image from file @file{.RData} if there is one (unless
+@option{--no-restore} or @option{--no-restore-data} was specified).
+This file looked for in the @file{etc} subdirectory of @R{}
+application folder.
+
+@item
+Finally, if a function @code{.First} exists, it is executed.  This
+function (as well as @code{.Last} which is executed at the end of the
+@R{} session) can be defined in the appropriate startup profiles, or
+reside in @file{.RData}.
+@end itemize
+
+In addition, there are options for controlling the memory available to
+the @R{} process (see the on-line help for topic @samp{Memory} for more
+information).  Users will not normally need to use these unless they are
+trying to limit the amount of memory used by @R{}.  Please note that
+under MacOS, you have to reserve in advance the amount of memory
+assigned to the @R{} application from the `Finder/Information' menu as
+it is usually done for any Macintosh software.  An amount of 32000k is
+sufficient to run all the demos and examples in the base distribution.
+
+@R{} accepts the following command-line options.
+
+@table @option
+@item --version
+Print version information to standard output and exit successfully.
+
+@item --save
+@itemx --no-save
+Control whether data sets should be saved or not at the end of the @R{}
+session.  If neither is given in an interactive session, the user is
+asked for the desired behavior when ending the session with @kbd{q()};
+in batch mode, one of these must be specified.
+
+@item --no-init-file
+Do not read the user's profile at startup.
+
+@item --restore
+@itemx --no-restore
+@itemx --no-restore-data
+Control whether saved images (file @file{:etc:.RData} in the directory
+where @R{} was started) should be restored at startup or not.  The
+default is to restore. (@option{--no-restore} implies all the specific
+@option{--no-restore-*} options.)
+
+@item --no-restore-history
+Control whether the history file (normally file @file{.Rhistory} in the
+directory where @R{} was started, but can be set by the environment
+variable @env{R_HISTFILE}) should be restored at startup or not.  The
+default is to restore.
+
+@item --vanilla
+Combine @option{--no-save}, @option{--no-environ},
+@option{--no-site-file}, @option{--no-init-file} and
+@option{--no-restore}.
+
+@item --min-vsize=@var{N}
+@itemx --max-vsize=@var{N}
+Specify the minimum or maximum amount of memory used for variable size
+objects by setting the ``vector heap'' size to @var{N} bytes.  Here,
+@var{N} must either be an integer or an integer ending with @samp{M},
+@samp{K}, or @samp{k}, meaning `Mega' (2^20), (computer) `Kilo' (2^10),
+or regular `kilo' (1000).
+
+@item --min-nsize=@var{N}
+@itemx --max-nsize=@var{N}
+Specify the amount of memory used for fixed size objects by setting the
+number of ``cons cells'' to @var{N}.  See the previous option for
+details on @var{N}.  A cons cell takes 28 bytes on a 32-bit machine, and
+usually 56 bytes on a 64-bit machine.
+
+@item --quiet
+@itemx --silent
+@itemx -q
+Do not print out the initial copyright and welcome messages.
+
+@item --slave
+Make @R{} run as quietly as possible.
+
+@item --verbose
+Print more information about progress, and in particular set @R{}'s
+option @code{verbose} to @code{TRUE}.  @R{} code uses this option to
+control the printing of diagnostic messages.
+
+@end table
+
 
 @node The command line editor, Function and variable index, Invoking R, Top
 @appendix The command line editor

@@ -38,7 +38,6 @@
       S and S-PLUS}, Springer.
 }
 \examples{
-library(nls)
 data(Indometh)
 fm1 <- nls(conc ~ SSbiexp(time, A1, lrc1, A2, lrc2),
            data = Indometh, subset = Subject == 1)

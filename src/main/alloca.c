@@ -79,9 +79,10 @@ typedef char *pointer;
    Non-Emacs programs expect this to call xmalloc.
 
    Callers below should use malloc.  */
-
 #  ifndef emacs
-#   define malloc xmalloc
+#ifndef macintosh
+ #   define malloc xmalloc
+#endif /* mac */
 #  endif
 extern pointer malloc ();
 

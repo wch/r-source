@@ -34,15 +34,15 @@ bartlett.test(x, g)
   \item{parameter}{the degrees of freedom of the approximate chi-squared
     distribution of the test statistic.}
   \item{p.value}{the p-value of the test.}
-  \item{method}{the string
+  \item{method}{the character string
     \code{"Bartlett test for homogeneity of variances"}.}
   \item{data.name}{a character string giving the names of the data.}
 }
 \seealso{
   \code{\link{var.test}} for the special case of comparing variances in
   two samples from normal distributions;
-  \code{\link{fligner.test}} for a rank-based (nonparametric) k-sample
-  test for homogeneity of variances;
+  \code{\link{fligner.test}} for a rank-based (nonparametric)
+  \eqn{k}-sample test for homogeneity of variances;
   \code{\link{ansari.test}} and \code{\link{mood.test}} for two rank
   based two-sample tests for difference in scale.
 }

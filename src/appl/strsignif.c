@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) Martin Maechler, 1994, 1998
+ *  Copyright (C) 2001 the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -63,7 +64,11 @@
 #endif
 #include <stdio.h>
 #include <string.h>
+#ifndef Macintosh
 #include <math.h>
+#else
+#include <fp.h>
+#endif /* mac */
 
 #include "R_ext/Error.h" /* error */
 #include "R_ext/RS.h" /* Calloc */

@@ -1,10 +1,10 @@
 \name{pictex}
+\alias{pictex}
 \title{A PicTeX Graphics Driver}
 \usage{
 pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
        bg = "white", fg = "black")
 }
-\alias{pictex}
 \arguments{
   \item{file}{the file where output will appear.}
   \item{width}{The width of the plot in inches.}
@@ -66,6 +66,8 @@ dev.off()
 \\input pictex
 $$ \\input Rplots.tex $$
 }
+##--------------------
+unlink("Rplots.tex")
 }
 \keyword{device}
 %%-

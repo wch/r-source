@@ -5,7 +5,7 @@
 srcdir = .
 
 R= $(RHOME)/bin/Rterm --vanilla LC_ALL=C
-RDIFF = $(R_HOME)/bin/Rcmd Rdiff.sh
+RDIFF = $(RHOME)/bin/Rcmd Rdiff.sh
 RVAL_IF_DIFF=0
 
 test-src-strict-1 = \
@@ -32,6 +32,12 @@ test-src = $(test-src-strict) $(test-src-sloppy)
 
 test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
+
+test-src-reg-1 = \
+	reg-tests-1.R reg-tests-2.R reg-IO.R  reg-plot.R
+test-src-reg-auto =
+test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
+test-out-reg = $(test-src-reg:.R=.Rout)
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout
@@ -64,6 +70,14 @@ test-Specific:
 	@echo "running sloppy specific tests"
 	@$(MAKE) -f $(RHOME)/src/gnuwin32/check/Maketests \
 	  test-Specific-sloppy RVAL_IF_DIFF=0
+
+test-Reg:
+	@echo "running regression tests"
+	@$(MAKE) -f $(RHOME)/src/gnuwin32/check/Maketests \
+	  test-Reg-run RVAL_IF_DIFF=0
+
+test-Reg-run: $(test-out-reg)
+
 
 clean:
 	@rm -f *.Rout *.Rout.fail $(test-src-auto)

@@ -15,7 +15,7 @@ spline(x, y, n = 3*length(x), method = "fmm",
 \arguments{
   \item{x,y}{vectors giving the coordinates of the points to be
     interpolated.  Alternatively a single plotting structure can be
-    specified.}
+    specified: see \code{\link{xy.coords}.}
   \item{method}{specifies the type of spline to be used.  Possible
     values are \code{"fmm"}, \code{"natural"} and \code{"periodic"}.}
   \item{n}{interpolation takes place at \code{n} equally spaced points
@@ -27,8 +27,14 @@ spline(x, y, n = 3*length(x), method = "fmm",
   If \code{method = "fmm"}, the spline used is that of Forsythe, Malcolm
   and Moler (an exact cubic is fitted through the four points at each
   end of the data, and this is used to determine the end conditions).
-  Natural splines are used when \code{method="natural"}, and periodic
-  splines when \code{method="periodic"}.
+  Natural splines are used when \code{method = "natural"}, and periodic
+  splines when \code{method = "periodic"}.
+
+  These interpolation splines can also be used for extrapolation, that is
+  prediction at points outside the range of \code{x}.  Extrapolation
+  makes little sense for \code{method = "fmm"}; for natural splines it
+  is linear using the slope of the interpolating curve at the nearest
+  data point.
 }
 \value{
   \code{spline} returns a list containing components \code{x} and
@@ -46,13 +52,21 @@ spline(x, y, n = 3*length(x), method = "fmm",
 \seealso{
   \code{\link{approx}} and \code{\link{approxfun}} for constant and
   linear interpolation.
+
+  Package \code{splines}, especially \code{\link[splines]{interpSpline}} and
+  \code{\link[splines]{periodicSpline}} for interpolation splines.
+  That package also generates spline bases that can be used for
+  regression splines.
+
+  \code{\link[modreg]{smooth.spline}} in package \code{modreg} for
+  smoothing splines.
 }
 \examples{
 op <- par(mfrow = c(2,1), mgp = c(2,.8,0), mar = .1+c(3,3,3,1))
 n <- 9
 x <- 1:n
 y <- rnorm(n)
-plot(x, y, main = paste("spline[fun](.) through",n,"points"))
+plot(x, y, main = paste("spline[fun](.) through", n, "points"))
 lines(spline(x, y))
 lines(spline(x, y, n = 201), col = 2)
 

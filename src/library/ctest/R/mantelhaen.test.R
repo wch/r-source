@@ -61,6 +61,7 @@ function(x, y = NULL, z = NULL,
                           sum(apply(rbind(s.x, s.y), 2, prod)
                               / (n^2 * (n - 1))))
             PARAMETER <- 1
+            PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)
             names(STATISTIC) <- "Mantel-Haenszel X-squared"
             names(PARAMETER) <- "df"
             METHOD <- paste("Mantel-Haenszel chi-squared test",
@@ -94,7 +95,7 @@ function(x, y = NULL, z = NULL,
                        })
             RVAL <- list(statistic = STATISTIC,
                          parameter = PARAMETER,
-                         p.value = pchisq(STATISTIC, PARAMETER, lower = FALSE))
+                         p.value = PVAL)
         }
         else {
             ## Exact inference for the 2 x 2 x k case can be carried out
@@ -263,12 +264,13 @@ function(x, y = NULL, z = NULL,
         n <- n - m
         STATISTIC <- crossprod(n, qr.solve(V, n))
         PARAMETER <- df
+        PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)
         names(STATISTIC) <- "Cochran-Mantel-Haenszel M^2"
         names(PARAMETER) <- "df"
         METHOD <- "Cochran-Mantel-Haenszel test"
         RVAL <- list(statistic = STATISTIC,
                      parameter = PARAMETER,
-                     p.value = pchisq(STATISTIC, PARAMETER, lower = FALSE))
+                     p.value = PVAL)
     }
 
     RVAL <- c(RVAL,

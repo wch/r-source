@@ -16,7 +16,7 @@ methods(generic.function, class)
 }
 \details{
   An \R ``object'' is a data object which has a \code{class} attribute.
-  A class attribute is a vector of character strings giving the names of
+  A class attribute is a character vector giving the names of
   the classes which the object ``inherits'' from.  When a generic
   function \code{fun} is applied to an object with class attribute
   \code{c("first", "second")}, the system searches for a function called

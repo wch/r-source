@@ -47,7 +47,11 @@
 # include <stddef.h>
 #else
 /* We need this for `regex.h', and perhaps for the Emacs include files.  */
-# include <sys/types.h>
+ #ifdef Macintosh
+  #include <types.h>
+ #else 
+  #include <sys/types.h> 
+ #endif /* mac */
 #endif
 
 #define WIDE_CHAR_SUPPORT (HAVE_WCTYPE_H && HAVE_WCHAR_H && HAVE_BTOWC)
@@ -152,7 +156,6 @@ char *realloc ();
 #   endif
 #  endif
 # endif
-
 /* Define the syntax stuff for \<, \>, etc.  */
 
 /* This must be nonzero for the wordchar and notwordchar pattern
@@ -301,7 +304,7 @@ init_syntax_once ()
 #  ifdef __GNUC__
 #   define alloca __builtin_alloca
 #  else /* not __GNUC__ */
-#   if HAVE_ALLOCA_H
+#   ifdef HAVE_ALLOCA_H
 #    include <alloca.h>
 #   endif /* HAVE_ALLOCA_H */
 #  endif /* not __GNUC__ */

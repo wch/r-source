@@ -3,5 +3,6 @@ Version: @VERSION@
 Priority: base
 Title: Step Functions, including Empirical Distributions
 Author: R Development Core Team
+Maintainer: R Core Team <R-core@r-project.org>
 Description: Step Functions, including empirical distributions
 License: GPL Version 2 or later.

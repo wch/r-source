@@ -21,7 +21,7 @@ profile(fitted, \dots)
 }
 \seealso{
   \code{\link[nls]{profile.nls}} in package \bold{nls},
-  \code{\link[MASS]{profile.glm}} in package \bold{MASS},
+  \code{\link[MASS:confint]{profile.glm}} in package \bold{MASS},
   \ldots
 }
 \keyword{models}

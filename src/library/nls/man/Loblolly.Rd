@@ -31,7 +31,6 @@
 	in S and S-PLUS}, Springer.
 }
 \examples{
-library(nls)
 data(Loblolly)
 plot(height ~ age, data = Loblolly, subset = Seed == 329,
      xlab = "Tree age (yr)", las = 1,

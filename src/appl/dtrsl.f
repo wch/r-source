@@ -50,8 +50,8 @@ c     g. w. stewart, university of maryland, argonne national lab.
 c
 c     subroutines and functions
 c
-c     blas:	daxpy,ddot
-c     fortran	mod
+c     blas:     daxpy,ddot
+c     fortran   mod
 c
       subroutine dtrsl(t,ldt,n,b,job,info)
       integer ldt,n,job,info

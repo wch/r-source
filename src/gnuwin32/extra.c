@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file extra.c
- *  Copyright (C) 1998--2000  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998--2001  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -302,24 +302,44 @@ SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
     TCHAR szCSDVersion[ 128 ];
     } OSVERSIONINFO; */
 
-typedef struct _OSVERSIONINFOEXA {
-    DWORD dwOSVersionInfoSize;
-    DWORD dwMajorVersion;
-    DWORD dwMinorVersion;
-    DWORD dwBuildNumber;
-    DWORD dwPlatformId;
-    CHAR szCSDVersion[ 128 ];
-    WORD wServicePackMajor;
-    WORD wServicePackMinor;
-    WORD wReserved[2];
-} OSVERSIONINFOEXA;
+
+#define VER_NT_WORKSTATION              0x0000001
+#define VER_NT_DOMAIN_CONTROLLER        0x0000002
+#define VER_NT_SERVER                   0x0000003
+
+#define VER_SERVER_NT                       0x80000000
+#define VER_WORKSTATION_NT                  0x40000000
+#define VER_SUITE_SMALLBUSINESS             0x00000001
+#define VER_SUITE_ENTERPRISE                0x00000002
+#define VER_SUITE_BACKOFFICE                0x00000004
+#define VER_SUITE_COMMUNICATIONS            0x00000008
+#define VER_SUITE_TERMINAL                  0x00000010
+#define VER_SUITE_SMALLBUSINESS_RESTRICTED  0x00000020
+#define VER_SUITE_EMBEDDEDNT                0x00000040
+#define VER_SUITE_DATACENTER                0x00000080
+#define VER_SUITE_SINGLEUSERTS              0x00000100
+/* next one is a guess */
+#define VER_SUITE_PERSONAL                  0x00000200
+
+typedef struct _OSVERSIONINFOEX {
+  DWORD dwOSVersionInfoSize;
+  DWORD dwMajorVersion;
+  DWORD dwMinorVersion;
+  DWORD dwBuildNumber;
+  DWORD dwPlatformId;
+  TCHAR szCSDVersion[ 128 ];
+  WORD wServicePackMajor;
+  WORD wServicePackMinor;
+  WORD wSuiteMask;
+  BYTE wProductType;
+  BYTE wReserved;
+} OSVERSIONINFOEX;
 
 SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char isNT[8]="??", ver[256];
     SEXP ans;
     OSVERSIONINFO verinfo;
-    OSVERSIONINFOEXA verinfoex;
 
     checkArity(op, args);
     verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
@@ -329,7 +349,21 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 	strcpy(isNT, "NT");
 	break;
     case VER_PLATFORM_WIN32_WINDOWS:
-	strcpy(isNT, "9x");
+	switch(verinfo.dwMinorVersion ) {
+	case 0:
+	    strcpy(isNT, "95");
+	    if (verinfo.szCSDVersion[1] == 'C') strcat(isNT, " OSR2" );
+	    break;
+	case 10:
+	    strcpy(isNT, "98");
+	    if (verinfo.szCSDVersion[1] == 'A') strcat(isNT, " SE" );
+	    break;
+	case 90:
+	    strcpy(isNT, "ME");
+	    break;
+	default:
+	    strcpy(isNT, "9x");
+	}
 	break;
     case VER_PLATFORM_WIN32s:
 	strcpy(isNT, "win32s");
@@ -340,14 +374,40 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     if((int)verinfo.dwMajorVersion >= 5) {
-	verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEXA);
-	GetVersionEx(&verinfoex);
-	sprintf(ver, "Windows %d.%d (build %d) Service Pack %d.%d (%s)",
-		(int)verinfoex.dwMajorVersion, (int)verinfoex.dwMinorVersion,
-		LOWORD(verinfoex.dwBuildNumber),
-		(int)verinfoex.wServicePackMajor,
-		(int)verinfoex.wServicePackMinor,
-		verinfoex.szCSDVersion);
+	OSVERSIONINFOEX osvi;
+	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+	if(GetVersionEx(&osvi)) {
+	    char tmp[]="", *desc= tmp, *type = tmp;
+	    if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 0)
+		desc = "2000";
+	    if(osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1)
+		desc = "XP";
+            if ( osvi.wProductType == VER_NT_WORKSTATION ) {
+               if( osvi.wSuiteMask & VER_SUITE_PERSONAL )
+                  type = "Personal";
+               else
+                  type = "Professional";
+            } else if ( osvi.wProductType == VER_NT_SERVER )
+            {
+               if( osvi.wSuiteMask & VER_SUITE_DATACENTER )
+                  type = "DataCenter Server";
+               else if( osvi.wSuiteMask & VER_SUITE_ENTERPRISE )
+                  type = "Advanced Server";
+               else
+		   type = "Server";
+            }
+ 	    
+	    sprintf(ver, 
+		    "Windows %s %s (build %d) Service Pack %d.%d",
+		    desc, type,
+		    LOWORD(osvi.dwBuildNumber),
+		    (int)osvi.wServicePackMajor,
+		    (int)osvi.wServicePackMinor);
+	} else {
+	    sprintf(ver, "Windows 2000 %d.%d (build %d) %s",
+		    (int)verinfo.dwMajorVersion, (int)verinfo.dwMinorVersion,
+		    LOWORD(verinfo.dwBuildNumber), verinfo.szCSDVersion);
+	}
     } else {
 	sprintf(ver, "Windows %s %d.%d (build %d) %s", isNT,
 		(int)verinfo.dwMajorVersion, (int)verinfo.dwMinorVersion,
@@ -643,6 +703,7 @@ struct mallinfo {
   int keepcost; /* top-most, releasable (via malloc_trim) space */
 };
 extern unsigned long max_total_mem;
+extern unsigned int R_max_memory;
 
 struct mallinfo mallinfo();
 #endif
@@ -654,15 +715,14 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
     
     checkArity(op, args);
     maxmem = asLogical(CAR(args));
-    if(maxmem == NA_LOGICAL)
-	errorcall(call, "invalid `max' argument");
     PROTECT(ans = allocVector(INTSXP, 1));
 #ifdef LEA_MALLOC
-    if(maxmem) {
+    if(maxmem == NA_LOGICAL) 
+	INTEGER(ans)[0] = R_max_memory;
+    else if(maxmem)
 	INTEGER(ans)[0] = max_total_mem;
-    } else {
+    else
 	INTEGER(ans)[0] = mallinfo().uordblks;
-    }
 #else
     INTEGER(ans)[0] = NA_INTEGER;
 #endif

@@ -162,9 +162,9 @@ int IntegerFromString(SEXP x, int *warn)
 {
     double xdouble;
     char *endp;
-    if (x != R_NaString) {
+    if (x != R_NaString && !isBlankString(CHAR(x))) {
 	xdouble = strtod(CHAR(x), &endp);
-	if (isBlankString((unsigned char *)endp)) {
+	if (isBlankString(endp)) {
 	    if (xdouble > INT_MAX) {
 		*warn |= WARN_INACC;
 		return INT_MAX;
@@ -208,9 +208,9 @@ double RealFromString(SEXP x, int *warn)
 {
     double xdouble;
     char *endp;
-    if (x != R_NaString) {
+    if (x != R_NaString && !isBlankString(CHAR(x))) {
 	xdouble = strtod(CHAR(x), &endp);
-	if (isBlankString((unsigned char *)endp))
+	if (isBlankString(endp))
 	    return xdouble;
 	else
 	    *warn |= WARN_NA;
@@ -266,15 +266,15 @@ Rcomplex ComplexFromString(SEXP x, int *warn)
     Rcomplex z;
     char *endp = CHAR(x);;
     z.r = z.i = NA_REAL;
-    if (x != R_NaString) {
+    if (x != R_NaString && !isBlankString(endp)) {
 	xr = strtod(endp, &endp);
-	if (isBlankString((unsigned char *)endp)) {
+	if (isBlankString(endp)) {
 	    z.r = xr;
 	    z.i = 0.0;
 	}
 	else if (*endp == '+' || *endp == '-') {
 	    xi = strtod(endp, &endp);
-	    if (*endp++ == 'i' && isBlankString((unsigned char *)endp)) {
+	    if (*endp++ == 'i' && isBlankString(endp)) {
 		z.r = xr;
 		z.i = xi;
 	    }
@@ -1377,7 +1377,7 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* Same code for LISTSXP and VECSXP : */
 #define LIST_VEC_NA(s)							\
-	if (!isVector(s) || length(s) > 1)				\
+	if (!isVector(s) || length(s) != 1)				\
 		LOGICAL(ans)[i] = 0;					\
 	else {								\
 		switch (TYPEOF(s)) {					\
@@ -1475,7 +1475,7 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* Same code for LISTSXP and VECSXP : */
 
 #define LIST_VEC_NAN(s)							\
-	if (!isVector(s) || length(s) > 1)				\
+	if (!isVector(s) || length(s) != 1)				\
 		LOGICAL(ans)[i] = 0;					\
 	else {								\
 		switch (TYPEOF(s)) {					\
@@ -1749,10 +1749,12 @@ SEXP substituteList(SEXP el, SEXP rho)
     if (isNull(el))
 	return el;
     if (CAR(el) == R_DotsSymbol) {
-	h = findVar(CAR(el), rho);
+	h = findVarInFrame(rho, CAR(el));
 	if (h == R_NilValue)
 	    return substituteList(CDR(el), rho);
 	if (TYPEOF(h) != DOTSXP) {
+	    if (h == R_UnboundValue)
+		return el;
 	    if (h == R_MissingArg)
 		return substituteList(CDR(el), rho);
 	    error("... used in an incorrect context");

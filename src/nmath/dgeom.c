@@ -4,7 +4,7 @@
  *    October 23, 2000.
  *
  *  Merge in to R:
- *	Copyright (C) 2000, The R Core Development Team
+ *	Copyright (C) 2000, 2001 The R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,10 +37,10 @@ double dgeom(double x, double p, int give_log)
     if (ISNAN(x) || ISNAN(p)) return x + p;
 #endif
 
-    if (p <= 0 || p > 1) ML_ERR_return_NAN;
+    if (p < 0 || p > 1) ML_ERR_return_NAN;
 
     R_D_nonint_check(x);
-    if (x < 0 || !R_FINITE(x))	return R_D__0;
+    if (x < 0 || !R_FINITE(x) || p == 0) return R_D__0;
     x = R_D_forceint(x);
 
     /* prob = (1-p)^x, stable for small p */

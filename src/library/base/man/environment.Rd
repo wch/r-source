@@ -14,6 +14,7 @@ environment(fun = NULL)
 environment(fun) <- value
 is.environment(obj)
 .GlobalEnv
+globalenv()
 new.env()
 }
 \arguments{
@@ -36,6 +37,11 @@ new.env()
 
   \code{new.env} returns a new (empty) environment enclosed in the
   parent's environment.
+}
+\details{
+  The global environment \code{.GlobalEnv} is the first item on the
+  search path, more often known as the user's workspace.  It can also be
+  accessed by \code{globalenv()}.
 }
 \seealso{
   The \code{envir} argument of \code{\link{eval}}.

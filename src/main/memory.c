@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2000  The R Development Core Team.
+ *  Copyright (C) 1998--2001  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@
 
 #include <Defn.h>
 #include <Graphics.h> /* display lists */
-#include <Devices.h> /* GetDevice */
+#include <Rdevices.h> /* GetDevice */
 
 static int gc_reporting = 0;
 static int gc_count = 0;
@@ -817,6 +817,35 @@ static void CheckFinalizers(void)
 	    s->sxpinfo.gp = 1;
 }
 
+/* C finalizers are stored in a CHARSXP.  It would be nice if we could
+   use EXTPTRSXP's but these only hold a void *, and function pointers
+   are not guaranteed to be compatible with a void *.  There should be
+   a cleaner way of doing this, but this will do until I get a chance
+   to redesign the finalization stuff to fit in with weak references.
+   I think the right thing to do is to implement the ideas in
+   "Stretching the storage manager: weak pointers and stable names in
+   Haskell" by Peyton Jones, Marlow, and Elliott (at
+   www.research.microsoft.com/Users/simonpj/papers/weak.ps.gz). --LT */
+static Rboolean isCFinalizer(SEXP fun)
+{
+    return TYPEOF(fun) == CHARSXP;
+    /*return TYPEOF(fun) == EXTPTRSXP;*/
+}
+
+static SEXP MakeCFinalizer(R_CFinalizer_t cfun)
+{
+    SEXP s = allocString(sizeof(R_CFinalizer_t));
+    *((R_CFinalizer_t *) CHAR(s)) = cfun;
+    return s;
+    /*return R_MakeExternalPtr((void *) cfun, R_NilValue, R_NilValue);*/
+}
+
+static R_CFinalizer_t GetCFinalizer(SEXP fun)
+{
+    return *((R_CFinalizer_t *) CHAR(fun));
+    /*return (R_CFinalizer_t) R_ExternalPtrAddr(fun);*/
+}
+
 static Rboolean RunFinalizers(void)
 {
     volatile SEXP s, last;
@@ -855,9 +884,9 @@ static Rboolean RunFinalizers(void)
 		PROTECT(s);
 		val = CAR(s);
 		fun = TAG(s);
-		if (TYPEOF(fun) == EXTPTRSXP) {
+		if (isCFinalizer(fun)) {
 		    /* Must be a C finalizer. */
-		    R_CFinalizer_t cfun = R_ExternalPtrAddr(fun);
+		    R_CFinalizer_t cfun = GetCFinalizer(fun);
 		    cfun(val);
 		}
 		else {
@@ -909,7 +938,7 @@ void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun)
        registered as elligible for finalization. */
     PROTECT(s);
     R_fin_registered = CONS(s, R_fin_registered);
-    SET_TAG(R_fin_registered, R_MakeExternalPtr(fun, R_NilValue, R_NilValue));
+    SET_TAG(R_fin_registered, MakeCFinalizer(fun));
     R_fin_registered->sxpinfo.gp = 0;
     UNPROTECT(1);
 }
@@ -1133,7 +1162,7 @@ SEXP do_gcinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP value;
-    int ogc, onsize=R_NSize, ovsize=R_VSize;
+    int ogc, onsize=R_NSize;
 
     checkArity(op, args);
     ogc = gc_reporting;
@@ -1144,13 +1173,13 @@ SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
     /*- now return the [used , gc trigger size] for cells and heap */
     PROTECT(value = allocVector(INTSXP, 10));
     INTEGER(value)[0] = onsize - R_Collected;
-    INTEGER(value)[1] = ovsize - VHEAP_FREE();
+    INTEGER(value)[1] = R_VSize - VHEAP_FREE();
     INTEGER(value)[4] = R_NSize;
     INTEGER(value)[5] = R_VSize;
     /* next four are in 0.1Mb, rounded up */
     INTEGER(value)[2] = 10.0 * (onsize - R_Collected)/1048576.0 *
 	sizeof(SEXPREC) + 0.999;
-    INTEGER(value)[3] = 10.0 * (ovsize - VHEAP_FREE())/131072.0 + 0.999;
+    INTEGER(value)[3] = 10.0 * (R_VSize - VHEAP_FREE())/131072.0 + 0.999;
     INTEGER(value)[6] = 10.0 * R_NSize/1048576.0 * sizeof(SEXPREC) + 0.999;
     INTEGER(value)[7] = 10.0 * R_VSize/131072.0 + 0.999;
     INTEGER(value)[8] = (R_MaxNSize < INT_MAX) ? 

@@ -81,7 +81,7 @@ arima0.diag(fit, gof.lag = 10)
   the log-likelihood, and so may only be a rough guide, especially for
   fits close to the boundary of invertibility.
 
-  Optimization is (currently) done by \code{\link{nlm}}. It will work
+  Optimization is done by \code{\link{optim}}. It will work
   best if the columns in \code{xreg} are roughly scaled to zero mean
   and unit variance.
 

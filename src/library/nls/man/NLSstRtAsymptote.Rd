@@ -1,4 +1,4 @@
-% $Id: NLSstRtAsymptote.Rd,v 1.2 2000/01/17 16:23:10 ripley Exp $
+% $Id: NLSstRtAsymptote.Rd,v 1.2.14.1 2001/03/24 00:08:06 bates Exp $
 \name{NLSstRtAsymptote}
 \title{Horizontal Asymptote on the Right Side}
 \alias{NLSstRtAsymptote}
@@ -23,7 +23,6 @@ NLSstRtAsymptote(xy)
 \seealso{\code{\link{sortedXyData}}, \code{\link{NLSstClosestX}},
   \code{\link{NLSstRtAsymptote}}, \code{\link{selfStart}}}
 \examples{
-library( nls )
 data( DNase )
 DNase.2 <- DNase[ DNase$Run == "2", ]
 DN.srt <- sortedXyData( expression(log(conc)), expression(density), DNase.2 )

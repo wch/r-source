@@ -88,7 +88,7 @@ showConnections <- function(all = FALSE)
     ans <- matrix("", length(set), 7)
     for(i in seq(along=set)) ans[i, ] <- unlist(summary.connection(set[i]))
     rownames(ans) <- set
-    colnames(ans) <- c("class", "description", "mode", "text", "isopen",
+    colnames(ans) <- c("description", "class", "mode", "text", "isopen",
                        "can read", "can write")
     if(!all) ans[ans[, 5] == "opened", , drop = FALSE]
     else ans[, , drop = FALSE]
@@ -111,4 +111,27 @@ closeAllConnections <- function()
     set <- set[set > 2]
     for(i in seq(along=set)) close(set[i])
     invisible()
+}
+
+readBin <- function(con, what, n = 1, size = NA, endian = .Platform$endian)
+{
+    if(is.character(con)) {
+        con <- file(con, "rb")
+        on.exit(close(con))
+    }
+    swap <- endian != .Platform$endian
+    if(!is.character(what) || length(what) != 1) what <- typeof(what)
+    .Internal(readBin(con, what, n, size, swap))
+}
+
+writeBin <- function(object, con, size = NA, endian = .Platform$endian)
+{
+    swap <- endian != .Platform$endian
+    if(!is.vector(object) || mode(object) == "list")
+        stop("can only write vector objects")
+    if(is.character(con)) {
+        con <- file(con, "wb")
+        on.exit(close(con))
+    }
+    invisible(.Internal(writeBin(object, con, size, swap)))
 }

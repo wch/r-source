@@ -13,9 +13,9 @@
 }
 \examples{
 data(islands)
-dotplot(log(islands, 10),
+dotchart(log(islands, 10),
    main = "islands data: log10(area) (log10(sq. miles))")
-dotplot(log(islands[order(islands)], 10),
+dotchart(log(islands[order(islands)], 10),
    main = "islands data: log10(area) (log10(sq. miles))")
 }
 \keyword{datasets}

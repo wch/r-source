@@ -48,7 +48,7 @@
 /* For the input handlers of the event loop mechanism: */
 #include "R_ext/eventloop.h" 
 #include "R_ext/Memory.h" /* vmaxget */
-#include "Devices.h"
+#include "Rdevices.h"
 
 #include "devX11.h"
 
@@ -219,7 +219,6 @@ static double BlueGamma	 = 0.6;
 static struct { int red; int green; int blue; } RPalette[512];
 static XColor XPalette[512];
 static int PaletteSize;
-static int RedLevels, GreenLevels, BlueLevels;
 
 
 /* Monochome Displays : Compute pixel values by converting */
@@ -247,7 +246,7 @@ static unsigned GetGrayScalePixel(int r, int g, int b)
 {
     unsigned int d, dmin = 0xFFFFFFFF;
     unsigned int dr;
-    int i, imin;
+    int i;
     unsigned int pixel = 0;  /* -Wall */
     int gray = (0.299 * r + 0.587 * g + 0.114 * b) + 0.0001;
     for (i = 0; i < PaletteSize; i++) {
@@ -256,7 +255,6 @@ static unsigned GetGrayScalePixel(int r, int g, int b)
 	if (d < dmin) {
 	    pixel = XPalette[i].pixel;
 	    dmin = d;
-	    imin = i;
 	}
     }
     return pixel;
@@ -377,12 +375,8 @@ static int GetColorPalette(Display *dpy, Colormap cmap, int nr, int ng, int nb)
 	PaletteSize = 0;
 	return 0;
     }
-    else {
-	RedLevels = nr;
-	GreenLevels = ng;
-	BlueLevels = nb;
+    else
 	return 1;
-    }
 }
 
 static void SetupPseudoColor()
@@ -414,7 +408,7 @@ static unsigned int GetPseudoColor1Pixel(int r, int g, int b)
     unsigned int d, dmin = 0xFFFFFFFF;
     unsigned int dr, dg, db;
     unsigned int pixel;
-    int i, imin;
+    int i;
     pixel = 0;			/* -Wall */
     for (i = 0; i < PaletteSize; i++) {
 	dr = (RPalette[i].red - r);
@@ -424,7 +418,6 @@ static unsigned int GetPseudoColor1Pixel(int r, int g, int b)
 	if (d < dmin) {
 	    pixel = XPalette[i].pixel;
 	    dmin = d;
-	    imin = i;
 	}
     }
     return pixel;
@@ -549,7 +542,7 @@ static Rboolean SetupX11Color()
 	else {
 	    if (model == TRUECOLOR)
 		model = PSEUDOCOLOR2;
-	    SetupPseudoColor(model);
+	    SetupPseudoColor();
 	}
     }
     else if (Vclass == TrueColor) {
@@ -558,7 +551,7 @@ static Rboolean SetupX11Color()
 	else if (model == GRAYSCALE)
 	    SetupGrayScale();
 	else if (model == PSEUDOCOLOR1 || model == PSEUDOCOLOR2)
-	    SetupPseudoColor(model);
+	    SetupPseudoColor();
 	else
 	    SetupTrueColor();
     }
@@ -834,21 +827,22 @@ static XFontStruct *RLoadFont(int face, int size)
     if (size < SMALLEST) size = SMALLEST;
     face--;
 
+    /* Here's a 1st class fudge: make sure that the Adobe design sizes
+       8, 10, 11, 12, 14, 17, 18, 20, 24, 25, 34 can be obtained via
+       an integer "size" at 100 dpi, namely 6, 7, 8, 9, 10, 12, 13,
+       14, 17, 18, 24 points. It's almost y = x * 100/72, but not
+       quite. The constants were found using lm(). --pd */
+    if (IS_100DPI) size = R_rint(size * 1.43 - 0.4);
+
     /* search fontcache */
     for ( i = nfonts ; i-- ; ) {
 	f = &fontcache[i];
 	if ( f->face == face && f->size == size ) return f->font;
     }
 
-
-
-    /* Here's a 1st class fudge: make sure that the Adobe design sizes
-       8, 10, 11, 12, 14, 17, 18, 20, 24, 25, 34 can be obtained via
-       an integer "size" at 100 dpi, namely 6, 7, 8, 9, 10, 12, 13,
-       14, 17, 18, 24 points. It's almost y = x * 100/72, but not
-       quite. The constants were found using lm(). --pd */
-
-    pixelsize = IS_100DPI ? R_rint(size * 1.43 - 0.4) : size;
+    /* 'size' is the requested size, 'pixelsize'  the size of the
+       actually allocated font*/
+    pixelsize = size;
 
     if (face == 4)
 	sprintf(buf, symbolname,  pixelsize);
@@ -1070,6 +1064,17 @@ static int R_X11Err(Display *dsp, XErrorEvent *event)
 
 static int R_X11IOErr(Display *dsp)
 {
+    int fd = ConnectionNumber(display);
+    /*
+    while (nfonts--)  XFreeFont(display, fontcache[nfonts].font);
+    nfonts = 0;
+    */
+    removeInputHandler(&R_InputHandlers,
+		       getInputHandler(R_InputHandlers,fd));
+    /*
+    XCloseDisplay(display);
+    displayOpen = FALSE;
+    */
     error("X11 fatal IO error: please save work and shut down R");
     return 0; /* but should never get here */
 }
@@ -1092,10 +1097,13 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
     if (!strncmp(dsp, "png::", 5)) {
 	FILE *fp;
 #ifndef HAVE_PNG
-	error("No png support in this version of R");
+	warning("No png support in this version of R");
+	return FALSE;
 #endif
-	if (!(fp = R_fopen(R_ExpandFileName(dsp+5), "w")))
-	    error("could not open PNG file `%s'", dsp+6);
+	if (!(fp = R_fopen(R_ExpandFileName(dsp+5), "w"))) {
+	    warning("could not open PNG file `%s'", dsp+6);
+	    return FALSE;
+	}
 	xd->fp = fp;
 	type = PNG;
 	p = "";
@@ -1103,12 +1111,15 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
     else if (!strncmp(dsp, "jpeg::", 6)) {
 	FILE *fp;
 #ifndef HAVE_JPEG
-	error("No jpeg support in this version of R");
+	warning("No jpeg support in this version of R");
+	return FALSE;
 #endif
 	p = strchr(dsp+6, ':'); *p='\0';
 	xd->quality = atoi(dsp+6);
-	if (!(fp = R_fopen(R_ExpandFileName(p+1), "w")))
-	    error("could not open JPEG file `%s'", p+1);
+	if (!(fp = R_fopen(R_ExpandFileName(p+1), "w"))) {
+	    warning("could not open JPEG file `%s'", p+1);
+	    return FALSE;
+	}
 	xd->fp = fp;
 	type = JPEG;
 	p = "";

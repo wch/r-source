@@ -26,12 +26,19 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     if (order.max < 1)
         stop("order.max must be >= 1")
     xacf <- acf(x, type = "cov", plot = FALSE, lag.max = order.max)$acf
-    z <- .C("multi_yw", aperm(xacf, c(3, 2, 1)), as.integer(n.used),
-        as.integer(order.max), as.integer(nser), coefs = double((1 +
-            order.max) * nser * nser), pacf = double((1 + order.max) *
-            nser * nser), var = double((1 + order.max) * nser *
-            nser), aic = double(1 + order.max), order = integer(1),
-        as.integer(aic), as.integer(var.method))
+    z <- .C("multi_yw",
+            aperm(xacf, c(3, 2, 1)),
+            as.integer(n.used),
+            as.integer(order.max),
+            as.integer(nser),
+            coefs = double((1 + order.max) * nser * nser),
+            pacf = double((1 + order.max) * nser * nser),
+            var = double((1 + order.max) * nser * nser),
+            aic = double(1 + order.max),
+            order = integer(1),
+            as.integer(aic),
+            as.integer(var.method),
+            PACKAGE = "ts")
     partialacf <- aperm(array(z$pacf, dim = c(nser, nser, order.max +
         1)), c(3, 2, 1))[-1, , , drop = FALSE]
     var.pred <- aperm(array(z$var, dim = c(nser, nser, order.max +

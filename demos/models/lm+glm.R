@@ -103,8 +103,8 @@ anova(z, update(z, dead ~ dose -1))
 ##	[MM: huh?  round(round(n*p)/n, 3) looks almost exactly like "p" !]
 n <- c(102,  99,   108,	 76,   81,   90)
 p <- c(0.539,0.525,0.528,0.724,0.617,0.555)
-## x <- round(n*p)
-x <- n*p
+x <- round(n*p)
+## x <- n*p
 y <- cbind(x,n-x)
 f <- rep(c(40,150,350),2)
 (g <- gl(2,3))

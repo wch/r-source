@@ -55,7 +55,7 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
     freq <- seq(0, 0.5, length = n.freq)
     if (nser == 1) {
         coh <- phase <- NULL
-        if(order > 1) {
+        if(order >= 1) {
             cs <- outer(freq, 1:order, function(x, y) cos(2*pi*x*y)) %*% x$ar
             sn <- outer(freq, 1:order, function(x, y) sin(2*pi*x*y)) %*% x$ar
             spec <- x$var.pred/(xfreq*((1 - cs)^2 + sn^2))

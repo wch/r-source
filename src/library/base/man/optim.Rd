@@ -9,7 +9,7 @@
 \usage{
 optim(par, fn, gr = NULL,
       method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN"),
-      lower = -Inf, upper = +Inf,
+      lower = -Inf, upper = Inf,
       control = list(), hessian = FALSE, \dots)
 }
 \arguments{

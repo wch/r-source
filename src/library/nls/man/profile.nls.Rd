@@ -1,4 +1,4 @@
-% $Id: profile.nls.Rd,v 1.3 2000/01/17 16:23:10 ripley Exp $
+% $Id: profile.nls.Rd,v 1.3.14.1 2001/03/24 00:08:06 bates Exp $
 \name{profile.nls}
 \alias{profile.nls}
 \title{ Method for Profiling nls Objects}
@@ -39,7 +39,6 @@ profile.nls(fitted, which, maxpts=100, alphamax=0.01, delta.t=cutoff/5)
     \code{\link{profiler.nls}}, \code{\link{plot.profile.nls}}
 }
 \examples{
-library( nls )
 data( BOD )
 # obtain the fitted object
 fm1 <- nls(demand ~ SSasympOrig( Time, A, lrc ), data = BOD)

@@ -85,8 +85,6 @@ FILE *R_OpenInitFile(void)
 
 
 #ifdef HAVE_LIBREADLINE
-char *tilde_expand(char*);
-
 char *R_ExpandFileName(char *s)
 {
     return( tilde_expand(s) );
@@ -316,8 +314,8 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
 SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    warning("Sys,info is not implemented on this system");
-    return R_NilValue; /* -Wall */
+    warning("Sys.info is not implemented on this system");
+    return R_NilValue;		/* -Wall */
 }
 #endif
 

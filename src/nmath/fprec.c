@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000, 2001 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -97,7 +97,7 @@ double fprec(double x, double digits)
 	return(sgn*(floor((x*pow10)*p10+0.5)/pow10)/p10);
     } else { /* -- LARGE or small -- */
 	do_round = max10e - l10	 >= R_pow_di(10., -dig);
-	e2 = (e10>0)? 16 : -16;
+	e2 = dig + ((e10>0)? 16 : -16);
 	p10 = R_pow_di(10., e2);	x *= p10;
 	P10 = R_pow_di(10., e10-e2);	x *= P10;
 	/*-- p10 * P10 = 10 ^ e10 */

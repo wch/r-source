@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.52 $'
+revision='$Revision: 1.52.2.3 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -46,6 +46,7 @@ NO_PERL5_MSG="\
 *** get the PDF reference manual from the nearest CRAN server.
 *** The CRAN master site can be found at
 ***    http://cran.r-project.org/"
+PERL=${PERL-@PERL@}
 tmpdir="${TMPDIR-/tmp}/R.INSTALL.$$"
 
 umask 022
@@ -243,11 +244,15 @@ do_install () {
       else
         cd src;
           srcs=`ls *.[cfC] *.cc *.cpp 2>/dev/null`
-	  sh ${R_HOME}/bin/SHLIB -o ${pkg}.@SHLIB_EXT@ ${srcs} \
-	    && cp *.@SHLIB_EXT@ ${lib}/${pkg}/libs \
-  	    || error=true; \
-	  if ${clean}; then
-	    rm -f .libs _libs *.o *.@SHLIB_EXT@
+	  if test -n "${srcs}"; then
+	    sh ${R_HOME}/bin/SHLIB -o ${pkg}.@SHLIB_EXT@ ${srcs} \
+	      && cp *.@SHLIB_EXT@ ${lib}/${pkg}/libs \
+  	      || error=true; \
+	    if ${clean}; then
+	      rm -f .libs _libs *.o *.@SHLIB_EXT@
+	    fi
+	  else
+	    echo "WARNING: no source files found"
 	  fi
 	cd ..
       fi
@@ -296,7 +301,8 @@ do_install () {
     done
     title=`grep -s "^Title:" DESCRIPTION | sed "s/^Title:[ \t]*//"`
     if test "${title}"; then
-      ${R_HOME}/bin/maketitle > ${lib}/${pkg}/TITLE
+      ${PERL} ${R_HOME}/share/perl/maketitle.pl DESCRIPTION \
+        > ${lib}/${pkg}/TITLE
     elif test -f TITLE; then
       cp TITLE ${lib}/${pkg}
     fi

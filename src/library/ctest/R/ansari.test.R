@@ -49,8 +49,8 @@ ansari.test <- function(x, y,
                            p <- pansari(STATISTIC, m, n)
                        min(2 * p, 1)
                    },
-                   greater = 1 - pansari(STATISTIC - 1, m, n),
-                   less = pansari(STATISTIC, m, n))
+                   less = 1 - pansari(STATISTIC - 1, m, n),
+                   greater = pansari(STATISTIC, m, n))
         if (conf.int) {
             qansari <- function(p, m, n) {
                 .C("qansari",
@@ -60,6 +60,12 @@ ansari.test <- function(x, y,
                    as.integer(n),
                    PACKAGE = "ctest")$q
             }
+            # Bauer defines the CI for y/x, therefore interchange.
+            help <- x
+            x <- y
+            y <- help
+            m <- length(x)
+            n <- length(y)
             alpha <- 1 - conf.level
             x <- sort(x)
             y <- sort(y)
@@ -118,8 +124,8 @@ ansari.test <- function(x, y,
                 absigma <- cumsum(c(ab(sigma[1]),
                                     coefs[2:length(coefs)]))
                 switch(alternative, two.sided = {
-                    u <- absigma - qansari(alpha/2, m, n) 
-                    l <- absigma - qansari(1 - alpha/2, m, n) 
+                    u <- absigma - qansari(alpha/2, n, m) 
+                    l <- absigma - qansari(1 - alpha/2, n, m) 
                     if(length(u[u >= 0]) == 0)
                         uci <- sigma[1]
                     else {
@@ -138,7 +144,7 @@ ansari.test <- function(x, y,
                     }
                     c(uci, lci)
                 }, greater= {
-                    u <- absigma - qansari(alpha, m, n)
+                    u <- absigma - qansari(alpha, n, m)
                     if(length(u[u >= 0]) == 0)
                         uci <- sigma[1]
                     else {
@@ -147,9 +153,9 @@ ansari.test <- function(x, y,
                         if(length(uci) != 1)
                             uci <- uci[1]
                     }
-                    c(uci, NA)
+                    c(uci, Inf)
                 }, less= {
-                    l <- absigma - qansari(1 - alpha, m, n)
+                    l <- absigma - qansari(1 - alpha, n, m)
                     if(length(l[l > 0]) == 0)
                         lci <- sigma[length(sigma)]
                     else {                
@@ -158,7 +164,7 @@ ansari.test <- function(x, y,
                         if (length(lci) != 1)
                             lci <- lci[length(lci)]
                     }
-                    c(NA, lci)
+                    c(0, lci)
                 })
             }
             attr(cint, "conf.level") <- conf.level	
@@ -166,7 +172,7 @@ ansari.test <- function(x, y,
     }
     else {
         EVEN <- ((N %% 2) == 0)
-        normalize <- function(s, r, TIES) {
+        normalize <- function(s, r, TIES, m=length(x), n=length(y)) {
             z <- if(EVEN)
                 s - m * (N + 2)/4
             else
@@ -193,16 +199,23 @@ ansari.test <- function(x, y,
         p <- pnorm(normalize(STATISTIC, r, TIES))
         PVAL <- switch(alternative,
                        two.sided = 2 * min(p, 1 - p),
-                       greater = 1 - p,
-                       less = p)
+                       less = 1 - p,
+                       greater = p)
     
         if(conf.int && !exact) {
+            # Bauer defines the CI for y/x, therefore interchange.
+            help <- x
+            x <- y
+            y <- help
+            m <- length(x)
+            n <- length(y)
+
             alpha <- 1 - conf.level
             ab <- function(sig, zq) {
                 r <- rank(c(y / sig, x))
                 s <- sum(pmin(r, N -r + 1)[seq(along = y)])
                 TIES <- (length(r) != length(unique(r)))
-                abs(normalize(s, r, TIES) - zq)
+                abs(normalize(s, r, TIES, length(y), length(x)) - zq)
             }
             ## optimize is not good here, use Nelder-Mead 
             ## what should we use as initial value?
@@ -213,10 +226,10 @@ ansari.test <- function(x, y,
                 c(u, l)
             }, greater= {
                 u <- optim(1, ab, zq=qnorm(alpha))$par
-                c(u, NA)
+                c(u, Inf)
             }, less= {
                 l <- optim(1, ab, zq=qnorm(alpha, lower = FALSE))$par
-                c(NA, l)
+                c(0, l)
             })
             attr(cint, "conf.level") <- conf.level
         }
@@ -232,6 +245,7 @@ ansari.test <- function(x, y,
     names(STATISTIC) <- "AB"
     RVAL <- list(statistic = STATISTIC,
                  p.value = PVAL,
+                 null.value = c("ratio of scales" = 1),
                  alternative = alternative,
                  method = "Ansari-Bradley test",
                  data.name = DNAME)

@@ -5,7 +5,7 @@ fileparse_set_fstype; # Unix, in case one gets anything else.
 
 open OUTFILE,">$ARGV[1]" || die "Couldn't open CONTENTS file";
 
-while(<$ARGV[0]/man/*.Rd>){
+while(<$ARGV[0]/man/*.Rd $ARGV[0]/man/windows/*.Rd>){
 
     my $file = basename($_, (".Rd", ".rd"));
 

@@ -12,15 +12,15 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 INSTFILES = \
-	agd_____.lt1 agdo____.lt1 agw_____.lt1 agwo____.lt1 bkd_____.lt1 \
-	bkdi____.lt1 bkl_____.lt1 bkli____.lt1 cob_____.lt1 cobo____.lt1 \
-	com_____.lt1 coo_____.lt1 hv______.lt1 hvb_____.lt1 hvbo____.lt1 \
-	hvn_____.lt1 hvnb____.lt1 hvnbo___.lt1 hvno____.lt1 hvo_____.lt1 \
-	ncb_____.lt1 ncbi____.lt1 nci_____.lt1 ncr_____.lt1 pob_____.lt1 \
-	pobi____.lt1 poi_____.lt1 por_____.lt1 tib_____.lt1 tibi____.lt1 \
-	tii_____.lt1 tir_____.lt1 \
+	agd_____.afm agdo____.afm agw_____.afm agwo____.afm bkd_____.afm \
+	bkdi____.afm bkl_____.afm bkli____.afm cob_____.afm cobo____.afm \
+	com_____.afm coo_____.afm hv______.afm hvb_____.afm hvbo____.afm \
+	hvn_____.afm hvnb____.afm hvnbo___.afm hvno____.afm hvo_____.afm \
+	ncb_____.afm ncbi____.afm nci_____.afm ncr_____.afm pob_____.afm \
+	pobi____.afm poi_____.afm por_____.afm tib_____.afm tibi____.afm \
+	tii_____.afm tir_____.afm \
 	sy______.afm
-DISTFILES = Makefile.in $(INSTFILES)
+DISTFILES = Makefile.in $(INSTFILES) README
 
 all: Makefile R
 

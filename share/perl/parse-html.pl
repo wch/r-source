@@ -6,7 +6,7 @@
 #   `Freeware. You may not resell it or claim you wrote it. 
 #    You can use it for anything, commercial or otherwise.'
 #
-# Modifications for R (C)1999 B. D. Ripley
+# Modifications for R (C) 1999, 2001 B. D. Ripley
 
 # HTML parser
 # Jim Davis, July 15 1994
@@ -336,6 +336,7 @@ sub substitute_entities {
 		  "PARAM",
 		  "PRE",
 		  "SAMP",
+		  "SCRIPT",
 		  "SELECT",
 		  "STRIKE",
 		  "STRONG",

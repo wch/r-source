@@ -5,7 +5,7 @@ WINHELP = BOTH# NO, CHM, BOTH
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
-RPREFIX = rw1020
+RPREFIX = rw1023
 
 RHOME = $(shell perl pwd.pl ../..)# must be absolute path
 RLIB = $(RHOME)/library
@@ -179,11 +179,9 @@ pkgcheck-%:
 
 ziphelp-%:
 	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziphelp-$*
-	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
 
 ziponly-%:
 	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziponlyhelp-$*
-	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
 
 zipdata-%:
 	(cd $(RLIB)/$*/data; ls -1 > filelist; \
@@ -212,6 +210,7 @@ distclean veryclean: clean
 	../../etc/rgb.txt ../../etc/Makeconf-tests \
 	../include/FFDecl.h ../include/FFTab.h ../include/Platform.h \
 	../include/globalvar.h ../../tests/*.Rout ../../tests/*.Rout.fail
+	-$(MAKE) -C installer ISdistclean
 
 cleanwin:
 	$(RM) *.o *.exe *.dll *.a *~ \#*\# *.zip R.def R.exp1 \
@@ -224,7 +223,7 @@ cleanwin:
 	$(MAKE) -C xdr clean
 	$(MAKE) -C math clean
 	$(MAKE) -C bitmap clean
-	-$(MAKE) -C installer clean
+	-$(MAKE) -C installer clean ISclean
 
 
 #                          ===== testing ======
@@ -235,6 +234,10 @@ check test: test-Specific pkgtests
 test-Specific:
 	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests clean
 	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests RHOME=$(RHOME)
+
+test-Reg:
+	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests RHOME=$(RHOME) test-Reg
+
 
 PKGS-CHK = $(foreach i, $(PACKAGES), pkgcheck-$i)
 pkgtests: $(PKGS-CHK)
@@ -324,6 +327,9 @@ endif
 	-zip -rm9X $(RPREFIX)wh.zip $(RPREFIX)/library/*/winhlp
 	zip -rm9X $(RPREFIX)l.zip $(RPREFIX)/library/*/latex $(RPREFIX)/doc/manual
 	$(RM) -r $(RPREFIX)/doc
+	mkdir -p  $(RPREFIX)/doc/html
+	$(CP) -p ../../doc/html/faq.html ../../doc/html/rw-FAQ.html \
+	  $(RPREFIX)/doc/html
 	zip -rm9X $(RPREFIX)b2.zip $(RPREFIX)/library
 	zip -r9X $(RPREFIX)b1.zip $(RPREFIX)
 	$(RM) -rf $(RPREFIX)
@@ -336,14 +342,14 @@ GW32_HEADERS = globalvar.h
 
 packagedist:
 	$(RM) -r $(RPREFIX)sp.zip $(RPREFIX)
-	$(MKDIR) $(RPREFIX) $(RPREFIX)/bin \
+	$(MKDIR) $(RPREFIX) $(RPREFIX)/bin $(RPREFIX)/etc \
 	  $(RPREFIX)/doc $(RPREFIX)/doc/html $(RPREFIX)/doc/manual \
 	  $(RPREFIX)/src $(RPREFIX)/src/include $(RPREFIX)/src/library \
 	  $(RPREFIX)/src/gnuwin32 $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) ../../doc/html/logo.jpg $(RPREFIX)/doc/html
 	$(CP) -p ../../doc/manual/Rd.sty $(RPREFIX)/doc/manual
 	$(CP) -p exported-vars R.exp MkRules MakePkg MakeDll \
-	  maketitle pwd.pl makeDllRes.pl $(RPREFIX)/src/gnuwin32
+	  pwd.pl makeDllRes.pl $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
 	$(CP) fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -pr help check $(RPREFIX)/src/gnuwin32
@@ -354,17 +360,19 @@ packagedist:
 	  ../include/$i) $(RPREFIX)/src/include
 	$(CP) -pr ../include/R_ext $(RPREFIX)/src/include
 	$(SED) -e 3,5d readme.packages > $(RPREFIX)/readme.packages
+	$(CP) ../../COPYING.LIB $(RPREFIX)
 	$(MKDIR) $(RPREFIX)/share
 	$(CP) -r ../../share/perl $(RPREFIX)/share
 	$(CP) ../../bin/INSTALL ../../bin/REMOVE ../../bin/SHLIB \
 	  ../../bin/build ../../bin/check ../../bin/massage-Examples.sh \
 	  ../../bin/Rd2dvi.sh ../../bin/Rd2txt ../../bin/Rdconv \
-	  ../../bin/Rdindex ../../bin/Rdiff.sh ../../bin/Sd2Rd \
-	  ../../bin/Rcmd.exe \
+	  ../../bin/Rdindex ../../bin/Rdiff.sh ../../bin/extract-usage \
+	  ../../bin/Sd2Rd ../../bin/Rcmd.exe \
           $(RPREFIX)/bin
+	$(CP) ../../etc/Makeconf-tests $(RPREFIX)/etc
 	$(CP) -p graphapp/graphapp.h $(RPREFIX)/src/include
 	$(CP) -pr windlgs $(RPREFIX)/src/library
-	zip -rX $(RPREFIX)sp.zip $(RPREFIX)
+	zip -r9X $(RPREFIX)sp.zip $(RPREFIX)
 	$(RM) -r $(RPREFIX)
 
 docsdist: docs

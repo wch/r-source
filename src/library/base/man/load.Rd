@@ -1,28 +1,28 @@
 \name{load}
 \title{Reload Saved Datasets}
-\usage{
-load(filename, envir = parent.frame()))
-}
 \alias{load}
-\arguments{
-  \item{filename}{a character string giving the name of the file to load.}
-  \item{envir}{the environment where the data should be loaded}
-}
 \description{
-This function will reload the datasets written to a file
-with the function \code{save}.
+  This function will reload the datasets written to a file with the
+  function \code{save}.
+}
+\usage{
+load(file, envir = parent.frame())
+}
+\arguments{
+  \item{file}{a character string giving the name of the file to load.}
+  \item{envir}{the environment where the data should be loaded.}
 }
 \seealso{
-\code{\link{save}}.
+  \code{\link{save}}.
 }
 \examples{
-# save all data
+## save all data
 save(list = ls(), file= "all.Rdata")
 
-# restore the saved values to the current environment
+## restore the saved values to the current environment
 load("all.Rdata")
 
-# restore the saved values to the global environment
-load("all.Rdata",globalenv())
+## restore the saved values to the workspace
+load("all.Rdata", .GlobalEnv)
 }
 \keyword{file}

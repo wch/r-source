@@ -6,7 +6,7 @@ summary.default <-
     if(is.factor(object))
 	return(summary.factor(object, ...))
     else if(is.matrix(object))
-	return(summary.matrix(object, ...))
+	return(summary.matrix(object, digits = digits, ...))
 
     value <- if(is.numeric(object)) {
 	nas <- is.na(object)
@@ -57,9 +57,10 @@ summary.matrix <- function(object, ...)
     summary.data.frame(data.frame(object), ...)
 
 summary.data.frame <-
-    function(object, maxsum = 7, digits = getOption("digits"), ...)
+    function(object, maxsum = 7, digits = max(3, getOption("digits") - 3), ...)
 {
-    z <- lapply(as.list(object), summary, maxsum = maxsum)
+    # compute results to full precision.
+    z <- lapply(as.list(object), summary, maxsum = maxsum, digits = 12, ...)
     nv <- length(object)
     nm <- names(object)
     lw <- numeric(nv)

@@ -14,13 +14,13 @@
   dates and times.
 }
 \usage{
-format.POSIXct(x, format = "", tz = "", ...)
-format.POSIXlt(x, format = "", ...)
+format.POSIXct(x, format = "", tz = "", usetz = FALSE, ...)
+format.POSIXlt(x, format = "", usetz = FALSE, ...)
 
 as.character.POSIXct(x, ...)
 as.character.POSIXlt(x, ...)
 
-strftime(x, format="\%Y-\%m-\%d \%X", ...)
+strftime(x, format="\%Y-\%m-\%d \%X", usetz = FALSE, ...)
 strptime(x, format)
 
 ISOdatetime(year, month, day, hour, min, sec, tz = "")
@@ -37,6 +37,9 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   }
   \item{\dots}{Further arguments to be passed from or to other methods.}
   \item{tz}{A timezone: see \code{\link{as.POSIXct}}.}
+  \item{usetz}{logical.  Should the timezone be appended to the output?
+    This is used in printing time, and as a workaround for problems with
+    using \code{"%Z"} on most Linux systems.}
   \item{year, month, day}{numerical values to specify a day.}
   \item{hour, min, sec}{numerical values for a time within a day.}
 }
@@ -87,7 +90,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
       values up to 69 are prefixed by 20 and 70--99 by 19.}
     \item{\code{\%Y}}{Year with century.}
     \item{\code{\%Z}}{(output only.) Time zone as a character
-      string (empty if not available). Note: do not use this on Linux
+      string (empty if not available).  Note: do not use this on Linux
       unless the \code{TZ} environment variable is set.}
   }
   Where leading zeros are shown they will be used on output but are
@@ -111,6 +114,16 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   standard which expresses a day as \code{"2001-02-03"} and a time as
   \code{"14:01:02"} using leading zeroes as here.  The ISO form uses no
   space to separate dates and times.
+
+  If the timezone specified is invalid on your system, what happens is
+  system-specific but it will probably be ignored.
+#ifdef mac
+  Under MacOS only the current timezone \code{""} and UTC (or GMT)
+  are supported.
+#endif
+
+  OS facilities will probably not print years before 1CE (aka 1AD)
+  correctly.
 }
 \references{
   International Organization for Standardization (1988, 1997, \dots)
@@ -130,12 +143,15 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 ## locale-specific version of date()
 format(Sys.time(), "\%a \%b \%d \%X \%Y")
 ## we would include the timezone as in
-## format(Sys.time(), "\%a \%b \%d \%X \%Y %Z")
+## format(Sys.time(), "\%a \%b \%d \%X \%Y \%Z")
 ## but this crashes some Linux systems
 
 ## read in date info in format `ddmmmyyyy'
+## This will give NA(s) in some locales.
+## lct <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
 x <- c("1jan1960", "2jan1960", "31mar1960", "30jul1960")
 z <- strptime(x, "\%d\%b\%Y")
+## Sys.setlocale("LC_TIME", lct)
 z
 
 ## read in date/time info in format `m/d/y h:m:s'

@@ -3,8 +3,9 @@
 \usage{
 summary(object, \dots)
 
-summary.default   (object, \dots, digits = max(3, getOption("digits") -3))
-summary.data.frame(object, maxsum = 7, digits = getOption("digits"), \dots)
+summary.default   (object, \dots, digits = max(3, getOption("digits")-3))
+summary.data.frame(object, maxsum = 7,
+                   digits = max(3, getOption("digits")-3), \dots)
 summary.factor    (object, maxsum = 100, \dots)
 summary.matrix    (object, \dots)
 }
@@ -46,7 +47,7 @@ summary.matrix    (object, \dots)
 }
 \examples{
 data(attenu)
-summary(attenu, digits = 4) #-> summary.data.frame(..)
+summary(attenu, digits = 4) #-> summary.data.frame(..), default precision
 summary(attenu $ station, maxsum = 20) #-> summary.factor(..)
 }
 \keyword{methods}

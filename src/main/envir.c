@@ -1399,6 +1399,9 @@ static int isMissing(SEXP symbol, SEXP rho)
     int ddv=0;
     SEXP vl, s;
 
+    if (symbol == R_MissingArg) /* Yes, this can happen */
+        return 1;
+
     if (DDVAL(symbol)) {
 	s = R_DotsSymbol;
 	ddv = ddVal(symbol);

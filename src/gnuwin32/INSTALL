@@ -1,7 +1,7 @@
-R 1.2.0 for Windows
+R 1.2.2 for Windows
 ====================
 
-This distribution contains the sources to build a port of R-1.2.0 to
+This distribution contains the sources to build a port of R-1.2.2 to
 run on Windows 95, 98, ME, NT4 and 2000 on Intel/clone chips. See the
 file `readme' for fuller details, including how to install the binary
 versions.
@@ -22,31 +22,34 @@ Collect the tools
 You will need suitable versions of at least make, sh, cat, cp, cut,
 diff, echo, egrep, expr, g(awk), grep, ls, mkdir, mv, rm, sed, touch;
 we use those from the cygwin distribution
-(http://sources.redhat.com/cygwin/mirrors.html) or (gzip, tar,
-makeinfo, texindex) compiled from the sources.  We have packaged a set
-at http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
+(http:/www.cygwin.com/mirrors.html) or (gzip, makeinfo, texindex)
+compiled from the sources.  We have packaged a set at
+http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
 
 BEWARE: `Native' ports of make are _not_ suitable (including that at
-the mingw32 site).  There are also problems with several earlier
+the mingw site).  There were also problems with several earlier
 versions of the cygwin tools and dll.  To avoid frustration, please
 use our tool set.
 
 
-We recommend that you use the mingw32 port of gcc-2.95.2 by Mumit Khan
-from http://www.mingw.org/ or
-ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. (The `portal'
-gives more precise instructions.)  You can build R against either the
-crtdll.dll or msvcrt.dll runtime systems, and as from 1.2.0 we
+We recommend that you use the mingw32 port of gcc-2.95.2-1 by Mumit
+Khan from http://www.mingw.org/.  (The `portal' gives more precise
+instructions on the current locations.)  You can build R against
+either the crtdll.dll or msvcrt.dll runtime systems, and we strongly
 recommend the latter.  (In particular, locale support is poor with
-crtdll.dll, non-existent under Win9x.)
+crtdll.dll, non-existent under Win9x and crtdll.dll has many memory
+leaks.)
 
-It may also be possible to use the compilers from the cygwin 1.1 net
-release with the -mno-cygwin flag.  (You will need the cygwin, gcc,
-mingw32, w32api and binutils bundles.  You will need to ensure that
-you have just one version of cygwin1.dll in your path, and there is
-one in our tools distribution.)  You can no longer use earlier
-versions (e.g. b20) of cygwin.  (It is not possible to compile R to
-use msvcrt.dll with the cygwin suite.)
+An alternative is to use a more recent snapshot of the mingw compiler
+set from http://prdownloads.sourceforge.net/mingw/.  You will need the
+binutils, gcc, gcc-f77, ld, libbfd, mingw32-runtime and w32api
+bundles.
+
+It might also be possible to use the compilers from the cygwin 1.1 net
+release with the -mno-cygwin -mwin32 flags; the current versions use
+mscrt.dll.  (You will need the cygwin, gcc, mingw32, w32api and
+binutils bundles.  All the recent versions we have tried do not work
+unchanged with -mno-cygwin.)
 
 
 perl5, available via http://www.activestate.com/Products/ActivePerl/
@@ -56,7 +59,9 @@ mirrors, and included in our tools.zip).
 
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, available for download at 
-http://msdn.microsoft.com/workshop/author/htmlhelp/.
+http://msdn.microsoft.com/library/tools/htmlhelp/wkshp/download.htm
+You may need this on the same drive as the other tools. (Although we
+have successfully used it elsewhere, others have reported problems).
 
 If you want to make Window help files you will need hcrtf.exe from a
 Windows compiler installation (this has been available for download at
@@ -69,12 +74,12 @@ appropriate environment variables set.
 Building
 --------
 
-You also need: the R source (R-1.2.0.tgz), and to build the
-installer, unzip541.zip from any Info-ZIP mirror.
+You also need: the R source (R-1.2.2.tgz), and to build the
+installer, unzip541.zip or unzip542.zip from any Info-ZIP mirror.
 
-Then: untar R-1.2.0.tgz somewhere (with no spaces in the path names),
+Then: untar R-1.2.2.tgz somewhere (with no spaces in the path names),
 
-	cd /somewhere/R-1.2.0/src/gnuwin32
+	cd /somewhere/R-1.2.2/src/gnuwin32
 
 IMPORTANT: edit MkRules to set the appropriate paths as needed.  If
 you have Mingw32/cross-compiler and gcc-2.95.2.1 or later you can set
@@ -87,11 +92,11 @@ and run
 	make BUILD=MINGW32 or CYGWIN
 
 
-Note 1: the file rw1020\unzip\unzip32.dll is not in the source
-distribution. It can be found in file unz541dN.zip at any Info-ZIP
+Note 1: the file rw1023\unzip\unzip32.dll is not in the source
+distribution. It can be found in file unz542dN.zip at any Info-ZIP
 mirror, or you can copy it from a binary distribution.
 
-The file rw1020\bin\Rchtml.dll is only built if CHM help is specified
+The file rw1023\bin\Rchtml.dll is only built if CHM help is specified
 in the main Makefile. Its source is the help directory, and you need
 the HTML Help Workshop files to build it. It contains instructions
 to build it under VC++6, and it is preferable to use that as the 
@@ -114,13 +119,14 @@ in crtdll.dll is unlikely to be satisfactory, but the one in msvcrt.dll
 does work but imposes a considerable performance penalty.
 
 You can test a build by `make check': expect some differences in the
-tests of the print routines.
+tests of the print routines.  You may need to set TMPDIR to a suitable
+temporary directory: the default is c:\TEMP.
 
 
 Building bitmap device support
 ------------------------------
 
-The file rw1020\bin\Rbitmap.dll is not built automatically:
+The file rw1023\bin\Rbitmap.dll is not built automatically:
 instructions on how to build it are in the file bitmap\INSTALL.  You
 can just copy this from a binary distribution.
 
@@ -166,12 +172,12 @@ cross-built version of binutils 2.9.4.
 
 You will need Perl, zip and unzip installed.
 
-You also need: the R source (R-1.2.0.tgz), and to build the installer,
-unzip541.zip from any Info-ZIP mirror.
+You also need: the R source (R-1.2.2.tgz), and to build the installer,
+unzip542.zip from any Info-ZIP mirror.
 
-Then: untar R-1.2.0.tgz somewhere, and
+Then: untar R-1.2.2.tgz somewhere, and
 
-	cd /somewhere/R-1.2.0/src/gnuwin32
+	cd /somewhere/R-1.2.2/src/gnuwin32
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths (including
 HEADER) as needed.  With our set of cross-compilers you can uncomment

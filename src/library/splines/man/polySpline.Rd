@@ -10,7 +10,6 @@ as.polySpline(object, \dots)
 \alias{polySpline.pbSpline}
 \alias{polySpline.polySpline}
 \alias{as.polySpline}
-\alias{plot.polySpline}
 \alias{predict.polySpline}
 \alias{print.polySpline}
 \arguments{

@@ -16,7 +16,9 @@ aperm(a, perm, resize = TRUE)
 \value{
   A transposed version of array \code{a}, with subscripts permuted as
   indicated by the array \code{perm}.  If \code{resize} is \code{TRUE},
-  the array is reshaped as well as having its elements permuted.
+  the array is reshaped as well as having its elements permuted; if
+  \code{FALSE} then the returned object has the same dimensions as
+  \code{a}, and the dimnames are dropped.
 
   The function \code{t} provides a faster and more convenient way of
   transposing matrices.

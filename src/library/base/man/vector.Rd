@@ -22,8 +22,8 @@ is.vector(x, mode = "any")
   is most convenient).  The attributes of \code{x} are removed.
 
   \code{is.vector} returns \code{TRUE} if \code{x} is a vector (of mode
-  logical, integer, real or character if not specified) and
-  \code{FALSE} otherwise.
+  logical, integer, real, complex, character or list if not specified)
+  and \code{FALSE} otherwise.
 }
 \details{
   Note that factors are \emph{not} vectors;  \code{is.vector} returns

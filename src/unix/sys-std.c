@@ -27,7 +27,7 @@
 
 #include "Defn.h"
 #include "Fileio.h"
-#include "Devices.h"		/* for KillAllDevices */
+#include "Rdevices.h"		/* for KillAllDevices */
 #include "Runix.h"
 #include "Startup.h"
 
@@ -158,6 +158,9 @@ removeInputHandler(InputHandler **handlers, InputHandler *it)
        to the second element. That's why we use the address of the first
        element as the first argument.
     */
+
+    if (it == NULL) return(0);
+
     if(*handlers == it) {
 	*handlers = (*handlers)->next;
 	return(1);
@@ -307,7 +310,7 @@ static int readline_len;
 static int readline_eof;
 static unsigned char *readline_buf;
 
-static void readline_handler(unsigned char *line)
+static void readline_handler(char *line)
 {
     int l;
     rl_callback_handler_remove();
@@ -315,12 +318,12 @@ static void readline_handler(unsigned char *line)
 	return;
     if (line[0]) {
 #ifdef HAVE_READLINE_HISTORY_H
-	if (strlen((char *)line) && readline_addtohistory)
+	if (strlen(line) && readline_addtohistory)
 	    add_history(line);
 #endif
-	l = (((readline_len-2) > strlen((char *)line))?
-	     strlen((char *)line): (readline_len-2));
-	strncpy(readline_buf, line, l);
+	l = (((readline_len-2) > strlen(line))?
+	     strlen(line): (readline_len-2));
+	strncpy((char *)readline_buf, line, l);
 	readline_buf[l] = '\n';
 	readline_buf[l+1] = '\0';
     }
@@ -332,16 +335,28 @@ static void readline_handler(unsigned char *line)
 }
 #endif
 
-	/* Fill a text buffer with user typed console input. */
+	/* Fill a text buffer from stdin or with user typed console input. */
 
 int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 		     int addtohistory)
 {
     if(!R_Interactive) {
+	int ll;
 	if (!R_Slave)
 	    fputs(prompt, stdout);
 	if (fgets((char *)buf, len, stdin) == NULL)
 	    return 0;
+	ll = strlen((char *)buf);
+	/* remove CR in CRLF ending */
+	if (buf[ll - 1] == '\n' && buf[ll - 2] == '\r') {
+	    buf[ll - 2] = '\n';
+	    buf[--ll] = '\0';    
+	}
+/* according to system.txt, should be terminated in \n, so check this
+   at eof */
+	if (feof(stdin) && buf[ll - 1] != '\n' && ll < len) {
+	    buf[ll++] = '\n'; buf[ll] = '\0';
+	}
 	if (!R_Slave)
 	    fputs((char *)buf, stdout);
 	return 1;
@@ -369,26 +384,26 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	for (;;) {
 	    InputHandler *what = waitForActivity();
 	    if(what != NULL) {
-              if(what->fileDescriptor == fileno(stdin)) {
+		if(what->fileDescriptor == fileno(stdin)) {
   	        /* We could make this a regular handler, but we need to pass additional arguments. */
 #ifdef HAVE_LIBREADLINE
-		if (UsingReadline) {
-		    rl_callback_read_char();
-		    if (readline_eof)
-			return 0;
-		    if (readline_gotaline)
-			return 1;
-		}
-		else
-#endif
-		{
-		    if(fgets((char *)buf, len, stdin) == NULL)
-			return 0;
+		    if (UsingReadline) {
+			rl_callback_read_char();
+			if (readline_eof)
+			    return 0;
+			if (readline_gotaline)
+			    return 1;
+		    }
 		    else
-			return 1;
-		}
-	      } else
-                 what->handler((void*) NULL);
+#endif
+		    {
+			if(fgets((char *)buf, len, stdin) == NULL)
+			    return 0;
+			else
+			    return 1;
+		    }
+		} else
+		    what->handler((void*) NULL);
 	    }
 	}
     }
@@ -710,6 +725,6 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
 SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    error("Sys.sleep is not implemented on this system")
+    error("Sys.sleep is not implemented on this system");
 }
 #endif
