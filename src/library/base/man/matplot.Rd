@@ -38,8 +38,8 @@ matlines(x, y, lty = 1:5, lwd = 1, pch = NULL, col = 1:6)
 %  \code{pch=c(88,2)}.
   }
   \item{col}{vector of colors.  Colors are used cyclically.}
-  \item{xlim, ylim}{}
-  \item{xlab, ylab}{}
+  \item{xlim, ylim}{ranges of x and y axes, as in \code{\link{plot}}.}
+  \item{xlab, ylab}{titles for x and y axes, as in \code{\link{plot}}.}
   \item{\dots}{Graphical parameters (see \code{\link{par}}) may also be
     supplied as arguments to this function.  In addition, the high-level
     graphics control arguments described under \code{\link{par}} and the
