@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-10-16)
+Version 1.4.0 Under development (unstable) (2001-11-20)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -27,43 +27,44 @@ Type `q()' to quit R.
 > # test do_download.
 > CRAN.packages()[, 1]
 trying URL `http://cran.r-project.org/src/contrib/PACKAGES'
-Content type `text/plain' length 55893 bytes
+Content type `text/plain' length 58229 bytes
 opened URL
 .......... .......... .......... .......... ..........
-....
-downloaded 54Kb
+......
+downloaded 56Kb
 
-  [1] "AnalyzeFMRI"    "CoCoAn"         "Devore5"        "EMV"           
-  [5] "GLMMGibbs"      "GenKern"        "GeneSOM"        "KernSmooth"    
-  [9] "Matrix"         "NISTnls"        "Oarray"         "PHYLOGR"       
- [13] "PTAk"           "RArcInfo"       "RMySQL"         "RODBC"         
- [17] "RPgSQL"         "RandomFields"   "RmSQL"          "Rstreams"      
- [21] "Rwave"          "SASmixed"       "SuppDists"      "VR"            
- [25] "XML"            "acepack"        "adapt"          "akima"         
- [29] "ash"            "bindata"        "blighty"        "boot"          
- [33] "bootstrap"      "bqtl"           "car"            "cclust"        
- [37] "cfa"            "chron"          "cluster"        "cmprsk"        
- [41] "coda"           "conf.design"    "cramer"         "date"          
- [45] "diamonds"       "dse"            "e1071"          "ellipse"       
- [49] "event.chart"    "exactRankTests" "fastICA"        "fdim"          
- [53] "fields"         "foreign"        "fracdiff"       "gafit"         
- [57] "gee"            "geoR"           "gld"            "gregmisc"      
- [61] "gss"            "ineq"           "leaps"          "lgtdl"         
- [65] "lmtest"         "locfit"         "logspline"      "lokern"        
- [69] "lpridge"        "maptree"        "maxstat"        "mclust"        
- [73] "mda"            "meanscore"      "mgcv"           "mlbench"       
- [77] "muhaz"          "multiv"         "mvnmle"         "mvtnorm"       
- [81] "netCDF"         "nlme"           "nlrq"           "norm"          
- [85] "odesolve"       "oz"             "panel"          "pcurve"        
- [89] "permax"         "pinktoe"        "pixmap"         "polymars"      
- [93] "polynom"        "princurve"      "pspline"        "quadprog"      
- [97] "quantreg"       "rmeta"          "rpart"          "rpvm"          
-[101] "scatterplot3d"  "sem"            "sgeostat"       "sm"            
-[105] "sma"            "sn"             "sna"            "splancs"       
-[109] "sptests"        "spweights"      "strucchange"    "survival"      
-[113] "tensor"         "tree"           "tripack"        "tseries"       
-[117] "twostage"       "vegan"          "wavethresh"     "wle"           
-[121] "xgobi"          "xtable"         "zmatrix"       
+  [1] "acepack"        "adapt"          "akima"          "AnalyzeFMRI"   
+  [5] "ash"            "bindata"        "blighty"        "boot"          
+  [9] "bootstrap"      "bqtl"           "car"            "cclust"        
+ [13] "cfa"            "chron"          "cluster"        "cmprsk"        
+ [17] "CoCoAn"         "coda"           "conf.design"    "cramer"        
+ [21] "date"           "Devore5"        "diamonds"       "dse"           
+ [25] "e1071"          "ellipse"        "EMV"            "event.chart"   
+ [29] "exactRankTests" "fastICA"        "fdim"           "fields"        
+ [33] "foreign"        "fracdiff"       "gafit"          "gee"           
+ [37] "GeneSOM"        "GenKern"        "geoR"           "gld"           
+ [41] "GLMMGibbs"      "gregmisc"       "gss"            "ineq"          
+ [45] "KernSmooth"     "leaps"          "lgtdl"          "lmtest"        
+ [49] "locfit"         "logspline"      "lokern"         "lpridge"       
+ [53] "maptree"        "Matrix"         "maxstat"        "mclust"        
+ [57] "mda"            "meanscore"      "mgcv"           "mlbench"       
+ [61] "moc"            "muhaz"          "multiv"         "mvnmle"        
+ [65] "mvtnorm"        "netCDF"         "NISTnls"        "nlme"          
+ [69] "nlrq"           "norm"           "Oarray"         "odesolve"      
+ [73] "oz"             "panel"          "pcurve"         "permax"        
+ [77] "PHYLOGR"        "pinktoe"        "pixmap"         "polymars"      
+ [81] "polynom"        "princurve"      "pspline"        "PTAk"          
+ [85] "qtl"            "quadprog"       "quantreg"       "RandomFields"  
+ [89] "RArcInfo"       "rmeta"          "RmSQL"          "RMySQL"        
+ [93] "RODBC"          "ROracle"        "rpart"          "RPgSQL"        
+ [97] "rpvm"           "RSQLite"        "Rstreams"       "Rwave"         
+[101] "SASmixed"       "scatterplot3d"  "sem"            "sgeostat"      
+[105] "sm"             "sma"            "sn"             "sna"           
+[109] "splancs"        "sptests"        "spweights"      "strucchange"   
+[113] "SuppDists"      "survival"       "tensor"         "tree"          
+[117] "tripack"        "tseries"        "twostage"       "vegan"         
+[121] "VR"             "waveslim"       "wavethresh"     "wle"           
+[125] "xgobi"          "XML"            "xtable"         "zmatrix"       
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
@@ -96,7 +97,8 @@ downloaded 54Kb
 > 
 > ## check graceful failure:
 > try(zz <- url("http://foo.bar", "r"))
-Error in url("http://foo.bar", "r") : cannot open: HTTP status was `500'
+unable to resolve 'foo.bar'.
+Error in url("http://foo.bar", "r") : cannot open URL `http://foo.bar'
 > 
 > # and via read.table, test http and ftp.
 > 
