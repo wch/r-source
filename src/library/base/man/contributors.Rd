@@ -9,8 +9,8 @@
   statistical software for the GNU suite of software.
 }
 \section{Contributors}{
-  The current \R is the result of a collaborative effort authors from
-  all over the world.
+  The current \R is the result of a collaborative effort with
+  contributions from all over the world.
 
   \R was initially written by Robert Gentleman and Ross Ihaka---also
   known as ``\emph{R & R}''---of the Statistics Department of the
@@ -73,6 +73,7 @@
   know and we'll update the list.
 
   A special debt is owed to John Chambers who has graciously contributed
-  advice and encouragement.
+  advice and encouragement in the early days of \R and later became
+  a member of the core team.
 }
 \keyword{misc}
