@@ -144,6 +144,7 @@ HINSTANCE R_loadLibrary(const char *path, int asLocal, int now)
     unsigned int dllcw, rcw;
 
     rcw = _controlfp(0,0);
+    _clearfp();
     tdlh = LoadLibrary(path);
     dllcw = _controlfp(0,0);
 
