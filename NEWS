@@ -398,7 +398,7 @@ BUG FIXES
 
     o   Work around a glibc bug to make the %Z format usable in strftime().
 
-    o	rstandard() was wrongly scaled for cases where
+    o	The glm method for rstandard() was wrongly scaled for cases where
 	summary(model)$dispersion != 1.
 
     o   Calling princomp() with a covariance matrix (rather than a
