@@ -729,14 +729,13 @@ int PicTeXDeviceDriver(DevDesc *dd, char *filename, char *bg, char *fg,
 
 /*	dd->dp.metricInfo = PicTeX_MetricInfo;
  */
-
 	dd->dp.metricInfo = NULL;
-	
+
 	/* Screen Dimensions in Pixels */
 
-	dd->dp.left = 0;			/* left */
+	dd->dp.left = 0;		/* left */
 	dd->dp.right = 72.27 * width;	/* right */
-	dd->dp.bottom = 0;			/* bottom */
+	dd->dp.bottom = 0;		/* bottom */
 	dd->dp.top = 72.27 * height;	/* top */
 
 	if( ! PicTeX_Open(dd, ptd) ) return 0;
