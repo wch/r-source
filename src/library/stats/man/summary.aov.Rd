@@ -33,10 +33,14 @@
   For a fits with a single stratum the result will be a list of
   ANOVA tables, one for each response (even if there is only one response):
   the tables are of class \code{"anova"} inheriting from class
-  \code{"data.frame"}.
+  \code{"data.frame"}.  They have columns \code{"Df"}, \code{"Sum Sq"},
+  \code{"Mean Sq"}, as well as \code{"F value"} and \code{"Pr(>F)"} if
+  there are non-zero residual degrees of freedom.  There is a row for
+  each term in the model, plus one for \code{"Residuals"} if there
+  are any.
 
-  For multistratum fits the return value is a list of summaries, one for
-  each stratum.
+  For multistratum fits the return value is a list of such summaries,
+  one for each stratum.
 }
 \note{
   The use of \code{expand.split = TRUE} is little tested: it is always
