@@ -81,8 +81,9 @@ summary.table <- function(object, ...)
 	      n.cases = n.cases)
     if(n.vars > 1) {
         m <- vector("list", length = n.vars)
+        relFreqs <- object / n.cases
         for(k in seq(along = m)) {
-            m[[k]] <- apply(object, k, sum) / n.cases
+            m[[k]] <- apply(relFreqs, k, sum)
         }
         expected <- apply(do.call("expand.grid", m), 1, prod) * n.cases
         statistic <- sum((c(object) - expected)^2 / expected)
