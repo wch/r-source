@@ -25745,14 +25745,35 @@ if test "${GCC}" = yes; then
 else
   linker_option=
 fi
+r_save_flibs=""
 for arg in ${FLIBS}; do
   case "${arg}" in
-    -lcrt*.o)
+    ## this is not for a Fortran main program
+    -lcrt*.o | -lfrtbegin | -lgfortranbegin)
       ;;
     -[a-zA-Z]/*\" | -[a-zA-Z]*\\) # ifc
       ;;
     -l:*)
       flibs="${flibs} ${linker_option}${arg}"
+      ;;
+    -L*)
+      lib=`echo ${arg} | sed "s/^-L//"`
+      ## Do not add non-existent directories.
+      test -d "${lib}" || continue
+      ## Canonicalize (/usr/lib/gcc-lib/i686-linux/3.4.3/../../..).
+      lib=`cd "${lib}" && ${GETWD}`
+      r_want_lib=true
+      ## Do not add something twice
+      for dir in ${r_save_flibs}; do
+        if test x"${dir}" = x"${lib}"; then
+           r_want_lib=false
+           break
+        fi
+      done
+      if test x"${r_want_lib}" = xtrue; then
+        flibs="${flibs} -L${lib}"
+	r_save_flibs="${r_save_flibs} ${lib}"
+      fi
       ;;
     *)
       flibs="${flibs} ${arg}"

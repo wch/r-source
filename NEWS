@@ -137,6 +137,8 @@ INSTALLATION CHANGES
     o	Configuring without having the recommended packages is now an
 	error unless --with-recommended-packages=no is used.
 
+    o	Configure tries harder to find a minimal set of FLIBS.
+
 
 BUG FIXES
 

@@ -716,6 +716,7 @@ AM_CONDITIONAL(USING_G77, [test "x${ac_cv_f77_compiler_gnu}" = xyes])
 ## Run AC_F77_LIBRARY_LDFLAGS, and fix some known problems with FLIBS.
 AC_DEFUN([R_PROG_F77_FLIBS],
 [AC_BEFORE([$0], [AC_F77_LIBRARY_LDFLAGS])
+##
 ## Currently (Autoconf 2.50 or better, it seems) FLIBS also contains all
 ## elements of LIBS when AC_F77_LIBRARY_LDFLAGS is run.  This is because
 ## _AC_PROG_F77_V_OUTPUT() uses 'eval $ac_link' for obtaining verbose
@@ -753,20 +754,50 @@ LIBS="${r_save_LIBS}"
 ## One possible solution is to change AC_F77_LIBRARY_LDFLAGS() to remove
 ## double quotes for ifc, as it already does for the Cray cft90.  As we
 ## prefer not to overload Autoconf code, we try to fix things here ...
+##
+## As of 2.1.0 we try to tidy this up a bit.
+## 1) -lfrtbegin and -lgfortranbegin are used by g77/gfortran only for a 
+## Fortran main program, which we do not have.
+## 2) g77 also tends to duplicate paths via ../../.., so we canonicalize
+## paths and remove duplicates.
+## 3) We only need a path like /usr/lib/gcc-lib/i686-linux/3.4.3 if it contains
+## libg2c.a, libgfortranpreview ... but cover that later.
+##
 flibs=
 if test "${GCC}" = yes; then
   linker_option="-Wl,"
 else
   linker_option=
 fi
+r_save_flibs=""
 for arg in ${FLIBS}; do
   case "${arg}" in
-    -lcrt*.o)
+    ## this is not for a Fortran main program
+    -lcrt*.o | -lfrtbegin | -lgfortranbegin)
       ;;
     -[[a-zA-Z]]/*\" | -[[a-zA-Z]]*\\) # ifc
       ;;
     -l:*)
       flibs="${flibs} ${linker_option}${arg}"
+      ;;
+    -L*)
+      lib=`echo ${arg} | sed "s/^-L//"`
+      ## Do not add non-existent directories.
+      test -d "${lib}" || continue
+      ## Canonicalize (/usr/lib/gcc-lib/i686-linux/3.4.3/../../..).
+      lib=`cd "${lib}" && ${GETWD}`
+      r_want_lib=true
+      ## Do not add something twice
+      for dir in ${r_save_flibs}; do
+        if test x"${dir}" = x"${lib}"; then
+           r_want_lib=false
+           break
+        fi
+      done
+      if test x"${r_want_lib}" = xtrue; then
+        flibs="${flibs} -L${lib}"
+	r_save_flibs="${r_save_flibs} ${lib}"
+      fi
       ;;
     *)
       flibs="${flibs} ${arg}"
