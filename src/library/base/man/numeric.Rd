@@ -22,8 +22,8 @@ is.numeric(x)
   \emph{\R has no single precision data type.  All real numbers are
     stored in double precision format}.
 
-  \code{as.numeric} for factors now operates on the levels of the factor, not
-the underlying codes. Use \code{\link{codes}} for the old behaviour
+  \code{as.numeric} for factors yields the codes underlying the factor
+    levels. 
 }
 \examples{
 as.numeric(c("2","B"))
