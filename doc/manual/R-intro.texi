@@ -17,12 +17,26 @@
 @include R-defs.texi
 @include version.texi
 
+@ifnottex
 @macro RIcopyright{}
-Copyright @copyright{} 1990, 1992 W.@: Venables
-Copyright @copyright{} 1997, R.@: Gentleman & R.@: Ihaka
+Copyright @copyright{} 1990 W.@: N.@: Venables@*
+Copyright @copyright{} 1992 W.@: N.@: Venables & D.@: M.@: Smith@*
+Copyright @copyright{} 1997 R.@: Gentleman & R.@: Ihaka@*
+Copyright @copyright{} 1997, 1998 M.@: Maechler@*
+@Rcopyright{1999}
+@end macro
+@end ifnottex
+
+@iftex
+@macro RIcopyright{}
+@noindent
+Copyright @copyright{} 1990 W.@: N.@: Venables
+Copyright @copyright{} 1992 W.@: N.@: Venables & D.@: M.@: Smith
+Copyright @copyright{} 1997 R.@: Gentleman & R.@: Ihaka
 Copyright @copyright{} 1997, 1998 M.@: Maechler
 @Rcopyright{1999}
 @end macro
+@end iftex
 
 @c NOTE:
 @c Conversion to PDF fails if sectioning titles contain (user-defined)
@@ -42,10 +56,11 @@ This is an introduction to R.
 @title An Introduction to R
 @subtitle Notes on @R{}: A Programming Environment for Data Analysis and Graphics
 @subtitle Version @value{VERSION}
-@author R Development Core Team
+@author W. N. Venables, D. M. Smith 
+@author and the R Development Core Team
 
 @page
-@vskip 0pt plus 1fill
+@vskip 0pt plus 1filll
 
 @flushleft
 @RIcopyright{}
@@ -103,9 +118,9 @@ The current version of this document is @value{VERSION}.
 
 This introduction to @R{} is derived from an original set of notes
 describing the @Sl{} and @SPLUS{} environments written by Bill Venables
-and Dave Smith.  We have made a number of small changes to reflect
-differences between the @R{} and @Sl{} programs, and expanded some of
-the material.
+and David M. Smith (Insightful Corporation).  We have made a number of
+small changes to reflect differences between the @R{} and @Sl{}
+programs, and expanded some of the material.
 
 @c FIXME:
 @c Would something like this still be needed?  There are certainly no
@@ -5159,8 +5174,8 @@ most cases, interactive use is more productive.  Interactive use is also
 easy because at startup time @R{} initiates a graphics @emph{device
 driver} which opens a special @emph{graphics window} for the display of
 interactive graphics.  Although this is done automatically, it is useful
-to know that the command used is @code{X11()} under UNIX and
-@code{windows()} under Windows.
+to know that the command used is @code{X11()} under UNIX,
+@code{windows()} under Windows and @code{macintosh()} on MacOS 8/9.
 
 Once the device driver is running, @R{} plotting commands can be used to
 produce a variety of graphical displays and to create entirely new kinds
@@ -6088,6 +6103,8 @@ meanings are as follows:
 [Unix]
 @item windows()
 [Windows]
+@item Macintosh()
+[MaxOS 8/9]
 @item postscript()
 @itemx pictex()
 @itemx @dots{}

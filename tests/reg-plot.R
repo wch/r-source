@@ -66,3 +66,11 @@ for(i in c(32:126, 144:152, 154, 155, 157:255)) {
 }
 
 par(pty="m")
+
+## PR 816 (label sizes in dotplot)
+
+### Prior to 1.2.2, the label sizes were unaffected by cex.
+
+data(VADeaths)
+dotplot(VADeaths, main = "Death Rates in Virginia - 1940", cex = 0.5)
+dotplot(VADeaths, main = "Death Rates in Virginia - 1940", cex = 1.5)

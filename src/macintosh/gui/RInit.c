@@ -85,7 +85,7 @@ OSErr Initialize( void )
 
 	/* allocate some extra master pointer blocks
 */
-	for ( i = 0; i < 20; i++ )
+	for ( i = 0; i < 30; i++ )
 	{
 		MoreMasters( );
 	}

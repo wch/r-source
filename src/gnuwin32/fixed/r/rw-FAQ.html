@@ -412,10 +412,10 @@ you prefer compiling from source, get <code>rwXxxxsp.zip</code>
 from the distribution (see Q1.1) and unpack it in <code>
 rwXxxx</code>. Then read the <code>readme.packages</code>. You will
 need to collect and install several tools to use this. Once you
-have done so, installation is easy: just run <code>Rcmd INSTALL
-pkgname</code>. To check the package (run all the examples on its
-help pages and in its test suite, if any) use <code>Rcmd check
-pkgname</code>. <a name=
+have done so, just run <code>Rcmd INSTALL pkgname</code>. To check
+the package (run all the examples on its help pages and in its test
+suite, if any) use <code>Rcmd check pkgname</code>: see the
+`Writing R Extensions' manual. <a name=
 "I%20don't%20have%20permission%20to%20write%20to%20the%20rwXxxx%2flibrary%20directory">
 </a></p>
 
@@ -457,7 +457,7 @@ the Start menu). You can also set them on the command line, for
 example in the shortcut you could have</p>
 
 <pre>
-path_to_R\bin\Rgui.exe --vsize=10M R_LIBS=e:/R/library
+path_to_R\bin\Rgui.exe R_LIBS=e:/R/library
 </pre>
 
 <p>and you can set variables in a file <code>.Renviron</code> in
@@ -465,13 +465,10 @@ the working directory or your home directory, for example</p>
 
 <pre>
 R_LIBS=e:/R/library
-R_VSIZE=10M
-R_NSIZE=400k
 </pre>
 
-<p>The order of precedence is the command line (flags before
-variables) then <code>.Renviron</code> then the inherited
-environment. <a name=
+<p>The order of precedence is the command line then <code>
+.Renviron</code> then the inherited environment. <a name=
 "The%20packages%20I%20installed%20do%20not%20appear%20in%20the%20HTML%20help%20system">
 </a></p>
 
@@ -481,25 +478,16 @@ system.</h2>
 <p>HTML help only works for packages installed in
 <code>rwXxxx\library</code>.</p>
 
-<p>To update the HTML help files after you have installed a binary
-package, run at the R prompt.</p>
+<p>To update the HTML help files after you have installed a
+pre-compiled package, run at the R prompt.</p>
 
 <pre>
 &gt; link.html.help()
 </pre>
 
-<p>(Using <code>install.packages()</code> does this for you. The
-source-code installation also does this automatically, and if you
-have that installed you can use (preferably)</p>
-
-<pre>
-cd rwXxxx\src\gnuwin32\help
-make indices
-</pre>
-
-<p>instead.) <a name=
+<a name=
 "My%20functions%20are%20not%20found%20by%20the%20HTML%20help%20search%20system.">
-</a></p>
+</a> 
 
 <h2>3.4 My functions are not found by the HTML help search
 system.</h2>
@@ -557,12 +545,9 @@ here it contains spaces.) <a name=
 <p>Unfortunately, hyperlinks in compiled HTML files used from R are
 being interpreted relative to the current working directory of the
 R process, not relative to the <code>pkg.chm</code> file. This was
-not discovered until <code>rw1021</code>, so only files made with
+not discovered until <code>rw1021</code>, so only files made since
 that version are working correctly. Remake the package under <code>
 rw1021</code> or later to cure this.</p>
-
-<p>If you explore the installed <code>.chm</code> from Windows
-Explorer, the links will work.</p>
 
 <hr>
 <a name="Windows%20Features"></a> 
@@ -915,8 +900,8 @@ console, call <code>R_FlushConsole()</code> and then
 <code>R_ProcessEvents()</code>.</p>
 
 <hr width="100%">
-<address>Last edited 2001 January 3 by Brian Ripley <code><a href=
-"mailto:ripley@stats.ox.ac.uk">
+<address>Last edited 2001 February 24 by Professor B. D. Ripley
+<code><a href="mailto:ripley@stats.ox.ac.uk">
 ripley@stats.ox.ac.uk</a></code></address>
 </body>
 </html>

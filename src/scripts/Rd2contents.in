@@ -2,12 +2,16 @@
 
 use File::Basename;
 
-while(<$ARGV[0]/man/*.Rd>){
+$ARGV[0] =~ /([^\/]*)$/;
+my $pkg = $1;
 
+while(<$ARGV[0]/man/*.Rd>){ &do_one; }
+if(-d  "$ARGV[0]/man/unix") {
+    while(<$ARGV[0]/man/unix/*.Rd>){ &do_one; }
+}
+
+sub do_one {
     my $file = basename($_, (".Rd", ".rd"));
-
-    $ARGV[0] =~ /([^\/]*)$/;
-    my $pkg =$1;
 
     open(rdfile, "<$_");
     undef $text;

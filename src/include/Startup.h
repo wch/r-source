@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999  The R Development Core Team
+ *  Copyright (C) 1999-2001  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -45,15 +45,15 @@ typedef enum {
 
 typedef struct
 {
-    Rboolean R_Quiet		: 1;
-    Rboolean R_Slave		: 1;
-    Rboolean R_Interactive	: 1;
-    Rboolean R_Verbose		: 1;
-    Rboolean LoadSiteFile	: 1;
-    Rboolean LoadInitFile	: 1;
-    Rboolean DebugInitFile	: 1;
-    SA_TYPE	RestoreAction;
-    SA_TYPE 	SaveAction;
+    Rboolean R_Quiet;
+    Rboolean R_Slave;
+    Rboolean R_Interactive;
+    Rboolean R_Verbose;
+    Rboolean LoadSiteFile;
+    Rboolean LoadInitFile;
+    Rboolean DebugInitFile;
+    SA_TYPE RestoreAction;
+    SA_TYPE SaveAction;
     int vsize;
     int nsize;
     int max_vsize;
@@ -64,7 +64,6 @@ typedef struct
          of them passed to the application.
          These are populated via the routine R_set_command_line_arguments()
          called from R_common_command_line().
-         They are available
        */
     int    NumCommandLineArgs;
     char **CommandLineArgs;

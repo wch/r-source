@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2000  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1597,7 +1597,7 @@ static void R_WriteMagic(FILE *fp, int number)
 static int R_ReadMagic(FILE *fp)
 {
     unsigned char buf[6];
-    int d1, d2, d3, d4, d1234;
+    int d1, d2, d3, d4;
     fread((char*)buf, sizeof(char), 5, fp);
     if (strncmp((char*)buf, "RDA1\n", 5) == 0) {
 	return R_MAGIC_ASCII_V1;
@@ -1613,7 +1613,7 @@ static int R_ReadMagic(FILE *fp)
     d2 = (buf[2]-'0') % 10;
     d3 = (buf[1]-'0') % 10;
     d4 = (buf[0]-'0') % 10;
-    return d1234 = d1 + 10 * d2 + 100 * d3 + 1000 * d4;
+    return d1 + 10 * d2 + 100 * d3 + 1000 * d4;
 }
 
 /* ----- E x t e r n a l -- I n t e r f a c e s ----- */

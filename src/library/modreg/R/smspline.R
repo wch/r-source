@@ -55,7 +55,7 @@ smooth.spline <-
 				y = y, w = w)),
 		  ncol = 3, byrow=TRUE)
     wbar <- tmp[, 1]
-    ybar <- tmp[, 2]/wbar
+    ybar <- tmp[, 2]/ifelse(wbar> 0, wbar, 1)
     yssw <- sum(tmp[, 3] - wbar*ybar^2)
     nx <- length(ux)
     r.ux <- ux[nx] - ux[1]

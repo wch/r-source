@@ -1,10 +1,10 @@
 /*
  *  AUTHOR
  *    Catherine Loader, catherine@research.bell-labs.com.
- *    October 23, 2000.
+ *    October 23, 2000 and Feb, 2001.
  *
  *  Merge in to R:
- *	Copyright (C) 2000, The R Core Development Team
+ *	Copyright (C) 2000--2001, The R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -47,6 +47,7 @@ double dnbinom(double x, double n, double p, int give_log)
     if (x < 0 || !R_FINITE(x)) return R_D__0;
     x = R_D_forceint(x);
 
-    prob = dbinom_raw(n-1,n+x-1,p,1-p,give_log);
-    return((give_log) ? log(p) + prob : p*prob);
+    prob = dbinom_raw(n, x+n, p, 1-p, give_log);
+    p = ((double)n)/(n+x);
+    return((give_log) ? log(p) + prob : p * prob);
 }

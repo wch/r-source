@@ -21,11 +21,11 @@
  *
  *  This file is adapted from the public demos coming with the Waste library
  *  distribution:  WASTE Text Engine © 1993-2000 Marco Piovanelli.
- *   
+ *
  *  This file was originally written by: Wing Kwong (Tiki), WAN 3/2/99
  *  Updated to last version of WasteLib library: Stefano M. Iacus, 2001
  *  Added mac_load history, mac_savehistory: Stefano M. Iacus, 2000
- * 
+ *
  *  Original file was:
  *
  *	WASTE Demo Project:
@@ -44,9 +44,10 @@
 #endif
 #include "Defn.h"
 
+# define min(a, b) (a > b)?(b):(a)
+
 void mac_savehistory(char *file);
 void mac_loadhistory(char *file);
-
 
 // Constant
 #define   kLineto                         1
@@ -76,7 +77,7 @@ Boolean                                   gfinishedInput;
 char                             	  *gbuf;
 SInt16                                    HISTORY;
 Boolean		                          GWgDone;
-Boolean		                          gInBackground;
+extern Boolean		                  gInBackground;
 Ptr				          gPreAllocatedBlockPtr;
 SInt32		                          gUntitledWindowNumber  = 0;
 SInt32		                          gCurrentNumberOfWindows = 0;
@@ -119,7 +120,7 @@ void RWrite(char* buf)
     SInt32 buflen, i;
 
     buflen = strlen(buf);
-   
+
     if(fileno(stdout)>1){
 	fputs(buf, stdout);
 	fflush(stdout);
@@ -132,23 +133,29 @@ void RWrite(char* buf)
 
 void RnWrite(char* buf, SInt16 len)
 {
-    SInt32 i;
-    char buf2[300];
-   
+    SInt32 i,my_len;
+    char *buf2=NULL;
+    
+    
     if(fileno(stdout)>1){
-	strncpy(buf2,buf,len);
-	fputs(buf2, stdout);
-	fflush(stdout);
+    buf2 = malloc(len+2);
+     if(buf2){
+ 	 strncpy(buf2,buf,len);
+	 fputs(buf2, stdout);
+	 fflush(stdout);
+	 free(buf2);
+     }
     }
     else
 	for ( i=0; i < len; i++)
-	    WEKey ( buf[i], NULL, GetWindowWE (Console_Window) ) ; 
+	    WEKey ( buf[i], NULL, GetWindowWE (Console_Window) ) ;
+    
 }
 /* R_ReadConsole
-This is a platform dependent function.                           
-This function prints the given prompt at the console and then does a gets(3)- like operation, 
+This is a platform dependent function.
+This function prints the given prompt at the console and then does a gets(3)- like operation,
 transferring up to buflen characters into the buffer buf. The last character is set to \0 to
-preserve sanity.                                         
+preserve sanity.
 */
 
 void R_ReadConsole1(char *prompt,  char *buf, int buflen, int hist)
@@ -157,33 +164,32 @@ void R_ReadConsole1(char *prompt,  char *buf, int buflen, int hist)
     EventRecord myEvent;
     SInt32      i;
     char        tempChar;
-    char buffo[1000];
-
+  
     we = GetWindowWE ( Console_Window ) ;
-   
+
     // let have something about hist
     hist = hist + 1;
     // Print the prompt to stanard output
 
 
     RWrite(prompt);
-   
+
 
     gpmtLh = strlen(prompt);
     gChangeAble = WEGetTextLength(we);
     // The Prompt is in different color (black)
     //>
-    Change_Color_Range(gChangeAble-gpmtLh, gChangeAble, 
+    Change_Color_Range(gChangeAble-gpmtLh, gChangeAble,
 		       gComputerColour.red, gComputerColour.green, gComputerColour.blue, we);
     //The Command is in different color (red)
     //Change_Color(gTypeColour.red, gTypeColour.green, gTypeColour.blue, we);
-   
+
     // gbuf is a ptr, which is used to point to the receive buffer
     gbuf = buf;
     gbuflen = buflen;
 
 
-    // Call the Receive loop  
+    // Call the Receive loop
 
     if (HaveContent){
 	HLock( myHandle );
@@ -212,15 +218,15 @@ void R_ReadConsole1(char *prompt,  char *buf, int buflen, int hist)
     if (!HaveContent){
 	gfinishedInput = false;
 	while(!gfinishedInput)
-	{    
-	    if (isTextWindow){ 
- 
+	{
+	    if (isTextWindow){
+
 		ProcessEvent ( );
 	    }
 	}
-    }   
+    }
 
-    //It is green in color 
+    //It is green in color
     Change_Color_Range(gChangeAble, WEGetTextLength(we),
 		       gFinishedColour.red, gFinishedColour.green, gFinishedColour.blue, we);
     // It is blue in color
@@ -230,15 +236,15 @@ void R_ReadConsole1(char *prompt,  char *buf, int buflen, int hist)
     if (strlen((const char *)buf) > 1)
 	maintain_cmd_History(buf);
     // Mac_Command(buf);
-   
-    
+
+
 }
 
 /* R_ReadConsole2 experimental code
-This is a platform dependent function.                           
-This function prints the given prompt at the console and then does a gets(3)- like operation, 
+This is a platform dependent function.
+This function prints the given prompt at the console and then does a gets(3)- like operation,
 transferring up to buflen characters into the buffer buf. The last character is set to \0 to
-preserve sanity.                                         
+preserve sanity.
 */
 
 void R_ReadConsole2(char *prompt,  char *buf, int buflen, int hist)
@@ -251,34 +257,34 @@ void R_ReadConsole2(char *prompt,  char *buf, int buflen, int hist)
 
     we = GetWindowWE ( Console_Window ) ;
 
-   
+
     // let have something about hist
     hist = hist + 1;
     // Print the prompt to stanard output
 
 
     RWrite(prompt);
-   
+
 
     gpmtLh = strlen(prompt);
     gChangeAble = WEGetTextLength(we);
- 
+
     // The Prompt is in different color (black)
     //>
 
-/*   Change_Color_Range(gChangeAble-gpmtLh, gChangeAble, 
+/*   Change_Color_Range(gChangeAble-gpmtLh, gChangeAble,
      gComputerColour.red, gComputerColour.green, gComputerColour.blue, we);
 
 */
     //The Command is in different color (red)
     //Change_Color(gTypeColour.red, gTypeColour.green, gTypeColour.blue, we);
-   
+
     // gbuf is a ptr, which is used to point to the receive buffer
     gbuf = buf;
     gbuflen = buflen;
 
 
-    // Call the Receive loop  
+    // Call the Receive loop
 
     if (HaveContent){
 	HLock( myHandle );
@@ -307,15 +313,15 @@ void R_ReadConsole2(char *prompt,  char *buf, int buflen, int hist)
     if (!HaveContent){
 	gfinishedInput = false;
 	while(!gfinishedInput)
-	{    
-	    if (isTextWindow){ 
- 
+	{
+	    if (isTextWindow){
+
 		ProcessEvent ( );
 	    }
 	}
-    }   
+    }
 /*
-  //It is green in color 
+  //It is green in color
   Change_Color_Range(gChangeAble, WEGetTextLength(we),
   gFinishedColour.red, gFinishedColour.green, gFinishedColour.blue, we);
   // It is blue in color
@@ -323,15 +329,15 @@ void R_ReadConsole2(char *prompt,  char *buf, int buflen, int hist)
   gComputerColour.red, gComputerColour.green, gComputerColour.blue,  we);
   // ********* Don't try to change the content of buf
 */
-    
+
 /*   ReadCharsFromConsole(buf,buflen);
  */
-  
+
     if (strlen((const char *)buf) > 1)
 	maintain_cmd_History(buf);
     // Mac_Command(buf);
-   
-    
+
+
 }
 
 void DRWrite(long in)
@@ -339,7 +345,7 @@ void DRWrite(long in)
     char     temp[100];
     sprintf(temp, "%d", in);
     RWrite(temp);
-   
+
 }
 
 void FRWrite(double in)
@@ -358,7 +364,7 @@ void free_History(void)
     if (g_start_Cmd < g_end_Cmd)
 	for(i = g_start_Cmd ; i < g_end_Cmd ; i++){
 	    free(Cmd_Hist[i]);
-	} 
+	}
     else
 	for(i = 0; i < HISTORY; i++)
 	    free(Cmd_Hist[i]);
@@ -368,7 +374,7 @@ void free_History(void)
 SEXP do_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
-    
+
     checkArity(op, args);
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
@@ -380,7 +386,7 @@ SEXP do_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
-    
+
     checkArity(op, args);
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
@@ -390,20 +396,20 @@ SEXP do_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /**********************************************
- mac_savehistory: save history command to a 
+ mac_savehistory: save history command to a
  specified file. Adapted from gl_savehistory
  for Windows
  Stefano M. Iacus Gen 2001
-**********************************************/ 
+**********************************************/
 
 void mac_savehistory(char *file)
 {
     FILE *fp;
     int i;
     char hist_buff[1000];
-    
+
     if (!file || !g_end_Cmd) return;
-    
+
     fp = fopen(file, "w");
     if (!fp) {
 	char msg[256];
@@ -411,62 +417,59 @@ void mac_savehistory(char *file)
 	warning(msg);
 	return;
     }
-    
+
     if (g_start_Cmd < g_end_Cmd)
 	for(i = g_start_Cmd ; i < g_end_Cmd ; i++){
 	    fprintf(fp, "%s\n", Cmd_Hist[i]);
-	} 
+	}
     else
 	for(i = 0; i < HISTORY; i++)
 	    fprintf(fp, "%s\n", Cmd_Hist[i]);
-    fclose(fp); 
+    fclose(fp);
 }
 
 /**********************************************
- mac_loadhistory: load history command from a 
+ mac_loadhistory: load history command from a
  specified file. Adapted from gl_loadhistory
  for Windows. It can read history files of
  Windowds porting.
  Stefano M. Iacus Gen 2001
-**********************************************/ 
+**********************************************/
 void mac_loadhistory(char *file)
 {
     FILE *fp;
     int i,buflen,j;
     char buf[1002];
 
-    
-    if (!file) return;
+    if (!file || *file==NULL) return;
     fp = fopen(file, "r");
     if (!fp) {
-	char msg[256];
-	sprintf(msg, "Unable to open history file \"%s\" for reading", file);
-	warning(msg);
+    REprintf("\nUnable to open history file \"%s\" for reading\n", file);
 	return;
     }
 
     for(i = 0;; i++) {
-	if(!fgets(buf, 1000, fp)) 
+	if(!fgets(buf, 1000, fp))
 	    break;
 	if( (buflen = strlen(buf)) > 1) {
 	    if(buf[buflen-1]==0x0A) {
 		if(buf[buflen-2]==0x0D)
-		    buf[buflen-1]='\0'; 
-		else { 
-		    buf[buflen]='\0'; 
+		    buf[buflen-1]='\0';
+		else {
+		    buf[buflen]='\0';
 		    buf[buflen-1]=0x0D;
 		}
 	    }
 	    maintain_cmd_History(buf);
 	}
     }
-    fclose(fp); 
+    fclose(fp);
 }
 
 
 
 /* maintain_cmd_History
-Put the buf into the list of History                            
+Put the buf into the list of History
 Maintain the position of the start, cur and end pointer of the list of the History
 */
 
@@ -474,9 +477,10 @@ void maintain_cmd_History(char *buf)
 {
     char *temp;
     int numberOfChar;
+
     g_Stop = false;
-    numberOfChar = strlen((const char *)buf);
-    temp = malloc(numberOfChar * sizeof(char));
+    numberOfChar = strlen(buf);
+    temp = malloc((numberOfChar + 1) * sizeof(char));
     strcpy(temp, (const char *)buf);
     Cmd_Hist[g_end_Cmd] = temp;
     g_not_first = false;
@@ -505,43 +509,42 @@ void R_WriteConsole1(char *buf, SInt32 buflen)
     SInt32 outlen, lastLen;
     Boolean ended = false;
     WEReference we;
-    char stringona[1000];
+    char *stringona=NULL;
 
     outlen =   strlen(buf);
- 
-    strncpy(stringona,buf,outlen);
+
+    stringona = malloc(outlen+2);
+    if(stringona){
+     strncpy(stringona,buf,outlen);
     for ( i=0; i < outlen; i++)
-	if (buf[i] == '\n') stringona[i]='\r';
-
+	 if (buf[i] == '\n') stringona[i]='\r';
+    
     we = GetWindowWE ( Console_Window );
-//   WESetSelection ( WEGetTextLength(we), WEGetTextLength(we), we );
 
-    WEPut(kCurrentSelection,kCurrentSelection, stringona, outlen,kTextEncodingMultiRun, 0,0,nil,nil,we ); 
-}  
+    if(we)
+     WEPut(kCurrentSelection,kCurrentSelection, stringona, outlen,kTextEncodingMultiRun, 0,0,nil,nil,we );
+     
+    if(stringona)
+     free(stringona);
+    }
+}
 
+// Updated for Waste 2.X  Jago
 void R_WriteConsoleX(Ptr buf, SInt32 buflen)
 {
     SInt32 i, selStart, selEnd;
-/*   WEHandle pWE;
- */
     WEReference pWE;
-
-// Updated for Waste 2.X  Jago
-
-/*typedef WEReference WEHandle;*/
-
     SInt32 outLen, lastLen;
     Boolean ended = false;
     WEReference we;
 
-    lastLen = outLen = 0; 
+    lastLen = outLen = 0;
     we = GetWindowWE ( Console_Window);
     WESetSelection ( WEGetTextLength(we), WEGetTextLength(we), we );
     for ( i=0; i < buflen; i++){
 	if (buf[i] == '\n'){
 	    if (outLen != 0){
-//            WEInsert(&buf[lastLen], outLen, nil, nil, GetWindowWE(Console_Window));
-		WEPut(kCurrentSelection,kCurrentSelection, &buf[lastLen], outLen,kTextEncodingMultiRun, 0,0,nil,nil,GetWindowWE(Console_Window) );   
+		WEPut(kCurrentSelection,kCurrentSelection, &buf[lastLen], outLen,kTextEncodingMultiRun, 0,0,nil,nil,GetWindowWE(Console_Window) );
 		outLen =0;
 	    }
 	    WEKey ('\r', NULL,  GetWindowWE (Console_Window));
@@ -551,16 +554,15 @@ void R_WriteConsoleX(Ptr buf, SInt32 buflen)
 	    outLen++;
 	}
     }
-    //  WEInsert(&buf[lastLen], outLen, nil, nil, GetWindowWE(Console_Window));
-    WEPut(kCurrentSelection,kCurrentSelection, &buf[lastLen], 
+    WEPut(kCurrentSelection,kCurrentSelection, &buf[lastLen],
 	  outLen,kTextEncodingMultiRun, 0,0,nil,nil,
-	  GetWindowWE(Console_Window) );   
+	  GetWindowWE(Console_Window) );
 
-}  
+}
 
 
 
-/* R_WriteConsole2 
+/* R_WriteConsole2
 Experimental code to use only Sioux
 This function writes the given buffer out to the console. No special actions are required. (Specify
 the length of the buffer)
@@ -575,32 +577,32 @@ void R_WriteConsole2(char *buf, SInt32 buflen)
 
 
     WriteCharsToConsole(buf,buflen);
-   
+
     return;
-   
+
     outlen =   strlen(buf);
- 
+
     strncpy(stringona,buf,outlen);
     for ( i=0; i < outlen; i++)
 	if (buf[i] == '\n') stringona[i]='\r';
 
     we = GetWindowWE ( Console_Window );
 //   WESetSelection ( WEGetTextLength(we), WEGetTextLength(we), we );
-    WEPut(kCurrentSelection,kCurrentSelection, stringona, outlen,kTextEncodingMultiRun, 0,0,nil,nil,we ); 
-}  
+    WEPut(kCurrentSelection,kCurrentSelection, stringona, outlen,kTextEncodingMultiRun, 0,0,nil,nil,we );
+}
 
 Boolean inRange(int start, int end , int back, int length)
 {
     if(end > back){
 	if (start > back) return false;
 	else return true;
-    } 
+    }
     if(end < (back-length)) return false;
     if (end > (back-length)) return true;
     return true;
 }
 
-void Change_Color_Range(SInt32 start, SInt32 end, long red, long green, 
+void Change_Color_Range(SInt32 start, SInt32 end, long red, long green,
 			long blue, WEReference we)
 {
     RGBColor			color = { 0x0000, 0x0000, 0x0000 } ;
@@ -610,13 +612,13 @@ void Change_Color_Range(SInt32 start, SInt32 end, long red, long green,
     ts . tsColor . green = green ;
     ts . tsColor . blue = blue ;
     WESetSelection(start, end, we);
-    WESetStyle ( weDoColor, & ts, we ); 
+    WESetStyle ( weDoColor, & ts, we );
 */
-   
+
     color.red = red;
     color.blue = blue;
     color.green = green;
-	
+
     WESetOneAttribute ( start, end, weTagTextColor,
 			& color, sizeof ( color ),  we  ) ;
     WESetSelection(WEGetTextLength(we), WEGetTextLength(we), we);
@@ -624,9 +626,9 @@ void Change_Color_Range(SInt32 start, SInt32 end, long red, long green,
 
 void Change_Color(long red, long green, long blue, WEReference we)
 {
-    Change_Color_Range(WEGetTextLength(we),WEGetTextLength(we), 
+    Change_Color_Range(WEGetTextLength(we),WEGetTextLength(we),
 		       red, green, blue,  we);
-   
+
 }
 
 Boolean isTextWindow(WindowPtr window)
@@ -634,7 +636,7 @@ Boolean isTextWindow(WindowPtr window)
     if ((window == Console_Window) || (window == Edit_Window))
         return true;
     else
-        return false;    
+        return false;
 }
 
 // doErrorAlert
@@ -644,7 +646,7 @@ void  GWdoErrorAlert(SInt16 errorType)
     Str255 labelText;
     Str255 narrativeText;
     SInt16 itemHit;
-		
+
     paramRec.movable			= false;
     paramRec.helpButton			= false;
     paramRec.filterProc			= NULL;
@@ -667,7 +669,7 @@ void  GWdoErrorAlert(SInt16 errorType)
 //		StandardAlert(kAlertStopAlert,labelText,0,&paramRec,&itemHit);
 	if (errorType <7)
 	    ExitToShell();
-    }	
+    }
 }
 
 // doNewWindow
@@ -684,7 +686,7 @@ void  doNewWindow(void)
     }
     if(!(windowPtr = GetNewCWindow(rNewWindow,gPreAllocatedBlockPtr,(WindowPtr)-1)))
 	GWdoErrorAlert(eFailWindow);
-	
+
     gPreAllocatedBlockPtr = NULL;
     GetIndString(untitledString,rStringList,sUntitled);
     NumToString(++gUntitledWindowNumber,numberAsString);
@@ -697,10 +699,10 @@ void  doNewWindow(void)
 	NumToString(gUntitledWindowNumber,numberAsString);
 	GWdoConcatPStrings(untitledString,numberAsString);
     }
-    InsertMenuItem(windowsMenu,untitledString,CountMenuItems(windowsMenu));		
+    InsertMenuItem(windowsMenu,untitledString,CountMenuItems(windowsMenu));
     SetWRefCon(windowPtr,gCurrentNumberOfWindows);
     gCurrentNumberOfWindows ++;
-    gWindowPtrArray[gCurrentNumberOfWindows] = windowPtr;	
+    gWindowPtrArray[gCurrentNumberOfWindows] = windowPtr;
 }
 
 // doSetStandardState
@@ -709,7 +711,7 @@ void  doSetStandardState(WindowPtr windowPtr)
     WindowPeek windowRecPtr;
     WStateData *winStateDataPtr;
     Rect tempRect;
-    tempRect = qd.screenBits.bounds;	
+    tempRect = qd.screenBits.bounds;
     windowRecPtr = (WindowPeek) windowPtr;
     winStateDataPtr = (WStateData *) *(windowRecPtr->dataHandle);
     SetRect(&(winStateDataPtr->stdState),tempRect.left+40,tempRect.top+60,
@@ -717,13 +719,13 @@ void  doSetStandardState(WindowPtr windowPtr)
 }
 
 /* do_Down_Array
-This procedure used to maintain the reponse when you click the down array key. (about display 
+This procedure used to maintain the reponse when you click the down array key. (about display
 previous command in console window)                                            */
 void do_Down_Array(void)
 {
     WEReference we ;
-    SInt32 textLength; 
-    if (g_start_Cmd != g_end_Cmd) { 
+    SInt32 textLength;
+    if (g_start_Cmd != g_end_Cmd) {
 	we = GetWindowWE ( Console_Window ) ;
 	if (!g_down){
 	    g_cur_Cmd--;
@@ -731,13 +733,13 @@ void do_Down_Array(void)
 	g_not_first = true;
 	g_down = true;
 	WESetSelection(gChangeAble,WEGetTextLength(we),we);
-	if (g_start_Cmd == 0){ 
+	if (g_start_Cmd == 0){
 	    if (g_cur_Cmd < g_start_Cmd){
 		SysBeep(10);
 	    }else{
 		textLength = strlen(Cmd_Hist[g_cur_Cmd]) - 1;
-		RnWrite(Cmd_Hist[g_cur_Cmd] , textLength); 
-		g_cur_Cmd--;   
+		RnWrite(Cmd_Hist[g_cur_Cmd] , textLength);
+		g_cur_Cmd--;
 	    }
 	}else{
 	    if (g_cur_Cmd == g_end_Cmd){
@@ -756,9 +758,9 @@ void do_Down_Array(void)
 void do_Up_Array(void)
 {
     WEReference we ;
-    SInt32 textLength;  
+    SInt32 textLength;
     if (g_start_Cmd != g_end_Cmd) {
- 
+
 	we = GetWindowWE ( Console_Window ) ;
 	WESetSelection(gChangeAble,WEGetTextLength(we),we);
 	if ((g_down) && (g_not_first)){

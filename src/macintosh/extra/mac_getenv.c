@@ -52,9 +52,9 @@
  * Unfortunatelly the MacOS has no equivalent. So we need
  * a file to define the environment variables.
  * Name of this file is ".Renviron". It can be placed
- * in the subfolder ':etc:' of R folder or in the
+ * in the same folder as  R folder or in the
  * preference folder of the system disk.
- * If R founds the ".Renviron" file in the ':etc'
+ * If R founds the ".Renviron" file in the current
  * folder of the ".Renviron" file in the
  * preference folder will be ignored.
  *
@@ -185,7 +185,7 @@ char *mac_getenv(const char *name)
     if (name == NULL)
 	return NULL;
 
-    sprintf(temp_path,"%s:etc:.Renviron",R_Home);
+    sprintf(temp_path,"%s:.Renviron",R_Home);
 
     err = FSpLocationFromFullPath(strlen(temp_path),temp_path,&spec);
   

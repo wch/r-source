@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000		The R Development Core Team.
+ *  Copyright (C) 2000, 2001	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -422,6 +422,11 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
 
     r = INTEGER(dim)[0];
     c = INTEGER(dim)[1];
+    /* PR#850 */
+    if ((rl!=R_NilValue) && (r>length(rl)))
+	error("too few row labels");
+    if ((cl!=R_NilValue) && (c>length(cl)))
+	error("too few column labels");
     switch (TYPEOF(x)) {
     case LGLSXP:
 	printLogicalMatrix(x, offset, r, c, rl, cl, rn, cn);
@@ -445,7 +450,7 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
 static void printArrayGeneral(SEXP x, SEXP dim, int quote, SEXP dimnames)
 {
 /* == printArray(.) */
-    SEXP ii, nn, dn, dnn;
+    SEXP dn, dnn;
     int i, j, k, l, b, nb, ndim;
     int nr, nc;
     int has_dimnames = 0, has_dnn = 0;
@@ -461,8 +466,6 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, SEXP dimnames)
     }
     else {
 	SEXP dn0, dn1;
-	PROTECT(ii = allocVector(INTSXP, ndim));
-	PROTECT(nn = allocVector(INTSXP, ndim));
 	nr = INTEGER(dim)[0];
 	nc = INTEGER(dim)[1];
 	b = nr * nc;
@@ -523,7 +526,6 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, SEXP dimnames)
 	    }
 	    Rprintf("\n");
 	}
-	UNPROTECT(2);
     }
 }
 

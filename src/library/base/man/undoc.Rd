@@ -2,7 +2,7 @@
 \alias{undoc}
 \title{Find Undocumented Objects}
 \usage{
-undoc(pkg, dir)
+undoc(package, dir, lib.loc = .lib.loc)
 }
 \description{
   Finds the objects in a package which are undocumented, in the sense
@@ -10,12 +10,14 @@ undoc(pkg, dir)
   package), but no documentation entry exists.
 }
 \arguments{
-  \item{pkg}{a character string naming an installed package}
+  \item{package}{a character string naming an installed package.}
   \item{dir}{a character string specifying the path to a package's root
     source directory.  This must contain the subdirectory \file{man}
     with \R documentation sources (in Rd format), and at least one of
     the \file{R} or \file{data} subdirectories with \R code or data
     objects, respectively.}
+  \item{lib.loc}{a character vector describing the location of \R
+    library trees to search for \code{package}.}
 }
 \details{
   This function is useful for package maintainers mostly.  In principle,

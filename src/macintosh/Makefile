@@ -18,9 +18,9 @@ Rversion.h: $(RHOME)/date-stamp $(RHOME)/VERSION
 
 SED0='/^\#/d'
 SED01='/Rsockfork/d'
-SED1='s/F77_SUBROUTINE(\(.*\))/void * \1();/'
+SED1='s/F77_SUBROUTINE(\(.*\))/void * \1_();/'
 SED2='s/C_FUNCTION(\(.*\))/void * \1();/'
-SED3='s/F77_SUBROUTINE(\(.*\))/{ "\1",	\1 },/'
+SED3='s/F77_SUBROUTINE(\(.*\))/{ "\1_",	\1_ },/'
 SED4='s/C_FUNCTION(\(.*\))/{ "\1",	\1 },/'
 
 FFDecl.h: ../appl/ROUTINES
@@ -73,18 +73,18 @@ datafiles:
 
 help:
 	@for pkg in $(PACKAGES); do \
-	  PERL5LIB=$(RHOME)/share/perl perl build.help -txt -html -example -latex ../library/$${pkg} $(RHOME)/library; \
-	  perl ../gnuwin32/help/Rd2contents ../library/$${pkg} \
+	  PERL5LIB=$(RHOME)/share/perl perl build-help -txt -html -example -latex ../library/$${pkg} $(RHOME)/library; \
+	  perl Rd2contents ../library/$${pkg} \
            $(RHOME)/library/$${pkg}/CONTENTS; \
 	done
 	cat $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
-	PERL5LIB=$(RHOME)/share/perl perl build.help  -htmllists
+	PERL5LIB=$(RHOME)/share/perl perl build-help  -htmllists
 
 zipfiles:
 	(cd $(RHOME)/library/base/help; \
 	  zip -jqm Rhelp * -x 00Titles AnIndex)
-	(cd $(RHOME)/library/base/R-ex; zip -jqmX Rex *.R)
-	(cd $(RHOME)/library/base/latex; zip -jqmX Rhelp *.tex)
+	(cd $(RHOME)/library/base/R-ex; zip -jqm Rex *.R)
+	(cd $(RHOME)/library/base/latex; zip -jqm Rhelp *.tex)
 
 ## ------------- html -----------
 

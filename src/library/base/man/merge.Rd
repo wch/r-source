@@ -10,7 +10,7 @@
 merge(x, y, by, by.x, by.y, sort = TRUE)
 }
 \synopsis{
-merge(x, y, by, \dots)
+merge(x, y, \dots)
 merge.date.frame(x, y, by = intersect(names(x), names(y)), by.x = by,
                  by.y = by, sort = TRUE) 
 }

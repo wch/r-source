@@ -39,7 +39,7 @@ notice identical to this one except for the removal of this paragraph
 @subtitle Version @value{VERSION}
 @author R Development Core Team
 @page
-@vskip 0pt plus 1fill
+@vskip 0pt plus 1filll
 @permission{}
 
 @Rcopyright{2000}
@@ -330,8 +330,8 @@ documentation; generating ``live'' analyses/reports that contain text,
 data and code.
 
 A description of the facilities of the @pkg{XML} package is outside the
-scope of this document: see the package's
-@uref{http://www.omegahat.org/RSXML, Web page} for details and examples.
+scope of this document: see the package's Web page at
+@uref{http://www.omegahat.org/RSXML} for details and examples.
 
 
 @node Spreadsheet-like data, Importing from other statistical systems, Introduction, Top
@@ -1099,10 +1099,10 @@ systems provide support @acronym{ODBC}, including most of those on
 Windows (such as Microsoft Access), and MySQL, Oracle and PostgreSQL on
 Unix/Linux.
 
-You will need an @acronym{ODBC} Driver Manager such as
-@uref{http://www.unixODBC.org, unixODBC} or @uref{http://www.iODBC.org,
-iOBDC} on Unix/Linux, and an installed driver for your database system.
-The @uref{http://www.jepstone.net/FreeODBC/, FreeODBC project} is a
+You will need an @acronym{ODBC} Driver Manager such as unixODBC
+(@uref{http://www.unixODBC.org}) or iOBDC (@uref{http://www.iODBC.org})
+on Unix/Linux, and an installed driver for your database system.  The
+FreeODBC project (@uref{http://www.jepstone.net/FreeODBC/}) is a
 repository of information related to @acronym{ODBC}.
 
 Two groups of interface functions are provided.  The @code{odbc*} group
@@ -1219,12 +1219,11 @@ and Dubois, 2000.).  This is part of a project to provide a common
 @acronym{SQL}.  Currently this provides lower-level facilities than
 @pkg{RPgSQL} or @pkg{RODBC}.
 
-MySQL exists on Unix/Linux and Windows.  (Its current status appears to
-be that the source is freely available and beta versions are free but
-release binary versions are commercial on Windows.)  MySQL is a `light
-and lean' database.  (It preserves the case of names where the operating
-file system is case-sensitive, so not on Windows.)  Package @pkg{RMySQL}
-has been used on both Linux and Windows.
+MySQL exists on Unix/Linux and Windows: as from version 3.23 (Jan 2001)
+it is released under GPL.  MySQL is a `light and lean' database.  (It
+preserves the case of names where the operating file system is
+case-sensitive, so not on Windows.)  Package @pkg{RMySQL} has been used
+on both Linux and Windows.
 
 @findex MySQL
 @findex dbConnect
@@ -1428,7 +1427,7 @@ all data after that point is lost.
 @cindex Hierarchical Data Format
 @cindex network Common Data Form
 
-Packages @pkg{hdf5} and @pkg{netCDF} in the Devel area on @acronym{CRAN}
+Packages @pkg{hdf5} (in the Devel area) and @pkg{netCDF} on @acronym{CRAN}
 provide experimental interfaces to @acronym{NASA}'s HDF5 (Hierarchical
 Data Format, see @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's
 netCDF data files (network Common Data Form, see
@@ -1814,9 +1813,9 @@ written in Visual Basic) that is the client and @R{} is the server.
 to @acronym{DCOM}, allowing applications to call methods, or operations,
 in server objects running in other applications, potentially programmed
 in different languages and running on different machines.  There is a
-@pkg{CORBA} package available from the
-@uref{http://www.omegahat.org/RSCORBA, Omegahat Project}, currently for
-Unix but a Windows version looks to be possible.
+@pkg{CORBA} package available from the Omegahat Project (at
+@uref{http://www.omegahat.org/RSCORBA/}), currently for Unix but a
+Windows version looks to be possible.
 
 This package allows @R{} commands to be used to locate available
 @acronym{CORBA} servers, query the methods they provide, and dynamically
@@ -1825,7 +1824,7 @@ these calls are exported in the call and made available to that
 operation invocation.  Primitive data types (vectors and lists) are
 exported by default, while more complex objects are exported by
 reference.  Examples of using this include communicating with the
-@uref{http://www.gnumeric.org, Gnumeric} spreadsheet, and also
+Gnumeric (@uref{http://www.gnumeric.org}) spreadsheet, and also
 interacting with the data visualization system
 @uref{http://www.ggobi.org, ggobi}.
 
@@ -1839,8 +1838,8 @@ One can also use the @pkg{CORBA} package to achieve distributed,
 parallel computing in @R{}.  One @R{} session acts as a manager and
 dispatches tasks to different servers running in other @R{} worker
 sessions.  This uses the ability to invoke asynchronous or background
-CORBA calls in @R{}.  More information is available from the
-@uref{http://www.omegahat.org/RSCORBA, Omegahat Project}.
+CORBA calls in @R{}.  More information is available from the Omegahat Project,
+at @uref{http://www.omegahat.org/RSCORBA/}.
 
 
 

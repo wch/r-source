@@ -38,6 +38,10 @@ File etc/Makeconf-tests was missing from rw102Xsp.zip.
 
 Rcmd SHLIB now supports compilation from C++ sources.
 
+Rterm now saves and resets the console window title.
+
+On Win2k, system(intern=TRUE) was failing to reset stderr to the console.
+
 
 
 rw1021

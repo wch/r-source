@@ -81,6 +81,8 @@ Rboolean LoadSiteFile = TRUE;
 Rboolean LoadInitFile = TRUE;
 Rboolean DebugInitFile = FALSE;
 
+extern Rboolean R_Interactive;
+
 long start_Time, last_Time;
 SInt16 gAppResFileRefNum;
 char testBuf[ALLOW_INPUT_LENGTH];
@@ -250,18 +252,6 @@ FILE *R_OpenInitFile(void)
 
 
 
-/* doCopyPString
-*/
-void  doCopyPString(Str255 sourceString,Str255 destinationString)
-{
-    SInt16   stringLength;
-
-    stringLength = sourceString[0];
-    BlockMove(sourceString + 1,destinationString + 1,stringLength);
-    destinationString[0] = stringLength;
-}
-
-
 
 
 /* R_OpenFile
@@ -291,6 +281,7 @@ FILE *R_OpenLibraryFile(char *file)
 #define MAC_FILE_SIZE FILENAME_MAX
 
 static char R_HomeLocation[MAC_FILE_SIZE];
+static char R_DefHistFile[FILENAME_MAX];
 
 void GetHomeLocation(void);
 
@@ -336,39 +327,24 @@ int main(int ac, char **av)
     SIOUXSettings.initializeTB = false;  // I manage the ToolBox
     SIOUXSettings.asktosaveonclose = false;
     SIOUXSettings.autocloseonquit = true;
-    /* Show the status line */
-/*   SIOUXSettings.showstatusline = true;
- */
+
     ac = ccommand(&av);  // This must be the first  command after variables initializations !!!
 	
     /* FIXME HERE: record the time at which the program started. */
     /* This is probably zero on the mac as we have direct */
     /* access to the number of ticks since process start */
 
-    /* ... */
-
-    /* FIXME HERE: Command line options are not available. */
-    /* Application resources must be inspected here */
-    /* and used to modify the compiled-in defaults. */
-    /* Compare with the Unix code. */
-
-    /* ... */
-
     /* Set up the file handling defaults. */
 
     R_Quiet = 0;
-    R_Interactive = 1;		/* On the Mac we must be interactive */
 
     /* ... */
  
-//    start_Time = last_Time = TickCount();
-
-
 /* *** */    
     Mac_initialize_R ( ac, av );
 	
 /* *** */
-
+    if(R_Interactive)
     changeSize(Console_Window, gTextSize);
      
     /* Call the real R main program (in ../main/main.c) */
@@ -398,7 +374,6 @@ int Mac_initialize_R(int ac, char **av)
     if((R_Home = R_HomeDir()) == NULL)
 	R_Suicide("R home directory is not defined");
 
-//    process_global_Renviron();
 
 #ifdef HAVE_TIMES
     R_setStartTime();
@@ -433,15 +408,17 @@ int Mac_initialize_R(int ac, char **av)
    
     if(!Rp->NoRenviron) process_users_Renviron();
  
+ 
     /* On Unix the console is a file; we just use stdio to write on it */
-
     if(fileno(stdin) > 1){
 	R_Consolefile = stdin;	/* We get input from file specified by the user */
-	R_Interactive = false;
+	R_Interactive = FALSE;
     }
-    else
+    else{
+    R_Interactive = TRUE;	/* On the Mac we must be interactive */
 	R_Consolefile = NULL;	/* We get the input from the GUI console*/
-
+    }
+    
     if(fileno(stdout) > 1)
 	R_Outputfile = stdout;	/* We send output to the file specified by the user */
     else
@@ -455,12 +432,12 @@ int Mac_initialize_R(int ac, char **av)
  */
     if (!R_Interactive && SaveAction != SA_SAVE && SaveAction != SA_NOSAVE)
 	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
+    
+    R_HistoryFile = R_DefHistFile;
+    strcpy(R_HistoryFile, ".Rhistory");
 
-    if ((R_HistoryFile = getenv("R_HISTFILE")) == NULL)
-	R_HistoryFile = ":etc:.Rhistory";
- 	 
     R_HistorySize = 512;
-    if ((p = getenv("R_HISTSIZE"))) {
+    if ((p = mac_getenv("R_HISTSIZE"))) {
 	value = Decode2Long(p, &ierr);
 	if (ierr != 0 || value < 0)
 	    REprintf("WARNING: invalid R_HISTSIZE ignored;");
@@ -498,7 +475,7 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
 	saveact = SaveAction;
 
     if(fileno(stdin) > 1) 
-	R_Interactive = false;
+	 R_Interactive = false;
     
     if(saveact == SA_SAVEASK) {
 	if(R_Interactive) {
@@ -579,8 +556,8 @@ void R_RestoreGlobalEnv(void)
     int i;
 
     if(RestoreAction == SA_RESTORE) {
-	if(!(fp = R_fopen(":etc:.RData", "rb"))) { /* binary file */
-	    /* warning here perhaps */
+	if(!(fp = R_fopen(".RData", "rb"))){
+	    warning("No workspace to load");
 	    return;
 	}
 #ifdef OLD
@@ -668,7 +645,7 @@ SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
     i = LENGTH(CAR(args));
     if (i == 0) {
     
-	sprintf(temp_path,"%s:etc:.Renviron",R_Home);
+	sprintf(temp_path,"%s:.Renviron",R_Home);
 
 	err = FSpLocationFromFullPath(strlen(temp_path),temp_path,&spec);
     
@@ -784,12 +761,12 @@ char *Rmac_tmpnam(char * prefix)
     pid = (unsigned int) getpid();
     for (n = 0; n < 100; n++) {
 	/* try a random number at the end */
-        sprintf(tm, "%s:%sR%xS%x", tmp1, prefix, pid, rand());
+        sprintf(tm, "%s:%sR%xS%x\0", tmp1, prefix, pid, rand());
         if (!R_FileExists(tm)) { done = 1; break; }
     }
     if(!done)
 	error("cannot find unused tempfile name");
-    res = (char *) malloc((strlen(tm)+1) * sizeof(char));
+    res = (char *)malloc(strlen(tm));
     strcpy(res, tm);
     return res;
 }
@@ -816,8 +793,8 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	tn = CHAR( STRING_ELT( CAR(args) ,i ) );
 	/* try to get a new file name */
 	tm = Rmac_tmpnam(tn);
-	SET_STRING_ELT( ans,i,mkChar(tm) );	
-	free(tm);
+	SET_STRING_ELT(ans, i, mkChar(tm));	
+	if(tm) free(tm);
     }
     UNPROTECT(1);
     return (ans);

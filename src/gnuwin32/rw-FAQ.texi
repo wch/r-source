@@ -284,22 +284,19 @@ for Unix do not bother. So it is worth trying the alternative short name
 @node Can I install packages (libraries) in this version?, I don't have permission to write to the rwXxxx/library directory, Packages, Packages
 @section Can I install packages (libraries) in this version?
 
-Yes, of course. The easy way is to see if a pre-compiled binary version
-of the package is available: look on CRAN at
-@code{bin/windows/contrib}. If there is, download the zip
-file and unpack it in the @code{rwXxxx\library} directory, using
-@code{unzip} or similar, or using the installer @code{rwinst.exe}.
-Perhaps even easier is to use the R function @code{install.packages()}:
-check out its help page.
+Yes, but you will need a lot of tools to do so, unless the author has
+been kind enough to provide a pre-compiled version for Windows as a
+@code{.zip} file.
+
 
 If there is not a binary version or that is not up-to-date or you prefer
 compiling from source, get @code{rwXxxxsp.zip} from the distribution
 (see Q1.1) and unpack it in @code{rwXxxx}.  Then read the
 @file{readme.packages}.  You will need to collect and install several
-tools to use this.  Once you have done so, installation is easy: just run
-@code{Rcmd INSTALL pkgname}. To check the package (run all the examples
-on its help pages and in its test suite, if any) use @code{Rcmd check
-pkgname}.
+tools to use this.  Once you have done so, just run @code{Rcmd INSTALL
+pkgname}. To check the package (run all the examples on its help pages
+and in its test suite, if any) use @code{Rcmd check pkgname}: see the
+`Writing R Extensions' manual.
 
 @node I don't have permission to write to the rwXxxx/library directory, The packages I installed do not appear in the HTML help system, Can I install packages (libraries) in this version?, Packages
 @section I don't have permission to write to the @file{rwXxxx/library} directory.
@@ -335,7 +332,7 @@ Accessories, System Tools on the Start menu).  You can also set them on
 the command line, for example in the shortcut you could have
 
 @example
-path_to_R\bin\Rgui.exe --vsize=10M R_LIBS=e:/R/library
+path_to_R\bin\Rgui.exe R_LIBS=e:/R/library
 @end example
 @noindent
 and you can set variables in a file @file{.Renviron} in the working directory
@@ -343,12 +340,10 @@ or your home directory, for example
 
 @example
 R_LIBS=e:/R/library
-R_VSIZE=10M
-R_NSIZE=400k
 @end example
 
-The order of precedence is the command line (flags before variables)
-then @file{.Renviron} then the inherited environment.
+The order of precedence is the command line then @file{.Renviron} then
+the inherited environment.
 
 
 @node The packages I installed do not appear in the HTML help system, My functions are not found by the HTML help search system., I don't have permission to write to the rwXxxx/library directory, Packages
@@ -356,23 +351,13 @@ then @file{.Renviron} then the inherited environment.
 
 HTML help only works for packages installed in @file{rwXxxx\library}.
 
-To update the HTML help files after you have installed a binary package,
-run at the R prompt.
+To update the HTML help files after you have installed a pre-compiled
+package, run at the R prompt.
 
 @example
 > link.html.help()
 @end example
 
-(Using @code{install.packages()} does this for you.  The source-code
-installation also does this automatically, and if you have that
-installed you can use (preferably)
-
-@example
-cd rwXxxx\src\gnuwin32\help
-make indices
-@end example
-@noindent
-instead.)
 
 
 @node My functions are not found by the HTML help search system., Loading a package fails., The packages I installed do not appear in the HTML help system, Packages
@@ -424,12 +409,9 @@ the path, even if as here it contains spaces.)
 Unfortunately, hyperlinks in compiled HTML files used from R are being
 interpreted relative to the current working directory of the R process,
 not relative to the @code{pkg.chm} file.  This was not discovered until
-@code{rw1021}, so only files made with that version are working
+@code{rw1021}, so only files made since that version are working
 correctly.  Remake the package under @code{rw1021} or later to cure
 this.
-
-If you explore the installed @code{.chm} from Windows Explorer, the
-links will work.
 
 
 @newchap{}
@@ -773,14 +755,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2001 January 3 by Brian Ripley
+Last edited 2001 February 24 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2001 January 3 by Brian Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2001 February 24 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file run.c: a simple 'reading' pipe (and a command executor)
- *  Copyright (C) 1999, 2000  Guido Masarotto  and Brian Ripley
+ *  Copyright (C) 1999-2001  Guido Masarotto  and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -116,7 +116,8 @@ static HANDLE pcreate(char* cmd, char *finput,
     SECURITY_ATTRIBUTES sa;
     PROCESS_INFORMATION pi;
     STARTUPINFO si;
-    HANDLE hIN = INVALID_HANDLE_VALUE, hSAVED, hTHIS;
+    HANDLE hIN = INVALID_HANDLE_VALUE, 
+	hSAVED = INVALID_HANDLE_VALUE, hTHIS;
     char *ecmd;
 
     sa.nLength = sizeof(sa);
@@ -127,10 +128,7 @@ static HANDLE pcreate(char* cmd, char *finput,
 	return NULL;
     hTHIS = GetCurrentProcess();
     if (finput && finput[0]) {
-	DuplicateHandle(hTHIS, GetStdHandle(STD_INPUT_HANDLE),
-			hTHIS, &hSAVED,
-			0, FALSE, DUPLICATE_SAME_ACCESS);
-	CloseHandle(hTHIS);
+	hSAVED = GetStdHandle(STD_INPUT_HANDLE) ;
 	hIN = CreateFile(finput, GENERIC_READ, 0,
 			 &sa, OPEN_EXISTING, 0, NULL);
 	if (hIN == INVALID_HANDLE_VALUE) {
@@ -170,6 +168,7 @@ static HANDLE pcreate(char* cmd, char *finput,
     ret = CreateProcess(0, (char *) ecmd, &sa, &sa, TRUE,
 		    (newconsole && (visible == 1)) ? CREATE_NEW_CONSOLE : 0,
 			NULL, NULL, &si, &pi);
+    CloseHandle(hTHIS);
     if (finput && finput[0]) {
 	SetStdHandle(STD_INPUT_HANDLE, hSAVED);
 	CloseHandle(hIN);
@@ -266,8 +265,7 @@ rpipe * rpipeOpen(char *cmd, int visible, char *finput, int io)
 	    return NULL;
 	}
 	hTHIS = GetCurrentProcess();	
-	DuplicateHandle(hTHIS, GetStdHandle(STD_INPUT_HANDLE), hTHIS, &hIN,
-			0, FALSE, DUPLICATE_SAME_ACCESS);
+	hIN = GetStdHandle(STD_INPUT_HANDLE);
 	DuplicateHandle(hTHIS, hTemp, hTHIS, &r->write,
 			0, FALSE, DUPLICATE_SAME_ACCESS);
 	CloseHandle(hTemp);
@@ -285,10 +283,8 @@ rpipe * rpipeOpen(char *cmd, int visible, char *finput, int io)
 	return NULL;
     }
     hTHIS = GetCurrentProcess();
-    DuplicateHandle(hTHIS, GetStdHandle(STD_OUTPUT_HANDLE), hTHIS, &hOUT,
-		    0, FALSE, DUPLICATE_SAME_ACCESS);
-    DuplicateHandle(hTHIS, GetStdHandle(STD_ERROR_HANDLE), hTHIS, &hERR,
-		    0, FALSE, DUPLICATE_SAME_ACCESS);
+    hOUT = GetStdHandle(STD_OUTPUT_HANDLE) ;
+    hERR = GetStdHandle(STD_ERROR_HANDLE) ;
     DuplicateHandle(hTHIS, hTemp, hTHIS, &r->read,
 		    0, FALSE, DUPLICATE_SAME_ACCESS);
     CloseHandle(hTemp);

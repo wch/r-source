@@ -1,4 +1,4 @@
-undoc <- function(pkg, dir)
+undoc <- function(package, dir, lib.loc = .lib.loc)
 {
     fQuote <- function(s) paste("`", s, "'", sep = "")
     listFilesWithExts <- function(dir, exts, path = TRUE) {
@@ -14,35 +14,31 @@ undoc <- function(pkg, dir)
         files
     }
 
-    if(!missing(pkg)) {
-        ## FIXME:
-        ## undoc() should really have a `lib.loc' argument, and its
-        ## first argument should be renamed to `package'.
-        ## </FIXME>
+    if(!missing(package)) {
         which.lib.loc <-
-            .lib.loc[file.exists(file.path(.lib.loc, pkg))]
+            lib.loc[file.exists(file.path(lib.loc, package))]
         if(length(which.lib.loc) == 0)
-            stop(paste("package", fQuote(pkg), "is not installed"))
+            stop(paste("package", fQuote(package), "is not installed"))
         else if(length(which.lib.loc) > 1) {
             which.lib.loc <- which.lib.loc[1]
             warning(paste("package",
-                          fQuote(pkg),
+                          fQuote(package),
                           "found more than once\n",
                           "using the one found in",
                           fQuote(which.lib.loc[1])))
         }
-        pkgDir <- file.path(which.lib.loc, pkg)
-        isBase <- pkg == "base"
-        objsdocs <- sort(scan(file = file.path(pkgDir, "help",
+        packageDir <- file.path(which.lib.loc, package)
+        isBase <- package == "base"
+        objsdocs <- sort(scan(file = file.path(packageDir, "help",
                               "AnIndex"),
                               what = list("", ""),
                               quiet = TRUE, sep="\t")[[1]])
-        codeFile <- file.path(pkgDir, "R", pkg)
-        dataDir <- file.path(pkgDir, "data")
+        codeFile <- file.path(packageDir, "R", package)
+        dataDir <- file.path(packageDir, "data")
     }
     else {
         if(missing(dir))
-            stop("you must specify `pkg' or `dir'")
+            stop("you must specify `package' or `dir'")
         if(!file.exists(dir))
             stop(paste("directory", fQuote(dir), "does not exist"))
         isBase <- basename(dir) == "base"
@@ -52,11 +48,19 @@ undoc <- function(pkg, dir)
         files <- listFilesWithExts(docsDir, docsExts)
         if(file.exists(docsOSDir <- file.path(docsDir, .Platform$OS)))
             files <- c(files, listFilesWithExts(docsOSDir, docsExts))
-        cmd <- paste("grep -h ^\\\\name", paste(files, collapse = " "))
-        objsdocs <- gsub("\\\\name{(.*)}", "\\1", system(cmd, intern = TRUE))
-        cmd <- paste("grep -h ^\\\\alias", paste(files, collapse = " "))
-        objs2 <- gsub("\\\\alias{(.*)}", "\\1", system(cmd, intern = TRUE))
-        objsdocs <- c(objsdocs, objs2)
+        files <- paste(files, collapse = " ")
+        shQuote <- function(s) {
+            if(.Platform$OS.type == "unix")
+                paste("'", s, "'", sep = "")
+            else
+                s
+        }
+        fname  <- system(paste("grep -h", shQuote("^\\\\name"), files),
+                         intern = TRUE)
+        falias <- system(paste("grep -h", shQuote("^\\\\alias"), files),
+                         intern = TRUE)
+        objsdocs <- c(gsub("\\\\name{(.*)}.*",  "\\1", fname),
+                      gsub("\\\\alias{(.*)}.*", "\\1", falias))
         objsdocs <- gsub("\\\\%", "%", objsdocs)
         objsdocs <- gsub(" ", "", objsdocs)
         objsdocs <- sort(unique(objsdocs))

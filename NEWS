@@ -56,26 +56,38 @@ NEW FEATURES
     o	The Macintosh port becomes a full member of the R family and its
 	sources are incorporated as from this release.	
 	See `src/macintosh/INSTALL' for how that port is built.
-	This is bound to be modified for future versions, and suggestions
-	and volunteers are very welcome.
 
     o	The API header files and export files `R.exp' are released under
-	LGPL rather than GPL to allow dynamical loaded code to be
+	LGPL rather than GPL to allow dynamically loaded code to be
 	distributed under licences other than GPL.
+
+    o	postscript() and xfig() devices now make use of genuine Adobe
+	afm files, and warn if characters are used in string width or
+	height calculations that are not in the afm files.
 
     o	Configure now uses a much expanded search list for finding a
 	FORTRAN 77 compiler, and no longer disallows wrapper scripts for
 	this compiler.
 
+    o	New Rd markup \method{GENERIC}{CLASS} for indicating the usage
+	of methods.
+
+    o	print.ftable() and write.ftable() now have a `digits' argument.
+
+    o	undoc() has a new `lib.loc' argument, and its first argument is
+	now called `package'.
+
 
 BUG FIXES
 
+    o	The behaviour of polygon() with NA coordinate values is now
+	documented.
+
+    o	polygon() now correctly recycles the values of border and lty.
+	Thanks to Denis White.
+
     o	readBin() and writeBin() were not always making good use of
 	long types (such as long double) when available.
-
-    o	postscript() and xfig() devices now make use of genuine Adobe
-	afm files, and warn if characters are used in string width or
-	height calculations that are not in afm files.
 
     o	The C function fprec was not handling very small denormalized
 	numbers correctly.  This affected the way they were printed on
@@ -92,25 +104,85 @@ BUG FIXES
 	now happens by default).
 
     o	scan now sets the maximal sizes internally when `what' is a list
-	from `nmax' and failing that `nlines'.	This uses memory much more
-	efficiently if `nmax' is specified.  read.table() makes use of this.
+	from `nmax' and failing that `nlines'.	This uses memory much
+	more efficiently if `nmax' is specified.  read.table() makes use
+	of this.
 
-    o	The Fortran code used is now much closer to ANSI compliance.
+    o	The FORTRAN code used is now much closer to ANSI compliance.
 
-    o	cov.rob() gives a useful error message on nearly-degenerate matrices.
+    o	cov.rob() gives a useful error message on nearly-degenerate
+	matrices.
 
-    o	summary on a data frame was computing results to a precision
+    o	summary() on a data frame was computing results to a precision
 	based on options("digits") (default 4), not its `digits'
 	argument.  Now results are computed to full precision but 
 	formatted using `digits'.
 
-    o   When returning parameters from .C/.Fortran, the OBJECT field was
-    	not copied even though class attributes were (PR #834)
+    o	summary(m, digits=*) also properly works for matrices.
 
-    o   There was a spurious warning from the X11 driver on 100 dpi
-        displays. (PR#840 Fix from Tom Vogels)
+    o	When returning parameters from .C/.Fortran, the OBJECT field was
+	not copied even though class attributes were (PR#834).
 
-    o   All-blank fields were read as zero. Should be NA, and is now. 
+    o	There was a spurious warning from the X11 driver on 100 dpi
+	displays (PR#840, fix from Tom Vogels).
+
+    o	scan() was reading all-blank numeric fields as zero. 
+	Should be read as NA, and are now. 
+
+    o	dnbinom(*, size, *) now works again for size < 1 (PR#842).
+
+    o	dgeom(*, p = 0) and pgeom(*, p = 0) don't give NaN anymore.
+
+    o	smooth.spline() allows zero weights again.
+
+    o	aperm() fix for list arg; aperm(*, resize=FALSE) now works with
+	dimnames (by dropping them).
+
+    o	The xfig() driver was not closing unclosed polygons as the R
+	driver expected (but did not document).
+
+    o	spec.ar() now handles order 1 correctly.
+
+    o	Add fuzz to prevent anomalies with hist().
+
+    o	print.matrix() checks length of rowlab, collab (PR#850)
+
+    o	add1.glm() was using the wrong weights for binomial glms in
+	cbind(successes, failures) ~ lhs  form, since 1.2.0.
+
+    o	Eliminate packing of the `structRstart' structure, which was
+	probably non-ISO C and caused some compilers problems (PR#852).
+
+    o	all.vars() no longer returns empty `names' (PR#829).
+
+    o	dotplot() passes `cex' down to the mtext() calls used for the
+	labels (PR#816).
+
+    o	The pictex() driver was drawing polylines incorrectly (PR#845).
+
+    o	In the event of a fatal X11 error (this can be generated under FVWM
+	by selecting Destroy), the input handler would loop, leaving the
+	"please save work and shut down R" advice useless. There should now
+	be an opportunity for a relatively graceful exit.  
+
+    o	polyroot() misbehaved if all coefficients except that of the highest
+	degree term were zero (partial fix for PR#751)
+
+    o	spline(method="natural") was extrapolating incorrectly (both
+	to the left and to the right, for different reasons).  (PR#653)
+
+    o	Line clipping was incorrect for log-plots. (PR#839)
+
+    o	Add explicit test for rank-deficient residuals to summary.manova().
+
+    o	The help search databases did not contain the data from the
+	platform-specific help files.
+
+    o	parse.dcf() and hence package.contents() now work with a warning
+	for empty contents' files.
+
+    o	which.min() and which.max() now properly work for 0-length and
+	NA-only arguments.
 
 
 		CHANGES IN R VERSION 1.2.1

@@ -2,10 +2,8 @@
 Macintosh version
 =================
 
-system.c
-
-	Copyright (C) 1995-1999  Ross Ihaka
-                      2000-2001  Stefano M. Iacus
+Many of the files are copyright Ross Ihaka and/or Stefano M. Iacus.
+Other copyrights given in the files are:
 
 dll/dlfcn.[ch]
 dll/macutils.[ch]
@@ -40,6 +38,12 @@ extra/mac_getenv.c
         relies on MoreFiles interfaces from Apple.  
 	Copyright (c) various dates Info-ZIP.  All rights reserved.
 	See the file extra/LICENSE.
+
+dll/macutils.c
+gui/RFiles.c
+	Based in part on code in the Apple MoreFiles collection:
+	Copyright © 1992-1994 Apple Computer, Inc.
+	All rights reserved.
 
 
 Files from the WASTE library
@@ -83,7 +87,13 @@ Our usage of the shared library and following files in R have been
 agreed by Marco Piovanelli.
 
 RIntf.h
+RandTool.c
+macGFile.c
+edit/REditWin.c
+edit/RTextEditor.c
+graphic/RGWindow.c
 gui/DialogUtils.c
+gui/FiltersAndHooks.c
 gui/LongControls.c
 gui/R_Event.c
 gui/RFiles.c
@@ -94,19 +104,15 @@ gui/RPreference.c
 gui/RScripting.c
 gui/RWindows.c
 gui/WEDrags.c
+print/JobDialogAppend.c
+print/PrintSetup.c
+print/Printing.c
 print/p1.c
+print/printing2.c
 waste/*.[ch]
-
-	Copyright © 1993-1998 Marco Piovanelli
-	All Rights Reserved
 
 gui/SmartScroll.[ch]
 	Copyright © 1996, 1997 by Marc Moini, portions by 
 	Marc Menschenfreund, Alessandro Levi Montalcini and Mark Shirley
 
-gui/RFiles.c
-dll/macutils.c
-	Based in part on code in the Apple MoreFiles collection:
-	Copyright © 1992-1994 Apple Computer, Inc.
-	All rights reserved.
 

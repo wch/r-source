@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2000   Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997-2001   Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -43,7 +43,7 @@ static SEXP powerSymbol = NULL;
 static SEXP dotSymbol   = NULL;
 static SEXP parenSymbol = NULL;
 static SEXP inSymbol    = NULL;
-static SEXP identSymbol = NULL;
+/* unused static SEXP identSymbol = NULL; */
 
 
 static int intercept;		/* intercept term in the model */
@@ -277,15 +277,12 @@ static SEXP AllocTerm()
 static void SetBit(SEXP term, int whichBit, int value)
 {
     int word, offset;
-    unsigned tmp;
     word = (whichBit - 1) / WORDSIZE;
     offset = (WORDSIZE - whichBit) % WORDSIZE;
-    tmp = ((unsigned *) INTEGER(term))[word];
     if (value)
 	((unsigned *) INTEGER(term))[word] |= ((unsigned) 1 << offset);
     else
 	((unsigned *) INTEGER(term))[word] &= ~((unsigned) 1 << offset);
-    tmp = ((unsigned *) INTEGER(term))[word];
 }
 
 
@@ -756,7 +753,7 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     dotSymbol   = install(".");
     parenSymbol = install("(");
     inSymbol = install("%in%");
-    identSymbol = install("I");
+    /* identSymbol = install("I"); */
 
     /* Do we have a model formula? */
     /* Check for unary or binary ~ */
@@ -1144,7 +1141,7 @@ SEXP do_updateform(SEXP call, SEXP op, SEXP args, SEXP rho)
     dotSymbol   = install(".");
     parenSymbol = install("(");
     inSymbol = install("%in%");
-    identSymbol = install("I");
+    /* identSymbol = install("I"); */
 
     /* We must duplicate here because the */
     /* formulae may be part of the parse tree */
@@ -1480,7 +1477,7 @@ static SEXP ColumnNames(SEXP x)
 
 SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP expr, factors, terms, v, vars, vnames, assign;
+    SEXP expr, factors, terms, vars, vnames, assign;
     SEXP xnames, tnames, rnames;
     SEXP count, contrast, contr1, contr2, nlevs, ordered, columns, x;
     SEXP variable, var_i;
@@ -1554,7 +1551,6 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(ordered = allocVector(LGLSXP, nvar));
     PROTECT(columns = allocVector(INTSXP, nvar));
 
-    v = vars;
     for (i = 0; i < nvar; i++) {
 	var_i = SET_VECTOR_ELT(variable, i, VECTOR_ELT(vars, i));
 	if (nrows(var_i) != n)

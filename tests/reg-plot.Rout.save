@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.2.0 Patched (2001-01-14)
+Version 1.2.1 Patched (2001-02-18)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -126,4 +126,12 @@ par("yaxp") :            2         4         4
 + }
 > 
 > par(pty="m")
+> 
+> ## PR 816 (label sizes in dotplot)
+> 
+> ### Prior to 1.2.2, the label sizes were unaffected by cex.
+> 
+> data(VADeaths)
+> dotplot(VADeaths, main = "Death Rates in Virginia - 1940", cex = 0.5)
+> dotplot(VADeaths, main = "Death Rates in Virginia - 1940", cex = 1.5)
 > 

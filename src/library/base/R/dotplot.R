@@ -69,8 +69,8 @@
 	loffset <- (linch + 0.1)/lheight
 	labs <- labels[o]
 	for(i in 1:n)
-	    mtext(labs[i], side=2, line=loffset, at=y[i], adj = 0,
-		  col = color, las=2, ...)
+	    mtext(labs[i], side = 2, line = loffset, at = y[i], adj = 0,
+		  col = color, las = 2, cex = cex, ...)
     }
     abline(h = y, lty = "dotted", col = lcolor)
     points(x, y, pch = pch, col = color, bg = bg)
@@ -79,8 +79,8 @@
 	ginch <- max(strwidth(glabels, "inch"), na.rm = TRUE)
 	goffset <- (max(linch+0.2, ginch, na.rm = TRUE) + 0.1)/lheight
 	for(i in 1:nlevels(groups))
-	    mtext(glabels[i], side=2, line=goffset, at=gpos[i],
-		  adj = 0, col = gcolor, las=2, ...)
+	    mtext(glabels[i], side = 2, line = goffset, at = gpos[i],
+		  adj = 0, col = gcolor, las = 2, cex = cex, ...)
 	if (!is.null(gdata)) {
 	    abline(h = gpos, lty = "dotted")
 	    points(gdata, gpos, pch = gpch, col = gcolor,

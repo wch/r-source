@@ -1,5 +1,7 @@
-Macintosh porting of R-1.2.2,  beta 3, (Feb 6 2001).
+Macintosh porting of R-1.2.2,  beta 3, (Feb 14 2001).
 =====================================================
+* the GUi is now organized better. It also possibile
+  to "source" files by menus.
 * sources have been merged with the standard distribution
 * the InfoZip code has been eliminated. Now it is assumed
   that the external MacZip application is avalaible. If
@@ -7,7 +9,8 @@ Macintosh porting of R-1.2.2,  beta 3, (Feb 6 2001).
 * implemented the startup command line
 * re-direction of stdin/stdout implemented. Useful to 
   make checks.
-* several bugs fixed.
+* several bugs fixed. In particular one "malloc"
+  memory bug has been removed.
 
 Macintosh porting of R-1.2.1,  beta 2, (Jan 19 2001).
 =====================================================

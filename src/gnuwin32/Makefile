@@ -340,7 +340,7 @@ packagedist:
 	$(CP) ../../doc/html/logo.jpg $(RPREFIX)/doc/html
 	$(CP) -p ../../doc/manual/Rd.sty $(RPREFIX)/doc/manual
 	$(CP) -p exported-vars R.exp MkRules MakePkg MakeDll \
-	  maketitle.awk pwd.pl makeDllRes.pl $(RPREFIX)/src/gnuwin32
+	  pwd.pl makeDllRes.pl $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
 	$(CP) fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -pr help check $(RPREFIX)/src/gnuwin32

@@ -15,6 +15,23 @@ x <- matrix(c(2, 2, 4, 8, 6, 0, 1, 1, 7, 8, 1, 3, 1, 3, 7, 4, 2, 2, 2,
 fisher.test(x)
 ## Comments: (wasn't just on Windows)
 
+## PR 653 (extrapolation in spline)
+## By: Ian White <imsw@holyrood.ed.ac.uk>
+x <- c(2,5,8,10)
+y <- c(1.2266,-1.7606,-0.5051,1.0390)
+fn <- splinefun(x, y, method="natural")
+xx1 <- fn(0:12)
+# should be the same if reflected
+fn <- splinefun(rev(-x),rev(y),method="natural")
+xx2 <- fn(0:-12)
+stopifnot(all.equal(xx1, xx2))
+# should be the same as interpSpline
+library(splines)
+xx3 <- predict(interpSpline(x, y), 0:12)
+stopifnot(all.equal(xx1, xx3$y))
+detach("package:splines")
+## Comments: all three differed in 1.2.1.
+
 ## PR 698 (print problem with data frames)
 ## actually, a subsetting problem with data frames
 fred <- data.frame(happy=c(TRUE, FALSE, TRUE), sad=7:9)
@@ -57,3 +74,7 @@ try(scan("test.dat", what=list(,,,)))
 unlink("test.dat")
 ## Comments: segfaulted in 1.2.0
 
+## Jonathan Rougier, 2001-01-30  [bug in 1.2.1 and earlier]
+tmp <- array(list(3), c(2, 3))
+tmp[[2, 3]] <- "fred"
+all.equal(t(tmp), aperm(tmp))

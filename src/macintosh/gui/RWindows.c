@@ -119,8 +119,8 @@
 /* Constant, Global variables and prototype */
 Ptr                  gPreAllocatePointer;
 Boolean              Have_Console = false; /* why try to use sioux console */
-WindowPtr            Console_Window;
-WindowPtr            Working_Window;
+WindowPtr            Console_Window=NULL;
+WindowPtr            Working_Window=NULL;
 SInt16               Edit_Window = 1;
 WindowPtr            Graphic_Window[MAX_NUM_G_WIN + 1];
 WindowPtr            Edit_Windows[MAX_NUM_E_WIN + 1];
@@ -1560,7 +1560,6 @@ int R_ShowFiles(int nfile, char **fileName, char **title,
     strncpy( (char *)(&PWTitle[1]),WinTitle, PWTitle[0] );
 
     GetWTitle(Edit_Windows[Edit_Window-1], Cur_Title);
-//     Cur_Title[0] = strlen((unsigned char *) &Cur_Title[1]);
     windowsMenu = GetMenu(mWindows);
     for(i = 1; i <= CountMenuItems(windowsMenu); i++){
 	GetMenuItemText(windowsMenu, i , curString);
@@ -1574,12 +1573,12 @@ int R_ShowFiles(int nfile, char **fileName, char **title,
     Help_Windows[Help_Window] = Edit_Windows[Edit_Window-1];
 
     NumToString( Help_Window ,numberAsString);
+    GWdoConcatPStrings(PWTitle,"\p ");
     GWdoConcatPStrings(PWTitle,numberAsString);
-    //    SetWTitle(window, titledString);
-
     if(windowsMenu = GetMenu(mWindows))
 	AppendMenu(windowsMenu, PWTitle);
 
+    
     SetWTitle(Help_Windows[Help_Window], PWTitle);
 
     Edit_Window --;
@@ -1599,12 +1598,10 @@ int R_ShowFiles(int nfile, char **fileName, char **title,
         readErr = ReadTextFile ( &fsspec, we );
 
 
-        if (readErr){
-
-	    RnWWin("NO FILE  : ", 11, we);
-	    RnWWin(title[i], strlen(title[i]), we);
-	    RnWWin("\r", 1, we);
-	    readErr = noErr;
+        if (readErr) {
+	    DoClose(0, savingNo, Help_Windows[Help_Window-1]);
+	    if(readErr == -43)
+		warning("File not found");
         }
 
     }

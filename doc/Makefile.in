@@ -17,7 +17,7 @@ SUBDIRS = html manual
 
 HELP2MAN = $(PERL) $(top_srcdir)/tools/help2man.pl
 
-all: Makefile R docs
+all: Makefile R docs @MAINTAINER_MODE_TRUE@ maintainer-build
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
