@@ -25,10 +25,11 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
 \value{
   List with named components as follows:
   \item{stats}{a vector of length 5, containing the extreme of the
-    lower whisker, the lower \dQuote{hinge}, the median, the upper \dQuote{hinge}
-    and the extreme of the upper whisker.}
+    lower whisker, the lower \dQuote{hinge}, the median, the upper
+    \dQuote{hinge} and the extreme of the upper whisker.}
   \item{n}{the number of non-\code{NA} observations in the sample.}
-  \item{conf}{the lower and upper extremes of the \dQuote{notch} (\code{if(do.conf)}).}
+  \item{conf}{the lower and upper extremes of the \dQuote{notch}
+    (\code{if(do.conf)}). See the details.}
   \item{out}{the values of any data points which lie beyond the
     extremes of the whiskers (\code{if(do.out)}).}
 
@@ -45,6 +46,15 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
   the hinges do so \emph{additionally} for \code{n \%\% 4 == 2}
   (\eqn{n\equiv 2 \bmod 4}{n = 2 mod 4}), and are in the middle of
   two observations otherwise.
+
+  The the notches (if requested) extend to \code{+/-1.58 IQR/sqrt(n)}.
+  This seems to be based on same calculations as the formula with 1.57 in
+  Chambers \emph{et al.} (1983, p. 62) given in McGill \emph{et al.}
+  (1978, p. 16).  They are based on asymptotic normality of the median
+  and roughly equal sample sizes for the two medians being compared, and
+  are said to be rather insensitive to the underlying distributions of
+  the samples.  The idea appears to be to give roughly a 95\% confidence
+  interval for the difference in two medians.
 }
 \references{
   Tukey, J. W. (1977) \emph{Exploratory Data Analysis.} Section 2C.
@@ -59,6 +69,8 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
   Chapter 3 of \emph{Understanding Robust and Exploratory Data
     Analysis}, eds. D. C. Hoaglin, F. Mosteller and J. W. Tukey.  Wiley.
 
+  Chambers, J. M. and Cleveland, W. S. and Kleiner, B. and Tukey,
+  P. A. (1983) \emph{Graphical Methods for Data Analysis.}  Duxbury Press.
 }
 \seealso{
   \code{\link[stats]{fivenum}}, \code{\link{boxplot}}, \code{\link{bxp}}.

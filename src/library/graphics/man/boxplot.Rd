@@ -47,8 +47,9 @@ boxplot(x, \dots)
     of observations in the groups.}
   \item{notch}{if \code{notch} is \code{TRUE}, a notch is drawn in
     each side of the boxes.  If the notches of two plots do not
-    overlap then the medians are significantly different at the 5
-    percent level.}
+    overlap this is \sQuote{strong evidence} that the two medians differ
+    (Chambers \emph{et al.}, 1983, p. 62).  See \code{\link{boxplot.stats}}
+    for the calculations used.}
   \item{outline}{if \code{outline} is not true, the boxplot lines are
     not drawn.}% the argument name is most ugly but S+ compatible
   \item{names}{group labels which will be printed under each boxplot.}
@@ -97,6 +98,9 @@ boxplot(x, \dots)
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
+
+  Chambers, J. M. and Cleveland, W. S. and Kleiner, B. and Tukey,
+  P. A. (1983) \emph{Graphical Methods for Data Analysis.}  Duxbury Press.
 
   See also \code{\link{boxplot.stats}}.
 }
