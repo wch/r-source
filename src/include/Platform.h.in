@@ -35,6 +35,9 @@
 /* XDR Library Available */
 #undef HAVE_RPC_XDR_H
 
+/* HDF5 Library Available */
+#undef HAVE_HDF5_H
+
 /* General String Comparison */
 #undef HAVE_STRCOLL
 

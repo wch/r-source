@@ -21,6 +21,10 @@
 #include "Mathlib.h"
 #include "Fileio.h"
 
+#ifdef HAVE_HDF5_H
+#include <hdf5.h>
+#endif
+
 /* FIXME : the fixed size buffer here is an abomination */
 
 /* Static Globals */
@@ -1179,3 +1183,634 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return R_NilValue;
 }
+
+#ifdef HAVE_HDF5_H
+
+#define STRING2REF_CONV "string->ref"
+#define REF2STRING_CONV "ref->string"
+
+static herr_t
+ref_string (hid_t sid, hid_t did, H5T_cdata_t *cdata,
+            size_t count, void *buf, void *bkg)
+{
+  if (cdata->command == H5T_CONV_CONV)
+    {
+      SEXPREC *srcbuf[count];
+      char *destbuf = buf;
+      SEXPREC **recptr = srcbuf;
+      size_t i;
+      size_t maxlen = H5Tget_size (did);
+      
+      memcpy (srcbuf, buf, sizeof (srcbuf));
+      
+      for (i = 0; i < count; i++)
+        {
+          strncpy (destbuf, CHAR (*recptr), maxlen);
+          recptr++;
+          destbuf += maxlen;
+        }
+    }
+  return 0;
+}
+
+static herr_t
+string_ref (hid_t sid, hid_t did, H5T_cdata_t *cdata,
+            size_t count, void *buf, void *bkg)
+{
+  if (cdata->command == H5T_CONV_CONV)
+    {
+      void *srcbuf = buf;
+      size_t i;
+      size_t maxlen = H5Tget_size (sid);
+      
+      for (i = 0; i < count;i ++)
+        {
+          SEXP s = allocString (strlen (srcbuf));
+          
+          strcpy (CHAR (s), srcbuf);
+          ((SEXPREC **)buf)[i] = s;
+          srcbuf += maxlen;
+        }
+    }
+  return 0;
+}
+
+struct permute_info {
+  SEXP call;
+  int writeflag;
+  int type;
+  unsigned rank;
+  hssize_t *dims;
+  hssize_t *coord;
+  hid_t dataset;
+  hid_t memtid;
+  hid_t space;
+  hid_t mspace;
+  void *buf;
+};
+
+static void
+permute (struct permute_info *pinfo, unsigned dimnum)
+{
+  hssize_t i;
+  
+  if (dimnum < pinfo->rank)
+    {
+      for (i = 0; i < pinfo->dims[dimnum]; i++)
+        {
+          pinfo->coord[dimnum] = i;
+          permute (pinfo, dimnum + 1);
+        }
+    }
+  else
+    {
+      unsigned offset;
+      
+      if (H5Sselect_elements (pinfo->space, H5S_SELECT_SET, 1, 
+                              (const hssize_t **)pinfo->coord) == -1)
+        errorcall (pinfo->call, "Unable to select file elements");
+      
+      offset = pinfo->coord[0];
+      for (i = 1; i < pinfo->rank; i++)
+        offset += pinfo->coord[i] * pinfo->dims[i - 1];
+      
+      {
+        void *pointaddr;
+        
+        switch (pinfo->type)
+          {
+          case STRSXP:
+            pointaddr = &((SEXPREC **)pinfo->buf)[offset];
+            break;
+          case REALSXP:
+            pointaddr = &((double *)pinfo->buf)[offset];
+            break;
+          case INTSXP: case LGLSXP:
+            pointaddr = &((int *)pinfo->buf)[offset];
+            break;
+          default:
+            errorcall (pinfo->call, "No support for R type: %d", pinfo->type);
+          }
+        
+        if (pinfo->writeflag)
+          {
+            if (H5Dwrite (pinfo->dataset,
+                          pinfo->memtid,
+                          pinfo->mspace,
+                          pinfo->space,
+                          H5P_DEFAULT,
+                          pointaddr) == -1)
+              errorcall (pinfo->call, "Unable to write dataset");
+          }
+        else
+          {
+            if (H5Dread (pinfo->dataset,
+                         pinfo->memtid,
+                         pinfo->mspace,
+                         pinfo->space,
+                         H5P_DEFAULT,
+                         pointaddr) == -1)
+              errorcall (pinfo->call, "Unable to read dataset");
+          }
+      }
+    }
+}
+
+static void
+vector_io (SEXP call, int writeflag, hid_t dataset, hid_t space, SEXP obj)
+{
+  int rank = H5Sget_simple_extent_ndims (space);
+  hsize_t mdims[1] = {1};
+  hsize_t dims[rank], maxdims[rank];
+  int type = TYPEOF (obj);
+  hid_t memtid, tid, mspace;
+  void *buf;
+    
+  if ((tid = H5Dget_type (dataset)) == -1)
+    errorcall (call, "Unable to get type for dataset");
+  
+  if (type == STRSXP)
+    {
+      size_t maxlen = H5Tget_size (tid);
+
+      memtid = H5Tcopy (H5T_STD_REF_OBJ);
+      H5Tset_size (memtid, sizeof (SEXPREC *));
+      buf = STRING (obj);
+
+      if (writeflag)
+        {
+          if (H5Tregister_soft (REF2STRING_CONV,
+                                H5T_REFERENCE,
+                                H5T_STRING, ref_string) == -1)
+            errorcall (call, "Unable to register ref->string converter");
+        }
+      else
+        { 
+          if (H5Tregister_soft (STRING2REF_CONV,
+                                H5T_STRING,
+                                H5T_REFERENCE, string_ref) == -1)
+            errorcall (call, "Unable to register string->ref converter");
+        }
+    }
+  else if (type == REALSXP)
+    {
+      memtid = H5T_NATIVE_DOUBLE;
+      buf = REAL (obj);
+    }
+  else if (type == INTSXP)
+    {
+      memtid = H5T_NATIVE_INT;
+      buf = INTEGER (obj);
+    }
+  else if (type == LGLSXP)
+    {
+      memtid = H5T_NATIVE_UINT;
+      buf = INTEGER (obj);
+    }
+  else
+      errorcall (call, "Can't get type for R type: %d (IO)", type);
+
+  if (H5Sget_simple_extent_dims (space, dims, maxdims) == -1)
+    errorcall (call, "Unable to get dimensions of space");
+  
+  if ((mspace = H5Screate_simple (1, mdims, NULL)) == -1)
+    errorcall (call, "Unable to create point space");
+
+  {
+    struct permute_info pinfo;
+    hssize_t coord[rank];
+
+    pinfo.call = call;
+    pinfo.writeflag = writeflag;
+    pinfo.type = type;
+    pinfo.rank = rank;
+    pinfo.coord = coord;
+    pinfo.dims = dims;
+    pinfo.dataset = dataset;
+    pinfo.memtid = memtid;
+    pinfo.space = space;
+    pinfo.mspace = mspace;
+    pinfo.buf = buf;
+
+    permute (&pinfo, 0);
+  }
+
+  if (H5Sclose (mspace) == -1)
+    errorcall (call, "Unable to close point space");
+
+  if (type == STRSXP)
+    {
+      if (H5Tclose (memtid) == -1)
+        errorcall (call, "Unable to close string reference type");
+      if (writeflag)
+        {
+          if (H5Tunregister (ref_string) == -1)
+            errorcall (call, "Unable to unregister ref->string converter");
+        }
+      else
+        {
+          if (H5Tunregister (string_ref) == -1)
+            errorcall (call, "Unable to unregister string->ref converter");
+        }
+    }
+}
+
+static void
+hdf_write_vector (SEXP call, hid_t id, const char *symname, SEXP val)
+{
+  unsigned i, rank;
+  SEXP dimvec;
+  hid_t space, dataset;
+  int type = TYPEOF (val);
+  hid_t tid;
+  
+  dimvec = getAttrib (val, R_DimSymbol);
+  rank = (dimvec == R_NilValue) ? 1 : LENGTH (dimvec);
+
+  {
+    hsize_t dims[rank];
+    
+    if (rank > 1)
+      for (i = 0; i < rank; i++)
+        dims[i] = INTEGER (dimvec)[i];
+    else
+      dims[0] = LENGTH (val);
+    
+    if ((space = H5Screate_simple (rank, dims, NULL)) == -1)
+      errorcall (call, "Unable to create file dataspace");
+
+    if (type == STRSXP)
+      {
+        hid_t stringtype = H5Tcopy (H5T_C_S1);
+        size_t len, maxlen;
+        unsigned i;
+
+        maxlen = 0;
+        for (i = 0; i < LENGTH (val); i++)
+          {
+            size_t len = strlen (CHAR (STRING (val)[i])) + 1;
+            
+            if (len > maxlen)
+              maxlen = len;
+          }
+        H5Tset_size (stringtype, maxlen);
+        tid = stringtype;
+      }
+    else if (type == LGLSXP)
+      {
+        tid = H5Tcopy (H5T_NATIVE_UINT);
+        H5Tset_precision (tid, 1);
+      }
+    else if (type == INTSXP)
+      tid = H5T_NATIVE_INT;
+    else if (type == REALSXP)
+      tid = H5T_NATIVE_DOUBLE;
+    else
+      errorcall (call, "Can't get type for R type: %d (Creating)", type);
+        
+    if ((dataset = H5Dcreate (id,
+                              symname,
+                              tid,
+                              space,
+                              H5P_DEFAULT)) == -1)
+      errorcall (call, "Unable to create dataset");
+
+    vector_io (call, TRUE, dataset, space, val);
+    
+    if (type == LGLSXP || type == STRSXP)
+      if (H5Tclose (tid) == -1)
+        errorcall (call, "Unable to close type");
+    
+    if (H5Dclose (dataset) == -1)
+      errorcall (call, "Unable to close dataset");
+    if (H5Sclose (space) == -1)
+      errorcall (call, "Unable to close space");
+  }
+}
+
+static void
+hdf_write_string (SEXP call, hid_t fid, const char *symname, const char *str)
+{
+  hid_t stringtype;
+  hid_t dataset;
+  hid_t dataspace;
+
+  dataspace = H5Screate (H5S_SCALAR);
+
+  stringtype = H5Tcopy (H5T_C_S1);
+  H5Tset_size (stringtype, strlen (str) + 1);
+        
+  if ((dataset = H5Dcreate (fid,
+                            symname,
+                            stringtype,
+                            dataspace,
+                            H5P_DEFAULT)) == -1)
+    errorcall (call, "Unable to create dataset");
+  
+  if (H5Dwrite (dataset,
+                stringtype,
+                H5S_ALL,
+                H5S_ALL,
+                H5P_DEFAULT,
+                str) == -1)
+    errorcall (call, "Unable to write dataset");
+  
+  H5Dclose (dataset);
+  H5Sclose (dataspace);
+  H5Tclose (stringtype);
+}
+
+static void
+hdf_save_object (SEXP call, hid_t fid, const char *symname, SEXP val)
+{
+  int type = TYPEOF (val);
+
+  switch (type)
+    {
+    case LGLSXP: case INTSXP: case REALSXP: case STRSXP:
+      hdf_write_vector (call, fid, symname, val);
+      break;
+    case LISTSXP: 
+      {
+        unsigned len = length (val);
+        hid_t gid;
+        SEXP l;
+        unsigned pos;
+
+        if ((gid = H5Gcreate (fid, symname, len * 8)) == -1)
+          errorcall (call, "unable to create group");
+        
+        for (l = val, pos = 0; l != R_NilValue; l = CDR (l), pos++)
+          {
+            char buf[8];
+
+            sprintf (buf, "%u", pos);
+            hdf_save_object (call, gid, buf, CAR (l));
+          }
+        if (H5Gclose (gid) == -1)
+          errorcall (call, "unable to close group");
+      }
+      break;
+    case SYMSXP:
+      {
+        const char *pn = CHAR (PRINTNAME (val));
+        
+        hdf_write_string (call, fid, symname, pn);
+      }
+      break;
+    default:
+      errorcall (call, "unhandled type: %d", type);
+      break;
+    }
+}
+
+  
+static void
+hdf_save_symbol (SEXP call, hid_t fid, SEXP sym, SEXP env)
+{
+  SEXP val;
+  int type;
+
+  val = findVar (sym, env);
+  
+  hdf_save_object (call, fid, CHAR (PRINTNAME (sym)), val);
+}
+
+SEXP
+do_hdf5save (SEXP call, SEXP op, SEXP args, SEXP env)
+{
+  const char *path;
+  hid_t fid;
+  SEXP s;
+
+  checkArity (op, args);
+
+  if (length (args) < 2)
+    errorcall (call, "Two arguments are required: HDF-path and an object)");
+
+  if (TYPEOF (CAR (args)) != STRSXP)
+    errorcall (call, "first argument must be a pathname\n");
+
+  path = CHAR (STRING (CAR (args))[0]); 
+
+  H5dont_atexit ();
+
+  if ((fid = H5Fcreate (path, H5F_ACC_TRUNC, H5P_DEFAULT, H5P_DEFAULT)) == -1)
+    errorcall (call, "unable to create HDF file: %s", path);
+  
+  for (s = CDR (args); s != R_NilValue; s = CDR (s))
+    hdf_save_symbol (call, fid, CAR (s), env);
+
+  if (H5Fclose (fid) == -1)
+    errorcall (call, "unable to close HDF file: %s", path);
+  
+  return R_NilValue;
+}
+
+struct iterate_info {
+  SEXP call;
+  void (*add) (struct iterate_info *, const char *, SEXP);
+  SEXP env;
+  SEXP ret;
+};
+
+static void
+add_to_list (struct iterate_info *iinfo, const char *name, SEXP obj)
+{
+  PROTECT (iinfo->ret);
+  iinfo->ret = CONS (obj, iinfo->ret);
+  UNPROTECT (1);
+}
+  
+
+static SEXP
+collect (SEXP call, hid_t id, H5G_iterate_t iterate_func, SEXP env)
+{
+  struct iterate_info iinfo;
+  
+  iinfo.call = call;
+  iinfo.add = add_to_list;
+  iinfo.ret = R_NilValue;
+  iinfo.env = env;
+  
+  if (H5Giterate (id, ".", NULL, iterate_func, &iinfo) == -1)
+    errorcall (call, "unable to collect HDF group");
+
+  {
+    SEXP nl = R_NilValue, l;
+    SEXP rl = iinfo.ret;
+
+    PROTECT (rl);
+    l = rl;
+    while (l != R_NilValue)
+      {
+        PROTECT (nl);
+        nl = CONS (CAR (l), nl);
+        UNPROTECT (1);
+        l = CDR (l);
+      }
+    UNPROTECT (1);
+    return nl;
+  }
+}
+
+static herr_t
+hdf_process_object (hid_t id, const char *name, void *client_data)
+{
+  struct iterate_info *iinfo = client_data;
+
+  H5G_stat_t statbuf;
+
+  if (H5Gget_objinfo (id, name, 1, &statbuf) == -1)
+    errorcall (iinfo->call, "Cannot query object `%s'", name);
+
+  if (statbuf.type == H5G_GROUP)
+    {
+      SEXP l;
+      hid_t gid = H5Gopen (id, name);
+      
+      if (gid == -1)
+        errorcall (iinfo->call, "unable to open group `%s'", name);
+      
+      PROTECT (l = collect (iinfo->call, gid, hdf_process_object, iinfo->env));
+      iinfo->add (iinfo, name, CONS (l, R_NilValue));
+      UNPROTECT (1);
+      if (H5Gclose (gid) == -1)
+        errorcall (iinfo->call, "unable to close group");
+    }
+  else if (statbuf.type == H5G_DATASET)
+    {
+      hid_t dataset, space, tid;
+      int rank;
+      int type;
+      H5T_class_t class;
+      
+      if ((dataset = H5Dopen (id, name)) == -1)
+        errorcall (iinfo->call, "unable to load dataset `%s'", name);
+      
+      if ((tid = H5Dget_type (dataset)) == -1)
+        errorcall (iinfo->call, "unable to get dataset type");
+      
+      switch (H5Tget_class (tid))
+        {
+        case H5T_INTEGER:
+          if (H5Tget_precision (tid) == 1)
+            type = LGLSXP;
+          else
+            type = INTSXP;
+          break;
+        case H5T_FLOAT:
+          type = REALSXP;
+          break;
+        case H5T_STRING:
+          type = STRSXP;
+          break;
+        default:
+          errorcall (iinfo->call, "can't handle hdf type %d", tid);
+          break;
+        }
+      
+      if ((space = H5Dget_space (dataset)) == -1)
+        errorcall (iinfo->call, "unable to get dataset space");
+      
+      if (H5Sis_simple (space) != TRUE)
+        errorcall (iinfo->call, "space not simple");
+
+      if ((rank = H5Sget_simple_extent_ndims (space)) == -1)
+        errorcall (iinfo->call, "unable to get space rank");
+
+      {
+        hsize_t dims[rank];
+        hsize_t maxdims[rank];
+        SEXP obj;
+        
+        if (H5Sget_simple_extent_dims (space, dims, maxdims) == -1)
+          errorcall (iinfo->call, "unable to get space extent");
+        
+        obj = ((rank == 1)
+               ? allocVector (type, dims[0])
+               : allocMatrix (type, dims[0], dims[1]));
+
+        PROTECT (obj);
+        vector_io (iinfo->call, FALSE, dataset, space, obj);
+        iinfo->add (iinfo, name, obj);
+        UNPROTECT (1);
+      }
+      if (H5Sclose (space) == -1)
+        errorcall (iinfo->call, "unable to close dataspace");
+      if (H5Tclose (tid) == -1)
+        errorcall (iinfo->call, "unable to close datatype");
+      if (H5Dclose (dataset) == -1)
+        errorcall (iinfo->call, "unable to close dataset");
+    }
+  else
+    errorcall (iinfo->call, "no support for HDF object type: %d",
+               statbuf.type);
+  return 0;
+}
+
+static void
+add_to_symbol_table (struct iterate_info *iinfo, const char *name, SEXP obj)
+{
+  setVar (install ((char *)name), obj, iinfo->env);
+}
+
+static void
+add_to_return_list (struct iterate_info *iinfo, const char *name, SEXP obj)
+{
+  PROTECT (iinfo->ret);
+  iinfo->ret = CONS (obj, iinfo->ret);
+  UNPROTECT (1);
+}
+
+SEXP
+do_hdf5load (SEXP call, SEXP op, SEXP args, SEXP env)
+{
+  const char *path;
+  hid_t fid;
+  int restore_syms; 
+  SEXP rl;
+  struct iterate_info iinfo;
+
+  checkArity (op, args);
+
+  if (TYPEOF (CAR (args)) != STRSXP)
+    errorcall (call, "first argument must be a pathname\n");
+
+  if (TYPEOF (CADR (args)) != LGLSXP)
+    errorcall (call, "second argument must be a logical vector\n");
+
+  path = CHAR (STRING (CAR (args))[0]); 
+  restore_syms = INTEGER (CADR (args))[0];
+
+  H5dont_atexit ();
+
+  if ((fid = H5Fopen (path, H5F_ACC_RDONLY, H5P_DEFAULT)) == -1)
+    errorcall (call, "unable to open HDF file: %s", path);
+
+
+  iinfo.call = call;
+  iinfo.add = restore_syms ? add_to_symbol_table : add_to_return_list;
+  iinfo.env = env;
+  iinfo.ret = R_NilValue;
+  
+  if (H5Giterate (fid, "/", NULL, hdf_process_object, &iinfo) == -1)
+    errorcall (call, "unable to iterate over HDF file: %s", path);
+  
+  if (H5Fclose (fid) == -1)
+    errorcall (call, "unable to close HDF file");
+
+  return iinfo.ret;
+}
+#else
+SEXP
+do_hdf5save (SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    errorcall(call, "HDF5 support unavailable\n");
+}
+SEXP
+do_hdf5load (SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    errorcall(call, "HDF5 support unavailable\n");
+}
+#endif
