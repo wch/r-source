@@ -17,6 +17,8 @@
 \alias{RtangleWritedoc}
 \alias{RtangleFinish}
 \alias{SweaveGetSyntax}
+\alias{buildVignettes}
+\alias{pkgVignettes}
 \description{
   Internal tools functions.
 }
