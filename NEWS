@@ -152,8 +152,12 @@ NEW FEATURES
     o	User hooks can be set for onLoad, library, detach and
 	onUnload: see ?setUserOnLoadHook.
 
-    o	factorial(x) := gamma(x+1) more easily and for S-plus
-	compatibility, lfactorial(x) := lgamma(x+1).
+    o	New functions factorial(x) defined as gamma(x+1) and for
+	S-PLUS compatibility, lfactorial(x) defined as lgamma(x+1).
+
+    o	expand.grid() returns appropriate array dimensions and dimnames
+	in the attribute "out.attrs", and this is used by the
+	predict() method for loess to return a suitable array.
 
 
 Utilities

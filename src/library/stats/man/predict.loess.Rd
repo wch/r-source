@@ -33,6 +33,9 @@
   \item{df}{an estimate of the effective degrees of freedom used in
     estimating the residual scale, intended for use with t-based
     confidence intervals. }
+  If \code{newdata} was the result of a call to
+  \code{\link{expand.grid}}, the predictions (and s.e.'s if requested)
+  will be an array of the appropriate dimensions.
 }
 \author{
   B.D. Ripley, based on the \code{cloess} package of Cleveland,

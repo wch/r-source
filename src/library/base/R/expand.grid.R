@@ -13,10 +13,14 @@ expand.grid <- function(...)
     if(any(ng0 <- nchar(nm) > 0)) nmc[ng0] <- nm[ng0]
     names(cargs) <- nmc
     rep.fac <- 1
-    orep <- prod(sapply(args, length))
+    d <- sapply(args, length)
+    dn <- vector("list", nargs)
+    names(dn) <- nmc
+    orep <- prod(d)
     for(i in 1:nargs) {
 	x <- args[[i]]
-	## avoid sorting the levels of character variates
+        dn[[i]] <- paste(nmc[i], "=", if(is.numeric(x) format(x) else x),
+                         sep = "")
 	nx <- length(x)
 	orep <- orep/nx
 	x <- rep.int(rep.int(x, rep.int(rep.fac, nx)), orep)
@@ -25,5 +29,7 @@ expand.grid <- function(...)
 	cargs[[i]] <- x
 	rep.fac <- rep.fac * nx
     }
-    do.call("cbind.data.frame", cargs)
+    res <- do.call("cbind.data.frame", cargs)
+    attr(res, "out.attrs") <- list(dim=d, dimnames=dn)
+    res
 }

@@ -234,6 +234,12 @@ predict.loess <- function(object, newdata = NULL, se = FALSE, ...)
 		     object$pars$drop.square, object$pars$surface,
 		     object$pars$cell, object$pars$family,
 		     object$kd, object$divisor, se=se)
+    if(!is.null(out.attrs <- attr(newdata, "out.attrs"))) { # expand.grid used
+        if(se) {
+            res$fit <- array(res$fit, out.attrs$dim, out.attrs$dimnames)
+            res$se <- array(res$se, out.attrs$dim, out.attrs$dimnames)
+        } else res <- array(res, out.attrs$dim, out.attrs$dimnames)
+    }
     if(se)
 	res$df <- object$one.delta^2/object$two.delta
     res
