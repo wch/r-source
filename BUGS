@@ -434,15 +434,3 @@ Date: Fri, 25 Jan 2002 14:36:52 -0500
 Subject: make check fails when R_HOME env var set
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Fri, 25 Jan 2002 15:08:33 -0500
-* PR# 1294 *
-Subject: documentation for abline and terms.object
-From: Paulo Justiniano Ribeiro Jr <p.ribeiro@lancaster.ac.uk>
-Date: Fri, 1 Feb 2002 16:30:14 +0000 (GMT)
-* PR# 1297 *
-Subject: comment.char in read.fwf
-From: jlongmat@coh.org
-Date: Fri, 1 Feb 2002 23:54:08 +0100 (MET)
-* PR# 1298 *
-Subject: comment.char in read.fwf
-From: jlongmat@coh.org
-Date: Fri, 1 Feb 2002 23:54:34 +0100 (MET)
