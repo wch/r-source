@@ -391,6 +391,9 @@ BUG FIXES
     o   tapply() had "..." argument after simplify=, which made it
 	incompatible with S when passing additional unnamed arguments to FUN.
 
+    o   dbeta() could return zero erroneously on some platforms where 
+    	roundoff makes e.g. 1.3 - 1 > (1.3 + 1) - 2 (Solaris and HP-UX
+	were affected). (PR#970)
 
 
 	**************************************************

@@ -40,6 +40,8 @@
 double dbeta(double x, double a, double b, int give_log)
 { 
     double f, p;
+    volatile double am1, bm1; /* prevent roundoff trouble on some
+                                 platforms */
 
 #ifdef IEEE_754
     /* NaNs propagated correctly */
@@ -65,17 +67,21 @@ double dbeta(double x, double a, double b, int give_log)
 	}
 	else {			/* a < 1 <= b */
 	    f = a/x;
-	    p = dbinom_raw(a,a+b-1, x,1-x, give_log);
+	    bm1 = b - 1;
+	    p = dbinom_raw(a,a+bm1, x,1-x, give_log);
 	}
     }
     else { 
 	if (b < 1) {		/* a >= 1 > b */
 	    f = b/(1-x);
-	    p = dbinom_raw(a-1,a+b-1, x,1-x, give_log);
+	    am1 = a - 1; 
+	    p = dbinom_raw(am1,am1+b, x,1-x, give_log);
 	}
 	else {			/* a,b >= 1 */
 	    f = a+b-1;
-	    p = dbinom_raw(a-1,a+b-2, x,1-x, give_log);
+	    am1 = a - 1;
+	    bm1 = b - 1;
+	    p = dbinom_raw(am1,am1+bm1, x,1-x, give_log);
 	}
     }
     return( (give_log) ? p + log(f) : p*f );
