@@ -37,8 +37,15 @@ codes.factor <- function(x)
   attributes(x) <- NULL
   x
 }
+
 "codes<-" <- function(x, value)
 {
+  .not.yet.implemented()
+  ## not so clear how this is done in interpreted code.
+  ## It could be done before, and is still documented..
+
+  ## An even bigger problem is  ``codes(x)[i] <- value''.
+  ## which should be handled in primitive  "[<-"
 
   x
 }
