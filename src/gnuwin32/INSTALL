@@ -55,8 +55,7 @@ mirrors, and included in our tools.zip).
 
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, currently available for download at
-
-http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp
+http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwmicrosofthtmlhelpdownloads.asp
 and http://www.microsoft.com/office/ork/xp/appndx/appa06.htm
 
 You may need this on the same drive as the other tools. (Although we
