@@ -3,7 +3,7 @@
 <title>R Installation and Administration</title>
 <meta http-equiv="Content-Type" content="text/html">
 <meta name="description" content="R Installation and Administration">
-<meta name="generator" content="makeinfo 4.5">
+<meta name="generator" content="makeinfo 4.3">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
 </head>
 <body>
@@ -14,7 +14,7 @@
 
    <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.8.0 (2003-05-05).
+   <p>The current version of this document is 1.8.0 (2003-05-17).
 
    ISBN 3-901167-52-8
 
@@ -74,10 +74,12 @@ subdirectory <code>R</code> of the current directory, where <var>module</var>
 specifies one of the four existing flavors of the R sources, and can be
 one of <code>r-release</code> (current released version), <code>r-patched</code>
 (patched released version), and <code>r-devel</code> (development version). 
-The rsync trees are created directly from the master CVS archive and are
-updated hourly.  The <code>-C</code> option in the <code>rsync</code> command
-is to cause it to skip the CVS directories.  Further information on
-<code>rsync</code> is available at <a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsync/</a>.
+(These flavors are described in the R FAQ,
+<a href="http://www.ci.tuwien.ac.at/~hornik/R/">http://www.ci.tuwien.ac.at/~hornik/R/</a>.)  The rsync trees are
+created directly from the master CVS archive and are updated hourly. 
+The <code>-C</code> option in the <code>rsync</code> command is to cause it to
+skip the CVS directories.  Further information on <code>rsync</code> is
+available at <a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsync/</a>.
 
 <a name="Installing%20R%20under%20Unix"></a>
 
@@ -288,7 +290,7 @@ work.
    <p>Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
-   <p>The simplest way is to use <code>rw1080.exe</code> or
+   <p>The simplest way is to use <code>rw1080dev.exe</code> or
 <code>miniR.exe</code>.  Just double-click on the icon and follow the
 instructions.  If you installed R this way you can uninstall it from the
 Control Panel.
@@ -1143,6 +1145,22 @@ dynamically load modules (such as X11) with the <code>dlopen</code> call.
 note that linker flags must be escaped using <code>-Wl,</code> if
 <code>gcc</code> is used for linking: use <code>MAIN_LDFLAGS="-Wl,brtl"</code>
 and <code>SHLIB_LDFLAGS="-Wl,-G"</code> in this case.
+
+   <p>Harald Servat Gelabert &lt;harald@cepba.upc.es&gt; reported success building
+R 1.7.0 under AIX 5.1 with
+
+<pre class="smallexample">     CC=xlc
+     F77=xlf
+     CXX=xlC
+     CFLAGS=-O3 -qstrict -qmaxmem=8192
+     FFLAGS=-O3 -qstrict -qmaxmem=8192
+     CXXFLAGS=-O2 -qmaxmem=8192
+     MAIN_LDFLAGS=-Wl,-brtl
+     SHLIB_LDFLAGS=-Wl,-G
+     </pre>
+
+<p>but was unable to use the X libraries or the native BLAS (ESSL) and so
+used <code>--without-x --without-blas</code>.
 
 <a name="New%20platforms"></a>
 
