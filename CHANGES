@@ -1,6 +1,10 @@
 		CHANGES IN R VERSION 0.61.2
 
 BUG FIXES
+    o   Docs for predict.lm
+
+    o   Subset and transform functions (to make life with dataframes
+	easier) copied from 0.62.
 
     o   (copy from 0.62) check.names argument to data.frame,
 	default rownames 1:n
