@@ -4,7 +4,7 @@
 ceiling(x)
 floor(x)
 round(x, digits = 0)
-signif(x, digits)
+signif(x, digits = 6)
 trunc(x)
 }
 \alias{ceiling}
