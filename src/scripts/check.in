@@ -41,7 +41,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.109 $ ';
+my $revision = ' $Revision: 1.110 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -896,7 +896,7 @@ sub check_pkg {
 
     ## Check for undocumented objects.
 
-    if(((-d "R") || (-d "data")) && -d "man") {
+    if(((-d "R") || (-d "data")) && (-d "man")) {
 	$log->checking("for undocumented objects");
 
 	my $Rcmd = "library(tools)\n";
@@ -928,7 +928,7 @@ sub check_pkg {
 
     ## Check for code/documentation mismatches.
 
-    if($opt_codoc && ((-d "R") || (-d "data")) && -d "man") {
+    if($opt_codoc && (-d "R") && (-d "man")) {
 	$log->checking("for code/documentation mismatches");
 
 	my $Rcmd = "library(tools)\n";
