@@ -14,8 +14,13 @@
 \alias{weights.nls}
 \alias{AIC.nls}
 \title{Nonlinear Least Squares}
+\synopsis{
+nls(formula, data = parent.frame(), start, control,
+    algorithm = "default", trace = FALSE, subset,
+    weights, na.action)
+}
 \usage{
-nls(formula, data, start, control = nls.control(),
+nls(formula, data = parent.frame(), start, control = nls.control(),
     algorithm = "default", trace = FALSE, subset,
     weights, na.action)
 }

@@ -7,7 +7,7 @@
 }
 \synopsis{
 polygon(x, y = NULL, density = NULL, angle = 45,
-        col = NA, border = NULL, lty = NULL, xpd = NULL,
+        border = NULL, col = NA, lty = NULL, xpd = NULL,
         ..debug.hatch = FALSE, \dots)
 }
 \usage{

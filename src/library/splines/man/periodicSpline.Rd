@@ -8,7 +8,7 @@
   \code{y} vectors, or from a formula/data.frame combination.
 }
 \usage{
-periodicSpline(obj1, obj2, knots, period, ord)
+periodicSpline(obj1, obj2, knots, period = 2*pi, ord = 4)
 }
 \arguments{
  \item{obj1}{either a numeric vector of \code{x} values or a formula.}

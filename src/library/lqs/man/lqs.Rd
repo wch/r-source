@@ -16,24 +16,24 @@ Resistant Regression
   achieving a regression estimator with a high breakdown point.
   \code{lmsreg} and \code{ltsreg} are compatibility wrappers.
 }
-\usage{
+\synopsis{
 lqs(x, \dots)
-lqs.formula(formula, data = NULL, \dots,
+lqs.formula(formula, data, \dots,
             method = c("lts", "lqs", "lms", "S", "model.frame"),
             subset, na.action = na.fail, model = TRUE,
-            x = FALSE, y = FALSE, contrasts = NULL)
-lqs.default(x, y, intercept, method = c("lts", "lqs", "lms", "S"),
+            x.ret = FALSE, y.ret = FALSE, contrasts = NULL)
+lqs.default(x, y, intercept = TRUE, method = c("lts", "lqs", "lms", "S"),
             quantile, control = lqs.control(\dots), k0 = 1.548, seed, \dots)
 lmsreg(\ldots)
 ltsreg(\ldots)
 }
-\synopsis{
+\usage{
 lqs(x, \dots)
-lqs.formula(formula, data = NULL, \dots,
+lqs.formula(formula, data, \dots,
             method = c("lts", "lqs", "lms", "S", "model.frame"),
             subset, na.action = na.fail, model = TRUE,
-            x.ret = FALSE, y.ret = FALSE, contrasts = NULL)
-lqs.default(x, y, intercept, method = c("lts", "lqs", "lms", "S"),
+            x = FALSE, y = FALSE, contrasts = NULL)
+lqs.default(x, y, intercept = TRUE, method = c("lts", "lqs", "lms", "S"),
             quantile, control = lqs.control(\dots), k0 = 1.548, seed, \dots)
 lmsreg(\ldots)
 ltsreg(\ldots)

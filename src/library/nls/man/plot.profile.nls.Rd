@@ -8,7 +8,8 @@
   \code{profile.nls}.
 }
 \usage{
-\method{plot}{profile.nls}(x, levels, conf, nseg, absVal, ...)
+\method{plot}{profile.nls}(x, levels, conf= c(99, 95, 90, 80, 50)/100,
+     nseg = 50, absVal =TRUE, ...)
 }
 \arguments{
  \item{x}{an object of class \code{"profile.nls"} }

@@ -52,7 +52,7 @@ as.character.tclVar(x)
 tclvalue(x)
 tclvalue(x) <- value
 
-addTclPath(path)
+addTclPath(path = ".")
 tclRequire(package, warn = TRUE)
 }
 \arguments{

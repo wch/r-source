@@ -7,8 +7,8 @@
   at the values in \code{x}.
 }
 \usage{
-splineDesign(knots, x, ord, derivs)
-spline.des(knots, x, ord, derivs)
+splineDesign(knots, x, ord = 4, derivs)
+spline.des(knots, x, ord = 4, derivs)
 }
 \arguments{
   \item{knots}{a numeric vector of knot positions with non-decreasing

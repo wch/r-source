@@ -5,7 +5,8 @@
   Generate the B-spline basis matrix for a polynomial spline.
 }
 \usage{
-bs(x, df, knots, degree=3, intercept=FALSE, Boundary.knots)
+bs(x, df = NULL, knots = NULL, degree = 3, intercept = FALSE,
+   Boundary.knots = range(x))
 }
 \arguments{
   \item{x}{the predictor variable.}

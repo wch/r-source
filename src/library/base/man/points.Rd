@@ -9,7 +9,7 @@
 }
 \usage{
 points(x, \dots)
-points.default(x, y=NULL, type="p", pch=par("ch"), col=par("col"),
+points.default(x, y=NULL, type="p", pch=par("pch"), col=par("col"),
                bg=NA, cex=1, \dots)
 }
 \arguments{

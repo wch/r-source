@@ -1,7 +1,7 @@
 \name{prop.test}
 \title{Test for Equal or Given Proportions}
 \usage{
-prop.test(x, n = NULL, p = NULL,
+prop.test(x, n, p = NULL,
           alternative = c("two.sided", "less", "greater"),
           conf.level = 0.95, correct = TRUE)
 }
