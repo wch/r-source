@@ -536,6 +536,8 @@ static void gzfile_open(Rconnection con)
     con->isopen = TRUE;
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
+    if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
+    else con->text = TRUE;
     con->save = -1000;
 }
 
@@ -886,7 +888,7 @@ static Rconnection newtext(char *description, SEXP text)
     }
     init_con(new, description, "r");
     new->isopen = TRUE;
-    new->canread = TRUE;
+    new->canwrite = FALSE;
     new->open = &text_open;
     new->close = &text_close;
     new->destroy = &text_destroy;
@@ -1031,7 +1033,7 @@ static Rconnection newouttext(char *description, SEXP sfile, char *mode)
     }
     init_con(new, description, mode);
     new->isopen = TRUE;
-    new->canwrite = TRUE;
+    new->canread = FALSE;
     new->open = &text_open;
     new->close = &outtext_close;
     new->destroy = &outtext_destroy;
@@ -2419,7 +2421,6 @@ static Rconnection newurl(char *description, char *mode)
     }
     init_con(new, description, mode);
     new->canwrite = FALSE;
-    new->canseek = FALSE;
     new->open = &url_open;
     new->close = &url_close;
     new->fgetc = &url_fgetc;
