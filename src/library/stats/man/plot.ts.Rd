@@ -62,12 +62,10 @@ data(nhtemp)
 plot(nhtemp, c(nhtemp[-1], NA), cex = .8, col="blue",
      main = "Lag plot of New Haven temperatures")
 ## a clearer way to do this would be
-\dontrun{library(ts)
+\dontrun{
 plot(nhtemp, lag(nhtemp, 1), cex = .8, col="blue",
      main = "Lag plot of New Haven temperatures")
 }
-
-library(ts)  # normally loaded
 
 data(sunspots)
 ## xy.lines and xy.labels are FALSE for large series:

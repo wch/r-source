@@ -92,7 +92,6 @@ is.ts(x)
   \code{\link{window}};
   \code{\link{print.ts}}, the print method for time series objects;
   \code{\link{plot.ts}}, the plot method for time series objects.
-  Standard package \pkg{ts} for many additional time-series functions.
 }
 \examples{
 ts(1:10, frequency = 4, start = c(1959, 2)) # 2nd Quarter of 1959
@@ -113,7 +112,7 @@ data(nhtemp)
 plot(nhtemp, c(nhtemp[-1], NA), cex = .8, col="blue",
      main = "Lag plot of New Haven temperatures")
 ## a clearer way to do this would be
-\dontrun{library(ts)
+\dontrun{
 plot(nhtemp, lag(nhtemp, 1), cex = .8, col="blue",
      main = "Lag plot of New Haven temperatures")
 }}
