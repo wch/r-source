@@ -28,20 +28,20 @@
 #include "Errormsg.h"
 
 /*  Heap and Pointer Protection Stack Sizes.  */
-/*  These values are minima and can be overriden in Platform.h  */
+/*  These values are minima and can be overriden in Platform.h	*/
 
 /*  R_PPSSIZE  The pointer protection stack size  */
-/*  R_NSIZE    The number of cons cells  */
+/*  R_NSIZE    The number of cons cells	 */
 /*  R_VSIZE    The vector heap size in bytes */
 
 #ifndef R_PPSSIZE
 #define	R_PPSSIZE    10000L
 #endif
 #ifndef R_NSIZE
-#define	R_NSIZE      200000L
+#define	R_NSIZE	     200000L
 #endif
 #ifndef R_VSIZE
-#define	R_VSIZE      2000000L
+#define	R_VSIZE	     2000000L
 #endif
 
 #ifdef Macintosh
@@ -69,7 +69,7 @@
 #endif
 
 #define HSIZE	    211	/* The size of the hash table for symbols */
-#define MAXELTSIZE  512	/* The largest string size */
+#define MAXELTSIZE  512 /* The largest string size */
 #define MAXIDSIZE   512	/* Largest symbol size possible */
 
 
@@ -78,43 +78,43 @@
 /*  INTSXP, REALSXP, CPLXSXP and STRSXP which are the  */
 /*  element types for S-like data objects.  */
 
-/*  Note that the gap of 11 and 12 below is because of  */
+/*  Note that the gap of 11 and 12 below is because of	*/
 /*  the withdrawal of native "factor" and "ordered" types.  */
 
 typedef unsigned int SEXPTYPE;
 
-#define NILSXP	     0    /* nil */
-#define SYMSXP	     1    /* symbols */
-#define LISTSXP	     2    /* lists & dotted pairs */
-#define CLOSXP	     3    /* closures */
-#define ENVSXP	     4    /* environments */
-#define PROMSXP	     5    /* evaluated/unevaluated closure arguments */
-#define LANGSXP	     6    /* language constructs (special lists) */
-#define SPECIALSXP   7    /* special forms */
-#define BUILTINSXP   8    /* builtin non-special forms */
-#define CHARSXP	     9    /* "scalar" string type (internal only)*/
-#define LGLSXP	    10    /* logical vectors */
-#define INTSXP	    13    /* integer vectors */
-#define REALSXP	    14    /* real variables */
-#define CPLXSXP	    15    /* complex variables */
-#define STRSXP	    16    /* string vectors */
-#define DOTSXP	    17    /* dot-dot-dot object */
-#define ANYSXP	    18    /* make "any" args work */
-#define VECSXP	    19    /* generic vectors */
-#define EXPRSXP	    20    /* expressions vectors */
+#define NILSXP	     0	  /* nil */
+#define SYMSXP	     1	  /* symbols */
+#define LISTSXP	     2	  /* lists & dotted pairs */
+#define CLOSXP	     3	  /* closures */
+#define ENVSXP	     4	  /* environments */
+#define PROMSXP	     5	  /* evaluated/unevaluated closure arguments */
+#define LANGSXP	     6	  /* language constructs (special lists) */
+#define SPECIALSXP   7	  /* special forms */
+#define BUILTINSXP   8	  /* builtin non-special forms */
+#define CHARSXP	     9	  /* "scalar" string type (internal only)*/
+#define LGLSXP	    10	  /* logical vectors */
+#define INTSXP	    13	  /* integer vectors */
+#define REALSXP	    14	  /* real variables */
+#define CPLXSXP	    15	  /* complex variables */
+#define STRSXP	    16	  /* string vectors */
+#define DOTSXP	    17	  /* dot-dot-dot object */
+#define ANYSXP	    18	  /* make "any" args work */
+#define VECSXP	    19	  /* generic vectors */
+#define EXPRSXP	    20	  /* expressions vectors */
 
 typedef struct SEXPREC {
 
     /* Flags */
     struct {
-	SEXPTYPE type      :  5;
+	SEXPTYPE type	   :  5;
 	unsigned int obj   :  1;
 	unsigned int named :  2;
-	unsigned int gp    : 16;
+	unsigned int gp	   : 16;
 	unsigned int mark  :  1;
 	unsigned int debug :  1;
 	unsigned int trace :  1;
-	unsigned int       :  5;
+	unsigned int	   :  5;
     } sxpinfo;
 
     /* Attributes */
@@ -292,11 +292,11 @@ typedef struct RCNTXT {
 /* is already the or of CTXT_NEXT and CTXT_BREAK. */
 enum {
     CTXT_TOPLEVEL = 0,
-    CTXT_NEXT     = 1,
-    CTXT_BREAK    = 2,
-    CTXT_LOOP     = 3,	/* break OR next target */
-    CTXT_RETURN   = 4,
-    CTXT_CCODE    = 8,
+    CTXT_NEXT	  = 1,
+    CTXT_BREAK	  = 2,
+    CTXT_LOOP	  = 3,	/* break OR next target */
+    CTXT_RETURN	  = 4,
+    CTXT_CCODE	  = 8,
     CTXT_BROWSER  = 12,
     CTXT_GENERIC  = 16
 };
@@ -407,12 +407,6 @@ extern int	R_DirtyImage;	    /* Current image dirty */
 extern int	R_Init;		    /* Do we have an image loaded */
 extern FILE*	R_FileRef;	    /* the environment file pointer  */
 
-#define NA_LOGICAL	R_NaInt
-#define NA_INTEGER	R_NaInt
-#define NA_FACTOR	R_NaInt
-#define NA_REAL		R_NaReal
-#define NA_STRING	R_NaString
-
 /* File Handling */
 
 #define R_EOF	65535
@@ -425,7 +419,7 @@ extern int	R_fgetc(FILE*);
 #define R_MAGIC_XDR    1977
 
 #define R_MAGIC_BINARY_VERSION16 1971
-#define R_MAGIC_ASCII_VERSION16  1972
+#define R_MAGIC_ASCII_VERSION16	 1972
 
 /* Other Stuff */
 
@@ -569,7 +563,6 @@ int isExpression(SEXP);
 int isExpressionObject(SEXP);
 int isFactor(SEXP);
 int isFrame(SEXP);
-int isFinite(double);
 int isFunction(SEXP);
 int isInteger(SEXP);
 int isLanguage(SEXP);
