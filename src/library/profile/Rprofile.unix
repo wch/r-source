@@ -42,6 +42,8 @@ if(.Platform$GUI == "AQUA"){
  options(device = "quartz")
 
 # sets initial current working directory to user's root
+# as RAqua is installed at system level
+
  setwd("~/")
 
 # this is to allow g77 compiler to work
