@@ -859,6 +859,10 @@ static void RestoreSEXP(SEXP s, FILE *fp)
 		}
 	}
 
+	/* Map old factors to new ...  (0.61->0.62) */
+	if (TYPEOF(s) == 11 || TYPEOF(s) == 12)
+		TYPEOF(s) = 13;
+
 	OBJECT(s) = InInteger(fp);
 	LEVELS(s) = InInteger(fp);
 	ATTRIB(s) = OffsetToNode(InInteger(fp));
