@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-20
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-21
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2774,6 +2774,8 @@ Sciences'' by Mark S. Handcock and Martina Morris, 1999, Springer.
 @item relimp
 Functions to facilitate inference on the relative importance of
 predictors in a linear or generalized linear model.
+@item relsurv
+Various functions for regression in relative survival.
 @item rgdal
 Provides bindings to Frank Warmerdam's Geospatial Data Abstraction 
 Library (GDAL).
