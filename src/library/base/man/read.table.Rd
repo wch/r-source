@@ -8,7 +8,7 @@
   cases corresponding to lines and variables to fields in the file.
 }
 \usage{
-read.table(file, header = FALSE, sep = "", dec = ".", quote = "\"\'",
+read.table(file, header = FALSE, sep = "", dec = ".", quote = "\"'",
            row.names, col.names, as.is = FALSE, na.strings = "NA",
            skip = 0)
 
