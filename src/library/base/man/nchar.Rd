@@ -12,6 +12,9 @@ on other objects passing them through \code{deparse} first will be required.
 \arguments{
   \item{x}{character vector.} 
 }
+\value{
+  The number of characters, or integer \code{NA} for a missing string.
+}
 \seealso{
 \code{\link{strwidth}} giving width of strings for plotting;
 \code{\link{paste}}, \code{\link{substr}}, \code{\link{strsplit}}
