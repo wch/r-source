@@ -33,8 +33,6 @@
  *  "Machine", but for strings rather than numerical values.  These
  *  two functions should probably be amalgamated.
  */
-
-
 static char *R_OSType = OSTYPE;
 static char *R_FileSep = FILESEP;
 static char *R_DynLoadExt = DYNLOADEXT;
@@ -62,12 +60,11 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  POSIX calls which should be available on each platform.  We should
  *  perhaps check this in the configure script.
  */
-
 char *R_Date()
 {
     time_t t;
     time(&t);
-    return ctime(&t);
+    return strtok(ctime(&t), "\n");/* drop final \n */
 }
 
 SEXP do_date(SEXP call, SEXP op, SEXP args, SEXP rho)

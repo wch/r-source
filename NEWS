@@ -7,14 +7,15 @@
 
 NEW FEATURES
 
-    o	warnings can be collected (options(warn=0), the default), printed 
+    o	warnings can be collected (options(warn=0), the default), printed
 	immediately (options(warn=0)) or turned into errors (options(warn=2)).
 	As a consequence, all warnings and errors now are printed followed
 	by a newline, if one is not supplied. (This should improve the
 	S compatibility of the use of PROBLEM ... in compiled code.)
 
     o	hdf5{read|write} now allow more kinds of attributes and add support
-	for HDF5 ver. 1.2, thanks to Marcus G. Daniels.
+	for HDF5 version 1.2 (or newer) -- which you now must have,
+	thanks to Marcus G. Daniels.
 
     o	A first step in improving performance has been made.
 	Attached objects, libraries etc are now hashed; performance
@@ -107,7 +108,9 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   When persp was the first graphics command given to R it caused
+    o	date() doesn't anymore return a final "\n" (as it did since 0.64).
+
+    o	When persp was the first graphics command given to R it caused
 	the error message "plot.new() has not been called yet" to be
 	printed.  This no longer happens.
 
