@@ -29,6 +29,7 @@ Directory:  Accuracy
 Subject: Re: [R] bug? and New bug.
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Wed, 10 Mar 1999 17:21:16 +0100
+--pt() for large df. Solved, but problem remains for pf et al.
 
 Directory:  Add-ons
 
@@ -36,6 +37,7 @@ Directory:  Add-ons
 Subject: funfits
 From: "Alvaro A. Novo" <novo@uiuc.edu>
 Date: Tue, 9 Mar 1999 22:24:54 -0600
+--Not our problem. Dubious whether a bug at all.
 
 Directory:  Analyses
 
@@ -44,17 +46,12 @@ Subject: glm throws erroneous(?)'names attribute must be the same length as the 
 From: wagman@enteract.com
 Date: Thu, 18 Mar 1999 08:58:47 +0100
 --Can anyone reproduce this ??
+--Same error as when doing regression on empty subset. All fitted
+--values might be 0 or 1
 
 Directory:  Documentation
 
-* PR# 146 *
-Subject: nlm docs
-From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
-Date: Wed, 24 Mar 1999 15:48:41 +0100 (MET)
-* PR# 199 *
-Subject: help for trig functions
-From: Bill Simpson <wsi@gcal.ac.uk>
-Date: Wed, 26 May 1999 14:55:00 +0000
+none
 
 Directory:  Graphics
 
@@ -63,14 +60,6 @@ Subject: points(...,  cex = ..)  is pretty wrong...
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 2 Nov 1998 19:15:06 +0100
 --Symbols getting decentered when too large cex for X. Still there 22feb99  
-* PR# 66 *
-Subject: Bug with bounding box?
-From: johnp@tip.csiro.au
-Date: Thu, 3 Dec 1998 02:15:38 +0100
---Yes, this appears to have x/y reversed. The supplied example gives 
---%%Orientation: Landscape
---%%BoundingBox: 18 18 824 577 
---but the convention is to rotate the paper but leave the coordinate system.
 * PR# 69 *
 Subject: Some graphics bugs
 From: Martyn Plummer <plummer@iarc.fr>
@@ -78,18 +67,6 @@ Date: Fri, 04 Dec 1998 11:42:50 -0000 ()
 Date: 04-Dec-98
 --Various anomalies with text size and alignment. 2B appears to be solved. The 
 --rest is still there (22feb99)
-* PR# 106 *
-Subject: border-arg. in persp
-From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
-Date: Fri, 29 Jan 1999 11:12:39 +0100
---No effect of arg. Still here 22feb99. Segfault with border=0 seems gone now. 
-* PR# 114 *
-Subject: PostScript Level 1/2 bug
-From: ben@eno.princeton.edu
-Date: Mon, 8 Feb 1999 00:07:20 +0100
---Not sure whether this is really PS lev 1/2 issue.
---/Font5 /Symbol findfont definefont
---(missing scalefont?)
 * PR# 120 *
 Subject: graphics bug: type="l"
 From: Matthew Wiener <mcw@ln.nimh.nih.gov>
@@ -104,30 +81,23 @@ Date: Thu, 18 Feb 1999 13:05:37 -0500
 Subject: lty=0 -- shouldn't it give an invisible line?
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 28 Feb 1999 21:45:43 +0100
+--Strange effect on barplot
 * PR# 149 *
 Subject: plot.formula and pch=
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 25 Mar 1999 21:22:44 +0100
-* PR# 153 *
-Subject: image + x11
-From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
-Date: Wed, 31 Mar 1999 14:09:53 +0200
+--plot(y~x,pch=z) may subset x and y but leave z.
+--E.g. with missing values you can get incorrect plot symbols.
 * PR# 192 *
 Subject: dev.print aspect ratio
 From: wsi@gcal.ac.uk
 Date: Tue, 11 May 1999 13:43:50 +0200 (MET DST)
+--Difficulty getting a square plot.
 * PR# 202 *
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
 Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
-* PR# 206 *
-Subject: seg fault via text()
-From: P.Herkenrath@rrz.uni-koeln.de
-Date: Sat, 5 Jun 1999 16:18:42 +0200 (MET DST)
-* PR# 215 *
-Subject: plot(..., lab=..) fails in axis() --- wrong "..." propagation
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 29 Jun 1999 10:48:25 +0200
+--Don't think I (pd) got the point there...
 
 Directory:  In-Out
 
@@ -140,35 +110,22 @@ Subject: Formatting in formatC and format
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Sun, 28 Feb 1999 08:53:34 +0000 (GMT)
 --Documentation and ``merge'' of format() and formatC() would be desired - MM
-* PR# 193 *
-Subject: matrix() can't handle NaN
-From: wsi@gcal.ac.uk
-Date: Tue, 11 May 1999 14:01:59 +0200 (MET DST)
-* PR# 203 *
-Subject: dput and options()$digits
-From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
-Date: Wed, 02 Jun 1999 13:24:32 -0400
 * PR# 207 *
 Subject: Lines longer than ~1000 chars truncated at parsing
 From: msa@biostat.mgh.harvard.edu
 Date: Mon, 7 Jun 1999 22:27:10 +0200 (MET DST)
+--Fixed buffer used during input.
+--Not fixable without major changes to readline lib.
 * PR# 211 *
 Subject: readline/history size
 From: seniorr@teleport.com
 Date: Tue, 15 Jun 1999 00:08:59 +0200 (MET DST)
-* PR# 212 *
-Subject: Re: save.image()
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 17 Jun 1999 11:29:01 +0200
+--Limitation of history size. Kurt cannot reproduce. 
+--Depends on libreadline version??
 
 Directory:  Installation
 
-* PR# 95 *
-Subject: patch to 63.2
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Fri, 15 Jan 1999 11:00:25 +0100 (MET)
---An incident where the 0.63.2 patches didn't take. So far the only one. 
---Maybe caused by patching unclean sources?
+none
 
 Directory:  Language
 
@@ -183,15 +140,6 @@ Subject: Function parsing
 From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
 Date: Wed, 10 Feb 1999 13:42:01 +0000 (GMT)
 --comment placement.
-* PR# 166 *
-Subject: outer fails with group generic operations on factors
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Tue, 13 Apr 1999 18:28:53 +0100 (BST)
---There is a suggested solution (PD), but not yet implemented (99/05/07)
-* PR# 187 *
-Subject: subscripting in list()
-From: Wenxin Mao <mao@compstat.wharton.upenn.edu>
-Date: Sun, 9 May 1999 13:02:51 -0400 (EDT)
 
 Directory:  Low-level
 
@@ -215,11 +163,6 @@ Date: Tue, 9 Mar 1999 13:18:37 -0000
 --lm (?) AND Windows problem;  Win solved (fudged) for 0.63.3
 --
 --Another low-level buffer-size problem
-* PR# 180 *
-Subject: nlm on a function in the Math group
-From: Douglas Bates <bates@stat.wisc.edu>
-Date: Thu, 29 Apr 1999 17:11:00 -0500 (CDT)
---causes R to core dump
 * PR# 185 *
 Subject: Re: [R] R_problem_buf in the S.h files & lists in .C
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -229,10 +172,12 @@ Date: 05 May 1999 00:32:49 +0200
 Subject: glm crash
 From: Cor en Aylin <Cor.Berrevoets@gironet.nl>
 Date: Fri, 21 May 1999 19:44:23 +0200
+--Obscure report. Cannot reproduce from given info.
 * PR# 210 *
 Subject: definition of R_problem_buf in S.h
 From: vogels@ieee.org
 Date: Mon, 14 Jun 1999 17:56:04 +0200 (MET DST)
+--Same as #185
 
 Directory:  Misc
 
@@ -251,10 +196,6 @@ From: Peter Dalgaard BSA <pd@biostat.ku.dk>
 Date: Thu, 18 Feb 1999 15:47:24 +0100
 --Subset in C code + attributes = mess
 --Switch to interpreted ("[")
-* PR# 189 *
-Subject: model.matrix crashes
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Tue, 11 May 1999 10:16:33 +0200 (MET DST)
 
 Directory:  Startup
 
@@ -318,10 +259,9 @@ Directory:  Windows
 Subject: very minor Rgui problem in rw0641
 From: Simon Fear <fears@roycastle.liv.ac.uk>
 Date: Thu, 3 Jun 1999 14:09:04 +0100 
-* PR# 205 *
-Subject: IE5 html help search failure
-From: Simon Fear <fears@roycastle.liv.ac.uk>
-Date: Thu, 3 Jun 1999 14:55:24 +0100 
+--accelerators for dialog boxes will be working in rw0642
+--bug.report works as intended, but should it be altered?
+--bug.report needs fuller information from R.version - not yet addressed
 
 Directory:  incoming
 
