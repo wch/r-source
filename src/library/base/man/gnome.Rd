@@ -1,45 +1,39 @@
 \name{Gnome}
 \alias{Gnome}
 \alias{gnome}
-\title{ ~~function to do ... ~~}
+\title{Gnome (on X Windows 11) Graphics Device}
 \usage{
+gnome(display="", width=7, height=7, pointsize=12)
 Gnome(display="", width=7, height=7, pointsize=12)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
- \item{display}{ ~~Describe \code{display} here~~ }
- \item{width}{ ~~Describe \code{width} here~~ }
- \item{height}{ ~~Describe \code{height} here~~ }
- \item{pointsize}{ ~~Describe \code{pointsize} here~~ }
+  \item{display}{the display on which the graphics window will appear.
+    The default is to use the value in the user's environment variable
+    \code{DISPLAY}.}
+  \item{width}{the width of the plotting window in inches.}
+  \item{height}{the height of the plotting window in inches.}
+  \item{pointsize}{the default pointsize to be used.}
 }
 \description{
- ~~ A concise (1-5 lines) description of what the function does. ~~
+    \code{gnome} starts a \code{GNOME} compatible device driver.
+    GNOME is an acronym for \bold{G}NU \bold{O}bject \bold{M}.... \bold{E}.....
+%>> Lyndon, fill in the above; however it should only be a few lines
+%>>    whereas the "details" should come below :
 }
 \details{
- ~~ If necessary, more details than the __description__  above ~~
+%%>>>    Please, Lyndon, fill this in ...
+    This is still in development state.
 }
-\value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of `comp1'}
-  \item{comp2 }{Description of `comp2'}
-  ...
+\references{\url{www.gnome.org}}
+\author{Lyndon Drake \email{lyndon@stat.auckland.ac.nz}}
+\note{The GNOME device is only available when explicitly desired at
+    configure/compile time, see the toplevel \file{INSTALLATION} file.
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ }
 
- ~Make other sections like WARNING with \section{WARNING }{....} ~
-
-\seealso{ ~~objects to SEE ALSO as \code{\link{~~fun~~}}, ~~~ }
-
+\seealso{\code{\link{x11}},\code{\link{Devices}}.}
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	     or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (display = "", width = 7, height = 7, pointsize = 12)
-.Internal(Gnome(display, width, height, pointsize))
+\dontrun{
+gnome(width=9)
 }
-\keyword{ ~keyword }%-- one or more ...
+}
+\keyword{device}
