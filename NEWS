@@ -178,7 +178,9 @@ NEW FEATURES
      o	print.matrix() and prmatrix() are now separate functions.
 	prmatrix() is the old S-compatible function, and
 	print.matrix() is a proper print method, currently identical
-	to print.default().
+	to print.default().  prmatrix() and the old print.default()
+	did not print attributes of a matrix, but the new print.matrix()
+	does.
 
 
 INSTALLATION CHANGES
