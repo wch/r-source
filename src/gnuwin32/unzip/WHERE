@@ -1,6 +1,6 @@
 __________________________________________________________________________
 
-   This is the Info-ZIP file ``WHERE,'' last updated on 10 January 2001.
+   This is the Info-ZIP file ``WHERE,'' last updated on 26 November 2001.
 __________________________________________________________________________
 
    The latest version of this file can be found online at:
@@ -25,8 +25,9 @@ Info-ZIP's home WWW site is listed on Yahoo and is at:
    ftp://ftp.info-zip.org/pub/infozip/Info-ZIP.html  (master version)
    http://www.info-zip.org/pub/infozip/
 
-Note that the old site at http://www.cdrom.com/pub/infozip/ is PERMANENTLY
-BROKEN.  It cannot be updated or removed, apparently.
+Note that the old sites at http://www.cdrom.com/pub/infozip/ and
+http://www.freesoftware.com/pub/infozip are PERMANENTLY BROKEN.  They
+cannot be updated or removed, apparently.
 
 The Zip and UnZip pages have links to most known mirror sites carrying our
 source and/or binary distributions, and they generally are more up-to-date
@@ -37,7 +38,7 @@ and have better information than what you are reading:
 
 The related zlib package by Info-ZIP's Jean-loup Gailly and Mark Adler is at:
 
-   ftp://ftp.info-zip.org/pub/infozip/zlib/zlib.html
+   http://www.zlib.org/
 
 Source-code archives for Info-ZIP's portable Zip, UnZip, and related
 utilities:
