@@ -4,7 +4,7 @@ HELP=YES
 WINHELP=BOTH # NO, CHM, BOTH
 
 PACKAGES=base ctest eda lqs modreg mva nls splines stepfun ts
-RPREFIX=rw1001
+RPREFIX=rw1002
 RVER=$(shell cut -d' ' -f1 ../../VERSION)
 
 RHOME=$(shell cd ../..; perl src/gnuwin32/pwd.pl)# must be absolute path
@@ -190,7 +190,7 @@ distclean veryclean: clean
 	../../doc/html/function.html ../../doc/html/packages.html \
 	../../demos/dynload/zero.def ../../demos/dynload/zero.dll \
 	../../demos/dynload/zero.o \
-	../../etc/R* ../../etc/rgb.txt \
+	../../etc/Rconsole ../etc/Rdevga ../etc/Rprofile ../../etc/rgb.txt \
 	../include/FFDecl.h ../include/FFTab.h ../include/Platform.h \
 	../include/globalvar.h ../../tests/*.Rout ../../tests/*.Rout.fail
 
