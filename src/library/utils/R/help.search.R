@@ -322,8 +322,11 @@ function(pattern, fields = c("alias", "concept", "title"),
     y
 }
 
-print.hsearch <-
-function(x, ...)
+print.hsearch <- function(x,...){
+  printhsearchInternal(x,...)
+}
+
+printhsearchInternal  <- function(x, ...)
 {
     fields <- paste(x$fields, collapse = " or ")
     type <- switch(x$type, fuzzy = "fuzzy", "regular expression")
