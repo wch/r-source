@@ -1,20 +1,23 @@
 \name{p.adjust}
 \alias{p.adjust}
 \alias{p.adjust.methods}
-\title{Adjust p-values for multiple comparisons}
+\title{Adjust P-values for Multiple Comparisons}
 \description{Given a set of p-values, returns p-values adjusted using
   one of several methods.}
 \usage{
-p.adjust(p, method = p.adjust.methods, n = length(p))
+p.adjust(p, method = p.adjust.methods, n = length(p), na.rm = FALSE)
 
 p.adjust.methods
 }
 \arguments{
-  \item{p}{vector of p-values}
+  \item{p}{vector of p-values (possibly with \code{\link{NA}}s).}
   \item{method}{correction method}
   \item{n}{number of comparisons}
+  \item{na.rm}{logical specifiying if \code{\link{NA}} values should be
+    removed a priori (such that \code{n} will be smaller when there were
+    \code{NA}s).  This is typically not recommended (see the example).}
 }
-\value{A vector of corrected p-values.}
+\value{A vector of corrected p-values (same length as \code{p}).}
 \details{
   The adjustment methods include the Bonferroni correction
   (\code{"bonferroni"}) in which the p-values are multiplied by the
@@ -93,14 +96,33 @@ p.adjust.methods
 }
 
 \examples{
+set.seed(123)
 x <- rnorm(50, m=c(rep(0,25),rep(3,25)))
-p <- 2*pnorm( -abs(x))
+p <- 2*pnorm( sort(-abs(x)))
 
 round(p, 3)
-
 round(p.adjust(p), 3)
-round(p.adjust(p,"bonferroni"), 3)
-
 round(p.adjust(p,"fdr"), 3)
+
+## or all of them at once:
+p.adj <- sapply(p.adjust.methods, function(meth) p.adjust(p, meth))
+round(p.adj, 3)
+## or a bit nicer:
+noquote(apply(p.adj, 2, format.pval, digits = 3))
+
+## and a graphic:
+matplot(p, p.adj, ylab="p.adjust(p, meth)", type = "l", asp=1, lty=1:6,
+        main = "P-value adjustments")
+legend(.7,.6, p.adjust.methods, col=1:6, lty=1:6)
+
+## Can work with NA's:
+pN <- p; iN <- c(46,47); pN[iN] <- NA
+pN.a <- sapply(p.adjust.methods, function(meth) p.adjust(pN, meth))
+pN.o <- sapply(p.adjust.methods, function(meth) p.adjust(pN, meth, na.rm=TRUE))
+
+## The smallest 20 P-values are not affected at all by the NA's :
+stopifnot(all.equal(pN.a[1:20], p.adj[1:20], tol= 1e-15))
+## but they are all changed, for "na.rm = TRUE" :
+round((pN.o / p.adj)[1:20, ] , 4)
 }
 \keyword{htest}
