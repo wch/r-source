@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2005-02-14), ISBN 3-900051-07-0
+Version 2.1.0 Under development (unstable) (2005-02-22), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3714,7 +3714,7 @@ probability of success
 > try(numeric(2^31))
 Error in vector("double", length) : vector size specified is too large
 > try(matrix( , 2^31, 1))
-Error in matrix(, 2^31, 1) : matrix: invalid nrow value (too large or NA)
+Error in matrix(, 2^31, 1) : matrix: invalid 'nrow value' (too large or NA)
 In addition: Warning message:
 NAs introduced by coercion 
 > try(matrix( , 2^31/10, 100))
