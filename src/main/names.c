@@ -542,6 +542,7 @@ FUNTAB R_FunTab[] =
 {"get.num.cmd",	do_getnumcmd,	0,	11,	1,	PP_FUNCALL},
 {"del.num.cmd",	do_delnumcmd,	0,	11,	1,	PP_FUNCALL},
 {"del.usr.cmd",	do_delusrcmd,	0,	11,	0,	PP_FUNCALL},
+{"wsbrowser",	do_wsbrowser,	0,	11,	7,	PP_FUNCALL},
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
 {"save",	do_save,	0,	111,	5,	PP_FUNCALL},
