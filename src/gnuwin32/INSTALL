@@ -24,7 +24,7 @@ echo, cp, cut, diff, grep, egrep, pwd, expr and cat; we use those from
 the cygwin distribution (http://sourceware.cygnus.com/cygwin and
 several mirrors).
 
-It is also possible to use cygwin-b20.1 with the --no-cygwin flag, but
+It is also possible to use cygwin-b20.1 with the -mno-cygwin flag, but
 we suggest you do so only if you have a working setup from building
 earlier versions of R.  We have also successfully used the variant of
 mingw32 that uses the MSVCRT run-time system.  Be aware that not all

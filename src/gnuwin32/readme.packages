@@ -18,7 +18,7 @@ mingw32 one in your path. (We believe this is solved in gcc-2.95.2,
 but have no way of testing this as we now use NT.)
 
 It is also possible to use earlier mingw32 compilers or cygwin-b20.1
-with the --no-cygwin flag, but we suggest you do so only if you have a
+with the -mno-cygwin flag, but we suggest you do so only if you have a
 working setup from building earlier versions of R. We have also
 successfully used the variant of mingw32 that uses the MSVCRT run-time
 system (under gcc-2.95.x but not earlier versions), and in the case of
