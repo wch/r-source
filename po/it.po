@@ -6420,6 +6420,11 @@ msgid ""
 "Type 'license()' or 'licence()' for distribution details.\n"
 "\n"
 msgstr ""
+"R è un software libero e viene rilasciato SENZA ALCUNA GARANZIA.\n"
+"Siamo ben lieti se potrai redistribuirlo, ma sotto certe condizioni.\n"
+"Scrivi 'license()' o 'licence()' per dettagli su come distribuirlo.\n"
+"\n"
+
 
 #: src/main/version.c:37
 msgid ""
@@ -6428,6 +6433,10 @@ msgid ""
 "'citation()' on how to cite R or R packages in publications.\n"
 "\n"
 msgstr ""
+"R è un progetto di collaborazione con molti contribuit esterni.\n"
+"Scrivi 'contributors()' per maggiori informazioni e\n"
+"'citation()' per sapre come citare R o i pacchetti di R nelle pubblicazioni.\n"
+"\n"
 
 #: src/main/version.c:40
 msgid ""
@@ -6436,30 +6445,34 @@ msgid ""
 "Type 'q()' to quit R.\n"
 "\n"
 msgstr ""
+"Scrivi 'demo()' per una dimostrazione, 'help()' per l'aiuto on-line, o\n"
+"'help.start()' per l'help navigabile on browser HTML.\n"
+"Scrivi 'q()' per uscire da R.\n"
+"\n"
 
 #: src/main/vfonts.c:78
 msgid "vfont routines cannot be accessed in module"
-msgstr ""
+msgstr "le routine vfont non sono accessibili al modulo"
 
 #: src/main/vfonts.c:97
 msgid "allocation failure in GVStrWidth"
-msgstr ""
+msgstr "allocazione di memoria non riuscita in GVStrWidth"
 
 #: src/main/vfonts.c:115 src/main/vfonts.c:152 src/main/vfonts.c:196
 msgid "Hershey fonts cannot be loaded"
-msgstr ""
+msgstr "font Hershey non caricati"
 
 #: src/main/vfonts.c:134
 msgid "allocation failure in GVStrHeight"
-msgstr ""
+msgstr "allocazione di memoria non riuscita in GVStrHeight"
 
 #: src/main/vfonts.c:178
 msgid "allocation failure in GVText"
-msgstr ""
+msgstr "allocazione di memoria non riuscita in GVText"
 
 #: src/modules/internet/internet.c:91
 msgid "unknown URL scheme"
-msgstr ""
+msgstr "schema URL sconosciuto"
 
 #: src/modules/internet/internet.c:160 src/modules/internet/internet.c:164
 #: src/modules/internet/internet.c:170 src/modules/internet/internet.c:182
@@ -6494,50 +6507,50 @@ msgstr "argomento 'cacheOK' non valido"
 #: src/modules/internet/internet.c:435
 #, c-format
 msgid "cannot open URL '%s'"
-msgstr ""
+msgstr "impossibile aprire URL '%s'"
 
 #: src/modules/internet/internet.c:273 src/modules/internet/internet.c:290
 #: src/modules/internet/internet.c:369
 #, c-format
 msgid "cannot open destfile '%s'"
-msgstr ""
+msgstr "impossibile aprire file destinazione '%s'"
 
 #: src/modules/internet/internet.c:293 src/modules/internet/internet.c:372
 #, c-format
 msgid "trying URL '%s'\n"
-msgstr ""
+msgstr "provo con l'URL '%s'\n"
 
 #: src/modules/internet/internet.c:300 src/modules/internet/internet.c:379
 msgid "opened URL\n"
-msgstr ""
+msgstr "URL aperta\n"
 
 #: src/modules/internet/internet.c:305 src/modules/internet/internet.c:384
 msgid "Download progress"
-msgstr ""
+msgstr "Progressione caricamento"
 
 #: src/modules/internet/internet.c:352 src/modules/internet/internet.c:431
 #, c-format
 msgid "downloaded length %d != reported length %d"
-msgstr ""
+msgstr "lunghezza caricamento %d != lunghezza prevista %d"
 
 #: src/modules/internet/internet.c:466 src/modules/internet/internet.c:692
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
-msgstr ""
+msgstr "apertura non riuscita: stato HTTP '%d %s'"
 
 #: src/modules/internet/internet.c:636 src/modules/internet/internet.c:792
 msgid "InternetOpenUrl timed out"
-msgstr ""
+msgstr "InternetOpenUrl fuori tempo massimo"
 
 #: src/modules/internet/internet.c:663 src/modules/internet/internet.c:677
 #: src/modules/internet/internet.c:814 src/modules/internet/internet.c:823
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
-msgstr ""
+msgstr "InternetOpenUrl non riuscita: '%s'"
 
 #: src/modules/internet/internet.c:727
 msgid "Internet read timed out"
-msgstr ""
+msgstr "Lettura da Internet fuori tempo massimo"
 
 #: src/modules/internet/internet.c:906
 msgid "cannot allocate memory for InternetRoutines structure"
@@ -6545,16 +6558,16 @@ msgstr "non è possibile allocare memoria per la struttura InternetRoutines"
 
 #: src/modules/internet/nanoftp.c:372
 msgid "removing FTP proxy info"
-msgstr ""
+msgstr "elimino informazione proxy FTP"
 
 #: src/modules/internet/nanoftp.c:374
 #, c-format
 msgid "using FTP proxy '%s'"
-msgstr ""
+msgstr "uso proxy FTP '%s'"
 
 #: src/modules/internet/nanoftp.c:806
 msgid "cannot resolve host"
-msgstr ""
+msgstr "impossibile identificare host"
 
 #: src/modules/internet/nanoftp.c:836
 msgid "failed to connect to server"
