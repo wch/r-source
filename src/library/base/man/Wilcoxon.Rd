@@ -42,6 +42,10 @@ rwilcox(nn, m, n)
   \code{m * n}, and its mean and variance are \code{m * n / 2} and
   \code{m * n * (m + n + 1) / 12}, respectively.
 }
+\note{
+  S-PLUS uses a different (but equivalent) definition of the Wilcoxon
+  statistic.
+}
 \author{Kurt Hornik \email{hornik@ci.tuwien.ac.at}}
 \seealso{\code{\link{dsignrank}} etc, for the \emph{one-sample} Wilcoxon
     rank statistic.}
