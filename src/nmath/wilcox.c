@@ -40,7 +40,7 @@
 void R_CheckUserInterrupt(void);
 #endif
 
-static double ***w;
+static double ***w;/* to store  cwilcox(i,j,k) -> w[i][j][k] */
 static int allocated_m, allocated_n;
 
 static void
@@ -70,10 +70,17 @@ w_init_maybe(int m, int n)
 {
     int i;
 
-    if (w && (m > WILCOX_MAX || n > WILCOX_MAX))
-	w_free(WILCOX_MAX, WILCOX_MAX);
+    if (w) {
+/* this leaks memory --- according to Jean Coursol: */
+	if (m > WILCOX_MAX || n > WILCOX_MAX)
+	    w_free(WILCOX_MAX, WILCOX_MAX);
+/* and he proposes -- but this segfaults for dwilcox(1,6,4);dwilcox(1,4,6)
+*	if (m > allocated_m || n > allocated_n)
+*	    w_free(allocated_m, allocated_n);
+*/
 
-    if (!w) {
+    }
+    else { /* initialize w[][] */
 	allocated_m = m; allocated_n = n;
 	if (m > n) {
 	    i = n; n = m; m = i;
@@ -108,17 +115,16 @@ cwilcox(int k, int m, int n)
 #endif
 
     u = m * n;
-    c = (int)(u / 2);
-
-    if ((k < 0) || (k > u))
+    if (k < 0 || k > u)
 	return(0);
+    c = (int)(u / 2);
     if (k > c)
-	k = u - k;
+	k = u - k;/* hence  k < floor(u / 2) */
     if (m < n) {
 	i = m; j = n;
     } else {
 	i = n; j = m;
-    }
+    }/* hence  i <= j */
 
     if (w[i][j] == 0) {
 	w[i][j] = (double *) calloc(c + 1, sizeof(double));
@@ -128,11 +134,10 @@ cwilcox(int k, int m, int n)
 	    w[i][j][l] = -1;
     }
     if (w[i][j][k] < 0) {
-	if ((i == 0) || (j == 0))
+	if (i == 0 || j == 0)
 	    w[i][j][k] = (k == 0);
 	else
-	    w[i][j][k] = cwilcox(k - n, m - 1, n)
-		+ cwilcox(k, m, n - 1);
+	    w[i][j][k] = cwilcox(k - n, m - 1, n) + cwilcox(k, m, n - 1);
 
     }
     return(w[i][j][k]);
@@ -297,5 +302,3 @@ void wilcox_free()
 {
     w_free_maybe(allocated_m, allocated_n);
 }
-
-
