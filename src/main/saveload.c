@@ -1061,7 +1061,7 @@ SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
     if (TYPEOF(CADDR(args)) != LGLSXP)
 	errorcall(call, "third argument must be a logical vector\n");
 
-    fp = R_fopen(CHAR(STRING(CADR(args))[0]), "wb");
+    fp = R_fopen(R_ExpandFileName(CHAR(STRING(CADR(args))[0])), "wb");
     if (!fp)
 	errorcall(call, "unable to open file\n");
 
@@ -1149,7 +1149,7 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Process the saved file to obtain a list of saved objects. */
 
-    fp = R_fopen(CHAR(STRING(CAR(args))[0]), "rb");
+    fp = R_fopen(R_ExpandFileName(CHAR(STRING(CAR(args))[0])), "rb");
     if (!fp)
 	errorcall(call, "unable to open file\n");
     ans = R_LoadFromFile(fp);
@@ -1808,10 +1808,12 @@ SEXP
 do_hdf5save (SEXP call, SEXP op, SEXP args, SEXP env)
 {
     errorcall(call, "HDF5 support unavailable\n");
+    return(R_NilValue);		/* -Wall */
 }
 SEXP
 do_hdf5load (SEXP call, SEXP op, SEXP args, SEXP env)
 {
     errorcall(call, "HDF5 support unavailable\n");
+    return(R_NilValue);		/* -Wall */    
 }
 #endif
