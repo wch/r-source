@@ -32,7 +32,7 @@ download.packages(pkgs, destdir, available = NULL,
 install.packages(pkgs, lib, CRAN = getOption("CRAN"),
                  contriburl = contrib.url(CRAN),
                  method, available = NULL, destdir = NULL,
-		 installWithVers = FALSE)
+		 installWithVers = FALSE, dependencies = FALSE)
 }
 \arguments{
   \item{lib.loc}{character vector describing the location of R
@@ -40,7 +40,11 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   \item{CRAN}{character, the base URL of the CRAN mirror to use, i.e.,
     the URL of a CRAN root such as \code{"http://cran.r-project.org"}
     (the default) or its Statlib mirror,
-    \code{"http://lib.stat.cmu.edu/R/CRAN"}.}
+    \code{"http://lib.stat.cmu.edu/R/CRAN"}.
+#ifdef windows
+    Can also be \code{NULL} to install from local \code{.zip} files.
+#endif
+  }
   \item{contriburl}{URL of the contrib section of CRAN. Use this argument
     only if your CRAN mirror is incomplete, e.g., because you burned
     only the contrib section on a CD.  Overrides argument \code{CRAN}.}
@@ -60,6 +64,12 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
     and installed.}
   \item{installWithVers}{If \code{TRUE}, will invoke the install the
     package such that it can be referenced by package version}
+  \item{dependencies}{logical indicating to also install uninstalled
+    packages on which these packages depend (and so on recursively).
+#ifdef windows
+    Not used if \code{CRAN = NULL}.
+#endif
+  }
 }
 \details{
   \code{installed.packages} scans the \file{DESCRIPTION} files of each

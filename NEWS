@@ -153,6 +153,11 @@ NEW FEATURES
 
     o	heatmap() has a new argument 'reorderfun'.
 
+    o	Most versions of install.packages() have an new optional
+	argument 'dependencies = TRUE' which will not only fetch the
+	packages but also their uninstalled dependencies and their
+	dependencies ....
+
     o	interaction() has new argument 'sep'.
 
     o	interaction.plot() allows 'type = "b"'.
