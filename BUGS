@@ -582,22 +582,7 @@ Date: Fri, 27 Feb 2004 11:27:18 +0000
 
 Directory:  Macintosh
 
-* PR# 1991 *
-Subject: Mac Save As... bug
-From: Tim Cole <tjc1@cam.ac.uk>
-Date: Sun, 8 Sep 2002 13:47:00 +0100
-* PR# 2813 *
-Subject: Search Engine
-From: leroy@ucsd.edu
-Date: Tue, 22 Apr 2003 06:21:19 +0200 (MET DST)
-..According to Simon Urbanek this is a java security issue.  With RAqua a good
-..alternative is starting HTML 
-..help and then using help.search() or  Help|Search Help on...
-* PR# 6647 *
-Subject: macintosh OS X 10.3.2 not working at all
-From: swheelan@jhmi.edu
-Date: Thu,  4 Mar 2004 22:55:35 +0100 (CET)
-..not much to reproduce
+none
 
 Directory:  Misc
 
