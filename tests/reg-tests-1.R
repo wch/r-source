@@ -2669,6 +2669,16 @@ stopifnot(crossprod(z) == cz,# the first has NULL dimnames
 stopifnot(!is.na(rmultinom(12,100, c(3, 4, 2, 0,0))))
 ## 3rd line was all NA before 1.8.0
 
+## PR#4275: getAnywhere with extra "."
+g0 <- getAnywhere("predict.loess")
+g1 <- getAnywhere("as.dendrogram.hclust")
+g2 <- getAnywhere("predict.smooth.spline")
+g3 <- getAnywhere("print.data.frame")
+is.S3meth <- function(ga) any(substr(ga$where, 1,20) == "registered S3 method")
+stopifnot(is.S3meth(g0), is.S3meth(g1),
+          is.S3meth(g2), is.S3meth(g3))
+## all but g0 failed until 1.8.0 (Oct 6)
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

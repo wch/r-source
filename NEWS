@@ -630,6 +630,9 @@ BUG FIXES
     o	dotchart() now does recycle the `color' argument and better
 	documents the `bg' one (PR#4343).
 
+    o	getAnywhere() didn't not correctly check for S3 methods, when
+	the generic or the class name contains a "." (PR#4275).
+
     o	file.copy() ignored the overwrite argument.  (PR#3529)
 
     o	filter(method="recursive") was unnecessarily requiring the

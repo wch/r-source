@@ -300,10 +300,10 @@ getAnywhere <- function(x)
     }
     ## next look for methods
     if(length(grep("\\.", x))) {
-        parts <- strsplit(x, "\\.")[[1]]
-        for(i in 2:length(parts)) {
-            gen <- paste(parts[1:(i-1)], collapse="")
-            cl <- paste(parts[2:length(parts)], collapse="")
+        np <- length(parts <- strsplit(x, "\\.")[[1]])
+        for(i in 2:np) {
+            gen <- paste(parts[1:(i-1)], collapse=".")
+            cl <- paste(parts[i:np], collapse=".")
             if(!is.null(f <- getS3method(gen, cl, TRUE))) {
                 ev <- topenv(environment(f), NULL)
                 nmev <- if(isNamespace(ev)) getNamespaceName(ev) else NULL
