@@ -20,7 +20,7 @@ NEW FEATURES
 
     o	plot.ts() has more arguments, particularly 'yax.flip'.
 
-    o	heatmap() has a 'keep.dendro' argument.
+    o	heatmap() has a new 'keep.dendro' argument.
 
     o	The default barplot method now handles vectors and 1-d arrays
 	(e.g., obtained by table()) the same, and uses grey instead of
@@ -46,12 +46,12 @@ INSTALLATION ISSUES
 
     o	Added some patches to allow non-IEEE-754 installations to work
 	reasonably well.  (Infs and NAs are still not handled properly
-	in complex arithmetic and functions such as sin(). See also
+	in complex arithmetic and functions such as sin().  See also
 	Deprecated, as support for non-IEEE-754 installations is about
 	to be removed.)
 
-    o	Installation will now work in et_EE* locales, which sort z
-	before u.  (PR#6958)
+    o	Installation will now work in Estonian (et_EE*) locales, which
+	sort z before u.  (PR#6958)
 
 
 DEPRECATED & DEFUNCT
@@ -130,7 +130,7 @@ BUG FIXES
 
     o	bxp() fixed for e.g.,  boxplot(..., border=2:4)
 
-    o	approx(list(x=rep(NaN,9),y=1:9), xout=NaN) does not seg.fault
+    o	approx(list(x=rep(NaN,9), y=1:9), xout=NaN) does not seg.fault
 	anymore (PR#6809).
 
     o	plot(1, pch=NA) does not give an error anymore and
@@ -171,9 +171,12 @@ BUG FIXES
     o	stats:::as.dendrogram.hclust() is documented and no longer re-sorts
 	the two children at each node.	This fixes as.dendrogram(hh) for
 	the case where hh is a "reordered" hclust object.
+
 	plot.dendrogram(x) now draws leaves 'x' more sensibly.
+
 	reorder.dendrogram() now results in a dendrogram with correct
 	"midpoint"s, and hence reordered dendrograms are plotted correctly.
+
 	stats:::midcache.dendrogram() and hence the reorder() and rev()
 	dendrogram methods do not return bloated dendrograms.
 
@@ -189,10 +192,14 @@ BUG FIXES
     o	jitter(x) now returns x when length(x) == 0.
 
     o	Under some rare circumstances the locale-specific tables used by
-	the perl=TRUE option to grep etc were being corrupted and so
+	the perl=TRUE option to grep() etc were being corrupted and so
 	matches were missed.
 
-    o	qbinom(*, prob = 0, lower.tail = FALSE) now properly gives 0 (PR#6972).
+    o	qbinom(*, prob = 0, lower.tail = FALSE) now properly gives 0.
+	(PR#6972)
+
+    o	Class "octmode" needed a "[" method to preserve the class: see
+	example(file.info) for an example.
 
 
 
