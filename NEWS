@@ -45,6 +45,9 @@ BUG FIXES
 	the order of evaluation of calls to random numbers was not
 	fully defined.  This affected the Mac port.
 
+    o	ppr() inside nested calls sometimes failed to find objects
+	due to a typo in the eval call in ppr.formula.
+
 
 
 		CHANGES IN R VERSION 1.2.2
