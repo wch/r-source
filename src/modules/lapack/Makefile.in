@@ -25,7 +25,7 @@ HEADERS = Lapack.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
-	README Makefile.in Makefile.win \
+	README Makefile.in Makefile.mac Makefile.win \
 	dllversion.rc $(HEADERS) $(SOURCES_C) \
 	double.f cmplx.f blas2.f cmplxblas.f lapack.mcp.hqx
 

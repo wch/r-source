@@ -11,7 +11,7 @@ subdir = src/modules
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in Makefile.win
+DISTFILES = Makefile.in Makefile.win BuildAll.mac
 
 SUBDIRS = X11 gnome internet lapack vfonts
 
