@@ -31,6 +31,8 @@ sort <- function(x, partial=NULL, na.last=NA, decreasing = FALSE,
         }
         switch(method,
                "quick" = {
+                   if(decreasing)
+                       stop("qsort only handles increasing sort")
                    y <- .Internal(qsort(x, index.return))
                },
                "shell" = {
