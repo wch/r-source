@@ -17,6 +17,13 @@ Cross-building automatically uses STAMP=NO for packages.
 
 
 
+rw1041
+======
+
+Making packages now warns if there is a configure script.
+
+
+
 rw1040
 ======
 
