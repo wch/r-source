@@ -234,7 +234,8 @@ download.packages <- function(pkgs, destdir, available = NULL,
 menuInstallCran <- function()
 {
     a <- available.packages()
-    install.packages(select.list(a[,1],,TRUE), .libPaths()[1], available=a,
+    o <- order(a[, 1])
+    install.packages(select.list(a[o,1],,TRUE), .libPaths()[1], available=a,
                      dependencies=TRUE)
 }
 
@@ -256,7 +257,10 @@ chooseCRANmirror <- function()
 {
     m <- read.csv(file.path(R.home(), "doc/CRAN_mirrors.csv"), as.is=TRUE)
     URL <- m[m[, 1] == select.list(m[,1], , FALSE, "CRAN mirror"), 'URL']
-    if(length(URL)) options(CRAN = gsub("/$", "", URL[1]))
+    if(length(URL)) {
+        URL <- gsub("/$", "", URL[1])
+        options(CRAN = sub("@CRAN@", URL, getOption("CRAN")))
+    }
 }
 
 contrib.url <- function(repos)

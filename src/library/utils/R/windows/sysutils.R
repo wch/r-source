@@ -37,7 +37,7 @@ getWindowsHandle <- function(which = "Console") {
 
 menuShowCRAN <- function()
 {
-    CRAN <- getOption("CRAN")
+    CRAN <- getOption("CRAN")[1]
     if(identical(CRAN, "@CRAN@")) CRAN <- "http://cran.r-project.org"
     shell.exec(CRAN)
 }
