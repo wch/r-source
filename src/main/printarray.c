@@ -463,9 +463,9 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
     c = INTEGER(dim)[1];
     /* PR#850 */
     if ((rl!=R_NilValue) && (r>length(rl)))
-	error("too few row labels");
+	error(_("too few row labels"));
     if ((cl!=R_NilValue) && (c>length(cl)))
-	error("too few column labels");
+	error(_("too few column labels"));
     if (r == 0 && c == 0) {
 	Rprintf("<0 x 0 matrix>\n");
 	return;

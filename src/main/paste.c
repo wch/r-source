@@ -56,18 +56,18 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 
     x = CAR(args);
     if (!isVectorList(x))
-	errorcall(call, "invalid first argument");
+	errorcall(call, _("invalid first argument"));
 
     sep = CADR(args);
     if (!isString(sep) || LENGTH(sep) <= 0)
-	errorcall(call, "invalid separator");
+	errorcall(call, _("invalid separator"));
     sep = STRING_ELT(sep, 0);
     sepw = strlen(CHAR(sep)); /* not LENGTH as might contain \0 */
 
     collapse = CADDR(args);
     if (!isNull(collapse))
 	if(!isString(collapse) || LENGTH(collapse) <= 0)
-	    errorcall(call, "invalid collapse argument");
+	    errorcall(call, _("invalid 'collapse' argument"));
 
     /* Maximum argument length and */
     /* check for arguments of list type */
@@ -76,7 +76,7 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     maxlen = 0;
     for (j = 0; j < nx; j++) {
 	if (!isString(VECTOR_ELT(x, j)))
-	    error("non-string argument to Internal paste");
+	    error(_("non-string argument to Internal paste"));
 	if(length(VECTOR_ELT(x, j)) > maxlen)
 	    maxlen = length(VECTOR_ELT(x, j));
     }
@@ -159,19 +159,19 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
     case 3:
 	nsmall = asInteger(CADDR(args));
 	if (nsmall == NA_INTEGER || nsmall < 0 || nsmall > 20)
-	    errorcall(call, "invalid \"nsmall\" argument");
+	    errorcall(call, _("invalid ;nsmall' argument"));
 	/* drop through */
     case 2:
 	trim = asLogical(CADR(args));
 	if (trim == NA_INTEGER)
-	    errorcall(call, "invalid \"trim\" argument");
+	    errorcall(call, _("invalid 'trim' argument"));
 	break;
     default:
-	errorcall(call, "incorrect number of arguments");
+	errorcall(call, _("incorrect number of arguments"));
     }
 
     if (!isVector(x = CAR(args)))
-	errorcall(call, "first argument must be atomic");
+	errorcall(call, _("first argument must be atomic"));
 
     if ((n = LENGTH(x)) <= 0)
 	return allocVector(STRSXP, 0);
@@ -236,7 +236,7 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(1);
 	break;
     default:
-	errorcall(call, "Impossible mode ( x )"); y = R_NilValue;/* -Wall */
+	errorcall(call, _("Impossible mode ( x )")); y = R_NilValue;/* -Wall */
     }
     PROTECT(y);
     if((l = getAttrib(x, R_DimSymbol)) != R_NilValue)
@@ -293,7 +293,7 @@ SEXP do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
 
     default:
-	errorcall(call, "vector arguments only");
+	errorcall(call, _("vector arguments only"));
     }
     x = allocVector(INTSXP, (n >= 0) ? 3 : 6);
     INTEGER(x)[0] = w;

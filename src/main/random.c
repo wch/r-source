@@ -31,7 +31,7 @@
 
 static void invalid(SEXP call)
 {
-    errorcall(call, "invalid arguments");
+    errorcall(call, _("invalid arguments"));
 }
 
 static Rboolean random1(double (*f) (), double *a, int na, double *x, int n)
@@ -93,10 +93,10 @@ SEXP do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    RAND1(4, rt);
 	    RAND1(5, rsignrank);
 	default:
-	    error("internal error in do_random1");
+	    error(_("internal error in do_random1"));
 	}
 	if (naflag)
-	    warningcall(call, "NAs produced");
+	    warningcall(call, _("NAs produced"));
 
 	PutRNGstate();
 	UNPROTECT(1);
@@ -175,10 +175,10 @@ SEXP do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    RAND2(11, rwilcox);
 	    RAND2(12, rnchisq);
 	default:
-	    error("internal error in do_random2");
+	    error(_("internal error in do_random2"));
 	}
 	if (naflag)
-	    warningcall(call,"NAs produced");
+	    warningcall(call, _("NAs produced"));
 
 	PutRNGstate();
 	UNPROTECT(2);
@@ -253,10 +253,10 @@ SEXP do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
 	switch (PRIMVAL(op)) {
 	    RAND3(0, rhyper);
 	default:
-	    error("internal error in do_random3");
+	    error(_("internal error in do_random3"));
 	}
 	if (naflag)
-	    warningcall(call,"NAs produced");
+	    warningcall(call, _("NAs produced"));
 
 	PutRNGstate();
 	UNPROTECT(3);
@@ -371,16 +371,16 @@ static void FixupProb(SEXP call, double *p, int n, int k, int replace)
     sum = 0.;
     for (i = 0; i < n; i++) {
 	if (!R_FINITE(p[i]))
-	    errorcall(call, "NA in probability vector");
+	    errorcall(call, _("NA in probability vector"));
 	if (p[i] < 0)
-	    errorcall(call, "non-positive probability");
+	    errorcall(call, _("non-positive probability"));
 	if (p[i] > 0) {
 	    npos++;
 	    sum += p[i];
 	}
     }
     if (npos == 0 || (!replace && k > npos))
-	errorcall(call, "insufficient positive probabilities");
+	errorcall(call, _("too few positive probabilities"));
     for (i = 0; i < n; i++)
 	p[i] /= sum;
 }
@@ -398,13 +398,13 @@ SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
     replace = asLogical(CAR(args)); args = CDR(args);
     prob = CAR(args);
     if (replace == NA_LOGICAL)
-	errorcall(call, "invalid third argument");
+	errorcall(call, _("invalid third argument"));
     if (n == NA_INTEGER || n < 1)
-	errorcall(call, "invalid first argument");
+	errorcall(call, _("invalid first argument"));
     if (k == NA_INTEGER || k < 0)
-	errorcall(call, "invalid second argument");
+	errorcall(call, _("invalid second argument"));
     if (!replace && k > n)
-	errorcall(call, "can't take a sample larger than the population\n when replace = FALSE");
+	errorcall(call, _("cannot take a sample larger than the population\n when replace = FALSE"));
     GetRNGstate();
     PROTECT(y = allocVector(INTSXP, k));
     if (!isNull(prob)) {
@@ -412,7 +412,7 @@ SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (NAMED(prob)) prob = duplicate(prob);
 	PROTECT(prob);
 	if (length(prob) != n)
-	    errorcall(call, "incorrect number of probabilities");
+	    errorcall(call, _("incorrect number of probabilities"));
 	FixupProb(call, REAL(prob), n, k, replace);
 	PROTECT(x = allocVector(INTSXP, n));
 	if (replace)
@@ -441,9 +441,9 @@ SEXP do_rmultinom(SEXP call, SEXP op, SEXP args, SEXP rho)
     n	 = asInteger(CAR(args)); args = CDR(args);/* n= #{samples} */
     size = asInteger(CAR(args)); args = CDR(args);/* X ~ Multi(size, prob) */
     if (n == NA_INTEGER || n < 0)
-	errorcall(call, "invalid first argument `n'");
+	errorcall(call, _("invalid first argument 'n'"));
     if (size == NA_INTEGER || size < 0)
-	errorcall(call, "invalid second argument `size'");
+	errorcall(call, _("invalid second argument 'size'"));
     prob = CAR(args);
     prob = coerceVector(prob, REALSXP);
     k = length(prob);/* k = #{components or classes} = X-vector length */
@@ -485,7 +485,7 @@ R_r2dtable(SEXP n, SEXP r, SEXP c)
     if(!isInteger(n) || (length(n) == 0) ||
        !isInteger(r) || (nr <= 1) ||
        !isInteger(c) || (nc <= 1))
-	error("invalid arguments");
+	error(_("invalid arguments"));
 
     n_of_samples = INTEGER(n)[0];
     row_sums = INTEGER(r);

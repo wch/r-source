@@ -75,7 +75,7 @@ static void vfonts_Init(void)
     initialized = -1;
     if(!res) return;
     if(!ptr->GEVStrWidth)
-	error("vfont routines cannot be accessed in module");
+	error(_("vfont routines cannot be accessed in module"));
     initialized = 1;
     return;
 }
@@ -94,7 +94,7 @@ double GVStrWidth (const unsigned char *s, int typeface, int fontindex,
 #ifdef SUPPORT_MBCS
     if(mbcslocale && !utf8strIsASCII(str)) {
 	buff = alloca(strlen(str)+1); /* Output string cannot be longer */
-	if(!buff) error("allocation failure in GVStrWidth");
+	if(!buff) error(_("allocation failure in GVStrWidth"));
 	mbcsToLatin1((char*) s, buff);
 	str = buff;
     }
@@ -112,7 +112,7 @@ double R_GE_VStrWidth(const unsigned char *s,
     if(initialized > 0)
 	return (*ptr->GEVStrWidth)(s, gc, dd);
     else {
-	error("Hershey fonts cannot be loaded");
+	error(_("Hershey fonts cannot be loaded"));
 	return 0.0;
     }
 }
@@ -131,7 +131,7 @@ double GVStrHeight (const unsigned char *s, int typeface, int fontindex,
 #ifdef SUPPORT_MBCS
     if(mbcslocale && !utf8strIsASCII(str)) {
 	buff = alloca(strlen(str)+1); /* Output string cannot be longer */
-	if(!buff) error("allocation failure in GVStrHeight");
+	if(!buff) error(_("allocation failure in GVStrHeight"));
 	mbcsToLatin1((char *) s, buff);
 	str = buff;
     }
@@ -149,7 +149,7 @@ double R_GE_VStrHeight(const unsigned char *s,
     if(initialized > 0)
 	return (*ptr->GEVStrHeight)(s, gc, dd);
     else {
-	error("Hershey fonts cannot be loaded");
+	error(_("Hershey fonts cannot be loaded"));
 	return 0.0;
     }
 }
@@ -175,7 +175,7 @@ void GVText (double x, double y, int unit, char *s,
 #ifdef SUPPORT_MBCS
     if(mbcslocale && !utf8strIsASCII(str)) {
 	buff = alloca(strlen(str)+1); /* Output string cannot be longer */
-	if(!buff) error("allocation failure in GVText");
+	if(!buff) error(_("allocation failure in GVText"));
 	mbcsToLatin1(s, buff);
 	str = buff;
     }
@@ -193,5 +193,5 @@ void R_GE_VText(double x, double y, char *s,
     if(initialized > 0)
 	(*ptr->GEVText)(x, y, s, x_justify, y_justify, rotation, gc, dd);
     else
-	error("Hershey fonts cannot be loaded");
+	error(_("Hershey fonts cannot be loaded"));
 }

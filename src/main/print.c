@@ -131,7 +131,7 @@ SEXP do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     naprint = CAR(a);
     if(!isNull(naprint))  {
 	if(!isString(naprint) || LENGTH(naprint) < 1)
-	    errorcall(call, "invalid na.print specification");
+	    errorcall(call, _("invalid 'na.print' specification"));
 	R_print.na_string = R_print.na_string_noquote = STRING_ELT(naprint, 0);
 	R_print.na_width = R_print.na_width_noquote =
 	    strlen(CHAR(R_print.na_string));
@@ -140,9 +140,9 @@ SEXP do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (length(rowlab) == 0) rowlab = R_NilValue;
     if (length(collab) == 0) collab = R_NilValue;
     if (!isNull(rowlab) && !isString(rowlab))
-	errorcall(call, "invalid row labels");
+	errorcall(call, _("invalid row labels"));
     if (!isNull(collab) && !isString(collab))
-	errorcall(call, "invalid column labels");
+	errorcall(call, _("invalid column labels"));
 
     printMatrix(x, 0, getAttrib(x, R_DimSymbol), quote, R_print.right,
 		rowlab, collab, rowname, colname);
@@ -169,19 +169,19 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (R_print.digits == NA_INTEGER ||
 	    R_print.digits < R_MIN_DIGITS_OPT ||
 	    R_print.digits > R_MAX_DIGITS_OPT)
-		errorcall(call, "invalid digits parameter");
+		errorcall(call, _("invalid digits argument"));
     }
     args = CDR(args);
 
     R_print.quote = asLogical(CAR(args));
     if(R_print.quote == NA_LOGICAL)
-	errorcall(call, "invalid quote parameter");
+	errorcall(call, _("invalid quote argument"));
     args = CDR(args);
 
     naprint = CAR(args);
     if(!isNull(naprint))  {
 	if(!isString(naprint) || LENGTH(naprint) < 1)
-	    errorcall(call, "invalid na.print specification");
+	    errorcall(call, _("invalid 'na.print' specification"));
 	R_print.na_string = R_print.na_string_noquote = STRING_ELT(naprint, 0);
 	R_print.na_width = R_print.na_width_noquote =
 	    strlen(CHAR(R_print.na_string));
@@ -191,18 +191,18 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!isNull(CAR(args))) {
 	R_print.gap = asInteger(CAR(args));
 	if (R_print.gap == NA_INTEGER || R_print.gap < 0)
-	    errorcall(call, "'gap' must be non-negative integer");
+	    errorcall(call, _("'gap' must be non-negative integer"));
     }
     args = CDR(args);
 
     R_print.right = asLogical(CAR(args));
     if(R_print.right == NA_LOGICAL)
-	errorcall(call, "invalid right parameter");
+	errorcall(call, _("invalid right argument"));
     args = CDR(args);
 
     tryS4 = asLogical(CAR(args));
     if(tryS4 == NA_LOGICAL)
-	errorcall(call, "invalid tryS4 internal parameter");
+	errorcall(call, _("invalid tryS4 internal argument"));
 
     if(tryS4 && isObject(x) && isMethodsDispatchOn()) {
 	SEXP class = getAttrib(x, R_ClassSymbol);
@@ -821,7 +821,7 @@ int F77_NAME(dblep0) (char *label, int *nchar, double *data, int *ndata)
 
     if(nc < 0) nc = strlen(label);
     if(nc > 255) {
-	warning("invalid character length in dblepr");
+	warning(_("invalid character length in dblepr"));
 	nc = 0;
     } else if(nc > 0) {
 	for (k = 0; k < nc; k++)
@@ -838,7 +838,7 @@ int F77_NAME(intpr0) (char *label, int *nchar, int *data, int *ndata)
 
     if(nc < 0) nc = strlen(label);
     if(nc > 255) {
-	warning("invalid character length in intpr");
+	warning(_("invalid character length in intpr"));
 	nc = 0;
     } else if(nc > 0) {
 	for (k = 0; k < nc; k++)
@@ -856,7 +856,7 @@ int F77_NAME(realp0) (char *label, int *nchar, float *data, int *ndata)
 
     if(nc < 0) nc = strlen(label);
     if(nc > 255) {
-	warning("invalid character length in realpr");
+	warning(_("invalid character length in realpr"));
 	nc = 0;
     }
     else if(nc > 0) {
@@ -866,7 +866,7 @@ int F77_NAME(realp0) (char *label, int *nchar, float *data, int *ndata)
     }
     if(nd > 0) {
 	ddata = malloc(nd*sizeof(double));
-	if(!ddata) error("memory allocation error in realpr");
+	if(!ddata) error(_("memory allocation error in realpr"));
 	for (k = 0; k < nd; k++) ddata[k] = (double) data[k];
 	printRealVector(ddata, nd, 1);
 	free(ddata);
@@ -882,5 +882,5 @@ void F77_NAME(xerbla)(char *srname, int *info)
     char buf[7];
     strncpy(buf, srname, 6);
     buf[6] = '\0';
-    error("LAPACK routine %6s gave error code %d", buf, -(*info));
+    error(_("LAPACK routine %6s gave error code %d"), buf, -(*info));
 }

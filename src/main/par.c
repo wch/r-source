@@ -62,14 +62,14 @@ void RecordGraphicsCall(SEXP call)
 
 static void par_error(char *what)
 {
-    error("invalid value specified for graphics parameter \"%s\".",  what);
+    error(_("invalid value specified for graphics parameter \"%s\""),  what);
 }
 
 
 static void lengthCheck(char *what, SEXP v, int n, SEXP call)
 {
     if (length(v) != n)
-	errorcall(call, "parameter \"%s\" has the wrong length", what);
+	errorcall(call, _("parameter \"%s\" has the wrong length"), what);
 }
 
 
@@ -364,7 +364,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	value = coerceVector(value, INTSXP);
 	np = length(value);
 	if(np != 2 && np != 4)
-	    errorcall(call, "parameter \"mfg\" has the wrong length");
+	    errorcall(call, _("parameter \"mfg\" has the wrong length"));
 	posIntCheck(INTEGER(value)[0], what);
 	posIntCheck(INTEGER(value)[1], what);
 	row = INTEGER(value)[0];
@@ -372,16 +372,16 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	nrow = Rf_dpptr(dd)->numrows;
 	ncol = Rf_dpptr(dd)->numcols;
 	if(row <= 0 || row > nrow)
-	    errorcall(call, "parameter \"i\" in \"mfg\" is out of range");
+	    errorcall(call, _("parameter \"i\" in \"mfg\" is out of range"));
 	if(col <= 0 || col > ncol)
-	    errorcall(call, "parameter \"j\" in \"mfg\" is out of range");
+	    errorcall(call, _("parameter \"j\" in \"mfg\" is out of range"));
 	if(np == 4) {
 	    posIntCheck(INTEGER(value)[2], what);
 	    posIntCheck(INTEGER(value)[3], what);
 	    if(nrow != INTEGER(value)[2])
-		warningcall(call, "value of nr in \"mfg\" is wrong and will be ignored");
+		warningcall(call, _("value of nr in \"mfg\" is wrong and will be ignored"));
 	    if(ncol != INTEGER(value)[3])
-		warningcall(call, "value of nc in \"mfg\" is wrong and will be ignored");
+		warningcall(call, _("value of nc in \"mfg\" is wrong and will be ignored"));
 	}
 	R_DEV_2(lastFigure) = nrow*ncol;
 	/*R_DEV__(mfind) = 1;*/
@@ -419,7 +419,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 
     else if (streql(what, "new")) {
 	lengthCheck(what, value, 1, call);	ix = asLogical(value);
-	if(!Rf_gpptr(dd)->state) warning("calling par(new=) with no plot");
+	if(!Rf_gpptr(dd)->state) warning(_("calling par(new=) with no plot"));
 	else R_DEV__(new) = (ix != 0);
     }
     /* -- */
@@ -569,7 +569,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	R_DEV__(ylog) = (ix != 0);
     }
 
-    else warningcall(call, "parameter \"%s\" can't be set", what);
+    else warningcall(call, _("parameter \"%s\" cannot be set"), what);
 
     return;
 } /* Specify */
@@ -616,7 +616,8 @@ void Specify2(char *what, SEXP value, DevDesc *dd, SEXP call)
     }
 
     else warning(
-	"parameter \"%s\" couldn't be set in high-level plot() function", what);
+	_("parameter \"%s\" could not be set in high-level plot() function"),
+	what);
 } /* Specify2 */
 
 
@@ -1074,7 +1075,7 @@ SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(2);
     }
     else {
-	errorcall(call, "invalid parameter passed to \"par\"");
+	errorcall(call, _("invalid parameter passed to par()"));
 	return R_NilValue/* -Wall */;
     }
     /* should really only do this if specifying new pars ?  yes! [MM] */
@@ -1144,15 +1145,15 @@ SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
     nrow = Rf_dpptr(dd)->numrows = Rf_gpptr(dd)->numrows = 
 	INTEGER(CAR(args))[0];
     if (nrow > MAX_LAYOUT_ROWS)
-	error("Too many rows in layout, limit %d", MAX_LAYOUT_ROWS);
+	error(_("Too many rows in layout, limit %d"), MAX_LAYOUT_ROWS);
     args = CDR(args);
     /* num.cols: */
     ncol = Rf_dpptr(dd)->numcols = Rf_gpptr(dd)->numcols =
 	INTEGER(CAR(args))[0];
     if (ncol > MAX_LAYOUT_COLS)
-	error("Too many columns in layout, limit %d", MAX_LAYOUT_COLS);
+	error(_("Too many columns in layout, limit %d"), MAX_LAYOUT_COLS);
     if (nrow * ncol > MAX_LAYOUT_CELLS)
-	error("Too many cells in layout, limit %d", MAX_LAYOUT_CELLS);
+	error(_("Too many cells in layout, limit %d"), MAX_LAYOUT_CELLS);
     args = CDR(args);
     /* mat[i,j] == order[i+j*nrow] : */
     for (i = 0; i < nrow * ncol; i++)
