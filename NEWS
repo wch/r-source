@@ -45,6 +45,9 @@ INSTALLATION ISSUES
 
 BUG FIXES
 
+    o   Copying lattice (grid) output to another device now works again
+        (PR #6915, #6947, and #6948).  
+
     o	pbinom(q, N, prob) is now more accurate when prob is close to 0.
 	(PR#6757)
 
