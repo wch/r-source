@@ -12,7 +12,7 @@
   also known as ``\emph{R & R}'' ---
   of the Statistics Department of the University of Auckland.
 
-  Since mid-1997 there has been a core group with access to the \R
+  Since mid-1997 there has been a core group with write access to the \R
   source, currently consisting of
 
   \itemize{%%-- should we add E-mail  and / or affiliation ?
@@ -27,11 +27,12 @@
       \item Guido Masarotto
       \item Paul Murrell
       \item Brian Ripley
-      \item Heiner Schwarte
       \item Duncan Temple Lang
       \item Luke Tierney
     }
 
+  plus Heiner Schwarte up to October 1999.
+   
   In addition, a large group of individuals has contributed to \R by
   donating code, bug reports and documentation, notably
 

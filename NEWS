@@ -74,6 +74,12 @@ NEW FEATURES
     o   x labels in boxplot now handled differently, so that math
     	expressions are allowed.
 
+    o	postscript() argument `onefile' now does something, and there
+	is a new paper type `special' and new argument `pagecentre'.
+	See ?postscript for details.
+
+    o	Experimental function dev2bitmap() to copy to a bitmap graphics format.
+
 
 BUG FIXES
 

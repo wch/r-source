@@ -34,8 +34,7 @@ source code CVS archive.  The group currently consists of
 	Douglas Bates, Peter Dalgaard, Robert Gentleman,
 	Kurt Hornik, Ross Ihaka, Friedrich Leisch, Thomas Lumley,
 	Martin Maechler, Guido Masarotto, Paul Murrell, 
-	Brian Ripley, Heiner Schwarte, Duncan Temple Lang 
-	and Luke Tierney.
+	Brian Ripley, Duncan Temple Lang and Luke Tierney.
 
 As noted above, discussions of the development process take
 place in the r-devel mailing list.
