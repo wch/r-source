@@ -53,6 +53,9 @@
 /* Define if you have the bzip2 headers and libraries. */
 /* #undef HAVE_BZLIB */
 
+/* Define if you have the `chdir' function. */
+#define HAVE_CHDIR 1
+
 /* Define to 1 if you have the declaration of `acosh', and to 0 if you don't.
    */
 #define HAVE_DECL_ACOSH 0
