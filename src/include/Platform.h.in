@@ -5,10 +5,7 @@
 
 /* (Long) Integers */
 
-/* --- FIXME: This is NOT YET set by  ../../configure.in
- * Kurt knows how to use  AC_CHECK_SIZEOF(..) to do this
- */
-#define LONG_32_BITS
+#undef LONG_32_BITS
 
 /* Floating Point Arithmetic */
 #undef HAVE_MATHERR		/* System V */
