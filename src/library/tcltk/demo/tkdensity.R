@@ -85,12 +85,9 @@ local({
     tclvar$kernel<- "gaussian"
     tclvar$bw    <- 1
     cat("******************************************************\n",
-        "The source for this demo can be found in the file:\n", 
-        paste(R.home(),"demos","tcltk","tkdensity.R", sep=.Platform$file.sep),
+        "The source for this demo can be found in the file:\n",
+        file.path(system.file(), "tcltk", "demo", "tkdensity.R"),
         "\n******************************************************\n")
 
     regen()
 })
-
-
-

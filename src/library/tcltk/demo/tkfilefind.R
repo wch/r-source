@@ -61,8 +61,8 @@ local({
         sep="\n")
 
     cat("******************************************************\n",
-        "The source for this demo can be found in the file:\n", 
-        paste(R.home(),"demos","tcltk","tkfilefind.R", sep=.Platform$file.sep),
+        "The source for this demo can be found in the file:\n",
+        file.path(system.file(), "tcltk", "demo", "tkfilefind.R"),
         "\n******************************************************\n")
 
 

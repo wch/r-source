@@ -20,11 +20,7 @@ local({
     tkfocus(txt)
 
     cat("******************************************************\n",
-        "The source for this demo can be found in the file:\n", 
-        paste(R.home(),"demos","tcltk","tkfaq.R", sep=.Platform$file.sep),
+        "The source for this demo can be found in the file:\n",
+        file.path(system.file(), "tcltk", "demo", "tkfaq.R"),
         "\n******************************************************\n")
 })
-
-
-
-

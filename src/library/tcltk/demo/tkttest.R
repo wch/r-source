@@ -62,8 +62,8 @@ local({
     }
 
     cat("******************************************************\n",
-        "The source for this demo can be found in the file:\n", 
-        paste(R.home(),"demos","tcltk","tkttest.R", sep=.Platform$file.sep),
+        "The source for this demo can be found in the file:\n",
+        file.path(system.file(), "tcltk", "demo", "tkttest.R"),
         "\n******************************************************\n")
     
     data(airquality)
