@@ -68,15 +68,20 @@ OBJS = $(SRCS_C:.c=.o) \
 
 LIB = libappl.a
 
-all: Makefile R
+all: Makefile Makedeps R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(DEPS)
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
-	@cat $(DEPS) >> $@
 
-R: Makefile $(LIB)
+Makedeps: Makefile
+	@cat $(DEPS) >> $<
+	@touch $@
+
+R: Makefile
+	@$(MAKE) Makedeps
+	@$(MAKE) $(LIB)
 
 $(LIB):	$(OBJS)
 	$(AR) cr $(LIB) $(OBJS)

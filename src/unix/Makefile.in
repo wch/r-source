@@ -31,7 +31,7 @@ OBJS = $(SRCS:.c=.o)
 
 LIB = libunix.a
 
-all: Makefile R
+all: Makefile Makedeps R
 
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
@@ -41,9 +41,14 @@ Makefile: $(srcdir)/Makefile.in \
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
-	@cat $(DEPS) >> $@
 
-R: Makefile $(LIB)
+Makedeps: Makefile
+	@cat $(DEPS) >> $<
+	@touch $@
+
+R: Makefile
+	@$(MAKE) Makedeps
+	@$(MAKE) $(LIB)
 
 ../include/FFDecl.h ../include/FFTab.h: $(top_srcdir)/src/appl/ROUTINES
 	(cd ../include; $(top_srcdir)/tools/GETSYMBOLS)
