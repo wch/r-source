@@ -31,6 +31,12 @@ Added winMenuNames() and winMenuItems() functions to query user menus.
 Added menu items for www.r-project.org and CRAN on the help menu. 
 (Wishlist PR#6492)
 
+Added "R" command to be similar to Unix invocaton of scripts, e.g.
+"R CMD INSTALL" replaces "Rcmd INSTALL".  Rcmd still exists for 
+backwards compatibility.
+
+
+
 
 Installation
 ------------
@@ -65,10 +71,10 @@ Cross-building of R itself now works again.  (It had been broken since
 Building/installing packages
 ----------------------------
 
-Rcmd INSTALL/build/check map path names with spaces in to their short
+R CMD INSTALL/build/check map path names with spaces in to their short
 forms.
 
-Rcmd INSTALL now supports versioned install via --with-package-versions.
+R CMD INSTALL now supports versioned install via --with-package-versions.
 
 Installing (binary) package bundles now checks the MD5 sums and
 reports success, just as for packages.
@@ -117,7 +123,7 @@ line.  (PR#5593)
 
 Fixed junk character at start of a pipe(). (PR#5053)
 
-Rcmd SHLIB was computing dependencies for all C files, not just those
+R CMD SHLIB was computing dependencies for all C files, not just those
 specified on the command line, and building the DLL from all *.o files
 in the directory.
 

@@ -322,7 +322,7 @@ LaTeX installed you can print help files by @code{help(fn_name, offline=TRUE)}.
 @node Can I use R BATCH?, Can I use @RWVER@ with ESS and (X)emacs?, How do I print from R?, Installation and Usage
 @section Can I use @code{R BATCH}?
 
-Yes.  The Windows analogue is @code{Rcmd BATCH}: use @code{Rcmd BATCH
+Yes: use @code{R CMD BATCH
 --help} for full details.  (Perl is no longer required.)
 
 You can set also up a batch file using @code{Rterm.exe}.  A sample
@@ -584,9 +584,9 @@ necessary files from @code{@RWVER@.exe}.  Then read the file
 @file{readme.packages}.  You will need to collect and install several
 tools to use this: you can download them via the portal at
 @uref{http://www.stats.ox.ac.uk/pub/Rtools/}.  Once you have done so,
-just run @code{Rcmd INSTALL pkgname}.  To check the package (including
+just run @code{R CMD INSTALL pkgname}.  To check the package (including
 running all the examples on its help pages and in its test suite, if
-any) use @code{Rcmd check pkgname}: see the @emph{`Writing R
+any) use @code{R CMD check pkgname}: see the @emph{`Writing R
 Extensions'} manual.
 
 Note that this is rather tricky; please do ensure that you have followed
@@ -1002,10 +1002,10 @@ install the parts of the R system for building R packages (in
 compilers mentioned in the file @file{readme.packages} contained
 therein.  Then you can use
 @example
-...\bin\Rcmd SHLIB foo.c bar.f
+...\bin\R CMD SHLIB foo.c bar.f
 @end example
 @noindent
-to make @code{foo.dll}.  Use @code{...\bin\Rcmd SHLIB --help} for
+to make @code{foo.dll}.  Use @code{...\bin\R CMD SHLIB --help} for
 further options, or see @code{?SHLIB}.
 
 If you want to use Visual C++, Borland C++ or other compilers, see the
@@ -1106,7 +1106,7 @@ as in the example in @emph{`Writing R Extensions'}.  Then build the DLL by
 (@code{gcc})
 
 @example
-...\bin\Rcmd SHLIB X.cc X_main.cc
+...\bin\R CMD SHLIB X.cc X_main.cc
 @end example
 @noindent
 or (VC++, which requires extension @code{.cpp})

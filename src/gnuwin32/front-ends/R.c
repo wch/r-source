@@ -20,10 +20,21 @@
 #define NONAMELESSUNION
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 extern int rcmdfn (int cmdarg, int argc, char **argv); /* in rcmdfn.c */
 
 int main (int argc, char **argv)
 {
-    exit(rcmdfn(1, argc, argv));
-}
+    int cmdarg = 0;
+
+    if (argc > 1) {
+	if (strcmp(argv[1], "CMD") == 0) cmdarg = 2;
+	else if (strcmp(argv[1], "BATCH") == 0
+		|| strcmp(argv[1], "SHLIB") == 0
+		|| strcmp(argv[1], "INSTALL") == 0
+	 	|| strcmp(argv[1], "REMOVE") == 0) cmdarg = 1;
+    }
+
+    exit(rcmdfn(cmdarg, argc, argv));
+ }

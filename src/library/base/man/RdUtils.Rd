@@ -10,18 +10,16 @@
   in other formats to Rd format.
 }
 \usage{
-#ifdef unix
+
 R CMD Rdconv [options] file
+#ifdef unix
 R CMD Rd2dvi [options] files
-R CMD Rd2txt [options] file
-R CMD Sd2Rd [options] file
 #endif
 #ifdef windows
-Rcmd Rdconv [options] file
-Rcmd Rd2dvi.sh [options] files
-Rcmd Rd2txt [options] file
-Rcmd Sd2Rd [options] file
+R CMD Rd2dvi.sh [options] files
 #endif
+R CMD Rd2txt [options] file
+R CMD Sd2Rd [options] file
 }
 \arguments{
   \item{file}{the path to a file to be processed.}
@@ -44,12 +42,7 @@ Rcmd Sd2Rd [options] file
   format.
 
   Use
-#ifdef unix
   \code{R CMD foo --help}
-#endif
-#ifdef windows
-  \code{Rcmd foo --help}
-#endif
   to obtain usage information on utility \code{foo}.  
 }
 \note{

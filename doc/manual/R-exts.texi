@@ -110,9 +110,9 @@ before reading on.  If the package you are writing uses the
 @pkg{methods} package, look at the corresponding section in
 @code{?INSTALL}.
 
-Once a source package is created, it must be installed.  Under
-Unix-alikes that is done by @code{R CMD INSTALL}.  Under Windows,
-@code{Rcmd INSTALL} is used, but please see the file
+Once a source package is created, it must be installed by 
+the command @code{R CMD INSTALL}.  Under Windows,
+please see the file
 @file{readme.packages} (in the top-level directory of the binary
 installation) for the tools that you need to have installed.
 
@@ -727,8 +727,7 @@ The macro @code{BLAS_LIBS} should always be included @emph{after}
 
 @findex R CMD check
 Using @code{R CMD check}, the @R{} package checker, one can test whether
-@emph{source} @R{} packages work correctly.  (Under Windows the
-equivalent command is @code{Rcmd check}.)  This runs a series of checks.
+@emph{source} @R{} packages work correctly.  This runs a series of checks.
 
 @enumerate
 @item
@@ -810,7 +809,7 @@ version of the package's manual is created (to check that the Rd files
 can be converted successfully).
 @end enumerate
 
-Use @kbd{R CMD check --help} (@kbd{Rcmd check --help} on Windows) to
+Use @kbd{R CMD check --help} to
 obtain more information about the usage of the @R{} package checker.
 A subset of the checking steps can be selected by
 adding flags.
@@ -818,8 +817,7 @@ adding flags.
 @findex R CMD build
 @cindex Package builder
 Using @code{R CMD build}, the @R{} package builder, one can build R
-packages from their sources (for example, for subsequent release).  The
-Windows equivalent is @code{Rcmd build}.
+packages from their sources (for example, for subsequent release). 
 
 Prior to actually building the package in the common gzipped tar file
 format, a few diagnostic checks and cleanups are performed.  In
@@ -847,7 +845,7 @@ excluded by default.
 @c 1.13.17).
 @c @end quotation
 
-Use @kbd{R CMD build --help} (@kbd{Rcmd build --help} on Windows) to
+Use @kbd{R CMD build --help} to
 obtain more information about the usage of the @R{} package builder.
 
 @code{R CMD build} can also build pre-compiled version of packages for
@@ -861,7 +859,7 @@ you will need to set it in the environment.
 @end quotation
 
 @quotation
-@strong{Note to Windows users:} @code{Rcmd check} and @code{Rcmd build}
+@strong{Note to Windows users:} @code{R CMD check} and @code{R CMD build}
 work well under Windows NT4/2000/XP but may not work correctly on Windows
 95/98/ME because of problems with some versions of Perl on those limited
 OSes.  Experiences vary.
@@ -2229,8 +2227,8 @@ above commands can be obtained by running @code{R CMD @var{command}
 --help}, e.g., @kbd{R CMD Rdconv --help}.  All available commands can be
 listed using @kbd{R --help}.
 
-All of these have Windows equivalents.  For most just replace @samp{R
-CMD} by @samp{Rcmd}, with the exception that it is @code{Rcmd Rd2dvi.sh}
+All of these have Windows equivalents.  For most the identical command works.
+One exception that it is @code{R CMD Rd2dvi.sh}
 (and that needs the tools to build packages from source to be
 installed).  (You will need the files in the @R{} binary Windows
 distribution for installing source packages to be installed.)
@@ -2412,7 +2410,7 @@ This often produces surprising results and can be used to identify
 bottlenecks or pieces of @R{} code that could benefit from being
 replaced by compiled code.
 
-@code{R CMD Rprof} (or @code{Rcmd Rprof} under Windows) uses a Perl
+@code{R CMD Rprof} uses a Perl
 script that may be much faster than @code{summaryRprof} for large files
 (about 4 times faster for the example above). On the other hand
 @code{summaryRprof} does not require Perl and provides the results as an
@@ -2885,7 +2883,7 @@ needs to ensure that the shared object created is linked against all
 FORTRAN 77 intrinsic and run-time libraries that @R{} was linked
 against; Make variable @code{FLIBS} contains this information.
 
-The Windows equivalent is the command @code{Rcmd SHLIB}; files
+In Windows the same command works, but files
 @file{Makevars.win} or @file{Makefile.win} are used in preference to
 @file{Makevars} or @file{Makefile} if they exist.  (This does need the
 files in the @R{} binary Windows distribution for installing source

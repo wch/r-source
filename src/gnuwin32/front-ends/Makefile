@@ -13,7 +13,7 @@ CFLAGS=$(OPTFLAGS) -I../../include
 
 all: ../../../bin/Rgui.exe ../../../bin/Rterm.exe \
      ../../../bin/Rcmd.exe  ../../../bin/RSetReg.exe  \
-    ../../../bin/Rproxy.dll
+     ../../../bin/Rproxy.dll ../../../bin/R.exe
 
 ../../../bin/Rgui.exe: Rgui.exe
 	$(MKDIR) -p ../../../bin
@@ -30,6 +30,10 @@ all: ../../../bin/Rgui.exe ../../../bin/Rterm.exe \
 ../../../bin/RSetReg.exe: RSetReg.exe
 	$(MKDIR) -p ../../../bin
 	$(CP) $^ $@
+	
+../../../bin/R.exe: R.exe
+	$(MKDIR) -p ../../../bin
+	$(CP) $^ $@	
 
 graphappmain.o: ../graphapp/graphappmain.c
 	$(CC) -c -o $@ -I../graphapp $(CFLAGS) $^
@@ -46,7 +50,9 @@ Rgui.exe: graphappmain.o  rgui.o rgico.o
 
 Rterm.exe: graphappmain.o rterm.o rtico.o
 
-Rcmd.exe: rcmd.o ../rhome.o rcico.o
+Rcmd.exe: rcmd.o ../rhome.o rcico.o rcmdfn.o
+
+R.exe: R.o ../rhome.o rcico.o rcmdfn.o
 
 RSetReg.exe: RSetReg.o ../rhome.o rcico.o
 
@@ -56,7 +62,7 @@ Rpwd:
 
 Rpwd.exe: rpwd.o rcico.o
 
-rcmd.o rgui.o rterm.o RSetReg.o rproxy_impl.o rgico.o rtico.o rcico.o: ../../include/Rversion.h
+rcmd.o R.o rgui.o rterm.o RSetReg.o rproxy_impl.o rgico.o rtico.o rcico.o: ../../include/Rversion.h
 
 clean:
 	$(RM) *.o *.obj *.exe *~ *.exp *.def *.dll *.lib

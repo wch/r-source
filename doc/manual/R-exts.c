@@ -1,7 +1,6 @@
-/* 
+/*
      C code of the .Call/.External examples in `Writing R extensions'
-     Compile under Unix with R CMD SHLIB R-exts.c
-             under Windows   Rcmd  SHLIB R-exts.c
+     Compile with R CMD SHLIB R-exts.c
      The use the R code in R-exts.R
  */
 

@@ -1,7 +1,7 @@
 \name{INSTALL}
 \title{Install Add-on Packages from Sources}
 \alias{INSTALL}
-\usage{Rcmd INSTALL [options] [-l lib] pkgs}
+\usage{R CMD INSTALL [options] [-l lib] pkgs}
 \arguments{
   \item{pkgs}{A list with the path names of the sources of the
     packages to be installed.}
@@ -10,14 +10,14 @@
     particular the process for building the help files can be
     Options should only be given once, and paths including spaces should
     be quoted.
-    Use \code{Rcmd INSTALL --help} for the current list of options.}
+    Use \code{R CMD INSTALL --help} for the current list of options.}
 }
 \description{
   To install packages into the default library tree (which is rooted at
-  \file{\$R\_HOME/library}), do \code{Rcmd INSTALL pkgs}.
+  \file{\$R\_HOME/library}), do \code{R CMD INSTALL pkgs}.
 
   To install into the library tree \code{lib} instead of the default
-  one, use \code{Rcmd INSTALL -l lib pkgs}.
+  one, use \code{R CMD INSTALL -l lib pkgs}.
 }
 \details{
   Windows Perl and the files for installing from source packages need to
@@ -46,7 +46,7 @@
   or \code{chm} (the default, text, HTML and CHTML) or \code{winhlp} or
   \code{all} (adding old-style Windows \code{.hlp} files, no longer tested).
 
-  Use \code{Rcmd INSTALL --help} for more usage information.
+  Use \code{R CMD INSTALL --help} for more usage information.
 }
 
 \section{Packages using the methods package}{

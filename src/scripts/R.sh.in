@@ -103,10 +103,10 @@ while test -n "${1}"; do
     RHOME|--print-home)
       echo "${R_HOME}"; exit 0 ;;
     BATCH|COMPILE|INSTALL|REMOVE|SHLIB)
-      exec sh "${R_HOME}/bin/Rcmd" "${@}" ;;
+      exec sh "${R_HOME}/bin/R CMD" "${@}" ;;
     CMD)
       shift;
-      exec sh "${R_HOME}/bin/Rcmd" "${@}" ;;
+      exec sh "${R_HOME}/bin/R CMD" "${@}" ;;
     --gnome)
       error "option '${1}' is defunct, use '--gui=gnome'"
       ;;

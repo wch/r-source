@@ -8,14 +8,8 @@
   them.
 }
 \usage{
-#ifdef unix
 R CMD build [options] pkgdirs
 R CMD check [options] pkgdirs
-#endif
-#ifdef windows
-Rcmd build [options] pkgdirs
-Rcmd check [options] pkgdirs
-#endif
 }
 \arguments{
   \item{pkgdirs}{a list of names of directories with sources of \R
@@ -24,32 +18,17 @@ Rcmd check [options] pkgdirs
     obtaining information about usage and version of the utility.}
 }
 \details{
-#ifdef unix
   \code{R CMD check}
-#endif
-#ifdef windows
-  \code{Rcmd check}
-#endif
   checks \R add-on packages from their sources, performing a wide
   variety of diagnostic checks.
 
-#ifdef unix
   \code{R CMD build}
-#endif
-#ifdef windows
-  \code{Rcmd build}
-#endif
   builds \R source or binary packages from their sources.  It will
   create index files in the sources if necessary, so it is often helpful
   to run \code{build} before \code{check}.
 
   Use
-#ifdef unix
   \code{R CMD foo --help}
-#endif
-#ifdef windows
-  \code{Rcmd foo --help}
-#endif
   to obtain usage information on utility \code{foo}.
 
   Several of the options to \code{build --binary} are passed to
