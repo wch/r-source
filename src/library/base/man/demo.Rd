@@ -27,7 +27,10 @@ demo(topic, device = getOption("device"),
 \examples{
 % Most demos are strictly tested anyway, since R 1.3.0,
 % make sure, the others are run here: 
-demo() # gives list
+demo() # for attached packages
+
+## All available demos:
+demo(package = .packages(all.available = TRUE))
 
 demo(lm.glm)
 \testonly{
