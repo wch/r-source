@@ -551,6 +551,9 @@ DOCUMENTATION
 	name and version at the top.
 
     o   All manuals in the 2.x series have new ISBN numbers.
+
+    o   The 'R Data Import/Export' manual has been revised and has a
+	new chapter on `Reading Excel spreadsheets'.
     
 
 C-LEVEL FACILITIES

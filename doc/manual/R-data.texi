@@ -71,6 +71,7 @@ The current version of this document is @value{VERSION}.
 * Binary files::                
 * Connections::                 
 * Network interfaces::          
+* Reading Excel spreadsheets::  
 * References::                  
 * Function and variable index::  
 * Concept index::               
@@ -92,15 +93,13 @@ principal authors of the packages mentioned are
 @item @pkg{e1071} @tab Friedrich Leisch
 @item @pkg{foreign} @tab Thomas Lumley, Saikat DebRoy, Douglas Bates and Duncan Murdoch
 @item @pkg{hdf5} @tab Marcus Daniels
-@item @pkg{Java} @tab John Chambers and Duncan Temple Lang
+@item @pkg{SJava} @tab John Chambers and Duncan Temple Lang
 @item @pkg{ncdf} @tab David Pierce
 @item @pkg{RNetCDF} @tab Pavel Michna
 @item @pkg{RMySQL} @tab David James and Saikat DebRoy
 @item @pkg{RODBC} @tab Michael Lapsley and Brian Ripley
 @item @pkg{RSPerl} @tab Duncan Temple Lang
-@item @pkg{RPgSQL} @tab Timothy Keitt
 @item @pkg{RSPython} @tab Duncan Temple Lang
-@c @item @pkg{Rstreams} @tab Brian Ripley and Duncan Murdoch
 @end multitable
 @end quotation
 
@@ -121,20 +120,20 @@ Some of the packages described are still under development but they
 already provide useful functionality.
 
 Unless otherwise stated, everything described in this manual is
-available for both Unix/Linux and Windows versions of @R{}.
+available on all platforms running @R{}.
 
 In general, statistical systems like @R{} are not particularly well
 suited to manipulations of large-scale data.  Some other systems are
 better than @R{} at this, and part of the thrust of this manual is to
 suggest that rather than duplicating functionality in @R{} we can make
-the other system do the work!  (For example Therneau & Grambsch (2000)
+another system do the work!  (For example Therneau & Grambsch (2000)
 comment that they prefer to do data manipulation in SAS and then use
 @pkg{survival} in @Sl{} for the analysis.)  Several recent packages
 allow functionality developed in languages such as @code{Java},
 @code{perl} and @code{python} to be directly integrated with @R{} code,
 making the use of facilities in these languages even more
-appropriate.  (See the @pkg{Java}, @pkg{RSPerl} and @pkg{RSPython}
-packages.)
+appropriate.  (See the @pkg{SJava}, @pkg{RSPerl} and @pkg{RSPython}
+packages from the Omegahat project, @uref{http://www.omeghat.org}.)
 
 
 
@@ -177,7 +176,8 @@ export the data as a text file (and statistical consultants will have
 copies of the commonest applications on their computers for that
 purpose).  However, this is not always possible, and @ref{Importing from
 other statistical systems} discusses what facilities are available to
-access such files directly from @R{}.
+access such files directly from @R{}.  For Excel spreadsheets, the
+available methods are summarized in @ref{Reading Excel spreadsheets}.
 
 In a few cases, data have been stored in a binary form for compactness
 and speed of access.  One application of this that we have seen several
@@ -205,7 +205,10 @@ convenient interchange vehicle.  (If a binary file is required, see
 @findex cat
 Function @code{cat} underlies the functions for exporting data.  It
 takes a @code{file} argument, and the @code{append} argument allows a
-text file to be written via successive calls to @code{cat}.
+text file to be written via successive calls to @code{cat}.  Better,
+especially if this is to be done many times, is to open a @code{file}
+connection for writing or appending, and @code{cat} to that connection,
+then @code{close} it.
 
 @findex write
 @findex write.table
@@ -341,7 +344,8 @@ data and code.
 
 A description of the facilities of the @pkg{XML} package is outside the
 scope of this document: see the package's Web page at
-@uref{http://www.omegahat.org/RSXML} for details and examples.
+@uref{http://www.omegahat.org/RSXML} for details and examples.  Package
+@pkg{StatDataML} on CRAN is one example building on @pkg{XML}
 
 
 @node Spreadsheet-like data, Importing from other statistical systems, Introduction, Top
@@ -499,11 +503,15 @@ safer (and may be faster) to use @code{comment.char = ""}.
 @findex read.delim
 @findex read.delim2
 @cindex CSV files
+@findex Sys.localeconv
+@cindex locales
 Convenience functions @code{read.csv} and @code{read.delim} provide
 arguments to @code{read.table} appropriate for CSV and tab-delimited
 files exported from spreadsheets in English-speaking locales.  The
 variations @code{read.csv2} and @code{read.delim2} are appropriate for
 use in countries where the comma is used for the decimal point.
+You can find the current settings of the computer in use by calling
+@code{Sys.localeconv()}.
 
 If the options to @code{read.table} are specified incorrectly, the error
 message will usually be of the form
@@ -512,8 +520,10 @@ message will usually be of the form
 Error in scan(file = file, what = what, sep = sep, : 
         line 1 did not have 5 elements
 @end smallexample
+
 @noindent
 or
+
 @smallexample
 Error in read.table("files.dat", header = TRUE) : 
         more columns than column names
@@ -549,6 +559,12 @@ This is adequate for small files, but for anything more complicated we
 recommend using the facilities of a language like @code{perl} to
 pre-process the file.
 @cindex perl
+
+
+@findex read.fortran
+Function @code{read.fortran} is a similar function for fixed-format files,
+using Fortran-style column specifications.
+
 
 @node Using scan directly, Re-shaping data, Fixed-width-format files, Spreadsheet-like data
 @section  Using @code{scan} directly
@@ -655,6 +671,7 @@ useful for exporting data.
 @findex reshape
 Another way to do this is to use the function
 @code{reshape}, by
+
 @smallexample
 > reshape(zz, idvar="id",timevar="var",
   varying=list(c("V1","V2","V3","V4")),direction="long")
@@ -753,10 +770,10 @@ some cases these function may require substantially less memory than
 @cindex Stata
 @findex read.dta
 @findex write.dta
-Stata @file{.dta} files are a binary file format. Files from versions
-5.0, 6.0 and 7.0 of Stata can be read and written by functions
-@code{read.dta} and @code{write.dta}. Stata variables with value labels
-are optionally converted to (and from) @R{} factor. 
+Stata @file{.dta} files are a binary file format. Files from versions 5,
+6, 7/SE and 8 of Stata can be read and written by functions
+@code{read.dta} and @code{write.dta}.  Stata variables with value labels
+are optionally converted to (and from) @R{} factor.
 
 @cindex EpiInfo
 @cindex EpiData
@@ -777,7 +794,8 @@ and return a list of data frames.  If SAS is available on your system,
 function @code{read.ssd} can be used to create and run a SAS script that
 saves a SAS permanent dataset (@code{.ssd} or @code{.sas7bdat}) in
 Transport format.  It then calls @code{read.xport} to read the resulting
-file.
+file.  Package @pkg{HMisc} has a similar function @code{sas.get}, also
+running SAS.
 
 @cindex SPSS
 @cindex SPSS Data Entry
@@ -788,7 +806,7 @@ component for each variable in the saved data set. @acronym{SPSS}
 variables with value labels are optionally converted to @R{} factors.
 
 @acronym{SPSS} Data Entry is an application for creating data entry
-forms. By default it creates data files with extra formatting
+forms.  By default it creates data files with extra formatting
 information that @code{read.spss} cannot handle, but it is possible to
 export the data in an ordinary @acronym{SPSS} format.
 
@@ -813,7 +831,7 @@ If you have access to S-PLUS, it is usually more reliable to @code{dump}
 the object(s) in S-PLUS and @code{source} the dumpfile in @R{}.  For
 S-PLUS 5.x and 6.x you may need to use @code{dump(..., oldStyle=T)}, and
 to read in very large objects it may be preferable to use the dumpfile
-as a batch script rather than @code{source}.
+as a batch script rather than use the @code{source} function.
 
 
 @node Octave,  , EpiInfo Minitab SAS S-PLUS SPSS Stata, Importing from other statistical systems
@@ -845,7 +863,7 @@ There are limitations on the types of data that @R{} handles well.
 Since all data being manipulated by @R{} are resident in memory, and
 several copies of the data can be created during execution of a
 function, @R{} is not well suited to extremely large data sets.  Data
-objects that are more than a few (tens of) megabytes in size can cause
+objects that are more than a (few) hundred megabytes in size can cause
 @R{} to run out of memory.
 
 @R{} does not easily support concurrent access to data.  That is, if
@@ -895,7 +913,7 @@ Oracle}; @uref{http://www.sybase.com, Sybase}; IBM's DB/2; Microsoft
 (such as MySQL, PostgreSQL, Microsoft Access, @dots{}), the former
 marked out by much greater emphasis on data security features.  The line
 is blurring, with the Open Source PostgreSQL having more and more
-high-end features, and `free' versions of Informix, Oracle and Sysbase
+high-end features, and `free' versions of Informix, Oracle and Sybase
 being made available on Linux.
 
 @cindex ODBC
@@ -905,7 +923,7 @@ non-relational databases and even text files (possibly compressed).
 Open Database Connectivity (@acronym{ODBC}) is a standard to use all of
 these data sources.  It originated on Windows (see
 @uref{http://www.microsoft.com/data/odbc/}) but is also implemented on
-Linux.
+Linux/Unix.
 
 All of the packages described later in this chapter provide clients to
 client/server databases.  The database can reside on the same machine or
@@ -942,7 +960,7 @@ they are made up of @emph{columns} or @emph{fields} of one type
 database.  The classical query is a SELECT statement of the type
 
 @smallexample
-SELECT State, Murder FROM USArrests WHERE rape > 30 ORDER BY Murder
+SELECT State, Murder FROM USArrests WHERE Rape > 30 ORDER BY Murder
 
 SELECT t.sch, c.meanses, t.sex, t.achieve
   FROM student as t, school as c WHERE t.sch = c.id
@@ -1001,24 +1019,6 @@ data types is DBMS-specific, but the @acronym{SQL} standard defines many
 types, including the following that are widely implemented (often not by
 the @acronym{SQL} name).
 
-@c  @quotation
-@c  @multitable {Data type name varying} {A longgggggggggggggggggggg description}
-
-@c  @item name @tab  description
-
-@c  @item @code{float(p)}   @tab Real number, with optional precision
-@c  @item @code{integer}   @tab 32-bit integer
-@c  @item @code{smallint}  @tab 16-bit integer
-@c  @item @code{character(n)}   @tab fixed-length character string
-@c  @item @code{character varying(n)} @tab variable-length character string
-@c  @item @code{boolean}  @tab true or false.
-@c  @item @code{date}  @tab calendar date
-@c  @item @code{time}  @tab time of day
-@c  @item @code{timestamp}  @tab date and time
-
-@c  @end multitable
-@c  @end quotation
-
 @table @code
 @item float(@var{p})
 Real number, with optional precision.  Often called @code{real} or
@@ -1030,9 +1030,10 @@ Real number, with optional precision.  Often called @code{real} or
 @item character(@var{n})
 fixed-length character string.  Often called @code{char}.
 @item character varying(@var{n})
-variable-length character string.  Often called @code{varchar}.
+variable-length character string.  Often called @code{varchar}.  Almost
+always has a limit of 255 chars.
 @item boolean
-true or false.  Sometimes called @code{bool}.
+true or false.  Sometimes called @code{bool} or @code{bit}.
 @item date
 calendar date
 @item time
@@ -1043,7 +1044,8 @@ date and time
 
 @noindent
 There are variants on @code{time} and @code{timestamp}, @code{with
-timezone}.
+timezone}.  Other types widely implemented are @code{text} and
+@code{blob}, for large blocks of text and binary data, respectively.
 
 The more comprehensive of the @R{} interface packages hide the type
 conversion issues from the user.
@@ -1056,8 +1058,7 @@ communicate with DBMSs.  They provide different levels of abstraction.
 Some provide means to copy whole data frames to and from databases.  All
 have functions to select data within the database via @acronym{SQL}
 queries, and to retrieve the result as a whole as a
-data frame or in pieces (usually as groups of rows, but @pkg{RPgSQL} can
-retrieve columns).  
+data frame or in pieces (usually as groups of rows).  
 
 All except @pkg{RODBC} are tied to one DBMS, but work is in progress
 towards a unified `front-end' package @pkg{DBI}
@@ -1066,11 +1067,15 @@ towards a unified `front-end' package @pkg{DBI}
 are the back-ends @pkg{ROracle} and @pkg{RSQLite} (which works with the
 included DBMS @code{SQLite}, @uref{http://www.hwaci.com/sw/sqlite}).
 
+Two earlier packages @pkg{RmSQL} and @pkg{RPgSQL} are now unsupported
+and in the development area on CRAN: the BioConductor project has
+@pkg{RdbiPgSQL}.  @pkg{PL/R} (@uref{http://www.joeconway.com/plr/}) is a
+project to embed R into PostgreSQL.
+
 
 @menu
 * DBI / RMySQL::                
 * RODBC::                       
-* RPgSQL::                      
 @end menu
 
 
@@ -1084,7 +1089,6 @@ MySQL database system (see @uref{http://www.mysql.com} and Dubois,
 versions had a substantially different interface.  The current version
 requires the @pkg{DBI} package, and this description will apply with
 minor changes to all the other back-ends to @pkg{DBI}.
-
 
 MySQL exists on Unix/Linux and Windows: as from version 3.23.x (Jan 2001)
 it is released under GPL.  MySQL is a `light and lean' database.  (It
@@ -1147,9 +1151,9 @@ Alaska           10.0     263       48 44.5
 Arizona           8.1     294       80 31.0
 Arkansas          8.8     190       50 19.5
 ...
-## Select from the loaded table: all on one line
-> dbGetQuery(con, "select row_names, Murder from arrests 
-                   where Rape > 30 order by Murder")
+## Select from the loaded table
+> dbGetQuery(con, paste("select row_names, Murder from arrests",
+                        "where Rape > 30 order by Murder"))
    row_names Murder
 1   Colorado    7.9
 2    Arizona    8.1
@@ -1163,7 +1167,7 @@ Arkansas          8.8     190       50 19.5
 > dbDisconnect(con)
 @end smallexample
 
-@node RODBC, RPgSQL, DBI / RMySQL, R interface packages
+@node RODBC,  , DBI / RMySQL, R interface packages
 @subsection Package RODBC
 @cindex ODBC
 @cindex Open Database Connectivity
@@ -1171,10 +1175,13 @@ Arkansas          8.8     190       50 19.5
 Package @pkg{RODBC} on @acronym{CRAN} provides an interface to database
 sources supporting an @acronym{ODBC} interface.  This is very widely
 available, and allows the same @R{} code to access different database
-systems.  @pkg{RODBC} runs on both Linux and Windows, and many database
-systems provide support for @acronym{ODBC}, including most of those on
-Windows (such as Microsoft Access), and MySQL, Oracle and PostgreSQL on
-Unix/Linux.
+systems.  @pkg{RODBC} runs on both Unix/Linux and Windows, and almost
+all database systems provide support for @acronym{ODBC}.  We havew
+tested Microsoft SQL Server, Access, MySQL and PostgreSQL on Windows and
+MySQL, Oracle, PostgreSQL and SQLite on Linux.
+
+ODBC is a client-server system, and we have happily connected to a DBMS
+running on a Unix server from a Windows client, and @emph{vice versa}.
 
 On Windows ODBC support is normally installed, and current versions are
 available from @uref{http://www.microsoft.com/data/odbc/} as part of MDAC.
@@ -1184,22 +1191,34 @@ unixODBC (@uref{http://www.unixODBC.org}) or iOBDC
 system.  The FreeODBC project (@uref{http://www.jepstone.net/FreeODBC/})
 is a repository of information related to @acronym{ODBC}.
 
-Two groups of interface functions are provided.  The @code{odbc*} group
-provide a low-level interface to the basic @acronym{ODBC} functions: see
-the help page (@code{?RODBC}) for details.  The @code{sql*} group
-provide an interface between @R{} data frames and @acronym{SQL} tables.
+@cindex Excel
+@findex .xls
+@cindex Dbase
+@findex .dbf
+Windows provides drivers not just for DBMSs but also for Excel (@code{.xls})
+spreadsheets, DBase (@code{.dbf}) files and even text files.  (The named
+applications do @emph{not} need to be installed.)
 
 @findex odbcConnect
 @findex odbcDriverConnect
+@findex odbcGetInfo
+Many simultaneous connections are possible.  A connection is opened by a
+call to @code{odbcConnect} or @code{odbcDriverConnect} (which on the
+Windows GUI allows a database to be selected via dialog boxes) which
+returns a handle used for subsequent access to the database.  Printing a
+connection will provide some details of the ODBC connection, and calling
+@code{odbcGetInfo} will give details on the client and server.
+
+ 
 @findex odbcClose
 @findex close
+A connection is closed by a call to @code{close} or @code{odbcClose},
+and also (with a warning) when not R object refers to it and at the end
+of an R session.
+
 @findex sqlTables
-Up to 16 simultaneous connections are possible.  A connection is opened
-by a call to @code{odbcConnect} or @code{odbcDriverConnect} (which on
-Windows allows a database to be selected via dialog boxes) which returns
-a handle used for subsequent access to the database.  A connection is
-closed by @code{close} or @code{odbcClose}.  Details of the tables on a
-connection can be found using @code{sqlTables}.
+Details of the tables on a connection can be found using
+@code{sqlTables}.
 
 @findex sqlFetch
 @findex sqlSave
@@ -1211,14 +1230,14 @@ data frame.
 @findex sqlCopy
 @findex odbcQuery
 @findex sqlGetResults
-@findex odbcFetchRows
+@findex sqlFetchMore
 An @acronym{SQL} query can be sent to the database by a call to
 @code{sqlQuery}.  This returns the result in an @R{} data frame.
 (@code{sqlCopy} sends a query to the database and saves the result as a
 table in the database.)  A finer level of control is attained by first
 calling @code{odbcQuery} and then @code{sqlGetResults} to fetch the
 results.  The latter can be used within a loop to retrieve a limited
-number of rows at a time.
+number of rows at a time, as can function @code{sqlFetchMore}.
 
 @cindex PostgreSQL database system
 Here is an example using PostgreSQL, for which the @acronym{ODBC} driver
@@ -1238,7 +1257,7 @@ Panel (`Data Sources (ODBC)' in the `Administrative Tools' section on
 > channel <- odbcConnect("testdb", uid="ripley", case="tolower")
 ## load a data frame into the database
 > data(USArrests)
-> sqlSave(channel, USArrests, rownames = "state")
+> sqlSave(channel, USArrests, rownames = "state", addPK = TRUE)
 > rm(USArrests)
 ## list the tables in the database
 > sqlTables(channel)
@@ -1268,13 +1287,15 @@ Alaska           10.0     263       48 44.5
 > odbcClose(channel)
 @end smallexample
 
+@cindex Excel
+@findex .xls
+@findex odbcConnectExcel
 As a simple example of using @acronym{ODBC} under Windows with a Excel
-spreadsheet, suppose that an @acronym{DSN} for spreadsheet
-@file{bdr.xls} has been set up in the Control Panel.  Then we can read
-from the spreadsheet by
+spreadsheet, we can read from a spreadsheet by
+
 @smallexample
 > library(RODBC)
-> channel <- odbcConnect("bdr.xls")
+> channel <- odbcConnectExcel("bdr.xls")
 ## list the spreadsheets
 > sqlTables(channel)
   TABLE_CAT TABLE_SCHEM        TABLE_NAME   TABLE_TYPE REMARKS
@@ -1286,130 +1307,132 @@ from the spreadsheet by
 > sh1 <- sqlFetch(channel, "Sheet1")
 > sh1 <- sqlQuery(channel, "select * from [Sheet1$]")
 @end smallexample
+
 @noindent
 Notice that the specification of the table is different from the name
-returned by @code{sqlTables}: as from version 0.9-1 @code{sqlFetch} is
-able to map the differences.
+returned by @code{sqlTables}: @code{sqlFetch} is able to map the
+differences.
 
 The ODBC interface to Excel spreadsheets is read-only; you cannot alter
 the spreadsheet data.
 
-@node RPgSQL,  , RODBC, R interface packages
-@subsection Package RPgSQL
-@cindex PostgreSQL database system
 
-Package @pkg{RPgSQL} at @uref{http://rpgsql.sourceforge.net/} and in the
-@code{Devel} area on @acronym{CRAN} provides an interface to
-@uref{http://www.postgresql.org, PostgreSQL}.  Development appears to
-have ceased.
+@c @node RPgSQL,  , RODBC, R interface packages
+@c @subsection Package RPgSQL
+@c @cindex PostgreSQL database system
 
-PostgreSQL is described by its developers as `the most advanced open
-source database server' (Momjian, 2000).  It would appear to be buildable
-for most Unix-alike OSes and Windows (under Cygwin or U/Win).
-PostgreSQL has most of the features of the commercial RDBMSs.
+@c Package @pkg{RPgSQL} at @uref{http://rpgsql.sourceforge.net/} and in the
+@c @code{Devel} area on @acronym{CRAN} provides an interface to
+@c @uref{http://www.postgresql.org, PostgreSQL}.  Development appears to
+@c have ceased.
 
-@findex db.connect
-@findex db.read.table
-@findex db.write.table
-To make use of @pkg{RPgSQL}, first open a connection to a database using
-@code{db.connect}.  (Currently only one connection can be open at a
-time.)  Once a connection is open an @R{} data frame can be copied to a
-PostgreSQL table by @code{db.write.table}, whereas @code{db.read.table}
-copies a PostgreSQL table to an @R{} data frame.
+@c PostgreSQL is described by its developers as `the most advanced open
+@c source database server' (Momjian, 2000).  It would appear to be buildable
+@c for most Unix-alike OSes and Windows (under Cygwin or U/Win).
+@c PostgreSQL has most of the features of the commercial RDBMSs.
 
-@findex bind.db.proxy
-@cindex proxy data frame
-@pkg{RPgSQL} has the interesting concept of a @emph{proxy data frame}.
-A data frame proxy is an @R{} object that inherits from the
-@code{"data.frame"} class, but contains no data.  All accesses to the
-proxy data frame generate the appropriate @acronym{SQL} query and
-retrieve the resulting data from the database.  A proxy data frame is
-set up by a call to @code{bind.db.proxy}.  To remove the proxy, just
-remove the object which @code{bind.db.proxy} created.
+@c @findex db.connect
+@c @findex db.read.table
+@c @findex db.write.table
+@c To make use of @pkg{RPgSQL}, first open a connection to a database using
+@c @code{db.connect}.  (Currently only one connection can be open at a
+@c time.)  Once a connection is open an @R{} data frame can be copied to a
+@c PostgreSQL table by @code{db.write.table}, whereas @code{db.read.table}
+@c copies a PostgreSQL table to an @R{} data frame.
 
-@findex db.execute
-@findex db.result.columns
-@findex db.result.rows
-@findex db.read.column
-@findex db.fetch.result
-@findex db.clear.result
-@findex db.result.get.value
-A finer level of control is available via sending @acronym{SQL} queries
-to the PostgreSQL server via @code{db.execute}.  This leaves a result in
-PostgreSQL's result cache, unless flushed by @code{clear = TRUE} (the
-default).  Once a result is in the cache, @code{db.fetch.result} can be
-used to fetch the whole result as a data frame.  Functions such as
-@code{db.result.columns} and @code{db.result.rows} will report the
-number of columns and rows in the cached table, and
-@code{db.read.column} will fetch a single column (as a vector).  An
-individual cell in the result can be read by @code{db.result.get.value}.
-@code{db.clear.result} will clear the result cache.
+@c @findex bind.db.proxy
+@c @cindex proxy data frame
+@c @pkg{RPgSQL} has the interesting concept of a @emph{proxy data frame}.
+@c A data frame proxy is an @R{} object that inherits from the
+@c @code{"data.frame"} class, but contains no data.  All accesses to the
+@c proxy data frame generate the appropriate @acronym{SQL} query and
+@c retrieve the resulting data from the database.  A proxy data frame is
+@c set up by a call to @code{bind.db.proxy}.  To remove the proxy, just
+@c remove the object which @code{bind.db.proxy} created.
 
-@findex sql.insert
-@findex sql.select
-One disadvantage is that PostgreSQL maps all table and column names to
-lower case, so for maximal flexibility, only use lower case in @R{}
-names.  Functions @code{sql.insert} and @code{sql.select} provide
-convenience wrappers for the INSERT and SELECT queries.
+@c @findex db.execute
+@c @findex db.result.columns
+@c @findex db.result.rows
+@c @findex db.read.column
+@c @findex db.fetch.result
+@c @findex db.clear.result
+@c @findex db.result.get.value
+@c A finer level of control is available via sending @acronym{SQL} queries
+@c to the PostgreSQL server via @code{db.execute}.  This leaves a result in
+@c PostgreSQL's result cache, unless flushed by @code{clear = TRUE} (the
+@c default).  Once a result is in the cache, @code{db.fetch.result} can be
+@c used to fetch the whole result as a data frame.  Functions such as
+@c @code{db.result.columns} and @code{db.result.rows} will report the
+@c number of columns and rows in the cached table, and
+@c @code{db.read.column} will fetch a single column (as a vector).  An
+@c individual cell in the result can be read by @code{db.result.get.value}.
+@c @code{db.clear.result} will clear the result cache.
 
-We can explore these functions in a simple example.  The database
-@file{testdb} had already been set up, and as PostgreSQL was running on
-a standalone machine no further authentication was required to connect.
+@c @findex sql.insert
+@c @findex sql.select
+@c One disadvantage is that PostgreSQL maps all table and column names to
+@c lower case, so for maximal flexibility, only use lower case in @R{}
+@c names.  Functions @code{sql.insert} and @code{sql.select} provide
+@c convenience wrappers for the INSERT and SELECT queries.
 
-@smallexample
-> library(RPgSQL)
-> db.connect(dbname="testdb")   # add authentication as needed
-Connected to database "testdb" on ""
-> data(USArrests)
-> usarrests <- USArrests
-> names(usarrests) <- tolower(names(USArrests))
-> db.write.table(USArrests, write.row.names = TRUE)
-> db.write.table(usarrests, write.row.names = TRUE)
-> rm(USArrests, usarrests)
-## db.ls lists tables in the database.
-> db.ls()
-[1] "USArrests"  "usarrests"
-> db.read.table("USArrests")
-               Murder Assault UrbanPop Rape
-Alabama          13.2     236       58 21.2
-Alaska           10.0     263       48 44.5
-   ...
-## set up a proxy data frame.  Remember USArrests has been removed
-> bind.db.proxy("USArrests")
-## USArrests is now a proxy, so all accesses are to the database
-> USArrests[, "Rape"]
-   Rape
-1  21.2
-2  44.5
-   ...
-> rm(USArrests) # remove proxy
-> db.execute("SELECT rpgsql_row_names, murder FROM usarrests",
-             "WHERE rape > 30 ORDER BY murder", clear=FALSE)
-> db.fetch.result()
-           murder
-Colorado      7.9
-Arizona       8.1
-California    9.0
-Alaska       10.0
-New Mexico   11.4
-Michigan     12.1
-Nevada       12.2
-Florida      15.4
-> db.rm("USArrests", "usarrests") # use ask=FALSE to skip confirmation
-Destroy table USArrests? y
-Destroy table usarrests? y
-> db.ls()
-character(0)
-> db.disconnect()
-@end smallexample
+@c We can explore these functions in a simple example.  The database
+@c @file{testdb} had already been set up, and as PostgreSQL was running on
+@c a standalone machine no further authentication was required to connect.
 
-@noindent
-Notice how the row names are mapped if @code{write.row.names = TRUE} to
-a field @code{rpgsql_row_names} in the database table and transparently
-restored provided we preserve that field in the query.
+@c @smallexample
+@c > library(RPgSQL)
+@c > db.connect(dbname="testdb")   # add authentication as needed
+@c Connected to database "testdb" on ""
+@c > data(USArrests)
+@c > usarrests <- USArrests
+@c > names(usarrests) <- tolower(names(USArrests))
+@c > db.write.table(USArrests, write.row.names = TRUE)
+@c > db.write.table(usarrests, write.row.names = TRUE)
+@c > rm(USArrests, usarrests)
+@c ## db.ls lists tables in the database.
+@c > db.ls()
+@c [1] "USArrests"  "usarrests"
+@c > db.read.table("USArrests")
+@c                Murder Assault UrbanPop Rape
+@c Alabama          13.2     236       58 21.2
+@c Alaska           10.0     263       48 44.5
+@c    ...
+@c ## set up a proxy data frame.  Remember USArrests has been removed
+@c > bind.db.proxy("USArrests")
+@c ## USArrests is now a proxy, so all accesses are to the database
+@c > USArrests[, "Rape"]
+@c    Rape
+@c 1  21.2
+@c 2  44.5
+@c    ...
+@c > rm(USArrests) # remove proxy
+@c > db.execute("SELECT rpgsql_row_names, murder FROM usarrests",
+@c              "WHERE rape > 30 ORDER BY murder", clear=FALSE)
+@c > db.fetch.result()
+@c            murder
+@c Colorado      7.9
+@c Arizona       8.1
+@c California    9.0
+@c Alaska       10.0
+@c New Mexico   11.4
+@c Michigan     12.1
+@c Nevada       12.2
+@c Florida      15.4
+@c > db.rm("USArrests", "usarrests") # use ask=FALSE to skip confirmation
+@c Destroy table USArrests? y
+@c Destroy table usarrests? y
+@c > db.ls()
+@c character(0)
+@c > db.disconnect()
+@c @end smallexample
 
-@pkg{RPgSQL} provides means to extend its mapping between @R{} classes
-within a data frame and PostgreSQL types.
+@c @noindent
+@c Notice how the row names are mapped if @code{write.row.names = TRUE} to
+@c a field @code{rpgsql_row_names} in the database table and transparently
+@c restored provided we preserve that field in the query.
+
+@c @pkg{RPgSQL} provides means to extend its mapping between @R{} classes
+@c within a data frame and PostgreSQL types.
 
 
 @node Binary files, Connections, Relational databases, Top
@@ -1422,7 +1445,6 @@ within a data frame and PostgreSQL types.
 
 Binary connections (@ref{Connections}) are now the preferred way to
 handle binary files.
-
 
 
 
@@ -1533,13 +1555,12 @@ writes any remaining output to a final element of the character vector.
 @cindex Pipe connections
 @findex pipe
 @emph{Pipes} are a special form of file that connects to another
-process, and pipe connections are created by the function @code{pipe}
-(currently implemented on Unix and @code{Rterm} only).  Opening a pipe
-connection for writing (it makes no sense to append to a pipe) runs an
-OS command, and connects its standard input to whatever @R{} then writes
-to that connection.  Conversely, opening a pipe connection for input
-runs an OS command and makes its standard output available for @R{}
-input from that connection.
+process, and pipe connections are created by the function @code{pipe}.
+Opening a pipe connection for writing (it makes no sense to append to a
+pipe) runs an OS command, and connects its standard input to whatever
+@R{} then writes to that connection.  Conversely, opening a pipe
+connection for input runs an OS command and makes its standard output
+available for @R{} input from that connection.
 
 @cindex URL connections
 @findex url
@@ -1623,9 +1644,7 @@ opening a file connection allows a file to be read sequentially in
 different formats.
 
 Other functions that call @code{scan} can also make use of connections,
-in particular @code{read.table}.  As from @R{} version 1.3.0, 
-@code{read.table} reads the data in a single pass and so works better
-with non-file connections.
+in particular @code{read.table}.
 
 Some simple examples are
 
@@ -1760,17 +1779,18 @@ interchange with another program or another platform.  By default binary
 data is transferred directly from memory to the connection or @emph{vice
 versa}.  This will not suffice if the file is to be transferred to a
 machine with a different architecture, but between almost all @R{}
-platforms the only change needed is that of byte-order.  Intel
-@code{ix86}-based machines, Compaq Alpha and Vaxen are
-@emph{little-endian}, whereas Sun Sparc, mc680x0 series, IBM R6000, SGI
-and most others are @emph{big-endian}.  (Network byte-order (as used by
-XDR, eXternal Data Representation) is big-endian.)  To transfer to or
-from other programs we may need to do more, for example to read 16-bit
-integers or write single-precision real numbers.  This can be done using
-the @code{size} argument, which (usually) allows sizes 1, 2, 4, 8 for
-integers and logicals, and sizes 4, 8 and perhaps 12 or 16 for reals.
-Transferring at different sizes can lose precision, and should not be
-attempted for vectors containing @code{NA}'s.
+platforms the only change needed is that of byte-order.  Common PCs
+(@code{ix86}-based and @code{x86_64}-based machines), Compaq Alpha and
+Vaxen are @emph{little-endian}, whereas Sun Sparc, mc680x0 series, IBM
+R6000, Apple Macintosh, SGI and most others are @emph{big-endian}.
+(Network byte-order (as used by XDR, eXternal Data Representation) is
+big-endian.)  To transfer to or from other programs we may need to do
+more, for example to read 16-bit integers or write single-precision real
+numbers.  This can be done using the @code{size} argument, which
+(usually) allows sizes 1, 2, 4, 8 for integers and logicals, and sizes
+4, 8 and perhaps 12 or 16 for reals.  Transferring at different sizes
+can lose precision, and should not be attempted for vectors containing
+@code{NA}'s.
 
 @findex readChar
 @findex writeChar
@@ -1810,7 +1830,7 @@ platforms @code{NA} is represented by the @code{NaN} value with low-word
 @code{0x7a2} (1954 in decimal).
 
 
-@node Network interfaces, References, Connections, Top
+@node Network interfaces, Reading Excel spreadsheets, Connections, Top
 @chapter Network interfaces
 
 @menu
@@ -1866,11 +1886,17 @@ which ships with the Windows version of @R{} and makes an @acronym{DCOM}
 server.  This can be used to pass simple objects (vectors and matrices)
 to and from @R{} and to submit commands to @R{}.
 
-The program comes with a Visual Basic demonstration, and there is an
-Excel plug-in by Erich Neuwirth available in the same area on
-@acronym{CRAN}.  This interface is in the other direction to most of
-those considered here in that it is another application (Excel, or
-written in Visual Basic) that is the client and @R{} is the server.
+The program comes with a Visual Basic demonstration and an Excel plug-in
+by Erich Neuwirth available.  This interface is in the other direction
+to most of those considered here in that it is another application
+(Excel, or written in Visual Basic) that is the client and @R{} is the
+server.
+
+Another (D)COM server is available from @uref{http://www.omegahat.org/},
+which allows R objects to be exported as COM values.  That site also
+has packages @code{RDCOMClient} and @code{SWinTypeLibs} which allow R
+to act as a (D)COM client.
+
 
 @node CORBA interface,  , DCOM interface, Network interfaces
 @section @acronym{CORBA} interface
@@ -1880,7 +1906,7 @@ written in Visual Basic) that is the client and @R{} is the server.
 to @acronym{DCOM}, allowing applications to call methods, or operations,
 in server objects running in other applications, potentially programmed
 in different languages and running on different machines.  There is a
-@pkg{CORBA} package available from the Omegahat Project (at
+@pkg{CORBA} package available from the Omegahat project (at
 @uref{http://www.omegahat.org/RSCORBA/}), currently for Unix but a
 Windows version looks to be possible.
 
@@ -1905,12 +1931,53 @@ One can also use the @pkg{CORBA} package to achieve distributed,
 parallel computing in @R{}.  One @R{} session acts as a manager and
 dispatches tasks to different servers running in other @R{} worker
 sessions.  This uses the ability to invoke asynchronous or background
-CORBA calls in @R{}.  More information is available from the Omegahat Project,
-at @uref{http://www.omegahat.org/RSCORBA/}.
+CORBA calls in @R{}.  More information is available from the Omegahat
+project at @uref{http://www.omegahat.org/RSCORBA/}.
 
 
 
-@node References, Function and variable index, Network interfaces, Top
+@node Reading Excel spreadsheets, References, Network interfaces, Top
+@chapter Reading Excel spreadsheets
+
+The commonest R data import/export question seems to be `how do I read an
+Excel spreadsheet'.  This chapter collects together advice and options
+given earlier.
+
+@findex read.csv
+@findex read.delim
+@findex read.table
+@findex readClipboard
+The first piece of advice is to avoid doing so if possible!  If you have
+access to Excel, export the data you want from Excel in tab-delimited or
+comma-separated form, and use @code{read.delim} or @code{read.csv} to
+import it into R.  (You may need to use @code{read.delim2} or
+@code{read.csv2} in a continental European locale that uses comma as the
+decimal point.)  If you do not have Excel, many other programs are able
+to read such spreadsheets and export in a text format on both Windows
+and Unix, for example Gnumeric
+(@uref{http://www.gnome.org/projects/gnumeric/}) and OpenOffice
+(@uref{http://www.openoffice.org}).  You can also cut-and-paste from the
+display of a spreadsheet in such a program and R: @code{read.table} will
+read from the R console or, under Windows, from the clipboard (via
+@code{file = "clipboard"} or @code{readClipboard}).
+
+Note that an Excel @code{.xls} is not just a spreadsheet: such files can
+contain many sheets, and the sheets can contain formulae, macros and so
+on.  Not all readers can read other than the first sheet, and may be
+confused by other contents of the file.
+
+@findex odbcConnectExcel
+Windows users can use @code{odbcConnectExcel} in package @pkg{RODBC}.
+This can select rows and columns from any of the sheets in an Excel
+spreadsheet file.
+
+@code{Perl} users have contributed a module
+@code{OLE::SpreadSheet::ParseExcel} and a program @code{xls2csv.pl} to
+convert Excel spreadsheets to CSV files.  Package @pkg{gregmisc}
+provides a basic wrapper in its @code{read.xls} function.
+
+
+@node References, Function and variable index, Reading Excel spreadsheets, Top
 @appendix References
 
 @noindent
