@@ -111,7 +111,8 @@ typedef struct clpconn {
 } *Rclpconn;
 #endif
 
-#ifdef _ZLIB_H
+/* zlib wants to use ZLIB_H without leading underscore in 1.2.1 */
+#if defined(_ZLIB_H) || defined(ZLIB_H)
 typedef struct gzconn {
     Rconnection con;
     int cp; /* compression level */
