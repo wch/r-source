@@ -19,7 +19,7 @@ TESTout = $(TESTsrc:.R=.Rout)
 	@./Rdiff $@ $@.save
 #	-@wc $@
 
-tests: test-Examples $(TESTout)
+test-All: test-Examples $(TESTout)
 
 test-Examples:
 	-(cd $(Ex); $(MAKE) $@)
