@@ -48,6 +48,9 @@ BUG FIXES
     o	ppr() inside nested calls sometimes failed to find objects
 	due to a typo in the eval call in ppr.formula.
 
+    o	dchisq with integer x, df and ncp sometimes gave incorrect
+	results on i686 Linux.
+
 
 
 		CHANGES IN R VERSION 1.2.2

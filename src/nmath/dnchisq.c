@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000-1 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ double dnchisq(double x, double df, double lambda, int give_log)
 	term = q * term;
 	sum += term;
 	errorbound = term * q / (1-q);
-    } while (errorbound > eps);
+    } while (errorbound > eps || q >= 1);
     /* lower tail */
     term = mid;
     df = dfmid;
@@ -80,7 +80,7 @@ double dnchisq(double x, double df, double lambda, int give_log)
 	term = q * term;
 	sum += term;
 	errorbound = term * q / (1-q);
-	if ( errorbound <= eps ) break;
+	if (errorbound <= eps && q < 1) break;
     }
     return R_D_val(sum);
 }
