@@ -1098,6 +1098,8 @@ SEXP listAssign1(SEXP call, SEXP x, SEXP subs, SEXP y)
 static void SubAssignArgs(SEXP args, SEXP *x, SEXP *s, SEXP *y)
 {
     SEXP p;
+    if (length(args) < 3)
+	error("SubAssignArgs: invalid number of arguments");
     *x = CAR(args);
     *s = p = CDR(args);
     while (CDDR(p) != R_NilValue)
@@ -1278,6 +1280,8 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isVector(x)) {
 	if (!isVectorList(x) && LENGTH(y) > 1)
 	    error("more elements supplied than there are to replace");
+	if (nsubs == 0 || CAR(subs) == R_MissingArg) 
+	    error("[[]] with missing subscript");
 	if (nsubs == 1) {
 	    offset = OneIndex(x, CAR(subs), length(x), 0, &newname);
 	    if (isVectorList(x) && isNull(y)) {

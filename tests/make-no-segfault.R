@@ -25,7 +25,9 @@ stop.list[["base"]] <-
 	socket.fun <- apropos("socket")
 	## "Interactive" ones:
 	dev.int <- c("X11", "windows", "macintosh")
-	misc.2 <- c("help.start",
+        ## print.plot() will print a blank page on the printer and is
+        ## deprecated anyway --pd
+	misc.2 <- c("help.start", "print.plot",
                     "gctorture", "q", "quit",
 		    "data.entry", "dataentry", "de", apropos("^de\."))
 	c(inet.list, socket.fun, dev.int, edit.int, misc.int, misc.2)
