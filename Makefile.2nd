@@ -65,7 +65,7 @@ install: all
 	$(INSTALL_PROGRAM) bin/R.binary $(rhome)/bin
 	cat bin/R | sed "s@RHOME=.*@RHOME=$(rhome)@" > $(bindir)/R
 	chmod 755 $(bindir)/R
-	$(INSTALL_PROGRAM) cmd/[a-z]* $(rhome)/cmd
+	$(INSTALL_PROGRAM) `ls cmd/[a-z]* | grep -v '.*\.in'`  $(rhome)/cmd
 	cd demos; $(MAKE) $@
 	cd doc; $(MAKE) $@
 	cd etc; $(MAKE) $@
