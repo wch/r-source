@@ -1,7 +1,7 @@
 \name{dump}
 \title{Text Representations of R Objects}
 \usage{
-dump(list, file="dumpdata.R", append=FALSE)
+dump(list, file = "dumpdata.R", append = FALSE, envir = parent.frame())
 }
 \alias{dump}
 \description{
@@ -19,6 +19,8 @@ dump(list, file="dumpdata.R", append=FALSE)
   \item{append}{if \code{TRUE}, output will be appended to
     \code{file}; otherwise, it will overwrite the contents of
     \code{file}.}
+
+  \item{envir}{the environment to search for objects.}
 }
 \details{
   At present the implementation of \code{dump} is very
@@ -31,6 +33,17 @@ dump(list, file="dumpdata.R", append=FALSE)
   The function \code{\link{save}} is designed to be used for
   transporting \R data between machines.
 }
+\note{
+  The \code{envir} argument was added at version 1.7.0, and changed the
+  search path for named objects to include the environment from which
+  \code{dump} was called.
+
+  As \code{dump} is defined in the base namespace, the base package will
+  be searched \emph{before} the global environment unless \code{dump}
+  is called from the top level or the \code{envir} argument is given
+  explicitly.
+}
+
 \seealso{\code{\link{dput}}, \code{\link{dget}},\code{\link{write}}.
 }
 \examples{

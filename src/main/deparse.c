@@ -298,7 +298,7 @@ SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP file, names, o, objs, tval;
+    SEXP file, names, o, objs, tval, source;
     int i, j, nobjs, res;
     Rboolean wasopen, havewarned = FALSE;
     Rconnection con;
@@ -312,14 +312,18 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     nobjs = length(names);
     if(nobjs < 1 || length(file) < 1)
 	errorcall(call, "zero length argument");
+    source = CADDR(args);
+    if (source != R_NilValue && TYPEOF(source) != ENVSXP)
+	error("bad environment");
 
     PROTECT(o = objs = allocList(nobjs));
 
-    for(i = 0 ; i < nobjs ; i++) {
-	SETCAR(o, eval(install(CHAR(STRING_ELT(names, i))), rho));
-	o = CDR(o);
+    for (j = 0; j < nobjs; j++, o = CDR(o)) {
+	SET_TAG(o, install(CHAR(STRING_ELT(names, j))));
+	SETCAR(o, findVar(TAG(o), source));
+	if (CAR(o) == R_UnboundValue)
+	    error("Object \"%s\" not found", CHAR(PRINTNAME(TAG(o))));
     }
-
     o = objs;
     if(INTEGER(file)[0] == 1) {
 	for (i = 0; i < nobjs; i++) {

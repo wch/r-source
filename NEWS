@@ -112,9 +112,13 @@ NEW FEATURES
 	size the output line-length limit for fifo(), gzfile() and 
 	bzfile() has been raised from 10k to 100k chars.
 
-     o	help.search() can now reliable match individual aliases and
+     o	help.search() can now reliably match individual aliases and
 	keywords, provided that all packages searched were installed
-	using R 1.7 or newer.
+	using R 1.7.0 or newer.
+
+     o	dump() has a new argument `envir'.  The search for named
+	objects now starts by default in the environment from which
+	dump() is called.
 
 
 INSTALLATION CHANGES
