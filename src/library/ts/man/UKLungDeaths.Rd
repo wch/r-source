@@ -13,7 +13,7 @@ Monthly Deaths from Lung Diseases in the UK
 data(UKLungDeaths)
 }
 \description{
-    Time series giving the monthly deaths from bronchitis,
+    Three time series giving the monthly deaths from bronchitis,
     emphysema and asthma in the UK, 1974--1979,
     both sexes (\code{ldeaths}), males (\code{mdeaths}) and
     females (\code{fdeaths}).
@@ -22,5 +22,14 @@ data(UKLungDeaths)
 P. J. Diggle (1990)
 \emph{Time Series: A Biostatistical Introduction.}
 Oxford, table A.3
+}
+\examples{
+data(UKLungDeaths)
+plot(ldeaths) 
+plot(mdeaths, fdeaths) 
+## Better labels:
+yr <- floor(tt <- time(mdeaths))
+plot(mdeaths, fdeaths,
+     xy.labels = paste(month.abb[12*(tt - yr)], yr-1900, sep="'"))
 }
 \keyword{datasets}
