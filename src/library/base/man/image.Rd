@@ -48,8 +48,9 @@ image(x, y, z, zlim, col = heat.colors(12),
     between the cells: in the second case \code{x} specifies the
     midpoints of the cells. Similar reasoning applies to \code{y}. It
     probably only makes sense to specify the midpoints of an
-    equally-spaced grid, and you only are only allowed to specify the
-    midpoints if there are least two rows (or columns for \code{y}).
+    equally-spaced grid. If you specify just one row or column and a
+    length-one \code{x} or \code{y}, the whole user area in the
+    corresponding direction is filled.
 }
 \note{
   Based on a function by Thomas Lumley
@@ -64,7 +65,7 @@ image(x, y, z, zlim, col = heat.colors(12),
 \examples{
 \testonly{
 ## Degenerate, should still work
-# image(as.matrix(1)) # makes no sense, now an error
+image(as.matrix(1))
 image(matrix(pi,2,4))
 }
 x <- y <- seq(-4*pi, 4*pi, len=27)

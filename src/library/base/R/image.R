@@ -32,23 +32,23 @@ image <- function (x = seq(0, 1, len = nrow(z)),
 	if (missing(ylab))
 	    ylab <- if (missing(y)) "" else deparse(substitute(y))
     }
-    if(length(x) < 2 || length(y) < 2)
-        stop("x and y must be of length at least two")
     if (any(diff(x) <= 0) || any(diff(y) <= 0))
 	stop("increasing x and y values expected")
-    if(length(x) == nrow(z)) { # midpoints
+    if(length(x) > 1 && length(x) == nrow(z)) { # midpoints
         dx <- 0.5*diff(x)
         x <- c(x[1] - dx[1], x[1]+dx[1], x[-1]+dx)
     }
-    if(length(y) == ncol(z)) { # midpoints
+    if(length(y) > 1 && length(y) == ncol(z)) { # midpoints
         dy <- 0.5*diff(y)
         y <- c(y[1] - dy[1], y[1]+dy[1], y[-1]+dy)
     }
-    if(length(x) != nrow(z)+1 || length(y) != ncol(z)+1)
-        stop("dimensions of z are not length(x)(+1) times length(y)(+1)")
     if (!add)
 	plot(0, 0, xlim = xlim, ylim = ylim, type = "n", xaxs = xaxs,
 	     yaxs = yaxs, xlab = xlab, ylab = ylab, ...)
+    if(length(x) == 1) x <- par("usr")[1:2]
+    if(length(y) == 1) y <- par("usr")[3:4]
+    if(length(x) != nrow(z)+1 || length(y) != ncol(z)+1)
+        stop("dimensions of z are not length(x)(+1) times length(y)(+1)")
     .Internal(image(as.double(x), as.double(y), as.double(z),
 		    as.double(zlim), col))
 }
