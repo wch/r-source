@@ -487,3 +487,9 @@ x <- c(-Inf, -Inf, Inf, Inf)
 median(x)
 quantile(x)
 ## 1.5.1 had -Inf not NaN in several places
+
+## NAs in matrix dimnames
+z <- matrix(1:9, 3, 3)
+dimnames(z) <- list(c("x", "y", NA), c(1, NA, 3))
+z
+## NAs in dimnames misaligned when printing in 1.5.1
