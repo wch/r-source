@@ -303,8 +303,6 @@ SEXP do_globalenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* components of the list in as the values of this env */
 /* and intall the tags from the list as the names. */
 
-SEXP VectorToPairList(SEXP);
-
 SEXP do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP name, s, t, x;

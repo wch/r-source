@@ -604,6 +604,7 @@ int NonNullStringMatch(SEXP, SEXP);
 SEXP nthcdr(SEXP, int);
 void onintr();
 int OneIndex(SEXP, SEXP, int, SEXP*);
+SEXP PairToVectorList(SEXP x);
 SEXP parse(FILE*, int);
 int pmatch(SEXP, SEXP, int);
 void PrintDefaults(SEXP);
@@ -647,6 +648,7 @@ void unmarkPhase(void);
 void unprotect(int);
 void unprotect_ptr(SEXP);
 int usemethod(char*, SEXP, SEXP, SEXP, SEXP, SEXP*);
+SEXP VectorToPairList(SEXP x);
 void warningcall(SEXP, char*,...);
 void WarningMessage(SEXP, int, ...);
 

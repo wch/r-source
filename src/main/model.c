@@ -1202,8 +1202,6 @@ SEXP do_updateform(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* .Internal(model.frame(terms, rownames, variables, varnames, */
 /*           dots, dotnames, subset, na.action)) */
 
-SEXP VectorToPairList(SEXP);
-
 SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP terms, data, names, variables, varnames, dots, dotnames, na_action;

@@ -950,9 +950,6 @@ void CheckFormals(SEXP ls)
 /* Evaluate the first argument in the environment specified by */
 /* the second argument. */
 
-SEXP PairToVectorList(SEXP);
-SEXP VectorToPairList(SEXP);
-
 SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP expr, env, encl;

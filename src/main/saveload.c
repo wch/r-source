@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -415,8 +415,8 @@ static double BinaryInReal(FILE * fp)
 
 static void BinaryOutComplex(FILE *fp, complex x)
 {
-        if (fwrite(&x, sizeof(complex), 1, fp) != 1)
-                error("a write error occured\n");
+	if (fwrite(&x, sizeof(complex), 1, fp) != 1)
+		error("a write error occured\n");
 }
 
 static complex BinaryInComplex(FILE * fp)
@@ -739,9 +739,9 @@ static void DataSave(SEXP s, FILE *fp)
 		OutSpace(fp);
 		OutInteger(fp, OBJECT(&R_NHeap[i]));
 		OutSpace(fp);
-		OutInteger(fp, 	LEVELS(&R_NHeap[i]));
+		OutInteger(fp,	LEVELS(&R_NHeap[i]));
 		OutSpace(fp);
-		OutInteger(fp, 	NodeToOffset(ATTRIB(&R_NHeap[i])));
+		OutInteger(fp,	NodeToOffset(ATTRIB(&R_NHeap[i])));
 		OutSpace(fp);
 
 		switch (TYPEOF(&R_NHeap[i])) {
@@ -1077,11 +1077,10 @@ SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /* These functions convert old (pairlist) lists into new */
-/* (vectorlist) lists.  The conversion can be defeated by */
+/* (vectorlist) lists.	The conversion can be defeated by */
 /* hiding things inside closures, but it is doubtful that */
 /* anyone has done this. */
 
-SEXP PairToVectorList(SEXP);
 static SEXP ConvertPairToVector(SEXP);
 
 static SEXP ConvertAttributes(SEXP attrs)
@@ -1173,7 +1172,7 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(a);
 	CDR(e) = FRAME(R_GlobalEnv);
 	FRAME(R_GlobalEnv) = e;
-	CAR(e) = ConvertPairToVector(CAR(e));          /* PAIRLIST conv */
+	CAR(e) = ConvertPairToVector(CAR(e));	       /* PAIRLIST conv */
     NextItem:
 	;
     }
