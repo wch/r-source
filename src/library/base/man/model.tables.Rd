@@ -2,17 +2,20 @@
 % copyright (C) 1998 B. D. Ripley
 %
 \name{model.tables}
-\title{Compute Tables of Results from an Aov Model Fit.}
+\alias{model.tables}
+\alias{model.tables.aov}
+\alias{model.tables.aovlist}
+\alias{print.tables.aov}
+\title{Compute Tables of Results from an Aov Model Fit}
+\description{
+  Computes summary tables for model fits, especially complex \code{aov}
+  fits.
+}
 \usage{
 model.tables(x, \dots)
 model.tables.aov(x, type = "effects", se = FALSE, cterms, \dots)
 model.tables.aovlist(x, type = "effects", se = FALSE, \dots)
 }
-\alias{model.tables}
-\alias{model.tables.aov}
-\alias{model.tables.aovlist}
-
-\alias{print.tables.aov}
 \arguments{
   \item{x}{a model object, usually produced by \code{aov}}
   \item{type}{type of table: currently only \code{"effects"} and
@@ -22,15 +25,12 @@ model.tables.aovlist(x, type = "effects", se = FALSE, \dots)
     which tables should be computed. The default is all tables.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
-\description{
- Computes summary tables for model fits, especially complex \code{aov} fits.
-}
 \details{
- For \code{type = "effects"} give tables of the coefficients for each
- term, optionally with standard errors.
+  For \code{type = "effects"} give tables of the coefficients for each
+  term, optionally with standard errors.
 
- For \code{type = "means"} give tables of the mean response for each
- combinations of levels of the factors in a term.
+  For \code{type = "means"} give tables of the mean response for each
+  combinations of levels of the factors in a term.
 }
 \value{
   An object of class \code{"tables.aov"}, as list which may contain components
@@ -39,8 +39,8 @@ model.tables.aovlist(x, type = "effects", se = FALSE, \dots)
   \item{se}{Standard error information.}
 }
 \section{Warning}{
-  The implementation is incomplete, and only the simpler
-  cases have been tested thoroughly.
+  The implementation is incomplete, and only the simpler cases have been
+  tested thoroughly.
 
   Weighted \code{aov} fits are not supported.
 }

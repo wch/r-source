@@ -1,16 +1,16 @@
 \name{try}
 \alias{try}
-\title{Try an Expression Allowing Error Recovery.}
+\title{Try an Expression Allowing Error Recovery}
+\description{
+  \code{try} is a wrapper to run an expression that might fail and allow
+  the user's code to handle error-recovery.
+}
 \usage{
 try(expr, first = TRUE)
 }
 \arguments{
-  \item{expr}{an \R expression to try}
+  \item{expr}{an \R expression to try.}
   \item{first}{not for user use!}
-}
-\description{
-  \code{try} is a wrapper to run an expression that might fail and allow
-  the user's code to handle error-recovery.
 }
 \details{
   \code{try} is a user-friendly wrapper to \code{\link{restart}}.
