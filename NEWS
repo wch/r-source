@@ -39,7 +39,7 @@ USER-VISIBLE CHANGES
 	DESCRIPTION file.
 
     o	Package 'graphics' has been split into 'grDevices' (the
-	graphics devices shared between base and grid graphics) and 
+	graphics devices shared between base and grid graphics) and
 	'graphics' (base graphics).
 
     o	The semantics of data() have changed (and were incorrectly
@@ -62,8 +62,8 @@ USER-VISIBLE CHANGES
 	require(), regardless of whether the underlying file system is
 	case-sensitive or not.
 
-    o   R no longer accepts associative use of relational 
-        operators. That is, 3 < 2 < 1 (which used to evalute 
+    o   R no longer accepts associative use of relational
+        operators. That is, 3 < 2 < 1 (which used to evalute
         as TRUE!) now causes a syntax error. If this breaks
         existing code, just add parentheses - or braces in the
         case of plotmath.
@@ -220,9 +220,9 @@ NEW FEATURES
 	automagically opens a device if none is open.
 
     o   replayPlot() issues a warning if an attempt is made to replay
-	a plot that was recorded using a different R version (the 
-	format for recorded plots is not guaranteed to be stable 
-	across different R versions).  The Windows-menu equivalent 
+	a plot that was recorded using a different R version (the
+	format for recorded plots is not guaranteed to be stable
+	across different R versions).  The Windows-menu equivalent
 	(History...Get from variable) issues a similar warning.
 
     o	reshape() can handle multiple 'id' variables.
@@ -529,7 +529,8 @@ BUG FIXES
 
     o	The checking of R versions incorrectly assumed 1.9.1 >= 1.50.
 
-    o	str(Surv(..)) failed for  type = "counting"  Surv objects.
+    o	str(Surv(..)) failed for  type = "counting"  Surv objects and for
+	promises.
 
 
 
@@ -596,7 +597,7 @@ DEPRECATED & DEFUNCT
 BUG FIXES
 
     o	pbinom(q, N, prob) is now more accurate when prob is close to 0.
-	(PR#6757).
+	(PR#6757)
 
     o	pcauchy(x, .., log.p) is now more accurate for large x,
 	particularly when log.p = TRUE.	(PR#6756)
