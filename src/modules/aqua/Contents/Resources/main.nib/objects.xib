@@ -20,7 +20,7 @@
                 <string name="helpTagText">General information on this binary distribution of R for MacOSX</string>
               </object>
               <object class="IBCarbonMenuItem" id="411">
-                <string name="title">Check for RAqua updates</string>
+                <string name="title">Check for R updates</string>
                 <ostype name="command">nraq</ostype>
                 <string name="helpTagText">Checks for new versions of RAqua on CRAN</string>
               </object>
@@ -482,7 +482,7 @@
     <reference idRef="189"/>
     <object class="IBCarbonWindow" id="190">
       <string name="windowRect">211 300 449 677 </string>
-      <string name="title">About RAqua</string>
+      <string name="title">About R</string>
       <object name="rootControl" class="IBCarbonRootControl" id="191">
         <string name="bounds">0 0 238 377 </string>
         <string name="viewFrame">0 0 377 238 </string>
@@ -523,7 +523,7 @@
             <ostype name="controlSignature">0FFF</ostype>
             <int name="controlID">134</int>
             <boolean name="small">TRUE</boolean>
-            <string name="title">RAqua author</string>
+            <string name="title">R author</string>
             <string name="helpTagText">RAqua GUI developers</string>
             <int name="justification">1</int>
           </object>
@@ -972,42 +972,42 @@
     <reference idRef="278"/>
     <reference idRef="279"/>
     <object class="IBCarbonUserPane" id="280">
-      <string name="bounds">24036 9872 24334 10312 </string>
+      <string name="bounds">-14090 -1310 -13792 -870 </string>
       <array count="9" name="subviews">
         <object class="IBCarbonCheckBox" id="281">
-          <string name="bounds">14863 21980 14865 21980 </string>
+          <string name="bounds">10250 -32697 10252 -32693 </string>
           <string name="title">AntiAliasing</string>
         </object>
         <object class="IBCarbonCheckBox" id="282">
-          <string name="bounds">14863 -5003 14865 -5001 </string>
+          <string name="bounds">10250 -9391 10252 -9389 </string>
           <string name="title">Auto Refresh</string>
         </object>
         <object class="IBCarbonStaticText" id="284">
-          <string name="bounds">14963 -3438 14979 -3045 </string>
+          <string name="bounds">10136 -7638 10152 -7245 </string>
           <string name="title">Font Name</string>
         </object>
         <object class="IBCarbonButton" id="283">
-          <string name="bounds">14923 -1507 14943 -1499 </string>
+          <string name="bounds">10176 -5518 10196 -5514 </string>
           <string name="title">Choose Font</string>
         </object>
         <object class="IBCarbonEditText" id="285">
-          <string name="bounds">31320 600 31316 595 </string>
+          <string name="bounds">-6202 -3230 -6204 -3231 </string>
           <string name="title">12</string>
         </object>
         <object class="IBCarbonStaticText" id="286">
-          <string name="bounds">14925 2254 14941 2330 </string>
+          <string name="bounds">10174 -1396 10190 -1320 </string>
           <string name="title">Point Size</string>
         </object>
         <object class="IBCarbonEditText" id="287">
-          <string name="bounds">15064 4041 15060 4041 </string>
+          <string name="bounds">10054 582 10052 576 </string>
           <string name="title">5</string>
         </object>
         <object class="IBCarbonStaticText" id="288">
-          <string name="bounds">15053 5751 15069 5798 </string>
+          <string name="bounds">10046 2462 10062 2509 </string>
           <string name="title">Width:</string>
         </object>
         <object class="IBCarbonStaticText" id="290">
-          <string name="bounds">15053 7741 15069 7788 </string>
+          <string name="bounds">10046 4634 10062 4681 </string>
           <string name="title">Height:</string>
         </object>
       </array>
