@@ -10,4 +10,49 @@ subdir = src/extra
 
 include $(top_builddir)/Makeconf
 
-# this is just a dummy at present
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in
+
+SUBDIRS = libxml
+
+all: Makefile R
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
+
+R: Makefile
+	@for d in $(SUBDIRS); do \
+	  (cd $${d} && $(MAKE) $@) || exit 1; \
+	done
+
+install install-strip uninstall TAGS info dvi check docs:
+
+mostlyclean: clean
+clean:
+	@for d in $(SUBDIRS); do \
+	  (cd $${d} && $(MAKE) $@) || exit 1; \
+	done
+distclean: clean
+	@rm -f Makefile
+maintainer-clean: distclean
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+	@for d in $(SUBDIRS); do \
+	  test -d $(distdir)/$${d} \
+	    || mkdir $(distdir)/$${d} \
+	    || exit 1; \
+	  chmod 755 $(distdir)/$${d}; \
+	  (cd $${d} && $(MAKE) distdir) \
+	    || exit 1; \
+	done
+	@((cd $(srcdir); \
+	      $(TAR) -c -f - --exclude=CVS xdr) \
+	    | (cd $(distdir); $(TAR) -x -f -)) \
+	  || exit 1

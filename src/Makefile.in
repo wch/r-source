@@ -13,19 +13,23 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
-SUBDIRS = scripts include appl extra/libxml nmath unix main library
+SUBDIRS = scripts include appl extra nmath unix main library
 
-all install install-strip TAGS info dvi dist check R docs::
-	@for d in $(SUBDIRS); do \
-	  (cd $${d} && $(MAKE) $@) || exit 1; \
-	done
+all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-uninstall mostlyclean clean::
+R: Makefile
+
+install install-strip TAGS info dvi dist check R docs:
+	@for d in $(SUBDIRS); do \
+	  (cd $${d} && $(MAKE) $@) || exit 1; \
+	done
+
+uninstall mostlyclean clean:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 distclean:
@@ -34,7 +38,7 @@ distclean:
 	@rm -f Makefile
 maintainer-clean: distclean
 
-distdir:
+distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
 	  test -f $(distdir)/$${f} \
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
@@ -49,6 +53,6 @@ distdir:
 	    || exit 1; \
 	done
 	@((cd $(srcdir); \
-	      $(TAR) -c -f - --exclude=CVS f2clib gnuwin32 macintosh) \
+	      $(TAR) -c -f - --exclude=CVS gnuwin32 macintosh) \
 	    | (cd $(distdir); $(TAR) -x -f -)) \
 	  || exit 1

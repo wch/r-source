@@ -15,9 +15,13 @@ DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in $(SOURCES)
+DISTFILES = Makefile.in README $(SOURCES) \
+	Makefile.win win32config.h
 
-SUBDIRS = standalone
+## <FIXME>
+## Do we need standalone?
+## SUBDIRS = standalone
+## </FIXME>
 
 noinst_LIBRARIES = libxml.a
 libxml_a_SOURCES = $(SOURCES)
@@ -71,11 +75,14 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-	@for d in $(SUBDIRS); do \
-	  ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
-	      | (cd $(distdir); $(TAR) -x -f -)) \
-	    || exit 1; \
-        done
+## <FIXME>
+## Do we need standalone?
+## 	@for d in $(SUBDIRS); do \
+## 	  ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
+## 	      | (cd $(distdir); $(TAR) -x -f -)) \
+## 	    || exit 1; \
+##         done
+## </FIXME>
 
 ## Automagically generated dependencies:
 
