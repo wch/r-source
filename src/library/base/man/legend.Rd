@@ -14,8 +14,11 @@ legend(x, y, legend, fill, col= "black", lty, pch, bty = "o",
   \item{fill}{if specied, this argument will cause boxes filled
     with the specified colors to appear beside the legend text.}
   \item{col}{the color of points or lines appearing in the legend.}
-  \item{lty}{the line types for lines appearing in the legend.}
-  \item{pch}{the plotting symbols appearing in the legend.}
+  \item{lty}{the line types for lines appearing in the legend. \emph{Must}
+    be specified for line drawing.}
+  \item{pch}{the plotting symbols appearing in the legend, either as
+    vector of 1-character strings, or one (multi character)
+    string. \emph{Must} be specified for symbol drawing.}
   \item{bty}{the type of box to be drawn around the legend.}
   \item{bg}{the background color for the legend box.}
   \item{cex}{character expansion factor \bold{relative} to current
@@ -41,6 +44,9 @@ legend(x, y, legend, fill, col= "black", lty, pch, bty = "o",
 
   The default values for \code{x.intersp} and \code{y.intersp} are
   computed from \code{Cx <- cex * par('cex')}.
+
+  ``Attribute'' arguments such as \code{col}, \code{lty}, \code{pch},
+  etc, are recycled if necessary.
 }
 \seealso{
   \code{\link{plot}}, \code{\link{barplot}} which uses \code{legend()}, and
@@ -60,21 +66,18 @@ for (i in seq(cexv))
 # `merge = TRUE' for merging lines & points:
 x <- seq(-pi, pi, len = 65)
 plot(x, sin(x), type = "l", ylim = c(-1.2, 1.8), col = 3, lty = 2)
-points(x, cos(x), pch = 3, col = 5)
-lines(x, tan(x), type = "b", lty = 1, pch = 4, col = 9)
+points(x, cos(x), pch = 3, col = 4)
+lines(x, tan(x), type = "b", lty = 1, pch = 4, col = 6)
 title("legend(..... lty = c(2, -1, 1), pch = c(-1,3,4), merge = TRUE)",
       cex.main = 1.1)
-vcex <- c( 3,1.5, 1,   .8)
-vx   <- c(-2,  0, 1.5, 2.8)
-for (i in seq(vcex))
-  legend(vx[i], 1.8, c("sin", "cos", "tan"), xjust = .5, col = c(3, 5, 9),
-         lty = c(2, -1, 1), pch = c(-1, 3, 4), merge = TRUE, cex = vcex[i])
+legend(-1, 1.9, c("sin", "cos", "tan"), col = c(3,4,6),
+       lty = c(2, -1, 1), pch = c(-1, 3, 4), merge = TRUE, bg='gray90')
 
 ##-- Math expressions:
-plot (x, sin(x), type="l", col = 2, xlab = expression(phi))
-lines(x, cos(x), col = 3, lty = 2); abline(h=0, v=pi/2*(-6:6), col="gray90")
-ex.cs1 <- expression(plain(sin) * phi,  plain(cos) * phi)
-ex.cs2 <- expression(paste("sin ",phi), paste("cos ",phi))
+plot (x, sin(x), type="l", col = 2,xlab=expression(phi),ylab=expression(f(phi)))
+abline(h=-1:1, v=pi/2*(-6:6), col="gray90")
+lines(x, cos(x), col = 3, lty = 2)
+ex.cs1 <- expression(plain(sin) * phi,  paste("cos", phi))# 2 ways
 legend(-3, .9, ex.cs1, lty=1:2, col=2:3)
 
 x <- rexp(100, rate = .5)
@@ -84,7 +87,5 @@ abline(v = median(x), col=3, lty=3, lwd=2)
 ex12 <- expression(bar(x) == sum(over(x[i], n), i==1, n),
     		   hat(x) == median(x[i], i==1,n))
 legend(4,30, ex12, col = 2:3, lty=2:3) # lwd = 2 does not yet work
-rm(x, ex12, ex.cs1, ex.cs2)
-
 }
 \keyword{aplot}
