@@ -4,5 +4,5 @@ Priority: defunct-base
 Title: Defunct Package for Step Functions, incl. Empirical Distributions
 Author: R Development Core Team
 Maintainer: R Core Team <R-core@r-project.org>
-Description: Step Functions, including empirical distributions
+Description: A stub package -- contents merged into stats
 License: GPL Version 2 or later.

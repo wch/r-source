@@ -6,5 +6,5 @@ Author: Saikat DebRoy <saikat@stat.wisc.edu>,
  Douglas M. Bates <bates@stat.wisc.edu>, and
  Jose C. Pinheiro <jcp@research.bell-labs.com>.
 Maintainer: R Core Team <R-core@r-project.org>
-Description: Nonlinear regression routines
+Description: A stub package -- contents merged into stats
 License: GPL version 2 or later
