@@ -219,8 +219,10 @@ static xbuf file2xbuf(char *name,int del)
     for (q = p, ms = 1, dim = rr; *q; q++) {
 	if (*q == '\t')
 	    dim += TABSIZE;
-	else if (*q == '\n')
+	else if (*q == '\n') {
+            dim++;
 	    ms++;
+        }
     }
     if ((xb = newxbuf(dim + 1, ms, 1)))
 	for (q = p; *q; q++)

@@ -1039,7 +1039,7 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h)
 		setdata(bt, (void *) dd);
                 r.x += (btsize + 6);
 
-                MCHECK(bt = newtoolbutton(print_image, r, menuclpwm));
+                MCHECK(bt = newtoolbutton(print_image, r, menuprint));
                 MCHECK(addtooltip(bt, "Print"));
 		gsetcursor(bt, ArrowCursor);
                 setdata(bt, (void *) dd);
@@ -1315,8 +1315,11 @@ static void X11_NewPage(DevDesc *dd)
     xd->bgcolor = rgb(R_RED(xd->bg),
 		      R_GREEN(xd->bg),
 		      R_BLUE(xd->bg));
-    xd->clip = getrect(xd->gawin);
-    DRAW(gfillrect(_d, xd->bgcolor, xd->clip));
+    if (xd->kind) 
+       xd->clip = getrect(xd->gawin);
+    else
+       xd->clip = getrect(xd->bm);
+    DRAW(gfillrect(_d, xd->bgcolor, getrect(_d)));
     if (xd->kind)
 	xd->needsave = 1;
 }
@@ -1635,13 +1638,17 @@ static void X11_Text(double x, double y, int coords,
     else
 	x -= pixs;
     SetFont(dd->gp.font, size, rot, dd);
-    SetColor(dd->gp.col, dd),
+    SetColor(dd->gp.col, dd);
+#ifdef NOCLIPTEXT
     gsetcliprect(xd->gawin, getrect(xd->gawin));
     gdrawstr(xd->gawin, xd->font, xd->fgcolor, pt(x, y), str);
     if (!xd->kind) {
 	gsetcliprect(xd->bm, getrect(xd->bm));
 	gdrawstr(xd->bm, xd->font, xd->fgcolor, pt(x, y), str);
     }
+#else      
+    DRAW(gdrawstr(_d, xd->font, xd->fgcolor, pt(x,y), str));
+#endif
 }
 
 	/********************************************************/
@@ -1847,7 +1854,7 @@ X11DeviceDriver
     /* Clipping is problematic for X11 */
     /* Graphics is clipped, text is not */
 
-    dd->dp.canResizePlot = 0;
+    dd->dp.canResizePlot = 1;
     dd->dp.canChangeFont = 0;
     dd->dp.canRotateText = 1;
     dd->dp.canResizeText = 1;

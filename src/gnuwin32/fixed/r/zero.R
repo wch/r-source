@@ -13,8 +13,8 @@
 
 dyn.load(file.path(R.home(), "demos", "dynload", "zero.dll"))
 ##-- you may need to change this to
-## dyn.load("<RHOME>/demos/dynload/zero.so")
-##-- substituting the proper path for <RHOME>,
+## dyn.load("<R_HOME>/demos/dynload/zero.so")
+##-- substituting the proper path for <R_HOME>,
 ## unless you are executing R from the directory containing zero.so
 
 zero <- function(f, guesses, tol = 1e-7) {

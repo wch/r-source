@@ -166,6 +166,7 @@
 #include "devga.h"
 #include <windows.h>
 #include "run.h"
+#include "Startup.h"
 
 static int DefaultSaveAction = 0;
 static int DefaultRestoreAction = 1;
@@ -174,8 +175,7 @@ static int LoadInitFile = 1;
 static int DebugInitFile = 0;
 static int NoRenviron = 0;
 
-int   CharacterMode;
-static int PipedInput = 0;
+UImode  CharacterMode;
 int   ConsoleAcceptCmd;
 
 /* used to avoid some flashing during cleaning up */
@@ -184,6 +184,12 @@ int   setupui(void);
 void  delui(void);
 
 int   UserBreak = 0;
+/* callbacks */
+static void (*R_CallBackHook) ();
+static void R_DoNothing() {}
+void (*my_message)(char *s);
+int (*my_yesnocancel)(char *s);
+void (*my_R_Busy)(int);
 
 void ProcessEvents(void)
 {
@@ -194,36 +200,31 @@ void ProcessEvents(void)
 	UserBreak = 0;
 	error("user break\n");
     }
+    R_CallBackHook();
 }
 
-static void my_message(char *s)
+static void char_message(char *s)
 {
     if (!s) return;
-    if (CharacterMode)
-	R_WriteConsole(s, strlen(s));
-    else
-	askok(s);
+    R_WriteConsole(s, strlen(s));
 }
 
-static int my_yesnocancel(char *s)
+static int char_yesnocancel(char *s)
 {
     char  a[3], ss[128];
 
-    if (CharacterMode) {
-	sprintf(ss, "%s [y/n/c]: ", s);
-	R_ReadConsole(ss, a, 3, 0);
-	switch (a[0]) {
-	  case 'y':
-	  case 'Y':
-	    return YES;
-	  case 'n':
-	  case 'N':
-	    return NO;
-	  default:
-	    return CANCEL;
-	}
-    } else
-	return askyesnocancel(s);
+    sprintf(ss, "%s [y/n/c]: ", s);
+    R_ReadConsole(ss, a, 3, 0);
+    switch (a[0]) {
+    case 'y':
+    case 'Y':
+	return YES;
+    case 'n':
+    case 'N':
+	return NO;
+    default:
+	return CANCEL;
+    }
 }
 
 
@@ -289,7 +290,7 @@ static void GuiWriteConsole(char *buf,int len)
 /*2:*/
 static char LastLine[512];
 
-static int CharReadConsole(char *prompt, char *buf, int len, int addtohistory)
+int CharReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
     static char *gl = NULL;
     int   i;
@@ -310,7 +311,7 @@ static int CharReadConsole(char *prompt, char *buf, int len, int addtohistory)
     return 1;
 }
 
-static void CharWriteConsole(char *buf, int len)
+void CharWriteConsole(char *buf, int len)
 {
     char *p = strrchr(buf, '\n');
 
@@ -420,10 +421,8 @@ void R_ResetConsole()
 
 void R_FlushConsole()
 {
-    if (CharacterMode)
-	fflush(stdin);
-    else
-	consoleflush(RConsole);
+    if (CharacterMode == RTerm) fflush(stdin);
+    else if (CharacterMode == RGui) consoleflush(RConsole);
 }
 
 
@@ -431,7 +430,7 @@ void R_FlushConsole()
 
 void R_ClearerrConsole()
 {
-    if (CharacterMode)  clearerr(stdin);
+    if (CharacterMode == RTerm)  clearerr(stdin);
 }
 
 
@@ -510,8 +509,9 @@ static long StartTime;
 
 static char RHome[MAX_PATH + 7];
 static char UserRHome[MAX_PATH + 7];
+static char RUser[MAX_PATH];
 char *getRHOME();
-void  closeAllHlpFiles();
+void closeAllHlpFiles();
 void UnLoad_Unzip_Dll();
 
 
@@ -523,7 +523,7 @@ static void processRenviron()
     char *opt[2], optf[MAX_PATH], buf[80];
     int   ok;
 
-    sprintf(optf, "%s/Renviron", getenv("R_HOME"));
+    sprintf(optf, "%s/Renviron", getenv("R_USER"));
     if (!optopenfile(optf))
 	return;
     while ((ok = optread(opt, '='))) {
@@ -534,6 +534,57 @@ static void processRenviron()
 }
 
 
+void GuiBusy(int which)
+{
+	if (which == 1) gsetcursor(RConsole, WatchCursor);
+	if (which == 0) gsetcursor(RConsole, ArrowCursor);
+}
+
+void CharBusy(int which)
+{
+}
+
+void R_Busy(int which)
+{
+    my_R_Busy(which);
+}
+
+int R_SetParams(Rstart Rp)
+{
+    R_Home = Rp->rhome;
+    sprintf(RHome, "R_HOME=%s", R_Home);
+    putenv(RHome);
+    strcpy(UserRHome, "R_USER=");
+    strcat(UserRHome, Rp->home);
+    putenv(UserRHome);
+
+    CharacterMode = Rp->CharacterMode;
+    TrueReadConsole = Rp->ReadConsole;
+    TrueWriteConsole = Rp->WriteConsole;
+    R_CallBackHook = Rp->CallBack;
+    my_message = Rp->message;
+    my_yesnocancel = Rp->yesnocancel;
+    my_R_Busy = Rp->busy;    
+    R_Quiet = Rp->R_Quiet;
+    R_Slave = Rp->R_Slave;
+    R_Interactive = Rp->R_Interactive;
+    R_Verbose = Rp->R_Verbose;
+    DefaultRestoreAction = Rp->RestoreAction;
+    DefaultSaveAction = Rp->SaveAction;
+    LoadSiteFile = Rp->LoadSiteFile;
+    LoadInitFile = Rp->LoadInitFile;
+    DebugInitFile = Rp->DebugInitFile;
+    NoRenviron = Rp->NoRenviron;
+    R_VSize = Rp->vsize;
+    R_NSize = Rp->nsize;
+
+#ifdef Win32    
+    /* in case caller uses getline */
+    gl_events_hook = ProcessEvents;
+    _controlfp(_MCW_EM, _MCW_EM);
+#endif
+    return 0;
+}
 
 #define Max_Nsize 20000000	/* must be < LONG_MAX (= 2^32 - 1 =)
 				   2147483647 = 2.1e9 */
@@ -542,45 +593,61 @@ static void processRenviron()
 #define Min_Nsize 200000
 #define Min_Vsize (2*Mega)
 
+
 int cmdlineoptions(int ac, char **av)
 {
     int   value, ierr, nset = 0, vset = 0;
     char *p;
     char  s[1024];
+    structRstart rstart;
+    Rstart Rp = &rstart;
+
+    Rp->R_Quiet = 0;
+    Rp->R_Slave = 0;
+    Rp->R_Verbose = 0;
+    Rp->SaveAction = 1;
+    Rp->RestoreAction = 1;
+    Rp->LoadSiteFile = 1;
+    Rp->LoadInitFile = 1;
+    Rp->DebugInitFile = 0;
+    Rp->NoRenviron = 0;
+    Rp->vsize = R_VSIZE;
+    Rp->nsize = R_NSIZE;
 
 /* Here so that -ess and similar can change */
-    PipedInput = 0;
-    if (CharacterMode) {
+    Rp->CallBack = R_DoNothing;
+    if (CharacterMode == RTerm) {
 	if (isatty(0)) {
-	    R_Interactive = 1;
-	    R_Consolefile = NULL;
-	    R_Outputfile = NULL;
-	    gl_events_hook = ProcessEvents;
+	    Rp->R_Interactive = 1;
 	    LastLine[0] = 0;
-	    TrueReadConsole = CharReadConsole;
-	    TrueWriteConsole = CharWriteConsole;
+	    Rp->ReadConsole = CharReadConsole;
+	    Rp->WriteConsole = CharWriteConsole;
 	} else {
-	    R_Interactive = 0;
-	    R_Consolefile = stdout;
-	    R_Outputfile = stdout;
-	    TrueReadConsole = FileReadConsole;
-	    TrueWriteConsole = FileWriteConsole;
+	    Rp->R_Interactive = 0;
+	    R_Consolefile = stdout; /* used for errors */
+	    R_Outputfile = stdout;  /* used for sink-able output */
+	    Rp->ReadConsole = FileReadConsole;
+	    Rp->WriteConsole = FileWriteConsole;
 	}
+	Rp->message = char_message;
+	Rp->yesnocancel = char_yesnocancel;
+	Rp->busy = CharBusy;
     } else {
-	R_Interactive = 1;
-	R_Consolefile = NULL;
-	R_Outputfile = NULL;
-	TrueReadConsole = GuiReadConsole;
-	TrueWriteConsole = GuiWriteConsole;
+	Rp->R_Interactive = 1;
+	Rp->ReadConsole = GuiReadConsole;
+	Rp->WriteConsole = GuiWriteConsole;
+	Rp->message = askok;
+	Rp->yesnocancel = askyesnocancel;
+	Rp->busy = GuiBusy;
     }
-    R_Sinkfile = NULL;
+
+    my_message = Rp->message; /* used here */
 
 #ifdef HAVE_TIMES
     StartTime = currenttime();
 #endif
-    R_Quiet = 0;
 
-    DefaultSaveAction = 1;
+/*    DefaultSaveAction = 1;*/
 
     while (--ac) {
 	if (**++av == '-') {
@@ -594,38 +661,38 @@ int cmdlineoptions(int ac, char **av)
 		my_message(s);
 		exit(0);
 	    } else if (!strcmp(*av, "--save")) {
-		DefaultSaveAction = 3;
+		Rp->SaveAction = 3;
 	    } else if (!strcmp(*av, "--no-save")) {
-		DefaultSaveAction = 2;
+		Rp->SaveAction = 2;
 	    } else if (!strcmp(*av, "--restore")) {
-		DefaultRestoreAction = 1;
+		Rp->RestoreAction = 1;
 	    } else if (!strcmp(*av, "--no-restore")) {
-		DefaultRestoreAction = 0;
+		Rp->RestoreAction = 0;
 	    } else if (!strcmp(*av, "--silent") ||
 		       !strcmp(*av, "--quiet") ||
 		       !strcmp(*av, "-q")) {
 		R_Quiet = 1;
 	    } else if (!strcmp(*av, "--vanilla")) {
-		DefaultSaveAction = 2;	/* --no-save */
-		DefaultRestoreAction = 0;	/* --no-restore */
-		LoadSiteFile = 0;	/* --no-site-file */
-		LoadInitFile = 0;	/* --no-init-file */
-		NoRenviron = 1;
+		Rp->SaveAction = 2;	/* --no-save */
+		Rp->RestoreAction = 0;	/* --no-restore */
+		Rp->LoadSiteFile = 0;	/* --no-site-file */
+		Rp->LoadInitFile = 0;	/* --no-init-file */
+		Rp->NoRenviron = 1;
 	    } else if (!strcmp(*av, "--verbose")) {
 		R_Verbose = 1;
 	    } else if (!strcmp(*av, "--slave") ||
 		       !strcmp(*av, "-s")) {
-		R_Quiet = 1;
-		R_Slave = 1;
-		DefaultSaveAction = 2;
+		Rp->R_Quiet = 1;
+		Rp->R_Slave = 1;
+		Rp->SaveAction = 2;
 	    } else if (!strcmp(*av, "--no-site-file")) {
-		LoadSiteFile = 0;
+		Rp->LoadSiteFile = 0;
 	    } else if (!strcmp(*av, "--no-init-file")) {
-		LoadInitFile = 0;
+		Rp->LoadInitFile = 0;
 	    } else if (!strcmp(*av, "--debug-init")) {
-		DebugInitFile = 1;
+		Rp->DebugInitFile = 1;
 	    } else if (!strcmp(*av, "--no-environ")) {
-		NoRenviron = 1;
+		Rp->NoRenviron = 1;
 	    } else if (!strcmp(*av, "-save") ||
 		       !strcmp(*av, "-nosave") ||
 		       !strcmp(*av, "-restore") ||
@@ -666,7 +733,7 @@ int cmdlineoptions(int ac, char **av)
 		    my_message(s);
 		} else {
 		    vset = 1;
-		    R_VSize = value;
+		    Rp->vsize = value;
 		}
 	    } else if ((value = (*av)[1] == 'n') || !strcmp(*av, "--nsize")) {
 		if (value)
@@ -696,13 +763,12 @@ int cmdlineoptions(int ac, char **av)
 		    my_message(s);
 		} else {
 		    nset = 1;
-		    R_NSize = value;
+		    Rp->nsize = value;
 		}
 	    } else if (!strcmp(*av, "--ess")) {
 /* Assert that we are interactive even if input is from a file */
-		PipedInput = 1;
-		R_Interactive = 1;
-		TrueReadConsole = PipeReadConsole;
+		Rp->R_Interactive = 1;
+		Rp->ReadConsole = PipeReadConsole;
 	    } else if (!strcmp(*av, "--mdi")) {
 		MDIset = 1;
 	    } else if (!strcmp(*av, "--sdi") || !strcmp(*av, "--no-mdi")) {
@@ -723,48 +789,47 @@ int cmdlineoptions(int ac, char **av)
 	    }
 	}
     }
-    R_Home = getRHOME();
-    sprintf(RHome, "R_HOME=%s", R_Home);
-    putenv(RHome);
+    Rp->rhome = getRHOME();
 
 /*
  * try R_USER then HOME then working directory
  * put these here to allow R_USER or HOME to be set on the command line.
  */
-    if (!getenv("R_USER")) {
+    if (getenv("R_USER")) {
+	strcpy(RUser, getenv("HOME"));
+	p = RUser + (strlen(RUser) - 1);
+	if (*p == '/' || *p == '\\') *p = '\0';
+    } else {
 	if (getenv("HOME")) {
-	    sprintf(UserRHome, "R_USER=%s", getenv("HOME"));
-	    p = UserRHome + (strlen(UserRHome) - 1);
-	    if (*p == '/' || *p == '\\')
-		*p = '\0';
-	} else {
-	    strcpy(UserRHome, "R_USER=");
-	    GetCurrentDirectory(MAX_PATH, &UserRHome[7]);
-	}
-	putenv(UserRHome);
+	    strcpy(RUser, getenv("HOME"));
+	    p = RUser + (strlen(RUser) - 1);
+	    if (*p == '/' || *p == '\\') *p = '\0';
+	} else
+	    GetCurrentDirectory(MAX_PATH, RUser);
     }
+    Rp->home = RUser;
 
 /* Process ~/.Renviron, if it exists */
-    processRenviron();
+    if(!NoRenviron) processRenviron();
 
     if (!vset && (p = getenv("R_VSIZE"))) {
 	value = Decode2Long(p, &ierr);
 	if (ierr != 0 || value > Max_Vsize || value < Min_Vsize)
 	    REprintf("WARNING: invalid R_VSIZE ignored;");
 	else
-	    R_VSize = value;
+	    Rp->vsize = value;
     }
     if (!nset && (p = getenv("R_NSIZE"))) {
 	value = Decode2Long(p, &ierr);
 	if (ierr != 0 || value > Max_Nsize || value < Min_Nsize)
 	    REprintf("WARNING: invalid R_NSIZE ignored;");
 	else
-	    R_NSize = value;
+	    Rp->nsize = value;
     }
     if (!R_Interactive && DefaultSaveAction == 0)
 	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
 
-    _controlfp(_MCW_EM, _MCW_EM);
+    R_SetParams(Rp);
 
     return 0;
 
@@ -772,6 +837,7 @@ badargs:
     REprintf("invalid argument passed to R\n");
     exit(1);
 }
+
 
 void R_InitialData(void)
 {
@@ -794,7 +860,7 @@ void R_CleanUp(int ask)
     if (R_DirtyImage) {
 	R_ClearerrConsole();
 	R_FlushConsole();
-	if (CharacterMode && !R_Interactive && ask == 1)
+	if ((CharacterMode != RGui) && !R_Interactive && (ask == 1))
 	    ask = DefaultSaveAction;
 	if (ask == 1)
 	    ans = my_yesnocancel("Save workspace image?");
@@ -817,19 +883,10 @@ void R_CleanUp(int ask)
     closeAllHlpFiles();
     KillAllDevices();
     AllDevicesKilled = 1;
-    if (!CharacterMode)
+    if (CharacterMode == RGui)
 	savehistory(RConsole, ".Rhistory");
     UnLoad_Unzip_Dll();
     exitapp();
-}
-
-void R_Busy(int which)
-{
-/* currently cursor is never set off busy */
-    if(!CharacterMode) {
-	if (which == 1) gsetcursor(RConsole, WatchCursor);
-	if (which == 0) gsetcursor(RConsole, ArrowCursor);
-    }
 }
 
 	/* Saving and Restoring the Global Environment */
@@ -954,9 +1011,9 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	vis = 1;
     if (!isString(CADDR(args)))
 	errorcall(call, "character string expected as third argument\n");
-    if (CharacterMode && (flag == 2))
+    if ((CharacterMode != RGui) && (flag == 2))
 	flag = 1;
-    if (!CharacterMode) {
+    if (CharacterMode == RGui) {
 	SetStdHandle(STD_INPUT_HANDLE, INVALID_HANDLE_VALUE);
 	SetStdHandle(STD_OUTPUT_HANDLE, INVALID_HANDLE_VALUE);
 	SetStdHandle(STD_ERROR_HANDLE, INVALID_HANDLE_VALUE);
