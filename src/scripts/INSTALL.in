@@ -628,7 +628,7 @@ do_install_source () {
   ## size in a left-space-padded first field, and some do not pad. 
   if test "x$thislazy" = "xauto" ; then
     Rcodesize=`cat ${R_PACKAGE_DIR}/R/${pkg_name} | wc -c`
-    if test ${Rcodesize} -gt 50000 ; then
+    if test ${Rcodesize} -gt 25000 ; then
       thislazy=true
     else
       thislazy=false

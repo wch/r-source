@@ -316,7 +316,7 @@ foreach $pkg (@ARGV){
 		$codesize =~ / *([0-9]+)/;
 		$codesize = $1;
 		print "*** codesize is $codesize ***\n" if $opt_debug;
-		if($codesize > 50000) {$lazyload = 1;} else {$lazyload = 0;}
+		if($codesize > 25000) {$lazyload = 1;} else {$lazyload = 0;}
 	    }
 	    print "*** lazyload is $lazyload ***\n" if $opt_debug;
 	    if($lazyload) {
