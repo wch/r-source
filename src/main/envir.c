@@ -1566,6 +1566,9 @@ static int isMissing(SEXP symbol, SEXP rho)
     else
 	s = symbol;
 
+    if (rho == R_NilValue)  /* is this really the right thing to do? LT */
+	return 0;
+
     vl = findVarLocInFrame(rho, s);
     if (vl != R_NilValue) {
 	if (DDVAL(symbol)) {
@@ -2167,7 +2170,6 @@ void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env)
 	    warning("saved workspaces with active bindings may not work"
 		    " properly when loaded into older versions of R");
 	    defineVar(sym, fun, env); /* fails if env is locked */
-	    binding = findVarLocInFrame(env, sym);
 	    SET_ACTIVE_BINDING_BIT(binding);
 	}
 	else if (! IS_ACTIVE_BINDING(binding))
@@ -2186,7 +2188,7 @@ Rboolean R_HasFancyBindings(SEXP rho)
 	int i, size;
 
 	table = HASHTAB(rho);
-	size = HASHSIZE(rho);
+	size = HASHSIZE(table);
 	for (i = 0; i < size; i++)
 	    for (chain = VECTOR_ELT(table, i);
 		 chain != R_NilValue;
