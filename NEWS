@@ -19,6 +19,7 @@ BUG FIXES
 
     o  segfault in rbind of a vector without names fixed. cbind, too.
 
+    o  fixed symbol size problems with PostScript driver
 
 		CHANGES IN R VERSION 0.90.0
 

@@ -3555,7 +3555,7 @@ void GPretty(double *lo, double *up, int *ndiv)
 #ifdef OLDSYMSIZE
 #define GSTR_0  GStrWidth("0", INCHES, dd)
 #else
-#define GSTR_0  xDevtoInch(dd->dp.cra[0] * 0.66, dd) * dd->gp.cex
+#define GSTR_0  dd->dp.cra[0] * 0.66 * dd->gp.ipr[0] * dd->gp.cex
 /* NOTE: This cex is already multiplied with cexbase */
 #endif /* Draw one of the R special symbols. */
 void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
