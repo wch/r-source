@@ -191,3 +191,11 @@ Date: Tue, 14 Mar 2000 12:15:54 +0100
 Subject: Error in lme?
 From: simon.frost@ed.ac.uk
 Date: Tue, 14 Mar 2000 14:15:52 +0100 (MET)
+* PR# 489 *
+Subject: r-base_1.0.0-1_i386.deb install problem
+From: "Gregory R. Warnes" <warnes@biostat.washington.edu>
+Date: Thu, 16 Mar 2000 04:02:26 +0000 (GMT)
+* PR# 490 *
+Subject: R-1.0.0 on alpha/osf1 memory glitch
+From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
+Date: Fri, 17 Mar 2000 11:25:30 +1300 (NZDT)
