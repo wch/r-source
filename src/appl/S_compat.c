@@ -1,6 +1,7 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998--1999  The R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,26 +19,23 @@
  */
 
 /* S compatibility library - mapping some internal functions in S to R
- *
- * $Id: S_compat.c,v 1.1.2.1 1999/01/22 16:29:06 maechler Exp $
  */
 
-#include "S.h"
 #include "S_compat.h"
 
 extern longint
 F77_NAME(dqrdc2) (double*, longint*, longint*, longint*, double*,
 		  longint*, double*, longint*, double*);
 
-				/* These are based on the argument
-				   sequences used in the nlme 2.1 code 
-				   on statlib. */
+/* These are based on the argument
+   sequences used in the nlme 2.1 code 
+   on statlib. */
 void
 F77_NAME(dqrdca) (double *x, longint *ldx, longint *n, longint *p,
-		    double *qraux, longint *jpvt, double *work,
-		    longint *rank, double *tol)
+		  double *qraux, longint *jpvt, double *work,
+		  longint *rank, double *tol)
 {				/* modified calling sequence for dqrdc2 */
-  F77_NAME(dqrdc2) (x, ldx, n, p, tol, rank, qraux, jpvt, work);
+    F77_NAME(dqrdc2) (x, ldx, n, p, tol, rank, qraux, jpvt, work);
 }
 
 void
@@ -45,10 +43,12 @@ F77_NAME(dbksl) (double *x, longint *ldx, longint *n,
 		 double *rhs, longint *nrhs, longint *info)
 {				/* solve multiple right hand sides on
 				   upper triangular system of equations */
-  longint nn = *nrhs, job = 1;
-  while (nn-- > 0) {
-    F77_NAME(dtrsl) (x, ldx, n, rhs, &job, info);
-    if (*info) return;
-    rhs += *n;
-  }
+
+    /*--- is almost like bakslv() in ./bakslv.c -- however that one COPIES */
+    longint nn = *nrhs, job = 1;
+    while (nn-- > 0) {
+	F77_NAME(dtrsl) (x, ldx, n, rhs, &job, info);
+	if (*info) return;
+	rhs += *n;
+    }
 }
