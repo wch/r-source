@@ -50,6 +50,7 @@
 #
 #
 # Default: RKey=DefaultValue
+# just as an example...
 RforMacCreator=Stefano M. Iacus
 
 # Timezone
@@ -57,10 +58,56 @@ RforMacCreator=Stefano M. Iacus
 TZ=+0100
 
 # The history size
-# Default: R_HISTSIZE=512
-R_HISTSIZE=512
+# Default: RHISTSIZE=512
+RHISTSIZE=512
+
+# Wheter to show or source a file
+# You should set this to TRUE if you
+# want Alpha  be your external editor
+# Default: OnOpenSource=FALSE
+OnOpenSource=FALSE
+
+# The Tab size to use in text windows
+# range [1,20]
+# Default: TabSize=5
+TabSize=5
+
+# TextSize to be used in text windows
+# range [8,14]
+# Default: TextSize=12
+TextSize=12
+
+# ScreenRes
+# Useful values is only 72. Possibile other values
+# are 144, 300, 600 but you should not use them unless
+# you know exactly what you are doing ! So, please,
+# don't change this parameter.
+# Default: ScreenRes=72
+ScreenRes=72
 
 
+# FontName: this is the font used in text windows.
+# There are several possibilities for this.
+# You can specify any font you like but you should
+# prefere a monospaced font. If the Monaco will be used instead.
+# Font names are not case sensitive i.e.
+# FontName=monaco and FontName=MoNacO are the same.
+# If your font name includes spaces you should provide them 
+# without using quotes, i.e.
+# FontName=Times New Roman
+# Default: FontName=monaco
+FontName=monaco
 
+# GraphFontName: this font is used for graphic windows.
+# There are several possibilities for this.
+# If the font is not usable by R application, then 
+# the font Helvetica will be used instead.
+# Font names are not case sensitive i.e.
+# FontName=monaco and FontName=MoNacO are the same.
+# If your font name includes spaces you should provide them 
+# without including quotes, i.e.
+# FontName=Times New Roman
+# Default: GraphFontName=helvetica
+GraphFontName=helvetica
 
 
