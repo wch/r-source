@@ -734,12 +734,12 @@ static SEXP real_binary(int code, SEXP s1, SEXP s2)
 
 /* Mathematical Functions of One Argument */
 
+#if !defined(HAVE_ASINH) || !defined(HAVE_ACOSH) || !defined(HAVE_ATANH)
 static double unavailable(double x)
 {
     errorcall(lcall, "function unavailable in this R\n");
-    return 0.;/* never used; to keep -Wall happy */
+    return 0.;/* to keep -Wall happy */
 }
-
 #ifndef HAVE_ASINH
 #define asinh unavailable
 #endif
@@ -748,6 +748,7 @@ static double unavailable(double x)
 #endif
 #ifndef HAVE_ATANH
 #define atanh unavailable
+#endif
 #endif
 
 static SEXP math1(SEXP op, SEXP sa, double(*f)())

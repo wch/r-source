@@ -167,7 +167,7 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     for (i = 0; i < LENGTH(sepr); i++)
 	if (strstr(CHAR(STRING(sepr)[i]), "\n")) nlsep = 1;
     args = CDR(args);
-    
+
     fill = CAR(args);
     if ((!isNumeric(fill) && !isLogical(fill)) || (length(fill) != 1))
 	errorcall(call, "invalid fill argument\n");
@@ -301,9 +301,11 @@ SEXP do_makelist(SEXP call, SEXP op, SEXP args, SEXP rho)
     return list;
 }
 
+#ifdef NOT_used
 SEXP do_namedlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 }
+#endif NOT_used
 
 
 SEXP do_expression(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -405,7 +407,7 @@ SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(xnames = getAttrib(x, R_NamesSymbol));
     if (xnames != R_NilValue)
 	names = allocVector(STRSXP, len);
-    else names = R_NilValue;    /*- just for -Wall --- should we do this ? */
+    else names = R_NilValue;	/*- just for -Wall --- should we do this ? */
     switch (TYPEOF(x)) {
     case LGLSXP:
     case INTSXP:
@@ -525,7 +527,7 @@ SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 	set = 0;
 	tsym = install(CHAR(STRING(name)[i]));
 	tenv = aenv;
-    rmset:     
+    rmset:
 	for (tframe = FRAME(tenv); tframe != R_NilValue; tframe = CDR(tframe))
 	    if (TAG(tframe) == tsym) {
 		unbindVar(tsym, tenv);
@@ -580,7 +582,7 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
 	t1 = install(CHAR(STRING(CAR(args))[0]));
 
-    /* envir :  originally, the "where=" argument */
+    /* envir :	originally, the "where=" argument */
 
     if (TYPEOF(CADR(args)) == REALSXP || TYPEOF(CADR(args)) == INTSXP) {
 	where = asInteger(CADR(args));
@@ -622,7 +624,7 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    rval = eval(rval, genv);
 	NAMED(rval) = 1;
 	return rval;
-    } 
+    }
     else { /* exists(.) */
 	if (rval == R_UnboundValue)
 	    ginherits = 0;
