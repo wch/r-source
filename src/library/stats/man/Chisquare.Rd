@@ -52,11 +52,14 @@ rchisq(n, df, ncp=0)
   }
   for \eqn{x \ge 0}.  For integer \eqn{n}, this is the distribution of
   the sum of squares of \eqn{n} normals each with variance one,
-  \eqn{\lambda} being the sum of squares of the normal means.
+  \eqn{\lambda} being the sum of squares of the normal means; further,
+  \cr
+  \eqn{E(X) = n + \lambda}, \eqn{Var(X) = 2(n + 2*\lambda)}, and
+  \eqn{E((X - E(X))^3) = 8(n + 3*\lambda)}.
+
   Note that the degrees of freedom \code{df}\eqn{= n}, can be
   non-integer, and for non-centrality \eqn{\lambda > 0}, even \eqn{n = 0};
   see the reference, chapter 29.
-
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -67,8 +70,10 @@ rchisq(n, df, ncp=0)
     Distributions}, Vol \bold{2}; Wiley NY;
 }
 \seealso{
-  \code{\link{dgamma}} for the Gamma distribution which generalizes the
-  chi-squared one.
+  A central chi-squared distribution with \eqn{n} degrees of freedom
+  is the same as a Gamma distribution with \code{shape} \eqn{\alpha =
+    n/2}{a = n/2} and \code{scale} \eqn{\sigma = 2}{s = 2}.  Hence, see
+  \code{\link{dgamma}} for the Gamma distribution.
 }
 \examples{
 dchisq(1, df=1:3)
