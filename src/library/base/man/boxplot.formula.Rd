@@ -6,7 +6,7 @@
   formula notation.
 }
 \usage{
-\method{boxplot}{formula}(formula, data = NULL, \dots, subset, na.action)
+\method{boxplot}{formula}(formula, data = NULL, \dots, subset)
 }
 \arguments{
   \item{formula}{a formula, such as \code{y ~ x}.}
@@ -16,10 +16,6 @@
     parameters may also be passed as arguments, see \code{\link{par}}.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used for plotting.}
-  %% <FIXME>
-  %% Remove in 1.4.0.
-  \item{na.action}{deprecated.}
-  %% </FIXME>
 }
 \details{
   This is a method of the generic function \code{\link{boxplot}}.  It

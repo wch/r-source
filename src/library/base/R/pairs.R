@@ -1,17 +1,12 @@
 pairs <- function(x, ...) UseMethod("pairs")
 
 pairs.formula <-
-function(formula, data = NULL, ..., subset, na.action)
+function(formula, data = NULL, ..., subset)
 {
-    ## <FIXME>
-    ## Remove `na.action' in 1.4.
-    if(!missing(na.action))
-        warning("argument `na.action' is deprecated")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
-    m$... <- m$na.action <- NULL
-    ## </FIXME>
+    m$... <- NULL
     m[[1]] <- as.name("model.frame")
     mf <- eval(m, parent.frame())
     pairs(mf, ...)
