@@ -109,8 +109,7 @@ function (object, filename = paste0(name, ".Rd"))
               "~~ Give a concise description here ~~", "}",
               "\\format{",
               "This data frame contains the following columns:",
-              "}",
-              "\\arguments{")
+              "\\describe{")
     for (i in names(dat)) {
       file <- c(file, paste0("\\item{", i, "}{"),
                 if (inherits(dat[[i]], "ordered")) {
@@ -128,7 +127,7 @@ function (object, filename = paste0(name, ".Rd"))
                 },
                 "}")
     }
-    file <- c(file, "}",
+    file <- c(file, "}\n}",
               "\\details{",
               " ~~ If necessary, more details than the __description__  above ~~",
               "}",
