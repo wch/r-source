@@ -726,9 +726,13 @@ int PicTeXDeviceDriver(DevDesc *dd, char *filename, char *bg, char *fg,
 	dd->dp.locator = PicTeX_Locator;
 	dd->dp.mode = PicTeX_Mode;
 	dd->dp.hold = PicTeX_Hold;
-	dd->dp.metricInfo = PicTeX_MetricInfo;
 
-		/* Screen Dimensions in Pixels */
+/*	dd->dp.metricInfo = PicTeX_MetricInfo;
+ */
+
+	dd->dp.metricInfo = NULL;
+	
+	/* Screen Dimensions in Pixels */
 
 	dd->dp.left = 0;			/* left */
 	dd->dp.right = 72.27 * width;	/* right */

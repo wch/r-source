@@ -23,7 +23,9 @@
 #include <Rconfig.h>
 #endif
 
+/*
 #define OLD
+*/
 #ifndef OLD
 #define DEBUG_X11
 #endif
@@ -793,11 +795,11 @@ static unsigned int adobe_sizes = 8600544;
 typedef struct {int face, size;  XFontStruct *font;} cacheentry;
 
 static cacheentry fontcache[MAXFONTS];
-static int nfonts = 0, cache_full = 0 ;
+static int nfonts = 0;
 static int force_nonscalable = 0; /* for testing */
 
 #define ADOBE_SIZE(I) (adobe_sizes & (1<<((I)-1)))
-#define SMALLEST 5
+#define SMALLEST 2
 
 static XFontStruct *RLoadFont(int face, int size)
 {
@@ -1587,7 +1589,8 @@ static void X11_Text(double x, double y, int coords,
     if(xc != 0.0 || yc != 0) {
 	rot1 = DEG2RAD * rot;
 	xl = X11_StrWidth(str, dd);
-	yl = GConvertYUnits(1, CHARS, DEVICE, dd);
+	/* yl = GConvertYUnits(1, CHARS, DEVICE, dd); */
+	yl = xd->font->ascent;
 	x += -xc * xl * cos(rot1) + yc * yl * sin(rot1);
 	y -= -xc * xl * sin(rot1) - yc * yl * cos(rot1);
     }
