@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2000-2002 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -103,15 +103,7 @@ double qt(double p, double ndf, int lower_tail, int log_p)
 	    c = (((0.05 * d * x - 5) * x - 7) * x - 2) * x + b + c;
 	    y = (((((0.4 * y + 6.3) * y + 36) * y + 94.5) / c
 		  - y - 3) / b + 1) * x;
-	    y = a * y * y;
-	    /* FIXME: Following cutoff is machine-precision dependent
-	       -----  Really, use stable impl. of expm1(y) == exp(y) - 1,
-	              as it is in GNU's mathlib ..*/
-	    if (y > 1e-6) /* was (y > 0.002) */
-		y = exp(y) - 1;
-	    else { /* Taylor of	 e^y -1 : */
-		y = (0.5 * y + 1) * y;
-	    }
+	    y = expm1(a * y * y);
 	} else {
 	    y = ((1 / (((ndf + 6) / (ndf * y) - 0.089 * d - 0.822)
 		       * (ndf + 2) * 3) + 0.5 / (ndf + 4))

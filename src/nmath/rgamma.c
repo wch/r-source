@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2001 The R Development Core Team
+ *  Copyright (C) 2000-2002 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -77,12 +77,6 @@ double rgamma(double a, double scale)
     const double a6 = -0.1367177;
     const double a7 = 0.1233795;
 
-    const double e1 = 1.0;
-    const double e2 = 0.4999897;
-    const double e3 = 0.166829;
-    const double e4 = 0.0407753;
-    const double e5 = 0.010293;
-
     /* State variables [FIXME for threading!] :*/
     static double aa = 0.;
     static double aaa = 0.;
@@ -137,7 +131,7 @@ double rgamma(double a, double scale)
     if (a != aaa) {
 	aaa = a;
 	r = 1.0 / a;
-	q0 = ((((((q7 * r + q6) * r + q5) * r + q4) * r + q3) * r 
+	q0 = ((((((q7 * r + q6) * r + q5) * r + q4) * r + q3) * r
 	       + q2) * r + q1) * r;
 
 	/* Approximation depending on size of parameter a */
@@ -164,7 +158,7 @@ double rgamma(double a, double scale)
 	/* Step 6: calculation of v and quotient q */
 	v = t / (s + s);
 	if (fabs(v) <= 0.25)
-	    q = q0 + 0.5 * t * t * ((((((a7 * v + a6) * v + a5) * v + a4) * v 
+	    q = q0 + 0.5 * t * t * ((((((a7 * v + a6) * v + a5) * v + a4) * v
 				      + a3) * v + a2) * v + a1) * v;
 	else
 	    q = q0 - s * t + 0.25 * t * t + (s2 + s2) * log(1.0 + v);
@@ -191,24 +185,22 @@ double rgamma(double a, double scale)
 	    /* Step 10:	 calculation of v and quotient q */
 	    v = t / (s + s);
 	    if (fabs(v) <= 0.25)
-		q = q0 + 0.5 * t * t * 
-		    ((((((a7 * v + a6) * v + a5) * v + a4) * v + a3) * v 
+		q = q0 + 0.5 * t * t *
+		    ((((((a7 * v + a6) * v + a5) * v + a4) * v + a3) * v
 		      + a2) * v + a1) * v;
 	    else
 		q = q0 - s * t + 0.25 * t * t + (s2 + s2) * log(1.0 + v);
 	    /* Step 11:	 hat acceptance (h) */
 	    /* (if q not positive go to step 8) */
 	    if (q > 0.0) {
-		if (q <= 0.5)
-		    w = ((((e5 * q + e4) * q + e3) * q + e2) * q + e1) * q;
-		else
-		    w = exp(q) - 1.0;
+		w = expm1(q);
+		/*  ^^^^^ original code had approximation with rel.err < 2e-7 */
 		/* if t is rejected sample again at step 8 */
 		if (c * fabs(u) <= w * exp(e - 0.5 * t * t))
 		    break;
 	    }
 	}
-    }
+    } /* repeat .. until  `t' is accepted */
     x = s + 0.5 * t;
     return scale * x * x;
 }

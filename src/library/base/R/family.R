@@ -63,7 +63,7 @@ make.link <- function (link)
                    linkfun <- function(mu) log(-log(1 - mu))
                    linkinv <- function(eta)
                        pmax(.Machine$double.eps,
-                            pmin(1 - .Machine$double.eps, 1 - exp(-exp(eta))))
+                            pmin(1 - .Machine$double.eps, - expm1(-exp(eta))))
                    mu.eta <- function(eta) {
                        eta <- pmin(eta, 700)
                        pmax(.Machine$double.eps, exp(eta) * exp(-exp(eta)))
