@@ -859,47 +859,41 @@ RECT *RgetMDIsize(); /* in rui.c */
 SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP list, preselect, ans = R_NilValue;
-    char **clist, *cps;
+    char **clist;
     int i, j = -1, n, mw = 0, multiple, nsel = 0;
-    int xmax = 550, ymax  = 400, ylist, fht, fwd, h0;
+    int xmax, ymax, ylist, fht, h0;
     Rboolean haveTitle;
-    rect r;
 
     checkArity(op, args);
     list = CAR(args);
     if(!isString(list)) error(_("invalid 'list' argument"));
     preselect = CADR(args);
-    if(!isNull(preselect) &&
-       (!isString(preselect) || length(preselect) != 1))
+    if(!isNull(preselect) && !isString(preselect))
 	error(_("invalid 'preselect' argument"));
-    if(!isNull(preselect)) cps = CHAR(STRING_ELT(preselect, 0));
-    else cps = "";
     multiple = asLogical(CADDR(args));
     if(multiple == NA_LOGICAL) multiple = 0;
     haveTitle = isString(CADDDR(args));
+    if(!multiple && isString(preselect) && LENGTH(preselect) != 1)
+	error(_("invalid 'preselect' argument"));
 
     n = LENGTH(list);
     clist = (char **) R_alloc(n + 1, sizeof(char *));
     for(i = 0; i < n; i++) {
 	clist[i] = CHAR(STRING_ELT(list, i));
-	if(strcmp(clist[i], cps) == 0) j = i;
-	mw = max(mw, strlen(clist[i]));
+	mw = max(mw, gstrwidth(NULL, SystemFont, clist[i]));
     }
     clist[n] = NULL;
 
-    r = getSysFontSize();
-    fht = r.height + r.y;
-    fwd = r.width;
+    fht = getSysFontSize().height;
     
-    mw = min(mw, 25);
-    xmax = max(170, fwd*mw+60); /* allow for scrollbar */
+    xmax = max(170, mw+60); /* allow for scrollbar */
     if(ismdi()) {
 	RECT *pR = RgetMDIsize();
 	h0 = pR->bottom;
     } else {
 	h0 = deviceheight(NULL);
     }
-    ymax = min(60+fht*n, h0-100); /* allow for window widgets, toolbar */
+    ymax = min(80+fht*n, h0-100); /* allow for window widgets, toolbar */
     ylist = ymax - 60;
     wselect = newwindow(haveTitle ? CHAR(STRING_ELT(CADDDR(args), 0)):
 			(multiple ? "Select one or more" : "Select one"),
@@ -910,13 +904,23 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 	f_list = newmultilist(clist, rect(10, 10, xmax-25, ylist), NULL);
     else
 	f_list = newlistbox(clist, rect(10, 10, xmax-25, ylist), NULL);
-    setlistitem(f_list, j);
+    if(!isNull(preselect) && LENGTH(preselect)) {
+	for(i = 0; i < n; i++)
+	    for(j = 0; j < LENGTH(preselect); j++)
+		if(strcmp(clist[i], CHAR(STRING_ELT(preselect, j))) == 0) {
+		    setlistitem(f_list, i);
+		    break;
+		}
+    }
     bFinish = newbutton("OK", rect(xmax-160, ymax-40, 70, 25), finish);
     bCancel = newbutton("Cancel", rect(xmax-80, ymax-40, 70, 25), cancel);
     setkeydown(wselect, key1);
     show(wselect);
     done = 0;
-    while(!done) R_ProcessEvents();
+    while(!done) {
+	Sleep(100);
+	R_ProcessEvents();
+    }
 
     if(multiple) {
 	if (done == 1) { /* Finish */

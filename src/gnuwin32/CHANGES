@@ -17,6 +17,9 @@ BDR's supplementary collection is now included in the default
 options("CRAN"): if you want to include it explicitly set something like
 options(CRAN=c(some_cran_mirror, http://www.stats.ox.ac.uk/pub/RWin"))
 
+There is a new item on the Packages menu to set repositories, e.g.
+CRAN, Bioconductor, Omegahat.
+
 The new (in R 2.0.0) graphics pars "lend", "ljoin" and "lmitre" are
 now implemented for the Windows devices.
 
@@ -46,7 +49,8 @@ R can now be built with support for multibyte and variable-width
 character sets, e.g. for Japanese. See README.rw????.
 
 select.list() now looks up the current font size and chooses its
-window size based on that.
+window size based on that.  It allows multiple preselections if
+multiple=TRUE.
 
 The instructions for compiling packages from source and for
 compiling R itself have been moved to the R Installation and 
@@ -66,7 +70,7 @@ There are now facilities (documented in file src/gnuwin32/INSTALL) to
 add packages when building the R installer, and to rebuild a
 customized installer from the existing binary distribution.
 
-TCL/TK could crash Rgui during shutdown by trying to print an error
+Tcl/Tk could crash Rgui during shutdown by trying to print an error
 message after the console had been shut down.  Such messages are now
 redirected to message boxes.
 

@@ -366,17 +366,19 @@ download.packages <- function(pkgs, destdir, available = NULL,
 menuInstallCran <- function()
 {
     a <- available.packages()
-    contains <- .find_bundles(a)
-    extras <- unlist(lapply(names(contains), function(x)
-                            paste(contains[[x]], " (", x, ")", sep="")))
-    p <- sort(as.vector(c(a[, 1], extras)))
-    sel <- select.list(p,,TRUE)
-    if(!length(sel)) return(invisible())
-    bundles <- grep("(", sel, fixed = TRUE)
-    if(length(bundles)) sel[bundles] <-
-        sub("[^(]*\\((.*)\\)", "\\1" , sel[bundles])
-    install.packages(unique(sel), .libPaths()[1], available=a,
-                     dependencies=TRUE)
+    if(NROW(a)) {
+        contains <- .find_bundles(a, FALSE)
+        extras <- unlist(lapply(names(contains), function(x)
+                                paste(contains[[x]], " (", x, ")", sep="")))
+        p <- sort(as.vector(c(a[, 1], extras)))
+        sel <- select.list(p,,TRUE)
+        if(!length(sel)) return(invisible())
+        bundles <- grep("(", sel, fixed = TRUE)
+        if(length(bundles)) sel[bundles] <-
+            sub("[^(]*\\((.*)\\)", "\\1" , sel[bundles])
+        install.packages(unique(sel), .libPaths()[1], available=a,
+                         dependencies=TRUE)
+    }
 }
 
 menuInstallLocal <- function()
@@ -393,13 +395,30 @@ menuInstallBioc <- function()
                      dependencies = TRUE)
 }
 
+menuRepositories <- function()
+{
+    a <- c("CRAN (auto-built)", "CRAN (extras)", "Bioconductor", "Omegahat")
+    res <- select.list(a, a[1:2], multiple=TRUE, "Repositories")
+    if(length(res)) {
+        res <- match(res, a)
+        repos <- c(CRAN = "@CRAN@",
+                   CRANextra = "http://www.stats.ox.ac.uk/pub/RWin",
+                   BioC = "http://www.bioconductor.org",
+                   Omegahat = "http://www.omegahat.org/R")
+        CRAN <- getOption("CRAN")["CRAN"]
+        if(!is.na(CRAN)) repos[1] <- CRAN
+        options(CRAN=repos[res])
+    }
+}
+
 chooseCRANmirror <- function()
 {
     m <- read.csv(file.path(R.home(), "doc/CRAN_mirrors.csv"), as.is=TRUE)
     URL <- m[m[, 1] == select.list(m[,1], , FALSE, "CRAN mirror"), 'URL']
     if(length(URL)) {
-        URL <- gsub("/$", "", URL[1])
-        options(CRAN = sub("@CRAN@", URL, getOption("CRAN")))
+        CRAN <- getOption("CRAN")
+        CRAN["CRAN"] <- gsub("/$", "", URL[1])
+        options(CRAN = CRAN)
     }
 }
 
@@ -407,13 +426,18 @@ contrib.url <- function(repos, type = c("binary", "source"))
 {
     type <- if(missing(type)) "binary" else match.arg(type)
     if(is.null(repos)) return(NULL)
-    if(length(grep("@CRAN@", repos)) > 0)
-        if(interactive()) {
-            cat(gettext("--- Please select a CRAN mirror for use in this session ---\n"))
-            flush.console()
-            chooseCRANmirror()
-            repos <- sub("@CRAN@", getOption("CRAN"), repos)
-        } else stop("trying to use CRAN without setting a mirror")
+    if("@CRAN@" %in% repos && interactive()) {
+        cat(gettext("--- Please select a CRAN mirror for use in this session ---\n"))
+        flush.console()
+        chooseCRANmirror()
+        m <- match("@CRAN@", repos)
+        nm <- names(repos)
+        repos[m] <- getOption("CRAN")["CRAN"]
+        if(is.null(nm)) nm <- rep("", length(repos))
+        nm[m] <- "CRAN"
+        names(repos) <- nm
+    }
+    if("@CRAN@" %in% repos) stop("trying to use CRAN without setting a mirror")
     if(type == "binary") {
         ver <- paste(R.version$major, substring(R.version$minor, 1, 1),
                      sep = ".")

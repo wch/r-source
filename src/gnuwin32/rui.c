@@ -67,7 +67,7 @@ static menuitem msource, mdisplay, mload, msave, mloadhistory,
     mls, mrm, msearch, mhelp, mmanintro, mmanref, mmandata,
     mmanext, mmanlang, mmanadmin, mman0, mapropos, mhelpstart, mhelpsearch, 
     mFAQ, mrwFAQ, mpkgl, mpkgm, mpkgi, mpkgil, mpkgb, mpkgu, mpkgbu, mde, 
-    mCRAN;
+    mCRAN, mrepos;
 static int lmanintro, lmanref, lmandata, lmanlang, lmanext, lmanadmin;
 static menu m, mman;
 static char cmd[1024];
@@ -397,6 +397,12 @@ static void menupkgcranmirror(control m)
     consolecmd(RConsole, "utils:::chooseCRANmirror()");
 }
 
+static void menupkgrepos(control m)
+{
+    if (!ConsoleAcceptCmd) return;
+    consolecmd(RConsole, "utils:::menuRepositories()");
+}
+
 static void menupkginstallcran(control m)
 {
     if (!ConsoleAcceptCmd) return;
@@ -562,6 +568,7 @@ static void menuact(control m)
 	enable(mpkgbu);
 	enable(mde);
 	enable(mCRAN);
+	enable(mrepos);
     } else {
 	disable(msource);
 	disable(mload);
@@ -581,6 +588,7 @@ static void menuact(control m)
 	disable(mpkgbu);
 	disable(mde);
 	disable(mCRAN);
+	disable(mrepos);
     }
 
     if (consolecancopy(RConsole)) {
@@ -909,9 +917,11 @@ int RguiPackageMenu()
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mpkgm = newmenuitem(G_("Set CRAN mirror..."), 0,
 			       menupkgcranmirror));
-    MCHECK(mpkgi = newmenuitem(G_("Install package(s) from CRAN..."), 0,
+    MCHECK(mrepos = newmenuitem(G_("Select repositories..."), 0,
+				menupkgrepos));
+    MCHECK(mpkgi = newmenuitem(G_("Install package(s)..."), 0,
 			       menupkginstallcran));
-    MCHECK(mpkgu = newmenuitem(G_("Update packages from CRAN"), 0,
+    MCHECK(mpkgu = newmenuitem(G_("Update packages"), 0,
 			       menupkgupdate));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mpkgil = newmenuitem(G_("Install package(s) from local zip files..."),

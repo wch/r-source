@@ -21,4 +21,4 @@ options(width=80)
 options(windowsBuffered=TRUE)
 options(windowsTimeouts=as.integer(c(100,500)))
 
-options(CRAN = c("@CRAN@", "http://www.stats.ox.ac.uk/pub/RWin"))
+options(CRAN = c(CRAN="@CRAN@", "http://www.stats.ox.ac.uk/pub/RWin"))

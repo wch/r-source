@@ -333,14 +333,14 @@ compareVersion <- function(a, b)
 }
 
 ## ------------- private functions --------------------
-.find_bundles <- function(available)
+.find_bundles <- function(available, all=TRUE)
 {
     ## Sort out bundles. Returns a named list of character vectors
     bundles <- available[!is.na(available[, "Bundle"]), "Contains"]
     ans <- strsplit(bundles, "[[:space:]]+")
     ## As VR is recommended, it may not be the same version
     ## as on CRAN (and for Windows etc may not be there).
-    ans$VR <- c("MASS", "class", "nnet","spatial")
+    if(all) ans$VR <- c("MASS", "class", "nnet","spatial")
     ans
 }
 

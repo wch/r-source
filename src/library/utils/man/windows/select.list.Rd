@@ -9,8 +9,8 @@ select.list(list, preselect = NULL, multiple = FALSE, title = NULL)
 }
 \arguments{
   \item{list}{character. A list of items.}
-  \item{preselect}{a character vector of length one, or \code{NULL}.  If
-    non-null and if the string appears in the list, the item is selected
+  \item{preselect}{a character vector, or \code{NULL}.  If non-null and
+    if the string(s) appear in the list, the item(s) are selected
     initially.}
   \item{multiple}{logical: can more than one item be selected?}
   \item{title}{optional character string for window title.}
