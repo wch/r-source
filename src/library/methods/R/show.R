@@ -23,17 +23,11 @@ showDefault <-
             cat("\n")
         }
     }
-    else {
-        printFun <- printNoClass
-        ## Try to honor old-style methods for declared S3 classes &  (if oldMethods is TRUE)
-        ## for undefined classes.
-        if(oldMethods || extends(cl, "oldClass")) {
-            oldMethod <- paste("print", cl, sep=".")
-            if(existsFunction(oldMethod))
-                printFun <- getFunction(oldMethod, generic = FALSE)
-        }
-        printFun(object)
-     }
+    else
+        ## NBB:  This relies on the delicate fact (as of version 1.7 at least)
+        ## that print will NOT recursively call show if it gets more than one argument!
+        print(object, digits = NULL)
+
 }
 
 ## temporary definition of show, to become the default method
