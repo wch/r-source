@@ -1,4 +1,5 @@
 \name{QA}
+\alias{checkAssignFuns}
 \alias{checkDocArgs}
 \alias{checkDocStyle}
 \alias{checkMethods}
@@ -7,6 +8,7 @@
   Functions for performing various quality checks.
 }
 \usage{
+checkAssignFuns(dir)
 checkDocArgs(dir)
 checkDocStyle(dir)
 checkMethods(dir)
@@ -18,6 +20,9 @@ checkMethods(dir)
     format).}
 }
 \details{
+  \code{checkAssignFuns} checks whether assignment functions in the
+  package R code have their final argument named \code{value}.
+  
   \code{checkDocArgs} checks, for all Rd files in a package, whether all
   arguments shown in the usage sections of the Rd file are documented in
   its arguments section.  It also reports duplicated entries in the

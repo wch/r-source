@@ -34,8 +34,10 @@ NEW FEATURES
 
     o	R CMD check now also fully checks the Depends field in the
 	package DESCRIPTION file.  It also tests whether all methods in
-	the code have all arguments of the corresponding generic, and
-	for arguments shown in \usage but not documented in \arguments.
+	the code have all arguments of the corresponding generic, for
+	arguments shown in \usage but not documented in \arguments, and
+	whether assignment functions have their final argument named
+	`value'.
 
     o	New function checkDocArgs() for checking whether all arguments
 	shown in \usage of Rd files are documented in the corresponding
@@ -260,6 +262,9 @@ NEW FEATURES
     o   save() now takes a version argument to specify the worspace file
         format version to use.  This is in preparation for a change in
         the default format.
+
+    o	New function checkAssignFuns() for checking whether the final
+	argument of assignment functions in a package is named `value'.
 
 
 

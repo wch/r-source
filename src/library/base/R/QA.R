@@ -527,3 +527,73 @@ function(dir) {
 
     return(invisible())
 }
+
+checkAssignFuns <-
+function(dir) {
+    fQuote <- function(s) paste("`", s, "'", sep = "")
+    listFilesWithExts <- function(dir, exts, path = TRUE) {
+        ## Return the paths or names of the files in `dir' with
+        ## extension in `exts'.
+        files <- list.files(dir)
+        files <- files[sub(".*\\.", "", files) %in% exts]
+        if(path)
+            files <- if(length(files) > 0)
+                file.path(dir, files)
+            else
+                character(0)
+        files
+    }
+
+    ## Argument handling.
+    if(missing(dir))
+        stop("no package directory given")
+    if(!file.exists(dir))
+        stop(paste("directory", fQuote(dir), "does not exist"))
+    else
+        ## tilde expansion
+        dir <- file.path(dirname(dir), basename(dir))
+    if(!file.exists(codeDir <- file.path(dir, "R")))
+        stop(paste("directory", fQuote(dir),
+                   "does not contain R code"))
+    isBase <- basename(dir) == "base"
+
+    ## Collect code into codeFile.
+    codeFile <- tempfile("Rcode")
+    on.exit(unlink(codeFile))
+    codeExts <- c("R", "r", "S", "s", "q")
+    files <- listFilesWithExts(codeDir, codeExts, path = FALSE)
+    files <- file.path(codeDir, files)
+    if(file.exists(codeOSDir <- file.path(codeDir, .Platform$OS)))
+        files <- c(files, listFilesWithExts(codeOSDir, codeExts))
+    file.create(codeFile)
+    file.append(codeFile, files)
+
+    ## Read code from codeFile into .CodeEnv.
+    lib.source <- function(file, envir) {
+        oop <- options(keep.source = FALSE)
+        on.exit(options(oop))
+        assignmentSymbol <- as.name("<-")
+        exprs <- parse(n = -1, file = file)
+        if(length(exprs) == 0)
+            return(invisible())
+        for(e in exprs) {
+            if(e[[1]] == assignmentSymbol)
+                yy <- eval(e, envir)
+        }
+        invisible()
+    }
+    .CodeEnv <- new.env()
+    lib.source(codeFile, env = .CodeEnv)
+    lsCode <- ls(envir = .CodeEnv, all.names = TRUE)
+
+    ## Find the assignment functions in the given package.
+    assignFuns <- lsCode[grep("<-", lsCode)]
+    ## Find the assignment functions with last arg not named `value'.
+    badAssignFuns <-
+        assignFuns[sapply(assignFuns, function(f) {
+            argNames <- names(formals(get(f, envir = .CodeEnv)))
+            argNames[length(argNames)] != "value"
+        }) == TRUE]
+
+    badAssignFuns
+}
