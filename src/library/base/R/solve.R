@@ -18,7 +18,10 @@ solve.default <- function(a, b, tol = 1e-7, ...)
     if(is.complex(a) || (!missing(b) && is.complex(b))) {
         ## call overwrites a and b, so need to force copies
         A <- a
-        if(missing(b)) B <- diag(1+0i, nrow(a)) else B <- b
+        if(missing(b)) {
+            B <- a
+            B[] <- diag(1+0i, nrow(a))
+        } else B <- b
         if(!is.complex(A)) A[] <- as.complex(A)
         if(!is.complex(B)) B[] <- as.complex(B)
         return (if (is.matrix(B))
@@ -34,7 +37,9 @@ solve.default <- function(a, b, tol = 1e-7, ...)
     if( missing(b) ) {
 	if( nc != nrow(a$qr) )
 	    stop("only square matrices can be inverted")
+        ## preserve dimnames
 	b <- diag(1, nc)
+        colnames(b) <- rownames(a$qr)
     }
     qr.coef(a, b)
 }

@@ -159,6 +159,8 @@ NEW FEATURES
      o	download.file() can now use HTTP proxies which require basic
 	username/password authentication.
 
+     o	solve.default(a) now gives the dimnames one would expect.
+
 
 INSTALLATION CHANGES
 

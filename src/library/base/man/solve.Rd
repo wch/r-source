@@ -7,11 +7,11 @@
 \alias{solve.default}
 \alias{solve.qr}
 \arguments{
-  \item{a}{a numeric matrix containing the coefficients of the linear
-    system.}
-  \item{b}{a numeric vector or matrix giving the right-hand side(s) of
-    the linear system.  If omitted, \code{b} is taken to be an identity
-    matrix and \code{solve} will return the inverse of \code{a}.}
+  \item{a}{a numeric or complex matrix containing the coefficients of
+    the linear system.}
+  \item{b}{a numeric or complex vector or matrix giving the right-hand
+    side(s) of the linear system.  If missing, \code{b} is taken to be
+    an identity matrix and \code{solve} will return the inverse of \code{a}.}
   \item{tol}{the tolerance for detecting linear dependencies in the
     columns of \code{a}.}
   \item{\dots}{further arguments passed to or from other methods}
@@ -21,10 +21,16 @@
   where \code{b} can be either a vector or a matrix.
 }
 \details{
-  As from \R version 1.3.0, \code{a} or \code{b} can be complex, in
+  As from \R 1.3.0, \code{a} or \code{b} can be complex, in
   which case LAPACK routine \code{ZESV} is used.
   This uses double complex arithmetic which might not be available on all
   platforms.
+
+  The row and column names of the result are taken from the column
+  names of \code{a} and of \code{b} respectively.  As from \R 1.7.0
+  if \code{b} is missing the column names of the result are the row
+  names of \code{a}.  No check is made that the column names of \code{a}
+  and the row names of \code{b} are equal.
 }
 \seealso{
   \code{\link{backsolve}}, \code{\link{qr.solve}}.

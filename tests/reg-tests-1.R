@@ -1155,6 +1155,16 @@ stopifnot(identical(x, y))
 ## pushback problems in 1.6.2 only
 
 
+## dimnames in solve(): not a bug just an improvement in 1.7.0
+A <- diag(3)
+dimnames(A) <- list(LETTERS[1:3], letters[1:3])
+(B <- solve(A))
+stopifnot(identical(colnames(B), rownames(A)))
+## R < 1.7.0 had no colnames for B, and S has the colnames of A.
+stopifnot(all.equal(t(B), solve(t(A))))
+## test here is of dimnames
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
