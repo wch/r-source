@@ -404,7 +404,12 @@ Date: Thu, 20 Jun 2002 16:27:37 -0400
 
 Directory:  Macintosh
 
-none
+* PR# 1819 *
+Subject: Date arithmetic fails
+From: RML27@cornell.edu
+Date: Sun, 21 Jul 2002 20:26:12 +0200 (MET DST)
+--In fact, as.POSIXct is off by 66 years. See
+--   http://developer.apple.com/qa/ops/ops23.html
 
 Directory:  Misc
 
@@ -535,43 +540,19 @@ Date: Tue, 16 Jul 2002 16:59:22 -0400
 Subject: read.table bug
 From: mmcstephen@cogstate.com
 Date: Fri, 19 Jul 2002 05:11:59 +0200 (MET DST)
-* PR# 1810 *
-Subject: All three give the same
-From: maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 19 Jul 2002 22:53:32 +1200 (NZST)
-* PR# 1811 *
-Subject: 2002 Yahoo! Taiwan Inc. All Rights Reserved.
-From: BinRpe <BinRpe@-rjc.r>
-Date: Sat, 20 Jul 2002 00:40:31 +0800 (CST)
-* PR# 1812 *
-Subject: The Garden of Eden
-From: feedback <feedback@water-coolers-scotland.com>
-Date: Fri, 19 Jul 2002 20:10:42 -0400 (EDT)
-* PR# 1813 *
-Subject: 2002 Yahoo! Taiwan Inc. All Rights Reserved.
-From: BinRpe <BinRpe@-rjc.r>
-Date: Sat, 20 Jul 2002 12:10:05 +0800 (CST)
-* PR# 1814 *
-Subject: Questionnaire
-From: contact <contact@siennasoft.com>
-Date: Sat, 20 Jul 2002 02:03:47 -0500 (CDT)
-* PR# 1815 *
-Subject: Your password
-From: ripley <ripley@stats.ox.ac.uk>
-Date: Sat, 20 Jul 2002 02:09:05 -0500 (CDT)
-* PR# 1816 *
-Subject: 免費傳授您 Sahaja Yoga 靜坐法
-From: zq2v_oe11by@novartis.com
-Date: 17 Jul 2002 00:13:09 +0800
-* PR# 1817 *
-Subject: F distribution with 
-From: 09040194622 <09040194622@docomo.ne.jp>
-Date: Mon, 22 Jul 2002 02:11:30 +0900
-* PR# 1818 *
+* PR# 1821 *
 Subject: Contents
-From: kanatin76 <kanatin76@docomo.ne.jp>
-Date: Mon, 22 Jul 2002 02:19:13 +0900
-* PR# 1819 *
-Subject: Date arithmetic fails
-From: RML27@cornell.edu
-Date: Sun, 21 Jul 2002 20:26:12 +0200 (MET DST)
+From: r-devel-request <r-devel-request@stat.math.ethz.ch>
+Date: Tue, 23 Jul 2002 01:25:22 +0900
+* PR# 1822 *
+Subject: Attributes are restored. The set of factor
+From: h-masao <h-masao@ezweb.ne.jp>
+Date: Tue, 23 Jul 2002 01:41:41 +0900
+* PR# 1823 *
+Subject: Some questions
+From: tazi-shin <tazi-shin@jp-t.ne.jp>
+Date: Tue, 23 Jul 2002 02:32:44 +0900
+* PR# 1824 *
+Subject: Contents
+From: sup <sup@yun.co.jp>
+Date: Tue, 23 Jul 2002 02:48:57 +0900
