@@ -19,12 +19,15 @@ DESCRIPTION
 
 FORMAT
 
-A data frame with  21 observations on 4 variables.
+- stackloss: A data frame with  21 observations on 4 variables.
 
   [,1] Air.Flow    "Flow of cooling air"
   [,2] Water.Temp  "Cooling Water Inlet Temperature"
   [,3] Acid.Conc.  "Concentration of acid [per 1000, minus 500]"
   [,4] stack.loss  "Stack loss"
+
+- stack.loss == [[,4]]  numeric vector
+- stack.x    == [,1:3]  numeric matrix
 
 
 REFERENCES

@@ -5,3 +5,6 @@ stackloss <- data.frame(
  stack.loss = c(42,37,37,28,18,18,19,20,15,14,14,13,11,12, 8, 7, 8, 8, 9,15,15),
  as.is=TRUE
 )
+##- These are for S compatibility:
+stack.loss <- stackloss[["stack.loss"]]
+stack.x    <- as.matrix(stackloss[,-4])
