@@ -23,7 +23,7 @@ all: R
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
 	@cat R.sh | \
-	  (cd $(top_builddir); sed "s@R_HOME=.*@R_HOME=`pwd`@" > bin/R)
+	  (cd $(top_builddir); sed "s@-R_HOME_DIR*@-`pwd`@" > bin/R)
 	@chmod +x $(top_builddir)/bin/R
 	@for f in $(SRC_SCRIPTS); do \
 	  $(INSTALL) $(srcdir)/$$f $(top_builddir)/bin; \
