@@ -259,10 +259,10 @@ is specified.  Excel is one such system.
 A common field separator to use in the file is a comma, as that is
 unlikely to appear in any of the fields, in English-speaking countries.
 Such files are known as CSV (comma separated values) files, and wrapper
-function @code{read.csv} provides appropriate defaults.  In some locales
+function @code{write.csv} provides appropriate defaults.  In some locales
 the comma is used as the decimal point (set this in @code{write.table}
 by @code{dec = ","}) and there CSV files use the semicolon as the field
-separator: use @code{read.csv2} for appropriate defaults.
+separator: use @code{write.csv2} for appropriate defaults.
 
 Using a semicolon or tab (@code{sep = "\t"}) are probably the safest
 options.
@@ -387,6 +387,20 @@ very large numerical matrices: see @code{scan} below.
 Some of the issues to consider are:
 
 @enumerate
+@item @strong{Encoding}
+
+If the file contains non-ASCII character fields, ensure that it is read
+in the correct encoding.  This is mainly an issue for reading Latin-1
+files in a UTF-8 locale, which can be done by something like
+
+@example
+read.table(file("file.dat", encoding="latin1"))
+@end example
+
+@noindent
+Note that this will work in any locale which can represent Latin-1 names.
+
+
 @item @strong{Header line}
 
 We recommend that you specify the @code{header} argument explicitly,

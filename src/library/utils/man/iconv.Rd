@@ -17,9 +17,9 @@ iconvlist()
   \item{from}{A character string describing the current encoding.}
   \item{to}{A character string describing the target encoding.}
   \item{sub}{character string.  If not \code{NA} it is used to replace
-    an non-convertible bytes in the input.  (This would normally be a
-    single character, but can be more.  If "byte", the indication is
-    "<xx>" with the hex code of the byte.}
+    any non-convertible bytes in the input.  (This would normally be a
+    single character, but can be more.  If \code{"byte"}, the indication is
+    \code{"<xx>"} with the hex code of the byte.}
 }
 
 \details{
@@ -39,10 +39,10 @@ iconvlist()
 #ifdef windows
   \code{iconvlist} provides an alphabetical list of the supported encodings.
 #endif
-  
-  Elements which cannot be converted (perhaps because they are invalid
-  or because they cannot be represented in the target encoding)
-  will be returned as \code{NA}.
+
+  Elements of \code{x} which cannot be converted (perhaps because they
+  are invalid or because they cannot be represented in the target
+  encoding) will be returned as \code{NA} unless \code{sub} is specified.
 
   Some versions of \code{iconv} will allow transliteration by appending
   \code{//TRANSLIT} to the \code{to} encoding: see the examples.
@@ -69,8 +69,11 @@ iconvlist()
 iconv(x, "ISO_8859-2", "UTF-8")
 iconv(x, "LATIN2", "UTF-8")
 
+## Both x below are in latin1 and will only display correctly in a
+## latin1 locale.
 (x <- "fa\xE7ile")
 charToRaw(xx <- iconv(x, "latin1", "UTF-8"))
+## in a UTF-8 locale, print(xx)
 
 iconv(x, "latin1", "ASCII")          #   NA
 iconv(x, "latin1", "ASCII", "?")     # "fa?ile"

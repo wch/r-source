@@ -31,6 +31,10 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     and so will match \code{sep = "\n"}.
 
     \code{file} can also be a complete URL.
+
+    To read a data file not in the current encoding (for example a
+    Latin-1 file in a UTF-8 locale or conversely) use a
+    \code{\link{file}} connection setting the \code{encoding} argument.
   }
 
   \item{what}{the type of \code{what} gives the type of data to be read.

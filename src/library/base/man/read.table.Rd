@@ -43,6 +43,10 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     signal, \code{Ctrl-D} on Unix and \code{Ctrl-Z} on Windows.)
 
     \code{file} can also be a complete URL.
+
+    To read a data file not in the current encoding (for example a
+    Latin-1 file in a UTF-8 locale or conversely) use a
+    \code{\link{file}} connection setting the \code{encoding} argument.
   }
 
   \item{header}{a logical value indicating whether the file contains the
