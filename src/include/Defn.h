@@ -673,17 +673,6 @@ extern int R_dec_min_exponent		INI_as(-308);
 # define yyprompt		Rf_yyprompt
 # define yywrap			Rf_yywrap
 
-/* Language support -------------------------------------------
-
-   As of 2.1.0 we have some internationalization support.
-   Configuring with --enable-utf8 defines SUPPORT_UTF8 if there is
-   enough OS support for widechars and SUPPORT_MBCS.  That in turn
-   defines USE_FONTSET (in the X11 module), both of
-   which control sections with more general MBCS support.
-
-   ------------------------------------------------------------ */
-
-
 /* Platform Dependent Gui Hooks */
 
 #define	R_CONSOLE	1
@@ -894,10 +883,8 @@ char *EncodeString(SEXP, int, int, Rprt_adj);
 void UNIMPLEMENTED_TYPE(char *s, SEXP x);
 void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t);
 Rboolean utf8strIsASCII(char *str);
-#ifdef SUPPORT_UTF8
-int utf8clen(char c);
-#endif
 #ifdef SUPPORT_MBCS
+int utf8clen(char c);
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
 void mbcsToLatin1(char *in, char *out);

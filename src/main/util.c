@@ -1122,7 +1122,8 @@ SEXP do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-/* Note: this is designed to be fast and valid only for UTF-8 strings */
+/* Note: this is designed to be fast and valid only for UTF-8 strings.
+   It is also correct in EUC-* locales. */
 Rboolean utf8strIsASCII(char *str)
 {
     char *p;
@@ -1131,7 +1132,7 @@ Rboolean utf8strIsASCII(char *str)
     return TRUE;
 }
 
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 /* Number of additional bytes */
 static const unsigned char utf8_table4[] = {
   1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -1145,9 +1146,7 @@ int utf8clen(char c)
     if ((c & 0xc0) != 0xc0) return 1;
     return 1 + utf8_table4[c & 0x3f];
 }
-#endif
 
-#ifdef SUPPORT_MBCS
 /* A version that reports failure as an error */
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
 {
