@@ -184,10 +184,22 @@ function(pattern, fields = c("alias", "title"),
     db <- db[sort(unique(i)), , drop = FALSE]
     if(verbose) cat(", matched", NROW(db), "entries.\n")
 
+    ## As the \name is not necessarily a topic documented (i.e., not an
+    ## \alias) we use the *first* \alias as the topic to use for help()
+    ## when accessing the matched entries.
+    firstAliasRegExp <- "^[[:space:]]*([^[:space:]]*)([[:space:]]+.*)*$"
+    db <- cbind(db,
+                topic = gsub(firstAliasRegExp, "\\1", db[, "alias"]))
+    ## <FIXME>
+    ## We should really use the \name if it is among the \alias entries.
+    ## Also, once we build CONTENTS.rda we will have a character vector
+    ## with all aliases ...
+    ## </FIXME>
+
     ## Retval.
     y <- list(pattern = pattern,
               fields = fields,
-              matches = db[, c("name", "title", "Package", "LibPath"),
+              matches = db[, c("topic", "title", "Package", "LibPath"),
               drop = FALSE])
     class(y) <- "hsearch"
     y
@@ -208,7 +220,7 @@ function(x, ...)
                          "entry 'FOO(PKG) TITLE':",
                          "\n", sep = ""),
                    outConn)
-        dbnam <- paste(db[ , "name"], "(", db[, "Package"], ")",
+        dbnam <- paste(db[ , "topic"], "(", db[, "Package"], ")",
                        sep = "")
         dbtit <- paste(db[ , "title"], sep = "")
         writeLines(formatDL(dbnam, dbtit), outConn)
