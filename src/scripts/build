@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/bin/build
 
-revision='$Revision: 1.9 $'
+revision='$Revision: 1.10 $'
 version=`set - ${revision}; echo ${2}`
 version="R package builder ${version}
 
@@ -218,26 +218,29 @@ buildpkg () {
 
   ## Check R documentation files
   if test -d man; then
+    checking "Rd files"    
     Rdfiles=`find man -name "*.[Rr]d" -print | sort`
-    checking "Rd files"
-    any=
-    for tag in name alias title description keyword; do
-      badfiles=`grep -L "^\\\\\\\\${tag}" ${Rdfiles} 2>/dev/null`
-      if test -n "${badfiles}"; then
-	if test -z "${any}"; then
-	  result "WARNING:"
+    if test -n "${Rdfiles}"; then
+      any=
+      for tag in name alias title description keyword; do
+	badfiles=`grep -L "^\\\\\\\\${tag}" ${Rdfiles} 2>/dev/null`
+	if test -n "${badfiles}"; then
+	  if test -z "${any}"; then
+	    result "WARNING:"
+	  fi
+	  any="${any} ${tag}"
+	  echo "Rd files without ${tag}:"
+	  echo "${badfiles}"
 	fi
-	any="${any} ${tag}"
-	echo "Rd files without ${tag}:"
-	echo "${badfiles}"
+      done
+      if test -z "${any}"; then
+	result "OK"
       fi
-    done
-    if test -z "${any}"; then
-      result "OK"
+    else
+      result "WARNING: no Rd files found"
     fi
-  else
-    result "WARNING: no Rd files found"
   fi
+
   ## Check for `INDEX'
   checking "for \`INDEX'"
   if test -r INDEX; then
@@ -265,7 +268,9 @@ buildpkg () {
   
   ## Update `data/00Index'
   if test -d data; then
-    Rdfiles=`grep -l "\\\\keyword{datasets}" ${Rdfiles}`
+    if test -n "${Rdfiles}"; then
+      Rdfiles=`grep -l "\\\\keyword{datasets}" ${Rdfiles}`
+    fi
     checking "for \`data/00Index'"
     if test -r data/00Index; then
       result "OK"
@@ -291,23 +296,26 @@ buildpkg () {
     fi
   fi
 
-  ## Check for undocumented objects 
-  checking "for undocumented objects"
-  out=`echo "undoc(dir = \"${dir}\")" | R ${R_opts} | \
-    grep "^Error\\|^ *\\["`
-  err=`echo "${out}" | grep "^Error"`
-  if test -z "${err}"; then
-    if test -n "${out}"; then
-      result "WARNING:"
-      echo "${out}"
+  ## Check for undocumented objects
+  if test -d R -a -d man; then
+    checking "for undocumented objects"
+    out=`echo "undoc(dir = \"${dir}\")" \
+      | ${R_HOME}/bin/R.X11 ${R_opts} \
+      | grep "^Error\\|^ *\\["`
+    err=`echo "${out}" | grep "^Error"`
+    if test -z "${err}"; then
+      if test -n "${out}"; then
+	result "WARNING:"
+	echo "${out}"
+      else
+	result "OK"
+      fi
     else
-      result "OK"
+      err=`echo "${err}" | sed -e 's/^Error *//'`
+      result "ERROR:"
+      echo "${err}"
+      exit 1
     fi
-  else
-    err=`echo "${err}" | sed -e 's/^Error *//'`
-    result "ERROR:"
-    echo "${err}"
-    exit 1
   fi
 
   ## Clean up `src'
