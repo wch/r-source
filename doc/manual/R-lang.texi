@@ -2162,7 +2162,7 @@ Default behaviours can also be specified by using the function
 name of a formal
 argument it returns @code{TRUE} if the formal argument was not matched
 with any actual argument and has not been subsequently modified in the
-body of the function.  A an argument that is @code{missing} will thus
+body of the function.  An argument that is @code{missing} will thus
 have its default value, if any. The @code{missing} function does not
 force evaluation of the argument.
 
