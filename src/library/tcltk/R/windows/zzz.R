@@ -1,14 +1,17 @@
 .First.lib <- function(lib, pkg)
 {
-    if(!file.exists(file.path(R.home(), "Tcl")))
-       stop("Tcl/Tk support files were not installed", call.=FALSE)
-#    if(!nchar(Sys.getenv("TCL_LIBRARY"))) stop("TCL_LIBRARY is not set")
-    Sys.putenv("TCL_LIBRARY"=file.path(R.home(), "Tcl/lib/tcl8.4"))
-    opath <-  Sys.getenv("PATH")
-    tclbin <- file.path(R.home(), "Tcl/bin")
-    Sys.putenv(PATH=paste(tclbin, opath, sep=";"))
-    library.dynam("tcltk", pkg, lib)
-    Sys.putenv(PATH=opath)
+    if(nchar(Sys.getenv("MY_TCLTK"))) {
+        library.dynam("tcltk", pkg, lib)
+    } else {
+        if(!file.exists(file.path(R.home(), "Tcl")))
+            stop("Tcl/Tk support files were not installed", call.=FALSE)
+        Sys.putenv("TCL_LIBRARY"=file.path(R.home(), "Tcl/lib/tcl8.4"))
+        opath <-  Sys.getenv("PATH")
+        tclbin <- file.path(R.home(), "Tcl/bin")
+        Sys.putenv(PATH=paste(tclbin, opath, sep=";"))
+        library.dynam("tcltk", pkg, lib)
+        Sys.putenv(PATH=opath)
+    }
     .C("tcltk_start", PACKAGE="tcltk")
     bringToTop(-1) # restore focus to console
     extra <- system.file("exec", package = "tcltk")

@@ -49,7 +49,11 @@ the creation of Registry entries to be de-selected by the user.
 Rcmd.exe and Rprof have been moved to the main distribution (although
 to use them you will need perl installed).
 
-Tcl/Tk 8.4.1 is bundled in rw1070.exe.
+Tcl/Tk 8.4.1 is bundled in rw1070.exe.  You can still use your own
+installation of Tcl/Tk (version 8.4.x unless you compile from sources)
+by setting the environment variables MY_TCLTK and TCL_LIBRARY and
+having tcl84.dll and tk84.dll in your path.
+
 
 HTML help changes
 -----------------

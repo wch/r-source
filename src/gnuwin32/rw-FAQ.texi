@@ -645,6 +645,12 @@ For package @code{tcltk} to work (try @code{demo(tkdensity)} or
 installed.  This is an optional part of the installation by
 @code{@value{VERSION}.exe}, although it is selected by default.
 
+If you have the environment variable @code{MY_TCLTK} set, it is assumed
+that you want to use a different Tcl/Tk 8.4.x installation, and that
+this is set up correctly (with the DLLs in your path and
+@code{TCL_LIBRARY}).
+
+
 @c Download ActiveTcl 8.4.x from
 @c @uref{http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/} and install
 @c it.  (Most of the installers that ActiveTcl uses will put the @file{bin}
