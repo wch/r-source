@@ -134,18 +134,18 @@ BUG FIXES
     o   writeChar() could segfault if more characters were requested
 	than exist. (PR#5090)
 
-    o   round() and signif() dropped attributes with 0-length inputs,
+    o	round() and signif() dropped attributes with 0-length inputs,
 	only. (PR#4710)
 
-    o   The default graphics device in the GNOME interface was gtk,
-        which is no longer in the base library. It is now X11.
+    o	The default graphics device in the GNOME interface was gtk,
+	which is no longer in the base package. It is now X11.
 
-    o   The print button on the toolbar of the GNOME graphics device
-        did not work.
+    o	The print button on the toolbar of the GNOME graphics device
+	did not work.
 
-    o   The example code on the man page for TkWidgetcmds had not been
-        updated after the change that made tkget (et al.) return
-        tclObj objects, so the "Submit" button didn't work.
+    o	The example code on the man page for TkWidgetcmds had not been
+	updated after the change that made tkget (et al.) return
+	tclObj objects, so the "Submit" button didn't work.
 
 
 		CHANGES IN R VERSION 1.8.0
