@@ -39,6 +39,7 @@
  */
 
 #include "Mathlib.h"
+#include "Errormsg.h"
 
 int signgam;
 
@@ -101,7 +102,7 @@ double lgamma(double x)
 	}
 
 	if (x > 0)
-	  return /* ans */;
+	  return ans;
 	else if (((int)(-x))%2 == 0)
 	  signgam = -1;
 	return ans;

@@ -57,6 +57,10 @@ c
       v=a+c*(b-a)
       w=v
       x=v
+c
+c  -Wall indicates that d may be used before being assigned
+c
+      d=0.0d0
       e=0.0d0
       fx=f(x)
       fv=fx

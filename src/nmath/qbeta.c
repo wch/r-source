@@ -137,6 +137,7 @@ double qbeta(double alpha, double p, double q)
 
 	 */
 	acu = fmax2(acu_min, pow(10, -13 - 2.5/(pp * pp) - 0.5/(a * a)));
+	tx = prev = zero;	/* keep -Wall happy */
 
 	for (i_pb=0; i_pb < 1000; i_pb++) {
 		y = pbeta_raw(xinbta, pp, qq);
