@@ -1,6 +1,7 @@
 arima0 <- function(x, order=c(0,0,0),
                    seasonal=list(order=c(0,0,0), period=NA), xreg=NULL,
-                   include.mean=TRUE, na.action=na.fail, delta=0.01)
+                   include.mean=TRUE, na.action=na.fail, delta=0.01,
+                   transform.pars=FALSE)
 {
     series <- deparse(substitute(x))
     if(is.matrix(ts))
@@ -35,7 +36,8 @@ arima0 <- function(x, order=c(0,0,0),
     }
     .C("setup_starma",
        as.integer(arma), as.double(x), as.integer(n.used),
-       as.double(xreg), as.integer(ncxreg), as.double(delta))
+       as.double(xreg), as.integer(ncxreg), as.double(delta),
+       as.integer(transform.pars))
     init <- rep(0, sum(arma[1:4]))
     if(ncxreg > 0) {
         init <- c(init, coef(lm(x ~ xreg+0)))

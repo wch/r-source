@@ -7,7 +7,7 @@
 arima0(x, order = c(0, 0, 0),
        seasonal = list(order = c(0, 0, 0), period = NA),
        xreg = NULL, include.mean, na.action = na.fail,
-       delta = 0.01)
+       delta = 0.01, transform.pars = FALSE)
 predict(arima0.obj, n.ahead = 1, newxreg, se.fit = TRUE)
 }
 \arguments{
@@ -32,6 +32,9 @@ predict(arima0.obj, n.ahead = 1, newxreg, se.fit = TRUE)
 
  \item{delta}{A value to indicate at which point `fast recursions'
      should be used. See the Details section.}
+
+ \item{transform.pars}{If true, the ARMA parameters are transformed to
+     ensure that they remain in the region of invertibility.}
 
  \item{arima0.obj}{The result of an \code{arima0} fit.}
 

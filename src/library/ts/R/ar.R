@@ -160,7 +160,11 @@ print.ar <- function(x, digits = max(3, .Options$digits - 3), ...)
 
 predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
 {
-    if(missing(newdata)) newdata <- eval(parse(text=object$series))
+    if(missing(newdata)) {
+        newdata <- eval(parse(text=object$series))
+        if (!is.null(nas <- object$call$na.action))
+            newdata <- eval(call(nas, newdata))
+    }
     nser <- NCOL(newdata)
     ar <- object$ar
     p <- object$order

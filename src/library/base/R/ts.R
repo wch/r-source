@@ -52,7 +52,7 @@ ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
 		else if(ndata > nobs) data[1:nobs, ]
 	    }
     attr(data, "tsp") <- c(start, end, frequency) #-- order is fixed
-    if(!is.null(class) && class != "none") attr(data, "class") <- "class"
+    if(!is.null(class) && class != "none") attr(data, "class") <- class
     data
 }
 
