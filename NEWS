@@ -206,6 +206,12 @@ BUG FIXES
 	the response and intercept = FALSE (which is not sensible)
 	would give an error.
 
+    o	seek() on file connections was ignoring the `origin' argument.
+
+    o	fixed new environment handling in library() to avoid forcing
+	promises created by delay()
+
+
 
 
 		CHANGES IN R VERSION 1.4.0

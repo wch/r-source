@@ -51,14 +51,9 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
             ## detach does not allow character vector args
             on.exit(do.call("detach", list(name = pkgname)))
             attr(env, "path") <- file.path(which.lib.loc, package)
-            for (name in ls(loadenv, all = TRUE)) {
-                val <- get(name, env = loadenv)
-                rm(list=name, envir = loadenv, inherits = FALSE)
-	        if (typeof(val) == "closure" &&
-                    identical(environment(val), loadenv))
-                    environment(val) <- .GlobalEnv
-                assign(name, val, env = env)
-            }
+	    ## the actual copy has to be done by C code to avoid forcing
+            ## promises that might have been created using delay().
+            .Internal(lib.fixup(loadenv, env))
             ## run .First.lib
 	    if(exists(".First.lib", envir = env, inherits = FALSE)) {
 		firstlib <- get(".First.lib", envir = env, inherits = FALSE)
