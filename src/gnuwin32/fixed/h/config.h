@@ -67,14 +67,6 @@
    */
 #define HAVE_DECL_ATANH 0
 
-/* Define to 1 if you have the declaration of `iconv', and to 0 if you don't.
-   */
-#define HAVE_DECL_ICONV 1
-
-/* Define to 1 if you have the declaration of `iconvlist', and to 0 if you
-   don't. */
-#define HAVE_DECL_ICONVLIST 1
-
 /* Define to 1 if you have the declaration of `isfinite', and to 0 if you
    don't. */
 #define HAVE_DECL_ISFINITE 1
@@ -177,6 +169,12 @@
 
 /* Define to 1 if you have the `hypot' function. */
 #define HAVE_HYPOT 1
+
+/* Define if you have the `iconv' function. */
+#define HAVE_ICONV 1
+
+/* Define if you have the `iconvlist' function. */
+#define HAVE_ICONVLIST 1
 
 /* Define to 1 if you have the <iconv.h> header file. */
 #define HAVE_ICONV_H 1
@@ -495,6 +493,9 @@
 
 /* Define to 1 if you have the `Xutf8TextExtents' function. */
 /* #undef HAVE_XUTF8TEXTEXTENTS */
+
+/* Define to a value `iconv' accepts for Latin-1. */
+#define ICONV_LATIN1 latin1
 
 /* Define if you have IEEE 754 floating point arithmetic. */
 #define IEEE_754 1
