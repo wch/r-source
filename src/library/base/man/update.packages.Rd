@@ -105,19 +105,13 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   will be given the option of deleting the temporary files once the
   packages are installed.
 }
-#ifdef windows
-\note{
-  \code{wget.exe} is available from
-  \url{http://www.stats.ox.ac.uk/pub/Rtools/wget.zip}.
-  \code{lynx.exe} is available from
-  \url{http://www.fdisk.com/doslynx/lynxport.htm}.
-}
-#endif
 \seealso{
+  See \code{\link{download.file}} for how to handle proxies and
+  other options to monitor file transfers.
+
 #ifdef unix
   \code{\link{INSTALL}}, \code{\link{REMOVE}},
 #endif
-  \code{\link{library}}, \code{\link{.packages}},
-  \code{\link{read.dcf}}, \code{\link{download.file}}
+  \code{\link{library}}, \code{\link{.packages}}, \code{\link{read.dcf}}
 }
 \keyword{utilities}
