@@ -46,7 +46,7 @@
  *			at exit from the closure (normal or abnormal).
  *	cend		a pointer to function which executes if there is
  *			non-local return (i.e. an error)
- *	cenddata	a void pointer do data for cend to use
+ *	cenddata	a void pointer to data for cend to use
  *	vmax		the current setting of the R_alloc stack
  *
  *  Context types can be one of:
