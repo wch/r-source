@@ -171,7 +171,7 @@ libRblas.a:  Rblas.def
 ifeq ($(strip $(USE_ATLAS)),YES)
 ../../bin/Rblas.dll: blas00.o
 	@$(ECHO) -------- Building $@ --------
-	gcc -shared -o $@ blas00.o Rblas.def -L $(ATLAS_PATH) \
+	$(DLL) -shared -o $@ blas00.o Rblas.def -L $(ATLAS_PATH) \
 	   -L. -lR -lg2c -lf77blas -lcblas -latlas
 ## suppress lots of warnings: this is a dummy
 blas00.o: blas00.c
@@ -179,7 +179,7 @@ blas00.o: blas00.c
 else
 ../../bin/Rblas.dll: blas.o blas2.o cmplxblas.o
 	@$(ECHO) -------- Building $@ --------
-	gcc -shared -o $@ Rblas.def $^ -L. -lR
+	$(DLL) -shared -o $@ Rblas.def $^ -L. -lR
 
 blas.o: ../appl/blas.f
 	$(F77) $(FFLAGS) -c $< -o $@
