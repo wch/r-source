@@ -12,7 +12,7 @@ include $(top_builddir)/Makeconf
 CleanMe = .RData sink-examp.txt
 
 R = $(top_builddir)/bin/R --no-init-file --no-save --no-restore --vsize 6
-Rbase = $(top_builddir)/library/base
+Rbase = $(top_builddir)/library/base/R/base
 Rbinary = $(top_builddir)/bin/R.binary
 
 Rd_BASEDIR = $(top_srcdir)/src/library/base/man
