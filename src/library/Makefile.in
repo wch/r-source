@@ -68,10 +68,9 @@ DOCS:
 	fi
 	@for pkg in $(R_PKGS_BASE); do \
 	  $(R_CMD_BUILD_HELP) $${OPTS} $(srcdir)/$${pkg}; \
-	  (echo "library(tools)"; \
-	    echo ".installPackageIndices(\"$(srcdir)/$${pkg}\","; \
+	  ( echo ".installPackageIndices(\"$(srcdir)/$${pkg}\","; \
 	    echo " \"$(top_builddir)/library/$${pkg}\")") | \
-	      $(R_EXE) > /dev/null; \
+	      R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > /dev/null; \
 	done; \
 	cat $(top_builddir)/library/*/CONTENTS \
 	  > $(top_builddir)/doc/html/search/index.txt
