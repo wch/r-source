@@ -27,6 +27,9 @@ Added support for building with the ATLAS optimized BLAS library: on a
 PII this speeds up La.svd on a 500x500 matrix by about 30%, and the
 multiplication of two 1000x1000 matrices by about 8x. See INSTALL.
 
+The recommended compiler sysrem has been changed, but that recommended
+for rw1030 still works.
+
 
 
 rw1030
