@@ -3,8 +3,12 @@
 \usage{
 print.default(x, digits = NULL, quote = TRUE, na.print = "NA",
               print.gap = 1, \dots)
+print.factor(x, quote = FALSE)
+print.ordered(x, quote = FALSE)
 }
 \alias{print.default}
+\alias{print.factor}
+\alias{print.ordered}
 \description{
   \code{print} prints its argument.
 
