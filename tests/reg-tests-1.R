@@ -728,3 +728,5 @@ detach("package:nls")
 ## part of PR 1662: fisher.test with total one
 fisher.test(cbind(0, c(0,0,0,1)))
 ## crashed in R <= 1.5.0
+
+stopifnot(all(Mod(vector("complex", 7)) == 0))# contained garbage in 1.5.0
