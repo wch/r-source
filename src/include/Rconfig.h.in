@@ -23,6 +23,9 @@
 /* (Long) Integers */
 #undef SIZEOF_LONG
 
+/* Byte order */
+#undef WORDS_BIGENDIAN
+
 /* Floating Point Arithmetic */
 #undef HAVE_MATHERR		/* System V */
 #undef HAVE_ISNAN		/* IEEE Arith indicator */
