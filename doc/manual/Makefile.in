@@ -77,7 +77,7 @@ docs: html
 
 .texi.html:
 	@if test "$(MAKEINFO)" = false; then \
-	  echo "'makeinfo' v4.5 or later needed to make HTML docs but missing on your system." ; \
+	  echo "'makeinfo' v4.7 or later needed to make HTML docs but missing on your system." ; \
 	  echo "file $@ will be missing"; \
 	else \
 	  echo "creating doc/manual/$@"; \
@@ -86,7 +86,7 @@ docs: html
 
 .texi.info:
 	@if test "$(MAKEINFO)" = false; then \
-	  echo "ERROR: 'makeinfo' v4.5 or later needed but missing on your system."; \
+	  echo "ERROR: 'makeinfo' v4.7 or later needed but missing on your system."; \
 	  exit 1; \
 	fi
 	$(MAKEINFO) -D UseExternalXrefs -I$(srcdir) $<
@@ -107,7 +107,7 @@ R-admin.html: $(srcdir)/R-admin.texi
 	  cp "$(top_srcdir)/doc/html/R-admin.html" R-admin.html ; \
 	else \
 	  if test "$(MAKEINFO)" = false; then \
-	    echo "'makeinfo' v4.5 or later needed to make HTML docs but missing on your system." ; \
+	    echo "'makeinfo' v4.7 or later needed to make HTML docs but missing on your system." ; \
 	    echo "file $@ will be missing"; \
 	  else \
 	    echo "creating doc/manual/$@"; \
@@ -349,7 +349,7 @@ install-images-pdf:
 	@-for f in $(srcdir)/images/*.pdf; do \
 	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"/images; \
 	done
-## if there is no makeinfo >= 4.5 then there are no html pages
+## if there is no makeinfo >= 4.7 then there are no html pages
 install-html:
 	@for f in $(OBJECTS_HTML); do \
 	  if test -f $${f} ; then \
@@ -429,7 +429,7 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	done
 	@if test "$(MAKEINFO)" = false; then \
-	  echo "ERROR: 'makeinfo' v4.5 or later needed but missing on your system."; \
+	  echo "ERROR: 'makeinfo' v4.7 or later needed but missing on your system."; \
 	  exit 1; \
 	fi
 #	$(distdir)/doc/html has already been created
