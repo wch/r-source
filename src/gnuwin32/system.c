@@ -382,6 +382,8 @@ void R_CleanUp(int saveact, int status, int runLast)
     if (CharacterMode == RGui || 
 	(R_Interactive && CharacterMode == RTerm))
 	gl_savehistory(R_HistoryFile);
+    if (R_Interactive && CharacterMode == RTerm)
+	SetConsoleTitle("");
     UnLoad_Unzip_Dll();
     UnLoad_Rbitmap_Dll();
     if (R_CollectWarnings && saveact != SA_SUICIDE

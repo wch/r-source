@@ -321,7 +321,9 @@ void gnome_start(int ac, char **av, Rstart Rp)
     R_gtk_terminal_new();
 
     /* restore command history */
-    gtk_console_restore_history(GTK_CONSOLE(R_gtk_terminal_text), R_HistoryFile, R_HistorySize, NULL);
+    if(R_RestoreHistory)
+	gtk_console_restore_history(GTK_CONSOLE(R_gtk_terminal_text), 
+				    R_HistoryFile, R_HistorySize, NULL);
 
     fpu_setup(1);
 

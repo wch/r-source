@@ -217,7 +217,7 @@ int main(int ac, char **av)
 	else
 	    R_HistorySize = value;
     }
-    Rstd_read_history(R_HistoryFile);
+    if (R_RestoreHistory) Rstd_read_history(R_HistoryFile);
     fpu_setup(1);
 
 

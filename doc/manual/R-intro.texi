@@ -6466,10 +6466,16 @@ Control whether saved images (file @file{.Rdata} in the directory where
 @R{} was started) should be restored at startup or not.
 The default is to restore.
 
+@item --no-restore-history
+Control whether the history file (normally file @file{.Rhistory} in the
+directory where @R{} was started, but can be set by the environment
+variable @var{R_HISTFILE}) should be restored at startup or not.
+The default is to restore.
+
 @item --vanilla
 Combine @option{--no-save}, @option{--no-environ}
-@option{--no-site-file}, @option{--no-init-file}, and
-@option{--no-restore}.
+@option{--no-site-file}, @option{--no-init-file}, 
+@option{--no-restore} and @option{--no-restore-history}
 
 @item --no-readline
 Turn off command-line editing via @strong{readline}.  This is useful

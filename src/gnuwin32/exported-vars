@@ -13,6 +13,7 @@ R_Interactive
 R_MissingArg
 R_NilValue
 R_PreciousList
+R_RestoreHistory
 R_tcldo
 R_UnboundValue
 R_Visible

@@ -366,11 +366,9 @@ If those all hold true, this works for us.
 and @key{Ctrl-break} or @key{Ctrl-C} in @code{Rterm.exe}: @key{Ctrl-C}
 is used for copying in the GUI version.
 
-@item Command-line editing is always available, but is much simpler than the
+@item Command-line editing is always available, but is simpler than the
 readline-based editing on Unix. For @code{Rgui.exe}, the menu item `Help |
 Console' will give details.
-
-@item The commands history is always saved between sessions.
 
 @item Using @code{help.start()} does not automatically send help
 requests to the browser: use @code{options(htmlhelp=T)} to turn this on.

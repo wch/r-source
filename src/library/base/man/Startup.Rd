@@ -32,8 +32,12 @@
   The functions \code{.First} and \code{\link{.Last}} can be defined
   in the appropriate startup profiles or reside in \file{.RData}.
 
+  The commands history is read from the file specified by the
+  environment variable \code{R_HISTFILE} (default \code{.Rhistory})
+  unless \code{--no-restore-history} was specified.
+
   The command-line flag \code{--vanilla} implies \code{--no-init-file},
-  \code{--no-restore} and \code{--no-environ}.
+  \code{--no-restore},  \code{--no-restore-history} and \code{--no-environ}.
 }
 \seealso{
   \code{\link{.Last}} for final actions before termination.

@@ -20,6 +20,9 @@ history limit is now just on the number of lines (rather than on the
 number of lines and the total size).  The mechanism has been altered
 so that Rterm records repeated lines (as Rgui always did).
 
+The history is only saved when the workspace is, to be compatible
+with other versions of R.
+
 There are some extra command-line editing commands: see the
 Help | Console information screen.
 

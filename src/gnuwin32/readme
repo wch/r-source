@@ -242,10 +242,9 @@ Differences from Unix versions of R
   Ctrl-C is used for copying in the GUI version.  C-c C-c works
   under NTemacs.
 
-- Command-line editing is always available, but is much simpler than
-  under readline-based input on Unix.
-
-- The commands history is always saved between sessions.
+- Command-line editing is always available, but is simpler than
+  under readline-based input on Unix.  For Rgui.exe, see the menu item
+  `Help | Console', for Rterm.exe the file README.Rterm.
 
 - The HTML function and package lists and search datasbase are not
   re-generated automatically by html.start().  Use link.html.help().

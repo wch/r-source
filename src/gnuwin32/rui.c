@@ -727,7 +727,7 @@ int setupui()
     MCHECK(newmenuitem("About", 0, menuabout));
     consolesetbrk(RConsole, menukill, ESC, 0);
     gl_hist_init(R_HistorySize, 0);
-    gl_loadhistory(R_HistoryFile);
+    if (R_RestoreHistory) gl_loadhistory(R_HistoryFile);
     show(RConsole);
     return 1;
 }

@@ -62,6 +62,8 @@ NEW FEATURES
 
     o	Formerly deprecated function provide() is now defunct.
 
+    o	New command-line option --no-restory-history implied by --vanilla.
+
 
 
 	**************************************************
