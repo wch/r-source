@@ -872,7 +872,7 @@ SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
 
     switch (PRIMVAL(op)) {
     case 0: return math2(op, CAR(args), CADR(args), atan2);
-    case 1: return math2(op, CAR(args), CADR(args), prec);
+    /* case 1: return math2(op, CAR(args), CADR(args), prec); */
 
     case 2: return math2(op, CAR(args), CADR(args), lbeta);
     case 3: return math2(op, CAR(args), CADR(args), beta);
@@ -928,29 +928,32 @@ SEXP do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_round(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP a, b;
-    int n;
-    if( DispatchGroup("Math", call, op, args, env, &a) )
-	return a;
-    lcall = call;
-    switch(n = length(args)) {
-    case 1: PROTECT(a = CAR(args));
-	PROTECT(b = allocVector(REALSXP, 1));
-	REAL(b)[0] = 0;
-	break;
-    case 2: PROTECT(a = CAR(args));
-	PROTECT(b = CADR(args));
-	break;
-    default: error("%d arguments passed to \"round\" which requires 1 or 2\n", n);
-    }
-    if (isComplex(CAR(args))) {
-	args = list2(a, b);
-	a = complex_math2(call, op, args, env);
-    }
-    else
-	a = math2(op, a, b, rround);
-    UNPROTECT(2);
+  SEXP a, b;
+  int n;
+  if (DispatchGroup("Math", call, op, args, env, &a))
     return a;
+  lcall = call;
+  switch(n = length(args)) {
+  case 1:
+    PROTECT(a = CAR(args));
+    PROTECT(b = allocVector(REALSXP, 1));
+    REAL(b)[0] = 0;
+    break;
+  case 2:
+    PROTECT(a = CAR(args));
+    PROTECT(b = CADR(args));
+    break;
+  default:
+    error("%d arguments passed to \"round\" which requires 1 or 2\n", n);
+  }
+  if (isComplex(CAR(args))) {
+    args = list2(a, b);
+    a = complex_math2(call, op, args, env);
+  }
+  else
+    a = math2(op, a, b, rround);
+  UNPROTECT(2);
+  return a;
 }
 
 SEXP do_log(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -973,6 +976,35 @@ SEXP do_log(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	error("%d arguments passed to \"log\" which requires 1 or 2\n", n);
     }
+}
+
+SEXP do_signif(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+  SEXP a, b;
+  int n;
+  if (DispatchGroup("Math", call, op, args, env, &a))
+    return a;
+  switch(n = length(args)) {
+  case 1:
+    PROTECT(a = CAR(args));
+    PROTECT(b = allocVector(REALSXP, 1));
+    REAL(b)[0] = 6;
+    break;
+  case 2:
+    PROTECT(a = CAR(args));
+    PROTECT(b = CADR(args));
+    break;
+  default:
+    error("%d arguments passed to \"signif\" which requires 1 or 2\n", n);
+  }
+  if (isComplex(CAR(args))) {
+    args = list2(a, b);
+    a = complex_math2(call, op, args, env);
+  }
+  else
+    a = math2(op, a, b, prec);
+  UNPROTECT(2);
+  return a;
 }
 
 #define mod_iterate3(n1,n2,n3,i1,i2,i3) for (i=i1=i2=i3=0; i<n; \
