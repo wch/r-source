@@ -39,7 +39,7 @@ fx <- function(x)
 x <- seq(-2, 2, len=100)
 y <- seq(-.5, 1.5, len=100)
 z <- fx(expand.grid(x, y))
-par(mfrow = c(2,1), mar = .1 + c(3,3,0,0))
+op <- par(mfrow = c(2,1), mar = .1 + c(3,3,0,0))
 contour(x, y, matrix(log10(z), length(x)))
 
 str(nlm.f2 <- nlm(f, c(-1.2, 1), hessian=TRUE))
@@ -49,7 +49,7 @@ x <- y <- seq(.9, 1.1, len=100)
 z <- fx(expand.grid(x, y))
 contour(x, y, matrix(log10(z), length(x)))
 points(rbind(nlm.f2$estim[1:2]), col = "red", pch = 20)
-
+par(op)
 
 fg <- function(x)
 {
