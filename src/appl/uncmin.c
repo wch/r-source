@@ -718,98 +718,104 @@ lnsrch(int n, double *x, double f, double *g, double *p, double *xpls,
        double *fpls, fcn_p fcn, void *state, int *mxtake, int *iretcd,
        double stepmx, double steptl, double *sx)
 {
-  double disc;
-  double a, b;
-  int i, one = 1;
-  double t1, t2, t3, almbda, tlmbda, rmnlmb;
-  double scl, rln, sln, slp;
-  double temp1, temp2;
-  double pfpls = 0.0, plmbda = 0.0; /* -Wall */
+    double disc;
+    double a, b;
+    int i, one = 1, firstback = 1;
+    double t1, t2, t3, almbda, tlmbda, rmnlmb;
+    double scl, rln, sln, slp;
+    double temp1, temp2;
+    double pfpls = 0.0, plmbda = 0.0; /* -Wall */
 
-  *mxtake = 0;
-  *iretcd = 2;
-  temp1 = 0.;
-  for (i = 0; i < n; ++i) {
-    temp1 += sx[i] * sx[i] * p[i] * p[i];
-  }
-  sln = sqrt(temp1);
-  if (sln > stepmx) {
-    /* 	newton step longer than maximum allowed */
-    scl = stepmx / sln;
-    F77_CALL(dscal)(&n, &scl, p, &one);
-    sln = stepmx;
-  }
-  slp = F77_CALL(ddot)(&n, g, &one, p, &one);
-  rln = 0.0;
-  for (i = 0; i < n; ++i) {
-    temp1 = fabs(x[i]);
-    temp2 = 1.0/sx[i];
-    temp1 = fabs(p[i])/ max(temp1, temp2);
-    rln = max(rln, temp1);
-  }
-  rmnlmb = steptl / rln;
-  almbda = 1.0;
-
-  /* 	check if new iterate satisfactory.  generate new lambda if necessary. */
-
-  while(*iretcd > 1) {
+    *mxtake = 0;
+    *iretcd = 2;
+    temp1 = 0.;
     for (i = 0; i < n; ++i) {
-      xpls[i] = x[i] + almbda * p[i];
+	temp1 += sx[i] * sx[i] * p[i] * p[i];
     }
-    (*fcn)(n, xpls, fpls, state);
-    if (*fpls <= f + slp * 1e-4 * almbda) {
-      /* solution found */
-
-      *iretcd = 0;
-      if (almbda == 1. && sln > stepmx * .99) {
-	*mxtake = 1;
-      }
-      return;
-    } else {
-      /* solution not (yet) found */
-
-      if (almbda < rmnlmb) {
-	/* 	no satisfactory xpls found sufficiently distinct from x */
-
-	*iretcd = 1;
-	return;
-      } else {
-	/* 	calculate new lambda */
-	if (almbda == 1.0) {
-	  /* 	first backtrack: quadratic fit */
-
-	  tlmbda = -slp / ((*fpls - f - slp) * 2.);
-	} else {
-	  /* 	all subsequent backtracks: cubic fit */
-	  t1 = *fpls - f - almbda * slp;
-	  t2 = pfpls - f - plmbda * slp;
-	  t3 = 1. / (almbda - plmbda);
-	  a = t3 * (t1 / (almbda * almbda) - t2 / (plmbda * plmbda));
-	  b = t3 * (t2 * almbda / (plmbda * plmbda) - t1 * plmbda / (almbda * 
-								     almbda));
-	  disc = b * b - a * 3. * slp;
-	  if (disc > b * b) {
-	    /* 	only one positive critical point, must be minimum */
-
-	    tlmbda = (-b + ((a < 0)? - sqrt(disc): sqrt(disc)))/(a * 3.);
-	  } else {
-	    /* 	both critical points positive, first is minimum */
-	    tlmbda = (-b + ((a < 0)? sqrt(disc): -sqrt(disc)))/ (a * 3.);
-	  }
-	  if (tlmbda > almbda * .5) {
-	    tlmbda = almbda * .5;
-	  }
-	}
-	plmbda = almbda;
-	pfpls = *fpls;
-	if (tlmbda < almbda * .1) {
-	  almbda *= .1;
-	} else {
-	  almbda = tlmbda;
-	}
-      }
+    sln = sqrt(temp1);
+    if (sln > stepmx) {
+	/* 	newton step longer than maximum allowed */
+	scl = stepmx / sln;
+	F77_CALL(dscal)(&n, &scl, p, &one);
+	sln = stepmx;
     }
-  }
+    slp = F77_CALL(ddot)(&n, g, &one, p, &one);
+    rln = 0.0;
+    for (i = 0; i < n; ++i) {
+	temp1 = fabs(x[i]);
+	temp2 = 1.0/sx[i];
+	temp1 = fabs(p[i])/ max(temp1, temp2);
+	rln = max(rln, temp1);
+    }
+    rmnlmb = steptl / rln;
+    almbda = 1.0;
+
+    /* 	check if new iterate satisfactory.  generate new lambda if necessary. */
+
+    while(*iretcd > 1) {
+	for (i = 0; i < n; ++i)
+	    xpls[i] = x[i] + almbda * p[i];
+	(*fcn)(n, xpls, fpls, state);
+	if (*fpls <= f + slp * 1e-4 * almbda) {
+	    /* solution found */
+
+	    *iretcd = 0;
+	    if (almbda == 1. && sln > stepmx * .99) {
+		*mxtake = 1;
+	    }
+	    return;
+	} else {
+	    /* solution not (yet) found */
+
+	    /* First find a point with a finite value */
+	    if (almbda < rmnlmb) {
+		/* no satisfactory xpls found sufficiently distinct from x */
+
+		*iretcd = 1;
+		return;
+	    } else {
+		/* 	calculate new lambda */
+		/* modifications by BDR 2000/01/05 to cover non-finite values */		
+		if (*fpls == DBL_MAX) {
+		    almbda *= 0.1;
+		    firstback = 1;
+		} else {
+		    if (firstback) {
+			/* 	first backtrack: quadratic fit */
+			tlmbda = -almbda * slp / ((*fpls - f - slp) * 2.);
+			firstback = 0;
+		    } else {
+			/* 	all subsequent backtracks: cubic fit */
+			t1 = *fpls - f - almbda * slp;
+			t2 = pfpls - f - plmbda * slp;
+			t3 = 1. / (almbda - plmbda);
+			a = t3 * (t1 / (almbda * almbda) - t2 / (plmbda * plmbda));
+			b = t3 * (t2 * almbda / (plmbda * plmbda) - t1 * plmbda / (almbda * 
+										   almbda));
+			disc = b * b - a * 3. * slp;
+			if (disc > b * b) {
+			    /* 	only one positive critical point, must be minimum */
+
+			    tlmbda = (-b + ((a < 0)? - sqrt(disc): sqrt(disc)))/(a * 3.);
+			} else {
+			    /* 	both critical points positive, first is minimum */
+			    tlmbda = (-b + ((a < 0)? sqrt(disc): -sqrt(disc)))/ (a * 3.);
+			}
+			if (tlmbda > almbda * .5) {
+			    tlmbda = almbda * .5;
+			}
+		    }
+		    plmbda = almbda;
+		    pfpls = *fpls;
+		    if (tlmbda < almbda * .1) {
+			almbda *= .1;
+		    } else {
+			almbda = tlmbda;
+		    }
+		}
+	    }
+	}
+    }
 } /* lnsrch */
 
 /* 	subroutine dogstp */
