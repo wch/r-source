@@ -43,7 +43,7 @@
 /* back-compatibility entry point */
 double Rf_log1p(double x)
 {
-    log1p(x);
+    return log1p(x);
 }
 #endif
 
