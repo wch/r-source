@@ -108,7 +108,8 @@ function(file)
 
     start <- regexpr("\\\\name{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
     if(start == -1)
-       stop("missing/empty \\name field")
+       stop(paste("missing/empty \\name field in",
+                  summary(file)$description))
     RdName <- gsub("[[:space:]]*", " ",
                    substr(txt,
                           start + 6,
@@ -116,7 +117,8 @@ function(file)
 
     start <- regexpr("\\\\title{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
     if(start == -1)
-        stop("missing/empty \\title field")
+        stop(paste("missing/empty \\title field in",
+                   summary(file)$description))
     RdTitle <- gsub("[[:space:]]*", " ",
                     substr(txt,
                            start + 7,
