@@ -4,7 +4,11 @@ HELP=YES
 WINHELP=BOTH # NO, CHM, BOTH
 
 PACKAGES=base eda lqs modreg mva nls splines stepfun ts
-RPREFIX=rw0900
+RPREFIX=rw0901
+RHOME=$(shell cd ../..; pwd) # must be absolute path
+RLIBS=$(RHOME)/library
+PKGDIR=$(RHOME)/src/library
+PKGD=$(shell cd $(PKGDIR); pwd) # must be absolute path
 
 ifdef DEBUG
  OPTFLAGS=-g -O2
@@ -41,7 +45,7 @@ rinstaller:
 	$(MAKE) -C installer PREFIX=$(RPREFIX)
 
 rdemo:  libR.a
-	make -C ../../demos/dynload -f ../../src/gnuwin32/MkDyndemo
+	make -C ../../demos/dynload -f $(RHOME)/src/gnuwin32/MkDyndemo
 
 rlibs: 
 	$(MAKE) -C ../appl OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
@@ -53,7 +57,7 @@ rlibs:
 	$(MAKE) -C ./xdr
 	$(MAKE) -C ./math
 
-COPYRIGHTS: ../../COPYRIGHTS COPYRIGHTS.win
+COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
 
 fixfiles:
@@ -116,33 +120,36 @@ endif
 base-HELP=ziponly
 
 pkg-%:  libR.a #../include/globalvar.h
-	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) -C ../library/$* PKG=$* -f ../../gnuwin32/MakePkg
+	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) \
+	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIBS=$(RLIBS)\
+	  -f $(RHOME)/src/gnuwin32/MakePkg
 ifeq ($(strip $(HELP)),YES)
-	$(MAKE) -C ./help $($*-HELP)help-$*
-	$(MAKE) -C ./help contents-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) $($*-HELP)help-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) contents-$*
 ifeq ($(strip $(WINHELP)),CHM)
-	$(MAKE) -C ./help chm-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) chm-$*
 endif
 ifeq ($(strip $(WINHELP)),BOTH)
-	$(MAKE) -C ./help winhlp-$* # also makes chm
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) winhlp-$* # also makes chm
 endif
 endif
 
 pkgclean-%:
-	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) -C ../library/$* PKG=$* -f ../../gnuwin32/MakePkg clean
+	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) RHOME=$(RHOME) \
+	  -C $(PKGDIR)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
 
 pkgcheck-%:
 	@$(ECHO) -------- Testing package $* --------
-	-@mkdir -p ../library/$*/check
-	@$(MAKE) -C ../library/$*/check PKG=$* -f ../../../gnuwin32/check/PkgCheck
+	-@mkdir -p $(PKGDIR)/$*/check
+	@$(MAKE) -C $(PKGDIR)/$*/check PKG=$* -f $(RHOME)/src/gnuwin32/check/PkgCheck
 
 ziphelp-%:
-	$(MAKE) -C ./help ziphelp-$*
-	$(MAKE) -C ./help contents-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) ziphelp-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) contents-$*
 
 ziponly-%:
-	$(MAKE) -C ./help ziponlyhelp-$*
-	$(MAKE) -C ./help contents-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) ziponlyhelp-$*
+	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) contents-$*
 
 bootstrap-DLLNM=boott
 
@@ -232,7 +239,7 @@ srcdist:
 	$(RM) -r ../src/gnuwin32/bitmap/libpng
 	$(RM) -r ../src/gnuwin32/bitmap/zlib 
 	$(RM) -f ../src/gnuwin32/unzip/*.dll
-	$(MAKE) -C ../src/gnuwin32 cleanwin
+	$(MAKE) -k -C ../src/gnuwin32 cleanwin
 	mv ../src .
 	$(RM) $(RPREFIX)s.zip
 	zip -rX  $(RPREFIX)s.zip src
@@ -268,8 +275,8 @@ check: all test
 test: stricttests pkgtests
 
 stricttests:
-	-@$(MAKE) -C ../../tests -f ../src/gnuwin32/check/Maketests clean
-	-@$(MAKE) -k -C ../../tests -f ../src/gnuwin32/check/Maketests
+	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests clean
+	-@$(MAKE) -k -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests
 
 PKGS-CHK=$(foreach i, $(PACKAGES), pkgcheck-$i)
 pkgtests: $(PKGS-CHK)
@@ -281,15 +288,18 @@ pkgcheck-base:
 	-@$(MAKE) -C ../library/base/check PKG=base -f ../../../gnuwin32/check/PkgCheck
 	@(cd ../../library/base/R-ex; rm -f *.R)
 
+bundle-%:
+	sh fixed/dobundle.sh $* $(PKGD) $(RLIBS)
+
 docs manuals:
-	@$(MAKE) -C ../../doc/manual -f Makefile.win clean
-	@$(MAKE) -C ../../doc/manual -f Makefile.win
-	$(RM) ../../library/base/latex/*.tex
+	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win clean
+	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win
+	$(RM) $(RHOME)/library/base/latex/*.tex
 
 docsdist:
 	$(RM) -rf $(RPREFIX)
 	$(MKDIR) $(RPREFIX) $(RPREFIX)/doc $(RPREFIX)/doc/manuals 
-	$(CP) -pr ../../doc/manual/*.pdf $(RPREFIX)/doc/manuals
+	$(CP) -pr $(RHOME)/doc/manual/*.pdf $(RPREFIX)/doc/manuals
 	zip -rm9X $(RPREFIX)d.zip $(RPREFIX)
 
 

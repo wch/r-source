@@ -1,3 +1,4 @@
+#-*- Makefile -*-
 .SUFFIXES: .c .f .o .a .def .exp .dll .exe .d
 
 # Alternatives CYGWIN (--no-cygwin), MINGW32 (mingw32 gcc), CROSS (Linux)

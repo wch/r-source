@@ -13,19 +13,19 @@
 
 $debug = 0;
 
-#  # get directory where this file is.  
-#  {
-#      $0 =~ /^(.*)\/.*$/;
-#      $my_dir = $1; 
-#      if ($my_dir !~ ?^/?) {
-#  	$my_dir = $ENV{PWD} . "/" . $my_dir;
-#      }
-#      if ($my_dir =~ ?/$?) {
-#  	chop ($my_dir);
-#      }
-#  }
+# get directory where this file is.  
+{
+    $0 =~ /^(.*)\/.*$/;
+    $my_dir = $1; 
+    if ($my_dir !~ ?^/?) {
+	$my_dir = $ENV{PWD} . "/" . $my_dir;
+    }
+    if ($my_dir =~ ?/$?) {
+	chop ($my_dir);
+    }
+}
 
-push(@INC, "../../../gnuwin32/help");
+push(@INC, $my_dir);
 
 # Parse command line arguments.
 $HHC = "";
