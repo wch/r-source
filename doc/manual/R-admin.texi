@@ -1119,6 +1119,9 @@ CXX=CC
 CXXFLAGS="-xO5 -xlibmil -dalign -xarch=v9"
 @end smallexample
 
+@noindent
+in @file{config.site}.
+
 For 64-bit compilation with @command{gcc} 3.2 we used
 
 @smallexample
@@ -1133,8 +1136,6 @@ This @emph{does} work with @command{gcc} 3.2.1.
 
 @cindex BLAS library
 @cindex LAPACK library
-@noindent
-in @file{config.site}.
 
 Note that using @command{f95} allows the Sun
 performance library @code{libsunperf} to be selected: it will not work
