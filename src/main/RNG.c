@@ -86,6 +86,15 @@ static void RNG_Init_KT(Int32);
 static void RNG_Init_KT2(Int32);
 #define KT_pos (RNG_Table[KNUTH_TAOCP].i_seed[100])
 
+static double fixup(double x)
+{
+    /* ensure 0 and 1 are never returned */
+    if(x <= 0.0) return 0.5*i2_32m1;
+    if((1.0 - x) <= 0.0) return 1.0 - 0.5*i2_32m1;
+    return x;
+}
+
+
 double unif_rand(void)
 {
     double value;
@@ -97,12 +106,12 @@ double unif_rand(void)
 	I2 = I2 * 172 % 30307;
 	I3 = I3 * 170 % 30323;
 	value = I1 / 30269.0 + I2 / 30307.0 + I3 / 30323.0;
-	return value - (int) value;/* in [0,1) */
+	return fixup(value - (int) value);/* in [0,1) */
 
     case MARSAGLIA_MULTICARRY:/* 0177777(octal) == 65535(decimal)*/
 	I1= 36969*(I1 & 0177777) + (I1>>16);
 	I2= 18000*(I2 & 0177777) + (I2>>16);
-	return ((I1 << 16)^(I2 & 0177777)) * i2_32m1; /* in [0,1) */
+	return fixup(((I1 << 16)^(I2 & 0177777)) * i2_32m1); /* in [0,1) */
 
     case SUPER_DUPER:
 	/* This is Reeds et al (1984) implementation;
@@ -111,14 +120,14 @@ double unif_rand(void)
 	I1 ^= ((I1 >> 15) & 0377777); /* Tausworthe */
 	I1 ^= I1 << 17;
 	I2 *= 69069;		/* Congruential */
-	return (I1^I2) * i2_32m1; /* in [0,1) */
+	return fixup((I1^I2) * i2_32m1); /* in [0,1) */
 
     case MERSENNE_TWISTER:
-	return MT_genrand();
+	return fixup(MT_genrand());
 
     case KNUTH_TAOCP:
     case KNUTH_TAOCP2:
-	return KT_next() * KT;
+	return fixup(KT_next() * KT);
 
     case USER_UNIF:
 	return *((double *) User_unif_fun());

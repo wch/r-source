@@ -57,6 +57,12 @@ NEW FEATURES
 
     o	medpolish {eda} now has an `na.rm' argument (PR#2298).
 
+    o	The internal random number generators will now never return
+	values of 0 or 1 for runif.  This might affect simulation
+	output in extremely rare cases.  Note that this is not
+	guaranteed for user-supplied random-number generators, nor
+	when the standalone Rmath library is used.
+
 
 INSTALLATION CHANGES
 
