@@ -838,7 +838,7 @@ SEXP do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     int save = R_PPStackTop;
     checkArity(op, args);
     s = CAR(args);
-    if (!isList(s))
+    if (!isPairList(s))
 	errorcall(call, "invalid .Internal() argument\n");
     fun = CAR(s);
     if (!isSymbol(fun))
