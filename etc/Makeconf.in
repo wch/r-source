@@ -62,12 +62,16 @@ ALL_FFLAGS_LO = $(ALL_FFLAGS)
 @r_cxx_rules_frag@
 @r_f77_rules_frag@
 
+## <FIXME>
 ## As we currently use
 ##   -bundle -bundle_loader $(Rexecbindir)/R.bin -undefined error
-## for the default SHLIB_LDFLAGS on Darwin >= 5 ...
+## for the default SHLIB_LDFLAGS on Darwin >= 5.
 ## Note we also need prefix and exec_prefix as by default, libdir seems
-## to expand to ${exec_prefix} and this to ${prefix} ...
+## to expand to ${exec_prefix} and this to ${prefix}.
 prefix = @prefix@
 exec_prefix = @exec_prefix@
 rhome = @libdir@/R
 Rexecbindir = $(rhome)/bin
+## Note however that by default we get paths in the installation dir and
+## not in the build dir.
+## <FIXME>
