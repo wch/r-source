@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.58 $'
+revision='$Revision: 1.59 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -27,6 +27,7 @@ Options:
   -c, --clean		remove all files created during installation
   -s, --save            Save the package source as an image file, and arrange for
                         this file to be loaded when the library is attached.
+  --no-save             Do not save the package source as an image file.
   -d, --debug		turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB
       --no-configure    do not use the package's configure script
