@@ -54,6 +54,10 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
   Although \code{xfig} can produce multiple plots in one file, the XFig
   format does not say how to separate or view them.  So
   \code{onefile = FALSE} is the default.
+
+  Line widths as controlled by \code{par(lwd=)} are in multiples of
+  5/6*1/72 inch.  Multiples less than 1 are allowed.  \code{pch="."}
+  corresponds to a square of side 1/72 inch.  
 }
 \note{
   Only some line textures (\code{0 <= lty < 4}) are used.  Eventually this
