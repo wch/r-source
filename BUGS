@@ -33,6 +33,10 @@ Date: Tue, 28 Nov 2000 13:24:33 +0800
 
 Directory:  Add-ons
 
+* PR# 812 *
+Subject: segmentation fault in integrate
+From: Achim Zeileis <zeileis@ci.tuwien.ac.at>
+Date: Thu, 11 Jan 2001 22:49:59 +0100
 * PR# 781 *
 Subject: syskern fails Rcmd check on Windows, gives incorrect information
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
@@ -94,15 +98,17 @@ none
 
 Directory:  Installation
 
-none
+* PR# 806 *
+Subject: configure error on alpha
+From: Richard Beare <Richard.Beare@cmis.CSIRO.AU>
+Date: Wed, 10 Jan 2001 16:52:58 +1100
 
 Directory:  Language
 
-* PR# 669 *
-Subject: Bug(s) w/ rbind.data.frame(); fix also read.table(*, as.is = TRUE) ?
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 25 Sep 2000 10:17:15 +0200
---status of AsIs columns
+* PR# 813 *
+Subject: match.call problem
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 12 Jan 2001 17:46:15 +0100
 * PR# 412 *
 Subject: anomalies with call objects
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -111,6 +117,15 @@ Date: 06 Feb 2000 01:18:50 +0100
 Subject: convolution bug
 From: wsimpson@gcal.ac.uk
 Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
+* PR# 809 *
+Subject: changing dimnames of a matrix with rownames/colnames causes
+From: David Meyer <David.Meyer@ci.tuwien.ac.at>
+Date: Wed, 10 Jan 2001 13:20:44 +0100
+* PR# 669 *
+Subject: Bug(s) w/ rbind.data.frame(); fix also read.table(*, as.is = TRUE) ?
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 25 Sep 2000 10:17:15 +0200
+--status of AsIs columns
 
 Directory:  Low-level
 
@@ -138,11 +153,27 @@ Date: Tue, 14 Mar 2000 10:32:43 +0100 (MET)
 
 Directory:  System-specific
 
-none
+* PR# 808 *
+Subject: Time zone
+From: Herve Morin <morin@mat.ulaval.ca>
+Date: Wed, 10 Jan 2001 07:24:07 -0500
+--This appears to be a complaint about a warning on a beta Mac version
+--(but Macs are never mentioned!).  That version is incomplete.
 
 Directory:  TooMuchAtOnce
 
-none
+* PR# 811 *
+Subject: problem with strptime example (and mention of bug.report)
+From: Stephen Eglen <stephen@anc.ed.ac.uk>
+Date: Thu, 11 Jan 2001 19:18:39 GMT
+--1) On OSF4, strptime is deficient. Nothing we can do.
+--
+--2) On Windows NT, the strptime problems are (i) German locale, English dates,
+--(ii) Windows system errors with unknown DST (it move times to DST).
+--(i) now has another warning in the help file (there already was one).
+--(ii) was already worked around for 1.2.1.
+--
+--3) bug.report() uses a mailer option that does not exist on OSF4.
 
 Directory:  Windows
 
@@ -150,35 +181,4 @@ none
 
 Directory:  incoming
 
-* PR# 813 *
-Subject: match.call problem
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 12 Jan 2001 17:46:15 +0100
-* PR# 806 *
-Subject: configure error on alpha
-From: Richard Beare <Richard.Beare@cmis.CSIRO.AU>
-Date: Wed, 10 Jan 2001 16:52:58 +1100
-* PR# 805 *
-Subject:  Inconsistent behaviour in solve 
-From: J.C.Rougier@durham.ac.uk
-Date: Tue, 9 Jan 2001 17:25:55 GMT
-* PR# 808 *
-Subject: Time zone
-From: Herve Morin <morin@mat.ulaval.ca>
-Date: Wed, 10 Jan 2001 07:24:07 -0500
-* PR# 807 *
-Subject: par(par()) corrupts devices
-From: =?iso-8859-1?Q?=22Dr=2E_Jens_Oehlschl=E4gel=22?=
-Date: Wed, 10 Jan 2001 13:09:28 +0100
-* PR# 812 *
-Subject: segmentation fault in integrate
-From: Achim Zeileis <zeileis@ci.tuwien.ac.at>
-Date: Thu, 11 Jan 2001 22:49:59 +0100
-* PR# 811 *
-Subject: problem with strptime example (and mention of bug.report)
-From: Stephen Eglen <stephen@anc.ed.ac.uk>
-Date: Thu, 11 Jan 2001 19:18:39 GMT
-* PR# 809 *
-Subject: changing dimnames of a matrix with rownames/colnames causes
-From: David Meyer <David.Meyer@ci.tuwien.ac.at>
-Date: Wed, 10 Jan 2001 13:20:44 +0100
+none
