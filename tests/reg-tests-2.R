@@ -58,7 +58,7 @@ test.list
 # $B$subset
 # [1] TRUE
 
-## Marc Feldesman 2001-Feb-1.  Precision in summary.data.frame & *.matric
+## Marc Feldesman 2001-Feb-01.  Precision in summary.data.frame & *.matrix
 data(attenu)
 summary(attenu)
 summary(attenu, digits = 5)
@@ -138,5 +138,9 @@ gofX.manova <- manova(formula = cbind(A, B, C, D) ~ groups, data = gofX.df)
 try(summary(gofX.manova))
 ## should fail with error message
 
-
-## summary.matrix(*, digits) 
+## F. Tusell 2001-03-07.  printing kernels.
+library(ts)
+kernel("daniell", m=5)
+kernel("modified.daniell", m=5)
+kernel("daniell", m=c(3,5,7))
+## fixed by patch from Adrian Trapletti 2001-03-08

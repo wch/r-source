@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.2.1 Patched (2001-02-23)
+Version 1.2.2 Patched (2001-03-08)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -106,7 +106,7 @@ $B$subset
 > # $B$subset
 > # [1] TRUE
 > 
-> ## Marc Feldesman 2001-Feb-1.  Precision in summary.data.frame & *.matric
+> ## Marc Feldesman 2001-Feb-01.  Precision in summary.data.frame & *.matrix
 > data(attenu)
 > summary(attenu)
      event            mag           station         dist       
@@ -301,6 +301,66 @@ Residual Deviance: 5.656 	AIC: 71.35
 Error in summary.manova(gofX.manova) : residuals have rank 3 < 4
 > ## should fail with error message
 > 
-> 
-> ## summary.matrix(*, digits) 
+> ## F. Tusell 2001-03-07.  printing kernels.
+> library(ts)
+> kernel("daniell", m=5)
+Daniell(5) 
+coef[-5] = 0.09091
+coef[-4] = 0.09091
+coef[-3] = 0.09091
+coef[-2] = 0.09091
+coef[-1] = 0.09091
+coef[ 0] = 0.09091
+coef[ 1] = 0.09091
+coef[ 2] = 0.09091
+coef[ 3] = 0.09091
+coef[ 4] = 0.09091
+coef[ 5] = 0.09091
+> kernel("modified.daniell", m=5)
+mDaniell(5) 
+coef[-5] = 0.05
+coef[-4] = 0.10
+coef[-3] = 0.10
+coef[-2] = 0.10
+coef[-1] = 0.10
+coef[ 0] = 0.10
+coef[ 1] = 0.10
+coef[ 2] = 0.10
+coef[ 3] = 0.10
+coef[ 4] = 0.10
+coef[ 5] = 0.05
+> kernel("daniell", m=c(3,5,7))
+unknown 
+coef[-15] = 0.0008658
+coef[-14] = 0.0025974
+coef[-13] = 0.0051948
+coef[-12] = 0.0086580
+coef[-11] = 0.0129870
+coef[-10] = 0.0181818
+coef[ -9] = 0.0242424
+coef[ -8] = 0.0303030
+coef[ -7] = 0.0363636
+coef[ -6] = 0.0424242
+coef[ -5] = 0.0484848
+coef[ -4] = 0.0536797
+coef[ -3] = 0.0580087
+coef[ -2] = 0.0614719
+coef[ -1] = 0.0640693
+coef[  0] = 0.0649351
+coef[  1] = 0.0640693
+coef[  2] = 0.0614719
+coef[  3] = 0.0580087
+coef[  4] = 0.0536797
+coef[  5] = 0.0484848
+coef[  6] = 0.0424242
+coef[  7] = 0.0363636
+coef[  8] = 0.0303030
+coef[  9] = 0.0242424
+coef[ 10] = 0.0181818
+coef[ 11] = 0.0129870
+coef[ 12] = 0.0086580
+coef[ 13] = 0.0051948
+coef[ 14] = 0.0025974
+coef[ 15] = 0.0008658
+> ## fixed by patch from Adrian Trapletti 2001-03-08
 > 
