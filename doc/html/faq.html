@@ -28,7 +28,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.9-3 2004-04-18</h2>
+<h2>Version 1.9-5 2004-04-21</h2>
 <h2>ISBN 3-900051-01-1</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -313,7 +313,7 @@ the "Comprehensive R Archive Network" (see <a href="#What%20is%20CRAN%3f">What i
 
    <p>Sources are also available via anonymous rsync.  Use
 
-<pre class="example">     rsync -rC --delete rsync.R-project.org::<var>module</var> R
+<pre class="example">     rsync -rptC --delete rsync.R-project.org::<var>module</var> R
      </pre>
 
 <p>to create a copy of the source tree specified by <var>module</var> in the
@@ -498,9 +498,11 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 <p>The <code>bin/linux</code> directory of a <small>CRAN</small> site contains Debian
 stable/testing/unstable packages for the i386 platform (now part of the
 Debian distribution and maintained by Dirk Eddelbuettel), Mandrake
-9.0/9.1 i386 packages by Michele Alzetta, Red Hat 7.x/8.x/9 i386
-packages by Martyn Plummer, SuSE 7.3/8.0/8.1/8.2/9.0 i386 packages by
-Detlef Steuer, and VineLinux 2.6 i386 packages by Susunu Tanimura.
+9.1/9.2/10.0 i386 packages by Michele Alzetta, Red Hat 7.x/8.x/9/Fedora1
+i386, 7.x alpha, and Fedora1 x86_64 packages by Martyn Plummer, Naoki
+Takebayashi, and James Henstridge, respectively, SuSE 7.3/8.0/8.1/8.2
+i386 and 9.0 i586 packages by Detlef Steuer, and VineLinux 2.6 i386
+packages by Susunu Tanimura.
 
    <p>The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -1838,6 +1840,8 @@ and Bmapqtl samples.
      <dd>Generation of correlated artificial binary data. 
 <br><dt><strong>blighty</strong>
      <dd>Function for drawing the coastline of the United Kingdom. 
+<br><dt><strong>boa</strong>
+     <dd>Bayesian Output Analysis Program for MCMC. 
 <br><dt><strong>boolean</strong>
      <dd>Boolean logit and probit: a procedure for testing Boolean hypotheses. 
 <br><dt><strong>boot</strong>
@@ -2292,8 +2296,6 @@ removed such that the reduced data set has complete separation.
      <dd>Estimating the number of essential genes in a genome on the basis of
 data from a random transposon mutagenesis experiment, through the use of
 a Gibbs sampler. 
-<br><dt><strong>netCDF</strong>
-     <dd>Read data from netCDF files. 
 <br><dt><strong>nlme</strong>
      <dd>Fit and compare Gaussian linear and nonlinear mixed-effects models. 
 <em>Recommended</em>. 
@@ -2433,6 +2435,8 @@ fft, histogram equalization, and reading <small>JPEG</small> files.
 two-sample comparison of binary outcomes. 
 <br><dt><strong>rpart</strong>
      <dd>Recursive PARTitioning and regression trees.  <em>Recommended</em>. 
+<br><dt><strong>rpart.permutation</strong>
+     <dd>Permutation tests of rpart models. 
 <br><dt><strong>rpvm</strong>
      <dd>R interface to PVM (Parallel Virtual Machine).  Provides interface to
 PVM APIs, and examples and documentation for its use. 
