@@ -17,13 +17,13 @@ NEW FEATURES
 	   a user-specified encoding.
 
 	-  New functions readChar() and writeChar() to read
-           character strings with known lengths and no terminators,
+	   character strings with known lengths and no terminators,
 	   and to write user-specified lengths from strings.
 
 	-  sink() now has a stack of output connections, following S4.
 
 	-  sink() can also be applied to the message stream, to
-           capture error messages to a connection.  Use carefully!
+	   capture error messages to a connection.  Use carefully!
 
 	-  seek() has a new `origin' argument.
 
@@ -101,6 +101,7 @@ NEW FEATURES
 
     o	New function integrate() with S-compatible call.
 
+    o	New function col2rgb() for color conversion of names, hex, or integer.
 
 
 BUG FIXES

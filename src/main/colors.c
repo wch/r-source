@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-2000  Robert Gentleman, Ross Ihaka and the
- *                           R Development Core Team
+ *  Copyright (C) 1995-2001  Robert Gentleman, Ross Ihaka and the
+ *			     R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ static void setpalette(char **palette)
 SEXP do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP val, ans;
-    unsigned int ncols[COLOR_TABLE_SIZE];
+    unsigned int color[COLOR_TABLE_SIZE];
     int i, n;
     checkArity(op,args);
     /* Record the current palette */
@@ -68,9 +68,9 @@ SEXP do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (n > COLOR_TABLE_SIZE)
 	     errorcall(call, "maximum number of colors exceeded");
 	for (i = 0; i < n; i++)
-	    ncols[i] = char2col(CHAR(STRING_ELT(val, i)));
+	    color[i] = char2col(CHAR(STRING_ELT(val, i)));
 	for (i = 0; i < n; i++)
-	    R_ColorTable[i] = ncols[i];
+	    R_ColorTable[i] = color[i];
 	R_ColorTableSize = n;
     }
     UNPROTECT(1);
@@ -199,3 +199,35 @@ SEXP do_gray(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+SEXP do_col2RGB(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+/* colorname, "#rrggbb" or "col.number" to (r,g,b) conversion */
+    SEXP colors, ans, names, dmns;
+    unsigned int col;
+    int n, i, i3;
+
+    checkArity(op, args);
+
+    PROTECT(colors = coerceVector(CAR(args),STRSXP));
+    n = LENGTH(colors);
+    PROTECT(ans = allocMatrix(INTSXP, 3, n));
+    PROTECT(dmns = allocVector(VECSXP, 2));
+
+    PROTECT(names = allocVector(STRSXP, 3));
+    SET_STRING_ELT(names, 0, mkChar("red"));
+    SET_STRING_ELT(names, 1, mkChar("green"));
+    SET_STRING_ELT(names, 2, mkChar("blue"));
+    SET_VECTOR_ELT(dmns, 0, names);
+    UNPROTECT(1);/*names*/
+    if ((names = getAttrib(colors, R_NamesSymbol)) != R_NilValue)
+	SET_VECTOR_ELT(dmns, 1, names);
+    setAttrib(ans, R_DimNamesSymbol, dmns);
+    for(i = i3 = 0; i < n; i++, i3 += 3) {
+	col = str2col(CHAR(STRING_ELT(colors, i)));
+	INTEGER(ans)[i3 +0] = R_RED(col);
+	INTEGER(ans)[i3 +1] = R_GREEN(col);
+	INTEGER(ans)[i3 +2] = R_BLUE(col);
+    }
+    UNPROTECT(3);
+    return ans;
+}

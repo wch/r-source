@@ -669,6 +669,7 @@ FUNTAB R_FunTab[] =
 {"hsv",		do_hsv,		0,	11,	4,	PP_FUNCALL},
 {"gray",	do_gray,	0,	11,	1,	PP_FUNCALL},
 {"colors",	do_colors,	0,	11,	0,	PP_FUNCALL},
+{"col2rgb",	do_col2RGB,	0,	11,	1,	PP_FUNCALL},
 {"palette",	do_palette,	0,	11,	1,	PP_FUNCALL},
 {"plot.new",	do_plot_new,	0,	111,	0,	PP_FUNCALL},
 {"plot.window",	do_plot_window,	0,	111,	3,	PP_FUNCALL},

@@ -46,6 +46,7 @@ R.Version <- function().Internal(Version())
 machine <- function().Internal(machine())
 colors <- function().Internal(colors())
 colours <- .Alias(colors)
+col2rgb <- function(col).Internal(col2rgb(col))
 commandArgs <- function() .Internal(commandArgs())
 
 args <- function(name).Internal(args(name))
