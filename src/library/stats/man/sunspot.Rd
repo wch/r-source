@@ -20,7 +20,7 @@ data(sunspot)
 }
 \seealso{
   \code{sunspot.month} is a longer version of \code{\link{sunspots}}
-  in base \R, that runs until 1988.
+  that runs until 1988.
 }
 \source{
   Monthly data: Sunspot Index Data Center,
@@ -37,9 +37,9 @@ data(sunspot)
   Wadsworth \& Brooks/Cole.
 }
 \examples{
-## Compare the monthly series from 'base' and 'stats':
-data(sunspots, package = "base")
-data(sunspot,  package = "stats")
+## Compare the monthly series 
+data(sunspots)
+data(sunspot)
 plot (sunspot.month, main = "sunspot.month [stats]", col = 2)
 lines(sunspots) # "very barely" see something
 
