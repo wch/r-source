@@ -5,7 +5,7 @@
 @setchapternewpage on
 @c %**end of header
 
-@documentencoding ISO-8859-1
+@c @documentencoding ISO-8859-1
 
 @syncodeindex fn vr
 
@@ -1802,23 +1802,23 @@ a single format string containing all English words in the messages.
 
 In R error messages do not construct a message with @code{paste} (such
 messages will not be translated) but via multiple arguments to
-@code{stop} or @code{warning}, or via @code{sprintf}.
+@code{stop} or @code{warning}, or via @code{gettextf}.
 
 @item
 Do not use colloquialisms such as ``can't'' and ``don't''.
 
 @item
 If possible, make quotation marks part of your message as different
-languages have different conventions.  In R messages this means not
-using @code{sQuote} or @code{dQuote} except where the argument is
-a variable.
+languages have different conventions.  In @R{} messages this means not
+using @code{sQuote} or @code{dQuote} except where the argument is a
+variable.
 
 Conventionally single quotation marks are used for quotations such as
 @example
 'ord' must be a positive integer, at most the number of knots
 @end example
-and double quotation marks when referring to an R character string such
-as
+and double quotation marks when referring to an @R{} character string
+such as
 @example
 'format' must be "normal" or "short" - using "normal"
 @end example
@@ -1826,22 +1826,12 @@ as
 Since @acronym{ASCII} does not contain directional quotation marks, it
 is best to use @samp{'} and let the translator (including automatic
 translation) use directional quotations where available.  The range of
-quotation styles is immense: here are some from the @code{gettext-tools}
-system
-@example
-"invalid argument `%s' for `%s'"
-"argument invalide « %s » pour « %s »"
-"ungültiges Argument »%s« für »%s«"
-"neveljaven argument %s za ,%s`"
-"Öffnen der Datei »%s« zum Lesen fehlgeschlagen"
-"feil under åpning av «%s» for lesing"
-"feil under skriving av fila \"%s\""
-"fejl ved læse-åbning af '%s'"
-@end example
-@noindent
-and there are others we cannot reproduce in ISO-8859-1, for example
-bidirectional single quotes in Taiwanese Chinese and bidirectional
-double quotes in Japanese.
+quotation styles is immense: unfortunately we cannot reproduce them in a
+portable @code{texinfo} document.  But as a taster, some languages use
+`up' and `down' (comma) quotes rather than left or right quotes, and
+some use guillemets (and some use what Adobe calls `guillemotleft' to
+start and others use it to end).
+
 
 @item
 Occasionally messages need to be singular or plural (and in other
