@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998	      Robert Gentleman, Ross Ihaka and the R core team.
+ *  Copyright (C) 1998	      Robert Gentleman, Ross Ihaka and the
+ *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -948,7 +949,7 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
     if (strlen(pd->filename) == 0)
 	pd->psfp = popen(R_PRINTCMD, "w");
     else
-	pd->psfp = R_fopen(pd->filename, "w");
+	pd->psfp = R_fopen(R_ExpandFileName(pd->filename), "w");
     if (!pd->psfp) return 0;
 
     if(pd->landscape)

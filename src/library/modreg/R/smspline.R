@@ -127,15 +127,15 @@ print.smooth.spline <- function(x, ...)
     invisible(x)
 }
 
-predict.smooth.spline <- function(object, x, deriv = 0)
+predict.smooth.spline <- function(object, x, deriv = 0, ...)
 {
     if(missing(x)) return(object[c("x", "y")])
     fit <- object$fit
     if(is.null(fit)) stop("not a valid smooth.spline object")
-    else predict(fit, x, deriv)
+    else predict(fit, x, deriv, ...)
 }
 
-predict.smooth.spline.fit <- function(object, x, deriv = 0)
+predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
 {
     if(missing(x))
 	x <- seq(from = object$min, to = object$min + object$range,

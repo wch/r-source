@@ -6,7 +6,6 @@ getenv <- function(x)
         structure(.Internal(getenv(x)), names = x)
 }
 
-
 help.start <- function(gui = "irrelevant", browser = "irrelevant")
 {
     a <- system.file("index.html", pkg="doc/html", lib=R.home())
@@ -22,10 +21,9 @@ help.start <- function(gui = "irrelevant", browser = "irrelevant")
     invisible("")
 }
 
-
 system <- function(command, intern = FALSE, wait = TRUE, input = "",
-                   show.output.on.console = FALSE,minimized=FALSE,
-                   invisible=FALSE)
+                   show.output.on.console = FALSE, minimized = FALSE,
+                   invisible = FALSE)
 {
     f <- ""
     if (input!="") {
@@ -52,13 +50,9 @@ unix <- function(call, intern = FALSE)
     system(call,intern)
 }
 
-
-
-tempfile <- function(pattern = "") .Internal(tempfile(pattern))
+tempfile <- function(pattern = "file") .Internal(tempfile(pattern))
 
 unlink <- function(x) invisible(.Internal(unlink(x)))
-
-
 
 flush.console <- function() .Internal(flush.console())
 
@@ -86,20 +80,26 @@ shell <- function(cmd, shell, flag="/c", intern=FALSE,
     if(intern) res else invisible(res)
 }
 
-
 zip.file.extract <- function(file, zipname="R.zip")
 {
-    unzip <- options()$unzip
-    if(!length(unzip)) return(file)
     ofile <- gsub("\\\\", "/", file)
     path <- sub("[^/]*$","", ofile)
     topic <- substr(ofile, nchar(path)+1, 1000)
     if(file.exists(file.path(path, zipname))) {
         tempdir <- sub("[^\\]*$","", tempfile())
-        if(!system(paste(unzip, "-oq",
-                         file.path(path, zipname), topic,
-                         "-d", tempdir), show=FALSE, invisible=TRUE))
-            file <- paste(tempdir,  topic, sep="")
+        if((unzip <- options()$unzip) != "internal") {
+            if(!system(paste(unzip, "-oq",
+                             file.path(path, zipname), topic,
+                             "-d", tempdir), show = FALSE, invisible = TRUE))
+                file <- paste(tempdir,  topic, sep="")
+        } else {
+            rc <- .Internal(int.unzip(file.path(path, zipname), topic, tempdir))
+            if (rc == 10)
+                warning(paste(R.home(),
+                              "unzip\\unzip32.dll cannot be loaded", sep="\\"))
+            if (rc == 0)
+                file <- paste(tempdir, topic, sep="")
+        }
     }
     file
 }

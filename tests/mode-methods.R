@@ -1,6 +1,6 @@
 
-##-- This REALLY does  NOT work in R (0.62, April 9, 1998) !!!
-##-- just call	abc.default(..)	 ...
+##-- This REALLY does  NOT yet work in R (0.64.0, April 8, 1999) !
+##-- just alwas calls	abc.default(..)	 ...
 
 abc <- function(x, ...) {
     if (is.null(class(x))) class(x) <- data.class(x)
@@ -9,6 +9,8 @@ abc <- function(x, ...) {
     UseMethod("abc")
     ##fails in all cases: NextMethod("abc",x)
 }
+
+
 abc.default <- function(x, ...) sys.call()
 
 "abc.(" <- function(x)
@@ -16,6 +18,7 @@ abc.default <- function(x, ...) sys.call()
 
 abc.expression <- function(x)
     cat("'expression' method of abc:", deparse(sys.call(sys.parent())),"\n")
+
 
 abc(1)
 e0 <- expression((x))

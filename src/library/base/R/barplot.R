@@ -1,4 +1,6 @@
-barplot <-
+barplot <- function(height, ...) UseMethod("barplot") 
+
+barplot.default <-
     function(height, width = 1, space = NULL, names.arg = NULL,
 	     legend.text = NULL, beside = FALSE, horiz = FALSE,
 	     col = heat.colors(NR), border = par("fg"), main = NULL,

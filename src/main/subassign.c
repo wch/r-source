@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997, 1998  The R Core Team
+ *  Copyright (C) 1997, 1998  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ static SEXP EnlargeVector(SEXP x, int newlen)
 
     /* Sanity Checks */
     if (LOGICAL(GetOption(install("check.bounds"), R_NilValue))[0])
-	warning("assignment outside vector/list limits");
+	warning("assignment outside vector/list limits\n");
     if (!isVector(x))
 	error("attempt to enlarge non-vector\n");
 
@@ -200,6 +200,7 @@ static void SubassignTypeFix(SEXP *x, SEXP *y,
 	*x = coerceVector(*x, STRSXP);
 	break;
 
+    case 1901:  /* vector     <- symbol   */
     case 1906:  /* vector     <- language   */
     case 1910:  /* vector     <- logical    */
     case 1913:  /* vector     <- integer    */
@@ -217,14 +218,6 @@ static void SubassignTypeFix(SEXP *x, SEXP *y,
 	    VECTOR(tmp)[0] = *y;
 	    *y = tmp;
 	}
-	break;
-
-    case 1019:  /* logical    <- vector     */
-    case 1319:  /* integer    <- vector     */
-    case 1419:  /* real       <- vector     */
-    case 1519:  /* complex    <- vector     */
-    case 1619:  /* character  <- vector     */
-	*x = coerceVector(*x, VECSXP);
 	break;
 
     case 2001:	/* expression <- symbol	    */
@@ -338,7 +331,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	if (n > 0 && ny == 0)
 	    errorcall(call, "nothing to replace with\n");
 	if (n > 0 && n % ny)
-	    warning("number of items to replace is not a multiple of replacement length");
+	    warning("number of items to replace is not a multiple of replacement length\n");
     }
 
     PROTECT(x);
@@ -1320,22 +1313,18 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(CDR(args) = EvalSubassignArgs(CDR(args), rho));
     SubAssignArgs(args, &x, &subs, &y);
 
-    /* Handle NULL left-hand sides.  If the right-hand side */
-    /* is NULL, just return the left-hand size otherwise, */
-    /* convert to a zero length list (VECSXP). */
-
-    if (isNull(x)) {
-        if (isNull(y)) {
-            UNPROTECT(1);
-	    return x;
-        }
-        UNPROTECT(1);
-        PROTECT(x = allocVector(TYPEOF(y), 0));
+    if (length(x) == 0) {
+	if (length(y) > 1)
+	    x = coerceVector(x, VECSXP);
+	else if (length(y) == 1) {
+	    if (TYPEOF(x) != VECSXP)
+		x = coerceVector(x, TYPEOF(y));
+	}
+	else {
+	    UNPROTECT(1);
+	    return(x);
+	}
     }
-
-    /* Ensure that the LHS is a local variable. */
-    /* If it is not, then make a local copy. */
-
     if (NAMED(x) == 2) {
 	CAR(args) = x = duplicate(x);
     }
@@ -1345,10 +1334,10 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     stretch = 0;
     if (isVector(x)) {
-	if (!isVectorList(x) && length(y) > 1)
+	if (!isVectorList(x) && LENGTH(y) > 1)
 	    error("more elements supplied than there are to replace\n");
 	if (nsubs == 1) {
-	    offset = OneIndex(x, CAR(subs), 0, &newname);
+	    offset = OneIndex(x, CAR(subs), length(x), 0, &newname);
 	    if (isVectorList(x) && isNull(y)) {
 		x = DeleteOneVectorListItem(x, offset);
 		UNPROTECT(1);
@@ -1367,6 +1356,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for (i = 0; i < ndims; i++) {
 		INTEGER(index)[i] = get1index(CAR(subs), isNull(names) ?
 					      R_NilValue : VECTOR(names)[i],
+					      INTEGER(dims)[i],
 					      0);
 		subs = CDR(subs);
 		if (INTEGER(index)[i] < 0 ||
@@ -1456,12 +1446,6 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    STRING(x)[offset] = STRING(y)[0];
 	    break;
 
-	case 1019:      /* logical    <- vector     */
-	case 1319:      /* integer    <- vector     */
-	case 1419:      /* real       <- vector     */
-	case 1519:      /* complex    <- vector     */
-	case 1619:      /* character  <- vector     */
-
 	case 1901:	/* vector     <- symbol	    */
 	case 1906:	/* vector     <- language   */
 	case 1910:      /* vector     <- logical    */
@@ -1472,6 +1456,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	    VECTOR(x)[offset] = VECTOR(y)[0];
 	    break;
+
 
 	case 2001:	/* expression <- symbol	    */
 	case 2006:	/* expression <- language   */
@@ -1527,7 +1512,8 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(index = allocVector(INTSXP, ndims));
 	    names = getAttrib(x, R_DimNamesSymbol);
 	    for (i = 0; i < ndims; i++) {
-		INTEGER(index)[i] = get1index(CAR(subs), CAR(names),0);
+		INTEGER(index)[i] = get1index(CAR(subs), CAR(names),
+					      INTEGER(dims)[i], 0);
 		subs = CDR(subs);
 		if (INTEGER(index)[i] < 0 ||
 		    INTEGER(index)[i] >= INTEGER(dims)[i])
@@ -1603,7 +1589,7 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 	SEXP names;
 
 	if (!(isNewList(x) || isExpression(x))) {
-	    warning("Coercing LHS to a list");
+	    warning("Coercing LHS to a list\n");
 	    x = coerceVector(x, VECSXP);
 	}
 	names = getAttrib(x, R_NamesSymbol);

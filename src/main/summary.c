@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R core team.
+ *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the
+ *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -56,7 +57,7 @@ static void isum(int *x, int n, int *value)
 	}
     }
     if(s > INT_MAX || s < R_INT_MIN){
-	warning("Integer overflow in sum(.); use sum(as.numeric(.))");
+	warning("Integer overflow in sum(.); use sum(as.numeric(.))\n");
 	*value = NA_INTEGER;
     }
     else *value = s;
@@ -526,7 +527,7 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /*-------------------------------------------------------*/
     if(empty && (iop == 2 || iop == 3))
-	warningcall(call,"no finite arguments to min/max; returning extreme.");
+	warningcall(call,"no finite arguments to min/max; returning extreme.\n");
 
     ans = allocVector(ans_type, 1);
     switch(ans_type) {

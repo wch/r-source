@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the R Core Team
+ *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the
+ *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1848,7 +1849,7 @@ void GScale(double min, double max, int axis, DevDesc *dd)
     }
 
     if(!FINITE(min) || !FINITE(max)) {
-	warning("Nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]",
+	warning("Nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]\n",
 		min, max, axis, log);
 	if(!FINITE(min)) min = - .45 * DBL_MAX;
 	if(!FINITE(max)) max = + .45 * DBL_MAX;
@@ -2827,17 +2828,19 @@ double GStrWidth(char *str, int units, DevDesc *dd)
     return w;
 #else
     double w;
-    static *sbuf = NULL;
+    static char *sbuf = NULL;
     if (sbuf) {
 	free(sbuf);
 	sbuf = NULL;
-        warning("freeing previous text buffer in GStrWidth");
+        warning("freeing previous text buffer in GStrWidth\n");
     }
     w = 0;
     if(str && *str) {
-        char *s, *sbuf, *sb;
+        char *s, *sb;
 	double wdash;
 	sbuf = (char*)malloc(strlen(str) + 1);
+        if (sbuf == NULL)
+            error("unable to allocate memory (in GStrWidth)\n");
 	sb = sbuf;
         for(s = str; ; s++) {
             if (*s == '\n' || *s == '\0') {
@@ -2851,6 +2854,10 @@ double GStrWidth(char *str, int units, DevDesc *dd)
 	}
 	if (units != DEVICE)
 	    w = GConvertXUnits(w, DEVICE, units, dd);
+    }
+    if (sbuf) {
+	free(sbuf);
+	sbuf = NULL;
     }
     return w;
 #endif
@@ -2891,7 +2898,7 @@ void GText(double x, double y, int coords, char *str,
     if (sbuf) {
 	free(sbuf);
 	sbuf = NULL;
-        warning("freeing previous text buffer in GText");
+        warning("freeing previous text buffer in GText\n");
     }
     if(str && *str) {
         char *s, *sbuf, *sb;
@@ -3179,7 +3186,7 @@ void GPretty(double *lo, double *up, int *ndiv)
     else {
 	warning("Imprecision in axis setup.\t GPretty(%g,%g,%d):\n"
 		"cell=%g, ndiv= %d <=0; (ns,nu)=(%d,%d); "
-		"dx=%g, unit=%g, ismall=%d.",
+		"dx=%g, unit=%g, ismall=%d.\n",
 		*lo,*up, *ndiv, cell, nd0, ns, nu, dx, unit, (int)i_small);
 	if(nd0 == 0)
 	    nu = ns + 1;
@@ -3225,9 +3232,9 @@ void GPretty(double *lo, double *up, int *ndiv)
 
 #ifdef DEBUG_PLOT
     if(*lo < x1)
-	warning(" .. GPretty(.): new *lo = %g < %g = x1", *lo, x1);
+	warning(" .. GPretty(.): new *lo = %g < %g = x1\n", *lo, x1);
     if(*up > x2)
-	warning(" .. GPretty(.): new *up = %g > %g = x2", *up, x2);
+	warning(" .. GPretty(.): new *up = %g > %g = x2\n", *up, x2);
 #endif
 }
 

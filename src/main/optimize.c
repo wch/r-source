@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--1999  Robert Gentleman, Ross Ihaka and the R core team
+ *  Copyright (C) 1998--1999  Robert Gentleman, Ross Ihaka and the
+ *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -43,7 +44,7 @@ static double F77_SYMBOL(fcn1)(double *x)
     case INTSXP:
 	if (length(s) != 1) goto badvalue;
 	if (INTEGER(s)[0] == NA_INTEGER) {
-	    warning("NA replaced by maximum positive value");
+	    REprintf("warning: NA replaced by maximum positive value\n");
 	    return DBL_MAX;
 	}
 	else return INTEGER(s)[0];
@@ -51,7 +52,7 @@ static double F77_SYMBOL(fcn1)(double *x)
     case REALSXP:
 	if (length(s) != 1) goto badvalue;
 	if (!FINITE(REAL(s)[0])) {
-	    warning("NA/Inf replaced by maximum positive value");
+	    REprintf("warning: NA/Inf replaced by maximum positive value\n");
 	    return DBL_MAX;
 	}
 	else return REAL(s)[0];
@@ -114,21 +115,19 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* One Dimensional Root Finding --  just wrapper code for Brent's "zeroin" */
 
-struct callinfo {
-  SEXP R_fcall2;
-  SEXP R_env2;
-} ;
+static SEXP R_fcall2;
+static SEXP R_env2;
 
-double fcn2(double x, struct callinfo *info)
+static double F77_SYMBOL(fcn2)(double *x)
 {
     SEXP s;
-    REAL(CADR(info->R_fcall2))[0] = x;
-    s = eval(info->R_fcall2, info->R_env2);
+    REAL(CADR(R_fcall2))[0] = *x;
+    s = eval(R_fcall2, R_env2);
     switch(TYPEOF(s)) {
     case INTSXP:
 	if (length(s) != 1) goto badvalue;
 	if (INTEGER(s)[0] == NA_INTEGER) {
-	    warning("NA replaced by maximum positive value");
+	    REprintf("warning: NA replaced by maximum positive value\n");
 	    return	DBL_MAX;
 	}
 	else return INTEGER(s)[0];
@@ -136,7 +135,7 @@ double fcn2(double x, struct callinfo *info)
     case REALSXP:
 	if (length(s) != 1) goto badvalue;
 	if (!FINITE(REAL(s)[0])) {
-	    warning("NA/Inf replaced by maximum positive value");
+	    REprintf("warning: NA/Inf replaced by maximum positive value\n");
 	    return DBL_MAX;
 	}
 	else return REAL(s)[0];
@@ -156,7 +155,6 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
     double xmin, xmax, tol;
     int iter;
     SEXP v, res;
-    struct callinfo info;
 
     checkArity(op, args);
     PrintDefaults(rho);
@@ -196,13 +194,12 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (iter <= 0)
 	errorcall(call, "maxiter must be positive\n");
 
-    info.R_env2 = rho;
-    PROTECT(info.R_fcall2 = lang2(v, R_NilValue)); /* the info used in fcn2() */
-    CADR(info.R_fcall2) = allocVector(REALSXP, 1);
+    R_env2 = rho;
+    PROTECT(R_fcall2 = lang2(v, R_NilValue));/* the GLOBAL used in fcn2() */
+    CADR(R_fcall2) = allocVector(REALSXP, 1);
     PROTECT(res = allocVector(REALSXP, 3));
     REAL(res)[0] =
-	zeroin(xmin, xmax,   (double (*)(double, void*)) fcn2, 
-	       (void *) &info, &tol, &iter);
+	F77_SYMBOL(zeroin)(&xmin, &xmax, F77_SYMBOL(fcn2), &tol, &iter);
     REAL(res)[1] = (double)iter;
     REAL(res)[2] = tol;
     UNPROTECT(2);
@@ -213,11 +210,10 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* General Nonlinear Optimization */
 
-/* These are unevaluated calls to R functions supplied */
-/* by the user.	 When the optimizer needs a value the */
-/* functions below insert the function argument and then */
-/* evaluate the call. */
-
+/* These are unevaluated calls to R functions supplied by the user.
+ * When the optimizer needs a value, the functions below insert
+ * the function argument and then evaluate the call. 
+ */
 static SEXP R_fcall;	/* function */
 static SEXP R_env;	/* where to evaluate the calls */
 
@@ -245,7 +241,7 @@ static int F77_SYMBOL(fcn)(int *n, double *x, double *f)
     case INTSXP:
 	if (length(s) != 1) goto badvalue;
 	if (INTEGER(s)[0] == NA_INTEGER) {
-	    warning("NA replaced by maximum positive value");
+	    REprintf("warning: NA replaced by maximum positive value\n");
 	    *f = DBL_MAX;
 	}
 	else *f = INTEGER(s)[0];
@@ -253,7 +249,7 @@ static int F77_SYMBOL(fcn)(int *n, double *x, double *f)
     case REALSXP:
 	if (length(s) != 1) goto badvalue;
 	if (!FINITE(REAL(s)[0])) {
-	    warning("NA/Inf replaced by maximum positive value");
+	    REprintf("warning: NA/Inf replaced by maximum positive value\n");
 	    *f = DBL_MAX;
 	}
 	else *f = REAL(s)[0];

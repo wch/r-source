@@ -7,9 +7,11 @@ convolve(x, y, conj = TRUE)
 \arguments{
 \item{x,y}{numeric sequences \emph{of the same length} to be convolved.}
 }
+\description{
+    Use the Fast Fourier Transform to compute the
+    (circular) convolution of two sequences (of same length).
+}
 \value{
-This function uses the Fast Fourier Transform to compute the
-(circular) convolution of the sequences given as its arguments.
 If \code{r <- convolve(x,y)} and \code{n <- length(x)}, then
 \deqn{r_k = \sum_{i=1}^n x_i y_{k-i}}{r[k] = sum(i=1,..,n;  x[i] * y[k-i])}
 for \eqn{k = 1,\dots,n}, where \eqn{y_{j} = y_{n+j}}{y[j] == y[n+j]} for
@@ -22,8 +24,7 @@ Brillinger, D. R. (1981).
 \emph{Time Series: Data Analysis and Theory}, Second Edition.
 San Francisco: Holden-Day.
 }
-\seealso{
-\code{\link{fft}}, \code{\link{nextn}}.
+\seealso{\code{\link{fft}}, \code{\link{nextn}}.
 }
 \examples{
 x <- c(0,0,0,100,0,0,0)

@@ -15,6 +15,8 @@ for(f in list.of.files) {
     cat(file=file, append=T, '.Random.seed <- c(0,rep(7654,3)); rm(list = ls())\n')
     file.append(file, file.path(exloc, f))
     cat(file=file, append=T, 'par(.par.postscript)\n')
+    cat(file=file, append=T, 'options(contrasts = c(unordered="contr.treatment", ordered = "contr.poly"))\n')
 }
 cat(file=file, append=T, 'cat("Time elapsed: ", proc.time() - .ptime,"\\n")\n')
 cat(file=file, append=T, 'dev.off(); quit("no")\n')
+

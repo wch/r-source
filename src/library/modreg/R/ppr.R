@@ -24,8 +24,8 @@ function(formula, data=sys.parent(), weights, subset,
   structure(fit, class=c("ppr.form", "ppr"))
 }
 
-ppr.default <- 
-function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms, 
+ppr.default <-
+function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
          optlevel=2, sm.method=c("supsmu", "spline", "gcvspline"),
          bass=0, span=0, df=5, gcvpen=1)
 {
@@ -43,11 +43,11 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
   if(!is.null(dimnames(x))) xnames <- dimnames(x)[[2]]
   else xnames <- paste("X", 1:p, sep="")
   if(!is.null(dimnames(y))) ynames <- dimnames(y)[[2]]
-  else ynames <- paste("Y", 1:p, sep="")  
+  else ynames <- paste("Y", 1:p, sep="")
   msmod <- ml*(p+q+2*n)+q+7+ml		# for asr
   nsp <- n*(q+15)+q+3*p
   ndp <- p*(p+1)/2+6*p
-  .Fortran("bdrsetppr", 
+  .Fortran("bdrsetppr",
 	   as.double(span), as.double(bass), as.integer(optlevel),
 	   as.integer(ism), as.double(df), as.double(gcvpen)
 	   )
@@ -82,17 +82,17 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
   gofn <- smod[jt+1:ml] * n * ys^2
 # retain only terms for the size of model finally fitted
   jf <- q+6+ml*(p+q)
-  smod <- smod[c(1:(q+6+p*mu), q+6+p*ml + 1:(q*mu), 
+  smod <- smod[c(1:(q+6+p*mu), q+6+p*ml + 1:(q*mu),
 		 jf + 1:(mu*n), jf+ml*n + 1:(mu*n))]
   smod[1] <- mu
-  structure(list(call=call, ml=max.terms, p=p, q=q, 
-		 gof=gof, gofn=gofn, 
+  structure(list(call=call, ml=max.terms, p=p, q=q,
+		 gof=gof, gofn=gofn,
 		 df=df, edf=Z$edf[1:mu],
 		 xnames=xnames, ynames=ynames,
 		 alpha=drop(alpha), beta=ys*drop(beta),
 		 yb=smod[5+1:q], ys=ys,
 		 fitted.values=fitted, residuals=drop(y-fitted),
-		 smod=smod), 
+		 smod=smod),
 	    class="ppr")
 }
 
@@ -158,7 +158,7 @@ plot.ppr <- function(fit, ask, type="o", ...)
   }
 }
 
-predict.ppr <- function(obj, newdata)
+predict.ppr <- function(obj, newdata, ...)
 {
   if(missing(newdata)) return(obj$fitted)
   if(!is.null(obj$terms))

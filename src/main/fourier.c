@@ -1,6 +1,7 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998--1999  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,7 +20,11 @@
 
 #include "Defn.h"
 #include "FFDecl.h"
-
+/* These are the  R interface routines to the
+ * plain FFT code  in ../appl/fft.c
+ * NOTE: That one     ~~~~~~~~~~~~~  (and hence the code here) uses
+ * ----	 several GLOBAL (static) variables!
+ */
 
 /* Fourier Transform for Univariate Spatial and Time Series */
 
@@ -70,10 +75,11 @@ SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 	    fft_work(&(COMPLEX(z)[0].r), &(COMPLEX(z)[0].i),
 		     1, n, 1, inv, work, iwork);
 	}
-	else {                                       /* spatial transform */
+	else {					     /* spatial transform */
 	    maxmaxf = 1;
 	    maxmaxp = 1;
 	    ndims = LENGTH(d);
+	    /* do whole loop just for error checking and maxmax[fp] .. */
 	    for (i = 0; i < ndims; i++) {
 		if (INTEGER(d)[i] > 1) {
 		    fft_factor(INTEGER(d)[i], &maxf, &maxp);
@@ -92,9 +98,9 @@ SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
 	    nspn = 1;
 	    for (i = 0; i < ndims; i++) {
 		if (INTEGER(d)[i] > 1) {
-		    nspn = nspn * n;
+		    nspn *= n;
 		    n = INTEGER(d)[i];
-		    nseg = nseg/n;
+		    nseg /= n;
 		    fft_factor(n, &maxf, &maxp);
 		    fft_work(&(COMPLEX(z)[0].r), &(COMPLEX(z)[0].i),
 			     nseg, n, nspn, inv, work, iwork);
@@ -107,8 +113,8 @@ SEXP do_fft(SEXP call, SEXP op, SEXP args, SEXP env)
     return z;
 }
 
-/* Fourier Transform for Vector-Valued Series */
-/* Not to be confused with the spatial case. */
+/* Fourier Transform for Vector-Valued ("multivariate") Series */
+/* Not to be confused with the spatial case (in do_fft). */
 
 SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -123,8 +129,8 @@ SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
     z = CAR(args);
 
     d = getAttrib(z, R_DimSymbol);
-    if (length(d) > 2)
-	errorcall(call, "vector-valued series required\n");
+    if (d == R_NilValue || length(d) > 2)
+	errorcall(call, "vector-valued (multivariate) series required\n");
     n = INTEGER(d)[0];
     p = INTEGER(d)[1];
 
@@ -142,7 +148,7 @@ SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     PROTECT(z);
 
-    /* -2 for forward transform, complex values */
+    /* -2 for forward  transform, complex values */
     /* +2 for backward transform, complex values */
 
     inv = asLogical(CADR(args));
@@ -156,9 +162,11 @@ SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errorcall(call, "fft factorization error\n");
 	work = (double*)R_alloc(4 * maxf, sizeof(double));
 	iwork = (int*)R_alloc(maxp, sizeof(int));
-	for (i = 0; i < p; i++)
+	for (i = 0; i < p; i++) {
+	    fft_factor(n, &maxf, &maxp);
 	    fft_work(&(COMPLEX(z)[i*n].r), &(COMPLEX(z)[i*n].i),
 		     1, n, 1, inv, work, iwork);
+	}
 	vmaxset(vmax);
     }
     UNPROTECT(1);

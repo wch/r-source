@@ -29,8 +29,9 @@ AC_CONFIG_HEADER(src/include/Platform.h)
 if test -f ${HOME}/.Rconf; then . ${HOME}/.Rconf; fi
 
 R_MAJOR="0"
-R_MINOR="65.0"
-R_STATUS="Under development (unstable)"
+R_MINOR="64.1"
+R_STATUS=""
+#R_STATUS="Patched (unreleased snapshot)"
 R_STATUS_REV="0"
 
 AC_CONFIG_AUX_DIR(aux)
@@ -94,41 +95,41 @@ AC_ARG_WITH(f77,
 ## Here we should maybe check that only one of the above options for
 ## dealing with FORTRAN were specified.
 
-AC_ARG_ENABLE(libmoto,
-  [  --enable-libmoto        use libmoto math library (if available)],
-  [ if test "${enableval}"=no;
+AC_ARG_WITH(libmoto,
+  [  --with-libmoto          use libmoto math library (if available)],
+  [ if test "${withval}"=no;
       then use_libmoto=false;
       else use_libmoto=true;
     fi],
    use_libmoto=true)
       
-AC_ARG_ENABLE(blas,
-  [  --enable-blas           use BLAS library (if available)],
-  [if test "${enableval}" = no;
+AC_ARG_WITH(blas,
+  [  --with-blas             use BLAS library (if available)],
+  [if test "${withval}" = no;
     then use_blas=false;
     else use_blas=true;
   fi],
   use_blas=true)
 
-AC_ARG_ENABLE(blas_risc,
-  [  --enable-blas_risc      use RISC Optimized BLAS library (if available)],
-  [ if test "${enableval}" = no;
+AC_ARG_WITH(blas_risc,
+  [  --with-blas_risc        use RISC Optimized BLAS library (if available)],
+  [ if test "${withval}" = no;
      then use_blas_risc=false;  
      else use_blas_risc=true;
     fi],
     use_blas_risc=true)
 
-AC_ARG_ENABLE(dxml,
-  [  --enable-dxml           use DXML library (if available)],
-  [if test "${enableval}" = no;
+AC_ARG_WITH(dxml,
+  [  --with-dxml             use DXML library (if available)],
+  [if test "${withval}" = no;
     then use_dxml=false;
     else use_dxml=true;
   fi],
   use_dxml=true)
 
-AC_ARG_ENABLE(readline,
-  [  --enable-readline       use readline library (if available)],
-  [if test "${enableval}" = no;
+AC_ARG_WITH(readline,
+  [  --with-readline         use readline library (if available)],
+  [if test "${withval}" = no;
     then use_readline=false;
     else use_readline=true;
    fi],
@@ -169,6 +170,9 @@ AC_SUBST(ARFLAGS)
 AC_PATH_PROG(LATEX, latex, false)
 AC_PATH_PROG(DVIPS, dvips, false)
 AC_PATH_PROG(MAKEINDEX, makeindex, false)
+
+AC_PATH_PROG(R_UNZIPCMD, unzip, "")
+AC_PATH_PROG(R_ZIPCMD, zip, "")
 
 ## Make.
 
@@ -446,11 +450,11 @@ if ${use_gnome}; then
   GNOME_INIT_HOOK([],cont)
 fi
 if test "${GNOMEUI_LIBS}" = ""; then
-  GNOME_ENABLED="no"
+  use_gnome="no"
   RGNOMEDIR=""
   RGNOMEBIN=""
 else
-  GNOME_ENABLED="yes"
+  use_gnome="yes"
   RGNOMEDIR="gnome"
   RGNOMEBIN="\$(top_builddir)/bin/R.gnome"
 fi
@@ -573,10 +577,6 @@ case "${host}" in
     CFLAGS="-mieee ${CFLAGS}"
     DLLFLAGS=-export-dynamic
     ;;
-  *freebsd3.*)
-    DLLFLAGS=-export-dynamic
-    SHLIBLDFLAGS="-shared"
-    ;;
   *linuxaout)
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
     LDCMD=gcc
@@ -603,7 +603,7 @@ case "${host}" in
     if ${f77_is_g77}; then
       FPICFLAGS=-fPIC
     else
-      FPICFLAGS=-PIC
+      FPICFLAGS=-KPIC
     fi
     ;;
   *hpux*)
@@ -724,5 +724,5 @@ R is now configured for ${host}
   Installation directory:   ${prefix}
   C compiler:               ${CC} ${CFLAGS}
   FORTRAN compiler:         ${FORT}
-  Gnome support enabled:    ${GNOME_ENABLED}
+  Gnome support:            ${use_gnome}
 ])

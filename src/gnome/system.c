@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R core team
+ *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the
+ *                            R Development Coreeam
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -332,7 +333,7 @@ int main(int ac, char **av)
 	    if (!strcmp(*av, "--version")) {
 		Rprintf("Version %s.%s %s (%s %s, %s)\n",
 			R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR);
-		Rprintf("Copyright (C) %s R Core Team\n\n", R_YEAR);
+		Rprintf("Copyright (C) %s R Development Core Team\n\n", R_YEAR);
 		Rprintf("R is free software and comes with ABSOLUTELY NO WARRANTY.\n");
 		Rprintf("You are welcome to redistribute it under the terms of the\n");
 		Rprintf("GNU General Public License.  For more information about\n");

@@ -116,7 +116,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
 
     nn1 = floor(nn1in+0.5);
     nn2 = floor(nn2in+0.5);
-    kk = floor(kkin+0.5);
+    kk	= floor(kkin +0.5);
 
     if (nn1 < 0 || nn2 < 0 || kk < 0 || kk > nn1 + nn2) {
 	ML_ERROR(ME_DOMAIN);
@@ -158,10 +158,9 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	minjx = imax2(0, k - n2);
 	maxjx = imin2(n1, k);
     }
-    /* generate random variate */
+    /* generate random variate --- Three basic cases */
 
-    if (minjx == maxjx) {
-	/* degenerate distribution */
+    if (minjx == maxjx) { /* I: degenerate distribution ---------------- */
 	ix = maxjx;
 	/* return ix;
 	   No, need to unmangle <TSL>*/
@@ -179,8 +178,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	}
 	return ix;
 
-    } else if (m - minjx < 10) {
-	/* inverse transformation */
+    } else if (m - minjx < 10) { /* II: inverse transformation ---------- */
 	if (setup1 || setup2) {
 	    if (k < n2) {
 		w = exp(con + afc(n2) + afc(n1 + n2 - k)
@@ -204,8 +202,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
 		goto L10;
 	    goto L20;
 	}
-    } else {
-	/* h2pe */
+    } else { /* III : h2pe --------------------------------------------- */
 
 	if (setup1 || setup2) {
 	    s = sqrt((tn - k) * k * n1 * n2 / (tn - 1) / tn / tn);
@@ -236,17 +233,14 @@ double rhyper(double nn1in, double nn2in, double kkin)
       L30:
 	u = sunif() * p3;
 	v = sunif();
-	if (u < p1) {
-	    /* rectangular region */
+	if (u < p1) {		/* rectangular region */
 	    ix = xl + u;
-	} else if (u <= p2) {
-	    /* left tail */
+	} else if (u <= p2) {	/* left tail */
 	    ix = xl + log(v) / lamdl;
 	    if (ix < minjx)
 		goto L30;
 	    v = v * (u - p1) * lamdl;
-	} else {
-	    /* right tail */
+	} else {		/* right tail */
 	    ix = xr - log(v) / lamdr;
 	    if (ix > maxjx)
 		goto L30;

@@ -57,7 +57,7 @@ duplicated <- function(x, incomparables = FALSE) {
 	stop("duplicated(.. incomparables != FALSE) not yet available in R.")
     .Internal(duplicated(x))
 }
-format.info <- function(x).Internal(format.info(x)) ### NO DOC
+format.info <- function(x).Internal(format.info(x))
 gc <- function(verbose = .Options$verbose)
     matrix(.Internal(gc(verbose)),2,2,
            dimnames = list(c("Ncells","Vcells"),c("free","total")))

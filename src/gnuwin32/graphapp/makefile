@@ -1,8 +1,17 @@
 include ../MkRules
 
-CFLAGS=-I. -Wall -O2 -DINDLL
+ifdef DEBUG
+  DEBUGFLAG=-g
+else
+  DEBUGFLAG=
+endif
+
+CFLAGS=-I. -Wall $(DEBUGFLAG)  -O2 -DINDLL
 SOURCES=$(filter-out graphappmain.c, $(wildcard *.c))
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
+
+# Uncomment next line to get substitute of malloc and friends
+winalloc-CFLAGS=-DDANGER=1
 
 ../ga.a: $(OBJS)
 # workaround line-limit problems on djtools make
@@ -16,6 +25,8 @@ OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 #graphapp.o: $(filter-out graphappmain.c, $(wildcard *.c)) graphapp.h internal.h
 #	$(CC) $(CFLAGS) -c graphapp.c
 
+# to allow changing USE_NATIVE*
+buttons.o : internal.h
 
 clean:
 	$(RM) *.o *.a *~ \#*\#

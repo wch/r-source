@@ -64,6 +64,15 @@ where your man reader finds it, such as `/usr/local/man/man1'. If you
 want to install the complete R tree to, e.g., /usr/local/lib/R, see
 section INSTALLATION below.
 
+You do not necessarily have to build R in the top-level source
+directory (say, TOP_SRCDIR).  To build in BUILDDIR, cd there and run 
+
+	TOP_SRCDIR/configure
+	make
+
+and so on, as described further below.  This has the advantage of always
+keeping your source tree `clean'.
+
 If you need or want to set certain configure variables to something
 other than their default, you can do that by either editing the file
 `config.site' or on the command line as
@@ -118,15 +127,6 @@ and can be set by running configure with the option
 Then the R executable will be installed in /where/you/want/R/to/go/bin,
 and so on.  The prefix of the installation directories can also be seen
 in the status message that is displayed at the end of configure.
-
-You do not necessarily have to build R in the top-level source
-directory (say, TOP_SRCDIR).  To build in BUILDDIR, cd there and run 
-
-	TOP_SRCDIR/configure
-	make
-
-and so on, as described further above.  This has the advantage of always
-keeping your source tree `clean'.
 
 
 USING MAKE

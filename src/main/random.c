@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R Core team.
+ *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the
+ *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,33 +31,32 @@
 static void GetRNGstate()
 {
   /* Get  .Random.seed  into proper variables */
-    int len_seed, j, seed_off;
+    int len_seed, j, seed_off = 0;
     SEXP seeds;
-    len_seed = RNG_Table[RNG_kind].n_seed;
 
     seeds = findVar(R_SeedsSymbol, R_GlobalEnv);
     if (seeds == R_UnboundValue) {
 	Randomize(RNG_kind);
     }
     else {
+	seeds = coerceVector(seeds, INTSXP);
 	if (seeds == R_MissingArg)
 	    error(".Random.seed is a missing argument with no default\n");
 	if (!isVector(seeds))
 	    error(".Random.seed is not a vector\n");
-	seed_off = 0;
-	if(LENGTH(seeds)!= 1 && LENGTH(seeds) < len_seed + 1) {
+	RNG_kind = INTEGER(seeds)[0];
+	len_seed = RNG_Table[RNG_kind].n_seed;
+	if(LENGTH(seeds) > 1 && LENGTH(seeds) < len_seed + 1) {
 	    if(LENGTH(seeds) == RNG_Table[WICHMANN_HILL].n_seed) {
 		/* BACKWARDS COMPATIBILITY: */
-		seed_off = 1;
-		warning("Wrong length .Random.seed; forgot initial RNGkind? set to Wichmann-Hill");
+		warning("Wrong length .Random.seed; forgot initial RNGkind? set to Wichmann-Hill\n");
 		/* compatibility mode */
 		RNG_kind = WICHMANN_HILL;
+		seed_off = 1;
 	    } else {
 		error(".Random.seed has wrong length.\n");
 	    }
 	}
-	seeds = coerceVector(seeds, INTSXP);
-	if(!seed_off) RNG_kind = INTEGER(seeds)[0];
 
  	switch(RNG_kind) {
  	case WICHMANN_HILL:
@@ -72,9 +72,9 @@ static void GetRNGstate()
 	if(LENGTH(seeds) == 1)
 	    Randomize(RNG_kind);
 	else {
-	    RNG_Table[RNG_kind].i1_seed = INTEGER(seeds)[1- seed_off];
-	    for(j=2; j <= len_seed; j++)
-		RNG_Table[RNG_kind].i_seed[j-2] = INTEGER(seeds)[j - seed_off];
+	    RNG_Table[RNG_kind].i1_seed = INTEGER(seeds)[1 - seed_off];
+	    for(j = 2; j <= len_seed; j++)
+		RNG_Table[RNG_kind].i_seed[j - 2] = INTEGER(seeds)[j - seed_off];
 	    FixupSeeds(RNG_kind);
 	}
     }
@@ -90,7 +90,7 @@ static void PutRNGstate()
 
     INTEGER(seeds)[0] = RNG_kind;
     INTEGER(seeds)[1] = RNG_Table[RNG_kind].i1_seed;
-    for(j=2; j <= len_seed; j++)
+    for(j = 2; j <= len_seed; j++)
 	INTEGER(seeds)[j] = RNG_Table[RNG_kind].i_seed[j-2];
 
     setVar(R_SeedsSymbol, seeds, R_GlobalEnv);
@@ -215,7 +215,7 @@ SEXP do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error("internal error in do_random1\n");
 	}
 	if (naflag)
-	    warningcall(call, "NAs produced");
+	    warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
 
 	PutRNGstate();
 	UNPROTECT(1);
@@ -296,7 +296,7 @@ SEXP do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error("internal error in do_random2\n");
 	}
 	if (naflag)
-	    warningcall(call,"NAs produced");
+	    warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
 
 	PutRNGstate();
 	UNPROTECT(2);
@@ -374,7 +374,7 @@ SEXP do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    error("internal error in do_random2\n");
 	}
 	if (naflag)
-	    warningcall(call,"NAs produced");
+	    warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
 
 	PutRNGstate();
 	UNPROTECT(3);

@@ -1,0 +1,79 @@
+###---- ALL tests here should return  TRUE !
+###
+### '##P': This lines give not 'T' but relevant ``Print output''
+###
+
+Meps <- .Machine $ double.eps
+
+options(rErr.eps = 1e-30)
+rErr <- function(approx, true, eps = .Options$rErr.eps)
+{
+    if(is.null(eps)) { eps <- 1e-30; options(rErr.eps = eps) }
+    ifelse(Mod(true) >= eps,
+           1 - approx / true, # relative error
+           true - approx)     # absolute error (e.g. when true=0)
+}
+
+is.infinite(.Machine$double.base ^ .Machine$double.max.exp)# overflow
+abs(1- .Machine$double.xmin * 10^(-.Machine$double.min.exp*log10(2)))/Meps < 1e3
+##P (1- .Machine$double.xmin * 10^(-.Machine$double.min.exp*log10(2)))/Meps
+log10(.Machine$double.xmax) / log10(2) == .Machine$double.max.exp
+log10(.Machine$double.xmin) / log10(2) == .Machine$double.min.exp
+
+## Real Trig.:
+cos(0) == 1
+sin(3*pi/2) == cos(pi)
+x <- rnorm(99)
+all( sin(-x) == - sin(x))
+all( cos(-x) == cos(x))
+
+x <- 1:99/100
+all(abs(1 - x / asin(sin(x))) <= Meps)
+all(abs(1 - x / atan(tan(x))) <= Meps)
+
+## Complex Trig.:
+abs(Im(cos(acos(1i))) -	 1) < 2*Meps
+abs(Im(sin(asin(1i))) -	 1) < 2*Meps
+##P (1 - Im(sin(asin(Ii))))/Meps
+##P (1 - Im(cos(acos(Ii))))/Meps
+abs(Im(asin(sin(1i))) -	 1) < 2*Meps
+cos(1i) == cos(-1i)# i.e. Im(acos(*)) gives + or - 1i:
+abs(abs(Im(acos(cos(1i)))) - 1) < 4*Meps
+
+.Random.seed <- c(0, 629, 6137, 22167) # want reproducible output
+Isi <- Im(sin(asin(1i + rnorm(100))))
+all(abs(Isi-1) < 100* Meps)
+##P table(2*abs(Isi-1)	/ Meps)
+Isi <- Im(cos(acos(1i + rnorm(100))))
+all(abs(Isi-1) < 100* Meps)
+##P table(2*abs(Isi-1)	/ Meps)
+Isi <- Im(atan(tan(1i + rnorm(100)))) #-- tan(atan(..)) does NOT work (Math!)
+all(abs(Isi-1) < 100* Meps)
+##P table(2*abs(Isi-1)	/ Meps)
+
+## gamma():
+abs(gamma(1/2)^2 - pi) < 4* Meps
+r <- rlnorm(5000)
+all(abs(rErr(gamma(r+1), r*gamma(r))) < 500 * Meps)
+
+n <-   10; all(          gamma(1:n) == cumprod(c(1,1:(n-1))))
+n <-   20; all(abs(rErr( gamma(1:n), cumprod(c(1,1:(n-1))))) < 100*Meps)
+n <-  120; all(abs(rErr( gamma(1:n), cumprod(c(1,1:(n-1))))) < 1000*Meps)
+n <- 10000;all(abs(rErr(lgamma(1:n),cumsum(log(c(1,1:(n-1)))))) < 100*Meps)
+
+## fft():
+ok <- TRUE
+##test EXTENSIVELY:	for(N in 1:100) {
+    cat(".")
+    for(n in c(1:30, 1000:1050)) {
+        x <- rnorm(n)
+        er <- Mod(rErr(fft(fft(x), inverse = TRUE)/n, x*(1+0i)))
+        n.ok <- all(er < 1e-8) & quantile(er, 0.95, names=FALSE) < 10000*Meps
+        if(!n.ok) cat("\nn=",n,": quantile(rErr, c(.95,1)) =",
+                      formatC(quantile(er, prob= c(.95,1))),"\n")
+        ok <- ok & n.ok
+    }
+    cat("\n")
+##test EXTENSIVELY:	}
+ok
+

@@ -66,9 +66,15 @@ print( ts(1:10, freq = 7, start = c(12, 2)), calendar = TRUE) # print.ts(.)
 gnp <- ts(cumsum(1 + round(rnorm(100), 2)),
           start = c(1954, 7), frequency = 12)
 plot(gnp) # using `plot.ts' for time-series plot
+
+## Multivariate
+ z <- ts(matrix(rnorm(300),100,3),start=c(1961,1), frequency=12)
 \testonly{
 ts(1:5, start=2, end=4) # truncate
 ts(1:5, start=3, end=17)# repeat
+
+all(z==z)
+all(z-z == 0)
 }
 ## A phase plot:
 data(nhtemp)

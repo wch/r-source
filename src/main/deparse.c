@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R Core team
+ *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the
+ *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -125,7 +126,7 @@ SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!isNull(CAR(args))) {
 	cut0 = asInteger(CAR(args));
 	if(cut0 == NA_INTEGER|| cut0 < MIN_Cutoff || cut0 > MAX_Cutoff)
-	    warning("invalid 'cutoff' for deparse, used default");
+	    warning("invalid 'cutoff' for deparse, used default\n");
 	else
 	    cutoff = cut0;
     }
@@ -160,6 +161,23 @@ SEXP deparse1(SEXP call, int abbrev)
     print_digits = savedigits;
     return svec;
 }
+
+/* deparse1line uses the maximum cutoff rather than the default */
+/* This is needed in terms.formula, where we must be able */
+/* to deparse a term label into a single line of text so */
+/* that it can be reparsed correctly */
+SEXP deparse1line(SEXP call, int abbrev)
+{
+   int savecutoff;
+   SEXP temp;
+
+   savecutoff = cutoff;
+   cutoff = MAX_Cutoff;
+   temp = deparse1(call, abbrev);
+   cutoff = savecutoff;
+   return(temp);
+}
+
 
 SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -662,7 +680,7 @@ static void deparse2buff(SEXP s)
 	    args2buff(CDR(s), 0, 0);
 	    print2buff(")");
 	}
-	else { /* we have a lambda expression */
+	else {
 	    deparse2buff(CAR(s));
 	    print2buff("(");
 	    args2buff(CDR(s), 0, 0);

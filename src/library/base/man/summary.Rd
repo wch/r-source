@@ -20,29 +20,26 @@ summary.matrix    (object, \dots)
 \item{\dots}{additional arguments affecting the summary produced.}
 }
 \description{
-\code{summary} is a generic function used
-to produce result summaries of the results of
-various model fitting functions.
-The function invokes particular \code{\link{method}}s
-which depend on the \code{\link{class}} of the first argument.
+    \code{summary} is a generic function used to produce result
+    summaries of the results of various model fitting functions.  The
+    function invokes particular \code{\link{methods}} which depend on
+    the \code{\link{class}} of the first argument. 
+}
+\details{
+    For \code{\link{factor}}s, the frequency of the first \code{maxsum - 1}
+    most frequent levels is shown, where the less frequent levels are
+    summarized in \code{"(Others)"} (resulting in \code{maxsum} frequencies).
 
-For \code{\link{factor}}s, the frequency of the first \code{maxsum - 1}
-most frequent levels is shown, where the less frequent levels are
-summarized in \code{"(Others)"} (resulting in \code{maxsum} frequencies).
-
-The functions \code{summary.lm} and \code{summary.glm}
-are examples of particular methods which summarise
-the results produced by \code{\link{lm}} and \code{\link{glm}}.
+    The functions \code{summary.lm} and \code{summary.glm} are examples
+    of particular methods which summarise the results produced by
+    \code{\link{lm}} and \code{\link{glm}}.
 }
 \value{
-The form of the value returned by \code{summary} depends on the
-class of its argument.  See the documentation of the
-particular methods for details of what is produced by that method.
+    The form of the value returned by \code{summary} depends on the
+    class of its argument.  See the documentation of the particular
+    methods for details of what is produced by that method.
 }
-\seealso{
-\code{\link{anova}},
-\code{\link{summary.glm}},
-\code{\link{summary.lm}}.
+\seealso{\code{\link{anova}},\code{\link{summary.glm}},\code{\link{summary.lm}}.
 }
 \examples{
 options(digits=5)

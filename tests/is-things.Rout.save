@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.65.0 Under development (unstable) (April 22, 1999)
+Version 0.64.0 Patched (unreleased snapshot) (April 19, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -100,6 +100,7 @@ Number of builtin functions:	 1049
 > 
 > 
 > is.ALL(NULL)
+Warning in fn(obj) : is.nan() applied to non-(list or vector)
 is.R           : | 
 is.array       : . 
 is.atomic      : | 
@@ -133,18 +134,13 @@ is.recursive   : .
 is.symbol      : . 
 is.ts          : . 
 is.vector      : . 
-Warning message: 
-is.nan() applied to non-(list or vector) in: fn(obj) 
 > ##fails: is.ALL(NULL, not.using = c("is.single", "is.loaded"))
 > is.ALL(NULL,   true.only = TRUE)
+Warning in fn(obj) : is.nan() applied to non-(list or vector)
 [1] "is.R"        "is.atomic"   "is.null"     "is.pairlist"
-Warning message: 
-is.nan() applied to non-(list or vector) in: fn(obj) 
 > is.ALL(list(), true.only = TRUE)
+Warning in fn(obj) : is.na() applied to non-(list or vector)
 [1] "is.R"      "is.list"   "is.vector"
-Warning messages: 
-1: is.na() applied to non-(list or vector) in: fn(obj) 
-2: is.nan() applied to non-(list or vector) in: fn(obj) 
 > 
 > is.ALL(1:5)
 is.R           : | 
@@ -286,6 +282,7 @@ is.vector      : |
 > ## fails (0.50-a) [is.loaded]
 > ##   is.ALL(e13, not.using=c("is.single", "is.finite", "is.na"))
 > is.ALL(y ~ x) #--> (0.49):  NA	for 'is.na' (& is.finite)
+Warning in fn(obj) : is.nan() applied to non-(list or vector)
 is.R           : | 
 is.array       : . 
 is.atomic      : . 
@@ -319,8 +316,6 @@ is.recursive   : |
 is.symbol      : . 
 is.ts          : . 
 is.vector      : . 
-Warning message: 
-is.nan() applied to non-(list or vector) in: fn(obj) 
 > 
 > 
 > is0 <- is.ALL(numeric(0))

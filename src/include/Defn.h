@@ -22,7 +22,7 @@
 
 #define COUNTING
 
-#include "Arith.h"/*-> Platform.h */
+#include "Arith.h"		/*-> Platform.h */
 #include "Complex.h"
 #include "Errormsg.h"
 #include "Memory.h"
@@ -42,10 +42,10 @@
 #define	R_PPSSIZE	10000L
 #endif
 #ifndef R_NSIZE
-#define	R_NSIZE		200000L
+#define	R_NSIZE		250000L
 #endif
 #ifndef R_VSIZE
-#define	R_VSIZE		2097152L
+#define	R_VSIZE		6291456L
 #endif
 
 #include <math.h>
@@ -427,9 +427,6 @@ extern int	R_DirtyImage;	    /* Current image dirty */
 extern int	R_Init;		    /* Do we have an image loaded */
 extern FILE*	R_FileRef;	    /* the environment file pointer  */
 
-/* Warnings/Errors */
-extern int      R_CollectWarnings;  /* the number of warnings */
-extern SEXP     R_Warnings;         /* the warnings and their calls */
 
 /*--- FUNCTIONS ------------------------------------------------------ */
 
@@ -523,6 +520,7 @@ void DataFrameClass(SEXP);
 SEXP ddfindVar(SEXP, SEXP);
 void defineVar(SEXP, SEXP, SEXP);
 SEXP deparse1(SEXP,int);
+SEXP deparse1line(SEXP,int);
 SEXP dimgets(SEXP, SEXP);
 SEXP dimnamesgets(SEXP, SEXP);
 int DispatchOrEval(SEXP, SEXP, SEXP, SEXP, SEXP*, int);
@@ -552,7 +550,7 @@ void FrameClassFix(SEXP);
 int framedepth(RCNTXT*);
 SEXP frameSubscript(int, SEXP, SEXP);
 SEXP getAttrib(SEXP, SEXP);
-int get1index(SEXP,SEXP,int);
+int get1index(SEXP, SEXP, int, int);
 void GetMatrixDimnames(SEXP, SEXP*, SEXP*);
 SEXP GetArrayDimnames(SEXP);
 SEXP GetColNames(SEXP);
@@ -649,7 +647,7 @@ int nlevels(SEXP);
 int NonNullStringMatch(SEXP, SEXP);
 SEXP nthcdr(SEXP, int);
 void onintr();
-int OneIndex(SEXP, SEXP, int, SEXP*);
+int OneIndex(SEXP, SEXP, int, int, SEXP*);
 SEXP parse(FILE*, int);
 int pmatch(SEXP, SEXP, int);
 void PrintDefaults(SEXP);
@@ -657,7 +655,6 @@ void PrintGreeting(void);
 void PrintValue(SEXP);
 void PrintValueEnv(SEXP, SEXP);
 void PrintValueRec(SEXP, SEXP);
-void PrintWarnings(void);
 SEXP promiseArgs(SEXP, SEXP);
 SEXP protect(SEXP);
 SEXP R_LoadFromFile(FILE*);
@@ -665,7 +662,6 @@ FILE* R_OpenLibraryFile(char *);
 void R_RestoreGlobalEnv(void);
 void R_SaveGlobalEnv(void);
 void R_SaveToFile(SEXP, FILE*, int);
-int R_SetOptionWarn(int);
 int R_SetOptionWidth(int);
 void R_Suicide(char*);
 SEXP rownamesgets(SEXP,SEXP);

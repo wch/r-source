@@ -118,18 +118,18 @@ static char cod[MAX_PATH]=""; /*current open directory*/
 
 void askchangedir()
 {
-  char *s;
-  char msg[MAX_PATH+40]=" Change working directory to:";
-/* if cod never used, set it to current directory */
-  if (!cod[0]) GetCurrentDirectory(MAX_PATH,cod);
-  s = askstring(msg,cod);
-  if (s && (SetCurrentDirectory(s)==FALSE)) {
-     sprintf(msg,"Impossible to set '%s' as working directory",s);
-     askok(msg);
-  }
-  /* in every case reset cod (to new directory if all went ok
-     or to old since user can have edited it */
-  GetCurrentDirectory(MAX_PATH,cod);
+    char *s, msg[MAX_PATH + 40];
+
+/* if cod has never been used, set it to current directory */
+    if (!cod[0]) GetCurrentDirectory(MAX_PATH, cod);
+    s = askcdstring(" Change working directory to:", cod);
+    if (s && (SetCurrentDirectory(s) == FALSE)) {
+	sprintf(msg, "Unable to set '%s' as working directory", s);
+	askok(msg);
+    }
+    /* in every case reset cod (to new directory if all went ok
+       or to old since user may have edited it */
+    GetCurrentDirectory(MAX_PATH, cod);
 }
 
 
@@ -246,11 +246,13 @@ char *askfilesave(char *title, char *default_name)
 /*
  *  Some strings to use:
  */
-	static char * OKAY_STRING	= "Okay";
+	static char * OKAY_STRING	= "OK";
 	static char * CANCEL_STRING	= "Cancel";
+	static char * BROWSE_STRING	= "Browse";
 
 	static char * QUESTION_TITLE	= "Question";
 	static char * PASSWORD_TITLE	= "Password Entry";
+	static char * FINDDIR_TITLE	= "Change directory";
 
 static void add_data(window w)
 {
@@ -285,6 +287,41 @@ static void hit_button(control c)
 
 	d->hit = value;
 	hide(w);
+}
+
+static void browse_button(control c)
+{
+    window w = parentwindow(c);
+    dialog_data *d = data(w);
+
+    OPENFILENAME ofn;
+    char strbuf[256]="anything", *p;
+
+    ofn.lStructSize     = sizeof(OPENFILENAME);
+    ofn.hwndOwner       = 0;
+    ofn.hInstance       = 0;
+    ofn.lpstrFilter     = "All files (*.*)\0*.*\0\0";
+    ofn.lpstrCustomFilter = NULL;
+    ofn.nMaxCustFilter  = 0;
+    ofn.nFilterIndex    = 0;
+    ofn.lpstrFile       = strbuf;
+    ofn.nMaxFile        = _MAX_PATH;
+    ofn.lpstrFileTitle  = NULL;
+    ofn.nMaxFileTitle   = _MAX_FNAME + _MAX_EXT;
+    ofn.lpstrInitialDir = gettext(d->text);
+    ofn.lpstrTitle      = "Select working directory";
+    ofn.Flags           = OFN_HIDEREADONLY;
+    ofn.nFileOffset     = 0;
+    ofn.nFileExtension  = 0;
+    ofn.lpstrDefExt     = "";
+    ofn.lCustData       = 0L;
+    ofn.lpfnHook        = NULL;
+    ofn.lpTemplateName  = NULL;
+
+    if(GetSaveFileName(&ofn) && strlen(strbuf)) {
+	 p = strrchr(strbuf,'\\'); if(p) *p ='\0';
+	 settext(d->text, strbuf);
+    }
 }
 
 static void hit_key(window w, int key)
@@ -374,7 +411,13 @@ static window init_askstr_dialog(char *title, char *question,
 	d = data(win);
 	d->question = newlabel(question, rect(10,h,tw+4,h*2+2),
 			AlignLeft);
-	if (title == PASSWORD_TITLE)
+	if (title == FINDDIR_TITLE) {
+	    bw = strwidth(SystemFont, BROWSE_STRING) * 3/2;
+	    d->text = newfield(default_str, rect(10,h*4,tw+4-bw,h*3/2));
+	    newbutton(BROWSE_STRING, rect(20+tw-bw, h*4-2, bw, h+10), 
+		      browse_button);
+	}
+	else if (title == PASSWORD_TITLE)
 		d->text = newpassword(default_str, rect(10,h*4,tw+4,h*3/2));
 	else
 		d->text = newfield(default_str, rect(10,h*4,tw+4,h*3/2));
@@ -383,11 +426,11 @@ static window init_askstr_dialog(char *title, char *question,
 	bw = strwidth(SystemFont, CANCEL_STRING) * 3/2;
 
 	d->yes = newbutton(OKAY_STRING,
-			rect(middle-bw-10,h*7,bw,h+6), hit_button);
+			rect(middle-bw-10, h*7, bw, h+10), hit_button);
 	setvalue(d->yes, YES);
 
 	d->cancel = newbutton(CANCEL_STRING,
-			rect(middle+10,h*7,bw,h+6), hit_button);
+			rect(middle+10, h*7, bw, h+10), hit_button);
 	setvalue(d->cancel, CANCEL);
 
 	setkeydown(win, hit_key);
@@ -402,6 +445,22 @@ char *askstring(char *question, char *default_str)
 
 	if (! win)
 		win = init_askstr_dialog(QUESTION_TITLE, question, default_str);
+	else {
+		settext(data(win)->question, question);
+		settext(data(win)->text, default_str);
+	}
+	handle_message_dialog(win);
+	current_window = prev;
+	return get_dialog_string(win);
+}
+
+char *askcdstring(char *question, char *default_str)
+{
+	static window win = NULL;
+	window prev = current_window;
+
+	if (! win)
+		win = init_askstr_dialog(FINDDIR_TITLE, question, default_str);
 	else {
 		settext(data(win)->question, question);
 		settext(data(win)->text, default_str);

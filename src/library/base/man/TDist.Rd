@@ -43,7 +43,7 @@ rt(n, df)
   variables, \eqn{U \sim {\cal N}(0,1)}{U \~ N(0,1)}, and
 %%fails  \eqn{{\chi_{\nu}}^2}{(Chi(df))^2} 
   \eqn{\chi^2_\nu}{Chi(df)^2} 
-  is chi-squared, see \code{\link{pchisqr}}.
+  is chi-squared, see \code{\link{pchisq}}.
   
   The most used applications are power calculations for \eqn{t}-tests:\cr
   Let \eqn{T= \frac{\bar{X} - \mu_0}{S/\sqrt{n}}}{T= (mX - m0) / (S/sqrt(n))}
@@ -57,14 +57,11 @@ rt(n, df)
   degrees of freedom and \bold{n}on-\bold{c}entrality \bold{p}arameter
   \code{ncp}\eqn{= \mu - \mu_0}{= mu - m0}.
 }
-\references{
-    Lenth, R. V. (1989). \emph{Algorithm AS 243} --
+\references{Lenth, R. V. (1989). \emph{Algorithm AS 243} --
     Cumulative distribution function of the non-central \eqn{t} distribution,
     \emph{Appl.\ Statist.} \bold{38}, 185--189.
 }
-\seealso{
-  \code{\link{df}} for the F distribution.
-}
+\seealso{\code{\link{df}} for the F distribution.}
 \examples{
 1 - pt(1:5, df = 1)
 qt(.975, df = c(1:10,20,50,100,1000))

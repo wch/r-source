@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-1999	The R core team.
+ *  Copyright (C) 1998-1999	    The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -349,7 +349,7 @@ static SEXP binary(SEXP op, SEXP args)
     }
     
     if (mismatch)
-	warningcall(lcall, "longer object length\n\tis not a multiple of shorter object length");
+	warningcall(lcall, "longer object length\n\tis not a multiple of shorter object length\n");
 
     if (TYPEOF(x) == CPLXSXP || TYPEOF(y) == CPLXSXP) {
 	x = CAR(args) = coerceVector(x, CPLXSXP);
@@ -367,11 +367,6 @@ static SEXP binary(SEXP op, SEXP args)
 	}
 
     PROTECT(x);
-    if (xts || yts) {
-	setAttrib(x, R_TspSymbol, tsp);
-	setAttrib(x, R_ClassSymbol, class);
-	UNPROTECT(2);
-    }
     /* Don't set the dims if one argument is an array of */
     /* size 0 and the other isn't of size zero, cos they're wrong */
     if (dims != R_NilValue) {
@@ -389,6 +384,12 @@ static SEXP binary(SEXP op, SEXP args)
 	    setAttrib(x, R_NamesSymbol, xnames);
 	else if (length(x) == length(ynames))
 	    setAttrib(x, R_NamesSymbol, ynames);
+    }
+
+    if (xts || yts) { /* must set *after* dims! */
+	setAttrib(x, R_TspSymbol, tsp);
+	setAttrib(x, R_ClassSymbol, class);
+	UNPROTECT(2);
     }
 
     UNPROTECT(4);
@@ -778,9 +779,9 @@ static SEXP math1(SEXP op, SEXP sa, double(*f)())
 	}
 	if (naflag)
 #ifdef IEEE_754
-	    warningcall(lcall, "NaNs produced");
+	    warning("NaNs produced in function \"%s\"\n", PRIMNAME(op));
 #else
-	    warningcall(lcall, "NAs produced");
+	    warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
 #endif
 	ATTRIB(sy) = duplicate(ATTRIB(sa));
 	OBJECT(sy) = OBJECT(sa);
@@ -890,9 +891,9 @@ static SEXP math2(SEXP op, SEXP sa, SEXP sb, double (*f)())
     }
     if (naflag)
 #ifdef IEEE_754
-	warningcall(lcall, "NaNs produced");
+	warning("NaNs produced in function \"%s\"\n", PRIMNAME(op));
 #else
-	warningcall(lcall, "NAs produced");
+	warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
 #endif
     if (n == na) {
 	ATTRIB(sy) = duplicate(ATTRIB(sa));
@@ -1120,9 +1121,9 @@ static SEXP math3(SEXP op, SEXP sa, SEXP sb, SEXP sc, double (*f)())
     }
     if (naflag)
 #ifdef IEEE_754
-	warningcall(lcall, "NaNs produced");
+	warning("NaNs produced in function \"%s\"\n", PRIMNAME(op));
 #else
-	warningcall(lcall, "NAs produced");
+	warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
 #endif
     if (n == na) {
 	ATTRIB(sy) = duplicate(ATTRIB(sa));
@@ -1282,9 +1283,9 @@ static SEXP math4(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
     }
     if (naflag)
 #ifdef IEEE_754
-	warningcall(lcall, "NaNs produced");
+	warning("NaNs produced in function \"%s\"\n", PRIMNAME(op));
 #else
-	warningcall(lcall, "NAs produced");
+	warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
 #endif
     if (n == na) {
 	ATTRIB(sy) = duplicate(ATTRIB(sa));

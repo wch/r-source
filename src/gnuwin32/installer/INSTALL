@@ -1,0 +1,8 @@
+You need to get Info-Zip's unzip540.zip (or later) from one of many
+mirrors, and unzip it in this directory, with say
+
+	unzip unzip540.zip -d unzip
+
+Then alter UNZIPDIR in the Makefile if necessary and run make.
+
+dounzip.c is based rather loosely on the windll/example.c file.

@@ -39,7 +39,7 @@ the model (stated below).}
 }
 \seealso{
 \code{\link{lm}} which usually is preferable;
-\code{\link{ls.print}}, \code{\link{ls.diag}}, \code{\link{rreg}}.
+\code{\link{ls.print}}, \code{\link{ls.diag}}.
 }
 \examples{
 \testonly{example("lm", echo = FALSE)}

@@ -110,13 +110,13 @@ Summary.factor(x, \dots)
     The following builtin functions are \emph{generic} as well, i.e., you
     can write \code{\link{methods}} for them:
 
-    \code{\link{"["}}, %do_subset() [subset.c:464]
-    \code{\link{"[["}}%	do_subset2()[subset.c:567]
+    \code{\link{[}},		% do_subset()	[subset.c:464]
+    \code{\link{[[}}		% do_subset2()	[subset.c:567]
     
-    \code{\link{dimnames<-}}, %do_dimnamesgets()	[attrib.c:422]
-    \code{\link{dimnames}}, %do_dimnames()		[attrib.c:489]
-    \code{\link{dim<-}}, %do_dimgets()	[attrib.c:513]
-    \code{\link{dim}}%do_dim()		[attrib.c:501]
+    \code{\link{dimnames<-}},	% do_dimnamesgets()	[attrib.c:422]
+    \code{\link{dimnames}},	% do_dimnames()		[attrib.c:489]
+    \code{\link{dim<-}},	% do_dimgets()	[attrib.c:513]
+    \code{\link{dim}}		% do_dim()	[attrib.c:501]
     
     \code{\link{c}}, %do_c()		[bind.c:524]
     \code{\link{unlist}}, %do_unlist()	[bind.c:648]
@@ -141,4 +141,3 @@ d.fr <- data.frame(x=1:9, y=rnorm(9))
 data.class(1 + d.fr) == "data.frame" ##-- add to d.f. ...
 }
 \keyword{methods}
-

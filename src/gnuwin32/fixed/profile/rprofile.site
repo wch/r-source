@@ -5,9 +5,6 @@
 # options(editor="notepad")
 # options(pager="internal")
 
-# use the following if unzip is already on PATH.
-# options(unzip="unzip.exe")
-
 # to prefer HTML help
 # options(htmlhelp=TRUE)
 

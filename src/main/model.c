@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997 Robert Gentleman, Ross Ihaka and the R Core Team
+ *  Copyright (C) 1997        Robert Gentleman, Ross Ihaka and the
+ *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -894,7 +895,7 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (isSymbol(CAR(v)))
 	    STRING(varnames)[i++] = PRINTNAME(CAR(v));
 	else
-	    STRING(varnames)[i++] = STRING(deparse1(CAR(v), 0))[0];
+	    STRING(varnames)[i++] = STRING(deparse1line(CAR(v), 0))[0];
     }
     PROTECT(termlabs = allocVector(STRSXP, nterm));
     n = 0;

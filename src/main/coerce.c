@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-1998  Robert Gentleman, Ross Ihaka and the R core team
+ *  Copyright (C) 1995-1998  Robert Gentleman, Ross Ihaka and the
+ *                           R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -50,11 +51,11 @@ static char *falsenames[] = {
 void CoercionWarning(int warn)
 {
     if (warn & WARN_NA)
-	warning("NAs introduced by coercion");
+	warning("NAs introduced by coercion\n");
     if (warn & WARN_INACC)
-	warning("inaccurate integer conversion in coercion");
+	warning("inaccurate integer conversion in coercion\n");
     if (warn & WARN_IMAG)
-	warning("imaginary parts discarded in coercion");
+	warning("imaginary parts discarded in coercion\n");
 }
 
 int LogicalFromInteger(int x, int *warn)
@@ -1311,7 +1312,7 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	break;
     default:
-	warningcall(call, "is.na() applied to non-(list or vector)");
+	warningcall(call, "is.na() applied to non-(list or vector)\n");
 	for (i = 0; i < n; i++)
 	    LOGICAL(ans)[i] = 0;
     }
@@ -1342,7 +1343,7 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #ifdef stringent_is
     if (!isList(CAR(args)) && !isVector(CAR(args)))
-	errorcall(call, "is.nan applies only to lists and vectors");
+	errorcall(call, "is.nan applies only to lists and vectors\n");
 #endif
     PROTECT(ans = allocVector(LGLSXP, length(CAR(args))));
     x = CAR(args);
@@ -1388,7 +1389,7 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 		case LGLSXP:
 		case INTSXP:
 		case STRSXP:
-		    LOGICAL(ans)[i] = 1;
+		    LOGICAL(ans)[i] = 0;
 		    break;
 		case REALSXP:
 #ifdef IEEE_754
@@ -1410,8 +1411,39 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    x = CDR(x);
 	}
 	break;
+    case VECSXP:
+	for (i = 0; i < n; i++) {
+	    SEXP s = VECTOR(x)[i];
+	    if (!isVector(s) || length(s) > 1)
+		LOGICAL(ans)[i] = 0;
+	    else {
+		switch (TYPEOF(s)) {
+		case LGLSXP:
+		case INTSXP:
+		case STRSXP:
+		    LOGICAL(ans)[i] = 0;
+		    break;
+		case REALSXP:
+#ifdef IEEE_754
+		    LOGICAL(ans)[i] = R_IsNaN(REAL(s)[0]);
+#else
+		    LOGICAL(ans)[i] = 0;
+#endif
+		    break;
+		case CPLXSXP:
+#ifdef IEEE_754
+		    LOGICAL(ans)[i] = (R_IsNaN(COMPLEX(s)[0].r) ||
+				       R_IsNaN(COMPLEX(s)[0].i));
+#else
+		    LOGICAL(ans)[i] = 0;
+#endif
+		    break;
+		}
+	    }
+	}
+	break;
     default:
-	warningcall(call, "is.nan() applied to non-(list or vector)");
+	warningcall(call, "is.nan() applied to non-(list or vector)\n");
 	for (i = 0; i < n; i++)
 	    LOGICAL(ans)[i] = 0;
     }
@@ -1579,12 +1611,7 @@ SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
     CAR(c) = install(CHAR(STRING(fun)[0]));
     c = CDR(c);
     for (i = 0; i < n; i++) {
-#ifdef OLD
 	CAR(c) = VECTOR(args)[i];
-#else
-	CAR(c) = mkPROMISE(VECTOR(args)[i], rho);
-	PRVALUE(CAR(c)) = VECTOR(args)[i];
-#endif
 	if (ItemName(names, i) != R_NilValue)
 	    TAG(c) = install(CHAR(ItemName(names, i)));
 	c = CDR(c);

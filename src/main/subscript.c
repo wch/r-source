@@ -19,10 +19,24 @@
 
 #include "Defn.h"
 
-int OneIndex(SEXP x, SEXP s, int partial, SEXP *newname)
+static int integerOneIndex(int i, int len) {
+    int index = -1;
+
+    if (i > 0)
+	index = i - 1;
+    else if (i == 0 || len < 2)
+	error("attempt to select less than one element\n");
+    else if (len == 2 && i > -3)
+	index = 2 + i;
+    else
+	error("attempt to select more than one element\n");
+    return(index);
+}
+
+int OneIndex(SEXP x, SEXP s, int len, int partial, SEXP *newname)
 {
     SEXP names;
-    int i, index, len, nx;
+    int i, index, nx;
 
     if (length(s) > 1)
 	error("attempt to select more than one element\n");
@@ -34,10 +48,10 @@ int OneIndex(SEXP x, SEXP s, int partial, SEXP *newname)
     switch(TYPEOF(s)) {
     case LGLSXP:
     case INTSXP:
-	index = INTEGER(s)[0] - 1;
+	index = integerOneIndex(INTEGER(s)[0], len);
 	break;
     case REALSXP:
-	index = REAL(s)[0] - 1;
+	index = integerOneIndex(REAL(s)[0], len);
 	break;
     case STRSXP:
 	nx = length(x);
@@ -89,12 +103,12 @@ int OneIndex(SEXP x, SEXP s, int partial, SEXP *newname)
     return index;
 }
 
-/* Get a single index for the [[ operator. */
-/* Check that only one index is being selected. */
+/* Get a single index for the [[ operator.
+   Check that only one index is being selected. */
 
-int get1index(SEXP s, SEXP names, int pok)
+int get1index(SEXP s, SEXP names, int len, int pok)
 {
-    int index, i, len;
+    int index, i;
 
     if (length(s) > 1)
 	error("attempt to select more than one element\n");
@@ -105,10 +119,10 @@ int get1index(SEXP s, SEXP names, int pok)
     switch (TYPEOF(s)) {
     case LGLSXP:
     case INTSXP:
-	index = INTEGER(s)[0] - 1;
+	index = integerOneIndex(INTEGER(s)[0], len);
 	break;
     case REALSXP:
-	index = REAL(s)[0] - 1;
+	index = integerOneIndex(REAL(s)[0], len);
 	break;
     case STRSXP:
 	/* Try for exact match */
@@ -187,21 +201,13 @@ static SEXP nullSubscript(int n)
     return index;
 }
 
-static SEXP logicalSubscript(SEXP s, int ns, int nx, int *stretch)
+static SEXP logicalSubscript(SEXP s, int ns, int nx)
 {
-    int canstretch, count, i, nmax;
+    int count, i;
     SEXP index;
-    canstretch = *stretch;
-#ifdef OLD
     if (ns > nx)
 	error("subscript (%d) out of bounds, should be at most %d\n",
 	      ns, nx);
-#else
-    if (!canstretch && ns > nx)
-	error("(subscript) logical subscript too long\n");
-    nmax = (ns > nx) ? ns : nx;
-    *stretch = (ns > nx) ? ns : 0;
-#endif
     if (ns == 0)
 	return(allocVector(INTSXP, 0));
     count = 0;
@@ -210,11 +216,7 @@ static SEXP logicalSubscript(SEXP s, int ns, int nx, int *stretch)
 	    count++;
     index = allocVector(INTSXP, count);
     count = 0;
-#ifdef OLD
     for (i = 0; i < nx; i++)
-#else
-    for (i = 0; i < nmax; i++)
-#endif
 	if (LOGICAL(s)[i%ns]) {
 	    if (LOGICAL(s)[i%ns] == NA_LOGICAL)
 		INTEGER(index)[count++] = NA_INTEGER;
@@ -227,7 +229,6 @@ static SEXP logicalSubscript(SEXP s, int ns, int nx, int *stretch)
 static SEXP negativeSubscript(SEXP s, int ns, int nx)
 {
     SEXP index;
-    int stretch = 0;
     int i;
     PROTECT(index = allocVector(INTSXP, nx));
     for (i = 0; i < nx; i++)
@@ -235,7 +236,7 @@ static SEXP negativeSubscript(SEXP s, int ns, int nx)
     for (i = 0; i < ns; i++)
 	if (INTEGER(s)[i] != 0)
 	    INTEGER(index)[-INTEGER(s)[i] - 1] = 0;
-    s = logicalSubscript(index, nx, nx, &stretch);
+    s = logicalSubscript(index, nx, nx);
     UNPROTECT(1);
     return s;
 }
@@ -355,7 +356,7 @@ SEXP arraySubscript(int dim, SEXP s, SEXP x)
     case NILSXP:
 	return allocVector(INTSXP, 0);
     case LGLSXP:
-	return logicalSubscript(s, ns, nd, &stretch);
+	return logicalSubscript(s, ns, nd);
     case INTSXP:
 	return integerSubscript(s, ns, nd, &stretch);
     case REALSXP:
@@ -400,8 +401,8 @@ SEXP makeSubscript(SEXP x, SEXP s, int *stretch)
 	    ans = allocVector(INTSXP, 0);
 	    break;
 	case LGLSXP:
-	    /* *stretch = 0; */
-	    ans = logicalSubscript(s, ns, nx, stretch);
+	    *stretch = 0;
+	    ans = logicalSubscript(s, ns, nx);
 	    break;
 	case INTSXP:
 	    ans = integerSubscript(s, ns, nx, stretch);

@@ -18,6 +18,8 @@ of a heterogeneous Poisson process whose intensity is distributed
 as a gamma distribution with scale parameter \code{prob/(1-prob)} and
 shape parameter \code{size} (this definition allows non-integer
 values of \code{size}).}
+\item{x}{vector of (non-negative integer) quantiles.}
+\item{q}{vector of quantiles.}
 \item{p}{vector of probabilities.}
 \item{n}{number of observations to generate.}
 \item{size}{target for number of successful trials /\cr
@@ -40,6 +42,9 @@ values of \code{size}).}
     p(x) = \frac{\Gamma(x+n)}{\Gamma(n) x!} p^n (1-p)^x}{%
     p(x) = Gamma(x+n)/(Gamma(n) x!) p^n (1-p)^x}
   for \eqn{x = 0, 1, 2, \ldots}
+
+  If an element of \code{x} is not integer, the result of \code{dnbinom}
+  is zero, with a warning.
 }
 \seealso{
   \code{\link{dbinom}} for the binomial, \code{\link{dpois}} for the
@@ -55,7 +60,7 @@ dnbinom(x, size = 1, prob = 1/2) * 2^(1 + x) # == 1
 summary(1 - cumsum(dnbinom(x, size = 2, prob = 1/2)) /
 	          pnbinom(x, size  = 2, prob = 1/2))
 
-x <- seq(0,6, len=21)
+x <- 0:15
 size <- (1:20)/4
 persp(x,size, dnb <- outer(x,size,function(x,s)dnbinom(x,s, pr= 0.4)))
 title(tit <- "negative binomial density(x,s, pr = 0.4)  vs.  x & s")

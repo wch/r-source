@@ -65,7 +65,7 @@ contr.helmert <-
 }
 
 contr.treatment <-
-    function(n, contrasts = TRUE)
+    function(n, base = 1, contrasts = TRUE)
 {
     if(is.numeric(n) && length(n) == 1)
 	levs <- 1:n
@@ -74,12 +74,14 @@ contr.treatment <-
 	n <- length(n)
     }
     contr <- array(0, c(n, n), list(levs, levs))
-    contr[seq(1, n^2, n + 1)] <- 1
+    diag(contr) <- 1
     if(contrasts) {
 	if(n < 2)
 	    stop(paste("Contrasts not defined for", n - 1,
 		       "degrees of freedom"))
-	contr <- contr[, -1, drop = FALSE]
+	if (base < 1 | base > n)
+	    stop("Baseline group number out of range")
+	contr <- contr[, -base, drop = FALSE]
     }
     contr
 }

@@ -48,9 +48,9 @@ double lgammafn(double x)
     static double dxrel = 0.;
     double ans, y, sinpiy;
 
-    if (xmax == 0) {
-	xmax = d1mach(2)/log(d1mach(2));
-	dxrel = sqrt (d1mach(4));
+    if (xmax == 0) {/* initialize machine dependent constants _ONCE_ */
+	xmax = d1mach(2)/log(d1mach(2));/* = 2.533 e305	 for IEEE double */
+	dxrel = sqrt (d1mach(4));/* sqrt(Eps) ~ 1.49 e-8  for IEEE double */
     }
 
     signgam = 1;
@@ -66,44 +66,41 @@ double lgammafn(double x)
 
     y = fabs(x);
 
-    if (y <= 10) {
+    if (y <= 10)
 	return log(fabs(gammafn(x)));
+    /*
+      ELSE  y = |x| > 10 ---------------------- */
+
+    if (y > xmax) {
+	ML_ERROR(ME_RANGE);
+	return ML_POSINF;
     }
-    else { /* y = |x| > 10  */
 
-	if (y > xmax) {
-	    ML_ERROR(ME_RANGE);
-	    return ML_POSINF;
-	}
+    if (x > 0) /* i.e. y = x > 10 */
+	return M_LN_SQRT_2PI + (x - 0.5) * log(x) - x + lgammacor(y);
 
-	if (x > 0)
-	  return M_LN_SQRT_2PI + (x - 0.5) * log(x) - x + lgammacor(y);
+    /* else: x < -10; y = -x */
+    sinpiy = fabs(sin(M_PI * y));
 
-	/* else: x < -10 */
-	sinpiy = fabs(sin(M_PI * y));
-
-	if (sinpiy == 0) { /* Negative integer argument ===
-			      Now UNNECESSARY: caught above */
-	    MATHLIB_WARNING(" ** should NEVER happen! *** [lgamma.c: Neg.int, y=%g]\n",y);
-	    ML_ERROR(ME_DOMAIN);
-	    return ML_NAN;
-	}
-
-	ans = M_LN_SQRT_PId2 + (x - 0.5) * log(y) - x
-	      - log(sinpiy) - lgammacor(y);
-
-	if(fabs((x - (int)(x - 0.5)) * ans / x) < dxrel) {
-
-	    /* The answer is less than half precision because */
-	    /* the argument is too near a negative integer. */
-
-	    ML_ERROR(ME_PRECISION);
-	}
-
-	if (x > 0)
-	  return ans;
-	else if (((int)(-x))%2 == 0)
-	  signgam = -1;
-	return ans;
+    if (sinpiy == 0) { /* Negative integer argument ===
+			  Now UNNECESSARY: caught above */
+	MATHLIB_WARNING(" ** should NEVER happen! *** [lgamma.c: Neg.int, y=%g]\n",y);
+	ML_ERROR(ME_DOMAIN);
+	return ML_NAN;
     }
+
+    ans = M_LN_SQRT_PId2 + (x - 0.5) * log(y) - x
+	- log(sinpiy) - lgammacor(y);
+
+    if(fabs((x - (int)(x - 0.5)) * ans / x) < dxrel) {
+
+	/* The answer is less than half precision because */
+	/* the argument is too near a negative integer. */
+
+	ML_ERROR(ME_PRECISION);
+    }
+
+    if (x <= 0 && ((int)(-x))%2 == 0)
+	signgam = -1;
+    return ans;
 }

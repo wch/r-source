@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1999  R Core Team
+ *  Copyright (C) 1997--1999  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -114,7 +114,7 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 	    PROTECT(class = getAttrib(y, R_ClassSymbol));
 	}
     }
-    if (mismatch) warningcall(call, "longer object length\n\tis not a multiple of shorter object length");
+    if (mismatch) warningcall(call, "longer object length\n\tis not a multiple of shorter object length\n");
 
     if (isString(x) || isString(y)) {
 	x = CAR(args) = coerceVector(x, STRSXP);
@@ -136,11 +136,6 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     PROTECT(x);
-    if (xts || yts) {
-	setAttrib(x, R_TspSymbol, tsp);
-	setAttrib(x, R_ClassSymbol, class);
-	UNPROTECT(2);
-    }
     if (dims != R_NilValue) {
 	setAttrib(x, R_DimSymbol, dims);
 	if (xnames != R_NilValue)
@@ -153,6 +148,11 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 	    setAttrib(x, R_NamesSymbol, xnames);
 	else if (length(x) == length(ynames))
 	    setAttrib(x, R_NamesSymbol, ynames);
+    }
+    if (xts || yts) {
+	setAttrib(x, R_TspSymbol, tsp);
+	setAttrib(x, R_ClassSymbol, class);
+	UNPROTECT(2);
     }
 
     UNPROTECT(4);

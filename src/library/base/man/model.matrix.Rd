@@ -34,7 +34,7 @@ model.matrix.default(formula, data, contrasts.arg = NULL, xlev = NULL)
   Chambers and Hastie: "\emph{Statistical Models in S}".
 }
 \seealso{
-  \code{\link{model.frame}}, \code{\link{model.data.frame}},
+  \code{\link{model.frame}},
   \code{\link{terms}}
 }
 \examples{
