@@ -1449,7 +1449,7 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
 	/********************************************************/
 
 #ifndef DEG2RAD
-#define DEG2RAD = 0.01745329251994329576;
+#define DEG2RAD 0.01745329251994329576
 #endif
 
 static void X11_Text(double x, double y, int coords,

@@ -54,6 +54,9 @@
 #endif /*CACHE_BITMAPS*/
 #endif /*CACHE_XIMAGES*/
 
+#ifndef DEG2RAD
+#define DEG2RAD 0.01745329251994329576
+#endif
 
 /* ---------------------------------------------------------------------- */
 
@@ -396,7 +399,7 @@ static int XRotPaintAlignedString(Display *dpy, XFontStruct *font, double angle,
     while(angle>=360)
 	angle-=360;
 
-    angle *= deg2rad;
+    angle *= DEG2RAD;
 
     /* horizontal text made easy */
     if(angle==0. && style.magnify==1.)
@@ -1409,7 +1412,7 @@ XPoint *XRotTextExtents(Display *dpy, XFontStruct *font, double angle,
     while(angle>360)
 	angle-=360;
 
-    angle *= deg2rad;
+    angle *= DEG2RAD;
 
     /* count number of sections in string */
     nl=1;
