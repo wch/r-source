@@ -57,7 +57,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
             ## attached.
             ## Note for detail: this does _not_ test whether dispatch is
             ## currently on, but rather whether the package is attached
-            ## (cf .isMethodsDispachOn).
+            ## (cf .isMethodsDispatchOn).
             hasMethods <- !is.na(match("package:methods", search()))
             pkgpath <- .find.package(package, lib.loc, quiet = TRUE,
                                      verbose = verbose)
@@ -208,11 +208,8 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
         for(lib in lib.loc) {
             a <- .packages(all.available = TRUE, lib.loc = lib)
             for(i in sort(a)) {
-                INDEX <- file.path(lib, i, "TITLE")
-                title <- if(file.exists(INDEX))
-                    read.00Index(INDEX)[, 2]
-                else ""
-                if(length(title) == 0) title <- ""
+                title <- package.description(i, lib.loc = lib, field="Title")
+                if(is.na(title)) title <- ""
                 db <- rbind(db, cbind(i, lib, title))
             }
             if(length(a) == 0)

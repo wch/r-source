@@ -1,6 +1,6 @@
 # Subroutines for building R documentation
 
-# Copyright (C) 1997-2000 R Development Core Team
+# Copyright (C) 1997-2002 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -201,7 +201,7 @@ sub read_anindex {
 
 
 
-### Build $R_HOME/doc/html/packages.html from the $pkg/TITLE files
+### Build $R_HOME/doc/html/packages.html from the $pkg/DESCRIPTION files
 
 sub build_htmlpkglist {
 
@@ -266,11 +266,15 @@ sub build_index { # lib, dest
         mkdir("$dest", $dir_mod) or die "Could not create directory $dest: $!\n";
     }
 
-    open title, "<../TITLE";
-    my $title = <title>;
-    close title;
-    chomp $title;
-    $title =~ s/^\S*\s*(.*)/$1/;
+    my $title = "";
+    if(-r "../DESCRIPTION") {
+	my $rdcf = R::Dcf->new("../DESCRIPTION");
+	if($rdcf->{"Title"}) {
+	    $title = $rdcf->{"Title"};
+	    chomp $title;
+	    $title =~ s/^\S*\s*(.*)/$1/;
+	}
+    }
 
     my $tdir = file_path($dest, "help");
     if(! -d $tdir) {
