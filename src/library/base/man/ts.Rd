@@ -81,7 +81,8 @@ lines(ts.obj, ...)
   \code{\link{start}},
   \code{\link{end}},
   \code{\link{time}},
-  \code{\link{window}}.
+  \code{\link{window}}, standard ackage \code{ts} for many additional
+  time-series functions.
 }
 \examples{
 ts(1:10, frequency = 4, start = c(1959, 2)) # 2nd Quarter of 1959
