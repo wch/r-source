@@ -72,6 +72,7 @@ RNGTAB RNG_Table[] =
 #define I2 (RNG_Table[RNG_kind].i_seed[1])
 #define I3 (RNG_Table[RNG_kind].i_seed[2])
 
+static void Randomize(RNGtype kind);
 static double MT_genrand();
 static Int32 KT_next();
 static void RNG_Init_KT(Int32);
@@ -147,17 +148,26 @@ static void FixupSeeds(RNGtype kind, int initial)
 
     case MERSENNE_TWISTER:
 	if(initial) I1 = 624;
-	/* check for all zeroes: should not happen unless user sets it */
+	 /* No action unless user has corrupted .Random.seed */
+	if(I1 <= 0) I1 = 624; 
+	/* check for all zeroes */
 	for (j = 1; j <= 624; j++)
 	    if(RNG_Table[kind].i_seed[j] != 0) {
 		notallzero = 1;
 		break;
 	    }
-	if(!notallzero) RNG_Table[kind].i_seed[3] = 37;
+	if(!notallzero) Randomize(kind);
 	break;
 
     case KNUTH_TAOCP:
-	/* -Wall: never get here */
+	if(KT_pos <= 0) KT_pos = 100;
+	/* check for all zeroes */
+	for (j = 0; j < 100; j++)
+	    if(RNG_Table[kind].i_seed[j] != 0) {
+		notallzero = 1;
+		break;
+	    }
+	if(!notallzero) Randomize(kind);	
 	break;
     }
 }
@@ -168,10 +178,10 @@ static void RNG_Init(RNGtype kind, Int32 seed)
 
     /* Initial scrambling */
     for(j = 0; j < 50; j++)
-	seed = (69069 * seed + 1) & 0xffffffff;
+	seed = (69069 * seed + 1);
     if (kind != KNUTH_TAOCP) {
 	for(j = 0; j < RNG_Table[kind].n_seed; j++) {
-	    seed = (69069 * seed + 1) & 0xffffffff;
+	    seed = (69069 * seed + 1);
 	    RNG_Table[kind].i_seed[j] = seed;
 	}
 	FixupSeeds(kind, 1);

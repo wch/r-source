@@ -62,7 +62,7 @@ set.seed(seed, kind = NULL)
       4.6*10^18} for most initial seeds.  The seed is two integers (all
     values allowed for the first seed: the second must be odd).
 
-    We use the implementation by Reeds et al.\ (1982--83).% RNG.c has (1984)
+    We use the implementation by Reeds et al.\ (1982--84).
 
     The two seeds are the Tausworthe and Congruence long integers,
     respectively.  A one-to-one mapping to S's \code{.Random.seed[1:12]}
@@ -71,7 +71,7 @@ set.seed(seed, kind = NULL)
 
     \item{\code{"Mersenne-Twister":}}{
     From Matsumoto and Nishimura (1998). A twisted GFSR with period
-    \eqn{2^{19937} - 1}{2^{19937} - 1} and equidistribution in 623
+    \eqn{2^{19937} - 1}{2^19937 - 1} and equidistribution in 623
     consecutive dimensions (over the whole period).  The ``seed'' is a
     624-dimensional set of 32-bit integers plus a current position in
     that set.}
@@ -83,7 +83,8 @@ set.seed(seed, kind = NULL)
         }{X[j] = (X[j-100] - X[j-37]) mod 2^30}
     and the ``seed'' is the set
     of the 100 last numbers (actually recorded as 101 numbers, the last
-    being a cyclic shift of the buffer).}
+    being a cyclic shift of the buffer). The period is around
+    \eqn{2^{129}}{2^129 - 1}.}
   }
 
   \code{normal.kind} can be \code{"Kinderman-Ramage"} (the default) or
@@ -123,7 +124,9 @@ set.seed(seed, kind = NULL)
   paper, posting on Usenet newsgroup \code{sci.stat.math} on
   September 29, 1997.
 
-%% FIXME:  we need   "Reeds et al (1984)  or "1982-1983" as said above
+  Reeds, J., Hubert, S. and Abrahams, M. (1982--4) C implementation of
+  SuperDuper, University of California at Berkeley.  (Personal
+  communication from Jim Reeds to Ross Ihaka.)
 
   Marsaglia, G. and Zaman, A. (1994) Some portable very-long-period
   random number generators. \emph{Computers in Physics}, \bold{8},
