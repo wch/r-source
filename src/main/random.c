@@ -1,6 +1,7 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -92,7 +93,7 @@ static void random1(double (*f) (), double * a, int na, double * x, int n)
 
 /**********************************************************/
 /* do_random1 - random sampling from 1 parameter families */
-/* see switch below for distributions.                    */
+/* see switch below for distributions.			  */
 /**********************************************************/
 
 SEXP do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -104,7 +105,7 @@ SEXP do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	if(!isVector(CAR(args)) || !isNumeric(CADR(args)))
 		invalid(call);
-		
+
 	if(LENGTH(CAR(args)) == 1) {
 		n = asInteger(CAR(args));
 		if (n == NA_INTEGER || n < 0)
@@ -170,7 +171,7 @@ static void random2(double (*f) (), double * a, int na, double * b, int nb, doub
 
 /**********************************************************/
 /* do_random2 - random sampling from 2 parameter families */
-/* see switch below for distributions.                    */
+/* see switch below for distributions.			  */
 /**********************************************************/
 
 SEXP do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -244,7 +245,7 @@ static void random3(double (*f) (), double * a, int na, double * b, int nb, doub
 	for (i = 0; i < n; i++) {
 		ai = a[i % na];
 		bi = b[i % nb];
-		ci = c[i % nc];  /* not i % nb */
+		ci = c[i % nc];	 /* not i % nb */
 		if (FINITE(ai) && FINITE(bi) && FINITE(ci)) {
 			x[i] = MATH_CHECK(f(ai, bi, ci));
 			if(!FINITE(x[i])) naflag = 1;
@@ -260,7 +261,7 @@ static void random3(double (*f) (), double * a, int na, double * b, int nb, doub
 
 /**********************************************************/
 /* do_random3 - random sampling from 3 parameter families */
-/* see switch below for distributions.                    */
+/* see switch below for distributions.			  */
 /**********************************************************/
 
 SEXP do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -322,8 +323,8 @@ SEXP do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /*******************************************************************/
 /* do_sample - equal probability sampling with/without replacement */
-/* Implements sample(n, k, r) - choose k elements from 1 to n      */
-/* with/without replacement according to r.                        */
+/* Implements sample(n, k, r) - choose k elements from 1 to n	   */
+/* with/without replacement according to r.			   */
 /*******************************************************************/
 
 SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -343,7 +344,7 @@ SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (k == NA_INTEGER || k < 0)
 		errorcall(call, "invalid second argument\n");
 	if (!r && k > n)
-		errorcall(call, "can't take a sample larger than the population\n");
+		errorcall(call, "can't take a sample larger than the population\n when replace = FALSE\n");
 
 	GetSeeds();
 	PROTECT(y = allocVector(INTSXP, k));
