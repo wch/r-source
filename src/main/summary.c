@@ -25,7 +25,7 @@
 #define Int2Real(i) (i == NA_INTEGER) ? NA_REAL : (double)i;
 
 
-#ifdef Debug
+#ifdef DEBUG_sum
 #define DbgP1(s) REprintf(s)
 #define DbgP2(s,a) REprintf(s,a)
 #define DbgP3(s,a,b) REprintf(s,a,b)
@@ -38,7 +38,7 @@
 /* These GLOBALS are set/initialized in do_summary: */
 static int narm;
 
-static int updated; 
+static int updated;
 /* updates is assigned 1 as soon as (i)tmp (do_summary), */
 /* or *value ([ir]min / max) is assigned */
 
@@ -306,10 +306,10 @@ static void cprod(complex *x, int n, complex *value)
 }
 
 
-/* do_summary provides a variety of data summaries */
-/* op : 0 = sum, 1 = mean, 2 = min, 3 = max, 4 = prod */
-/* NOTE: mean() [op = 1]  is no longer processed by this code. */
-/* (NEVER was correct for multiple arguments!) */
+/* do_summary provides a variety of data summaries
+	op : 0 = sum, 1 = mean, 2 = min, 3 = max, 4 = prod */
+/* NOTE: mean() [op = 1]  is no longer processed by this code.
+		(NEVER was correct for multiple arguments!) */
 
 SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -361,13 +361,13 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
 
     default:
-	errorcall(call,"internal error ('op' in do_summary).	Call a Guru\n");
+	errorcall(call,"internal error ('op' in do_summary).\t Call a Guru\n");
     }
 
     /*-- now loop over all arguments.  Do the 'op' switch INSIDE : */
     while (args != R_NilValue) {
 	a = CAR(args);
-	int_a = 0;/* int_a = 1  <-->	a is INTEGER */
+	int_a = 0;/* int_a = 1	<-->	a is INTEGER */
 
 	if(length(a) > 0) {
 	    updated = 0;/*- GLOBAL -*/
@@ -380,7 +380,7 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		case LGLSXP:
 		case INTSXP: int_a = 1;
 		    if (iop == 2) imin(INTEGER(a), length(a), &itmp);
-		    else          imax(INTEGER(a), length(a), &itmp);
+		    else	  imax(INTEGER(a), length(a), &itmp);
 		    break;
 		case REALSXP:
 		    if(ans_type == INTSXP) {/* change to REAL */
@@ -405,18 +405,18 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		    } else { /* real */
 			if (int_a) tmp = Int2Real(itmp);
 			DbgP3(" REAL: (old)cum= %g, tmp=%g\n", zcum.r,tmp);
-			if (ISNAN(tmp))
+			if (ISNAN(tmp)) {
 #ifdef IEEE_754
 			    zcum.r += tmp;/* NA or NaN */
 #else
-			goto na_answer;
+			    goto na_answer;
 #endif
-			else if(
+			} else if(
 #ifndef IEEE_754
-				ISNAN(zcum.r) ||
+			    ISNAN(zcum.r) ||
 #endif
-				(iop==2 && tmp < zcum.r) ||
-				(iop==3 && tmp > zcum.r))	zcum.r = tmp;
+			    (iop==2 && tmp < zcum.r) ||
+			    (iop==3 && tmp > zcum.r))	zcum.r = tmp;
 		    }
 		}/*updated*/ else {
 		    /*-- in what cases does this happen here at all? */
@@ -524,6 +524,9 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     } /*-- while(..) loop over args */
 
     /*-------------------------------------------------------*/
+    if(empty && (iop == 2 || iop == 3))
+	warningcall(call,"only non-finite arguments to min/max; "
+		    "returning extreme.\n");
 
     ans = allocVector(ans_type, 1);
     switch(ans_type) {
@@ -535,7 +538,7 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     return ans;
 
- na_answer: /* even for IEEE, for INT : */
+na_answer: /* even for IEEE, for INT : */
     ans = allocVector(ans_type, 1);
     switch(ans_type) {
     case INTSXP:	INTEGER(ans)[0] = NA_INTEGER; break;
@@ -545,7 +548,7 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 
 
- badmode:
+badmode:
     errorcall(call, "invalid \"mode\" of argument\n");
     return R_NilValue;/* for -Wall */
 }/* do_summary */
@@ -601,7 +604,7 @@ SEXP do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 		else
 		    goto bad_mode;
 	    }
-	    
+
 	}
 	else if (isMatrix(CAR(s))) {
 	    u = getAttrib(CAR(s), R_DimSymbol);
@@ -721,7 +724,7 @@ SEXP do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return rval;
 
- bad: 
+ bad:
     error("complete.cases: not all arguments have the same length\n");
 
  bad_mode:
