@@ -41,6 +41,11 @@ NEW FEATURES
     o	heatmap() allows Rowv/Colv = NA, suppressing the corresponding
 	dendrogram.
 
+    o   An "antifeature": Tcl 8.0 is now officially unsupported. In 1.8.0
+	it just didn't work. This very old version lacks several features
+        that are needed for the new version of the tcltk package. R will
+	still build the tcltk package against Tcl 8.0 but the resulting
+	package will not load.
 
 BUG FIXES
 
@@ -109,10 +114,6 @@ BUG FIXES
     o	buildVignettes() and pkgVignettes() in package tools are now
 	documented.  The call to texi2dvi is wrapped in the new
 	function texi2dvi() which also works on Windows.
-
-    o   Build errors with Tcl version 8.0 has been corrected.  (Note that
-        some features are simply not implemented for this ancient version,
-        so upgrade if you can.)
 
     o   hclust() was sometimes not finding the correct inter-cluster
 	distances with non-monotone methods.  (PR#4195)
