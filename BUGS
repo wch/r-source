@@ -305,10 +305,6 @@ Subject: Maybe a problem in binary read/write
 From: accot@free.fr
 Date: Tue, 18 Jun 2002 22:51:17 +0200 (MET DST)
 ..I don't think file() is said to work with devices!
-* PR# 2639 *
-Subject: Bug in read.socket
-From: mckay@gmr.com
-Date: Fri, 14 Mar 2003 14:28:58 +0100 (MET)
 
 Directory:  Installation
 
@@ -397,14 +393,6 @@ Date: Fri, 4 Jan 2002 13:34:34 GMT
 Subject: lib.fixup, .GlobalEnv, and R1.5.0
 From: mark.bravington@csiro.au
 Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
-* PR# 2541 *
-Subject: cbind rises floating point exception 
-From: Ramon Diaz <rdiaz@cnio.es>
-Date: Tue, 11 Feb 2003 19:23:53 +0100
-..The problem here is that a 1x0 matrix and 0-length vector
-..are not conformable.  The test for a zero-row was wrong.
-..
-..Fixed for 1.7.0
 
 Directory:  Low-level
 
@@ -600,6 +588,16 @@ Directory:  incoming
 Subject: apropos() with partial name
 From: John Maindonald <u9801539@leonard.anu.edu.au>
 Date: Thu, 16 Jan 2003 20:22:23 +1100 (EST)
+..The proposed fix would make it impossible to pass a variable to apropos
+..
+..eg 
+..
+..> sor<-"plot"
+..> apropos(sor)
+..[1] "sor"          "isoreg"       "sortedXyData" "is.unsorted"  "sort"        
+..[6] "sort.list"   
+..
+..A better fix might be to require the argument to be a string.
 * PR# 2577 *
 Subject: Problem with hessian in deriv3 
 From: j.c.rougier@durham.ac.uk
@@ -616,43 +614,15 @@ Date: Wed, 12 Mar 2003 17:27:34 +0100 (CET)
 Subject: recursive default argument reference in debugger
 From: pburns@pburns.seanet.com
 Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
-* PR# 2687 *
-Subject: termplot
-From: Mark.Bravington@csiro.au
-Date: Wed, 26 Mar 2003 10:32:17 +1100
-* PR# 2720 *
-Subject: [R] 
-From: Jerome Asselin <jerome@hivnet.ubc.ca>
-Date: Tue, 1 Apr 2003 11:22:55 -0800
-* PR# 2752 *
-Subject: Increase your p-e-n-i-s size naturally qh nm
-From: "Sheri Rollins" <ah77cylo61@coxnet.com>
-Date: Wed, 09 Apr 03 12:38:59 GMT
-* PR# 2753 *
-Subject: 60% off v1agra!                                                                                                                                                      lerq
-From: "Robert" <GenericViagra452492@earthlink.net>
-Date: Thu, 10 Apr 03 02:11:50 GMT
-* PR# 2754 *
-Subject: FW: RE: Just Released - Digital Cable Descrambler dsoykm yhfyksbo
-From: "Richard" <Cable4Free2142g13@msn.com>
-Date: Wed, 09 Apr 03 23:04:49 GMT
-* PR# 2755 *
-Subject: FW: Descramble Digital Cable sa
-From: "Nancy" <Descrambler34082f4@hotmail.com>
-Date: Thu, 10 Apr 03 05:10:24 GMT
-* PR# 2756 *
-Subject: YOUR ASSISTANCE IS NEEDED
-From: "PRINCE AKIM ABUDU." <princeakimabudu@netscape.net>
-Date: Thu, 10 Apr 2003 09:10:09 +0100
-* PR# 2757 *
-Subject: YOUR ASSISTANCE IS NEEDED
-From: "PRINCE AKIM ABUDU." <princeakimabudu@netscape.net>
-Date: Thu, 10 Apr 2003 09:08:02 +0100
-* PR# 2758 *
-Subject: (광고) 판매자 여러분! "옥*" 보다 많이, 빠른판매를 보장합니다.
-From: 매장닷컴<mail@miraesolution.com>
-Date: Thu, 10 Apr 2003 23:52:37 +0900
-* PR# 2759 *
-Subject: (광고) 인터넷 쇼핑몰 창업해드립니다. @
-From: 소호마트 <soho@sohomart.org>
-Date: Fri, 11 Apr 2003 07:23:40 +0900
+* PR# 2765 *
+Subject: lattice bug?
+From: "David Barron" <david.barron@said-business-school.oxford.ac.uk>
+Date: Fri, 11 Apr 2003 18:11:15 +0100
+* PR# 2766 *
+Subject: Girls - Special message for women facing menopause
+From: "Women Newsline" <racqueljerry@cormany.ngmg.com>
+Date: Thu, 10 Apr 2003 00:15:18 +0200
+* PR# 2767 *
+Subject: [광고] 푸켓허니문 반값 할인 104만원->59만원 / 호주 6일 59만원! @ 
+From: 한은영 <bcho@3stour.com>
+Date: Sat, 12 Apr 2003 05:14:43 +0900
