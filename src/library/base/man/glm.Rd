@@ -1,7 +1,7 @@
 \name{glm}
 \title{Fitting Generalized Linear Models}
 \usage{
-glm(formula, family=gaussian, data, weightst=NULL, subsett=NULL,
+glm(formula, family=gaussian, data, weights=NULL, subset=NULL,
         na.action=na.fail, start=NULL, offset=NULL,
         control=glm.control(epsilon=0.0001, maxit=10, trace=FALSE),
         model = TRUE, method = "glm.fit", x = FALSE, y = TRUE)
@@ -57,17 +57,18 @@ glm.fit(x, y, weights=rep(1, nrow(x)),
 Models for \code{glm} are specified by giving
 a symbolic description of the linear predictor and
 a description of the error distribution.
-A typical predictor has the form
-\code{response ~ terms} where \code{response} is the (numeric)
-response vector and \code{terms} is a series of terms which
-specifies a linear predictor for \code{response}. For \code{binomial}
-models the response can also be specified as a factor (when the first
-level denotes failure and all others success) or as a two-column matrix
-with the columns giving the numbers of successes and failures.
-A terms specification of the form \code{first+second}
-indicates all the terms in \code{first} together
-with all the terms in \code{second} with duplicates
-removed.
+}
+\details{
+A typical predictor has the form \code{response ~ terms} where
+\code{response} is the (numeric) response vector and \code{terms} is a
+series of terms which specifies a linear predictor for \code{response}.
+For \code{binomial} models the response can also be specified as a
+\code{\link{factor}} (when the first level denotes failure and all
+others success) or as a two-column matrix with the columns giving the
+numbers of successes and failures.  A terms specification of the form
+\code{first+second} indicates all the terms in \code{first} together
+with all the terms in \code{second} with duplicates removed.
+
 A specification of the form \code{first:second} indicates the
 the set of terms obtained by taking the interactions of
 all terms in \code{first} with all terms in \code{second}.
@@ -92,7 +93,7 @@ extract various useful features of the value returned by \code{glm}.
   \code{glm} methods,
   and the generic functions \code{\link{anova}}, \code{\link{summary}},
   \code{\link{effects}}, \code{\link{fitted.values}},
-  and\code{\link{residuals}}. Further, \code{\link{lm}} for
+  and \code{\link{residuals}}. Further, \code{\link{lm}} for
   non-generalized \emph{linear} models.
 }
 \examples{
