@@ -31,7 +31,7 @@ par(\dots)
   \item{bg}{The color to be used for the background of plots.  A
     description of how colors are specified is given below.}
   \item{bty}{A character string which determined the type of box which
-    is drawn about plots.  If \code{bty} is one of are \code{"o"},
+    is drawn about plots.  If \code{bty} is one of \code{"o"},
     \code{"l"}, \code{"7"} or \code{"c"} the resulting box resembles the
     corresponding upper case letter.  A value of \code{"n"} suppresses
     the box.}
