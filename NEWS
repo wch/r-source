@@ -67,6 +67,10 @@ BUG FIXES
     o   rebind.data.frame() was coercing logical columns to factors.
 	(PR#1536)
 
+    o   Rprof(NULL) or Rprof("") called when not profiling caused a
+	segfault: now silently ignored.  (PR#1471)
+
+
 
 		CHANGES IN R VERSION 1.5.0
 
