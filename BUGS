@@ -423,3 +423,7 @@ Date: Fri, 25 Jan 2002 14:36:52 -0500
 Subject: make check fails when R_HOME env var set
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Fri, 25 Jan 2002 15:08:33 -0500
+* PR# 1288 *
+Subject: dimnames usage in ts
+From: tkeitt@ms.cc.sunysb.edu
+Date: Tue, 29 Jan 2002 21:11:08 +0100 (MET)
