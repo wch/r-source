@@ -1,5 +1,23 @@
-/*#include <math.h>
-*/
+ *  R : A Computer Language for Statistical Data Analysis
+ *  file RBitMap.c
+ *  Copyright (C) 1995-1999  Ross Ihaka
+ *                2000-2001  Stefano M. Iacus and the R core team
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
 #include <fp.h>
 #include "RIntf.h"
 
@@ -45,7 +63,7 @@ OSErr SetUpPixMap(
     else
     {
         newColors = (CTabHandle)NewHandle( sizeof (ColorTable) -
-                sizeof (CSpecArray) );
+					   sizeof (CSpecArray) );
         error = MemError();
     }
     if (error == noErr)
@@ -57,7 +75,7 @@ OSErr SetUpPixMap(
             /* Initialize fields common to indexed and direct PixMaps */
             (**aPixMap).baseAddr = offBaseAddr;  /* Point to image */
             (**aPixMap).rowBytes = bytesPerRow | /* MSB set for PixMap */
-                    0x8000;
+		0x8000;
             (**aPixMap).bounds = *bounds;        /* Use given bounds */
             (**aPixMap).pmVersion = 0;           /* No special stuff */
             (**aPixMap).packType = 0;            /* Default PICT pack */
@@ -147,7 +165,7 @@ OSErr CreateOffScreen(
 
     /* Make sure depth is indexed or depth is direct and 32-Bit QD installed*/
     if (depth == 1 || depth == 2 || depth == 4 || depth == 8 ||
-            ((depth == 16 || depth == 32) && qdVersion >=gestalt32BitQD))
+	((depth == 16 || depth == 32) && qdVersion >=gestalt32BitQD))
     {
         /* Maximum number of bytes per row is 16,382; make sure within range*/
         if (bytesPerRow <= kMaxRowBytes)
@@ -155,8 +173,8 @@ OSErr CreateOffScreen(
             /* Make sure a color table is provided if the depth is indexed */
             if (depth <= 8)
                 if (colors == nil)
-                  /* Indexed depth and clut is NIL; is parameter error */
-                  error = paramErr;
+		    /* Indexed depth and clut is NIL; is parameter error */
+		    error = paramErr;
         }
         else
             /* # of bytes per row is more than 16,382; is parameter error */
@@ -185,7 +203,7 @@ OSErr CreateOffScreen(
 
             /* Initialize the new PixMap for off-screen drawing */
             error = SetUpPixMap( depth, bounds, colors, bytesPerRow,
-                    newPort->portPixMap );
+				 newPort->portPixMap );
             if (error == noErr)
             {
                 /* Grab the initialized PixMap handle */
@@ -296,7 +314,7 @@ OSErr CreateGDevice(
             if ((**basePixMap).pixelSize <= 8)
             {
                 MakeITable( (**basePixMap).pmTable, (**newDevice).gdITable,
-                        (**newDevice).gdResPref );
+			    (**newDevice).gdResPref );
                 error = QDError();
             }
         }
@@ -412,7 +430,7 @@ OSErr UpdateOffScreen(
 
     /* Make sure depth is indexed or depth is direct and 32-Bit QD installed*/
     if (depth == 1 || depth == 2 || depth == 4 || depth == 8 ||
-            ((depth == 16 || depth == 32) && qdVersion >=gestalt32BitQD))
+	((depth == 16 || depth == 32) && qdVersion >=gestalt32BitQD))
     {
         /* Maximum number of bytes per row is 16,382; make sure within range*/
         if (bytesPerRow <= kMaxRowBytes)
@@ -482,8 +500,8 @@ OSErr UpdateOffScreen(
                 /* Copy old image to the new graphics environment */
                 HLock( (Handle)oldPixMap );
                 CopyBits( (BitMapPtr)*oldPixMap, &((GrafPtr)updPort)->portBits,
-                        &(**oldPixMap).bounds, &updPort->portRect,
-                        srcCopy, nil );
+			  &(**oldPixMap).bounds, &updPort->portRect,
+			  srcCopy, nil );
                 HUnlock( (Handle)oldPixMap );
 
                 /* Restore the foreground/background color */
@@ -524,9 +542,8 @@ OSErr UpdateOffScreen(
     return error;
 }
 
-void SetUpOffScreen(){
-
-
+void SetUpOffScreen()
+{
     CTabHandle offColors;   /* Colors for off-screen environments */
     Rect       offRect;     /* Rectangle of off-screen environments */
     short      count;       /* Generic counter */
@@ -537,9 +554,9 @@ void SetUpOffScreen(){
     SetRect( &offRect, 0, 0, 256, 256 );
     offColors = GetCTable( rColorClut );
 
-        /* Create the color off-screen graphics environment */
+    /* Create the color off-screen graphics environment */
     error = CreateOffScreen( &offRect, kOffDepth, offColors,
-         &colorPort, &colorDevice );
+			     &colorPort, &colorDevice );
 
     if (error == noErr)
     {
@@ -556,59 +573,60 @@ void SetUpOffScreen(){
 
 }
 
-void WriteTo(){
+void WriteTo()
+{
+    RGBColor   aColor;      /* Color used for drawing off screen */
 
-   RGBColor   aColor;      /* Color used for drawing off screen */
+    GetPort( &savedPort );
+    savedDevice = GetGDevice();
+    /* Copy gray ramp into color off-screen colorized with green */
+    SetPort( (GrafPtr)colorPort );
+    SetGDevice( colorDevice );
+       
+    PenSize( 8, 8 );
+    aColor.red = 0xFFFF; aColor.green = 0x0000; aColor.blue = 0x0000;
+    RGBForeColor( &aColor );
+    circleRect = colorPort->portRect;
+    FrameOval( &circleRect );
 
-   GetPort( &savedPort );
-   savedDevice = GetGDevice();
-   /* Copy gray ramp into color off-screen colorized with green */
-   SetPort( (GrafPtr)colorPort );
-   SetGDevice( colorDevice );
+    SetPort( savedPort );
+    SetGDevice( savedDevice );
+
+
+}
+
+void WriteTo2()
+{
+    RGBColor   aColor;      /* Color used for drawing off screen */
+
+    GetPort( &savedPort );
+    savedDevice = GetGDevice();
+    /* Copy gray ramp into color off-screen colorized with green */
+    SetPort( (GrafPtr)colorPort );
+    SetGDevice( colorDevice );
        
 
-   PenSize( 8, 8 );
-   aColor.red = 0xFFFF; aColor.green = 0x0000; aColor.blue = 0x0000;
-   RGBForeColor( &aColor );
-   circleRect = colorPort->portRect;
-   FrameOval( &circleRect );
+    PenSize( 8, 8 );
+    aColor.red = 0x0000; aColor.green = 0xFFFF; aColor.blue = 0x0000;
+    RGBForeColor( &aColor );
+    InsetRect( &circleRect, 20, 20 );
+    FrameOval( &circleRect );
 
-   SetPort( savedPort );
-   SetGDevice( savedDevice );
+    SetPort( savedPort );
+    SetGDevice( savedDevice );
+}
 
+void CopyTo()
+{
+    CopyBits( &((GrafPtr)colorPort)->portBits,&savedPort->portBits,
+	      &colorPort->portRect, &savedPort->portRect,
+	      srcCopy, nil );
 
 }
 
-void WriteTo2(){
-
-   RGBColor   aColor;      /* Color used for drawing off screen */
-
-   GetPort( &savedPort );
-   savedDevice = GetGDevice();
-   /* Copy gray ramp into color off-screen colorized with green */
-   SetPort( (GrafPtr)colorPort );
-   SetGDevice( colorDevice );
-       
-
-   PenSize( 8, 8 );
-   aColor.red = 0x0000; aColor.green = 0xFFFF; aColor.blue = 0x0000;
-   RGBForeColor( &aColor );
-   InsetRect( &circleRect, 20, 20 );
-   FrameOval( &circleRect );
-
-   SetPort( savedPort );
-   SetGDevice( savedDevice );
-
-
-}
-void CopyTo(){
-   CopyBits( &((GrafPtr)colorPort)->portBits,&savedPort->portBits,
-             &colorPort->portRect, &savedPort->portRect,
-             srcCopy, nil );
-
-}
-void TurnOff(){
-   DisposeOffScreen( colorPort, colorDevice );
+void TurnOff()
+{
+    DisposeOffScreen( colorPort, colorDevice );
 }
 #ifdef FFFFF
 void ExerciseOffScreen()
@@ -633,17 +651,17 @@ void ExerciseOffScreen()
 
     /* Create the gray off-screen graphics environment */
     error = CreateOffScreen( &offRect, kOffDepth, offColors,
-            &grayPort, &grayDevice );
+			     &grayPort, &grayDevice );
 #endif
-  /*  if (error == noErr) */
-     if (true)
+    /*  if (error == noErr) */
+    if (true)
     {
         /* Get the color table for the color off-screen graphics environment*/
         offColors = GetCTable( rColorClut );
 
         /* Create the color off-screen graphics environment */
         error = CreateOffScreen( &offRect, kOffDepth, offColors,
-                &colorPort, &colorDevice );
+				 &colorPort, &colorDevice );
 
         if (error == noErr)
         {
@@ -671,13 +689,13 @@ void ExerciseOffScreen()
             aColor.red = 0x0000; aColor.green = 0xFFFF; aColor.blue = 0x0000;
             RGBForeColor( &aColor );
             CopyBits( &((GrafPtr)grayPort)->portBits,
-                    &((GrafPtr)colorPort)->portBits,
-                    &grayPort->portRect,
-                    &colorPort->portRect,
-                    srcCopy | ditherCopy, nil );
+		      &((GrafPtr)colorPort)->portBits,
+		      &grayPort->portRect,
+		      &colorPort->portRect,
+		      srcCopy | ditherCopy, nil );
 #endif 
             EraseRect(&colorPort->portRect);
-           /* Draw red, green, and blue circles */
+	    /* Draw red, green, and blue circles */
             PenSize( 8, 8 );
             aColor.red = 0x0000; aColor.green = 0x0000; aColor.blue = 0x0000;
             RGBForeColor( &aColor );
@@ -696,8 +714,8 @@ void ExerciseOffScreen()
             SetPort( savedPort );
             SetGDevice( savedDevice );
             CopyBits( &((GrafPtr)colorPort)->portBits,&savedPort->portBits,
-                    &colorPort->portRect, &savedPort->portRect,
-                    srcCopy, nil );
+		      &colorPort->portRect, &savedPort->portRect,
+		      srcCopy, nil );
 
             /* Dispose of the off-screen graphics environments */
 #ifdef FFFFF

@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file mac_getenv.c
  *  Copyright (C) 1998--2000  Guido Masarotto and Brian Ripley
- *  Adapted to Macintosh by Stefano M. Iacus, Jan 2001
+ *                2001        Stefano M. Iacus and the R core team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *                1997-2000 The R Development Core Team
+ *  Copyright (C) 1995-1996  Robert Gentleman and Ross Ihaka
+ *                2000-2001  Stefano M. Iacus and the R core team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,44 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
-/*  Dynamic Loading Support
- *
- *  This module provides support for run-time loading of shared libraries
- *  access to symbols within such libraries via .C and .Fortran.  This is
- *  done under Unix with dlopen, dlclose and dlsym (the exception is
- *  hpux, where we use compatibility code provided by Luke Tierney.
- *  There are two cases:
- *
- *
- *  1. The dlopen interface is available.
- *
- *  In this case all symbol location is done using the dlopen routines.
- *  We maintain a list of currently loaded shared libraries in an array
- *  called "LoadedDLL" with the number of currenly loaded libraries
- *  being "CountDLL".  To locate a symbol, we probe the loaded libraries
- *  in order until the symbol is located.  If we do not find a symbol
- *  in the loaded libraries, we search the executable itself.  This
- *  search is not very efficient, but this probably pales into
- *  insignificance when compared with the inefficiencies in the R
- *  interpreter.
- *
- *  Loading and unloading of shared libraries is done via the routines
- *  AddDLL and DeleteDLL.  These routines maintain the list of currently
- *  loaded libraries.  When a library is added, any existing reference
- *  to that library are deleted and then the library is inserted at the
- *  start of the search list.  This way, symbols in more recently loaded
- *  libraries are found first.
- *
- *
- *  2. The dlopen interface is not available.
- *
- *  In this case we use the table "CFunTabEntry" to locate functions
- *  in the executable.	We do this by straight linear search through
- *  the table.	Note that the content of the table is created at
- *  system build time from the list in ../appl/ROUTINES.
- */
-
 
 /* 
   DynLoad implemented in pre-alpha 3, Jago Nov-00 (Stefano M. Iacus)
@@ -102,8 +64,8 @@ static CFunTabEntry CFunTab[] =
    relevant defines are set up by autoconf. */
 
 #ifdef Macintosh
-#define HAVE_DLFCN_H  /* Yes we have under MacOS. Thanks to L. Tierney, see above */
-#define HAVE_NO_SYMBOL_UNDERSCORE /* No "_" before functions name under MacOS */
+#define HAVE_NO_SYMBOL_UNDERSCORE 
+/* No "_" before function names under MacOS */
 #endif
 
 #ifdef HAVE_DLFCN_H

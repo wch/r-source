@@ -4,8 +4,8 @@ Macintosh version
 
 system.c
 
-	Copyright (C) 1998--1999  Tiki Wan, Ross Ihaka
-                      2000--2001  Stefano M.Iacus
+	Copyright (C) 1995-1999  Ross Ihaka
+                      2000-2001  Stefano M. Iacus
 
 dll/dlfcn.[ch]
 dll/macutils.[ch]

@@ -3,20 +3,31 @@ Macintosh porting of R
 
 In this directory you can find all the files needed to compile a
 specific version of R for MacOS.  The original code for MacOS was
-written by Ross Ihaka and Wing Kwong (Tiki) Wan. Most of the files
-have been modified or simply updated to work with current versions of
-R sources and the Waste Text Engine.
+written by Ross Ihaka, Julian Harris and Wing Kwong (Tiki) Wan. More
+recently Stefan Iacus has modified or simply updated most of the files
+to work with current versions of R sources and the Waste Text Engine.
 
 Before building R
 =================
 
 There are only two files that must be uncompressed before
-starting compiling R. These are 
+starting compiling R. These are
 
 src/macintosh/res/R.rsrc.hqx	-  the R application resource file
 src/macintosh/cwpro/R.mcp.hqx	-  the CodeWarrior Project file
 
 and you need to expand them via any hqx decoding utility.
+
+Some files need to be created on a Unix/Linux platform. Unpack the
+sources on such a platform  and run (you will probably need GNU make)
+
+	cd src/macintosh
+	make
+	make distribution
+
+and then copy the file dist.zip to the Macintosh and unpack it at the
+top level of the R sources.  It creates the library folder, and adds
+files in doc/html and some header files in src/macintosh.
 
 
 Building R
@@ -31,13 +42,13 @@ official Waste library site,  http://www.merzwaren.com/waste.
 
 You also need a fortran compiler or an F2C tool to compile the
 *.f fortran files in src/appl directory.
-The R.mcp project assumes that you have converted the files with F2C 
+The R.mcp project assumes that you have converted the files with F2C
 and put the *.c sources in /src/appl/mac_f2c directory.
 
 
-Once you have built the R application, copy the "R" binary 
-from "src/macintosh/bin" in the folder  
-where you put also the "library" directory (with all 
+Once you have built the R application, copy the "R" binary
+from "src/macintosh/bin" in the folder
+where you put also the "library" directory (with all
 packages built), the "afm", "demos" and "tests"
 directories. The distribution folder should appear as
 
@@ -50,10 +61,8 @@ tests/		(dir)
 Before building R :
 ===================
 
-1) Please copy the file "src/include/macintosh/config.mac.h" to 
-   "src/include/config.h" and copy it over
-   "src/include/macintosh/Rconfig.h" 
-   before you build the R application.
+1) Please copy the file "src/include/macintosh/config.mac.h" to
+   "src/include/config.h" before you build the R application.
 
 2) if you do not use F2C you need a Fortran compiler
    and also to change the R.mcp project.
@@ -76,14 +85,6 @@ directory here.
 
 At present this applies to the data and R directories too.
 
-For the base package, you will need to create a file library/base/R/Rprofile
-by concatenating (in an editor) the files
-
-src/library/profile/Common.R
-src/library/profile/Rprofile.mac
-
-This means that the files in src/library/base/R/mac are currently unused.
-
 
 Futher directions
 =================
@@ -98,16 +99,11 @@ satisfactory to us, and we are working on improvements.
 
 ---------
 
-For comments and feedback, please contact either the 
+For comments and feedback, please contact either the
 R Core Development Team (and Stefano Iacus) at
-  
+
   R-core@R-project.org
 
-or only 
+or only
 
   Stefano M. Iacus <stefano.iacus@unimi.it>
-
----
-release note: Jan 31 2001
-
-

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995--1998  Ross Ihaka
- *                2000--2001  Stefano Iacus and the R core team
+ *  Copyright (C) 1995-1999  Ross Ihaka
+ *                2000-2001  Stefano M. Iacus and the R core team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,6 +16,19 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *  This file is adapted from the public demos coming with the Waste library
+ *  distribution:  WASTE Text Engine © 1993-2000 Marco Piovanelli.
+ *   
+ *  Original file was:
+ *
+ *	WASTE Demo Project:
+ *	Dialog Utilities
+ *
+ *	Copyright © 1993-1998 Marco Piovanelli
+ *	All Rights Reserved
+ *
+ *	C port by John C. Daub
  */
 
 #ifndef __APPLEEVENTS__
@@ -83,29 +96,30 @@ void LoadEditEnvironment()
     
 }
 
-int ggetc(){
-   WindowPtr window;
-   char returnChar;
-   char*    CharPtr;
+int ggetc()
+{
+    WindowPtr window;
+    char returnChar;
+    char*    CharPtr;
    
-   if (gEditPos >= gEditLen){
-      return EOF;
-   }else{
-      HLock(gEditHdl);
-      CharPtr = *gEditHdl;
-      CharPtr = CharPtr + gEditPos;
-      returnChar = *CharPtr;
-      HUnlock(gEditHdl);
-      gEditPos ++;
-   }
-   if (returnChar == '\r'){
-      startPoint = gEditPos;
-      return '\n';
+    if (gEditPos >= gEditLen){
+	return EOF;
+    }else{
+	HLock(gEditHdl);
+	CharPtr = *gEditHdl;
+	CharPtr = CharPtr + gEditPos;
+	returnChar = *CharPtr;
+	HUnlock(gEditHdl);
+	gEditPos ++;
+    }
+    if (returnChar == '\r'){
+	startPoint = gEditPos;
+	return '\n';
 
-   }
-   else{  
-      return returnChar;
-   }
+    }
+    else{  
+	return returnChar;
+    }
 }
 
 int gungetc(int c)

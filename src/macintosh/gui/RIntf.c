@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file RIntf.c
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the R core team
+ *  Copyright (C) 1995-1999  Ross Ihaka
+ *                2000-2001  Stefano M. Iacus and the R core team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,24 +21,24 @@
  *
  *  This file is adapted from the public demos coming with the Waste library
  *  distribution:  WASTE Text Engine © 1993-2000 Marco Piovanelli.
- *   
+ *
  *  This file was originally written by: Wing Kwong (Tiki), WAN 3/2/99
- *   updated to last version of WasteLib library: Stefano M. Iacus, 2001
+ *  Updated to last version of WasteLib library: Stefano M. Iacus, 2001
  *
  *  Original file was:
  *  WASTE Demo Project:
- *  WEDemoIntf.c 
- * 
+ *  WEDemoIntf.c
+ *
  */
- 
- /*
-	In Pascal, an "intf" file is sorta like a .h (header) file in C:  it contains a lot
-	of the declarations and definitions of things used in general by the entirity of
-	the code.
 
-	Most of the code from the WEDemoIntf.p file has been placed into the WEDemoHeader.h
-	file except for some general purpose utility functions, which have then been
-	placed here.
+ /*
+   In Pascal, an "intf" file is sorta like a .h (header) file in C: it
+   contains a lot of the declarations and definitions of things used
+   in general by the entirity of the code.
+
+   Most of the code from the WEDemoIntf.p file has been placed into
+   the WEDemoHeader.h file except for some general purpose utility
+   functions, which have then been placed here.
 */
 
 #ifndef	__WEDEMOAPP__
@@ -53,90 +53,91 @@ Boolean		gExiting = false;
 
 DocumentHandle GetWindowDocument( WindowPtr window )
 {
-	/* make sure window is not nil and is one of our windows
-	*/
-	if (( window == nil ) || ( GetWindowKind( window ) != userKind ))
-		return nil;
+    /* make sure window is not nil and is one of our windows
+     */
+    if (( window == nil ) || ( GetWindowKind( window ) != userKind ))
+	return nil;
 
-	/* a handle to the document structure is kept in the window refCon
-	*/
-	return (DocumentHandle) GetWRefCon( window );
+    /* a handle to the document structure is kept in the window refCon
+     */
+    return (DocumentHandle) GetWRefCon( window );
 }
 
 void ErrorAlert( OSErr err )
 {
-	Str255 errString;
+    Str255 errString;
 
-	NumToString( err, errString );
-	ParamText( errString, nil, nil, nil );
+    NumToString( err, errString );
+    ParamText( errString, nil, nil, nil );
 
-	SetCursor( &qd.arrow );
+    SetCursor( &qd.arrow );
 
-	Alert( kAlertGenError, GetMyStandardDialogFilter( ) );
+    Alert( kAlertGenError, GetMyStandardDialogFilter( ) );
 }
 
 void ForgetHandle( Handle *h )
 {
-	Handle theHandle;
+    Handle theHandle;
 
-	if ( ( theHandle = *h ) != nil )
-	{
-		*h = nil;
-		DisposeHandle( theHandle );
-	}
+    if ( ( theHandle = *h ) != nil )
+    {
+	*h = nil;
+	DisposeHandle( theHandle );
+    }
 }
 
 void ForgetResource( Handle *h )
 {
-	Handle theHandle;
+    Handle theHandle;
 
-	if ( ( theHandle = *h ) != nil )
-	{
-		*h = nil;
-		ReleaseResource( theHandle );
-	}
+    if ( ( theHandle = *h ) != nil )
+    {
+	*h = nil;
+	ReleaseResource( theHandle );
+    }
 }
 
 OSErr NewHandleTemp( Size blockSize, Handle *h )
 {
-	OSErr err;
+    OSErr err;
 
-	/* allocate a new relocatable block from temporary memory, or
-	 if that fails, from the current heap
+    /* allocate a new relocatable block from temporary memory, or
+       if that fails, from the current heap
 
-	 first try tapping temporary memory
-*/
-	*h = TempNewHandle( blockSize, &err );
+       first try tapping temporary memory
+    */
+    *h = TempNewHandle( blockSize, &err );
 
-	/* in case of failure, try with current heap
-*/
-	if ( *h == nil )
-	{
-		*h = NewHandle( blockSize );
-		err = MemError( );
-	}
+    /* in case of failure, try with current heap
+     */
+    if ( *h == nil )
+    {
+	*h = NewHandle( blockSize );
+	err = MemError( );
+    }
 
-	return err;
+    return err;
 }
 
 void BlockClr ( void * blockPtr, register Size blockSize )
 {
-	register char * p = ( char * ) blockPtr ;
+    register char * p = ( char * ) blockPtr ;
 
-	while ( --blockSize >= 0 )
-	{
-		* p ++ = 0 ;
-	}
+    while ( --blockSize >= 0 )
+    {
+	* p ++ = 0 ;
+    }
 }
 
-/* this is a function not originally in the WASTE Demo App, however due to the
- differences between Pascal and C, it's necessary to have to accomplish things.
+/* this is a function not originally in the WASTE Demo App, however
+   due to the differences between Pascal and C, it's necessary to have
+   to accomplish things.
 */
 void PStringCopy( ConstStr255Param srcString, Str255 destString )
 {
-	register SInt16 index = StrLength( srcString );
+    register SInt16 index = StrLength( srcString );
 
-	do {
-		*destString++ = *srcString++;
-	} while ( --index >= 0 );
+    do {
+	*destString++ = *srcString++;
+    } while ( --index >= 0 );
 }

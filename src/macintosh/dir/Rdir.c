@@ -1,8 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file Rdir.c
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the R core team
+ *  Copyright (C) 1995-1999  Ross Ihaka
+ *                2000-2001  Stefano M. Iacus and the R core team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,6 @@ void closedir(DIR *entry)
 	return ;   
 }
 
-
 DIR *opendir(char *path)
 {
     char pathname[2048];
@@ -42,7 +41,7 @@ DIR *opendir(char *path)
     search_info.hFileInfo.ioNamePtr = 0;
     if ((path != (char *) NULL) || (*path != '\0'))
 	if ((path[0] != '.') || (path[1] != '\0'))
-	    search_info.hFileInfo.ioNamePtr = c2pstr(strcpy(pathname,path));
+	    search_info.hFileInfo.ioNamePtr = c2pstr(strcpy(pathname, path));
     search_info.hFileInfo.ioCompletion = 0;
     search_info.hFileInfo.ioVRefNum = 0;
     search_info.hFileInfo.ioFDirIndex = 0;
@@ -85,12 +84,10 @@ struct dirent *readdir(DIR *entry)
 	return((struct dirent *) NULL);
     }
     entry->ioFDirIndex++;
-    (void) strcpy(dir_entry.d_name,p2cstr(search_info.hFileInfo.ioNamePtr));
+    (void) strcpy(dir_entry.d_name, p2cstr(search_info.hFileInfo.ioNamePtr));
     dir_entry.d_namlen = strlen(dir_entry.d_name);
     return(&dir_entry);
 }
-
-
 
 void seekdir(DIR *entry, long position)
 {

@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  File RTextEditor.c
- *  Copyright (C) 1999--2001  Ross Ihaka, Stefano M. Iacus and the R core team
+ *  Copyright (C) 1995-1999  Ross Ihaka
+ *                2000-2001  Stefano M. Iacus and the R core team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,7 +23,7 @@
  *  distribution:  WASTE Text Engine © 1993-2000 Marco Piovanelli.
  *   
  *  This file was originally written by: Wing Kwong (Tiki), WAN 3/2/99
- *  updated to last version of WasteLib library: Stefano M. Iacus, 2001
+ *  Updated to last version of WasteLib library: Stefano M. Iacus, 2001
  *  Added mac_load history, mac_savehistory: Stefano M. Iacus, 2000
  * 
  *  Original file was:

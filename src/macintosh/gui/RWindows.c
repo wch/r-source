@@ -23,7 +23,7 @@
  *  distribution:  WASTE Text Engine © 1993-2000 Marco Piovanelli.
  *
  *  This file was originally written by: Wing Kwong (Tiki), WAN 3/2/99
- *   updated to last version of WasteLib library: Stefano M. Iacus, 2001
+ *  Updated to last version of WasteLib library: Stefano M. Iacus, 2001
  *
  *  Original file was:
  *

@@ -1,4 +1,4 @@
-/* src/include/config.h.in.  Generated automatically from configure.in by autoheader.  */
+/* src/macintosh/config.mac.h.  Hand edited from config.h.in.  */
 /* acconfig.h
    Descriptive text for the C preprocessor macros that are needed by R.
    */
@@ -283,7 +283,7 @@
 #undef HAVE_DL_H
 
 /* Define if you have the <dlfcn.h> header file.  */
-#undef HAVE_DLFCN_H
+#define HAVE_DLFCN_H 1
 
 /* Define if you have the <elf.h> header file.  */
 #undef HAVE_ELF_H
