@@ -72,64 +72,6 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o	length() is now generic.
-
-    o	new.env() is now internal and allows you to set hashing. Also,
-	parent.env() and parent.env<-() are included to provide direct
-	access to setting and retrieving environments.
-
-    o	Function identical(), a fast and reliable way to test for exact
-	equality of two objects.
-
-    o	bxp() has a show.names argument allowing labels on a single
-	boxplot; it and hence boxplot() now makes use of pch, cex, and bg
-	for outlier points().
-
-	bxp() and boxplot() also have an argument `outline' to suppress
-	outlier drawing {S-PLUS compatibly}.
-
-    o	Function nsl() to look up IP addresses of hosts: intended as
-	a way to test for internet connectivity.
-
-    o	The startup processing now interprets escapes in the values of
-	environment variables set in R_HOME/etc/Renviron in a similar
-	way to most shells.
-
-    o	scan() allows unlimited (by R) lengths of input lines, instead
-	of a limit of 8190 chars.
-
-    o	Ops(), cbind(), diff() and na.omit() methods for time series
-	objects moved from package ts to package base.
-
-    o	Started work on new package management system: packageStatus()
-	and friends.
-
-    o	A package `methods' has been added, containing formal classes
-	and methods ("S4" methods).  In support of this, the "@"
-	operator has been added to the grammar.
-
-    o	New argument `cacheOK' to download.file() to request cache
-	flushing.
-
-    o	Modifications to the access functions for more consistency with S:
-	arguments `name', `pos' and `where' are more flexible in
-	assign(), exists(), get(), ls(), objects(), remove() and rm().
-
-    o	warning() allows multiple arguments, following S4's style.
-
-    o	Modified `save' internals to improve performance when saving
-	large collections of code.
-
-    o	As an experiment only, "=" is now allowed as an assignment
-	operator in the grammar.  This is not a commitment that it
-	will be supported in future non-development versions.
-
-    o	order() and sort.list() now implement na.last = FALSE, NA.
-
-    o	Previously deprecated functions read.table.url(), scan.url(),
-	source.url(), httpclient() and parse.dcf() are defunct.
-	Method "socket" for download.file no longer exists.
-
     o	Transparency is now supported on most graphics devices.
 	Internally colors include an alpha channel for opacity, but at
 	present there is only visible support for transparent/opaque.
@@ -141,33 +83,47 @@ NEW FEATURES
 	(NB: you may have bg = "white" saved in .Postscript.options in
 	your workspace.)
 
-    o	Unix x11() devices can now have a canvas color set, which can
-	help to distinguish plotting "white" from plotting
-	"transparent".
+    o	A package `methods' has been added, containing formal classes
+	and methods ("S4" methods).  
 
-    o	png(), jpeg() and bmp() devices now have a `bg' argument to
-	set the background color: useful to set "transparent" on png().
+	- In support of this, the "@" operator has been added to the
+	  grammar.
 
-    o	barplot() now respects an inline `cex.axis' argument and has a
-	separate `cex.names' argument so names and the numeric axis
-	labels can be scaled separately.  Also, graphics parameters
-	intended for axis() such as `las' can now be used.
+    	- Method dispatch for formal methods (the standardGeneric
+	  function), is now a primitive. Aside from efficiency issues,
+	  this allows S3-style generics to also have formal methods
+	  (not really recommended in the long run, but it should at
+	  least work).  The C-level dispatch is now implemented for
+	  primitives that use either DispatchGroup or DispatchOrEval
+	  internally.
 
-    o	Three new primitive functions have been added to base:
-	dataClass(), objWithClass(), and as.environment().  The first two
-	are support routines for class() and class<-() in package
-	methods.  The third replaces pos.to.env() in the functions get(),
-	exists(), and friends.
+	- The methods package will be attached automatically if a call
+	  to standardGeneric is encountered.  This does not yet work
+	  if the generic encountered is a function needed for
+	  attaching.  That will be fixed, but for now you still need
+	  to have library(methods) in the .Rprofile file in this case.
 
-    o	An enhanced function type.convert() is now a documented
-	function, rather than just internal to read.table().
+	- The methods package now uses C-level code (from within
+	  DispatchOrEval) to dispatch any methods defined for
+	  primitive functions.  As with S3-style methods, methods can
+	  only be defined if the first argument satisfies is.object(x)
+	  (not strictly required for formal methods, but imposed for
+	  now for simplicity and efficiency).
 
-    o	df.residual() now has a default method, used for classes
-	"lm" and "glm".
+    o   Changes to the tcltk package:
 
-    o	cor.test() in package ctest now also gives an asymptotic
-	confidence interval for the Pearson product moment correlation
-	coefficient.
+        - New interface for accessing Tcl variables, effectively
+          making the R representations lexically scoped. The old form
+          is being deprecated.
+
+        - Callbacks can now be expressions, with slightly unorthodox
+          semantics. In particular this allows bindings to contain
+          "break" expressions (this is necessary to bind code to
+          e.g. Alt-x without having the key combination also insert an
+          "x" in a text widget.)
+
+        - A bunch of file handling and dialog functions (previously
+          only available via tkcmd) have been added
 
     o	The "?" operator is now an actual function.  It can be used
 	(as always) as a unary operator (?plot) and the grammar now
@@ -176,92 +132,184 @@ NEW FEATURES
 	type (class?matrix, for example).  So far, no such
 	documentation exists.
 
-    o	All methods for download.file() do tilde-expansion on the path
-	name.
+    o	New methods AIC.default() and logLik.glm(), also fixing 
+	AIC(<glm obj>).
 
-    o	Finalizers can be registered to be run on system exit for both
-	reachable and unreachable objects.
-
-    o	Methods dispatch for formal methods (the standardGeneric
-	function), is now a primitive.	Aside from efficiency issues,
-	this allows S3-style generics to also have formal methods (not
-	really recommended in the long run, but it should at least
-	work).  The C-level dispatch is now implemented for primitives
-	that use either DispatchGroup or DispatchOrEval internally.
-
-    o	readline() allows up to 256 chars for the prompt.
-
-    o	readChar() now returns what is available if fewer characters
-	than requested are on the file.
-
-    o	is.xxx reached through do_is are now generic
+    o	axis.POSIXct() allows the label date/times to be specified
+	via the new `at' argument.
 
     o	arrows() now allows length = 0 (and draws no arrowheads).
 
-    o	The formula interface to mosaicplot() now allows a contingency
-	table as data argument.
+    o	Modifications to the access functions for more consistency with S:
+	arguments `name', `pos' and `where' are more flexible in
+	assign(), exists(), get(), ls(), objects(), remove() and rm().
+
+    o	Three new primitive functions have been added to base:
+	dataClass(), objWithClass(), and as.environment().  The first two
+	are support routines for class() and class<-() in package
+	methods.  The third replaces pos.to.env() in the functions get(),
+	exists(), and friends.
+
+    o	barplot() now respects an inline `cex.axis' argument and has a
+	separate `cex.names' argument so names and the numeric axis
+	labels can be scaled separately.  Also, graphics parameters
+	intended for axis() such as `las' can now be used.
+
+    o	Shading by lines added to functions barplot(), hist(),
+	legend(), piechart(), polygon() and rect().
+
+    o	bxp() has a show.names argument allowing labels on a single
+	boxplot; it and hence boxplot() now makes use of pch, cex, and bg
+	for outlier points().
+
+	bxp() and boxplot() also have an argument `outline' to suppress
+	outlier drawing {S-PLUS compatibly}.
+
+    o	New capabilities() options "GNOME" and "IEEE754".
+
+    o   New function casefold(), a wrapper for tolower/toupper
+	provided for compatibility with S-PLUS.
+
+    o	contour() is now generic.
+
+    o	cor.test() in package ctest now also gives an asymptotic
+	confidence interval for the Pearson product moment correlation
+	coefficient.
+
+    o	data(), demo() and library() now also return the information
+	about available data sets, demos or packages.  Similarly,
+	help.search() returns its results.
+
+    o	density() allows `bw' or `width' to specify a rule to choose the
+        bandwidth, and rules "nrd0" (the previous default), "nrd",
+	"ucv", "bcv", "SJ-ste" and "SJ-dpi" are supplied (based on
+	functions in package MASS).
+
+    o	df.residual() now has a default method, used for classes
+	"lm" and "glm".
+
+    o	New argument `cacheOK' to download.file() to request cache
+	flushing.
+
+    	All methods for download.file() do tilde-expansion on the path
+	name.
+
+    	The internal download.file() etc now allow URLs of the form
+	ftp://user@foo.bar/ and ftp://user:pass@foo.bar/
+
+    o   duplicated() and unique() are now generic functions with
+	methods for data frames (as well as atomic vectors).
+
+    o	factanal() and princomp() use napredict() on their scores, so
+	na.action = na.exclude is supported.
+
+    o	Function getNativeSymbolInfo() returns details about a native
+        routine, potentially including its address, the library in
+        which it is located, the interface by which it can be called
+        and the number of parameters.
+
+    o	Functions such as help() which perform library or package index
+	searches now use NULL as default for their `lib.loc' argument so
+	that missingness can be propagated more easily.  The default
+	corresponds to all currently known libraries as before.
+
+    o	Added function file.rename().
+
+    o	hist.default() allows `breaks' to specify a rule to choose the
+        number of classes, and rules "Sturges" (the previous default),
+	"Scott" and "FD" (Freedman-Diaconis) are supplied (based on
+	package MASS).
+
+    o	Function identical(), a fast and reliable way to test for exact
+	equality of two objects.
+
+    o	New generic function is.na<-(), from S4.  This is by default
+	equivalent to x[value] <- NA but may differ, e.g. for factors
+	where "NA" is a level.
+
+    o	is.xxx reached through do_is are now generic
+
+    o	La.eigen() and La.svd() have new default methods to use later
+	(and often much faster) LAPACK routines.  The difference
+	is most noticeable on systems with optimized BLAS libraries.
+
+    o	length() is now generic.
+
+    o	New function .libPaths() for getting or setting the paths to the
+	library trees R knows about.  This is still stored in .lib.loc,
+	which however should no longer be accessed directly.
 
     o	Using lm/glm/... with `data' a matrix rather than a data frame
 	now gives a specific error message.
 
-    o	read.table(), scan() and count.fields() have a new argument
-	`comment.char', default `#', that can be used to start
-	comments on a line.
-
-    o	integer addition, subtraction, and multiplication now return NA's
-	on overflow and issue a warning.
-
-    o	new AIC.default() and logLik.glm(), also fixing AIC(<glm obj>)
-
-    o	smooth.spline() has a new `control.spar' argument and returns
-	`lambda' besides `spar'.  spar <= 0 is now valid and allows
-	to go more closely towards interpolation (lambda -> 0) than before.
-	This also fixes smooth.spline() behavior for "df ~= n - 2". Better
-	error messages in several situations.
-
-	Note that spar = 0 is no longer the default and no longer entails
-	cross-validation.
-
-    o	page() has a new `method' argument allowing `method = print'.
+    o	loess(), lqs(), nls() and ppr() use the standard NA-handling
+	and so support na.action = na.exclude.
 
     o	mean() has `data frame' method applying mean column-by-column.
 	When applied to non-numeric data mean() now returns NA rather
 	than a confusing error message (for compatibility with S4).
 	Logicals are still coerced to numeric.
 
-    o	axis.POSIXct() allows the label date/times to be specified
-	via the new `at' argument.
+    o	The formula interface to mosaicplot() now allows a contingency
+	table as data argument.
 
-    o	princomp() now has a formula interface.
+    o	new.env() is now internal and allows you to set hashing. Also,
+	parent.env() and parent.env<-() are included to provide direct
+	access to setting and retrieving environments.
 
-    o	factanal() and princomp() use napredict() on their scores, so
-	na.action = na.exclude is supported.
+    o	Function nsl() to look up IP addresses of hosts: intended as
+	a way to test for internet connectivity.
 
-    o	loess(), lqs(), nls() and ppr() use the standard NA-handling
-	and so support na.action = na.exclude.
+    o	Ops(), cbind(), diff() and na.omit() methods for time series
+	objects moved from package ts to package base.
+
+    o   New option `download.file.method' can be used to set the
+	default method for download.file() and functions which use it
+	such as update.packages().
+
+    o	order() and sort.list() now implement na.last = FALSE, NA.
+
+    o	Started work on new package management system: packageStatus()
+	and friends.
+
+    o	page() has a new `method' argument allowing `method = print'.
+
+    o	png(), jpeg() and bmp() devices now have a `bg' argument to
+	set the background color: useful to set "transparent" on png().
+
+    o   Changes to the postscript() device:
+
+    	- The symbol font can now be set on a postscript() device, and
+	  support has been added for using Computer Modern type-1
+	  fonts (including for symbols). (Contributed by Brian D'Urso.)
+
+    	- There is now support for URW font families: this will give
+	  access to more characters and more appropriate metrics on
+	  PostScript devices using URW fonts (such as ghostscript).
+
+	- %%IncludeResource comments have been added to the output.
+	  (Contributed by Brian D'Urso.)
 
     o	predict.ppr() now predicts on `newdata' containing NAs.
 
-    o	X11(), png() and jpeg() now give informative warnings if
-	they fail to open the device.
+    o	princomp() now has a formula interface.
 
-    o	New generic function is.na<-(), from S4.  This is by default
-	equivalent to x[value] <- NA but may differ, e.g. for factors
-	where "NA" is a level.
+    o	readChar() now returns what is available if fewer characters
+	than requested are on the file.
 
-    o	Printing factors with both level "NA" and missing values
-	uses `<NA>' for the missing values to distinguish them.
+    o	readline() allows up to 256 chars for the prompt.
 
-    o	data(), demo() and library() now also return the information
-	about available data sets, demos or packages.  Similarly,
-	help.search() returns its results.
+    o	read.table(), scan() and count.fields() have a new argument
+	`comment.char', default `#', that can be used to start
+	comments on a line.
 
-    o   The methods package will be attached automatically if a call
-        to standardGeneric is encountered.  This does not yet
-        (as of 2001/10/09) work if the generic encountered is a function
-        needed for attaching.  That will be fixed, but for now you
-        still need to have library(methods) in the .Rprofile file in
-        this case.
+    o   New function reg.finalizer() to provide R interface to
+        finalization.
+
+    o   reshape() extends reshapeLong, reshapeWide, which are deprecated.
+
+    o	rle() now returns a classed object, has a print method and
+	an inverse.
 
     o   Changes to save() and friends:
 
@@ -273,6 +321,9 @@ NEW FEATURES
 	  internal data types, produces smaller save files when saving
 	  code, and provides a basis for a more flexible serialization
 	  mechanism.
+
+    	- Modified `save' internals to improve performance when saving
+	  large collections of code.
 
     	- save() and save.image() now take a `version' argument to
 	  specify the workspace file-format version to use.  The
@@ -297,89 +348,17 @@ NEW FEATURES
 	  when save.image is called from q() or GUI analogs.
 
 
-    o   New function reg.finalizer() to provide R interface to
-        finalization.
+    o	scan() allows unlimited (by R) lengths of input lines, instead
+	of a limit of 8190 chars.
 
-    o   reshape() extends reshapeLong, reshapeWide, which are deprecated.
+    o	smooth.spline() has a new `control.spar' argument and returns
+	`lambda' besides `spar'.  spar <= 0 is now valid and allows
+	to go more closely towards interpolation (lambda -> 0) than before.
+	This also fixes smooth.spline() behavior for "df ~= n - 2". Better
+	error messages in several situations.
 
-    o   duplicated() and unique() are now generic functions with
-	methods for data frames (as well as atomic vectors).
-
-    o   New option `download.file.method' can be used to set the
-	default method for download.file() and functions which use it
-	such as update.packages().
-
-    o   Changes to the tcltk package:
-
-        - New interface for accessing Tcl variables, effectively
-          making the R representations lexically scoped. The old form
-          is being deprecated.
-
-        - Callbacks can now be expressions, with slightly unorthodox
-          semantics. In particular this allows bindings to contain
-          "break" expressions (this is necessary to bind code to
-          e.g. Alt-x without having the key combination also insert an
-          "x" in a text widget.)
-
-        - A bunch of file handling and dialog functions (previously
-          only available via tkcmd) have been added
-
-    o   step() is now closer to stepAIC() and so handles a wider range
-	of objects (but stepAIC [in MASS] is still more powerful).
-
-    o	Functions such as help() which perform library or package index
-	searches now use NULL as default for their `lib.loc' argument so
-	that missingness can be propagated more easily.  The default
-	corresponds to all currently known libraries as before.
-
-    o   The methods package now uses C-level code (from within
-        DispatchOrEval) to dispatch any methods defined for primitive
-        functions.  As with S3-style methods, methods can only be
-        defined if the first argument satisfies is.object(x) (not
-        strictly required for formal methods, but imposed for now for
-        simplicity and efficiency).
-
-    o   New function casefold(), a wrapper for tolower/toupper
-	provided for compatibility with S-PLUS.
-
-    o   Added an experimental interface for locking environments and
-	individual bindings.  Also added support for "active bindings"
-	that link a variable to a function (useful for example for linking
-	an R variable to an internal C global).
-
-    o	The internal download.file() etc now allow URLs of the form
-	ftp://user@foo.bar/ and ftp://user:pass@foo.bar/
-
-    o	Added function file.rename().
-
-    o	.Alias has been removed from all R sources and deprecated.
-
-    o	symbols() now has automatic xlab and ylab and a main argument
-	which eliminates an incorrect warning.	It better checks wrongly
-	scaled arguments.
-
-    o	hist.default() allows `breaks' to specify a rule to choose the
-        number of classes, and rules "Sturges" (the previous default),
-	"Scott" and "FD" (Freedman-Diaconis) are supplied (based on
-	package MASS).
-
-    o	density() allows `bw' or `width' to specify a rule to choose the
-        bandwidth, and rules "nrd0" (the previous default), "nrd",
-	"ucv", "bcv", "SJ-ste" and "SJ-dpi" are supplied (based on
-	functions in package MASS).
-
-    o   Changes to the postscript() device:
-
-    	- The symbol font can now be set on a postscript() device, and
-	  support has been added for using Computer Modern type-1
-	  fonts (including for symbols). (Contributed by Brian D'Urso.)
-
-    	- There is now support for URW font families: this will give
-	  access to more characters and more appropriate metrics on
-	  PostScript devices using URW fonts (such as ghostscript).
-
-	- %%IncludeResource comments have been added to the output.
-	  (Contributed by Brian D'Urso.)
+	Note that spar = 0 is no longer the default and no longer entails
+	cross-validation.
 
     o	stars() has been enhanced; new `mar' argument uses smaller
 	mar(gins) by default; further `nrow and `ncol' as S-PLUS,
@@ -389,12 +368,52 @@ NEW FEATURES
 
 	stars() now returns the locations invisibly.
 
-    o	contour() is now generic.
+    o   step() is now closer to stepAIC() and so handles a wider range
+	of objects (but stepAIC [in MASS] is still more powerful).
 
-    o	rle() now returns a classed object, has a print method and
-	an inverse.
+    o	symbols() now has automatic xlab and ylab and a main argument
+	which eliminates an incorrect warning.	It better checks wrongly
+	scaled arguments.
 
     o	Sys.setlocale() now issues a warning if it fails.
+
+    o	An enhanced function type.convert() is now a documented
+	function, rather than just internal to read.table().
+
+    o	warning() allows multiple arguments, following S4's style.
+
+    o	New function with() for evaluating expressions in environments
+	constructed from data.
+
+    o	Unix x11() devices can now have a canvas color set, which can
+	help to distinguish plotting "white" from plotting
+	"transparent".
+
+    o	On Unix, X11(), png() and jpeg() now give informative warnings
+	if they fail to open the device.
+
+
+    o	The startup processing now interprets escapes in the values of
+	environment variables set in R_HOME/etc/Renviron in a similar
+	way to most shells.
+
+    o	As an experiment only, "=" is now allowed as an assignment
+	operator in the grammar.  This is not a commitment that it
+	will be supported in future non-development versions.
+
+    o	Finalizers can be registered to be run on system exit for both
+	reachable and unreachable objects.
+
+    o	integer addition, subtraction, and multiplication now return NA's
+	on overflow and issue a warning.
+
+    o	Printing factors with both level "NA" and missing values
+	uses `<NA>' for the missing values to distinguish them.
+
+    o   Added an experimental interface for locking environments and
+	individual bindings.  Also added support for "active bindings"
+	that link a variable to a function (useful for example for linking
+	an R variable to an internal C global).
 
     o   GNOME interface now has separate colours for input and output
         text (like the windows GUI). These can be modified via the
@@ -403,23 +422,10 @@ NEW FEATURES
     o   Output from the GNOME console is block buffered for increased
         speed
 
-    o	New function .libPaths() for getting or setting the paths to the
-	library trees R knows about.  This is still stored in .lib.loc,
-	which however should no longer be accessed directly.
-
-    o	La.eigen() and La.svd() have new default methods to use later
-	(and often much faster) LAPACK routines.  The difference
-	is most noticeable on systems with optimized BLAS libraries.
-
-    o	New capabilities() options "GNOME" and "IEEE754".
-
-    o	New function with() for evaluating expressions in environments
-	constructed from data.
-
-    o	Function getNativeSymbolInfo() returns details about a native
-        routine, potentially including its address, the library in
-        which it is located, the interface by which it can be called
-        and the number of parameters.
+    o   The GNOME console inherits standard emacs-style keyboard
+        shortcuts from the GtkText widget for cursor motion, editing
+        and selection.  These have been modified to allow for the prompt
+	at the beginning of the command line.
 
     o	One can register R functions and C routines to be called at the
         end of the successful evaluation of each top-level expression,
@@ -427,8 +433,16 @@ NEW FEATURES
         addTaskCallback() and taskCallbackManager(). See
 	http://developer.r-project.org/TaskHandlers.pdf.
 
-    o	Shading by lines added to functions barplot(), hist(),
-	legend(), piechart(), polygon() and rect().
+
+DEPRECATED & DEFUNCT
+
+    o	.Alias has been removed from all R sources and deprecated.
+
+    o   reshapeLong(), reshapeWide() are deprecated in favour of reshape().
+
+    o	Previously deprecated functions read.table.url(), scan.url(),
+	source.url(), httpclient() and parse.dcf() are defunct.
+	Method "socket" for download.file() no longer exists.
 
 
 DOCUMENTATION CHANGES
@@ -634,11 +648,6 @@ BUG FIXES
 
     o	fifo() no longer tries to truncate on opening in modes
 	including "w". (Caused the fifo example to fail on HP-UX.)
-
-    o   The GNOME console inherits standard emacs-style keyboard
-        shortcuts from the GtkText widget for cursor motion, editing
-        and selection.  These have been modified to allow for the prompt
-	at the beginning of the command line.
 
     o	Output over 1024 characters was discarded from the
 	GNOME console.
