@@ -425,6 +425,7 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
     else {
 	if (!R_FINITE(REAL(xlim)[0]) || !R_FINITE(REAL(xlim)[1]))
 	    errorcall(call, "need finite xlim values\n");
+	xmin = REAL(xlim)[0];
 	xmax = REAL(xlim)[1];
     }
     if (isInteger(ylim)) {

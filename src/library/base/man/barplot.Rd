@@ -78,14 +78,6 @@ barplot(height, width = 1, space = NULL, names.arg = NULL,
 \examples{
 tN <- table(Ni <- rpois(100, lambda=5))
 r <- barplot(tN, col='gray')
-<<<<<<< barplot.Rd
-points(r, tN, type='h', col='red', lwd=2)#- type = "h" plotting *is* `bar'plot
-
-data(VADeaths, package = "base")
-mp <- barplot(VADeaths) # default
-tot <- apply(VADeaths, 2, sum); text(mp, tot + 3, format(tot))
-barplot(VADeaths, beside = TRUE,
-=======
 lines(r, tN, type='h', col='red', lwd=2)#- type = "h" plotting *is* `bar'plot
 
 data(VADeaths, package = "base")
