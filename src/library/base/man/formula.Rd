@@ -3,7 +3,7 @@
 \usage{
 y ~ model
 formula(x, \dots)
-as.formula(object)
+as.formula(object, env=parent.frame())
 I(x)
 }
 \alias{~}
@@ -20,7 +20,9 @@ I(x)
   way of extracting formulae which have been included in other objects.
 
   \code{as.formula} is almost identical, additionally preserving
-  attributes when \code{object} already inherits from \code{"formula"}.
+  attributes when \code{object} already inherits from
+  \code{"formula"}. The default value of the \code{env} argument is
+  used only when the formula would otherwise lack an environment.
 }
 \details{
   The models fit by, e.g., the \code{\link{lm}} and \code{\link{glm}} functions
@@ -73,9 +75,12 @@ I(x)
   that are not found in the supplied \code{data} argument.
 
   Formulas created with the \code{~} operator use the
-  environment in which they were created; formulas created from strings
-  with \code{as.formula} have the \code{NULL} environment and will
-  usually need to be assigned a more appropriate environment.
+  environment in which they were created. Formulas created with
+  \code{as.formula} will use the \code{env} argument for their
+  environment. Pre-existing formulas extracted with
+  \code{as.formula} will only have their environment changed if
+  \code{env} is explicitly given.
+
   }
 \value{
   All the functions above produce an object
@@ -91,9 +96,9 @@ typeof(fo)# R internal : "language"
 terms(fo)
 
 environment(fo)
-fo2<-as.formula("y~x") 
-environment(fo2)                  # NULL
-environment(fo2)<-environment()   # assign it the current environment
+environment(as.formula("y~x"))  
+environment(as.formula("y~x",env=new.env())) 
+
 
 ## Create a formula for a model with a large number of variables:
 xnam <- paste("x", 1:25, sep="")

@@ -1,6 +1,6 @@
 ## we don't use white; it's for compatibility
 
-parse <- function(file = "", n = NULL, text = NULL, prompt = NULL,
+parse <- function(file = "", n = NULL, text = NULL, prompt = "?",
                   white = FALSE)
 {
     if(is.character(file))

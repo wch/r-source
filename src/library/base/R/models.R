@@ -1,5 +1,5 @@
 formula <- function(x, ...) UseMethod("formula")
-formula.default <- function (x, ...)
+formula.default <- function (x,env=parent.frame(), ...)
 {
     if (!is.null(x$formula))		eval(x$formula)
     else if (!is.null(x$call$formula))	eval(x$call$formula)
@@ -9,7 +9,7 @@ formula.default <- function (x, ...)
 		NULL = structure(NULL, class = "formula"),
 		character = formula(eval(parse(text = x)[[1]])),
 		call = eval(x), stop("invalid formula"))
-        environment(form)<-NULL
+        environment(form)<-env
         form
     }
 }
@@ -33,7 +33,9 @@ formula.data.frame <- function (x, ...)
        lhs <- NULL
     }
     ff <- parse(text = paste(lhs, paste(rhs, collapse = "+"), sep = "~"))
-    eval(ff)
+    ff<-eval(ff)
+    environment(ff)<-parent.frame()
+    ff
 }
 
 print.formula <- function(x, ...) {
