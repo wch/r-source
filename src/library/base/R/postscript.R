@@ -39,11 +39,14 @@ check.options <-
     if(lnew > 0) {
 	matches <- pmatch(newnames, oldnames)
 	if(any(is.na(matches)))
-	    stop(paste("invalid argument names in \"",
-		       deparse(sys.call(sys.parent())),"\"",sep=""))
-	else if(any(matches==0))
-	    stop(paste("ambiguous argument names in \"",
-		       deparse(sys.call(sys.parent())),"\"",sep=""))
+	    stop(paste("invalid argument name(s) `",
+		       paste(newnames[is.na(matches)], collapse=", "),
+		       "' in \"", deparse(sys.call(sys.parent())),"\"",sep=""))
+##-- This does not happen: ambiguities are plain "NA" here:
+##-	else if(any(matches==0))
+##-	    stop(paste("ambiguous argument name(s) `",
+##-			   paste(newnames[matches == 0], collapse=", "),
+##-			   "' in \"", deparse(sys.call(sys.parent())),"\"",sep=""))
 	else { #- match(es) found:  substitute if appropriate
 	    i.match <- oldnames[matches]
 	    prev <- old[i.match]

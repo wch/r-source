@@ -10,6 +10,9 @@ BUG FIXES
 
     o	Typos in NegBinomial.Rd (Negative Binomial distrib), thanks to Ch.Gu.
 
+    o	Improved error message from check.options().
+
+
 
 		CHANGES IN R VERSION 0.64.2
 
