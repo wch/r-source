@@ -70,6 +70,14 @@ AC_ARG_ENABLE(R-profiling,
     fi],
   want_Rprof=no)
 
+## Enable maintainer-specific portions of Makefiles.
+AC_ARG_ENABLE(maintainer-mode,
+  [  --enable-maintainer-mode
+                          enable make rules and dependencies not useful
+                          (and maybe confusing) to the casual installer],
+  use_maintainer_mode=${enableval},
+  use_maintainer_mode=no)
+
 ## Allow the user to force us to use f2c.
 AC_ARG_WITH(f2c,
   [  --with-f2c              use f2c even if FORTRAN compiler is available],
@@ -147,7 +155,7 @@ AC_ARG_WITH(tk-config,
                           specify location of tkConfig.sh],
   TK_CONFIG=${withval},
   TK_CONFIG="")
-    
+
 ### Programs.
 
 AC_PROG_AWK
@@ -794,6 +802,8 @@ AC_SUBST(R_PAPERSIZE)
 AC_SUBST(R_BATCHSAVE)
 
 ## Final cleanups/rewrites.
+
+AM_CONDITIONAL(MAINTAINER_MODE, test "${use_maintainer_mode}" = yes)
 
 ## Make sure -L terms come first in LIBS, separate out as LIBPATHS
 LIBS1=""
