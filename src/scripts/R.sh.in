@@ -8,12 +8,6 @@ RBINARY="R.binary"
 
 ARG="$1"
 case "${ARG}" in
-    -g|--gnome)
-        shift; RBINARY="R.gnome" ;;
-esac
-
-ARG="$1"
-case "${ARG}" in
     RHOME)
 	echo ${RHOME}; exit 0 ;;
     CMD)
@@ -29,7 +23,7 @@ case "${ARG}" in
 	  echo "*** (maybe use \`run ${args}'  from *inside* ${deb}"
 	  echo ""
 	fi
-	exec $deb ${RHOME}/bin/${RBINARY};;
+	exec ${deb} ${RHOME}/bin/${RBINARY};;
     -h|--help|-\?)
 	cat <<_EOF_
 
@@ -38,7 +32,7 @@ Usage:  R [OPTIONS] [< INFILE] [> OUTFILE]
    or   R CMD Rcommand [arguments]
 
 Options:
-  -g, --gnome               Run the gnome binary (must be first option)
+  --gnome                   Run the gnome binary (must be first option)
   --save                    Do save data sets at the end of the session.
   --no-save                 Don't save them.
   --restore                 Do restore previously saved data sets at startup.
@@ -92,5 +86,6 @@ R_LATEXCMD=${R_LATEXCMD:-${LATEX:-@LATEX@}}
 R_DVIPSCMD=${R_DVIPSCMD:-${DVIPS:-@DVIPS@}}
 export R_LATEXCMD R_DVIPSCMD
 
-exec ${RHOME}/bin/${RBINARY} @R_BATCHSAVE@ "$@"
 [ -f ${HOME}/.Renviron ] && . ${HOME}/.Renviron
+
+exec ${RHOME}/bin/${RBINARY} @R_BATCHSAVE@ "$@"
