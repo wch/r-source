@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2004  R Development Core Team
+ *  Copyright (C) 1997--2005  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -433,10 +433,17 @@ static SEXP complex_relop(RELOP_TYPE code, SEXP s1, SEXP s2, SEXP call)
     UNPROTECT(2);
     return ans;
 }
-#ifdef HAVE_STRCOLL
-#define STRCMP strcoll
+
+#if defined(Win32) && defined(SUPPORT_UTF8)
+#define STRCOLL Rstrcoll
 #else
-#define STRCMP strcmp
+
+#ifdef HAVE_STRCOLL
+#define STRCOLL strcoll
+#else
+#define STRCOLL strcmp
+#endif
+
 #endif
 
 static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
@@ -484,7 +491,7 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 		(STRING_ELT(s2, i % n2) == NA_STRING))
 		LOGICAL(ans)[i] = NA_LOGICAL;
  	    else
-	    if (STRCMP(CHAR(STRING_ELT(s1, i % n1)),
+	    if (STRCOLL(CHAR(STRING_ELT(s1, i % n1)),
 		       CHAR(STRING_ELT(s2, i % n2))) < 0)
 		LOGICAL(ans)[i] = 1;
 	    else
@@ -497,7 +504,7 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 		(STRING_ELT(s2, i % n2) == NA_STRING))
 		LOGICAL(ans)[i] = NA_LOGICAL;
  	    else
-	    if (STRCMP(CHAR(STRING_ELT(s1, i % n1)),
+	    if (STRCOLL(CHAR(STRING_ELT(s1, i % n1)),
 		       CHAR(STRING_ELT(s2, i % n2))) > 0)
 		LOGICAL(ans)[i] = 1;
 	    else
@@ -510,7 +517,7 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 		(STRING_ELT(s2, i % n2) == NA_STRING))
 		LOGICAL(ans)[i] = NA_LOGICAL;
  	    else
-	    if (STRCMP(CHAR(STRING_ELT(s1, i % n1)),
+	    if (STRCOLL(CHAR(STRING_ELT(s1, i % n1)),
 		       CHAR(STRING_ELT(s2, i % n2))) <= 0)
 		LOGICAL(ans)[i] = 1;
 	    else
@@ -523,7 +530,7 @@ static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 		(STRING_ELT(s2, i % n2) == NA_STRING))
 		LOGICAL(ans)[i] = NA_LOGICAL;
  	    else
-	    if (STRCMP(CHAR(STRING_ELT(s1, i % n1)),
+	    if (STRCOLL(CHAR(STRING_ELT(s1, i % n1)),
 		       CHAR(STRING_ELT(s2, i % n2))) >= 0)
 		LOGICAL(ans)[i] = 1;
 	    else

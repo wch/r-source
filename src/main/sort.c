@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2004   The R Development Core Team.
+ *  Copyright (C) 1998-2005   The R Development Core Team.
  *  Copyright (C) 2004        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -29,10 +29,6 @@
 
 #include <Defn.h> /* => Utils.h with the protos from here */
 #include <Rmath.h>
-
-#ifndef HAVE_STRCOLL
-#define strcoll strcmp
-#endif
 
 			/*--- Part I: Comparison Utilities ---*/
 
@@ -82,7 +78,7 @@ static int scmp(SEXP x, SEXP y, Rboolean nalast)
     if (x == NA_STRING && y == NA_STRING) return 0;
     if (x == NA_STRING) return nalast?1:-1;
     if (y == NA_STRING) return nalast?-1:1;
-    return strcoll(CHAR(x), CHAR(y));
+    return STRCOLL(CHAR(x), CHAR(y));
 }
 
 Rboolean isUnsorted(SEXP x)
@@ -694,11 +690,11 @@ static void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
 	break;
     case STRSXP:
 	if (decreasing)
-#define less(a, b) (c=strcoll(CHAR(sx[a]),CHAR(sx[b])), c < 0 || (c == 0 && a > b))
+#define less(a, b) (c=STRCOLL(CHAR(sx[a]),CHAR(sx[b])), c < 0 || (c == 0 && a > b))
 	    sort2_with_index
 #undef less
         else
-#define less(a, b) (c=strcoll(CHAR(sx[a]),CHAR(sx[b])), c > 0 || (c == 0 && a > b))
+#define less(a, b) (c=STRCOLL(CHAR(sx[a]),CHAR(sx[b])), c > 0 || (c == 0 && a > b))
 	    sort2_with_index
 #undef less
 	break;

@@ -910,6 +910,21 @@ size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n);
 size_t Rwcstombs(char *s, const wchar_t *wc, size_t n);
 #endif
 
+/* used in relop.c and sort.c */
+#if defined(Win32) && defined(SUPPORT_UTF8)
+#define STRCOLL Rstrcoll
+#else
+
+#ifdef HAVE_STRCOLL
+#define STRCOLL strcoll
+#else
+#define STRCOLL strcmp
+#endif
+
+#endif
+
+
+
 /* Macros for suspending interrupts */
 #define BEGIN_SUSPEND_INTERRUPTS do { \
     Rboolean __oldsusp__ = R_interrupts_suspended; \
