@@ -11,88 +11,101 @@
     ## First, set up the existing functions in the list as valid generics.
     curNames <- names(funs)
     for(i in seq(along=funs)) {
-      val <- funs[[i]]
-      if(is.function(val))
-        funs <- .addBasicGeneric(funs, curNames[[i]], val, "", env)
+	val <- funs[[i]]
+	if(is.function(val))
+	    funs <- .addBasicGeneric(funs, curNames[[i]], val, "", env)
     }
     ## the Math group.
-    members <- c("log", "sqrt", "log10", "cumprod", "abs", "acos", "acosh", "asin", "asinh",
-               "atan", "atanh", "ceiling", "cos", "cosh", "cumsum", "exp", "floor",
-               "gamma", "lgamma", "sin", "sinh", "tan", "tanh", "trunc")
+    members <- c("log", "sqrt", "log10", "cumprod", "abs", "acos",
+		 "acosh", "asin", "asinh", "atan", "atanh",
+		 "ceiling", "cos", "cosh", "cumsum", "exp", "floor",
+		 "gamma", "lgamma", "sin", "sinh", "tan", "tanh", "trunc")
     for(f in members)
-        funs <- .addBasicGeneric(funs, f, function(x)standardGeneric(""),"Math", env)
-
+	funs <- .addBasicGeneric(funs, f, function(x) standardGeneric(""),
+				 "Math", env)
 
     setGroupGeneric(where=where,"Math", function(x)NULL,
-                    knownMembers = members, package = "base")
+		    knownMembers = members, package = "base")
 
-    ## The Math2 group (too late now, but it would probably have been better to put "trunc" in
-    ## here and call this something like the "Truncation" group)
+    ## The Math2 group (too late now, but it would probably have been
+    ## better to put "trunc" in	 here and call this something like the
+    ## "Truncation" group)
 
     funs <- .addBasicGeneric(funs, "round",
-                                       function (x, digits = 0)  standardGeneric(""), "Math2", env)
+			     function(x, digits = 0) standardGeneric(""),
+			     "Math2", env)
     funs <- .addBasicGeneric(funs, "signif",
-                                       function (x, digits = 6)  standardGeneric(""), "Math2", env)
+			     function(x, digits = 6) standardGeneric(""),
+			     "Math2", env)
 
-    setGroupGeneric(where=where,"Math2", function(x, digits)NULL,
-                    knownMembers = c("round", "signif"), package = "methods")
+    setGroupGeneric(where = where, "Math2", function(x, digits) NULL,
+		    knownMembers = c("round", "signif"), package = "methods")
 
     ## The Arith group
     members <- c("+", "-", "*", "^", "%%", "%/%", "/")
     for(f in members)
-        funs <- .addBasicGeneric(funs, f, function(e1, e2) standardGeneric(""),
-                                           "Arith", env)
+	funs <- .addBasicGeneric(funs, f, function(e1, e2) standardGeneric(""),
+				 "Arith", env)
 
-    setGroupGeneric(where=where,"Arith", function(e1, e2)NULL,
-                    group = "Ops", knownMembers = members, package = "base")
+    setGroupGeneric(where = where, "Arith", function(e1, e2)NULL,
+		    group = "Ops", knownMembers = members, package = "base")
 
     ## the Compare group
     members <- c("==", ">", "<", "!=", "<=", ">=")
     for(f in members)
-        funs <- .addBasicGeneric(funs, f, function(e1, e2) standardGeneric(""),
-                                           "Compare", env)
+	funs <- .addBasicGeneric(funs, f, function(e1, e2) standardGeneric(""),
+				 "Compare", env)
 
-    setGroupGeneric(where=where,"Compare", function(e1, e2)NULL,
-                    group = "Ops", knownMembers = members, package = "methods")
+    setGroupGeneric(where = where, "Compare", function(e1, e2)NULL,
+		    group = "Ops", knownMembers = members, package = "methods")
 
-    ## R does not currently do the Logic group (! & |) A strange group, since the argument
-    ## lists are different.  But perhaps we'll add it sometime.
+    ## R does not currently do the Logic group (! & |)
+    ## A strange group, since the argument lists are different.	 But
+    ## perhaps we'll add it sometime.
+
 
     ## the Ops group generic
 
-    setGroupGeneric(where=where,"Ops", function(e1, e2)NULL,
-                    knownMembers = c("Arith", "Compare"), package = "base")
+    setGroupGeneric(where = where,"Ops", function(e1, e2)NULL,
+		    knownMembers = c("Arith", "Compare"), package = "base")
 
 
     ## The Summary group
 
-    ## These are a bit problematic, since they essentially have "..." as their only data-related
-    ## formal argument.  The treatment since S3 has been to define the generic with a special
-    ## first argument, to allow method dispatch.  But the method had better invoke the generic
-    ## recursively or perform some other special computations, in order to avoid unintended
-    ## anomalies, such as !identical(max(x,y), max(y,x))
+    ## These are a bit problematic, since they essentially have "..."
+    ## as their only data-related formal argument.  The treatment
+    ## since S3 has been to define the generic with a special first
+    ## argument, to allow method dispatch.  But the method had better
+    ## invoke the generic recursively or perform some other special
+    ## computations, in order to avoid unintended anomalies, such as
+    ## !identical(max(x,y), max(y,x))
+
     members <- c("max", "min", "range", "prod", "sum", "any", "all")
     for(f in members)
-        funs <- .addBasicGeneric(funs, f, function (x, ..., na.rm = FALSE) standardGeneric(""),
-                                           "Summary", env)
+	funs <- .addBasicGeneric(funs, f, function (x, ..., na.rm = FALSE)
+				 standardGeneric(""),
+				 "Summary", env)
 
-    setGroupGeneric(where=where,"Summary", function(x, ..., na.rm = FALSE )NULL,
-                              knownMembers = members, package = "base")
+    setGroupGeneric(where = where, "Summary",
+		    function(x, ..., na.rm = FALSE) NULL,
+		    knownMembers = members, package = "base")
 
     ## The Complex group
-    ##
-    ## R adds this group to the previous S language function groups, for all the operations
-    ## defined on complex numbers.  For applications wanting to define a new class that
-    ## extends the concept of complex numbers, a function group is likely to be useful
-    ## since all these functions may operate in a similar manner (by analogy, e.g., with the
-    ## Math group).
+
+    ## R adds this group to the previous S language function groups,
+    ## for all the operations defined on complex numbers.  For
+    ## applications wanting to define a new class that extends the
+    ## concept of complex numbers, a function group is likely to be
+    ## useful since all these functions may operate in a similar
+    ## manner (by analogy, e.g., with the Math group).
+
     members <- c("Arg", "Conj", "Im", "Mod", "Re")
     for(f in members)
-        funs <- .addBasicGeneric(funs, f, function(z) standardGeneric(""),
-                                           "Complex", env)
+	funs <- .addBasicGeneric(funs, f, function(z) standardGeneric(""),
+				 "Complex", env)
 
     setGroupGeneric(where=where,"Complex", function(z)NULL,
-                              knownMembers = members, package = "base")
+		    knownMembers = members, package = "base")
 
     assign(".BasicFunsList", funs, envir=where)
     assign(".BasicFunsEnv", env, envir=where)
@@ -101,17 +114,22 @@
 
 .BasicFunsMethods <- list()
 
-.InitSubsetMethods <- function(where) {
+.InitSubsetMethods <- function(where)
+{
     ## create some methods for the functions in .BasicFunsList.
-    ##
-    ## The strategy on initialization is to create the methods list objects by
-    ## setMethod calls, and then move them to the .BasicFunsMethods list, from
-    ## which they will be retrieved when the generic is installed; see getGeneric.
-    ## The mlist objects can not be left in the methods library itself after initialization,
-    ## since the basic functions are not "turned on" as generics until some other
-    ## package or user defines methods for them.
-    ##
-    ## This facility is not currently instantiated, though there are some desirable changes
-    ## to the "[" and related functions, to untangle the current messing with "drop" and
-    ## multiple subscripts, in the vector case.
+
+    ## The strategy on initialization is to create the methods list
+    ## objects by setMethod calls, and then move them to the
+    ## .BasicFunsMethods list, from which they will be retrieved when
+    ## the generic is installed; see getGeneric.
+
+    ## The mlist objects can not be left in the methods library itself
+    ## after initialization, since the basic functions are not "turned
+    ## on" as generics until some other package or user defines
+    ## methods for them.
+
+    ## This facility is not currently instantiated, though there are
+    ## some desirable changes to the "[" and related functions, to
+    ## untangle the current messing with "drop" and multiple
+    ## subscripts, in the vector case.
 }
