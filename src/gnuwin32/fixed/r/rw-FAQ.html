@@ -190,12 +190,12 @@ might contain (as one line)
 
 <h2>2.7 Can I use rwXxxx with ESS and emacs?</h2>
 
-<p>Yes. The latest versions of ESS (e.g. 5.1.11) come with support for this
-version of R, and <code>rw0650</code> and later have support for interrupting
-the R process from ESS (by <code>C-c C-c</code>).
+<p>Yes. The latest versions of ESS (e.g. 5.1.13) come with support for this
+version of R, and there is support for interrupting the R process from
+ESS (by <code>C-c C-c</code>).
 
-<p>For help with ESS, please send email to <a href="ESS-help@stat.ethz.ch">ESS-help@stat.ethz.ch</a>, not the R
-mailing lists.
+<p>For help with ESS, please send email to <a href="ESS-help@stat.ethz.ch">ESS-help@stat.ethz.ch</a>,
+not the R mailing lists.
 
 <a name="What%20are%20HOME%20and%20working%20directories%3f"></a>
 
@@ -208,7 +208,7 @@ mailing lists.
 by the `Start in' field of the shortcut's properties. You can find this
 from R code by the call <code>getwd()</code>.
 
-<p>The home directory is set as follows (<code>rw0650</code> on):<br>
+<p>The home directory is set as follows:<br>
 If environment variable <code>R_USER</code> is set, its value is used.<br>
 Otherwise if environment variable <code>HOME</code> is set, its value is used.<br>
 Otherwise if environment variables <code>HOMEDRIVE</code> and <code>HOMEPATH</code> are set,
@@ -253,7 +253,7 @@ on its help pages) use <code>make pkgcheck-pkgname</code>.
 <code>R_LIBS</code> to point to the library location(s). You can also set the
 R variable <code>.lib.loc</code> in your <code>.Rprofile</code> or when running R.
 
-<p>Suppose your packages are in installed in <code>p:\mylibs</code>. Then you can EITHER
+<p>Suppose your packages are installed in <code>p:\mylibs</code>. Then you can EITHER
 
 <pre>set R_LIBS to p:\mylibs
 </pre>
@@ -270,7 +270,7 @@ R variable <code>.lib.loc</code> in your <code>.Rprofile</code> or when running 
 
 <p>How you set an environment variable is system specific: in Windows 9x
 you can set them in autoexec.bat or in an MS-DOS window from which you
-launch <code>Rgui</code> / <code>Rterm</code>. Under Windows NT you can use the
+launch <code>Rgui</code> / <code>Rterm</code>. Under Windows NT/2000 you can use the
 control panel or the properties of `My Computer'. You can also set them
 on the command line, for example in the shortcut you could have
 
@@ -288,8 +288,8 @@ R_NSIZE=400k
 <p>The order of precedence is the command line (flags before variables)
 then <code>.Renviron</code> then the inherited environment.
 
-<p>You can also build packages anywhere, but it is simpler to install a
-private copy of R to do the building.
+<p>You can also build packages from anywhere to anywhere, but may be
+simpler to install a private copy of R to do the building.
 
 <a name="The%20packages%20I%20installed%20do%20not%20appear%20in%20the%20HTML%20help%20system"></a>
 
@@ -371,26 +371,29 @@ and copy the graphics to <code>png</code>, <code>jpeg</code>, <code>bmp</code>,
 shortcuts to menu items, and optionally toolbars with buttons giving
 shortcuts to frequent operations.
 
-<p>If you resize the R console the <code>options(width=)</code> is automatically set to the
-console width (unless disabled in the configuration file).
+<p>If you resize the R console the <code>options(width=)</code> is automatically
+set to the console width (unless disabled in the configuration file).
 
 <p>The graphics has a history mechanism. As the README says:
 
 <blockquote>
 `The History menu allows the recording of plots. When plots have been
-recorded they can be reviewed by &lt;PgUp&gt; and &lt;PgDn&gt;, saved and replaced. 
-Recording can be turned on automatically (the Recording item on the list) or
-individual plots can be added (Add or the &lt;INS&gt; key). The whole plot history
-can be saved to or retrieved from an R variable in the global environment.
+recorded they can be reviewed by &lt;PgUp&gt; and &lt;PgDn&gt;, saved and
+replaced.  Recording can be turned on automatically (the Recording item
+on the list) or individual plots can be added (Add or the &lt;INS&gt;
+key). The whole plot history can be saved to or retrieved from an R
+variable in the global environment.
 
 <p>There is only one graphics history shared by all the windows devices.' 
 </blockquote>
 
-<p>The R console and graphics windows have configuration files stored in the
-<code>RHOME\etc</code> directory called <code>Rconsole</code> and <code>Rdevga</code>; you can
-keep personal copies in your <code>HOME</code> directory. They contain comments which
-should suffice for you to edit them to your preferences. For more details
-see <code>?Rconsole</code>.
+<p>The R console and graphics windows have configuration files stored in
+the <code>RHOME\etc</code> directory called <code>Rconsole</code> and <code>Rdevga</code>;
+you can keep personal copies in your <code>HOME</code> directory. They contain
+comments which should suffice for you to edit them to your
+preferences. For more details see <code>?Rconsole</code>.  From <code>rw1010</code>
+there is a Preferences editor invoked from the <code>Edit</code> menu which
+can be used to edit the file <code>Rconsole</code>.
 
 <p><hr>
 
@@ -591,7 +594,7 @@ dllwrap -o X.dll --def X.def X.o X_R.o -lstdc++
 <p>or (VC++)
 
 <pre>cl /MT /c X.cpp X_R.cpp
-ink /dll /out:XX.dll /export:X_main X.obj X_R.obj
+link /dll /out:XX.dll /export:X_main X.obj X_R.obj
 </pre>
 
 <p>and call the entry point(s) in <code>X_R</code>.  Construction of static variables
@@ -618,7 +621,7 @@ documented in the <em>`Writing R Extensions'</em> manual.
 
 <p><hr WIDTH="100%">
 <address>
-Last edited 2000 February 4 by Brian Ripley
+Last edited 2000 April 6 by Brian Ripley
 <code><a href="mailto:ripley@stats.ox.ac.uk">ripley@stats.ox.ac.uk</a></code>
 </address>
 

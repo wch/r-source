@@ -269,7 +269,7 @@ You can install packages anywhere and use the environment variable
 @code{R_LIBS} to point to the library location(s). You can also set the
 R variable @code{.lib.loc} in your @file{.Rprofile} or when running R.
 
-Suppose your packages are in installed in @code{p:\mylibs}. Then you can EITHER
+Suppose your packages are installed in @code{p:\mylibs}. Then you can EITHER
 
 @example
 set R_LIBS to p:\mylibs
@@ -289,7 +289,7 @@ library(MASS, lib.loc="p:/mylibs")
 
 How you set an environment variable is system specific: in Windows 9x
 you can set them in autoexec.bat or in an MS-DOS window from which you
-launch @code{Rgui} / @code{Rterm}. Under Windows NT you can use the
+launch @code{Rgui} / @code{Rterm}. Under Windows NT/2000 you can use the
 control panel or the properties of `My Computer'. You can also set them
 on the command line, for example in the shortcut you could have
 
@@ -309,8 +309,8 @@ R_NSIZE=400k
 The order of precedence is the command line (flags before variables)
 then @file{.Renviron} then the inherited environment.
 
-You can also build packages anywhere, but it is simpler to install a
-private copy of R to do the building.
+You can also build packages from anywhere to anywhere, but may be
+simpler to install a private copy of R to do the building.
 
 
 @node The packages I installed do not appear in the HTML help system, My functions are not found by the HTML help search system., I don't have permission to write to the rwXxxx/library directory, Packages

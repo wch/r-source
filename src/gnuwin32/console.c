@@ -1664,7 +1664,7 @@ static void pagermenuact(control m)
     }
 }
 
-extern RECT RframeRect; /* client area of main window */
+RECT *RgetMDIsize(); /* in rui.c */
 #define MCHECK(a) if (!(a)) {freeConsoleData(p);del(c);return NULL;}
 static pager pagercreate()
 {
@@ -1692,8 +1692,10 @@ static pager pagercreate()
     h = HEIGHT;
     /* centre a single pager, randomly place each of multiple pagers */
     if(ismdi()) {
-	w0 = RframeRect.right;
-	h0 = RframeRect.bottom - 50; /* allow for toolbar, menubar */
+	RECT *pR = RgetMDIsize();
+	w0 = pR->right;
+	h0 = pR->bottom;
+	Rprintf("w0 %d h0 %d\n", w0, h0);
     } else {
 	w0 = devicewidth(NULL);
 	h0 = deviceheight(NULL);
