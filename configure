@@ -11312,7 +11312,7 @@ fi
     ;;
 esac
 
-case "{host_os}" in
+case "${host_os}" in
   ## <FIXME>
   ## This used to be
   ##   aix4.[[2-9]]*)
