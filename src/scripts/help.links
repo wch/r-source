@@ -21,7 +21,8 @@ for lib in $*; do
     echo "<P><TABLE width=100%>" >> ${PKGLIST}
     for pkg in `ls -d ${lib}/* | sed '/CVS$/d; /profile$/d'`; do
 	if test -d ${pkg}; then
-	    ln -sf ${pkg} ${URHOME}/library
+	    rm -f ${URHOME}/library/${pkg}
+	    ln -s ${pkg} ${URHOME}/library
 	    pkgname=`basename ${pkg}`
 	    if test -r ${pkg}/TITLE; then
 		pkgtitle=`cat ${pkg}/TITLE | sed "s/^${pkgname}//"`
