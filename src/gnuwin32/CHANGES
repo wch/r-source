@@ -7,6 +7,9 @@ See the file NEWS for changes that affect all versions of R.
 rw1070
 ======
 
+The installers have new options under `Additional tasks' which allow
+the creation of Registry entries to be de-selected by the user.
+
 There is a new option to use file("clipboard") to read from or write
 to the clipboard.  As most input/output functions in R use file(),
 this makes it possible to read data from or write data to the
@@ -15,8 +18,8 @@ clipboard in many ways, including direct use of read/writeClipboard().
 Removed some calls to reset the size of the console, so it will 
 stay maximized through window operations.
 
-The output from formatC uses e+/-0n not e+/-00n for compatibility with
-other platforms and with format.
+The output from formatC() uses e+/-0n not e+/-00n for compatibility with
+other platforms and with format().
 
 A site-wide environment file R_HOME/etc/Renviron.site (or as set by
 the `R_ENVIRON' environment variable) is now implemented on Windows.
@@ -89,6 +92,7 @@ the active graphics device.
 Fixed a crash that occurred when an attempt was made to view a file in
 the pager but the file could not be opened (e.g. because another 
 application had it opened with exclusive access).
+
 
 
 rw1061

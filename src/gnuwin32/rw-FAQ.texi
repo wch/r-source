@@ -78,7 +78,7 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@code{1.4.0} or later); the current version is often called something like
+(@code{1.7.0} or later); the current version is often called something like
 @code{@value{VERSION}} (although not officially).
 
 
@@ -103,8 +103,9 @@ The information here applies only to recent versions of R for Windows,
 * How do I set environment variables?::  
 * R can't find my file::        
 * Does R use the Registry?::    
-* Entering certain characters crashes Rgui.::  
+* Does R support automation?::  
 * The internet download functions fail.::  
+* Entering certain characters crashes Rgui.::  
 * Other strange crashes.::      
 @end menu
 
@@ -150,7 +151,7 @@ the Start menu file tree.  Right-click the shortcut, select
 Properties... and change the `Start in' field to your working directory.
 
 You may also want to add command-line arguments at the end of the Target
-field, for example @code{--sdi --max-mem-size=40M}.  You can also set
+field, for example @code{--sdi --max-mem-size=200M}.  You can also set
 environment variables at the end of the Target field, for example
 @code{R_LIBS=p:/myRlib}.
 
@@ -234,10 +235,11 @@ was installed.
 That's a matter of taste.  For most people the best thing to do is to
 uninstall R (see the previous Q), install the new version, copy any
 installed packages to the library folder in the new installation, run
-@code{update.packages()} (from the menu, if you prefer) and then delete
-anything left of the old installation.  Different versions of R are
-quite deliberately installed in parallel folders so you can keep old
-versions around if you prefer.
+@code{update.packages()} in the new R (`Update packages from CRAN' from
+the Packages menu, if you prefer) and then delete anything left of the
+old installation.  Different versions of R are quite deliberately
+installed in parallel folders so you can keep old versions around if you
+wish.
 
 
 @node There seems to be a limit on the memory it uses!, How can I keep workspaces for different projects in different directories?, What's the best way to upgrade?, Installation and Usage
@@ -407,24 +409,55 @@ short name (something like @code{PROGRA~1}; you can get it as the
 Windows, and from @code{dir /X} in a @code{Command Prompt} window on 2000/XP).
 
 
-@node Does R use the Registry?, Entering certain characters crashes Rgui., R can't find my file, Installation and Usage
+@node Does R use the Registry?, Does R support automation?, R can't find my file, Installation and Usage
 @section Does R use the Registry?
 
 Not itself.
 
 The installers set some entries to allow uninstallation.  In addition
-they set a Registry key @code{LOCAL_MACHINE\Software\R-core\R} giving
-the version and install path.  Again, this is not used by R itself, but
-it will be used by the DCOM interface
-(@uref{http://cran.r-project.org/other-software.html}).  Finally, a file
-association for extension @code{.RData} is set in the Registry.
+(by default, but this can be de-selected) they set a Registry key
+@code{LOCAL_MACHINE\Software\R-core\R} giving the version and install
+path.  Again, this is not used by R itself, but it will be used by the
+DCOM interface (@uref{http://cran.r-project.org/other-software.html}).
+Finally, a file association for extension @code{.RData} is set in the
+Registry.
 
 You can add the Registry entries by running @code{RSetReg.exe} in the
 @code{bin} folder, and remove them by running this with argument
 @code{/U}.  Note that the settings are all per machine and not per user,
 and that this neither sets up nor removes the file associations.
 
-@node Entering certain characters crashes Rgui., The internet download functions fail., Does R use the Registry?, Installation and Usage
+
+@node Does R support automation?, The internet download functions fail., Does R use the Registry?, Installation and Usage
+@section Does R support automation (OLE, COM)?
+
+Directly, no.  There is a (D)COM server written by Thomas Baier
+available on CRAN (@uref{http://cran.r-project.org/other-software.html})
+which works with @code{Rproxy.dll} (in the R distribution) and
+@code{R.dll} to support transfer of data to and from R and remote
+execution of R commands, as well as embedding of an R graphics window.
+
+An R-Excel interface making use of the DCOM server is available from the
+same area of CRAN.
+
+
+@node The internet download functions fail., Entering certain characters crashes Rgui., Does R support automation?, Installation and Usage
+@section The internet download functions fail.
+
+for example @code{update.packages} and the menu items on the Packages menu.
+
+We have had several reports of this, although they do work for us on
+@emph{all} of our machines.  There are two known possible fixes.
+
+(a) Use the alternative @code{internet2.dll} by starting R with the flag
+@code{--internet2} (@pxref{How do I install R for Windows?}) which uses
+the Internet Explorer internals (and so needs Internet Explorer 4 or
+later installed).
+
+(b) A proxy needs to be set up: see @code{?download.file}.
+
+
+@node Entering certain characters crashes Rgui., Other strange crashes., The internet download functions fail., Installation and Usage
 @section Entering certain characters crashes Rgui.
 
 This used to happen occasionally, and all the occurrences we have
@@ -445,22 +478,8 @@ the date-time functions.  However, you are probably better off
 re-installing Windows.
 
 
-@node The internet download functions fail., Other strange crashes., Entering certain characters crashes Rgui., Installation and Usage
-@section The internet download functions fail.
 
-for example @code{update.packages} and the menu items on the Packages menu.
-
-We have had several reports of this, although they do work for us on
-@emph{all} of our machines.  There are two known possible fixes.
-
-(a) Use the alternative @code{internet2.dll} by starting R with the flag
-@code{--internet2} (@pxref{How do I install R for Windows?}) which uses
-the Internet Explorer internals (and so needs Internet Explorer 4 or
-later installed).
-
-(b) A proxy needs to be set up: see @code{?download.file}.
-
-@node Other strange crashes.,  , The internet download functions fail., Installation and Usage
+@node Other strange crashes.,  , Entering certain characters crashes Rgui., Installation and Usage
 @section Other strange crashes.
 
 Some users have found that @code{Rgui.exe} fails to start, exiting with a ``Floating-
@@ -759,7 +778,7 @@ act on it).
 @menu
 * My workspace gets saved in a strange place.  How do I stop this?::  
 * How do I store my workspace in a different place?::  
-* Can I load workspaces saved under Unix/GNU-Linux?::  
+* Can I load workspaces saved under Unix/GNU-Linux or MacOS?::  
 @end menu
 
 
@@ -769,7 +788,7 @@ act on it).
 Have you changed the working directory?: see Q5.2.
 
 
-@node How do I store my workspace in a different place?, Can I load workspaces saved under Unix/GNU-Linux?, My workspace gets saved in a strange place.  How do I stop this?, Workspaces
+@node How do I store my workspace in a different place?, Can I load workspaces saved under Unix/GNU-Linux or MacOS?, My workspace gets saved in a strange place.  How do I stop this?, Workspaces
 @section How do I store my workspace in a different place?
 
 Use the `File | Change Dir...' menu item to select a new working
@@ -781,8 +800,8 @@ From the command line you can change the working directory by the
 function @code{setwd}: see its help page.
 
 
-@node Can I load workspaces saved under Unix/GNU-Linux?,  , How do I store my workspace in a different place?, Workspaces
-@section Can I load workspaces saved under Unix/GNU-Linux?
+@node Can I load workspaces saved under Unix/GNU-Linux or MacOS?,  , How do I store my workspace in a different place?, Workspaces
+@section Can I load workspaces saved under Unix/GNU-Linux or MacOS?
 
 Yes.  All ports of R use the same format for workspaces, so they are
 interchangeable (for the same 1.x.? version of R, at least).
@@ -1097,14 +1116,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2002 December 24 by Professor B. D. Ripley
+Last edited 2003 January 14 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2002 December 24 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2003 January 14 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
