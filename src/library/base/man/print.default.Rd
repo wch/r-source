@@ -32,7 +32,7 @@ print.atomic(x, quote = TRUE, \dots)
 }
 \details{
   The default for printing \code{NA}s is to print \code{NA} (without
-  quotes) unless this is a character \code{NA} \emph{end}, \code{quote =
+  quotes) unless this is a character \code{NA} \emph{and} \code{quote =
     FALSE}, when \code{<NA>} is printed.
 }
 \seealso{The generic \code{\link{print}}, \code{\link{options}}.
