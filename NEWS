@@ -569,6 +569,9 @@ BUG FIXES
     o	Base graphics now notices (ab)lines which have a zero
 	coordinate on log scale, and omits them.  (PR#7559)
 
+    o	atop() and warning() now accept NULL, as they are documented
+	to do (although this seems of little use and is equivalent to "").
+
 
 
 
