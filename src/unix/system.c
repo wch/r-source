@@ -51,7 +51,7 @@
 #include "Runix.h"
 
 
-#ifdef HAVE_AQUA
+#ifdef HAVE_AQUA 
 void R_StartConsole(void) { ptr_R_StartConsole(); }
 #endif
 

@@ -43,6 +43,7 @@ void Raqua_ResetConsole(void);
 void Raqua_FlushConsole(void);
 void Raqua_ClearerrConsole(void);
 
+
 void R_load_X11_shlib(void);
 void R_load_gnome_shlib(void);
 void R_load_aqua_shlib(void);
