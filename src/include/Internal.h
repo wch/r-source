@@ -37,8 +37,12 @@ SEXP do_XFig(SEXP, SEXP, SEXP, SEXP);
 SEXP do_PDF(SEXP, SEXP, SEXP, SEXP);
 SEXP do_Quartz(SEXP, SEXP, SEXP, SEXP);
 
+#if defined(Unix) && defined(HAVE_AQUA)
+SEXP do_wsbrowser(SEXP, SEXP, SEXP, SEXP);
+#endif
 
 #ifdef Macintosh
+SEXP do_wsbrowser(SEXP, SEXP, SEXP, SEXP);
 SEXP do_Macintosh(SEXP, SEXP, SEXP, SEXP);
 SEXP do_applescript(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fileedit(SEXP, SEXP, SEXP, SEXP);
