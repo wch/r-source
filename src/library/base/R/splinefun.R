@@ -3,21 +3,15 @@ splinefun <- function(x, y=NULL, method="fmm")
 	x <- xy.coords(x, y)
 	y <- x$y
 	x <- x$x
-## ensured by  xy.coords(.) :
-## 	if (!is.numeric(x) || !is.numeric(y))
-##		stop("splinefun: x and y must be numeric")
-	n <- length(x)
-## ensured by  xy.coords(.) :
-## 	if (n != length(y))
-## 		stop("x and y must have equal lengths")
+	n <- length(x)# = length(y), ensured by xy.coords(.)
 	method <- match(method, c("periodic", "natural", "fmm"))
 	if(is.na(method))
 		stop("splinefun: invalid interpolation method")
 	if(any(diff(x) < 0)) {
-            o <- order(x)
-            x <- x[o]
-            y <- y[o]
-        }
+	    z <- order(x)
+	    x <- x[z]
+	    y <- y[z]
+	}
 	if(method == 1 && y[1] != y[n]) {
 		warning("first and last y values differ in spline - using y[1] for both")
 		y[n] <- y[1]
@@ -31,7 +25,7 @@ splinefun <- function(x, y=NULL, method="fmm")
 		c=double(n),
 		d=double(n),
 		e=double(if(method == 1) n else 0))
-	rm(x,y,n,method,o)
+	rm(x,y,n,method)
 	function(x) {
 		.C("spline_eval",
 			z$method,
