@@ -1,0 +1,9 @@
+useDynLib(ctest)
+
+exportPattern("\\.test$")
+exportPattern("\\.test.default$")
+exportPattern("\\.test.formula$")
+export(pairwise.table, print.power.htest)
+
+S3method(print, pairwise.htest)
+S3method(print, power.htest)
