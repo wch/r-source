@@ -45,11 +45,13 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   The mean and variance are
   \eqn{E(X) = \alpha\sigma}{E(X) = a*s} and
   \eqn{Var(X) = \alpha\sigma^2}{Var(X) = a*s^2}.
+
+  \code{pgamma()} uses algorithm AS 239, see the references.
 }
 \note{
   The S parametrization is via \code{shape} and \code{rate}: S has no
   \code{scale} parameter.  Prior to 1.4.0 \R only had \code{scale}.
-  
+
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
   is \code{-pgamma(t, ..., lower = FALSE, log = TRUE)}.
 }
@@ -57,6 +59,10 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
+
+  Shea, B. L. (1988)
+  Algorithm AS 239,  Chi-squared and Incomplete Gamma Integral,
+  \emph{Applied Statistics (JRSS C)} \bold{37}, 466--473.
 }
 \seealso{
   \code{\link{gamma}} for the Gamma function, \code{\link{dbeta}} for
