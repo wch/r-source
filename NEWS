@@ -17,6 +17,10 @@ NEW FEATURES
     o	The more recent GNU regex from grep-2.4.2 is used.
 
 
+BUG FIXES
+
+    o   xlab expressions didn't print
+
 
 	**************************************************
 	*						 *
