@@ -407,7 +407,7 @@ check-recommended:
 docs manuals:
 	@$(MAKE) --no-print-directory -C $(RHOME)/doc/manual -f Makefile.win clean BUILD=$(BUILD)
 	@$(MAKE) --no-print-directory -C $(RHOME)/doc/manual -f Makefile.win BUILD=$(BUILD)
-	@$(MAKE) --no-print-directory ziponly-base
+#	@$(MAKE) --no-print-directory ziponly-base
 
 
 ## ===================== Maintainer targets ========================
