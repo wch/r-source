@@ -39,7 +39,7 @@ double rf(double n1, double n2)
     if (ISNAN(n1) || ISNAN(n2) || n1 <= 0. || n2 <= 0.)
 	ML_ERR_return_NAN;
 
-    v1 = R_FINITE(n1) ? (rchisq(n1) / n1) : norm_rand();
-    v2 = R_FINITE(n2) ? (rchisq(n2) / n2) : norm_rand();
+    v1 = R_FINITE(n1) ? (rchisq(n1) / n1) : 1;
+    v2 = R_FINITE(n2) ? (rchisq(n2) / n2) : 1;
     return v1 / v2;
 }
