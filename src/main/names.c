@@ -680,7 +680,7 @@ FUNTAB R_FunTab[] =
 {"symbols",	do_symbols,	0,	111,	-1,	PP_FUNCALL},
 
 /* Objects */
-
+{"inherits",    do_inherits,    0,      11,     3,     PP_FUNCALL},
 {"UseMethod",	do_usemethod,	0,	 0,	-1,	PP_FUNCALL},
 {"NextMethod",	do_nextmethod,	0,	10,	-1,	PP_FUNCALL},
 

@@ -4,7 +4,7 @@
 class(x)
 class(x) <- names
 unclass(x)
-inherits(x, name)
+inherits(x, what, which = FALSE)
 }
 \alias{class}
 \alias{class<-}
@@ -33,11 +33,25 @@ inherits(x, name)
   \code{unclass} returns (a copy of) its argument with its class
   information removed.
 
-  \code{inherits} indicates whether its first argument inherits from a
-  class with name equal to its second argument.
+  \code{inherits} indicates whether its first argument inherits from any
+  of the classes specified in the \code{what} argument. If \code{which}
+  is \code{TRUE} then an integer vector of the same length as
+  \code{what} is returned. Each element indicates the position in the
+  \code{class(x)} matched by the element of \code{what}; zero indicates
+  no match. If \code{what} is \code{FALSE} then \code{TRUE} is 
+  returned by \code{inherits} if any of the names in \code{what} match
+  with any \code{class}.
 }
 \seealso{
   \code{\link{UseMethod}}, \code{\link{NextMethod}}.
+}
+\examples{
+  x<-10
+  inherits(x,"a") #FALSE
+  class(x)<-c("a","b")
+  inherits(x,"a") #TRUE
+  inherits(x,"a",T) # 1
+  inherits(x,c("a","b","c"),T) # 1 2 0
 }
 \keyword{methods}
 \keyword{classes}

@@ -654,3 +654,50 @@ void RemoveClass(SEXP x, char *name)
 	UNPROTECT(1);
     }
 }
+
+SEXP do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP x, class, what, which, rval;
+    int i, j, nargs, nwhat, isvec, nclass;
+
+    checkArity(op, args);
+
+    x = CAR(args);
+    /* if x isn't an object get out asap */
+    if( !isObject(x) )
+	return mkFalse();
+    
+    class = getAttrib(x, R_ClassSymbol);
+    nclass = length(class);
+
+    what = CADR(args);
+    if( !isString(what) )
+	errorcall(call, "what must be a character vector");
+    nwhat = length(what);
+
+    which = CADDR(args);
+    if( !isLogical(which) || (length(which) != 1) )
+	errorcall(call, "which must be a length 1 logical vector");
+    isvec = asLogical(which);
+
+    if( isvec )
+	rval = allocVector(INTSXP, nwhat);
+
+    for(j=0; j<nwhat; j++) {
+	for(i=0; i<nclass; i++) {
+	    if( isvec )
+		INTEGER(rval)[j] = 0;
+	    if(!strcmp(CHAR(STRING(class)[i]), CHAR(STRING(what)[j]))) {
+		if(isvec) 
+		   INTEGER(rval)[j] = i+1; 
+		else 
+		    return mkTrue();
+		break;
+	    }
+	}
+    }
+    if( !isvec ) 
+	return mkFalse();
+    return rval;
+}
+	
