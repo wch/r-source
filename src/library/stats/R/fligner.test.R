@@ -37,7 +37,9 @@ function(x, g, ...)
         stop("not enough observations")
     ## FIXME: now the specific part begins.
 
-    x <- unlist(tapply(x, g, function(u) u - median(u)))
+    ## Careful. This assumes that g is a factor:
+    x <- x - tapply(x,g,median)[g]
+    
     a <- qnorm((1 + rank(abs(x)) / (n + 1)) / 2)
     STATISTIC <- sum(tapply(a, g, "sum")^2 / tapply(a, g, "length"))
     STATISTIC <- (STATISTIC - n * mean(a)^2) / var(a)

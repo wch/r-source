@@ -968,6 +968,8 @@ BUG FIXES
 	before 1902 and after 2038 computed which were leap years from
 	(year-1900) so got some xx00 years wrong.
 
+    o   fligner.test() worked correctly only if data were already sorted
+        by group levels. (PR#6739)
 
 
 		CHANGES IN R VERSION 1.8.0
