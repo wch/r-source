@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-3, @value{FAQ-YEAR}-10-09
+@set FAQ-VERSION 1.8-4, @value{FAQ-YEAR}-10-10
 @set REL-VERSION 1.8.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -302,6 +302,9 @@ updated hourly.  The @option{-C} and in the @command{rsync} command
 is to cause it to skip the CVS directories.  Further information on
 @command{rsync} is available at @uref{http://rsync.samba.org/rsync/}.
 
+The sources of the development version are also available via anonymous
+CVS.  See @uref{http://anoncvs.R-project.org} for more information.
+
 @node How can R be installed?, Are there Unix binaries for R?, How can R be obtained?, R Basics
 @section How can R be installed?
 
@@ -439,24 +442,24 @@ to MacOS 9.2.2.  This port of R for Macintosh is no longer supported.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2003-10-09:
+@c Linux binaries as of 2003-10-10:
 @c
 @c debian    woody i386  1.7.1  Dirk Eddelbuettel <edd@debian.org>
 @c           sarge i386  1.7.1  Dirk Eddelbuettel <edd@debian.org>
-@c mandrake  8.0   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
-@c           8.1   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
-@c           8.2   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
-@c           9.0   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
-@c           9.1   i386  1.7.1  Michele Alzetta <mikalzet@libero.it>
-@c redhat    7.x   alpha 1.6.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c                 i386  1.7.1  Martyn Plummer <plummer@iarc.fr>
+@c mandrake  8.0   i386    Michele Alzetta <mikalzet@libero.it>
+@c           8.1   i386    Michele Alzetta <mikalzet@libero.it>
+@c           8.2   i386    Michele Alzetta <mikalzet@libero.it>
+@c           9.0   i386    Michele Alzetta <mikalzet@libero.it>
+@c           9.1   i386    Michele Alzetta <mikalzet@libero.it>
+@c redhat    7.x   alpha 1.7.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
+@c                 i386  1.8.0  Martyn Plummer <plummer@iarc.fr>
 @c           8.x   i386  1.8.0  Martyn Plummer <plummer@iarc.fr>
-@c           9     i386  1.7.1  Martyn Plummer <plummer@iarc.fr>
-@c suse      7.3   i386  1.7.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           8.0   i386  1.7.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           8.1   i386  1.7.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c           8.2   i386  1.7.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
-@c vinelinux 2.6   i386  1.7.1  Susunu Tanimura <stanimura-ngs@umin.ac.jp>
+@c           9     i386  1.8.0  Martyn Plummer <plummer@iarc.fr>
+@c suse      7.3   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           8.0   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           8.1   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c           8.2   i386  1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c vinelinux 2.6   i386    Susunu Tanimura <stanimura-ngs@umin.ac.jp>
 
 The @file{bin/linux} directory of a @CRAN{} site contains Debian
 stable/testing packages for the i386 platform (now part of the Debian
