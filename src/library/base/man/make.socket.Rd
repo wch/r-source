@@ -46,7 +46,7 @@ daytime <- function(host = "localhost"){
     on.exit(close.socket(a))
     read.socket(a)
 }
-\dontrun{daytime()}  ## only works if your computer runs this service
-\dontrun{daytime("ntp.demon.co.uk")}
+## Offical time (UTC) from US Naval Observatory
+\dontrun{daytime("tick.usno.navy.mil")}
 }
 \keyword{misc}
