@@ -14,10 +14,10 @@ pkstwo(Sint *n, double *x, double *tol) {
 
     for(i = 0; i < *n; i++) {
 	z = 2 * *x * *x;
-	s = 1;
+	s = -1;
 	k = 1;
-	old = 1;
-	new = 0;
+	old = 0;
+	new = 1;
 	while(fabs(old - new) > *tol) {
 	    old = new;
 	    new += 2 * s / exp(z * k * k);
