@@ -421,6 +421,8 @@ static int GTK_Open(DevDesc *dd, gtkDesc *gtkd, char *dsp, double w, double h)
 
   /* create drawingarea */
   gtkd->drawing = gtk_drawing_area_new();
+  gtk_widget_set_events(gtkd->drawing,
+			GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
 
   /* connect to signal handlers, etc */
   gtk_signal_connect(GTK_OBJECT(gtkd->drawing), "realize",
@@ -878,10 +880,64 @@ static void GTK_Text(double x, double y, int coords,
 		    str, strlen(str), deg2rad * rot);
 }
 
+
+typedef struct _GTK_locator_info GTK_locator_info;
+
+struct _GTK_locator_info {
+    guint x;
+    guint y;
+    gboolean button1;
+};
+
+static gboolean locator_button_press(GtkWidget *widget,
+				     GdkEventButton *event,
+				     gpointer user_data)
+{
+  GTK_locator_info *info;
+
+  info = (GTK_locator_info *) user_data;
+
+  info->x = event->x;
+  info->y = event->y;
+  if(event->button == 1)
+      info->button1 = TRUE;
+  else
+      info->button1 = FALSE;
+
+  gtk_main_quit();
+}
+
 static int GTK_Locator(double *x, double *y, DevDesc *dd)
 {
-  /* FIXME: implement this */
-  g_message("FIXME: GTK_Locator is not implemented");
+  gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
+  GTK_locator_info *info;
+  guint handler_id;
+  gboolean button1;
+
+  info = g_new(GTK_locator_info, 1);
+
+  /* Flush any pending events */
+  while(gtk_events_pending())
+      gtk_main_iteration();
+
+  /* connect signal */
+  handler_id = gtk_signal_connect(GTK_OBJECT(gtkd->drawing), "button-press-event",
+				  (GtkSignalFunc) locator_button_press, (gpointer) info);
+
+  /* run the handler */
+  gtk_main();
+
+  *x = (double) info->x;
+  *y = (double) info->y;
+  button1 = info->button1;
+
+  /* clean up */
+  gtk_signal_disconnect(GTK_OBJECT(gtkd->drawing), handler_id);
+  g_free(info);
+
+  if(button1)
+      return 1;
+
   return 0;
 }
 
