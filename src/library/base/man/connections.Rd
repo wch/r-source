@@ -110,7 +110,7 @@ isIncomplete(con)
     \item{\code{"wb"}}{Open for writing in binary mode.}
     \item{\code{"ab"}}{Open for appending in binary mode.}
     \item{\code{"r+"}, \code{"r+b"}}{Open for reading and writing.}
-    \item{\code{"r+"}, \code{"w+b"}}{Open for reading and writing,
+    \item{\code{"w+"}, \code{"w+b"}}{Open for reading and writing,
       truncating file initially.}
     \item{\code{"a+"}, \code{"a+b"}}{Open for reading and appending.}
   }
