@@ -269,7 +269,7 @@ static SEXP commentgets(SEXP vec, SEXP comment)
 {
     if (isNull(comment) || isString(comment)) {
 	if (length(comment) <= 0) {
-	    SET_ATTRIB(vec, stripAttrib(R_CommentSymbol, vec));
+	    SET_ATTRIB(vec, stripAttrib(R_CommentSymbol, ATTRIB(vec)));
 	}
 	else {
 	    installAttrib(vec, R_CommentSymbol, comment);

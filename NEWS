@@ -95,7 +95,8 @@ BUG FIXES
 	expressions between explicit calls to `return' and falling off
 	the end returns.
 
-    o	attr(x, "class") <- character(0) was segfaulting.
+    o	attr(x, "class") <- character(0) was segfaulting.  Similar problem
+	with "comment" attribute also fixed.
 
 
 
