@@ -3,6 +3,11 @@
 
 #define Unix
 
+/* AIX at least. */
+#ifndef _ALL_SOURCE
+#undef _ALL_SOURCE
+#endif
+
 /* alloca */
 #undef C_ALLOCA
 #undef HAVE_ALLOCA
