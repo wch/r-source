@@ -1,7 +1,7 @@
 \name{SHLIB}
 \title{Build a DLL for Dynamic Loading}
 \alias{SHLIB}
-\usage{Rcmd SHLIB [-o dllname] files}
+\usage{R CMD SHLIB [-o dllname] files}
 \arguments{
   \item{files}{a list of names of (typically) source files to be
     compiled and included in the library.  You can also include the name

@@ -2,13 +2,13 @@
 ##  Rd2dvi -- Convert man pages (*.Rd help files) via LaTeX to DVI/PDF.
 ##
 ## Examples:
-##  Rcmd Rd2dvi.sh /path/to/Rsrc/src/library/base/man/Normal.Rd
-##  Rcmd Rd2dvi.sh `grep -l "\\keyword{distr" \
+##  R CMD Rd2dvi.sh /path/to/Rsrc/src/library/base/man/Normal.Rd
+##  R CMD Rd2dvi.sh `grep -l "\\keyword{distr" \
 ##                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
 
 R_PAPERSIZE=${R_PAPERSIZE-a4}
 
-revision='$Revision: 1.18 $'
+revision='$Revision: 1.18.2.1 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi.sh ${version}
 

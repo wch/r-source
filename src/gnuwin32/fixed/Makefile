@@ -34,22 +34,22 @@ fixh: version h/config.h \
 	$(SED) -e 's/"contr.poly")/"contr.poly"), pager="console"/' $< > $@
 
 ../../../bin/check: ../../scripts/check.in
-	$(SED) -e 1d -e "s/R CMD/Rcmd/" -e "s/Rd2dvi /Rd2dvi.sh /" $< > $@
+	$(SED) -e 1d -e "s/Rd2dvi /Rd2dvi.sh /" $< > $@
 
 ../../../bin/build: ../../scripts/build.in
-	$(SED) -e 1d -e "s/R CMD/Rcmd/" $< > $@
+	$(SED) -e 1d $< > $@
 
 ../../../bin/Sd2Rd: ../../scripts/Sd2Rd.in
-	$(SED) -e 1d -e "s/R CMD/Rcmd/" $< > $@
+	$(SED) -e 1d $< > $@
 
 ../../../bin/Rdconv: ../../scripts/Rdconv.in
-	$(SED) -e 1d -e s/\"unix\"/\"windows\"/ -e "s/R CMD/Rcmd/" $< > $@
+	$(SED) -e 1d -e s/\"unix\"/\"windows\"/ $< > $@
 
 ../../../bin/Rdiff.sh: ../../scripts/Rdiff
 	$(SED) -e 1d -e 's/\$${EGREP}/grep -E/' $< > $@
 
 ../../../bin/Rprof: ../../scripts/Rprof.in
-	$(SED) -e 1d -e "s/R CMD/Rcmd/" $< > $@
+	$(SED) -e 1d $< > $@
 
 fixbin: ../../../bin/massage-Examples ../../../bin/build \
 	   ../../../bin/check ../../../bin/Rdconv \

@@ -101,7 +101,7 @@ Rterm.exe --no-restore --no-save < infile > outfile 2>&1
 
 (users of Windows 95/98/ME should omit 2>&1) although users will
 probably want to set up simple .bat or .cmd files to run batch
-jobs. You can also use it via Rcmd BATCH: see ?BATCH or Rcmd BATCH
+jobs. You can also use it via R CMD BATCH: see ?BATCH or R CMD BATCH
 --help.
 
 Use with ESS: You can use Rterm.exe to provide inferior R-mode in ESS

@@ -6969,12 +6969,12 @@ skipped: this can be useful to retrieve values from it with
 @code{commandArgs()}.
 @end table
 
-The command @code{Rcmd} allows the invocation of various tools which
+The command @code{R CMD} allows the invocation of various tools which
 are useful in conjunction with @R{}, but not intended to be called
 ``directly''.  The general form is
 
 @example
-Rcmd @var{command} @var{args}
+R CMD @var{command} @var{args}
 @end example
 
 @noindent
@@ -7010,12 +7010,12 @@ Convert S documentation to Rd format.
 Use
 
 @example
-Rcmd @var{command} --help
+R CMD @var{command} --help
 @end example
 
 @noindent
 to obtain usage information for each of the tools accessible via the
-@code{Rcmd} interface.
+@code{R CMD} interface.
 
 You may also specify your own @code{*.bat} or @code{*.exe} file instead of one of the built-in
 commands.  It will be run with the following environment variables set appropriately:
@@ -7024,7 +7024,7 @@ commands.  It will be run with the following environment variables set appropria
 on your path, then 
 
 @example
-Rcmd latex.exe mydoc
+R CMD latex.exe mydoc
 @end example
 
 @noindent

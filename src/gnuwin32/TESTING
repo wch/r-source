@@ -71,10 +71,10 @@ Testing R build under Windows
       cross-links between help files in different packages under HTML
       and CHTML.
 
-    o Try Rcmd INSTALL on windlgs.
+    o Try R CMD INSTALL on windlgs.
 
 
-- Test Rprof and Rcmd Rprof.
+- Test Rprof and R CMD Rprof.
 
 - Check win.version() is reporting sensibly.
 
@@ -95,7 +95,7 @@ Testing R build under Windows
   will need to do this on an installed version or run .../bin/RSetReg.exe.)
 
 - Using the installed copy, try building a copy of packages and a
-  bundle (e.g. VR) using Rcmd INSTALL, and try Rcmd check and Rcmd
+  bundle (e.g. VR) using R CMD INSTALL, and try R CMD check and R CMD
   build too.  Also a package that uses BLAS (e.g. quadprog).
 
 - If you have latex installed, customize .../bin/helpPRINT.bat and

@@ -102,10 +102,10 @@ At this point there are two approaches:
 
 Assuming that ...\rw10xx\bin is in your path, use
 
-	Rcmd INSTALL package
+	R CMD INSTALL package
 
 where `package' can be a directory or a .tar.gz file.  See
-Rcmd INSTALL --help for a full list of options, which include
+R CMD INSTALL --help for a full list of options, which include
 
   -l, --library=LIB	install packages to library tree LIB
       --docs=TYPE	type(s) of documentation to build and install
@@ -163,7 +163,7 @@ You will need zip installed, of course. Just run
 after building mypkg.  Target `ziphelp-mypkg' will make the zip files
 but not remove the separate files: this can be used for testing.
 
-This is an option to Rcmd INSTALL.
+This is an option to R CMD INSTALL.
 
 
 Using zipped data files
@@ -176,7 +176,7 @@ You will need zip installed. Just run
 after building mypkg.  This is recommended if you have either many small
 data files (as in package Devore5) or a few large data files.
 
-This is an option to Rcmd INSTALL.
+This is an option to R CMD INSTALL.
 
 
 Checking and building packages
@@ -184,9 +184,9 @@ Checking and building packages
 
 The equivalent of `R CMD check mypkg' on Unix is
 
-	Rcmd check mypkg
+	R CMD check mypkg
 
-Use `Rcmd check --help' for full details.  There is an analogous call for
+Use `R CMD check --help' for full details.  There is an analogous call for
 build.
 
 You may need to set TMPDIR to (the absolute path to) a suitable
@@ -208,7 +208,7 @@ See the Writing R Extensions manual for full instructions on converting
 package help files to DVI or PDF format.  If you have the necessary tools 
 installed,
 
-	Rcmd rd2dvi.sh --pdf mypkg
+	R CMD rd2dvi.sh --pdf mypkg
 	
 will use LaTeX to build a PDF version of the reference manual.	
 
@@ -341,7 +341,7 @@ which installs the package in \mysources\mypkg as \R\library\mypkg.
 
 It may well be simpler to use
 
-	Rcmd INSTALL -l /R/library /mysources/mypkg
+	R CMD INSTALL -l /R/library /mysources/mypkg
 
 Once again, if the paths contain spaces use the short forms, although
 Rcmd INSTALL will attempt to convert the paths if needed (but they

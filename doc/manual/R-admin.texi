@@ -494,12 +494,8 @@ first library in @env{R_LIBS} is used if set, otherwise the main
 library @file{@var{R_HOME}/library} is used.  (@env{R_LIBS} is looked
 for in the environment: @file{.Renviron} is not read by @command{R CMD}.)
 
-The Windows equivalent is@footnote{if you have the source-code package
-files installed}
-
-@smallexample
-Rcmd INSTALL -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
-@end smallexample
+The same command works in Windows if you have the source-code package
+files installed.
 
 @findex install.packages
 Alternatively, packages can be downloaded and installed from within
@@ -568,16 +564,6 @@ can be removed by
 @smallexample
 R CMD REMOVE -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
 @end smallexample
-
-@noindent
-(Unix) or
-
-@smallexample
-Rcmd REMOVE -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
-@end smallexample
-
-@noindent
-(Windows).
 
 From a running @R{} process they can be removed by
 

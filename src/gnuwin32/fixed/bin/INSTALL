@@ -26,7 +26,7 @@ use R::Dcf;
 use R::Utils;
 
 
-my $revision = ' $Revision: 1.38 $ ';
+my $revision = ' $Revision: 1.38.2.1 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -256,7 +256,7 @@ if((-e "$R_HOME/doc/html/R.css") && !(-e "$library/R.css")) {
 
 sub usage {
     print STDERR <<END;
-Usage: Rcmd $name [options] pkgs
+Usage: R CMD $name [options] pkgs
 
 Install the add-on packages specified by pkgs into the default R library
 tree ($R_HOME/library) or the tree specified via \`--library'.  The
