@@ -1,4 +1,8 @@
-seq <- function(from = 1, to = 1, by = ((to - from)/(length.out - 1)), length.out = NULL, along.with = NULL) {
+seq <- function(x, ...) UseMethod("seq")
+
+seq.default <-
+function(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
+         length.out = NULL, along.with = NULL) {
 	if(!missing(along.with))
 		length.out <- length(along.with)
 	else if(!missing(length.out))
