@@ -24,7 +24,7 @@
 @title R for Windows FAQ
 @subtitle Frequently Asked Questions on R for Windows
 @subtitle Version @value{VERSION}
-@author B. D. Ripley
+@author B. D. Ripley and D. J. Murdoch
 @end titlepage
 
 @ifinfo
@@ -103,6 +103,7 @@ The information here applies only to recent versions of R for Windows,
 * Does R use the Registry?::    
 * Entering certain characters crashes Rgui.::  
 * The internet download functions fail.::  
+* Other strange crashes.::
 @end menu
 
 
@@ -356,7 +357,7 @@ the date-time functions.  However, you are probably better off
 re-installing Windows.
 
 
-@node The internet download functions fail.,  , Entering certain characters crashes Rgui., Installation and Usage
+@node The internet download functions fail., Other strange crashes. , Entering certain characters crashes Rgui., Installation and Usage
 @section The internet download functions fail.
 
 for example @code{update.packages} and the menu items on the Packages menu.
@@ -370,6 +371,23 @@ the Internet Explorer internals (and so needs Internet Explorer 4 or
 later installed).
 
 (b) A proxy needs to be set up: see @code{?download.file}.
+
+@node Other strange crashes.,  , The internet download functions fail. , Installation and Usage
+@section Other strange crashes.
+
+Some users have found that @code{Rgui.exe} fails to start, exiting with a ``Floating-
+point invalid operation'' or other low level error.  This error may also happen in
+the middle of a session.  In some cases where we have tracked this down, it
+was due to bugs in the video driver on the system in question:  it makes
+changes to the floating point control word which are incompatible with R.
+(Good practice would restore the control word to the state it was in when
+the driver code was called.) For example, one user reported that the virtual
+screen manager JSP2 caused this crash.
+
+These errors are essentially impossible for us to fix or work around.  The only 
+solution we know of is for the user to replace the buggy driver that is
+causing the error.
+
 
 
 @newchap{}
