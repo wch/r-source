@@ -275,7 +275,11 @@ function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
                   type = if(do.lab) "c" else "l")
 	return(invisible())
     }
-    if(missing(ylab)) ylab <- xlabel
+    if(missing(ylab)) {
+        ylab <- colnames(x)
+        if(length(ylab) != 1)
+            ylab <- xlabel
+    }
     time.x <- time(x)
     if(is.null(xlim)) xlim <- range(time.x)
     if(is.null(ylim)) ylim <- range(x[is.finite(x)])
