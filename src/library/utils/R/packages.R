@@ -60,9 +60,8 @@ update.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
         update <- old
 
 
-    if(!is.null(update)){
-        if(is.null(instlib))
-            instlib <-  update[,"LibPath"]
+    if(!is.null(update)) {
+        if(is.null(instlib)) instlib <-  update[,"LibPath"]
 
         install.packages(update[,"Package"], instlib,
                          contriburl = contriburl,
@@ -91,9 +90,9 @@ old.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
     for(b in unique(instp[,"Bundle"])){
         if(!is.na(b))
             for (w in unique(instp[,"LibPath"])) {
-            ok <- which(instp[,"Bundle"] == b & instp[,"LibPath"] == w)
-            if(length(ok) > 1) instp <- instp[-ok[-1], ]
-        }
+                ok <- which(instp[,"Bundle"] == b & instp[,"LibPath"] == w)
+                if(length(ok) > 1) instp <- instp[-ok[-1], ]
+            }
     }
 
     ## for packages contained in bundles use bundle names from now on
@@ -111,7 +110,7 @@ old.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
         z <- match(instp[k, "Package"], available[,"Package"])
         if(is.na(z)) next
         onCran <- available[z, ]
-        ## OK if Built: is missing (it which should not be)
+        ## OK if Built: is missing (which it should not be)
 	if((!checkBuilt || package_version(instp[k, "Built"]) >= minorR) &&
            package_version(onCran["Version"]) <=
            package_version(instp[k, "Version"])) next
@@ -129,6 +128,27 @@ old.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
     if(!is.null(update))
         colnames(update) <- c("Package", "LibPath", "Installed", "Built", "CRAN")
     update
+}
+
+new.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
+                         contriburl = contrib.url(CRAN),
+                         method, available = NULL)
+{
+    if(is.null(lib.loc)) lib.loc <- .libPaths()
+
+    instp <- installed.packages(lib.loc = lib.loc)
+    if(is.null(dim(instp)))
+        stop("no installed.packages for (invalid?) lib.loc=",lib.loc)
+    if(is.null(available))
+        available <- CRAN.packages(contriburl = contriburl, method = method)
+    ## for packages contained in bundles use bundle names from now on
+    ok <- !is.na(instp[,"Bundle"])
+    instp[ok,"Package"] <- instp[ok,"Bundle"]
+    installed <- unique(instp[, "Package"])
+    ok <- !is.na(available[,"Bundle"])
+    available[ok,"Package"] <- available[ok,"Bundle"]
+    poss <- sort(unique(available[ ,"Package"])) # sort in local locale
+    setdiff(poss, installed)
 }
 
 installed.packages <- function(lib.loc = NULL, priority = NULL)

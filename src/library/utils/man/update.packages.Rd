@@ -25,6 +25,10 @@ old.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
              contriburl = contrib.url(CRAN),
              method, available = NULL, checkBuilt = FALSE)
 
+new.packages(lib.loc = NULL, CRAN = getOption("CRAN"),
+             contriburl = contrib.url(CRAN),
+             method, available = NULL)
+
 download.packages(pkgs, destdir, available = NULL,
                   CRAN = getOption("CRAN"),
                   contriburl = contrib.url(CRAN), method)
@@ -89,6 +93,9 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   \code{checkBuilt = TRUE}, that were built under an earlier minor
   version of \R (for example under 2.0.x and running \R 2.1.1).
 
+  \code{new.packages} does the same comparison but reports uninstalled
+  packages that are available on CRAN.
+
   \code{download.packages} takes a list of package/bundle names and a
   destination directory, downloads the newest versions of the package
   sources and saves them in \code{destdir}.  If the list of available
@@ -152,10 +159,17 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   \code{"Installed"} and \code{"CRAN"}.  (The last two columns are
   version numbers.)
 
+  For \code{new.packages} a character vector of package/bundle names.
+
   For \code{download.packages}, a two-column matrix of names and
   destination file names, for those packages/bundles successfully downloaded.
 
   \code{install.packages} and \code{update.packages} have no return value.
+}
+\section{Warning}{
+  Not enough information is recorded to know if a bundle is completely
+  installed, so a bundle is regarded as installed if any of its
+  component packages is.
 }
 \seealso{
   \code{\link{installed.packages}}.

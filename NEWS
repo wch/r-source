@@ -73,6 +73,9 @@ NEW FEATURES
 	should be deleted: they will be deleted at the end of the
 	session anyway (and can be deleted by the user at any time).
 
+    o	New function new.packages() to report uninstalled packages
+	available at the requested repositories.
+
 
 UTILITIES
 
