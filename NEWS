@@ -63,6 +63,8 @@ NEW FEATURES
 	guaranteed for user-supplied random-number generators, nor
 	when the standalone Rmath library is used.
 
+     o  New function constrOptim for optimisation under linear inequality
+        constraints
 
 INSTALLATION CHANGES
 
