@@ -58,6 +58,13 @@ points(x, \dots)
 
   Graphical parameters are permitted as arguments to this function.
 }
+\note{
+  What is meant by \sQuote{a single character} is locale-dependent, and
+  may not be handled well in multi-byte locales such as UTF-8.
+
+  The encoding may not have symbols for some or all of the characters in
+  \code{pch=128:255} 
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
