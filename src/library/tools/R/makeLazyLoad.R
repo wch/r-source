@@ -54,7 +54,8 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
     } else {
         pkgpath <- sub("/data$", "", dataDir)
         package <- basename(pkgpath)
-        lib.loc <- dirname(pkgpath)
+	# avoid builddir != srcdir problems -- assume package has been installed
+        #lib.loc <- dirname(pkgpath)
     }
     if(file_test("-d", dataDir)) {
         if(file.exists(sv <- file.path(dataDir, "Rdata.rds"))) {

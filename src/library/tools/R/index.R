@@ -28,11 +28,6 @@ function(dataDir, contents)
     if(!file_test("-d", dataDir))
         stop(paste("directory", sQuote(dataDir), "does not exist"))
     ## dataFiles <- list_files_with_type(dataDir, "data")
-    ## <FIXME>
-    ## To avoid name clashes CO2 is stored as zCO2.R.
-    ## dataTopics <- unique(basename(file_path_sans_ext(dataFiles)))
-    ## dataTopics[dataTopics == "zCO2"] <- "CO2"
-    ## </FIXME>
     dataTopics <- list_data_in_pkg(dataDir=dataDir)
     names(dataTopics) <- paste(names(dataTopics), "/", sep="")
     datasets <- unlist(dataTopics)
