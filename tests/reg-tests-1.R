@@ -995,6 +995,11 @@ detach("package:modreg")
 ## segfaulted in 1.5.1
 
 
+## format.AsIs was not handling matrices
+jk <- data.frame(x1=2, x2=I(matrix(0,1,2)))
+jk
+## printing failed in 1.5.1
+
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
