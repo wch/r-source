@@ -141,6 +141,9 @@ NEW FEATURES
 	one argument but not if it had two.  This allows trunc.POSIXt()
 	to be called via the group generic trunc().
 
+     o  hist.default now returns the nominal break points, not those
+	adjusted for numerical tolerances.
+
 
 INSTALLATION CHANGES
 

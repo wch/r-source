@@ -78,6 +78,9 @@ hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
   and \code{include.lowest} really has the meaning of
   ``\emph{include highest}''.
 
+  A numerical tolerance of \eqn{10^{-7}}{1e-7} times the range of the
+  breaks is applied when counting entries on the edges of bins. 
+
   The default for \code{breaks} is \code{"Sturges"}: see
   \code{\link{nclass.Sturges}}.  Other names for which algorithms
   are supplied are \code{"Scott"} and \code{"FD"} /
@@ -107,11 +110,15 @@ hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
   The resulting value does \emph{not} depend on the values of
   the arguments \code{freq} (or \code{probability})
   or \code{plot}.  This is intentionally different from S.
+
+  Prior to \R 1.7.0, the element \code{breaks} of the result was
+  adjusted for numerical tolerances.  The nominal values are now
+  returned even though tolerances are still used when counting.
 }
 
 \references{
-  Venables, W. N. and Ripley. B. D. (1999)
-  \emph{Modern Applied Statistics with S-PLUS}.  Springer.
+  Venables, W. N. and Ripley. B. D. (2002)
+  \emph{Modern Applied Statistics with S}.  Springer.
 }
 
 \seealso{

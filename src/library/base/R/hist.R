@@ -72,17 +72,17 @@ hist.default <-
 	c(rep(-diddle, length(breaks) - 1),
 	    if(include.lowest) diddle else -diddle)
 
-    breaks <- breaks + fuzz
-    h <- diff(breaks)
+    fuzzybreaks <- breaks + fuzz
+    h <- diff(fuzzybreaks)
 
     storage.mode(x) <- "double"
-    storage.mode(breaks) <- "double"
+    storage.mode(fuzzybreaks) <- "double"
     ## With the fuzz adjustment above, the "right" and "include"
     ## arguments are really irrelevant
     counts <- .C("bincount",
                  x,
                  n,
-                 breaks,
+                 fuzzybreaks,
                  nB,
                  counts = integer(nB - 1),
                  right = as.logical(right),
