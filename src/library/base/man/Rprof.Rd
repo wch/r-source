@@ -24,11 +24,19 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02)
   another or the same file.
   
   Profiling works by writing out the call stack every \code{interval}
-  seconds, to the file specified.   Either the \code{\link{summaryRprof}}
+  seconds, to the file specified. Either the \code{\link{summaryRprof}}
+#ifdef windows
   function or the Perl script \code{Rcmd Rprof}
   can be used to process the output file to produce a summary of the
   usage; use \code{Rcmd Rprof --help} for usage information.
+#endif
+#ifdef unix
+  function or the Perl script \code{R CMD Rprof} can be used to process
+  the output file to produce a summary of the
+  usage; use \code{R CMD Rprof --help} for usage information.
+#endif
 
+#ifdef windows
   Exactly what the time interval measures is subtle: it is time that the
   \R process is running and executing an \R command.  It is not however just
   CPU time, for if \code{readline()} is waiting for input, that counts
@@ -37,9 +45,29 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02)
   Note that the timing interval cannot be too small, for the time spent
   in each profiling step is added to the interval.  What is feasible is
   machine-dependent, but 10ms seems as small as advisable on a 1GHz machine.
+#endif
+#ifdef unix
+  Note that the timing interval cannot be too small: once the timer goes
+  off, the information is not recorded until the next clock tick
+  (probably every 10msecs).  Thus the interval is rounded to the nearest
+  integer number of clock ticks, and is made to be at least one clock
+  tick (at which resolution the total time spent is liable to be
+  underestimated).
+#endif
 }
 \note{
+#ifdef windows
   Using \code{Rcmd Rprof} needs Windows Perl to be installed.
+#endif
+#ifdef unix
+  Profiling is not available on all platforms.  By default, it is
+  attempted to compile support for profiling.  Configure \R with
+  \option{--disable-R-profiling} to change this.
+
+  As \R profiling uses the same mechanisms as C profiling, the two
+  cannot be used together, so do not use \code{Rprof} in an executable
+  built for profiling.
+#endif
 }
 \seealso{
   The chapter on \dQuote{Tidying and profiling R code} in
@@ -57,9 +85,6 @@ Rprof(append=TRUE)
 ## some code to be profiled
 Rprof(NULL)
 \dots
-## Post-process the output by
-##   Rcmd Rprof Rprof.out
-## at the command prompt.
-}
-}
+## Now post-process the output as described in Details
+}}
 \keyword{utilities}
