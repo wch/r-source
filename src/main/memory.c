@@ -156,6 +156,13 @@ static int R_VGrowIncr = 100000;
 static double R_VShrinkFrac = 0.30;
 static int R_VShrinkIncr = 100000;
 
+/* Maximal Heap Limits.  These variables contain upper limits on the
+   heap sizes.  They could be made adjustable from the R level,
+   perhaps by a handler for a recoverable error.  For now both are set
+   to INT_MAX to insure that the heap counters do not wrap on systems
+   with that much memory */
+static int R_MaxVSize = INT_MAX;
+static int R_MaxNSize = INT_MAX;
 
 /* Miscellaneous Globals. */
 
@@ -659,8 +666,10 @@ static void AdjustHeapSize(int size_needed)
   double vect_occup =
     ((double) (R_SmallVallocSize + R_LargeVallocSize + size_needed)) / R_VSize;
 
-  if (node_occup > R_NGrowFrac)
-    R_NSize += R_NGrowIncr;
+  if (node_occup > R_NGrowFrac) {
+    if (R_MaxNSize - R_NSize >= R_NGrowIncr)
+      R_NSize += R_NGrowIncr;
+  }
   else if (node_occup < R_NShrinkFrac) {
     R_NSize -= R_NShrinkIncr;
     if (R_NSize < orig_R_NSize)
@@ -670,10 +679,13 @@ static void AdjustHeapSize(int size_needed)
   if (vect_occup > 1.0) {
     int k = (R_SmallVallocSize + R_LargeVallocSize + size_needed - R_VSize - 1)
       / R_VGrowIncr + 1;
-    R_VSize += k * R_VGrowIncr;
+    if (R_MaxVSize - R_VSize >= k * R_VGrowIncr)
+      R_VSize += k * R_VGrowIncr;
   }
-  else if (vect_occup > R_VGrowFrac)
-    R_VSize += R_VGrowIncr;
+  else if (vect_occup > R_VGrowFrac) {
+    if (R_MaxVSize - R_VSize >= R_VGrowIncr)
+      R_VSize += R_VGrowIncr;
+  }
   else if (vect_occup < R_VShrinkFrac) {
     R_VSize -= R_VShrinkIncr;
     if (R_VSize < orig_R_VSize)
