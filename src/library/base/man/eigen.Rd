@@ -3,7 +3,7 @@
 \alias{La.eigen}
 \title{Spectral Decomposition of a Matrix}
 \usage{
-eigen(x, symmetric, only.values = FALSE)
+eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
 La.eigen(x, symmetric, only.values = FALSE,
          method = c("dsyevr", "dsyev"))
 }
@@ -16,36 +16,38 @@ La.eigen(x, symmetric, only.values = FALSE,
   \item{only.values}{if \code{TRUE}, only the eigenvalues are computed
     and returned, otherwise both eigenvalues and eigenvectors are
     returned.}
+  \item{EISPACK}{logical. Should EISPACK be used (for compatibility with
+    \R < 1.7.0)?}
   \item{method}{The LAPACK routine to use in the real symmetric case.}
 }
 \description{
-  Function \code{eigen} computes eigenvalues and eigenvectors by providing an
-  interface to the EISPACK routines \code{RS}, \code{RG}, \code{CH}
-  and \code{CG}.
-
-  Function \code{La.eigen} uses the LAPACK routines DSYEV/DSYEVR,
-  DGEEV, ZHEEV and ZGEEV.
+  Computes eigenvalues and eigenvectors.
 }
 \details{
+  These functions use the LAPACK routines DSYEV/DSYEVR,
+  DGEEV, ZHEEV and ZGEEV, and \code{eigen(EISPACK=TRUE)} provides an
+  interface to the EISPACK routines \code{RS}, \code{RG}, \code{CH}
+  and \code{CG}.
+   
   If \code{symmetric} is unspecified, the code attempts to
   determine if the matrix is symmetric up to plausible numerical
   inaccuracies.  It is faster and surer to set the value yourself.
 
-  \code{La.eigen} is preferred to \code{eigen} for new projects, but
-  its eigenvectors may differ in sign and (in the asymmetric case) in
-  normalization. (They may also differ between methods
-  and between platforms.)
+  \code{eigen} is preferred to \code{eigen(EISPACK=TRUE)}
+  for new projects, but its eigenvectors may differ in sign and
+  (in the asymmetric case) in normalization. (They may also differ
+  between methods and between platforms.)
 
   The LAPACK routine DSYEVR is usually substantially
   faster than DSYEV: see
   \url{http://www.cs.berkeley.edu/~demmel/DOE2000/Report0100.html}.
   Most benefits are seen with an optimized BLAS system.
 
-  Computing the eigenvectors is the slow part for large matrices.
-
   Using \code{method="dsyevr"} requires IEEE 754 arithmetic.  Should
   this not be supported on your platform, \code{method="dsyev"} is
   used, with a warning.
+
+  Computing the eigenvectors is the slow part for large matrices.
 }
 \value{
   The spectral decomposition of \code{x} is returned
@@ -58,8 +60,9 @@ La.eigen(x, symmetric, only.values = FALSE,
     eigenvectors of \code{x}, or \code{NULL} if \code{only.values} is
     \code{TRUE}.
     
-    For \code{eigen(, symmetric = FALSE)} the choice of length of the
-    eigenvectors is not defined by LINPACK. In all other cases the
+    For \code{eigen(, symmetric = FALSE, EISPACK =TRUE)}
+    the choice of length of the
+    eigenvectors is not defined by EISPACK. In all other cases the
     vectors are normalized to unit length.
 
     Recall that the eigenvectors are only defined up to a constant: even
@@ -113,24 +116,17 @@ stopifnot(
 
 em <- eigen(sm, symmetric = FALSE); V2 <- em$vect
 print(lam2 <- em$values) # ordered decreasingly in ABSolute value !
-                         # and V2 is not normalized (where V is):
 print(i <- rev(order(lam2)))
 stopifnot(abs(lam - lam2[i]) < 60 * Meps)
 
-zapsmall(Diag <- t(V2) \%*\% V2) # orthogonal, but not normalized
-print(norm2V <- colSums(V2 * V2))
-stopifnot( abs(1- norm2V / diag(Diag)) < 60*Meps)
+zapsmall(Diag <- t(V2) \%*\% V2)
+stopifnot( abs(1- diag(Diag)) < 60*Meps)
 
-V2n <- sweep(V2,2, STATS= sqrt(norm2V), FUN="/")## V2n are now Normalized EV
-apply(V2n * V2n, 2, sum)
-##[1] 1 1 1 1 1
-
-## Both are now TRUE:
-stopifnot(abs(sm \%*\% V2n - V2n \%*\% diag(lam2))            < 60*Meps,
-          abs(sm         - V2n \%*\% diag(lam2) \%*\% t(V2n)) < 60*Meps)
+stopifnot(abs(sm \%*\% V2 - V2 \%*\% diag(lam2))            < 60*Meps,
+          abs(sm         - V2 \%*\% diag(lam2) \%*\% t(V2)) < 60*Meps)
 
 ## Re-ordered as with symmetric:
-sV <- V2n[,i]
+sV <- V2[,i]
 slam <- lam2[i]
 all(abs(sm \%*\% sV -  sV \%*\% diag(slam))             < 60*Meps)
 all(abs(sm        -  sV \%*\% diag(slam) \%*\% t(sV)) < 60*Meps)

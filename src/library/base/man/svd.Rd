@@ -3,7 +3,7 @@
 \alias{La.svd}
 \title{Singular Value Decomposition of a Matrix}
 \usage{
-svd(x, nu = min(n, p), nv = min(n, p))
+svd(x, nu = min(n, p), nv = min(n, p), LINPACK = FALSE)
 La.svd(x, nu = min(n, p), nv = min(n, p), method = c("dgesdd", "dgesvd"))
 }
 \arguments{
@@ -13,6 +13,8 @@ La.svd(x, nu = min(n, p), nv = min(n, p), method = c("dgesdd", "dgesvd"))
     except for \code{method = "dgesdd"}.}
   \item{nv}{the number of right singular vectors to be computed.
     This must be one of \code{0} and \code{ncol(x)}.}
+  \item{LINPACK}{logical. Should LINPACK be used (for compatibility with
+    \R < 1.7.0)?}
   \item{method}{The LAPACK routine to use in the real case.}
 }
 \description{
@@ -20,28 +22,22 @@ La.svd(x, nu = min(n, p), nv = min(n, p), method = c("dgesdd", "dgesvd"))
 }
 \details{
   The singular value decomposition plays an important role in many
-  statistical techniques.
-
-  \code{svd} provides an interface to the LINPACK routine DSVDC.
-  \code{La.svd} provides an interface to the LAPACK routines DGESVD and
-  DGESDD.  The latter is usually substantially faster if singular
-  vectors are required: see
+  statistical techniques.  \code{svd} and \code{La.svd} provide two
+  slightly different interfaces.  The main functions used are
+  the LAPACK routines DGESDD and ZGESVD; \code{svd(LINPACK=TRUE)}
+  provides an interface to the LINPACK routine DSVDC, purely for
+  backwards compatibility.
+  
+  \code{La.svd} provides an interface to both the LAPACK routines
+  DGESVD and DGESDD.  The latter is usually substantially faster
+  if singular vectors are required: see
   \url{http://www.cs.berkeley.edu/~demmel/DOE2000/Report0100.html}.
   Most benefit is seen with an optimized BLAS system.
-
-  \code{La.svd} is preferred to \code{svd} for new projects, but it is
-  not an exact replacement as it returns the transpose of the right
-  singular vector matrix, and the signs of the singular vectors may differ
-  from those given by \code{svd}.  (They may also differ between methods
-  and between platforms.)
-
-  Both functions handle complex matrices via LAPACK routine ZGESVD.
-
-  Computing the singular vectors is the slow part for large matrices.
-
   Using \code{method="dgesdd"} requires IEEE 754 arithmetic.  Should
   this not be supported on your platform, \code{method="dgesvd"} is
   used, with a warning.
+
+  Computing the singular vectors is the slow part for large matrices.
 }
 \value{
   The SVD decomposition of the matrix as computed by LINPACK,
@@ -51,13 +47,12 @@ La.svd(x, nu = min(n, p), nv = min(n, p), method = c("dgesdd", "dgesvd"))
   values \eqn{D_{ii}}{D[i,i]}.  Equivalently, \eqn{\bold{D = U' X V}},
   which is verified in the examples, below.
 
-  The components in the returned value correspond directly
-  to the values returned by DSVDC.
+  The returned value is a list with components
   \item{d}{a vector containing the singular values of \code{x}.}
   \item{u}{a matrix whose columns contain the left singular vectors of
-    \code{x}.}
+    \code{x}, present if \code{nu > 0}}
   \item{v}{a matrix whose columns contain the right singular vectors of
-    \code{x}.}
+    \code{x}, present if \code{nv > 0}.}
 
   For \code{La.svd} the return value replaces \code{v} by \code{vt}, the
   (conjugated if complex) transpose of \code{v}.
