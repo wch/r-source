@@ -1,16 +1,23 @@
 \name{grid.arrows}
 \alias{grid.arrows}
+\alias{arrowsGrob}
 \title{ Draw Arrows }
 \description{
-  This will draw arrows at either end of a line or an existing
+  Functions to create and draw arrows at either end of a line, or at
+  either end of a 
   line.to, lines, or segments grob.
 }
 \usage{
 grid.arrows(x = c(0.25, 0.75), y = 0.5, default.units = "npc",
             grob = NULL,
             angle = 30, length = unit(0.25, "inches"),
-            ends = "last", type = "open",
+            ends = "last", type = "open", name = NULL,
             gp = gpar(), draw = TRUE, vp = NULL)
+arrowsGrob(x = c(0.25, 0.75), y = 0.5, default.units = "npc",
+            grob = NULL,
+            angle = 30, length = unit(0.25, "inches"),
+            ends = "last", type = "open", name = NULL,
+            gp = gpar(), vp = NULL)
 }
 \arguments{
   \item{x}{A numeric vector or unit object specifying x-values.}
@@ -26,6 +33,7 @@ grid.arrows(x = c(0.25, 0.75), y = 0.5, default.units = "npc",
     indicating which end of the line to add arrow heads. }
   \item{type}{ Either \code{"open"} or \code{"closed"} to indicate
     the type of arrow head.   }
+  \item{name}{ A character identifier. }
   \item{gp}{An object of class \code{gpar}, typically the output
     from a call to the function \code{gpar}.  This is basically
     a list of graphical parameter settings.}
@@ -34,11 +42,15 @@ grid.arrows(x = c(0.25, 0.75), y = 0.5, default.units = "npc",
   \item{vp}{A Grid viewport object (or NULL).}
 }
 \details{
+  Both functions create an arrows grob (a graphical object describing 
+  arrows), but only \code{grid.arrows()}
+  draws the arrows (and then only if \code{draw} is \code{TRUE}).
+  
   If the grob argument is specified, this overrides any x
   and/or y arguments.
 }
 \value{
-  An object of class \code{"grob"}.
+  An arrows grob.  \code{grid.arrows()} returns the value invisibly.
 }
 \author{ Paul Murrell }
 \seealso{
@@ -86,17 +98,21 @@ popViewport()
 pushViewport(viewport(layout.pos.col=3,
                        layout.pos.row=2))
 grid.rect(gp=gpar(col="grey"))
-gs <- grid.segments(x0=unit(1:4/5, "npc"),
-                    x1=unit(1:4/5, "npc"))
+# Drawing arrows on a segments grob
+gs <- segmentsGrob(x0=unit(1:4/5, "npc"),
+                   x1=unit(1:4/5, "npc"))
 grid.arrows(grob=gs, length=unit(0.1, "npc"),
             type="closed", gp=gpar(fill="white"))
 popViewport()
 pushViewport(viewport(layout.pos.col=4,
                        layout.pos.row=2))
 grid.rect(gp=gpar(col="grey"))
-gl <- grid.lines(x=unit(0:80/100, "npc"),
-                 y=unit((0:80/100)^2, "npc"))
-grid.arrows(grob=gl, angle=15, type="closed", gp=gpar(fill="black"))
+# Arrows on a lines grob
+# Name these because going to grid.edit them later
+gl <- linesGrob(name="curve", x=unit(0:80/100, "npc"),
+                y=unit((0:80/100)^2, "npc"))
+grid.arrows(name="arrowOnLine", grob=gl, angle=15, type="closed",
+            gp=gpar(fill="black"))
 popViewport()
 pushViewport(viewport(layout.pos.col=1,
                        layout.pos.row=2))
@@ -104,9 +120,10 @@ grid.move.to(x=0.5, y=0.8)
 popViewport()
 pushViewport(viewport(layout.pos.col=4,
                        layout.pos.row=1))
-glt <- grid.line.to(x=0.5, y=0.2, gp=gpar(lwd=3))
+# Arrows on a line.to grob
+glt <- lineToGrob(x=0.5, y=0.2, gp=gpar(lwd=3))
 grid.arrows(grob=glt, ends="first", gp=gpar(lwd=3))
 popViewport(2)
-grid.edit(gl, y=unit((0:80/100)^3, "npc"))
+grid.edit(gPath("arrowOnLine", "curve"), y=unit((0:80/100)^3, "npc"))
 }
 \keyword{dplot}

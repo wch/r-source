@@ -1,74 +1,135 @@
+
 ######################################
 # move-to and line-to primitives
 ######################################
-draw.details.move.to <- function(x, x.wrapped, recording=TRUE) {
+validGrobDetails.move.to <- function(x) {
+  if (!is.unit(x$x) ||
+      !is.unit(x$y))
+    stop("x and y must be units")
+  # Make sure that x and y are of length 1
+  if (unit.length(x$x) > 1 | unit.length(x$y) > 1)
+    stop("x and y must have length 1")
+  x
+}
+
+drawDetails.move.to <- function(x, recording=TRUE) {
   grid.Call.graphics("L_moveTo", x$x, x$y)
+}
+
+moveToGrob <- function(x=0, y=0,
+                       default.units="npc",
+                       name=NULL, vp=NULL) {
+  if (!is.unit(x))
+    x <- unit(x, default.units)
+  if (!is.unit(y))
+    y <- unit(y, default.units)
+  grob(x=x, y=y, 
+       name=name, vp=vp, cl="move.to")
 }
 
 grid.move.to <- function(x=0, y=0,
                          default.units="npc",
-                         draw=TRUE, vp=NULL) {
+                         name=NULL, draw=TRUE, vp=NULL) {
+  mtg <- moveToGrob(x=x, y=y, default.units=default.units,
+                    name=name, vp=vp)
+  if (draw)
+    grid.draw(mtg)
+  invisible(mtg)
+}
+
+validGrobDetails.line.to <- function(x) {
+  if (!is.unit(x$x) ||
+      !is.unit(x$y))
+    stop("x and y must be units")
+  # Make sure that x and y are of length 1
+  if (unit.length(x$x) > 1 | unit.length(x$y) > 1)
+    stop("x and y must have length 1")
+  x
+}
+
+drawDetails.line.to <- function(x, recording=TRUE) {
+  grid.Call.graphics("L_lineTo", x$x, x$y)
+}
+
+lineToGrob <- function(x=1, y=1,
+                       default.units="npc",
+                       name=NULL, gp=gpar(), vp=NULL) {
   if (!is.unit(x))
     x <- unit(x, default.units)
   if (!is.unit(y))
     y <- unit(y, default.units)
-  # Make sure that x and y are of length 1
-  if (unit.length(x) > 1 | unit.length(y) > 1)
-    stop("x and y must have length 1")
-  grid.grob(list(x=x, y=y, vp=vp), "move.to", draw)
-}
-
-draw.details.line.to <- function(x, x.wrapped, recording=TRUE) {
-  grid.Call.graphics("L_lineTo", x$x, x$y)
+  grob(x=x, y=y, 
+       name=name, gp=gp, vp=vp, cl="line.to")
 }
 
 grid.line.to <- function(x=1, y=1,
                          default.units="npc",
-                         draw=TRUE, gp=gpar(), vp=NULL) {
-  if (!is.unit(x))
-    x <- unit(x, default.units)
-  if (!is.unit(y))
-    y <- unit(y, default.units)
-  # Make sure that x and y are of length 1
-  if (unit.length(x) > 1 | unit.length(y) > 1)
-    stop("x and y must have length 1")
-  grid.grob(list(x=x, y=y, gp=gp, vp=vp), "line.to", draw)
+                         name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
+  ltg <- lineToGrob(x=x, y=y, default.units=default.units,
+                    name=name, gp=gp, vp=vp)
+  if (draw)
+    grid.draw(ltg)
+  invisible(ltg)
 }
 
 ######################################
 # LINES primitive
 ######################################
-draw.details.lines <- function(x, x.wrapped, recording=TRUE) {
+validGrobDetails.lines <- function(x) {
+  if (!is.unit(x$x) ||
+      !is.unit(x$y))
+    stop("x and y must be units")
+  x
+}
+
+drawDetails.lines <- function(x, recording=TRUE) {
   grid.Call.graphics("L_lines", x$x, x$y)
 }
 
-# Specify "units.per.obs=TRUE" to give a unit or units per (x, y) pair
-grid.lines <- function(x=unit(c(0, 1), "npc", units.per.obs),
-                   y=unit(c(0, 1), "npc", units.per.obs),
-                   default.units="npc", units.per.obs=FALSE,
-                   gp=gpar(), draw=TRUE, vp=NULL) {
+linesGrob <- function(x=unit(c(0, 1), "npc", units.per.obs),
+                      y=unit(c(0, 1), "npc", units.per.obs),
+                      default.units="npc", units.per.obs=FALSE,
+                      name=NULL, gp=gpar(), vp=NULL) {
   # Allow user to specify unitless vector;  add default units
   if (!is.unit(x))
     x <- unit(x, default.units, units.per.obs)
   if (!is.unit(y))
     y <- unit(y, default.units, units.per.obs)
-  l <- list(x=x, y=y, gp=gp, vp=vp)
-  cl <- "lines"
-  grid.grob(l, cl, draw)
+  grob(x=x, y=y, name=name, gp=gp, vp=vp, cl="lines")
+}
+
+# Specify "units.per.obs=TRUE" to give a unit or units per (x, y) pair
+grid.lines <- function(x=unit(c(0, 1), "npc", units.per.obs),
+                       y=unit(c(0, 1), "npc", units.per.obs),
+                       default.units="npc", units.per.obs=FALSE,
+                       name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
+  lg <- linesGrob(x=x, y=y, default.units=default.units,
+                  units.per.obs=units.per.obs,
+                  name=name, gp=gp, vp=vp)
+  if (draw)
+    grid.draw(lg)
+  invisible(lg)
 }
 
 ######################################
 # SEGMENTS primitive
 ######################################
-draw.details.segments <- function(x, x.wrapped, recording=TRUE) {
+validGrobDetails.segments <- function(x) {
+  if (!is.unit(x$x0) || !is.unit(x$x1) ||
+      !is.unit(x$y0) || !is.unit(x$y1))
+    stop("x0, y0, x1, and y1 must be units")
+  x
+}
+
+drawDetails.segments <- function(x, recording=TRUE) {
   grid.Call.graphics("L_segments", x$x0, x$y0, x$x1, x$y1)
 }
 
 # Specify "units.per.obs=TRUE" to give a unit or units per (x, y) pair
-grid.segments <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
-                      x1=unit(1, "npc"), y1=unit(1, "npc"),
-                      default.units="npc", units.per.obs=FALSE,
-                      gp=gpar(), draw=TRUE, vp=NULL) {
+segmentsGrob <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
+                         x1=unit(1, "npc"), y1=unit(1, "npc"),
+                         default.units="npc", units.per.obs=FALSE,
+                         name=NULL, gp=gpar(), vp=NULL) {
   # Allow user to specify unitless vector;  add default units
   if (!is.unit(x0))
     x0 <- unit(x0, default.units, units.per.obs)
@@ -78,60 +139,99 @@ grid.segments <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
     y0 <- unit(y0, default.units, units.per.obs)
   if (!is.unit(y1))
     y1 <- unit(y1, default.units, units.per.obs)
-  s <- list(x0=x0, y0=y0, x1=x1, y1=y1, gp=gp, vp=vp)
-  cl <- "segments"
-  grid.grob(s, cl, draw)
+  grob(x0=x0, y0=y0, x1=x1, y1=y1, name=name, gp=gp, vp=vp,
+       cl="segments")
+}
+
+grid.segments <- function(x0=unit(0, "npc"), y0=unit(0, "npc"),
+                      x1=unit(1, "npc"), y1=unit(1, "npc"),
+                      default.units="npc", units.per.obs=FALSE,
+                      name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
+  sg <- segmentsGrob(x0=x0, y0=y0, x1=x1, y1=y1,
+                     default.units=default.units,
+                     units.per.obs=units.per.obs,
+                     name=name, gp=gp, vp=vp)
+  if (draw)
+    grid.draw(sg)
+  invisible(sg)
 }
 
 ######################################
 # ARROWS primitive
 ######################################
-draw.details.arrows <- function(x, x.wrapped, recording=TRUE) {
+
+validGrobDetails.arrows <- function(x) {
+  # If grob is specified, that overrides any x and y values
+  grobName <- childNames(x)
+  if (length(grobName) == 0) {
+    if (!is.unit(x$x) ||
+        !is.unit(x$y))
+      stop("x and y must be units")
+  } else {
+    lineThing <- getGrob(x, grobName)
+    cl <- class(lineThing)
+    # The grob can only be a "lines" or "segments"
+    # (splines would be another candidate if they existed)
+    if (!(inherits(lineThing, "lines") ||
+          inherits(lineThing, "segments") ||
+          inherits(lineThing, "line.to")))
+      stop("The grob argument must be a line.to, lines, or segments grob")
+    x$x <- x$y <- NULL
+  }
+  if (!is.unit(x$length))
+    stop("Length must be a unit object")
+  x$ends <- as.integer(match(x$ends, c("first", "last", "both")))
+  x$type <- as.integer(match(x$type, c("open", "closed")))
+  if (any(is.na(x$ends)) || any(is.na(x$type)))
+    stop("Invalid ends or type argument")
+  x
+}
+
+drawDetails.arrows <- function(x, recording=TRUE) {
   if (is.null(x$x)) { # y should be null too
     if (!is.null(x$y))
       stop("Corrupt arrows object")
-    list.struct <- get.value(x$grob)
-#    cl <- class(list.struct)
+    lineThing <- getGrob(x, childNames(x))
     # This could be done via method dispatch, but that really
     # seemed like overkill
     # OTOH, this is NOT user-extensible
     # AND the code for, e.g., "lines" is not located with
     # the other grid.lines code so changes there are unlikely
     # to propagate to here (e.g., add an id arg to grid.lines?
-    if (inherits(list.struct, "line.to")) {
+    if (inherits(lineThing, "line.to")) {
       x1 <- NULL
-      x2 <- list.struct$x
+      x2 <- lineThing$x
       y1 <- NULL
-      y2 <- list.struct$y
+      y2 <- lineThing$y
       xnm1 <- NULL
-      xn <- list.struct$x
+      xn <- lineThing$x
       ynm1 <- NULL
-      yn <- list.struct$y
-    } else if (inherits(list.struct, "lines")) {
+      yn <- lineThing$y
+    } else if (inherits(lineThing, "lines")) {
       # x or y may be recycled
-      n <- max(unit.length(list.struct$x),
-               unit.length(list.struct$y))
-      xx <- unit.rep(list.struct$x, length=2)
+      n <- max(unit.length(lineThing$x),
+               unit.length(lineThing$y))
+      xx <- unit.rep(lineThing$x, length=2)
       x1 <- xx[1]
       x2 <- xx[2]
-      xx <- unit.rep(list.struct$x, length=n)
+      xx <- unit.rep(lineThing$x, length=n)
       xnm1 <- xx[n - 1]
       xn <- xx[n]
-      yy <- unit.rep(list.struct$y, length=2)
+      yy <- unit.rep(lineThing$y, length=2)
       y1 <- yy[1]
       y2 <- yy[2]
-      yy <- unit.rep(list.struct$y, length=n)
+      yy <- unit.rep(lineThing$y, length=n)
       ynm1 <- yy[n - 1]
       yn <- yy[n]
-    } else { # inherits(list.struct, "segments")
-      x1 <- list.struct$x0
-      x2 <- list.struct$x1
-      xnm1 <- list.struct$x0
-      xn <- list.struct$x1
-      y1 <- list.struct$y0
-      y2 <- list.struct$y1
-      ynm1 <- list.struct$y0
-      yn <- list.struct$y1
+    } else { # inherits(lineThing, "segments")
+      x1 <- lineThing$x0
+      x2 <- lineThing$x1
+      xnm1 <- lineThing$x0
+      xn <- lineThing$x1
+      y1 <- lineThing$y0
+      y2 <- lineThing$y1
+      ynm1 <- lineThing$y0
+      yn <- lineThing$y1
     }
   } else {
     # x or y may be recycled
@@ -154,49 +254,64 @@ draw.details.arrows <- function(x, x.wrapped, recording=TRUE) {
                      x$angle, x$length, x$ends, x$type)
 }
 
-grid.arrows <- function(x=c(0.25, 0.75), y=0.5,
+arrowsGrob <- function(x=c(0.25, 0.75), y=0.5,
                         default.units="npc",
                         grob=NULL,
                         angle=30, length=unit(0.25, "inches"),
                         ends="last", type="open",
-                        gp=gpar(), draw=TRUE, vp=NULL) {
-  # If grob is specified, that overrides any x and y values
-  if (!is.null(grob)) {
-    if (!is.grob(grob))
-      stop("The grob argument must be of class grob")
-    list.struct <- get.value(grob)
-    cl <- class(list.struct)
-    # The grob can only be a "lines" or "segments"
-    # (splines would be another candidate if they existed)
-    if (!(inherits(list.struct, "lines") ||
-          inherits(list.struct, "segments") ||
-          inherits(list.struct, "line.to")))
-      stop("The grob argument must be a line.to, lines, or segments grob")
-    x <- y <- NULL
-  } else {
+                        name=NULL, gp=gpar(), vp=NULL) {
+  if (is.null(grob)) {
     if (!is.unit(x))
       x <- unit(x, default.units)
     if (!is.unit(y))
       y <- unit(y, default.units)
   }
-  if (!is.unit(length))
-    stop("Length must be a unit object")
-  ends <- as.integer(match(ends, c("first", "last", "both")))
-  type <- as.integer(match(type, c("open", "closed")))
-  if (any(is.na(ends)) || any(is.na(type)))
-    stop("Invalid ends or type argument")
-  a <- list(x=x, y=y, grob=grob,
-            angle=as.numeric(angle), length=length,
-            ends=ends, type=type, gp=gp, vp=vp)
-  cl <- "arrows"
-  grid.grob(a, cl, draw)
+  gTree(x=x, y=y, children=if (is.null(grob)) NULL else gList(grob),
+       angle=as.numeric(angle), length=length,
+       ends=ends, type=type,
+       name=name, gp=gp, vp=vp, cl="arrows")
+}
+
+grid.arrows <- function(x=c(0.25, 0.75), y=0.5,
+                        default.units="npc",
+                        grob=NULL,
+                        angle=30, length=unit(0.25, "inches"),
+                        ends="last", type="open",
+                        name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
+  ag <- arrowsGrob(x=x, y=y, 
+                   default.units=default.units,
+                   grob=grob, angle=angle, length=length,
+                   ends=ends, type=type,
+                   name=name, gp=gp, vp=vp)
+  if (draw)
+    grid.draw(ag)
+  invisible(ag)
 }
 
 ######################################
 # POLYGON primitive
 ######################################
 
-draw.details.polygon <- function(x, x.wrapped, recording=TRUE) {
+validGrobDetails.polygon <- function(x) {
+  if (!is.unit(x$x) ||
+      !is.unit(x$y))
+    stop("x and y must be units")
+  if (!is.null(x$id) && !is.null(x$id.lengths))
+    stop("It is invalid to specify both id and id.lenths")
+  if (unit.length(x$x) != unit.length(x$y))
+    stop("x and y must be same length")
+  if (!is.null(x$id) && (length(x$id) != unit.length(x$x)))
+    stop("x and y and id must all be same length")
+  if (!is.null(x$id))
+    x$id <- as.integer(x$id)
+  if (!is.null(x$id.lengths) && (sum(x$id.lengths) != unit.length(x$x)))
+    stop("x and y and id.lengths must specify same overall length")
+  if (!is.null(x$id.lengths))
+    x$id.lengths <- as.integer(x$id.lengths)
+  x
+}
+
+drawDetails.polygon <- function(x, recording=TRUE) {
   if (is.null(x$id) && is.null(x$id.lengths))
     grid.Call.graphics("L_polygon", x$x, x$y,
                        list(as.integer(1:length(x$x))))
@@ -218,74 +333,100 @@ draw.details.polygon <- function(x, x.wrapped, recording=TRUE) {
   }
 }
 
-grid.polygon <- function(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
-                         id=NULL, id.lengths=NULL,
-                         default.units="npc",
-                         gp=gpar(),draw=TRUE, vp=NULL) {
-  if (!missing(id) && !missing(id.lengths))
-    stop("It is invalid to specify both id and id.lenths")
+polygonGrob <- function(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
+                        id=NULL, id.lengths=NULL,
+                        default.units="npc",
+                        name=NULL, gp=gpar(), vp=NULL) {
   if (!is.unit(x))
     x <- unit(x, default.units)
   if (!is.unit(y))
     y <- unit(y, default.units)
-  if (unit.length(x) != unit.length(y))
-    stop("x and y must be same length")
-  if (!is.null(id) && (length(id) != unit.length(x)))
-    stop("x and y and id must all be same length")
-  if (!is.null(id))
-    id <- as.integer(id)
-  if (!is.null(id.lengths) && (sum(id.lengths) != unit.length(x)))
-    stop("x and y and id.lengths must specify same overall length")
-  if (!is.null(id.lengths))
-    id.lengths <- as.integer(id.lengths)
-  p <- list(x=x, y=y, id=id,
-            id.lengths=id.lengths, gp=gp, vp=vp)
-  cl <- "polygon"
-  grid.grob(p, cl, draw)
+  grob(x=x, y=y, id=id,
+       id.lengths=id.lengths,
+       name=name, gp=gp, vp=vp, cl="polygon")
+}
+
+grid.polygon <- function(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
+                         id=NULL, id.lengths=NULL,
+                         default.units="npc",
+                         name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
+  pg <- polygonGrob(x=x, y=y, id=id, id.lengths=id.lengths,
+                    default.units=default.units,
+                    name=name, gp=gp, vp=vp)
+  if (draw)
+    grid.draw(pg)
+  invisible(pg)
 }
 
 ######################################
 # CIRCLE primitive
 ######################################
 
-draw.details.circle <- function(x, x.wrapped, recording=TRUE) {
+validGrobDetails.circle <- function(x) {
+  if (!is.unit(x$x) ||
+      !is.unit(x$y) ||
+      !is.unit(x$r))
+    stop("x, y, and r must be units")
+  x
+}
+
+drawDetails.circle <- function(x, recording=TRUE) {
   grid.Call.graphics("L_circle", x$x, x$y, x$r)
 }
 
-grid.circle <- function(x=0.5, y=0.5, r=0.5,
-                         default.units="npc",
-                         gp=gpar(),draw=TRUE, vp=NULL) {
+circleGrob <- function(x=0.5, y=0.5, r=0.5,
+                       default.units="npc",
+                       name=NULL, gp=gpar(), vp=NULL) {
   if (!is.unit(x))
     x <- unit(x, default.units)
   if (!is.unit(y))
     y <- unit(y, default.units)
   if (!is.unit(r))
     r <- unit(r, default.units)
-  c <- list(x=x, y=y, r=r, gp=gp, vp=vp)
-  cl <- "circle"
-  grid.grob(c, cl, draw)
+  grob(x=x, y=y, r=r, name=name, gp=gp, vp=vp, cl="circle")
+}
+              
+grid.circle <- function(x=0.5, y=0.5, r=0.5,
+                        default.units="npc",
+                        name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
+  cg <- circleGrob(x=x, y=y, r=r,
+                   default.units=default.units,
+                   name=name, gp=gp, vp=vp)
+  if (draw)
+    grid.draw(cg)
+  invisible(cg)
 }
 
 ######################################
 # RECT primitive
 ######################################
-draw.details.rect <- function(x, x.wrapped, recording=TRUE) {
+validGrobDetails.rect <- function(x) {
+  if (!is.unit(x$x) ||
+      !is.unit(x$y) ||
+      !is.unit(x$width) ||
+      !is.unit(x$height))
+    stop("x, y, width, and height must be units")
+  valid.just(x$just)
+  x
+}
+
+drawDetails.rect <- function(x, recording=TRUE) {
   grid.Call.graphics("L_rect", x$x, x$y, x$width, x$height,
                      valid.just(x$just))
 }
 
-width.details.rect <- function(x) {
+widthDetails.rect <- function(x) {
   absolute.size(x$width)
 }
 
-height.details.rect <- function(x) {
+heightDetails.rect <- function(x) {
   absolute.size(x$height)
 }
 
-grid.rect <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
-                      width=unit(1, "npc"), height=unit(1, "npc"),
-                      just="centre", default.units="npc",
-                      gp=gpar(),draw=TRUE, vp=NULL) {
+rectGrob <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
+                     width=unit(1, "npc"), height=unit(1, "npc"),
+                     just="centre", default.units="npc",
+                     name=NULL, gp=gpar(), vp=NULL) {
   if (!is.unit(x))
     x <- unit(x, default.units)
   if (!is.unit(y))
@@ -294,54 +435,81 @@ grid.rect <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
     width <- unit(width, default.units)
   if (!is.unit(height))
     height <- unit(height, default.units)
-  r <- list(x=x, y=y, width=width, height=height, just=just, gp=gp, vp=vp)
-  cl <- "rect"
-  grid.grob(r, cl, draw)
+  grob(x=x, y=y, width=width, height=height, just=just,
+       name=name, gp=gp, vp=vp, cl="rect")
+}
+            
+grid.rect <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
+                      width=unit(1, "npc"), height=unit(1, "npc"),
+                      just="centre", default.units="npc",
+                      name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
+  rg <- rectGrob(x=x, y=y, width=width, height=height, just=just,
+                 default.units=default.units,
+                 name=name, gp=gp, vp=vp)
+  if (draw)
+    grid.draw(rg)
+  invisible(rg)
 }
 
 ######################################
 # TEXT primitive
 ######################################
-draw.details.text <- function(x, x.wrapped, recording=TRUE) {
-  # FIXME:  Need type checking for "rot" and "check.overlap"
+validGrobDetails.text <- function(x) {
+  if (!is.expression(x$label))
+    x$label <- as.character(x$label)
+  if (!is.unit(x$x) ||
+      !is.unit(x$y))
+    stop("x and y must be units")
+  x$rot <- as.numeric(x$rot)
+  if (!all(is.finite(x$rot)))
+    stop("Invalid rot value")
+  valid.just(x$just)
+  x$check.overlap <- as.logical(x$check.overlap)
+  x
+}
+
+drawDetails.text <- function(x, recording=TRUE) {
   grid.Call.graphics("L_text", x$label, x$x, x$y,
-                 valid.just(x$just), x$rot, x$check.overlap)
+                     valid.just(x$just), x$rot, x$check.overlap)
 }
 
-width.details.text <- function(x) {
-  unit(1, "mystrwidth", data=x$label)
+widthDetails.text <- function(x) {
+  unit(1, "strwidth", data=x$label)
 }
 
-height.details.text <- function(x) {
-  unit(1, "mystrheight", data=x$label)
+heightDetails.text <- function(x) {
+  unit(1, "strheight", data=x$label)
 }
 
-grid.text <- function(label, x=unit(0.5, "npc"), y=unit(0.5, "npc"),
-                  just="centre", rot=0, check.overlap=FALSE,
-                  default.units="npc", gp=gpar(), draw=TRUE, vp=NULL) {
+textGrob <- function(label, x=unit(0.5, "npc"), y=unit(0.5, "npc"),
+                     just="centre", rot=0, check.overlap=FALSE,
+                     default.units="npc",
+                     name=NULL, gp=gpar(), vp=NULL) {
   if (!is.unit(x))
     x <- unit(x, default.units)
   if (!is.unit(y))
     y <- unit(y, default.units)
-  if (!is.expression(label))
-    label <- as.character(label)
-  rot <- as.numeric(rot)
-  if (!is.finite(rot))
-    stop("Invalid rot value")
-  txt <- list(label=label, x=x, y=y, gp=gp,
-              just=just, rot=rot, check.overlap=check.overlap,
-              vp=vp)
-  cl <- "text"
-  grid.grob(txt, cl, draw)
+  grob(label=label, x=x, y=y, 
+       just=just, rot=rot, check.overlap=check.overlap,
+       name=name, gp=gp, vp=vp, cl="text")
+}
+
+grid.text <- function(label, x=unit(0.5, "npc"), y=unit(0.5, "npc"),
+                      just="centre", rot=0, check.overlap=FALSE,
+                      default.units="npc",
+                      name=NULL, gp=gpar(), draw=TRUE, vp=NULL) {
+  tg <- textGrob(label=label, x=x, y=y, just=just, rot=rot,
+                 check.overlap=check.overlap,
+                 default.units=default.units,
+                 name=name, gp=gp, vp=vp)
+  if (draw)
+    grid.draw(tg)
+  invisible(tg)
 }
 
 ######################################
 # POINTS primitive
 ######################################
-draw.details.points <- function(x, x.wrapped, recording=TRUE) {
-  grid.Call.graphics("L_points", x$x, x$y, x$pch, x$size)
-}
-
 valid.pch <- function(pch) {
   if (length(pch) == 0)
     stop("zero-length pch")
@@ -352,19 +520,57 @@ valid.pch <- function(pch) {
   pch
 }
 
-grid.points <- function(x=runif(10),
-                        y=runif(10),
-                        pch=1, size=unit(1, "char"),
-                        default.units="native", gp=gpar(),
-                        draw=TRUE, vp=NULL) {
+validGrobDetails.points <- function(x) {
+  if (!is.unit(x$x) ||
+      !is.unit(x$y) ||
+      !is.unit(x$size))
+    stop("x, y and size must be units")
+  if (unit.length(x$x) != unit.length(x$y))
+    stop("x and y must be unit objects and have the same length")
+  x$pch <- valid.pch(x$pch)
+  x
+}
+
+drawDetails.points <- function(x, recording=TRUE) {
+  grid.Call.graphics("L_points", x$x, x$y, x$pch, x$size)
+}
+
+pointsGrob <- function(x=runif(10),
+                       y=runif(10),
+                       pch=1, size=unit(1, "char"),
+                       default.units="native",
+                       name=NULL, gp=gpar(),
+                       draw=TRUE, vp=NULL) {
   if (!is.unit(x))
     x <- unit(x, default.units)
   if (!is.unit(y))
     y <- unit(y, default.units)
-  if (unit.length(x) != unit.length(y))
-    stop("x and y must be unit objects and have the same length")
-  p <- list(x=x, y=y, pch=valid.pch(pch), size=size, gp=gp, vp=vp)
-  cl <- "points"
-  grid.grob(p, cl, draw)
+  grob(x=x, y=y, pch=pch, size=size,
+       name=name, gp=gp, vp=vp, cl="points")
 }
+
+grid.points <- function(x=runif(10),
+                        y=runif(10),
+                        pch=1, size=unit(1, "char"),
+                        default.units="native",
+                        name=NULL, gp=gpar(),
+                        draw=TRUE, vp=NULL) {
+  pg <- pointsGrob(x=x, y=y, pch=pch, size=size, 
+                   default.units=default.units,
+                   name=name, gp=gp, vp=vp)
+  if (draw)
+    grid.draw(pg)
+  invisible(pg)
+}
+
+
+
+
+
+
+
+
+
+
+
 

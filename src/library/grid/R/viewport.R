@@ -3,7 +3,7 @@ initvpAutoName <- function() {
   index <- 0
   function() {
     index <<- index + 1
-    paste("GRIDVP", index, sep="")
+    paste("GRID.VP.", index, sep="")
   }
 }
 
@@ -81,7 +81,10 @@ pushedvp <- function(vp) {
                     # be pushed "properly" the first time, calculating
                     # transformations, etc ...
                     devwidthcm = 0,
-                    devheightcm = 0))
+                    devheightcm = 0,
+                    # This is down here because need to keep
+                    # #defines in grid.h consistent with order here
+                    parentgpar = NULL))
   class(pvp) <- c("pushedvp", class(vp))
   pvp
 }
@@ -153,8 +156,8 @@ depth.vpTree <- function(vp) {
   depth(vp$parent) + depth(vp$children[[length(vp$children)]])
 }
 
-depth.vpPath <- function(vp) {
-  vp$n
+depth.path <- function(path) {
+  path$n
 }
 
 ####################
@@ -275,7 +278,7 @@ setvpgpar.vpTree <- function(vp) {
 }
 
 # Functions for creating "paths" of viewport names
-vpPathSep <- "::"
+.grid.pathSep <- "::"
 
 vpPathFromVector <- function(names) {
   n <- length(names)
@@ -284,10 +287,10 @@ vpPathFromVector <- function(names) {
   if (!all(is.character(names)))
     stop("Invalid viewport name(s)")
   path <- list(path=if (n==1) NULL else
-               paste(names[1:(n-1)], collapse=vpPathSep),
+               paste(names[1:(n-1)], collapse=.grid.pathSep),
                name=names[n],
                n=n)
-  class(path) <- "vpPath"
+  class(path) <- c("vpPath", "path")
   path
 }
 
@@ -298,15 +301,20 @@ vpPath <- function(...) {
 
 # Create vpPath from string with embedded VpPathSep(s)
 vpPathDirect <- function(path) {
-  names <- unlist(strsplit(path, vpPathSep))
+  names <- unlist(strsplit(path, .grid.pathSep))
   vpPathFromVector(names)
 }
 
-print.vpPath <- function(x, ...) {
+as.character.path <- function(x, ...) {
   if (x$n == 1)
     x$name
   else
-  print(paste(x$path, x$name, sep=vpPathSep))
+    paste(x$path, x$name, sep=.grid.pathSep)
+
+}
+
+print.path <- function(x, ...) {
+  print(as.character(x))
 }
 
 #############

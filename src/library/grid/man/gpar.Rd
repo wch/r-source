@@ -83,12 +83,12 @@ gpar(col = "blue", lty = "solid", lwd = 3, fontsize = 16)
 get.gpar(c("col", "lty"))
 grid.newpage()
 vp <- viewport(w = .8, h = .8, gp = gpar(col="blue"))
-grid.collection(grid.rect(gp = gpar(col="red"), draw = FALSE),
-                grid.text(paste("The rect is its own colour (red)",
-                                "but this text is the colour",
-                                "set by the collection (green)", sep = "\n"),
-                          draw = FALSE),
-                gp = gpar(col="green"), vp = vp)
+grid.draw(gTree(children=gList(rectGrob(gp = gpar(col="red")),
+                     textGrob(paste("The rect is its own colour (red)",
+                                    "but this text is the colour",
+                                    "set by the gTree (green)",
+                                    sep = "\n"))),
+      gp = gpar(col="green"), vp = vp))
 grid.text("This text is the colour set by the viewport (blue)",
           y = 1, just = c("center", "bottom"),
           gp = gpar(fontsize=20), vp = vp)

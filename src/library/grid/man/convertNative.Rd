@@ -3,9 +3,9 @@
 \title{ Convert a Unit Object to Native units }
 \description{
   \bold{This function is deprecated in grid version 0.8 and will be
-    made defunct in grid version 0.9}
+    made defunct in grid version 1.9}
 
-  You should use the \code{grid.convert()} function or one of its
+  You should use the \code{convertUnit()} function or one of its
   close allies instead.
   
   This function returns a numeric vector containing the specified
@@ -46,8 +46,8 @@ popViewport(1)
 
 # How to use grid.convert(), etc instead
 convertNative(unit(1, "inches")) ==
-  grid.convertX(unit(1, "inches"), "native", valueOnly=TRUE)
+  convertX(unit(1, "inches"), "native", valueOnly=TRUE)
 convertNative(unit(1, "inches"), "y", "dimension") ==
-  grid.convertHeight(unit(1, "inches"), "native", valueOnly=TRUE)
+  convertHeight(unit(1, "inches"), "native", valueOnly=TRUE)
 }
 \keyword{ dplot }

@@ -7,8 +7,9 @@ recycle.data <- function(data, data.per, max.n) {
   # The test for whether it is only a single value currently
   # consists of a check for mode="character" (i.e., a single
   # string) or mode="expression" (i.e., a single expression)
-  # or class="grob" (i.e., a single grob)
-  if (is.character(data) || is.expression(data) || is.grob(data))
+  # or class="grob" (i.e., a single grob) or class="gPath"
+  if (is.character(data) || is.expression(data) ||
+      is.grob(data) || inherits(data, "gPath"))
     data <- list(data)
   if (data.per)
     n <- max.n
@@ -50,6 +51,13 @@ valid.unit <- function(x, units, data) {
 grid.convert <- function(x, unitTo, axisFrom="x", typeFrom="location",
                          axisTo=axisFrom, typeTo=typeFrom,
                          valueOnly=FALSE) {
+  .Deprecated("convertUnit")
+  convertUnit(x, unitTo, axisFrom, typeFrom, axisTo, typeTo, valueOnly)
+}
+
+convertUnit <- function(x, unitTo, axisFrom="x", typeFrom="location",
+                        axisTo=axisFrom, typeTo=typeFrom,
+                        valueOnly=FALSE) {
   whatfrom <- match(axisFrom, c("x", "y")) - 1 +
     2*(match(typeFrom, c("location", "dimension")) - 1)
   whatto <- match(axisTo, c("x", "y")) - 1 +
@@ -67,29 +75,49 @@ grid.convert <- function(x, unitTo, axisFrom="x", typeFrom="location",
 }
 
 grid.convertX <- function(x, unitTo, valueOnly=FALSE) {
-  grid.convert(x, unitTo, "x", "location", "x", "location",
-               valueOnly=valueOnly)
+  .Deprecated("convertX")
+  convertX(x, unitTo, valueOnly)
+}
+
+convertX <- function(x, unitTo, valueOnly=FALSE) {
+  convertUnit(x, unitTo, "x", "location", "x", "location",
+              valueOnly=valueOnly)
 }
 
 grid.convertY <- function(x, unitTo, valueOnly=FALSE) {
-  grid.convert(x, unitTo, "y", "location", "y", "location",
-               valueOnly=valueOnly)
+  .Deprecated("convertY")
+  convertY(x, unitTo, valueOnly)
+}
+
+convertY <- function(x, unitTo, valueOnly=FALSE) {
+  convertUnit(x, unitTo, "y", "location", "y", "location",
+              valueOnly=valueOnly)
 }
 
 grid.convertWidth <- function(x, unitTo, valueOnly=FALSE) {
-  grid.convert(x, unitTo, "x", "dimension", "x", "dimension",
-               valueOnly=valueOnly)
+  .Deprecated("convertWidth")
+  convertWidth(x, unitTo, valueOnly)
+}
+
+convertWidth <- function(x, unitTo, valueOnly=FALSE) {
+  convertUnit(x, unitTo, "x", "dimension", "x", "dimension",
+              valueOnly=valueOnly)
 }
 
 grid.convertHeight <- function(x, unitTo, valueOnly=FALSE) {
-  grid.convert(x, unitTo, "y", "dimension", "y", "dimension",
-               valueOnly=valueOnly)
+  .Deprecated("convertHeight")
+  convertHeight(x, unitTo, valueOnly)
+}
+
+convertHeight <- function(x, unitTo, valueOnly=FALSE) {
+  convertUnit(x, unitTo, "y", "dimension", "y", "dimension",
+              valueOnly=valueOnly)
 }
 
 convertNative <- function(unit, dimension="x", type="location") {
-  .Deprecated("grid.convert")
-  grid.convert(unit, "native", dimension, type, dimension, type,
-               valueOnly=TRUE)
+  .Deprecated("convertUnit")
+  convertUnit(unit, "native", dimension, type, dimension, type,
+              valueOnly=TRUE)
 }
 
 # NOTE: the order of the strings in these conversion functions must
@@ -122,14 +150,28 @@ valid.data <- function(units, data) {
   grob.units <- units == "grobwidth"
   if (any(grob.units != 0))
     for (i in (1:n)[grob.units]) {
-      if (!(length(data) >= i && is.grob(data[[i]])))
+      if (!(length(data) >= i &&
+            (is.grob(data[[i]]) || inherits(data[[i]], "gPath") ||
+             is.character(data[[i]]))))
         stop("No grob supplied for `grobwidth' unit")
+      if (is.character(data[[i]]))
+        data[[i]] <- gPathDirect(data[[i]])
+      if (inherits(data[[i]], "gPath"))
+        if (depth(data[[i]]) > 1)
+          stop("gPath must have depth 1 in grobwidth/height units")
     }
   grob.units <- units == "grobheight"
   if (any(grob.units != 0))
     for (i in (1:n)[grob.units]) {
-      if (!(length(data) >= i && is.grob(data[[i]])))
+      if (!(length(data) >= i &&
+            (is.grob(data[[i]]) || inherits(data[[i]], "gPath") ||
+             is.character(data[[i]]))))
         stop("No grob supplied for `grobheight' unit")
+      if (is.character(data[[i]]))
+        data[[i]] <- gPathDirect(data[[i]])
+      if (inherits(data[[i]], "gPath"))
+        if (depth(data[[i]]) > 1)
+          stop("gPath must have depth 1 in grobwidth/height units")
     }
   data
 }
@@ -504,6 +546,44 @@ unit.length.unit.arithmetic <- function(unit) {
          "min"=1,
          "max"=1,
          "sum"=1)
+}
+
+#########################
+# Convenience functions 
+#########################
+
+stringWidth <- function(string) {
+  string <- as.character(string)
+  unit(rep(1, length(string)), "strwidth", data=as.list(string))
+}
+
+stringHeight <- function(string) {
+  string <- as.character(string)
+  unit(rep(1, length(string)), "strheight", data=as.list(string))
+}
+
+grobWidth <- function(x) {
+  UseMethod("grobWidth")
+}
+
+grobWidth.grob <- function(x) {
+  unit(1, "grobwidth", data=grob)
+}
+
+grobWidth.gList <- function(x) {
+  unit(rep(1, length(gList)), "grobwidth", data=x)
+}
+
+grobHeight <- function(x) {
+  UseMethod("grobHeight")
+}
+
+grobHeight.grob <- function(x) {
+  unit(1, "grobheight", data=grob)
+}
+
+grobHeight.gList <- function(x) {
+  unit(rep(1, length(gList)), "grobheight", data=x)
 }
 
 #########################

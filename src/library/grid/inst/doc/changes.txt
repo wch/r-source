@@ -58,6 +58,51 @@ Changes from grid_1.8.0 to grid_1.9.0:
     on the grid web site 
     (http://www.stat.auckland.ac.nz/~paul/grid/grid.html)
 
+9.  Changed the implementation of grob objects.  They are no longer 
+    implemented as external references.  They are now regular R objects
+    which copy-by-value.  This means that they can be saved/loaded
+    like normal R objects.  In order to retain some existing grob
+    behaviour, the following changes were necessary:
+
+    - grobs all now have a "name" slot.  The grob name is used to
+      uniquely identify a "drawn" grob (i.e., a grob on the display
+      list).  
+    - grid.edit() and grid.pack() now take a grob name as the first
+      argument instead of a grob.  (Actually, they take a gPath -
+      see below)
+    - the "grobwidth" and "grobheight" units take either a grob
+      OR a grob name (actually a gPath - see below).  Only in the 
+      latter case will the unit be updated if the grob "pointed to"
+      is modified.
+
+    In addition, the following features are now possible with grobs:
+
+    - grobs now save()/load() like any normal R object.
+    - many grid.*() functions now have a *Grob() counterpart.  The
+      grid.*() version is used for its side-effect of drawing 
+      something or modifying something which has been drawn;  the
+      *Grob() version is used for its return value, which is a grob.
+      This makes it more convenient to just work with grob objects without
+      producing any graphical output (by using the *Grob() functions).
+    - there is a gTree object (derived from grob), which is a grob 
+      which can have children.  A gTree also has a "childrenvp" slot
+      which is a viewport which is pushed and then "up"ed before the
+      children are drawn;  this allows the children of a gTree to 
+      place themselves somewhere in the viewports specified in the
+      childrenvp by having a vpPath in their vp slot. 
+    - there is a gPath object, which is essentially a concatenation
+      of grob names.  This is used to specify the child of (a child of ...)
+      a gTree.
+    - there is a new API for creating/accessing/modifying grob objects:
+      grid.add(), grid.remove(), grid.edit(), grid.get() (and their
+      *Grob() counterparts can be used to add, remove, edit, or extract
+      a grob or the child of a gTree.  NOTE: the new grid.edit() API
+      is incompatible with the previous version.
+
+10. Added stringWidth(), stringHeight(), grobWidth(), and grobHeight()
+    convenience functions (they produce "strwidth", "strheight",
+    "grobwidth", and "grobheight" unit objects, respectively).
+
 
 Changes from grid_1.8.0 to grid_1.8.1:
 ------------------------------------

@@ -1,77 +1,71 @@
-######################################
-# Default COLLECTION of grobs
-######################################
-draw.details.collection <- function(x, x.wrapped, recording=TRUE) {
-  # A collection draws all of its children
-  lapply(x$children, grid.draw, recording=FALSE)
-}
-
-# Have a draw=T argument because "only" other alternative is to
-# have a separate make.collection function with identical argument
-# list (i.e., duplicated entry point).  Not such an issue here,
-# but just gets worse the more complex the graphical object gets.
 grid.collection <- function(..., gp=gpar(), draw=TRUE, vp=NULL) {
-  children <- list(...)
-  # Allow for single argument of a list of grobs (rather than
-  # multiple grobs as separate arguments)
-  if (!is.grob(children[[1]]) && is.list(children[[1]]))
-    children <- children[[1]]
-  collection <- list(children=children, gp=gp, vp=vp)
-  cl <- "collection"
-  grid.grob(collection, cl, draw)
+  .Deprecated("gTree")
+  gc <- gTree(children=gList(...), gp=gp, vp=vp, cl="collection")
+  if (draw)
+    grid.draw(gc)
+  gc
 }
 
 ######################################
 # AXES
 ######################################
 
-# Axes are extended from the "collection" class
-# They have named children and the same grobs stored in their
-# children slot.  This means that the standard (e.g., draw.details)
-# methods for collections will apply, but axes can allow more
-# convenient access and more sophisticated control of their
-# child grobs AS WELL
+# Axes are extended from the "gTree" class
+# This means that the standard (e.g., draw.details)
+# methods for gTrees will apply
 
 # The children of an axis are fixed to be:
-# [[1]] major line
-# [[2]] tick marks
-# [[3]] tick labels
 
 # NOTE that the `at' parameter is numeric (i.e., NOT a unit) for
 # grid.xaxis and grid.yaxis.  These functions assume a unit for the `at'
 # values rather than letting the user specify a unit.
 
-draw.details.xaxis <- function(x, x.wrapped, recording=TRUE) {
-  # We may have to create the children if there was not
-  # enough information available at creation time
+validGrobDetails.axis <- function(x) {
+  if (!is.null(x$at))
+    x$at <- as.numeric(x$at)
+  x$label <- as.logical(x$label)
+  x$main <- as.logical(x$main)
+  x
+}
+
+drawDetails.xaxis <- function(x, recording=TRUE) {
+  # If x$at is NULL, then we must calculate the
+  # tick marks on-the-fly
   if (is.null(x$at)) {
-    # FIXME:  There should be a grid.pretty rather than
-    # forcing users to use grid.Call
     at <- grid.pretty(current.viewport()$xscale)
-    # We edit the grob itself so that the change is permanent
-    grid.edit(x.wrapped, at=at, redraw=FALSE)
-    # Then we make sure the current draw is aware of the change
-    x <- grid.get(x.wrapped)
+    grid.draw(make.xaxis.major(at, x$main), recording=FALSE)
+    grid.draw(make.xaxis.ticks(at, x$main), recording=FALSE)
+    if (x$label)
+      grid.draw(make.xaxis.labels(at, x$main), recording=FALSE)
+    return(x)
   }
-  NextMethod()
 }
 
 # NOTE that this can't be for all axes because it needs to
 # call make.XAXIS.ticks and make.XAXIS.labels
-editDetails.xaxis <- function(x, new.values) {
-  slot.names <- names(new.values)
+editDetails.xaxis <- function(x, specs) {
+  slot.names <- names(specs)
   if (match("at", slot.names, nomatch=0)) {
     # NOTE that grid.edit has already set x$at to the new value
     # We might set at to NULL to get ticks recalculated at redraw
-    if (!is.null(x$at)) {
-      x$major <- make.xaxis.major(x$at, x$main)
-      x$ticks <- make.xaxis.ticks(x$at, x$main)
+    if (is.null(x$at)) {
+      removeGrob(x, "main", warn=FALSE)
+      removeGrob(x, "ticks", warn=FALSE)
+      removeGrob(x, "labels", warn=FALSE)
+    } else {
+      x <- addGrob(x, make.xaxis.major(x$at, x$main))
+      x <- addGrob(x, make.xaxis.ticks(x$at, x$main))
       if (x$label)
-        x$labels <- make.xaxis.labels(x$at, x$main)
+        x <- addGrob(x, make.xaxis.labels(x$at, x$main))
       else
-        x$labels <- NULL
-      x$children <- list(x$major, x$ticks, x$labels)
+        x <- removeGrob(x, "labels", warn=FALSE)
     }
+  }
+  if (match("label", slot.names, nomatch=0)) {
+    if (x$label)
+      x <- addGrob(x, make.xaxis.labels(x$at, x$main))
+    else
+      x <- removeGrob(x, "labels", warn=FALSE)    
   }
   # FIXME:  Handle "label=" and "main=" too ?
   x
@@ -82,8 +76,8 @@ make.xaxis.major <- function(at, main) {
     y <- c(0, 0)
   else
     y <- c(1, 1)
-  grid.lines(unit(c(min(at), max(at)), "native"),
-         unit(y, "npc"), draw=FALSE)
+  linesGrob(unit(c(min(at), max(at)), "native"),
+            unit(y, "npc"), name="major")
 }
 
 make.xaxis.ticks <- function(at, main) {
@@ -95,9 +89,9 @@ make.xaxis.ticks <- function(at, main) {
     tick.y0 <- unit(1, "npc")
     tick.y1 <- unit(1, "npc") + unit(.5, "lines")
   }
-  grid.segments(unit(at, "native"), tick.y0,
-                unit(at, "native"), tick.y1,
-                draw=FALSE)
+  segmentsGrob(unit(at, "native"), tick.y0,
+               unit(at, "native"), tick.y1,
+               name="ticks")
 }
 
 make.xaxis.labels <- function(at, main) {
@@ -106,25 +100,28 @@ make.xaxis.labels <- function(at, main) {
     label.y <- unit(-1.5, "lines")
   else
     label.y <- unit(1, "npc") + unit(1.5, "lines")
-  grid.text(as.character(at), unit(at, "native"), label.y,
-                    just="centre", rot=0,
-                    check.overlap=TRUE, draw=FALSE)
+  textGrob(as.character(at), unit(at, "native"), label.y,
+           just="centre", rot=0,
+           check.overlap=TRUE, name="labels")
+}
+
+xaxisGrob <- function(at=NULL, label=TRUE, main=TRUE,
+                       name=NULL, gp=gpar(), vp=NULL) {
+  grid.xaxis(at=at, label=label, main=main,
+             name=name, gp=gp, draw=FALSE, vp=vp)
 }
 
 # The "main" x-axis is on the bottom when vp$origin is "bottom.*"
 # and on the top when vp$origin is "top.*"
-grid.xaxis <- function(at=NULL, label = TRUE, main=TRUE, gp=gpar(),
-                   draw=TRUE, vp=NULL) {
-  if (is.null(at))
-    if (is.null(vp)) {
-      # We do not have enough information to make the ticks and labels
-      major <- NULL
-      ticks <- NULL
-      labels <- NULL
-    }
-    else
-      at <- grid.pretty(vp$xscale)
-  if (!is.null(at)) {
+grid.xaxis <- function(at=NULL, label=TRUE, main=TRUE,
+                       name=NULL, gp=gpar(),
+                       draw=TRUE, vp=NULL) {
+  if (is.null(at)) {
+    # We do not have enough information to make the ticks and labels
+    major <- NULL
+    ticks <- NULL
+    labels <- NULL
+  } else {
     major <- make.xaxis.major(at, main)
     ticks <- make.xaxis.ticks(at, main)
     if (label)
@@ -132,35 +129,49 @@ grid.xaxis <- function(at=NULL, label = TRUE, main=TRUE, gp=gpar(),
     else
       labels <- NULL
   }
-  grid.grob(list(at=at, children=list(major, ticks, labels),
-                 major=major, ticks=ticks, labels=labels,
-                 label=label, gp=gp, main=main, vp=vp),
-            c("xaxis", "axis", "collection"), draw)
+  xg <- gTree(at=at, label=label, main=main,
+              children=gList(major, ticks, labels),
+              name=name, gp=gp, vp=vp,
+              cl=c("xaxis", "axis"))
+  if (draw)
+    grid.draw(xg)
+  invisible(xg)
 }
 
-draw.details.yaxis <- function(x, x.wrapped, recording=TRUE) {
-  # We may have to create the children if there was not
-  # enough information available at creation time
+drawDetails.yaxis <- function(x, recording=TRUE) {
+  # If x$at is NULL, then we must calculate and draw the
+  # tick marks on-the-fly
   if (is.null(x$at)) {
     at <- grid.pretty(current.viewport()$yscale)
-    grid.edit(x.wrapped, at=at, redraw=FALSE)
-    x <- grid.get(x.wrapped)
+    grid.draw(make.yaxis.major(at, x$main), recording=FALSE)
+    grid.draw(make.yaxis.ticks(at, x$main), recording=FALSE)
+    if (x$label)
+      grid.draw(make.yaxis.labels(at, x$main), recording=FALSE)
+    return(x)
   }
-  NextMethod()
 }
 
-editDetails.yaxis <- function(x, new.values) {
-  slot.names <- names(new.values)
+editDetails.yaxis <- function(x, specs) {
+  slot.names <- names(specs)
   if (match("at", slot.names, nomatch=0)) {
-    if (!is.null(x$at)) {
-      x$major <- make.yaxis.major(x$at, x$main)
-      x$ticks <- make.yaxis.ticks(x$at, x$main)
+    if (is.null(x$at)) {
+      removeGrob(x, "main", warn=FALSE)
+      removeGrob(x, "ticks", warn=FALSE)
+      removeGrob(x, "labels", warn=FALSE)
+    } else {
+      x <- addGrob(x, make.yaxis.major(x$at, x$main))
+      x <- addGrob(x, make.yaxis.ticks(x$at, x$main))
       if (x$label)
-        x$labels <- make.yaxis.labels(x$at, x$main)
+        x <- addGrob(x, make.yaxis.labels(x$at, x$main))
       else
-        x$labels <- NULL
-      x$children <- list(x$major, x$ticks, x$labels)
+        x <- removeGrob(x, "labels", warn=FALSE)
     }
+  }
+  if (match("label", slot.names, nomatch=0)) {
+    if (x$label)
+      x <- addGrob(x, make.xaxis.labels(x$at, x$main))
+    else
+      x <- removeGrob(x, "labels", warn=FALSE)    
   }
   x
 }
@@ -170,7 +181,8 @@ make.yaxis.major <- function(at, main) {
     x <- c(0, 0)
   else
     x <- c(1, 1)
-  grid.lines(unit(x, "npc"), unit(c(min(at), max(at)), "native"), draw=FALSE)
+  linesGrob(unit(x, "npc"), unit(c(min(at), max(at)), "native"),
+            name="major")
 }
 
 make.yaxis.ticks <- function(at, main) {
@@ -182,9 +194,9 @@ make.yaxis.ticks <- function(at, main) {
     tick.x0 <- unit(1, "npc")
     tick.x1 <- unit(1, "npc") + unit(.5, "lines")
   }
-  grid.segments(tick.x0, unit(at, "native"),
-                tick.x1, unit(at, "native"),
-                draw=FALSE)
+  segmentsGrob(tick.x0, unit(at, "native"),
+               tick.x1, unit(at, "native"),
+               name="ticks")
 }
 
 make.yaxis.labels <- function(at, main) {
@@ -197,24 +209,27 @@ make.yaxis.labels <- function(at, main) {
     label.x <- unit(1, "npc") + unit(1, "lines")
   }
   just <- c(hjust, "centre")
-  grid.text(as.character(at), label.x, unit(at, "native"),
-        just=just, rot=0, check.overlap=TRUE, draw=FALSE)
+  textGrob(as.character(at), label.x, unit(at, "native"),
+           just=just, rot=0, check.overlap=TRUE, name="labels")
+}
+
+yaxisGrob <- function(at=NULL, label=TRUE, main=TRUE,
+                      name=NULL, gp=gpar(), vp=NULL) {
+  grid.yaxis(at=at, label=label, main=main,
+             name=name, gp=gp, draw=FALSE, vp=vp)
 }
 
 # The "main" y-axis is on the left when vp$origin is "*.left"
 # and on the right when vp$origin is "*.right"
-grid.yaxis <- function(at=NULL, label=TRUE, main=TRUE, gp=gpar(),
-                   draw=TRUE, vp=NULL) {
-  if (is.null(at))
-    if (is.null(vp)) {
-      # We do not have enough information to make the ticks and labels
-      major <- NULL
-      ticks <- NULL
-      labels <- NULL
-    }
-    else
-      at <- grid.pretty(vp$yscale)
-  if (!is.null(at)) {
+grid.yaxis <- function(at=NULL, label=TRUE, main=TRUE,
+                       name=NULL, gp=gpar(),
+                       draw=TRUE, vp=NULL) {
+  if (is.null(at)) {
+    # We do not have enough information to make the ticks and labels
+    major <- NULL
+    ticks <- NULL
+    labels <- NULL
+  } else {
     major <- make.yaxis.major(at, main)
     ticks <- make.yaxis.ticks(at, main)
     if (label)
@@ -222,10 +237,13 @@ grid.yaxis <- function(at=NULL, label=TRUE, main=TRUE, gp=gpar(),
     else
       labels <- NULL
   }
-  grid.grob(list(at=at, major=major, ticks=ticks, labels=labels,
-                 children=list(major, ticks, labels),
-                 label=label, gp=gp, main=main, vp=vp),
-            c("yaxis", "axis", "collection"), draw)
+  yg <- gTree(at=at, label=label, main=main, 
+              children=gList(major, ticks, labels),
+              name=name, gp=gp, vp=vp,
+              cl=c("yaxis", "axis"))
+  if (draw)
+    grid.draw(yg)
+  invisible(yg)
 }
 
 ######################################

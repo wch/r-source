@@ -2,6 +2,8 @@
 \alias{grid.collection}
 \title{Create a Coherent Group of Grid Graphical Objects}
 \description{
+  This function is deprecated; please use \code{gTree}.
+  
   This function creates a graphical object which contains
   several other graphical objects.  When it is drawn, it draws
   all of its children.  
@@ -21,18 +23,13 @@ grid.collection(..., gp=gpar(), draw=TRUE, vp=NULL)
   \item{vp}{A Grid viewport object (or NULL).}
 }
 \value{
-  An object of class \code{"grob"} containing a list structure
-  of class \code{"collection"}.
+  A collection grob.
 }
 \author{Paul Murrell}
 \seealso{
   \code{\link{grid.grob}}.
 }
 \examples{
-grid.newpage()
-lc <- grid.collection(l1=grid.lines(draw=FALSE),
-                      l2=grid.lines(c(.5, .5), draw=FALSE))
-grid.edit(lc, gp=gpar(col="blue"))
-grid.edit(lc, "children", "l2", gp=gpar(col="red"))
 }
 \keyword{dplot}
+

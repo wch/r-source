@@ -1,14 +1,19 @@
 \name{grid.lines}
 \alias{grid.lines}
+\alias{linesGrob}
 \title{Draw Lines in a Grid Viewport}
 \description{
-  This function draws a series of lines within a Grid viewport.
+  These functions create and draw a series of lines.
 }
 \usage{
 grid.lines(x = unit(c(0, 1), "npc", units.per.obs),
        y = unit(c(0, 1), "npc", units.per.obs), 
-       default.units = "npc", units.per.obs = FALSE,
+       default.units = "npc", units.per.obs = FALSE, name = NULL,
        gp=gpar(), draw = TRUE, vp = NULL)
+linesGrob(x = unit(c(0, 1), "npc", units.per.obs),
+       y = unit(c(0, 1), "npc", units.per.obs), 
+       default.units = "npc", units.per.obs = FALSE, name = NULL,
+       gp=gpar(), vp = NULL)
 }
 \arguments{
   \item{x}{A numeric vector or unit object specifying x-values.}
@@ -17,6 +22,7 @@ grid.lines(x = unit(c(0, 1), "npc", units.per.obs),
     if \code{x} or \code{y} are only given as numeric vectors.}  
   \item{units.per.obs}{A logical value to indicate whether each
     individual (x, y) location has its own unit(s) specified.}
+  \item{name}{ A character identifier. }
   \item{gp}{An object of class \code{gpar}, typically the output
     from a call to the function \code{gpar}.  This is basically
     a list of graphical parameter settings.}
@@ -24,11 +30,14 @@ grid.lines(x = unit(c(0, 1), "npc", units.per.obs),
     should be produced.}
   \item{vp}{A Grid viewport object (or NULL).}
 }
-\value{
-  An object of class \code{"grob"}.
-}
 \details{
-  The \code{"grob"} object contains an object of class \code{"lines"}.
+  Both functions create a lines grob (a graphical object describing
+  lines), but only \code{grid.lines}
+  draws the lines (and then only if \code{draw} is \code{TRUE}).
+  
+}
+\value{
+  A lines grob.  \code{grid.lines} returns the value invisibly.
 }
 \author{Paul Murrell}
 \seealso{

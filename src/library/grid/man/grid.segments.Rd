@@ -1,14 +1,19 @@
 \name{grid.segments}
 \alias{grid.segments}
-\title{ Draw Line Segments in a Grid Viewport }
+\alias{segmentsGrob}
+\title{ Draw Line Segments }
 \description{
-  This function draws line segments.
+  These functions create and draw line segments.
 }
 \usage{
 grid.segments(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
               x1 = unit(1, "npc"), y1 = unit(1, "npc"),
-              default.units = "npc", units.per.obs = FALSE,
+              default.units = "npc", units.per.obs = FALSE, name = NULL,
               gp = gpar(), draw = TRUE, vp = NULL)
+segmentsGrob(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
+              x1 = unit(1, "npc"), y1 = unit(1, "npc"),
+              default.units = "npc", units.per.obs = FALSE, name = NULL,
+              gp = gpar(), vp = NULL)
 }
 \arguments{
   \item{x0}{ Numeric indicating the starting x-values of the line segments. }
@@ -17,16 +22,23 @@ grid.segments(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
   \item{x1}{ Numeric indicating the stopping x-values of the line
     segments. }
   \item{y1}{ Numeric indicating the stopping y-values of the line segments.}
-  \item{gp}{ An object of class \code{gpar}. }
   \item{default.units}{ A string. }
   \item{units.per.obs}{ A boolean indicating whether distinct units are
     given for each x/y-value. }
+  \item{name}{ A character identifier. }
+  \item{gp}{ An object of class \code{gpar}. }
   \item{draw}{ A logical value indicating whether graphics output
     should be produced.}
   \item{vp}{A Grid viewport object (or NULL)}
 }
+\details{
+  Both functions create a segments grob (a graphical object describing
+  segments), but only \code{grid.segments}
+  draws the segments (and then only if \code{draw} is \code{TRUE}).
+  
+}
 \value{
-  An object of class \code{"grob"}.
+  A segments grob.  \code{grid.segments} returns the value invisibly.
 }
 \author{ Paul Murrell                }
 \seealso{

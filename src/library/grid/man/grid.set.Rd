@@ -1,35 +1,37 @@
 \name{grid.set}
 \alias{grid.set}
-\title{Set the Contents of a Grid Graphical Object}
+\alias{setGrob}
+\title{Set a Grid Graphical Object}
 \description{
-  A Grid graphical object contains a list structure;  this
-  function sets the value of that list structure.
+  Replace a grob or a descendant of a grob.
+
 }
 \usage{
-grid.set(grob, ...)
+grid.set(gPath, newGrob, strict = FALSE, redraw = TRUE) 
+setGrob(gTree, gPath, newGrob, strict = FALSE) 
 }
 \arguments{
-  \item{grob}{An object of class \code{"grob"}.}
-  \item{\dots}{Zero or more element-specifiers, plus a list structure.
-    The list structure is required.  Each specifier
-    may be a single character or numeric value.  }
+  \item{gTree}{A gTree object.}
+  \item{gPath}{ A gPath object. For \code{grid.set} this
+    specifyies a grob on the display list.  For \code{setGrob} this
+    specifies a descendant of the specified gTree. }
+  \item{strict}{ A boolean indicating whether the gPath must be
+    matched exactly. }
+  \item{newGrob}{ A grob object. }
+  \item{redraw}{A logical value to indicate whether to redraw the grob. }
 }
 \details{
-  If there are no specifiers then the contents of the \code{grob}
-  are set to be the list structure.   If there is a specifier
-  and the list structure of the \code{grob} has a corresponding
-  element, and that element is an object of class \code{"grob"},
-  then the contents of that element are set to be the list structure.
-  And so on \ldots
-
-  This is ONLY for setting the list structure contents of a
-  graphical object.  See \code{grid.edit} for setting the values
-  of the elements of the list structure.
+  \code{setGrob} copies the specified grob and returns a modified
+  grob.
   
-  This function should not normally be called by the user.
+  \code{grid.set} destructively replaces a grob on the display list.
+  If \code{redraw}
+  is \code{TRUE} it then redraws everything to reflect the change.
+
+  These functions should not normally be called by the user.
 }
 \value{
-  None.
+  \code{setGrob} returns a grob object;  \code{grid.set} returns \code{NULL}.
 }
 \author{Paul Murrell}
 \seealso{

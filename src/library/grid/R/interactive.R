@@ -6,7 +6,7 @@ grid.locator <- function(unit="native") {
   # The inverse viewport transform is from device coordinates into
   # inches relative to the current viewport
   location <- unit(location/location[3], "inches")
-  list(x=grid.convertX(location[1], unit),
-       y=grid.convertY(location[2], unit))
+  list(x=convertX(location[1], unit),
+       y=convertY(location[2], unit))
 }
 

@@ -1,43 +1,36 @@
 \name{grid.get}
 \alias{grid.get}
-\title{Get the Contents of a Grid Graphical Object}
+\alias{getGrob}
+\title{Get a Grid Graphical Object}
 \description{
-  A Grid graphical object contains a list structure;  this
-  function returns that list structure.
+  Retrieve a grob or a descendant of a grob.
 }
 \usage{
-grid.get(grob, ...)
+grid.get(gPath, strict = FALSE) 
+getGrob(gTree, gPath, strict = FALSE) 
 }
 \arguments{
-  \item{grob}{An object of class \code{"grob"}.}
-  \item{\dots}{Zero or more element-specifiers.  Each specifier
-    may be a single character or numeric value.}
-}
-\details{
-  If there are no specifiers then the value returned is just the
-  list structure of the \code{grob}.  If there is a specifier
-  and the list structure of the \code{grob} has a corresponding
-  element, and that element is an object of class \code{"grob"},
-  then the return value is the list structure within that element.
-  And so on ...
-
-  Typically, users will not need to call this function, even
-  when writing their own graphical objects.  Most graphical object
-  methods will work only with the list structure.
+  \item{gTree}{A gTree object.}
+  \item{gPath}{ A gPath object. For \code{grid.get} this
+    specifyies a grob on the display list.  For \code{getGrob} this
+    specifies a descendant of the specified gTree. }
+  \item{strict}{ A boolean indicating whether the gPath must be
+    matched exactly. }
 }
 \value{
-  A list structure.
+  A grob object.
 }
 \author{Paul Murrell}
 \seealso{
-  \code{\link{grid.grob}}.
+  \code{\link{grob}}, \code{\link{getGrob}},
+  \code{\link{addGrob}}, \code{\link{removeGrob}}.
 }
 \examples{
-xa <- grid.xaxis(draw=FALSE)
-grid.get(xa)
-grid.get(xa, "ticks")
+grid.xaxis(name="xa")
+grid.get("xa")
+grid.get(gPath("xa", "ticks"))
 
-temp <- grid.collection(axis=grid.xaxis(draw=FALSE), draw=FALSE)
-grid.get(temp, "children", "axis", "ticks")
+grid.draw(gTree(name="gt", children=gList(xaxisGrob(name="axis"))))
+grid.get(gPath("gt", "axis", "ticks"))
 }
 \keyword{dplot}

@@ -153,6 +153,10 @@ SEXP viewportDevHeightCM(SEXP vp) {
     return VECTOR_ELT(vp, PVP_DEVHEIGHTCM);
 }
 
+SEXP viewportParentGPar(SEXP vp) {
+    return VECTOR_ELT(vp, PVP_PARENTGPAR);
+}
+
 void fillViewportLocationFromViewport(SEXP vp, LViewportLocation *vpl) 
 {
     vpl->x = viewportX(vp);
@@ -257,7 +261,14 @@ void calcViewportTransform(SEXP vp, SEXP parent, Rboolean incremental,
 		parentTransform[i][j] = 
 		    REAL(viewportTransform(parent))[i +3*j];
 	fillViewportContextFromViewport(parent, &parentContext);
-	gcontextFromViewport(parent, &parentgc);
+	/* 
+	 * Don't get gcontext from parent because the most recent
+	 * previous gpar setting may have come from a gTree
+	 * So we look at this viewport's parentgpar slot instead
+	 * 
+	 * WAS gcontextFromViewport(parent, &parentgc);
+	 */
+	gcontextFromgpar(viewportParentGPar(vp), 0, &parentgc);
 	/* In order for the vp to get its vpl from a layout
 	 * it must have specified a layout.pos and the parent
 	 * must have a layout

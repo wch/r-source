@@ -14,10 +14,17 @@ push.vp.viewport <- function(vp, recording) {
   # Record on the display list
   if (recording)
     record(vp)
-  # Enforce gpar settings
-  set.gpar(vp$gp)
   # Create a pushedvp object for the system to keep track of
   pvp <- pushedvp(vp)
+  # Store the entire set of gpar settings JUST PRIOR to push
+  # We refer to this when calculating the viewport transform
+  # We cannot simply rely on parent's gpar because we may be
+  # being pushed from within a gTree which has enforced gpar
+  # settings (i.e., the gTree$gp is enforced between this viewport
+  # and the this viewport's parent$gp)
+  pvp$parentgpar <- grid.Call("L_getGPar")
+  # Enforce gpar settings
+  set.gpar(vp$gp)
   # Store the entire set of gpar settings for this viewport
   pvp$gpar <- grid.Call("L_getGPar")
   # Pass in the pushedvp structure which will be used to store
@@ -74,7 +81,7 @@ pushViewport <- function(..., recording=TRUE) {
 
 # Helper functions called from C
 no.children <- function(children) {
-  length(ls(env=children)) == 0
+  length(ls(env=children, all.names=TRUE)) == 0
 }
 
 child.exists <- function(name, children) {
@@ -82,38 +89,49 @@ child.exists <- function(name, children) {
 }
 
 child.list <- function(children) {
-  ls(env=children)
+  ls(env=children, all.names=TRUE)
 }
 
-pathMatch <- function(path, pathsofar) {
-  regexpr(paste(path, "$", sep=""), pathsofar) > 0
+pathMatch <- function(path, pathsofar, strict) {
+  if (is.null(pathsofar))
+    is.null(path)
+  else {
+    if (strict)
+      pattern <- paste("^", path, "$", sep="")
+    else
+      pattern <- paste(path, "$", sep="")
+    regexpr(pattern, pathsofar) > 0
+  }
 }
 
 growPath <- function(pathsofar, name) {
-  paste(pathsofar, name, sep=vpPathSep)
+  paste(pathsofar, name, sep=.grid.pathSep)
 }
 
 # Rather than pushing a new viewport, navigate down to one that has
 # already been pushed
-downViewport <- function(name, recording=TRUE) {
+downViewport <- function(name, strict=FALSE, recording=TRUE) {
   UseMethod("downViewport")
 }
 
 # For interactive use, allow user to specify
 # vpPath directly (i.e., w/o calling vpPath)
-downViewport.default <- function(name, recording=TRUE) {
+downViewport.default <- function(name, strict=FALSE, recording=TRUE) {
   name <- as.character(name)
-  downViewport(vpPathDirect(name), recording=recording)
+  downViewport(vpPathDirect(name), strict, recording=recording)
 }
 
-downViewport.vpPath <- function(name, recording=TRUE) {
+downViewport.vpPath <- function(name, strict=FALSE, recording=TRUE) {
   if (name$n == 1)
-    result <- grid.Call.graphics("L_downviewport", name$name)
+    result <- grid.Call.graphics("L_downviewport", name$name, strict)
   else
-    result <- grid.Call.graphics("L_downvppath", name$path, name$name)
+    result <- grid.Call.graphics("L_downvppath", name$path, name$name, strict)
   if (result) {
+    # Enforce the gpar settings for the viewport 
+    pvp <- grid.Call("L_currentViewport")
+    set.gpar(pvp$gpar)
+    # Record the viewport operation
     if (recording) {
-      class(name) <- "down"
       record(name)
     }
   } else {
@@ -223,7 +241,7 @@ current.viewport <- function(vp=NULL) {
 }
 
 vpListFromNode <- function(node) {
-  childnames <- ls(env=node$children)
+  childnames <- ls(env=node$children, all.names=TRUE)
   n <- length(childnames)
   children <- vector("list", n)
   index <- 1
@@ -236,7 +254,7 @@ vpListFromNode <- function(node) {
 
 vpTreeFromNode <- function(node) {
   # If no children then just return viewport
-  if (length(ls(env=node$children)) == 0)
+  if (length(ls(env=node$children, all.names=TRUE)) == 0)
     vpFromPushedvp(node)
   # Otherwise return vpTree
   else
@@ -252,12 +270,12 @@ current.vpTree <- function(all=TRUE) {
   moving <- all && vpDepth() > 0
   if (moving) {
     savedname <- cpvp$name
-    upViewport(0)
+    upViewport(0, recording=FALSE)
     cpvp <- grid.Call("L_currentViewport")
   }
   tree <- vpTreeFromNode(cpvp)
   if (moving) {
-    downViewport(savedname)
+    downViewport(savedname, recording=FALSE)
   }
   tree
 }
@@ -284,6 +302,7 @@ grid.newpage <- function(recording=TRUE) {
     .Call("L_initDisplayList", PACKAGE="grid")
     for (fun in getHook("grid.newpage")) try(fun())
   }
+  invisible()
 }
 
 ###########
@@ -347,7 +366,7 @@ record.viewport <- function(x) {
   inc.display.list()
 }
 
-record.down <- function(x) {
+record.vpPath <- function(x) {
   grid.Call("L_setDLelt", x)
   inc.display.list()
 }
@@ -374,11 +393,25 @@ grid.Call.graphics <- function(fnname, ...) {
   # list if the engineDLon flag is set
   engineDLon <- grid.Call("L_getEngineDLon")
   if (engineDLon) {
-    .Call.graphics("L_gridDirty", PACKAGE="grid")
-    .Call.graphics(fnname, ..., PACKAGE="grid")
+    # Avoid recording graphics operations on the engine's display list
+    # when we are already recording!
+    engineRecording <- grid.Call("L_getEngineRecording")
+    if (engineRecording) {
+      .Call("L_gridDirty", PACKAGE="grid")
+      result <- .Call(fnname, ..., PACKAGE="grid")
+    } else {
+      # NOTE: we MUST record the fact that we are already recording
+      # otherwise when we replay the engine display list, we will
+      # not know that at this point we were recording (my brain hurts)
+      .Call.graphics("L_setEngineRecording", TRUE, PACKAGE="grid")
+      .Call.graphics("L_gridDirty", PACKAGE="grid")
+      result <- .Call.graphics(fnname, ..., PACKAGE="grid")
+      .Call.graphics("L_setEngineRecording", FALSE, PACKAGE="grid")
+    }
   } else {
     .Call("L_gridDirty", PACKAGE="grid")
-    .Call(fnname, ..., PACKAGE="grid")
+    result <- .Call(fnname, ..., PACKAGE="grid")
   }
+  result
 }
 

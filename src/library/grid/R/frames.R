@@ -1,55 +1,135 @@
-######################################
-# Stuff for lpack()
-######################################
-
-width.details.frame <- function(x) {
-  sum(layout.widths(viewport.layout(x$frame.vp)))
+################
+# frame class
+################
+# NOTE: make framevp separate slot (rather than combining with
+# normal vp slot) so that it can be edited (e.g., by grid.pack)
+frameGrob <- function(layout=NULL, name=NULL, gp=gpar(), vp=NULL) {
+  if (!is.null(layout)) 
+    framevp <- viewport(layout=layout)
+  else 
+    framevp <- NULL
+  gTree(framevp=framevp, name=name, gp=gp, vp=vp,
+        cl="frame")
 }
 
-height.details.frame <- function(x) {
-  sum(layout.heights(viewport.layout(x$frame.vp)))
+# draw=TRUE will not draw anything, but will mean that
+# additions to the frame are drawn
+grid.frame <- function(layout=NULL, name=NULL, gp=gpar(), vp=NULL,
+                       draw=TRUE) {
+  fg <- frameGrob(layout=layout, name=name, gp=gp, vp=vp)
+  if (draw)
+    grid.draw(fg)
+  invisible(fg)
 }
 
-draw.frame.child <- function(grob) {
-  temp.vp <- viewport(layout.pos.col=grob$col,
-                      layout.pos.row=grob$row)
-  pushViewport(temp.vp, recording=FALSE)
-  if (!is.null(grob$border))
-    pushViewport(viewport(x=grob$border[2],
+preDrawDetails.frame <- function(x) {
+  if (!is.null(x$framevp))
+    pushViewport(x$framevp, recording=FALSE)
+}
+
+postDrawDetails.frame <- function(x) {
+  if (!is.null(x$framevp))
+    popViewport(recording=FALSE)
+}
+
+widthDetails.frame <- function(x) {
+  if (is.null(x$framevp))
+    unit(1, "null")
+  else
+    sum(layout.widths(viewport.layout(x$framevp)))
+}
+
+heightDetails.frame <- function(x) {
+  if (is.null(x$framevp))
+    unit(1, "null")
+  else
+    sum(layout.heights(viewport.layout(x$framevp)))
+}
+
+frameDim <- function(frame) {
+  if (is.null(frame$framevp))
+    rep(0, 2)
+  else
+    c(layout.nrow(viewport.layout(frame$framevp)),
+      layout.ncol(viewport.layout(frame$framevp)))
+}
+
+################
+# cellGrob class
+################
+cellViewport <- function(col, row, border) {
+  vp <- viewport(layout.pos.col=col, layout.pos.row=row)
+  if (!is.null(border))
+    vp <- vpStack(vp,
+                  viewport(x=grob$border[2],
                            y=grob$border[1],
                            width=unit(1, "npc") - sum(grob$border[c(2,4)]),
                            height=unit(1, "npc") - sum(grob$border[c(1,3)]),
-                           just=c("left", "bottom")),
-                  recording=FALSE)
-  grid.draw(grob, recording=FALSE)
-  if (!is.null(grob$border))
-    popViewport(recording=FALSE)
-  popViewport(recording=FALSE)
+                           just=c("left", "bottom")))
+  vp
 }
 
-draw.details.frame <- function(x, x.wrapped, recording=TRUE) {
-  if (!is.null(x$frame.vp))
-    pushViewport(x$frame.vp, recording=FALSE)
-  lapply(x$children, draw.frame.child)
-  if (!is.null(x$frame.vp))
-    popViewport(recording=FALSE)
+cellGrob <- function(col, row, border, grob, dynamic, vp) {
+  gTree(col=col, row=row, border=border, dynamic=dynamic,
+        children=gList(grob), vp=vp, cl="cellGrob")
 }
 
-# NOTE that this never produces any actual graphical output
-# (there is nothing to draw) BUT it is important to use
-# draw=TRUE if you want to pack the frame interactively.
-# This ensures that the frame is on the .grid.display.list
-# so that the editing that occurs in grid.pack() will redraw the
-# frame when it forces a draw.all()
-grid.frame <- function(layout=NULL, vp=NULL, gp=gpar(), draw=FALSE) {
-  if (!is.null(layout))
-    frame.vp <- viewport(layout=layout)
+# For dynamically packed grobs, need to be able to
+# recalculate cell sizes
+widthDetails.cellGrob <- function(x) {
+  if (x$dynamic)
+    unit(1, "grobwidth", gPath(x$children[[1]]$name))
   else
-    frame.vp <- NULL
-  grid.grob(list(children=NULL, vp=vp, gp=gp, frame.vp=frame.vp),
-        c("frame", "collection"), draw=draw)
+    unit(1, "grobwidth", x$children[[1]])
 }
 
+heightDetails.cellGrob <- function(x) {
+  if (x$dynamic)
+    unit(1, "grobheight", gPath(x$children[[1]]$name))
+  else
+    unit(1, "grobheight", x$children[[1]])
+}
+
+################
+# grid.place
+################
+# Place an object into an already existing cell of a frame ...
+# ... for a grob on the display list
+grid.place <- function(gPath, grob,
+                       row=1, col=1,
+                       redraw=TRUE) {
+  grid.set(gPath,
+           placeGrob(grid.get(gPath), grob, row, col),
+           redraw)
+}
+  
+# ... for a grob description
+placeGrob <- function(frame, grob,
+                      row=NULL, col=NULL) {
+  if (!inherits(frame, "frame"))
+    stop("Invalid frame")
+  if (!is.grob(grob))
+    stop("Invalid grob")
+  dim <- frameDim(frame)
+  if (is.null(row))
+    row <- c(1, dim[1])
+  if (is.null(col))
+    col <- c(1, dim[2])
+  if (length(row) == 1)
+    row <- rep(row, 2)
+  if (length(col) == 1)
+    col <- rep(col, 2)
+  if (min(row) < 1 || max(row) > dim[1] ||
+      min(col) < 1 || max(col) > dim[2])
+    stop("Invalid row and/or col (no such cell in frame layout)")
+  cgrob <- cellGrob(col, row, NULL, grob, FALSE,
+                    cellViewport(col, row, NULL))
+  addGrob(frame, cgrob)
+}
+
+################
+# grid.pack
+################
 num.col.specs <- function(side, col, col.before, col.after) {
   4 - sum(is.null(side) || any(c("top", "bottom") %in% side),
           is.null(col), is.null(col.before), is.null(col.after))
@@ -164,65 +244,63 @@ mod.dims <- function(dim, dims, index, new.index, nindex, force) {
   dims
 }
 
-updateCol <- function(grob, added.col) {
-  old.col <- grob$col
+updateCol <- function(col, added.col) {
+  old.col <- col
   # If grob$col is a range ...
   if (length(old.col) == 2) {
     if (added.col <= old.col[2])
-      grob$col <- c(old.col[1], old.col[2] + 1)
+      col <- c(old.col[1], old.col[2] + 1)
   }
   else
     if (added.col <= old.col)
-      grob$col <- old.col + 1
-  grob
+      col <- old.col + 1
+  col
 }
 
-updateRow <- function(grob, added.row) {
-  old.row <- grob$row
+updateRow <- function(row, added.row) {
+  old.row <- row
   # If grob$row is a range ...
   if (length(old.row) == 2) {
     if (added.row <= old.row[2])
-      grob$row <- c(old.row[1], old.row[2] + 1)
+      row <- c(old.row[1], old.row[2] + 1)
   }
   else
     if (added.row <= old.row)
-      grob$row <- old.row + 1
-  grob
+      row <- old.row + 1
+  row
 }
 
-# This guy is just a simpler interface to grid.pack(), with
-# the focus more on just "placing" a grob within the existing
-# layout of a frame, without modifying that layout in any way
-# In this way, it is basically just a more convenient way of
-# locating grobs within a viewport with a layout
-# NOTE that it relies on intimate knowledge of grid.pack
-# to make the minimum impact on the existing layout
-# THEREFORE it is fragile if grid.pack changes
-# In particular, it makes sure that the widths/heights of
-# the layout are untouched by specifying the row and col as
-# a range
-grid.place <- function(frame, grob, grob.name="", draw=TRUE,
-                       row=1, col=1) {
-  if (length(row) == 1)
-    row <- rep(row, 2)
-  if (length(col) == 1)
-    col <- rep(col, 2)
-  grid.pack(frame, grob, grob.name, draw,
-            col=col, row=row,
-            # Just dummy values;  they will be ignored by grid.pack
-            width=unit(1, "null"), height=unit(1, "null"))
-}
-
-# Pack a child grob within a frame grob
-# (a special sort of editing just for frame grobs)
 # FIXME:  Allow specification of respect for new row/col
-grid.pack <- function(frame, grob, grob.name="", draw=TRUE,
+# Pack a child grob within a frame grob ... 
+# (a special sort of editing just for frame grobs)
+# ... for a grob on the display list
+grid.pack <- function(gPath, grob, redraw=TRUE,
                       side=NULL,
                       row=NULL, row.before=NULL, row.after=NULL,
                       col=NULL, col.before=NULL, col.after=NULL,
                       width=NULL, height=NULL,
                       force.width=FALSE, force.height=FALSE,
-                      border=NULL) {
+                      border=NULL, dynamic=FALSE) {
+  grid.set(gPath,
+           packGrob(grid.get(gPath), grob, side,
+                    row, row.before, row.after,
+                    col, col.before, col.after,
+                    width, height, force.width, force.height,
+                    border),
+           redraw)
+}
+
+packGrob <- function(frame, grob,
+                     side=NULL,
+                     row=NULL, row.before=NULL, row.after=NULL,
+                     col=NULL, col.before=NULL, col.after=NULL,
+                     width=NULL, height=NULL,
+                     force.width=FALSE, force.height=FALSE,
+                     border=NULL, dynamic=FALSE) {
+  if (!inherits(frame, "frame"))
+    stop("Invalid frame")
+  if (!is.grob(grob))
+    stop("Invalid grob")
   # col/row can be given as a range, but I only want to know
   # about the min and max
   if (!is.null(col) & length(col) > 1) {
@@ -238,7 +316,7 @@ grid.pack <- function(frame, grob, grob.name="", draw=TRUE,
   else
     row.range <- FALSE
   
-  frame.vp <- grid.get(frame, "frame.vp")
+  frame.vp <- frame$framevp
   if (is.null(frame.vp))
     frame.vp <- viewport()
   lay <- viewport.layout(frame.vp)
@@ -286,18 +364,32 @@ grid.pack <- function(frame, grob, grob.name="", draw=TRUE,
   col <- col.spec(side, col, col.before, col.after, ncol)
   new.row <- new.row(side, row, row.before, row.after, nrow)
   row <- row.spec(side, row, row.before, row.after, nrow)
+
+  # Wrap the child in a "cellGrob" to maintain additional info
+  # (like row and col occupied in frame)
+  # Need to do this here so can create widths/heights based on this cell grob
+  if (!is.null(grob))
+    cgrob <- cellGrob(col, row, border, grob, dynamic,
+                      cellViewport(col, row, border))
   
   # (iii) If width and height are not given, take them from the child
+  #       NOTE:  if dynamic is TRUE then use a gPath to the child
   if (is.null(width))
     if (is.null(grob))
       width <- unit(1, "null")
     else
-      width <- unit(1, "grobwidth", grob)
+      if (dynamic)
+        width <- unit(1, "grobwidth", gPath(cgrob$name))
+      else
+        width <- unit(1, "grobwidth", cgrob)
   if (is.null(height))
     if (is.null(grob))
       height <- unit(1, "null")
     else
-      height <- unit(1, "grobheight", grob)
+      if (dynamic)
+        height <- unit(1, "grobheight", gPath(cgrob$name))
+      else
+        height <- unit(1, "grobheight", cgrob)
   # If there is a border, include it in the width/height
   if (!is.null(border)) {
     width <- sum(border[2], width, border[4])
@@ -327,23 +419,32 @@ grid.pack <- function(frame, grob, grob.name="", draw=TRUE,
       heights <- mod.dims(height, layout.heights(lay), row, new.row, nrow,
                           force.height)
   }
-  # NOT SURE WHAT THIS WAS DOING HERE
-  # respect <- layout.respect(lay)
   frame.vp$layout <- grid.layout(ncol=ncol, nrow=nrow,
                                  widths=widths, height=heights)
-  children <- grid.get(frame, "children")
+
   # Modify the locations (row, col) of existing children in the frame
-  if (new.col)
-    children <- lapply(children, updateCol, col)
-  if (new.row)
-    children <- lapply(children, updateRow, row)
-  if (!is.null(grob)) {
-    # Give the new grob a record of its location (row, col) in the frame
-    grob$row <- row
-    grob$col <- col
-    grob$border <- border
-    children <- c(children, list(grob))
+  if (new.col || new.row) {
+    for (i in childNames(frame)) {
+      child <- getGrob(frame, i)
+      if (new.col) {
+        newcol <- updateCol(child$col, col)
+        child <- editGrob(child, col=newcol,
+                          vp=cellViewport(newcol, child$row, child$border))
+      }
+      if (new.row) {
+        newrow <- updateRow(child$row, row)
+        child <- editGrob(child, row=newrow,
+                          vp=cellViewport(child$col, newrow, child$border))
+      }
+      frame <- addGrob(frame, child)
+    }
   }
-  grid.edit(frame, grid.prop.list(children=children, frame.vp=frame.vp), redraw=draw)
+
+  # Add the new grob to the frame
+  if (!is.null(grob)) {
+    frame <- addGrob(frame, cgrob)
+  }
+  
+  editGrob(frame, framevp=frame.vp)
 }
 

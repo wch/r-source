@@ -1,28 +1,37 @@
 \name{grid.pack}
 \alias{grid.pack}
+\alias{packGrob}
 \title{ Pack an Object within a Frame }
 \description{
-  This function, together with \code{grid.frame} is part of a
+  This functions, together with \code{grid.frame} and \code{frameGrob}
+  are part of a
   GUI-builder-like interface to constructing graphical images.
-  The idea is that you create a frame with \code{grid.frame} then
-  use this function to pack objects into the frame.
+  The idea is that you create a frame with \code{grid.frame} or
+  \code{frameGrob} then
+  use this functions to pack objects into the frame.
 }
 \usage{
-grid.pack(frame, grob, grob.name="", draw=TRUE, side=NULL,
+grid.pack(gPath, grob, redraw=TRUE, side=NULL,
           row=NULL, row.before=NULL, row.after=NULL,
           col=NULL, col.before=NULL, col.after=NULL,
           width=NULL, height=NULL,
-          force.width=FALSE, force.height=FALSE, border=NULL)
+          force.width=FALSE, force.height=FALSE, border=NULL,
+          dynamic=FALSE)
+packGrob(frame, grob, side=NULL,
+          row=NULL, row.before=NULL, row.after=NULL,
+          col=NULL, col.before=NULL, col.after=NULL,
+          width=NULL, height=NULL,
+          force.width=FALSE, force.height=FALSE, border=NULL,
+          dynamic=FALSE)
 }
 \arguments{
+  \item{gPath}{ A gPath object, which specifies a frame on the
+    display list.} 
   \item{frame}{ An object of class \code{frame}, typically the output
   from a call to \code{grid.frame}. }
   \item{grob}{ An object of class \code{grob}.  The object to be
     packed. }
-  \item{grob.name}{ The name of the grob within the frame.  This is
-    crucial if you intend to access the object again, for example, to
-    edit it.}
-  \item{draw}{ A boolean indicating whether the output should be updated. }
+  \item{redraw}{ A boolean indicating whether the output should be updated. }
   \item{side}{ One of \code{"left"}, \code{"top"}, \code{"right"},
     \code{"bottom"} to indicate which side to pack the object on. }
   \item{row}{ Which row to add the object to.  Must be between 1 and
@@ -50,9 +59,20 @@ grid.pack(frame, grob, grob.name="", draw=TRUE, side=NULL,
     that height and the pre-existing height. }
   \item{border}{ A \code{unit} object of length 4 indicating the borders
     around the object. }
+  \item{dynamic}{ If the width/height is taken from the grob being
+    packed, this boolean flag indicates whether the grobwidth/height
+    unit refers directly to the grob, or uses a gPath to the grob.
+    In the latter case, changes to the grob will trigger a
+    recalculation of the width/height.}
 }
 \details{
-  This is (meant to be) a very flexible function.  There are many
+  \code{packGrob} modifies the given frame grob and returns the modified
+  frame grob.
+  
+  \code{grid.pack} destructively modifies a frame grob on the display
+  list (and redraws the display list if \code{redraw} is \code{TRUE}).
+  
+  These are (meant to be) very flexible functions.  There are many
   different
   ways to specify where the new object is to be added relative to the
   objects already in the frame.  The function checks that the
@@ -63,10 +83,13 @@ grid.pack(frame, grob, grob.name="", draw=TRUE, side=NULL,
   is specified.
 }
 \value{
-  None.
+  \code{packGrob} returns a frame grob, but \code{grid.pack} returns
+  \code{NULL}.
 }
 \author{ Paul Murrell }
 \seealso{
-  \code{\link{grid.frame}}
+  \code{\link{grid.frame}},
+    \code{\link{grid.place}},
+    \code{\link{grid.edit}}, and \code{\link{gPath}}.
 }
 \keyword{dplot}

@@ -1,40 +1,76 @@
 ## useDynLib("grid") # done in .onLoad
 
-export("absolute.size", "convertNative", 
+export(
+       # Conversion of units
+       "convertUnit", "convertX", "convertY",
+       "convertWidth", "convertHeight",
+       # Deprecated conversion functions
+       "convertNative", 
+       "grid.convertWidth", "grid.convertX", "grid.convertY",
+       "grid.convert", "grid.convertHeight",
+
        "current.viewport", "current.vpTree", 
        "current.transform",
-       "dataViewport", "downViewport", 
-       "engine.display.list", "get.gpar",
-       "gpar", "grid.arrows", "grid.circle",
-       "grid.collection", "grid.convert", "grid.convertHeight",
-       "grid.convertWidth", "grid.convertX", "grid.convertY",
-       "grid.copy", "grid.display.list", "grid.draw", "grid.edit",
-       "grid.frame", "grid.get", "grid.grill", "grid.grob",
-       "grid.layout", "grid.line.to", "grid.lines", "grid.locator",
-       "grid.move.to", "grid.newpage", "grid.pack", "grid.place",
-       "grid.plot.and.legend", "grid.points", "grid.polygon",
-       "grid.pretty", "grid.rect", "grid.segments", "grid.set",
-       "grid.show.layout", "grid.show.viewport", "grid.text",
-       "grid.xaxis", "grid.yaxis", "height.details", "is.unit",
-       "plotViewport", "pop.viewport", "push.viewport", 
-       "popViewport", "pushViewport",
-       "seekViewport", "unit",
+       "engine.display.list", 
+       "gpar", "get.gpar", 
+       "grid.collection", 
+       "grid.copy", "grid.display.list", "grid.draw", 
+       "grid.grill", 
+       "grid.layout", "grid.locator",
+       "grid.newpage", 
+       "grid.plot.and.legend", 
+       "grid.pretty", 
+       "grid.show.layout", "grid.show.viewport", 
+
+       "unit",
+       "is.unit",
        "unit.c", "unit.length", "unit.pmax", "unit.pmin", "unit.rep",
-       "upViewport",
+       "stringWidth", "stringHeight", "grobWidth", "grobHeight",
+       "absolute.size", 
+
        "viewport", "vpList", "vpStack", "vpTree", "vpPath",
-       "width.details")
+       "pop.viewport", "push.viewport", 
+       "popViewport", "pushViewport",
+       "dataViewport", "plotViewport", 
+       "downViewport", "upViewport", "seekViewport", 
+       
+#       "drawDetails", "editDetails", 
+#       "height", "heightDetails",
+#       "width", "widthDetails", 
+
+       # Creating and modifying grobs (and gTrees)
+       "grid.grob",
+       "grob", "gList", "gTree", "gPath", 
+       "grid.get", "grid.set", "grid.add", "grid.remove", "grid.edit",
+       "getGrob", "setGrob", "addGrob", "removeGrob", "editGrob",
+#       "childNames",
+
+       # Creating and drawing predefined grobs and gTrees
+       "grid.arrows", "grid.circle",
+       "grid.line.to", "grid.lines", "grid.move.to",        
+       "grid.points", "grid.polygon",
+       "grid.rect", "grid.segments", "grid.text",
+       "grid.xaxis", "grid.yaxis", 
+       "arrowsGrob", "circleGrob", "linesGrob", "lineToGrob", "moveToGrob",
+       "pointsGrob", "polygonGrob", "rectGrob", "segmentsGrob", "textGrob",
+       "xaxisGrob", "yaxisGrob",
+       
+       # Frames and packing
+       "grid.frame", "grid.pack", "grid.place",
+       "frameGrob", "packGrob", "placeGrob"
+       )
 
 ## Documented as internal but in Paul's first attempt at a sensible
 ## export list:
-export("draw.details", "editDetails", "grid.legend", "grid.multipanel",
-       "grid.panel", "grid.prop.list", "grid.strip",
-       "height.post.details", "height.pre.details", "layoutRegion",
-       "viewport.layout", "viewport.transform", "width.post.details",
-       "width.pre.details")
+export("draw.details",
+       "grid.legend", "grid.multipanel",
+       "grid.panel", "grid.strip",
+       "layoutRegion",
+#       "validGrobDetails",
+       "viewport.layout", "viewport.transform")
 
 ## Manipulated via C code ...
-## export("get.gpar", "grid.top.level.vp", "height", "height.post",
-##        "height.pre", "width", "width.post", "width.pre")
+## export("get.gpar", "grid.top.level.vp")
 
 ## <FIXME>
 ## In the grid.layout.Rd \example ...
@@ -47,6 +83,7 @@ S3method("[", "unit.arithmetic")
 S3method("[", "unit.list")
 S3method("Ops", "unit")
 S3method("Summary", "unit")
+S3method("as.character", "path")
 S3method("as.character", "unit")
 S3method("as.character", "unit.arithmetic")
 S3method("as.character", "unit.list")
@@ -57,7 +94,7 @@ S3method("as.character", "vpTree")
 S3method("print", "grob")
 S3method("print", "unit")
 S3method("print", "viewport")
-S3method("print", "vpPath")
+S3method("print", "path")
 
 ## S3 methods for exported generics in grid
 S3method("unit.length", "unit")
@@ -67,47 +104,55 @@ S3method("unit.length", "unit.arithmetic")
 S3method("downViewport", "default")
 S3method("downViewport", "vpPath")
 
-S3method("draw.details", "arrows")
-S3method("draw.details", "circle")
-S3method("draw.details", "collection")
-S3method("draw.details", "default")
-S3method("draw.details", "frame")
-S3method("draw.details", "glist")
-S3method("draw.details", "line.to")
-S3method("draw.details", "lines")
-S3method("draw.details", "move.to")
-S3method("draw.details", "points")
-S3method("draw.details", "polygon")
-S3method("draw.details", "rect")
-S3method("draw.details", "segments")
-S3method("draw.details", "text")
-S3method("draw.details", "viewport")
-S3method("draw.details", "xaxis")
-S3method("draw.details", "yaxis")
+S3method("grid.draw", "grob")
+S3method("grid.draw", "gTree")
+S3method("grid.draw", "viewport")
+S3method("grid.draw", "vpPath")
+S3method("grid.draw", "pop")
+S3method("grid.draw", "up")
+S3method("drawDetails", "arrows")
+S3method("drawDetails", "circle")
+S3method("drawDetails", "grob")
+S3method("drawDetails", "line.to")
+S3method("drawDetails", "lines")
+S3method("drawDetails", "move.to")
+S3method("drawDetails", "points")
+S3method("drawDetails", "polygon")
+S3method("drawDetails", "rect")
+S3method("drawDetails", "segments")
+S3method("drawDetails", "text")
+S3method("drawDetails", "xaxis")
+S3method("drawDetails", "yaxis")
 S3method("editDetails", "default")
 S3method("editDetails", "xaxis")
 S3method("editDetails", "yaxis")
-S3method("height.details", "default")
-S3method("height.details", "frame")
-S3method("height.details", "rect")
-S3method("height.details", "text")
-S3method("height.details", "viewport")
-S3method("height.post.details", "default")
-S3method("height.pre.details", "default")
-S3method("width.details", "default")
-S3method("width.details", "frame")
-S3method("width.details", "rect")
-S3method("width.details", "text")
-S3method("width.details", "viewport")
-S3method("width.post.details", "default")
-S3method("width.pre.details", "default")
+S3method("heightDetails", "default")
+S3method("heightDetails", "frame")
+S3method("heightDetails", "rect")
+S3method("heightDetails", "text")
+#S3method("height.details", "viewport")
+S3method("preDraw", "grob")
+S3method("preDraw", "gTree")
+S3method("preDrawDetails", "grob")
+S3method("postDrawDetails", "grob")
+S3method("validGrobDetails", "arrows")
+S3method("validGrobDetails", "grob")
+S3method("validGrobDetails", "lines")
+S3method("validGrobDetails", "line.to")
+S3method("validGrobDetails", "move.to")
+S3method("validGrobDetails", "segments")
+S3method("widthDetails", "default")
+S3method("widthDetails", "frame")
+#S3method("width.details", "rect")
+S3method("widthDetails", "text")
+#S3method("width.details", "viewport")
 
 # S3 methods for internal generics that are used in calls to external fns
 S3method("depth", "viewport")
 S3method("depth", "vpList")
 S3method("depth", "vpStack")
 S3method("depth", "vpTree")
-S3method("depth", "vpPath")
+S3method("depth", "path")
 S3method("pushgrobvp", "viewport")
 S3method("pushgrobvp", "vpPath")
 S3method("popgrobvp", "viewport")

@@ -56,24 +56,27 @@ int layoutVJust(SEXP l) {
     return INTEGER(VECTOR_ELT(l, LAYOUT_VJUST))[1];
 }
 
-Rboolean relativeUnit(SEXP unit, int index) {
-    return pureNullUnit(unit, index);
+Rboolean relativeUnit(SEXP unit, int index,
+		   GEDevDesc *dd) {
+    return pureNullUnit(unit, index, dd);
 }
 
-void findRelWidths(SEXP layout, int *relativeWidths) 
+void findRelWidths(SEXP layout, int *relativeWidths,
+		   GEDevDesc *dd) 
 {
     int i;
     SEXP widths = layoutWidths(layout);
     for (i=0; i<layoutNCol(layout); i++) 
-	relativeWidths[i] = relativeUnit(widths, i);
+	relativeWidths[i] = relativeUnit(widths, i, dd);
 }
 
-void findRelHeights(SEXP layout, int *relativeHeights) 
+void findRelHeights(SEXP layout, int *relativeHeights,
+		   GEDevDesc *dd) 
 {
     int i;
     SEXP heights = layoutHeights(layout);
     for (i=0; i<layoutNRow(layout); i++) 
-	relativeHeights[i] = relativeUnit(heights, i);
+	relativeHeights[i] = relativeUnit(heights, i, dd);
 }
 
 void allocateKnownWidths(SEXP layout, 
@@ -438,8 +441,8 @@ void calcViewportLayout(SEXP viewport,
     double reducedHeightCM = parentHeightCM;
     /* Figure out which rows and cols have relative heights and widths 
      */
-    findRelWidths(layout, relativeWidths);
-    findRelHeights(layout, relativeHeights);
+    findRelWidths(layout, relativeWidths, dd);
+    findRelHeights(layout, relativeHeights, dd);
     /* For any width or height which has a unit other than "null"
      * we can immediately figure out its physical size and we can convert to 
      * "npc" units.  We do this and return the widthCM and heightCM 

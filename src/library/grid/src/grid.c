@@ -42,8 +42,8 @@ void getDeviceSize(GEDevDesc *dd, double *devWidthCM, double *devHeightCM)
     *devHeightCM = fabs(top - bottom) * dd->dev->ipr[1] * 2.54;
 }
 
-Rboolean deviceChanged(double devWidthCM, double devHeightCM, 
-		       SEXP currentvp)
+static Rboolean deviceChanged(double devWidthCM, double devHeightCM, 
+			      SEXP currentvp)
 {
     Rboolean result = FALSE;
     SEXP pvpDevWidthCM, pvpDevHeightCM;
@@ -82,19 +82,10 @@ SEXP L_killGrid()
     return R_NilValue;
 }
 
-/* Get the current device -- create one if there isn't one already
+/* Get the current device (the graphics engine creates one if nec.)
  */
 GEDevDesc* getDevice() 
 {
-    if (NoDevices()) {
-	SEXP defdev = GetOption(install("device"), R_NilValue);
-	if (isString(defdev) && length(defdev) > 0) {
-	    PROTECT(defdev = lang1(install(CHAR(STRING_ELT(defdev, 0)))));
-	}
-	else error("No active or default device");
-	eval(defdev, R_GlobalEnv);
-	UNPROTECT(1);
-    }
     return GEcurrentDevice();
 }
 
@@ -390,8 +381,8 @@ find.in.children <- function(name, children) {
   return(result)
 }
 */
-static SEXP findViewport(SEXP name, SEXP vp);
-static SEXP findInChildren(SEXP name, SEXP children) 
+static SEXP findViewport(SEXP name, SEXP strict, SEXP vp);
+static SEXP findInChildren(SEXP name, SEXP strict, SEXP children) 
 {
     SEXP childnames = childList(children);
     int n = LENGTH(childnames);
@@ -400,7 +391,7 @@ static SEXP findInChildren(SEXP name, SEXP children)
     SEXP result = R_NilValue;
     PROTECT(result);
     while (count < n && !found) {
-	result = findViewport(name,
+	result = findViewport(name, strict,
 			      findVar(install(CHAR(STRING_ELT(childnames, count))),
 				      children));
 	found = LOGICAL(VECTOR_ELT(result, 0))[0];
@@ -434,7 +425,7 @@ find.viewport <- function(name, pvp) {
       find.in.children(name, pvp$children)
 }
 */
-static SEXP findViewport(SEXP name, SEXP vp) 
+static SEXP findViewport(SEXP name, SEXP strict, SEXP vp) 
 {
     SEXP result, false, true;
     PROTECT(result = allocVector(VECSXP, 2));
@@ -457,13 +448,22 @@ static SEXP findViewport(SEXP name, SEXP vp)
 		       findVar(install(CHAR(STRING_ELT(name, 0))), 
 			       viewportChildren(vp)));
     } else {
-	result = findInChildren(name, viewportChildren(vp));
+	/*
+	 * If this is a strict match, fail
+	 * Otherwise recurse into children
+	 */
+	if (LOGICAL(strict)[0]) {
+	    SET_VECTOR_ELT(result, 0, false);
+	    SET_VECTOR_ELT(result, 1, R_NilValue);
+	} else {
+	    result = findInChildren(name, strict, viewportChildren(vp));
+	}
     }
     UNPROTECT(3);
     return result;
 }
 
-SEXP L_downviewport(SEXP name) 
+SEXP L_downviewport(SEXP name, SEXP strict) 
 {
     /* Get the current device 
      */
@@ -477,7 +477,7 @@ SEXP L_downviewport(SEXP name)
      * Try to find the named viewport
      */
     SEXP found, vp;
-    PROTECT(found = findViewport(name, gvp));
+    PROTECT(found = findViewport(name, strict, gvp));
     if (LOGICAL(VECTOR_ELT(found, 0))[0]) {
 	vp = doSetViewport(VECTOR_ELT(found, 1), FALSE, FALSE, dd);
 	/* Set the value of the current viewport for the current device
@@ -496,11 +496,11 @@ SEXP L_downviewport(SEXP name)
  * Similar to L_downviewport
  */
 
-static Rboolean pathMatch(SEXP path, SEXP pathsofar) 
+static Rboolean pathMatch(SEXP path, SEXP pathsofar, SEXP strict) 
 {
     SEXP result, fcall;
-    PROTECT(fcall = lang3(install("pathMatch"),
-			  path, pathsofar));
+    PROTECT(fcall = lang4(install("pathMatch"),
+			  path, pathsofar, strict));
     PROTECT(result = eval(fcall, R_gridEvalEnv)); 
     UNPROTECT(2);
     return LOGICAL(result)[0];    
@@ -520,8 +520,10 @@ static SEXP growPath(SEXP pathsofar, SEXP name)
     return result;    
 }
 
-static SEXP findvppath(SEXP path, SEXP name, SEXP pathsofar, SEXP vp);
-static SEXP findvppathInChildren(SEXP path, SEXP name, SEXP pathsofar,
+static SEXP findvppath(SEXP path, SEXP name, SEXP strict, 
+		       SEXP pathsofar, SEXP vp);
+static SEXP findvppathInChildren(SEXP path, SEXP name, 
+				 SEXP strict, SEXP pathsofar,
 				 SEXP children) 
 {
     SEXP childnames = childList(children);
@@ -536,7 +538,7 @@ static SEXP findvppathInChildren(SEXP path, SEXP name, SEXP pathsofar,
 			     children));
 	PROTECT(newpathsofar = growPath(pathsofar,
 					VECTOR_ELT(vp, VP_NAME)));
-	result = findvppath(path, name, newpathsofar, vp);
+	result = findvppath(path, name, strict, newpathsofar, vp);
 	found = LOGICAL(VECTOR_ELT(result, 0))[0];
 	count = count + 1;
 	UNPROTECT(2);
@@ -556,7 +558,8 @@ static SEXP findvppathInChildren(SEXP path, SEXP name, SEXP pathsofar,
     return result;
 }
 			   
-static SEXP findvppath(SEXP path, SEXP name, SEXP pathsofar, SEXP vp) 
+static SEXP findvppath(SEXP path, SEXP name, SEXP strict, 
+		       SEXP pathsofar, SEXP vp) 
 {
     SEXP result, false, true;
     PROTECT(result = allocVector(VECSXP, 2));
@@ -574,10 +577,10 @@ static SEXP findvppath(SEXP path, SEXP name, SEXP pathsofar, SEXP vp)
     } 
     /* 
      * Check for the viewport name AND whether the rest
-     * of the path matches
+     * of the path matches (possibly strictly)
      */
     else if (childExists(name, viewportChildren(vp)) &&
-	     pathMatch(path, pathsofar)) {
+	     pathMatch(path, pathsofar, strict)) {
 	SET_VECTOR_ELT(result, 0, true);
 	SET_VECTOR_ELT(result, 1, 
 		       /*
@@ -586,14 +589,14 @@ static SEXP findvppath(SEXP path, SEXP name, SEXP pathsofar, SEXP vp)
 		       findVar(install(CHAR(STRING_ELT(name, 0))), 
 			       viewportChildren(vp)));
     } else {
-	result = findvppathInChildren(path, name, pathsofar,
+	result = findvppathInChildren(path, name, strict, pathsofar,
 				      viewportChildren(vp));
     }
     UNPROTECT(3);
     return result;
 }
 
-SEXP L_downvppath(SEXP path, SEXP name) 
+SEXP L_downvppath(SEXP path, SEXP name, SEXP strict) 
 {
     /* Get the current device 
      */
@@ -607,7 +610,7 @@ SEXP L_downvppath(SEXP path, SEXP name)
      * Try to find the named viewport
      */
     SEXP found, vp;
-    PROTECT(found = findvppath(path, name, VECTOR_ELT(gvp, VP_NAME), gvp));
+    PROTECT(found = findvppath(path, name, strict, R_NilValue, gvp));
     if (LOGICAL(VECTOR_ELT(found, 0))[0]) {
 	vp = doSetViewport(VECTOR_ELT(found, 1), FALSE, FALSE, dd);
 	/* Set the value of the current viewport for the current device
@@ -781,6 +784,21 @@ SEXP L_setDisplayList(SEXP dl)
     return R_NilValue;
 }
 
+/*
+ * Get the element at index on the DL
+ */
+SEXP L_getDLelt(SEXP index)
+{
+    /* Get the current device 
+     */
+    GEDevDesc *dd = getDevice();
+    SEXP dl, result;
+    PROTECT(dl = gridStateElement(dd, GSS_DL));
+    result = VECTOR_ELT(dl, INTEGER(index)[0]);
+    UNPROTECT(1);
+    return result;
+}
+
 /* Add an element to the display list at the current location
  * Location is maintained in R code
  */
@@ -844,6 +862,32 @@ SEXP L_setEngineDLon(SEXP value)
      */
     GEDevDesc *dd = getDevice();
     setGridStateElement(dd, GSS_ENGINEDLON, value);
+    return R_NilValue;
+}
+
+SEXP L_getCurrentGrob() 
+{
+    GEDevDesc *dd = getDevice();
+    return gridStateElement(dd, GSS_CURRGROB);
+}
+
+SEXP L_setCurrentGrob(SEXP value)
+{
+    GEDevDesc *dd = getDevice();
+    setGridStateElement(dd, GSS_CURRGROB, value);
+    return R_NilValue;
+}
+
+SEXP L_getEngineRecording() 
+{
+    GEDevDesc *dd = getDevice();
+    return gridStateElement(dd, GSS_ENGINERECORDING);
+}
+
+SEXP L_setEngineRecording(SEXP value)
+{
+    GEDevDesc *dd = getDevice();
+    setGridStateElement(dd, GSS_ENGINERECORDING, value);
     return R_NilValue;
 }
 
@@ -1457,7 +1501,7 @@ SEXP L_arrows(SEXP x1, SEXP x2, SEXP xnm1, SEXP xn,
 	 * x1 will be NULL
 	 */
 	if (isNull(x1)) 
-	    PROTECT(devloc = gridStateElement(dd, GSS_PREVLOC));
+	    PROTECT(devloc = gridStateElement(dd, GSS_CURRLOC));
 	if (first) {
 	    if (isNull(x1)) {
 		xx1 = REAL(devloc)[0];

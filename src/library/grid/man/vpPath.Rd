@@ -12,7 +12,7 @@ vpPath(...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{\dots}{ Character vector of viewport names. }
+  \item{\dots}{ Character values which are viewport names. }
 }
 \details{
   Viewport names must only be unique amongst viewports which

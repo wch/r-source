@@ -1,139 +1,50 @@
 # These functions are used to evaluate "grobwidth" and
 # "grobheight" units.
-# They are actually called from within the C code
-# (specifically, from within unit.c) and should NOT be called
-# from the command line in normal use.
-# The width.pre function sets up the correct graphical context (
-# gpar settings) for the grob.  The basic idea is that the width
-# of a grob has to be evaluated within the same context as would
-# be used to draw the grob.  For simple grobs, there should be
-# nothing to do beyond the default given here.
+# They are usually called from within the C code
+# (specifically, from within unit.c)
+# It should be noted that they only give the width/height
+# of the grob in the grob's drawing context
+# (i.e., evaluating the width/height in another context
+#  will not necessarily give the same result)
 
-# NOTE that we do NOT push any viewports.  That would probably create
-# an infinite loop (because push.viewport would call set.viewport
-# which would attempt to recalculate the entire viewport transform,
-# which may get back to here if we originally got here due to
-# calculating a viewport transform;  i.e., if we started with a
-# viewport or layout that was using "grobwidth" or "grobheight" units)
-
-# NOTE that the above note implies that we should NOT return a unit
-# in the width.details method that relies on having the correct
-# viewport set up.  In other words we should only return "absolute"
-# units;  there is a function at the end of this file to help with this.
-
-# For complex grobs, e.g., ones which
-# construct their own viewports, it may be necessary to do extra
-# setting up by writing a width.pre.details method.
-# The width function just returns a unit object.
-# The width.post function is important for reversing all of the
-# setting up that was done in the width.pre function.  Again, for
-# simple grobs there should be nothing to do beyond the default.
+# The C code to evaluate "grobwidth" and "grobheight" calls
+# the preDrawDetails and postDrawDetails generics before and
+# after the call to width/height() to allow for complex grobs which
+# construct their own viewports.
 
 #########
 # WIDTHS
 #########
 
-# We are just setting graphical parameters (so that things like
-# "strwidth" and "lines" units are evaluated correctly)
-# We do NOT push any viewports !!
-# We are doing this in R code to provide generics like width.pre.details
+# We are doing this in R code to provide generics like widthDetails
 # so that users can customise the behaviour for complex grobs by
 # writing their own (R code!) methods
-width.pre <- function(x) {
-  list.struct <- get.value(x)
-  if (!is.null(list.struct$vp))
-    # NOTE: The vp slot in a grob could be more than just a standard viewport
-    # i.e., it could be a vpStack/List/Tree
-    # NOTE also that the unsetting is less problematic because
-    # the previous gpar setting is just saved and reset in C code
-    setvpgpar(list.struct$vp)
-  if (!is.null(list.struct$gp))
-    set.gpar(list.struct$gp)
-  width.pre.details(list.struct)
-}
-
-width.pre.details <- function(x) {
-  UseMethod("width.pre.details")
-}
-
-width.pre.details.default <- function(x) {}
-
 width <- function(x) {
-  list.struct <- get.value(x)
-  width.details(list.struct)
+  widthDetails(x)
 }
 
-width.details <- function(x) {
-  UseMethod("width.details", x)
+widthDetails <- function(x) {
+  UseMethod("widthDetails", x)
 }
 
-width.details.default <- function(x) {
+widthDetails.default <- function(x) {
   unit(1, "null")
 }
-
-# graphical parameters are saved/restored in C-level code
-# so should be nothing to do here
-width.post <- function(x) {
-  list.struct <- get.value(x)
-  width.post.details(list.struct)
-}
-
-width.post.details <- function(x) {
-  UseMethod("width.post.details")
-}
-
-width.post.details.default <- function(x) {}
 
 #########
 # HEIGHTS
 #########
-
-# We are just setting graphical parameters
-# We do NOT push any viewports !!
-height.pre <- function(x) {
-  list.struct <- get.value(x)
-  if (!is.null(list.struct$vp))
-    # NOTE: The vp slot in a grob could be more than just a standard viewport
-    # i.e., it could be a vpStack/List/Tree
-    # NOTE also that the unsetting is less problematic because
-    # the previous gpar setting is just saved and reset in C code
-    setvpgpar(list.struct$vp)
-  if (!is.null(list.struct$gp))
-    set.gpar(list.struct$gp)
-  height.pre.details(list.struct)
-}
-
-height.pre.details <- function(x) {
-  UseMethod("height.pre.details")
-}
-
-height.pre.details.default <- function(x) {}
-
 height <- function(x) {
-  list.struct <- get.value(x)
-  height.details(list.struct)
+  heightDetails(x)
 }
 
-height.details <- function(x) {
-  UseMethod("height.details", x)
+heightDetails <- function(x) {
+  UseMethod("heightDetails", x)
 }
 
-height.details.default <- function(x) {
+heightDetails.default <- function(x) {
   unit(1, "null")
 }
-
-# We are just unsetting graphical parameters
-# We do NOT pop any viewports !!
-height.post <- function(x) {
-  list.struct <- get.value(x)
-  height.post.details(list.struct)
-}
-
-height.post.details <- function(x) {
-  UseMethod("height.post.details")
-}
-
-height.post.details.default <- function(x) {}
 
 #########
 # Some functions that might be useful for determining the sizes
@@ -148,20 +59,13 @@ height.post.details.default <- function(x) {}
 # makes the area allocated to the rectangle .1 of the frame area, but
 # then the rectangle only occupies .1 of _that_ allocated area;  my head
 # hurts !).  The first sort will actually lead to infinite loops so
-# I outlaw them;  the second sort I just don't want to have to deal with.
+# watch out for that;  the second sort I just don't want to have to deal with.
 #
 # On the other hand, dimensions which do not depend on the parent context
 # are much easier to deal with (e.g., "inches", "cm", "lines", ...)
 #
 # So this function takes a unit and returns absolute values
 # untouched and replaces other values with unit(1, "null")
-#
-# NOTE that I included "lines" amongst the absolute units above, even
-# though these depend on the parent context in the sense that the
-# parent may specify a value for lineheight or fontsize.
-# This is ok because these are "absolute" graphical parameters that do not
-# themselves depend on the parent's size (by contrast, "npc" units
-# and "native" units depend on the parent's size).
 
 absolute.size <- function(unit) {
   absolute.units(unit)

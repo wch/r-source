@@ -1,15 +1,21 @@
 \name{grid.polygon}
 \alias{grid.polygon}
+\alias{polygonGrob}
 \title{ Draw a Polygon }
 \description{
-  This function draws a polygon.  The final point will automatically
+  These functions create and draw a polygon.
+  The final point will automatically
   be connected to the initial point.
 }
 \usage{
 grid.polygon(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
              id=NULL, id.lengths=NULL,
-             default.units="npc",
+             default.units="npc", name=NULL,
              gp=gpar(), draw=TRUE, vp=NULL)
+polygonGrob(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
+             id=NULL, id.lengths=NULL,
+             default.units="npc", name=NULL,
+             gp=gpar(), vp=NULL)
 }
 \arguments{
   \item{x}{A numeric vector or unit object specifying x-locations.}
@@ -23,6 +29,7 @@ grid.polygon(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
   \item{default.units}{A string indicating the default units to use
     if \code{x}, \code{y}, \code{width}, or \code{height}
     are only given as numeric vectors.}  
+  \item{name}{ A character identifier. }
   \item{gp}{An object of class \code{gpar}, typically the output
     from a call to the function \code{gpar}.  This is basically
     a list of graphical parameter settings.}
@@ -31,10 +38,12 @@ grid.polygon(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
   \item{vp}{A Grid viewport object (or NULL).}
 }
 \value{
-  An object of class \code{"grob"}.
+  A grob object.
 }
 \details{
-  The \code{"grob"} object contains an object of class \code{"polygon"}.
+  Both functions create a polygon grob (a graphical object describing a
+  polygon), but only \code{grid.polygon}
+  draws the polygon (and then only if \code{draw} is \code{TRUE}).  
 }
 \author{Paul Murrell}
 \seealso{

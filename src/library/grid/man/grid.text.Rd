@@ -1,14 +1,19 @@
 \name{grid.text}
 \alias{grid.text}
-\title{Draw Text in a Grid Viewport}
+\alias{textGrob}
+\title{Draw Text}
 \description{
-  This function draws a piece of text.
+  These functions create and draw text.
 }
 \usage{
 grid.text(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"), 
           just = "centre", rot = 0,
-          check.overlap = FALSE, default.units = "npc",
+          check.overlap = FALSE, default.units = "npc", name = NULL,
           gp=gpar(), draw = TRUE, vp = NULL)
+textGrob(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"), 
+          just = "centre", rot = 0,
+          check.overlap = FALSE, default.units = "npc", name = NULL,
+          gp=gpar(), vp = NULL)
 }
 \arguments{
   \item{label}{A vector of strings or expressions to draw.}
@@ -24,6 +29,7 @@ grid.text(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
   \item{default.units}{A string indicating the default units to use
     if \code{x} or \code{y}
     are only given as numeric vectors.}  
+  \item{name}{ A character identifier. }
   \item{gp}{An object of class \code{gpar}, typically the output
     from a call to the function \code{gpar}.  This is basically
     a list of graphical parameter settings.}
@@ -31,14 +37,17 @@ grid.text(label, x = unit(0.5, "npc"), y = unit(0.5, "npc"),
     should be produced.}
   \item{vp}{A Grid viewport object (or NULL).}
 }
-\value{
-  An object of class \code{"grob"}.
-}
 \details{
+  Both functions create a text grob (a graphical object describing
+  text), but only \code{grid.text}
+  draws the text (and then only if \code{draw} is \code{TRUE}).
+  
   If the \code{label} argument is an expression, the output is
   formatted as a mathematical annotation, as for base graphics text.
   
-  The \code{"grob"} object contains an object of class \code{"text"}.
+}
+\value{
+  A text grob.  \code{grid.text} returns the value invisibly.
 }
 \author{Paul Murrell}
 \seealso{

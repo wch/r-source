@@ -24,4 +24,3 @@ grid.pretty <- function(range) {
   .Call("L_pretty", range, PACKAGE="grid")
 }
 
-

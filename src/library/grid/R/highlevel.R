@@ -103,6 +103,8 @@ grid.multipanel <- function(x=stats::runif(90), y=stats::runif(90),
 grid.show.layout <- function(l, newpage=TRUE,
                          cell.border="blue", cell.fill="light blue",
                          cell.label=TRUE, vp=NULL) {
+  if (!is.layout(l))
+    stop("l must be a layout")
   if (newpage)
     grid.newpage()
   if (!is.null(vp))
@@ -285,17 +287,16 @@ function(pch, labels, frame=TRUE,
                   hgap),
                 heights=unit.pmax(unit(2, "lines"),
                   vgap + unit(rep(1, nkeys), "strheight", as.list(labels))))
-  gf <- grid.frame(layout=legend.layout, vp=vp, gp=gp, draw=FALSE)
+  fg <- frameGrob(layout=legend.layout, vp=vp, gp=gp)
   for (i in 1:nkeys) {
-    grid.place(gf, grid.points(.5, .5, pch=pch[i], draw=FALSE),
-               col=1, row=i, draw=FALSE)
-    grid.place(gf, grid.text(labels[i], x=0, y=.5, just=c("left", "centre"),
-                             draw=FALSE),
-               col=2, row=i, draw=FALSE)
+    fg <- placeGrob(fg, pointsGrob(.5, .5, pch=pch[i]), col=1, row=i)
+    fg <- placeGrob(fg, textGrob(labels[i], x=0, y=.5,
+                                 just=c("left", "centre")),
+                    col=2, row=i)
   }
   if (draw)
-    grid.draw(gf)
-  gf
+    grid.draw(fg)
+  fg
 }
 
 # Just a wrapper for a sample series of grid commands
@@ -308,15 +309,15 @@ grid.plot.and.legend <- function() {
   y2 <- stats::runif(10)
   pch <- 1:3
   labels <- c("Girls", "Boys", "Other")
-  lf <- grid.frame(draw=TRUE)
-  plot <- grid.collection(grid.rect(draw=FALSE),
-                      grid.points(x, y1, pch=1, draw=FALSE),
-                      grid.points(x, y2, pch=2, draw=FALSE),
-                      grid.xaxis(draw=FALSE),
-                      grid.yaxis(draw=FALSE),
-                      draw=FALSE)
-  grid.pack(lf, plot)
-  grid.pack(lf, grid.legend(pch, labels, draw=FALSE),
-            height=unit(1,"null"), side="right")
+  lf <- frameGrob()
+  plot <- gTree(children=gList(rectGrob(),
+                  pointsGrob(x, y1, pch=1),
+                  pointsGrob(x, y2, pch=2),
+                  xaxisGrob(),
+                  yaxisGrob()))
+  lf <- packGrob(lf, plot)
+  lf <- packGrob(lf, grid.legend(pch, labels, draw=FALSE),
+                 height=unit(1,"null"), side="right")
+  grid.draw(lf)
 }
 

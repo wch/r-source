@@ -15,7 +15,7 @@
 \usage{
 pushViewport(..., recording=TRUE)
 popViewport(n, recording=TRUE)
-downViewport(name, recording=TRUE)
+downViewport(name, strict=FALSE, recording=TRUE)
 seekViewport(name, recording=TRUE)
 upViewport(n, recording=TRUE)
 }
@@ -25,6 +25,8 @@ upViewport(n, recording=TRUE)
     pop or navigate up.  The special value \code{0} indicates to
     pop or navigate viewports right up to the root viewport.}
   \item{name}{A character value to identify a viewport in the tree.}
+  \item{strict}{ A boolean indicating whether the vpPath must be
+    matched exactly. }
   \item{recording}{A logical value to indicate whether the viewport
     operation should be recorded on the Grid display list.}
 }

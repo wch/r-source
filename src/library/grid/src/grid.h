@@ -47,6 +47,8 @@
 #define GSS_GRIDDEVICE 9
 #define GSS_PREVLOC 10
 #define GSS_ENGINEDLON 11
+#define GSS_CURRGROB 12
+#define GSS_ENGINERECORDING 13
 
 /*
  * Structure of a viewport
@@ -83,6 +85,7 @@
 #define PVP_CHILDREN 26
 #define PVP_DEVWIDTHCM 27
 #define PVP_DEVHEIGHTCM 28
+#define PVP_PARENTGPAR 29
 
 /*
  * Structure of a layout
@@ -223,12 +226,13 @@ SEXP L_killGrid();
 SEXP L_gridDirty();
 SEXP L_currentViewport(); 
 SEXP L_setviewport(SEXP vp, SEXP hasParent);
-SEXP L_downviewport(SEXP vp);
-SEXP L_downvppath(SEXP path, SEXP name);
+SEXP L_downviewport(SEXP vp, SEXP strict);
+SEXP L_downvppath(SEXP path, SEXP name, SEXP strict);
 SEXP L_unsetviewport(SEXP last);
 SEXP L_upviewport(SEXP last);
 SEXP L_getDisplayList(); 
 SEXP L_setDisplayList(SEXP dl); 
+SEXP L_getDLelt(SEXP index);
 SEXP L_setDLelt(SEXP value);
 SEXP L_getDLindex();
 SEXP L_setDLindex(SEXP index);
@@ -236,6 +240,10 @@ SEXP L_getDLon();
 SEXP L_setDLon(SEXP value);
 SEXP L_getEngineDLon();
 SEXP L_setEngineDLon(SEXP value);
+SEXP L_getCurrentGrob();
+SEXP L_setCurrentGrob(SEXP value);
+SEXP L_getEngineRecording();
+SEXP L_setEngineRecording(SEXP value);
 SEXP L_currentGPar();
 SEXP L_newpagerecording(SEXP ask);
 SEXP L_newpage();
@@ -298,7 +306,7 @@ extern int L_nullLayoutMode;
 
 double pureNullUnitValue(SEXP unit, int index);
 
-int pureNullUnit(SEXP unit, int index);
+int pureNullUnit(SEXP unit, int index, GEDevDesc *dd);
 
 double transformX(SEXP x, int index, LViewportContext vpc, 
 		  R_GE_gcontext *gc,
@@ -535,5 +543,9 @@ void getDeviceSize(GEDevDesc *dd, double *devWidthCM, double *devHeightCM);
 
 GEDevDesc* getDevice();
 
+void getViewportTransform(SEXP currentvp, 
+			  GEDevDesc *dd, 
+			  double *vpWidthCM, double *vpHeightCM,
+			  LTransform transform, double *rotationAngle);
 
 

@@ -262,58 +262,134 @@ double pureNullUnitValue(SEXP unit, int index)
     return result;
 }
 
-int pureNullUnitArithmetic(SEXP unit, int index);
+int pureNullUnitArithmetic(SEXP unit, int index, GEDevDesc *dd);
 
-int pureNullUnit(SEXP unit, int index) {
+int pureNullUnit(SEXP unit, int index, GEDevDesc *dd) {
     int result;
     if (isUnitArithmetic(unit)) 
-	result = pureNullUnitArithmetic(unit, index);
+	result = pureNullUnitArithmetic(unit, index, dd);
     else if (isUnitList(unit)) {
-	result = pureNullUnit(VECTOR_ELT(unit, index), 0);
+	result = pureNullUnit(VECTOR_ELT(unit, index), 0, dd);
     } else {  /* Just a plain unit */
 	/* Special case:  if "grobwidth" or "grobheight" unit
 	 * and width/height(grob) is pure null
 	 */
 	if (unitUnit(unit, index) == L_GROBWIDTH) {
-	    SEXP fn, R_fcall;
-	    SEXP width;
-	    PROTECT(fn = findFun(install("width"), R_gridEvalEnv));
-	    PROTECT(R_fcall = lang2(fn, unitData(unit, index)));
-	    PROTECT(width = eval(R_fcall, R_gridEvalEnv));
-	    result = pureNullUnit(width, 0);
-	    UNPROTECT(3);
+	    SEXP grob, width;
+	    SEXP widthPreFn, widthFn, widthPostFn, findGrobFn;
+	    SEXP R_fcall0, R_fcall1, R_fcall2, R_fcall3;
+	    SEXP savedgpar, savedgrob;
+	    /*
+	     * The data could be a gPath to a grob
+	     * In this case, need to find the grob first, and in order
+	     * to do that correctly, need to call pre/postDraw code 
+	     */
+	    PROTECT(grob = unitData(unit, index));
+	    PROTECT(savedgpar = gridStateElement(dd, GSS_GPAR));
+	    PROTECT(savedgrob = gridStateElement(dd, GSS_CURRGROB));
+	    PROTECT(widthPreFn = findFun(install("preDraw"), 
+					 R_gridEvalEnv));
+	    PROTECT(widthFn = findFun(install("width"), R_gridEvalEnv));
+	    PROTECT(widthPostFn = findFun(install("postDraw"), 
+					  R_gridEvalEnv));
+	    if (inherits(grob, "gPath")) {
+		if (isNull(savedgrob)) {
+		    PROTECT(findGrobFn = findFun(install("findGrobinDL"), 
+						 R_gridEvalEnv));
+		    PROTECT(R_fcall0 = lang2(findGrobFn, 
+					     getListElement(grob, "name")));
+		    grob = eval(R_fcall0, R_gridEvalEnv);
+		} else {
+		    PROTECT(findGrobFn =findFun(install("findGrobinChildren"), 
+						R_gridEvalEnv));
+		    PROTECT(R_fcall0 = lang3(findGrobFn, 
+					     getListElement(grob, "name"),
+					     getListElement(savedgrob, 
+							    "children")));
+		    grob = eval(R_fcall0, R_gridEvalEnv);
+		}
+		UNPROTECT(2);
+	    }
+	    PROTECT(R_fcall1 = lang2(widthPreFn, grob));
+	    eval(R_fcall1, R_gridEvalEnv);
+	    PROTECT(R_fcall2 = lang2(widthFn, grob));
+	    PROTECT(width = eval(R_fcall2, R_gridEvalEnv));
+	    result = pureNullUnit(width, 0, dd);
+	    PROTECT(R_fcall3 = lang2(widthPostFn, grob));
+	    eval(R_fcall3, R_gridEvalEnv);
+	    setGridStateElement(dd, GSS_GPAR, savedgpar);
+	    setGridStateElement(dd, GSS_CURRGROB, savedgrob);
+	    UNPROTECT(10);
 	} else if (unitUnit(unit, index) == L_GROBHEIGHT) {
-	    SEXP fn, R_fcall;
-	    SEXP height;
-	    PROTECT(fn = findFun(install("height"), R_gridEvalEnv));
-	    PROTECT(R_fcall = lang2(fn, unitData(unit, index)));
-	    PROTECT(height = eval(R_fcall, R_gridEvalEnv));
-	    result = pureNullUnit(height, 0);
-	    UNPROTECT(3);
+	    SEXP grob, height;
+	    SEXP heightPreFn, heightFn, heightPostFn, findGrobFn;
+	    SEXP R_fcall0, R_fcall1, R_fcall2, R_fcall3;
+	    SEXP savedgpar, savedgrob;
+	    /*
+	     * The data could be a gPath to a grob
+	     * In this case, need to find the grob first, and in order
+	     * to do that correctly, need to call pre/postDraw code 
+	     */
+	    PROTECT(grob = unitData(unit, index));
+	    PROTECT(savedgpar = gridStateElement(dd, GSS_GPAR));
+	    PROTECT(savedgrob = gridStateElement(dd, GSS_CURRGROB));
+	    PROTECT(heightPreFn = findFun(install("preDraw"), 
+					 R_gridEvalEnv));
+	    PROTECT(heightFn = findFun(install("height"), R_gridEvalEnv));
+	    PROTECT(heightPostFn = findFun(install("postDraw"), 
+					  R_gridEvalEnv));
+	    if (inherits(grob, "gPath")) {
+		if (isNull(savedgrob)) {
+		    PROTECT(findGrobFn = findFun(install("findGrobinDL"), 
+						 R_gridEvalEnv));
+		    PROTECT(R_fcall0 = lang2(findGrobFn, 
+					     getListElement(grob, "name")));
+		    grob = eval(R_fcall0, R_gridEvalEnv);
+		} else {
+		    PROTECT(findGrobFn =findFun(install("findGrobinChildren"), 
+						R_gridEvalEnv));
+		    PROTECT(R_fcall0 = lang3(findGrobFn, 
+					     getListElement(grob, "name"),
+					     getListElement(savedgrob, 
+							    "children")));
+		    grob = eval(R_fcall0, R_gridEvalEnv);
+		}
+		UNPROTECT(2);
+	    }
+	    PROTECT(R_fcall1 = lang2(heightPreFn, grob));
+	    eval(R_fcall1, R_gridEvalEnv);
+	    PROTECT(R_fcall2 = lang2(heightFn, grob));
+	    PROTECT(height = eval(R_fcall2, R_gridEvalEnv));
+	    result = pureNullUnit(height, 0, dd);
+	    PROTECT(R_fcall3 = lang2(heightPostFn, grob));
+	    eval(R_fcall3, R_gridEvalEnv);
+	    setGridStateElement(dd, GSS_GPAR, savedgpar);
+	    setGridStateElement(dd, GSS_CURRGROB, savedgrob);
+	    UNPROTECT(10);
 	} else
 	    result = unitUnit(unit, index) == L_NULL;
     }
     return result;    
 }
 
-int pureNullUnitArithmetic(SEXP unit, int index) {
+int pureNullUnitArithmetic(SEXP unit, int index, GEDevDesc *dd) {
     /* 
      * Initialised to shut up compiler
      */
     int result = 0;
     if (addOp(unit) || minusOp(unit)) {
-	result = pureNullUnit(arg1(unit), index) &&
-	    pureNullUnit(arg2(unit), index);
+	result = pureNullUnit(arg1(unit), index, dd) &&
+	    pureNullUnit(arg2(unit), index, dd);
     }
     else if (timesOp(unit)) {
-	result = pureNullUnit(arg2(unit), index);
+	result = pureNullUnit(arg2(unit), index, dd);
     }
     else if (minFunc(unit) || maxFunc(unit) || sumFunc(unit)) {
 	int n = unitLength(arg1(unit));
 	int i = 0;
 	result = 1;
 	while (result && i<n) {
-	    result = result && pureNullUnit(arg1(unit), i);
+	    result = result && pureNullUnit(arg1(unit), i, dd);
 	    i += 1;
 	}
     } 
@@ -334,81 +410,117 @@ int pureNullUnitArithmetic(SEXP unit, int index) {
  */
 
 double evaluateGrobWidthUnit(SEXP grob, 
-			     double vpwidthCM, double vpheightCM,
+			     double vpheightCM, double vpwidthCM,
 			     GEDevDesc *dd) 
 {
-    SEXP widthPreFn, widthFn, widthPostFn, R_fcall1, R_fcall2, R_fcall3;
-    SEXP savedgpar;
-    SEXP width;
+    double vpWidthCM, vpHeightCM;
+    double rotationAngle;
     LViewportContext vpc;
     R_GE_gcontext gc;
+    LTransform transform;
+    SEXP currentvp, currentgp;
+    SEXP widthPreFn, widthFn, widthPostFn, findGrobFn;
+    SEXP R_fcall0, R_fcall1, R_fcall2, R_fcall3;
+    SEXP savedgpar, savedgrob;
+    SEXP width;
     double resultINCHES, result;
     /* 
      * Save the current gpar state and restore it at the end
      */
     PROTECT(savedgpar = gridStateElement(dd, GSS_GPAR));
-    PROTECT(widthPreFn = findFun(install("width.pre"), R_gridEvalEnv));
+    /*
+     * Save the current grob and restore it at the end
+     */
+    PROTECT(savedgrob = gridStateElement(dd, GSS_CURRGROB));
+    /*
+     * Set up for calling R functions 
+     */
+    PROTECT(widthPreFn = findFun(install("preDraw"), R_gridEvalEnv));
     PROTECT(widthFn = findFun(install("width"), R_gridEvalEnv));
-    PROTECT(widthPostFn = findFun(install("width.post"), R_gridEvalEnv));
-    /* Call width.pre(grob) 
+    PROTECT(widthPostFn = findFun(install("postDraw"), R_gridEvalEnv));
+    /*
+     * If grob is actually a gPath, use it to find an actual grob
+     */
+    if (inherits(grob, "gPath")) {
+	/* 
+	 * If the current grob is NULL then we are at the top level
+	 * and we search the display list, otherwise we search the 
+	 * children of the current grob
+	 *
+	 * NOTE: assume here that only gPath of depth == 1 are valid
+	 */
+	if (isNull(savedgrob)) {
+	    PROTECT(findGrobFn = findFun(install("findGrobinDL"), 
+					 R_gridEvalEnv));
+	    PROTECT(R_fcall0 = lang2(findGrobFn, 
+				     getListElement(grob, "name")));
+	    grob = eval(R_fcall0, R_gridEvalEnv);
+	} else {
+	    PROTECT(findGrobFn = findFun(install("findGrobinChildren"), 
+					 R_gridEvalEnv));
+	    PROTECT(R_fcall0 = lang3(findGrobFn, 
+				     getListElement(grob, "name"),
+				     getListElement(savedgrob, "children")));
+	    grob = eval(R_fcall0, R_gridEvalEnv);
+	}
+	UNPROTECT(2);
+    }
+    /* Call preDraw(grob) 
      */
     PROTECT(R_fcall1 = lang2(widthPreFn, grob));
     eval(R_fcall1, R_gridEvalEnv);
+    /* 
+     * The call to preDraw may have pushed viewports and/or
+     * enforced gpar settings, SO we need to re-establish the
+     * current viewport and gpar settings before evaluating the
+     * width unit.
+     * 
+     * NOTE:  we are really relying on the grid state to be coherent
+     * when we do stuff like this (i.e., not to have changed since
+     * we started evaluating the unit [other than the changes we may
+     * have deliberately made above by calling preDraw]).  In other
+     * words we are relying on no other drawing occurring at the 
+     * same time as we are doing this evaluation.  In other other
+     * words, we are relying on there being only ONE process
+     * (i.e., NOT multi-threaded).
+     */
+    currentvp = gridStateElement(dd, GSS_VP);
+    currentgp = gridStateElement(dd, GSS_GPAR);
+    getViewportTransform(currentvp, dd, 
+			 &vpWidthCM, &vpHeightCM, 
+			 transform, &rotationAngle);
+    fillViewportContextFromViewport(currentvp, &vpc);
     /* Call width(grob)
      * to get the unit representing the with
      */
     PROTECT(R_fcall2 = lang2(widthFn, grob));
     PROTECT(width = eval(R_fcall2, R_gridEvalEnv));
-    /* Transform the width
-     * NOTE:  the width.pre function should NOT have done any 
-     * viewport pushing so the viewport context and sizeCM 
-     * should be unchanged
+    /* 
+     * Transform the width
      * NOTE:  We transform into INCHES so can produce final answer in terms
      * of NPC for original context
      */
     /* Special case for "null" units
      */
-    if (pureNullUnit(width, 0)) {
+    if (pureNullUnit(width, 0, dd)) {
 	result = evaluateNullUnit(pureNullUnitValue(width, 0));
     } else {
-	/* 
-	 * Get the current gpar settings (they may have been changed in the 
-	 * width.pre call
-	 */
-	gcontextFromgpar(gridStateElement(dd, GSS_GPAR), 0, &gc);
-	/*
-	 * NOTE that the vpc contains garbage.
-	 * This is ok ONLY because of the strict
-	 * restrictions placed on what sort of units can
-	 * be used in a width.details method.
-	 * If those restrictions are lifted, all bets are off ...
-	 */
+	gcontextFromgpar(currentgp, 0, &gc);
 	resultINCHES = transformWidthtoINCHES(width, 0, vpc, &gc,
-					      /* These are the current
-					       * viewport widthCM and
-					       * heightCM.
-					       * They are adequate ONLY
-					       * because of the strict
-					       * restrictions placed on
-					       * what sort of units can
-					       * be used in a width.details
-					       * method.
-					       * If those restrictions are
-					       * lifted, all bets are off ...
-					       */
-					      vpwidthCM, vpheightCM,
+					      vpWidthCM, vpHeightCM,
 					      dd);
 	result = resultINCHES/(vpwidthCM/2.54);
     }
-    /* Call width.post(grob)
+    /* Call postDraw(grob)
      */
     PROTECT(R_fcall3 = lang2(widthPostFn, grob));
     eval(R_fcall3, R_gridEvalEnv);
     /* 
-     * Restore the saved gpar state 
+     * Restore the saved gpar state and grob
      */
     setGridStateElement(dd, GSS_GPAR, savedgpar);
-    UNPROTECT(8);
+    setGridStateElement(dd, GSS_CURRGROB, savedgrob);
+    UNPROTECT(9);
     /* Return the transformed width
      */
     return result;
@@ -420,59 +532,111 @@ double evaluateGrobHeightUnit(SEXP grob,
 			     double vpheightCM, double vpwidthCM,
 			     GEDevDesc *dd) 
 {
-    /* FIXME:  I probably want to create a new environment here
-     * rather than use the global environment (?) 
-     * Ditto in three eval()s below.
-     */
-    SEXP heightPreFn, heightFn, heightPostFn, R_fcall1, R_fcall2, R_fcall3;
-    SEXP savedgpar;
-    SEXP height;
+    double vpWidthCM, vpHeightCM;
+    double rotationAngle;
     LViewportContext vpc;
     R_GE_gcontext gc;
+    LTransform transform;
+    SEXP currentvp, currentgp;
+    SEXP heightPreFn, heightFn, heightPostFn, findGrobFn;
+    SEXP R_fcall0, R_fcall1, R_fcall2, R_fcall3;
+    SEXP savedgpar, savedgrob;
+    SEXP height;
     double resultINCHES, result;
     /* 
      * Save the current gpar state and restore it at the end
      */
     PROTECT(savedgpar = gridStateElement(dd, GSS_GPAR));
-    PROTECT(heightPreFn = findFun(install("height.pre"), R_gridEvalEnv));
+    /*
+     * Save the current grob and restore it at the end
+     */
+    PROTECT(savedgrob = gridStateElement(dd, GSS_CURRGROB));
+    PROTECT(heightPreFn = findFun(install("preDraw"), R_gridEvalEnv));
     PROTECT(heightFn = findFun(install("height"), R_gridEvalEnv));
-    PROTECT(heightPostFn = findFun(install("height.post"), R_gridEvalEnv));
-    /* Call height.pre(grob) 
+    PROTECT(heightPostFn = findFun(install("postDraw"), R_gridEvalEnv));
+    /*
+     * If grob is actually a gPath, use it to find an actual grob
+     */
+    if (inherits(grob, "gPath")) {
+	/* 
+	 * If the current grob is NULL then we are at the top level
+	 * and we search the display list, otherwise we search the 
+	 * children of the current grob
+	 *
+	 * NOTE: assume here that only gPath of depth == 1 are valid
+	 */
+	if (isNull(savedgrob)) {
+	    PROTECT(findGrobFn = findFun(install("findGrobinDL"), 
+					 R_gridEvalEnv));
+	    PROTECT(R_fcall0 = lang2(findGrobFn, 
+				     getListElement(grob, "name")));
+	    grob = eval(R_fcall0, R_gridEvalEnv);
+	} else {
+	    PROTECT(findGrobFn = findFun(install("findGrobinChildren"), 
+					 R_gridEvalEnv));
+	    PROTECT(R_fcall0 = lang3(findGrobFn, 
+				     getListElement(grob, "name"),
+				     getListElement(savedgrob, "children")));
+	    grob = eval(R_fcall0, R_gridEvalEnv);
+	}
+	UNPROTECT(2);
+    }
+    /* Call preDraw(grob) 
      */
     PROTECT(R_fcall1 = lang2(heightPreFn, grob));
     eval(R_fcall1, R_gridEvalEnv);
+    /* 
+     * The call to preDraw may have pushed viewports and/or
+     * enforced gpar settings, SO we need to re-establish the
+     * current viewport and gpar settings before evaluating the
+     * height unit.
+     * 
+     * NOTE:  we are really relying on the grid state to be coherent
+     * when we do stuff like this (i.e., not to have changed since
+     * we started evaluating the unit [other than the changes we may
+     * have deliberately made above by calling preDraw]).  In other
+     * words we are relying on no other drawing occurring at the 
+     * same time as we are doing this evaluation.  In other other
+     * words, we are relying on there being only ONE process
+     * (i.e., NOT multi-threaded).
+     */
+    currentvp = gridStateElement(dd, GSS_VP);
+    currentgp = gridStateElement(dd, GSS_GPAR);
+    getViewportTransform(currentvp, dd, 
+			 &vpWidthCM, &vpHeightCM, 
+			 transform, &rotationAngle);
+    fillViewportContextFromViewport(currentvp, &vpc);
     /* Call height(grob)
      * to get the unit representing the with
      */
     PROTECT(R_fcall2 = lang2(heightFn, grob));
     PROTECT(height = eval(R_fcall2, R_gridEvalEnv));
-    /* Transform the height
-     * NOTE:  the height.pre function should NOT have done any 
-     * viewport pushing so the viewport context and sizeCM 
-     * should be unchanged
+    /* 
+     * Transform the height
      * NOTE:  We transform into INCHES so can produce final answer in terms
      * of NPC for original context
      */
     /* Special case for "null" units
      */
-    if (pureNullUnit(height, 0)) {
+    if (pureNullUnit(height, 0, dd)) {
 	result = evaluateNullUnit(pureNullUnitValue(height, 0));
     } else {
-	gcontextFromgpar(gridStateElement(dd, GSS_GPAR), 0, &gc);
+	gcontextFromgpar(currentgp, 0, &gc);
 	resultINCHES = transformHeighttoINCHES(height, 0, vpc, &gc,
-					       vpwidthCM, vpheightCM,
+					       vpWidthCM, vpHeightCM,
 					       dd);
 	result = resultINCHES/(vpheightCM/2.54);
     }
-    /* Call height.post(grob)
+    /* Call postDraw(grob)
      */
     PROTECT(R_fcall3 = lang2(heightPostFn, grob));
     eval(R_fcall3, R_gridEvalEnv);
     /* 
-     * Restore the saved gpar state 
+     * Restore the saved gpar state and grob
      */
     setGridStateElement(dd, GSS_GPAR, savedgpar);
-    UNPROTECT(8);
+    setGridStateElement(dd, GSS_CURRGROB, savedgrob);
+    UNPROTECT(9);
     /* Return the transformed height
      */
     return result;
@@ -575,7 +739,7 @@ double transform(double value, int unit, SEXP data,
 		2.54/thisCM;
 	break;
     case L_GROBWIDTH:
-	result = value*evaluateGrobWidthUnit(data, thisCM, otherCM, dd);
+	result = value*evaluateGrobWidthUnit(data, otherCM, thisCM, dd);
 	break;
     case L_GROBHEIGHT:
 	result = value*evaluateGrobHeightUnit(data, thisCM, otherCM, dd);

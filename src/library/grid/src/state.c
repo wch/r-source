@@ -36,11 +36,17 @@ int gridRegisterIndex;
  * GSS_GRIDDEVICE 9 = does this device contain grid output?
  * GSS_PREVLOC 10 = previous location of grid "pen" 
  * GSS_ENGINEDLON 11 = are we using the graphics engine's display list?
+ * GSS_CURRGROB 12 = current grob being drawn (for determining 
+ *   the list of grobs to search when evaluating a grobwidth/height
+ *   unit via gPath)
+ * GSS_ENGINERECORDING 13 = are we already inside a .Call.graphics call?
+ *   Used by grid.Call.graphics to avoid unnecessary recording on 
+ *   engine display list
 */
 
 SEXP createGridSystemState()
 {
-    return allocVector(VECSXP, 12);
+    return allocVector(VECSXP, 14);
 }
 
 void initDL(GEDevDesc *dd)
@@ -59,9 +65,34 @@ void initDL(GEDevDesc *dd)
     UNPROTECT(2);
 }
 
+/*
+ * This is used to init some bits of the system state
+ * Called when a grahpics engine redraw is about to occur
+ * NOTE that it does not init all of the state, in particular,
+ * the display list is not initialised here (see initDL), 
+ * nor is the ROOT viewport (see initVP),
+ * nor is the current gpar (see initGP)
+ */
+void initOtherState(GEDevDesc* dd)
+{
+    SEXP currloc, prevloc, recording;
+    SEXP state = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
+    currloc = VECTOR_ELT(state, GSS_CURRLOC);
+    REAL(currloc)[0] = 0;
+    REAL(currloc)[1] = 0;    
+    prevloc = VECTOR_ELT(state, GSS_PREVLOC);
+    REAL(prevloc)[0] = 0;
+    REAL(prevloc)[1] = 0;    
+    SET_VECTOR_ELT(state, GSS_CURRGROB, R_NilValue);
+    recording = VECTOR_ELT(state, GSS_ENGINERECORDING);
+    LOGICAL(recording)[0] = FALSE;
+    SET_VECTOR_ELT(state, GSS_ENGINERECORDING, recording);
+}
+
 void fillGridSystemState(SEXP state, GEDevDesc* dd) 
 {
-    SEXP devsize, currloc, prevloc, dlon, enginedlon, griddev;
+    SEXP devsize, currloc, prevloc, dlon, enginedlon, recording;
+    SEXP griddev;
     PROTECT(devsize = allocVector(REALSXP, 2));
     REAL(devsize)[0] = 0;
     REAL(devsize)[1] = 0;
@@ -84,6 +115,10 @@ void fillGridSystemState(SEXP state, GEDevDesc* dd)
     PROTECT(enginedlon = allocVector(LGLSXP, 1));
     LOGICAL(enginedlon)[0] = TRUE;
     SET_VECTOR_ELT(state, GSS_ENGINEDLON, enginedlon);
+    SET_VECTOR_ELT(state, GSS_CURRGROB, R_NilValue);
+    PROTECT(recording = allocVector(LGLSXP, 1));    
+    LOGICAL(recording)[0] = FALSE;
+    SET_VECTOR_ELT(state, GSS_ENGINERECORDING, recording);
     initGPar(dd);
     SET_VECTOR_ELT(state, GSS_GPSAVED, R_NilValue);
     /* Do NOT initialise top-level viewport or grid display list for
@@ -95,7 +130,7 @@ void fillGridSystemState(SEXP state, GEDevDesc* dd)
     PROTECT(griddev = allocVector(LGLSXP, 1));
     LOGICAL(griddev)[0] = FALSE;
     SET_VECTOR_ELT(state, GSS_GRIDDEVICE, griddev);
-    UNPROTECT(6);
+    UNPROTECT(7);
 }
 
 SEXP gridStateElement(GEDevDesc *dd, int elementIndex)
@@ -246,6 +281,7 @@ SEXP gridCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 		*/
 		initGPar(dd);
 		initVP(dd);
+		initOtherState(dd);
 	    } else {
 		/*
 		 * If we have turned off the graphics engine's display list

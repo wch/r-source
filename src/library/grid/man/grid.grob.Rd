@@ -1,52 +1,68 @@
 \name{grid.grob}
 \alias{grid.grob}
+\alias{grob}
+\alias{gTree}
+\alias{gList}
 \title{Create a Grid Graphical Object}
 \description{
-  Creates a Grid graphical object.
+  These functions create grid graphical objects.
 }
 \usage{
 grid.grob(list.struct, cl = NULL, draw = TRUE)
+grob(..., name = NULL, gp = NULL, vp = NULL, cl = NULL) 
+gTree(..., name = NULL, gp = NULL, vp = NULL, children = NULL, 
+      childrenvp = NULL, cl = NULL)
+gList(...)
 }
 \arguments{
+  \item{...}{ For \code{grob} and \code{gTree}, the
+    named slots describing important features of
+    the graphical object. For \code{gList}, a series of grob objects. }
   \item{list.struct}{A list (preferably with each element named).}
+  \item{name}{ A character identifier for the grob.  Used to find the
+    grob on the display list and/or as a child of another grob. }
+  \item{children}{ A gList object. }
+  \item{childrenvp}{ A viewport object (or \code{NULL}).}
+  \item{gp}{A gpar object, typically the output
+    from a call to the function \code{gpar}.  This is basically
+    a list of graphical parameter settings.}
+  \item{vp}{A viewport object (or \code{NULL}).}
   \item{cl}{A string giving the class attribute for the \code{list.struct}}
   \item{draw}{A logical value to indicate whether to produce
     graphical output.}
 }
 \details{
-  A Grid graphical object provides a pointer to the
-  \code{list.struct}.  This has the important consequence that
-  copies of the graphical object refer to the same \code{list.struct}.
+  These functions can be used to create a basic grob, gTree, or gList
+  object, or a new class derived from one of these.
   
-  All Grid primitives (\code{grid.lines}, \code{grid.rect}, ...) and
-  some higher-level Grid functions (e.g., \code{grid.xaxis} and
-  \code{grid.yaxis}) return graphical objects.
+  A grid graphical object (grob) is a description of a graphical
+  item.  These basic classes provide default behaviour for
+  validating, drawing,
+  and modifying graphical objects.
 
-  Grid provides several useful functions for graphical objects
-  (e.g., \code{grid.draw} and \code{grid.edit}) which are designed to make
-  it easier to produce new graphical objects.
+  A gTree can have other grobs as children;  when a gTree is drawn, it
+  draws all of its children.  Before drawing its children, a gTree
+  pushes its childrenvp slot and then navigates back up (calls
+  \code{upViewport}) so that the children can specify their location
+  within the childrenvp via a vpPath.
+  
+  All grid primitives (\code{grid.lines}, \code{grid.rect}, ...) and
+  some higher-level grid components (e.g., \code{grid.xaxis} and
+  \code{grid.yaxis}) are derived from these classes.
+
+  \code{grid.grob} is deprecated.
+
 }
 \value{
-  An object of class \code{"grob"}.
+  A grob object.
 }
 \author{Paul Murrell}
 \seealso{
   \code{\link{grid.draw}},
   \code{\link{grid.edit}},
-  \code{\link{grid.get}},
-  \code{\link{grid.copy}}.
+  \code{\link{grid.get}}.
 }
 
 \examples{
-## Create a graphical object
-l <- grid.lines(draw=FALSE)
-## View the list.struct
-grid.get(l)
-## Copy by reference
-l2 <- l
-## Edit the common list.struct
-grid.edit(l2, gp=gpar(col="green"))
-## Copy by value
-l3 <- grid.copy(l)
 }
 \keyword{dplot}
