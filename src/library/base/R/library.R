@@ -112,13 +112,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     libraryMaxVersPos <- function(vers)
     {
 	## Takes in a character vector of version numbers
-        ## returns the position of the maximum version utilizing
-        ## compareVersion.  Can't do as.numeric due to the "-" in versions.
+        ## returns the position of the maximum version.
+        vers <- package_version(vers)
 	max <- vers[1]
-
-        for (ver in vers) if (compareVersion(max, ver) < 0) max <- ver
-	out <- match(max, vers)
-	out
+        for (i in seq(along=vers)) if (max < vers[i]) max <- vers[i]
+	which(vers == max)[1]
     }
 
     runUserHook <- function(pkgname, pkgpath) {
@@ -216,7 +214,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             pfile <- system.file("Meta", "package.rds", package = package,
                                  lib.loc = which.lib.loc)
             if(!nchar(pfile))
-            	stop(sQuote(libraryPkgName(package)), " is not a valid package -- installed < 2.0.0?")
+            	stop(sQuote(libraryPkgName(package)),
+                     " is not a valid package -- installed < 2.0.0?")
             pkgInfo <- .readRDS(pfile)
             testRversion(pkgInfo, package)
 
@@ -257,7 +256,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 
                     if(!nogenerics && .isMethodsDispatchOn() &&
                        !identical(pkgname, "package:methods"))
-                        methods::cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
+                        methods::cacheMetaData(env, TRUE,
+                                               searchWhere = .GlobalEnv)
                     runUserHook(package, pkgpath)
                     on.exit()
                     if (logical.return)
@@ -397,11 +397,6 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     if(is.list(tmp)) tmp <- tmp$DESCRIPTION
                     tmp["Title"]
                 } else NA
-#                 if(title == "") {
-#                     file <- system.file("DESCRIPTION", package = i,
-#                                         lib.loc = lib)
-#                     title <- if(file != "") read.dcf(file, field="Title")[1,1] else ""
-#                 }
                 if(is.na(title))
                     title <- " ** No title available (pre-2.0.0 install?)  ** "
                 db <- rbind(db, cbind(i, lib, title))
@@ -429,6 +424,44 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     if (logical.return)
 	TRUE
     else invisible(.packages())
+}
+
+print.libraryIQR <-
+function(x, ...)
+{
+    db <- x$results
+    ## Split according to LibPath.
+    out <- if(nrow(db) == 0)
+        NULL
+    else lapply(split(1 : nrow(db), db[, "LibPath"]),
+                function(ind) db[ind, c("Package", "Title"),
+                                 drop = FALSE])
+    outFile <- tempfile("RlibraryIQR")
+    outConn <- file(outFile, open = "w")
+    first <- TRUE
+    for(lib in names(out)) {
+        writeLines(paste(ifelse(first, "", "\n"),
+                         "Packages in library ", sQuote(lib), ":\n",
+                         sep = ""),
+                   outConn)
+        writeLines(formatDL(out[[lib]][, "Package"],
+                            out[[lib]][, "Title"]),
+                   outConn)
+        first <- FALSE
+    }
+    if(first) {
+        close(outConn)
+        unlink(outFile)
+        writeLines("no packages found")
+    }
+    else {
+        if(!is.null(x$footer))
+            writeLines(c("\n", x$footer), outConn)
+        close(outConn)
+        file.show(outFile, delete.file = TRUE,
+                  title = "R packages available")
+    }
+    invisible(x)
 }
 
 library.dynam <-
