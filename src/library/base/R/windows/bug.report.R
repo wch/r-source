@@ -1,6 +1,6 @@
 bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
                        method = getOption("mailer"),
-                       address = "r-bugs@biostat.ku.dk",
+                       address = "r-bugs@r-project.org",
                        file = "R.bug.report",
                        wait = TRUE)
 {

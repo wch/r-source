@@ -8,7 +8,7 @@
 
 R_PAPERSIZE=${R_PAPERSIZE:-a4}
 
-revision='$Revision: 1.6 $'
+revision='$Revision: 1.7 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi ${version}" 
 
@@ -29,7 +29,7 @@ Options:
   -v, --version		print version info and exit
   -V, --verbose		report on what is done
 
-Report bugs to <R-bugs@lists.r-project.org>."
+Report bugs to <r-bugs@r-project.org>."
 
 start_dir=`pwd`
 

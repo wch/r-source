@@ -119,7 +119,7 @@ can also be invoked without the \`CMD' option.
 Please use \`R CMD command --help' to obtain further information about
 the usage of \`command'.
 
-Report bugs to <R-bugs@lists.r-project.org>."
+Report bugs to <r-bugs@r-project.org>."
 
 version="R REPLACE_BY_VERSION.
 Copyright (C) REPLACE_BY_YEAR R Development Core Team

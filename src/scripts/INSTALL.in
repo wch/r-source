@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.45 $'
+revision='$Revision: 1.46 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}"
 
@@ -26,7 +26,7 @@ Options:
       --use-zip		combine \`--use-zip-data' and \`--use-zip-help'
   -v, --version		print version info and exit
 
-Report bugs to <R-bugs@lists.r-project.org>."
+Report bugs to <r-bugs@r-project.org>."
 
 R_VERSION='@VERSION@'
 INSTALL='@INSTALL@'

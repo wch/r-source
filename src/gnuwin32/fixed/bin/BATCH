@@ -16,13 +16,13 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA.
 
-# Send any bug reports to R-bugs@lists.r-project.org
+# Send any bug reports to r-bugs@r-project.org
 
 use File::Basename;
 use R::Utils;
 
 
-my $revision = ' $Revision: 1.1 $ ';
+my $revision = ' $Revision: 1.2 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -78,7 +78,7 @@ Further arguments starting with a \`-\' are considered as options as long
 as \`--\' was not encountered, and are passed on to the R process, which
 by default is started with \`--restore --save\'.
 
-Report bugs to <R-bugs\@lists.r-project.org>.
+Report bugs to <r-bugs\@r-project.org>.
 END
     exit 0;
 }

@@ -17,7 +17,7 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA.
 
-# Send any bug reports to R-bugs@lists.R-project.org
+# Send any bug reports to r-bugs@r-project.org
 
 system("Rcmd Rdconv -t txt $ARGV[0]")
 

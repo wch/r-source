@@ -68,9 +68,9 @@ on-line at
 R has a bug-tracking system (or perhaps a bug-filing system is a more
 precise description) available on the net at 
 
-    http:///bugs.r-project.org
+    http://bugs.r-project.org
 
-and via e-mail to r-bugs@biostat.ku.dk. The R function bug.report()
+and via e-mail to r-bugs@r-project.org. The R function bug.report()
 can be used to invoke an editor from a within an R session and send
 the report to the right address. It also fills in some basic
 information, such as your R version and operating system, which has

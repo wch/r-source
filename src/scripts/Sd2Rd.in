@@ -21,7 +21,7 @@
 
 use Getopt::Long;
 
-my $revision = ' $Revision: 1.13 $ ';
+my $revision = ' $Revision: 1.14 $ ';
 my $version;
 my $name;
 
@@ -52,7 +52,7 @@ Options:
 			into a \\dontrun{} environment
   -x			interpret all single-quoted names as code names
 
-Email bug reports to <r-bugs\@lists.r-project.org>.
+Email bug reports to <r-bugs\@r-project.org>.
 END
   exit 0; 
 }

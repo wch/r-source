@@ -3,7 +3,7 @@
 \title{Send a Bug Report}
 \usage{
 bug.report(subject = "", ccaddress = Sys.getenv("USER"),
-           method = getOption("mailer"), address = "r-bugs@biostat.ku.dk",
+           method = getOption("mailer"), address = "r-bugs@r-project.org",
 #ifdef windows
            file = "R.bug.report", wait = TRUE)
 #endif
@@ -27,7 +27,7 @@ bug.report(subject = "", ccaddress = Sys.getenv("USER"),
 }
 \description{
   Invokes an editor to write a bug report and optionally mail it to the
-  R-bugs list at \email{r-bugs@biostat.ku.dk}.  Some standard
+  r-bugs list at \email{r-bugs@r-project.org}.  Some standard
   information on the current version and configuration of \R are 
   included automatically.
 }
@@ -48,7 +48,7 @@ bug.report(subject = "", ccaddress = Sys.getenv("USER"),
   If method is \code{"none"} or \code{NULL} (which is the default on
   Windows systems), then only an editor is opened to help writing the
   bug report.  The report can then be copied to your favorite email
-  program and be sent to the R-bugs list.
+  program and be sent to the r-bugs list.
 
   If method is \code{"ess"} the body of the mail is simply sent to
   stdout.
@@ -139,8 +139,8 @@ bug.report(subject = "", ccaddress = Sys.getenv("USER"),
   On some systems a bug report can be generated using the
   \code{bug.report()} function.  This automatically includes the version
   information and sends the bug to the correct address.  Alternatively
-  the bug report can be emailed to \email{r-bugs@biostat.ku.dk} or
-  submitted to the Web page at \url{http://r-bugs.biostat.ku.dk/R}.
+  the bug report can be emailed to \email{r-bugs@r-project.org} or
+  submitted to the Web page at \url{http://bugs.r-project.org}.
 }
 \seealso{R FAQ} 
 \author{This help page is adapted from the Emacs manual}
