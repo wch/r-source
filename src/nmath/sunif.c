@@ -23,7 +23,7 @@
  *
  *  DESCRIPTION
  *
- *     Random variates from the standard uniform distribution.
+ *     Random variates from the standard uniform distribution, U(0,1).
  *
  *  REFERENCE
  *

@@ -19,11 +19,13 @@
  *  SYNOPSIS
  *
  *    #include "Mathlib.h"
- *    double rnorm(double mean, double sd);
+ *    double snorm(void);
  *
  *  DESCRIPTION
  *
- *    Random variates from the standard normal distribution.
+ *    Random variates from the STANDARD normal distribution  N(0,1).
+ *
+ * Is called from  rnorm(..), but also rt(), rf(), rgamma(), ...
  */
 
 #include "Mathlib.h"
@@ -163,7 +165,7 @@ double snorm(void)
 }
 
 #endif
-
+
 #ifdef KINDERMAN_RAMAGE
 
 /*
