@@ -160,7 +160,12 @@ static SEXP getActiveValue(SEXP fun)
     UNPROTECT(1);
     return expr;
 }
-#endif
+#else /* no FANCY_BINDINGS */
+#define BINDING_VALUE(b) CAR(b)
+#define SYMBOL_BINDING_VALUE(s) SYMVALUE(s)
+#define SET_BINDING_VALUE(b,val) SETCAR(b,val)
+#define SET_SYMBOL_BINDING_VALUE(sym, val) SET_SYMVALUE(sym,val)
+#endif /* FANCY_BINDINGS */
 
 /*----------------------------------------------------------------------
 
@@ -214,10 +219,6 @@ extern int R_Newhashpjw(char *s)
   'hashcode' must be provided by user.	Allocates some memory for list
   entries.
 
-  At some point we need to remove the sanity checks here.  This
-  code is going to be called a lot and the places it is called
-  from are very controlled.
-
 */
 
 #ifdef ENVIRONMENT_LOCKING
@@ -229,13 +230,6 @@ static void R_HashSet(int hashcode, SEXP symbol, SEXP table, SEXP value)
 {
     SEXP chain;
 
-    /* Do some checking */
-    if (TYPEOF(table) != VECSXP) {
-	error("3rd arg (table) not of type VECSXP, from R_HashSet");
-    }
-    if (isNull(table)) {
-	error("Table is null, from R_HashSet");
-    }
     /* Grab the chain from the hashtable */
     chain = VECTOR_ELT(table, hashcode);
 #ifndef ENVIRONMENT_LOCKING
@@ -246,11 +240,7 @@ static void R_HashSet(int hashcode, SEXP symbol, SEXP table, SEXP value)
     /* Add the value into the chain */
     for (; !isNull(chain); chain = CDR(chain)) {
 	if (TAG(chain) == symbol) {
-#ifdef FANCY_BINDINGS
 	    SET_BINDING_VALUE(chain, value);
-#else
-	    SETCAR(chain, value);
-#endif
 	    return;
 	}
     }
@@ -282,25 +272,12 @@ static SEXP R_HashGet(int hashcode, SEXP symbol, SEXP table)
 {
     SEXP chain;
 
-#if 0
-/* Removed by pd -- never seen the "3rd arg" stuff and when the table
-   is a VECSXP it can't be NULL...*/
-
-    /* Do type checking */
-    if (TYPEOF(table) != VECSXP){
-	printf("3rd arg (table) not of type VECSXP, from R_HashGet\n");
-    }
-
-    if (isNull(table)) {
-	error("Table is null, from R_HashGet");
-    }
-#endif
     /* Grab the chain from the hashtable */
     chain = VECTOR_ELT(table, hashcode);
     /* Retrieve the value from the chain */
     for (; chain != R_NilValue ; chain = CDR(chain)) {
 	if (TAG(chain) == symbol) {
-	    return CAR(chain);
+	    return BINDING_VALUE(chain);
 	}
     }
     /* If not found */
@@ -323,13 +300,6 @@ static SEXP R_HashGetLoc(int hashcode, SEXP symbol, SEXP table)
 {
     SEXP chain;
 
-    /* Do type checking */
-    if (TYPEOF(table) != VECSXP){
-	printf("3rd arg (table) not of type VECSXP, from R_HashGet\n");
-    }
-    if (isNull(table)) {
-	error("Table is null, from R_HashGet");
-    }
     /* Grab the chain from the hashtable */
     chain = VECTOR_ELT(table, hashcode);
     /* Retrieve the value from the chain */
@@ -692,17 +662,9 @@ static SEXP R_GetGlobalCache(SEXP symbol)
   case SYMSXP:
     if (vl == R_UnboundValue) /* avoid test?? */
       return R_UnboundValue;
-#ifdef FANCY_BINDINGS
     else return SYMBOL_BINDING_VALUE(vl);
-#else
-    else return SYMVALUE(vl);
-#endif
   case LISTSXP:
-#ifdef FANCY_BINDINGS
     return BINDING_VALUE(vl);
-#else
-    return CAR(vl);
-#endif
   default:
     error("illegal cached value");
     return R_NilValue;
@@ -845,11 +807,7 @@ R_varloc_t R_findVarLocInFrame(SEXP rho, SEXP symbol)
 
 SEXP R_GetVarLocValue(R_varloc_t vl)
 {
-#ifdef FANCY_BINDINGS
     return BINDING_VALUE((SEXP) vl);
-#else
-    return CAR((SEXP) vl);
-#endif
 }
 
 SEXP R_GetVarLocSymbol(R_varloc_t vl)
@@ -859,11 +817,7 @@ SEXP R_GetVarLocSymbol(R_varloc_t vl)
 
 void R_SetVarLocValue(R_varloc_t vl, SEXP value)
 {
-#ifdef FANCY_BINDINGS
     SET_BINDING_VALUE((SEXP) vl, value);
-#else
-    SETCAR((SEXP) vl, value);
-#endif
 }
 
 
@@ -884,21 +838,13 @@ SEXP findVarInFrame(SEXP rho, SEXP symbol)
     SEXP frame, c;
 #ifdef EXPERIMENTAL_NAMESPACES
     if (rho == R_BaseNamespace)
-#ifdef FANCY_BINDINGS
 	return SYMBOL_BINDING_VALUE(symbol);
-#else
-        return SYMVALUE(symbol);
-#endif
 #endif
     if (HASHTAB(rho) == R_NilValue) {
 	frame = FRAME(rho);
 	while (frame != R_NilValue) {
 	    if (TAG(frame) == symbol)
-#ifdef FANCY_BINDINGS
 		return BINDING_VALUE(frame);
-#else
-		return CAR(frame);
-#endif
 	    frame = CDR(frame);
 	}
     }
@@ -910,17 +856,7 @@ SEXP findVarInFrame(SEXP rho, SEXP symbol)
 	}
 	hashcode = HASHVALUE(c) % HASHSIZE(HASHTAB(rho));
 	/* Will return 'R_UnboundValue' if not found */
-#ifdef FANCY_BINDINGS
-        {
-	    SEXP binding = R_HashGetLoc(hashcode, symbol, HASHTAB(rho));
-            if (binding == R_NilValue)
-		return R_UnboundValue;
-	    else
-		return BINDING_VALUE(binding);
-	}
-#else
 	return(R_HashGet(hashcode, symbol, HASHTAB(rho)));
-#endif
     }
     return R_UnboundValue;
 }
@@ -952,18 +888,10 @@ static SEXP findGlobalVar(SEXP symbol)
 	vl = findVarLocInFrame(rho, symbol);
 	if (vl != R_NilValue) {
 	    R_AddGlobalCache(symbol, vl);
-#ifdef FANCY_BINDINGS
 	    return BINDING_VALUE(vl);
-#else
-	    return CAR(vl);
-#endif
 	}
     }
-#ifdef FANCY_BINDINGS
     vl = SYMBOL_BINDING_VALUE(symbol);
-#else
-    vl = SYMVALUE(symbol);
-#endif
     if (vl != R_UnboundValue)
 	R_AddGlobalCache(symbol, symbol);
     return vl;
@@ -986,11 +914,7 @@ SEXP findVar(SEXP symbol, SEXP rho)
     if (rho == R_GlobalEnv)
 	return findGlobalVar(symbol);
     else
-#ifdef FANCY_BINDINGS
 	return SYMBOL_BINDING_VALUE(symbol);
-#else
-	return SYMVALUE(symbol);
-#endif
 #else
     while (rho != R_NilValue) {
 	vl = findVarInFrame(rho, symbol);
@@ -998,11 +922,7 @@ SEXP findVar(SEXP symbol, SEXP rho)
 	    return (vl);
 	rho = ENCLOS(rho);
     }
-#ifdef FANCY_BINDINGS
-	return SYMBOL_BINDING_VALUE(symbol);
-#else
-    return (SYMVALUE(symbol));
-#endif
+    return SYMBOL_BINDING_VALUE(symbol);
 #endif
 }
 
@@ -1044,11 +964,7 @@ SEXP findVar1(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits)
 	else
 	    return (R_UnboundValue);
     }
-#ifdef FANCY_BINDINGS
     return SYMBOL_BINDING_VALUE(symbol);
-#else
-    return (SYMVALUE(symbol));
-#endif
 }
 
 /*
@@ -1083,11 +999,7 @@ SEXP findVar1mode(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits)
 	else
 	    return (R_UnboundValue);
     }
-#ifdef FANCY_BINDINGS
     return SYMBOL_BINDING_VALUE(symbol);
-#else
-    return (SYMVALUE(symbol));
-#endif
 }
 
 
@@ -1238,11 +1150,7 @@ SEXP findFun(SEXP symbol, SEXP rho)
     }
     if (SYMVALUE(symbol) == R_UnboundValue)
 	error("couldn't find function \"%s\"", CHAR(PRINTNAME(symbol)));
-#ifdef FANCY_BINDINGS
     return SYMBOL_BINDING_VALUE(symbol);
-#else
-    return SYMVALUE(symbol);
-#endif
 }
 
 
@@ -1273,11 +1181,7 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
 	    frame = FRAME(rho);
 	    while (frame != R_NilValue) {
 		if (TAG(frame) == symbol) {
-#ifdef FANCY_BINDINGS
 		    SET_BINDING_VALUE(frame, value);
-#else
-		    SETCAR(frame, value);
-#endif
 		    SET_MISSING(frame, 0);	/* Over-ride */
 		    return;
 		}
@@ -1311,11 +1215,7 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
 #ifdef USE_GLOBAL_CACHE
 	R_FlushGlobalCache(symbol);
 #endif
-#ifdef FANCY_BINDINGS
 	SET_SYMBOL_BINDING_VALUE(symbol, value);
-#else
-	SET_SYMVALUE(symbol, value);
-#endif
     }
 }
 
@@ -1338,11 +1238,8 @@ SEXP setVarInFrame(SEXP rho, SEXP symbol, SEXP value)
 #ifdef USE_GLOBAL_CACHE
 	R_FlushGlobalCache(symbol);
 #endif
-#ifdef FANCY_BINDINGS
 	SET_SYMBOL_BINDING_VALUE(symbol, value);
-#else
-	SET_SYMVALUE(symbol, value);
-#endif
+	return symbol;
     }
     else
 #endif
@@ -1350,15 +1247,12 @@ SEXP setVarInFrame(SEXP rho, SEXP symbol, SEXP value)
 	frame = FRAME(rho);
 	while (frame != R_NilValue) {
 	    if (TAG(frame) == symbol) {
-#ifdef FANCY_BINDINGS
 		SET_BINDING_VALUE(frame, value);
-#else
-		SETCAR(frame, value);
-#endif
 		return symbol;
 	    }
 	    frame = CDR(frame);
 	}
+	return R_NilValue;
     }
     else {
 	/* Do the hash table thing */
@@ -1370,16 +1264,11 @@ SEXP setVarInFrame(SEXP rho, SEXP symbol, SEXP value)
 	hashcode = HASHVALUE(c) % HASHSIZE(HASHTAB(rho));
 	frame = R_HashGetLoc(hashcode, symbol, HASHTAB(rho));
 	if (frame != R_NilValue) {
-#ifdef FANCY_BINDINGS
 	  SET_BINDING_VALUE(frame, value);
-#else
-	  SETCAR(frame, value);
-#endif
 	  return symbol;
 	}
 	else return R_NilValue;
     }
-    return R_NilValue;
 }
 
 
@@ -1426,11 +1315,7 @@ void gsetVar(SEXP symbol, SEXP value, SEXP rho)
 #ifdef USE_GLOBAL_CACHE
     R_FlushGlobalCache(symbol);
 #endif
-#ifdef FANCY_BINDINGS
     SET_SYMBOL_BINDING_VALUE(symbol, value);
-#else
-    SET_SYMVALUE(symbol, value);
-#endif
 }
 
 
