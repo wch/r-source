@@ -740,7 +740,7 @@ SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(perm = coerceVector(CADR(args), INTSXP));
     if (!isVector(perm) || (length(perm) != length(dimsa)))
-	error("aperm: invalid second argument, must be a vector");
+	error("aperm: invalid second argument, must be a vector of the appropriate length");
 
     len = length(a);
 
