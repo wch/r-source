@@ -1106,16 +1106,17 @@ you may need to reset it to avoid finding 32-bit addons.
 @subsection HPUX
 
 @R{} has been built successfully on HPUX 10.2 and HPUX 11.0 using both
-native compilers and @command{gcc}.  By default, R is configured to use
-@command{gcc} and @command{g77} on HPUX (if available).  Some
-installations of @command{g77} only install a static version of the
-@command{g2c} library that cannot be linked into a shared library since
-its files have not been compiled with the appropriate flag for producing
-position independent code (@acronym{PIC}).  This will result in
-@command{make} failing with a linker error complaining that code needs
-to be compiled with a @option{+z} or @option{+Z} flag, the native
-@command{cc} @acronym{PIC} flag.  If this is the case you either need to
-modify your @command{g77} installation or configure with
+native compilers and @command{gcc}.  However, 10.2 has not been tested
+since R 1.4.  By default, R is configured to use @command{gcc} and
+@command{g77} on HPUX (if available).  Some installations of
+@command{g77} only install a static version of the @command{g2c} library
+that cannot be linked into a shared library since its files have not
+been compiled with the appropriate flag for producing position
+independent code (@acronym{PIC}).  This will result in @command{make}
+failing with a linker error complaining that code needs to be compiled
+with a @option{+z} or @option{+Z} flag, the native @command{cc}
+@acronym{PIC} flag.  If this is the case you either need to modify your
+@command{g77} installation or configure with
 
 @smallexample
 F77=fort77
