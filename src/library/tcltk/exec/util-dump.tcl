@@ -34,7 +34,8 @@ namespace import -force ::Utility::get_opts*
 #   --		forcibly ends options recognition
 # Results:
 #	the values of the requested items in a 'source'able form
-;proc dump {type args} {
+;proc dump {type arg
+s} {
     if {![llength $args]} {
 	## If no args, assume they gave us something to dump and
 	## we'll try anything
