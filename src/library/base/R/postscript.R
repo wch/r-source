@@ -105,8 +105,11 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
 
     if(is.null(old$command) || old$command == "default")
         old$command <- if(!is.null(cmd <- getOption("printcmd"))) cmd else ""
-    ## handle family separately as length can be 1 or 4
-    if(!missing(family)) old$family <- family
+    ## handle family separately as length can be 1, 4, or 5
+    if(!missing(family)) {
+        if(length(family) == 4) family <- c(family, "sy______.afm")
+        old$family <- family
+    }
     if(is.null(old$encoding) || old$encoding  == "default")
         old$encoding <- switch(machine(),
                                "Macintosh" = "MacRoman.enc",

@@ -3,6 +3,8 @@
 \alias{ps.options}
 \alias{.PostScript.Options}
 \alias{.ps.prolog}
+\alias{.ps.resourcecomments}
+\alias{.ps.fontreencoding}
 \title{PostScript Graphics}
 \description{
   \code{postscript} starts the graphics device driver for producing
@@ -134,15 +136,19 @@ ps.options(paper, horizontal, width, height, family, encoding,
   Most of the PostScript prologue used is taken from the \R character
   vector \code{.ps.prolog}.  This is marked in the output, and can be
   changed by changing that vector.  (This is only advisable for
-  PostScript experts.)
+  PostScript experts.)  The fontencoding can be changed by setting
+  \code{.ps.fontreencoding} to a character vector, and
+  \code{.ps.resourcecomments} can be used to add to the
+  resource comments in the postscript file
 
   If the second form of argument \code{"family"} is used, it should be a
   set of four paths to Adobe Font Metric files for the regular, bold,
-  italic and bold italic fonts to be used.  If these paths do not
+  italic, bold italic and (optionally) symbol fonts to be used.  If
+  these paths do not
   contain the file separator, they are taken to refer to files in the
   \R directory \file{R\_HOME/afm}.  Thus the default Helvetica family
   can be specified by \code{family = c("hv______.afm",
-    "hvb_____.afm", "hvo_____.afm", "hvbo____.afm")}.
+    "hvb_____.afm", "hvo_____.afm", "hvbo____.afm", "sy______.afm")}.
 
   It is the user's responsibility to check that suitable fonts are made
   available, and that they contain the needed characters when

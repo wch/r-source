@@ -9,13 +9,64 @@
 		CHANGES IN R VERSION 1.4.0
 
 
+USER-VISIBLE CHANGES
+
+    [This is a new section to highlight changes in behaviour, which
+    may be given in more detail in the following sections.
+    Many bug fixes are also user-visible changes.]
+
+    o	The default save format has been changed, so saved workspaces
+	and objects cannot (by default) be read in earlier versions of R.
+
+    o	The number of bins selected by default in a histogram uses
+	the correct version of Sturges' formula and will usually be
+	one larger.
+
+    o	data.frame() no longer converts logical arguments to factors
+	(following S4 rather than S3).
+
+    o	read.table() has new arguments `nrows' and `colClasses'.  If the
+	latter is NA (the default), conversion is attempted to
+	logical, integer, numeric or complex, not just to numeric.
+
+    o	model.matrix() treats logical variables as a factors with
+	levels c(FALSE, TRUE) (rather than 0-1 valued numerical
+	variables).  This makes R compatible with all S versions.
+
+    o	Transparency is now supported on most graphics devices.
+	This means that using par("bg"), for example in legend(), will
+	by default give a transparent rather than opaque background.
+
+    o	[dpqr]gamma now has third argument `rate' for S-compatibility
+	(and for compatibility with exponentials).  Calls which use
+	positional matching may need to be altered.
+
+    o	The meaning of spar = 0 in smooth.spline() has changed.
+
+    o   substring() and substring()<- do nothing silently on a
+        character vector of length 0, rather than generating an
+        error.  This is consistent with other functions and with S.
+ 
+    o	For compatibility with S4, any arithmetic operation using a
+	zero-length vector has a zero-length result.  (This was
+	already true for logical operations, which were compatible
+	with S4 rather than S3.)
+
+    o	undoc() and codoc() have been moved to the new package `tools'.
+
+    o	The name of the site profile now defaults to
+	`R_HOME/etc/Rprofile.site'.
+
+    o	The startup process for setting environment variables now first
+	searches for a site environment file (given by the environment
+	variable `R_ENVIRON' if set or `R_HOME/etc/Renviron.site' if
+	not), *and* then for a user `.Renviron' file in the current or
+	the user's home directory.
+
+
 NEW FEATURES
 
     o	length() is now generic.
-
-    o	arraySubscript and vectorSubscript are now available to package
-	users.	All "array-like" packages can use a standard method for
-	calculating subscripts.
 
     o	new.env() is now internal and allows you to set hashing. Also,
 	parent.env() and parent.env<-() are included to provide direct
@@ -32,15 +83,6 @@ NEW FEATURES
 
     o	Function nsl() to look up IP addresses of hosts: intended as
 	a way to test for internet connectivity.
-
-    o	R CMD Rd2dvi has more convenient defaults for its output file.
-
-    o	R CMD check now also fully checks the Depends field in the
-	package DESCRIPTION file.  It also tests whether all methods in
-	the code have all arguments of the corresponding generic, for
-	arguments shown in \usage but not documented in \arguments, and
-	whether assignment functions have their final argument named
-	`value'.
 
     o	The startup processing now interprets escapes in the values of
 	environment variables set in R_HOME/etc/Renviron in a similar
@@ -62,30 +104,11 @@ NEW FEATURES
     o	New argument `cacheOK' to download.file() to request cache
 	flushing.
 
-    o	The name of the site profile now defaults to
-	`R_HOME/etc/Rprofile.site'.
-
-    o	The startup process for setting environment variables now first
-	searches for a site environment file (given by the environment
-	variable `R_ENVIRON' if set or `R_HOME/etc/Renviron.site' if
-	not), *and* then for a user `.Renviron' file in the current or
-	the user's home directory.
-
     o	Modifications to the access functions for more consistency with S:
 	arguments `name', `pos' and `where' are more flexible in
 	assign(), exists(), get(), ls(), objects(), remove() and rm().
 
     o	warning() allows multiple arguments, following S4's style.
-
-    o	The C routine type2symbol, similar to type2str, returns a symbol
-	corresponding to the type supplied as an argument.
-
-    o	data.frame() no longer converts logical arguments to factors
-	(following S4 rather than S3).
-
-    o	model.matrix() treats logical variables as a factors with
-	levels c(FALSE, TRUE) (rather than 0-1 valued numerical
-	variables).  This makes R compatible with all S versions.
 
     o	Modified `save' internals to improve performance when saving
 	large collections of code.
@@ -118,9 +141,6 @@ NEW FEATURES
     o	png(), jpeg() and bmp() devices now have a `bg' argument to
 	set the background color: useful to set "transparent" on png().
 
-    o	The macro SHLIB_EXT now includes `.', e.g. ".so" or ".dll",
-	since the Mac uses "Lib" without a `.'.
-
     o	barplot() now respects an inline `cex.axis' argument and has a
 	separate `cex.names' argument so names and the numeric axis
 	labels can be scaled separately.  Also, graphics parameters
@@ -131,10 +151,6 @@ NEW FEATURES
 	are support routines for class() and class<-() in package
 	methods.  The third replaces pos.to.env() in the functions get(),
 	exists(), and friends.
-
-    o	read.table() has new arguments `nrows' and `colClasses'.  If the
-	latter is NA (the default), conversion is attempted to
-	logical, integer, numeric or complex, not just to numeric.
 
     o	An enhanced function type.convert() is now a documented
 	function, rather than just internal to read.table().
@@ -168,10 +184,6 @@ NEW FEATURES
 
     o	readline() allows up to 256 chars for the prompt.
 
-    o	[dpqr]gamma now has third argument `rate' for S-compatibility
-	(and for compatibility with exponentials).  Calls which use
-	positional matching may need to be altered.
-
     o	readChar() now returns what is available if fewer characters
 	than requested are on the file.
 
@@ -181,9 +193,6 @@ NEW FEATURES
 
     o	The formula interface to mosaicplot() now allows a contingency
 	table as data argument.
-
-    o	`Writing R Extensions' has a new chapter on generic/method
-	functions.
 
     o	Using lm/glm/... with `data' a matrix rather than a data frame
 	now gives a specific error message.
@@ -236,13 +245,6 @@ NEW FEATURES
     o	Printing factors with both level "NA" and missing values
 	uses `<NA>' for the missing values to distinguish them.
 
-    o	New Fortran entry points rwarn() and rexit() for warnings and
-	error exits from compiled Fortran code.
-
-    o   substring() and substring()<- do nothing silently on a
-        character vector of length 0, rather than generating an
-        error.  This is consistent with other functions and with S.
-
     o	data(), demo() and library() now also return the information
 	about available data sets, demos or packages.  Similarly,
 	help.search() returns its results.
@@ -267,28 +269,6 @@ NEW FEATURES
         R 0.99.0 to 1.3.1 is version 1.  The new default format is
 	version 2.
 
-    o   A new serialization mechanism is available that can be used to
-        serialize R objects to connections or to strings.  This mechanism
-	is used for the version 2 save format.  For now, only an internal
-	C interface is available.
-
-    o	New package `tools' for package development and administration
-	tools, containing the QA tools checkFF(), codoc() and undoc()
-	previously in package base, as well as the following new ones:
-
-	-  checkAssignFuns() for checking whether the final argument of
-           assignment functions in a package is named `value'.
-
-	-  checkDocArgs() for checking whether all arguments shown in
-	   \usage of Rd files are documented in the corresponding
-	   \arguments.
-
-	-  checkMethods() for checking whether all methods defined in a
-           package have all arguments of their generic.
-
-	-  checkTnF() for finding expressions containing the symbols `T'
-           and `F'.
-
     o   New function reg.finalizer() to provide R interface to
         finalization.
 
@@ -305,11 +285,6 @@ NEW FEATURES
 
         - New interface for accessing Tcl variables, effectively
           making the R representations lexically scoped.
-
-    o   For compatibility with S4, any arithmetic operation using a
-	zero-length vector has a zero-length result.  (This was
-	already true for logical operations, which were compatible
-	with S4 rather than S3.)
 
     o   step() is now closer to stepAIC() and so handles a wider range
 	of objects (but stepAIC [in MASS] is still more powerful).
@@ -349,7 +324,11 @@ NEW FEATURES
 	"Scott" and "FD" (Freedman-Diaconis) are supplied (based on
 	package MASS).
 
-     o	stars() has been enhanced; new `mar' argument uses smaller mar(gins)
+    o	The symbol font can now be set on a postscript() device, and
+	support has been added for using Computer Modern type-1 fonts
+	(including for symbols). (Contributed by Brian D'Urso.)
+
+    o	stars() has been enhanced; new `mar' argument uses smaller mar(gins)
 	by default; further `nrow and `ncol' as S-PLUS, `frame.plot',
 	`flip.labels', `lty' and explicit `main', `sub', `xlab' and `ylab'.
 	Note that `colors' has been replaced by `col.segments' and there's
@@ -357,9 +336,64 @@ NEW FEATURES
 	stars() now returns the locations invisibly.
 
 
+DOCUMENTATION CHANGES
+
+    o	`Writing R Extensions' has a new chapter on generic/method
+	functions.
+
+
+UTILITIES
+
+    o	New package `tools' for package development and administration
+	tools, containing the QA tools checkFF(), codoc() and undoc()
+	previously in package base, as well as the following new ones:
+
+	-  checkAssignFuns() for checking whether the final argument of
+           assignment functions in a package is named `value'.
+
+	-  checkDocArgs() for checking whether all arguments shown in
+	   \usage of Rd files are documented in the corresponding
+	   \arguments.
+
+	-  checkMethods() for checking whether all methods defined in a
+           package have all arguments of their generic.
+
+	-  checkTnF() for finding expressions containing the symbols `T'
+           and `F'.
+
+    o	R CMD Rd2dvi has more convenient defaults for its output file.
+
+    o	R CMD check now also fully checks the Depends field in the
+	package DESCRIPTION file.  It also tests whether all methods in
+	the code have all arguments of the corresponding generic, for
+	arguments shown in \usage but not documented in \arguments, and
+	whether assignment functions have their final argument named
+	`value'.
+
+
+C-LEVEL FACILITIES
+
+    o	arraySubscript and vectorSubscript are now available to package
+	users.	All "array-like" packages can use a standard method for
+	calculating subscripts.
+
+    o	The C routine type2symbol, similar to type2str, returns a symbol
+	corresponding to the type supplied as an argument.
+
+    o	The macro SHLIB_EXT now includes `.', e.g. ".so" or ".dll",
+	since the Mac uses "Lib" without a `.'.
+
+    o	New Fortran entry points rwarn() and rexit() for warnings and
+	error exits from compiled Fortran code.
+
+    o   A new serialization mechanism is available that can be used to
+        serialize R objects to connections or to strings.  This mechanism
+	is used for the version 2 save format.  For now, only an internal
+	C interface is available.
+
+
 
 BUG FIXES
-
 
     o   Fixed Pearson residuals for glms with non-canonical
 	link.(PR#1123). Fixed them again for weights (PR#1175).
@@ -433,12 +467,12 @@ BUG FIXES
 
     o	seq(0,0,1) now works (PR#1133).
 
-    o   reshapeWide got it wrong if the "i" factor was not sorted (the
+    o   reshapeWide() got it wrong if the "i" factor was not sorted (the
         function is now deprecated since reshape() is there, but the bug
         still needed fixing...)
 
     o   PR#757 was fixed incorrectly, causing improper subsetting of
-        pch etc. in plot.formula.
+        pch etc. in plot.formula().
 
     o	library() no longer removes environments of functions that are
 	not defined in the top-level package scope.  Also, packages
