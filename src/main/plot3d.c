@@ -401,16 +401,10 @@ static SEGP ctr_segupdate(double xend, double yend, int dir, int tail,
 */
 static SEXP labelList;
 
-double min(double d1, double d2) {
-    double ans = d1;
-    if (d2 < d1) ans = d2;
-    return ans;
-}
-
 static
 int distFromEdge(double *xxx, double *yyy, int iii, DevDesc *dd) {
-    return min(min(xxx[iii]-dd->gp.usr[0], dd->gp.usr[1]-xxx[iii]),
-	       min(yyy[iii]-dd->gp.usr[2], dd->gp.usr[3]-yyy[iii]));
+    return fmin2(fmin2(xxx[iii]-dd->gp.usr[0], dd->gp.usr[1]-xxx[iii]),
+		 fmin2(yyy[iii]-dd->gp.usr[2], dd->gp.usr[3]-yyy[iii]));
 }
 
 static
@@ -879,10 +873,10 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 			    /* find which plot edge we are closest to */
 			    int closest; // 0 = index,  1 = index+range
 			    double dx1, dx2, dy1, dy2, dmin;
-			    dx1 = min((xxx[index] - dd->gp.usr[0]),
-				      (dd->gp.usr[1] - xxx[index]));
-			    dx2 = min((dd->gp.usr[1] - xxx[index+range]),
-				      (xxx[index+range] - dd->gp.usr[0])); 
+			    dx1 = fmin2((xxx[index] - dd->gp.usr[0]),
+					(dd->gp.usr[1] - xxx[index]));
+			    dx2 = fmin2((dd->gp.usr[1] - xxx[index+range]),
+					(xxx[index+range] - dd->gp.usr[0])); 
 			    if (dx1 < dx2) {
 				closest = 0;
 				dmin = dx1;
@@ -890,15 +884,15 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 				closest = 1;
 				dmin = dx2;
 			    }
-			    dy1 = min((yyy[index] - dd->gp.usr[2]),
-				      (dd->gp.usr[3] - yyy[index]));
+			    dy1 = fmin2((yyy[index] - dd->gp.usr[2]),
+					(dd->gp.usr[3] - yyy[index]));
 			    if (closest && (dy1 < dmin)) {
 				closest = 0;
 				dmin = dy1;
 			    } else if (dy1 < dmin) 
 				dmin = dy1;
-			    dy2 = min((dd->gp.usr[3] - yyy[index+range]),
-				      (yyy[index+range] - dd->gp.usr[2]));
+			    dy2 = fmin2((dd->gp.usr[3] - yyy[index+range]),
+					(yyy[index+range] - dd->gp.usr[2]));
 			    if (!closest && (dy2 < dmin)) 
 				closest = 1;
 			    
