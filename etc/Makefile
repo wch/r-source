@@ -44,3 +44,4 @@ clean:
 distclean realclean:
 	@rm -f COMPILE INSTALL SHLIB
 	@rm -fr $(Ex_Tests) $(CleanMe)
+	@rm -f stamp-*
