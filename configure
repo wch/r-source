@@ -23636,6 +23636,10 @@ _ACEOF
 _ACEOF
 
     cat >>confdefs.h <<\_ACEOF
+#define HAVE_PCRE 1
+_ACEOF
+
+    cat >>confdefs.h <<\_ACEOF
 #define HAVE_PNG 1
 _ACEOF
 

@@ -14,7 +14,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-<p>The current version of this document is 1.6.0 (2002-05-09).
+<p>The current version of this document is 1.6.0 (2002-05-10).
 
 ISBN 3-901167-52-8
 
@@ -510,6 +510,12 @@ it.
 
 <p><code>bzfile</code> connections make use of <code>libbz2</code>, part of
 <code>bzip2</code> (<a href="http://sources.redhat.com/bzip2">http://sources.redhat.com/bzip2</a>).
+
+<p><code>grep</code> and related functions will make use of PCRE if installed. 
+The sources are at
+<a href="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/">ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/</a>; the
+Debian package is <code>libpcre3-dev</code> and the RPM something like
+<code>pcre-devel-3.4-2</code>.
 
 </ul>
 
