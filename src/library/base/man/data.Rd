@@ -55,6 +55,13 @@ data(\dots, list = character(0), package = .packages(),
   The data sets to be loaded can be specified as a sequence of names or
   character strings, or as the character vector \code{list}, or as both.
 
+  For each given data set, the first two types (\file{.R} or \file{.r},
+  and \file{.RData} or \file{.rda} files) can create several variables
+  in the load environment, which might all be named differently from the
+  data set.  The second two (\file{.tab}, \file{.txt}, or \file{.TXT},
+  and \file{.csv} or \file{.CSV} files) will always result in the
+  creation of a single variable with the same name as the data set. 
+
   If no data sets are specified, \code{data} lists the available data
   sets.  It looks for a new-style data index in the \file{Meta} or, if
   this is not found, an old-style \file{00Index} file in the \file{data}
