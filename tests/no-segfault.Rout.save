@@ -1332,3 +1332,2345 @@ NULL
 NULL
 > f(NULL,NULL)
 NULL
+> f(list())
+Error in f(list()) : no index specified
+> f(logical(0))
+Error in f(logical(0)) : no index specified
+> f(character(0))
+Error in f(character(0)) : no index specified
+> f(FALSE)
+Error in f(FALSE) : no index specified
+> 
+> ##  [.data.frame  :
+> f <- get("[.data.frame", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+NULL
+> f(NULL,NULL)
+Error in NextMethod(generic, object, ...) : object not specified
+> f(list())
+list()
+> f(logical(0))
+logical(0)
+> f(character(0))
+character(0)
+> f(FALSE)
+[1] FALSE
+> 
+> ##  [.factor  :
+> f <- get("[.factor", pos = 3)
+> f()
+Error in NextMethod(generic, object, ...) : object not specified
+> f(NULL)
+Error in NextMethod(generic, object, ...) : object not specified
+> f(NULL,NULL)
+Error in NextMethod(generic, object, ...) : object not specified
+> f(list())
+Error in NextMethod(generic, object, ...) : object not specified
+> f(logical(0))
+Error in NextMethod(generic, object, ...) : object not specified
+> f(character(0))
+Error in NextMethod(generic, object, ...) : object not specified
+> f(FALSE)
+Error in NextMethod(generic, object, ...) : object not specified
+> 
+> ##  [.formula  :
+> f <- get("[.formula", pos = 3)
+> f()
+Error in NextMethod(generic, object, ...) : object not specified
+> f(NULL)
+Error in NextMethod(generic, object, ...) : object not specified
+> f(NULL,NULL)
+Error in NextMethod(generic, object, ...) : object not specified
+> f(list())
+Error in NextMethod(generic, object, ...) : object not specified
+> f(logical(0))
+Error in NextMethod(generic, object, ...) : object not specified
+> f(character(0))
+Error in NextMethod(generic, object, ...) : object not specified
+> f(FALSE)
+Error in NextMethod(generic, object, ...) : object not specified
+> 
+> ##  [.noquote  :
+> f <- get("[.noquote", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+NULL
+> f(NULL,NULL)
+NULL
+> f(list())
+Error in unclass(x)[...] : no index specified
+> f(logical(0))
+Error in unclass(x)[...] : no index specified
+> f(character(0))
+Error in unclass(x)[...] : no index specified
+> f(FALSE)
+Error in unclass(x)[...] : no index specified
+> 
+> ##  [.ts  :
+> f <- get("[.ts", pos = 3)
+> f()
+Error in NextMethod(generic, object, ...) : object not specified
+> f(NULL)
+Error in NextMethod(generic, object, ...) : object not specified
+> f(NULL,NULL)
+Error in NextMethod(generic, object, ...) : object not specified
+> f(list())
+Error in NextMethod(generic, object, ...) : object not specified
+> f(logical(0))
+Error in NextMethod(generic, object, ...) : object not specified
+> f(character(0))
+Error in NextMethod(generic, object, ...) : object not specified
+> f(FALSE)
+Error in NextMethod(generic, object, ...) : object not specified
+> 
+> ##  [<-  :
+> f <- get("[<-", pos = 3)
+> f()
+NULL
+> f(NULL)
+NULL
+> f(NULL,NULL)
+NULL
+> f(list())
+list()
+> f(logical(0))
+logical(0)
+> f(character(0))
+character(0)
+> f(FALSE)
+Error in f(FALSE, NULL) : incompatible types
+> 
+> ##  [<-.data.frame  :
+> f <- get("[<-.data.frame", pos = 3)
+> f()
+Error: Need 0, 1, or 2 subscripts
+> f(NULL)
+Error: Need 0, 1, or 2 subscripts
+> f(NULL,NULL)
+Error: can't coerce NULL into a data.frame
+> f(list())
+Error: Need 0, 1, or 2 subscripts
+> f(logical(0))
+Error: Need 0, 1, or 2 subscripts
+> f(character(0))
+Error: Need 0, 1, or 2 subscripts
+> f(FALSE)
+Error: Need 0, 1, or 2 subscripts
+> 
+> ##  [<-.factor  :
+> f <- get("[<-.factor", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: Argument "value" is missing, with no default
+> f(NULL,NULL)
+Error: Argument "value" is missing, with no default
+> f(list())
+Error: Argument "value" is missing, with no default
+> f(logical(0))
+Error: Argument "value" is missing, with no default
+> f(character(0))
+Error: Argument "value" is missing, with no default
+> f(FALSE)
+Error: Argument "value" is missing, with no default
+> 
+> ##  [[  :
+> f <- get("[[", pos = 3)
+> f()
+NULL
+> f(NULL)
+NULL
+> f(NULL,NULL)
+NULL
+> f(list())
+Error in f(list()) : no index specified
+> f(logical(0))
+Error in f(logical(0)) : no index specified
+> f(character(0))
+Error in f(character(0)) : no index specified
+> f(FALSE)
+Error in f(FALSE) : no index specified
+> 
+> ##  [[.data.frame  :
+> f <- get("[[.data.frame", pos = 3)
+> f()
+Error: Argument "i" is missing, with no default
+> f(NULL)
+Error: Argument "i" is missing, with no default
+> f(NULL,NULL)
+NULL
+> f(list())
+Error: Argument "i" is missing, with no default
+> f(logical(0))
+Error: Argument "i" is missing, with no default
+> f(character(0))
+Error: Argument "i" is missing, with no default
+> f(FALSE)
+Error: Argument "i" is missing, with no default
+> 
+> ##  [[<-  :
+> f <- get("[[<-", pos = 3)
+> f()
+NULL
+> f(NULL)
+NULL
+> f(NULL,NULL)
+NULL
+> f(list())
+Error: attempt to select less than one element
+> f(logical(0))
+Error: more elements supplied than there are to replace
+> f(character(0))
+Error: more elements supplied than there are to replace
+> f(FALSE)
+Error: more elements supplied than there are to replace
+> 
+> ##  [[<-.data.frame  :
+> f <- get("[[<-.data.frame", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: Argument "value" is missing, with no default
+> f(NULL,NULL)
+Error: Argument "value" is missing, with no default
+> f(list())
+Error: Argument "value" is missing, with no default
+> f(logical(0))
+Error: Argument "value" is missing, with no default
+> f(character(0))
+Error: Argument "value" is missing, with no default
+> f(FALSE)
+Error: Argument "value" is missing, with no default
+> 
+> ##  ^  :
+> f <- get("^", pos = 3)
+> f()
+Error: operator with more than two arguments
+> f(NULL)
+Error in f(NULL) : Invalid argument to unary operator
+> f(NULL,NULL)
+numeric(0)
+> f(list())
+Error in f(list()) : Invalid argument to unary operator
+> f(logical(0))
+Error: illegal unary operator
+> f(character(0))
+Error in f(character(0)) : Invalid argument to unary operator
+> f(FALSE)
+Error: illegal unary operator
+> 
+> ##  abbreviate  :
+> f <- get("abbreviate", pos = 3)
+> f()
+Error: Argument "names.arg" is missing, with no default
+> f(NULL)
+character(0)
+> f(NULL,NULL)
+Error in minlength <= 0 : comparison (4) is possible only for vector types
+> f(list())
+character(0)
+> f(logical(0))
+character(0)
+> f(character(0))
+character(0)
+> f(FALSE)
+ FALSE 
+"FALS" 
+> 
+> ##  abline  :
+> f <- get("abline", pos = 3)
+> f()
+Error: plot.new has not been called yet
+> f(NULL)
+Error: plot.new has not been called yet
+> f(NULL,NULL)
+Error: plot.new has not been called yet
+> f(list())
+Error: plot.new has not been called yet
+> f(logical(0))
+Error: plot.new has not been called yet
+> f(character(0))
+Error: plot.new has not been called yet
+> f(FALSE)
+Error: plot.new has not been called yet
+> 
+> ##  abs  :
+> f <- get("abs", pos = 3)
+> f()
+Error: 0 arguments passed to "abs" which requires 1.
+> f(NULL)
+Error in f(NULL) : non-numeric argument to function
+> f(NULL,NULL)
+Error: 2 arguments passed to "abs" which requires 1.
+> f(list())
+Error in f(list()) : non-numeric argument to function
+> f(logical(0))
+numeric(0)
+> f(character(0))
+Error in f(character(0)) : non-numeric argument to function
+> f(FALSE)
+[1] 0
+> 
+> ##  acos  :
+> f <- get("acos", pos = 3)
+> f()
+Error: 0 arguments passed to "acos" which requires 1.
+> f(NULL)
+Error in f(NULL) : Non-numeric argument to mathematical function
+> f(NULL,NULL)
+Error: 2 arguments passed to "acos" which requires 1.
+> f(list())
+Error in f(list()) : Non-numeric argument to mathematical function
+> f(logical(0))
+numeric(0)
+> f(character(0))
+Error in f(character(0)) : Non-numeric argument to mathematical function
+> f(FALSE)
+[1] 1.570796
+> 
+> ##  acosh  :
+> f <- get("acosh", pos = 3)
+> f()
+Error: 0 arguments passed to "acosh" which requires 1.
+> f(NULL)
+Error in f(NULL) : Non-numeric argument to mathematical function
+> f(NULL,NULL)
+Error: 2 arguments passed to "acosh" which requires 1.
+> f(list())
+Error in f(list()) : Non-numeric argument to mathematical function
+> f(logical(0))
+numeric(0)
+> f(character(0))
+Error in f(character(0)) : Non-numeric argument to mathematical function
+> f(FALSE)
+[1] NaN
+Warning message: 
+NaNs produced in: f(FALSE) 
+> 
+> ##  add.scope  :
+> f <- get("add.scope", pos = 3)
+> f()
+Error: Argument "terms1" is missing, with no default
+> f(NULL)
+Error: argument is not a valid model
+> f(NULL,NULL)
+Error: argument is not a valid model
+> f(list())
+Error: invalid formula
+> f(logical(0))
+Error: invalid formula
+> f(character(0))
+> f(FALSE)
+Error: invalid formula
+> 
+> ##  add1  :
+> f <- get("add1", pos = 3)
+> f()
+Error: no terms in scope
+> f(NULL)
+Error: no terms in scope
+> f(NULL,NULL)
+Error: no terms in scope
+> f(list())
+Error: no terms in scope
+> f(logical(0))
+Error: no terms in scope
+> f(character(0))
+Error: no terms in scope
+> f(FALSE)
+Error: no terms in scope
+> 
+> ##  add1.default  :
+> f <- get("add1.default", pos = 3)
+> f()
+Error: no terms in scope
+> f(NULL)
+Error: no terms in scope
+> f(NULL,NULL)
+Error: no terms in scope
+> f(list())
+Error: no terms in scope
+> f(logical(0))
+Error: no terms in scope
+> f(character(0))
+Error: no terms in scope
+> f(FALSE)
+Error: no terms in scope
+> 
+> ##  add1.glm  :
+> f <- get("add1.glm", pos = 3)
+> f()
+Error: Argument "scope" is missing, with no default
+> f(NULL)
+Error: Argument "scope" is missing, with no default
+> f(NULL,NULL)
+Error: argument is not a valid model
+> f(list())
+Error: Argument "scope" is missing, with no default
+> f(logical(0))
+Error: Argument "scope" is missing, with no default
+> f(character(0))
+Error: Argument "scope" is missing, with no default
+> f(FALSE)
+Error: Argument "scope" is missing, with no default
+> 
+> ##  add1.lm  :
+> f <- get("add1.lm", pos = 3)
+> f()
+Error: no terms in scope
+> f(NULL)
+Error: no terms in scope
+> f(NULL,NULL)
+Error: no terms in scope
+> f(list())
+Error: no terms in scope
+> f(logical(0))
+Error: no terms in scope
+> f(character(0))
+Error: no terms in scope
+> f(FALSE)
+Error: no terms in scope
+> 
+> ##  add1.mlm  :
+> f <- get("add1.mlm", pos = 3)
+> f()
+Error: no add1 method implemented for mlm models
+> f(NULL)
+Error: no add1 method implemented for mlm models
+> f(NULL,NULL)
+Error: no add1 method implemented for mlm models
+> f(list())
+Error: no add1 method implemented for mlm models
+> f(logical(0))
+Error: no add1 method implemented for mlm models
+> f(character(0))
+Error: no add1 method implemented for mlm models
+> f(FALSE)
+Error: no add1 method implemented for mlm models
+> 
+> ##  aggregate  :
+> f <- get("aggregate", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: can't coerce NULL into a data.frame
+> f(NULL,NULL)
+Error: can't coerce NULL into a data.frame
+> f(list())
+Error: Argument "by" is missing, with no default
+> f(logical(0))
+Error: Argument "by" is missing, with no default
+> f(character(0))
+Error: Argument "by" is missing, with no default
+> f(FALSE)
+Error: Argument "by" is missing, with no default
+> 
+> ##  aggregate.data.frame  :
+> f <- get("aggregate.data.frame", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: can't coerce NULL into a data.frame
+> f(NULL,NULL)
+Error: can't coerce NULL into a data.frame
+> f(list())
+Error: Argument "by" is missing, with no default
+> f(logical(0))
+Error: Argument "by" is missing, with no default
+> f(character(0))
+Error: Argument "by" is missing, with no default
+> f(FALSE)
+Error: Argument "by" is missing, with no default
+> 
+> ##  aggregate.default  :
+> f <- get("aggregate.default", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: can't coerce NULL into a data.frame
+> f(NULL,NULL)
+Error: can't coerce NULL into a data.frame
+> f(list())
+Error: Argument "by" is missing, with no default
+> f(logical(0))
+Error: Argument "by" is missing, with no default
+> f(character(0))
+Error: Argument "by" is missing, with no default
+> f(FALSE)
+Error: Argument "by" is missing, with no default
+> 
+> ##  aggregate.ts  :
+> f <- get("aggregate.ts", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: ts object must have one or more observations
+> f(NULL,NULL)
+Error: ts object must have one or more observations
+> f(list())
+Error: ts object must have one or more observations
+> f(logical(0))
+Error: ts object must have one or more observations
+> f(character(0))
+Error: ts object must have one or more observations
+> f(FALSE)
+Time Series:
+Start = 1 
+End = 1 
+Frequency = 1 
+[1] FALSE
+> 
+> ##  alias  :
+> f <- get("alias", pos = 3)
+> f()
+Error: no applicable method for "alias"
+> f(NULL)
+Error: no applicable method for "alias"
+> f(NULL,NULL)
+Error: no applicable method for "alias"
+> f(list())
+Error: no applicable method for "alias"
+> f(logical(0))
+Error: no applicable method for "alias"
+> f(character(0))
+Error: no applicable method for "alias"
+> f(FALSE)
+Error: no applicable method for "alias"
+> 
+> ##  alias.formula  :
+> f <- get("alias.formula", pos = 3)
+> f()
+Error: Argument "object" is missing, with no default
+> f(NULL)
+Error: subscript out of bounds
+> f(NULL,NULL)
+Error: subscript out of bounds
+> f(list())
+Error: subscript out of bounds
+> f(logical(0))
+Error: subscript out of bounds
+> f(character(0))
+Error: subscript out of bounds
+> f(FALSE)
+Error: subscript out of bounds
+> 
+> ##  alias.lm  :
+> f <- get("alias.lm", pos = 3)
+> f()
+Error: Argument "object" is missing, with no default
+> f(NULL)
+Error: heap memory (6144 Kb) exhausted [needed 4194304 Kb more]
+       See "help(Memory)" on how to increase the heap size.
+> f(NULL,NULL)
+Error: heap memory (6144 Kb) exhausted [needed 4194304 Kb more]
+       See "help(Memory)" on how to increase the heap size.
+> f(list())
+Error: heap memory (6144 Kb) exhausted [needed 4194304 Kb more]
+       See "help(Memory)" on how to increase the heap size.
+> f(logical(0))
+Error: heap memory (6144 Kb) exhausted [needed 4194304 Kb more]
+       See "help(Memory)" on how to increase the heap size.
+> f(character(0))
+Error: heap memory (6144 Kb) exhausted [needed 4194304 Kb more]
+       See "help(Memory)" on how to increase the heap size.
+> f(FALSE)
+Error: heap memory (6144 Kb) exhausted [needed 4194304 Kb more]
+       See "help(Memory)" on how to increase the heap size.
+> 
+> ##  alist  :
+> f <- get("alist", pos = 3)
+> f()
+list()
+> f(NULL)
+[[1]]
+NULL
+
+> f(NULL,NULL)
+[[1]]
+NULL
+
+[[2]]
+NULL
+
+> f(list())
+[[1]]
+list()
+
+> f(logical(0))
+[[1]]
+logical(0)
+
+> f(character(0))
+[[1]]
+character(0)
+
+> f(FALSE)
+[[1]]
+[1] FALSE
+
+> 
+> ##  all  :
+> f <- get("all", pos = 3)
+> f()
+[1] TRUE
+> f(NULL)
+[1] TRUE
+> f(NULL,NULL)
+[1] TRUE
+> f(list())
+Error in all(..., na.rm = na.rm) : incorrect argument type
+> f(logical(0))
+[1] TRUE
+> f(character(0))
+Error in all(..., na.rm = na.rm) : incorrect argument type
+> f(FALSE)
+[1] FALSE
+> 
+> ##  all.equal  :
+> f <- get("all.equal", pos = 3)
+> f()
+Error: Argument "target" is missing, with no default
+> f(NULL)
+Error: Argument "current" is missing, with no default
+> f(NULL,NULL)
+[1] TRUE
+> f(list())
+Error: Argument "current" is missing, with no default
+> f(logical(0))
+Error: Argument "current" is missing, with no default
+> f(character(0))
+Error: Argument "current" is missing, with no default
+> f(FALSE)
+Error: Argument "current" is missing, with no default
+> 
+> ##  all.equal.character  :
+> f <- get("all.equal.character", pos = 3)
+> f()
+Error: Argument "target" is missing, with no default
+> f(NULL)
+Error: Argument "current" is missing, with no default
+> f(NULL,NULL)
+Error in target != current : comparison (2) is possible only for vector types
+> f(list())
+Error: Argument "current" is missing, with no default
+> f(logical(0))
+Error: Argument "current" is missing, with no default
+> f(character(0))
+Error: Argument "current" is missing, with no default
+> f(FALSE)
+Error: Argument "current" is missing, with no default
+> 
+> ##  all.equal.default  :
+> f <- get("all.equal.default", pos = 3)
+> f()
+Error: Argument "target" is missing, with no default
+> f(NULL)
+Error: Argument "current" is missing, with no default
+> f(NULL,NULL)
+[1] TRUE
+> f(list())
+Error: Argument "current" is missing, with no default
+> f(logical(0))
+Error: Argument "current" is missing, with no default
+> f(character(0))
+Error: Argument "current" is missing, with no default
+> f(FALSE)
+Error: Argument "current" is missing, with no default
+> 
+> ##  all.equal.factor  :
+> f <- get("all.equal.factor", pos = 3)
+> f()
+Error: Argument "current" is missing, with no default
+> f(NULL)
+Error: Argument "current" is missing, with no default
+> f(NULL,NULL)
+[1] "`current' is not a factor"
+> f(list())
+Error: Argument "current" is missing, with no default
+> f(logical(0))
+Error: Argument "current" is missing, with no default
+> f(character(0))
+Error: Argument "current" is missing, with no default
+> f(FALSE)
+Error: Argument "current" is missing, with no default
+> 
+> ##  all.equal.formula  :
+> f <- get("all.equal.formula", pos = 3)
+> f()
+Error: Argument "target" is missing, with no default
+> f(NULL)
+Error: Argument "current" is missing, with no default
+> f(NULL,NULL)
+[1] TRUE
+> f(list())
+Error: Argument "current" is missing, with no default
+> f(logical(0))
+Error: Argument "current" is missing, with no default
+> f(character(0))
+Error: Argument "current" is missing, with no default
+> f(FALSE)
+Error: Argument "current" is missing, with no default
+> 
+> ##  all.equal.language  :
+> f <- get("all.equal.language", pos = 3)
+> f()
+Error: Argument "target" is missing, with no default
+> f(NULL)
+Error: Argument "current" is missing, with no default
+> f(NULL,NULL)
+[1] TRUE
+> f(list())
+Error: Argument "current" is missing, with no default
+> f(logical(0))
+Error: Argument "current" is missing, with no default
+> f(character(0))
+Error: Argument "current" is missing, with no default
+> f(FALSE)
+Error: Argument "current" is missing, with no default
+> 
+> ##  all.equal.list  :
+> f <- get("all.equal.list", pos = 3)
+> f()
+Error: Argument "target" is missing, with no default
+> f(NULL)
+Error: Argument "current" is missing, with no default
+> f(NULL,NULL)
+[1] TRUE
+> f(list())
+Error: Argument "current" is missing, with no default
+> f(logical(0))
+Error: Argument "current" is missing, with no default
+> f(character(0))
+Error: Argument "current" is missing, with no default
+> f(FALSE)
+Error: Argument "current" is missing, with no default
+> 
+> ##  all.equal.numeric  :
+> f <- get("all.equal.numeric", pos = 3)
+> f()
+Error: Argument "target" is missing, with no default
+> f(NULL)
+Error: Argument "current" is missing, with no default
+> f(NULL,NULL)
+Error in target == current : comparison (1) is possible only for vector types
+> f(list())
+Error: Argument "current" is missing, with no default
+> f(logical(0))
+Error: Argument "current" is missing, with no default
+> f(character(0))
+Error: Argument "current" is missing, with no default
+> f(FALSE)
+Error: Argument "current" is missing, with no default
+> 
+> ##  all.names  :
+> f <- get("all.names", pos = 3)
+> f()
+Error: Argument "expr" is missing, with no default
+> f(NULL)
+character(0)
+> f(NULL,NULL)
+character(0)
+> f(list())
+character(0)
+> f(logical(0))
+character(0)
+> f(character(0))
+character(0)
+> f(FALSE)
+character(0)
+> 
+> ##  all.vars  :
+> f <- get("all.vars", pos = 3)
+> f()
+Error: Argument "expr" is missing, with no default
+> f(NULL)
+character(0)
+> f(NULL,NULL)
+character(0)
+> f(list())
+character(0)
+> f(logical(0))
+character(0)
+> f(character(0))
+character(0)
+> f(FALSE)
+character(0)
+> 
+> ##  anova  :
+> f <- get("anova", pos = 3)
+> f()
+Error: no applicable method for "anova"
+> f(NULL)
+Error: no applicable method for "anova"
+> f(NULL,NULL)
+Error: no applicable method for "anova"
+> f(list())
+Error: no applicable method for "anova"
+> f(logical(0))
+Error: no applicable method for "anova"
+> f(character(0))
+Error: no applicable method for "anova"
+> f(FALSE)
+Error: no applicable method for "anova"
+> 
+> ##  anova.glm  :
+> f <- get("anova.glm", pos = 3)
+> f()
+Error: Argument "object" is missing, with no default
+> f(NULL)
+Error: subscript out of bounds
+> f(NULL,NULL)
+Error: subscript out of bounds
+> f(list())
+Error: subscript out of bounds
+> f(logical(0))
+Error: subscript out of bounds
+> f(character(0))
+Error: subscript out of bounds
+> f(FALSE)
+Error: subscript out of bounds
+> 
+> ##  anova.glm.null  :
+> f <- get("anova.glm.null", pos = 3)
+> f()
+Error: Argument "object" is missing, with no default
+> f(NULL)
+Error: can't coerce NULL into a data.frame
+> f(NULL,NULL)
+Error in formula(x)[[2]] : subscript out of bounds
+> f(list())
+Error: can't coerce NULL into a data.frame
+> f(logical(0))
+Error: can't coerce NULL into a data.frame
+> f(character(0))
+Error: can't coerce NULL into a data.frame
+> f(FALSE)
+Error: can't coerce NULL into a data.frame
+> 
+> ##  anova.glmlist  :
+> f <- get("anova.glmlist", pos = 3)
+> f()
+Error: Argument "object" is missing, with no default
+> f(NULL)
+Error: (list) object cannot be coerced to vector type 14
+> f(NULL,NULL)
+Error: (list) object cannot be coerced to vector type 14
+> f(list())
+Error: (list) object cannot be coerced to vector type 14
+> f(logical(0))
+Error: (list) object cannot be coerced to vector type 14
+> f(character(0))
+Error: (list) object cannot be coerced to vector type 14
+> f(FALSE)
+Error: invalid formula
+> 
+> ##  anova.lm  :
+> f <- get("anova.lm", pos = 3)
+> f()
+Error: Argument "object" is missing, with no default
+> f(NULL)
+Error in 1:object$rank : NA/NaN argument
+> f(NULL,NULL)
+Error: no applicable method for "df.residual"
+> f(list())
+Error in 1:object$rank : NA/NaN argument
+> f(logical(0))
+Error in 1:object$rank : NA/NaN argument
+> f(character(0))
+Error in 1:object$rank : NA/NaN argument
+> f(FALSE)
+Error in 1:object$rank : NA/NaN argument
+> 
+> ##  anova.lm.null  :
+> f <- get("anova.lm.null", pos = 3)
+> f()
+Error: Argument "object" is missing, with no default
+> f(NULL)
+Error: no applicable method for "df.residual"
+> f(NULL,NULL)
+Error: no applicable method for "df.residual"
+> f(list())
+Error: no applicable method for "df.residual"
+> f(logical(0))
+Error: no applicable method for "df.residual"
+> f(character(0))
+Error: no applicable method for "df.residual"
+> f(FALSE)
+Error: no applicable method for "df.residual"
+> 
+> ##  anova.mlm  :
+> f <- get("anova.mlm", pos = 3)
+> f()
+Error: no anova method implemented for mlm models
+> f(NULL)
+Error: no anova method implemented for mlm models
+> f(NULL,NULL)
+Error: no anova method implemented for mlm models
+> f(list())
+Error: no anova method implemented for mlm models
+> f(logical(0))
+Error: no anova method implemented for mlm models
+> f(character(0))
+Error: no anova method implemented for mlm models
+> f(FALSE)
+Error: no anova method implemented for mlm models
+> 
+> ##  anovalist.lm  :
+> f <- get("anovalist.lm", pos = 3)
+> f()
+Error: Argument "object" is missing, with no default
+> f(NULL)
+Error in 1:object$rank : NA/NaN argument
+> f(NULL,NULL)
+Error: no applicable method for "df.residual"
+> f(list())
+Error in 1:object$rank : NA/NaN argument
+> f(logical(0))
+Error in 1:object$rank : NA/NaN argument
+> f(character(0))
+Error in 1:object$rank : NA/NaN argument
+> f(FALSE)
+Error in 1:object$rank : NA/NaN argument
+> 
+> ##  any  :
+> f <- get("any", pos = 3)
+> f()
+[1] FALSE
+> f(NULL)
+[1] FALSE
+> f(NULL,NULL)
+[1] FALSE
+> f(list())
+Error in any(..., na.rm = na.rm) : incorrect argument type
+> f(logical(0))
+[1] FALSE
+> f(character(0))
+Error in any(..., na.rm = na.rm) : incorrect argument type
+> f(FALSE)
+[1] FALSE
+> 
+> ##  aov  :
+> f <- get("aov", pos = 3)
+> f()
+Error: Argument "formula" is missing, with no default
+> f(NULL)
+Error: subscript out of bounds
+> f(NULL,NULL)
+Error: subscript out of bounds
+> f(list())
+Error: subscript out of bounds
+> f(logical(0))
+Error: subscript out of bounds
+> f(character(0))
+Error: subscript out of bounds
+> f(FALSE)
+Error: subscript out of bounds
+> 
+> ##  aperm  :
+> f <- get("aperm", pos = 3)
+> f()
+Error: Argument "a" is missing, with no default
+> f(NULL)
+Error: aperm: invalid first argument, must be an array
+> f(NULL,NULL)
+Error in sort(x) : only vectors can be sorted
+> f(list())
+Error: aperm: invalid first argument, must be an array
+> f(logical(0))
+Error: aperm: invalid first argument, must be an array
+> f(character(0))
+Error: aperm: invalid first argument, must be an array
+> f(FALSE)
+Error: aperm: invalid first argument, must be an array
+> 
+> ##  append  :
+> f <- get("append", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: Argument "values" is missing, with no default
+> f(NULL,NULL)
+NULL
+> f(list())
+Error: Argument "values" is missing, with no default
+> f(logical(0))
+Error: Argument "values" is missing, with no default
+> f(character(0))
+Error: Argument "values" is missing, with no default
+> f(FALSE)
+Error: Argument "values" is missing, with no default
+> 
+> ##  apply  :
+> f <- get("apply", pos = 3)
+> f()
+Error: Argument "FUN" is missing, with no default
+> f(NULL)
+Error: Argument "FUN" is missing, with no default
+> f(NULL,NULL)
+Error: Argument "FUN" is missing, with no default
+> f(list())
+Error: Argument "FUN" is missing, with no default
+> f(logical(0))
+Error: Argument "FUN" is missing, with no default
+> f(character(0))
+Error: Argument "FUN" is missing, with no default
+> f(FALSE)
+Error: Argument "FUN" is missing, with no default
+> 
+> ##  approx  :
+> f <- get("approx", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: x and y lengths differ
+> f(NULL,NULL)
+Error: x and y lengths differ
+> f(list())
+Error: approx requires at least two values to interpolate
+> f(logical(0))
+Error: x and y lengths differ
+> f(character(0))
+Error: x and y lengths differ
+> f(FALSE)
+Error: approx requires at least two values to interpolate
+> 
+> ##  approxfun  :
+> f <- get("approxfun", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: x and y lengths differ
+> f(NULL,NULL)
+Error: x and y lengths differ
+> f(list())
+Error: approx requires at least two values to interpolate
+> f(logical(0))
+Error: x and y lengths differ
+> f(character(0))
+Error: x and y lengths differ
+> f(FALSE)
+Error: approx requires at least two values to interpolate
+> 
+> ##  apropos  :
+> f <- get("apropos", pos = 3)
+> f()
+Error: Argument "what" is missing, with no default
+> f(NULL)
+Error in grep(pattern, x, ignore.case, extended, value) : invalid argument
+> f(NULL,NULL)
+Error in grep(pattern, x, ignore.case, extended, value) : invalid argument
+> f(list())
+ [1] "alist"                   "all.equal.list"         
+ [3] "anova.glmlist"           "anovalist.lm"           
+ [5] "as.data.frame.list"      "as.list"                
+ [7] "as.list.data.frame"      "as.list.default"        
+ [9] "as.pairlist"             "coef.listof"            
+[11] "dev.list"                "dummy.coef.aovlist"     
+[13] "eff.aovlist"             "is.list"                
+[15] "is.pairlist"             "list"                   
+[17] "list.files"              "make.tables.aovprojlist"
+[19] "model.frame.aovlist"     "model.tables.aovlist"   
+[21] "pairlist"                "print.aovlist"          
+[23] "print.dummy.coef.list"   "print.listof"           
+[25] "print.simple.list"       "print.summary.aovlist"  
+[27] "proj.aovlist"            "se.aovlist"             
+[29] "se.contrast.aovlist"     "summary.aovlist"        
+[31] "terms.aovlist"           "unlist"                 
+> f(logical(0))
+[1] "as.data.frame.logical" "as.logical"            "as.logical.default"   
+[4] "is.logical"            "logical"              
+> f(character(0))
+Error in grep(pattern, x, ignore.case, extended, value) : invalid argument
+> f(FALSE)
+character(0)
+> 
+> ##  args  :
+> f <- get("args", pos = 3)
+> f()
+Error: Argument "name" is missing, with no default
+> f(NULL)
+NULL
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+NULL
+> f(logical(0))
+NULL
+> f(character(0))
+NULL
+> f(FALSE)
+NULL
+> 
+> ##  array  :
+> f <- get("array", pos = 3)
+> f()
+[1] NA
+> f(NULL)
+Error: attempt to set an attribute on NULL
+> f(NULL,NULL)
+NULL
+> f(list())
+list()
+> f(logical(0))
+logical(0)
+> f(character(0))
+character(0)
+> f(FALSE)
+[1] FALSE
+> 
+> ##  arrows  :
+> f <- get("arrows", pos = 3)
+> f()
+Error: Argument "x0" is missing, with no default
+> f(NULL)
+Error: Argument "y0" is missing, with no default
+> f(NULL,NULL)
+Error: Argument "x1" is missing, with no default
+> f(list())
+Error: Argument "y0" is missing, with no default
+> f(logical(0))
+Error: Argument "y0" is missing, with no default
+> f(character(0))
+Error: Argument "y0" is missing, with no default
+> f(FALSE)
+Error: Argument "y0" is missing, with no default
+> 
+> ##  as.array  :
+> f <- get("as.array", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: attempt to set an attribute on NULL
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+list()
+> f(logical(0))
+logical(0)
+> f(character(0))
+character(0)
+> f(FALSE)
+[1] FALSE
+> 
+> ##  as.call  :
+> f <- get("as.call", pos = 3)
+> f()
+Error: 0 arguments passed to "as.call" which requires 1.
+> f(NULL)
+Error in f(NULL) : invalid argument list
+> f(NULL,NULL)
+Error: 2 arguments passed to "as.call" which requires 1.
+> f(list())
+Error in f(list()) : illegal length 0 argument
+> f(logical(0))
+Error in f(logical(0)) : invalid argument list
+> f(character(0))
+Error in f(character(0)) : invalid argument list
+> f(FALSE)
+Error in f(FALSE) : invalid argument list
+> 
+> ##  as.char.or.expr  :
+> f <- get("as.char.or.expr", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+character(0)
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+character(0)
+> f(logical(0))
+character(0)
+> f(character(0))
+character(0)
+> f(FALSE)
+[1] "FALSE"
+> 
+> ##  as.character  :
+> f <- get("as.character", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+character(0)
+> f(NULL,NULL)
+Error in as.character.default(NULL, NULL) : unused argument to function
+> f(list())
+character(0)
+> f(logical(0))
+character(0)
+> f(character(0))
+character(0)
+> f(FALSE)
+[1] "FALSE"
+> 
+> ##  as.character.default  :
+> f <- get("as.character.default", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+character(0)
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+character(0)
+> f(logical(0))
+character(0)
+> f(character(0))
+character(0)
+> f(FALSE)
+[1] "FALSE"
+> 
+> ##  as.complex  :
+> f <- get("as.complex", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+complex(0)
+> f(NULL,NULL)
+Error in as.complex.default(NULL, NULL) : unused argument to function
+> f(list())
+Error: (list) object cannot be coerced to vector type 15
+> f(logical(0))
+complex(0)
+> f(character(0))
+complex(0)
+> f(FALSE)
+[1] 0+0i
+> 
+> ##  as.complex.default  :
+> f <- get("as.complex.default", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+complex(0)
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error: (list) object cannot be coerced to vector type 15
+> f(logical(0))
+complex(0)
+> f(character(0))
+complex(0)
+> f(FALSE)
+[1] 0+0i
+> 
+> ##  as.data.frame  :
+> f <- get("as.data.frame", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: can't coerce NULL into a data.frame
+> f(NULL,NULL)
+Error: can't coerce NULL into a data.frame
+> f(list())
+NULL data frame with 0 rows
+> f(logical(0))
+[1] factor(x)
+<0 rows> (or 0-length row.names)
+> f(character(0))
+[1] factor(x)
+<0 rows> (or 0-length row.names)
+> f(FALSE)
+  factor(x)
+1     FALSE
+> 
+> ##  as.data.frame.AsIs  :
+> f <- get("as.data.frame.AsIs", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+[1] x
+<0 rows> (or 0-length row.names)
+> f(NULL,NULL)
+[1] x
+<0 rows> (or 0-length row.names)
+> f(list())
+[1] x
+<0 rows> (or 0-length row.names)
+> f(logical(0))
+[1] x
+<0 rows> (or 0-length row.names)
+> f(character(0))
+[1] x
+<0 rows> (or 0-length row.names)
+> f(FALSE)
+      x
+1 FALSE
+> 
+> ##  as.data.frame.character  :
+> f <- get("as.data.frame.character", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+[1] factor(x)
+<0 rows> (or 0-length row.names)
+> f(NULL,NULL)
+[1] factor(x)
+<0 rows> (or 0-length row.names)
+> f(list())
+[1] factor(x)
+<0 rows> (or 0-length row.names)
+> f(logical(0))
+[1] factor(x)
+<0 rows> (or 0-length row.names)
+> f(character(0))
+[1] factor(x)
+<0 rows> (or 0-length row.names)
+> f(FALSE)
+  factor(x)
+1     FALSE
+> 
+> ##  as.data.frame.complex  :
+> f <- get("as.data.frame.complex", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+[1] NULL
+<0 rows> (or 0-length row.names)
+> f(NULL,NULL)
+[1] NULL
+<0 rows> (or 0-length row.names)
+> f(list())
+[1] list()
+<0 rows> (or 0-length row.names)
+> f(logical(0))
+[1] logical(0)
+<0 rows> (or 0-length row.names)
+> f(character(0))
+[1] character(0)
+<0 rows> (or 0-length row.names)
+> f(FALSE)
+  FALSE
+1 FALSE
+> 
+> ##  as.data.frame.data.frame  :
+> f <- get("as.data.frame.data.frame", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error in if (i > 1) class(x) <- cl[-seq(length = i - 1)] : missing value where logical needed
+> f(NULL,NULL)
+Error in if (i > 1) class(x) <- cl[-seq(length = i - 1)] : missing value where logical needed
+> f(list())
+Error in if (i > 1) class(x) <- cl[-seq(length = i - 1)] : missing value where logical needed
+> f(logical(0))
+Error in if (i > 1) class(x) <- cl[-seq(length = i - 1)] : missing value where logical needed
+> f(character(0))
+Error in if (i > 1) class(x) <- cl[-seq(length = i - 1)] : missing value where logical needed
+> f(FALSE)
+Error in if (i > 1) class(x) <- cl[-seq(length = i - 1)] : missing value where logical needed
+> 
+> ##  as.data.frame.default  :
+> f <- get("as.data.frame.default", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: can't coerce NULL into a data.frame
+> f(NULL,NULL)
+Error: can't coerce NULL into a data.frame
+> f(list())
+NULL data frame with 0 rows
+> f(logical(0))
+[1] factor(x)
+<0 rows> (or 0-length row.names)
+> f(character(0))
+[1] factor(x)
+<0 rows> (or 0-length row.names)
+> f(FALSE)
+  factor(x)
+1     FALSE
+> 
+> ##  as.data.frame.factor  :
+> f <- get("as.data.frame.factor", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+[1] NULL
+<0 rows> (or 0-length row.names)
+> f(NULL,NULL)
+[1] NULL
+<0 rows> (or 0-length row.names)
+> f(list())
+[1] list()
+<0 rows> (or 0-length row.names)
+> f(logical(0))
+[1] logical(0)
+<0 rows> (or 0-length row.names)
+> f(character(0))
+[1] character(0)
+<0 rows> (or 0-length row.names)
+> f(FALSE)
+  FALSE
+1 FALSE
+> 
+> ##  as.data.frame.integer  :
+> f <- get("as.data.frame.integer", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+[1] NULL
+<0 rows> (or 0-length row.names)
+> f(NULL,NULL)
+[1] NULL
+<0 rows> (or 0-length row.names)
+> f(list())
+[1] list()
+<0 rows> (or 0-length row.names)
+> f(logical(0))
+[1] logical(0)
+<0 rows> (or 0-length row.names)
+> f(character(0))
+[1] character(0)
+<0 rows> (or 0-length row.names)
+> f(FALSE)
+  FALSE
+1 FALSE
+> 
+> ##  as.data.frame.list  :
+> f <- get("as.data.frame.list", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+NULL data frame with 0 rows
+> f(NULL,NULL)
+NULL data frame with 0 rows
+> f(list())
+NULL data frame with 0 rows
+> f(logical(0))
+NULL data frame with 0 rows
+> f(character(0))
+NULL data frame with 0 rows
+> f(FALSE)
+  FALSE
+1 FALSE
+> 
+> ##  as.data.frame.logical  :
+> f <- get("as.data.frame.logical", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+[1] factor(x)
+<0 rows> (or 0-length row.names)
+> f(NULL,NULL)
+[1] factor(x)
+<0 rows> (or 0-length row.names)
+> f(list())
+[1] factor(x)
+<0 rows> (or 0-length row.names)
+> f(logical(0))
+[1] factor(x)
+<0 rows> (or 0-length row.names)
+> f(character(0))
+[1] factor(x)
+<0 rows> (or 0-length row.names)
+> f(FALSE)
+  factor(x)
+1     FALSE
+> 
+> ##  as.data.frame.matrix  :
+> f <- get("as.data.frame.matrix", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error in vector("list", ncols) : negative length vectors are not allowed
+> f(NULL,NULL)
+Error in vector("list", ncols) : negative length vectors are not allowed
+> f(list())
+Error in vector("list", ncols) : negative length vectors are not allowed
+> f(logical(0))
+Error in vector("list", ncols) : negative length vectors are not allowed
+> f(character(0))
+Error in vector("list", ncols) : negative length vectors are not allowed
+> f(FALSE)
+Error in vector("list", ncols) : negative length vectors are not allowed
+> 
+> ##  as.data.frame.model.matrix  :
+> f <- get("as.data.frame.model.matrix", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error in ceiling(length.out) : Non-numeric argument to mathematical function
+> f(NULL,NULL)
+Error in ceiling(length.out) : Non-numeric argument to mathematical function
+> f(list())
+Error in ceiling(length.out) : Non-numeric argument to mathematical function
+> f(logical(0))
+Error in ceiling(length.out) : Non-numeric argument to mathematical function
+> f(character(0))
+Error in ceiling(length.out) : Non-numeric argument to mathematical function
+> f(FALSE)
+Error in ceiling(length.out) : Non-numeric argument to mathematical function
+> 
+> ##  as.data.frame.numeric  :
+> f <- get("as.data.frame.numeric", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+[1] NULL
+<0 rows> (or 0-length row.names)
+> f(NULL,NULL)
+[1] NULL
+<0 rows> (or 0-length row.names)
+> f(list())
+[1] list()
+<0 rows> (or 0-length row.names)
+> f(logical(0))
+[1] logical(0)
+<0 rows> (or 0-length row.names)
+> f(character(0))
+[1] character(0)
+<0 rows> (or 0-length row.names)
+> f(FALSE)
+  FALSE
+1 FALSE
+> 
+> ##  as.data.frame.ordered  :
+> f <- get("as.data.frame.ordered", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+[1] NULL
+<0 rows> (or 0-length row.names)
+> f(NULL,NULL)
+[1] NULL
+<0 rows> (or 0-length row.names)
+> f(list())
+[1] list()
+<0 rows> (or 0-length row.names)
+> f(logical(0))
+[1] logical(0)
+<0 rows> (or 0-length row.names)
+> f(character(0))
+[1] character(0)
+<0 rows> (or 0-length row.names)
+> f(FALSE)
+  FALSE
+1 FALSE
+> 
+> ##  as.data.frame.ts  :
+> f <- get("as.data.frame.ts", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+[1] x
+<0 rows> (or 0-length row.names)
+> f(NULL,NULL)
+[1] x
+<0 rows> (or 0-length row.names)
+> f(list())
+[1] x
+<0 rows> (or 0-length row.names)
+> f(logical(0))
+[1] x
+<0 rows> (or 0-length row.names)
+> f(character(0))
+[1] x
+<0 rows> (or 0-length row.names)
+> f(FALSE)
+      x
+1 FALSE
+> 
+> ##  as.data.frame.vector  :
+> f <- get("as.data.frame.vector", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+[1] NULL
+<0 rows> (or 0-length row.names)
+> f(NULL,NULL)
+[1] NULL
+<0 rows> (or 0-length row.names)
+> f(list())
+[1] list()
+<0 rows> (or 0-length row.names)
+> f(logical(0))
+[1] logical(0)
+<0 rows> (or 0-length row.names)
+> f(character(0))
+[1] character(0)
+<0 rows> (or 0-length row.names)
+> f(FALSE)
+  FALSE
+1 FALSE
+> 
+> ##  as.double  :
+> f <- get("as.double", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+numeric(0)
+> f(NULL,NULL)
+Error in as.double.default(NULL, NULL) : unused argument to function
+> f(list())
+Error: (list) object cannot be coerced to vector type 14
+> f(logical(0))
+numeric(0)
+> f(character(0))
+numeric(0)
+> f(FALSE)
+[1] 0
+> 
+> ##  as.double.default  :
+> f <- get("as.double.default", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+numeric(0)
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error: (list) object cannot be coerced to vector type 14
+> f(logical(0))
+numeric(0)
+> f(character(0))
+numeric(0)
+> f(FALSE)
+[1] 0
+> 
+> ##  as.expression  :
+> f <- get("as.expression", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+expression(NULL)
+> f(NULL,NULL)
+Error in as.expression.default(NULL, NULL) : unused argument to function
+> f(list())
+expression(NULL)
+> f(logical(0))
+expression()
+> f(character(0))
+expression()
+> f(FALSE)
+expression(FALSE)
+> 
+> ##  as.expression.default  :
+> f <- get("as.expression.default", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+expression(NULL)
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+expression(NULL)
+> f(logical(0))
+expression()
+> f(character(0))
+expression()
+> f(FALSE)
+expression(FALSE)
+> 
+> ##  as.factor  :
+> f <- get("as.factor", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+character(0)
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+character(0)
+> f(logical(0))
+character(0)
+> f(character(0))
+character(0)
+> f(FALSE)
+[1] FALSE
+Levels:  FALSE 
+> 
+> ##  as.formula  :
+> f <- get("as.formula", pos = 3)
+> f()
+Error: Argument "object" is missing, with no default
+> f(NULL)
+list()
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error: invalid formula
+> f(logical(0))
+Error: invalid formula
+> f(character(0))
+> f(FALSE)
+Error: invalid formula
+> 
+> ##  as.function  :
+> f <- get("as.function", pos = 3)
+> f()
+Error: Argument "l" is missing, with no default
+> f(NULL)
+Error in as.function.default(l, envir) : argument must have length at least 1
+> f(NULL,NULL)
+Error in as.function.default(l, envir) : argument must have length at least 1
+> f(list())
+Error in as.function.default(l, envir) : argument must have length at least 1
+> f(logical(0))
+Error in as.function.default(l, envir) : list argument expected
+> f(character(0))
+Error in as.function.default(l, envir) : list argument expected
+> f(FALSE)
+Error in as.function.default(l, envir) : list argument expected
+> 
+> ##  as.function.default  :
+> f <- get("as.function.default", pos = 3)
+> f()
+Error: Argument "l" is missing, with no default
+> f(NULL)
+Error in as.function.default(l, envir) : argument must have length at least 1
+> f(NULL,NULL)
+Error in as.function.default(l, envir) : argument must have length at least 1
+> f(list())
+Error in as.function.default(l, envir) : argument must have length at least 1
+> f(logical(0))
+Error in as.function.default(l, envir) : list argument expected
+> f(character(0))
+Error in as.function.default(l, envir) : list argument expected
+> f(FALSE)
+Error in as.function.default(l, envir) : list argument expected
+> 
+> ##  as.integer  :
+> f <- get("as.integer", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+numeric(0)
+> f(NULL,NULL)
+Error in as.integer.default(NULL, NULL) : unused argument to function
+> f(list())
+Error: (list) object cannot be coerced to vector type 13
+> f(logical(0))
+numeric(0)
+> f(character(0))
+numeric(0)
+> f(FALSE)
+[1] 0
+> 
+> ##  as.integer.default  :
+> f <- get("as.integer.default", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+numeric(0)
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error: (list) object cannot be coerced to vector type 13
+> f(logical(0))
+numeric(0)
+> f(character(0))
+numeric(0)
+> f(FALSE)
+[1] 0
+> 
+> ##  as.list  :
+> f <- get("as.list", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+list()
+> f(NULL,NULL)
+Error in as.list.default(NULL, NULL) : unused argument to function
+> f(list())
+list()
+> f(logical(0))
+list()
+> f(character(0))
+list()
+> f(FALSE)
+[[1]]
+[1] 0
+
+> 
+> ##  as.list.data.frame  :
+> f <- get("as.list.data.frame", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+NULL
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+list()
+> f(logical(0))
+logical(0)
+> f(character(0))
+character(0)
+> f(FALSE)
+[1] FALSE
+> 
+> ##  as.list.default  :
+> f <- get("as.list.default", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+list()
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+list()
+> f(logical(0))
+list()
+> f(character(0))
+list()
+> f(FALSE)
+[[1]]
+[1] 0
+
+> 
+> ##  as.logical  :
+> f <- get("as.logical", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+logical(0)
+> f(NULL,NULL)
+Error in as.logical.default(NULL, NULL) : unused argument to function
+> f(list())
+Error: (list) object cannot be coerced to vector type 10
+> f(logical(0))
+logical(0)
+> f(character(0))
+logical(0)
+> f(FALSE)
+[1] FALSE
+> 
+> ##  as.logical.default  :
+> f <- get("as.logical.default", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+logical(0)
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error: (list) object cannot be coerced to vector type 10
+> f(logical(0))
+logical(0)
+> f(character(0))
+logical(0)
+> f(FALSE)
+[1] FALSE
+> 
+> ##  as.matrix  :
+> f <- get("as.matrix", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: attempt to set an attribute on NULL
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+     [,1]
+> f(logical(0))
+     [,1]
+> f(character(0))
+     [,1]
+> f(FALSE)
+      [,1]
+[1,] FALSE
+> 
+> ##  as.matrix.data.frame  :
+> f <- get("as.matrix.data.frame", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error in 1:p : NA/NaN argument
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error in 1:p : NA/NaN argument
+> f(logical(0))
+Error in 1:p : NA/NaN argument
+> f(character(0))
+Error in 1:p : NA/NaN argument
+> f(FALSE)
+Error in 1:p : NA/NaN argument
+> 
+> ##  as.matrix.default  :
+> f <- get("as.matrix.default", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: attempt to set an attribute on NULL
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+     [,1]
+> f(logical(0))
+     [,1]
+> f(character(0))
+     [,1]
+> f(FALSE)
+      [,1]
+[1,] FALSE
+> 
+> ##  as.matrix.noquote  :
+> f <- get("as.matrix.noquote", pos = 3)
+> f()
+Error in NextMethod(generic, object, ...) : object not specified
+> f(NULL)
+Error in NextMethod(generic, object, ...) : object not specified
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error in NextMethod(generic, object, ...) : object not specified
+> f(logical(0))
+Error in NextMethod(generic, object, ...) : object not specified
+> f(character(0))
+Error in NextMethod(generic, object, ...) : object not specified
+> f(FALSE)
+Error in NextMethod(generic, object, ...) : object not specified
+> 
+> ##  as.name  :
+> f <- get("as.name", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: invalid type/length (1/0) in vector allocation
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error: (list) object cannot be coerced to vector type 1
+> f(logical(0))
+Error: Invalid data of mode "H" (too short)
+> f(character(0))
+Error: Invalid data of mode "H" (too short)
+> f(FALSE)
+FALSE
+> 
+> ##  as.null  :
+> f <- get("as.null", pos = 3)
+> f()
+NULL
+> f(NULL)
+NULL
+> f(NULL,NULL)
+Error in as.null.default(NULL, NULL) : unused argument to function
+> f(list())
+NULL
+> f(logical(0))
+NULL
+> f(character(0))
+NULL
+> f(FALSE)
+NULL
+> 
+> ##  as.null.default  :
+> f <- get("as.null.default", pos = 3)
+> f()
+NULL
+> f(NULL)
+NULL
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+NULL
+> f(logical(0))
+NULL
+> f(character(0))
+NULL
+> f(FALSE)
+NULL
+> 
+> ##  as.numeric  :
+> f <- get("as.numeric", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+numeric(0)
+> f(NULL,NULL)
+Error in as.double.default(NULL, NULL) : unused argument to function
+> f(list())
+Error: (list) object cannot be coerced to vector type 14
+> f(logical(0))
+numeric(0)
+> f(character(0))
+numeric(0)
+> f(FALSE)
+[1] 0
+> 
+> ##  as.ordered  :
+> f <- get("as.ordered", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+ordered(0)
+Levels:   
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+ordered(0)
+Levels:   
+> f(logical(0))
+ordered(0)
+Levels:   
+> f(character(0))
+ordered(0)
+Levels:   
+> f(FALSE)
+[1] FALSE
+Levels:  FALSE 
+> 
+> ##  as.pairlist  :
+> f <- get("as.pairlist", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+NULL
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+NULL
+> f(logical(0))
+NULL
+> f(character(0))
+NULL
+> f(FALSE)
+[[1]]
+[1] FALSE
+
+> 
+> ##  as.qr  :
+> f <- get("as.qr", pos = 3)
+> f()
+Error: you cannot be serious
+> f(NULL)
+Error: you cannot be serious
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error: you cannot be serious
+> f(logical(0))
+Error: you cannot be serious
+> f(character(0))
+Error: you cannot be serious
+> f(FALSE)
+Error: you cannot be serious
+> 
+> ##  as.real  :
+> f <- get("as.real", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+numeric(0)
+> f(NULL,NULL)
+Error in as.double.default(NULL, NULL) : unused argument to function
+> f(list())
+Error: (list) object cannot be coerced to vector type 14
+> f(logical(0))
+numeric(0)
+> f(character(0))
+numeric(0)
+> f(FALSE)
+[1] 0
+> 
+> ##  as.single  :
+> f <- get("as.single", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+numeric(0)
+Warning message: 
+type single is not supported in R in: as.single.default(NULL) 
+> f(NULL,NULL)
+Error in as.single.default(NULL, NULL) : unused argument to function
+> f(list())
+Error: (list) object cannot be coerced to vector type 14
+> f(logical(0))
+numeric(0)
+Warning message: 
+type single is not supported in R in: as.single.default(logical(0)) 
+> f(character(0))
+numeric(0)
+Warning message: 
+type single is not supported in R in: as.single.default(character(0)) 
+> f(FALSE)
+[1] 0
+Warning message: 
+type single is not supported in R in: as.single.default(FALSE) 
+> 
+> ##  as.single.default  :
+> f <- get("as.single.default", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+numeric(0)
+Warning message: 
+type single is not supported in R in: f(NULL) 
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error: (list) object cannot be coerced to vector type 14
+> f(logical(0))
+numeric(0)
+Warning message: 
+type single is not supported in R in: f(logical(0)) 
+> f(character(0))
+numeric(0)
+Warning message: 
+type single is not supported in R in: f(character(0)) 
+> f(FALSE)
+[1] 0
+Warning message: 
+type single is not supported in R in: f(FALSE) 
+> 
+> ##  as.ts  :
+> f <- get("as.ts", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: ts object must have one or more observations
+> f(NULL,NULL)
+Error in f(NULL, NULL) : unused argument to function
+> f(list())
+Error: ts object must have one or more observations
+> f(logical(0))
+Error: ts object must have one or more observations
+> f(character(0))
+Error: ts object must have one or more observations
+> f(FALSE)
+Time Series:
+Start = 1 
+End = 1 
+Frequency = 1 
+[1] FALSE
+> 
+> ##  as.vector  :
+> f <- get("as.vector", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+NULL
+> f(NULL,NULL)
+Error in as.vector(x, mode) : invalid "mode" of argument
+> f(list())
+list()
+> f(logical(0))
+logical(0)
+> f(character(0))
+character(0)
+> f(FALSE)
+[1] FALSE
+> 
+> ##  as.vector.factor  :
+> f <- get("as.vector.factor", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+NULL
+> f(NULL,NULL)
+Error in type == "any" : comparison (1) is possible only for vector types
+> f(list())
+NULL
+> f(logical(0))
+NULL
+> f(character(0))
+NULL
+> f(FALSE)
+NULL
+> 
+> ##  asin  :
+> f <- get("asin", pos = 3)
+> f()
+Error: 0 arguments passed to "asin" which requires 1.
+> f(NULL)
+Error in f(NULL) : Non-numeric argument to mathematical function
+> f(NULL,NULL)
+Error: 2 arguments passed to "asin" which requires 1.
+> f(list())
+Error in f(list()) : Non-numeric argument to mathematical function
+> f(logical(0))
+numeric(0)
+> f(character(0))
+Error in f(character(0)) : Non-numeric argument to mathematical function
+> f(FALSE)
+[1] 0
+> 
+> ##  asinh  :
+> f <- get("asinh", pos = 3)
+> f()
+Error: 0 arguments passed to "asinh" which requires 1.
+> f(NULL)
+Error in f(NULL) : Non-numeric argument to mathematical function
+> f(NULL,NULL)
+Error: 2 arguments passed to "asinh" which requires 1.
+> f(list())
+Error in f(list()) : Non-numeric argument to mathematical function
+> f(logical(0))
+numeric(0)
+> f(character(0))
+Error in f(character(0)) : Non-numeric argument to mathematical function
+> f(FALSE)
+[1] 0
+> 
+> ##  assign  :
+> f <- get("assign", pos = 3)
+> f()
+Error: Argument "x" is missing, with no default
+> f(NULL)
+Error: Argument "value" is missing, with no default
+> f(NULL,NULL)
+Error: assign: invalid first argument
+> f(list())
+Error: Argument "value" is missing, with no default
+> f(logical(0))
+Error: Argument "value" is missing, with no default
+> f(character(0))
+Error: Argument "value" is missing, with no default
+> f(FALSE)
+Error: Argument "value" is missing, with no default
+> 
+> ##  atan  :
+> f <- get("atan", pos = 3)
+> f()
+Error: 0 arguments passed to "atan" which requires 1 or 2
+> f(NULL)
+Error in f(NULL) : Non-numeric argument to mathematical function
+> f(NULL,NULL)
+Error in f(NULL, NULL) : Non-numeric argument to mathematical function
+> f(list())
+Error in f(list()) : Non-numeric argument to mathematical function
+> f(logical(0))
+numeric(0)
+> f(character(0))
+Error in f(character(0)) : Non-numeric argument to mathematical function
+> f(FALSE)
+[1] 0
+> 
+> ##  atan2  :
+> f <- get("atan2", pos = 3)
+> f()
+Error: Argument "y" is missing, with no default
+> f(NULL)
+Error: Argument "x" is missing, with no default
+> f(NULL,NULL)
+Error in atan2(y, x) : Non-numeric argument to mathematical function
+> f(list())
+Error: Argument "x" is missing, with no default
+> f(logical(0))
+Error: Argument "x" is missing, with no default
+> f(character(0))
+Error: Argument "x" is missing, with no default
+> f(FALSE)
+Error: Argument "x" is missing, with no default
+> 
+> ##  atanh  :
+> f <- get("atanh", pos = 3)
+> f()
+Error: 0 arguments passed to "atanh" which requires 1.
+> f(NULL)
+Error in f(NULL) : Non-numeric argument to mathematical function
+> f(NULL,NULL)
+Error: 2 arguments passed to "atanh" which requires 1.
+> f(list())
+Error in f(list()) : Non-numeric argument to mathematical function
+> f(logical(0))
+numeric(0)
+> f(character(0))
+Error in f(character(0)) : Non-numeric argument to mathematical function
+> f(FALSE)
+[1] 0
+> 
+> ##  attach  :
+> f <- get("attach", pos = 3)
+> f()
+Error: Argument "what" is missing, with no default
+> f(NULL)
+> f(NULL,NULL)
+Error: attach: pos must be an integer
+> f(list())
+> f(logical(0))
+Error: attach only works for lists and data frames
+> f(character(0))
+Error: attach only works for lists and data frames
+> f(FALSE)
+Error: attach only works for lists and data frames
+> 
+> ##  attr  :
+> f <- get("attr", pos = 3)
+> f()
+Error: Argument "which" is missing, with no default
+> f(NULL)
+Error: Argument "which" is missing, with no default
+> f(NULL,NULL)
+Error: attribute name must be of mode character
+> f(list())
+Error: Argument "which" is missing, with no default
+> f(logical(0))
+Error: Argument "which" is missing, with no default
+> f(character(0))
+Error: Argument "which" is missing, with no default
+> f(FALSE)
+Error: Argument "which" is missing, with no default
+> 
+> ##  attr.all.equal  :
+> f <- get("attr.all.equal", pos = 3)
+> f()
+Error: Argument "target" is missing, with no default
+> f(NULL)
+Error: Argument "current" is missing, with no default
+> f(NULL,NULL)
+NULL
+> f(list())
+Error: Argument "current" is missing, with no default
+> f(logical(0))
+Error: Argument "current" is missing, with no default
+> f(character(0))
+Error: Argument "current" is missing, with no default
+> f(FALSE)
+Error: Argument "current" is missing, with no default
+> 
+> ##  attr<-  :
+> f <- get("attr<-", pos = 3)
+> f()
+Error: attr<- : name must be of mode character
+> f(NULL)
+Error: attr<- : name must be of mode character
+> f(NULL,NULL)
+Error: attr<- : name must be of mode character
+> f(list())
+Error: attr<- : name must be of mode character
+> f(logical(0))
+Error: attr<- : name must be of mode character
+> f(character(0))
+Error: attr<- : name must be of mode character
+> f(FALSE)
+Error: attr<- : name must be of mode character
+> 
+> ##  attributes  :
+> f <- get("attributes", pos = 3)
+> f()
+NULL
+> f(NULL)
+NULL
+> f(NULL,NULL)
+NULL
+> f(list())
+NULL
+> f(logical(0))
+NULL
+> f(character(0))
+NULL
+> f(FALSE)
+NULL
+> 
+> ##  attributes<-  :
+> f <- get("attributes<-", pos = 3)
+> f()
+NULL
+> f(NULL)
+NULL
+> f(NULL,NULL)
+NULL
+> f(list())
+list()
+> f(logical(0))
+logical(0)
+> f(character(0))
+character(0)
+> f(FALSE)
+[1] FALSE
