@@ -26,7 +26,10 @@
   archive files of the form \file{pkg\_version.tar.gz} as obtained from
   CRAN, these are then extracted in a temporary directory.
 
-  For checking (via the examples in the help files \file{man/*.Rd},
+  Some package sources contain a \file{configure} script that can be
+  passed arguments via the option \code{--configure-args}.
+
+  For checking (via the examples in the help files \file{man/*.Rd}),
   use \code{R CMD check [-l lib] <pkg>}, use \code{R CMD check --help}
   for more information.
 }

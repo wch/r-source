@@ -96,6 +96,7 @@ ifeq ($(strip $(INSTFILES)),)
 else
 	-$(CP) -r $(OFILES3) inst/* $(DPKG)/
 endif
+	@echo  "cat('Built: R ', R.version[['major']], '.', R.version[['minor']], ';  Win32;  ', format(Sys.time()), sep='')" | $(RHOME)/bin/Rterm --slave >> ${DPKG}/DESCRIPTION
 
 $(DATA): $(DSOURCES)
 	$(MKDIR) -p $(DATA)

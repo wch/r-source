@@ -313,6 +313,9 @@ NEW FEATURES
 
     o	lag.plot() {ts package}.
 
+    o	DESCRIPTION file in installed packages has a new `Built:' field
+	giving build information (R version, platform, date).
+
 
 BUG FIXES
 
