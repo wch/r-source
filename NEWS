@@ -90,7 +90,15 @@ NEW FEATURES
 	thanks to contributions from Arni Magnusson.  For consistency,
 	'boxwex' is not an explicit argument anymore.
 
+    o	chull() has been moved to package graphics (as it uses xy.coords).
+
     o	There is now a coef() method for summaries of "nls" objects.
+
+    o	compareVersion(), packageDescription() and read.00Index
+	have been moved to package 'utils'.
+
+    o	convolve(), fft(), mvfft() and nextn() have been moved to
+	package stats.
 
     o	coplot() now makes use of cex.lab and font.lab par() settings.
 
@@ -214,8 +222,6 @@ NEW FEATURES
 	bug fix.)
 
     o	package.dependencies() has been moved to package 'tools'.
-
-    o	packageDescription() has been moved to package 'utils'.
 
     o	The 'formula' method for pairs() has a 'na.action' argument,
 	defaulting to 'na.pass', rather than the value of
@@ -407,8 +413,8 @@ DOCUMENTATION
 	example.
 
     o	HTML help pages now contain a reference to the package and
-	version in the footer, and package pages give their name and
-	version at the top.
+	version in the footer, and HTML package index pages give their
+	name and version at the top.
 
 
 C-LEVEL FACILITIES
