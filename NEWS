@@ -119,6 +119,10 @@ NEW FEATURES
 	colorRamp() uses it.
 
     o	as.ts() is now generic.
+    
+    o	legend() now accepts positioning by keyword, e.g. "topleft", 
+    	and can put a title within the legend.  (Suggested by Elizabeth
+    	Purdom in PR#7400.)
 
 
 UTILITIES

@@ -5,7 +5,7 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
 	 xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1, adj = c(0, 0.5),
 	 text.width = NULL, text.col = par("col"),
 	 merge = do.lines && has.pch, trace = FALSE,
-	 plot = TRUE, ncol = 1, horiz = FALSE)
+	 plot = TRUE, ncol = 1, horiz = FALSE, title = NULL)
 {
     ## the 2nd arg may really be `legend'
     if(missing(legend) && !missing(y) &&
@@ -14,10 +14,23 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
 	y <- NULL
     }
     mfill <- !missing(fill) || !missing(density)
+    
+    if(length(title) > 1) stop("invalid title")
 
-    xy <- xy.coords(x, y); x <- xy$x; y <- xy$y
-    nx <- length(x)
-    if (nx < 1 || nx > 2) stop("invalid coordinate lengths")
+    if (is.character(x)) {
+	auto <- pmatch(x, c("bottomright", "bottomcenter", "bottomleft", 
+	                    "leftcenter", 
+	                    "topleft", "topcenter", "topright",
+	                    "rightcenter"))
+	if (length(auto) != 1 || is.na(auto)) stop("invalid legend position")
+    }
+    else auto <- NA
+    
+    if (is.na(auto)) {	
+    	xy <- xy.coords(x, y); x <- xy$x; y <- xy$y
+    	nx <- length(x)
+    	if (nx < 1 || nx > 2) stop("invalid coordinate lengths")
+    } else nx <- 0
 
     xlog <- par("xlog")
     ylog <- par("ylog")
@@ -96,10 +109,11 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
     }
     x.off <- if(merge) -0.7 else 0
 
-    ##- Adjust (x,y) :
-    if (xlog) x <- log10(x)
-    if (ylog) y <- log10(y)
-
+    if (is.na(auto)) {
+    	##- Adjust (x,y) :
+    	if (xlog) x <- log10(x)
+    	if (ylog) y <- log10(y)
+    }
     if(nx == 2) {
 	## (x,y) are specifiying OPPOSITE corners of the box
 	x <- sort(x)
@@ -116,17 +130,39 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
 	if(missing(yjust)) yjust <- 0.5
 
     }
-    else {## nx == 1
+    else {## nx == 1  or  auto
 	## -- (w,h) := (width,height) of the box to draw -- computed in steps
-	h <- n.legpercol * ychar + yc
+	h <- (n.legpercol + !is.null(title)) * ychar + yc
 	w0 <- text.width + (x.intersp + 1) * xchar
 	if(mfill)	w0 <- w0 + dx.fill
 	if(has.pch && !merge)	w0 <- w0 + dx.pch
 	if(do.lines)		w0 <- w0 + (2+x.off) * xchar
 	w <- ncol*w0 + .5* xchar
+	if (!is.null(title)) w <- max(w, strwidth(title, units="user", cex=cex) + 0.5*xchar)
 	##-- (w,h) are now the final box width/height.
-	left <- x      - xjust	* w
-	top  <- y + (1 - yjust) * h
+	
+	if (is.na(auto)) {
+	    left <- x - xjust * w
+	    top  <- y + (1 - yjust) * h
+	} else {
+	    usr <- par("usr")
+	    left <- switch(auto, usr[2]-w,
+	    		 	 (usr[1]+usr[2]-w)/2,
+	    		 	 usr[1],
+	    		 	 usr[1],
+	    		 	 usr[1],
+	    		 	 (usr[1]+usr[2]-w)/2,
+	    		 	 usr[2]-w,
+	    		 	 usr[2]-w)
+	    top <- switch(auto,  usr[3]+h,
+	    			 usr[3]+h,
+	    			 usr[3]+h,
+	    			 (usr[3]+usr[4]+h)/2,
+	    			 usr[4],
+	    			 usr[4],
+	    			 usr[4],
+	    			 (usr[3]+usr[4]+h)/2)
+	}
     }
 
     if (plot && bty != "n") { ## The legend box :
@@ -134,10 +170,11 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
 	    catn("  rect2(",left,",",top,", w=",w,", h=",h,", ...)",sep="")
 	rect2(left, top, dx = w, dy = h, col = bg, density = NULL)
     }
+	
     ## (xt[],yt[]) := `current' vectors of (x/y) legend text
     xt <- left + xchar + (w0 * rep.int(0:(ncol-1),
 				       rep.int(n.legpercol,ncol)))[1:n.leg]
-    yt <- top - (rep.int(1:n.legpercol,ncol)[1:n.leg]-1) * ychar -
+    yt <- top - (rep.int(1:n.legpercol,ncol)[1:n.leg] - 1 + !is.null(title)) * ychar -
 	0.5 * yextra - ymax
 
     if (mfill) {		#- draw filled boxes -------------
@@ -186,9 +223,12 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
     }
 
     xt <- xt + x.intersp * xchar
-    if(plot)
+    if(plot) {
+	if (!is.null(title)) text(left + w/2, top - ymax, labels = title, 
+				  adj = c(0.5, 0), cex = cex, col = text.col)
+		
 	text2(xt, yt, labels = legend, adj = adj, cex = cex, col = text.col)
-
+    }
     invisible(list(rect = list(w = w, h = h, left = left, top = top),
 		   text = list(x = xt, y = yt)))
 }

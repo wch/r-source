@@ -9,7 +9,7 @@ legend(x, y = NULL, legend, fill = NULL, col = "black",
        xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1,
        adj = c(0, 0.5), text.width = NULL, text.col = par("col"),
        merge = do.lines && has.pch, trace = FALSE,
-       plot = TRUE, ncol = 1, horiz = FALSE)
+       plot = TRUE, ncol = 1, horiz = FALSE, title = NULL)
 }
 \description{
   This function can be used to add legends to plots.  Note that a call
@@ -18,7 +18,7 @@ legend(x, y = NULL, legend, fill = NULL, col = "black",
 }
 \arguments{
   \item{x, y}{the x and y co-ordinates to be used to position the legend.
-    They can be specified in any way which is accepted by
+    They can be specified by keyword or in any way which is accepted by
     \code{\link{xy.coords}}: See Details.}
   \item{legend}{a vector of text values or an \code{\link{expression}}
     of length \eqn{\ge 1}{>= 1}, or a \code{\link{call}} (as resulting
@@ -69,6 +69,8 @@ legend(x, y = NULL, legend, fill = NULL, col = "black",
   \item{horiz}{logical; if \code{TRUE}, set the legend horizontally rather than
      vertically (specifying \code{horiz} overrides the \code{ncol}
      specification).}
+  \item{title}{a text value giving a title to be placed at the top of the
+     legend.}
 }
 \details{
   Arguments \code{x, y, legend} are interpreted in a non-standard way to
@@ -83,6 +85,13 @@ legend(x, y = NULL, legend, fill = NULL, col = "black",
   legend.  If it gives the coordinates of two points, these specify
   opposite corners of the rectangle (either pair of corners, in any
   order).
+  
+  The location may also be specified by setting \code{x} to a single
+  keyword from the list \code{"bottomright"}, \code{"bottomcenter"},
+  \code{"bottomleft"}, \code{"leftcenter"}, \code{"topleft"},
+  \code{"topcenter"}, \code{"topright"} and \code{"rightcenter"}. This places
+  the legend on the inside of the plot frame at the given location.
+  Partial argument matching is used.
 
   \dQuote{Attribute} arguments such as \code{col}, \code{pch}, \code{lty},
   etc, are recycled if necessary.  \code{merge} is not.
@@ -146,9 +155,10 @@ legend(-1, 1.9, c("sin", "cos", "tan"), col = c(3,4,6), text.col= "green4",
 x <- 1:5; y1 <- 1/x; y2 <- 2/x
 plot(rep(x, 2), c(y1, y2), type="n", xlab="x", ylab="y")
 lines(x, y1); lines(x, y2, lty=2)
-temp <- legend(5, 2, legend = c(" ", " "),
+temp <- legend("topright", legend = c(" ", " "),
                text.width = strwidth("1,000,000"),
-               lty = 1:2, xjust = 1, yjust = 1)
+               lty = 1:2, xjust = 1, yjust = 1,
+               title = "Line Types")
 text(temp$rect$left + temp$rect$w, temp$text$y,
      c("1,000", "1,000,000"), pos=2)
 
@@ -215,5 +225,18 @@ y <- sin(3*pi*x)
 plot(x, y, type="l", col="blue", main = "points with bg & legend(*, pt.bg)")
 points(x, y, pch=21, bg="white")
 legend(.4,1, "sin(c x)", pch=21, pt.bg="white", lty=1, col = "blue")
+
+## legends with titles at different locations
+x <- rnorm(10)
+y <- rnorm(10)
+plot(x, y, xlim=c(-4,4), ylim=c(-4,4))
+legend("bottomright", "(x,y)", pch=1, title="bottomright")
+legend("bottomcenter", "(x,y)", pch=1, title="bottomcenter")
+legend("bottomleft", "(x,y)", pch=1, title="bottomleft")
+legend("leftcenter", "(x,y)", pch=1, title="leftcenter")
+legend("topleft", "(x,y)", pch=1, title="topleft")
+legend("topcenter", "(x,y)", pch=1, title="topcenter")
+legend("topright", "(x,y)", pch=1, title="topright")
+legend("rightcenter", "(x,y)", pch=1, title="rightcenter")
 }
 \keyword{aplot}
