@@ -1,6 +1,7 @@
 #   File:       Makefile.make
 #   Target:     vfontsLib
 #   Created:    Jago, Aug 2001, Stefano M. Iacus
+#   Updated:	Jago, Jan 2002
 #
 #   This script assumes that R binary already exists in 
 #   folder 'src/macintosh/bin'
@@ -22,8 +23,8 @@ Includes        = -i :::include: ¶
 
 Sym-PPC         = -sym off
 
-PPCCOptions     = {Includes} {Sym-PPC} -opt off -includes unix -w 35 -shared_lib_export on -d HAVE_CONFIG_H ¶
-				-d Macintosh -d TARGET_API_MAC_CARBON -prefix RHeaders.h 
+PPCCOptions     = {Includes} {Sym-PPC} -opt off -includes unix -w 35,23 -shared_lib_export on -d HAVE_CONFIG_H ¶
+				-d Macintosh -d TARGET_API_MAC_CARBON -prefix RHeaders.h -enum int
 
 ### Modules directory ###
 

@@ -322,10 +322,10 @@ echo '.o Ä .c Rversion.h Rconfig.h FFTab.h FFDecl.h ¶
 echo '	'Mrc '{'DepDir'}''{'default'}'.c '{'includes'}' -o ¶
 :obj:'{'default'}'.o -sym full -opt off -includes Unix ¶
 -shared_lib_export on '¶' >> MakeR
-echo '	'-w 35,2,7,29,30 -d HAVE_CONFIG_H  -d Macintosh  -d ¶
+echo '	'-w 35,2,7,29,30,23 -d HAVE_CONFIG_H  -d Macintosh  -d ¶
 TARGET_API_MAC_CARBON '¶' >> MakeR
 echo '	'-typecheck relaxed -noMapCR -ansi off ¶
--prefix RHeaders.h -alloca  >> MakeR
+-prefix RHeaders.h -alloca  -enum int >> MakeR
 
 
 if `Exists :expvar`
@@ -436,5 +436,4 @@ echo " "
 echo "Make -f MakeR R > MyMake"
 echo "MyMake"
 echo " "
-
 

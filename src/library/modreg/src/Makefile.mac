@@ -1,6 +1,7 @@
 #   File:       Makefile.mac
 #   Target:     modregLib
 #   Created:    Jago, Aug 2001, Stefano M. Iacus
+#   Updated:	Jago, Jan 2002
 #
 #   This script assumes that R binary already exists in 
 #   folder 'src/macintosh/bin'
@@ -28,8 +29,8 @@ Includes        = -i ::::include: ¶
 				  
 Sym-PPC         = -sym off
 
-PPCCOptions     = {Includes} {Sym-PPC} -opt off -includes unix -w 35,2 -shared_lib_export on -d HAVE_CONFIG_H -d Macintosh ¶
-                  -d TARGET_API_MAC_CARBON=1 -prefix RHeaders.h -align power 
+PPCCOptions     = {Includes} {Sym-PPC} -opt off -includes unix -w 35,2,23 -shared_lib_export on -d HAVE_CONFIG_H -d Macintosh ¶
+                  -d TARGET_API_MAC_CARBON=1 -prefix RHeaders.h -align power -enum int
 				  
 ### Library directory ###
 
@@ -91,6 +92,7 @@ FortFiles		=	bsplvd.f ¶
 ### Libraries ###
 
 LibFiles-PPC    =  ¶
+                  "{PPCLibraries}CarbonStdCLib.o" ¶
 				  "{SharedLibraries}CarbonLib" ¶
 				  "{PPCLibraries}PPCCRuntime.o" ¶
 				  "{SharedLibraries}StdCLib" ¶
