@@ -67,6 +67,13 @@ list_data_in_pkg <- function(package, lib.loc = NULL, dataDir = NULL)
     if(file_test("-d", dataDir)) {
         if(file.exists(sv <- file.path(dataDir, "Rdata.rds"))) {
             ans <- .readRDS(sv)
+        } else if(file.exists(sv <- file.path(dataDir, "datalist"))) {
+            ans <- strsplit(readLines(sv), ":")
+            nms <- lapply(ans, function(x) x[1])
+            ans <- lapply(ans, function(x)
+                          if(length(x)==1) x[1] else
+                          strsplit(x[2], " +")[[1]][-1])
+            names(ans) <- nms
         } else {
             files <- list_files_with_type(dataDir, "data")
             files <- unique(basename(file_path_sans_ext(files)))

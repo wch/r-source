@@ -388,9 +388,10 @@ only create R objects and not call functions with side effects such as
 @code{require} and @code{options}.
 
 One exception is allowed: if the @file{R} subdirectory contains a file
-@file{sysdata.rda} this will be lazy-loaded into the namespace/package
-environment -- this is intended for system datasets that are not intended
-to be user-accessible via @code{data}.
+@file{sysdata.rda} (a saved image of @R{} objects) this will be
+lazy-loaded into the namespace/package environment -- this is intended
+for system datasets that are not intended to be user-accessible via
+@code{data}.
 
 @findex .First.lib
 @findex .Last.lib
@@ -459,7 +460,12 @@ data file can also be used without having to load the package.  It is no
 longer necessary to provide a @file{00Index} file in the @file{data}
 directory---the corresponding information is generated automatically
 from the documentation sources when installing from source, or when
-using the package builder (@pxref{Checking and building packages}).
+using the package builder (@pxref{Checking and building packages}).  If
+your data files are enormous you can speed up installation by providing
+a file @file{datalist} in the @file{data} subdirectory.  This should
+have one line per topic that @code{data()} will find, in the format
+@samp{foo} if @code{data(foo)} provides @samp{foo}, or @samp{foo: bar
+bah} if @code{data(foo)} provides @samp{bar} and @samp{bah}.
 
 The @file{demo} subdirectory is for @R{} scripts (for running via
 @code{demo()}) which demonstrate some of the functionality of the
