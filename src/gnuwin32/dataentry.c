@@ -1566,6 +1566,8 @@ static void depopupact(control m)
 
 #define MCHECK(a) if (!(a)) {del(c);return NULL;}
 
+RECT *RgetMDIsize(); /* in rui.c */
+
 static dataeditor newdataeditor(void)
 {
     ConsoleData p;
@@ -1581,18 +1583,14 @@ static dataeditor newdataeditor(void)
 
     w = WIDTH ;
     h = HEIGHT;
-#ifdef USE_MDI
     if (ismdi()) {
 	RECT *pR = RgetMDIsize();
 	x = (pR->right - w) / 3; x = x > 20 ? x:20;
 	y = (pR->bottom - h) / 3; y = y > 20 ? y:20;
     } else {
-#endif
 	x = (devicewidth(NULL) - w) / 3;
 	y = (deviceheight(NULL) - h) / 3 ;
-#ifdef USE_MDI
     }
-#endif
     c = (dataeditor) newwindow(" Data Editor", rect(x, y, w, h),
 			       Document | StandardWindow | Menubar |
 			       VScrollbar | HScrollbar | TrackMouse);
@@ -1609,7 +1607,6 @@ static dataeditor newdataeditor(void)
     BORDERY = (HEIGHT - ROWS*FH) / 2;
     gsetcursor(c, ArrowCursor);
     setbackground(c, consolebg);
-#ifdef USE_MDI
     if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
 	/* blank toolbar to stop windows jumping around */
         int btsize = 24;
@@ -1618,15 +1615,12 @@ static dataeditor newdataeditor(void)
         MCHECK(tb = newtoolbar(btsize + 4));
 	gsetcursor(tb, ArrowCursor);
     }
-#endif
     MCHECK(gpopup(depopupact, DePopup));
     MCHECK(m = newmenubar(demenuact));
     MCHECK(newmenu("File"));
 /*    MCHECK(m = newmenuitem("-", 0, NULL));*/
     MCHECK(m = newmenuitem("Close", 0, declose));
-#ifdef USE_MDI
     newmdimenu();
-#endif
     MCHECK(newmenu("Edit"));
     MCHECK(m = newmenuitem("Copy  \tCTRL+C", 0, de_copy));
     MCHECK(m = newmenuitem("Paste \tCTRL+V", 0, de_paste));
