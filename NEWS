@@ -47,7 +47,7 @@ BUG FIXES
 	was both exported and registered.
 
     o	The internal zip.unpack() could crash if more that 500 files
-	were to be extracted. (PR#2827)
+	were to be extracted. (PR#2818)
 
 
 		CHANGES IN R VERSION 1.7.0
