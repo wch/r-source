@@ -45,6 +45,6 @@ finger <- function(user, host = "localhost", port = 79, print = TRUE)
     if (print) cat(output)
     invisible(output)
 }
-finger("root")  ## only works if your site provides a finger daemon
+\dontrun{finger("root")  ## only works if your site provides a finger daemon}
 }
 \keyword{misc}
