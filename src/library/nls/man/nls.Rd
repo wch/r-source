@@ -24,7 +24,7 @@ nls(formula, data, start, control = nls.control(),
      \code{formula}}
  \item{start}{a named list or named numeric vector of starting estimates}
  \item{control}{an optional list of control settings.  See
-     \code{nlsControl} for the names of the settable control values and
+     \code{nls.control} for the names of the settable control values and
      their effect.}
  \item{algorithm}{character string specifying the algorithm to use.
      The default algorithm is a Gauss-Newton algorithm. The other 
