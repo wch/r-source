@@ -31,6 +31,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   added more warnings to update.packages & friends. new function
+        old.packages for better control of update.packages.
+
     o	adding matrices to data frames now happens column by column as
 	documented, so character or logical matrices generate factor
 	columns.
