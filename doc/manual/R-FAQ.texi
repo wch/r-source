@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-7, 2000-08-02
+@set FAQ-VERSION 1.1-8, 2000-08-14
 @set REL-VERSION 1.1.0
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -1888,6 +1888,13 @@ When using @code{read.table()}, the memory requirements are in fact
 higher than anticipated, because the file is first read in as one long
 string which is then split again.  Use @code{scan()} if possible in
 case you run out of memory when reading in a large table.
+
+R version 1.2.0 introduces a new ``generational'' garbage collector,
+which will increase the memory available to R as needed.  The interface
+for controlling the generational collector is still experimental and in
+flux.  Currently, the command line arguments and environment variables
+described above can be used to supply minimal values for the sizes of
+the node and vector heaps.
 
 @node Why does sourcing a correct file fail?, How can I set components of a list to NULL?, Why does R run out of memory?, R Miscellania
 @section Why does sourcing a correct file fail?

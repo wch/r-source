@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-7, 2000-08-02
+Version 1.1-8, 2000-08-14
 Kurt Hornik
 
 
@@ -1613,6 +1613,13 @@ conveniently on Unix in the R environment file (`~/.Renviron' by default).
 than anticipated, because the file is first read in as one long string
 which is then split again.  Use `scan()' if possible in case you run out of
 memory when reading in a large table.
+
+   R version 1.2.0 introduces a new "generational" garbage collector, which
+will increase the memory available to R as needed.  The interface for
+controlling the generational collector is still experimental and in flux.
+Currently, the command line arguments and environment variables described
+above can be used to supply minimal values for the sizes of the node and
+vector heaps.
 
 7.2 Why does sourcing a correct file fail?
 ==========================================

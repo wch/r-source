@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.1-7, 2000-08-02</h2>
+<h2>Version 1.1-8, 2000-08-14</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -1976,6 +1976,13 @@ file (<code>~/.Renviron</code> by default).
 higher than anticipated, because the file is first read in as one long
 string which is then split again.  Use <code>scan()</code> if possible in
 case you run out of memory when reading in a large table.
+
+<p>R version 1.2.0 introduces a new "generational" garbage collector,
+which will increase the memory available to R as needed.  The interface
+for controlling the generational collector is still experimental and in
+flux.  Currently, the command line arguments and environment variables
+described above can be used to supply minimal values for the sizes of
+the node and vector heaps.
 
 <p><hr>
 Node:<a name="Why%20does%20sourcing%20a%20correct%20file%20fail%3f">Why does sourcing a correct file fail?</a>,
