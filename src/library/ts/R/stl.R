@@ -79,10 +79,11 @@ print.stl <- function(x, ...)
 
 plot.stl <- function(x, labels = colnames(X), ...)
 {
-    sers <- unclass(x$time.series)
+    sers <- x$time.series
     ncomp <- ncol(sers)
     data <- drop(sers %*% rep(1, ncomp))
-    X <- cbind(data=data, sers)
+    X <- cbind(data, sers)
+    colnames(X) <- c("data", colnames(sers))
     nplot <- ncomp + 1
     oldpar <- par("mar", "oma", "mfrow", "tck")
     on.exit(par(oldpar))

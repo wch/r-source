@@ -238,6 +238,8 @@ BUG FIXES
 	that simultaneous instances of postscript/xfig/bitmap can use
 	different values for `family'.
 
+    o   plot.stl() now uses correct time labels for tickmarks of x-axes
+
 
 
 
