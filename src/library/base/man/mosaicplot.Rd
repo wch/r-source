@@ -6,25 +6,23 @@
 \description{Plots a mosaic on the current graphics device.}
 \usage{
 mosaicplot(x, \dots)
-mosaicplot.default(X, main = NULL, xlab = NULL, ylab = NULL,
+\method{mosaicplot}{default}(X, main = NULL, xlab = NULL, ylab = NULL,
                    sort = NULL, off = NULL, dir = NULL,
                    color = FALSE, shade = FALSE, margin = NULL,
                    type = c("pearson", "deviance", "FT"))
-mosaicplot.formula(formula, data = NULL, subset, na.action, \dots)
+\method{mosaicplot}{formula}(formula, data = NULL, subset, na.action, \dots)
 }
 \arguments{
   \item{x}{an \R object.}
-  \item{X}{a contingency table, with optional category labels
-    specified in the \code{dimnames(x)} attribute.  The table is
-    best created by the \code{table()} command, which produces an
-    object of type array.}
+  \item{X}{a contingency table in array form, with optional category
+    labels specified in the \code{dimnames(x)} attribute.  The table is
+    best created by the \code{table()} command.}
   \item{main}{character string for the mosaic title.}
-  \item{xlab,ylab}{x- and y-axis labels; by default, the first and
-    second element of \code{names(dimnames(X))} (i.e., the name of the
-    first and second variable in \code{X}).}
-  \item{sort}{vector ordering of the variables, containing a
-    permutation of the integers \code{1:length(dim(x))} (the
-    default).}
+  \item{xlab,ylab}{x- and y-axis labels used for the plot; by default,
+    the first and second element of \code{names(dimnames(X))} (i.e., the
+    name of the first and second variable in \code{X}).}
+  \item{sort}{vector ordering of the variables, containing a permutation
+    of the integers \code{1:length(dim(x))} (the default).}
   \item{off}{vector of offsets to determine percentage spacing at each
     level of the mosaic (appropriate values are between 0 and 20,
     and the default is 10 at each level).  There should be one
@@ -78,7 +76,7 @@ mosaicplot.formula(formula, data = NULL, subset, na.action, \dots)
 }
 \author{
   S-PLUS original by John Emerson \email{emerson@stat.yale.edu}.
-  Slightly modified for \R by KH.
+  Modified and enhanced for \R by KH.
 }
 \references{
   Hartigan, J.A., and Kleiner, B. (1984)

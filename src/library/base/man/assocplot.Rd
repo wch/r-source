@@ -37,8 +37,8 @@ assocplot(x, col = c("black", "red"), space = 0.3,
   of a cell is greater than the expected one, the box rises above the
   baseline and is shaded in the color specified by the first element of
   \code{col}, which defaults to black; otherwise, the box falls below
-  the basline and is shaded in the color specified by the second element
-  of \code{col}, which default to red.
+  the baseline and is shaded in the color specified by the second
+  element of \code{col}, which defaults to red.
 }
 \seealso{
   \code{\link{mosaicplot}};

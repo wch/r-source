@@ -122,7 +122,8 @@ write.ftable(x, file = "", quote = TRUE, digits = getOption("digits"))
 \seealso{
   \code{\link{ftable.formula}} for the formula interface (which allows a
   \code{data = .} argument);
-  \code{\link{table}} for ``ordinary'' cross-tabulation.
+  \code{\link{table}} for ``ordinary'' cross-tabulation;
+  \code{\link{xtabs}} for formula-based cross-tabulation.
 }
 \references{
   Agresti, A.  (1990)

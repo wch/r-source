@@ -18,7 +18,7 @@ summary.xtabs(object, \dots)
 \usage{
 xtabs(formula = ~., data, subset, na.action, exclude = c(NA, NaN),
       drop.unused.levels = FALSE)
-summary.xtabs(object, \dots)
+\method{summary}{xtabs}(object, \dots)
 }
 \arguments{
   \item{formula}{a formula object with the cross-classifying variables,
@@ -40,6 +40,8 @@ summary.xtabs(object, \dots)
     there are unused levels, the table will contain zero marginals, and
     a subsequent chi-squared test for independence of the factors will
     not work.}
+  \item{object}{an object of class \code{"xtabs"}.}
+  \item{\dots}{additional arguments affecting the summary produced.}
 }
 \details{
   There is a \code{summary} method for contingency table objects created
