@@ -24,7 +24,7 @@ SOURCES_C = \
 	gram.c gram-ex.c graphics.c \
 	identical.c internet.c iosupport.c \
 	lapack.c list.c logic.c \
-	main.c match.c memory.c model.c \
+	main.c mapply.c match.c memory.c model.c \
 	names.c \
 	objects.c optim.c optimize.c options.c \
 	par.c paste.c pcre.c platform.c \

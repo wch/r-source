@@ -192,6 +192,9 @@ static R_CallMethodDef callMethods [] = {
 /* Reflectance for the dynamically loaded native symbols */
     CALLDEF(R_getSymbolInfo, 2),
 
+/* mapply */
+    CALLDEF(do_mapply, 4),
+
 /* Methods related routines. */
     CALLDEF(R_isMethodsDispatchOn, 1),
     CALLDEF(R_traceOnOff, 1),

@@ -34,6 +34,7 @@ void R_traceOnOff();
 
 SEXP Rrowsum_matrix(SEXP, SEXP, SEXP, SEXP);
 SEXP Rrowsum_df(SEXP, SEXP, SEXP, SEXP);
+SEXP do_mapply(SEXP, SEXP, SEXP, SEXP);
 
 void F77_SYMBOL(dchdc)();
 void F77_SYMBOL(dpbfa)();
