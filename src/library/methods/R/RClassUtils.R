@@ -958,17 +958,33 @@ requireMethods <-
   ## be called, resulting in less helpful error messages or (worse still) silently incorrect
   ## results.
   function(functions, signature,
-           message = paste("No method defined for signature",
-           paste(signature, collapse=", ")), where = topenv(parent.frame()))
+           message = "", where = topenv(parent.frame()))
 {
     for(f in functions) {
         method <- getMethod(f, optional = TRUE)
         if(!is.function(method))
             method <- getGeneric(f, where = where)
-        body(method) <- substitute(stop(MESSAGE), list(MESSAGE=message))
+        body(method) <- substitute(stop(methods:::.missingMethod(FF, MESSAGE, if(exists(".Method")).Method else NULL)), list(FF=f, MESSAGE=message))
         environment(method) <- .GlobalEnv
         setMethod(f, signature, method, where = where)
     }
+}
+
+## Construct an error message for an unsatisfied required method.
+.missingMethod <- function(f, message = "", method) {
+    if(nchar(message)>0)
+        message <- paste("(", message, ")", sep="")
+    message <- paste("for function", f, message)
+    if(is(method, "MethodDefinition")) {
+        target <-  paste(dQuote(method@target), collapse=", ")
+        defined <- paste(dQuote(method@defined), collapse=", ")
+        message <- paste("Required method", message, "not defined for signature",
+                         target)
+        if(!identical(target, defined))
+            message <- paste(message, ", required for signature", defined)
+    }
+    else message <- paste("Required method not defined", message)
+    message
 }
 
 getSlots <- function(x) {

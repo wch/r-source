@@ -370,10 +370,12 @@ inheritedSubMethodLists <-
   }
   else {
     ## search in the superclasses, but don't use inherited methods
-    ## There are two cases:  if thisClass is formally defined, use its
+    ## There are two cases:  if thisClass is formally defined & unsealed, use its
     ## superclasses.  Otherwise, look in the subclasses of those classes for
     ## which methods exist.
-    if(isClass(thisClass)) {
+      useSuperClasses <- isClass(thisClass, where = ev)  &&
+           !getClass(thisClass, where = ev)@sealed
+    if(useSuperClasses) {
       ## for consistency, order the available methods by
       ## the ordering of the superclasses of thisClass
       superClasses <- names(getClass(thisClass)@contains)
