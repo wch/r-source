@@ -47,6 +47,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	locator(n=512) -- default: MANY points, not just one.
+
     o	qqnorm() uses ppoints() and returns list with x sorted along y.
 
     o	plot.formula now allows ylab to be set

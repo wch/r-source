@@ -1,7 +1,7 @@
 \name{locator}
 \title{Graphical Input}
 \usage{
-locator(n=1)
+locator(n=512)
 }
 \alias{locator}
 \description{
