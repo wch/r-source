@@ -53,15 +53,10 @@ SEXP getAttrib(SEXP vec, SEXP name)
 	    s = getAttrib(vec, R_DimSymbol);
 	    if(TYPEOF(s) == INTSXP && length(s) == 1) {
 		s = getAttrib(vec, R_DimNamesSymbol);
-#ifdef OLD
-		if(!isNull(s))
-		    return VECTOR(s)[0];
-#else
                 if(!isNull(s)) {
                     NAMED(VECTOR(s)[0]) = 2;
                     return VECTOR(s)[0];
                 }
-#endif
 	    }
 	}
 	if (isList(vec) || isLanguage(vec)) {
@@ -80,14 +75,10 @@ SEXP getAttrib(SEXP vec, SEXP name)
 		    error("getAttrib: invalid type for TAG\n");
 	    }
 	    UNPROTECT(1);
-#ifdef OLD
-	    if (any) return (s);
-#else
 	    if (any) {
 		if (!isNull(s)) NAMED(s) = 2;
 		return (s);
 	    }
-#endif
 	    return R_NilValue;
 	}
     }
@@ -104,18 +95,10 @@ SEXP getAttrib(SEXP vec, SEXP name)
 		    VECTOR(new)[i++] = CAR(old);
 		    old = CDR(old);
 		}
-#ifdef OLD
-		NAMED(new) = NAMED(vec);
-#else
 		NAMED(new) = 2;
-#endif
 		return new;
 	    }
-#ifdef OLD
-	    NAMED(CAR(s)) = NAMED(vec);
-#else
 	    NAMED(CAR(s)) = 2;
-#endif
 	    return CAR(s);
 	}
     return R_NilValue;
@@ -342,7 +325,16 @@ SEXP do_class(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_namesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
-    if (NAMED(CAR(args)) == 2) CAR(args) = duplicate(CAR(args));
+    if (NAMED(CAR(args)) == 2)
+        CAR(args) = duplicate(CAR(args));
+    if (CADR(args) != R_NilValue) {
+        PROTECT(call = allocList(2));
+        TYPEOF(call) = LANGSXP;
+        CAR(call)  = install("as.character");
+        CADR(call) = CADR(args);
+        CADR(args) = eval(call, env);
+        UNPROTECT(1);
+    }
     setAttrib(CAR(args), R_NamesSymbol, CADR(args));
     return CAR(args);
 }
