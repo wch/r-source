@@ -50,10 +50,15 @@ install-strip: install
 
 uninstall:
 	@echo "uninstalling $(subdir) ..."
-	@if test -d $(rhome)/$(subdir) -a \
-	  "`cd $(rhome); pwd`" != "`cd $(top_builddir); pwd`"; then \
-	  (cd $(rhome)/$(subdir) && \
-	    rm -rf $(SUBDIRS) KEYWORDS*); \
+	@if test -d $(rhome)/$(subdir) \
+	  && test "`cd $(rhome); pwd`" != "`cd $(top_builddir); pwd`"; \
+	then \
+	  for d in $(SUBDIRS); do \
+	    (cd $${d} && $(MAKE) $@) || exit 1; \
+	  done; \
+	  for f in $(INSTFILES); do \
+	    rm -f $(rhome)/$(subdir)/$${f}; \
+	  done; \
 	  rmdir $(rhome)/$(subdir) 2>/dev/null \
 	    || echo "  subdir $(subdir) not removed"; \
 	fi

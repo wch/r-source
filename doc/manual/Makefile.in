@@ -247,6 +247,9 @@ $(infodir)/dir:
 	$(INSTALL_DATA) $(srcdir)/dir $(infodir)
 
 uninstall:
+	@if test -f $(infodir)/R-data.info; then \
+	  $(MAKE) uninstall-info; \
+	fi
 	@echo "uninstalling $(subdir) ..."
 	@rm -rf $(rhome)/$(subdir)
 uninstall-dvi:
