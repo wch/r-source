@@ -69,6 +69,7 @@ all.equal(gamma(2:14),   cumprod(1:13), tol=0) # to see difference
 all.equal(options(), .Options)
 .Options $ myopt <- TRUE
 all.equal(options(), as.list(.Options))
+rm(.Options)
 }
 \keyword{utilities}
 \keyword{logic}
