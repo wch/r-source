@@ -7,6 +7,15 @@
 
 NEW FEATURES
 
+    o	New functions getwd() and setwd() for getting and setting the R
+	working directory.
+
+    o	source() has a new argument `chdir' for changing the working
+	directory to that of the file being sourced when evaluating.
+
+    o	If data() loads an R source file, it now changes the working
+	directory (to that containing the file) when evaluating.
+
     o	Interpret NaN and Inf in character->numeric conversions (and
 	thereby in read.table)
 
