@@ -1,0 +1,143 @@
+#   File:       Makefile.mac
+#   Target:     foreignLib
+#   Created:    Jago, Dec 2001, Stefano M. Iacus
+#   Updated:	Jago, Apr 2002
+#   
+#   This script assumes that R binary already exists in 
+#   the R root folder
+#
+#   Tested with:
+#
+#   MPW Shell 3.6d7
+#   MrC C Compiler 5.0.0d3c1
+#   Universal Headers 3.4
+#   CarbonLib 1.4
+#   MPW release  August 2001+Updates
+
+DLib            = foreign
+MAKEFILE        = Makefile.mac
+¥MondoBuild¥    = {MAKEFILE}  # Make blank to avoid rebuilds when makefile is modified
+
+Includes        = -i ::::include: ¶
+				  -i ::::macintosh: ¶
+
+Sym-PPC         = -sym off
+
+PPCCOptions     = {Includes} {Sym-PPC} -opt off -includes unix -w 35,2,23 -shared_lib_export on -d HAVE_CONFIG_H -d Macintosh ¶
+					-d TARGET_API_MAC_CARBON=1 -prefix RHeaders.h -align power -typecheck relaxed -enum int
+					
+
+### Library directory ###
+
+LibDir     		= :::::library:{DLib}:libs
+
+### Source Files ###
+
+SrcFiles        =  ¶
+				  avl.c ¶
+				  file-handle.c ¶
+				  format.c ¶
+				  minitab.c ¶
+				  pfm-read.c ¶
+				  SASxport.c ¶
+				  sfm-read.c ¶
+				  spss.c ¶
+				  stataread.c
+				  
+
+### Object Files ###
+
+ObjFiles-PPC    =  ¶
+				  avl.o ¶
+				  file-handle.o ¶
+				  format.o ¶
+				  minitab.o ¶
+				  pfm-read.o ¶
+				  SASxport.o ¶
+				  sfm-read.o ¶
+				  spss.o ¶
+				  stataread.o
+				  
+				  
+### Libraries ###
+
+LibFiles-PPC    =  ¶
+  				  "{PPCLibraries}CarbonStdCLib.o" ¶
+				  "{SharedLibraries}CarbonLib" ¶
+				  "{SharedLibraries}StdCLib" ¶
+				  ":::::R"  ¶
+				  "{PPCLibraries}PPCCRuntime.o" 
+   
+
+### Default Rules ### 
+
+.o  Ä  .c  {¥MondoBuild¥}
+	{PPCC} {depDir}{default}.c -o {targDir}{default}.o {PPCCOptions}
+
+
+### Build Rules ###
+
+
+{DLib}Lib  ÄÄ  {ObjFiles-PPC} {LibFiles-PPC} {¥MondoBuild¥} 
+#create export table
+    if `Exists :expvar`
+	 delete :expvar
+	end
+    catenate Å.x > expvar
+# checks if modules directory exsists
+    if ! `Exists -d "{LibDir}"`
+	 echo "Creating libs directory" "{LibDir}" 
+     NewFolder "{LibDir}"
+    end
+# Builds the library
+	PPCLink ¶
+		-o {LibDir}:{DLib}Lib ¶
+		{ObjFiles-PPC} ¶
+		{LibFiles-PPC} ¶
+		{Sym-PPC} ¶
+		-mf -d ¶
+		-t 'shlb' ¶
+		-c '????' ¶
+		-xm s ¶
+		-@export expvar     
+# Removing mass
+ #  Delete   Å.x
+ #	Delete   Å.o 
+ #  Delete :expvar
+
+
+### Required Dependencies ###
+
+file-handle.c Ä var.h
+
+var.h Ä var.h.in
+ Duplicate -y var.h.in var.h
+
+SASxport.c Ä swap_bytes.h  
+swap_bytes.h Ä swap_bytes.h.in
+ Duplicate -y swap_bytes.h.in swap_bytes.h
+ 
+avl.o Ä avl.c
+file-handle.o Ä file-handle.c
+format.o Ä format.c
+minitab.o Ä minitab.c
+pfm-read.o Ä pfm-read.c
+SASxport.o Ä SASxport.c
+sfm-read.o Ä sfm-read.c
+spss.o Ä spss.c
+stataread.o Ä stataread.c
+
+
+### Optional Dependencies ###
+### Build this target to generate "include file" dependencies. ###
+
+Dependencies  Ä  $OutOfDate
+	MakeDepend ¶
+		-append {MAKEFILE} ¶
+		-ignore "{CIncludes}" ¶
+		-objdir ":" ¶
+		-objext .o ¶
+		{Includes} ¶
+		{SrcFiles}
+
+
