@@ -8,7 +8,7 @@
   populations (strata).
 }
 \usage{
-fourfoldplot(x, color = c("red", "blue"), conf.level = 0.95,
+fourfoldplot(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
              std = c("margins", "ind.max", "all.max"),
              margin = c(1, 2), space = 0.2, main = NULL,
              mfrow = NULL, mfcol = NULL)
