@@ -45,7 +45,7 @@ binary-arch: build
 	dh_testroot
 	dh_clean -k
 	dh_installdirs
-	make; make check info; make install prefix=`pwd`/debian/tmp/usr
+	make; make check info pdf; make install prefix=`pwd`/debian/tmp/usr
 	sed -e '/{R_HOME=.*/s::{R_HOME=/usr/lib/R}:' \
 	  < bin/R > debian/tmp/usr/bin/R
 	sed -e '/{R_HOME=.*/s::{R_HOME=/usr/lib/R}:' \
