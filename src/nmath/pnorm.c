@@ -108,10 +108,9 @@ double pnorm(double x, double mu, double sigma)
     double y;
     int i;
 
-    /* Note: The structure of these checks has been */
-    /* carefully thought through.  For example, if x == mu */
-    /* and sigma == 0, we still get the correct answer. */
-
+    /* Note: The structure of these checks has been carefully thought through.
+     * For example, if x == mu and sigma == 0, we still get the correct answer.
+     */
 #ifdef IEEE_754
     if(ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
 	return x + mu + sigma;
@@ -123,6 +122,7 @@ double pnorm(double x, double mu, double sigma)
     x = (x - mu) / sigma;
 #ifdef IEEE_754
     if(!R_FINITE(x)) {
+	if(ISNAN(x)) /* e.g. x=mu=Inf */ return(R_NaN);
 	if(x < 0) return 0;
 	else return 1;
     }
