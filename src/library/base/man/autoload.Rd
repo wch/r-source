@@ -1,8 +1,8 @@
 \name{autoload}
 \title{On-demand Loading of Packages}
 \usage{
-autoload(name, file)
-autoloader(name, file)
+autoload(name, package,...)
+autoloader(name, package,...)
 .AutoloadEnv
 }
 \alias{autoload}
@@ -10,7 +10,9 @@ autoloader(name, file)
 \alias{.AutoloadEnv}
 \arguments{
 \item{name}{string giving the name of an object}
-\item{file}{string giving the name of a package containing the object}
+\item{package}{string giving the name of a package containing the
+  object}
+\item{\dots}{other arguments to \code{\link{library}}}
 }
 \description{
   \code{autoload} creates a promise-to-evaluate \code{autoloader} and stores it with name \code{name} in

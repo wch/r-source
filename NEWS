@@ -163,6 +163,9 @@ NEW FEATURES
     o	legend() has a new argument pt.bg.
 
 
+    o   autoload() accepts lib.loc and other arguments to library()
+
+
 BUG FIXES
 
     o	Method dispatching now forces evaluation of promises, so

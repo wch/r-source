@@ -1,26 +1,33 @@
-autoload <- function (name, file)
+autoload <- function (name, package, ...)
 {
     if (exists(name,envir=.GlobalEnv,inherits=FALSE))
-	stop("Object already exists")
-    newcall <- paste("delay(autoloader(\"", name, "\",\"", file, "\"))",
-		     sep = "")
-    if (is.na(match(file,.Autoloaded)))
-	assign(".Autoloaded",c(file,.Autoloaded),env=.AutoloadEnv)
-    assign(name, eval(parse(text = newcall)), env = .AutoloadEnv)
+	stop("Object with that name already exists")
+    m<-match.call()
+    m[[1]]<-as.name("list")
+    newcall<-eval(m,parent.frame())
+    newcall<-as.call(c(as.name("autoloader"),newcall))
+    if (is.na(match(package,.Autoloaded)))
+	assign(".Autoloaded",c(package,.Autoloaded),env=.AutoloadEnv)
+    assign(name, do.call("delay",list(newcall)), env = .AutoloadEnv)
 }
-autoloader <- function (name, file)
+
+autoloader <- function (name,package,...)
 {
     name<-paste(name,"",sep="")
     rm(list=name,envir=.AutoloadEnv,inherits=FALSE)
-    where <- length(search)
-    eval(parse(text = paste("library(\"", file, "\")", sep = "")),
-	 .GlobalEnv)
-    autoload(name,file)
-    where <- length(search) - where + 2
+    m<-match.call()
+    m$name<-NULL
+    m[[1]]<-as.name("library")
+    ## load the package
+    eval(m,.GlobalEnv)
+    ## reset the autoloader
+    autoload(name,package,...)
+    ## reevaluate the object
+    where<-match(paste("package",package,sep=":"),search())
     if (exists(name,where=where,inherits=FALSE))
 	eval(as.name(name), pos.to.env(where))
     else
-	stop(paste("autoloader didn't find `",name,"' in `",file,"'.",sep=""))
+	stop(paste("autoloader didn't find `",name,"' in `",package,"'.",sep=""))
 }
 
 
