@@ -22,6 +22,10 @@ BUG FIXES
 
     o	by() works when embedded in a function.
 
+    o	keep.source was not set correctly before the base package was
+	loaded, some functions in the base package had the source
+	kept.  The memory usage should now be reduced by ca 1Mb.
+
 
 		CHANGES IN R VERSION 1.0.1
 
