@@ -46,8 +46,6 @@ rbind <- function(..., deparse.level=1) {
     .Internal(rbind(...))
 }
 
-check.bounds <- function(on=TRUE).Internal(check.bounds(on)) ### NO DOC
-
 dataentry <- function(data, modes).Internal(dataentry(data, modes))
 deparse <-
     function(expr, width.cutoff = 60).Internal(deparse(expr, width.cutoff))
@@ -56,7 +54,7 @@ do.call <- function(what,args).Internal(do.call(what,args))
 drop <- function(x).Internal(drop(x))
 duplicated <- function(x, incomparables = FALSE) {
     if(!is.logical(incomparables) || incomparables)
-	stop("duplicated(.. incomparables != FALSE)  not yet available in R.")
+	stop("duplicated(.. incomparables != FALSE) not yet available in R.")
     .Internal(duplicated(x))
 }
 format.info <- function(x).Internal(format.info(x)) ### NO DOC
