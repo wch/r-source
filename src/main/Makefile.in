@@ -109,7 +109,7 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(Rexecbin_PROGRAMS)
-	@@WANT_R_SHLIB_TRUE@$(MAKE) $(Rexeclib_LTLIBRARIES)
+@WANT_R_SHLIB_TRUE@	@$(MAKE) $(Rexeclib_LTLIBRARIES)
 	@(cd ../unix && $(MAKE) DLLs)
 
 ../include/config.h ../include/Rversion.h:
@@ -137,9 +137,9 @@ $(libR_la): $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
 ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo:
 	(cd $(@D); $(MAKE) $(@F))
 
-gram.c: $(srcdir)/gram.y
+$(srcdir)/gram.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gram.y
 	$(YACC) $(YFLAGS) $(srcdir)/gram.y
-	$(top_srcdir)/tools/move-if-change y.tab.c $(@F)
+	$(top_srcdir)/tools/move-if-change y.tab.c $@
 
 install: installdirs
 	@$(MAKE) install-bin

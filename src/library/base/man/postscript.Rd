@@ -146,6 +146,10 @@ ps.options(paper, horizontal, width, height, family, encoding,
   including the PostScript plot file should either embed the font
   outlines (usually from \code{.pfb} or \code{.pfa} files) or
   use DSC comments to instruct the print spooler to do so.
+
+  As ISOLatin1 encoding is used, \code{-} is set as a minus and not
+  as a hyphen.  Supply a hyphen (character 173) if that is what you need.
+
 }
 \section{Encodings}{
   Encodings describe which glyphs are used to display the character codes

@@ -17,9 +17,6 @@
 @include R-defs.texi
 @include version.texi
 
-@macro Rcopyright{}
-Copyright @copyright{} 2000 R Development Core Team
-@end macro
 @macro C {}
 @strong{C}
 @end macro
@@ -27,7 +24,7 @@ Copyright @copyright{} 2000 R Development Core Team
 @ifinfo
 This is the R language definition.
 
-@Rcopyright{}
+@Rcopyright{2000}
 
 @permission{}
 @end ifinfo
@@ -37,8 +34,8 @@ This is the R language definition.
 @subtitle Version @value{VERSION} @b{DRAFT}
 @author R Development Core Team
 @page
-@vskip 0pt plus 1filll
-@Rcopyright{}
+@vskip 0pt plus 1fill
+@Rcopyright{2000}
 
 @permission{}
 @end titlepage

@@ -511,6 +511,13 @@ FUNTAB R_FunTab[] =
 {"DLL.version",	do_dllversion,	0,	11,	1,	PP_FUNCALL},
 {"bringToTop",	do_bringtotop,	0,	11,	1,	PP_FUNCALL},
 #endif
+#ifdef Macintosh
+{"unlink",	do_unlink,	0,	11,	2,	PP_FUNCALL},
+{"help.start",	do_helpstart,	0,	11,	0,	PP_FUNCALL},
+{"show.help.item",do_helpitem,	0,	11,	3,	PP_FUNCALL},
+{"int.unzip",	do_int_unzip,	0,	11,    -1,	PP_FUNCALL},
+{"dir.create",	do_dircreate,	0,	11,	1,	PP_FUNCALL},
+#endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
 {"save",	do_save,	0,	111,	3,	PP_FUNCALL},
 {"load",	do_load,	0,	111,	2,	PP_FUNCALL},
@@ -639,6 +646,9 @@ FUNTAB R_FunTab[] =
 {"X11",		do_X11,		0,	111,	7,	PP_FUNCALL},
 {"gnome",	do_Gnome,	0,	111,	4,	PP_FUNCALL},
 {"GTK",		do_GTK,		0,	111,	4,	PP_FUNCALL},
+#endif
+#ifdef Macintosh
+{"Macintosh",	do_Macintosh,	0,	111,	4,	PP_FUNCALL},
 #endif
 
 /* Graphics */

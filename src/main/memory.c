@@ -35,7 +35,7 @@
 
 #include <Defn.h>
 #include <Graphics.h> /* display lists */
-#include <Devices.h> /* GetDevice */
+#include <Rdevices.h> /* GetDevice */
 
 static int gc_reporting = 0;
 static int gc_count = 0;

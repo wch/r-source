@@ -25,7 +25,7 @@
 #define __MAIN__
 #include "Defn.h"
 #include "Graphics.h"
-#include "Devices.h"		/* for InitGraphics */
+#include "Rdevices.h"		/* for InitGraphics */
 #include "IOStuff.h"
 #include "Parse.h"
 #include "Startup.h"
@@ -299,10 +299,8 @@ int R_ReplDLLdo1()
 static int doneit;
 
 FILE* R_OpenSysInitFile(void);
-#ifndef Macintosh
 FILE* R_OpenSiteFile(void);
 FILE* R_OpenInitFile(void);
-#endif
 
 #ifdef OLD
 static void R_LoadProfile(FILE *fp)

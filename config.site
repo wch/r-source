@@ -60,11 +60,12 @@
 # CPPFLAGS=
 
 # The command which runs the the FORTRAN compiler.
-# If unspecified, a search is made for g77, fort77, f77, f90, xlf, cf77,
-# and fc (in that order).  If none of these is found, f2c is used if
-# found; otherwise, R cannot be compiled.  The search mechanism can be
-# changed using the `--with-g77', `--with-f77', and `--with-f2c' command
-# line options to configure.
+# If unspecified, a search is made for g77, f77, xlf, cf77, cft77,
+# pgf77, fl32, af77, fort77, f90, xlf90, pgf90, epcf90, f95, xlf95,
+# lf95, g95, and fc (in that order).  If none of these is found, f2c is
+# used if found; otherwise, R cannot be compiled.  The search mechanism
+# can be changed using the `--with-g77', `--with-f77', and `--with-f2c'
+# command line options to configure.
 # FC=
 
 # Options for the FORTRAN compiler.

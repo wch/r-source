@@ -23,8 +23,11 @@
    -- translated by f2c (version of 1 June 1993 23:00:00).
    -- and hand edited by Saikat DebRoy
    */
-
+#ifndef Macintosh
 #include <math.h>
+#else
+#include <fp.h>
+#endif /* mac */
 #include <R.h>
 #include <R_ext/Applic.h>
 #include <R_ext/PrtUtil.h> /* printRealVector */

@@ -15,7 +15,7 @@ regexpr(pattern, text,  extended=TRUE)
 \arguments{
 \item{pattern}{character string containing a regular expression
   to be matched in the vector of character string \code{vec}.}
-\item{x, text}{a vector of character strings where matches are sought.}
+\item{x, text}{a character vector where matches are sought.}
 \item{ignore.case}{if \code{FALSE}, the pattern matching is
   \emph{case sensitive} and if \code{TRUE}, case is ignored during matching.}
 \item{extended}{if \code{TRUE}, extended regular expression matching
@@ -29,7 +29,7 @@ regexpr(pattern, text,  extended=TRUE)
 }
 \description{
   \code{grep} searches for matches to \code{pattern} (its first
-  argument) within the vector \code{x} of character strings (second
+  argument) within the character vector \code{x} (second
   argument). \code{regexpr} does too, but returns more detail in a
   different format.
 

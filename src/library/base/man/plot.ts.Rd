@@ -3,8 +3,12 @@
 \alias{plot.mts}
 \alias{lines.ts}
 \title{Plotting Time-Series Objects}
+\description{
+  Plotting methods for objects of class \code{"ts"} or \code{"mts"}
+  (multivariate time-series).
+}
 \usage{
-plot(x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
+\method{plot}{ts}(x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
      xlab = "Time", ylab, log = "",
      col = par("col"), bg = NA, pch = par("pch"), cex = par("cex"),
      lty = par("lty"), lwd = par("lwd"),
@@ -31,10 +35,6 @@ lines(x, \dots)
 
   \item{\dots}{additional graphical arguments, see \code{\link{plot}},
     \code{\link{plot.default}} and \code{\link{par}}.}
-}
-\description{
-  Plotting methods for objects of class \code{\link{ts}} or \code{"mts"}
-  (multivariate time-series).
 }
 \details{
   With one prinicipal argument, these functions create time series
@@ -69,18 +69,17 @@ plot(nhtemp, lag(nhtemp, 1), cex = .8, col="blue",
 
 library(ts)
 
- data(sunspots)
- ## xy.lines and xy.labels are FALSE for large series:
- plot(lag(sunspots, 1), sunspots, pch = ".")
+data(sunspots)
+## xy.lines and xy.labels are FALSE for large series:
+plot(lag(sunspots, 1), sunspots, pch = ".")
 
- data(EuStockMarkets)
- SMI <- EuStockMarkets[, "SMI"]
- plot(lag(SMI,  1), SMI, pch = ".")
- plot(lag(SMI, 20), SMI, pch = ".", log = "xy",
-      main = "4 weeks lagged SMI stocks -- log scale", xy.lines= TRUE)
+data(EuStockMarkets)
+SMI <- EuStockMarkets[, "SMI"]
+plot(lag(SMI,  1), SMI, pch = ".")
+plot(lag(SMI, 20), SMI, pch = ".", log = "xy",
+     main = "4 weeks lagged SMI stocks -- log scale", xy.lines= TRUE)
 
 detach("package:ts") 
 }
 \keyword{hplot}
 \keyword{ts}
-

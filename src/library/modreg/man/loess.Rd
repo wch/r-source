@@ -74,7 +74,7 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
   value is the least-squares fit, this need not be a very resistant fit.
 
   It can be important to tune the control list to achieve acceptable
-  speed. See \link{loess.control} for details.
+  speed. See \code{\link{loess.control}} for details.
 }
 \value{
   An object of class \code{"loess"}.

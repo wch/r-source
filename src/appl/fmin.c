@@ -41,8 +41,11 @@
     Algol  60 procedure  localmin  given in Richard Brent, Algorithms for
     Minimization without Derivatives, Prentice-Hall, Inc. (1973).
 */
-
+#ifndef Macintosh
 #include <math.h>
+#else
+#include <fp.h>
+#endif /* mac */
 #define MATHLIB_PRIVATE
 #include <Rmath.h> /* for dimach */
 #undef MATHLIB_PRIVATE

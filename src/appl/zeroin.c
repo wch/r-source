@@ -73,7 +73,11 @@
  */
 
 #include <float.h>
+#ifndef Macintosh
 #include <math.h>
+#else
+#include <fp.h>
+#endif /* mac */
 
 #define EPSILON DBL_EPSILON
 

@@ -64,8 +64,8 @@ ansari.test(x, y, alternative = c("two.sided", "less", "greater"),
   \bold{67}, 687--690.
 }
 \seealso{
-  \code{\link{fligner.test}} for a rank-based (nonparametric) k-sample
-  test for homogeneity of variances;
+  \code{\link{fligner.test}} for a rank-based (nonparametric)
+  \eqn{k}-sample test for homogeneity of variances;
   \code{\link{mood.test}} for another rank-based two-sample test for a
   difference in scale parameters;
   \code{\link{var.test}} and \code{\link{bartlett.test}} for parametric

@@ -20,7 +20,7 @@
 @ifinfo
 This is a guide to extending R.
 
-Copyright 1999, 2000 R Development Core Team
+@Rcopyright{1999}
 
 @ignore
 Permission is granted to process this file through TeX and print the
@@ -39,10 +39,10 @@ notice identical to this one except for the removal of this paragraph
 @subtitle Version @value{VERSION}
 @author R Development Core Team
 @page
-@vskip 0pt plus 1filll
+@vskip 0pt plus 1fill
 @permission{}
 
-Copyright @copyright{} 1999, 2000 R Development Core Team
+@Rcopyright{1999}
 @end titlepage
 
 @ifnothtml
@@ -89,6 +89,21 @@ provided information on the C++ interface) are gratefully acknowledged.
 Packages provide a mechanism for loading optional code and attached
 documentation as needed.  The @R{} distribution provides several
 packages, such as @pkg{eda}, @pkg{mva}, and @pkg{stepfun}.
+
+In the following, we assume that you know the
+@samp{library()} command, including its @samp{lib.loc} argument,
+and we also assume basic knowledge of @samp{R CMD INSTALL}.
+Otherwise, please look at @R{}'s help pages
+
+@quotation
+@smallexample
+ ?library
+ ?INSTALL
+@end smallexample
+@end quotation
+
+@noindent
+before reading on.
 
 @menu
 * Package structure::           

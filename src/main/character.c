@@ -25,6 +25,8 @@
 
 #ifndef Macintosh
 #include <sys/types.h>
+#else 
+#include <types.h>
 #endif
 
 #include "Defn.h"

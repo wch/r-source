@@ -30,7 +30,14 @@
 #include "Graphics.h"
 #include "R_ext/Error.h"
 #include "Fileio.h"
-#include "Devices.h"
+#include <Rdevices.h>
+
+/* Define this to use hyphen except in -[0-9] */
+#undef USE_HYPHEN
+/* In ISOLatin1, minus is 45 and hyphen is 173 */
+#ifdef USE_HYPHEN
+static char PS_hyphen = 173;
+#endif
 
 #define USERAFM 999
 
@@ -511,7 +518,12 @@ PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics)
     short wx;
     unsigned char p1, p2;
     for ( ; *p; p++) {
-	wx = metrics->CharInfo[*p].WX;
+#ifdef USE_HYPHEN
+	if (*p == '-' && !isdigit(p[1]))
+	    wx = metrics->CharInfo[(int)PS_hyphen].WX;
+	else
+#endif
+	    wx = metrics->CharInfo[*p].WX;
 	if(wx == NA_SHORT)
 	    warning("font width unknown for character %d", *p);
 	else sum += wx;
@@ -724,7 +736,12 @@ static void PostScriptWriteString(FILE *fp, char *str)
 	    fprintf(fp, "\\\\");
 	    break;
 	case '-':
-	    fputc(*str, fp);
+#ifdef USE_HYPHEN
+	    if (!isdigit((int)str[1]))
+		fputc(PS_hyphen, fp);
+	    else
+#endif
+		fputc(*str, fp);
 	    break;
 	case '(':
 	case ')':
@@ -1850,8 +1867,14 @@ XFigDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     return 1;
 }
 
+#ifdef Unix
+char * Runix_tmpnam(char * prefix);
+#endif
 #ifdef Win32
 char * Rwin32_tmpnam(char * prefix);
+#endif
+#ifdef Macintosh
+char * Rmac_tmpnam(char * prefix);
 #endif
 
 static Rboolean XFig_Open(DevDesc *dd, XFigDesc *pd)
@@ -1882,10 +1905,14 @@ static Rboolean XFig_Open(DevDesc *dd, XFigDesc *pd)
 	pd->psfp = R_fopen(R_ExpandFileName(buf), "w");
     }
     if (!pd->psfp) return FALSE;
+#ifdef Unix
+    strcpy(pd->tmpname, Runix_tmpnam("Rxfig"));
+#endif
 #ifdef Win32
     strcpy(pd->tmpname, Rwin32_tmpnam("Rxfig"));
-#else
-    strcpy(pd->tmpname, tmpnam(NULL));
+#endif
+#ifdef Macintosh
+    strcpy(pd->tmpname, Rmac_tmpnam("Rxfig"));
 #endif
     pd->tmpfp = R_fopen(pd->tmpname, "w");
     if (!pd->tmpfp) {

@@ -9,7 +9,12 @@
 #include <config.h>
 #endif
 
+#ifndef Macintosh
 #include <math.h>
+#else
+#include <fp.h>
+#endif /* mac */
+
 #include <stdio.h>
 #include "R_ext/RS.h"
 #include "R_ext/Applic.h"

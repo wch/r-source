@@ -24,12 +24,19 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         floor(10 * log10(n.used))
     else floor(order.max)
     xaic <- numeric(order.max + 1)
-    z <- .C("multi_burg", as.integer(n.used), resid = as.double(x),
-        as.integer(order.max), as.integer(nser), coefs = double((1 +
-            order.max) * nser * nser), pacf = double((1 + order.max) *
-            nser * nser), var = double((1 + order.max) * nser *
-            nser), aic = double(1 + order.max), order = integer(1),
-        as.integer(aic), as.integer(var.method))
+    z <- .C("multi_burg",
+            as.integer(n.used),
+            resid = as.double(x),
+            as.integer(order.max),
+            as.integer(nser),
+            coefs = double((1 + order.max) * nser * nser),
+            pacf = double((1 + order.max) * nser * nser),
+            var = double((1 + order.max) * nser * nser),
+            aic = double(1 + order.max),
+            order = integer(1),
+            as.integer(aic),
+            as.integer(var.method),
+            PACKAGE = "ts")
     partialacf <- aperm(array(z$pacf, dim = c(nser, nser, order.max +
         1)), c(3, 2, 1))[-1, , , drop = FALSE]
     var.pred <- aperm(array(z$var, dim = c(nser, nser, order.max +

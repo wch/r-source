@@ -37,6 +37,71 @@ BUG FIXES
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.2.2
+
+
+NEW FEATURES
+
+    o	The Macintosh port becomes a full member of the R family and its
+	sources are incorporated as from this release.	
+	See `src/macintosh/INSTALL' for how that port is built.
+	This is bound to be modified for future versions, and suggestions
+	and volunteers are very welcome.
+
+    o	The API header files and export files `R.exp' are released under
+	LGPL rather than GPL to allow dynamical loaded code to be
+	distributed under licences other than GPL.
+
+    o	Configure now uses a much expanded search list for finding a
+	FORTRAN 77 compiler, and no longer disallows wrapper scripts for
+	this compiler.
+
+
+BUG FIXES
+
+    o	readBin() and writeBin() were not always making good use of
+	long types (such as long double) when available.
+
+    o	postscript() and xfig() devices now make use of genuine Adobe
+	afm files, and warn if characters are used in string width or
+	height calculations that are not in afm files.
+
+    o	The C function fprec was not handling very small denormalized
+	numbers correctly.  This affected the way they were printed on
+	Windows, for example.
+
+    o	legend() now draws points after lines allowing "empty dots on
+	lines" thanks to Ben Bolker.
+
+    o	Setting row/column names preserves the names of the dimnames
+	(PR#809). 
+
+    o	Using help() after help.start() on Unix was failing to find
+	the linked help files if more than one package was loaded (as
+	now happens by default).
+
+    o	scan now sets the maximal sizes internally when `what' is a list
+	from `nmax' and failing that `nlines'.	This uses memory much more
+	efficiently if `nmax' is specified.  read.table() makes use of this.
+
+    o	The Fortran code used is now much closer to ANSI compliance.
+
+    o	cov.rob() gives a useful error message on nearly-degenerate matrices.
+
+    o	summary on a data frame was computing results to a precision
+	based on options("digits") (default 4), not its `digits'
+	argument.  Now results are computed to full precision but 
+	formatted using `digits'.
+
+    o   When returning parameters from .C/.Fortran, the OBJECT field was
+    	not copied even though class attributes were (PR #834)
+
+    o   There was a spurious warning from the X11 driver on 100 dpi
+        displays. (PR#840 Fix from Tom Vogels)
+
+    o   All-blank fields were read as zero. Should be NA, and is now. 
+
+
 		CHANGES IN R VERSION 1.2.1
 
 NEW FEATURES
@@ -98,7 +163,7 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   There have been many small improvements/corrections in the
+    o	There have been many small improvements/corrections in the
 	documentation. In particular:
 
 	The help pages for lm and glm now describe the fitted objects.
@@ -106,8 +171,8 @@ BUG FIXES
 	is.vector() is now correctly documented: complex vectors and
 	lists return TRUE.
 
-    o   The default sortedXyData constructor in the nls package now
-        handles missing values in the response.
+    o	The default sortedXyData constructor in the nls package now
+	handles missing values in the response.
 
     o	On startup, file .RData is now restored *after* the site and
 	user profiles are loaded (if at all).  This is as previously
@@ -205,8 +270,8 @@ BUG FIXES
     o	Loading .Random.seed could extremely rarely and with some
 	generators reject a value as NA_INTEGER when it was valid.
 
-    o   save(..., ascii=TRUE) created broken files when saving strings
-        containing special characters (ASCII code > 127).
+    o	save(..., ascii=TRUE) created broken files when saving strings
+	containing special characters (ASCII code > 127).
 
     o	mean(c(1,NA,NA,NA)[-1], trim = .1, na.rm = TRUE) doesn't give an
 	error anymore.

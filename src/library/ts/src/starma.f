@@ -6,7 +6,7 @@ c
 c  start of as 154
       subroutine starma(ip, iq, ir, np, phi, theta, a, p, v, thetab,
      $  xnext, xrow, rbar, nrbar, ifault)
-      implicit none
+c      implicit none
       integer ip,iq,ir,np,nrbar,ifault,i,ind,j,k,irank,ifail,ind1,
      $  npr,npr1,ind2,indi,indj,indn
       double precision phi(ir), theta(ir), a(ir), p(np), v(np), 
@@ -159,7 +159,7 @@ c
 c
       subroutine karma(ip, iq, ir, np, phi, theta, a, p,
      $  v, n, w, resid, sumlog, ssq, iupd, delta, e, nit)
-      implicit none
+c      implicit none
 c
 c        algorithm as 154.1  appl. statist. (1980) vol.29, p.311
 c
@@ -277,7 +277,7 @@ c
 c        invoking this subroutine obtains predictions
 c        of a and p, m steps ahead.
 c
-      implicit none
+c      implicit none
       integer m, ip, ir, np, ir1, l, i, j, ind, ind1
       double precision phi(ir), a(ir), p(np), v(np), work(ir), dt,
      $  a1, phii, phij, phijdt, zero, x(m), var(m)
@@ -326,7 +326,7 @@ c modifications here
 c
       subroutine inclu2(np, nrbar, weight, xnext, xrow, ynext, d, rbar,
      $  thetab, ssqerr, recres, irank, ifault)
-      implicit none
+c      implicit none
 c
 c        algorithm as 154.3  appl. statist. (1980) vol.29, p.311
 c
@@ -398,7 +398,7 @@ c        appl. statist. (1974) vol.23, p.448
 c        invoking this subroutine obtains beta by backsubstitution
 c        in the triangular system rbar and thetab.
 c
-      implicit none
+c      implicit none
       integer np,nrbar,ithisr,im,i1,jm,i,j
       double precision rbar(nrbar), thetab(np), beta(np), bi
       ithisr = nrbar
@@ -483,10 +483,10 @@ c      iq1 = iq + 1
 c      do 110 i = 2, iq1
 c  110 v(i) = theta(i-1)
 c      do 120 j = 1, iq
-c	ll = j * (2*ir + 1 - j) / 2
-c	do 120 i = j, iq
-c	  lli = ll + i
-c	  v(lli) = theta(i) * theta(j)
+c       ll = j * (2*ir + 1 - j) / 2
+c       do 120 i = j, iq
+c         lli = ll + i
+c         v(lli) = theta(i) * theta(j)
 c  120 continue
 c
 c     find initial likelihood conditions.
@@ -502,17 +502,17 @@ c
       nt = n - id
       if (id .eq. 0) go to 170
       do 140 j = 1, id
-	nj = n - j
-	store(j) = w(nj)
+        nj = n - j
+        store(j) = w(nj)
   140 continue
       do 160 i = 1, nt
-	aa = zero
-	do 150 k = 1, id
-	  idk = id + i - k
-	  aa = aa - delta(k) * w(idk)
+        aa = zero
+        do 150 k = 1, id
+          idk = id + i - k
+          aa = aa - delta(k) * w(idk)
   150   continue
-	iid = i + id
-	w(i) = w(iid) + aa
+        iid = i + id
+        w(i) = w(iid) + aa
   160 continue
 c
 c     evaluate likelihood to obtain final kf conditions
@@ -541,15 +541,15 @@ c
   220 p(i) = zero
       ind = 0
       do 230 j = 1, ir
-	k = (j-1) * (id + ir + 1) - (j-1) * j / 2
-	do 230 i = j, ir
-	  ind = ind + 1
-	  k = k + 1
-	  p(k) = xrow(ind)
+        k = (j-1) * (id + ir + 1) - (j-1) * j / 2
+        do 230 i = j, ir
+          ind = ind + 1
+          k = k + 1
+          p(k) = xrow(ind)
   230 continue
       do 240 j = 1, id
-	irj = ir + j
-	a(irj) = store(j)
+        irj = ir + j
+        a(irj) = store(j)
   240 continue
 c
 c     set up constants
@@ -572,138 +572,138 @@ c
 c
 c     predict a
 c
-	a1 = a(1)
-	if (ir .eq. 1) go to 310
-	do 300 i = 1, ir1
+        a1 = a(1)
+        if (ir .eq. 1) go to 310
+        do 300 i = 1, ir1
   300   a(i) = a(i+1)
   310   a(ir) = zero
-	if (ip .eq. 0) go to 330
-	do 320 j = 1, ip
+        if (ip .eq. 0) go to 330
+        do 320 j = 1, ip
   320   a(j) = a(j) + phi(j) * a1
 c original has label 360 and overruns a
   330   if (id .eq. 0) go to 361
-	do 340 j = 1, id
-	  irj = ir + j
-	  a1 = a1 + delta(j) * a(irj)
+        do 340 j = 1, id
+          irj = ir + j
+          a1 = a1 + delta(j) * a(irj)
   340   continue
-	if (id .lt. 2) go to 360
-	do 350 i = 1, id1
-	  iri1 = ird - i
-	  a(iri1 + 1) = a(iri1)
+        if (id .lt. 2) go to 360
+        do 350 i = 1, id1
+          iri1 = ird - i
+          a(iri1 + 1) = a(iri1)
   350   continue
   360   a(ir2) = a1
   361   continue
 c     
 c     predict p
 c
-	if (id .eq. 0) go to 480
-	do 370 i = 1, id
-	  store(i) = zero
-	  do 370 j = 1, id
-	    ll = max(i,j)
-	    k = min(i,j)
-	    jj = jkl + (ll - k) + 1 + (k-1) * (idd2 - k) / 2
-	    store(i) = store(i) + delta(j) * p(jj)
+        if (id .eq. 0) go to 480
+        do 370 i = 1, id
+          store(i) = zero
+          do 370 j = 1, id
+            ll = max(i,j)
+            k = min(i,j)
+            jj = jkl + (ll - k) + 1 + (k-1) * (idd2 - k) / 2
+            store(i) = store(i) + delta(j) * p(jj)
   370   continue
-	if (id .eq. 1) go to 400
-	do 380 j = 1, id1
-	  jj = id - j
-	  lk = (jj-1) * (idd2 - jj) / 2 + jkl
-	  lk1 = jj * (idd1 - jj) / 2 + jkl
-	  do 380 i = 1, j
-	    lk = lk + 1
-	    lk1 = lk1 + 1
-	    p(lk1) = p(lk)
+        if (id .eq. 1) go to 400
+        do 380 j = 1, id1
+          jj = id - j
+          lk = (jj-1) * (idd2 - jj) / 2 + jkl
+          lk1 = jj * (idd1 - jj) / 2 + jkl
+          do 380 i = 1, j
+            lk = lk + 1
+            lk1 = lk1 + 1
+            p(lk1) = p(lk)
   380   continue
         do 390 j = 1, id1
-	  jklj = jkl1 + j
-	  irj = ir + j
-	  p(jklj) = store(j) + p(irj)
+          jklj = jkl1 + j
+          irj = ir + j
+          p(jklj) = store(j) + p(irj)
   390   continue
   400   p(jkl1) = p(1)
-	do 410 i = 1, id
-	  iri = ir + i
-	  p(jkl1) = p(jkl1) + delta(i) * (store(i) + two * p(iri))
+        do 410 i = 1, id
+          iri = ir + i
+          p(jkl1) = p(jkl1) + delta(i) * (store(i) + two * p(iri))
   410   continue
-	do 420 i = 1, id
-	  iri = ir + i
-	  store(i) = p(iri)
+        do 420 i = 1, id
+          iri = ir + i
+          store(i) = p(iri)
   420   continue
-	do 430 j = 1, ir
-	  kk1 = j * (id2r1 - j) / 2 + ir
-	  k1 = (j-1) * (id2r - j) / 2 + ir
-	  do 430 i = 1, id
-	    kk = kk1 + i
-	    k = k1 + i
-	    p(k) = phi(j) * store(i)
-	    if (j .ne. ir) p(k) = p(k) + p(kk)
+        do 430 j = 1, ir
+          kk1 = j * (id2r1 - j) / 2 + ir
+          k1 = (j-1) * (id2r - j) / 2 + ir
+          do 430 i = 1, id
+            kk = kk1 + i
+            k = k1 + i
+            p(k) = phi(j) * store(i)
+            if (j .ne. ir) p(k) = p(k) + p(kk)
   430   continue
 c
-	do 440 j = 1, ir
-	  store(j) = zero
-	  kkk = j * (i45 - j) / 2 - id
-	  do 440 i = 1, id
-	    kkk = kkk + 1
-	    store(j) = store(j) + delta(i) * p(kkk)
+        do 440 j = 1, ir
+          store(j) = zero
+          kkk = j * (i45 - j) / 2 - id
+          do 440 i = 1, id
+            kkk = kkk + 1
+            store(j) = store(j) + delta(i) * p(kkk)
   440   continue
-	if (id .eq. 1) go to 460
-	do 450 j = 1, ir
-	  k = j * idrr1 - j * (j+1) / 2 + 1
-	  do 450 i = 1, id1
-	    k = k - 1
-	    p(k) = p(k-1)
+        if (id .eq. 1) go to 460
+        do 450 j = 1, ir
+          k = j * idrr1 - j * (j+1) / 2 + 1
+          do 450 i = 1, id1
+            k = k - 1
+            p(k) = p(k-1)
   450   continue
   460   do 470 j = 1, ir
           k = (j-1) * (id2r - j) / 2 + ir + 1
-	  p(k) = store(j) + phi(j) * p(1)
-	  if (j .lt. ir) p(k) = p(k) + p(j+1)
+          p(k) = store(j) + phi(j) * p(1)
+          if (j .lt. ir) p(k) = p(k) + p(j+1)
   470   continue
   480   do 490 i = 1, ir
   490   store(i) = p(i)
 c
-	ind = 0
-	dt = p(1)
-	do 500 j = 1, ir
-	  phij = phi(j)
-	  phijdt = phij * dt
-	  ind2 = (j-1) * (id2r2 - j) / 2
-	  ind1 = j * (i45 - j) / 2
-	  do 500 i = j, ir
-	    ind = ind + 1
-	    ind2 = ind2 + 1
-	    phii = phi(i)
-	    p(ind2) = v(ind) + phii * phijdt
-	    if (j .lt. ir) p(ind2) = p(ind2) + store(j+1) * phii
-	    if (i .eq. ir) go to 500
-	    ind1 = ind1 + 1
-	    p(ind2) = p(ind2) + store(i+1) * phij + p(ind1)
+        ind = 0
+        dt = p(1)
+        do 500 j = 1, ir
+          phij = phi(j)
+          phijdt = phij * dt
+          ind2 = (j-1) * (id2r2 - j) / 2
+          ind1 = j * (i45 - j) / 2
+          do 500 i = j, ir
+            ind = ind + 1
+            ind2 = ind2 + 1
+            phii = phi(i)
+            p(ind2) = v(ind) + phii * phijdt
+            if (j .lt. ir) p(ind2) = p(ind2) + store(j+1) * phii
+            if (i .eq. ir) go to 500
+            ind1 = ind1 + 1
+            p(ind2) = p(ind2) + store(i+1) * phij + p(ind1)
   500   continue
 c
 c     predict y
 c
         y(l) = a(1)
-	if (id .eq. 0) go to 520
-	do 510 j = 1, id
-	  irj = ir + j
-	  y(l) = y(l) + a(irj) * delta(j)
+        if (id .eq. 0) go to 520
+        do 510 j = 1, id
+          irj = ir + j
+          y(l) = y(l) + a(irj) * delta(j)
   510   continue
 c
 c     calculate m.s.e. of y
 c
   520   ams = p(1)
-	if (id .eq. 0) go to 550
-	do 530 j = 1, id
-	  jrj = ibc + (j-1) * (idd2 - j) / 2
-	  irj = ir + j
-	  ams = ams + two * delta(j) * p(irj) + p(jrj+1) * delta(j)**2
+        if (id .eq. 0) go to 550
+        do 530 j = 1, id
+          jrj = ibc + (j-1) * (idd2 - j) / 2
+          irj = ir + j
+          ams = ams + two * delta(j) * p(irj) + p(jrj+1) * delta(j)**2
   530   continue
-	if (id .eq. 1) go to 550
-	do 540 j = 1, id1
-	  j1 = j + 1
-	  jrk = ibc + 1 + (j-1) * (idd2 - j) / 2
-	  do 540 i = j1, id
-	    jrk = jrk + 1
-	    ams = ams + two * delta(i) * delta(j) * p(jrk)
+        if (id .eq. 1) go to 550
+        do 540 j = 1, id1
+          j1 = j + 1
+          jrk = ibc + 1 + (j-1) * (idd2 - j) / 2
+          do 540 i = j1, id
+            jrk = jrk + 1
+            ams = ams + two * delta(i) * delta(j) * p(jrk)
   540   continue
   550   amse(l) = ams * sigma
   560 continue

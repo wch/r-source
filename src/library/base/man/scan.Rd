@@ -32,7 +32,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 
   \item{nmax}{the maximum number of data values to be read, or if
     \code{what} is a list, the maximum number of records to be read.  If
-    omitted, \code{scan} will read to the end of \code{file}.}
+    omitted (and \code{nlines} is not set to a positive value),
+    \code{scan} will read to the end of \code{file}.}
 
   \item{n}{the maximum number of data values to be read, defaulting to
     no limit.}
@@ -108,6 +109,14 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   will give an empty file line if the file ends in a linefeed and not it
   it does not.  This might not be what you expected; see also
   \code{\link{readLines}}.
+}
+\note{
+  If number of items is not specified, the internal
+  mechanism re-allocates memory in powers of two and so could use up
+  to three times as much memory as needed.  (It needs both old and new
+  copies.)  If you can, specify either \code{n} or \code{nmax} whenever
+  inputting a large vector, and \code{nmax} or \code{nlines} when
+  inputting a large list.
 }
 \seealso{
   \code{\link{read.table}} for more user-friendly reading of data

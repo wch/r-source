@@ -48,7 +48,7 @@
 /* For the input handlers of the event loop mechanism: */
 #include "R_ext/eventloop.h" 
 #include "R_ext/Memory.h" /* vmaxget */
-#include "Devices.h"
+#include "Rdevices.h"
 
 #include "devX11.h"
 
@@ -834,21 +834,22 @@ static XFontStruct *RLoadFont(int face, int size)
     if (size < SMALLEST) size = SMALLEST;
     face--;
 
+    /* Here's a 1st class fudge: make sure that the Adobe design sizes
+       8, 10, 11, 12, 14, 17, 18, 20, 24, 25, 34 can be obtained via
+       an integer "size" at 100 dpi, namely 6, 7, 8, 9, 10, 12, 13,
+       14, 17, 18, 24 points. It's almost y = x * 100/72, but not
+       quite. The constants were found using lm(). --pd */
+    if (IS_100DPI) size = R_rint(size * 1.43 - 0.4);
+
     /* search fontcache */
     for ( i = nfonts ; i-- ; ) {
 	f = &fontcache[i];
 	if ( f->face == face && f->size == size ) return f->font;
     }
 
-
-
-    /* Here's a 1st class fudge: make sure that the Adobe design sizes
-       8, 10, 11, 12, 14, 17, 18, 20, 24, 25, 34 can be obtained via
-       an integer "size" at 100 dpi, namely 6, 7, 8, 9, 10, 12, 13,
-       14, 17, 18, 24 points. It's almost y = x * 100/72, but not
-       quite. The constants were found using lm(). --pd */
-
-    pixelsize = IS_100DPI ? R_rint(size * 1.43 - 0.4) : size;
+    /* 'size' is the requested size, 'pixelsize'  the size of the
+       actually allocated font*/
+    pixelsize = size;
 
     if (face == 4)
 	sprintf(buf, symbolname,  pixelsize);

@@ -1,0 +1,160 @@
+<html lang="en"><head>
+<title>R for Macintosh FAQ</title>
+</head><body>
+
+<html>
+<head>
+<TITLE>R for Macintosh FAQ</TITLE>
+</head>
+
+<body>
+<h1 align="center">R for Macintosh FAQ</h1>
+<h2>Version for <tt>R 1.2.1</tt></h2>
+<address>S. M. Iacus</address>
+<p><p><hr><p>
+
+
+We are currently writing this.
+
+<p><hr WIDTH="100%">
+
+<FONT FACE="Times"><P>Macintosh porting of R-1.2.1,  beta 1, (Gen 19 2001).</P>
+<P>=====================================================</P>
+<P>* getenv() in now working. The .Renviron file is assumed</P>
+<P>  to be in "etc" directory </P>
+<P>* "etc" is assumed to contain the history file, the image</P>
+<P>  session and the environments variables</P>
+<P>* a new command line has been added. It is possible to</P>
+<P>  specify options as in the Unix/Win implementations</P>
+<P>* packages have been recompiled</P>
+<P>* few other bugs fixed</P>
+
+<P>What's new from R for Mac R-1.2.0,  beta 1, (Jan 07 2001).</P>
+<P>==========================================================</P>
+<P>* dir.create() now implemented</P>
+<P>* help.start() now works. It launches the default browser 
+associated to the</P>
+<P>   file extension "htm" and/or "html". The same behaviour as nder 
+Windows</P>
+<P>   systems.</P>
+<P>* internal unzip implemented using InfoZip</P>
+
+<P>&nbsp;</P>
+<P>What's new from R for Mac R-1.1.1,  beta 1, (Dec 10 2000).</P>
+<P>==========================================================</P>
+<P>Sources for MacOS avalaible!</P>
+<P>This version is only an update to version 1.2.0 of R sources.</P>
+<P>This is intended to release sources for MacOS developers.</P>
+
+<P>* memory allocation problems have been fixed.</P>
+
+<P>* Packages have been rebuilt to version 1.2.0.</P>
+
+<P>* proc.time and system.time are now partially implemented. They</P>
+<P>  give results in seconds only for total system time and process time.</P>
+<P>  The system time is calculated as the number of seconds passed</P>
+<P>  from booting your machine.</P>
+
+<P>* Memory settings are now ignored since from version 1.2.0 of R</P>
+<P>   there is no more (really) a need to fix VSize and NSize.</P>
+<P>   If R runs out of memory it only suffices to increment the Memory</P>
+<P>   of the "R application" from the Finder. The default is set to 25Mb</P>
+<P>   but you can change it as you prefer up to the maximum of the</P>
+<P>   memory currently  avalaible on your Macintosh system.</P>
+
+<P>* the Sys.timezone() implemented by a trick. The timezone</P>
+<P>  string can be read from the system but not set. The function</P>
+<P>  getenv still doesn't exists on Macintosh.</P>
+
+<P>* command history is now saved and loaded. do_savehistory and</P>
+<P>  do_loadhistory fully implemented.</P>
+
+<P>&nbsp;</P>
+<P>Macintosh porting of R-1.1.1,  beta 1, (Dec 10 2000)</P>
+<P>====================================================</P>
+
+<P>* tempfile() is now supported. Temporary files are stored in a directory</P>
+<P>  "tmp" that it is assumed to be in the main R folder. If it doesn't</P>
+<P>  exist, R create it. All temporary files will be stored there.</P>
+
+<P>* unlink() is implemented. It can delete only files and dirs created</P>
+<P>  from the current R session. Wildcards not allowed yet.</P>
+
+<P>* Dynamic libraries are fully implemented grace to the code give to me</P>
+<P>  by Luke Tierney. </P>
+<P>  (There is a problem with DLLName. Every function must be searched</P>
+<P>   for global and not for a specific package when calling 
+.C/.Fortran etc)</P>
+
+<P>* Most of the packages have been compiled but the tclk one.</P>
+
+<P>* tclk demos disabled</P>
+
+<P>* Packages. The following packages have been compiled or simply added</P>
+<P>  to the base one:</P>
+
+<P>  ctest (ex:tested)</P>
+<P>  eda (ex:tested)</P>
+<P>  lqs (ex:tested)</P>
+<P>  modreg (ex:tested)</P>
+<P>  mva (ex:tested)</P>
+<P>  nls (ex:tested, does not work "SSlogis")</P>
+<P>  splines (ex:tested)</P>
+<P>  stepfun (ex:tested)</P>
+<P>  ts (file AnIndex to be built)</P>
+<P>  wavethresh (examples and help files to be built)</P>
+
+<P>* Metric Information for graphics device partially working.</P>
+<P>  You can write expressions and symbols in plots but it is not yet</P>
+<P>  perfectly working.</P>
+<P> </P>
+<P>* data(women) doesn't load! Can't understand why...yet.</P>
+
+<P>* XDR loading/saving has been implemented. I use the code from B. Ripley</P>
+<P>  that (seems) to work fine with very little modifications.</P>
+
+<P>* Load and Save of image is now implemented correctly. </P>
+
+<P>* Load and Save implemented from menu too. If you save from menu an icon</P>
+<P>  will be added to the file. You can double-click on a R file to 
+start the</P>
+<P>  application or load a file in R if the application is running. You can</P>
+<P>  also  drag&amp;drop the file on the R icon to launch R.</P>
+
+<P>* Help files are now displayed correctly with colors as under Windows</P>
+
+<P>&nbsp;</P>
+<P>What else still remains to do!</P>
+<P>==============================</P>
+<P>There are lots of things that have to be implemented and fixed.</P>
+<P>Not all the avalaible packages have been compiled. If you have any</P>
+<P>particular need please let me know and I will compile and made</P>
+<P>available the package. There is not an automatic install procedure</P>
+<P>for building packages under MacOS yet.</P>
+
+<P>This current version containes wavethresh and multiv packages but no</P>
+<P>help files and examples are avalaible yet.</P>
+<P>If you need them you should only copy the directories "help" and "R-ex" </P>
+<P>of the Windows distribution in their respectively directory under this</P>
+<P>distribution.</P>
+
+<P>&nbsp;</P>
+<P>Hystory</P>
+<P>=======</P>
+
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>What was in R for Mac pre-alpha 2 and 1</P>
+<P>=======================================</P>
+<P>* dir, setcwd, getcwd</P>
+<P>* macdevice pdated to WasteLib 2.0 </P>
+</FONT>
+
+<p><hr WIDTH="100%">
+<address>
+Last edited 2001 January 19 by Stefano Maria Iacus
+<code><a
+href="mailto:stefano.iacus@unimi.it">stefano.iacus@unimi.it</a></code>
+</address>
+
+</body></html>

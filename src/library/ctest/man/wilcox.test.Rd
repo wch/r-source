@@ -12,9 +12,10 @@ wilcox.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 \arguments{
   \item{x}{numeric vector of data values.}
   \item{y}{an optional numeric vector of data values.}
-  \item{alternative}{the alternative hypothesis must be
-    one of \code{"two.sided"} (default), \code{"greater"} or
-    \code{"less"}.  You can specify just the initial letter.}
+  \item{alternative}{a character string specifying the alternative
+    hypothesis, must be one of \code{"two.sided"} (default),
+    \code{"greater"} or \code{"less"}.  You can specify just the initial
+    letter.}
   \item{mu}{a number specifying an optional location parameter.}
   \item{paired}{a logical indicating whether you want a paired test.}
   \item{exact}{a logical indicating whether an exact p-value should be

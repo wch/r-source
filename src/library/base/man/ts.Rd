@@ -6,7 +6,7 @@ ts(data = NA, start = 1, end = numeric(0), frequency = 1,
 as.ts(x)
 is.ts(x)
 
-print(ts.obj, calendar, \dots)
+\method{print}{ts}(x, calendar, \dots)
 }
 \alias{ts}
 \alias{as.ts}

@@ -27,7 +27,7 @@
 
 #include "Defn.h"
 #include "Fileio.h"
-#include "Devices.h"		/* for KillAllDevices */
+#include "Rdevices.h"		/* for KillAllDevices */
 #include "Runix.h"
 #include "Startup.h"
 
@@ -722,6 +722,6 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
 SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    error("Sys.sleep is not implemented on this system")
+    error("Sys.sleep is not implemented on this system");
 }
 #endif

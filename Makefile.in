@@ -10,7 +10,7 @@ top_builddir = .
 include $(top_builddir)/Makeconf
 
 distdir = $(PACKAGE)-$(VERSION)
-INSTFILES = AUTHORS COPYING COPYRIGHTS FAQ NEWS RESOURCES THANKS
+INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS FAQ NEWS RESOURCES THANKS
 DISTFILES = $(INSTFILES) \
 	BUGS ChangeLog INSTALL ONEWS README VERSION Y2K \
 	Makeconf.in Makefile.in \
@@ -79,6 +79,7 @@ install: installdirs
 	@$(INSTALL_PROGRAM) bin/R.bin $(rhome)/bin
 	@sed "s@R_HOME_DIR=.*@R_HOME_DIR=$(rhome)@" < bin/R \
 	  > $(rhome)/bin/R
+	@rm -f $(bindir)/R
 	@sed "s@R_HOME_DIR=.*@R_HOME_DIR=$(rhome)@" < bin/R \
 	  > $(bindir)/R
 	@chmod 755 $(bindir)/R $(rhome)/bin/R

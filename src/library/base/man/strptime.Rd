@@ -37,7 +37,9 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   }
   \item{\dots}{Further arguments to be passed from or to other methods.}
   \item{tz}{A timezone: see \code{\link{as.POSIXct}}.}
-  \item{usetz}{logical.  Should the timezone be appended to the output?}
+  \item{usetz}{logical.  Should the timezone be appended to the output?
+    This is used in printing time, and as a workaround for problems with
+    using \code{"%Z"} on most Linux systems.}
   \item{year, month, day}{numerical values to specify a day.}
   \item{hour, min, sec}{numerical values for a time within a day.}
 }
@@ -88,7 +90,7 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
       values up to 69 are prefixed by 20 and 70--99 by 19.}
     \item{\code{\%Y}}{Year with century.}
     \item{\code{\%Z}}{(output only.) Time zone as a character
-      string (empty if not available). Note: do not use this on Linux
+      string (empty if not available).  Note: do not use this on Linux
       unless the \code{TZ} environment variable is set.}
   }
   Where leading zeros are shown they will be used on output but are
@@ -115,6 +117,13 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 
   If the timezone specified is invalid on your system, what happens is
   system-specific but it will probably be ignored.
+#ifdef mac
+  Under MacOS only the current timezone \code{""} and UTC (or GMT)
+  are supported.
+#endif
+
+  OS facilities will probably not print years before 1CE (aka 1AD)
+  correctly.
 }
 \references{
   International Organization for Standardization (1988, 1997, \dots)

@@ -25,10 +25,11 @@ R_EXT_HEADERS = \
 OBJ_HEADERS = Rconfig.h Rversion.h
 
 ## Non-API internal ones:
-INT_HEADERS = Defn.h Devices.h Errormsg.h Fileio.h Fortran.h Graphics.h \
+INT_HEADERS = Defn.h Rdevices.h Errormsg.h Fileio.h Fortran.h Graphics.h \
 	IOStuff.h Internal.h Parse.h Print.h Rconnections.h Startup.h 
 
-DISTFILES = Makefile.in README $(INT_HEADERS) $(SRC_HEADERS) config.h.in
+DISTFILES = Makefile.in README $(INT_HEADERS) $(SRC_HEADERS) \
+	config.h.in config.mac.h stamp-h.in
 
 all: Makefile R
 
@@ -56,9 +57,11 @@ stamp-h: $(srcdir)/config.h.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
 	  CONFIG_FILES= CONFIG_HEADERS=$(subdir)/config.h \
 	  $(SHELL) ./config.status
-	echo > $@
-$(srcdir)/config.h.in: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/configure.in $(top_srcdir)/acconfig.h $(top_srcdir)/aclocal.m4
+	@echo timestamp > $@ 2> /dev/null
+$(srcdir)/config.h.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/stamp-h.in
+$(srcdir)/stamp-h.in: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/configure.in $(top_srcdir)/acconfig.h $(top_srcdir)/aclocal.m4
 	@cd $(top_srcdir) && $(AUTOHEADER)
+	@echo timestamp > $@ 2> /dev/null
 Rconfig.h: $(top_srcdir)/VERSION config.h
 	@$(top_srcdir)/tools/GETCONFIG > $@
 Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/date-stamp

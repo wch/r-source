@@ -57,7 +57,7 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(noinst_LIBRARIES)
-	@@WANT_R_SHLIB_TRUE@$(MAKE) stamp-lo
+@WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
 
 DLLs:
 	@for g in $(R_GUIS) ""; do \

@@ -194,15 +194,17 @@ require <- function(package, quietly = FALSE, warn.conflicts = TRUE,
 
 .packages <- function(all.available = FALSE, lib.loc = .lib.loc) {
     if(all.available) {
-	a <- list.files(lib.loc[file.exists(lib.loc)], all.files =
-			FALSE, full.names = FALSE)
 	ans <- character(0)
-	for (nam in a) {
-	    pkg <- system.file(file.path("R", nam), pkg = nam, lib =
-			       lib.loc)
-	    if (pkg != "") ans <- c(ans,nam)
-	}
-	return(ans)
+        lib.loc <- lib.loc[file.exists(lib.loc)]
+        for(lib in lib.loc) {
+            a <- list.files(lib, all.files = FALSE, full.names = FALSE)
+            for(nam in a) {
+                if(file.exists(file.path(lib, nam, "R", nam))
+                   || file.exists(file.path(lib, nam, "data")))
+                    ans <- c(ans, nam)
+            }
+        }
+        return(unique(ans))
     } ## else
     s <- search()
     return(invisible(substring(s[substr(s, 1, 8) == "package:"], 9)))

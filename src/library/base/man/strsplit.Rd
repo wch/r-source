@@ -1,17 +1,17 @@
 \name{strsplit}
-\title{Split the Strings in a Vector}
+\title{Split the Elements of a Character Vector}
 \usage{strsplit(x, split, extended = TRUE)}
 \alias{strsplit}
 \description{
-  Split the strings in \code{x} into substrings according to the
-  presence of substring \code{split} within them.
+  Split the elements of a character vector \code{x} into substrings
+  according to the presence of substring \code{split} within them.
 }
 \arguments{
   \item{x}{character vector, to be split.}
-  \item{split}{character string containing a regular expression to use
+  \item{split}{character vector containing a regular expression to use
     as ``split''.  If empty matches occur, in particular if \code{split}
     has length 0, \code{x} is split into single characters.  If
-    \code{split} is a vector, it is re-cycled along \code{x}.}
+    \code{split} has length greater than 1, it is re-cycled along \code{x}.}
   \item{extended}{if \code{TRUE}, extended regular expression matching
     is used, and if \code{FALSE} basic regular expressions are used.}
 }

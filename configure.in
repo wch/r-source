@@ -2,7 +2,7 @@ dnl configure.in
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl
-dnl Copyright (C) 1998, 1999, 2000 R Core Team
+dnl Copyright (C) 1998, 1999, 2000, 2001 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -261,56 +261,7 @@ AC_PATH_PROGS(R_ZIPCMD, [${ZIP} zip], "")
 AC_CHECK_LIBM
 AC_SUBST(LIBM)
 
-## If we have not been forced to use a particular FORTRAN compiler, try
-## to find one using one of the several common names.
-##
-## The configure options `--with-g77', `--with-f77', or `--with-f2c'
-## force g77, f77, or f2c to be used.  It is also possible to use these
-## options to specify the full path name of the compiler.
-
-if test -n "${FC}"; then
-  F77=${FC}
-  AC_MSG_RESULT([defining F77 to be ${F77}])
-elif ${use_f77}; then
-  if test "${with_f77}" = yes; then
-    F77=f77
-  else
-    F77="${with_f77}"
-  fi
-  AC_MSG_RESULT([defining F77 to be ${F77}])
-elif ${use_g77}; then
-  if test "${with_g77}" = yes; then
-    F77=g77
-  else
-    F77="${with_g77}"
-  fi
-  AC_MSG_RESULT([defining F77 to be ${F77}])
-elif ${use_f2c}; then
-  F77=
-  if test "${with_f2c}" = yes; then
-    F2C=f2c
-  else
-    F2C="${with_f2c}"
-  fi
-  AC_MSG_RESULT([defining F2C to be ${F2C}])
-else
-  F77=
-  for name in g77 fort77 f77 f90 xlf cf77 fc; do
-    AC_PATH_PROG(F77, ${name})
-    if test -n "${F77}"; then
-      if test -n "`file ${F77} | grep script`"; then
-	dnl If F77 found above is a shell or perl script, do not use it.
-	F77=
-      else
-	F77=`basename ${F77}`
-	break
-      fi
-    fi
-  done
-  if test -z "${F77}"; then
-    AC_CHECK_PROG(F2C, f2c, f2c, [])
-  fi
-fi
+R_PROG_F77_OR_F2C
 
 if test -n "${F77}"; then
   FC=${F77}

@@ -25,7 +25,8 @@
 #include <Defn.h>
 #include <Rmath.h>
 #include <Graphics.h>
-#include <Devices.h>
+#include <Rdevices.h>
+
 
 /* Return a non-relocatable copy of a string */
 
