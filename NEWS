@@ -179,6 +179,8 @@ BUG FIXES
     o   R INSTALL and package.description() fix some common problems of
         DESCRIPTION files (blank lines, ...)
 
+    o	the "coef = 0" fix (PR#917) to boxplot.stats() accidentally broke
+	boxplot.stats(do.out = FALSE).
 
 
 	**************************************************
