@@ -18,9 +18,11 @@ uniroot(f, interval, lower = min(interval), upper = max(interval),
   The function \code{uniroot} searches the interval from \code{lower}
   to \code{upper} for a zero of the function \code{f} with respect to
   its first argument.
-
-  The function uses Fortran code (from Netlib) based on algorithms given
-  in the reference below.
+}
+\details{
+  Either \code{interval} or both \code{lower} and \code{upper} must be
+  specified.  The function uses Fortran code (from Netlib) based on
+  algorithms given in the reference below.
 }
 \value{
   A list with components \code{root} and \code{f.root} which give the
