@@ -2731,7 +2731,7 @@ msgstr "Argument \"%s\" fehlt ohne Standardwert"
 #: src/main/envir.c:1222
 #, c-format
 msgid "couldn't find function \"%s\""
-msgstr "konnte Funkton \"%s\" nicht finden"
+msgstr "konnte Funktion \"%s\" nicht finden"
 
 #: src/main/envir.c:1253
 msgid "cannot assign variables to this database"
@@ -4337,7 +4337,7 @@ msgstr "ungültiger 'tol' Wert"
 
 #: src/main/optimize.c:154
 msgid "invalid function value in 'zeroin'"
-msgstr "ungültiger Funktonswert in 'zeroin'"
+msgstr "ungültiger Funktionswert in 'zeroin'"
 
 #: src/main/optimize.c:203
 msgid "'maxiter' must be positive"
