@@ -40,7 +40,7 @@ colorRampPalette(colors, \dots)
   sequence (similar to \code{\link{heat.colors}} or
   \code{\link{terrain.colors}}.
 }
-
+ 
 \seealso{
   Good starting points for interpolation are the "sequential"
   and "diverging" ColorBrewer palettes in the RColorBrewer package

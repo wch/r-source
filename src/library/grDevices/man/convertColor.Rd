@@ -33,7 +33,7 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
   \code{"Lab"}, \code{"Luv"}. The converters for these colour spaces are
   in the object \code{colorspaces}.
 
-  
+   
   The \code{"sRGB"} color space is that used by standard PC monitors.
   \code{"Apple RGB"} is used by Apple monitors. \code{"Lab"} and
   \code{"Luv"}
