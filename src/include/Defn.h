@@ -109,7 +109,7 @@ typedef unsigned long R_size_t;
 #endif
 
 #ifdef Macintosh
-#include <fp.h> 
+#include <fp.h>
 #else
 #include <math.h>
 #endif
@@ -152,11 +152,11 @@ extern int vsnprintf (char *str, size_t count, const char *fmt, va_list arg);
 #  include <sys/param.h>
 # endif
 # if !defined(PATH_MAX)
-#  if defined(MAXPATHLEN) 
+#  if defined(MAXPATHLEN)
 #    define PATH_MAX MAXPATHLEN
 #  elif defined(Win32)
 #    define PATH_MAX 260
-#  else 
+#  else
 /* quite possibly unlimited, so we make this large, and test when used */
 #    define PATH_MAX 5000
 #  endif
@@ -212,6 +212,33 @@ typedef enum {
     PP_DOLLAR 	= 18,
     PP_FOREIGN 	= 19,
     PP_REPEAT 	= 20
+} PPkind;
+
+typedef enum {
+    PREC_FN	 = 0,
+    PREC_LEFT    = 1,
+    PREC_EQ	 = 2,
+    PREC_RIGHT	 = 3,
+    PREC_TILDE	 = 4,
+    PREC_OR	 = 5,
+    PREC_AND	 = 6,
+    PREC_NOT	 = 7,
+    PREC_COMPARE = 8,
+    PREC_SUM	 = 9,
+    PREC_PROD	 = 10,
+    PREC_PERCENT = 11,
+    PREC_COLON	 = 12,
+    PREC_SIGN	 = 13,
+    PREC_POWER	 = 14,
+    PREC_DOLLAR  = 15,
+    PREC_NS	 = 16,
+    PREC_SUBSET	 = 17
+} PPprec;
+
+typedef struct {
+	PPkind kind; 	 /* deparse kind */
+	PPprec precedence; /* operator precedence */
+	unsigned int rightassoc;  /* right associative? */
 } PPinfo;
 
 /* The type definitions for the table of built-in functions. */
