@@ -111,6 +111,9 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   standard which expresses a day as \code{"2001-02-03"} and a time as
   \code{"14:01:02"} using leading zeroes as here.  The ISO form uses no
   space to separate dates and times.
+
+  If the timezone specified is invalid on your system, what happens is
+  system-specific but it will probably be ignored.
 }
 \references{
   International Organization for Standardization (1988, 1997, \dots)

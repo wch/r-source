@@ -521,9 +521,9 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, sformat, ans;
-    int i, n = 0, m, N, nlen[9];
-    char buff[256];
+    SEXP x, sformat, ans, tz;
+    int i, n = 0, m, N, nlen[9], UseTZ;
+    char buff[300], *p;
     struct tm tm;
 
     checkArity(op, args);
@@ -533,6 +533,10 @@ SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString((sformat = CADR(args))) || LENGTH(sformat) == 0)
 	error("invalid `format' argument");
     m = LENGTH(sformat);
+    UseTZ = asLogical(CADDR(args));
+    if(UseTZ == NA_LOGICAL)
+	error("invalid `usetz' argument");
+    tz = getAttrib(x, install("tzone"));
 
     /* coerce fields to integer, find length of longest one */
     for(i = 0; i < 9; i++) {
@@ -561,6 +565,15 @@ SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(validate_tm(&tm) < 0) SET_STRING_ELT(ans, i, NA_STRING);
 	    else {
 		strftime(buff, 256, CHAR(STRING_ELT(sformat, i%m)), &tm);
+		if(UseTZ && !isNull(tz)) {
+		    int i = 0;
+		    if(LENGTH(tz) == 3) i = 1 + tm.tm_isdst;
+		    p = CHAR(STRING_ELT(tz, i));
+		    if(strlen(p)) {
+			strcat(buff, " ");
+			strcat(buff, p);
+		    }
+		}
 		SET_STRING_ELT(ans, i, mkChar(buff));
 	    }
 	}

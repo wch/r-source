@@ -718,7 +718,7 @@ FUNTAB R_FunTab[] =
 {"Sys.time",	do_systime,	0,	11,	0,	PP_FUNCALL},
 {"as.POSIXct",	do_asPOSIXct,	0,	11,	2,	PP_FUNCALL},
 {"as.POSIXlt",	do_asPOSIXlt,	0,	11,	2,	PP_FUNCALL},
-{"format.POSIXlt",do_formatPOSIXlt,0,	11,	2,	PP_FUNCALL},
+{"format.POSIXlt",do_formatPOSIXlt,0,	11,	3,	PP_FUNCALL},
 {"strptime",	do_strptime,	0,	11,	2,	PP_FUNCALL},
 
 /* Connections */

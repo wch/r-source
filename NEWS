@@ -45,6 +45,8 @@ NEW FEATURES
 	axes) are now consistent with other plot functions.  The key symbol
 	is not clipped anymore into the plot region by default.
 
+    o	Date-time quantities are now printed with the timezone, if known.
+
 
 BUG FIXES
     
@@ -130,6 +132,8 @@ BUG FIXES
 
     o	In the \link[pkg]{topic}, `pkg' was not being used if `topic'
 	was found in a package in .lib.loc.  Now `pkg' is always used.
+
+    o	as.POSIXct() on character objects was ignoring `tz'.
 
 
 
