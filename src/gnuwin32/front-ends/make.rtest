@@ -12,12 +12,15 @@ LIBS=-L.. -lR
 CFLAGS=-Wall
 
 rtest-CFLAGS=-I.. -I../../include
-Rtest.exe: rtest.o R.dll
+Rtest.exe: rtest.o R.dll Rblas.dll
 	$(CC) -o $@ rtest.o R.dll
 
 rtest.c: ../../include/Rversion.h
 
 R.dll: ../R.dll
+	$(CP) -p $^ $@
+
+Rblas.dll: ../../../bin/Rblas.dll
 	$(CP) -p $^ $@
 
 clean:
