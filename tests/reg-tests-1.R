@@ -947,14 +947,12 @@ Ops.foo <- function(e1, e2) {
 Ops.baz <- function(e1, e2) {
    NextMethod()
 }
-a <- 1
+a <- b <- 1
 class(a) <- c("foo","bar","baz")
-stopifnot(a == 1)
-
-b <- 1
 class(b) <- c("foo","baz")
-stopifnot(b == a)
-
+stopifnot(a == 1,
+          b == a)
+##(already worked in 1.5.1)
 
 ## t() wrongly kept "ts" class and "tsp"
 t(ts(c(a=1, d=2)))
@@ -965,6 +963,9 @@ stopifnot(length(at) == 2,
           at$dimnames[[1]] == paste("Series", 1:2))
 ## failed in 1.5.1
 
+## Nextmethod from anonymous function (PR#1211)
+try( get("print.ts")(1) )# -> Error
+## seg.faulted till 1.5.1
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
