@@ -397,13 +397,36 @@ function(chname, package = .packages(), lib.loc = NULL, verbose =
                 file <- ""
         }
         if(file == "") {
-            stop(paste("dynamic library", sQuote(chname), "not found"))
+            stop(paste("shared library", sQuote(chname), "not found"))
         }
         if(verbose)
             cat("now dyn.load(", file, ") ...\n", sep = "")
         dyn.load(file, ...)
         .dynLibs(c(.Dyn.libs, chname))
     }
+    invisible(.dynLibs())
+}
+
+library.dynam.unload <-
+function(chname, libpath, verbose = getOption("verbose"),
+         file.ext = .Platform$dynlib.ext)
+{
+    .Dyn.libs <- .dynLibs()
+    if(missing(chname) || (ncChname <- nchar(chname)) == 0)
+        stop("no shared library was specified")
+    ncFileExt <- nchar(file.ext)
+    if(substr(chname, ncChname - ncFileExt + 1, ncChname) == file.ext)
+        chname <- substr(chname, 1, ncChname - ncFileExt)
+    num <- match(chname, .Dyn.libs, 0)
+    if(is.na(num))
+        stop(paste("shared library", sQuote(chname), " was not loaded"))
+    file <- file.path(libpath, "libs", paste(chname, file.ext, sep = ""))
+    if(!file.exists(file))
+        stop(paste("shared library", sQuote(chname), "not found"))
+    if(verbose)
+        cat("now dyn.unload(", file, ") ...\n", sep = "")
+    dyn.unload(file)
+    .dynLibs(.Dyn.libs[-num])
     invisible(.dynLibs())
 }
 

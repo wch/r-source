@@ -12,6 +12,5 @@
 .onUnload <- function(libpath) {
 ###    options(pager=NULL)
     .C("delTcl", PACKAGE="tcltk")
-###    dyn.unload(file.path(libpath, "libs",
-###                         paste("tcltk", .Platform$"dynlib.ext", sep="")))
+    ## library.dynam.unload("tcltk", libpath)
 }

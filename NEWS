@@ -186,6 +186,10 @@ NEW FEATURES
     o	Terms in formulae can now be quoted, to allow the use of
 	non-syntactic variable names.  [Note that other code using
 	terms objects may expect syntactic names.]
+
+    o	Added function library.dynam.unload() to call dyn.unload() on
+	a loaded DLL and tidy up.  This is called for all the standard
+	packages in namespaces with DLLs if their namespaces are unloaded.
  
     o   Non-syntactic variable names can now be specified by inclusion
         between back-quotes `Like this`. The deparse() code has been
@@ -298,6 +302,11 @@ BUG FIXES
 	make.tables() were applying get() without asking for a
 	function and/or not starting the search in the environment of
 	the caller.
+
+    o	Corrected many problems with 0-rank (but not necessarily empty
+	model) lm() and glm() fits.
+
+    o	model.matrix.default() was throwing an error on 0-term models.
 
 
 

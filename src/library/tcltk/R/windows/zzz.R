@@ -22,9 +22,8 @@
 .onUnload <- function(libpath) {
     if(is.loaded(symbol.C("tcltk_end"))) {
         .C("tcltk_end", PACKAGE="tcltk")
-        dyn.unload(file.path(libpath, "libs", "tcltk.dll"))
-        .Dyn.libs <- .dynLibs()
-        num <- match("tcltk", .Dyn.libs)
-        .dynLibs(.Dyn.libs[-num])
+## unloading the DLL used to work, but it seems Tcl/Tk 8.4.1 does
+## not like being reinitialized
+        ## library.dynam.unload("tcltk", libpath)
     }
 }
