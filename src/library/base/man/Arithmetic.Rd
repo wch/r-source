@@ -37,9 +37,9 @@ x \%/\% y
 
   \code{\%\%} indicates \code{x mod y} and \code{\%/\%} indicates
   integer division.  It is guaranteed that \code{x == (x \%\% y) + y * ( x
-    \%/\% y )} unless \code{y == 0} where the result is \code{\link{NA}} or
-  \code{\link{NaN}} (depending on the \code{\link{typeof}} of the
-  arguments).
+    \%/\% y )} (up to rounding error) unless \code{y == 0}
+  where the result is \code{\link{NA}} or \code{\link{NaN}} (depending
+  on the \code{\link{typeof}} of the arguments).
 }
 \details{
   The binary arithmetic operators are generic functions: methods can be
@@ -58,6 +58,10 @@ x \%/\% y
 
   Objects such as arrays or time-series can be operated on this
   way provided they are conformable.
+
+  For real arguments, \code{\%\%} can be subject to catastrophic loss of
+  accuracy if \code{x} is much larger than \code{y}, and a warning is
+  given if this is detected.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

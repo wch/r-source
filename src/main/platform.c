@@ -37,54 +37,63 @@
 
 static void Init_R_Machine(SEXP rho)
 {
-    int ibeta, it, irnd, ngrd, machep, negep, iexp, minexp, maxexp;
-    double eps, epsneg, xmin, xmax;
     SEXP ans, nms;
 
-    machar(&ibeta, &it, &irnd, &ngrd, &machep, &negep, &iexp,
-	   &minexp, &maxexp, &eps, &epsneg, &xmin, &xmax);
+    machar(&R_AccuracyInfo.ibeta,
+	   &R_AccuracyInfo.it,
+	   &R_AccuracyInfo.irnd,
+	   &R_AccuracyInfo.ngrd,
+	   &R_AccuracyInfo.machep,
+	   &R_AccuracyInfo.negep,
+	   &R_AccuracyInfo.iexp,
+	   &R_AccuracyInfo.minexp,
+	   &R_AccuracyInfo.maxexp,
+	   &R_AccuracyInfo.eps,
+	   &R_AccuracyInfo.epsneg,
+	   &R_AccuracyInfo.xmin,
+	   &R_AccuracyInfo.xmax);
 
-    R_dec_min_exponent = floor(log10(xmin)); /* smallest decimal exponent */
+    R_dec_min_exponent = floor(log10(R_AccuracyInfo.xmin)); /* smallest decimal exponent */
     PROTECT(ans = allocVector(VECSXP, 18));
     PROTECT(nms = allocVector(STRSXP, 18));
     SET_STRING_ELT(nms, 0, mkChar("double.eps"));
-    SET_VECTOR_ELT(ans, 0, ScalarReal(eps));
+    SET_VECTOR_ELT(ans, 0, ScalarReal(R_AccuracyInfo.eps));
 
     SET_STRING_ELT(nms, 1, mkChar("double.neg.eps"));
-    SET_VECTOR_ELT(ans, 1, ScalarReal(epsneg));
+    SET_VECTOR_ELT(ans, 1, ScalarReal(R_AccuracyInfo.epsneg));
 
     SET_STRING_ELT(nms, 2, mkChar("double.xmin"));
-    SET_VECTOR_ELT(ans, 2, ScalarReal(xmin));
+    SET_VECTOR_ELT(ans, 2, ScalarReal(R_AccuracyInfo.xmin));
 
     SET_STRING_ELT(nms, 3, mkChar("double.xmax"));
-    SET_VECTOR_ELT(ans, 3, ScalarReal(xmax));
+    SET_VECTOR_ELT(ans, 3, ScalarReal(R_AccuracyInfo.xmax));
 
     SET_STRING_ELT(nms, 4, mkChar("double.base"));
-    SET_VECTOR_ELT(ans, 4, ScalarInteger(ibeta));
+    SET_VECTOR_ELT(ans, 4, ScalarInteger(R_AccuracyInfo.ibeta));
 
     SET_STRING_ELT(nms, 5, mkChar("double.digits"));
-    SET_VECTOR_ELT(ans, 5, ScalarInteger(it));
+    SET_VECTOR_ELT(ans, 5, ScalarInteger(R_AccuracyInfo.it));
 
     SET_STRING_ELT(nms, 6, mkChar("double.rounding"));
-    SET_VECTOR_ELT(ans, 6, ScalarInteger(irnd));
+    SET_VECTOR_ELT(ans, 6, ScalarInteger(R_AccuracyInfo.irnd));
 
     SET_STRING_ELT(nms, 7, mkChar("double.guard"));
-    SET_VECTOR_ELT(ans, 7, ScalarInteger(ngrd));
+    SET_VECTOR_ELT(ans, 7, ScalarInteger(R_AccuracyInfo.ngrd));
 
     SET_STRING_ELT(nms, 8, mkChar("double.ulp.digits"));
-    SET_VECTOR_ELT(ans, 8, ScalarInteger(machep));
+    SET_VECTOR_ELT(ans, 8, ScalarInteger(R_AccuracyInfo.machep));
 
     SET_STRING_ELT(nms, 9, mkChar("double.neg.ulp.digits"));
-    SET_VECTOR_ELT(ans, 9, ScalarInteger(negep));
+    SET_VECTOR_ELT(ans, 9, ScalarInteger(R_AccuracyInfo.negep));
 
     SET_STRING_ELT(nms, 10, mkChar("double.exponent"));
-    SET_VECTOR_ELT(ans, 10, ScalarInteger(iexp));
+    SET_VECTOR_ELT(ans, 10, ScalarInteger(R_AccuracyInfo.iexp));
 
     SET_STRING_ELT(nms, 11, mkChar("double.min.exp"));
-    SET_VECTOR_ELT(ans, 11, ScalarInteger(minexp));
+    SET_VECTOR_ELT(ans, 11, ScalarInteger(R_AccuracyInfo.minexp));
 
     SET_STRING_ELT(nms, 12, mkChar("double.max.exp"));
-    SET_VECTOR_ELT(ans, 12, ScalarInteger(maxexp));
+    SET_VECTOR_ELT(ans, 12, ScalarInteger(R_AccuracyInfo.maxexp));
 
     SET_STRING_ELT(nms, 13, mkChar("integer.max"));
     SET_VECTOR_ELT(ans, 13, ScalarInteger(INT_MAX));

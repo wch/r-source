@@ -162,14 +162,15 @@ void InitArithmetic()
     R_NegInf = -1.0/R_Zero_Hack;
 }
 
-
-
 static double myfmod(double x1, double x2)
 {
-    double q, tmp;
-    tmp = x1 - floor(x1 / x2) * x2;
+    double q = x1 / x2, tmp;
+
+    if (x2 == 0.0) return R_NaN;
+    tmp = x1 - floor(q) * x2;
+    if(R_FINITE(q) && (fabs(q) > 1/R_AccuracyInfo.eps))
+	warning("probable complete loss of accuracy in modulus");
     q = floor(tmp/x2);
-    if (q != 0) warning("possible loss of accuracy in modulus");
     return tmp - q * x2;
 }
 

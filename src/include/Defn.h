@@ -876,6 +876,14 @@ void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t);
         onintr(); \
 } while(0)
 
+/* structure for caching machine accuracy values */
+typedef struct {
+    int ibeta, it, irnd, ngrd, machep, negep, iexp, minexp, maxexp;
+    double eps, epsneg, xmin, xmax;
+} AccuracyInfo;
+
+AccuracyInfo R_AccuracyInfo;
+
 #endif /* DEFN_H_ */
 /*
  *- Local Variables:
