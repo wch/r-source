@@ -34830,7 +34830,7 @@ else
 fi
 
   CFLAGS="${r_save_CFLAGS}"
-  if test "${r_cv_have_keysym}" = yes; then
+  if test "${r_cv_type_keysym}" = yes; then
 
 cat >>confdefs.h <<\_ACEOF
 #define HAVE_KEYSYM 1

@@ -1591,7 +1591,7 @@ if test "${use_X11}" = yes; then
                 r_cv_type_keysym=no,
 		[#include <X11/X.h>])
   CFLAGS="${r_save_CFLAGS}"
-  if test "${r_cv_have_keysym}" = yes; then
+  if test "${r_cv_type_keysym}" = yes; then
     AC_DEFINE(HAVE_KEYSYM, 1,
               [Define if you have KeySym defined in X11.])
   fi
