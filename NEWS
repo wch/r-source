@@ -43,9 +43,9 @@ USER-VISIBLE CHANGES
 
     o	The meaning of spar = 0 in smooth.spline() has changed.
 
-    o   substring() and substring()<- do nothing silently on a
-        character vector of length 0, rather than generating an
-        error.  This is consistent with other functions and with S.
+    o	substring() and substring()<- do nothing silently on a
+	character vector of length 0, rather than generating an
+	error.	This is consistent with other functions and with S.
 
     o	For compatibility with S4, any arithmetic operation using a
 	zero-length vector has a zero-length result.  (This was
@@ -91,39 +91,39 @@ NEW FEATURES
 	- In support of this, the "@" operator has been added to the
 	  grammar.
 
-    	- Method dispatch for formal methods (the standardGeneric
+	- Method dispatch for formal methods (the standardGeneric
 	  function), is now a primitive. Aside from efficiency issues,
 	  this allows S3-style generics to also have formal methods
 	  (not really recommended in the long run, but it should at
-	  least work).  The C-level dispatch is now implemented for
+	  least work).	The C-level dispatch is now implemented for
 	  primitives that use either DispatchGroup or DispatchOrEval
 	  internally.
 
 	- A version of the function "plot" in the methods package has
-          arguments "x" and "y", to allow methods for either or both.
-          See "?setMethod" for examples of such methods.
+	  arguments "x" and "y", to allow methods for either or both.
+	  See "?setMethod" for examples of such methods.
 
 	- The methods package now uses C-level code (from within
 	  DispatchOrEval) to dispatch any methods defined for
-	  primitive functions.  As with S3-style methods, methods can
+	  primitive functions.	As with S3-style methods, methods can
 	  only be defined if the first argument satisfies is.object(x)
 	  (not strictly required for formal methods, but imposed for
 	  now for simplicity and efficiency).
 
-    o   Changes to the tcltk package:
+    o	Changes to the tcltk package:
 
-        - New interface for accessing Tcl variables, effectively
-          making the R representations lexically scoped. The old form
-          is being deprecated.
+	- New interface for accessing Tcl variables, effectively
+	  making the R representations lexically scoped. The old form
+	  is being deprecated.
 
-        - Callbacks can now be expressions, with slightly unorthodox
-          semantics. In particular this allows bindings to contain
-          "break" expressions (this is necessary to bind code to
-          e.g. Alt-x without having the key combination also insert an
-          "x" in a text widget.)
+	- Callbacks can now be expressions, with slightly unorthodox
+	  semantics. In particular this allows bindings to contain
+	  "break" expressions (this is necessary to bind code to
+	  e.g. Alt-x without having the key combination also insert an
+	  "x" in a text widget.)
 
-        - A bunch of file handling and dialog functions (previously
-          only available via tkcmd) have been added
+	- A bunch of file handling and dialog functions (previously
+	  only available via tkcmd) have been added
 
     o	The "?" operator is now an actual function.  It can be used
 	(as always) as a unary operator (?plot) and the grammar now
@@ -167,7 +167,7 @@ NEW FEATURES
 
     o	New capabilities() options "GNOME" and "IEEE754".
 
-    o   New function casefold(), a wrapper for tolower/toupper
+    o	New function casefold(), a wrapper for tolower/toupper
 	provided for compatibility with S-PLUS.
 
     o	contour() is now generic.
@@ -181,7 +181,7 @@ NEW FEATURES
 	help.search() returns its results.
 
     o	density() allows `bw' or `width' to specify a rule to choose the
-        bandwidth, and rules "nrd0" (the previous default), "nrd",
+	bandwidth, and rules "nrd0" (the previous default), "nrd",
 	"ucv", "bcv", "SJ-ste" and "SJ-dpi" are supplied (based on
 	functions in package MASS).
 
@@ -191,32 +191,32 @@ NEW FEATURES
     o	New argument `cacheOK' to download.file() to request cache
 	flushing.
 
-    	All methods for download.file() do tilde-expansion on the path
+	All methods for download.file() do tilde-expansion on the path
 	name.
 
-    	The internal download.file() etc now allow URLs of the form
+	The internal download.file() etc now allow URLs of the form
 	ftp://user@foo.bar/ and ftp://user:pass@foo.bar/
 
-    o   duplicated() and unique() are now generic functions with
+    o	duplicated() and unique() are now generic functions with
 	methods for data frames (as well as atomic vectors).
 
     o	factanal() and princomp() use napredict() on their scores, so
 	na.action = na.exclude is supported.
 
     o	Function getNativeSymbolInfo() returns details about a native
-        routine, potentially including its address, the library in
-        which it is located, the interface by which it can be called
-        and the number of parameters.
+	routine, potentially including its address, the library in
+	which it is located, the interface by which it can be called
+	and the number of parameters.
 
     o	Functions such as help() which perform library or package index
 	searches now use NULL as default for their `lib.loc' argument so
-	that missingness can be propagated more easily.  The default
+	that missingness can be propagated more easily.	 The default
 	corresponds to all currently known libraries as before.
 
     o	Added function file.rename().
 
     o	hist.default() allows `breaks' to specify a rule to choose the
-        number of classes, and rules "Sturges" (the previous default),
+	number of classes, and rules "Sturges" (the previous default),
 	"Scott" and "FD" (Freedman-Diaconis) are supplied (based on
 	package MASS).
 
@@ -265,7 +265,7 @@ NEW FEATURES
     o	Ops(), cbind(), diff() and na.omit() methods for time series
 	objects moved from package ts to package base.
 
-    o   New option `download.file.method' can be used to set the
+    o	New option `download.file.method' can be used to set the
 	default method for download.file() and functions which use it
 	such as update.packages().
 
@@ -279,13 +279,13 @@ NEW FEATURES
     o	png(), jpeg() and bmp() devices now have a `bg' argument to
 	set the background color: useful to set "transparent" on png().
 
-    o   Changes to the postscript() device:
+    o	Changes to the postscript() device:
 
-    	- The symbol font can now be set on a postscript() device, and
+	- The symbol font can now be set on a postscript() device, and
 	  support has been added for using Computer Modern type-1
 	  fonts (including for symbols). (Contributed by Brian D'Urso.)
 
-    	- There is now support for URW font families: this will give
+	- There is now support for URW font families: this will give
 	  access to more characters and more appropriate metrics on
 	  PostScript devices using URW fonts (such as ghostscript).
 
@@ -305,49 +305,49 @@ NEW FEATURES
 	`comment.char', default `#', that can be used to start
 	comments on a line.
 
-    o   New function reg.finalizer() to provide R interface to
-        finalization.
+    o	New function reg.finalizer() to provide R interface to
+	finalization.
 
-    o   reshape() extends reshapeLong, reshapeWide, which are deprecated.
+    o	reshape() extends reshapeLong, reshapeWide, which are deprecated.
 
     o	rle() now returns a classed object, has a print method and
 	an inverse.
 
-    o   Changes to save() and friends:
+    o	Changes to save() and friends:
 
-        - save() now takes an envir argument for specifying where
+	- save() now takes an envir argument for specifying where
 	  items to be saved are to be found.
 
-        - A new default format for saved workspaces has been
+	- A new default format for saved workspaces has been
 	  introduced.  This format provides support for some new
 	  internal data types, produces smaller save files when saving
 	  code, and provides a basis for a more flexible serialization
 	  mechanism.
 
-    	- Modified `save' internals to improve performance when saving
+	- Modified `save' internals to improve performance when saving
 	  large collections of code.
 
-    	- save() and save.image() now take a `version' argument to
+	- save() and save.image() now take a `version' argument to
 	  specify the workspace file-format version to use.  The
 	  version used from R 0.99.0 to 1.3.1 is version 1.  The new
-	  default format is version 2.  load() can read a version 2
+	  default format is version 2.	load() can read a version 2
 	  saved workspace if it is compressed.
 
-    	- save() and save.image() now take a `compress' argument to
+	- save() and save.image() now take a `compress' argument to
 	  specify that the saved image should be written using the zlib
 	  compression facilities.
 
-    	- save.image() now takes an argument `ascii'.
+	- save.image() now takes an argument `ascii'.
 
-    	- save.image() now takes an argument `safe'.  If TRUE, the
+	- save.image() now takes an argument `safe'.  If TRUE, the
 	  default, a temporary file is used for creating the saved
 	  workspace.  The temporary file is renamed if the save
 	  succeeds.  This preserves an existing workspace if the save
 	  fails, but at the cost of using extra disk space during the
 	  save.
 
-    	- save.image() default arguments can be specified in the
-	  `save.image.defaults' option.  These specifications are used
+	- save.image() default arguments can be specified in the
+	  `save.image.defaults' option.	 These specifications are used
 	  when save.image() is called from q() or GUI analogs.
 
 
@@ -371,7 +371,7 @@ NEW FEATURES
 
 	stars() now returns the locations invisibly.
 
-    o   step() is now closer to stepAIC() and so handles a wider range
+    o	step() is now closer to stepAIC() and so handles a wider range
 	of objects (but stepAIC [in MASS] is still more powerful).
 
     o	symbols() now has automatic xlab and ylab and a main argument
@@ -418,27 +418,27 @@ NEW FEATURES
     o	Printing factors with both level "NA" and missing values
 	uses `<NA>' for the missing values to distinguish them.
 
-    o   Added an experimental interface for locking environments and
+    o	Added an experimental interface for locking environments and
 	individual bindings.  Also added support for "active bindings"
 	that link a variable to a function (useful for example for linking
 	an R variable to an internal C global).
 
-    o   GNOME interface now has separate colours for input and output
-        text (like the windows GUI). These can be modified via the
-        properties dialogue.
+    o	GNOME interface now has separate colours for input and output
+	text (like the windows GUI). These can be modified via the
+	properties dialogue.
 
-    o   Output from the GNOME console is block buffered for increased
-        speed
+    o	Output from the GNOME console is block buffered for increased
+	speed
 
-    o   The GNOME console inherits standard emacs-style keyboard
-        shortcuts from the GtkText widget for cursor motion, editing
-        and selection.  These have been modified to allow for the prompt
+    o	The GNOME console inherits standard emacs-style keyboard
+	shortcuts from the GtkText widget for cursor motion, editing
+	and selection.	These have been modified to allow for the prompt
 	at the beginning of the command line.
 
     o	One can register R functions and C routines to be called at the
-        end of the successful evaluation of each top-level expression,
-        for example to perform auto-saves, update displays, etc. See
-        addTaskCallback() and taskCallbackManager(). See
+	end of the successful evaluation of each top-level expression,
+	for example to perform auto-saves, update displays, etc. See
+	addTaskCallback() and taskCallbackManager(). See
 	http://developer.r-project.org/TaskHandlers.pdf.
 
 
@@ -446,7 +446,7 @@ DEPRECATED & DEFUNCT
 
     o	.Alias has been removed from all R sources and deprecated.
 
-    o   reshapeLong(), reshapeWide() are deprecated in favour of reshape().
+    o	reshapeLong(), reshapeWide() are deprecated in favour of reshape().
 
     o	Previously deprecated functions read.table.url(), scan.url(),
 	source.url(), httpclient() and parse.dcf() are defunct.
@@ -466,17 +466,17 @@ UTILITIES
 	previously in package base, as well as the following new ones:
 
 	-  checkAssignFuns() for checking whether the final argument of
-           assignment functions in a package is named `value'.
+	   assignment functions in a package is named `value'.
 
 	-  checkDocArgs() for checking whether all arguments shown in
 	   \usage of Rd files are documented in the corresponding
 	   \arguments.
 
 	-  checkMethods() for checking whether all methods defined in a
-           package have all arguments of their generic.
+	   package have all arguments of their generic.
 
 	-  checkTnF() for finding expressions containing the symbols `T'
-           and `F'.
+	   and `F'.
 
     o	R CMD Rd2dvi has more convenient defaults for its output file.
 
@@ -504,9 +504,9 @@ C-LEVEL FACILITIES
 	error exits from compiled Fortran code.
 
     o	A new serialization mechanism is available that can be used to
-        serialize R objects to connections or to strings.  This
-        mechanism is used for the version 2 save format.  For now,
-        only an internal C interface is available.
+	serialize R objects to connections or to strings.  This
+	mechanism is used for the version 2 save format.  For now,
+	only an internal C interface is available.
 
     o	R_tryEval() added for evaluating expressions from C code with
 	errors handled but guaranteed to return to the calling C
@@ -514,7 +514,7 @@ C-LEVEL FACILITIES
 	languages.
 
     o	Support for attach()'ing user-defined tables of variables
-        is available and accessed via the RObjectTables package
+	is available and accessed via the RObjectTables package
 	currently at http://www.omegahat.org/RObjectTables.
 
 
@@ -523,7 +523,7 @@ BUG FIXES
     o	Fixed share/perl/massage-examples.pl to detect instances of
 	par() at the very start of a line.
 
-    o   Fixed Pearson residuals for glms with non-canonical
+    o	Fixed Pearson residuals for glms with non-canonical
 	link.(PR#1123). Fixed them again for weights (PR#1175).
 
     o	Fixed an inconsistency in the evaluation context for on.exit
@@ -595,12 +595,12 @@ BUG FIXES
 
     o	seq(0, 0, 1) now works (PR#1133).
 
-    o   reshapeWide() got it wrong if the "i" factor was not sorted (the
-        function is now deprecated since reshape() is there, but the bug
-        still needed fixing...)
+    o	reshapeWide() got it wrong if the "i" factor was not sorted (the
+	function is now deprecated since reshape() is there, but the bug
+	still needed fixing...)
 
-    o   PR#757 was fixed incorrectly, causing improper subsetting of
-        pch etc. in plot.formula().
+    o	PR#757 was fixed incorrectly, causing improper subsetting of
+	pch etc. in plot.formula().
 
     o	library() no longer removes environments of functions that are
 	not defined in the top-level package scope.  Also, packages
@@ -623,7 +623,7 @@ BUG FIXES
     o	range(numeric(0)) is now c(NA, NA) not NA.
 
     o	round(x, digits) for digits <= 0 always gives an integral
-	answer.  Previously it might not due to rounding errors in
+	answer.	 Previously it might not due to rounding errors in
 	fround. (PR#1138/9)
 
     o	Several memory leaks on interrupting functions have been
@@ -637,7 +637,7 @@ BUG FIXES
 	ctest to avoid rounding errors (PR#1004, follow-up).
 
     o	Use exact Hodges-Lehmann estimators for the Wilcoxon tests in
-        package ctest (PR#1150).
+	package ctest (PR#1150).
 
     o	Arithmetic which coerced types could lose the class
 	information, for example `table - real' had a class attribute
@@ -663,17 +663,17 @@ BUG FIXES
     o	rug() now correctly warns about clipped values also for logarithmic
 	axes and has a `quiet' argument for suppressing these (PR#1188).
 
-    o   model.matrix.default was not handling correctly contrasts.arg
+    o	model.matrix.default was not handling correctly contrasts.arg
 	which did not supply a full set of contrasts (PR#1187).
 
-    o   The `width' argument of density() was only compatible with S
+    o	The `width' argument of density() was only compatible with S
 	for a Gaussian kernel: now it is compatible in all cases.
 
-    o   The rbinom() C code had a transcription error from the original
-        Fortran which led to a small deviation from the intended
-        distribution. (PR#1190)
+    o	The rbinom() C code had a transcription error from the original
+	Fortran which led to a small deviation from the intended
+	distribution. (PR#1190)
 
-    o   pt(t, , ncp=0) was wrong if t was +/-Inf.
+    o	pt(t, , ncp=0) was wrong if t was +/-Inf.
 
     o	Subsetting grouping factors gave incorrect degrees of freedom
 	for some tests in package ctests. (PR#1124)
@@ -682,23 +682,25 @@ BUG FIXES
 
     o	qbeta(0.25, 0.143891, 0.05) was (incorrectly) 3e-308. (PR#1201)
 
-    o   Fixed alignment problem in ppr.f on Irix. (PR#1002, 1026)
+    o	Fixed alignment problem in ppr.f on Irix. (PR#1002, 1026)
 
-    o   glm() failed on null binomial models. (PR#1216)
+    o	glm() failed on null binomial models. (PR#1216)
 
-    o   La.svd() with nu = 0 or nv = 0 could fail as the matrix passed
+    o	La.svd() with nu = 0 or nv = 0 could fail as the matrix passed
 	to DGESVD was not of dimension at least one (it was a vector).
 
-    o   Rownames in xcoef and ycoef of cancor() were wrong if x or y
+    o	Rownames in xcoef and ycoef of cancor() were wrong if x or y
 	was rank-deficient.
 
-    o   lqs() could give warnings if there was an exact fit. (PR#1184)
+    o	lqs() could give warnings if there was an exact fit. (PR#1184)
 
-    o   aov() didn't find free-floating variables for Error() terms when
+    o	aov() didn't find free-floating variables for Error() terms when
 	called from inside another function
 
-    o   write.table() failed if asked to quote a numerical matrix with
+    o	write.table() failed if asked to quote a numerical matrix with
 	no row names. (PR#1219)
+
+    o	rlnorm( *, *, sd=0) now returns the mean (PR#1218).
 
 
 	**************************************************
