@@ -509,8 +509,8 @@ fi
 ##  2. Good/tested native compilers, bad/untested native compilers
 ##  3. Wrappers around f2c go last.
 ##
-## `fort77' and `fc' are wrappers around `f2c', `fort77' being better.
-## It is believed that under HP-UX `fort77' is the name of the native
+## 'fort77' and fc' are wrappers around 'f2c', 'fort77' being better.
+## It is believed that under HP-UX 'fort77' is the name of the native
 ## compiler.  On some Cray systems, fort77 is a native compiler.
 ## cf77 and cft77 are (older) Cray F77 compilers.
 ## pgf77 and pgf90 are the Portland Group F77 and F90 compilers.
@@ -524,10 +524,9 @@ fi
 ## In fact, on HP-UX fort77 is the POSIX-compatible native compiler and
 ## f77 is not: hence we need look for fort77 first!
 ##
-## The configure options `--with-g77', `--with-f77', or `--with-f2c'
-## force g77, f77, or f2c to be used (under *exactly* these names).  It
-## is also possible to use these options to specify the full path name
-## of the compiler.
+## The configure options '--with-f77' or '--with-f2c' force f77 or f2c
+## to be used (under *exactly* these names).  It is also possible to use
+## these options to specify the full path name of the compiler.
 AC_DEFUN([R_PROG_F77_OR_F2C],
 [if test -n "${FC}"; then
   F77=${FC}
@@ -537,13 +536,6 @@ elif test "${use_f77}" = yes; then
     F77=f77
   else
     F77="${with_f77}"
-  fi
-  AC_MSG_RESULT([defining F77 to be ${F77}])
-elif test "${use_g77}" = yes; then
-  if test "${with_g77}" = yes; then
-    F77=g77
-  else
-    F77="${with_g77}"
   fi
   AC_MSG_RESULT([defining F77 to be ${F77}])
 elif test "${use_f2c}" = yes; then
@@ -591,17 +583,17 @@ AC_DEFUN([R_PROG_F77_FLIBS],
 ## Native f90 on HPUX 11 comes up with '-l:libF90.a' causing trouble
 ## when using gcc for linking.  The '-l:' construction is similar to
 ## plain '-l' except that search order (archive/shared) given by '-a'
-## is not important.  We escape such flags via '-Wl,'.  Note that the
-## current Autoconf CVS uses _AC_LINKER_OPTION for a similar purpose
-## when computing FLIBS: this uses '-Xlinker' escapes for gcc and does
-## nothing otherwise.
+## is not important.  We escape such flags via '${wl}' from libtool.
+## Note that the current Autoconf CVS uses _AC_LINKER_OPTION for a
+## similar purpose when computing FLIBS: this uses '-Xlinker' escapes
+## for gcc and does nothing otherwise.
 flibs=
 for arg in ${FLIBS}; do
   case "${arg}" in
     -lcrt?.o)
       ;;
     -l:*)
-      flibs="${flibs} -Wl,${arg}"
+      flibs="${flibs} ${wl}${arg}"
       ;;
     *)
       flibs="${flibs} ${arg}"
@@ -1566,14 +1558,14 @@ if test -z "${TCLTK_LIBS}"; then
     fi
   fi
   ## Postprocessing for AIX.
-  ## On AIX, the *_LIB_SPEC variables need to contain `-bI:' flags for
+  ## On AIX, the *_LIB_SPEC variables need to contain '-bI:' flags for
   ## the Tcl export file.  These are really flags for ld rather than the
-  ## C/C++ compilers, and hence may need protection via `-Wl,'.
+  ## C/C++ compilers, and hence may need protection via '-Wl,'.
   ## We have two ways of doing that:
-  ## * Recording whether `-Wl,' is needed for the C or C++ compilers,
+  ## * Recording whether '-Wl,' is needed for the C or C++ compilers,
   ##   and getting this info into the TCLTK_LIBS make variable ... mess!
-  ## * Protecting all entries in TCLTK_LIBS that do not start with `-l'
-  ##   or `-L' with `-Wl,' (hoping that all compilers understand this).
+  ## * Protecting all entries in TCLTK_LIBS that do not start with '-l'
+  ##   or '-L' with '-Wl,' (hoping that all compilers understand this).
   ##   Easy, hence ...
   case "${host_os}" in
     aix*)
