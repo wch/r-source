@@ -30,14 +30,8 @@ all: Makefile DESCRIPTION
 	  fi; \
 	done
 	@if test -f DESCRIPTION; then \
-	  $(INSTALL_DATA) DESCRIPTION $(top_builddir)/library/$(pkg); \
-	  (tmp="Built: R $(VERSION); "; \
-	    if test -d $(srcdir)/src; then \
-	      tmp="$${tmp}$(R_PLATFORM)"; \
-	    fi; \
-	    tmp="$${tmp}; `date`; $(R_OSTYPE)"; \
-	    echo "$${tmp}") \
-	    >> $(top_builddir)/library/$(pkg)/DESCRIPTION; \
+	  echo "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
+	  R_DEFAULT_PACKAGES=NULL $(R_EXE) --slave > /dev/null ; \
 	fi
 	@if test -d $(srcdir)/man; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
