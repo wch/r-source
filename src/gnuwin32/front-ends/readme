@@ -12,7 +12,7 @@ another front end. To build it
 
 	copy ..\R.exp and ..\R.dll to this directory
 	lib /def:R.exp
-	cl /MT /Ox /D "WIN32"  /I..\..\include /I.. rtest.c R.lib
+	cl /MT /Ox /D Win32 /D VisualC /I..\..\include /I.. rtest.c R.lib
 
 This provides an rterm-like test front end. The main loop is in the
 main program here: R_ReplDLLdo1() parses one line (up to ; or \n) and
@@ -25,3 +25,8 @@ callback is called from within ProcessEvents.)
 
 An alternative to linking the import library would be to explicitly
 load the DLL from a known location or after searching for it.
+
+The example shows one way to handle user interrupts, although it might be
+as easy to generate a SIGINT directly from a GUI front end. For this
+to be useful you will want to set R_Interactive to be true, and you will need
+to use SETJMP to jump back to somewhere useful in your code.

@@ -18,6 +18,9 @@
    12.06.1999: Added pause and sigsuspend (require a version (also
                a non POSIX one) of sleep; if your system don't have it
                define DONT_HAVE_SLEEP)
+   27/06/1999: (BDR) convert sigsetjmp and siglongjmp macros to (,,)
+   12/07/1999: (BDR) fix sigsetjmp macro to set saved_mask
+   
 */
 
 #ifndef	_PSIGNAL_H_

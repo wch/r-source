@@ -4,15 +4,17 @@
 #include "Startup.h"
 #include "graphapp/graphapp.h"
 
+/* for signal-handling code */
+#define PSIGNAL
+#include "psignal.h"
+
 /* one way to allow user interrupts: called in ProcessEvents */
+#ifdef VisualC
+__declspec(dllimport) int UserBreak;
+#else
 #define UserBreak     (*__imp_UserBreak)
 extern int UserBreak;
-static BOOL hCtrlc(DWORD type)
-{
-    if (type == CTRL_BREAK_EVENT) 
-	UserBreak = 1;
-    return TRUE;
-}
+#endif
 
 /* calls into the R DLL */
 extern char *getDLLVersion();
@@ -21,6 +23,8 @@ extern void setup_term_ui(void);
 extern void ProcessEvents(void);
 extern void setup_Rmainloop(), end_Rmainloop(), R_ReplDLLinit();
 extern int R_ReplDLLdo1();
+void run_Rmainloop(void);
+
 
 /* getline-based input, simple output */
 #include <string.h>
@@ -62,9 +66,13 @@ void myCallBack()
 
 void myBusy(int which)
 {
-    /* set a busy cursor ... in which = 1, unset if which = 0 */
+    /* set a busy cursor ... if which = 1, unset if which = 0 */
 }
 
+static void my_onintr(int sig)
+{
+    UserBreak = 1;
+}
 
 int main (int argc, char **argv)
 {
@@ -99,14 +107,23 @@ int main (int argc, char **argv)
     R_SetParams(Rp);
 
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
-/*    SetConsoleCtrlHandler(hCtrlc, TRUE);  typedef problem on VC++ */
     LastLine[0] = 0;
 
+    signal(SIGBREAK, my_onintr);
     setup_term_ui();
     setup_Rmainloop();
+#ifdef SIMPLE_CASE
     run_Rmainloop();
-/*    R_ReplDLLinit();
-      while(R_ReplDLLdo1() > 0);*/
+    end_Rmainloop();
+#else
+    R_ReplDLLinit();
+    while(R_ReplDLLdo1() > 0) {
+/* add user actions here if desired */
+    }
+/* only get here on EOF (not q()) */
+    Rprintf("\nquitting\n");
+    R_CleanUp(1);
+#endif
     end_Rmainloop();
     return 0;
 }

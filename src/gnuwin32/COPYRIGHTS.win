@@ -49,3 +49,10 @@ src/gnuwin32/math/*
 
         Cephes Math Library Release 2.3:  March, 1995
         Copyright 1984, 1995 by Stephen L. Moshier
+
+src/gnuwin32/psignal.[ch]
+
+Based on files which are
+	Freely redistributable and modifiable.  Use at your own risk.
+	Copyright 1994-1999 The Downhill Project
+	http://www.ede.com/free/u2nt

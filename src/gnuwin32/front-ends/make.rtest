@@ -11,7 +11,7 @@ endif
 LIBS=-L.. -lR
 CFLAGS=-Wall
 
-rtest-CFLAGS=-I.. -I../../include
+rtest-CFLAGS=-I.. -I../../include -DWin32
 Rtest.exe: rtest.o R.dll
 	$(CC) -o $@ $^ -L.. -lR
 

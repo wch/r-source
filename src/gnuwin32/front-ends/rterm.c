@@ -1,6 +1,8 @@
 #include <windows.h>
 #include <stdio.h>
 #include "Version.h"
+#define PSIGNAL
+#include "../psignal.h"
 
 #define CharacterMode (*__imp_CharacterMode)
 #define UserBreak     (*__imp_UserBreak)
@@ -20,11 +22,9 @@ char *getRVersion()
     return(Rversion);
 }
 
-static BOOL hCtrlc(DWORD type)
+static void my_onintr()
 {
-    if (type == CTRL_BREAK_EVENT) 
-	UserBreak = 1;
-    return TRUE;
+    UserBreak = 1;
 }
 
 
@@ -38,7 +38,7 @@ int AppMain (int argc, char **argv)
     if (isatty(0)) 
 	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
     cmdlineoptions(argc, argv);
-    SetConsoleCtrlHandler(hCtrlc, TRUE);
+    signal(SIGBREAK, my_onintr);
     setup_term_ui();
     mainloop();
 }

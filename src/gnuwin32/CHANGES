@@ -3,13 +3,20 @@ rw0650
 
 The environment variables have been changed: R_HOME is now R's home
 and R_USER is the HOME for the user which will be used by R (and
-defaults to HOME, if set).
+defaults to HOME, if set). (There are many other such changes in R:
+for example RLIBS becomes R_LIBS.)
+
+Saving a plot as postscript will produce a portrait plot irrespective
+of the setting of ps.options().
 
 New flag --no-environ suppresses reading .Renviron and is implied by
 --vanilla.
 
 More support for building R into other applications: see the examples
 in the front-ends directory of the source distribution.
+
+Internally interrupting by Esc of Ctrl-Break is handled by signals, so the
+`User Break' response will no longer appear.
 
 
 rw0642
@@ -47,6 +54,9 @@ escape will select Cancel and B Back.
 
 There is a new target `make check' for running the standard tests and 
 checking the standard packages (as on Unix).
+
+Saving the content of a graphic device as GIF should work again (under some
+circumstances, it resulted in a white image in rw064[01]). 
 
 
 rw0641
