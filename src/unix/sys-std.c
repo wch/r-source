@@ -819,7 +819,7 @@ int Rstd_ChooseFile(int new, char *buf, int len)
 
 void Rstd_ShowMessage(char *s)
 {
-    REprintf("%s", s);
+    REprintf("%s\n", s);
 }
 
 
