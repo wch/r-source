@@ -37,7 +37,7 @@ double bessel_k(double x, double alpha, double expo)
     if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
 #endif
     ize = (long)expo;
-    nb = 1+ (long)floor(alpha);/* nb-1 <= alpha < nb */
+    nb = 1+ (long)floor(fabs(alpha));/* nb-1 <= alpha < nb */
     alpha -= (nb-1);
     bk = (double *) calloc(nb, sizeof(double));
     K_bessel(&x, &alpha, &nb, &ize, bk, &ncalc);
@@ -60,7 +60,7 @@ void K_bessel(double *x, double *alpha, long *nb,
 /*-------------------------------------------------------------------
 
   This routine calculates modified Bessel functions
-  of the second kind, K_(N+ALPHA) (X), for non-negative
+  of the third kind, K_(N+ALPHA) (X), for non-negative
   argument X, and non-negative order N+ALPHA, with or without
   exponential scaling.
 
