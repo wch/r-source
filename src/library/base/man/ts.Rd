@@ -107,7 +107,7 @@ z <- ts(matrix(rnorm(300), 100, 3), start=c(1961, 1), frequency=12)
 plot(z)
 plot(z, plot.type="single", lty=1:3)
 
-# Arithmetic etc :
+# Ensure working arithmetic for `ts' objects :
 stopifnot(z == z)
 stopifnot(z-z == 0)
 

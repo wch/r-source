@@ -83,6 +83,7 @@ Machine()
 str(Machine())
 (Meps <- .Machine $ double.eps)
 
+## All the following relations must hold :
 stopifnot(
  1 +     Meps != 1,
  1 + .5* Meps == 1,
