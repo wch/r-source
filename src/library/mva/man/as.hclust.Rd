@@ -33,7 +33,7 @@ as.hclust(x, \dots)
 x <- matrix(rnorm(30), ncol=3)
 hc <- hclust(dist(x), method="complete")
 
-if(require(cluster)) {# is a required package
+if(require(cluster, quietly=TRUE)) {# is a recommended package
   ag <- agnes(x, method="complete")
   hcag <- as.hclust(ag)
   ## The dendrograms order slightly differently:
