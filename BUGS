@@ -268,4 +268,7 @@ none
 
 Directory:  incoming
 
-none
+* PR# 1049 *
+Subject: predict.mlm: Error: Object "X" not found
+From: John Holena <john.holena@reverecapital.com>
+Date: Sun, 12 Aug 2001 13:35:15 -0400
