@@ -9,19 +9,7 @@
 
 
 RHOME = ::
-all Ä profiles library headers html
-
-## ------------- headers -----------
-headers Ä ::include:config.h Rconfig.h Rversion.h FFDecl.h FFTab.h
-
-::include:config.h Ä config.mac.h
-	Duplicate -y config.mac.h ::include:config.h
-	execute GETCONFIG
-	execute GETVERSION 
-	execute FF_CREATE
-    set MacF2C    "Mac F2C"
-    set FortList  "`Files ::appl:Å.f ::main:Å.f`" 
-    "{MacF2C}" -wait {FortList}
+all Ä profiles library html
 	
 	
 ## ------------- profiles -----------
@@ -40,13 +28,13 @@ profiles Ä {RHOME}:library:base:R:Rprofile
 	catenate ::library:profile:Common.R ::library:profile:Rprofile.mac > {RHOME}:library:base:R:Rprofile
 
 ## ------------- library -----------
-PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
+PACKAGES = base ctest eda lqs methods modreg mva nls splines stepfun ts
 DATA = base modreg mva nls ts
 DEMO = base eda
 
 fixdesc Ä $OutOfDate
 	echo "creating DESCRIPTION files"
-	execute GETDESC (PACKAGES}
+	execute :tools:GETDESC (PACKAGES}
 
 library Ä mainfiles datafiles help demofiles
 
