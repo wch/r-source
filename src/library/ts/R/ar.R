@@ -146,7 +146,9 @@ print.ar <- function(x, digits = max(3, .Options$digits - 3), ...)
     cat("\nCall:\n", deparse(x$call), "\n\n", sep = "")
     nser <- NCOL(x$var.pred)
     if(nser > 1) {
-        res <- x[c("ar", "var.pred")]
+        if(!is.null(x$x.intercept))
+            res <- x[c("ar", "x.intercept", "var.pred")]
+        else res <- x[c("ar", "var.pred")]
         res$ar <- aperm(res$ar, c(2,3,1))
         print(res, digits=digits)
     } else {
@@ -156,6 +158,10 @@ print.ar <- function(x, digits = max(3, .Options$digits - 3), ...)
             names(coef) <- seq(length=x$order)
             print.default(coef, print.gap = 2)
         }
+        if(!is.null(xint <- x$x.intercept) && !is.na(xint))
+            cat("\nIntercept: ", format(xint, digits = digits),
+                " (", format(x$asy.se.coef$x.mean, digits = digits),
+                ") ", "\n", sep="")
         cat("\nOrder selected", x$order, " sigma^2 estimated as ",
             format(x$var.pred, digits = digits),"\n")
 

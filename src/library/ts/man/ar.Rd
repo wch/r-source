@@ -3,7 +3,6 @@
 \alias{ar.burg}
 \alias{ar.burg.R}
 \alias{ar.yw}
-\alias{ar.ols}
 \alias{ar.mle}
 \alias{print.ar}
 \alias{predict.ar}
@@ -14,8 +13,8 @@ ar(x, aic = TRUE, order.max = NULL,
 ar.burg(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE, series,
         var.method = 1)
 ar.yw(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE, series)
-ar.ols(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE, series)
 ar.mle(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE, series)
+
 predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
 }
 \arguments{
@@ -40,7 +39,7 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
 
     \item{demean}{should a mean be estimated during fitting?}
 
-    \item{series}{name for the series.  Defaults to
+    \item{series}{names for the series.  Defaults to
      	\code{deparse(substitute(x))}.}
 
     \item{var.method}{the method to estimate the innovations variance
@@ -62,13 +61,10 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
 \details{
   For definiteness, note that the AR coefficients have the sign in
 
-  (x[t] - m) = a[0] + a[1]*(x[t-1] - m) + ... +  a[p]*(x[t-p] - m) + e[t]
-
-  and a[0] is zero except to an OLS fit (which can fit non-stationary
-  models).
+  (x[t] - m) = a[1]*(x[t-1] - m) + ... +  a[p]*(x[t-p] - m) + e[t]
   
   \code{ar} is just a wrapper for the functions \code{ar.yw},
-  \code{ar.burg}, \code{ar.ols} and \code{ar.mle}.
+  \code{ar.burg}, \code{\link{ar.ols}} and \code{ar.mle}.
   
   Order selection is done by AIC if \code{aic} is true. This is
   problematic, as of the methods here only \code{ar.mle} performs
@@ -77,8 +73,7 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
   likelihood. Note that this is not the same as the Gaussian likelihood
   evaluated at the estimated parameter values. In \code{ar.yw} the
   variance matrix of the innovations is computed from the fitted
-  coefficients and the autocovariance of \code{x} and in \code{ar.ols}
-  from the variance matrix of the residuals.
+  coefficients and the autocovariance of \code{x}.
   
   \code{ar.burg} allows two methods to estimate the innovations
   variance and hence AIC. Method 1 is to use the update given by
@@ -90,15 +85,7 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
 
   Remember that \code{ar} includes by default a constant in the model, by
   removing the overall mean of \code{x} before fitting the AR model,
-  or (\code{ar.mle}) estimating a constant to subtract or
-  (\code{ar.ols}) subtracting the mean and estimating an additive
-  constant.
-
-  \code{ar.ols} fits the general AR model (containing an intercept
-  if \code{demean = TRUE}) to a possibly non-stationary and/or
-  multivariate system of series \code{x}. The resulting
-  unconstrained least squares estimates are consistent, even if
-  some of the series are non-stationary and/or co-integrated.
+  or (\code{ar.mle}) estimating a constant to subtract.
 }
 \value{
   For \code{ar} and its methods a list of class \code{"ar"} with
@@ -123,25 +110,26 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
       are set to \code{NA}. If \code{x} is a time series, so is \code{resid}.}
   \item{method}{The value of the \code{method} argument.}
   \item{series}{The name(s) of the time series.}
-  \item{asy.var.coef}{(univariate, not \code{ar.ols}) The asymptotic-theory
+  \item{asy.var.coef}{(univariate case.) The asymptotic-theory
       variance matrix of the coefficient estimates.}
-  \item{asy.se.coef}{(\code{ar.ols} only.) The asymptotic-theory
-      standard errors of the coefficient estimates.}
 
   For \code{predict.ar}, a time series of predictions, or if
   \code{se.fit = TRUE}, a list with components \code{pred}, the
   predictions, and \code{se}, the estimated standard errors. Both
   components are time series.
 }
-\author{Martyn Plummer, univariate case of \code{ar.yw}, \code{ar.mle}
-    and C code for \code{ar.burg} by B.D. Ripley,
-    \code{ar.ols} by Adrian Trapletti.}
+\author{Martyn Plummer. Univariate case of \code{ar.yw}, \code{ar.mle}
+    and C code for \code{ar.burg} by B.D. Ripley.}
 
 \note{
     Only the univariate cases of \code{ar.burg} and \code{ar.mle} are
     implemented.
 
     Fitting by \code{method="mle"} to long series can be very slow.
+}
+
+\seealso{
+    \code{\link{ar.ols}}, \code{\link{arima0}} for ARMA models.
 }
 
 \references{
@@ -151,9 +139,6 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
 
     Brockwell, P. J. and Davis, R. A. (1996) \emph{Introduction to Time
 	Series and Forecasting.} Springer, New York. Sections 5.1 and 7.6.
-
-    Luetkepohl, H. (1991): \emph{Introduction to Multiple Time Series
-	Analysis.} Springer Verlag, NY, pp. 368-370.
 
     Percival, D. P. and Walden, A. T. (1998) \emph{Spectral Analysis
 	for Physical Applications.} Cambridge University Press.
@@ -189,9 +174,5 @@ predict(sunspot.ar, n.ahead=25)
 
 data(BJsales)
 ar(ts.union(BJsales, BJsales.lead))
-
-data(EuStockMarkets)
-x <- diff(log(EuStockMarkets))
-ar.ols(x, order.max=6)
 }
 \keyword{ts}
