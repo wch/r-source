@@ -2,7 +2,7 @@
 \title{List of Graphical Devices}
 \usage{
 #ifdef unix
-x11(\dots)
+X11(\dots)
 #endif
 #ifdef windows
 windows(\dots)
@@ -59,7 +59,7 @@ dev.interactive()
   The following devices will be available if \R was compiled to use them
   and started with the appropriate \code{--gui} argument:
   \itemize{
-    \item \code{\link{x11}} The graphics driver for the X11 Window
+    \item \code{\link{X11}} The graphics driver for the X11 Window
     system
     \item \code{\link{png}} PNG bitmap device
     \item \code{\link{jpeg}} JPEG bitmap device
@@ -73,6 +73,13 @@ dev.interactive()
   \code{dev.interactive()} returns a logical, \code{TRUE} iff an
   interactive (screen) device is in use.
 }
+\details{
+  If no device is open, using a high-level graphics function will cause
+  a device to be opened.  Which device is given by
+  \code{\link{options}("device")} which is initially set as the most
+  appropriate for each platform: a screen device in interactive use and
+  \code{\link{postscript}} otherwise.
+}
 \seealso{
   The individual help files for further information on any of the
   devices listed here;
@@ -82,8 +89,13 @@ dev.interactive()
   \code{\link{dev2bitmap}}.
 #ifdef unix
 
-  \code{\link{capabilities}} to see if \code{\link{x11}}, \code{\link{jpeg}}
+  \code{\link{capabilities}} to see if \code{\link{X11}}, \code{\link{jpeg}}
   and \code{\link{png}} are available.
 #endif
 }
+\examples{\dontrun{
+## open the default screen device on this platform if no device is 
+## open
+if(dev.cur() == 1) get(getOption("device"))()
+}}
 \keyword{device}
