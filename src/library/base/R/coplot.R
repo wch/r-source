@@ -32,7 +32,7 @@ coplot <-
              show.given = TRUE, col = par("fg"), pch=par("pch"),
              xlab = paste("Given :", a.name),
              ylab = paste("Given :", b.name),
-             number = 6, overlap = 0.5, ...)
+             xlim, ylim, number = 6, overlap = 0.5, ...)
 {
     deparen <- function(expr) {
 	while (is.language(expr) && !is.name(expr) && deparse(expr[[1]])== "(")
@@ -198,8 +198,10 @@ coplot <-
 		new = FALSE)
     on.exit(par(opar))
     plot.new()
-    xlim <- range(x[is.finite(x)])
-    ylim <- range(y[is.finite(y)])
+    if( missing(xlim) )
+        xlim <- range(x[is.finite(x)])
+    if( missing(ylim) )
+        ylim <- range(y[is.finite(y)])
     pch <- rep(pch, length=nobs)
     col <- rep(col, length=nobs)
     do.panel <- function(index) {
