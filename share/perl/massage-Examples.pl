@@ -52,18 +52,21 @@ attach(NULL, name = "CheckExEnv")
 assign(".CheckExEnv", as.environment(2), pos = length(search())) # base
 ## This plot.new() patch has no effect yet for persp();
 ## layout() & filled.contour() are now ok
-utils::assignInNamespace("plot.new",
-       function() {
-	   .Internal(plot.new())
-	   pp <- par(c("mfg","mfcol","oma","mar"))
-	   if(all(pp\$mfg[1:2] == c(1, pp\$mfcol[2]))) {
-               outer <- (oma4 <- pp\$oma[4]) > 0; mar4 <- pp\$mar[4]
-               mtext(paste("help(", ..nameEx, ")"), side = 4,
-                     line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
-                     outer = outer, adj = 1, cex = .8, col = "orchid")
-	   }
-       },
-       ns = "graphics")
+## Note that either this is in front of package:graphics, or the latter
+## will get the altered value when created.
+.plot.new <- function() {
+    .Internal(plot.new())
+    pp <- par(c("mfg","mfcol","oma","mar"))
+    if(all(pp\$mfg[1:2] == c(1, pp\$mfcol[2]))) {
+	outer <- (oma4 <- pp\$oma[4]) > 0; mar4 <- pp\$mar[4]
+	mtext(paste("help(", ..nameEx, ")"), side = 4,
+	      line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
+	      outer = outer, adj = 1, cex = .8, col = "orchid", las=3)
+    }
+}
+utils::assignInNamespace("plot.new", .plot.new, ns = "graphics")
+assign("plot.new", .plot.new, envir = .CheckExEnv)
+rm(.plot.new)
 assign("cleanEx",
        function(env = .GlobalEnv) {
 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
