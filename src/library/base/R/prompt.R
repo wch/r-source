@@ -97,7 +97,7 @@ prompt.default <-
               "\\non_function{}",
               "\\title{ ~~data-name / kind ...  }",
               "\\description{",
-		  "  ~~ A concise (1-5 lines) description of what the function does. ~~",
+		  "  ~~ A concise (1-5 lines) description of the dataset. ~~",
               "}",
               paste0("\\usage{data(", name, ")}"),
               "\\format{", "  The format is:", str.txt, "}",
