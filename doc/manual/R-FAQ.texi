@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.6-6, 2002-10-11
+@set FAQ-VERSION 1.6-7, 2002-10-18
 @set REL-VERSION 1.6.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -435,12 +435,13 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @c                i386  1.6.0  Martyn Plummer <plummer@iarc.fr>
 @c suse     7.3   i386  1.6.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c          8.0   i386  1.6.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
+@c          8.1   i386  1.6.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 
 The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
 stable/testing packages for the i386 platform (now part of the Debian
 distribution and maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x
 i386 and 7.x alpha packages (maintained by Stephen Eglen, Martyn Plummer
-and Naoki Takebayashi, respectively), SuSE 7.3/8.0 i386 packages by
+and Naoki Takebayashi, respectively), SuSE 7.3/8.0/8.1 i386 packages by
 Detlef Steuer, and Mandrake 8.1/8.2/9.0 i386 packages by Michele
 Alzetta.
 
@@ -1921,6 +1922,8 @@ Breiman's random forest classifier.
 @item relimp
 Functions to facilitate inference on the relative importance of
 predictors in a linear or generalized linear model.
+@item rgenoud
+R version of GENetic Optimization Using Derivatives.
 @item rmeta
 Functions for simple fixed and random effects meta-analysis for
 two-sample comparison of binary outcomes.
