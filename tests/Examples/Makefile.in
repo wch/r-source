@@ -53,9 +53,6 @@ R:
 	@echo "@ECHO_T@ OK"
 
 $(EX_IN): FORCE
-## <FIXME>
-## Eventually we should make setting T and F to NULL unconditional and
-## hence not need to set 'R_CHECK_WITH_T_N_F_AS_NULL'.
 	@(pkg=`basename $@ -Ex.R`; \
 	if $(PERL) $(top_srcdir)/tools/Rdnewer.pl \
 	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
@@ -74,7 +71,6 @@ $(EX_IN): FORCE
 	  $(top_srcdir)/tools/move-if-change $${f} $@; \
 	  touch $@; \
 	fi)
-## </FIXME>
 FORCE:
 
 $(EX_OUT): Makefile \
