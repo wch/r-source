@@ -34,4 +34,5 @@ eval(ex1)# 1:10
 length(ex3 <- expression(u,v, 1+ 0:9))# 3
 mode(ex3 [3]) # expression
 mode(ex3[[3]])# call
+rm(ex3)
 }
