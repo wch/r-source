@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file dounzip.c
- *  first part Copyright (C) 2002-3  the R Development Core Team
+ *  first part Copyright (C) 2002-4  the R Development Core Team
  *  second part Copyright (C) 1998 Gilles Vollant
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -19,8 +19,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* <UTF8-FIXME> low priority
-   Has a byte-level interface and e.g. own case-insensitive comparisons.
+/* <UTF8>
+   Looks OK as byte-level comparions are all with ASCII chars.
+   Has own case-insensitive comparisons which we never use (as from R 2.1.0).
  */
 
 #ifdef HAVE_CONFIG_H
@@ -38,11 +39,11 @@
 #include <io.h> /* for mkdir */
 #endif
 
+/* cf do_dircreate in platform.c */
 static int R_mkdir(char *path)
 {
 #ifdef Win32
     char *p, local[PATH_MAX];
-    /* Looks like `/' only works on NT4 with no drive in the path */
     strcpy(local, path);
     for (p = local; *p; p++) if (*p == '/') *p = '\\';
     return mkdir(local);
@@ -147,7 +148,7 @@ do_unzip(char *zipname, char *dest, int nfiles, char **files,
 	}
     } else {
 	for (i = 0; i < nfiles; i++) {
-	    if ((err = unzLocateFile(uf, files[i], 0)) != UNZ_OK) break;
+	    if ((err = unzLocateFile(uf, files[i], 1)) != UNZ_OK) break;
 	    if ((err = extract_one(uf, dest, files[i], names, nnames)) != UNZ_OK) break;
 #ifdef Win32
 	    R_ProcessEvents();
@@ -257,7 +258,7 @@ static Rboolean unz_open(Rconnection con)
 	warning("cannot open zip file `%s'", path);
 	return FALSE;
     }
-    if (unzLocateFile(uf, p+1, 0) != UNZ_OK) {
+    if (unzLocateFile(uf, p+1, 1) != UNZ_OK) {
 	warning("cannot locate file `%s' in zip file `%s'", p+1, path);
 	return FALSE;
     }

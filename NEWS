@@ -173,6 +173,9 @@ NEW FEATURES
     o	abbreviate() now warns if used with non-ASCII chars, as the 
 	algorithm is designed for English words.
 
+    o	File-name matching is no longer case-insensitive with unz()
+	connections, even on Windows.
+
 
 UTILITIES
 
