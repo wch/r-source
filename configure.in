@@ -173,7 +173,7 @@ fi
 #  HEADER FILES
 
 AC_HEADER_STDC
-AC_CHECK_HEADERS(fcntl.h limits.h dlfcn.h dl.h elf.h time.h sys/times.h rpc/xdr.h readline/history.h)
+AC_CHECK_HEADERS(fcntl.h limits.h dlfcn.h dl.h elf.h time.h sys/times.h rpc/xdr.h readline/history.h locale.h)
 
 
 #  TYPEDEFS, STRUCTURES, AND COMPILER CHARACTERISTICS
