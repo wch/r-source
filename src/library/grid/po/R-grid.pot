@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-03 11:51\n"
+"POT-Creation-Date: 2005-03-08 07:39\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,16 +77,16 @@ msgstr ""
 msgid "Must specify only valid 'gpar' names"
 msgstr ""
 
-msgid "WILL not be faithful"
-msgstr ""
-
-msgid "MAY not be faithful"
-msgstr ""
-
 msgid "Invalid display list element"
 msgstr ""
 
-msgid "grob(s) overwritten"
+msgid "grob(s) overwritten (grab WILL not be faithful; try 'wrap=TRUE')"
+msgstr ""
+
+msgid "viewport overwritten (grab MAY not be faithful)"
+msgstr ""
+
+msgid "grob pushed viewports and did not pop/up them (grab MAY not be faithful)"
 msgstr ""
 
 msgid "Only valid to push viewports"
