@@ -23,6 +23,9 @@ BUG FIXES
     o	Subsetting non-existent rows in a data frame would produce
 	missing row names, which are not allowed.
 
+    o   On Unix, R_PAPERSIZE was set to '' instead of 'a4' as default on
+	systems without paperconf.
+
 
 
 		CHANGES IN R VERSION 1.5.0
