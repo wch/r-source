@@ -485,7 +485,7 @@ do_install_source () {
     fi
     if ${thislazy}; then
       message " moving datasets to lazyload DB"
-      echo "tools:::data2LazyLoadDB(\"${pkg_name}\")" | \
+      echo "tools:::data2LazyLoadDB(\"${pkg_name}\", \"${lib}\")" | \
         R_DEFAULT_PACKAGES=tools LANG=C "${R_EXE}" --vanilla > /dev/null
     else
       if test -n "${use_zip_data}" \
@@ -606,7 +606,7 @@ do_install_source () {
   fi
   if ${thislazy}; then
     message "preparing package for lazy loading"
-    echo "tools:::makeLazyLoading(\"${pkg_name}\")" | \
+    echo "tools:::makeLazyLoading(\"${pkg_name}\", \"${lib}\")" | \
       R_DEFAULT_PACKAGES=NULL LC_COLLATE=C "${R_EXE}" --vanilla --slave
     rm -f ${R_PACKAGE_DIR}/R/all.rda
     if test -s R_PROFILE.R; then
