@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-35, @value{FAQ-YEAR}-08-04
+@set FAQ-VERSION 1.7-36, @value{FAQ-YEAR}-08-11
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1986,6 +1986,9 @@ Kernel regression smoothing with adaptive local or global plug-in
 bandwidth selection.
 @item lpridge
 Local polynomial (ridge) regression.
+@item maptools
+Set of tools for manipulating and reading geographic data, in particular
+ESRI shapefiles.
 @item maptree
 Functions with example data for graphing and mapping models from
 hierarchical clustering and classification and regression trees.
@@ -2943,7 +2946,7 @@ debugger GDB, type @kbd{M-x gdb} and give the path to the R
 @emph{binary} as argument.  At the @command{gdb} prompt, set
 @env{R_HOME} and other environment variables as needed (using e.g.@:
 @kbd{set env R_HOME /path/to/R/}, but see also below), and start the
-binary with the desired arguments (e.g., @kbd{run --vsize=12M}).
+binary with the desired arguments (e.g., @kbd{run --quiet}).
 
 If you have @acronym{ESS}, you can do @kbd{C-u M-x R @key{RET} - d
 @key{SPC} g d b @key{RET}} to start an inferior R process with arguments

@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-35, 2003-08-04
+Version 1.7-36, 2003-08-11
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1812,6 +1812,10 @@ distributions of R.)
 *lpridge*
      Local polynomial (ridge) regression.
 
+*maptools*
+     Set of tools for manipulating and reading geographic data, in
+     particular ESRI shapefiles.
+
 *maptree*
      Functions with example data for graphing and mapping models from
      hierarchical clustering and classification and regression trees.
@@ -2759,7 +2763,7 @@ debugger GDB, type `M-x gdb' and give the path to the R _binary_ as
 argument.  At the `gdb' prompt, set `R_HOME' and other environment
 variables as needed (using e.g.  `set env R_HOME /path/to/R/', but see also
 below), and start the binary with the desired arguments (e.g., `run
---vsize=12M').
+--quiet').
 
    If you have ESS, you can do `C-u M-x R <RET> - d <SPC> g d b <RET>' to
 start an inferior R process with arguments `-d gdb'.
