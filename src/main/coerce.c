@@ -530,7 +530,7 @@ static SEXP coerceToExpression(SEXP v)
 	    break;
 	case INTSXP:
 	    for (i = 0; i < n; i++)
-		VECTOR(ans)[i] = ScalarLogical(INTEGER(v)[i]);
+		VECTOR(ans)[i] = ScalarInteger(INTEGER(v)[i]);
 	    break;
 	case REALSXP:
 	    for (i = 0; i < n; i++)
