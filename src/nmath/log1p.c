@@ -112,8 +112,7 @@ double log1p(double x)
 	if(fabs(x) < .5 * DBL_EPSILON)
 	    return x;
 
-	if( 0    < x && x < 1e-8 ||
-	   -1e-9 < x && x < 0)
+	if( (0 < x && x < 1e-8) || (-1e-9 < x && x < 0))
 	    return x * (1 - .5 * x);
 	/* else */
 	return x * (1 - x * chebyshev_eval(x / .375, alnrcs, nlnrel));

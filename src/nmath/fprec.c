@@ -38,7 +38,7 @@
 #include "Mathlib.h"
 
 /* Improvements by Martin Maechler, May 1997,
-/* further ones, Feb.2000:
+ * further ones, Feb.2000:
    Replace  pow(x, (double)i) by  R_pow_di(x, i) {and use  int dig} */
 
 /* DBL_DIG := digits of precision of a double, usually 15 : */
