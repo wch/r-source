@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-15, 2000-10-04
+Version 1.1-16, 2000-10-06
 Kurt Hornik
 
 
@@ -76,6 +76,7 @@ Table of Contents
   8.1 How should I write summary methods?
   8.2 How can I debug dynamically loaded code?
   8.3 How can I inspect R objects when debugging?
+  8.4 How can I change compilation flags?
 
 9 R Bugs
   9.1 What is a bug?
@@ -502,7 +503,6 @@ being mirrored daily at
 
      `http://cran.dk.r-project.org/'  (Denmark)
      `http://cran.hu.r-project.org/'  (Hungary)
-     `http://cran.it.r-project.org/'  (Italy)
      `http://cran.ch.r-project.org/'  (Switzerland)
      `http://cran.uk.r-project.org/'  (United Kingdom)
      `http://cran.us.r-project.org/'  (USA/Wisconsin)
@@ -923,6 +923,14 @@ the same time being as compatible as possible with S.
 
    * In S, `tapply(simplify=TRUE)' returns a vector where R returns a
      one-dimensional array (which can have named dimnames).
+
+   * In S(-PLUS) the C locale is used, whereas in R the current operating
+     system locale is used for determining which characters are alphanumeric
+     and how they are sorted.  This affects the set of valid names for R
+     objects (for example accented chars may be allowed in R) and ordering
+     in sorts and comparisons (such as whether `"aA" < "Bb"' is true or
+     false).  From version 1.2.0 the locale can be (re-)set in R by the
+     `Sys.setlocale()' function.
 
 
    There are also differences which are not intentional, and result from
@@ -2001,6 +2009,18 @@ code, send an interrupt, and then set the required breakpoints.
 
    See section "Inspecting R objects when debugging" in `Writing R
 Extensions'.
+
+8.4 How can I change compilation flags?
+=======================================
+
+   Suppose you have C code file for dynloading into R, but you want to use
+`R CMD SHLIB' with compilation flags other than the default ones (which
+were determined when R was built).  You could change the file
+``R_HOME'/etc/Makeconf' to reflect your preferences.  If you are a Bourne
+shell user, you can also pass the desired flags to Make (which is used for
+controlling compilation) via the Make variable `MAKEFLAGS', as in
+
+     MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
 
 9 R Bugs
 ********

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-15, 2000-10-04
+@set FAQ-VERSION 1.1-16, 2000-10-06
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -620,9 +620,9 @@ currently being mirrored daily at
 @tab (Denmark)
 @item @uref{http://cran.hu.r-project.org/}
 @tab (Hungary)
-@item @uref{http://cran.it.r-project.org/}
-@c @uref{http://www.stat.unipg.it/pub/stat/statlib/R/CRAN/}
-@tab (Italy)
+@c @item @uref{http://cran.it.r-project.org/}
+@c @c @uref{http://www.stat.unipg.it/pub/stat/statlib/R/CRAN/}
+@c @tab (Italy)
 @item @uref{http://cran.ch.r-project.org/}
 @c @uref{http://stat.ethz.ch/CRAN/}
 @tab (Switzerland)
@@ -1186,6 +1186,15 @@ statement is executed.
 @item
 In S, @code{tapply(simplify=TRUE)} returns a vector where R returns a
 one-dimensional array (which can have named dimnames).
+
+@item
+In S(-PLUS) the C locale is used, whereas in R the current operating
+system locale is used for determining which characters are alphanumeric
+and how they are sorted.  This affects the set of valid names for R
+objects (for example accented chars may be allowed in R) and ordering in
+sorts and comparisons (such as whether @code{"aA" < "Bb"} is true or
+false).  From version 1.2.0 the locale can be (re-)set in R by the
+@code{Sys.setlocale()} function.
 
 @end itemize
 
@@ -2305,6 +2314,7 @@ examples in the mailing list achives.
 * How should I write summary methods?::  
 * How can I debug dynamically loaded code?::  
 * How can I inspect R objects when debugging?::  
+* How can I change compilation flags?::  
 @end menu
 
 @node How should I write summary methods?, How can I debug dynamically loaded code?, R Programming, R Programming
@@ -2337,7 +2347,7 @@ code, R-exts, Writing R Extensions}.
 This manual is included in the R distribution, @pxref{What documentation
 exists for R?}.
 
-@node How can I inspect R objects when debugging?,  , How can I debug dynamically loaded code?, R Programming
+@node How can I inspect R objects when debugging?, How can I change compilation flags?, How can I debug dynamically loaded code?, R Programming
 @section How can I inspect R objects when debugging?
 
 The most convenient way is to call @code{R_PV} from the symbolic
@@ -2351,6 +2361,21 @@ Extensions}.
 @xref{Inspecting R objects, , Inspecting R objects when debugging,
 R-exts, Writing R Extensions}.
 @end ifset
+
+@node How can I change compilation flags?,  , How can I inspect R objects when debugging?, R Programming
+@section How can I change compilation flags?
+
+Suppose you have C code file for dynloading into R, but you want to use
+@code{R CMD SHLIB} with compilation flags other than the default ones
+(which were determined when R was built).  You could change the file
+@file{@env{R_HOME}/etc/Makeconf} to reflect your preferences.  If you
+are a Bourne shell user, you can also pass the desired flags to Make
+(which is used for controlling compilation) via the Make variable
+@code{MAKEFLAGS}, as in
+
+@smallexample
+MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
+@end smallexample
 
 @node R Bugs, Acknowledgments, R Programming, Top
 @chapter R Bugs
