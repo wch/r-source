@@ -706,7 +706,11 @@ The problem is that @code{SIGINT} signals will not be handled properly
 when sent during a multi-threaded ATLAS computation, and this may result
 in a segmentation fault.  Changes in the R internals are needed to
 support the use of threaded libraries; this will hopefully be addressed
-in a future release.
+in a future release.  If despite this warning you still want to use a
+multi-threaded ATLAS you can do so by specifying
+@smallexample
+--with-blas="-lptf77blas -lpthread -latlas"
+@end smallexample
 
 Note that the BLAS library will be used for several add-on packages as
 well as for @R{} itself.  This means that it is better to use a shared
@@ -1183,7 +1187,8 @@ with @command{f77}, nor with @command{g77}.  @code{libsunperf}
 contains both BLAS and LAPACK code, and @option{--with-lapack} is 
 recommended for 32-bit builds using @command{f95}, but not for
 64-bit builds where on our test system it failed in both Forte 6U1 and
-7, albeit in different ways.  
+7, albeit in different ways.  Our experience has been that ATLAS's BLAS
+is faster than @code{libsunperf}, especially for complex numbers.
 
 Some care is needed to ensure that libraries found by
 @command{configure} are compatible with the R executable and modules, as
