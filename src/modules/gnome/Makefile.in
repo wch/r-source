@@ -24,7 +24,8 @@ SOURCES = \
 	system-choosefile.c system-console.c system-showfiles.c \
 	system.c \
 	terminal-find.c terminal-functions.c terminal-menu.c \
-	terminal-prefs.c terminal-toolbar.c terminal.c
+	terminal-prefs.c terminal-toolbar.c terminal.c \
+	device-support.c
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.lo)
 HEADERS = \
@@ -34,7 +35,8 @@ HEADERS = \
 	gnome-find-dialog.h \
 	gtkconsole.h \
 	terminal-find.h terminal-functions.h terminal-menu.h \
-	terminal-prefs.h terminal-toolbar.h terminal.h
+	terminal-prefs.h terminal-toolbar.h terminal.h \
+	device-support.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(SOURCES) $(HEADERS)
