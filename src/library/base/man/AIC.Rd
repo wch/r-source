@@ -12,6 +12,8 @@ AIC(object, \dots, k = 2)
     \code{logLik} method to extract the corresponding log-likelihood, or
     an object inheriting from class \code{logLik}.}
   \item{\dots}{optional fitted model objects.}
+  \item{k}{numeric, the ``penalty'' per parameter to be used; the
+    default \code{k = 2} is the classical AIC.}
 }
 \description{
   This generic function calculates the Akaike information criterion for
