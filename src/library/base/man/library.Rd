@@ -83,34 +83,36 @@ library.dynam(chname)
   documentation as needed.  The \R distribution provides the two example
   packages \code{eda} and \code{mva}.
 
-  A package consists of a subdirectory containing a \code{TITLE} and
-  \code{INDEX} file, and subdirectories \code{R}, \code{man} and
-  optionally \code{src}, \code{src-c}, \code{data}, and \code{exec}.
+  A package consists of a subdirectory containing a \file{TITLE} and
+  \file{INDEX} file, and subdirectories \file{R}, \file{man} and
+  optionally \file{src}, \file{src-c}, \file{data}, and \file{exec}.
 
-  The \code{TITLE} file contains a line giving the name of the package
-  and a brief description.  \code{INDEX} contains a line for each
+  The \file{TITLE} file contains a line giving the name of the package
+  and a brief description.  \file{INDEX} contains a line for each
   sufficiently interesting object in the package, giving its name and a
   description (functions such as print methods not usually called
   explicitly might not be included).
 
-  The \code{R} subdirectory contains \R code files with names beginning
+  The \file{R} subdirectory contains \R code files with names beginning
   with lowercase letters.  One of these files should use
   \code{library.dynam()} to load any necessary compiled code.
 
-  The \code{man} subdirectory should contain \R documentation files for
+  The \file{man} subdirectory should contain \R documentation files for
   the objects in the package.
 
-  Source and a Makefile for the compiled code is in \code{src}, and a
-  pure C version of the source should be in \code{src-c}.  In the common
+  Source and a Makefile for the compiled code is in \file{src}, and a
+  pure C version of the source should be in \file{src-c}.  In the common
   case when all the source is in C it may be convenient to make one of
   these directories a symbolic link to the other. The Makefile will be
   passed various machine-dependent compile and link flags, examples of
   which can be seen in the \code{eda} package.
 
-  The \code{data} subdirectory is for additional data files the package
-  makes available for loading using \code{data()}.
+  The \file{data} subdirectory is for additional data files the package
+  makes available for loading using \code{data()}.  Note that (at least
+  currently) all such files are in fact R code files, and must have the
+  extension `.R'.
 
-  Finally, \code{exec} could contain executables, typically (shell or
+  Finally, \file{exec} could contain executables, typically (shell or
   Perl) scripts, the package needs.  Note that this mechanism currently
   only is experimental.
 }
