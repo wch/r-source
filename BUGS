@@ -75,17 +75,11 @@ none
 
 Directory:  Graphics
 
-* PR# 548 *
-Subject: graphics character misplaced
+* PR# 549 *
+Subject: RE:bug 548 graphics '*'
 From: acuster@nature.berkeley.edu
-Date: Sat, 20 May 2000 01:45:51 +0200 (MET DST)
---Position of '*'.  This is probably OS-specific, as it is not reproducible
---on X11 on Solaris 2.7 nor on postscript().
-* PR# 542 *
-Subject: Inconsistent behavior of par() agruments on lines()
-From: Art Salwin <salwin@mitretek.org>
-Date: Fri, 12 May 2000 10:08:22 -0400
---There are many more such inconsistencies: under investigation
+Date: Mon, 22 May 2000 00:13:37 +0200 (MET DST)
+--follow up to PR#548
 * PR# 535 *
 Subject:  axis() deficiency 
 From: William.Venables@cmis.CSIRO.AU (Bill Venables)
@@ -98,6 +92,17 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --The persp algorithm does not apply the occlusion rules to the frame, 
 --which is always plotted first. 
 --A bug, but not very simple to fix.
+* PR# 548 *
+Subject: graphics character misplaced
+From: acuster@nature.berkeley.edu
+Date: Sat, 20 May 2000 01:45:51 +0200 (MET DST)
+--Position of '*'.  This is probably OS-specific, as it is not reproducible
+--on X11 on Solaris 2.7 nor on postscript().
+* PR# 542 *
+Subject: Inconsistent behavior of par() agruments on lines()
+From: Art Salwin <salwin@mitretek.org>
+Date: Fri, 12 May 2000 10:08:22 -0400
+--There are many more such inconsistencies: under investigation
 
 Directory:  In-Out
 
@@ -132,6 +137,11 @@ Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
 
 Directory:  Low-level
 
+* PR# 550 *
+Subject:  Inconsistencies 
+From: Berwin Turlach <berwin@maths.uwa.edu.au>
+Date: Mon, 22 May 2000 10:39:40 +0800
+--Is there a bug here?
 * PR# 505 *
 Subject: interrupted save 
 From: Thomas Lumley <thomas@biostat.washington.edu>
@@ -193,10 +203,10 @@ none
 
 Directory:  incoming
 
-* PR# 549 *
-Subject: RE:bug 548 graphics '*'
-From: acuster@nature.berkeley.edu
-Date: Mon, 22 May 2000 00:13:37 +0200 (MET DST)
+* PR# 553 *
+Subject: text() with large cex parameter crashes X11()
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Mon, 22 May 2000 17:25:24 +0200 (CEST)
 * PR# 545 *
 Subject: Segmentation Fault of unknown cause
 From: kjetikj@astro.uio.no
@@ -205,3 +215,11 @@ Date: Mon, 15 May 2000 16:29:29 +0200 (MET DST)
 Subject: Problem with match.arg()
 From: kjetikj@astro.uio.no
 Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
+* PR# 552 *
+Subject: character arguments with call_R
+From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
+Date: Mon, 22 May 2000 16:13:46 +0200 (MET DST)
+* PR# 551 *
+Subject: Bus Error crash
+From: kjetikj@astro.uio.no
+Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
