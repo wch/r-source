@@ -24,7 +24,7 @@
 
 #include <Defn.h>
 #include <Rmath.h>
-
+#include <R_ext/RS.h>
 /* "GetRowNames" and "GetColNames" are utility routines which */
 /* locate and return the row names and column names from the */
 /* dimnames attribute of a matrix.  They are useful because */
@@ -306,12 +306,19 @@ SEXP do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-/* FIXME - What about non-IEEE overflow ??? */
-/* Does it really matter? */
-
 static void matprod(double *x, int nrx, int ncx,
 		    double *y, int nry, int ncy, double *z)
 {
+#ifdef IEEE_754
+    char *transa = "N", *transb = "N";
+    double one = 1.0, zero = 0.0;
+    F77_CALL(dgemm)(transa, transb, &nrx, &ncy, &ncx, &one,
+		    x, &nrx, y, &nry, &zero, z, &nrx);
+#else
+
+/* FIXME - What about non-IEEE overflow ??? */
+/* Does it really matter? */
+
     int i, j, k;
     double xij, yjk, sum;
 
@@ -322,18 +329,15 @@ static void matprod(double *x, int nrx, int ncx,
 	    for (j = 0; j < ncx; j++) {
 		xij = x[i + j * nrx];
 		yjk = y[j + k * nry];
-#ifndef IEEE_754
 		if (ISNAN(xij) || ISNAN(yjk))
 		    goto next_ik;
-#endif
 		sum += xij * yjk;
 	    }
 	    z[i + k * nrx] = sum;
-#ifndef IEEE_754
 	next_ik:
 	    ;
-#endif
 	}
+#endif
 }
 
 static void cmatprod(Rcomplex *x, int nrx, int ncx,
@@ -373,6 +377,12 @@ static void cmatprod(Rcomplex *x, int nrx, int ncx,
 static void crossprod(double *x, int nrx, int ncx,
 		      double *y, int nry, int ncy, double *z)
 {
+#ifdef IEEE_754
+    char *transa = "T", *transb = "N";
+    double one = 1.0, zero = 0.0;
+    F77_CALL(dgemm)(transa, transb, &ncx, &ncy, &nrx, &one,
+		    x, &nrx, y, &nry, &zero, z, &ncx);
+#else
     int i, j, k;
     double xji, yjk, sum;
 
@@ -383,18 +393,15 @@ static void crossprod(double *x, int nrx, int ncx,
 	    for (j = 0; j < nrx; j++) {
 		xji = x[j + i * nrx];
 		yjk = y[j + k * nry];
-#ifndef IEEE_754
 		if (ISNAN(xji) || ISNAN(yjk))
 		    goto next_ik;
-#endif
 		sum += xji * yjk;
 	    }
 	    z[i + k * ncx] = sum;
-#ifndef IEEE_754
 	next_ik:
 	    ;
-#endif
 	}
+#endif
 }
 
 static void ccrossprod(Rcomplex *x, int nrx, int ncx,
