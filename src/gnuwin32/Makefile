@@ -87,8 +87,6 @@ rinstaller:
 	@$(MAKE) --no-print-directory -C installer clean
 
 rlibs:
-# need pcre.h built before main is built
-	$(MAKE) --no-print-directory -C ../extra/pcre -f Makefile.win
 	$(MAKE) --no-print-directory -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../main  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win

@@ -22,4 +22,4 @@ clean:
 	$(RM) *.o *~ libRpcre.a
 
 distclean: clean
-	$(RM) pcre.h config.h dftables.exe
+	$(RM) chartables.h dftables.exe
