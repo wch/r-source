@@ -2,10 +2,16 @@
 
 NEW FEATURES
 
-    o   which(.) preserves names and has a new 'arr.ind' argument allowing
-        for array indices.
+    o   Makefiles should now conform (mostly) with the GNU Coding 
+	Standards.  In particular, `make install', `make uninstall'
+	and `make install-strip' now work.
+	Also, it is now possible to build R in a non-source directory.
+
+    o   which() preserves names and has a new `arr.ind' argument 
+	allowing for array indices.
 
     o   New functions {d,p,q,r}signrank for the Wilcoxon signed rank
+	distribution, and {d,p,q,r}wilcox for the Wilcoxon (rank sum)
 	distribution.
 
     o   Command line options GNUified a bit further.

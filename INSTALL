@@ -59,8 +59,10 @@ And, read the R FAQ (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html).
 INSTALLATION
 
 After
+
 	./configure
 	make
+
 have been completed successfully, you can install the complete R tree
 to your system by typing
 
@@ -68,7 +70,7 @@ to your system by typing
 
 This will install to the following directories:
 
-	$prefix/bin		executables
+	$prefix/bin		(some) executables
 	$prefix/man/man1	man pages
 	$prefix/lib/R		all the rest (libraries, online help
 				system, ...)
@@ -81,9 +83,14 @@ and can be set by running configure with the option
 The prefix of the installation directories can also be seen in the
 status message that is displayed at the end of configure.
 
-Note that you can run R without installing it from the place you
-compiled, even after `make clean'---all you need is a link from
-RHOME/bin/R to somewhere in your path.
+You do not necessarily have to build R in the top-level source
+directory (say, TOP_SRCDIR).  To build in BUILDDIR, cd there and run 
+
+	TOP_SRCDIR/configure
+	make
+
+and so on, as described further above.  This has the advantage of always
+keeping your source tree `clean'.
 
 
 USING FORTRAN
@@ -94,8 +101,8 @@ cf77, and fc (in that order), and then for f2c, and use whichever is
 found first; if none is found, R cannot be compiled.  The search
 mechanism can be changed using the `--with-g77', `--with-f77', and
 `--with-f2c' command line options to configure.  If your FORTRAN
-compiler is in a non-standard location, you can specify it via
-`--with-f77=path.to.f77'.
+compiler is in a non-standard location, you should set the enviroment
+vaiable PATH accordingly before running configure.
 
 
 TWO-LEVEL MAKE
