@@ -580,6 +580,9 @@ static void PostScriptWriteString(FILE *fp, char *str)
 	case '\n':
 	    fprintf(fp, "\\n");
 	    break;
+	case '\\':
+	    fprintf(fp, "\\\\");
+	    break;
 	case '-':
 	    if (isdigit((int)str[1]))
 		fputc(PS_minus, fp);
