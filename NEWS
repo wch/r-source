@@ -44,6 +44,8 @@ BUG FIXES
 
     o   sanitised delete.response
 
+    o   x[["a",]] could crash R
+
     o   strwidth() crashed R if no device open
 
     o   predict inconsistencies with offsets straightened out
