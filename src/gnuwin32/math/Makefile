@@ -1,3 +1,5 @@
+# library of inverse hyperbolic functions
+
 include ../MkRules
 CFLAGS=-O2
 
