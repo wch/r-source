@@ -101,8 +101,8 @@ function(file)
     lines <- Rdpp(readLines(file))
 
     aliases <- .getRdMetaDataFromRdLines(lines, "alias")
-    concepts <- .getRdMetaDataFromRdLines(lines, "concepts")    
-    keywords <- .getRdMetaDataFromRdLines(lines, "keywords")
+    concepts <- .getRdMetaDataFromRdLines(lines, "concept")
+    keywords <- .getRdMetaDataFromRdLines(lines, "keyword")
     
     ## Could be none or more than one ... argh.    
     RdType <- c(.getRdMetaDataFromRdLines(lines, "docType"), "")[1]
