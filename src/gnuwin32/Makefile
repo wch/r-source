@@ -292,7 +292,7 @@ distribution: bindist packagedist docsdist
 bindist: docfiles
 	$(RM) -rf $(RPREFIX)
 	$(MKDIR) $(RPREFIX)
-	$(CP) -pr ../../bin ../../afm ../../demos  ../../unzip $(RPREFIX)
+	$(CP) -pr ../../bin ../../afm ../../unzip $(RPREFIX)
 	$(MKDIR) $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
 	$(RM) $(RPREFIX)/*/Makefile.in
