@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.133 $'
+revision='$Revision: 1.134 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -422,11 +422,11 @@ do_install_source () {
     echo "collater(\".\",pkg=\"${R_PACKAGE_NAME}\")" | \
       R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla > /dev/null
       mkdir -p "${R_PACKAGE_DIR}/R"
-      if test -e "R/${R_PACKAGE_NAME}"; then
+      if test -f "R/${R_PACKAGE_NAME}"; then
 	mv "R/${R_PACKAGE_NAME}" "${R_PACKAGE_DIR}/R"
       else	
-	echo "ERROR: Unable to collate files for package '${pkg}'"
-	exit 5
+	echo "ERROR: Unable to collate files for package '${pkg_name}'"
+	do_exit_on_error
      fi
     if ${fake}; then
       if test -f NAMESPACE; then
