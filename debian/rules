@@ -1,16 +1,30 @@
 #!/usr/bin/make -f
 # debian/rules file for the Debian GNU/Linux r-base package
-# Copyright 1997-2001 by Douglas M. Bates <bates@stat.wisc.edu>
+# Copyright 1997-2001 by Douglas Bates <bates@stat.wisc.edu>, <edd@debian.org>
+# Copyright 2001      by Dirk Eddelbuettel <edd@debian.org>
+
+# $Id: rules,v 1.35 2001/11/28 19:44:31 bates Exp $
 
 package		= r-base
 pdfpackage	= r-doc-pdf
+htmlpackage	= r-doc-html
 gnomepackage	= r-gnome
+nmathpackage	= r-mathlib
 
-debbase		:= $(shell pwd)/debian
+# for the standalone library, no sonames are assigned in the upstream Makefiles
+somaj		= 1
+somin		= 0
+sorel		= 0
+libver		= $(somaj).$(somin).$(sorel)
+
+debbase		:= $(CURDIR)/debian
 debtmp		:= $(debbase)/tmp
-debdoc		:= $(debtmp)/usr/share/doc/$(package)
+debdoc		:= $(debbase)/$(package)/usr/share/doc/$(package)
+debmat		:= $(debbase)/$(nmathpackage)
 
-# set this to 0 if you don't want Gnome packages
+arch		:= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+
+# set this to 1 (default) if you want the Gnome GUI package
 gnome		= 1
 ifeq ($(gnome),0)
 gnomeconfig 	= --without-gnome
@@ -18,54 +32,120 @@ else
 gnomeconfig	= --with-gnome
 endif
 
-# edd 10 Feb 98	See section 4.1 of Policy Manual
-arch		:= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
-
-# Uncomment this to turn on verbose mode. 
-#export DH_VERBOSE=1
-
-# This is the debhelper compatability version to use.
-export DH_COMPAT=1
-
-# This has to be exported to make some magic below work.
-export DH_OPTIONS
+export DH_VERBOSE=
+export DH_COMPAT=3
 
 # edd 15 Aug 2001: default to blas, atlas can override it 
 atlas = --with-blas=blas
 
-build: build-stamp configure-stamp make-stamp
-build-stamp: configure make
+# edd 02 Sep 2001: default to g77 but let m68k use f2c
+fortran 	= --with-g77=/usr/bin/g77
+compiler	= gcc
+cxxcompiler	= g++
+
+# edd 04 Sep 2001  default compiler flags, lowered for m68k
+compilerflags	= "-O2"
+# m68k barks when using g77, and when gcc use -O2
+ifeq ($(arch),m68k-linux)
+fortran		= --with-f2c
+compilerflags	= "-O"
+endif
+
+## edd 09 Nov 2001  ia64 needs gcc-3.0, hppa gets it by default
+ifeq ($(arch),ia64-linux)
+fortran 	= --with-g77=/usr/bin/g77-3.0
+compiler	= gcc-3.0
+cxxcompiler	= g++-3.0
+compilerflags	= "-O2"
+endif
+
+## try gcc-3.0 on i386 -- appears to work
+#ifeq ($(arch),i386-linux)
+#fortran 	= --with-g77=/usr/bin/g77-3.0
+#compiler	= gcc-3.0
+#cxxcompiler	= g++-3.0
+#compilerflags	= "-O2"
+#endif
+
+get-orig-source: upstream
+upstream:
+	links http://cran.us.r-project.org
+
+build: configure make-arch build-arch build-stamp
+build-stamp: 
 	touch build-stamp
+
+build-arch: configure make-arch build-arch-stamp
+build-arch-stamp:
+	touch build-arch-stamp
 
 configure: configure-stamp
 configure-stamp:	
 	dh_testdir
-	R_UNZIPCMD=/usr/bin/miniunzip R_ZIPCMD=/usr/bin/minizip \
+	R_UNZIPCMD=/usr/bin/miniunzip 			\
+	R_ZIPCMD=/usr/bin/minizip 			\
+	CC=${compiler} 					\
+	CXX=${cxxcompiler} 				\
+	CPPFLAGS= LIBS=	FLIBS=-lg2c-pic			\
 	./configure --prefix=/usr		     \
-		    --with-g77			     \
 		    --with-tcltk		     \
+		    --with-tcl-config=/usr/lib/tcl8.3/tclConfig.sh 	\
+		    --with-tk-config=/usr/lib/tk8.3/tkConfig.sh 	\
 		    --mandir=$(debtmp)/usr/share/man \
+		    $(fortran)			     \
 		    $(atlas)                         \
 		    $(gnomeconfig)		     \
 		    --enable-R-profiling             \
 		    --enable-R-shlib                 \
 		    --host $(arch)
+        ## hppa and ia64 really need the PIC version of libg2c
+        ## for conformity we will use it throughout
+	perl -p -i -e "s/ -lg2c / -lg2c-pic /" Makeconf
+        ## same needed for lower-level library files
+	for i in ctest modreg mva ts; do 			\
+		perl -p -i -e "s/ -lg2c / -lg2c-pic /" 		\
+				src/library/$$i/src/Makefile; 	\
+	done
+        ## and etc/Makeconf	
+	perl -p -i -e "s/ -lg2c / -lg2c-pic /" etc/Makeconf
 	touch configure-stamp
 
-make: make-stamp
-make-stamp:
-	make 
-	make check
+make-arch: configure make-arch-stamp 
+make-arch-stamp: 
+	make		CFLAGS=$(compilerflags)			\
+			CXXFLAGS=$(compilerflags)		\
+			FFLAGS=$(compilerflags)			\
+			CC=${compiler} 				\
+			CXX=${cxxcompiler}
+	(cd src/nmath/standalone; 				\
+		make	CFLAGS="$(compilerflags) -D_REENTRANT"	\
+			CXXFLAGS="$(compilerflags) -D_REENTRANT"\
+			FFLAGS="$(compilerflags) -D_REENTRANT"	\
+			CC=${compiler} 				\
+			CXX=${cxxcompiler} 			\
+			libRmath_la_LDFLAGS=-Wl,-soname,libRmath.so.$(somaj) )
 	make help
-	make html
 	make info 
+	touch make-arch-stamp
+
+make: configure make-arch make-stamp
+make-stamp: 
+        # Already made in general 'make': make html
 	make pdf
 	touch make-stamp
+
+check: configure make-arch check-stamp
+check-stamp: 
+ifneq	($(arch),arm-linux)
+	make check
+endif
+	touch check-stamp
 
 clean:
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp configure-stamp make-stamp
+	rm -f build-stamp configure-stamp make-stamp make-arch-stamp \
+		install-stamp install-arch-stamp check-stamp build-arch-stamp
 	-make distclean
 	-rm -f `find . -name "*~"`
 	-rm -rf debian/tmp debian/files* core debian/substvars
@@ -73,108 +153,136 @@ clean:
 	-rm -f modules/*.so
 	dh_clean
 
-install: DH_OPTIONS=
-install: build
+install-arch: make-arch check install-arch-stamp
+install-arch-stamp: 
 	dh_testdir
 	dh_testroot
-	dh_clean -k
-	dh_installdirs
+	dh_clean -a -k
+	dh_installdirs -A
+	make    	prefix=$(debtmp)/usr   	 	install
 
-	# Add here commands to install the package into debian/tmp.
-	#$(MAKE) prefix=`pwd`/debian/tmp/usr install
-	make 
-	make check 
-	make install		prefix=`pwd`/debian/tmp/usr
-	make install-pdf	prefix=`pwd`/debian/tmp/usr
+        # set R_HOME_DIR env.var. in R shell script
 	sed -e '/^R_HOME_DIR=.*/s::R_HOME_DIR=/usr/lib/R:' \
-	  < bin/R > debian/tmp/usr/bin/R
+	  < bin/R > $(debtmp)/usr/bin/R
 	sed -e '/^R_HOME_DIR=.*/s::R_HOME_DIR=/usr/lib/R:' \
-	  < bin/R > debian/tmp/usr/lib/R/bin/R
-	# remove unneeded license file
-	rm -v $(debtmp)/usr/lib/R/COPYING  
+	  < bin/R > $(debtmp)/usr/lib/R/bin/R
 
-	# move the pdf files into the arch-indep. package
-	dh_movefiles	-p$(pdfpackage)	usr/lib/R/doc/manual/*.pdf 
+        # fix permissions (Lintian)
+	chmod a+x 	$(debtmp)/usr/lib/R/share/sh/echo.sh \
+			$(debtmp)/usr/lib/R/share/sh/help-links.sh
 
+        # remove unneeded license files, but link them back
+	rm -v 	$(debtmp)/usr/lib/R/COPYING 		\
+		$(debtmp)/usr/lib/R/COPYING.LIB 
+	(cd $(debtmp)/usr/lib/R/; \
+		ln -s ../../share/common-licenses/GPL COPYING; \
+		ln -s ../../share/common-licenses/LGPL COPYING.LIB)
+
+        # move the GNOME version to the r-gnome package
 ifneq ($(gnome),0)
-	# move the GNOME version to the r-gnome package
-	dh_movefiles	-p$(gnomepackage) usr/lib/R/modules/R_gnome.so
+	dh_movefiles	-p$(gnomepackage) 	usr/lib/R/modules/R_gnome.so
 endif
 
-# Build architecture-independent files here.
-# Pass -i to all debhelper commands in this target to reduce clutter.
-binary-indep: DH_OPTIONS=-i
-binary-indep: build install
-	# Need this version of debhelper for DH_OPTIONS to work.
-	dh_testversion 1.1.17
+        # move the html manual files in r-doc-html.files into r-doc-html 
+        # these get built in make-arch too ...
+	dh_movefiles	-p$(htmlpackage)		
+
+        # move files for r-base
+	dh_movefiles	-p$(package)
+
+        # for the standalone library package, move the two libs
+        # as 'make install' ignore these, we have to do it by hand
+	dh_installdirs -p$(nmathpackage) usr/include usr/lib
+	install -m 0644 src/nmath/standalone/libRmath.a     \
+			$(debmat)/usr/lib
+	install -m 0644 src/nmath/standalone/libRmath.so    \
+			$(debmat)//usr/lib/libRmath.so.$(libver)
+	(cd $(debmat)/usr/lib; \
+			ln -s libRmath.so.$(libver) libRmath.so.$(somaj))
+        # and create a link for Rmath.h 
+	(cd $(debmat)/usr/include; \
+			ln -s ../lib/R/include/Rmath.h .)
+	touch install-arch-stamp
+
+install: make-arch make install-arch install-stamp
+install-stamp: 
 	dh_testdir
 	dh_testroot
-#	dh_installdebconf
-	dh_installdocs
-	dh_installexamples
-	dh_installmenu
-#	dh_installemacsen
-#	dh_installpam
-#	dh_installmime
-#	dh_installinit
-	dh_installcron
-#	dh_installmanpages
-	dh_installinfo
-#	dh_undocumented
-	dh_installchangelogs	NEWS 
-	dh_link
-	dh_compress
-	dh_fixperms
-	# You may want to make some executables suid here.
-#	dh_suidregister
-	dh_installdeb
-#	dh_perl
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
+	dh_clean -a -k
+	dh_installdirs -A
+	make    	prefix=$(debtmp)/usr   	 	install-pdf	
+        # move the pdf manual files listed in r-doc-pdf.files into r-doc-pdf 
+	dh_movefiles	-p$(pdfpackage)		
+        # move the html manual files in r-doc-html.files into r-doc-html 
+	dh_movefiles	-p$(htmlpackage)		
+	touch install-stamp
+
+# Build architecture-independent files here.
+binary-indep: build install
+	dh_testdir -i
+	dh_testroot -i
+	dh_link -i
+#	dh_installdebconf -i
+	dh_installdocs -i
+#	dh_installexamples -i
+#	dh_installmenu -i
+#	dh_installemacsen -i
+#	dh_installpam -i
+#	dh_installmime -i
+#	dh_installinit -i
+#	dh_installcron -i
+#	dh_installmanpages -i
+#	dh_installinfo -i
+#	dh_undocumented -i
+	dh_installchangelogs -i	
+	dh_compress -i
+	dh_fixperms -i
+#	dh_suidregister -i
+	dh_installdeb -i
+#	dh_perl -i
+	dh_gencontrol -i
+	dh_md5sums -i
+	dh_builddeb -i
 
 # Build architecture-dependent files here.
-# Pass -a to all debhelper commands in this target to reduce clutter.
-binary-arch: DH_OPTIONS=-a
-binary-arch: build install
-	# Need this version of debhelper for DH_OPTIONS to work.
-	dh_testversion 1.1.17
-	dh_testdir
-	dh_testroot
-#	dh_installdebconf
-	dh_installdocs		BUGS Y2K 
-	dh_installdocs 		-p$(package) 	debian/README.Atlas
-	dh_installexamples
-	dh_installmenu
-#	dh_installemacsen
-#	dh_installpam
-#	dh_installmime
-#	dh_installinit
-	dh_installcron
-	dh_installmanpages	-N$(gnomepackage) -p$(package) getline.3
-	dh_installinfo		-n doc/manual/R-*.info*
+binary-arch: build-arch install-arch check
+	dh_testdir -a
+	dh_testroot -a
+#	dh_installdebconf -a
+	dh_link -a
+	dh_installdocs -p$(package) 	AUTHORS BUGS COPYRIGHTS FAQ 	\
+					NEWS ONEWS README RESOURCES 	\
+					THANKS Y2K debian/README.Atlas
+	dh_installexamples -a
+	dh_installmenu -a
+#	dh_installemacsen -a
+#	dh_installpam -a
+#	dh_installmime -a
+#	dh_installinit -a
+#	dh_installcron -a
+#	dh_installmanpages -a	-N$(gnomepackage) -p$(package) getline.3
+#	dh_installman 		-p$(package) doc/R.1
+	dh_installinfo -a	-n doc/manual/R-*.info*
 	(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/html .)
 	(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/manual .)
 	(cd $(debdoc) && ln -s ../../../lib/R/library .)
-#	install lintian "silencer"
+        # install lintian "silencer"
 	install -p -m 0644  debian/$(package).lintian \
-                        $(debtmp)/usr/share/lintian/overrides/$(package)
-#	dh_undocumented
-	dh_installchangelogs	NEWS 
-	dh_strip
-	dh_link
-	dh_compress
-	dh_fixperms
-	# You may want to make some executables suid here.
-#	dh_suidregister
-	dh_installdeb
-#	dh_makeshlibs
-#	dh_perl
-	dh_shlibdeps
-	dh_gencontrol
-	dh_md5sums		-X'usr/bin/R'  -XLibIndex -Xindex.txt \
+		$(debbase)/$(package)/usr/share/lintian/overrides/$(package)
+#	dh_undocumented -a
+	dh_installchangelogs -a	-k NEWS 
+	dh_strip -a
+	dh_compress -a
+	dh_fixperms -a
+#	dh_suidregister -a
+	dh_makeshlibs -a
+	dh_installdeb -a
+	dh_perl -a
+	dh_shlibdeps -a
+	dh_gencontrol -a
+	dh_md5sums -a		-X'usr/bin/R'  -XLibIndex -Xindex.txt \
 					-Xfunction.html -Xpackages.html
-	dh_builddeb
+	dh_builddeb -a
 
-binary: binary-indep binary-arch
+binary: binary-arch binary-indep 
 .PHONY: build clean binary-indep binary-arch binary install

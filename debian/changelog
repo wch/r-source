@@ -1,8 +1,51 @@
 r-base (1.4.0-0) unstable; urgency=low
 
-  * Test builds for new upstream release
+  * Test build of the 2001-11-27 snapshot of the upcoming 1.4.0 release
+  
+ -- Dirk Eddelbuettel <edd@debian.org>  Tue, 27 Nov 2001 19:08:02 -0600
 
- -- Douglas Bates <bates@stat.wisc.edu>  Wed, 24 Oct 2001 08:23:50 -0500
+r-base (1.3.1-6) unstable; urgency=low
+
+  * debian/rules: Also apply s/-lg2c/-lg2c-pic/ on etc/Makeconf
+  * debian/control: Revert to Arch: all for doc packages, no Depends r-base
+  * debian/control: r-base-dev Depends remodelled on r-base Build-Depends
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Wed, 21 Nov 2001 23:14:35 -0600
+
+r-base (1.3.1-5) unstable; urgency=low
+
+  * debian/rules: Unset CPPFLAGS, LIBS before calling configure to not
+    leave traces of /usr/local. Thanks, Kurt Hornik (Closes: #71917)
+  * debian/rules: More s/-lg2c/-lg2c-pic/ substitution in src/library/
+  * debian/control: Added new package r-mathlib (Closes: #119701)
+  * debian/control: Added new package r-doc-html (R manuals in html format)
+  * debian/rules: Added suitable rules for r-mathlib and r-doc-html
+  * debian/rules: Rewritten/cleaned for DH_COMPAT=3
+  
+ -- Dirk Eddelbuettel <edd@debian.org>  Fri, 16 Nov 2001 20:43:24 -0600
+
+r-base (1.3.1-4) unstable; urgency=low
+
+  * debian/control: Corrected maintainer email
+  * debian/rules: Do not run 'make check' on arm as it stumbles over the
+    Bessel example; this known misfeature has long been reported upstream
+  * debian/README.Atlas: Updated to reflect autoMAGIC loading of Atlas lib
+    with ldconfig from libc6_2.2.4-5 or later -- thanks, Ben Collins!
+  
+ -- Dirk Eddelbuettel <edd@debian.org>  Sun, 11 Nov 2001 11:19:10 -0600
+
+r-base (1.3.1-3) unstable; urgency=low
+
+  * New maintainer
+  * debian/rules: Substitute -lg2c-pic for -lg2c in Makeconf [Thanks, Jeff!]
+  * debian/control: Following advice from the Release Manager, let r-doc-pdf
+    and r-base-dev be Arch: any as they Depends: on r-base itself 
+  * debian/rules: configure with tkConfig.sh,tclConfig.sh for 8.3 support
+  * debian/control: Build-Depends on tcl8.3-dev and tk8.3-dev
+  * debian/rules: Let ia64 use gcc-3.0, g77-3.0, g++-3.0
+  * debian/control: Build-Depends adjusted accordingly
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Fri,  9 Nov 2001 20:17:43 -0600
 
 r-base (1.3.1-2) unstable; urgency=low
 
