@@ -26,8 +26,8 @@
   Also given is the percent of the population living in urban areas.
 }
 \references{
-  McNeil, D. R. (1977).  \emph{Interactive Data Analysis}.  New York:
-  Wiley.
+  McNeil, D. R. (1977) \emph{Interactive Data Analysis.}
+  New York: Wiley.
 }
 \examples{
 data(USArrests)

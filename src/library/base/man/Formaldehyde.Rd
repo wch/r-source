@@ -8,8 +8,8 @@
     [,2] \tab optden \tab numeric \tab Optical Density
   }
 }
-\source{Bennett, N. A. and N. L. Franklin (1954).  \emph{Statistical
-    Analysis in Chemistry and the Chemical Industry}.  New York: Wiley.
+\source{Bennett, N. A. and N. L. Franklin (1954)  \emph{Statistical
+    Analysis in Chemistry and the Chemical Industry.}  New York: Wiley.
 }
 \description{These data are from a chemical experiment to prepare a
   standard curve for the determination of formaldehyde by the addition
@@ -17,8 +17,8 @@
   the resulting purple color on a spectophotometer.
 }
 \references{
-  McNeil, D. R. (1977).  \emph{Interactive Data Analysis}.  New York:
-  Wiley.
+  McNeil, D. R. (1977) \emph{Interactive Data Analysis.}
+  New York: Wiley.
 }
 \examples{
 data(Formaldehyde)

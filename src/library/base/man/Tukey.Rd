@@ -35,13 +35,13 @@ qtukey(p, nmeans, df, nranges = 1)
   The computations are relatively expensive, especially for
   \code{qtukey} which uses a simple secant method for finding the
   inverse of \code{ptukey}.
-  \code{qtukey(..)} will be accurate to the 4th decimal place.
+  \code{qtukey} will be accurate to the 4th decimal place.
 }
 \references{
-  Copenhaver, Margaret Diponzio & Holland, Burt S. (1988).\cr
+  Copenhaver, Margaret Diponzio and Holland, Burt S. (1988)
   Multiple comparisons of simple effects in
   the two-way analysis of variance with fixed effects.
-  \emph{Journal of Statistical Computation and Simulation}, \bold{30}, 1-15.
+  \emph{Journal of Statistical Computation and Simulation}, \bold{30}, 1--15.
 }
 \seealso{
 \code{\link{pnorm}} and \code{\link{qnorm}} for the corresponding

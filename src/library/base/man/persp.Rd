@@ -4,7 +4,7 @@
 persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
         z, xlim = range(x), ylim = range(y), zlim = range(z, na.rm=T),
         theta = 0, phi = 15, d = 1, scale = TRUE, col, border,
-        ltheta = -135, lphi = 0, shade = NA, box = TRUE, ...)
+        ltheta = -135, lphi = 0, shade = NA, box = TRUE, \dots)
 }
 \alias{persp}
 \arguments{

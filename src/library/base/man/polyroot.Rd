@@ -24,9 +24,9 @@ polyroot(z)
   \code{length(z)}.
 }
 \references{
-  Jenkins and Traub (1972).
-  \emph{TOMS Algorithm 419}.
-  Comm. ACM \bold{15}, 97-99.
+  Jenkins and Traub (1972)
+  TOMS Algorithm 419.
+  \emph{Comm. ACM}, \bold{15}, 97--99.
 }
 \seealso{
   \code{\link{uniroot}} for numerical root finding of arbitrary

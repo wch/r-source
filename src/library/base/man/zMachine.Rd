@@ -72,9 +72,9 @@ Machine()
   The algorithm is based on Cody's (1988) subroutine MACHAR.
 }
 \references{
-  W. J. Cody (1988),
-  MACHAR: A Subroutine to Dynamically Determine Machine Parameters.
-  \emph{Transactions on Mathematical Software}, \bold{14}, 4, 303-311.
+  Cody, W. J. (1988)
+  MACHAR: A subroutine to dynamically determine machine parameters.
+  \emph{Transactions on Mathematical Software}, \bold{14}, 4, 303--311.
 }
 \seealso{
   \code{\link{machine}} to determine the computer type which \R is running on.

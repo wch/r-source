@@ -22,7 +22,7 @@ zip.file.extract(file, zipname="R.zip")
 }
 \note{The implementation differs by platform: it might do nothing.}
 
-\section{WARNING}{This function is intended for internal use only:
+\section{Warning}{This function is intended for internal use only:
     it may be altered at any time, and may differ between platforms. Do
     NOT use in user code.}
 

@@ -52,11 +52,11 @@ hat(xmat)
   these functions.
 }
 \references{
-  Belsley, D. A., E. Kuh and R. E. Welsch (1980).
+  Belsley, D. A., Kuh, E. and Welsch, R. E. (1980)
   \emph{Regression Diagnostics.}
   New York: Wiley.
 
-  Cook, R. D. and S. Weisberg (1982).
+  Cook, R. D. and Weisber,g S. (1982)
   \emph{Residuals and Influence in Regression.}
   London: Chapman and Hall.
 }

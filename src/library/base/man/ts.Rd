@@ -6,9 +6,9 @@ ts(data = NA, start = 1, end = numeric(0), frequency = 1,
 as.ts(x)
 is.ts(x)
 
-print(ts.obj, calendar, ...)
-plot(ts.obj, plot.type=c("multiple", "single"), ...)
-lines(ts.obj, ...)
+print(ts.obj, calendar, \dots)
+plot(ts.obj, plot.type=c("multiple", "single"), \dots)
+lines(ts.obj, \dots)
 }
 \alias{ts}
 \alias{as.ts}

@@ -9,7 +9,7 @@
   10,000 square miles.
 }
 \references{
-  McNeil, D. R. (1977).  \emph{Interactive Data Analysis}.  Wiley.
+  McNeil, D. R. (1977) \emph{Interactive Data Analysis.}  Wiley.
 }
 \examples{
 data(islands)

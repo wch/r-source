@@ -63,8 +63,8 @@ plot.default(x, y = NULL, type = "p",  xlim = NULL, ylim = NULL,
   in the active graphics window.
 }
 \references{
-  Cleveland, W. S. (1985).
-  \emph{The Elements of Graphing Data}.
+  Cleveland, W. S. (1985)
+  \emph{The Elements of Graphing Data.}
   Monterey, CA: Wadsworth.
 }
 \seealso{

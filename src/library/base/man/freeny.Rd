@@ -22,8 +22,8 @@
   and \code{market.potential} obtained from the above two data objects.
 }
 \source{
-  A. E. Freeny (1977).
-  \emph{A Portable Linear Regression Package with Test Programs}.
+  A. E. Freeny (1977)
+  \emph{A Portable Linear Regression Package with Test Programs.}
   Bell Laboratories memorandum.
 }
 \examples{

@@ -26,11 +26,11 @@ chull(x, y=NULL)
 }
 \references{
   Eddy, W. F. (1977) A new convex hull algorithm for planar sets.
-  \emph{ACM Transactions on Mathematical Software}, \bold{3}, 398-403.
+  \emph{ACM Transactions on Mathematical Software}, \bold{3}, 398--403.
 
   Eddy, W. F. (1977) Algorithm 523. CONVEX, A new convex hull
   algorithm for planar sets[Z]. \emph{ACM Transactions on
-    Mathematical Software}, \bold{3}, 411-412.
+    Mathematical Software}, \bold{3}, 411--412.
 }
 \author{B. D. Ripley}
 

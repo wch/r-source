@@ -1,8 +1,8 @@
 \name{start}
 \title{Encode the Terminal Times of Time Series}
 \usage{
-start(x, ...)
-end(x, ...)
+start(x, \dots)
+end(x, \dots)
 }
 \alias{start}
 \alias{end}

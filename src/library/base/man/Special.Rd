@@ -45,8 +45,8 @@ lchoose(n,k)
   coefficients and their logarithms.
 }
 \references{
-  Abramowitz, M. and Stegun, I. A. (1972).\cr
-  \emph{Handbook of Mathematical Functions}, Dover, New York;\cr
+  Abramowitz, M. and Stegun, I. A. (1972)
+  \emph{Handbook of Mathematical Functions.} New York: Dover. 
   Chapter 6: Gamma and Related Functions.
 }
 \seealso{

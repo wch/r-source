@@ -18,7 +18,7 @@ RNGkind(kind=NULL)
 }
 \arguments{
   \item{kind}{character or \code{NULL}.  If \code{kind} is a character
-    string, set \R's RNG to the kind desired, if it's \code{NULL},
+    string, set \R's RNG to the kind desired, if its \code{NULL},
     return the currently used RNG.}
   \item{rng.kind}{integer code in \code{0:k} for the above \code{kind}.}
   \item{n1,n2,\dots}{integers. See the details for how many are required
@@ -97,20 +97,20 @@ RNGkind(kind=NULL)
   invisibly if \code{kind} is not \code{NULL}.
 }
 \references{
-  B. A. Wichmann and I. D. Hill (1982).
+  Wichmann, B. A.  and Hill, I. D. (1982)
   \emph{Algorithm AS 183: An Efficient and Portable Pseudo-random Number
-    Generator}, Applied Statistics, \bold{31}, 188-190; Remarks:
+    Generator}, Applied Statistics, \bold{31}, 188--190; Remarks:
   \bold{34}, 198 and \bold{35}, 89.
 
-  A. De Matteis and S. Pagnutti (1993).
+  De Matteis, A. and Pagnutti, S. (1993)
   \emph{Long-range Correlation Analysis of the Wichmann-Hill Random
-      Number Generator}, Statist. Comput., \bold{3}, 67-70.
+      Number Generator}, Statist. Comput., \bold{3}, 67--70.
   
-  Marsaglia, G. (1997). \emph{A random number generator for C}. Discussion 
-  paper, posting on usenet newsgroup \code{sci.stat.math}.
+  Marsaglia, G. (1997) \emph{A random number generator for C.} Discussion 
+  paper, posting on Usenet newsgroup \code{sci.stat.math}.
   
-  Marsaglia, G. and Zaman, A. (1994). \emph{Some portable very-long-period 
-  random number generators}. Computers in Physics, \bold{8}, 117-121. 
+  Marsaglia, G. and Zaman, A. (1994) Some portable very-long-period 
+  random number generators. \emph{Computers in Physics}, \bold{8}, 117--121. 
 }
 \note{
   Initially, there is no seed;  a new one is created, using

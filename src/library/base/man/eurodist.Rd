@@ -11,7 +11,7 @@
   package loaded to have the methods for this kind of object available).
 }
 \source{
-  Crystal, D. Ed. (1990).  \emph{The Cambridge Encyclopaedia}.
+  Crystal, D. Ed. (1990)  \emph{The Cambridge Encyclopaedia.}
   Cambridge: Cambridge University Press,
 }
 \keyword{datasets}

@@ -3,7 +3,9 @@
 \usage{data(phones)}
 \alias{phones}
 \format{A matrix with 7 rows and 8 columns.}
-\source{AT&T (1961).  \emph{The World's Telephones}.}
+\source{
+  AT&T (1961)  \emph{The World's Telephones}.
+}
 \description{
   The number of telephones in various regions of the world (in
   thousands).
@@ -18,7 +20,7 @@
   The years are: 1951, 1956, 1957, 1958, 1959, 1960, 1961.
 }
 \references{
-  McNeil, D. R. (1977).  \emph{Interactive Data Analysis.}  New York:
+  McNeil, D. R. (1977) \emph{Interactive Data Analysis.}  New York:
   Wiley.
 }
 \examples{

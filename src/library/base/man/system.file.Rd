@@ -1,11 +1,11 @@
 \name{system.file}
 \title{Find Names of R System Files}
 \usage{
-system.file(..., pkg = .packages(), lib = .lib.loc)
+system.file(\dots, pkg = .packages(), lib = .lib.loc)
 }
 \alias{system.file}
 \arguments{
-  \item{...}{character strings, specifying subdirectory and file(s)
+  \item{\dots}{character strings, specifying subdirectory and file(s)
       within some package.
       The default, none or \code{""}, returns the root of
       package(s). Wildcards are not supported.}
@@ -18,7 +18,7 @@ system.file(..., pkg = .packages(), lib = .lib.loc)
 }
 \value{
     A character vector of positive length,
-    containing the file names that matched \code{...}, or the empty
+    containing the file names that matched \code{\dots}, or the empty
     string, \code{""}, if none matched. If matching the root of a
     package, there is no trailing separator.
 

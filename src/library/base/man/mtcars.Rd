@@ -5,7 +5,7 @@
 \description{
   The data was extracted from 1974 Motor Trend magazine, and comprises
   gasoline mileage in gallons per mile (GPM) and 10 aspects of
-  automobile design and performance for 32 automobiles (1973-74
+  automobile design and performance for 32 automobiles (1973--74
   models).
 }
 \format{

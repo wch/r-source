@@ -15,13 +15,13 @@
   This provides a rather nice 3-way analysis of variance example.
 }
 \source{
-  L. Moyneau, S. K. Gilliam, and L. C. Florant (1947).
+  Moyneau, L.,  Gilliam, S. K., and  Florant, L. C.(1947)
   Differences in Virginia death rates by color, sex, age,
   and rural or urban residence.
   \emph{American Sociological Review}, \bold{12}, 525--535.
 }
 \references{
-  McNeil, D. R. (1977).  \emph{Interactive Data Analysis}.  Wiley.
+  McNeil, D. R. (1977) \emph{Interactive Data Analysis.}  Wiley.
 }
 \examples{
 data(VADeaths)

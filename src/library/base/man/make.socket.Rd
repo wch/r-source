@@ -30,7 +30,7 @@ print.socket(socket)
   Adapted from Luke Tierney's code for \code{XLISP-Stat}, in turn
   based on code from Robbins and Robbins "Practical UNIX Programming"
 }
-\section{WARNING}{
+\section{Warning}{
   I don't know if the connecting host name returned
   when \code{server = TRUE} can be trusted. I suspect not.
 } 

@@ -11,7 +11,7 @@
     A time series of monthly data from 1749 to 1983.
 }
 \source{
-    D. F. Andrews and A. M. Herzberg (1985).
+    Andrews, D. F. and Herzberg, A. M. (1985)
     \emph{Data: A Collection of Problems from Many Fields for the
         Student and Research Worker}.
     New York: Springer-Verlag.

@@ -40,8 +40,8 @@
 \source{
   Project ``16P5'', pages 549--551 in
 
-  Mosteller, F. and Tukey, J. W. (1977).
-  \emph{Data Analysis and Regression: A Second Course in Statistics},
+  Mosteller, F. and Tukey, J. W. (1977)
+  \emph{Data Analysis and Regression: A Second Course in Statistics.}
   Addison-Wesley, Reading Mass.
 
   indicating their source as

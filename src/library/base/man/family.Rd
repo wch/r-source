@@ -54,16 +54,16 @@ print.family(x, \dots)
   fitting takes place.
 }
 \references{
-  McCullagh P. and J. A. Nelder (1989).
-  \emph{Generalized Linear Models}.
+  McCullagh P. and Nelder, J. A. (1989)
+  \emph{Generalized Linear Models.}
   London: Chapman and Hall.
 
-  Dobson, A. J. (1983).
-  \emph{An Introduction to Statistical Modelling}.
+  Dobson, A. J. (1983)
+  \emph{An Introduction to Statistical Modelling.}
   London: Chapman and Hall.
 
-  Cox, D. R. and E. J. Snell (1981).
-  \emph{Applied Statistics; Principles and Examples}.
+  Cox, D. R. and  Snell, E. J. (1981).
+  \emph{Applied Statistics; Principles and Examples.}
   London: Chapman and Hall.
 }
 \seealso{

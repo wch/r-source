@@ -48,10 +48,10 @@
   }
 }
 \source{
-  U.S. Department of Commerce, Bureau of the Census (1977).
+  U.S. Department of Commerce, Bureau of the Census (1977)
   \emph{Statistical Abstract of the United States}.
 
-  U.S. Department of Commerce, Bureau of the Census (1977).
+  U.S. Department of Commerce, Bureau of the Census (1977)
   \emph{County and City Data Book}.
 }
 \keyword{datasets}

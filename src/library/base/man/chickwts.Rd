@@ -9,7 +9,7 @@
   }
 }
 \source{
-  Anonymous (1948).  \emph{Biometrika}, p.214.
+  Anonymous (1948) \emph{Biometrika}, \bold{35}, p.214.
 } 
 \description{
   An experiment was conducted to measure and compare the effectiveness
@@ -21,7 +21,7 @@
   after six weeks are given along with feed types.
 }
 \references{
-  McNeil, D. R. (1977). \emph{Interactive Data Analysis}.  New York:
+  McNeil, D. R. (1977) \emph{Interactive Data Analysis.}  New York:
   Wiley.
 }
 \examples{

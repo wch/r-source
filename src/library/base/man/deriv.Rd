@@ -52,10 +52,10 @@ deriv(expr, namevec, function.arg = NULL, tag = ".expr")
   is better than none.
 }
 \references{
-A. Griewank, G. F. Corliss (1991).
-\emph{Automatic Differentiation of Algorithms: Theory, Implementation,
-and Application}.
-SIAM proceedings, Philadelphia.
+  Griewank, A.  and  Corliss, G. F. (1991)
+  \emph{Automatic Differentiation of Algorithms: Theory, Implementation,
+    and Application}.
+  SIAM proceedings, Philadelphia.
 }
 \seealso{
   \code{\link{nlm}} for numeric minimization which should make use of

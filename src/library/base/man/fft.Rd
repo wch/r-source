@@ -37,7 +37,7 @@ mvfft(z, inverse = FALSE)
   amount of memory.
 }
 \references{
-  Singleton, R. C. (1979).
+  Singleton, R. C. (1979)
   Mixed Radix Fast Fourier Transforms,
   in \emph{Programs for Digital Signal Processing},
   IEEE Digital Signal Processing Committee eds.

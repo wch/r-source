@@ -6,13 +6,13 @@
 \alias{url.show}
 \title{Read Data and Code from a Web Server}
 \usage{
-read.table.url(url, port = 80, check.MIME.type = TRUE, ...)
-scan.url(url, port = 80, check.MIME.type = TRUE, ...)
-source.url(url, port = 80, check.MIME.type = TRUE, ...)
+read.table.url(url, port = 80, check.MIME.type = TRUE, \dots)
+scan.url(url, port = 80, check.MIME.type = TRUE, \dots)
+source.url(url, port = 80, check.MIME.type = TRUE, \dots)
 copy.url(url, port = 80, error.is.fatal = TRUE, file = tempfile(),
          check.MIME.type = TRUE, drop.ctrl.z = TRUE)
 url.show(url, port = 80, check.MIME.type = TRUE, file = tempfile(),
-         delete.file = TRUE, ...)
+         delete.file = TRUE, \dots)
 }
 \arguments{
  \item{url}{URL beginning with \code{http://} }

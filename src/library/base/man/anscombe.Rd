@@ -9,12 +9,12 @@
     y1, y2, y3, y4 \tab numbers in (3, 12.5) with mean 7.5 and sdev 2.03}
 }
 \source{
-  Edward R. Tufte (1989).
+  Tufte, Edward R. (1989)
   \emph{The Visual Display of Quantitative Information}, 13--14.
   Graphics Press.
 }
 \references{
-  Francis J. Anscombe (1973).  Graphs in Statistical Analysis;
+  Anscombe, Francis J. (1973)  Graphs in statistical analysis.
   \emph{American Statistician}, \bold{27}, 17--21.
 }
 \description{

@@ -24,9 +24,7 @@ La Jolla, California USA 92093-0220.
 \url{ftp://cdiac.esd.ornl.gov/pub/maunaloa-co2/maunaloa.co2}.
 }
 \references{
-  Cleveland, W. S. (1993).
-  \emph{Visualizing Data}.
-  New Jersey: Summit Press.
+  Cleveland, W. S. (1993) \emph{Visualizing Data.} New Jersey: Summit Press.
 }
 \examples{
 data(co2)

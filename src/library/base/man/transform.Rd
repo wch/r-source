@@ -4,9 +4,9 @@
 \alias{transform.data.frame}
 \title{Transform an Object, e.g. a Data Frame}
 \usage{
-transform(x, ...)
-transform.default(x, ...)
-transform.data.frame(x, ...)
+transform(x, \dots)
+transform.default(x, \dots)
+transform.data.frame(x, \dots)
 }
 \arguments{
     \item{x}{The object to be transformed}
@@ -19,7 +19,7 @@ transform.data.frame(x, ...)
   a dataframe if possible and calls \code{transform.data.frame}. 
 }
 \details{
-  The \code{...} arguments to \code{transform.data.frame} are tagged
+  The \code{\dots} arguments to \code{transform.data.frame} are tagged
   vector expressions, which are evaluated in the dataframe
   \code{x}.  The tags are matched against \code{names(x)}, and for
   those that match, the value replace the corresponding variable in

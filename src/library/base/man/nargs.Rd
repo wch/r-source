@@ -8,10 +8,10 @@
 }
 \seealso{\code{\link{args}}, \code{\link{formals}} and \code{\link{sys.call}}.}
 \examples{
-tst <- function(a, b=3, ...) {nargs()}
+tst <- function(a, b = 3, ...) {nargs()}
 tst() # 0
-tst(clicketyclack) # 1 (even non existing)
-tst(c1,a2,rr3) # 3
+tst(clicketyclack) # 1 (even non-existing)
+tst(c1, a2, rr3) # 3
 
 nargs()# not really meaningful
 }

@@ -15,7 +15,7 @@ new <- .Alias(expr)
 \value{
   \emph{an identical copy} of \code{expr}.
 }
-\section{WARNING}{
+\section{Warning}{
   This has a \bold{dangerous} semantic, and consequences can be
   unexpected (it can be used to defeat the call-by-value illusion).
   Know what you are doing \emph{before} using \code{.Alias}!

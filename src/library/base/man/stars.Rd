@@ -5,7 +5,7 @@
 stars(x, full = TRUE, scale = TRUE, radius = TRUE, labels =
       dimnames(x)[[1]], locations = NULL, xlimit = NULL, ylimit = NULL,
       len = 1, colors = NULL, key.loc = NULL, key.labels = NULL,
-      draw.segments = FALSE, draw.axes = FALSE, ...)
+      draw.segments = FALSE, draw.axes = FALSE, \dots)
 }
 \arguments{
   \item{x}{matrix of data.  One segment plot will be produced for each

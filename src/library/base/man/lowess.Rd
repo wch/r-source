@@ -25,11 +25,11 @@ lowess(x, y, f=2/3, iter=3, delta=.01*diff(range(x)))
   points with the function \code{lines}.
 }
 \references{
-  Cleveland, W. S. (1979).
+  Cleveland, W. S. (1979)
   Robust locally weighted regression and smoothing scatterplots.
-  \emph{J. Amer. Statist. Assoc.} \bold{74}, 829-836.
+  \emph{J. Amer. Statist. Assoc.} \bold{74}, 829--836.
 
-  Cleveland, W. S. (1981).
+  Cleveland, W. S. (1981)
   LOWESS: A program for smoothing scatterplots by robust locally weighted
   regression. \emph{The American Statistician}, \bold{35}, 54.
 }

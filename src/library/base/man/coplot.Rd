@@ -63,14 +63,12 @@ co.intervals(x, number = 6, overlap = 0.5)
   discussed in the reference below.
 }
 \value{
-    \code{co.intervals(., number, .)} returns a (\code{number} \eqn{\times}{x}
-        2) \code{\link{matrix}}, say \code{ci},  where \code{ci[k,]} is
-        the \code{\link{range}} of \code{x} values for the \code{k}-th interval.
+  \code{co.intervals(., number, .)} returns a (\code{number} \eqn{\times}{x}
+  2) \code{\link{matrix}}, say \code{ci},  where \code{ci[k,]} is
+  the \code{\link{range}} of \code{x} values for the \code{k}-th interval.
 }
 \references{
-  Cleveland, W. S. (1993).
-  \emph{Visualizing Data}.
-  New Jersey: Summit Press.
+  Cleveland, W. S. (1993) \emph{Visualizing Data.} New Jersey: Summit Press.
 }
 \seealso{
   \code{\link{pairs}},
@@ -99,7 +97,7 @@ coplot(breaks ~ 1:54 | wool * tension, data = warpbreaks, col = 'red')
 data(state)
 attach(data.frame(state.x77))#> don't need `data' arg. below
 coplot(Life.Exp ~ Income | Illiteracy * state.region, number = 3,
-       panel=function(x,y,...) panel.smooth(x,y, span= .8, ...))
+       panel = function(x, y, ...) panel.smooth(x, y, span = .8, ...))
 }
 \keyword{hplot}
 \keyword{aplot}

@@ -16,8 +16,8 @@
     [,7] \tab advancel \tab numeric  \tab Advancement}
 }
 \source{
-  S. Chatterjee and B. Price (1977).
-  \emph{Regression Analysis by Example}.
+  Chatterjee, S. and Price, B. (1977)
+  \emph{Regression Analysis by Example.}
   New York: Wiley.
 }
 \examples{

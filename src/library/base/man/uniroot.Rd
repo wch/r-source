@@ -2,7 +2,7 @@
 \title{One Dimensional Root Finding}
 \usage{
 uniroot(f, interval, lower = min(interval), upper = max(interval),
-        tol = .Machine$double.eps^0.25, maxiter = 1000, ...)
+        tol = .Machine$double.eps^0.25, maxiter = 1000, \dots)
 }
 \alias{uniroot}
 \arguments{
@@ -13,7 +13,7 @@ uniroot(f, interval, lower = min(interval), upper = max(interval),
   \item{upper}{the upper end point of the interval to be searched.}
   \item{tol}{the desired accuracy (convergence tolerance).}
   \item{maxiter}{the maximum number of iterations.}
-  \item{...}{additional arguments to \code{f}.}
+  \item{\dots}{additional arguments to \code{f}.}
 }
 \description{
   The function \code{uniroot} searches the interval from \code{lower}
@@ -35,8 +35,8 @@ uniroot(f, interval, lower = min(interval), upper = max(interval),
   used and an approximate estimated precision for \code{root}.
 }
 \references{
-  Brent, R. (1973).
-  \emph{Algorithms for Minimization without Derivatives}.
+  Brent, R. (1973)
+  \emph{Algorithms for Minimization without Derivatives.}
   Englewood Cliffs, NJ: Prentice-Hall.
 }
 \seealso{
@@ -46,7 +46,9 @@ uniroot(f, interval, lower = min(interval), upper = max(interval),
 \examples{
 f <- function (x,a) x - a
 str(xmin <- uniroot(f, c(0, 1), tol = 0.0001, a = 1/3))
-str(uniroot(function(x) x*(x^2-1) + .5, low=-2, up=2, tol = 0.0001),dig=10)
-str(uniroot(function(x) x*(x^2-1) + .5, low=-2, up=2, tol = 1e-10 ),dig=10)
+str(uniroot(function(x) x*(x^2-1) + .5, low = -2, up = 2, tol = 0.0001),
+    dig = 10)
+str(uniroot(function(x) x*(x^2-1) + .5, low = -2, up =2 , tol = 1e-10 ),
+    dig = 10)
 }
 \keyword{optimize}

@@ -101,73 +101,74 @@ plot(dobj, main = NULL, xlab = NULL, ylab = "Density", type = "l",
   \item{has.na}{logical, for compatibility (always FALSE).}
 }
 \references{
-Silverman, B. W. (1986).
-\emph{Density Estimation}.
-London: Chapman and Hall.
+  Silverman, B. W. (1986)
+  \emph{Density Estimation}.
+  London: Chapman and Hall.
 
-Venables, W. N. and B. D. Ripley (1994,7,9).
-\emph{Modern Applied Statistics with S-PLUS}.
-New York: Springer.
+  Venables, W. N. and B. D. Ripley (1994, 7, 9)
+  \emph{Modern Applied Statistics with S-PLUS}.
+  New York: Springer.
 
-Scott, D. W. (1992).
-\emph{Multivariate Density Estimation.  Theory, Practice and Visualization}.
-New York: Wiley.
+  Scott, D. W. (1992)
+  \emph{Multivariate Density Estimation. Theory, Practice and Visualization}.
+  New York: Wiley.
 
-Sheather, S. J. and M. C. Jones (1991).
-``A reliable data-based bandwidth selection method for kernel density
-estimation.
-\emph{J. Roy. Statist. Soc.} \bold{B}, 683-690.
+  Sheather, S. J. and Jones M. C. (1991)
+  A reliable data-based bandwidth selection method for kernel density
+  estimation.
+  \emph{J. Roy. Statist. Soc.} \bold{B}, 683--690.
 }
 \seealso{
-\code{\link{convolve}}, \code{\link{hist}}.
+  \code{\link{convolve}}, \code{\link{hist}}.
 }
 \examples{
-plot(density(c(-20,rep(0,98),20)),xlim=c(-4,4))# IQR = 0
+plot(density(c(-20,rep(0,98),20)), xlim = c(-4,4))# IQR = 0
 
 # The Old Faithful geyser data
 data(faithful)
-d <- density(faithful$eruptions, bw=0.15)
+d <- density(faithful$eruptions, bw = 0.15)
 d
 plot(d)
 
-plot(d, type="n")
-polygon(d, col="wheat")
+plot(d, type = "n")
+polygon(d, col = "wheat")
 
 ## Missing values:
 x <- xx <- faithful$eruptions
 x[i.out <- sample(length(x), 10)] <- NA
-doR <- density(x, bw=0.15, na.rm = TRUE)
-lines(doR, col="blue")
+doR <- density(x, bw = 0.15, na.rm = TRUE)
+lines(doR, col = "blue")
 points(xx[i.out], rep(.01,10))
 
 
 (kernels <- eval(formals(density)$kernel))
 
-plot (density(0,bw=1))
+plot (density(0,bw = 1))
 for(i in 2:length(kernels))
-   lines(density(0,bw=1, kern= kernels[i]), col=i)
-mtext(side=3, "R's density() kernels with bw=1")
-legend(1.5,.4, leg=kernels, col=seq(kernels),lty=1, cex=.8, y.int=1)
+   lines(density(0,bw = 1, kern =  kernels[i]), col = i)
+mtext(side = 3, "R's density() kernels with bw = 1")
+legend(1.5,.4, leg = kernels, col = seq(kernels),lty = 1, cex = .8, y.int = 1)
 
-(RKs <- cbind(sapply(kernels, function(k)density(kern=k, give.Rkern=TRUE))))
+(RKs <- cbind(sapply(kernels, function(k)density(kern = k, give.Rkern = TRUE))))
 100*round(RKs["epanechnikov",]/RKs, 4) ## Efficiencies
 
 data(precip)
-plot(density(precip, n=2^13))
+plot(density(precip, n = 2^13))
 for(i in 2:length(kernels))
-   lines(density(precip, kern= kernels[i], n=2^13), col=i)
-mtext(side=3, "same scale bandwidths, 7 different kernels")
+   lines(density(precip, kern =  kernels[i], n = 2^13), col = i)
+mtext(side = 3, "same scale bandwidths, 7 different kernels")
 
 ## Bandwidth Adjustment for "Exactly Equivalent Kernels"
-h.f <- sapply(kernels, function(k)density(kern=k, give.Rkern=TRUE))
+h.f <- sapply(kernels, function(k)density(kern = k, give.Rkern = TRUE))
 (h.f <- (h.f["gaussian"] / h.f)^ .2)
 ## -> 1, 1.01, .995, 1.007,... close to 1 => adjustment barely visible..
 
-plot(density(precip, n=2^13))
+plot(density(precip, n = 2^13))
 for(i in 2:length(kernels))
-   lines(density(precip, adjust = h.f[i], kern= kernels[i], n=2^13), col=i)
-mtext(side=3, "equivalent bandwidths, 7 different kernels")
-legend(55,.035, leg=kernels, col=seq(kernels),lty=1)
+   lines(density(precip, adjust = h.f[i], kern =  kernels[i], n = 2^13),
+         col = i)
+mtext(side = 3, "equivalent bandwidths, 7 different kernels")
+legend(55,.035, leg = kernels, col = seq(kernels), lty = 1)
 }
 \keyword{dplot}
 \keyword{distribution}

@@ -4,9 +4,9 @@
 \name{model.tables}
 \title{Compute Tables of Results from an Aov Model Fit.}
 \usage{
-model.tables(x, ...)
+model.tables(x, \dots)
 model.tables.aov(x, type = "effects", se = FALSE, cterms)
-model.tables.aovlist(x, type = "effects", se = FALSE, ...)
+model.tables.aovlist(x, type = "effects", se = FALSE, \dots)
 }
 \alias{model.tables}
 \alias{model.tables.aov}
@@ -37,7 +37,7 @@ model.tables.aovlist(x, type = "effects", se = FALSE, ...)
   \item{n}{The replication information for each term.}
   \item{se}{Standard error information.}
 }
-\section{WARNING}{The implementation is incomplete, and only the simpler
+\section{Warning}{The implementation is incomplete, and only the simpler
   cases have been tested thoroughly.}
 
 \author{B.D. Ripley}

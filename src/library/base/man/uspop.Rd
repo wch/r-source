@@ -8,7 +8,7 @@
 }
 \format{A time series of 19 values.}
 \source{
-  McNeil, D. R. (1977).  \emph{Interactive Data Analysis}.  New York:
+  McNeil, D. R. (1977) \emph{Interactive Data Analysis.} New York:
   Wiley.
 }
 % FIXME: missing \references{}

@@ -1,7 +1,7 @@
 \name{aov}
 \title{Fit an Analysis of Variance Model}
 \usage{
-aov(formula, data=NULL, projections=FALSE, contrasts=NULL, ...)
+aov(formula, data = NULL, projections = FALSE, contrasts = NULL, \dots)
 se.aov(object, n, type = "means") 
 }
 \alias{aov}

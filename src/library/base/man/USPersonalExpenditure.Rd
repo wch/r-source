@@ -11,10 +11,10 @@
   for the years 1940, 1945, 1950, and 1960.
 }
 \references{
-  Tukey, J. W. (1977).  \emph{Exploratory Data Analysis}.
+  Tukey, J. W. (1977) \emph{Exploratory Data Analysis.}
   Addison-Wesley.
 
-  McNeil, D. R. (1977).  \emph{Interactive Data Analysis}.  Wiley.
+  McNeil, D. R. (1977) \emph{Interactive Data Analysis.}  Wiley.
 }
 \examples{
 data(USPersonalExpenditure)

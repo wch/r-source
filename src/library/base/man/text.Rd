@@ -1,7 +1,7 @@
 \name{text}
 \title{Add Text to a Plot}
 \usage{
-text (x, ...)
+text (x, \dots)
 text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
               pos = NULL, offset = 0.5, \dots)
 }

@@ -1,49 +1,47 @@
 \name{screen}
 \title{Creating and Controlling Multiple Screens on a Single Device}
 \usage{
-split.screen(figs, screen=<<see below>>, erase=T)
-screen(n=<<see below>>, new=T)
-erase.screen(n=<<see below>>)
-close.screen(n=<<see below>>, all=T)
+split.screen(figs, screen = <<see below>>, erase = TRUE)
+screen(n = <<see below>>, new = TRUE)
+erase.screen(n = <<see below>>)
+close.screen(n = <<see below>>, all = TRUE)
 }
-%- maybe also `usage' for other functions documented here.
 \alias{screen}
 \alias{split.screen}
 \alias{erase.screen}
 \alias{close.screen}
-%- Also NEED an `\alias' for EACH other function documented here.
 \arguments{
- \item{figs}{A two-element vector describing the number of rows and the
- number of columns in a screen matrix \emph{or} a matrix with 4 columns.
- If a matrix, then each row describes a screen with values for the left,
- right, bottom, and top of the screen (in that order) in NDC units.}
- \item{n}{A number indicating which screen to prepare for drawing
- (\code{screen}), erase (\code{erase.screen}), or close
- (\code{close.screen}).}
- \item{new}{A logical value indicating whether the screen should be
- erased as part of the preparation for drawing in the screen.}
- \item{all}{A logical value indicating whether all of the screens should
- be closed.}
+  \item{figs}{A two-element vector describing the number of rows and the
+    number of columns in a screen matrix \emph{or} a matrix with 4 columns.
+    If a matrix, then each row describes a screen with values for the left,
+    right, bottom, and top of the screen (in that order) in NDC units.}
+  \item{n}{A number indicating which screen to prepare for drawing
+    (\code{screen}), erase (\code{erase.screen}), or close
+    (\code{close.screen}).}
+  \item{new}{A logical value indicating whether the screen should be
+    erased as part of the preparation for drawing in the screen.}
+  \item{all}{A logical value indicating whether all of the screens should
+    be closed.}
 }
 \description{
- \code{split.screen} defines a number of regions within the current
- device which can, to some extent, be treated as separate graphics
- devices.  It is useful for generating multiple plots on a single
- device.  Screens can themselves be split, allowing for quite complex
- arrangements of plots.
+  \code{split.screen} defines a number of regions within the current
+  device which can, to some extent, be treated as separate graphics
+  devices.  It is useful for generating multiple plots on a single
+  device.  Screens can themselves be split, allowing for quite complex
+  arrangements of plots.
 
- \code{screen} is used to select which screen to draw in.
+  \code{screen} is used to select which screen to draw in.
 
- \code{erase.screen} is used to clear a single screen.
+  \code{erase.screen} is used to clear a single screen.
 
- \code{close.screen} removes the specified screen definition(s).
+  \code{close.screen} removes the specified screen definition(s).
 }
 \details{
- The first call to \code{split.screen} places \R into split-screen
- mode.  The other split-screen functions only work within this mode.
- While in this mode, certain other commands should be avoided (see WARNINGS
- below).  Split-screen mode is exited by the command 
- \code{close.screen(all=T)}
+  The first call to \code{split.screen} places \R into split-screen
+  mode.  The other split-screen functions only work within this mode.
+  While in this mode, certain other commands should be avoided (see WARNINGS
+  below).  Split-screen mode is exited by the command 
+  \code{close.screen(all = TRUE)}
 }
 \value{
   \code{split.screen} returns a vector of screen numbers for the
@@ -60,21 +58,24 @@ close.screen(n=<<see below>>, all=T)
   \code{FALSE} if \R is not in split-screen mode.
 }
 
-\section{WARNING}{These functions are totally incompatible with the
-other mechanisms for arranging plots on a device:  \code{par(mfrow)},
-\code{par(mfcol)}, and \code{layout()}.  
+\section{Warning}{
+  These functions are totally incompatible with the
+  other mechanisms for arranging plots on a device:  \code{par(mfrow)},
+  \code{par(mfcol)}, and \code{layout()}.  
 
-The functions are also incompatible with some plotting functions, 
-such as \code{coplot}, which make use of these other mechanisms.
+  The functions are also incompatible with some plotting functions, 
+  such as \code{coplot}, which make use of these other mechanisms.
 
-The functions should not be used with multiple devices.}
+  The functions should not be used with multiple devices.
+}
 
-\seealso{\code{\link{par}}, \code{\link{layout}}, \code{\link{Devices}},
-\code{dev.*}}}
+\seealso{
+  \code{\link{par}}, \code{\link{layout}}, \code{\link{Devices}},
+  \code{dev.*}
+}
 
 \examples{
 if (interactive()) {
-
 split.screen(c(2,1))             # split display into two screens
 split.screen(c(1,3), screen = 2) # now split the bottom half into 3
 screen(1) # prepare screen 1 for output
@@ -97,9 +98,8 @@ plot(10:1, axes=F, lty=2, ylab="")  # overlay second plot
 axis(4)                   # add tic marks to right-hand axis
 title("Plot 1")
 close.screen(all = T) # exit split-screen mode
-
 }
 }
-\keyword{aplot}%-- one or more ...
-\keyword{dplot}%-- one or more ...
-\keyword{device}%-- one or more ...
+\keyword{aplot}
+\keyword{dplot}
+\keyword{device}

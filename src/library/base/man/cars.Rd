@@ -9,14 +9,14 @@
   }
 }
 \source{
-  Ezekiel, M. (1930).  \emph{Methods of Correlation Analysis}.  Wiley.
+  Ezekiel, M. (1930) \emph{Methods of Correlation Analysis.} Wiley.
 }
 \description{
   The data give the speed of cars and the distances taken to stop.
   Note that the data were recorded in the 1920s.
 }
 \references{
-  McNeil, D. R. (1977).  \emph{Interactive Data Analysis}.  Wiley.
+  McNeil, D. R. (1977) \emph{Interactive Data Analysis.} Wiley.
 }
 \examples{
 data(cars)

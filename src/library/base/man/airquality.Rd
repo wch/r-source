@@ -5,11 +5,11 @@
 \format{A data frame with 154 observations on 6 variables.
 
   \tabular{rlll}{
-    [,1] \tab Ozone   \tab numeric \tab Ozone (ppb) \cr
-    [,2] \tab Solar.R \tab numeric \tab Solar R (lang) \cr
-    [,3] \tab Wind    \tab numeric \tab Wind (mph) \cr
-    [,4] \tab Temp    \tab numeric \tab Temperature (degrees F) \cr
-    [,5] \tab Month   \tab numeric \tab Month (1--12) \cr
+    [,1] \tab Ozone   \tab numeric \tab Ozone (ppb)\cr
+    [,2] \tab Solar.R \tab numeric \tab Solar R (lang)\cr
+    [,3] \tab Wind    \tab numeric \tab Wind (mph)\cr
+    [,4] \tab Temp    \tab numeric \tab Temperature (degrees F)\cr
+    [,5] \tab Month   \tab numeric \tab Month (1--12)\cr
     [,6] \tab Day     \tab numeric \tab Day of month (1--31)
   }
 }
@@ -38,7 +38,7 @@
   (meteorological data).
 }
 \references{
-  Chambers, J. M., W. S. Cleveland, B. Kleiner and P. A. Tukey (1983).
+  Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983)
   \emph{Graphical Methods for Data Analysis.}
   Belmont, CA: Wadsworth.
 }

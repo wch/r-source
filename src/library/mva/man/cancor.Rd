@@ -36,7 +36,7 @@ cancor(x, y, xcenter = TRUE, ycenter = TRUE)
 \references{
   Hotelling H. (1936).
   Relations between two sets of variables.
-  \emph{Biometrika}, \bold{28}, 321-327.
+  \emph{Biometrika}, \bold{28}, 321--327.
   
   Seber, G. A. F. (1984). \emph{Multivariate Analysis}.
   New York: Wiley, p. 506f.

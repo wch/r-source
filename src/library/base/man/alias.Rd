@@ -4,8 +4,8 @@
 \name{alias}
 \title{Find Aliases (Dependencies) in a Model}
 \usage{
-alias(object, ...)
-alias.formula(object, data, ...)
+alias(object, \dots)
+alias.formula(object, data, \dots)
 alias.lm(object, complete = TRUE, partial = FALSE, partial.pattern = FALSE)
 }
 \alias{alias}

@@ -11,9 +11,9 @@
   follows:
 
   \tabular{rll}{
-    No \tab Name \tab Levels \cr
-    1 \tab Admit \tab Admitted, Rejected \cr
-    2 \tab Gender \tab Male, Female \cr
+    No \tab Name \tab Levels\cr
+    1 \tab Admit \tab Admitted, Rejected\cr
+    2 \tab Gender \tab Male, Female\cr
     3 \tab Dept \tab A, B, C, D, E, F
   }
 }
@@ -38,9 +38,9 @@
   information.
 }
 \references{
-  Bickel, P. J., Hammel, E. A., & O'Connell, J. W. (1975).
+  Bickel, P. J., Hammel, E. A., & O'Connell, J. W. (1975)
   Sex bias in graduate admissions: Data from Berkeley.
-  \emph{Science}, \bold{187}: 398--403.
+  \emph{Science}, \bold{187}, 398--403.
 }
 \examples{
 data(UCBAdmissions)

@@ -57,19 +57,19 @@ mosaicplot.formula(formula, data = NULL, subset, na.action, \dots)
   Slightly modified for \R by KH.
 }
 \references{
-  Hartigan, J.A., and Kleiner, B. (1984).
+  Hartigan, J.A., and Kleiner, B. (1984)
   A mosaic of television ratings. \emph{The American Statistician},
-  \bold{38}, 32-35.
+  \bold{38}, 32--35.
 
-  John W. Emerson (1998).
+  Emerson, J. W. (1998)
   Mosaic displays in S-PLUS: a general implementation and a case study.
   \emph{Statistical Computing and Graphics Newsletter (ASA)},
-  \bold{9}, 1, 17-23.
+  \bold{9}, 1, 17--23.
 
-  Friendly, M. (1994).
+  Friendly, M. (1994)
   Mosaic displays for multi-way contingency tables.
   \emph{Journal of the American Statistical Association}, \bold{89},
-  190-200.
+  190--200.
 
   The home page of Michael Friendly
   (\url{http://hotspur.psych.yorku.ca/SCS/friendly.html}) provides

@@ -5,35 +5,39 @@ eigen(x, symmetric, only.values=FALSE)
 }
 \alias{eigen}
 \arguments{
-\item{x}{a matrix whose spectral decomposition is to be computed.}
-\item{symmetric}{if \code{TRUE}, the matrix is assumed to be symmetric
+  \item{x}{a matrix whose spectral decomposition is to be computed.}
+  \item{symmetric}{if \code{TRUE}, the matrix is assumed to be symmetric
     (or Hermitian if complex) and only its lower triangle is used.
-    If \code{symmetric} is not specified, the matrix is inspected for symmetry.}
-\item{only.values}{if \code{TRUE}, only the eigenvalues are computed
+    If \code{symmetric} is not specified, the matrix is inspected for
+    symmetry.}
+  \item{only.values}{if \code{TRUE}, only the eigenvalues are computed
     and returned, otherwise both eigenvalues and eigenvectors are
     returned.}
 }
 \description{
-This function computes eigenvalues and eigenvectors by providing an
-interface to the EISPACK routines \code{RS}, \code{RG}, \code{CH} and \code{CG}.
+  This function computes eigenvalues and eigenvectors by providing an
+  interface to the EISPACK routines \code{RS}, \code{RG}, \code{CH}
+  and \code{CG}.
 }
 \value{
-The spectral decomposition of \code{x} is returned
-as components of a list.
-\item{values}{a vector containing the \eqn{p} eigenvalues of \code{x}, sorted
-  \emph{decreasingly}, according to \code{Mod(values)} if they are complex.}
-\item{vectors}{a \eqn{p\times p}{p * p} matrix whose columns contain the
+  The spectral decomposition of \code{x} is returned
+  as components of a list.
+  \item{values}{a vector containing the \eqn{p} eigenvalues of \code{x},
+    sorted in \emph{decreasing} order, according to \code{Mod(values)}
+    if they are complex.}
+  \item{vectors}{a \eqn{p\times p}{p * p} matrix whose columns contain the
     eigenvectors of \code{x}, or \code{NULL} if \code{only.values} is
     \code{TRUE}.}
 }
-\note{To compute the determinant of a matrix (do you \emph{really} need it?),
-    it is much more efficient to use the QR decomposition, see \code{\link{qr}}.
+\note{
+  To compute the determinant of a matrix (do you \emph{really} need it?),
+  it is much more efficient to use the QR decomposition, see \code{\link{qr}}.
 }
 \references{
-Smith, B. T, J. M. Boyle, J. J. Dongarra, B. S. Garbow, Y. Ikebe,
-V. Klema, C. B. Moler (1976).
-\emph{Matrix Eigensystems Routines - EISPACK Guide}.
-Springer-Verlag Lecture Notes in Computer Science.
+  Smith, B. T, Boyle, J. M., Dongarra, J. J., Garbow, B. S., Ikebe,Y.,
+  Klema, V., and  Moler, C. B. (1976).
+  \emph{Matrix Eigensystems Routines -- EISPACK Guide}.
+  Springer-Verlag Lecture Notes in Computer Science.
 }
 \seealso{
 \code{\link{svd}}, a generalization of \code{eigen}; \code{\link{qr}}, and

@@ -13,8 +13,8 @@
   Statistical Abstracts of the United States, 1975.
 }
 \references{
-  McNeil, D. (1977).
-  \emph{Interactive Data Analysis}.
+  McNeil, D. R. (1977)
+  \emph{Interactive Data Analysis.}
   New York: Wiley.
 }
 \examples{

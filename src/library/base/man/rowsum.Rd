@@ -36,7 +36,7 @@ xsum <- rowsum(x, group)
 
 
 #same result another way, slower, and temp may be much larger than x
-temp <- model.matrix( ~a -1, data.frame(a=as.factor(group)))
+temp <- model.matrix(~ a - 1, data.frame(a=as.factor(group)))
 xsum2<- t(temp) \%*\% x
 
 

@@ -9,7 +9,7 @@
   North America, as compiled by the US Geological Survey.
 }
 \references{
-  McNeil, D. (1977).  \emph{Interactive Data Analysis}.  New York:
+  McNeil, D. R. (1977) \emph{Interactive Data Analysis.}  New York:
   Wiley.
 }
 \keyword{datasets}

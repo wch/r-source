@@ -43,7 +43,7 @@ convolve(x, y, conj = TRUE, type = c("circular", "open", "filter"))
   \eqn{x_{j} := x_{n+j}}{x[j] := x[n+j]} for \eqn{j < 1}.
 }
 \references{
-  Brillinger, D. R. (1981).
+  Brillinger, D. R. (1981)
   \emph{Time Series: Data Analysis and Theory}, Second Edition.
   San Francisco: Holden-Day.
 }

@@ -70,12 +70,12 @@ sunflowerplot(x, y = NULL, number, log = "", digits = 6,
   \item{number}{number}
 }
 \references{
-  Chambers, J.M., Cleveland, W.S., Kleiner, B. and Tukey, P.A. (1983).
-  \emph{Graphical Methods for Data Analysis}.  Wadsworth.
+  Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983)
+  \emph{Graphical Methods for Data Analysis.}  Wadsworth.
 
-  Schilling, M.F. and Watkins, A.E. (1994).
+  Schilling, M. F. and Watkins, A. E. (1994)
   A suggestion for sunflower plots.
-  \emph{The American Statistician} \bold{48}, 303--305.
+  \emph{The American Statistician}, \bold{48}, 303--305.
 }
 \author{
   Andreas Ruckstuhl, Werner Stahel, Martin Maechler, Tim Hesterberg,

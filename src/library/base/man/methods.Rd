@@ -2,7 +2,7 @@
 \title{Class Methods}
 \usage{
 UseMethod(generic, object )
-NextMethod(generic, object, ...)
+NextMethod(generic, object, \dots)
 methods(generic.function, class)
 }
 \alias{UseMethod}
@@ -42,7 +42,7 @@ methods(generic.function, class)
   method.  The arguments will be the same in number, order and name as
   those to the current method but their values will be promises to
   evaluate their name in the current method and environment.  Any
-  arguments matched to \code{...} are handled specially.  They are
+  arguments matched to \code{\dots} are handled specially.  They are
   passed on as the promise that was supplied as an argument to the
   current environment. (S does this differently!)  If they have been
   evaluated in the current (or a previous environment) they remain

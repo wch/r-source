@@ -39,10 +39,10 @@
   }
 }
 \source{
-  Finney, D. J. (1947).  \emph{Probit Analysis}.  Cambridge.
+  Finney, D. J. (1947) \emph{Probit Analysis.} Cambridge.
 }
 \references{
-  McNeil, D. R. (1977).  \emph{Interactive Data Analysis}.  Wiley.
+  McNeil, D. R. (1977) \emph{Interactive Data Analysis.} New York: Wiley.
 }
 \examples{
 data(OrchardSprays)

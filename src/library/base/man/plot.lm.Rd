@@ -8,7 +8,7 @@ plot.lm(x, which = 1:4,
         panel = points,
         sub.caption = deparse(x$call), main = "",
         ask = interactive() && one.fig && .Device != "postscript",
-        ...,
+        \dots,
         id.n = 3, labels.id = names(residuals(x)), cex.id = 0.25)
 }
 \arguments{
@@ -39,42 +39,44 @@ plot.lm(x, which = 1:4,
   \eqn{\sqrt{| residuals |}} against fitted values, a Normal Q-Q plot,
   and a plot of Cook's distances versus row labels.
 }
-\details{\code{sub.caption}---by default the function call---is shown as
-    a subtitle (under the x-axis title) on each plot when plots are on
-    separate pages, or as a subtitle in the outer margin (if any) when
-    there are multiple plots per page.
+\details{
+  \code{sub.caption}---by default the function call---is shown as
+  a subtitle (under the x-axis title) on each plot when plots are on
+  separate pages, or as a subtitle in the outer margin (if any) when
+  there are multiple plots per page.
 
-    The ``Scale-Location'' plot, also called ``Spread-Location'' or
-    ``S-L'' plot, takes the square root of the absolute residuals in
-    order to diminish skewness (\eqn{\sqrt{| E |}} is much less skewed
-    than \eqn{| E |} for Gaussian zero-mean \eqn{E}).
+  The ``Scale-Location'' plot, also called ``Spread-Location'' or
+  ``S-L'' plot, takes the square root of the absolute residuals in
+  order to diminish skewness (\eqn{\sqrt{| E |}} is much less skewed
+  than \eqn{| E |} for Gaussian zero-mean \eqn{E}).
 
-    This `S-L' and the Q-Q plot use \emph{standardized} residuals which
-    have identical variance (under the hypothesis).  They are given as
-    \eqn{R_i / (s \times \sqrt{1 - h_{ii}})}{R[i] / (s*sqrt(1 - h.ii))}
-    where \eqn{h_{ii}}{h.ii} are the diagonal entries of the hat matrix,
+  This `S-L' and the Q-Q plot use \emph{standardized} residuals which
+  have identical variance (under the hypothesis).  They are given as
+  \eqn{R_i / (s \times \sqrt{1 - h_{ii}})}{R[i] / (s*sqrt(1 - h.ii))}
+  where \eqn{h_{ii}}{h.ii} are the diagonal entries of the hat matrix,
 % bug in Rdconv: "$" and \link inside \code fails; '\$' doesn't help...
-    \code{\link{lm.influence}()}\code{$hat}, see also \code{\link{hat}}.
+  \code{\link{lm.influence}()}\code{$hat}, see also \code{\link{hat}}.
 }
 \references{
-    Belsley, D. A., E. Kuh and R. E. Welsch (1980).
-    \emph{Regression Diagnostics}.  New York: Wiley.
+  Belsley, D. A., Kuh, E. and Welsch, R. E. (1980)
+  \emph{Regression Diagnostics.}  New York: Wiley.
 
-    Cook, R. D. and S. Weisberg (1982).
-    \emph{Residuals and Influence in Regression}.
-    London: Chapman and Hall.
+  Cook, R. D. and Weisberg, S. (1982)
+  \emph{Residuals and Influence in Regression.}
+  London: Chapman and Hall.
 
-    Hinkley, D. V. (1975). On power transformations to
-    symmetry. \emph{Biometrika} \bold{62}: 101-111.
+  Hinkley, D. V. (1975) On power transformations to
+  symmetry. \emph{Biometrika} \bold{62}, 101--111.
 
-    McCullagh, P. and Nelder, J. A. (1989).
-    \emph{Generalized Linear Models}.
-    London: Chapman and Hall.
+  McCullagh, P. and Nelder, J. A. (1989)
+  \emph{Generalized Linear Models.}
+  London: Chapman and Hall.
 }
-\author{John Maindonald and Martin Maechler.
+\author{
+  John Maindonald and Martin Maechler.
 }
 \seealso{
-    \code{\link{lm.influence}}, \code{\link{cooks.distance}}
+  \code{\link{lm.influence}}, \code{\link{cooks.distance}}
 }
 
 \examples{

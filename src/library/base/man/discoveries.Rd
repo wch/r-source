@@ -6,11 +6,12 @@
 \source{
   The World Almanac and Book of Facts, 1975 Edition, pages 315--318.
 }
-\description{The numbers of ``great'' inventions and scientific
+\description{
+  The numbers of ``great'' inventions and scientific
   discoveries in each year from 1860 to 1959.
 }
 \references{
-  McNeil, D. R. (1977).  \emph{Interactive Data Analysis}.  Wiley.
+  McNeil, D. R. (1977) \emph{Interactive Data Analysis.} Wiley.
 }
 \examples{
 data(discoveries)

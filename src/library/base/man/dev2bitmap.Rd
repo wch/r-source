@@ -2,8 +2,8 @@
 \alias{dev2bitmap}
 \title{Copy Graphics Device to Bitmap File}
 \usage{
-dev2bitmap(file, type="png256", height=6, width=6, res=72,
-           pointsize, ...)
+dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
+           pointsize, \dots)
 }
 \arguments{
  \item{file}{The putput file name, with an appropriate extension.}
@@ -45,7 +45,7 @@ dev2bitmap(file, type="png256", height=6, width=6, res=72,
 }
 \author{B. D. Ripley}
 
-\section{WARNING}{This is experimental and may be withdrawn in favour of
+\section{Warning}{This is experimental and may be withdrawn in favour of
 an equivalent device in a later version.}
 
 \seealso{\code{\link{postscript}}}

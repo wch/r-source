@@ -1,16 +1,16 @@
 \name{expand.grid}
 \title{Create a Data Frame from All Combinations of Factors}
 \usage{
-expand.grid(...)
+expand.grid(\dots)
 }
 \alias{expand.grid}
 \arguments{
- \item{\dots}{Vectors, factors or a list containing these. }
+  \item{\dots}{Vectors, factors or a list containing these. }
 }
 \description{
- Create a data frame from all combinations of the supplied vectors or
- factors. See the description of the return value for precise details of
- the way this is done.
+  Create a data frame from all combinations of the supplied vectors or
+  factors. See the description of the return value for precise details of
+  the way this is done.
 }
 \value{
   A data frame containing one row for each combination of the supplied
@@ -21,7 +21,7 @@ expand.grid(...)
 \author{B.D. Ripley}
 
 \examples{
-expand.grid(height=seq(60,80,5), weight=seq(100,300,50),
-             sex=c("Male","Female"))
+expand.grid(height = seq(60, 80, 5), weight = seq(100, 300, 50),
+            sex = c("Male","Female"))
 }
 \keyword{models}

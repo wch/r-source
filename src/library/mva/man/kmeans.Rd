@@ -43,15 +43,15 @@ A data frame or matrix of data.
 \references{
   Hartigan, J.A. and Wong, M.A. (1979).
   A K-means clustering algorithm.
-  \emph{Applied Statistics} \bold{28}, 100-108.
+  \emph{Applied Statistics} \bold{28}, 100--108.
 }
 \examples{
 # a 2-dimensional example
-x <- rbind(matrix(rnorm(100,sd=0.3),ncol=2),
-           matrix(rnorm(100,mean=1,sd=0.3),ncol=2))
-cl <- kmeans(x,2,20)
+x <- rbind(matrix(rnorm(100, sd = 0.3), ncol = 2),
+           matrix(rnorm(100, mean = 1, sd = 0.3), ncol = 2))
+cl <- kmeans(x, 2, 20)
 plot(x, col = cl$cluster)
-points(cl$centers,col = 1:2,pch = 8)
+points(cl$centers, col = 1:2, pch = 8)
 }
 \keyword{multivariate}
 \keyword{cluster}

@@ -22,7 +22,7 @@
   indoor clothing and shoes, and heights with shoes.
 }
 \references{
-  McNeil, D. R. (1977).  \emph{Interactive Data Analysis}.  Wiley.
+  McNeil, D. R. (1977) \emph{Interactive Data Analysis.}  Wiley.
 }
 \examples{
 data(women)

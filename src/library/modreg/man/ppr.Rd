@@ -180,7 +180,7 @@ the training set points.
   Friedman, J. H. and Stuetzle, W. (1981)
   Projection pursuit regression. 
   \emph{Journal of the American Statistical Association},
-  \bold{76}, 817-823.
+  \bold{76}, 817--823.
 
   Friedman, J. H. (1984)
   SMART User's Guide.

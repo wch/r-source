@@ -11,7 +11,7 @@
   }
 }
 \source{
-  C. I. Bliss (1952).  \emph{The Statistics of Bioassay}.  Academic
+  C. I. Bliss (1952) \emph{The Statistics of Bioassay.}  Academic
   Press.
 }
 \description{
@@ -21,8 +21,8 @@
   acid).
 }
 \references{
-  McNeil, D. R. (1977).  \emph{Interactive Data Analysis}.  New York:
-  Wiley.
+  McNeil, D. R. (1977) \emph{Interactive Data Analysis.}
+  New York: Wiley.
 }
 \examples{
 data(ToothGrowth)

@@ -125,8 +125,9 @@ Summary.factor(x, \dots)
     \code{\link{is.nan}}%do_isnan()    [coerce.c:1332]
 }
 \references{
-    Appendix A, \emph{Classes and Methods} of \cr
-    Chambers and Hastie (1992). \emph{Statistical Models in S};
+    Appendix A, \emph{Classes and Methods} of\cr
+    Chambers, J. M.  and Hastie, T. J. eds (1992)
+    \emph{Statistical Models in S.}
     Wadsworth & Brooks/Cole.
 }
 \seealso{

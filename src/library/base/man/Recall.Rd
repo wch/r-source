@@ -2,15 +2,15 @@
 \alias{Recall}
 \title{Recursive Calling}
 \usage{
-Recall(...)
+Recall(\dots)
 }
 \arguments{
- \item{\dots}{all the arguments to be passed.}
+  \item{\dots}{all the arguments to be passed.}
 }
 \description{
-    \code{Recall} is used as a placeholder for the name of the function
-    in which it is called.  It allows the definition of recursive
-    functions which still work after being renamed, see example below.
+  \code{Recall} is used as a placeholder for the name of the function
+  in which it is called.  It allows the definition of recursive
+  functions which still work after being renamed, see example below.
 }
 % \details{
 % 

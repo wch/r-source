@@ -66,7 +66,7 @@ plot(pts)
 # Argument lists
 f <- function()x
 # Note the specification of a "..." argument:
-formals(f) <- al <- alist(x=, y=2, ...=)
+formals(f) <- al <- alist(x=, y=2, \dots=)
 f
 str(al)
 

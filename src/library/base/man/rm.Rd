@@ -1,9 +1,9 @@
 \name{remove}
 \title{Remove Objects from a Specified Environment}
 \usage{
-remove(..., list = character(0), pos = -1, envir = pos.to.env(pos),
+remove(\dots, list = character(0), pos = -1, envir = pos.to.env(pos),
        inherits = FALSE)
-rm    (..., list = character(0), pos = -1, envir = pos.to.env(pos),
+rm    (\dots, list = character(0), pos = -1, envir = pos.to.env(pos),
        inherits = FALSE)
 }
 \alias{rm}

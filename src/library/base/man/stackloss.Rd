@@ -18,8 +18,8 @@
 }
 \source{
   Brownlee, K. A. (1960, 2nd ed. 1965)
-  \emph{Statistical Theory and Methodology in Science and Engineering}.
-  John Wiley, NY; pp. 491--500.
+  \emph{Statistical Theory and Methodology in Science and Engineering.}
+  New York: Wiley. pp. 491--500.
 }
 \details{
   ``Obtained from 21 days of operation of a plant for the oxidation
@@ -38,10 +38,11 @@
   of the plant.
 }
 \references{
-  Yadolah Dodge, The Guinea Pig of Multiple Regression,
+  Dodge, Y. (1996)
+  The guinea pig of multiple regression. In:
   \emph{Robust Statistics, Data Analysis, and Computer Intensive
     Methods; In Honor of Peter Huber's 60th Birthday}, 1996,
-  Lecture Notes in Statistics 109, Springer-Verlag, New York.
+  \emph{Lecture Notes in Statistics} \bold{109}, Springer-Verlag, New York.
 }
 \examples{
 data(stackloss)

@@ -51,8 +51,8 @@ gammaCody(x)
   purpose mainly, and \emph{may be defunct very soon}.
 }
 \references{
-  Abramowitz, M. and Stegun, I. A. (1972).
-  \emph{Handbook of Mathematical Functions}, Dover, New York;
+  Abramowitz, M. and Stegun, I. A. (1972)
+  \emph{Handbook of Mathematical Functions.} Dover, New York;
   Chapter 9: Bessel Functions of Integer Order.
 }
 \seealso{

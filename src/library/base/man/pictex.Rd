@@ -18,16 +18,16 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
   LaTeX documents.
 }
 \references{
-  Knuth, D. E. (1984).
-  \emph{The TeXbook}.
+  Knuth, D. E. (1984)
+  \emph{The TeXbook.}
   Reading, MA: Addison-Wesley.
 
-  Lamport, L. (1994).
-  \emph{LATEX: A Document Preparation System}.
+  Lamport, L. (1994)
+  \emph{LATEX: A Document Preparation System.}
   Reading, MA: Addison-Wesley.
 
-  Goossens, M., F. Mittelbach and A. Samarin (1994).
-  \emph{The LATEX Companion}.
+  Goossens, M., Mittelbach, F. and Samarin, A. (1994)
+  \emph{The LATEX Companion.}
   Reading, MA: Addison-Wesley.
 }
 \author{

@@ -4,7 +4,7 @@
 \name{C}
 \title{Sets Contrasts for a Factor}
 \usage{
-C(object, contr, how.many, ...)
+C(object, contr, how.many, \dots)
 }
 \alias{C}
 \arguments{
@@ -47,9 +47,8 @@ summary(lm(breaks ~ wool + C(tension, base=2), data=warpbreaks))
 
 
 data(esoph) # following on from help(esoph)
-model3 <- glm(cbind(ncases, ncontrols) ~ agegp + C(tobgp,, 1) +
-     C(alcgp,, 1), data = esoph, family = binomial())
+model3 <- glm(cbind(ncases, ncontrols) ~ agegp + C(tobgp, , 1) +
+     C(alcgp, , 1), data = esoph, family = binomial())
 summary(model3)
-
 }
 \keyword{models}

@@ -5,7 +5,7 @@
  Construct the path to a file from components in a platform-independent way.
 }
 \usage{
-file.path(..., fsep=.Platform$file.sep)
+file.path(\dots, fsep=.Platform$file.sep)
 }
 \arguments{
  \item{\dots}{Character vectors}

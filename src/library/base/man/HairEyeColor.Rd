@@ -35,8 +35,8 @@
 
   Friendly, M. (1992),
   Mosaic displays for loglinear models.
-  \emph{Proceedings of the Statistical Graphics Section}, 61--68.
-  American Statistical Association.
+  \emph{Proceedings of the Statistical Graphics Section},
+  American Statistical Association, pp. 61--68.
   \url{http://hotspur.psych.yorku.ca/SCS/Papers/asa92.html}
 }
 \seealso{

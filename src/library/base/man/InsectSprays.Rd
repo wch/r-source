@@ -2,24 +2,24 @@
 \title{Effectiveness of Insect Sprays}
 \usage{data(InsectSprays)}
 \alias{InsectSprays}
+\description{
+  The counts of insects in agricultural experimental units treated with
+  different insecticides.
+}
 \format{A data frame with 72 observations on 2 variables.
   \tabular{rlll}{
-    [,1]  \tab count  \tab numeric  \tab Insect count      \cr
+    [,1]  \tab count  \tab numeric  \tab Insect count\cr
     [,2]  \tab spray  \tab factor   \tab The type of spray
   }
 }
 \source{
-  Geoffrey Beall, (1942).
-  ``The Transformation of Data from Entomological Field Experiments'',
-  \emph{Biometrika}, 243--262.
+  Beall, G., (1942)
+  The Transformation of data from entomological field experiments,
+  \emph{Biometrika}, \bold{29}, 243--262.
 }
 \references{
-  McNeil, D. (1977).  \emph{Interactive Data Analysis}.  New York:
-  Wiley.
-}
-\description{
-  The counts of insects in agricultural experimental units treated with
-  different insecticides.
+  McNeil, D. (1977) \emph{Interactive Data Analysis.}
+  New York: Wiley.
 }
 \examples{
 data(InsectSprays)

@@ -2,10 +2,10 @@
 \title{Quantile-Quantile Plots}
 \usage{
 qqnorm(y, ylim, main = "Normal Q-Q Plot", xlab = "Theoretical Quantiles",
-       ylab = "Sample Quantiles", plot.it = TRUE, ...)
+       ylab = "Sample Quantiles", plot.it = TRUE, \dots)
 qqline(y, \dots)
 qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
-       ylab = deparse(substitute(y)), ...)
+       ylab = deparse(substitute(y)), \dots)
 }
 \alias{qqnorm}
 \alias{qqplot}

@@ -1,7 +1,7 @@
 \name{prompt}
 \title{Produce Prototype of an R Documentation File}
 \usage{
-prompt(object, ...)
+prompt(object, \dots)
 
 prompt.default(object,
     filename = paste(name, ".Rd", sep = ""),

@@ -9,18 +9,18 @@
 \format{
     A data frame with 19 observations on 2 variables.
     \tabular{rlll}{
-        [, 1] \tab temperature \tab numeric \tab temperature (deg C) \cr
+        [, 1] \tab temperature \tab numeric \tab temperature (deg C)\cr
         [, 2] \tab pressure    \tab numeric \tab pressure (mm)
     }
 }
 \source{
-    R. C. Weast, Editor (1973).
-    \emph{Handbook of Chemistry and Physics}.
+    Weast, R. C., ed. (1973)
+    \emph{Handbook of Chemistry and Physics.}
     CRC Press.
 }
 \references{
-    McNeil, D. (1977).
-    \emph{Interactive Data Analysis}.
+    McNeil, D. R. (1977)
+    \emph{Interactive Data Analysis.}
     New York: Wiley.
 }
 \examples{

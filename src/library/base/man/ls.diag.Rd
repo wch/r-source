@@ -26,7 +26,7 @@ ls.diag(ls.out)
   \item{cov.unscaled}{Unscaled covariance matrix of the coefficients}
 }
 \references{
-  Belsley, D. A., E. Kuh and R. E. Welsch (1980).
+  Belsley, D. A., Kuh, E. and Welsch, R. E. (1980)
   \emph{Regression Diagnostics.}
   New York: Wiley.
 }

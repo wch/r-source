@@ -36,8 +36,8 @@ lm.influence(lm.obj)
   Note that cases with \code{weights == 0} are \emph{dropped}.
 }
 \references{
-  Belsley, D. A., E. Kuh and R. E. Welsch (1980).
-  \emph{Regression Diagnostics}.
+  Belsley, D. A., Kuh, E. and Welsch, R. E. (1980)
+  \emph{Regression Diagnostics.}
   New York: Wiley.
 }
 \seealso{

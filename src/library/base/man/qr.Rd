@@ -73,9 +73,8 @@ as.qr(x)
     (\code{\link{eigen}}).  See \code{det2} in the examples below.
 }
 \references{
-  Dongarra, J. J., J. R. Bunch, C. B. Moler and G. W. Stewart (1978).
-  \emph{LINPACK Users Guide}.
-  Philadelphia, PA:  SIAM Publications.
+  Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
+  \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
 }
 \seealso{
   \code{\link{qr.Q}},  \code{\link{qr.R}},  \code{\link{qr.X}} for

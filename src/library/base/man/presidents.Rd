@@ -18,7 +18,7 @@
   McNeil's book for details.
 
 \references{
-  McNeil, D. (1977).  \emph{Interactive Data Analysis}.  New York:
+  McNeil, D. R. (1977) \emph{Interactive Data Analysis.}  New York:
   Wiley.
 }
 \examples{

@@ -7,24 +7,26 @@ forwardsolve(l, x, k= ncol(l), upper.tri = FALSE, transpose = FALSE)
 \alias{backsolve}
 \alias{forwardsolve}
 \arguments{
-    % Name 'r' is not really making sense for upper.tri = FALSE
-    % Name 'x' is also a  misnomer,  should rather be  'b'. -- is this S ??
-\item{r,l}{an upper (or lower) triangular matrix giving the coefficients for
-the system to be solved.  Values below (above) the diagonal are ignored.}
-\item{x}{a matrix whose columns give ``right-hand sides'' for the equations.}
-\item{k}{The number of columns of \code{r} and rows of \code{x} to use.}
-\item{upper.tri}{logical; if \code{TRUE} (default), the \emph{upper}
+  % Name 'r' is not really making sense for upper.tri = FALSE
+  % Name 'x' is also a  misnomer,  should rather be  'b'. -- is this S ??
+  \item{r,l}{an upper (or lower) triangular matrix giving the
+    coefficients for the system to be solved.  Values below (above)
+    the diagonal are ignored.}
+  \item{x}{a matrix whose columns give ``right-hand sides'' for
+    the equations.}
+  \item{k}{The number of columns of \code{r} and rows of \code{x} to use.}
+  \item{upper.tri}{logical; if \code{TRUE} (default), the \emph{upper}
     \emph{tri}angular part of \code{r} is used.  Otherwise, the lower one.}
-\item{transpose}{logical; if \code{TRUE}, solve \eqn{r' * y = x} for
+  \item{transpose}{logical; if \code{TRUE}, solve \eqn{r' * y = x} for
     \eqn{y}, i.e., \code{t(r) \%*\% y == x}.
 }
 \value{
-The solution of the triangular system.  The result will be a
-a vector if \code{x} is a vector and a matrix if \code{x} is a matrix.
+  The solution of the triangular system.  The result will be a
+  a vector if \code{x} is a vector and a matrix if \code{x} is a matrix.
 }
 \references{
-Dongarra, J. J., J. R. Bunch, C. B. Moler and G. W. Stewart (1978).
-\emph{LINPACK Users Guide}.  Philadelphia: SIAM Publications.
+  Dongarra, J. J., Bunch,J. R.,  Moler, C. B. and  Stewart, G. W. (1978)
+  \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
 }
 \seealso{
 \code{\link{chol}},

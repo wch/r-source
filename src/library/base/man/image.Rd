@@ -2,7 +2,7 @@
 \title{Display a Color Image}
 \usage{
 image(x, y, z, zlim, col = heat.colors(12),
-      add = FALSE, xaxs = "i", yaxs = "i", xlab, ylab, ...)
+      add = FALSE, xaxs = "i", yaxs = "i", xlab, ylab, \dots)
 }
 \alias{image}
 \arguments{

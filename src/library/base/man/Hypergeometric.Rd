@@ -41,9 +41,9 @@ rhyper(nn, m, n, k)
   for \eqn{x = 0, \ldots, k}{x = 0, ..., k}.
 }
 \references{
-  Johnson, N. L., Kotz, S., & Kemp, A. W. (1992).
+  Johnson, N. L., Kotz, S., and Kemp, A. W. (1992)
   \emph{Univariate Discrete Distributions},
-  2nd Ed., Wiley.
+  Second Edition. New York: Wiley.
 }
 \examples{
 m <- 10; n <- 7; k <- 8

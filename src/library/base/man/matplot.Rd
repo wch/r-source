@@ -3,7 +3,7 @@
 \usage{
 matplot(x, y, type = "p", lty = 1:5, lwd = 1, pch = NULL, col = 1:6,
         xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
-        ..., add = FALSE)
+        \dots, add = FALSE)
 matpoints(x, y, lty = 1:5, lwd = 1, pch = NULL, col = 1:6)
 matlines(x, y, lty = 1:5, lwd = 1, pch = NULL, col = 1:6)
 }

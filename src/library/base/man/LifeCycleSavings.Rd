@@ -30,11 +30,11 @@
   business cycle or other short-term fluctuations. 
 }
 \references{
-  Sterling, Arnie (1977). Unpublished BS Thesis.
+  Sterling, Arnie (1977) Unpublished BS Thesis.
   Massachusetts Institute of Technology.
 
-  Belsley, D. A., E. Kuh and R. E. Welsch (1980).
-  \emph{Regression Diagnostics}.  New York: Wiley.
+  Belsley, D. A., E. Kuh. E. and  Welsch, R. E. (1980)
+  \emph{Regression Diagnostics.} New York: Wiley.
 }
 \examples{
 data(LifeCycleSavings)

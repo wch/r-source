@@ -36,7 +36,7 @@ spline(x, y, n = 3*length(x), method = "fmm",
   splines when \code{method="periodic"}.
 }
 \references{
-  Forsythe, G. E., M. A. Malcolm and C. B. Moler (1977).
+  Forsythe, G. E., Malcolm, M. A. and Moler, C. B. (1977)
   \emph{Computer Methods for Mathematical Computations}.
 }
 \seealso{

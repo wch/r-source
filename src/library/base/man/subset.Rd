@@ -4,7 +4,7 @@
 \alias{subset.data.frame}
 \title{Subsetting Vectors and Data Frames}
 \usage{
-subset(x, ...)
+subset(x, \dots)
 subset.default(x, subset)
 subset.data.frame(x, subset, select)
 }

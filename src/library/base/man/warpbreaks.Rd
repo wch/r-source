@@ -2,7 +2,8 @@
 \title{The Number of Breaks in Yarn during Weaving}
 \usage{data(warpbreaks)}
 \alias{warpbreaks}
-\format{A data frame with 54 observations on 3 variables.
+\format{
+  A data frame with 54 observations on 3 variables.
   \tabular{rlll}{
     [,1]  \tab breaks  \tab numeric \tab The number of breaks\cr
     [,2]  \tab wool    \tab factor  \tab The type of wool (A or B)\cr
@@ -10,8 +11,8 @@
   }
 }
 \source{
-  L. H. C. Tippet (1950).
-  \emph{Technological Applications of Statistics}.
+  Tippet,  L. H. C. (1950)
+  \emph{Technological Applications of Statistics.}
   Wiley.  Page 106.
 
 }
@@ -20,10 +21,10 @@
   corresponds to a fixed length of yarn.
 }
 \references{
-  Tukey, J. W. (1977).  \emph{Exploratory Data Analysis}.
+  Tukey, J. W. (1977) \emph{Exploratory Data Analysis.}
   Addison-Wesley.
 
-  McNeil, D. (1977).  \emph{Interactive Data Analysis}.  Wiley.
+  McNeil, D. R. (1977) \emph{Interactive Data Analysis.}  Wiley.
 }
 \examples{
 data(warpbreaks)

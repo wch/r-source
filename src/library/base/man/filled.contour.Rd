@@ -12,7 +12,8 @@ filled.contour(x = seq(0, 1, len = nrow(z)),
                color.palette = cm.colors,
                col = color.palette(length(levels) - 1),
                plot.title, plot.axes, key.title, key.axes,
-               asp = NA, xaxs="i", yaxs="i", las=1, axes=TRUE, ...)
+               asp = NA, xaxs = "i", yaxs = "i", las = 1, axes = TRUE,
+               \dots)
 }
 \arguments{
  \item{x,y}{locations of grid lines at which the values in \code{z} are
@@ -58,8 +59,8 @@ filled.contour(x = seq(0, 1, len = nrow(z)),
     is shown to the right of the plot.
 }
 \references{
-  Cleveland, W. S. (1993).
-  \emph{Visualizing Data},
+  Cleveland, W. S. (1993)
+  \emph{Visualizing Data}.
   Summit, New Jersey: Hobart.
 }
 \author{Ross Ihaka.}
@@ -84,7 +85,7 @@ filled.contour(x, y, volcano, color = terrain.colors,
     key.title = title(main="Height\n(meters)"),
     key.axes = axis(4, seq(90, 190, by = 10)))# maybe also asp=1
 mtext(paste("filled.contour(.) from", R.version.string),
-      side=1, line=4, adj=1, cex=.66)
+      side = 1, line = 4, adj = 1, cex = .66)
 }
 \keyword{hplot}
 \keyword{aplot}

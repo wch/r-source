@@ -4,10 +4,10 @@
 \name{labels}
 \title{Find Labels from Object}
 \usage{
-labels(object, ...)
-labels.default(object, ...)
-labels.terms(object, ...)
-labels.lm(object, ...)
+labels(object, \dots)
+labels.default(object, \dots)
+labels.terms(object, \dots)
+labels.lm(object, \dots)
 }
 \alias{labels}
 \alias{labels.default}
@@ -17,8 +17,8 @@ labels.lm(object, ...)
   \item{object}{Any \R object: the function is generic.}
 }
 \description{
- Find a suitable set of labels from an object for use in printing or
- plotting, for example.
+  Find a suitable set of labels from an object for use in printing or
+  plotting, for example.
 }
 \value{
   A character vector or list of such vectors. For a vector the results

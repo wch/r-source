@@ -84,18 +84,18 @@ A list containing the following components:
 \item{iterations}{the number of iterations performed.}
 }
 \references{
-Dennis, J. E. and Schnabel, R. B. (1983) \emph{Numerical Methods for
-Unconstrained Optimization and Nonlinear Equations}, Prentice-Hall,
-Englewood Cliffs, NJ.
+  Dennis, J. E. and Schnabel, R. B. (1983) \emph{Numerical Methods for
+    Unconstrained Optimization and Nonlinear Equations.} Prentice-Hall,
+  Englewood Cliffs, NJ.
 
-Schnabel, R. B., Koontz, J. E. and Weiss, B. E. (1985) A modular
-system of algorithms for unconstrained minimization,
-\emph{ACM Trans. Math. Software}, \bold{11}, 419-440.
+  Schnabel, R. B., Koontz, J. E. and Weiss, B. E. (1985) A modular
+  system of algorithms for unconstrained minimization.
+  \emph{ACM Trans. Math. Software}, \bold{11}, 419--440.
 }
 \seealso{
-\code{\link{optimize}} for one-dimensional
-minimization and \code{\link{uniroot}} for root finding.
-\code{\link{deriv}} to calculate analytical derivatives.
+  \code{\link{optimize}} for one-dimensional
+  minimization and \code{\link{uniroot}} for root finding.
+  \code{\link{deriv}} to calculate analytical derivatives.
 }
 \examples{
 f <- function(x) sum((x-1:length(x))^2)

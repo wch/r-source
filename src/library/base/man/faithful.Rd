@@ -16,7 +16,7 @@
   Faithful geyser in Yellowstone National Park, Wyoming, USA.
 }
 \references{
-  Härdle, W. (1991).
+  Härdle, W. (1991)
   \emph{Smoothing Techniques with Implementation in S}.
   New York: Springer.
     
