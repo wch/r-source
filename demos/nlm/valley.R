@@ -47,8 +47,6 @@ contour(x, y, matrix(log10(z), length(x)))
 
 nlm(f, c(-1.2,1), hessian=TRUE)
 
-  g[1]:=-400.0*Bvec[1]*(Bvec[2]-sqr(Bvec[1]))-2.0*(1.0-Bvec[1]);
-  g[2]:=200.0*(Bvec[2]-sqr(Bvec[1]));
 
 fg <- function(x)
 {
