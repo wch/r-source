@@ -55,25 +55,27 @@ pi / 0 ## = Inf a non-zero number divided by zero creates infinity
 1/0 + 1/0# Inf
 1/0 - 1/0# NaN
 
-1/0 == Inf
-1/Inf == 0
+stopifnot(
+    1/0 == Inf,
+    1/Inf == 0
+)
 exp(-Inf) == 0
 ##              (actually, the last one seems to give NA on not-very-new
 ##               versions of Linux, which is a Linux bug and seems to be
 ##               corrected in newer 'libc6' based Linuxen).
 
-is.na(0/0) # T
-!is.na(Inf)# T
-is.nan(0/0)# T
+stopifnot(
+    is.na(0/0),
+    !is.na(Inf),
+    is.nan(0/0),
 
-(!is.nan(NA))  &&  (!is.infinite(NA))  && (!is.finite(NA)) # TRUE!!
-( is.nan(NaN)) &&  (!is.infinite(NaN)) && (!is.finite(NaN))# TRUE!!
+    !is.nan(NA)  &&  !is.infinite(NA)  && !is.finite(NA),
+     is.nan(NaN) &&  !is.infinite(NaN) && !is.finite(NaN),
+    !is.nan(c(1,NA)),
+    c(F,T,F) == is.nan(c   (1,NaN,NA)),
+    c(F,T,F) == is.nan(list(1,NaN,NA))#-> FALSE in older versions
+)
 
-!is.nan(NA)
-all(!is.nan(c(1,NA)))
-all(c(F,T,F) == is.nan(c   (1,NaN,NA)))
-all(c(F,T,F) == is.nan(list(1,NaN,NA)))#-> FALSE  'BUGlet' [coerce.c]
-                                # However, S is different anyway.
 \testonly{
  ( weird.values <- c(-20.9/0, 1/0, 0/0, NA) )
 

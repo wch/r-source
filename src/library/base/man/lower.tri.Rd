@@ -22,6 +22,6 @@ upper.tri(x, diag = FALSE)
 m2 <- ma <- matrix(1:20, 4, 5)
 m2[lower.tri(m2)] <- NA
 m2
-all(lower.tri(ma) == !upper.tri(ma, diag=TRUE))
+stopifnot(lower.tri(ma) == !upper.tri(ma, diag=TRUE))
 }
 \keyword{array}

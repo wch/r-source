@@ -36,14 +36,14 @@ pi
   \code{\link{data}}.
 }
 \examples{
-all(nchar(letters) == 1)                    # TRUE
-all(month.abb == substr(month.name, 1, 3))  # TRUE
-
+stopifnot(
+ nchar(letters) == 1,
+ month.abb == substr(month.name, 1, 3)
+)
 eps <- .Machine$double.eps
 all.equal(pi, 4*atan(1), tol= 2*eps)
 
 # John Machin (1705) computed 100 decimals of pi :
 all.equal(pi/4, 4*atan(1/5) - atan(1/239), 4*eps)
-
 }
 \keyword{sysdata}

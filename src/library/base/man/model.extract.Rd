@@ -35,7 +35,7 @@ model.weights(x)
 data(esoph)
 a <- model.frame(cbind(ncases,ncontrols) ~ agegp+tobgp+alcgp, data=esoph)
 model.extract(a, "response")
-all(model.extract(a, "response") == model.response(a))
+stopifnot(model.extract(a, "response") == model.response(a))
 
 a <- model.frame(ncases/(ncases+ncontrols) ~ agegp+tobgp+alcgp,
                  data = esoph, weights = ncases+ncontrols)
@@ -45,7 +45,7 @@ model.extract(a, "weights")
 a <- model.frame(cbind(ncases,ncontrols) ~ agegp,
                  something = tobgp, data = esoph)
 names(a)
-all(model.extract(a, "something") == esoph$tobgp) # TRUE
+stopifnot(model.extract(a, "something") == esoph$tobgp)
 }
 \keyword{manip}
 \keyword{programming}

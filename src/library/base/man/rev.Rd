@@ -5,16 +5,16 @@ rev(x)
 }
 \alias{rev}
 \description{
-\code{rev}
-provides a reversed version of its argument.
-It can be used in combination with
-\code{sort} to obtain vectors sorted into descending order.
+  \code{rev}
+  provides a reversed version of its argument.
+  It can be used in combination with
+  \code{sort} to obtain vectors sorted into descending order.
 }
 \seealso{\code{\link{seq}}, \code{\link{sort}}.}
 \examples{
 x <- c(1:5,5:3)
 # sort into descending order
 rev(sort(x))
-all(rev(1:7) == 7:1)#- don't need `rev' here
+stopifnot(rev(1:7) == 7:1)#- don't need `rev' here
 }
 \keyword{manip}

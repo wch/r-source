@@ -50,11 +50,12 @@ round(.5 + -2:4) # IEEE rounding: -2  0  0  2  2  4  4
 round(x1)#-- IEEE rounding !
 x1[trunc(x1) != floor(x1)]
 x1[round(x1) != floor(x1 + .5)]
-all(trunc(x1) == as.integer(x1))# TRUE
-non.int <- ceiling(x1) != floor(x1)
-all(non.int == (ceiling(x1) != trunc(x1) | trunc(x1) != floor(x1)))
-# TRUE
-all((signif(x1, 1) != round(x1,1)) == (non.int & abs(x1)>1)) # TRUE
+(non.int <- ceiling(x1) != floor(x1))
+stopifnot(
+ trunc(x1) == as.integer(x1),
+ non.int == (ceiling(x1) != trunc(x1) | trunc(x1) != floor(x1)),
+ (signif(x1, 1) != round(x1,1)) == (non.int & abs(x1) > 1)
+)
 
 x2 <- pi * 100^(-1:3)
 round(x2, 3)

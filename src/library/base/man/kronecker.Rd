@@ -24,7 +24,7 @@ X \%x\% Y
   the smaller array is padded with dimensions of size one.  \code{A}
   consists of submatrices constructed by taking \code{X} one term at a time
   and expanding that term as \code{FUN(x, Y, \dots)}.
-    
+
   \code{\%x\%} is an \code{\link{.Alias}} for \code{kronecker} (where
   \code{FUN} is hardwired to \code{"*"}).
 }
@@ -40,12 +40,12 @@ X \%x\% Y
 \examples{
 # simple scalar multiplication
 ( M <- matrix(1:6, ncol=2) )
-all(kronecker(4, M) == 4 * M)
+stopifnot(kronecker(4, M) == 4 * M)
 
 ( A <- matrix(0:3, ncol=2) )
 A \%x\% cbind(2:3)
 # Block diagonal array:
 kronecker(diag(3), M)
-all(kronecker(diag(3), M) == diag(3) \%x\% M)
+stopifnot(kronecker(diag(3), M) == diag(3) \%x\% M)
 }
 \keyword{array}

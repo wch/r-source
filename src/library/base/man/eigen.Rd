@@ -60,8 +60,9 @@ sm <- m + t(m) #- symmetric matrix
 em <- eigen(sm); V <- em$vect
 print(lam <- em$values) # ordered DEcreasingly
 
-all(abs(sm \%*\% V - V \%*\% diag(lam))          < 60*Meps)
-all(abs(sm       - V \%*\% diag(lam) \%*\% t(V)) < 60*Meps)
+stopifnot(
+ abs(sm \%*\% V - V \%*\% diag(lam))          < 60*Meps,
+ abs(sm       - V \%*\% diag(lam) \%*\% t(V)) < 60*Meps)
 
 ##------- Symmetric = FALSE:  -- different to above : ---
 
@@ -69,19 +70,19 @@ em <- eigen(sm, symmetric = FALSE); V2 <- em$vect
 print(lam2 <- em$values) # ordered decreasingly in ABSolute value !
                          # and V2 is not normalized (where V is):
 print(i <- rev(order(lam2)))
-all(abs(1 - lam2[i] / lam) < 60 * Meps)# [1] TRUE
+stopifnot(abs(1 - lam2[i] / lam) < 60 * Meps)
 
 zapsmall(Diag <- t(V2) \%*\% V2) # orthogonal, but not normalized
 print(norm2V <- apply(V2 * V2, 2, sum))
-all( abs(1- norm2V / diag(Diag)) < 60*Meps) #> TRUE
+stopifnot( abs(1- norm2V / diag(Diag)) < 60*Meps)
 
 V2n <- sweep(V2,2, STATS= sqrt(norm2V), FUN="/")## V2n are now Normalized EV
 apply(V2n * V2n, 2, sum)
 ##[1] 1 1 1 1 1
 
 ## Both are now TRUE:
-all(abs(sm \%*\% V2n - V2n \%*\% diag(lam2))            < 60*Meps)
-all(abs(sm         - V2n \%*\% diag(lam2) \%*\% t(V2n)) < 60*Meps)
+stopifnot(abs(sm \%*\% V2n - V2n \%*\% diag(lam2))            < 60*Meps,
+          abs(sm         - V2n \%*\% diag(lam2) \%*\% t(V2n)) < 60*Meps)
 
 ## Re-ordered as with symmetric:
 sV <- V2n[,i]

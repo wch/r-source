@@ -111,7 +111,7 @@ mp <- barplot(hh, beside = TRUE,
         main = "Death Rates in Virginia", font.main = 4,
         sub = "Faked upper 2*sigma error bars", col.sub = mybarcol)
 segments(mp, hh, mp, hh + 2*sqrt(1000*hh/100), col = mybarcol, lwd = 1.5)
-all(dim(mp) == dim(hh))# corresponding matrices
+stopifnot(dim(mp) == dim(hh))# corresponding matrices
 mtext(side = 1, at = apply(mp, 2, mean), line = -2,
       text = paste("Mean", formatC(apply(hh, 2, mean))), col = "red")
 }

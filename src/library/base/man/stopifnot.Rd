@@ -9,9 +9,14 @@ stopifnot(...)
    should evaluate to \code{\link{TRUE}}.}
 }
 \description{
-  If any of the expressions in \code{\dots} are not \code{TRUE},
+  If any of the expressions in \code{\dots} are not \code{\link{all}}
+  \code{TRUE},
   \code{\link{stop}(..)} is called, producing an error message
   indicating the \emph{first} element of \code{\dots} which was not true.
+}
+\details{
+  \code{stopifnot(A, B)} is conceptually equivalent to
+  \code{\{ if(!all(A)) stop(...) ; if(!all(B)) stop(...) \}}.
 }
 \value{
   (\code{\link{NULL}} if all statements in \code{\dots} are \code{TRUE}.)

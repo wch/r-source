@@ -106,12 +106,14 @@ plot(gnp) # using `plot.ts' for time-series plot
 z <- ts(matrix(rnorm(300), 100, 3), start=c(1961, 1), frequency=12)
 plot(z)
 plot(z, plot.type="single", lty=1:3)
-\testonly{
-ts(1:5, start=2, end=4) # truncate
-ts(1:5, start=3, end=17)# repeat
 
-all(z==z)
-all(z-z == 0)
+# Arithmetic etc :
+stopifnot(z == z)
+stopifnot(z-z == 0)
+
+\testonly{
+ ts(1:5, start=2, end=4) # truncate
+ ts(1:5, start=3, end=17)# repeat
 }
 ## A phase plot:
 data(nhtemp)

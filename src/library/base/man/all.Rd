@@ -23,6 +23,9 @@ all(\dots, na.rm = FALSE)
   If \code{x} consists of a mix of \code{TRUE} and \code{NA} values,
   then value is \code{NA}.
 }
+\seealso{\code{\link{stopifnot}(*)} which is an \code{all(*)}
+  ``insurance''.
+}
 \examples{
 range(x <- sort(round(rnorm(10) - 1.2,1)))
 if(all(x < 0)) cat("all x values are negative\n")

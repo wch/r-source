@@ -62,11 +62,14 @@ all.equal.numeric(target, current,
 \examples{
 all.equal(pi, 355/113) # not precise enough (default tol) > relative error
 
-all.equal(gamma(2:14),   cumprod(1:13)) # TRUE, but
+stopifnot(
+all.equal(gamma(2:14),   cumprod(1:13))) # TRUE, but
+
 all      (gamma(2:14) == cumprod(1:13)) # FALSE, since not exactly
 all.equal(gamma(2:14),   cumprod(1:13), tol=0) # to see difference
 
 all.equal(options(), .Options)
+all.equal(options(), as.list(.Options))# TRUE
 .Options $ myopt <- TRUE
 all.equal(options(), as.list(.Options))
 rm(.Options)

@@ -28,6 +28,6 @@ aperm(a, perm, resize = TRUE)
 # interchange the first two subscripts on a 3-way array x
 x  <- array(1:24, 2:4)
 xt <- aperm(x, c(2,1,3))
-all( t(xt[,,2]) == x[,,2] )
+stopifnot( t(xt[,,2]) == x[,,2] )
 }
 \keyword{array}

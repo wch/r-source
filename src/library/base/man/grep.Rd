@@ -84,7 +84,7 @@ txt <- c("The", "licenses", "for", "most", "software", "are",
    "to", "make", "sure", "the", "software", "is",
    "free", "for", "all", "its", "users")
 ( i <- grep("[gu]", txt) ) # indices
-all( txt[i] == grep("[gu]", txt, value = TRUE) )
+stopifnot( txt[i] == grep("[gu]", txt, value = TRUE) )
 (ot <- sub("[b-e]",".", txt))
 txt[ot != gsub("[b-e]",".", txt)]#- gsub does "global" substitution
 

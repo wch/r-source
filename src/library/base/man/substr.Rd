@@ -26,11 +26,11 @@ substring(text, first, last = 1000000)
 \examples{
 substr("abcdef",2,4)
 print(ss <- substring("abcdef",1:6,1:6))
-all(  ss == strsplit ("abcdef",NULL)[[1]])# strsplit is more efficient..
+stopifnot(ss == strsplit ("abcdef",NULL)[[1]])# strsplit is more efficient..
 
 substr(rep("abcdef",4),1:4,4:5)
 x <- c("asfef", "qwerty", "yuiop[", "b", "stuff.blah.yech")
-all(substr(x, 2, 5) == substring(x, 2, 5)) #> TRUE
+stopifnot(substr(x, 2, 5) == substring(x, 2, 5))
 substr(x, 2, 5)
 substring(x, 2, 4:6)
 }

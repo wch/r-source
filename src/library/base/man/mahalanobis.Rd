@@ -29,8 +29,8 @@ ma <- cbind(1:6, 1:3)
 mahalanobis(c(0,0), 1:2, S)
 
 x <- matrix(rnorm(100*3), ncol = 3)
-all(mahalanobis(x, 0, diag(ncol(x)))
-    == apply(x*x, 1, sum)) ##- Here, D^2 = usual Euclidean distances
+stopifnot(mahalanobis(x, 0, diag(ncol(x))) == apply(x*x, 1, sum))
+	##- Here, D^2 = usual Euclidean distances
 Sx <- cov(x)
 D2 <- mahalanobis(x, apply(x, 2, mean), Sx)
 plot(density(D2, bw=.5), main="Mahalanobis distances, n=100, p=3"); rug(D2)

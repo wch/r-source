@@ -86,7 +86,7 @@ set.seed(seed, kind = NULL)
     and the ``seed'' is the set of the 100 last numbers (actually
     recorded as 101 numbers, the last being a cyclic shift of the
     buffer).  The period is around \eqn{2^{129}}{2^129}.}
-  
+
     \item{\code{"user-supplied":}}{
     Use a user-supplied generator. See \code{\link{Random.user}} for details.
     }
@@ -183,9 +183,10 @@ my.runif1 <- function(i.seed = .Random.seed)
 rs <- .Random.seed
 (WHs <- next.WHseed(rs[-1]))
 u <- runif(1)
-all(next.WHseed(rs[-1]) == .Random.seed[-1])
-all.equal(u, my.runif1(rs))
-
+stopifnot(
+ next.WHseed(rs[-1]) == .Random.seed[-1],
+ all.equal(u, my.runif1(rs))
+)
 
 ## ----
 .Random.seed

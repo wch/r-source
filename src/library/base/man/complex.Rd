@@ -43,7 +43,7 @@ Conj(z)
 }
 \examples{
 ( z <- 0i ^ (-3:3) )
-all(Re(z) == 0 ^ (-3:3))
+stopifnot(Re(z) == 0 ^ (-3:3))
 matrix(1i^ (-6:5), nr=4)#- all columns are the same
 0 ^ 1i # a complex NaN
 
