@@ -334,6 +334,7 @@ setMethod <-
                    ## extra classes in method => use "..." to rematch
                    definition <- rematchDefinition(definition, fdef, mnames, fnames, signature)
                }
+               definition <- matchDefaults(definition, fdef) # use generic's defaults if none in method
            },
            builtin = , special = {
              ## the only primitive methods allowed are those equivalent

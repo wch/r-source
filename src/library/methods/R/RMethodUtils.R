@@ -1073,3 +1073,27 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
 
 ## a version of match that avoids the is.factor() junk: faster & safe for bootstrapping
 .matchBasic <- function(x, table, nomatch = NA) .Internal(match(x, table, nomatch))
+
+## match default exprs in the method to those in the generic
+## if the method does not itself specify a default, and the
+## generic does
+matchDefaults <- function(method, generic) {
+    changes <- FALSE
+    margs <- formals(method)
+    gargs <- formals(generic)
+    for(arg in names(margs)) {
+        ##!! weird use of missing() here is required by R's definition
+        ## of a missing arg as a name object with empty ("") name
+        ## This is dangerously kludgy code but seems the only way
+        ## to avoid spurious errors ("xxx missing with no default")
+        marg <- margs[[arg]]
+        garg <- gargs[[arg]]
+        if(missing(marg) && !missing(garg)) {
+            changes <- TRUE
+            margs[[arg]] <- garg
+        }
+    }
+    if(changes)
+        formals(method, envir = environment(method)) <- margs
+    method
+}

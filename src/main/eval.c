@@ -707,8 +707,20 @@ SEXP R_execMethod(SEXP op, SEXP rho)
 	SET_TAG(FRAME(newrho), symbol);
 	if (missing) {
 	    SET_MISSING(FRAME(newrho), missing);
-	    if (TYPEOF(val) == PROMSXP && PRENV(val) == rho)
+	    if (TYPEOF(val) == PROMSXP && PRENV(val) == rho) {
+		SEXP deflt;
 		SET_PRENV(val, newrho);
+		/* find the symbol in the method, copy its expression
+		 * to the promise */ 
+		for(deflt = CAR(op); deflt != R_NilValue; deflt = CDR(deflt)) {
+		    if(TAG(deflt) == symbol)
+		        break;
+		}
+		if(deflt == R_NilValue)
+		    error("Symbol \"%s\" not in environment of method",
+			  CHAR(PRINTNAME(symbol)));
+		PRCODE(val) = CAR(deflt);
+	    }
 	}
     }
 

@@ -77,15 +77,25 @@ removeMethod(f, signature, where)
   or environments, the underlying model is that these together make up
   the definition for a single generic function.  When R proceeds to
   select and evaluate methods for \code{f}, the methods on the current
-  search list are merged to form a single methods list.  When \code{f}
+  search list are merged to form a single generic function and
+  associated methods list.  When \code{f}
   is called and a method is \dQuote{dispatched}, the evaluator matches the
   classes of the actual arguments to the signatures of the available
   methods.  When a match is found, the body of the corresponding
-  method is evaluated (in R, the body is evaluated in the lexical
-  context of the method), but without rematching the arguments to
-  \code{f}.
+  method is evaluated, but without rematching the arguments to
+  \code{f}.   Aside from not rematching the arguments, the computation
+  proceeds as if the call had been to the method.  In particular, the
+  lexical scope of the method is used.
 
-  It is possible, however, to have some differences between the
+  Method definitions can
+  have default expressions for arguments.  If those arguments are then
+  missing in the call to the generic function, the default expression
+  in the method is used.  If the method definition has no default for
+  the argument, then the expression (if any) supplied in the definition of the
+  generic function itself is used.  But note that this expression will
+  be evaluated in the environment defined by the method.
+
+  It is possible to have some differences between the
   formal arguments to a method supplied to \code{setMethod} and those
   of the generic. Roughly, if the generic has \dots as one of its
   arguments, then the method may have extra formal arguments, which

@@ -254,6 +254,11 @@ NEW FEATURES
 	plotted via stats:::plotNode called from plot.dendrogram). The
 	diamond frames around edge labels are nicer scaled horizontally.
 
+    o   Methods defined in the methods package can now include
+        default expressions for arguments.  If these arguments are
+    	missing in the call, the defaults in the selected method will
+	override a default in the generic.  See ?setMethod.
+
     o	Changes to package 'grid':
 
 	- Renamed push/pop.viewport() to push/popViewport().
