@@ -6,12 +6,7 @@ ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 
-test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
-test-src-sloppy = $(test-src-sloppy-1) $(test-src-sloppy-auto)
-test-src-auto = $(test-src-strict-auto) $(test-src-sloppy-auto)
-test-src = $(test-src-strict) $(test-src-sloppy)
-test-out-strict = $(test-src-strict:.R=.Rout)
-test-out-sloppy = $(test-src-sloppy:.R=.Rout)
+test-src = $(test-src-1) $(test-src-auto)
 test-out = $(test-src:.R=.Rout)
 
 R = $(R_HOME)/bin/R --vanilla
@@ -20,8 +15,8 @@ RDIFF = $(R_HOME)/bin/Rdiff
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout
 
-.Rin.R: stamp-R
-	@echo "creating \`$@'"
+.Rin.R:
+	@echo "Creating \`$@'"
 	@$(R) < $< > /dev/null
 
 .R.Rout:
@@ -31,23 +26,15 @@ RDIFF = $(R_HOME)/bin/Rdiff
 	@if test -f $@.save ; then \
 	  mv $@ $@.fail; \
 	  echo @ECHO_N@ "  Comparing \`$@' to \`$@.save' ...@ECHO_C@"; \
-	  $(RDIFF) $@.fail $@.save $(RVAL_IF_DIFF) || exit 1; \
+	  $(RDIFF) $@.fail $@.save 0 || exit 1; \
 	  mv $@.fail $@; \
 	  echo "@ECHO_T@ OK"; \
 	fi
 
 all:
-	@(out=`echo "$(test-out-strict)" | sed 's/ //g'`; \
+	@(out=`echo "$(test-out)" | sed 's/ //g'`; \
 	  if test -n "$${out}"; then \
-	    echo " Running strict specific tests"; \
-	    $(MAKE) -f $(R_HOME)/etc/Makeconf-tests \
-	      "$${out}" RVAL_IF_DIFF=1; \
-	  fi)
-	@(out=`echo "$(test-out-sloppy)" | sed 's/ //g'`; \
-	  if test -n "$${out}"; then \
-	    echo " Running sloppy specific tests"; \
-	    $(MAKE) -f $(R_HOME)/etc/Makeconf-tests \
-	      "$${out}" RVAL_IF_DIFF=0; \
+	    $(MAKE) -f $(R_HOME)/etc/Makeconf-tests "$${out}"; \
 	  fi)
 
 clean:
