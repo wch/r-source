@@ -1,7 +1,4 @@
-###-- NOTE: This is for  NON-Windows only  (cf. windows/help.R )
-
-index.search <- function(topic, path, file="AnIndex", type="help")
-    .Internal(index.search(topic, path, file, .Platform$file.sep, type))
+### NOTE: This is for Unix only (cf. ../{mac,windows}/help.R)
 
 help <- function(topic, offline = FALSE, package = .packages(),
                  lib.loc = .lib.loc, verbose = getOption("verbose"),
