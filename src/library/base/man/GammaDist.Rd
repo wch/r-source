@@ -34,14 +34,14 @@ rgamma(n, shape, scale=1)
   If \code{scale} is omitted, it assumes the default value of \code{1}.
 
   The Gamma distribution with parameters \code{shape} \eqn{=\alpha}{= a}
-  and \code{scale} \eqn{=\sigma}{= b} has density
+  and \code{scale} \eqn{=\sigma}{= s} has density
   \deqn{
     f(x)= \frac{1}{{\sigma}^{\alpha}\Gamma(\alpha)} {x}^{\alpha-1} e^{-x/\sigma}%
-  }{f(x)= 1/(b^a Gamma(a)) x^(a-1) e^-(x/b)}
-  for \eqn{x > 0}, \eqn{\alpha > 0}{a > 0} and \eqn{\sigma > 0}{b > 0}.
+  }{f(x)= 1/(s^a Gamma(a)) x^(a-1) e^-(x/s)}
+  for \eqn{x > 0}, \eqn{\alpha > 0}{a > 0} and \eqn{\sigma > 0}{s > 0}.
   The mean and variance are
-  \eqn{E(X) = \alpha\sigma}{E(X) = a*b} and
-  \eqn{Var(X) = \alpha\sigma^2}{Var(X) = a*b^2}.
+  \eqn{E(X) = \alpha\sigma}{E(X) = a*s} and
+  \eqn{Var(X) = \alpha\sigma^2}{Var(X) = a*s^2}.
 }
 \note{
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}

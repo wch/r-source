@@ -39,14 +39,19 @@ rbinom(n, size, prob)
 
   If an element of \code{x} is not integer, the result of \code{dbinom}
   is zero, with a warning.
+  \eqn{p(x)} is computed using Loader's algorithm, see the reference below.
 
   The quantile is defined as the smallest value \eqn{x} such that
   \eqn{F(x) \ge p}, where \eqn{F} is the distribution function.
 }
-
 \seealso{
   \code{\link{dnbinom}} for the negative binomial, and
   \code{\link{dpois}} for the Poisson distribution.
+}
+\references{
+  Catherine Loader (2000). \emph{Fast and Accurate Computation of
+    Binomial Probabilities}; manuscript available from
+  \url{http://cm.bell-labs.com/cm/ms/departments/sia/catherine/dbinom}
 }
 \examples{
 # Compute P(45 < X < 55) for X Binomial(100,0.5)

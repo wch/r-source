@@ -39,6 +39,8 @@ rpois(n, lambda)
 
   If an element of \code{x} is not integer, the result of \code{dpois}
   is zero, with a warning.
+  \eqn{p(x)} is computed using Loader's algorithm, see the reference in
+  \code{\link{dbinom}}.
 
   The quantile is left continuous: \code{qgeom(q, prob)} is the largest
   integer \eqn{x} such that \eqn{P(X \le x) < q}.
