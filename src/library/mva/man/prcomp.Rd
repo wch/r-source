@@ -27,35 +27,40 @@ prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
     equal the number of columns of \code{x} can be supplied.  The
     value is passed to \code{scale}.}
   \item{tol}{a value indicating the magnitude below which components
-    should be omitted. With the default null setting, no components
+    should be omitted. (Components are omitted if their
+    standard deviations are less than or equal to \code{tol} times the
+    standard deviation of the first component.)
+    With the default null setting, no components
     are omitted.  Other settings for tol could be \code{tol = 0} or
-    \code{tol = sqrt(.Machine$double.eps)}.} 
+    \code{tol = sqrt(.Machine$double.eps)}, which would omit
+    essentially constant components.} 
 }
 \value{
   \code{prcomp} returns an list with class \code{"prcomp"}
   containing the following components:
-  \item{sdev}{the standard deviation of the principal components
-    (i.e., the sqare root of the eigenvalues of the covariance
-    matrix, though the calculation
+  \item{sdev}{the standard deviations of the principal components
+    (i.e., the square roots of the eigenvalues of the
+    covariance/correlation matrix, though the calculation
     is actually done with the singular values of the data matrix).}
   \item{rotation}{the matrix of variable loadings (i.e., a matrix
-    whose olumns contain the eigenvectors).  The function
+    whose columns contain the eigenvectors).  The function
     \code{princomp} returns this in the element \code{loadings}.}
   \item{x}{if \code{retx} is true the value of the rotated data (the
     data multiplied by the \code{rotation} matrix) is returned.}
 }
 \details{
   The calculation is done by a singular value decomposition of the
-  data matrix, not by using \code{eigen} on the covariance matrix.  This
+  (centered and scaled) data matrix, not by using \code{eigen} on the
+  covariance matrix.  This
   is generally the preferred method for numerical accuracy.  The
   \code{print} method for the these objects prints the results in a nice
   format and the \code{plot} method produces a scree plot.
 }
 \references{
-  Mardia, K. V., J. T. Kent, J and M. Bibby (1979),
+  Mardia, K. V., J. T. Kent, and J. M. Bibby (1979)
   \emph{Multivariate Analysis}, London: Academic Press.
 
-  Venables, W. N. and B. D. Ripley (1997),
+  Venables, W. N. and B. D. Ripley (1997)
   \emph{Modern Applied Statistics with S-PLUS}, Springer-Verlag.
 }
 \seealso{
