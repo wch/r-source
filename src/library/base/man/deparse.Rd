@@ -6,7 +6,7 @@
 }
 \usage{
 deparse(expr, width.cutoff = 60,
-        backtick = mode(expr) \%in\% c("expression", "call", "(")
+        backtick = mode(expr) \%in\% c("expression", "call", "("))
 }
 \arguments{
   \item{expr}{any \R expression.}
