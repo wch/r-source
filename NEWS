@@ -29,6 +29,12 @@ BUG FIXES
     o	Explicitly close files opened by sink() for OSes (such as
 	Windows) that benefit from it.
 
+    o	ts(1:10, start= c(1999,6), end = c(2000,3), frequency = 12)
+	now prints both years (as it should).
+
+    o	monthly multivariate time series now print proper month names
+	in all cases.
+
 
 
 		CHANGES IN R VERSION 1.2.0
