@@ -343,4 +343,5 @@ void gnome_start(int ac, char **av, Rstart Rp)
 SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     error("Sys.sleep is not implemented on this system");
+    return R_NilValue;		/* -Wall */
 }
