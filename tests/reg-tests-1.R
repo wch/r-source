@@ -2913,3 +2913,8 @@ fit <- princomp(covmat=cov(x))
 stopifnot(is.null(fit$scores))
 stopifnot(is.na(predict(fit, newdata=x[1:10, ])))
 ## failed in 1.8.1
+
+
+## (PR#6451) regex functions did not coerce args to character.
+sub(x=NA, pattern="x", replacement="y")
+## failed in 1.8.1

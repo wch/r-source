@@ -750,10 +750,15 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (igcase_opt == NA_INTEGER) igcase_opt = 0;
     if (extended_opt == NA_INTEGER) extended_opt = 1;
 
-    if (!isString(pat) || length(pat) < 1 ||
-	!isString(rep) || length(rep) < 1 ||
-	!isString(vec))
+    if (length(pat) < 1 || length(rep) < 1)
 	errorcall(call, R_MSG_IA);
+
+    if (!isString(pat)) PROTECT(pat = coerceVector(pat, STRSXP));
+    else PROTECT(pat);
+    if (!isString(rep)) PROTECT(rep = coerceVector(rep, STRSXP));
+    else PROTECT(rep);
+    if (!isString(vec)) PROTECT(vec = coerceVector(vec, STRSXP));
+    else PROTECT(vec);
 
     eflags = 0;
     if (extended_opt) eflags = eflags | REG_EXTENDED;
@@ -831,7 +836,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     regfree(&reg);
-    UNPROTECT(1);
+    UNPROTECT(4);
     return ans;
 }
 
@@ -851,10 +856,14 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     fixed_opt = asLogical(CAR(args));
     if (fixed_opt == NA_INTEGER) fixed_opt = 0;
 
-    if (!isString(pat) || length(pat) < 1 ||
-	!isString(text) || length(text) < 1 ||
+    if (length(pat) < 1 || length(text) < 1 ||
 	STRING_ELT(pat,0) == NA_STRING)
 	errorcall(call, R_MSG_IA);
+
+    if (!isString(pat)) PROTECT(pat = coerceVector(pat, STRSXP));
+    else PROTECT(pat);
+    if (!isString(text)) PROTECT(text = coerceVector(text, STRSXP));
+    else PROTECT(text);
 
     eflags = extended_opt ? REG_EXTENDED : 0;
 
@@ -885,7 +894,7 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if (!fixed_opt) regfree(&reg);
     setAttrib(ans, install("match.length"), matchlen);
-    UNPROTECT(2);
+    UNPROTECT(4);
     return ans;
 }
 

@@ -43,6 +43,9 @@ regexpr(pattern, text,  extended = TRUE, perl = FALSE, fixed = FALSE)
     \code{gsub}.}
 }
 \details{
+  Arguments which should be character strings or character vectors are
+  coerced to character if possible.
+  
   The two \code{*sub} functions differ only in that \code{sub} replaces
   only the first occurrence of a \code{pattern} whereas \code{gsub}
   replaces all occurrences.
@@ -71,11 +74,6 @@ regexpr(pattern, text,  extended = TRUE, perl = FALSE, fixed = FALSE)
   is none, with attribute \code{"match.length"} giving the length of the
   matched text (or \eqn{-1} for no match).
 }
-% \note{
-%   \code{perl = TRUE} will only be available if \R was compiled against 
-%   PCRE: this is detected at configure time.  All Unix and Windows system
-%   should have it.
-% }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

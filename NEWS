@@ -214,6 +214,9 @@ NEW FEATURES
     o	New functions head() and tail() in package `utils'.
 	(Based on a contribution by Patrick Burns.)
 
+    o	Functions grep(), regexpr(), sub() and gsub() now coerce their
+	arguments to character, rather than give an error.
+
 
 UTILITIES
 
@@ -283,9 +286,6 @@ INSTALLATION CHANGES
 
 
 BUG FIXES
-
-    o	termplot() is more tolerant of variables not in the data= argument.
-	(PR#6327)
 
     o	contrasts() turns a logical variable into a factor.  This now
 	always has levels c("FALSE", "TRUE") even if only one (or
@@ -361,7 +361,7 @@ BUG FIXES
 	machines. For buildVignettes() this makes no difference as it
 	uses an internal cleanup mechanism.
 
-    o	The biplot method for prcomp was not registered nor exported.
+    o	The biplot() method for "prcomp" was not registered nor exported.
 	(PR#6425)
 
     o	Latex conversion of .Rd files was missing newline before
@@ -376,6 +376,9 @@ BUG FIXES
     o   Calling princomp() with a covariance matrix (rather than a
 	list) failed to predict scores rather than predict NA as
 	intended.  (PR#6452)
+
+    o	termplot() is more tolerant of variables not in the data= argument.
+	(PR#6327)
 
 
 
