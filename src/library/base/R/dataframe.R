@@ -724,7 +724,8 @@ rbind.data.frame <- function(..., deparse.level = 1)
     }
     for(j in 1:nvar) {
 	xj <- value[[j]]
-	if(!has.dim[j] && (is.character(xj) || is.logical(xj)))
+	if(!has.dim[j] && !inherits(xj, "AsIs") && 
+	   	(is.character(xj) || is.logical(xj)))
 	    value[[j]] <- factor(xj)
     }
     rlabs <- unlist(rlabs)

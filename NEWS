@@ -57,6 +57,8 @@ BUG FIXES
 
     o	which(.) now omits NAs in its argument.
 
+    o   rbind.data.frame caused character-to-factor coercion a bit too often
+
 
 		CHANGES IN R VERSION 0.63
 
