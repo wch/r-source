@@ -474,6 +474,9 @@ nevertheless a valid type value.  It gets used in certain (rather rare)
 circumstances, e.g.@: @code{as.vector(x, "any")}, indicating that type
 coercion should not be done.
 
+@c @node External pointer objects
+@c @subsection External pointer objects
+
 @node Attributes, Special compound objects, Basic types, Objects
 @section Attributes
 
