@@ -1,0 +1,12 @@
+ksmooth                  Kernel Regression Smoother
+loess                    Local Polynomial Regression Fitting
+loess.control            Set Parameters for Loess
+loess.smooth		 Simple Smoothing via Loess
+plot.ppr                 Plot Ridge Functions for Projection Pursuit
+                           Regression Fit
+ppr                      Projection Pursuit Regression
+predict.loess            Predict Loess Curve or Surface
+predict.smooth.spline    Predict from Smoothing Spline Fit
+scatter.smooth           Scatter Plot with Smooth Curve Fitted by Loess
+smooth.spline            Fit a Smoothing Spline
+supsmu                   Friedmans's SuperSmoother
