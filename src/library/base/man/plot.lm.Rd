@@ -8,7 +8,7 @@
                     "Scale-Location plot", "Cook's distance plot"),
         panel = points,
         sub.caption = deparse(x$call), main = "",
-        ask = nb.fig < length(which) && dev.interactive(),
+        ask = prod(par("mfcol")) < length(which) && dev.interactive(),
         \dots,
         id.n = 3, labels.id = names(residuals(x)), cex.id = 0.25)
 }
