@@ -47,20 +47,22 @@ static void check_max_mem(int argc, char **argv)
 	    if(strlen(*av) < 16) {
 		ac--; av++; p = *av;
 	    } else p = &(*av)[15];
-	    v = strtol(p, &p, 10);
-	    if(p[0] == 'M') {
-		if((1024*1024 * (double)v) > LONG_MAX) return;
-		v = 1024*1024*v;
-	    } else if(p[0] == 'K') {
-		if((1024 * (double)v) > LONG_MAX) return;
-		v = 1024*v;
-	    } else if(p[0] == 'k') {
-		if((1000 * (double)v) > LONG_MAX) return;
-		v = 1000*v;
-	    }
+	    if (p) {
+	    	v = strtol(p, &p, 10);
+	    	if(p[0] == 'M') {
+		    if((1024*1024 * (double)v) > LONG_MAX) return;
+		    v = 1024*1024*v;
+	    	} else if(p[0] == 'K') {
+		    if((1024 * (double)v) > LONG_MAX) return;
+		    v = 1024*v;
+	    	} else if(p[0] == 'k') {
+		    if((1000 * (double)v) > LONG_MAX) return;
+		    v = 1000*v;
+	    	}
 #ifdef LEA_MALLOC
-	    if (v > R_reserved_size) R_reserved_size = v;
+	    	if (v > R_reserved_size) R_reserved_size = v;
 #endif
+	    }
 	    return;
 	}
     }
