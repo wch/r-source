@@ -5,8 +5,8 @@
 BUILD=MINGW32
 
 # Where does 'HTML Help Workshop' live? (unused if compiled HTML help is
-# not requested. No spaces allowed.)
-HHWDIR=C:/PROGRA~1/HTMLHE~1
+# not requested. Spaces allowed.)
+HHWDIR=C:/Program Files/HTML Help Workshop
 
 ifeq ($(strip $(BUILD)),CYGWIN)
 BINPREF=
