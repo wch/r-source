@@ -51,7 +51,7 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch,
     Cex <- cex * par("cex")             # = the `effective' cex for text
 
     if(is.null(text.width))
-	text.width <- max(strwidth(legend, u="user", cex=cex))
+	text.width <- max(strwidth(legend, units="user", cex=cex))
     else if(!is.numeric(text.width) || text.width < 0)
 	stop("text.width must be numeric, >= 0")
 
@@ -60,7 +60,7 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch,
 
     xchar  <- xc
     yextra <- yc * (y.intersp - 1)
-    ymax   <- max(yc, strheight(legend, u="user", cex=cex))
+    ymax   <- max(yc, strheight(legend, units="user", cex=cex))
     ychar <- yextra + ymax
     if(trace) catn("  xchar=", xchar, "; (yextra,ychar)=", c(yextra,ychar))
 

@@ -269,8 +269,8 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
         ## more than 1/12 of the of the plot region horizontally and not
         ## more than 1/4 vertically.
         rtxtCex <- min(1,
-                       pin[1] / (strheight(rtxt, units = "i") * 12),
-                       pin[2] / (strwidth (rtxt, units = "i") / 4))
+                       pin[1] / (strheight(rtxt, units = "inches") * 12),
+                       pin[2] / (strwidth (rtxt, units = "inches") / 4))
         rtxtWidth <- 0.1                # unconditionally ...
         ## We put the legend to the right of the third axis.
         opar <- par(usr = c(1, 1000 * (1.1 + rtxtWidth), 1, 1000),
