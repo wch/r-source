@@ -1897,7 +1897,7 @@ these a try, of course.  This area of CRAN currently contains
 *pls*
      Univariate Partial Least Squares Regression.
 
-*runStats*
+*runStat*
      Running median and mean.
 
 *write.snns*

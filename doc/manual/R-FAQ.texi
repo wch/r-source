@@ -2102,7 +2102,7 @@ Univariate Partial Least Squares Regression.
 @c @item regexp
 @c Simple regular expression interface.
 @c </COMMENT>
-@item runStats
+@item runStat
 Running median and mean.
 @item write.snns
 Function for writing a @acronym{SNNS} pattern file from a data frame or
