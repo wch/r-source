@@ -28,7 +28,7 @@ static R_CallMethodDef CallEntries[] = {
 };
 
 static R_NativePrimitiveArgType Srunmed_t[6] = {REALSXP,REALSXP,INTSXP,INTSXP,
-					 INTSXP,INTSXP};
+					 INTSXP,LGLSXP};
 static R_NativePrimitiveArgType Trunmed_t[9] = {INTSXP,INTSXP, REALSXP,REALSXP,
 					 INTSXP,INTSXP, REALSXP,INTSXP,INTSXP};
 
