@@ -12,6 +12,9 @@ No Windows-specific changes (nor are any planned).
 Support for earlier compilers has been dropped: you must use a
 compiler system that supports --shared and an in-memory dlltool.
 
+Under the default compilation options, Internet Explorer 4.0 or later
+is required.
+
 
 
 rw1023
