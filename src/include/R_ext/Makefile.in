@@ -1,0 +1,71 @@
+#
+# ${R_HOME}/src/include/R_ext/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../../..
+subdir = src/include/R_ext
+
+include $(top_builddir)/Makeconf
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+
+## Partially included by the API (1) headers in .., but not part of the
+## API per se. 
+R_EXT_HEADERS = \
+	Applic.h Arith.h Boolean.h Complex.h Constants.h Error.h \
+	Linpack.h Mathlib.h Memory.h Print.h PrtUtil.h R-ftp-http.h \
+	RS.h Random.h RConverters.h Rdynload.h Utils.h eventloop.h \
+	libextern.h
+DISTFILES = Makefile.in $(R_EXT_HEADERS) \
+  RX11.h Rdynpriv.h Rinternet.h Rlapack.h
+
+TIMESTAMPS = $(R_EXT_HEADERS:.h=.ts)
+
+.SUFFIXES:
+.SUFFIXES: .h .ts
+
+.h.ts:
+	@$(INSTALL_DATA) $< $(top_builddir)/include/R_ext/`basename $<`
+	@touch $@
+
+all: Makefile R
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	@cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
+
+R: Makefile stamp-R $(TIMESTAMPS)
+stamp-R: 
+	@$(MKINSTALLDIRS) $(top_builddir)/include/R_ext
+	@touch $@
+
+install: installdirs
+	@for f in $(R_EXT_HEADERS); do \
+	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/include/R_ext; \
+	done
+installdirs:
+	@$(MKINSTALLDIRS) $(rhome)/include/R_ext
+install-strip:
+	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
+uninstall:
+	@rm -rf $(rhome)/include/R_ext
+
+mostlyclean: clean
+clean:
+	@rm -f stamp-R $(TIMESTAMPS)
+distclean: clean
+	@rm -f Makefile
+maintainer-clean: distclean
+
+TAGS info dvi check:
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
