@@ -324,7 +324,7 @@ static SEXP real_relop(int code, SEXP s1, SEXP s2)
 static SEXP complex_relop(int code, SEXP s1, SEXP s2)
 {
     int i, n, n1, n2;
-    complex x1, x2;
+    Rcomplex x1, x2;
     SEXP ans;
 
     if (code != EQOP && code != NEOP) {

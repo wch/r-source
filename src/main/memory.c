@@ -592,7 +592,7 @@ void compactPhase(void)
 	    size = LENGTH(s) * sizeof(double);
 	    break;
 	case CPLXSXP:
-	    size = LENGTH(s) * sizeof(complex);
+	    size = LENGTH(s) * sizeof(Rcomplex);
 	    break;
 	case STRSXP:
 	case EXPRSXP:

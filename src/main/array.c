@@ -326,8 +326,8 @@ static void matprod(double *x, int nrx, int ncx,
 	}
 }
 
-static void cmatprod(complex *x, int nrx, int ncx,
-		complex *y, int nry, int ncy, complex *z)
+static void cmatprod(Rcomplex *x, int nrx, int ncx,
+		Rcomplex *y, int nry, int ncy, Rcomplex *z)
 {
     int i, j, k;
     double xij_r, xij_i, yjk_r, yjk_i, sum_i, sum_r;
@@ -387,8 +387,8 @@ static void crossprod(double *x, int nrx, int ncx,
 	}
 }
 
-static void ccrossprod(complex *x, int nrx, int ncx,
-		       complex *y, int nry, int ncy, complex *z)
+static void ccrossprod(Rcomplex *x, int nrx, int ncx,
+		       Rcomplex *y, int nry, int ncy, Rcomplex *z)
 {
     int i, j, k;
     double xji_r, xji_i, yjk_r, yjk_i, sum_r, sum_i;

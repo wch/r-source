@@ -81,7 +81,7 @@ double DLOG10(double *x)
 
 	/* Complex Arithmetic */
 
-void ZDIV(complex *c, complex *a, complex *b)
+void ZDIV(Rcomplex *c, Rcomplex *a, Rcomplex *b)
 {
     double ratio, den;
     double abr, abi;
@@ -106,22 +106,22 @@ void ZDIV(complex *c, complex *a, complex *b)
     }
 }
 
-double ZABS(complex *z)
+double ZABS(Rcomplex *z)
 {
     return hypot(z->r, z->i);
 }
 
-double ZIMAG(complex *z)
+double ZIMAG(Rcomplex *z)
 {
     return z->i;
 }
 
-double ZREAL(complex *z)
+double ZREAL(Rcomplex *z)
 {
     return z->r;
 }
 
-void ZCNJG(complex *r, complex *z)
+void ZCNJG(Rcomplex *r, Rcomplex *z)
 {
     r->r = z->r;
     r->i = - z->i;

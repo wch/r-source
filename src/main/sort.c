@@ -43,7 +43,7 @@ static int rcmp(double x, double y)
     return 0;
 }
 
-static int ccmp(complex x, complex y)
+static int ccmp(Rcomplex x, Rcomplex y)
 {
 				/* compare real parts */
     if (ISNAN(x.r))	return 1;
@@ -102,9 +102,9 @@ void rsort(double *x, int n)
 #undef TYPE_CMP
 }
 
-void csort(complex *x, int n)
+void csort(Rcomplex *x, int n)
 {
-    complex v;
+    Rcomplex v;
 #define TYPE_CMP ccmp
     sort_body
 #undef TYPE_CMP
@@ -260,9 +260,9 @@ void rPsort(double *x, int n, int k)
 #undef TYPE_CMP
 }
 
-void cPsort(complex *x, int n, int k)
+void cPsort(Rcomplex *x, int n, int k)
 {
-    complex v, w;
+    Rcomplex v, w;
 #define TYPE_CMP ccmp
     psort_body
 #undef TYPE_CMP

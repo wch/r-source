@@ -71,7 +71,7 @@ static int rhash(SEXP x, int index)
 
 static int chash(SEXP x, int index)
 {
-    complex tmp;
+    Rcomplex tmp;
     tmp.r = (COMPLEX(x)[index].r == 0.0) ? 0.0 : COMPLEX(x)[index].r;
     tmp.i = (COMPLEX(x)[index].i == 0.0) ? 0.0 : COMPLEX(x)[index].i;
     return scatter((*((unsigned int *)(&tmp.r)) |

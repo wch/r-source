@@ -251,7 +251,7 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
 			       SEXP rl, SEXP cl, char *rn, char *cn)
 {
     SEXP sdr, ser, swr, sdi, sei, swi, sw;
-    complex *x;
+    Rcomplex *x;
     int *dr, *er, *wr, *di, *ei, *wi, *w;
     int width, rlabw, clabw, rnw;
     int i, j, jmin, jmax, lbloff = 0;

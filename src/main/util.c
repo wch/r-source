@@ -52,7 +52,7 @@ SEXP ScalarReal(double x)
     return ans;
 }
 
-SEXP ScalarComplex(complex x)
+SEXP ScalarComplex(Rcomplex x)
 {
     SEXP ans = allocVector(CPLXSXP, 1);
     COMPLEX(ans)[0] = x;
@@ -145,9 +145,9 @@ double asReal(SEXP x)
 }
 
 
-complex asComplex(SEXP x)
+Rcomplex asComplex(SEXP x)
 {
-    complex z;
+    Rcomplex z;
     z.r = NA_REAL;
     z.i = NA_REAL;
     if (isVectorAtomic(x) && LENGTH(x) >= 1) {

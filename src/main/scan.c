@@ -66,8 +66,8 @@ static int ttyflag;
 static int quiet;
 static SEXP NAstrings;
 
-static complex strtoc(const char *nptr, char **endptr) {
-    complex z;
+static Rcomplex strtoc(const char *nptr, char **endptr) {
+    Rcomplex z;
     double x, y;
     char *s, *endp;
 

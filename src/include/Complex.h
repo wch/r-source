@@ -24,6 +24,9 @@
 typedef struct {
 	double r;
 	double i;
-} complex;
+} Rcomplex;
+
+/* This will go away in due course */
+typedef Rcomplex complex;
 
 #endif

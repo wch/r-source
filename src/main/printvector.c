@@ -122,7 +122,7 @@ void printRealVector(double *x, int n, int index)
     Rprintf("\n");
 }
 
-void printComplexVector(complex *x, int n, int index)
+void printComplexVector(Rcomplex *x, int n, int index)
 {
     int i, w, wr, dr, er, wi, di, ei, labwidth=0, width;
 
@@ -315,7 +315,7 @@ static void printNamedRealVector(double * x, int n, SEXP * names)
     Rprintf("\n");
 }
 
-static void printNamedComplexVector(complex *x, int n, SEXP *names)
+static void printNamedComplexVector(Rcomplex *x, int n, SEXP *names)
 {
     int i, j, k, w, wn, wr, dr, er, wi, di, ei, nlines, nperline;
 

@@ -93,10 +93,10 @@ extern double DLOG10(double*);
 extern double POW_DD(double*, double*);
 extern double POW_DI(double*, int*);
 
-extern void ZDIV(complex*, complex*, complex*);
-extern double ZABS(complex*);
-extern double ZIMAG(complex*);
-extern double ZREAL(complex*);
-extern void ZCNJG(complex*, complex*);
+extern void ZDIV(Rcomplex*, Rcomplex*, Rcomplex*);
+extern double ZABS(Rcomplex*);
+extern double ZIMAG(Rcomplex*);
+extern double ZREAL(Rcomplex*);
+extern void ZCNJG(Rcomplex*, Rcomplex*);
 
 #endif
