@@ -99,7 +99,7 @@ help <- function(topic, package = c(.packages(),.Autoloaded), lib.loc =
     pkgname <- paste("package", name, sep = ":")
     if (is.na(match(pkgname, search()))) {
       packagedir<-system.file("",name,lib.loc)
-      which.lib.loc<-.lib.loc[match(packagedir,paste(.lib.loc,name,"",sep="/"))]
+      which.lib.loc<-lib.loc[match(packagedir,paste(lib.loc,name,"",sep="/"))]
       if (packagedir == "") {
         txt <- paste("There is no package called `", 
                      name, "'", sep = "")
