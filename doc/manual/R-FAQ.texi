@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-6, @value{FAQ-YEAR}-10-15
+@set FAQ-VERSION 1.8-7, @value{FAQ-YEAR}-10-17
 @set REL-VERSION 1.8.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -422,15 +422,12 @@ The @file{bin/macosx} directory of a @CRAN{} site contains a standard
 Apple installer package named @file{RAqua.pkg.sit} compressed in Aladdin
 Stuffit format.  Once downloaded, uncompressed and executed, the
 installer will install the current non-developer release of R.  RAqua is
-a native MacOSX Darwin version with Aqua GUI.
-
-Inside @file{bin/macosx/@var{x}.@var{y}} there are prebuilt binary
-version of packages ready to be used with RAqua corresponding to R major
-release ``@var{x}.@var{y}''. The installation of these packages is
-available through the ``Package'' menu of the RAqua GUI.
-
-This port of R for MacOSX is maintained by
-@email{Stefano.Iacus@@R-project.org, Stefano Iacus}.  The
+a native MacOSX Darwin version of R with an Aqua GUI.  Inside
+@file{bin/macosx/@var{x}.@var{y}} there are prebuilt binary packages to
+be used with RAqua corresponding to the ``@var{x}.@var{y}'' release of
+R. The installation of these packages is available through the
+``Package'' menu of the RAqua GUI.  This port of R for MacOSX is
+maintained by @email{Stefano.Iacus@@R-project.org, Stefano Iacus}.  The
 @uref{http://cran.r-project.org/bin/macosx/RAqua-FAQ.html, ``R for
 Macintosh @acronym{FAQ}/DOC''} has more details.
 
@@ -534,6 +531,12 @@ York, ISBN 0-387-95475-9.
 J. Fox (2002), ``An R and @SPLUS{} Companion to Applied Regression'',
 Sage Publications, ISBN 0-761-92280-6 (softcover) or 0-761-92279-2
 (hardcover), @uref{http://www.socsci.mcmaster.ca/jfox/Books/Companion/}.
+
+J. Maindonald and J. Braun (2003), ``Data Analysis and Graphics Using
+R'', Cambridge University Press, ISBN 0-521-81336-0.
+
+S. M. Iacus and G. Masarotto (2002), ``Laboratorio di statistica con R
+'', McGraw-Hill, ISBN 88-386-6084-0 (in Italian).
 @end quotation
 
 @noindent
