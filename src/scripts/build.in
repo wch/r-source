@@ -121,11 +121,25 @@ foreach my $pkg (@ARGV) {
 	$is_bundle = 1;
 	@bundlepkgs = split(/\s+/, $description->{"Contains"});
 	foreach my $ppkg (@bundlepkgs) {
+	    $log->message("cleaning '$ppkg' in bundle '$pkg'");
+	    $log->setstars("**");
+	    chdir($startdir);
+	    cleanup_pkg(&file_path("$pkg", "$ppkg"), $log);
+	    $log->setstars("*");
+	}
+	foreach my $ppkg (@bundlepkgs) {
 	    $log->message("preparing '$ppkg' in bundle '$pkg':");
 	    $log->setstars("**");
 	    chdir($startdir);
 	    prepare_pkg(&file_path("$pkg", "$ppkg"), $is_bundle,
 			$description, $log);
+	    $log->setstars("*");
+	}
+	foreach my $ppkg (@bundlepkgs) {
+	    $log->message("cleaning '$ppkg' in bundle '$pkg'");
+	    $log->setstars("**");
+	    chdir($startdir);
+	    cleanup_pkg(&file_path("$pkg", "$ppkg"), $log);
 	    $log->setstars("*");
 	}
 	rmtree("$libdir") if (-d "$libdir");
@@ -378,37 +392,7 @@ sub prepare_pkg {
     &R::Utils::check_package_description($pkgdir, $pkgname, $log,
 					 $in_bundle, 0, 1);
 
-    if(-d "src") {
-	chdir("src");
-	$log->message("cleaning src");
-	if($WINDOWS) {
-	    ## A Windows Makefile.win might use
-	    ## $(RHOME)/src/gnuwin32/MkRules.
-	    $ENV{RHOME} = $ENV{R_HOME};
-	    if(-r "Makefile.win") {
-		R_system("${R::Vars::MAKE} -f Makefile.win clean");
-	    } else {
-		foreach my $file (<*.o $pkgname.a $pkgname.dll $pkgname.def>) {
-		    unlink($file);
-		}
-		rmtree("_libs") if (-d "_libs");
-	    }
-	} else {
-	    if(-r "Makefile") {
-		R_system("${R::Vars::MAKE} -f Makefile clean");
-	    } else {
-		foreach my $file (<*.o *.s[lo] .dylib>) {
-		    unlink($file);
-		}
-		rmtree(".libs") if (-d ".libs");
-	    }
-	}
-    }
-    chdir($pkgdir);
-    if(!$WINDOWS && -x "./cleanup") {
-	$log->message("running cleanup");
-	R_system("./cleanup");
-    }
+    &cleanup_pkg($pkgdir, $log) if(!$in_bundle);
 
     ## Only update existing INDEX files.
     &update_Rd_index("INDEX", "man", $log) if(-f "INDEX");
@@ -418,9 +402,11 @@ sub prepare_pkg {
 				"vignette")) {
 	if(!$opt_no_vignettes) {
 	    my $doit = 1;
-	    ## if we are in a bundle, need to install the whole bundle once.
+	    ## if we are in a bundle, need to install the whole bundle
+	    ## once.
+	    my $pkg_or_bundle_dir;
 	    if ($in_bundle) {
-		$pkgdir = $pkgdir . "/..";
+		$pkg_or_bundle_dir = dirname($pkgdir);
 		if(-d "$libdir") {
 		    $doit = 0;
 		} else {
@@ -429,6 +415,7 @@ sub prepare_pkg {
 		    or die "Error: cannot create directory '$libdir'\n";
 		}
 	    } else {
+		$pkg_or_bundle_dir = $pkgdir;
 		$log->message("installing the package to re-build vignettes");
 		mkdir("$libdir", 0755)
 		    or die "Error: cannot create directory '$libdir'\n";
@@ -438,13 +425,13 @@ sub prepare_pkg {
 		$cmd = join(" ",
 			    ("Rcmd.exe INSTALL -l",
 			     &shell_quote_file_path($libdir),
-			     &shell_quote_file_path($pkgdir)));
+			     &shell_quote_file_path($pkg_or_bundle_dir)));
 	    } else {
 		$cmd = join(" ",
 			    (&shell_quote_file_path(${R::Vars::R_EXE}),
 			     "CMD INSTALL -l",
 			     &shell_quote_file_path($libdir),
-			     &shell_quote_file_path($pkgdir)));
+			     &shell_quote_file_path($pkg_or_bundle_dir)));
 	    }
 	    if($doit && R_system($cmd)) {
 		$log->error();
@@ -470,11 +457,61 @@ sub prepare_pkg {
 	    else {
 		$log->result("OK");
 	    }
+
+	    ## And finally, clean up again (if not in a bundle).
+	    &cleanup_pkg($pkgdir, $log) if(!$in_bundle);
 	}
     }
 
     1;
 }
+
+sub cleanup_pkg {
+    my ($pkg, $log) = @_;
+
+    chdir($pkg);
+    my $pkgdir = R_cwd();
+
+    if(-d "src") {
+	chdir("src");
+	$log->message("cleaning src");
+	if($WINDOWS) {
+	    ## A Windows Makefile.win might use
+	    ## $(RHOME)/src/gnuwin32/MkRules.
+	    $ENV{RHOME} = $ENV{R_HOME};
+	    if(-r "Makefile.win") {
+		R_system("${R::Vars::MAKE} -f Makefile.win clean");
+	    } else {
+		foreach my $file (<*.o $pkgname.a $pkgname.dll $pkgname.def>) {
+		    unlink($file);
+		}
+		rmtree("_libs") if (-d "_libs");
+	    }
+	} else {
+	    if(-r "Makefile") {
+		my $makefiles = "-f " .
+		    &shell_quote_file_path(&file_path(${R::Vars::R_HOME},
+						      "etc", "Makeconf"));
+		$makefiles .= " -f Makefile";
+		R_system("${R::Vars::MAKE} $makefiles clean");
+	    } else {
+		foreach my $file (<*.o *.s[lo] .dylib>) {
+		    unlink($file);
+		}
+		rmtree(".libs") if (-d ".libs");
+	    }
+	}
+    }
+    
+    chdir($pkgdir);
+    if(!$WINDOWS && -x "./cleanup") {
+	$log->message("running cleanup");
+	R_system("./cleanup");
+    }
+    
+    1;
+}
+    
 
 sub unlink_junk_files {
     unlink($_) if /^(\.RData|\.Rhistory)$/;
