@@ -1286,27 +1286,24 @@ AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])
 
 ### * Checks for system services.
 
-AC_SUBST(R_GUIS)
+AC_SUBST(R_MODULES)
 
 ## X11.
 R_X11
 if test "${use_X11}" = yes; then
-  R_GUIS=X11
+  R_MODULES=X11
 else
-  R_GUIS=
+  R_MODULES=
 fi
 
 ## GNOME.
 R_GNOME
 if test "${use_gnome}" = yes; then
-  R_SH_VAR_ADD(R_GUIS, [gnome]);
+  R_SH_VAR_ADD(R_MODULES, [gnome]);
 fi
 
 ## Aqua
 R_AQUA
-if test "${use_aqua}" = yes; then
-  R_SH_VAR_ADD(R_GUIS, [aqua]);
-fi
 AM_CONDITIONAL(BUILD_AQUA, [test "x${use_aqua}" = xyes])
 AC_SUBST(use_aqua)
 

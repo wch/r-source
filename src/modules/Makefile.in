@@ -15,7 +15,7 @@ DISTFILES = Makefile.in Makefile.win
 
 SUBDIRS = X11 gnome internet lapack vfonts
 
-MODULES = $(R_GUIS) internet lapack vfonts
+MODULES = $(R_MODULES) internet lapack vfonts
 
 all: Makefile R
 
