@@ -10,25 +10,26 @@
     assign("reconcilePropertiesAndPrototype", function(name, properties, prototype, extends) {
         list(properties=properties, prototype = prototype, extends = extends)
     }, envir)
-    setClass("VIRTUAL", sealed = TRUE, where = envir)
-    setClass("oldClass", sealed = TRUE, where = envir)
-    setClass("ANY", sealed = TRUE, where = envir)
-    setClass("vector", sealed = TRUE, where = envir)
-    setClass("missing", sealed = TRUE, where = envir)
+    clList = character()
+    setClass("VIRTUAL", where = envir); clList <- c(clList, "VIRTUAL")
+    setClass("oldClass", where = envir); clList <- c(clList, "oldClass")
+    setClass("ANY", where = envir); clList <- c(clList, "ANY")
+    setClass("vector", where = envir); clList <- c(clList, "vector")
+    setClass("missing", where = envir); clList <- c(clList, "missing")
     vClasses <- c("logical", "numeric", "character",
                 "complex", "integer", "single", "double",
                 "expression", "list")
     for(.class in vClasses) {
-        setClass(.class, prototype = newBasic(.class), sealed = TRUE, where = envir)
+        setClass(.class, prototype = newBasic(.class), where = envir)
     }
-    clList <- c(vClasses, "VIRTUAL", "ANY", "vector", "missing")
+    clList <- c(clList, vClasses)
     nullF <- function()NULL; environment(nullF) <- .GlobalEnv
-    setClass("function", prototype = nullF, sealed = TRUE, where = envir); clList <- c(clList, "function")
+    setClass("function", prototype = nullF, where = envir); clList <- c(clList, "function")
 
-    setClass("language", sealed = TRUE, where = envir); clList <- c(clList, "language")
-    setClass("environment", prototype = new.env(), sealed = TRUE, where = envir); clList <- c(clList, "environment")
+    setClass("language", where = envir); clList <- c(clList, "language")
+    setClass("environment", prototype = new.env(), where = envir); clList <- c(clList, "environment")
 
-    setClass("externalptr", prototype = .newExternalptr(), sealed = TRUE, where = envir); clList <- c(clList, "externalptr")
+    setClass("externalptr", prototype = .newExternalptr(), where = envir); clList <- c(clList, "externalptr")
              
 
     ## NULL is weird in that it has NULL as a prototype, but is not virtual
@@ -36,10 +37,10 @@
     assignClassDef("NULL", nullClass, where = envir); clList <- c(clList, "NULL")
 
     
-    setClass("structure", sealed = TRUE, where = envir); clList <- c(clList, "structure")
+    setClass("structure", where = envir); clList <- c(clList, "structure")
     stClasses <- c("matrix", "array") # classes that have attributes, but no class attr.
     for(.class in stClasses) {
-        setClass(.class, prototype = newBasic(.class), sealed = TRUE, where = envir)
+        setClass(.class, prototype = newBasic(.class), where = envir)
     }
     ## "ts" will be defined below, because it has a formal contains, but its initialize
     ## method uses newBasic, so it needs to be in .BasicClasses
@@ -80,24 +81,24 @@
     ## The initialize method uses newBasic(...), so should be consistent with the old code,
     ## (see def'n of BasicClasses above).
     setClass("ts", representation(.Data = "vector", tsp = "numeric"), contains = "vector",
-             prototype = newBasic("ts"), sealed = TRUE, where = envir)
+             prototype = newBasic("ts"), where = envir)
     
 
     ## Some class definitions extending "language", delayed to here so
     ## setIs will work.
-    setClass("name", "language", prototype = as.name("<UNDEFINED>"), sealed = TRUE, where = envir); clList <- c(clList, "name")
-    setClass("call", "language", prototype = quote("<undef>"()), sealed = TRUE, where = envir); clList <- c(clList, "call")
-    setClass("{", "language", prototype = quote({}), sealed = TRUE, where = envir); clList <- c(clList, "{")
-    setClass("if", "language", prototype = quote(if(NA) TRUE else FALSE), sealed = TRUE, where = envir); clList <- c(clList, "if")
-    setClass("<-", "language", prototype = quote("<undef>"<-NULL), sealed = TRUE, where = envir); clList <- c(clList, "<-")
-    setClass("for", "language", prototype = quote(for(NAME in logical()) NULL), sealed = TRUE, where = envir); clList <- c(clList, "for") 
-    setClass("while", "language", prototype = quote(while(FALSE) NULL), sealed = TRUE, where = envir); clList <- c(clList, "while") 
-    setClass("repeat", "language", prototype = quote(repeat{break}), sealed = TRUE, where = envir); clList <- c(clList, "repeat") 
-    setClass("(", "language", prototype = quote((NULL)), sealed = TRUE, where = envir); clList <- c(clList, "(") 
+    setClass("name", "language", prototype = as.name("<UNDEFINED>"), where = envir); clList <- c(clList, "name")
+    setClass("call", "language", prototype = quote("<undef>"()), where = envir); clList <- c(clList, "call")
+    setClass("{", "language", prototype = quote({}), where = envir); clList <- c(clList, "{")
+    setClass("if", "language", prototype = quote(if(NA) TRUE else FALSE), where = envir); clList <- c(clList, "if")
+    setClass("<-", "language", prototype = quote("<undef>"<-NULL), where = envir); clList <- c(clList, "<-")
+    setClass("for", "language", prototype = quote(for(NAME in logical()) NULL), where = envir); clList <- c(clList, "for") 
+    setClass("while", "language", prototype = quote(while(FALSE) NULL), where = envir); clList <- c(clList, "while") 
+    setClass("repeat", "language", prototype = quote(repeat{break}), where = envir); clList <- c(clList, "repeat") 
+    setClass("(", "language", prototype = quote((NULL)), where = envir); clList <- c(clList, "(") 
 
     ## a virtual class used to allow NULL as an indicator that a possible function
     ## is not supplied (used, e.g., for the validity slot in classRepresentation
-    setClass("OptionalFunction", sealed = TRUE, where = envir)
+    setClass("OptionalFunction", where = envir)
     setIs("function", "OptionalFunction", where = envir)
     setIs("NULL", "OptionalFunction")
     assign(".BasicClasses", clList, envir)
@@ -106,6 +107,7 @@
     ## package.
     for(cl in .OldClassesList)
         setOldClass(cl, envir)
+    assign(".SealedClasses", c(clList,unique(unlist(.OldClassesList))),  envir)
     ## restore the true definition of the hidden functions
     assign("reconcilePropertiesAndPrototype", real.reconcileP, envir)
 }

@@ -27,7 +27,7 @@ getFunction <-  function(name, generic = TRUE, mustFind = TRUE,
     isGenericFunction <- function(obj) exists(".Generic", envir = environment(obj), inherits=FALSE)
     found <- FALSE
     if(identical(where, -1))
-      where <- 1:length(search())
+      where <- .envSearch()
     else if(is.environment(where)) where <- list(where)
     ## unfortunately, if `where' turns out to be an environment, the for
     ## loop will generate an error.
@@ -113,20 +113,23 @@ existsFunction <-
 }
 
 findFunction <-
-  ## return all the indices of the search list on which a function
+  ## return a list of all the places where a function
   ## definition for `name' exists.  If `generic' is FALSE, ignore generic
   ## functions.
-  function(f, generic = TRUE)
+  function(f, generic = TRUE, where = .topLevelEnv())
 {
-    allWhere <- integer()
-    for(i in seq(along=search()))
-      if(exists(f, i, inherits = FALSE)) {
-        fdef <-get(f, i)
-        if(generic || is.primitive(fdef)
-           || !isGeneric(f, i, fdef))
-          allWhere <- c(allWhere, i)
-      }
-    allWhere
+    allWhere <- .findAll(f, where)
+    ok <- rep(FALSE, length(allWhere))
+    for(i in seq(along = ok)) {
+        wherei <- allWhere[[i]]
+        if(exists(f, wherei, inherits = FALSE)) {
+            fdef <-get(f, wherei)
+            if(generic || is.primitive(fdef)
+               || !isGeneric(f, wherei, fdef))
+                ok[[i]] <- TRUE
+        }
+    }
+    allWhere[ok]
   }
 
 Quote <- get("quote" , mode = "function")

@@ -5,32 +5,33 @@
 \alias{isClass}
 \alias{getClasses}
 \alias{findClass}
+\alias{sealClass}
 \title{Create a Class Definition}
 \description{
-  Create a formally defined class with specified slots and/or
-  relationships to other classes.  Also functions to remove a class
-  definition, to test whether a class has been defined, to test whether
-  an object is a class definition, and to reset the internal definition
-  of a class.
+  Functions to create (\code{setClass}) and manipulate class definitions.
 }
 \usage{
 setClass(Class, representation, prototype, contains=character(),
          validity, access, where=1, version=FALSE, sealed, package)
 
-removeClass(Class, where=-1, removeSubclassLinks = TRUE)
+removeClass(Class, where)
 
-isClass(Class, formal=TRUE)
+isClass(Class, formal=TRUE, where)
 isClassDef(object)
 
-getClasses(where)
+getClasses(where, inherits = missing(where))
 
-findClass(Class)
+findClass(Class, where, unique = "")
 
-resetClass(Class, resetSubclasses = TRUE)
+resetClass(Class, classDef, where)
+
+sealClass(Class, where)
 
 }
 \arguments{
-  \item{Class}{ character string name for the class }
+  \item{Class}{ character string name for the class.  Other than
+  \code{setClass}, the functions will usually take a class definition
+  instead of the string (allowing the caller to identify the class uniquely). }
   \item{representation}{ the slots that the new class should have
     and/or other classes that this class extends.  Usually a call to
     the \code{\link{representation}} function. }
@@ -40,10 +41,26 @@ resetClass(Class, resetSubclasses = TRUE)
     called \emph{superclasses} in some languages.)  When these classes
     have slots, all their slots will be contained in the new class as
     well. }
-  \item{where}{ What environment to use to store or remove the
-    definition (as metadata).
-    By default, uses the global environment for \code{setClass} and
-    searches for a definition to remove, for \code{removeClass}. }
+  \item{where}{ For \code{setClass}, what environment to use to store or remove the
+    definition (as metadata).  Defaults to the top-level environment,
+    the global environment for ordinary computations, but the
+    environment or namespace of a package when loading that package.
+
+    For other functions, \code{where} defines where to do the search
+    for the class definition, and the default is to search the visible
+    environments or namespace.
+    }
+  \item{unique}{if \code{findClass} expects a unique location for the
+    class, \code{unique} is a character string explaining the purpose
+    of the search (and is used in warning and error messages).  By
+    default, multiple locations are possible and the function always
+    returns a list.
+    }
+  \item{inherits}{in a call to \code{getClasses}, should the value
+    returned include all parent environments of \code{where}, or that
+    environment only?  Defaults to \code{TRUE} if \code{where} is
+    omitted, and to \code{FALSE} otherwise.
+    }
   \item{validity, access, version}{ Control arguments included for
     compatibility with the S-Plus API, but not currently used.  }
   \item{sealed}{ If \code{TRUE}, the class definition will be sealed,
@@ -56,19 +73,13 @@ resetClass(Class, resetSubclasses = TRUE)
   \item{formal}{ Should a formal definition be required? }
   \item{object}{ any R object. }
 
-  \item{removeSubclassLinks}{When a class is removed, any links
-      \emph{to} that class from other classes will become invalid.  If
-      this argument is not supplied as \code{FALSE}, then
-      \code{removeClass} will search for all such links and delete
-      them. You can omit the  argument, or supply it as the
-      positions in the search list to look for these links (by default
-      all attached object tables will be searched).}
-  \item{resetSubclasses}{
-      Should \code{resetClass} also reset all known
-    subclasses.  Usually \code{TRUE}, unless you know from the context
-    these will be reset elsewhere.
 
+  \item{classDef}{ For \code{removeClass}, the optional class
+    definition (but usually it's better for \code{Class} to be the
+    class definition, and to omit \code{classDef}).
     }
+
+
 }
 \details{
 
@@ -97,7 +108,10 @@ resetClass(Class, resetSubclasses = TRUE)
   
     \item{\code{isClass}:}{ 
       Is this a the name of a formally defined class? (Argument
-      \code{formal} is for compatibility and is ignored.)
+      \code{formal} is for compatibility and is ignored.)  Argument
+      \code{where} is the environment from which to start the search
+      for the class definition.  By default, start at the global
+      environment and search through the search list.
     }
 
     \item{\code{isClassDef}:}{ 
@@ -109,15 +123,30 @@ resetClass(Class, resetSubclasses = TRUE)
 
     \item{\code{getClasses}:}{
       The names of all the classes formally defined on \code{where}.  If
-      called with no argument, all the classes currently known in the
-      session (which does not include classes that may be defined on one
-      of the attached packages, but have not yet been used in the
-      session).
+      called with no argument, all the classes visible from the
+      calling function (if called from the top-level, all the classes
+      in any of the environments on the search list).  The
+      \code{inherits} argument can be used to search a particular
+      environment and all its parents, but usually the default setting
+      is what you want.
     }
     \item{\code{findClass}:}{
-        Where on the current search list the class named \code{Class}
-        is defined.  (If there is more than one definition, all
-        corresponding elements of the search list are returned.)
+        The list of environments or positions on the search list in
+        which a class definition of \code{Class} is found.  If
+        \code{where} is supplied, this is an environment (or
+        namespace) from which the search takes place; otherwise the
+        top-level environment is used.  If \code{unique} is supplied
+        as a character string, \code{findClass} returns a single
+        environment or position.  By default, it always returns a
+        list.
+
+        In the second case, the calling function should select, say, the first element
+        as a position or environment for functions such as
+        \code{\link{get}}. In the first case, \code{findClass} will
+        warn if there is more than one definition visible (using the
+        string supplied as \code{unique} to identify the purpose of
+        the call), and will generate an error if no definition can be found.
+
     }
 
     \item{\code{unclass}:}{
@@ -130,9 +159,10 @@ resetClass(Class, resetSubclasses = TRUE)
     }
     
     \item{\code{resetClass}:}{
-      Reset the internal definition of a class.  The effect is that
-      the next time the definition of this class is needed, it will be
-      recomputed from the information in the currently attached packages.
+      Reset the internal definition of a class.  Causes the complete
+      definition of the class to be re-computed, from the
+      representation and superclasses specified in the original
+      call to \code{\link{setClass}}.
 
       This function is called when aspects of the class definition are
       changed.  You would need to call it explicitly if you changed the
@@ -140,6 +170,13 @@ resetClass(Class, resetSubclasses = TRUE)
       the  middle of a session is living dangerously, since it may
       invalidate existing objects).
 
+    }
+
+  \item{sealClass}{ Seal the current definition of the specified
+    class, to prevent further changes.  It is possible to seal a class
+    in the call to \code{setClass}, but sometimes further changes have
+    to be made (e.g., by calls to \code{setIs}).  If so, call
+    \code{sealClass} after all the relevant changes have been made.
     }
   }
 }
@@ -243,25 +280,6 @@ nrow(new("matrix")) # 1
 xxx <- rnorm(3)
 setClass("xNum", representation(x = "numeric"), prototype = list(x = xxx))
 stopifnot(identical(new("xNum")@x, xxx))
-
-## extending a virtual class with several possible realizations
-## Used to result in a recursive loop through as()
-## (in S-Plus 6.0, new() doesn't work right with this class)
-
-setClass("maybeNumber")
-setIs("numeric", "maybeNumber")
-setIs("logical", "maybeNumber")
-setClass("withId", representation("maybeNumber", id = "character"))
-
-ttt <- 1:10 ## relevant that this is class integer, to test indirect extensions
-www <- new("withId", ttt, id = "test 1")
-
-## The following test is less trivial than it looks.
-## It depends on the assignment of the data part NOT performing a
-## strict coerce to "numeric" on the way to satisfying
-## is(ttt, "maybeNumber").
-stopifnot(identical(www@.Data, ttt))
-
 ### tests of the C macros MAKE_CLASS and NEW
 ### FIXME:  there should be a separate man page for the C-level macros
 ### and the tests below should be there.
@@ -290,6 +308,7 @@ removeClass("track")
 }
 }
 \seealso{
+  \code{\link{setClassUnion}},
   \code{\link{Methods}},
   \code{\link{makeClassRepresentation}}}
 \keyword{programming}

@@ -2,7 +2,7 @@ setClass <-
     ## Define Class to be an S-style class.
     function(Class, representation = list(), prototype = NULL,
              contains = character(), validity = NULL, access = list(),
-             where = 1, version = .newExternalptr(), sealed = FALSE, package = getPackageName(where))
+             where = .topLevelEnv(), version = .newExternalptr(), sealed = FALSE, package = getPackageName(where))
 {
     if(isClass(Class) && getClassDef(Class)@sealed)
         stop(paste("\"", Class, "\" has a sealed class definition and cannot be redefined", sep=""))
@@ -28,12 +28,31 @@ setClass <-
                                              validity, access, version, sealed)
         superClasses <- names(classDef@contains)
     }
-    ## confirm the validity of the class definition
-    .completeClassSlots(classDef)
-    completeExtends(classDef)
-    for(class2 in superClasses) # store the metadata for class relations
-        setIs(Class, class2, where = where, classDef = classDef)
+    classDef <- completeClassDefinition(Class, classDef, where, doExtends = FALSE)
+    oldDef <- getClassDef(Class, where)
     assignClassDef(Class, classDef, where)
+    badContains <- character()
+    for(class2 in superClasses)
+        if(is(try(setIs(Class, class2, where = where)), "try-error"))
+            badContains <- c(badContains, class2)
+    if(length(badContains)>0) {
+        msg <- paste(dQuote(badContains), collapse = ", ")
+        if(is(try(removeClass(Class, where)), "try-error"))
+           stop("Error in contained classes (", msg, ") for class \"", Class,
+                "\" and unable to remove definition from \"",
+                , getPackageName(where), "\"")
+        if(is.null(oldDef))
+            stop("Error in contained classes (", msg, ") for class \"", Class,
+                 "\"; class definition removed from \"", getPackageName(where), "\"")
+        else if(is(try(setClass(Class, oldDef, where=where)), "try-error"))
+           stop("Error in contained classes (", msg, ") for class \"", Class,
+                "\" and unable to restore previous definition from \"",
+                , getPackageName(where), "\"")
+        else
+           stop("Error in contained classes (", msg, ") for class \"", Class,
+                "\"; previous definition restored to \"",
+                getPackageName(where), "\"")
+    }
     Class
 }
 
@@ -93,8 +112,6 @@ makeClassRepresentation <-
   ## Users should call setClass instead of this function.
   function(name, slots = list(), superClasses = character(), prototype = NULL, package, validity = NULL, access = list(), version = .newExternalptr(), sealed = FALSE, virtual = NA)
 {
-    ## remove from the cached definition (only) right away
-    removeClass(name, where = 0)
     if(!is.null(prototype) || length(slots)>0 || length(superClasses) >0) {
         ## collect information about slots, create prototype if needed
         pp <- reconcilePropertiesAndPrototype(name, slots, prototype, superClasses)
@@ -103,11 +120,16 @@ makeClassRepresentation <-
     }
     contains <- list();
     for(what in superClasses) {
-        whatClassDef <- getClass(what)
+        if(is(what, "classRepresentation")) {
+            whatClassDef <- what
+            what <- whatClassDef@className
+        }
+        else
+            whatClassDef <- getClass(what)
         ## Create the SClassExtension objects (will be simple, possibly dataPart).
         ## The slots are supplied explicitly, since `name' is currently an undefined class
         elNamed(contains, what) <- makeExtends(name, what, slots = slots,
-                                              classDef2 = whatClassDef)
+                                              classDef2 = whatClassDef, package = package)
     }
     validity <- .makeValidityMethod(name, validity)
     if(is.na(virtual)) {
@@ -128,23 +150,12 @@ makeClassRepresentation <-
 
 getClassDef <-
   ## Get the definition of the class supplied as a string.
-  ## This is the unexpanded definition.  If you want all the information currently
-  ## known, such as the complete list of superclasses, use `getClass(Class)'.
-  function(Class, where = -1)
+  function(Class, where = .topLevelEnv(), package = "")
 {
     cname <- classMetaName(Class)
-    if(identical(where, 0))
-        getFromClassMetaData(cname)
-    ## much messing around below because of two problems with get/exists in R:
-    ## 1. the inherits argument (TRUE by default, but FALSE & where = -1 don't mix
-    ## 2. no way to say "get or return NULL"
-    else if(identical(where, -1)) {
-        if(exists(cname))
-            get(cname)
-        else
-            NULL
-    }        
-    else if(exists(cname, where,inherits = FALSE))
+    if(nchar(package)>0)
+        .getFromPackage(cname, package)
+    else if(exists(cname, where))
         get(cname, where)
     else
         NULL
@@ -153,19 +164,14 @@ getClassDef <-
 getClass <-
   ## Get the complete definition of the class supplied as a string,
   ## including all slots, etc. in classes that this class extends.
-  function(Class, .Force = FALSE)
+  function(Class, .Force = FALSE, where = .topLevelEnv())
 {
-    value <- getClassDef(Class, 0)
+    value <- getClassDef(Class, where)
     if(is.null(value)) {
-        value  <- getClassDef(Class)
-        if(is.null(value)) {
             if(!.Force)
                 stop(paste("\"", Class, "\" is not a defined class", sep=""))
             else
                 value <- makeClassRepresentation(Class, package = "base", virtual = TRUE)
-        }
-        else
-            value <- completeClassDefinition(Class, value)
       }
     value
 }
@@ -233,55 +239,30 @@ slotNames <-
     names(getClass(Class)@slots)
 }
 
-removeClass <-
-  ## Remove the definition of this class.
-  function(Class, where = -1, removeSubclassLinks = TRUE)
-{
-    ## always remove the cached version, if any
-    what <- classMetaName(Class)
-    if(removeSubclassLinks && !identical(where, 0)) {
-        fullDef <- trySilent(getClass(Class))
-        if(is(fullDef, "try-error")) {
-            warning("unable to get definition of \"", Class, "\" (",
-                    fullDef, "): subclass links may not be removed")
-            fullDef <- NULL
-        }
-    }
-    else
-        fullDef <- getFromClassMetaData(what)
-    if(!is.null(fullDef))
-        removeFromClassMetaData(what)
-    if(identical(where, 0))
-    {}
-    else {
-        ClassDef <- getClassDef(Class)
-        if(is.null(ClassDef)) {
+removeClass <-  function(Class, where) {
+    if(missing(where)) {
+        where <- findClass(Class, .topLevelEnv())
+        if(length(where) == 0) {
             warning("\"", Class, "\" is not a class (no action taken)")
             return(FALSE)
         }
-        if(identical(where, -1))
-            rm(list=what, pos=find(what)[[1]])
-        else
-            rm(list=what, pos=where)
-        ## remove extensions
-        what <- extendsMetaName(ClassDef)
-        extWhere <- find(what)
-        for(pos in extWhere)
-            rm(list = what, pos = pos)
-        if(removeSubclassLinks && is(fullDef, "classRepresentation"))
-            .removeSubclassLinks(fullDef)
+        if(length(where) > 1)
+            warning("\"", Class, "\" has multiple definitions visible; only the first removed")
+        where <- where[[1]]
     }
+    what <- classMetaName(Class)
+    rm(list=what, pos=where)
     TRUE
 }
-
+    
 
 isClass <-
   ## Is this a formally defined class?
-  function(Class, formal=TRUE)
+  function(Class, formal=TRUE, where = .topLevelEnv())
 {
     ## argument formal is for Splus compatibility & is ignored.  (All classes that
     ## are defined must have a class definition object.)
-    exists(classMetaName(Class))
+    exists(classMetaName(Class), where)
 }
 
 new <-
@@ -313,13 +294,21 @@ getClasses <-
   ## If called with no argument, all the classes currently known in the session
   ## (which does not include classes that may be defined on one of the attached
   ## libraries, but have not yet been used in the session).
-  function(where = get(SessionClassMetaData))
+  function(where = .externalCallerEnv(), inherits = missing(where))
 {
     pat <- paste("^",classMetaName(""), sep="")
-    names <- objects(where, pattern = pat, all.names = TRUE)
+    if(inherits) {
+        evList <- .parentEnvList(where)
+        clNames <- character()
+        for(ev in evList)
+            clNames <- c(clNames, objects(ev, pattern = pat, all.names = TRUE))
+        clNames <- unique(clNames)
+    }
+    else
+        clNames <- objects(where, pattern = pat, all.names = TRUE)
     ## strip off the leading pattern (this implicitly assumes the characters
     ## in classMetaName("") are either "." or not metacharacters
-    substring(names, nchar(pat))
+    substring(clNames, nchar(pat))
 }
 
 
@@ -371,7 +360,7 @@ validObject <- function(object, test = FALSE) {
 }
 
 setValidity <-
-  function(Class, method, where = 1) {
+  function(Class, method, where = .topLevelEnv()) {
     if(isClassDef(Class)) {
         ClassDef <- Class
         Class <- ClassDef@className
@@ -390,20 +379,38 @@ setValidity <-
     resetClass(ClassDef)
   }
 
-resetClass <-
-    function(Class, 
-             resetSubclasses = TRUE) {
-        if(is(Class, "classRepresentation"))
+resetClass <- function(Class, classDef, where) {
+        if(is(Class, "classRepresentation")) {
+            classDef <- Class
             Class <- Class@className
-        cname <- classMetaName(Class) ## TODO:  change to allow same name, different package
-        def <- getFromClassMetaData(cname)
-        if(!is.null(def)) {
-            removeFromClassMetaData(cname)
-            if(resetSubclasses)
-                for(what in names(def@subclasses))
-                    resetClass(what) # no further recursion needed if def is complete
+            package <- classDef@package
+            if(missing(where))
+                where <- .requirePackage(package)
         }
-        Class
+        else {
+            if(missing(where))
+                where <- findClass(Class, unique = "resetting the definition")[[1]]
+            if(missing(classDef)) {
+                classDef <- getClassDef(Class, where)
+                if(is.null(classDef)) {
+                    warning("Class ", Class,"\" not found on ",
+                            getPackageName(where), "; resetClass will have no effect")
+                    return(classDef)
+                }
+            }
+            else if(!is(classDef, "classRepresentation"))
+                stop("Argument classDef must be a string or a class representation; got an object of class \"",
+                     class(classDef), "\"")
+            package <- getPackageName(where)
+        }
+        if(classDef@sealed)
+            warning("Class \"", Class,"\" is sealed; resetClass will have no effect")
+        else {
+            classDef <-  .uncompleteClassDefinition(classDef)
+            classDef <- completeClassDefinition(Class, classDef, where)
+            assignClassDef(Class, classDef, where)
+        }
+        classDef
     }
 
 ## the (default) initialization:  becomes the default method when the function
@@ -485,24 +492,51 @@ initialize <- function(.Object, ...) {
     .Object
 }
 
-findClass <- function(Class) {
-    if(!is.character(Class))
+findClass <- function(Class, where, unique = "") {
+    if(is(Class, "classRepresentation")) {
         Class <- Class@className
+        pkg <- Class@package
+    }
+    else
+        pkg <- ""
+    if(missing(where)) {
+        if(nchar(pkg))
+            where <- .requirePackage(pkg)
+        else
+            where <- .topLevelEnv()
+    }
     what <- classMetaName(Class)
-    where <- search()
-    ok <- logical(length(where))
-    for(i in seq(along=where))
-        ok[i] <- exists(what, where[i], inherits = FALSE)
-    where[ok]
+    where <- .findAll(what, where)
+    if(length(where) != 1 && nchar(unique)>0) {
+            if(length(where) == 0)
+                stop("No definition of \"", Class, "\" to use for ", unique)
+            if(length(where) > 1) {
+                where <- where[[1]]
+                warning("Multiple definitions of class \"", Class,
+                        "\" visible; using the definition on package \"",
+                        getPackageName(where), "\" for ", unique)
+            }
+    }
+    where
 }
 
 isSealedClass <- function(Class) {
-    if(is.character(Class)) {
-        if(isClass(Class))
-            Class <- getClass(Class, FALSE)
-    }
+    if(is.character(Class))
+            Class <- getClass(Class, TRUE)
     if(!is(Class, "classRepresentation"))
         FALSE
     else
         Class@sealed
 }
+
+sealClass <- function(Class, where) {
+    if(missing(where))
+        where <- findClass(Class, unique = "sealing the class")
+    classDef <- getClassDef(Class, where)
+    if(!classDef@sealed) {
+        classDef@sealed <- TRUE
+        assignClassDef(Class, classDef, where)
+    }
+    invisible(classDef)
+}
+

@@ -1,6 +1,6 @@
 ## assumes oldClass has been defined as a virtual class
 
-setOldClass <- function(Classes, where = 1) {
+setOldClass <- function(Classes, where = .topLevelEnv()) {
     prevClass <- "oldClass"
     for(cl in rev(Classes)) {
         if(isClass(cl)) {

@@ -9,19 +9,21 @@ setGeneric <-
   ## If `def' is supplied, this defines the generic function.  The default method for
   ## a new generic will usually be an existing non-generic.  See the .Rd page
   ##
-    function(name, def = NULL, group = list(), valueClass = character(), where = 1,
+    function(name, def = NULL, group = list(), valueClass = character(), where = .topLevelEnv(),
              package = NULL, signature = NULL,
              useAsDefault = existsFunction(name, generic = FALSE),
              genericFunction = NULL)
 {
-    if(isGeneric(name)) {
-        others <- character()
-        for(old in seq(along=search()))
-            if(exists(name,  old, inherits=FALSE) && is(get(name, old, inherits=FALSE), "genericFunction"))
-                others <- c(others, getPackageName(old))
-        warning("Function  \"", name, "\" is already a generic function (package: ",
-                paste(others, collapse = ", "), ")")
-    }
+    ## Used (pre 1.8) to warn if hiding a generic.  The logic needs to be rethought
+    ## when using sys.source(), esp. w.r. to namespaces
+#     if(isGeneric(name)) {
+#         others <- character()
+#         for(old in seq(along=search()))
+#             if(exists(name,  old, inherits=FALSE) && is(get(name, old, inherits=FALSE), "genericFunction"))
+#                 others <- c(others, getPackageName(old))
+#         warning("Function  \"", name, "\" is already a generic function (package: ",
+#                 paste(others, collapse = ", "), ")")
+#     }
     if(exists(name, "package:base") &&
          typeof(get(name, "package:base")) != "closure") {
         msg <- paste("\"",name, "\" is a primitive function; its generic definition is built in and automatically included.", sep="")
@@ -40,7 +42,7 @@ setGeneric <-
         else if(is.primitive(fdef)) ## get the pre-defined version
             fdef <- getGeneric(name)
         else
-            body(fdef) <- stdGenericBody
+            body(fdef, envir = as.environment(where)) <- stdGenericBody
         if(is.null(package))
             ## infer the package name; takes the first to be consistent with
             ## ignoring conflicts in finding fdef above.
@@ -95,7 +97,7 @@ isGeneric <-
             where <- findFunction(f)
             if(length(where) == 0)
                 return(FALSE)
-            where <- where[1]
+            where <- where[[1]]
         }
         fdef <- getFunction(f, where=where, mustFind = FALSE)
     }
@@ -206,7 +208,6 @@ getMethodsForDispatch <-
         found <- .existsBasic(f, "package:base")
         if(found) {
             ## force (default) computation of mlist in MethodsListSelect
-            throwAway <- is.null(mlist)
             .assignBasic(".Methods", envir = .evBasic(fdef), .getBasic(f, "package:base"))
         }
         found
@@ -254,7 +255,7 @@ setMethod <-
   ##
   ## Note that assigning methods anywhere but the global environment (`where==1') will
   ## not have a permanent effect beyond the current R session.
-  function(f, signature = character(), definition, where = 1, valueClass = NULL,
+  function(f, signature = character(), definition, where = .topLevelEnv(), valueClass = NULL,
            sealed = FALSE)
 {
     ## Methods are stored in metadata in database where.  A generic function will be
@@ -322,6 +323,8 @@ setMethod <-
 }
 
 removeMethod <- function(f, signature = character(), where) {
+    ## TODO:  should get the environment of the package for this generic function
+    ## as the default starting point for `where'
     if(missing(where)) {
         where <- findMethod(f, signature)
         if(length(where) == 0) {
@@ -330,33 +333,47 @@ removeMethod <- function(f, signature = character(), where) {
             return(FALSE)
         }
         else if(length(where) > 1) {
+            where <- sapply(where, getPackageName)
             warning("Method found in multiple packages: ", paste(where, collapse = ", "),
                     " (The first one will be removed)")
-            where <- where[[1]]
         }
+        where <- where[[1]]
     }
     setMethod(f, signature, NULL, where = where)
     TRUE
 }
 
-findMethod <- function(f, signature, where = search()) {
+findMethod <- function(f, signature, where = .topLevelEnv()) {
+    where <- .findAll(mlistMetaName(f), where)
     found <- logical(length(where))
-    metaName <- mlistMetaName(f)
     for(i in seq(along = where)) {
-        found[i] <- exists(metaName, where[[i]]) &&
-            is(getMethod(f, signature, where = where[[i]], optional = TRUE),
+        wherei <- where[[i]]
+        found[i] <- 
+            is(getMethod(f, signature, where = wherei, optional = TRUE),
                "function")
+        if(found[i] && is.environment(wherei))
+            simple <- FALSE
     }
-    where[found]
+    value <- where[found]
+    ## to conform to the API, try to return a numeric or character vector
+    ## if possible
+    what <- sapply(value, class)
+    if(identical(what, "numeric") || identical(what, "character"))
+        unlist(value)
+    else
+        value
 }
 
 getMethod <-
   ## Return the function that is defined as the method for this generic function and signature
   ## (classes to be matched to the arguments of the generic function).
-  function(f, signature = character(), where = -1, optional = FALSE)
+  function(f, signature = character(), where, optional = FALSE)
 {
-    mlist <- getMethods(f, where)
     fdef <- getGeneric(f, !optional)
+    if(missing(where))
+        mlist <- getMethods(f)
+    else
+        mlist <- getMethods(f, where)
     if(!is(fdef, "genericFunction")) # must be the optional case, else an error in getGeneric
         return(NULL)
     i <- 1
@@ -365,7 +382,7 @@ getMethod <-
     Classes <- signature # a copy just for possible error message
     while(length(signature) > 0 && is(mlist, "MethodsList")) {
         if(!identical(argNames[[i]], as.character(mlist@argument)))
-            stop("Apparent inconsistency in the methods for function \"", f,
+            stop("Apparent inconsistency in the methods for function \"", .genericName(f),
                  "\"; argument \"", argNames[[i]],
                  "\" in the signature corresponds to \"", as.character(mlist@argument),
                  "\" in the methods list object.")
@@ -392,7 +409,7 @@ getMethod <-
         }
         else
             Classes <- "\"ANY\""
-        stop("No method defined for function \"", f,
+        stop("No method defined for function \"", .genericName(f),
              "\" and signature ", Classes)
     }
 }
@@ -705,7 +722,7 @@ setReplaceMethod <-
 setGroupGeneric <-
     ## create a group generic function for this name.
     function(name, def = NULL, group = list(), valueClass = character(),
-             knownMembers = list(), package = getPackageName(where), where = 1)
+             knownMembers = list(), package = getPackageName(where), where = .topLevelEnv())
 {
     if(is.null(def)) {
         def <- getFunction(name)

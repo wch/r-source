@@ -1,12 +1,10 @@
 ## utilities to manage package names
 
-getPackageName <- function(where = 1) {
-    ## the default for where should really be "top level environment"
-    ## to work correctly during all installations.
+getPackageName <- function(where = .topLevelEnv()) {
     pkg <- ""
     if(exists(".packageName", where, inherits = FALSE))
         pkg <- get(".packageName", where)
-    else  if(identical(where, 1) || identical(as.environment(where), .GlobalEnv))
+    else  if(identical(where, 1) || identical(as.environment(where), .topLevelEnv()))
         pkg <- Sys.getenv("R_PACKAGE_NAME")
     if(nchar(pkg) == 0) {
         env <- as.environment(where)
@@ -26,14 +24,16 @@ getPackageName <- function(where = 1) {
             if(identical(substr(pkg, 1, 8), "package:"))
                 pkg <- substr(pkg, 9, nchar(pkg))
         }
-        ## save the package name, but not in the global environment
-        ## (where it might cause confusion if the image is saved)
-        if(!identical(pkg, ".GlobalEnv")) {
-            setPackageName(pkg, env)
-            ## uncomment the following if we decide that packages OUGHT
-            ## to be self-identifying
-            ##   warning("The package name \"", pkg, "\" was inferred, but not found in that package")
-        }
+#  Problem:  the library() function should now be putting .packageName in package environments
+#   but namespace makes them invisible from outside.
+        ## save the package name, but .GlobalEnv is not a package name,
+        ## and package base doesn't have a .packageName (yet?)
+#         if(!(identical(pkg, ".GlobalEnv") || identical(pkg, "base")) ) {
+#             setPackageName(pkg, env)
+#             ## packages OUGHT
+#             ## to be self-identifying
+#              warning("The package name \"", pkg, "\" was inferred, but not found in that package")
+#         }
     }
     pkg
 }
@@ -48,5 +48,5 @@ functionPackageName <- function(name) {
     else if(length(where) > 1)
        sapply(as.list(where), getPackageName)
     else
-        getPackageName(where)
+        getPackageName(where[[1]])
 }

@@ -3,51 +3,51 @@
 {
     if(exists(classMetaName("MethodsList"), envir))
         return(FALSE)
-
+    clList <- character()
     setClass("MethodsList",
              representation(methods = "list", argument = "name", allMethods = "list"),
-             sealed = TRUE, where = envir)
+             where = envir); clList <- c(clList, "MethodsList")
     setClass("EmptyMethodsList", representation(argument = "name", sublist = "list"),
-             sealed = TRUE, where = envir)
+             where = envir); clList <- c(clList, "EmptyMethodsList")
 
     setClass("LinearMethodsList", representation(methods = "list", arguments = "list",
                                                  classes = "list", fromClasses = "list"),
-             sealed = TRUE, where = envir)
+             where = envir); clList <- c(clList, "LinearMethodsList")
     ## the classes for method definitions
-    setClass("PossibleMethod", sealed = TRUE, where = envir)
+    setClass("PossibleMethod", where = envir); clList <- c(clList, "PossibleMethod")
     ## functions (esp. primitives) are methods
     setIs("function", "PossibleMethod", where = envir)
 
     ## signatures -- used mainly as named character vectors
-    setClass("signature", representation("character", names = "character"), sealed = TRUE, where = envir)
+    setClass("signature", representation("character", names = "character"), where = envir); clList <- c(clList, "signature")
 
     ## formal method definition for all but primitives
     setClass("MethodDefinition",
              representation("function", "PossibleMethod",
                             target = "signature", defined = "signature"),
-             sealed = TRUE, where = envir)
+             where = envir); clList <- c(clList, "MethodDefinition")
     setClass("MethodWithNext",
-             representation("MethodDefinition", nextMethod = "PossibleMethod", excluded = "list"), sealed = TRUE, where = envir)
-    setClass("SealedMethodDefinition", contains = "MethodDefinition")
+             representation("MethodDefinition", nextMethod = "PossibleMethod", excluded = "list"), where = envir); clList <- c(clList, "MethodWithNext")
+    setClass("SealedMethodDefinition", contains = "MethodDefinition"); clList <- c(clList, "SealedMethodDefinition")
     setClass("genericFunction",
              representation("function", generic = "character", package = "character",
                             group = "list", valueClass = "character",
                             signature = "character", default = "MethodsList",
-                            skeleton = "call"))
+                            skeleton = "call"), where = envir); clList <- c(clList, "genericFunction")
     setClass("nonstandardGeneric", # virtual class to mark special generic/group generic
-             sealed = TRUE, where = envir)
+             where = envir); clList <- c(clList, "nonstandardGeneric")
     setClass("nonstandardGenericFunction",
              representation("genericFunction", "nonstandardGeneric"),
-             sealed = TRUE, where = envir)
+             where = envir); clList <- c(clList, "nonstandardGenericFunction")
     setClass("groupGenericFunction",
              representation("genericFunction", groupMembers = "list"),
-             sealed = TRUE, where = envir)
+             where = envir); clList <- c(clList, "groupGenericFunction")
     setClass("nonstandardGroupGenericFunction",
              representation("groupGenericFunction", "nonstandardGeneric"),
-             sealed = TRUE, where = envir)
+             where = envir); clList <- c(clList, "nonstandardGroupGenericFunction")
     setClass("ObjectsWithPackage", representation("character", package = "character"),
-             sealed = TRUE, where = envir)
-
+             where = envir); clList <- c(clList, "ObjectsWithPackage")
+    assign(".SealedClasses", c(get(".SealedClasses", envir), clList), envir);
     TRUE
 }
 

@@ -11,7 +11,6 @@
 \alias{trySilent}
 %%
 \alias{testVirtual}
-\alias{SessionClassMetaData}
 \alias{makePrototypeFromClassDef}
 \alias{newEmptyObject}
 \alias{completeClassDefinition}
@@ -27,9 +26,6 @@
 \alias{empty.dump}
 \alias{showClass}
 \alias{showExtends}
-\alias{getFromClassMetaData}
-\alias{assignToClassMetaData}
-\alias{removeFromClassMetaData}
 \alias{possibleExtends}
 \alias{completeExtends}
 \alias{classMetaName}
@@ -63,13 +59,13 @@ makePrototypeFromClassDef(slots, ClassDef, extends)
 
 newEmptyObject()
 
-completeClassDefinition(Class, ClassDef)
+completeClassDefinition(Class, ClassDef, where, doExtends)
 
 getSlots(x, complete = TRUE)
 
-getAllSuperClasses(ClassDef)
+getAllSuperClasses(ClassDef, simpleOnly = TRUE)
 
-superClassDepth(ClassDef, soFar)
+superClassDepth(ClassDef, soFar, simpleOnly = TRUE)
 
 isVirtualClass(Class)
 
@@ -90,15 +86,9 @@ showClass(Class, complete=TRUE, propertiesAreCalled="Properties")
 
 showExtends(ext, printTo = stdout())
 
-getFromClassMetaData(name)
-
-assignToClassMetaData(name, value)
-
-removeFromClassMetaData(name)
-
 possibleExtends(class1, class2)
 
-completeExtends(ClassDef)
+completeExtends(ClassDef, class2, extensionDef)
 
 classMetaName(name)
 
@@ -166,15 +156,12 @@ setDataPart(object, value)
     }
 
     \item{\code{completeClassDefinition}:}{ 
-      Completes the definition of \code{Class}, relative to the current
-      session.
+      Completes the definition of \code{Class}, relative to the class
+      definitions visible from environment \code{where}.  If
+      \code{doExtends} is \code{TRUE}, complete the super- and
+      sub-class information.
 
-      The completed definition is stored in the session's class metadata,
-      to be retrieved the next time that getClass is called on this
-      class, and is returned as the value of the call.
-
-      If \code{ClassDef} is omitted, the initial definition is obtained
-      from the first package having a meta-object for this class.
+      This function is called when a class is defined or re-defined.
     }
 
     \item{\code{getFromClassDef}:}{ 
@@ -295,11 +282,12 @@ setDataPart(object, value)
       complete the extends information in the class definition, by
       following transitive chains.
       
-      Elements in the immediate extends list may be added and current
-      elements may be replaced, either by replacing a conditional
-      relation with an unconditional one, or by adding indirect
-      relations.
-      
+      If \code{class2} and \code{extensionDef} are included, this
+      class relation is to be added.  Otherwise just use the current
+      \code{ClassDef}.
+
+      Both the \code{contains} and \code{subclasses} slots are
+      completed with any indirect relations visible.
     }
     
     \item{\code{classMetaName}:}{ 
@@ -349,11 +337,6 @@ setDataPart(object, value)
       class, and does not extend one of the basic classes.  In future
       releases, this will likely be a non-vector R object type, but none
       of the current types (as of release 1.4) is suitable.
-    }
-    
-    \item{\code{SessionClassMetaData}:}{
-      Contains the name of the special table in which class information
-      is cached during the session.
     }
     
     \item{\code{.InitBasicClasses}, \code{.InitMethodsListClass}, \code{.setCoerceGeneric}:}{

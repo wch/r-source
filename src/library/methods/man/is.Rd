@@ -23,13 +23,13 @@ is(object, class2)
 extends(class1, class2, maybe=TRUE, fullInfo = FALSE)
 
 setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
-      by = NULL, where = 1, classDef)
+      by = NULL, where = 1, classDef, extensionObject, doComplete = TRUE)
 
 }
 \arguments{
   \item{object}{Any R object.}
   \item{class1, class2}{
-    The names of the classes between which \code{is} relations are to be
+    the names of the classes between which \code{is} relations are to be
     defined.}
 
   \item{maybe, fullInfo}{
@@ -37,7 +37,16 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
       include/exclude conditional relations, and \code{fullInfo} is a
       flag, which if \code{TRUE} causes object(s) of class
       \code{classExtension} to be returned, rather than just the
-      names of the classes or a logical value.  See the details below.}
+      names of the classes or a logical value.  See the details
+      below.}
+
+  \item{extensionObject}{ alternative to the \code{test, coerce,
+    replace, by} arguments; an object from class
+    \code{SClassExtension} describing the relation.  (Used in internal calls.)
+    }
+
+  \item{doComplete}{when \code{TRUE}, the class definitions will be
+  augmented with indirect relations as well.  (Used in internal calls.)}
 
 
   \item{test, coerce, replace}{

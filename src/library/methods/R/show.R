@@ -85,4 +85,12 @@ show <- function(object)
                       paste(object@signature, collapse=", "), "\n\n")
               },
               where = envir)
+    setMethod("show", "classRepresentation",
+              function(object){
+                  if(!identical(class(object), "classRepresentation"))
+                      cat("Extended class definition (", dQuote(class(object)),
+                          ")\n")
+                  print.classRepresentation(object)
+              },
+               where = envir)
 }

@@ -8,19 +8,33 @@
            fdefault = getFunction(f, generic = FALSE, mustFind = FALSE),
            group = list(), valueClass = character(), package, signature = NULL,
            genericFunction = NULL) {
+      checkTrace <- function(fun, what, f) {
+          if(is(fun, "traceable")) {
+              warning("The function being used as ", what,
+                      " in making a generic function for \"", f,
+                      "\" is currently traced; the function used will have tracing removed")
+              .untracedFunction(fun)
+          }
+          else
+              fun
+      }
       ## give the function a new environment, to cache methods later
       ev <- new.env()
       parent.env(ev) <- environment(fdef)
       environment(fdef) <- ev
       assign(".Generic", f, envir = ev)
       assign(".Methods", NULL, envir = ev)
+      fdef <- checkTrace(fdef)
       if(length(valueClass)>0)
           fdef <- .ValidateValueClass(fdef, f, valueClass)
       group <- .asGroupArgument(group)
       if(is.null(genericFunction))
           value <- new("genericFunction")
-      else 
+      else if(is(genericFunction, "genericFunction"))
           value <- genericFunction
+      else
+          stop("The `genericFunction' argument must be NULL or a generic function object; got an object of class \"",
+               class(genericFunction), "\"")
       value@.Data <- fdef
       value@generic <- f
       value@group <- group
@@ -42,6 +56,7 @@
       if(is.null(fdefault))
           methods <- MethodsList(name)
       else {
+          fdefault <- checkTrace(fdefault)
           if(!identical(formalArgs(fdefault), formalArgs(fdef)) &&
              !is.primitive(fdefault))
               stop("The formal arguments of the generic function for \"",
@@ -190,7 +205,7 @@ getAllMethods <-
   ##
   ## The slot "allMethods" of the merged methods list is set to a copy of the methods slot;
   ## this is the slot where inherited methods are stored.
-  function(f, fdef = getGeneric(f, TRUE), libs = search()) {
+  function(f, fdef = getGeneric(f, TRUE)) {
       if(is(fdef, "genericFunction"))
           deflt <- finalDefaultMethod(fdef@default)
       else if(is.primitive(fdef)) {
@@ -214,11 +229,14 @@ getAllMethods <-
           methods <- methods@default
     funs <- c(fdef, groups)
     for(fun in rev(funs)) {
+        fun <- getGeneric(fun)
+        if(is.null(fun))
+            next # but really an error?
         genericLabel <- if(primCase && !identical(fun, fdef)) f else character()
+        libs = .findAll(mlistMetaName(fun@generic), .genericEnv(fun))
         for(where in rev(libs)) {
             mw <- getMethodsMetaData(fun, where)
-            if(!is.null(mw))
-                methods <- mergeMethods(methods, mw, genericLabel)
+            methods <- mergeMethods(methods, mw, genericLabel)
         }
     }
     ev <- environment(fdef)
@@ -231,7 +249,7 @@ getAllMethods <-
     ## primitives are pre-cached in the method metadata (because
     ## they are not visible as generic functions from the C code).
     if(primCase)
-      setPrimitiveMethods(f, deflt, "set", fdef)
+      setPrimitiveMethods(f, deflt, "set", fdef, methods)
     ## cancel the error cleanup
     on.exit()
     methods
@@ -397,13 +415,12 @@ unRematchDefinition <- function(definition) {
 getGeneric <-
   ## return the definition of the function named f as a generic.
   ##
-  ## If there is no definition in the current search list, throws an error or returns
+  ## If there is no definition, throws an error or returns
   ## NULL according to the value of mustFind.
-### TO BE CHANGED:  Needs a package argument, which should be passed down to R_getGeneric
-  function(f, mustFind = FALSE) {
+  function(f, mustFind = FALSE, where = .topLevelEnv()) {
     if(is.function(f) && is(f, "genericFunction"))
         return(f)
-    value <- .Call("R_getGeneric", f, FALSE, PACKAGE = "methods")
+    value <- .Call("R_getGeneric", f, FALSE, as.environment(where), PACKAGE = "methods")
     if(is.null(value) && exists(f, "package:base", inherits = FALSE)) {
       ## check for primitives
       baseDef <- get(f, "package:base")
@@ -513,7 +530,7 @@ mlistMetaName <-
   }
 
 getGenerics <-
-  function(where = seq(along=search()), searchForm = FALSE) {
+  function(where = .envSearch(), searchForm = FALSE) {
     if(is.environment(where)) where <- list(where)
     these <- character()
     for(i in where) {
@@ -567,9 +584,9 @@ cacheGenericsMetaData <- function(generics, attach = TRUE, where, package) {
                 }
             }
             else
-              ## this is a primitive generic.  In current (1.7.1) code, we need to force
-              ## the collection of methods during the library() call.
-              getAllMethods(f, fdef)
+                ## this is a primitive generic.  In current (1.7.1) code, we need to force
+                ## the collection of methods during the library() call.
+                getAllMethods(f, fdef)
         }
         ## find the function.  It may be a generic, but will be a primitive
         ## if the internal C code is being used to dispatch methods for primitives.
@@ -616,18 +633,22 @@ setPrimitiveMethods <-
 
 
 
-findUnique <- function(what, doFind = find, message)
+findUnique <- function(what, doFind = .findAll, message)
 {
     where <- doFind(what)
     if(length(where) > 1) {
         if(missing(message)) {
             if(identical(doFind, findFunction))
-                message <- paste("function", what)
+                message <- paste("function ", dQuote(what))
             else
-                message <- what
+                message <- dQuote(what)
         }
+        if(is.list(where))
+            where <- unlist(where)
+        if(is.numeric(where))
+            where <- search()[where]
         warning(message, " found on: ", 
-                paste(search()[where], collapse = ", "),
+                paste(where, collapse = ", "),
                     "; using the first one.")
             where <- where[1]
     }
@@ -934,4 +955,90 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     dnames[whereNames] <- new
     names(vlist) <- dnames
     as.function(vlist, envir = environment(def))
+}
+
+## the top-level environment, set in sys.source()
+.topLevelEnv <- function() {
+    env <- options()$topLevelEnvironment
+    if(is.null(env))
+        .GlobalEnv
+    else if(is.environment(env))
+        env
+    else
+        as.environment(env)
+}
+
+.envSearch <- function() {
+    env <- options()$topLevelEnvironment
+    if(is.null(env))
+        seq(along = search())
+    else {
+        ## loading via sys.source()
+        if(isNamespace(env)) # loading with namespace
+            list(env)
+        else # ordinary loading with search list
+            c(list(env), as.list(seq(along = search())))
+    }
+}
+
+.genericName <- function(f) {
+    if(is(f, "genericFunction"))
+        f@generic
+    else
+        as.character(f)
+}
+
+## the environment in which to start searching for methods, etc. related
+## to this generic function.  Will normally be the namespace of the generic's
+## home package, or else the global environment
+.genericEnv <- function(fdef)
+    parent.env(environment(fdef))
+
+## the default environment in which to start searching for methods, etc. relative to this
+## call to a methods package utility.  In the absence of other information, the current
+## strategy is to look at the function _calling_ the methods package utility.
+##TODO:  this utility can't really work right until the methods package itself has a
+## namespace, so that calls from within the package can be detected.  The
+## heuristic is that all callers are skipped as long as their enviornment is  identical
+## to .methodsNamespace.  But that is currently initialized to .GlobalEnv.
+##
+## The logic will fail if a function in a package with a namespace calls a (non-methods)
+## function in a pacakge with no namespace, and that function then calls a methods package
+## function.  The right answer then is .GlobalEnv, but we will instead get the package
+## namespace.
+.externalCallerEnv <- function(n = 2, nmax = sys.nframe() - n +1) {
+    ## start n generations back; by default the caller of the caller to this function
+    ## go back nmax at most (e.g., a function in the methods package that knows it's never
+    ## called more than nmax levels in could supply this argument
+    if(nmax < 1) stop("Got a negative maximum number of frames to look at")
+    ev <- .topLevelEnv() # .GlobalEnv or the environment in which methods is being built.
+    for(back in seq(start = -n, length = nmax)) {
+        fun <- sys.function(back)
+        if(is(fun, "function")) {
+            ## Note that "fun" may actually be a method definition, and still will be counted.
+            ## This appears to be the correct semantics, in
+            ## the sense that, if the call came from a method, it's the method's environment
+            ## where one would expect to start the search (for a class defintion, e.g.)
+            ev <- environment(fun)
+            if(!identical(ev, .methodsNamespace))
+                break
+        }
+    }
+    ev
+}
+
+## a list of environments, starting from ev, going back to NULL (the base package),
+## or else terminated by finding a namespace
+.parentEnvList <- function(ev) {
+    ev <- as.environment(ev)
+    value <- list(ev)
+    while(!isNamespace(ev)) {
+        if(is.null(ev)) {
+            value[[length(value)]] <- .BaseNamespaceEnv
+            break
+        }
+        ev <- parent.env(ev)
+        value <- c(value, list(ev))
+    }
+    value
 }

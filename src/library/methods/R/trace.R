@@ -123,13 +123,16 @@
         
 
 .InitTraceFunctions <- function(envir)  {
-    setClass("traceable", representation("VIRTUAL", original = "PossibleMethod"),
-             sealed = TRUE, where = envir)
+    setClass("traceable", representation(original = "PossibleMethod"), contains = "VIRTUAL", 
+             where = envir); clList <- "traceable"
     ## create the traceable classes
     for(cl in c("function", "MethodDefinition", "MethodWithNext", "genericFunction",
-                "groupGenericFunction"))
+                "groupGenericFunction")) {
         setClass(.traceClassName(cl),
-                 representation(cl, "traceable"), sealed = TRUE, where = envir)
+                 representation(cl, "traceable"), where = envir)
+        clList <- c(clList, .traceClassName(cl))
+    }
+    assign(".SealedClasses", c(get(".SealedClasses", envir), clList), envir);
     setMethod("initialize", "traceable",
               function(.Object, def, tracer, exit, at, print) {
                   oldClass <- class(def)

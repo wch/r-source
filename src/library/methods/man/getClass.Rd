@@ -6,15 +6,19 @@
   Get the definition of a class.
 }
 \usage{
-getClass(Class, .Force = FALSE)
-getClassDef(Class, where=-1)
+getClass(Class, .Force = FALSE, where)
+getClassDef(Class, where, package)
 }
 \arguments{
   \item{Class}{ the character-string name of the class.}
   \item{.Force}{ if \code{TRUE}, return \code{NULL} if the class is
     undefined; otherwise, an undefined class results in an error.}
-  \item{where}{ where to search for the definition; by default,
-    anywhere on the current search list.}
+  \item{where}{ environment from which to begin the search for the definition; by default,
+    start at the top-level (global) environment and proceed through
+    the search list.}
+  \item{package}{ the name of the package asserted to hold the
+      definition.  Supplied instead of \code{where}, with the
+      distinction that the package need not be currently attached.}
 }
 \details{
   A call to \code{getClass} returns the complete definition of the class
@@ -35,15 +39,20 @@ getClassDef(Class, where=-1)
   Messing up a class object will cause great confusion.
 }
 \references{
-  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
-  primary documentation.
+  The R package \code{methods} implements, with a few exceptions, the
+  programming interface for classes
+  and methods in the book \emph{Programming with Data} (John
+  M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
+  and chapters 7 and 8.
 
-  The functions in this package emulate the facility for classes and
-  methods described in \emph{Programming with Data} (John M. Chambers,
-  Springer, 1998).  See this book for further details and examples.
-}
-\author{
-  John Chambers
+  While the programming interface for the methods package follows the reference,
+  the R software is an original implementation, so details in
+  the reference that reflect the S4 implementation may appear
+  differently in R.  Also, there are extensions to the programming
+  interface developed more recently than the reference.  For a
+  discussion of details and ongoing development, see the web page 
+  \url{http://developer.r-project.org/methodsPackage.html} and the
+  pointers from that page.
 }
 \seealso{
   \link{Classes},

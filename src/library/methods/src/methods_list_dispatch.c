@@ -387,9 +387,8 @@ static SEXP R_get_from_f_env(SEXP env, SEXP what, SEXP fname)
             (TYPEOF(vl) == CLOSXP && GET_ATTR(vl, s_generic) == R_NilValue))
 #define IS_GENERIC(vl) (TYPEOF(vl) == CLOSXP && GET_ATTR(vl, s_generic) != R_NilValue)
 
-static SEXP get_generic(SEXP symbol)
+static SEXP get_generic(SEXP symbol, SEXP rho)
 {
-    SEXP rho = R_GlobalEnv;
     SEXP vl, generic = R_UnboundValue;
     if(!isSymbol(symbol))
 	symbol = install(CHAR_STAR(symbol));
@@ -418,16 +417,21 @@ static SEXP get_generic(SEXP symbol)
     return generic;
 }
 
-SEXP R_getGeneric(SEXP name, SEXP mustFind)
+SEXP R_getGeneric(SEXP name, SEXP mustFind, SEXP env)
 {
     SEXP value;
     if(isSymbol(name)) {}
     else check_single_string(name, TRUE, "The argument \"f\" to getGeneric");
-    value = get_generic(name);
+    value = get_generic(name, env);
     if(value == R_UnboundValue) {
-	if(LOGICAL_VALUE(mustFind))
-	    error("No generic function definition for \"%s\"",
+	if(LOGICAL_VALUE(mustFind)) {
+	    if(env == R_GlobalEnv)
+		error("No generic function definition found for \"%s\"",
 		  CHAR_STAR(name));
+	    else
+		error("No generic function definition found for \"%s\" in the supplied environmnet",
+		  CHAR_STAR(name));
+	}
 	value = R_NilValue;
     }
     return value;

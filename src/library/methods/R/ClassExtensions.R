@@ -1,11 +1,12 @@
 .InitExtensions <- function(where) {
     ## to be called from the initialization
-    setClass("SClassExtension", representation(superClass = "character", package = "character",
+    setClass("SClassExtension", representation(subClass = "character", superClass = "character", package = "character",
                                                coerce = "function", test = "function",
                                                replace = "function",
                                                simple = "logical", by = "character",
                                                dataPart = "logical"),
-             sealed = TRUE, where = where)
+             where = where)
+    assign(".SealedClasses", c(get(".SealedClasses", where), "SClassExtension"), where);
 }
 
 .simpleExtCoerce <- function(from, strict = TRUE)from
@@ -25,8 +26,8 @@
 .InhSlotNames <- function(Class) {
    ClassDef <- getClass(Class)
     value <- names(ClassDef@slots)
-    if(length(value)==0 && !is.na(match("vector", names(ClassDef@contains))))
-        ## usually a basic class; treat as data part
+    if(length(value)==0 && extends(ClassDef, "vector"))
+        ## No slots, but extends "vector" => usually a basic class; treat as data part
         value <- ".Data"
    value
 }
@@ -61,7 +62,7 @@
 
 makeExtends <- function(Class, to,
                         coerce = NULL, test = NULL, replace = NULL,
-                        by = character(), package = getPackageName(findClass(to)),
+                        by = character(), package,
                         slots = getSlots(classDef1),
                         classDef1 = getClass(Class, TRUE), classDef2 = getClass(to, TRUE)) {
     ## test for datapart class:  must be the data part class, except
@@ -168,18 +169,29 @@ makeExtends <- function(Class, to,
     else
         stop("the replace= argument to setIs() should be a function of 2 or 3 arguments, got an object of class \"",
              class(replace), "\"")
-    new("SClassExtension", superClass = to, package = package, coerce = coerce,
+    new("SClassExtension", subClass = Class, superClass = to, package = package, coerce = coerce,
                test = test, replace = replace, simple = simple, by = by, dataPart = dataPart)
     
     
 }
 
-.findMetaData <- function(what, where = search()) {
+.findAll <- function(what, where = .topLevelEnv()) {
     ## must avoid R's find() function because it uses
     ## regular expressions
-    ok <- logical(length(where))
-    for(i in seq(along=where))
-        ok[i] <- exists(what, where[i], inherits = FALSE)
-    where[ok]
+    ok <- logical()
+    value <- list()
+    repeat {
+        if(exists(what, where, inherits = FALSE))
+            value <- c(value, list(where))
+        if(isNamespace(where))
+            break ##? parent environment is .GlobalEnv
+        where <- parent.env(where)
+        if(is.null(where)) {
+            if(exists(what, "package:base", inherits = FALSE))
+                value <- c(value, "package:base")
+            break
+        }
+    }
+    value
 }
     

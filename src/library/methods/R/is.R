@@ -77,27 +77,45 @@ setIs <-
   ## more elaborate one.  If the `replace' argument is supplied as an S replacement
   ## function, this function will be used to implement `as(obj, class2) <- value'.
   function(class1, class2, test = NULL, coerce = NULL,
-           replace = NULL, by = character(), where = 1, classDef = getClass(class1, TRUE))
+           replace = NULL, by = character(), where = .topLevelEnv(),
+           classDef = getClass(class1, TRUE), extensionObject = NULL, doComplete = TRUE)
 {
-    complete <- missing(classDef) # else, called from setClass
     ## class2 should exist
-    classDef2 <- getClass(class2, TRUE)
-    ## check some requirements
-    .validExtends(class1, class2, classDef,  classDef2, complete && is.null(coerce))
-    
-    obj <- makeExtends(class1, class2, coerce, test, replace, by,
-                       classDef1 = classDef, classDef2 = classDef2)
-    setExtendsMetaData(classDef, classDef2, obj, where = where)
-    subDef <- setSubclassMetaData(classDef2, classDef, where = where)
-    resetClass(class1)
-    ## Usually it would be OK to do:  resetClass(class2)
-    ## However, resetting a basic class can throw us into a loop.
-    classDef2 <- getClassDef(class2, 0)
-    if(!is.null(classDef2)) {
-        elNamed(classDef2@subclasses, class1) <- subDef
-        assignClassDef(class2, classDef2, 0)
-    }
-    invisible(obj)
+    classDef2 <- getClassDef(class2, where)
+    ## check some requirements:
+    ## One of the classes must be on the target environment (so that the relation can
+    ## be retained by saving the corresponding image)
+    if((classDef@sealed || !exists(classMetaName(class1), where, inherits = FALSE)) &&
+       (classDef2@sealed || !exists(classMetaName(class2), where, inherits = FALSE)) )
+        stop("Cannot create a setIs relation when neither of the classes (\"",
+             class1,"\" and \"", class2, "\") is local and modifiable in this package")
+    if(classDef@sealed && !isClassUnion(classDef2))
+        stop("Class \"", class1,
+             "\" is sealed; new superclasses can not be defined, except by setClassUnion")
+    if(is.null(extensionObject))
+        obj <- makeExtends(class1, class2, coerce, test, replace, by,
+                       classDef1 = classDef, classDef2 = classDef2,
+                       package = getPackageName(where))
+    else
+        obj <- extensionObject
+        ## revise the superclass/subclass info in the stored class definition
+    .validExtends(class1, class2, classDef,  classDef2, obj@simple)
+        if(!classDef@sealed) {
+            where1 <- findClass(class1, where)[[1]]
+            ## the direct contains information 
+            elNamed(classDef@contains, class2) <- obj
+            if(doComplete)
+                classDef@contains <- completeExtends(classDef, class2, obj)
+            assignClassDef(class1, classDef, where1)
+        }
+        if(!classDef2@sealed) {
+            where2 <- findClass(class2, where)[[1]]
+            elNamed(classDef2@subclasses, class1) <- obj
+            if(doComplete)
+                classDef2@subclasses <- completeSubclasses(classDef2, class1, obj)
+            assignClassDef(class2, classDef2, where2)
+        }
+    invisible(classDef)
 }
 
 .validExtends <- function(class1, class2, classDef1,  classDef2, slotTests) {

@@ -18,10 +18,6 @@
         }
         where <- as.environment(where)
     }
-    ## initialize the environment used as the session table to store methods definitions
-    table <- new.env(hash=TRUE)
-    assign("__MethodMetaData", table, envir = where)
-    .Call("R_initialize_methods_metadata", table, PACKAGE = "methods")
     initMethodDispatch()
     saved <- (if(exists(".saveImage", envir = where, inherits = FALSE))
               get(".saveImage", envir = where)
@@ -30,6 +26,7 @@
     if(identical(saved, FALSE)) {
         cat("initializing class and method definitions now ...")
         on.exit(assign(".saveImage", NA, envir = where))
+        assign(".SealedClasses", character(), envir = where)
         .InitClassDefinition(where)
         .InitBasicClasses(where)
         .initClassSupport(where)
@@ -39,11 +36,16 @@
         assign("makeGeneric", .makeGeneric, envir = where)
         assign("newClassRepresentation", .newClassRepresentation, envir = where)
         assign(".mergeClassDefSlots", ..mergeClassDefSlots, envir = where)
+        assign(".requirePackage", ..requirePackage, envir = where)
         .makeBasicFunsList(where)
         rm(.makeGeneric, .newClassRepresentation, envir = where)
         .InitMethodDefinitions(where)
         .InitShowMethods(where)
         assign(".isPrototype", ..isPrototype, envir = where)
+        .InitClassUnion(where)
+        ## now seal the classes defined in the package
+        for(cl in get(".SealedClasses", where))
+            sealClass(cl, where)
         ## TO DO: .InitSubsetMethods(where)
         assign(".saveImage", TRUE, envir = where)
         on.exit()
@@ -52,12 +54,10 @@
     else {
         if(!identical(saved, TRUE))
             stop("Looks like the methods library was not installed correctly; check the make results!\n")
-        classRepClass <- getClassDef("classRepresentation", where)
-        if(is.null(classRepClass))
-            stop("The methods library was not initialized correctly: couldn't find the definition of the \"classRepresentation\" class")
-        ## cache the definition of classRepresentation to boot the class system
-        assignClassDef("classRepresentation", classRepClass, 0)
     }
+    ## assign the environment of a function from the methods package--
+    ## the namespace of the methods package, if it has one, or the global environment
+    assign(".methodsNamespace", environment(get("setGeneric", where)), where)
     ## cache metadata for all environments in search path.  The assumption is that
     ## this has not been done, since cacheMetaData is in this package.  library, attach,
     ## and detach functions look for cacheMetaData and call it if it's found.

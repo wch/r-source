@@ -248,6 +248,8 @@ MethodsListSelect <-
         if(is(selection, "function"))
             value <- mlist ## no change
         else {
+            ## recursive call with NULL function name, to allow search to fail &
+            ## to suppress any reset actions. 
             method <- Recall(NULL, env, selection, finalDefault = finalDefault,
                    evalArgs = evalArgs, useInherited = nextUseInherited, fdef = fdef,
                              )
@@ -417,11 +419,8 @@ inheritedSubMethodLists <-
 matchSignature <-
   ## Match the signature object (a partially or completely named subset of the
   ## arguments of `fun', and return a vector of all the classes in the order specified
-  ## by `names'.  The classes not specified by `signature' will be `"ANY"' in the
-  ## value.
-  ##
-  ## The formal arguments of `fun' must agree with `names' (usually the formal arguments
-  ## of the generic function) as well, and `matchSignature' checks this.
+  ## by the signature slot of the generic.  The classes not specified by `signature
+  ##' will be `"ANY"' in the value.
   function(signature, fun)
 {
     if(!is(fun, "genericFunction"))
@@ -434,7 +433,9 @@ matchSignature <-
     if(length(signature) == 0)
         return(character())
     sigClasses <- as.character(signature)
-    unknown <- !sapply(sigClasses, function(x)isClass(x))
+    ## TODO:  `where' should be the namespace of the package containing `fun', if that exists
+    where <- .topLevelEnv()
+    unknown <- !sapply(sigClasses, function(x, where)isClass(x, where), where = where)
     signature <- as.list(signature)
     if(length(sigClasses) != length(signature))
         stop("Object to use as a method signature for function \"", fun@generic,

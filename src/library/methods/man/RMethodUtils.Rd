@@ -22,12 +22,8 @@
 \alias{assignMethodsMetaData}
 \alias{matchSignature}
 \alias{mlistMetaName}
-\alias{assignToMethodMetaData}
-\alias{getFromMethodMetaData}
 \alias{removeMethodsObject}
 \alias{findUnique}
-\alias{removeFromMethodMetaData}
-\alias{removeSubclassMetaData}
 \alias{MethodAddCoerce}
 \alias{is.primitive}
 \alias{.saveImage}
@@ -44,7 +40,6 @@
 %% Not for the user to know about!
 \alias{.ShortPrimitiveSkeletons} %% used from C code
 \alias{.EmptyPrimitiveSkeletons}
-\alias{__MethodMetaData}
 \title{RMethodUtils}
 \description{
   Utility functions to support the definition and use of formal
@@ -61,7 +56,7 @@ generic.skeleton(name, fdef, fdefault)
 
 defaultDumpName(generic, signature)
 
-getAllMethods(f, fdef, libs=search())
+getAllMethods(f, fdef)
 
 setAllMethodsSlot(mlist)
 
@@ -69,20 +64,11 @@ doPrimitiveMethod(name, def, call=sys.call(-1), ev=sys.frame(-2))
 
 conformMethod(signature, mnames, fnames, f)
 
-getGeneric(f, mustFind=FALSE)
+getGeneric(f, mustFind=FALSE, where = .topLevelEnv())
 
 getGroup(fdef, recursive=FALSE)
 
 matchSignature(signature, fun)
-
-## manage method metadata
-getFromMethodMetaData(name)
-
-assignToMethodMetaData(name, value)
-
-removeFromMethodMetaData(name)
-
-removeSubclassMetaData(ClassDef1, ClassDef2) 
 
 removeMethodsObject(f, where)
 
@@ -193,9 +179,11 @@ addNextMethod(method, f, mlist, optional, envir)
     \item{\code{getGeneric}:}{ 
       return the definition of the function named \code{f} as a generic.
 
-      If there is no definition in the current search list, throws an
+      If no definition is found, throws an
       error or returns \code{NULL} according to the value of
-      \code{mustFind}.
+      \code{mustFind}.  By default, searches in the top-level
+      environment (normally the global environment, but adjusted to
+      work correctly when package code is evaluated from the function \code{\link{library}}.
 
       Primitive functions are dealt with specially, since there is never
       a formal generic definition for them.  The value returned is the
@@ -232,13 +220,6 @@ addNextMethod(method, f, mlist, optional, envir)
       utilities to manage methods list objects in a particular
       environment.
       Not to be called directly.
-    }
-    
-    \item{\code{getFromMethodMetaData},
-      \code{assignToMethodMetaData},
-      \code{removeFromMethodMetaData}:}{
-      Functions to manage the session metadata for methods.  Don't
-      call these directly.
     }
     
     \item{\code{MethodAddCoerce}:}{
