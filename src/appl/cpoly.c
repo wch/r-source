@@ -117,16 +117,9 @@ void R_cpolyroot(double *opr, double *opi, int *degree,
     static double bnd, xxx;
     Rboolean conv;
     int d1;
-#ifdef Older
-    /* We use the originals to get exact agreement with the original, but ... */
-    static const double cosr = (float)-.060756474;/*instead of -.069... ! */
-    static const double sinr = (float).99756405;
-    xx = (float).70710678;
-#else
     static const double cosr =/* cos 94 */ -0.06975647374412529990;
     static const double sinr =/* sin 94 */  0.99756405025982424767;
     xx = M_SQRT1_2;/* 1/sqrt(2) = 0.707.... */
-#endif
 
     yy = -xx;
     *fail = FALSE;

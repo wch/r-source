@@ -752,19 +752,6 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
     /* FIXME : The following assumes one of pair or vector */
     /* based lists applies.  It needs to handle both */
 
-#ifdef OLD
-    /* This is here only for historical interest */
-    if (mode == LISTSXP) {
-	if (!recurse) {
-	    while (args != R_NilValue) {
-		ListAnswer(CAR(args), 0);
-		args = CDR(args);
-	    }
-	}
-	else ListAnswer(args, recurse);
-	data.ans_length = length(ans);
-    }
-#else
     if (mode == VECSXP) {
 	if (!recurse) {
 	    for (i = 0; i < n; i++)
@@ -773,7 +760,6 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 	else ListAnswer(args, recurse, &data);
 	data.ans_length = length(ans);
     }
-#endif
     else if (mode == STRSXP)
 	StringAnswer(args, &data);
     else if (mode == CPLXSXP)
