@@ -647,9 +647,10 @@ restrictions.
 @cindex SPSS
 @cindex PSPP
 
-There are currently no facilities to import SPSS data files, but it may
-be possible to use the @uref{http://pspp.stat.wisc.edu, PSPP package} to
-convert these files to a text format.
+It is planned to include facilities to import SPSS data files in package
+@code{foreign}.  It may be possible to use the
+@uref{http://pspp.stat.wisc.edu, PSPP package} to convert these files to
+a text format.
 
 @node Octave,  , SPSS, Importing from other statistical systems
 @section Octave
@@ -1079,8 +1080,9 @@ maps column and data frame names to lower case.  We use a database
 @code{testdb} we created earlier, and had the DSN (data source name) set
 up in @file{~/.odbc.ini} under @code{unixODBC}.  Exactly the same code
 worked using MyODBC to access a MySQL database under Linux or Windows NT
-(where MySQL also maps names to lowercase).  Under Windows, DSNs are set
-up in the @acronym{ODBC} applet in the Control Panel.
+(where MySQL also maps names to lowercase).  Under Windows,
+@acronym{DSN}s are set up in the @acronym{ODBC} applet in the Control
+Panel.
 @cindex MySQL database system
 
 @smallexample
@@ -1119,6 +1121,27 @@ Alaska           10.0     263       48 44.5
 > odbcClose(channel)
 @end smallexample
 
+As a simple example of using @acronym{ODBC} with a Excel spreadsheet,
+suppose that an @acronym{DSN} for spreadsheet @file{bdr.xls}
+has been set up in the Control Panel.  Then we can read from the
+spreadsheet by
+@smallexample
+> library(RODBC)
+> channel <- odbcConnect("bdr.xls")
+## list the spreadsheets
+> sqlTables(channel)
+  TABLE_CAT TABLE_SCHEM        TABLE_NAME   TABLE_TYPE REMARKS
+1 C:\\bdr            NA           Sheet1$ SYSTEM TABLE      NA
+2 C:\\bdr            NA           Sheet2$ SYSTEM TABLE      NA
+3 C:\\bdr            NA           Sheet3$ SYSTEM TABLE      NA
+4 C:\\bdr            NA Sheet1$Print_Area        TABLE      NA
+## retrieve the contents of sheet 1
+> sh1 <- sqlQuery(channel, "select * from [Sheet1$]")
+@end smallexample
+@noindent
+Notice that the specification of the table is different from the name
+returned by @code{sqlTables}: this precludes the use of @code{sqlFetch}.
+
 @node RMySQL, RmSQL, RODBC, R interface packages
 @subsection Package RMySQL
 @cindex MySQL database system
@@ -1134,10 +1157,8 @@ MySQL exists on Unix/Linux and Windows.  (Its current status appears to
 be that the source is freely available and beta versions are free but
 release binary versions are commercial on Windows.)  MySQL is a `light
 and lean' database.  (It preserves the case of names where the operating
-file system is case-sensitive, so not on Windows.)
-
-@c Currently package @pkg{RMySQL} appears only to be installable on
-@c Unix/Linux.
+file system is case-sensitive, so not on Windows.)  Package @pkg{RMySQL}
+has been used on both Linux and Windows.
 
 @findex MySQL
 @findex dbConnect
