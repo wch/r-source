@@ -17,7 +17,7 @@ The assignment form sets the body of a function \code{obj} to the
 \code{list} on the right hand side.
 }
 \seealso{
-\code{\link{alist}}, \code{\link{args}}
+\code{\link{alist}}, \code{\link{args}}, \code{\link{function}}.
 }
 \examples{
 body(body)

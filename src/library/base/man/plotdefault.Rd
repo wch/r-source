@@ -46,8 +46,8 @@ plot.default(x, y=NULL, type = "p", col = par("fg"), bg = NA,
   \item{ylab}{a label for the y axis.}
   \item{cex}{a numerical value giving the amount by which plotting text
     and symbols should be scaled relative to the default}
-  \item{lty}{the line type}
-  \item{lwd}{the line width \bold{not supported yet}}
+  \item{lty}{the line type, see \code{\link{par}.}
+  \item{lwd}{the line width \bold{not yet supported for postscript}.}
   \item{\dots}{graphical parameters as in \code{\link{par}(\dots)} may
     also be passed as arguments.  Additionally, \code{asp}, the
     \eqn{y/x} aspect ratio, see \code{\link{plot.window}}.}

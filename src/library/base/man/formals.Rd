@@ -17,8 +17,8 @@ The assignment form sets the formals of a function to the list on the
 right hand side.
 }
 \seealso{
-\code{\link{args}}
-\code{\link{alist}}
+\code{\link{args}} for a ``human--readable'' version,
+\code{\link{alist}}, \code{\link{body}}, \code{\link{function}}.
 }
 \examples{
 length(formals(lm))      # the number of formal arguments
