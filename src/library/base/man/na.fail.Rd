@@ -1,16 +1,19 @@
 \name{na.fail}
-\title{Handle Missing Values in Data Frames}
+\title{Handle Missing Values in Objects}
 \usage{
-na.fail(frame)
-na.omit(frame)
+na.fail(object)
+na.omit(object)
 }
 \alias{na.fail}
+\alias{na.fail.default}
 \alias{na.omit}
+\alias{na.omit.default}
 \arguments{
-  \item{frame}{a data frame}
+  \item{object}{an \R object, typically a data frame}
 }
 \description{
-  These functions are useful for dealing with \code{\link{NA}}s in data frames.
+  These generic functions are useful for dealing with \code{\link{NA}}s
+  in e.g., data frames.
   \code{na.fail} returns the data frame if it does not contain any
   missing values, and signals an error otherwise.
   \code{na.omit} returns the data frame with incomplete cases removed.

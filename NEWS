@@ -7,6 +7,8 @@
 
 NEW FEATURES
 
+    o	na.omit() and na.fail() now are generic.
+
     o	New generic function all.equal();
 	most useful for numerical comparisons `up to rounding errors'.
 

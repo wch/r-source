@@ -154,51 +154,42 @@ offset <- function(object) object
 na.action <- function(object, ...)UseMethod("na.action")
 na.action.default <- function(object, ...) attr(object, "na.action")
 
-na.fail <- function(frame)
+na.fail <- function(object, ...)UseMethod("na.fail")
+na.fail.default <- function(object)
 {
-    ok <- complete.cases(frame)
-    if(all(ok)) frame else stop("missing values in data frame");
+    ok <- complete.cases(object)
+    if(all(ok)) object else stop("missing values in data frame");
 }
 
-na.omit <- function(frame)  {
-    n <- length(frame)
+na.omit <- function(object, ...)UseMethod("na.omit")
+na.omit.default <- function(object)  {
+    ## Assuming a data.frame like object
+    n <- length(object)
     omit <- FALSE
     vars <- seq(length = n)
     for(j in vars) {
-	x <- frame[[j]]
+	x <- object[[j]]
 	if(!is.atomic(x)) next
-    # variables are assumed to be either some sort of matrix, numeric or cat'y
+	## variables are assumed to be either some sort of matrix, numeric,...
 	x <- is.na(x)
 	d <- dim(x)
 	if(is.null(d) || length(d) != 2)
-		omit <- omit | x
-	else {
+	    omit <- omit | x
+	else # matrix
 	    for(ii in 1:d[2])
-		    omit <- omit | x[, ii]
-	    }
-	}
-    xx <- frame[!omit,  , drop = F]
+		omit <- omit | x[, ii]
+    }
+    xx <- object[!omit, , drop = F]
     if (any(omit)) {
 	temp <- seq(omit)[omit]
-	names(temp) <- row.names(frame)[omit]
-	attr(temp, 'class') <- 'omit'
+	names(temp) <- row.names(object)[omit]
+	attr(temp, "class") <- "omit"
 	attr(xx, "na.action") <- temp
-	}
-    xx
     }
+    xx
+}
 
-
-
-##-- used nowhere (0.62)
-##- model.data.frame <- function(...) {
-##-	cn <- as.character(substitute(list(...))[-1])
-##-	rval<-data.frame(..., col.names=cn, as.is=TRUE)
-##-	names(rval)<-cn
-##-	rval
-##- }
-
-model.frame <- function(formula, ...)	UseMethod("model.frame")
-
+model.frame <- function(formula, ...) UseMethod("model.frame")
 model.frame.default <-
     function(formula, data = NULL, subset=NULL, na.action = na.fail,
 	     drop.unused.levels = FALSE, xlev = NULL,...)
