@@ -15,10 +15,9 @@
 int
 main(int argc, char *argv[])
 {
-    SEXP fun, arg, seq;
+    SEXP fun, arg;
     SEXP e, e1;
-    int i;
-    char *localArgs[] = {"R", "--gui=none", "--no-save", "--silent"};
+    /* char *localArgs[] = {"R", "--gui=none", "--no-save", "--silent"}; */
     init_R(argc, argv);
 
       /* postscript() */

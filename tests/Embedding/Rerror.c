@@ -16,7 +16,6 @@ int
 main(int argc, char *argv[])
 {
   SEXP fun, e, arg;
-  int i;
   int errorOccurred;
   char *localArgs[] = {"R", "--gui=none", "--silent"};
   init_R(sizeof(localArgs)/sizeof(localArgs[0]), localArgs);

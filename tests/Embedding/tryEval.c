@@ -1,4 +1,5 @@
 #include <Rdefines.h>
+extern int Rf_initEmbeddedR(int argc, char *argv[]);
 
 int 
 main(int argc, char *argv[])
