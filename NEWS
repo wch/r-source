@@ -121,6 +121,10 @@ BUG FIXES
 
     o   Try() constructs lost protection of R_alloc'ed memory (PR#877)
 
+  
+    o   Documented that as.numeric() dispatches to as.double.foo methods
+	(PR#918.1)
+
 
 
 		CHANGES IN R VERSION 1.2.2
