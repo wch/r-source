@@ -909,6 +909,8 @@ BUG FIXES
 	indices were ignored.  (PR#7210)
 
     o	Fixed bug in handling of lwd=NA in contour().
+    
+    o	is.na() was returning undefined results on nested lists.
 
 
 

@@ -209,6 +209,10 @@ is.na (ll)
 is.nan(ll)
 ## end of moved from NA.Rd
 
+## is.na was returning unset values on nested lists
+ll <- list(list(1))
+for (i in 1:5) print(as.integer(is.na(ll)))
+
 ## scale
 ## test out NA handling
 tm <- matrix(c(2,1,0,1,0,NA,NA,NA,0), nrow=3)
