@@ -23,7 +23,8 @@ graphappmain.o: ../graphapp/graphappmain.c
 
 LIBS=-L.. -lR
 
-Rgui-LINKFLAGS=-mwindows 
+Rgui-LINKFLAGS=-mwindows
+Rterm-LIBS=-luser32
 rgui-CFLAGS=-I../../include -DWin32
 rterm-CFLAGS=-I../../include -DWin32
 
