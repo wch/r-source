@@ -1632,24 +1632,20 @@ force the variant object to the right type.
 
 We need to know a little about the way @R{} handles memory allocation.
 The memory allocated for @R{} objects is not freed by the user; instead,
-the memory is from time to time @dfn{garbage collected}.  That is, all
-the allocated memory not being used is freed, and the objects that are
-in use may be moved.
+the memory is from time to time @dfn{garbage collected}.  That is, some
+or all of the allocated memory not being used is freed.  (Prior to
+@R{} 1.2, objects could be moved, to.)
 
 The @R{} object types are represented by a C structure defined by a
-typedef @code{SEXPREC} in @file{Rinternals.h}. It contains several
+typedef @code{SEXPREC} in @file{Rinternals.h}.  It contains several
 things among which are pointers to data blocks and to other
-@code{SEXPREC}s. With the current memory managements scheme, the data
-blocks may be moved in memory during garbage collection, and the
-pointers to them updated. Because of this it is not safe to save and
-re-use pointers to data blocks in an object's structure. A @code{SEXP}
-is simply a pointer to a @code{SEXPREC}.
+@code{SEXPREC}s.  A @code{SEXP} is simply a pointer to a @code{SEXPREC}.
 
 If you create an @R{} object in your C code, you must tell @R{} that you
 are using the object by using the @code{PROTECT} macro on a pointer to
 the object. This tells @R{} that the object is in use so it is not
-destroyed. Notice that it is the object which is protected, not the pointer
-variable. It is a common mistake to believe that if you invoked
+destroyed.  Notice that it is the object which is protected, not the pointer
+variable.  It is a common mistake to believe that if you invoked
 @code{PROTECT(@var{p})} at some point then @var{p} is protected from
 then on, but that is not true once a new object is assigned to @var{p}.
 
@@ -1697,12 +1693,12 @@ and then those in @file{Rinternals.h}:
 
 Now, the reader may ask how the @R{} object could possibly get removed
 during those manipulations, as it is just our C code that is running. As
-it happens, we can do without the protection in this case, but in
+it happens, we can do without the protection in this example, but in
 general we do not know (nor want to know) what is hiding behind the @R{}
 macros and functions we use, and any of them might cause memory to be
 allocated, hence garbage collection and hence our object @code{ab} to be
-(re)moved. It is usually wise to err on the side of caution and assume
-that any of the @R{} macros and functions might (re)move the object.
+removed. It is usually wise to err on the side of caution and assume
+that any of the @R{} macros and functions might remove the object.
 
 In some cases it is necessary to keep better track of whether protection
 is really needed. Be particularly aware of situations where a large
@@ -3023,7 +3019,8 @@ void warning(const char * @var{format}, ...);
 @noindent
 These have the same call sequences as calls to @code{printf}, but in the
 simplest case can be called with a single character string
-argument giving the error message.
+argument giving the error message. (Don't do this if the string contains
+@code{%} or might otherwise be interpreted as a format.)
 
 There is also an @Sl{}-compatibility interface which uses calls of the
 form
