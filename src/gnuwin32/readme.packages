@@ -242,6 +242,17 @@ functions) exported from R.dll.  These must be declared
 __declspec(dllimport) (as in R's own header files).  A list of the
 relevant variables is in the file `exported-vars'.
 
+VC++ lacks some standard functions such as isnan and isfinite.  To use
+R's macros you will need
+
+#undef ISNAN
+#define ISNAN(x) _isnan(x)
+#undef R_FINITE
+#define R_FINITE(x) _finite(x)
+
+for example.  Even then, we have seen examples of IEC60559 arithmetic
+being performed incorrectly.
+
 
 Using Borland C++
 =================
