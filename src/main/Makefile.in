@@ -129,7 +129,7 @@ $(top_builddir)/bin/R.X11: $(OBJECTS) $(RLIBS) @EXPORTFILE@
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
 	$(LDCMD) $(DLLFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(ALL_LIBS)
 
-$(top_builddir)/bin/R.gnome: $(OBJECTS) $(RGNOMELIBS)
+$(top_builddir)/bin/R.GNOME: $(OBJECTS) $(RGNOMELIBS)
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
 	$(LDCMD) $(DLLFLAGS) $(LDFLAGS) $(GNOME_LIBDIR) -o $@ $(OBJECTS) $(ALL_GNOME_LIBS)
 
@@ -150,7 +150,7 @@ gram.c: $(srcdir)/gram.y
 mostlyclean: clean
 clean:
 	@echo "Cleaning in $(subdir)"
-	@-rm -f R.binary R.X11 R.gnome R-Image *core Makedeps *.d *.o
+	@-rm -f R.binary R.X11 R.GNOME R-Image *core Makedeps *.d *.o
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

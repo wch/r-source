@@ -57,15 +57,15 @@ install: all installdirs
 	  done)
 	@echo "Installing executables ..."
 	@$(INSTALL_PROGRAM) bin/R.X11 $(rhome)/bin
-	@if test -x bin/R.gnome; then \
-	  $(INSTALL_PROGRAM) bin/R.gnome $(rhome)/bin; \
+	@if test -x bin/R.GNOME; then \
+	  $(INSTALL_PROGRAM) bin/R.GNOME $(rhome)/bin; \
 	fi
 	@sed "s@R_HOME=.*@R_HOME=$(rhome)\}@" < bin/R > $(rhome)/bin/R
 	@sed "s@R_HOME=.*@R_HOME=$(rhome)\}@" < bin/R > $(bindir)/R
 	@chmod 755 $(bindir)/R $(rhome)/bin/R
 	@for f in `ls bin/* | grep -v '^bin/R\**$$' \
 	                    | grep -v '^bin/R.X11\**$$' \
-	                    | grep -v '^bin/R.gnome\**$$'`; do \
+	                    | grep -v '^bin/R.GNOME\**$$'`; do \
 	  $(INSTALL) $${f} $(rhome)/bin; \
 	done
 	@for f in Rd2txt Rdconv Rdindex Sd2Rd; do \

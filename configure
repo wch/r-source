@@ -3445,7 +3445,7 @@ else
     echo "$ac_t""yes" 1>&6
     use_gnome="yes"
 	  RGNOMEDIR="gnome"
-	  RGNOMEBIN="\$(top_builddir)/bin/R.gnome"
+	  RGNOMEBIN="\$(top_builddir)/bin/R.GNOME"
 	  GNOME_IF_FILES="gnome-interface.glade"
   else
     echo "*** libglade was not compiled with support for $module_args" 1>&2

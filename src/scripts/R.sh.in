@@ -70,7 +70,8 @@ Options:
   --slave               Make R run as quietly as possible
   --verbose             Print more information about progress
   -d, --debugger=NAME   Run R through debugger NAME
-  -g, --gnome		Run the gnome binary
+  --gui=TYPE		Use TYPE as GUI; possible values are \`X11'
+			(default) and \`GNOME'
 
 Commands:
   BATCH			Run R in batch mode
@@ -106,14 +107,12 @@ while test -n "${1}"; do
       cmd="${1}"; shift; exec sh "${R_HOME}/bin/${cmd}" "${@}" ;;
     CMD)
       shift; PATH="${R_HOME}/bin:${PATH}" exec "${@}" ;;
-    -g)
-      gui="${2}"; shift ;;
-    --gui=*)
-      gui=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
-    --gnome)
-      echo "option \`--gnome' is defunct, use \`--gui=GNOME'"
+    -g|--gnome)
+      echo "option \`${1}' is defunct, use \`--gui=GNOME'"
       exit 1
       ;;
+    --gui=*)
+      gui=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     -d)
       debugger="${2}"; shift ;;
     --debugger=*)
@@ -133,13 +132,10 @@ while test -n "${1}"; do
   shift
 done
 
-case "${gui}" in
-  X11)
-    R_binary="R.X11" ;;
-  GNOME|gnome)
-    R_binary="R.gnome" ;;
-  *)
-    echo "GUI \`${gui}' is not supported" && exit 1 ;;
+if test -x ${R_HOME}/bin/R.${gui}; then
+  R_binary="R.${gui}"
+else
+  echo "GUI \`${gui}' is not supported" && exit 1 ;;
 esac
 
 # Startup

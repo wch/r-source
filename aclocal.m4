@@ -721,7 +721,7 @@ AC_DEFUN(R_GNOME, [
       AM_PATH_LIBGLADE(
         [use_gnome="yes"
 	  RGNOMEDIR="gnome"
-	  RGNOMEBIN="\$(top_builddir)/bin/R.gnome"
+	  RGNOMEBIN="\$(top_builddir)/bin/R.GNOME"
 	  GNOME_IF_FILES="gnome-interface.glade"],
         [AC_MSG_WARN([GNOME support requires libglade version >= 0.3])],
         gnome)

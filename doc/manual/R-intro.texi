@@ -2,7 +2,7 @@
 @c %**start of header
 @setfilename R-intro.info
 @settitle An Introduction to R
-@set VERSION $Revision: 1.8 $
+@set VERSION $Revision: 1.9 $
 @setchapternewpage on
 @c %**end of header
 
@@ -6449,9 +6449,12 @@ Run @R{} through debugger @var{name}.  Note that in this case, further
 command line options are disregarded, and should instead be given when
 starting the @R{} executable from inside the debugger.
 
-@item --gnome
+@item --gui=@var{type}
 @itemx -g
-Use the GNOME interface provided that it is available.
+Use @var{type} as graphical user interface (note that this also includes
+interactive graphics).  Currently, possible values for @var{type} are
+@code{X11} (the default) and @code{GNOME} provided that GNOME support
+available.
 @end table
 
 Note that input and output can be redirected in the usual way (using
