@@ -11,7 +11,7 @@ subdir = src/library/base
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = DESCRIPTION.in Makefile.in makebasedb.R
+DISTFILES = DESCRIPTION.in Makefile.in baseloader.R makebasedb.R
 
 pkg = base
 
@@ -60,9 +60,9 @@ all: Makefile DESCRIPTION
 	    $(top_builddir)/library/$(pkg)/man/$(pkg).Rd.gz)
 	@$(INSTALL_DATA) $(srcdir)/inst/CITATION $(top_builddir)/library/$(pkg)
 	@$(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
-	@(cat $(srcdir)/../tools/R/makeLazyLoad.R $(srcdir)/makebasedb.R; \
-	  echo "makeLazyLoading(\"$(pkg)\")") | \
+	@cat $(srcdir)/makebasedb.R | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null
+	@$(INSTALL_DATA) $(srcdir)/baseloader.R $(top_builddir)/library/$(pkg)/R/$(pkg)
 
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status

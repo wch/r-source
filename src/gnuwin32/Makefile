@@ -118,7 +118,7 @@ rpackage: ../../library/R.css rpackageindices
 	  (echo ".libPaths('../../library')"; \
 	    cat ../library/base/makebasedb.R) | \
 	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(REXE) > /dev/null; \
-          cp ../../share/R/baseloader.R ../../library/base/R/base; \
+          cp ../library/base/baseloader.R ../../library/base/R/base; \
 	fi
 	@R_START_PACKAGES=NULL $(MAKE) --no-print-directory pkg-tools
 	@if ! test -f ../../library/tools/R/tools.rdb ; then \
