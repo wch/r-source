@@ -12,7 +12,7 @@ include $(top_builddir)/Makeconf
 
 SOURCES_C = \
 	CConverters.c \
-	Rdynload.c RNG.c \
+	Rdynload.c Renviron.c RNG.c \
 	apply.c arithmetic.c apse.c array.c attrib.c \
 	base.c bind.c builtin.c \
 	character.c coerce.c colors.c complex.c connections.c context.c \
@@ -32,7 +32,7 @@ SOURCES_C = \
 	print.c printarray.c printvector.c printutils.c qsort.c \
 	random.c regex.c registration.c relop.c \
 	saveload.c scan.c seq.c serialize.c size.c sort.c source.c split.c \
-	sprintf.c subassign.c subscript.c subset.c summary.c \
+	sprintf.c subassign.c subscript.c subset.c summary.c sysutils.c \
 	unique.c util.c \
 	version.c vfonts.c
 SOURCES_F = \
