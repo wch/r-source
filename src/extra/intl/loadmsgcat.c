@@ -89,6 +89,12 @@ char *alloca ();
 #include "hash-string.h"
 #include "plural-exp.h"
 
+/* we need this to test libiconv version below */
+#ifdef HAVE_ICONV_H
+# include <iconv.h>
+#endif
+
+
 #ifdef _LIBC
 # include "../locale/localeinfo.h"
 #endif
