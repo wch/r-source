@@ -186,6 +186,13 @@ NEW FEATURES
         CSV" format (fields separated by semicolon and using comma as
         decimal point).
 
+    o	HDF5 support is gone from the R distribution, and provided by an
+	add-on package.
+
+    o	New function getOption() for retrieving the value of a single
+	option.
+
+
 
 BUG FIXES
 
