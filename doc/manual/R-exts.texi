@@ -3038,6 +3038,22 @@ the parser (the R sources have one example, in
 @file{src/main/plot3d.c}).
 @findex UNPROTECT_PTR
 
+Sometimes an object is changed (for example coerced or grown) yet the
+current value needs to be protected. For these cases
+@code{PROTECT_WITH_INDEX} saves an index of the protection location that
+can be used to replace the protected value using @code{REPROTECT}.
+@findex PROTECT_WITH_INDEX
+@findex REPROTECT
+For example (from the internal code for @code{optim})
+@smallexample
+    PROTECT_INDEX ipx;
+
+    ....
+    PROTECT_WITH_INDEX(s = eval(OS->R_fcall, OS->R_env), &ipx);
+    REPROTECT(s = coerceVector(s, REALSXP), ipx);
+@end smallexample
+
+
 @node Allocating storage, Details of R types, Garbage Collection, Handling R objects in C
 @subsection Allocating storage
 @cindex Allocating storage
