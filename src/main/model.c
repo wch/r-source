@@ -1691,7 +1691,8 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	nc = 0;
     for (j = 0; j < nterms; j++) {
 	if (j == rhs_response) {
-	    INTEGER(count)[j]=0;  /* need this initialised */
+	    warning("the response appeared on the rhs and was dropped");
+	    INTEGER(count)[j] = 0;  /* need this initialised */
 	    continue;
 	}
 	k = 1;

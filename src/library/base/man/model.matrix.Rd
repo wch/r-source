@@ -32,12 +32,16 @@ model.matrix(object, \dots)
   contain columns with the same names as would be created by a call to
   \code{model.frame(formula)} or, more precisely, by evaluating
   \code{attr(terms(formula), "variables")}.  There may be other columns
-  and the order is not important. If \code{contrasts} is specified it
+  and the order is not important.  If \code{contrasts} is specified it
   overrides the default factor coding for that variable.
 
   In interactions, the variable whose levels vary fastest is the first
   one to appear in the formula (and not in the term), so in \code{~ a +
     b + b:a} the interaction will have \code{a} varying fastest.
+
+  By convention, if the response variable also appears on the
+  right-hand side of the formula it is dropped (with a warning),
+  although interactions involving the term are retained.
 }
 \value{
   The design matrix for a regression model with the specified formula

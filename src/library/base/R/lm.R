@@ -44,8 +44,9 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     }
     else {
 	x <- model.matrix(mt, mf, contrasts)
-	z <- if(is.null(w)) lm.fit(x, y, offset=offset, ...)
-	else lm.wfit(x, y, w, offset=offset, ...)
+	z <- if(is.null(w)) lm.fit(x, y, offset = offset,
+                                   singular.ok=singular.ok, ...)
+	else lm.wfit(x, y, w, offset = offset, singular.ok=singular.ok, ...)
     }
     class(z) <- c(if(is.matrix(y)) "mlm", "lm")
     if(!is.null(na.act)) z$na.action <- na.act
@@ -64,7 +65,8 @@ lm <- function (formula, data = list(), subset, weights, na.action,
 }
 
 ## lm.fit() and lm.wfit() have *MUCH* in common  [say ``code re-use !'']
-lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
+lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
+                    singular.ok = TRUE, ...)
 {
     if (is.null(n <- nrow(x))) stop("`x' must be a matrix")
     if(n == 0) stop("0 (non-NA) cases")
@@ -98,6 +100,8 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
 		  residuals = y, effects = y, rank = integer(1),
 		  pivot = 1:p, qraux = double(p), work = double(2*p),
                   PACKAGE="base")
+    if(!singular.ok && z$rank == 0)
+        stop("singular fit encountered")
     coef <- z$coefficients
     pivot <- z$pivot
     ## careful here: the rank might be 0
@@ -126,7 +130,8 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
 	   df.residual = n - z$rank))
 }
 
-lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
+lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
+                     singular.ok = TRUE, ...)
 {
     if(is.null(n <- nrow(x))) stop("'x' must be a matrix")
     if(n == 0) stop("0 (non-NA) cases")
@@ -178,6 +183,8 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
 		  rank = integer(1), pivot = 1:p, qraux = double(p),
 		  work = double(2 * p),
                   PACKAGE="base")
+    if(!singular.ok && z$rank == 0)
+        stop("singular fit encountered")
     coef <- z$coefficients
     pivot <- z$pivot
     r1 <- seq(len=z$rank)

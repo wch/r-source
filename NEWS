@@ -279,6 +279,12 @@ NEW FEATURES
 	the command line to be skipped (but recorded in commandArgs()
 	for further processing).
 
+    o	model.matrix() now warns when it removes the response from the
+	rhs of the formula: that this happens is now documented on its
+	help page.
+
+    o	lm(singular.ok = FALSE) is now implemented.
+
 
 DEPRECATED & DEFUNCT
 
@@ -437,7 +443,7 @@ BUG FIXES
 	not exist.
 
     o   The png(), jpeg(), png() and win.metafile() devices now 
-	enforce the limit of 512 chars(!) on the filename.  (PR#3466)
+	enforce the length limit on the filename.  (PR#3466)
 
     o   step() adds a fuzz for reduction in AIC for 0-df terms.  (PR#3491)
 

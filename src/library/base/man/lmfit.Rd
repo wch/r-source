@@ -1,8 +1,11 @@
 \name{lm.fit}
 \title{Fitter Functions for Linear Models}
 \usage{
-lm.fit (x, y,    offset = NULL, method = "qr", tol = 1e-7, \dots)
-lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7, \dots)
+lm.fit (x, y,    offset = NULL, method = "qr", tol = 1e-7,
+       singular.ok = TRUE, \dots)
+
+lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7,
+        singular.ok = TRUE, \dots)
 }
 \alias{lm.fit}
 \alias{lm.wfit}
@@ -26,6 +29,9 @@ lm.wfit(x, y, w, offset = NULL, method = "qr", tol = 1e-7, \dots)
   \item{tol}{tolerance for the \code{\link{qr}} decomposition.  Default
     is 1e-7.}
 
+  \item{singular.ok}{logical. If \code{FALSE}, a singular model is an
+    error.}
+  
   \item{\dots}{currently disregarded.}
 }
 \details{
