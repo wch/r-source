@@ -19,7 +19,7 @@ case "${ffile}" in
     pattern=${pattern}'|^\[1\] [19][0-9][0-9])'
     ;;
   *)
-    pattern=${pattern}'|^<environment)'
+    pattern=${pattern}'|^<(environment|promise|pointer): )'
     ;;
 esac
 
