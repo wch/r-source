@@ -1,5 +1,6 @@
 \name{det}
 \title{Calculate the Determinant of a Matrix}
+\alias{det}
 \usage{
 det(x, method = c("qr","eigenvalues"))
 }

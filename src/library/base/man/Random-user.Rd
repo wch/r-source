@@ -1,8 +1,10 @@
 \name{Random.user}
 \title{User-supplied Random Number Generation}
+\alias{Random.user}
 \description{
   Function \code{\link{RNGkind}} allows user-coded uniform and
-  normal random number generators to be supplied. The details are given here.
+  normal random number generators to be supplied.  The details are given
+  here.
 }
 \details{
   A user-specified uniform RNG is called from entry points in
