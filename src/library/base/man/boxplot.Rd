@@ -13,7 +13,7 @@ boxplot.default(x, \dots, range = 1.5, width = NULL,
         data = parent.frame(), plot = TRUE,
         border = par("fg"), col = NULL, log = "", pars = NULL,
         horizontal = FALSE, add = FALSE, at = NULL)
-boxplot.formula(formula, data = NULL, subset, na.action, \dots)
+boxplot.formula(formula, data = NULL, \dots, subset, na.action)
 }
 \arguments{
   \item{x}{an \R object.}

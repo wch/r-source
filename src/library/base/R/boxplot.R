@@ -16,7 +16,8 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
     pars <- c(args[namedargs], pars)
     groups <-
 	if(is.language(x)) {
-            warning("Using `formula' in boxplot.default -- shouldn't boxplot.formula be called?")
+            warning(paste("Using `formula' in boxplot.default --",
+                          "shouldn't boxplot.formula be called?"))
 	    if(inherits(x, "formula") && length(x) == 3) {
 		groups <- eval(x[[3]], data, parent.frame())
 		x <- eval(x[[2]], data, parent.frame())
@@ -65,7 +66,8 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
     else z
 }
 
-boxplot.formula <- function(formula, data = NULL, subset, na.action, ...)
+boxplot.formula <-
+function(formula, data = NULL, ..., subset, na.action)
 {
     if(missing(formula) || (length(formula) != 3))
         stop("formula missing or incorrect")
