@@ -11,16 +11,14 @@ subdir = src/library/profile
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Common.R Makefile.in Rprofile.gnw Rprofile.mac Rprofile.unix
+DISTFILES = Common.R Makefile.in \
+	Rprofile.mac Rprofile.unix Rprofile.windows
 
-all: Makefile $(srcdir)/Common.R $(srcdir)/Rprofile.unix
+all: Makefile $(srcdir)/Common.R $(srcdir)/Rprofile.$(R_OSTYPE)
 	@echo "building system startup profile"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/base/R
-## <FIXME>
-## The Windows profile is really called 'Rprofile.gnw' ...
 	@cat $(srcdir)/Common.R $(srcdir)/Rprofile.$(R_OSTYPE) \
 	  > $(top_builddir)/library/base/R/Rprofile
-## </FIXME>
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@

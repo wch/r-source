@@ -5,7 +5,7 @@ all: profiles fixh fixhtml fixbin fixetc fixshare
 profiles: ../../../library/base/R/Rprofile
 
 ../../../library/base/R/Rprofile:  ../../library/profile/Common.R \
-../../library/profile/Rprofile.gnw
+../../library/profile/Rprofile.windows
 	@$(ECHO) -------- Building $@ from $^--------
 	mkdir -p ../../../library/base/R
 	@$(CAT)  $^ > $@
