@@ -99,8 +99,8 @@ boxplot(x, \dots)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
 
-  Chambers, J. M. and Cleveland, W. S. and Kleiner, B. and Tukey,
-  P. A. (1983) \emph{Graphical Methods for Data Analysis.}  Duxbury Press.
+  Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983)
+  \emph{Graphical Methods for Data Analysis.}  Wadsworth \& Brooks/Cole.
 
   See also \code{\link{boxplot.stats}}.
 }

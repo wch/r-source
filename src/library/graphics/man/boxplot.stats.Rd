@@ -49,7 +49,7 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
 
   The notches (if requested) extend to \code{+/-1.58 IQR/sqrt(n)}.
   This seems to be based on same calculations as the formula with 1.57 in
-  Chambers \emph{et al.} (1983, p. 62) given in McGill \emph{et al.}
+  Chambers \emph{et al.} (1983, p. 62), given in McGill \emph{et al.}
   (1978, p. 16).  They are based on asymptotic normality of the median
   and roughly equal sample sizes for the two medians being compared, and
   are said to be rather insensitive to the underlying distributions of
@@ -69,8 +69,8 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
   Chapter 3 of \emph{Understanding Robust and Exploratory Data
     Analysis}, eds. D. C. Hoaglin, F. Mosteller and J. W. Tukey.  Wiley.
 
-  Chambers, J. M. and Cleveland, W. S. and Kleiner, B. and Tukey,
-  P. A. (1983) \emph{Graphical Methods for Data Analysis.}  Duxbury Press.
+  Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P. A. (1983)
+  \emph{Graphical Methods for Data Analysis.}  Wadsworth \& Brooks/Cole.
 }
 \seealso{
   \code{\link[stats]{fivenum}}, \code{\link{boxplot}}, \code{\link{bxp}}.
