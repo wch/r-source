@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-33, 2003-07-28
+Version 1.7-34, 2003-07-29
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1207,6 +1207,10 @@ distributions of R.)
 *CoCoAn*
      Constrained Correspondence Analysis.
 
+*DAAG*
+     Various data sets used in examples and exercises in "Data Analysis and
+     Graphics Using R" by John H. Maindonald and W. John Brown, 2003.
+
 *DBI*
      A common database interface (DBI) class and method definitions.  All
      classes in this package are virtual and need to be extended by the
@@ -1587,6 +1591,9 @@ distributions of R.)
      and (for simulation) multivariate parametric extreme value
      distributions, and provides fitting functions which calculate maximum
      likelihood estimates for univariate and bivariate models.
+
+*exactLoglinTest*
+     Monte Carlo exact tests for log-linear models.
 
 *exactRankTests*
      Computes exact p-values and quantiles using an implementation of the
