@@ -240,9 +240,9 @@ model.matrix.default <- function(formula, data = sys.frame(sys.parent()),
      else contrasts(data[[ni]]) <- contrasts.arg[[nn]]
    }
  }
-## reorder <- match(as.character(attr(t,"variables"))[-1],names(data))
-## if (any(is.na(reorder))) stop("invalid model frame in model.matrix()")
-## data <- data[,reorder, drop=FALSE]
+ reorder <- match(as.character(attr(t,"variables"))[-1],names(data))
+ if (any(is.na(reorder))) stop("invalid model frame in model.matrix()")
+ data <- data[,reorder, drop=FALSE]
  ans <- .Internal(model.matrix(t, data))
  cons <- if(any(isF))
    lapply(data[-1][isF], function(x) attr(x,  "contrasts"))
