@@ -9,10 +9,6 @@
 #include <math.h>
 #include <stdlib.h>
 
-/* possible -lm / Fortran conflicts:*/
-#define gamma Rgamma
-#define lgamma Rlgamma
-
 /* 30 Decimal-place constants computed with bc -l (scale=32; proper round) */
 
 #ifndef M_SQRT_2
