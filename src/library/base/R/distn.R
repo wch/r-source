@@ -98,6 +98,37 @@ qbinom <- function(p, size, prob, lower.tail = TRUE, log.p = FALSE)
     .Internal(qbinom(p, size, prob, lower.tail, log.p))
 rbinom <- function(n, size, prob) .Internal(rbinom(n, size, prob))
 
+## Multivariate: that's why there's no C interface (yet) for d...():
+dmultinom <- function(x, size=NULL, prob, log = FALSE)
+{
+    K <- length(prob)
+    if(length(x) != K) stop("x[] and prob[] must be equal length vectors.")
+    if(any(prob < 0) || (s <- sum(prob)) == 0)
+	stop("probabilities cannot be negative nor all 0.")
+    prob <- prob / s
+
+    x <- as.integer(x + 0.5)
+    if(any(x < 0)) stop("`x' must be non-negative")
+    N <- sum(x)
+    if(is.null(size)) size <- N
+    else if (size != N) stop("size != sum(x), i.e. one is wrong")
+
+    i0 <- prob == 0
+    if(any(i0)) {
+	if(any(x[i0] != 0))
+            ##  prob[j] ==0 and x[j] > 0 ==>  "impossible" => P = 0
+	    return(if(log)-Inf else 0)
+	## otherwise : `all is fine': prob[j]= 0 = x[j] ==> drop j and continue
+	if(all(i0)) return(if(log)0 else 1)
+	## else
+	x <- x[!i0]
+	prob <- prob[!i0]
+    }
+    r <- lgamma(size+1) + sum(x*log(prob) - lgamma(x+1))
+    if(log) r else exp(r)
+}
+rmultinom <- function(n, size, prob) .Internal(rmultinom(n, size, prob))
+
 dchisq <- function(x, df, ncp=0, log = FALSE) {
     if(missing(ncp)) .Internal(dchisq(x, df, log))
     else .Internal(dnchisq(x, df, ncp, log))
@@ -178,7 +209,12 @@ qpois <- function(p, lambda, lower.tail = TRUE, log.p = FALSE)
     .Internal(qpois(p, lambda, lower.tail, log.p))
 rpois <- function(n, lambda) .Internal(rpois(n, lambda))
 
-dt <- function(x, df, log = FALSE) .Internal(dt(x, df, log))
+dt <- function(x, df, ncp, log = FALSE) {
+    if(missing(ncp))
+        .Internal(dt(x, df, log))
+    else .NotYetImplemented()
+}
+
 pt <- function(q, df, ncp, lower.tail = TRUE, log.p = FALSE) {
     if(missing(ncp))
 	.Internal(pt(q, df, lower.tail, log.p))

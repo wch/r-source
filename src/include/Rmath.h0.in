@@ -404,6 +404,10 @@ double	pbinom(double, double, double, int, int);
 double	qbinom(double, double, double, int, int);
 double	rbinom(double, double);
 
+	/* Multnomial Distribution */
+
+void	rmultinom(int, double*, int, int*);
+
 	/* Cauchy Distribution */
 
 double	dcauchy(double, double, double, int);

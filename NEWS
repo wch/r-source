@@ -16,10 +16,10 @@ USER-VISIBLE CHANGES
 	normalization of eigen/singular vectors may change from
 	earlier versions.
 
-    o   The `methods' package is now attached by default.
-        The option "defaultPackages" has been added and initially set
-        to c("methods", "ctest"), causing those packages to be
-        attached at startup.  See ?Startup and ?options for details.
+    o	The `methods' package is now attached by default.
+	The option "defaultPackages" has been added and initially set
+	to c("methods", "ctest"), causing those packages to be
+	attached at startup.  See ?Startup and ?options for details.
 
 	class() now always (not just when `methods' is attached) gives
 	a non-null class, and UseMethod() always dispatches on the
@@ -28,19 +28,19 @@ USER-VISIBLE CHANGES
 	and oldClass<-() get and set the "class" attribute as R
 	without `methods' used to.
 
-    o   Formulae are not longer automatically simplified when terms()
+    o	Formulae are not longer automatically simplified when terms()
 	is called, so the formulae in results may still be in the
 	original form rather than the equivalent simplified form
 	(which may have reordered the terms): the result are now
 	much closer to those of S.
 
-    o   The R_X11 module is no longer loaded until it is needed, so
+    o	The R_X11 module is no longer loaded until it is needed, so
 	do test that x11() works in a new Unix-alike R installation.
 
 
 NEW FEATURES
 
-    o   library() was changed so that when the methods package is
+    o	library() was changed so that when the methods package is
 	attached it no longer complains about formal generic functions
 	not specific to the library.
 
@@ -84,144 +84,147 @@ NEW FEATURES
 	guaranteed for user-supplied random-number generators, nor
 	when the standalone Rmath library is used.
 
-     o	New function constrOptim() for optimisation under linear inequality
+    o	New function constrOptim() for optimisation under linear inequality
 	constraints.
 
-     o	if() and while() give a warning if called with a vector condition.
+    o	if() and while() give a warning if called with a vector condition.
 
-     o	ts() now allows arbitrary values for y in start/end = c(x, y):
+    o	ts() now allows arbitrary values for y in start/end = c(x, y):
 	it always allowed y < 1 but objected to y > frequency.
 
-     o	Add `difftime' subscript method and methods for the group
+    o	Add `difftime' subscript method and methods for the group
 	generics. (Thereby fixing PR#2345)
 
-     o	When assigning names to a vector, a value that is too short is
+    o	When assigning names to a vector, a value that is too short is
 	padded by character NAs. (Wishlist part of PR#2358)
 
-     o	The postscript() and PDF() drivers now allow the title to be set.
+    o	The postscript() and PDF() drivers now allow the title to be set.
 
-     o	table() now allows exclude= with factor arguments (requested by
+    o	table() now allows exclude= with factor arguments (requested by
 	Michael Friendly).
 
-     o	New convenience function loadURL() to allow loading data files
+    o	New convenience function loadURL() to allow loading data files
 	from URLs (requested by Frank Harrell).
 
-     o	biplot.default() {mva} allows `xlab' and `ylab' parameters to
+    o	biplot.default() {mva} allows `xlab' and `ylab' parameters to
 	be set (without partially matching to `xlabs' and `ylabs').
 	(Thanks to Uwe Ligges.)
 
-     o	On Unix(-alike) systems the default PDF viewer is now determined
+    o	On Unix(-alike) systems the default PDF viewer is now determined
 	during configuration, and available as the 'pdfviewer' option.
 
-     o	If a prompt() method is called with 'filename' as 'NA', a
+    o	If a prompt() method is called with 'filename' as 'NA', a
 	list-style representation of the documentation shell generated
 	is returned.  New function promptData() for documenting objects
 	as data sets.
 
-     o	New argument `local' for example() (suggested by Andy Liaw).
+    o	New argument `local' for example() (suggested by Andy Liaw).
 
-     o	load() now returns invisibly a character vector of the names
+    o	load() now returns invisibly a character vector of the names
 	of the objects which were restored.
 
-     o	It is now recommended to use the 'SystemRequirements:' field in
+    o	It is now recommended to use the 'SystemRequirements:' field in
 	the DESCRIPTION file for specifying dependencies external to the
 	R system.
 
-     o	Output text connections no longer have a line-length limit.
+    o	Output text connections no longer have a line-length limit.
 
-     o	On platforms where vsnprintf does not return the needed buffer
+    o	On platforms where vsnprintf does not return the needed buffer
 	size the output line-length limit for fifo(), gzfile() and
 	bzfile() has been raised from 10k to 100k chars.
 
-     o	help.search() can now reliably match individual aliases and
+    o	help.search() can now reliably match individual aliases and
 	keywords, provided that all packages searched were installed
 	using R 1.7.0 or newer.
 
-     o	dump() has a new argument `envir'.  The search for named
+    o	dump() has a new argument `envir'.  The search for named
 	objects now starts by default in the environment from which
 	dump() is called.
 
-     o	interaction.plot() has several new arguments, and the legend
+    o	interaction.plot() has several new arguments, and the legend
 	is not clipped anymore by default.  It internally uses axis(1,*)
 	instead of mtext().
 	This also addresses "bugs" PR#820, PR#1305, PR#1899.
 
-     o	legend() has a new `plot' argument.  Setting it `FALSE' gives
+    o	legend() has a new `plot' argument.  Setting it `FALSE' gives
 	size information without plotting (suggested by U.Ligges).
 
-     o  To guard against unthinking use, `include.lowest' in
+    o	To guard against unthinking use, `include.lowest' in
 	hist.default is now ignored, with a warning, unless `breaks'
 	is a vector.  (It either generated an error or had no effect,
 	depending how prettification of the range operated.)
 
-     o  pie(...) has always accepted graphical pars but only passed
+    o	pie(...) has always accepted graphical pars but only passed
 	them on to title().  Now pie(, cex=1.5) works.
 
-     o  The Math group generic does not check the number of arguments
+    o	The Math group generic does not check the number of arguments
 	supplied before dispatch: it used to if the default method had
 	one argument but not if it had two.  This allows trunc.POSIXt()
 	to be called via the group generic trunc().
 
-     o  hist.default() now returns the nominal break points, not those
+    o	hist.default() now returns the nominal break points, not those
 	adjusted for numerical tolerances.
 
-     o	New function slice.index() for identifying indexes with respect
+    o	New function slice.index() for identifying indexes with respect
 	to slices of an array.
 
-     o	New function Sys.getpid() to get the process ID of the R session.
+    o	New function Sys.getpid() to get the process ID of the R session.
 
-     o	ccf() now coerces its x and y arguments to class "ts".
+    o	ccf() now coerces its x and y arguments to class "ts".
 
-     o	download.file() can now use HTTP proxies which require `basic'
+    o	download.file() can now use HTTP proxies which require `basic'
 	username/password authentication.
 
-     o	solve.default(a) now gives the dimnames one would expect.
+    o	solve.default(a) now gives the dimnames one would expect.
 
-     o	rchisq() now has a non-centrality parameter `ncp', and there's a
+    o	rchisq() now has a non-centrality parameter `ncp', and there's a
 	C API for rnchisq().
 
-     o	glm() now accepts `etastart' and `mustart' as alternative ways
+    o	glm() now accepts `etastart' and `mustart' as alternative ways
 	to express starting values.
 
-     o  power.t.test() now behaves correctly for negative delta in the
-        two-tailed case.
+    o  power.t.test() now behaves correctly for negative delta in the
+       two-tailed case.
 
-     o  power.t.test() and power.prop.test() now have a `strict'
-        argument that includes rejections in the "wrong tail" in the
-        power calculation. (Based in part on code suggested by Ulrich
-        Halekoh.)
+    o  power.t.test() and power.prop.test() now have a `strict'
+       argument that includes rejections in the "wrong tail" in the
+       power calculation. (Based in part on code suggested by Ulrich
+       Halekoh.)
 
-     o	print.matrix() and prmatrix() are now separate functions.
+    o	print.matrix() and prmatrix() are now separate functions.
 	prmatrix() is the old S-compatible function, and
 	print.matrix() is a proper print method, currently identical
 	to print.default().  prmatrix() and the old print.matrix()
 	did not print attributes of a matrix, but the new print.matrix()
 	does.
 
-     o 	New function mapply(), a multivariate lapply().
+    o	New function mapply(), a multivariate lapply().
 
-     o	New function r2dtable() for generating random samples of two-way
+    o	New function r2dtable() for generating random samples of two-way
 	tables with given marginals using Patefield's algorithm.
 
-     o	Recursive indexing of lists is allowed, so x[[c(4,2)]] is
-	shorthand for x[[4]][[2]] etc.  (Wishlist PR#1588)
+    o	Recursive indexing of lists is allowed, so x[[c(4,2)]] is
+	shorthand for x[[4]][[2]] etc.	(Wishlist PR#1588)
 
-     o	summaryRprof() now prints times with a precision appropriate
+    o	summaryRprof() now prints times with a precision appropriate
 	to the sampling interval, rather than always to 2dp.
 
-     o	Most of the time series functions now check explicitly for a
+    o	Most of the time series functions now check explicitly for a
 	numeric time series, rather than fail at a later stage.
 
-     o	The ordering of terms for terms.formula(keep.order=FALSE) is
+    o	The ordering of terms for terms.formula(keep.order=FALSE) is
 	now defined on the help page and used consistently, so that
 	repeated calls will not alter the ordering (which is why
 	delete.response() was failing: see the bug fixes).  The
 	formula is not simplified unless the new argument `simplify'
 	is true.
 
-     o	Printing an object with attributes now dispatches on the
+    o	Printing an object with attributes now dispatches on the
 	class(es) of the attributes. See ?print.default for the fine
 	print. (PR#2506)
+
+    o	New functions rmultinom() and dmultinom(), the first one with
+	C API.
 
 
 INSTALLATION CHANGES
@@ -313,7 +316,7 @@ UTILITIES
 C-LEVEL FACILITIES
 
     o	A full double-precision LAPACK shared library is made
-	available as -lRlapack.  To use this include
+	available as -lRlapack.	 To use this include
 	$(LAPACK_LIBS) $(BLAS_LIBS) in PKG_LIBS.
 	[Not currently operational on MacOS X unless vecLib is used,
 	and vecLib and libsunperf give incomplete libraries.]
@@ -321,7 +324,7 @@ C-LEVEL FACILITIES
     o	R will automatically call initialization and unload routines, if
 	present, in shared libraries/DLLs during dyn.load() and
 	dyn.unload() calls. The routines are named R_init_<dll name>
-	and R_unload_<dll name>, respectively.  See Writing R
+	and R_unload_<dll name>, respectively.	See Writing R
 	Extensions Manual for more information.
 
     o	Routines exported directly from the R executable for use with
@@ -338,7 +341,7 @@ C-LEVEL FACILITIES
 	Extensions' for details.
 
     o	New entry point R_GetX11Image and formerly undocumented
-	ptr_R_GetX11Image are in new header R_ext/GetX11Image.  These
+	ptr_R_GetX11Image are in new header R_ext/GetX11Image.	These
 	are used by package trkplot.
 
 
@@ -384,16 +387,16 @@ BUG FIXES
 
     o	StructTS() now accepts numeric time series of integer storage mode.
 
-    o   all(), any() now handle NAs as documented.
+    o	all(), any() now handle NAs as documented.
 
-    o   Subsetting arrays to a result with 0 dimension(s) failed if
+    o	Subsetting arrays to a result with 0 dimension(s) failed if
 	the array had dimnames. (PR#2507)
 
-    o   If the call to data.frame() included 0-row arguments, it
+    o	If the call to data.frame() included 0-row arguments, it
 	tried to replicate them to maximum number of rows, and failed
 	if this was 1 or more.
 
-    o   replicate() now understands data frames to which na.omit() has
+    o	replicate() now understands data frames to which na.omit() has
 	been applied.
 
 
@@ -410,12 +413,12 @@ BUG FIXES
 
 BUG FIXES
 
-    o   The fix to PR#2396 broke read.table() on files with CR line
+    o	The fix to PR#2396 broke read.table() on files with CR line
 	endings. (PR#2469) Separate problem with this on Carbon Mac
 	build fixed as well.
 
-    o   Converting Sweave files to noweb syntax using SweaveSyntConv()
-        was broken.
+    o	Converting Sweave files to noweb syntax using SweaveSyntConv()
+	was broken.
 
 
 		CHANGES IN R VERSION 1.6.2

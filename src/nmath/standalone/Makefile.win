@@ -48,6 +48,7 @@ SOURCES_NMATH = \
 	dt.c pt.c qt.c rt.c \
 	dchisq.c pchisq.c qchisq.c rchisq.c rnchisq.c \
 	dbinom.c pbinom.c qbinom.c rbinom.c \
+	rmultinom.c \
 	dcauchy.c pcauchy.c qcauchy.c rcauchy.c \
 	dexp.c pexp.c qexp.c rexp.c \
 	dgeom.c pgeom.c qgeom.c rgeom.c \
