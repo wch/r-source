@@ -34,7 +34,7 @@ void bakslv(double *, int *, int *,
 
 void bincode (double *, int *, double *, int *, int *, int *, int *);
 void bincode2(double *, int *, double *, int *, int *, int *, int *);
-void bincount(double *, int *, double *, int *, int *, int *, int *);
+int bincount(double *, int *, double *, int *, int *, int *, int *);
 
 /* cpoly.c : */
 int F77_SYMBOL(cpoly)(double *opr, double *opi, int *degree,
