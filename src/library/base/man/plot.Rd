@@ -1,8 +1,10 @@
 \name{plot}
 \title{X-Y Plotting}
 \usage{
+%-- this is not really ok:  plot(x , ...)  is now the GENERIC function
 plot(x, y, xlim=range(x), ylim=range(y), type="p",
         main, xlab, ylab, \dots)
+plot(y ~ x, \dots)
 }
 \alias{plot}
 \arguments{
@@ -35,9 +37,11 @@ For more details about the graphical parameter arguments, see \code{\link{par}}.
 A longer description will go here eventually.
 }
 \seealso{
-\code{\link{plot.default}}, \code{\link{points}}, \code{\link{lines}}, \code{\link{par}}.
+  \code{\link{plot.default}}, \code{\link{plot.formula}} and other
+  methods; \code{\link{points}}, \code{\link{lines}}, \code{\link{par}}.
 }
 \examples{
+data(cars)
 plot(cars)
 lines(lowess(cars))
 }
