@@ -11,7 +11,8 @@ setGeneric <-
   ##
     function(name, def = NULL, group = list(), valueClass = character(), where = 1,
              package = NULL, signature = NULL,
-             useAsDefault = existsFunction(name, generic = FALSE))
+             useAsDefault = existsFunction(name, generic = FALSE),
+             genericFunction = NULL)
 {
     if(nargs() == 1 && isGeneric(name)) {
         message("Function \"", name, "\" is already a generic; no change")
@@ -26,6 +27,7 @@ setGeneric <-
             stop(msg)
         return(name)
     }
+    stdGenericBody <- substitute(standardGeneric(NAME), list(NAME = name))
     if(is.null(def)) {
         ## get the current function which may already be a generic
         fdef <- getFunction(name, mustFind = FALSE)
@@ -34,7 +36,7 @@ setGeneric <-
         else if(is.primitive(fdef)) ## get the pre-defined version
             fdef <- getGeneric(name)
         else
-            body(fdef) <- substitute(standardGeneric(NAME), list(NAME = name))
+            body(fdef) <- stdGenericBody
         if(is.null(package))
             ## infer the package name; takes the first to be consistent with
             ## ignoring conflicts in finding fdef above.
@@ -42,6 +44,8 @@ setGeneric <-
     }
     else {
         fdef <- def
+        if(is.null(genericFunction) && !identical(body(fdef), stdGenericBody))
+            genericFunction <- new("nonstandardGenericFunction")
         if(is.null(package))
             package <- getPackageName(where)
     }
@@ -53,7 +57,8 @@ setGeneric <-
         else
             fdeflt <- NULL
         fdef <- makeGeneric(name, fdef, fdeflt, group=group, valueClass=valueClass,
-                            package = package, signature = signature)
+                            package = package, signature = signature,
+                            genericFunction = genericFunction)
     }
     methods <- fdef@default # methods list: empty or containing the default
     ## there are two assignment steps.  First, assign the methods metadata
@@ -229,7 +234,11 @@ setMethod <-
                mnames <- formalArgs(definition)
                if(!identical(mnames, fnames)) {
                    ## omitted classes in method => "missing"
-                   signature <- conformMethod(signature, mnames, fnames)
+                   fullSig <- conformMethod(signature, mnames, fnames)
+                   if(!identical(fullSig, signature)) {
+                       formals(definition, envir = environment(definition)) <- formals(fdef)
+                       signature <- fullSig
+                   }
                    ## extra classes in method => use "..." to rematch
                    definition <- rematchDefinition(definition, fdef, mnames, fnames)
                }
@@ -336,7 +345,8 @@ selectMethod <-
     function(f, signature, optional = FALSE,
              useInherited = TRUE, mlist = getMethods(fdef), fdef = getGeneric(f))
 {
-    if(is.environment(signature))
+    evalArgs <- is.environment(signature)
+    if(evalArgs)
         env <- signature
     else if(length(names(signature)) == length(signature))
         env <- sigToEnv(signature)
@@ -355,7 +365,7 @@ selectMethod <-
         else
             stop(paste("\"", f, "\" has no methods defined", sep=""))
     }
-    selection <- .Call("R_selectMethod", f, env, mlist, PACKAGE = "methods")
+    selection <- .Call("R_selectMethod", f, env, mlist, evalArgs, PACKAGE = "methods")
     if(is.null(selection) && !identical(useInherited, FALSE)) {
       ## do the inheritance computations to update the methods list, try again.
       ##
@@ -367,9 +377,9 @@ selectMethod <-
                      "\"), or else a bug in method selection", sep=""))
       assign(".SelectMethodOn", TRUE, fEnv)
       on.exit(rm(.SelectMethodOn, envir = fEnv))
-      mlist <- MethodsListSelect(f, env, mlist, NULL, evalArgs = FALSE, useInherited = useInherited)
+      mlist <- MethodsListSelect(f, env, mlist, NULL, evalArgs = evalArgs, useInherited = useInherited)
       if(is(mlist, "MethodsList"))
-          selection <- .Call("R_selectMethod", f, env, mlist, PACKAGE = "methods")
+          selection <- .Call("R_selectMethod", f, env, mlist, evalArgs, PACKAGE = "methods")
     }
     if(is(selection, "function"))
         selection
