@@ -881,7 +881,14 @@ Date: Tue, 20 Apr 2004 14:15:05 -0400
 Subject: Failure to preserve package attribute when coercing S4 objects
 From: "Swinton, Jonathan" <Jonathan.Swinton@astrazeneca.com>
 Date: Fri, 21 May 2004 15:04:10 +0100
-* PR# 6931 *
-Subject: a fault in the "hist" - function
-From: stephanschlueter@gmx.de
-Date: Wed,  2 Jun 2004 11:34:00 +0200 (CEST)
+* PR# 6960 *
+Subject: failure delivery
+Subject: error in dbase
+From: MAILER-DAEMON@yahoo.com
+From: r-bugs@biostat.ku.dk
+Date: 9 Jun 2004 12:40:15 -0000
+Date: Wed, 09 Jun 2004 12:35:40 UTC
+* PR# 6961 *
+Subject: bug in  bandwidths.R (function bw.nrd0)
+From: "Zhang, Yunyu" <Yunyu_Zhang@dfci.harvard.edu>
+Date: Wed, 9 Jun 2004 10:14:03 -0400 
