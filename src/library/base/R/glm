@@ -455,7 +455,7 @@ stat.anova <- function(table, test, scale, df.scale, n)
 
 
 summary.glm <- function(object, dispersion = NULL,
-	correlation = TRUE, na.action=na.omit)
+	correlation = FALSE, na.action=na.omit)
 {
 	est.disp<-FALSE
 	if(is.null(dispersion))	# calculate dispersion if needed

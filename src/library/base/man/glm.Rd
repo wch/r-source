@@ -7,7 +7,7 @@ glm(formula, family=gaussian, data, weights, subset,
                 trace=F),
         model=T, method=glm.fit, x=F, y=T)
 
-summary(glm.obj, dispersion=NULL, correlation=TRUE,
+summary(glm.obj, dispersion=NULL, correlation=FALSE,
         na.action=na.omit)
 anova(glm.obj, \dots)
 

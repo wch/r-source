@@ -1,6 +1,9 @@
 		CHANGES IN R VERSION 0.61.2
 
 BUG FIXES
+
+    o   Output of correlation matrix in summary.glm() no longer default
+
     o   Docs for predict.lm
 
     o   Subset and transform functions (to make life with dataframes
