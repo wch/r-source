@@ -37,8 +37,12 @@ Makeconf-tests: $(srcdir)/Makeconf-tests.in $(top_builddir)/config.status
 R: Makeconf Makeconf-tests
 	@if [ "$(srcdir)" != "." ]; then \
 	  $(MAKE) rhome=$(top_builddir) install-perl; \
-	  $(MAKE) rhome=$(top_builddir) install-gnome; \
 	fi
+## FIXME:
+## We currently look for gnome-interface.glade in R_HOME/gnome, but we 
+## should have it in R_HOME/etc (and the shlibs in Rexeclibdir).
+## In this case, only do `install-gnome' if not building in srcdir.
+	@$(MAKE) rhome=$(top_builddir) install-gnome
 
 install: installdirs install-perl install-gnome
 	@echo "installing etc ..."
