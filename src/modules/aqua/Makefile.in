@@ -89,6 +89,11 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
+	@for d in $(SUBDIRS_WITH_NO_BUILD); do \
+	  ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
+	      | (cd $(distdir); $(TAR) -x -f -)) \
+	    || exit 1; \
+	done
 
 aqualaunch:
 	@gcc $(top_srcdir)/src/modules/aqua/RAqua/Contents/MacOS/aqualaunch.c
