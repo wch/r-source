@@ -851,8 +851,11 @@ void RxmlMessage(int level, const char *format, ...)
 
 #include "sock.h"
 
-void
-R_init_internet(DllInfo *info)
+#ifdef USE_WININET
+void R_init_internet2(DllInfo *info)
+#else
+void R_init_internet(DllInfo *info)
+#endif
 {
     R_InternetRoutines *tmp;
     tmp = (R_InternetRoutines*) malloc(sizeof(R_InternetRoutines));
