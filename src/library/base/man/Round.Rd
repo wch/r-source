@@ -13,7 +13,6 @@ zapsmall(x, digits= getOption("digits"))
 \alias{round}
 \alias{signif}
 \alias{trunc}
-\alias{trunc.default}
 \alias{zapsmall}
 \description{
   \code{ceiling} takes a single numeric argument \code{x} and returns a
