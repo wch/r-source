@@ -42,6 +42,7 @@ ObjFiles-PPC    =  lqs.o
 ### Libraries ###
 
 LibFiles-PPC    =  ¶
+				  "{PPCLibraries}CarbonStdCLib.o" ¶
 				  "{SharedLibraries}CarbonLib" ¶
 				  ":::::R"  
     

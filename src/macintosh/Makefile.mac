@@ -28,7 +28,7 @@ profiles Ä {RHOME}library:base:R:Rprofile
 	catenate ::library:profile:Common.R ::library:profile:Rprofile.mac > {RHOME}library:base:R:Rprofile
 
 ## ------------- library -----------
-PACKAGES =  base ctest eda lqs methods modreg mva nls splines stepfun ts
+PACKAGES =  base ctest eda lqs methods modreg mva nls splines stepfun ts tools
 ## ---- uncomment for the recommended packages
 ##         boot cluster foreign KernSmooth mgcv nlme rpart survival ¶
 ##		   class MASS spatial nnet
