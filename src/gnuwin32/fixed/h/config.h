@@ -73,7 +73,7 @@
 
 /* Define to 1 if you have the declaration of `iconvlist', and to 0 if you
    don't. */
-#define HAVE_DECL_ICONVLIST 0
+#define HAVE_DECL_ICONVLIST 1
 
 /* Define to 1 if you have the declaration of `isfinite', and to 0 if you
    don't. */
@@ -173,7 +173,7 @@
 /* #undef HAVE_GRP_H */
 
 /* Define to 1 if you have the `history_truncate_file' function. */
-/* #undef HAVE_HISTORY_TRUNCATE_FILE *.
+/* #undef HAVE_HISTORY_TRUNCATE_FILE */
 
 /* Define to 1 if you have the `hypot' function. */
 #define HAVE_HYPOT 1
