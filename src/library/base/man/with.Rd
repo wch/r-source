@@ -21,6 +21,9 @@ with(data, expr, \dots)
   local environment constructed from \code{data}.  The environment has
   the caller's environment as its parent.  This is useful for
   simplifying calls to modeling functions.
+
+  Note that assignments within \code{expr} take place in the constructed
+  environment and not in the user's workspace.
 }
 \seealso{
   \code{\link{evalq}}, \code{\link{attach}}.
