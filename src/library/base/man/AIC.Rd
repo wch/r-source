@@ -34,11 +34,15 @@ AIC(object, \dots, k = 2)
   (\code{df}) and the AIC.
 }
 \references{
-  Sakamoto, Y., Ishiguro, M., and Kitagawa G. (1986) "Akaike
-  Information Criterion Statistics", D. Reidel Publishing Company.
+  Sakamoto, Y., Ishiguro, M., and Kitagawa G. (1986).
+  \emph{Akaike Information Criterion Statistics}.
+  D. Reidel Publishing Company.
 }
 \author{Jose Pinheiro and Douglas Bates}
-\seealso{\code{\link{logLik}}, \code{\link{AIC.logLik}}}.
+\seealso{
+  \code{\link{logLik}},
+  \code{\link{AIC.logLik}}.
+}
 \examples{
 data(swiss)
 lm1 <- lm(Fertility ~ . , data = swiss)

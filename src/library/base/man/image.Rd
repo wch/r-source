@@ -1,4 +1,6 @@
 \name{image}
+\alias{image}
+\alias{image.default}
 \title{Display a Color Image}
 \usage{
 image(x, \dots)
@@ -6,15 +8,6 @@ image.default(x, y, z, zlim, xlim, ylim, col = heat.colors(12),
       add = FALSE, xaxs = "i", yaxs = "i", xlab, ylab,
       breaks, oldstyle = FALSE, \dots)
 }
-\synopsis{
-image(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), 
-    z, zlim = range(z[is.finite(z)]), xlim = range(x[is.finite(x)]), 
-    ylim = range(y[is.finite(y)]), col = heat.colors(12), add = FALSE, 
-    xaxs = "i", yaxs = "i", xlab, ylab, breaks, oldstyle = FALSE, 
-    ...) 
-}
-\alias{image}
-\alias{image.default}
 \arguments{
   \item{x,y}{locations of grid lines at which the values in \code{z} are
     measured.  These must be in ascending order.  By default, equally
