@@ -1236,9 +1236,9 @@ You may need to move comments to more appropriate places.
 
 The standard format provides a good starting point for further tidying.
 Most package authors use a version of Emacs (on Unix or Windows) to edit
-@R{} code, using the ESS[S] mode of the ESS Emacs package.  See @ref{R
-coding standards} for style options within the ESS[S] mode recommended
-for the source code of @R{} itself.
+@R{} code, using the ESS[S] mode of the @acronym{ESS} Emacs package.
+See @ref{R coding standards} for style options within the ESS[S] mode
+recommended for the source code of @R{} itself.
 
 
 @node Profiling R code,  , Tidying R code, Tidying and profiling R code
@@ -4054,7 +4054,7 @@ The following tools can ``safely be assumed'' for @R{} extensions.
 An @acronym{ANSI} C compiler.  If you do not have access to the
 @acronym{ANSI} standard, refer to the 2nd edition of Brian W. Kernighan
 & Dennis M. Ritchie, @cite{The C Programming Language}.  Any extensions,
-such as POSIX, must be tested for, typically using Autoconf
+such as @acronym{POSIX}, must be tested for, typically using Autoconf
 (@pxref{Configure and cleanup}).
 
 @item
@@ -4080,12 +4080,13 @@ or later, as no other @command{make} is viable on that platform.
 A Bourne shell and the ``traditional'' Unix programming tools, including
 @command{grep}, @command{sed}, and @command{awk}.
 
-There are POSIX standards for these tools, but these may not fully be
-supported, and the precise standards are typically hard to access.
-Baseline features could be determined from a book such as @cite{The UNIX
-Programming Environment} by Brian W. Kernighan & Rob Pike.  Note in
-particular that @samp{|} in a regexp is an extended regexp, and is not
-supported by all versions of @command{grep} or @command{sed}.
+There are @acronym{POSIX} standards for these tools, but these may not
+fully be supported, and the precise standards are typically hard to
+access.  Baseline features could be determined from a book such as
+@cite{The UNIX Programming Environment} by Brian W. Kernighan & Rob
+Pike.  Note in particular that @samp{|} in a regexp is an extended
+regexp, and is not supported by all versions of @command{grep} or
+@command{sed}.
 
 Under Windows, these tools can be assumed because versions
 (specifically, of @command{basename}, @command{cat}, @command{comm},
