@@ -81,7 +81,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-$(top_builddir)/library/$(pkg)/iconvlist:
+$(top_builddir)/library/$(pkg)/iconvlist: most
 	@iconv -l > $@ 2> /dev/null || touch $@
 
 
