@@ -78,11 +78,11 @@ docs: html
 .texi.html:
 	@if test "$(MAKEINFO)" = false; then \
 	  echo "'makeinfo' v4.5 or later needed to make HTML docs but missing on your system." ; \
-	  echo "file $@ will be empty"; \
+	  echo "file $@ will be missing"; \
 	else \
 	  echo "creating doc/manual/$@"; \
+	  $(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@ || touch $@; \
 	fi
-	@$(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@ || touch $@
 
 .texi.info:
 	@if test "$(MAKEINFO)" = false; then \
@@ -108,11 +108,11 @@ R-admin.html:
 	else \
 	  if test "$(MAKEINFO)" = false; then \
 	    echo "'makeinfo' v4.5 or later needed to make HTML docs but missing on your system." ; \
-	    echo "file $@ will be empty"; \
+	    echo "file $@ will be missing"; \
 	  else \
 	    echo "creating doc/manual/$@"; \
+	    $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@;\
 	  fi ; \
-	  $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@ ; \
 	fi
 
 dvi: refman.dvi $(OBJECTS_DVI)
