@@ -147,7 +147,7 @@ extern char *DefaultPalette[];
  */
 
 typedef struct {
-		/* Basic Device Driver Properties */
+	/* Basic Device Driver Properties */
 		/* These MUST be set by device drivers on open */
 
 		/* These parameters cannot be set by the user */
@@ -175,7 +175,7 @@ typedef struct {
 	double	asp;		/* Pixel aspect ratio = ipr[1]/ipr[0] */
 	double	cra[2];		/* Character size in rasters; [0]=x, [1]=y */
 
-		/* Plot State */
+	/* Plot State */
 		/* When the device driver is started this is 0 */
 		/* After the first call to plot.new it is 1 */
 		/* Every graphics operation except plot.new */
@@ -186,12 +186,12 @@ typedef struct {
 	int	state;		/* Plot State */
 	int 	valid;		/* valid layout ? */
 
-		/* GRZ-like Graphics Parameters */
+	/* GRZ-like Graphics Parameters */
 		/* ``The horror, the horror ... '' */
 		/* Marlon Brando - Appocalypse Now */
 
-		/* General Parameters */
-		/* These are set and interrogated directly */
+
+		/* General Parameters -- set and interrogated directly */
 
 	double	adj;		/* String adjustment */
 	int	ann;		/* Should annotation take place */
@@ -291,7 +291,7 @@ typedef struct {
 	int 	defaultFigure;	/* calculate figure from layout ? */
 	double	plt[4];		/* (current) Plot size (proportions) */
 				/* [0] = left, [1] = right */
-				/* [2] = botom, [3] = top */
+				/* [2] = bottom, [3] = top */
 	double  pin[2];		/* (current) plot size (inches) */
 				/* [0] = width, [1] = height */
 	int 	pUnits;		/* (current) plot size units */
@@ -328,7 +328,7 @@ typedef struct {
 		/* Layout parameter: Internal flags */
 
 	int	new;		/* Clean plot ? */
-	int 	devmode;		/* creating new image or adding to existing one */
+	int 	devmode;	/* creating new image or adding to existing one */
 
 		/* Coordinate System Mappings */
 		/* These are only used internally (i.e., cannot be */
