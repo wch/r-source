@@ -141,7 +141,7 @@ for granting permission to distribute this modified version of the notes
 in this way, and for being a supporter of @R{} from way back.
 
 Comments and corrections are always welcome.  Please address email
-correspondence to @email{R-core@@r-project.org}.
+correspondence to @email{R-core@@R-project.org}.
 
 @subheading Suggestions to the reader
 
@@ -247,7 +247,7 @@ built into the base @R{} environment, but many are supplied as
 @emph{packages}.  There are about 25 packages supplied with @R{} (called
 ``standard'' and ``recommended'' packages) and many more are available
 through the @acronym{CRAN} family of Internet sites (via
-@uref{http://cran.r-project.org}) and elsewhere.  More details on
+@uref{http://CRAN.R-project.org}) and elsewhere.  More details on
 packages are given later (@pxref{Packages}).
 
 Most classical statistics and much of the latest methodology is
@@ -6388,7 +6388,7 @@ statistical methods, others give access to data or hardware, and others
 are designed to complement textbooks.  Some (the @emph{recommended}
 packages) are distributed with every binary distribution of @R{}.  Most
 are available for download from @acronym{CRAN}
-(@uref{http://cran.r-project.org/} and its mirrors), and other
+(@uref{http://CRAN.R-project.org/} and its mirrors), and other
 repositories such as Bioconductor (@uref{http://www.bioconductor.org/}).
 The @emph{R FAQ} contains a list that was current at the time of
 release, but the collection of available packages changes frequently.
