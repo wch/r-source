@@ -6,8 +6,8 @@
 #include "RSMethods.h"
 
 /* from Defn.h */
-#define type2str		Rf_type2str
-SEXP type2str(SEXPTYPE);
+#define type2symbol		Rf_type2symbol
+SEXP type2symbol(SEXPTYPE);
 #define findVarInFrame		Rf_findVarInFrame
 SEXP findVarInFrame(SEXP, SEXP);
 #define streql(s, t)	(!strcmp((s), (t)))
@@ -99,26 +99,10 @@ static SEXP R_get_attr(SEXP obj, char *what) {
   return(R_NilValue);
 }
 
-/* return a symbol containing mode(obj):  this should be moved to main/util.c to use the local
-   type table there.  */
+/* return a symbol containing mode (well, actually, typeof) obj */
 static SEXP R_mode(SEXP obj)
 {
-    int t1; SEXP class = 0;
-    t1 = TYPEOF(obj);
-    switch(t1) {
-    case PROMSXP:
-	class = mkChar("expression"); /*??*/ break;
-    case EXPRSXP:
-    case EXTPTRSXP:
-	class = mkChar("expression"); break;
-    case CLOSXP:
-    case SPECIALSXP:
-    case BUILTINSXP:
-	class = mkChar("function"); break;
-    default:
-	class = type2str(t1);
-    }
-    return(class);
+    return type2symbol(TYPEOF(obj));
 }
 
 

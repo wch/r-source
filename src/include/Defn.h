@@ -538,6 +538,7 @@ extern char*	R_GUIType	INI_as("unknown");
 #define tsConform		Rf_tsConform
 #define tspgets			Rf_tspgets
 #define type2str		Rf_type2str
+#define type2symbol		Rf_type2symbol
 #define unbindVar		Rf_unbindVar
 #define usemethod		Rf_usemethod
 #define warningcall		Rf_warningcall
@@ -667,6 +668,7 @@ SEXP R_sysfunction(int,RCNTXT*);
 Rboolean tsConform(SEXP,SEXP);
 SEXP tspgets(SEXP, SEXP);
 SEXP type2str(SEXPTYPE);
+SEXP type2symbol(SEXPTYPE);
 void unbindVar(SEXP, SEXP);
 #ifdef ALLOW_OLD_SAVE
 void unmarkPhase(void);

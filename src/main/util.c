@@ -723,6 +723,20 @@ SEXP type2str(SEXPTYPE t)
     return R_NilValue; /* for -Wall */
 }
 
+SEXP type2symbol(SEXPTYPE t)
+{
+    int i;
+    /* for efficiency, a hash table set up to index TypeTable, and
+       with TypeTable pointing to both the
+       character string and to the symbol would be better */
+    for (i = 0; TypeTable[i].str; i++) {
+	if (TypeTable[i].type == t)
+	    return install(TypeTable[i].str);
+    }
+    UNIMPLEMENTED("type2str");
+    return R_NilValue; /* for -Wall */
+}
+
 Rboolean isBlankString(char *s)
 {
     while (*s)

@@ -75,6 +75,9 @@ NEW FEATURES
 
     o	warning() allows multiple arguments, following S4's style.
 
+    o   the C routine type2symbol, similar to type2str, returns a symbol
+        corresponding to the type supplied as an argument.
+
 
 
 
