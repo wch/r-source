@@ -9,6 +9,8 @@
 
 
 NEW FEATURES
+    o   `examples' sections have been added to the documentation
+        for most of the data sets in the base library.
 
     o   update.packages & friends have new argument contriburl for
         incomplete CRAN mirrors 
