@@ -1491,7 +1491,7 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
 
     /* System generated locals */
     int wy_dim1, wy_offset, ws_dim1, ws_offset, sy_dim1, sy_offset,
-	    wt_dim1, wt_offset, i__1, i__2;
+	    wt_dim1, wt_offset, i__2;
     double d__1;
 
     /* Local variables */
