@@ -94,14 +94,37 @@ function (x, y=NULL, type="p", col=par("fg"), bg=NA, pch=par("pch"), xlim=NULL,
 }
 
 plot.factor <-
-function(x, y, ...)
-{
-	if(missing(y))
-		barplot(table(x), ...)
-	else NextMethod("plot")
+function(x, y, ...) {
+  if (missing(y))
+    barplot(table(x), ...)
+  else if (is.numeric(y))
+    boxplot(y ~ x, ...)
+  else NextMethod("plot")
 }
 
-plot.formula <- function(x, data, ...) .not.yet.implemented()
+plot.formula <-
+function(formula, data = NULL, subset, na.action, ..., ask = TRUE) {   
+  if (missing(na.action)) na.action <- options()$na.action
+  m <- match.call(expand.dots = F)
+  if (is.matrix(eval(m$data, sys.parent())))
+    m$data <- as.data.frame(data)
+  m$... <- NULL
+  m[[1]] <- as.name("model.frame")
+  mf <- eval(m, sys.parent())
+  response <- attr(attr(mf, "terms"), "response")
+  if (response) {
+    varnames <- names(mf)
+    y <- mf[[response]]
+    ylab <- varnames[response]
+    if (length(varnames) > 2) {
+      opar <- par(ask = ask)
+      on.exit(par(opar))
+    }
+    for (i in varnames[-response])
+      plot(mf[[i]], y, xlab = i, ylab = ylab, ...)      
+  }
+  else plot.data.frame(mf)
+}
 
 plot.xy <-
 function(xy, type, pch=1, lty="solid", col=par("fg"), bg=NA, cex=1, ...)
