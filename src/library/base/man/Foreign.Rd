@@ -32,13 +32,17 @@
   to C and Fortran code.
 
   \code{.External} can be used to call compiled code that uses \R
-  objects in the same way as internal \R functions.  There is no
-  documentation to help you write this sort of code. 
+  objects in the same way as internal \R functions. 
 
   \code{.Call} can be used call compiled code which makes use of
   internal \R objects.  The arguments are passed to the C code as a
   sequence of \R objects.  It is included to provide compatibility with
   S version 4.
+}
+\details{
+  For details about how to write code to use with \code{.Call} and
+  \code{.External} see the \file{R-external} manual which can be made
+  from files in the \R source tree.
 }
 \value{
   The functions \code{.C} and \code{.Fortran} return a list similar to
