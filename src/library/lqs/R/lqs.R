@@ -13,7 +13,7 @@ lqs.formula <-
     mf <- match.call(expand.dots = FALSE)
     mf$method <- mf$contrasts <- mf$model <- mf$x <- mf$y <- mf$... <- NULL
     mf[[1]] <- as.name("model.frame")
-    mf <- eval(mf, sys.frame(sys.parent()))
+    mf <- eval(mf, parent.frame())
     if (method == "model.frame") return(mf)
     mt <- attr(mf, "terms")
     y <- model.extract(mf, "response")
@@ -114,7 +114,7 @@ lqs.default <-
 	     as.integer(samp), as.integer(ps), as.integer(nsamp),
 	     crit=double(1), sing=integer(1), bestone=integer(ps),
 	     coefficients=double(p), as.double(k0), as.double(beta),
-             PACKAGE="lqs"
+	     PACKAGE="lqs"
 	     )[c("crit", "sing", "coefficients", "bestone")]
     z$sing <- paste(z$sing, "singular samples of size", ps, "out of", nsamp)
     z$bestone <- sort(z$bestone)
@@ -219,7 +219,7 @@ cov.rob <- function(x, cor = FALSE, quantile.used = floor((n+p+1)/2),
 		 as.integer(qn), as.integer(method=="mcd"),
 		 as.integer(samp), as.integer(ps), as.integer(nsamp),
 		 crit=double(1), sing=integer(1), bestone=integer(n),
-                 PACKAGE="lqs"
+		 PACKAGE="lqs"
 		 )
 	z$sing <- paste(z$sing, "singular samples of size", ps, "out of", nsamp)
 	crit <- z$crit + 2*sum(log(divisor)) +
@@ -251,7 +251,7 @@ lmsreg <- function(...)
     oc <- sys.call()
     oc$method <- "lms"
     oc[[1]] <- as.name("lqs")
-    eval(oc, sys.frame(sys.parent()))
+    eval(oc, parent.frame())
 }
 
 ltsreg <- function(...)
@@ -259,7 +259,7 @@ ltsreg <- function(...)
     oc <- sys.call()
     oc$method <- "lts"
     oc[[1]] <- as.name("lqs")
-    eval(oc, sys.frame(sys.parent()))
+    eval(oc, parent.frame())
 }
 
 cov.mve <- function(...)
@@ -267,7 +267,7 @@ cov.mve <- function(...)
     oc <- sys.call()
     oc$method <- "mve"
     oc[[1]] <- as.name("cov.rob")
-    eval(oc, sys.frame(sys.parent()))
+    eval(oc, parent.frame())
 }
 
 cov.mcd <- function(...)
@@ -275,5 +275,5 @@ cov.mcd <- function(...)
     oc <- sys.call()
     oc$method <- "mcd"
     oc[[1]] <- as.name("cov.rob")
-    eval(oc, sys.frame(sys.parent()))
+    eval(oc, parent.frame())
 }

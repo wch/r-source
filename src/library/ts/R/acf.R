@@ -8,7 +8,7 @@ acf <-
         m <- match.call()
         m[[1]] <- as.name("pacf")
         m$type <- NULL
-        return(eval(m, sys.frame(sys.parent())))
+        return(eval(m, parent.frame()))
     }
     series <- deparse(substitute(x))
     x <- na.action(as.ts(x))
@@ -49,7 +49,7 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
     if(is.matrix(x)) {
         m <- match.call()
         m[[1]] <- as.name("pacf.mts")
-        return(eval(m, sys.frame(sys.parent())))
+        return(eval(m, parent.frame()))
     }
     x <- na.action(as.ts(x))
     x.freq <- frequency(x)

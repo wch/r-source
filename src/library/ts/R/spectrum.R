@@ -192,12 +192,12 @@ plot.spec <-
     if(plot.type == "coherency") {
         m[[1]] <- as.name("plot.spec.coherency")
         m$plot.type <- m$log <- m$add <- NULL
-        return(eval(m, sys.frame(sys.parent())))
+        return(eval(m, parent.frame()))
     }
     if(plot.type == "phase") {
         m[[1]] <- as.name("plot.spec.phase")
         m$plot.type <- m$log <- m$add <- NULL
-        return(eval(m, sys.frame(sys.parent())))
+        return(eval(m, parent.frame()))
     }
     if(is.null(ylab))
         ylab <- if(log == "dB") "spectrum (dB)" else "spectrum"

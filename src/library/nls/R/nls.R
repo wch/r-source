@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.7 2000/06/28 17:26:44 bates Exp $
+### $Id: nls.R,v 1.8 2000/10/03 15:28:21 maechler Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -413,8 +413,7 @@ nls <-
     ## then it is probably a variable
     ## This may fail if evaluation of formula[[2]] fails
     varIndex <- sapply(varNames, function(varName, data, respLength)
-                       {
-                           length(eval(as.name(varName), data)) %% respLength == 0
+                       { length(eval(as.name(varName), data)) %% respLength == 0
                        }, data, length(eval(formula[[2]], data)))
 
     mf$formula <-                         # replace RHS by linear model formula
@@ -422,7 +421,7 @@ nls <-
 
     mf$start <- mf$control <- mf$algorithm <- mf$trace <- NULL
     mf[[1]] <- as.name("model.frame")
-    mf <- as.list(eval(mf, sys.frame(sys.parent())))
+    mf <- as.list(eval(mf, parent.frame()))
     for(var in varNames[!varIndex])
       mf[[var]] <- eval(as.name(var), data)
 

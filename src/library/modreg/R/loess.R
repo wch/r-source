@@ -16,7 +16,7 @@ function(formula, data=NULL, weights, subset, na.action, model = FALSE,
 	mf$parametric <- mf$drop.square <- mf$normalize <- mf$family <-
 	    mf$control <- mf$... <- NULL
     mf[[1]] <- as.name("model.frame")
-    mf <- eval(mf, sys.frame(sys.parent()))
+    mf <- eval(mf, parent.frame())
     if (match.arg(method) == "model.frame") return(mf)
     y <- model.response(mf, "numeric")
     w <- model.weights(mf)
