@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.0-13, 2000/06/04
+Version 1.1-0, 2000/06/12
 Kurt Hornik
 
 
@@ -201,8 +201,8 @@ sparc-linux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current stable Unix/Windows version is 1.0.1, the unstable one is
-1.1.0.  Typically, new features are introduced in the development versions;
+   The current stable Unix/Windows version is 1.1.0, the unstable one is
+1.2.0.  Typically, new features are introduced in the development versions;
 updates of stable versions are for bug fixes mostly.  The version for the
 Mac is pre-alpha.
 
@@ -322,12 +322,12 @@ distribution is available.  We hope that this will change soon.
 2.6 Are there Unix binaries for R?
 ==================================
 
-   The `bin/linux' directory of a CRAN site contains Debian 2.1 and 2.2
+   The `bin/linux' directory of a CRAN site contains Debian 2.1/2.2/2.3
 packages for the i386 platform (now part of the Debian distribution and
 maintained by Doug Bates), Red Hat 6.x packages for the alpha, i386 and
 sparc platforms (maintained by Naoki Takebayashi, Martyn Plummer, and Vin
-Everett, respectively), SuSE 5.3/6.0/6.3 i386 packages by Albrecht
-Gebhardt, and Linuxppc 5.0 RPMs by Alex Buerkle.
+Everett, respectively), SuSE 5.3/6.4 i386 packages by Albrecht Gebhardt,
+and Linuxppc 5.0 RPMs by Alex Buerkle.
 
    The `bin/osf' directory of a CRAN site contains RPMs for alpha systems
 running Digital Unix 4.0 by Albrecht Gebhardt.
@@ -978,6 +978,9 @@ works, was published in the Journal of Statistical Software
      Code for dealing with STEP FUNctions, including empirical cumulative
      distribution functions.
 
+*tcltk*
+     Interface and language bindings to Tcl/Tk GUI elements.
+
 *ts*
      Time Series.
 
@@ -1114,6 +1117,10 @@ works, was published in the Journal of Statistical Software
 
 *logspline*
      Logspline density estimation.
+
+*maptree*
+     Functions with example data for graphing and mapping models from
+     hierarchical clustering and classification and regression trees.
 
 *mclust*
      Model-based cluster analysis.
@@ -1268,18 +1275,12 @@ these a try, of course.  This area of CRAN currently contains
 *syskern*
      Functions for writing code that is OS and R/S independent.
 
-*tcltk*
-     Basic interface with Tcl/Tk.
-
 *tframe*
      Functions for writing code that is independent of the representation of
      time.
 
 *timeslab*
      Time series routines.
-
-*vtcl*
-     Interface to Visual Tcl.
 
    Jim Lindsey <jlindsey@luc.ac.be> has written a collection of R packages
 for nonlinear regression and repeated measurements, consisting of *event*

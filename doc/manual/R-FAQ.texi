@@ -4,9 +4,9 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.0-13, 2000/06/04
-@set REL-VERSION 1.0.1
-@set DEV-VERSION 1.1.0
+@set FAQ-VERSION 1.1-0, 2000/06/12
+@set REL-VERSION 1.1.0
+@set DEV-VERSION 1.2.0
 @c %**end of header
 
 @dircategory Programming
@@ -387,7 +387,7 @@ distribution is available.  We hope that this will change soon.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2000/05/03:
+@c Linux binaries as of 2000/06/12:
 @c
 @c debian   2.1 i386  1.0.0  Doug Bates
 @c          2.2 i386  1.0.1  Doug Bates
@@ -397,15 +397,13 @@ distribution is available.  We hope that this will change soon.
 @c              i386  1.0.1  Martyn Plummer <plummer@iarc.fr>
 @c              sparc 1.0.0  Vin Everett <vin.everett@mrc-bsu.cam.ac.uk>
 @c suse     5.3 i386  1.0.1  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-@c          6.0 i386  1.0.0  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-@c          6.3 i386  1.0.1  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 @c          6.4 i386  1.0.1  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
-The @file{bin/linux} directory of a CRAN site contains Debian 2.1 and
-2.2 packages for the i386 platform (now part of the Debian distribution
-and maintained by Doug Bates), Red Hat 6.x packages for the alpha, i386
-and sparc platforms (maintained by Naoki Takebayashi, Martyn Plummer,
-and Vin Everett, respectively), SuSE 5.3/6.0/6.3 i386 packages by
+The @file{bin/linux} directory of a CRAN site contains Debian
+2.1/2.2/2.3 packages for the i386 platform (now part of the Debian
+distribution and maintained by Doug Bates), Red Hat 6.x packages for the
+alpha, i386 and sparc platforms (maintained by Naoki Takebayashi, Martyn
+Plummer, and Vin Everett, respectively), SuSE 5.3/6.4 i386 packages by
 Albrecht Gebhardt, and Linuxppc 5.0 RPMs by Alex Buerkle.
 
 The @file{bin/osf} directory of a CRAN site contains RPMs for alpha
@@ -1239,6 +1237,8 @@ Regression spline functions and classes.
 @item stepfun
 Code for dealing with STEP FUNctions, including empirical cumulative
 distribution functions.
+@item tcltk
+Interface and language bindings to Tcl/Tk GUI elements.
 @item ts
 Time Series.
 @end table
@@ -1351,6 +1351,9 @@ and H. Sonnberger, 1986, Physica.
 Local Regression, likelihood and density estimation.
 @item logspline
 Logspline density estimation.
+@item maptree
+Functions with example data for graphing and mapping models from
+hierarchical clustering and classification and regression trees.
 @item mclust
 Model-based cluster analysis.
 @item mda
@@ -1478,15 +1481,11 @@ Code for correspondence analysis and other multidimensional descriptive
 statistics.
 @item syskern
 Functions for writing code that is OS and R/S independent.
-@item tcltk
-Basic interface with Tcl/Tk.
 @item tframe
 Functions for writing code that is independent of the representation of
 time.
 @item timeslab
 Time series routines.
-@item vtcl
-Interface to Visual Tcl.
 @end table
 
 @email{jlindsey@@luc.ac.be, Jim Lindsey} has written a collection of R
