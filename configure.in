@@ -602,7 +602,7 @@ case "${host}" in
     if ${f77_is_g77}; then
       FPICFLAGS=-fPIC
     else
-      FPICFLAGS=-PIC
+      FPICFLAGS=-KPIC
     fi
     ;;
   *hpux*)
