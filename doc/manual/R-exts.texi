@@ -7476,12 +7476,14 @@ A Bourne shell and the ``traditional'' Unix programming tools, including
 @command{grep}, @command{sed}, and @command{awk}.
 
 There are @acronym{POSIX} standards for these tools, but these may not
-fully be supported, and the precise standards are typically hard to
-access.  Baseline features could be determined from a book such as
-@cite{The UNIX Programming Environment} by Brian W. Kernighan & Rob
-Pike.  Note in particular that @samp{|} in a regexp is an extended
+fully be supported.  Baseline features could be determined from a book
+such as @cite{The UNIX Programming Environment} by Brian W. Kernighan &
+Rob Pike.  Note in particular that @samp{|} in a regexp is an extended
 regexp, and is not supported by all versions of @command{grep} or
-@command{sed}.
+@command{sed}.  The Open Group Base Specifications, Issue 6, which is
+technicall identical to ISO/IEC 9945 and IEEE Std 1003.1 (POSIX), 2004,
+are available at
+@url{http://www.opengroup.org/onlinepubs/009695399/mindex.html}.
 
 Under Windows, these tools can be assumed because versions
 (specifically, of @command{basename}, @command{cat}, @command{comm},
