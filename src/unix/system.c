@@ -43,6 +43,8 @@
 #endif
 #endif
 
+#include <unistd.h> /* isatty() */
+
 void fpu_setup(int);     /* in sys-unix.c */
 
 
@@ -104,7 +106,7 @@ int main(int ac, char **av)
     R_DefParams(Rp);
     R_SizeFromEnv(Rp);
     /* Store the command line arguments before they are processed
-       by the R option handler. These are stored in Rp and then moved 
+       by the R option handler. These are stored in Rp and then moved
        to the global variable CommandLineArgs in R_SetParams.
      */
     R_set_command_line_arguments(ac, av, Rp);
@@ -212,7 +214,7 @@ int main(int ac, char **av)
     Rstd_read_history(R_HistoryFile);
     fpu_setup(1);
 
-    
+
     mainloop();
     /*++++++  in ../main/main.c */
     return 0;
