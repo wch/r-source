@@ -2026,7 +2026,7 @@ static SEXP readStringFromFile(SEXP file, SEXP key)
     return val;
 }
 
-/* Gets the vinding values of variables from a frame and returns them
+/* Gets the binding values of variables from a frame and returns them
    as a list.  If the force argument is true, promises are forced;
    otherwise they are not. */
 
@@ -2039,7 +2039,7 @@ SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
     if (TYPEOF(env) != NILSXP && TYPEOF(env) != ENVSXP)
         error("bad environment");
     if (TYPEOF(vars) != STRSXP)
-        error("bad varaible names");
+        error("bad variable names");
     force = asLogical(forcesxp);
 
     len = LENGTH(vars);
@@ -2087,9 +2087,9 @@ SEXP R_lazyLoadDBinsertValue(SEXP value, SEXP file, SEXP ascii,
     return key;
 }
 
-/* Retireves a sequence of bytes as specified by a position/length key
+/* Retrieves a sequence of bytes as specified by a position/length key
    from a file, optionally decompresses, and unserializes the bytes.
-   If the result is a promise, then the promise ir forced. */
+   If the result is a promise, then the promise is forced. */
 
 SEXP R_lazyLoadDBfetch(SEXP key, SEXP file, SEXP compsxp, SEXP hook)
 {
