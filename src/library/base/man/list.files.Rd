@@ -42,7 +42,12 @@ list.files(path = ".", pattern = NULL, all.files = FALSE,
   ignored, with a warning.
 }
 \seealso{\code{\link{file.info}}, \code{\link{file.access}}
-  and \code{\link{files}} for many more file handling functions.}
+  and \code{\link{files}} for many more file handling functions and 
+  \code{\link{file.choose}} 
+#ifdef windows
+and \code{\link[utils]{choose.files}}
+#endif
+for interactive selection.}
 \examples{
 list.files(R.home())
 ## Only files starting with a-l or r (*including* uppercase):

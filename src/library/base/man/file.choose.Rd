@@ -14,4 +14,10 @@ file.choose(new = FALSE)
 \value{
   A character vector of length one giving the file path.
 }
+
+\seealso{\code{\link{list.files}} for non-interactive selection.
+#ifdef windows    
+\code{\link[utils]{choose.files}} for selecting multiple files interactively.
+#endif
+}
 \keyword{file}
