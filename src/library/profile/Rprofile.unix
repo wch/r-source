@@ -6,6 +6,7 @@ options(papersize = as.vector(Sys.getenv("R_PAPERSIZE")))
 options(printcmd = as.vector(Sys.getenv("R_PRINTCMD")))
 options(latexcmd = as.vector(Sys.getenv("R_LATEXCMD")))
 options(dvipscmd = as.vector(Sys.getenv("R_DVIPSCMD")))
+options(browser = as.vector(Sys.getenv("R_BROWSER")))
 options(unzip = as.vector(Sys.getenv("R_UNZIPCMD")))
 options(editor = as.vector(Sys.getenv("EDITOR")))
 if(interactive() && Sys.getenv("DISPLAY") != "") {
@@ -15,7 +16,6 @@ if(interactive() && Sys.getenv("DISPLAY") != "") {
 ## this must be set for x11 to be used, even non-interactively
 options(X11colortype = "true")
 options(pager = file.path(R.home(), "bin", "pager"))
-options(browser = "netscape")
 options(mailer = "mailx")
 
 MacRoman <- as.integer(c(0:126, 32, 196, 197, 199, 201, 209, 214, 220,
