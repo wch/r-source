@@ -21,6 +21,11 @@ power(lambda = 1)
     \code{mu.eta}, and \code{valideta}.
     See \code{\link{make.link}} for information on their meaning.
 }
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S.}
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
     \code{\link{make.link}},
     \code{\link{family}}

@@ -32,6 +32,11 @@ switch(EXPR, \dots)
   the first argument \code{EXPR} unless that is named. See the examples
   for good practice in naming the first argument.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 centre <- function(x, type) {
   switch(type,

@@ -61,6 +61,11 @@ prompt.data.frame(object, filename = NULL, name = NULL, \dots)
   \file{doc/manual} subdirectory of the \R source tree).
 }
 \author{Douglas Bates for \code{prompt.data.frame}}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 prompt(plot.default)
 prompt(interactive, force.function = TRUE)

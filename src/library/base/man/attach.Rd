@@ -44,6 +44,11 @@ attach(what, pos = 2, name = deparse(substitute(what)))
   The \code{\link{environment}} is returned invisibly with a
   \code{"name"} attribute.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{library}}, \code{\link{detach}}, \code{\link{search}},
   \code{\link{objects}}, \code{\link{environment}}.

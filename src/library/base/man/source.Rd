@@ -47,6 +47,11 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   limit of 265.  Use \code{option(keep.source = FALSE)} when these
   limits might take effect: if exceeded they generate an error.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{demo}} which uses \code{source};
   \code{\link{eval}}, \code{\link{parse}} and \code{\link{scan}};

@@ -67,6 +67,11 @@ library.dynam(chname, package = .packages(), lib.loc = NULL,
   \code{\link{SHLIB}} for how to create suitable DLLs.
 #endif
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 library.dynam()# which packages have been ``dynamically loaded''
 }

@@ -51,6 +51,11 @@ graphics window.
   recorded in the device's display list until the input process has
   terminated.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{identify}}
 }

@@ -42,6 +42,11 @@ diag(x) <- value
   vector that could be of length one. Use \code{diag(x, nrow =
     length(x))} for consistent behaviour. 
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
 \code{\link{matrix}}.
 }

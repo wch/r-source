@@ -31,6 +31,11 @@ mean.default(x, trim = 0, na.rm = FALSE, \dots)
   with a fraction of \code{trim} observations deleted from each end
   before the mean is computed.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{weighted.mean}}, \code{\link{mean.POSIXct}}
 }

@@ -42,6 +42,11 @@ duplicated.array(x, incomparables = FALSE, MARGIN = 1, ...)
   commonly be used to find duplicated rows (the default) or columns
   (with \code{MARGIN = 2}).
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{\code{\link{unique}}.}
 \examples{
 x <- c(9:20, 1:5, 3:7, 0:8)

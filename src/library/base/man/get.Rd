@@ -46,6 +46,11 @@ get(x, pos=-1, envir=as.environment(pos), mode="any", inherits=TRUE)
   Using a \code{NULL} environment is equivalent to using the current
   environment.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{exists}}.
 }

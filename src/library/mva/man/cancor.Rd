@@ -42,6 +42,11 @@ cancor(x, y, xcenter = TRUE, ycenter = TRUE)
   \emph{Multivariate Observations}.
   New York: Wiley, p. 506f.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{qr}}, \code{\link{svd}}.
 }

@@ -45,6 +45,11 @@ x != y
   Using \code{\link{all.equal}} with \code{identical} is almost
   always preferable.  See the examples.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{Syntax}} for operator precedence.
 }

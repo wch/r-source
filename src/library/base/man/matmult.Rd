@@ -15,6 +15,11 @@ a \%*\% b
   The matrix product.  Use \code{\link{drop}} to get rid of dimensions
   which have only one level.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{matrix}},
   \code{\link{Arithmetic}},

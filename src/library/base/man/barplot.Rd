@@ -106,6 +106,11 @@
   Prior to \R 1.6.0, \code{barplot} behaved as if \code{axis.lty = 1},
   unintentionally.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{plot}(\dots, type="h")}, \code{\link{dotchart}},
   \code{\link{hist}}.

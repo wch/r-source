@@ -42,6 +42,11 @@ na.pass(object, \dots)
   the correct length by inserting \code{NA}s for cases omitted by
   \code{na.exclude}.
 }
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S.}
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{na.action}};
   \code{\link{options}} with argument \code{na.action} for setting ``NA

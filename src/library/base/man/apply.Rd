@@ -36,6 +36,11 @@ apply(X, MARGIN, FUN, \dots)
   If the calls to \code{FUN} return vectors of different lengths,
   \code{apply} returns a list of length \code{dim(X)[MARGIN]}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{lapply}}, \code{\link{tapply}}, and convenience functions
   \code{\link{sweep}} and \code{\link{aggregate}}.

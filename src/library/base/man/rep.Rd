@@ -51,6 +51,11 @@ rep.int(x, times)
   Function \code{rep.int} is a simple case handled by internal code, and
   provided as a separate function purely for S compatibility.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{seq}}, \code{\link{sequence}}.
 }

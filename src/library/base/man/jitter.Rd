@@ -41,6 +41,10 @@ jitter(x, factor=1, amount = NULL)
   Chambers, J. M., Cleveland, W. S., Kleiner, B. and Tukey, P.A. (1983)
   \emph{Graphical Methods for Data Analysis.} Wadsworth; figures 2.8,
   4.22, 5.4.
+
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S.}
+  Wadsworth \& Brooks/Cole.
 }
 \author{Werner Stahel and Martin Maechler, ETH Zurich}
 \seealso{\code{\link{rug}} which you may want to combine with \code{jitter}.}

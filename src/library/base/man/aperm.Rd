@@ -31,6 +31,11 @@ aperm(a, perm, resize = TRUE)
 \author{Jonathan Rougier, \email{J.C.Rougier@durham.ac.uk} did the
   faster C implementation.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{\code{\link{t}}, to transpose matrices.
 }
 \examples{

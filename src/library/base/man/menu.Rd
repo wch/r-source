@@ -19,6 +19,11 @@ menu(choices, graphics = FALSE, title = "")
   The number corresponding to the selected item, or 0 if no choice was
   made.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 \dontrun{
 switch(menu(c("List letters", "List LETTERS")) + 1,

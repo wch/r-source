@@ -68,7 +68,12 @@ rt(n, df)
   degrees of freedom and \bold{n}on-\bold{c}entrality \bold{p}arameter
   \code{ncp}\eqn{= (\mu - \mu_0) \sqrt{n}/\sigma}{= (mu - m0) * sqrt(n)/sigma}.
 }
-\references{Lenth, R. V. (1989). \emph{Algorithm AS 243} ---
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole. (except non-central versions.)
+
+  Lenth, R. V. (1989). \emph{Algorithm AS 243} ---
     Cumulative distribution function of the non-central \eqn{t} distribution,
     \emph{Appl.\ Statist.} \bold{38}, 185--189.
 }

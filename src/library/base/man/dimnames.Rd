@@ -33,6 +33,11 @@ dimnames(x) <- nlist
   \code{NULL} or a character vector the length of the appropriate
   dimension of \code{x}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{rownames}}, \code{\link{colnames}};
   \code{\link{array}}, \code{\link{matrix}}, \code{\link{data.frame}}.

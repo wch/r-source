@@ -22,6 +22,11 @@
   for a plot which are character string versions of the actual arguments
   to the function \code{myplot}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{substitute}},
   \code{\link{parse}},

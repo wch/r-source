@@ -31,6 +31,11 @@
   \emph{Journal of the American Statistical Association}, \bold{62},
   819--841.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 ## give the data set in the form it is used in S-PLUS:
 data(longley)

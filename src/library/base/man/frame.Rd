@@ -13,6 +13,11 @@ frame()
   used in all high-level plotting functions and also useful for skipping
   plots when a multi-figure region is in use.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole. (\code{frame}.)
+}
 \seealso{
   \code{\link{plot.window}}, \code{\link{plot.default}}.
 }

@@ -54,6 +54,10 @@ rnorm(n, mean=0, sd=1)
   generation, and \code{\link{dlnorm}} for the \emph{Log}normal distribution.
 }
 \references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+
   Wichura, M. J. (1988)
   Algorithm AS 241: The Percentage Points of the Normal Distribution.
   \emph{Applied Statistics}, \bold{37}, 477--484.

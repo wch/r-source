@@ -24,6 +24,11 @@ mostattributes(obj) <- value
   attributes, and assigns them only when that is valid whereas as
   \code{attributes} assignment would give an error in that case.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{\code{\link{attr}}.
 }
 \examples{

@@ -16,6 +16,11 @@ do.call(what, args)
 \value{
   The result of the (evaluated) function call.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{call}} which creates an unevaluated call.
 }

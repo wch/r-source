@@ -55,6 +55,11 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   from \code{\link{par}("usr","lab")}, and \code{\link{par}("xlog")} (or
   \code{ylog} respectively).
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 plot(1:4, rnorm(4), axes=FALSE)
 axis(1, 1:4, LETTERS[1:4])

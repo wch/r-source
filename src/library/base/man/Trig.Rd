@@ -32,4 +32,9 @@ atan2(y, x)
 
   Angles are in radians, not degrees (i.e. a right angle is \eqn{\pi/2}).
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \keyword{math}

@@ -96,6 +96,11 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
   Only one page of output is produced.
 }
 \author{Thomas S. Dye}
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \note{
   This code started life as spatial star plots by David A. Andrews.
   See \url{http://www.udallas.edu:8080/~andrews/software/software.html}.

@@ -23,6 +23,11 @@ any(\dots, na.rm = FALSE)
   If \code{x} consists of a mix of \code{FALSE} and \code{NA} values,
   the value is \code{NA}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{\code{\link{all}}, the ``complement'' of \code{any}.
 }
 \examples{

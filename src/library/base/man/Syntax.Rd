@@ -38,6 +38,11 @@
   particular, in S \code{?} has the same precedence as \code{+ -} and
   \code{& && | ||} have equal precedence.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{Arithmetic}}, \code{\link{Comparison}}, \code{\link{Control}},
   \code{\link{Extract}}, \code{\link{Logic}}, \code{\link{Paren}}

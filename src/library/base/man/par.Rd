@@ -361,6 +361,11 @@ par(\dots, no.readonly = FALSE)
   layout and figure region size.
 }
 
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{plot.default}} for some high-level plotting parameters;
   \code{\link{colors}}, \code{\link{gray}}, \code{\link{rainbow}},

@@ -16,6 +16,11 @@
   \code{function(x) x}, whereas \code{\{} is slightly more interesting,
   see examples.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{if}}, \code{\link{return}}, etc for other objects used in
   the \R language itself.

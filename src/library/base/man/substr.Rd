@@ -43,6 +43,11 @@ substring(text, first, last = 1000000) <- value
   The S4 version of \code{substring<-} ignores \code{last}; this version
   does not.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole. (\code{substring}.)
+}
 \seealso{
  \code{\link{strsplit}}, \code{\link{paste}}, \code{\link{nchar}}.
 }

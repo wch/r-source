@@ -26,6 +26,12 @@ glm.control(epsilon=1e-04, maxit=10, trace=FALSE)
 \value{
   A list with the arguments as components.
 }
+\references{
+  Hastie, T. J. and Pregibon, D. (1992)
+  \emph{Generalized linear models.}
+  Chapter 6 of \emph{Statistical Models in S}
+  eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+}
 \seealso{\code{\link{glm.fit}}, the fitting procedure used by
   \code{\link{glm}}.}
 \examples{

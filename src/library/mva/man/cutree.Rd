@@ -19,6 +19,11 @@ cutree(tree, k=NULL, h=NULL)
  At least one of \code{k} or \code{h} must be specified, \code{k}
  overrides \code{h} if both are given.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \value{
   \code{cutree} returns a vector with group memberships if \code{k} or
   \code{h} are scalar, otherwise a matrix with group meberships is returned

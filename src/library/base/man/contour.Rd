@@ -73,6 +73,11 @@ contour(x, \dots)
   For information about vector fonts, see the
   help for \code{\link{text}} and \code{\link{Hershey}}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{filled.contour}} for ``color-filled'' contours,
   \code{\link{image}} and the graphics demo which can be invoked as

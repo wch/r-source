@@ -18,6 +18,11 @@ prod(\dots, na.rm = FALSE)
   a value of \code{NA} to be returned, otherwise
   \code{NA} values are ignored.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
 \code{\link{sum}},
 \code{\link{cumprod}},

@@ -45,5 +45,10 @@ is.logical(x)
   \code{is.logical} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of logical type or not.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \keyword{classes}
 \keyword{logic}

@@ -17,6 +17,11 @@ row(x, as.factor = FALSE)
   An integer matrix with the same dimensions as \code{x} and whose
   \code{ij}-th element is equal to \code{i}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{col}} to get columns.
 }

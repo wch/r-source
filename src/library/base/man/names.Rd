@@ -36,6 +36,11 @@ names(x) <- value
   general rules: see the examples.  This works because the expression
   there is evaluated as \code{z <- "names<-"(z, "[<-"(names(z), 3, "c2"))}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 data(islands)
 # print the names attribute of the islands data set

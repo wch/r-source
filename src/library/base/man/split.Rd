@@ -48,6 +48,11 @@ unsplit(value, f)
   \code{unsplit} returns a vector for which \code{split(x, f)} equals
   \code{value}
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{\code{\link{cut}}}
 \examples{
 n <- 10; nn <- 100

@@ -69,6 +69,10 @@ plot.default(x, y = NULL, type = "p",  xlim = NULL, ylim = NULL,
     passed as arguments.}
 }
 \references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+
   Cleveland, W. S. (1985)
   \emph{The Elements of Graphing Data.}
   Monterey, CA: Wadsworth.

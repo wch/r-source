@@ -37,6 +37,11 @@ data(iris3)
   \emph{Bulletin of the American Iris Society},
   \bold{59}, 2--5.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole. (has \code{iris3} as \code{iris}.)
+}
 \seealso{\code{\link{matplot}} some examples of which use \code{iris}.}
 \examples{
 data(iris3)

@@ -267,6 +267,11 @@ getOption(x)
   }
   Others are set from environment variables or are platform-dependent.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 options() # printing all current options
 op <- options(); str(op) # nicer printing

@@ -13,4 +13,9 @@ values in R.
   \code{is.single} is generic: you can write methods to handle
   of specific classes of objects, see \link{InternalMethods}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \keyword{classes}

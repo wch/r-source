@@ -19,6 +19,11 @@ expand.grid(\dots)
   components of a list.
 }
 
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S.}
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 expand.grid(height = seq(60, 80, 5), weight = seq(100, 300, 50),
             sex = c("Male","Female"))

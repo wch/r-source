@@ -67,6 +67,11 @@ regexpr(pattern, text,  extended=TRUE, perl=FALSE)
   PCRE: this is detected at configure time.  All Unix and Windows system
   should have it.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole (\code{grep})
+}
 \seealso{
   \code{\link{agrep}} for approximate matching.
   

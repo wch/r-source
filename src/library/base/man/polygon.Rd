@@ -64,6 +64,11 @@ polygon(x, y = NULL, density = NULL, angle = 45,
 \author{The code implementing polygon shading was donated by
   Kevin Buhr \email{buhr@stat.wisc.edu}.}
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{segments}} for even more flexibility, \code{\link{lines}},
   \code{\link{rect}}, \code{\link{box}}, \code{\link{abline}}.

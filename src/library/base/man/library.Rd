@@ -230,6 +230,11 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \code{\link{data}}, \code{\link{install.packages}},
   \code{\link{INSTALL}}, \code{\link{REMOVE}}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 (.packages())		    # maybe just "base"
 .packages(all = TRUE)       # return all available as character vector

@@ -41,6 +41,11 @@ unless \code{y == 0} where the result is \code{\link{NA}} or
     Objects such as arrays or time-series can be operated on this
     way provided they are conformable.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{sqrt}} for miscellaneous and \code{\link{Special}} for special
   mathematical functions.

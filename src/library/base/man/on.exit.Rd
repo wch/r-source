@@ -19,6 +19,11 @@ on.exit(expr, add = FALSE)
   the current \code{on.exit} code is removed.
   
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{sys.on.exit}} to see the current expression.
 }

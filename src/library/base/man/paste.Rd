@@ -25,6 +25,11 @@ paste(\dots, sep = " ", collapse = NULL)
 \value{
   A character vector of the concatenated values.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   String manipulation with
   \code{\link{as.character}}, \code{\link{substr}}, \code{\link{nchar}},

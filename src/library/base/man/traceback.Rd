@@ -17,6 +17,11 @@ traceback()
   deepest call first.  The calls may print on more that one line, and
   the first line is labelled by the frame number.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 foo <- function(x) { print(1); bar(2) }
 bar <- function(x) { x + a.variable.which.does.not.exist }

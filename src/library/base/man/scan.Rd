@@ -153,6 +153,11 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   inputting a large vector, and \code{nmax} or \code{nlines} when
   inputting a large list.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{read.table}} for more user-friendly reading of data
   matrices;

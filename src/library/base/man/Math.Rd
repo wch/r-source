@@ -19,6 +19,11 @@ such as C or Fortran.
 \code{\link{sin}} for trigonometric, and \code{\link{Special}} for
 special mathematical functions.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 xx <- -9:9
 plot(xx, sqrt(abs(xx)),  col = "red")

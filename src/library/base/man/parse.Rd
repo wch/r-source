@@ -22,6 +22,11 @@ parse(file = "", n = NULL, text = NULL, prompt = "?", white = FALSE)
   \code{parse} returns the parsed but unevaluated expressions in a
   list.  Each element of the list is of mode \code{expression}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{scan}}, \code{\link{source}}, \code{\link{eval}},
   \code{\link{deparse}}.

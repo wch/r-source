@@ -45,6 +45,15 @@ pmatch(x, table, nomatch = NA, duplicates.ok = FALSE)
     NA}) of the same length as \code{x}, giving the indices of the
   elements in \code{table} which matched, or \code{nomatch}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+
+  Chambers, J. M. (1998)
+  \emph{Programming with Data. A Guide to the S Language}.
+  Springer.
+}
 \seealso{
   \code{\link{match}}, \code{\link{charmatch}} and
   \code{\link{match.arg}}, \code{\link{match.fun}},

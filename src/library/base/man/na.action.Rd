@@ -18,6 +18,11 @@ na.action.default(object, \dots)
   The ``NA action'' which should be applied to \code{object} whenever
   \code{\link{NA}}s are not desired.
 }
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S.}
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{options}("na.action")}, \code{\link{na.omit}},
   \code{\link{na.fail}}

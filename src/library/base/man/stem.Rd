@@ -16,6 +16,11 @@ stem(x, scale = 1, width = 80, atom = 1e-08)
   \item{width}{The desired width of plot.}
   \item{atom}{a tolerance.}
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \examples{
 data(islands)
 stem(islands)

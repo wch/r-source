@@ -23,6 +23,11 @@ write(x, file = "data",
   If \code{x} is a two-dimensional matrix you need to transpose it to get the
   columns in \code{file} the same as those in the internal representation.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{save}} for writing any \R objects,
   \code{\link{write.table}} for data frames,

@@ -40,6 +40,11 @@ unique.array(x, incomparables = FALSE, MARGIN = 1, ...)
   an element is equal to one with a smaller index, it is removed.
   Dimensions of arrays are not dropped.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{duplicated}} which gives the indices of duplicated
   elements.

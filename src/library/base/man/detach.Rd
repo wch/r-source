@@ -33,6 +33,11 @@ detach(name, pos = 2, version)
   You cannot detach either the workspace (position 1) or the \code{base}
   package (the last item in the search list).
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
   \code{\link{attach}}, \code{\link{library}}, \code{\link{search}},
   \code{\link{objects}}.

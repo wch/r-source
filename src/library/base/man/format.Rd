@@ -97,6 +97,11 @@ prettyNum(x, big.mark = "",   big.interval = 3,
 
   Character(s) \code{"} in input strings \code{x} are escaped to \code{\\"}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 
 \seealso{
   \code{\link{format.info}} indicates how something would be formatted;

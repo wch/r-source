@@ -61,6 +61,10 @@ is.unsorted(x, na.rm = FALSE)
   unlike \code{sort.list}, as quicksort is not stable.
 }
 \references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+
   Sedgewick, R. (1986)
   A new upper bound for Shell sort.
   \emph{J. Algorithms} \bold{7}, 159--173.

@@ -60,6 +60,11 @@ alist(\dots)
   An empty pairlist, \code{pairlist()} is the same as \code{NULL}.  This
   is different from \code{list()}.
 }
+\references{
+  Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth \& Brooks/Cole.
+}
 \seealso{
 \code{\link{vector}(., mode="list")}, \code{\link{c}}, for concatenation;
 \code{\link{formals}}.
