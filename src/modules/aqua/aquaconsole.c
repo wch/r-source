@@ -674,28 +674,32 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
         RgnHandle       CursorRgn;
         NewDevDesc 	*dd;
         QuartzDesc 	*xd = NULL;
-        
-	switch ( GetEventClass( inEvent ) )
+        WindowRef 	EventWindow;
+	
+        switch ( GetEventClass( inEvent ) )
 	{
          case kEventClassWindow:
-            GetEventParameter (inEvent, kEventParamAttributes, typeUInt32, NULL, sizeof(RWinCode), NULL, &RWinCode);
+            GetEventParameter (inEvent, kEventParamAttributes, typeUInt32, NULL, sizeof(RWinCode), 
+                                NULL, &RWinCode);
+            GetEventParameter(inEvent, kEventParamDirectObject, typeWindowRef, NULL, sizeof(EventWindow),
+                                NULL, &EventWindow);
             if ( (eventKind == kEventWindowBoundsChanged) && (RWinCode != 9)){ 
-            if( GetUserFocusWindow() == ConsoleWindow)
+             if( EventWindow == ConsoleWindow)
               RescaleInOut(0.8);
-            else{
-             err = GetWindowProperty(GetUserFocusWindow(),kRAppSignature,1,sizeof(int),devsize,&devnum);
-             if(err == noErr){
-              dd = ((GEDevDesc*) GetDevice(devnum))->dev;
-              if(dd) {
-               xd = (QuartzDesc*)dd->deviceSpecific;
-               if(xd){
+             else {
+              err = GetWindowProperty(EventWindow, kRAppSignature, 1, sizeof(int), devsize, &devnum);
+              if(err == noErr){
+               dd = ((GEDevDesc*) GetDevice(devnum))->dev;
+               if(dd) {
+                xd = (QuartzDesc*)dd->deviceSpecific;
+                if(xd){
                  dd->size(&(dd->left), &(dd->right), &(dd->bottom), &(dd->top), dd);
                  GEplayDisplayList((GEDevDesc*) GetDevice(devnum));       
+                }
                }
               }
-              }
              } 
-         }
+            }
          break;
             
             
