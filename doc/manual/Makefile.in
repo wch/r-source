@@ -27,7 +27,7 @@ OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
 OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
 
 MAKEINFO = @MAKEINFO@
-TEXI2DVI = $(top_srcdir)/tools/texi2dvi
+TEXI2DVI = $(top_srcdir)/tools/texi2dvi --texinfo="@set UseExternalXrefs"
 TEXI2PDF = $(TEXI2DVI) --pdf
 PDFLATEX = @PDFLATEX@
 
@@ -58,7 +58,7 @@ R:
 .texi.dvi:
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2DVI) $<
 .texi.info:
-	$(MAKEINFO) -I$(srcdir) $<
+	$(MAKEINFO) -D UseExternalXrefs -I$(srcdir) $<
 .texi.pdf:
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2PDF) $<
 
@@ -140,6 +140,14 @@ R-intro.pdf: stamp-images-pdf
 stamp-images-pdf:
 	@$(MAKE) rhome=$(top_builddir) install-images-pdf
 	@touch $@
+
+MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
+MAKEINFO_HTML_OPTS = --number-sections --html
+front-matter: $(top_srcdir)/FAQ $(top_srcdir)/doc/html/faq.html
+$(top_srcdir)/FAQ: $(srcdir)/R-FAQ.texi
+	@$(MAKEINFO) $(MAKEINFO_TEXT_OPTS) $< -o $@
+$(top_srcdir)/doc/html/faq.html: $(srcdir)/R-FAQ.texi
+	@$(MAKEINFO) $(MAKEINFO_HTML_OPTS) $< -o $@
 
 install: installdirs install-tex
 	@echo "Installing doc/manual ..."
