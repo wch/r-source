@@ -11,7 +11,7 @@
 ##    Correspondingly, the underlying C code does not need to extract
 ##    the function from the passed "list".
 
-dyn.load("zero.so")
+dyn.load(paste("zero", .Platform$dynlib.ext, sep="."))
 ##-- you may need to change this to
 ## dyn.load("<RHOME>/demos/dynload/zero.so")
 ##-- substituting the proper path for <RHOME>,
