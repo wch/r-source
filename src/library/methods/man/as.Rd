@@ -149,21 +149,21 @@ calls to the \code{setAs} function.
 \section{The Function \code{as} Used in Replacements}{
   When \code{as} appears on the left of an assignment, the intuitive
   meaning is ``Replace the part of \code{object} that was inherited from
-  \Code{Class} by the \code{value} on the right of the assignment.''
+  \code{Class} by the \code{value} on the right of the assignment.''
 
   This usually has a straightforward interpretation, but you can control
   explicitly what happens, and sometimes you should to avoid possible
   corruption of objects.
 
   When \code{object} inherits from \code{Class} in the usual way, by
-  including the slots of \Code{Class}, the default \code{as} method is
+  including the slots of \code{Class}, the default \code{as} method is
   to set the corresponding slots in \code{object} to those in
   \code{value}.
 
   The default computation may be reasonable, but usually only if all
   \emph{other} slots in \code{object} are unrelated to the slots being
   changed.  Often, however, this is not the case.  The class of
-  \code{object} may have extended \Code{Class} with a new slot whose
+  \code{object} may have extended \code{Class} with a new slot whose
   value depends on the inherited slots.  In this case, you may want to
   define a method for replacing the inherited information that
   recomputes all the dependent information.  Or, you may just want to
