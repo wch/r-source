@@ -76,7 +76,7 @@ Boolean                                   gfinishedInput;
 char                             	  *gbuf;
 SInt16                                    HISTORY;
 Boolean		                          GWgDone;
-Boolean		                          gInBackground;
+extern Boolean		                  gInBackground;
 Ptr				          gPreAllocatedBlockPtr;
 SInt32		                          gUntitledWindowNumber  = 0;
 SInt32		                          gCurrentNumberOfWindows = 0;
@@ -435,13 +435,10 @@ void mac_loadhistory(char *file)
     int i,buflen,j;
     char buf[1002];
 
-    
     if (!file) return;
     fp = fopen(file, "r");
     if (!fp) {
-	char msg[256];
-	sprintf(msg, "Unable to open history file \"%s\" for reading", file);
-	warning(msg);
+	REprintf("\nUnable to open history file \"%s\" for reading\n", file);
 	return;
     }
 
@@ -474,9 +471,10 @@ void maintain_cmd_History(char *buf)
 {
     char *temp;
     int numberOfChar;
+
     g_Stop = false;
-    numberOfChar = strlen((const char *)buf);
-    temp = malloc(numberOfChar * sizeof(char));
+    numberOfChar = strlen(buf);
+    temp = (char *)malloc(numberOfChar);
     strcpy(temp, (const char *)buf);
     Cmd_Hist[g_end_Cmd] = temp;
     g_not_first = false;

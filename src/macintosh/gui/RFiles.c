@@ -271,10 +271,10 @@ OSStatus ReadTextFile ( const FSSpec * pFileSpec, WEReference we )
       }
      else 
       { 
-        if( (*hText)[i] != 0x0A )    /* strips also cr escape char  */
-          testo[k]=(*hText)[i]; 
+        if( (*hText)[i] == 0x0A )    /* strips also cr escape char  */
+          testo[k]='\r';
         else 
-          testo[k]=' ';
+          testo[k]=(*hText)[i];
         k++;
       }
        

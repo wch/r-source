@@ -1560,7 +1560,6 @@ int R_ShowFiles(int nfile, char **fileName, char **title,
     strncpy( (char *)(&PWTitle[1]),WinTitle, PWTitle[0] );
 
     GetWTitle(Edit_Windows[Edit_Window-1], Cur_Title);
-//     Cur_Title[0] = strlen((unsigned char *) &Cur_Title[1]);
     windowsMenu = GetMenu(mWindows);
     for(i = 1; i <= CountMenuItems(windowsMenu); i++){
 	GetMenuItemText(windowsMenu, i , curString);
@@ -1574,12 +1573,12 @@ int R_ShowFiles(int nfile, char **fileName, char **title,
     Help_Windows[Help_Window] = Edit_Windows[Edit_Window-1];
 
     NumToString( Help_Window ,numberAsString);
+    GWdoConcatPStrings(PWTitle,"\p ");
     GWdoConcatPStrings(PWTitle,numberAsString);
-    //    SetWTitle(window, titledString);
-
     if(windowsMenu = GetMenu(mWindows))
 	AppendMenu(windowsMenu, PWTitle);
 
+    
     SetWTitle(Help_Windows[Help_Window], PWTitle);
 
     Edit_Window --;

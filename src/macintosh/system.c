@@ -250,18 +250,6 @@ FILE *R_OpenInitFile(void)
 
 
 
-/* doCopyPString
-*/
-void  doCopyPString(Str255 sourceString,Str255 destinationString)
-{
-    SInt16   stringLength;
-
-    stringLength = sourceString[0];
-    BlockMove(sourceString + 1,destinationString + 1,stringLength);
-    destinationString[0] = stringLength;
-}
-
-
 
 
 /* R_OpenFile
@@ -291,6 +279,7 @@ FILE *R_OpenLibraryFile(char *file)
 #define MAC_FILE_SIZE FILENAME_MAX
 
 static char R_HomeLocation[MAC_FILE_SIZE];
+static char R_DefHistFile[FILENAME_MAX];
 
 void GetHomeLocation(void);
 
@@ -455,12 +444,12 @@ int Mac_initialize_R(int ac, char **av)
  */
     if (!R_Interactive && SaveAction != SA_SAVE && SaveAction != SA_NOSAVE)
 	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
-
-    if ((R_HistoryFile = getenv("R_HISTFILE")) == NULL)
-	R_HistoryFile = ":etc:.Rhistory";
+    
+    R_HistoryFile = R_DefHistFile;
+    sprintf(R_HistoryFile, "%s", mac_getenv("R_HISTFILE"));
  	 
     R_HistorySize = 512;
-    if ((p = getenv("R_HISTSIZE"))) {
+    if ((p = mac_getenv("R_HISTSIZE"))) {
 	value = Decode2Long(p, &ierr);
 	if (ierr != 0 || value < 0)
 	    REprintf("WARNING: invalid R_HISTSIZE ignored;");
@@ -784,12 +773,12 @@ char *Rmac_tmpnam(char * prefix)
     pid = (unsigned int) getpid();
     for (n = 0; n < 100; n++) {
 	/* try a random number at the end */
-        sprintf(tm, "%s:%sR%xS%x", tmp1, prefix, pid, rand());
+        sprintf(tm, "%s:%sR%xS%x\0", tmp1, prefix, pid, rand());
         if (!R_FileExists(tm)) { done = 1; break; }
     }
     if(!done)
 	error("cannot find unused tempfile name");
-    res = (char *) malloc((strlen(tm)+1) * sizeof(char));
+    res = (char *)malloc(strlen(tm));
     strcpy(res, tm);
     return res;
 }
@@ -816,8 +805,8 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	tn = CHAR( STRING_ELT( CAR(args) ,i ) );
 	/* try to get a new file name */
 	tm = Rmac_tmpnam(tn);
-	SET_STRING_ELT( ans,i,mkChar(tm) );	
-	free(tm);
+	SET_STRING_ELT(ans, i, mkChar(tm));	
+	if(tm) free(tm);
     }
     UNPROTECT(1);
     return (ans);
