@@ -397,7 +397,7 @@ SEXP allocList(int n)
 
 void gc(void)
 {
-#ifndef Macintosh
+#ifdef HAVE_SIGLONGJMP
     sigset_t mask, omask;
 #endif
     int vcells, vfrac;
@@ -405,7 +405,7 @@ void gc(void)
     gc_count++;
     if (gc_reporting)
 	REprintf("Garbage collection [nr. %d]...", gc_count);
-#if !defined(Macintosh) && !defined(Win32)
+#ifdef HAVE_SIGLONGJMP
     sigemptyset(&mask);
     sigaddset(&mask,SIGINT);
     sigprocmask(SIG_BLOCK, &mask, &omask);
@@ -414,7 +414,7 @@ void gc(void)
     markPhase();
     compactPhase();
     scanPhase();
-#if !defined(Macintosh) && !defined(Win32)
+#ifdef HAVE_SIGLONGJMP
     sigprocmask(SIG_SETMASK, &omask, &mask);
 #endif
     if (gc_reporting) {

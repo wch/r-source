@@ -36,8 +36,12 @@
 #include <limits.h>
 #include <float.h>
 #include <ctype.h>
+#ifdef PSIGNAL
+#include <psignal.h>
+#else
 #include <signal.h>
 #include <setjmp.h>
+#endif
 #include <time.h>
 #ifdef HAVE_LOCALE_H
 #include <locale.h>
