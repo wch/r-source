@@ -1444,11 +1444,11 @@ static void newX11_MetricInfo(int c,
 	if(f->per_char) {
 	    *ascent = f->per_char[c-first].ascent;
 	    *descent = f->per_char[c-first].descent;
-	    *width = f->per_char[c-first].width;  /* rbearing - lbearing? */
+	    *width = f->per_char[c-first].width;
 	} else {
 	    *ascent = f->max_bounds.ascent;
 	    *descent = f->max_bounds.descent;
-	    *width = f->max_bounds.width;  /* rbearing - lbearing? */
+	    *width = f->max_bounds.width;
 	}
     } else {
 	*ascent = 0;
@@ -2049,7 +2049,10 @@ Rf_setNewX11DeviceData(NewDevDesc *dd, double gamma_fac, newX11Desc *xd)
     {
 	XFontStruct *f;
 #ifdef USE_FONTSET
-	/* <FIXME> get something like M, not whole font */
+	/* Use fudge size of M, not the max of the first font or the 
+	   whole fontset which may have very wide characters if it contains
+	   a comprehensive ISO 10646 font.
+	 */
 	if(xd->font->type == Font_Set) {
 	    char buf[10];
 	    XRectangle ink, log;
@@ -2062,11 +2065,7 @@ Rf_setNewX11DeviceData(NewDevDesc *dd, double gamma_fac, newX11Desc *xd)
 #endif
 		XmbTextExtents(xd->font->fontset, buf, strlen(buf), &ink, &log);
 	    dd->cra[0] = 2+log.width; /* fudge to allow some space */
-	    dd->cra[1] = 2+log.height;
-/*	    char **ml;
-	    XFontStruct **fs_list;
-	    XFontsOfFontSet(xd->font->fontset, &fs_list, &ml);
-	    f = fs_list[0];*/
+	    dd->cra[1] = 2+log.height;/* M has no descenders */
 	} else
 #endif
 	{
