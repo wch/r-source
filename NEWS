@@ -596,6 +596,9 @@ BUG FIXES
     o   The `width' argument of density() was only compatible with S
 	only for a Gaussian kernel: now it is compatible in all cases.
 
+    o   The rbinom() C code had a transcription error from the original
+        Fortran which led to a small deviation from the intended
+        distribution. (PR#1190)
 
 
 	**************************************************
