@@ -69,6 +69,7 @@ assign("cleanEx",
 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
            RNGkind("default", "default")
 	   set.seed(1)
+   	   options(warn = 1)
 _EOF_
 if(!defined($ENV{'R_CHECK_WITH_T_N_F_AS_NULL'})
    || $ENV{'R_CHECK_WITH_T_N_F_AS_NULL'} ne "") {
@@ -118,6 +119,7 @@ foreach my $file (@Rfiles) {
     }
 
     print "### * $nm\n\n";
+    print "flush(stderr()); flush(stdout())\n\n";
     open(FILE, "< $file") or die "file $file cannot be opened";
     while (<FILE>) { print $_; }
     close(FILE);
