@@ -165,14 +165,14 @@ static int AddDLL(char *path, int asLocal, int now)
     dpath = malloc(strlen(path)+1);
     if(dpath == NULL) {
 	strcpy(DLLerror,"Couldn't allocate space for 'path'");
-	FreeLibrary(tdlh);	
+	FreeLibrary(tdlh);
 	return 0;
     }
     strcpy(dpath, path);
 
     strcpy(DLLname, path);
     for(p = DLLname; *p != '\0'; p++) if(*p == '\\') *p = '/';
-    p = strrchr(path, '/'); 
+    p = strrchr(path, '/');
     if(!p) p = DLLname; else p++;
     st = strchr(p, '.');
     if(st) *st = '\0';
@@ -209,7 +209,7 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg)
     for (i = CountDLL - 1; i >= 0; i--) {
 	doit = all;
 	if(!doit && !strcmp(pkg, LoadedDLL[i].name)) doit = 2;
-	if(doit) {	    
+	if(doit) {
 	    /* Rprintf("name = %s\n", LoadedDLL[i].name); */
 	    fcnptr = (DL_FUNC) GetProcAddress(LoadedDLL[i].dlh, name);
 	    if (fcnptr != (DL_FUNC)0) return fcnptr;
@@ -268,7 +268,7 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
         /* do_dynload implements the R-Interface for the */
         /* loading of shared libraries */
 /* This looks very close the version in unix.
-   Is the only reason it is not shared due to 
+   Is the only reason it is not shared due to
     a) 2*PATH_MAX v's PATH_MAX for sizeof(buf)
     b) static routines in this file.
 */
@@ -282,7 +282,7 @@ SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
     GetFullDLLPath(call, buf, CHAR(STRING(CAR(args))[0]));
     DeleteDLL(buf);
     if (!AddDLL(buf,LOGICAL(CADR(args))[0],LOGICAL(CADDR(args))[0]))
-	errorcall(call, "unable to load shared library \"%s\":\n  %s\n",
+	errorcall(call, "unable to load shared library \"%s\":\n  %s",
 		  buf, DLLerror);
     return R_NilValue;
 }
