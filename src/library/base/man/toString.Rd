@@ -8,7 +8,6 @@
   to a string. If the argument is a vector then its elements are
   concatenated with a \code{,} as a separator. 
   Most methods should honor the width argument. 
-  The minimum value for \code{width} is six. 
 }
 \usage{
 toString(x, \dots)
@@ -17,8 +16,14 @@ toString(x, \dots)
 }
 \arguments{
   \item{x}{The object to be converted.}
-  \item{width}{The returned value is at most the first \code{width} characters.}
+  \item{width}{The returned value has at most \code{width} characters.
+    The minimum value accepted is 6 and smaller values are taken as 6.}
   \item{\dots}{Optional arguments for methods.}
+}
+\details{
+  The default method returns the first \code{width - 4} characters of
+  the result with \code{....} appended, if the full result would use
+  more than \code{width} characters.
 }
 \value{
   A character vector of length 1 is returned.
