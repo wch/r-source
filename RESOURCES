@@ -1,7 +1,6 @@
 
                             AVAILABLE R RESOURCES
 
-
 1 FAQ
 *****
 
@@ -88,6 +87,9 @@ It is currently mirrored daily at
     `http://mirror.aarnet.edu.au/pub/CRAN/'
           (AARNet, Australia [accessible only from Australia and New
           Zealand])
+
+    `http://www.termix.ufv.br/CRAN/'
+          (Federal University of Vicosa, Brazil)
 
     `ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/'
           (University of Aizu, Japan)

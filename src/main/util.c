@@ -1008,8 +1008,8 @@ SEXP do_basename(SEXP call, SEXP op, SEXP args, SEXP rho)
     char  buf[PATH_MAX], *p, fsp = FILESEP[0];
 
     checkArity(op, args);
-    if (!isPairList(args) || !isValidString(s = CAR(args)))
-	errorcall(call, "character argument expected");
+    if (!isPairList(args) || !isValidString(s = CAR(args)) || LENGTH(s) != 1)
+	errorcall(call, "a single character string argument expected");
     p = R_ExpandFileName(CHAR(STRING_ELT(s, 0)));
     if (strlen(p) > PATH_MAX - 1)
 	errorcall(call, "path too long");
@@ -1037,8 +1037,8 @@ SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
     char  buf[PATH_MAX], *p, fsp = FILESEP[0];
 
     checkArity(op, args);
-    if (!isPairList(args) || !isValidString(s = CAR(args)))
-	errorcall(call, "character argument expected");
+    if (!isPairList(args) || !isValidString(s = CAR(args)) || LENGTH(s) != 1)
+	errorcall(call, "a single character string argument expected");
     p = R_ExpandFileName(CHAR(STRING_ELT(s, 0)));
     if (strlen(p) > PATH_MAX - 1)
 	errorcall(call, "path too long");
