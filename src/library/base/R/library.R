@@ -129,8 +129,8 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                 if(!is.na(match("package:methods", search()))) {
                     if( length(ob) > 0 )
                         ob <- ob[sapply(ob, function(f) {
-                            f<- get(f, pos=lib.pos)
-                            fAttr <- attributes(f)[c("class", "package")]
+                            f<- get(f, pos = lib.pos)
+                            fAttr <- c(class(f), attr(f, "package"))
                             (length(fAttr) == 2
                              && fAttr[1] == "genericFunction"
                              && fAttr[2] != package)
