@@ -216,7 +216,13 @@ case "${host}" in
   *hpux*)
     LIBS="-L/lib/pa1.1 ${LIBS}"
     case "${CC}" in
-      cc|c89)
+      cc)
+        if test `echo ${CFLAGS} | grep -c -e "-A[ae] "` = 0; then
+	  CFLAGS="${CFLAGS} -Aa"
+	fi
+	AC_DEFINE(_HPUX_SOURCE)
+	;;
+      c89)
 	AC_DEFINE(_HPUX_SOURCE)
 	;;
     esac
@@ -480,10 +486,7 @@ case "${host}" in
   *hpux*)
     AC_DEFINE(USE_BUILTIN_RINT)
     case "${CC}" in
-      cc)
-	R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -Aa -D_HPUX_SOURCE"
-	;;
-      c89)
+      cc|c89)
 	R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D_HPUX_SOURCE"
 	;;
     esac
