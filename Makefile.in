@@ -176,15 +176,15 @@ install-R-framework:
 	@(cd $(top_builddir)/src/modules/aqua && \
 	  cp Info.plist "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources")
 	@(cd "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)" && \
-	  ln -f -s -h Resources/include Headers && \
-	  ln -f -s -h Resources/bin/libR.dylib R && \
+	  ln -f -s -n Resources/include Headers && \
+	  ln -f -s -n Resources/bin/libR.dylib R && \
 	  test -d "Resources/bin/Frameworks" || mkdir -p "Resources/bin/Frameworks")
 	@(cd "$(R_FRAMEWORK_DIR)/Versions" && \
-	  ln -f -s -h $(VERSION) Current)
+	  ln -f -s -n $(VERSION) Current)
 	@(cd "$(R_FRAMEWORK_DIR)"  && \
-	  ln -f -s -h Versions/Current/Headers Headers&& \
-	  ln -f -s -h Versions/Current/R R && \
-	  ln -f -s -h Versions/Current/Resources Resources)
+	  ln -f -s -n Versions/Current/Headers Headers&& \
+	  ln -f -s -n Versions/Current/R R && \
+	  ln -f -s -n Versions/Current/Resources Resources)
 	@(cd "$(srcdir)/src/modules/aqua/Contents/Resources" && \
 	  cp -R * "$(R_FRAMEWORK_DIR)/Resources/bin")
 	@(cd "$(R_FRAMEWORK_DIR)/Resources/bin" && \
@@ -213,6 +213,6 @@ install-aqua:
 	@test -f "$(R_FRAMEWORK_DIR)/Resources/bin/RAqua"  \
 	  || (echo "please, make install-R-framework first" &&  exit 1)
 	@(cd /Applications/R.app/Contents/MacOS && \
-	  ln -f -h "$(R_FRAMEWORK_DIR)/Resources/bin/RAqua" R && \
+	  ln -f -n "$(R_FRAMEWORK_DIR)/Resources/bin/RAqua" R && \
 	  chmod 755 R)
 TAGS:
