@@ -63,7 +63,7 @@ removeMethod(f, signature, where)
   \code{"missing"}.  See the example below.
 
   While \code{f} can correspond to methods defined on several packages
-  or databases, the underlying model is that these together make up
+  or environments, the underlying model is that these together make up
   the definition for a single generic function.  When R proceeds to
   select and evaluate methods for \code{f}, the methods on the current
   search list are merged to form a single generic.  In particular, all

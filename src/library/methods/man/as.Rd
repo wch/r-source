@@ -86,7 +86,7 @@ setAs(from, to, def, replace, where = 1)
     \code{setAs} will do the conversion.) }
   \item{replace}{If supplied, the function to use as a replacement
     method.}
-  \item{where}{ The database on which to store the resulting method for
+  \item{where}{ The position or environment in which to store the resulting method for
     \code{coerce}; by default, the global environment. }
 }
 

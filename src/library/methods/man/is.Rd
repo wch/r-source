@@ -73,8 +73,8 @@ Information about \code{setIs} relations can be stored in the metadata
 for either \code{class1} (in the \code{extends} information) or in the
 metadata for \code{class2} (in the \code{subclasses} information).  For
 the information to be retained for a future session, one of these
-classes must be defined in the current database (i.e., the global
-environment), since only objects assigned there are saved by
+classes must be defined in the global
+environment, since only objects assigned there are saved by
 \code{\link{save.image}}.  If neither class is defined in environment
 \code{where}, \code{setIs} generates an error.
 

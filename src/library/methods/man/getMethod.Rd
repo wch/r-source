@@ -49,8 +49,9 @@ selectMethod(f, signature, optional=FALSE, useInherited, mlist=getMethods(f))
     environment with classes assigned to the names of the corresponding
     arguments.  If the signature is not an environment, it must
     currently be named.}
-  \item{where}{ Where to look for the method.  By default, looks in all
-    the currently attached databases (i.e., the complete search list).}
+  \item{where}{ The position or environment in which to look for the method:  by default,
+      anywhere in
+    the current search list.}
   \item{optional}{ If the selection does not produce a unique result,
     an error is generated, unless this argument is \code{TRUE}.  In that
     case, the value returned is either a \code{MethodsList} object, if

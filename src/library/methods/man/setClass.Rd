@@ -104,7 +104,7 @@ resetClass(Class)
     \item{\code{resetClass}:}{
       Reset the internal definition of a class.  The effect is that
       the next time the definition of this class is needed, it will be
-      recomputed from the information on the attached databases.
+      recomputed from the information in the currently attached packages.
 
       This function is called when aspects of the class definition are
       changed.  You would need to call it explicitly if you changed the

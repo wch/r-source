@@ -10,12 +10,13 @@ showMethods(f=character(), where=-1, classes=NULL, includeDefs=FALSE,
             inherited=TRUE, printTo = stdout())
 }
 \arguments{
-  \item{f}{ One or more function names.  If omitted, all the functions
-    on database \code{where} will be examined. }
+  \item{f}{ One or more function names.  If omitted, all functions
+    will be examined. }
   \item{where}{If \code{where} is supplied, the methods definition from
-    that database will be used; otherwise, the current definition is
+    that position will be used; otherwise, the current definition is
     used (which will include inherited methods that have arisen so far
-    in the session). } 
+    in the session). If \code{f} is omitted, \code{where} controls
+    where to look for generic functions.} 
   \item{classes}{ If argument \code{classes} is supplied, it is a vector
     of class names that restricts the displayed results to those methods
     whose signatures include one or more of those classes. }

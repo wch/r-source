@@ -226,12 +226,12 @@ unRematchDefinition(definition)
 
     \item{\code{getMethodsMetaData}, \code{assignMethodsMetaData},
       \code{mlistMetaName}:}{
-      utilities to manage methods list objects in a particular database.
+      utilities to manage methods list objects in a particular environment.
       Not to be called directly.
     }
     
     \item{\code{getFromMethodMetaData, assignToMethodMetaData,
-	removeFromMethodMetaData}}{
+        removeFromMethodMetaData}}{
       Functions to manage the session metadata for methods.  Don't
       call these directly.
     }
@@ -263,11 +263,11 @@ unRematchDefinition(definition)
     }
   
     \item{\code{cacheMetaData, cacheGenericsMetaData,
-	setPrimitiveMethods}:}{
+        setPrimitiveMethods}:}{
       Utilities for ensuring that the session-scope information about
       class and method definitions is up to date.  Should normally be
       called automatically whenever needed (for example, when a method
-      or class definition changes, or when a database is attached or
+      or class definition changes, or when a package is attached or
       detached.
 
       The \code{environment} must be one of the environments on the
@@ -290,7 +290,7 @@ unRematchDefinition(definition)
 
     \item{\code{missingArg}: }{
       Returns \code{TRUE} if the symbol supplied is missing \emph{from
-	the call} corresponding to the environment supplied (by default,
+        the call} corresponding to the environment supplied (by default,
       environment of the call to \code{missingArg}).  If \code{eval} is
       true, the argument is evaluated to get the name of the symbol to
       test.  Note that \code{missingArg} is closer to the ``blue-book''

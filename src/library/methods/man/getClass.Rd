@@ -20,16 +20,10 @@ getClassDef(Class, where=-1)
   A call to \code{getClass} returns the complete definition of the class
   supplied as a string, including all slots, etc. in classes that this
   class extends.  A call to \code{getClassDef} returns the definition of
-  the class from that database, unadorned.  It's usually \code{getClass}
+  the class from the environment \code{where}, unadorned.  It's usually \code{getClass}
   you want.
 
-  The statement that \code{getClass} fails if the class is undefined is
-  not quite true at the moment.  A few special vector types and
-  informally defined classes are allowed, and \code{getClass} returns
-  \code{NULL} for these.  But don't count on it; eventually these holes
-  in the class system should be plugged.
-
-  In any case, if you really want to know whether a class is formally
+  If you really want to know whether a class is formally
   defined, call \code{\link{isClass}}.
 }
 \value{

@@ -3,31 +3,12 @@
 \alias{traceOn}
 \alias{traceOff}
 \alias{browseAll}
-\title{Session Data and Debugging Tools}
+\title{Deprecated:  Session Data and Debugging Tools}
 \description{
-  The function \code{sessionData} provides a work-around in R for the
-  absence of a session database (what you get in S with the argument
-  \code{where=0} to functions such as \code{get} and \code{assign}).
-
-  The functions \code{traceOn}, \code{traceOff} and \code{browseAll} are
-  debugging tools with roughly similar functionality to \code{trace},
-  \code{untrace} and \code{browser} as described in the reference.
-  Calling \code{traceOn} creates a new version of a function with
-  arbitrary code inserted at the beginning of the call and/or on exit.
-  Calling \code{traceOff} undoes the change.  The function
-  \code{browseAll} is a useful interactive call to insert for tracing.
-  It behaves basically like \code{\link{debugger}}.
-
-  Note:  use \code{traceOn} only for testing functions in a library,
-  \emph{not} for functions defined in the global environment.  Because
-  the session data is in position 2 on the search list, the temporary
-  versions stored there will not override functions in the global
-  environment.
-
-  A more satisfactory version of these  facilities is likely to be
-  provided in the future.  Use the current versions but don't write code
-  that depends on them.
-}
+The functions \code{traceOn} and \code{traceOff} have been replaced by
+extended versions of the functions \code{\link{trace}} and
+\code{\link{untrace}}, and should not be used.
+  }
 \usage{
 sessionData()
 
@@ -37,17 +18,6 @@ traceOff(what)
 
 browseAll()
 
-}
-\arguments{
-  \item{what}{
-    The object to be traced or untraced.
-  }
-  \item{tracer, exit}{
-    The code to use at the entrance or exit trace.  Either a function
-    (which will be called with no arguments) or an expression (typically
-    constructed from \code{\link{quote}} or \code{\link{substitute}}) to
-    be evaluated.
-  }
 }
 \details{
   \describe{
@@ -83,6 +53,4 @@ browseAll()
 \author{
   John Chambers
 }
-\keyword{programming}
-\keyword{classes}
-\keyword{methods}
+\keyword{internal}

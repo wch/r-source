@@ -21,8 +21,8 @@ promptClass(clName, filename, type = "class", keywords = "classes", where)
       documentation.  The keyword \code{"classes"} should be one of
       them.  }
   \item{where}{ where to look for the definition of the class and of
-      methods that use it.  By default, the function searches for the
-      class definition on the currently attached databases.  } }
+      methods that use it:  by default, anywhere in the current search
+      list.  } }
   \details{ 
     The class definition is found on the search list.  Using
     that definition, information about classes extended and slots is
@@ -30,7 +30,7 @@ promptClass(clName, filename, type = "class", keywords = "classes", where)
 
   In addition, the currently available generics with methods for this
   class are found (using \code{\link{getGenerics}}).  Note that these
-  methods need not be on the same database as the class definition; in
+  methods need not be in the same environment as the class definition; in
   particular, this part of the output may depend on which packages are
   currently in the search list.
 

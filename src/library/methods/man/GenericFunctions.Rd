@@ -80,8 +80,8 @@ callGeneric(\dots)
       exist as formal function objects (for efficiency and historical
       reasons), regardless of whether methods have been defined for
       them.  A call to \code{isGeneric} tells you whether methods have
-      been defined for this primitive function, either on database
-      \code{where} or anywhere in the current search list.  In contrast,
+      been defined for this primitive function, anywhere in the
+      current search list, or in the specified position \code{where}.  In contrast,
       a call to \code{\link{getGeneric}} will return what the generic
       for that function would be, even if no methods have been currently
       defined for it.
