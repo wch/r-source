@@ -686,6 +686,7 @@ AC_OUTPUT(Makeconf
   Makefile
   afm/Makefile
   demos/Makefile
+  demos/dynload/Makefile
   doc/Makefile
   doc/manual/Makefile
   etc/Makefile

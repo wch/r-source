@@ -6798,6 +6798,7 @@ trap 'rm -fr `echo "Makeconf
   Makefile
   afm/Makefile
   demos/Makefile
+  demos/dynload/Makefile
   doc/Makefile
   doc/manual/Makefile
   etc/Makefile
@@ -7029,6 +7030,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   Makefile
   afm/Makefile
   demos/Makefile
+  demos/dynload/Makefile
   doc/Makefile
   doc/manual/Makefile
   etc/Makefile
