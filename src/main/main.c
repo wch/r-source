@@ -310,8 +310,8 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 
 static int doneit;
 
-#ifndef Macintosh
 FILE* R_OpenSysInitFile(void);
+#ifndef Macintosh
 FILE* R_OpenSiteFile(void);
 FILE* R_OpenInitFile(void);
 #endif

@@ -176,7 +176,7 @@ SEXP do_filecreate(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    errorcall(call, "invalid filename \"%s\"\n", STRING(fn)[i]);
 	if ((fp = fopen(CHAR(STRING(fn)[i]), "w")) == NULL)
 	    errorcall(call, "cannot create file \"%s\"\n", STRING(fn)[i]);
-	close(fp);
+	fclose(fp);
     }
     return R_NilValue;
 }
