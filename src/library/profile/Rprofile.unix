@@ -19,4 +19,6 @@ options(papersize = getenv("R_PAPERSIZE"))
 options(device = if(interactive() && getenv("DISPLAY") != "")
         "X11" else "postscript")
 
+options(browser = "netscape")
+
 # .First <- function() { if (interactive() && getenv("DISPLAY") != "") x11() }
