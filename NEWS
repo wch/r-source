@@ -162,8 +162,8 @@ NEW FEATURES
 
     o	legend() has a new argument pt.bg.
 
-
     o   autoload() accepts lib.loc and other arguments to library()
+
 
 
 BUG FIXES
@@ -219,6 +219,10 @@ BUG FIXES
 
     o	ff[i] <- r  now works for formula (and potentially other
 	non-standard) objects ff.
+
+    o	D(.) is now more correctly documented, has second argument
+	"name" instead of "namevec" (S compatibility), and gives a warning
+	when name has not length 1.
 
 
 	**************************************************

@@ -20,8 +20,6 @@
  *
  *  Symbolic Differentiation
  *
- *  Note: the code below makes use of "expression" objects.
- *  Maybe it is time for us to introduce mode "expression".
  */
 
 #ifdef HAVE_CONFIG_H
@@ -48,6 +46,8 @@ static SEXP SqrtSymbol;
 
 static void InitDerivSymbols()
 {
+/* Called from do_D() and do_deriv();
+ * FIXME: the following needs to `run' only once ! */
     ParenSymbol = install("(");
     PlusSymbol = install("+");
     MinusSymbol = install("-");
@@ -528,6 +528,8 @@ SEXP do_D(SEXP call, SEXP op, SEXP args, SEXP env)
     var = CADR(args);
     if (!isString(var) || length(var) < 1)
 	errorcall(call, "variable must be a character string");
+    if (length(var) > 1)
+	warningcall(call, "only the first element is used as variable name")
     var = install(CHAR(STRING_ELT(var, 0)));
     InitDerivSymbols();
     PROTECT(expr = D(expr, var));

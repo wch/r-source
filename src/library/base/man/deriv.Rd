@@ -1,12 +1,12 @@
 \name{deriv}
 \title{Symbolic and Algorithmic Derivatives of Simple Expressions}
 \usage{
-D(expr, namevec)
+   D (expr, name)
 deriv(expr, namevec, function.arg = NULL, tag = ".expr")
 }
 \synopsis{
-D(expr, namevec)
-deriv(expr, ...) 
+D(expr, name)
+deriv(expr, ...)
 deriv.default(expr, namevec, function.arg = NULL, tag = ".expr")
 deriv.formula(expr, namevec, function.arg = NULL, tag = ".expr")
 }
@@ -15,15 +15,17 @@ deriv.formula(expr, namevec, function.arg = NULL, tag = ".expr")
 \alias{deriv.default}
 \alias{deriv.formula}
 \arguments{
-  \item{expr}{expression which should be differentiated.}
-  \item{namevec}{character vector, giving the variable names with
+  \item{expr}{\code{\link{expression}} or \code{\link{call} which should
+      be differentiated.}
+  \item{name,namevec}{character vector, giving the variable names (only
+    one for \code{D(.)}) with
     respect to which derivatives will be computed.}
   \item{function.arg}{\emph{NOT YET IMPLEMENTED}.  If specified, a
     function `prototype' (with empty \code{\link{body}}) which will be
     used to return a function with the given argument list, instead of
     an expression.}
   \item{tag}{character; the prefix to be used for the locally created
-    variables in result..}
+    variables in result.}
 }
 \description{
   Compute derivatives of simple expressions, symbolically.
@@ -81,15 +83,17 @@ mode(dx2x)
 x <- -1:2
 eval(dx2x)
 
-
 ## Something `tougher':
 trig.exp <- expression(sin(cos(x + y^2)))
-( D.sc <- D(trig.exp, c("x", "y")) )
+( D.sc <- D(trig.exp, "x") )
+all.equal(D(trig.exp[[1]], "x"), D.sc)
 
 ( dxy <- deriv(trig.exp, c("x", "y")) )
 y <- 1
 eval(dxy)
 eval(D.sc)
+stopifnot(eval(D.sc) ==
+          attr(eval(dxy),"gradient")[,"x"])
 }
 \keyword{math}
 \keyword{nonlinear}
