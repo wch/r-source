@@ -153,8 +153,8 @@ SEXP do_docall(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dotcall(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dotCode(SEXP, SEXP, SEXP, SEXP);
 #if HAVE_TCLTK
-SEXP do_dotTk(SEXP, SEXP, SEXP, SEXP);
-SEXP do_Tkcallback(SEXP, SEXP, SEXP, SEXP);
+SEXP do_dotTcl(SEXP, SEXP, SEXP, SEXP);
+SEXP do_Tclcallback(SEXP, SEXP, SEXP, SEXP);
 #endif
 SEXP do_dotplot(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dput(SEXP, SEXP, SEXP, SEXP);

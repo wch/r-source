@@ -546,8 +546,8 @@ FUNTAB R_FunTab[] =
 {".External",   do_External,    0,      1,      -1,     PP_FOREIGN},
 {".Call",       do_dotcall,     0,      1,      -1,     PP_FOREIGN},
 #if HAVE_TCLTK
-{".Tk",         do_dotTk,       0,      1,      1,     PP_FUNCALL},
-{".Tkcallback", do_Tkcallback,  0,      1,      1,     PP_FUNCALL},
+{".Tcl",        do_dotTcl,       0,      1,      1,     PP_FUNCALL},
+{".Tcl.callback",do_Tclcallback,  0,      1,      1,     PP_FUNCALL},
 #endif
 {"dyn.load",	do_dynload,	0,	111,	3,	PP_FUNCALL},
 {"dyn.unload",	do_dynunload,	0,	111,	1,	PP_FUNCALL},

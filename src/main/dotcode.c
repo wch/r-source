@@ -383,7 +383,7 @@ SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
 #if HAVE_TCLTK
 extern char *(* tk_eval)(char *);
 
-SEXP do_dotTk(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_dotTcl(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
     char *cmd;
@@ -392,14 +392,14 @@ SEXP do_dotTk(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isValidString(CAR(args)))
 	errorcall(call, "invalid argument");
     if (!tk_eval)
-	error("Tk interface is not available");
+	error("Tcl interface is not available");
     cmd = CHAR(STRING(CAR(args))[0]);
     val = tk_eval(cmd);
     ans = mkString(val);
     return ans;
 }
 
-SEXP do_Tkcallback(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_Tclcallback(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, closure = CAR(args), formals;
 
@@ -410,7 +410,7 @@ SEXP do_Tkcallback(SEXP call, SEXP op, SEXP args, SEXP env)
 
     formals = FORMALS(closure);
 
-    sprintf(buf, "{ R_call %lx", (unsigned long) closure);
+    sprintf(buf, "{ R_call 0x%lx", (unsigned long) closure);
 
     /* FIXME: we really should do something to ensure that "closure"
        is protected from later GCs. Otherwise we'll have buttons that
