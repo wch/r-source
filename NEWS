@@ -1172,6 +1172,8 @@ BUG FIXES
     o	ARMAacf() sometimes gave too many results or failed if `lag.max'
 	was used.
 
+    o   termplot() with a subset of terms now gives correct partial residuals 
+
     o	Functions anova.glm(), contrasts(), getS3method(), glm() and
 	make.tables() were applying get() without asking for a
 	function and/or not starting the search in the environment of

@@ -10,6 +10,7 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
                      use.factor.levels=TRUE, smooth=NULL,
                      ...)
 {
+    which.terms<-terms
     terms <- ## need if(), since predict.coxph() has non-NULL default terms :
 	if (is.null(terms))
 	    predict(model, type="terms", se=se)
@@ -54,8 +55,10 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
     if (is.null(xlabs))
         xlabs<-unlist(lapply(cn,carrier.name))
 
-    if (partial.resid || !is.null(smooth))
+    if (partial.resid || !is.null(smooth)){
 	pres <- residuals(model, "partial")
+        if (!is.null(which.terms)) pres<-pres[,which.terms,drop=FALSE]
+      }
     is.fac <- sapply(nmt, function(i) is.factor(mf[,i]))
 
     se.lines <- function(x, iy, i, ff = 2) {
