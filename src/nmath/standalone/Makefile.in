@@ -98,7 +98,7 @@ test: $(srcdir)/test.c
 mostlyclean: clean
 clean:
 	@echo "cleaning in $(subdir)"
-	@-rm -f Makedeps *.d *.o test
+	@-rm -f Makedeps *.d *.o *.lo test
 distclean: clean
 	@-rm -f Makefile $(LIB) $(SHLIB)
 maintainer-clean: distclean
