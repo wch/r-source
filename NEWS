@@ -270,6 +270,9 @@ INSTALLATION CHANGES
 	path elements that ought to have specified in LDFLAGS (but
 	were not).
 
+    o	The C code for most of the graphics device drivers and their
+	afm files are now in package grDevices.
+
 
 PACKAGE INSTALLATION CHANGES
 
