@@ -143,13 +143,13 @@ in the status message that is displayed at the end of configure.
 
 USING MAKE
 
-To compile R, you currently most likely need GNU make.	(To be more
-precise, you need a version of make which accepts shell wildcards in
-dependencies.)  On Solaris 2.6/7 in particular, you need a version of
-GNU make different from 3.77; 3.78.x and 3.76.1 work fine, as
-does the Sun make.  To build in a separate directory you need a make
-than uses the VPATH variable: GNU make does but e.g. Sun make does
-not.
+To compile R, you will most likely find it easiest to use GNU make.
+On Solaris 2.6/7 in particular, you need a version of GNU make
+different from 3.77; 3.78.x and 3.76.1 work fine, as does the Sun
+make.
+
+To build in a separate directory you need a make that uses the VPATH
+variable, for example GNU make.
 
 
 USING FORTRAN
@@ -169,7 +169,8 @@ path.
 
 You must set whatever compilation flags (if any) are needed to ensure
 that FORTRAN `integer' is equivalent to a C int pointer and FORTRAN
-`double precision' is equivalent to a C double pointer.
+`double precision' is equivalent to a C double pointer. This is checked
+during the configuration process.
 
 
 BUILDING THE GNOME INTERFACE
