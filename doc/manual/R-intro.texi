@@ -3964,7 +3964,7 @@ of the session.  An example is given below.
 @example
 > .Last <- function() @{
   graphics.off()                        # @r{a small safety measure.}
-  cat(paste(system.date(),"\nAdios\n")) # @r{Is it time for lunch?}
+  cat(paste(date(),"\nAdios\n"))        # @r{Is it time for lunch?}
 @}
 @end example
 @findex .Last
