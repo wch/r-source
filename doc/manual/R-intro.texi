@@ -6538,14 +6538,14 @@ is available in the @code{morley} object, but we will read it
 to illustrate the @code{read.table} function.
 
 @table @code
-@item filename <- file.path(.find.package("datasets"), "intro", "morley.tab")
-@itemx filename
+@item filepath <- system.file("data", "morley.tab" , package="datasets")
+@itemx filepath
 Get the path to the data file.
 
-@item file.show(filename)
+@item file.show(filepath)
 Optional.  Look at the file.
 
-@item mm <- read.table(filename)
+@item mm <- read.table(filepath)
 @itemx mm
 Read in the Michaelson and Morley data as a data frame, and look at it.
 There are five experiments (column @code{Expt}) and each has 20 runs
@@ -6557,7 +6557,7 @@ suitably coded.
 Change @code{Expt} and @code{Run} into factors.
 
 @item attach(mm)
-Make the data frame visible at position 2 (the default).
+Make the data frame visible at position 3 (the default).
 
 @item plot(Expt, Speed, main="Speed of Light Data", xlab="Experiment No.")
 Compare the five experiments with simple boxplots.
