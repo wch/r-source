@@ -91,7 +91,7 @@ edit.matrix <-
     if(is.null(dn[[1]])) edit.row.names <- FALSE
     datalist <- split(name, col(name))
     if(!is.null(dn[[2]])) names(datalist) <- dn[[2]]
-    else names(datalist) <- paste("col", 1:ncol(m), sep = "")
+    else names(datalist) <- paste("col", 1:ncol(name), sep = "")
     modes <- as.list(rep(mode(name), ncol(name)))
     if (edit.row.names) {
         datalist <- c(list(row.names=dn[[1]]), datalist)
