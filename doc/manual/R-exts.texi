@@ -131,7 +131,7 @@ Other types of extensions are supported as from @R{} 2.1.0:
 * Submitting a package to CRAN::  
 * Package name spaces::         
 * Writing portable packages::   
-* Error and warning messages::  
+* Diagnostic messages::         
 * Localization::                
 * Package types::               
 @end menu
@@ -663,7 +663,7 @@ The definition of the respective R function in @file{foo.R.in} could be
 @group
 foo <- function(x) @{
     if(!@@HAVE_FOO@@)
-      stop(paste("Sorry, library", sQuote("foo"), "is not available"))
+      stop("Sorry, library 'foo' is not available"))
     ...
 @end group
 @end example
@@ -676,7 +676,7 @@ From this file @command{configure} creates the actual R source file
 @group
 foo <- function(x) @{
     if(!FALSE)
-      stop(paste("Sorry, library", sQuote("foo"), "is not available"))
+      stop("Sorry, library 'foo' is not available"))
     ...
 @end group
 @end example
@@ -797,8 +797,8 @@ example @samp{-L} and @samp{-l} options.
 
 When writing a @file{Makevars} file for a package you intend to
 distribute, take care to ensure that it is not specific to your
-compiler: flags such as @code{-O2 -Wall -pedantic} are all specific to
-@code{gcc}.
+compiler: flags such as @option{-O2 -Wall -pedantic} are all specific to
+GCC.
 
 There are some macros which are built whilst configuring the building of
 @R{} itself, are stored on Unix-alikes in
@@ -946,13 +946,21 @@ or by setting the environment variables @code{ODBC_INCLUDE} and
 
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
-@cindex Building packages
-@cindex Checking packages
 
 Before using these tools, please check that your package can be
 installed and loaded.  @code{R CMD check} will @emph{inter alia} do
 this, but you will get more informative error messages doing the checks
 directly.
+
+@menu
+* Checking packages::           
+* Building packages::           
+* Customizing checking and building::  
+@end menu
+
+@node Checking packages, Building packages, Checking and building packages, Checking and building packages
+@subsection Checking packages
+@cindex Checking packages
 
 @findex R CMD check
 Using @code{R CMD check}, the @R{} package checker, one can test whether
@@ -1046,6 +1054,10 @@ Use @kbd{R CMD check --help} to obtain more information about the usage
 of the @R{} package checker.  A subset of the checking steps can be
 selected by adding flags.
 
+@node Building packages, Customizing checking and building, Checking packages, Checking and building packages
+@subsection Building packages
+@cindex Building packages
+
 @findex R CMD build
 @cindex Package builder
 Using @code{R CMD build}, the @R{} package builder, one can build R
@@ -1113,6 +1125,47 @@ To use them you will need to have installed the files for building
 source packages.
 @end quotation
 
+@node Customizing checking and building,  , Building packages, Checking and building packages
+@subsection Customizing checking and building
+
+In addition to the available command line options, @code{R CMD check}
+also allows customization by setting (Perl) configuration variables in a
+configuration file, the location of which can be specified via the
+@option{--rcfile} option and defaults to @file{$HOME/.R/check.conf}
+provided that the environment variable @env{HOME} is set.
+
+The following configuration variables are currently available.
+
+@table @code
+@item $R_check_use_install_log
+If true, record the output from installing a package as part of its
+check to a log file (@file{00install.out} by default), even when running
+interactively.
+Default: false.
+@item $R_check_all_non_ISO_C
+If true, do not ignore compiler (typically GCC) warnings about non ISO C
+code in @emph{system} headers.
+Default: false.
+@item $R_check_weave_vignettes
+If true, weave package vignettes in the process of checking them.
+Default: true.
+@end table
+
+Values @samp{1} or a string with lower-cased version @samp{"yes"} or
+@samp{"true"} can be used for setting the variables to true; similarly,
+@samp{0} or strings with lower-cased version @samp{"no"} or
+@samp{"false"} give false.
+
+For example, a configuration file containing
+@example
+$R_check_use_install_log = "TRUE";
+$R_check_weave_vignettes = 0;
+@end example
+@noindent
+results in using install logs and turning off weaving.
+
+Future versions of R will enhance this customization mechanism, and
+provide a similar scheme for @code{R CMD build}.
 
 @node Writing package vignettes, Submitting a package to CRAN, Checking and building packages, Creating R packages
 @section Writing package vignettes
@@ -1210,7 +1263,9 @@ Run @code{R CMD build} to make the release @file{.tar.gz} file.
 
 @noindent
 Please ensure that you can run through the complete procedure with only
-warnings that you understand and have reasons not to eliminate.
+warnings that you understand and have reasons not to eliminate.  In
+principle, packages must pass @code{R CMD check} without warnings to be
+admitted to the main @acronym{CRAN} package area.
 
 When all the testing is done, upload the @file{.tar.gz} file to
 
@@ -1621,7 +1676,7 @@ exportClasses(c1, c2)
 respectively.
 
 
-@node Writing portable packages, Error and warning messages, Package name spaces, Creating R packages
+@node Writing portable packages, Diagnostic messages, Package name spaces, Creating R packages
 @section Writing portable packages
 
 @code{R CMD check} provides a basic set of checks, but often further
@@ -1726,11 +1781,11 @@ CMD check} checks for.
 
 @end itemize
 
-@node Error and warning messages, Localization, Writing portable packages, Creating R packages
-@section Error and warning messages
+@node Diagnostic messages, Localization, Writing portable packages, Creating R packages
+@section Diagnostic messages
 
-Now that error messages can be made available for translation, it is
-important to write them in a consistent style.  Using the tools
+Now that diagnostic messages can be made available for translation, it
+is important to write them in a consistent style.  Using the tools
 described in the next section to extract all the messages can give a
 useful overview of your consistency (or lack of it).
 
@@ -1768,10 +1823,11 @@ as
 'format' must be "normal" or "short" - using "normal"
 @end example
 
-Since ASCII does not contain directional quotation marks, it is best to
-use @code{'} and let the translator (including automatic translation)
-use directional quotations where available.  The range of quotation
-styles is immense: here are some from the @code{gettext-tools} system
+Since @acronym{ASCII} does not contain directional quotation marks, it
+is best to use @samp{'} and let the translator (including automatic
+translation) use directional quotations where available.  The range of
+quotation styles is immense: here are some from the @code{gettext-tools}
+system
 @example
 "invalid argument `%s' for `%s'"
 "argument invalide « %s » pour « %s »"
@@ -1782,6 +1838,7 @@ styles is immense: here are some from the @code{gettext-tools} system
 "feil under skriving av fila \"%s\""
 "fejl ved læse-åbning af '%s'"
 @end example
+@noindent
 and there are others we cannot reproduce in ISO-8859-1, for example
 bidirectional single quotes in Taiwanese Chinese and bidirectional
 double quotes in Japanese.
@@ -1821,7 +1878,7 @@ in another language one might need to say `There is no package in library
 
 @end itemize
 
-@node Localization, Package types, Error and warning messages, Creating R packages
+@node Localization, Package types, Diagnostic messages, Creating R packages
 @section Localization
 
 @R{} 2.1.0 introduced mechanisms to translate the R- and C-level error
@@ -1893,21 +1950,22 @@ settings).
 @node R messages,  , C-level messages, Localization
 @subsection R messages
 
-Mechanisms to support the automatic translation of @R{} @code{warning}
-and @code{stop} messages are in place, provided the package has a
-namespace.  They make use of message catalogs in the same way as C-level
-messages, but using domain @code{R-@var{pkg}} rather than
-@code{@var{pkg}}.  Translation of character strings inside @code{stop}
-and @code{warning} calls is automatically enabled, as well as other
-messages enclosed in calls to @code{gettext}.  (To suppress this, use
-argument @code{domain=NA}.)
+Mechanisms to support the automatic translation of @R{} @code{stop},
+@code{warning} and @code{message} messages are in place, provided the
+package has a namespace.  They make use of message catalogs in the same
+way as C-level messages, but using domain @code{R-@var{pkg}} rather than
+@code{@var{pkg}}.  Translation of character strings inside @code{stop},
+@code{warning} and @code{message} calls is automatically enabled, as
+well as other messages enclosed in calls to @code{gettext} or
+@code{gettextf}.  (To suppress this, use argument @code{domain=NA}.)
 
 Tools to prepare the @file{R-@var{pkg}.pot} file are provided in package
 @pkg{tools}: @code{xgettext2pot} will prepare a file from all strings
-occurring inside @code{gettext}, @code{stop} and @code{warning} calls.
-Some of these are likely to be spurious and so the file is likely to
-need manual editing.  @code{xgettext} extracts the actual calls and so
-is more useful when tidying up error messages.
+occurring inside @code{gettext}/@code{gettextf}, @code{stop},
+@code{warning} and @code{message} calls.  Some of these are likely to be
+spurious and so the file is likely to need manual editing.
+@code{xgettext} extracts the actual calls and so is more useful when
+tidying up error messages.
 
 Translation of messages which might be singular or plural can be very
 intricate: languages can have up to four different forms.  The @R{}
@@ -1917,8 +1975,8 @@ the selected language depending on the value of its first argument
 @code{n}.
 
 Packages without namespaces will need to use @code{domain="R-@var{pkg}"}
-explicitly in calls to @code{warning}, @code{stop}, @code{gettext} and
-@code{ngettext}.
+explicitly in calls to @code{stop}, @code{warning}, @code{message},
+@code{gettext}/@code{gettextf} and @code{ngettext}.
 
 @node Package types,  , Localization, Creating R packages
 @section Package types
