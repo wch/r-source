@@ -1117,13 +1117,13 @@ sapply(X, dim)
 for(id in c("A", "B")) {
     eval(substitute(
     {
-setHook(pkgEvent("stats4", "onLoad"),
+setHook(packageEvent("stats4", "onLoad"),
         function(pkgname, ...) cat("onLoad", sQuote(pkgname), id, "\n"));
-setHook(pkgEvent("stats4", "attach"),
+setHook(packageEvent("stats4", "attach"),
         function(pkgname, ...) cat("attach", sQuote(pkgname), id, "\n"));
-setHook(pkgEvent("stats4", "detach"),
+setHook(packageEvent("stats4", "detach"),
         function(pkgname, ...) cat("detach", sQuote(pkgname), id, "\n"));
-setHook(pkgEvent("stats4", "onUnload"),
+setHook(packageEvent("stats4", "onUnload"),
         function(pkgname, ...) cat("onUnload", sQuote(pkgname), id, "\n"))
     },
                     list(id=id)))

@@ -1,7 +1,7 @@
 \name{UserHooks}
 \alias{getHook}
 \alias{setHook}
-\alias{pkgEvent}
+\alias{packageEvent}
 \alias{getUserOnLoadHook}
 \alias{setUserOnLoadHook}
 \alias{getUserAttachHook}
@@ -20,7 +20,7 @@
 getHook(hookName)
 setHook(hookName, value, action = c("append", "prepend", "replace"))
 
-pkgEvent(pkgname, event=c("onLoad", "attach", "detach", "onUnload"))
+packageEvent(pkgname, event=c("onLoad", "attach", "detach", "onUnload"))
 
 getUserOnLoadHook(pkgname)
 setUserOnLoadHook(pkgname, value, action = "append")
@@ -48,7 +48,7 @@ setUserOnUnloadHook(pkgname, value, action = "append")
   \code{setHook} provides a general mechanism for users to register
   hooks, a list of functions to be called from system (or user)
   functions.  The initial set of hooks is associated with events on
-  packages/namespaces: these hooks are named via calls to \code{pkgEvent}.
+  packages/namespaces: these hooks are named via calls to \code{packageEvent}.
 
   To remove a hook completely, call \code{setHook(hookName, NULL, "replace")}.
   
@@ -91,7 +91,7 @@ setUserOnUnloadHook(pkgname, value, action = "append")
   \code{\link{persp}} already have them.
 }
 \examples{
-setHook(pkgEvent("graphics", "onLoad"),
+setHook(packageEvent("graphics", "onLoad"),
         function(...) graphics::ps.options(horizontal=FALSE)) 
 }
 \keyword{utilities}

@@ -1,6 +1,6 @@
 .userHooksEnv <- new.env(hash = FALSE, parent = NULL)
 
-pkgEvent <-
+packageEvent <-
     function(pkgname, event=c("onLoad", "attach", "detach", "onUnload"))
 {
     event <- match.arg(event)
@@ -33,48 +33,48 @@ setHook <- function(hookName, value,
 
 getUserOnLoadHook <- function(pkgname)
 {
-    .Deprecated("getHook(pkgEvent())")
-    getHook(pkgEvent(pkgname, "onLoad"))
+    .Deprecated("getHook(packageEvent())")
+    getHook(packageEvent(pkgname, "onLoad"))
 }
 
 setUserOnLoadHook <- function(pkgname, value, action = "append")
 {
-    .Deprecated("setHook(pkgEvent())")
-    setHook(pkgEvent(pkgname, "onLoad"), value, action)
+    .Deprecated("setHook(packageEvent())")
+    setHook(packageEvent(pkgname, "onLoad"), value, action)
 }
 
 getUserAttachHook <- function(pkgname)
 {
-    .Deprecated("getHook(pkgEvent())")
-    getHook(pkgEvent(pkgname, "attach"))
+    .Deprecated("getHook(packageEvent())")
+    getHook(packageEvent(pkgname, "attach"))
 }
 
 setUserAttachHook <- function(pkgname, value, action = "append")
 {
-    .Deprecated("setHook(pkgEvent())")
-    setHook(pkgEvent(pkgname, "attach"), value, action)
+    .Deprecated("setHook(packageEvent())")
+    setHook(packageEvent(pkgname, "attach"), value, action)
 }
 
 getUserDetachHook <- function(pkgname)
 {
-    .Deprecated("getHook(pkgEvent())")
-    getHook(pkgEvent(pkgname, "detach"))
+    .Deprecated("getHook(packageEvent())")
+    getHook(packageEvent(pkgname, "detach"))
 }
 
 setUserDetachHook <- function(pkgname, value, action = "append")
 {
-    .Deprecated("setHook(pkgEvent())")
-    setHook(pkgEvent(pkgname, "detach"), value, action)
+    .Deprecated("setHook(packageEvent())")
+    setHook(packageEvent(pkgname, "detach"), value, action)
 }
 
 getUserOnUnloadHook <- function(pkgname)
 {
-    .Deprecated("getHook(pkgEvent())")
-    getHook(pkgEvent(pkgname, "onUnload"))
+    .Deprecated("getHook(packageEvent())")
+    getHook(packageEvent(pkgname, "onUnload"))
 }
 
 setUserOnUnloadHook <- function(pkgname, value, action = "append")
 {
-    .Deprecated("setHook(pkgEvent())")
-    setHook(pkgEvent(pkgname, "onUnload"), value, action)
+    .Deprecated("setHook(packageEvent())")
+    setHook(packageEvent(pkgname, "onUnload"), value, action)
 }
