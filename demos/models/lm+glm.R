@@ -19,7 +19,7 @@ birthw <- c(2968, 2795, 3163, 2925, 2625, 2847, 3292, 3473, 2628, 3176,
             3421, 2975, 3317, 2729, 2935, 2754, 3210, 2817, 3126, 2539,
             2412, 2991, 2875, 3231)
 sex <- gl(2,12, labels=c("M","F"))
-if(exists(".Device") && !is.null(.Device)) {
+if(!is.null(dev.list())) {
         plot(age,birthw, col=codes(sex), main="Dobson's Birth Weight Data")
         lines(lowess(age[sex=='M'],birthw[sex=='M']), col=1)
         lines(lowess(age[sex=='F'],birthw[sex=='F']), col=2)
