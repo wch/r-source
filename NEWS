@@ -324,6 +324,10 @@ BUG FIXES
     o   The biplot method for prcomp was not registered nor exported. 
 	(PR#6425)
 
+    o   Latex conversion of .Rd files was missing newline before
+	\end{Section} etc which occasionally gave problems, as fixed for
+	some other \end{Foo} in 1.8.1.  (PR#5645)
+
 
 
 

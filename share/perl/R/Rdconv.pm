@@ -2479,7 +2479,7 @@ sub latex_print_block {
 	my $thisblock = &text2latex($blocks{$block});
 	print $latexout $thisblock;
 	print $latexout "\n" unless $thisblock =~ /\n$/m;
-	print $latexout "\\end\{$env\}\n";
+	print $latexout "\n\\end\{$env\}\n";
     }
 }
 
@@ -2555,8 +2555,10 @@ sub latex_print_sections {
 
     for($section=0; $section<$max_section; $section++){
 	print $latexout "\\begin\{Section\}\{" . $section_title[$section] . "\}\n";
-	print $latexout &text2latex($section_body[$section]);
-	print $latexout "\\end\{Section\}\n";
+	my $thisblock = &text2latex($section_body[$section]);
+	print $latexout $thisblock;
+	print $latexout "\n" unless $thisblock =~ /\n$/m;
+	print $latexout "\n\\end\{Section\}\n";
     }
 }
 
