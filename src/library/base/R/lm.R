@@ -26,8 +26,6 @@ lm <- function (formula, data = list(), subset, weights, na.action,
 	    xlev <- lapply(mf[xvars], levels)
 	    xlev[!sapply(xlev, is.null)]
 	}
-    if (!singular.ok)
-	warning("only `singular.ok = TRUE' is currently implemented.")
     y <- model.response(mf, "numeric")
     w <- model.weights(mf)
     offset <- model.offset(mf)
@@ -88,7 +86,7 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
     if(method != "qr")
 	warning("method = ",method, " is not supported. Using \"qr\".")
     if(length(list(...)))
-	warning("Extra arguments ", deparse(substitute(...)),
+	warning("Extra arguments ", paste(names(list(...)), sep=", "),
                 " are just disregarded.")
     storage.mode(x) <- "double"
     storage.mode(y) <- "double"
@@ -100,8 +98,7 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07,
 		  residuals = y, effects = y, rank = integer(1),
 		  pivot = 1:p, qraux = double(p), work = double(2*p),
                   PACKAGE="base")
-    if(!singular.ok && z$rank == 0)
-        stop("singular fit encountered")
+    if(!singular.ok && z$rank < p) stop("singular fit encountered")
     coef <- z$coefficients
     pivot <- z$pivot
     ## careful here: the rank might be 0
@@ -148,7 +145,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
     if(method != "qr")
 	warning("method = ",method, " is not supported. Using \"qr\".")
     if(length(list(...)))
-	warning("Extra arguments ", deparse(substitute(...)),
+	warning("Extra arguments ", paste(names(list(...)), sep=", "),
                 " are just disregarded.")
     x.asgn <- attr(x, "assign")# save
     zero.weights <- any(w == 0)
@@ -183,8 +180,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7,
 		  rank = integer(1), pivot = 1:p, qraux = double(p),
 		  work = double(2 * p),
                   PACKAGE="base")
-    if(!singular.ok && z$rank == 0)
-        stop("singular fit encountered")
+    if(!singular.ok && z$rank < p) stop("singular fit encountered")
     coef <- z$coefficients
     pivot <- z$pivot
     r1 <- seq(len=z$rank)

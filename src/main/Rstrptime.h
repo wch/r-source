@@ -64,7 +64,8 @@ static void get_locale_strings(void);
     do {								      \
       val *= 10;							      \
       val += *rp++ - '0';						      \
-    } while (--__n > 0 && val * 10 <= to && *rp >= '0' && *rp <= '9');	      \
+/*  } while (--__n > 0 && val * 10 <= to && *rp >= '0' && *rp <= '9');*/      \
+    } while (--__n > 0 && *rp >= '0' && *rp <= '9');	      \
     if (val < from || val > to)						      \
       return NULL;							      \
   } while (0)

@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.26 2003/08/10 09:24:39 ripley Exp $
+### $Id: nls.R,v 1.26.6.1 2003/11/23 07:01:22 ripley Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -319,7 +319,7 @@ nlsModel <- function( form, data, start ) {
       }
     setPars <- setPars.noVarying
 
-    on.exit(remove(i, data, parLength, start, temp))
+    on.exit(remove(i, data, parLength, start, temp, m))
     m <-
       list(resid = function() resid,
            fitted = function() rhs,

@@ -6,6 +6,21 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.8.2
+
+
+BUG FIXES
+
+    o	When lm.{w}fit() disregarded arguments in ... they reported
+	the values and not the names.
+
+    o	lm(singular.ok=FALSE) was looking for 0 rank, not rank < p. 
+
+    o	The substitution code for strptime in the sources no longer
+	follows glibc in silently `correcting' invalid inputs.
+
+
+
 		CHANGES IN R VERSION 1.8.1
 
 
