@@ -128,5 +128,3 @@ SEXP listAppend(SEXP, SEXP);
 SEXP ssNewVector(SEXPTYPE, int);
 static SEXP ssNA_STRING;
 static double ssNA_REAL;
- 
-double atof();

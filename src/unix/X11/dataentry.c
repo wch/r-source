@@ -26,12 +26,8 @@
 #include "Defn.h"
 #include "Print.h"
 
-#if defined(Macintosh) | defined(Unix)
 #include "dataentry.h"
-
-#ifdef Macintosh
-#include "MACconsole.h"
-#endif
+#include <stdlib.h>
 
 
 static void clearwindow(void);
@@ -60,15 +56,12 @@ static void clearwindow(void);
 
  */
 
-#ifndef Macintosh
 static char *menu_label[] =
 {
     "Real",
     "Character",
     "Change Name",
 };
-
-#endif
 
 /*
    ssNewVector is just an interface to allocVector but it lets us
@@ -122,14 +115,8 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     tvec = allocVector(REALSXP, 1);
     REAL(tvec)[0] = ssNA_REAL;
     PROTECT(ssNA_STRING = coerceVector(tvec, STRSXP)); nprotect++;
-#ifdef Macintosh
-    bwidth = hwidth = 0;
-    doneSpread = 1;
-    text_offset = 2;
-#else
     bwidth = 5;
     hwidth = 30;
-#endif
 
     /* setup inputlist  */
 
@@ -180,14 +167,7 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     highlightrect();
 
-    /*if on the mac call the main event loop */
-
-#ifdef Macintosh
-    while (doneSpread)
-	EventLoop();
-#else
     eventloop();
-#endif
 
     endcontext(&cntxt);
     closewin();
@@ -235,7 +215,6 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* Event Loop Functions */
 
-#ifndef Macintosh
 
 static void eventloop()
 {
@@ -271,7 +250,6 @@ int doMouseDown(DEEvent * event)
 {
     return findsquare();
 }
-#endif
 
 static int CellModified;
 
@@ -312,52 +290,6 @@ static void doSpreadKey(int key, DEEvent * event)
 	handlechar(text);
 }
 
-#ifdef Macintosh
-
-static void doSpreadActive(DEEvent * myevent, WindowPtr whichWindow,
-			   short windowCode)
-{
-    if (windowCode == inContent)
-	findsquare();
-    else
-	bell();
-}
-
-static void doSpreadInactive(DEEvent * myevent, WindowPtr whichWindow, short windowCode)
-{
-}
-
-static void doSpreadUpdate(WindowPtr theWind)
-{
-    GrafPtr current;
-
-    GetPort(&current);
-    SetPort(theWind);
-    BeginUpdate(theWind);
-    drawwindow();
-    EndUpdate(theWind);
-    SetPort(current);
-}
-
-static void doSpreadActivate(int ival)
-{
-    SetPort((WindowPtr) dataentryWindow);
-    SetCursor(&arrow);
-}
-
-static void doSpreadCursor()
-{
-}
-
-static void doSpreadNotWindow(DEEvent * myevent, WindowPtr whichWindow, short windowCode)
-{
-    if (windowCode == inMenuBar)
-	doSpreadMenu(MenuSelect(myevent->where));
-    else if (windowCode == inDesk)
-	bell();
-}
-
-#endif
 
 /* Window Drawing Routines */
 
@@ -391,13 +323,11 @@ void drawwindow()
 	for (i = colmin; i <= colmax; i++)
 	    drawcol(i);
 
-#ifndef Macintosh
     /* draw the quit box */
 
     i = textwidth("Quit", 4);
     drawrectangle(windowWidth - 6 - bwidth - i, 3, i + 4, hwidth - 6);
     drawtext(windowWidth - 4 - bwidth - i, hwidth - 7, "Quit", 4);
-#endif
 
     /* set the active rectangle to be the upper left one */
     crow = 1;
@@ -408,13 +338,10 @@ void drawwindow()
 
 }
 
-#ifndef Macintosh
 static void clearwindow()
 {
     XClearWindow(iodisplay, iowindow);
 }
-
-#endif
 
 /* find_coords finds the coordinates of the upper left corner of the
    given square on the screen */
@@ -590,16 +517,16 @@ static void drawelt(int whichrow, int whichcol)
 
     if (length(inputlist) >= whichcol + colmin - 1) {
 	tmp = nthcdr(inputlist, whichcol + colmin - 2);
-	if (whichrow == 0)
-	    if (TAG(tmp) != R_NilValue)
+	if (whichrow == 0) {
+	    if (TAG(tmp) != R_NilValue) {
 		printstring(
 		    CHAR(PRINTNAME(TAG(tmp))),
 		    strlen(CHAR(PRINTNAME(TAG(tmp)))), 0, whichcol);
-	    else {
+	    } else {
 		sprintf(clab, "var%d", whichcol + colmin - 1);
 		printstring(clab, strlen(clab), 0, whichcol);
 	    }
-	else
+	} else
 	    if (CAR(tmp) != R_NilValue && 
 		(i = rowmin + whichrow - 2) < (int)LEVELS(CAR(tmp)) )
 		printelt(CAR(tmp), i, whichrow, whichcol);
@@ -673,7 +600,6 @@ void highlightrect()
 }
 
 /* find out whether the button click was in the quit box */
-#ifndef Macintosh
 static int checkquit(int xw)
 {
     int wi;
@@ -685,7 +611,6 @@ static int checkquit(int xw)
     else
 	return 0;
 }
-#endif
 
 /* when a buttonpress event happens find the square that is being
    pointed to if the pointer is in the header we need to see if the
@@ -994,386 +919,6 @@ void printlabs()
     }
 }
 
-#ifdef Macintosh
-
-/* Event Loop Routines */
-
-static int NextEvent(DEEvent * ioevent)
-{
-
-    long sleepTicks;
-
-    sleepTicks = 10L;
-    return (WaitNextEvent(everyEvent, ioevent, sleepTicks, 0L));
-}
-
-static int WhichEvent(DEEvent ioevent)
-{
-    int rval;
-
-    rval = ioevent.what;
-    return rval;
-}
-
-static void RefreshKeyboardMapping(DEEvent * ioevent)
-{
-}
-
-static void doConfigure(DEEvent * ioevent)
-{
-}
-
-static int IsModifierKey(KeySym key)
-{
-    return 0;
-}
-
-static KeySym GetKey(DEEvent * event)
-{
-    return (*event).message & keyCodeMask;
-}
-
-static char GetCharP(DEEvent * event)
-{
-    short iochar;
-
-    iochar = (*event).message & charCodeMask;
-    return (char) iochar;
-}
-
-static int CheckControl(DEEvent * event)
-{
-    return 0;
-}
-
-static void doControl(DEEvent * event)
-{
-}
-
-/* Menu Functions */
-
-static void doSpreadMenu(long code)
-{
-    int theItem;
-
-    theItem = LoWord(code);
-    if (HiWord(code) == 200 && theItem == 1)
-	doneSpread = 0;
-    else
-	bell();
-}
-
-void popupmenu(int x_pos, int y_pos, int col, int row)
-{
-    DialogPtr dstorage;
-    DEEvent theEvent;
-    short whichItem, type;
-    Rect box;
-    ControlHandle chand1, chand2, chand3;
-    char text[120], noString[1];
-    SEXP tvec;
-    int levs;
-
-    noString[1] = '\0';
-    if (length(inputlist) < col + colmin - 1)
-	inputlist = listAppend(inputlist, allocList(col + colmin - 1 - length(inputlist)));
-    tvec = nthcdr(inputlist, col + colmin - 2);
-    if (TAG(tvec) != R_NilValue)
-	sprintf(text, "%s", CHAR(PRINTNAME(TAG(tvec))));
-    else
-	sprintf(text, "var%d", col + colmin - 1);
-
-    dstorage = GetNewDialog(129, 0L, (WindowPtr) - 1L);
-    GetDItem(dstorage, 2, &type, &chand1, &box);
-    GetDItem(dstorage, 3, &type, &chand2, &box);
-
-    if (TYPEOF(CAR(tvec)) == STRSXP) {
-	SetCtlValue(chand1, 0);
-	SetCtlValue(chand2, 1);
-    }
-    else {
-	SetCtlValue(chand1, 1);
-	SetCtlValue(chand2, 0);
-    }
-
-    GetDItem(dstorage, 5, &type, &chand3, &box);
-    CtoPstr(text);
-    SetIText(chand3, text);
-    SelIText(dstorage, 5, 0, 120);
-    ShowWindow(dstorage);
-    whichItem = 0;
-    while (whichItem != 6 && whichItem != 7) {
-	ModalDialog(0, &whichItem);
-	if (whichItem == 2) {
-	    SetCtlValue(chand1, 1);
-	    SetCtlValue(chand2, 0);
-	}
-	else if (whichItem == 3) {
-	    SetCtlValue(chand1, 0);
-	    SetCtlValue(chand2, 1);
-	}
-	else if (whichItem == 6) {
-	    GetDItem(dstorage, 5, &type, &chand3, &box);
-	    GetIText(chand3, text);
-	    PtoCstr(text);
-	    if (!validName(text)) {
-		CtoPstr(text);
-		ParamText(text, noString, noString, noString);
-		StopAlert(130, 0L);
-		SetIText(chand3,"");
-		whichItem = 0;
-	    }
-	    else {
-		TAG(tvec) = install(text);
-		printstring(text, strlen(text), 0, col);
-		type = GetCtlValue(chand1);
-		if (type == 1) {
-		    if (CAR(tvec) == R_NilValue)
-			CAR(tvec) = ssNewVector(REALSXP, 100);
-		    else {
-			levs = LEVELS(CAR(tvec));
-			CAR(tvec) = coerceVector(CAR(tvec), REALSXP);
-			LEVELS(CAR(tvec)) = levs;
-		    }
-		}
-		else {
-		    if (CAR(tvec) == R_NilValue)
-			CAR(tvec) = ssNewVector(STRSXP, 100);
-		    else {
-			levs = LEVELS(CAR(tvec));
-			CAR(tvec) = coerceVector(CAR(tvec), STRSXP);
-			LEVELS(CAR(tvec)) = levs;
-		    }
-		}
-	    }
-	}
-    }
-    CloseDialog(dstorage);
-}
-
-static int validName(char *text)
-{
-    char tmp;
-
-
-
-    if (!isalpha(*text++))
-	return 0;
-
-    while (*text != '\0')
-	if (!isalnum(*text++))
-	    return 0;
-    return 1;
-}
-
-/* X11-MAC versions of graphics functions */
-
-static void Mac_MoveTo(int x, int y)
-{
-    xlast = x;
-    ylast = y;
-    MoveTo(x, y);
-}
-
-
-/* ring the bell for argument 60ths of a second */
-static void bell()
-{
-    SysBeep(30);
-}
-
-static int checkquit(int x)
-{
-    return 0;
-}
-
-static void clearwindow()
-{
-    EraseRect(&dataentryWindow->portRect);
-}
-
-/*
-   copyarea is a lot more complicated than you would expect but,
-   the Mac requires that you transform to screen coordinates to CopyBits
-   in the same window and if the copy regions are not the same size it
-   automatically rescales for you (bizarre!) so you need to be sure the
-   two regions are the same size
- */
-
-static void copyarea(int src_x, int src_y, int dest_x, int dest_y)
-{
-    int destw, desth;
-    Point tp1, tp2;
-    Rect srcRect, destRect;
-
-    destw = (src_x < dest_x) ? windowWidth - dest_x : windowWidth - src_x;
-    desth = (src_y < dest_y) ? windowHeight - dest_y : windowHeight - src_y;
-    tp1.h = src_x;
-    tp1.v = src_y;
-    LocalToGlobal(&tp1);
-    tp2.h = src_x + destw;
-    tp2.v = src_y + desth;
-    LocalToGlobal(&tp2);
-    SetRect(&srcRect, tp1.h, tp1.v, tp2.h, tp2.v);
-    tp1.h = dest_x;
-    tp1.v = dest_y;
-    tp2.h = dest_x + destw;
-    tp2.v = dest_y + desth;
-    LocalToGlobal(&tp1);
-    LocalToGlobal(&tp2);
-    SetRect(&destRect, tp1.h, tp1.v, tp2.h, tp2.v);
-    CopyBits(&screenBits, &screenBits,
-	     &srcRect, &destRect, srcCopy, 0);
-    /*
-      &srcRect, &destRect, srcCopy, &dataentryWindow->clipRgn); */
-}
-
-/* clear the text from an area */
-
-static void cleararea(int xpos, int ypos, int width, int height)
-{
-    SetRect(&drawRect1, xpos, ypos, xpos + width, ypos + height);
-    EraseRect(&drawRect1);
-}
-
-static void drawline(int fromx, int fromy, int tox, int toy)
-{
-    if (xlast != fromx || ylast != fromy)
-	Mac_MoveTo(fromx, fromy);
-    LineTo(tox, toy);
-    xlast = tox;
-    ylast = toy;
-}
-
-
-static void drawrectangle(int xpos, int ypos, int width, int height)
-{
-    SetRect(&drawRect1, xpos, ypos, xpos + width + 1, ypos + height + 1);
-    FrameRect(&drawRect1);
-}
-
-static void setattribsfromwindow()
-{
-    windowWidth = dataentryWindow->portRect.right - dataentryWindow->portRect.left;
-    windowHeight = dataentryWindow->portRect.bottom - dataentryWindow->portRect.top;
-    box_w = textwidth(digits, 10);
-    box_h = 25;
-    bwidth = 0;
-}
-
-static void setforeground(int which)
-{
-    if (which == 0)
-	PenPat(white);
-    else
-	PenPat(black);
-}
-
-
-/* set the line width */
-static void setlineattribs(int width)
-{
-    PenSize(width, width);
-}
-
-/* Text Drawing */
-static void drawtext(int xpos, int ypos, char *text, int len)
-{
-    MoveTo(xpos + text_offset, ypos - text_offset);
-    DrawText(text, 0, len);
-}
-
-static void querypointer(int *xglobal, int *yglobal, int *xlocal, int *ylocal)
-{
-    Point tp1;
-
-    GetMouse(&tp1);
-    *xlocal = tp1.h;
-    *ylocal = tp1.v;
-    LocalToGlobal(&tp1);
-    *xglobal = tp1.h;
-    *yglobal = tp1.v;
-}
-
-/* no need to Rsync on the mac */
-static void Rsync()
-{
-}
-
-/* find the width of a text string */
-static int textwidth(char *text, int nchar)
-{
-    int t1;
-
-    t1 = TextWidth(text, 0, nchar);
-    return t1;
-}
-
-
-/* Open/Close Windows */
-static int initwin(void)
-{
-    FontInfo info;
-
-
-    dewindowBounds.left = screenBits.bounds.right - degraphBounds.right - 4;
-    dewindowBounds.top = screenBits.bounds.bottom - degraphBounds.bottom - 4;
-    dewindowBounds.right = screenBits.bounds.right - 4;
-    dewindowBounds.bottom = screenBits.bounds.bottom - 4;
-    dedragRect = screenBits.bounds;
-    SetRect(&dedragRect,
-	    screenBits.bounds.left + 4,
-	    screenBits.bounds.top + 24,
-	    screenBits.bounds.right - 4,
-	    screenBits.bounds.bottom - 4);
-
-    FlushEvents(everyEvent, 0);
-
-    dataentryWindow = NewWindow(0L, &dewindowBounds, "\pR Data Entry", true, documentProc,
-				(WindowPtr) - 1L, false, 0);
-
-    spreadContext.active = 0;	/* 1 only when locator in action */
-    spreadContext.theWindow = dataentryWindow;
-    spreadContext.doCursor = doSpreadCursor;
-    spreadContext.doKey = doSpreadKey;
-    spreadContext.doMenu = doSpreadMenu;
-    spreadContext.doActive = doSpreadActive;
-    spreadContext.doInactive = doSpreadInactive;
-    spreadContext.doNotWindow = doSpreadNotWindow;
-    spreadContext.doUpdate = doSpreadUpdate;
-    spreadContext.doActivate = doSpreadActivate;
-
-    GetPort(&savePort);
-    SetPort(dataentryWindow);
-    SelectWindow(dataentryWindow);
-
-    TextSize(10);
-    GetFontInfo(&info);
-    fh = info.ascent + info.descent;
-    fw = info.widMax + info.leading;
-
-    deMenu = NewMenu(200, "\pDataEntry");
-    AppendMenu(deMenu, "\pQuit");
-    InsertMenu(deMenu, 0);
-    DrawMenuBar();
-    activeContext = &spreadContext;
-
-    return 0;
-}
-
-
-static void closewin()
-{
-    closerect();
-    DeleteMenu(200);
-    DisposeMenu(deMenu);
-    DrawMenuBar();
-    DisposeWindow(dataentryWindow);
-    SetPort(savePort);
-    activeContext = &stdioContext;
-}
-
-#else /* X11 */
 
 /* Event Loop Functions */
 
@@ -1750,15 +1295,3 @@ void popdownmenu()
     XUnmapWindow(iodisplay, menuwindow);
     XUnmapSubwindows(iodisplay, menuwindow);
 }
-
-#endif
-
-#else
-
-SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    error("no data entry editor in this version of R");
-    return R_NilValue;
-}
-
-#endif
