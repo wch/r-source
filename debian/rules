@@ -31,6 +31,7 @@ build-stamp:
 	PATH=${PATH}:/usr/bin/X11\   # so /usr/bin/X11/imake is found
 	SHLIBLDFLAGS='-shared -lc' ./configure --prefix=/usr		 \
 					--with-g77			 \
+					--with-tcltk			 \
 					--mandir=$(debtmp)/usr/share/man \
 					--with-gnome			 \
 					--host $(arch)
