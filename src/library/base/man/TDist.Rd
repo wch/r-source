@@ -23,7 +23,7 @@ rt(n, df)
     is taken to be the number required.}
   \item{df}{degrees of freedom (\eqn{> 0}, maybe non-integer).}
   \item{ncp}{non-centrality parameter \eqn{\delta};
-    currently only for \code{pt()} and \code{ncp <= 37.62}.}
+    currently for \code{pt()} and \code{dt()}, only for \code{ncp <= 37.62}.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
@@ -88,5 +88,10 @@ ptn <- outer(tt,ncp, function(t,d) pt(t, df = 3, ncp=d))
 image(tt,ncp,ptn, zlim=c(0,1),main=t.tit <- "Non-central t - Probabilities")
 persp(tt,ncp,ptn, zlim=0:1, r=2, phi=20, theta=200, main=t.tit,
       xlab = "t", ylab = "noncentrality parameter", zlab = "Pr(T <= t)")
+
+op <- par(yaxs="i")
+plot(function(x) dt(x, df = 3, ncp = 2), -3, 11, ylim = c(0, 0.32),
+     main="Non-central t - Density")
+par(op)
 }
 \keyword{distribution}

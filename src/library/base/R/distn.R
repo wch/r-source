@@ -211,8 +211,9 @@ rpois <- function(n, lambda) .Internal(rpois(n, lambda))
 
 dt <- function(x, df, ncp=0, log = FALSE) {
     if(missing(ncp))
-        .Internal(dt(x, df, log))
-    else .NotYetImplemented()
+	.Internal(dt(x, df, log))
+    else
+	.Internal(dnt(x, df, ncp, log))
 }
 
 pt <- function(q, df, ncp=0, lower.tail = TRUE, log.p = FALSE) {

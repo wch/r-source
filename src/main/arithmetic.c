@@ -1304,7 +1304,7 @@ SEXP do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 static SEXP math3(SEXP sa, SEXP sb, SEXP sc, double (*f)(), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, ic, n, na, nb, nc, 
+    int i, ia, ib, ic, n, na, nb, nc,
 	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc);
     double ai, bi, ci, *a, *b, *c, *y;
     int naflag;
@@ -1370,7 +1370,7 @@ static SEXP math3(SEXP sa, SEXP sb, SEXP sc, double (*f)(), SEXP lcall)
 static SEXP math3_1(SEXP sa, SEXP sb, SEXP sc, SEXP sI, double (*f)(), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, ic, n, na, nb, nc, 
+    int i, ia, ib, ic, n, na, nb, nc,
 	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc);
     double ai, bi, ci, *a, *b, *c, *y;
     int i_1;
@@ -1397,7 +1397,7 @@ static SEXP math3_1(SEXP sa, SEXP sb, SEXP sc, SEXP sI, double (*f)(), SEXP lcal
 static SEXP math3_2(SEXP sa, SEXP sb, SEXP sc, SEXP sI, SEXP sJ, double (*f)(), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, ic, n, na, nb, nc, 
+    int i, ia, ib, ic, n, na, nb, nc,
 	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc);
     double ai, bi, ci, *a, *b, *c, *y;
     int i_1,i_2;
@@ -1478,14 +1478,9 @@ SEXP do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
 
     case 34:  return Math3_1(args, dnchisq);
     case 35:  return Math3_2(args, pnchisq);
-/* #ifdef UNIMP */
-/* This appears to be IMP already */
     case 36:  return Math3_2(args, qnchisq);
-/* #endif */
 
-#ifdef UNIMP
     case 37:  return Math3_1(args, dnt);
-#endif
     case 38:  return Math3_2(args, pnt);
 #ifdef UNIMP
     case 39:  return Math3_2(args, qnt);
@@ -1521,7 +1516,7 @@ SEXP do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
 static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)(), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, ic, id, n, na, nb, nc, nd, 
+    int i, ia, ib, ic, id, n, na, nb, nc, nd,
 	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc), sdo = OBJECT(sd);
     double ai, bi, ci, di, *a, *b, *c, *d, *y;
     int naflag;
@@ -1596,7 +1591,7 @@ static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)(), SEXP lcall)
 static SEXP math4_1(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, double (*f)(), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, ic, id, n, na, nb, nc, nd, 
+    int i, ia, ib, ic, id, n, na, nb, nc, nd,
 	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc), sdo = OBJECT(sd);
     double ai, bi, ci, di, *a, *b, *c, *d, *y;
     int i_1;
@@ -1624,7 +1619,7 @@ static SEXP math4_2(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP sI, SEXP sJ,
 		    double (*f)(), SEXP lcall)
 {
     SEXP sy;
-    int i, ia, ib, ic, id, n, na, nb, nc, nd, 
+    int i, ia, ib, ic, id, n, na, nb, nc, nd,
 	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc), sdo = OBJECT(sd);
     double ai, bi, ci, di, *a, *b, *c, *d, *y;
     int i_1, i_2;
@@ -1721,8 +1716,8 @@ SEXP do_math4(SEXP call, SEXP op, SEXP args, SEXP env)
 static SEXP math5(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se, double (*f)())
 {
     SEXP sy;
-    int i, ia, ib, ic, id, ie, n, na, nb, nc, nd, ne, 
-	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc), 
+    int i, ia, ib, ic, id, ie, n, na, nb, nc, nd, ne,
+	sao = OBJECT(sa), sbo = OBJECT(sb), sco = OBJECT(sc),
 	sdo = OBJECT(sd), seo = OBJECT(se);
     double ai, bi, ci, di, ei, *a, *b, *c, *d, *e, *y;
 

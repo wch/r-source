@@ -297,7 +297,9 @@ NEW FEATURES
 	workspace.  Previously the first place a variable of that name
 	was found on the search path was used.
 
-    o   bquote does partial substitution like LISP backquote.
+    o	bquote does partial substitution like LISP backquote.
+
+    o	dt(*, ncp = V)	is now implemented, thanks to Claus Ekstroem.
 
 
 DEPRECATED & DEFUNCT
