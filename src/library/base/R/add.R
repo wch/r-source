@@ -461,6 +461,8 @@ step <-
     tmp <- attr(tt, "term.labels")
     if (!attr(tt, "intercept")) 
     	tmp <- c(tmp, "0")
+    if (!length(tmp)) 
+    	tmp <- "1"
     tmp <- paste(deparse(formula(object)[[2]]), "~",
                  paste(tmp, collapse = " + "))
     if (length(offset <- attr(tt, "offset")))
@@ -589,7 +591,8 @@ step <-
       }
       attr(aod, "heading") <- NULL
       # need to remove any terms with zero df from consideration
-      nzdf <- aod$Df != 0 | is.na(aod$Df)
+      nzdf <- if( !is.null(aod$Df) )
+        aod$Df != 0 | is.na(aod$Df)
       aod <- aod[nzdf, ]
       if(is.null(aod) || ncol(aod) == 0) break
       nc <- match(c("Cp", "AIC"), names(aod))
