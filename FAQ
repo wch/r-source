@@ -2723,6 +2723,9 @@ distributions of R.)
 *supclust*
      Methodology for supervised grouping of predictor variables.
 
+*superpc*
+     Supervised principal components.
+
 *survey*
      Summary statistics, generalized linear models, and general maximum
      likelihood estimation for stratified, cluster-sampled, unequally
