@@ -2203,7 +2203,8 @@ stopifnot(identical(hc, hhc <- as.hclust(hc)),
           identical(hc[iC1], hcn[iC1]),
           identical(hcn$labels, rownames(xn))
           )
-if(require(cluster)) {# is a required package
+
+if(require(cluster)) { # required package
   ag <- agnes(x, method="complete")
   hcag <- as.hclust(ag)
   agn <- agnes(xn, method="complete")
@@ -2214,6 +2215,7 @@ if(require(cluster)) {# is a required package
             all.equal(hc$height, hcag$height, tol = 1e-12),
             all(hc$merge == hcag$merge | hc$merge == hcag$merge[ ,2:1])
             )
+  detach("package:cluster")
 }
 ## as.hclust.twins() lost labels and more till (incl) 1.6.2
 
@@ -3113,6 +3115,15 @@ tmp.aov <- aov(y ~ cc + bb/aa, data=tmp)
 anova(tmp.aov)
 model.tables(tmp.aov, type="means")
 ## failed in 1.9.1.
+
+if(require(survival)) { # required package
+  a <- Surv(1:4, 2:5, c(0,1,1,0))
+  str(a)
+  str(a[rep(1:4,3)], vec.len = 7)
+  detach("package:survival")
+}
+
+### end of tests added in 1.9.1 patched ###
 
 
 ### end of tests added in 1.9.1 patched ###

@@ -45,30 +45,32 @@ BUG FIXES
     o	summary.Date() now has a sensible default for 'digits'.
 
     o	list.files(all.files = TRUE, recursive = TRUE) died on infinite
-    	recursion. (PR#7100)
+	recursion. (PR#7100)
 
     o	cor(as.array(c(a=1,b=2)), cbind(1:2)) no longer seg.faults (PR#7116).
 	cor(), cov() and var() no longer accidentally work with list()
 	arguments as if they were unlist()ed.
 
     o	as.matrix(data.frame(d= as.POSIXct("2004-07-20"))) doesn't give a
-        wrong warning anymore.
+	wrong warning anymore.
 
     o	gsub(perl=TRUE) code got the R length of return strings wrong
-	in some circumstances (when the string was shortened).  
+	in some circumstances (when the string was shortened).
 	(Fixed also PR#7108)
 
-    o   summaryRprof was ignoring functions whose name begins with dot, 
+    o	summaryRprof was ignoring functions whose name begins with dot,
 	e.g. .C, .Call, .Fortran. (PR#7137)
 
-    o   loglin() could segfault if 'start' was of the wrong length.  (PR#7123)
+    o	loglin() could segfault if 'start' was of the wrong length.  (PR#7123)
 
-    o   model.tables(type="means") could fail in a design where a
+    o	model.tables(type="means") could fail in a design where a
 	projection gave all zeros. (PR#7132)
 
     o	Applying attributes() to a pairlist, e.g. .Options, could segfault.
 
     o	The checking of R versions incorrectly assumed 1.9.1 >= 1.50.
+
+    o	str(Surv(..)) failed for  type = "counting"  Surv objects.
 
 
 
@@ -225,8 +227,8 @@ BUG FIXES
 
     o	Building standalone nmath did not support some of the DEBUG options.
 
-    o   mle() got confused if start value list was not in same order as
-        arguments of likelihood function (reported by Ben Bolker)
+    o	mle() got confused if start value list was not in same order as
+	arguments of likelihood function (reported by Ben Bolker)
 
     o	backsolve(r, x, k) now allows k < nrow(x) - as its documentation
 	always claimed.
@@ -249,8 +251,8 @@ BUG FIXES
     o	heatmap(*, labRow=., labCol=.) now also reorders the labels when
 	specified---not only when using default labels.
 
-    o   Copying lattice (grid) output to another device now works again
-        (There were intermittent problems in 1.9.0 - PR#6915, #6947/8.)
+    o	Copying lattice (grid) output to another device now works again
+	(There were intermittent problems in 1.9.0 - PR#6915, #6947/8.)
 
     o	hist() uses a more robust choice of its 'diddle' factor, used
 	to detect if an observation is on a bin boundary.  (PR#6931)
