@@ -288,3 +288,7 @@ Date: Tue, 17 Aug 1999 12:21:45 +0200 (CEST)
 Subject: bug: R says "Floating exception" on DEC-Alpha w/OSF1
 From: "Michael Thompson" <mlthomps@yayoi.mt.m-kagaku.co.jp>
 Date: Thu, 19 Aug 1999 06:03:06 +0900
+* PR# 253 *
+Subject: seg.fault for some illegal .Random.seed (new since 0.64)
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 20 Aug 1999 14:17:31 +0200
