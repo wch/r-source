@@ -26,6 +26,10 @@ The Poisson distribution has density
 \deqn{p(x) = \frac{{\lambda}^{x} {e}^{-\lambda}}{x!}}{p(x) = lambda^x exp(-lambda)/x!}
 for \eqn{x = 0, 1, 2, \ldots}.
 }
+\seealso{
+\code{\link{dbinom}} for the binomial and \code{\link{dnbinom}} for
+the negative binomial distribution.
+}
 \examples{
 -log(dpois(0:7, lambda=1) * gamma(1+ 0:7))
 Ni <- rpois(50, lam= 4); table(factor(Ni, 0:max(Ni)))

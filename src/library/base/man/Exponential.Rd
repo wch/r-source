@@ -11,10 +11,10 @@ rexp(n, rate = 1)
 \alias{qexp}
 \alias{rexp}
 \arguments{
-  \item{x q}{vector of quantiles}
-  \item{p}{vector of probabilities}
-  \item{n}{number of observations to generate}
-  \item{rate}{vector of rates}
+  \item{x q}{vector of quantiles.}
+  \item{p}{vector of probabilities.}
+  \item{n}{number of observations to generate.}
+  \item{rate}{vector of rates.}
 }
 \value{
   These functions provide information about the exponential distribution
@@ -25,6 +25,8 @@ rexp(n, rate = 1)
   and
   \code{rexp} generates random deviates.
 
+  If \code{rate} is not specified, it assumes the default value of \code{1}.
+
   The exponential distribution with rate \eqn{\lambda} has density
   \deqn{
     f(x) = \lambda {e}^{- \lambda x}}{
@@ -32,8 +34,9 @@ rexp(n, rate = 1)
   for \eqn{x \ge 0}.
 }
 \seealso{
-  \code{\link{exp}}, \code{\link{dchisq}} for the chisquare and
-  \code{\link{dweibull}} for the Weibull distribution which both
+  \code{\link{exp}} for the exponential function,
+  \code{\link{dgamma}} for the gamma distribution and
+  \code{\link{dweibull}} for the Weibull distribution, both of which
   generalize the exponential.
 }
 \examples{

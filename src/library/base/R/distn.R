@@ -13,10 +13,14 @@ pnorm <- function(q, mean=0, sd=1) .Internal(pnorm(q, mean, sd))
 qnorm <- function(p, mean=0, sd=1) .Internal(qnorm(p, mean, sd))
 rnorm <- function(n, mean=0, sd=1) .Internal(rnorm(n, mean, sd))
 
-dcauchy <- function(x, location=0, scale=1) .Internal(dcauchy(x, location, scale))
-pcauchy <- function(q, location=0, scale=1) .Internal(pcauchy(q, location, scale))
-qcauchy <- function(p, location=0, scale=1) .Internal(qcauchy(p, location, scale))
-rcauchy <- function(n, location=0, scale=1) .Internal(rcauchy(n, location, scale))
+dcauchy <-
+function(x, location=0, scale=1) .Internal(dcauchy(x, location, scale))
+pcauchy <-
+function(q, location=0, scale=1) .Internal(pcauchy(q, location, scale))
+qcauchy <-
+function(p, location=0, scale=1) .Internal(qcauchy(p, location, scale))
+rcauchy <-
+function(n, location=0, scale=1) .Internal(rcauchy(n, location, scale))
 
 dgamma <- function(x, shape, scale=1) .Internal(dgamma(x, shape, scale))
 pgamma <- function(q, shape, scale=1) .Internal(pgamma(q, shape, scale))
@@ -38,74 +42,80 @@ pweibull <- function(q, shape, scale=1) .Internal(pweibull(q, shape, scale))
 qweibull <- function(p, shape, scale=1) .Internal(qweibull(p, shape, scale))
 rweibull <- function(n, shape, scale=1) .Internal(rweibull(n, shape, scale))
 
+dbeta <- function(x, shape1, shape2, ncp=0) {
+	if(missing(ncp)) .Internal(dbeta(x, shape1, shape2))
+	else .Internal(dnbeta(x, shape1, shape2, ncp))
+}
+pbeta <- function(q, shape1, shape2, ncp=0) {
+	if(missing(ncp)) .Internal(pbeta(q, shape1, shape2))
+	else .Internal(pnbeta(q, shape1, shape2, ncp))
+}
+qbeta <- function(p, shape1, shape2) .Internal(qbeta(p, shape1, shape2))
+rbeta <- function(n, shape1, shape2) .Internal(rbeta(n, shape1, shape2))
 
-##--- Argument names taken from  ../man/Beta :
-dbeta <- function(x, a, b, ncp=0) {
-if(missing(ncp)) .Internal(dbeta(x, a, b))
-else .Internal(dnbeta(x, a, b, ncp))
-}
-pbeta <- function(q, a, b, ncp=0) {
-if(missing(ncp)) .Internal(pbeta(q, a, b))
-else .Internal(pnbeta(q, a, b, ncp))
-}
-qbeta <- function(p, a, b) .Internal(qbeta(p, a, b))
-rbeta <- function(n, a, b) .Internal(rbeta(n, a, b))
-##--- Argument names taken from  ../man/Binomial :
-dbinom <- function(x, n, p) .Internal(dbinom(x, n, p))
-pbinom <- function(q, n, p) .Internal(pbinom(q, n, p))
-qbinom <- function(prob, n, p) .Internal(qbinom(prob, n, p))
-rbinom <- function(nobs, n, p) .Internal(rbinom(nobs, n, p))
-##--- Argument names taken from  ../man/[N]Chisquare :
+dbinom <- function(x, size, prob) .Internal(dbinom(x, size, prob))
+pbinom <- function(q, size, prob) .Internal(pbinom(q, size, prob))
+qbinom <- function(p, size, prob) .Internal(qbinom(p, size, prob))
+rbinom <- function(n, size, prob) .Internal(rbinom(n, size, prob))
+
 dchisq <- function(x, df, ncp=0) {
-if(missing(ncp)) .Internal(dchisq(x, df))
-else .Internal(dnchisq(x, df, ncp))
+	if(missing(ncp)) .Internal(dchisq(x, df))
+	else .Internal(dnchisq(x, df, ncp))
 }
 pchisq <- function(q, df, ncp=0) {
-if(missing(ncp)) .Internal(pchisq(q, df))
-else .Internal(pnchisq(q, df, ncp))
+	if(missing(ncp)) .Internal(pchisq(q, df))
+	else .Internal(pnchisq(q, df, ncp))
 }
-qchisq <- function(p, df) .Internal(qchisq(p, df))
-rchisq <- function(n, df) .Internal(rchisq(n, df))
+qchisq <- function(p, df, ncp=0) {
+	if(missing(ncp)) .Internal(qchisq(p, df))
+	else .Internal(qnchisq(p, df, ncp))
+}
+rchisq <- function(n, df, ncp=0) {
+	if(missing(ncp)) .Internal(rchisq(n, df))
+        else .not.yet.implemented()
+}
+#-- These *REALLY* are deprecated;  just here for compatibility (<= 0.61.2):
 dnchisq <- function(x, df, lambda) .Internal(dnchisq(x, df, lambda))
 pnchisq <- function(q, df, lambda) .Internal(pnchisq(q, df, lambda))
 qnchisq <- function(p, df, lambda) .Internal(qnchisq(p, df, lambda))
-rnchisq <- function(n, df, lambda) .Internal(rnchisq(n, df, lambda))
-##--- Argument names taken from  ../man/F :
-df <- function(x, n1, n2) .Internal(df(x, n1, n2))
-pf <- function(q, n1, n2, ncp=0) {
-if(missing(ncp)) .Internal(pf(q, n1, n2))
-else .Internal(pnf(q, n1, n2, ncp))
+rnchisq <- function(...) .not.yet.implemented()
+
+df <- function(x, df1, df2) .Internal(df(x, df1, df2))
+pf <- function(q, df1, df2, ncp=0) {
+	if(missing(ncp)) .Internal(pf(q, df1, df2))
+	else .Internal(pnf(q, df1, df2, ncp))
 }
-qf <- function(p, n1, n2) .Internal(qf(p, n1, n2))
-rf <- function(n, n1, n2) .Internal(rf(n, n1, n2))
-##--- Argument names taken from  ../man/Geometric :
-dgeom <- function(x, p) .Internal(dgeom(x, p))
-pgeom <- function(q, p) .Internal(pgeom(q, p))
-qgeom <- function(prob, p) .Internal(qgeom(prob, p))
-rgeom <- function(n, p) .Internal(rgeom(n, p))
-##--- Argument names taken from  ../man/Hypergeometric :
-dhyper <- function(x, N1, N2, n) .Internal(dhyper(x, N1, N2, n))
-phyper <- function(q, N1, N2, n) .Internal(phyper(q, N1, N2, n))
-qhyper <- function(p, N1, N2, n) .Internal(qhyper(p, N1, N2, n))
-rhyper <- function(nobs, N1, N2, n) .Internal(rhyper(nobs, N1, N2, n))
-##--- Argument names taken from  ../man/NegBinomial :
-dnbinom <- function(x, n, p) .Internal(dnbinom(x, n, p))
-pnbinom <- function(q, n, p) .Internal(pnbinom(q, n, p))
-qnbinom <- function(prob, n, p) .Internal(qnbinom(prob, n, p))
-rnbinom <- function(nobs, n, p) .Internal(rnbinom(nobs, n, p))
-##--- Argument names taken from  ../man/Poisson :
+qf <- function(p, df1, df2) .Internal(qf(p, df1, df2))
+rf <- function(n, df1, df2) .Internal(rf(n, df1, df2))
+
+dgeom <- function(x, prob) .Internal(dgeom(x, prob))
+pgeom <- function(q, prob) .Internal(pgeom(q, prob))
+qgeom <- function(p, prob) .Internal(qgeom(p, prob))
+rgeom <- function(n, prob) .Internal(rgeom(n, prob))
+
+dhyper <- function(x, m, n, k) .Internal(dhyper(x, m, n, k))
+phyper <- function(q, m, n, k) .Internal(phyper(q, m, n, k))
+qhyper <- function(p, m, n, k) .Internal(qhyper(p, m, n, k))
+rhyper <- function(nn, m, n, k) .Internal(rhyper(nn, m, n, k))
+
+dnbinom <- function(x, size, prob) .Internal(dnbinom(x, size, prob))
+pnbinom <- function(q, size, prob) .Internal(pnbinom(q, size, prob))
+qnbinom <- function(p, size, prob) .Internal(qnbinom(p, size, prob))
+rnbinom <- function(n, size, prob) .Internal(rnbinom(n, size, prob))
+
 dpois <- function(x, lambda) .Internal(dpois(x, lambda))
 ppois <- function(q, lambda) .Internal(ppois(q, lambda))
 qpois <- function(p, lambda) .Internal(qpois(p, lambda))
 rpois <- function(n, lambda) .Internal(rpois(n, lambda))
-##--- Argument names taken from  ../man/T
+
 dt <- function(x, df) .Internal(dt(x, df))
 pt <- function(q, df, ncp) {
-if(missing(ncp)) .Internal(pt(q, df))
-else .Internal(pnt(q, df, ncp))
+	if(missing(ncp)) .Internal(pt(q, df))
+	else .Internal(pnt(q, df, ncp))
 }
 qt <- function(p, df) .Internal(qt(p, df))
 rt <- function(n, df) .Internal(rt(n, df))
+
 ptukey <- function(q, nmeans, df, nranges=1)
 .Internal(ptukey(q, nranges, nmeans, df))
 qtukey <- function(p, nmeans, df, nranges=1)

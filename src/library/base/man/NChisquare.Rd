@@ -1,6 +1,8 @@
 \name{NChisquare}
 \title{The Non-Central Chi-Square Distribution}
 \usage{
+--- these are DEPRECATED, use  Xchisq( . , df, ncp) instead ---
+
 dnchisq(x, df, lambda)
 pnchisq(q, df, lambda)
 qnchisq(p, df, lambda)
@@ -10,7 +12,15 @@ rnchisq(n, df, lambda)
 \alias{pnchisq}
 \alias{qnchisq}
 \alias{rnchisq}
+\arguments{
+\item{x,q}{vector of quantiles.}
+\item{p}{vector of probabilities.}
+\item{n}{number of observations to generate.}
+\item{df,lambda}{degrees of freedom and non-centrality parameter.}
+}
 \description{
+--- these are DEPRECATED, use  Xchisq( . , df, ncp) instead ---
+
   These functions provide information about the non-central chi-square
   distribution with \code{df} degrees of freedom and non-centrality
   parameter \code{lambda}.  \code{dnchisq} gives the density,
@@ -20,7 +30,7 @@ rnchisq(n, df, lambda)
   The non-central chi-square distribution with \eqn{df} degrees of
   freedom and non-centrality parameter \eqn{\lambda} has density
   \deqn{
-    f(x) = e^{-\lambda / 2} 
+    f(x) = e^{-\lambda / 2}
     \sum_{r=0}^\infty \frac{\lambda^r}{2^r r!}
     \, \mathrm{pchisq}(x, df + 2r)}{
     f(x) = exp(-lambda/2) SUM_{r=0}^infty (lambda^r / 2^r r!)
@@ -28,7 +38,7 @@ rnchisq(n, df, lambda)
   for \eqn{x \ge 0}.
 }
 \seealso{
-  \code{\link{dchisq}}, \code{\link{dgamma}}.
+  \code{\link{dchisq}}.
 }
 \examples{
 pnchisq(1, df = 3, lambda = 0) == pchisq(1, df = 3)

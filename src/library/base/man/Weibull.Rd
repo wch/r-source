@@ -10,12 +10,20 @@ rweibull(n, shape, scale = 1)
 \alias{pweibull}
 \alias{qweibull}
 \alias{rweibull}
+\arguments{
+\item{x,q}{vector of quantiles.}
+\item{p}{vector of probabilities.}
+\item{n}{number of observations to generate.}
+\item{shape,scale}{shape and scale parameters.}
+}
 \description{
   These functions provide information about the Weibull distribution
   with parameters \code{shape} and \code{scale}.  \code{dweibull} gives
   the density, \code{pweibull} gives the distribution function,
   \code{qweibull} gives the quantile function and \code{rweibull}
   generates random deviates.
+
+  If \code{scale} is omitted it assumes the default value of \code{1}.
 
   The Weibull distribution with \code{shape} parameter \eqn{a} and
   \code{scale} parameter \eqn{b} has density given by

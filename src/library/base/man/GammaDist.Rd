@@ -25,17 +25,19 @@ distribution with parameters \code{shape} and \code{scale}.
 and
 \code{rgamma} generates random deviates.
 
+If \code{scale} is omitted, it assumes the default value of \code{1}.
+
 The gamma distribution with parameters \code{shape} \eqn{= a} and
 \code{scale} \eqn{= b} has density
-\deqn{f(x) =
-\frac{1}{{b}^{a} \Gamma (a)} {x}^{a-1} {e}^{-x/b}}{f(x) = 1/(b^a Gamma(a)) x^(a-1) e^-(x/b)}
-for \eqn{x > 0},
-\eqn{a > 0}
-and
-\eqn{b > 0}.
+\deqn{
+  f(x) = \frac{1}{{b}^{a} \Gamma (a)} {x}^{a-1} {e}^{-x/b}%
+}{f(x) = 1/(b^a Gamma(a)) x^(a-1) e^-(x/b)}
+for \eqn{x > 0}, \eqn{a > 0} and \eqn{b > 0}.
 }
 \seealso{
-\code{\link{gamma}}, \code{\link{dbeta}}.
+\code{\link{gamma}} for the gamma function, \code{\link{dbeta}} for
+the beta distribution and \code{\link{dchisq}} for the chi-square
+distribution which is a special case of the gamma distribution.
 }
 \examples{
 -log(dgamma(1:4, shape=1))
