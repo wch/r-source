@@ -111,6 +111,9 @@ This runs all the examples in the help files. If you need to increase
 the heap size or the number of cons cells (e.g. for nlme) use
 environmental variables to do so.  
 
+It will also run and `diff' examples in the tests directory if one
+exists.
+
 
 Debugging
 =========
