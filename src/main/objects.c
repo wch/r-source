@@ -114,8 +114,8 @@ static SEXP matchmethargs(SEXP oldargs, SEXP newargs)
 
 int usemethod(char *generic, SEXP obj, SEXP call, SEXP args, SEXP rho, SEXP *ans)
 {
-	SEXP class, method, sxp, t, s, matchedarg, cloenv;
-	SEXP op, formals, newrho;
+	SEXP class, method, sxp, t, s, cloenv, matchedarg;
+	SEXP op, formals, newrho, newcall;
         char buf[512];
         int i, j, nclass, matched;
 	RCNTXT *cptr;
@@ -125,15 +125,7 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args, SEXP rho, SEXP *ans
 	cptr = R_GlobalContext;
 	if(cptr->callflag != CTXT_RETURN || cptr->cloenv != rho)
 		error("UseMethod used in an inappropriate fashion\n");
-#ifdef old
-	while(cptr != NULL) {
-		if(cptr->callflag == CTXT_RETURN && cptr->cloenv == rho)
-			break;
-		cptr = cptr->nextcontext;
-	}
-	if(cptr == NULL)
-		error("UseMethod called outside a function\n");
-#endif
+
 		/* Create a new environment without any */
 		/* of the formals to the generic in it. */
 
@@ -152,6 +144,7 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args, SEXP rho, SEXP *ans
 	}
 
 	PROTECT(matchedarg= cptr->promargs);
+	PROTECT(newcall = duplicate(cptr->call));
 
 	if(isObject(obj)) {
 		class = getAttrib(obj, R_ClassSymbol);
@@ -175,7 +168,8 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args, SEXP rho, SEXP *ans
 				PROTECT(t=mkString(buf));
 				defineVar(install(".Method"), t, newrho);
 				UNPROTECT(1);
-				PROTECT(t=LCONS(method,matchedarg));
+				t=newcall;
+				CAR(t) = method;
 				R_GlobalContext->callflag=CTXT_GENERIC;
 				*ans = applyMethod(t,sxp,matchedarg,rho,newrho);
 				R_GlobalContext->callflag=CTXT_RETURN;
@@ -193,14 +187,15 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args, SEXP rho, SEXP *ans
 		PROTECT(t=mkString(buf));
 		defineVar(install(".Method"), t, newrho);
 		UNPROTECT(1);
-		PROTECT(t=LCONS(method,matchedarg));
+		t=newcall;
+		CAR(t) = method;
 		R_GlobalContext->callflag=CTXT_GENERIC;
 		*ans = applyMethod(t, sxp, matchedarg, rho, newrho);
 		R_GlobalContext->callflag=CTXT_RETURN;
 		UNPROTECT(4);
 		return 1;
 	}
-	UNPROTECT(3);
+	UNPROTECT(4);
 	cptr->callflag = CTXT_RETURN;
 	return 0;
 }
@@ -264,7 +259,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	char buf[128],*pt, *pb;
 	SEXP ans, s, t, class, method, matchedarg, generic, nextfun;
-	SEXP sysp, m, formals, actuals, tmp;
+	SEXP sysp, m, formals, actuals, tmp, newcall;
 	RCNTXT *cptr;
 	int nargs,i,j;
 
@@ -282,6 +277,8 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	if(cptr == NULL)
 		error("NextMethod called from outside a closure\n");
+
+	PROTECT(newcall=duplicate(cptr->call));
 
 	/* set up the arglist */
 	s=findFun(CAR(cptr->call), cptr->sysparent);
@@ -405,8 +402,8 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	defineVar(install(".Generic"), generic, m);
 
-	PROTECT(t=LCONS(method,matchedarg));
-	ans = applyMethod(t, nextfun, matchedarg, env, m);
+	CAR(newcall) = method;
+	ans = applyMethod(newcall, nextfun, matchedarg, env, m);
 	UNPROTECT(7);
 	return(ans);
 }

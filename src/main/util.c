@@ -657,3 +657,22 @@ int isFree(SEXP val)
 			return 1;
 	return (0);
 }
+
+/*
+  here are some debugging functions-hence the d-prefix
+*/
+
+int dtype(SEXP q)
+{
+	return((int)TYPEOF(q));
+}
+
+SEXP dcar(SEXP l)
+{
+	return(CAR(l));
+}
+
+SEXP dcdr(SEXP l)
+{
+	return(CDR(l));
+}
