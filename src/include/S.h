@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997--1998, The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,9 +17,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *
  *  Much of this is from Doug Bates.
- *
  */
 
 #ifndef R_S_H
@@ -33,6 +32,8 @@
 extern "C" {
 #endif
 
+#include "Platform.h"
+
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -44,13 +45,13 @@ extern "C" {
 #include <math.h>
 #endif
 
-  extern char *S_alloc();  
+  extern char *S_alloc();
   extern void seed_in(long *);
   extern void seed_out();
   extern double unif_rand(void);
   extern double norm_rand(void);
 
-  extern void error(const char *format,...);  
+  extern void error(const char *format,...);
   extern void warning(const char *format,...);
 
 #define PROBLEM_BUFSIZE 4096
@@ -66,8 +67,8 @@ extern "C" {
 #define Free(p)        free( (void *)(p) )
 #define Memcpy(p,q,n)  memcpy( p, q, (size_t)( (n) * sizeof(*p) ) )
 
-#define F77_CALL(x)    x ## _    /* should do this with a proper include */
-#define F77_NAME(x)    x ## _
+#define F77_CALL(x)    F77_SYMBOL(x)
+#define F77_NAME(x)    F77_SYMBOL(x)
 
 #define PI             M_PI
 #define SINGLE_EPS     FLT_EPSILON
