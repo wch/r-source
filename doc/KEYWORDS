@@ -42,7 +42,7 @@ Programming, Input/Ouput, and Miscellaneous
 	methods		&	Methods and Generic Functions
 	print		&	Printing
 	file		&	Input/Output--Files
-	connections	&	Input/Output--Connections
+	connection	&	Input/Output--Connections
 	error		&	Error Handling				8
 
 	environment	&	Session Environment
@@ -80,6 +80,6 @@ MASS (2, 1997)
 
 add the following keywords :
 
-	classif		&	Classification	['class' library]
-	spatial		&	Spatial Statistics ['spatial' library]
-	neural		&	Neural Networks ['nnet'	 library]
+	classif		&	Classification	['class' package]
+	spatial		&	Spatial Statistics ['spatial' package]
+	neural		&	Neural Networks ['nnet'	 package]
