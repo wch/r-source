@@ -18,7 +18,6 @@ CPPFLAGS = @CPPFLAGS@
 DEFS = @DEFS@
 DISTDIR_TAR_EXCLUDE = --exclude=CVS --exclude=Makefile --exclude="*.o" --exclude="*$(SHLIB_EXT)"
 DVIPS = @DVIPS@
-FC = @FC@
 FFLAGS = @FFLAGS@
 FLIBS = @FLIBS@
 FPICFLAGS = @FPICFLAGS@
