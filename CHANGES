@@ -1,3 +1,9 @@
+                CHANGES IN VERSION R VERSION 0.62
+
+NEW FEATURES
+
+    o  	.First.lib() now implemented; called by library() after loading
+	a package.
 
 		CHANGES IN VERSION R VERSION 0.61
 

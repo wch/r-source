@@ -82,36 +82,55 @@ help <- function(topic, package = c(.packages(),.Autoloaded), lib.loc =
     help("help", "base", .Library)
 }
 
-library <- function(name, help, lib.loc = .lib.loc,
-		    character.only = FALSE, logical.return = FALSE) {
+"library" <-
+  function (name, help, lib.loc = .lib.loc, character.only = FALSE, 
+            logical.return = FALSE) 
+{
   if (!missing(name)) {
-    if (!character.only)
+    if (!character.only) 
       name <- as.character(substitute(name))
     lib.source <- function(file, env) {
       exprs <- parse(n = -1, file = file)
-      if (length(exprs) == 0) return(invisible())
-      for (i in exprs)
-	yy <- eval(i, env)
+      if (length(exprs) == 0) 
+        return(invisible())
+      for (i in exprs) yy <- eval(i, env)
       invisible()
     }
     pkgname <- paste("package", name, sep = ":")
     if (is.na(match(pkgname, search()))) {
-      file <- system.file(paste("R", name, sep = "/"), name, lib.loc)
-      if (file == "") {
-	txt <- paste("There is no package called `", name, "'", sep= "")
-	if (logical.return) { warning(txt); return(FALSE) } else stop(txt)
+      packagedir<-system.file("",name,lib.loc)
+      which.lib.loc<-.lib.loc[match(packagedir,paste(.lib.loc,name,"",sep="/"))]
+      if (packagedir == "") {
+        txt <- paste("There is no package called `", 
+                     name, "'", sep = "")
+        if (logical.return) {
+          warning(txt)
+          return(FALSE)
+        }
+        else stop(txt)
       }
+      file <- system.file(paste("R", name, 
+                                sep = "/"), name, lib.loc)
       env <- attach(NULL, name = pkgname)
-      lib.source(file, env)
+      if (file == "") 
+        warning(paste("Package  `", 
+                      name, "' contains no R code", sep = ""))
+      else
+        lib.source(file, env)
       lib.fixup(env, .GlobalEnv)
+      if (exists(".First.lib",env=env,inherits=F)){
+        firstlib<-get(".First.lib",envir=env,inherits=FALSE)
+        firstlib(section=which.lib.loc,libname=name)
+      }
     }
   }
   else if (!missing(help)) {
-    if (!character.only)
+    if (!character.only) 
       help <- as.character(substitute(help))
     file <- system.file("INDEX", help, lib.loc)
-    if (file == "")
-      stop(paste("No documentation for package `", help, "'", sep = ""))
+    if (file == "") 
+      stop(paste("No documentation for package `", 
+                 help, "'", sep = ""))
     else {
       system(paste("$RHOME/cmd/pager", file))
     }
@@ -121,16 +140,19 @@ library <- function(name, help, lib.loc = .lib.loc,
     on.exit(unlink(file))
     first <- TRUE
     for (lib in lib.loc) {
-      cat(paste(ifelse(first, "", "\n"), "Packages in library `", lib,
-		"':\n\n", sep = ""),
-	  file = file, append = TRUE)
+      cat(paste(ifelse(first, "", "\n"), "Packages in library `", 
+                lib, "':\n\n", sep = ""), file = file, 
+          append = TRUE)
       INDEX <- paste(lib, "LibIndex", sep = "/")
-      system(paste("cat", INDEX, ">>", file, "2>/dev/null"))
+      system(paste("cat", INDEX, ">>", file, 
+                   "2>/dev/null"))
       first <- FALSE
     }
     system(paste("$RHOME/cmd/pager", file))
   }
-  if (logical.return) TRUE else invisible(.packages())
+  if (logical.return) 
+    TRUE
+  else invisible(.packages())
 }
 
 library.dynam <- function(name, package = .packages(), lib.loc = .lib.loc) {
