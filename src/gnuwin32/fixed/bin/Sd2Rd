@@ -20,7 +20,7 @@
 
 use Getopt::Long;
 
-my $revision = ' $Revision: 1.3 $ ';
+my $revision = ' $Revision: 1.4 $ ';
 my $version;
 my $name;
 
@@ -61,8 +61,10 @@ GetOptions(("v|version", "h|help", "n", "x")) || &usage();
 &usage() if $opt_h;
 
 my $braceLevel = 0;
+my $inReferences = 0;
 my $inVerbatim = 0;
 my $inSeeAlso = 0;
+my $isDataSet = 0;
 my $doprint = 1;
 my $needArg = 1;
 my $needVal = 0;
@@ -76,19 +78,34 @@ while (<>) {
   if (/^\s*$/) { &output("\n"); }
   if (/^[^.]/) { &output($_); }
 
-  ## Added by BDR 1998/08/27
+  ## Added by BDR 1998-08-27
   if (/^\.\\\"/o) {
     s/^\.\\\"/%/;
     &output($_);
   }
   ## End
-  
+
+  if (/^\.BG D/) {
+    $isDataSet = 1;
+  }
   if (/^\.AG/) {
-    if ($needArg) {
-      &section(0, "\\arguments\{");
-      $needArg = 0;
+    if ($isDataSet) {
+      if ($needArg) {
+        &section(1, "\\describe\{");
+        $needArg = 0;
+      }
+      $arg = $_;
+      $arg =~ s/^\.AG\s//;
+      &section(2, "\\item\{\\code\{$arg\}\}\{");
+    } else {
+      if ($needArg) {
+        &section(0, "\\arguments\{");
+        $needArg = 0;
+      }
+      $arg = $_;
+      $arg =~ s/^\.AG\s//;
+      &section(1, "\\item\{$arg\}\{");
     }
-    &section(1, "\\item\{$word[1]\}\{");
   }
   if (/^\.CS/) {
     &section(0, "\\usage\{");
@@ -126,7 +143,7 @@ while (<>) {
       &section(0, "\\value\{\n$output\n");
       $doprint = 1;
     }
-    &section(1, "\\item\{$word[1]\}\{");
+    &section(1, "\\item\{" . join(" ", @word[1..$#word]) . "\}\{");
   }
   if (/^\.RT/) {
     $needVal = 1;
@@ -141,11 +158,18 @@ while (<>) {
   if (/^\.SH/) {
     if ($word[1] =~ /REFERENCE/) {
       &section(0, "\\references\{");
+      $inReferences = 1;
+    } elsif ($word[1] =~ /NOTE/) {
+      &section(0, "\\note\{");
     } elsif ($word[1] =~ /SOURCE/) {
       &section(0, "\\source\{");
+      $inReferences = 1;
     } elsif ($word[1] =~ /SUMMARY/) {
       &section(0, "\\description\{");
+    } elsif ($word[1] =~ /Warning/) {
+      &section(0, "\\secion{Warning}\{");
     } elsif (join(" ", @word[1..2]) =~ /DATA DESCRIPTION/) {
+      &section(0, "\\usage\{\ndata($fun)");
       &section(0, "\\format\{");
     } else {
       # This line may be of the form .SH "A B C"
@@ -172,6 +196,7 @@ while (<>) {
     output("This is a generic function.");
     output("Functions with names beginning in \\code\{$fun.\} will be");
     output("methods for this function.");
+    output("Classes with methods for this function include:");
   }
   if (/^\.GR/) {
     output("Graphical parameters (see \\code\{\\link\{par\}\}) may also");
@@ -179,7 +204,7 @@ while (<>) {
   }
   if (/^\.ME/) {
     output("This function is a method for the generic function");
-    output("\\code\{$word[1]()\} for class \\code\{$word[2]\}.");
+    output("\\code\{$word[1]()\} for class \\code\{\"$word[2]\"\}.");
     output("It can be invoked by calling \\code\{$word[1](x)\} for an");
     output("object \\code\{x\} of the appropriate class, or directly by");
     output("calling \\code\{$word[1].$word[2](x)\} regardless of the");
@@ -191,7 +216,7 @@ while (<>) {
     output("described under \\code\{\\link\{par\}\} and the arguments to");
     output("\\code\{\\link\{title\}\} may be supplied to this function.");
   }
-  ## Added by BDR 1998/06/20
+  ## Added by BDR 1998-06-20
   if (/^\.ul/) {
     $_ = <>;
     &substitute;
@@ -205,8 +230,8 @@ sub substitute {
   if (!$inVerbatim) {
     s/\{/\\\{/g;
     s/\}/\\\}/g;
-#    s/&/\\&/g; removed BDR 2000/02/10
-    ## Added by BDR 1998/06/20
+#    s/&/\\&/g; removed BDR 2000-02-10
+    ## Added by BDR 1998-06-20
     s/\\\(aa/'/g;		# extra ' for highlight matching
     s/\\\(em/--/g;		# em dash
     s/\\\(tm/ (TM) /g;		# Trademark
@@ -223,7 +248,7 @@ sub substitute {
   s/\.\.\./\\dots/g;
   s/\\fB/\\bold\{/g;
   s/\\fR/\}/g;
-  ## Added by BDR 1998/06/20
+  ## Added by BDR 1998-06-20
   s/\\fI/\\emph\{/g;
   s/\\fP/\}/g;
   ## End
@@ -236,7 +261,11 @@ sub substitute {
       s/\`([^\']*)\'/\\code{\\link{$1}}/g;
     }
   } elsif (!$inVerbatim) {
-    s/\`([^\']*)\'/\\code{$1}/g;
+    s/\`([^\']*)\'$/\\code{$1}/g;
+    s/\`([^\']*)\'([^\'])/\\code{$1}$2/g;  
+  }
+  if ($inReferences) {
+    s/([0-9])-([0-9])/$1--$2/g;
   }
 }
 
@@ -250,6 +279,7 @@ sub section {
   }
   print("$text\n") if $text;    
   $braceLevel = $level + 1;
+  $inReferences = 0;
   $inVerbatim = 0;
   $inSeeAlso = 0;
   $doprint = 1;    
@@ -275,5 +305,4 @@ sub output {
 ### mode: perl ***
 ### perl-indent-level: 2 ***
 ### End: ***
-__END__
 
