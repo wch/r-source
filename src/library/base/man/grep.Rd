@@ -40,8 +40,12 @@ either extended or basic, depending on the value of the
 \code{extended} argument.
 }
 \note{
-This function is based on the \emph{regex} regular expression library
-written by Henry Spencer of the University of Toronto.
+    It is possible to compile \R without support for regular
+    expressions, and then these functions are not operational.
+    
+    On the Macintosh port this function is based on the \emph{regex}
+    regular expression library written by Henry Spencer of the
+    University of Toronto.
 }
 \seealso{
     \code{\link{charmatch}}, \code{\link{pmatch}}, \code{\link{match}}.
