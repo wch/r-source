@@ -528,7 +528,7 @@ endif
 # this is really tricky for a bundle.
 # also note that as we are not using Rcmd INSTALL we do not get info
 # on LazyLoad / LazyData from the DESCRIPTION files.
-R_PKGS_RECOMMENDED_LAZYDATA = boot rpart
+R_PKGS_RECOMMENDED_LAZYDATA = boot rpart survival
 recommended0: unpack-recommended
 	@$(ECHO) "--- Making recommended packages"
 	@$(MAKE) --no-print-directory bundle-VR
