@@ -224,7 +224,7 @@ Otherwise if environment variables @code{HOMEDRIVE} and @code{HOMEPATH} are set,
 the value is @code{$@{HOMEDRIVE@}$@{HOMEPATH@}}.@*
 If all of these fail, the current working directory is used.
 
-You can find this from R code by @code{getenv("R_USER")}.
+You can find this from R code by @code{Sys.getenv("R_USER")}.
 
 
 @newchap{}

@@ -1,14 +1,14 @@
 ###-*- R -*- Unix Specific ----
 
 .Library <- file.path(R.home(), "library")
-.lib.loc <- unique(c(unlist(strsplit(getenv("R_LIBS"), ":")), .Library))
-options(papersize = as.vector(getenv("R_PAPERSIZE")))
-options(printcmd = as.vector(getenv("R_PRINTCMD")))
-options(latexcmd = as.vector(getenv("R_LATEXCMD")))
-options(dvipscmd = as.vector(getenv("R_DVIPSCMD")))
-options(unzip = as.vector(getenv("R_UNZIPCMD")))
-options(editor = as.vector(getenv("EDITOR")))
-if(interactive() && getenv("DISPLAY") != "") {
+.lib.loc <- unique(c(unlist(strsplit(Sys.getenv("R_LIBS"), ":")), .Library))
+options(papersize = as.vector(Sys.getenv("R_PAPERSIZE")))
+options(printcmd = as.vector(Sys.getenv("R_PRINTCMD")))
+options(latexcmd = as.vector(Sys.getenv("R_LATEXCMD")))
+options(dvipscmd = as.vector(Sys.getenv("R_DVIPSCMD")))
+options(unzip = as.vector(Sys.getenv("R_UNZIPCMD")))
+options(editor = as.vector(Sys.getenv("EDITOR")))
+if(interactive() && Sys.getenv("DISPLAY") != "") {
     options(device = switch(.Platform$GUI,
             "X11" = "X11", "GNOME" = "gtk", "postscript"))
 } else options(device = "postscript")

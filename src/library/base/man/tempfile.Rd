@@ -45,7 +45,7 @@ tempfile(pattern = "file")
 \examples{
 tempfile(c("ab", "a b c"))   # give file name with spaces in!
 ## One possibility of getting ALL environment variables;
-## compare with `getenv':
+## compare with `Sys.getenv':
 fun <- function() {
   FILE <- tempfile("fun")
   on.exit(unlink(FILE))

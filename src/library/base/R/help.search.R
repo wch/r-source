@@ -43,8 +43,8 @@ help.search <- function(topic, fields = c("name", "title"),
         ## Check whether we can save the help db lateron
         save.db <- FALSE
         dir <- switch(.Platform$OS.type,
-                      "windows" = getenv("R_USER"),
-                      "unix" = getenv("HOME"),
+                      "windows" = Sys.getenv("R_USER"),
+                      "unix" = Sys.getenv("HOME"),
                       "")
         if(nchar(dir) == 0) dir <- getwd()
         dir <- file.path(dir, ".R")

@@ -56,6 +56,10 @@ may not be supplied on a non-POSIX Unix system.
   What is meant by file access time is system-dependent.
 }
 
+\section{Warning}{
+  The format and handling of file dates will be changed before release.
+}
+
 \seealso{
   \code{\link{file}}, \code{\link{file.access}}, \code{\link{list.files}}
 }

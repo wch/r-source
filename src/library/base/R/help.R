@@ -86,7 +86,7 @@ help <-
                         "paper]{article}",
                         "\n",
                         "\\usepackage[",
-                        getenv("R_RD4DVI"),
+                        Sys.getenv("R_RD4DVI"),
                         "]{Rd}",
                         "\n",
                         "\\InputIfFileExists{Rhelp.cfg}{}{}\n",

@@ -2,7 +2,7 @@
 \alias{bug.report}
 \title{Send a Bug Report}
 \usage{
-bug.report(subject = "", ccaddress = getenv("USER"),
+bug.report(subject = "", ccaddress = Sys.getenv("USER"),
            method = getOption("mailer"), address = "r-bugs@biostat.ku.dk",
            file = "R.bug.report")
 }

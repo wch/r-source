@@ -3883,7 +3883,7 @@ in later files will mask definitions in earlier files.
   options(digits=5, length=999)         # @r{custom numbers and printout}
   x11()                                 # @r{for graphics}
   par(pch = "+")                        # @r{plotting character}
-  source(file.path(getenv("HOME"), "R", "mystuff.R"))
+  source(file.path(Sys.getenv("HOME"), "R", "mystuff.R"))
                                         # @r{my personal package}
   library(stepfun)                      # @r{attach the step function tools}
 @}

@@ -48,6 +48,6 @@ be most complete on Windows NT systems.
 \examples{
 Sys.info()
 ## An alternative (and probably better) way to get the login name on Unix
-getenv("LOGNAME")
+Sys.getenv("LOGNAME")
 }
 \keyword{utilities}

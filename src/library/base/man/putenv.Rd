@@ -1,16 +1,16 @@
-\name{putenv}
+\name{Sys.putenv}
 \title{Set Environment Variables}
 \usage{
-putenv(\dots)
+Sys.putenv(\dots)
 }
-\alias{putenv}
+\alias{Sys.putenv}
 \arguments{
   \item{\dots}{arguments in \code{name=value} form, with \code{value}
     coercible to a character string.}
 }
 \description{
   \code{putenv} sets environment variables (for other processes called
-  from within \R or future calls to \code{\link{getenv}} from this
+  from within \R or future calls to \code{\link{Sys.getenv}} from this
   \R process).
 }
 \value{
@@ -21,15 +21,15 @@ putenv(\dots)
   Non-standard \R names must be quoted: see the Examples section.
 }
 \note{
-  Not all systems need support \code{putenv}.
+  Not all systems need support \code{Sys.putenv}.
 }
 \seealso{
-  \code{\link{getenv}},
+  \code{\link{Sys.getenv}},
   \code{\link{setwd}} for the working directory.
 }
 \examples{
-print(putenv("R_TEST"="testit", ABC=123))
-getenv("R_TEST")
+print(Sys.putenv("R_TEST"="testit", ABC=123))
+Sys.getenv("R_TEST")
 }
 \keyword{environment}
 \keyword{utilities}

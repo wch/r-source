@@ -175,7 +175,7 @@ Otherwise if environment variables `HOMEDRIVE' and `HOMEPATH' are set,
 the value is `${HOMEDRIVE}${HOMEPATH}'.
 If all of these fail, the current working directory is used.
 
-You can find this from R code by `getenv("R_USER")'.
+You can find this from R code by `Sys.getenv("R_USER")'.
 
 
 3 Packages

@@ -1,7 +1,7 @@
-bug.report <- function(subject="", ccaddress=getenv("USER"),
-                       method=getOption("mailer"),
-                       address="r-bugs@biostat.ku.dk",
-                       file="R.bug.report")
+bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
+                       method = getOption("mailer"),
+                       address ="r-bugs@biostat.ku.dk",
+                       file = "R.bug.report")
 {
     methods <- c("mailx", "gnudoit", "none", "ess")
 
@@ -29,7 +29,7 @@ bug.report <- function(subject="", ccaddress=getenv("USER"),
     }
     else if(method=="none"){
 
-        disclaimer <- 
+        disclaimer <-
             paste("# Your mailer is set to \"none\" (default on Windows),\n",
                   "# hence we cannot send the bug report directly from R.\n",
                   "# Please copy the bug report (after finishing it) to\n",
@@ -37,9 +37,9 @@ bug.report <- function(subject="", ccaddress=getenv("USER"),
                   "#       ", address, "\n#\n",
                   "######################################################\n",
                   "\n\n", sep = "")
-                  
 
-        cat(disclaimer, file=file)        
+
+        cat(disclaimer, file=file)
 	body <- gsub("\\\\n", "\n", body)
 	cat(body, file=file, append=TRUE)
 	system(paste(getOption("editor"), file))
@@ -61,9 +61,9 @@ bug.report <- function(subject="", ccaddress=getenv("USER"),
         else
             cmdargs <- paste("-s '", subject, "'", address, "<",
                              file, "2>/dev/null")
-        
+
         status <- 1
-            
+
         cat("Submit the bug report? ")
         answer <- readline()
         answer <- grep("y", answer, ignore.case=TRUE)
@@ -74,14 +74,14 @@ bug.report <- function(subject="", ccaddress=getenv("USER"),
                 status <- system(paste("Mail", cmdargs))
             if(status > 0)
                 status <- system(paste("/usr/ucb/mail", cmdargs))
-            
+
             if(status==0) unlink(file)
             else{
                 cat("Sending email failed!\n")
                 cat("The unsent bug report can be found in file",
                     file, "\n")
             }
-            
+
         }
         else
             cat("The unsent bug report can be found in file",

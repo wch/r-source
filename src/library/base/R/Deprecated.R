@@ -9,22 +9,9 @@
 		  sep = ""))
 }
 
-provide <- function(package)
+getenv <- function(x)
 {
     .Deprecated()
-    if (!exists(".Provided", inherits = TRUE))
-	assign(".Provided", character(0), envir = .GlobalEnv)
-    if (missing(package))
-	.Provided
-    else {
-	package <- as.character(substitute(package))
-	if (is.na(match(package, .packages())) &&
-	    is.na(match(package, .Provided))) {
-	    assign(".Provided", c(package, .Provided), envir = .GlobalEnv)
-	    TRUE
-	}
-	else
-	    FALSE
-    }
+    Sys.getenv(x)
 }
 

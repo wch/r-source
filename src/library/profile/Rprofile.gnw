@@ -1,8 +1,8 @@
 ###-*- R -*-
 
 .Library <- file.path(R.home(), "library")
-.lib.loc <- unique(c(unlist(strsplit(getenv("R_LIBS"), ";")), .Library))
-if(nchar(getenv("R_PAPERSIZE")) > 0) options(papersize = as.vector(getenv("R_PAPERSIZE"))) else  options(papersize = "a4")
+.lib.loc <- unique(c(unlist(strsplit(Sys.getenv("R_LIBS"), ";")), .Library))
+if(nchar(Sys.getenv("R_PAPERSIZE")) > 0) options(papersize = as.vector(Sys.getenv("R_PAPERSIZE"))) else  options(papersize = "a4")
 options(device="windows")
 options(editor="notepad")
 if(any(grep("--ess", commandArgs()))) options(pager="console") else options(pager="internal")

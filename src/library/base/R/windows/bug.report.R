@@ -1,6 +1,6 @@
-bug.report <- function(subject="", ccaddress=getenv("USER"),
-                       method=getOption("mailer"), file = "R.bug.report",
-                       address="r-bugs@biostat.ku.dk", wait = TRUE)
+bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
+                       method = getOption("mailer"), file = "R.bug.report",
+                       address = "r-bugs@biostat.ku.dk", wait = TRUE)
 {
     body <- paste("\\n<<insert bug report here>>\\n\\n\\n\\n",
 		  "--please do not edit the information below--\\n\\n",

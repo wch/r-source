@@ -1,4 +1,4 @@
-getenv <- function(x) {
+Sys.getenv <- function(x) {
     if (missing(x)) {
 	x <- strsplit(.Internal(getenv(character())), "=")
 	v <- n <- character(LEN <- length(x))
@@ -12,7 +12,7 @@ getenv <- function(x) {
     }
 }
 
-putenv <- function(...)
+Sys.putenv <- function(...)
 {
     x <- list(...)
     nm <- names(x)

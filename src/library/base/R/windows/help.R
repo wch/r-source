@@ -123,7 +123,7 @@ help <-
                         "paper]{article}",
                         "\n",
                         "\\usepackage[",
-                        if(nchar(opt <- getenv("R_RD4DVI"))) opt else "ae",
+                        if(nchar(opt <- Sys.getenv("R_RD4DVI"))) opt else "ae",
                         "]{Rd}",
                         "\n",
                         "\\InputIfFileExists{Rhelp.cfg}{}{}\n",

@@ -55,7 +55,12 @@ NEW FEATURES
 
     o	New function Sys.sleep() to suspend execution for a while.
 
-    o	New function putenv() to set environment variables.
+    o	Sys.getenv() becomes the preferred name for getenv(), which is
+	now deprecated.
+
+    o	New function Sys.putenv() to set environment variables.
+
+    o	Formerly deprecated function provide() is now defunct.
 
 
 
