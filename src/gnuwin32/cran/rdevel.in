@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="http://cran.r-project.org/R.css">
-<title>R-@RVER@ development build for Windows</title>
+<title>R-@FULLVERSION@ build for Windows</title>
 </head>
 
 <body bgcolor="#FFFFFF">
 
-<h1>R-@RVER@ development build for Windows</h1>
+<h1>R-@FULLVERSION@ build for Windows</h1>
 
 <p>This directory contains a Windows binary build of the @DATE@ development
 version of R (which will eventually become R-@RVER@).</p>
