@@ -25,7 +25,7 @@
 #endif
 
 #include "Defn.h"
-#include "R.h"
+#include <R_ext/RS.h> /* for Calloc, Realloc */
 
 static SEXP GetObject(RCNTXT *cptr)
 {
@@ -963,85 +963,85 @@ SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef,
 
 SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist)
 {
-  int offset = 0;
-  prim_methods_t code = NO_METHODS; /* -Wall */
-  SEXP value;
-  Rboolean errorcase = FALSE;
-  switch(code_string[0]) {
-  case 'c': /* clear */
-    code = NO_METHODS; break;
-  case 'r': /* reset */
-    code = NEEDS_RESET; break;
-  case 's': /* set */
-      switch(code_string[1]) {
-      case 'e': code = HAS_METHODS; break;
-      case 'u': code = SUPPRESSED; break;
-      default: errorcase = TRUE;
-      }
-      break;
-  default:
-      errorcase = TRUE;
-  }
-  if(errorcase) {
-      error("Invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", or \"set\"", code_string);
-      return R_NilValue;
-  }
-  switch(TYPEOF(op)) {
-  case BUILTINSXP: case SPECIALSXP:
-    offset = PRIMOFFSET(op);
-    break;
-  default: 
-    error("Invalid object: must be a primitive function");
-  }
-  if(offset >= maxMethodsOffset) {
-    int n;
-    n = offset;
-    if(n < DEFAULT_N_PRIM_METHODS)
-      n = DEFAULT_N_PRIM_METHODS;
-    if(n < 2*maxMethodsOffset)
-      n = 2 * maxMethodsOffset;
-    if(prim_methods) {
-      prim_methods = Realloc(prim_methods, n, prim_methods_t);
-      prim_generics = Realloc(prim_generics, n, SEXP);
-      prim_mlist = Realloc(prim_mlist, n, SEXP);
-   }
-    else {
-      prim_methods = Calloc(n, prim_methods_t);
-      prim_generics = Calloc(n, SEXP);
-      prim_mlist = Calloc(n, SEXP);
+    int offset = 0;
+    prim_methods_t code = NO_METHODS; /* -Wall */
+    SEXP value;
+    Rboolean errorcase = FALSE;
+    switch(code_string[0]) {
+    case 'c': /* clear */
+	code = NO_METHODS; break;
+    case 'r': /* reset */
+	code = NEEDS_RESET; break;
+    case 's': /* set */
+	switch(code_string[1]) {
+	case 'e': code = HAS_METHODS; break;
+	case 'u': code = SUPPRESSED; break;
+	default: errorcase = TRUE;
+	}
+	break;
+    default:
+	errorcase = TRUE;
     }
-    maxMethodsOffset = n;
-  }
-  if(offset > curMaxOffset)
-    curMaxOffset = offset;
-  prim_methods[offset] = code;
-  /* store a preserved pointer to the generic function if there is not
-     one there currently.  Unpreserve it if no more methods, but don't
-     replace it otherwise:  the generic definition is not allowed to
-     change while it's still defined! (the stored methods list can,
-     however) */
-  value = prim_generics[offset];
-  if(code == NO_METHODS && prim_generics[offset]) {
-    R_ReleaseObject(prim_generics[offset]);
-    prim_generics[offset] = 0;
-    prim_mlist[offset] = 0;
-  }
-  else if(fundef && !isNull(fundef) && !prim_generics[offset]) {
-    if(TYPEOF(fundef) != CLOSXP)
-      error("The formal definition of a primitive generic must be a function object (got type %s)",
-	    type2str(TYPEOF(fundef)));
-    R_PreserveObject(fundef);
-    prim_generics[offset] = fundef;
-  }
-  if(code==HAS_METHODS) {
-      if(!mlist  || isNull(mlist))
-	  error("Call tried to set primitive function methods with a null methods list");
-      if(prim_mlist[offset])
-	  R_ReleaseObject(prim_mlist[offset]);
-      R_PreserveObject(mlist);
-      prim_mlist[offset] = mlist;
-  }
-  return value;
+    if(errorcase) {
+	error("Invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", or \"set\"", code_string);
+	return R_NilValue;
+    }
+    switch(TYPEOF(op)) {
+    case BUILTINSXP: case SPECIALSXP:
+	offset = PRIMOFFSET(op);
+	break;
+    default: 
+	error("Invalid object: must be a primitive function");
+    }
+    if(offset >= maxMethodsOffset) {
+	int n;
+	n = offset;
+	if(n < DEFAULT_N_PRIM_METHODS)
+	    n = DEFAULT_N_PRIM_METHODS;
+	if(n < 2*maxMethodsOffset)
+	    n = 2 * maxMethodsOffset;
+	if(prim_methods) {
+	    prim_methods = Realloc(prim_methods, n, prim_methods_t);
+	    prim_generics = Realloc(prim_generics, n, SEXP);
+	    prim_mlist = Realloc(prim_mlist, n, SEXP);
+	}
+	else {
+	    prim_methods = Calloc(n, prim_methods_t);
+	    prim_generics = Calloc(n, SEXP);
+	    prim_mlist = Calloc(n, SEXP);
+	}
+	maxMethodsOffset = n;
+    }
+    if(offset > curMaxOffset)
+	curMaxOffset = offset;
+    prim_methods[offset] = code;
+    /* store a preserved pointer to the generic function if there is not
+       one there currently.  Unpreserve it if no more methods, but don't
+       replace it otherwise:  the generic definition is not allowed to
+       change while it's still defined! (the stored methods list can,
+       however) */
+    value = prim_generics[offset];
+    if(code == NO_METHODS && prim_generics[offset]) {
+	R_ReleaseObject(prim_generics[offset]);
+	prim_generics[offset] = 0;
+	prim_mlist[offset] = 0;
+    }
+    else if(fundef && !isNull(fundef) && !prim_generics[offset]) {
+	if(TYPEOF(fundef) != CLOSXP)
+	    error("The formal definition of a primitive generic must be a function object (got type %s)",
+		  type2str(TYPEOF(fundef)));
+	R_PreserveObject(fundef);
+	prim_generics[offset] = fundef;
+    }
+    if(code==HAS_METHODS) {
+	if(!mlist  || isNull(mlist))
+	    error("Call tried to set primitive function methods with a null methods list");
+	if(prim_mlist[offset])
+	    R_ReleaseObject(prim_mlist[offset]);
+	R_PreserveObject(mlist);
+	prim_mlist[offset] = mlist;
+    }
+    return value;
 }
 
 static SEXP get_primitive_methods(SEXP op, SEXP rho)
