@@ -39,11 +39,12 @@
   carries some information needed for efficient plotting or cutting as
   attributes:
   \describe{
-    \item{\code{members}}{number of leaves in the branch}
+    \item{\code{members}}{total number of leaves in the branch}
     \item{\code{height}}{numeric non-negative height at which the node
       is plotted.}
     \item{\code{midpoint}}{numeric horizontal distance of the node from
-      the left border of the branch}
+      the left border of the branch.  This is needed at least for
+    \code{plot(*, center=FALSE)}.}
     \item{\code{text}}{character; the label of the node}
     \item{\code{edgetext}}{character; the label for the edge leading to
       the node}
