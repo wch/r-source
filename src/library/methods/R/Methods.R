@@ -216,9 +216,7 @@ setMethod <-
     }
     allMethods <- getMethodsMetaData(f, where = where) # may be NULL
     fnames <- formalArgs(fdef)
-    snames <- names(signature)
-    if(length(snames)>0)
-        signature <- matchSignature(fnames, signature, definition)
+    signature <- matchSignature(fnames, signature, fdef)
     switch(typeof(definition),
            closure = {
                mnames <- formalArgs(definition)
