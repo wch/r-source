@@ -275,7 +275,7 @@ static Rboolean unz_open(Rconnection con)
     if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
-    return FALSE;
+    return TRUE;
 }
 
 static void unz_close(Rconnection con)

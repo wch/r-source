@@ -567,7 +567,7 @@ BUG FIXES
 	   - more thorough tests & informative messages for invalid
              `def' arguments to setGeneric
 
-
+    o	unz() connections could no longer be opened. (PR#2579)
 
 
 
