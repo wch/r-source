@@ -107,8 +107,8 @@ enum
    kTabSize                     = 7,
    kHistoryLength               = 8,
    kConsTextSize                = 21,  // Jago
-   kR_Vsize                     = 10,
-   kR_Nsize                     = 11,
+   kInterrupt                   = 24,
+   kOnOpenSource                = 25,
    kOkButton                    = 1,       // 1 is default button.
    kCancelButton                = 10,
    kApplyButton					= 23,   
@@ -124,18 +124,6 @@ enum
 Here include all the content that the preference will store, if you wanted to add more.
 You need to add the corresponding item in here.
 */
-typedef struct
-{
-   char                        tabSize[3];
-   char                        textSize[3];
-   char                        ScreenR[5];
-   RGBColor	                   TypeColour;
-   RGBColor                    FinishedColour;
-   RGBColor                    ComputerColour;
-   FSSpec                      sfFile;
-   StandardFileReply           sfr;
-   char                        envString[255];
-}  appPrefs, *appPrefsPointer, **appPrefsHandle;
 
 /* ************************************************************************************************ */
 /*                                        Global variables                                          */
@@ -174,6 +162,8 @@ extern Str255							   PostFont;
 extern Str255							   UserFont;
 
 void RPrefs(void);
+int GetTextSize(void);
+int GetScreenRes(void);
 
 
 /* ************************************************************************************************ */
@@ -191,10 +181,43 @@ void                                      SetTextSize(Boolean);
 void                                      SetTextFontAndSize(void);
 extern int                                R_SetOptionWidth(int w);
 
-extern int GetTextSize(void);
 int EightyWidth(void);
 
-void GetDialogPrefs(DialogPtr PreferenceBox);
+
+
+typedef struct
+{
+   long						   prefsTypeVers;
+   SInt16                      gtabSize;
+   SInt16                      storeHistory;
+   SInt16                      gTextSize;
+   int                         gScreenRes;
+   Boolean					   OnOpenSource;
+   Boolean  				   Interrupt;
+   Str255					   UserFont;
+   Str255					   PostFont;
+   RGBColor	                   TypeColour;
+   RGBColor                    FinishedColour;
+   RGBColor                    ComputerColour;
+}  appPrefs, *appPrefsPointer, **appPrefsHandle;
+
+void GetDialogPrefs(DialogPtr PreferenceBox, Boolean saveit);
+void savePreference(void);
+void setDefaultPrefs(void);
+
+
+#define kPrefsFileType 'pref'
+#define kPrefsCreatorType '????'
+#define kFinderMessageStrID -16397 /* ID of STR for default finder message */
+#define kPrefsResourceType 'Pref'
+#define kPrefsResourceID 128
+#define kPrefsNameStrID 132         /* name of prefs file */
+#define kStrType 'STR '
+
+
+void GetOrGeneratePrefs(appPrefs * thePrefsTypePtr, long minVers);
+short OpenPrefsResFile(SignedByte prefsPerm, Boolean createFlag);
+OSErr SavePrefs(appPrefs * thePrefsTypePtr);
 
 
 
@@ -214,13 +237,113 @@ extern char *mac_getenv(const char *name);
 Boolean Interrupt =false;
 Boolean OnOpenSource = false;
 
-/* ************************************************************************************************
-doGetPreferences :	This function will be called at the beginning when R application starts.
-					It sets up some parameters specified by the user in the .Renviron file
-					such as the graphic device screen resolution and font, the Console font and
-					size and the tab-size of all the text windows. Etc.
-Jago, April 2001, Stefano M. Iacus	
-************************************************************************************************ */
+
+void setDefaultPrefs(void)
+{
+     gTextSize = 12;
+	 gScreenRes = 72;
+	 gtabSize = 5;
+	 storeHistory = 512;
+	 
+	 Interrupt = false;
+     OnOpenSource = false;
+	 
+     gTypeColour.red =  0xffff;
+     gTypeColour.green =  0x0000;
+     gTypeColour.blue =  0x0000;
+     gFinishedColour.red = 0x0000;
+     gFinishedColour.green = 0x0000;
+     gFinishedColour.blue = 0xffff;
+     gComputerColour.red = 0x0000;
+     gComputerColour.green = 0x0000;
+     gComputerColour.blue = 0x0000;
+	 
+	 doCopyPString("\pmonaco", UserFont);
+	 doCopyPString("\phelvetica", PostFont); 
+
+}
+
+
+
+void GetOrGeneratePrefs(appPrefs * thePrefsTypePtr, long minVers)
+{
+	short prefsResRefNum;
+	Handle tempHandle;
+	
+	/* initialize prefs structure in case we can't get a valid set */
+
+    
+	
+	 thePrefsTypePtr->prefsTypeVers = 0L;
+	 thePrefsTypePtr->gTextSize = gTextSize;
+	 thePrefsTypePtr->gScreenRes = gScreenRes;
+	 thePrefsTypePtr->gtabSize = gtabSize;
+	 thePrefsTypePtr->storeHistory = storeHistory;
+	 
+	 thePrefsTypePtr->Interrupt = Interrupt;
+     thePrefsTypePtr->OnOpenSource = OnOpenSource;
+	 
+     thePrefsTypePtr->TypeColour = gTypeColour;
+	 thePrefsTypePtr->FinishedColour = gFinishedColour;
+	 thePrefsTypePtr->ComputerColour = gComputerColour;
+	 
+	 
+	 doCopyPString(UserFont, thePrefsTypePtr->UserFont);
+	 doCopyPString(PostFont, thePrefsTypePtr->PostFont); 
+
+	
+	/* open (but don't create) the prefs file */
+	prefsResRefNum = OpenPrefsResFile(fsRdPerm, false);
+	if (prefsResRefNum != -1) {
+	
+		/* file opened successfully, get the prefs resource */
+		tempHandle = Get1Resource(kPrefsResourceType, kPrefsResourceID);
+		
+		/* if the resource is there and it's the right size and version, copy it */
+		/* (in C these can be combined with &&, but don't use AND in Pascal)     */
+		
+		if (tempHandle != nil)
+			if (GetHandleSize(tempHandle) == sizeof(appPrefs)) 
+			//	if ((*(appPrefs *)*tempHandle).prefsTypeVers == minVers) {
+				
+					/* copy the prefs struct */
+					*thePrefsTypePtr = *(appPrefs *)*tempHandle;
+					
+					
+		//		}
+		/* release the pref resource and close the file */
+		CloseResFile(prefsResRefNum);
+	}
+}
+
+
+/* Only resolutions 72, 144, 300 and 600 are allowable */
+int GetScreenRes(void)
+{
+   appPrefs StartupPrefs;
+
+  GetOrGeneratePrefs(&StartupPrefs, 0L);
+
+   gScreenRes = StartupPrefs.gScreenRes;
+
+  return(gScreenRes); 
+}
+
+
+
+
+int GetTextSize(void)
+{
+   appPrefs StartupPrefs;
+
+   GetOrGeneratePrefs(&StartupPrefs, 0L);
+
+   gTextSize = StartupPrefs.gTextSize;
+
+   return(gTextSize);
+}
+
+
 void  doGetPreferences(void)
 {
    Str255               prefsFileName;
@@ -230,6 +353,92 @@ void  doGetPreferences(void)
    FSSpec               fileSSpec;
    SInt16               fileRefNum;
    appPrefsHandle       appPrefsHdl;
+   char 				userfont[25];
+   FMFontFamily 		postFontId;
+   appPrefs StartupPrefs;
+   short prefsResRefNum;
+
+   setDefaultPrefs();
+   
+   GetOrGeneratePrefs(&StartupPrefs, 0L);
+
+   strcpy(genvString, ".Renviron");
+      
+   SetTab(false);
+    
+   storeHistory = StartupPrefs.storeHistory;
+	  
+	  if(storeHistory < 1 || storeHistory > 512)  
+       storeHistory = 512;
+      HISTORY = storeHistory +1;
+      Cmd_Hist = malloc(HISTORY * sizeof(Ptr));
+  
+         
+      gTextSize = StartupPrefs.gTextSize; 
+	//  if(gTextSize < 8 || gTextSize > 14)  
+  	//   gTextSize = 12;
+
+	  
+      gScreenRes = StartupPrefs.gScreenRes;	  
+	  if( gScreenRes < 72 || gScreenRes >600)
+	   gScreenRes = 72;
+
+	  gtabSize = StartupPrefs.gtabSize;
+	  if(gtabSize < 1 || gtabSize > 99)
+       gtabSize = 5;
+   
+	   
+      tempTypeColour= gTypeColour = StartupPrefs.TypeColour;
+      tempFinishedColour=gFinishedColour = StartupPrefs.FinishedColour;
+      tempComputerColour=gComputerColour = StartupPrefs.ComputerColour;
+
+       doCopyPString("\psymbol", MacSymbolFont);  /* Jago */
+
+
+       PStringCopy(StartupPrefs.PostFont,PostFont);
+       PStringCopy(StartupPrefs.UserFont,UserFont);
+
+
+	  if(GetFontIDFromMacFontName(PostFont) == kATSUInvalidFontID)
+         doCopyPString("\phelvetica", PostFont); /* Emergency font ! */
+
+  
+      if(systemVersion > kMinSystemVersion){
+      if( FMGetFontFamilyFromName(UserFont) == kInvalidFontFamily)
+         doCopyPString("\pmonaco", UserFont); /* Emergency font ! */
+      }
+      else {
+       GetFNum(UserFont, &postFontId);
+       if( postFontId == kInvalidFontFamily)
+          doCopyPString("\pmonaco", UserFont); /* Emergency font ! */
+      }
+
+      EIGHTY = EightyWidth();
+ 
+//    SetTextFontAndSize();
+
+	  OnOpenSource = StartupPrefs.OnOpenSource; 
+      Interrupt = StartupPrefs.Interrupt; 
+
+
+}
+
+/* ************************************************************************************************
+doGetPreferences :	This function will be called at the beginning when R application starts.
+					It sets up some parameters specified by the user in the .Renviron file
+					such as the graphic device screen resolution and font, the Console font and
+					size and the tab-size of all the text windows. Etc.
+Jago, April 2001, Stefano M. Iacus	
+************************************************************************************************ */
+void  doGetPreferences1(void)
+{
+   Str255               prefsFileName;
+   OSErr                osError;
+   SInt16               volRefNum;
+   long                 directoryID;
+   FSSpec               fileSSpec;
+   SInt16               fileRefNum;
+//   appPrefsHandle       appPrefsHdl;
    char 				userfont[25];
    FMFontFamily 		postFontId;
      
@@ -402,16 +611,23 @@ void DrawBox(DialogPtr PreferenceBox){
    Rect               itemRect;
    Pattern	          myPat;
    RGBColor          blackColour;
+   CGrafPtr savedPort,port;
+   Rect myRect = {400, 130, 430, 160};
+
    blackColour.red	 = 0x0000;
    blackColour.green = 0x0000;
    blackColour.blue	 = 0x0000;
-   GetIndPattern( &myPat, sysPatListID,2 ); 	/* brickwork */
+
+//   GetIndPattern( &myPat, sysPatListID,2 ); 	/* brickwork */
+   
+//   GetPort(&savedPort);
+
    PenPat( &myPat );
 //   GetDialogItem(PreferenceBox,kEditRect,&type,&itemHandle,&itemRect);
 //   FrameRect(&itemRect);
 //   GetDialogItem(PreferenceBox,kMemoryRect,&type,&itemHandle,&itemRect);
 //   FrameRect(&itemRect);
-   GetIndPattern( &myPat, sysPatListID,1 ); 	/* Restore */
+//   GetIndPattern( &myPat, sysPatListID,1 ); 	/* Restore */
   //SetColor 
    GetDialogItem(PreferenceBox,   kActiveTextField, &type, &itemHandle, &itemRect);
    RGBForeColor(&tempTypeColour);
@@ -420,11 +636,23 @@ void DrawBox(DialogPtr PreferenceBox){
    RGBForeColor(&tempFinishedColour);
    SetDialogItemText(itemHandle, "\pCompleted Text Color");
    GetDialogItem(PreferenceBox,  kComputerResponseField, &type, &itemHandle, &itemRect);
+   
+
+  //  SetPort ( GetDialogPort(PreferenceBox) ) ;
+//	GetQDGlobalsBlack(&myPat);
+//	 PenPat( &myPat );
+//   GetIndPattern( &myPat, sysPatListID,1 ); 	/* Restore */
+  
+   // RGBForeColor(&blackColour);
    RGBForeColor(&tempComputerColour);
+  //  PaintRect(&myRect);
+  //  SetPort(savedPort);
+   
+   
    SetDialogItemText(itemHandle, "\pComputer Text Color");
    RGBForeColor(&blackColour); 
 
-   PenPat( &myPat );
+//   PenPat( &myPat );
 }
 
 /*
@@ -624,6 +852,8 @@ void RPrefs ( void )
    RGBColor           outColor;
    SInt16              fileLen;
    Handle              fileName;
+   Boolean				tempInterrupt = Interrupt;
+   Boolean				tempOnOpenSource = OnOpenSource;
 
    PreferenceBox = GetNewDialog ( kPreferences, nil, ( WindowPtr ) -1L ) ;
    if ( PreferenceBox == nil )
@@ -661,25 +891,24 @@ void RPrefs ( void )
    SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
  
    
-   //Handle R_NSize
-   GetDialogItem(PreferenceBox, kR_Nsize, &type, &itemHandle, &itemRect);
-//   sprintf(tempSpace, "%d", (PR_NSize)); 
-//   SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
- 
-   //Handle R_VSize
-   GetDialogItem(PreferenceBox, kR_Vsize, &type, &itemHandle, &itemRect);
-//   sprintf(tempSpace, "%d", (PR_VSize));
-//   SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
- 
    //Handle Screen Resolution
    GetDialogItem(PreferenceBox, kScreenRes, &type, &itemHandle, &itemRect);
    sprintf(tempSpace, "%d", (gScreenRes));
    SetDialogItemText(itemHandle, StrToPStr(tempSpace, strlen(tempSpace)));
    //show the dialog
+   
+   
+    GetDialogItem(PreferenceBox, kInterrupt, &type, &itemHandle, &itemRect);
+    tempInterrupt = Interrupt;
+    SetControlValue((ControlHandle) itemHandle, (tempInterrupt ? 1 : 0));
+
+    GetDialogItem(PreferenceBox, kOnOpenSource, &type, &itemHandle, &itemRect);
+    tempOnOpenSource = OnOpenSource;
+    SetControlValue((ControlHandle) itemHandle, (tempOnOpenSource ? 1 : 0));
+
    ShowWindow ( GetDialogWindow(PreferenceBox) ) ;
    
- //  R_ShowMessage("Before ModalDialog");
- //  goto cleanup;
+
    
    while(true){
       // wait for a click in the picture
@@ -701,6 +930,22 @@ void RPrefs ( void )
          DrawBox(PreferenceBox);
 
       }
+
+	  if (itemHit == kInterrupt){
+          GetDialogItem(PreferenceBox, kInterrupt, &type, &itemHandle, &itemRect);
+          tempInterrupt = (tempInterrupt ? 0 : 1);
+		  SetControlValue((ControlHandle) itemHandle, (tempInterrupt ? 1 : 0));
+
+      }
+	   
+	   if (itemHit == kOnOpenSource){
+          GetDialogItem(PreferenceBox, kOnOpenSource, &type, &itemHandle, &itemRect);
+          tempOnOpenSource = (tempOnOpenSource ? 0 : 1);
+		  SetControlValue((ControlHandle) itemHandle, (tempOnOpenSource ? 1 : 0));
+
+      }
+
+	
 
       if ( itemHit == kOkButton )
       { 
@@ -731,25 +976,8 @@ void RPrefs ( void )
             break;
          }         
          
-         //Handle R_NSize
-   //      GetDialogItem(PreferenceBox, kR_Nsize, &type, &itemHandle, &itemRect);
-   //      GetDialogItemText(itemHandle, buf);
-   //      buf[buf[0] + 1] = '\0';
-   //      if ((atoi((char *)&buf[1]) > 1000) || (atoi((char *)&buf[1]) < 200)){
-   //         GWdoErrorAlert(eR_NSize);
-   //         break;
-    //     }           
-         
-         //Handle R_VSize
-    //     GetDialogItem(PreferenceBox, kR_Vsize, &type, &itemHandle, &itemRect);
-    //     GetDialogItemText(itemHandle, buf);
-    //     buf[buf[0] + 1] = '\0';
-    //     if ((atoi((char *)&buf[1]) > 500) || (atoi((char *)&buf[1]) < 1)){
-    //        GWdoErrorAlert(eR_VSize);
-    //        break;
-    //     }  
-         
-         //Handle R_VSize
+		 
+         //Handle ScreenRes
          GetDialogItem(PreferenceBox, kScreenRes, &type, &itemHandle, &itemRect);
          GetDialogItemText(itemHandle, buf);
          buf[buf[0] + 1] = '\0';
@@ -761,9 +989,8 @@ void RPrefs ( void )
          gTypeColour = tempTypeColour;
          gComputerColour = tempComputerColour;
          gFinishedColour = tempFinishedColour;
-         // When you click the OK button, save the preference
-         //doSavePreference(PreferenceBox);
-         R_ShowMessage("Save prefs");
+         GetDialogPrefs(PreferenceBox,true);
+
          break;
   
       }
@@ -778,7 +1005,7 @@ void RPrefs ( void )
       
       
       if (itemHit == kApplyButton){
-         GetDialogPrefs(PreferenceBox);
+         GetDialogPrefs(PreferenceBox,false);
          // When you click Cancel button, no action followed
          break;
       }
@@ -801,9 +1028,136 @@ cleanup :
    }
    
    
+   
 }
 
-void GetDialogPrefs(DialogPtr PreferenceBox)
+
+
+
+
+
+/* ************************************************************************************************
+savePreference: This function is used to save the global variable into the preference without 
+prompt out the preference dialog.
+************************************************************************************************ */
+void savePreference(void){
+   appPrefsHandle     appPrefsHdl;
+   Handle             existingResHdl;
+   Str255             resourceName = "\pPreferences";
+   char               buf[50];
+   appPrefs myPref;
+
+    myPref.gtabSize = gtabSize;
+    myPref.gTextSize = gTextSize;
+    myPref.storeHistory = storeHistory;
+
+    myPref.gScreenRes = gScreenRes;
+
+    PStringCopy(PostFont,myPref.PostFont);
+	PStringCopy(UserFont,myPref.UserFont);
+	
+	CopyPascalStringToC(myPref.UserFont,buf);
+	
+    myPref.OnOpenSource = OnOpenSource;
+    myPref.Interrupt = Interrupt;
+   
+    myPref.TypeColour = gTypeColour;
+    myPref.FinishedColour = gFinishedColour;
+    myPref.ComputerColour = gComputerColour;
+    myPref.prefsTypeVers = 0L;
+	
+     SavePrefs(&myPref);
+}
+
+
+
+OSErr SavePrefs(appPrefs * thePrefsTypePtr)
+/* save the prefs structure in the prefs resource file */
+{
+	OSErr retCode;
+	short prefsResRefNum;
+	Handle prefHandle, finderMessageHandle;
+	
+	/* open (and, if necessary, create) the prefs file */
+	prefsResRefNum = OpenPrefsResFile(fsRdWrPerm, true);
+	if (prefsResRefNum != -1) {
+	
+		/* file opened successfully, get the prefs resource */
+		prefHandle = Get1Resource(kPrefsResourceType, kPrefsResourceID);
+		
+		if (prefHandle == nil) {
+		
+			/* create a new resource */
+			prefHandle = NewHandle(sizeof(appPrefs));
+			if (prefHandle != nil) {
+			
+				/* copy the prefs struct into the handle
+				   and make it into a resource */
+				
+				*(appPrefs *)*prefHandle = *thePrefsTypePtr;
+				AddResource(prefHandle, kPrefsResourceType, kPrefsResourceID, 
+					"\pRPrefs");
+				retCode = ResError();
+				if (retCode != noErr) DisposeHandle(prefHandle);
+			} 
+			
+			else retCode = MemError(); /* NewHandle failed */
+		}
+		
+		else {  /* prefHandle != nil */
+		
+			/* update the existing resource */
+			SetHandleSize(prefHandle, sizeof(appPrefs));
+			retCode = MemError();
+			if (retCode == noErr) {
+
+				/* copy the prefs struct into the handle and tell the rsrc manager */
+				*(appPrefs *)*prefHandle = *thePrefsTypePtr;
+				ChangedResource(prefHandle);
+			}
+		}
+		
+		if (retCode == noErr) {
+			/* now, get rid of the old fileAlias and, if the fileAliasID field
+			   of the prefs struct indicates that there is a new one, add it to
+			   the resource file */
+			   
+			
+			/* add the message to be displayed if the user tries
+			   to open the prefs file in the Finder (but don't add it
+			   if it's already in the preferences file) */
+			   
+			finderMessageHandle = (Handle) GetString(kFinderMessageStrID);
+			if (finderMessageHandle != nil &&
+				HomeResFile((Handle) finderMessageHandle) != prefsResRefNum) {
+			
+				/* copy the resource into the prefs file */
+				DetachResource(finderMessageHandle);
+				AddResource(finderMessageHandle, kStrType, kFinderMessageStrID,
+					"\pFinder message");
+					
+				/* if AddResource failed, dispose of the handle */
+				retCode = ResError();
+				if (retCode != noErr) DisposeHandle(finderMessageHandle);
+			}
+		}
+		
+		/* update and close the preference resource file, 
+		   releasing its resources from memory */
+		CloseResFile(prefsResRefNum);
+	}
+	
+	else {
+		/* couldn't open the res file */
+		retCode = ResError();
+		if (retCode == noErr) retCode = resFNotFound;
+	}
+	
+	return retCode;
+}
+
+
+void GetDialogPrefs(DialogPtr PreferenceBox, Boolean saveit)
 {
    short              type, i; 
    Handle             itemHandle;
@@ -817,29 +1171,21 @@ void GetDialogPrefs(DialogPtr PreferenceBox)
    // It is used to save the tab Size
    GetDialogItem(PreferenceBox, kTabSize, &type, &itemHandle, &itemRect);
    GetDialogItemText(itemHandle, buf);
-   for (i=0; i<buf[0]; i++)
-      tempSpace[i] = buf[i+1];
-   tempSpace[i] = '\0';
-   gtabSize = atoi(tempSpace);
+   CopyPascalStringToC(buf,tempSpace);
+   gtabSize = atoi(buf);
    SetTab(true);
    
    //It is used to save the history size
+   // this will take effect next time you start R
    GetDialogItem(PreferenceBox, kHistoryLength, &type, &itemHandle, &itemRect);
    GetDialogItemText(itemHandle, buf);
-   for (i=0; i<buf[0]; i++)
-      tempSpace[i] = buf[i+1];
-   tempSpace[i] = '\0';
-      
-   // After you change History length, you can only have effect after you restart the program
-   // it is because you need to allocate memory for history record when you start the computer.
+   CopyPascalStringToC(buf,tempSpace);
    storeHistory = atoi(tempSpace);
    
    //Handle textSize
    GetDialogItem(PreferenceBox, kConsTextSize, &type, &itemHandle, &itemRect);
    GetDialogItemText(itemHandle, buf);
-   for (i=0; i<buf[0]; i++)
-      tempSpace[i] = buf[i+1];
-   tempSpace[i] = '\0';
+   CopyPascalStringToC(buf,tempSpace);
    gTextSize = atoi(tempSpace);
 
   
@@ -869,9 +1215,7 @@ void GetDialogPrefs(DialogPtr PreferenceBox)
    // Handle Screen Resolution
    GetDialogItem(PreferenceBox, kScreenRes, &type, &itemHandle, &itemRect);
    GetDialogItemText(itemHandle, buf);
-   for (i=0; i<buf[0]; i++)
-      tempSpace[i] = buf[i+1];
-   tempSpace[i] = '\0';
+   CopyPascalStringToC(buf,tempSpace);
    gScreenRes = atoi(tempSpace);
  
    gTypeColour = tempTypeColour;
@@ -880,8 +1224,67 @@ void GetDialogPrefs(DialogPtr PreferenceBox)
      
    
    
-//   savePreference();
+    GetDialogItem(PreferenceBox, kOnOpenSource, &type, &itemHandle, &itemRect);
+    OnOpenSource = GetControlValue((ControlHandle) itemHandle);
+	
+	GetDialogItem(PreferenceBox, kInterrupt, &type, &itemHandle, &itemRect);
+    Interrupt = GetControlValue((ControlHandle) itemHandle);
+	
+	
+   
+   if(saveit)
+    savePreference();
 
 }
 
+
+
+
+
+
+
+
+
+
+short OpenPrefsResFile(SignedByte prefsPerm, Boolean createFlag)
+/* open the preferences file with the given permission; if createFlag is set,
+   create a preferences file if necessary */
+{
+	OSErr retCode;
+	short prefsVRefNum;
+	long prefsDirID;
+	Str255 prefsNameStr;
+	FSSpec prefsFSSpec;
+	short prefsResRefNum = -1;
+
+	
+	/* get the name of the prefs file */
+
+	GetIndString(prefsNameStr,rPreStringList,iPrefsFileName);
+		
+    retCode = FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder,
+			&prefsVRefNum, &prefsDirID);
+	
+		if (retCode == noErr) {
+		
+			/* make a file spec for the prefs file */
+			
+			retCode = FSMakeFSSpec(prefsVRefNum, prefsDirID, prefsNameStr,
+				&prefsFSSpec);
+				
+			if (retCode == fnfErr && createFlag) {
+				/* prefs file doesn't already exist, so create it */
+				FSpCreateResFile(&prefsFSSpec, kPrefsCreatorType, kPrefsFileType,
+					smSystemScript);
+				retCode = ResError();
+			}
+			
+			/* open the prefs file */
+			if (retCode == noErr) {
+				prefsResRefNum = FSpOpenResFile(&prefsFSSpec, prefsPerm);
+			}
+		}
+	
+	return prefsResRefNum;
+}
 

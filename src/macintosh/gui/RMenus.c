@@ -184,8 +184,8 @@ OSStatus DoOpen(void);
 OSErr OldDoOpen(void);
 OSErr DoSource(void);
 OSErr SourceFile(FSSpec  	*myfss);
-int GetTextSize(void);
-int GetScreenRes(void);
+extern int GetTextSize(void);
+extern int GetScreenRes(void);
 Boolean RunningOnCarbonX(void);
 
 
@@ -1547,26 +1547,6 @@ void DoPaste(WindowPtr window)
 		HaveContent = true;
 	else 	
 		DisposeHandle(myHandle);
-}
-
-/* Only resolutions 72, 144, 300 and 600 are allowable */
-int GetScreenRes(void)
-{
-   gScreenRes = atoi(mac_getenv("ScreenRes"));
-
-  if( gScreenRes != 72 && gScreenRes != 144 &&
-      gScreenRes != 300 && gScreenRes != 600)  
-    gScreenRes = 72;
-  return(gScreenRes); 
-}
-
-int GetTextSize(void)
-{
-   gTextSize = atoi(mac_getenv("TextSize"));
-
-  if(gTextSize < 8 || gTextSize > 14)  
-  	 gTextSize = 12;
-  return(gTextSize);
 }
 
 void changeSize(WindowPtr window, SInt16 newSize)

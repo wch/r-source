@@ -157,7 +157,7 @@ extern WindowPtr     Help_Windows[MAX_NUM_H_WIN + 1];
 // some consts used by DoGrow()
 static void          hideTextRect(Rect*);
 static SInt32        sScrollStep; // how many pixels to scroll (used by ScrollProc)
-extern void          SetTab(void);
+extern void          SetTab(Boolean);
 extern int           R_SetOptionWidth(int w);
 
 void RnWWin(char* buf, SInt16 len, WEReference we );
@@ -1481,7 +1481,7 @@ OSStatus newWindow ( const FSSpec * pFileSpec, WindowRef * outWindow, int graphi
 	    if(windowsMenu = GetMenuHandle(kMenuWindows))
     	 AppendMenu(windowsMenu, titledString); 
          
-	    SetTab();
+	    SetTab(false);
 	    GetQDGlobalsScreenBits(&screenBits);
 	    SetRect(&theWholeScreen, screenBits.bounds.left +4,
 		    screenBits.bounds.top +24, screenBits.bounds.right -4,
