@@ -36,7 +36,10 @@
   If this variable is unset, the default is
   \file{\$R\_HOME/etc/Rprofile.site}, which is used if it exists
   (which it does not in a ``factory-fresh'' installation).
-  This code is loaded into package \code{base}.
+  This code is loaded into package \code{base}.  Users need to be
+  careful not to unintentionally overwrite objects in base, and it
+  is normally advisable to use \code{\link{local}} if code needs to be
+  executed: see the examples.
 
   Then, unless \code{--no-init-file} was given, \R searches for a file
   called \file{.Rprofile} in the current directory or in the user's
@@ -101,15 +104,16 @@
   \code{value} is processed in a similar way to a Unix shell.  In particular
   quotes are stripped, and backslashes are removed except inside quotes.
 }
+#ifdef unix
 \note{
-#ifdef Unix
   The file \file{\$R\_HOME/etc/Renviron} is always read very early in
   the start-up processing.  It contains environment variables set by \R
   in the configure process.  Values in that file can be overriden in
   site or user environment files: do not change
   \file{\$R\_HOME/etc/Renviron} itself.
-
+}
 #endif
+\section{Historical notes}{
   Prior to \R version 1.4.0, the environment files searched were
   \file{.Renviron} in the current directory, the file pointed to by
   \code{R_ENVIRON} if set, and \file{.Renviron} in the user's home
@@ -136,7 +140,8 @@ PAGER=/usr/local/bin/less
 
 # Example .Renviron on Windows
 R_LIBS=C:/R/library
-TCL_LIBRARY=c:/packages/Tcl/lib/tcl8.3
+MY_TCLTK=yes
+TCL_LIBRARY=c:/packages/Tcl/lib/tcl8.4
 
 # Example of .Rprofile
 options(width=65, digits=5)
@@ -145,6 +150,12 @@ ps.options(horizontal=FALSE)
 set.seed(1234)
 .First <- function() cat("\n   Welcome to R!\n\n")
 .Last <- function()  cat("\n   Goodbye!\n\n")
+
+# Example of Rprofile.site
+local({
+  old <- getOption("defaultPackages")
+  options(defaultPackages = c(old, "MASS"))
+})
 
 ## if .Renviron contains
 FOOBAR="coo\bar"doh\\ex"abc\"def'"
