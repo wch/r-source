@@ -9,10 +9,10 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	scope <- add.scope(object, update.formula(object, scope))
     if(!length(scope))
 	stop("no terms in scope for adding to object")
-    newform <- update.formula(object,
-                              paste(". ~ . +", paste(scope, collapse="+")))
-    data <- model.frame(update(object, newform)) # remove NAs
-    object <- update(object, data = data)
+#     newform <- update.formula(object,
+#                               paste(". ~ . +", paste(scope, collapse="+")))
+#     data <- model.frame(update(object, newform)) # remove NAs
+#     object <- update(object, data = data)
     ns <- length(scope)
     ans <- matrix(nrow = ns + 1, ncol = 2)
     dimnames(ans) <- list(c("<none>", scope), c("df", "AIC"))
@@ -248,8 +248,8 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	if(!all(match(scope, tl, FALSE)))
 	    stop("scope is not a subset of term labels")
     }
-    data <- model.frame(object) # remove NAs
-    object <- update(object, data = data)
+#    data <- model.frame(object) # remove NAs
+#    object <- update(object, data = data)
     ns <- length(scope)
     ans <- matrix(nrow = ns + 1, ncol = 2)
     dimnames(ans) <- list(c("<none>", scope), c("df", "AIC"))
