@@ -96,7 +96,7 @@ $(srcdir)/R.1: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/src/scripts/R.sh.in $(srcdir
 	  $(top_builddir)/src/scripts/R.fe
 
 windocs:
-	@(cd $(top_srcdir)/src/gnuwin32 && $(MAKE) docfiles)
+	@(cd $(top_srcdir)/src/gnuwin32 && $(MAKE) -f Makefile.docfiles)
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
