@@ -112,6 +112,10 @@ NEW FEATURES
 	size the output line-length limit for fifo(), gzfile() and 
 	bzfile() has been raised from 10k to 100k chars.
 
+     o	help.search() can now reliable match individual aliases and
+	keywords, provided that all packages searched were installed
+	using R 1.7 or newer.
+
 
 INSTALLATION CHANGES
 
@@ -162,6 +166,13 @@ INSTALLATION CHANGES
 	contents data base, are serialized as R objects, allowing for
 	faster and more reliable index-based computations (e.g., in
 	help.search()).
+
+    o	The Rd contents data base is now computed when installing source
+	packages using R code in package tools.  The information is
+	represented as a data frame without collapsing the aliases and
+	keywords, and serialized as an R object.  (The 'CONTENTS' file
+	in Debian Control Format is still written, as it is used by the
+	HTML search engine.)
 
 
 DEPRECATED & DEFUNCT

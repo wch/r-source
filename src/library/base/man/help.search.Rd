@@ -101,9 +101,10 @@ help.search(apropos = "print")  # The same
 help.search(keyword = "hplot")  # All help pages documenting high-level
                                 # plots.
 
-## Help pages with documented topics starting with `try'.
+## Help pages with documented topics starting with 'try'.
 help.search("\\\\btry", fields = "alias")
-## Do not use `^' or `$' when matching aliases or keywords.
+## Do not use '^' or '$' when matching aliases or keywords
+## (unless all packages were installed using R 1.7 or newer).
 }
 }
 \keyword{documentation}
