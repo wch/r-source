@@ -53,17 +53,12 @@ isGeneric <-
 {
     ## the fdef argument is not found in S4 but should be ;-)
     if(missing(fdef)) {
-        if(missing(where)) {
-            if(!exists(f))
-                return(FALSE)
-            fdef <- getFunction(f)
-        }
-        else {
-            gotIt <- (if(is.environment(where)) exists(f, envir=where, inherits=FALSE) else exists(f, where, inherits=FALSE))
-            if(!gotIt)
-                return(FALSE)
-            fdef <- getFunction(f, where=where)
-        }
+        if(missing(where))
+            fdef <- getFunction(f, mustFind = FALSE)
+        else
+          fdef <- getFunction(f, where=where, mustFind = FALSE)
+    if(is.null(fdef))
+      return(FALSE)
     }
     env <- environment(fdef)
     if(!exists(".Generic", envir=env))
