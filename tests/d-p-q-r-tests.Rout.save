@@ -355,7 +355,8 @@ n= 50 : ......................
 [1] TRUE
 > all.equal(Rgeom,     qgeom    (Pgeom, prob = .4), tol = 1e-14)
 [1] TRUE
-> #>>all.equal(Rhyper,    qhyper   (Phyper, m = 40, n = 30, k = 20), tol = 1e-14)
+> all.equal(Rhyper,    qhyper   (Phyper, m = 40, n = 30, k = 20), tol = 1e-14)
+[1] TRUE
 > all.equal(Rlnorm,    qlnorm   (Plnorm, meanlog = 0, sdlog = 1), tol = 1e-14)
 [1] TRUE
 > all.equal(Rlogis,    qlogis   (Plogis, location = 0, scale = 1), tol = 1e-14)
@@ -364,7 +365,8 @@ n= 50 : ......................
 [1] TRUE
 > all.equal(Rnorm,     qnorm    (Pnorm, mean = 0, sd = 1), tol = 1e-14)
 [1] TRUE
-> #>>all.equal(Rpois,     qpois    (Ppois, lambda = 12), tol = 1e-14)
+> all.equal(Rpois,     qpois    (Ppois, lambda = 12), tol = 1e-14)
+[1] TRUE
 > all.equal(Rsignrank, qsignrank(Psignrank, n = 47), tol = 1e-14)
 [1] TRUE
 > all.equal(Rt,        qt       (Pt, df = 11), tol = 1e-7 )## << !!
