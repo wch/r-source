@@ -81,11 +81,13 @@ static void posIntCheck(int x, char *s)
 	par_error(s);
 }
 
+#ifdef UNUSED
 static void naIntCheck(int x, char *s)
 {
     if (x == NA_INTEGER)
 	par_error(s);
 }
+#endif
 
 static void posRealCheck(double x, char *s)
 {
