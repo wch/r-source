@@ -62,11 +62,34 @@ table <- function (..., exclude = c(NA, NaN),
 }
 
 print.table <- function(x, digits = getOption("digits"), quote = FALSE,
-                        na.print = "", ...) {
+                        na.print = "", ...)
+{
     print.default(unclass(x), digits = digits, quote = quote,
                   na.print = na.print, ...)
 }
+
+as.data.frame.table <- function(x, row.names = NULL, optional = FALSE)
+{
+    x <- as.table(x)
+    data.frame(do.call("expand.grid", dimnames(x)), Freq = c(x),
+               row.names = row.names)
+}
+
+is.table <- function(x) inherits(x, "table")
+as.table <- function(x, ...) UseMethod("as.table")
+as.table.default <- function(x)
+{
+    if(is.table(x))
+        return(x)
+    else if(is.array(x)) {
+        class(x) <- c("table", class(x))
+        return(x)
+    }
+    else
+        stop("cannot coerce into a table")
+}
+
 prop.table<-function (x, margin) 
-sweep(x, margin, margin.table(x, margin), "/")
+    sweep(x, margin, margin.table(x, margin), "/")
 margin.table<-function (x, margin) 
-apply(x, margin, sum)
+    apply(x, margin, sum)
