@@ -14,7 +14,7 @@ RHOME = $(top_builddir)
 
 pkg = mva
 LIB = $(pkg).$(SHLIBEXT)
-OBJS = dblcen.o dist.o hclust.o kmns.o
+OBJS = dblcen.o hclust.o kmns.o
 
 
 all: $(LIB)
