@@ -234,7 +234,7 @@ SRC_HEADERS = Applic.h Arith.h Blas.h Complex.h Error.h Errormsg.h \
 	Fortran.h Linpack.h Mathlib.h Memory.h PrtUtil.h Random.h \
 	Rdefines.h Rinternals.h S.h S_compat.h Utils.h f2c.h
 OBJ_HEADERS = Rconfig.h Rversion.h
-GW32_HEADERS = globalvar.h
+GW32_HEADERS = globalvar.h psignal.h
 
 packagedist:
 	$(RM) -r $(RPREFIX)sp.zip $(RPREFIX)
