@@ -549,7 +549,7 @@ data.frame <-
 	    if(nnew > 0) {
 		n <- is.na(jj)
 		jj[n] <- nvars + 1:nnew
-		new.cols <- c(names(x), j[n])
+		new.cols <- j[n]
 	    }
 	    jseq <- jj
 	}
@@ -558,13 +558,17 @@ data.frame <-
 	else {
 	    jseq <- j
 	    if(max(jseq) > nvars) {
-		new.cols <- c(names(x),
-			      paste("V", seq(from = nvars + 1,
-					     to = max(jseq)),
-				    sep = ""))
-		if(length(new.cols) - nvars != sum(jseq > nvars))
+		new.cols <- paste("V", seq(from = nvars + 1, to = max(jseq)),
+                                  sep = "")
+		if(length(new.cols)  != sum(jseq > nvars))
 		    stop(paste("new columns would leave holes",
 			       "after existing columns"))
+                ## try to use the names of a list `value'
+                if(is.list(value) && !is.null(vnm <- names(value))) {
+                    p <- length(jseq)
+                    if(length(vnm) < p) vnm <- rep(vnm, length = p)
+                    new.cols <- vnm[jseq > nvars]
+                }
 	    }
 	}
     }
@@ -585,10 +589,28 @@ data.frame <-
             value <- split(value, col(value))
         }
 	dimv <- c(n, p)
-    } else {
+    } else { # a list
         ## careful, as.data.frame turns things into factors.
-	value <- as.data.frame(value)
-	dimv <- dim(value)
+	## value <- as.data.frame(value)
+        lens <- sapply(value, NROW)
+        for(k in seq(along=lens)) {
+            N <- lens[k]
+            if(n != N && length(dim(value[[k]])) == 2)
+                stop(paste("replacement element", k,
+                           "is a matrix/data frame of", N,
+                           "rows, need", n))
+            if(N > 0 && N < n && n %% N)
+                stop(paste("replacement element", k, "has", N,
+                           "rows, need", n))
+            ## these fixing-ups will not work for matrices
+            if(N > 0 && N < n) value[[k]] <- rep(value[[k]], len=n)
+            if(N > n) {
+                warning(paste("replacement element", k, "has", N,
+                              "rows to replace", n, "rows"))
+                value[[k]] <- value[[k]][1:n]
+            }
+        }
+	dimv <- c(n, length(value))
     }
     nrowv <- dimv[1]
     if(nrowv < n && nrowv > 0) {
@@ -602,27 +624,35 @@ data.frame <-
     vseq <- 1:n
     ncolv <- dimv[2]
     jvseq <- 1:p
-    if(ncolv < p) jvseq <- rep.int(1:ncolv, length=p)
+    if(ncolv < p) jvseq <- rep(1:ncolv, length = p)
     else if(ncolv > p)
 	warning(paste("provided", ncolv, "variables to replace", p,
 		      "variables"))
+    if(length(new.cols)) {
+        ## extend and name now, as assignment of NULL may delete cols later.
+        nm <- names(x)
+        rows <- attr(x, "row.names")
+        x <- c(x, vector("list", length(new.cols)))
+        names(x) <- c(nm, new.cols)
+        attr(x, "row.names") <- rows
+    }
     if(has.i)
 	for(jjj in 1:p) {
 	    jj <- jseq[jjj]
-	    vjj <- value[[jvseq[[jjj]] ]]
+	    vjj <- value[[ jvseq[[jjj]] ]]
 	    xj <- x[[jj]]
 	    if(length(dim(xj)) != 2) xj[iseq] <- vjj else xj[iseq, ] <- vjj
             ## if a column exists, preserve its attributes
             if(jj <= nvars) x[[jj]][] <- xj else x[[jj]] <- xj
 	}
-    else for(jjj in 1:p) {
+    else for(jjj in p:1) { # we might delete columns with NULL
 	jj <- jseq[jjj]
 	x[[jj]] <- value[[ jvseq[[jjj]] ]]
     }
     if(length(new.cols) > 0) {
+        new.cols <- names(x) # we might delete columns with NULL
         ## added in 1.8.0
-        if(any(duplicated(new.cols))) new.cols <- make.unique(new.cols)
-	names(x) <- new.cols
+        if(any(duplicated(new.cols))) names(x) <- make.unique(new.cols)
     }
     class(x) <- cl
     x

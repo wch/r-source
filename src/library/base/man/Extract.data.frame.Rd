@@ -45,7 +45,7 @@ x$name <- value
   \code{[[} are used with a single index, they index the data frame
   as if it were a list.  In this usage a \code{drop} argument is
   ignored, with a warning.  Using \code{$} is equivalent to using
-  \code{[[} are used with a single index.
+  \code{[[} with a single index.
 
   When \code{[} and \code{[[} are used with two indices they act
   like indexing a matrix:  \code{[[} can only be used to select one element.
@@ -65,6 +65,14 @@ x$name <- value
   at any row after the current last row, and the columns will be
   in-filled with missing values.
 
+  For \code{[} the replacement value can be a list: each element of the
+  list is used to replace (part of) one column, recycling the list as
+  necessary.  If the columns specified by number are created, the names
+  (if any) of the corresponding list elements are used to name the
+  columns.  If the replacment is not selecting rows, list values can
+  contain \code{NULL} elements which will cause the corresponding
+  columns to be deleted.
+
   Matrixing indexing using \code{[} is not recommended, and barely
   supported.  For extraction, \code{x} is first coerced to a matrix.
   For replacement a logical matrix (only) can be used to select the
@@ -82,20 +90,17 @@ x$name <- value
   replicated (by calling the generic function \code{\link{rep}}) to the
   right length if an exact number of repeats can be used.
 
-  When \code{[} is used to add or replace one or more columns and the
-  supplied \code{value} is a list, it is coerced to a data frame.
-
   When \code{[} is used with a logical matrix, each value is coerced to
   the type of the column in which it is to be placed.
 
   When  \code{[} and \code{[[} are used with two indices, the
-  column will be coerced as necessary to accomodate the value.
+  column will be coerced as necessary to accommodate the value.
 }
 \section{Warning}{
   Although the default for \code{drop} is \code{TRUE}, the default
-  behaviour is equivalent to specifying \code{drop=FALSE} when only one
-  \emph{row} is left.  To drop from a data frame to a list, \code{drop =
-    FALSE} has to specified explicitly.
+  behaviour  when only one \emph{row} is left is equivalent to
+  specifying \code{drop = FALSE}.  To drop from a data frame to a list,
+  \code{drop = FALSE} has to specified explicitly.
 }
 \value{
   For \code{[} a data frame, list or a single column (the latter two
@@ -105,7 +110,7 @@ x$name <- value
   For \code{[[} a column of the data frame (extraction with one index)
   or a length-one vector (extraction with two indices).
 
-  For \code{[<-} and \code{[[<-}, a data frame.
+  For \code{[<-}, \code{[[<-} and \code{$<-}, a data frame.
 }
 \seealso{
   \code{\link{data.frame}}, \code{\link{Extract}}
@@ -138,6 +143,9 @@ sw[, "new3"] <- LETTERS[1:5] # ditto
 sw$new4 <- 1:5
 sapply(sw, class)
 sw$new4 <- NULL              # delete the column
+sw
+sw[6:8] <- list(letters[10:14], NULL, aa=1:5) # delete col7, update 6, append
+sw
 
 ## matrices in a data frame
 A <- data.frame(x=1:3, y=I(matrix(4:6)), z=I(matrix(letters[1:9],3,3)))

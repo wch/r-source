@@ -121,11 +121,14 @@ NEW FEATURES
 
 	- adf[j] <- value and adf[[j]] <- value did not convert
 	  character vectors to factors, but adf[,j] <- value did.
-	  Now none do,
+	  Now none do.  Nor is a list `value' corced to a data frame
+	  (thereby coercing character elements to factors).
 
 	- Where replicating the replacment value a whole number of
           times will produce the right number of values, this is
           always done (rather than some times but not others).
+
+	- Replacement list values can include NULL elements.
 
 	- Subsetting a data frame can no longer produce duplicate
           column names.
@@ -153,8 +156,10 @@ NEW FEATURES
 	In particular make.names() now recognises that names beginning
 	with a dot are valid and that reserved words are not.
 
-    o   format() and hence print() makes an effort to handle corrupt
+    o   format() and hence print() make an effort to handle corrupt
 	data frames, with a warning.
+
+    o   dump() only quotes object names in the file where necessary.
 
     o   New function replicate() for repeated evaluation of expression
         and collection of results, wrapping a common use of sapply()
