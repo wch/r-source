@@ -6176,8 +6176,8 @@ Windows, and @R{} interfaces are available for each.
 The following session is intended to introduce to you some features of
 the @R{} environment by using them.  Many features of the system will be
 unfamiliar and puzzling at first, but this puzzlement will soon
-disappear.  This is written for the UNIX user.  Those using Windows will
-need to adapt the discussion appropriately.
+disappear.  This is written for the UNIX user.  Those using Windows or
+Macintosh will need to adapt the discussion slightly.
 
 @table @code
 @item
