@@ -24,6 +24,10 @@ NEW FEATURES
 	distribution, and also contains chisq.test, prop.test and t.test
 	which previously were in package base.
 
+    o	New utility `R CMD build' for building add-on packages along
+	with some useful testing and cleaning up.
+
+
 
 BUG FIXES
 
@@ -755,9 +759,8 @@ NEW FEATURES
     o	new global variable R.version.string (for plots & reports).
 	Deprecated version & Version for new  R.version & R.Version.
 
-    o	R CMD Rd2dvi  has builtin "Usage" help and works for multiple files.
+    o	R CMD Rd2dvi has builtin "Usage" help and works for multiple files.
 	Useful for automatic reference manual of a package.
-	(doc/manual/lib2tex is more efficient for installed packages, however).
 
 
 BUG FIXES
