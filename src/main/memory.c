@@ -808,6 +808,11 @@ static void SortNodes(void)
 
 /* Finalization and Weak References */
 
+/* The design of this mechanism is very close to the one described in
+   "Stretching the storage manager: weak pointers and stable names in
+   Haskell" by Peyton Jones, Marlow, and Elliott (at
+   www.research.microsoft.com/Users/simonpj/papers/weak.ps.gz). --LT */
+
 static SEXP R_weak_refs = NULL;
 
 #define READY_TO_FINALIZE_MASK 1
@@ -903,12 +908,7 @@ static void CheckFinalizers(void)
 /* C finalizers are stored in a CHARSXP.  It would be nice if we could
    use EXTPTRSXP's but these only hold a void *, and function pointers
    are not guaranteed to be compatible with a void *.  There should be
-   a cleaner way of doing this, but this will do until I get a chance
-   to redesign the finalization stuff to fit in with weak references.
-   I think the right thing to do is to implement the ideas in
-   "Stretching the storage manager: weak pointers and stable names in
-   Haskell" by Peyton Jones, Marlow, and Elliott (at
-   www.research.microsoft.com/Users/simonpj/papers/weak.ps.gz). --LT */
+   a cleaner way of doing this, but this will do for now. --LT */
 static Rboolean isCFinalizer(SEXP fun)
 {
     return TYPEOF(fun) == CHARSXP;
