@@ -20,7 +20,8 @@ DISTFILES = \
 	$(SOURCES_TEXI) \
 	resources.texi \
 	R-exts.R R-exts.c R-intro.R \
-	refman.top refman.bot
+	refman.top refman.bot \
+	ISBN
 SUBDIRS = images
 
 OBJECTS_DVI = $(SOURCES_TEXI:.texi=.dvi)

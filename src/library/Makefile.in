@@ -11,7 +11,7 @@ subdir = src/library
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in BuildAll.mac
+DISTFILES = Makefile.in
 
 SUBDIRS = profile $(R_PKGS)
 
