@@ -1,6 +1,6 @@
 link.html.help <- function(verbose=FALSE, lib.loc=.Library)
 {
-    if(!file.exists(file.path(R.home(), "doc", "html")))
+    if(!file.exists(file.path(R.home(), "doc", "html", "search")))
        return(invisible(NULL))
     if(verbose) {
         cat("updating HTML package descriptions\n")
