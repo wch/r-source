@@ -24,13 +24,17 @@
 
   After loading, \code{\link{loadNamespace}} looks for a hook function named
   \code{.onLoad} and runs it before sealing the namespace and processing
-  exports.  Note that the code is run without the package being on the
-  search path, so objects in the package need to be referred to using the
-  double colon operator.
+  exports.
 
   If a name space is unloaded (via \code{\link{unloadNamespace}}),
   a hook function \code{.onUnload} is run before final unloading.
   
+  Note that the code in \code{.onLoad} and \code{.onUnload} is run
+  without the package being on the search path, but (unless circumvented)
+  lexical scope will make objects in the namespace and its imports
+  visible. (Do not use the double colon operator in \code{.onLoad} as
+  exports have not been processed at the point it is run.)
+
   When the package is attached (via \code{\link{library}}), the hook
   function \code{.onAttach} is called after the exported functions are
   attached.  This is less likely to be useful than \code{.onLoad}, which
@@ -39,9 +43,9 @@
 
   \code{.onLoad}, \code{.onUnload} and \code{.onAttach} are looked for
   as internal variables in the name space and should not be exported.
-
-  A function \code{\link{.Last.lib}} will be called when the package is
-  detached: this does need to be exported.
+  
+  If a function \code{\link{.Last.lib}} is visible in the package, it
+  will be called when the package is detached: this does need to be exported.
 
   Anything needed for the functioning of the name space should be
   handled at load/unload times by the \code{.onLoad} and
