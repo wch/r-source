@@ -125,7 +125,7 @@ fourfoldplot <- function(x, color = c("red", "blue"), conf.level = 0.95,
         for(i in 1 : k) {
             f <- x[ , , i]
             if(any(f == 0))
-                f <- f + 10^(-6)
+                f <- f + 0.5
             or[i] <- (f[1, 1] * f[2, 2]) / (f[1, 2] * f[2, 1])
             se[i] <- sqrt(sum(1 / f))
         }
