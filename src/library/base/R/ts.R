@@ -10,11 +10,15 @@ options(ts.eps = 1e-5)   # default as S
 
 ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
 	       deltat = 1, ts.eps  =  .Options$ts.eps,
-               class = if(nseries > 1) c("mts", "ts") else "ts")
+               class = if(nseries > 1) c("mts", "ts") else "ts",
+               names = if(!is.null(dimnames(data))) colnames(data)
+               else paste("Series", seq(nseries))
+               )
 {
     if(is.matrix(data) || is.data.frame(data)) {
 	nseries <- ncol(data)
 	ndata <- nrow(data)
+        dimnames(data) <- list(NULL, names)
     } else {
 	nseries <- 1
 	ndata <- length(data)

@@ -2,7 +2,7 @@
 \title{Time-Series Objects}
 \usage{
 ts(data = NA, start = 1, end = numeric(0), frequency = 1,
-   deltat = 1, ts.eps = .Options$ts.eps, class)
+   deltat = 1, ts.eps = .Options$ts.eps, class, names)
 as.ts(x)
 is.ts(x)
 
@@ -34,6 +34,9 @@ lines(ts.obj, ...)
     \item{class}{class to be given to the result, or none if \code{NULL}
 	or \code{"none"}. The default is \code{"ts"} for a single
 	series, \code{c("mts", "ts")} for multiple series.}
+    \item{names}{a character vector of names for the series in a
+	multiple series: defaults to the colnames of \code{data}, or
+	\code{Series 1}, \code{Series 2}, \dots.
 
     \item{calendar}{enable/disable the display of information about
 	month names, quarter names or year when printing. The default is
