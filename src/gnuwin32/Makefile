@@ -163,8 +163,9 @@ bindist:
 	$(CP) -p ../../etc/Rconsole $(RPREFIX)/etc/Rconsole
 	$(CP) -p ../../etc/Rdevga $(RPREFIX)/etc/Rdevga
 	$(CP) -p ../../etc/rgb.txt $(RPREFIX)/etc/rgb.txt
-	$(MKDIR) $(RPREFIX)/doc
+	$(MKDIR) $(RPREFIX)/doc $(RPREFIX)/doc/manual
 	$(CP) -pr ../../doc/html $(RPREFIX)/doc
+	$(CP) -p ../doc/manual/Rd.sty $(RPREFIX)/doc/manual
 	$(CP) -p ../../COPYING COPYRIGHTS ../../FAQ ../../NEWS \
 		../../Y2K $(RPREFIX)
 	$(CP) -p readme $(RPREFIX)/README
