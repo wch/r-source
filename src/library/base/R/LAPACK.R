@@ -80,9 +80,16 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
             stop("nv must be 0, nrow(x) or ncol(x)")
     } else {
         if(nu > 0 || nv > 0) {
-            jobu <- 'A'
-            u <- matrix(0, n, n)
-            v <- matrix(0, p, p)
+            np <- min(n, p)
+            if(nu <= np && nv <= np) {
+                jobu <- 'S'
+                u <- matrix(0, n, np)
+                v <- matrix(0, np, p)
+            } else {
+                jobu <- 'A'
+                u <- matrix(0, n, n)
+                v <- matrix(0, p, p)
+            }
         } else {
             jobu <- 'N'
             # these dimensions _are_ checked, but unused
@@ -94,6 +101,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
                      method, PACKAGE = "base")
         res <- res[c("d", if(nu) "u", if(nv) "vt")]
         if(nu) res$u <- res$u[, 1:min(n, nu), drop = FALSE]
+        if(nv) res$vt <- res$vt[1:min(p, nv), , drop = FALSE]
         return(res)
     }
 
