@@ -16,8 +16,8 @@
   see examples.
 }
 \seealso{
-\code{\link{if}}, \code{\link{return}}, etc for other objects used in
-the \R language itself.
+  \code{\link{if}}, \code{\link{return}}, etc for other objects used in
+  the \R language itself.
 }
 \examples{
 f <- get("(")
