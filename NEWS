@@ -62,10 +62,10 @@ NEW FEATURES
 
     o	Formerly deprecated function provide() is now defunct.
 
-    o	New command-line option --no-restory-history implied by --vanilla.
+    o	New command-line option --no-restore-history implied by --vanilla.
 
     o	The `mode' argument of exists() and get() is interpreted
-	as a mode(x) rather than typeof(x), following S. 
+	as mode(x) rather than typeof(x), following S. 
 
 
 
