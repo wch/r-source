@@ -7,7 +7,7 @@
 \alias{solve.default}
 \alias{solve.qr}
 \arguments{
-  \item{a}{a numeric or complex matrix containing the coefficients of
+  \item{a}{a square numeric or complex matrix containing the coefficients of
     the linear system.}
   \item{b}{a numeric or complex vector or matrix giving the right-hand
     side(s) of the linear system.  If missing, \code{b} is taken to be
@@ -33,6 +33,10 @@
   if \code{b} is missing the column names of the result are the row
   names of \code{a}.  No check is made that the column names of \code{a}
   and the row names of \code{b} are equal.
+
+  For back-compatibility \code{a} can be a (real) QR decomposition,
+  although \code{\link{qr.solve}} should be called in that case.
+  \code{\link{qr.solve}} can handle non-square systems.
 }
 \seealso{
   \code{\link{backsolve}}, \code{\link{qr.solve}}.

@@ -16,6 +16,7 @@ solve.qr <- function(a, b, tol = 1e-7, ...)
 solve.default <- function(a, b, tol = 1e-7, LINPACK = FALSE, ...)
 {
     if(is.complex(a) || (!missing(b) && is.complex(b))) {
+        a <- as.matrix(a)
         if(missing(b)) {
             b <- diag(1+0i, nrow(a))
             colnames(b) <- rownames(a)
@@ -27,7 +28,12 @@ solve.default <- function(a, b, tol = 1e-7, LINPACK = FALSE, ...)
 	} else
 	    drop(.Call("La_zgesv", a, as.matrix(b), PACKAGE = "base")))
     }
+    if(is.qr(a)) {
+        warning("solve.default called with a qr object: use qr.solve")
+        return(solve.qr(a, b, tol))
+    }
     if(!LINPACK) {
+        a <- as.matrix(a)
         if(missing(b)) {
             b <- diag(1.0, nrow(a))
             colnames(b) <- rownames(a)
@@ -39,8 +45,7 @@ solve.default <- function(a, b, tol = 1e-7, LINPACK = FALSE, ...)
 	} else
 	    drop(.Call("La_dgesv", a, as.matrix(b), PACKAGE = "base")))
     }
-    if( !is.qr(a) )
-	a <- qr(a, tol = tol)
+    a <- qr(a, tol = tol)
     nc <- ncol(a$qr)
     if( a$rank != nc )
 	stop("singular matrix `a' in solve")
