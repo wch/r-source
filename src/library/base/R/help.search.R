@@ -42,13 +42,14 @@ help.search <- function(topic, fields = c("name", "title"),
     if(rebuild || is.null(help.db) || !file.exists(help.db)) {
         ## Check whether we can save the help db lateron
         save.db <- FALSE
-        dir <- getenv("HOME")
-        if(nchar(dir) == 0)
-            dir <- getwd()
+        dir <- switch(.Platform$OS.type,
+                      "windows" = getenv("R_USER"),
+                      "unix" = getenv("HOME"),
+                      "")
+        if(nchar(dir) == 0) dir <- getwd()
         dir <- file.path(dir, ".R")
         dbfile <- file.path(dir, "help.db")
-        if((file.exists(dir) || (system(paste("mkdir", dir)) == 0))
-           && (unlink(dbfile) == 0))
+        if((file.exists(dir) || dir.create(dir)) && (unlink(dbfile) == 0))
             save.db <- TRUE
         ## Create the help db
         if(verbose)
@@ -71,10 +72,10 @@ help.search <- function(topic, fields = c("name", "title"),
                 cfile <- system.file("CONTENTS", pkg = p, lib = lib)
                 if(cfile != "") {
                     ctext <- scan("", file = cfile, sep = "\n",
-                                  quiet = TRUE) 
+                                  quiet = TRUE)
                     if(length(ctext) > 0) {
                         ctext <- parse.dcf(ctext,
-                                           fields = c("Entry", "Aliases", 
+                                           fields = c("Entry", "Aliases",
                                            "Description", "Keywords"))
                         nr <- NROW(ctext)
                         db <- rbind(db,
@@ -98,7 +99,7 @@ help.search <- function(topic, fields = c("name", "title"),
     }
 
     ## Matching
-    if(verbose) cat("\nDatabase of dimension", dim(db))    
+    if(verbose) cat("\nDatabase of dimension", dim(db))
     i <- NULL
     for (f in fields)
         i <- c(i, grep(topic, db[, f], ignore.case = ignore.case))
