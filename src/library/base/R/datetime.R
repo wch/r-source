@@ -537,7 +537,7 @@ cut.POSIXt <-
 
 julian <- function(x, ...) UseMethod("julian")
 
-julian.POSIXt <- function(x, origin = as.POSIXct("1970-01-01", tz="GMT"))
+julian.POSIXt <- function(x, origin = as.POSIXct("1970-01-01", tz="GMT"), ...)
 {
     if(length(origin) != 1) stop("`origin' must be of length one")
     res <- difftime(as.POSIXct(x), origin, units = "days")
@@ -557,7 +557,7 @@ months.POSIXt <- function(x, abbreviate = FALSE)
 }
 
 quarters <- function(x, abbreviate) UseMethod("quarters")
-quarters.POSIXt <- function(x)
+quarters.POSIXt <- function(x, ...)
 {
     x <- (as.POSIXlt(x)$mon)%/%3
     paste("Q", x+1, sep = "")
