@@ -904,7 +904,6 @@ SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
 	a = CDR(a);
 	v = CDR(v);
     }
-    UNPROTECT(1);
     switch(nv) {
     case 0:
 	v = R_NilValue;
@@ -919,6 +918,8 @@ SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
 	v = PairToVectorList(vals);
 	break;
     }
+    UNPROTECT(1);
+
     findcontext(CTXT_BROWSER | CTXT_FUNCTION, rho, v);
 
     return R_NilValue; /*NOTREACHED*/
