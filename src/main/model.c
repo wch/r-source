@@ -833,17 +833,16 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	a = CDR(a);
 	/* now remove offset terms from the formula */
 	call = formula; /* call is to be the previous term once one is found */
-	for (l = 0; call != R_NilValue; l++) {
-	    SEXP thisterm;
+	while (1) {
+	    SEXP thisterm = foundOne ? CDR(call) : call;
 	    Rboolean have_offset = FALSE;
-	    thisterm = foundOne ? CDR(call) : call;
-	    for (i = 1; i <= nvar; i++) {
+	    if(length(thisterm) == 0) break;
+	    for (i = 1; i <= nvar; i++)
 		if (GetBit(CAR(thisterm), i) &&
 		    !strncmp(CHAR(STRING_ELT(varnames, i-1)), "offset(", 7)) {
 		    have_offset = TRUE;
 		    break;
 		}
-	    }
 	    if (have_offset) {
 		if (!foundOne) call = formula = CDR(formula);
 		else SETCDR(call, CDR(thisterm));
