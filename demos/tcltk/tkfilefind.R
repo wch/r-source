@@ -1,5 +1,19 @@
 require(tcltk) || stop("tcltk support is absent")
 
+cat("\n\n    ------------------------------------------------------\n",
+    "    This demo will put a tree widget to explore the filesystem",
+    "    from the current working directory.",
+    "",
+    "    *Double* click on a folder marked with + or - to expand",
+    "    or contract a branch.",
+    "",
+    "    Click on the Select button to pick a file,",
+    "    or Quit to return without selecting",
+    "\n    ------------------------------------------------------\n\n",
+    sep="\n")
+
+if(.Platform$OS.type == "windows") flush.console()
+
 tkfilefind<-function(path=getwd(), all.names=FALSE, multiple=FALSE){
     tclRequire("::Utility")
     tclRequire("Hierarchy")
