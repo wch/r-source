@@ -1564,6 +1564,7 @@ static Rboolean newX11_Locator(double *x, double *y, NewDevDesc *dd)
     /* click in the desired device */
     while (!done && displayOpen) {
 	XNextEvent(display, &event);
+	R_CheckUserInterrupt();
 	if (event.type == ButtonPress) {
 	    XFindContext(display, event.xbutton.window,
 			 devPtrContext, &temp);
