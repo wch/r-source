@@ -160,7 +160,9 @@ files used by R are relative to the starting directory, so setting the
 `Start in' field automatically helps separate projects.
 
 Alternatively, start R by double-clicking on a saved `.RData' file in
-the directory for the project you want to use.
+the directory for the project you want to use, or drag-and-drop a file
+with extension `.RData' onto an R shortcut (which acts in the same way
+as double-clicking the file).
 
 2.6 How do I print from R?
 ==========================

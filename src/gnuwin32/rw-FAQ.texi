@@ -203,7 +203,9 @@ files used by R are relative to the starting directory, so setting the
 `Start in' field automatically helps separate projects.
 
 Alternatively, start R by double-clicking on a saved @file{.RData} file
-in the directory for the project you want to use.
+in the directory for the project you want to use, or drag-and-drop a
+file with extension @file{.RData} onto an R shortcut (which acts in the
+same way as double-clicking the file).
 
 @node How do I print from R?, Can I use R BATCH?, How can I keep workspaces for different projects in different directories?, Installation and Usage
 @section How do I print from R?

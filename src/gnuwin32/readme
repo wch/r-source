@@ -24,13 +24,13 @@ Installation
 The distribution can be obtained in one of three versions:
 
 1) A 15Mb file SetupR.exe.  Just run this for a Windows-2000 style
-installer.  It contains all the R components except WinHlp files, and you
-can select what want installed.  This includes the recommended packages.
+installer.  It contains all the R components, and you can select what
+want installed.
 
 
-2) Files miniR.exe and miniR-1.bin to miniR-?.bin.  If you need to,
+2) Files miniR.exe and miniR-1.bin to miniR-7.bin.  If you need to,
 put miniR.exe and miniR-1.bin on one floppy, and miniR-2.bin to
-miniR-?.bin on separate floppies.
+miniR-7.bin on separate floppies.
 
 This is a small installation, containing text and compiled HTML help
 and the Introduction to R and Data Import/Export manuals in PDF.
@@ -78,8 +78,8 @@ as the working directory (where workspaces and files are saved and
 loaded from).  The SetupR.exe and miniR.exe installers create a
 shortcut on the desktop for you (by default).
 
-You have a choice of interface:  SDI (lots of separate windows) or
-MDI (multiple child windows in one large window).  MDI is the default:
+You have a choice of interface: SDI (separate windows) or MDI
+(multiple child windows in one large window).  MDI is the default:
 select SDI by adding --sdi in the Target field.
 
 Command-line editing is available: see Help | Console for details.
@@ -124,7 +124,7 @@ Rcmd BATCH --help.  (You will need @RWVER@sp.zip and Perl installed.)
 
 Use with ESS: You can use Rterm.exe to provide inferior R-mode in ESS
 under NTEmacs, for example with ess-5.1.18.  The pager is
-automatically set to "console" so help will be displayed in emacs
+automatically set to "console" so text help will be displayed in emacs
 buffers.
 
 
@@ -162,7 +162,7 @@ options(chmhelp=TRUE) or for individual help items by help(topic,
 chmhelp=TRUE).  Full text search is available from the Search tab.
 According to Microsoft, to make use of this you will need to have IE3
 or later installed and a recent version of Windows or (not Windows
-2000) use the updater hhupd.exe at
+2000 or ME) use the updater hhupd.exe at
 http://msdn.microsoft.com/library/tools/htmlhelp/wkshp/download.htm.
 
 (iii) HTML help to be displayed in your normal browser.  Set this as
@@ -228,8 +228,8 @@ Adding packages
 
 Binaries for many packages are available at CRAN/bin/windows/contrib.
 These are zip files which should be unpacked in @RWVER@\library.
-Perhaps the simplest option is use the item on the Packages menu to
-install from a zip file.
+Perhaps the simplest option is use the items on the Packages menu to
+install from a zip file or to download from CRAN.
 
 The list of packages and functions given by HTML help and used by the
 search engine can be updated from a running R process by the command
@@ -292,8 +292,9 @@ Using package tcltk
 
 The package tcltk introduced in version 1.1.0 provides somewhat
 experimental support for building graphical interfaces with Tcl/Tk.
-To use this you need to install tcl831.exe or tcl832.exe from
-dev.scriptics.com, and you will need the Tcl and Tk dlls in your path.
+To use this you need to install either ActiveTcl 8.3.3 from
+http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/ or tcl832.exe
+from dev.scriptics.com, and you will need the Tcl and Tk dlls in your path.
 Also, you need to set the environment variable TCL_LIBRARY, to
 something like c:/Program Files/Tcl/lib/tcl8.3.
 
