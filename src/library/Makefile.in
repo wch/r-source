@@ -10,7 +10,11 @@ subdir = src/library
 
 include $(top_builddir)/Makeconf
 
-PKGS = `ls $(srcdir) | sed '/^CVS/d; /Makefile/d; /^stamp-/d;'`
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in
+SUBDIRS = base eda mva profile stepfun
+
+PKGS = base eda mva stepfun
 
 all: Makefile R
 
@@ -21,7 +25,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
-	@for pkg in $(PKGS); do \
+	@for pkg in $(PKGS) profile; do \
 	  (cd $${pkg} && $(MAKE)); \
 	done
 
@@ -32,19 +36,24 @@ latex: stamp-latex
 examples: stamp-examples
 
 stamp-docs: $(srcdir)/*/man/*.Rd $(top_builddir)/library/LibIndex
+	@rm -f $@ stamp-help stamp-html stamp-latex stamp-examples
 	@echo "Building ALL documentation (help, HTML, LaTeX, R-Examples)"
 	@$(MAKE) DOCS
 	@touch $@ stamp-help stamp-html stamp-latex stamp-examples
 stamp-help: $(srcdir)/*/man/*.Rd $(top_builddir)/library/LibIndex
+	@rm -f $@
 	@OPTS="--nroff" $(MAKE) DOCS
 	@touch $@
 stamp-html: $(srcdir)/*/man/*.Rd
+	@rm -f $@
 	@OPTS="--html"  $(MAKE) DOCS
 	@touch $@
 stamp-latex: $(srcdir)/*/man/*.Rd
+	@rm -f $@
 	@OPTS="--latex" $(MAKE) DOCS
 	@touch $@
 stamp-examples: $(srcdir)/*/man/*.Rd
+	@rm -f $@
 	@OPTS="--example" $(MAKE) DOCS
 	@touch $@
 
@@ -59,15 +68,30 @@ DOCS:
 
 mostlyclean: clean
 clean:
-	@for pkg in $(PKGS); do \
-	  (cd $${pkg} && $(MAKE) $@); \
+	@for d in $(SUBDIRS); do \
+	  (cd $${d} && $(MAKE) $@); \
 	done
 	@rm -f stamp-*
 distclean:
-	@for pkg in $(PKGS); do \
-	  (cd $${pkg} && $(MAKE) $@); \
+	@for d in $(SUBDIRS); do \
+	  (cd $${d} && $(MAKE) $@); \
 	done
 	@rm -f Makefile
 maintainer-clean: distclean
 
 install install-strip uninstall TAGS info dvi check::
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+        done
+	@for d in $(SUBDIRS); do \
+	  test -d $(distdir)/$${d} \
+	    || mkdir $(distdir)/$${d} \
+	    || exit 1; \
+	  chmod 755 $(distdir)/$${d}; \
+	  (cd $${d} && $(MAKE) distdir) \
+	    || exit 1; \
+        done
