@@ -52,7 +52,9 @@ print.listof <- function(x, ...)
     for(i in seq(length=ll)) {
 	cat(nn[i], ":\n"); print(x[[i]], ...); cat("\n")
     }
+    invisible(x)
 }
+
 ## used for version:
 print.simple.list <- function(x, ...)
     print(noquote(cbind("_"=unlist(x))), ...)
@@ -155,6 +157,3 @@ print.anova <- function(x, digits = max(.Options$digits - 2, 3),
 		  ...)
     invisible(x)
 }
-
-
-
