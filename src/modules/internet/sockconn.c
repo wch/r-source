@@ -93,6 +93,7 @@ static Rboolean sock_open(Rconnection con)
     con->isopen = TRUE;
     if(mlen >= 2 && con->mode[mlen - 1] == 'b') con->text = FALSE;
     else con->text = TRUE;
+    set_iconv(con); /* OK for output, at least */
     con->save = -1000;
     return TRUE;
 }
@@ -150,7 +151,7 @@ static int sock_fgetc(Rconnection con)
     int n;
   
     n = sock_read_helper(con, (char *)&c, 1);
-    return (n == 1) ? con->encoding[c] : R_EOF;
+    return (n == 1) ? c : R_EOF;
 }
 
 static size_t sock_read(void *ptr, size_t size, size_t nitems,

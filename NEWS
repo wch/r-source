@@ -21,6 +21,15 @@ USER-VISIBLE CHANGES
 	--enable-utf8.  The changes to font handling in the X11
 	devices are based on the Japanization patches of Eiji Nakama.]
 
+    o	The meaning of 'encoding' for a connection has changed: it now
+	allows any charset encoding supported by iconv on the
+	platform, and can re-encode output as well as input.
+	[Currently input re-encoding is only implemented for file
+	connections.]
+
+	As the new specification is a character string and the old was
+	numeric, this should not cause incorrect operation.
+
 
 NEW FEATURES
 

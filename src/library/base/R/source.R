@@ -29,7 +29,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	cat("--> parsed", Ne, "expressions; now eval(.)ing them:\n")
     if (Ne == 0)
 	return(invisible())
-    if (chdir && (path <- dirname(file)) != ".") {
+    if (chdir && is.character(file) && (path <- dirname(file)) != ".") {
 	owd <- getwd()
 	on.exit(setwd(owd))
 	setwd(path)

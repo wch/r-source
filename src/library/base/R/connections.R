@@ -191,10 +191,6 @@ writeBin <- function(object, con, size = NA, endian = .Platform$endian)
     invisible(.Internal(writeBin(object, con, size, swap)))
 }
 
-## encoding vectors
-native.enc <- 0:255
-# rest in Rprofile.*
-
 readChar <- function(con, nchars)
 {
     if(is.character(con)) {

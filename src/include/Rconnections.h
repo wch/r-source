@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2004   The R Development Core Team.
+ *  Copyright (C) 2000-2005   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -47,7 +47,10 @@ struct Rconn {
     int nPushBack, posPushBack; /* number of lines, position on top line */
     char **PushBack;
     int save, save2;
-    unsigned char encoding[256];
+    /* unsigned char encoding[256];*/
+    char encname[101];
+    /* will be iconv_t, which is a pointer. NULL if not in use */
+    void *inconv, *outconv;
     void *private;
 };
 
@@ -63,6 +66,9 @@ typedef struct fileconn {
 #endif
 #endif
     Rboolean last_was_write;
+    /* The idea here is that no MBCS char will ever not fit */
+    char iconvbuff[25], oconvbuff[50], *next;
+    short navail, inavail;
 } *Rfileconn;
 
 typedef struct fifoconn {
@@ -155,5 +161,7 @@ int getActiveSink(int n);
 int Rsockselect(int nsock, int *insockfd, int *ready, int *write,
 		double timeout);
 
+#define set_iconv Rf_set_iconv
+void set_iconv(Rconnection con);
 #endif
 

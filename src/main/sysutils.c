@@ -303,7 +303,6 @@ static void iconv_Init(void)
 {
     static int initialized = 0;
     char dllpath[PATH_MAX];
-    HINSTANCE dll;
     snprintf(dllpath, PATH_MAX, "%s%smodules%s%s%s", getenv("R_HOME"), 
 	     FILESEP, FILESEP, "iconv", SHLIB_EXT);
     if(!initialized) {
@@ -314,7 +313,6 @@ static void iconv_Init(void)
 	    ptr_iconv_open = R_FindSymbol("libiconv_open", "iconv", NULL);
 	    ptr_iconv_close = R_FindSymbol("libiconv_close", "iconv", NULL);
 	    ptr_iconvlist = R_FindSymbol("libiconvlist", "iconv", NULL);
-	    Rprintf("iconv is at %p\n", ptr_iconv);
 	    if(!ptr_iconv)
 		error("failed to find symbols in iconv.dll");
 	}
@@ -326,9 +324,9 @@ static void iconv_Init(void)
 #undef iconv_open
 #undef iconv_close
 #undef iconvlist
-#define iconv (*ptr_iconv)
-#define iconv_open (*ptr_iconv_open)
-#define iconv_close (*ptr_iconv_close)
+#define iconv(a,b,c,d,e) ((size_t)(*ptr_iconv)(a,b,c,d,e))
+#define iconv_open(a, b) ((iconv_t)(*ptr_iconv_open)(a,b))
+#define iconv_close(a) ((int)(*ptr_iconv_close)(a))
 #define iconvlist (*ptr_iconvlist)
 #endif
 
@@ -417,3 +415,43 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue; /* -Wall */
 #endif
 }
+
+#ifdef HAVE_ICONV
+void * Riconv_open (const char* tocode, const char* fromcode)
+{
+#ifdef Win32
+    iconv_Init();
+#endif
+    return iconv_open(tocode, fromcode);
+}
+
+size_t Riconv (void * cd, const char* * inbuf, size_t *inbytesleft, 
+	       char* * outbuf, size_t *outbytesleft)
+{
+    return iconv((iconv_t) cd, inbuf, inbytesleft, outbuf, outbytesleft);
+}
+
+int Riconv_close (void * cd)
+{
+    return iconv_close((iconv_t) cd);
+}
+#else
+void * Riconv_open (const char* tocode, const char* fromcode)
+{
+    error("`iconv' is not available on this system");
+    return (void *)-1;
+}
+
+size_t Riconv (void * cd, const char* * inbuf, size_t *inbytesleft, 
+	       char* * outbuf, size_t *outbytesleft)
+{
+    error("`iconv' is not available on this system");
+    return 0;
+}
+
+int Riconv_close (void * cd)
+{
+    error("`iconv' is not available on this system");
+    return -1;
+}
+#endif

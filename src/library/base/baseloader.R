@@ -7,7 +7,7 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter) {
     readRDS <- function (file) {
         halt <- function (message) .Internal(stop(TRUE, message))
         gzfile <- function (description, open)
-            .Internal(gzfile(description, open, 0:255, 6))
+            .Internal(gzfile(description, open, "native.enc", 6))
         close <- function (con) .Internal(close(con, "rw"))
         if (! is.character(file)) halt("bad file name")
         con <- gzfile(file, "rb")

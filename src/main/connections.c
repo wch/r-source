@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-4   The R Development Core Team.
+ *  Copyright (C) 2000-5   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 
 /* <UTF8-FIXME>
    Uses byte-level access, mainly OK.
-   Use of encoding vector which is not 0-255 must be disallowed.
    The meaning of nchars in read/writeChar needs to be resolved - it is
      currently nbytes.
  */
@@ -129,14 +128,30 @@ Rconnection getConnection_no_err(int n)
 
 }
 
-void Rconn_setEncoding(Rconnection con, SEXP enc)
-{
-    int i;
+/* from sysutils.c */
+void * Riconv_open (const char* tocode, const char* fromcode);
+size_t Riconv (void * cd, char **inbuf, size_t *inbytesleft, 
+	       char  **outbuf, size_t *outbytesleft);
+int Riconv_close (void * cd);
 
-    if(!isInteger(enc) || length(enc) != 256)
-	error("invalid `enc' argument");
-    for(i = 0; i < 256; i++)
-	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
+
+void set_iconv(Rconnection con)
+{
+    void *tmp;
+    /* need to test if this is text, open for reading to writing or both,
+       and set inconv and/or outconv */
+    if(!con->text || !strlen(con->encname) || 
+       strcmp(con->encname, "native.enc") == 0) return;
+    if(con->canread) {
+	tmp = Riconv_open("", con->encname);
+	if(tmp != (void *)-1) con->inconv = tmp;
+	else error("conversion from %s is unsupported", con->encname);
+    }
+    if(con->canwrite) {
+	tmp = Riconv_open(con->encname, "");
+	if(tmp != (void *)-1) con->outconv = tmp;
+	else error("conversion to %s is unsupported", con->encname);
+    }
 }
 
 
@@ -185,7 +200,26 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 	    res = 100*BUFSIZE;
 	}
     }
-    con->write(b, 1, res, con);
+#ifdef HAVE_ICONV
+    /* FIXME this is not correct for stateful encodings */
+    if(con->outconv) { /* translate the buffer */
+	char outbuf[BUFSIZE+1], *ib = b, *ob;
+	size_t inb = res, onb, ires;
+	Rboolean again = FALSE;
+	do {
+	    onb = BUFSIZE; /* space for nul */
+	    ob = outbuf;
+	    ires = Riconv(con->outconv, &ib, &inb, &ob, &onb);
+	    if(ires == (size_t)(-1) && errno == E2BIG) again = TRUE;
+	    if(ires == (size_t)(-1) && errno != E2BIG)
+		/* is this safe? */
+		warning("invalid char string in output conversion");
+	    *ob = '\0';
+	    con->write(outbuf, 1, strlen(outbuf), con);
+	} while(again);
+    } else 
+#endif
+	con->write(b, 1, res, con);
     if(usedRalloc) vmaxset(vmax);
     return res;
 }
@@ -248,6 +282,7 @@ void init_con(Rconnection new, char *description, char *mode)
     new->nPushBack = 0;
     new->save = new->save2 = -1000;
     new->private = NULL;
+    new->inconv = new->outconv = NULL;
 }
 
 /* ------------------- file connections --------------------- */
@@ -301,6 +336,8 @@ static Rboolean file_open(Rconnection con)
     if(mlen >= 2 && con->mode[mlen-1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
+    set_iconv(con);
+    this->navail = this->inavail = 0;
 
 #ifdef HAVE_FCNTL
     if(!con->blocking) {
@@ -328,7 +365,8 @@ static int file_vfprintf(Rconnection con, const char *format, va_list ap)
 	this->last_was_write = TRUE;
 	f_seek(this->fp, this->wpos, SEEK_SET);
     }
-    return vfprintf(this->fp, format, ap);
+    if(con->outconv) return dummy_vfprintf(con, format, ap);
+    else return vfprintf(this->fp, format, ap);
 }
 
 static int file_fgetc(Rconnection con)
@@ -342,8 +380,45 @@ static int file_fgetc(Rconnection con)
 	this->last_was_write = FALSE;
 	f_seek(this->fp, this->rpos, SEEK_SET);
     }
-    c = fgetc(fp);
-    return feof(fp) ? R_EOF : con->encoding[c];
+    if(con->inconv) {
+	/* FIXME this is not correct for stateful encodings, and we
+	   could at least pass on all the current conversion on EILSEQ.
+	 */
+	if(this->navail <= 0) {
+	    unsigned int i, inb, onb, inew = 0;
+	    char *p = this->iconvbuff + this->inavail, *ib, *ob;
+	    size_t res;
+	    for(i = this->inavail; i < 25; i++) {
+		c = fgetc(fp);
+		if(feof(fp)) break;
+		*p++ = c;
+		this->inavail++;
+		inew++;
+	    }
+	    if(inew == 0) return R_EOF;
+	    ib = this->iconvbuff; inb = this->inavail;
+	    ob = this->oconvbuff; onb = 50;
+	    res = Riconv(con->inconv, &ib, &inb, &ob, &onb);
+	    this->inavail = inb;
+	    if(res == (size_t)-1) { /* an error condition */
+		if(errno == EINVAL || errno == E2BIG) { 
+		    /* incomplete input char or no space in output buffer */
+		    memmove(this->iconvbuff, ib, inb);
+  		} else {/*  EILSEQ invalid input */
+		    warning("invalid input found on input connection %s",
+			    con->description);
+		    return R_EOF;
+		}
+	    }
+	    this->next = this->oconvbuff;
+	    this->navail = 50 - onb;
+	}
+	this->navail--;
+	return *this->next++;
+    } else {
+	c = fgetc(fp);
+	return feof(fp) ? R_EOF : c;
+    }
 }
 
 static double file_seek(Rconnection con, double where, int origin, int rw)
@@ -542,6 +617,7 @@ static Rboolean fifo_open(Rconnection con)
 
     if(mlen >= 2 && con->mode[mlen-1] == 'b') con->text = FALSE;
     else con->text = TRUE;
+    set_iconv(con);
     con->save = -1000;
     return TRUE;
 }
@@ -559,7 +635,7 @@ static int fifo_fgetc(Rconnection con)
     int n;
 
     n = read(this->fd, (char *)&c, 1);
-    return (n == 1) ? con->encoding[c] : R_EOF;
+    return (n == 1) ? c : R_EOF;
 }
 
 static size_t fifo_read(void *ptr, size_t size, size_t nitems,
@@ -636,14 +712,14 @@ SEXP do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
     if(block == NA_LOGICAL)
 	error("invalid `block' argument");
     enc = CADDDR(args);
-    if(!isInteger(enc) || length(enc) != 256)
-	error("invalid `enc' argument");
+    if(!isString(enc) || length(enc) != 1 || 
+       strlen(CHAR(STRING_ELT(enc, 0))) > 100)
+	error("invalid `encoding' argument");
     open = CHAR(STRING_ELT(sopen, 0));
     ncon = NextConnection();
     con = Connections[ncon] = newfifo(file, strlen(open) ? open : "r");
-    for(i = 0; i < 256; i++)
-	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
     con->blocking = block;
+    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100);
 
     /* open it if desired */
     if(strlen(open)) {
@@ -695,6 +771,7 @@ static Rboolean pipe_open(Rconnection con)
     con->canread = !con->canwrite;
     if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
     else con->text = TRUE;
+    set_iconv(con);
     con->save = -1000;
     return TRUE;
 }
@@ -747,7 +824,7 @@ SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef HAVE_POPEN
     SEXP scmd, sopen, ans, class, enc;
     char *file, *open;
-    int i, ncon;
+    int ncon;
     Rconnection con = NULL;
 
     checkArity(op, args);
@@ -762,9 +839,10 @@ SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 	error("invalid `open' argument");
     open = CHAR(STRING_ELT(sopen, 0));
     enc = CADDR(args);
-    if(!isInteger(enc) || length(enc) != 256)
-	error("invalid `enc' argument");
-
+    if(!isString(enc) || length(enc) != 1 || 
+       strlen(CHAR(STRING_ELT(enc, 0))) > 100)
+	error("invalid `encoding' argument");
+ 
     ncon = NextConnection();
 #ifdef Win32
     if(CharacterMode != RTerm)
@@ -775,8 +853,7 @@ SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
     con = newpipe(file, strlen(open) ? open : "r");
 #endif
     Connections[ncon] = con;
-    for(i = 0; i < 256; i++)
-	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
+    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100);
 
     /* open it if desired */
     if(strlen(open)) {
@@ -824,6 +901,7 @@ static Rboolean gzfile_open(Rconnection con)
     con->canread = !con->canwrite;
     if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
     else con->text = TRUE;
+    set_iconv(con);
     con->save = -1000;
     return TRUE;
 }
@@ -843,10 +921,7 @@ static int gzfile_fgetc(Rconnection con)
     /* -- sometimes! gzgetc may still return EOF */
     if(gzeof(fp)) return R_EOF;
     c = gzgetc(fp);
-    if (c == EOF)
-	return R_EOF;
-    else
-	return con->encoding[c];
+    return (c == EOF) ? R_EOF : c;
 }
 
 static double gzfile_seek(Rconnection con, double where, int origin, int rw)
@@ -934,7 +1009,7 @@ SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile, sopen, ans, class, enc;
     char *file, *open;
-    int i, ncon, compress;
+    int ncon, compress;
     Rconnection con = NULL;
 
     checkArity(op, args);
@@ -948,8 +1023,9 @@ SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(sopen) || length(sopen) != 1)
 	error("invalid `open' argument");
     enc = CADDR(args);
-    if(!isInteger(enc) || length(enc) != 256)
-	error("invalid `enc' argument");
+    if(!isString(enc) || length(enc) != 1 || 
+       strlen(CHAR(STRING_ELT(enc, 0))) > 100)
+	error("invalid `encoding' argument");
     compress = asInteger(CADDDR(args));
     if(compress == NA_LOGICAL || compress < 0 || compress > 9)
 	error("invalid `compress' argument");
@@ -957,9 +1033,7 @@ SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     ncon = NextConnection();
     con = Connections[ncon] = newgzfile(file, strlen(open) ? open : "r",
 					compress);
-
-    for(i = 0; i < 256; i++)
-	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
+    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100);
 
     /* open it if desired */
     if(strlen(open)) {
@@ -1027,6 +1101,7 @@ static Rboolean bzfile_open(Rconnection con)
     con->isopen = TRUE;
     if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
     else con->text = TRUE;
+    set_iconv(con);
     con->save = -1000;
     return TRUE;
 }
@@ -1049,15 +1124,10 @@ static int bzfile_fgetc(Rconnection con)
 {
     BZFILE* bfp = (BZFILE *)((Rbzfileconn)(con->private))->bfp;
     char buf[1];
-    int bzerror, size, p;
+    int bzerror, size;
 
     size = BZ2_bzRead(&bzerror, bfp, buf, 1);
-    /* Some versions seem to signal end a char or two early, so play safe
-       if(bzerror == BZ_STREAM_END) return R_EOF;
-       if(bzerror != BZ_OK || size < 1) return R_EOF; */
-    if(size < 1) return R_EOF;
-    p = buf[0] % 256;
-    return con->encoding[p];
+    return (size < 1) ? R_EOF : (buf[0] % 256);
 }
 
 static size_t bzfile_read(void *ptr, size_t size, size_t nitems,
@@ -1119,7 +1189,7 @@ SEXP do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile, sopen, ans, class, enc;
     char *file, *open;
-    int i, ncon;
+    int ncon;
     Rconnection con = NULL;
 
     checkArity(op, args);
@@ -1133,14 +1203,13 @@ SEXP do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(sopen) || length(sopen) != 1)
 	error("invalid `open' argument");
     enc = CADDR(args);
-    if(!isInteger(enc) || length(enc) != 256)
-	error("invalid `enc' argument");
+    if(!isString(enc) || length(enc) != 1 || 
+       strlen(CHAR(STRING_ELT(enc, 0))) > 100)
+	error("invalid `encoding' argument");
     open = CHAR(STRING_ELT(sopen, 0));
     ncon = NextConnection();
     con = Connections[ncon] = newbzfile(file, strlen(open) ? open : "r");
-
-    for(i = 0; i < 256; i++)
-	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
+    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100);
 
     /* open it if desired */
     if(strlen(open)) {
@@ -1214,6 +1283,7 @@ static Rboolean clp_open(Rconnection con)
 	this->last = 0;
     }
     con->text = TRUE;
+    set_iconv(con);
     con->save = -1000;
     this->warned = FALSE;
 
@@ -1258,11 +1328,9 @@ static void clp_close(Rconnection con)
 static int clp_fgetc(Rconnection con)
 {
     Rclpconn this = con->private;
-    int c;
 
     if (this->pos >= this->len) return R_EOF;
-    c = this->buff[this->pos++];
-    return con->encoding[c];
+    return this->buff[this->pos++];
 }
 
 static double clp_seek(Rconnection con, double where, int origin, int rw)
@@ -1832,7 +1900,7 @@ SEXP do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP scmd, sopen, ans, class, enc;
     char *host, *open;
-    int i, ncon, port, server, blocking;
+    int ncon, port, server, blocking;
     Rconnection con = NULL;
 
     checkArity(op, args);
@@ -1860,15 +1928,15 @@ SEXP do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     open = CHAR(STRING_ELT(sopen, 0));
     args = CDR(args);
     enc = CAR(args);
-    if(!isInteger(enc) || length(enc) != 256)
-	error("invalid `enc' argument");
+    if(!isString(enc) || length(enc) != 1 || 
+       strlen(CHAR(STRING_ELT(enc, 0))) > 100)
+	error("invalid `encoding' argument");
 
     ncon = NextConnection();
     con = R_newsock(host, port, server, open);
     Connections[ncon] = con;
-    for(i = 0; i < 256; i++)
-	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
     con->blocking = blocking;
+    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100);
 
     /* open it if desired */
     if(strlen(open)) {
@@ -1899,7 +1967,7 @@ SEXP do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile, sopen, ans, class, enc;
     char *file, *open;
-    int i, ncon;
+    int ncon;
     Rconnection con = NULL;
 
     checkArity(op, args);
@@ -1913,14 +1981,13 @@ SEXP do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(sopen) || length(sopen) != 1)
 	error("invalid `open' argument");
     enc = CADDR(args);
-    if(!isInteger(enc) || length(enc) != 256)
-	error("invalid `enc' argument");
+    if(!isString(enc) || length(enc) != 1 || 
+       strlen(CHAR(STRING_ELT(enc, 0))) > 100)
+	error("invalid `encoding' argument");
     open = CHAR(STRING_ELT(sopen, 0));
     ncon = NextConnection();
     con = Connections[ncon] = R_newunz(file, strlen(open) ? open : "r");
-
-    for(i = 0; i < 256; i++)
-	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
+    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100);
 
     /* open it if desired */
     if(strlen(open)) {
@@ -2038,6 +2105,9 @@ static void con_close1(Rconnection con)
 	Rgzconn priv = (Rgzconn)con->private;
 	con_close1(priv->con);
     }
+    /* close inconv and outconv if open */
+    if(con->inconv) Riconv_close(con->inconv);
+    if(con->outconv) Riconv_close(con->outconv);
     con->destroy(con);
     free(con->class);
     free(con->description);
@@ -3156,7 +3226,7 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP scmd, sopen, ans, class, enc;
     char *url, *open, *class2 = "url";
-    int i, ncon, block;
+    int ncon, block;
     Rconnection con = NULL;
 #ifdef HAVE_INTERNET
     UrlScheme type = HTTPsh;	/* -Wall */
@@ -3185,8 +3255,9 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     if(block == NA_LOGICAL)
 	error("invalid `block' argument");
     enc = CADDDR(args);
-    if(!isInteger(enc) || length(enc) != 256)
-	error("invalid `enc' argument");
+    if(!isString(enc) || length(enc) != 1 || 
+       strlen(CHAR(STRING_ELT(enc, 0))) > 100)
+	error("invalid `encoding' argument");
 
     ncon = NextConnection();
     if(strncmp(url, "file://", 7) == 0) {
@@ -3215,9 +3286,8 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     Connections[ncon] = con;
-    for(i = 0; i < 256; i++)
-	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
     con->blocking = block;
+    strncpy(con->encname, CHAR(STRING_ELT(enc, 0)), 100);
 
     /* open it if desired */
     if(strlen(open)) {
@@ -3516,7 +3586,7 @@ static int gzcon_fgetc(Rconnection con)
 {
     unsigned char c;
     int n = gzcon_read(&c, 1, 1, con);
-    return (n == 1) ? con->encoding[c] : R_EOF;
+    return (n == 1) ? c : R_EOF;
 }
 
 
@@ -3524,7 +3594,7 @@ static int gzcon_fgetc(Rconnection con)
 SEXP do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, class;
-    int i, icon, level, allow;
+    int icon, level, allow;
     Rconnection incon=NULL, new=NULL;
     char *m, *mode = NULL /* -Wall */,  description[1000];
 
@@ -3583,9 +3653,9 @@ SEXP do_gzcon(SEXP call, SEXP op, SEXP args, SEXP rho)
     ((Rgzconn)(new->private))->allow = allow;
 
     Connections[icon] = new;
-    for(i = 0; i < 256; i++)
-	new->encoding[i] = incon->encoding[i];
+    strncpy(new->encname, incon->encname, 100);
     if(incon->isopen) new->open(new);
+    /* show we do encoding here */
 
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = icon;

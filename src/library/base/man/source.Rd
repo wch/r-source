@@ -8,7 +8,7 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
 }
 \alias{source}
 \arguments{
-  \item{file}{a connection or a character string giving the name
+  \item{file}{a connection or a character string giving the pathname
     of the file or URL to read from.}
   \item{local}{if \code{local} is \code{FALSE}, the statements scanned
     are evaluated in the user's workspace (the global environment),
@@ -26,8 +26,9 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   \item{max.deparse.length}{integer; is used only if \code{echo} is
     \code{TRUE} and gives the maximal length of the \dQuote{echo} of a
     single expression.}
-  \item{chdir}{logical; if \code{TRUE}, the R working directory is
-    changed to the directory containing \code{file} for evaluating.}
+  \item{chdir}{logical; if \code{TRUE} and \code{file} is a pathname,
+    the \R working directory is temporarily changed to the directory
+    containing \code{file} for evaluating.}
 }
 \description{
   \code{source} causes \R to accept its input from the named file (the

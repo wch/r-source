@@ -31,7 +31,7 @@ options(BIOC = "http://www.bioconductor.org")
 
 options(timeout = 60)
 options(internet.info = 2)
-options(encoding = native.enc)
+options(encoding = "native.enc")
 options(show.error.messages = TRUE)
 options(scipen = 0)
 options(locatorBell = TRUE)

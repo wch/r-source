@@ -19,10 +19,6 @@
 \alias{flush.connection}
 \alias{print.connection}
 \alias{summary.connection}
-\alias{ISOLatin1}
-\alias{MacRoman}
-\alias{WinAnsi}
-\alias{native.enc}
 \concept{encoding}
 \concept{compression}
 \title{Functions to Manipulate Connections}
@@ -70,8 +66,9 @@ isIncomplete(con)
   \item{server}{logical.  Should the socket be a client or a server?}
   \item{open}{character.  A description of how to open the connection
     (if at all). See Details for possible values.}
-  \item{blocking}{logical.  See \sQuote{Blocking} section below.}
-  \item{encoding}{An integer vector of length 256.}
+  \item{blocking}{logical.  See the \sQuote{Blocking} section below.}
+  \item{encoding}{The name of the encoding to be used.  See the
+    \sQuote{Encoding} section below.}
   \item{compression}{integer in 0--9.  The amount of compression to be
     applied when writing, from none to maximal.  The default is a good
     space/time compromise.}
@@ -137,7 +134,7 @@ isIncomplete(con)
   is immediately opened in \code{"w+"} mode and unlinked from the file
   system.  This provides a temporary file to write to and then read from.
   
-  The encoding vector is used to map the input from a file or pipe to
+  The encoding vector is used to map the input to
   the platform's native character set.  Supplied examples are
   \code{native.enc} as well as \code{MacRoman}, \code{WinAnsi} and
   \code{ISOLatin1}, whose actual encoding is platform-dependent.  Missing
@@ -155,6 +152,36 @@ isIncomplete(con)
   \code{isIncomplete} returns a logical value, whether last read attempt
   was blocked, or for an output text connection whether there is
   unflushed output.
+}
+\section{Encoding}{
+  \strong{Note:} prior to \R 2.1.0 there was a byte-by-byte encoding
+  option applied to input only.  This has been replaced by a more
+  comprehensive scheme.
+
+  The encoding of the input/output stream of a connection in \emph{text}
+  mode can be specified by name, in the same way as it would be given to
+  \code{\link{iconv}}: see that help page for how to find out what names are
+  recognized on your platform.  Additionally, \code{""} and
+  \code{"native.enc"} both mean the \sQuote{native} encoding, that is
+  the internal encoding of the current locale and hence no translation
+  is done.
+#ifdef unix
+  Not all builds of \R support this, and if yours does not, specifying a
+  non-default encoding will give an error when the connection is opened.
+#endif
+
+  Currently re-encoding of inputs is only implemented for \code{file}
+  connections, but re-encoding of output works on all connections (as
+  they share a common mechanism).
+
+  Exactly what happens when the requested translation cannot be done is
+  in general undocumented.  Requesting a conversion that is not supported is
+  an error, reported when the connection is opened.  On output the
+  result is likely to be that up to the error, with a warning.  On
+  input, it will most likely be all or some of the input up to the
+  error.
+ 
+  Currently stateful encodings are not properly supported.
 }
 \section{Blocking}{
   The default condition for all but fifo and socket connections is to be in
@@ -318,7 +345,12 @@ con2 <- socketConnection(Sys.info()["nodename"], port = 6011)
 # as non-blocking, may need to loop for input
 readLines(con2)
 while(isIncomplete(con2)) {Sys.sleep(1); readLines(con2)}
-close(con2)}
+close(con2)
+}
+
+\dontrun{ ## examples of use of encodings
+cat(x, file = file("foo", "w", encoding="UTF-8"))
+}
 }
 \keyword{file}
 \keyword{connection}
