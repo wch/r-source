@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-1, 2000/06/17
+Version 1.1-2, 2000-07-09
 Kurt Hornik
 
 
@@ -322,7 +322,7 @@ distribution is available.  We hope that this will change soon.
 2.6 Are there Unix binaries for R?
 ==================================
 
-   The `bin/linux' directory of a CRAN site contains Debian 2.1/2.2/2.3
+   The `bin/linux' directory of a CRAN site contains Debian 2.2/2.3
 packages for the i386 platform (now part of the Debian distribution and
 maintained by Doug Bates), Red Hat 6.x packages for the alpha, i386 and
 sparc platforms (maintained by Naoki Takebayashi, Martyn Plummer, and Vin
@@ -488,6 +488,7 @@ contributed extensions, documentation for R, and binaries.
 being mirrored daily at
 
      `http://cran.dk.r-project.org/'  (Denmark)
+     `http://cran.hu.r-project.org/'  (Hungary)
      `http://cran.it.r-project.org/'  (Italy)
      `http://cran.ch.r-project.org/'  (Switzerland)
      `http://cran.uk.r-project.org/'  (United Kingdom)
@@ -1256,6 +1257,9 @@ these a try, of course.  This area of CRAN currently contains
 
 *dse*
      Multivariate time series.
+
+*exactDistr*
+     Exact distributions for rank tests.
 
 *foreign*
      Functions for reading data stored by statistical software like Minitab,
