@@ -207,7 +207,7 @@ void	SetUpPrefSymbols(void);
 
 void	SetUpPrefSymbols(void){
     
-    appName = CFSTR("RAqua");
+    appName = CFSTR("org.r-project.R");
     tabsizeKey = CFSTR("Tab Size");
     fontsizeKey = CFSTR("Font Size");
     consolefontKey = CFSTR("Console Font");
