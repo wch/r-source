@@ -120,6 +120,7 @@ static SEXP ascommon(SEXP call, SEXP u, int type)
 		return v;
 	}
 	else errorcall(call, "cannot coerce to vector\n");
+	return u;/* -Wall */
 }
 
 /* as.logical */
@@ -149,7 +150,7 @@ SEXP do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
                 return(ans);
                                                                                                 /* Method dispatch has failed, we now just */                                   /* run the generic internal code */
                                                                                         PROTECT(args = ans);
- 
+
 	checkArity(op, args);
 
 	if (!isString(CADR(args)) || LENGTH(CADR(args)) < 1)
@@ -613,8 +614,9 @@ SEXP do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     break;
   case CPLXSXP:
     for(i=0 ; i<n ; i++)
-      INTEGER(ans)[i] = !(FINITE(COMPLEX(x)[i].r) || R_IsNA(COMPLEX(x)[i].r) &&
-			  FINITE(COMPLEX(x)[i].i) || R_IsNA(COMPLEX(x)[i].i));
+      INTEGER(ans)[i] = !(FINITE(COMPLEX(x)[i].r) ||
+			  (R_IsNA(COMPLEX(x)[i].r) && FINITE(COMPLEX(x)[i].i)) ||
+			  R_IsNA(COMPLEX(x)[i].i));
     break;
   default:
     for(i=0 ; i<n ; i++)
@@ -809,7 +811,7 @@ static SEXP coerceToLogical(SEXP v)
 static SEXP coerceToInteger(SEXP v)
 {
 	SEXP ans;
-	int i, li, n, warn;
+	int i, n, warn;
 	double out;
 	char *endp;
 
@@ -884,7 +886,7 @@ static SEXP coerceToInteger(SEXP v)
 static SEXP coerceToReal(SEXP v)
 {
 	SEXP ans;
-	int i, li, n;
+	int i, n;
 	double out;
 	char *endp;
 
@@ -935,7 +937,7 @@ static SEXP coerceToComplex(SEXP v)
 	SEXP ans;
 	double outr, outi;
 	char *endp;
-	int i, li, n;
+	int i, n;
 
 	n = LENGTH(v);
 	PROTECT(ans = allocVector(CPLXSXP, n));
@@ -1016,7 +1018,7 @@ static SEXP coerceToComplex(SEXP v)
 static SEXP coerceToString(SEXP v)
 {
 	SEXP ans, tmpchar;
-	int i, j, n, savedigits;
+	int i, n, savedigits;
 	char *strp;
 
 	PrintDefaults(R_NilValue);
@@ -1026,7 +1028,7 @@ static SEXP coerceToString(SEXP v)
 	PROTECT(ans);
 	ATTRIB(ans) = duplicate(ATTRIB(v));
 	savedigits = print_digits;
-	print_digits = 7;
+	print_digits = DBL_DIG;/*- MAXIMAL precision */
 	for (i = 0; i < n; i++) {
 		strp = EncodeElement( v, i, 0);
 		if (streql(strp, "NA"))
