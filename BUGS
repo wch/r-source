@@ -146,6 +146,18 @@ Date: Thu, 12 Dec 2002 23:43:14 +0100 (MET)
 Subject: quantreg package - predict method for rq objects
 From: John Maindonald <u9801539@leonard.anu.edu.au>
 Date: Sat, 14 Dec 2002 20:46:34 +1100 (EST)
+* PR# 2384 *
+Subject: degrees of freedom in nlme()
+From: jerome@hivnet.ubc.ca
+Date: Fri, 20 Dec 2002 01:40:06 +0100 (MET)
+* PR# 2385 *
+Subject: read.xport and lookup.xport in foreign
+From: Frank E Harrell Jr <fharrell@virginia.edu>
+Date: Fri, 20 Dec 2002 12:47:58 -0500
+* PR# 2386 *
+Subject: ace and avas in acepack
+From: Frank E Harrell Jr <fharrell@virginia.edu>
+Date: Fri, 20 Dec 2002 12:59:07 -0500
 
 Directory:  Analyses
 
@@ -638,51 +650,15 @@ Date: Thu, 12 Dec 2002 00:17:26 +0100 (MET)
 Subject: R -g gnome has graphics bugs
 From: chris-public@math.uu.se
 Date: Thu, 12 Dec 2002 14:19:43 +0100 (MET)
-* PR# 2384 *
-Subject: degrees of freedom in nlme()
-From: jerome@hivnet.ubc.ca
-Date: Fri, 20 Dec 2002 01:40:06 +0100 (MET)
-* PR# 2385 *
-Subject: read.xport and lookup.xport in foreign
-From: Frank E Harrell Jr <fharrell@virginia.edu>
-Date: Fri, 20 Dec 2002 12:47:58 -0500
-* PR# 2386 *
-Subject: ace and avas in acepack
-From: Frank E Harrell Jr <fharrell@virginia.edu>
-Date: Fri, 20 Dec 2002 12:59:07 -0500
-* PR# 2387 *
-Subject: 純商業辦公室出租
-From: bhc5_2gk1525@adidas.de
-Date: Sat, 21 Dec 2002 01:51:21 +0100 (MET)
-* PR# 2388 *
-Subject: 免費狂吃券送給你
-From: mlpi_uy_rff03dw@amazon.com
-Date: 19 Dec 2002 23:34:47 +0800
-* PR# 2389 *
-Subject: Responsive Email Leads
-From: "Email Leads" <myemc12421221@hotmail.com>
-Date: Sat, 21 Dec 2002 13:49:37 -0600
-* PR# 2390 *
-Subject: Tired throwing money on DVDs?  Then you might want to take a look
-From: "janice kendall" <janice_kendall@emaildelvery.org>
-Date: Sun, 22 Dec 2002 23:21:41 +0100 (MET)
-* PR# 2391 *
-Subject: NEW STOCK PICK: TWLO - AMCG WENT UP 461%..................................................................................................................................................................................... vayu
-From: "WALL STREET BULLETIN..46643" <Subscriber_Services78051@uswest.com>
-Date: Mon, 23 Dec 2002 05:47:07 -0600
-* PR# 2392 *
-Subject: NEW STOCK PICK: TWLO - AMCG WENT UP 461%..................................................................................................................................................................................... mqbqt
-From: "WALL STREET BULLETIN..47139" <Subscriber_Services78053@usa.net>
-Date: Mon, 23 Dec 2002 11:32:27 -0600
-* PR# 2393 *
-Subject: ASSISTANCE
-From: "RICHARD COLE " <richie16@mail.com>
-Date: di, 24 dec 2002 05:39:30
-* PR# 2394 *
-Subject: inv.logit (package boot)
-From: olefc@birc.dk
-Date: Wed, 25 Dec 2002 13:05:20 +0100 (MET)
-* PR# 2395 *
-Subject: R-1.6.2beta_2002-12-20: build problems
-From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
-Date: Thu, 26 Dec 2002 09:38:33 -0700 (MST)
+* PR# 2396 *
+Subject: parse and pushBack
+From: Mark.Bravington@csiro.au
+Date: Fri, 27 Dec 2002 14:16:34 +1100
+* PR# 2397 *
+Subject: RELIABLE AND REPUTABLE PERSON
+From: "DR. OLUSEGUN SMITH" <olu001@go.com>
+Date: Fri, 27 Dec 2002 07:43:57 -0800 (PST)
+* PR# 2398 *
+Subject: Cheap Web Hosting Only $5.95
+From: "Web Site Hosting" <webhosting@mirroredsite.com>
+Date: Fri, 27 Dec 2002 14:50:25
