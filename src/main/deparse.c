@@ -1047,6 +1047,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
     case INTSXP:
     case REALSXP:
     case CPLXSXP:
+    case RAWSXP:
 	if (!localForDisplay) attr1(s, d);
 	vector2buff(s, d);
 	if (!localForDisplay) attr2(s, d);
@@ -1132,6 +1133,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 	case REALSXP: print2buff("numeric(0)", d); break;
 	case CPLXSXP: print2buff("complex(0)", d); break;
 	case STRSXP: print2buff("character(0)", d); break;
+	case RAWSXP: print2buff("raw(0)", d); break;
 	}
     }
     else if (tlen == 1) {

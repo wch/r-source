@@ -45,6 +45,8 @@ extern "C" {
 
 #include <R_ext/libextern.h>
 
+typedef unsigned char Rbyte;
+
 /* type for length of vectors etc */
 typedef int R_len_t; /* will be long later, LONG64 or ssize_t on Win64 */
 #define R_LEN_T_MAX INT_MAX
@@ -98,6 +100,7 @@ typedef unsigned int SEXPTYPE;
 #define BCODESXP    21    /* byte code */
 #define EXTPTRSXP   22    /* external pointer */
 #define WEAKREFSXP  23    /* weak reference */
+#define RAWSXP      24    /* raw bytes */
 
 #define FUNSXP      99    /* Closure or Builtin */
 
@@ -127,6 +130,7 @@ typedef enum {
     BCODESXP    = 21,   /* byte code */
     EXTPTRSXP   = 22,   /* external pointer */
     WEAKREFSXP  = 23,   /* weak reference */
+    RAWSXP      = 24,   /* raw bytes */
 
     FUNSXP	= 99	/* Closure or Builtin */
 } SEXPTYPE;
@@ -258,6 +262,7 @@ typedef union { VECTOR_SEXPREC s; double align; } SEXPREC_ALIGN;
 #define CHAR(x)		((char *) DATAPTR(x))
 #define LOGICAL(x)	((int *) DATAPTR(x))
 #define INTEGER(x)	((int *) DATAPTR(x))
+#define RAW(x)		((Rbyte *) DATAPTR(x))
 #define COMPLEX(x)	((Rcomplex *) DATAPTR(x))
 #define REAL(x)		((double *) DATAPTR(x))
 #define STRING_ELT(x,i)	((SEXP *) DATAPTR(x))[i]
@@ -581,6 +586,7 @@ SEXP Rf_ScalarInteger(int);
 SEXP Rf_ScalarReal(double);
 SEXP Rf_ScalarComplex(Rcomplex);
 SEXP Rf_ScalarString(SEXP);
+SEXP Rf_ScalarRaw(Rbyte);
 SEXP Rf_setAttrib(SEXP, SEXP, SEXP);
 void Rf_setSVector(SEXP*, int, SEXP);
 void Rf_setVar(SEXP, SEXP, SEXP);
@@ -1014,6 +1020,7 @@ int R_system(char *);
 #define ScalarLogical		Rf_ScalarLogical
 #define ScalarReal		Rf_ScalarReal
 #define ScalarString		Rf_ScalarString
+#define ScalarRaw		Rf_ScalarRaw
 #define setAttrib		Rf_setAttrib
 #define setSVector		Rf_setSVector
 #define setVar			Rf_setVar

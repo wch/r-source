@@ -172,9 +172,10 @@ readBin <- function(con, what, n = 1, size = NA, signed = TRUE,
         on.exit(close(con))
     }
     swap <- endian != .Platform$endian
-    if(!is.character(what) || length(what) != 1 
-    	|| !(what %in% c("numeric", "double", "integer",
-    		"int", "logical", "complex", "character"))) what <- typeof(what)
+    if(!is.character(what) || length(what) != 1
+    	|| !(what %in% c("numeric", "double", "integer", "int", "logical",
+                         "complex", "character", "raw")))
+        what <- typeof(what)
     .Internal(readBin(con, what, n, size, signed, swap))
 }
 

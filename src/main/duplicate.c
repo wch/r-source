@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *            (C) 2004  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -143,6 +144,7 @@ SEXP duplicate(SEXP s)
     case INTSXP: DUPLICATE_ATOMIC_VECTOR(int, INTEGER, t, s); break;
     case REALSXP: DUPLICATE_ATOMIC_VECTOR(double, REAL, t, s); break;
     case CPLXSXP: DUPLICATE_ATOMIC_VECTOR(Rcomplex, COMPLEX, t, s); break;
+    case RAWSXP: DUPLICATE_ATOMIC_VECTOR(Rbyte, RAW, t, s); break;
     case STRSXP:
 	/* direct copying and bypassing the write barrier is OK since
 	   t was just allocated and so it cannot be older than any of
@@ -192,6 +194,10 @@ void copyVector(SEXP s, SEXP t)
     case VECSXP:
 	for (i = 0; i < ns; i++)
 	    SET_VECTOR_ELT(s, i, VECTOR_ELT(t, i % nt));
+	break;
+    case RAWSXP:
+	for (i = 0; i < ns; i++)
+	    RAW(s)[i] = RAW(t)[i % nt];
 	break;
     default:
 	UNIMPLEMENTED("copyVector");
@@ -271,6 +277,11 @@ void copyMatrix(SEXP s, SEXP t, Rboolean byrow)
 	    for (i = 0; i < nr; i++)
 		for (j = 0; j < nc; j++)
 		    SET_VECTOR_ELT(s, i + j * nr, VECTOR_ELT(t, k++ % nt));
+	    break;
+	case RAWSXP:
+	    for (i = 0; i < nr; i++)
+		for (j = 0; j < nc; j++)
+		    RAW(s)[i + j * nr] = RAW(t)[k++ % nt];
 	    break;
 	default:
 	    UNIMPLEMENTED("copyMatrix");

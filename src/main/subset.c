@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2003   The R Development Core Team
+ *  Copyright (C) 1997-2004   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
  *  is handled inside VectorSubset. The subscript matrix is turned
  *  into a subscript vector of the appropriate size and then
  *  VectorSubset continues.  This provides coherence especially
- *  regarding attributes etc. (it would be quicker handle this case
+ *  regarding attributes etc. (it would be quicker to handle this case
  *  separately, but then we would have more to keep in step.
  */
 
@@ -105,6 +105,12 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 	    else
 		SETCAR(tmp, R_NilValue);
 	    tmp = CDR(tmp);
+	    break;
+	case RAWSXP:
+	    if (0 <= ii && ii < nx && ii != NA_INTEGER)
+		RAW(result)[i] = RAW(x)[ii];
+	    else
+		RAW(result)[i] = (Rbyte) 0;
 	    break;
 	default:
 	    errorcall(call, R_MSG_ob_nonsub);
@@ -226,6 +232,9 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		case VECSXP:
 		    SET_VECTOR_ELT(result, ij, R_NilValue);
 		    break;
+		case RAWSXP:
+		    RAW(result)[ij] = (Rbyte) 0;
+		    break;
 		default:
 		    error("matrix subscripting not handled for this type");
 		    break;
@@ -249,6 +258,9 @@ static SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
 		    break;
 		case VECSXP:
 		    SET_VECTOR_ELT(result, ij, VECTOR_ELT(x, iijj));
+		    break;
+		case RAWSXP:
+		    RAW(result)[ij] = RAW(x)[iijj];
 		    break;
 		default:
 		    error("matrix subscripting not handled for this type");
@@ -363,7 +375,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
       assignLoop:
 	switch (mode) {
 	case LGLSXP:
-	    if (ii != NA_LOGICAL)
+	    if (ii != NA_INTEGER)
 		LOGICAL(result)[i] = LOGICAL(x)[ii];
 	    else
 		LOGICAL(result)[i] = NA_LOGICAL;
@@ -400,6 +412,12 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 		SET_VECTOR_ELT(result, i, VECTOR_ELT(x, ii));
 	    else
 		SET_VECTOR_ELT(result, i, R_NilValue);
+	    break;
+	case RAWSXP:
+	    if (ii != NA_INTEGER)
+		RAW(result)[i] = RAW(x)[ii];
+	    else
+		RAW(result)[i] = (Rbyte) 0;
 	    break;
 	default:
 	    error("matrix subscripting not handled for this type");
@@ -811,6 +829,9 @@ SEXP do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    break;
 	case STRSXP:
 	    SET_STRING_ELT(ans, 0, STRING_ELT(x, offset));
+	    break;
+	case RAWSXP:
+	    RAW(ans)[0] = RAW(x)[offset];
 	    break;
 	default:
 	    UNIMPLEMENTED("do_subset2");

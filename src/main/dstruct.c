@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2001-3  The R Development Core Team
+ *  Copyright (C) 2001-4  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -161,6 +161,7 @@ R_len_t length(SEXP s)
     case CHARSXP:
     case VECSXP:
     case EXPRSXP:
+    case RAWSXP:
 	return LENGTH(s);
     case LISTSXP:
     case LANGSXP:

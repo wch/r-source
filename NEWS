@@ -121,6 +121,9 @@ NEW FEATURES
 
     o	readChar() can now read strings with embedded nuls.
 
+    o	There is a new atomic vector type, class "raw".  See ?raw for
+	full details including the operators and utility functions provided.
+
 
 UTILITIES
 

@@ -44,6 +44,11 @@
 #include <Rmath.h>
 #include <Print.h>
 
+/* this is just for conformity with other types */
+void formatRaw(Rbyte *x, int n, int *fieldwidth)
+{
+    *fieldwidth = 2;
+}
 
 void formatString(SEXP *x, int n, int *fieldwidth, int quote)
 {

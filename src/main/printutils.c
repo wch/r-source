@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999--2003  The R Development Core Team
+ *  Copyright (C) 1999--2004  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -117,6 +117,13 @@ char *EncodeInteger(int x, int w)
     R_AllocStringBuffer(0, buffer);
     if(x == NA_INTEGER) sprintf(buffer->data, "%*s", w, CHAR(R_print.na_string));
     else sprintf(buffer->data, "%*d", w, x);
+    return buffer->data;
+}
+
+char *EncodeRaw(Rbyte x)
+{
+    R_AllocStringBuffer(0, buffer);
+    sprintf(buffer->data, "%02x", x);
     return buffer->data;
 }
 
@@ -345,6 +352,9 @@ char *EncodeElement(SEXP x, int indx, int quote)
 		      &w, &d, &e, &wi, &di, &ei, 0);
 	EncodeComplex(COMPLEX(x)[indx],
 		      w, d, e, wi, di, ei);
+	break;
+    case RAWSXP:
+	EncodeRaw(RAW(x)[indx]);
 	break;
     }
     return buffer->data;

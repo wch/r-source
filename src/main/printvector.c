@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1997, 1998  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2000  the R Development Core Team.
+ *  Copyright (C) 1998-2004  the R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -148,6 +148,24 @@ static void printStringVector(SEXP * x, int n, int quote, int indx)
     Rprintf("\n");
 }
 
+void printRawVector(Rbyte *x, int n, int indx)
+{
+    int i, w, labwidth=0, width;
+
+    DO_first_lab;
+    formatRaw(x, n, &w);
+    w += R_print.gap;
+
+    for (i = 0; i < n; i++) {
+	if (i > 0 && width + w > R_print.width) {
+	    DO_newline;
+	}
+	Rprintf("%*s%s", R_print.gap, "", EncodeRaw(x[i]));
+	width += w;
+    }
+    Rprintf("\n");
+}
+
 void printVector(SEXP x, int indx, int quote)
 {
 /* print R vector x[];	if(indx) print indices; if(quote) quote strings */
@@ -173,6 +191,9 @@ void printVector(SEXP x, int indx, int quote)
 	case CPLXSXP:
 	    printComplexVector(COMPLEX(x), n, indx);
 	    break;
+	case RAWSXP:
+	    printRawVector(RAW(x), n, indx);
+	    break;
 	}
     else
 #define PRINT_V_0						\
@@ -182,6 +203,7 @@ void printVector(SEXP x, int indx, int quote)
 	case REALSXP:	Rprintf("numeric(0)\n");	break;	\
 	case CPLXSXP:	Rprintf("complex(0)\n");	break;	\
 	case STRSXP:	Rprintf("character(0)\n");	break;	\
+	case RAWSXP:	Rprintf("raw(0)\n");		break;	\
 	}
 	PRINT_V_0;
 }
@@ -274,6 +296,10 @@ static void printNamedStringVector(SEXP * x, int n, int quote, SEXP * names)
 			   EncodeString(x[k], w, quote, Rprt_adj_right),
 			   R_print.gap, ""))
 
+static void printNamedRawVector(Rbyte * x, int n, SEXP * names)
+    PRINT_N_VECTOR(formatRaw(x, n, &w), 
+                   Rprintf("%s%*s", EncodeRaw(x[k]), R_print.gap,""))
+
 void printNamedVector(SEXP x, SEXP names, int quote, char *title)
 {
     int n;
@@ -298,6 +324,9 @@ void printNamedVector(SEXP x, SEXP names, int quote, char *title)
 	case STRSXP:
 	    if(quote) quote = '"';
 	    printNamedStringVector(STRING_PTR(x), n, quote, STRING_PTR(names));
+	    break;
+	case RAWSXP:
+	    printNamedRawVector(RAW(x), n, STRING_PTR(names));
 	    break;
 	}
     else {
