@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  file extra.c
- *  Copyright (C) 1998--1999  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998--2000  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@
 #include <time.h>
 #include <windows.h>
 #include "graphapp/ga.h"
+#include "rui.h"
 
 
 SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -96,6 +97,8 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return (ans);
 }
+
+
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -324,3 +327,109 @@ int check_doc_file(char * file)
     strcat(path, file);
     return stat(path, &sb) == 0;
 }
+
+SEXP do_windialog(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP message, ans;
+    char * type;
+    int res=YES;
+
+    checkArity(op, args);
+    type = CHAR(STRING(CAR(args))[0]);
+    message = CADR(args);
+    if (strcmp(type, "ok")  == 0) {
+	askok(CHAR(STRING(message)[0]));
+	res = 10;
+    } else if (strcmp(type, "okcancel")  == 0) {
+	res = askokcancel(CHAR(STRING(message)[0]));
+	if(res == YES) res = 2;
+    } else if (strcmp(type, "yesno")  == 0) {
+	res = askyesno(CHAR(STRING(message)[0]));
+    } else if (strcmp(type, "yesnocancel")  == 0) {
+	res = askyesnocancel(CHAR(STRING(message)[0]));
+    } else
+	errorcall(call, "unknown type");
+    ans = allocVector(INTSXP, 1);
+    INTEGER(ans)[0] = res;
+    return (ans);
+}
+
+SEXP do_windialogstring(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP  message, def, ans;
+    char *string;
+
+    checkArity(op, args);
+    message = CAR(args);
+    def = CADR(args);
+    string = askstring(CHAR(STRING(message)[0]), CHAR(STRING(def)[0]));
+    if (string) {
+	ans = allocVector(STRSXP, 1);
+	STRING(ans)[0] = mkChar(string);
+	return (ans);
+    } else
+	return (R_NilValue);
+}
+
+#include "Startup.h"
+extern UImode CharacterMode;
+static char msgbuf[256];
+
+SEXP do_winmenuadd(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP smenu, sitem;
+    int res;
+    char errmsg[50];
+    
+    checkArity(op, args);
+    if (CharacterMode != RGui)
+	errorcall(call, "Menu functions can only be used in the GUI");
+    smenu = CAR(args);
+    sitem = CADR(args);
+    if (isNull(sitem)) { /* add a menu */
+	res = winaddmenu (CHAR(STRING(smenu)[0]), errmsg);
+	if (res > 0) {
+	    sprintf(msgbuf, "unable to add menu (%s)", errmsg);
+	    errorcall(call, msgbuf);
+	}
+	
+    } else { /* add an item */
+	res = winaddmenuitem (CHAR(STRING(sitem)[0]),
+			      CHAR(STRING(smenu)[0]),
+			      CHAR(STRING(CADDR(args))[0]),
+			      errmsg);
+	if (res > 0) {
+	    sprintf(msgbuf, "unable to add menu item (%s)", errmsg);
+	    errorcall(call, msgbuf);
+	}
+    }
+    return (R_NilValue);
+}
+
+SEXP do_winmenudel(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP smenu, sitem;
+    int res;
+    char errmsg[50];
+    
+    checkArity(op, args);
+    if (CharacterMode != RGui)
+	errorcall(call, "Menu functions can only be used in the GUI");
+    smenu = CAR(args);
+    sitem = CADR(args);
+    if (isNull(sitem)) { /* delete a menu */
+	res = windelmenu (CHAR(STRING(smenu)[0]), errmsg);
+	if (res > 0) 
+	    errorcall(call, "menu does not exist");
+    } else { /* delete an item */
+	res = windelmenuitem (CHAR(STRING(sitem)[0]),
+			      CHAR(STRING(smenu)[0]), errmsg);
+	if (res > 0) {
+	    sprintf(msgbuf, "unable to delete menu item (%s)", errmsg);
+	    errorcall(call, msgbuf);
+	}
+    }
+    return (R_NilValue);
+}
+
+

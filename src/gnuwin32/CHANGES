@@ -13,11 +13,15 @@ faster, but produce nothing on the console.
 Help files will be displayed in the internal pager with headings
 in a contrasting colour.
 
+There are new functions winDialog() and winDialogString() to produce
+dialog boxes, and functions winMenu* (use ?winMenus) to manipulate
+user menus.
+
 Following Unix, the handling of help(, offline=TRUE) has been altered.
-It will be necessary to adjust helpPRINT.bat to set the TEXINPUTS path to 
-find Rd.sty. TeX processing of these help files normally uses LaTeX package
-`ae' to handle Latin-1 characters: this can be changed by setting the
-environment variable R_RD4DVI.
+It will be necessary to adjust helpPRINT.bat to set the TEXINPUTS path
+to find Rd.sty. TeX processing of these help files normally uses LaTeX
+package `ae' to handle Latin-1 characters: this can be changed by
+setting the environment variable R_RD4DVI.
 
 The conversion to text help no longer requires groff.
 

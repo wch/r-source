@@ -24,6 +24,8 @@
 /* R user interface based on GraphApp */
 #include "Defn.h"
 #include <stdio.h>
+/* the user menu code looks at the internal structure */
+#include "graphapp/internal.h"
 #include "graphapp/ga.h"
 #include "graphapp/stdimg.h"
 #include "console.h"
@@ -661,4 +663,186 @@ int DialogSelectFile(char *buf, int len)
     else
 	strcpy(buf, "");
     return (strlen(buf));
+}
+
+static menu usermenus[10];
+static char usermenunames[10][51];
+
+typedef struct {
+    menuitem m;
+    char *name;
+    char *action;
+}  uitem;
+typedef uitem *Uitem;
+
+static Uitem  umitems[500];
+
+static int nmenus=0, nitems=0;
+
+static void menuuser(control m)
+{
+    int item = m->max;
+    Rconsolecmd(umitems[item]->action);
+}
+
+
+int winaddmenu(char * name, char *errmsg)
+{
+    int i;
+    char *p, *submenu = name, start[50];
+    
+    if (nmenus > 9) {
+	strcpy(errmsg, "Only 10 menus are allowed");
+	return 2;
+    }
+    if (strlen(name) > 50) {
+	strcpy(errmsg, "`menu' is limited to 50 chars");
+	return 5;
+    }
+    p = strrchr(name, '/');
+    if (p) {
+	submenu = p + 1;
+	strcpy(start, name);
+	*strrchr(start, '/') = '\0';
+	for (i = 0; i < nmenus; i++)
+	    if (strcmp(start, usermenunames[i]) == 0) break;
+	if (i == nmenus) {
+	    strcpy(errmsg, "base menu does not exist");
+	    return 3;
+	}
+	m = newsubmenu(usermenus[i], submenu);
+    } else {
+	addto(RMenuBar);
+	m = newmenu(submenu);
+    }
+    if (m) {
+	usermenus[nmenus] = m;
+	strcpy(usermenunames[nmenus], name);
+	nmenus++;
+	show(RConsole);
+	return 0;
+    } else {
+	strcpy(errmsg, "failed to allocate menu");
+	return 1;
+    }
+}
+
+int winaddmenuitem(char * item, char * menu, char * action, char *errmsg)
+{
+    int i, im;
+    menuitem m;
+    char mitem[102], *p;
+
+    if (nitems > 499) {
+	strcpy(errmsg, "too many menu items have been created");
+	return 2;
+    }
+    if (strlen(item) + strlen(menu) > 100) {
+	strcpy(errmsg, "menu + item is limited to 100 chars");
+	return 5;
+    }
+
+    for (im = 0; im < nmenus; im++) {
+	if (strcmp(menu, usermenunames[im]) == 0) break;
+    }
+    if (im == nmenus) {
+	strcpy(errmsg, "menu does not exist");
+	return 3;
+    }
+    
+    strcpy(mitem, menu); strcat(mitem, "/"); strcat(mitem, item);
+
+    for (i = 0; i < nitems; i++) {
+	if (strcmp(mitem, umitems[i]->name) == 0) break;
+    }
+    if (i < nitems) { /* existing item */
+	if (strcmp(action, "enable") == 0) {
+	    enable(umitems[i]->m);
+	} else if (strcmp(action, "disable") == 0) {
+	    disable(umitems[i]->m);
+	} else {
+	    p = umitems[i]->action;
+	    p = realloc(p, strlen(action) + 1);
+	    if(!p) {
+		strcpy(errmsg, "failed to allocate char storage");
+		return 4;
+	    }
+	    strcpy(p, action);
+	}
+    } else {
+	addto(usermenus[im]);
+	m  = newmenuitem(item, 0, menuuser);
+	if (m) {
+	    umitems[nitems] = (Uitem) malloc(sizeof(uitem));
+	    umitems[nitems]->m = m;
+	    umitems[nitems]->name = p = (char *) malloc(strlen(mitem) + 1);
+	    if(!p) {
+		strcpy(errmsg, "failed to allocate char storage");
+		return 4;
+	    }
+	    strcpy(p, mitem);
+	    if(!p) {
+		strcpy(errmsg, "failed to allocate char storage");
+		return 4;
+	    }
+	    umitems[nitems]->action = p = (char *) malloc(strlen(action) + 1);
+	    strcpy(p, action);
+	    m->max = nitems;
+	    nitems++;
+	} else {
+	    strcpy(errmsg, "failed to allocate menuitem");
+	    return 1;
+	}
+    }
+    show(RConsole);
+    return 0;
+}
+
+int windelmenu(char * menu, char *errmsg)
+{
+    int i, j;
+
+    for (i = 0; i < nmenus; i++) {
+	if (strcmp(menu, usermenunames[i]) == 0) break;
+    }
+    if (i == nmenus) {
+	strcpy(errmsg, "menu does not exist");
+	return 3;
+    }
+#ifdef NEW
+    delobj(usermenus[i]);
+    nmenus--;
+    for(j = i; j < nmenus; j++) {
+	usermenus[j] = usermenus[j+1];
+	strcpy(usermenunames[j], usermenunames[j+1]);
+    }
+    show(RConsole);
+#else
+    error("cannot currently delete menus");
+#endif
+    return 0;
+}
+
+int windelmenuitem(char * item, char * menu, char *errmsg)
+{
+    int i;
+    char mitem[52];
+
+    if (strlen(item) + strlen(menu) > 50) {
+	strcpy(errmsg, "menu + item is limited to 50 chars");
+	return 5;
+    }
+    strcpy(mitem, menu); strcat(mitem, "/"); strcat(mitem, item);
+    for (i = 0; i < nitems; i++) {
+	if (strcmp(mitem, umitems[i]->name) == 0) break;
+    }
+    if (i == nitems) {
+	strcpy(errmsg, "menu or item does not exist");
+	return 3;
+    }
+    delobj(umitems[i]->m);
+    strcpy(umitems[i]->name, "invalid");
+    free(umitems[i]->action);
+    show(RConsole);
+    return 0;
 }

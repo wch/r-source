@@ -66,6 +66,10 @@ SEXP do_devga(SEXP, SEXP, SEXP, SEXP);
 SEXP do_saveDevga(SEXP, SEXP, SEXP, SEXP);
 SEXP do_shellexec(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dircreate(SEXP, SEXP, SEXP, SEXP);
+SEXP do_windialog(SEXP, SEXP, SEXP, SEXP);
+SEXP do_windialogstring(SEXP, SEXP, SEXP, SEXP);
+SEXP do_winmenuadd(SEXP, SEXP, SEXP, SEXP);
+SEXP do_winmenudel(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 SEXP do_abbrev(SEXP, SEXP, SEXP, SEXP);
