@@ -327,9 +327,9 @@ void formatComplex(complex *x, int l, int *mr, int *nr, int *er,
 		else if (x[i].r > 0) rposinf = 1;
 		else rneginf = 1;
 	    }
-	    else {
+	    else
 #endif
-
+	      {
 		scientific(&(x[i].r), &sgn, &kpower, &nsig);
 
 		left = kpower + 1;
@@ -354,9 +354,9 @@ void formatComplex(complex *x, int l, int *mr, int *nr, int *er,
 		if (ISNAN(x[i].i)) inanflag = 1;
 		else iposinf = 1;
 	    }
-            else {
+            else
 #endif
-
+	      {
 		scientific(&(x[i].i), &sgn, &kpower, &nsig);
 
 		left = kpower + 1;
