@@ -2322,13 +2322,17 @@ void setVar(SEXP symbol, SEXP value, SEXP rho)
 @noindent
 can be used to assign values to @R{} variables.  @code{defineVar}
 creates a new binding or changes the value of an existing binding in the
-specified environment frame; it is the equivalent of
-@code{assign(symbol, value, envir = rho, inherits = FALSE)}.
-@code{setVar} searches for an existing binding for @code{symbol} in
-@code{rho} or its enclosing environments.  If a binding is found, its
-value is changed to @code{value}.  Otherwise, a new binding with the
-specified value is created in the global environment.  This corresponds
-to @code{assign(symbol, value, envir = rho, inherits = TRUE)}.
+specified environment frame; it is the analogue of @code{assign(symbol,
+value, envir = rho, inherits = FALSE)}, but unlike @code{assign},
+@code{defineVar} does not make a copy of the object
+@code{value}.@footnote{You can assign a @emph{copy} of the object in the
+environment frame @code{rho} using @code{defineVar(symbol,
+duplicate(value), rho)}).}  @code{setVar} searches for an existing
+binding for @code{symbol} in @code{rho} or its enclosing environments.
+If a binding is found, its value is changed to @code{value}.  Otherwise,
+a new binding with the specified value is created in the global
+environment.  This corresponds to @code{assign(symbol, value, envir =
+rho, inherits = TRUE)}.
 
 @node Changes in R version 1.2,  , Finding and setting variables, Handling R objects in C
 @subsection Changes in R version 1.2
