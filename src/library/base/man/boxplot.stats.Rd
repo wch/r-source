@@ -40,10 +40,10 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
   i.e. close to \code{\link{quantile}(x, c(1,3)/4)}.  The hinges equal
   the quartiles for odd \eqn{n} (where \code{n <- length(x)}) and
   differ for even \eqn{n}. Where the quartiles only equal observations
-  for \code{n \%\% 4 == 1} (\eqn{n\equiv 1 (\mod 4)}{n = 1 (mod 4)}),
-  the hinges do so \emph{additionally} for
-  \code{n \%\% 4 == 2} (\eqn{n\equiv 2 (\mod 4)}{n = 2 (mod 4)}),
-  and are in the middle of two observations otherwise.
+  for \code{n \%\% 4 == 1} (\eqn{n\equiv 1 \bmod 4}{n = 1 mod 4}),
+  the hinges do so \emph{additionally} for \code{n \%\% 4 == 2}
+  (\eqn{n\equiv 2 \bmod 4}{n = 2 mod 4}), and are in the middle of
+  two observations otherwise.
 }
 \seealso{
   \code{\link{fivenum}}, \code{\link{boxplot}}, \code{\link{bxp}}.
