@@ -55,10 +55,7 @@ double rbinom(double nin, double pp)
     static int nsave = -1;
 
     n = floor(nin + 0.5);
-    if (
-#ifdef IEEE_754
-	!R_FINITE(n) || !R_FINITE(pp) ||
-#endif
+    if (!R_FINITE(n) || !R_FINITE(pp) ||
 	/* n=0, p=0, p=1 are not errors <TSL>*/
 	n < 0. || pp < 0. || pp > 1.)	ML_ERR_return_NAN;
 
@@ -108,8 +105,8 @@ double rbinom(double nin, double pp)
 
     /*-------------------------- np = n*p >= 30 : ------------------- */
     repeat {
-      u = sunif() * p4;
-      v = sunif();
+      u = unif_rand() * p4;
+      v = unif_rand();
       /* triangular region */
       if (u <= p1) {
 	  ix = xm - p1 * v + u;
@@ -179,7 +176,7 @@ double rbinom(double nin, double pp)
   repeat {
      ix = 0;
      f = qn;
-     u = sunif();
+     u = unif_rand();
      repeat {
 	 if (u < f)
 	     goto finis;

@@ -27,10 +27,8 @@
 double rweibull(double shape, double scale)
 {
     if (
-#ifdef IEEE_754
 	!R_FINITE(shape) || !R_FINITE(scale) ||
-#endif
 	shape <= 0. || scale <= 0.)	ML_ERR_return_NAN;
 
-    return scale * pow(-log(sunif()), 1.0 / shape);
+    return scale * pow(-log(unif_rand()), 1.0 / shape);
 }

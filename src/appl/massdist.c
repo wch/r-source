@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1996, 1999 Robert Gentleman and Ross Ihaka and the
+ *  Copyright (C) 1996-2000     Robert Gentleman and Ross Ihaka and the
  *				R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -18,11 +18,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#include "Mathlib.h"
+#include "Arith.h"
 
 void massdist(double *x, int *nx, double *xlow, double *xhigh,
 	      double *y, int *ny)

@@ -162,9 +162,9 @@ double pwilcox(double x, double m, double n, int lower_tail, int log_p)
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(m) || ISNAN(n))
 	return(x + m + n);
+#endif
     if (!R_FINITE(m) || !R_FINITE(n))
 	ML_ERR_return_NAN;
-#endif
     m = floor(m + 0.5);
     n = floor(n + 0.5);
     if (m <= 0 || n <= 0)
@@ -202,9 +202,9 @@ double qwilcox(double x, double m, double n, int lower_tail, int log_p)
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(m) || ISNAN(n))
 	return(x + m + n);
+#endif
     if(!R_FINITE(x) || !R_FINITE(m) || !R_FINITE(n))
 	ML_ERR_return_NAN;
-#endif
     R_Q_P01_check(x);
 
     m = floor(m + 0.5);
@@ -273,7 +273,7 @@ double rwilcox(double m, double n)
     for (i = 0; i < k; i++)
 	x[i] = i;
     for (i = 0; i < n; i++) {
-	j = floor(k * sunif());
+	j = floor(k * unif_rand());
 	r += x[j];
 	x[j] = x[--k];
     }

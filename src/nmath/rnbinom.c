@@ -46,11 +46,8 @@
 
 double rnbinom(double n, double p)
 {
-    if(
-#ifdef IEEE_754
-	!R_FINITE(n) || !R_FINITE(p) ||
-#endif
-	n <= 0 || p <= 0 || p >= 1)	ML_ERR_return_NAN;
+    if(!R_FINITE(n) || !R_FINITE(p) || n <= 0 || p <= 0 || p >= 1)
+	ML_ERR_return_NAN;
 
     return rpois(rgamma(n, (1 - p) / p));
 }

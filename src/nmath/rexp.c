@@ -32,11 +32,8 @@
 
 double rexp(double scale)
 {
-    if (
-#ifdef IEEE_754
-	!R_FINITE(scale) ||
-#endif
-	scale <= 0.0)	ML_ERR_return_NAN;
+    if (!R_FINITE(scale) || scale <= 0.0)
+	ML_ERR_return_NAN;
 
-    return scale * sexp();
+    return scale * exp_rand();
 }

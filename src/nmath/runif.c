@@ -25,14 +25,10 @@
 
 double runif(double a, double b)
 {
-    if (
-#ifdef IEEE_754
-	!R_FINITE(a) || !R_FINITE(b) ||
-#endif
-	b < a)	ML_ERR_return_NAN;
+    if (!R_FINITE(a) || !R_FINITE(b) || b < a)	ML_ERR_return_NAN;
 
     if (a == b)
 	return a;
     else
-	return a + (b - a) * sunif();
+	return a + (b - a) * unif_rand();
 }

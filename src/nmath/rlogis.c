@@ -27,6 +27,6 @@ double rlogis(double location, double scale)
     if (!R_FINITE(location) || !R_FINITE(scale))	ML_ERR_return_NAN;
 /* #endif */
 
-    u = sunif();
+    u = unif_rand();
     return location + scale * log(u / (1. - u));
 }

@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,7 +20,7 @@
  *  SYNOPSIS
  *
  *    #include "Mathlib.h"
- *    double snorm(void);
+ *    double norm_rand(void);
  *
  *  DESCRIPTION
  *
@@ -28,15 +29,12 @@
  * Is called from  rnorm(..), but also rt(), rf(), rgamma(), ...
  */
 
-#include "Mathlib.h"/* >> "Random.h" */
+#include "Mathlib.h"
+#include "Random.h"
 
 #define repeat for(;;)
 
 N01type N01_kind = KINDERMAN_RAMAGE;
-
-/* #define KINDERMAN_RAMAGE */
-
-/* #ifdef AHRENS_DIETER */
 
 /*
  *  REFERENCE
@@ -114,7 +112,7 @@ static double h[31] =
 static double A =  2.216035867166471;
 
 
-double snorm(void)
+double norm_rand(void)
 {
     double s, u1, w, y, u2, u3, aa, tt;
     int i;
@@ -123,7 +121,7 @@ double snorm(void)
 	
     case  AHRENS_DIETER: /* see Reference above */
 	
-	u1 = sunif();
+	u1 = unif_rand();
 	s = 0.0;
 	if (u1 > 0.5)
 	    s = 1.0;
@@ -136,19 +134,19 @@ double snorm(void)
 	    u2 = u1 - i;
 	    aa = a[i - 1];
 	    while (u2 <= t[i - 1]) {
-		u1 = sunif();
+		u1 = unif_rand();
 		w = u1 * (a[i] - aa);
 		tt = (w * 0.5 + aa) * w;
 		repeat {
 		    if (u2 > tt)
 			goto deliver;
-		    u1 = sunif();
+		    u1 = unif_rand();
 		    if (u2 < u1)
 			break;
 		    tt = u1;
-		    u2 = sunif();
+		    u2 = unif_rand();
 		}
-		u2 = sunif();
+		u2 = unif_rand();
 	    }
 	    w = (u2 - t[i - 1]) * h[i - 1];
 	}
@@ -167,15 +165,15 @@ double snorm(void)
 		w = u1 * d[i - 1];
 		tt = (w * 0.5 + aa) * w;
 		repeat {
-		    u2 = sunif();
+		    u2 = unif_rand();
 		    if (u2 > tt)
 			goto jump;
-		    u1 = sunif();
+		    u1 = unif_rand();
 		    if (u2 < u1)
 			break;
 		    tt = u1;
 		}
-		u1 = sunif();
+		u1 = unif_rand();
 	    }
 	jump:;
 	}
@@ -187,16 +185,16 @@ double snorm(void)
     /*-----------------------------------------------------------*/
     
     case KINDERMAN_RAMAGE: /* see Reference above */
-	u1 = sunif();
+	u1 = unif_rand();
 	if(u1 < 0.884070402298758) {
-	    u2 = sunif();
+	    u2 = unif_rand();
 	    return A*(1.13113163544180*u1+u2-1);
 	}
 	
 	if(u1 >= 0.973310954173898) { /* tail: */
 	    repeat {
-		u2 = sunif();
-		u3 = sunif();
+		u2 = unif_rand();
+		u3 = unif_rand();
 		tt = (A*A-2*log(u3));
 		if( u2*u2<(A*A)/tt )
 		    return (u1 < 0.986655477086949) ? sqrt(tt) : -sqrt(tt);
@@ -205,8 +203,8 @@ double snorm(void)
 	
 	if(u1 >= 0.958720824790463) { /* region3: */
 	    repeat {
-		u2 = sunif();
-		u3 = sunif();
+		u2 = unif_rand();
+		u3 = unif_rand();
 		tt = A - 0.630834801921960* fmin2(u2,u3);
 		if(fmax2(u2,u3) <= 0.755591531667601)
 		    return (u2<u3) ? tt : -tt;
@@ -217,8 +215,8 @@ double snorm(void)
 	
 	if(u1 >= 0.911312780288703) { /* region2: */
 	    repeat {
-		u2 = sunif();
-		u3 = sunif();
+		u2 = unif_rand();
+		u3 = unif_rand();
 		tt = 0.479727404222441+1.105473661022070*fmin2(u2,u3);
 		if( fmax2(u2,u3)<=0.872834976671790 )
 		    return (u2<u3) ? tt : -tt;
@@ -229,14 +227,14 @@ double snorm(void)
 
 	/* ELSE	 region1: */
 	repeat {
-	    u2 = sunif();
-	    u3 = sunif();
+	    u2 = unif_rand();
+	    u3 = unif_rand();
 	    tt = 0.479727404222441-0.595507138015940*fmin2(u2,u3);
 	    if(fmax2(u2,u3) <= 0.805577924423817)
 		return (u2<u3) ? tt : -tt;
 	}
     default:
-	MATHLIB_ERROR("snorm(): invalid N01_kind: %d\n", N01_kind);
+	MATHLIB_ERROR("norm_rand(): invalid N01_kind: %d\n", N01_kind);
 	return 0.0;/*- -Wall */
     }/*switch*/
 }

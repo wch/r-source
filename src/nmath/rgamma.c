@@ -90,14 +90,14 @@ double rgamma(double a, double scale)
 		aa = 0.0;
 		b = 1.0 + 0.36787944117144232159 * a;
 		repeat {
-			p = b * sunif();
+			p = b * unif_rand();
 			if (p >= 1.0) {
 				ret_val = -log((b - p) / a);
-				if (sexp() >= (1.0 - a) * log(ret_val))
+				if (exp_rand() >= (1.0 - a) * log(ret_val))
 					break;
 			} else {
 				ret_val = exp(log(p) / a);
-				if (sexp() >= ret_val)
+				if (exp_rand() >= ret_val)
 					break;
 			}
 		}
@@ -114,14 +114,14 @@ double rgamma(double a, double scale)
 	/* x = (s,1/2)-normal deviate. */
 	/* immediate acceptance (i) */
 
-	t = snorm();
+	t = norm_rand();
 	x = s + 0.5 * t;
 	ret_val = x * x;
 	if (t >= 0.0)
 		return scale * ret_val;
 
 	/* Step 3: u = 0,1 - uniform sample. squeeze acceptance (s) */
-	u = sunif();
+	u = unif_rand();
 	if (d * u <= t * t * t) {
 		return scale * ret_val;
 	}
@@ -175,8 +175,8 @@ double rgamma(double a, double scale)
 	/* t=(b,si)-double exponential (laplace) sample */
 
 	repeat {
-		e = sexp();
-		u = sunif();
+		e = exp_rand();
+		u = unif_rand();
 		u = u + u - 1.0;
 		if (u < 0.0)
 			t = b - si * e;

@@ -108,10 +108,8 @@ double rhyper(double nn1in, double nn2in, double kkin)
 
     /* check parameter validity */
 
-#ifdef IEEE_754
     if(!R_FINITE(nn1in) || !R_FINITE(nn2in) || !R_FINITE(kkin))
 	ML_ERR_return_NAN;
-#endif
 
     nn1 = floor(nn1in+0.5);
     nn2 = floor(nn2in+0.5);
@@ -188,7 +186,7 @@ double rhyper(double nn1in, double nn2in, double kkin)
       L10:
 	p = w;
 	ix = minjx;
-	u = sunif() * scale;
+	u = unif_rand() * scale;
       L20:
 	if (u > p) {
 	    u = u - p;
@@ -228,8 +226,8 @@ double rhyper(double nn1in, double nn2in, double kkin)
 	    p3 = p2 + kr / lamdr;
 	}
       L30:
-	u = sunif() * p3;
-	v = sunif();
+	u = unif_rand() * p3;
+	v = unif_rand();
 	if (u < p1) {		/* rectangular region */
 	    ix = xl + u;
 	} else if (u <= p2) {	/* left tail */

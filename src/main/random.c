@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2000  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -25,156 +25,7 @@
 
 #include "Defn.h"
 #include "Random.h"
-#include "Mathlib.h"
-
-/* .Random.seed == (RNGkind, i1_seed, i_seed[0],i_seed[1],..,i_seed[n_seed-2])
- *		                      i2_seed   i3_seed
- * or           == (RNGkind)  [--> Randomize that one !]
- */
-
-static void GetRNGstate()
-{
-  /* Get  .Random.seed  into proper variables */
-    int len_seed, j, seed_off = 0;
-    SEXP seeds;
-
-    seeds = findVar(R_SeedsSymbol, R_GlobalEnv);
-    if (seeds == R_UnboundValue) {
-	Randomize(RNG_kind);
-    }
-    else {
-	seeds = coerceVector(seeds, INTSXP);
-	if (seeds == R_MissingArg)
-	    error(".Random.seed is a missing argument with no default");
-	if (!isVector(seeds))
-	    error(".Random.seed is not a vector");
-	RNG_kind = INTEGER(seeds)[0];
-	if (RNG_kind > MERSENNE_TWISTER || RNG_kind < 0) 
-		RNG_kind = WICHMANN_HILL; 
-	len_seed = RNG_Table[RNG_kind].n_seed;
-	if(LENGTH(seeds) > 1 && LENGTH(seeds) < len_seed + 1) {
-	    if(LENGTH(seeds) == RNG_Table[WICHMANN_HILL].n_seed) {
-		/* BACKWARDS COMPATIBILITY: */
-		seed_off = 1;
-		warning("Wrong length .Random.seed; forgot initial RNGkind? set to Wichmann-Hill");
-		/* compatibility mode */
-		RNG_kind = WICHMANN_HILL;
-	    } else {
-		error(".Random.seed has wrong length");
-	    }
-	}
-
- 	switch(RNG_kind) {
- 	case WICHMANN_HILL:
- 	case MARSAGLIA_MULTICARRY:
- 	case SUPER_DUPER:
- 	case RAND:
-	    break;
- 	case MERSENNE_TWISTER:
-	    error("'Mersenne-Twister' not yet implemented"); break;
-	default:
-	    error(".Random.seed[1] is NOT a valid RNG kind (code)");
-	}
-	if(LENGTH(seeds) == 1)
-	    Randomize(RNG_kind);
-	else {
-	    RNG_Table[RNG_kind].i1_seed = INTEGER(seeds)[1 - seed_off];
-	    for(j = 2; j <= len_seed; j++)
-		RNG_Table[RNG_kind].i_seed[j - 2] = INTEGER(seeds)[j - seed_off];
-	    FixupSeeds(RNG_kind);
-	}
-    }
-}
-
-static void PutRNGstate()
-{
-    int len_seed, j;
-    SEXP seeds;
-    len_seed = RNG_Table[RNG_kind].n_seed;
-
-    PROTECT(seeds = allocVector(INTSXP, len_seed + 1));
-
-    INTEGER(seeds)[0] = RNG_kind;
-    INTEGER(seeds)[1] = RNG_Table[RNG_kind].i1_seed;
-    for(j = 2; j <= len_seed; j++)
-	INTEGER(seeds)[j] = RNG_Table[RNG_kind].i_seed[j-2];
-
-    setVar(R_SeedsSymbol, seeds, R_GlobalEnv);
-    UNPROTECT(1);
-}
-
-static void RNGkind(RNGtype newkind)
-{
-/* Choose a new kind of RNG.
- * Initialize its seed by calling the old RNG's sunif()
- */
-    GetRNGstate();
-
-    RNG_Init(newkind, sunif() * UINT_MAX);
-
-    switch(newkind) {
-    case WICHMANN_HILL:
-    case MARSAGLIA_MULTICARRY:
-    case SUPER_DUPER:
-      break;
-    case RAND:
-	error("RNGkind: \"Rand\" not yet available (BUG)!");
-	srand((unsigned int)sunif()*UINT_MAX);
-      break;
-    case MERSENNE_TWISTER:
-	/* ... */
-	error("RNGkind: \"Mersenne-Twister\" not yet available!");
-      break;
-    default:
-      error("RNGkind: unimplemented RNG kind %d", newkind);
-    }
-    RNG_kind = newkind;
-
-    PutRNGstate();
-}
-
-SEXP do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP r;
-    RNGtype kind, oldkind;
-
-    checkArity(op,args);
-    oldkind = RNG_kind;
-    r = CAR(args);
-    if(length(r)) { /* set a new RNG kind */
-      kind = asInteger(r);
-      RNGkind(kind);
-    }
-    r = allocVector(INTSXP, 1);
-    INTEGER(r)[0] = oldkind;
-    return r;
-}
-
-
-SEXP do_setseed (SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP skind;
-    int seed;
-    RNGtype kind;
-
-    checkArity(op,args);
-    seed = asInteger(CAR(args));
-    if (seed == NA_INTEGER)
-	error("supplied seed is not a valid integer");
-    skind = CADR(args);
-    if (!isNull(skind)) {
-	kind = asInteger(skind);
-	RNGkind(kind);
-    } else
-	kind = RNG_kind;
-    RNG_Init(kind, (Int32) seed);
-    PutRNGstate();
-    return R_NilValue;
-}
-
-
-
-/*------ Part without RNGkind dependency ------------------------*/
+#include "Mathlib.h" /* for rxxx functions, MATH_CHECK  */
 
 static int naflag = 0;
 
@@ -444,7 +295,7 @@ static void ProbSampleReplace(int n, double *p, int *perm, int nans, int *ans)
 
     /* compute the sample */
     for (i = 0; i < nans; i++) {
-	random = sunif();
+	random = unif_rand();
 	for (j = 0; j < nm1; j++) {
 	    if (random <= p[j])
 	        break;
@@ -473,7 +324,7 @@ static void ProbSampleNoReplace(int n, double *p, int *perm,
     totalmass = 1;
     nm1 = n - 1;
     for (i = 0; i < nans; i++) {
-	random = totalmass * sunif();
+	random = totalmass * unif_rand();
 	mass = 0;
 	for (j = 0; j < nm1; j++) {
 	    mass += p[j];
@@ -496,7 +347,7 @@ static void SampleReplace(int k, int n, int *y)
 {
     int i;
     for (i = 0; i < k; i++)
-	y[i] = n * sunif() + 1;
+	y[i] = n * unif_rand() + 1;
 }
 
 /* Equal probability sampling; without-replacement case */
@@ -507,7 +358,7 @@ static void SampleNoReplace(int k, int n, int *y, int *x)
     for (i = 0; i < n; i++)
 	x[i] = i;
     for (i = 0; i < k; i++) {
-	j = n * sunif();
+	j = n * unif_rand();
 	y[i] = x[j] + 1;
 	x[j] = x[--n];
     }
@@ -581,20 +432,3 @@ SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return y;
 }
-
-
-/* S COMPATIBILITY */
-
-/* The following entry points provide compatibility with S. */
-/* These entry points should not be used by new R code. */
-
-void seed_in(long *ignored)
-{
-    GetRNGstate();
-}
-
-void seed_out(long *ignored)
-{
-    PutRNGstate();
-}
-/* unif_rand == sunif , norm_rand == snorm   via 'define' in Mathlib.h */

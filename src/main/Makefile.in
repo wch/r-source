@@ -65,6 +65,7 @@ SOURCES_C = \
 	printvector.c \
 	printutils.c \
 	random.c \
+	RNG.c \
 	regex.c \
 	relop.c \
 	saveload.c \

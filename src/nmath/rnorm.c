@@ -32,14 +32,11 @@
 
 double rnorm(double mu, double sigma)
 {
-    if(
-#ifdef IEEE_754
-        !R_FINITE(mu) || !R_FINITE(sigma) ||
-#endif
-	sigma < 0.)	ML_ERR_return_NAN;
+    if(!R_FINITE(mu) || !R_FINITE(sigma) || sigma < 0.)	
+	ML_ERR_return_NAN;
 
     if (sigma == 0.)
 	return mu;
     else
-	return mu + sigma * snorm();
+	return mu + sigma * norm_rand();
 }

@@ -31,11 +31,8 @@
 
 double rlnorm(double logmean, double logsd)
 {
-    if(
-#ifdef IEEE_754
-	!R_FINITE(logmean) || !R_FINITE(logsd) ||
-#endif
-	logsd <= 0.)	ML_ERR_return_NAN;
+    if(!R_FINITE(logmean) || !R_FINITE(logsd) || logsd <= 0.)
+	ML_ERR_return_NAN;
 
     return exp(rnorm(logmean, logsd));
 }

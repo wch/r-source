@@ -20,7 +20,7 @@ SOURCES = \
 	gamma.c lgamma.c gamma_cody.c beta.c lbeta.c polygamma.c \
 	bessel_i.c bessel_j.c bessel_k.c bessel_y.c \
 	choose.c \
-	snorm.c sunif.c sexp.c \
+	snorm.c sexp.c \
 	dgamma.c pgamma.c qgamma.c rgamma.c \
 	dbeta.c pbeta.c qbeta.c rbeta.c \
 	dunif.c punif.c qunif.c runif.c \

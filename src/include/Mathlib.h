@@ -32,7 +32,6 @@
 
 #include "config.h"
 #include "Arith.h"
-#include "Random.h"
 
 #ifdef FORTRAN_H
 #error __MUST__include "Mathlib.h"  _before_  "Fortran.h"
@@ -198,7 +197,7 @@ void ml_error(int n);
 
 #define ML_ERR_return_NAN { ML_ERROR(ME_DOMAIN); return ML_NAN; }
 
-	/* Splus Compatibility */
+	/* old-R Compatibility */
 
 #define snorm	norm_rand
 #define sunif	unif_rand
@@ -292,9 +291,9 @@ double	fcube(double);
 
 	/* Random Number Generators */
 
-double	snorm(void);
-double	sunif(void);
-double	sexp(void);
+double	norm_rand(void);
+double	unif_rand(void);
+double	exp_rand(void);
 
 	/* Chebyshev Series */
 
