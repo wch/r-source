@@ -24,7 +24,7 @@ writeLines(text, con = stdout(), sep = "\n")
 
   Normally \code{writeLines} is used with a text connection, and the
   default separator is converted to the normal separator for that
-  platform (LF on Unix/Linux, CRLF on Windows, LF on Macintosh).  For
+  platform (LF on Unix/Linux, CRLF on Windows, CR on Classic MacOS).  For
   more control, open a binary connection and specify the precise value
   you want written to the file in \code{sep}.  For even more control,
   use \code{\link{writeChar}} on a binary connection.
