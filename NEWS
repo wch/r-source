@@ -5,6 +5,11 @@ BUG FIXES
     o   build-help --dosnames should now also work for text help,
         latex and examples.
 
+    o	seq() should work better now (fuzz-factor 1e-7 inserted)
+
+    o	multiple arguments to return caused value to be a pairlist
+
+    o   data.frame choked on long names from deparse()
 
 		CHANGES IN R VERSION 0.63
 
