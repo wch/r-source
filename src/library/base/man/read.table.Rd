@@ -2,8 +2,8 @@
 \alias{read.table}
 \alias{read.csv}
 \alias{read.csv2}
-\alias{read.tabsep}
-\alias{read.tabsep2}
+\alias{read.delim}
+\alias{read.delim2}
 \title{Data Input}
 \description{
   Reads a file in table format and creates a data frame from it, with

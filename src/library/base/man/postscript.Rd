@@ -30,6 +30,7 @@ ps.options(paper, horizontal, width, height, family, pointsize, bg, fg,
 \alias{postscript}
 \alias{ps.options}
 \alias{.PostScript.Options}
+\alias{.ps.prolog}
 \arguments{
   \item{file}{a character string giving the name of the file.  If it is
     \code{""}, the output is piped to the command given by
