@@ -59,17 +59,16 @@ a symbolic description of the linear predictor and
 a description of the error distribution.
 }
 \details{
-A typical predictor has the form
-\code{response ~ terms} where \code{response} is the (numeric)
-response vector and \code{terms} is a series of terms which
-specifies a linear predictor for \code{response}. For \code{binomial}
-models the response can also be specified as a factor (when the first
-level denotes failure and all others success) or as a two-column matrix
-with the columns giving the numbers of successes and failures.
-A terms specification of the form \code{first+second}
-indicates all the terms in \code{first} together
-with all the terms in \code{second} with duplicates
-removed.
+A typical predictor has the form \code{response ~ terms} where
+\code{response} is the (numeric) response vector and \code{terms} is a
+series of terms which specifies a linear predictor for \code{response}.
+For \code{binomial} models the response can also be specified as a
+\code{\link{factor}} (when the first level denotes failure and all
+others success) or as a two-column matrix with the columns giving the
+numbers of successes and failures.  A terms specification of the form
+\code{first+second} indicates all the terms in \code{first} together
+with all the terms in \code{second} with duplicates removed.
+
 A specification of the form \code{first:second} indicates the
 the set of terms obtained by taking the interactions of
 all terms in \code{first} with all terms in \code{second}.
@@ -94,7 +93,7 @@ extract various useful features of the value returned by \code{glm}.
   \code{glm} methods,
   and the generic functions \code{\link{anova}}, \code{\link{summary}},
   \code{\link{effects}}, \code{\link{fitted.values}},
-  and\code{\link{residuals}}. Further, \code{\link{lm}} for
+  and \code{\link{residuals}}. Further, \code{\link{lm}} for
   non-generalized \emph{linear} models.
 }
 \examples{
