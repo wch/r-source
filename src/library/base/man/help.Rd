@@ -157,7 +157,7 @@ type?topic
 
   Both approaches make use of any inherited methods; the signature of
   the method to be looked up is found by using
-  \code{\link{selectMethod}}.
+  \code{\link[methods]{selectMethod}}.
 
   
 }
