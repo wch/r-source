@@ -210,6 +210,10 @@ Date: Fri, 26 Oct 2001 15:23:45 -0400
 Subject: identify(...plot=F)
 From: Rolf Turner <rolf@maths.uwa.edu.au>
 Date: Fri, 2 Nov 2001 09:43:49 +0800 (WST)
+* PR# 1161 *
+Subject: x-axis label in persp()
+From: Rolf Turner <rolf@maths.uwa.edu.au>
+Date: Wed, 7 Nov 2001 18:07:22 +0800 (WST)
 
 Directory:  In-Out
 
@@ -366,10 +370,7 @@ Date: Wed, 3 Oct 2001 11:35:58 -0400 (EDT)
 
 Directory:  Windows
 
-* PR# 1135 *
-Subject: Canceling close behaves incorrectly
-From: john_heumann@agilent.com
-Date: Sat, 20 Oct 2001 01:02:02 +0200 (MET DST)
+none
 
 Directory:  incoming
 
@@ -377,30 +378,17 @@ Directory:  incoming
 Subject: bug.report()sends empty message
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
 Date: Mon, 05 Nov 2001 10:05:27 -0500
-* PR# 1159 *
-Subject: stepwise algorithm step() on coxph()
-From: jerome@hivnet.ubc.ca
-Date: Mon, 5 Nov 2001 23:41:14 +0100 (MET)
-* PR# 1160 *
-Subject: incorrect xlim error message in image() 
-Subject: Re: image function
-From: Jane Fridlyand <janef@stat.berkeley.edu>
-From: Jason Turner <jasont@indigoindustrial.co.nz>
-Date: Tue, 6 Nov 2001 10:19:31 -0800 (PST)
-Date: Fri, 2 Nov 2001 20:32:23 +1300
-* PR# 1161 *
-Subject: x-axis label in persp()
-From: Rolf Turner <rolf@maths.uwa.edu.au>
-Date: Wed, 7 Nov 2001 18:07:22 +0800 (WST)
-* PR# 1162 *
-Subject: eqscplot() in library MASS: fails when given only one point
-From: Kaspar Pflugshaupt <pflugshaupt@geobot.umnw.ethz.ch>
-Date: Thu, 08 Nov 2001 18:39:21 +0100
-* PR# 1163 *
-Subject: ADV: Doing a PHD?
-From: "AL Email Marketing, Inc." <info@alemailmarketing.com>
-Date: Thu, 8 Nov 2001 13:05:02 -0700
-* PR# 1164 *
-Subject: Re: [Rd] eqscplot() in library MASS: fails when given only one point
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 9 Nov 2001 07:44:01 +0000 (GMT)
+* PR# 1165 *
+Subject: png output requires X connection
+Subject: r-base: png output requires X connection
+From: edd@debian.org
+From: Ryan Murray <rmurray@cyberhqz.com>
+Date: Sun, 11 Nov 2001 18:23:35 +0100 (MET)
+Date: Wed, 10 Oct 2001 13:40:06 -0700
+* PR# 1166 *
+Subject: Gnits about setting LD_LIBRARY_PATH from R
+Subject: r-base gnits
+From: edd@debian.org
+From: "Stephen J. Turnbull" <turnbull@sk.tsukuba.ac.jp>
+Date: Sun, 11 Nov 2001 18:23:33 +0100 (MET)
+Date: Mon, 18 Sep 2000 19:48:11 +0900 (JST)
