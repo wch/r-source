@@ -79,8 +79,7 @@ boxplot.stats <- function(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
 	out <- x < (stats[2] - coef * iqr) | x > (stats[4] + coef * iqr)
 	if(any(out[nna])) stats[c(1, 5)] <- range(x[!out], na.rm = TRUE)
     }
-    conf <- if(do.conf)
-	stats[3] + c(-1.58, 1.58) * diff(stats[c(2, 4)]) / sqrt(n)
+    conf <- if(do.conf) stats[3] + c(-1.58, 1.58) * iqr / sqrt(n)
     list(stats = stats, n = n, conf = conf,
 	 out = if(do.out) x[out & nna] else numeric(0))
 }
