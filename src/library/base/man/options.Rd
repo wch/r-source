@@ -238,8 +238,9 @@ getOption(x)
       input encoding.  Defaults to \code{native.enc} (= \code{0:255}).
       See \code{\link{connections}}.}
 
-    \item{\code{timeout}:}{integer.  The timeout for Internet
-      operations, in seconds.  Default 60 seconds.}
+    \item{\code{timeout}:}{integer.  The timeout for some Internet
+      operations, in seconds.  Default 60 seconds.
+      See \code{\link{download.file}} and \code{\link{connections}}.}
 
     \item{\code{internet.info}:}{The minimum level of information to be
       printed on URL downloads etc.  Default is 2, for failure causes.
