@@ -66,6 +66,9 @@ NEW FEATURES
 
     o	First argument renamed to "package" for library(), require(), provide().
 
+    o   model.frame now accepts data= arguments that can be coerced to
+	data frames
+
 
 BUG FIXES
 

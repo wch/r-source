@@ -214,6 +214,8 @@ model.frame.default <-
     }
     if(missing(data))
 	data <- sys.frame(sys.parent())
+    else if (!is.data.frame(data) && !is.environment(data) && !is.null(class(data)))
+        data<-as.data.frame(data)
     if(!inherits(formula, "terms"))
 	formula <- terms(formula, data = data)
     rownames <- attr(data, "row.names")

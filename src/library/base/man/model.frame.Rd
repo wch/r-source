@@ -15,8 +15,8 @@ Methods for
 \alias{model.frame.aovlist}
 \arguments{
   \item{formula}{a model formula}
-  \item{data}{\code{data.frame} or \code{environment} where the objects
-    in formula are.}
+  \item{data}{\code{data.frame}, list, \code{environment} or object
+coercible to \code{data.frame} containing the variables in \code{formula}.}
   \item{na.action}{how \code{NA}s are treated.}
   \item{drop.unused.levels}{show factors have unused levels dropped?
       Defaults to \code{FALSE}.}
