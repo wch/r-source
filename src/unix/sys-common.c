@@ -103,7 +103,7 @@ FILE *R_OpenSiteFile(void)
 
 	/* Saving and Restoring the Global Environment */
 
-static char workspace_name[100] = ".Rdata";
+static char workspace_name[100] = ".RData";
 
 void set_workspace_name(char *fn)
 {
