@@ -41,7 +41,7 @@ unique.default <- function(x, incomparables = FALSE, ...)
 	.NotYetUsed("incomparables != FALSE")
     z <- .Internal(unique(x))
     if(is.factor(x))
-	factor(z, levels = 1:nlevels(x), labels = levels(x),
+	factor(z, levels = seq(len=nlevels(x)), labels = levels(x),
                ordered = is.ordered(x))
     else if(inherits(x, "POSIXct")) structure(z, class=class(x))
     else z

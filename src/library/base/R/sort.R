@@ -7,7 +7,7 @@ sort <- function(x, partial=NULL, na.last=NA, decreasing = FALSE,
 	nlev <- nlevels(x)
  	isord <- is.ordered(x)
         x <- c(x)
-    } else 
+    } else
     if(!is.atomic(x))
         stop("`x' must be atomic")
     if(has.na <- any(ina <- is.na(x))) {
@@ -47,7 +47,8 @@ sort <- function(x, partial=NULL, na.last=NA, decreasing = FALSE,
     if(!is.na(na.last) && has.na)
 	y <- if(!na.last) c(nas, y) else c(y, nas)
     if(isfact)
-        y <- (if (isord) ordered else factor)(y, levels=1:nlev, labels=lev)
+        y <- (if (isord) ordered else factor)(y, levels=seq(len=nlev),
+                                              labels=lev)
     y
 }
 
