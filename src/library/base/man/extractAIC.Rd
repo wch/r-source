@@ -10,13 +10,7 @@
 \alias{extractAIC.negbin}
 \alias{extractAIC.survreg}
 \usage{
-extractAIC    (fit, scale,     k = 2, \dots)  
-extractAIC.lm (fit, scale = 0, k = 2, \dots)
-extractAIC.glm(fit, scale = 0, k = 2, \dots)  
-extractAIC.aov(fit, scale = 0, k = 2, \dots)  
-extractAIC.coxph  (fit, scale, k = 2, \dots)  
-extractAIC.negbin (fit, scale, k = 2, \dots)  
-extractAIC.survreg(fit, scale, k = 2, \dots)  
+extractAIC(fit, scale,     k = 2, \dots)  
 }
 \arguments{
   \item{fit}{fitted model, usually the result of a fitter like
@@ -31,10 +25,14 @@ extractAIC.survreg(fit, scale, k = 2, \dots)
 }
 %-- Source in ../R/add.R
 \description{
-  Computes the (generalized) \bold{A}kaike \bold{I}nformation
+  Computes the (generalized) Akaike \bold{A}n \bold{I}nformation
   \bold{C}riterion for a fitted parametric model.
 }
 \details{
+  This is a generic function, with methods in base \R for \code{"aov"},
+  \code{"coxph"}, \code{"glm"}, \code{"lm"}, \code{"negbin"}
+  and \code{"survreg"} classes.
+  
   The criterion used is 
  \deqn{AIC = - 2\log L +  k \times \mbox{edf},}{AIC = - 2*log L +  k * edf,}
   where \eqn{L} is the likelihood
@@ -69,7 +67,10 @@ extractAIC.survreg(fit, scale, k = 2, \dots)
   \emph{Modern Applied Statistics with S.}
   New York: Springer (4th ed).
 }
-\seealso{\code{\link{deviance}}, \code{\link{add1}}, \code{\link{step}}}
+\seealso{
+  \code{\link{AIC}}, \code{\link{deviance}}, \code{\link{add1}},
+  \code{\link{step}}
+}
 \examples{
 example(glm)
 extractAIC(glm.D93)#>>  5  15.129

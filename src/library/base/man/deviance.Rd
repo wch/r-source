@@ -10,10 +10,6 @@
 }
 \usage{
 deviance(object, \dots)
-deviance.lm (object, \dots)
-deviance.glm(object, \dots)
-deviance.mlm(object, \dots)
-deviance.default(object, \dots)
 }
 \arguments{
   \item{object}{an object for which the deviance is desired.}

@@ -2,7 +2,7 @@
 \alias{update.formula}
 \title{Model Updating}
 \usage{
-update.formula(old, new, ...)
+\method{update}{formula}(old, new, ...)
 }
 \arguments{
   \item{old}{a model formula to be updated.}
@@ -30,7 +30,7 @@ update.formula(old, new, ...)
   \code{\link{terms}}, \code{\link{model.matrix}}.
 }
 \examples{
-update.formula(y ~ x,    ~ . + x2) #> y ~ x + x2
-update.formula(y ~ x, log(.) ~ . ) #> log(y) ~ x
+update(y ~ x,    ~ . + x2) #> y ~ x + x2
+update(y ~ x, log(.) ~ . ) #> log(y) ~ x
 }
 \keyword{models}

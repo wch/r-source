@@ -1,7 +1,7 @@
 %% From package:nlme  AIC.Rd,v 1.4 2000/07/03 18:22:45 bates
 %% with additional "k = 2" argument (MM)
 \name{AIC}
-\title{Akaike Information Criterion}
+\title{Akaike's An Information Criterion}
 \usage{
 AIC(object, \dots, k = 2)
 }
@@ -47,8 +47,7 @@ AIC(object, \dots, k = 2)
 }
 \author{Jose Pinheiro and Douglas Bates}
 \seealso{
-  \code{\link{logLik}},
-  \code{\link{AIC.logLik}}.
+  \code{\link{extractAIC}}, \code{\link{logLik}}, \code{\link{AIC.logLik}}.
 }
 \examples{
 data(swiss)

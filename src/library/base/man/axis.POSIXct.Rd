@@ -4,13 +4,11 @@
 \alias{plot.POSIXlt}
 \title{Date-time Plotting Functions}
 \description{
-  Functions to manipulate objects of classes \code{"POSIXlt"} and
-  \code{"POSIXct"} representing calendar dates and times (to the nearest
-  second). 
+  Functions to plot objects of classes \code{"POSIXlt"} and
+  \code{"POSIXct"} representing calendar dates and times. 
 }
 \usage{
-plot.POSIXct(x, y, xlab = "", ...)
-plot.POSIXlt(x, y, xlab = "", ...)
+\method[plot}{POSIXct}(x, y, xlab = "", ...)
 axis.POSIXct(side, x, at, format, ...)
 }
 \synopsis{
