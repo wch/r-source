@@ -1,21 +1,49 @@
 colors <- function() .Internal(colors())
 colours <- colors
-col2rgb <- function(col) .Internal(col2rgb(col))
+col2rgb <- function(col, alpha=FALSE) {
+  result <- .Internal(col2rgb(col))
+  if (!alpha)
+    result <- result[1:3,]
+  result
+}
 
 gray <- function(level) .Internal(gray(level))
 grey <- gray
 
-rgb <- function(red, green, blue, names=NULL, maxColorValue = 1)
+rgb <- function(red, green, blue, alpha,
+                names=NULL, maxColorValue = 1)
 {
-    ## in the first case, (r,g,b) are (coerced to) integer, otherwise
-    ## double.
-    if(maxColorValue == 255)
-        .Internal(rgb256(red, green, blue, names))
-    else .Internal(rgb(red, green, blue, maxColorValue, names))
+  if (missing(alpha)) {
+    alphaspec <- FALSE
+    alpha <- maxColorValue
+  } else {
+    alphaspec <- TRUE
+  }
+  ## in the first case, (r,g,b) are (coerced to) integer, otherwise
+  ## double.
+  if(maxColorValue == 255)
+    result <- .Internal(rgb256(red, green, blue, alpha, names))
+  else
+    result <- .Internal(rgb(red, green, blue, alpha, maxColorValue, names))
+  # If alpha not specified only return #RRGGBB
+  if (!alphaspec)
+    result <- substr(result, 1, 7)
+  result
 }
 
-hsv <- function(h=1,s=1,v=1,gamma=1)
-    .Internal(hsv(h,s,v,gamma))
+hsv <- function(h=1, s=1, v=1, gamma=1, alpha) {
+  if (missing(alpha)) {
+    alphaspec <- FALSE
+    alpha <- 1
+  } else {
+    alphaspec <- TRUE
+  }
+  result <- .Internal(hsv(h, s, v, gamma, alpha))
+  # If alpha not specified only return #RRGGBB
+  if (!alphaspec)
+    result <- substr(result, 1, 7)
+  result
+}
 
 rgb2hsv <- function(r, g = NULL, b = NULL, gamma = 1, maxColorValue = 255)
 {

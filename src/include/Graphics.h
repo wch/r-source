@@ -357,6 +357,7 @@ typedef struct {
 #define NumDevices              Rf_NumDevices
 #define rgb2col			Rf_rgb2col
 #define RGB2rgb			Rf_RGB2rgb
+#define RGBA2rgb		Rf_RGBA2rgb
 #define ScaleColor		Rf_ScaleColor
 #define str2col			Rf_str2col
 #define StrMatch		Rf_StrMatch
@@ -395,6 +396,7 @@ unsigned int CheckColor(int x);
 Rboolean isNAcol(SEXP col, int index, int ncol);
 
 char* RGB2rgb(unsigned int, unsigned int, unsigned int);
+char* RGBA2rgb(unsigned int, unsigned int, unsigned int, unsigned int);
 
 int StrMatch(char *s, char *t);
 

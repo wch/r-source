@@ -4039,16 +4039,29 @@ int StrMatch(char *s, char *t)
 
 
 /* #RRGGBB String to Internal Color Code */
-
+/*
+ * Paul:  Add ability to handle #RRGGBBAA
+ */
 unsigned int rgb2col(char *rgb)
 {
-    unsigned int r, g, b;
-    if(rgb[0] != '#' || strlen(rgb) != 7)
+    unsigned int r, g, b, a;
+    if(rgb[0] != '#')
 	error("invalid RGB specification");
-    r = 16 * hexdigit(rgb[1]) + hexdigit(rgb[2]);
-    g = 16 * hexdigit(rgb[3]) + hexdigit(rgb[4]);
-    b = 16 * hexdigit(rgb[5]) + hexdigit(rgb[6]);
-    return R_RGB(r, g, b);
+    switch (strlen(rgb)) {
+    case 9:
+	a = 16 * hexdigit(rgb[7]) + hexdigit(rgb[8]);
+    case 7:
+	r = 16 * hexdigit(rgb[1]) + hexdigit(rgb[2]);
+	g = 16 * hexdigit(rgb[3]) + hexdigit(rgb[4]);
+	b = 16 * hexdigit(rgb[5]) + hexdigit(rgb[6]);
+	break;
+    default:
+	error("invalid RGB specification");
+    }
+    if (strlen(rgb) == 7)
+	return R_RGB(r, g, b);
+    else 
+	return R_RGBA(r, g, b, a);
 }
 
 /* External Color Name to Internal Color Code */
@@ -4093,7 +4106,7 @@ unsigned int number2col(char *nm)
 }
 
 
-static char ColBuf[8];
+static char ColBuf[10];
 
 char *RGB2rgb(unsigned int r, unsigned int g, unsigned int b)
 {
@@ -4108,6 +4121,22 @@ char *RGB2rgb(unsigned int r, unsigned int g, unsigned int b)
     return &ColBuf[0];
 }
 
+char *RGBA2rgb(unsigned int r, unsigned int g, unsigned int b,
+	       unsigned int a)
+{
+    ColBuf[0] = '#';
+    ColBuf[1] = HexDigits[(r >> 4) & 15];
+    ColBuf[2] = HexDigits[r & 15];
+    ColBuf[3] = HexDigits[(g >> 4) & 15];
+    ColBuf[4] = HexDigits[g & 15];
+    ColBuf[5] = HexDigits[(b >> 4) & 15];
+    ColBuf[6] = HexDigits[b & 15];
+    ColBuf[7] = HexDigits[(a >> 4) & 15];
+    ColBuf[8] = HexDigits[a & 15];
+    ColBuf[9] = '\0';
+    return &ColBuf[0];
+}
+
 
 /* Internal to External Color Representation */
 /* Search the color name database first */
@@ -4117,20 +4146,35 @@ char *col2name(unsigned int col)
 {
     int i;
 
-    if(!R_OPAQUE(col)) return "transparent";
-    for(i=0 ; ColorDataBase[i].name ; i++) {
-	if(col == ColorDataBase[i].code)
-	    return ColorDataBase[i].name;
+    if(R_OPAQUE(col)) {
+	for(i=0 ; ColorDataBase[i].name ; i++) {
+	    if(col == ColorDataBase[i].code)
+		return ColorDataBase[i].name;
+	}
+	ColBuf[0] = '#';
+	ColBuf[1] = HexDigits[(col >>  4) & 15];
+	ColBuf[2] = HexDigits[(col	    ) & 15];
+	ColBuf[3] = HexDigits[(col >> 12) & 15];
+	ColBuf[4] = HexDigits[(col >>  8) & 15];
+	ColBuf[5] = HexDigits[(col >> 20) & 15];
+	ColBuf[6] = HexDigits[(col >> 16) & 15];
+	ColBuf[7] = '\0';
+	return &ColBuf[0];
+    } else if (R_TRANSPARENT(col)) {
+	return "transparent";
+    } else {
+	ColBuf[0] = '#';
+	ColBuf[1] = HexDigits[(col >>  4) & 15];
+	ColBuf[2] = HexDigits[(col	) & 15];
+	ColBuf[3] = HexDigits[(col >> 12) & 15];
+	ColBuf[4] = HexDigits[(col >>  8) & 15];
+	ColBuf[5] = HexDigits[(col >> 20) & 15];
+	ColBuf[6] = HexDigits[(col >> 16) & 15];
+	ColBuf[7] = HexDigits[(col >> 28) & 15];
+	ColBuf[8] = HexDigits[(col >> 24) & 15];
+	ColBuf[9] = '\0';
+	return &ColBuf[0];
     }
-    ColBuf[0] = '#';
-    ColBuf[1] = HexDigits[(col >>  4) & 15];
-    ColBuf[2] = HexDigits[(col	    ) & 15];
-    ColBuf[3] = HexDigits[(col >> 12) & 15];
-    ColBuf[4] = HexDigits[(col >>  8) & 15];
-    ColBuf[5] = HexDigits[(col >> 20) & 15];
-    ColBuf[6] = HexDigits[(col >> 16) & 15];
-    ColBuf[7] = '\0';
-    return &ColBuf[0];
 }
 
 /* NOTE that this is called with dd == NULL by */

@@ -5,13 +5,15 @@
   \dQuote{Any \R color} to RGB (red/green/blue) conversion.
 }
 \usage{
-col2rgb(col)
+col2rgb(col, alpha=FALSE)
 }
 \arguments{
   \item{col}{vector of any of the three kind of \R colors, i.e., either
     a color name (an element of \code{\link{colors}()}), a hexadecimal
     string of the form \code{"#rrggbb"}, or an integer \code{i} meaning
     \code{palette()[i]}.}
+  \item{alpha}{logical value indicating whether alpha channel
+    values should be returned.}
 }
 \details{
   For integer colors, \code{0} is shorthand for the current
@@ -21,7 +23,7 @@ col2rgb(col)
   For character colors, \code{"NA"} is equivalent to \code{NA} above.
 }
 \value{
-  an integer matrix with three rows and number of columns the length
+  an integer matrix with three or four rows and number of columns the length
   (and names if any) as \code{col}.
 }
 \author{Martin Maechler}

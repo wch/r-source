@@ -1,22 +1,30 @@
 \name{rgb}
 \title{RGB Color Specification}
 \usage{
-rgb(red, green, blue, names=NULL, maxColorValue = 1)
+rgb(red, green, blue, alpha=NULL, names=NULL, maxColorValue = 1)
 }
 \alias{rgb}
 \description{
   This function creates \dQuote{colors} corresponding to the given
   intensities (between 0 and \code{max}) of the red, green and blue
-  primaries.  The names argument may be used to provide names for the
-  colors.
+  primaries.
 
-  The values returned by \code{rgb} can be used with a
+  An alpha transparency value can also be specified
+  (0 means fully transparent and \code{max} means opaque).
+  If \code{alpha} is not specified, an opaque colour is generated.
+
+  The names argument may be used to provide names for the
+  colors.
+  
+  The values returned by these functions can be used with a
   \code{col=} specification in graphics functions or in \code{\link{par}}.
 }
 \arguments{
-  \item{red, blue, green}{vectors of same length with values in \eqn{[0, M]}
+  \item{red, blue, green, alpha}{vectors of same length
+    with values in \eqn{[0, M]}
     where \eqn{M} is \code{maxColorValue}. When this is \code{255}, the
-    \code{red}, \code{blue} and \code{green} values are coerced to
+    \code{red}, \code{blue}, \code{green}, and \code{alpha}
+    values are coerced to
     integers in \code{0:255} and the result is computed most efficiently.}
   \item{names}{character. The names for the resulting vector.}
   \item{maxColorValue}{number giving the maximum of the color values
