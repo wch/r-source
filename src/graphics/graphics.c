@@ -18,7 +18,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  *
- *  This is an extensive reworking by Paul Murrell of and original
+ *  This is an extensive reworking by Paul Murrell of an original
  *  quick hack by Ross Ihaka designed to give a superset of the
  *  functionality in the AT&T Bell Laboratories GRZ library.
  *
@@ -325,6 +325,9 @@ int NoDevices();
 int NumDevices();
 		/* how many devices exist ? (>= 1) */
 
+
+int deviceNumber(DevDesc*); 
+		/* get the index of the specified device */
 
 int StartDevice(SEXP, SEXP, int, SEXP, int);
 		/* create a new device */
@@ -2593,7 +2596,7 @@ int GLocator(double *x, double *y, int coords, DevDesc *dd)
 	double ix, iy;
 	if(!dd->dp.locator)
 		error("no locator capability in device driver\n");
-	if(dd->dp.locator(x, y)) {
+	if(dd->dp.locator(x, y, dd)) {
 		GConvert(x, y, DEVICE, coords, dd);
 		return 1;
 	}

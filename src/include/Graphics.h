@@ -413,6 +413,7 @@ void KillDevice(DevDesc*);
 void KillAllDevices();
 int NoDevices();
 int NumDevices();
+int deviceNumber(DevDesc*); 
 int StartDevice(SEXP, SEXP, int, SEXP, int);
 
 		/* Utility Device functions */
