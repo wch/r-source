@@ -378,6 +378,9 @@ DOCUMENTATION CHANGES
 	\method{GENERIC}{CLASS} markup for indicating the usage of S3
 	methods, providing the CLASS info in a comment.
 
+    o	\dontrun sections are no marked within comments in the
+	user-readable versions of the converted help pages.
+
 
 INSTALLATION CHANGES
 

@@ -499,6 +499,29 @@ sub replace_command {
     $text;
 }
 
+# ditto, but add newline before $after unless it starts a new line
+# and if there is more than one line.
+sub replace_addnl_command {
+
+    my ($text, $cmd, $before, $after) = @_;
+
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "\\$cmd")
+	  && $text =~ /\\$cmd(\[[^\]]+\])?$ID/) {
+	my ($id, $arg) = get_arguments($cmd, $text, 1);
+	$text =~ /\\$cmd$id(.*)$id/s;
+	$arg = $1;
+	if ($arg =~ /\n/m) {
+	    $arg = "\n" . $arg unless $arg =~ /^\n/m;
+	    $arg = $arg . "\n" unless $arg =~ /\n$/m;
+	    $text =~ s/\\$cmd$id(.*)$id/$before$arg$after/s;
+	} else {
+	    $text =~ s/\\$cmd$id(.*)$id/$before$arg/s;
+	}
+    }
+    $text;
+}
+
 ## Replace the command and its closing bracket by $before and $after,
 ## respectively, AND PREPEND a comment to each LINE.  E.g., replace
 ## '\abc{line1\nline2\n....}' by '<Bef>\n##line1\n##line2\n##....<Aft>'
@@ -512,9 +535,15 @@ sub replace_prepend_command {
 	my ($id, $arg) = get_arguments($cmd, $text, 1);
 	$text =~ /\\$cmd$id(.*)$id/s;
 	$arg = $1;
-	$arg =~ s/^/$prepend/gmo;# prepend at all line beginnings
-	$arg =~ s/^$prepend//;   # but NOT the very beginning..
-	$text =~ s/\\$cmd$id.*$id/$before$arg$after/s;
+	if ($arg =~ /\n/m) {
+	    $arg = "\n" . $arg unless $arg =~ /^\n/m;
+	    $arg =~ s/^/$prepend/gmo;# prepend at all line beginnings
+	    $arg =~ s/^$prepend//;   # but NOT the very beginning..
+	    $arg = $arg . "\n" unless $arg =~ /\n$/m;
+	    $text =~ s/\\$cmd$id.*$id/$before$arg$after/s;
+	} else {
+	    $text =~ s/\\$cmd$id.*$id/$before$arg/s;
+	}
     }
     $text;
 }
@@ -917,7 +946,8 @@ sub code2html {
 	}
     }
 
-    $text = undefine_command($text, "dontrun");
+    $text = replace_addnl_command($text, "dontrun", 
+				  "## Don't run: ", "## End Don't run");
     $text = drop_full_command($text, "testonly");
     $text =~ s/\\\\/\\/go;
 
@@ -1409,7 +1439,8 @@ sub code2txt {
     $text =~ s/\\dots/.../go;
 
     $text = undefine_command($text, "link");
-    $text = undefine_command($text, "dontrun");
+    $text = replace_addnl_command($text, "dontrun", 
+				  "## Don't run: ", "## End Don't run");
     $text = drop_full_command($text, "testonly");
 
     $text = unmark_brackets($text);
@@ -2099,7 +2130,8 @@ sub code2nroff {
     $text =~ s/\\n/\\\\n/g;
 
     $text = undefine_command($text, "link");
-    $text = undefine_command($text, "dontrun");
+    $text = replace_addnl_command($text, "dontrun", 
+				  "## Don't run: ", "## End Don't run");
     $text = drop_full_command($text, "testonly");
 
     $text = unmark_brackets($text);
@@ -2238,7 +2270,8 @@ sub code2examp {
     ##	      "if(is.null(F) || <call from example(*, testonly = TRUE)>)) {\\n",
     ##				"\\n}");
 
-    $text = replace_prepend_command($text, "dontrun","##Don't run: ", "",
+    $text = replace_prepend_command($text, "dontrun","## Don't run: ", 
+				    "## End Don't run",
 				    "##D ");
     $text =~ s/\\\\/\\/g;
 
@@ -2401,7 +2434,8 @@ sub code2latex {
     } else {
 	$text = undefine_command($text, "link");
     }
-    $text = undefine_command($text, "dontrun");
+    $text = replace_addnl_command($text, "dontrun", 
+				  "## Don't run: ", "## End Don't run");
     $text = drop_full_command($text, "testonly");
 
     $text = unmark_brackets($text);
@@ -2849,7 +2883,8 @@ sub code2Ssgm {
 	    s/\\link(\[.*\])?$id.*$id/<s-function name="$arg">$arg<\/s-function>/s;
     }
 
-    $text = undefine_command($text, "dontrun");
+    $text = replace_addnl_command($text, "dontrun", 
+				  "## Don't run: ", "## End Don't run");
     $text = drop_full_command($text, "testonly");
     $text =~ s/\\\\/\\/go;
 
