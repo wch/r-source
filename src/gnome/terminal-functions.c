@@ -108,7 +108,7 @@ static void file_open_ok(GtkWidget *widget, gpointer data)
 #ifdef OLD
         FRAME(R_GlobalEnv) = R_LoadFromFile(fp, 0);
 #else
-	PROTECT(img = R_LoadFromFile(fp, 1));
+	PROTECT(img = R_LoadFromFile(fp, 0));
 	switch (TYPEOF(img)) {
 	case LISTSXP:
 	    while (img != R_NilValue) {
