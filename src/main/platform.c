@@ -108,3 +108,31 @@ SEXP do_removefile(SEXP call, SEXP op, SEXP args, SEXP rho)
 		        CHAR(STRING(fn1)[i]));
     return R_NilValue;
 }
+
+#include <sys/types.h>
+#include <dirent.h>
+
+SEXP do_dir(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP d, ans;
+    DIR *dir;
+    struct dirent *de;
+    int count;
+    checkArity(op, args);
+    d = CAR(args);
+    if (!isString(d) || length(d) < 1 || STRING(d)[0] == R_NilValue)
+	errorcall(call, "invalid directory argument\n");
+    if ((dir = opendir(CHAR(STRING(d)[0]))) == NULL)
+	errorcall(call, "invalid directory/folder name\n");
+    count = 0;
+    while (de = readdir(dir))
+	count++;
+    rewinddir(dir);
+    PROTECT(ans = allocVector(STRSXP, count));
+    count = 0;
+    while (de = readdir(dir))
+	STRING(ans)[count++] = mkChar(de->d_name);
+    closedir(dir);
+    UNPROTECT(1);
+    return ans;
+}
