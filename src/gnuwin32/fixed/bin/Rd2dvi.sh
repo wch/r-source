@@ -8,7 +8,7 @@
 
 R_PAPERSIZE=${R_PAPERSIZE-a4}
 
-revision='$Revision: 1.13 $'
+revision='$Revision: 1.14 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi.sh ${version}
 
@@ -22,14 +22,18 @@ Generate DVI (or PDF) output from the Rd sources specified by files, by
 either giving the paths to the files, or the path to a directory with
 the sources of a package.
 
+Unless specified via option \`--output', the basename of the output file
+equals the basename of argument \`files' if this specifies a package
+(bundle) or a single file, and \`Rd2' otherwise.
+
 Options:
   -h, --help		print short help message and exit
   -v, --version		print version info and exit  
       --debug		turn on shell debugging (set -x)
       --no-clean	do not remove created temporary files
       --no-preview	do not preview generated output file
-      --os=NAME		use OS subdir \`NAME\' (unix, mac or windows)
-      --OS=NAME		the same as \`--os\'
+      --os=NAME		use OS subdir \`NAME' (unix, mac or windows)
+      --OS=NAME		the same as \`--os'
   -o, --output=FILE	write output to FILE
       --pdf		generate PDF output
       --title=NAME	use NAME as the title of the document
@@ -89,10 +93,6 @@ while test -n "${1}"; do
   shift
 done
 
-if test -z "${output}"; then
-  output=Rd2.${out_ext}
-fi
-
 if ${debug}; then set -x; fi
 
 get_dcf_field () {
@@ -139,6 +139,7 @@ Rd_DESCRIPTION_to_LaTeX () {
   ## list.
   ## Usage:
   ##   Rd_DESCRIPTION_to_LaTeX FILE
+  
   fields=`sed '/^[ 	]/d; s/^\([^:]*\):.*$/\1/' $1`
   echo "\\begin{description}"
   echo "\\raggedright{}"
@@ -150,6 +151,7 @@ Rd_DESCRIPTION_to_LaTeX () {
 }
 
 is_bundle=no
+is_base_package=no
 file_sed='s/[_$]/\\&/g'
 
 toc="\\Rdcontents{\\R{} topics documented:}"
@@ -163,9 +165,19 @@ if test -d "${1}"; then
       title=${title-"Bundle \`${bundle_name}'"}
     else
       echo "Hmm ... looks like a package"
-      title=${title-"Package \`${1}'"}
+      package_name=`get_dcf_field Package "${1}/DESCRIPTION"`
+      title=${title-"Package \`${package_name}'"}
       dir=${1}/man
     fi
+    test -z "${output}" && output="`basename ${1}`.${out_ext}"
+  elif test -f ${1}/DESCRIPTION.in && \
+       test -n "`grep '^Priority: *base' ${1}/DESCRIPTION.in`"; then
+    is_base_package=yes
+    echo "Hmm ... looks like a package from the R distribution"
+    package_name=`get_dcf_field Package "${1}/DESCRIPTION.in"`
+    title=${title-"Package \`${package_name}'"}
+    dir=${1}/man
+    test -z "${output}" && output="`basename ${1}`.${out_ext}"    
   else
     if test -d ${1}/man; then
       dir=${1}/man
@@ -180,6 +192,10 @@ else
   else
     subj=
     toc=
+    if test -z "${output}"; then
+      output=`basename "${1}"`
+      output="`echo ${output} | sed 's/[Rr]d$//'`${out_ext}"
+    fi
   fi
   subj="\\file{`echo ${1} | sed ${file_sed}`}${subj}"
 fi
@@ -188,6 +204,9 @@ title1="\\R{} documentation}} \\par\\bigskip{{\\Large of ${subj}"
 title=${title-$title1}
 
 ## Prepare for building the documentation.
+if test -z "${output}"; then
+  output="Rd2.${out_ext}"
+fi
 if test -f ${output}; then
   echo "file \`${output}' exists; please remove first"
   exit 1
@@ -208,7 +227,7 @@ cat > ${build_dir}/Rd2.tex <<EOF
 \\makeindex{}
 \\begin{document}
 EOF
-if test ${is_bundle} = no; then
+if test "${is_bundle}" = no; then
   cat >> ${build_dir}/Rd2.tex <<EOF
 \\chapter*{}
 \\begin{center}
@@ -218,6 +237,14 @@ if test ${is_bundle} = no; then
 EOF
   if test -f ${1}/DESCRIPTION; then
     Rd_DESCRIPTION_to_LaTeX ${1}/DESCRIPTION >> ${build_dir}/Rd2.tex
+  fi
+  if test "${is_base_package}" = yes; then
+    R_version=unknown
+    if test -f ${1}/../../../VERSION; then
+      R_version=`cat ${1}/../../../VERSION`
+    fi
+    Rd_DESCRIPTION_to_LaTeX ${1}/DESCRIPTION.in | \
+      sed "s/@VERSION@/${R_version}/" >> ${build_dir}/Rd2.tex
   fi
 else
   cat >> ${build_dir}/Rd2.tex <<EOF
@@ -238,11 +265,12 @@ EOF
 fi
   
 ## Rd2.tex part 2: body
-if test ${is_bundle} = no; then
+if test "${is_bundle}" = no; then
   echo ${toc} >> ${build_dir}/Rd2.tex
   Rdconv_dir_or_files_to_LaTeX ${build_dir}/Rd2.tex ${dir-${@}}
 else
   cat >> ${build_dir}/Rd2.tex <<EOF
+\\setcounter{secnumdepth}{-1}
 \\pagenumbering{roman}
 \\tableofcontents{}
 \\cleardoublepage{}
@@ -272,10 +300,11 @@ cd ${build_dir}
 ${R_LATEXCMD-latex} Rd2
 ${R_MAKEINDEXCMD-makeindex} Rd2
 ${R_LATEXCMD-latex} Rd2
-if test ${out_ext} = pdf; then
+if test "${out_ext}" = pdf; then
   ${R_LATEXCMD-latex} Rd2
 fi
 cd ${start_dir}
+echo "Saving output to \`${output}' ..."
 cp ${build_dir}/Rd2.${out_ext} ${output}
 echo "Done"
 
