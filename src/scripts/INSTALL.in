@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.151 $'
+revision='$Revision: 1.152 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -387,7 +387,7 @@ do_install_source () {
   ## trailing newlines at EOF.)
   ## As from 1.7.0, packages without compiled code are not marked
   ## as being from any platform.
-  echo ".installPackageDescription(\".\", \"${R_PACKAGE_DIR}\")" | \
+  echo "tools:::.installPackageDescription(\".\", \"${R_PACKAGE_DIR}\")" | \
     R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
   if test ${?} -ne 0; then
     error "installing package DESCRIPTION failed"
@@ -432,7 +432,7 @@ do_install_source () {
     message "R"
       ${MKDIR_P} "${R_PACKAGE_DIR}/R"
       rm -f "${R_PACKAGE_DIR}/R/"*
-      echo ".installPackageCodeFiles(\".\", \"${R_PACKAGE_DIR}\")" | \
+      echo "tools:::.installPackageCodeFiles(\".\", \"${R_PACKAGE_DIR}\")" | \
         R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
       if test ${?} -ne 0; then
         error "unable to collate files for package '${pkg_name}'"
@@ -595,7 +595,7 @@ do_install_source () {
     echo "No man pages found in package '${pkg_name}'"
   fi
 
-  echo ".installPackageIndices(\".\", \"${R_PACKAGE_DIR}\")" | \
+  echo "tools:::.installPackageIndices(\".\", \"${R_PACKAGE_DIR}\")" | \
     R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
   if test ${?} -ne 0; then
     error "installing package indices failed"
@@ -604,7 +604,7 @@ do_install_source () {
 
   ## Install a dump of the parsed NAMESPACE file
   if test -f NAMESPACE && test "${fake}" != "true"; then
-      echo ".installPackageNamespaceInfo(\".\", \"${R_PACKAGE_DIR}\")" | \
+      echo "tools:::.installPackageNamespaceInfo(\".\", \"${R_PACKAGE_DIR}\")" | \
         R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
     if test ${?} -ne 0; then
       error "installing namespace metadata failed"

@@ -44,7 +44,7 @@ R:
 	@rm -f $(top_builddir)/library/tools/Meta/nsInfo.rds
 	@for pkg in $(R_PKGS_BASE) ; do \
 	  if test -f "$(srcdir)/$${pkg}/NAMESPACE"; then \
-          echo ".installPackageNamespaceInfo(\"$(top_builddir)/library/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" \
+          echo "tools:::.installPackageNamespaceInfo(\"$(top_builddir)/library/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")" \
 	    | R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > /dev/null ; \
           fi ; \
 	done
@@ -83,7 +83,7 @@ vignettes:
 	fi
 indices:
 	@for pkg in $(R_PKGS_BASE); do \
-	  ( echo ".installPackageIndices(\"$(srcdir)/$${pkg}\","; \
+	  ( echo "tools:::.installPackageIndices(\"$(srcdir)/$${pkg}\","; \
 	    echo " \"$(top_builddir)/library/$${pkg}\")") | \
 	      R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > /dev/null; \
 	done

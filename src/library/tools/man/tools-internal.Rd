@@ -7,9 +7,9 @@
 % \alias{.sourceAssignments}
 % \alias{Rdcontents}
 % \alias{Rd2contents}
-\alias{.installPackageCodeFiles}
-\alias{.installPackageDescription}
-\alias{.installPackageIndices}
+% \alias{.installPackageCodeFiles}
+% \alias{.installPackageDescription}
+% \alias{.installPackageIndices}
 % \alias{.installPackageRdIndices}
 % \alias{.installPackageVignetteIndex}
 % \alias{.installPackageDemoIndex}
@@ -19,10 +19,10 @@
 % \alias{.buildVignetteIndex}
 % \alias{.buildDemoIndex}
 % \alias{.buildDataIndex}
-\alias{.installPackageNamespaceInfo}
-\alias{.checkVignetteIndex}
+% \alias{.installPackageNamespaceInfo}
+% \alias{.checkVignetteIndex}
 \alias{print.checkVignetteIndex}
-\alias{.checkDemoIndex}
+% \alias{.checkDemoIndex}
 \alias{print.checkDemoIndex}
 % \alias{.stripRdComments}
 \description{
@@ -45,15 +45,15 @@
 % .buildDemoIndex(demoDir)
 % .buildRdIndex(contents, type = NULL)
 % .buildVignetteIndex(vignetteDir)
-.installPackageCodeFiles(dir, outDir)
-.installPackageDescription(dir, outDir)
-.installPackageIndices(dir, outDir)
+% .installPackageCodeFiles(dir, outDir)
+% .installPackageDescription(dir, outDir)
+% .installPackageIndices(dir, outDir)
 % .installPackageRdIndices(dir, outDir)
 % .installPackageVignetteIndex(dir, outDir)
 % .installPackageDemoIndex(dir, outDir)
-.installPackageNamespaceInfo(dir, outDir)
-.checkDemoIndex(demoDir)
-.checkVignetteIndex(vignetteDir)
+% .installPackageNamespaceInfo(dir, outDir)
+% .checkDemoIndex(demoDir)
+% .checkVignetteIndex(vignetteDir)
 }
 \details{
   These are not to be called by the user.
