@@ -35,24 +35,24 @@ SEXP do_browser(SEXP, SEXP, SEXP, SEXP);
 
 /* This code places a limit on the depth to which eval can recurse. */
 
-/* Now R correctly handles user breaks 
+/* Now R correctly handles user breaks
    Jago, 4 Jun 2001, Stefano M. Iacus
 */
 extern RgnHandle sMouseRgn;
 extern UInt32 sSleepTime;
 void isintrpt()
 {
-   EventRecord event;
-       
-   WaitNextEvent( everyEvent, &event, sSleepTime, sMouseRgn );
-   if ((event.modifiers & cmdKey) && ((event.message & charCodeMask) == '.'))
-	{
-	    FlushEvents(keyDownMask, 0);
-	    Rprintf("\n");
-	    error("user break");
-	    raise(SIGINT);
-	    return;
-	}
+    EventRecord event;
+
+    WaitNextEvent( everyEvent, &event, sSleepTime, sMouseRgn );
+    if ((event.modifiers & cmdKey) &&
+	((event.message & charCodeMask) == '.')) {
+	FlushEvents(keyDownMask, 0);
+	Rprintf("\n");
+	error("user break");
+	raise(SIGINT);
+	return;
+    }
 }
 
 #endif
@@ -119,16 +119,17 @@ static void doprof()
 {
     RCNTXT *cptr;
     char buf[1100];
-    
+
     buf[0] = '\0';
     SuspendThread(MainThread);
     for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
-	if (((cptr->callflag & CTXT_FUNCTION) || (cptr->callflag & CTXT_BUILTIN))
+	if (((cptr->callflag & CTXT_FUNCTION) ||
+	     (cptr->callflag & CTXT_BUILTIN))
 	    && TYPEOF(cptr->call) == LANGSXP) {
 	    SEXP fun = CAR(cptr->call);
 	    if(strlen(buf) < 1000) {
-		
-		strcat(buf, TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) : "<Anonymous>");
+		strcat(buf, TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) :
+		       "<Anonymous>");
 		strcat(buf, " ");
 	    }
 	}
@@ -149,23 +150,23 @@ static void __cdecl ProfileThread(void *pwait)
 	doprof();
     }
 }
-#else
+#else /* Unix */
 static void doprof(int sig)
 {
     RCNTXT *cptr;
     int newline = 0;
     for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
-	if (((cptr->callflag & CTXT_FUNCTION) || (cptr->callflag & CTXT_BUILTIN))
+	if (((cptr->callflag & CTXT_FUNCTION) ||
+	     (cptr->callflag & CTXT_BUILTIN))
 	    && TYPEOF(cptr->call) == LANGSXP) {
 	    SEXP fun = CAR(cptr->call);
-	    if (! newline)
-		newline = 1;
+	    if (!newline) newline = 1;
 	    fprintf(R_ProfileOutfile, "\"%s\" ",
-		    TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) : "<Anonymous>");
+		    TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) :
+		    "<Anonymous>");
 	}
     }
-    if (newline)
-	fprintf(R_ProfileOutfile, "\n");
+    if (newline) fprintf(R_ProfileOutfile, "\n");
     signal(SIGPROF, doprof);
 }
 
@@ -197,7 +198,7 @@ static void R_EndProfiling()
 }
 
 static void R_InitProfiling(char * filename, int append, double dinterval)
-{	
+{
 #ifndef Win32
     struct itimerval itv;
 #else
@@ -214,10 +215,10 @@ static void R_InitProfiling(char * filename, int append, double dinterval)
 
 #ifdef Win32
     /* need to duplicate to make a real handle */
-    DuplicateHandle(Proc, GetCurrentThread(), Proc, &MainThread, 
+    DuplicateHandle(Proc, GetCurrentThread(), Proc, &MainThread,
 		    0, FALSE, DUPLICATE_SAME_ACCESS);
     wait = interval/1000;
-    if(!(ProfileEvent = CreateEvent(NULL, FALSE, FALSE, NULL)) || 
+    if(!(ProfileEvent = CreateEvent(NULL, FALSE, FALSE, NULL)) ||
        (_beginthread(ProfileThread, 0, &wait) == -1))
 	R_Suicide("unable to create profiling thread");
 #else
@@ -1470,7 +1471,7 @@ int DispatchOrEval(SEXP call, char *generic, SEXP args, SEXP rho,
 	}
     }
     PROTECT(x);
-  
+
     /* try to dispatch on the object */
     if( isObject(x)) {
 	char *pt;
