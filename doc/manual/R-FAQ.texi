@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.0-6, 2000/04/16
+@set FAQ-VERSION 1.0-8, 2000/04/26
 @set REL-VERSION 1.0.1
 @set DEV-VERSION 1.1.0
 @c %**end of header
@@ -386,24 +386,24 @@ distribution is available.  We hope that this will change soon.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2000/03/05:
+@c Linux binaries as of 2000/04/17:
 @c
 @c debian   2.1 i386  1.0.0  Doug Bates
-@c          2.2 i386  1.0.0  Doug Bates
+@c          2.2 i386  1.0.1  Doug Bates
+@c          2.3 i386  1.0.1  Doug Bates
 @c linuxppc 5.0 ppc   1.0.0  Alex Buerkle <buerkle@hawaii.edu>
-@c redhat   6.x alpha 1.0.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c              i386  1.0.0  Martyn Plummer <plummer@iarc.fr>
+@c redhat   6.x alpha 1.0.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
+@c              i386  1.0.1  Martyn Plummer <plummer@iarc.fr>
 @c              sparc 1.0.0  Vin Everett <vin.everett@mrc-bsu.cam.ac.uk>
-@c suse     5.3 i386  0.90.1 Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-@c          6.0 i386  0.90.1 Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-@c          6.2 i386  1.0.0  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-@c          6.3 i386  1.0.0  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
+@c suse     5.3 i386  1.0.1  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
+@c          6.0 i386  1.0.0  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
+@c          6.3 i386  1.0.1  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
 The @file{bin/linux} directory of a CRAN site contains Debian 2.1 and
 2.2 packages for the i386 platform (now part of the Debian distribution
 and maintained by Doug Bates), Red Hat 6.x packages for the alpha, i386
 and sparc platforms (maintained by Naoki Takebayashi, Martyn Plummer,
-and Vin Everett, respectively), SuSE 5.3/6.0/6.2/6.3 i386 packages by
+and Vin Everett, respectively), SuSE 5.3/6.0/6.3 i386 packages by
 Albrecht Gebhardt, and Linuxppc 5.0 RPMs by Alex Buerkle.
 
 The @file{bin/osf} directory of a CRAN site contains RPMs for alpha
@@ -464,13 +464,20 @@ W. N. Venables and B. D. Ripley (1999), ``Modern Applied Statistics with
 @noindent
 This has a home page at @uref{http://www.stats.ox.ac.uk/pub/MASS3/}
 providing additional material, in particular ``R Complements'' which
-describe how to use the book with R.  These complements provide both
+describe how to use the book with R.  These complements contain both
 descriptions of some of the differences between R and @SPLUS{}, and the
-modifications needed to run the examples in the book.  Its companion
-volume on ``S Programming'', due in about April 2000, will provide an
-in-depth guide to writing software in the S language which forms the
-basis of both the commercial @SPLUS{} and the Open Source R data
-analysis software systems.
+modifications needed to run the examples in the book.  Its companion is
+
+@quotation
+W. N. Venables and B. D. Ripley (2000), ``S Programming''.  Springer,
+ISBN 0-387-98966-8.
+@end quotation
+
+@noindent
+This provides an in-depth guide to writing software in the S language
+which forms the basis of both the commercial @SPLUS{} and the Open
+Source R data analysis software systems.  See
+@uref{http://www.stats.ox.ac.uk/pub/MASS3/Sprog/} for more information.
 
 More introductory books are
 
@@ -1428,6 +1435,8 @@ in competing risks.
 A small C++ test package.
 @item dopt
 Finding D-optimal experimental designs.
+@item dse
+Multivariate time series.
 @item foreign
 Functions for reading data stored by statistical software like Minitab,
 SAS, SPSS, etc.
@@ -1439,8 +1448,13 @@ Interface to the NCSA HDF5 library.
 @item multidim
 Code for correspondence analysis and other multidimensional descriptive
 statistics.
+@item syskern
+Functions for writing code that is OS and R/S independent.
 @item tcltk
 Basic interface with Tcl/Tk.
+@item tframe
+Functions for writing code that is independent of the representation of
+time.
 @item timeslab
 Time series routines.
 @item vtcl
@@ -1461,16 +1475,6 @@ in the new edition of his book ``Models for Repeated Measurements''
 Jim has also started @strong{dna}, a package with procedures for the
 analysis of DNA sequences.  Jim's packages can be obtained from
 @uref{http://www.luc.ac.be/~jlindsey/rcode.html}.
-
-@email{pgilbert@@bank-banque-canada.ca, Paul Gilbert} has written the
-Dynamic Systems Estimation (DSE) Library, a multivariate time series
-package which implements an object oriented approach to time series
-models (using classes and methods in R/S).  The package provides
-state-space models and the Kalman filter, VARMA and cointegration
-models, and numerical differentiation.  It also contains Troll models as
-another class (the Troll interface is not yet functional in R).  Paul's
-package @strong{dse} can be obtained via
-@uref{http://www.bank-banque-canada.ca/pgilbert/dsedesc.htm}.
 
 @c @email{hfe@@math.uio.no, Harald Fekjaer} has written @strong{addreg}, a
 @c package for additive hazards regression, which can be obtained from
