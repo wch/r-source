@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-12, 2000-09-21
+Version 1.1-13, 2000-09-24
 Kurt Hornik
 
 
@@ -205,9 +205,9 @@ project ("GNU S").
 systems.
 
    The current version of R will configure and build under a number of
-common Unix platforms including i386-freebsd, i386-linux, ppc-linux,
-mips-sgi-irix, alpha-linux, alpha-dec-osf4, rs6000-ibm-aix, hppa-hp-hpux,
-sparc-linux, and sparc-sun-solaris.
+common Unix platforms including i386-freebsd, i386-linux, ix86-sun-solaris,
+ppc-linux, mips-sgi-irix, alpha-linux, alpha-dec-osf4, rs6000-ibm-aix,
+hppa-hp-hpux, sparc-linux, and sparc-sun-solaris.
 
    If you know about other platforms, please drop us a note.
 
@@ -1247,6 +1247,10 @@ works, was published in the Journal of Statistical Software
      Software linked to the book "Applied Smoothing Techniques for Data
      Analysis:  The Kernel Approach with S-PLUS Illustrations" by A. W.
      Bowman and A. Azzalini (1997), Oxford University Press.
+
+*sn*
+     Functions for manipulating skew-normal probability distributions and
+     for fitting them to data, in the scalar and the multivariate case.
 
 *spatial*
      Functions for kriging and point pattern analysis from "Modern Applied

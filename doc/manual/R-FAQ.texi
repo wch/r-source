@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-12, 2000-09-21
+@set FAQ-VERSION 1.1-13, 2000-09-24
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -237,9 +237,9 @@ R is being developed for the Unix, Windows and Mac families of operating
 systems.
 
 The current version of R will configure and build under a number of
-common Unix platforms including i386-freebsd, i386-linux, ppc-linux,
-mips-sgi-irix, alpha-linux, alpha-dec-osf4, rs6000-ibm-aix,
-hppa-hp-hpux, sparc-linux, and sparc-sun-solaris.
+common Unix platforms including i386-freebsd, i386-linux,
+ix86-sun-solaris, ppc-linux, mips-sgi-irix, alpha-linux, alpha-dec-osf4,
+rs6000-ibm-aix, hppa-hp-hpux, sparc-linux, and sparc-sun-solaris.
 
 @c and according to @email{jlindsey@@luc.ac.be, Jim Lindsey} also on
 @c Mac, Amiga and Atari under m68k-linux.
@@ -1472,6 +1472,9 @@ An object-oriented framework for geostatistical modeling.
 Software linked to the book ``Applied Smoothing Techniques for Data
 Analysis:  The Kernel Approach with @SPLUS{} Illustrations'' by
 A. W. Bowman and A. Azzalini (1997), Oxford University Press.
+@item sn
+Functions for manipulating skew-normal probability distributions and for
+fitting them to data, in the scalar and the multivariate case.
 @c @item snns
 @c An R interface to the Stuttgart Neural Networks Simulator (SNNS).
 @item spatial
