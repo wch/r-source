@@ -58,7 +58,7 @@ function(dll)
 }
 
 
-getDLLRegisteredRoutines.character <-  
+getDLLRegisteredRoutines.character <-
 function(dll)
 {
   dlls = getLoadeddDLLs()
@@ -75,7 +75,7 @@ function(dll)
 }
 
 
-getDLLRegisteredRoutines.DLLInfo <-  
+getDLLRegisteredRoutines.DLLInfo <-
 function(dll)
 {
    # Provide methods for the different types.
@@ -94,7 +94,7 @@ function(dll)
                     })
 
  class(els) <- "DLLRegisteredRoutines"
- 
+
  els
 }
 
@@ -114,28 +114,30 @@ print.DLLRegisteredRoutines <-
       # if one reads it row-wise as the columns are related in pairs
       # but not across pairs.  We might leave it as  a list of lists
       # but that spans a great deal of vertical space and involves
-      # a lot of scrolling for the user. 
+      # a lot of scrolling for the user.
 function(x, ...)
 {
       # Create a data frame with as many rows as the maximum number
       # of routines in any category. Then fill the column with ""
       # and then the actual entries.
-  
-    n = max(sapply(x, length))
-    d = list()
+
+    n <- max(sapply(x, length))
+    d <- list()
     sapply(names(x),
              function(id) {
-                d[[id]] <<- rep("", n) 
-                names = sapply(x[[id]], function(x) x$name)
-                d[[id]][1:length(names)] <<- names
+                d[[id]] <<- rep("", n)
+                names <- sapply(x[[id]], function(x) x$name)
+                if(length(names))
+                    d[[id]][1:length(names)] <<- names
 
-                d[[paste(id, "numParameters")]] <<- rep("", n) 
-                names = sapply(x[[id]], function(x) x$numParameters)
-                d[[paste(id, "numParameters")]][1:length(names)] <<- names                
+                d[[paste(id, "numParameters")]] <<- rep("", n)
+                names <- sapply(x[[id]], function(x) x$numParameters)
+                if(length(names))
+                    d[[paste(id, "numParameters")]][1:length(names)] <<- names
              })
     print(as.data.frame(d), ...)
     invisible(x)
-}  
+}
 
 
 getCallingDLL <-
