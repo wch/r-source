@@ -79,8 +79,12 @@ NEW FEATURES
 
      o  The postscript() and PDF() drivers now allow the title to be set.
 
-     o  table() now allows exclude= with factor arguments. (requested by
-	Michael Friendly)
+     o  table() now allows exclude= with factor arguments (requested by
+	Michael Friendly).
+
+     o  New convenience function loadURL() to allow loading data files
+	from URLs (requested by Frank Harrell).
+
 
 
 INSTALLATION CHANGES
@@ -130,6 +134,7 @@ DEPRECATED & DEFUNCT
 BUG FIXES
 
     o   Sys.sleep() on Unix was having trouble with waits of less than 0.5s 
+
 
 
 	**************************************************

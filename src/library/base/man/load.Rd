@@ -6,14 +6,25 @@
 }
 \usage{
 load(file, envir = parent.frame())
+loadURL(url, envir = parent.frame(), quiet = TRUE, \dots)
 }
 \arguments{
   \item{file}{a connection or a character string giving the name of the
     file to load.}
   \item{envir}{the environment where the data should be loaded.}
+  \item{url}{a character string naming a URL.}
+  \item{quiet, \dots}{additional arguments to \code{\link{download.file}}.}
+}
+\details{
+  \code{load} can load \R objects saved in the current or any earlier
+  format.  When called with a file argument it can read a compressed
+  file (see \code{\link{save}}), but not when reading from a connection.
+
+  \code{loadURL} is a convenience wrapper which downloads a file, loads
+  it and deletes the downloaded copy.
 }
 \seealso{
-  \code{\link{save}}.
+  \code{\link{save}}, \code{\link{download.file}}.
 }
 \examples{
 ## save all data
@@ -22,7 +33,10 @@ save(list = ls(), file= "all.Rdata")
 ## restore the saved values to the current environment
 load("all.Rdata")
 
-## restore the saved values to the workspace
+## restore the saved values to the user's workspace
 load("all.Rdata", .GlobalEnv)
+
+\dontrun{## This example may not still be available
+loadURL("http://hesweb1.med.virginia.edu/biostat/s/data/sav/kprats.sav")}
 }
 \keyword{file}
