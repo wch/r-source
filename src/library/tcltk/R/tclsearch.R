@@ -10,11 +10,11 @@ addTclPath <- function(path = ".")
 
 tclRequire <- function(package, warn = TRUE)
 {
-    a <- tclvalue(tcl("package", "versions", package))
-    if (length(a) == 1 && nchar(a) == 0){
+    a <- try(tcl("package", "require", package), silent=TRUE)
+    if (inherits(a, "try-error")){
         if (warn)
             warning(gettextf("Tcl package '%s' not found", package),
                     domain = NA)
         return(FALSE)
-    } else tcl("package", "require", package)
+    } else return(a)
 }

@@ -861,6 +861,10 @@ BUG FIXES
 
     o   par() set xaxp before xlog and yaxp before ylog, causing PR#831.
 
+    o   The logic in tclRequire() to check the availability of a Tcl
+        package turned out to be fallible. It now uses a try()-and-see
+        mechanism instead.
+
 
 
 	**************************************************
