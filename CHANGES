@@ -2,7 +2,12 @@
 
 NEW FEATURES
 
+    o   After help.start() the html help system is used for all help()
+        requests. The name of the browser is now controlled by
+        options("browser").
+
     o   Added kmeans to package mva (donated by B. Ripley)
+
 
 
 		CHANGES IN R VERSION 0.62.2
