@@ -48,9 +48,16 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, outline = TRUE,
     \code{1:n} where \code{n} is the number of boxes.}
   \item{show.names}{Set to \code{TRUE} or \code{FALSE} to override the
     defaults on whether an x-axis label is printed for each group.}
-  \item{pars,\dots}{Graphical parameters can be passed as arguments to
+  \item{pars,\dots}{graphical parameters can be passed as arguments to
     this function, either as a list (\code{pars}) or
-    normally(\code{\dots}).}
+    normally(\code{\dots}).
+
+    Currently, \code{pch}, \code{cex}, and \code{bg} are passed to
+    \code{\link{points}},\cr
+    \code{ylim} and \code{axes} to the main plot
+    (\code{\link{plot.default}}), \code{xaxt}, \code{yaxt}, \code{las}
+    to \code{\link{axis}} and the others to \code{\link{title}}.
+  }
 }
 \value{
   An invisible vector, actually identical to the \code{at} argument,
