@@ -1,4 +1,4 @@
-\name{connection}
+\name{connections}
 \alias{file}
 \alias{pipe}
 \alias{open}
