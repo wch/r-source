@@ -111,7 +111,7 @@ double qgamma(double p, double alpha, double scale)
     if(v < (-1.24)*log(p)) {
       /* starting approximation for small chi-squared */
 
-	ch = pow(p*alpha*exp(g+alpha*M_LN_2), 1/alpha);
+	ch = pow(p*alpha*exp(g+alpha*M_LN2), 1/alpha);
 	if(ch < EPS0) {
 	    ML_ERROR(ME_DOMAIN);
 	    return ML_NAN;
@@ -133,7 +133,7 @@ double qgamma(double p, double alpha, double scale)
     } else { /* starting approximation for v <= 0.32 */
 
 	ch = 0.4;
-	a = log(1-p) + g + c*M_LN_2;
+	a = log(1-p) + g + c*M_LN2;
 	do {
 	    q = ch;
 	    p1 = 1+ch*(C7+ch);
@@ -156,7 +156,7 @@ double qgamma(double p, double alpha, double scale)
 #endif
 		return ML_NAN;
 
-	t = p2*exp(alpha*M_LN_2+g+p1-c*log(ch));
+	t = p2*exp(alpha*M_LN2+g+p1-c*log(ch));
 	b = t/ch;
 	a = 0.5*t-b*c;
 	s1 = (C19+a*(C17+a*(C14+a*(C13+a*(C12+C11*a)))))/C24;

@@ -3962,8 +3962,8 @@ ColorDataBaseEntry ColorDataBase[] = {
 };
 
 
-int ColorTableSize;
-unsigned int ColorTable[COLOR_TABLE_SIZE];
+int R_ColorTableSize;
+unsigned int R_ColorTable[COLOR_TABLE_SIZE];
 
 /* Hex Digit to Integer Conversion */
 
@@ -4042,7 +4042,7 @@ unsigned int number2col(char *nm, DevDesc *dd)
     index = strtod(nm, &ptr);
     if(*ptr) error("invalid color specification\n");
     if(index == 0) return dd->dp.bg;
-    else return ColorTable[(index-1) % ColorTableSize];
+    else return R_ColorTable[(index-1) % R_ColorTableSize];
 }
 
 
@@ -4112,13 +4112,13 @@ unsigned int RGBpar(SEXP x, int i, DevDesc *dd)
 	if(INTEGER(x)[i] == NA_INTEGER) return NA_INTEGER;
 	index = INTEGER(x)[i] - 1;
 	if(index < 0) return dd->dp.bg;
-	else return ColorTable[abs(index) % ColorTableSize];
+	else return R_ColorTable[abs(index) % R_ColorTableSize];
     }
     else if(isReal(x)) {
 	if(!FINITE(REAL(x)[i])) return NA_INTEGER;
 	index = REAL(x)[i] - 1;
 	if(index < 0) return dd->dp.bg;
-	else return ColorTable[abs(index) % ColorTableSize];
+	else return R_ColorTable[abs(index) % R_ColorTableSize];
     }
     return 0;		/* should not occur */
 }
@@ -4137,8 +4137,8 @@ void InitColors()
 
     /* Install Default Palette */
     for(i=0 ; DefaultPalette[i] ; i++)
-	ColorTable[i] = str2col(DefaultPalette[i], NULL);
-    ColorTableSize = i;
+	R_ColorTable[i] = str2col(DefaultPalette[i], NULL);
+    R_ColorTableSize = i;
 }
 
 /*  LINE TEXTURE CODE */

@@ -312,6 +312,11 @@ char *R_ExpandFileName(char *s)
 }
 #endif
 
+FILE *R_fopen(const char *filename, const char *mode)
+{
+	return( fopen(filename, mode) );
+}
+
 FILE *R_OpenLibraryFile(char *file)
 {
     char buf[256], *rhome;

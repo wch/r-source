@@ -133,7 +133,7 @@ void mem_err_cons()
     error("cons memory (%ld cells) exhausted\n       See \"help(Memory)\" on how to increase the number of cons cells.\n", R_NSize);
 }
 
-#ifdef Macintosh
+#ifdef OLD_Macintosh
 Handle  gStackH;
 Handle  gNHeapH;
 Handle  gVHeapH;
@@ -163,7 +163,7 @@ void InitMemory()
     int i;
 
     gc_reporting = R_Verbose;
-#ifdef Macintosh
+#ifdef OLD_Macintosh
     OSErr   result;
 
     gStackH = TempNewHandle( R_PPStackSize * sizeof(SEXP), &result );
@@ -178,7 +178,7 @@ void InitMemory()
 
     R_PPStackTop = 0;
 
-#ifdef Macintosh
+#ifdef OLD_Macintosh
     gNHeapH = TempNewHandle( R_NSize * sizeof(SEXPREC), &result );
     if( (gNHeapH == NULL) || (result != noErr) )
 	R_Suicide( "couldn't allocate system memory for node heap" );
@@ -191,7 +191,7 @@ void InitMemory()
 
     R_VSize = (((R_VSize + 1)/ sizeof(VECREC)));
 
-#ifdef Macintosh
+#ifdef OLD_Macintosh
     gVHeapH = TempNewHandle( R_VSize * sizeof(VECREC), &result );
     if( (gVHeapH == NULL) || (result != noErr) )
 	R_Suicide( "couldn't allocate system memory for vector heap" );
@@ -420,20 +420,26 @@ SEXP allocList(int n)
 
 void gc(void)
 {
+#ifndef Macintosh
     sigset_t mask, omask;
+#endif
     int vcells, vfrac;
 
     gc_count++;
     if (gc_reporting)
 	REprintf("Garbage collection [nr. %d]...", gc_count);
+#ifndef Macintosh
     sigemptyset(&mask);
     sigaddset(&mask,SIGINT);
     sigprocmask(SIG_BLOCK, &mask, &omask);
+#endif
     unmarkPhase();
     markPhase();
     compactPhase();
     scanPhase();
+#ifndef Macintosh
     sigprocmask(SIG_SETMASK, &omask, &mask);
+#endif
     if (gc_reporting) {
 	REprintf("\n%ld cons cells free (%ld%%)\n",
 		 R_Collected, (100 * R_Collected / R_NSize));

@@ -210,10 +210,12 @@ SEXP do_Machine(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* Base 2 and Genreal Base Logarithms */
 
+#ifdef OLD
 double log2(double x)
 {
     return log(x) / M_LN_2;
 }
+#endif
 
 double logbase(double x, double base)
 {

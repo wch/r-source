@@ -70,7 +70,7 @@ SEXP do_Macintosh(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Do this for early redraw attempts */
     dd->displayList = R_NilValue;
     GInit(&dd->dp);
-    if (!MacDeviceDriver(dd, display, width, height, ps)) {
+    if (!MacDeviceDriver(dd, width, height, ps)) {
 	free(dd);
 	errorcall(call, "unable to start device Macintosh\n");
     }

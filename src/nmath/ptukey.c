@@ -61,7 +61,7 @@
  *  or modifying a calculation.
  *
  *  M_1_SQRT_2PI = 1 / sqrt(2 * pi);  from abramowitz & stegun, p. 3.
- *  M_SQRT_2 = sqrt(2)
+ *  M_SQRT2 = sqrt(2)
  *  xleg = legendre 12-point nodes
  *  aleg = legendre 12-point coefficients
  */
@@ -115,7 +115,7 @@ static double wprob(double w, double rr, double cc)
 
     /* if ans ** cc < 2e-22 then set ans = 0 */
 
-    ans = erf(qsqz / M_SQRT_2);
+    ans = erf(qsqz / M_SQRT2);
     if (ans >= exp(eps2 / cc))
 	ans = pow(ans, cc);
     else
@@ -172,14 +172,14 @@ static double wprob(double w, double rr, double cc)
 	    if (qexpo > eps3)
 		break;
 	    if (ac > 0.0)
-		pplus = 1.0 + erf(ac / M_SQRT_2);
+		pplus = 1.0 + erf(ac / M_SQRT2);
 	    else
-		pplus = erfc(-(ac / M_SQRT_2));
+		pplus = erfc(-(ac / M_SQRT2));
 
 	    if (ac > w)
-		pminus = 1.0 + erf((ac / M_SQRT_2) - (w / M_SQRT_2));
+		pminus = 1.0 + erf((ac / M_SQRT2) - (w / M_SQRT2));
 	    else
-		pminus = erfc((w / M_SQRT_2) - (ac / M_SQRT_2));
+		pminus = erfc((w / M_SQRT2) - (ac / M_SQRT2));
 
 	    /* if rinsum ** (cc-1) < 9e-14, */
 	    /* then doesn't contribute to integral */
@@ -246,7 +246,7 @@ static double wprob(double w, double rr, double cc)
  *
  *  d.f. > dlarg:   the range is used to calculate integral.
  *
- *  M_LN_2 = log(2)
+ *  M_LN2 = log(2)
  *
  *  xlegq = legendre 16-point nodes
  *
@@ -344,7 +344,7 @@ double ptukey(double q, double rr, double cc, double df)
     /* lgamma is the log gamma function. */
 
     f2 = df * 0.5;
-    f2lf = ((f2 * log(df)) - (df * M_LN_2)) - lgammafn(f2);
+    f2lf = ((f2 * log(df)) - (df * M_LN2)) - lgammafn(f2);
     f21 = f2 - 1.0;
 
     /* integral is divided into unit, half-unit, quarter-unit, or */

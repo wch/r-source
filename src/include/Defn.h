@@ -46,12 +46,10 @@
 #define	R_VSIZE	     2000000L
 #endif
 
+#include <math.h>
 #ifdef Macintosh
-#include <fp.h>
 #define PosixArith
 #define QUICKDRAW_GRAPHICS
-#else
-#include <math.h>
 #endif
 
 #include <errno.h>
@@ -523,6 +521,7 @@ SEXP dynamicfindVar(SEXP, RCNTXT*);
 SEXP elt(SEXP, int);
 SEXP emptyEnv(void);
 void endcontext(RCNTXT*);
+SEXP EnsureString(SEXP);
 void errorcall(SEXP, char*, ...);
 void ErrorMessage(SEXP, int, ...);
 SEXP eval(SEXP, SEXP);

@@ -20,7 +20,6 @@ OBJS = \
 	devX11.o \
 	dynload.o \
 	edit.o \
-	fileio.o \
 	rotated.o \
 	system.o \
 	Rsock.o \
@@ -40,8 +39,6 @@ dynload.o: $(srcdir)/dynload.c ../include/FFTab.h ../include/FFDecl.h
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
 dataentry.o: $(srcdir)/dataentry.c $(srcdir)/dataentry.h $(top_srcdir)/src/include/Defn.h
 	$(CC) $(CFLAGS) $(X_CFLAGS) $(CPPFLAGS) -c $<
-fileio.o: $(srcdir)/fileio.c $(top_srcdir)/src/include/Fileio.h
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
 rotated.o: $(srcdir)/rotated.c $(srcdir)/rotated.h
 	$(CC) $(CFLAGS) $(X_CFLAGS) $(CPPFLAGS) -c $<
 devX11.o: $(srcdir)/devX11.c $(top_srcdir)/src/include/Graphics.h $(top_srcdir)/src/include/Defn.h

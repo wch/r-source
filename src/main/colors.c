@@ -38,8 +38,8 @@ static void setpalette(char **palette)
 {
     int i;
     for (i = 0; (i<COLOR_TABLE_SIZE) && palette[i]; i++)
-	ColorTable[i] = name2col(palette[i]);
-    ColorTableSize = i;
+	R_ColorTable[i] = name2col(palette[i]);
+    R_ColorTableSize = i;
 }
 
 SEXP do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -49,9 +49,9 @@ SEXP do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, n;
     checkArity(op,args);
     /* Record the current palette */
-    PROTECT(ans = allocVector(STRSXP, ColorTableSize));
-    for (i = 0; i < ColorTableSize; i++)
-	STRING(ans)[i] = mkChar(col2name(ColorTable[i]));
+    PROTECT(ans = allocVector(STRSXP, R_ColorTableSize));
+    for (i = 0; i < R_ColorTableSize; i++)
+	STRING(ans)[i] = mkChar(col2name(R_ColorTable[i]));
     val = CAR(args);
     if (!isString(val)) errorcall(call, "invalid argument type\n");
     if ((n=length(val)) == 1) {
@@ -63,8 +63,8 @@ SEXP do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for (i = 0; i < n; i++)
 	    ncols[i] = char2col(CHAR(STRING(val)[i]));
 	for (i = 0; i < n; i++)
-	    ColorTable[i] = ncols[i];
-	ColorTableSize = n;
+	    R_ColorTable[i] = ncols[i];
+	R_ColorTableSize = n;
     }
     UNPROTECT(1);
     return ans;

@@ -31,11 +31,10 @@
 #endif
 #endif
 
+#include <math.h>
 #ifdef Macintosh
-# include <fp.h>
 # define finite(x) isfinite(x)
 #else
-# include <math.h>
 # ifndef HAVE_FINITE
 #  ifndef finite /* Do not declare if macro! */
 #   ifdef isfinite/* HPUX math.h */

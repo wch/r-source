@@ -135,7 +135,7 @@ static void jump_now()
     exit(1);
 }
 
-#ifdef Macintosh
+#ifdef OLD_Macintosh
 
 #include <signal.h>
 #include <errno.h>

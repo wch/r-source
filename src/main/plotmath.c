@@ -84,17 +84,17 @@ static double ConvertedY()
     return rotatedY;
 }
 
-static void MoveAcross(double xamount)
+static void PMoveAcross(double xamount)
 {
     CurrentX += xamount;
 }
 
-static void MoveUp(double yamount)
+static void PMoveUp(double yamount)
 {
     CurrentY += yamount;
 }
 
-static void MoveTo(double x, double y)
+static void PMoveTo(double x, double y)
 {
     CurrentX = x;
     CurrentY = y;
@@ -566,20 +566,20 @@ static BBOX DrawBBox(BBOX bbox, double xoffset, double yoffset)
     CurrentX += xoffset;
     CurrentY += yoffset;
     MathDevice->gp.col = BoxColor;
-    MoveUp(-bboxDepth(bbox));
+    PMoveUp(-bboxDepth(bbox));
     x[4] = x[0] = ConvertedX();
     y[4] = y[0] = ConvertedY();
-    MoveAcross(bboxWidth(bbox));
+    PMoveAcross(bboxWidth(bbox));
     x[1] = ConvertedX();
     y[1] = ConvertedY();
-    MoveUp(bboxHeight(bbox) + bboxDepth(bbox));
+    PMoveUp(bboxHeight(bbox) + bboxDepth(bbox));
     x[2] = ConvertedX();
     y[2] = ConvertedY();
-    MoveAcross(-bboxWidth(bbox));
+    PMoveAcross(-bboxWidth(bbox));
     x[3] = ConvertedX();
     y[3] = ConvertedY();
     GPolyline(5, x, y, INCHES, MathDevice);
-    MoveTo(xsaved, ysaved);
+    PMoveTo(xsaved, ysaved);
     MathDevice->gp.col = TextColor;
     return bbox;
 }
@@ -949,7 +949,7 @@ static BBOX RenderItalicCorr(BBOX bbox, int draw)
 {
     if (bboxItalic(bbox) > 0) {
 	if (draw)
-	    MoveAcross(bboxItalic(bbox));
+	    PMoveAcross(bboxItalic(bbox));
 	bboxWidth(bbox) += bboxItalic(bbox);
 	bboxItalic(bbox) = 0;
     }
@@ -959,7 +959,7 @@ static BBOX RenderItalicCorr(BBOX bbox, int draw)
 static BBOX RenderGap(double gap, int draw)
 {
     if (draw)
-	MoveAcross(gap);
+	PMoveAcross(gap);
     return MakeBBox(0, 0, gap);
 }
 
@@ -980,7 +980,7 @@ static BBOX RenderSymbolChar(int ascii, int draw)
 	asciiStr[1] = '\0';
 	GText(ConvertedX(), ConvertedY(), INCHES, asciiStr,
 	      0.0, 0.0, CurrentAngle, MathDevice);
-	MoveAcross(bboxWidth(bbox));
+	PMoveAcross(bboxWidth(bbox));
     }
     SetFont(prev);
     return bbox;
@@ -1017,10 +1017,10 @@ static BBOX RenderSymbolStr(char *str, int draw)
 		bboxItalic(glyphBBox) = 0;
 	    if (draw) {
 		chr[0] = *s;
-		MoveAcross(lastItalicCorr);
+		PMoveAcross(lastItalicCorr);
 		GText(ConvertedX(), ConvertedY(), INCHES, chr,
 		      0.0, 0.0, CurrentAngle, MathDevice);
-		MoveAcross(bboxWidth(glyphBBox));
+		PMoveAcross(bboxWidth(glyphBBox));
 	    }
 	    bboxWidth(resultBBox) += lastItalicCorr;
 	    resultBBox = CombineBBoxes(resultBBox, glyphBBox);
@@ -1046,7 +1046,7 @@ static BBOX RenderChar(int ascii, int draw)
 	asciiStr[1] = '\0';
 	GText(ConvertedX(), ConvertedY(), INCHES, asciiStr,
 	      0.0, 0.0, CurrentAngle, MathDevice);
-	MoveAcross(bboxWidth(bbox));
+	PMoveAcross(bboxWidth(bbox));
     }
     return bbox;
 }
@@ -1065,7 +1065,7 @@ static BBOX RenderStr(char *str, int draw)
 	if (draw) {
 	    GText(ConvertedX(), ConvertedY(), INCHES, str,
 		  0.0, 0.0, CurrentAngle, MathDevice);
-	    MoveAcross(bboxWidth(resultBBox));
+	    PMoveAcross(bboxWidth(resultBBox));
 	}
 	if (UsingItalics())
 	    bboxItalic(resultBBox) = ItalicFactor * bboxHeight(glyphBBox);
@@ -1133,9 +1133,9 @@ static BBOX RenderDots(SEXP expr, int draw)
     if (NameMatch(expr, "cdots") || NameMatch(expr, "...")) {
 	double shift = AxisHeight() - 0.5 * bboxHeight(bbox);
 	if (draw) {
-	    MoveUp(shift);
+	    PMoveUp(shift);
 	    RenderSymbolChar(S_ELLIPSIS, 1);
-	    MoveUp(-shift);
+	    PMoveUp(-shift);
 	}
 	return ShiftBBox(bbox, shift);
     }
@@ -1245,10 +1245,10 @@ static BBOX RenderSlash(int draw)
     MathDevice->gp.cex = 1.2 * MathDevice->gp.cex;
     height2 = bboxHeight(RenderSymbolChar(S_SLASH, 0));
     if (draw)
-	MoveUp(- 0.5 * (height2 - height1));
+	PMoveUp(- 0.5 * (height2 - height1));
     bbox = RenderSymbolChar(S_SLASH, draw);
     if (draw)
-	MoveUp(0.5 * (height2 - height1));
+	PMoveUp(0.5 * (height2 - height1));
     MathDevice->gp.cex = savecex;
     return bbox;
 #endif
@@ -1259,17 +1259,17 @@ static BBOX RenderSlash(int draw)
     double height = XHeight() + 0.5 * TeX(sigma22);
     double width = 0.5 * xHeight();
     if (draw) {
-	MoveAcross(0.5 * width);
-	MoveUp(-depth);
+	PMoveAcross(0.5 * width);
+	PMoveUp(-depth);
 	x[0] = ConvertedX();
 	y[0] = ConvertedY();
-	MoveAcross(width);
-	MoveUp(depth + height);
+	PMoveAcross(width);
+	PMoveUp(depth + height);
 	x[1] = ConvertedX();
 	y[1] = ConvertedY();
-	MoveUp(-height);
+	PMoveUp(-height);
 	GPolyline(2, x, y, INCHES, MathDevice);
-	MoveAcross(0.5 * width);
+	PMoveAcross(0.5 * width);
     }
     return MakeBBox(height, depth, 2 * width);
 #endif
@@ -1283,12 +1283,12 @@ static BBOX RenderSlash(int draw)
     double slope = (height + depth) / slope;
     double delta = TeX(sigma22);
     if (draw)
-	MoveUp(-delta);
+	PMoveUp(-delta);
     ansBBox = ShiftBBox(RenderSymbolChar(S_SLASH, draw), -delta);
-    MoveUp(2 * delta);
+    PMoveUp(2 * delta);
     ansBBox = CombineBBoxes(ansBBox, RenderGap(2 * delta / slope, draw));
     ansBBox = ShiftBBox(RenderSymbolChar(S_SLASH, draw), 2 * delta);
-    MoveUp(-delta);
+    PMoveUp(-delta);
     return ansBBox;
 #endif
 }
@@ -1377,7 +1377,7 @@ static BBOX RenderSub(SEXP expr, int draw)
     bodyBBox = CombineBBoxes(bodyBBox, subBBox);
     SetStyle(style);
     if (draw)
-	MoveTo(savedX + bboxWidth(bodyBBox), savedY);
+	PMoveTo(savedX + bboxWidth(bodyBBox), savedY);
     return bodyBBox;
 }
 
@@ -1437,10 +1437,10 @@ static BBOX RenderSup(SEXP expr, int draw)
 	    }
 	}
 	if (draw)
-	    MoveTo(savedX, savedY);
+	    PMoveTo(savedX, savedY);
 	subBBox = RenderOffsetElement(sub, width, -v, draw);
 	if (draw)
-	    MoveTo(savedX, savedY);
+	    PMoveTo(savedX, savedY);
 	SetSupStyle(style);
 	supBBox = RenderOffsetElement(sup, width + delta, u, draw);
 	bodyBBox = CombineAlignedBBoxes(bodyBBox, subBBox);
@@ -1451,7 +1451,7 @@ static BBOX RenderSup(SEXP expr, int draw)
 	bodyBBox = CombineBBoxes(bodyBBox, supBBox);
     }
     if (draw)
-	MoveTo(savedX + bboxWidth(bodyBBox), savedY);
+	PMoveTo(savedX + bboxWidth(bodyBBox), savedY);
     SetStyle(style);
     return bodyBBox;
 }
@@ -1494,21 +1494,21 @@ static BBOX RenderWideTilde(SEXP expr, int draw)
     if (draw) {
 	baseX = savedX;
 	baseY = savedY + height + accentGap;
-	MoveTo(baseX, baseY);
+	PMoveTo(baseX, baseY);
 	x[0] = ConvertedX();
 	y[0] = ConvertedY();
 	for (i = 0; i <= NTILDE; i++) {
 	    xval = start + i * delta;
 	    yval = 0.5 * hatHeight * (sin(c * i) + 1);
-	    MoveTo(baseX + xval, baseY + yval);
+	    PMoveTo(baseX + xval, baseY + yval);
 	    x[i + 1] = ConvertedX();
 	    y[i + 1] = ConvertedY();
 	}
-	MoveTo(baseX + totalwidth, baseY + hatHeight);
+	PMoveTo(baseX + totalwidth, baseY + hatHeight);
 	x[NTILDE + 2] = ConvertedX();
 	y[NTILDE + 2] = ConvertedY();
 	GPolyline(NTILDE + 3, x, y, INCHES, MathDevice);
-	MoveTo(savedX + totalwidth, savedY);
+	PMoveTo(savedX + totalwidth, savedY);
     }
     return MakeBBox(height + accentGap + hatHeight,
 		    bboxDepth(bbox), totalwidth);
@@ -1532,19 +1532,19 @@ static BBOX RenderWideHat(SEXP expr, int draw)
     double x[3], y[3];
 
     if (draw) {
-	MoveTo(savedX, savedY + height + accentGap);
+	PMoveTo(savedX, savedY + height + accentGap);
 	x[0] = ConvertedX();
 	y[0] = ConvertedY();
-	MoveAcross(0.5 * totalwidth);
-	MoveUp(hatHeight);
+	PMoveAcross(0.5 * totalwidth);
+	PMoveUp(hatHeight);
 	x[1] = ConvertedX();
 	y[1] = ConvertedY();
-	MoveAcross(0.5 * totalwidth);
-	MoveUp(-hatHeight);
+	PMoveAcross(0.5 * totalwidth);
+	PMoveUp(-hatHeight);
 	x[2] = ConvertedX();
 	y[2] = ConvertedY();
 	GPolyline(3, x, y, INCHES, MathDevice);
-	MoveTo(savedX + width, savedY);
+	PMoveTo(savedX + width, savedY);
     }
     return EnlargeBBox(bbox, accentGap + hatHeight, 0, 0);
 }
@@ -1567,14 +1567,14 @@ static BBOX RenderBar(SEXP expr, int draw)
     double x[2], y[2];
 
     if (draw) {
-	MoveTo(savedX + offset, savedY + height + accentGap);
+	PMoveTo(savedX + offset, savedY + height + accentGap);
 	x[0] = ConvertedX();
 	y[0] = ConvertedY();
-	MoveAcross(width);
+	PMoveAcross(width);
 	x[1] = ConvertedX();
 	y[1] = ConvertedY();
 	GPolyline(2, x, y, INCHES, MathDevice);
-	MoveTo(savedX + width, savedY);
+	PMoveTo(savedX + width, savedY);
     }
     return EnlargeBBox(bbox, accentGap, 0, 0);
 }
@@ -1633,17 +1633,17 @@ static BBOX RenderAccent(SEXP expr, int draw)
     bodyBBox = RenderGap(xoffset, draw);
     bodyBBox = CombineBBoxes(bodyBBox, RenderElement(body, draw));
     bodyBBox = CombineBBoxes(bodyBBox, RenderGap(xoffset, draw));
-    MoveTo(savedX, savedY);
+    PMoveTo(savedX, savedY);
     xoffset = 0.5 *(width - bboxWidth(accentBBox))
 	+ 0.9 * italic;
     yoffset = bboxHeight(bodyBBox) + bboxDepth(accentBBox) + 0.1 * XHeight();
     if (draw) {
-	MoveTo(savedX + xoffset, savedY + yoffset);
+	PMoveTo(savedX + xoffset, savedY + yoffset);
 	RenderChar(code, draw);
     }
     bodyBBox = CombineOffsetBBoxes(bodyBBox, 0, accentBBox, 0,
 				   xoffset, yoffset);
-    MoveTo(savedX + width, savedY);
+    PMoveTo(savedX + width, savedY);
     return bodyBBox;
 }
 
@@ -1734,16 +1734,16 @@ static BBOX RenderFraction(SEXP expr, int rule, int draw)
 	if (rule) {
 	    CurrentX = savedX;
 	    CurrentY = savedY;
-	    MoveUp(AxisHeight());
+	    PMoveUp(AxisHeight());
 	    x[0] = ConvertedX();
 	    y[0] = ConvertedY();
-	    MoveAcross(width);
+	    PMoveAcross(width);
 	    x[1] = ConvertedX();
 	    y[1] = ConvertedY();
 	    GPolyline(2, x, y, INCHES, MathDevice);
-	    MoveUp(-AxisHeight());
+	    PMoveUp(-AxisHeight());
 	}
-	MoveTo(savedX + width, savedY);
+	PMoveTo(savedX + width, savedY);
     }
     return CombineAlignedBBoxes(numBBox, denomBBox);
 }
@@ -1937,21 +1937,21 @@ static BBOX RenderDelim(int which, double dist, int draw)
 	midBBox = ShiftBBox(midBBox, midShift);
 	ansBBox = CombineAlignedBBoxes(ansBBox, midBBox);
 	if (draw) {
-	    MoveTo(savedX, savedY + topShift);
+	    PMoveTo(savedX, savedY + topShift);
 	    RenderSymbolChar(top, draw);
-	    MoveTo(savedX, savedY + midShift);
+	    PMoveTo(savedX, savedY + midShift);
 	    RenderSymbolChar(mid, draw);
-	    MoveTo(savedX, savedY - botShift);
+	    PMoveTo(savedX, savedY - botShift);
 	    RenderSymbolChar(bot, draw);
-	    MoveTo(savedX + bboxWidth(ansBBox), savedY);
+	    PMoveTo(savedX + bboxWidth(ansBBox), savedY);
 	}
     }
     else {
 	if (draw) {
 	    /* draw the top and bottom elements */
-	    MoveTo(savedX, savedY + topShift);
+	    PMoveTo(savedX, savedY + topShift);
 	    RenderSymbolChar(top, draw);
-	    MoveTo(savedX, savedY - botShift);
+	    PMoveTo(savedX, savedY - botShift);
 	    RenderSymbolChar(bot, draw);
 	    /* now join with extenders */
 	    ytop = axisHeight + dist
@@ -1962,11 +1962,11 @@ static BBOX RenderDelim(int which, double dist, int draw)
 	    if (n > 0) {
 		delta = (ytop - ybot) / n;
 		for (i = 0; i < n; i++) {
-		    MoveTo(savedX, savedY + ybot + (i + 0.5) * delta - extShift);
+		    PMoveTo(savedX, savedY + ybot + (i + 0.5) * delta - extShift);
 		    RenderSymbolChar(ext, draw);
 		}
 	    }
-	    MoveTo(savedX + bboxWidth(ansBBox), savedY);
+	    PMoveTo(savedX + bboxWidth(ansBBox), savedY);
 
 	}
     }
@@ -2036,17 +2036,17 @@ static BBOX RenderIntSymbol(int draw)
 	BBOX bbox2 = RenderSymbolChar(245, 0);
 	double shift;
 	shift = TeX(sigma22) + 0.99 * bboxDepth(bbox1);
-	MoveUp(shift);
+	PMoveUp(shift);
 	bbox1 = ShiftBBox(RenderSymbolChar(243, draw), shift);
 	CurrentX = savedX;
 	CurrentY = savedY;
 	shift = TeX(sigma22) - 0.99 * bboxHeight(bbox2);
-	MoveUp(shift);
+	PMoveUp(shift);
 	bbox2 = ShiftBBox(RenderSymbolChar(245, draw), shift);
 	if (draw)
-	    MoveTo(savedX + max(bboxWidth(bbox1), bboxWidth(bbox2)), savedY);
+	    PMoveTo(savedX + max(bboxWidth(bbox1), bboxWidth(bbox2)), savedY);
 	else
-	    MoveTo(savedX, savedY);
+	    PMoveTo(savedX, savedY);
 	return CombineAlignedBBoxes(bbox1, bbox2);
     }
     else {
@@ -2089,7 +2089,7 @@ static BBOX RenderInt(SEXP expr, int draw)
 	CurrentX = savedX;
 	CurrentY = savedY;
     }
-    MoveAcross(bboxWidth(opBBox));
+    PMoveAcross(bboxWidth(opBBox));
     if (nexpr > 1) {
 	bodyBBox = RenderElement(CADR(expr), draw);
 	opBBox = CombineBBoxes(opBBox, bodyBBox);
@@ -2146,9 +2146,9 @@ static BBOX RenderOpSymbol(SEXP op, int draw)
 	    bbox = RenderSymbolChar(OpAtom(op), 0);
 	    shift = 0.5 * (bboxHeight(bbox) - bboxDepth(bbox)) - TeX(sigma22);
 	    if (draw) {
-		MoveUp(-shift);
+		PMoveUp(-shift);
 		bbox = RenderSymbolChar(opId, 1);
-		MoveUp(shift);
+		PMoveUp(shift);
 	    }
 	    MathDevice->gp.cex = cexSaved;
 	    return ShiftBBox(bbox, -shift);
@@ -2214,7 +2214,7 @@ static BBOX RenderOp(SEXP expr, int draw)
     }
     opBBox = EnlargeBBox(opBBox, TeX(xi13), TeX(xi13), 0);
     if (draw)
-	MoveAcross(width);
+	PMoveAcross(width);
     opBBox = CombineBBoxes(opBBox, RenderGap(ThinSpace(), draw));
     bodyBBox = RenderElement(CADR(expr), draw);
     return CombineBBoxes(opBBox, bodyBBox);
@@ -2289,7 +2289,7 @@ static BBOX RenderRadical(SEXP expr, int draw)
 	if (vshift - bboxDepth(orderBBox) < twiddleHeight + radGap)
 	    vshift = twiddleHeight + bboxDepth(orderBBox) + radGap;
 	if (draw) {
-	    MoveTo(savedX + hshift, savedY + vshift);
+	    PMoveTo(savedX + hshift, savedY + vshift);
 	    orderBBox = RenderScript(order, draw);
 	}
 	orderBBox = EnlargeBBox(orderBBox, vshift, 0, hshift);
@@ -2297,27 +2297,27 @@ static BBOX RenderRadical(SEXP expr, int draw)
     else
 	orderBBox = NullBBox();
     if (draw) {
-	MoveTo(savedX + leadWidth - radWidth, savedY);
-	MoveUp(0.8 * twiddleHeight);
+	PMoveTo(savedX + leadWidth - radWidth, savedY);
+	PMoveUp(0.8 * twiddleHeight);
 	x[0] = ConvertedX();
 	y[0] = ConvertedY();
-	MoveUp(0.2 * twiddleHeight);
-	MoveAcross(0.3 * radWidth);
+	PMoveUp(0.2 * twiddleHeight);
+	PMoveAcross(0.3 * radWidth);
 	x[1] = ConvertedX();
 	y[1] = ConvertedY();
-	MoveUp(-(twiddleHeight + bboxDepth(bodyBBox)));
-	MoveAcross(0.3 * radWidth);
+	PMoveUp(-(twiddleHeight + bboxDepth(bodyBBox)));
+	PMoveAcross(0.3 * radWidth);
 	x[2] = ConvertedX();
 	y[2] = ConvertedY();
-	MoveUp(bboxDepth(bodyBBox) + bboxHeight(bodyBBox) + radGap);
-	MoveAcross(0.4 * radWidth);
+	PMoveUp(bboxDepth(bodyBBox) + bboxHeight(bodyBBox) + radGap);
+	PMoveAcross(0.4 * radWidth);
 	x[3] = ConvertedX();
 	y[3] = ConvertedY();
-	MoveAcross(radSpace + bboxWidth(bodyBBox) + radTrail);
+	PMoveAcross(radSpace + bboxWidth(bodyBBox) + radTrail);
 	x[4] = ConvertedX();
 	y[4] = ConvertedY();
 	GPolyline(5, x, y, INCHES, MathDevice);
-	MoveTo(savedX, savedY);
+	PMoveTo(savedX, savedY);
     }
     orderBBox = CombineAlignedBBoxes(orderBBox,
 				     RenderGap(leadWidth + radSpace, draw));
@@ -2348,28 +2348,28 @@ static BBOX RenderAbs(SEXP expr, int draw)
 
     bbox= RenderGap(MuSpace(), draw);
     if (draw) {
-	MoveUp(-depth);
+	PMoveUp(-depth);
 	x[0] = ConvertedX();
 	y[0] = ConvertedY();
-	MoveUp(depth + height);
+	PMoveUp(depth + height);
 	x[1] = ConvertedX();
 	y[1] = ConvertedY();
 	GPolyline(2, x, y, INCHES, MathDevice);
-	MoveUp(-height);
+	PMoveUp(-height);
     }
     bbox = CombineBBoxes(bbox, RenderGap(MuSpace(), draw));
     bbox = CombineBBoxes(bbox, RenderElement(CADR(expr), draw));
     bbox = RenderItalicCorr(bbox, draw);
     bbox = CombineBBoxes(bbox, RenderGap(MuSpace(), draw));
     if (draw) {
-	MoveUp(-depth);
+	PMoveUp(-depth);
 	x[0] = ConvertedX();
 	y[0] = ConvertedY();
-	MoveUp(depth + height);
+	PMoveUp(depth + height);
 	x[1] = ConvertedX();
 	y[1] = ConvertedY();
 	GPolyline(2, x, y, INCHES, MathDevice);
-	MoveUp(-height);
+	PMoveUp(-height);
     }
     bbox = CombineBBoxes(bbox, RenderGap(MuSpace(), draw));
     return bbox;
