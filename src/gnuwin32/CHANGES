@@ -18,7 +18,8 @@ options("CRAN"): if you want to include it explicitly set something like
 options(CRAN=c(some_cran_mirror, http://www.stats.ox.ac.uk/pub/RWin"))
 
 There is a new item on the Packages menu to set repositories, e.g.
-CRAN, Bioconductor, Omegahat.
+CRAN, Bioconductor, Omegahat.  You can modify the list (and its
+defaults): see the rw-FAQ Q2.9.
 
 The new (in R 2.0.0) graphics pars "lend", "ljoin" and "lmitre" are
 now implemented for the Windows devices.
@@ -43,10 +44,12 @@ install.packages() can install source packages as well as binary ones.
 shQuote() now defaults to type="cmd" on Windows.
 
 R can now be built with Unicode support on Win9x and WinME.  See
-src/gnuwin32/MkRules.
+src/gnuwin32/MkRules: this is currently experimental and not needed
+for standard builds.
 
 R can now be built with support for multibyte and variable-width
-character sets, e.g. for Japanese. See README.rw????.
+character sets, e.g. for Japanese. See README.rw????.  The standard
+installer includes both single-byte and multi-byte builds.
 
 select.list() now looks up the current font size and chooses its
 window size based on that.  It allows multiple preselections if

@@ -397,16 +397,19 @@ menuInstallBioc <- function()
 
 menuRepositories <- function()
 {
-    a <- c("CRAN (auto-built)", "CRAN (extras)", "Bioconductor", "Omegahat")
-    res <- select.list(a, a[1:2], multiple=TRUE, "Repositories")
+    p <- file.path(Sys.getenv("R_USER"), ".R", "repositories")
+    if(!file.exists(p))
+        p <- file.path(R.home(), "etc", "repositories")
+    a <- read.delim(p, header=TRUE,
+                    colClasses=c(rep("character", 3), "logical"))
+    res <- select.list(a[,1], a[a[["default"]], 1], multiple=TRUE,
+                       "Repositories")
     if(length(res)) {
-        res <- match(res, a)
-        repos <- c(CRAN = "@CRAN@",
-                   CRANextra = "http://www.stats.ox.ac.uk/pub/RWin",
-                   BioC = "http://www.bioconductor.org",
-                   Omegahat = "http://www.omegahat.org/R")
+        res <- match(res, a[[1]])
+        repos <- a[["URL"]]
+        names(repos) <- row.names(a)
         CRAN <- getOption("CRAN")["CRAN"]
-        if(!is.na(CRAN)) repos[1] <- CRAN
+        if(!is.na(CRAN)) repos["CRAN"] <- CRAN
         options(CRAN=repos[res])
     }
 }

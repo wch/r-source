@@ -15,7 +15,7 @@ $(R_HOME)/library/base/R/Rprofile:  ../../library/profile/Common.R \
 fixbin:  cp2bin
 	@$(ECHO) done > fixbin
 
-cp2bin: $(filter-out ./bin/CVS, $(wildcard ./bin/*))
+cp2bin: $(wildcard ./bin/*)
 ifeq ($(strip $(BUILD)),CROSS)
 	@zip -ql bins $^
 	@unzip -oq bins -d  $(R_HOME)
@@ -30,7 +30,7 @@ fixhtml:  html/rwin.html $(R_HOME)/doc/html/search/SearchEngine.html
 	$(CP) -p html/rwin.html $(R_HOME)/doc/html/index.html
 	@$(ECHO) done > fixhtml
 
-fixetc: $(filter-out ./etc/CVS, $(wildcard ./etc/*))
+fixetc: $(wildcard ./etc/*)
 	$(CP) -p $^ $(R_HOME)/etc
 	@$(ECHO) done > fixetc
 

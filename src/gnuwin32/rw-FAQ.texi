@@ -637,6 +637,7 @@ that is causing the error.
 * Package TclTk does not work.::  
 * Hyperlinks in HTML do not work.::  
 * update.packages() fails::     
+* How do I add to the list of repositories?::  
 @end menu
 
 
@@ -791,7 +792,7 @@ Currently links to the @code{base}, @code{datasets}, @code{utils},
 @code{grDevices}, @code{graphics} and @code{stats} packages are fixed.
 
 
-@node update.packages() fails,  , Hyperlinks in HTML do not work., Packages
+@node update.packages() fails, How do I add to the list of repositories?, Hyperlinks in HTML do not work., Packages
 @section @code{update.packages()} fails
 
 You may not be able to update a package which is in use: Windows `locks'
@@ -802,6 +803,17 @@ If you put @code{library(foo)} in your @file{.Rprofile} you will need to
 start R with @option{--vanilla} to be able to update package @code{foo}.
 If you set @code{R_DEFAULT_PACKAGES} to include @code{foo}, you will
 need to unset it temporarily.
+
+
+@node How do I add to the list of repositories?,  , update.packages() fails, Packages
+@section How do I add to the list of repositories?
+
+as shown in the @code{Select repositories...} item on the
+@code{Packages} menu?
+
+This read from the tab-delimited file @file{R_HOME/etc/repositories},
+which you can edit, or put a modified copy at @file{.R/repositories}
+in your HOME directory (@pxref{What are HOME and working directories?}).
 
 @newchap{}
 @node Windows Features, Workspaces, Packages, Top
