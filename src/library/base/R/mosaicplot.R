@@ -1,3 +1,5 @@
+## Copyright (C) 1998 John W. Emerson
+
 mosaicplot <- function(X, main = NA, sort = NA, off = NA, dir = NA,
                        color = FALSE) {
 
