@@ -17,5 +17,7 @@ page(x, method = c("dput", "print"), \dots)
 }
 \seealso{
   \code{\link{file.show}}, \code{\link{edit}}, \code{\link{fix}}.
+
+  To go to a new page when graphing, see \code{\link{frame}}.
 }
 \keyword{utilities}

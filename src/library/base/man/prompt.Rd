@@ -59,6 +59,8 @@ prompt.data.frame(object, filename = NULL, name = NULL, \dots)
   \code{\link{promptData}}, \code{\link{help}} and the chapter on
   \dQuote{Writing \R documentation} in \dQuote{Writing \R Extensions}
   (see the \file{doc/manual} subdirectory of the \R source tree).
+
+  To prompt the user for input, see \code{\link{readline}}.
 }
 \author{Douglas Bates for \code{prompt.data.frame}}
 \references{

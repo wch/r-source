@@ -23,5 +23,7 @@ profile(fitted, \dots)
   \code{\link[nls]{profile.nls}} in package \pkg{nls},
   \code{\link[MASS:confint]{profile.glm}} in package \pkg{MASS},
   \ldots
+
+  For profiling code, see \code{\link{Rprof}}.
 }
 \keyword{models}

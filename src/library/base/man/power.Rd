@@ -29,6 +29,11 @@ power(lambda = 1)
 \seealso{
     \code{\link{make.link}},
     \code{\link{family}}
+
+    To raise a number to a power, see \code{\link{Arithmetic}}.
+
+    To calculate the power of a test, see various functions in the 
+    \code{ctest} package, e.g. \code{\link[ctest]{power.t.test}}.
 }
 \examples{
 power()

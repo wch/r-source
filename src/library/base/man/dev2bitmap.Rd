@@ -73,6 +73,8 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
   \code{\link{jpeg}} and on Windows \code{bmp}.
 
   \code{\link{pdf}} generate PDF directly.
+
+  To display an array of data, see \code{\link{image}}.
 }
 
 \keyword{utilities}

@@ -220,6 +220,10 @@ isIncomplete(con)
 
   \code{\link{capabilities}} to see if \code{gzfile}, \code{url},
   \code{fifo} and \code{socketConnection} are supported by this build of \R.
+
+#ifdef windows
+  To flush output to the console, see \code{\link{flush.console}}.
+#endif
 }
 
 \examples{
