@@ -7,8 +7,6 @@
 core.pkgs <-
 {x <- installed.packages(file.path(R.home(), "library"));
     x[x[,"Priority"]=="base", "Package"]}
-## c("base", "eda", "lqs", "modreg", "mva", "stepfun", "ts", "nls","splines")
-## .packages(all=TRUE,lib.loc = .lib.loc[length(.lib.loc)])
 core.pkgs <- core.pkgs[- match(c("methods", "tcltk"), core.pkgs)]
 ## move methods to the end because it has side effects (overrides primitives)
 core.pkgs <- c(core.pkgs, "methods")
