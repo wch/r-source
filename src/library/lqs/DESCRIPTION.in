@@ -1,8 +1,0 @@
-Package: lqs
-Version: @VERSION@
-Priority: defunct-base
-Title: Resistant Regression and Covariance Estimation
-Author: Brian Ripley.
-Maintainer: R Core Team <R-core@r-project.org>
-Description: A stub package -- contents merged into MASS
-License: GPL Version 2 or later.
