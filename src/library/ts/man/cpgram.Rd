@@ -11,12 +11,13 @@
 }
 \usage{
 cpgram(ts, taper=0.1, main=
-         paste("Series: ", deparse(substitute(ts))))
+         paste("Series: ", deparse(substitute(ts))), ci.col="blue")
 }
 \arguments{
   \item{ts}{a univariate time series}
   \item{taper}{proportion tapered in forming the periodogram}
   \item{main}{main title}
+  \item{ci.col}{colour for confidence band.}
 }
 \value{
   None.
