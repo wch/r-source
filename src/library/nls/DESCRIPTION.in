@@ -1,0 +1,7 @@
+Package: nls
+Version: @VERSION@
+Authors: Saikat DebRoy <saikat@stat.wisc.edu>,
+         Douglas M. Bates <bates@stat.wisc.edu>, and
+         Jose C. Pinheiro <jcp@research.bell-labs.com>
+Description: Nonlinear regression routines
+License: GPL version 2 or later

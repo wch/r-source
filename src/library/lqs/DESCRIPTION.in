@@ -1,0 +1,5 @@
+Package: lqs
+Version: @VERSION@
+Author: Brian Ripley.
+Description: Resistant regression and covariance estimation
+License: GPL Version 2 or later.

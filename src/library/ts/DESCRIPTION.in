@@ -1,0 +1,5 @@
+Package: ts
+Version: @VERSION@
+Author: Collected by Brian Ripley. See SOURCES.
+Description: Time series functions.
+License: GPL Version 2 or later.
