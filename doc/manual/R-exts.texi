@@ -67,7 +67,7 @@ The current version of this document is @value{VERSION}.
 @menu
 * Acknowledgements::            
 * Creating R packages::         
-* Writing R help files::        
+* Writing R documentation files::  
 * Tidying and profiling R code::  
 * System and foreign language interfaces::  
 * The R API::                   
@@ -86,7 +86,7 @@ The contributions of Saikat DebRoy (who wrote the first draft of a guide
 to using @code{.Call} and @code{.External}) and of Adrian Trapletti (who
 provided information on the C++ interface) are gratefully acknowledged.
 
-@node Creating R packages, Writing R help files, Acknowledgements, Top
+@node Creating R packages, Writing R documentation files, Acknowledgements, Top
 @chapter Creating R packages
 @cindex Packages
 @cindex Creating packages
@@ -633,7 +633,6 @@ The macro @code{BLAS_LIBS} should always be included @emph{after}
 @end table
 
 
-
 @node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
 @cindex Building packages
@@ -1157,8 +1156,8 @@ code based on the @pkg{methods} package.  Support for @pkg{methods} is
 anticipated for the following release of @R{}.
 
 
-@node Writing R help files, Tidying and profiling R code, Creating R packages, Top
-@chapter Writing R help files
+@node Writing R documentation files, Tidying and profiling R code, Creating R packages, Top
+@chapter Writing R documentation files
 @cindex Documentation, writing
 
 @menu
@@ -1173,7 +1172,7 @@ anticipated for the following release of @R{}.
 * Processing Rd format::        
 @end menu
 
-@node Rd format, Sectioning, Writing R help files, Writing R help files
+@node Rd format, Sectioning, Writing R documentation files, Writing R documentation files
 @section Rd format
 
 @R{} objects are documented in files written in ``@R{} documentation''
@@ -1242,6 +1241,13 @@ See the @uref{http://developer.r-project.org/Rds.html, ``Guidelines for Rd
 files''} for guidelines for writing documentation in Rd format which
 should be useful for package writers.
 
+@menu
+* Documenting functions::       
+* Documenting datasets::        
+* Documenting S4 classes and methods::  
+@end menu
+
+@node Documenting functions, Documenting datasets, Rd format, Rd format
 @subsection Documenting functions
 
 The basic markup commands used for documenting @R{} objects (in
@@ -1476,6 +1482,7 @@ documenting @R{} objects.  If @code{foo} is an @R{} function, then
 the proper function and argument names of @code{foo}, and a structure
 which can be filled in with information.
 
+@node Documenting datasets, Documenting S4 classes and methods, Documenting functions, Rd format
 @subsection Documenting datasets
 
 The structure of Rd files which document @R{} data sets is slightly
@@ -1543,7 +1550,54 @@ The @code{\keyword} entry is always @samp{datasets}.
 If @code{bar} is a data frame, documenting it as a data set can again be
 initiated via @kbd{prompt(bar)}.
 
-@node Sectioning, Marking text, Rd format, Writing R help files
+@node Documenting S4 classes and methods,  , Documenting datasets, Rd format
+@subsection Documenting S4 classes and methods
+
+Structure of and special markup for documenting S4 classes and methods
+are still under development.  In any case, to allow for making full use
+of the potential of the on-line documentation system, all user-visible
+S4 classes and methods in a package should at least have a suitable
+@code{\alias} entry in one of the package's Rd files.
+
+The topic names (@code{\alias} entries) for S4 classes and methods are
+of the form
+
+@example
+@var{class}-class
+@var{generic},@var{signature_list}-method
+@end example
+
+@noindent
+where @var{signature_list} contains the names of the classes in the
+signature of the method (without quotes) separated by @samp{,}, with
+@samp{ANY} used for arguments without an explicit specification.  E.g.,
+@samp{genericFunction-class} is the topic name for documentation for the
+S4 class @code{"genericFunction"}, and @samp{coerce,ANY,NULL-method} is
+the topic name for documentation for the S4 method for @code{coerce} for
+signature @code{c("ANY", "NULL")}.  It is crucial not to use different
+topic names, as otherwise the facilities for getting on-line
+documentation on S4 classes and methods via @samp{?} are bypassed.
+
+Skeletons of documentation for S4 classes and methods can be generated
+by using the functions @code{promptClass()} and @code{promptMethods()},
+respectively, from package @pkg{methods}.  If it is necessary or desired
+to provide an explicit function synopsis (in a @code{\usage} section)
+for an S4 method (e.g., if it has ``surprising arguments'' to be
+mentioned explicitly) , one can use the special markup
+
+@example
+\S4method@{@var{generic}@}@{@var{signature_list}@}(@var{argument_list})
+@end example
+
+@noindent
+(e.g., @samp{\S4method@{coerce@}@{ANY,NULL@}(from, to)}).
+
+See @kbd{help("Documentation", package = "methods")} for more
+information on using and creating on-line documentation for S4 classes and
+methods.
+
+
+@node Sectioning, Marking text, Rd format, Writing R documentation files
 @section Sectioning
 
 To begin a new paragraph or leave a blank line in an example, just
@@ -1557,9 +1611,9 @@ In addition to the predefined sections (such as @code{\description@{@}},
 @findex \section
 For example
 
-@display
-@code{\section@{Warning@}@{You must not call this function unless @dots{}@}}
-@end display
+@smallexample
+\section@{Warning@}@{You must not call this function unless @dots{}@}
+@end smallexample
 
 @noindent
 For consistency with the pre-assigned sections, the section name (the
@@ -1570,7 +1624,7 @@ Note that the additional named sections are always inserted at fixed
 positions in the output (before @code{\note}, @code{\seealso} and the
 examples), no matter where they appear in the input.
 
-@node Marking text, Lists and tables, Sectioning, Writing R help files
+@node Marking text, Lists and tables, Sectioning, Writing R documentation files
 @section Marking text
 @cindex Marking text in documentation
 
@@ -1659,7 +1713,7 @@ such as @acronym{GNU}.
 @end table
 
 
-@node Lists and tables, Cross-references, Marking text, Writing R help files
+@node Lists and tables, Cross-references, Marking text, Writing R documentation files
 @section Lists and tables
 @cindex Lists and tables in documentation
 
@@ -1706,7 +1760,7 @@ There must be the same number of fields on each line as there are
 alignments in the first argument, and they must be non-empty (but can
 contain only spaces).
 
-@node Cross-references, Mathematics, Lists and tables, Writing R help files
+@node Cross-references, Mathematics, Lists and tables, Writing R documentation files
 @section Cross-references
 @cindex Cross-references in documentation
 
@@ -1723,7 +1777,7 @@ There are optional arguments specified as
 @code{\link[@var{pkg:bar}]@{@var{foo}@}} to link to the package
 @var{pkg} with topic (file?) @var{foo} and @var{bar} respectively.
 
-@node Mathematics, Insertions, Cross-references, Writing R help files
+@node Mathematics, Insertions, Cross-references, Writing R documentation files
 @section Mathematics
 @cindex Mathematics in documentation
 @findex \eqn
@@ -1795,7 +1849,7 @@ for x = 0, 1, 2, ....
 @c  @findex \left(
 @c  @findex \right)
 
-@node Insertions, Platform-specific sections, Mathematics, Writing R help files
+@node Insertions, Platform-specific sections, Mathematics, Writing R documentation files
 @section Insertions
 
 @findex \R
@@ -1833,7 +1887,7 @@ as @code{\eqn@{\mbox@{\textasciicircum@}@}@{^@}}, and @samp{~} by
 and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
 @code{\deqn}.
 
-@node  Platform-specific sections, Processing Rd format, Insertions, Writing R help files
+@node  Platform-specific sections, Processing Rd format, Insertions, Writing R documentation files
 @section Platform-specific documentation
 @cindex Platform-specific documentation
 
@@ -1867,7 +1921,7 @@ If the differences between platforms are extensive or the @R{} objects
 documented are only relevant to one platform, platform-specific Rd files
 can be put in a @file{unix} or @file{windows} subdirectory.
 
-@node Processing Rd format,  , Platform-specific sections, Writing R help files
+@node Processing Rd format,  , Platform-specific sections, Writing R documentation files
 @section Processing Rd format
 @cindex Processing Rd format
 
@@ -1913,7 +1967,7 @@ CMD} by @samp{Rcmd}, with the exception that it is @code{Rcmd Rd2dvi.sh}
 installed).  (You will need the files in the @R{} binary Windows
 distribution for installing source packages to be installed.)
 
-@node Tidying and profiling R code, System and foreign language interfaces, Writing R help files, Top
+@node Tidying and profiling R code, System and foreign language interfaces, Writing R documentation files, Top
 @chapter Tidying and profiling R code
 
 @menu
@@ -3702,7 +3756,12 @@ there are to be three items, a symbol (pointing to the function to be
 called) and two argument values, the first unnamed and the second named.
 Setting the type makes this a call which can be evaluated.
 
+@menu
+* Zero-finding::                
+* Calculating numerical derivatives::  
+@end menu
 
+@node Zero-finding, Calculating numerical derivatives, Evaluating R expressions from C, Evaluating R expressions from C
 @subsection Zero-finding
 @cindex Zero-finding
 
@@ -3787,6 +3846,7 @@ The C code is essentially unchanged from the @code{call_R} version, just
 using a couple of functions to convert from @code{double} to @code{SEXP}
 and to evaluate @code{f.check}.
 
+@node Calculating numerical derivatives,  , Zero-finding, Evaluating R expressions from C
 @subsection Calculating numerical derivatives
 @cindex Numerical derivatives
 
@@ -4367,6 +4427,11 @@ the last two being the forms available in all @Sl{} versions.  Here
 @samp{......} is a set of arguments to @code{printf}, so can be a string
 or a format string followed by arguments separated by commas.
 
+@menu
+* Error handling from FORTRAN::  
+@end menu
+
+@node Error handling from FORTRAN,  , Error handling, Error handling
 @subsection Error handling from FORTRAN
 @cindex Error handling from FORTRAN
 
@@ -4504,7 +4569,11 @@ The function @code{REprintf} is similar but writes on the error stream
 output stream.  Functions @code{Rvprintf} and @code{REvprintf} are the
 analogues using the @code{vprintf} interface.
 
+@menu
+* Printing from FORTRAN::       
+@end menu
 
+@node Printing from FORTRAN,  , Printing, Printing
 @subsection Printing from FORTRAN
 @cindex Printing from FORTRAN
 
