@@ -53,8 +53,6 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 R:
 	@if [ "$(srcdir)" != "." ]; then \
 	  $(MAKE) rhome=$(top_builddir) install-tex; \
-	  $(MAKE) rhome=$(top_builddir) install-images-eps; \
-	  $(MAKE) rhome=$(top_builddir) install-images-pdf; \
 	fi
 
 .texi.dvi:
@@ -65,9 +63,9 @@ R:
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2PDF) $<
 
 dvi: refman.dvi $(OBJECTS_DVI)
-refman.dvi: version.tex $(srcdir)/Rd.sty stamp-dvi
+refman.dvi: version.tex $(srcdir)/Rd.sty stamp-refman-dvi
 	@echo "LaTeX documentation: Reference Index ..."
-	@rm -f *.aux refman.toc refman.ind stamp-dvi
+	@rm -f *.aux refman.toc refman.ind stamp-refman-dvi
 	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
 	  opt="$${R_RD4DVI:-$(R_RD4DVI)}"; \
@@ -80,7 +78,7 @@ refman.dvi: version.tex $(srcdir)/Rd.sty stamp-dvi
 	@$(MAKEINDEX) refman
 	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{refman.tex}'
-	@touch stamp-dvi
+	@touch stamp-refman-dvi
 version.tex: Makefile $(top_srcdir)/date-stamp $(top_srcdir)/VERSION
 	@echo "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
@@ -88,7 +86,7 @@ version.tex: Makefile $(top_srcdir)/date-stamp $(top_srcdir)/VERSION
 	  m=`cut -d/ -f2 < $(top_srcdir)/date-stamp`; \
 	  d=`cut -d/ -f3 < $(top_srcdir)/date-stamp`; \
 	  echo "$${v} ($${m} $${d}, $${y})") > $@
-stamp-dvi: $(pkgsrcs)
+stamp-refman-dvi: $(pkgsrcs)
 	@touch $@
 %-pkg.tex: FORCE
 	@if $(top_builddir)/tools/Rdnewer \
@@ -102,19 +100,22 @@ FORCE:
 
 $(OBJECTS_DVI): $(srcdir)/texinfo.tex
 R-exts.dvi: version.texi
-R-intro.dvi: R
 version.texi: Makefile $(top_srcdir)/VERSION
 	@echo "creating $(subdir)/$@"
 	@(v=`sed 's/\([^ ]*\).*/\1/' $(top_srcdir)/VERSION`; \
 	  echo "@set VERSION $${v}" > $@)
+R-intro.dvi: stamp-images-eps
+stamp-images-eps:
+	@$(MAKE) rhome=$(top_builddir) install-images-eps
+	@touch $@
 
 info: $(OBJECTS_INFO)
 R-exts.info: version.texi
 
 pdf: refman.pdf $(OBJECTS_PDF)
-refman.pdf: version.tex $(srcdir)/Rd.sty stamp-pdf
+refman.pdf: version.tex $(srcdir)/Rd.sty stamp-refman-pdf
 	@echo "PDF LaTeX documentation: Reference Index ..."
-	@rm -f *.aux refman.toc refman.ind stamp-pdf
+	@rm -f *.aux refman.toc refman.ind stamp-refman-pdf
 	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
 	  opt="$${R_RD4PDF:-$(R_RD4PDF)}"; \
@@ -129,12 +130,16 @@ refman.pdf: version.tex $(srcdir)/Rd.sty stamp-pdf
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@TEXINPUTS="$(srcdir):$(srcdir):$$TEXINPUTS" \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
-	@touch stamp-pdf
-stamp-pdf: $(pkgsrcs)
+	@touch stamp-refman-pdf
+stamp-refman-pdf: $(pkgsrcs)
 	@touch $@
 
 $(OBJECTS_PDF): $(srcdir)/texinfo.tex
-R-exts.pdf: version.texi 
+R-exts.pdf: version.texi
+R-intro.pdf: stamp-images-pdf
+stamp-images-pdf:
+	@$(MAKE) rhome=$(top_builddir) install-images-pdf
+	@touch $@
 
 install: installdirs install-tex
 	@echo "Installing doc/manual ..."
