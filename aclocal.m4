@@ -273,7 +273,7 @@ EOF
 else
   cat << \EOF >> ${r_cc_rules_frag}
 .c.lo:
-	@test -d .libs || mkdir .libs
+	@-test -d .libs || mkdir .libs
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o .libs/$[*].o
 	mv .libs/$[*].o $[*].lo
 EOF

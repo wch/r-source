@@ -1115,11 +1115,16 @@ versions of @command{gcc 3.3}.)
 5.8 using @command{gcc}/@command{g77} and the SunPro @w{WorkShop 6} (aka
 Forte 6) compilers and the `Sun ONE Studio 7 Compiler Suite' (aka Forte
 7), and less regularly on Solaris 2.5.1, 2.6, 2.7 and 9.  GNU
-@command{make} is needed prior to 2.7 for building other than in the
-source tree, and perhaps even then.
+@command{make} is needed prior to Solaris 2.7 for building other than in
+the source tree, and perhaps even then.
+
+The Solaris versions of several of the tools needed to build @R{}
+(e.g. @command{make}, @command{ar} and @command{ld}) are in
+@code{/usr/ccs/bin}, so if using those tools ensure this is in your
+path.
 
 @command{gcc} 3.2.1 and 3.2.2 generate incorrect code on 32-bit Solaris
-builds with optimization, but versions 3.1, 3.2 and 3.2.3 work
+builds with optimization, but versions 3.1, 3.2, 3.2.3  and 3.3 work
 correctly.  At least files @file{src/main/engine.c},
 @file{src/main/graphics.c} and @file{src/modules/devX11.c} are affected.
 
@@ -1204,17 +1209,6 @@ process by default sets @code{LDFLAGS} to @samp{-L/usr/local/lib},
 you may need to set it to avoid finding 32-bit addons (as in the
 @command{gcc -m64} example above).
 
-@c We have seen problems with @command{gcc} versions 3.1 and 3.2 on some
-@c (but not all) 32-bit Solaris 7/8 systems.  The symptom is
-
-@c @smallexample
-@c > as.double(NA)
-@c [1] NaN
-@c @end smallexample
-
-@c @noindent
-@c and the cure is to compile @file{src/main/arithmetic.c} without
-@c optimization.
 
 @node HP-UX, IRIX, Solaris, Platform notes
 @subsection HP-UX

@@ -3,7 +3,7 @@
 <title>R Installation and Administration</title>
 <meta http-equiv="Content-Type" content="text/html">
 <meta name="description" content="R Installation and Administration">
-<meta name="generator" content="makeinfo 4.3">
+<meta name="generator" content="makeinfo 4.5">
 <link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
 </head>
 <body>
@@ -14,7 +14,7 @@
 
    <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.8.0 (2003-05-17).
+   <p>The current version of this document is 1.8.0 (2003-05-25).
 
    ISBN 3-901167-52-8
 
@@ -917,11 +917,16 @@ versions of <code>gcc 3.3</code>.)
 5.8 using <code>gcc</code>/<code>g77</code> and the SunPro WorkShop&nbsp;6 (aka
 Forte 6) compilers and the `Sun ONE Studio 7 Compiler Suite' (aka Forte
 7), and less regularly on Solaris 2.5.1, 2.6, 2.7 and 9.  GNU
-<code>make</code> is needed prior to 2.7 for building other than in the
-source tree, and perhaps even then.
+<code>make</code> is needed prior to Solaris 2.7 for building other than in
+the source tree, and perhaps even then.
+
+   <p>The Solaris versions of several of the tools needed to build R
+(e.g. <code>make</code>, <code>ar</code> and <code>ld</code>) are in
+<code>/usr/ccs/bin</code>, so if using those tools ensure this is in your
+path.
 
    <p><code>gcc</code> 3.2.1 and 3.2.2 generate incorrect code on 32-bit Solaris
-builds with optimization, but versions 3.1, 3.2 and 3.2.3 work
+builds with optimization, but versions 3.1, 3.2, 3.2.3  and 3.3 work
 correctly.  At least files <code>src/main/engine.c</code>,
 <code>src/main/graphics.c</code> and <code>src/modules/devX11.c</code> are affected.
 

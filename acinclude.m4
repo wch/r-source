@@ -347,6 +347,8 @@ rm -rf conftest* TMP])
 ## ------------------
 ## Generate a Make fragment with suffix rules for the C compiler.
 ## Used for both building R (Makeconf) and add-ons (etc/Makeconf).
+## NB test -d .libs || mkdir .libs can be run more than once
+##    and hence race when a parallel make is used
 AC_DEFUN([R_PROG_CC_MAKEFRAG],
 [r_cc_rules_frag=Makefrag.cc
 AC_REQUIRE([R_PROG_CC_M])
@@ -376,7 +378,7 @@ EOF
 else
   cat << \EOF >> ${r_cc_rules_frag}
 .c.lo:
-	@test -d .libs || mkdir .libs
+	@-test -d .libs || mkdir .libs
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o .libs/$[*].o
 	mv .libs/$[*].o $[*].lo
 EOF
