@@ -53,7 +53,7 @@ julian(x, \dots)
 }
 \note{
   Other components such as the day of the month or the year are
-  very easy to computes: just use \code{\link{as.POSIXlt}} and extract
+  very easy to compute: just use \code{\link{as.POSIXlt}} and extract
   the relevant component.
 }
 

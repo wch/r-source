@@ -3,7 +3,7 @@
 \alias{lag.default}
 \title{Lag a Time Series}
 \description{
-  Computed a lagged version of a time series, shifting the time base
+  Compute a lagged version of a time series, shifting the time base
   back by a given number of observations.
 }
 \usage{
