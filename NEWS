@@ -449,6 +449,10 @@ BUG FIXES
 
     o	barplot() passes "..." down to plot.window as documented.
 
+    o	make install could fail if there were no shared libraries to
+	install (e.g. on vanilla Solaris).
+
+
 
 	**************************************************
 	*						 *
