@@ -1427,7 +1427,6 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
     break;
 
     case 'h': /* h[istogram] (bar plot) */
-	dd->gp.col = INTEGER(col)[0];
 	if (dd->gp.ylog)
 	    yold = dd->gp.usr[2];/* DBL_MIN fails.. why ???? */
 	else
@@ -1437,7 +1436,9 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    xx = x[i];
 	    yy = y[i];
 	    GConvert(&xx, &yy, USER, DEVICE, dd);
-	    if (R_FINITE(xx) && R_FINITE(yy)) {
+	    if (R_FINITE(xx) && R_FINITE(yy)
+		&& (thiscol = INTEGER(col)[i % ncol]) != NA_INTEGER) {
+		dd->gp.col = thiscol;
 		GLine(xx, yold, xx, yy, DEVICE, dd);
 	    }
 	}
