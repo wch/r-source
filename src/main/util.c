@@ -178,6 +178,13 @@ int isList(SEXP s)
 	return (s == R_NilValue || TYPEOF(s) == LISTSXP);
 }
 
+#ifdef NEWLIST
+int isNewList(SEXP s)
+{
+	return (TYPEOF(s) == VECSXP);
+}
+#endif
+
 int isFrame(SEXP s)
 {
 	SEXP class;

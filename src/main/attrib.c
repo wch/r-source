@@ -501,6 +501,43 @@ SEXP dimgets(SEXP vec, SEXP val)
 	return vec;
 }
 
+#ifdef NEWLIST
+SEXP do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+	SEXP attrs, blank, names, namesattr, value;
+	int nvalues;
+	namesattr = R_NilValue;
+	attrs = ATTRIB(CAR(args));
+	nvalues = length(attrs);
+	if (isList(CAR(args))) {
+		namesattr = getAttrib(CAR(args), R_NamesSymbol);
+		if (namesattr != R_NilValue)
+			nvalues++;
+	}
+	PROTECT(value = allocVector(VECSXP, nvalues));
+	PROTECT(names = allocVector(STRSXP, nvalues));
+	PROTECT(blank = mkChar(""));
+	nvalues = 0;
+	if (namesattr != R_NilValue) {
+		VECTOR(value)[nvalues] = namesattr;
+		STRING(names)[nvalues] = PRINTNAME(R_NamesSymbol);
+		nvalues++;
+	}
+	while(attrs != R_NilValue) {
+		VECTOR(value)[nvalues] = CAR(attrs);
+		if (TAG(attrs) == R_NilValue)
+			STRING(names)[nvalues] = blank;
+		else
+			STRING(names)[nvalues] = PRINTNAME(TAG(attrs));
+		attrs = CDR(attrs);
+		nvalues++;
+	}
+	setAttrib(value, R_NamesSymbol, names);
+	NAMED(value) = NAMED(CAR(args));
+	UNPROTECT(3);
+	return value;
+}
+#else
 SEXP do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP s;
@@ -519,7 +556,73 @@ SEXP do_attributes(SEXP call, SEXP op, SEXP args, SEXP env)
 	NAMED(s) = NAMED(CAR(args));
 	return s;
 }
+#endif
 
+/* NOTE: The following code ensures that when an attribute list */
+/* is attached to an object, that the "dim" attibute is always */
+/* brought to the front of the list.  This ensures that when both */
+/* "dim" and "dimnames" are set that the "dim" is attached first. */
+
+#ifdef NEWLIST
+SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+	SEXP object, attrs, names;
+	int i, nattrs;
+
+		/* If there are multiple references to the */
+		/* object being mutated, we must duplicate. */
+
+	if (NAMED(CAR(args)) == 2)
+		CAR(args) = duplicate(CAR(args));
+
+		/* Extract the arguments from the argument list */
+
+	object = CAR(args);
+	if(object == R_NilValue ) {
+		warning("attempt to set attributes on NULL\n");
+		return(R_NilValue);
+	}
+	attrs = CADR(args);
+	if (!isNewList(attrs))
+		errorcall(call, "attributes must be in a list\n");
+	names = getAttrib(attrs, R_NamesSymbol);
+	if (names == R_NilValue)
+		errorcall(call, "attributes must be named\n");
+
+		/* Empty the existing attribute list */
+		/* FIXME: the code below treats pair-based */
+		/* structures in a special way.  This can */
+		/* probably be dropped down the road. */
+		/* Users should never encounter pair-based lists. */
+
+	if(isList(object))
+		setAttrib(object, R_NamesSymbol, R_NilValue);
+	ATTRIB(object) = R_NilValue;
+	OBJECT(object) = 0;
+
+		/* We do two passes through the attributes */
+		/* the first finding and transferring "dims" */
+		/* and the second transferring the rest. */
+		/* This is to ensure that "dim" occurs */
+		/* in the attribute list before "dimnames". */
+
+	nattrs = length(attrs);
+	for(i = 0 ; i < nattrs ; i++) {
+		if (STRING(names)[i] == R_NilValue &&
+			CHAR(STRING(names)[i])[0] == '\0') {
+			error("all attributes must have names\n");
+		}
+		if (!strcmp(CHAR(STRING(names)[i]), "dim"))
+			setAttrib(object, R_DimSymbol, VECTOR(attrs)[i]);
+	}
+	for(i = 0 ; i < nattrs ; i++) {
+		if (strcmp(CHAR(STRING(attrs)[i]), "dim"))
+			setAttrib(object, install(CHAR(STRING(names)[i])),
+				VECTOR(attrs)[i]);
+	}
+	return object;
+}
+#else
 static SEXP dimptr;
 
 static SEXP TrimDim(SEXP l)
@@ -536,11 +639,6 @@ static SEXP TrimDim(SEXP l)
 	}
 	return R_NilValue;
 }
-
-/* NOTE: The following code ensures that when an attribute list */
-/* is attached to an object, that the "dim" attibute is always */
-/* brought to the front of the list.  This ensures that when both */
-/* "dim" and "dimnames" are set that the "dim" is attached first. */
 
 SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -579,6 +677,7 @@ SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	return s;
 }
+#endif
 
 SEXP do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
