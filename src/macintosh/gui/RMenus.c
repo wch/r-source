@@ -701,8 +701,8 @@ OSErr DoOpenText(Boolean editable)
 		       GetWindowWE(Edit_Windows[Edit_Window-1]));
     
     
-    if(err != noErr)
-	 REprintf("\n ReadTextFile error: %d\n",err);
+//    if(err != noErr)
+//	 REprintf("\n ReadTextFile error: %d\n",err);
    	
    	UniqueWinTitle();
 	if(Edit_Window>2)
