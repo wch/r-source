@@ -72,7 +72,6 @@ get("\%o\%")
 
 ##test mget
 e1 <- new.env()
-mget(letters, e1)
 mget(letters, e1, ifnotfound=LETTERS)
 }
 \keyword{data}
