@@ -63,7 +63,7 @@ export R_PRINTCMD
 
 if [ $DEBUGGER ]
 then
-	exec $DEBUGGER $RHOME/bin/R.binary @R_BATCHSAVE@ $*
+	exec $DEBUGGER $RHOME/bin/R.binary 
 else
 	exec $RHOME/bin/R.binary @R_BATCHSAVE@ $*
 fi
