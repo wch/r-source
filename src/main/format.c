@@ -64,7 +64,7 @@ void formatLogical(int *x, int n, int *fieldwidth)
 
     *fieldwidth = 1;
     for(i = 0 ; i < n; i++) {
-	if (x[i] == 1 && *fieldwidth < 4)
+	if (x[i] != 0 && *fieldwidth < 4)
 	    *fieldwidth = 4;
 	if (x[i] == 0 && *fieldwidth < 5 ) {
 	    *fieldwidth = 5;
