@@ -36,11 +36,13 @@ use R::Logfile;
 use R::Rd;
 use R::Utils;
 use R::Vars;
+use Text::DelimMatch;
+use Text::Wrap;
 
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.36 $ ';
+my $revision = ' $Revision: 1.37 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -275,8 +277,11 @@ sub prepare_pkg {
 	system("./cleanup");
     }
 
-    updateIndex("INDEX", "man", 0, $log);
-    updateIndex("data/00Index", "man", 1, $log) if(-d "data");
+    updateRdIndex("INDEX", "man", 0, $log);
+    updateRdIndex("data/00Index", "man", 1, $log) if(-d "data");
+    if(glob("inst/doc/*.[rRsS]nw")) {
+	updateVignetteIndex("inst/doc/00Index.dcf", "inst/doc", $log);
+    }
 
     1;
 }
@@ -284,19 +289,9 @@ sub prepare_pkg {
 #**********************************************************
 
 sub updateIndex {
-
-    my ($oldindex, $Rdfiles, $dataset, $log) = @_;
-    my $newindex = ".Rbuildindex.$$";
-
+    my ($oldindex, $newindex, $log) = @_;
+    
     $log->checking("whether '$oldindex' is up-to-date");
-    my $dataopt = "-d" if $dataset;
-
-    ## <NOTE>
-    ## Rdindex really is a Perl script, so we could work around this
-    ## call to R_system().
-    R_system("${R::Vars::R_CMD} Rdindex $dataopt ${Rdfiles} > ${newindex}");
-    ## </NOTE>
-
     if(-r $oldindex) {
 	if(compare($oldindex, $newindex) != 0) {
 	    $log->result("NO");
@@ -323,7 +318,70 @@ sub updateIndex {
 	unlink $oldindex;
 	rename($newindex, $oldindex);
     }
+    
     1;
+}
+
+sub updateRdIndex {
+    my ($oldindex, $Rdfiles, $dataset, $log) = @_;
+    
+    my $newindex = ".Rbuildindex.$$";
+    my $dataopt = "-d" if $dataset;
+
+    ## <NOTE>
+    ## Rdindex really is a Perl script, so we could work around this
+    ## call to R_system().
+    R_system("${R::Vars::R_CMD} Rdindex $dataopt ${Rdfiles} "
+	     . "> ${newindex}");
+    ## </NOTE>
+
+    updateIndex($oldindex, $newindex, $log);
+    1;
+}
+
+sub updateVignetteIndex {
+    my ($oldindex, $dir, $log) = @_;
+    
+    my $newindex = ".Rbuildindex.$$";
+    
+    buildVignetteIndex($dir, $newindex);
+    updateIndex($oldindex, $newindex, $log);
+    
+    1;
+}
+
+sub buildVignetteIndex {
+    my ($dir, $newindex) = @_;
+
+    my $delimcurly = new Text::DelimMatch("\\{", "\\}");
+    $delimcurly->escape("\\");
+    my @entries = ();
+    my @Snwfiles = glob("$dir/*.[rRsS]nw");
+
+    foreach my $file (@Snwfiles) {
+	open(SNWFILE, "< $file")
+	    or die("Error: cannot open '$file' for reading");
+	my @text = <SNWFILE>;
+	@text = split(/\n\s*\%+\s*\\VignetteIndexEntry\{/,
+		      join("\n", @text));
+	if($#text >= 1) {
+	    $delimcurly->match("\{" . $text[1]);
+	    $file = basename($file, (".rnw", ".Rnw", ".snw", ".Snw"));
+	    push(@entries,
+		 "$file.pdf: " . substr($delimcurly->matched, 1, -1));
+	}
+	close(SNWFILE);
+    }
+
+    open(NEWINDEX, "> $newindex")
+	or die("Error: cannot open '$newindex' for writing");
+    foreach my $entry (@entries) {
+	print NEWINDEX wrap("", "    ", $entry), "\n";
+    }
+    close(NEWINDEX);
+
+    1;
+
 }
 
 #**********************************************************
