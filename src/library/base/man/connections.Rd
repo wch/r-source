@@ -5,6 +5,7 @@
 \alias{pipe}
 \alias{fifo}
 \alias{gzfile}
+\alias{unz}
 \alias{url}
 \alias{socketConnection}
 \alias{open}
@@ -31,6 +32,7 @@ fifo(description = "", open = "", blocking = FALSE,
      encoding = getOption("encoding"))
 gzfile(description, open = "", encoding = getOption("encoding"),
        compression = 6)
+unz(description, filename, open = "", encoding = getOption("encoding"))
 url(description, open = "", blocking = TRUE,
     encoding = getOption("encoding"))
 socketConnection(host = "localhost", port, server = FALSE,
@@ -50,6 +52,7 @@ isIncomplete(con)
     (\code{http://}, \code{ftp://} or \code{file://}).  \code{file} also
     accepts complete URLs.
   }
+  \item{filename}{a filename within a zip file.}
   \item{con}{a connection.}
   \item{host}{character.  Host name for port.}
   \item{port}{integer.  The TCP port number.}
@@ -69,11 +72,15 @@ isIncomplete(con)
   \item{\dots}{arguments passed to or from other methods.}
 }
 \details{
-  The first six functions create connections.  By default the connection
-  is not opened (except for \code{socketConnection}, but may be opened
-  by setting a non-empty value of
-  argument \code{open}.  \code{gzfile} applies to files compressed by
+  The first seven functions create connections.  By default the
+  connection is not opened (except for \code{socketConnection}), but may
+  be opened by setting a non-empty value of argument \code{open}.
+
+  \code{gzfile} applies to files compressed by
   \code{gzip}: such connections can only be binary.
+
+  \code{unz} reads (only) single files within zip files, in binary mode.
+  The description is the full path, with \file{.zip} extension if required.
 
   All platforms support file connections and \code{url("file://")}
   connections.  The other types may be partially implemented or
@@ -169,7 +176,7 @@ isIncomplete(con)
 }
 \note{
   \R's connections are modelled on those in S version 4 (see Chambers,
-  1998). However \R also goes well beyond the Svr4 model, for example
+  1998). However \R goes well beyond the Svr4 model, for example
   in output text connections and URL, gzfile and socket connections.
 
   The default mode in \R is \code{"r"} except for socket

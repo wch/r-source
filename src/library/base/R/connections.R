@@ -71,6 +71,10 @@ gzfile <- function(description, open = "",
                    encoding = getOption("encoding"), compression = 6)
     .Internal(gzfile(description, open, encoding, compression))
 
+unz <- function(description, filename, open = "",
+                encoding = getOption("encoding"))
+    .Internal(unz(paste(description, filename, sep=":"), open, encoding))
+
 socketConnection <- function(host= "localhost", port, server = FALSE,
                              blocking = FALSE, open = "a+",
                              encoding = getOption("encoding"))

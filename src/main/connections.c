@@ -414,7 +414,6 @@ static Rconnection newfile(char *description, char *mode)
 	error("allocation of file connection failed");
     }
     init_con(new, description, mode);
-    new->canseek = TRUE;
     new->open = &file_open;
     new->close = &file_close;
     new->vfprintf = &file_vfprintf;
@@ -1358,6 +1357,50 @@ SEXP do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
     error("sockets are not available on this system");
 #endif
+    return ans;
+}
+
+/* ------------------- unz connections  --------------------- */
+
+/* see dounzip.c for the details */
+SEXP do_unz(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP sfile, sopen, ans, class, enc;
+    char *file, *open;
+    int i, ncon;
+    Rconnection con = NULL;
+
+    checkArity(op, args);
+    sfile = CAR(args);
+    if(!isString(sfile) || length(sfile) < 1)
+	errorcall(call, "invalid `description' argument");
+    if(length(sfile) > 1)
+	warning("only first element of `description' argument used");
+    file = CHAR(STRING_ELT(sfile, 0));
+    sopen = CADR(args);
+    if(!isString(sopen) || length(sopen) != 1)
+	error("invalid `open' argument");
+    enc = CADDR(args);
+    if(!isInteger(enc) || length(enc) != 256)
+	error("invalid `enc' argument");
+    open = CHAR(STRING_ELT(sopen, 0));
+    ncon = NextConnection();
+    con = Connections[ncon] = R_newunz(file, strlen(open) ? open : "r");
+
+    for(i = 0; i < 256; i++)
+	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
+
+    /* open it if desired */
+    if(strlen(open)) con->open(con);
+
+    PROTECT(ans = allocVector(INTSXP, 1));
+    INTEGER(ans)[0] = ncon;
+    PROTECT(class = allocVector(STRSXP, 2));
+    SET_STRING_ELT(class, 0, mkChar("unz"));
+    SET_STRING_ELT(class, 1, mkChar("connection"));
+    classgets(ans, class);
+    UNPROTECT(2);
+
     return ans;
 }
 

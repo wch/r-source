@@ -94,6 +94,10 @@ typedef struct sockconn {
     char inbuf[4096], *pstart, *pend;
 } *Rsockconn;
 
+typedef struct unzconn {
+    void *uf;
+} *Runzconn;
+
 int Rconn_fgetc(Rconnection con);
 int Rconn_ungetc(int c, Rconnection con);
 int Rconn_getline(Rconnection con, char *buf, int bufsize);
@@ -108,4 +112,5 @@ void init_con(Rconnection new, char *description, char *mode);
 Rconnection R_newurl(char *description, char *mode);
 Rconnection R_newsock(char *host, int port, int server, char *mode);
 Rconnection in_R_newsock(char *host, int port, int server, char *mode);
+Rconnection R_newunz(char *description, char *mode);
 int dummy_vfprintf(Rconnection con, const char *format, va_list ap);

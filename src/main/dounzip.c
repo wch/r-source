@@ -78,7 +78,7 @@ extract_one(unzFile uf, char *dest, char *filename)
 	    err = unzReadCurrentFile(uf, buf, BUF_SIZE);
 	    /* Rprintf("read %d bytes\n", err); */
 	    if (err <= 0) break;
-	    if (fwrite(buf, err, 1, fout) != 1) err = -200;
+	    if (fwrite(buf, err, 1, fout) != 1) { err = -200; break; }
 	    if (err < BUF_SIZE) { err = 0; break; }
 	}
 	fclose(fout);
@@ -91,7 +91,7 @@ extract_one(unzFile uf, char *dest, char *filename)
 static int 
 do_unzip(char *zipname, char *dest, int nfiles, char **files)
 {
-    int   i, err = 0;
+    int   i, err = UNZ_OK;
     unzFile uf;
 
     uf = unzOpen(zipname);
@@ -100,16 +100,15 @@ do_unzip(char *zipname, char *dest, int nfiles, char **files)
 	unz_global_info gi;
 	unzGetGlobalInfo(uf, &gi);
 	for (i = 0; i < gi.number_entry; i++) {
-	    if(i > 0) if(unzGoToNextFile(uf) != UNZ_OK) break;
-	    if (extract_one(uf, dest, NULL) != UNZ_OK) break;	    
+	    if (i > 0) 
+		if((err = unzGoToNextFile(uf)) != UNZ_OK) break;
+	    if ((err = extract_one(uf, dest, NULL)) != UNZ_OK) break;	    
 	}
     } else {
 	for (i = 0; i < nfiles; i++) {
-	    if (unzLocateFile(uf, files[i], 0) != UNZ_OK) break;
-	    if (extract_one(uf, dest, files[i]) != UNZ_OK) break;
+	    if ((err = unzLocateFile(uf, files[i], 0)) != UNZ_OK) break;
+	    if ((err = extract_one(uf, dest, files[i])) != UNZ_OK) break;
 	}
-	unzCloseCurrentFile(uf);
-	if (err != UNZ_OK) return err;
     }
     unzClose(uf);
     return err;
@@ -139,13 +138,149 @@ do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid destination argument");
     strcpy(dest, CHAR(STRING_ELT(CAR(args), 0)));
     rc = do_unzip(zipname, dest, ntopics, topics);
+    if(rc != UNZ_OK)
+	switch(rc) {
+	case UNZ_END_OF_LIST_OF_FILE:
+	    warning("requested file not found in the zip file");
+	    break;
+	case UNZ_BADZIPFILE:
+	    warning("zip file is corrupt");
+	    break;
+	case UNZ_CRCERROR:
+	    warning("CRC error in zip file");
+	    break;
+	case UNZ_PARAMERROR:
+	case UNZ_INTERNALERROR:
+	    warning("internal error in unz code");
+	    break;
+	case -200:
+	    warning("write error in extracting from zip file");
+	    break;
+	default:
+	    warning("error %d in extracting from zip file", rc);
+	}
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = rc;
     UNPROTECT(1);
     return ans;
 }
 
-             /* ============ second part =================== */
+/* ------------------- unz connections --------------------- */
+
+#include <Rconnections.h>
+
+static void unz_open(Rconnection con)
+{
+    unzFile uf;
+    char path[2*PATH_MAX], *p;
+
+    if(con->mode[0] != 'r')
+	error("unz connections can only be opened for reading");
+    strcpy(path, R_ExpandFileName(con->description));
+    p = strrchr(path, ':');
+    if(!p) error("invalid description of unz connection");
+    *p = '\0';
+    uf = unzOpen(path);
+    if(!uf) error("cannot open zip file `%s'", path);
+    if (unzLocateFile(uf, p+1, 0) != UNZ_OK)
+	error("cannot locate file `%s' in zip file `%s'", p+1, path);
+    unzOpenCurrentFile(uf);
+    ((Runzconn)(con->private))->uf = uf;
+    con->isopen = TRUE;
+    con->canwrite = FALSE;
+    con->canread = TRUE;
+    if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
+    else con->text = TRUE;
+    con->save = -1000;
+}
+
+static void unz_close(Rconnection con)
+{
+    unzFile uf = ((Runzconn)(con->private))->uf;    
+    unzCloseCurrentFile(uf);
+    unzClose(uf);
+    con->isopen = FALSE;
+}
+
+static int unz_fgetc(Rconnection con)
+{
+    unzFile uf = ((Runzconn)(con->private))->uf;
+    char buf[1];
+    int err, p;
+
+    err = unzReadCurrentFile(uf, buf, 1);
+    p = buf[0] % 256;
+    if(err < 1) return R_EOF;
+    else return con->encoding[p];
+}
+
+static size_t unz_read(void *ptr, size_t size, size_t nitems,
+		       Rconnection con)
+{
+    unzFile uf = ((Runzconn)(con->private))->uf;
+    return unzReadCurrentFile(uf, ptr, size*nitems)/size;
+}
+
+static int null_vfprintf(Rconnection con, const char *format, va_list ap)
+{
+    error("printing not enabled for this connection");
+    return 0; /* -Wall */
+}
+
+static size_t null_write(const void *ptr, size_t size, size_t nitems,
+			 Rconnection con)
+{
+    error("write not enabled for this connection");
+    return 0; /* -Wall */
+}
+
+static long null_seek(Rconnection con, int where, int origin, int rw)
+{
+    error("seek not enabled for this connection");
+    return 0; /* -Wall */
+}
+
+static int null_fflush(Rconnection con)
+{
+    return 0;
+}
+
+Rconnection R_newunz(char *description, char *mode)
+{
+    Rconnection new;
+    new = (Rconnection) malloc(sizeof(struct Rconn));
+    if(!new) error("allocation of file connection failed");
+    new->class = (char *) malloc(strlen("unz") + 1);
+    if(!new->class) {
+	free(new);
+	error("allocation of unz connection failed");
+    }
+    strcpy(new->class, "unz");
+    new->description = (char *) malloc(strlen(description) + 1);
+    if(!new->description) {
+	free(new->class); free(new);
+	error("allocation of unz connection failed");
+    }
+    init_con(new, description, mode);
+
+    new->canseek = TRUE;
+    new->open = &unz_open;
+    new->close = &unz_close;
+    new->vfprintf = &null_vfprintf;
+    new->fgetc = &unz_fgetc;
+    new->seek = &null_seek;
+    new->fflush = &null_fflush;
+    new->read = &unz_read;
+    new->write = &null_write;
+    new->private = (void *) malloc(sizeof(struct fileconn));
+    if(!new->private) {
+	free(new->description); free(new->class); free(new);
+	error("allocation of unz connection failed");
+    }
+    return new;
+}
+
+       /* =================== second part ====================== */
 
 /* From minizip contribution to zlib 1.1.3 */
 
@@ -1217,8 +1352,6 @@ unzReadCurrentFile(unzFile file, voidp buf, unsigned int len)
     return err;
 }
 
-
-
 /*
   Close the file in zip opened with unzipOpenCurrentFile
   Return UNZ_CRCERROR if all the file was read but the CRC is not good
@@ -1262,6 +1395,11 @@ SEXP
 do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     errorcall(call, "not defined on this platform");
+}
+
+Rconnection R_newunz(char *description, char *mode)
+{
+    error("unz connections not defined on this platform");
 }
 #endif
 
