@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.4-25, 2002-03-20
+Version 1.4-26, 2002-03-29
 Kurt Hornik
 
 
@@ -1488,6 +1488,11 @@ works, was published in the Journal of Statistical Software
 *ineq*
      Inequality, concentration and poverty measures, and Lorenz curves
      (empirical and theoretic).
+
+*ipred*
+     Improved predictive models by direct and indirect bootstrap aggregation
+     in classification and regression as well as resampling based estimators
+     of prediction error.
 
 *lasso2*
      Routines and documentation for solving regression problems while
