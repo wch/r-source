@@ -59,15 +59,14 @@
 #include <Rconfig.h>
 #endif
 
-#include "Defn.h"
-#include "Mathlib.h"
 #include <string.h>
 #include <stdlib.h>
-#include <sys/param.h>
-
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
+#include "Defn.h"
+#include "Mathlib.h"
 
 typedef int (*DL_FUNC)();
 typedef struct {
