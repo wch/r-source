@@ -4876,12 +4876,12 @@ enclosed in calls to @code{GetRNGstate} and @code{PutRNGstate}.
 @findex R_NegInf
 @findex NA_REAL
 
-It is possible to compile @R{} on a platform without @acronym{IEC} 559
-(more commonly known as @acronym{IEEE} 754)-compatible arithmetic, so
-users should not assume that it is available.  Rather a set of functions
-is provided to test for @code{NA}, @code{Inf}, @code{-Inf} (which exists
-on all platforms) and @code{NaN}.  These functions are accessed via
-macros:
+It used to be possible to compile @R{} on a platform without
+@acronym{IEC} 60559 (more commonly known as @acronym{IEEE}
+754)-compatible arithmetic, so users could not assume that it is
+available.  Rather a set of functions is provided to test for @code{NA},
+@code{Inf}, @code{-Inf} and @code{NaN}.  These functions are accessed
+via macros:
 
 @smallexample
 @group
@@ -4903,10 +4903,6 @@ as @code{NA_REAL}.
 All of the above apply to @emph{double} variables only.  For integer
 variables there is a variable accessed by the macro @code{NA_INTEGER}
 which can used to set or test for missingness.
-
-Beware that these special values may be represented by extreme values
-which could occur in ordinary computations which run out of control,
-so you may need to test that they have not been generated inadvertently.
 
 
 @node Printing, Calling C from FORTRAN and vice versa, Missing and IEEE values, The R API
