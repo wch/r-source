@@ -9,9 +9,9 @@ str.default(object, max.level = 0, vec.len = 4, digits.d = 3,
     indent.str = paste(rep(" ", max(0, nest.lev + 1)), collapse = ".."),
     \dots)
 
- ls.str(pos = 1, pattern, \dots, mode = "any",
+ ls.str(pos = 1, pattern, \dots,  envir = as.environment(pos), mode = "any",
         max.level = 1, give.attr = FALSE)
-lsf.str(pos = 1, pattern, \dots)
+lsf.str(pos = 1, \dots, envir = as.environment(pos))
 }
 \alias{str}
 \alias{str.default}
@@ -61,6 +61,7 @@ lsf.str(pos = 1, pattern, \dots)
   For \code{ls.str} and \code{lsf.str}:
 
   \item{pos}{integer indicating \code{\link{search}} path position.}
+  \item{envir}{environment to use, see \code{\link{ls}}.}
   \item{pattern}{regular expression passed to \code{\link{ls}}.  Only names
           matching \code{pattern} are considered.}
   \item{mode}{character specifying the \code{\link{mode}} of objects to

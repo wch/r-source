@@ -734,11 +734,9 @@ fisher.test(cbind(0, c(0,0,0,1)))
 
 stopifnot(all(Mod(vector("complex", 7)) == 0))# contained garbage in 1.5.0
 
-
 ## hist.POSIXt with numeric `breaks'
 hist(.leap.seconds, breaks = 5)
 ## error in 1.5.1
-
 
 ##Jonathan Rougier 2002-06-18
 x <- matrix(runif(30), 10, 3)
@@ -754,6 +752,13 @@ stopifnot(all(!is.na(res)))
 (res <- cut(x, cut.off, include.lowest=TRUE, right=FALSE))
 stopifnot(all(!is.na(res)))
 ## outer values were NA in 1.5.1
+
+## ls.str() for function environments:
+library(stepfun)
+Fn <- ecdf(rnorm(50))
+ls.str(envir = environment(Fn))
+detach("package:stepfun")
+## failed in 1.5.1
 
 
 ## related to PR 1577/1608, conversions to character
@@ -828,6 +833,8 @@ stopifnot(class(fit) == "try-error")
 
 
 ## keep at end, as package `methods' has persistent side effects
+
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
 detach("package:methods")
+

@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
-    ## $Id: str.R,v 1.22 2001/09/15 17:05:56 hornik Exp $
+    ## $Id: str.R,v 1.23 2002/07/04 14:16:50 maechler Exp $
     if(! is.data.frame(object)) {
 	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
 	object <- data.frame(object)
@@ -41,7 +41,7 @@ str.default <-
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
     ## ------ Please send Bug-reports, -fixes and improvements !
     ## ------------------------------------------------------------------------
-    ## $Id: str.R,v 1.22 2001/09/15 17:05:56 hornik Exp $
+    ## $Id: str.R,v 1.23 2002/07/04 14:16:50 maechler Exp $
 
     oo <- options(digits = digits.d); on.exit(options(oo))
     le <- length(object)
@@ -304,21 +304,21 @@ str.default <-
     invisible()	 ## invisible(object)#-- is SLOOOOW on large objects
 }# end of `str.default()'
 
-ls.str <- function(pos = 1, pattern, ...,
+## An extended `ls()' using str() :
+ls.str <- function(pos = 1, pattern, ..., envir = as.environment(pos),
                    mode = "any", max.level = 1, give.attr = FALSE)
 {
-    ## An extended "ls()" using  str(.)
-    r <- character(0)
-    for(nam in ls(pos = pos, ..., envir = as.environment(pos),
-                  pattern=pattern))
-	if(exists(nam, where = pos, mode = mode)) {
+    n <- length(nms <- ls(..., envir = envir, pattern = pattern))
+    r <- character(n)
+    for(i in seq(length = n))
+	if(exists(nam <- nms[i], envir = envir, mode = mode)) {
 	    cat(nam, ": ")
-	    r <- c(r,nam)
-	    str(get(nam, pos = pos, mode = mode), max.level = max.level,
-		give.attr = give.attr)
+	    r[i] <- nam
+	    str(get(nam, envir = envir, mode = mode),
+                max.level = max.level, give.attr = give.attr)
 	}
     invisible(r)
 }
 
-lsf.str <- function(pos = 1, pattern, ...)
-    ls.str(pos = pos, pattern = pattern, mode = "function", ...)
+lsf.str <- function(pos = 1, ..., envir = as.environment(pos))
+    ls.str(pos = pos, envir = envir, mode = "function", ...)
