@@ -46,6 +46,7 @@ Table of Contents
   7.2 How do I debug code that I have compiled and dyn.load-ed?
   7.3 How do I include C++ code?
   7.4 The output from my C code disappears. Why?
+  7.5 The output from my Fortran code disappears. Why?
 
 
 
@@ -65,6 +66,7 @@ to recent versions (`rw0901' or later).
 
 There is also information on the use of R for Windows in the Venables &
 Ripley `R Complements' at `http://www.stats.ox.ac.uk/pub/MASS2'.
+
 
 2 Installation and Usage
 ************************
@@ -178,6 +180,7 @@ If all of these fail, the current working directory is used.
 
 You can find this from R code by `getenv("R_USER")'.
 
+
 3 Packages
 **********
 
@@ -276,6 +279,7 @@ installed.
 
 If those all hold true, this works for us.
 
+
 4 Windows Features
 ******************
 
@@ -336,6 +340,7 @@ personal copies in your `HOME' directory. They contain comments which
 should suffice for you to edit them to your preferences. For more
 details see `?Rconsole'.
 
+
 5 Workspaces
 ************
 
@@ -356,6 +361,7 @@ snapshot of the workspace from the `Save Image' menu item.
 =====================================================
 
 Yes. The converse (saving on Windows, loading on Unix) also works.
+
 
 6 The R Console and Fonts
 *************************
@@ -400,6 +406,7 @@ They only *seem* to be truncated: that $ at the end indicates you can
 scroll the window to see the rest of the message. Use the <CTRL+arrow>
 keys to scroll horizontally, or (`rw0990' and later) use the horizontal
 scrollbar.
+
 
 7 Building from Source
 **********************
@@ -515,7 +522,14 @@ The `Rgui.exe' console is a Windows application: writing to `stdout' or
 `stderr' will not produce output in the console. (This will work with
 `Rterm.exe'.)  Use `Rprintf' or `REprintf' instead.
 
+7.5 The output from my Fortran code disappears. Why?
+====================================================
+
+Writing to Fortran output writes to a file, not the `Rgui' console.
+Use one of the subroutines `dblepr', `intpr' or `realpr' documented in
+the _`Writing R Extensions'_ manual.
 
 
-Last edited 4 February 2000 by Brian Ripley <ripley@stats.ox.ac.uk>
+
+Last edited 2000 February 4 by Brian Ripley <ripley@stats.ox.ac.uk>
 

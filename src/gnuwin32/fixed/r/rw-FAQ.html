@@ -62,7 +62,8 @@
 <li><a href="#How%20can%20I%20compile%20R%20from%20source%3f">7.1 How can I compile R from source?</a>
 <li><a href="#How%20do%20I%20debug%20code%20that%20I%20have%20compiled%20and%20dyn.load-ed%3f">7.2 How do I debug code that I have compiled and dyn.load-ed?</a>
 <li><a href="#How%20do%20I%20include%20C++%20code%3f">7.3 How do I include C++ code?</a>
-<li><a href="#The%20output%20from%20my%20C%20code%20disappears.%20Why%3f">7.4 The output from my C code disappears. Why?</a>
+<li><a href="#The%20output%20from%20my%20C%20code%20disappears.">7.4 The output from my C code disappears. Why?</a>
+<li><a href="#The%20output%20from%20my%20Fortran%20code%20disappears.">7.5 The output from my Fortran code disappears. Why?</a>
 </ul>
 </ul>
 
@@ -70,9 +71,9 @@
 
 </ul>
 
-<a name="Introduction"></a>
-
 <p><hr>
+
+<a name="Introduction"></a>
 
 <h1>1 Introduction</h1>
 
@@ -90,9 +91,9 @@ only to recent versions (<code>rw0901</code> or later).
 <p>There is also information on the use of R for Windows in the Venables
 &amp; Ripley `R Complements' at <a href="http://www.stats.ox.ac.uk/pub/MASS2">http://www.stats.ox.ac.uk/pub/MASS2</a>.
 
-<a name="Installation%20and%20Usage"></a>
-
 <p><hr>
+
+<a name="Installation%20and%20Usage"></a>
 
 <h1>2 Installation and Usage</h1>
 
@@ -216,9 +217,9 @@ If all of these fail, the current working directory is used.
 
 <p>You can find this from R code by <code>getenv("R_USER")</code>.
 
-<a name="Packages"></a>
-
 <p><hr>
+
+<a name="Packages"></a>
 
 <h1>3 Packages</h1>
 
@@ -328,9 +329,9 @@ installing the package.
 
 <p>If those all hold true, this works for us.
 
-<a name="Windows%20Features"></a>
-
 <p><hr>
+
+<a name="Windows%20Features"></a>
 
 <h1>4 Windows Features</h1>
 
@@ -391,9 +392,9 @@ keep personal copies in your <code>HOME</code> directory. They contain comments 
 should suffice for you to edit them to your preferences. For more details
 see <code>?Rconsole</code>.
 
-<a name="Workspaces"></a>
-
 <p><hr>
+
+<a name="Workspaces"></a>
 
 <h1>5 Workspaces</h1>
 
@@ -420,9 +421,9 @@ save a snapshot of the workspace from the `Save Image' menu item.
 
 <p>Yes. The converse (saving on Windows, loading on Unix) also works.
 
-<a name="The%20R%20Console%20and%20Fonts"></a>
-
 <p><hr>
+
+<a name="The%20R%20Console%20and%20Fonts"></a>
 
 <h1>6 The R Console and Fonts</h1>
 
@@ -474,9 +475,9 @@ can scroll the window to see the rest of the message. Use the
 &lt;CTRL+arrow&gt; keys to scroll horizontally, or (<code>rw0990</code> and
 later) use the horizontal scrollbar.
 
-<a name="Building%20from%20Source"></a>
-
 <p><hr>
+
+<a name="Building%20from%20Source"></a>
 
 <h1>7 Building from Source</h1>
 
@@ -597,7 +598,7 @@ ink /dll /out:XX.dll /export:X_main X.obj X_R.obj
 will occur when the DLL is loaded, and destruction when the DLL is
 unloaded, usually when R terminates.
 
-<a name="The%20output%20from%20my%20C%20code%20disappears.%20Why%3f"></a>
+<a name="The%20output%20from%20my%20C%20code%20disappears."></a>
 
 <h2>7.4 The output from my C code disappears. Why?</h2>
 
@@ -606,9 +607,17 @@ unloaded, usually when R terminates.
 console. (This will work with <code>Rterm.exe</code>.)  Use <code>Rprintf</code> or
 <code>REprintf</code> instead.
 
+<a name="The%20output%20from%20my%20Fortran%20code%20disappears."></a>
+
+<h2>7.5 The output from my Fortran code disappears. Why?</h2>
+
+<p>Writing to Fortran output writes to a file, not the <code>Rgui</code> console. 
+Use one of the subroutines <code>dblepr</code>, <code>intpr</code> or <code>realpr</code>
+documented in the <em>`Writing R Extensions'</em> manual.
+
 <p><hr WIDTH="100%">
 <address>
-Last edited 4 February 2000 by Brian Ripley
+Last edited 2000 February 4 by Brian Ripley
 <code><a href="mailto:ripley@stats.ox.ac.uk">ripley@stats.ox.ac.uk</a></code>
 </address>
 
