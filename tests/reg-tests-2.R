@@ -66,8 +66,8 @@ str(d <- data.frame(cbind(x=1, y=1:10), fac=sample(L3, 10, repl=TRUE)))
 (d00 <- d0[FALSE,])  # NULL dataframe with 0 rows
 (d000 <- data.frame()) #but not quite the same as d00:
 !identical(d00, d000)
-dput(d00)
-dput(d000)
+dput(d00, fordisplay=FALSE)
+dput(d000, fordisplay=FALSE)
 stopifnot(identical(d, cbind(d, d0)),
           identical(d, cbind(d0, d)),
           identical(d, rbind(d,d.0)),
@@ -1278,3 +1278,8 @@ try(x[-c(1, NA)])
 data(InsectSprays)
 boxplot(count ~ spray, data = InsectSprays, border=2:7)
 ## gave warnings in 1.9.0
+
+## Dump should quote when necessary (PR#6857)
+x <- quote(b)
+dump("x", "")
+## doesn't quote b in 1.9.0

@@ -366,9 +366,9 @@ NULL data frame with 0 rows
 NULL data frame with 0 rows
 > !identical(d00, d000)
 [1] TRUE
-> dput(d00)
+> dput(d00, fordisplay=FALSE)
 structure(list(), .Names = character(0), row.names = character(0), class = "data.frame")
-> dput(d000)
+> dput(d000, fordisplay=FALSE)
 structure(list(), row.names = character(0), class = "data.frame")
 > stopifnot(identical(d, cbind(d, d0)),
 +           identical(d, cbind(d0, d)),
@@ -4023,4 +4023,11 @@ Error in try(x[-c(1, NA)]) : only 0's may mix with negative subscripts
 > data(InsectSprays)
 > boxplot(count ~ spray, data = InsectSprays, border=2:7)
 > ## gave warnings in 1.9.0
+> 
+> ## Dump should quote when necessary (PR#6857)
+> x <- quote(b)
+> dump("x", "")
+x <-
+quote(b)
+> ## doesn't quote b in 1.9.0
 > 

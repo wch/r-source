@@ -7,6 +7,8 @@ dump(list, file = "dumpdata.R", append = FALSE, envir = parent.frame())
 \description{
   This function takes a vector of names of \R objects and produces
   text representations of the objects on a file or connection.
+  A \code{dump} file can usually be \code{\link{source}}d into another
+  \R (or S) session.
 }
 \arguments{
   \item{list}{character. The names of one or more \R objects to be dumped.}
@@ -21,17 +23,22 @@ dump(list, file = "dumpdata.R", append = FALSE, envir = parent.frame())
   \item{envir}{the environment to search for objects.}
 }
 \details{
-  At present the implementation of \code{dump} is very
-  incomplete and it really only works for functions and
-  simple vectors and lists.
+  At present \code{source}ing may not produce an identical copy of 
+  \code{dump}ed objects. A warning is issued if it is likely 
+  that major differences will be present, for example when dumping uncommon
+  objects such as \link[delay]{promises}, \link[environment]{environments},
+  external pointers, etc.
 
-  \code{dump} will warn if fewer characters were written to a file than
+  \code{dump} will also warn if fewer characters were written to a file than
   expected, which may indicate a full or corrupt file system.
 
   A \code{dump} file can be \code{\link{source}}d into another \R (or
   perhaps S) session, but the function \code{\link{save}} is designed to
   be used for transporting \R data, and will work with \R objects that
   \code{dump} does not handle.
+  
+  To produce a more readable representation of an object (though perhaps
+  a less faithful representation), use \code{\link{dput}}.
 }
 \note{
   The \code{envir} argument was added at version 1.7.0, and changed the

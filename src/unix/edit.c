@@ -116,7 +116,7 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    errorcall(call, "unable to open file");
 	if (LENGTH(STRING_ELT(fn, 0)) == 0) EdFileUsed++;
 	if (TYPEOF(x) != CLOSXP || isNull(t = getAttrib(x, R_SourceSymbol)))
-	    t = deparse1(x, 0);
+	    t = deparse1(x, 0, FALSE); /* deparse for sourcing, not for display */
 	for (i = 0; i < LENGTH(t); i++)
 	    fprintf(fp, "%s\n", CHAR(STRING_ELT(t, i)));
 	fclose(fp);

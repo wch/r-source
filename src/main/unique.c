@@ -101,9 +101,9 @@ static int chash(SEXP x, int indx, HashData *d)
     tmp.i = (COMPLEX(x)[indx].i == 0.0) ? 0.0 : COMPLEX(x)[indx].i;
 #ifdef IEEE_754 /* otherwise always false */
     /* we want all NaNs except NA equal, and all NAs equal */
-    if (R_IsNA(tmp.r)) tmp.r = NA_REAL; 
+    if (R_IsNA(tmp.r)) tmp.r = NA_REAL;
     else if (R_IsNaN(tmp.r)) tmp.r = R_NaN;
-    if (R_IsNA(tmp.i)) tmp.i = NA_REAL; 
+    if (R_IsNA(tmp.i)) tmp.i = NA_REAL;
     else if (R_IsNaN(tmp.i)) tmp.i = R_NaN;
 #endif
     if (sizeof(double) >= sizeof(unsigned int)*2) {
@@ -159,7 +159,7 @@ static int cequal(SEXP x, int i, SEXP y, int j)
 	    && (R_IsNaN(COMPLEX(y)[j].r) || R_IsNaN(COMPLEX(y)[j].i)))
 	return 1;
 #endif
-    else 
+    else
 	return 0;
 }
 
@@ -167,7 +167,7 @@ static int sequal(SEXP x, int i, SEXP y, int j)
 {
     if (STRING_ELT(x, i) != NA_STRING && STRING_ELT(y, j) != NA_STRING)
 	return !strcmp(CHAR(STRING_ELT(x, i)), CHAR(STRING_ELT(y, j)));
-    else 
+    else
 	return STRING_ELT(x, i) == STRING_ELT(y, j);
 }
 
@@ -637,7 +637,7 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	funcall = VECTOR_ELT(funcall, 0);
 
     if (TYPEOF(funcall) != LANGSXP) {
-	b = deparse1(funcall, 1);
+	b = deparse1(funcall, 1, TRUE);
 	errorcall(call, "%s is not a valid call", CHAR(STRING_ELT(b, 0)));
     }
 
@@ -694,7 +694,7 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     /* It must be a closure! */
 
     if (TYPEOF(b) != CLOSXP) {
-	b = deparse1(b, 1);
+	b = deparse1(b, 1, TRUE);
 	errorcall(call, "%s is not a function", CHAR(STRING_ELT(b, 0)));
     }
 
@@ -702,7 +702,7 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 
     expdots = asLogical(CAR(CDDR(args)));
     if (expdots == NA_LOGICAL) {
-	b = deparse1(CADDR(args), 1);
+	b = deparse1(CADDR(args), 1, TRUE);
 	errorcall(call, "%s is not a logical", CHAR(STRING_ELT(b, 0)));
     }
 
@@ -809,13 +809,13 @@ SEXP Rrowsum_matrix(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg)
     PROTECT(data.HashTable);
     DoHashing(uniqueg, &data);
     PROTECT(matches = HashLookup(uniqueg ,g, &data));
-    
-    PROTECT(ans=allocMatrix(TYPEOF(x),ng,p)); 
-    
+
+    PROTECT(ans=allocMatrix(TYPEOF(x),ng,p));
+
     offset=0; offsetg=0;
 
     switch(TYPEOF(x)){
-    case REALSXP:    
+    case REALSXP:
 	ZERODBL(ans,ng*p,i);
 	for(i=0;i<p;i++){
 	    for(j=0;j<n;j++){
@@ -825,7 +825,7 @@ SEXP Rrowsum_matrix(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg)
 	    offsetg+=ng;
 	}
 	break;
-    case INTSXP: 
+    case INTSXP:
 	ZEROINT(ans,ng*p,i);
 	for(i=0;i<p;i++){
 	    for(j=0;j<n;j++){
@@ -862,9 +862,9 @@ SEXP Rrowsum_df(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg)
     PROTECT(data.HashTable);
     DoHashing(uniqueg, &data);
     PROTECT(matches = HashLookup(uniqueg ,g, &data));
-    
-    PROTECT(ans=allocVector(VECSXP,p)); 
-    
+
+    PROTECT(ans=allocVector(VECSXP,p));
+
     offset=0; offsetg=0;
 
     for(i=0; i<p;i++){
@@ -872,7 +872,7 @@ SEXP Rrowsum_df(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg)
 	if (!isNumeric(xcol))
 	    error("non-numeric dataframe in rowsum");
 	switch(TYPEOF(xcol)){
-	case REALSXP:    
+	case REALSXP:
 	    PROTECT(col=allocVector(REALSXP,ng));
 	    ZERODBL(col,ng,i);
 	    for(j=0;j<n;j++){
@@ -881,7 +881,7 @@ SEXP Rrowsum_df(SEXP x, SEXP ncol, SEXP g, SEXP uniqueg)
 	    SET_VECTOR_ELT(ans,i,col);
 	    UNPROTECT(1);
 	    break;
-	case INTSXP: 
+	case INTSXP:
 	    PROTECT(col=allocVector(INTSXP,ng));
 	    ZEROINT(col,ng,i);
 	    for(j=0;j<n;j++){
@@ -947,7 +947,7 @@ SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, n, cnt, len, maxlen = 0, *cnts, dp;
     HashData data;
     char *csep, *buf;
-    
+
     checkArity(op, args);
     names = CAR(args);
     if(!isString(names)) errorcall(call, "names must be a character vector");
@@ -964,7 +964,7 @@ SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if(n > 1) {
 	/* +2 for terminator and rounding error */
-	buf = Calloc(maxlen + strlen(csep) + log((double)n)/log(10.0) + 2, 
+	buf = Calloc(maxlen + strlen(csep) + log((double)n)/log(10.0) + 2,
 		     char);
 	cnts = Calloc(n, int);
 	for(i = 0; i < n; i++) cnts[i] = 1;

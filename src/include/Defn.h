@@ -695,7 +695,7 @@ void CheckFormals(SEXP);
 void CleanEd(void);
 void DataFrameClass(SEXP);
 SEXP ddfindVar(SEXP, SEXP);
-SEXP deparse1(SEXP,Rboolean);
+SEXP deparse1(SEXP,Rboolean,Rboolean);
 SEXP deparse1line(SEXP,Rboolean);
 int DispatchOrEval(SEXP, SEXP, char*, SEXP, SEXP, SEXP*, int, int);
 int DispatchGroup(char*, SEXP,SEXP,SEXP,SEXP,SEXP*);

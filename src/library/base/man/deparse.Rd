@@ -6,7 +6,8 @@
 }
 \usage{
 deparse(expr, width.cutoff = 60,
-        backtick = mode(expr) \%in\% c("call", "expression", "("))
+        backtick = mode(expr) \%in\% c("call", "expression", "("),
+        fordisplay = TRUE)
 }
 \arguments{
   \item{expr}{any \R expression.}
@@ -14,6 +15,8 @@ deparse(expr, width.cutoff = 60,
     at which line-breaking is tried.}
   \item{backtick}{logical indicating whether symbolic names should be
     enclosed in backticks if they don't follow the standard syntax.}
+  \item{fordisplay}{logical indicating that the intention is to display the results
+  rather than to re-parse them}
 }
 \details{
   This function turns unevaluated expressions (where \dQuote{expression}
@@ -31,6 +34,15 @@ deparse(expr, width.cutoff = 60,
   symbols but only composite expressions. This is a compromise to
   avoid breaking existing code.
 
+  With \code{fordisplay = TRUE}, the deparsing is intended to be readable,
+  but perhaps incomplete:  for example, attributes are not generally shown.
+  
+  The \code{fordisplay = FALSE} option requests a more accurate
+  but less readable deparsing of complex objects, bringing \code{deparse()}
+  closer to being an inverse of \code{parse()}.  However, not all 
+  objects are deparseable even with this option.  A warning will be
+  issued if the function recognizes that it is being asked to do the impossible.
+
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -47,7 +59,7 @@ require(stats)
 deparse(args(lm))
 deparse(args(lm), width = 500)
 myplot <-
-function(x, y)
+function(x, y) {
     plot(x, y, xlab=deparse(substitute(x)),
         ylab=deparse(substitute(y)))
 }
@@ -56,6 +68,8 @@ deparse(e)
 deparse(e, backtick=TRUE)
 e <- quote(`foo bar`+1)
 deparse(e)
+deparse(e, fordisplay = FALSE)
+}
 \keyword{programming}
 \keyword{manip}
 \keyword{data}

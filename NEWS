@@ -38,6 +38,12 @@ NEW FEATURES
 	been rationalized so a few more cases will now work -- see
 	?Comparison.
 
+    o	deparse() and dput() have a new 'fordisplay' argument that 
+	indicates that the result is intended to be human-readable.  
+	When TRUE, some details (e.g. attributes, quoting) are omitted.  
+	When FALSE, the result is usually parseable to reproduce the 
+	object. dump() always produces the parseable format.
+
 
 UTILITIES
 
