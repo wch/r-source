@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-11-09
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-11-11
 @set REL-VERSION 2.0.0
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2501,6 +2501,9 @@ preparation, macro functions, and more.
 ML estimation for multivariate normal data with missing values.
 @item mvnormtest
 Generalization of the Shapiro-Wilk test for multivariate variables.
+@item mvoutlier
+Multivariate outlier detection based on robust estimates of location and
+covariance structure.
 @item mvpart
 Multivariate partitioning.
 @item mvtnorm
