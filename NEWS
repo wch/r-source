@@ -15,6 +15,11 @@ NEW FEATURES
 	in their .lib.loc argument, the latter as pre-0.99.0.  See
 	their help pages for the precise details.
 
+    o	help() has a new argument `try.all.packages' set by the option
+	"help.try.all.packages". If help is not found in the normal
+	path and this is TRUE then a search is made of all packages 
+	for possible matches.
+
 
 BUG FIXES
 
@@ -79,6 +84,8 @@ BUG FIXES
     o	keyword2html omitted items when changing up a level, so 
 	the HTML search engine keyword list was missing `data' and
 	`utilities', for example.
+
+    o	aov() with multiple strata was setting some spurious options.
 
 
 
