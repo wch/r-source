@@ -21,7 +21,8 @@
   Both \code{lib} and the elements of \code{pkgs} may be absolute or
   relative path names. \code{pkgs} can also contain name of package
   archive files of the form \file{pkg\_version.tar.gz} as obtained from
-  CRAN (these are then extracted in a temporary directory).
+  CRAN (these are then extracted in a temporary directory
+  \file{R.INSTALL} of the current directory).
 
   For checking (via the examples in the help files \file{man/*.Rd},
   use \code{Rcmd check [-l lib] <pkg>}, use \code{Rcmd check --help}
