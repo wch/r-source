@@ -2633,9 +2633,8 @@ This often produces surprising results and can be used to identify
 bottlenecks or pieces of @R{} code that could benefit from being
 replaced by compiled code.
 
-@code{R CMD Rprof} uses a Perl
-script that may be much faster than @code{summaryRprof} for large files
-(about 4 times faster for the example above). On the other hand
+@code{R CMD Rprof} uses a Perl script that may be a little faster than
+@code{summaryRprof} for large files.  On the other hand
 @code{summaryRprof} does not require Perl and provides the results as an
 @R{} object.
 
