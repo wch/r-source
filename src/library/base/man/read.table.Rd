@@ -29,12 +29,12 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 \details{
   \code{read.csv} and \code{read.csv2} are identical to
   \code{read.table} except for the defaults. They are intended for
-  reading "comma separated variable" files (.csv) or the variant used in
-  countries that use comma as decimal point and consequently semicolon
+  reading "comma separated value" files (.csv) or the variant used in
+  countries that use a comma as decimal point and a semicolon
   as field separator. Similarly, \code{read.delim} and
   \code{read.delim2} are for reading delimited files, defaulting to
   the TAB character for the delimiter. Notice that
-  \code{header=TRUE} and \code{fill=TRUE}in these variants.
+  \code{header = TRUE} and \code{fill = TRUE} in these variants.
 }
 \arguments{
   \item{file}{the name of the file which the data are to be read from.
@@ -44,13 +44,18 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     \code{\link{getwd}()}.}
 
   \item{header}{a logical value indicating whether the file contains the
-    names of the variables as its first line.}
+    names of the variables as its first line. If missing, the value is
+    determined from the file format: \code{header} is set to @code{TRUE}
+    if and only if the first row contains one fewer field than the second.}
 
   \item{sep}{the field separator character.  Values on each line of the
-    file are separated by this character.}
+    file are separated by this character.  If \code{sep = ""} the
+    separator is ``white space'', that is one or more spaces, tabs or
+    newlines.}
 
   \item{quote}{the set of quoting characters. To disable quoting
-    altogether, use \code{quote=""}.}
+    altogether, use \code{quote=""}.  See \code{\link{scan}} for the
+    behaviour on quotes embedded in quotes.}
 
   \item{dec}{the character used in the file for decimal points.}
 
