@@ -1,4 +1,5 @@
-StructTS <- function(x, type = c("level", "trend", "BSM"), init=NULL)
+StructTS <- function(x, type = c("level", "trend", "BSM"),
+                     init = NULL, fixed = NULL, optim.control = NULL)
 {
     KalmanLike2 <- function (y, mod, nit = 0)
     {
@@ -41,9 +42,11 @@ StructTS <- function(x, type = c("level", "trend", "BSM"), init=NULL)
         V <- diag(c(1, 1, 1, rep(0, nf-2)))
         return(Z, a, P, T, V, h, Pn)
     }
-    getLike <- function(p)
+    getLike <- function(par)
     {
-        if(all(p == 0)) return(-1000)
+        p <- cf
+        p[mask] <- par
+        if(all(p == 0)) return(1000)
         Z$V[cbind(1:np, 1:np)] <- p[-(np+1)]*vx
         Z$h <- p[np+1]*vx
         Z$P[] <- 1e6*vx
@@ -71,14 +74,21 @@ StructTS <- function(x, type = c("level", "trend", "BSM"), init=NULL)
     a0 <- Z$a
     vx <- var(x, na.rm=TRUE)/100
     np <- switch(type, "level" = 1, "trend" = 2, "BSM" = 3)
+    if (is.null(fixed)) fixed <- rep(NA, np+1)
+    mask <- is.na(fixed)
+    if(!any(mask)) stop("all parameters were fixed")
+    cf <- fixed/vx
     if(is.null(init)) init <- rep(1, np+1) else init <- init/vx
+
     y <- x
-    res <- optim(init, getLike, method="L-BFGS-B",
-                 lower=rep(0, np+1), upper=rep(Inf, np+1))
+    res <- optim(init[mask], getLike, method = "L-BFGS-B",
+                 lower = rep(0, np+1), upper = rep(Inf, np+1),
+                 control = optim.control)
         if(res$convergence > 0)
             warning(paste("possible convergence problem: optim gave code=",
                           res$convergence, res$message))
-    coef <- res$par
+    coef <- cf
+    coef[mask] <- res$par
     Z$V[cbind(1:np, 1:np)] <- coef[1:np]*vx
     Z$h <- coef[np+1]*vx
     Z$P[] <- 1e6*vx
@@ -132,6 +142,26 @@ predict.StructTS <- function(object, n.ahead = 1, se.fit = TRUE, ...)
     }
     else return(pred)
 }
+
+tsdiag.StructTS <- function(object, gof.lag = 10, ...)
+{
+    ## plot standardized residuals, acf of residuals, Ljung-Box p-values
+    oldpar<- par(mfrow = c(3, 1))
+    on.exit(par(oldpar))
+    rs <- object$resid
+    stdres <- rs
+    plot(stdres, type = "h", main = "Standardized Residuals", ylab = "")
+    abline(h = 0)
+    acf(object$resid, plot = TRUE, main = "ACF of Residuals",
+        na.action = na.pass)
+    nlag <- gof.lag
+    pval <- numeric(nlag)
+    for(i in 1:nlag) pval[i] <- Box.test(rs, i, type="Ljung-Box")$p.value
+    plot(1:nlag, pval, xlab = "lag", ylab = "p value", ylim = c(0,1),
+         main = "p values for Ljung-Box statistic")
+    abline(h = 0.05, lty = 2, col = "blue")
+}
+
 
 tsSmooth <- function(object, ...) UseMethod("tsSmooth")
 

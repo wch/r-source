@@ -2,6 +2,7 @@
 \alias{tsdiag}
 \alias{tsdiag.arima0}
 \alias{tsdiag.Arima}
+\alias{tsdiag.StructTS}
 \alias{arima0.diag}
 \title{Diagnostic Plots for Time-Series Fits}
 \description{
@@ -21,9 +22,9 @@ tsdiag(object, gof.lag, ...)
   often standadized, the autocorrelation function of the residuals, and
   the p-values of a Portmanteau test for all lags up to \code{gof.lag}.
 
-  The method for \code{\link{arima}} objects plots residuals scaled by
-  the estimate of their (individual) variance, and uses the
-  Ljung--Box version of the portmanteau test.
+  The methods for \code{\link{arima}} and \code{\link{StructTS}} objects
+  plots residuals scaled by the estimate of their (individual) variance,
+  and use the Ljung--Box version of the portmanteau test.
 }
 \value{
   None. Diagnostics are plotted.
@@ -32,7 +33,7 @@ tsdiag(object, gof.lag, ...)
 \author{B. D. Ripley}
 
 \seealso{
-  \code{\link{arima}, \code{\link{Box.test}}}
+  \code{\link{arima}}, \code{\link{StructTS}}, \code{\link{Box.test}}
 }
 \note{
   \code{\link{arima0.diag}} was an earlier version using the Box--Pierce
@@ -42,9 +43,13 @@ tsdiag(object, gof.lag, ...)
 \examples{
 \dontrun{data(lh)
 fit <- arima(lh, c(1,0,0))
-tsdiag(fit)}
+tsdiag(fit)
 
 ## see also examples(arima)
-}
+
+data(JohnsonJohnson)
+(fit <- StructTS(log10(JohnsonJohnson), type="BSM"))
+tsdiag(fit)
+}}
 \keyword{ts}
 

@@ -7,12 +7,25 @@
   Fit a structural model for a time series by maximum likelihood.
 }
 \usage{
-StructTS(x, type = c("level", "trend", "BSM"), init = NULL)
+StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
+         fixed = NULL, optim.control = NULL)
 }
 \arguments{
   \item{x}{a univariate time series. Missing values are allowed.}
-  \item{type}{the class of structural model.}
+
+  \item{type}{the class of structural model.  If omitted, a BSM is used
+    for a time series with \code{frequency(x) > 1}, and a local trend
+    model otherwise.}
+
   \item{init}{initial values of the variance parameters.}
+
+  \item{fixed}{optional numeric vector of the same length as the total
+    number of parameters.  If supplied, only non-\code{NA} entries in
+    \code{fixed} will be varied.  Probably most useful for setting
+    variances to zero.}
+
+  \item{optim.control}{List of control parameters for
+    \code{\link{optim}}.  Method \code{"L-BFGS-B"} is used.}
 }
 \details{
  \emph{Structural time series} models are (linear Gaussian) state-space
@@ -63,7 +76,8 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL)
    s[t+1] = -s[t] - \dots - s[t - s + 2] + w[t],  w[t] ~ N(0, sigma^2_w)
  }
  The boundary case \eqn{\sigma^2_\omega = 0}{sigma^2_w = 0} corresponds
- to a deterministic (but arbitrary) seasonal pattern.
+ to a deterministic (but arbitrary) seasonal pattern.  (This is
+ sometimes known as the `dummy variable' version of the BSM.)
 }
 \value{
   A list of class \code{"StructTS"} with components:
@@ -122,6 +136,7 @@ trees <- window(treering, start=0)
 (fit <- StructTS(trees, type = "level"))
 plot(trees)
 lines(fitted(fit), col = "green")
+tsdiag(fit)
 
 data(UKgas)
 (fit <- StructTS(log10(UKgas), type = "BSM"))
