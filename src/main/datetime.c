@@ -55,6 +55,11 @@
 
 #include "Defn.h"
 
+#if (defined(Macintosh) & defined(__MRC__))
+#define mktime POSIXMakeTime
+#endif
+
+ 
 #ifndef HAVE_WORKING_STRPTIME
 /* Substitute based on glibc code. */
 # include "Rstrptime.h"
