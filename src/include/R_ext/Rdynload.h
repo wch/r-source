@@ -20,6 +20,8 @@
 #ifndef  R_FOREIGN_H
 #define  R_FOREIGN_H
 
+typedef void * (*DL_FUNC)();
+
 /* 
  These are very similar to those in  unix/dynload.c
  but we maintain them separately to give us more freedom to do
@@ -28,21 +30,21 @@
 */
 typedef struct {
     const char *name;
-    void       *fun;
+    DL_FUNC     fun;
     int         numArgs;
  
 } R_CMethodDef;
 
 typedef struct {
     const char *name;
-    void       *fun;
+    DL_FUNC     fun;
     int         numArgs;
  
 } R_FortranMethodDef;
 
 typedef struct {
     const char *name;
-    void       *fun;
+    DL_FUNC     fun;
     int         numArgs;
  
 } R_CallMethodDef;
@@ -57,7 +59,7 @@ R_registerRoutines(DllInfo *info, R_CMethodDef *croutines,
 
 DllInfo *R_getDllInfo(const char *name);
 
-typedef void * (*DL_FUNC)();
+
 DL_FUNC R_FindSymbol(char const *, char const *);
 int moduleCdynload(char *module, int local, int now);
 

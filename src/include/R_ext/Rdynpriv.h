@@ -41,6 +41,7 @@ typedef void *HINSTANCE;
 
 
 #include "Defn.h"
+#include "R_ext/Rdynload.h"
 
   /*
      A name-routine pair.
@@ -66,21 +67,21 @@ typedef struct {
 
 typedef struct {
     char       *name;
-    void       *fun;
+    DL_FUNC     fun;
     int         numArgs;
     /* Add information about argument types or converters. */  
 } Rf_DotCSymbol;
 
 typedef struct {
     char       *name;
-    void       *fun;
+    DL_FUNC     fun;
     int         numArgs;
 
 } Rf_DotCallSymbol;
 
 typedef struct {
     char       *name;
-    void       *fun;
+    DL_FUNC     fun;
     int         numArgs;
 
 } Rf_DotFortranSymbol;
@@ -172,6 +173,8 @@ extern int nCPFun;
 
 DL_FUNC Rf_lookupCachedSymbol(const char *name, const char *pkg, int all);
 
+Rf_DotCSymbol *Rf_lookupRegisteredCSymbol(DllInfo *info, const char *name);
+Rf_DotCallSymbol *Rf_lookupRegisteredCallSymbol(DllInfo *info, const char *name);
 
 #ifdef __cplusplus
 }
