@@ -615,7 +615,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	args2buff(FORMALS(s), 0, 1, d);
 	print2buff(") ", d);
 	writeline(d);
-	deparse2buff(BODY(s), d);
+	deparse2buff(BODY_EXPR(s), d);
 	break;
     case ENVSXP:
 	print2buff("<environment>", d);
@@ -967,8 +967,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	break;
 #ifdef BYTECODE
     case BCODESXP:
-	sprintf(tpb, ".Compiled(...)");
-	print2buff(tpb, d);
+	print2buff("<bytecode>", d);
 	break;
 #endif
     case WEAKREFSXP:
