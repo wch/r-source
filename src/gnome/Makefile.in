@@ -12,7 +12,8 @@ include $(top_builddir)/Makeconf
 
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(GNOME_INCLUDEDIR) $(LIBGLADE_CFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
 
-SOURCES = ../unix/dataentry.c \
+SOURCES = stubs.c \
+	  ../unix/X11/dataentry.c \
 	  ../unix/dynload.c \
 	  ../unix/sys-unix.c \
 	  ../unix/sys-common.c \
