@@ -3092,6 +3092,7 @@ void GPolygon(int n, double *x, double *y, int coords,
     int i;
     double *xx;
     double *yy;
+    char *vmaxsave = vmaxget();
 
     if (Rf_gpptr(dd)->lty == LTY_BLANK)
 	fg = NA_INTEGER; /* transparent for the border */
@@ -3114,6 +3115,7 @@ void GPolygon(int n, double *x, double *y, int coords,
     }
     else
 	clipPolygon(n, xx, yy, DEVICE, bg, fg, 0, dd);
+    vmaxset(vmaxsave);
 }
 
 #include <stdio.h>
