@@ -4,8 +4,7 @@
 anova(object, \dots)
 anovalist(object, \dots, test = NULL)
 summary(object, correlation = FALSE)
-predict(object, newdata = model.frame(object), conf.level = 0.95,
-        tol.level = conf.level)
+predict(object, newdata = model.frame(object), se = FALSE)
 coefficients(x) ; coef(x)
 deviance(x)
 df.residual(x)
@@ -91,13 +90,11 @@ stars'' if \code{signif.stars= TRUE}.
   value returned by \code{lm}.
 }
 
-The function \code{predict} produces predicted values with confidence
-and prediction (tolerance) intervals in the form of a data frame with
-components \code{predictor}, \code{conf.l}, \code{conf.u},
-\code{pred.l}, and \code{pred.u}, obtained by evaluating the
-regression function in the frame \code{newdata}, the arguments
-\code{conf.level} and \code{tol.level} control the respective
-intervals.
+The function \code{predict} produces predicted values, obtained by
+evaluating the regression function in the frame \code{newdata}.  If the
+logical \code{se} is \code{FALSE}, a vector of matrix of predictions is
+returned; if \code{TRUE}, a list with components \code{fit} and
+\code{se} giving the predictions and corresponding standard errors.
 
 \seealso{
 The model fitting function \code{\link{lm}}.
@@ -122,9 +119,9 @@ abline(h=0, lty=2, col = 'gray')
 qqnorm(residuals(lm.D90))
 
 ## Predictions
-x<-rnorm(15)
-y<-x+rnorm(15)
-predict(lm(y~x))
-predict(lm(y~x),data.frame(x=seq(-3,3,0.1)),.99,.90)
+x <- rnorm(15)
+y <- x + rnorm(15)
+predict(lm(y ~ x))
+predict(lm(y ~ x), data.frame(x = seq(-3, 3, 0.1)), se = TRUE)
 }
 \keyword{regression}
