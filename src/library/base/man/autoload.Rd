@@ -11,6 +11,7 @@ autoloader(name, package, \dots)
 \alias{autoloader}
 \alias{.AutoloadEnv}
 \alias{.Autoloaded}
+\alias{Autoloads}
 \arguments{
   \item{name}{string giving the name of an object.}
   \item{package}{string giving the name of a package containing the object.}
