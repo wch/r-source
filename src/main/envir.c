@@ -434,7 +434,7 @@ void unbindVar(SEXP symbol, SEXP rho)
 	hashcode = newhashpjw(CHAR(PRINTNAME(symbol))) %
 	    HASHSIZE(HASHTAB(rho));
 	/* Should be changed to remove */
-	return(R_HashDelete(hashcode, symbol, HASHTAB(rho)));
+	R_HashDelete(hashcode, symbol, HASHTAB(rho));
     }
 }
 
