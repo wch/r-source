@@ -31,6 +31,17 @@ quit(save="default", status=0, runLast=TRUE)
     the \code{.Last} function, control will be returned to the command
     prompt, so do test the function thoroughly.
 }
+\details{
+    Some error statuses are used by \R itself.  The default error
+    handler for non-interactive effectively calls \code{q("no", 1,
+	FALSE)} and returns error code 1. Error status 2 is used for \R
+    `suicide', that is a catastrophic failure, and other small numbers
+    are used by specific ports for initialization failures. It is
+    recommended that users choose statuses of 10 or more.
+
+    Valid values of \code{status} are system-dependent, but \code{0:255}
+    are normally valid.
+}
 \seealso{\code{\link{.First}} for setting things on startup.
 }
 \examples{
