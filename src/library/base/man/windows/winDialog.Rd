@@ -26,8 +26,16 @@ winDialogString(message, default)
   For \code{winDialogString} a string giving the contents of the text
   box when \code{Ok} was pressed, or \code{NULL} if code{Cancel} was pressed.
 }
+\note{
+  The standard keyboard accelerators work with these dialog boxes:
+  where appropriate \code{Return} accepts the default action,
+  \code{Esc} cancels and the underlined initial letter (\code{Y} or
+  \code{N}) can be used.
+}
 \seealso{\code{\link{winMenus}}\cr
-  \code{\link{file.choose}} to select a file.}
+  \code{\link{file.choose}} to select a file\cr
+  package \code{windlgs} in the package source distribution for ways to
+  program dialogs in C in the \code{GraphApp} toolkit.}
 
 \examples{
 \dontrun{winDialog("yesno", "Is it OK to delete file blah")}
