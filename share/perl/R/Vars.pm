@@ -48,7 +48,7 @@ if($^O =~ /^(MS)?Win32$/i){
 }
 elsif($^O =~ /^MacOS$/i){
     $OSTYPE = "mac";
-    use Mac::Files;
+##    use Mac::Files;
 }
 else{
     $OSTYPE = "unix";
