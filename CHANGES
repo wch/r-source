@@ -1,3 +1,10 @@
+		CHANGES IN R VERSION 0.63
+
+NEW FEATURES
+
+    o   Added kmeans to package mva (donated by B. Ripley)
+
+
 		CHANGES IN R VERSION 0.62.2
 
 		CHANGES IN R VERSION 0.62.1
