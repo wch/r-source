@@ -87,9 +87,10 @@ boxplot.stats <- function(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
     n <- length(nna) # including +/- Inf
     stats <- fivenum(x, na.rm = TRUE)
     iqr <- diff(stats[c(2, 4)])
+    if(coef < 0) stop("`coef' must not be negative")
     if(coef == 0)
 	do.out <- FALSE
-    else if(do.out) {
+    else { # coef > 0
 	out <- x < (stats[2] - coef * iqr) | x > (stats[4] + coef * iqr)
 	if(any(out[nna])) stats[c(1, 5)] <- range(x[!out], na.rm = TRUE)
     }

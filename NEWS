@@ -5,6 +5,11 @@
 	*						 *
 	**************************************************
 
+BUG FIXES
+
+    o	the "coef = 0" fix (PR#917) to boxplot.stats() accidentally broke
+	boxplot.stats(do.out = FALSE).
+
 
 		CHANGES IN R VERSION 1.2.3
 
