@@ -292,3 +292,20 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return (ans);
 }
+
+SEXP do_shellexec(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    char *home, buf[MAX_PATH];
+    SEXP file;
+
+    checkArity(op, args);
+    home = getenv("R_HOME");
+    if (home == NULL)
+	error("R_HOME not set");
+    file = CAR(args);
+    if (!isString(file) || length(file) != 1)
+	errorcall(call, "invalid file argument");
+    strcpy(buf, CHAR(STRING(file)[0]));
+    ShellExecute(NULL, "open", buf, NULL, home, SW_SHOW);
+    return R_NilValue;
+}

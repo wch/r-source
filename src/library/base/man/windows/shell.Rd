@@ -1,9 +1,11 @@
 \name{shell}
 \alias{shell}
+\alias{shell.exec}
 \title{Invoke a System Command, using a Shell}
 \usage{
 shell(cmd, shell, flag="/c", intern=FALSE, wait=TRUE,
       translate=FALSE, mustWork=FALSE)
+shell.exec(file)
 }
 \arguments{
     \item{cmd}{the system command to be invoked, as a string.}
@@ -21,11 +23,15 @@ shell(cmd, shell, flag="/c", intern=FALSE, wait=TRUE,
     \item{translate}{If \code{TRUE}, \code{"/"} in \code{cmd} is
 	translated to \code{"\\"}.}
     \item{mustWork}{a logical; if \code{TRUE} failure to run the command
-	will give an \R error.}
+      will give an \R error.}
+    \item{file}{file to be opened.}
 }
 \description{
     \code{shell} runs the command specified by \code{cmd}, usually under
     a shell.
+
+    \code{shell.exec} opens the specified file using the application
+    specified in the Windows file associations.
 }
 \value{
     If \code{intern=TRUE}, a character vector giving the output of the
@@ -41,7 +47,10 @@ shell(cmd, shell, flag="/c", intern=FALSE, wait=TRUE,
 
     If \code{intern=FALSE} and \code{wait=TRUE} (the defaults) the text
     output from a command that is a console application will appear in
-    the \R console (\code{Rgui}) or the window running \R (\code{Rterm}).
+    the \R console (\code{Rgui}) or the window running \R
+    (\code{Rterm}).
+
+    \code{shell.exec} returns no value.
 }
 \details{
     If no \code{shell} is specified, the environment variables

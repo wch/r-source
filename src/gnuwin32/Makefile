@@ -278,6 +278,7 @@ pkgcheck-base:
 	@(cd ../../library/base/R-ex; rm -f *.R)
 
 docs manuals:
+	@$(MAKE) -C ../../doc/manual -f Makefile.win clean
 	@$(MAKE) -C ../../doc/manual -f Makefile.win
 	$(RM) ../../library/base/latex/*.tex
 

@@ -18,7 +18,9 @@ graphics window, savePlot() or dev.print to the new devices png(), bmp()
 and jpeg(), which can also be used directly.
 
 PDF versions of the (draft) manuals are available in file rw0900d.zip
-and install into rw0900/doc/manuals.
+and install into rw0900/doc/manuals.  These can be read in Acrobat
+Reader from the Manuals sub-menu of the Help menu provided they and
+the reader (http://www.adobe.com) are installed.
 
 
 rw0651
