@@ -53,6 +53,8 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(pat) || length(pat) < 1 || !isString(vec))
 	errorcall(call, R_MSG_IA);
 
+    /* NAs are removed in R code so this isn't used */
+    /* it's left in case we change our minds again */
     /* special case: NA pattern matches only NAs in vector */
     if (STRING_ELT(pat,0)==NA_STRING){
 	n = length(vec);\
@@ -225,6 +227,8 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	int ovector[30];
 	offset = 0;
 	nmatch = 0;
+	/* NA `pat' are removed in R code, the C code is left */
+	/* in case we change our minds again */
 	/* NA matches only itself */
         if (STRING_ELT(vec,i)==NA_STRING){
 	    if (STRING_ELT(pat,0)==NA_STRING) 
