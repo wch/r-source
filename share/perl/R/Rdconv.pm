@@ -711,8 +711,16 @@ sub code2html {
 			s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
 		}
 	    } else {
-		$text =~
+	     if($main::OSdir eq "mac"){
+	     my $uxfile = $htmlfile;
+		 $uxfile =~ s|:|\/|g;
+		 $text =~
+		    s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$uxfile\">$arg<\/a>/s;
+		    }
+		 else{
+		 	$text =~
 		    s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
+		 }   
 	    }
 	}
 	else{
