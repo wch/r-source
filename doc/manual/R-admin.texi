@@ -1142,13 +1142,9 @@ fail.  The maximal set of optimization options known to work is
 We have found little performance difference between @command{gcc} and
 @command{cc} but considerable benefit from using a SunPro Fortran
 compiler: the @command{gcc}/@command{f77} combination works well.
-To use C++ code, Forte 7 requires
-@smallexample
-SHLIB_CXXLDFLAGS=-lCstd
-@end smallexample
-
-@noindent
-Possibly @code{-lCrun} might be needed as well or instead.
+To use C++ code Forte 7 requires @code{-lCstd}, which the configure
+script will add to @code{SHLIB_CXXLDFLAGS} if it identifies the
+compiler correctly.
 
 
 To compile for a 64-bit target on Solaris (which needs an UltraSparc
@@ -1162,7 +1158,6 @@ F77="f95 -xarch=v9"
 FFLAGS="-xO5 -xlibmil -dalign"
 CXX="CC -xarch=v9"
 CXXFLAGS="-xO5 -xlibmil -dalign"
-SHLIB_CXXLDFLAGS=-lCstd
 @end smallexample
 
 @noindent
