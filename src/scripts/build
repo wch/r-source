@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/bin/build
 
-REVISION='$Revision: 1.3 $'
+REVISION='$Revision: 1.4 $'
 VERSION=`set - ${REVISION}; echo ${2}`
 VERSION="R package builder version ${VERSION}
 
@@ -22,11 +22,13 @@ Options:
   -v, --version    Display version information and exit successfully.
   --vsize=N        Set R's vector heap size to N bytes.
   --nsize=N        Set R's number of cons cells to N.
+  --force          Force overwriting of (index) files.
 
 Email bug reports to <r-bugs@lists.r-project.org>."
 
 R_opts="--vanilla"
 DEBUG=false
+FORCE=false
 PKGS=
 
 START_DIR=`pwd`
@@ -40,6 +42,8 @@ while test -n "${1}"; do
       echo "${VERSION}"; exit 0 ;;
     -d|--debug)
       DEBUG=true ;;
+    --force)
+      FORCE=true ;;
     --nsize=*)
       R_NSIZE=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     --vsize=*)
@@ -65,6 +69,25 @@ fi
 checking () { echo ${ECHO_N} "* checking $@ ...${ECHO_C}"; }
 message () { echo "* $@"; }
 result () { echo "${ECHO_T} $@"; }
+
+## For updating `INDEX' and `data/00Index;
+updateIndex () {
+  oldindex=${1}
+  newindex=${TMPDIR:-/tmp}/Rbuild${$}
+  R CMD Rdindex ${Rdfiles} > ${newindex}
+  if cmp ${newindex} ${oldindex} > /dev/null; then
+    result "OK"
+  else
+    result "NO"
+    if ${FORCE}; then
+      echo "overwriting \`${oldindex}' as \`--force' was given"
+      cp ${newindex} ${oldindex}
+      else
+	echo "use \`--force' to overwrite the existing \`${oldindex}'"
+      fi
+    fi
+  rm -f ${newindex}
+}
 
 ## The work horse
 buildpkg () {
@@ -130,7 +153,7 @@ buildpkg () {
 
   ## Check R documentation files
   if test -d man; then
-    Rdfiles=`find man -name "*.[Rr]d" -print`
+    Rdfiles=`find man -name "*.[Rr]d" -print | sort`
     checking "Rd files"
     any=
     for tag in name alias title description keyword; do
@@ -150,31 +173,54 @@ buildpkg () {
   else
     result "WARNING: no Rd files found"
   fi
-  ## Update `INDEX'
-  if test -n "${Rdfiles}"; then
-    message "creating \`INDEX' from Rd files"
-    R CMD Rdindex ${Rdfiles} > INDEX
+  ## Check for `INDEX'
+  checking "for \`INDEX'"
+  if test -r INDEX; then
+    result "OK"
+    if test -n "${Rdfiles}"; then
+      checking "whether \`INDEX' is up-to-date"
+      updateIndex "INDEX"
+    fi
   else
-    checking "for \`INDEX'"
-    if test -r INDEX; then
-      result "WARNING: cannot update \`INDEX'"
+    result "NO"
+    if test -n "${Rdfiles}"; then
+      message "creating \`INDEX' from Rd files"
+      R CMD Rdindex ${Rdfiles} > INDEX
+      if test ${?} -ne 0; then
+	result "ERROR"
+	exit 1
+      else
+	result "OK"
+      fi
     else
-      result "ERROR: file \`INDEX' not found"
+      result "ERROR: no \`INDEX' and no Rd files found."
       exit 1
     fi
   fi
+  
   ## Update `data/00Index'
   if test -d data; then
-    if test -n "${Rdfiles}"; then
-      message "creating \`data/00Index' from Rd files"
-      Rdfiles=`grep -l "\\\\keyword{datasets}" ${Rdfiles}`
-      R CMD Rdindex ${Rdfiles} > data/00Index
+    Rdfiles=`grep -l "\\\\keyword{datasets}" ${Rdfiles}`
+    checking "for \`data/00Index'"
+    if test -r data/00Index; then
+      result "OK"
+      if test -n "${Rdfiles}"; then
+	checking "whether \`data/00Index' is up-to-date"
+	updateIndex "data/00Index"
+      fi
     else
-      checking "for \`data/00Index'"
-      if test -r data/00Index; then
-	result "WARNING: cannot update \`data/00Index'"
+      result "NO"
+      if test -n "${Rdfiles}"; then
+	message "creating \`data/00Index' from Rd files"
+	R CMD Rdindex ${Rdfiles} > data/00Index
+	if test ${?} -ne 0; then
+	  result "ERROR"
+	  exit 1
+	else
+	  result "OK"
+	fi
       else
-	result "ERROR: file \`data/00Index' not found"
+	result "ERROR: no \`data/00Index' and no Rd files found."
 	exit 1
       fi
     fi
