@@ -36,6 +36,7 @@ make.packages.html <- function()
             "</td></tr>\n", file=out, sep="")
     }
     cat("</table>\n</body></html>\n", file=out)
+    close(out)
     invisible(pg)
 }
 
@@ -84,6 +85,7 @@ make.function.html <- function()
         cat("</table>\n", file=out)
     }
     cat("</body>", file=out)
+    close(out)
     invisible(fun)
 }
 
