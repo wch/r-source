@@ -444,6 +444,7 @@ setRepositories <- function(graphics=TRUE)
 
     default <- a[["default"]]
 
+    res <- integer(0)
     if(graphics) {
         ## return a list of row numbers.
         if(.Platform$OS.type == "unix" &&
@@ -451,18 +452,19 @@ setRepositories <- function(graphics=TRUE)
             tcltk:::repositoriesWidget(a)
             return(invisible())
         } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
-            res <- match(select.list(a[,1], a[default,1], multiple = TRUE,
+            res <- match(select.list(a[, 1], a[default, 1], multiple = TRUE,
                                      "Repositories"),
-                         a[,1])
-    } else {
+                         a[, 1])
+    }
+    if(!length(res)) {
         ## text-mode fallback
         cat(gettext("--- Please select repositories for use in this session ---\n"))
         nc <- length(default)
-        cat("\n", paste(seq(len=nc), ": ",
-                        ifelse(res, "+", " "), " ", a[, 1],
-                        sep=""),
-            "\n", sep="\n")
-        cat(gettext("Enter one or more numbers\n"))
+        cat("", paste(seq(len=nc), ": ",
+                      ifelse(default, "+", " "), " ", a[, 1],
+                      sep=""),
+            "", sep="\n")
+        cat(gettext("Enter one or more numbers separated by spaces\n"))
         res <- scan("", what=0, quiet=TRUE, nlines=1)
         if(!length(res) || (length(res) == 1 && !res[1])) return(invisible())
         res <- res[1 <= res && res <= nc]
