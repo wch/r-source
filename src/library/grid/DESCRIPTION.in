@@ -6,4 +6,5 @@ Author: Paul Murrell <paul@stat.auckland.ac.nz>
 Maintainer: R Core Team <R-core@r-project.org>
 Description: A rewrite of the graphics layout capabilities, plus some
   support for interaction
+Depends: grDevices
 License: GPL Version 2 or later.
