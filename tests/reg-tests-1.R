@@ -733,3 +733,8 @@ stopifnot(all(Mod(vector("complex", 7)) == 0))# contained garbage in 1.5.0
 
 ## error in 1.5.1
 hist(.leap.seconds, breaks = 5)
+
+##Jonathan Rougier 2002-06-18
+x <- matrix(runif(30), 10, 3)
+poly(x, degree=2)
+## failed in 1.5.1

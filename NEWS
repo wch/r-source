@@ -18,6 +18,7 @@ BUG FIXES
     o	The internal download.file() methods was setting the proxy
 	port to 0 unless it was specified.
 
+    o	poly() did not work for >=3 column matrices.
 
 
 		CHANGES IN R VERSION 1.5.1
