@@ -44,7 +44,7 @@ delim_match(SEXP x, SEXP delims)
     for(i = 0; i < n; i++) {
 	start = end = -1;
 	s = CHAR(STRING_ELT(x, i));
-	if(*s == '\0') continue;
+	/* if(*s == '\0') continue; */
 	pos = is_escaped = delim_depth = 0;
 	while((c = *s++) != '\0') {
 	    if(c == '\n') {
@@ -65,7 +65,7 @@ delim_match(SEXP x, SEXP delims)
 		if(delim_depth > 1) delim_depth--;
 		else if(delim_depth == 1) {
 		    end = pos;
-		    continue;
+		    break;
 		}
 		else if(equal_start_and_end_delims) {
 		    start = pos;
