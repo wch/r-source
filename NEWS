@@ -53,6 +53,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   predict.glm() works again with type="link".
+
     o   subscripting arrays and matrices no longer loses the names of
 	the dimnames vector.  Transpose also preserves the names.
 
