@@ -84,7 +84,7 @@ At this point there are two approaches:
 
 1) Streamlined way
 
-Assuming that ...\rw1021\bin is in your path, use
+Assuming that ...\rw1022\bin is in your path, use
 
 	Rcmd INSTALL package
 
