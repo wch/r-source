@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# ${RHOME}/tools/GETVERSION
+# ${RHOME}/tools/GETCONFIG
 
 echo "/* src/include/Rver.h.  Generated automatically */"
 echo "#ifndef R_EXT_RVER_H"
@@ -15,20 +15,21 @@ echo
 echo "#ifndef RCONFIG_H_"
 echo
 us=`sed -n /HAVE_F77_UNDERSCORE/p Rconfig.h | sed -n 1p | sed s/.\*HAVE_F77_UNDERSCORE//`
-if [ $us = 1 ] ; then
+if [ "$us" -eq 1 ] ; then
 echo "#define F77_SYMBOL(x)	x ## _"
 else
 echo "#define F77_SYMBOL(x)	x"
 fi
 echo
-ieee=`sed -n /HAVE_F77_UNDERSCORE/p Rconfig.h | sed -n 1p | sed s/.\*HAVE_F77_UNDERSCORE//`
-if [ $ieee = 1 ] ; then
+ieeea=`sed -n /HAVE_ISNAN/p Rconfig.h | sed -n 1p | sed -e s/.\*HAVE_ISNAN// -e s+/.\*$++ `
+ieeeb=`sed -n /HAVE_FINITE/p Rconfig.h | sed -n 1p | sed s/.\*HAVE_FINITE//`
+if [ "$ieeea" -eq 1 -a "$ieeeb" -eq 1 ] ; then
 echo "#define IEEE_754 1"
 else
 echo "/* #undef IEEE_754 */"
 fi
 endian=`sed -n /WORDS_BIGENDIAN/p Rconfig.h | sed s/.\*WORDS_BIGENDIAN//`
-if [ $endian = 1 ] ; then
+if [ "$endian" -eq 1 ] ; then
 echo "#define WORDS_BIGENDIAN 1"
 else
 echo "/* #undef WORDS_BIGENDIAN */"
