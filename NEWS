@@ -621,6 +621,9 @@ BUG FIXES
     o	Changing timezones in the POSIXt functions was not working on
 	some Linux systems, and this has been corrected.
 
+    o	ks.test() in package ctest had numerical problems in the lower
+	tail of the asymptotic distribution (PR#2571).
+
 
 
 	**************************************************
