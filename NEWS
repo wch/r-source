@@ -131,6 +131,12 @@ BUG FIXES
 	equal, yet not always distinguishing NA and NaN.  This was
 	very rare except for data imported as binary numbers.
 
+    o   the error handler recover protects itself against errors in
+        dump.frames and uses a new utility, limitedLabels, to generate
+        names for the dump that don't inadvertently blow the limit on
+        symbol length.  (TODO:  either fix dump.frames accordingly or
+        remove the limit--say by truncating very long symbols?)
+
 
 
 	**************************************************
