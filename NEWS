@@ -85,6 +85,9 @@ BUG FIXES
 	partial=TRUE for factors whose levels were not in
 	lexicographical order.
 
+    o   a serious performance flaw in as() computations was fixed (the
+        methods were not being cached properly.)
+
 
 
 		CHANGES IN R VERSION 1.7.0
