@@ -1080,7 +1080,7 @@ usually identified by suffix @code{.utf8}, something like
 @code{en_GB.utf8}@footnote{As usual, AIX has to be different: it has
 @code{EN_US.UTF-8}!}.  UTF-8 is an encoding of Unicode and in principle
 covers all human languages simultaneously: however, a given system may
-not have fonts capable of displaying all these languages.
+not have fonts capable of displaying more than a few of these languages.
 
 To enable UTF-8 support, configure with @option{--enable-utf8}.  This
 will check for a large number of features, notably support for the
@@ -1094,10 +1094,10 @@ started in UTF-8.}.  If run in a single-byte locale @R{} behaves almost
 exactly as if it was not configured with @option{--enable-utf8}.
 
 A version of @R{} with UTF-8 support can also be run in other multi-byte
-locales, for example those using the EUC-JP, EUC-KR and EUC-TW encodings.
-A few parts of @R{} assume that ASCII characters never occur as part of
-multi-byte character sequences, which is true of UTF-8 and the EUC-*
-locales, but not of @code{ja_JP.ujis}.
+locales, for example those using the EUC-JP, EUC-KR and EUC-TW
+encodings.  A few parts of @R{} currently assume that ASCII characters
+never occur as part of multi-byte character sequences, which is true of
+UTF-8 and the EUC-* locales, but not of @code{ja_JP.ujis}.
 
 @node Configuration variables, Using make, Internationalization, Configuration on Unix
 @section Configuration variables
