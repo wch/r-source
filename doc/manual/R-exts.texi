@@ -2923,12 +2923,17 @@ vectors (which @code{outer} and @code{%o%} already do).  As usual the
 @R{} code is simple
 
 @smallexample
-out <- function(x, y) .Call("out", as.double(x), as.double(y))
+out <- function(x, y) 
+@{
+   storage.mode(x) <- storage.mode(y) <- "double"
+   .Call("out", x, y)
+@}
 @end smallexample
 
 @noindent
-where we expect @code{x} and @code{y} to be numeric vectors, possibly
-with names.  This time we do the coercion in the calling @R{} code.
+where we expect @code{x} and @code{y} to be numeric vectors (possibly
+integer), possibly with names.  This time we do the coercion in the
+calling @R{} code.
 
 C code to do the computations is
 
@@ -3027,7 +3032,7 @@ need to add a symbol for it @emph{via} a call to
 @group
   SEXP version;
   PROTECT(version = allocVector(REALSXP, 1));
-  REAL(version) = 3.0;
+  REAL(version)[0] = 3.0;
   setAttrib(ans, install("version"), version);
   UNPROTECT(1);
 @end group
