@@ -80,6 +80,7 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
         if(file.exists(file.path(dataDir, "Rdata.rds")))
             warning("package seems to be using lazy loading for data already")
         dataEnv <- new.env(hash=TRUE)
+        tmpEnv <- new.env()
         files <- tools:::list_files_with_type(dataDir, "data")
         files <- unique(basename(tools:::file_path_sans_ext(files)))
         dlist <- vector("list", length(files))
@@ -88,10 +89,18 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
         for(f in files) {
             data(list = f, package = package, lib.loc = lib.loc,
                  envir = dataEnv)
-            tmp <- ls(envir = dataEnv, all.names = TRUE)
-            dlist[[f]] <- setdiff(tmp, loaded)
-            loaded <- tmp
+            data(list = f, package = package, lib.loc = lib.loc,
+                 envir = tmpEnv)
+            tmp <- ls(envir = tmpEnv, all.names = TRUE)
+            rm(list = tmp, envir = tmpEnv)
+            dlist[[f]] <- tmp
+            loaded <- c(loaded, tmp)
         }
+        dup<- duplicated(loaded)
+        if(any(dup))
+            warning("object(s) ", paste(sQuote(loaded[dup]), collapse=", "),
+                    " are created by more than one data call")
+
         if(length(loaded)) {
             dbbase <- file.path(dataDir, "Rdata")
             makeLazyLoadDB(dataEnv, dbbase, compress = compress)
