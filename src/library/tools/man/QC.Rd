@@ -33,30 +33,39 @@ checkReplaceFuns(package, dir, lib.loc = NULL)
   \code{checkDocArgs} checks, for all Rd files in a package, whether all
   arguments shown in the usage sections of the Rd file are documented in
   its arguments section.  It also reports duplicated entries in the
-  arguments section.
+  arguments section, and \dQuote{over-documented} arguments which are
+  given in the arguments section but not in the usage.  Note that the
+  match is for the usage section and not a possibly existing synopsis
+  section, as the usage is what gets displayed.
 
   \code{checkDocStyle} investigates how (S3) methods are shown in the
-  usages of the Rd files in a package.  It reports if methods are shown
-  along with their generic, which typically causes problems for the
-  documentation of the primary argument of the generic.  It also finds
-  the methods shown by their full name (rather than that of the generic
-  using the Rd \code{\\method} markup).
+  usages of the Rd files in a package.  It reports the methods shown by
+  their full name rather than using the Rd \code{\\method} markup for
+  indicating S3 methods.  Earlier versions of \R also reported about
+  methods shown along with their generic, which typically caused
+  problems for the documentation of the primary argument in the generic
+  and its methods.  With \code{\\method} now being expanded in a way
+  that class information is preserved, \dQuote{joint} documentation is
+  no longer necessarily a problem.  (The corresponding information is
+  still contained in the object returned by \code{checkDocStyle}.)
 
-  \code{checkMethods} checks whether all methods defined in the package
-  R code have all arguments of the corresponding generic, with
+  \code{checkMethods} checks whether all S3 methods defined in the
+  package R code have all arguments of the corresponding generic, with
   positional arguments of the generics in the same positions for the
   method.  As an exception, the first argument of a formula method
   \emph{may} be called \code{formula} even if this is not the name used
-  by the generic.  Currently, only functions the body of which starts
-  with a call to \code{UseMethod} are recognized as (S3) generics;
-  internal method dispatch (see section \dQuote{Simple Dispatching} in
-  \link[base]{zMethods}) are not taken into account.  The generics are
-  sought first in the given package and then in the \pkg{base} package.
-  The rules when \code{\dots} is involved are subtle: see the source
-  code.
+  by the generic.  The rules when \code{\dots} is involved are subtle:
+  see the source code.  Functions recognized as S3 generics are those
+  with a call to \code{UseMethod} in their body, internal S3 generics
+  (see \code{\link[base]{zMethods}}), and S3 group generics (see
+  \code{\link[base]{Math}}).  Possible dispatch under a different name
+  is not taken into account.  The generics are sought first in the given
+  package and then in the \pkg{base} package (but currently not in other
+  packages \dQuote{used} by the given package).  
 
-  \code{checkReplaceFuns} checks whether replacement functions in the
-  package R code have their final argument named \code{value}.
+  \code{checkReplaceFuns} checks whether replacement functions or S3/S4
+  replacement methods in the package R code have their final argument
+  named \code{value}.
   
   If using an installed package, the checks needing access to all R
   objects of the package will load the package (unless it is the
