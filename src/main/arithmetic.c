@@ -501,7 +501,7 @@ SEXP R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     }
     else val = integer_binary(PRIMVAL(op), x, y, lcall);
 
-    /* quick return of there are no attributes */
+    /* quick return if there are no attributes */
     if (! xattr && ! yattr) {
 	UNPROTECT(nprotect);
 	return val;
@@ -789,6 +789,10 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
     }
 
 
+    /* quick return if there are no attributes */
+    if (ATTRIB(s1) == R_NilValue && ATTRIB(s2) == R_NilValue)
+	return ans;
+
     /* Copy attributes from longer argument. */
 
     if (n1 > n2)
@@ -932,6 +936,9 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 	break;
     }
 
+    /* quick return if there are no attributes */
+    if (ATTRIB(s1) == R_NilValue && ATTRIB(s2) == R_NilValue)
+	return ans;
 
     /* Copy attributes from longer argument. */
 
