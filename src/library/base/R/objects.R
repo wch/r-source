@@ -96,15 +96,17 @@ methods <- function (generic.function, class)
         info <- info[grep(name, row.names(info)), ]
         info <- info[! row.names(info) %in% S3MethodsStopList, ]
 
-        ## check if we can find a generic matching the name
-        possible.generics <- gsub(name, "", row.names(info))
-        keep <- sapply(possible.generics, function(nm) {
-            where <- find(nm, mode = "function")
-            if(!length(where)) return(FALSE)
-            any(sapply(where, function(w)
-                       nchar(findGeneric(nm, envir=as.environment(w))) > 0))
-        })
-        info <- info[keep, ]
+        if(nrow(info)) {
+            ## check if we can find a generic matching the name
+            possible.generics <- gsub(name, "", row.names(info))
+            keep <- sapply(possible.generics, function(nm) {
+                where <- find(nm, mode = "function")
+                if(!length(where)) return(FALSE)
+                any(sapply(where, function(w)
+                           nchar(findGeneric(nm, envir=as.environment(w))) > 0))
+            })
+            info <- info[keep, ]
+        }
 
         ## also look for registered methods in loaded namespaces.
         ## These should only be registered in environments containing
