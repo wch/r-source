@@ -204,10 +204,12 @@ srcdist:
 	$(RM) -r src
 
 
-#taken from ../include/makefile.in
-SRC_HEADERS = S.h S_compat.h f2c.h Arith.h Complex.h Error.h Errormsg.h \
-	 Fortran.h Applic.h Blas.h Linpack.h Mathlib.h Memory.h PrtUtil.h \
-	 Random.h Rinternals.h Utils.h Platform.h FFDecl.h FFTab.h globalvar.h
+#taken from ../include/Makefile.in
+SRC_HEADERS = Applic.h Arith.h Blas.h Complex.h Error.h Errormsg.h \
+	Fortran.h Linpack.h Mathlib.h Memory.h PrtUtil.h Random.h \
+	Rdefines.h Rinternals.h S.h S_compat.h Utils.h f2c.h
+OBJ_HEADERS = Rconfig.h Rversion.h
+GW32_HEADERS = globalvar.h
 
 packagedist:
 	$(RM) -r $(RPREFIX)sp.zip $(RPREFIX)
@@ -217,9 +219,9 @@ packagedist:
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
 	$(CP) -pr help check $(RPREFIX)/src/gnuwin32
 	$(MAKE) -C $(RPREFIX)/src/gnuwin32/help clean
-	$(CP) -p $(foreach i,$(SRC_HEADERS),../include/$i) $(RPREFIX)/src/include
+	$(CP) -p $(foreach i,$(SRC_HEADERS) $(OBJ_HEADERS),../include/$i) $(RPREFIX)/src/include
 	$(CP) readme.packages $(RPREFIX)
-	zip -r $(RPREFIX)sp.zip $(RPREFIX)
+	zip -rX $(RPREFIX)sp.zip $(RPREFIX)
 	$(RM) -r $(RPREFIX)
 
 

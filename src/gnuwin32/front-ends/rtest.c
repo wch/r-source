@@ -8,6 +8,7 @@
 #define PSIGNAL
 #include "psignal.h"
 
+/* From Defn.h, which is not distributed */
 #define SA_NORESTORE 0
 #define SA_RESTORE   1
 
@@ -18,7 +19,7 @@
 #define SA_SUICIDE   5
 
 /* one way to allow user interrupts: called in ProcessEvents */
-#ifdef VisualC
+#ifdef _MSC_VER
 __declspec(dllimport) int UserBreak;
 #else
 #define UserBreak     (*__imp_UserBreak)
@@ -37,35 +38,17 @@ extern void run_Rmainloop(void);
 
 
 /* getline-based input, simple output */
-#include <string.h>
-#include "../getline/getline.h"
-static char LastLine[512];
 
 int myReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
-    static char *gl = NULL;
-    int   i;
-
-    if (!gl) {
-	strcat(LastLine, prompt);
-	gl = getline(LastLine);
-	LastLine[0] = '\0';
-	if (addtohistory) gl_histadd(gl);
-    }
-    for (i = 0; *gl && (*gl != '\n') && (i < len - 2); gl++, i++)
-	buf[i] = *gl;
-    buf[i] = '\n';
-    buf[i + 1] = '\0';
-    if (!*gl || (*gl == '\n')) gl = NULL;
+    fputs(prompt, stdout);
+    fflush(stdout);
+    fgets(buf, len, stdin);
     return 1;
 }
 
 void myWriteConsole(char *buf, int len)
 {
-    char *p = strrchr(buf, '\n');
-
-    if (p) strcpy(LastLine, p + 1);
-    else strcat(LastLine, buf);
     printf("%s", buf);
 }
 
@@ -115,7 +98,6 @@ int main (int argc, char **argv)
     R_SetParams(Rp);
 
     FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
-    LastLine[0] = 0;
 
     signal(SIGBREAK, my_onintr);
     setup_term_ui();

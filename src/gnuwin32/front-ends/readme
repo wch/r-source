@@ -11,8 +11,8 @@ another front end. To build it
 - to make with VC++,
 
 	copy ..\R.exp and ..\R.dll to this directory
-	lib /def:R.exp
-	cl /MT /Ox /D Win32 /D VisualC /I..\..\include /I.. rtest.c R.lib
+	lib /def:R.exp /out:Rdll.lib
+	cl /MT /Ox /D Win32 /I..\..\include /I.. rtest.c Rdll.lib
 
 This provides an rterm-like test front end. The main loop is in the
 main program here: R_ReplDLLdo1() parses one line (up to ; or \n) and
