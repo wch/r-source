@@ -265,6 +265,8 @@ options(printcmd='redpr -P"\\\\markov\\lw"')
 postscript(file=tempfile("Rps."), print.it=TRUE)
 # produce the desired graph(s)
 dev.off()              # send plot file to the printer
+## alternative using GSView 4.x
+options(printcmd='/GhostGum/gsview/gsprint -query')
 #endif
 
 # for URW PostScript devices
@@ -281,9 +283,9 @@ TestChars <- function(encoding="ISOLatin1", family="URWHelvetica")
 {
     postscript(encoding=encoding, family=family)
     par(pty="s")
-    plot(c(0,15), c(0,15), type="n", xlab="", ylab="")
+    plot(c(-1,16), c(-1,16), type="n", xlab="", ylab="", xaxs="i", yaxs="i")
     title(paste("Centred chars in encoding", encoding))
-    grid(15, 15, lty=1)
+    grid(17, 17, lty=1)
     for(i in c(32:255)) {
 	x <- i %% 16
 	y <- i %/% 16

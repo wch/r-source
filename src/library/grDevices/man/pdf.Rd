@@ -28,7 +28,9 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{family}{the font family to be used, one of \code{"AvantGarde"},
     \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
     \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
-    \code{"Palatino"} or \code{"Times"}. }
+    \code{"Palatino"} or \code{"Times"}.  \bold{Note} the other
+    specifications allowed for \code{\link{postscript}} are \bold{not}
+    available.}
   \item{title}{title string to embed in the file.}
   \item{encoding}{the name of an encoding file.  Defaults to
 #ifdef unix
@@ -44,8 +46,7 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \item{bg}{the default background color to be used.}
   \item{fg}{the default foreground color to be used.}
   \item{fonts}{a character vector specifying font family names for fonts
-    which will be 
-    included in the PDF file.}
+    which will be included in the PDF file.}
   \item{version}{a string describing the PDF version that will be
     used to produce output.}
 }
@@ -86,13 +87,13 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
 \examples{
 \dontrun{
 ## Test function for encodings
-TestChars <- function(encoding="ISOLatin1")
+TestChars <- function(encoding="ISOLatin1", ...)
 {
-    pdf(encoding=encoding)
+    pdf(encoding=encoding, ...)
     par(pty="s")
-    plot(c(0,15), c(0,15), type="n", xlab="", ylab="")
+    plot(c(-1,16), c(-1,16), type="n", xlab="", ylab="", xaxs="i", yaxs="i")
     title(paste("Centred chars in encoding", encoding))
-    grid(15, 15, lty=1)
+    grid(17, 17, lty=1)
     for(i in c(32:255)) {
 	x <- i %% 16
 	y <- i %/% 16
