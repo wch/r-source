@@ -239,7 +239,7 @@ that all user-level objects in a package should be documented; if a
 package @var{pkg} contains user-level objects which are for ``internal''
 use only, it should provide a file @file{@var{pkg}-internal.Rd} which
 documents all such objects, and clearly states that these are not meant
-to be called by the user.  See e.g.@: package @strong{ts} in the @R{}
+to be called by the user.  See e.g.@: package @strong{modreg} in the @R{}
 distribution for an example.
 
 The @file{R} and @file{man} subdirectories may contain OS-specific
