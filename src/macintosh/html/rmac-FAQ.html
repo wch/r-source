@@ -64,6 +64,14 @@ connections</li>
   command associated to the menu "label". See the help
   pages for details and examples.
   </li>
+  <li>
+   Added three functions to manipulate a User menu in the
+  R Console menubar. With del.usr.cmd() the whole user
+  menu is removed. Respectively with del.num.cmd(menunum) 
+  and get.num.cmd(menunum) the user can remove or get the
+  command associated to the menu numbered "menunum". See 
+  the help pages for details and examples.
+  </li>
   </ul>
 
 
@@ -82,16 +90,18 @@ connections</li>
 <p>We discuss here the following topics:</center>
 
 <p>* <a href="#NEWS">NEWS</a>
-<br>* <a href="#GUI">THE NEW GUI</a>
+<br>* <a href="#GUI">THE GUI</a>
 <br>* <a href="#SCRIPTS">APPLE SCRIPT SUPPORT</a>
 <br>* <a href="#EDITOR">EXTERNAL EDITOR INTERACTION</a>
 <br>* <a href="#MEMORY">MEMORY</a>
-<br>* <a href="#PREFERENCES">SPECIFING OPTIONS: the Preferences pane</a>
-<br>* <a href="#OPTIONS">SPECIFING ENVIRONMENT VARIABLES: the .Renviron file</a>
+<br>* <a href="#PREFERENCES">SPECIFYING OPTIONS: the Preferences pane</a>
+<br>* <a href="#OPTIONS">SPECIFYING ENVIRONMENT VARIABLES: the .Renviron file</a>
+<br>* <a href="#USERMENU">THE USER MENU</a>
 <br>* <a href="#HELPERS">R HELPERS</a>
 <br>* <a href="#REQUIREMENTS">SYSTEM REQUIREMENTS</a>
 <br>* <a href="#KBUGS">KNOWN BUGS</a>
 <br>* <a href="#FAQ">SHORT FAQ  (in the MAC-FAQ)</a>
+<br>* <a href="#REMERC">REMERCIEMENTES</a>
 <p>
 <hr WIDTH="100%">
 <p><a NAME="NEWS"></a><b>NEWS</b>
@@ -786,7 +796,7 @@ memory as it needs.
 
 
 <p><a NAME="PREFERENCES"></a>
-<br><b>SPECIFING OPTIONS:</b> the Preferences pane<br>
+<br><b>SPECIFYING OPTIONS:</b> the Preferences pane<br>
 The Preferences pane allow you to configure a bit R GUI and behaviour.
 You can set the tab size in your edit windows, the font type and size of 
 text windows and R Console as well as the colors of the text in R Console.
@@ -808,7 +818,7 @@ preferences.
 
 
 <p><a NAME="OPTIONS"></a>
-<br><b>SPECIFING ENVIRONMENT VARIABLES: </b>the .Renviron file
+<br><b>SPECIFYING ENVIRONMENT VARIABLES: </b>the .Renviron file
 <br>In this file you can specify some of options or environment variables. This is not standard
 for general MacOS/X applications but has been implemented for 
 compatibility reasons. If you don't need to set environment variables you 
@@ -824,6 +834,36 @@ line as follows  RKey=keyvalue. Consider that RKey=keyvalue and RKey
 "RKey" and "keyvalue" are case sensitive.  A symbol "#" at the beginning
 of a line means that this is a commented out line.
 <br>You can find more details on that in the .Renviron file itself.
+
+<p><a NAME="USERMENU"></a>
+<br><b>THE NEW USER MENU</b>
+<br>The user has now the ability to create a menu with several menuitems,
+up to 99, where to keep preferred R commands. <br>
+With the commands add.menu.cmd("label","R_command") the user adds a menuitem named "label" to the 
+User menu. When the command is selected from the menu, R executes the command "Rcommand"
+associated to it.
+The User menu is created dynamically, so that user will never see it if he does not add any
+item to it.<br>
+Several functions to manipulate the user menu are previewed: <p>
+<table border = 2>
+<tr>
+<td>get.menu.cmd("label")</td><td>returns the R Command associated to menu item "label" and the corresponding menu number
+</td></tr>
+<tr><td>get.num.cmd(menunum)</td><td>returns the R Command associated to menu item number "menunum" and the corresponding menu label
+</td></tr>
+<tr><td>del.menu.cmd("label")</td><td>removes the menu item "label" from the User menu
+</td></tr>
+<tr><td>del.num.cmd(menunum)</td><td>removes the menu item numbered "menunum" from the User menu
+</td></tr>
+<tr><td>del.usr.cmd("label")</td><td>removes the whole User's menu 
+</td></tr>
+<tr><td>add.menu.cmd("label","RCommand")</td><td>adds a menu item to the User's menu, if any, with associated the R command "RCommand"
+</td></tr>
+</table>
+
+
+
+
 <p><a NAME="HELPERS"></a><b>R HELPERS</b>
 <br>* If you want to use an external editor we suggest you to use Alpha
 version  7.4.1 or newer that contains a S+/R mode. Alpha home page
@@ -980,10 +1020,16 @@ as "/my_file", i.e. in the root "/" directory.
 </td>
 </tr>
 </table>
-
+<p>
+<a NAME="REMERC"></a><b>REMERCIEMENTS</b><br>
+I would like to thank among the others (only few I can remember due to my brain volatility...) some of the people
+ who have contantly sent me 
+feedback on this Macintosh port of R or simply suggetested me some possibile
+directions. So, <i>merci</i>, in random order, to  P. Macdonald, P. Flint, R. Gill, K. Pflugshaupt, 
+J. DeLeeuw, G. Sawitzki and half of the R-Core.
 <p><hr WIDTH="100%">
 <address>
-Last edited 2001 November 24, Stefano M. Iacus
+Last edited 2001 November 29, Stefano M. Iacus
 <code><a
 href="mailto:stefano.iacus@unimi.it">stefano.iacus@unimi.it</a></code>
 </address>
