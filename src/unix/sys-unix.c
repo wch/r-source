@@ -232,6 +232,9 @@ void InitTempDir()
 
     tmp = getenv("R_SESSION_TMPDIR");
     if (!tmp) {
+        /* This looks like it will only be called in the embedded case
+           since this is done in the script. Also should test if directory
+           exists rather than just attempting to remove it. */
 	char *buf;
 	tm = getenv("TMPDIR");
 	if (!tm) tm = getenv("TMP");
@@ -251,7 +254,7 @@ void InitTempDir()
 	}
     }
     
-    len = strlen(tmp);
+    len = strlen(tmp) + 1;
     p = (char *) malloc(len);
     if(!p) R_Suicide("Can't allocate R_TempDir");
     else {
