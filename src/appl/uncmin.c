@@ -704,8 +704,10 @@ lnsrch(int n, double *x, double f, double *g, double *p, double *xpls,
 		return;
 	    } else {
 		/*	calculate new lambda */
-		/* modifications by BDR 2000/01/05 to cover non-finite values */
-		if (*fpls == DBL_MAX) {
+
+		/* modifications by BDR 2000/01/05 to cover non-finite values
+		 * ">=" instead of "==" :  MM 2001/07/24 */
+		if (*fpls >= DBL_MAX) {
 		    almbda *= 0.1;
 		    firstback = 1;
 		} else {

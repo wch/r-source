@@ -24,30 +24,30 @@ NEW FEATURES
     o	New formula interface to cor.test() in package ctest.
 
     o	"NA" is a valid color name (as NA has been a valid integer
-        color).
+	color).
 
-    o   pairs() function has a new `gap' argument for adjusting the
-        spacing between panels.
+    o	pairs() function has a new `gap' argument for adjusting the
+	spacing between panels.
 
     o	R CMD check has a new test for unbalanced braces in Rd files.
 
 
 BUG FIXES
 
-    o   Fixed placement of mtext() output (including tick labels)
+    o	Fixed placement of mtext() output (including tick labels)
 	when text is perpendicular to axis AND axis is logged
 	(PR#997 and PR#865).
 
-    o   rect() and arrows() now respond to setting of par(xpd)
+    o	rect() and arrows() now respond to setting of par(xpd)
 
-    o   abline() now responds to the setting of par(xpd), including 
+    o	abline() now responds to the setting of par(xpd), including
 	via the "..." argument (PR#750).
 
     o	Using cat() to a gzfile() connection no longer compresses poorly
 	(at the expense of some latency).
 
     o	The `exact' p-values for the two-sided two-sample
-        Kolmogorov-Smirnov test in 1.3.0 were for the wrong tail.
+	Kolmogorov-Smirnov test in 1.3.0 were for the wrong tail.
 
     o	In the HTML conversion of .Rd files, \link[foo]{bar} was
 	ignoring [foo] outside \code{} statements.
@@ -65,14 +65,16 @@ BUG FIXES
 
     o	legend() now also works with 100s of entries (thanks to M.Schlather).
 
-    o   A long-standing bug leading to inaccuracy in polyroot() has been
-        fixed (PR#751)
+    o	A long-standing bug leading to inaccuracy in polyroot() has been
+	fixed (PR#751)
 
-    o   A very old bug with eval() not handling a numeric `envir' argument
-        according to specifications has been fixed. [This in particular
-        broke ported S-PLUS code that used eval(..., sys.parent())]. Also,
+    o	A very old bug with eval() not handling a numeric `envir' argument
+	according to specifications has been fixed. [This in particular
+	broke ported S-PLUS code that used eval(..., sys.parent())]. Also,
 	eval() now checks that a numeric `envir' has length one to prevent
-        accidental passing of matrices instead of data frames.
+	accidental passing of matrices instead of data frames.
+
+    o	nlm(f, *) now also works correctly after f(x) returned +Inf.
 
     o	pdfcolor.tex is now included in doc/manual, as pdftex seems no
 	longer to include it.
