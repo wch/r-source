@@ -1391,7 +1391,10 @@ as described in "Statistical Models in S" (see *Note What is S?::);
 Generalized Additive Models (*gam*) and some of the nonlinear modeling code
 are not there yet.
 
-   See also the `PROJECTS' file in the top level R source directory.
+   The R Developer Page (http://developer.r-project.org) acts as an
+intermediate repository for more or less finalized ideas and plans for the
+R statistical system.  It contains (pointers to) TODO lists, RFCs, various
+other writeups, ideas lists, and CVS miscellania.
 
    Many (more) of the packages available at the Statlib S Repository might
 be worth porting to R.
