@@ -360,7 +360,7 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 		stop("undefined columns selected")
 	}
 	n <- length(x)
-	jj <- 1:n
+	jj <- seq(length = n)
 	for(j in jj) {
 	    xj <- x[[j]]
 	    if(length(dim(xj)) != 2)
