@@ -300,10 +300,10 @@ static struct tm * localtime0(const double *tp, const int local)
 SEXP do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     time_t res = time(NULL);
+    SEXP ans = allocVector(REALSXP, 1);
 #ifdef USING_LEAPSECONDS
     res -= 22;
 #endif
-    SEXP ans = allocVector(REALSXP, 1);
     if(res != (time_t)(-1)) REAL(ans)[0] = (double) res;
     else REAL(ans)[0] = NA_REAL;
     return ans;
