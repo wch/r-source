@@ -70,9 +70,6 @@
 /* Define if you have the <dl.h> header file. */
 /* #undef HAVE_DL_H */
 
-/* Define if you don't have `vprintf' but do have `_doprnt.' */
-/* #undef HAVE_DOPRNT */
-
 /* Define if C's Rcomplex and Fortran's COMPLEX*16 can be interchanged, and
    can do arithmetic on the latter. */
 #define HAVE_DOUBLE_COMPLEX 1
@@ -89,9 +86,11 @@
 /* Define if your Fortran compiler appends an underscore to external names. */
 #define HAVE_F77_UNDERSCORE 1
 
+/* Define if you have the `fcntl' function. */
+/* #undef HAVE_FCNTL */
+
 /* Define if you have the <fcntl.h> header file. */
-#undef HAVE_FCNTL_H
-/* it exists, but is non-standard */
+#define HAVE_FCNTL_H 1
 
 /* Define if you have the `finite' function. */
 #define HAVE_FINITE 1
@@ -209,15 +208,15 @@
 /* Define if you have the <netinet/in.h> header file. */
 /* #undef HAVE_NETINET_IN_H */
 
-/* Define if your C compiler does not prepend an underscore to external names.
-   */
+/* Define if module-loading does not need an underscore to be prepended to
+   external names. */
 #define HAVE_NO_SYMBOL_UNDERSCORE 1
 
 /* Define if you have the PNG headers and libraries. */
 #define HAVE_PNG 1
 
 /* Define if you have the `popen' function. */
-/* #undef HAVE_POPEN */
+#define HAVE_POPEN 1
 
 /* Define if your system time functions do not count leap seconds, as required
    by POSIX. */
@@ -275,16 +274,19 @@
 #define HAVE_STRDUP 1
 
 /* Define if you have the <strings.h> header file. */
-/* #undef HAVE_STRINGS_H  */
+#define HAVE_STRINGS_H 1
 
 /* Define if you have the <string.h> header file. */
 #define HAVE_STRING_H 1
+
+/* Define if you have the `strncasecmp' function. */
+#define HAVE_STRNCASECMP 1
 
 /* Define if you have the `strptime' function. */
 /* #undef HAVE_STRPTIME */
 
 /* Define if you have the `system' function. */
-/* #undef HAVE_SYSTEM have it but no the same as Unix */
+#define HAVE_SYSTEM 1
 
 /* Define if you have the <sys/dir.h> header file, and it defines `DIR'. */
 /* #undef HAVE_SYS_DIR_H */
@@ -339,9 +341,6 @@
 /* Define if you have the <vfork.h> header file. */
 /* #undef HAVE_VFORK_H */
 
-/* Define if you have the `vprintf' function. */
-#define HAVE_VPRINTF 1
-
 /* Define if you have the `vsnprintf' function. */
 #define HAVE_VSNPRINTF 1
 
@@ -395,7 +394,7 @@
 #define RETSIGTYPE void
 
 /* Define this to be the name of the CPU of your system. */
-#define R_CPU  "x86"
+#define R_CPU "i386"
 
 /* Define this to be the name of the OS of your system. */
 #define R_OS "mingw32"
@@ -429,7 +428,7 @@
 #define SIZEOF_LONG_LONG 8
 
 /* Type for socket lengths: socklen_t, sock_t, int? */
-#define SOCKLEN_T int
+#define SOCKLEN_T size_t
 
 /* If using the C implementation of alloca, define if you know the
    direction of stack growth for your system; otherwise it will be
@@ -484,7 +483,7 @@
 
 /* Define to 'long' if <sys/types.h> does not define. Apparently necessary to
    fix a GCC bug on AIX? */
-#undef blkcnt_t
+#define blkcnt_t long
 
 /* Define to empty if `const' does not conform to ANSI C. */
 /* #undef const */
@@ -505,13 +504,6 @@
 
 #define isnan(a) _isnan((a))
 #define finite(a) _finite((a))
-
-/*
-#ifndef max
-#define max(a,b)	(((a)>(b))?(a):(b))
-#define min(a,b)	(((a)<(b))?(a):(b))
-#endif
-*/
 
 /* 27/03/2000 win32-api needs this for ANSI compliance */
 #define NONAMELESSUNION
