@@ -226,7 +226,7 @@ cov.rob <- function(x, cor = FALSE, quantile.used = floor((n+p+1)/2),
 	means <- apply(x[best, , drop = FALSE], 2, mean)
 	rcov <- var(x[best, , drop = FALSE]) * (1 + 15/(n - p))^2
 	dist <- mahalanobis(x, means, rcov)
-	cut <- qchisq(0.975, p) * quantile(dist, ps/n)/qchisq(qn/n, p)
+	cut <- qchisq(0.975, p) * quantile(dist, qn/n)/qchisq(qn/n, p)
 	cov <- divisor * var(x[dist < cut, , drop = FALSE]) *
 	    rep(divisor, rep(p, p))
 	attr(cov, "names") <- NULL
