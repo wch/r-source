@@ -11,7 +11,7 @@ power.t.test <-
 
     tsample <- switch(type, one.sample = 1, two.sample = 2, paired = 1)
     tside <- switch(alternative, one.sided = 1, two.sided = 2)
-    if (tside == 2) delta <- abs(delta)
+    if (tside == 2 && !is.null(delta)) delta <- abs(delta)
 
     p.body <- quote({nu <- (n - 1) * tsample
                      pt(qt(sig.level/tside, nu, lower = FALSE),
@@ -22,7 +22,7 @@ power.t.test <-
           qu<-qt(sig.level/tside, nu, lower = FALSE)
           pt(qu, nu, ncp = sqrt(n/tsample) * delta/sd, lower = FALSE) +
             pt(-qu, nu, ncp = sqrt(n/tsample) * delta/sd, lower = TRUE)
-      }) 
+      })
 
     if (is.null(power))
         power <- eval(p.body)

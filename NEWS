@@ -171,6 +171,8 @@ BUG FIXES
 	expressions such as expression(x*y) (since the comments in the
 	C code were incorrect).  (PR#2577)
 
+    o   power.t.test(..., delta=NULL,alternative='two.sided') failed. (PR#2993)
+
 	
 
 		CHANGES IN R VERSION 1.7.0

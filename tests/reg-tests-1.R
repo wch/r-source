@@ -2195,6 +2195,11 @@ read.table(f, header = TRUE, sep ="¦")
 ## failed in 1.7.0
 
 
+## PR#2993 need to consider delta=NULL in power.t.test{ctest}
+power.t.test(n=10, delta=NULL, power=.9, alternative="two.sided")
+## failed in 1.7.0
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
