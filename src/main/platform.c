@@ -479,7 +479,7 @@ SEXP do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     new = asLogical(CAR(args));
     if ((len = R_ChooseFile(new, buf, CHOOSEBUFSIZE)) == 0)
-	return mkString("");
+	error("file choice cancelled\n");
     if (len >= CHOOSEBUFSIZE - 1)
 	errorcall(call, "file name too long\n");   
     return mkString(R_ExpandFileName(buf));
