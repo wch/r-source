@@ -1,10 +1,6 @@
-START-INFO-DIR-ENTRY
-* R FAQ: (R-FAQ).               The R statistical system FAQ.
-END-INFO-DIR-ENTRY
-
-   R FAQ
+R FAQ
 Frequently Asked Questions on R
-Version 1.9-35 2004-07-21
+Version 1.9-36 2004-08-01
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -12,16 +8,13 @@ Kurt Hornik
 Table of Contents
 *****************
 
-
 R FAQ
-
 1 Introduction
   1.1 Legalese
   1.2 Obtaining this document
   1.3 Citing this document
   1.4 Notation
   1.5 Feedback
-
 2 R Basics
   2.1 What is R?
   2.2 What machines does R run on?
@@ -39,7 +32,6 @@ R FAQ
   2.11 Can I use R for commercial purposes?
   2.12 Why is R named R?
   2.13 What is the R Foundation?
-
 3 R and S
   3.1 What is S?
   3.2 What is S-PLUS?
@@ -49,9 +41,7 @@ R FAQ
     3.3.3 Others
   3.4 Is there anything R can do that S-PLUS cannot?
   3.5 What is R-plus?
-
 4 R Web Interfaces
-
 5 R Add-On Packages
   5.1 Which add-on packages exist for R?
     5.1.1 Add-on packages in R
@@ -64,12 +54,10 @@ R FAQ
   5.4 How can add-on packages be removed?
   5.5 How can I create an R package?
   5.6 How can I contribute to R?
-
 6 R and Emacs
   6.1 Is there Emacs support for R?
   6.2 Should I run R from within Emacs?
   6.3 Debugging R from within Emacs
-
 7 R Miscellanea
   7.1 Why does R run out of memory?
   7.2 Why does sourcing a correct file fail?
@@ -97,17 +85,14 @@ R FAQ
   7.24 Why do lattice/trellis graphics not work?
   7.25 How can I sort the rows of a data frame?
   7.26 Why does the help.start() search engine not work?
-
 8 R Programming
   8.1 How should I write summary methods?
   8.2 How can I debug dynamically loaded code?
   8.3 How can I inspect R objects when debugging?
   8.4 How can I change compilation flags?
-
 9 R Bugs
   9.1 What is a bug?
   9.2 How to report a bug
-
 10 Acknowledgments
 
 
@@ -220,7 +205,7 @@ addition, a large group of individuals has contributed to R by sending code
 and bug reports.
 
    Since mid-1997 there has been a core group (the "R Core Team") who can
-modify the R source code CVS archive.  The group currently consists of Doug
+modify the R source code archive.  The group currently consists of Doug
 Bates, John Chambers, Peter Dalgaard, Robert Gentleman, Kurt Hornik,
 Stefano Iacus, Ross Ihaka, Friedrich Leisch, Thomas Lumley, Martin
 Maechler, Duncan Murdoch, Paul Murrell, Martyn Plummer, Brian Ripley,
@@ -623,7 +608,7 @@ See `http://cran.R-project.org/mirrors.html' for a complete list of
 mirrors.  Please use the CRAN site closest to you to reduce network load.
 
    From CRAN, you can obtain the latest official release of R, daily
-snapshots of R (copies of the current CVS trees), as gzipped and bzipped
+snapshots of R (copies of the current source trees), as gzipped and bzipped
 tar files, a wealth of additional contributed code, as well as prebuilt
 binaries for various operating systems (Linux, Mac OS Classic, Mac OS X,
 and MS Windows).  CRAN also provides access to documentation on R, existing
@@ -634,8 +619,8 @@ mailing lists and the R Bug Tracking system.
 <cran@R-project.org>.  Note that CRAN generally does not accept submissions
 of precompiled binaries due to security reasons.
 
-     *Note:*  It is very important that you indicate the copyright
-     (license) information (GPL, BSD, Artistic, ...)  in your submission.
+     *Please notice:*  It is very important that you indicate the copyright
+     (license) information (GPL, BSD, Artistic, ...) in your submission.
 
    Please always use the URL of the master site when referring to CRAN.
 
@@ -735,7 +720,7 @@ Chambers and coauthors, which are also the primary references for S.
 
    * John M. Chambers (1998), "Programming with Data," New York: Springer,
      ISBN 0-387-98503-4
-     (<http://cm.bell-labs.com/cm/ms/departments/sia/Sbook/>).
+     (`http://cm.bell-labs.com/cm/ms/departments/sia/Sbook/').
 
      This "_Green Book_" describes version 4 of S, a major revision of S
      designed by John Chambers to improve its usefulness at every stage of
@@ -944,9 +929,9 @@ to safeguard against possible crashes.  Other possibilities are logging
 your sessions, or have your R commands stored in text files which can be
 read in using `source()'.
 
-     *Note:*  If you run R from within Emacs (see *Note R and Emacs::), you
-     can save the contents of the interaction buffer to a file and
-     conveniently manipulate it using `ess-transcript-mode', as well as
+     *Please notice:*  If you run R from within Emacs (see *Note R and
+     Emacs::), you can save the contents of the interaction buffer to a file
+     and conveniently manipulate it using `ess-transcript-mode', as well as
      save source copies of all functions and data used.
 
 3.3.2 Models
@@ -1754,6 +1739,9 @@ distributions of R.)
      Functions, methods, and datasets for fitting dimension reduction
      regression, including pHd and inverse regression methods SIR and SAVE.
 
+*drfit*
+     Dose-response data evaluation.
+
 *dse*
      Dynamic System Estimation, a multivariate time series package.
      Contains *dse1* (the base system, including multivariate ARMA and state
@@ -1839,6 +1827,9 @@ distributions of R.)
 *fSeries*
      The Rmetrics module for "The Dynamical Process Behind Financial
      Markets".
+
+*faraway*
+     Functions and datasets for books by Julian Faraway.
 
 *fastICA*
      Implementation of FastICA algorithm to perform Independent Component
@@ -2190,12 +2181,19 @@ distributions of R.)
 *merror*
      Accuracy and precision of measurements.
 
+*mfp*
+     Multiple Fractional Polynomials.
+
 *mgcv*
      Routines for GAMs and other genralized ridge regression problems with
      multiple smoothing parameter selection by GCV or UBRE.  _Recommended_.
 
 *mimR*
      An R interface to MIM for graphical modeling in R.
+
+*mitools*
+     Tools to perform analyses and combine results from multiple-imputation
+     datasets.
 
 *mix*
      Estimation/multiple imputation programs for mixed categorical and
@@ -2762,6 +2760,9 @@ these a try, of course.  This area of CRAN currently contains
 *ensemble*
      Ensembles of tree classifiers.
 
+*rcom*
+     R COM Client Interface and internal COM Server.
+
 *runStat*
      Running median and mean.
 
@@ -3276,11 +3277,11 @@ at the R prompt.
    This produces something like
 
      Packages in `/home/me/lib/R':
-     
+
      mystuff       My own R functions, nicely packaged but not documented
-     
+
      Packages in `/usr/local/lib/R/library':
-     
+
      KernSmooth    Functions for kernel smoothing for Wand & Jones (1995)
      MASS          Main Package of Venables and Ripley's MASS
      base          The R base package
@@ -3775,8 +3776,14 @@ interest, use
 
      title(substitute(hat(a) == ahat, list(ahat = ahat)))
 
-(note that it is `==' and not `=').  There are more worked examples in the
-mailing list achives.
+(note that it is `==' and not `=').  Sometimes `bquote()' gives a more
+compact form, e.g.,
+
+     title(bquote(hat(a) = .(ahat)))
+
+where subexpressions enclosed in `.()' are replaced by their values.
+
+   There are more worked examples in the mailing list achives.
 
 7.16 What are valid names?
 ==========================
