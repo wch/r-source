@@ -21,14 +21,18 @@
 }
 \examples{
 data(euro)
+cbind(euro)
+all(euro == signif(euro,6))# TRUE: [6 digit precision in Euro's definition]
 
-### Convert 20,-- Euro to Belgian Franc
+all(euro.cross == outer(1/euro, euro)) # TRUE
+
+## Convert 20.- Euro to Belgian Franc
 20 * euro["BEF"]
 
-### Convert 20,-- Austrian Schilling to Euro
+## Convert 20.- Austrian Schilling to Euro
 20 / euro["ATS"]
 
-### Convert 20,-- Spanish Peseta to Italian Lira
+## Convert 20.- Spanish Pesetas to Italian Lira
 20 * euro.cross["ESP","ITL"]
 }
 \keyword{dataset}
