@@ -50,7 +50,8 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   \item{destdir}{directory where downloaded packages are stored.}
   \item{priority}{character vector or \code{NULL} (default).  If
     non-null, used to select packages; \code{"high"} is equivalent to
-    \code{c("base","recommended")}.}
+    \code{c("base","recommended")}.  To select all packages without an
+    assigned priority, use \code{priority = "NA"}.}
   \item{available}{list of packages available at CRAN as returned by
     \code{CRAN.packages}.}
   \item{lib,instlib}{character string giving the library directory where to
