@@ -37,7 +37,7 @@ sys.save.image(name)
   \item{version}{the workspace format version to use.  \code{NULL}
     specifies the current default format.  The version used from \R
     0.99.0 to \R 1.3.1 was version 1.  The default format as from \R
-    1.4.0 to 1.9.1 is version 2 and from \R 2.0.0 is version 3.}
+    1.4.0 is version 2.}
   \item{envir}{environment to search for objects to be saved.}
   \item{compress}{logical specifying whether saving to a named file is to
     use compression. Ignored when \code{file} is a connection and for

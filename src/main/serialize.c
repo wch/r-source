@@ -164,7 +164,7 @@ static SEXP ReadBC(SEXP ref_table, R_inpstream_t stream);
 
 /* The default version used when a stream Init function is called with
    version = 0 */
-static int R_DefaultSerializeVersion = 3;
+static int R_DefaultSerializeVersion = 2;
 
 
 /*
@@ -897,8 +897,6 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	    error("this version of R cannot write byte code objects");
 #endif
 	case RAWSXP:
-	    if(stream->version < 3)
-		error("this save file version cannot write raw objects");
 	    OutInteger(stream, LENGTH(s));
 	    OutVec(stream, s, RAW_ELT, OutByte);
 	    break;
@@ -1072,11 +1070,6 @@ void R_Serialize(SEXP s, R_outpstream_t stream)
 	OutInteger(stream, version);
 	OutInteger(stream, R_VERSION);
 	OutInteger(stream, R_Version(1,4,0));
-	break;
-    case 3:
-	OutInteger(stream, version);
-	OutInteger(stream, R_VERSION);
-	OutInteger(stream, R_Version(2,0,0));
 	break;
     default: error("version %d not supported", version);
     }
@@ -1321,7 +1314,6 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	case GENERICREFSXP:
 	    error("this version of R cannot read generic function references");
 	case RAWSXP:
-	    /* Should not be there before version 3 */
 	    length = InInteger(stream);
 	    PROTECT(s = allocVector(type, length));
 	    InVec(stream, s, SET_RAW_ELT, InByte, length);
@@ -1443,9 +1435,8 @@ SEXP R_Unserialize(R_inpstream_t stream)
     release_version = InInteger(stream);
     switch (version) {
     case 2: break;
-    case 3: break;
     default:
-	if (version != 2 && version != 3) {
+	if (version != 2) {
 	    int vw, pw, sw;
 	    DecodeVersion(writer_version, &vw, &pw, &sw);
 	    if (release_version < 0)

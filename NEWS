@@ -21,8 +21,6 @@ USER-VISIBLE CHANGES
 	grey palette (rather than the heat color palette) for coloring
 	its output when given a matrix.
 
-    o	The default save format is now version 3.
-
 
 NEW FEATURES
 
