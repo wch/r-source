@@ -45,9 +45,8 @@ example gcc-2.95.2 (no -1): the symptom is a report that `-shared' is
 not understood.
 
 An alternative is to use a more recent snapshot of the mingw compiler
-set from http://prdownloads.sourceforge.net/mingw/.  You will need the
-binutils, gcc, gcc-f77, ld, libbfd, mingw32-runtime and w32api
-bundles.
+set from http://prdownloads.sourceforge.net/mingw/, for example that
+in file Mingw-1.0.1-20010726.tar.bz2.  This is based on gcc 2.95.3.
 
 It might also be possible to use the compilers from the cygwin 1.1 net
 release with the -mno-cygwin -mwin32 flags; the current versions use
