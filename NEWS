@@ -19,6 +19,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   row.names(.) <- val  doesn't allow duplicated values anymore.
+
     o   library(mva)'s dist() now works with both "euclidean" & "euclidian"
 
     o	revised curve function to avoid using grep patterns that caused

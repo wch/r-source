@@ -6,7 +6,10 @@ row.names <- function(x) attr(x,"row.names")
     old <- attr(x, "row.names")
     if (!is.null(old) && length(value) != length(old))
 	stop("invalid row.names length")
-    attr(x, "row.names") <- as.character(value)
+    value <- as.character(value)
+    if (any(duplicated(value)))
+	stop("duplicate row.names are not allowed")
+    attr(x, "row.names") <- value
     x
 }
 
@@ -725,7 +728,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
     for(j in 1:nvar) {
 	xj <- value[[j]]
 	if(!has.dim[j] && !inherits(xj, "AsIs") && 
-	   	(is.character(xj) || is.logical(xj)))
+		(is.character(xj) || is.logical(xj)))
 	    value[[j]] <- factor(xj)
     }
     rlabs <- unlist(rlabs)
@@ -841,8 +844,8 @@ function (x, ...)
 {
     f <- get(.Generic, mode = "function")
     if (is.null(formals(f))) 
-        f <- function(x, ...) {
-        }
+	f <- function(x, ...) {
+	}
     call <- match.call(f, sys.call())
     call[[1]] <- as.name(.Generic)
     arg <- names(formals(f))[1]
@@ -850,12 +853,12 @@ function (x, ...)
     encl <- sys.frame(sys.parent())
     var.f <- function(x) eval(call, list(xx = x), encl)
     mode.ok <- sapply(x, is.numeric) & !sapply(x, is.factor) | 
-        sapply(x, is.complex)
+	sapply(x, is.complex)
     if (all(mode.ok)) {
-        r <- lapply(x, var.f)
-        class(r) <- class(x)
-        row.names(r) <- row.names(x)
-        return(r)
+	r <- lapply(x, var.f)
+	class(r) <- class(x)
+	row.names(r) <- row.names(x)
+	return(r)
     }
     else {
 	vnames <- names(x)
