@@ -15,6 +15,7 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
     pars <- c(args[namedargs], pars)
     groups <-
 	if(is.language(x)) {
+            warning("Using `formula' in boxplot.default -- shouldn't boxplot.formula be called?")
 	    if(inherits(x, "formula") && length(x) == 3) {
 		groups <- eval(x[[3]], data, sys.frame(sys.parent()))
 		x <- eval(x[[2]], data, sys.frame(sys.parent()))
