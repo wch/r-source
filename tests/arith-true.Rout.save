@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.65.0 Under development (unstable) (June 12, 1999)
+Version 0.65.0 Under development (unstable) (June 15, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -53,7 +53,7 @@ NaNs produced in: -1
 [1] TRUE
 > all((rn ^ -3) == -((-rn) ^ -3))
 [1] TRUE
-> 
+> #
 > all(c(1.1,2,Inf) ^ Inf == Inf)
 [1] TRUE
 > all(c(1.1,2,Inf) ^ -Inf == 0)
@@ -62,10 +62,10 @@ NaNs produced in: -1
 [1] TRUE
 > .9 ^ -Inf == Inf
 [1] TRUE
-> ## Not yet:
+> ## Wasn't ok in 0.64:
 > all(1^c(-Inf,Inf) == 1)
 [1] TRUE
-> all(is.nan(rn ^ .5))# Deb2.0-Linux: (-Inf) ^ .5 gives Inf, instead of NaN
+> all(is.nan(rn ^ .5))# in some C's : (-Inf) ^ .5 gives Inf, instead of NaN
 [1] TRUE
 > 
 > 

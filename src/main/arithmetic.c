@@ -18,7 +18,6 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-
 #include "Defn.h"/*-> Arith.h */
 #include "Mathlib.h"
 #include "Applic.h"		/* machar */
@@ -212,10 +211,34 @@ double R_log(double x){ return(x == 0.0 ? R_NegInf : log(x)); }
 #define R_log	log
 #endif
 
-double R_pow(double x, double y)
+double R_pow(double x, double y) /* = x ^ y */
 {
-    return((x == 1.0 && !isnan(y)) ? 1.0 :
-	   ((x == R_NegInf && y != floor(y)) ? R_NaN : pow(x,y)));
+    if(x == 1. || y == 0.)
+	return(1.);
+    if (ISNAN(x) || ISNAN(y)) {
+#ifdef IEEE_754
+	return(x + y);
+#else
+	return(NA_REAL);
+#endif
+    }
+    if(!FINITE(x)) {
+	if(x > 0) /* Inf ^ y */
+	    return((y < 0.)? 0. : R_PosInf);
+	else { /* (-Inf) ^ y */
+	    if(y != floor(y))
+		return(R_NaN);
+	    else /* (-Inf) ^ n */
+		return((y < 0.) ? 0. : (myfmod(y,2.) ? x  : -x));
+	}
+    }
+    if(!FINITE(y) && x > 0) {
+	if(y > 0) /* y == +Inf */
+	    return((x >= 1)? R_PosInf : 0.);
+	else /* y == -Inf */
+	    return((x < 1) ? R_PosInf : 0.);
+    }
+    return(pow(x,y));
 }
 
 /* Base 2 and General Base Logarithms */
@@ -722,7 +745,7 @@ static SEXP real_binary(int code, SEXP s1, SEXP s2)
 		REAL(ans)[i] = NA_REAL;
 	    else {
 		if (x2 == 0)
-		    REAL(ans)[i] = 0;
+		REAL(ans)[i] = 0;
 		else
 		    REAL(ans)[i] = MATH_CHECK(floor(x1 / x2));
 	    }

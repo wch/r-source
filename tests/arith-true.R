@@ -28,14 +28,14 @@ rp <- c(1:2,Inf); rn <- rev(- rp)
 r <- c(rn, 0, rp)
 all(r^0 == 1)
 all((rn ^ -3) == -((-rn) ^ -3))
-
+#
 all(c(1.1,2,Inf) ^ Inf == Inf)
 all(c(1.1,2,Inf) ^ -Inf == 0)
 .9 ^ Inf == 0
 .9 ^ -Inf == Inf
-## Not yet:
+## Wasn't ok in 0.64:
 all(1^c(-Inf,Inf) == 1)
-all(is.nan(rn ^ .5))# Deb2.0-Linux: (-Inf) ^ .5 gives Inf, instead of NaN
+all(is.nan(rn ^ .5))# in some C's : (-Inf) ^ .5 gives Inf, instead of NaN
 
 
 ## Real Trig.:

@@ -7,7 +7,10 @@
 
 NEW FEATURES
 
-    o   If the dimnames of a table are themselves named, then their names
+    o	plot.lm() has more options and now does 4 plots by default,
+	thanks to John Maindonald.
+
+    o	If the dimnames of a table are themselves named, then their names
 	are used to label the respective dimensions in tabular output.
 
     o	chisq.test() now optionally computes the p-value by Monte Carlo
@@ -46,6 +49,10 @@ NEW FEATURES
     o	uniroot() can now be used recursively.
 
 BUG FIXES
+
+    o	x ^ y  gives proper results when x or y are infinite.
+
+    o	log(0) gives -Inf on all architectures.
 
     o	plot(<function>, log="x") doesn't give silly warning anymore.
 
@@ -92,20 +99,20 @@ NEW FEATURES
 BUG FIXES
 
     o	Non-blank separated data files didn't have their 1st field
-    	handled properly.
+	handled properly.
 
-    o	"aux" directory moved to "tools" to avoid difficulties on 
-    	Windows
+    o	"aux" directory moved to "tools" to avoid difficulties on
+	Windows
 
-    o   structure() clobbered factors with missing levels
+    o	structure() clobbered factors with missing levels
 
-    o   pmatch() misbehaved on duplicate matches
-    
+    o	pmatch() misbehaved on duplicate matches
+
     o	R CMD Rd2dvi <file.Rd> works again
 
     o	logical binops tried to set time series parameters before dimensions
 
-    o	upped the BUFSIZE in model.c (This is really peeing in the pants 
+    o	upped the BUFSIZE in model.c (This is really peeing in the pants
 	to keep warm...)
 
     o	dput(), dump() and deparse()  now always use DBL_DIG (=15) digits
