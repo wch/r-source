@@ -127,11 +127,13 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
                            else if(or^(hi - lo) == Inf)
                                as.numeric(x == hi)
                            else {
+                               ## Note that we need a little fuzz.
+                               relErr <- 1 + 10 ^ (-7)
                                u <- lo : hi
                                d <- (dhyper(lo : hi, m, n, k)
                                      * or ^ (0 : (hi - lo)))
                                d <- d / sum(d)
-                               sum(d[d <= d[x - lo + 1]])
+                               sum(d[d <= d[x - lo + 1] * relErr])
                            }
                        })
             RVAL <- list(p.value = PVAL)

@@ -41,15 +41,17 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
                            ##   d <- dbinom(0 : n, n, p)
                            ##   sum(d[d <= dbinom(x, n, p)])
                            ## a bit more efficiently ...
+                           ## Note that we need a little fuzz.
+                           relErr <- 1 + 10 ^ (-7) 
                            d <- dbinom(x, n, p)
                            if(x / n < p) {
                                i <- seq(from = x + 1, to = n)
-                               y <- sum(dbinom(i, n, p) <= d)
+                               y <- sum(dbinom(i, n, p) <= d * relErr)
                                pbinom(x, n, p) +
                                    (1 - pbinom(n - y, n, p))
                            } else {
                                i <- seq(from = 0, to = x - 1)
-                               y <- sum(dbinom(i, n, p) <= d)
+                               y <- sum(dbinom(i, n, p) <= d * relErr)
                                pbinom(y - 1, n, p) +
                                    (1 - pbinom(x - 1, n, p))
                            }
