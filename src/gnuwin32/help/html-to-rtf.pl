@@ -17,9 +17,9 @@ $debug = 0;
 {
     $0 =~ /^(.*)\/.*$/;
     $my_dir = $1; 
-    if ($my_dir !~ ?^/?) {
-	$my_dir = $ENV{PWD} . "/" . $my_dir;
-    }
+#    if ($my_dir !~ ?^/?) {
+#	$my_dir = $ENV{PWD} . "/" . $my_dir;
+#    }
     if ($my_dir =~ ?/$?) {
 	chop ($my_dir);
     }
@@ -196,7 +196,7 @@ print RTF "\\red150\\green150\\blue150;\n";
 print RTF "}\n";
 
 foreach $file (@filelist) {
-#    if ($file =~ /^Hershey/) {printf "skipping\n"; next;}
+    if ($file =~ /^Hershey/) {printf "skipping Hershey\n"; next;}
     if ($file =~ /^Japanese/) {printf "skipping Japanese\n"; next;}
     print STDERR "Translating $file\n";
     &parse_html($file);

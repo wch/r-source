@@ -472,6 +472,9 @@ sub html_content {
     unless ($ignore_text) {
 	$string =~ s/\{/\\{/o;
 	$string =~ s/\}/\\}/o;
+	if ($whitespace_significant) { # means verbatim
+	    $string =~ s/\\"/\\\\"/o;
+	}
 	print RTF $string;
 #	if(!(defined $in_a)) {print RTF " ";}
 #	&print_word_wrap ($string);
