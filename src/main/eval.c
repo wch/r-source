@@ -1344,6 +1344,80 @@ SEXP EvalArgs(SEXP el, SEXP rho, int dropmissing)
 int DispatchOrEval(SEXP call, char *generic, SEXP args, SEXP rho,
 		   SEXP *ans, int dropmissing)
 {
+#define AVOID_PROMISES_IN_DISPATCH_OR_EVAL
+#ifdef AVOID_PROMISES_IN_DISPATCH_OR_EVAL
+/* DispatchOrEval is called very frequently, most often in cases where
+   no dispatching is needed and the isObject or the string-based
+   pre-test fail.  To avoid degrading performance it is therefore
+   necessary to avoid creating promises in these cases.  The pre-test
+   does require that we look at the first argument, so that needs to
+   be evaluated.  The complicating factor is that the first argument
+   might come in with a "..." and that there might be other arguments
+   in the "..." as well.  LT */
+
+    SEXP x = R_NilValue;
+    int dots = FALSE;
+
+    /* Find the object to dispatch on, dropping any leading
+       ... arguments with missing or empty values.  If there are no
+       arguments, R_NilValue is used. */
+    for (; args != R_NilValue; args = CDR(args)) {
+	if (CAR(args) == R_DotsSymbol) {
+	    SEXP h = findVar(R_DotsSymbol, rho);
+	    if (TYPEOF(h) == DOTSXP) {
+		/* just a consistency check */
+		if (TYPEOF(CAR(h)) != PROMSXP)
+		    error("value in ... is not a promise");
+		dots = TRUE;
+		x = eval(CAR(h), rho);
+		break;
+	    }
+	    else if (h != R_NilValue && h != R_MissingArg)
+		error("... used in an incorrect context");
+	}
+	else {
+	    dots = FALSE;
+	    x = eval(CAR(args), rho);
+	    break;
+	}
+    }
+    PROTECT(x);
+  
+    /* try to dispatch on the object */
+    if( isObject(x)) {
+	char *pt;
+	if (TYPEOF(CAR(call)) == SYMSXP)
+	    pt = strrchr(CHAR(PRINTNAME(CAR(call))), '.');
+	else
+	    pt = NULL;
+
+	if (pt == NULL || strcmp(pt,".default")) {
+	    RCNTXT cntxt;
+	    SEXP pargs;
+	    PROTECT(pargs = promiseArgs(args, rho));
+	    SET_PRVALUE(CAR(pargs), x);
+	    begincontext(&cntxt, CTXT_RETURN, call, rho, rho, pargs);
+	    if(usemethod(generic, x, call, pargs, rho, ans)) {
+		endcontext(&cntxt);
+		UNPROTECT(2);
+		return 1;
+	    }
+	    endcontext(&cntxt);
+	    UNPROTECT(1);
+	}
+    }
+
+    if (dots)
+	/* The first call argument was ... and may contain more than the
+	   object, so it needs to be evaluated here.  The object should be
+	   in a promise, so evaluating it again should be no problem. */
+	*ans = EvalArgs(args, rho, dropmissing);
+    else {
+	*ans = CONS(x, EvalArgs(CDR(args), rho, dropmissing));
+	SET_TAG(*ans, CreateTag(TAG(args)));
+    }
+    UNPROTECT(1);
+#else
     SEXP x;
     RCNTXT cntxt;
 
@@ -1374,6 +1448,7 @@ int DispatchOrEval(SEXP call, char *generic, SEXP args, SEXP rho,
     *ans = CONS(x, EvalArgs(CDR(args), rho, dropmissing));
     SET_TAG(*ans, CreateTag(TAG(args)));
     UNPROTECT(2);
+#endif
     return 0;
 }
 
