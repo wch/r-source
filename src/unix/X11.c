@@ -75,21 +75,13 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #ifndef HAVE_AQUA
 SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    R_X11_Init();
-    if(initialized > 0)
-	return (*ptr->de)(call, op, args, rho);
-    else {
-	error("R_X11 module cannot be loaded");
-	return R_NilValue;
-    }
-}
 #else
 /*  This copy of do_dataentry is needed when R is built under MacOSX along
-	with the aqua module which contains a definition of do_dataentry. If R
-	is not launched with --gui=aqua then a bus error is raised. S.I.
-*/	 
+    with the aqua module which contains a definition of do_dataentry. If R
+    is not launched with --gui=aqua then a bus error is raised. S.I.
+ */
 SEXP X11_do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
+#endif
 {
     R_X11_Init();
     if(initialized > 0)
@@ -99,7 +91,6 @@ SEXP X11_do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return R_NilValue;
     }
 }
-#endif
 
 Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
 {
