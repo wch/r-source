@@ -81,7 +81,7 @@ do.call <- function(what,args).Internal(do.call(what,args))
 drop <- function(x).Internal(drop(x))
 duplicated <- function(x, incomparables = FALSE) {
     if(!is.logical(incomparables) || incomparables)
-	stop("duplicated(.. incomparables != FALSE) not yet available in R.")
+	stop("duplicated(incomparables != FALSE) not yet available in R.")
     .Internal(duplicated(x))
 }
 format.info <- function(x).Internal(format.info(x))
@@ -118,7 +118,7 @@ plot.window <- function(xlim, ylim, log = "", asp = NA, ...)
 polyroot <- function(z).Internal(polyroot(z))
 rank <- function(x, na.last = TRUE) {
     if(!is.logical(na.last) || !na.last)
-	stop("rank(.., na.last != TRUE) does not yet work in R.")
+	stop("rank(na.last != TRUE) does not yet work in R.")
     .Internal(rank(x))
 }
 readline <- function(prompt="").Internal(readline(prompt))

@@ -30,13 +30,13 @@ sort <- function(x, partial=NULL, na.last=NA)
 
 order <- function(..., na.last = TRUE) {
     if(!is.logical(na.last) || !na.last)
-	stop("order(..., na.last != TRUE) does not yet work in R.")
+	stop("order(na.last != TRUE) does not yet work in R.")
     .Internal(order(...))
 }
 
 sort.list <- function(x, partial = NULL, na.last = TRUE)
 {
      if(!is.logical(na.last) || !na.last)
-	stop("sort(x, na.last != TRUE) does not yet work in R.")
+	stop("sort(na.last != TRUE) does not yet work in R.")
     .Internal(order(x))
 }
