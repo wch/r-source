@@ -27,14 +27,14 @@ use File::Find;
 use File::Path;
 use Getopt::Long;
 use R::Dcf;
+use R::Rdtools;
 use R::Utils;
-use R::Rd;
 use Text::DelimMatch;
 
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.65 $ ';
+my $revision = ' $Revision: 1.66 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -51,11 +51,12 @@ my $opt_tests = 1;
 my $opt_latex = 1;
 my $opt_use_gct = 0;
 my $opt_codoc = 1;
+my $opt_perms = 1;
 my $opt_install = 1;
 
 my @knownoptions = ("help|h", "version|v", "outdir|o:s", "library|l:s",
 		    "no-clean", "no-examples", "no-tests", "no-latex",
-		    "use-gct" => \$opt_use_gct, "no-codoc",
+		    "use-gct" => \$opt_use_gct, "no-codoc", "no-perms",
 		    "no-install");
 GetOptions (@knownoptions) || usage();
 
@@ -67,6 +68,7 @@ $opt_examples = 0 if $opt_no_examples;
 $opt_tests = 0 if $opt_no_tests;
 $opt_latex = 0 if $opt_no_latex;
 $opt_codoc = 0 if $opt_no_codoc;
+$opt_perms = 0 if $opt_no_perms;
 $opt_install = 0 if $opt_no_install;
 
 sub env_path {
@@ -283,8 +285,19 @@ sub check_pkg {
     chdir($pkgdir);
 
     ## Check for sufficient file permissions (Unix only).
+
+    ## This is a bit controversial, and hence has an option `--no-perms'
+    ## to turn this off.  In fact, the code below does a bit too much.
+    ## What would really be needed is the following:
+    ## * All dirs or files must be at least 555 or 444, respectively.
+    ## * Everything that gets installed must be writeable.  This
+    ##   includes DESCRIPTION COPYING INDEX TITLE data/* demo/* exec/*
+    ##   and inst/*.
+    ## * All directories used for building `objects' must be at least
+    ##   755.  This includes `.' and src.
+    ## Given time, the above could be implemented.
     
-    if($OS eq "unix") {
+    if($opt_perms && ($OS eq "unix")) {
 	$log->checking("for sufficient/correct file permissions");
 	my @badfiles = ();
 	my @excludepatterns = ("^.Rbuildignore\$", "\~\$", "\\.swp\$",
@@ -608,7 +621,7 @@ sub check_pkg {
 	    my $text = "";
 	    ## Read the Rd file via Rdpp, and get rid of the \alias
 	    ## entries as these may have unbalanced braces (Paren.Rd).
-	    my @lines = split(/\n/, R::Rd::Rdpp($rdfile, $OS));
+	    my @lines = split(/\n/, &Rdpp($rdfile, $OS));
 	    foreach my $line (@lines) {
 		$text .= "\n$line" unless ($line =~ /^\\alias/);
 	    }
@@ -984,6 +997,7 @@ Options:
                         (default is \`pkg.Rcheck\' in current directory,
 			where \`pkg\' is the name of the package checked)
       --no-clean        do not clean outdir before using it
+      --no-perms        do not check sufficient/correct file permissions
       --no-codoc        do not check for code/documentation mismatches
       --no-examples     do not run the examples in the Rd files
       --no-tests        do not run code in tests subdirectory
