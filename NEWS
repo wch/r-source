@@ -364,6 +364,8 @@ BUG FIXES
 
     o   all(), any() now handle NAs as documented.
 
+    o   Subsetting arrays to a result with 0 dimension(s) failed if
+	the array had dimnames. (PR#2507)
 
 
 

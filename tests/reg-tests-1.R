@@ -1165,6 +1165,13 @@ stopifnot(all.equal(t(B), solve(t(A))))
 ## test here is of dimnames
 
 
+## PR#2507: extracting 0-length dimensions for arrays
+dn <- list(LETTERS[1:2], letters[1:3], paste("t",1:4,sep=""))
+A. <- array(1:24, dim = 2:4, dimnames = dn)
+str(A.[1, 0, 2 ])
+str(A.[1, 0, 2, drop = FALSE])
+## both gave errors in 1.6.2
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

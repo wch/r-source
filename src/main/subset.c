@@ -409,7 +409,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
     }
 
     PROTECT(xdims = allocVector(INTSXP, k));
-    for(i=0 ; i<k ; i++)
+    for(i = 0 ; i < k ; i++)
 	INTEGER(xdims)[i] = bound[i];
     setAttrib(result, R_DimSymbol, xdims);
     UNPROTECT(1);
@@ -433,6 +433,8 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 			ExtractSubset(VECTOR_ELT(dimnames, i),
 				      allocVector(STRSXP, bound[i]),
 				      CAR(r), call));
+		} else { /* 0-length dims have NULL dimnames */ 
+		    SET_VECTOR_ELT(xdims, j++, R_NilValue);
 		}
 		r = CDR(r);
 	    }
