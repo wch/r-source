@@ -66,7 +66,7 @@ BUG FIXES
     o	cut() now produces correct default labels even when
 	include.lowest = TRUE (PR#1263).
 
-    o	reformulate() properly works with a response.
+    o	reformulate() works properly with a response.
 
     o	cmdscale(*, k = 1) now works properly.
 
@@ -75,10 +75,13 @@ BUG FIXES
 	was not working on some platforms.
 
     o	glm.fit.null() now accepts all the arguments of glm.fit() (it
-	couild be called from glm.fit with arguments it did not
+	could be called from glm.fit with arguments it did not
 	accept), and is now documented.
 
-    o	cov.wt(cbind(1),cor=T) now works.
+    o	cov.wt(cbind(1), cor = TRUE) now works.
+
+    o	predict(glm.object, se.fit = TRUE) was failing if the fit
+	involved an offset.
 
 
 
