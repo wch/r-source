@@ -633,7 +633,7 @@ PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics, int face)
 	    if(res > 0) p += res;
 	    else {
 		warning("invalid character in PostScriptStringWidth");
-		return 0.001 * sum;
+		return 0;
 	    }
 	    if(*p) mbrtowc(&wc2, (char *)p, MB_CUR_MAX, NULL); else wc2 = 0;
 #ifdef USE_HYPHEN
@@ -1956,7 +1956,30 @@ static void PostScriptCircle(FILE *fp, double x, double y, double r)
 }
 
 /* We do this conversion ourselves to do our own error recovery */
+#define WBUFFSIZE 1000
 #ifdef SUPPORT_UTF8
+static void utf8toLatin1(char *in, char *out)
+{
+    wchar_t wbuff[WBUFFSIZE+1]; /* FIXME */
+    int i;
+    size_t res = mbstowcs(NULL, in, 0);
+
+    if(res == (size_t)(-1)  || res > 1000) {
+	warning("invalid text in utf8toLatin1");
+	*out = '\0';
+	return;
+    }
+    mbstowcs(wbuff, in, WBUFFSIZE);
+    for(i = 0; i < res; i++) {
+	/* here we do assume Unicode wchars */
+	if(wbuff[i] > 0xFF) out[i] = '.'; 
+	else out[i] = (char) wbuff[i];
+    }
+    out[res] = '\0';
+}
+#endif
+
+#ifdef OLD
 static void utf8toLatin1(char *in, char *out)
 {
     unsigned char *p = (unsigned char *) in, *q = (unsigned char *) out, p2;
@@ -2903,7 +2926,7 @@ static void PS_Text(double x, double y, char *str,
 {
     char *str1 = str;
 #ifdef SUPPORT_UTF8
-    char buff[1000]; /* FIXME */
+    char buff[WBUFFSIZE+1]; /* FIXME */
 #endif
 
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
@@ -2914,8 +2937,8 @@ static void PS_Text(double x, double y, char *str,
 	SetColor(gc->col, dd);
 #ifdef SUPPORT_UTF8
 	if(utf8locale && !utf8strIsASCII(str) && 
-	   pd->current.font != 5) { 
-	    utf8toLatin1(str, buff);
+	   pd->current.font != 5) {
+	    utf8toLatin1(str, buff); 
 	    str1 = buff;
 	}
 #endif
@@ -4893,7 +4916,7 @@ static void PDF_Text(double x, double y, char *str,
     double a, b, rot1;
     char *str1 = str;
 #ifdef SUPPORT_UTF8
-    char buff[1000]; /* FIXME */
+    char buff[WBUFFSIZE+1]; /* FIXME */
 #endif
 
     if(face < 1 || face > 5) {
