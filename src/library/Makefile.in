@@ -52,6 +52,7 @@ R:
 docs:
 	@echo "building all R object docs (text, HTML, LaTeX, examples)"
 	@$(MAKE) help-indices
+	@$(MAKE) Rdfiles
 	@$(R_CMD_BUILD_HELP) --htmllists
 	@$(MAKE) vignettes
 	@$(MAKE) indices
