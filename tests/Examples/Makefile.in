@@ -37,6 +37,12 @@ $(Ex_Rout): %-Ex.Rout: %-Ex.R $(top_builddir)/stamp-R \
 	@echo "Running all help() examples ..."
 	$(R) < $< > $@
 
+base-Ex.R: $(top_builddir)/library/base/R-ex/*.R
+	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
+	@if [ -f $@ ]; then mv $@ $@.bak ; fi
+	@echo "Massaging examples into $@ ..."
+	-@$(top_builddir)/bin/massage-Examples $* \
+	  $(top_builddir)/library/base/R-ex/*.R > $@
 %-Ex.R: $(top_builddir)/library/%/R-ex/*.R
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
