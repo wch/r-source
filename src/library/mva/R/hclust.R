@@ -25,9 +25,10 @@
 
 hclust <- function(d, method="complete")
 {
-    method <-  pmatch(method, c("ward", "single",
-				"complete", "average", "mcquitty",
-				"median", "centroid"))
+    METHODS <- c("ward", "single",
+                 "complete", "average", "mcquitty",
+                 "median", "centroid")
+    method <-  pmatch(method, METHODS)
     if(is.na(method))
 	stop("invalid clustering method")
     if(method == -1)
@@ -63,11 +64,17 @@ hclust <- function(d, method="complete")
 		      iia = integer(n),
 		      iib = integer(n), PACKAGE="mva")
 
-    tree <- list(
-		 merge=cbind(hcass$iia[1:(n-1)], hcass$iib[1:(n-1)]),
+    tree <- list(merge=cbind(hcass$iia[1:(n-1)], hcass$iib[1:(n-1)]),
 		 height=hcl$crit[1:(n-1)],
 		 order=hcass$order,
-		 labels=attr(d, "Labels"))
+		 labels=attr(d, "Labels"),
+                 method=METHODS[method],
+                 call=match.call())
+    
+    if(!is.null(attr(d, "method"))){
+        tree$dist.method <- attr(d, "method")
+    }
+    
     class(tree) <- "hclust"
     tree
 }
@@ -109,8 +116,23 @@ as.hclust.twins <- function(x)
     retval <- list(merge = x$merge,
                    height = sort(x$height),
                    order = x$order,
+                   call = match.call(),
+                   dist.method = attr(x$diss, "Metric"),
                    labels = rownames(x$data))
     class(retval) <- "hclust"
     retval
 }
+
+print.hclust <- function(tree)
+{
+    if(!is.null(tree$call))
+        cat("\nCall:\n",deparse(tree$call),"\n\n",sep="")
+    if(!is.null(tree$method))
+        cat("Cluster method   :", tree$method, "\n") 
+    if(!is.null(tree$dist.method))
+        cat("Distance         :", tree$dist.method, "\n")
+        cat("Number of objects:", length(tree$height)+1, "\n")
+    cat("\n")
+}
+    
 
