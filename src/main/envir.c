@@ -44,6 +44,46 @@
  *
  */
 
+/* Some experimental options:
+ *
+ * EXPERIMENTAL_NAMESPACES: When this is defined the variable
+ *     R_BaseNamespace holds an environment that has R_GlobalEnv as
+ *     its parent.  This environment does not actually contain any
+ *     bindings of its own.  Instead, it redirects all fetches and
+ *     assignments to the SYMVALUE fields of the base (NULL)
+ *     environment.  If evaluation occurs in R_BaseNamespace, then
+ *     base is searched before R_GlobalEnv.
+ *
+ * ENVIRONMENT_LOCKING: Locking an environment prevents new bindings
+ *     from being created and existing bindings from being removed.
+ *
+ * FANCY_BINDINGS: This enables binding locking and "active bindings".
+ *     When a binding is locked, its value cannot be changed.  It may
+ *     still be removed from the environment if the environment is not
+ *     locked.
+ *
+ *     Active bindings contain a function in their value cell.
+ *     Getting the value of an active binding calls this function with
+ *     no arguments and returns the result.  Assigning to an active
+ *     binding calls this function with one argument, the new value.
+ *     Active bindings may be useful for mapping external variables,
+ *     such as C variables or data base entries, to R variables.  They
+ *     may also be useful for making some globals thread-safe.
+ *
+ *     Bindings are marked as locked or active using bits 14 and 15 in
+ *     their gp fields.  Since the save/load code writes out this
+ *     field it means the value will be preserved across save/load.
+ *     But older versions of R will interpret the entire gp field as
+ *     the MISSING field, which may cause confusion.  If we keep this
+ *     code, then we will need to make sure that there are no
+ *     locked/active bindings in workspaces written for older versions
+ *     of R to read.
+ *
+ *     This code is experimental; if it doesn't seem useful it can be
+ *     removed.
+ *
+ * LT */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -52,8 +92,6 @@
 
 #define ENVIRONMENT_LOCKING
 #ifdef ENVIRONMENT_LOCKING
-/* Environment locking: Locking an environment prevents new bindings
-   from being created and existing bindings from being removed. */
 #define FRAME_LOCK_MASK (1<<14)
 #define FRAME_IS_LOCKED(e) (ENVFLAGS(e) & FRAME_LOCK_MASK)
 #define LOCK_FRAME(e) SET_ENVFLAGS(e, ENVFLAGS(e) | FRAME_LOCK_MASK)
@@ -62,30 +100,6 @@
 
 #define FANCY_BINDINGS
 #ifdef FANCY_BINDINGS
-/* The FANCY_BINDINGS enables binding locking and "active bindings".
-   When a binding is locked, its value cannot be changed.  It may
-   still be removed from the environment if the environment is not
-   locked.
-
-   Active bindings contain a function in their value cell.  Getting
-   the value of an active binding calls this function with no
-   arguments and returns the result.  Assigning to an active bining
-   calls this function with one argument, the new value.  Active
-   bindings may be useful for mapping external variables, such as C
-   variables or data base entries, to R variables.  They may also be
-   useful for making some globals thread-safe.
-
-   Bindings are marked as locked or active using bits 14 and 15 in
-   their gp bields.  Since the saveload code writes out this field it
-   means the value will be preserved across save/load.  But older
-   versins of R will interpret the entire gp field as the MISSING
-   field, which may cause confusion.  If we keep this code, then we
-   will need to make sure that there are no locked/active bindings in
-   workspaces written for older versins of R to read.
-
-   This code is experimental; if it doesn't seem useful it can be
-   removed.  LT
-*/
 #ifndef NEW_BINDING_FLAGS
 #error need NEW_BINDING_FLAGS to be defined
 #endif
