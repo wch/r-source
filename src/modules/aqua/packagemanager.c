@@ -243,7 +243,7 @@ static void CreatePackageManager(WindowRef window, ControlRef *browser)
 		sizeof(frameAndFocus), &frameAndFocus);
 }
 
-char *pmNames[] = { "Load/Unload", "Status", "Package", "Description"};
+char *pmNames[] = { "Load", "(current)", "Package", "Description"};
 
 
 static void ConfigurePackageManager(ControlRef browser)
@@ -403,14 +403,14 @@ static pascal OSStatus pmGetSetItemData(ControlRef browser,
             switch(property)
             {
           
-                case 1000:
+                case 2000:
                     strcpy( buf, CHAR(STRING_ELT(pkgname, row-1)) );
                 break;
-                case 2000:
+                case 1000:
 		  if (LOGICAL(pkgstatus)[row-1])
-                    strcpy( buf, "loaded" );
+                    strcpy( buf, "Yes" );
 		  else 
-		    strcpy(buf, " ");
+		    strcpy(buf, "No");
                 break;
                 case 3000:
                     strcpy( buf, CHAR(STRING_ELT(pkgdesc, row-1)) );
