@@ -45,11 +45,11 @@
 
 #define __SYSTEM__
 #include "devUI.h"		/* includes Startup.h */
+#include <R_ext/GetX11Image.h>  /* for *GetX11Image declarations */
 #undef __SYSTEM__
 
 #include "Runix.h"
 
-#include <R_ext/GetX11Image.h>  /* for *GetX11Image declarations */
 
 #ifdef HAVE_AQUA
 void R_StartConsole(void) { ptr_R_StartConsole(); }
