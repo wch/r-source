@@ -227,15 +227,18 @@ install.from.file <- function(pkg = file.choose()) {
  print.hsearch <- function(x,...) {
      db <- x$matches
      if (NROW(db) == 0) {
-         writeLines(strwrap(paste("No help files found matching", sQuote(x$pattern),"using",x$type,"matching\n\n")))
-         invisible(NULL)
+	 writeLines(strwrap(paste("No help files found matching",
+				  sQuote(x$pattern),"using",x$type,
+				  "matching\n\n")))
      } else {
-         wtitle <- paste("Help topics matching",sQuote(x$pattern))
-         showhelp <- which(.Internal(hsbrowser(db[,"topic"],db[,"Package"],db[,"title"], wtitle)))
-         for(i in showhelp) {
-             help(db[i,"topic"], package = db[i,"Package"])
-         }
+	 wtitle <- paste("Help topics matching",sQuote(x$pattern))
+	 showhelp <- which(.Internal(hsbrowser(db[,"topic"],db[,"Package"],
+					       db[,"title"], wtitle)))
+	 for(i in showhelp) {
+	     help(db[i,"topic"], package = db[i,"Package"])
+	 }
      }
+     invisible(x)
  }
 
 
