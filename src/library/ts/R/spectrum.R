@@ -88,9 +88,9 @@ spec.pgram <-
     N <- nrow(x)
     nser <- ncol(x)
     if(!is.null(spans)) # allow user to mistake order of args
-        if(is.kernel(spans)) kernel <- spans
-        else kernel <- modified.daniell.kernel(spans %/% 2)
-    if(!is.null(kernel) && !is.kernel(kernel))
+        if(is.tskernel(spans)) kernel <- spans
+        else kernel <- kernel("modified.daniell", spans %/% 2)
+    if(!is.null(kernel) && !is.tskernel(kernel))
         stop("must specify spans or a valid kernel")
     if (detrend) {
         t <- 1:N - (N + 1)/2
@@ -153,8 +153,8 @@ spec.pgram <-
 #    } else if(!is.null(kernel)) {
     if(!is.null(kernel)) {
         for (i in 1:ncol(x)) for (j in 1:ncol(x))
-                pgram[, i, j] <- apply.kernel(pgram[, i, j], kernel,
-                                              circular = TRUE)
+                pgram[, i, j] <- kernapply(pgram[, i, j], kernel,
+                                           circular = TRUE)
         df <- df.kernel(kernel)/(u4/u2^2)
         bandwidth <- bandwidth.kernel(kernel) * xfreq/N
     } else {

@@ -106,7 +106,7 @@ plot.spec.coherency(mfdeaths.spc)
 plot.spec.phase(mfdeaths.spc)
 
 data(EuStockMarkets)
-stocks.spc <- spectrum(EuStockMarkets, kernel=daniell.kernel(c(30,50)),
+stocks.spc <- spectrum(EuStockMarkets, kernel("daniell", c(30,50)),
                        plot=FALSE)
 plot(stocks.spc)
 plot.spec.coherency(stocks.spc)
@@ -114,7 +114,7 @@ plot.spec.phase(stocks.spc)
 
 data(BJsales)
 sales.spc <- spectrum(ts.union(BJsales, BJsales.lead),
-                      kernel=modified.daniell.kernel(c(5,7)))
+                      kernel("modified.daniell", c(5,7)))
 plot.spec.coherency(sales.spc)
 plot.spec.phase(sales.spc)
 }
