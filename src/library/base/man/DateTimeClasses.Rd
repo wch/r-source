@@ -138,7 +138,7 @@ time1 lop time2
   \code{\link{round.POSIXt}} and \code{\link{trunc.POSIXt}} for methods
   for these classes.
 
-  \code{weekday.POSIXt} for convenience extraction functions.
+  \code{\link{weekdays.POSIXt}} for convenience extraction functions.
 }
 \section{Warning}{
   Some Unix-like systems (especially Linux ones) do not have \code{"TZ"}
