@@ -15,7 +15,7 @@ function (dfr, subset, select)
 		names(nl)<-names(dfr)
 		vars<-eval(substitute(select),nl)
 	}
-	dfr[r,vars]
+	dfr[r,vars,drop=F]
 }
 
 subset<-
