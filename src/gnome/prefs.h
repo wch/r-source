@@ -18,7 +18,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-void r_load_initial_prefs (void);
+#include "Startup.h"
+
+void r_load_initial_prefs (Rstart Rp, int *UseReadline);
 void r_load_gui_prefs (void);
 void r_save_prefs (void);
 void r_prefs_dialog (void);

@@ -26,7 +26,6 @@
 #include "Fileio.h"
 #include "Graphics.h"		/* KillAllDevices() [nothing else?] */
 #include "Rversion.h"
-#include "Startup.h"
 
 #include "gnome-callbacks.h"
 #include "prefs.h"
@@ -689,7 +688,8 @@ void  R_CleanUp (int saveact, int status, int runLast)
 	else saveact = SaveAction;
     }
 
-    /* FIXME: save gui prefs */
+    /* save GUI preferences */
+    r_save_prefs ();
 
     switch (saveact) {
     case SA_SAVE:
@@ -1032,7 +1032,7 @@ gboolean term_size_allocate (GtkWidget *widget,
 
     /* FIXME: tell readline about the new size */
 
-    /* tell R about the new size */
+    /* FIXME: tell R about the new size */
     /*R_SetOptionWidth (width);*/
 
     return FALSE;
@@ -1045,8 +1045,6 @@ GtkWidget *r_gnome_create_terminal ()
     int infd[2], outfd[2];
 
     term = zvt_term_new ();
-
-    /* FIXME: this should use the sizes from the preferences */
     zvt_term_set_size(ZVT_TERM (term), 80, 24);
 
     /* set window manager hints */
@@ -1187,8 +1185,7 @@ int main (int ac, char **av)
 		   g_strdup_printf ("%s.%s %s (%s %s %s)",
 				    R_MAJOR, R_MINOR, R_STATUS,
 				    R_MONTH, R_DAY, R_YEAR));
-    /* FIXME: load preferences */
-    /* FIXME: set preferences that just got loaded */
+    r_load_initial_prefs (Rp, &UsingReadline);
 
     /* process R command line options */
     R_set_command_line_arguments (ac, av, Rp);
@@ -1208,7 +1205,7 @@ int main (int ac, char **av)
     /* set the parameters */
     R_SetParams (Rp);
 
-    /* FIXME: load GUI-related preferences */
+    r_load_gui_prefs ();
 
     R_ShowQueuedMessages ();
 

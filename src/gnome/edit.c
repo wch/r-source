@@ -40,7 +40,16 @@
  * and an error message reported otherwise
  */
 
-static char *DefaultFileName;
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
+#include "Defn.h"
+#include "Print.h"
+#include "Fileio.h"
+#include "Parse.h"
+
+#include "rgnome.h"
 
 void InitEd ();
 SEXP do_edit (SEXP call, SEXP op, SEXP args, SEXP rho);
@@ -48,12 +57,11 @@ SEXP do_edit (SEXP call, SEXP op, SEXP args, SEXP rho);
 
 void InitEd ()
 {
-	DefaultFileName = tmpnam (NULL);
 }
 
 SEXP do_edit (SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-        errorcall (call, "edit() is unavailable");
-	return NULL;
+    errorcall (call, "edit() is unavailable");
+    return NULL;
 }
 
