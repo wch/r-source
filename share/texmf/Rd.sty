@@ -58,7 +58,6 @@
 \section*{{#1}\@mkboth{\MakeUppercase#1}{\MakeUppercase#1}}
   \@starttoc{toc}}
 
-\renewcommand\@pnumwidth{2.05em} % over 1000 pages
 \newcommand{\Header}[2]{%
   \vneed{1ex}
   \markboth{#1}{#1}
@@ -293,6 +292,39 @@
   {\if@restonecol\onecolumn\else\clearpage\fi}
   }
 
+% new definitions for R >= 2.0.0
+\ifthenelse{\boolean{Rd@use@hyper}}
+{\newcommand{\LinkA}[2]{\hyperlink{Rfn.#2}{#1}\index{#1@\texttt{#1}|textit}}}
+{\newcommand{\LinkA}[2]{#1\index{#1@\texttt{#1}|textit}}}
+%
+% \alias{<alias>}{<header>}
+\ifthenelse{\boolean{Rd@use@hyper}}
+{\newcommand{\aliasA}[3]{\hypertarget{Rfn.#3}{\index{#1@\texttt{#1} \textit{(\texttt{#2})}}}}}
+{\newcommand{\aliasA}[3]{\index{#1@\texttt{#1} \textit{(\texttt{#2})}}}}
+\ifthenelse{\boolean{Rd@use@hyper}}
+{\newcommand{\methaliasA}[3]{\hypertarget{Rfn.#3}{\relax}}}
+{\newcommand{\methaliasA}[3]{}}
+\newcommand{\HeaderA}[3]{%
+  \vneed{1ex}
+  \markboth{#1}{#1}
+  \noindent
+  \nopagebreak
+  \begin{center}
+  \ifthenelse{\boolean{Rd@use@hyper}}%
+    {\def\@currentHref{page.\thepage}
+    \hypertarget{Rfn.#3}{\index{#1@\texttt{#1}}}%
+    \myaddcontentsline{toc}{subsection}{#1}%
+    \pdfbookmark[1]{#1}{Rfn.#1}}
+    {\addcontentsline{toc}{subsection}{#1}
+      \index{#1@\texttt{#1}|textbf}}
+    \hrule
+    \parbox{0.95\textwidth}{%
+      \begin{ldescription}[1.5in]
+       \item[\texttt{#1}] \emph{#2}
+      \end{ldescription}}
+    \hrule
+  \end{center}
+  \nopagebreak}
 
 \InputIfFileExists{Rd.cfg}{%
   \typeout{Reading personal defaults ...}}{}

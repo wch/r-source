@@ -95,8 +95,8 @@ sub do_tex_files {
 	$fh->open( $latexDir . $fname ) 
 	    or croak "unable to open file $_:$!\n";
 	$fline = <$fh>;
-	## first line is \Header{object}{...}
-	$fline =~ s/\\Header\{\s*([^}]*)\}//;
+	## first line is \HeaderA{object}{object}{...}
+	$fline =~ s/\\HeaderA\{\s*([^}]*)\}//;
         ## omit internal help pages
         my $internal = 0;
         while(<$fh>) {

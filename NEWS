@@ -325,6 +325,11 @@ DOCUMENTATION
     o	There is a new help page shown by help("Memory-limits") which
 	documents the current design limitations on large objects.
 
+    o	The format of the LaTeX version of the documentation has
+	changed.  The old format is still accepted, but only the new
+	resolves cross-references to object names containing _, for
+	example.
+
 
 C-LEVEL FACILITIES
 

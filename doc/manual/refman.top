@@ -1,6 +1,10 @@
 \usepackage{makeidx}
 \pagestyle{headings}
 
+\makeatletter
+\renewcommand\@pnumwidth{2.05em} % over 1000 pages
+\makeatother
+
 \makeindex
 \sloppy{}
 
