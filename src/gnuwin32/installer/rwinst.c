@@ -380,7 +380,7 @@ void browsedest(button b)
     ofn.lStructSize     = sizeof(OPENFILENAME);
     ofn.hwndOwner       = 0;
     ofn.hInstance       = 0;
-    ofn.lpstrFilter     = "All files (*.*)\0*.*\0\0";
+    ofn.lpstrFilter     = "All files (*)\0*\0\0";
     ofn.lpstrCustomFilter = NULL;
     ofn.nMaxCustFilter  = 0;
     ofn.nFilterIndex    = 0;
@@ -393,7 +393,7 @@ void browsedest(button b)
     ofn.Flags           = OFN_HIDEREADONLY | OFN_PATHMUSTEXIST;
     ofn.nFileOffset     = 0;
     ofn.nFileExtension  = 0;
-    ofn.lpstrDefExt     = "*";
+    ofn.lpstrDefExt     = "";
     ofn.lCustData       = 0L;
     ofn.lpfnHook        = NULL;
     ofn.lpTemplateName  = NULL;
