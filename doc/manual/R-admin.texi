@@ -873,7 +873,7 @@ is to search for @command{g77}, @command{f77}, @command{xlf},
 @command{fort77}, @command{f90}, @command{xlf90}, @command{pgf90},
 @command{epcf90}, @command{f95}, @command{fort}, @command{xlf95},
 @command{lf95}, @command{g95}, and @command{fc} (in that
-order)@footnote{On HPUX @command{fort77} is the @acronym{POSIX}
+order)@footnote{On HP-UX @command{fort77} is the @acronym{POSIX}
 compliant FORTRAN compiler, and comes second in the search list.}, and
 then for @command{f2c}, and use whichever is found first; if none is
 found, @R{} cannot be compiled.  The search mechanism can be changed
@@ -1044,7 +1044,7 @@ of compilers and support libraries.
 @menu
 * MacOS X::                     
 * Solaris::                     
-* HPUX::                        
+* HP-UX::                       
 * IRIX::                        
 * Alpha/OSF1::                  
 * Alpha/FreeBSD::               
@@ -1071,7 +1071,7 @@ binary distribution and needed to be installed directly; for example for
 fink install g77
 @end smallexample
 
-@node Solaris, HPUX, MacOS X, Platform notes
+@node Solaris, HP-UX, MacOS X, Platform notes
 @subsection Solaris on Sparc
 @cindex Solaris
 
@@ -1175,14 +1175,14 @@ you may need to set it to avoid finding 32-bit addons (as in the
 @c optimization.
 
 
-@node HPUX, IRIX, Solaris, Platform notes
-@subsection HPUX
-@cindex HPUX
+@node HP-UX, IRIX, Solaris, Platform notes
+@subsection HP-UX
+@cindex HP-UX
 
-@R{} has been built successfully on HPUX 10.2 and HPUX 11.0 using both
+@R{} has been built successfully on HP-UX 10.2 and HP-UX 11.0 using both
 native compilers and @command{gcc}.  However, 10.2 has not been tested
 since R 1.4.0.  By default, R is configured to use @command{gcc} and
-@command{g77} on HPUX (if available).  Some installations of
+@command{g77} on HP-UX (if available).  Some installations of
 @command{g77} only install a static version of the @command{g2c} library
 that cannot be linked into a shared library since its files have not
 been compiled with the appropriate flag for producing position
@@ -1220,19 +1220,19 @@ which will cause @command{make check} to fail.  If this is the case, you
 should use @code{CFLAGS} to specify @option{-O} as the optimization
 level to use.
 
-Some systems running HPUX 11.0 may have a @command{gcc} that was
-installed under HPUX 10.2.  Between versions 10.2 and 11.0 HPUX changed
-its support functions for @acronym{IEEE} arithmetic from the recommended
-functions of the @acronym{IEEE} standard to the ones specified in the
-C9x draft standard.  In particular, this means that @code{finite} has
-been replaced by @code{isfinite}.  A @command{gcc} configured for HPUX
-10.2 run on 11.0 will not find @code{isfinite}, and as a result
-@command{configure} does not recognize the machine as fully supporting
-@acronym{IEEE} arithmetic and does not define @code{IEEE_754} when
-compiling C code.  This results in a failure in @command{make check}.
-The best solution is to install a properly configured @command{gcc}.  An
-alternative work-around is to add @option{-DIEEE_754} to the
-@code{CFLAGS} variable.
+Some systems running HP-UX 11.0 may have a @command{gcc} that was
+installed under HP-UX 10.2.  Between versions 10.2 and 11.0 HP-UX
+changed its support functions for @acronym{IEEE} arithmetic from the
+recommended functions of the @acronym{IEEE} standard to the ones
+specified in the C9x draft standard.  In particular, this means that
+@code{finite} has been replaced by @code{isfinite}.  A @command{gcc}
+configured for HP-UX 10.2 run on 11.0 will not find @code{isfinite}, and
+as a result @command{configure} does not recognize the machine as fully
+supporting @acronym{IEEE} arithmetic and does not define @code{IEEE_754}
+when compiling C code.  This results in a failure in @command{make
+check}.  The best solution is to install a properly configured
+@command{gcc}.  An alternative work-around is to add @option{-DIEEE_754}
+to the @code{CFLAGS} variable.
 
 You can configure @R{} to use both the native @command{cc} and
 @command{fort77} with
@@ -1249,7 +1249,7 @@ add this directory to the linker path via the configure variable
 LDFLAGS=/opt/fortran90/lib}).
 
 
-@node IRIX, Alpha/OSF1, HPUX, Platform notes
+@node IRIX, Alpha/OSF1, HP-UX, Platform notes
 @subsection IRIX
 @cindex IRIS
 
