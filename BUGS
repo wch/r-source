@@ -575,20 +575,7 @@ Date: Fri, 27 Feb 2004 11:27:18 +0000
 
 Directory:  Macintosh
 
-* PR# 6684 *
-Subject: http://cran.r-project.org/bin/macosx/RAqua-FAQ.html not found
-From: Markus Gail <gail@gmx.de>
-Date: Mon, 22 Mar 2004 13:13:24 +0100
-* PR# 6700 *
-Subject: Mac OS X Limited User cannot access R
-From: nave@macalester.edu
-Date: Fri, 26 Mar 2004 17:01:13 +0100 (CET)
-* PR# 6708 *
-Subject: Greek symbols not generated on quartz device
-From: marksj@nrel.colostate.edu
-Date: Sun, 28 Mar 2004 09:54:48 +0200 (CEST)
-..Actually, a bug report on his installation of MacOS X 10.3.3, since it works on
-..10.2.8.
+none
 
 Directory:  Misc
 
@@ -814,15 +801,19 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6709 *
-Subject: Cheap software on CDs, R.
-From: "Dirigible G. Tilt" <proton@the-fat-slags.com>
-Date: Sun, 28 Mar 2004 07:10:51 -0800
 * PR# 6710 *
 Subject: add "select" to subset docs
 From: ivo.welch@yale.edu
 Date: Sun, 28 Mar 2004 19:26:07 +0200 (CEST)
-* PR# 6711 *
-Subject: Help Documentation
+* PR# 6715 *
+Subject: RE: [Rd] Help Documentation
+From: "Henrik Bengtsson" <hb@maths.lth.se>
+Date: Mon, 29 Mar 2004 09:24:01 +0200
+* PR# 6716 *
+Subject: Re: [Rd] Help Documentation
 From: ivo welch <ivo.welch@yale.edu>
-Date: Sun, 28 Mar 2004 16:52:48 -0500
+Date: Mon, 29 Mar 2004 08:28:50 -0500
+* PR# 6717 *
+Subject: RE: [Rd] Help Documentation
+From: "Liaw, Andy" <andy_liaw@merck.com>
+Date: Mon, 29 Mar 2004 09:13:27 -0500
