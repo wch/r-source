@@ -66,3 +66,16 @@ savePlot <- function(filename = "Rplot",
     if(nchar(filename) > 0) filename <- paste(filename, type, sep=".")
     invisible(.Internal(saveDevga(device, filename, type)))
 }
+
+print.SavedPlots <- function(x, ...)
+{
+    if(x[[1]] != 31416) {
+        cat("object is not of class `SavedPlots'\n")
+        return()
+    }
+    cat("Saved Plots from R version 1.4.0 or later\n\n")
+    cat("  Contains", x[[2]], "out of a maximum", x[[3]], "plots\n")
+    lens <- sapply(x[[5]], length)[1:x[[2]]]
+    cat("  #plot calls are", paste(lens, collapse=", "), "\n")
+    cat("  Current position is plot", 1 + x[[4]], "\n")
+}

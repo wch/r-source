@@ -5,6 +5,7 @@
 \alias{win.print}
 \alias{x11}
 \alias{X11}
+\alias{print.SavedPlots}
 
 \title{Windows graphics devices}
 
@@ -103,6 +104,8 @@ win.print(width = 7, height = 7, pointsize = 12)
   default).  The difference between setting the canvas colour and the
   background colour is that when the device is copied the background
   colour is copied but the canvas colour is not.
+
+  Recorded plots are of class \code{"SavedPlots"}.
 }
 
 \value{
