@@ -414,10 +414,10 @@ getGeneric <-
     if(is.function(f) && is(f, "genericFunction"))
         return(f)
     value <- if(identical(where, baseenv()))
-        NULL
+        baseenv()
       else
           .getGeneric( f, as.environment(where))
-    if(is.null(value) && exists(f, "package:base", inherits = FALSE)) {
+    if(identical(value, baseenv()) && exists(f, "package:base", inherits = FALSE)) {
       ## check for primitives
       baseDef <- get(f, "package:base")
       if(is.primitive(baseDef)) {

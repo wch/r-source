@@ -161,7 +161,7 @@ MethodsListSelect <-
   ## is returned as the value.  If matching fails,  NULL is returned.
     function(f, env,
              mlist = NULL,
-             fEnv = if(is(fdef, "genericFunction")) environment(fdef) else NULL,
+             fEnv = if(is(fdef, "genericFunction")) environment(fdef) else baseenv(),
              finalDefault = finalDefaultMethod(mlist, f),
              evalArgs = TRUE,
              useInherited = TRUE,  ## supplied when evalArgs is FALSE
