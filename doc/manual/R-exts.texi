@@ -164,8 +164,8 @@ package, e.g.@: a copy of the @acronym{GNU} public license.  Whereas you
 should feel free to include a licence file in your source distribution,
 please do not arrange to install yet another copy of the @acronym{GNU}
 @file{COPYING} or @file{COPYING.LIB} files but refer to the copies in
-the @R{} distribution (e.g. in directory @file{share/licenses} in your
-own @file{COPYING} file.
+the @R{} distribution (e.g., in directory @file{share/licenses} in your
+own @file{COPYING} file).
 
 The package subdirectory should be given the same name as the package.
 Because some file systems (e.g., those on Windows) are not
@@ -295,25 +295,25 @@ imported from but which do not need to be attached.
 The optional @samp{Suggests} field uses the same syntax as
 @samp{Depends} and lists packages that are not necessarily needed.  This
 includes packages used only in examples or vignettes (@pxref{Writing
-package vignettes}), and packages loaded in the body of functions.  E.g.,
-consider an example from package @pkg{foo} uses a dataset from package
-@pkg{bar}. Then it is not necessary to have @pkg{bar} for routine use of
-@pkg{foo}, unless one wants to execute the examples: it is nice to have
-@pkg{bar}, but not necessary.  The general rules are
+package vignettes}), and packages loaded in the body of functions.
+E.g., suppose an example from package @pkg{foo} uses a dataset from
+package @pkg{bar}. Then it is not necessary to have @pkg{bar} for
+routine use of @pkg{foo}, unless one wants to execute the examples: it
+is nice to have @pkg{bar}, but not necessary.  The general rules are
 
 @itemize @bullet
 @item
-Packages whose namespace only is needed to load the package
-using @code{library(@var{pkgname})} must be listed in the @samp{Imports}
+Packages whose namespace only is needed to load the package using
+@code{library(@var{pkgname})} must be listed in the @samp{Imports}
 field.
 @item
-Packages that need to attached to successfully load the package
-using @code{library(@var{pkgname})} must be listed in the @samp{Depends}
+Packages that need to be attached to successfully load the package using
+@code{library(@var{pkgname})} must be listed in the @samp{Depends}
 field.
 @item
-All packages that are needed to successfully run @code{R CMD
-check} on the package must be listed in one of @samp{Depends} or
-@samp{Suggests} or @samp{Imports}.
+All packages that are needed to successfully run @code{R CMD check} on
+the package must be listed in one of @samp{Depends} or @samp{Suggests}
+or @samp{Imports}.
 @end itemize
 @noindent
 
@@ -362,8 +362,11 @@ The optional @samp{ZipData} field controls whether the automatic
 Windows build will zip up the data directory or no: set this to
 @samp{no} if your package will not work with a zipped data directory.
 
-@strong{NB} There should be no @samp{Built} or @samp{Packaged} fields,
-as these are added by the package management tools.
+@quotation Note
+There should be no @samp{Built} or @samp{Packaged} fields, as these are
+added by the package management tools.
+@end quotation
+
 
 @node The INDEX file, The install.R and R_PROFILE.R files, The DESCRIPTION file, Package structure
 @subsection The @file{INDEX} file
@@ -442,13 +445,14 @@ It is conventional to define these function in a file called
 called with arguments @code{libname} and @code{pkgname} after the
 packages is loaded and attached.  (If a package is installed with
 version information, the package name includes the version information,
-e.g. @samp{ash_1.0.9}.)  A common use is to call @code{library.dynam()}
-@code{.First.lib()} to load compiled code: another use is to call those
-functions with side effects.  If @code{.Last.lib} exists in a package it
-is called (with argument the full path to the installed package) just
-before the package is detached.  It is uncommon to detach packages and
-rare to have a @code{.Last.lib} function: one use is to call
-@code{library.dynam.unload} to unload compiled code.)
+e.g.@: @samp{ash_1.0.9}.)  A common use is to call
+@code{library.dynam()} inside @code{.First.lib()} to load compiled code:
+another use is to call those functions with side effects.  If
+@code{.Last.lib} exists in a package it is called (with argument the
+full path to the installed package) just before the package is detached.
+It is uncommon to detach packages and rare to have a @code{.Last.lib}
+function: one use is to call @code{library.dynam.unload} to unload
+compiled code.)
 
 
 The @file{man} subdirectory should contain documentation files for the
@@ -460,8 +464,8 @@ Note that all user-level objects in a package should be documented; if a
 package @var{pkg} contains user-level objects which are for ``internal''
 use only, it should provide a file @file{@var{pkg}-internal.Rd} which
 documents all such objects, and clearly states that these are not meant
-to be called by the user.  See e.g.@: the sources for package
-@pkg{tools} in the @R{} distribution for an example.
+to be called by the user.  See e.g.@: the sources for package @pkg{grid}
+in the @R{} distribution for an example.
 
 The @file{R} and @file{man} subdirectories may contain OS-specific
 subdirectories named @file{unix} or @file{windows}.
@@ -517,12 +521,12 @@ automatically.)
 The contents of the @file{inst} subdirectory will be copied recursively
 to the installation directory.  Subdirectories of @file{inst} should not
 interfere with those used by R (currently, @file{R}, @file{data},
-@file{demo}, @file{exec}, @file{man}, @file{help}, @file{html},
-@file{latex}, @file{R-ex}, and @file{Meta}).  As from @R{} 1.8.1 the
-copying of the @file{inst} happens after @file{src} is built so its
-@file{Makefile} can create files to be installed.  Note that with the
-exceptions of @file{INDEX} and @file{COPYING}, information files at the
-top level of the package will @emph{not} be installed and so not be
+@file{demo}, @file{exec}, @file{libs}, @file{man}, @file{help},
+@file{html}, @file{latex}, @file{R-ex}, and @file{Meta}).  As from @R{}
+1.8.1 the copying of the @file{inst} happens after @file{src} is built
+so its @file{Makefile} can create files to be installed.  Note that with
+the exceptions of @file{INDEX} and @file{COPYING}, information files at
+the top level of the package will @emph{not} be installed and so not be
 known to users of Windows and MacOS X compiled packages (and not seen by
 those who use @command{R CMD INSTALL} or @command{install.packages} on
 the tarball).  So any information files you wish an end user to see
@@ -598,8 +602,8 @@ Description: Functions for kriging and point pattern analysis.
 @end cartouche
 @end quotation
 
-Any files in the package except the @file{DESCRIPTION} file and the
-named packages will be ignored.
+Any files in the package bundle except the @file{DESCRIPTION} file and
+the named packages will be ignored.
 
 @node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
 @section Configure and cleanup
@@ -861,9 +865,9 @@ The @file{DESCRIPTION} file is checked for completeness, and some of its
 entries for correctness.  Unless installation tests are skipped,
 checking is aborted if the package dependencies cannot be resolved at
 run time.  One check is that the package name is not that of a standard
-package, nor of the defunct standard packages (@code{ctest}, @code{eda},
-@code{lqs}, @code{mle}, @code{modreg}, @code{mva}, @code{nls},
-@code{stepfun} and @code{ts}) which are handled specially by
+package, nor of the defunct standard packages (@samp{ctest}, @samp{eda},
+@samp{lqs}, @samp{mle}, @samp{modreg}, @samp{mva}, @samp{nls},
+@samp{stepfun} and @samp{ts}) which are handled specially by
 @code{library}.
 
 @item
@@ -880,11 +884,11 @@ arguments of the corresponding generic, and whether the final argument
 of replacement functions is called @samp{value}.
 
 @item
-The Rd files are checked for the mandatory (@code{\name}, @code{\alias},
-@code{\title}, @code{\description} and @code{\keyword}) fields, and for
-unbalanced braces (which indicate Rd syntax errors).  The Rd name and
-title are checked for being non-empty, and the keywords found are
-compared to the standard ones.
+The Rd files are checked for correct syntax and meta data, including the
+presence of the mandatory (@code{\name}, @code{\alias}, @code{\title},
+@code{\description} and @code{\keyword}) fields.  The Rd name and title
+are checked for being non-empty, and the keywords found are compared to
+the standard ones.
 
 @item
 A check is made for missing documentation entries, such as undocumented
@@ -900,7 +904,7 @@ sections of Rd files are documented in the corresponding
 @code{\arguments} section.
 
 @item
-C, C++ and Fortran source and header files are tested for portable
+C, C++ and FORTRAN source and header files are tested for portable
 (LF-only) line endings.
 
 @item
@@ -939,7 +943,7 @@ packages from their sources (for example, for subsequent release).
 Prior to actually building the package in the common gzipped tar file
 format, a few diagnostic checks and cleanups are performed.  In
 particular, it is tested whether object indices exist and can be assumed
-to be up-to-date, and C, C++ and Fortran source files are tested and
+to be up-to-date, and C, C++ and FORTRAN source files are tested and
 converted to LF line-endings if necessary.
 
 Run-time checks whether the package works correctly should be performed
@@ -967,7 +971,7 @@ Use @kbd{R CMD build --help} to obtain more information about the usage
 of the @R{} package builder.
 
 Unless @kbd{R CMD build} is invoked with the @option{--no-vignettes}
-option, it will attempt to rebuild and vignettes (@pxref{Writing package
+option, it will attempt to rebuild the vignettes (@pxref{Writing package
 vignettes}) in the package.  To do so it installs the current
 package/bundle into a temporary library tree, but any dependent packages
 need to be installed in an available library tree (see the Note: below).
@@ -1083,10 +1087,11 @@ run from the directory containing @file{mypkg} as a subdirectory.)
 Run @code{R CMD check} to check that the package will install and will
 runs its examples, and that the documentation is complete and can be
 processed.  If the package contains code that needs to be compiled, try
-to enable a reasonable amount of diagnostic messaging (``warnings'') when
-compiling, such as e.g.@: @samp{-Wall -pedantic} for tools from GCC, the
-Gnu Compiler Collection.  (If @R{} was not configured accordingly, one
-can achieve this e.g.@: via @code{PKG_CFLAGS} and related variables.)
+to enable a reasonable amount of diagnostic messaging (``warnings'')
+when compiling, such as e.g.@: @option{-Wall -pedantic} for tools from
+GCC, the Gnu Compiler Collection.  (If @R{} was not configured
+accordingly, one can achieve this e.g.@: via @code{PKG_CFLAGS} and
+related variables.)
 
 @item
 Run @code{R CMD build} to make the release @file{.tar.gz} file.
@@ -1544,24 +1549,25 @@ corresponds to @code{int} in C on all @R{} platforms.
 
 @item
 Errors in memory allocation and reading/writing outside arrays are very
-common causes of crashes (e.g. segfaults) on some machines.  If you have
-access to Linux on an @code{ix86} platform you can use @code{valgrind}
-(@url{http://valgrind.kde.org/}) to look out for possible problems.
-To run some examples under @code{valgrind} use something like
+common causes of crashes (e.g., segfaults) on some machines.  If you
+have access to Linux on an @code{ix86} platform you can use
+@code{valgrind} (@url{http://valgrind.kde.org/}) to look out for
+possible problems.  To run some examples under @code{valgrind} use
+something like
 
 @example
 R -d "valgrind --tool=memcheck --leak-check=yes" --vanilla < mypkg-Ex.R
 @end example
 
 @noindent
-where @file{mypkg-Ex.R} is a set of examples, e.g. the file created in
+where @file{mypkg-Ex.R} is a set of examples, e.g.@: the file created in
 @file{mypkg.Rcheck} by @code{R CMD check}.  Occasionally this reports
 memory reads of `uninitialised values' that are the result of compiler
 optimization, so can be worth checking under unoptimized compiles.  We
-know there will be some small memory leaks from @code{readline} and
-@R{} itself -- these are memory areas that are in use right up to the
-end of the @R{} session.  Expect this to run around 20x slower than
-without @code{valgrind}, and in some cases even slower than that.
+know there will be some small memory leaks from @code{readline} and @R{}
+itself -- these are memory areas that are in use right up to the end of
+the @R{} session.  Expect this to run around 20x slower than without
+@code{valgrind}, and in some cases even slower than that.
 @code{valgrind} is not happy with many optimized BLASes that use
 cpu-specific instructions (3D now, SSE2 and similar) so you may need to
 build a version of @R{} specifically to use with @code{valgrind}.
@@ -1593,7 +1599,7 @@ will crash the application (here @R{}) if they are ever used.  Some
 (notably Windows) will not.  Looking at the output of
 
 @example
-nm -pg mypkg.so  # or other extension such as .sl or .dylib
+nm -pg mypkg.so  # @r{or other extension such as @samp{.sl} or @samp{.dylib}}
 @end example
 
 @noindent
@@ -1667,8 +1673,9 @@ compiled with NLS support (which is requested by @command{configure}
 option @option{--enable-nls}, the default).
 
 The procedures make use of @code{msgfmt} and @code{xgettext} which are
-part of GNU @code{gettext} and this will need to be installed: Windows
-users can find pre-compiled binaries at the GNU archive mirrors.
+part of @acronym{GNU} @code{gettext} and this will need to be installed:
+Windows users can find pre-compiled binaries at the @acronym{GNU}
+archive mirrors.
 
 @menu
 * C-level messages::
@@ -2502,10 +2509,10 @@ and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
 
 @findex \enc
 Text which might need to be represented differently in different
-encodings should be marked by @code{\enc}, e.g.
+encodings should be marked by @code{\enc}, e.g.@:
 @code{\enc@{Jöreskog@}@{Joreskog@}} where the first argument will be used
 where encodings are allowed and the second should be ASCII (and is used
-for e.g. the text conversion).
+for e.g.@: the text conversion).
 
 @node Indices, Platform-specific sections, Insertions, Writing R documentation files
 @section Indices
@@ -2923,7 +2930,7 @@ mixture of C functions and FORTRAN subprogams the argument types must
 match as given in the table above.
 
 C type @code{Rcomplex} is a structure with @code{double} members
-@code{r} and @code{i} defined in the header file @file{Complex.h}
+@code{r} and @code{i} defined in the header file @file{R_ext/Complex.h}
 included by @file{R.h}.  Only a single character string can be passed to
 or from FORTRAN, and the success of this is compiler-dependent.  Other
 @R{} objects can be passed to @code{.C}, but it is better to use one of
@@ -2966,7 +2973,7 @@ are normally sufficient to cause @R{} to crash.
 
 For @code{.C} only you can specify an @code{ENCODING} argument: this
 requests that (unless @code{DUP = FALSE}) character vectors be
-re-encoding to the requested encoding before being passed in, and
+re-encoded to the requested encoding before being passed in, and
 re-encoded from the requested encoding when passed back.  Note that
 encoding names are not standardized, and not all @R{} builds support
 re-encoding. (The argument is ignored with a warning if re-encoding is
@@ -3090,6 +3097,7 @@ directory.
 The following example shows templates for the initialization and
 unload routines for the @code{mylib} DLL.
 
+@quotation
 @cartouche
 @example
 #include <Rdefines.h>
@@ -3108,6 +3116,7 @@ R_unload_mylib(DllInfo *info)
 @}
 @end example
 @end cartouche
+@end quotation
 
 If a shared object/DLL is loaded more than once the most recent version is
 used.  More generally, if the same symbol name appears in several
@@ -3158,7 +3167,7 @@ Currently, the @code{R_ExternalMethodDef} is the same as
 routine by which it can be accessed in R, a pointer to the actual native
 symbol (i.e., the routine itself), and the number of arguments the
 routine expects.  For routines with a variable number of arguments
-invoked via the @code{.External} interface, one specifies @math{-1} for
+invoked via the @code{.External} interface, one specifies @code{-1} for
 the number of arguments which tells R not to check the actual number
 passed.  For example, if we had a routine named @code{myCall} defined as
 
@@ -3171,7 +3180,7 @@ we would describe this as
 
 @example
 R_CallMethodDef callMethods[]  = @{
-  @{"myCall",  &myCall, 3@},
+  @{"myCall", &myCall, 3@},
   @{NULL, NULL, 0@}
 @};
 @end example
@@ -3181,15 +3190,14 @@ along with any other routines for the @code{.Call} interface.
 
 Routines for use with the @code{.C} and @code{.Fortran} interfaces are
 described with similar data structures, but which have two additional
-fields for describing the type and ``style'' of each argument.  Each
-of these can be omitted. However, if specified, each should be an
-array with the same number of elements as the number of parameters for
-the routine.  The types array should contain the @code{SEXP} types
-describing the expected type of the argument. (Technically, the
-elements of the types array are of type
-@code{R_NativePrimitiveArgType} which is just an unsigned integer.)
-The S types and corresponding type identifiers are provided in the
-following table:
+fields for describing the type and ``style'' of each argument.  Each of
+these can be omitted. However, if specified, each should be an array
+with the same number of elements as the number of parameters for the
+routine.  The types array should contain the @code{SEXP} types
+describing the expected type of the argument. (Technically, the elements
+of the types array are of type @code{R_NativePrimitiveArgType} which is
+just an unsigned integer.)  The R types and corresponding type
+identifiers are provided in the following table:
 
 @quotation
 @multitable {@code{character  }} {@code{SINGLESXP}}
@@ -3220,7 +3228,7 @@ R_CMethodDef cMethods[] = @{
 One can also specify whether each argument is used simply as input, or
 as output, or as both input and output.  The style field in the
 description of a method is used for this.  The purpose is to allow R to
-more efficiently transfer values across the S-C/FORTRAN interface by
+more efficiently transfer values across the R-C/FORTRAN interface by
 avoiding copying values when it is not necessary. Typically, one omits
 this information in the registration data.
 
@@ -3318,7 +3326,7 @@ function of the package) either automatically using the above @code{R
 CMD SHLIB} mechanism, or using Make if directory @file{src} contains a
 @file{Makefile}.  In both cases, if file @file{Makevars} exists it is
 read first when invoking @code{make}.  If a @file{Makefile} is really
-needed or provided, if Fortran is involved it needs to ensure that the
+needed or provided, if FORTRAN is involved it needs to ensure that the
 shared object created is linked against all FORTRAN 77 intrinsic and
 run-time libraries that @R{} was linked against; Make variable
 @code{FLIBS} contains this information.
@@ -3340,6 +3348,7 @@ Suppose we have the following hypothetical C++ library, consisting of
 the two files @file{X.hh} and @file{X.cc}, and implementing the two
 classes @code{X} and @code{Y} which we want to use in @R{}.
 
+@quotation
 @cartouche
 @example
 // X.hh
@@ -3353,7 +3362,9 @@ public: Y (); ~Y ();
 @};
 @end example
 @end cartouche
+@end quotation
 
+@quotation
 @cartouche
 @example
 // X.cc
@@ -3369,6 +3380,7 @@ Y::Y()  @{ std::cout << "constructor Y" << std::endl; @}
 Y::~Y() @{ std::cout << "destructor Y"  << std::endl; @}
 @end example
 @end cartouche
+@end quotation
 
 To use with @R{}, the only thing we have to do is writing a wrapper
 function and ensuring that the function is enclosed in
@@ -3383,6 +3395,7 @@ extern "C" @{
 
 For example,
 
+@quotation
 @cartouche
 @example
 // X_main.cc:
@@ -3398,6 +3411,7 @@ void X_main () @{
 @} // extern "C"
 @end example
 @end cartouche
+@end quotation
 
 Compiling and linking should be done with the C++ compiler-linker
 (rather than the C compiler-linker or the linker itself); otherwise, the
@@ -6241,7 +6255,7 @@ These check if the user has requested an interrupt, and if so branch to
 @R{}'s error handling functions.
 
 Note that it is possible that the code behind one of the entry points
-defined here if called from your C or Fortran code could be interruptible
+defined here if called from your C or FORTRAN code could be interruptible
 or generate an error and so not return to your code.
 
 
@@ -6363,11 +6377,13 @@ The header files which @R{} installs are in directory
 @file{R_HOME/include}.  This currently contains
 
 @quotation
-@multitable {@file{R_ext/RConvertors.h}} {Needed to register compiled code in packages}
+@multitable @columnfractions 0.30 0.55
 @item @file{R.h} @tab includes many other files
 @item @file{S.h} @tab different version for code ported from @Sl{}
-@item @file{Rinternals.h} @tab definitions for using @R{}'s internal structures
-@item @file{Rdefines.h} @tab macros for an @Sl{}-like interface to the above.
+@item @file{Rinternals.h} @tab definitions for using @R{}'s internal
+structures
+@item @file{Rdefines.h} @tab macros for an @Sl{}-like interface to the
+above
 @item @file{Rmath.h} @tab standalone math library
 @item @file{Rversion.h} @tab @R{} version information
 @item @file{Rinterface.h} @tab for add-on front-ends
@@ -6379,25 +6395,31 @@ share in the @R{} event loops
 @item @file{R_ext/Lapack.h} @tab C definitions for some LAPACK routines
 @item @file{R_ext/Linpack.h} @tab C definitions for some LINPACK
 routines, not all of which are included in @R{}
-@item @file{R_ext/GetX11Image.h} @tab X11Image interface used by package @pkg{trkplot}
+@item @file{R_ext/GetX11Image.h} @tab X11Image interface used by package
+@pkg{trkplot}
 @item @file{R_ext/Parse.h} @tab a small part of @R{}'s parse interface
-@item @file{R_ext/Callbacks.h} @tab C (and R function) top-level task handlers
-@item @file{R_ext/RConvertors.h} @tab
-@item @file{R_ext/Rdynload.h} @tab Needed to register compiled code in packages
-@item @file{R_ext/R-ftp-http.h} @tab interface to internal method of @code{download.file}
+@item @file{R_ext/Callbacks.h} @tab C (and R function) top-level task
+handlers
+@item @file{R_ext/RConvertors.h}
+@item @file{R_ext/Rdynload.h} @tab needed to register compiled code in
+packages
+@item @file{R_ext/R-ftp-http.h} @tab interface to internal method of
+@code{download.file}
 @item @file{R_ext/Riconv.h} @tab interface to @code{iconv}
 @end multitable
 @end quotation
 
 The following headers are included by @file{R.h}:
+
 @quotation
-@multitable {R_ext/RConvertors.h}   {definitions for exports from R.dll on Windows.}
+@multitable @columnfractions 0.30 0.55
 @item @file{Rconfig.h} @tab configuration info that is made available
-@item @file{R_ext/Arith.h} @tab handling for NAs, NaNa, +/-Inf
-@item @file{R_ext/Boolean.h} @tab TRUE/FALSE type
+@item @file{R_ext/Arith.h} @tab handling for @code{NA}s, @code{NaN}s,
+@code{Inf}/@code{-Inf}
+@item @file{R_ext/Boolean.h} @tab @code{TRUE}/@code{FALSE} type
 @item @file{R_ext/Complex.h} @tab C typedefs for @R{}'s @code{complex}
 @item @file{R_ext/Constants.h} @tab constants
-@item @file{R_ext/Error.h}  @tab error handling
+@item @file{R_ext/Error.h} @tab error handling
 @item @file{R_ext/Memory.h} @tab memory allocation
 @item @file{R_ext/Print.h} @tab @code{Rprintf} and variations.
 @item @file{R_ext/Random.h} @tab random number generation
@@ -6409,8 +6431,8 @@ The following headers are included by @file{R.h}:
 @end multitable
 @end quotation
 
-The graphics systems are exposed in @file{Rdevices.h} (for writing
-graphics devices), @file{Rgraphics.h} and
+The graphics systems are exposed in headers @file{Rdevices.h} (for
+writing graphics devices), @file{Rgraphics.h} and
 @file{R_ext/Graphics@{Base,Device,Engine@}.h}.
 
 
@@ -6729,7 +6751,8 @@ extern void (*ptr_R_FlushConsole)();
 extern void (*ptr_R_ClearerrConsole)();
 extern void (*ptr_R_Busy)(int);
 extern void (*ptr_R_CleanUp)(SA_TYPE, int, int);
-extern int  (*ptr_R_ShowFiles)(int, char **, char **, char *, Rboolean, char *);
+extern int  (*ptr_R_ShowFiles)(int, char **, char **, char *,
+                               Rboolean, char *);
 extern int  (*ptr_R_ChooseFile)(int, char *, int);
 extern int  (*ptr_R_EditFile)(char *);
 extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
@@ -6737,22 +6760,23 @@ extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
 @end example
 
 @noindent
-which allow standard @R{} callbacks to be redirected to your GUI.
-What these do is generally documented in the file @file{src/unix/system.txt}.
+which allow standard @R{} callbacks to be redirected to your GUI.  What
+these do is generally documented in the file @file{src/unix/system.txt}.
 
-@deftypefun void R_ShowMessage (char *message)
-This should display the message, which may have multiple lines:
-it should be brought to the user's attention immediately.
+@deftypefun void R_ShowMessage (char *@var{message})
+This should display the message, which may have multiple lines:  it
+should be brought to the user's attention immediately.
 @end deftypefun
 
-@deftypefun void R_Busy (int which)
-This function invokes actions (such as change of cursor) when
-@R{} embarks on an extended computation (@code{which=1}) and when such a
-state terminates (@code{which=0}).
+@deftypefun void R_Busy (int @var{which})
+This function invokes actions (such as change of cursor) when @R{}
+embarks on an extended computation (@code{@var{which}=1}) and when such
+a state terminates (@code{@var{which}=0}).
 @end deftypefun
 
-@deftypefun int R_ReadConsole (char *prompt, char *buf, int buflen, int hist)
-@deftypefunx void R_WriteConsole (char *buf, int buflen)
+@deftypefun int R_ReadConsole (char *@var{prompt}, char *@var{buf}, @
+  int @var{buflen}, int @var{hist})
+@deftypefunx void R_WriteConsole (char *@var{buf}, int @var{buflen})
 @deftypefunx void R_ResetConsole ()
 @deftypefunx void R_FlushConsole ()
 @deftypefunx void R_ClearErrConsole ()
@@ -6760,34 +6784,35 @@ state terminates (@code{which=0}).
 These functions interact with a console.
 
 @code{R_ReadConsole} prints the given prompt at the console and then
-does a @code{gets(3)}--like operation, transferring up to "buflen"
-characters into the buffer @code{"buf"}. The last two characters should
-be set to @code{"\n\0"} to preserve sanity.  If @code{"hist"} is
-non-zero, then the line should be added to any command history which is
-being maintained.  The return value is 0 on success and >0 on failure.
+does a @code{gets(3)}--like operation, transferring up to @var{buflen}
+characters into the buffer @var{buf}. The last two characters should be
+set to @samp{"\n\0"} to preserve sanity.  If @var{hist} is non-zero,
+then the line should be added to any command history which is being
+maintained.  The return value is 0 on success and >0 on failure.
 
 @code{R_WriteConsole} writes the given buffer to the console.
 
 @code{R_ResetConsole} is called when the system is reset after an error.
 @code{R_FlushConsole} is called to flush any pending output to the
-system console.
-@code{R_ClearerrConsole} clears any errors associated with reading from the
-console.
+system console.  @code{R_ClearerrConsole} clears any errors associated
+with reading from the console.
 @end deftypefun
 
-
-@deftypefun void R_ShowFiles (int nfile, char **file, char **headers, char *wtitle, Rboolean del, char *pager)
+@deftypefun void R_ShowFiles (int @var{nfile}, char **@var{file}, @
+  char **@var{headers}, char *@var{wtitle}, Rboolean @var{del}, @
+  char *@var{pager})
 
 This function is used to display the contents of files.
 @end deftypefun
 
-@deftypefun int R_ChooseFile (int new, char *buf, int len)
+@deftypefun int R_ChooseFile (int @var{new}, char *@var{buf}, @
+  int @var{len})
 
-Choose a file and return its name in @code{buf} of length @code{len}.
+Choose a file and return its name in @var{buf} of length @var{len}.
 Return value is 0 for success, > 0 otherwise.
 @end deftypefun
 
-@deftypefun int R_EditFile (char *buf)
+@deftypefun int R_EditFile (char *@var{buf})
 Send a file to an editor window.
 @end deftypefun
 
@@ -6800,7 +6825,7 @@ arguments.  If the console has no history mechanism these can be as
 simple as
 
 @example
-SEXP R_loadhistory (SEXP call, SEXP op , SEXP args, SEXP env)
+SEXP R_loadhistory (SEXP call, SEXP op, SEXP args, SEXP env)
 @{
     errorcall(call, "loadhistory is not implemented");
     return R_NilValue;
@@ -6813,7 +6838,7 @@ SEXP R_savehistory (SEXP call, SEXP op , SEXP args, SEXP env)
 @end example
 @end deftypefun
 
-@deftypefun void R_Suicide (char *message)
+@deftypefun void R_Suicide (char *@var{message})
 This should abort @R{} as rapidly as possible, displaying the message.
 A possible implementation is
 
@@ -6828,7 +6853,8 @@ void R_Suicide (char *message)
 @end example
 @end deftypefun
 
-@deftypefun void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
+@deftypefun void R_CleanUp (SA_TYPE @var{saveact}, int @var{status}, @
+  int @var{RunLast})
 
 This function invokes any actions which occur at system termination.
 It needs to be quite complex:
@@ -6888,7 +6914,7 @@ uses events and timers for
 @itemize
 @item
 Running X11 windows such as the graphics device and data editor, and
-interacting with them (e.g. using @code{locator()}).
+interacting with them (e.g., using @code{locator()}).
 
 @item
 Supporting Tcl/Tk events for the @pkg{tcltk} package.
@@ -6928,7 +6954,7 @@ in file @file{src/modules/X11/dataentry.c}.  This is regarded as
 
 There is a protocol for adding event handlers to the first two types of
 event loops, using types and functions declared in the header
-@code{<R_ext/eventloop.h>} and described in comments in file
+@file{R_ext/eventloop.h} and described in comments in file
 @file{src/unix/sys-std.c}.  It is possible to add (or remove) an input
 handler for events on a particular file descriptor, or to set a polling
 interval (@emph{via} @code{R_wait_usec}) and a function to be called
@@ -6991,7 +7017,7 @@ currently available that interface directly with @R{} and provide a
 There is a (D)COM server called @code{StatConnector} written by Thomas
 Baier available on CRAN
 (@url{http://cran.r-project.org/other-software.html}) which works with
-@code{Rproxy.dll} (in the R distribution) and @code{R.dll} to support
+@file{Rproxy.dll} (in the R distribution) and @file{R.dll} to support
 transfer of data to and from R and remote execution of R commands, as
 well as embedding of an R graphics window.
 
@@ -7008,8 +7034,8 @@ The @code{R} DLL is mainly written in C and has @code{_cdecl} entry
 points.  Calling it directly will be tricky except from C code (or C++
 with a little care).
 
-Examples of calling @code{R.dll} directly are provided in the directory
-@file{src/gnuwin32/front-ends}, including @code{Rproxy.dll} used by
+Examples of calling @file{R.dll} directly are provided in the directory
+@file{src/gnuwin32/front-ends}, including @file{Rproxy.dll} used by
 @code{StatConnector} and a simple command-line front end @file{rtest.c}
 whose code is
 
@@ -7130,14 +7156,14 @@ The ideas are
 
 @itemize
 @item
-Check that the front-end and the linked @code{R.dll} match -- other
+Check that the front-end and the linked @file{R.dll} match -- other
 front-ends may allow a looser match.
 
 @item
 Find and set the @R{} home directory and the user's home directory.  The
 former may be available from the Windows Registry: it will normally be
 in @code{HKEY_LOCAL_MACHINE\Software\R-core\R\InstallPath} and can be
-set there by running the program @code{R_HOME\bin\RSetReg.exe}.
+set there by running the program @file{R_HOME\bin\RSetReg.exe}.
 
 @item
 Define startup conditions and callbacks via the @code{Rstart} structure.
@@ -7486,7 +7512,7 @@ hand, Perl cannot be assumed at all for installing @emph{binary}
 (pre-built) versions of add-on packages, or at run time.
 
 @item
-Makeinfo version 4.5 is needed to build the Info files for the @R{}
+Makeinfo version 4.7 is needed to build the Info files for the @R{}
 manuals written in the @acronym{GNU} Texinfo system.  (Future
 distributions of @R{} may contain the Info files.)
 @end itemize
