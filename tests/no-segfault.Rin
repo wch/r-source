@@ -24,7 +24,8 @@ edit.int <- c("fix", "edit", "edit.data.frame", "edit.matrix",
 ## warning: readLines will work, but read all the rest of the script
 ## warning: trace will load methods.
 ## warning: rm and remove zap c0, l0, m0, df0
-misc.int <- c("browser", "bug.report", "menu", "repeat", "readLines",
+misc.int <- c("browser", "bug.report", "checkCRAN",
+              "menu", "repeat", "readLines",
               "package.skeleton", "trace", "recover", "rm", "remove")
 inet.list <- c(apropos("download\."),
                apropos("^url\."), apropos("\.url"),

@@ -51,6 +51,11 @@ NEW FEATURES
 	in their inputs.
 
 
+UTILITIES
+
+    o   New functions mirror2html() and checkCRAN().
+    
+
 DOCUMENTATION
 
     o	File doc/html/faq.html no longer exists, and doc/manual/R-FAQ.html
