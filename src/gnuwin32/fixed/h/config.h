@@ -348,7 +348,7 @@
 #define HAVE_UNISTD_H 1
 
 /* Define if you have the xml library (-lxml).  */
-#define HAVE_LIBXML 1
+/* #undef HAVE_LIBXML */
 
 /* Define if you have the z library (-lz).  */
 #define HAVE_LIBZ 1
@@ -357,7 +357,7 @@
 #define PACKAGE "R"
 
 /* Version number of package */
-#define VERSION "1.2.0"
+#define VERSION "1.3.0"
 
 /* Windows-specific */
 #define PSIGNAL
@@ -379,6 +379,7 @@ extern int _finite(double);
 #define min(a,b)	(((a)<(b))?(a):(b))
 #endif
 
+void R_ProcessEvents(void);
 
 /* 27/03/2000 win32-api needs this for ANSI compliance */
 #define NONAMELESSUNION

@@ -883,7 +883,6 @@ static void delconsole(control c)
 }
 
 /* console readline (coded looking to the GNUPLOT 3.5 readline)*/
-void R_ProcessEvents();
 static char consolegetc(control c)
 {
     ConsoleData p;

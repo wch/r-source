@@ -1,7 +1,12 @@
 include MkRules
 
+## configuration macros
 HELP = YES
 WINHELP = CHM# NO, CHM, BOTH
+
+LEA_MALLOC=YES
+USE_LIBXML=YES
+#USE_WININET=YES
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
@@ -25,17 +30,27 @@ R-DLLLIBS = -L. $(FLIBS) -lwsock32 -lcomctl32 -lversion
 SOURCES = $(filter-out malloc.c,$(wildcard *.c *.f))
 OBJS = $(foreach i, $(SOURCES), $(basename $i).o)
 MAINLIBS = libmain.a libappl.a libmath.a
-EXTRALIBS = ga.a gl.a xdr.a em.a bitmap/zlib/libz.a libxml.a
+EXTRALIBS = ga.a gl.a xdr.a em.a bitmap/zlib/libz.a
 
 LIBFILES = $(foreach i, $(ALLPACKAGES), ../../library/$i) ../../library/R.css
 PKGS = $(foreach i,$(PACKAGES),pkg-$i)
 PKGCLEAN = $(foreach i,$(ALLPACKAGES),pkgclean-$i)
 
-LEA_MALLOC=YES
 # flags to ensure that Doug Lea's malloc is used:
 ifdef LEA_MALLOC
 extra-CFLAGS+=-DLEA_MALLOC
 OBJS-EXTRA=malloc.o
+endif
+
+USE_LIBXML=YES
+ifdef USE_LIBXML
+EXTRALIBS+= Rlibxml.a
+OPTFLAGS+=-DHAVE_LIBXML
+endif
+
+ifdef USE_WININET
+EXTRALIBS+= libwininet.a
+OPTFLAGS+=-DHAVE_WININET
 endif
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends

@@ -185,7 +185,6 @@ static void SaveAsPng(DevDesc *dd,char *fn);
 static void SaveAsJpeg(DevDesc *dd,int quality,char *fn);
 static void SaveAsBmp(DevDesc *dd,char *fn);
 static void SaveAsBitmap(DevDesc *dd);
-void  R_ProcessEvents();
 
 static void PrivateCopyDevice(DevDesc *dd,DevDesc *ndd, char *name)
 {

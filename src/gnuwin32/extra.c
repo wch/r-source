@@ -668,8 +668,6 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-void R_ProcessEvents(void); /* from system.c */
-
 SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {    DWORD mtime;
     int ntime;

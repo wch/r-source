@@ -138,8 +138,6 @@ static int oldWIDTH=0, oldHEIGHT=0;
 static int nboxchars=0;
 
 
-void R_ProcessEvents(); /* in system.c */
-
 static void eventloop()
 {
     while (R_de_up) R_ProcessEvents();
