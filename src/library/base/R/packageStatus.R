@@ -44,8 +44,12 @@ packageStatus <- function(lib.loc = NULL,
         colnames(z) <- FIELDS2
         for(rep in repositories){
             z1 <- try(read.dcf(paste(rep,"PACKAGES",sep="/"),
-                               fields=FIELDS2))
-            if(inherits(z1, "try-error")) next
+                               fields=FIELDS2), silent=TRUE)
+            if(inherits(z1, "try-error")) {
+                cat("Warning: unable to access index for repository", rep, "\n")
+                repositories <- repositories[repositories != rep]
+                next
+            }
 
             ## ignore packages which don't fit our version of R
             z1 <- z1[package.dependencies(z1, check=TRUE),,drop=FALSE]

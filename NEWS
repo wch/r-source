@@ -68,10 +68,10 @@ NEW FEATURES
         holder, and includes the R ISBN number and a pointer to the new
         citation() function.
 
-    o   The "solve" function now uses the tol argument for all non-complex
-        cases.  The default tolerance for LINPACK is 1e-7, as before.
-        For LAPACK it currently is .Machine$double.eps but may be made
-        tighter in future versions of R.
+    o	The solve() function now uses the `tol' argument for all
+        non-complex cases.  The default tolerance for LINPACK is 1e-7,
+        as before.  For LAPACK it currently is .Machine$double.eps but
+        may be changed in future versions of R.
 
 
 BUG FIXES
@@ -124,7 +124,11 @@ BUG FIXES
 
     o	df[, length_1_index] <- value did not recycle short rhs. (PR#4820)
 
-    o	median no longer `works' for odd-length factor variables.
+    o	median() no longer `works' for odd-length factor variables.
+
+    o	packageStatus() is more robust to failing to contact a
+	repository, and contacts the correct paths in the repositories
+	under Windows.
 
 
 
