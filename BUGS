@@ -271,10 +271,6 @@ Subject: return() undocumented
 From: Scot@Wilcoxon.Org
 Date: Sat, 10 Jan 2004 16:12:16 +0100 (CET)
 ..He meant in R-lang
-* PR# 6570 *
-Subject: Spelling
-From: Peter Dalgaard <p.dalgaard@biostat.ku.dk>
-Date: 11 Feb 2004 01:13:32 +0100
 
 Directory:  Graphics
 
@@ -575,6 +571,14 @@ Subject: Memmory Bugs
 From: "Eric R. Riehl" <eriehl@email.unc.edu>
 Date: Wed, 8 Oct 2003 14:30:57 -0400 (EDT)
 ..about use of enum for messages in errors.c
+* PR# 6617 *
+Subject: Regular expressions & large strings
+From: Mark White <mjw@celos.net>
+Date: Fri, 27 Feb 2004 11:27:18 +0000
+..Works on my (TSL) OS X and Linux machines
+..Incorrect result confirmed on RH8.0 and segfault on Windows (BDR)
+..The segfault is under a call to regexec: PCRE is not used.
+..If perl=TRUE is included, this works, fast.
 
 Directory:  Macintosh
 
@@ -822,44 +826,13 @@ Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 Subject: Bug
 From: huan.huang@bnpparibas.com
 Date: Fri,  6 Feb 2004 18:40:05 +0100 (CET)
+..Report of mailman bug
 * PR# 6601 *
 Subject: Process R segmentation with strsplit()
 From: "wolski" <wolski@molgen.mpg.de>
 Date: Thu, 19 Feb 2004 19:05:49 +0100
 ..mangled input supplied.
-* PR# 6612 *
-Subject: suggestions
-From: ivo.welch@yale.edu
-Date: Wed, 25 Feb 2004 16:07:27 +0100 (CET)
-* PR# 6613 *
-Subject: summary()
-From: ivo.welch@yale.edu
-Date: Wed, 25 Feb 2004 16:10:57 +0100 (CET)
-* PR# 6614 *
-Subject: aliases
-From: ivo.welch@yale.edu
-Date: Wed, 25 Feb 2004 16:13:38 +0100 (CET)
-* PR# 6615 *
-Subject: re: getting that raise
-From: "Colin" <DVNMLD@hotmail.com>
-Date: Wed, 25 Feb 2004 21:35:10 +0400
-* PR# 6616 *
-Subject: Dear Friend.
-From: adamusherif <adamusherif@telstra.com>
-Date: Thu, 26 Feb 2004 15:32:30 +0100
-* PR# 6617 *
-Subject: Regular expressions & large strings
+* PR# 6624 *
+Subject: Line splitting in system()
 From: Mark White <mjw@celos.net>
-Date: Fri, 27 Feb 2004 11:27:18 +0000
-* PR# 6618 *
-Subject: New Price-list
-From: Kurt.Hornik@R-project.org
-Date: Fri, 27 Feb 2004 17:40:53 -0500
-* PR# 6619 *
-Subject: Proclivity to servitude
-From: r-devel-request@stat.math.ethz.ch
-Date: Fri, 27 Feb 2004 17:40:56 -0500
-* PR# 6620 *
-Subject: Daily activity report
-From: Kurt.Hornik@R-project.org
-Date: Fri, 27 Feb 2004 17:41:33 -0500
+Date: Sat, 28 Feb 2004 15:41:47 +0000
