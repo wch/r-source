@@ -45,7 +45,6 @@
 
 #define __SYSTEM__
 #include "devUI.h"		/* includes Startup.h */
-#include <R_ext/GetX11Image.h>  /* for *GetX11Image declarations */
 #undef __SYSTEM__
 
 #include "Runix.h"
@@ -118,7 +117,6 @@ int Rf_initialize_R(int ac, char **av)
     ptr_R_loadhistory = Rstd_loadhistory;
     ptr_R_savehistory = Rstd_savehistory;
     ptr_GnomeDeviceDriver = stub_GnomeDeviceDriver;
-    ptr_R_GetX11Image = R_GetX11Image;
     R_timeout_handler = NULL;
     R_timeout_val = 0;
 

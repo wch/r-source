@@ -106,6 +106,9 @@ DEPRECATED & DEFUNCT
 	installed in $R_HOME/bin, but this will be removed in the near
 	future.	 Use that in R_HOME/lib instead.
 
+    o	C-level entry point ptr_R_GetX11Image has been removed, as it
+	was replaced by R_GetX11Image at 1.7.0.
+
 
 INSTALLATION CHANGES
 

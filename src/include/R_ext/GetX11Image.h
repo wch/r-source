@@ -26,10 +26,4 @@ Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight);
 /* pximage is really (XImage **) */
 
 
-#ifdef __SYSTEM__
-Rboolean (*ptr_R_GetX11Image)(int, void *, int *, int *);
-#else
-extern Rboolean (*ptr_R_GetX11Image)(int, void *, int *, int *);
-#endif
-
 #endif
