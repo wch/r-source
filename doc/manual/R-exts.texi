@@ -1555,10 +1555,12 @@ It is possible to run all the examples, tests and vignettes covered by
 @code{--use-valgrind}.  If you do this you will need to select the
 @code{valgrind} options some other way, for example by having a
 @file{~/.valgrindrc} file containing
+
 @example
 --tool=memcheck
 --memcheck:leak-check=yes
 @end example
+
 @noindent
 or setting the environment variable @env{VALGRIND_OPTS}.
 
@@ -1572,9 +1574,11 @@ declared as @code{extern} in all but one of the files.
 Many platforms will allow unsatisfied entry points in compiled code, but
 will crash the application (here @R{}) if they are ever used.  Some
 (notably Windows) will not.  Looking at the output of
+
 @example
 nm -pg mypkg.so  # or other extension such as .sl or .dylib
 @end example
+
 @noindent
 and checking if any of the symbols marked @code{U} is unexpected is a
 good way to avoid this.
@@ -3502,6 +3506,7 @@ can be used to replace the protected value using @code{REPROTECT}.
 @findex PROTECT_WITH_INDEX
 @findex REPROTECT
 For example (from the internal code for @code{optim})
+
 @example
     PROTECT_INDEX ipx;
 
@@ -3952,6 +3957,7 @@ The case @code{NAMED(foo) == 1} allows some optimization, but it can be
 ignored (and duplication done whenever @code{NAMED(foo) > 0}).  This
 optimization is unlikely to be worthwhile in user code.  It is intended
 for use within assignment functions.  Suppose we used
+
 @example
 x <- 1:10
 foo(x) <- 3
@@ -3959,6 +3965,7 @@ foo(x) <- 3
 
 @noindent
 which is computed as
+
 @example
 x <- 1:10
 x <- "foo<-"(x)
@@ -4352,6 +4359,7 @@ language.
 As a more comprehensive example of constructing an @R{} call in C code
 and evaluating, consider the following fragment of
 @code{printAttributes} in @file{src/main/print.c}.
+
 @example
     /* Need to construct a call to
        print(CAR(a), digits=digits)
@@ -5028,10 +5036,12 @@ x = (int *) R_alloc(nrows(merge)+2, sizeof(int));
 
 There is a similar calls, @code{S_alloc} (for compatibility with older
 versions of @Sl{}) which zeroes the memory allocated,
+
 @example
 char* S_alloc(long @var{n}, int @var{size})
 @end example
 
+@noindent
 and
 
 @example
@@ -5044,6 +5054,7 @@ zeroes the additional units.
 
 For compatibility with current versions of @Sl{}, header @file{S.h}
 (only) defines wrapper macros equivalent to
+
 @example
 type* Salloc(long @var{n}, int @var{type})
 type* Srealloc(char *@var{p}, long @var{new}, long @var{old}, int @var{type})
@@ -5984,15 +5995,20 @@ this is defined.
 As from @R{} 1.8.0 no port of @R{} can be interrupted whilst running
 long computations in compiled code, so programmers should make provision
 for the code to be interrupted at suitable points by calling from C
+
 @example
 #include <R_ext/Utils.h>
 
 void R_CheckUserInterrupt(void);
 @end example
+
+@noindent
 and from FORTRAN
+
 @example
 subroutine rchkusr()
 @end example
+
 These check if the user has requested an interrupt, and if so branch to
 @R{}'s error handling functions.
 
@@ -6553,6 +6569,7 @@ Send a file to an editor window.
 @code{savehistory}: these are called after checking the number of
 arguments.  If the console has no history mechanism these can be as
 simple as
+
 @example
 SEXP R_loadhistory (SEXP call, SEXP op , SEXP args, SEXP env)
 @{
@@ -6570,6 +6587,7 @@ SEXP R_savehistory (SEXP call, SEXP op , SEXP args, SEXP env)
 @deftypefun void R_Suicide (char *message)
 This should abort @R{} as rapidly as possible, displaying the message.
 A possible implementation is
+
 @example
 void R_Suicide (char *message)
 @{
@@ -6585,6 +6603,7 @@ void R_Suicide (char *message)
 
 This function invokes any actions which occur at system termination.
 It needs to be quite complex:
+
 @example
 #include <Rinterface.h>
 #include <Rdevices.h>    /* for KillAllDevices */
@@ -6923,6 +6942,7 @@ needed -- two ways are provided to allow this:
 @code{ProcessEvents} calls the callback registered by
 @code{Rp->callback}.  A version of this is used to run package Tcl/Tk
 for @pkg{tcltk} under Windows, for the code is
+
 @example
 void R_ProcessEvents(void)
 @{
