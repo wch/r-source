@@ -30,8 +30,10 @@ static void timer(double * ttime)
 
 #define FALSE_ 0
 #define TRUE_ 1
-#define max(a, b) (a < b)?(b):(a)
-#define min(a, b) (a > b)?(b):(a)
+#ifndef max
+# define max(a, b) (a < b)?(b):(a)
+# define min(a, b) (a > b)?(b):(a)
+#endif
 
 /* Table of constant values */
 
