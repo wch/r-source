@@ -4,8 +4,9 @@
 ## Constructor
 ecdf <- function (x)
 {
-    x <- sort(x)
     n <- length(x)
+    if(n < 1) stop("x must have length >= 1")
+    x <- sort(x)
     rval <- approxfun(x, (1:n)/n,
 		      method = "constant", yleft=0, yright=1, f = 0,
                       ties = "ordered")
