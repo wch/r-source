@@ -620,10 +620,8 @@ FUNTAB R_FunTab[] =
 {"setwd",	do_setwd,	0,	11,	1,	PP_FUNCALL},
 {"basename",	do_basename,	0,	11,	1,	PP_FUNCALL},
 {"dirname",	do_dirname,	0,	11,	1,	PP_FUNCALL},
-#ifndef macintosh
 {"Sys.info",	do_sysinfo,	0,	11,	0,	PP_FUNCALL},
 {"Sys.sleep",	do_syssleep,	0,	11,	1,	PP_FUNCALL},
-#endif
 {"getlocale",	do_getlocale,	0,	11,	1,	PP_FUNCALL},
 {"setlocale",	do_setlocale,	0,	11,	2,	PP_FUNCALL},
 {"localeconv",	do_localeconv,	0,	11,	0,	PP_FUNCALL},
