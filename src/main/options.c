@@ -29,28 +29,52 @@
 #define R_MIN_EXPRESSIONS_OPT	25
 #define R_MAX_EXPRESSIONS_OPT	100000
 
-/*
- *  "prompt"
- *  "continue"
- *  "editor"
- *  "expressions"
- *  "width"
- *  "digits"
- *  "contrasts"
+/* Interface to the (polymorphous!)  options(...)  command.
  *
- *  "echo"
- *  "error"
- *  "free"
- *  "keep"
- *  "length"
- *  "memory"
- *  "object.size"
- *  "pager"
- *  "reference"
- *  "scrap"
- *  "show"
- *  "ts.eps"
- *  "warn"
+ * We have two kind of options:
+ *   1) those used exclusively from R code, 
+ *	typically initialized in Rprofile.  
+
+ *	Their names need not appear here, but may, when we want
+ *	to make sure that they are assigned `valid' values only.
+ *
+ *   2) Those used (and sometimes set) from C code;
+ *	Either accessing and/or setting a global C variable,
+ *	or just accessed by e.g.  GetOption(install("pager"), ..)
+ *
+ * A (complete?!) list of these (2):	
+ *
+ *	"prompt"
+ *	"continue"
+ *	"editor"
+ *	"expressions"
+ *	"width"
+ *	"digits"
+ *	"contrasts"
+ *	"echo"
+ *	"verbose"
+ *	"check.bounds"
+ *	"keep.source"
+ *	"keep.source.pkgs"
+
+ *	"de.cellwidth"		../unix/X11/ & ../gnuwin32/dataentry.c
+ *	"device"
+ *	"pager"
+ *	"paper.size"		./devPS.c
+
+ *	"error"
+ *	"error.messages"
+ *	"show.error.messages"
+ *	"warn"
+ *	"warning.expression"
+
+ *
+ * S additionally/instead has (and one might think about some)
+ * "free",	"keep"
+ * "length",	"memory"
+ * "object.size"
+ * "reference", "show"
+ * "scrap"
  */
 
 static SEXP Options(void)
@@ -206,14 +230,14 @@ void InitOptions(void)
     namesgets(CAR(v), t);
     v = CDR(v);
 
-    SET_TAG(v, install("verbose"));
-    SETCAR(v, allocVector(LGLSXP, 1));
-    LOGICAL(CAR(v))[0] = R_Verbose;
-    v = CDR(v);
-
     SET_TAG(v, install("echo"));
     SETCAR(v, allocVector(LGLSXP, 1));
     LOGICAL(CAR(v))[0] = !R_Slave;
+    v = CDR(v);
+
+    SET_TAG(v, install("verbose"));
+    SETCAR(v, allocVector(LGLSXP, 1));
+    LOGICAL(CAR(v))[0] = R_Verbose;
     v = CDR(v);
 
     SET_TAG(v, install("check.bounds"));
@@ -242,31 +266,6 @@ void InitOptions(void)
     UNPROTECT(2);
 }
 
-#if 0
-/* FIXME : This functionality should be universal */
-/* See also in bind.c. */
-
-/* static */ SEXP EnsureString(SEXP s)
-{
-    switch(TYPEOF(s)) {
-    case SYMSXP:
-	s = PRINTNAME(s);
-	break;
-    case STRSXP:
-	s = STRING_ELT(s, 0);
-	break;
-    case CHARSXP:
-	break;
-    case NILSXP:
-	s = R_BlankString;
-	break;
-    default:
-	error("invalid tag in name extraction");
-    }
-    return s;
-}
-#endif
-
 SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP argi= R_NilValue, argnames= R_NilValue, namei= R_NilValue,
@@ -280,11 +279,10 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     options = SYMVALUE(Options());
 
-    /* This is the zero argument case.  We alloc up a real list and
-       write the system values into it.
-       */
-
     if (args == R_NilValue) {
+	/* This is the zero argument case.  
+	   We alloc up a real list and write the system values into it.
+	*/
 	n = length(options);
 	PROTECT(value = allocVector(VECSXP, n));
 	PROTECT(names = allocVector(STRSXP, n));
@@ -292,16 +290,16 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	while (options != R_NilValue) {
 	    SET_VECTOR_ELT(names, i, PRINTNAME(TAG(options)));
 	    SET_VECTOR_ELT(value, i, duplicate(CAR(options)));
-	    i = i + 1; options = CDR(options);
+	    options = CDR(options); i++;
 	}
 	setAttrib(value, R_NamesSymbol, names);
 	UNPROTECT(2);
 	return value;
     }
 
-    /* The arguments to "options" can either be a sequence of name =
-       value form, or can be a single list.  This means that we must
-       code so that both forms will work.
+    /* The arguments to "options" can either be a sequence of 
+       name = value form, or can be a single list.  
+       This means that we must code so that both forms will work.
        [ Vomits quietly onto shoes ... ]
        */
 
@@ -325,7 +323,7 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     R_Visible = 0;
-    for (i = 0 ; i < n ; i++) {
+    for (i = 0 ; i < n ; i++) { /* i-th argument */
 
 	switch (TYPEOF(args)) {
 	case LISTSXP:
@@ -339,7 +337,7 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    break;
 	}
 
-	if (*CHAR(namei)) {
+	if (*CHAR(namei)) { /* name = value  ---> assignment */
 	    tag = install(CHAR(namei));
 	    if (streql(CHAR(namei), "width")) {
 		k = asInteger(argi);
@@ -433,7 +431,7 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    SET_STRING_ELT(names, i, namei);
 	}
-	else {
+	else { /* querying arg */
 	    if (!isString(argi) || LENGTH(argi) <= 0)
 		errorcall(call, R_MSG_IA);
 	    SET_VECTOR_ELT(value, i, duplicate(CAR(FindTaggedItem(options,
