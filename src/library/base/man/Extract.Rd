@@ -25,7 +25,7 @@ x$name
     object from which to extract elements or in which to replace elements.
   }
   \item{i, j, \dots, name}{
-    elements to extract or replace. \code{i, j} are
+    indices specifying elements to extract or replace.  \code{i, j} are
     \code{numeric} or \code{character} or empty whereas \code{name} must be
     character or an (unquoted) name.  Numeric values are coerced to
     integer as by \code{\link{as.integer}}.  Character strings are
@@ -115,6 +115,19 @@ x$name
   be used or not (and \R handled this inconsistently prior to \R 2.0.0),
   this is only allowed if the rhs value is of length one (so the two
   interpretations would have the same outcome).  
+}
+\section{Argument matching}{
+  Note that these operations do match their index arguments in the standard
+  way: argument names are ignored and positional matching only is used.
+  So \code{m[j=2,i=1]} is equivalent to \code{m[2,1]} and \strong{not}
+  \code{m[1,2]}.
+
+  This may not be true for methods defined for them; for example it is
+  not for the \code{data.frame} methods described in
+  \code{\link{[.data.frame}}.
+
+  To avoid confusion, do not name indiex arguments
+  (but \code{drop} must be named).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
