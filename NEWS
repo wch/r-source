@@ -505,6 +505,8 @@ BUG FIXES
     o   bgroup with a null (.) delimiter was setting font to Greek.
         (PR#3099)
 
+    o   identify.default() detects zero-length arguments (PR#4057)
+
     o	cut.POSIXt() now passes on ... to cut.default(), as documented.
 
     o	seq.POSIXt(from, to, by="DSTday") was failing or calculating
