@@ -12,7 +12,7 @@ de(\dots, Modes = NULL, Names = NULL)
 \alias{de.restore}
 \alias{de.setup}
 \description{
-  A spreadsheet-lie editor for entering or editing data.
+  A spreadsheet-like editor for entering or editing data.
 }
 \arguments{
   \item{...}{A list of variables: currently these should be numeric or
