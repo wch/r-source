@@ -66,13 +66,11 @@ Name: "devel"; Description: "Source Package Installation Files"; Types: develope
 
 [Tasks]
 Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"; MinVersion: 4,4; Flags: unchecked
-Name: "quicklaunchicon"; Description: "Create a &Quick Launch icon"; GroupDescription: "Additional icons:"; MinVersion: 4,4; Flags: unchecked
 
 [Icons]
 Name: "{group}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; $iconpars
-Name: "{group}\\R $RVER Help"; Filename: "{app}\\doc\\html\\Rwin.html"
+Name: "{group}\\R $RVER Help"; Filename: "{app}\\doc\\html\\Rwin.html"; Components: html
 Name: "{userdesktop}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; MinVersion: 4,4; Tasks: desktopicon; $iconpars
-;Name: "{userappdata}\\Microsoft\Internet Explorer\\Quick Launch\\R for Windows"; Filename: "{app}\\bin\\Rgui.exe"; MinVersion: 4,4; Tasks: quicklaunchicon
 
 [Files]
 END
@@ -106,15 +104,15 @@ find(\&listFiles, ".");
 
 close insfile;
 
-
 sub listFiles {
     $fn = $File::Find::name;
     $fn =~ s+^./++;
     if (!(-d $_)) {
 	$fn =~ s+/+\\+g;
 	$dir = $fn;
-	$dir =~ s/\\[^\\]+$//;
-	$dir =~ s+/+\\+g;
-	print insfile "Source: \"$path\\$fn\"; DestDir: \"{app}\\$dir\"; CopyMode: alwaysoverwrite; Components: $component\n";
+	$dir =~ s/[^\\]+$//;
+	$dir = "\\".$dir;
+	$dir =~ s/\\$//;
+	print insfile "Source: \"$path\\$fn\"; DestDir: \"{app}$dir\"; CopyMode: alwaysoverwrite; Components: $component\n";
     }
 }
