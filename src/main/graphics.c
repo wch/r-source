@@ -2775,15 +2775,14 @@ void GPretty(double *lo, double *up, int *ndiv)
     ns = floor(*lo/unit);
     nu = ceil (*up/unit);
 #ifdef DEBUG_PLOT
-    REprintf("GPretty(%g,%g,%d): cell= %g, base= %g, unit= %g;\n"
-	     "\t (ns,nu) = (%d,%d)",
+    REprintf("GPretty(%g,%g,%d): cell= %g, base= %g, unit= %g; (ns,nu)=(%d,%d)",
 	     *lo, *up, *ndiv, cell, base, unit, ns,nu);
 #endif
 
     while(ns*unit >= *lo *(1- DBL_EPSILON)) ns--;    ns++;
     while(nu*unit <= *up *(1+ DBL_EPSILON)) nu++;    nu--;
 #ifdef DEBUG_PLOT
-    REprintf("\t -> new (ns,nu) = (%d,%d)\n", ns,nu);
+    REprintf(" -> new = (%d,%d)\n", ns,nu);
 #endif
 
     nd0 = nu - ns;
