@@ -76,7 +76,8 @@ delete.response <- function (termobj)
         f[[2]] <- NULL
     tt <- terms(f, specials = names(attr(termobj, "specials")))
     attr(tt, "intercept") <- attr(termobj, "intercept")
-    attr(tt, "predvars") <- attr(termobj, "predvars")[-2]
+    if (length(f) == 3)
+        attr(tt, "predvars") <- attr(termobj, "predvars")[-2]
     tt
 }
 
