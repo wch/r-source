@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-13, 2001-01-07
+Version 1.2-14, 2001-01-08
 Kurt Hornik
 
 
@@ -1188,6 +1188,10 @@ works, was published in the Journal of Statistical Software
 *ellipse*
      Package for drawing ellipses and ellipse-like confidence regions.
 
+*exactRankTests*
+     Computes exact p-values and quantiles using an implementation of the
+     Streitberg/Roehmel shift algorithm.
+
 *fdim*
      Functions for calculating fractal dimension.
 
@@ -1407,10 +1411,6 @@ these a try, of course.  This area of CRAN currently contains
 *dseplus*
      Extensions to *dse*, the Dynamic Systems Estimation multivariate time
      series package.  Contains PADI, juice and monitoring extensions.
-
-*exactDistr*
-     Exact distributions for rank tests by means of an implementation of the
-     Streitberg/Roehmel shift algorithm.
 
 *funfits*
      An integrated set of functions for fitting curves and surfaces
