@@ -2474,10 +2474,13 @@ void	xmlNanoFTPClose		(void *ctx);
 void *R_HTTPOpen(const char *url)
 {
     void *ctxt;
-    int timeout = asInteger(GetOption(install("timeout")));
+    int timeout = asInteger(GetOption(install("timeout"), R_NilValue));
 
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
-    xmlNanoHTTPTimeout();
+
+/* not yet: not in all libxml versions
+    xmlNanoHTTPTimeout(timeout);
+*/
     ctxt = xmlNanoHTTPOpen(url, NULL);
     if(ctxt != NULL) {
 	int rc = xmlNanoHTTPReturnCode(ctxt);
@@ -2576,7 +2579,7 @@ void *R_HTTPOpen(const char *url)
     }
 
 #ifdef USE_WININET_ASYNC
-    timeout = asInteger(GetOption(install("timeout")));
+    timeout = asInteger(GetOption(install("timeout"), R_NilValue));
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
     InternetSetStatusCallback(wictxt->hand,
 			      (INTERNET_STATUS_CALLBACK) InternetCallback);
@@ -2681,7 +2684,7 @@ void *R_FTPOpen(const char *url)
     }
 
 #ifdef USE_WININET_ASYNC
-    timeout = asInteger(GetOption(install("timeout")));
+    timeout = asInteger(GetOption(install("timeout"), R_NilValue));
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
     InternetSetStatusCallback(wictxt->hand,
 			      (INTERNET_STATUS_CALLBACK) InternetCallback);

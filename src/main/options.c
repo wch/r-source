@@ -61,6 +61,8 @@
  *	"pager"
  *	"paper.size"		./devPS.c
 
+ *	"timeout"		./connections.c
+
  *	"check.bounds"
  *	"error"
  *	"error.messages"
