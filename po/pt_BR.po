@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-01 07:59+0000\n"
+"POT-Creation-Date: 2005-03-01 10:10+0000\n"
 "PO-Revision-Date: 2005-02-26 18:12-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -231,56 +231,56 @@ msgstr "impossível abrir a área de transferência "
 msgid "Unable to write to the clipboard"
 msgstr "impossível escrever na área de transferência"
 
-#: src/gnuwin32/extra.c:1199
+#: src/gnuwin32/extra.c:1198
 msgid "'default' must be a character string"
 msgstr "'default' deve ser uma string de caracteres"
 
-#: src/gnuwin32/extra.c:1201
+#: src/gnuwin32/extra.c:1200
 msgid "'default' is overlong"
 msgstr "'default' muito longo"
 
-#: src/gnuwin32/extra.c:1210
+#: src/gnuwin32/extra.c:1209
 msgid "'caption' must be a character string"
 msgstr "'caption' deve ser uma string de caracteres"
 
-#: src/gnuwin32/extra.c:1212
+#: src/gnuwin32/extra.c:1211
 msgid "'multi' must be a logical value"
 msgstr "'multi' deve ser um valor lógico"
 
-#: src/gnuwin32/extra.c:1214
+#: src/gnuwin32/extra.c:1213
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' deve ser um valor inteiro"
 
-#: src/gnuwin32/extra.c:1348
+#: src/gnuwin32/extra.c:1347
 msgid "'title' must be a character string"
 msgstr "'title' deve ser uma string de caracteres"
 
-#: src/gnuwin32/extra.c:1380
+#: src/gnuwin32/extra.c:1379
 msgid "'which' must be length 1"
 msgstr "'which' deve ter comprimento 1"
 
-#: src/gnuwin32/extra.c:1410
+#: src/gnuwin32/extra.c:1409
 msgid "invalid value of 'which'"
 msgstr "valor inválido para 'which'"
 
-#: src/gnuwin32/extra.c:1412 src/gnuwin32/extra.c:1414
-#: src/gnuwin32/extra.c:1454
+#: src/gnuwin32/extra.c:1411 src/gnuwin32/extra.c:1413
+#: src/gnuwin32/extra.c:1453
 msgid "invalid device"
 msgstr "dispositivo inválido"
 
-#: src/gnuwin32/extra.c:1415
+#: src/gnuwin32/extra.c:1414
 msgid "requires SDI mode"
 msgstr "modo SDI requerido"
 
-#: src/gnuwin32/extra.c:1448
+#: src/gnuwin32/extra.c:1447
 msgid "invalid graphical device number"
 msgstr "número de dispositivo gráfico inválido"
 
-#: src/gnuwin32/extra.c:1458
+#: src/gnuwin32/extra.c:1457
 msgid "bad device"
 msgstr "dispositivo defeituoso "
 
-#: src/gnuwin32/extra.c:1697 src/gnuwin32/extra.c:1705
+#: src/gnuwin32/extra.c:1696 src/gnuwin32/extra.c:1704
 msgid "invalid input in Rmbstowcs"
 msgstr "entrada inválida em Rmbstowcs"
 
@@ -414,7 +414,7 @@ msgstr "NaNs produzidos"
 msgid "Non-numeric argument to mathematical function"
 msgstr "Argumento não-numérico para função matemática"
 
-#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3662
+#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3665
 #: src/main/scan.c:1475
 msgid "invalid argument"
 msgstr "argumento inválido"
@@ -2233,11 +2233,11 @@ msgstr "não foi possível alocar memória para read.dcf"
 msgid "Could not allocate memory for Encodebuf"
 msgstr "Não foi possível alocar memória para Encodebuf "
 
-#: src/main/deparse.c:184 src/main/plot.c:948 src/main/plot.c:1444
-#: src/main/plot.c:1730 src/main/plot.c:1795 src/main/plot.c:1883
-#: src/main/plot.c:2008 src/main/plot.c:2098 src/main/plot.c:2388
-#: src/main/plot.c:2588 src/main/plot.c:2831 src/main/plot.c:3424
-#: src/main/plot.c:3500 src/main/plot.c:3753 src/main/plot3d.c:1383
+#: src/main/deparse.c:184 src/main/plot.c:951 src/main/plot.c:1447
+#: src/main/plot.c:1733 src/main/plot.c:1798 src/main/plot.c:1886
+#: src/main/plot.c:2011 src/main/plot.c:2101 src/main/plot.c:2391
+#: src/main/plot.c:2591 src/main/plot.c:2834 src/main/plot.c:3427
+#: src/main/plot.c:3503 src/main/plot.c:3756 src/main/plot3d.c:1383
 #: src/main/sprintf.c:117
 msgid "too few arguments"
 msgstr "muitos poucos argumentos"
@@ -3240,9 +3240,8 @@ msgid "restarts not supported in eval"
 msgstr "reinícios não suportados em eval"
 
 #: src/main/eval.c:1639
-#, fuzzy
-msgid "Recall called from outside a closure"
-msgstr "Revogação chamada fora de um fechamento"
+msgid "'Recall' called from outside a closure"
+msgstr "'Recall' chamada fora de um fechamento"
 
 #: src/main/eval.c:1695
 msgid "value in ... is not a promise"
@@ -3993,8 +3992,8 @@ msgid "bad generic definition environment"
 msgstr "ambiente de definição genérico defeituoso"
 
 #: src/main/objects.c:225 src/main/objects.c:359
-msgid "UseMethod used in an inappropriate fashion"
-msgstr "UseMethod usado de uma maneira inapropriada"
+msgid "'UseMethod' used in an inappropriate fashion"
+msgstr "'UseMethod' usado de uma maneira inapropriada"
 
 #: src/main/objects.c:248
 msgid "Invalid generic function in 'usemethod'"
@@ -4019,9 +4018,8 @@ msgid "arguments after the first two are ignored"
 msgstr "argumentos depois dos dois primeiros são ignorados"
 
 #: src/main/objects.c:380
-#, fuzzy
-msgid "UseMethod called from outside a closure"
-msgstr "UseMethod chamado fora de um fechamento "
+msgid "'UseMethod' called from outside a closure"
+msgstr "'UseMethod' chamado fora de um fechamento "
 
 #: src/main/objects.c:389
 msgid "first argument must be a generic name"
@@ -4793,260 +4791,260 @@ msgstr "Eixos logarítmicos devem ter limites positivos"
 msgid "invalid type for axis labels"
 msgstr "tipo inválido para rótulos dos eixos"
 
-#: src/main/plot.c:957
+#: src/main/plot.c:960
 #, c-format
 msgid "invalid axis number %d"
 msgstr "número de eixo inválido %d"
 
-#: src/main/plot.c:1054 src/main/plot.c:2441
+#: src/main/plot.c:1057 src/main/plot.c:2444
 msgid "zero length 'padj' specified"
 msgstr "'padj' de comprimento zero especificado"
 
-#: src/main/plot.c:1105
+#: src/main/plot.c:1108
 #, c-format
 msgid "'at' and 'label' lengths differ, %d != %d"
 msgstr "comprimentos de 'at' e 'label' diferem, %d != %d"
 
-#: src/main/plot.c:1123
+#: src/main/plot.c:1126
 msgid "no locations are finite"
 msgstr "nenhuma localização é finita"
 
-#: src/main/plot.c:1460
+#: src/main/plot.c:1463
 msgid "invalid plotting structure"
 msgstr "estrutura de gráfico inválida"
 
-#: src/main/plot.c:1462
+#: src/main/plot.c:1465
 #, c-format
 msgid "'x' and 'y' lengths differ in %s()"
 msgstr "comprimentos de 'x' e 'y' diferem em %s()"
 
-#: src/main/plot.c:1474
+#: src/main/plot.c:1477
 #, c-format
 msgid "plot type '%s' will be truncated to first character"
 msgstr "gráfico do tipo '%s' vai ser truncado para o primeiro caractere"
 
-#: src/main/plot.c:1478 src/main/plot.c:3090
+#: src/main/plot.c:1481 src/main/plot.c:3093
 msgid "invalid plot type"
 msgstr "tipo de gráfico inválido"
 
-#: src/main/plot.c:1654
+#: src/main/plot.c:1657
 #, c-format
 msgid "invalid plot type '%c'"
 msgstr "tipo de gráfico inválido '%c'"
 
-#: src/main/plot.c:1695
+#: src/main/plot.c:1698
 msgid "first argument invalid"
 msgstr "primeiro argumento inválido"
 
-#: src/main/plot.c:1701
+#: src/main/plot.c:1704
 msgid "second argument invalid"
 msgstr "segundo argumento inválido"
 
-#: src/main/plot.c:1707
+#: src/main/plot.c:1710
 msgid "third argument invalid"
 msgstr "terceiro argumento inválido"
 
-#: src/main/plot.c:1713
+#: src/main/plot.c:1716
 msgid "fourth argument invalid"
 msgstr "quarto argumento inválido"
 
-#: src/main/plot.c:1895
+#: src/main/plot.c:1898
 msgid "invalid arrow head length"
 msgstr "comprimento de ponta da flexa inválido"
 
-#: src/main/plot.c:1900
+#: src/main/plot.c:1903
 msgid "invalid arrow head angle"
 msgstr "ângulo de ponta da flexa inválido"
 
-#: src/main/plot.c:1905
+#: src/main/plot.c:1908
 msgid "invalid arrow head specification"
 msgstr "especificação de ponta da flexa inválida"
 
-#: src/main/plot.c:1925
+#: src/main/plot.c:1928
 msgid "'lwd' must be numeric of length >=1"
 msgstr "'lwd' deve ser numérico e de comprimento >=1"
 
-#: src/main/plot.c:2110
+#: src/main/plot.c:2113
 msgid "zero length 'labels'"
 msgstr "'labels' de comprimento zero"
 
-#: src/main/plot.c:2138
+#: src/main/plot.c:2141
 msgid "invalid 'adj' value"
 msgstr "valor de 'adj' inválido"
 
-#: src/main/plot.c:2145
+#: src/main/plot.c:2148
 msgid "invalid 'pos' value"
 msgstr "valor de 'pos' inválido"
 
-#: src/main/plot.c:2188
+#: src/main/plot.c:2191
 msgid "no coordinates were supplied"
 msgstr "nenhuma coordenada foi especificada"
 
-#: src/main/plot.c:2399
+#: src/main/plot.c:2402
 msgid "zero length 'text' specified"
 msgstr "'text' de comprimento zero foi especificado"
 
-#: src/main/plot.c:2405
+#: src/main/plot.c:2408
 msgid "zero length 'side' specified"
 msgstr "'side' de comprimento zero foi especificado"
 
-#: src/main/plot.c:2412
+#: src/main/plot.c:2415
 msgid "zero length 'line' specified"
 msgstr "'line' de comprimento zero foi especificado"
 
-#: src/main/plot.c:2420
+#: src/main/plot.c:2423
 msgid "zero length 'outer' specified"
 msgstr "'outer' de comprimento zero foi especificado"
 
-#: src/main/plot.c:2427
+#: src/main/plot.c:2430
 msgid "zero length 'at' specified"
 msgstr "'at' de comprimento zero foi especificado"
 
-#: src/main/plot.c:2434
+#: src/main/plot.c:2437
 msgid "zero length 'adj' specified"
 msgstr "'adj' de comprimento zero foi especificado"
 
-#: src/main/plot.c:2448
+#: src/main/plot.c:2451
 msgid "zero length 'cex' specified"
 msgstr "'cex' de comprimento zero foi especificado"
 
-#: src/main/plot.c:2456
+#: src/main/plot.c:2459
 msgid "zero length 'col' specified"
 msgstr "'col' de comprimento zero foi especificado"
 
-#: src/main/plot.c:2463
+#: src/main/plot.c:2466
 msgid "zero length 'font' specified"
 msgstr "'font' de comprimento zero foi especificado"
 
-#: src/main/plot.c:2536
+#: src/main/plot.c:2539
 msgid "Hershey fonts not yet implemented for mtext()"
 msgstr "Fontes Hershey ainda não implementadas para mtext()"
 
-#: src/main/plot.c:2872
+#: src/main/plot.c:2875
 msgid "invalid a=, b= specification"
 msgstr "especificação a=, b= inválida"
 
-#: src/main/plot.c:2881
+#: src/main/plot.c:2884
 msgid "'a' and 'b' must be finite"
 msgstr "'a' e 'b' devem ser finitos"
 
-#: src/main/plot.c:3012
+#: src/main/plot.c:3015
 msgid "invalid 'which' specification"
 msgstr "especificação 'which' inválida"
 
-#: src/main/plot.c:3085
+#: src/main/plot.c:3088
 msgid "invalid number of points in locator()"
 msgstr "número de pontos inválidos em locator()"
 
-#: src/main/plot.c:3206
+#: src/main/plot.c:3209
 msgid "invalid number of points in identify()"
 msgstr "número de pontos inválidos em identify()"
 
-#: src/main/plot.c:3208
+#: src/main/plot.c:3211
 msgid "incorrect argument type"
 msgstr "tipo de argumento inválido"
 
-#: src/main/plot.c:3210
+#: src/main/plot.c:3213
 msgid "different argument lengths"
 msgstr "argumentos de comprimentos diferentes"
 
-#: src/main/plot.c:3245
+#: src/main/plot.c:3248
 #, c-format
 msgid "warning: no point with %.2f inches\n"
 msgstr "aviso: nenhum ponto com %.2f polegadas\n"
 
-#: src/main/plot.c:3250
+#: src/main/plot.c:3253
 msgid "warning: nearest point already identified\n"
 msgstr "aviso: ponto mais próximo já identificado\n"
 
-#: src/main/plot.c:3325
+#: src/main/plot.c:3328
 msgid "invalid units"
 msgstr "unidades inválidas"
 
-#: src/main/plot.c:3331
+#: src/main/plot.c:3334
 msgid "invalid 'cex' value"
 msgstr "valor de 'cex' inválido"
 
-#: src/main/plot.c:3484 src/main/plot.c:3593
+#: src/main/plot.c:3487 src/main/plot.c:3596
 msgid "invalid dendrogram input"
 msgstr "entrada inválida de dendograma"
 
-#: src/main/plot.c:3624
+#: src/main/plot.c:3627
 msgid "cannot take snapshot of old-style device"
 msgstr "não foi possível fazer uma imagem do dispositivo de modo antigo"
 
-#: src/main/plot.c:3637
+#: src/main/plot.c:3640
 msgid "cannot play snapshot on old-style device"
 msgstr "não é possível usar uma imagem em um dispositivo de modo antigo"
 
-#: src/main/plot.c:3693
+#: src/main/plot.c:3696
 msgid "invalid graphics parameter list"
 msgstr "lista de parâmetros gráficos inválidos"
 
-#: src/main/plot.c:3735
+#: src/main/plot.c:3738
 msgid "invalid symbol parameter vector"
 msgstr "vetor de parâmetros de símbolos inválido"
 
-#: src/main/plot.c:3758
+#: src/main/plot.c:3761
 msgid "invalid symbol coordinates"
 msgstr "coordenadas de símbolo inválidas"
 
-#: src/main/plot.c:3766
+#: src/main/plot.c:3769
 msgid "x/y/parameter length mismatch"
 msgstr "comprimento dos parâmetros x/y incompatíveis"
 
-#: src/main/plot.c:3785
+#: src/main/plot.c:3788
 msgid "invalid circles data"
 msgstr "dados circulares inválidos"
 
-#: src/main/plot.c:3787 src/main/plot.c:3805 src/main/plot.c:3831
-#: src/main/plot.c:3860
+#: src/main/plot.c:3790 src/main/plot.c:3808 src/main/plot.c:3834
+#: src/main/plot.c:3863
 msgid "invalid symbol parameter"
 msgstr "parâmetro de símbolo inválido"
 
-#: src/main/plot.c:3803
+#: src/main/plot.c:3806
 msgid "invalid squares data"
 msgstr "dados quadrados inválidos"
 
-#: src/main/plot.c:3829
+#: src/main/plot.c:3832
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "dados retangulares inválidos (2 colunas necessárias)"
 
-#: src/main/plot.c:3858
+#: src/main/plot.c:3861
 msgid "invalid stars data"
 msgstr "dados de estrela inválidos"
 
-#: src/main/plot.c:3900
+#: src/main/plot.c:3903
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "dados de termômetro inválidos (3 ou 4 colunas necessárias)"
 
-#: src/main/plot.c:3903
+#: src/main/plot.c:3906
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "thermometers[,%s] inválidos"
 
-#: src/main/plot.c:3907
+#: src/main/plot.c:3910
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr "thermometers[,%s] não estão em [0,1] - pode não dar um bom resultado"
 
-#: src/main/plot.c:3910
+#: src/main/plot.c:3913
 msgid "invalid thermometers[,1:2]"
 msgstr "thermometers[,1:2] inválidos"
 
-#: src/main/plot.c:3949
+#: src/main/plot.c:3952
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "dados de boxplots inválidos (5 colunas necessárias)"
 
-#: src/main/plot.c:3959
+#: src/main/plot.c:3962
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "boxplots[,5] fora do intervalo [0,1] - pode não dar um bom resultado"
 
-#: src/main/plot.c:3961
+#: src/main/plot.c:3964
 msgid "invalid boxplots[, 1:4]"
 msgstr "boxplots[, 1:4] inválidos"
 
-#: src/main/plot.c:4007
+#: src/main/plot.c:4010
 msgid "invalid symbol type"
 msgstr "tipo de símbolo inválido"
 
