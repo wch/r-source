@@ -25,6 +25,7 @@ SEXP La_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
 		     REAL(v), INTEGER(getAttrib(v, R_DimSymbol)),
 		     &tmp, &lwork, &info);
     lwork = (int) tmp;
+    
     work = (double *) R_alloc(lwork, sizeof(double));
     F77_CALL(dgesvd)(CHAR(STRING_ELT(jobu, 0)), CHAR(STRING_ELT(jobv, 0)),
 		     &n, &p, REAL(x), &n, REAL(s),
@@ -69,6 +70,7 @@ SEXP La_rs(SEXP x, SEXP only_values)
     lwork = -1;
     F77_CALL(dsyev)(jobv, uplo, &n, rx, &n, rvalues, &tmp, &lwork, &info);
     lwork = (int) tmp;
+    if (lwork < 3*n-1) lwork = 3*n-1;  /* Sanity check */
     work = (double *) R_alloc(lwork, sizeof(double));
     F77_CALL(dsyev)(jobv, uplo, &n, rx, &n, rvalues, work, &lwork, &info);
     if (info != 0)
