@@ -20,11 +20,8 @@
  * For 32-bit integers, the maximum n is 2^31-1=2147483647.
  * If larger n is required, NTYPE must be double.
  *
- * The p and lb arguments should always be double.
- */
-
-/*
- *  'protoize'd to ANSI C headers; indented: M.Maechler
+ * Merge in to R:
+ * Copyright (C) 2000, The R Core Development Team
  */
 #include "nmath.h"
 

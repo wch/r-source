@@ -35,10 +35,12 @@
  * MAKE ANY REPRESENTATION OR WARRANTY OF ANY KIND CONCERNING THE
  * MERCHANTABILITY OF THIS SOFTWARE OR ITS FITNESS FOR ANY PARTICULAR PURPOSE.
  *
- * This code provides functions dbinom(x,n,p) and dpois(x,lb) for computing
- * binomial and Poisson probabilities, that attempt to be accurate for
- * a full range of parameter values (standard algorithms are often
- * inaccurate with large parameters).
+ * This code provides a function for computing Poisson probabilities, and
+ * attempts to be accurate for a full range of parameter values
+ * (standard algorithms are often inaccurate with large parameters).
+ *
+ * Merge in to R:
+ * Copyright (C) 2000, The R Core Development Team
  *
  * NOTE: Loader's original code is now split (and merged into R's extras)
  *       into  ./dbinom.c, ./dpois.c and ./stirlerr.c
