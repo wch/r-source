@@ -9,5 +9,5 @@ $(LIBNAME).so:	$(OBJS)
 
 clean:
 	@rm -f *.o *.so
+
 realclean: clean
-	@rm -f Makefile
