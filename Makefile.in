@@ -164,6 +164,7 @@ aqualaunch:
 	@(cd $(top_builddir)/src/modules/aqua && \
         $(MAKE) aqualaunch)
 install-aqua: aqualaunch
+	@(rm -rf /Applications/StartR.app);	
 	@(cd $(top_builddir) && \
 	$(MAKE) install \
 	rhome=/Applications/StartR.app/RAqua.app/Contents \
