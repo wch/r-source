@@ -43,8 +43,10 @@ double dpois(double x, double lambda, int give_log)
     if(!R_FINITE(x))
 	return R_D__0;
 
-    if (lambda == 0.0)
-	    return (x > 0) ? R_D__0 : R_D__1 ;
+    if (lambda == 0)
+	return (x > 0) ? R_D__0 : R_D__1 ;
+    if (x == 0)
+	return R_D_exp(-lambda);
 
     return R_D_exp(x * log(lambda) - lambda - lgammafn(x + 1));
 }

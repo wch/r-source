@@ -40,6 +40,10 @@ double dbinom(double x, double n, double p, int give_log)
     }
     if (x < 0 || x > n)
 	return R_D__0;
+    if (x == 0)
+	return R_D_exp(n*log1p(-p));
+    if (x == n)
+	return R_D_exp(n*log(p));
     if (p == 0)
 	return (x == 0) ? R_D__1 : R_D__0;
     if (p == 1)
