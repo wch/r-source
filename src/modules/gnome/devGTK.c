@@ -888,9 +888,9 @@ struct _GTK_locator_info {
     gboolean button1;
 };
 
-static gboolean locator_button_press(GtkWidget *widget,
-				     GdkEventButton *event,
-				     gpointer user_data)
+static void locator_button_press(GtkWidget *widget,
+				 GdkEventButton *event,
+				 gpointer user_data)
 {
     GTK_locator_info *info;
 
