@@ -7,9 +7,13 @@ See the file NEWS for changes that affect all versions of R.
 rw1060
 ======
 
+The miniR distribution has grown to eight floppies, and the zip files
+are no longer distributed on CRAN.
+
 Support for bzip-ed connections has been added to the standard distribution.
 
-The miniR distribution has grown to eight floppies.
+update.packages() and install.packages() will not try to install a package
+that is in use (with an informative warning).
 
 The preferred compiler is gcc-3.1: gcc-2.95.3 can still be used but
 current header files are needed.
@@ -17,9 +21,6 @@ current header files are needed.
 Making packages containing source code automagically adds dependency
 information to MakeDll: this is useful when experimenting with
 packages, and especially for the packages which ship with R.
-
-update.packages() and install.packages() will not try to install a package
-that is in use (with an informative warning).
 
 
 

@@ -21,7 +21,7 @@ a self-extracting zip archive that contains instructions.
 Installation
 ============
 
-The distribution can be obtained in one of three versions:
+The distribution can be obtained in two versions:
 
 1) A 18Mb file SetupR.exe.  Just run this for a Windows-2000 style
 installer.  It contains all the R components, and you can select what
@@ -35,32 +35,6 @@ miniR-8.bin on separate floppies.
 This is a small installation, containing text and compiled HTML help
 and the Introduction to R and Data Import/Export manuals in PDF.
 
-
-3) The full distribution consists of several zip files:
-
-@RWVER@b.zip				the base system
-@RWVER@h.zip				text help
-@RWVER@ch.zip				compiled HTML help
-@RWVER@w.zip				HTML help files
-@RWVER@l.zip				latex help files for offline help
-@RWVER@m.zip				installed .Rd files
-@RWVER@d1.zip				PDF manuals except
-@RWVER@d2.zip				  PDF version of the reference manual
-@RWVER@sp.zip				files to build packages from source
-
-To install, unpack @RWVER@b.zip anywhere you like.
-It will unpack to a directory tree under @RWVER@.  The help,
-compiled HTML, HTML and latex help files are in separate files
-@RWVER@h.zip, @RWVER@ch.zip @RWVER@w.zip and @RWVER@l.zip which should
-be unpacked in the same directory you unpacked @RWVER@b.zip.
-
-Files @RWVER@d1.zip and @RWVER@d2.zip contains PDF versions of the
-manuals for R, which unpack into @RWVER@/doc/manual.
-
-You should install at least one of the text help and the compiled HTML help.
-
-You will need to install the recommended packages separately: see the
-rw-FAQ.
 
 
 Usage
@@ -124,7 +98,7 @@ to run batch jobs. You can also use it via Rcmd BATCH: see ?BATCH or
 Rcmd BATCH --help.  (You will need @RWVER@sp.zip and Perl installed.)
 
 Use with ESS: You can use Rterm.exe to provide inferior R-mode in ESS
-under NTEmacs, for example with ess-5.1.19.  The pager is
+under NTEmacs, for example with ess-5.1.20.  The pager is
 automatically set to "console" so text help will be displayed in emacs
 buffers.
 
@@ -259,8 +233,8 @@ add the line
 to your .Rprofile or at the end of R_HOME\etc\Rprofile.
 
 To install a package from source code you need the source-package
-distribution @RWVER@sp.zip installed (but not the R sources).  This
-contains detailed instructions.
+distribution installed from SetupR.exe (but not the R sources).  This
+contains detailed instructions in file `README.packages'.
 
 
 Differences from Unix versions of R

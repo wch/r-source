@@ -88,22 +88,13 @@ The information here applies only to recent versions of R for Windows,
 
 Go to any CRAN site (see `http://cran.r-project.org/mirrors.html' for a
 list), navigate to the `bin/windows/base' directory and collect the
-files you need.  There are three versions of the distribution.
+files you need.  There are two versions of the distribution.
 
 1) `SetupR.exe' is about 19Mb and gives a complete installation.
 
 2) Directory `miniR' contains `miniR.exe' and eight files
 `miniR-?.bin'.  You can put  `miniR.exe' and `miniR-1.bin' on one
 floppy and the remaining `miniR-?.bin' on a floppy each.
-
-3) Via zip files in directory `zip'.  You will need at least the files
-           rw1060b.zip
-           rw1060h.zip (text help) or rw1060ch.zip (Compiled HTML help)
-
-and you may want `rw1060w.zip' (the HTML format help files),
-`rw1060l.zip' (the LaTeX format help files, used for offline printing),
-or `rw1060d?.zip' (the manuals, in PDF).  The recommended packages are
-available separately.
 
 2.2 How do I install R for Windows?
 ===================================
@@ -237,8 +228,8 @@ It depends what you want to print.
 ========================
 
 Yes, if you have Perl and the files for making source packages (from
-`SetupR.exe' or `rw1060sp.zip') installed.  The Windows analogue is
-`Rcmd BATCH': use `Rcmd BATCH --help' for full details.
+`SetupR.exe') installed.  The Windows analogue is `Rcmd BATCH': use
+`Rcmd BATCH --help' for full details.
 
 Otherwise you can set up a batch file using `Rterm.exe'.  A sample
 batch file might contain (as one line)
@@ -361,16 +352,14 @@ Note that the pre-compiled versions on CRAN are unsupported: see
 `http://cran.r-project.org/bin/windows/contrib/ReadMe'.
 
 If there is not a pre-compiled version or that is not up-to-date or you
-prefer compiling from source, get `rw1060sp.zip' from the distribution
-(*note Where can I find the latest version?::; you may already have
-installed this from `SetupR.exe') and unpack it in the parent of
-`rw1060'.  Then read the file `readme.packages'.  You will need to
-collect and install several tools to use this: you can download them
-via the portal at `http://www.stats.ox.ac.uk/pub/Rtools/'.  Once you
-have done so, just run `Rcmd INSTALL pkgname'.  To check the package
-(including running all the examples on its help pages and in its test
-suite, if any) use `Rcmd check pkgname': see the _`Writing R
-Extensions'_ manual.
+prefer compiling from source, make sure you installed the necessary
+files from `SetupR.exe'.  Then read the file `README.packages'.  You
+will need to collect and install several tools to use this: you can
+download them via the portal at
+`http://www.stats.ox.ac.uk/pub/Rtools/'.  Once you have done so, just
+run `Rcmd INSTALL pkgname'.  To check the package (including running
+all the examples on its help pages and in its test suite, if any) use
+`Rcmd check pkgname': see the _`Writing R Extensions'_ manual.
 
 Note that this is rather so tricky; please do ensure that you have
 followed the instructions *exactly*.  At least 90% of the questions
@@ -684,34 +673,33 @@ case) did not work.
 
 Fast BLAS (Basic Linear Algebra Subprograms,
 `http://www.netlib.org/blas/faq.html') routines are used to speed up
-numerical linear algebra.  If you compile R from sources yourself,
-there is support for the `tuned' BLAS called ATLAS
-(`http://math-atlas.sourceforge.net').  The savings can be appreciable:
-on a 366MHz PIIM and a 1000 x 1000 matrix `La.svd' took 182 sec with
-the standard BLAS and 59 sec with ATLAS.  Because ATLAS is tuned to a
-particular chip we can't use it generally: the optimal routines for a
-PIII or an Athlon XP are quite different and neither will not run at all
-on a PII.
-
-In the file `MkRules' there are macros `USE_ATLAS' and `ATLAS_PATH'.
-Set `USE_ATLAS = YES' and `ATLAS_PATH' to where the ATLAS libraries are
-located.  You will need to make the libraries yourself: none of the
-binaries we have seen are compiled for the correct compiler.
+numerical linear algebra.  There is support in the R sources for the
+`tuned' BLAS called ATLAS (`http://math-atlas.sourceforge.net').  The
+savings can be appreciable: on a 366MHz PIIM and a 1000 x 1000 matrix
+`La.svd' took 182 sec with the standard BLAS and 59 sec with ATLAS.
+Because ATLAS is tuned to a particular chip we can't use it generally:
+the optimal routines for a PIII or an Athlon XP are quite different and
+neither will not run at all on a PII.
 
 BLAS support is supplied by the single DLL `R_HOME\bin\Rblas.dll', and
 you can add a fast BLAS just by replacing that.  Replacements for some
 of the more common chips are available on CRAN in directory
 `bin/windows/contrib/ATLAS'.
 
+If you are building R from source, in the file `MkRules' there are
+macros `USE_ATLAS' and `ATLAS_PATH'.  Set `USE_ATLAS = YES' and
+`ATLAS_PATH' to where the ATLAS libraries are located.  You will need
+to make the libraries yourself: none of the binaries we have seen are
+compiled for the correct compiler.
+
 7.3 How do I include compiled C code?
 =====================================
 
 We strongly encourage you to do this _via_ building an R package: see
 the _`Writing R Extensions'_ manual.  In any event you should install
-the parts of the R system for building R packages (in `SetupR.exe' or
-`rw1060sp.zip'), and get and install the tools (including Perl) and
-compilers mentioned in the file `readme.packages' contained therein.
-Then you can use
+the parts of the R system for building R packages (in `SetupR.exe'),
+and get and install the tools (including Perl) and compilers mentioned
+in the file `readme.packages' contained therein.  Then you can use
      ...\bin\Rcmd SHLIB foo.c bar.f
 
 to make `foo.dll'.  Use `...\bin\Rcmd SHLIB --help' for further
@@ -849,6 +837,6 @@ then `R_ProcessEvents()'.
 
 
 
-Last edited 2002 June 01 by Professor B. D. Ripley
+Last edited 2002 July 26 by Professor B. D. Ripley
 <ripley@stats.ox.ac.uk>
 
