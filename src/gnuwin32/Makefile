@@ -497,7 +497,7 @@ install:
 REC_TGZ = $(wildcard ../../Recommended/*)
 
 get_recommended:
-	(cd ../..; rsync -rCv --delete cran.r-project.org::CRAN/src/contrib/1.6.0/Recommended .)
+	(cd ../..; rsync -rv --delete cran.r-project.org::CRAN/src/contrib/1.6.0/Recommended .)
 
 recommended:
 	@echo "Making recommended packages"
