@@ -86,7 +86,8 @@ install: installdirs
 	@echo "installing shlibs ..."
 ## FIXME:
 ## Add bin/*.la when using libtool for shlibs
-	@for f in `ls bin/*.$(SHLIB_EXT)`; do \
+## Note: if there are no shared libraries, the ls call may generate an error.
+	@-for f in `ls bin/*.$(SHLIB_EXT) 2> /dev/null`; do \
 	  $(INSTALL_PROGRAM) $${f} $(Rexeclibdir); \
 	done
 ## </FIXME>
