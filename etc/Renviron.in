@@ -19,7 +19,7 @@ R_RD4PDF=${R_RD4PDF:-@R_RD4PDF@}
 R_UNZIPCMD=${R_UNZIPCMD:-@R_UNZIPCMD@}
 R_ZIPCMD=${R_ZIPCMD:-@R_ZIPCMD@}
 ## Default editor
-EDITOR=${EDITOR-${VISUAL-vi}}
+EDITOR=${EDITOR:-${VISUAL:-vi}}
 
 ### Local Variables: ***
 ### mode: sh ***
