@@ -46,7 +46,7 @@
 # Use this to specify CFLAGS for the version of the C compiler specified
 # above.  If unspecified, defaults to "-g -O2" for gcc, and "-g" in all
 # other cases.
-# CFLAGS=
+CFLAGS=-O2
 
 # Header file search directory (`-IDIR') and any other miscellaneous
 # options for the C preprocessor and compiler.
@@ -58,12 +58,12 @@
 # found; otherwise, R cannot be compiled.  The search mechanism can be
 # changed using the `--with-g77', `--with-f77', and `--with-f2c' command
 # line options to configure.
-# FC=
+FC=f77
 
 # Options for the FORTRAN compiler.
 # Use this to specify FFLAGS for the version of the compiler specified
 # above.  If unspecified, defaults to "-O2" for g77, and "" otherwise.
-# FFLAGS=
+FFLAGS=-O
 
 # The command to be used to load the main R binary.
 # This is usually the FORTRAN or C compiler, but the automatic choice
@@ -71,7 +71,7 @@
 # LDCMD=
 
 # For `-l' and `-L' options to pass to the linker.
-# LIBS=
+LIBS="-L/usr/local/lib -R/usr/local/lib"
 
 # The flags which are necessary for loading main program which will load
 # DLLs at runtime.  HP-UX and Linux-elf are examples of platforms which
@@ -82,13 +82,14 @@
 # turned into a shared library.  This is typically something like -fpic
 # or -fPIC.  If this variable is left unspecified an attempt is made to
 # automatically detect the correct value by configure.
-# CPICFLAGS=
+CPICFLAGS=-fPIC
 
 # The following variable can be used to provide any PIC flags for the
 # FORTRAN compiler (if you are using one).  If not specified, the value
 # of CPICFLAGS above is used.
-# FPICFLAGS=
+FPICFLAGS=-PIC
 
 # Any special flags which are required by "ld" when creating shared
 # libraries.  This is usually automatically detected by configure.
-# SHLIBLDFLAGS=
+SHLIBLDFLAGS=-G
+MAKE=gmake

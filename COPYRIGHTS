@@ -36,7 +36,7 @@ src/library/base/R/update.R
 
 src/library/modreg:
 
-	See the file [src/]library/modreg/COPYRIGHTS
+	See the file library/modreg/COPYRIGHTS for details
 
       src/loessc.c
       src/loessf.f
@@ -49,9 +49,11 @@ src/library/mva/R/princomp-add.R
 
 	Copyright (C) 1998 W. N. Venables and B. D. Ripley
 
-src/regex/*
+src/regex/* [Only used on Macintosh]
 
 	Copyright (c) 1992, 1993, 1994 Henry Spencer
+
+	See the file src/regex/COPYRIGHTS
 
 src/unix/rotated.[ch]
 
