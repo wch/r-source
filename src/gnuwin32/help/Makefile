@@ -6,7 +6,7 @@ CP=cp
 RM=rm
 MKDIR=mkdir
 
-RHOME=$(shell cd ../../..; perl src/gnuwin32/pwd.pl)# must be absolute path
+RHOME=$(shell perl ../pwd.pl ../../..)
 PKGDIR=../../library
 RLIB=$(RHOME)/library
 

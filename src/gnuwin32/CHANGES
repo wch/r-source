@@ -17,11 +17,17 @@ compiler system that supports --shared and an in-memory dlltool.
 rw1023
 ======
 
-Alternative installer based on Inno Setup.
+Alternative installer based on Inno Setup 2.0.x.
 
 The windows() device no longer rounds width and height to the nearest inch.
 
-File extract-usage needed for codoc was missing from the binary distribution.
+File extract-usage needed for codoc was missing from rw1022sp.zip.
+
+The default memory limit is set to at least 16Mb, to allow R to start
+on 8Mb machines.
+
+link.html.help() has been re-written using connections and so is
+several times faster.
 
 
 
