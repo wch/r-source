@@ -15,22 +15,21 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
 	y <- NULL
     }
     mfill <- !missing(fill) || !missing(density)
-    
+
     if(length(title) > 1) stop("invalid title")
 
-    if (is.character(x)) {
-	auto <- pmatch(x, c("bottomright", "bottom", "bottomleft", 
-	                    "left", 
-	                    "topleft", "top", "topright",
-	                    "right", "center"))
-	if (length(auto) != 1 || is.na(auto)) stop("invalid legend position")
-    }
-    else auto <- NA
-    
-    if (is.na(auto)) {	
-    	xy <- xy.coords(x, y); x <- xy$x; y <- xy$y
-    	nx <- length(x)
-    	if (nx < 1 || nx > 2) stop("invalid coordinate lengths")
+    auto <-
+	if (is.character(x))
+	    match.arg(x, c("bottomright", "bottom", "bottomleft",
+			   "left",
+			   "topleft", "top", "topright",
+			   "right", "center"))
+	else NA
+
+    if (is.na(auto)) {
+	xy <- xy.coords(x, y); x <- xy$x; y <- xy$y
+	nx <- length(x)
+	if (nx < 1 || nx > 2) stop("invalid coordinate lengths")
     } else nx <- 0
 
     xlog <- par("xlog")
@@ -112,9 +111,9 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
     x.off <- if(merge) -0.7 else 0
 
     if (is.na(auto)) {
-    	##- Adjust (x,y) :
-    	if (xlog) x <- log10(x)
-    	if (ylog) y <- log10(y)
+	##- Adjust (x,y) :
+	if (xlog) x <- log10(x)
+	if (ylog) y <- log10(y)
     }
     if(nx == 2) {
 	## (x,y) are specifiying OPPOSITE corners of the box
@@ -140,40 +139,30 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
 	if(has.pch && !merge)	w0 <- w0 + dx.pch
 	if(do.lines)		w0 <- w0 + (2+x.off) * xchar
 	w <- ncol*w0 + .5* xchar
-	if (!is.null(title) 
+	if (!is.null(title)
 	    && (tw <- strwidth(title, units="user", cex=cex) + 0.5*xchar) > w) {
 	    xextra <- (tw - w)/2
 	    w <- tw
 	}
-	    
+
 	##-- (w,h) are now the final box width/height.
-	
+
 	if (is.na(auto)) {
 	    left <- x - xjust * w
-	    top  <- y + (1 - yjust) * h
+	    top	 <- y + (1 - yjust) * h
 	} else {
 	    usr <- par("usr")
 	    inset <- rep(inset, length.out = 2)
 	    insetx <- inset[1]*(usr[2] - usr[1])
-	    left <- switch(auto, usr[2] - w - insetx,
-	    		 	 (usr[1] + usr[2] - w)/2,
-	    		 	 usr[1] + insetx,
-	    		 	 usr[1] + insetx,
-	    		 	 usr[1] + insetx,
-	    		 	 (usr[1] + usr[2] - w)/2,
-	    		 	 usr[2] - w - insetx,
-	    		 	 usr[2] - w - insetx,
-	    		 	 (usr[1] + usr[2] - w)/2)
-	    insety <- inset[2]*(usr[4] - usr[3])	    
-	    top <- switch(auto,  usr[3] + h + insety,
-	    			 usr[3] + h + insety,
-	    			 usr[3] + h + insety,
-	    			 (usr[3] + usr[4] + h)/2,
-	    			 usr[4] - insety,
-	    			 usr[4] - insety,
-	    			 usr[4] - insety,
-	    			 (usr[3] + usr[4] + h)/2,
-	    			 (usr[3] + usr[4] + h)/2)
+	    left <- switch(auto, "bottomright"=,
+			   "topright"=, "right" = usr[2] - w - insetx,
+			   "bottomleft"=, "left"=, "topleft"= usr[1] + insetx,
+			   "bottom"=, "top"=, "center"= (usr[1] + usr[2] - w)/2)
+	    insety <- inset[2]*(usr[4] - usr[3])
+	    top <- switch(auto, "bottomright"=,
+			  "bottom"=, "bottomleft"= usr[3] + h + insety,
+			  "topleft"=, "top"=, "topright" = usr[4] - insety,
+			  "left"=, "right"=, "center" = (usr[3] + usr[4] + h)/2)
 	}
     }
 
@@ -182,12 +171,12 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
 	    catn("  rect2(",left,",",top,", w=",w,", h=",h,", ...)",sep="")
 	rect2(left, top, dx = w, dy = h, col = bg, density = NULL)
     }
-	
+
     ## (xt[],yt[]) := `current' vectors of (x/y) legend text
-    xt <- left + xchar + xextra + (w0 * rep.int(0:(ncol-1),
-				  	       rep.int(n.legpercol,ncol)))[1:n.leg]
-    yt <- top - (rep.int(1:n.legpercol,ncol)[1:n.leg] - 1 + !is.null(title)) * ychar -
-	0.5 * yextra - ymax
+    xt <- left + xchar + xextra +
+	(w0 * rep.int(0:(ncol-1), rep.int(n.legpercol,ncol)))[1:n.leg]
+    yt <- top -	0.5 * yextra - ymax -
+	(rep.int(1:n.legpercol,ncol)[1:n.leg] - 1 + !is.null(title)) * ychar
 
     if (mfill) {		#- draw filled boxes -------------
 	if(plot) {
@@ -236,9 +225,9 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
 
     xt <- xt + x.intersp * xchar
     if(plot) {
-	if (!is.null(title)) text(left + w/2, top - ymax, labels = title, 
+	if (!is.null(title)) text(left + w/2, top - ymax, labels = title,
 				  adj = c(0.5, 0), cex = cex, col = text.col)
-		
+
 	text2(xt, yt, labels = legend, adj = adj, cex = cex, col = text.col)
     }
     invisible(list(rect = list(w = w, h = h, left = left, top = top),
