@@ -57,7 +57,7 @@ SearchEngine.html: \
 	@cat $(srcdir)/SearchEngine-foot.html >> $@
 ## <FIXME>
 ## This is created via
-##   (cd $(top_builddir)/src/library && make DOCS)
+##   (cd $(top_builddir)/src/library && make docs)
 index.txt:
 	@touch $@
 ## so we need to remove it ...

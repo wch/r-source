@@ -105,7 +105,7 @@ $(EX_IN_BASE): FORCE
 	    || test "$${target_is_newer_than_Rdfiles}" = no; then \
 	  echo "collecting examples for package '$${pkg}' ..."; \
 	  (cd $(top_builddir)/src/library && \
-	    OPTS="--txt --example" $(MAKE) R_PKGS_BASE="$${pkg}" DOCS); \
+	    OPTS="--txt --example" $(MAKE) R_PKGS_BASE="$${pkg}" Rdfiles); \
 	  f=$${TMPDIR-/tmp}/R$$$$; \
 	  $(PERL) $(top_srcdir)/share/perl/massage-Examples.pl $${pkg} \
 	    $(top_builddir)/library/$${pkg}/R-ex > $${f}; \
