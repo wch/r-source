@@ -51,6 +51,8 @@ NEW FEATURES
 
     o	New function Sys.info() for platorn, host and user information.
 
+    o	New function putenv() to set environment variables.
+
 
 
 	**************************************************
