@@ -246,6 +246,9 @@ BUG FIXES
     o   outer() called rep() with an argument the generic does not
 	have, and discarded the class of the answer.
 
+    o   object.size() now returns a real (not integer) answer and so
+	can cope with objects occupying more than 2Gb.
+
 
 
 

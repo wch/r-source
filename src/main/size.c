@@ -35,9 +35,10 @@
       space for its name nor for builtins it references
 */
 
-static int objectsize(SEXP s)
+static unsigned long objectsize(SEXP s)
 {
-    int i, cnt = 0, vcnt = 0;
+    int i;
+    unsigned long cnt = 0, vcnt = 0;
     
     switch (TYPEOF(s)) {
     case NILSXP:
@@ -91,7 +92,7 @@ static int objectsize(SEXP s)
 	    cnt += objectsize(VECTOR_ELT(s, i));
 	break;
     default:
-	error("object.size: unknown type %i", TYPEOF(s));
+	error("object.size: unknown type %d", TYPEOF(s));
     }
     cnt += 8 * vcnt;
     /* add in node space */
@@ -105,12 +106,12 @@ static int objectsize(SEXP s)
 SEXP do_objectsize(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    int cnt = 0;
+    unsigned long cnt = 0;
     
     checkArity(op, args);
     cnt = objectsize(CAR(args));
-    PROTECT(ans = allocVector(INTSXP, 1));
-    INTEGER(ans)[0] = cnt;
+    PROTECT(ans = allocVector(REALSXP, 1));
+    REAL(ans)[0] = cnt;
     UNPROTECT(1);
     return ans;
 }
