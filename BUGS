@@ -437,10 +437,6 @@ Date: Thu, 31 Jan 2002 18:00:55 +0100 (MET)
 Subject: shared libraries on AIX
 From: lio@hpss1.ccs.ornl.gov
 Date: Mon, 18 Feb 2002 18:53:41 +0100 (MET)
-* PR# 1321 *
-Subject: Gnome causes different behaviour of some R functions 
-From: alobo@ija.csic.es
-Date: Fri, 22 Feb 2002 14:41:17 +0100 (MET)
 
 Directory:  TooMuchAtOnce
 
@@ -470,3 +466,19 @@ Date: Fri, 25 Jan 2002 15:08:33 -0500
 Subject:  itemize/item crashes R CMD check 
 From: Ben Bolker <bolker@zoo.ufl.edu>
 Date: Tue, 26 Feb 2002 15:13:04 -0500
+* PR# 1372 *
+Subject: Hi,questionnaire
+From: p1p1p1p <p1p1p1p@p-p.p.p>
+Date: Mon, 11 Mar 2002 02:59:08 +0100 (CET)
+* PR# 1373 *
+Subject: Look,my beautiful girl friend
+From: propst <propst@stolaf.edu>
+Date: Sun, 10 Mar 2002 23:21:45 -0600 (CST)
+* PR# 1374 *
+Subject: Sos!
+From: pearsopi <pearsopi@stolaf.edu>
+Date: Mon, 11 Mar 2002 02:38:12 -0600 (CST)
+* PR# 1375 *
+Subject: Underlying operating system
+From: catellie <catellie@stolaf.edu>
+Date: Mon, 11 Mar 2002 04:31:09 -0600 (CST)
