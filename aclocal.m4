@@ -799,7 +799,7 @@ AC_CHECK_HEADER(png.h, [
       AC_DEFINE(HAVE_PNG)
     ], , ${LIBS})
   ])
-echo "using libraries \`${BITMAP_LIBS}' for bitmap functions"
+## echo "using libraries \`${BITMAP_LIBS}' for bitmap functions"
 AC_SUBST(BITMAP_LIBS)
 ])
 
@@ -823,7 +823,6 @@ AC_DEFUN(R_TCLTK,
 	        have_tcltk=yes ], , [-ltcl ${X_LIBS}])
         fi
       fi
-##      echo "have_tcltk now is ${have_tcltk}"
       if test "${have_tcltk}" = no; then
 	## Try finding {tcl,tk}Config.sh
 	libpath="${tcltk_prefix}:${LD_LIBRARY_PATH}"

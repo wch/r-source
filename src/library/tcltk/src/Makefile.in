@@ -27,7 +27,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
 include $(top_builddir)/etc/Makeconf
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(PKG_CPPFLAGS) $(CPPFLAGS)
-ALL_LIBS = $(PKG_LIBS) $(TCLTK_LIBS)
+ALL_LIBS = $(PKG_LIBS) $(LIBPATHS) $(TCLTK_LIBS)
 
 mostlyclean: clean
 clean:

@@ -50,6 +50,7 @@
 
 # Header file search directory (`-IDIR') and any other miscellaneous
 # options for the C preprocessor and compiler.
+# If unset defaults to -I/usr/local/include
 # CPPFLAGS=
 
 # The command which runs the the FORTRAN compiler.
@@ -91,6 +92,8 @@
 # SHLIBLDFLAGS=
 
 # For `-l' and `-L' options to pass to the linker.
+# `-L' options set here will be prepended to LD_LIBRARY_PATH at run time
+# If unset defaults to -L/usr/local/lib
 # LIBS=
 
 # The command which runs the C++ compiler.  It not specified, configure

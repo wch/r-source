@@ -789,6 +789,25 @@ AC_SUBST(R_PAPERSIZE)
 
 R_BITMAPS
 
+## Make sure -L terms come first in LIBS, separate out as LIBPATHS
+LIBS1=""
+LIBS2=""
+for arg in ${LIBS}; do
+  case ${arg} in
+    -L*)
+    LIBS1="${LIBS1} ${arg}"
+      ;;
+    *)
+    LIBS2="${LIBS2} ${arg}"
+      ;;
+  esac
+done
+LIBS="${LIBS1} ${LIBS2}"
+if test -n "${LIBS1}"; then
+  LIBPATHS="${LIBS1}"
+fi
+AC_SUBST(LIBPATHS)
+
 ## Saving.
 
 AC_SUBST(R_BATCHSAVE)
