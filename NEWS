@@ -39,6 +39,9 @@ BUG FIXES
     o	write.table() printed a mixture of numeric and complex numbers
 	as all complex.  (PR#7260)
 
+    o   R CMD INSTALL failed with versioned installs on packages which
+	save images (only).
+
 
 
         *********************************************************

@@ -601,10 +601,10 @@ do_install_source () {
     ## is no namespace).  Argh.
     ## </NOTE>
     save_image_defaults="list(compress=TRUE, safe=FALSE)"
-    code_file="${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
+    code_file="${R_PACKAGE_DIR}/R/${pkg_name}"
     rda_file="${R_PACKAGE_DIR}/R/all.rda"
     if test -f NAMESPACE; then
-      code_cmd="echo invisible(.libPaths(c(\"${lib}\", .libPaths()))); .getRequiredPackages(); saveNamespaceImage(\"${pkg_name}\", \"${rda_file}\", \"${lib}\")"
+      code_cmd="echo invisible(.libPaths(c(\"${lib}\", .libPaths()))); .getRequiredPackages(); saveNamespaceImage(\"${R_PACKAGE_NAME}\", \"${rda_file}\", \"${lib}\")"
       loader_file=nsrdaload.R
       R_save_args="--vanilla --slave"
     else
