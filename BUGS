@@ -45,22 +45,15 @@ Directory:  Graphics
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
 Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
---Don't think I (pd) got the point there...
---The persp algorithm does not apply the occlusion rules to the frame, which
---  is always plotted first.  A bug, but not very simple to fix.
-* PR# 267 *
-Subject: matplot(... panel.first=..) fails  <==> dealing with "..."
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 6 Sep 1999 11:04:03 +0200
-* PR# 365 *
-Subject: plot math - segfault and "frac", "^" bug(s)..
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Wed, 8 Dec 1999 18:27:03 +0100 (MET)
---seg.fault fixed; "^" precedence is really bad
+--The persp algorithm does not apply the occlusion rules to the frame, 
+--which is always plotted first. 
+--A bug, but not very simple to fix.
 * PR# 400 *
 Subject: X11 troubles
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 13 Jan 2000 14:31:42 +0100
+--a) We don't handle multiple window closes well
+--b) X11 errors should be caught by an error handler, not kill R
 * PR# 414 *
 Subject:  graphics bugs: steep slopes and large values beyond ylim 
 From: Ben Bolker <bolker@zoo.ufl.edu>
@@ -89,15 +82,11 @@ Date: 06 Feb 2000 01:18:50 +0100
 
 Directory:  Low-level
 
-* PR# 386 *
-Subject: as.matrix.data.frame() modifies content of character columns
-From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
-Date: Wed, 22 Dec 1999 16:18:19 +0100
---Now a (small) warning on the help page for format that " is escaped to \"
 * PR# 391 *
 Subject: Segfault in dataentry()
 From: Peter Dalgaard BSA <p.dalgaard@pubhealth.ku.dk>
 Date: 29 Dec 1999 11:59:50 +0100
+--dataentry(0,0) segfaults
 
 Directory:  Misc
 
@@ -113,33 +102,15 @@ none
 
 Directory:  System-specific
 
-* PR# 449 *
-Subject: Installation of rpm file on Suse Linux 6.2
-From: luzi@stud.phys.ethz.ch
-Date: Thu, 17 Feb 2000 18:36:04 +0100 (MET)
 * PR# 452 *
 Subject: problem with glm
 From: Brad McNeney <mcneney@cs.sfu.ca>
 Date: Fri, 18 Feb 2000 17:51:54 -0800 (PST)
+--Problems on Alpha's with glm. Status unclear
 
 Directory:  TooMuchAtOnce
 
-* PR# 53 *
-Subject: 0.62.3 bugs, incompatibilities and problems
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Mon, 12 Oct 1998 09:43:51 +0200 (MET DST)
---Of Jims points: (checked in 0.65 April 26 compared to Splus 3.4)
--- 4. works the same as S
--- 5. Splus gives NA and the if(class(z)=="repeated") doesn't work in either
--- 10. seems to work
--- 7.  seems to do what Jim wants now
---1.0.0
--- 1. is S-compatible and has been altered to make R incompatible
---13. There are many such options.
-* PR# 76 *
-Subject: R-0.63.0
-From: Rashid Nassar <rnassar@acpub.duke.edu>
-Date: Fri, 11 Dec 1998 23:20:08 -0500 (EST)
+none
 
 Directory:  Windows
 
@@ -147,23 +118,4 @@ none
 
 Directory:  incoming
 
-* PR# 455 *
-Subject: fisher.test() in ctest or perhaps uniroot()
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Thu, 24 Feb 2000 08:35:53 -0800 (PST)
-* PR# 456 *
-Subject: Oprah, Nightline, Maria Shriver, 48 Hours, 20/20, 
-From: ADV.Sleuth.Teaches.U, Make 10K <ALasChance@aol.com>
-Date: Fri, 25 Feb 2000 03:34:24 +0100 (MET)
-* PR# 457 *
-Subject: bug and fix : using panel.first with plot() in do.call()
-From: Colin Farrow <c.farrow@compserv.gla.ac.uk>
-Date: Fri, 25 Feb 2000 14:18:00 +0000
-* PR# 458 *
-Subject: Re: [Rd] bug and fix : using panel.first with plot() in do.call()
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 25 Feb 2000 14:34:48 +0000 (GMT)
-* PR# 459 *
-Subject:  lambda==0 in dpois() 
-From: Ben Bolker <bolker@zoo.ufl.edu>
-Date: Fri, 25 Feb 2000 14:24:00 -0500
+none
