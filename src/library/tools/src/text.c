@@ -75,12 +75,13 @@ delim_match(SEXP x, SEXP delims)
 	    else if(c == '%') {
 		while((c != '\0') && (c != '\n')) {
 #ifdef SUPPORT_MBCS
-		    used = Rf_mbrtowc(NULL, s, MB_CUR_MAX, &mb_st);
-		    if(used == 0) break;
-		    s += used; c = *s;
-#else
-		    c = *++s;
+		    if(mbcslocale) {
+			used = Rf_mbrtowc(NULL, s, MB_CUR_MAX, &mb_st);
+			if(used == 0) break;
+			s += used; c = *s;
+		    } else
 #endif
+			c = *++s;
 		    pos++;
 		}
 	    }
@@ -100,12 +101,13 @@ delim_match(SEXP x, SEXP delims)
 		delim_depth++;
 	    }
 #ifdef SUPPORT_MBCS
-	    used = Rf_mbrtowc(NULL, s, MB_CUR_MAX, &mb_st);
-	    if(used == 0) break;
-	    s += used;
-#else
-	    s++;
+	    if(mbcslocale) {
+		used = Rf_mbrtowc(NULL, s, MB_CUR_MAX, &mb_st);
+		if(used == 0) break;
+		s += used;
+	    } else
 #endif
+		s++;
 	    pos++;
 	}
 	if(end > -1) {
