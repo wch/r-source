@@ -613,6 +613,7 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     char *vmax = vmaxget();
     char buf[128];
 
+    op = CAR(args);
     args = resolveNativeRoutine(args, &fun, &symbol, buf, NULL, NULL, NULL, call);
     args = CDR(args);
 
