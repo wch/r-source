@@ -17,6 +17,15 @@ BUG FIXES
 	needed, the latter zeroed half of what it got, sizeof() mistakes
 	in both cases.
 
+    o   c(ordered factor) caused segfault (uninitalised pointer), now 
+	fixed.
+
+    o   behaviour of as.numeric() on factors changed recently; now 
+	documented.
+
+    o   model.matrix() now pays attention to the names on its dataframe
+	argument.
+
 		CHANGES IN VERSION R VERSION 0.61
 
 We try to make development more flexible by creating a "CVS branch". This
