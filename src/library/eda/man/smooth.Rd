@@ -1,4 +1,5 @@
 \name{smooth}
+\alias{smooth}
 \title{Median Smoothing}
 \usage{
 smooth(x)

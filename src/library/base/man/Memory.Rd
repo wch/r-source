@@ -1,4 +1,5 @@
 \name{Memory}
+\alias{Memory}
 \title{Memory Available for Data Storage}
 \usage{
 R --vsize v --nsize n
@@ -76,3 +77,4 @@ R --vsize v --nsize n
 R --vsize 15M --nsize 1000k
 }
 }
+
