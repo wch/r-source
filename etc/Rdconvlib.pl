@@ -1520,9 +1520,9 @@ sub latex_code_cmd {
     my $code = $_[0];
 
     if($code =~ /[$LATEX_SPECIAL]/){
-	die("\nERROR: found `\@' in \\code{...\}\n")
+	warn("\nERROR: found `\@' in \\code{...\}\n")
 	  if $code =~ /@/;
-	die("\nERROR: found `HYPERLINK(' in \$code: '" . $code ."'\n")
+	warn("\nERROR: found `HYPERLINK(' in \$code: '" . $code ."'\n")
 	  if $code =~ /HYPERLINK\(/;
 	## till 0.63.1 
 	## $code = "\\verb@" . $code . "@";
