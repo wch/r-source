@@ -542,8 +542,8 @@ fi
 if test -f ${HOME}/.Rconf; then . ${HOME}/.Rconf; fi
 
 R_MAJOR="0"
-R_MINOR="63.2"
-R_STATUS=""
+R_MINOR="63.3"
+R_STATUS="in progress"
 R_STATUS_REV="0"
 
 ac_aux_dir=
