@@ -573,6 +573,10 @@ case "${host}" in
     CFLAGS="-mieee ${CFLAGS}"
     DLLFLAGS=-export-dynamic
     ;;
+  *freebsd3.*)
+    DLLFLAGS=-export-dynamic
+    SHLIBLDFLAGS="-shared"
+    ;;
   *linuxaout)
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
     LDCMD=gcc
