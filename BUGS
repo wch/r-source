@@ -360,3 +360,7 @@ Date: Thu, 13 Dec 2001 13:46:54 -0500 (EST)
 Subject: Error when library() called with no arguments
 From: rpeng@stat.ucla.edu
 Date: Thu, 13 Dec 2001 20:51:21 +0100 (MET)
+* PR# 1216 *
+Subject: binomial null model
+From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
+Date: Fri, 14 Dec 2001 11:55:18 -0400
