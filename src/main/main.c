@@ -173,6 +173,7 @@ static void R_ReplFile(FILE *fp, SEXP rho, int savestack, int browselevel)
 	    UNPROTECT(1);
 	    if (R_Visible)
 		PrintValueEnv(R_CurrentExpr, rho);
+	    R_Busy(0);
 	    break;
 	case PARSE_ERROR:
 	    error("syntax error\n");
@@ -274,6 +275,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 	    UNPROTECT(1);
 	    if (R_Visible)
 		PrintValueEnv(R_CurrentExpr, rho);
+	    R_Busy(0);
 	    R_IoBufferWriteReset(&R_ConsoleIob);
 	    prompt_type = 1;
 	    break;
