@@ -40,6 +40,10 @@ rpois(n, lambda)
 
   The quantile is left continuous: \code{qgeom(q, prob)} is the largest
   integer \eqn{x} such that \eqn{P(X \le x) < q}.
+
+  Setting \code{lower.tail = FALSE} allows to get much more precise
+  results when the default, \code{lower.tail = TRUE} would return 1, see
+  the example below.
 }
 \seealso{
   \code{\link{dbinom}} for the binomial and \code{\link{dnbinom}} for
@@ -48,6 +52,9 @@ rpois(n, lambda)
 \examples{
 -log(dpois(0:7, lambda=1) * gamma(1+ 0:7)) # == 1
 Ni <- rpois(50, lam= 4); table(factor(Ni, 0:max(Ni)))
+
+1 - ppois(10*(15:25), lambda=100)		# becomes 0 (cancellation)
+    ppois(10*(15:25), lambda=100, lower=FALSE)	# no cancellation
 
 par(mfrow = c(2, 1))
 x <- seq(-0.01, 5, 0.01)
