@@ -243,6 +243,7 @@ BUG FIXES
     o	lm.fit & lm.wfit (and hence lm) now give understandable error
 	messages when there are 0 non-NA cases.
 
+    o	New "[.AsIs" function fixing PR#665
 
 
 	**************************************************

@@ -87,8 +87,8 @@ plot (x, \dots)
 }
 \details{
   Non-numeric variables passed to \code{data.frame} are converted to
-  factor columns unless protected by \code{\link{I}}. This applies to
-  character and logical variables, in particular. It also applies to
+  factor columns unless protected by \code{\link{I}}.  This applies to
+  character and logical variables, in particular.  It also applies to
   adding columns to a data frame.
 
   If a list or data frame or matrix is passed to \code{data.frame}
@@ -101,9 +101,15 @@ plot (x, \dots)
 }
 \examples{
 L3 <- LETTERS[1:3]
-str(d <- data.frame(cbind(x=1, y=1:10), ch=sample(L3, 10, repl=TRUE)))
-str(     data.frame(cbind(  1,   1:10),    sample(L3, 10, repl=TRUE)))
+str(d <- data.frame(cbind(x=1, y=1:10), fac=sample(L3, 10, repl=TRUE)))
+
+## The same with automatic column names:
+str(     data.frame(cbind(  1,   1:10),     sample(L3, 10, repl=TRUE)))
 is.data.frame(d)
+
+## do not convert to factor:
+str(cbind(d, char = I(letters[1:10])), vec.len = 10)
+
 all(1:10 == row.names(d))# TRUE (coercion)
 }
 \keyword{classes}

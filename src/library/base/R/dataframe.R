@@ -197,6 +197,8 @@ as.data.frame.model.matrix <- function(x, row.names = NULL, optional = FALSE)
     value
 }
 
+"[.AsIs" <- function(x, i) structure(NextMethod("["), class = class(x))
+
 as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE)
 {
     if(length(dim(x))==2)
@@ -864,7 +866,8 @@ as.matrix.data.frame <- function (x)
 				  sep = ".")
 	}
 	if(length(levels(xj)) > 0 || !(is.numeric(xj) || is.complex(xj))
-           || (!is.null(cl <- class(xj)) && any(substr(cl,1,5) == "POSIX")))
+           || (!is.null(cl <- class(xj)) && # numeric classed objects to format:
+               any(cl == c("POSIXct", "POSIXlt"))))
 	    non.numeric <- TRUE
 	if(!is.atomic(xj))
 	    non.atomic <- TRUE
@@ -878,13 +881,10 @@ as.matrix.data.frame <- function (x)
 	}
     } else if(non.numeric) {
 	for (j in 1:p) {
-            if (mode(X[[j]]) == "character")
-                next;
+            if (is.character(X[[j]]))
+                next
 	    xj <- X[[j]]
-	    if(length(levels(xj)) > 0) {
-		X[[j]] <- as.vector(xj)
-	    }
-	    else X[[j]] <- format(xj)
+	    X[[j]] <- if(length(levels(xj))) as.vector(xj) else format(xj)
 	}
     }
     X <- unlist(X, recursive = FALSE, use.names = FALSE)
@@ -907,7 +907,7 @@ Math.data.frame <- function(x, ...)
     call[[arg]] <- as.name("xx")
     for(j in names(X)) {
 	xx <- X[[j]]
-	if(!is.numeric(xx) && mode(xx) != "complex")
+	if(!is.numeric(xx) && !is.complex(xx))
 	    stop(paste("Non-numeric variable:", j))
 	X[[j]] <- eval(call)
     }
@@ -1005,7 +1005,7 @@ Ops.data.frame <- function(e1, e2 = NULL)
 Summary.data.frame <- function(x, ...)
 {
     x <- as.matrix(x)
-    if(!is.numeric(x) && mode(x) != "complex")
+    if(!is.numeric(x) && !is.complex(x))
 	stop("only defined on a data frame with all numeric or complex variables")
     NextMethod(.Generic)
 }
