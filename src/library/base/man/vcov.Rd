@@ -6,7 +6,6 @@
 \alias{vcov.gls}
 \alias{vcov.coxph}
 \alias{vcov.survreg}
-\alias{vcov}
 \title{
 Calculate Variance-Covariance Matrix for a Fitted Model Object
 }
@@ -18,16 +17,18 @@ a fitted model object.
 vcov(object, \dots)
 }
 \arguments{
-\item{object}{
-a fitted model object.
+  \item{object}{
+    a fitted model object.
+  }
+  \item{...}{
+    additional arguments for method functions.  For the
+    \code{\link{glm}} method this can be used to pass a
+    \code{dispersion} parameter.
+  }
 }
-\item{...}{
-additional arguments for method functions.  For the \code{\link{glm}}
-method this can be used to pass a \code{dispersion} parameter.
-}}
 \value{
-A matrix of the estimated covariances between the parameter estimates
-in the linear or non-linear predictor of the model.
+  A matrix of the estimated covariances between the parameter estimates
+  in the linear or non-linear predictor of the model.
 }
 \details{
 This is a generic function.
