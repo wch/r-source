@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-45, 2004-02-28
+Version 1.8-46, 2004-03-02
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -2386,6 +2386,10 @@ distributions of R.)
 
 *simpleboot*
      Simple bootstrap routines.
+
+*skewt*
+     Density, distribution function, quantile function and random generation
+     for the skewed t distribution of Fernandez and Steel.
 
 *sm*
      Software linked to the book "Applied Smoothing Techniques for Data
