@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-16, 2003-11-13
+Version 1.8-17, 2003-11-15
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1871,6 +1871,9 @@ distributions of R.)
      Fit smoothing spline terms in Gaussian linear and nonlinear
      mixed-effects models.
 
+*lmm*
+     Linear mixed models.
+
 *lmtest*
      A collection of tests on the assumptions of linear regression models
      from the book "The linear regression model under test" by W. Kraemer
@@ -2021,17 +2024,17 @@ distributions of R.)
      networks"), and for multinomial log-linear models.  Contained in the
      `VR' bundle.  _Recommended_.
 
+*nor1mix*
+     One-dimensional normal mixture models classes, for, e.g., density
+     estimation or clustering algorithms research and teaching; providing
+     the widely used Marron-Wand densities.
+
 *norm*
      Analysis of multivariate normal datasets with missing values.
 
 *normalp*
      A collection of utilities for normal of order p distributions (General
      Error Distributions).
-
-*normix*
-     One-dimensional normal mixture models classes, for, e.g., density
-     estimation or clustering algorithms research and teaching; providing
-     the widely used Marron-Wand densities.
 
 *nortest*
      Five omnibus tests for the composite hypothesis of normality.
