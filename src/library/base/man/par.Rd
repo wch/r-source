@@ -172,7 +172,7 @@ par(\dots, no.readonly = FALSE)
     \code{mfrow}.
 
     For compatibility with S, the form \code{c(i, j, nr, nc)} is also
-    accepted, when \code{nc} and \code{nc} should be the current number of
+    accepted, when \code{nr} and \code{nc} should be the current number of
     rows and number of columns. Mismatches will be ignored, with a warning.}
   \item{mgp}{The margin line (in \code{mex} units) for the axis title,
     axis labels and axis line.  The default is \code{c(3, 1, 0)}.}
