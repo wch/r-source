@@ -14,14 +14,15 @@
 dchisq(x, df, ncp=0, log = FALSE)
 pchisq(q, df, ncp=0, lower.tail = TRUE, log.p = FALSE)
 qchisq(p, df, ncp=0, lower.tail = TRUE, log.p = FALSE)
-rchisq(n, df)
+rchisq(n, df, ncp=0)
 }
 \arguments{
   \item{x, q}{vector of quantiles.}
   \item{p}{vector of probabilities.}
   \item{n}{number of observations to generate.}
   \item{df}{degrees of freedom.}
-  \item{ncp}{non-centrality parameter.}
+  \item{ncp}{non-centrality parameter.  For \code{rnchisq}, \code{ncp=0}
+    is the only possible value.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}

@@ -2,16 +2,19 @@
 \title{Add Arrows to a Plot}
 \usage{
 arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
-       col = par("fg"), lty = NULL, xpd = FALSE)
+       col = par("fg"), lty = NULL, lwd = par("lwd"), xpd = FALSE)
 }
 \alias{arrows}
 \arguments{
   \item{x0,y0}{coordinates of points \bold{from} which to draw.}
   \item{x1,y1}{coordinates of points \bold{to} which to draw.}
   \item{length}{length of the edges of the arrow head (in inches).}
-  \item{angle}{angle from the shaft of the arrow to the edge of the arrow head.}
-  \item{code}{integer code, determining \emph{kind} of arrows to be drawn.}
-  \item{col, lty, xpd}{usual graphical parameters as in \code{\link{par}}.}
+  \item{angle}{angle from the shaft of the arrow to the edge of the
+    arrow head.}
+  \item{code}{integer code, determining \emph{kind} of arrows to be
+    drawn.}
+  \item{col, lty, lwd, xpd}{usual graphical parameters as in
+    \code{\link{par}}.}
 }
 \description{
   Draw arrows between pairs of points.

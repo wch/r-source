@@ -10,8 +10,13 @@
   other \R classes.
 }
 \usage{
-cbind(\dots)
-rbind(\dots)
+cbind(\dots, deparse.level = 1)
+rbind(\dots, deparse.level = 1)
+}
+\arguments{
+  \item{\dots}{vectors or matrices.}
+  \item{deparse.level}{integer controlling the construnction of labels;
+    currently, \code{1} is the only possible value.}
 }
 \details{
   The functions \code{cbind} and \code{rbind} are generic, with methods

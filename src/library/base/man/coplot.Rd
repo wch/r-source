@@ -2,20 +2,11 @@
 \title{Conditioning Plots}
 \usage{
 coplot(formula, data, given.values, panel = points, rows, columns,
-       show.given = TRUE, col = par("fg"), pch = par("pch"),
-       xlab = c(x.name, paste("Given :", a.name)),
-       ylab = c(y.name, paste("Given :", b.name)),
-       subscripts = FALSE,
-       number = 6, overlap = 0.5, \dots)
-co.intervals(x, number = 6, overlap = 0.5)
-}
-\synopsis{
-coplot(formula, data, given.values, panel = points, rows, columns,
        show.given = TRUE, col = par("fg"), pch = par("pch"), 
        xlab = c(x.name, paste("Given :", a.name)),
        ylab = c(y.name, paste("Given :", b.name)),
        subscripts = FALSE,
-       number = 6, overlap = 0.5, xlim, ylim, ...) 
+       number = 6, overlap = 0.5, xlim, ylim, \dots) 
 co.intervals(x, number = 6, overlap = 0.5)
 }
 \alias{coplot}
@@ -64,15 +55,17 @@ co.intervals(x, number = 6, overlap = 0.5)
     variable.}
   \item{ylab}{character; labels to use for the y axis and any
     second conditioning variable.}
-  \item{subscripts}{logical: if true the panel function is given an additional
-    (third) argument \code{subscripts} giving the subscripts of the data
-    passed to that panel.}
+  \item{subscripts}{logical: if true the panel function is given an
+    additional (third) argument \code{subscripts} giving the subscripts
+    of the data passed to that panel.}
   \item{number}{integer; the number of conditioning intervals,
     possibly of length 2 for x and y direction.}
   \item{overlap}{numeric < 1; the fraction of overlap of the
-      conditioning variables, possibly of length 2 for x and y
-      direction.  When overlap < 0, there will be \emph{gaps} between
-      the data slices.}
+    conditioning variables, possibly of length 2 for x and y
+    direction.  When overlap < 0, there will be \emph{gaps} between
+    the data slices.}
+  \item{xlim}{the range for the x axis.}
+  \item{ylim}{the range for the y axis.}
   \item{\dots}{additional arguments to the panel function.}
 }
 \description{

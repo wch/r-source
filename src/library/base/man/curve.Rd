@@ -4,21 +4,20 @@
 \alias{plot.function}
 \usage{
 curve(expr, from, to, n = 101, add = FALSE, type = "l",
-      ylab = NULL, log = NULL, \dots)
+      ylab = NULL, log = NULL, xlim = NULL, \dots)
 plot.function(fn, from = 0, to = 1, xlim, \dots)
 }
 \arguments{
-\item{expr}{an expression written as a function of \code{x}, or
-  alternatively a function which will be plotted.}
-\item{fn}{a `vectorizing' numeric \R function.}
-\item{from,to}{the range over which the function will be plotted.}
-\item{n}{integer; the number of x values at which to evaluate.}
-\item{add}{logical; if \code{TRUE} add to already existing plot.}
-
-\item{xlim}{numeric of length 2; if specified, it serves as default for
-  \code{c(from,to)}.}
-\item{\dots}{graphical parameters can also be specified as arguments.
-  \code{plot.function} passes all these to \code{curve}.}
+  \item{expr}{an expression written as a function of \code{x}, or
+    alternatively a function which will be plotted.}
+  \item{fn}{a `vectorizing' numeric \R function.}
+  \item{from,to}{the range over which the function will be plotted.}
+  \item{n}{integer; the number of x values at which to evaluate.}
+  \item{add}{logical; if \code{TRUE} add to already existing plot.}
+  \item{xlim}{numeric of length 2; if specified, it serves as default
+    for \code{c(from, to)}.}
+  \item{\dots}{graphical parameters can also be specified as arguments.
+    \code{plot.function} passes all these to \code{curve}.}
 }
 \description{
   Draws a curve corresponding to the given function or expression (in

@@ -5,19 +5,20 @@
   Draw a Cleveland dot plot.
 }
 \usage{
-dotplot(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
-        pch = 21, gpch = 21, bg = par("bg"), color = par("fg"),
-        gcolor = par("fg"), lcolor = "gray", \dots)
+dotplot(x, labels = NULL, groups = NULL, gdata = NULL,
+        cex = par("cex"), pch = 21, gpch = 21, bg = par("bg"),
+        color = par("fg"), gcolor = par("fg"), lcolor = "gray",
+        main = NULL, xlab = NULL, ylab = NULL, \dots)
 }
 \arguments{
   \item{x}{either a vector or matrix of numeric values (\code{NA}s are
     allowed).  If \code{x} is a matrix the overall plot consists of
     juxtaposed dotplots for each row.}
   \item{labels}{a vector of labels for each point.
-    For vectors the default is to use \code{names(x)} and for
-    matrices the row labels \code{dimnames(x)[[1]]}.}
-  \item{groups}{an optional factor indicating how the
-    elements of \code{x} are grouped.
+    For vectors the default is to use \code{names(x)} and for matrices
+    the row labels \code{dimnames(x)[[1]]}.}
+  \item{groups}{an optional factor indicating how the elements of
+    \code{x} are grouped.
     If \code{x} is a matrix, \code{groups} will default to the columns
     of \code{x}.}
   \item{gdata}{data values for the groups.
@@ -31,8 +32,12 @@ dotplot(x, labels = NULL, groups = NULL, gdata = NULL, cex = par("cex"),
     values.}
   \item{bg}{the background color to be used.}
   \item{color}{the color(s) to be used for points an labels.}
-  \item{gcolor}{the single color to be used for group labels and values.}
+  \item{gcolor}{the single color to be used for group labels and
+    values.}
   \item{lcolor}{the color(s) to be used for the horizontal lines.}
+  \item{main}{overall title for the plot.}
+  \item{xlab}{title for the x axis.}
+  \item{ylab}{title for the y axis.}
   \item{\dots}{graphical parameters can also be specified as arguments.}
 }
 \value{

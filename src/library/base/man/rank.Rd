@@ -1,16 +1,18 @@
 \name{rank}
 \title{Sample Ranks}
-\usage{
-rank(x)
-}
-\synopsis{
-rank(x, na.last = TRUE))
-}
 \alias{rank}
 \description{
   \code{rank} returns the sample ranks of the values in \code{x}.
   Ties result in ranks being averaged.
   \code{\link{NA}} values are not allowed in this function.
+}
+\usage{
+rank(x, na.last = TRUE)
+}
+\arguments{
+  \item{x}{a numeric vector.}
+  \item{na.last}{for controlling the treatment of \code{NA}s.
+    Currently, \code{TRUE} is the only possible value.}
 }
 \seealso{\code{\link{order}} and \code{\link{sort}}.}
 \examples{
