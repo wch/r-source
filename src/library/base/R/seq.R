@@ -27,8 +27,10 @@ seq.default <-
 		else if(n < 0)
 		    stop("Wrong sign in by= argument")
 
-		eps <- .Machine$double.eps *
-		    max(1, max(abs(to),abs(from)) / abs(del))
+		dd <- abs(del)/max(abs(to), abs(from))
+		if (dd < sqrt(.Machine$double.eps)) 
+		    return(from)
+		eps <- .Machine$double.eps * max(1, 1/dd)
 		n <- as.integer(n * (1 + eps))
 		if(eps*2*n >= 1)
 		    warning(paste("seq.default(f,t,by): n=",n,
