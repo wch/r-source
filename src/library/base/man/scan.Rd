@@ -78,5 +78,6 @@ pp <- scan("ex.data", skip = 1, quiet= TRUE)
     scan("ex.data", skip = 1, nlines=1)# only 1 line after the skipped one
 str(scan("ex.data", what = list("","",""))) # flush is F -> read "7"
 str(scan("ex.data", what = list("","",""), flush = TRUE))
+unlink("ex.data") # tidy up
 }
 \keyword{file}

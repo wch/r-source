@@ -25,5 +25,6 @@ sink("sink-examp.txt")
 i <- 1:10
 outer(i,i,"*")
 sink()
+unlink("sink-examp.txt")
 }
 \keyword{file}

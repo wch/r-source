@@ -27,5 +27,6 @@ count.fields(file, sep = "", quote = "", skip = 0)
 \examples{
 cat("NAME", "1:John", "2:Paul", file = "foo", sep = "\n")
 count.fields("foo", sep = ":")
+unlink("foo")
 }
 \keyword{file}

@@ -31,5 +31,6 @@ write(t(x))
 # the file data now contains the data in x,
 # two rows, five cols but the first row is 1 2 3 4 5
 write(x)
+unlink("data") # tidy up
 }
 \keyword{file}

@@ -22,5 +22,6 @@ dump(list, fileout="dumpdata")
 \examples{
 x <- 1; y <- 1:10
 dump(ls(patt='^[xyz]'), "xyz.Rdmped")
+unlink("xyz.Rdmped")
 }
 \keyword{file}
