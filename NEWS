@@ -81,9 +81,9 @@ BUG FIXES
     o	besselK(x,*) now returns 0 instead of Inf for large x. (PR#2179)
 
     o	The Tcl console code didn't work with Tcl/TK 8.0, and has been
-	#ifdef'd out.
+	#ifdef'd out.  (PR#2090)
 
-    o	format.AsIs was not handling matrices.
+    o	format.AsIs() was not handling matrices.
 
     o   sd() was not passing na.rm to var() for matrices and data frames.
 
@@ -94,6 +94,8 @@ BUG FIXES
     o	basename() and dirname() did not check the length of their
 	input and ignored elements after the first.  This affected
 	undoc {tools}.
+
+    o   If A had dimnames, eigen(A) had inappropriate dimnames. (PR#2116)
 
 
 INTERNALS
