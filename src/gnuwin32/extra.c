@@ -839,7 +839,7 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     clist[n] = NULL;
     mw = min(mw, 25);
-    xmax = max(170, 10*mw+50);
+    xmax = max(170, 8*mw+60);
     ylist = min(20*n, 300);
     ymax = ylist + 60;
     wselect = newwindow(multiple ? "Select" : "Select one", 
@@ -847,9 +847,9 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 			Titlebar | Centered | Modal);
     setbackground(wselect, LightGrey);
     if(multiple)
-	f_list = newmultilist(clist, rect(10, 10, 35+10*mw, ylist), NULL);
+	f_list = newmultilist(clist, rect(10, 10, 35+8*mw, ylist), NULL);
     else
-	f_list = newlistbox(clist, rect(10, 10, 35+10*mw, ylist), NULL);
+	f_list = newlistbox(clist, rect(10, 10, 35+8*mw, ylist), NULL);
     setlistitem(f_list, j);
     bFinish = newbutton("OK", rect(xmax-160, ymax-40, 70, 25), finish);
     bCancel = newbutton("Cancel", rect(xmax-80, ymax-40, 70, 25), cancel);
