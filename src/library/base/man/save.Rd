@@ -25,13 +25,12 @@ sys.save.image(name)
     which leads to a more compact binary file being written.}
   \item{version}{the workspace format version to use.  NULL specifies
     the current default format.  The version used from \R 0.99.0 to
-    \R 1.3.1 is version 1.  The default format as from \R 1.4.0 is
+    \R 1.3.1 was version 1.  The default format as from \R 1.4.0 is
     version 2.}
   \item{envir}{environment to search for objects to be saved.}
   \item{compress}{logical specifying whether saving to a named file is to
     use compression. Ignored when \code{file} is a connection and for
-    workspace format version 1, or if \code{\link{gzfile}} is not
-    supported on this platform.}
+    workspace format version 1.}
   \item{safe}{logical.  If TRUE, a temporary file is used for creating
     the saved workspace.  The temporary file is renamed to \code{file}
     if the save succeeds.  This preserves an existing workspace
@@ -52,9 +51,8 @@ sys.save.image(name)
   happens with \code{\link{q}("yes")}.
 }
 \details{
-  Almost all current \R platforms (including Windows and Macintosh)
-  use the XDR representation of binary objects in binary save-d files,
-  and these are portable across all XDR-compliant implementations.
+  All \R platforms use the XDR representation of binary objects in
+  binary save-d files, and these are portable across all \R platforms.
 
   Default values for \code{save.image} options can be modified with
   the \code{save.image.defaults} option.  This mechanism is experimental
@@ -75,7 +73,7 @@ save.image()
 unlink("xy.Rdata")
 unlink(".RData")
 
-# set save.image dafaults using option:
+# set save.image defaults using option:
 options(save.image.defaults=list(ascii=TRUE, safe=FALSE))
 save.image()
 unlink(".RData")
