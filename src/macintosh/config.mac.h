@@ -25,7 +25,9 @@
 #undef CRAY_STACKSEG_END
 
 /* Define if you have alloca, as a function or macro.  */
-#undef HAVE_ALLOCA
+#ifdef __MRC__
+#define HAVE_ALLOCA 1
+#endif
 
 /* Define if you have <alloca.h> and it should be used (not on Ultrix).  */
 #ifndef __MRC__
