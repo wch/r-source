@@ -8,7 +8,7 @@ revision='$Revision: 1.15 $'
 version=`set - ${revision}; echo ${2}`
 version="R compilation front end ${version}
 
-Copyright (C) 2000-2004 The R Core Development Team.
+Copyright (C) 2000-2005 The R Core Development Team.
 This is free software; see the GNU General Public Licence version 2 or
 later for copying conditions.  There is NO warranty."
 
@@ -29,8 +29,10 @@ compilation.
 Report bugs to <r-bugs@r-project.org>."
 
 makefiles="-f \"${R_HOME}/etc/Makeconf\""
-if test -r "${HOME}/.Rmakeconf"; then
-  makefiles="${makefiles} -f \"${HOME}/.Rmakeconf\""
+if test -r "${HOME}/.R/Makevars-${R_PLATFORM}"; then
+  makefiles="${makefiles} -f \"${HOME}/.R/Makevars-${R_PLATFORM}\""
+elif test -r "${HOME}/.R/Makevars"; then
+  makefiles="${makefiles} -f \"${HOME}/.R/Makevars\""
 fi
 if test -r Makevars; then
   makefiles="-f Makevars ${makefiles}"
