@@ -189,6 +189,7 @@ install-R-framework:
 	@(cd "$(R_FRAMEWORK_DIR)/Versions" && \
 	  ln -f -s -n $(VERSION) Current)
 	@(cd "$(R_FRAMEWORK_DIR)"  && \
+	  ln -f -s -n Versions/Current/PrivateHeaders PrivateHeaders&& \
 	  ln -f -s -n Versions/Current/Headers Headers&& \
 	  ln -f -s -n Versions/Current/R R && \
 	  ln -f -s -n Versions/Current/Resources Resources)
@@ -205,7 +206,7 @@ install-R-framework:
 	@(chmod 755 $(R_FRAMEWORK_DIR)/Resources/bin/RAqua)
 	@(cp $(srcdir)/src/modules/aqua/CHANGES "$(R_FRAMEWORK_DIR)/Resources/NEWS.aqua")
 	@(cp $(srcdir)/src/modules/aqua/RMacOSX-FAQ.html "$(R_FRAMEWORK_DIR)/Resources/RMacOSX-FAQ.html")
-
+	@(cp -R $(srcdir)/src/include $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders)
 
 
 install-aqua:
