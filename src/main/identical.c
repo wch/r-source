@@ -33,6 +33,18 @@ SEXP do_identical(SEXP x, SEXP y)
   return(ans);
 }
 
+/* primitive interface */
+
+SEXP do_ident(SEXP call,  SEXP op,  SEXP args, SEXP env)
+{
+  /* needs some more includes, but Defn.h produces compile errors.
+     When that's figured out, add
+     checkArity(op, args);
+  */
+  return do_identical(CAR(args), CADR(args));
+
+}
+
 /* do the two objects compute as identical? */
 static Rboolean compute_identical(SEXP x, SEXP y)
 {
