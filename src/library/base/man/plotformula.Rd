@@ -34,7 +34,7 @@
   is given. A plot against the running index can be specified as
   \code{plot(y~1)}.
 
-  If \code{y} is an object (ie. has a \code{\link{class}} attribute)
+  If \code{y} is an object (ie. has a \code{\link[base]{class}} attribute)
   then \code{plot.formula} looks for a plot method for that class first.
 }
 \value{

@@ -10,7 +10,7 @@ abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,
        lty = par("lty"), lwd = NULL, ...)
 }
 \usage{
-abline(a, b, untf = FALSE,\ dots)
+abline(a, b, untf = FALSE, \dots)
 abline(h=, untf = FALSE, \dots)
 abline(v=, untf = FALSE, \dots)
 abline(coef=, untf = FALSE, \dots)

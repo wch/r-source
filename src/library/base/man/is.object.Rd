@@ -12,7 +12,7 @@ is.object(x)
 \arguments{
   \item{x}{object to be tested.}
 }
-\seealso{\code{\link{class}}, and \code{\link{methods}}.}
+\seealso{\code{\link[base]{class}}, and \code{\link{methods}}.}
 
 \examples{
 is.object(1) # FALSE

@@ -22,7 +22,7 @@ range.default(\dots, na.rm = FALSE, finite = FALSE)
   (\code{\link{range.default}}).
 
   It is also a member of the \code{Summary} group of functions, see
-  \code{\link{Methods}}.
+  \code{\link[base]{Methods}}.
 
   If \code{na.rm} is \code{FALSE}, \code{NA}
   and \code{NaN} values in any of the arguments will cause NA values
@@ -38,7 +38,7 @@ range.default(\dots, na.rm = FALSE, finite = FALSE)
 \seealso{
   \code{\link{min}},
   \code{\link{max}},
-  \code{\link{Methods}}.
+  \code{\link[base]{Methods}}.
 }
 \examples{
 print(r.x <- range(rnorm(100)))

@@ -78,7 +78,7 @@ lm(formula, data, subset, weights, na.action,
   only, you may consider doing likewise.
 }
 \value{
-  \code{lm} returns an object of \code{\link{class}} \code{"lm"} or for
+  \code{lm} returns an object of \code{\link[base]{class}} \code{"lm"} or for
   multiple responses of class \code{c("mlm", "lm")}.
 %% actually also c("lm.null","lm") and c("mlm.null", "lm.null", "mlm", "lm")
 %% but I'm still not sure that this should be `it' for the future. {MM}.

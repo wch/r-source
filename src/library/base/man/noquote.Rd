@@ -16,7 +16,7 @@ obj[j]
 }
 \description{
   These functions exist both as utilities and as an example of using
-  \code{\link{class}} and object orientation.
+  \code{\link[base]{class}} and object orientation.
 }
 \value{
   \code{noquote} returns its argument as an object of class
@@ -27,7 +27,8 @@ obj[j]
   characters \emph{without} quotes (\code{"\dots"}).
 }
 \author{Martin Maechler \email{maechler@stat.math.ethz.ch}}
-\seealso{\code{\link{methods}},\code{\link{class}},\code{\link{print}}.
+\seealso{
+  \code{\link{methods}}, \code{\link[base]{class}}, \code{\link{print}}.
 }
 \examples{
 letters
