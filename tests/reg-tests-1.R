@@ -3017,7 +3017,7 @@ stopifnot(inherits(try(e == e), "try-error"))
 
 
 ## "nowhere" interpolation (PR#6809)
-approx(list(x=rep(NaN, 9), y=1:9), xout=NaN)
+try(approx(list(x=rep(NaN, 9), y=1:9), xout=NaN))
 ## gave a seg.fault in 1.9.0
 
 
