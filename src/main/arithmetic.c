@@ -203,6 +203,11 @@ SEXP do_Machine(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+static double myfmod(double x1, double x2)
+{
+    double q = x1 / x2;
+    return x1 - floor(q) * x2;
+}
 
 /*#ifdef Log_0_broken /-* only on some platforms: small performance loss: */
 #if 1==1/* always(for testing)*/
@@ -496,13 +501,6 @@ static SEXP real_unary(int code, SEXP s1)
     }
     return s1;/* never used; to keep -Wall happy */
 }
-
-static double myfmod(double x1, double x2)
-{
-    double q = x1 / x2;
-    return x1 - floor(q) * x2;
-}
-
 
 /* i1 = i % n1; i2 = i % n2;
  * this macro is quite a bit faster than having real modulo calls
