@@ -3,7 +3,7 @@ read.fwf <- function(file, widths, sep = "\t", as.is = FALSE,
 {
     doone <- function(x) {
         x <- substring(x, first, last)
-        x[nchar(x)==0] <- "NA"
+        x[nchar(x)==0] <- as.character(NA)
         x
     }
     FILE <- tempfile("Rfwf.")

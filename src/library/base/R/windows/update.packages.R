@@ -70,6 +70,7 @@ download.packages <- function(pkgs, destdir, available=NULL,
     for(p in unique(pkgs))
     {
         ok <- (available[,"Package"] == p) | (available[,"Bundle"] == p)
+        ok <- ok & !is.na(ok)
         if(!any(ok))
             warning(paste("No package \"", p, "\" on CRAN.", sep=""))
         else{

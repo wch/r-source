@@ -331,7 +331,7 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 	if(is.matrix(i))
 	    return(as.matrix(x)[i])
 	y <- NextMethod("[")
-	if(any(names(y) == "NA"))
+	if(any(is.na(names(y))))
 	    stop("undefined columns selected")
 	return(structure(y, class = class(x), row.names = row.names(x)))
     }

@@ -30,7 +30,7 @@ make.packages.html <- function(lib.loc=.libPaths())
             f.t <- scan(t.file, what="c", quiet=TRUE, quote="")
         else {
             title <- package.description(i, field="Title")[1]
-            if (title == "NA") title <- "-- Title is missing --"
+            if (is.na(title)) title <- "-- Title is missing --"
             f.t <- c(i, title)
         }
         lib <- system.file(package=i)
