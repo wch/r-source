@@ -16,17 +16,21 @@ options(\dots)
   blank (\code{" "}).}
 \item{continue}{a string setting the prompt used for lines which continue
   over one line.}
-\item{width}{controls the number of characters on a line. You may
+\item{width}{controls the number of characters on a line.  You may
   want to change this if you resize the window that \R is running in.}
 \item{digits}{controls the number of digits to print when printing
-  numeric values. It is a suggestion only.}
+  numeric values.  It is a suggestion only.}
 \item{editor}{sets the default text editor, e.g., for \code{\link{edit}}.}
 \item{browser}{default HTML browser used by \code{\link{help.start}()}.}
 \item{contrasts}{the default \code{\link{contrasts}} used in model
     fitting such as with \code{\link{aov}} or \code{\link{lm}}.}
 \item{expressions}{sets a limit on the number of nested expressions that
-  will be evaluated.   This is especially important on the Macintosh
+  will be evaluated.  This is especially important on the Macintosh
   since stack overflow is likely if this is set too high.}
+\item{keep.source}{When \code{TRUE}, the default, the source code for
+  functions loaded by is stored in their \code{"source"} attribute,
+  allowing comments to be kept in the right places.  This does not apply
+  to functions loaded by \code{library}.}
 \item{na.action}{the name of a function for treating missing values
   (\code{\link{NA}}'s) for certain situations.}
 \item{pager}{the (standalone) program used for displaying ASCII files on
@@ -38,18 +42,24 @@ options(\dots)
   \bold{read-only}, set by environment variable \code{R_PRINTCMD}, or in
   \file{config.site}.}
 \item{show.signif.stars, show.coef.Pvalues}{logical, affecting P value
-    printing, see \code{\link{print.coefmat}}.}
+  printing, see \code{\link{print.coefmat}}.}
 \item{ts.eps}{the relative tolerance for certain time series
   (\code{\link{ts}}) computations.}
-\item{warn}{sets the handling of warning messages. If \code{warn}
-is negative all warnings are ignored. If \code{warn} is zero (the default)
-warnings are stored until the  top--level function returns. If fewer than 10
-warnings were signalled they will be printed otherwise a message
-saying how many (max 50) were signalled. A top--level variable called
-\code{last.warning} is created and can be viewed through the function
-\code{\link{warnings}}. If \code{warn} is one, warnings are printed
-as they occur. If \code{warn} is two or larger all warnings are turned
-into errors.}
+\item{warn}{sets the handling of warning messages.  If \code{warn}
+  is negative all warnings are ignored.  If \code{warn} is zero (the default)
+  warnings are stored until the  top--level function returns.  If fewer than 10
+  warnings were signalled they will be printed otherwise a message
+  saying how many (max 50) were signalled.  A top--level variable called
+  \code{last.warning} is created and can be viewed through the function
+  \code{\link{warnings}}.  If \code{warn} is one, warnings are printed
+  as they occur.  If \code{warn} is two or larger all warnings are turned
+  into errors.}
+\item{error.halt}{logical, setting the handling of errors
+  (\code{\link{stop}}) \emph{when} \R is used in `batch mode', i.e.,
+  when \code{\link{interactive}()} is \code{FALSE}.
+  By default, \code{error.halt = TRUE}, a (fatal) error stops batch
+  processing of \R immediately.  After \code{options(error.halt = FALSE)},
+  \R will continue after an error, just as when \code{interactive()}.
 }
 \description{
   \code{options} allows the user to set and examine a variety of global

@@ -22,7 +22,7 @@ chol <- function(x)
 		  n,
 		  v=matrix(0, nr=n, nc=n),
 		  info=integer(1),
-		  DUP=FALSE)
+		  DUP=FALSE, PACKAGE="base")
     if(z$info)
 	stop("singular matrix in chol")
     z$v
@@ -50,7 +50,7 @@ chol2inv <- function(x, size=ncol(x))
 		  size,
 		  v=matrix(0, nr=size, nc=size),
 		  info=integer(1),
-		  DUP=FALSE)
+		  DUP=FALSE, PACKAGE="base")
     if(z$info)
 	stop("singular matrix in chol2inv")
     z$v

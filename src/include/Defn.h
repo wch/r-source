@@ -92,6 +92,16 @@
 #  endif
 #endif
 
+#ifdef HAVE_POSIX_SETJMP
+# define JMP_BUF sigjmp_buf
+# define SETJMP(x) sigsetjmp(x,1)
+# define LONGJMP(x,i) siglongjmp(x,i)
+#else
+# define JMP_BUF jmp_buf
+# define SETJMP(x) setjmp(x)
+# define LONGJMP(x,i) longjmp(x,i)
+#endif
+
 #define HSIZE	   4119	/* The size of the hash table for symbols */
 #define MAXELTSIZE 8192 /* The largest string size */
 #define MAXIDSIZE   256	/* Largest symbol size possible */
@@ -128,18 +138,6 @@ typedef struct {
 #define PPINFO(x)	(R_FunTab[(x)->u.primsxp.offset].gram)
 #define PRIMPRINT(x)	(((R_FunTab[(x)->u.primsxp.offset].eval)/100)%10)
 
-/* Symbol Access Macros */
-#define PRINTNAME(x)	((x)->u.symsxp.pname)
-#define SYMVALUE(x)	((x)->u.symsxp.value)
-#define INTERNAL(x)	((x)->u.symsxp.internal)
-#define DDVAL(x)	((x)->sxpinfo.gp) /* for ..1, ..2 etc */
-
-/* Environment Access Macros */
-#define FRAME(x)	((x)->u.envsxp.frame)
-#define ENCLOS(x)	((x)->u.envsxp.enclos)
-#define HASHTAB(x)	((x)->u.envsxp.hashtab)
-#define NARGS(x)	((x)->sxpinfo.gp)	/* for closure calls */
-
 /* Promise Access Macros */
 #define PREXPR(x)	((x)->u.promsxp.expr)
 #define PRENV(x)	((x)->u.promsxp.env)
@@ -165,7 +163,6 @@ typedef struct {
 
 
 /* Evaluation Context Structure */
-/* Note: JMP_BUF is defined in Rconfig.h */
 typedef struct RCNTXT {
     struct RCNTXT *nextcontext;	/* The next context up the chain */
     int callflag;		/* The context "type" */
@@ -232,7 +229,7 @@ enum {
 
 #define SA_DEFAULT   1
 #define SA_NOSAVE    2
-#define SA_SAVE      3
+#define SA_SAVE	     3
 #define SA_SAVEASK   4
 #define SA_SUICIDE   5
 
@@ -268,7 +265,7 @@ extern VECREC*	R_VHeap;	    /* Base of the vector heap */
 extern VECREC*	R_VTop;		    /* Current top of the vector heap */
 extern VECREC*	R_VMax;		    /* bottom of R_alloc'ed heap */
 extern long	R_Collected;	    /* Number of free cons cells (after gc) */
-extern SEXP	R_PreciousList;     /* List of Persistent Objects */
+extern SEXP	R_PreciousList;	    /* List of Persistent Objects */
 
 /* The Pointer Protection Stack */
 extern int	R_PPStackSize	INI_as(R_PPSSIZE); /* The stack size (elements) */
@@ -290,6 +287,7 @@ extern int	R_BrowseLevel	INI_as(0);	/* how deep the browser is */
 
 /* File Input/Output */
 extern int	R_Interactive	INI_as(1);	/* Non-zero during interactive use */
+extern int	R_Error_Halt	INI_as(1);	/* For non-interactive.. */
 extern int	R_Quiet		INI_as(0);	/* Be as quiet as possible */
 extern int	R_Slave		INI_as(0);	/* Run as a slave process */
 extern int	R_Verbose	INI_as(0);	/* Be verbose */
@@ -320,6 +318,11 @@ extern int	R_HistorySize;	/* Size of the history file */
 /* Warnings/Errors */
 extern int	R_CollectWarnings INI_as(0);	/* the number of warnings */
 extern SEXP	R_Warnings;	    /* the warnings and their calls */
+
+
+
+extern char ** CommandLineArgs	  INI_as(NULL); /* permanent copy of the command line arguments passed to the application. */
+extern int     NumCommandLineArgs INI_as(0); /* the number of command line arguments. */
 
 #ifdef __MAIN__
 #undef extern
@@ -373,11 +376,11 @@ SEXP DropDims(SEXP);
 SEXP duplicated(SEXP);
 SEXP dynamicfindVar(SEXP, RCNTXT*);
 void endcontext(RCNTXT*);
-SEXP EnsureString(SEXP);
 int factorsConform(SEXP, SEXP);
 void findcontext(int, SEXP, SEXP);
 SEXP findVar1(SEXP, SEXP, SEXPTYPE, int);
 SEXP findVarInFrame(SEXP, SEXP);
+SEXP findVarLocInFrame(SEXP, SEXP);
 void FrameClassFix(SEXP);
 int framedepth(RCNTXT*);
 SEXP frameSubscript(int, SEXP, SEXP);
@@ -399,7 +402,6 @@ void internalTypeCheck(SEXP, SEXP, SEXPTYPE);
 int isValidName(char *);
 void jump_to_toplevel(void);
 SEXP levelsgets(SEXP, SEXP);
-unsigned int LTYpar(SEXP, int);
 void mainloop(void);
 void markPhase(void);
 void markSExp(SEXP);

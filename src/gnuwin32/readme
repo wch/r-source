@@ -1,7 +1,7 @@
-R 0.65.0 for Windows 9x and NT
+R 0.65.1 for Windows 9x and NT
 ==============================
 
-This distribution contains a binary distribution of R-0.65.0 to run on
+This distribution contains a binary distribution of R-0.65.1 to run on
 Windows 95, 98 and NT4 on Intel/clone chips. It is designed to
 be as close as possible to the implementation on Unix, but see the
 list of differences below. The port was by Guido Masarotto with
@@ -16,23 +16,23 @@ Installation
 The simplest way is to run the installer (double-click on the icon for
 rwinst.exe and navigate its wizard-like pages).
 
-To install manually, unpack rw0650b.zip anywhere you like. It will
-unpack to a directory tree under rw0650. The help, HTML and latex help
-files are in separate files rw0650h.zip, rw0650w.zip and rw0650l.zip
-which should be unpacked in the same directory you unpacked
-rw0650b.zip.
+To install manually, unpack rw0651b.zip anywhere you like. It will
+unpack to a directory tree under rw0651. The help, HTML, Compiled
+HTML, Windows and latex help files are in separate files rw0651h.zip,
+rw0651w.zip, rw0651ch.zip, rw0651wh.zip and rw0651l.zip which should
+be unpacked in the same directory in which you unpacked rw0651b.zip.
 
 Usage
 =====
 
-There are two executables in rw0650\bin:
+There are two executables in rw0651\bin:
 
 GUI:
 
 Rgui.exe runs as a standard Windows GUI executable and provides an R
 console in its own window. It takes the standard R command-line
 arguments; these are most easily set by making a shortcut to
-...\rw0650\bin\rgui.exe and adding the arguments in the Target field.
+...\rw0651\bin\rgui.exe and adding the arguments in the Target field.
 Set the `Start in' field of the shortcut to the directory you want to use
 as the working directory (where workspaces and files are saved and
 loaded from).
@@ -66,32 +66,29 @@ Window running the standard shells, command.com (9x) and cmd.exe (NT),
 as well as the ports of bash and tcsh that we use.  Its primary
 purpose is to allow batch operation, but it does provide all the
 facilities needed for interactive use, including simple command-line
-editing..
+editing.
 
-Batch use: At it simplest, rterm.exe can be used in a batch mode by
+Batch use: At it simplest, Rterm.exe can be used in a batch mode by
 commands like
 
-Rterm.exe --vsize 6M --nsize 250k --no-restore --no-save < infile > outfile
+Rterm.exe --vsize 10M --nsize 400k --no-restore --no-save < infile > outfile
 
 although users will probably want to set up simple .bat or .cmd files
 to run batch jobs.
 
 
-Use with ESS-5.0: You can use Rterm.exe to provide inferior R-mode in
-ESS-5.0 mode under NTEmacs. The only change needed is to add the
-starting argument --ess to essd-r.el at the line
-
-    (inferior-ess-start-args       . "--ess"))
-
-You can also try the ESS-5.1.x betas, which have some in-built support.
+Use with ESS: You can use Rterm.exe to provide inferior R-mode in
+ESS under NTEmacs, for example ess-5.1.9.  The pager is automatically
+set to "console" so help will be displayed in emacs buffers.
 
 
 GRAPHICS:
 
 The screen device is called windows(). This is launched automatically,
-and can also be launched explicitly by X11(), x11() or win.graph()
-from both Rgui.exe and Rterm.exe.  A printer device can be opened
-using win.print(), and graphs drawn as metafiles by win.metafile().
+and can also be launched explicitly by windows() or win.graph() (or
+x11()) from both Rgui.exe and Rterm.exe.  A printer device can be
+opened using win.print(), and graphs drawn as metafiles by
+win.metafile().
 
 The graphics device pops up a separate window which has two menus. The
 device's File menu allows saving or printing or to run dev.off().
@@ -105,21 +102,54 @@ in the global environment.
 
 There is only one graphics history shared by all the windows devices.
 
+HELP:
+
+There are several options for help, depending on which help files you
+installed.
+
+(i) Text help. This is the default, and the fallback option.
+It will display in the currently set pager (use options(pager=) to change).
+
+(ii) Compiled HTML files. Set this as the default by
+options(chmhelp=T) or for individual help items by help(topic,
+chmhelp=T).  Full text search is available from the Search tab.  To
+make use of this you will need a recent version of Windows or IE4 or
+later installed, or use the updater hhupd.exe on CRAN at 
+bin/windows/windows-NT/etc.
+
+(iii) Windows .hlp files. Set this as the default by
+options(winhelp=T) or for individual help items by help(topic,
+winhelp=T).  Full text search is available from the Search tab. The
+conversion to this format is a little rough, and tables may be
+incomplete.
+
+(iv) HTML help to be displayed in your normal browser.  Set this as
+the default by options(htmlhelp=T) or for individual help items by
+help(topic, htmlhelp=T).  Using help.start() sets the browser to the 
+top-level page, from which you can access a search engine.
+
+(v) Latex help files are available for use with help(topic, offline=T).
+You will need to customize the file rw0651\bin\helpPRINT.bat: it
+contains instructions.
+
+
 
 Customization
 =============
 
 Environment variables can be set as NAME=value on the command line,
 including in a short-cut.  They can also be set (as NAME=value lines)
-in the file HOME\.Renviron, if this exists.
+in the file .Renviron, or if that does not exist HOME\.Renviron.
 
 Many aspects of the console (size, appearance, font, colours) can be
 customized by editing the file etc\Rconsole, and a copy with a user's
 settings can be put in her HOME directory or in the working
-directory. (The exact sequence is to search the directories pointed to
-by the environment variables R_USER then HOME then the working
-directory, finally R_HOME\etc.) The file contains a description of the
-settings that can be altered. See also ?Rconsole.
+directory. (The exact sequence is to search the directory pointed to
+by the first found of the environment variables R_USER then HOME then
+{HOMEDRIVE}{HOMEPATH} then the working directory, finally R_HOME\etc.
+This applies to .Renviron and other uses of `HOME' in our documentation.)
+The file contains a description of the settings that can be
+altered. See also ?Rconsole.
 
 The mapping between Windows fonts and R font's number can be set by
 editing the file etc\Rdevga, and a copy with a user's settings can be
@@ -137,17 +167,13 @@ file .Rprofile. In particular:
   used are "notepad" and "pfe32 /v", and "console" to list the files in
   the console (rgui.exe) or terminal window (rterm.exe).
 
-- If you wish to use HTML help where this is available, set
-  options(htmlhelp=T). If you prefer to use Windows help files where these
-  available, set options(winhelp=T).
-
 
 Adding packages
 ===============
 
 Binaries for many packages are available at
 CRAN/bin/windows/windows-NT/contrib. These are zip files which should
-be unpacked in rw0650\library. They are then available for use. You
+be unpacked in rw0651\library. They are then available for use. You
 can also use the installer rwinst.exe to selectively unpack the zip
 files.
 
@@ -157,10 +183,10 @@ search engine can be updated from a running R process by the command
 	link.html.help()
 
 provided the owner of the process has write permission on
-rw0650\doc\html.  If you have the source-package files and Perl
+rw0651\doc\html.  If you have the source-package files and Perl
 installed you can use
 
-	cd ...\rw0650\src\gnuwin32\help
+	cd ...\rw0651\src\gnuwin32\help
 	make indices
 
 Private libraries of packages can be used and can be specified by the
@@ -174,10 +200,10 @@ in the environment or on the command line, or add the line
 
 .lib.loc <- c("R:/libraries/gm", .lib.loc)
 
-to your .Rprofile or at the end of R_HOME/etc/Rprofile.
+to your .Rprofile or at the end of R_HOME\etc\Rprofile.
 
 To install a package from source code you need the source-package
-distribution rw0650sp.zip installed (but not the R source). This contains
+distribution rw0651sp.zip installed (but not the R source). This contains
 detailed instructions.
 
 
@@ -185,7 +211,8 @@ Differences from Unix
 =====================
 
 - R can be interrupted by Esc in Rgui and by Ctrl-Break in Rterm:
-  Ctrl-C is used for copying in the GUI version.
+  Ctrl-C is used for copying in the GUI version. C-c C-c works
+  under emacs (only).
 
 - Command-line editing is always available, but is much simpler than
   under readline-based input on Unix.
@@ -198,11 +225,11 @@ Differences from Unix
 - Paths to files can be specified with "/" or "\\".
 
 - Using help.start() does not automatically send help requests to the
-  browser(): use options(htmlhelp=T) to turn this on.
+  browser: use options(htmlhelp=T) to turn this on.
 
 - Graphics save and replay only here.
 
-- system is enhanced here and does not automatically use a shell.
+- system() is enhanced here and does not automatically use a shell.
   See its help page and that of shell.
 
 
@@ -219,7 +246,7 @@ Building on Windows
 We recommend that you use the mingw32 port of gcc-2.95 by Mumit Khan from
 ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will also
 need suitable versions of make, sh, rm, sed, awk, mkdir, echo, cp and
-cat; we have packaged a set at bin/windows/windows-NT/etc/tools.zip
+cat; we have packaged a set at CRAN/bin/windows/windows-NT/base/etc/tools.zip
 extracted from the cygwin distribution
 (http://sourceware.cygnus.com/cygwin and several mirrors). To avoid
 past problems on some versions of Windows95, we use the cygwin ld
@@ -231,35 +258,56 @@ with the --no-cygwin flag, but we suggest you do so only if you have a
 working setup from building earlier versions of R.  We have also
 successfully used the variant of mingw32 that uses the MSVCRT run-time 
 system (under gcc-2.95 but not earlier versions).
+Be aware that not all Windows machines have MSVCRT.DLL installed.
+
+(If you want to use cygwin, we suggest you upgrade to gcc-2.95 by
+installing the files gcc-2.95-cygb20.tar.gz and gcc-2.95-mingw-extra.tar.gz
+from ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin32.)
 
 perl5, available via http://www.perl.com/CPAN/ports.
 
 groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
 
-zip and unzip from the INFO-ZIP project.
+zip and unzip from the Info-ZIP project
+(ftp://ftp.cdrom.com/pub/infozip/Info-ZIP.html and mirrors).
+
+If you want to make compiled html (.chm) files you will need the
+Microsoft HTML Help Workshop, available for download at 
+http://msdn.microsoft.com/workshop/author/htmlhelp.
+
+If you want to make Windows (.hlp) files you will need a Windows help
+compiler, preferably hcrtf.exe. This is available for download at
+ftp://ftp.microsoft.com/support/MSLFILES/HCWSETUP.EXE.
 
 All of these need to be installed and in your path, and the
 appropriate environment variables set.
 
-You also need: the R source (R-0.65.0.tgz), and to build the
+You also need: the R source (R-0.65.1.tgz), and to build the
 installer, unzip5.40.zip from any Info-Zip mirror.  Do remember to set
-MAKE_MODE to UNIX.
+MAKE_MODE to UNIX (set MAKE_MODE=UNIX at the Windows command-line).
 
 
-Then: untar R-0.65.0.tgz somewhere,
+Then: untar R-0.65.1.tgz somewhere,
 
-	cd /somewhere/R-0.50.0/src/gnuwin32
+	cd /somewhere/R-0.65.1/src/gnuwin32
 
 edit MkRules to set the appropriate paths as needed
+edit Makefile to set the type(s) of help that you want built.
 
 and run
 
 	make BUILD=MINGW32 or CYGWIN
 
-Note 1: the file rw0650\unzip\unzip32.dll is not in the source
+Note 1: the file rw0651\unzip\unzip32.dll is not in the source
 distribution, nor are the sources (it is the standard Info-Zip unzip
 5.40, built with MSVC++4.2). You will need to copy it from a binary
 distribution.
+
+The file rw0651\bin\Rchtml.dll is only built if chm help is specifed
+in the main Makefile. Its source is the help directory, and you need
+the HTML Help Workshop files to build it. It contains instructions
+to build it under VC++6, and it is preferable to use that as the 
+VC++ library will check versions of the components needed.
 
 Note 2: we are aware that because of limitations in line length or in
 the shell used that the Makefiles do not work unchanged on all the
@@ -282,17 +330,20 @@ You will need i386-mingw32 cross-compilers installed: see
 
 http://www.xraylith.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
 
-and ensure that these are in your path. You also need Perl and nroff
+and ensure that these are in your path. You will need Perl and nroff
 installed.
 
-You also need: the R source (R-0.65.0.tgz), and to build the installer,
-unzip5.40.zip from any Info-Zip mirror.
+You also need: the R source (R-0.65.1.tgz), and to build the installer,
+unzip5.40.zip from any Info-ZIP mirror.
 
-Then: untar R-0.65.0.tgz somewhere
+Then: untar R-0.65.1.tgz somewhere
 
-	cd /somewhere/R-0.65.0/src/gnuwin32
+	cd /somewhere/R-0.65.1/src/gnuwin32
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths as needed.
+Edit Makefile to set the type(s) of help that you want built. (You
+will not be able to cross-build .chm or .hlp files, nor Rchmtl.dll.)
+
 Set the environment variable TEMP to, say, /tmp, and make.
 
 Packages can be made in the same way as natively: see the file

@@ -33,12 +33,11 @@ lm.influence <- function (lm.obj)
 	     n,
 	     k,
 	     lm.obj$qr$qraux,
-	     lm.obj$coefficients,
 	     e,
 	     hat = double(n),
 	     coefficients = matrix(0, nr = n, nc = k),
 	     sigma = double(n),
-	     DUP = FALSE)[c("hat", "coefficients", "sigma")]
+	     DUP = FALSE, PACKAGE="base")[c("hat", "coefficients", "sigma")]
 }
 
 rstudent <- function(lm.obj)

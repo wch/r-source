@@ -27,8 +27,8 @@
  *  It is presented here to support a joint programming style which
  *  will work in both R and S.  In particular it helps with:
  *
- *    1. Duncan Temple Lang's CORBA code.
- *    2. John Chambers' Java Code.
+ *    1. S/R <-> CORBA code.
+ *    2. S/R <-> Java Code.
  *
  *  And to hide some internal nastiness.
  */
@@ -48,6 +48,7 @@
 #define IS_CHARACTER(x)		isString(x)
 #define IS_COMPLEX(x)		isComplex(x)
 #define IS_VECTOR(x)		isVector(x)
+#define IS_LIST(x)		IS_VECTOR(x)
 
 #define NEW_LIST(n)		allocVector(VECSXP,n)
 #define NEW_LOGICAL(n)		allocVector(LGLSXP,n)
@@ -64,6 +65,7 @@
 #define NUMERIC_POINTER(x)	REAL(x)
 #define COMPLEX_POINTER(x)	COMPLEX(x)
 #define STRING_POINTER(x)	STRING(x)
+#define CHARACTER_POINTER(x)	STRING(x)
 
 /* The following are not defined in `Programming with Data' but are
    defined in S.h in Svr4 */
@@ -105,8 +107,13 @@
 #define Memcpy(p,q,n)  memcpy( p, q, (size_t)( (n) * sizeof(*p) ) )
 
 /* S Like Fortran Interface */
+/* These may not be adequate everywhere. Convex had _ prepending common
+   blocks, and some compilers may need to specify Fortran linkage */
 
 #define F77_CALL(x)    F77_SYMBOL(x)
 #define F77_NAME(x)    F77_SYMBOL(x)
+#define F77_SUB(x)     F77_SYMBOL(x)
+#define F77_COM(x)     F77_SYMBOL(x)
+#define F77_COMDECL(x) F77_SYMBOL(x)
 
 #endif

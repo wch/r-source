@@ -46,7 +46,7 @@ AC_DEFINE_UNQUOTED(R_OS, "${host_os}")
 AC_MSG_RESULT([${host}])
 
 PACKAGE="R"
-VERSION=`${srcdir}/tools/GETVERSION`
+VERSION=`cat ${srcdir}/VERSION | cut -d' ' -f1`
 AC_SUBST(PACKAGE)
 AC_SUBST(VERSION)
 
@@ -284,9 +284,10 @@ fi
 
 if test -n "${F77}"; then
   FC=${F77}
-  R_PROG_F77_G77
-  R_PROG_F77_APPEND_UNDERSCORE  
   OCTAVE_FLIBS
+  R_PROG_F77_G77
+  R_PROG_F77_APPEND_UNDERSCORE
+  R_PROG_F77_CC_COMPAT
   f77_rules_frag=Makefrag.f77
   cat << \EOF > ${f77_rules_frag}
 .f.c:
@@ -294,29 +295,7 @@ if test -n "${F77}"; then
 	$(FC) $(ALL_FFLAGS) -c $< -o $@
 EOF
 elif test -n "${F2C}"; then
-  ## This seems to be necessary on some Linux system. -- you bet! -pd
-  cat > conftest.${ac_ext} << EOF
-int MAIN_ () { return 0; }
-int MAIN__ () { return 0; }
-EOF
-  if AC_TRY_EVAL(ac_compile); then
-    ${AR} ${ARFLAGS} libconftest.a conftest.o 1>&AC_FD_CC
-    if test -n "${RANLIB}"; then
-      ${RANLIB} libconftest.a 1>&AC_FD_CC
-    fi
-  fi
-  AC_DEFINE(HAVE_F77_UNDERSCORE)
-  AC_CHECK_LIB(f2c, f_open, FLIBS=-lf2c, FLIBS=, -L. -lconftest -lm)
-  rm -f libconftest*
-  if test -z "${FLIBS}"; then
-    AC_CHECK_LIB(F77, d_sin, FLIBS=-lF77, FLIBS=, -lm)
-    if test -n "${FLIBS}"; then
-      AC_CHECK_LIB(I77, f_rew, FLIBS="${FLIBS} -lI77", FLIBS=, -lF77)
-    fi
-  fi
-  if test -z "${FLIBS}"; then
-    AC_MSG_WARN([I found f2c but not libf2c, or libF77 and libI77])
-  fi
+  R_PROG_F2C_FLIBS
   f77_rules_frag=Makefrag.f77
   cat << \EOF > ${f77_rules_frag}
 .f.o:
@@ -396,9 +375,8 @@ R_GNOME
 AC_FUNC_ALLOCA
 AC_FUNC_VFORK
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS(acosh asinh atanh bcopy finite getcwd isfinite isnan \
-  matherr memcpy memmove regcomp rint siglongjmp sigsetjmp strcoll  \
-  strtod strtol system times)
+AC_CHECK_FUNCS(acosh asinh atanh bcopy finite getcwd isnan matherr \
+  memcpy memmove regcomp rint strcoll system times)
 R_FUNC___SETFPUCW
 R_FUNC_CALLOC
 R_FUNC_FINITE
@@ -417,7 +395,8 @@ AC_CHECK_HEADERS(dl.h dlfcn.h elf.h floatingpoint.h fpu_control.h \
 case "${host}" in
   *sunos4*)
     AC_DEFINE(SunOS4) ;;
-esac    
+esac
+R_HEADER_SETJMP
 
 ### Typedefs.
 

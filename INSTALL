@@ -163,6 +163,12 @@ If your FORTRAN libraries are in slightly peculiar places, you should
 also look at LD_LIBRARY_PATH to make sure that all libraries are on this
 path.
 
+You must set whatever compilation flags (if any) are needed to ensure
+that FORTRAN `integer' is equivalent to a C int pointer and FORTRAN
+`double precision' is equivalent to a C double pointer.  (Beware of
+f2c and compilers whose integer type is by default equivalent to C
+long on platforms where long != int.)
+
 
 BUILDING THE GNOME INTERFACE
 
@@ -196,7 +202,7 @@ installed:
 	glib
 	glib-devel
 
-You will need also libglade 0.3 or later.  For more information on
+You will need also libglade 0.5 or later.  For more information on
 libglade and to download the source, see
 http://www.daa.com.au/~james/gnome/.
 

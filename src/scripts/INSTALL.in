@@ -6,7 +6,7 @@
 
 # @configure_input@
 
-VERSION="0.1-6"
+VERSION="0.2-1"
 USAGE_MSG="Usage:  R INSTALL [options] [-l lib] pkg_1 ... pkg_n"
 
 CLEAN=false
@@ -39,6 +39,8 @@ lib=${R_HOME}/library
 
 MAKE=${MAKE-@MAKE@}
 
+TMPDIR="/tmp/R.INSTALL.$$"
+
 umask 022
 
 while test -n "${1}"; do
@@ -69,7 +71,18 @@ while test -n "${1}"; do
     -l|--library)
       lib=${2}; shift ;;
     *)
-      if test -d "${1}"; then
+      if test -f "${1}"; then
+        mkdir -p ${TMPDIR}
+	PKGNAME=`basename "${1}"`
+	PKGNAME=`echo "${PKGNAME}" | sed 's/_.*//'`
+	gzip -dc "${1}" | (cd ${TMPDIR} && tar -xf -)
+	if test -d "${TMPDIR}/${PKGNAME}"; then
+	  PKGS="${PKGS} \"`cd "${TMPDIR}/${PKGNAME}"; pwd`\""
+	else
+	  echo "ERROR: cannot extract package from ${1}"
+	  exit 1
+	fi    
+      elif test -d "${1}"; then
 	PKGS="${PKGS} \"`cd "${1}"; pwd`\""
       else
 	echo "WARNING: package \`"${1}"' does not exist"
@@ -230,6 +243,11 @@ do_install () {
 }
 
 eval "for pkg in ${PKGS}; do do_install \"\${pkg}\"; done"
+
+if test -d "${TMPDIR}"; then
+  cd /
+  rm -rf "${TMPDIR}"
+fi
 
 echo "DONE (INSTALL)"
 

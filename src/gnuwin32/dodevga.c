@@ -79,7 +79,7 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "unable to start device devga\n");
     }
     gsetVar(install(".Device"),
-	    mkString(display[0] ? display : "X11"), R_NilValue);
+	    mkString(display[0] ? display : "windows"), R_NilValue);
     addDevice(dd);
     initDisplayList(dd);
     vmaxset(vmax);

@@ -1,17 +1,19 @@
 image <- function (x = seq(0, 1, len = nrow(z)),
-                   y = seq(0, 1, len = ncol(z)),
-                   z,
-                   zlim = range(z[is.finite(z)]),
-                   xlim = range(x[is.finite(x)]),
-                   ylim = range(y[is.finite(y)]),
-                   col = heat.colors(12), add = FALSE,
-                   xaxs = "i", yaxs = "i", xlab, ylab, ...)
+		   y = seq(0, 1, len = ncol(z)),
+		   z,
+		   zlim = range(z[is.finite(z)]),
+		   xlim = range(x[is.finite(x)]),
+		   ylim = range(y[is.finite(y)]),
+		   col = heat.colors(12), add = FALSE,
+		   xaxs = "i", yaxs = "i", xlab, ylab, ...)
 {
     if (missing(z)) {
 	if (!missing(x)) {
 	    if (is.list(x)) {
 		z <- x$z; y <- x$y; x <- x$x
 	    } else {
+		if(is.null(dim(x)))
+		   stop("argument must be matrix alike")
 		z <- x
 		x <- seq(0, 1, len = nrow(z))
 	    }

@@ -1,4 +1,4 @@
-chisq.test <- 
+chisq.test <-
 function(x, y = NULL, correct = TRUE, p = rep(1 / length(x), length(x)),
          simulate.p.value = FALSE, B = 2000)
 {
@@ -49,7 +49,8 @@ function(x, y = NULL, correct = TRUE, p = rep(1 / length(x), length(x)),
                       integer(nr * nc),
                       double(n + 1),
                       integer(nc),
-                      results = double(B))
+                      results = double(B),
+                      PACKAGE = "base")
             STATISTIC <- sum((x - E) ^ 2 / E)
             PARAMETER <- NA
             PVAL <- sum(tmp$results >= STATISTIC) / B

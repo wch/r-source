@@ -8,7 +8,8 @@
 			    fg = "black",
 			    onefile = TRUE,
 			    print.it = FALSE,
-			    append = FALSE)
+			    append = FALSE,
+                            pagecentre = TRUE)
 
 check.options <-
     function(new, name.opt, reset = FALSE, assign.opt = FALSE,
@@ -96,6 +97,7 @@ postscript <- function (file = "Rplots.ps", ...)
     old <- check.options(new = new, name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
     .Internal(PS(file, old$paper, old$family, old$bg, old$fg,
-		 old$width, old$height, old$horizontal, old$pointsize))
+		 old$width, old$height, old$horizontal, old$pointsize,
+                 old$onefile, old$pagecentre))
 }
-##--> source in ../../../main/devices.c	 and ../../../unix/devPS.c
+##--> source in ../../../main/devices.c	 and ../../../main/devPS.c

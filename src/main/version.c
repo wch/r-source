@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998, The R Development Core Team
+ *  Copyright (C) 1998, 1999  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -48,8 +48,8 @@ SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[128];
     checkArity(op, args);
     sprintf(buf,"%s, %s", R_CPU, R_OS);
-    PROTECT(value = allocVector(VECSXP,12));
-    PROTECT(names = allocVector(STRSXP,12));
+    PROTECT(value = allocVector(VECSXP,11));
+    PROTECT(names = allocVector(STRSXP,11));
     STRING(names)[0]  = mkChar("platform");
     VECTOR(value)[0]  = mkString(R_PLATFORM);
     STRING(names)[1]  = mkChar("arch");
@@ -60,20 +60,18 @@ SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)
     VECTOR(value)[3]  = mkString(buf);
     STRING(names)[4]  = mkChar("status");
     VECTOR(value)[4]  = mkString(R_STATUS);
-    STRING(names)[5]  = mkChar("status.rev");
-    VECTOR(value)[5]  = mkString(R_STATUS_REV);
-    STRING(names)[6]  = mkChar("major");
-    VECTOR(value)[6]  = mkString(R_MAJOR);
-    STRING(names)[7]  = mkChar("minor");
-    VECTOR(value)[7]  = mkString(R_MINOR);
-    STRING(names)[8]  = mkChar("year");
-    VECTOR(value)[8]  = mkString(R_YEAR);
-    STRING(names)[9]  = mkChar("month");
-    VECTOR(value)[9]  = mkString(R_MONTH);
-    STRING(names)[10] = mkChar("day");
-    VECTOR(value)[10] = mkString(R_DAY);
-    STRING(names)[11] = mkChar("language");
-    VECTOR(value)[11] = mkString("R");
+    STRING(names)[5]  = mkChar("major");
+    VECTOR(value)[5]  = mkString(R_MAJOR);
+    STRING(names)[6]  = mkChar("minor");
+    VECTOR(value)[6]  = mkString(R_MINOR);
+    STRING(names)[7]  = mkChar("year");
+    VECTOR(value)[7]  = mkString(R_YEAR);
+    STRING(names)[8]  = mkChar("month");
+    VECTOR(value)[8]  = mkString(R_MONTH);
+    STRING(names)[9] = mkChar("day");
+    VECTOR(value)[9] = mkString(R_DAY);
+    STRING(names)[10] = mkChar("language");
+    VECTOR(value)[10] = mkString("R");
     setAttrib(value, R_NamesSymbol, names);
     UNPROTECT(2);
     return value;
@@ -91,4 +89,3 @@ void PrintVersion(char *s)
     strcat(s, "GNU General Public License.  For more information about\n");
     strcat(s, "these matters, see http://www.gnu.org/copyleft/gpl.html.\n");
 }
-

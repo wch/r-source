@@ -41,7 +41,7 @@ HINSTANCE hUnzipDll;
 window w;
 button bBack, bNext, bFinish, bCancel, bSrc, bDest;
 radiobutton sys, pkg;
-checkbox basepkg, texthelp, htmlhelp, ltxhelp, winhelp, srcsp, overwrite;
+checkbox basepkg, texthelp, htmlhelp, ltxhelp, chmhelp, winhelp, srcsp, overwrite;
 listbox packages;
 textbox unzout;
 label lVer, lsrc, ldest, lwhat1, lwhat2, lwarn2, lwarn3, lwarn4, lwarn5,
@@ -55,8 +55,8 @@ field fRver, fSrc, fDest;
 int FullInstall = 1, over;
 char Rver[20]=RVER, src[MAX_PATH], dest[MAX_PATH];
 char selpkg[80], *pkglist[100], *selpkglist[100];
-int npkgs, nspkgs, ispkgs, rwb=1, rwh=1, rww=1, rwl=1, rwwh=0, rwsp=0;
-int prwb=1, prww=1, prwl=1, prwwh=0;
+int npkgs, nspkgs, ispkgs, rwb=1, rwh=1, rwch=1, rww=1, rwl=1, rwwh=0, rwsp=0;
+int prwb=1, prww=1, prwl=1, prwch=1, prwwh=0;
 
 /* SHELLsort -- corrected from R. Sedgewick `Algorithms in C' */
 
@@ -76,22 +76,20 @@ void ssort(char **x, int n)
 	}
 }
 
+/*
 void fixslash(char *s)
 {
     char *p;
 
-    for (p = s; *p; p++)
-	if (*p == '\\') *p = '/';
-    if(*(p + strlen(s)) == '/') *p = '\0';
+    for (p = s; *p; p++) if (*p == '\\') *p = '/';
 }
+*/
 
 void dosslash(char *s)
 {
     char *p;
 
-    for (p = s; *p; p++)
-	if (*p == '/') *p = '\\';
-    if(*(p + strlen(s)) == '\\') *p = '\0';
+    for (p = s; *p; p++) if (*p == '/') *p = '\\';
 }
 
 #include <sys/stat.h>
@@ -100,8 +98,11 @@ int direxists(char * dir)
 {
     struct stat sb;
     int res;
+    char *p;
 
     dosslash(dir);
+    /* remove trailing \, but leave c:\ alone */
+    if(strlen(dir) > 3 && *(p = dir + strlen(dir) - 1) == '\\') *p = '\0';
     res = stat(dir, &sb);
     if(res != 0) return 0;
       return (sb.st_mode & _S_IFMT) == _S_IFDIR;
@@ -193,6 +194,7 @@ void cleanpage2()
     delobj(texthelp);
     delobj(htmlhelp);
     delobj(ltxhelp);
+    delobj(chmhelp);
     delobj(winhelp);
     delobj(srcsp);
     delobj(lwhat2);
@@ -223,6 +225,7 @@ void cleanpagepkg2()
     delobj(basepkg);
     delobj(htmlhelp);
     delobj(ltxhelp);
+    delobj(chmhelp);
     delobj(winhelp);
     delobj(lwhat3);
     delobj(overwrite);
@@ -253,6 +256,7 @@ void next2(button b)
     rwh = ischecked(texthelp);
     rww = ischecked(htmlhelp);
     rwl = ischecked(ltxhelp);
+    rwch = ischecked(chmhelp);
     rwwh = ischecked(winhelp);
     rwsp = ischecked(srcsp);
     if(!rwb) {
@@ -269,7 +273,7 @@ void next2(button b)
 	    return;
 	}
     }
-    if(!rwb & !rwh & !rww & !rwl & !rwwh & !rwsp) return;
+    if(!rwb & !rwh & !rww & !rwl & !rwch & !rwwh & !rwsp) return;
     over = ischecked(overwrite);
     cleanpage2();
     page3();
@@ -325,8 +329,9 @@ void nextpkg2(button b)
     prwb = ischecked(basepkg);
     prww = ischecked(htmlhelp);
     prwl = ischecked(ltxhelp);
+    prwch = ischecked(chmhelp);
     prwwh = ischecked(winhelp);
-    if(!prwb & !prww & !prwl & !prwwh) return;
+    if(!prwb & !prww & !prwl & !prwch & !prwwh) return;
     over = ischecked(overwrite);
     cleanpagepkg2();
     pagepkg3();
@@ -523,7 +528,7 @@ void page1()
 
 void page2()
 {
-    int xpos = 80, ypos = 80, zips = 0;
+    int xpos = 80, ypos = 70, zips = 0;
     char str[MAX_PATH];
 
     clear(w); redraw(w); header();
@@ -540,7 +545,7 @@ void page2()
 	zips++;
     }
 
-    ypos += 20;
+    ypos += 17;
     texthelp  = newcheckbox("plain text help",
 			    rect(xpos, ypos, 150, 20), NULL);
     strcpy(str, Rver); strcat(str, "h.zip");
@@ -551,7 +556,7 @@ void page2()
 	zips++;
     }
 
-    ypos += 20;
+    ypos += 17;
     htmlhelp  = newcheckbox("HTML help", rect(xpos, ypos, 150, 20), NULL);
     strcpy(str, Rver); strcat(str, "w.zip");
     if(!fexists(str)) {
@@ -561,7 +566,7 @@ void page2()
 	zips++;
     }
 
-    ypos += 20;
+    ypos += 17;
     ltxhelp = newcheckbox("latex help (for off-line printing)",
 			    rect(xpos, ypos, 300, 20), NULL);
     strcpy(str, Rver); strcat(str, "l.zip");
@@ -572,7 +577,18 @@ void page2()
 	zips++;
     }
 
-    ypos += 20;
+    ypos += 17;
+    chmhelp   = newcheckbox("Compiled HTML help", rect(xpos, ypos, 150, 20),
+			    NULL);
+    strcpy(str, Rver); strcat(str, "ch.zip");
+    if(!fexists(str)) {
+	uncheck(chmhelp); disable(chmhelp); hide(chmhelp);
+    } else {
+	if(rwch) check(chmhelp); else uncheck(chmhelp);
+	zips++;
+    }
+
+    ypos += 17;
     winhelp   = newcheckbox("Windows help", rect(xpos, ypos, 150, 20), NULL);
     strcpy(str, Rver); strcat(str, "wh.zip");
     if(!fexists(str)) {
@@ -582,7 +598,7 @@ void page2()
 	zips++;
     }
 
-    ypos += 20;
+    ypos += 17;
     srcsp   = newcheckbox("files for building packages from source",
 			  rect(xpos, ypos, 300, 20), NULL);
     strcpy(str, Rver); strcat(str, "sp.zip");
@@ -697,6 +713,18 @@ void page3()
 	rc = do_unzip(str, dest1, 0, NULL, 0, NULL, over);
 	if(!rc) {
 	    strcpy(lab, lab2); delobj(lres3); strcat(lab, "latex files  ");
+	    lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
+	}
+    }
+    if(rwch) {
+	strcpy(lab2, lab); delobj(lres3); strcat(lab, "compiled HTML . . .");
+	lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
+	strcpy(dest1, dest);
+	strcpy(str, src); strcat(str, "/");
+	strcat(str, Rver); strcat(str, "ch.zip");
+	rc = do_unzip(str, dest1, 0, NULL, 0, NULL, over);
+	if(!rc) {
+	    strcpy(lab, lab2); delobj(lres3); strcat(lab, "compiled HTML  ");
 	    lres3 = newlabel(lab, rect(30, 240, 350, 20), AlignLeft);
 	}
     }
@@ -825,6 +853,11 @@ void pagepkg2()
     if(prwl) check(ltxhelp); else uncheck(ltxhelp);
 
     ypos += 20;
+    chmhelp   = newcheckbox("compiled HTML", rect(xpos, ypos, 150, 20), NULL);
+    if(prwch) check(chmhelp); else uncheck(chmhelp);
+    disable(chmhelp); hide(chmhelp);
+
+    ypos += 20;
     winhelp   = newcheckbox("Windows help", rect(xpos, ypos, 150, 20), NULL);
     if(prwwh) check(winhelp); else uncheck(winhelp);
     disable(winhelp); hide(winhelp);
@@ -880,6 +913,10 @@ void pagepkg3()
 	    strcpy(p, selpkg); strcat(p, "/latex/*");
 	}
 	if(FALSE) {
+	if(!prwch) {
+	    p = xfiles[nxfiles++] = (char*) malloc(50);
+	    strcpy(p, selpkg); strcat(p, "/chtml/*");
+	}
 	if(!prwwh) {
 	    p = xfiles[nxfiles++] = (char*) malloc(50);
 	    strcpy(p, selpkg); strcat(p, "/winhlp/*");
@@ -895,6 +932,10 @@ void pagepkg3()
 	    strcpy(p, selpkg); strcat(p, "/latex/*");
 	}
 	if(FALSE) {
+	if(prwch) {
+	    p = files[nfiles++] = (char*) malloc(50);
+	    strcpy(p, selpkg); strcat(p, "/chtml/*");
+	}
 	if(prwwh) {
 	    p = files[nfiles++] = (char*) malloc(50);
 	    strcpy(p, selpkg); strcat(p, "/winhlp/*");

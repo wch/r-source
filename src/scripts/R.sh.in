@@ -31,7 +31,7 @@ export R_LATEXCMD R_DVIPSCMD
 : ${R_ZIPCMD=@R_ZIPCMD@}
 export R_UNZIPCMD R_ZIPCMD
 
-# Default environment file
+# Default environment file -- used if there's none in current
 : ${R_ENVIRON="${HOME}/.Renviron"}
 USE_R_ENVIRON=true
 
@@ -48,12 +48,12 @@ while test -n "${1}"; do
     -g|--gnome)
       R_BINARY="R.gnome" ;;
     -d|--debugger)
-      DBG="${2}"; shift 2 ;;
+      DBG="${2}"; shift  ;;
     --no-environ)
       USE_R_ENVIRON=false ;;
     --vanilla)
       ARGS="${ARGS} ${1}"
-      USE_R_ENVIRON=false ;;    
+      USE_R_ENVIRON=false ;;
     -h|--help|-\?)
       $0 --version
       cat <<_EOF_
@@ -71,7 +71,7 @@ Options:
   --no-readline             Don't use readline for command-line editing.
   --no-site-file            Don't read the site-wide Rprofile.
   --no-init-file            Don't read the .Rprofile or ~/.Rprofile files.
-  --no-environ              Don't read the ~/.Renviron file.
+  --no-environ              Don't read the .Renviron or ~/.Renviron files.
   --vanilla		    Combine --no-save, --no-restore, --no-site-file,
                             --no-init-file, and --no-environ.
   --vsize N                 Set vector heap size to N bytes; \`4M' = 4 MegaB.
@@ -105,8 +105,11 @@ _EOF_
 done
 
 # Startup
-if ${USE_R_ENVIRON}; then
-  [ -r ${R_ENVIRON} ] && . ${R_ENVIRON}
+if ${USE_R_ENVIRON}; then # use the one in current dir, or default
+  if [ -r .Renviron ]
+  then . .Renviron
+  else [ -r ${R_ENVIRON} ] && . ${R_ENVIRON}
+  fi
 fi
 
 if test -z "${DBG}"; then

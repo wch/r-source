@@ -39,13 +39,18 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
   greek letters, fractions, etc.
 
   \code{adj} allows \emph{adj}ustment of the text with respect to \code{(x,y)}.
-  Values of 0, 0.5, and 1 specify left/top, middle and
-  right/bottom, respectively.  The default is for centered text, i.e.,
-  \code{adj = c(0.5, 0.5)}.
+  Values of 0, 0.5, and 1 specify left/bottom, middle and
+  right/top, respectively.  The default is for centered text, i.e.,
+  \code{adj = c(0.5, 0.5)}. Accurate vertical centering needs
+  character metric information on individual characters, which is
+  only available on some devices.
 
   The \code{pos} and \code{offset} arguments can be used in conjunction
   with values returned by \code{identify} to recreate an interactively
   labelled plot.
+
+  Text can be rotated by using graphical parameters \code{srt} (see
+  \code{\link{par}}); this rotates about the centre set by \code{adj}.
 }
 \seealso{
   \code{\link{mtext}}, \code{\link{title}}.

@@ -25,7 +25,7 @@
 #include "internal.h"
 
 
-static HDC GETHDC(drawing d) 
+static HDC GETHDC(drawing d)
 {
   if ( (d->kind == PrinterObject)|| (d->kind == MetafileObject))
   {
@@ -55,7 +55,7 @@ rect ggetcliprect(drawing d)
     return r;
 }
 
-void gsetcliprect(drawing d,rect r)
+void gsetcliprect(drawing d, rect r)
 {
     HRGN rgn;
     HDC dc = GETHDC(d);
@@ -140,7 +140,7 @@ void gsetpixel(drawing d, point p, rgb c)
     DeleteObject(br);
 }
 
-static void CALLBACK  gLineHelper(int x, int y, LPARAM aa) 
+static void CALLBACK  gLineHelper(int x, int y, LPARAM aa)
 {
     int i, *a;
     a = (int *)aa;
@@ -175,7 +175,7 @@ void gdrawline(drawing d, int width, int style, rgb c, point p1, point p2)
    gdrawpolyline( d, width, style, c, p, 2, 0);
 }
 
-void gdrawpolyline(drawing d, int width, int style, rgb c, 
+void gdrawpolyline(drawing d, int width, int style, rgb c,
                    point p[], int n, int closepath)
 {
     int a[9];
@@ -188,7 +188,7 @@ void gdrawpolyline(drawing d, int width, int style, rgb c,
 	SelectObject(dc, gpen);
 	SetROP2(dc, R2_COPYPEN);
 	MoveToEx(dc, p[0].x, p[0].y, NULL);
-        for (i = 1; i < n ; i++) 
+        for (i = 1; i < n ; i++)
 	      LineTo(dc, p[i].x, p[i].y);
         if (closepath) LineTo(dc, p[0].x, p[0].y);
 	SelectObject(dc, GetStockObject(NULL_PEN));
@@ -199,7 +199,7 @@ void gdrawpolyline(drawing d, int width, int style, rgb c,
 	double pd;
 	HBRUSH br = CreateSolidBrush(getwinrgb(d,c));
 	fix_brush(dc, d, br);
-	SelectObject(dc, br);	
+	SelectObject(dc, br);
 	a[0] = 1;
 	a[1] = 0;
 	pd =(style & 15)*width;
@@ -222,7 +222,7 @@ void gdrawpolyline(drawing d, int width, int style, rgb c,
 	  }
  	  LineDDA(p[i-1].x, p[i-1].y, p[i].x, p[i].y, gLineHelper, (LPARAM) a);
         }
-        if (closepath) { 
+        if (closepath) {
 	  if (p[n-1].x != p[0].x) {
 
 
@@ -261,13 +261,13 @@ void gfillrect(drawing d, rgb fill, rect r)
     HDC dc = GETHDC(d);
     HBRUSH br = CreateSolidBrush(getwinrgb(d, fill));
     fix_brush(dc, d, br);
-    SelectObject(dc, br);	      
+    SelectObject(dc, br);
     PatBlt(dc, r.x, r.y, r.width, r.height, PATCOPY);
     SelectObject(dc, GetStockObject(NULL_BRUSH));
     DeleteObject(br);
 }
 
-void gdrawellipse(drawing d,int width,rgb border,rect r)
+void gdrawellipse(drawing d, int width, rgb border, rect r)
 {
     HDC dc = GETHDC(d);
     HPEN gpen = CreatePen(PS_INSIDEFRAME, width, getwinrgb(d,border));
@@ -326,7 +326,7 @@ void gfillellipse(drawing d, rgb fill, rect r)
 	gfillrect(d, fill, r);
 	return;
     }
-        
+
     dc = GETHDC(d);
     br = CreateSolidBrush(getwinrgb(d, fill));
     fix_brush(dc, d, br);
@@ -392,7 +392,7 @@ void gfillellipse(drawing d, rgb fill, rect r)
 }
 
 
-void gfillpolygon(drawing d,rgb fill,point *p, int n)
+void gfillpolygon(drawing d, rgb fill, point *p, int n)
 {
    HDC dc = GETHDC(d);
    HBRUSH br = CreateSolidBrush(getwinrgb(d,fill));
@@ -404,7 +404,7 @@ void gfillpolygon(drawing d,rgb fill,point *p, int n)
 }
 
 
-int gdrawstr(drawing d,font f,rgb c,point p, char *s)
+int gdrawstr(drawing d, font f, rgb c, point p, char *s)
 {
     POINT curr_pos;
     int width;
@@ -426,7 +426,7 @@ int gdrawstr(drawing d,font f,rgb c,point p, char *s)
     return width;
 }
 
-rect gstrrect(drawing d,font f, char *s)
+rect gstrrect(drawing d, font f, char *s)
 {
     SIZE size;
     HFONT old;
@@ -438,25 +438,25 @@ rect gstrrect(drawing d,font f, char *s)
     else
 	dc = GetDC(0);
     old = SelectObject(dc, f->handle);
-    GetTextExtentPoint(dc, (LPSTR) s, strlen(s), &size);
+    GetTextExtentPoint32(dc, (LPSTR)s, strlen(s), &size);
     SelectObject(dc, old);
     if (!d) ReleaseDC(0,dc);
-    return rect(0,0,size.cx, size.cy);
+    return rect(0, 0, size.cx, size.cy);
 }
 
-point gstrsize(drawing d,font f, char *s)
+point gstrsize(drawing d, font f, char *s)
 {
-    rect r = gstrrect(d,f,s);
+    rect r = gstrrect(d, f, s);
     return pt(r.width, r.height);
 }
 
-int gstrwidth(drawing d,font f, char *s)
+int gstrwidth(drawing d, font f, char *s)
 {
     rect r = gstrrect(d,f,s);
     return r.width;
 }
 
-int ghasfixedwidth(font f) 
+int ghasfixedwidth(font f)
 {
     TEXTMETRIC tm;
     HFONT old;
@@ -468,13 +468,14 @@ int ghasfixedwidth(font f)
     return !(tm.tmPitchAndFamily & TMPF_FIXED_PITCH);
 }
 
-void gcharmetric(drawing d, font f, int c, int *ascent, int *descent, 
-		 int *width) 
+void gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
+		 int *width)
 {
     int first, last;
     TEXTMETRIC tm;
     HFONT old;
     HDC dc = GETHDC(d);
+
     old = SelectObject(dc, (HFONT)f->handle);
     GetTextMetrics(dc, &tm);
     first = tm.tmFirstChar;
@@ -485,9 +486,9 @@ void gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
 	*width = tm.tmMaxCharWidth;
     else if((first <= c) && (c <= last)) {
 	char xx[2];
-	xx[0]=c;
-	xx[1]='\0';
-	*width = gstrwidth(d,f,xx);
+	xx[0] = c;
+	xx[1] = '\0';
+	*width = gstrwidth(d, f, xx);
     }
     else {
 	*ascent = 0;
@@ -505,7 +506,7 @@ font gnewfont(drawing d, char *face, int style, int size, double rot)
     double pixs;
 
     pixs = size/72.0;
-    if ((rot<=45.0) || ((rot>135) && (rot<=225)) || (rot>315))
+    if ((rot <= 45.0) || ((rot > 135) && (rot <= 225)) || (rot > 315))
 	pixs = pixs * devicepixelsy(d);
     else
 	pixs = pixs * devicepixelsx(d);
@@ -516,23 +517,21 @@ font gnewfont(drawing d, char *face, int style, int size, double rot)
     lf.lfEscapement = lf.lfOrientation = 10*rot;
     lf.lfWeight = FW_NORMAL;
     lf.lfItalic = lf.lfUnderline = lf.lfStrikeOut = 0;
-    if ((! strcmp(face, "Symbol")) ||
-	(! strcmp(face, "Wingdings")))
+    if ((! strcmp(face, "Symbol")) || (! strcmp(face, "Wingdings")))
 	lf.lfCharSet = SYMBOL_CHARSET;
     else
 	lf.lfCharSet = ANSI_CHARSET;
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-    if ((strlen(face)>1) && 
-        (face[0]== 'T') && (face[1] == 'T')) {
+    if ((strlen(face) > 1) && (face[0] == 'T') && (face[1] == 'T')) {
         char *pf;
-        lf.lfOutPrecision = OUT_TT_ONLY_PRECIS ;
+        lf.lfOutPrecision = OUT_TT_ONLY_PRECIS;
         for (pf = &face[2]; isspace(*pf) ; pf++);
         strncpy(lf.lfFaceName, pf, LF_FACESIZE-1);
     }
     else {
-        lf.lfOutPrecision = OUT_DEFAULT_PRECIS ;
+        lf.lfOutPrecision = OUT_DEFAULT_PRECIS;
         strncpy(lf.lfFaceName, face, LF_FACESIZE-1);
     }
     if (style & Italic)
@@ -550,10 +549,10 @@ font gnewfont(drawing d, char *face, int style, int size, double rot)
     obj = new_font_object(hf);
     if (obj)
 	obj->text = new_string(face);
-    if (d && ((d->kind==PrinterObject) ||
-	      (d->kind==MetafileObject))) {
+    if (d && ((d->kind == PrinterObject) ||
+	      (d->kind == MetafileObject))) {
 	TEXTMETRIC tm;
-	HFONT old = SelectObject((HDC)d->handle,hf);
+	HFONT old = SelectObject((HDC)d->handle, hf);
 	GetTextMetrics((HDC)d->handle, &tm);
 	obj->rect.width = tm.tmAveCharWidth;
 	obj->rect.height = tm.tmHeight;
@@ -566,7 +565,7 @@ font gnewfont(drawing d, char *face, int style, int size, double rot)
 }
 
 
-static int measuredev(drawing dev,int what)
+static int measuredev(drawing dev, int what)
 {
     HDC hDC;
     int n;
@@ -574,8 +573,8 @@ static int measuredev(drawing dev,int what)
 	hDC=GETHDC(dev);
     else
 	hDC=GetDC(NULL);
-    n = GetDeviceCaps(hDC,what);
-    if (!dev) ReleaseDC(NULL,hDC);
+    n = GetDeviceCaps(hDC, what);
+    if (!dev) ReleaseDC(NULL, hDC);
     return n;
 }
 

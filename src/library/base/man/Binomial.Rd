@@ -32,6 +32,9 @@ for \eqn{x = 0, \ldots, n}.
 
 If an element of \code{x} is not integer, the result of \code{dbinom} is zero,
 with a warning.
+
+The quantile is left continuous: \code{qbinom(q, \dots)} is the largest
+integer x such that P(X <= x) < q.
 }
 
 \seealso{

@@ -261,7 +261,7 @@ static int GetGrayPalette(Display *display, Colormap cmap, int n)
 	}
 	else
 	    XPalette[i].flags = DoRed|DoGreen|DoBlue;
-    }    
+    }
     PaletteSize = n;
     if (m > 0) {
         for (i = 0; i < PaletteSize; i++) {
@@ -292,8 +292,8 @@ static void SetupGrayScale()
 
 static int RGBlevels[][3] = {  /* PseudoColor Palettes */
     { 8, 8, 4 },
-    { 6, 7, 6 },    
-    { 6, 6, 6 },    
+    { 6, 7, 6 },
+    { 6, 6, 6 },
     { 6, 6, 5 },
     { 6, 6, 4 },
     { 5, 5, 5 },
@@ -781,33 +781,7 @@ static void SetColor(int color, DevDesc *dd)
     }
 }
 
-/*
- *	Some Notes on Line Textures
- *
- *	Line textures are stored as an array of 4-bit integers within
- *	a single 32-bit word.  These integers contain the lengths of
- *	lines to be drawn with the pen alternately down and then up.
- *	The device should try to arrange that these values are measured
- *	in points if possible, although pixels is ok on most displays.
- *
- *	If newlty contains a line texture description it is decoded
- *	as follows:
- *
- *		ndash = 0;
- *		for(i=0 ; i<8 && newlty&15 ; i++) {
- *			dashlist[ndash++] = newlty&15;
- *			newlty = newlty>>4;
- *		}
- *		dashlist[0] = length of pen-down segment
- *		dashlist[1] = length of pen-up segment
- *		etc
- *
- *	An integer containing a zero terminates the pattern.  Hence
- *	ndash in this code fragment gives the length of the texture
- *	description.  If a description contains an odd number of
- *	elements it is replicated to create a pattern with an
- *	even number of elements.  (If this is a pain, do something
- *	different its not crucial).
+/* --> See "Notes on Line Textures" in ../include/Graphics.h
  *
  *	27/5/98 Paul - change to allow lty and lwd to interact:
  *	the line texture is now scaled by the line width so that,
@@ -816,21 +790,19 @@ static void SetColor(int color, DevDesc *dd)
  *	would have "dots" which were wide, but not long, nor widely
  *	spaced.
  */
-
 static void SetLinetype(int newlty, double nlwd, DevDesc *dd)
 {
     static char dashlist[8];
     int i, ndash, newlwd;
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
-
     newlwd = nlwd;
-    if(newlwd < 1)
+    if(newlwd < 1)/* not less than 1 pixel */
 	newlwd = 1;
     if(newlty != xd->lty || newlwd != xd->lwd) {
 	xd->lty = newlty;
 	xd->lwd = newlwd;
-	if(newlty == 0) {
+	if(newlty == 0) {/* special hack for  lty = 0 -- only for X11 */
 	    XSetLineAttributes(display,
 			       xd->wgc,
 			       newlwd,
@@ -843,11 +815,11 @@ static void SetLinetype(int newlty, double nlwd, DevDesc *dd)
 	    for(i=0 ; i<8 && newlty != 0 ; i++) {
 		int j = newlty & 15;
 		if (j == 0) j = 1; /* Or we die with an X Error */
+		/* scale line texture for line width */
+		j = j*newlwd;
 		/* make sure that scaled line texture */
 		/* does not exceed X11 storage limits */
-		j = j*newlwd;
 		if (j > 255) j=255;
-		/* scale line texture for line width */
 		dashlist[ndash++] = j;
 		newlty = newlty>>4;
 	    }
@@ -892,7 +864,7 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
 
     /* If there is no server connection, establish one and */
     /* initialize the X11 device driver data structures. */
-    
+
     if (!displayOpen) {
 	if ((display = XOpenDisplay(dsp)) == NULL)
 	    return 0;
@@ -1448,13 +1420,11 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
 	/* location to DEVICE coordinates using GConvert	*/
 	/********************************************************/
 
-double deg2rad = 0.01745329251994329576;
-
 static void X11_Text(double x, double y, int coords,
 		     char *str, double xc, double yc, double rot, DevDesc *dd)
 {
     int len, size;
-    double xl, yl;
+    double xl, yl, rot1;
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
     size = dd->gp.cex * dd->gp.ps + 0.5;
@@ -1463,12 +1433,11 @@ static void X11_Text(double x, double y, int coords,
     len = strlen(str);
     GConvert(&x, &y, coords, DEVICE, dd);
     if(xc != 0.0 || yc != 0) {
+	rot1 = DEG2RAD * rot;
 	xl = X11_StrWidth(str, dd);
 	yl = GConvertYUnits(1, CHARS, DEVICE, dd);
-	x += -xc * xl * cos(deg2rad * rot) +
-	    yc * yl * sin(deg2rad * rot);
-	y -= -xc * xl * sin(deg2rad * rot) -
-	    yc * yl * cos(deg2rad * rot);
+	x += -xc * xl * cos(rot1) + yc * yl * sin(rot1);
+	y -= -xc * xl * sin(rot1) - yc * yl * cos(rot1);
     }
     XRotDrawString(display, xd->font, rot, xd->window, xd->wgc,
 		   (int)x, (int)y, str);

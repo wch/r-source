@@ -18,6 +18,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/*--- Device Driver for Windows; this file started from
+ *  ../unix/devX11.c --
+ */
 #ifdef HAVE_CONFIG_H
 #include <Rconfig.h>
 #endif
@@ -119,9 +122,6 @@ typedef struct {
 	/* creates a new device of this type			*/
 	/********************************************************/
 
-	/* Device Driver Entry Point */
-
-int   X11DeviceDriver(DevDesc *, char *, double, double, double);
 
 	/********************************************************/
 	/* There are a number of actions that every device 	*/
@@ -224,11 +224,6 @@ static void SaveAsWin(DevDesc *dd, char *display)
 }
     
 
-int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
-		   char *bg, char *fg,
-		   double width, double height,
-		   double horizontal, double ps);
-
 static void SaveAsPostscript(DevDesc *dd, char *fn)
 {
    SEXP s = findVar(install(".PostScript.Options"), R_GlobalEnv);
@@ -271,10 +266,11 @@ static void SaveAsPostscript(DevDesc *dd, char *fn)
       }
    }   
    if (PSDeviceDriver(ndd, fn, paper, family, bg, fg,
-			 GConvertXUnits(1.0, NDC, INCHES, dd),
-			 GConvertYUnits(1.0, NDC, INCHES, dd),
-			 (double)0,dd->gp.ps)) 
-        PrivateCopyDevice(dd,ndd,"postscript");
+		      GConvertXUnits(1.0, NDC, INCHES, dd),
+		      GConvertYUnits(1.0, NDC, INCHES, dd),
+		      (double)0, dd->gp.ps, 0, 1)) 
+    /* horizontal=F, onefile=F, pagecentre=T */
+        PrivateCopyDevice(dd, ndd, "postscript");
 }
 
 
@@ -1276,7 +1272,7 @@ static void X11_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
 	/* this is not usually called directly by the graphics	*/
 	/* engine because the detection of device resizes	*/
 	/* (e.g., a window resize) are usually detected by	*/
-	/* device-specific code	(see ProcessEvents in this file)*/
+	/* device-specific code	(see ProcessEvents in ./system.c)*/
 	/********************************************************/
 
 
@@ -1382,7 +1378,7 @@ static void X11_Activate(DevDesc *dd)
 
     if (xd->replaying || xd->kind)
 	return;
-    strcpy(t, title);
+    strcpy(t, (char *) title);
     strcat(t, ": Device ");
     sprintf(num, "%i", deviceNumber(dd) + 1);
     strcat(t, num);
@@ -1406,7 +1402,7 @@ static void X11_Deactivate(DevDesc *dd)
 
     if (xd->replaying || xd->kind)
 	return;
-    strcpy(t, title);
+    strcpy(t, (char *) title);
     strcat(t, ": Device ");
     sprintf(num, "%i", deviceNumber(dd) + 1);
     strcat(t, num);
@@ -1623,31 +1619,22 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
 	/********************************************************/
 
 
-static double deg2rad = 0.01745329251994329576;
-
 static void X11_Text(double x, double y, int coords,
 		     char *str, double xc, double yc, double rot, DevDesc *dd)
 {
     int   size;
-    double pixs, xl, yl;
+    double pixs, xl, yl, rot1;
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
     size = dd->gp.cex * dd->gp.ps + 0.5;
     GConvert(&x, &y, coords, DEVICE, dd);
     SetFont(dd->gp.font, size, 0.0, dd);
-    if (xc != 0.0 || yc != 0) {
-	xl = X11_StrWidth(str, dd);
-	yl = GConvertYUnits(1, CHARS, DEVICE, dd);
-	x += -xc * xl * cos(deg2rad * rot) +
-	    yc * yl * sin(deg2rad * rot);
-	y -= -xc * xl * sin(deg2rad * rot) -
-	    yc * yl * cos(deg2rad * rot);
-    }
     pixs = fontascent(xd->font) + fontdescent(xd->font) - 1;
-    if ((rot <= 45) || ((rot > 135) && (rot <= 225)) || (rot > 315))
-	y -= pixs;
-    else
-	x -= pixs;
+    xl = xc * X11_StrWidth(str, dd);
+    yl = yc * GConvertYUnits(1, CHARS, DEVICE, dd) - pixs;
+    rot1 = rot * DEG2RAD;
+    x += -xl * cos(rot1) + yl * sin(rot1);
+    y -= -xl * sin(rot1) - yl * cos(rot1);
     SetFont(dd->gp.font, size, rot, dd);
     SetColor(dd->gp.col, dd);
 #ifdef NOCLIPTEXT
@@ -1658,7 +1645,7 @@ static void X11_Text(double x, double y, int coords,
 	gdrawstr(xd->bm, xd->font, xd->fgcolor, pt(x, y), str);
     }
 #else      
-    DRAW(gdrawstr(_d, xd->font, xd->fgcolor, pt(x,y), str));
+    DRAW(gdrawstr(_d, xd->font, xd->fgcolor, pt(x, y), str));
 #endif
 }
 
@@ -1881,4 +1868,40 @@ X11DeviceDriver
     dd->displayListOn = 1;
     if (RConsole && xd->kind) show(RConsole);
     return 1;
+}
+
+SEXP do_saveDevga(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP filename, type;
+    char *fn, *tp, display[512];
+    int device;
+    DevDesc* dd;
+
+    checkArity(op, args);
+    device = asInteger(CAR(args));
+    if(device < 1 || device > NumDevices())
+	errorcall(call, "invalid device number");
+    dd = GetDevice(device);
+    if(!dd) errorcall(call, "invalid device");
+    filename = CADR(args);
+    if (!isString(filename) || LENGTH(filename) != 1)
+	errorcall(call, "invalid filename argument\n");
+    fn = CHAR(STRING(filename)[0]);
+    fixslash(fn);
+    type = CADDR(args);
+    if (!isString(type) || LENGTH(type) != 1)
+	errorcall(call, "invalid filename argument\n");
+    tp = CHAR(STRING(type)[0]);
+    Rprintf("device %d fn %s tp %s\n", device, fn, tp);
+    
+    if(!strcmp(tp, "gif")) {
+	SaveAsGif(dd, fn);
+    } else if (!strcmp(tp, "wmf")) {
+	sprintf(display, "win.metafile:%s", fn);
+	SaveAsWin(dd, display);
+    } else if (!strcmp(tp, "ps")) {
+	SaveAsPostscript(dd, fn);
+    } else 
+	errorcall(call, "unknown type\n");
+    return R_NilValue;
 }

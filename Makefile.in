@@ -10,10 +10,11 @@ top_builddir = .
 include $(top_builddir)/Makeconf
 
 distdir = $(PACKAGE)-$(VERSION)
-DISTFILES = COPYING COPYRIGHTS INSTALL MIRROR-SITES NEWS PLATFORMS \
-	PROJECTS README RESOURCES TASKS \
+INSTFILES = COPYING COPYRIGHTS FAQ MIRROR-SITES NEWS RESOURCES 
+DISTFILES = $(INSTFILES) \
+	BUGS INSTALL PLATFORMS PROJECTS README VERSION Y2K \
 	Makeconf.in Makefile.in \
-	config.site configure configure.in configure.mac configure.win \
+	aclocal.m4 config.site configure configure.in configure.mac \
 	date-stamp
 SUBDIRS = src afm demos doc etc tests
 
@@ -46,7 +47,7 @@ install: all installdirs
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@(cd $(srcdir); \
-	  for f in COPYING COPYRIGHTS MIRROR-SITES RESOURCES; do \
+	  for f in $(INSTFILES); do \
 	    $(INSTALL_DATA) $${f} $(rhome); \
 	  done)
 	@echo "Installing executables ..."
@@ -87,7 +88,7 @@ install-strip:
 uninstall:
 	@echo "Uninstalling library ..."
 	@(cd $(rhome)/library; \
-	  for p in base eda lqs modreg mva stepfun ts; do rm -rf $${p}; done)
+	  for p in $(R_PKGS); do rm -rf $${p}; done)
 	@echo "  Rebuilding help index ..."
 	@(cd $(rhome)/library; \
 	  cat */TITLE > LibIndex 2> /dev/null || echo "" > LibIndex)
@@ -102,7 +103,7 @@ uninstall:
 	@for f in R Rd2txt Rdconv Rdindex Sd2Rd; do \
 	  rm -f $(bindir)/$${f}; \
 	done
-	@for f in COPYING COPYRIGHTS MIRROR-SITES RESOURCES; do \
+	@for f in $(INSTFILES); do \
 	  rm -f $(rhome)/$${f}; \
 	done
 	@for d in afm demos doc etc; do \
@@ -162,3 +163,10 @@ TAGS:
 check test:: test-All
 test-All test-Examples test-Specific::
 	@(cd tests && $(MAKE) $@)
+check-force: test-All-force
+test-All-force:
+	@(cd tests && $(MAKE) test-All FORCE=FORCE)
+test-Examples-force:
+	@(cd tests && $(MAKE) test-Examples FORCE=FORCE)
+test-Specific-force:
+	@(cd tests && $(MAKE) test-Specific FORCE=FORCE)

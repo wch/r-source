@@ -1,6 +1,7 @@
-cancor                   Canonical Correlations
-cmdscale                 Classical (Metric) Multidimensional Scaling
-dist                     Distance Matrix Computation
-hclust                   Hierarchical Clustering
-kmeans                   K-Means Clustering
-prcomp                   Principal Components Analysis
+biplot			Biplot of Multivariate Data
+cancor			Canonical Correlations
+cmdscale		Classical (Metric) Multidimensional Scaling
+dist			Distance Matrix Computation
+hclust			Hierarchical Clustering
+kmeans			K-Means Clustering
+prcomp, princomp	Principal Components Analysis

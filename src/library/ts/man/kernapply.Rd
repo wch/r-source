@@ -2,7 +2,7 @@
 \alias{kernapply}
 \alias{kernapply.default}
 \alias{kernapply.ts}
-\alias{kernapply.kernel}
+\alias{kernapply.tskernel}
 
 \title{Apply Smoothing Kernel}
 \usage{

@@ -15,10 +15,13 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
 \item{file}{a character string giving the name of the file to print to.}
 \item{\dots}{further options for \code{postscript()}.}
 \item{paper}{the size of paper in the printer.  The choices are
-  \code{"a4"}, \code{"letter"}, \code{"legal"} and \code{"executive"}.}
-\item{horizontal}{the orientation of the printed image, a logical.}
-\item{width,height}{the width, and height of the graphics region in inches.
-The default is to use the entire page.}
+  \code{"a4"}, \code{"letter"}, \code{"legal"} and
+  \code{"executive"}. Also, \code{"special"} can be used, when the width
+  and height specify the paper size.}
+\item{horizontal}{the orientation of the printed image, a
+    logical. Defaults to true, that is landscape orientation.}
+\item{width, height}{the width and height of the graphics region in inches.
+  The default is to use the entire page less a 0.25 inch border.}
 \item{family}{the font family to be used.
   This must be one of \code{"AvantGarde"},
   \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
@@ -27,8 +30,13 @@ The default is to use the entire page.}
 \item{pointsize}{the default point size to be used.}
 \item{bg}{the default background color to be used.}
 \item{fg}{the default foreground color to be used.}
-\item{onefile, print.it, append}{logical; are currently \bold{all
-    disregarded}; just there for compatibility reasons.}
+\item{onefile}{logical: if true (the default) allow multiple figures
+    in one file. If false, assume only one figure and give EPSF header
+    and no \code{DocumentMedia} comment.}
+\item{pagecentre}{logical: should the device region be centred on the page:
+    defaults to true.}
+\item{print.it, append}{logical; are currently \bold{disregarded};
+    just there for compatibility reasons.}
 }
 %%>>> REAL DOC in SOURCE:    ../../../main/devices.c  &   ../../../unix/devPS.c
 \description{
@@ -45,7 +53,8 @@ This file can then be printed on a suitable device to obtain hard copy.
 
 The postscript produced by \R is EPS (\emph{Encapsulated PostScript})
 compatible, and can be included into other documents, e.g. into LaTeX, using
-\code{\epsfig{file=<filename>}}.
+\code{\epsfig{file=<filename>}}. For use in this way you will proabbly
+want to set \code{horizontal=FALSE, onefile=FALSE, paper="special"}.
 }
 \seealso{
     \code{\link{x11}}, \code{\link{macintosh}}, \code{\link{Devices}}.

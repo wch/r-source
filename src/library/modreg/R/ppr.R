@@ -49,7 +49,8 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
   ndp <- p*(p+1)/2+6*p
   .Fortran("bdrsetppr",
 	   as.double(span), as.double(bass), as.integer(optlevel),
-	   as.integer(ism), as.double(df), as.double(gcvpen)
+	   as.integer(ism), as.double(df), as.double(gcvpen),
+           PACKAGE="modreg"
 	   )
   Z <- .Fortran("bdrsmart",
 		as.integer(ml), as.integer(mu),
@@ -61,7 +62,8 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
 		smod=double(msmod), as.integer(msmod),
 		double(nsp), as.integer(nsp),
 		double(ndp), as.integer(ndp),
-		edf=double(ml)
+		edf=double(ml),
+                PACKAGE="modreg"
 		)
   smod <- Z$smod
   ys <- smod[q+6]
@@ -71,11 +73,12 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
   beta <- matrix(smod[q+6+p*ml + 1:(q*mu)], q, mu,
 		     dimnames=list(ynames, tnames))
   fitted <- drop(matrix(.Fortran("bdrpred",
-		       as.integer(nrow(x)),
-		       as.double(x),
-		       as.double(smod),
-		       y = double(nrow(x)*q),
-		       double(2*smod[4])
+                                 as.integer(nrow(x)),
+                                 as.double(x),
+                                 as.double(smod),
+                                 y = double(nrow(x)*q),
+                                 double(2*smod[4]),
+                                 PACKAGE="modreg"
 		       )$y, ncol=q, dimnames=dimnames(y)))
   jt <- q + 7 + ml*(p+q+2*n)
   gof <- smod[jt] * n * ys^2
@@ -170,7 +173,8 @@ predict.ppr <- function(obj, newdata, ...)
 		       as.double(x),
 		       as.double(obj$smod),
 		       y = double(nrow(x)*obj$q),
-		       double(2*obj$smod[4])
+		       double(2*obj$smod[4]),
+                       PACKAGE="modreg"
 		       )$y,
 	      ncol=obj$q,
 	      dimnames=list(dimnames(x)[[1]], obj$ynames)

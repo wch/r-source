@@ -43,7 +43,7 @@ double dnbinom(double x, double n, double p)
 	return ML_NAN;
     }
     if(fabs(x - floor(x + 0.5)) > 1e-7) {
-	warning("non-integer x = %f\n", x);
+	warning("non-integer x = %f", x);
 	return 0;
     }
     if (x < 0)

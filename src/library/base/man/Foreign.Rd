@@ -1,85 +1,104 @@
 \name{Foreign}
 \title{Foreign Function Interface}
 \usage{
-      .C(name, \dots, NAOK=FALSE, DUP=TRUE)
-.Fortran(name, \dots, NAOK=FALSE, DUP=TRUE)
+       .C(name, \dots, NAOK=FALSE, DUP=TRUE, PACKAGE)
+ .Fortran(name, \dots, NAOK=FALSE, DUP=TRUE, PACKAGE)
 .External(name, \dots)
-.Call(name, \dots)
+    .Call(name, \dots)
 }
 \alias{.C}
 \alias{.Fortran}
 \alias{.External}
 \alias{.Call}
 \arguments{
-\item{name}{a character string giving the name of a C function or
-  Fortran subroutine.}
-\item{\dots}{arguments to be passed to the foreign function.}
-\item{NAOK}{if \code{TRUE} then any \code{NA} or \code{NaN} or
-  \code{Inf} values in the arguments are passed on to the foreign function.
-  If \code{FALSE}, the presence of \code{NA}  or \code{NaN} or
-  \code{Inf} values is regarded as an error.}
-\item{DUP}{if \code{TRUE} then arguments are ``duplicated'' before their
-  address is passed to C or Fortran.}
+  \item{name}{a character string giving the name of a C function or
+    Fortran subroutine.}
+  \item{\dots}{arguments to be passed to the foreign function.}
+  \item{NAOK}{if \code{TRUE} then any \code{NA} or \code{NaN} or
+    \code{Inf} values in the arguments are passed on to the foreign
+    function.  If \code{FALSE}, the presence of \code{NA}  or \code{NaN}
+    or \code{Inf} values is regarded as an error.}
+  \item{DUP}{if \code{TRUE} then arguments are ``duplicated'' before
+    their address is passed to C or Fortran.}
+  \item{PACKAGE}{if supplied, confine the search for the \code{name} to
+    the DLL given by this argument (plus the conventional extension,
+    \code{.so}, \code{.sl}, \code{.dll}, \dots).  This is intended to
+    add safety for packages, which can ensure that no other package can
+    override their external symbols by using this argument.  Use
+    \code{PACKAGE="base"} for symbols linked in to \R.} 
 }
 \description{
-The functions \code{.C} and \code{.Fortran} can be used to
-make calls to C and Fortran code.
+  The functions \code{.C} and \code{.Fortran} can be used to make calls
+  to C and Fortran code.
 
-\code{.External} can be used to call
-compiled code that uses \R objects in the same way as internal \R
-functions. There is no documentation to help you write this sort of code.
+  \code{.External} can be used to call compiled code that uses \R
+  objects in the same way as internal \R functions.  There is no
+  documentation to help you write this sort of code. 
 
-\code{.Call} can be used call compiled code which makes use of internal
-\R objects.  The arguments are passed to the C code as a sequence of
-\R objects.  It is included to provide compatibility with S version 4.
+  \code{.Call} can be used call compiled code which makes use of
+  internal \R objects.  The arguments are passed to the C code as a
+  sequence of \R objects.  It is included to provide compatibility with
+  S version 4.
 }
 \value{
-The functions \code{.C} and \code{.Fortran} return a list similar to the \code{\dots}
-list of arguments passed in, but reflecting any
-changes made by the C or Fortran code.
+  The functions \code{.C} and \code{.Fortran} return a list similar to
+  the \code{\dots} list of arguments passed in, but reflecting any
+  changes made by the C or Fortran code.
 
-\code{.External} returns an \R object.
+  \code{.External} and \code{.Call} return an \R object.
 
-These calls are typically made in conjunction with
-\code{\link{dyn.load}} which links DLLs to \R.
+  These calls are typically made in conjunction with
+  \code{\link{dyn.load}} which links DLLs to \R.
 }
-%%-- This note based on BDR's understanding
-%% edited TSL
+%%-- This note based on BDR's understanding, edited TSL
 \section{Argument types}{
     The mapping of the types of \R arguments to C or Fortran arguments
     in \code{.C} or \code{.Fortran} is
     \tabular{lll}{
 \    R \tab     C \tab     Fortran\cr
 integer \tab int * \tab integer\cr
-real \tab double * \tab double precision\cr
+numeric \tab double * \tab double precision\cr
+-- or -- \tab float * \tab real\cr
 complex \tab complex * \tab double complex\cr
 logical \tab int * \tab integer \cr
-character \tab char ** \tab [compiler dependent]\cr
-list \tab void * (SEXP *)\tab \cr
-other \tab void * (SEXP)\tab \cr
+character \tab char ** \tab [see below]\cr
+list \tab SEXP *\tab not allowed\cr
+other \tab SEXP\tab not allowed\cr
 }
-    The C type \code{complex} is defined in \file{Complex.h} as a
-    \code{typedef struct {double r; double i;}}. Fortran type
-    \code{double complex} is an extension to the Fortran standard, and
-    the availibility of a mapping of \code{complex} to Fortran may be
-    compiler dependent.
+Numeric vectors in \R will be passed as type \code{double *} to C
+(and as \code{double precision} to Fortran) unless (i) \code{.C} or
+\code{.Fortran} is used, (ii) \code{DUP} is false and (iii) the argument
+has attribute \code{Csingle} set to \code{TRUE} (use \code{\link{as.single}}
+or \code{\link{single}}).  This mechanism is only intended to be use to
+facilitate the interfacing of existing C and Fortran code.
 
-    \emph{Note:} The C types corresponding to \code{integer} and
-    \code{logical} are \code{int}, not \code{long} as in S.
+The C type \code{complex} is defined in \file{Complex.h} as a
+\code{typedef struct {double r; double i;}}. Fortran type
+\code{double complex} is an extension to the Fortran standard, and
+the availibility of a mapping of \code{complex} to Fortran may be
+compiler dependent.
 
-    Character strings are passed as C arrays of character strings to
-    Fortran: the first string may be usable if its length is passed
-    separately.
+\emph{Note:} The C types corresponding to \code{integer} and
+\code{logical} are \code{int}, not \code{long} as in S.
 
-    Lists, functions, expressions, environments and other language
-elements are passed as generic pointers (\code{void *}). R functions can
-be invoked using \code{call_S} or \code{call_R} and can be passed
-lists or the simple types as arguments.
+The first character string of a character vector is passed as a C
+character array to Fortran: that string may be usable
+as \code{character*255} if its true length is passed separately. Only up
+to 255 characters of the string are passed back.
+
+Functions, expressions, environments and other language
+elements are passed as the internal \R pointer type \code{SEXP}. This type is
+defined in \code{Rinternals.h} or the arguments can be declared
+as generic pointers, \code{void *}. Lists are passed as C arrays of
+\code{SEXP} and can be declared as \code{void *} or \code{SEXP *}.
+
+R functions can be invoked using \code{call_S} or \code{call_R} and
+can be passed lists or the simple types as arguments.
 }
 %%-- This note by Thomas Lumley, (minimally edited by MM):
 \note{\emph{\code{DUP=FALSE} is dangerous.}
     
-There are two important dangers with \code{DUP=FALSE}. The first is that
+There are three important dangers with \code{DUP=FALSE}. The first is that
 garbage collection may move the object, resulting in the pointers
 pointing nowhere useful and causing hard-to-reproduce bugs.
 
@@ -88,6 +107,11 @@ function to \code{.C}/\code{.Fortran} with \code{DUP=FALSE}, it may not
 necessarily be copied.  You may be able to change not only the local
 variable but the variable one level up.  This will also be very hard to
 trace.
+
+The third is that lists are passed as a single \R \code{SEXP} with
+\code{DUP=FALSE}, not as an array of \code{SEXP}. This means the
+accessor macros in \code{Rinternals.h} are needed to get at the list
+elements and the lists cannot be passed to \code{call_S}/\code{call_R}.
 
 1.  If your C/Fortran routine calls back any \R function including
 \code{S_alloc}/\code{R_alloc} then do not use \code{DUP=FALSE}.  Do not
@@ -103,17 +127,14 @@ affected, e.g.,
 In this case the output variable didn't exist before the call so it can't
 cause trouble. If the input variable is not changed in \code{Cfunction} you are
 safe.
-
-Also note that with \code{DUP=FALSE}, lists are passed in the internal
-R format \code{(SEXP)} like any other non-atomic object. The accessor
-macros in \code{Rinternals.h} are needed to get at the list elements.
-}
+ }
 
 \section{Header files for external code}{
-    Writing code for use with \code{.External} will typically use
-    internal \R structures. If possible use just those in
-    \file{Rinternals.h}, as other header files are not installed and are
-    even more likely to be changed.
+    Writing code for use with \code{.External} and \code{.Call} will
+    use internal \R structures. If possible use just those defined in
+    \file{Rinternals.h} and/or the macros in \file{Rdefines.h},
+    as other header files are not installed and are even more
+    likely to be changed.
 }
     
 \seealso{\code{\link{dyn.load}}.}

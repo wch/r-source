@@ -1,6 +1,6 @@
 include ../MkRules
 
-MANOBJS= BATCH.Rd COMPILE.Rd INSTALL.Rd REMOVE.Rd RHOME.Rd SHLIB.Rd x11.Rd
+MANOBJS= BATCH.Rd COMPILE.Rd INSTALL.Rd REMOVE.Rd RHOME.Rd SHLIB.Rd gnome.Rd hdf5.Rd x11.Rd
 
 all: profiles fixh fixr fixRd fixbin fixmake
 
@@ -24,12 +24,7 @@ SED4='s/C_FUNCTION(\(.*\))/{ "\1",	\1 },/'
 
 fixh: h/Rconfig.h ../../../date-stamp ../../appl/ROUTINES
 	$(CP) -p ./h/Rconfig.h ./h/psignal.h ../../include
-	$(CP) -p  ../../include/Rversion.h.in ../../include/Rversion.h
-	gawk -F/ '{ \
-	    printf "#define R_DAY\t\"%s\"\n",   $$3; \
-	    printf "#define R_MONTH\t\"%s\"\n", $$2; \
-	    printf "#define R_YEAR\t\"%s\"\n",  $$1 }' \
-	  ../../../date-stamp >> ../../include/Rversion.h
+	sh ./GETVERSION > ../../include/Rversion.h
 	$(SED) -e $(SED0) -e $(SED01) -e $(SED1) -e $(SED2) ../../appl/ROUTINES > ../../include/FFDecl.h
 	$(SED) -e $(SED0) -e $(SED01) -e $(SED3) -e $(SED4) ../../appl/ROUTINES > ../../include/FFTab.h
 	$(ECHO) done > fixh
@@ -49,8 +44,8 @@ fixr: $(wildcard ./r/*.r) ./r/zero.R $(wildcard ./r/*.html)  \
 	$(ECHO) done > fixr		
 
 fixRd: $(wildcard man/*.Rd)
-	$(CP) -p man/*.Rd  ../../library/base/man
 	-$(RM) $(foreach i, $(MANOBJS), ../../library/base/man/$i)
+	$(CP) -p man/*.Rd  ../../library/base/man
 	$(ECHO) done > fixRd	
 
 fixmake: ../../appl/Makefile ../../main/Makefile ../../nmath/Makefile

@@ -45,6 +45,16 @@ typedef struct
     int DebugInitFile;
     int vsize;
     int nsize;
+
+      /* Permanent copy of the command line arguments and the number
+         of them passed to the application.
+         These are populated via the routine R_set_command_line_arguments()
+         called from R_common_command_line().
+         They are available 
+       */
+    int    NumCommandLineArgs;
+    char **CommandLineArgs;
+
 #ifdef Win32
     char *rhome;               /* R_HOME */
     char *home;                /* HOME  */
@@ -67,3 +77,4 @@ void R_SetWin32(Rstart);
 void R_SizeFromEnv(Rstart);
 void R_common_command_line(int *, char **, Rstart);
 
+void R_set_command_line_arguments(int argc, char **argv, Rstart Rp);

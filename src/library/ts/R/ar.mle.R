@@ -2,11 +2,12 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
                     demean = TRUE, series = NULL, ...)
 {
     if(is.null(series)) series <- deparse(substitute(x))
-    if(ists <- is.ts(x)) xtsp <- tsp(x)
+    ists <- is.ts(x)
     if (!is.null(dim(x)))
         stop("MLE only implemented for univariate series")
     x <- na.action(as.ts(x))
     if(any(is.na(x))) stop("NAs in x")
+    if(ists)  xtsp <- tsp(x)
     xfreq <- frequency(x)
     x <- as.vector(x)
     n.used <- length(x)
@@ -52,7 +53,7 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
                 partialacf=NULL, resid=resid, method = "MLE",
                 series = series, frequency = xfreq, call = match.call())
     xacf <- acf(x, type = "covariance", lag.max = order, plot=FALSE)$acf
-    res$asy.var.coef <- solve(toeplitz(drop(xacf)[1:order]))*var.pred/n.used
+    if(order > 0) res$asy.var.coef <- solve(toeplitz(drop(xacf)[seq(length=order)]))*var.pred/n.used
     class(res) <- "ar"
     res
 }

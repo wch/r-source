@@ -160,7 +160,7 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     args = CDR(args);
 
     file = CAR(args);
-    if (!isString(file) || length(file) != 1)
+    if (!isValidString(file))
 	errorcall(call, "invalid file= specification\n");
     args = CDR(args);
 
@@ -194,22 +194,19 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (append == NA_LOGICAL)
 	errorcall(call, "invalid append specification\n");
 
-    savefp = NULL;		/* -Wall */
     if (strlen(CHAR(STRING(file)[0])) > 0) {
 	savefp = R_Outputfile;
-	if (append)
-	    R_Outputfile
-		= R_fopen(R_ExpandFileName(CHAR(STRING(file)[0])), "a");
-	else
-	    R_Outputfile
-		= R_fopen(R_ExpandFileName(CHAR(STRING(file)[0])), "w");
-	if (!R_Outputfile) {
+	if(!(R_Outputfile = R_fopen(R_ExpandFileName(CHAR(STRING(file)[0])),
+				    (append) ? "a" : "w"))) {
 	    R_Outputfile = savefp;
 	    errorcall(call, "unable to open file\n");
 	}
 	havefile = 1;
     }
-    else havefile = 0;
+    else {
+        savefp = NULL;/* -Wall */
+        havefile = 0;
+    }
 
     nobjs = length(objs);
     /*
@@ -237,12 +234,23 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 		p = CHAR(STRING(s)[0]);
             else if (isSymbol(s))
                 p = CHAR(PRINTNAME(s));
-	    else if (isVector(s)) {
+	    else if (isVectorAtomic(s)) {
 		p = EncodeElement(s, 0, 0);
 		strcpy(buf,p);
 		p=buf;
 	    }
-            else errorcall(call, "argument %d not handled by cat\n", iobj);
+#ifdef fixed_cat
+	    else if (isVectorList(s)) {
+	      /* FIXME:	 call EncodeElement() for every element of  s.
+
+		 Real Problem: `s' can be large;
+		 should do line breaking etc.. (buf is of limited size)
+	      */
+	    }
+#endif
+	    else
+		errorcall(call, "argument %d not yet handled by cat\n",1+iobj);
+	    /* FIXME : cat(...) should handle ANYTHING */
 	    w = strlen(p);
 	    cat_sepwidth(sepr, &sepw, ntot);
 	    if ((iobj > 0) && (width + w + sepw > pwidth)) {
@@ -315,7 +323,7 @@ SEXP do_makelist(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_namedlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 }
-#endif NOT_used
+#endif /* NOT_used */
 
 
 SEXP do_expression(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -512,7 +520,7 @@ SEXP do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
     int argval;
     SEXP x, y, w;
     x = eval(CAR(args), rho);
-    if (!isVector(x) && length(x) != 1)
+    if (!isVector(x) || length(x) != 1)
 	error("switch: EXPR must return a length 1 vector\n");
     PROTECT(w = switchList(CDR(args), rho));
     if (isString(x)) {
@@ -540,3 +548,4 @@ SEXP do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return x;
 }
+

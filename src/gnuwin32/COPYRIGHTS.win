@@ -56,3 +56,9 @@ Based on files which are
 	Freely redistributable and modifiable.  Use at your own risk.
 	Copyright 1994-1999 The Downhill Project
 	http://www.ede.com/free/u2nt
+
+src/gnuwin32/bdx.[ch], rpr*
+
+	Copyright (C) 1999 Thomas Baier
+
+distributed under LGPL.

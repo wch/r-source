@@ -125,6 +125,7 @@ static int CountDLL = 0;
 
 static struct {
     char	*path;
+    char	*name;
     void	*handle;
 }
 LoadedDLL[MAX_NUM_DLLS];
@@ -144,10 +145,12 @@ static int DeleteDLL(char *path)
     }
     return 0;
 found:
+    free(LoadedDLL[i].name);
     free(LoadedDLL[i].path);
     dlclose(LoadedDLL[i].handle);
     for(i=loc+1 ; i<CountDLL ; i++) {
 	LoadedDLL[i-1].path = LoadedDLL[i].path;
+	LoadedDLL[i-1].name = LoadedDLL[i].name;
 	LoadedDLL[i-1].handle = LoadedDLL[i].handle;
     }
     CountDLL--;
@@ -164,16 +167,24 @@ static char DLLerror[DLLerrBUFSIZE] = "";
 	/* and returns 0 if there library table is full or */
 	/* or if dlopen fails for some reason. */
 
-static int AddDLL(char *path)
+static int computeDLOpenFlag(int asLocal, int now); /* Defined below. */
+
+static int AddDLL(char *path, int asLocal, int now)
 {
     void *handle;
-    char *dpath;
-    int i;
+    char *dpath, *name, DLLname[PATH_MAX], *p;
+    /*int i;*/
+    int openFlag = 0;
+
+    DeleteDLL(path);
     if(CountDLL == MAX_NUM_DLLS) {
 	strcpy(DLLerror, "Maximal number of DLLs reached...");
 	return 0;
     }
-    handle = dlopen(path, RTLD_NOW);
+
+    openFlag = computeDLOpenFlag(asLocal, now);
+
+    handle = dlopen(path,openFlag);
     if(handle == NULL) {
 	strcpy(DLLerror, dlerror());
 	return 0;
@@ -185,26 +196,123 @@ static int AddDLL(char *path)
 	return 0;
     }
     strcpy(dpath, path);
-    for(i=CountDLL ; i>0 ; i--) {
+
+    p = strrchr(dpath, '/');  /* We are on Unix here */
+    if(!p) p = dpath; else p++;
+    strcpy(DLLname, p);
+    p = strchr(DLLname, '.');
+    if(p) *p = '\0';
+    name = malloc(strlen(DLLname)+1);
+    if(name == NULL) {
+	strcpy(DLLerror,"Couldn't allocate space for 'name'");
+	dlclose(handle);
+	free(dpath);
+	return 0;
+    }
+    strcpy(name, DLLname);
+
+/*    for(i=CountDLL ; i>0 ; i--) {
 	LoadedDLL[i].path = LoadedDLL[i-1].path;
+	LoadedDLL[i].name = LoadedDLL[i-1].name;
 	LoadedDLL[i].handle = LoadedDLL[i-1].handle;
     }
     LoadedDLL[0].path = dpath;
-    LoadedDLL[0].handle = handle;
+    LoadedDLL[0].name = name;
+    LoadedDLL[0].handle = handle;*/
+
+    LoadedDLL[CountDLL].path = dpath;
+    LoadedDLL[CountDLL].name = name;
+    LoadedDLL[CountDLL].handle = handle;
     CountDLL++;
+
     return 1;
 }
+
+ /* 
+
+    Computes the flag to be passed as the second argument to dlopen(),
+    controlling whether the local or global symbol integration
+    and lazy or eager resolution of the undefined symbols.
+    The arguments determine which of each of these possibilities
+    to use and the results are or'ed together. We need a separate
+    routine to keep things clean(er) because some symbolic constants
+    may not  be defined, such as RTLD_LOCAL on certain Solaris 2.5.1
+    and Irix 6.4    boxes. In such cases, we emit a warning message and 
+    use the default by not modifying the value of the flag.
+
+    Called only by AddDLL().
+  */
+static int
+computeDLOpenFlag(int asLocal, int now)
+{
+ static char *warningMessages[] = {
+  "Explicit local dynamic loading not supported on this platform. Using default.",
+  "Explicit global dynamic loading not supported on this platform. Using default.",
+  "Explicit non-lazy dynamic loading not supported on this platform. Using default.",
+  "Explicit lazy dynamic loading not supported on this platform. Using default."
+ };
+  /* Define a local macro for issuing the warnings.
+     This allows us to redefine it easily so that it only emits the warning
+     once as in
+         DL_WARN(i) if(warningMessages[i]) {\
+                     warning(warningMessages[i]); \
+                     warningMessages[i] = NULL; \
+    	            }
+     or to control the emission via the options currently in effect at call time.
+   */
+#define DL_WARN(i) \
+   if(asInteger(GetOption(install("warn"),R_NilValue)) == 1 || \
+         asInteger(GetOption(install("verbose"),R_NilValue)) > 0) \
+                      warning(warningMessages[i]);
+
+ int openFlag = 0; /* Default value so no-ops for undefined flags should do nothing
+                      in the resulting dlopen(). */
+
+
+#undef RTLD_LOCAL
+
+if(asLocal != 0) {
+#ifndef RTLD_LOCAL
+  DL_WARN(0)
+#else
+  openFlag = RTLD_LOCAL;
+#endif
+} else {
+#ifndef RTLD_GLOBAL
+  DL_WARN(1)
+#else
+  openFlag = RTLD_GLOBAL;
+#endif
+}
+
+if(now != 0) {
+#ifndef RTLD_NOW
+  DL_WARN(2)
+#else
+  openFlag |= RTLD_NOW;
+#endif
+} else {
+#ifndef RTLD_LAZY
+  DL_WARN(3)
+#else
+  openFlag |= RTLD_LAZY;
+#endif
+}
+
+ return(openFlag);
+}
+
 
 	/* R_FindSymbol checks whether one of the libraries */
 	/* that have been loaded contains the symbol name and */
 	/* returns a pointer to that symbol upon success. */
 
 
-DL_FUNC R_FindSymbol(char const *name)
+DL_FUNC R_FindSymbol(char const *name, char const *pkg)
 {
     char buf[MAXIDSIZE+1];
     DL_FUNC fcnptr;
-    int i;
+    int i, all=(strlen(pkg) == 0), doit;
     
 #ifdef HAVE_NO_SYMBOL_UNDERSCORE
     sprintf(buf, "%s", name);
@@ -219,16 +327,23 @@ DL_FUNC R_FindSymbol(char const *name)
 	/* be cast without loss of information.		     */
 
     for (i=0 ; i<CountDLL ; i++) {
-	fcnptr = (DL_FUNC)dlsym(LoadedDLL[i].handle, buf);
-	if (fcnptr != (DL_FUNC)0) return fcnptr;
+	doit = all;
+	if(!doit && !strcmp(pkg, LoadedDLL[i].name)) doit = 2;
+	if(doit) {
+	   fcnptr = (DL_FUNC)dlsym(LoadedDLL[i].handle, buf);
+	   if (fcnptr != (DL_FUNC)0) return fcnptr;
+	}
+	if(doit > 1) return (DL_FUNC)0;  /* Only look in the first-matching DLL */
     }
+    if(all || !strcmp(pkg, "base")) {
 #ifdef DL_SEARCH_PROG
-    fcnptr = (DL_FUNC)dlsym(dlhandle, buf);
+	fcnptr = (DL_FUNC)dlsym(dlhandle, buf);
 #else
-    for(i=0 ; CFunTab[i].name ; i++)
-	if(!strcmp(name, CFunTab[i].name))
-	    return CFunTab[i].func;
+	for(i=0 ; CFunTab[i].name ; i++)
+	    if(!strcmp(name, CFunTab[i].name))
+		return CFunTab[i].func;
 #endif
+    }
     return (DL_FUNC)0;
 }
 
@@ -251,6 +366,20 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
 	/* do_dynload implements the R-Interface for the */
 	/* loading of shared libraries */
 
+/*
+  Extended to support 2 additional arguments (3 in total).
+  First argument is the name of the library.
+  Second argument is a logical indicating whether we 
+  want the symbols to be kept in their own local symbol table
+  or added to the global symbol table of the application.
+  Third argument is a logical indicating whether the 
+  dynamic loading should relocate all routine symbols 
+  now and signal any errors immediately or lazily relocate
+  the symbols as they are invoked. This is useful for 
+  developers so that they can ensure that all the symbols 
+  are available before they release, and allows users to 
+  call routines from "incomplete" libraries.
+ */
 SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char buf[2 * PATH_MAX];
@@ -259,7 +388,7 @@ SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "character argument expected\n");
     GetFullDLLPath(call, buf, CHAR(STRING(CAR(args))[0]));
     DeleteDLL(buf);
-    if(!AddDLL(buf))
+    if(!AddDLL(buf,LOGICAL(CADR(args))[0],LOGICAL(CADDR(args))[0]))
 	errorcall(call, "unable to load shared library \"%s\":\n  %s\n",
 		  buf, DLLerror);
     return R_NilValue;
@@ -287,7 +416,7 @@ void InitFunctionHashing()
 #endif
 }
 
-DL_FUNC R_FindSymbol(char const *name)
+DL_FUNC R_FindSymbol(char const *name, char const *pkg)
 {
     int i;
     for(i=0 ; CFunTab[i].name ; i++)

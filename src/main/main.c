@@ -49,7 +49,7 @@ static int ParseBrowser(SEXP, SEXP);
 
 
 
-	/* Read-Eval-Print loop with input from a file */
+	/* Read-Eval-Print Loop [ =: REPL = repl ] with input from a file */
 
 static void R_ReplFile(FILE *fp, SEXP rho, int savestack, int browselevel)
 {
@@ -120,6 +120,8 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
     prompt_type = 1;
     buf[0] = '\0';
     bufp = buf;
+    if(R_Verbose)
+	REprintf(" >R_ReplConsole(): before \"for(;;)\" {main.c}\n");
     for(;;) {
 	if(!*bufp) {
 	    R_Busy(0);
@@ -424,7 +426,6 @@ void setup_Rmainloop(void)
 	UNPROTECT(1);
     }
     /* gc_inhibit_torture = 0; */
-
 }
 
 

@@ -234,7 +234,7 @@ sub build_htmlpkglist {
     }
 
     print htmlfile "</TABLE>\n";
-    print htmlfile "</BODY>\n";
+    print htmlfile "</BODY></HTML>\n";
 
     close htmlfile;
 }
@@ -280,11 +280,14 @@ sub build_index {
 
 	    open(rdfile, "<$manfile");
 	    undef $text;
-	    while(<rdfile>){ $text .= $_;}
+	    while(<rdfile>){  # skip comment lines
+		if(!/^%/) { $text .= $_; }
+	    }
 	    close rdfile;
 	    $text =~ /\\title\{\s*([^\}]+)\s*\}/s;
 	    my $rdtitle = $1;
 	    $rdtitle =~ s/\n/ /sg;
+	    $rdtitle =~ s/\\R/R/g; # don't use \R in titles
 
 	    $filenm{$rdname} = $manfilebase;
 
@@ -321,28 +324,31 @@ sub build_index {
        print htmlfile html_alphabet();
    }
 
-    print htmlfile "\n<p>\n<table width=100%>\n";
+    print htmlfile "\n<p>\n<table width=\"100%\">\n";
 
     my $firstletter = "";
     while(<anindex>){ 
         chomp;  ($alias, $file) = split /\t/; 
-        $aliasfirst = uc substr($alias, 0, 1); 
-        if(($aliasfirst ne $firstletter) && 
-	   ($aliasfirst =~ /[A-Z]/) &&
-	   ($naliases>100)){
+        $aliasfirst = uc substr($alias, 0, 1);
+	if($aliasfirst lt "A") { $aliasfirst = ""; }
+	if($aliasfirst gt "Z") { $aliasfirst = "misc"; }
+	if( ($naliases > 100) && ($aliasfirst ne $firstletter) ) {
 	    print htmlfile "</table>\n";
-	    print htmlfile "<a name=\"$aliasfirst\">\n";
-	    print htmlfile html_title2("-- $aliasfirst --");
-	    print htmlfile "<table width=100%>\n";
+#	    print htmlfile "<a name=\"$aliasfirst\">\n";
+	    print htmlfile html_title2("<a name=\"$aliasfirst\">-- $aliasfirst --</a>");
+	    print htmlfile "<table width=\"100%\">\n";
 	    $firstletter = $aliasfirst;
 	}
 	print titleindex "$alias\t$alltitles{$alias}\n";
-	print htmlfile "<TR><TD width=25%><A HREF=\"$file.$HTML\">" .
-	    "$alias</A></TD>\n<TD>$alltitles{$alias}</TD></TR>\n";
+	$htmlalias = $alias;
+	$htmlalias =~ s/</&lt;/go;
+	$htmlalias =~ s/>/&gt;/go;
+	print htmlfile "<TR><TD width=\"25%\"><A HREF=\"$file.$HTML\">" .
+	    "$htmlalias</A></TD>\n<TD>$alltitles{$alias}</TD></TR>\n";
     }
 
     print htmlfile "</TABLE>\n";
-    print htmlfile "</BODY>\n";
+    print htmlfile "</BODY></HTML>\n";
 
     close titleindex;
     close htmlfile;
@@ -368,14 +374,14 @@ sub build_htmlfctlist {
     print htmlfile html_alphabet();
 
     print htmlfile html_title2("-- Operators, Global Variables, ... --");
-    print htmlfile "\n<p>\n<table width=100%>\n";
+    print htmlfile "\n<p>\n<table width=\"100%\">\n";
     foreach $alias (sort foldorder keys %htmltitles) {
-	print htmlfile "<TR><TD width=25%>" .
+	print htmlfile "<TR><TD width=\"25%\">" .
 	    "<A HREF=\"../../library/$htmlindex{$alias}\">" .
 	    "$alias</A></TD>\n<TD>$htmltitles{$alias}</TD></TR>\n"
 		unless $alias =~ /^[a-zA-Z]/;
     }
-    print htmlfile "\n</table>\n<p>\n<table width=100%>\n";
+    print htmlfile "\n</table>\n<p>\n<table width=\"100%\">\n";
 
     my $firstletter = "";
     foreach $alias (sort foldorder keys %htmltitles) {
@@ -385,10 +391,10 @@ sub build_htmlfctlist {
 		print htmlfile "</table>\n";
 		print htmlfile "<a name=\"" . uc $aliasfirst . "\">\n";
 		print htmlfile html_title2("-- " . uc $aliasfirst . " --");
-		print htmlfile "<table width=100%>\n";
+		print htmlfile "<table width=\"100%\">\n";
 		$firstletter = $aliasfirst;
 	    }
-	    print htmlfile "<TR><TD width=25%>" .
+	    print htmlfile "<TR><TD width=\"25%\">" .
 		"<A HREF=\"../../library/$htmlindex{$alias}\">" .
 		    "$alias</A></TD>\n<TD>$htmltitles{$alias}</TD></TR>\n";
 	}

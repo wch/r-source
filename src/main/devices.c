@@ -93,7 +93,7 @@ SEXP do_Macintosh(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
 /*  PostScript Device Driver Parameters:
- *  ------------------------		--> ../unix/devPS.c
+ *  ------------------------		--> devPS.c
  *  file	= output filename
  *  paper	= paper type
  *  face	= typeface = "family"
@@ -111,7 +111,7 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
     DevDesc *dd;
     char *vmax;
     char *file, *paper, *face, *bg, *fg;
-    int horizontal;
+    int horizontal, onefile, pagecentre;
     double height, width, ps;
     gcall = call;
     vmax = vmaxget();
@@ -125,7 +125,9 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
     horizontal = asLogical(CAR(args));args = CDR(args);
     if(horizontal == NA_LOGICAL)
 	horizontal = 1;
-    ps = asReal(CAR(args));
+    ps = asReal(CAR(args));	      args = CDR(args);
+    onefile = asLogical(CAR(args));   args = CDR(args);
+    pagecentre = asLogical(CAR(args));
 
     if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
 	return 0;
@@ -133,7 +135,7 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
     dd->displayList = R_NilValue;
     GInit(&dd->dp);
     if(!PSDeviceDriver(dd, file, paper, face, bg, fg, width, height,
-		       (double)horizontal, ps)) {
+		       (double)horizontal, ps, onefile, pagecentre)) {
 	free(dd);
 	errorcall(call, "unable to start device PostScript\n");
     }
@@ -150,7 +152,7 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 /*  PicTeX Device Driver Parameters
- *  --------------------		--> ../unix/devPicTeX.c
+ *  --------------------		--> devPicTeX.c
  *  file    = output filename
  *  bg	    = background color
  *  fg	    = foreground color

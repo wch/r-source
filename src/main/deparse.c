@@ -160,14 +160,14 @@ SEXP deparse1(SEXP call, int abbrev)
 {
 /* Argument  abbrev ("logical"):
 	If abbrev is 1(TRUE), then the returned value
-	is a STRSXP of length 1 with at most 10 characters.	 
-	This is used for plot labelling etc. 
+	is a STRSXP of length 1 with at most 10 characters.
+	This is used for plot labelling etc.
 */
     SEXP svec;
     int savedigits;
 
     PrintDefaults(R_NilValue);/* from global options() */
-    savedigits = R_print.digits; 
+    savedigits = R_print.digits;
     R_print.digits = DBL_DIG;/* MAX precision */
 
     svec = R_NilValue;
@@ -224,7 +224,9 @@ SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
     }
     file = CADR(args);
-    
+    if (!isValidString(file))
+	errorcall(call, "file name must be a valid character string\n");
+
     fp = NULL;
     if (strlen(CHAR(STRING(file)[0])) > 0) {
 	fp = R_fopen(R_ExpandFileName(CHAR(STRING(file)[0])), "w");
@@ -405,10 +407,10 @@ static void deparse2buff(SEXP s)
 #if 1
 	print2buff(CHAR(PRINTNAME(s)));
 #else
-	/* I'm pretty sure this is WRONG: 
+	/* I'm pretty sure this is WRONG:
 	   Blindly putting special symbols in ""s causes more trouble
-	   than it solves 
-	   --pd 
+	   than it solves
+	   --pd
 	   */
 	if( isValidName(CHAR(PRINTNAME(s))) )
 	    print2buff(CHAR(PRINTNAME(s)));
@@ -498,9 +500,9 @@ static void deparse2buff(SEXP s)
 		    switch (length(s)) {
 		    case 1:
 			fop = PP_UNARY;
-			break; 
+			break;
 		    case 2:
-			break; 
+			break;
 		    default:
 			fop = PP_FUNCALL;
 			break;

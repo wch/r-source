@@ -35,7 +35,7 @@ double dpois(double x, double lambda)
 	return x + lambda;
 #endif
     if(fabs(x - floor(x + 0.5)) > 1e-7) {
-	warning("non-integer x = %f\n", x);
+	warning("non-integer x = %f", x);
 	return 0;
     }
     if(lambda <= 0.0) {

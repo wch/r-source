@@ -448,31 +448,44 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	GReset(dd);
     }
     else if (streql(what, "mfg")) {
-	int row, col, nrow, ncol;
+	int row, col, nrow, ncol, np;
 	value = coerceVector(value, INTSXP);
-	lengthCheck(what, value, 4);
+	np = length(value);
+	if(np != 2 && np != 4) 
+	    errorcall(gcall, "parameter \"mfg\" has the wrong length");
 	posIntCheck(INTEGER(value)[0], what);
 	posIntCheck(INTEGER(value)[1], what);
-	posIntCheck(INTEGER(value)[2], what);
-	posIntCheck(INTEGER(value)[3], what);
 	row = INTEGER(value)[0];
 	col = INTEGER(value)[1];
-	nrow = INTEGER(value)[2];
-	ncol = INTEGER(value)[3];
-	dd->gp.numrows = dd->dp.numrows = nrow;
-	dd->gp.numcols = dd->dp.numcols = ncol;
+	nrow = dd->dp.numrows;
+	ncol = dd->dp.numcols;
+	if(row <= 0 || row > nrow) 
+	    errorcall(gcall, "parameter \"i\" in \"mfg\" is out of range");
+	if(col <= 0 || col > ncol) 
+	    errorcall(gcall, "parameter \"j\" in \"mfg\" is out of range");
+	if(np == 4) {
+	    posIntCheck(INTEGER(value)[2], what);
+	    posIntCheck(INTEGER(value)[3], what);
+	    if(nrow != INTEGER(value)[2])
+		warningcall(gcall, "value of nr in \"mfg\" is wrong and will be ignored");
+	    if(ncol != INTEGER(value)[3])
+		warningcall(gcall, "value of nc in \"mfg\" is wrong and will be ignored");
+	}
 	dd->gp.lastFigure = dd->dp.lastFigure = nrow*ncol;
-	dd->dp.mfind = dd->gp.mfind = 1;
+	/*dd->dp.mfind = dd->gp.mfind = 1;*/
 	/* currentFigure is 1-based */
-	dd->dp.currentFigure = (col-1)*nrow + row;
+	if(dd->gp.mfind)
+	    dd->dp.currentFigure = (col-1)*nrow + row;
+	else dd->dp.currentFigure = (row-1)*ncol + col;
 	/*
 	  if (dd->dp.currentFigure == 0)
 	  dd->dp.currentFigure = dd->dp.lastFigure;
 	*/
 	dd->gp.currentFigure = dd->dp.currentFigure;
-	dd->gp.defaultFigure = dd->dp.defaultFigure = 1;
-	dd->gp.layout = dd->dp.layout = 0;
+	/* dd->gp.defaultFigure = dd->dp.defaultFigure = 1;
+	dd->gp.layout = dd->dp.layout = 0; */
 	dd->gp.new = dd->dp.new = 1;
+	/*
 	if (nrow > 2 || ncol > 2) {
 	    dd->gp.cexbase = dd->dp.cexbase = 0.5;
 	    dd->gp.mex = dd->dp.mex = 1.0;
@@ -485,6 +498,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	    dd->gp.cexbase = dd->dp.cexbase = 1.0;
 	    dd->gp.mex = dd->dp.mex = 1.0;
 	}
+	*/
 	GReset(dd);
     }
     else if (streql(what, "mgp")) {

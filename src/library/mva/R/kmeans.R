@@ -35,7 +35,7 @@ kmeans <- function(x, centers, iter.max = 10)
 		  integer(k),
 		  as.integer(iter.max),
 		  wss = double(k),
-		  ifault = as.integer(0))
+		  ifault = as.integer(0), PACKAGE="mva")
     switch(Z$ifault,
 	   stop("empty cluster: try a better set of initial centers"),
 	   warning("did not converge in iter.max iterations"),

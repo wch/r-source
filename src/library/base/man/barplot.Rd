@@ -7,7 +7,7 @@ barplot(height, width = 1, space = NULL, names.arg = NULL,
         legend.text = NULL, beside = FALSE, horiz = FALSE,
         col = heat.colors(NR), border = par("fg"), main = NULL,
         xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
-        axes = TRUE, ...)
+        axes = TRUE, plot = TRUE, ...)
 }
 \arguments{
     \item{height}{either a vector or matrix of values describing the
@@ -53,43 +53,57 @@ barplot(height, width = 1, space = NULL, names.arg = NULL,
     \item{xlim}{limits for the x axis.}
     \item{ylim}{limits for the y axis.}
     \item{axes}{logical.  If \code{TRUE}, a vertical axis is drawn.}
+    \item{plot}{logical.  If \code{FALSE}, nothing is plotted.}
     \item{\dots}{further arguments are passed to \code{\link{title}()}.}
 }
 \description{
-    Creates a bar plot with vertical or horizontal bars.
+  Creates a bar plot with vertical or horizontal bars.
 }
 \details{
-    This is a generic function, it currently only has a default method.
-    A formula interface may be added eventually.
+  This is a generic function, it currently only has a default method.
+  A formula interface may be added eventually.
 }
 \value{
-    A numeric vector, giving the coordinates of the bar midpoints drawn,
- useful for adding to the graph.
+  A numeric vector (or matrix, when \code{beside = TRUE}), say
+  \code{mp}, giving the coordinates of \emph{all} the bar midpoints
+  drawn, useful for adding to the graph.
+
+  If \code{beside} is true, use \code{apply(mp, 2, mean)} for the
+  midpoints of each \emph{group} of bars, see example.
 }
 \seealso{
-    \code{\link{plot}(\dots, type="h")},
-    \code{\link{dotplot}},
-    \code{\link{hist}}.
+  \code{\link{plot}(\dots, type="h")}, \code{\link{dotplot}},
+  \code{\link{hist}}.
 }
 \examples{
 tN <- table(Ni <- rpois(100, lambda=5))
 r <- barplot(tN, col='gray')
-points(r, tN, type='h', col='red', lwd=2)#- type = "h" plotting *is* `bar'plot
+lines(r, tN, type='h', col='red', lwd=2)#- type = "h" plotting *is* `bar'plot
 
 data(VADeaths, package = "base")
+barplot(VADeaths, plot = FALSE)
+barplot(VADeaths, plot = FALSE, beside = TRUE)
+
 mp <- barplot(VADeaths) # default
-tot <- apply(VADeaths, 2, sum); text(mp, tot + 3, format(tot))
+tot <- apply(VADeaths, 2, sum)
+text(mp, tot + 3, format(tot), xpd = NA, col = "blue")
 barplot(VADeaths, beside = TRUE,
         col = c("lightblue", "mistyrose", "lightcyan",
                 "lavender", "cornsilk"),
         legend = rownames(VADeaths), ylim = c(0, 100))
 title(main = "Death Rates in Virginia", font.main = 4)
 
-barplot(t(VADeaths)[, 5:1], beside = TRUE,
+hh <- t(VADeaths)[, 5:1]
+mybarcol <- "gray20"
+mp <- barplot(hh, beside = TRUE,
         col = c("lightblue", "mistyrose",
                 "lightcyan", "lavender"),
-        legend = colnames(VADeaths), ylim = c(0,80),
-        main = "Death Rates in Virginia", font.main = 4)
-        ## instead of title(.)
+        legend = colnames(VADeaths), ylim= c(0,100),
+        main = "Death Rates in Virginia", font.main = 4,
+        sub = "Faked upper 2*sigma error bars", col.sub = mybarcol)
+segments(mp, hh, mp, hh+ 2*sqrt(1000*hh/100), col=mybarcol, lwd=1.5)
+all(dim(mp) == dim(hh))# corresponding matrices
+mtext(side=1, at=apply(mp,2,mean), line = -2,
+      text=paste("Mean",formatC(apply(hh,2,mean))),col="red")
 }
 \keyword{hplot}

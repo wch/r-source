@@ -66,12 +66,12 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (isVector(vals) || isList(vals)) {
 	if (length(vals) < 0)
-	    errorcall(call, "argument has length zero\n");
+	    errorcall(call, "argument has length zero");
     }
-    else errorcall(call, "invalid matrix element type\n");
+    else errorcall(call, "invalid matrix element type");
 
     if (!isNumeric(snr) || !isNumeric(snc))
-	error("non-numeric matrix extent\n");
+	error("non-numeric matrix extent");
 
     lendat = length(vals);
     nr = asInteger(snr);
@@ -80,16 +80,16 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (lendat > 1 && (nr * nc) % lendat != 0) {
 	if (((lendat > nr) && (lendat / nr) * nr != lendat) ||
 	    ((lendat < nr) && (nr / lendat) * lendat != nr))
-	    warning("Replacement length not a multiple of the elements to replace in matrix(...) \n");
+	    warning("Replacement length not a multiple of the elements to replace in matrix(...)");
 	else if (((lendat > nc) && (lendat / nc) * nc != lendat) ||
 		 ((lendat < nc) && (nc / lendat) * lendat != nc))
-	    warning("Replacement length not a multiple of the elements to replace in matrix(...) \n");
+	    warning("Replacement length not a multiple of the elements to replace in matrix(...)");
     }
 	else if ((lendat > 1) && (nr * nc == 0)){
-	  warning("Replacement length not a multiple of the elements to replace in matrix(...) \n");
+	  warning("Replacement length not a multiple of the elements to replace in matrix(...)");
 	}
 	else if (lendat == 0 && nr * nc > 0){
-	  error("No data to replace in matrix(...)\n");
+	  error("No data to replace in matrix(...)");
 	}
 
     PROTECT(snr = allocMatrix(TYPEOF(vals), nr, nc));
@@ -108,7 +108,7 @@ SEXP allocMatrix(SEXPTYPE mode, int nrow, int ncol)
     int n;
 
     if (nrow < 0 || ncol < 0)
-	error("negative extents to matrix\n");
+	error("negative extents to matrix");
     n = nrow * ncol;
     PROTECT(s = allocVector(mode, n));
     PROTECT(t = allocVector(INTSXP, 2));
@@ -259,7 +259,7 @@ SEXP do_length(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
     if (length(args) != 1)
-	error("incorrect number of args to length\n");
+	error("incorrect number of args to length");
     ans = allocVector(INTSXP, 1);
     INTEGER(ans)[0] = length(CAR(args));
     return ans;
@@ -272,9 +272,9 @@ SEXP do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, j, nr, nc;
 
     if (length(args) != 1)
-	error("incorrect number of args to row/col\n");
+	error("incorrect number of args to row/col");
     if (!isMatrix(CAR(args)))
-	error("a matrix is required as arg to row/col\n");
+	error("a matrix is required as arg to row/col");
 
     nr = nrows(CAR(args));
     nc = ncols(CAR(args));
@@ -428,7 +428,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (!(isNumeric(CAR(args)) || isComplex(CAR(args))) ||
 	!(isNumeric(CADR(args)) || isComplex(CADR(args))))
-	error("%%*%% requires numeric matrix/vector arguments\n");
+	error("%%*%% requires numeric matrix/vector arguments");
 
     x = CAR(args);
     y = CADR(args);
@@ -510,11 +510,11 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (PRIMVAL(op) == 0) {
 	if (ncx != nry)
-	    errorcall(call, "non-conformable arguments\n");
+	    errorcall(call, "non-conformable arguments");
     }
     else {
 	if (nrx != nry)
-	    errorcall(call, "non-conformable arguments\n");
+	    errorcall(call, "non-conformable arguments");
     }
 
     if (isComplex(CAR(args)) || isComplex(CADR(args)))
@@ -649,7 +649,7 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return r;
  not_matrix:
-    errorcall(call, "argument is not a matrix\n");
+    errorcall(call, "argument is not a matrix");
     return call;/* never used; just for -Wall */
 }
 
@@ -693,11 +693,11 @@ SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
     a = CAR(args);
     PROTECT(dimsa = getAttrib(a, R_DimSymbol));
     if (dimsa == R_NilValue)
-	error("aperm: invalid first argument, must be an array\n");
+	error("aperm: invalid first argument, must be an array");
 
     PROTECT(perm = coerceVector(CADR(args), INTSXP));
     if (!isVector(perm) || (length(perm) != length(dimsa)))
-	error("aperm: invalid second argument, must be a vector\n");
+	error("aperm: invalid second argument, must be a vector");
 
     len = length(a);
 
@@ -741,7 +741,7 @@ SEXP do_aperm(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    VECTOR(r)[j] = VECTOR(a)[i];
 	}
     default:
-	errorcall(call, "invalid argument\n");
+	errorcall(call, "invalid argument");
     }
 
     if (INTEGER(CAR(CDDR(args)))[0])

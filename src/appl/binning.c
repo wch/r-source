@@ -60,7 +60,7 @@ void bincode(double *x, int *pn, double *breaks, int *pnb, int *code,
 		code[i] = lo+1;
 	    }
 	} else if (! *naok)
-	    error("NA's in .C(\"bincode\",... NAOK=FALSE)\n");
+	    error("NA's in .C(\"bincode\",... NAOK=FALSE)");
 }
 
 /* bincount is called by  hist(.)  [only]
@@ -98,7 +98,7 @@ void bincount(double *x, int *pn, double *breaks, int *pnb, int *count,
 		count[lo] += 1;
 	    }
 	} else if (! *naok)
-	    error("NA's in .C(\"bincount\",... NAOK=FALSE)\n");
+	    error("NA's in .C(\"bincount\",... NAOK=FALSE)");
 }
 
 
@@ -132,5 +132,5 @@ void bincode2(double *x, int *pn, double *breaks, int *pnb, int *code,
 		code[i] = lo+1;
 	    }
 	} else if (! *naok)
-	    error("NA's in .C(\"bincode2\",... NAOK=FALSE)\n");
+	    error("NA's in .C(\"bincode2\",... NAOK=FALSE)");
 }

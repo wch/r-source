@@ -1,11 +1,11 @@
 c
-c     zsisl solves the complex*16 symmetric system
+c     zsisl solves the double complex symmetric system
 c     a * x = b
 c     using the factors computed by zsifa.
 c
 c     on entry
 c
-c        a       complex*16(lda,n)
+c        a       double complex(lda,n)
 c                the output from zsifa.
 c
 c        lda     integer
@@ -17,7 +17,7 @@ c
 c        kpvt    integer(n)
 c                the pivot vector from zsifa.
 c
-c        b       complex*16(n)
+c        b       double complex(n)
 c                the right hand side vector.
 c
 c     on return
@@ -47,11 +47,11 @@ c     fortran iabs
 c
       subroutine zsisl(a,lda,n,kpvt,b)
       integer lda,n,kpvt(*)
-      complex*16 a(lda,*),b(*)
+      double complex a(lda,*),b(*)
 c
 c     internal variables.
 c
-      complex*16 ak,akm1,bk,bkm1,zdotu,denom,temp
+      double complex ak,akm1,bk,bkm1,zdotu,denom,temp
       integer k,kp
 c
 c     loop backward applying the transformations and

@@ -33,7 +33,8 @@ eigen <- function(x, symmetric, only.values=FALSE)
 			  dbl.n,
 			  dbl.n,
 			  double(2*n),
-			  ierr = integer(1))
+			  ierr = integer(1),
+                          PACKAGE="base")
 	    if (z$ierr)
 		stop(paste("ch returned code ", z$ierr, " in eigen"))
 	    if(!only.values)
@@ -50,7 +51,8 @@ eigen <- function(x, symmetric, only.values=FALSE)
 			  vectors = x,
 			  dbl.n,
 			  dbl.n,
-			  ierr = integer(1))
+			  ierr = integer(1),
+                          PACKAGE="base")
 	    if (z$ierr)
 		stop(paste("rs returned code ", z$ierr, " in eigen"))
 	}
@@ -73,7 +75,8 @@ eigen <- function(x, symmetric, only.values=FALSE)
 			  dbl.n,
 			  dbl.n,
 			  dbl.n,
-			  ierr = integer(1))
+			  ierr = integer(1),
+                          PACKAGE="base")
 	    if (z$ierr)
 		stop(paste("cg returned code ", z$ierr, " in eigen"))
 	    z$values <- complex(re=z$values,im=z$ivalues)
@@ -92,7 +95,8 @@ eigen <- function(x, symmetric, only.values=FALSE)
 			  vectors = x,
 			  integer(n),
 			  dbl.n,
-			  ierr = integer(1))
+			  ierr = integer(1),
+                          PACKAGE="base")
 	    if (z$ierr)
 		stop(paste("rg returned code ", z$ierr, " in eigen"))
 	    ind <- z$ivalues > 0

@@ -8,7 +8,7 @@ acf <-
         m <- match.call()
         m[[1]] <- as.name("pacf")
         m$type <- NULL
-        return(eval(m, parent.frame()))
+        return(eval(m, sys.frame(sys.parent())))
     }
     series <- deparse(substitute(x))
     x <- na.action(as.ts(x))
@@ -20,6 +20,7 @@ acf <-
     if (is.null(lag.max))
         lag.max <- floor(10 * (log10(sampleT) - log10(nser)))
     lag.max <- min(lag.max, sampleT - 1)
+    if (lag.max < 1) stop("lag.max must be at least 1")
     x <- sweep(x, 2, apply(x, 2, mean))
     lag <- matrix(1, nser, nser)
     lag[lower.tri(lag)] <- -1
@@ -39,7 +40,7 @@ acf <-
     acf <- array(.C("acf",
                     as.double(x), as.integer(sampleT), as.integer(nser),
                     as.integer(lag.max), as.integer(type=="correlation"),
-                    acf=double((lag.max+1) * nser * nser)
+                    acf=double((lag.max+1) * nser * nser), PACKAGE="ts"
                     )$acf, c(lag.max + 1, nser, nser))
     lag <- outer(0:lag.max, lag/x.freq)
     acf.out <- structure(.Data = list(acf = acf, type = type,
@@ -60,7 +61,7 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
     if(is.matrix(x)) {
         m <- match.call()
         m[[1]] <- as.name("pacf.mts")
-        return(eval(m, parent.frame()))
+        return(eval(m, sys.frame(sys.parent())))
     }
     x <- na.action(as.ts(x))
     x.freq <- frequency(x)
@@ -72,12 +73,13 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
     if (is.null(lag.max))
         lag.max <- floor(10 * (log10(sampleT)))
     lag.max <- min(lag.max, sampleT - 1)
+    if (lag.max < 1) stop("lag.max must be at least 1")
     x <- scale(x, T, F)
     acf <- drop(acf(x, lag.max = lag.max, plot=F)$acf)
     pacf <- array(.C("uni_pacf",
                as.double(acf),
                pacf = double(lag.max),
-               as.integer(lag.max))$pacf, dim=c(lag.max,1,1))
+               as.integer(lag.max), PACKAGE="ts")$pacf, dim=c(lag.max,1,1))
     acf.out <- structure(.Data = list(acf = pacf, type = "partial",
                          n.used = sampleT,
                          lag = array((1:lag.max)/x.freq, dim=c(lag.max,1,1)),
@@ -101,6 +103,7 @@ pacf.mts <- function(x, lag.max = NULL, plot = TRUE, na.action = na.fail, ...)
     if (is.null(lag.max))
         lag.max <- floor(10 * (log10(sampleT) - log10(nser)))
     lag.max <- min(lag.max, sampleT - 1)
+    if (lag.max < 1) stop("lag.max must be at least 1")
     x <- sweep(x, 2, apply(x, 2, mean))
     lag <- matrix(1, nser, nser)
     lag[lower.tri(lag)] <- -1

@@ -2,8 +2,9 @@ include ../gnuwin32/MkRules
 
 CFLAGS=$(OPTFLAGS) -I../include -I../gnuwin32
 FFLAGS=$(OPTFLAGS)
-SOURCES=$(wildcard *.c *.f)
-OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
+CSOURCES=$(wildcard *.c)
+FSOURCES=$(filter-out $(wildcard z*.f), $(wildcard *.f))
+OBJS=$(foreach i, $(CSOURCES) $(FSOURCES), $(basename $i).o)
 
 sock-CFLAGS=-DWin32
 Rsock-CFLAGS=-DWin32
@@ -13,7 +14,6 @@ all: makeMakedeps ../gnuwin32/libappl.a
 ../gnuwin32/libappl.a: $(OBJS)
 
 # Dependencies
-CSOURCES=$(wildcard *.c)
 DEPS=$(foreach i, $(CSOURCES), $(basename $i).d)
 
 .c.d:

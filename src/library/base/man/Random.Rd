@@ -75,7 +75,6 @@ Currently available RNG kinds
     % NOT YET:
     % \item "Mersenne-Twister": \code{.Random.seed[1] == 4}
   }
-
  --- --- to be expanded --- ---
     
  ((Planned additions are
@@ -142,7 +141,7 @@ rs <- .Random.seed
 (WHs <- next.WHseed(rs[-1]))
 u <- runif(1)
 all(next.WHseed(rs[-1]) == .Random.seed[-1])
-u == my.runif1(rs)
+all.equal(u, my.runif1(rs))
 
 
 ## ----

@@ -177,6 +177,41 @@ SEXP R_HashGet(int hashcode, SEXP symbol, SEXP table)
 
 
 /*----------------------------------------------------------------------
+
+  R_HashGetLoc
+
+  Hashtable get location function. Just like R_HashGet, but returns
+  location of variable, rather than its value. Returns R_NilValue
+  if not found.
+
+*/
+
+SEXP R_HashGetLoc(int hashcode, SEXP symbol, SEXP table)
+{
+    SEXP chain;
+
+    /* Do type checking */
+    if (TYPEOF(table) != VECSXP){
+	printf("3rd arg (table) not of type VECSXP, from R_HashGet\n");
+    }
+    if (isNull(table)) {
+	error("Table is null, from R_HashGet\n");
+    }
+    /* Grab the chain from the hashtable */
+    chain = VECTOR(table)[hashcode];
+    /* Retrieve the value from the chain */
+    for (; !isNull(chain); chain = CDR(chain)) {
+	if (TAG(chain) == symbol) {
+	    return chain;
+	}
+    }
+    /* If not found */
+    return R_NilValue;
+}
+
+
+
+/*----------------------------------------------------------------------
   
   R_NewHashTable
   
@@ -459,6 +494,37 @@ void unbindVar(SEXP symbol, SEXP rho)
 	R_HashDelete(hashcode, symbol, HASHTAB(rho));
     }
 }
+
+
+
+/*----------------------------------------------------------------------
+
+  findVarLocInFrame
+
+  Look up the location of the value of a symbol in a
+  single environment frame.  Almost like findVarInFrame, but
+  does not return the value. R_NilValue if not found.
+
+*/
+
+SEXP findVarLocInFrame(SEXP rho, SEXP symbol)
+{
+    int hashcode;
+    SEXP frame;
+    if (HASHTAB(rho) == R_NilValue) {
+	frame = FRAME(rho);
+	while (frame != R_NilValue && TAG(frame) != symbol)
+	    frame = CDR(frame);
+	return frame;
+    }
+    else {    
+	hashcode = newhashpjw(CHAR(PRINTNAME(symbol))) %
+	    HASHSIZE(HASHTAB(rho));
+	/* Will return 'R_NilValue' if not found */
+	return(R_HashGetLoc(hashcode, symbol, HASHTAB(rho)));
+    }
+}
+
 
 
 
@@ -902,7 +968,7 @@ static int RemoveVariable(SEXP name, int hashcode, SEXP env)
 
 SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP name, envarg, tsym, tenv, tframe;
+    SEXP name, envarg, tsym, tenv;
     int ginherits = 0;
     int done, i, hashcode;
     checkArity(op, args);

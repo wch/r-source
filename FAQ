@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.65-2, 1999/08/25
+Version 0.65-7, 1999/10/06
 Kurt Hornik
 
 
@@ -174,7 +174,7 @@ R by sending code and bug reports.
 modify the R source code CVS archive.  The group currently consists of Doug
 Bates, Peter Dalgaard, Robert Gentleman, Kurt Hornik, Ross Ihaka, Friedrich
 Leisch, Thomas Lumley, Martin Maechler, Guido Masarotto, Paul Murrell,
-Brian Ripley, Heiner Schwarte, Duncan Temple Lang, and Luke Tierney.
+Brian Ripley, Duncan Temple Lang, and Luke Tierney.
 
    R has a home page at `http://stat.auckland.ac.nz/r/r.html'.  It is free
 software distributed under a GNU-style copyleft, and an official part of
@@ -197,11 +197,10 @@ distribution for more information.
 2.3 What is the current version of R?
 =====================================
 
-   The current stable Unix version is 0.65.0, the unstable one is
-0.66.0.  Typically, new features are introduced in the development
-versions; updates of stable versions are for bug fixes mostly.  The Windows
-version tracks the stable Unix version quite closely.  The version for the
-Mac is pre-alpha.
+   The current stable Unix/Windows version is 0.65.1, the unstable one is
+0.90.0.  Typically, new features are introduced in the development
+versions; updates of stable versions are for bug fixes mostly.  The version
+for the Mac is pre-alpha.
 
 2.4 How can R be obtained?
 ==========================
@@ -224,10 +223,10 @@ very easily under a number of common Unix platforms (see *Note What
 machines does R run on?::).  The file `INSTALL' that comes with the R
 distribution contains instructions.
 
-   Note that as of version 0.62, you need a FORTRAN compiler or `f2c' in
-addition to a C compiler to build R.  Also (as of 0.60), you need Perl
-version 5 to build the documentation.  If this is not available on your
-system, you can obtain precompiled documentation files via CRAN.
+   Note that you need a FORTRAN compiler or `f2c' in addition to a C
+compiler to build R.  Also, you need Perl version 5 to build the
+documentation.  If this is not available on your system, you can obtain
+precompiled documentation files via CRAN.
 
    In the simplest case, untar the R source code, cd to the directory thus
 created, and issue the following commands (at the shell prompt):
@@ -251,7 +250,7 @@ be previewed and printed using standard programs such as `xdvi' and `dvips'.
 correctly.
 
    You can also perform a "system-wide" installation using `make install'.
-This will install to the following directories:
+By default, this will install to the following directories:
 
 `${prefix}/bin'
      (some) executables
@@ -274,16 +273,12 @@ In the above, `prefix' is determined during configuration (typically
 2.5.2 How can R be installed (Windows)
 --------------------------------------
 
-   The `bin/ms-windows' directory of a CRAN site currently contains two
-binary distributions of R for MS Windows: one by Robert Gentleman in the
-`windows' subdirectory, and one by Guido Masarotto
-<guido@sirio.stat.unipd.it> and Brian D. Ripley <ripley@stats.ox.ac.uk> in
-`windows-9x'.  The latter only works on 32 bit versions of Windows (i.e.,
-95, 98 or NT), the former also on 3.11.  See the respective directories for
-more information.  Binary distributions for a large number of add-on
-packages (basically all those on CRAN except purely data collections) for
-use with the Guido & Brian version are available in the
-`windows-9x/contrib' subdirectory.
+   The `bin/windows/windows-NT' directory of a CRAN site contains the
+latest binary distributions of R for 32 bit versions of MS Windows (i.e.,
+95, 98 or NT), as well as binary distributions for a large number of add-on
+packages from CRAN.  The Windows version of R was created by Robert
+Gentleman, and is now being developed and maintained by Guido Masarotto
+<guido@sirio.stat.unipd.it> and Brian D. Ripley <ripley@stats.ox.ac.uk>.
 
    Note that when uncompressing the zip files, the pkunzip program needs to
 be invoked with the `-D' flag to create subdirectories.  Also, be aware
@@ -295,22 +290,19 @@ more details.
 2.5.3 How can R be installed (Macintosh)
 ----------------------------------------
 
-   The CRAN `bin/macintosh' directory contains `R.sea.hqx', a binhexed
-self-extracting archive, and installation instructions in
-`README.MACINTOSH'.  Note that the version in it is nowhere near the
-quality of the current Unix version.
-
-   The Power Macintosh port is temporarily on hold.
+   The Power Macintosh port is temporarily on hold, and currently no binary
+distribution is available.  We hope that this will change soon.
 
 2.6 Are there Unix binaries for R?
 ==================================
 
    The `bin/linux' directory contains Debian 2.1 packages for the i386
 platform (now part of the Debian distribution and maintained by Doug Bates)
-as well as Red Hat 5.1 packages for the i386, alpha and sparc platforms
-(maintained by Martyn Plummer, Naoki Takebayashi, and Vin Everett,
-respectively), S.u.S.E. 5.3 i386 packages by Albrecht Gebhardt, and RPMs
-for the ppc platform by Alex Buerkle.
+as well as Red Hat 5.1 packages for the alpha and sparc platforms
+(maintained by Nassib Nasser and Vin Everett, respectively), Red Hat 6.0
+packages for the i386 and alpha platforms (maintained by Martyn Plummer and
+Naoki Takebayashi, respectively), S.u.S.E. 5.3/6.0/6.2 i386 packages by
+Albrecht Gebhardt, and RPMs for the ppc platform by Alex Buerkle.
 
    No other binary distributions have thus far been made publically
 available.
@@ -328,26 +320,28 @@ name may need to be be quoted.)
 via LaTeX, see *Note How can R be installed?::.  An up-to-date HTML version
 is always available for web browsing at `http://stat.ethz.ch/R/manual/'.
 
-   An R manual ("Notes on R:  A Programming Environment for Data Analysis
-and Graphics") is currently being written, based on the "Notes on S-PLUS"
-by Bill Venables <venables@stats.adelaide.edu.au> and David Smith
-<D.M.Smith@lancaster.ac.uk>.  The current version can be obtained as
-`Rnotes.tgz' (LaTeX source) in a CRAN `doc' directory.  Note that the
-"conversion" from S(-PLUS) to R is not complete yet.  Further documentation
-on R and the R API are currently being written.
+   An earlier attempt at an R manual ("Notes on R:  A Programming
+Environment for Data Analysis and Graphics"), based on the "Notes on
+S-PLUS" by Bill Venables <venables@stats.adelaide.edu.au> and David Smith
+<D.M.Smith@lancaster.ac.uk>, can be obtained as `Rnotes.tgz' (LaTeX source)
+in a CRAN `doc' directory.  Further documentation on R and the R API are
+currently being written.
 
    In the absence of an R manual, documentation for S/S-PLUS (see *Note R
 and S::) can be used in combination with this FAQ (*note What are the
 differences between R and S?::).  We recommend
 
-     W. N. Venables and B. D. Ripley (1997), "Modern Applied Statistics with
-     S-PLUS.  Second Edition".  Springer, ISBN 0-387-98214-0.
+     W. N. Venables and B. D. Ripley (1999), "Modern Applied Statistics with
+     S-PLUS.  Third Edition".  Springer, ISBN 0-387-98825-4.
 
-which has a home page at `http://www.stats.ox.ac.uk/pub/MASS2/' providing
-additional material, in particular `R' Complements which describe how to
+which has a home page at `http://www.stats.ox.ac.uk/pub/MASS3/' providing
+additional material, in particular "R Complements" which describe how to
 use the book with R.  These complements provide both descriptions of some
-of the differences between R and S, and the modifications needed to run the
-examples in the book.
+of the differences between R and S-PLUS, and the modifications needed to
+run the examples in the book.  Its companion volume on "S Programming", due
+in about April 2000, will provide an in-depth guide to writing software in
+the S language which forms the basis of both the commercial S-PLUS and the
+Open Source R data analysis software systems.
 
    More introductory books are
 
@@ -487,25 +481,40 @@ R. Wilks of AT&T Bell Laboratories Statistics Research Department.
 
      This is also called the "_White Book_".
 
+   Version 4 of S, a major revision of S designed by John Chambers to
+improve its usefulness at every stage of the programming process, is
+described in "Programming with Data"
+(http://cm.bell-labs.com/cm/ms/departments/sia/Sbook/) by John M. Chambers
+(1998), Springer: New York, ISBN 0-387-98503-4.
+
+   In 1998, the Association for Computing Machinery presented its Software
+System Award to John Chambers for the design of the S system. The ACM
+citation stated that "S has forever altered the way people analyze,
+visualize, and manipulate data .... S is an elegant, widely accepted, and
+enduring software system, with conceptual integrity, thanks to the insight,
+taste, and effort of John Chambers."  See
+`http://netlib.bell-labs.com/cm/ms/departments/sia/S/index.html' for
+"Stages in the Evolution of S".
+
    There is a huge amount of user-contributed code for S, available at the
 S Repository (http://lib.stat.cmu.edu) at CMU.
 
-   See the "Frequently Asked Questions about S"
-(http://lib.stat.cmu.edu/S/faq) for further information about S.
+   The "Frequently Asked Questions about S" (http://lib.stat.cmu.edu/S/faq)
+contains further information about S, but is not up-to-date.
 
 3.2 What is S-PLUS?
 ===================
 
    S-PLUS is a value-added version of S sold by Statistical Sciences, Inc.
-(now a division of Mathsoft, Inc.).  S is a subset of S-PLUS, and hence
-anything which may be done in S may be done in S-PLUS.  In addition S-PLUS
-has extended functionality in a wide variety areas, including robust
+(now a division of Mathsoft, Inc.).  Based on the S language, S-PLUS
+provides functionality in a wide variety of areas, including robust
 regression, modern non-parametric regression, time series, survival
 analysis, multivariate analysis, classical statistical tests, quality
 control, and graphics drivers.  Add-on modules add additional capabilities
-for wavelet analysis, spatial statistics, and design of experiments.
+for wavelet analysis, spatial statistics, GARCH models, and design of
+experiments.
 
-   See the MathSoft S-PLUS page (http://www.mathsoft.com/splus.html) for
+   See the MathSoft S-PLUS page (http://www.mathsoft.com/splus/) for
 further information.
 
 3.3 What are the differences between R and S?
@@ -649,7 +658,7 @@ this is a trivial problem; simply make up the function with the required
 definitions in the same environment and scoping takes care of it.  With S,
 one solution is to add an extra parameter to the function and to the
 optimizer to pass in these extras, which however can only work if the
-optimizer supports this (and typically, the builtin ones do not).
+optimizer supports this.
 
    Lexical scoping allows using function closures and maintaining local
 state.  A simple example (taken from Abelson and Sussman) is obtained by
@@ -657,7 +666,9 @@ typing `demo(scoping)' at the R prompt.  Further information is provided in
 the standard R reference "R: A Language for Data Analysis and Graphics"
 (*note What documentation exists for R?::) and a paper on "Lexical Scope
 and Statistical Computing" by Robert Gentleman and Ross Ihaka which can be
-obtained from the `doc/misc' directory of a CRAN site.
+obtained from the `doc/misc' directory of a CRAN site and will appear in
+the _Journal of Computational and Graphical Statistics_ around the
+beginning of 2000.
 
    Lexical scoping also implies a further major difference.  Whereas S
 stores all objects as separate files in a directory somewhere (usually
@@ -754,10 +765,6 @@ being as compatible as possible with S.
    * In R, `dyn.load()' can only load _shared libraries_, as created for
      example by `R SHLIB'.
 
-   * Whereas in S, `abs(z)' is the same as `Mod(z)' for complex `z', in R
-     you _must_ use `Mod(z)', since `abs()' is a function of real numbers
-     only.
-
    * In R, `attach()' currently only works for lists and data frames (not
      for directories).  Also, you cannot attach at position 1.
 
@@ -772,9 +779,10 @@ being as compatible as possible with S.
    * The random number generators are different, and the seeds have
      different length.
 
-   * R uses only double precision and so can only pass real numeric
-     arguments to C/FORTRAN subroutines as double * or DOUBLE PRECISION,
-     respectively.
+   * R has no single precision storage mode, and so can only pass real
+     numeric arguments to C/FORTRAN subroutines as double * or DOUBLE
+     PRECISION, respectively.  (As of version 0.90 there will also be a
+     single precision interface.)
 
    * By default, `ls()' returns the names of the objects in the current
      (under R) and global (under S) environment, respectively.  For example,
@@ -793,8 +801,8 @@ being as compatible as possible with S.
      tested for by checking whether their `length()' is zero (which works
      in both R and S), and not using `is.null()'.
 
-   * Named vectors are vectors in R but not in S (e.g., `is.vector(c(a =
-     1:3))' returns `FALSE' in S and `TRUE' in R).
+   * Named vectors are considered vectors in R but not in S (e.g.,
+     `is.vector(c(a = 1:3))' returns `FALSE' in S and `TRUE' in R).
 
    * Data frames are not considered as matrices in R (i.e., if `DF' is a
      data frame, then `is.matrix(DF)' returns `FALSE' in R and `TRUE' in S).
@@ -834,15 +842,15 @@ to implement the change yourself and make sure it works.
 
    Since almost anything you can do in R has source code that you could
 port to S-PLUS with little effort there will never be much you can do in R
-that you couldn't do in S-PLUS (or vanilla S) if you wanted to.  (Note that
-using lexical scoping may simplify matters considerably, though.)
+that you couldn't do in S-PLUS if you wanted to.  (Note that using lexical
+scoping may simplify matters considerably, though.)
 
    R offers several graphics features that S-PLUS does not, such as finer
 handling of line types, more convenient color handling (via palettes),
-gamma correction for color, fixing aspect ratios, and, most importantly, it
-allows mathematics in plot texts.  Unfortunately, this feature still is
-mostly undocumented, but in a nutshell, "R has TeX inside".  The paper "An
-Approach to Providing Mathematical Annotations Plots" by Paul Murrell and
+gamma correction for color, and, most importantly, mathematical annotation
+in plot texts, via input expressions reminiscent of TeX constructs.
+Unfortunately, this feature still is mostly undocumented.  The paper "An
+Approach to Providing Mathematical Annotation in Plots" by Paul Murrell and
 Ross Ihaka, which will soon appear in the _Journal of Computational and
 Graphical Statistics_, has more details on this.
 
@@ -982,9 +990,6 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
      Miscellaneous functions used at the Department of Statistics at TU Wien
      (E1071).
 
-*event*
-     Procedures for event history analysis.
-
 *fracdiff*
      Maximum likelihood estimation of the parameters of a fractionally
      differenced ARIMA(p,d,q) model (Haslett and Raftery, Applied
@@ -997,12 +1002,6 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
 *gee*
      An implementation of the Liang/Zeger generalized estimating equation
      approach to GLMs for dependent data.
-
-*gnlm*
-     Generalized nonlinear regression models.
-
-*growth*
-     Normal theory repeated measurements models.
 
 *gss*
      A comprehensive package for structural multivariate function estimation
@@ -1081,15 +1080,9 @@ Journal of Statistical Software (`http://www.stat.ucla.edu/journals/jss/').
 *quantreg*
      Compute regression quantiles and some related rank statistics.
 
-*repeated*
-     Models for non-normal repeated measurements.
-
 *rmeta*
      Functions for simple fixed and random effects meta-analysis for
      two-sample comparison of binary outcomes.
-
-*rmutil*
-     Tools for repeated measurements.
 
 *rpart*
      Recursive Partitioning.
@@ -1147,16 +1140,6 @@ these a try, of course.  This area of CRAN currently contains
 *dopt*
      Finding D-optimal experimental designs.
 
-*dse*
-     A multivariate time series package (Dynamic Systems Estimation, DSE) by
-     Paul Gilbert <pgilbert@bank-banque-canada.ca> which implements an
-     object oriented approach to time series models (using classes and
-     methods in R/S).  The package provides state-space models and the
-     Kalman filter, VARMA and cointegration models, and numerical
-     differentiation.  It also contains Troll models as another class (the
-     Troll interface is not yet functional in R).  For further information
-     see `http://www.bank-banque-canada.ca/pgilbert'.
-
 *tcltk*
      Basic interface with Tcl/Tk.
 
@@ -1165,6 +1148,23 @@ these a try, of course.  This area of CRAN currently contains
 
 *vtcl*
      Interface to Visual Tcl.
+
+   Jim Lindsey <jlindsey@luc.ac.be> has written a collection of R packages
+for nonlinear regression and repeated measurements, consisting of *event*
+(procedures for event history analysis), *gnlm* (generalized nonlinear
+regression models), *growth* (normal theory repeated measurements models),
+*repeated* (models for non-normal repeated measurements.), and *rmutil*
+(tools for repeated measurements).  Jim's packages can be obtained via
+`http://www.luc.ac.be/~jlindsey/rcode.html'.
+
+   Paul Gilbert <pgilbert@bank-banque-canada.ca> has written the Dynamic
+Systems Estimation (DSE) Library, a multivariate time series package which
+implements an object oriented approach to time series models (using classes
+and methods in R/S).  The package provides state-space models and the
+Kalman filter, VARMA and cointegration models, and numerical
+differentiation.  It also contains Troll models as another class (the Troll
+interface is not yet functional in R).  Paul's package *dse* can be
+obtained from `http://www.bank-banque-canada.ca/pgilbert/dsedesc.htm'.
 
    More code has been posted to the r-help mailing list, and can be
 obtained from the mailing list archive.
@@ -1190,6 +1190,9 @@ use
      $ R INSTALL -l LIB PKGDIR_1 ... PKGDIR_N
 
 where LIB gives the path to the library tree to install to.
+
+   As of R version 0.65.1, the need for explicit unpacking for installing
+will be removed.
 
    You can use several library trees of add-on packages.  The easiest way
 to tell R to use these is via the environment variable `R_LIBS' which
@@ -1223,20 +1226,20 @@ at the R prompt.
      base         The R base package
      class        Functions for classification
      cluster      Functions for clustering
-     ctest        Classical Tests
+     ctest        Classical tests
      date         Functions for handling dates
      eda          Exploratory Data Analysis
      gee          Generalized Estimating Equation models
      lme          Linear mixed effects library
-     locfit       Local Regression, Likelihood and Density Estimtion.
-     lqs          Resistant Regression and Covariance Estimation
+     locfit       Local regression, likelihood and density estimation
+     lqs          Resistant regression and covariance estimation
      modreg       Modern regression: smoothing and local methods
      mva          Classical Multivariate Analysis
      nls          Nonlinear regression
      nnet         Software for feed-forward neural networks with a single
                   hidden layer and for multinomial log-linear models.
-     splines      Regression Spline Functions and Classes
-     stepfun      Step Functions, including Empirical Distributions
+     splines      Regression spline functions and classes
+     stepfun      Step functions, including empirical distributions
      survival5    Survival analysis [needs library(splines)]
      ts           Time series functions
 
@@ -1327,8 +1330,14 @@ of three types as indicated by their extension:  plain R code (`.R' or
 the installation directory.
 
    Finally, `exec' could contain additional executables the package needs,
-typically Shell or Perl scripts. This mechanism is currently not used by
+typically Shell or Perl scripts.  This mechanism is currently not used by
 any package, and still experimental.
+
+   You can also provide shell scripts `configure' and `cleanup' for
+configuration before installation (such as checking for additional software
+that might be needed by the package), and removing the files created in
+this process.  See the add-on package *e1071* on CRAN for an example of
+this mechanism.
 
    See the documentation for `library()' for more information.
 
@@ -1344,8 +1353,9 @@ maintained by Thomas Lumley provides information on porting S packages to R.
 and communicating problems is certainly of great value.
 
    One place where functionality is still missing is the modeling software
-as described in "Statistical Models in S" (see *Note What is S?::).  *gam*
-and some of the nonlinear modeling code are not there yet.
+as described in "Statistical Models in S" (see *Note What is S?::).
+Generalized Additive Models (*gam*) and some of the nonlinear modeling code
+are not there yet.
 
    See also the `PROJECTS' file in the top level R source directory.
 
@@ -1519,7 +1529,10 @@ different name.
    To remove all objects in the currently active environment (typically
 `.GlobalEnv'), you can do
 
-     rm(list = ls())
+     rm(list = ls(all = TRUE))
+
+(Without `all = TRUE', only the objects with names not starting with a `.'
+are removed.)
 
 7.6 How can I get eval() and D() to work?
 =========================================
@@ -1707,7 +1720,7 @@ R executable.  That way `.gdbinit' can stay in the directory with the code
 and be used to set up the environment and the search paths for the source,
 e.g. as follows:
 
-     set env R_HOME /usr/lib/R
+     set env R_HOME /usr/share/R
      set env R_PAPERSIZE letter
      set env R_PRINTCMD lpr
      dir /usr/lib/R/src/appl

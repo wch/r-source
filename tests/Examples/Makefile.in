@@ -15,46 +15,66 @@ DISTFILES = Makefile.in
 
 R = $(top_builddir)/bin/R --vanilla
 
-PKGS = base eda lqs modreg mva stepfun ts
+PKGS = $(R_PKGS)
 EX_IN = $(PKGS:=-Ex.R)
 EX_OUT = $(EX_IN:.R=.Rout)
+
 .SUFFIXES:
 .SUFFIXES: .R .Rout
-.SECONDARY: $(EX_IN)
 
-all: Makefile test-Examples
+all: Makefile Makedeps test-Examples
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
-	cd $(top_builddir) && \
+	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-test-Examples: R $(EX_OUT)
+Makedeps: Makefile
+	@(for p in $(PKGS); do \
+	    dep="$${p}-Ex.Rout: $${p}-Ex.R"; \
+	    dep="$${dep} \$$(top_builddir)/library/$${p}/R/$${p}"; \
+	    tmp="library/$${p}/libs/$${p}" ; \
+	    if test -f $(top_builddir)/$${tmp}.$(SHLIBEXT); then \
+	      dep="$${dep} \$$(top_builddir)/$${tmp}.\$$(SHLIBEXT)"; \
+	    fi; \
+	    dep="$${dep} \$$(FORCE)"; \
+	    echo $${dep}; \
+	  done) >> Makefile
+	@touch $@
+
+test-Examples: Makefile R
+	@$(MAKE) Makedeps
+	@$(MAKE) $(EX_OUT)
 
 R:
 	@cd $(top_builddir) && $(MAKE) R
 
 .R.Rout:
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
-	@if [ -f $@ ]; then mv $@ $@.bak ; fi
-	@echo "Running all help() examples ..."
+	@if [ -f $@ ];     then cp $@     $@.bak  ; fi
+	@echo "running code in $< ..."
 	$(R) < $< > $@
 
 $(EX_IN): FORCE
 	@(pkg=`echo $@ | sed -e 's/-Ex.R$$//g'`; \
 	  if test -f $@.bak ; then mv $@.bak $@.bakk ; fi; \
-	  if test -f $@     ; then mv $@     $@.bak  ; fi; \
-	  echo "Collecting components of $@ ..."; \
+	  if test -f $@     ; then cp $@     $@.bak  ; fi; \
+	  echo "updating $@ ..."; \
 	  (cd $(top_builddir)/src/library && \
 	    OPTS="--nroff --example" $(MAKE) PKGS="$${pkg}" DOCS); \
-	  echo "Massaging examples into $@ ..."; \
+	  f=/tmp/R$$$$; \
 	  $(top_builddir)/bin/massage-Examples $${pkg} \
-	    $(top_builddir)/library/$${pkg}/R-ex/*.R > $@)
+	    $(top_builddir)/library/$${pkg}/R-ex/*.R > $${f}; \
+	  $(top_srcdir)/tools/move-if-change $${f} $@)
 FORCE:
+
+$(EX_OUT): Makefile \
+  $(top_builddir)/bin/R.X11 \
+  $(top_builddir)/library/base/R/base
 
 mostlyclean: clean
 clean:
-	@rm -f *.R *.Rout *.Rd* *.ps *.tex *.dat* data foo*
+	@rm -f *.R *.Rout *.Rd* *.ps *.tex *.dat* data foo* Makedeps
 distclean: clean
 	@rm -f *.R*bak *.R*bakk .RData sink-examp.txt Makefile
 maintainer-clean: distclean
@@ -65,3 +85,5 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
         done
+
+## Automagically generated dependencies:

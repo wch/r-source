@@ -52,8 +52,9 @@ Y::~Y()
 }
 \end{verbatim}
 implementing the 2 classes \texttt{X} and \texttt{Y}. 
-The only thing we have to do, is writing a wrapper function 
-and ensuring that the function is bracketed by 
+The only thing we have to do is to write a wrapper function 
+and ensure that the function(s) containing symbols we want to call
+from R are bracketed by 
 \begin{verbatim}
 extern "C" {
 
@@ -62,40 +63,45 @@ extern "C" {
 For example, 
 \begin{verbatim}
 -------------------------------
-X_main.cc:
+X_wrap.cc:
 -------------------------------
 #include "X.hh"
 
 extern "C" {
 
-void X_main ()
+void X_wrap ()
 {
   X x;
 }
 
 }
 \end{verbatim}
-Compiling and linking should be done with the C++ compiler-linker
+Compiling and linking should be done with the C++ compiler-linker,
+for example under Linux
 \begin{verbatim}
 g++ -c X.cc
-g++ -c X_main.cc
-g++ -shared -o X.so X_main.o X.o
+g++ -c X_wrap.cc
+g++ -shared -o X.so X_wrap.o X.o
 \end{verbatim}
-Otherwise (i.e., linking, e.g., with GNU ld) \verb+__main()+ and hence, 
-the constructor of the static variable \verb+Y+ are not
-called.
+Otherwise \verb+__main()+ and hence the constructor of the static
+variable \verb+Y+ may not be not called.  (Replace \verb+-shared+ by
+\verb+${SHLIBLDFLAGS}+ from \verb+R_HOME/etc/Makeconf+ on other Unix
+platforms; on Windows add the library \verb|-lstdc++|.)
+
+
 Now starting R yields
 \begin{verbatim}
 R : Copyright 1999, The R Development Core Team
-Version 0.63.2  (January 12, 1999)
+Version 0.65.0  (August 27, 1999)
 ...
 Type    "q()" to quit R.
 
->dyn.load("X.so")
+> dyn.load("X.so")
 constructor Y
->.C("X_main")
+>.C("X_wrap")
 constructor X
 destructor X
+list()
 > q()
 Save workspace image? [y/n/c]: y
 destructor Y

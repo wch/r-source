@@ -1,7 +1,7 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1995  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997  The R Core Team
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997-1999 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -50,8 +50,8 @@
  *  2. The dlopen interface is not available.
  *
  *  In this case we use the table "CFunTabEntry" to locate functions
- *  in the executable.  We do this by straight linear search through
- *  the table.  Note that the content of the table is created at
+ *  in the executable.	We do this by straight linear search through
+ *  the table.	Note that the content of the table is created at
  *  system build time from the list in ../appl/ROUTINES.
  */
 
@@ -70,14 +70,13 @@ typedef int (*DL_FUNC) ();
 typedef struct {
     char *name;
     DL_FUNC func;
-}     CFunTabEntry;
+} CFunTabEntry;
 
 #include "FFDecl.h"
-#include "FFDecl.h"
 
-        /* This provides a table of built-in C and Fortran functions */
-        /* We include this table, even when we have dlopen and friends */
-        /* This is so that the functions are actually loaded at link time */
+/* This provides a table of built-in C and Fortran functions.
+   We include this table, even when we have dlopen and friends.
+   This is so that the functions are actually loaded at link time. */
 
 static CFunTabEntry CFunTab[] =
 {
@@ -96,15 +95,16 @@ void InitFunctionHashing()
 static int CountDLL = 0;
 
 static struct {
-    char  path[MAX_PATH + 1];
+    char  *path;
+    char  *name;
     HINSTANCE dlh;
 }
 
 LoadedDLL[MAX_NUM_DLLS];
 
-        /* Remove the specified DLL from the current DLL list */
-        /* Returns 1 if the DLL was found and removed from */
-        /* the list and returns 0 otherwise. */
+	/* Remove the specified DLL from the current DLL list */
+	/* Returns 1 if the DLL was found and removed from */
+	/* the list and returns 0 otherwise. */
 
 static int DeleteDLL(char *path)
 {
@@ -118,9 +118,12 @@ static int DeleteDLL(char *path)
     }
     return 0;
 found:
+    free(LoadedDLL[i].name);
+    free(LoadedDLL[i].path);
     FreeLibrary(LoadedDLL[i].dlh);
     for (i = loc + 1; i < CountDLL; i++) {
-	strcpy(LoadedDLL[i - 1].path, LoadedDLL[i].path);
+	LoadedDLL[i - 1].path = LoadedDLL[i].path;
+	LoadedDLL[i - 1].name = LoadedDLL[i].name;
 	LoadedDLL[i - 1].dlh = LoadedDLL[i].dlh;
     }
     CountDLL--;
@@ -138,10 +141,17 @@ static char DLLerror[DLLerrBUFSIZE] = "";
         /* and returns 0 if there library table is full or */
         /* or if LoadLibrary fails for some reason. */
 
-static int AddDLL(char *path)
+/*
+  The arguments asLocal and now are unused in this version.
+  They are here for consistency with the UNIX code.
+ */
+static int AddDLL(char *path, int asLocal, int now)
 {
     HINSTANCE tdlh;
+    char *dpath, *name, DLLname[MAX_PATH], *p, *st;
+    /* int i; */
 
+    DeleteDLL(path);
     if (CountDLL == MAX_NUM_DLLS) {
 	strcpy(DLLerror, "Maximal number of DLLs reached...");
 	return 0;
@@ -151,7 +161,32 @@ static int AddDLL(char *path)
 	strcpy(DLLerror, "LoadLibrary failure");
 	return 0;
     }
-    strcpy(LoadedDLL[CountDLL].path, path);
+
+    dpath = malloc(strlen(path)+1);
+    if(dpath == NULL) {
+	strcpy(DLLerror,"Couldn't allocate space for 'path'");
+	FreeLibrary(tdlh);	
+	return 0;
+    }
+    strcpy(dpath, path);
+
+    strcpy(DLLname, path);
+    for(p = DLLname; *p != '\0'; p++) if(*p == '\\') *p = '/';
+    p = strrchr(path, '/'); 
+    if(!p) p = DLLname; else p++;
+    st = strchr(p, '.');
+    if(st) *st = '\0';
+    name = malloc(strlen(p)+1);
+    if(name == NULL) {
+	strcpy(DLLerror,"Couldn't allocate space for 'name'");
+	FreeLibrary(tdlh);
+	free(dpath);
+	return 0;
+    }
+    strcpy(name, p);
+
+    LoadedDLL[CountDLL].path = dpath;
+    LoadedDLL[CountDLL].name = name;
     LoadedDLL[CountDLL].dlh = tdlh;
     CountDLL++;
     return 1;
@@ -162,26 +197,26 @@ static int AddDLL(char *path)
         /* that have been loaded contains the symbol name and */
         /* returns a pointer to that symbol upon success. */
 
-DL_FUNC R_FindSymbol(char const *name)
+DL_FUNC R_FindSymbol(char const *name, char const *pkg)
 {
-    char  buf[MAXIDSIZE + 1];
     DL_FUNC fcnptr;
-    int   i, j;
+    int   i, j, all=(strlen(pkg) == 0), doit;
     static int NumStatic = 0;
     int   mid, high, low, cmp;
 
-#ifdef HAVE_NO_SYMBOL_UNDERSCORE
-    sprintf(buf, "%s", name);
-#else
-    sprintf(buf, "_%s", name);
-#endif
-    sprintf(buf, "%s", name);
+    /* Rprintf("name = %s pkg = %s\n", name, pkg); */
+
     for (i = CountDLL - 1; i >= 0; i--) {
-	fcnptr = (DL_FUNC) GetProcAddress(LoadedDLL[i].dlh, buf);
-	if (fcnptr != NULL)
-	    return fcnptr;
+	doit = all;
+	if(!doit && !strcmp(pkg, LoadedDLL[i].name)) doit = 2;
+	if(doit) {	    
+	    /* Rprintf("name = %s\n", LoadedDLL[i].name); */
+	    fcnptr = (DL_FUNC) GetProcAddress(LoadedDLL[i].dlh, name);
+	    if (fcnptr != (DL_FUNC)0) return fcnptr;
+	}
+	if(doit > 1) return (DL_FUNC)0;/* Only look in the first-matching DLL*/
     }
-    if (!NumStatic) {
+    if (!NumStatic && (all || !strcmp(pkg, "base"))) {
 	char *tname;
 	DL_FUNC tfunc;
 
@@ -232,7 +267,11 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
 
         /* do_dynload implements the R-Interface for the */
         /* loading of shared libraries */
-
+/* This looks very close the version in unix.
+   Is the only reason it is not shared due to 
+    a) 2*PATH_MAX v's PATH_MAX for sizeof(buf)
+    b) static routines in this file.
+*/
 SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char  buf[MAX_PATH];
@@ -242,7 +281,7 @@ SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "character argument expected\n");
     GetFullDLLPath(call, buf, CHAR(STRING(CAR(args))[0]));
     DeleteDLL(buf);
-    if (!AddDLL(buf))
+    if (!AddDLL(buf,LOGICAL(CADR(args))[0],LOGICAL(CADDR(args))[0]))
 	errorcall(call, "unable to load shared library \"%s\":\n  %s\n",
 		  buf, DLLerror);
     return R_NilValue;

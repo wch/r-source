@@ -50,8 +50,8 @@ provide(name)
     \code{library(name)} and \code{require(name)} both load the package
     named \code{name}.  \code{provide} allows code to register services that
     it provides.
-    
-    \code{.First.lib()} is called when a package is loaded by \code{library()}. 
+
+    \code{.First.lib()} is called when a package is loaded by \code{library()}.
     \code{.packages()} and the \code{.xxx} variables return information about
     package availability.
 }
@@ -116,6 +116,9 @@ provide(name)
 }
 
 \section{Creating Packages}{
+  For installation etc, refer to \code{\link{INSTALL}} and
+  \code{\link{REMOVE}},
+
     Packages provide a mechanism for loading optional code and attached
     documentation as needed.  The \R distribution provides the example
     packages \code{eda}, \code{mva}, and \code{stepfun}.

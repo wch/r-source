@@ -37,6 +37,12 @@ void NewFrameConfirm()
 	/* Remember: +1 and/or -1 because C arrays are */
 	/* zero-based and R-vectors are one-based. */
 
+#define checkArity_length					\
+    checkArity(op, args);					\
+    if(!LENGTH(CAR(args)))					\
+	errorcall(call, "argument must have positive length\n")
+
+
 SEXP do_devcontrol(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
@@ -46,9 +52,8 @@ SEXP do_devcontrol(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_devcopy(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int devNum = INTEGER(CAR(args))[0] - 1;
-    checkArity(op, args);
-    copyDisplayList(devNum);
+    checkArity_length;
+    copyDisplayList(INTEGER(CAR(args))[0] - 1);
     return R_NilValue;
 }
 
@@ -62,34 +67,31 @@ SEXP do_devcur(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_devnext(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int fd = INTEGER(CAR(args))[0] - 1;
     SEXP nd = allocVector(INTSXP, 1);
-    checkArity(op, args);
-    INTEGER(nd)[0] = nextDevice(fd) + 1;
+    checkArity_length;
+    INTEGER(nd)[0] = nextDevice(INTEGER(CAR(args))[0] - 1) + 1;
     return nd;
 }
 
 SEXP do_devprev(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int fd = INTEGER(CAR(args))[0] - 1;
     SEXP pd = allocVector(INTSXP, 1);
-    checkArity(op, args);
-    INTEGER(pd)[0] = prevDevice(fd) + 1;
+    checkArity_length;
+    INTEGER(pd)[0] = prevDevice(INTEGER(CAR(args))[0] - 1) + 1;
     return pd;
 }
 
 SEXP do_devset(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int devNum = INTEGER(CAR(args))[0] - 1;
     SEXP sd = allocVector(INTSXP, 1);
-    checkArity(op, args);
-    INTEGER(sd)[0] = selectDevice(devNum) + 1;
+    checkArity_length;
+    INTEGER(sd)[0] = selectDevice(INTEGER(CAR(args))[0] - 1) + 1;
     return sd;
 }
 
 SEXP do_devoff(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    checkArity(op, args);
+    checkArity_length;
     killDevice(INTEGER(CAR(args))[0] - 1);
     return R_NilValue;
 }
@@ -2059,7 +2061,7 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /*  abline(a, b, h, v, col, lty, lwd, ...)
     draw lines in intercept/slope form.  */
-    
+
 SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP a, b, h, v, col, lty, lwd;

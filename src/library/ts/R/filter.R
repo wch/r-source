@@ -23,7 +23,7 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
                          as.integer(nfilt),
                          as.integer(sides),
                          as.integer(circular),
-                         out=double(n), NAOK=TRUE)$out
+                         out=double(n), NAOK=TRUE, PACKAGE="ts")$out
     } else {
         if(missing(init)) {
             init <- matrix(0, nfilt, nser)
@@ -42,7 +42,7 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
                          as.double(filter),
                          as.integer(nfilt),
                          out=as.double(c(init[, i], double(n))),
-                         NAOK=TRUE)$out[-(1:nfilt)]
+                         NAOK=TRUE, PACKAGE="ts")$out[-(1:nfilt)]
     }
     y <- drop(y)
     tsp(y) <- xtsp

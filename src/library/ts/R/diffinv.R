@@ -15,7 +15,8 @@ diffinv.vec <- function (x, lag = 1, differences = 1,
         y <- as.vector(numeric(n+lag))
         xi <- as.vector(xi,mode="double")
         for (i in 1:lag) y[i] <- xi[i]
-        res <- .C("R_intgrt_vec", x, y=y, as.integer(lag), as.integer(n))
+        res <- .C("R_intgrt_vec", x, y=y, as.integer(lag), as.integer(n),
+                  PACKAGE="ts")
         res$y
     }
     else

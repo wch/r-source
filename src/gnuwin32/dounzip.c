@@ -32,7 +32,7 @@ static int do_unzip(char *zipname, char *dest, int nfiles, char **files,
 SEXP do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  fn, ans;
-    char zipname[MAX_PATH], *topics[50], dest[MAX_PATH];
+    char zipname[MAX_PATH], *topics[500], dest[MAX_PATH];
     int i, ntopics, rc;
 
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
@@ -41,10 +41,12 @@ SEXP do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
     fn = CAR(args);
     ntopics = length(fn);
-    if (!isString(fn) || ntopics < 1 || ntopics > 50)
-	errorcall(call, "invalid topics argument\n");
-    for(i = 0; i < ntopics; i++)
-	topics[i] = CHAR(STRING(fn)[i]);
+    if (ntopics > 0) {
+	if (!isString(fn) || ntopics > 500)
+	    errorcall(call, "invalid topics argument\n");
+	for(i = 0; i < ntopics; i++)
+	    topics[i] = CHAR(STRING(fn)[i]);
+    }
     args = CDR(args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	errorcall(call, "invalid destination argument\n");
@@ -84,7 +86,7 @@ static int Load_Unzip_DLL()
 
     hUnzipDll = LoadLibrary(szFullPath);
     if (hUnzipDll != NULL) {
-	(_DLL_UNZIP)Wiz_SingleEntryUnzip =
+	Wiz_SingleEntryUnzip =
 	    (_DLL_UNZIP)GetProcAddress(hUnzipDll, "Wiz_SingleEntryUnzip");
     } else {
 	unzip_is_loaded = -1;

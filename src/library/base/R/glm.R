@@ -182,8 +182,8 @@ glm.fit <-
 			effects = numeric(ngoodobs),
 			rank = integer(1),
 			pivot = 1:nvars, qraux = double(nvars),
-			work = double(2 * nvars)
-			)
+			work = double(2 * nvars),
+                        PACKAGE = "base")
 	## stop if not enough parameters
 	if (nobs < fit$rank)
 	    stop(paste("X matrix has rank", fit$rank, "but only",

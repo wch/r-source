@@ -1,5 +1,68 @@
+rw0651
+======
+
+New function savePlot() to save plots to wmf, gif or ps.
+
+There is now support for help via compiled HTML files (as used by the
+latest Microsoft products): set options(chmhelp=TRUE) to use this.
+You will probably need Internet Explorer 4 or later installed to use
+this, or you can install hhupd.exe from the windows/windows-NT/base/etc
+directory on CRAN.
+
+There is support for building Windows help files (as in Windows 95).
+Set options(winhelp=TRUE) to make this your preferred help system.
+
+Both compiled HTML files and Windows help are available for the
+standard packages.
+
+The new function update.packages() is supported if you have wget.exe
+(a copy is in the windows/windows-NT/base/etc/wget.zip on CRAN) or
+lynx.exe, from http://www.fdisk.com/doslynx/lynxport.htm.
+
+On NT only, CPU times are returned by proc.time() (using a call to
+GetProcessTimes).
+
+Rotated text on a windows / win.* device is placed more accurately,
+especially for non-multiples of 90 degrees.
+
+A windows() device reports itself as `windows' not `X11'.
+
+getenv() now returns all the environmental variables.
+
+unlink() can now remove (empty) directories (but not using wildcard
+specifications).
+
+The complex LINPACK routines which were not included in the Unix
+versions of R are now omitted here.
+
+There is more support for (support of) ActiveX Automation via the
+Rproxy.dll: see the file front-ends/readme.
+
+As under Unix, .Renviron is first searched for in the working directory, 
+then in the home directory. (See README for how the home directory is
+decided.)
+
+The sockets code is definitely working in this version, enough to support
+source.url and friends.
+
+options(pager="console") is set as the default if --ess is used (as it
+works better with Emacs).
+
+The rounding code has been re-written to be more accurate and to round
+to even as documented.
+
+The rw-FAQ is linked into the HTML help system.
+
+We believe the problems with re-sizing windows (especially on Windows 9x)
+have been solved.
+
+
+
 rw0650
 ======
+
+[ Because Guido Masarotto was ill for several weeks, rw0650 was only ever
+pre-released. ]
 
 There are many changes `under the skin' which are not reflected in
 user-visible changes, but either improve performance or will allow
@@ -7,7 +70,7 @@ future enhancements.
 
 The environment variables have been changed: R_HOME is now R's home
 directory and R_USER is the HOME for the user which will be used by R
-(and defaults to HOME, if set, then to ${HOMEDIR}${HOMEPATH}, if that
+(and defaults to HOME, if set, then to ${HOMEDRIVE}${HOMEPATH}, if that
 is set, then the working directory). (There are many other such
 changes in R: for example RLIBS becomes R_LIBS, although for the time
 being RLIBS is also recognised.)
@@ -26,8 +89,7 @@ specified: these is no longer a default of --no-save (for consistency
 with Unix).
 
 More support for building R into other applications: see the examples
-in the front-ends directory of the source distribution.  Thomas Baier has 
-used this to link a version of R to an out-of-process ActiveX server.
+in the front-ends directory of the source distribution.
 
 Interrupting by Esc or Ctrl-Break is handled internally by signals, so
 the `User Break' response will no longer appear, but in rterm ^C will
@@ -35,15 +97,15 @@ be echoed.
 
 There is limited support for `tilde-expansion': file paths such as
 ~/rest will be expanded to ${HOME}\rest if HOME is set, or to
-${HOMEDIR}${HOMEPATH}\rest if those variables are set.
+${HOMEDRIVE}${HOMEPATH}\rest if those variables are set.
 
 Using rterm either interactively or with --ess will be more responsive and
 use much less CPU time when waiting for input.  Interruptions by Ctrl-Break
 or (under --ess, for use by ESS) Ctrl-C should happen immediately and be 
-handled correctly.
+handled correctly. [On NT: problems with Win 98 were corrected for rw0651.]
 
 The installer can now install correctly in a top-level directory (e.g.
-C:\), fixing a bug in the unzio code used.
+C:\), fixing a bug in the unzip code used.
 
 
 rw0642

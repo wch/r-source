@@ -171,7 +171,7 @@ interface which should be much easier to use.
 \references{
 Friedman, J. H. and Stuetzle, W. (1981)
 Projection pursuit regression. 
-Journal of the American Statistical Association
+\emph{Journal of the American Statistical Association},
 \bold{76}, 817-823.
 
 Friedman, J. H. (1984)

@@ -1,10 +1,19 @@
-diag <-
-    function(x = 1, nrow, ncol = n)
+diag <- function(x = 1, nrow, ncol = n)
 {
-    if(is.matrix(x) && nargs() == 1)
-        if((m <- min(dim(x))) > 0)
-            return(c(x)[1 + 0:(m - 1) * (dim(x)[1] + 1)])
-        else return(numeric(0))
+    if (is.matrix(x) && nargs() == 1) {
+        if((m <- min(dim(x))) == 0)
+            return(numeric(0))
+
+        y <- c(x)[1 + 0:(m - 1) * (dim(x)[1] + 1)]
+        nms <- dimnames(x)
+        if (is.list(nms) && !any(sapply(nms, is.null)) &&
+            all((nm <- nms[[1]][1:m]) == nms[[2]][1:m]))
+            names(y) <- nm
+        return(y)
+    }
+    if(is.array(x))
+        stop("first argument is array, but not matrix.")
+
     if(missing(x))
 	n <- nrow
     else if(length(x) == 1 && missing(nrow) && missing(ncol)) {
@@ -20,8 +29,7 @@ diag <-
     y
 }
 
-"diag<-" <-
-    function(x, value)
+"diag<-" <- function(x, value)
 {
     dx <- dim(x)
     if(length(dx) != 2 || prod(dx) != length(x))

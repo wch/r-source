@@ -601,7 +601,7 @@ void consoletogglelazy(control c)
 FBEGIN
     if (p->kind == PAGER) return;
     p->lazyupdate = (p->lazyupdate + 1) % 2;
-FVOIDEND;
+FVOIDEND
 
 int consolegetlazy(control c)
 FBEGIN
@@ -620,7 +620,7 @@ FVOIDEND
 #define PREVHISTORY 6
 #define KILLRESTOFLINE 7
 #define BACKCHAR  8
-#define DELETECHAR 9
+#define DELETECHAR 22 /* ^I is printable in some systems */
 #define KILLLINE 21
 
 static void storekey(control c,int k)
@@ -1243,14 +1243,14 @@ FBEGIN
     HEIGHT = r.height;
     BORDERX = (WIDTH - COLS*FW) / 2;
     BORDERY = (HEIGHT - ROWS*FH) / 2;
-    if(p->lbuf) FVOIDRETURN;    /* don't implement resize if no content
-				   yet in pager */
     del(BM);
     BM = newbitmap(r.width, r.height, 2);
     if (!BM) {
        R_ShowMessage("Insufficient memory. Please close the console");
        return ;
     }
+    if(!p->lbuf) FVOIDRETURN;    /* don't implement resize if no content
+				   yet in pager */
     if (p->r >= 0) {
         if (NUMLINES > ROWS) {
 	    p->r = ROWS - 1;

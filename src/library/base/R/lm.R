@@ -6,7 +6,7 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     ret.x <- x
     ret.y <- y
     mt <- terms(formula, data = data)
-    mf <- match.call()
+    mf <- cl <- match.call()
     mf$singular.ok <- mf$model <- mf$method <- NULL
     mf$x <- mf$y <- mf$qr <- mf$contrasts <- NULL
     mf$drop.unused.levels <- TRUE
@@ -54,7 +54,7 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     z$offset <- offset
     z$contrasts <- attr(x, "contrasts")
     z$xlevels <- xlev
-    z$call <- match.call()
+    z$call <- cl
     z$terms <- mt
     if (model)
 	z$model <- mf
@@ -96,7 +96,8 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
 		  tol = as.double(tol),
 		  coefficients = mat.or.vec(p, ny),
 		  residuals = y, effects = y, rank = integer(1),
-		  pivot = 1:p, qraux = double(p), work = double(2*p))
+		  pivot = 1:p, qraux = double(p), work = double(2*p),
+                  PACKAGE="base")
     coef <- z$coefficients
     pivot <- z$pivot
     r1 <- 1:z$rank
@@ -146,8 +147,8 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
 	ok <- w != 0
 	nok <- !ok
 	w <- w[ok]
-	x0 <- x[!ok, ]
-	x <- x[ok, ]
+	x0 <- x[!ok, , drop = FALSE]
+	x <- x[ok,  , drop = FALSE]
 	n <- nrow(x)
 	y0 <- if (ny > 1) y[!ok, , drop = FALSE] else y[!ok]
 	y  <- if (ny > 1) y[ ok, , drop = FALSE] else y[ok]
@@ -168,7 +169,8 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
 		  coefficients = mat.or.vec(p, ny), residuals = y,
 		  effects = mat.or.vec(n, ny),
 		  rank = integer(1), pivot = 1:p, qraux = double(p),
-		  work = double(2 * p))
+		  work = double(2 * p),
+                  PACKAGE="base")
     coef <- z$coefficients
     pivot <- z$pivot
     r1 <- 1:z$rank

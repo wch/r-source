@@ -12,8 +12,12 @@ deriv(expr, namevec, function.arg = NULL, tag = ".expr")
   \item{expr}{expression which should be derivated}
   \item{namevec}{character vector, giving the variable names with
     respect to which derivatives will be computed.}
-  \item{function.arg}{... ?? ...}
-  \item{tag}{... ?? ...}
+  \item{function.arg}{\emph{NOT YET IMPLEMENTED}.  If specified, a
+    function `prototype' (with empty \code{\link{body}}) which will be
+    used to return a function with the given argument list, instead of
+    an expression.}
+  \item{tag}{character; the prefix to be used for the locally created
+    variables in result..}
 }
 \description{
   \code{D} is modelled after its S pendant for taking simple symbolic

@@ -78,7 +78,7 @@ for pkg in ${PKGS}; do
 
   test -d ${CHECK_DIR} || mkdir ${CHECK_DIR}
   cd ${CHECK_DIR}
-    
+
   echo " Massaging examples into \`${pkg}-Ex.R' ..."
   ${R_HOME}/bin/massage-Examples ${pkg} ${lib}/${pkg}/R-ex/*.R \
     > ${pkg}-Ex.R
@@ -90,6 +90,10 @@ for pkg in ${PKGS}; do
   else
     echo " ERROR" && exit 1
   fi
-  if ${CLEAN}; then cd .. && rm -rf ${CHECK_DIR}; fi
+  if ${CLEAN}; then
+    cd .. && rm -rf ${CHECK_DIR}
+  else
+    echo " Results of `check' are available in directory ../${CHECK_DIR}"
+  fi
 
 done

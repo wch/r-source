@@ -8,6 +8,8 @@ ar.burg <-
         stop("Burg's algorithm only implemented for univariate series")
     if (ists <- is.ts(x)) xtsp <- tsp(x)
     x <- na.action(as.ts(x))
+    if(any(is.na(x))) stop("NAs in x")
+    if (ists)  xtsp <- tsp(x)
     xfreq <- frequency(x)
     x <- as.vector(x)
     if (demean) {
@@ -25,7 +27,7 @@ ar.burg <-
             as.integer(order.max),
             coefs=double(order.max^2),
             var1=double(1+order.max),
-            var2=double(1+order.max)
+            var2=double(1+order.max), PACKAGE="ts"
             )
     coefs <- matrix(z$coefs, order.max, order.max)
     partialacf <- array(diag(coefs), dim = c(order.max, 1, 1))
@@ -34,7 +36,7 @@ ar.burg <-
     xaic <- xaic - min(xaic)
     names(xaic) <- 0:order.max
     order <- if (aic) (0:order.max)[xaic == 0] else order.max
-    ar <- if (order > 0) coefs[order, 1:order] else 0
+    ar <- if (order > 0) coefs[order, 1:order] else numeric(0)
     var.pred <- var.pred[order+1]
     if(order > 0)
         resid <- c(rep(NA, order), embed(x, order+1) %*% c(1, -ar))
@@ -49,7 +51,7 @@ ar.burg <-
                 method = ifelse(var.method==1,"Burg","Burg2"),
                 series = series, frequency = xfreq, call = match.call())
     xacf <- acf(x, type = "covariance", lag.max = order, plot=FALSE)$acf
-    res$asy.var.coef <- solve(toeplitz(drop(xacf)[1:order]))*var.pred/n.used
+    if(order > 0) res$asy.var.coef <- solve(toeplitz(drop(xacf)[seq(length=order)]))*var.pred/n.used
     class(res) <- "ar"
     return(res)
 }
@@ -64,6 +66,8 @@ ar.burg.R <-
         stop("Burg's algorithm only implemented for univariate series")
     if (ists <- is.ts(x)) xtsp <- tsp(x)
     x <- na.action(as.ts(x))
+    if(any(is.na(x))) stop("NAs in x")
+    if (ists)  xtsp <- tsp(x)
     xfreq <- frequency(x)
     if (demean) {
         x.mean <- mean(x)

@@ -16,6 +16,7 @@ SSPKG=$(SPKG)/$(SRC)
 
 LSOURCES=$(wildcard $(SSPKG)/*.c $(SSPKG)/*.f)
 ifeq ($(strip $(LSOURCES)),)
+  LOBJS=
   DYNLIB=
 else
   LOBJS=$(foreach i,$(LSOURCES),$(basename $i).o)
@@ -44,7 +45,7 @@ endif
 # Others
 OFILES0=$(wildcard $(SPKG)/*)
 OFILES1= DESCRIPTION INDEX TITLE
-OFILES-NO= R r data man src src-c Makefile.in inst check orig\
+OFILES-NO= R r chm data man src src-c Makefile.in inst check orig\
 	DESCRIPTION INDEX TITLE index title
 OFILES3=$(foreach i, $(OFILES1), $(SPKG)/$i)
 OFILES2=$(foreach i, $(OFILES-NO), $(SPKG)/$i)
@@ -55,6 +56,10 @@ INSTFILES=$(wildcard $(SPKG)/inst/*)
 all:  $(DPKG)/zzzz  $(DPKG)/R/$(PKG)  $(DATA) $(DYNLIB)
 
 include ../../gnuwin32/MkRules
+
+clean:
+	$(RM) $(SSPKG)/$(DLLNAME).dll $(LOBJS)  $(SSPKG)/$(DLLNAME).a  $(SSPKG)/$(DLLNAME).def
+	$(RM) -rf $(SPKG)/chm
 
 SEDP='/^[	 ]*$$/d;s/$(DLLNAME).so/$(DLLNAME).dll/'
 

@@ -33,11 +33,7 @@ Date: Wed, 10 Mar 1999 17:21:16 +0100
 
 Directory:  Add-ons
 
-* PR# 137 *
-Subject: funfits
-From: "Alvaro A. Novo" <novo@uiuc.edu>
-Date: Tue, 9 Mar 1999 22:24:54 -0600
---Not our problem. Dubious whether a bug at all.
+none
 
 Directory:  Analyses
 
@@ -55,11 +51,6 @@ none
 
 Directory:  Graphics
 
-* PR# 61 *
-Subject: points(...,  cex = ..)  is pretty wrong...
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 2 Nov 1998 19:15:06 +0100
---Symbols getting decentered when too large cex for X. Still there 22feb99  
 * PR# 69 *
 Subject: Some graphics bugs
 From: Martyn Plummer <plummer@iarc.fr>
@@ -72,11 +63,6 @@ Subject: graphics bug: type="l"
 From: Matthew Wiener <mcw@ln.nimh.nih.gov>
 Date: Tue, 16 Feb 1999 15:30:25 -0500 (EST)
 --X server problem drawing > 64K lines at once. Workaround?
-* PR# 123 *
-Subject: Text in plot
-From: Ennapadam Venkatraman <venkat@biosta.mskcc.org>
-Date: Thu, 18 Feb 1999 13:05:37 -0500
---Multiline text not working
 * PR# 130 *
 Subject: lty=0 -- shouldn't it give an invisible line?
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -114,6 +100,30 @@ From: David Middleton <dajm@deeq.demon.co.uk>
 Date: Tue, 03 Aug 1999 17:51:47 -0300
 --initclip is removed. Still need new argument onefile/onepage to ensure one page
 --and use %!PS-Adobe-3.0 EPSF-3.0 header
+* PR# 249 *
+Subject: axis ignores srt/crt
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Mon, 16 Aug 1999 15:51:49 -0700 (PDT)
+--`its's not a bug it is an imcomptibility'
+* PR# 258 *
+Subject: Greek letters in outer margins.
+From: "BXC (Bendix Carstensen)" <BXC@NOVO.dk>
+Date: Thu, 26 Aug 1999 12:09:17 +0200
+--Uses *current* plot margins. 
+--
+--remove paste() from repro. instr.
+* PR# 267 *
+Subject: matplot(... panel.first=..) fails  <==> dealing with "..."
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 6 Sep 1999 11:04:03 +0200
+* PR# 281 *
+Subject: mtext(. col = ...) stopped working in 0.65.0
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 17 Sep 1999 15:10:40 +0200
+* PR# 287 *
+Subject: text( col=, cex=, font=) : doesn't allow more than length-1 arg
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 27 Sep 1999 11:12:08 +0200
 
 Directory:  In-Out
 
@@ -126,16 +136,21 @@ Subject: Formatting in formatC and format
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Sun, 28 Feb 1999 08:53:34 +0000 (GMT)
 --Documentation and ``merge'' of format() and formatC() would be desired - MM
-* PR# 207 *
-Subject: Lines longer than ~1000 chars truncated at parsing
-From: msa@biostat.mgh.harvard.edu
-Date: Mon, 7 Jun 1999 22:27:10 +0200 (MET DST)
---Fixed buffer used during input.
---Not fixable without major changes to readline lib.
+* PR# 248 *
+Subject: scan() + error interferes with count.fields() in some cases
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 13 Aug 1999 17:44:48 +0200
 
 Directory:  Installation
 
-none
+* PR# 288 *
+Subject: configure bug with IRIX 6.5 (Makedep)
+From: caves@yorvic.york.ac.uk
+Date: Tue, 28 Sep 1999 10:30:54 +0200 (MET DST)
+* PR# 290 *
+Subject: Error compiling R on RS6000
+From: pgutwin@us.ibm.com
+Date: Thu, 30 Sep 1999 21:18:49 +0200 (MET DST)
 
 Directory:  Language
 
@@ -160,6 +175,16 @@ Subject: Re: cbind is not generic as claimed, omits labels where S has them
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Fri, 6 Aug 1999 06:52:35 +0100 (BST)
 --See PR#239
+* PR# 257 *
+Subject:  dimnames names lost when subscripting 
+From: Andreas Weingessel <weingessel@ci.tuwien.ac.at>
+Date: Wed, 25 Aug 1999 12:45:28 +0200
+* PR# 263 *
+Subject: Problems sourcing functions with R65.0
+From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
+Date: Wed, 1 Sep 1999 11:58:51 +0200 (MET DST)
+--There is a 128K limit on functions wirh keep.source set. Try modular
+--programming!
 
 Directory:  Low-level
 
@@ -188,6 +213,7 @@ Subject: Re: [R] R_problem_buf in the S.h files & lists in .C
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 05 May 1999 00:32:49 +0200
 --S objects in .C calls (not just lists) are now documented in the help file
+--Should we not make the buffer static?
 * PR# 197 *
 Subject: glm crash
 From: Cor en Aylin <Cor.Berrevoets@gironet.nl>
@@ -198,11 +224,6 @@ Subject: definition of R_problem_buf in S.h
 From: vogels@ieee.org
 Date: Mon, 14 Jun 1999 17:56:04 +0200 (MET DST)
 --Same as #185
-* PR# 235 *
-Subject:  round(numeric(0)) 
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Thu, 29 Jul 1999 15:20:21 +0100 (BST)
---Some followup of this on R-devel not sent here.
 
 Directory:  Misc
 
@@ -215,12 +236,7 @@ Date: Sat, 9 Jan 1999 14:50:58 -0500 (EST)
 
 Directory:  Models
 
-* PR# 121 *
-Subject:  model.frame mangles time series 
-From: Peter Dalgaard BSA <pd@biostat.ku.dk>
-Date: Thu, 18 Feb 1999 15:47:24 +0100
---Subset in C code + attributes = mess
---Switch to interpreted ("[")
+none
 
 Directory:  Startup
 
@@ -246,6 +262,23 @@ Subject: R-Coda on rs6000-ibm-aix4.2.1.0
 From: =?iso-8859-1?Q?Jette_Halkj=E6r_Jakobsen?=
 Date: Wed, 11 Aug 1999 08:49:47 +0200
 --Problem with ps on AIX in 0.64.2. Try again with 0.65.0?
+* PR# 252 *
+Subject: bug: R says "Floating exception" on DEC-Alpha w/OSF1
+From: "Michael Thompson" <mlthomps@yayoi.mt.m-kagaku.co.jp>
+Date: Thu, 19 Aug 1999 06:03:06 +0900
+* PR# 260 *
+Subject: Re: Compiling R under Caldera Open Linux 2.2
+Subject: Compilation of R under Caldera OpenLinux 2.2
+From: John Maindonald <john.maindonald@anu.edu.au>
+Date: Sun, 29 Aug 1999 19:38:13 +1000 (EST)
+* PR# 268 *
+Subject: Re: Compiling R under Caldera Open Linux 2.2
+From: "Jack N." <jnf@pcisys.net>
+Date: Mon, 06 Sep 1999 08:03:02 -0600
+* PR# 274 *
+Subject: axis() produces junk on DEC alpha
+From: albrecht.gebhardt@uni-klu.ac.at
+Date: Mon, 13 Sep 1999 03:02:20 +0200 (MET DST)
 
 Directory:  TooMuchAtOnce
 
@@ -266,49 +299,13 @@ Date: Fri, 11 Dec 1998 23:20:08 -0500 (EST)
 
 Directory:  Windows
 
-none
+* PR# 271 *
+Subject: R with Windows 95
+From: pascal.grandeau@wanadoo.fr
+Date: Wed, 8 Sep 1999 17:56:12 +0200 (MET DST)
+--No response to questions, we can't reproduce this. Probably is a bug, but
+--impossible to take further.
 
 Directory:  incoming
 
-* PR# 248 *
-Subject: scan() + error interferes with count.fields() in some cases
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 13 Aug 1999 17:44:48 +0200
-* PR# 249 *
-Subject: axis ignores srt/crt
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Mon, 16 Aug 1999 15:51:49 -0700 (PDT)
-* PR# 250 *
-From: Peter Malewski <peter@tu-bs.de>
-Date: Tue, 17 Aug 1999 12:21:38 +0200 (CEST)
-* PR# 251 *
-From: Peter Malewski <peter@tu-bs.de>
-Date: Tue, 17 Aug 1999 12:21:45 +0200 (CEST)
-* PR# 252 *
-Subject: bug: R says "Floating exception" on DEC-Alpha w/OSF1
-From: "Michael Thompson" <mlthomps@yayoi.mt.m-kagaku.co.jp>
-Date: Thu, 19 Aug 1999 06:03:06 +0900
-* PR# 253 *
-Subject: seg.fault for some illegal .Random.seed (new since 0.64)
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 20 Aug 1999 14:17:31 +0200
-* PR# 254 *
-Subject: Strange 'Unimplemented feature in rep' error
-From: Lutz Prechelt <prechelt@ira.uka.de>
-Date: Mon, 23 Aug 1999 19:43:24 +0200
-* PR# 255 *
-Subject: broken link in R FAQ page?
-From: Tian-Xiong Lu <tian@chico.ma.adfa.edu.au>
-Date: Tue, 24 Aug 1999 13:41:21 +1000 (EST)
-* PR# 256 *
-Subject: Error in ?text
-From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
-Date: Wed, 25 Aug 1999 10:00:19 +0100 (BST)
-* PR# 257 *
-Subject:  dimnames names lost when subscripting 
-From: Andreas Weingessel <weingessel@ci.tuwien.ac.at>
-Date: Wed, 25 Aug 1999 12:45:28 +0200
-* PR# 258 *
-Subject: Greek letters in outer margins.
-From: "BXC (Bendix Carstensen)" <BXC@NOVO.dk>
-Date: Thu, 26 Aug 1999 12:09:17 +0200
+none

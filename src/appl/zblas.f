@@ -50,7 +50,7 @@ c
 *     .. Scalar Arguments ..
       INTEGER                           INCX, N
 *     .. Array Arguments ..
-      COMPLEX*16                        X( * )
+      DOUBLE COMPLEX                    X( * )
 *     ..
 *     .. Parameters ..
       DOUBLE PRECISION      ONE         , ZERO

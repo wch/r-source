@@ -88,10 +88,10 @@ double pretty0(double *lo, double *up, int *ndiv, int min_n,
     }
 
     if(cell < 20*DBL_MIN) {
-      warning("Internal(pretty()): very small range.. corrected\n");
+      warning("Internal(pretty()): very small range.. corrected");
       cell = 20*DBL_MIN;
     } else if(cell * 10 > DBL_MAX) {
-      warning("Internal(pretty()): very large range.. corrected\n");
+      warning("Internal(pretty()): very large range.. corrected");
       cell = .1*DBL_MAX;
     }
     base = pow(10., floor(log10(cell))); /* base <= cell < 10*base */
@@ -112,8 +112,8 @@ double pretty0(double *lo, double *up, int *ndiv, int min_n,
      *
      *	===>	2/5 *(2+h)/(1+h)  <=  c/u  <=  (2+h)/(1+h)	*/
 
-    ns = floor(*lo/unit);
-    nu = ceil (*up/unit);
+    ns = floor(*lo/unit+1e-5);
+    nu = ceil (*up/unit-1e-5);
 #ifdef DEBUGpr
     REprintf("pretty(lo=%g,up=%g,ndiv=%d,min_n=%d,shrink=%g,high_u=(%g,%g),"
 	     "eps=%d)\n\t dx=%g; is.small:%d. ==> cell=%g; unit=%g\n",
@@ -129,13 +129,13 @@ double pretty0(double *lo, double *up, int *ndiv, int min_n,
     if(ns*unit > *lo)
 	REprintf("\t ns= %.0f -- while(ns*unit > *lo) ns--;\n", ns);
 #endif
-    while(ns*unit > *lo) ns--;
+    while(ns*unit > *lo + 1e-5*unit) ns--;
 
 #ifdef DEBUGpr
     if(nu*unit < *up)
 	REprintf("\t nu= %.0f -- while(nu*unit < *up) nu++;\n", nu);
 #endif
-    while(nu*unit < *up) nu++;
+    while(nu*unit < *up - 1e-5*unit) nu++;
 
     k = .5 + nu - ns;
     if(k < min_n) {
@@ -144,9 +144,14 @@ double pretty0(double *lo, double *up, int *ndiv, int min_n,
 	REprintf("\tnu-ns=%.0f-%.0f=%d SMALL -> ensure nu-ns= min_n=%d\n",
 		 nu,ns, k, min_n);
 #endif
-	k = min_n -k;
-	ns -= k/2;
-	nu += k/2 + k%2;/* ==> nu-ns = old(nu-ns) + min_n -k = min_n */
+	k = min_n - k;
+	if(ns >= 0.) {
+	    nu += k/2;
+	    ns -= k/2 + k%2;/* ==> nu-ns = old(nu-ns) + min_n -k = min_n */
+	} else {
+	    ns -= k/2;
+	    nu += k/2 + k%2;
+	}
 	*ndiv = min_n;
     }
     else {

@@ -17,8 +17,8 @@ plot.lm <- function (x, which = 1:4,
     hii <- lm.influence(x)$hat
     s <- sqrt(deviance(x)/df.residual(x))
     if (any(show[2:3])) {
-	ylab23 <- switch(class(x)[1], lm = "Standardized residuals",
-			 glm = "Std. dev. residuals")
+	ylab23 <- if(inherits(x, "glm"))
+	    "Std. dev. residuals" else "Standardized residuals"
 	rs <- r/sqrt(1 - hii)/s
     }
     one.fig <- prod(par("mfcol")) == 1

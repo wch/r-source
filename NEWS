@@ -1,9 +1,169 @@
+
 	**************************************************
 	*						 *
 	*	       0.65 SERIES NEWS			 *
 	*						 *
 	**************************************************
 
+
+		CHANGES IN R VERSION 0.65.1
+
+
+NEW FEATURES
+
+    o	.C, .Fortran. .Call and .External now have an argument PACKAGE
+	to specify the shared library to be used for the symbol. See
+	?Foreign. Package writers are encouraged to use this.
+
+    o	On startup (unless --no-environ), first .Renviron is looked for in
+	the current directory, and then in $HOME/ (= ~/ ).
+
+    o	New options(error.halt = FALSE) (default is TRUE) allows
+	continuation after an error in batch processing.
+
+    o	In graphics, lty has now 6 instead of 4 predefined line types.
+
+    o	as.hclust.twins() in package mva to convert (and plot)
+	objects from agnes() and daisy() of package cluster.
+
+    o	R INSTALL now can directly install pkg_version.tar.gz files
+	as obtained from CRAN. New function update.packages()
+	& friends for automatically downloading packages from CRAN and
+	install them on the fly (on Unix and Windows).
+
+    o	New function commandArgs() to record the command-line used.
+
+    o	New arguments `local' and `now' to dyn.load.
+
+    o	diag(x) now keeps names when appropriate and barfs when x is an array.
+
+    o	functions source.url, url.show, read.table.url, scan.url to read
+	from an http server instead of a file.
+
+    o	grid() gets useful defaults: grid lines drawn at tick marks.
+
+    o	set operations union(), intersect(), setdiff() and is.element().
+
+    o	New function stars() for star plots and segment diagrams of
+	multivariate data.
+
+    o	Version info now in the top-level file `VERSION'.
+
+    o	barplot has a "plot = TRUE" argument and now returns locations of
+	all bars even when "beside = TRUE".
+
+    o	hist has an "nclass" argument purely for S compatibility.
+
+    o	Character strings can now, with most compilers, be passed
+	on and from Fortran. See ?Foreign for details.
+
+    o	Functions as.single and single now have the effect with
+	.C and .Fortran of passing a numeric argument as float/REAL
+	rather than as double/DOUBLE PRECISION, by setting the
+	attribute "Csingle". See ?Foreign for details.
+
+    o	Comparison of strings uses the current locale on systems where
+	this is available, and so is always consistent with the ordering
+	used by sort().
+
+    o	sapply  has a new argument USE.NAMES=TRUE  and now returns a named
+        result when its input was a character.
+
+    o	plot.stepfun  has new arguments  lty and lwd.
+
+    o   x labels in boxplot now handled differently, so that math
+    	expressions are allowed.
+
+    o	postscript() argument `onefile' now does something, and there
+	is a new paper type `special' and new argument `pagecentre'.
+	See ?postscript for details.
+
+    o	Experimental function dev2bitmap() to copy to a bitmap graphics format.
+
+
+BUG FIXES
+
+    o	centering in text() will be more accurate, particularly on devices
+	with full font metric information (postscript, x11, not windows).
+
+    o	arguments after --no-readline in the Unix version were ignored.
+
+    o	couldn't set attributes in hashed environments.
+
+    o	[<-.data.frame mishandled dfr[1] <- 1 (forgotten drop=FALSE)
+
+    o	sys.on.exit didn't work
+
+    o	sys.parent didn't quite work either for n >= 2.
+
+    o	par("mfg") was wrong, par(mfg=) switched to down columns. Now
+	par(mfrow/mfcol = c(nr, nc)) followed by par(mfg=c(i,j)) is
+	the preferred style.
+
+    o	plot( <aov.object> ) failed after 2nd plot, PR#279
+
+    o	Several patches for systems with long != int.
+
+    o	approx failed if inputs contained NAs.
+
+    o	weighted lm fits with 1 diml x failed if any weight was zero.
+
+    o	lm.influence failed when there were undetermined coefficients, PR#280.
+
+    o	problem with function()... inside saved functions because arg count
+	increased to accommodate stored source. (Incorrect number of
+	arguments to "lambda")
+
+    o	improvements to generation of HTML help files: should work
+	better on viewers other than Netscape.
+
+    o	stl in package ts could conflict with package leaps: the Fortran
+	symbols have been changed.
+
+    o	help page for factor is improved and corrected.
+
+    o	na.omit.ts and na.contiguous now preserve time-series attributes.
+
+    o	more automatic testing ("make check") using options(error.halt=FALSE)
+	led to the elimination of dozens (!) of seg.fault possibilities.
+
+    o	family quasi handles zero observations with var=mu^2 more correctly.
+
+    o	dynamically-loaded libraries are searched last-loaded first, as
+	documented (under Unix it used to be first-loaded first).
+
+    o	rowsum failed with a matrix and a single group (drop=FALSE needed).
+
+    o	deriv(y ~ <expr>(x)) now works as well as  deriv(~ <expr>(x)).
+
+    o	qr over-estimated ranks in some degenerate cases.
+	qr did not work correctly if n < p and the first n cols were
+	rank-deficient.
+
+    o	str() wouldn't work quite right for named characters;  doesn't quote
+	symbols anymore.
+
+    o	Colour conversion (rgb, gray, hsv) truncated doubles and so
+	gave machine-dependent results on the examples. It now rounds.
+
+    o	cat() now admits again that it can't handle lists instead of
+	"random" segfaulting.
+
+    o	More accurate rounding (including rounding to even) on platforms
+	without rint (e.g. Windows).
+
+    o	qgeom() is now left-continuous with a tolerance, and so the
+	example on the help page will be platform-independent.
+
+    o	pretty() has been changed to use tolerance around integers and
+	so will be more platform-independent. The exact output has
+	probably changed on all platforms for some input.
+
+    o	image() & filled.contour() now work for 1x1 matrices
+	and with constant z values.
+
+
+		CHANGES IN R VERSION 0.65.0
 
 NEW FEATURES
 
@@ -121,8 +281,8 @@ NEW FEATURES
 
     o	hdf5{read|write} now allow more kinds of attributes and add support
 	for HDF5 version 1.2 (or newer)	thanks to Marcus G. Daniels.
-	Configure checks for HDF5 1.2 availability, older versions will 
-	no longer work. 
+	Configure checks for HDF5 1.2 availability, older versions will
+	no longer work.
 
 
 
@@ -164,7 +324,7 @@ BUG FIXES
     o	log(0) gives -Inf on all architectures.
 
     o	When persp() was the first graphics command given to R it gave
-	the error "plot.new() has not been called yet".  This no
+	the error "plot.new() has not been called yet".	 This no
 	longer happens.
 
     o	pgamma() gave 0 or 1 for extreme arguments too soon.
@@ -197,9 +357,9 @@ BUG FIXES
     o	a clipping problem for plots when there non-zero outer margins
 	has been fixed.	 This problem used to affect coplot() and pairs().
 
-    o   get("zzz", mode="xxx") missed promise objects.
+    o	get("zzz", mode="xxx") missed promise objects.
 
-    o   match.fun failed when a data frame was attached containing a 
+    o	match.fun failed when a data frame was attached containing a
 	"length" variable (e.g.)
 
 

@@ -171,7 +171,6 @@ static void pipe_onintr()
 static DWORD CALLBACK
 threadedgetline(LPVOID unused)
 {
-    signal(SIGINT, pipe_onintr);
     gl = getline(LastLine);
     lineavailable = 1;
     PostThreadMessage(mainThreadId, 0, 0, 0);
@@ -182,8 +181,14 @@ int CharReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
     int   i;
     HANDLE rH;
-
     if (!gl) {
+      /* 
+         All the signal stuff must be rethinked. Anyway, in this way
+         it works both under NT and 9X. But, first SIGINT can be lost
+         (if is received AFTER signal(SIGINT,pipe_onintr) and
+          BEFORE WaitMessage() below).
+      */
+        sighandler_t oldhandler = signal(SIGINT, pipe_onintr); 
 	strcpy(LastLine, prompt);
 	lineavailable = 0;
 	mainThreadId = GetCurrentThreadId();
@@ -193,6 +198,7 @@ int CharReadConsole(char *prompt, char *buf, int len, int addtohistory)
 	    if (lineavailable || UserBreak) break;
 	    doevent();
 	}
+        signal(SIGINT, oldhandler);
 	if (UserBreak) {
 		UserBreak = 0;
 		lineavailable = 0;
@@ -200,7 +206,7 @@ int CharReadConsole(char *prompt, char *buf, int len, int addtohistory)
 		CloseHandle(rH);
 		gl = NULL;
 		/* raise(SIGINT);  just clean up ourselves */
-		printf("^C\n");
+		Rprintf("^C\n");
 		strcpy(buf, "\n");
 		return 1;
 	}
@@ -240,7 +246,6 @@ static char *inputbuffer;
 static DWORD CALLBACK
 threadedfgets(LPVOID unused)
 {
-    signal(SIGINT, pipe_onintr);
     inputbuffer = fgets(inputbuffer, lengthofbuffer, stdin);
     lineavailable = 1;
     PostThreadMessage(mainThreadId, 0, 0, 0);
@@ -252,7 +257,7 @@ PipeReadConsole(char *prompt, char *buf, int len, int addhistory)
 {
     HANDLE rH;
     DWORD  id;
-
+    sighandler_t oldhandler = signal(SIGINT, pipe_onintr);
     if (!R_Slave) {
 	fputs(prompt, stdout);
 	fflush(stdout);
@@ -275,6 +280,7 @@ PipeReadConsole(char *prompt, char *buf, int len, int addhistory)
 	if (rH)
 	    CloseHandle(rH);
     }
+    signal(SIGINT, oldhandler);
     if(!inputbuffer) {
 	strcpy(buf, "\n");
 	printf("^C\n");
@@ -313,7 +319,7 @@ int
 R_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory)
 {
     ProcessEvents();
-    return TrueReadConsole(prompt, buf, len, addtohistory);
+    return TrueReadConsole(prompt, (char *) buf, len, addtohistory);
 }
 
 	/* Write a text buffer to the console. */
@@ -467,7 +473,7 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 		if (!strcmp(pager, "internal")) {
 		    newpager(wtitle, file[i], headers[i], del);
 		} else if (!strcmp(pager, "console")) {
-		    DWORD len = 1;
+/*		    DWORD len = 1;
 		    HANDLE f = CreateFile(file[i], GENERIC_READ,
 					  FILE_SHARE_WRITE,
 					  NULL, OPEN_EXISTING, 0, NULL);
@@ -476,7 +482,16 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 			    buf[len] = '\0';
 			    R_WriteConsole(buf,strlen(buf));
 			}
-			CloseHandle(f);
+			CloseHandle(f);*/
+/* The above causes problems with lack of CRLF translations */
+		    size_t len;
+		    FILE *f = fopen(file[i], "rt");
+		    if(f) {
+			while((len = fread(buf, 1, 1023, f))) {
+			    buf[len] = '\0';
+			    R_WriteConsole(buf, strlen(buf));
+			}
+			fclose(f);
 			if (del) DeleteFile(file[i]);
 		    }
 		    else {
@@ -526,7 +541,8 @@ static void char_message(char *s)
 
 static int char_yesnocancel(char *s)
 {
-    char  a[3], ss[128];
+    char  ss[128];
+    unsigned char a[3];
 
     sprintf(ss, "%s [y/n/c]: ", s);
     R_ReadConsole(ss, a, 3, 0);
@@ -568,9 +584,11 @@ static void processRenviron()
     char *opt[2], optf[MAX_PATH], buf[80];
     int   ok;
 
-    sprintf(optf, "%s/.Renviron", getenv("R_USER"));
-    if (!optopenfile(optf))
-	return;
+    
+    if (!optopenfile(".Renviron")) {
+	sprintf(optf, "%s/.Renviron", getenv("R_USER"));
+	if (!optopenfile(optf)) return;
+    }
     while ((ok = optread(opt, '='))) {
 	sprintf(buf, "%s=%s", opt[0], opt[1]);
 	Putenv(buf);
@@ -628,6 +646,15 @@ int cmdlineoptions(int ac, char **av)
 #ifdef HAVE_TIMES
     setStartTime();
 #endif
+
+    /* Store the command line arguments before they are processed
+       by the different option handlers. We do this here so that
+       we get all the name=value pairs. Otherwise these will
+       have been removed by the time we get to call 
+       R_common_command_line().
+     */
+    R_set_command_line_arguments(ac, av, Rp);
+
 
     R_DefParams(Rp);
     Rp->CharacterMode = CharacterMode;
@@ -706,11 +733,11 @@ int cmdlineoptions(int ac, char **av)
  * try R_USER then HOME then working directory
  */
     if (getenv("R_USER")) {
-	strcpy(RUser, getenv("HOME"));
+	strcpy(RUser, getenv("R_USER"));
     } else if (getenv("HOME")) {
 	    strcpy(RUser, getenv("HOME"));
-    } else if (getenv("HOMEDIR")) {
-	    strcpy(RUser, getenv("HOMEDIR"));
+    } else if (getenv("HOMEDRIVE")) {
+	    strcpy(RUser, getenv("HOMEDRIVE"));
 	    strcat(RUser, getenv("HOMEPATH"));
     } else
 	GetCurrentDirectory(MAX_PATH, RUser);

@@ -35,8 +35,8 @@ arc-tangent, and the two-argument arc-tangent.
 cos(0) == 1
 sin(3*pi/2) == cos(pi)
 x <- rnorm(99)
-all( sin(-x) == - sin(x))
-all( cos(-x) == cos(x))
+all.equal( sin(-x), - sin(x))
+all.equal( cos(-x), cos(x))
 x <- abs(x); y <- abs(rnorm(x))
 all(abs(atan2(y, x) - atan(y/x)) <= .Machine$double.eps)# TRUE
 table(abs(atan2(y, x) - atan(y/x)) / .Machine$double.eps) # depends!

@@ -23,9 +23,9 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
                    demean = TRUE, series = NULL, ...)
 {
     if(is.null(series)) series <- deparse(substitute(x))
-    xfreq <- frequency(as.ts(x))
-    if(ists <- is.ts(x)) xtsp <- tsp(x)
+    ists <- is.ts(x)
     x <- na.action(as.ts(x))
+    if(ists)  xtsp <- tsp(x)
     xfreq <- frequency(x)
     x <- as.matrix(x)
     if(any(is.na(x))) stop("NAs in x")
@@ -94,8 +94,11 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         xaic <- xaic - min(xaic)
         names(xaic) <- 0:order.max
         resid <- cal.resid()
-        ar <- -ar[2:(max(order, 1) + 1), , , drop = FALSE]
-        dimnames(ar) <- list(1:order, snames, snames)
+        if(order > 0 ) {
+            ar <- -ar[2:(order + 1), , , drop = FALSE]
+            dimnames(ar) <- list(1:order, snames, snames)
+        } else ar <- array(0, dim=c(0, nser, nser),
+                           dimnames=list(NULL, snames, snames))
         dimnames(var.pred) <- list(snames, snames)
         dimnames(partialacf) <- list(1:order.max, snames, snames)
     } else {
@@ -106,7 +109,7 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
                       r, r,
                       coefs=double(order.max^2),
                       vars=double(order.max),
-                      double(order.max))
+                      double(order.max), PACKAGE="ts")
         coefs <- matrix(z$coefs, order.max, order.max)
         partialacf <- array(diag(coefs), dim=c(order.max, 1, 1))
         var.pred <- c(r[1], z$vars)
@@ -114,7 +117,7 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         xaic <- xaic - min(xaic)
         names(xaic) <- 0:order.max
         order <- if (aic) (0:order.max)[xaic == 0] else order.max
-        ar <- if (order > 0) coefs[order, 1:order] else 0
+        ar <- if (order > 0) coefs[order, 1:order] else numeric(0)
         var.pred <- var.pred[order+1]
         ## Splus compatibility fix
         var.pred <- var.pred * n.used/(n.used - (order + 1))
@@ -130,8 +133,8 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
                 aic = xaic, n.used=n.used, order.max=order.max,
                 partialacf=partialacf, resid=resid, method = "Yule-Walker",
                 series=series, frequency=xfreq, call=match.call())
-    if(nser == 1)
-        res$asy.var.coef <- solve(toeplitz(drop(xacf)[1:order]))*var.pred/n.used
+    if(nser == 1 && order > 0)
+        res$asy.var.coef <- solve(toeplitz(drop(xacf)[seq(length=order)]))*var.pred/n.used
     class(res) <- "ar"
     res
 }
@@ -206,7 +209,7 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
                 psi <- .C("artoma",
                         as.integer(object$order), as.double(ar),
                         psi = double(npsi+object$order+1),
-                        as.integer(npsi))$psi[1:npsi]
+                        as.integer(npsi), PACKAGE="ts")$psi[1:npsi]
                 vars <- cumsum(c(1, psi^2))
                 se <- sqrt(object$var.pred*vars)
             }

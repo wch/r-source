@@ -83,7 +83,7 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 	  form = Calloc(strlen(*flag)+strlen(*format)+ 4+1, char);
 	*/
 
-	if (wid == 0) error("Width cannot be zero\n");
+	if (wid == 0) error("Width cannot be zero");
 
 	if (strcmp("d", *format) == 0) {
 		if (strlen(*flag) == 0) strcpy(form, "%*d");
@@ -93,10 +93,10 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 			strcat(form, "*d");
 		}
 		if (strcmp("integer", *type) == 0)
-		  for (i=0; i < nn; i++)
-			sprintf(result[i], form, wid, (int)((long *)x)[i]);
+		    for (i=0; i < nn; i++)
+			sprintf(result[i], form, wid, ((int *)x)[i]);
 		else
-			error("`type' must be \"integer\" for  \"d\"-format\n");
+			error("`type' must be \"integer\" for  \"d\"-format");
 	}
 	else { /* --- floating point --- */
 		if (strlen(*flag) == 0) {
@@ -159,6 +159,6 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 		    for (i=0; i < nn; i++)
 			sprintf(result[i], form, wid, dig, ((double *)x)[i]);
 		} else
-			error("`type' must be \"real\" for this format\n");
+			error("`type' must be \"real\" for this format");
 	}
 }

@@ -12,7 +12,7 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
-PKGS = base eda lqs modreg mva stepfun ts
+PKGS = $(R_PKGS)
 
 SUBDIRS = profile $(PKGS)
 

@@ -156,7 +156,8 @@ formatC <- function (x, digits = NULL, width = NULL,
 	    digits = as.integer(digits),
 	    format = as.character(format),
 	    flag   = as.character(flag),
-	    result = blank.chars(i.strlen))$result
+	    result = blank.chars(i.strlen),
+            PACKAGE = "base")$result
     ##Dbg if(any(ii <- (nc.res <- nchar(r)) > i.strlen)) {
     ##Dbg  cat("formatC: some  i.strlen[.] were too small:\n")
     ##Dbg  print(cbind(ii=which(ii), strlen=i.strlen[ii], nchar=nc.res[ii]))

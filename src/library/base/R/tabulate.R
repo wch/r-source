@@ -6,5 +6,6 @@ tabulate <- function(bin, nbins = max(1,bin))
        as.integer(bin),
        as.integer(length(bin)),
        as.integer(nbins),
-       ans = integer(nbins))$ans
+       ans = integer(nbins),
+       PACKAGE="base")$ans
 }

@@ -1,0 +1,43 @@
+\name{commandArgs}
+\title{ Command line arguments for R}
+\usage{
+commandArgs()
+}
+\description{
+  provides access to a copy of the command line
+  arguments supplied when this R session was invoked.
+  This can be useful for passing the arguments on to other
+  embedded applications and libraries such as X11, CORBA, 
+  etc. Clones of the application can be constructed for
+  use in clustered distributed computing.
+}
+\details{
+  These arguments are captured before the standard
+  R command line processing takes place. This means
+  that they are the unmodified values.
+  If it were useful, we could provide support an argument
+  which indicated whether we want the unprocessed or processed values.
+}
+\value{
+  A character vector containing the name of the
+  executable and the user-supplied command line arguments.
+  The first element is the name of the executable by which R was
+  invoked. As far as I am aware, the exact form of this is element
+  is platform dependent. It may be the fully qualified name, or simply
+  the last component (or basename) of the application.
+}
+\
+%\author{DTL}
+\seealso{\code{\link{BATCH}}}
+
+\examples{
+commandArgs()
+\dontrun{
+  # Spawn a copy of this application as it was invoked,
+  # running it in the background.
+ system(paste(commandArgs(),"&",collapse=" "))
+}
+}
+\keyword{environment}
+\keyword{sysdata}
+\keyword{programming}

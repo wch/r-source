@@ -14,8 +14,8 @@
 #
 # A copy of the GNU General Public License is available via WWW at
 # http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
-# writing to the Free Software Foundation, Inc., 675 Mass Ave,
-# Cambridge, MA 02139, USA.
+# writing to the Free Software Foundation, Inc., 59 Temple Place,
+# Suite 330, Boston, MA  02111-1307  USA.
 
 # Send any bug reports to Friedrich.Leisch@ci.tuwien.ac.at
 
@@ -240,7 +240,7 @@ sub build_htmlpkglist {
     }
 
     print htmlfile "</TABLE>\n";
-    print htmlfile "</BODY>\n";
+    print htmlfile "</BODY></HTML>\n";
 
     close htmlfile;
 }
@@ -261,8 +261,8 @@ sub build_index {
 #    open out, ">$dest/TITLE";
     $title = <title>;
 #    print out "$title";
-#    close title;
-    close out;
+    close title;
+#    close out;
     $title =~ s/^\S*\s*(.*)/$1/;
 
     mkdir "$dest/help", $dir_mod || die "Could not create $dest/help: $!\n";
@@ -278,7 +278,7 @@ sub build_index {
 	if($manfile =~ /\.Rd$/i){
 
 	    my $rdname = basename($manfile, (".Rd", ".rd"));
-
+	    
 	    if($opt_dosnames){
 		    $manfilebase = "x" . (1000 + $nmanfiles++);
 	    }else{
@@ -287,13 +287,17 @@ sub build_index {
 
 	    open(rdfile, "<$manfile");
 	    undef $text;
-	    while(<rdfile>){ $text .= $_;}
+	    while(<rdfile>){  # skip comment lines
+		if(!/^%/) { $text .= $_; }
+	    }
 	    close rdfile;
 	    $text =~ /\\title\{\s*([^\}]+)\s*\}/s;
 	    my $rdtitle = $1;
 	    $rdtitle =~ s/\n/ /sg;
+	    $rdtitle =~ s/\\R/R/g; # don't use \R in titles
 
 	    $filenm{$rdname} = $manfilebase;
+	    $title2file{$rdtitle} = $manfilebase;
 
 	    while($text =~ s/\\(alias|name)\{\s*([^\}]+)\s*\}//){
 		$alias = $2;
@@ -317,42 +321,59 @@ sub build_index {
     open(anindex, "<$anindex");
     open(titleindex, ">$lib/$pkg/help/00Titles");
     open(htmlfile, ">$lib/$pkg/html/00Index.$HTML");
+    if($opt_chm) {open(chmfile, ">$chmdir/00Index.$HTML");}
 
     print htmlfile html_pagehead("$title", "../../../doc/html",
 				 "../../../doc/html/index.$HTML", "Top",
 				 "../../../doc/html/packages.$HTML",
 				 "Package List");
 
+    if($opt_chm) {print chmfile chm_pagehead("$title");}
+
 
     if($naliases>100){
-       print htmlfile html_alphabet();
+	print htmlfile html_alphabet();
+	if($opt_chm) {print chmfile html_alphabet();}
    }
 
-    print htmlfile "\n<p>\n<table width=100%>\n";
+    print htmlfile "\n<p>\n<table width=\"100%\">\n";
+    if($opt_chm) {print chmfile "\n<p>\n<table width=\"100%\">\n";}
 
     my $firstletter = "";
     while(<anindex>){ 
         chomp;  ($alias, $file) = split /\t/; 
-        $aliasfirst = uc substr($alias, 0, 1); 
-        if(($aliasfirst ne $firstletter) && 
-	   ($aliasfirst =~ /[A-Z]/) &&
-	   ($naliases>100)){
+        $aliasfirst = uc substr($alias, 0, 1);
+	if($aliasfirst lt "A") { $aliasfirst = ""; }
+	if($aliasfirst gt "Z") { $aliasfirst = "misc"; }
+	if( ($naliases > 100) && ($aliasfirst ne $firstletter) ) {
 	    print htmlfile "</table>\n";
-	    print htmlfile "<a name=\"$aliasfirst\">\n";
-	    print htmlfile html_title2("-- $aliasfirst --");
-	    print htmlfile "<table width=100%>\n";
+	    print htmlfile html_title2("<a name=\"$aliasfirst\">-- $aliasfirst --</a>");
+	    print htmlfile "<table width=\"100%\">\n";
+	    if($opt_chm) {
+		print chmfile "</table>\n";
+		print chmfile html_title2("<a name=\"$aliasfirst\">-- $aliasfirst --</a>");
+		print chmfile "<table width=\"100%\">\n";
+	    }
 	    $firstletter = $aliasfirst;
 	}
 	print titleindex "$alias\t$alltitles{$alias}\n";
-	print htmlfile "<TR><TD width=25%><A HREF=\"$file.$HTML\">" .
-	    "$alias</A></TD>\n<TD>$alltitles{$alias}</TD></TR>\n";
+	$htmlalias = $alias;
+	$htmlalias =~ s/</&lt;/go;
+	$htmlalias =~ s/>/&gt;/go;
+	print htmlfile "<TR><TD width=\"25%\"><A HREF=\"$file.$HTML\">" .
+	    "$htmlalias</A></TD>\n<TD>$alltitles{$alias}</TD></TR>\n";
+	if($opt_chm) {
+	    print chmfile "<TR><TD width=\"25%\"><A HREF=\"$file.$HTML\">" .
+		"$htmlalias</A></TD>\n<TD>$alltitles{$alias}</TD></TR>\n";}
     }
 
     print htmlfile "</TABLE>\n";
-    print htmlfile "</BODY>\n";
+    print htmlfile "</BODY></HTML>\n";
+    if($opt_chm) {print chmfile "</table>\n</body></HTML>\n";}
 
     close titleindex;
     close htmlfile;
+    if($opt_chm) {close chmfile;}
     close anindex;
 
     build_htmlpkglist($lib);
@@ -375,14 +396,14 @@ sub build_htmlfctlist {
     print htmlfile html_alphabet();
 
     print htmlfile html_title2("-- Operators, Global Variables, ... --");
-    print htmlfile "\n<p>\n<table width=100%>\n";
+    print htmlfile "\n<p>\n<table width=\"100%\">\n";
     foreach $alias (sort foldorder keys %htmltitles) {
-	print htmlfile "<TR><TD width=25%>" .
+	print htmlfile "<TR><TD width=\"25%\">" .
 	    "<A HREF=\"../../library/$htmlindex{$alias}\">" .
 	    "$alias</A></TD>\n<TD>$htmltitles{$alias}</TD></TR>\n"
 		unless $alias =~ /^[a-zA-Z]/;
     }
-    print htmlfile "\n</table>\n<p>\n<table width=100%>\n";
+    print htmlfile "\n</table>\n<p>\n<table width=\"100%\">\n";
 
     my $firstletter = "";
     foreach $alias (sort foldorder keys %htmltitles) {
@@ -392,10 +413,10 @@ sub build_htmlfctlist {
 		print htmlfile "</table>\n";
 		print htmlfile "<a name=\"" . uc $aliasfirst . "\">\n";
 		print htmlfile html_title2("-- " . uc $aliasfirst . " --");
-		print htmlfile "<table width=100%>\n";
+		print htmlfile "<table width=\"100%\">\n";
 		$firstletter = $aliasfirst;
 	    }
-	    print htmlfile "<TR><TD width=25%>" .
+	    print htmlfile "<TR><TD width=\"25%\">" .
 		"<A HREF=\"../../library/$htmlindex{$alias}\">" .
 		    "$alias</A></TD>\n<TD>$htmltitles{$alias}</TD></TR>\n";
 	}
@@ -411,6 +432,47 @@ sub fileolder { #(filename, age)
     my($file, $age) = @_;
     #- return ``true'' if file exists and is older than $age
     (! ((-f $file) && ((-M $file) < $age)))
+}
+
+sub build_chm_toc {
+    open tocfile, ">../chm/$pkg.toc" 
+	|| die "Couldn't open the chm toc file";
+    print tocfile
+	"<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">\n",
+	"<HEAD></HEAD><HTML><BODY>\n<UL>\n";
+    print tocfile
+	"<LI> <OBJECT type=\"text/sitemap\">\n",
+	"<param name=\"Name\" value=\"Package $pkg:  Contents\">\n",
+	"<param name=\"Local\" value=\"00Index.html\">\n",
+	"</OBJECT>\n";
+    print tocfile
+	"<LI> <OBJECT type=\"text/sitemap\">\n",
+	"<param name=\"Name\" value=\"Package $pkg:  R objects\">\n",
+	"</OBJECT>\n";
+    print tocfile "<UL>\n";   # contents of a book
+    foreach $alias (sort foldorder keys %aliasnm) {
+	print tocfile
+	    "<LI> <OBJECT type=\"text/sitemap\">\n",
+	    "<param name=\"Name\" value=\"$alias\">\n",
+	    "<param name=\"Local\" value=\"$aliasnm{$alias}.html\">\n",
+	    "</OBJECT>\n";
+    }
+    print tocfile "</UL>\n";  # end of a book
+    print tocfile
+	"<LI> <OBJECT type=\"text/sitemap\">\n",
+	"<param name=\"Name\" value=\"Package $pkg:  Titles\">\n",
+	"</OBJECT>\n";
+    print tocfile "<UL>\n";   # contents of a book
+    foreach $title (sort foldorder keys %title2file) {
+	print tocfile
+	    "<LI> <OBJECT type=\"text/sitemap\">\n",
+	    "<param name=\"Name\" value=\"$title\">\n",
+	    "<param name=\"Local\" value=\"$title2file{$title}.html\">\n",
+	    "</OBJECT>\n";
+    }
+    print tocfile "</UL>\n";  # end of a book
+    print tocfile "</UL>\n</BODY></HTML>\n";
+    close tocfile;
 }
 
 1;

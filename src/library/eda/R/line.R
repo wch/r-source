@@ -12,7 +12,7 @@ line <-
 	    double(n),
 	    n,
 	    double(2),
-	    DUP=FALSE)
+	    DUP=FALSE, PACKAGE="eda")
     value <- list(call=sys.call(), coefficients=z[[6]], residuals=z[[3]],
 		  fitted.values=xy$y-z[[3]])
     class(value) <- "tukeyline"

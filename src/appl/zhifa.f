@@ -1,5 +1,5 @@
 c
-c     zhifa factors a complex*16 hermitian matrix by elimination
+c     zhifa factors a double complex hermitian matrix by elimination
 c     with symmetric pivoting.
 c
 c     to solve  a*x = b , follow zhifa by zhisl.
@@ -10,7 +10,7 @@ c     to compute  inverse(a) , follow zhifa by zhidi.
 c
 c     on entry
 c
-c        a       complex*16(lda,n)
+c        a       double complex(lda,n)
 c                the hermitian matrix to be factored.
 c                only the diagonal and upper triangle are used.
 c
@@ -50,19 +50,19 @@ c     fortran dabs,dmax1,dcmplx,dconjg,dsqrt
 c
       subroutine zhifa(a,lda,n,kpvt,info)
       integer lda,n,kpvt(*),info
-      complex*16 a(lda,*)
+      double complex a(lda,*)
 c
 c     internal variables
 c
-      complex*16 ak,akm1,bk,bkm1,denom,mulk,mulkm1,t
+      double complex ak,akm1,bk,bkm1,denom,mulk,mulkm1,t
       double precision absakk,alpha,colmax,rowmax
       integer imax,imaxp1,j,jj,jmax,k,km1,km2,kstep,izamax
       logical swap
 c
-      complex*16 zdum
+      double complex zdum
       double precision cabs1
       double precision dreal,dimag
-      complex*16 zdumr,zdumi
+      double complex zdumr,zdumi
       dreal(zdumr) = zdumr
       dimag(zdumi) = (0.0d0,-1.0d0)*zdumi
       cabs1(zdum) = dabs(dreal(zdum)) + dabs(dimag(zdum))

@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.63.3 in progress (January 26, 1999)
+Version 0.65.0 Patched (unreleased) (September 03, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -55,4 +55,22 @@ c("Variance ratio" = 1, "tail area" = pf(1, 1, 1))
 > eval(e3)
 Variance ratio      tail area 
            1.0            0.5 
+> 
+> 
+> 
+> ##- From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+> ##- To: r-core
+> ##- Date: 2 Sep 1999
+> 
+> ## The first failed in 0.65.0 :
+> attach(list(x=1))
+> evalq(dim(x) <- 1,pos.to.env(2))
+> dput(get("x", env=pos.to.env(2)))
+structure(1, .Dim = 1)
+> 
+> e <- local({x <- 1;environment()})
+> evalq(dim(x) <- 1,e)
+> dput(get("x",env=e))
+structure(1, .Dim = 1)
+> 
 > 
