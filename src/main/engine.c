@@ -1337,11 +1337,11 @@ void GEText(double x, double y, char *str,
 			    double maxDepth = 0.0;
 			    char *ss;
 			    int charNum = 0;
-			    h = fromDeviceHeight(h, GE_INCHES, dd);
-			    d = fromDeviceHeight(d, GE_INCHES, dd);
 			    for (ss=sbuf; *ss; ss++) {
 				GEMetricInfo((unsigned char) *ss,
 					     font, cex, ps, &h, &d, &w, dd);
+				h = fromDeviceHeight(h, GE_INCHES, dd);
+				d = fromDeviceHeight(d, GE_INCHES, dd);
 				/* Set maxHeight and maxDepth from height
 				   and depth of first char.
 				   Must NOT set to 0 in case there is
