@@ -1024,10 +1024,9 @@ static type1fontfamily findLoadedFont(char *name)
     return font;
 }
 
-SEXP do_Type1FontInUse(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP Type1FontInUse(SEXP name)
 {
     SEXP result;
-    SEXP name = CAR(args);
     if (!isString(name) || LENGTH(name) > 1)
 	error("Invalid font name or more than one font name");
     PROTECT(result = allocVector(LGLSXP, 1));
@@ -4932,4 +4931,231 @@ static void PDF_MetricInfo(int c,
     *ascent = floor(gc->cex * gc->ps + 0.5) * *ascent;
     *descent = floor(gc->cex * gc->ps + 0.5) * *descent;
     *width = floor(gc->cex * gc->ps + 0.5) * *width;
+}
+
+
+/*  PostScript Device Driver Parameters:
+ *  ------------------------
+ *  file	= output filename
+ *  paper	= paper type
+ *  family	= typeface = "family"
+ *  encoding	= char encoding file name
+ *  bg		= background color
+ *  fg		= foreground color
+ *  width	= width in inches
+ *  height	= height in inches
+ *  horizontal	= {TRUE: landscape; FALSE: portrait}
+ *  ps		= pointsize
+ *  onefile     = {TRUE: normal; FALSE: single EPSF page}
+ *  pagecentre  = centre plot region on paper?
+ *  printit     = `print' after closing device?
+ *  command     = `print' command
+ *  title       = character string
+ */
+
+SEXP PostScript(SEXP args)
+{
+    NewDevDesc *dev = NULL;
+    GEDevDesc *dd;
+    char *vmax;
+    char *file, *paper, *family=NULL, *bg, *fg, *cmd;
+    char *afms[5], *encoding, *title, call[] = "postscript";
+    int i, horizontal, onefile, pagecentre, printit;
+    double height, width, ps;
+    SEXP fam, fonts;
+
+    vmax = vmaxget();
+    args = CDR(args); /* skip entry point name */
+    file = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args);
+    paper = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
+
+    /* `family' can be either one string or a 5-vector of afmpaths. */
+    fam = CAR(args); args = CDR(args);
+    if(length(fam) == 1) 
+	family = CHAR(STRING_ELT(fam, 0));
+    else if(length(fam) == 5) {
+	if(!isString(fam)) error("invalid `family' parameter in %s", call);
+	family = "User";
+	for(i = 0; i < 5; i++) afms[i] = CHAR(STRING_ELT(fam, i));
+    } else 
+	error("invalid `family' parameter in %s", call);
+    
+    encoding = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
+    bg = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
+    fg = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
+    width = asReal(CAR(args));	      args = CDR(args);
+    height = asReal(CAR(args));	      args = CDR(args);
+    horizontal = asLogical(CAR(args));args = CDR(args);
+    if(horizontal == NA_LOGICAL)
+	horizontal = 1;
+    ps = asReal(CAR(args));	      args = CDR(args);
+    onefile = asLogical(CAR(args));   args = CDR(args);
+    pagecentre = asLogical(CAR(args));args = CDR(args);
+    printit = asLogical(CAR(args));   args = CDR(args);
+    cmd = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
+    title = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);    
+    fonts = CAR(args); 
+    if (!isNull(fonts) && !isString(fonts))
+	error("invalid `fonts' parameter in %s", call);
+    
+    R_CheckDeviceAvailable();
+    BEGIN_SUSPEND_INTERRUPTS {
+	if (!(dev = (NewDevDesc *) calloc(1, sizeof(NewDevDesc))))
+	    return 0;
+	/* Do this for early redraw attempts */
+	dev->displayList = R_NilValue;
+	/* Make sure that this is initialised before a GC can occur.
+	 * This (and displayList) get protected during GC
+	 */
+	dev->savedSnapshot = R_NilValue;
+	if(!PSDeviceDriver((DevDesc*) dev, file, paper, family, afms, encoding, bg, fg,
+			   width, height, (double)horizontal, ps, onefile,
+			   pagecentre, printit, cmd, title, fonts)) {
+	    free(dev);
+	    error("unable to start device PostScript");
+	}
+	gsetVar(install(".Device"), mkString("postscript"), R_NilValue);
+	dd = GEcreateDevDesc(dev);
+	addDevice((DevDesc*) dd);
+	GEinitDisplayList(dd);
+    } END_SUSPEND_INTERRUPTS;
+    vmaxset(vmax);
+    return R_NilValue;
+}
+
+
+
+/*  XFig Device Driver Parameters:
+ *  ------------------------
+ *  file	= output filename
+ *  paper	= paper type
+ *  family	= typeface = "family"
+ *  bg		= background color
+ *  fg		= foreground color
+ *  width	= width in inches
+ *  height	= height in inches
+ *  horizontal	= {TRUE: landscape; FALSE: portrait}
+ *  ps		= pointsize
+ *  onefile     = {TRUE: normal; FALSE: single EPSF page}
+ *  pagecentre  = centre plot region on paper?
+ */
+
+SEXP XFig(SEXP args)
+{
+    NewDevDesc *dev = NULL;
+    GEDevDesc *dd;
+    char *vmax;
+    char *file, *paper, *family, *bg, *fg, call[] = "XFig";
+    int horizontal, onefile, pagecentre;
+    double height, width, ps;
+
+    vmax = vmaxget();
+    args = CDR(args); /* skip entry point name */
+    file = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args);
+    paper = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
+    family = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args);
+    bg = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
+    fg = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
+    width = asReal(CAR(args));	      args = CDR(args);
+    height = asReal(CAR(args));	      args = CDR(args);
+    horizontal = asLogical(CAR(args));args = CDR(args);
+    if(horizontal == NA_LOGICAL)
+	horizontal = 1;
+    ps = asReal(CAR(args));	      args = CDR(args);
+    onefile = asLogical(CAR(args));   args = CDR(args);
+    pagecentre = asLogical(CAR(args));
+
+    R_CheckDeviceAvailable();
+    BEGIN_SUSPEND_INTERRUPTS {
+	if (!(dev = (NewDevDesc *) calloc(1, sizeof(NewDevDesc))))
+	    return 0;
+	/* Do this for early redraw attempts */
+	dev->displayList = R_NilValue;
+	/* Make sure that this is initialised before a GC can occur.
+	 * This (and displayList) get protected during GC
+	 */
+	dev->savedSnapshot = R_NilValue;
+	if(!XFigDeviceDriver((DevDesc*) dev, file, paper, family, bg, fg, width, height,
+			     (double)horizontal, ps, onefile, pagecentre)) {
+	    free(dev);
+	    error("unable to start device xfig");
+	}
+	gsetVar(install(".Device"), mkString("xfig"), R_NilValue);
+	dd = GEcreateDevDesc(dev);
+	addDevice((DevDesc*) dd);
+	GEinitDisplayList(dd);
+    } END_SUSPEND_INTERRUPTS;
+    vmaxset(vmax);
+    return R_NilValue;
+}
+
+
+/*  PDF Device Driver Parameters:
+ *  ------------------------
+ *  file	= output filename
+ *  family	= typeface = "family"
+ *  encoding	= char encoding file name
+ *  bg		= background color
+ *  fg		= foreground color
+ *  width	= width in inches
+ *  height	= height in inches
+ *  ps		= pointsize
+ *  onefile     = {TRUE: normal; FALSE: single page per file}
+ *  title
+ *  fonts
+ *  versionMajor
+ *  versionMinor
+ */
+
+SEXP PDF(SEXP args)
+{
+    NewDevDesc *dev = NULL;
+    GEDevDesc *dd;
+    char *vmax;
+    char *file, *encoding, *family, *bg, *fg, *title, call[] = "PDF";
+    double height, width, ps;
+    int onefile, major, minor;
+    SEXP fonts;
+
+    vmax = vmaxget();
+    args = CDR(args); /* skip entry point name */
+    file = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args);
+    family = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args);
+    encoding = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args);
+    bg = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
+    fg = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
+    width = asReal(CAR(args));	      args = CDR(args);
+    height = asReal(CAR(args));	      args = CDR(args);
+    ps = asReal(CAR(args));           args = CDR(args);
+    onefile = asLogical(CAR(args)); args = CDR(args);
+    title = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
+    fonts = CAR(args); args = CDR(args);
+    if (!isNull(fonts) && !isString(fonts))
+	error("invalid `fonts' parameter in %s", call);
+    major = asInteger(CAR(args)); args = CDR(args);
+    minor = asInteger(CAR(args)); 
+
+    R_CheckDeviceAvailable();
+    BEGIN_SUSPEND_INTERRUPTS {
+	if (!(dev = (NewDevDesc *) calloc(1, sizeof(NewDevDesc))))
+	    return 0;
+	/* Do this for early redraw attempts */
+	dev->displayList = R_NilValue;
+	/* Make sure that this is initialised before a GC can occur.
+	 * This (and displayList) get protected during GC
+	 */
+	dev->savedSnapshot = R_NilValue;
+	if(!PDFDeviceDriver((DevDesc*) dev, file, family, encoding, bg, fg, 
+			    width, height, ps, onefile, title, fonts,
+			    major, minor)) {
+	    free(dev);
+	    error("unable to start device pdf");
+	}
+	gsetVar(install(".Device"), mkString("pdf"), R_NilValue);
+	dd = GEcreateDevDesc(dev);
+	addDevice((DevDesc*) dd);
+	GEinitDisplayList(dd);
+    } END_SUSPEND_INTERRUPTS;
+    vmaxset(vmax);
+    return R_NilValue;
 }

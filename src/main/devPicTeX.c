@@ -710,7 +710,7 @@ Rboolean PicTeXDeviceDriver(NewDevDesc *dd, char *filename,
  *  debug   = Rboolean; if TRUE, write TeX-Comments into output.
  */
 
-SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP PicTeX(SEXP args)
 {
     NewDevDesc *dev;
     GEDevDesc *dd;
@@ -720,6 +720,7 @@ SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean debug;
 
     vmax = vmaxget();
+    args = CDR(args); /* skip entry point name */
     file = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
     bg = CHAR(STRING_ELT(CAR(args), 0));   args = CDR(args);
     fg = CHAR(STRING_ELT(CAR(args), 0));   args = CDR(args);
@@ -740,7 +741,7 @@ SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
 	dev->savedSnapshot = R_NilValue;
 	if(!PicTeXDeviceDriver(dev, file, bg, fg, width, height, debug)) {
 	    free(dev);
-	    errorcall(call, "unable to start device PicTeX");
+	    error("unable to start device PicTeX");
 	}
 	gsetVar(install(".Device"), mkString("pictex"), R_NilValue);
 	dd = GEcreateDevDesc(dev);

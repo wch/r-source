@@ -96,3 +96,9 @@ SEXP R_getbcprofcounts();
 SEXP R_startbcprof();
 SEXP R_stopbcprof();
 #endif
+
+SEXP PicTeX(SEXP);
+SEXP PostScript(SEXP);
+SEXP XFig(SEXP);
+SEXP PDF(SEXP);
+SEXP Type1FontInUse(SEXP);

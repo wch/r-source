@@ -718,11 +718,6 @@ FUNTAB R_FunTab[] =
 
 /* Device Drivers */
 
-{"PS",		do_PS,		0,	111,   17,	{PP_FUNCALL, PREC_FN,	0}},
-{"PicTeX",	do_PicTeX,	0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
-{"XFig",	do_XFig,	0,	111,   11,	{PP_FUNCALL, PREC_FN,	0}},
-{"PDF",		do_PDF,		0,	111,   10,	{PP_FUNCALL, PREC_FN,	0}},
-{"Type1FontInUse", do_Type1FontInUse, 0, 111,   1,      {PP_FUNCALL, PREC_FN,	0}},
 #ifdef Win32
 {"devga",	do_devga,	0,	111,   15,	{PP_FUNCALL, PREC_FN,	0}},
 #endif

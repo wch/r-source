@@ -252,6 +252,7 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(R_stopbcprof, 0),
 #endif
 
+    CALLDEF(Type1FontInUse, 1),
     {NULL, NULL, 0}
 };
 
@@ -261,6 +262,10 @@ static R_CallMethodDef callMethods [] = {
 static R_ExternalMethodDef externalMethods [] = {
     EXTDEF(call_dqags),
     EXTDEF(call_dqagi),
+    EXTDEF(PicTeX),
+    EXTDEF(PostScript),
+    EXTDEF(XFig),
+    EXTDEF(PDF),
     {NULL, NULL, 0}
 };
 

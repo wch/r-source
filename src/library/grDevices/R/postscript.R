@@ -100,10 +100,10 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
     else old
 }
 
-##--> source in ../../../main/devices.c	 and ../../../main/devPS.c :
+##--> source in devPS.c :
 
 postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
-                        onefile = TRUE, family, 
+                        onefile = TRUE, family,
                         title = "R Graphics Output",
                         fonts = NULL, ...)
 {
@@ -124,20 +124,21 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
             # then map to postscript font family
             if (length(family) == 1) {
                 psFamily <- postscriptFonts(family)[[1]]
-                if (!is.null(psFamily)) 
+                if (!is.null(psFamily))
                     family <- psFamily$family
             }
-        }          
+        }
         old$family <- family
     }
     if(is.null(old$encoding) || old$encoding  == "default")
         old$encoding <- switch(.Platform$OS.type,
                                "windows" = "WinAnsi.enc",
                                "ISOLatin1.enc")
-    .Internal(PS(file, old$paper, old$family, old$encoding, old$bg, old$fg,
-		 old$width, old$height, old$horizontal, old$pointsize,
-                 old$onefile, old$pagecentre, old$print.it, old$command,
-                 title, fonts))
+    .External("PostScript",
+              file, old$paper, old$family, old$encoding, old$bg, old$fg,
+              old$width, old$height, old$horizontal, old$pointsize,
+              old$onefile, old$pagecentre, old$print.it, old$command,
+              title, fonts, PACKAGE = "base")
     # if .ps.prolog is searched for and fails, NULL got returned.
     invisible()
 }
@@ -150,13 +151,15 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
                          name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
 
-    .Internal(XFig(file, old$paper, old$family, old$bg, old$fg,
-		 old$width, old$height, old$horizontal, old$pointsize,
-                 old$onefile, old$pagecentre))
+    .External("XFig",
+              file, old$paper, old$family, old$bg, old$fg,
+              old$width, old$height, old$horizontal, old$pointsize,
+              old$onefile, old$pagecentre, PACKAGE = "base")
+    invisible()
 }
 
 pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
-                 width = 6, height = 6, onefile = TRUE, family, 
+                 width = 6, height = 6, onefile = TRUE, family,
                  title = "R Graphics Output", fonts = NULL, version="1.1", ...)
 {
     new <- list(onefile=onefile, ...)# eval
@@ -175,7 +178,7 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
         # then map to postscript font family
         else {
             psFamily <- postscriptFonts(family)[[1]]
-            if (!is.null(psFamily)) 
+            if (!is.null(psFamily))
                 family <- psFamily$family
         }
         old$family <- family
@@ -183,12 +186,14 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
     # Extract version
     versions <- c("1.1", "1.2", "1.3", "1.4")
     if (version %in% versions)
-      version <- as.integer(strsplit(version, "[.]")[[1]])
+        version <- as.integer(strsplit(version, "[.]")[[1]])
     else
-      stop("Invalid PDF version")
-    .Internal(PDF(file, old$family, old$encoding, old$bg, old$fg,
-                  width, height, old$pointsize, old$onefile, title,
-                  fonts, version[1], version[2]))
+        stop("Invalid PDF version")
+    .External("PDF",
+              file, old$family, old$encoding, old$bg, old$fg,
+              width, height, old$pointsize, old$onefile, title,
+              fonts, version[1], version[2], PACKAGE = "base")
+    invisible()
 }
 
 .ps.prolog <- c(
@@ -231,86 +236,86 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
 assign(".PostScript.Fonts", list(), envir = .PSenv)
 
 psFontError <- function(errDesc) {
-  stop(paste("Invalid", errDesc, "in PostScript font specification"))
+    stop(paste("Invalid", errDesc, "in PostScript font specification"))
 }
 
 # Check that the font has the correct structure and information
 # Already checked that it had a name
 checkPSFont <- function(font) {
-  if (is.null(font$family) || !is.character(font$family))
-    psFontError("font family name")
-  if (is.null(font$metrics) || !is.character(font$metrics) ||
-      length(font$metrics) < 4)
-    psFontError("font metric information")
-  # Add default symbol font metric if none provided
-  if (length(font$metrics) == 4)
-    font$metrics <- c(font$metrics, "sy______.afm")
-  if (is.null(font$encoding) || !is.character(font$encoding))
-    psFontError("font encoding")
-  font
+    if (is.null(font$family) || !is.character(font$family))
+        psFontError("font family name")
+    if (is.null(font$metrics) || !is.character(font$metrics) ||
+        length(font$metrics) < 4)
+        psFontError("font metric information")
+        ## Add default symbol font metric if none provided
+    if (length(font$metrics) == 4)
+        font$metrics <- c(font$metrics, "sy______.afm")
+    if (is.null(font$encoding) || !is.character(font$encoding))
+        psFontError("font encoding")
+    font
 }
 
 checkFontInUse <- function(names) {
-  for (i in names)
-    if (.Internal(Type1FontInUse(i)))
-      stop(paste("Font", i, "already in use"))
+    for (i in names)
+        if (.Call("Type1FontInUse", i, PACKAGE = "base"))
+            stop(paste("Font", i, "already in use"))
 }
 
 setPSFonts <- function(fonts, fontNames) {
-  fonts <- lapply(fonts, checkPSFont)
-  fontDB <- get(".PostScript.Fonts", envir=.PSenv)
-  existingFonts <- fontNames %in% names(fontDB)
-  if (sum(existingFonts) > 0) {
-    checkFontInUse(fontNames[existingFonts])
-    fontDB[fontNames[existingFonts]] <- fonts[existingFonts]
-  }
-  if (sum(existingFonts) < length(fontNames))
-    fontDB <- c(fontDB, fonts[!existingFonts])
-  assign(".PostScript.Fonts", fontDB, envir=.PSenv)
+    fonts <- lapply(fonts, checkPSFont)
+    fontDB <- get(".PostScript.Fonts", envir=.PSenv)
+    existingFonts <- fontNames %in% names(fontDB)
+    if (sum(existingFonts) > 0) {
+        checkFontInUse(fontNames[existingFonts])
+        fontDB[fontNames[existingFonts]] <- fonts[existingFonts]
+    }
+    if (sum(existingFonts) < length(fontNames))
+        fontDB <- c(fontDB, fonts[!existingFonts])
+    assign(".PostScript.Fonts", fontDB, envir=.PSenv)
 }
 
 printFont <- function(font) {
-  paste(font$family, "\n    (", paste(font$metrics, collapse=" "), ")\n",
-        sep="")
+    paste(font$family, "\n    (", paste(font$metrics, collapse=" "), ")\n",
+          sep="")
 }
 
 printFonts <- function(fonts) {
-  cat(paste(names(fonts), ": ", unlist(lapply(fonts, printFont)),
-            sep="", collapse=""))
+    cat(paste(names(fonts), ": ", unlist(lapply(fonts, printFont)),
+              sep="", collapse=""))
 }
 
-# If no arguments spec'ed, return entire font database
-# If no named arguments spec'ed, all args should be font names
-# to get info on from the database
+# If no arguments specified, return entire font database
+# If no named arguments specified, all args should be font names
+# on which to get info from the database
 # Else, must specify new fonts to enter into database (all
 # of which must be valid PostScript font descriptions and
 # all of which must be named args)
 postscriptFonts <- function(...) {
-  ndots <- length(fonts <- list(...))
-  if (ndots == 0)
-    get(".PostScript.Fonts", envir=.PSenv)
-  else {
-    fontNames <- names(fonts)
-    nnames <- length(fontNames)
-    if (nnames == 0) {
-      if (!all(sapply(fonts, is.character)))
-        stop("Invalid arguments in postscriptFonts (must be font names)")
-      else
-        get(".PostScript.Fonts", envir=.PSenv)[unlist(fonts)]
-    } else {
-      if (ndots != nnames)
-        stop("Invalid arguments in postscriptFonts (need NAMED args)")
-      setPSFonts(fonts, fontNames)
+    ndots <- length(fonts <- list(...))
+    if (ndots == 0)
+        get(".PostScript.Fonts", envir=.PSenv)
+    else {
+        fontNames <- names(fonts)
+        nnames <- length(fontNames)
+        if (nnames == 0) {
+            if (!all(sapply(fonts, is.character)))
+                stop("Invalid arguments in postscriptFonts (must be font names)")
+            else
+                get(".PostScript.Fonts", envir=.PSenv)[unlist(fonts)]
+        } else {
+            if (ndots != nnames)
+                stop("Invalid arguments in postscriptFonts (need NAMED args)")
+            setPSFonts(fonts, fontNames)
+        }
     }
-  }
 }
 
 # Create a valid postscript font description
 postscriptFont <- function(family, metrics, encoding="default") {
-  checkPSFont(list(family=family, metrics=metrics, encoding=encoding))
+    checkPSFont(list(family=family, metrics=metrics, encoding=encoding))
 }
 
-postscriptFonts(# Default Serif font is Times 
+postscriptFonts(# Default Serif font is Times
                 serif=postscriptFont("Times",
                   c("tir_____.afm", "tib_____.afm",
                     "tii_____.afm", "tibi____.afm",
@@ -406,7 +411,7 @@ postscriptFonts(# Default Serif font is Times
                   c("n021003l.afm", "n021004l.afm",
                     "n021023l.afm", "n021024l.afm",
                     "s050000l.afm")),
-                # Computer Modern as recoded by Brian D'Urso 
+                # Computer Modern as recoded by Brian D'Urso
                 ComputerModern=postscriptFont("ComputerModern",
                   c("CM_regular_10.afm", "CM_boldx_10.afm",
                     "CM_italic_10.afm", "CM_boldx_italic_10.afm",
