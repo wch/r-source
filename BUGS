@@ -363,3 +363,7 @@ Date: Tue, 30 Nov 1999 21:11:24 -0500 (EST)
 Subject: PRIVATE: Printing Problems
 From: mlamias@umich.edu
 Date: Wed, 1 Dec 1999 08:05:05 +0100 (MET)
+* PR# 356 *
+Subject: Error in plot.aov()
+From: John Maindonald <john.maindonald@anu.edu.au>
+Date: Thu, 02 Dec 1999 13:42:21 +1100
