@@ -15,7 +15,7 @@ data(\dots, list = character(0), package = .packages(),
   \item{list}{a character vector.}
   \item{package}{a character vector giving the package(s) to look
     in for data sets.  By default, all packages in the search path are
-    used, after the \file{data} subdirectory (if present) of the current
+    used, then the \file{data} subdirectory (if present) of the current
     working directory.}
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
@@ -73,12 +73,12 @@ data(\dots, list = character(0), package = .packages(),
   earlier versions of R, an empty character vector was returned along
   with listing available data sets.
 
-  If \code{lib.loc = NULL} (the default), the data sets are
-  searched for in the \file{data} directory (if any) of the current
-  working directory followed by those packages currently loaded (matching
-  \code{package}).  If \code{package} is specified, the search continues
+  If \code{lib.loc = NULL} (the default), the data sets are searched for
+  in those packages currently loaded (matching \code{package}) followed
+  by the \file{data} directory (if any) of the current working
+  directory.  If \code{package} is specified, the search continues
   amongst the specified packages in the default library/ies (see
-  \code{\link{.libPaths}}). 
+  \code{\link{.libPaths}}).
 
   If \code{lib.loc} \emph{is} specified (and not \code{NULL}), packages
   are searched for in the specified library/ies, even if they are
