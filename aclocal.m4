@@ -863,66 +863,161 @@ AC_DEFUN(R_BITMAPS, [
   ])
   AC_SUBST(BITMAP_LIBS)])
 dnl
-dnl R_TCLTK
+dnl Try finding {tcl,tk}Config.sh
+dnl
+dnl R_TCLTK_CONFIG()
+dnl
+AC_DEFUN(R_TCLTK_CONFIG,
+[libpath="${tcltk_prefix}:${LD_LIBRARY_PATH}"
+libpath="${libpath}:/opt/lib:/usr/local/lib:/usr/lib:/lib"
+AC_PATH_PROG(TCL_CONFIG, [${TCL_CONFIG} tclConfig.sh], , ${libpath})
+AC_PATH_PROG(TK_CONFIG, [${TK_CONFIG} tkConfig.sh], , ${libpath})])
+dnl
+dnl Need to ensure that we can find the tcl.h and tk.h headers, which
+dnl may be in non-standard and/or version-dependent directories, such as
+dnl on FreeBSD systems.
+dnl
+dnl R_TCLTK_CPPFLAGS()
+dnl
+AC_DEFUN(R_TCLTK_CPPFLAGS,
+[AC_REQUIRE([R_TCLTK_CONFIG])
+if test -z "${TCLTK_CPPFLAGS}"; then
+  ## We have to do the work.
+  if test "${have_tcltk}" = yes; then
+    ## Part 1. Check for tcl.h.
+    AC_CHECK_HEADER(tcl.h)
+    if test "${ac_cv_header_tcl_h}" = no; then
+      ## Grr, tcl.h is not in a standard place.
+      if test -n "${TCL_CONFIG}"; then
+	## We have a chance.
+	## Source the config file and look for tcl.h in
+	##   ${TCL_PREFIX}/include
+	##   ${TCL_PREFIX}/include/tcl${TCL_VERSION}
+	for dir in ${TCL_PREFIX}/include \
+	           ${TCL_PREFIX}/include/tcl${TCL_VERSION}; do
+	  r_save_CPPFLAGS="${CPPFLAGS}"
+	  CPPFLAGS="-I${dir} ${CPPFLAGS}"
+	  unset ac_cv_header_tcl_h
+	  AC_CHECK_HEADER(tcl.h)
+	  if test "${ac_cv_header_tcl_h}" = yes; then
+	    TCLTK_CPPFLAGS="-I${dir}"
+	    break
+	  fi
+	  CPPFLAGS="${r_save_CPPFLAGS}"
+	done
+      fi
+    fi
+    have_tcltk=${ac_cv_header_tcl_h}
+  fi
+  if test "${have_tcltk}" = yes; then
+    ## Part 2. Check for tk.h.
+    AC_CHECK_HEADER(tk.h)
+    if test "${ac_cv_header_tk_h}" = no; then
+      ## Grr, tk.h is not in a standard place.
+      if test -n "${TK_CONFIG}"; then
+	## We have a chance.
+	## Source the config file and look for tk.h in
+	##   ${TK_PREFIX}/include
+	##   ${TK_PREFIX}/include/tk${TK_VERSION}
+	for dir in ${TK_PREFIX}/include \
+	           ${TK_PREFIX}/include/tk${TK_VERSION}; do
+	  r_save_CPPFLAGS="${CPPFLAGS}"
+	  CPPFLAGS="-I${dir} ${CPPFLAGS}"
+	  unset ac_cv_header_tk_h
+	  AC_CHECK_HEADER(tk.h)
+	  if test "${ac_cv_header_tk_h}" = yes; then
+	    TCLTK_CPPFLAGS="-I${dir}"
+	    break
+	  fi
+	  CPPFLAGS="${r_save_CPPFLAGS}"
+	done
+      fi
+    fi
+    have_tcltk=${ac_cv_header_tk_h}
+  fi
+fi])
+dnl
+dnl Find the tcl and tk libraries.
+dnl
+dnl R_TCLTK_LIBS()
+dnl
+AC_DEFUN(R_TCLTK_LIBS,
+[AC_REQUIRE([AC_PATH_XTRA])
+AC_REQUIRE([R_TCLTK_CONFIG])
+if test -z "${TCLTK_LIBS}"; then
+  ## We have to do the work.
+  if test "${have_tcltk}" = yes; then
+    ## Part 1.  Try finding the tcl library.
+    AC_CHECK_LIB(tcl, Tcl_CreateInterp)
+    if test "${ac_cv_lib_tcl_Tcl_CreateInterp}" = no; then
+      ## Grr, simple -ltcl does not work.
+      if test -n "${TCL_CONFIG}"; then
+	## We have a chance.
+	. ${TCL_CONFIG}
+	AC_CHECK_LIB(tcl${TCL_VERSION}, Tcl_CreateInterp,
+	  [TCLTK_LIBS="-ltcl${TCL_VERSION}"],
+	  [have_tcltk=no])
+      else
+	have_tcltk=no
+      fi
+    fi
+  fi
+  if test "${have_tcltk}" = yes; then
+    ## Part 2.  Try finding the tk library.
+    AC_CHECK_LIB(tk, Tk_Init, , , ${TCLTK_LIBS})
+    if test "${ac_cv_lib_tk_Tk_Init}" = no; then
+      ## Grr, simple -ltk does not work.
+      ## But maybe we simply need to add X11 libs.
+      unset ac_cv_lib_tk_Tk_Init
+      AC_CHECK_LIB(tk, Tk_Init,
+        [TCLTK_LIBS="-ltcl -ltk ${X_LIBS}"], , [-ltcl ${X_LIBS}])
+    fi
+    if test "${ac_cv_lib_tk_Tk_Init}" = no; then
+      ## Grr, this also did not work.
+      if test -n "${TK_CONFIG}"; then
+	## We have a chance.
+	. ${TK_CONFIG}
+	AC_CHECK_LIB(tk${TK_VERSION}, Tk_Init,
+	  [TCLTK_LIBS="${TCLTK_LIBS} -ltk${TK_VERSION} ${TK_LIBS}"],
+          [have_tcltk=no],
+          [${TCLTK_LIBS} ${TK_LIBS}])
+      else
+	have_tcltk=no
+      fi
+    fi
+  fi
+fi
+])
+dnl
+dnl R_TCLTK()
 dnl
 AC_DEFUN(R_TCLTK,
-  [ AC_REQUIRE([AC_PATH_XTRA])
-    have_tcltk=no
-    TCLTK_CPPFLAGS=
-    TCLTK_LIBS=
-    if test "${want_tcltk}" = yes; then
-      AC_CHECK_LIB(tcl, Tcl_CreateInterp, [ TCLTK_LIBS="-ltcl"])
-      if test -n "${TCLTK_LIBS}"; then
-        AC_CHECK_LIB(tk, Tk_Init,
-          [ TCLTK_LIBS="-ltcl -ltk" have_tcltk=yes ], , ${TCLTK_LIBS})
-        if test "${have_tcltk}" = no; then
-        ## Try X11 libs
-          echo "checking with X11 libraries:"
-	  unset ac_cv_lib_tk_Tk_Init
-            AC_CHECK_LIB(tk, Tk_Init,
-              [ TCLTK_LIBS="-ltcl -ltk ${X_LIBS}"
-	        have_tcltk=yes ], , [-ltcl ${X_LIBS}])
-        fi
-      fi
-      if test "${have_tcltk}" = no; then
-	## Try finding {tcl,tk}Config.sh
-	libpath="${tcltk_prefix}:${LD_LIBRARY_PATH}"
-	libpath="${libpath}:/opt/lib:/usr/local/lib:/usr/lib:/lib"
-	TCL_CONFIG=
-	AC_PATH_PROG(TCL_CONFIG, tclConfig.sh, , ${libpath})
-	if test -n "${TCL_CONFIG}"; then
-	  . ${TCL_CONFIG}	# get TCL_VERSION
-	  AC_CHECK_LIB(tcl${TCL_VERSION}, Tcl_CreateInterp,
-	    [ TCLTK_LIBS="-ltcl${TCL_VERSION}" ],
-	    [ want_tcltk=no ])
-	  if test "${want_tcltk}" = yes; then
-	    TK_CONFIG=
-	    AC_PATH_PROG(TK_CONFIG, tkConfig.sh, , ${libpath})
-	    if test -n "${TK_CONFIG}"; then
-	      . ${TK_CONFIG}	# get TK_VERSION
-	      AC_CHECK_LIB(tk${TK_VERSION}, Tk_Init,
-	        [ TCLTK_LIBS="${TCLTK_LIBS} -ltk${TK_VERSION} ${TK_LIBS}"
-		  have_tcltk=yes ], , [${TCLTK_LIBS} ${TK_LIBS}] )
-	    fi
-	  fi
-	fi
-      fi
-    fi
-    if test "${have_tcltk}" = yes; then
-      AC_DEFINE(HAVE_TCLTK)
-      use_tcltk=yes
-      if test -n "${TK_XINCLUDES}"; then
-	TCLTK_CPPFLAGS=${TK_XINCLUDES}
-      else
-	TCLTK_CPPFLAGS=${X_CFLAGS}
-      fi
-    else
-      use_tcltk=no
-    fi
-    AC_SUBST(TCLTK_CPPFLAGS)
-    AC_SUBST(TCLTK_LIBS)
-    AC_SUBST(use_tcltk)
-  ])
+[if test "${want_tcltk}" = yes; then
+  have_tcltk=yes
+  R_TCLTK_CONFIG
+  R_TCLTK_CPPFLAGS  
+  R_TCLTK_LIBS
+else
+  have_tcltk=no
+  ## Just making sure.
+  TCLTK_CPPFLAGS=
+  TCLTK_LIBS=
+fi
+if test "${have_tcltk}" = yes; then
+  AC_DEFINE(HAVE_TCLTK)
+  use_tcltk=yes
+  if test -n "${TK_XINCLUDES}"; then
+    TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} ${TK_XINCLUDES}"
+  else
+    TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} ${X_CFLAGS}"
+  fi
+else
+  use_tcltk=no
+fi
+AC_SUBST(TCLTK_CPPFLAGS)
+AC_SUBST(TCLTK_LIBS)
+AC_SUBST(use_tcltk)
+])
 
 dnl Local Variables: ***
 dnl mode: sh ***
