@@ -1661,9 +1661,12 @@ static void PS_MetricInfo(int c,
 			  double* width, NewDevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
+    int face = gc->fontface;
+
+    if(face < 1 || face > 5) face = 1;
 
     PostScriptMetricInfo(c, ascent, descent, width,
-			 &(pd->metrics[gc->fontface-1]));
+			 &(pd->metrics[face-1]));
     *ascent = floor(gc->cex * gc->ps + 0.5) * *ascent;
     *descent = floor(gc->cex * gc->ps + 0.5) * *descent;
     *width = floor(gc->cex * gc->ps + 0.5) * *width;
