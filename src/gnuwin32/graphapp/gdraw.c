@@ -632,3 +632,8 @@ int devicewidthmm(drawing dev) MEASUREDEV(HORZSIZE)
 int deviceheightmm(drawing dev) MEASUREDEV(VERTSIZE)
 int devicepixelsx(drawing dev) MEASUREDEV(LOGPIXELSX)
 int devicepixelsy(drawing dev) MEASUREDEV(LOGPIXELSY)
+
+void BringToTop(window c)
+{
+    SetForegroundWindow(c->handle);
+}

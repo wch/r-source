@@ -1141,6 +1141,7 @@ static int setupScreenDevice(DevDesc *dd, gadesc *xd, int w, int h)
     setdata(xd->mreplace, (void *) dd);
     show(xd->gawin);
     show(xd->gawin);
+    BringToTop(xd->gawin);
     setresize(xd->gawin, HelpResize);
     setredraw(xd->gawin, HelpExpose);
     setmousedown(xd->gawin, HelpMouseClick);
