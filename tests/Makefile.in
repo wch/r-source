@@ -188,7 +188,7 @@ test-Specific:
 	@$(MAKE) test-Specific-strict RVAL_IF_DIFF=1
 	@echo "running sloppy specific tests"
 	@$(MAKE) test-Specific-sloppy RVAL_IF_DIFF=0
-	@rm -f data F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots.*
+	@rm -f data dumpdata.R  F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots.*
 
 test-Packages:
 	@for p in $(R_PKGS_BASE); do \

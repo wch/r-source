@@ -156,7 +156,7 @@ test-Reg:
 test-Segfault:
 	@echo "running tests of mis-calling functions"
 	@$(MAKE) -f Makefile.win $(test-out-segfault) RVAL_IF_DIFF=0
-	@$(RM) data F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots.*
+	@$(RM) data dumpdata.R F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots.*
 
 test-Ts:
 	@echo "running tests of package ts functions"
