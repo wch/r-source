@@ -109,13 +109,14 @@ extern WindowPtr gWindowPtrArray[kMaxWindows + 2];
     PMPrintSession	printSession;
 
 SInt32		systemVersion ;
+SInt32		carbonVersion ;
 
 OSErr Initialize( void )
 {
 	SInt32			response;
 	SInt16			i;
 	OSErr			err;
-
+    
 	/* expand the zone to its maximum size */
 	
 
@@ -152,7 +153,15 @@ OSErr Initialize( void )
     MoreMasterPointers(30);	
 #endif
 
+    // We need CarbonLib v 1.2.5 or Higher
+	Gestalt ( gestaltCarbonVersion, & carbonVersion ) ;
 
+    carbonVersion = ( carbonVersion << 16 ) | 0x8000 ;
+    if(carbonVersion < 0x01208000){
+     R_ShowMessage("You need CarbonLib 1.2.0 or newer\nto run R");
+     return -1;
+    } 
+    
 //	make sure we're using a recent version of the system software
 	Gestalt ( gestaltSystemVersion, & systemVersion ) ;
 	systemVersion = ( systemVersion << 16 ) | 0x8000 ;
@@ -202,7 +211,7 @@ OSErr Initialize( void )
 
     /* initialize the print session */
     if( (err = PMCreateSession(&printSession) ) != noErr)
-       {printSession =NULL;}// goto cleanup;
+       printSession =NULL;
     
     
 	InitSmartScrollAwareApplication ( ) ;
@@ -214,9 +223,6 @@ OSErr Initialize( void )
 
   	err = noErr;
 
-  /*	DoNew(true);
-  	Console_Window = FrontWindow();
-  */	
 
 cleanup:
 	if ( err != noErr )
