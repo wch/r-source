@@ -21,7 +21,9 @@
 #include "IOStuff.h"/*-> Defn.h */
 #include "Fileio.h"
 #include "Parse.h"
-
+#ifdef HAVE_ALLOCA_H
+#include <alloca.h>
+#endif
 
     /* Useful defines so editors don't get confused ... */
 

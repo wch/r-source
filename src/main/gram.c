@@ -63,7 +63,9 @@
 #include "IOStuff.h"/*-> Defn.h */
 #include "Fileio.h"
 #include "Parse.h"
-
+#ifdef HAVE_ALLOCA_H
+#include <alloca.h>
+#endif
 
     /* Useful defines so editors don't get confused ... */
 
@@ -244,14 +246,14 @@ static const short yyrhs[] = {     3,
 
 #if YYDEBUG != 0
 static const short yyrline[] = { 0,
-   139,   140,   141,   142,   143,   146,   147,   148,   149,   151,
-   152,   154,   155,   156,   157,   158,   160,   161,   162,   163,
-   164,   165,   166,   167,   168,   169,   170,   171,   172,   173,
-   174,   175,   176,   178,   179,   180,   182,   183,   184,   185,
-   186,   187,   188,   189,   190,   191,   192,   193,   197,   200,
-   203,   207,   208,   209,   210,   211,   212,   215,   216,   219,
-   220,   221,   222,   223,   224,   225,   226,   229,   230,   231,
-   232,   233,   236
+   141,   142,   143,   144,   145,   148,   149,   150,   151,   153,
+   154,   156,   157,   158,   159,   160,   162,   163,   164,   165,
+   166,   167,   168,   169,   170,   171,   172,   173,   174,   175,
+   176,   177,   178,   180,   181,   182,   184,   185,   186,   187,
+   188,   189,   190,   191,   192,   193,   194,   195,   199,   202,
+   205,   209,   210,   211,   212,   213,   214,   217,   218,   221,
+   222,   223,   224,   225,   226,   227,   228,   231,   232,   233,
+   234,   235,   238
 };
 #endif
 
@@ -487,7 +489,7 @@ static const short yycheck[] = {     0,
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
+   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
 /* As a special exception, when this file is copied by Bison into a
    Bison output file, you may use that output file without restriction.
@@ -968,295 +970,295 @@ yyreduce:
   switch (yyn) {
 
 case 1:
-#line 139 "./gram.y"
+#line 141 "./gram.y"
 { return 0; ;
     break;}
 case 2:
-#line 140 "./gram.y"
+#line 142 "./gram.y"
 { return xxvalue(NULL,2); ;
     break;}
 case 3:
-#line 141 "./gram.y"
+#line 143 "./gram.y"
 { return xxvalue(yyvsp[-1],3); ;
     break;}
 case 4:
-#line 142 "./gram.y"
+#line 144 "./gram.y"
 { return xxvalue(yyvsp[-1],4); ;
     break;}
 case 5:
-#line 143 "./gram.y"
+#line 145 "./gram.y"
 { YYABORT; ;
     break;}
 case 6:
-#line 146 "./gram.y"
-{ yyval = yyvsp[0]; ;
-    break;}
-case 7:
-#line 147 "./gram.y"
-{ yyval = yyvsp[0]; ;
-    break;}
-case 8:
 #line 148 "./gram.y"
 { yyval = yyvsp[0]; ;
     break;}
-case 9:
+case 7:
 #line 149 "./gram.y"
 { yyval = yyvsp[0]; ;
     break;}
-case 10:
+case 8:
+#line 150 "./gram.y"
+{ yyval = yyvsp[0]; ;
+    break;}
+case 9:
 #line 151 "./gram.y"
+{ yyval = yyvsp[0]; ;
+    break;}
+case 10:
+#line 153 "./gram.y"
 { yyval = xxexprlist(yyvsp[-2],yyvsp[-1]); ;
     break;}
 case 11:
-#line 152 "./gram.y"
+#line 154 "./gram.y"
 { yyval = xxparen(yyvsp[-2],yyvsp[-1]); ;
     break;}
 case 12:
-#line 154 "./gram.y"
-{ yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
-    break;}
-case 13:
-#line 155 "./gram.y"
-{ yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
-    break;}
-case 14:
 #line 156 "./gram.y"
 { yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
-case 15:
+case 13:
 #line 157 "./gram.y"
 { yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
-case 16:
+case 14:
 #line 158 "./gram.y"
 { yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
-case 17:
+case 15:
+#line 159 "./gram.y"
+{ yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
+    break;}
+case 16:
 #line 160 "./gram.y"
-{ yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
+{ yyval = xxunary(yyvsp[-1],yyvsp[0]); ;
     break;}
-case 18:
-#line 161 "./gram.y"
-{ yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
-    break;}
-case 19:
+case 17:
 #line 162 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 20:
+case 18:
 #line 163 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 21:
+case 19:
 #line 164 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 22:
+case 20:
 #line 165 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 23:
+case 21:
 #line 166 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 24:
+case 22:
 #line 167 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 25:
+case 23:
 #line 168 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 26:
+case 24:
 #line 169 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 27:
+case 25:
 #line 170 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 28:
+case 26:
 #line 171 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 29:
+case 27:
 #line 172 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 30:
+case 28:
 #line 173 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 31:
+case 29:
 #line 174 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 32:
+case 30:
 #line 175 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 33:
+case 31:
 #line 176 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
-case 34:
+case 32:
+#line 177 "./gram.y"
+{ yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
+    break;}
+case 33:
 #line 178 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
+case 34:
+#line 180 "./gram.y"
+{ yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
+    break;}
 case 35:
-#line 179 "./gram.y"
+#line 181 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[0],yyvsp[-2]); ;
     break;}
 case 36:
-#line 181 "./gram.y"
+#line 183 "./gram.y"
 { yyval = xxdefun(yyvsp[-5],yyvsp[-3],yyvsp[0]); ;
     break;}
 case 37:
-#line 182 "./gram.y"
+#line 184 "./gram.y"
 { yyval = xxfuncall(yyvsp[-3],yyvsp[-1]); ;
     break;}
 case 38:
-#line 183 "./gram.y"
+#line 185 "./gram.y"
 { yyval = xxif(yyvsp[-2],yyvsp[-1],yyvsp[0]); ;
     break;}
 case 39:
-#line 184 "./gram.y"
+#line 186 "./gram.y"
 { yyval = xxifelse(yyvsp[-4],yyvsp[-3],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 40:
-#line 185 "./gram.y"
+#line 187 "./gram.y"
 { yyval = xxfor(yyvsp[-2],yyvsp[-1],yyvsp[0]); ;
     break;}
 case 41:
-#line 186 "./gram.y"
+#line 188 "./gram.y"
 { yyval = xxwhile(yyvsp[-2],yyvsp[-1],yyvsp[0]); ;
     break;}
 case 42:
-#line 187 "./gram.y"
+#line 189 "./gram.y"
 { yyval = xxrepeat(yyvsp[-1],yyvsp[0]); ;
     break;}
 case 43:
-#line 188 "./gram.y"
+#line 190 "./gram.y"
 { yyval = xxsubscript(yyvsp[-4],yyvsp[-3],yyvsp[-2]); ;
     break;}
 case 44:
-#line 189 "./gram.y"
+#line 191 "./gram.y"
 { yyval = xxsubscript(yyvsp[-3],yyvsp[-2],yyvsp[-1]); ;
     break;}
 case 45:
-#line 190 "./gram.y"
+#line 192 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 46:
-#line 191 "./gram.y"
+#line 193 "./gram.y"
 { yyval = xxbinary(yyvsp[-1],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 47:
-#line 192 "./gram.y"
+#line 194 "./gram.y"
 { yyval = xxnxtbrk(yyvsp[0]); ;
     break;}
 case 48:
-#line 193 "./gram.y"
+#line 195 "./gram.y"
 { yyval = xxnxtbrk(yyvsp[0]); ;
     break;}
 case 49:
-#line 197 "./gram.y"
+#line 199 "./gram.y"
 { yyval = xxcond(yyvsp[-1]); ;
     break;}
 case 50:
-#line 200 "./gram.y"
+#line 202 "./gram.y"
 { yyval = xxifcond(yyvsp[-1]); ;
     break;}
 case 51:
-#line 203 "./gram.y"
+#line 205 "./gram.y"
 { yyval = xxforcond(yyvsp[-3],yyvsp[-1]); ;
     break;}
 case 52:
-#line 207 "./gram.y"
+#line 209 "./gram.y"
 { yyval = xxexprlist0(); ;
     break;}
 case 53:
-#line 208 "./gram.y"
+#line 210 "./gram.y"
 { yyval = xxexprlist1(yyvsp[0]); ;
     break;}
 case 54:
-#line 209 "./gram.y"
-{ yyval = xxexprlist2(yyvsp[-2],yyvsp[0]); ;
-    break;}
-case 55:
-#line 210 "./gram.y"
-{ yyval = yyvsp[-1]; AddComment(CAR(yyval));;
-    break;}
-case 56:
 #line 211 "./gram.y"
 { yyval = xxexprlist2(yyvsp[-2],yyvsp[0]); ;
     break;}
-case 57:
+case 55:
 #line 212 "./gram.y"
+{ yyval = yyvsp[-1]; AddComment(CAR(yyval));;
+    break;}
+case 56:
+#line 213 "./gram.y"
+{ yyval = xxexprlist2(yyvsp[-2],yyvsp[0]); ;
+    break;}
+case 57:
+#line 214 "./gram.y"
 { yyval = yyvsp[-1];;
     break;}
 case 58:
-#line 215 "./gram.y"
+#line 217 "./gram.y"
 { yyval = xxsublist1(yyvsp[0]); ;
     break;}
 case 59:
-#line 216 "./gram.y"
+#line 218 "./gram.y"
 { yyval = xxsublist2(yyvsp[-3],yyvsp[0]); ;
     break;}
 case 60:
-#line 219 "./gram.y"
+#line 221 "./gram.y"
 { yyval = xxsub0(); ;
     break;}
 case 61:
-#line 220 "./gram.y"
+#line 222 "./gram.y"
 { yyval = xxsub1(yyvsp[0]); ;
     break;}
 case 62:
-#line 221 "./gram.y"
-{ yyval = xxsymsub0(yyvsp[-1]); ;
-    break;}
-case 63:
-#line 222 "./gram.y"
-{ yyval = xxsymsub1(yyvsp[-2],yyvsp[0]); ;
-    break;}
-case 64:
 #line 223 "./gram.y"
 { yyval = xxsymsub0(yyvsp[-1]); ;
     break;}
-case 65:
+case 63:
 #line 224 "./gram.y"
 { yyval = xxsymsub1(yyvsp[-2],yyvsp[0]); ;
     break;}
-case 66:
+case 64:
 #line 225 "./gram.y"
+{ yyval = xxsymsub0(yyvsp[-1]); ;
+    break;}
+case 65:
+#line 226 "./gram.y"
+{ yyval = xxsymsub1(yyvsp[-2],yyvsp[0]); ;
+    break;}
+case 66:
+#line 227 "./gram.y"
 { yyval = xxnullsub0(); ;
     break;}
 case 67:
-#line 226 "./gram.y"
+#line 228 "./gram.y"
 { yyval = xxnullsub1(yyvsp[0]); ;
     break;}
 case 68:
-#line 229 "./gram.y"
+#line 231 "./gram.y"
 { yyval = xxnullformal(); ;
     break;}
 case 69:
-#line 230 "./gram.y"
+#line 232 "./gram.y"
 { yyval = xxfirstformal0(yyvsp[0]); ;
     break;}
 case 70:
-#line 231 "./gram.y"
+#line 233 "./gram.y"
 { yyval = xxfirstformal1(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 71:
-#line 232 "./gram.y"
+#line 234 "./gram.y"
 { yyval = xxaddformal0(yyvsp[-2],yyvsp[0]); ;
     break;}
 case 72:
-#line 233 "./gram.y"
+#line 235 "./gram.y"
 { yyval = xxaddformal1(yyvsp[-4],yyvsp[-2],yyvsp[0]); ;
     break;}
 case 73:
-#line 236 "./gram.y"
+#line 238 "./gram.y"
 { EatLines = 1; ;
     break;}
 }
@@ -1457,7 +1459,7 @@ yyerrhandle:
   yystate = yyn;
   goto yynewstate;
 }
-#line 238 "./gram.y"
+#line 240 "./gram.y"
 
 
 
