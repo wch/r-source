@@ -1,8 +1,7 @@
 bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
                        method = getOption("mailer"),
                        address = "r-bugs@r-project.org",
-                       file = "R.bug.report",
-                       wait = TRUE)
+                       file = "R.bug.report")
 {
     body <- paste("\\n<<insert bug report here>>\\n\\n\\n\\n",
 		  "--please do not edit the information below--\\n\\n",
@@ -15,11 +14,8 @@ bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
 		  paste(search(), collapse=", "),
 		  "\\n", sep="", collapse="")
 
-    if(missing(subject)) stop("'subject' missing")
-
     disclaimer <-
-        paste("# Your mailer is set to \"none\" (default on Windows),\n",
-              "# hence we cannot send the bug report directly from R.\n",
+        paste("# R for Windows will not send your bug report automatically.\n",
               "# Please copy the bug report (after finishing it) to\n",
               "# your favorite email program and send it to\n#\n",
               "#       ", address, "\n#\n",
@@ -29,8 +25,8 @@ bug.report <- function(subject = "", ccaddress = Sys.getenv("USER"),
     cat(disclaimer, file=file)
     body <- gsub("\\\\n", "\n", body)
     cat(body, file=file, append=TRUE)
-    system(paste(getOption("editor"), file), wait = wait)
-    cat("The unsent bug report can be found in file", file, "\n")
+    file.edit(file)
+    cat("The unsent bug report can be found in file", tools::file_path_as_absolute(file), "\n")
     invisible()
 }
 

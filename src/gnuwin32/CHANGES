@@ -83,6 +83,10 @@ Tcl/Tk could crash Rgui during shutdown by trying to print an error
 message after the console had been shut down.  Such messages are now
 redirected to message boxes.
 
+bug.report() failed to open the internal editor.  We have changed it
+to use file.edit() to edit the report, with the consequence that there
+is no longer a "wait" parameter.
+
 
 
 R 2.0.1
