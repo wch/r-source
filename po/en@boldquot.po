@@ -32,8 +32,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-16 08:27+0000\n"
-"PO-Revision-Date: 2005-02-16 08:27+0000\n"
+"POT-Creation-Date: 2005-02-18 07:43+0000\n"
+"PO-Revision-Date: 2005-02-18 07:43+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -95,213 +95,213 @@ msgstr "DLL attempted to change FPU control word from %x to %x"
 msgid "cannot get working directory"
 msgstr "cannot get working directory"
 
-#: src/gnuwin32/extra.c:46
+#: src/gnuwin32/extra.c:47
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "invalid ‘[1mtempdir[0m’ in R_tmpnam"
 
-#: src/gnuwin32/extra.c:59 src/unix/sys-unix.c:304
+#: src/gnuwin32/extra.c:60 src/unix/sys-unix.c:304
 msgid "cannot find unused tempfile name"
 msgstr "cannot find unused tempfile name"
 
-#: src/gnuwin32/extra.c:92
+#: src/gnuwin32/extra.c:93
 msgid "invalid 'names' in R_unlink"
 msgstr "invalid ‘[1mnames[0m’ in R_unlink"
 
-#: src/gnuwin32/extra.c:136
+#: src/gnuwin32/extra.c:137
 msgid "invalid file name argument"
 msgstr "invalid file name argument"
 
-#: src/gnuwin32/extra.c:139
+#: src/gnuwin32/extra.c:140
 msgid "invalid 'recursive' argument"
 msgstr "invalid ‘[1mrecursive[0m’ argument"
 
-#: src/gnuwin32/extra.c:160 src/gnuwin32/extra.c:207 src/gnuwin32/extra.c:391
-#: src/gnuwin32/extra.c:414
+#: src/gnuwin32/extra.c:161 src/gnuwin32/extra.c:208 src/gnuwin32/extra.c:392
+#: src/gnuwin32/extra.c:415
 msgid "R_HOME not set"
 msgstr "R_HOME not set"
 
-#: src/gnuwin32/extra.c:167
+#: src/gnuwin32/extra.c:168
 #, c-format
 msgid "%s\\doc\\html\\rwin.htm[l] not found"
 msgstr "%s\\doc\\html\\rwin.htm[l] not found"
 
-#: src/gnuwin32/extra.c:195
+#: src/gnuwin32/extra.c:196
 msgid "invalid topic argument"
 msgstr "invalid topic argument"
 
-#: src/gnuwin32/extra.c:201
+#: src/gnuwin32/extra.c:202
 #, c-format
 msgid "%s not found"
 msgstr "%s not found"
 
-#: src/gnuwin32/extra.c:211 src/gnuwin32/extra.c:223
+#: src/gnuwin32/extra.c:212 src/gnuwin32/extra.c:224
 msgid "invalid hlpfile argument"
 msgstr "invalid hlpfile argument"
 
-#: src/gnuwin32/extra.c:214 src/gnuwin32/extra.c:226
+#: src/gnuwin32/extra.c:215 src/gnuwin32/extra.c:227
 msgid "WinHelp call failed"
 msgstr "WinHelp call failed"
 
-#: src/gnuwin32/extra.c:217
+#: src/gnuwin32/extra.c:218
 msgid "too many .hlp files opened"
 msgstr "too many .hlp files opened"
 
-#: src/gnuwin32/extra.c:228
+#: src/gnuwin32/extra.c:229
 msgid "type not yet implemented"
 msgstr "type not yet implemented"
 
-#: src/gnuwin32/extra.c:402 src/gnuwin32/extra.c:619 src/gnuwin32/extra.c:634
+#: src/gnuwin32/extra.c:403 src/gnuwin32/extra.c:620 src/gnuwin32/extra.c:635
 #: src/main/platform.c:841 src/unix/sys-std.c:897 src/unix/sys-std.c:919
 msgid "invalid file argument"
 msgstr "invalid file argument"
 
-#: src/gnuwin32/extra.c:433 src/gnuwin32/extra.c:460
+#: src/gnuwin32/extra.c:434 src/gnuwin32/extra.c:461
 msgid "invalid 'message' argument"
 msgstr "invalid ‘[1mmessage[0m’ argument"
 
-#: src/gnuwin32/extra.c:445
+#: src/gnuwin32/extra.c:446
 msgid "unknown type"
 msgstr "unknown type"
 
-#: src/gnuwin32/extra.c:463
+#: src/gnuwin32/extra.c:464
 msgid "invalid 'default' argument"
 msgstr "invalid ‘[1mdefault[0m’ argument"
 
-#: src/gnuwin32/extra.c:484 src/gnuwin32/extra.c:508 src/gnuwin32/extra.c:546
-#: src/gnuwin32/extra.c:581
+#: src/gnuwin32/extra.c:485 src/gnuwin32/extra.c:509 src/gnuwin32/extra.c:547
+#: src/gnuwin32/extra.c:582
 msgid "Menu functions can only be used in the GUI"
 msgstr "Menu functions can only be used in the GUI"
 
-#: src/gnuwin32/extra.c:512 src/gnuwin32/extra.c:549 src/gnuwin32/extra.c:584
+#: src/gnuwin32/extra.c:513 src/gnuwin32/extra.c:550 src/gnuwin32/extra.c:585
 msgid "invalid 'menuname' argument"
 msgstr "invalid ‘[1mmenuname[0m’ argument"
 
-#: src/gnuwin32/extra.c:516
+#: src/gnuwin32/extra.c:517
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr "unable to retrieve items for %s (%s)"
 
-#: src/gnuwin32/extra.c:554
+#: src/gnuwin32/extra.c:555
 #, c-format
 msgid "unable to add menu (%s)"
 msgstr "unable to add menu (%s)"
 
-#: src/gnuwin32/extra.c:560 src/gnuwin32/extra.c:592
+#: src/gnuwin32/extra.c:561 src/gnuwin32/extra.c:593
 msgid "invalid 'itemname' argument"
 msgstr "invalid ‘[1mitemname[0m’ argument"
 
-#: src/gnuwin32/extra.c:566
+#: src/gnuwin32/extra.c:567
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr "unable to add menu item (%s)"
 
-#: src/gnuwin32/extra.c:589
+#: src/gnuwin32/extra.c:590
 msgid "menu does not exist"
 msgstr "menu does not exist"
 
-#: src/gnuwin32/extra.c:596
+#: src/gnuwin32/extra.c:597
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr "unable to delete menu item (%s)"
 
-#: src/gnuwin32/extra.c:623
+#: src/gnuwin32/extra.c:624
 msgid "savehistory can only be used in Rgui and Rterm"
 msgstr "savehistory can only be used in Rgui and Rterm"
 
-#: src/gnuwin32/extra.c:638
+#: src/gnuwin32/extra.c:639
 msgid "loadhistory can only be used in Rgui and Rterm"
 msgstr "loadhistory can only be used in Rgui and Rterm"
 
-#: src/gnuwin32/extra.c:706 src/unix/sys-std.c:968
+#: src/gnuwin32/extra.c:707 src/unix/sys-std.c:968
 msgid "invalid 'time' value"
 msgstr "invalid ‘[1mtime[0m’ value"
 
-#: src/gnuwin32/extra.c:761 src/gnuwin32/extra.c:771
+#: src/gnuwin32/extra.c:762 src/gnuwin32/extra.c:772
 msgid "incorrect argument"
 msgstr "incorrect argument"
 
-#: src/gnuwin32/extra.c:764
+#: src/gnuwin32/extra.c:765
 msgid "don't be silly!: your machine has a 4Gb address limit"
 msgstr "don't be silly!: your machine has a 4Gb address limit"
 
-#: src/gnuwin32/extra.c:767
+#: src/gnuwin32/extra.c:768
 msgid "cannot decrease memory limit"
 msgstr "cannot decrease memory limit"
 
-#: src/gnuwin32/extra.c:785 src/main/platform.c:881
+#: src/gnuwin32/extra.c:786 src/main/platform.c:881
 msgid "invalid 'path' argument"
 msgstr "invalid ‘[1mpath[0m’ argument"
 
-#: src/gnuwin32/extra.c:869
+#: src/gnuwin32/extra.c:870
 msgid "invalid 'list' argument"
 msgstr "invalid ‘[1mlist[0m’ argument"
 
-#: src/gnuwin32/extra.c:872 src/gnuwin32/extra.c:877
+#: src/gnuwin32/extra.c:873 src/gnuwin32/extra.c:878
 msgid "invalid 'preselect' argument"
 msgstr "invalid ‘[1mpreselect[0m’ argument"
 
-#: src/gnuwin32/extra.c:1051
+#: src/gnuwin32/extra.c:1052
 msgid "argument must be a character vector"
 msgstr "argument must be a character vector"
 
-#: src/gnuwin32/extra.c:1066 src/main/connections.c:1324
+#: src/gnuwin32/extra.c:1067 src/main/connections.c:1324
 msgid "Unable to open the clipboard"
 msgstr "Unable to open the clipboard"
 
-#: src/gnuwin32/extra.c:1071 src/main/connections.c:1328
+#: src/gnuwin32/extra.c:1072 src/main/connections.c:1328
 msgid "Unable to write to the clipboard"
 msgstr "Unable to write to the clipboard"
 
-#: src/gnuwin32/extra.c:1098
+#: src/gnuwin32/extra.c:1131
 msgid "default must be a character string"
 msgstr "default must be a character string"
 
-#: src/gnuwin32/extra.c:1100
+#: src/gnuwin32/extra.c:1133
 msgid "default is overlong"
 msgstr "default is overlong"
 
-#: src/gnuwin32/extra.c:1109
+#: src/gnuwin32/extra.c:1142
 msgid "caption must be a character string"
 msgstr "caption must be a character string"
 
-#: src/gnuwin32/extra.c:1111
+#: src/gnuwin32/extra.c:1144
 msgid "'multi' must be a logical value"
 msgstr "‘[1mmulti[0m’ must be a logical value"
 
-#: src/gnuwin32/extra.c:1113
+#: src/gnuwin32/extra.c:1146
 msgid "'filterindex' must be an integer value"
 msgstr "‘[1mfilterindex[0m’ must be an integer value"
 
-#: src/gnuwin32/extra.c:1247
+#: src/gnuwin32/extra.c:1280
 msgid "'title' must be a character string"
 msgstr "‘[1mtitle[0m’ must be a character string"
 
-#: src/gnuwin32/extra.c:1279
+#: src/gnuwin32/extra.c:1312
 msgid "'which' must be length 1"
 msgstr "‘[1mwhich[0m’ must be length 1"
 
-#: src/gnuwin32/extra.c:1309
+#: src/gnuwin32/extra.c:1342
 msgid "invalid value of 'which'"
 msgstr "invalid value of ‘[1mwhich[0m’"
 
-#: src/gnuwin32/extra.c:1311 src/gnuwin32/extra.c:1313
-#: src/gnuwin32/extra.c:1353
+#: src/gnuwin32/extra.c:1344 src/gnuwin32/extra.c:1346
+#: src/gnuwin32/extra.c:1386
 msgid "invalid device"
 msgstr "invalid device"
 
-#: src/gnuwin32/extra.c:1314
+#: src/gnuwin32/extra.c:1347
 msgid "requires SDI mode"
 msgstr "requires SDI mode"
 
-#: src/gnuwin32/extra.c:1347
+#: src/gnuwin32/extra.c:1380
 msgid "invalid graphical device number"
 msgstr "invalid graphical device number"
 
-#: src/gnuwin32/extra.c:1357
+#: src/gnuwin32/extra.c:1390
 msgid "bad device"
 msgstr "bad device"
 
-#: src/gnuwin32/extra.c:1596 src/gnuwin32/extra.c:1604
+#: src/gnuwin32/extra.c:1629 src/gnuwin32/extra.c:1637
 msgid "invalid input in Rmbstowcs"
 msgstr "invalid input in Rmbstowcs"
 
@@ -453,8 +453,8 @@ msgid "second argument must be a character string"
 msgstr "second argument must be a character string"
 
 #: src/include/Errormsg.h:40
-msgid "secong argument must be a list"
-msgstr "secong argument must be a list"
+msgid "second argument must be a list"
+msgstr "second argument must be a list"
 
 #: src/include/Errormsg.h:42 src/main/eval.c:2602 src/main/subscript.c:203
 #: src/main/subscript.c:307 src/main/subscript.c:310 src/main/subscript.c:404
@@ -3967,31 +3967,31 @@ msgstr "problem with term %d in model.matrix: no columns are assigned"
 msgid "term names will be truncated"
 msgstr "term names will be truncated"
 
-#: src/main/names.c:911
+#: src/main/names.c:912
 msgid "string argument required"
 msgstr "string argument required"
 
-#: src/main/names.c:919
+#: src/main/names.c:920
 msgid "no such primitive function"
 msgstr "no such primitive function"
 
-#: src/main/names.c:1032
+#: src/main/names.c:1033
 msgid "attempt to use zero-length variable name"
 msgstr "attempt to use zero-length variable name"
 
-#: src/main/names.c:1034
+#: src/main/names.c:1035
 msgid "symbol print-name too long"
 msgstr "symbol print-name too long"
 
-#: src/main/names.c:1060
+#: src/main/names.c:1061
 msgid "invalid .Internal() argument"
 msgstr "invalid .Internal() argument"
 
-#: src/main/names.c:1063
+#: src/main/names.c:1064
 msgid "invalid internal function"
 msgstr "invalid internal function"
 
-#: src/main/names.c:1065
+#: src/main/names.c:1066
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "no internal function “[1m%s[0m”"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-16 08:27+0000\n"
+"POT-Creation-Date: 2005-02-18 07:43+0000\n"
 "PO-Revision-Date: 2005-02-05 13:45+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -70,213 +70,213 @@ msgstr "la DLL ha tentato di cambiare la FPU control word da %x a %x"
 msgid "cannot get working directory"
 msgstr "impossibile ottenere la directory di lavoro"
 
-#: src/gnuwin32/extra.c:46
+#: src/gnuwin32/extra.c:47
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "'tempdir' non valida in R_tmpnam"
 
-#: src/gnuwin32/extra.c:59 src/unix/sys-unix.c:304
+#: src/gnuwin32/extra.c:60 src/unix/sys-unix.c:304
 msgid "cannot find unused tempfile name"
 msgstr "non è stato possibile trovare un nome tempfile non ancora utilizzato"
 
-#: src/gnuwin32/extra.c:92
+#: src/gnuwin32/extra.c:93
 msgid "invalid 'names' in R_unlink"
 msgstr "'names' non valido in R_unlink"
 
-#: src/gnuwin32/extra.c:136
+#: src/gnuwin32/extra.c:137
 msgid "invalid file name argument"
 msgstr "nome file specificato non valido"
 
-#: src/gnuwin32/extra.c:139
+#: src/gnuwin32/extra.c:140
 msgid "invalid 'recursive' argument"
 msgstr "argomento 'recursive' non valido"
 
-#: src/gnuwin32/extra.c:160 src/gnuwin32/extra.c:207 src/gnuwin32/extra.c:391
-#: src/gnuwin32/extra.c:414
+#: src/gnuwin32/extra.c:161 src/gnuwin32/extra.c:208 src/gnuwin32/extra.c:392
+#: src/gnuwin32/extra.c:415
 msgid "R_HOME not set"
 msgstr "R_HOME non impostata"
 
-#: src/gnuwin32/extra.c:167
+#: src/gnuwin32/extra.c:168
 #, c-format
 msgid "%s\\doc\\html\\rwin.htm[l] not found"
 msgstr "%s\\doc\\html\\rwin.htm[l] non trovata"
 
-#: src/gnuwin32/extra.c:195
+#: src/gnuwin32/extra.c:196
 msgid "invalid topic argument"
 msgstr "parametro topic non valido"
 
-#: src/gnuwin32/extra.c:201
+#: src/gnuwin32/extra.c:202
 #, c-format
 msgid "%s not found"
 msgstr "%s non trovato"
 
-#: src/gnuwin32/extra.c:211 src/gnuwin32/extra.c:223
+#: src/gnuwin32/extra.c:212 src/gnuwin32/extra.c:224
 msgid "invalid hlpfile argument"
 msgstr "parametro hlpfile non valido"
 
-#: src/gnuwin32/extra.c:214 src/gnuwin32/extra.c:226
+#: src/gnuwin32/extra.c:215 src/gnuwin32/extra.c:227
 msgid "WinHelp call failed"
 msgstr "chiamata a WinHelp non riuscita"
 
-#: src/gnuwin32/extra.c:217
+#: src/gnuwin32/extra.c:218
 msgid "too many .hlp files opened"
 msgstr "troppi file .hlp aperti"
 
-#: src/gnuwin32/extra.c:228
+#: src/gnuwin32/extra.c:229
 msgid "type not yet implemented"
 msgstr "type non ancora implementato"
 
-#: src/gnuwin32/extra.c:402 src/gnuwin32/extra.c:619 src/gnuwin32/extra.c:634
+#: src/gnuwin32/extra.c:403 src/gnuwin32/extra.c:620 src/gnuwin32/extra.c:635
 #: src/main/platform.c:841 src/unix/sys-std.c:897 src/unix/sys-std.c:919
 msgid "invalid file argument"
 msgstr "parametro file non valido"
 
-#: src/gnuwin32/extra.c:433 src/gnuwin32/extra.c:460
+#: src/gnuwin32/extra.c:434 src/gnuwin32/extra.c:461
 msgid "invalid 'message' argument"
 msgstr "parametro 'message' non valido"
 
-#: src/gnuwin32/extra.c:445
+#: src/gnuwin32/extra.c:446
 msgid "unknown type"
 msgstr "type sconosciuto"
 
-#: src/gnuwin32/extra.c:463
+#: src/gnuwin32/extra.c:464
 msgid "invalid 'default' argument"
 msgstr "parametro 'deafult' non valido"
 
-#: src/gnuwin32/extra.c:484 src/gnuwin32/extra.c:508 src/gnuwin32/extra.c:546
-#: src/gnuwin32/extra.c:581
+#: src/gnuwin32/extra.c:485 src/gnuwin32/extra.c:509 src/gnuwin32/extra.c:547
+#: src/gnuwin32/extra.c:582
 msgid "Menu functions can only be used in the GUI"
 msgstr "Le funzioni Menu possono essere utilizzate solo nella GUI"
 
-#: src/gnuwin32/extra.c:512 src/gnuwin32/extra.c:549 src/gnuwin32/extra.c:584
+#: src/gnuwin32/extra.c:513 src/gnuwin32/extra.c:550 src/gnuwin32/extra.c:585
 msgid "invalid 'menuname' argument"
 msgstr "parametro 'menuname' non valido"
 
-#: src/gnuwin32/extra.c:516
+#: src/gnuwin32/extra.c:517
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr "impossibile ottenere voci menu per %s (%s)"
 
-#: src/gnuwin32/extra.c:554
+#: src/gnuwin32/extra.c:555
 #, c-format
 msgid "unable to add menu (%s)"
 msgstr "impossibile aggiungere menu (%s)"
 
-#: src/gnuwin32/extra.c:560 src/gnuwin32/extra.c:592
+#: src/gnuwin32/extra.c:561 src/gnuwin32/extra.c:593
 msgid "invalid 'itemname' argument"
 msgstr "parametro 'itemname' non valido"
 
-#: src/gnuwin32/extra.c:566
+#: src/gnuwin32/extra.c:567
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr "impossibile aggiungere voce menu (%s)"
 
-#: src/gnuwin32/extra.c:589
+#: src/gnuwin32/extra.c:590
 msgid "menu does not exist"
 msgstr "il menu non esiste"
 
-#: src/gnuwin32/extra.c:596
+#: src/gnuwin32/extra.c:597
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr "impossibile eliminare la voce menu (%s)"
 
-#: src/gnuwin32/extra.c:623
+#: src/gnuwin32/extra.c:624
 msgid "savehistory can only be used in Rgui and Rterm"
 msgstr "savehistory può essere utilizzata solo in Rgui e Rterm"
 
-#: src/gnuwin32/extra.c:638
+#: src/gnuwin32/extra.c:639
 msgid "loadhistory can only be used in Rgui and Rterm"
 msgstr "loadhistory può essere utilizzata solo in Rgui e Rterm"
 
-#: src/gnuwin32/extra.c:706 src/unix/sys-std.c:968
+#: src/gnuwin32/extra.c:707 src/unix/sys-std.c:968
 msgid "invalid 'time' value"
 msgstr "valore 'time' non valido"
 
-#: src/gnuwin32/extra.c:761 src/gnuwin32/extra.c:771
+#: src/gnuwin32/extra.c:762 src/gnuwin32/extra.c:772
 msgid "incorrect argument"
 msgstr "parametro sbagliato"
 
-#: src/gnuwin32/extra.c:764
+#: src/gnuwin32/extra.c:765
 msgid "don't be silly!: your machine has a 4Gb address limit"
 msgstr "esagerato! la tua macchina ha un limite massimo di indirizzi di 4Gb"
 
-#: src/gnuwin32/extra.c:767
+#: src/gnuwin32/extra.c:768
 msgid "cannot decrease memory limit"
 msgstr "impossibile diminuire il limite di memoria"
 
-#: src/gnuwin32/extra.c:785 src/main/platform.c:881
+#: src/gnuwin32/extra.c:786 src/main/platform.c:881
 msgid "invalid 'path' argument"
 msgstr "parametro 'path' non valido"
 
-#: src/gnuwin32/extra.c:869
+#: src/gnuwin32/extra.c:870
 msgid "invalid 'list' argument"
 msgstr "parametro 'list' non valido"
 
-#: src/gnuwin32/extra.c:872 src/gnuwin32/extra.c:877
+#: src/gnuwin32/extra.c:873 src/gnuwin32/extra.c:878
 msgid "invalid 'preselect' argument"
 msgstr "parametro 'preselect' non valido"
 
-#: src/gnuwin32/extra.c:1051
+#: src/gnuwin32/extra.c:1052
 msgid "argument must be a character vector"
 msgstr "il parametro deve essere un vettori di caratteri"
 
-#: src/gnuwin32/extra.c:1066 src/main/connections.c:1324
+#: src/gnuwin32/extra.c:1067 src/main/connections.c:1324
 msgid "Unable to open the clipboard"
 msgstr "Non è possibile aprire gli appunti"
 
-#: src/gnuwin32/extra.c:1071 src/main/connections.c:1328
+#: src/gnuwin32/extra.c:1072 src/main/connections.c:1328
 msgid "Unable to write to the clipboard"
 msgstr "Impossibile scrivere negli appunti"
 
-#: src/gnuwin32/extra.c:1098
+#: src/gnuwin32/extra.c:1131
 msgid "default must be a character string"
 msgstr "default deve essere una stringa di caratteri"
 
-#: src/gnuwin32/extra.c:1100
+#: src/gnuwin32/extra.c:1133
 msgid "default is overlong"
 msgstr "default è troppo lungo"
 
-#: src/gnuwin32/extra.c:1109
+#: src/gnuwin32/extra.c:1142
 msgid "caption must be a character string"
 msgstr "la didascalia deve essere una stringa di caratteri"
 
-#: src/gnuwin32/extra.c:1111
+#: src/gnuwin32/extra.c:1144
 msgid "'multi' must be a logical value"
 msgstr "'multi' deve essere un valore logico/booleano"
 
-#: src/gnuwin32/extra.c:1113
+#: src/gnuwin32/extra.c:1146
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' deve essere un valore intero"
 
-#: src/gnuwin32/extra.c:1247
+#: src/gnuwin32/extra.c:1280
 msgid "'title' must be a character string"
 msgstr "'title' deve essere una stringa di caratteri"
 
-#: src/gnuwin32/extra.c:1279
+#: src/gnuwin32/extra.c:1312
 msgid "'which' must be length 1"
 msgstr "'which' deve essere di lunghezza 1"
 
-#: src/gnuwin32/extra.c:1309
+#: src/gnuwin32/extra.c:1342
 msgid "invalid value of 'which'"
 msgstr "valore di 'which' non valido"
 
-#: src/gnuwin32/extra.c:1311 src/gnuwin32/extra.c:1313
-#: src/gnuwin32/extra.c:1353
+#: src/gnuwin32/extra.c:1344 src/gnuwin32/extra.c:1346
+#: src/gnuwin32/extra.c:1386
 msgid "invalid device"
 msgstr "dispositivo non valido"
 
-#: src/gnuwin32/extra.c:1314
+#: src/gnuwin32/extra.c:1347
 msgid "requires SDI mode"
 msgstr "richiede modalità SDI"
 
-#: src/gnuwin32/extra.c:1347
+#: src/gnuwin32/extra.c:1380
 msgid "invalid graphical device number"
 msgstr "numero di dispositivo grafico non valido"
 
-#: src/gnuwin32/extra.c:1357
+#: src/gnuwin32/extra.c:1390
 msgid "bad device"
 msgstr "dispositivo sbagliato"
 
-#: src/gnuwin32/extra.c:1596 src/gnuwin32/extra.c:1604
+#: src/gnuwin32/extra.c:1629 src/gnuwin32/extra.c:1637
 msgid "invalid input in Rmbstowcs"
 msgstr "input non valido per Rmbstowcs"
 
@@ -431,7 +431,7 @@ msgstr "il secondo parametro deve essere una stringa di caratteri"
 
 #: src/include/Errormsg.h:40
 #, fuzzy
-msgid "secong argument must be a list"
+msgid "second argument must be a list"
 msgstr "il secondo argomento deve essere di tipo list"
 
 #: src/include/Errormsg.h:42 src/main/eval.c:2602 src/main/subscript.c:203
@@ -3935,31 +3935,31 @@ msgstr ""
 msgid "term names will be truncated"
 msgstr ""
 
-#: src/main/names.c:911
+#: src/main/names.c:912
 msgid "string argument required"
 msgstr ""
 
-#: src/main/names.c:919
+#: src/main/names.c:920
 msgid "no such primitive function"
 msgstr ""
 
-#: src/main/names.c:1032
+#: src/main/names.c:1033
 msgid "attempt to use zero-length variable name"
 msgstr ""
 
-#: src/main/names.c:1034
+#: src/main/names.c:1035
 msgid "symbol print-name too long"
 msgstr ""
 
-#: src/main/names.c:1060
+#: src/main/names.c:1061
 msgid "invalid .Internal() argument"
 msgstr ""
 
-#: src/main/names.c:1063
+#: src/main/names.c:1064
 msgid "invalid internal function"
 msgstr ""
 
-#: src/main/names.c:1065
+#: src/main/names.c:1066
 #, c-format
 msgid "no internal function \"%s\""
 msgstr ""
