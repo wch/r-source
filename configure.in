@@ -789,7 +789,8 @@ if test -z "${CPICFLAGS}"; then
 fi
 
 : ${FPICFLAGS=${fpicflags}}
-if test -z "${FPICFLAGS}"; then
+if test -z "${FPICFLAGS}" \
+    && test -z "${F2C}"; then
   case "${host}" in
     *aix4.[[2-9]]*)
       ;;
