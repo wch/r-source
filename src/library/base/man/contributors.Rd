@@ -20,20 +20,21 @@
   source, currently consisting of
 
   \itemize{%%-- should we add E-mail  and / or affiliation ?
-      \item Douglas Bates
-      \item Peter Dalgaard
-      \item Robert Gentleman
-      \item Kurt Hornik
-      \item Ross Ihaka
-      \item Friedrich Leisch
-      \item Thomas Lumley
-      \item Martin Maechler
-      \item Guido Masarotto
-      \item Paul Murrell
-      \item Brian Ripley
-      \item Duncan Temple Lang
-      \item Luke Tierney
-    }
+    \item Douglas Bates
+    \item John Chambers
+    \item Peter Dalgaard
+    \item Robert Gentleman
+    \item Kurt Hornik
+    \item Ross Ihaka
+    \item Friedrich Leisch
+    \item Thomas Lumley
+    \item Martin Maechler
+    \item Guido Masarotto
+    \item Paul Murrell
+    \item Brian Ripley
+    \item Duncan Temple Lang
+    \item Luke Tierney
+  }
 
   plus Heiner Schwarte up to October 1999.
 
