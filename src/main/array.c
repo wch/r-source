@@ -742,16 +742,13 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 		ccrossprod(COMPLEX(CAR(args)), nrx, ncx,
 			   COMPLEX(CADR(args)), nry, ncy, COMPLEX(ans));
 	else {
+	    if(sym)
 #ifdef IEEE_754
-	    if(sym)
 		symcrossprod(REAL(CAR(args)), nrx, ncx, REAL(ans));
-	    else
-		crossprod(REAL(CAR(args)), nrx, ncx,
-			  REAL(CADR(args)), nry, ncy, REAL(ans));
-#endif
-	    if(sym)
+#else
 		crossprod(REAL(CAR(args)), nrx, ncx,
 			  REAL(CAR(args)), nry, ncy, REAL(ans));
+#endif
 	    else
 		crossprod(REAL(CAR(args)), nrx, ncx,
 			  REAL(CADR(args)), nry, ncy, REAL(ans));
