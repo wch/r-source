@@ -23,10 +23,11 @@ make.search.html()
     explain a delay when called from other functions.}
 }
 \value{
-  No value is returned. The file \code{R\_HOME/doc/html/function.html},
-  \code{R\_HOME/doc/html/packages,html} or
-  \code{R\_HOME/doc/html/search/index.txt} is (re-)created.
+  No value is returned. The file \code{R\_HOME\\doc\\html\\function.html},
+  \code{R\_HOME\\doc\\html\\packages.html} or
+  \code{R\_HOME\\doc\\html\\search\\index.txt} is (re-)created.
 }
 \author{Guido Masarotto and Brian Ripley}
-\note{You will need write permission in the \code{R\_HOME/doc/html} directory.}
+\note{You will need write permission in the \code{R\_HOME\\doc\\html}
+  directory.}
 \keyword{utilities}
