@@ -5,8 +5,6 @@ C
      &	   crit,iparms,spar,parms,
      &	   isetup, scrtch, ld4,ldnk,ier)
 c
-      implicit none
-
       integer n,nk,isetup, iparms(2), ld4,ldnk,ier
       double precision penalt,dofoff, xs(n),ys(n),ws(n),ssw,
      &	   knot(nk+4), coef(nk),sz(n),lev(n), 
