@@ -1479,8 +1479,8 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP count, contrast, contr1, contr2, nlevs, ordered, columns, x;
     SEXP variable, var_i;
     int fik, first, i, j, k, kk, ll, n, nc, nterms, nvar;
-    int intercept, jstart, jnext, response, index;
-    char buf[BUFSIZE], *bufp;
+    int intercept, jstart, jnext, response, index, rhs_response;
+    char buf[BUFSIZE], *bufp, *addp;
 
     checkArity(op, args);
 
@@ -1553,12 +1553,13 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	var_i = VECTOR(variable)[i] = VECTOR(vars)[i];
 	if (nrows(var_i) != n)
 	    errorcall(call, "variable lengths differ");
-	if (i == response - 1) {
+	/*if (i == response - 1) {
 	    LOGICAL(ordered)[0] = 0;
 	    INTEGER(nlevs)[0] = 0;
 	    INTEGER(columns)[0] = 0;
 	}
-	else if (isOrdered(var_i)) {
+	else */
+	if (isOrdered(var_i)) {
 	    LOGICAL(ordered)[i] = 1;
 	    INTEGER(nlevs)[i] = nlevels(var_i);
 	    INTEGER(columns)[i] = ncols(var_i);
@@ -1637,6 +1638,22 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
 
+    /* By convention, an rhs term identical to the response generates nothing
+       in the model matrix (but interactions involving the response do). */
+
+    rhs_response = -1;
+    if (response > 0) /* there is a response specified */
+	for (j = 0; j < nterms; j++)
+	    if (INTEGER(factors)[response - 1 + j * nvar]) {
+		for (i = 0, k = 0; i < nvar; i++)
+		    k += INTEGER(factors)[i + j * nvar] > 0;
+		if (k == 1) {
+		    rhs_response = j;
+		    break;
+		}
+	    }
+    
+
     /* We now have everything needed to build the design matrix. */
     /* The first step is to compute the matrix size and to allocate it. */
     /* Note that "count" holds a count of how many columns there are */
@@ -1648,6 +1665,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
 	nc = 0;
     for (j = 0; j < nterms; j++) {
+	if (j == rhs_response) continue;
 	k = 1;
 	for (i = 0; i < nvar; i++) {
 	    if (INTEGER(factors)[i + j * nvar]) {
@@ -1699,13 +1717,12 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* FIXME : The body within these two loops should be embedded */
     /* in its own function. */
 
-    /* FIXME : we need to check for buffer overflow here. */
-
     k = 0;
     if (intercept)
 	STRING(xnames)[k++] = mkChar("(Intercept)");
 
     for (j = 0; j < nterms; j++) {
+	if (j == rhs_response) continue;
 	for (kk = 0; kk < INTEGER(count)[j]; kk++) {
 	    first = 1;
 	    index = kk;
@@ -1726,23 +1743,45 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 			    x = ColumnNames(VECTOR(contr2)[i]);
 			    ll = ncols(VECTOR(contr2)[i]);
 			}
-			bufp = AppendString(bufp, CHAR(STRING(vnames)[i]));
-			if (x == R_NilValue)
-			    bufp = AppendInteger(bufp, index % ll + 1);
-			else
-			    bufp = AppendString(bufp,
-					 CHAR(STRING(x)[index % ll]));
+			addp = CHAR(STRING(vnames)[i]);
+			if(strlen(buf) + strlen(addp) < BUFSIZE)
+			    bufp = AppendString(bufp, addp);
+			else 
+			    warningcall(call, "term names will be truncated");
+			if (x == R_NilValue) {
+			    if(strlen(buf) + 10 < BUFSIZE)
+				bufp = AppendInteger(bufp, index % ll + 1);
+			    else 
+				warningcall(call, "term names will be truncated");
+			} else {
+			    addp = CHAR(STRING(x)[index % ll]);
+			    if(strlen(buf) + strlen(addp) < BUFSIZE)
+				bufp = AppendString(bufp, addp);
+			    else 
+				warningcall(call, "term names will be truncated");
+			}
 		    }
 		    else {
 			x = ColumnNames(var_i);
 			ll = ncols(var_i);
-			bufp = AppendString(bufp, CHAR(STRING(vnames)[i]));
+			addp = CHAR(STRING(vnames)[i]);
+			if(strlen(buf) + strlen(addp) < BUFSIZE)
+			    bufp = AppendString(bufp, addp);
+			else 
+			    warningcall(call, "term names will be truncated");
 			if (ll > 1) {
-			    if (x == R_NilValue)
-				bufp = AppendInteger(bufp, index % ll + 1);
-			    else
-				bufp = AppendString(bufp,
-					     CHAR(STRING(x)[index % ll]));
+			    if (x == R_NilValue) {
+				if(strlen(buf) + 10 < BUFSIZE)
+				    bufp = AppendInteger(bufp, index % ll + 1);
+				else 
+				    warningcall(call, "term names will be truncated");		
+			    } else {
+				addp = CHAR(STRING(x)[index % ll]);
+				if(strlen(buf) + strlen(addp) < BUFSIZE)
+				    bufp = AppendString(bufp, addp);
+				else 
+				    warningcall(call, "term names will be truncated");
+			    }
 			}
 		    }
 		    index = index / ll;
@@ -1768,6 +1807,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     contrast = R_NilValue;	/* -Wall */
     for (k = 0; k < nterms; k++) {
+	if (k == rhs_response) continue;
 	for (i = 0; i < nvar; i++) {
 	    if (INTEGER(columns)[i] == 0)
 		continue;
