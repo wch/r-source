@@ -12,6 +12,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   model.frame/na.omit bug for matrices and Surv objects.
+
     o   `make install' copied the R shell script a second time without
 	getting RHOME right (thus also breaking R CMD check).  Fixed.
 

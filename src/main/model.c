@@ -1323,8 +1323,11 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	ans = eval(tmp, rho);
 	if (!isNewList(ans) || length(ans) != length(data))
 	    errorcall(call, "invalid result from na.action\n");
+	/* need to transfer _all but dim_ attributes, possibly lost 
+	   by subsetting in na.action.  */     
 	for ( i = length(ans) ; i-- ; )
-	    ATTRIB(VECTOR(ans)[i]) = ATTRIB(VECTOR(data)[i]);
+	  	copyMostAttrib(VECTOR(data)[i],VECTOR(ans)[i]);
+	/*	ATTRIB(VECTOR(ans)[i]) = ATTRIB(VECTOR(data)[i]); */
 	UNPROTECT(2);
     }
     else ans = data;
