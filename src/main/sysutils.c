@@ -47,6 +47,11 @@
 # include <sys/stat.h>
 #endif
 
+#if HAVE_AQUA
+extern Rboolean useCocoa;
+extern int (*ptr_CocoaSystem)(char*);
+#endif
+
 Rboolean R_FileExists(char *path)
 {
     struct stat sb;
@@ -178,6 +183,11 @@ int R_system(char *command)
     sigset_t ss;
     sigaddset(&ss, SIGPROF);
     sigprocmask(SIG_BLOCK, &ss,  NULL);
+#ifdef HAVE_AQUA
+	if(useCocoa)
+		val = ptr_CocoaSystem(command);
+    else
+#endif		
     val = system(command);
     sigprocmask(SIG_UNBLOCK, &ss, NULL);
 #else
