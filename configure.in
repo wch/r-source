@@ -394,32 +394,6 @@ if test "${ac_cv_func_connect}" = no; then
   AC_CHECK_LIB(socket, connect)
 fi
 
-## Determine what socket length (socklen_t) data type is
-AC_MSG_CHECKING([for type of socket length (socklen_t)])
-AC_TRY_COMPILE([
-#include <stddef.h>
-#include <sys/types.h>
-#include <sys/socket.h>],[
-(void)getsockopt (1, 1, 1, NULL, (socklen_t *)NULL)],[
-  AC_MSG_RESULT(socklen_t *)
-  SOCKLEN_T=socklen_t],[
-  AC_TRY_COMPILE([
-#include <stddef.h>
-#include <sys/types.h>
-#include <sys/socket.h>],[
-(void)getsockopt (1, 1, 1, NULL, (size_t *)NULL)],[
-    AC_MSG_RESULT(size_t *)
-    SOCKLEN_T=size_t],[
-    AC_TRY_COMPILE([
-#include <stddef.h>
-#include <sys/types.h>
-#include <sys/socket.h>],[
-(void)getsockopt (1, 1, 1, NULL, (int *)NULL)],[
-      AC_MSG_RESULT(int *)
-      SOCKLEN_T=int],[
-      AC_MSG_WARN(could not determine)])])])
-AC_DEFINE_UNQUOTED(SOCKLEN_T, $SOCKLEN_T)
-
 ## BLAS
 if ${use_blas}; then
   R_BLAS_LIBS
@@ -440,9 +414,10 @@ fi
 AC_FUNC_ALLOCA
 AC_FUNC_VFORK
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS(access acosh asinh atanh bcopy finite ftruncate getcwd getgrgid\
-  getpwuid getuid hypot isnan matherr memcpy memmove popen putenv rint \
-  setenv snprintf strcoll stat strptime system times unsetenv vsnprintf)
+AC_CHECK_FUNCS(access acosh asinh atanh bcopy finite ftruncate getcwd \
+  getgrgid getpwuid getuid hypot isnan matherr memcpy memmove popen \
+  putenv rint setenv snprintf strcoll stat strptime system times \
+  unsetenv vsnprintf)
 AC_REPLACE_FUNCS(strdup)
 R_FUNC___SETFPUCW
 R_FUNC_CALLOC
@@ -455,11 +430,11 @@ AC_HEADER_STDC
 AC_HEADER_TIME
 AC_HEADER_DIRENT
 AC_HEADER_SYS_WAIT
-AC_CHECK_HEADERS(dl.h dlfcn.h elf.h errno.h fcntl.h floatingpoint.h fpu_control.h \
-  grp.h ieee754.h ieeefp.h locale.h netdb.h netinet/in.h netinet/tcp.h \
-  pwd.h readline/history.h readline/readline.h rpc/rpc.h rpc/xdr.h \
-  string.h sys/param.h sys/select.h sys/socket.h sys/stat.h sys/time.h sys/times.h \
-  sys/utsname.h unistd.h)
+AC_CHECK_HEADERS(dl.h dlfcn.h elf.h errno.h fcntl.h floatingpoint.h \
+  fpu_control.h grp.h ieee754.h ieeefp.h locale.h netdb.h netinet/in.h \
+  netinet/tcp.h pwd.h readline/history.h readline/readline.h rpc/rpc.h \
+  rpc/xdr.h string.h sys/param.h sys/select.h sys/socket.h sys/stat.h \
+  sys/time.h sys/times.h sys/utsname.h unistd.h)
 case "${host}" in
   *sunos4*)
     AC_DEFINE(SunOS4) ;;
@@ -473,6 +448,7 @@ AC_TYPE_SIGNAL
 AC_TYPE_PID_T
 AC_TYPE_SIZE_T
 AC_CHECK_TYPE(blkcnt_t, long)
+R_TYPE_SOCKLEN
 
 ### C Compiler characteristics.
 
