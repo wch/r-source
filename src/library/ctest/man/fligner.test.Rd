@@ -72,7 +72,7 @@
 \examples{
 % FIXME: could use something more interesting here
 data(InsectSprays)
-plot(InsectSprays$count ~ InsectSprays$spray)
+plot(count ~ spray, data = InsectSprays)
 fligner.test(InsectSprays$count, InsectSprays$spray)
 fligner.test(count ~ spray, data = InsectSprays)
 ## Compare this to bartlett.test()
