@@ -5,3 +5,4 @@
     cat("      See `library(help=ts)' for details\n")
 }
 .conflicts.OK <- TRUE
+options(ts.S.compat = FALSE)

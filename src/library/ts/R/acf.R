@@ -69,7 +69,6 @@ pacf.ts <- function(x, lag.max = NULL, plot = TRUE, na.action = na.fail, ...)
     pacf <- array(.C("uni_pacf",
                as.double(acf),
                pacf = double(lag.max),
-               as.integer(sampleT),
                as.integer(lag.max))$pacf, dim=c(lag.max,1,1))
     acf.out <- structure(.Data = list(acf = pacf, type = "partial",
                          n.used = sampleT,

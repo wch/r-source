@@ -1,0 +1,122 @@
+\name{arima0}
+\alias{arima0}
+\alias{print.arima0}
+\alias{predict.arima0}
+\title{ARIMA Modelling of Time Series -- Preliminary Version}
+\usage{
+arima0(x, order=c(0, 0, 0),
+       seasonal=list(order = c(0, 0, 0), period = NA),
+       xreg=NULL, include.mean=TRUE, na.action=na.fail,
+       delta=0.01)
+predict(arima0.obj, n.ahead=1, newxreg, se.fit = TRUE)
+}
+\arguments{
+ \item{x}{a univariate time series}
+ \item{order}{A specification of the non-seasonal part of the ARIMA
+     model: the three components are (p, d, q), the AR order, the degree
+     of differencing and the MA order.}
+ \item{seasonal}{A specification of the seasonal part of the ARIMA
+     model, plus the period (which defaults to \code{frequency(x)}.}
+ \item{xreg}{Optionally, a vector or matrix of external regressors,
+     which must have the same number of rows as \code{x}
+     \emph{after differencing}.}
+ \item{include.mean}{Should the ARMA model (after differencing) include
+     a mean term?}
+ \item{na.action}{Function to be applies to remove missing values.}
+ \item{delta}{A value to indicate at which point `fast recursions'
+     should be used. See the Details section.}
+ \item{arima0.obj}{The result of an \code{arima0} fit.}
+ \item{newxreg}{New values of \code{xreg} to be used for
+     prediction. Must have at least \code{n.ahead} rows.}
+ \item{n.ahead}{The number of steps ahead for which prediction is required.}
+ \item{se.fit}{Logical: should standard errors of prediciTton be returned?}
+}
+\description{
+    Fit an ARIMA model to a univariate time series by exact maximum
+    likelihood, and forecast from the fitted model.
+}
+\details{
+    The exact likelihood is computed via a state-space representation of
+    the ARMA process, and the innovations and their varaince found by a
+    Kalman filter using the Fortran code of Gardener \emph{et al.}
+    (1980).  This has the option to switch to `fast recursions' (assume
+    an effectively infinite past) if the innovations variance is close
+    enough to its asymptotic bound. The argument \code{delta} sets the
+    tolerance: at its default value the approximation is normally
+    negligible and the speed-up considerable. Exact computations can be
+    ensure by setting \code{delta} to  negative value.
+
+    The variance matrix of the estimates is found from the Hessian of
+    the log-likelihood, and so may only be a rough guide, especially for
+    fits close to the boundary for invertibility.
+
+    The regression on \code{xreg} is done after differencing has been
+    performed.
+
+    Optimization is (currently) done by \code{\link{nlm}}. It will work
+    best if the columns in \code{xreg} are roughly scaled to zero mean
+    and unit variance.
+}
+\value{
+  For \code{arima0}, a list of class \code{"arima0"} with components
+  \item{coef}{a vector of AR, MA and regression coefficients,}
+  \item{sigma2}{the MLE of the innovations variance.}
+  \item{var.coef}{the estimated variance matrix of the coefficients
+      \code{coef}.}
+  \item{loglik}{the maximixed log-likelihood (of the differenced data).}
+  \item{aic}{the AIC value corresponding to that log-likelihood.}
+  \item{call}{the matched call.}
+  \item{arma}{A compact form of the specification, as a vector giving
+      the number of AR, MA, seasonal AR and seasonal MA coefficients,
+      plus the period.}
+  \item{series}{the name of the series \code{x}.}
+  \item{data}{the time series used for fitting (after regression and
+      removing the fitted mean).}
+
+  For \code{predict.arima0}, a time series of predictions, or if
+  \code{se.fit=TRUE}, a list with components \code{pred}, the
+  predictions, and \code{se}, the estimated standard errors. Both
+  components are time series.
+}
+\references{
+    Brockwell, P. J. and Davis, R. A. (1996) \emph{Introduction to Time
+	Series and Forecasting.} Springer, New York. Sections 3.3 and 8.3.
+
+    Gardener, G, Harvey, A. C. and Phillips, G. D. A. (1980) Algorithm
+    AS154. An algorithm for exact maximum likelihood estimation of
+    autoregressive-moving average models by means of Kalman filtering.
+    \emph{Applied Statistics} \bold{29}, 311-322.
+
+    Harvey, A. C. (1993) \emph{Time Series Models},
+    2nd Edition, Harvester Wheatsheaf, NY, section 4.4.
+}
+
+\author{B.D. Ripley}
+\note{
+    This is a preliminary version, and will be replaced in due course.
+
+    The predictions and standard errors of prediction are currently for
+    the differenced series.
+
+    The results are likely to be different from S-PLUS's
+    \code{arima.mle}, which computes a conditional likelihood, and does
+    not include a mean in the model.
+}
+
+
+\seealso{\code{\link{ar}}}
+
+\examples{
+data(lh)
+
+arima0(lh, order=c(1,0,0))
+arima0(lh, order=c(3,0,0))
+arima0(lh, order=c(1,0,1))
+predict(arima0(lh, order=c(3,0,0)), n.ahead=12)
+
+data(accdeaths)
+fit <- arima0(accdeaths, order=c(0,1,1), seasonal=list(order=c(0,1,1)))
+fit
+predict(fit, n.ahead=6) # note, predicts differences.
+}
+\keyword{ts}

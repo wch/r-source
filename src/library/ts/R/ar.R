@@ -25,7 +25,8 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     if(ists <- is.ts(x)) xtsp <- tsp(x)
     x <- as.matrix(x)
     if(any(is.na(x))) stop("NAs in x")
-    x <- sweep(x, 2, apply(x, 2, mean))
+    xm <- apply(x, 2, mean)
+    x <- sweep(x, 2, xm)
     n.used <- nrow(x)
     nser <- ncol(x)
     order.max <- if (is.null(order.max)) floor(10 * log10(n.used))
@@ -139,17 +140,17 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
             attr(resid, "class") <- "ts"
         }
     }
-    res <- list(order=order, ar=ar, var.pred=var.pred, aic = xaic,
-                n.used=n.used, order.max=order.max,
+    res <- list(order=order, ar=ar, var.pred=var.pred, x.mean= drop(xm),
+                aic = xaic, n.used=n.used, order.max=order.max,
                 partialacf=partialacf, resid=resid, method = "Yule-Walker",
                 series=series, frequency=xfreq, call=match.call())
     if(nser == 1)
         res$asy.var.coef <- solve(toeplitz(drop(xacf)[1:order]))*var.pred/n.used
-    class(res) <- "ar.fit"
+    class(res) <- "ar"
     res
 }
 
-print.ar.fit <- function(x, digits = max(3, .Options$digits - 3), ...)
+print.ar <- function(x, digits = max(3, .Options$digits - 3), ...)
 {
     cat("\nCall:\n", deparse(x$call), "\n\n", sep = "")
     nser <- NCOL(x$var.pred)
@@ -167,4 +168,62 @@ print.ar.fit <- function(x, digits = max(3, .Options$digits - 3), ...)
 
     }
     invisible(x)
+}
+
+predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
+{
+    if(missing(newdata)) newdata <- eval(parse(text=object$series))
+    nser <- NCOL(newdata)
+    ar <- object$ar
+    p <- object$order
+    st <- tsp(as.ts(newdata))[2]
+    dt <- deltat(newdata)
+    xfreq <- frequency(newdata)
+    tsp(newdata) <- NULL
+    class(newdata) <- NULL
+    if(NCOL(ar) != nser)
+        stop("number of series in fit and newdata do not match")
+    n <- NROW(newdata)
+    if(nser > 1) {
+        x <- rbind(newdata, matrix(newdata[n, ], n.ahead, nser, byrow=TRUE))
+        if(p > 0) {
+            for(i in 1:n.ahead) {
+                x[n+i,] <- x[n+i-1,] %*% ar[1,,]
+                if(p > 1) for(j in 2:p)
+                    x[n+i,] <- x[n+i,] + x[n+i-j,] %*% ar[j,,]
+            }
+            pred <- x[n+(1:n.ahead), ]
+        } else {
+            pred <- matrix(0, n.ahead, nser)
+        }
+        pred <- pred + matrix(object$x.mean, n.ahead, nser, byrow=TRUE)
+        colnames(pred) <- colnames(jj$var.pred)
+        if(se.fit) {
+            warn("se.fit not yet implemented for multivariate models")
+            se <- array(NA, dim=c(n.ahead, nser, nser))
+        }
+    } else {
+        x <- c(newdata-object$x.mean, rep(0, n.ahead))
+        if(p > 0) {
+            for(i in 1:n.ahead) {
+                x[n+i] <- sum(ar * x[n+i - (1:p)])
+            }
+            pred <- x[n+(1:n.ahead)]
+            if(se.fit) {
+                npsi <- n.ahead - 1
+                psi <- .C("artoma",
+                        as.integer(object$order), as.double(ar),
+                        psi = double(npsi+object$order+1),
+                        as.integer(npsi))$psi[1:npsi]
+                vars <- cumsum(c(1, psi^2))
+                se <- sqrt(object$var.pred*vars)
+            }
+        } else {
+            pred <- rep(0, n.ahead)
+            if (se.fit) se <- rep(sqrt(object$var.pred), n.ahead)
+        }
+        pred <- pred + rep(object$x.mean, n.ahead)
+    }
+    pred <- ts(pred, start = st + dt, frequency=xfreq)
+    if(se.fit) return(pred, se) else return(pred)
 }

@@ -29,6 +29,7 @@ Functions in package ts:
 acf		Autocovariance and autocorrelation function
 ar              Wrapper for autoregression estimation functions
 ar.yw           Estimate autoregression model by solving Yule-Walker equations
+arima0		ARIMA modelling -- provisional version
 Box.test	Box-Pierce and Ljung-Box tests of independence
 ccf		Cross-covariance and cross-correlations for two series
 cpgram		Plot cumulative periodogram of univariate time series
@@ -49,6 +50,7 @@ plot.spec       Plot spectral density estimate
 plot.spec.coherency
 plot.spec.phase
 PP.test		Phillips-Perron test for unit root
+predict		methods for ar and arima0
 spec.ar	        Estimate spectral density by autoregression
 spec.pgram      Estimate spectral density from periodogram
 spec.taper      Taper by cosine bell
@@ -60,8 +62,10 @@ ts.union	Bind time series as multivariate ts over their total time base
 
 TO DO
 
-ar.burg		maybe
-arima fitting and forecasting.
+ar.burg		maybe only univariate
+
+In some cases the behaviour will closer to that of S(-PLUS) if
+options(ts.S.compat=TRUE) has been set.
 
 
 Datasets in base R:

@@ -2,13 +2,15 @@
 \alias{ar}
 \alias{ar.burg}
 \alias{ar.yw}
-\alias{print.ar.fit}
+\alias{print.ar}
+\alias{predict.ar}
 \title{Fit Autoregressive Models to Time Series}
 \usage{
 ar(x, aic=TRUE, order.max=NULL, method=c("yule-walker", "burg"),
    na.action, series)
 ar.burg(x, aic=TRUE, order.max=NULL, na.action, series)
 ar.yw(x, aic=TRUE, order.max=NULL, na.action, series)
+predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE) 
 }
 \arguments{
  \item{x}{A univariate or multivariate time series}
@@ -21,7 +23,13 @@ ar.yw(x, aic=TRUE, order.max=NULL, na.action, series)
      Must be one of \code{"yule-walker"} or \code{"burg"} (the first few
      characters are sufficient). Defaults to \code{"yule-walker"}.}
  \item{na.action}{function called to remove missing values.}
- \item{series}{name for the series. Defaults to \code{deparse(substitute(x))}.}
+ \item{series}{name for the series. Defaults to
+\code{deparse(substitute(x))}.}
+ \item{ar.obj}{a fit from \code{ar}.}
+ \item{newdata}{data to which to apply the prediction.}
+ \item{n.ahead}{number of steps ahead at which to predict.}
+ \item{se.fit}{logical: return estimated standard errors of the
+     prediction error?.}
 }
 \description{
     Fit an autoregressive time series model to the data, by default
@@ -42,7 +50,7 @@ Remember that \code{ar} removes the overall mean of \code{x} before
 fitting the AR model.
 }
 \value{
-  A list of class \code{"ar.fit"} with the following elements:
+  A list of class \code{"ar"} with the following elements:
   \item{order}{The order of the fitted model.  This is chosen by
      minimizing the AIC if \code{aic=TRUE}, otherise it is \code{order.max}.}
   \item{ar}{Estimated autoregression coefficients for the fitted model.}
@@ -61,7 +69,12 @@ fitting the AR model.
   \item{method}{The value of the \code{method} argument.}
   \item{series}{The name(s) of the time series.}
   \item{asy.var.coef}{The asymptotic-theory variance matrix of the
-      coefficient estimates.}
+      coefficient estimates (only for univariate time series).}
+
+  For \code{predict.ar}, a time series of predictions, or if
+  \code{se.fit=TRUE}, a list with components \code{pred}, the
+  predictions, and \code{se}, the estimated standard errors. Both
+  components are time series.
 }
 \author{Martyn Plummer, univariate case of \code{ar.yw} by B.D. Ripley.}
 
@@ -86,7 +99,9 @@ data(lh)
 ar(lh)
 
 data(sunspot)
-ar(sunspot.year)
+sunspot.ar <- ar(sunspot.year)
+sunspot.ar
+predict(sunspot.ar, n.ahead=25)
 
 data(sales)
 ar(ts.union(sales, sales.lead))

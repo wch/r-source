@@ -7,12 +7,13 @@
 \title{Spectral Density Estimation}
 \usage{
 spectrum(x, method=c("pgram","ar"), plot = TRUE, ...)
-plot.spec(spec.obj, add=FALSE, ci=0.95, log=TRUE, ci.col="blue", ...)
+plot.spec(spec.obj, add=FALSE, ci=0.95,
+          log=c("yes", "dB", "no"), ci.col="blue", ...)
 plot.spec.coherency(spec.obj, ci=0.95, ci.lty = 3, ci.col="blue", ...)
 plot.spec.phase(spec.obj, ci=0.95, ci.lty = 3, ci.col="blue", ...)
 }
 \arguments{
- \item{x}{A time series.}
+ \item{x}{A univariate or multivariate time series.}
 
  \item{method}{String specifying the method used to estimate the spectral 
     density. Allowed methods are "pgram" (the default) and "ar".}
@@ -29,7 +30,10 @@ plot.spec.phase(spec.obj, ci=0.95, ci.lty = 3, ci.col="blue", ...)
 \item{ci}{Coverage probability for confidence interval. Plotting of the
     confidence bar is omitted if \code{ci} <= 0.}
 
-\item{log}{If true, plot on log10 (decibel) scale.}
+\item{log}{If \code{"dB"}, plot on log10 (decibel) scale (as S-PLUS),
+    otherwise use conventional log scale or linear scale. Logical values
+    are also accepted.  The default is \code{"yes"} unless
+    \code{options(ts.S.compat = TRUE)} has been set, when it is \code{"dB"}.}
 
 \item{ci.col}{Colour for plotting confidence bar.}
 
@@ -57,7 +61,7 @@ of coherency and phase of the cross-spectra.
      series, a matrix containing the squared coherency between different
      series. Column \eqn{ i + (j - 1) * (j - 2)/2} of \code{coh}
      contains the squared coherency between columns \eqn{i} and \eqn{j}
-     of \code{x}, where \eqn{i>j}.}
+     of \code{x}, where \eqn{i > j}.}
   \item{phase}{\code{NULL} for univariate series. For multivariate
      time series a matrix containing the cross-spectrum phase between
      different series. The format is the same as \code{coh}.}
@@ -68,11 +72,11 @@ of coherency and phase of the cross-spectra.
   The result is returned invisibly if \code{plot} is true.
 }
 \details{
-    The spectrum here is defined with scaling \code{1/frequency(x)},
+    The spectrum here is defined with scaling 1/frequency(x),
     following S-PLUS. This makes the spectral density a density over the
     range \code{(-frequency(x)/2, +frequency(x)/2]}, whereas a more
-    common scaling is \eqn{2*\pi} and range \eqn{(-0.5, 0.5]} (e.g.,
-    Bloomfield) or 1 and range \eqn{(-\pi, \pi]}.
+    common scaling is \eqn{2*\pi} and range (-0.5, 0.5]
+    (e.g. Bloomfield) or 1 and range \eqn{(-\pi, \pi]}.
 
     If available, a confidence interval will be plotted by
     \code{plot.spec}: this is asymmetric, and the width of the centre
@@ -87,10 +91,10 @@ all be overridden by supplying the appropriate graphical parameters.
     Bloomfield, P. (1976) \emph{Fourier Analysis of Time Series: An
 	Introduction.} Wiley.
 
-    Brockwell, P.J. and Davis, R.A. (1991) \emph{Time Series: Theory and
+    Brockwell, P. J. and Davis, R. A. (1991) \emph{Time Series: Theory and
 	Methods.} Second edition. Springer.
 
-    Venables, W.N. and Ripley, B.D. (1997) \emph{Modern Applied
+    Venables, W. N. and Ripley, B. D. (1997) \emph{Modern Applied
 	Statistics with S-PLUS.} Second edition. Springer. (Especially
         pp. 437-442.)
 }

@@ -195,9 +195,9 @@ spec.pgram <-
 }
 
 plot.spec <-
-    function (x, add = FALSE, ci = 0.95, log = TRUE,
+    function (x, add = FALSE, ci = 0.95, log = c("yes", "dB", "no"),
               xlab = "frequency",
-              ylab = if(log) "spectrum (dB)" else "spectrum",
+              ylab = if(log == "dB") "spectrum (dB)" else "spectrum",
               type = "l", ci.col="blue", main = NULL, sub = NULL, ...)
 {
     spec.ci <- function (spec.obj, coverage = 0.95)
@@ -212,16 +212,23 @@ plot.spec <-
         df <- spec.obj$df
         upper.quantile <- 1 - tail * (1 - pchisq(df, df))
         lower.quantile <- tail * pchisq(df, df)
-        -10 * log10(qchisq(c(upper.quantile, lower.quantile), df)/df)
+        1/(qchisq(c(upper.quantile, lower.quantile), df)/df)
     }
 
-    if(log) x$spec <- 10 * log10(x$spec)
+    if(is.logical(log))
+        log <- if(log) "yes" else "no"
+    if(missing(log) && .Options$ts.S.compat) log <- "dB"
+    log <- match.arg(log)
+    ylog <- ""
+    if(log=="dB") x$spec <- 10 * log10(x$spec)
+    if(log=="yes") ylog <- "y"
     if(add) {
         matplot(x$freq, x$spec, type = type, add=TRUE, ...)
     } else {
-        matplot(x$freq, x$spec, xlab = xlab, ylab = ylab, type = type, ...)
+        matplot(x$freq, x$spec, xlab = xlab, ylab = ylab, type = type,
+                log = ylog, ...)
         is.ar <- !is.na(pmatch("AR", x$method))
-        if (ci <= 0 || !log || is.ar) {
+        if (ci <= 0 || log == "no" || is.ar) {
             ## No confidence limits
             ci.text <- ""
         } else {
@@ -229,13 +236,24 @@ plot.spec <-
             ## and height. It is positioned in the top right hand corner.
             ##
             conf.lim <- spec.ci(x, coverage = ci)
-            conf.y <- max(x$spec) - conf.lim[2]
-            conf.x <- max(x$freq) - x$bandwidth
-            lines(rep(conf.x, 2), conf.y + conf.lim, col=ci.col)
-            lines(conf.x + c(-0.5, 0.5) * x$bandwidth, rep(conf.y, 2),
-                  col=ci.col)
-            ci.text <- paste(",  95% C.I. is (", paste(format(conf.lim,
-            digits = 3), collapse = ","), ")dB")
+            if(log=="dB") {
+                conf.lim <- 10*log10(conf.lim)
+                conf.y <- max(x$spec) - conf.lim[2]
+                conf.x <- max(x$freq) - x$bandwidth
+                lines(rep(conf.x, 2), conf.y + conf.lim, col=ci.col)
+                lines(conf.x + c(-0.5, 0.5) * x$bandwidth, rep(conf.y, 2),
+                      col=ci.col)
+                ci.text <- paste(",  95% C.I. is (",
+                                 paste(format(conf.lim, digits = 3),
+                                       collapse = ","), ")dB")
+            } else {
+                ci.text <- ""
+                conf.y <- max(x$spec) / conf.lim[2]
+                conf.x <- max(x$freq) - x$bandwidth
+                lines(rep(conf.x, 2), conf.y * conf.lim, col=ci.col)
+                lines(conf.x + c(-0.5, 0.5) * x$bandwidth, rep(conf.y, 2),
+                      col=ci.col)
+            }
         }
         if (is.null(main))
             main <- paste(paste("Series:", x$series), x$method, sep = "\n")

@@ -82,7 +82,8 @@ start.ts <- function(x)
     ts.eps <- .Options$ts.eps
     tsp <- attr(as.ts(x), "tsp")
     is <- tsp[1]*tsp[3]
-    if(tsp[3] > 1 && abs(is-round(is)) < ts.eps) {
+    if((tsp[3] > 1 || .Options$ts.S.compat)
+       && abs(is-round(is)) < ts.eps) {
 	is <- floor(tsp[1])
 	fs <- floor(tsp[3]*(tsp[1] - is)+0.001)
 	c(is, fs+1)
@@ -95,7 +96,8 @@ end.ts <- function(x)
     ts.eps <- .Options$ts.eps
     tsp <- attr(as.ts(x), "tsp")
     is <- tsp[2]*tsp[3]
-    if(tsp[3] > 1 && abs(is-round(is)) < ts.eps) {
+    if((tsp[3] > 1 || .Options$ts.S.compat)
+       && abs(is-round(is)) < ts.eps) {
 	is <- floor(tsp[2])
 	fs <- floor(tsp[3]*(tsp[2] - is)+0.001)
 	c(is, fs+1)
@@ -265,7 +267,7 @@ function (x, ...)
     invisible()
 }
 
-window.ts <- function(x, start = NULL, end = NULL)
+window.ts <- function(x, start = NULL, end = NULL, warn = TRUE)
 {
     x <- as.ts(x)
     xtsp <- tsp(x)
@@ -280,7 +282,7 @@ window.ts <- function(x, start = NULL, end = NULL)
 		stop("Bad value for start"))
     if(start < xtsp[1]) {
 	start <- xtsp[1]
-	warning("start value not changed")
+	if(warn) warning("start value not changed")
     }
 
     end <- if(is.null(end)) xtsp[2]
@@ -290,7 +292,7 @@ window.ts <- function(x, start = NULL, end = NULL)
 		stop("Bad value for end"))
     if(end > xtsp[2]) {
 	end <- xtsp[2]
-	warning("end value not changed")
+	if(warn) warning("end value not changed")
     }
 
     if(start > end)
