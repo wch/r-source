@@ -137,8 +137,10 @@ function (topic, package = .packages(), lib.loc = .lib.loc, echo = TRUE,
         topic <- deparse(topic)[1]
     INDICES <- system.file(pkg = package, lib = lib.loc)
     file <- index.search(topic, INDICES, "AnIndex", "R-ex")
-    if (file == "")
-        stop(paste("No help file found for'", topic, "'", sep = ""))
+    if (file == "") {
+        warning(paste("No help file found for'", topic, "'", sep = ""))
+        return(invisible())
+    }
     comp <- strsplit(file, .Platform$file.sep)[[1]]
     pkg <- comp[length(comp) - 2]
     if(length(file) > 1)
@@ -148,8 +150,11 @@ function (topic, package = .packages(), lib.loc = .lib.loc, echo = TRUE,
     zfile <- zip.file.extract(file, "Rex.zip")
     if(zfile != file) on.exit(unlink(zfile))
     ## end of experimental code
-    if (!file.exists(zfile))
-        stop(paste("'", topic, "' has a help file but no examples file", sep = ""))
+    if (!file.exists(zfile)) {
+        warning(paste("'", topic, "' has a help file but no examples file",
+                      sep = ""))
+        return(invisible())
+    }
     if (pkg != "base")
         library(pkg, lib = lib, character.only = TRUE)
     source(zfile, echo = echo, prompt.echo = prompt.echo, verbose = verbose,
