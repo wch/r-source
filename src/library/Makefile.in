@@ -27,7 +27,7 @@ html: stamp-html $(MANSRC)
 latex: stamp-latex $(MANSRC)
 
 stamp-docs:
-	@echo "Building ALL documentation (help, HTML, LaTeX)"
+	@echo "Building ALL documentation (help, HTML, LaTeX, R-Examples)"
 	@$(MAKE) DOCS
 	@touch $@
 	@touch stamp-help

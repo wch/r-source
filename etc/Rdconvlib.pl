@@ -21,18 +21,18 @@
 # Send any bug reports to Friedrich.Leisch@ci.tuwien.ac.at
 
 # Bugs: still get ``\bsl{}'' in verbatim-like, see e.g. Examples of apropos.Rd
-
+# New: \verbatim{}: like \examples{}, but can appear 0-n times [MM].
 
 require "$RHOME/etc/html-layout.pl";
 
 
 # names of unique text blocks, these may NOT appear MORE THAN ONCE!
 @blocknames = ("name", "title", "usage", "arguments", "format",
-	       "description", "details", "value", "references", "source", 
+	       "description", "details", "value", "references", "source",
 	       "seealso", "examples", "author", "note");
 
 # These may appear multiply but are of simple structure:
-@multiblocknames = ("alias", "keyword");
+@multiblocknames = ("alias", "keyword", "verbatim");
 
 
 # These should NOT contain letters from $LATEX_SPEC
@@ -52,12 +52,31 @@ $Math_del = "\$"; #UNquoted '$'
 $MAXLOOPS = 1000;
 
 
-sub Rdconv {
+sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename)
 
-    open rdfile, "<$_[0]";
+    $Rdname = $_[0];
+    open rdfile, "<$Rdname" || die "Rdconv(): Couldn't open '$Rdfile':$!\n";
 
     $type = $_[1];
     $debug = $_[2];
+
+    if($type !~ /,/) {
+      ## Trivial (R 0.62 case): Only 1 $type at a time ==> one filename is ok.
+      ## filename = 0   <==>  STDOUT
+      ## filename = -1  <==>  do NOT open and close files!
+      $htmlfile= $nrofffile= $Sdfile= $latexfile= $Exfile = $_[3];
+    } else { # have "," in $type: Multiple types with multiple output files
+      $dirname = $_[3]; # The super-directory , such as  <Rlib>/library/<pkg>
+      die "Rdconv(): '$dirname' is NOT a valid directory:$!\n"
+	unless -d $dirname;
+      $htmlfile = $dirname ."/html/" . $Rdname.".html"	if $type =~ /html/i;
+      $nrofffile= $dirname ."/help/" . $Rdname		if $type =~ /nroff/i;
+      die "Rdconv(): type 'Sd' must not be used with other types (',')\n"
+	if $type =~ /Sd/i;
+      $latexfile= $dirname ."/latex/". $Rdname.".tex"	if $type =~ /tex/i;
+      $Exfile   = $dirname ."/R-ex/" . $Rdname.".R"	if $type =~ /example/i;
+    }
+
 
     $max_bracket = 0;
     $max_section = 0;
@@ -95,13 +114,15 @@ sub Rdconv {
 	#-- These may be used in all cases :
 	@aliases = get_multi($complete_text,"alias");
 	@keywords= get_multi($complete_text,"keyword");
+
+	get_blocks($complete_text);
     }
 
-    rdoc2html()	 if $type =~ /html/i;
-    rdoc2nroff() if $type =~ /nroff/i;
-    rdoc2Sd()    if $type =~ /Sd/i;
-    rdoc2latex() if $type =~ /tex/i;
-    rdoc2ex()	 if $type =~ /example/i;
+    rdoc2html($htmlfile)	if $type =~ /html/i;
+    rdoc2nroff($nrofffile)	if $type =~ /nroff/i;
+    rdoc2Sd($Sdfile)    	if $type =~ /Sd/i;
+    rdoc2latex($latexfile)	if $type =~ /tex/i;
+    rdoc2ex($Exfile)	 	if $type =~ /example/i;
 }
 
 
@@ -193,10 +214,10 @@ sub get_blocks {
 	    print STDERR "found: $block\n" if $debug;
 	    if((($block =~ /usage/) || ($block =~ /examples/))){
 		## multiple empty lines to one
-		$blocks{$block} =~ s/^[ \t]+$//; 
+		$blocks{$block} =~ s/^[ \t]+$//;
 		$blocks{$block} =~ s/\n\n\n/\n\n/gom;
 	    } else {
-		## remove leading and trailing whitespace 
+		## remove leading and trailing whitespace
 		$blocks{$block} =~ s/^\s+//so;
 		$blocks{$block} =~ s/\s+$//so;
 		$blocks{$block} =~ s/\n[ \t]+/\n/go;
@@ -257,7 +278,7 @@ sub get_sections {
 	    = get_arguments("section", $text, 2);
 	print STDERR "found: $section\n" if $debug;
 
-	## remove leading and trailing whitespace 
+	## remove leading and trailing whitespace
 	$section =~ s/^\s+//so;
 	$section =~ s/\s+$//so;
 	$body =~ s/^\s+//so;
@@ -316,10 +337,10 @@ sub print_blocks {
 
     while(($block,$text) = each %blocks) {
 
-	print "\n\n********** $block **********\n\n";
-	print $text;
+	print STDERR "\n\n********** $block **********\n\n";
+	print STDERR $text;
     }
-    print "\n";
+    print STDERR "\n";
 }
 
 
@@ -355,13 +376,15 @@ sub replace_command {
 #************************** HTML ********************************
 
 
-sub rdoc2html {
+sub rdoc2html { # (filename) ; 0 for STDOUT
 
-    get_blocks($complete_text);
     get_sections($complete_text);
 
+    if($_[0]!= -1) {
+      if($_[0]) { open htmlout, "> $_[0]"; } else { open htmlout, "| cat"; }
+    }
     print htmlout html_functionhead($blocks{"title"});
-    
+
     html_print_codeblock("usage", "Usage");
     html_print_argblock("arguments", "Arguments");
     html_print_block("format", "Format");
@@ -379,6 +402,7 @@ sub rdoc2html {
     html_print_codeblock("examples", "Examples");
 
     print htmlout html_functionfoot();
+    close htmlout;
 }
 
 
@@ -615,7 +639,7 @@ sub html_tables {
 	    get_arguments("tabular", $text, 2);
 
 	$arg =~ s/\n/ /sgo;
-	
+
 	# remove trailing \cr (otherwise we get an empty last line)
 	$arg =~ s/\\cr\s*$//go;
 
@@ -661,15 +685,18 @@ sub html_tables {
     $text;
 }
 
-    
+
 
 #**************************** nroff ******************************
 
 
-sub rdoc2nroff {
+sub rdoc2nroff { # (filename); 0 for STDOUT
 
-    get_blocks($complete_text);
     get_sections($complete_text);
+
+    if($_[0]!= -1) {
+      if($_[0]) { open nroffout, "> $_[0]"; } else { open nroffout, "| cat"; }
+    }
 
     $INDENT = "0.5i";
     $TAGOFF = "1i";
@@ -696,6 +723,8 @@ sub rdoc2nroff {
     nroff_print_block("references", "References");
     nroff_print_block("seealso", "See Also");
     nroff_print_codeblock("examples", "Examples");
+
+    close nroffout;
 }
 
 
@@ -716,11 +745,11 @@ sub text2nroff {
     $text =~ s/^\.|([\n\(])\./$1\\\&./g;
 
     ## tables are pre-processed by the tbl(1) command, so this has to
-    ## be done first 
+    ## be done first
     $text = nroff_tables($text);
     $text =~ s/\\cr\n?/\n.br\n/sgo;
 
-    
+
 
     $text =~ s/\n\s*\n/\n.IP \"\" $indent\n/sgo;
     $text =~ s/\\dots/\\&.../go;
@@ -758,7 +787,7 @@ sub text2nroff {
     $text = replace_command($text, "file", "`", "'");
     $text = replace_command($text, "url", "<URL: ", ">");
 
-    
+
     # handle equations:
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\eqn")
@@ -959,12 +988,12 @@ sub nroff_tables {
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\tabular")
 	  &&  $text =~ /\\tabular/){
-	
+
 	my ($id, $format, $arg)  =
 	    get_arguments("tabular", $text, 2);
 
 	$arg =~ s/\n/ /sgo;
-	
+
 	# remove trailing \cr (otherwise we get an empty last line)
 	$arg =~ s/\\cr\s*$//go;
 
@@ -994,7 +1023,7 @@ sub nroff_tables {
 	    $table .= "$colformat[$l] ";
 	}
 	$table .= "$colformat[$#colformat].\n";
-	
+
 
 	# now do the real work: split into lines and columns
 	my @rows = split(/\\cr/, $arg);
@@ -1020,11 +1049,13 @@ sub nroff_tables {
 #****************************** Sd ******************************
 
 
-sub rdoc2Sd {
+sub rdoc2Sd { # (filename)
 
-    get_blocks($complete_text);
     get_sections($complete_text);
 
+    if($_[0]!= -1) {
+      if($_[0]) { open Sdout, "> $_[0]"; } else { open Sdout, "| cat"; }
+    }
     print Sdout "\.\\\" -*- nroff -*- generated from \.Rd format\n";
     print Sdout ".BG\n";
     print Sdout ".FN ", $blocks{"name"}, "\n";
@@ -1050,7 +1081,9 @@ sub rdoc2Sd {
     while ($#keywords >= 0) {
 	print Sdout ".KW ", shift( @keywords ), "\n";
     }
-    print Sdout ".WR\n"
+    print Sdout ".WR\n";
+
+    close Sdout;
 }
 
 # Convert a Rdoc text string to nroff
@@ -1131,30 +1164,32 @@ sub Sd_print_sections {
 #*********************** Example ***********************************
 
 
-sub rdoc2ex {
+sub rdoc2ex { # (filename)
 
-    get_blocks($complete_text);
-
+    if($_[0]!= -1) {
+      if($_[0]) { open Exout, "> $_[0]"; } else { open Exout, "| cat"; }
+    }
     ##--- Here, I should also put everything which belongs to
     ##--- ./massage-Examples ---- depending on 'name' !!!
-
-    print "###--- >>> `"; print $blocks{"name"};
-    print "' <<<----- "; print $blocks{"title"};
-    print "\n\n";
+    print Exout "###--- >>> `"; print Exout $blocks{"name"};
+    print Exout "' <<<----- "; print Exout $blocks{"title"};
+    print Exout "\n\n";
     if(@aliases) {
 	foreach (@aliases) {
-	    print "\t## alias\t help($_)\n";
+	    print Exout "\t## alias\t help($_)\n";
 	}
-	print "\n";
+	print Exout "\n";
     }
 
     ex_print_exampleblock("examples", "Examples");
 
     if(@keywords) {
-	print "## Keywords: ";
-	&print_vec(STDOUT, 'keywords');
+	print Exout "## Keywords: ";
+	&print_vec(Exout, 'keywords');
     }
-    print "\n\n";
+    print Exout "\n\n";
+
+    close Exout;
 }
 
 sub ex_print_exampleblock {
@@ -1162,9 +1197,9 @@ sub ex_print_exampleblock {
     my ($block,$env) = @_;
 
     if(defined $blocks{$block}){
-	print "##___ Examples ___:\n";
-	print  code2examp($blocks{$block});
-	print "\n";
+	print Exout "##___ Examples ___:\n";
+	print Exout  code2examp($blocks{$block});
+	print Exout "\n";
     }
 }
 
@@ -1186,11 +1221,14 @@ sub code2examp {
 #*********************** LaTeX ***********************************
 
 
-sub rdoc2latex {
+sub rdoc2latex {# (filename)
+
     my($c,$a);
-    get_blocks($complete_text);
     get_sections($complete_text);
 
+    if($_[0]!= -1) {
+      if($_[0]) { open latexout, "> $_[0]"; } else { open latexout, "| cat"; }
+    }
     print latexout "\\Header\{";
     print latexout $blocks{"name"};
     print latexout "\}\{";
@@ -1226,7 +1264,7 @@ sub rdoc2latex {
     latex_print_exampleblock("examples", "Examples");
 
     print latexout "\n";
-
+    close latexout;
 }
 
 # The basic translator for `normal text'
@@ -1264,7 +1302,7 @@ sub text2latex {
     $text =~ s/\\\\/\\bsl{}/go;
     $text =~ s/\\cr/\\\\\{\}/go;
     $text =~ s/\\tab(\s+)/&$1/go;
-	
+
     ##-- We should escape $LATEX_SPEC  unless within `eqn' above ...
     ##-- this would escape them EVERYWHERE:
     ## $text =~ s/[$LATEX_SPEC]/\\$&/go;  #- escape them (not the "bsl" \)
