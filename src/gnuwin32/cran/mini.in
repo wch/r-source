@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="http://cran.r-project.org/R.css">
-<title>R-@RVER@ mini build for Windows</title>
+<title>R-@FULLVERSION@ mini build for Windows</title>
 </head>
 
 <body bgcolor="#FFFFFF">
 
-<h1>R-@RVER@ mini build for Windows</h1>
+<h1>R-@FULLVERSION@ mini build for Windows</h1>
 
 <p>This directory contains a Windows binary build of R-@RVER@
 designed to fit on floppy disks.  Some parts of the full build have
