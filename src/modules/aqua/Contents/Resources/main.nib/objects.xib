@@ -193,6 +193,7 @@
       <object name="rootControl" class="IBCarbonRootControl" id="167">
         <string name="bounds">0 0 360 480 </string>
       </object>
+      <boolean name="hasCloseBox">FALSE</boolean>
       <boolean name="liveResize">TRUE</boolean>
     </object>
     <reference idRef="167"/>
