@@ -5,8 +5,9 @@
 
 { \dots }
 }
-\alias{(}
-\alias{{}
+% These two do not work properly!
+%\alias{(}
+%\alias{{}
 \description{
     Open parenthesis, \code{(}, and open brace, \code{\{}, are
     \code{\link{.Primitive}} functions in \R.
