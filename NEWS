@@ -124,6 +124,8 @@ BUG FIXES
 
     o	nargs() was documented incorrectly.
 
+    o	Using seq.POSIXt(by="2 weeks") was stepping by single weeks (PR#1046).
+
 
 
 		CHANGES IN R VERSION 1.3.0

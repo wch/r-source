@@ -459,9 +459,10 @@ seq.POSIXt <-
                         c("secs", "mins", "hours", "days", "weeks",
                           "months", "years"))
         if(is.na(valid)) stop("invalid string for `by'")
-        if(valid <= 5)
+        if(valid <= 5) {
             by <- c(1, 60, 3600, 86400, 7*86400)[valid]
-        else
+            if (length(by2) == 2) by <- by * as.integer(by2[1])
+        } else
             by <- if(length(by2) == 2) as.integer(by2[1]) else 1
     } else if(!is.numeric(by)) stop("invalid mode for `by'")
     if(is.na(by)) stop("`by' is NA")
