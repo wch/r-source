@@ -182,6 +182,15 @@ ps.options(paper, horizontal, width, height, family, encoding,
   file should either embed the font outlines (usually from \file{.pfb}
   or \file{.pfa} files) or use DSC comments to instruct the print
   spooler to do so.
+
+  The \code{.afm} files for the first four fonts do not need to be in
+  the correct encoding, but that for the symbol font must be.
+
+  When \code{family="ComputerModern"} is used, the italic/bold-italic
+  fonts used are slanted fonts (\code{cmsl10} and \code{cmbxsl10}).  To
+  use text italic fonts instead, use
+  \code{family = c("CM_regular_10.afm", "CM_boldx_10.afm", "cmti10.afm",
+    "cmbxti10.afm", "CM_symbol_10.afm")}.
 }
 
 \section{Encodings}{

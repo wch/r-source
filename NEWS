@@ -149,6 +149,9 @@ NEW FEATURES
 	rounding errors in low-precision calculations in gs >= 8.11.
 	(PR#5285, which is not a bug in R.)
 
+	It is now documented how to use other Computer Modern fonts,
+	for example italic rather than slanted.
+
     o	ppr() now fully supports categorical explanatory variables,
 
 	ppr() is now interruptible at suitable places in the

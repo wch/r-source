@@ -746,17 +746,21 @@ static void PSEncodeFont(FILE *fp, char *encname)
 	fprintf(fp, "} def\n");
 	fprintf(fp, "%%%%IncludeResource: font CMR10\n");
 	fprintf(fp, "%%%%IncludeResource: font CMSY10\n");
-	fprintf(fp, "[ /CMR10 findfont /CMSY10 findfont ] %s mergefonts\n", encname);
+	fprintf(fp, "[ /%s findfont /CMSY10 findfont ] %s mergefonts\n", 
+		familyname[0], encname);
 	fprintf(fp, "/Font1 exch definefont pop\n");
 	fprintf(fp, "%%%%IncludeResource: font CMBX10\n");
 	fprintf(fp, "%%%%IncludeResource: font CMBSY10\n");
-	fprintf(fp, "[ /CMBX10 findfont /CMBSY10 findfont ] %s mergefonts\n", encname);
+	fprintf(fp, "[ /%s findfont /CMBSY10 findfont ] %s mergefonts\n",
+		familyname[1], encname);
 	fprintf(fp, "/Font2 exch definefont pop\n");
 	fprintf(fp, "%%%%IncludeResource: font CMSL10\n");
-	fprintf(fp, "[ /CMSL10 findfont /CMSY10 findfont ] %s mergefonts\n", encname);
+	fprintf(fp, "[ /%s findfont /CMSY10 findfont ] %s mergefonts\n",
+		familyname[2], encname);
 	fprintf(fp, "/Font3 exch definefont pop\n");
 	fprintf(fp, "%%%%IncludeResource: font CMBXSL10\n");
-	fprintf(fp, "[ /CMBXSL10 findfont /CMBSY10 findfont ] %s mergefonts\n", encname);
+	fprintf(fp, "[ /%s findfont /CMBSY10 findfont ] %s mergefonts\n", 
+		familyname[3], encname);
 	fprintf(fp, "/Font4 exch definefont pop\n");
 	fprintf(fp, "%%%%IncludeResource: font CMMI10\n");
 	fprintf(fp, "[ /CMR10 findfont /CMSY10 findfont /CMMI10 findfont ] SymbolEncoding mergefonts\n");
