@@ -659,13 +659,15 @@ static SEXP assignCall(SEXP op, SEXP symbol, SEXP fun,
 }
 
 
+/* It might be a tad more efficient to make the non-error part of this
+   into a macro, especially for while loops. */
 static Rboolean asLogicalNoNA(SEXP s, SEXP call)
 {
     Rboolean cond = asLogical(s);
     if (cond == NA_LOGICAL) {
 	char *msg = isLogical(s) ?
 	    "missing value where logical needed" :
-	    "argument of if(*) is not interpretable as logical";
+	    "argument is not interpretable as logical";
 	errorcall(call, msg);
     }
     return cond;
