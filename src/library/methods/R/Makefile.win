@@ -19,9 +19,10 @@ endif
 R/$(PKG): $(PKGRFILES)
 	@echo "  collecting R files"
 	@$(MKDIR) -p $(DPKG)/R
+	@echo ".packageName <- \"methods\"" > $@
 ifeq ($(strip $(BUILD)),CROSS)
-	@$(CAT) $(PKGRFILES) | $(SED) -e 's+= file.path(.Library+= file.path("../../../library"+' > $@
+	@$(CAT) $(PKGRFILES) | $(SED) -e 's+= file.path(.Library+= file.path("../../../library"+' >> $@
 else
-	@$(CAT) $(PKGRFILES)   > $@
+	@$(CAT) $(PKGRFILES)   >> $@
 endif
 
