@@ -210,6 +210,11 @@ removeGeneric("plotData")
 
 stopifnot(!exists("plotData", 1))
 
+## Miscellaneous tests
+foo <- function(x,y)x+y
+setMethod("foo", , function(x)x)
+setMethod("foo", signature("character", "character"), function(x,y)paste(x,y))
+
 }
 }
 

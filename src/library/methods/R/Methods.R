@@ -540,6 +540,8 @@ removeMethods <-
     for(db in where) {
         if(isGeneric(f, db)) {
             if(is.function(default)) {
+                if(is(default, "MethodDefinition"))
+                    attributes(default) <- NULL ## would be better if as(..,"function") worked
                 cat("Restoring default function definition of", f, "\n")
                 assign(f, default, db)
             }

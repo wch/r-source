@@ -576,10 +576,7 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
 		    }
 		    else {
 			R_assign_to_method_metadata(fsym, fdef);
-			R_clear_method_selection(); /* to be safe.
-						       The S language code is supposed
-						       to clear also. */
-		    }
+			R_clear_method_selection();		    }
 		}
 		if(isNull(value))
 		    error("No direct or inherited method for function \"%s\" for this call",
@@ -633,7 +630,7 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
    the question (is the argument missing in the call), rather than the
    R semantics (is the value of the argument R_MissingArg)
 */
-Rboolean is_missing_arg(SEXP symbol, SEXP ev)
+static Rboolean is_missing_arg(SEXP symbol, SEXP ev)
 {
     SEXP args = FRAME(ev);
     while(args != R_NilValue) {
@@ -643,6 +640,22 @@ Rboolean is_missing_arg(SEXP symbol, SEXP ev)
     }
     error("Couldn't find symbol \"%s\" in frame of call", CHAR_STAR(symbol));
 }
+
+SEXP R_missingArg(SEXP symbol, SEXP ev) {
+    if(!isSymbol(symbol))
+	error("invalid `symbol' argument: expected a name, got a \"%s\"",
+	     CHAR_STAR((isObject(symbol) ? R_data_class(symbol, 1) :
+	      type2str(TYPEOF(symbol)))));
+    if(!isEnvironment(ev))
+	error("invalid `envir' argument: expected an environment, got a \"%s\"",
+	     CHAR_STAR((isObject(ev) ? R_data_class(ev, 1) :
+	      type2str(TYPEOF(ev)))));
+    if(is_missing_arg(symbol, ev))
+	return R_TRUE;
+    else
+	return R_FALSE;
+}
+
     
 
 SEXP R_selectMethod(SEXP fname, SEXP ev, SEXP mlist)
