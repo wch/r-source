@@ -1,4 +1,4 @@
-useDynLib("grid")
+## useDynLib("grid") # done in .onLoad
 
 export("absolute.size", "convertNative", "current.viewport",
        "dataViewport", "gpar", "grid.arrows", "grid.circle",
