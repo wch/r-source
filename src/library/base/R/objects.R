@@ -80,10 +80,10 @@ getS3method <-  function(f, class, optional = FALSE)
 getFromNamespace <- function(x, ns, pos = -1, envir = as.environment(pos))
 {
     if(missing(ns)) {
-        ## this is representation-dependent, but fairly simple
-        objs <- ls(envir, all.names=TRUE)
-        if(!length(objs)) stop("no objects in this environment")
-        ns <- environment(get(objs[1]))
+        nm <- attr(envir, "name")
+        if(is.null(nm) || substring(nm, 1, 8) != "package:")
+            stop("environment specified is not a package")
+        ns <- asNamespace(substring(nm, 9))
     } else ns <- asNamespace(ns)
     get(x, envir = ns, inherits = FALSE)
 }
@@ -96,10 +96,10 @@ fixInNamespace <- function (x, ns, pos = -1, envir = as.environment(pos), ...)
     if (!is.character(subx) || length(subx) != 1)
         stop("fixInNamespace requires a name")
     if(missing(ns)) {
-        ## this is representation-dependent, but fairly simple
-        objs <- ls(envir, all.names=TRUE)
-        if(!length(objs)) stop("no objects in this environment")
-        ns <- environment(get(objs[1]))
+        nm <- attr(envir, "name")
+        if(is.null(nm) || substring(nm, 1, 8) != "package:")
+            stop("environment specified is not a package")
+        ns <- asNamespace(substring(nm, 9))
     } else ns <- asNamespace(ns)
     x <- edit(get(subx, envir = ns, inherits = FALSE), ...)
     if(bindingIsLocked(subx, ns)) {
@@ -111,18 +111,19 @@ fixInNamespace <- function (x, ns, pos = -1, envir = as.environment(pos), ...)
         lockBinding(subx, ns)
     } else
         assign(subx, x, env = ns)
-    ## now look for possible copy as a method
-    S3 <- getNamespaceInfo(ns, "S3methods")
-    if(!length(S3)) return(invisible(NULL))
-    S3names <- sapply(S3, function(x) x[[3]])
-    if(subx %in% S3names) {
-        i <- match(subx, S3names)
-        genfun <- get(S3[[i]][[1]])
-        defenv <- if (typeof(genfun) == "closure") environment(genfun)
-        else .BaseNamespaceEnv
-        S3Table <- get(".__S3MethodsTable__.", envir = defenv)
-        if(exists(subx, envir = S3Table, inherits = FALSE)) {
-            assign(subx, x, S3Table)
+    if(!isBaseNamespace(ns)) {
+        ## now look for possible copy as a method
+        S3 <- getNamespaceInfo(ns, "S3methods")
+        if(!length(S3)) return(invisible(NULL))
+        S3names <- sapply(S3, function(x) x[[3]])
+        if(subx %in% S3names) {
+            i <- match(subx, S3names)
+            genfun <- get(S3[[i]][[1]])
+            defenv <- if (typeof(genfun) == "closure") environment(genfun)
+            else .BaseNamespaceEnv
+            S3Table <- get(".__S3MethodsTable__.", envir = defenv)
+            if(exists(subx, envir = S3Table, inherits = FALSE))
+                assign(subx, x, S3Table)
         }
     }
     invisible(NULL)
