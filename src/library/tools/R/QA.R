@@ -72,7 +72,7 @@ sQuote <- function(s) paste("'", s, "'", sep = "")
     ## @code{lib.loc}, capturing all output and messages.  All QA
     ## functions use this for loading packages because R CMD check
     ## interprets all output as indicating a problem.
-    outConn <- textConnection("out", "w")
+    outConn <- file(open = "w")         # anonymous tempfile
     sink(outConn, type = "output")
     sink(outConn, type = "message")
     yy <- try({
