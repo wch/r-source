@@ -264,7 +264,15 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifndef Macintosh
 #include <sys/types.h>
 #endif
-#include "dirent.h"
+#if HAVE_DIRENT_H
+# include <dirent.h>
+#elif HAVE_SYS_NDIR_H
+# include <sys/ndir.h>
+#elif HAVE_SYS_DIR_H
+# include <sys/dir.h>
+#elif HAVE_NDIR_H
+# include <ndir.h>
+#endif
 #ifdef HAVE_REGCOMP
 #include "regex.h"
 #endif
