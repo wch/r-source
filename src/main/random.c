@@ -455,6 +455,7 @@ static void FixupProb(SEXP call, double *p, int n, int k, int replace)
     double sum;
     int i, npos;
     npos = 0;
+    sum = 0.;
     for (i = 0; i < n; i++) {
 	if (!FINITE(p[i]))
 	    errorcall(call, "NA in probability vector\n");
@@ -473,7 +474,7 @@ static void FixupProb(SEXP call, double *p, int n, int k, int replace)
 SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, y, prob;
-    int i, j, k, n, replace;
+    int k, n, replace;
     checkArity(op, args);
     n = asInteger(CAR(args)); args = CDR(args);
     k = asInteger(CAR(args)); args = CDR(args);

@@ -63,7 +63,7 @@ static SEXP applyMethod(SEXP call, SEXP op, SEXP args, SEXP rho, SEXP newrho)
     else if (TYPEOF(op) == CLOSXP) {
 	ans = applyClosure(call, op, args, rho, newrho);
     }
-    else 
+    else
 	ans = R_NilValue;  /* for -Wall */
     return ans;
 }
@@ -264,7 +264,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[128];
     SEXP ans, s, t, class, method, matchedarg, generic, nextfun;
     SEXP sysp, m, formals, actuals, tmp, newcall;
-    SEXP a, b;
+    SEXP a;
     RCNTXT *cptr;
     int i,j;
     SEXP group,realgroup;

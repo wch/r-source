@@ -248,7 +248,7 @@ static SEXP simplify(SEXP fun, SEXP arg1, SEXP arg2)
 
 static SEXP D(SEXP expr, SEXP var)
 {
-    SEXP ans, expr1, expr2;
+    SEXP ans=R_NilValue, expr1, expr2;
     switch(TYPEOF(expr)) {
     case LGLSXP:
     case INTSXP:
@@ -622,7 +622,7 @@ static int FindSubexprs(SEXP expr)
     case LISTSXP:
 	if (inherits(expr, "expression"))
 	    return FindSubexprs(CAR(expr));
-	else InvalidExpression("FindSubexprs");
+	else { InvalidExpression("FindSubexprs"); return -1/*-Wall*/; }
 	break;
     case LANGSXP:
 	if (CAR(expr) == install("(")) {
@@ -740,7 +740,7 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, expr, funarg, names;
     int f_index, *d_index;
-    int i, nexpr, nderiv;
+    int i, nexpr, nderiv=0;
     char *vmax;
     checkArity(op, args);
     vmax = vmaxget();

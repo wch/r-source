@@ -438,6 +438,7 @@ void GInit(GPar*);
 void GRestore(DevDesc*);
 void GSavePars(DevDesc*);
 void GRestorePars(DevDesc*);
+void ProcessInlinePars(SEXP, DevDesc*);
 
 SEXP FixupPch(SEXP, DevDesc*);
 SEXP FixupLty(SEXP, DevDesc*);

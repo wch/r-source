@@ -136,7 +136,7 @@ void GSetState(int, DevDesc*);
  *
  *  GRAPHICAL PRIMITIVES are the generic front-end for the functions
  *  that every device driver must provide.
- *    
+ *
  *  NOTE that locations supplied to these functions may be in any
  *  of the valid coordinate systems (each function takes a "coords"
  *  parameter to indicate the coordinate system);  the device-specific
@@ -2654,7 +2654,7 @@ static int CSclipline(double *x1, double *y1, double *x2, double *y2,
 static void CScliplines(int n, double *x, double *y, int coords, DevDesc *dd)
 {
     int ind1, ind2;
-    int firstPoint = 1;
+    /*int firstPoint = 1;*/
     int count = 0;
     int i = 0;
     double *xx, *yy, temp;

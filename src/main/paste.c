@@ -37,7 +37,7 @@ SEXP mkChar(char *);
 
 SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP ans, collapse, sep, px, x, tmpchar;
+    SEXP ans, collapse, sep, x, tmpchar;
     int i, j, k, maxlen, nx, pwidth, sepw;
     char *s, *buf;
 
@@ -138,7 +138,7 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP l, x, y;
-    int i, n, trim;
+    int i, n, trim=0;
     int w, d, e;
     int wi, di, ei;
     char *strp;
@@ -222,6 +222,8 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	UNPROTECT(1);
 	break;
+    default:
+	errorcall(call, "Impossible mode ( x )\n"); y = R_NilValue;/* -Wall */
     }
     PROTECT(y);
     if((l = getAttrib(x, R_DimSymbol)) != R_NilValue)

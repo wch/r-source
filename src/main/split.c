@@ -21,11 +21,11 @@
 
 SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, f, counts, vec, ans;
+    SEXP x, f, counts, vec;
     int i, j, k, nobs, nlevs, nfac;
 
     checkArity(op, args);
-	
+
     x = CAR(args);
     f = CADR(args);
     if (!isVector(x))
@@ -38,7 +38,7 @@ SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
     if (nobs <= 0)
 	return R_NilValue;
     if (nfac <= 0)
-	errorcall(call, "Group length is 0 but data length > 0");	
+	errorcall(call, "Group length is 0 but data length > 0");
     if (nobs != nfac)
 	warningcall(call, "argument lengths differ\n");
     PROTECT(counts = allocVector(INTSXP, nlevs));

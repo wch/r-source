@@ -327,7 +327,7 @@ SEXP VectorToPairList(SEXP x)
 	CAR(xptr) = VECTOR(x)[i];
 	if (named && CHAR(STRING(xnames)[i])[0] != '\0')
 	    TAG(xptr) = install(CHAR(STRING(xnames)[i]));
-	xptr = CDR(xptr);	
+	xptr = CDR(xptr);
     }
     copyMostAttrib(x, xnew);
     UNPROTECT(3);
@@ -336,7 +336,7 @@ SEXP VectorToPairList(SEXP x)
 
 static SEXP coerceToSymbol(SEXP v)
 {
-    SEXP ans;
+    SEXP ans = R_NilValue;
     int warn;
     if (length(v) <= 0)
 	error("Invalid data of mode \"%s\" (too short)\n",
@@ -651,8 +651,8 @@ SEXP PairToVectorList(SEXP);
 /* Coerce a list to the given type */
 static SEXP coercePairList(SEXP v, SEXPTYPE type)
 {
-    int i, n;
-    SEXP rval, vp, names;
+    int i, n=0;
+    SEXP rval= R_NilValue, vp, names;
 
     names = v;
     if (type == EXPRSXP) {
@@ -904,7 +904,7 @@ static SEXP ascommon(SEXP call, SEXP u, int type)
 	    errorcall(call, "character argument required\n");
 	return install(CHAR(STRING(u)[0]));
     }
-    else 
+    else
 #endif
     if (type == CLOSXP) {
 	return asFunction(u);
@@ -918,7 +918,7 @@ static SEXP ascommon(SEXP call, SEXP u, int type)
 	    v = coerceVector(v, type);
 	    UNPROTECT(1);
 	}
-	if (type == LISTSXP && 
+	if (type == LISTSXP &&
 	    !(TYPEOF(u) == LANGSXP || TYPEOF(u) == LISTSXP ||
 	      TYPEOF(u) == EXPRSXP || TYPEOF(u) == VECSXP)) {
 	    ATTRIB(v) = R_NilValue;

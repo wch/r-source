@@ -555,7 +555,7 @@ static SEXP pos2env(int pos, SEXP call)
 
 SEXP do_pos2env(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP env, envp, pos;
+    SEXP env, pos;
     int i, npos;
 
     PROTECT(pos = coerceVector(CAR(args), INTSXP));
