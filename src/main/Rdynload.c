@@ -107,7 +107,6 @@
 #endif
 
 #ifdef Macintosh
-  extern char *strdup(); 
 # define HAVE_NO_SYMBOL_UNDERSCORE 
 # define HAVE_DYNAMIC_LOADING
 #endif

@@ -23,12 +23,6 @@
 #include <config.h>
 #endif
 
-#ifdef Macintosh
-# ifndef HAVE_STRDUP
-  extern char *strdup();
-# endif
-#endif
-
 #include <Defn.h>
 #include <R_ext/RConverters.h>
 

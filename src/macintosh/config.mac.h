@@ -311,6 +311,7 @@
 
 /* Define if you have the snprintf function.  */
 #undef HAVE_SNPRINTF
+#define HAVE_DECL_SNPRINTF 0
 
 /* Define if you have the stat function.  */
 #define HAVE_STAT 1
@@ -320,6 +321,7 @@
 
 /* Define if you have the strdup function.  */
 #undef HAVE_STRDUP
+#define HAVE_DECL_STRDUP 0
 
 /* Define if you have the strptime function.  */
 #undef HAVE_STRPTIME
