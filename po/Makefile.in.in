@@ -325,7 +325,7 @@ update-pkg-po: remove-potcdate.sed
 	     --add-comments=TRANSLATORS: $(XGETTEXT_OPTIONS) \
 	     --copyright-holder='$(COPYRIGHT_HOLDER)' \
 	     --msgid-bugs-address='$(MSGID_BUGS_ADDRESS)' \
-	     -o - *.c) > $${pkg}.po ; \
+	     -o - `LC_COLLATE=C ls *.c`) > $${pkg}.po ; \
 	      sed -f remove-potcdate.sed < $${src}/po/$${pkg}.pot > $${pkg}.1po && \
 	      sed -f remove-potcdate.sed < $${pkg}.po > $${pkg}.2po && \
 	      if cmp $${pkg}.1po $${pkg}.2po >/dev/null 2>&1; then \
