@@ -678,7 +678,8 @@ SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
     dll = CHAR(STRING_ELT(path, 0));
     dwVerInfoSize = GetFileVersionInfoSize(dll, &dwVerHnd);
     PROTECT(ans = allocVector(STRSXP, 2));
-    STRING_ELT(ans, 0) = STRING_ELT(ans, 1) = mkChar("");
+    SET_STRING_ELT(ans, 0, mkChar(""));
+    SET_STRING_ELT(ans, 1, mkChar(""));
     if (dwVerInfoSize) {
 	BOOL  fRet;
 	LPSTR lpstrVffInfo;
@@ -692,17 +693,17 @@ SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    fRet = VerQueryValue(lpstrVffInfo,
 				 TEXT("\\StringFileInfo\\040904E4\\FileVersion"),
 				 (LPVOID)&lszVer, &cchVer);
-	    if(fRet) STRING_ELT(ans, 0) = mkChar(lszVer);
+	    if(fRet) SET_STRING_ELT(ans, 0, mkChar(lszVer));
 
 	    fRet = VerQueryValue(lpstrVffInfo,
 				 TEXT("\\StringFileInfo\\040904E4\\R Version"),
 				 (LPVOID)&lszVer, &cchVer);
-	    if(fRet) STRING_ELT(ans, 1) = mkChar(lszVer);
+	    if(fRet) SET_STRING_ELT(ans, 1, mkChar(lszVer));
 	    else {
 		fRet = VerQueryValue(lpstrVffInfo,
 				     TEXT("\\StringFileInfo\\040904E4\\Compiled under R Version"),
 				     (LPVOID)&lszVer, &cchVer);
-		if(fRet) STRING_ELT(ans, 1) = mkChar(lszVer);
+		if(fRet) SET_STRING_ELT(ans, 1, mkChar(lszVer));
 	    }
 	    
 	} else ans = R_NilValue;
