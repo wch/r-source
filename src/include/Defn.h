@@ -270,7 +270,7 @@ FUNTAB	R_FunTab[];	    /* Built in functions */
 #endif
 
 extern int	errno;
-extern int	gc_inhibit_torture;
+extern int	gc_inhibit_torture INI_as(1);
 
 /* R Home Directory */
 extern char*	R_Home;		    /* Root of the R tree */
