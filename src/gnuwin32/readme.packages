@@ -67,6 +67,7 @@ BEWARE: if you have Norton Anti-Virus you may need to disable it.
 Some versions lock up the machine when windres is run.
 
 BEWARE: Don't expect this to work if the path to R_HOME contains spaces.
+As from R 1.5.0 it may work, but we don't recommend it.
 
 Then
 
@@ -82,7 +83,7 @@ At this point there are two approaches:
 
 1) Streamlined way
 
-Assuming that ...\rw1040\bin is in your path, use
+Assuming that ...\rw1050\bin is in your path, use
 
 	Rcmd INSTALL package
 
@@ -177,7 +178,7 @@ default is c:\TEMP.
 These have been used successfully under NT/2000.  We have seen
 problems with some Perl versions on Win 95/98/ME, but believe these
 are now resolved.  make pkgcheck-mypkg will perform the tests of the
-examples and tests directory, as far as we know on all OSes.
+examples and tests directory, as far as we know on all versions of Windows.
 
 
 Debugging
@@ -234,7 +235,7 @@ implib R.lib R.def
 and then add R.lib to the bcc32 command line, for example (from
 Venables & Ripley's `S Programming')
 
-bcc32 -u- -6 -O2 -WDE -I\R\rw1040\src\include VCrndR.c R.lib
+bcc32 -u- -6 -O2 -WDE -I\R\rw1050\src\include VCrndR.c R.lib
 
 We believe that when referencing variables (rather than functions)
 exported from R.dll these must be declared __declspec(dllimport) just
