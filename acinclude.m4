@@ -358,11 +358,11 @@ cat << \EOF > ${r_cc_rules_frag}
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $[@]
 EOF
 if test -n "${r_cv_prog_cc_m}"; then
-  cat << EOF >> ${r_cc_rules_frag}
+  cat << \EOF >> ${r_cc_rules_frag}
 .c.d:
 	@echo "making \$[@] from \$<"
 	@${r_cv_prog_cc_m} \$(ALL_CPPFLAGS) $< | \\
-	  \$(SED) -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > \$[@]
+	  $(SED) -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > \$[@]
 EOF
 else
   cat << \EOF >> ${r_cc_rules_frag}
@@ -519,15 +519,15 @@ if test "${r_cv_prog_cxx_m}" = yes; then
 .cc.d:
 	@echo "making $[@] from $<"
 	@$(CXX) -M $(ALL_CPPFLAGS) $< | \
-	  \$(SED) -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
+	  $(SED) -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
 .cpp.d:
 	@echo "making $[@] from $<"
 	@$(CXX) -M $(ALL_CPPFLAGS) $< | \
-	  \$(SED) -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
+	  $(SED) -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
 .C.d:
 	@echo "making $[@] from $<"
 	@$(CXX) -M $(ALL_CPPFLAGS) $< | \
-	  \$(SED) -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
+	  $(SED) -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
 EOF
 else
   cat << \EOF >> ${r_cxx_rules_frag}
