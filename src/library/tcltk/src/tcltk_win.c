@@ -4,7 +4,7 @@ void tcltk_init();
 #include "R_ext/Rdynload.h"
 
 typedef void (* DL3)();
-extern void (* R_tcldo)();
+extern __declspec(dllimport) void (* R_tcldo)();
 
 void _R_tcldo()
 {
