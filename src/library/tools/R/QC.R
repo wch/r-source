@@ -126,8 +126,8 @@ function(package, dir, lib.loc = NULL)
             ## <NOTE>
             ## Non-standard evaluation for argument 'package' to data()
             ## gone in R 1.9.0.
-            .try_quietly(data(list = f, package = package_name,
-                              lib.loc = libPath, envir = data_env))
+            .try_quietly(utils::data(list = f, package = package_name,
+                                     lib.loc = libPath, envir = data_env))
             ## (We use .try_quietly() because a .R data file using scan()
             ## to read in data from some other place may do this without
             ## 'quiet = TRUE', giving output which R CMD check would
@@ -1009,7 +1009,7 @@ function(package, lib.loc = NULL)
                 next                    # What the hell did we pick up?
             }
             ## Try loading the data set into data_env.
-            data(list = al, envir = data_env)
+            utils::data(list = al, envir = data_env)
             if(exists(al, envir = data_env, mode = "list",
                       inherits = FALSE)) {
                 al <- get(al, envir = data_env, mode = "list")
