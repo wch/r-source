@@ -4713,7 +4713,7 @@ fi
 for ac_hdr in dl.h dlfcn.h elf.h floatingpoint.h fpu_control.h \
   hdf5.h ieee754.h ieeefp.h readline/history.h readline/readline.h \
   rpc/rpc.h rpc/xdr.h sys/param.h sys/stat.h sys/time.h sys/times.h \
-  sys/types.h unistd.h locale.h
+  unistd.h locale.h
 do
 ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6

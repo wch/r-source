@@ -2,7 +2,7 @@ dnl configure.in
 dnl
 dnl Process this file with autoconf to produce a configure script.
 dnl
-dnl Copyright (C) 1998, 1999 R Core Team
+dnl Copyright (C) 1998, 1999, 2000 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -395,7 +395,7 @@ AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS(dl.h dlfcn.h elf.h floatingpoint.h fpu_control.h \
   hdf5.h ieee754.h ieeefp.h readline/history.h readline/readline.h \
   rpc/rpc.h rpc/xdr.h sys/param.h sys/stat.h sys/time.h sys/times.h \
-  sys/types.h unistd.h locale.h)
+  unistd.h locale.h)
 case "${host}" in
   *sunos4*)
     AC_DEFINE(SunOS4) ;;
