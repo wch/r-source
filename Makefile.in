@@ -207,7 +207,10 @@ install-R-framework:
 	@(cp $(srcdir)/src/modules/aqua/CHANGES "$(R_FRAMEWORK_DIR)/Resources/NEWS.aqua")
 	@(cp $(srcdir)/src/modules/aqua/RMacOSX-FAQ.html "$(R_FRAMEWORK_DIR)/Resources/RMacOSX-FAQ.html")
 	@(cp -R $(srcdir)/src/include $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders)
-
+	@(install_name_tool -change libR.dylib "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/lib/libR.dylib" \
+	  $(R_FRAMEWORK_DIR)/Resources/bin/exec/R)
+	@(find "$(R_FRAMEWORK_DIR)/Resources/" -name '*.so' -exec install_name_tool \
+	  -change libR.dylib "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/lib/libR.dylib" \{\} \;)
 
 install-aqua:
 	@(rm -rf /Applications/R.app)
