@@ -12,25 +12,27 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
-SUBDIRS = R_ext
-
 ## API(1): for .C() and .Call() writers, ...:
 SRC_HEADERS = R.h S.h Rdefines.h Rgraphics.h Rinternals.h Rmath.h
-## Partially included by these, but not part of the API per se.
-R_EXT_HEADERS = \
-	Applic.h Arith.h Boolean.h Complex.h Constants.h Error.h \
-	Linpack.h Mathlib.h Memory.h Print.h PrtUtil.h R-ftp-http.h \
-	RS.h Random.h RConverters.h Rdynload.h Utils.h eventloop.h \
-	libextern.h
 ## API(2) {these are built, system-dependently}:
 OBJ_HEADERS = Rconfig.h Rversion.h
-
 ## Non-API internal ones:
 INT_HEADERS = Defn.h Rdevices.h Errormsg.h Fileio.h Graphics.h \
 	IOStuff.h Internal.h Parse.h Print.h Rconnections.h Startup.h 
 
 DISTFILES = Makefile.in README $(INT_HEADERS) $(SRC_HEADERS) \
 	config.h.in stamp-h.in
+
+SUBDIRS = R_ext
+
+TIMESTAMPS = $(SRC_HEADERS:.h=.ts) $(OBJ_HEADERS:.h=.ts)
+
+.SUFFIXES:
+.SUFFIXES: .h .ts
+
+.h.ts:
+	@$(INSTALL_DATA) $< $(top_builddir)/include/`basename $<`
+	@touch $@
 
 all: Makefile R
 
@@ -39,8 +41,13 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-R: Makefile $(OBJ_HEADERS)
-	@$(MAKE) rhome=$(top_builddir) install
+R: Makefile stamp-R $(TIMESTAMPS)
+	@for d in $(SUBDIRS); do \
+	  (cd $${d} && $(MAKE) $@) || exit 1; \
+	done
+stamp-R:
+	@$(MKINSTALLDIRS) $(top_builddir)/include
+	@touch $@
 
 config.h: stamp-h
 stamp-h: $(srcdir)/config.h.in $(top_builddir)/config.status
@@ -61,24 +68,22 @@ install: installdirs
 	@for f in $(SRC_HEADERS); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/include; \
 	done
-	@for f in $(R_EXT_HEADERS); do \
-	  $(INSTALL_DATA) $(srcdir)/R_ext/$${f} \
-	    $(rhome)/include/R_ext; \
-	done
 	@for f in $(OBJ_HEADERS); do \
 	  $(INSTALL_DATA) $${f} $(rhome)/include; \
 	done
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/include
-	@$(MKINSTALLDIRS) $(rhome)/include/R_ext
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
+	@for d in $(SUBDIRS); do \
+	  (cd $${d} && $(MAKE) $@) || exit 1; \
+	done
 	@rm -rf $(rhome)/include
 
 mostlyclean: clean
 clean:
-	@rm -f $(OBJ_HEADERS) FFDecl.h FFTab.h
+	@rm -f $(OBJ_HEADERS) FFDecl.h FFTab.h stamp-R $(TIMESTAMPS)
 distclean: clean
 	@rm -f Makefile config.h stamp-h
 maintainer-clean: distclean
@@ -92,9 +97,10 @@ distdir: $(DISTFILES)
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
 	@for d in $(SUBDIRS); do \
-	  if test -d $(srcdir)/$${d}; then \
-	    ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
-	        | (cd $(distdir); $(TAR) -x -f -)) \
-	      || exit 1; \
-	  fi; \
+	  test -d $(distdir)/$${d} \
+	    || mkdir $(distdir)/$${d} \
+	    || exit 1; \
+	  chmod 755 $(distdir)/$${d}; \
+	  (cd $${d} && $(MAKE) distdir) \
+	    || exit 1; \
 	done
