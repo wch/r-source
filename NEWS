@@ -61,6 +61,9 @@ BUG FIXES
     o   When returning parameters from .C/.Fortran, the OBJECT field was
     	not copied even though class attributes were (PR #834)
 
+    o   There was a spurious warning from the X11 driver on 100 dpi
+        displays. (PR#840 Fix from Tom Vogels)
+
 
 		CHANGES IN R VERSION 1.2.1
 
