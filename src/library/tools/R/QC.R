@@ -2460,21 +2460,30 @@ function(x, ...)
     }
 
     if(length(x$files_with_likely_bad_Rd)) {
-        writeLines("Rd files with likely Rd problems:")
         bad <- x$files_with_likely_bad_Rd
-        for(i in seq(along = bad)) {
-            writeLines(paste("Unaccounted top-level text in file ",
-                             sQuote(names(bad)[i]), ":", sep = ""))
-            tags <- names(bad[[i]])
-            if(any(ind <- tags != ""))
-                tags[ind] <- paste("Following section",
-                                   sQuote(tags[ind]))
-            tags[!ind] <- "Preceding all sections"
-            vals <- as.character(bad[[i]])
-            long <- nchar(vals) >= 128  # Why 128?  Why not?
-            vals <- paste(sapply(substr(vals, 1, 127), deparse, 128),
-                          ifelse(long, " [truncated]", ""), sep = "")
-            writeLines(c(paste(tags, vals, sep = c(":\n", "\n")), ""))
+        ## Do not warn about stray top-level text which is just
+        ## whitespace and closing braces (i.e., "too many" closing
+        ## braces at top level).  These are not quite correct Rd, but
+        ## can safely be ignored, as Rdconv does.
+        bad <- lapply(bad,
+                      function(x) x[regexpr("^[[:space:]}]*$", x) == -1])
+        bad <- bad[sapply(bad, length) > 0]
+        if(length(bad)) {
+            writeLines("Rd files with likely Rd problems:")
+            for(i in seq(along = bad)) {
+                writeLines(paste("Unaccounted top-level text in file ",
+                                 sQuote(names(bad)[i]), ":", sep = ""))
+                tags <- names(bad[[i]])
+                if(any(ind <- tags != ""))
+                    tags[ind] <- paste("Following section",
+                                       sQuote(tags[ind]))
+                tags[!ind] <- "Preceding all sections"
+                vals <- as.character(bad[[i]])
+                long <- nchar(vals) >= 128  # Why 128?  Why not?
+                vals <- paste(sapply(substr(vals, 1, 127), deparse, 128),
+                              ifelse(long, " [truncated]", ""), sep = "")
+                writeLines(c(paste(tags, vals, sep = c(":\n", "\n")), ""))
+            }
         }
     }
     
