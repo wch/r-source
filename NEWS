@@ -229,6 +229,9 @@ NEW FEATURES
 	plus many utility functions similar to those for date-times.
 	See ?Date.
 
+    o	varimax() and promax() add class "loadings" to their loadings
+	component.
+
 
 UTILITIES
 
