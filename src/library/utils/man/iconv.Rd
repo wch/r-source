@@ -24,16 +24,16 @@ iconvlist()
 
 \details{
   The names of encodings and which ones are available (and indeed, if
-  any are) is platform-dependent.  Use \code{""} for the encoding of the
-  current locale.
+  any are) is platform-dependent.  On most systems you can use \code{""}
+  for the encoding of the current locale.
 
 #ifdef unix
-  On many platforms running \code{iconv --list} at a shell prompt will
-  give a list of encodings.  On others, the information is on the man
-  page for \code{iconv(5)} or elsewhere in the man pages.
-  Another possible source of information is the \R function \code{iconvlist}
-  (at least on platforms using GNU \code{libiconv}).  Unfortunately, the
-  names are rarely common across platforms.
+  On many platforms \code{iconvlist} provides an alphabetical list of
+  the supported encodings.  On others, the information is on the man
+  page for \code{iconv(5)} or elsewhere in the man pages (and beware
+  that the system command \code{iconv} may not support the same set of
+  encodings as the C functions \R calls).
+  Unfortunately, the names are rarely common across platforms.
 #endif
 #ifdef windows
   \code{iconvlist} provides an alphabetical list of the supported encodings.

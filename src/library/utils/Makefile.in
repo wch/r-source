@@ -74,6 +74,7 @@ all: Makefile DESCRIPTION
 	@rm -f $(top_builddir)/library/$(pkg)/R/all.rda
 	@echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null
+	-@iconv -l > $(top_builddir)/library/$(pkg)/iconvlist
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
