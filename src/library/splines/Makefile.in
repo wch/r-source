@@ -34,6 +34,11 @@ all: Makefile DESCRIPTION
 	  echo "tools:::.install_package_description('.', '"$(top_builddir)/library/${pkg}"')" | \
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) --slave > /dev/null ; \
 	fi
+## <FIXME> don't install .svn dirs
+	@if test -d $(srcdir)/inst/po; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/po; \
+	  cp -pr  $(srcdir)/inst/po/* $(top_builddir)/library/$(pkg)/po; \
+	fi
 	@if test -d $(srcdir)/man; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
 	  (f=$${TMPDIR:-/tmp}/R$$$$; \

@@ -24,6 +24,13 @@
 #include <R.h>
 #include <Rinternals.h>
 
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("splines", String)
+#else
+#define _(String) (String)
+#endif
+
 typedef struct spl_struct {
     int order,			/* order of the spline */
 	ordm1,			/* order - 1 (3 for cubic splines) */
@@ -144,7 +151,7 @@ spline_value(SEXP knots, SEXP coeff, SEXP order, SEXP x, SEXP deriv)
 
     sp = (struct spl_struct *) R_alloc(1, sizeof(struct spl_struct));
     sp->order = INTEGER(order)[0];
-    if (sp->order <= 0) { error("ord must be a positive integer"); }
+    if (sp->order <= 0) { error(_("'ord' must be a positive integer")); }
     sp->ordm1 = sp->order - 1;
     sp->ldel = (double *) R_alloc(sp->ordm1, sizeof(double));
     sp->rdel = (double *) R_alloc(sp->ordm1, sizeof(double));
@@ -232,6 +239,14 @@ const static R_CallMethodDef R_CallDef[] = {
 void
 R_init_splines(DllInfo *dll)
 {
+#ifdef ENABLE_NLS
+    char localedir[PATH_MAX];
+#endif
     R_registerRoutines(dll, NULL, R_CallDef, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
+#ifdef ENABLE_NLS
+    strcpy(localedir, getenv("R_HOME"));
+    strcat(localedir, "/library/splines/po");
+    bindtextdomain("splines", localedir);
+#endif
 }

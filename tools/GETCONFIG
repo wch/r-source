@@ -23,6 +23,8 @@ line=`grep "SUPPORT_UTF8" config.h`
 echo "${line}"
 line=`grep "SUPPORT_MBCS" config.h`
 echo "${line}"
+line=`grep "ENABLE_NLS" config.h`
+echo "${line}"
 echo
 echo "#endif /* not _CONFIG_H */"
 echo
