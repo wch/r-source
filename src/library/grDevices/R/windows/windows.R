@@ -98,3 +98,83 @@ print.SavedPlots <- function(x, ...)
     if(i > numplots || i < 1) stop("subscript out of range")
     x[[5]][[i]]
 }
+
+#########
+# WINDOWS font database
+# To map device-independent font to device-specific font
+#########
+
+.Windowsenv <- new.env()
+
+# Each font family has only a name
+assign(".Windows.Fonts", list(), envir = .Windowsenv)
+
+# Check that the font has the correct structure and information
+checkWindowsFont <- function(font) {
+  # For now just use the simple format that is used in Rdevga
+  # i.e., just a font family name, possibly with "TT" as the first
+  # two characters to indicate a TrueType font
+  if (!is.character(font) || length(font) != 1)
+    stop("Invalid Windows font:  must be a single font family name")
+  font
+}
+
+setWindowsFonts <- function(fonts, fontNames) {
+  fonts <- lapply(fonts, checkWindowsFont)
+  fontDB <- get(".Windows.Fonts", envir=.Windowsenv)
+  existingFonts <- fontNames %in% names(fontDB)
+  if (sum(existingFonts) > 0)
+    fontDB[fontNames[existingFonts]] <- fonts[existingFonts]
+  if (sum(existingFonts) < length(fontNames))
+    fontDB <- c(fontDB, fonts[!existingFonts])
+  assign(".Windows.Fonts", fontDB, envir=.Windowsenv)
+}
+
+printFont <- function(font) {
+  paste(font, "\n", sep="")
+}
+
+printFonts <- function(fonts) {
+  cat(paste(names(fonts), ": ", unlist(lapply(fonts, printFont)),
+            sep="", collapse=""))
+}
+
+# If no arguments spec'ed, return entire font database
+# If no named arguments spec'ed, all args should be font names
+# to get info on from the database
+# Else, must specify new fonts to enter into database (all
+# of which must be valid PostScript font descriptions and
+# all of which must be named args)
+windowsFonts <- function(...) {
+  ndots <- length(fonts <- list(...))
+  if (ndots == 0)
+    get(".Windows.Fonts", envir=.Windowsenv)
+  else {
+    fontNames <- names(fonts)
+    nnames <- length(fontNames)
+    if (nnames == 0) {
+      if (!all(sapply(fonts, is.character)))
+        stop("Invalid arguments in windowsFonts (must be font names)")
+      else
+        get(".Windows.Fonts", envir=.Windowsenv)[unlist(fonts)]
+    } else {
+      if (ndots != nnames)
+        stop("Invalid arguments in windowsFonts (need NAMED args)")
+      setWindowsFonts(fonts, fontNames)
+    }
+  }
+}
+
+# Create a valid windows font description
+windowsFont <- function(family) {
+  checkWindowsFont(family)
+}
+
+windowsFonts(# Default Serif font is Times 
+                serif=windowsFont("TT Times New Roman"),
+                # Default Sans Serif font is Helvetica
+                sans=windowsFont("TT Arial"),
+                # Default Monospace font is Courier
+                mono=windowsFont("TT Courier New"),
+                # Default Symbol font is Symbol
+                symbol=windowsFont("TT Symbol"))

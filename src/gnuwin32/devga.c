@@ -161,6 +161,8 @@ typedef struct {
     Rboolean usefixed;
     font  fixedfont;
     font  font;
+    char fontfamily[50];
+
     Rboolean locator;
     int clicked; /* {0,1,2} */
     int	px, py, lty, lwd;
@@ -277,7 +279,7 @@ static Rboolean GA_Open(NewDevDesc*, gadesc*, char*, double, double,
 static double pixelHeight(drawing  d);
 static double pixelWidth(drawing d);
 static void SetColor(int, double, NewDevDesc *);
-static void SetFont(int, int, double, NewDevDesc *);
+static void SetFont(char*, int, int, double, NewDevDesc *);
 static void SetLinetype(int, double, NewDevDesc *);
 static int Load_Rbitmap_Dll();
 void UnLoad_Rbitmap_Dll();
@@ -557,6 +559,7 @@ static int SetBaseFont(gadesc *xd)
     xd->fontsize = xd->basefontsize;
     xd->fontangle = 0.0;
     xd->usefixed = FALSE;
+    xd->fontfamily[0] = '\0';
     xd->font = gnewfont(xd->gawin, fontname[0], fontstyle[0],
 			MulDiv(xd->fontsize, xd->wanteddpi, xd->truedpi), 0.0);
     if (!xd->font) {
@@ -568,7 +571,56 @@ static int SetBaseFont(gadesc *xd)
     return 1;
 }
 
+/* Return a non-relocatable copy of a string */
 
+static char *SaveFontSpec(SEXP sxp, int offset)
+{
+    char *s;
+    if(!isString(sxp) || length(sxp) <= offset)
+	error("Invalid font specification");
+    s = R_alloc(strlen(CHAR(STRING_ELT(sxp, offset)))+1, sizeof(char));
+    strcpy(s, CHAR(STRING_ELT(sxp, offset)));
+    return s;
+}
+
+/*
+ * Take the fontfamily from a gcontext (which is device-independent)
+ * and convert it into a Windows-specific font description using
+ * the Windows font database (see src/library/graphics/R/unix/windows.R)
+ *
+ * IF gcontext fontfamily is empty ("") 
+ * OR IF can't find gcontext fontfamily in font database 
+ * THEN return NULL
+ */
+static char* translateFontFamily(char* family) {
+    SEXP graphicsNS, windowsenv, fontdb, fontnames;
+    int i, nfonts;
+    char* result = NULL;
+    PROTECT_INDEX xpi;
+
+    PROTECT(graphicsNS = R_FindNamespace(ScalarString(mkChar("grDevices"))));
+    PROTECT_WITH_INDEX(windowsenv = findVar(install(".Windowsenv"), 
+					   graphicsNS), &xpi);
+    if(TYPEOF(windowsenv) == PROMSXP)
+	REPROTECT(windowsenv = eval(windowsenv, graphicsNS), xpi);
+    PROTECT(fontdb = findVar(install(".Windows.Fonts"), windowsenv));
+    PROTECT(fontnames = getAttrib(fontdb, R_NamesSymbol));
+    nfonts = LENGTH(fontdb);
+    if (strlen(family) > 0) {
+	int found = 0;
+	for (i=0; i<nfonts && !found; i++) {
+	    char* fontFamily = CHAR(STRING_ELT(fontnames, i));
+	    if (strcmp(family, fontFamily) == 0) {
+		found = 1;
+		result = SaveFontSpec(VECTOR_ELT(fontdb, i), 0);
+	    }
+	}
+	if (!found)
+	    warning("Font family not found in Windows font database");
+    }
+    UNPROTECT(4);
+    return result;
+}
 
 /* Set the font size and face */
 /* If the font of this size and at that the specified */
@@ -579,9 +631,11 @@ static int SetBaseFont(gadesc *xd)
 #define SMALLEST 2
 #define LARGEST 100
 
-static void SetFont(int face, int size, double rot, NewDevDesc *dd)
+static void SetFont(char *family, int face, int size, double rot, 
+		    NewDevDesc *dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
+    char* fontfamily;
 
     if (face < 1 || face > fontnum)
 	face = 1;
@@ -590,11 +644,29 @@ static void SetFont(int face, int size, double rot, NewDevDesc *dd)
     size = MulDiv(size, xd->wanteddpi, xd->truedpi);
     if (!xd->usefixed &&
 	(size != xd->fontsize || face != xd->fontface ||
-	 rot != xd->fontangle)) {
-	 del(xd->font); doevent();
-	 xd->font = gnewfont(xd->gawin,
-			    fontname[face - 1], fontstyle[face - 1],
-			    size, rot);
+	 rot != xd->fontangle || strcmp(family, xd->fontfamily))) {
+        del(xd->font); doevent();
+	/*
+	 * If specify family = "", get family from face via Rdevga
+	 *
+	 * If specify a family and a face in 1 to 4 then get
+	 * that family (mapped through WindowsFonts()) and face.
+	 *
+	 * If specify face > 4 then get font from face via Rdevga
+	 * (whether specifed family or not).
+	 */
+	fontfamily = translateFontFamily(family);
+	if (fontfamily && face <= 4) {
+	    xd->font = gnewfont(xd->gawin,
+				fontfamily, fontstyle[face - 1],
+				size, rot);
+	    if (xd->font)
+                strcpy(xd->fontfamily, family);
+	} else {
+            xd->font = gnewfont(xd->gawin,
+				fontname[face - 1], fontstyle[face - 1],
+				size, rot);
+	}
 	if (xd->font) {
 	    xd->fontface = face;
 	    xd->fontsize = size;
@@ -1645,7 +1717,7 @@ static double GA_StrWidth(char *str,
     double a;
     int   size = gc->cex * gc->ps + 0.5;
 
-    SetFont(gc->fontface, size, 0.0, dd);
+    SetFont(gc->fontfamily, gc->fontface, size, 0.0, dd);
     a = (double) gstrwidth(xd->gawin, xd->font, str);
     return a;
 }
@@ -1670,7 +1742,7 @@ static void GA_MetricInfo(int c,
     int   size = gc->cex * gc->ps + 0.5;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
-    SetFont(gc->fontface, size, 0.0, dd);
+    SetFont(gc->fontfamily, gc->fontface, size, 0.0, dd);
     gcharmetric(xd->gawin, xd->font, c, &a, &d, &w);
     /* Some Windows systems report that space has height and depth,
        so we have a kludge.  Note that 32 is space in symbol font too */
@@ -2201,7 +2273,7 @@ static void GA_Text(double x, double y, char *str,
     rot1 = rot * DEG2RAD;
     x += -xl * cos(rot1) + yl * sin(rot1);
     y -= -xl * sin(rot1) - yl * cos(rot1);
-    SetFont(gc->fontface, size, rot, dd);
+    SetFont(gc->fontfamily, gc->fontface, size, rot, dd);
     SetColor(gc->col, gc->gamma, dd);
     if (R_OPAQUE(gc->col)) {
 #ifdef NOCLIPTEXT
