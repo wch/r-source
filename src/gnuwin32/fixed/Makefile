@@ -34,7 +34,7 @@ fixh: version h/config.h \
 	$(SED) -e 's/"contr.poly")/"contr.poly"), pager="console"/' $< > $@
 
 ../../../bin/check: ../../scripts/check.in
-	$(SED) -e 1d -e "s/Rd2dvi /Rd2dvi.sh /" $< > $@
+	$(SED) -e 1d $< > $@
 
 ../../../bin/build: ../../scripts/build.in
 	$(SED) -e 1d $< > $@
