@@ -65,9 +65,9 @@ R:
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2PDF) $<
 
 dvi: refman.dvi $(OBJECTS_DVI)
-refman.dvi: version.tex $(pkgsrcs) $(srcdir)/Rd.sty
+refman.dvi: version.tex $(srcdir)/Rd.sty stamp-dvi
 	@echo "LaTeX documentation: Reference Index ..."
-	@rm -f *.aux refman.toc refman.ind
+	@rm -f *.aux refman.toc refman.ind stamp-dvi
 	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
 	  opt="$${R_RD4DVI:-$(R_RD4DVI)}"; \
@@ -80,6 +80,7 @@ refman.dvi: version.tex $(pkgsrcs) $(srcdir)/Rd.sty
 	@$(MAKEINDEX) refman
 	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{refman.tex}'
+	@touch stamp-dvi
 version.tex: Makefile $(top_srcdir)/date-stamp $(top_srcdir)/VERSION
 	@echo "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
@@ -87,16 +88,20 @@ version.tex: Makefile $(top_srcdir)/date-stamp $(top_srcdir)/VERSION
 	  m=`cut -d/ -f2 < $(top_srcdir)/date-stamp`; \
 	  d=`cut -d/ -f3 < $(top_srcdir)/date-stamp`; \
 	  echo "$${v} ($${m} $${d}, $${y})") > $@
+stamp-dvi: $(pkgsrcs)
+	@touch $@
 %-pkg.tex: FORCE
-	@echo "Collecting components of $@ ..."
-	@cd $(top_builddir)/src/library && \
-	  OPTS="--latex" $(MAKE) PKGS="$*" DOCS
-	@$(top_builddir)/tools/pkg2tex $*
+	@if $(top_builddir)/tools/Rdnewer \
+	    "$(top_srcdir)/src/library/$*" "$@"; then \
+	  echo "collecting LaTeX docs for package \`$*' ..."; \
+	  (cd $(top_builddir)/src/library && \
+	    OPTS="--latex" $(MAKE) PKGS="$*" DOCS); \
+	  $(top_builddir)/tools/pkg2tex $*; \
+	fi
 FORCE:
 
 $(OBJECTS_DVI): $(srcdir)/texinfo.tex
 R-exts.dvi: version.texi
-
 version.texi: Makefile $(top_srcdir)/VERSION
 	@echo "creating $(subdir)/$@"
 	@(v=`sed 's/\([^ ]*\).*/\1/' $(top_srcdir)/VERSION`; \
@@ -106,9 +111,9 @@ info: $(OBJECTS_INFO)
 R-exts.info: version.texi
 
 pdf: refman.pdf $(OBJECTS_PDF)
-refman.pdf: version.tex $(pkgsrcs) $(srcdir)/Rd.sty
+refman.pdf: version.tex $(srcdir)/Rd.sty stamp-pdf
 	@echo "PDF LaTeX documentation: Reference Index ..."
-	@rm -f *.aux refman.toc refman.ind
+	@rm -f *.aux refman.toc refman.ind stamp-pdf
 	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
 	  echo "\\documentclass[$${opt}]{book}"; \
 	  opt="$${R_RD4PDF:-$(R_RD4PDF)}"; \
@@ -123,6 +128,10 @@ refman.pdf: version.tex $(pkgsrcs) $(srcdir)/Rd.sty
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@TEXINPUTS="$(srcdir):$(srcdir):$$TEXINPUTS" \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
+	@touch stamp-pdf
+stamp-pdf: $(pkgsrcs)
+	@touch $@
+
 $(OBJECTS_PDF): $(srcdir)/texinfo.tex
 R-exts.pdf: version.texi 
 
@@ -182,6 +191,8 @@ uninstall-info:
 	  rm -f $(infodir)/$${f}; \
 	done
 uninstall-pdf:
+	@-rm -f $(rhome)/doc/manual/images/*.pdf
+	@-rmdir $(rhome)/doc/manual/images
 	@-rm -f $(rhome)/doc/manual/*.pdf
 
 mostlyclean: clean
@@ -194,6 +205,7 @@ clean:
 	  *.log *.out *.pdf *.pg *.pgs *.ps *.ps-2 *.tmp *.toc *.tp  \
 	  *.vr *.vrs *-pkg.tex refman.i?? refman.tex version.tex \
 	  version.texi
+	@rm -f stamp-*
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
