@@ -29,10 +29,7 @@ none
 
 Directory:  Add-ons
 
-* PR# 443 *
-Subject: chron now fails with 4 digit year
-From: jens.oehlschlaegel-akiyoshi@mdfactory.de
-Date: Wed, 16 Feb 2000 13:03:18 +0100 (MET)
+none
 
 Directory:  Analyses
 
@@ -154,3 +151,19 @@ Directory:  incoming
 Subject: fisher.test() in ctest or perhaps uniroot()
 From: Thomas Lumley <thomas@biostat.washington.edu>
 Date: Thu, 24 Feb 2000 08:35:53 -0800 (PST)
+* PR# 456 *
+Subject: Oprah, Nightline, Maria Shriver, 48 Hours, 20/20, 
+From: ADV.Sleuth.Teaches.U, Make 10K <ALasChance@aol.com>
+Date: Fri, 25 Feb 2000 03:34:24 +0100 (MET)
+* PR# 457 *
+Subject: bug and fix : using panel.first with plot() in do.call()
+From: Colin Farrow <c.farrow@compserv.gla.ac.uk>
+Date: Fri, 25 Feb 2000 14:18:00 +0000
+* PR# 458 *
+Subject: Re: [Rd] bug and fix : using panel.first with plot() in do.call()
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 25 Feb 2000 14:34:48 +0000 (GMT)
+* PR# 459 *
+Subject:  lambda==0 in dpois() 
+From: Ben Bolker <bolker@zoo.ufl.edu>
+Date: Fri, 25 Feb 2000 14:24:00 -0500
