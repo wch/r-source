@@ -836,3 +836,10 @@ Date: Thu, 19 Feb 2004 19:05:49 +0100
 Subject: Line splitting in system()
 From: Mark White <mjw@celos.net>
 Date: Sat, 28 Feb 2004 15:41:47 +0000
+* PR# 6625 *
+From: fvrfnc@yahoo.com
+Date: Sun, 29 Feb 2004 01:00:58 +0100 (CET)
+* PR# 6626 *
+Subject: digamma with negative arguments
+From: cspark@ces.clemson.edu
+Date: Sun, 29 Feb 2004 22:14:32 +0100 (CET)
