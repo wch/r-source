@@ -159,6 +159,11 @@ Date: Thu, 11 Jul 2002 18:21:42 +1000
 Subject: colSums etc. documentation
 From: "Gunter, Bert" <bert_gunter@merck.com>
 Date: Thu, 13 Feb 2003 09:08:44 -0500
+* PR# 2794 *
+Subject: prop.test  confidence intervals
+From: rbaer@kcom.edu
+Date: Fri, 18 Apr 2003 19:01:03 +0200 (MET DST)
+..prop.test should say how it computes confidence intervals.
 
 Directory:  Graphics
 
@@ -614,43 +619,7 @@ Date: Sat, 1 Mar 2003 16:35:56 +1100 (EST)
 Subject: recursive default argument reference in debugger
 From: pburns@pburns.seanet.com
 Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
-* PR# 2776 *
-Subject: suggested changes to summary.glm and summary.lm
-From: John Fox <jfox@mcmaster.ca>
-Date: Mon, 14 Apr 2003 07:59:24 -0400
-* PR# 2782 *
-Subject: The World's Smallest Digital Camera & Webcam! trqenkukuuh ncxku 
-From: "Hi!" <phredom02@yahoo.com>
-Date: Tue, 15 Apr 03 16:52:26 GMT
-* PR# 2783 *
-Subject: shorrage delenion
-From: "Lorraine Tran" <62t8ojel93p@aol.com>
-Date: Mon, 14 Apr 03 23:36:23 GMT
-* PR# 2784 *
-Subject: You've never seen it look this good before
-From: "Todd Butler" <am2fagtp@gate811.net>
-Date: Tue, 15 Apr 03 20:05:19 GMT
-* PR# 2785 *
-Subject: Labeling in lm()
-From: veraf@stat.sc.edu
-Date: Tue, 15 Apr 2003 21:33:48 +0200 (MET DST)
-* PR# 2786 *
-Subject: *The World's Smallest Digital Camera & Webcam! srqikyzdll
-From: "Hi!" <phredom02@yahoo.com>
-Date: Wed, 16 Apr 03 06:28:47 GMT
-* PR# 2787 *
-Subject: Curious about pleasing your lover?  jozmp hunklgly
-From: "Rowena Wilkins" <2puwvjk95@earthlink.net>
-Date: Wed, 16 Apr 03 15:12:37 GMT
-* PR# 2788 *
-Subject: Over HALF off VIAGRA!
-From: "Florence Aguirre" <Cristina4726p@hotmail.com>
-Date: Thu, 17 Apr 03 20:47:47 GMT
-* PR# 2789 *
-Subject: Your own Online Dollar Store in 15 mins or less
-From: "Your Dollar Store" <mds23435999@mail.com>
-Date: Thu, 17 Apr 2003 15:53:28 -0800
-* PR# 2790 *
-Subject: URGENT ASSISTANCE
-From: Mrs mariam sese-seko <mrs_mariamsese17@rediffmail.com>
-Date: Thu, 17 Apr 2003 19:19:38 +0200
+* PR# 2793 *
+Subject: Problems with RMySQL in R 1.7.0 for Windows
+From: "Jonas Ranstam" <jonas@ranstam.dk>
+Date: Fri, 18 Apr 2003 09:13:56 +0200
