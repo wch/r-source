@@ -954,8 +954,9 @@ sub chm_functionhead
 {
     my ($title, $pkgname, $name) = @_;
 
-    my $retval = "<html><head><title>$title</title></head>\n" .
-	"<link rel=\"stylesheet\" type=\"text/css\" href=\"Rchm.css\">\n\n";
+    my $retval = "<html><head><title>$title</title>\n" .
+	"<link rel=\"stylesheet\" type=\"text/css\" href=\"Rchm.css\">\n".
+	    "</head>\n<body>\n\n";
 
     if($pkgname){
 	$retval .= "<table width=\"100%\"><tr>" .

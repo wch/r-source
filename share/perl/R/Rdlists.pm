@@ -579,8 +579,9 @@ sub chm_pagehead
 {
     my ($title) = @_;
 
-    my $retval = "<html><head><title>$title</title></head>\n" .
+    my $retval = "<html><head><title>$title</title>\n" .
 	"<link rel=\"stylesheet\" type=\"text/css\" href=\"Rchm.css\">\n" .
+	"</head><body>\n" .
 	"<h1>$title\n" .
         "<img class=\"toplogo\" src=\"logo.jpg\" alt=\"[R logo]\"></h1>\n\n" .
         "<hr>\n\n";

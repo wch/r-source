@@ -37,11 +37,13 @@ sub begin_head {
     print RTF "K{\\footnote $key}\n";
     print RTF "+{\\footnote $browse{$key}}\n";
 
-    $ignore_text = 1;}
+    $ignore_text = 1;
+}
 
 sub end_head {
     local ($element) = @_;
-    $ignore_text = 0;}
+    $ignore_text = 0;
+}
 
 $Begin{"TITLE"} = "begin_title";
 $End{"TITLE"} = "end_title";
@@ -74,10 +76,12 @@ sub end_document {
 
 ## Headers
 
-$Begin{"H1"} = "begin_header";
+# Centre H1 and H2
+
+$Begin{"H1"} = "begin_cheader";
 $End{"H1"} = "end_header";
 
-$Begin{"H2"} = "begin_header";
+$Begin{"H2"} = "begin_cheader";
 $End{"H2"} = "end_header";
 
 $Begin{"H3"} = "begin_header";
@@ -99,6 +103,13 @@ sub begin_header {
     if($attributes{"align"} eq "center") {
 	print RTF "\\qc "
     }
+}
+
+sub begin_cheader {
+    local ($element, $tag, %attributes) = @_;
+    print RTF $Font{$element}, " ";
+    $inheader = 1;
+    print RTF "\\qc "
 }
 
 sub end_header {
@@ -162,12 +173,18 @@ sub begin_a {
     if(exists $attributes{"href"}) { # It's a link source
 	$href = $attributes{"href"};
 	if(index($href, ":")>=0) {
+	    if($href =~ /^ms-its:\.\.\/\.\.\/$basename\/chtml\/$basename\.chm/) {
+		$href =~ s/^ms-its:\.\.\/\.\.\/$basename\/chtml\/$basename\.chm::\///;
+		print RTF "{\\uldb ";
+#		print "infile ref to $href\n";
+	    } else {
+		undef $href;
+	    }
 #	    if(index($href, "JavaScript:hhctrl.TextPopup")<0) {
 #		print RTF "{\\cf1\\strike ";
 #	    } else {
 #		print RTF "{\\ul ";
 #	    }
-	    undef $href;
 	} else {
 	    print RTF "{\\strike ";
 	}
@@ -418,21 +435,23 @@ $End{"DD"} = "end_defined_definition";
 sub begin_defined_term {
     local ($element, $tag) = @_;
     $indent = 360 * $list_level - 360;
-    print RTF "\\par ", $Font{"P"}, "\\li$indent";
+    print RTF "\\par ", $Font{"P"}, "\\li$indent ";
 }
 
 sub begin_defined_definition {
     local ($element, $tag) = @_;
     $indent = 360 * $list_level;
-    print RTF "\\par ", $Font{"P"}, "\\li$indent";
+    print RTF "\\par ", $Font{"P"}, "\\li$indent ";
 }
 
 sub end_defined_definition {
     local ($element) = @_;
+    print RTF "\n";
 }
 
 sub end_defined_term {
     local ($element) = @_;
+    print RTF "\n";
 }
 
 $Begin{"META"} = "begin_meta";
@@ -472,6 +491,8 @@ sub html_content {
     unless ($ignore_text) {
 	$string =~ s/\{/\\{/o;
 	$string =~ s/\}/\\}/o;
+	$string =~ s/\\{--\\}/\\endash /go;
+	$string =~ s/\\{---\\}/\\emdash /go;
 	if ($whitespace_significant) { # means verbatim
 	    $string =~ s/\\"/\\\\"/o;
 	}

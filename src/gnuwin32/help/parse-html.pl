@@ -283,6 +283,8 @@ sub substitute_entities {
     $string =~ s/&nbsp;/ /og;
     $string =~ s/&rarr;/->/og;
     $string =~ s/&reg;/(tm)/og;
+    $string =~ s/&#150;/{--}/og; # en dash
+    $string =~ s/&#151;/{---}/og;# em dash
     local($ch);
     while ($string =~ /\&#([^;]*);/) {
 	   $ch=sprintf("%c", $1);
