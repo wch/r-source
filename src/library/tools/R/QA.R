@@ -36,12 +36,15 @@ sQuote <- function(s) paste("'", s, "'", sep = "")
     outConn <- textConnection("out", "w")
     sink(outConn, type = "output")
     sink(outConn, type = "message")
+    warn <- getOption("warn")
+    options(warn = -1)
     yy <- try({
         pos <- match(paste("package", package, sep = ":"), search())
         if(!is.na(pos))
             detach(pos = pos)
         library(package, lib.loc = lib.loc, character.only = TRUE)
     })
+    options(warn = warn)
     if(inherits(yy, "try-error"))
         stop(yy)
     sink(type = "message")
@@ -240,7 +243,9 @@ function(package, dir, lib.loc = NULL)
         undocObjs <-
             c(undocObjs,
               list("S4 class" =
-                   S4ClassObjs[! topicName("class", S4ClassObjs)
+                   S4ClassObjs[! unlist(lapply(S4ClassObjs,
+                                               function(u)
+                                               topicName("class", u)))
                                %in% allDocTopics]))
     }
     
