@@ -42,6 +42,8 @@ SEXP do_wsbrowser(SEXP, SEXP, SEXP, SEXP);
 SEXP do_browsepkgs(SEXP, SEXP, SEXP, SEXP);
 SEXP do_datamanger(SEXP, SEXP, SEXP, SEXP);
 SEXP do_packagemanger(SEXP, SEXP, SEXP, SEXP);
+SEXP do_flushconsole(SEXP, SEXP, SEXP, SEXP);
+SEXP do_hsbrowser(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 

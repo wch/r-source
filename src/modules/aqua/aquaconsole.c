@@ -124,6 +124,7 @@ TXNObject	RConsoleInObject = NULL;
 bool 		WeHaveConsole = false;
 bool 		InputFinished = false;
 bool		EditingFinished = true;
+bool		HelpSearchBrowserFinished = true;
 bool		DataManagerFinished = false;
 bool		PackageManagerFinished = false;
 bool		DataEntryFinished = false;
@@ -311,6 +312,7 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
 extern void CloseDataEntry(void);
 extern void CloseBrowsePkg(void);
 extern void CloseDataManager(void);
+extern void CloseHelpSearchBrowser(void);
 extern void ClosePackageManager(void);
 
 static  OSStatus GenContEventHandlerProc( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData );
@@ -649,7 +651,6 @@ TXNTypeAttributes ROutAttr[] = {{ kTXNQDFontColorAttribute, kTXNQDFontColorAttri
 #define AQUA_MAXBUFLEN 32000
 static char outputbuffer[AQUA_MAXBUFLEN+2];
 static int  end_of_buffer=0;
-/* Status is updated from CurrentPrefs in Aqua_FlushBuffer */
 static int  WeAreBuffering=0;
 
 void Raqua_WriteConsole(char *buf, int len)
@@ -692,7 +693,7 @@ void Raqua_WriteConsole(char *buf, int len)
 }
 
 
-void Aqua_FlushBuffer(void){
+static void Aqua_FlushBuffer(void){
   if (WeHaveConsole) {
 
      if (WeAreBuffering){
@@ -705,6 +706,12 @@ void Aqua_FlushBuffer(void){
   }
 }
  
+
+SEXP Raqua_doflushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    Aqua_FlushBuffer();
+    return R_NilValue;
+}
 
 void RSetColors(void)
 {
@@ -1454,19 +1461,19 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 
 	       /* Bioconductor */
               case kRCmdUpdateFromBioC:
-		consolecmd("{library(reposTools);update.packages2()}");
+		consolecmd("{library(reposTools);update.packages2(getAllDeps=TRUE)}");
               break;
 
 	     case kRCmdBioCBundleAll:
-	       consolecmd("local({source(paste(getOption('BIOC'), 'getBioC.R',sep='/'), local=TRUE); getBioC('all')})");
+	       consolecmd("local({source(paste(getOption('BIOC'), 'getBioC.R',sep='/'), local=TRUE); getBioC('all', destdir=.libPaths()[1])})");
 	       break;
 	       
 	     case kRCmdBioCBundleAffy:
-	       consolecmd("local({source(paste(getOption('BIOC'), 'getBioC.R',sep='/'), local=TRUE); getBioC('affy')})");
+	       consolecmd("local({source(paste(getOption('BIOC'), 'getBioC.R',sep='/'), local=TRUE); getBioC('affy', destdir=.libPaths()[1])})");
 	       break;
 	      
 	     case kRCmdBioCBundleCDNA:
-	       consolecmd("local({source(paste(getOption('BIOC'), 'getBioC.R',sep='/'), local=TRUE); getBioC('cdna')})");
+	       consolecmd("local({source(paste(getOption('BIOC'), 'getBioC.R',sep='/'), local=TRUE); getBioC('cdna', destdir=.libPaths()[1])})");
 	       break;
 
 	      /* Local source files */
@@ -1802,6 +1809,14 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
 
             }
         
+           if( GetWindowProperty(EventWindow, 'RMAC', 'HSBR', sizeof(browser), NULL, &browser) == noErr){
+                    CloseHelpSearchBrowser();
+                    TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadWriteTag, RReadWriteData);
+                    HelpSearchBrowserFinished = true;
+                    err= noErr; 
+
+            }
+        
             if( GetWindowProperty(EventWindow, 'RMAC', 'PMAN', sizeof(browser), NULL, &browser) == noErr){
                     ClosePackageManager();
                     TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadWriteTag, RReadWriteData);
@@ -2097,7 +2112,7 @@ int Raqua_ShowFiles(int nfile, char **fileName, char **title,
     if (nfile <=0) return 1;
 	
     for (i = 0; i < nfile; i++){
-        NewHelpWindow(fileName[i], title[i], WinTitle); 
+      NewHelpWindow(R_ExpandFileName(fileName[i]), title[i], WinTitle); 
     }
 
     return 1;
