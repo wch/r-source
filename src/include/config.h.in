@@ -519,5 +519,4 @@
 #undef size_t
 
 
-
 #endif /* not _CONFIG_H */
