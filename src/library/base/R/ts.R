@@ -65,7 +65,7 @@ tsp <- function(x) attr(x, "tsp")
 "tsp<-" <- function(x, value)
 {
     attr(x,"tsp") <- value
-    class(x) <- "ts"
+    class(x) <- if (is.null(value) && inherits(x,"ts")) NULL  else "ts"
     x
 }
 
@@ -108,12 +108,13 @@ time.ts <- function (x)
     x <- as.ts(x)
     n <- if(is.matrix(x)) nrow(x) else length(x)
     xtsp <- attr(x, "tsp")
-    ts(seq(xtsp[1], xtsp[2], length=n),
+    ts(seq(xtsp[1], tsp[2], length=n),
        start=start(x), end=end(x), frequency=frequency(x))
 }
 
 print.ts <- function(x, calendar, ...)
 {
+    x <- as.ts(x)
     fr.x <- frequency(x)
     if(missing(calendar))
 	calendar <- any(fr.x==c(4,12))
@@ -156,6 +157,7 @@ plot.ts <-
 	      col=par("col"), bg=NA, pch=par("pch"), lty=par("lty"),
 	      axes = TRUE, frame.plot = axes, ann = par("ann"), main = NULL, ...)
 {
+    x <- as.ts(x)
     time.x <- time(x)
     if(is.null(xlim)) xlim <- range(time.x)
     if(is.null(ylim)) ylim <- range(x, finite=TRUE)
