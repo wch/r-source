@@ -14,7 +14,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-<p>The current version of this document is 1.7.0 (2002-10-31).
+<p>The current version of this document is 1.7.0 (2002-11-16).
 
 ISBN 3-901167-52-8
 
@@ -59,20 +59,6 @@ together at the destination with (Unix)
 users, set <code>umask</code> before unpacking so that the files will be
 readable by the target group (e.g., <code>umask 022</code> to be usable by all
 users).
-
-<p>Finally, for patch releases (<code><var>x</var>.<var>y</var>.<var>z</var></code> with <var>z</var>
-!= 0), a patch against the preceding release is made available in
-<code>R-<var>x</var>.<var>y</var>.<var>{z-1}</var>-<var>x</var>.<var>y</var>.<var>z</var>.diff.gz</code>
-(e.g., <code>R-1.2.2-1.2.3.diff.gz</code>), which is generally a much smaller
-file that the <code>.tgz</code> files.  Such a file can be applied to the
-sources of the previous version by changing to the top directory of it
-and
-
-<br><pre>gzip -dc /path/to/it/R-<var>x</var>.<var>y</var>.<var>{z-1}</var>-<var>x</var>.<var>y</var>.<var>z</var>.diff.gz | patch -E -p1
-</pre>
-
-<p>Beware that this does not necessarily work if the older sources have
-been modified (e.g., by building in their directories).
 
 <a name="Using%20rsync"></a>
 
@@ -291,10 +277,11 @@ work.
 <p>Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
-<p>The simplest way is to use <code>rw1070.exe</code> or <code>miniR.exe</code>.  Just
-double-click on the icon and follow the instructions.  If you installed
-R this way you can uninstall it from the Control Panel or Start Menu
-(unless you suppressed making a group for R).
+<p>The simplest way is to use <code>rw1070.exe</code> or
+<code>miniR.exe</code>.  Just double-click on the icon and follow the
+instructions.  If you installed R this way you can uninstall it from the
+Control Panel or Start Menu (unless you suppressed making a group for
+R).
 
 <p>See the <a href="http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html">R Windows <small>FAQ</small></a> for more details.
 
@@ -314,8 +301,8 @@ that a <code>samba</code>-mounted file system (which maps all file names to
 lower case) did not work.  Open a commands window at a directory <em>whose
 path does not contain spaces</em>, and run something like
 
-<br><pre>tar zxvf R-1.6.0.tgz
-cd R-1.6.0\src\gnuwin32
+<br><pre>tar zxvf R-1.7.0.tgz
+cd R-1.7.0\src\gnuwin32
 make
 </pre>
 
@@ -1174,7 +1161,6 @@ of practice at porting R to new platforms <small>...</small>.
 <li>Packages, installing: <a href="#Installing%20packages">Installing packages</a>
 <li>Packages, removing: <a href="#Removing%20packages">Removing packages</a>
 <li>Packages, updating: <a href="#Updating%20packages">Updating packages</a>
-<li>Patch files: <a href="#Getting%20and%20unpacking%20the%20sources">Getting and unpacking the sources</a>
 <li>Sources for R: <a href="#Getting%20and%20unpacking%20the%20sources">Getting and unpacking the sources</a>
 </ul>
 
