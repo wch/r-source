@@ -537,6 +537,8 @@ BUG FIXES
 
     o	lsfit() was returning incorrect residuals for 0-rank fits.
 
+    o   pipes were not opening properly when profiling on a Mac (PR#1140)
+
     o	sort() and unique.default() were failing on 0-level factors.
 
     o	sapply() for matrix result does not return list(NULL,NULL) dimnames

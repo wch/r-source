@@ -629,7 +629,17 @@ static Rboolean pipe_open(Rconnection con)
     mode[0] = con->mode[0];
     mode[1] = '\0';
 #endif
+#ifndef __APPLE_CC__
     fp = popen(con->description, mode);
+#else
+    { /* Luke recommends this to fix PR#1140 */
+      sigset_t ss;
+      sigaddset(&ss, SIGPROF);
+      sigprocmask(SIG_BLOCK, &ss,  NULL);
+      fp = popen(con->description, mode);
+      sigprocmask(SIG_UNBLOCK, &ss, NULL);
+    }
+#endif
     if(!fp) {
 	warning("cannot open cmd `%s'", con->description);
 	return FALSE;
