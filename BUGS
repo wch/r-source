@@ -50,11 +50,6 @@ Date: Sat, 9 Jun 2001 11:08:51 +1000 (EST)
 ..The warning is standard S and R behaviour.
 ..Probably xyplot needs to avoid it (by unclassing?)
 ..Still there in lattice 0.3-0.
-* PR# 1038 *
-Subject: nlme: bug in getCovariateFormula
-From: Setzer.Woodrow@epamail.epa.gov
-Date: Tue, 31 Jul 2001 11:24:09 -0400
-..change needed in package nlme
 * PR# 1044 *
 Subject: Polymarsall.c
 From: pleu@hotmail.com
@@ -67,19 +62,11 @@ Date: Tue, 20 Nov 2001 23:38:17 +0100
 Subject: pixmap: infinite recursion with nonascii pnm-files
 From: thomas.baumann@ch.tum.de
 Date: Fri, 7 Dec 2001 11:07:52 +0100 (CET)
-* PR# 1295 *
-Subject:  typo and user-proofing in odesolve() 
-From: Ben Bolker <bolker@zoo.ufl.edu>
-Date: Fri, 1 Feb 2002 12:42:25 -0500
 * PR# 1361 *
 Subject: Matrix identification bug
 From: hyu@stats.uwo.ca
 Date: Tue, 5 Mar 2002 21:19:46 +0100 (MET)
 ..seems to be about Matrix package, not solve
-* PR# 1580 *
-Subject: R bug in cluster package
-From: David Hitchcock <dhitchco@stat.ufl.edu>
-Date: Mon, 20 May 2002 14:33:24 -0400
 * PR# 1662 *
 Subject: fisher.test FEXACT memory bug "should not occur"
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -132,6 +119,10 @@ Date: Wed, 11 Sep 2002 15:17:53 +0200 (MET DST)
 Subject: xlim in plot.survfit() [with a discussion on "..."]
 From: jerome@hivnet.ubc.ca
 Date: Wed, 16 Oct 2002 18:46:11 +0200 (MET DST)
+* PR# 2252 *
+Subject: Ansari-Bradley test
+From: wex00002@uconn.edu
+Date: Sun, 3 Nov 2002 23:38:20 +0100 (MET)
 
 Directory:  Analyses
 
@@ -160,6 +151,12 @@ Date: Thu, 11 Jul 2002 18:21:42 +1000
 Subject: documentation: Missing paranthesis in reshape.Rd
 From: lina@u.washington.edu
 Date: Wed, 16 Oct 2002 08:36:07 +0200 (MET DST)
+* PR# 2229 *
+Subject: Building and installing packages with functions with names starting with 
+From: Jens Henrik Badsberg <JensHenrik.Badsberg@agrsci.dk>
+Date: Wed, 30 Oct 2002 15:48:58 +0100
+..Issue is package.skeleton creates names for .R files starting with dot.
+..R CMD INSTALL is documented not to install them!
 
 Directory:  Graphics
 
@@ -459,6 +456,10 @@ Subject:  You requested this report
 From: Berwin Turlach <berwin@maths.uwa.edu.au>
 Date: Tue, 6 Aug 2002 16:57:54 +0800
 ..The bug is that we get as far as mkCLOSXP before an error is reported
+* PR# 2253 *
+Subject: [R] CTRL-C suspends echo of shell (R versions 1.6.0 and 1.6.1)
+From: Wolfram Fischer - Z/I/M <wolfram@fischer-zim.ch>
+Date: Mon, 4 Nov 2002 10:18:48 +0100
 
 Directory:  Macintosh
 
@@ -630,137 +631,15 @@ From: hb@maths.lth.se
 Date: Mon, 14 Oct 2002 01:34:45 +0200 (MET DST)
 ..Not a bug, but perhaps a useful feature: should the attributes of environments
 ..be copied on assignment?
-* PR# 2220 *
-Subject: 짷ㅻψ Dmailer 켒Ξ쫁녔
-From: 1bvccbngn30by@snb.ch
-Date: 23 Oct 2002 23:32:13 +0800
-* PR# 2221 *
-Subject: (광고) "수협 feel 카드" 붐붐 대축제!~ 경품이 와르르!!! 지금 신청하세요!~
-From: "aearsrs" <12_dong@hanmail.net>
-Date: Sun, 27 Oct 2002 15:37:40 +0900
-* PR# 2222 *
-Subject: as.POSIX
-From: a.stephenson@lancaster.ac.uk
-Date: Mon, 28 Oct 2002 16:54:04 +0100 (MET)
-* PR# 2223 *
-Subject: Provide Yourself With Smart Investment Tools
-From: "E-Business News" <d.enterprise@aut.alcatel.at>
-Date: Wed, 18 Sep 2002 14:06:28 -1900
-* PR# 2224 *
-Subject: (광고) 쇼핑몰 부업 부업 부업 부업 부업
-From: 엑슨소호 <cyan0316@hanmail.net>
-Date: Tue, 29 Oct 2002 00:19:51 +0900
-* PR# 2225 *
-Subject:  - special report : no strenuous exercise! vrhur
-From: iwoigolfguygag <mfelonniell@yahoo.com>
-Date: Tue, 29 Oct 2002 00:17:12 -0800
-* PR# 2226 *
-Subject: documentation for require
-From: a.stephenson@lancaster.ac.uk
-Date: Tue, 29 Oct 2002 12:20:10 +0100 (MET)
-* PR# 2227 *
-Subject: patch to mva:prcomp to use La.svd instead of svd
-From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
-Date: Tue, 29 Oct 2002 12:04:09 -0500
-* PR# 2228 *
-Subject: [광고] 경품에 당첨됐습니다 축하드립니다...!!!
-From: 무료경품축제<seline@orgio.net>
-Date: Wed, 30 Oct 2002 22:06:30 +0900
-* PR# 2229 *
-Subject: Building and installing packages with functions with names starting with 
-From: Jens Henrik Badsberg <JensHenrik.Badsberg@agrsci.dk>
-Date: Wed, 30 Oct 2002 15:48:58 +0100
-* PR# 2230 *
-Subject: Have a humour Allhallowmas
-From: mjr <mjr@marduk.mth.uea.ac.uk>
-Date: Wed, 30 Oct 2002 14:43:44 -0300
-* PR# 2231 *
-Subject: typo in p.adjust
-From: ehlers@math.ucalgary.ca
-Date: Wed, 30 Oct 2002 19:35:59 +0100 (MET)
-* PR# 2232 *
-Subject: Have a excite Allhallowmas
-From: ds <ds@oldlfont>
-Date: Thu, 31 Oct 2002 02:40:14 +0800
-* PR# 2233 *
-Subject: CARETAKER NEEDED
-From: "MRS MARIAM SESESEKO" <mase_1002@spinfinder.com>
-Date: Wed, 30 Oct 2002 20:00:12 -0600
-* PR# 2234 *
-Subject: gam bug with poisson family?
-From: aukema@entomology.wisc.edu
-Date: Thu, 31 Oct 2002 00:23:56 +0100 (MET)
-* PR# 2235 *
-Subject: ASSISTANCE NEEDED
-From: George  Bano <georgebano2000@yahoo.co.uk>
-Date: Thu, 31 Oct 2002 02:26:28 +0100
-* PR# 2236 *
-Subject: Dynamic Internet Applications
-From: CharityAssist <noprfit@hotmail.com>
-Date: Thu, 31 Oct 2002 11:06:25 +0800
-* PR# 2237 *
-Subject: =?ISO-8859-1?B?uPKnQaazrPk=?=
-From: =?ISO-8859-1?B?pm6qQqTN?=@stat.math.ethz.ch
-Date: 01 Nov 2002 02:22:39 +0800
-* PR# 2238 *
-Subject: 몫쬋┳��
-From: 쫚찦ㅝ@stat.math.ethz.ch
-Date: 01 Nov 2003 03:23:29 +0800
-* PR# 2239 *
-Subject: Quick Question
-From: "Dr. Wong" <medrecord2001@yahoo.com>
-Date: Thu, 31 Oct 2002 14:26:03 -0500
-* PR# 2240 *
-Subject: typo in documentation for boxplot.stats
-From: ehlers@math.ucalgary.ca
-Date: Thu, 31 Oct 2002 21:00:18 +0100 (MET)
-* PR# 2241 *
+* PR# 2255 *
+Subject: cape of good hope
+From: "mabacha@ecplaza.net" <mabacha20@eircom.net>
+Date: Mon, 4 Nov 2002 18:30:53 +0000
+* PR# 2256 *
 Subject: arima.sim
 From: "Philippe Choquette" <pchoquet@mat.ulaval.ca>
-Date: Thu, 31 Oct 2002 22:08:27 -0500
-* PR# 2242 *
-Subject: Happy excite Allhallowmas
-From: alahoy <alahoy@att.net>
-Date: Thu, 31 Oct 2002 21:31:03 -0600
-* PR# 2243 *
-Subject: 한국원조동영상,서양성인동영상,헌타이의 정보 교환해요~~[성인광고]
-From: 섹스닷컴 <sexsexok892@hanmail.net>
-Date: Fri, 1 Nov 2002 16:45:52 +0900
-* PR# 2244 *
-Subject: Inconsistent results with %in%
-From: nklepeis@uclink.berkeley.edu
-Date: Fri, 1 Nov 2002 09:06:10 +0100 (MET)
-* PR# 2245 *
-Subject: REQUEST FOR URGENT BUSINESS PROPOSAL
-From: "DAUGLAS IKE" <dauglas_ike@yahoo.com>
-From: The Desk of Dr. DAUGLAS IKE
-Date: Fri, 01 Nov 2002 17:56:58
-* PR# 2246 *
-Subject: REQUEST FOR URGENT BUSINESS PROPOSAL
-From: "DAUGLAS IKE" <dauglas_ike@yahoo.com>
-From: The Desk of Dr. DAUGLAS IKE
-Date: Fri, 01 Nov 2002 17:57:32
-* PR# 2247 *
-Subject: (광고)년회비 2만원 고차원수학동영상강의 추천
-From: 유해균 <i712@korea.com>
-Date: Sat, 2 Nov 2002 11:46:28 +0900
-* PR# 2248 *
-Subject: SOLICITING FOR BUSINESS VENTURE AND PARTNERSHIP.
-From: "richard cole" <cole01@mail.com>
-Date: Sat, 02 Nov 2002 08:05:32 -0500
-* PR# 2249 *
-Subject:  
-From: ESS-help <ESS-help@sfs.math.ethz.ch>
-Date: Sat, 2 Nov 2002 12:25:35 -0600
-* PR# 2250 *
-Subject: KENNETH  MBANE
-From: KENNETH  MBANE <kennethmbane1@lycos.com>
-Date: Sat, 02 Nov 2002 19:47:18 +0100
-* PR# 2251 *
-Subject: KENNETH  MBANE
-From: KENNETH  MBANE <kennethmbane2@lycos.com>
-Date: Sat, 02 Nov 2002 20:23:11 +0100
-* PR# 2252 *
-Subject: Ansari-Bradley test
-From: wex00002@uconn.edu
-Date: Sun, 3 Nov 2002 23:38:20 +0100 (MET)
+Date: Mon, 4 Nov 2002 14:02:35 -0500
+* PR# 2257 *
+Subject: cape of good hope[mabacha20@ecplaza.net
+From: "mabacha20@ecplaza.net" <mabacha20@eircom.net>
+Date: Mon, 4 Nov 2002 19:09:58 +0000
