@@ -20,7 +20,7 @@ dnl Copyright (C) 1998, 1999 R Core Team
 ### along with R; if not, you can obtain it via the World Wide Web at
 ### `http://www.gnu.org/copyleft/gpl.html', or by writing to the Free
 ### Software Foundation, 59 Temple Place -- Suite 330, Boston, MA
-### 02111-3307, USE.
+### 02111-3307, USA.
 
 AC_INIT(src/include/Defn.h)
 AC_CONFIG_HEADER(src/include/Platform.h)
@@ -184,7 +184,7 @@ CheckForMakeIncludeSyntax()
 ${1}
 all:
 EOF
-    (eval "set -x; make -f .Makefile") >&5 2>&1
+    (eval "set -x; ${MAKE} -f .Makefile") >&5 2>&1
 }
 if test -z "${MAKE_INCLUDE_DEPS}"; then
   AC_MSG_CHECKING(whether ${MAKE} supports conditional inclusion)
@@ -240,12 +240,6 @@ fi
 
 CFLAGS=${CFLAGS-"-g"}
 
-cc_is_gcc=false
-cc_output=`${CC} -v 2>&1 | grep gcc`
-if test -n "${cc_output}"; then
-  cc_is_gcc=true
-fi
-
 case ${host} in
   *hpux*)
     LIBS="-L/lib/pa1.1 ${LIBS}"
@@ -264,8 +258,10 @@ esac
 ## force g77, f77, or f2c to be used.  It is also possible to use these
 ## options to specify the full path name of the compiler.
 
-f77_is_g77=false
-if ${use_f77}; then
+if test -n "${FC}"; then
+  F77=${FC}
+  AC_MSG_RESULT([defining F77 to be ${F77}])  
+elif ${use_f77}; then
   if test "${with_f77}" = yes; then
     F77=f77
   else
@@ -288,59 +284,29 @@ elif ${use_f2c}; then
   fi
   AC_MSG_RESULT([defining F2C to be ${F2C}])
 else
-  if test -z "${FC}"; then
-    AC_PATH_PROGS(F77, g77 f77 fort77 f90 xlf cf77 fc)
-    if test -n "${F77}"; then
-      if test -n "`file ${F77} | grep script`"; then
-        ## If F77 found above is a shell or perl script, don't use it.
-	F77=
-      else
-        F77=`basename ${F77}`
-      fi
+  AC_PATH_PROGS(F77, g77 f77 fort77 f90 xlf cf77 fc)
+  if test -n "${F77}"; then
+    if test -n "`file ${F77} | grep script`"; then
+      dnl If F77 found above is a shell or perl script, don't use it.
+      F77=
+    else
+      F77=`basename ${F77}`
     fi
-  else
-    F77=${FC}
   fi
   if test -z "${F77}"; then
     AC_CHECK_PROGS(F2C, f2c)
-  else
-    f77_output=`${F77} -v 2>&1 | egrep "GNU F77|egcs|g77"`
-    if test -n "${f77_output}"; then
-      f77_is_g77=true
-    fi
   fi
 fi
 
 if test -n "${F77}"; then
   FC=${F77}
   LDCMD=${LDCMD-${FC}}
-  AC_MSG_CHECKING(for underscore after Fortran symbols)
-  cat > conftestf.f <<EOF
-      subroutine try
-      end
-EOF
-  ${FC} -c ${FFLAGS} conftestf.f 2>/dev/null 1>/dev/null
-  cat > conftest.c <<EOF
-main() { try_(); }
-EOF
-  ${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o conftest \
-    conftest.c conftestf.o 1>/dev/null 2>/dev/null
-  if test ${?} = 0; then
-    AC_MSG_RESULT(yes)
-    AC_DEFINE(HAVE_F77_UNDERSCORE)
-  else
-    cat > conftest.c <<EOF
-main() { try(); }
-EOF
-    ${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o conftest \
-      conftest.c conftestf.o 1>/dev/null 2>/dev/null
-    if test ${?} = 0; then
-      AC_MSG_RESULT(no)
-    else
-      AC_MSG_ERROR([Nothing worked - cannot use FORTRAN])
-    fi
+  R_PROG_G77
+  if test "${r_cv_f77_is_g77}" = yes; then
+    FFLAGS=${FFLAGS-"-O2"}
   fi
-  rm -rf conftest conftest.* conftestf.*
+  R_F77_APPEND_UNDERSCORE  
+  OCTAVE_FLIBS
   f77_rules_frag_top=Makefrag.top
   cat << \EOF > ${f77_rules_frag_top}
 .f.c:
@@ -354,29 +320,21 @@ EOF
 	$(FC) $(FFLAGS) $(FPICFLAGS) -c $< -o $@
 EOF
 elif test -n "${F2C}"; then
-  ## I cannibalized most of the following out of octave 2.0.5, I have
-  ## only a vague idea how it works... (-pd) 
-  ##
-  ## This seems to be necessary on some Linux system.
-  ## -- you bet! -pd
+  ## This seems to be necessary on some Linux system. -- you bet! -pd
   cat > conftest.${ac_ext} << EOF
 int MAIN_ () { return 0; }
 int MAIN__ () { return 0; }
 EOF
-  ## XXX FIXME XXX -- these shouldn't be fixed names, eh?
-  R_conflib=libconflib.a
-  R_obj_ext=o
   if AC_TRY_EVAL(ac_compile); then
-    $AR $ARFLAGS $R_conflib conftest.$R_obj_ext 1>&AC_FD_CC
-    if test -n "$RANLIB"; then
-      $RANLIB $R_conflib 1>&AC_FD_CC
+    ${AR} ${ARFLAGS} libconftest.a conftest.o 1>&AC_FD_CC
+    if test -n "${RANLIB}"; then
+      ${RANLIB} libconftest.a 1>&AC_FD_CC
     fi
   fi
-  rm -f conftest*
-
   LDCMD=${LDCMD-${CC}}
   AC_DEFINE(HAVE_F77_UNDERSCORE)
-  AC_CHECK_LIB(f2c, f_open, FLIBS=-lf2c, FLIBS=, -L. -lconflib -lm)
+  AC_CHECK_LIB(f2c, f_open, FLIBS=-lf2c, FLIBS=, -L. -lconftest -lm)
+  rm -f libconftest*
   if test -z "${FLIBS}"; then
     AC_CHECK_LIB(F77, d_sin, FLIBS=-lF77, FLIBS=, -lm)
     if test -n "${FLIBS}"; then
@@ -390,25 +348,18 @@ EOF
   ## for some reason these can't be .f.c/.f.o, at least in GNU make
   ## this probably makes *other* makes useless... (-pd)
   cat << \EOF > ${f77_rules_frag_top}
-%.c : %.f
+%.c: %.f
 	cat $< | $(F2C) $(F2CFLAGS) > $(@F)
-%.o : %.f
+%.o: %.f
 EOF
   f77_rules_frag_etc=Makefrag.etc
   cat << \EOF > ${f77_rules_frag_etc}
-%.c : %.f
+%.c: %.f
 	cat $< | $(F2C) $(F2CFLAGS) > $(@F)
-%.o : %.f
+%.o: %.f
 EOF
 else
   AC_MSG_ERROR([Neither an F77 compiler nor f2c found])
-fi
-
-if ${f77_is_g77}; then
-  FFLAGS=${FFLAGS-"-O2"}
-  AC_CHECK_LIB(g2c, f_open, FLIBS="${FLIBS} -lg2c",
-    AC_CHECK_LIB(f2c, f_open, FLIBS="${FLIBS} -lf2c")
-  )
 fi
 
 AC_SUBST(FC)
@@ -472,7 +423,6 @@ AC_SUBST(FLIBS)
 if ${use_readline}; then
   AC_CHECK_LIB(readline, rl_callback_read_char)
 fi
-
 if ${use_gnome}; then
   GNOME_INIT_HOOK([],cont)
 fi
@@ -492,10 +442,9 @@ AC_SUBST(RGNOMEBIN)
 
 AC_FUNC_VFORK
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS(acosh asinh atanh bcopy finite getcwd isfinite isnan\
-  matherr memcpy \
-  memmove regcomp rint strcoll strtod strtol system times sigsetjmp\
-  siglongjmp __setfpucw)
+AC_CHECK_FUNCS(acosh asinh atanh bcopy finite getcwd isfinite isnan \
+  matherr memcpy memmove regcomp rint siglongjmp sigsetjmp strcoll  \
+  strtod strtol system times __setfpucw)
 
 ### Header files
 
@@ -593,7 +542,7 @@ else
     Please set CPICFLAGS, FPICFLAGS and SHLIBLDFLAGS in \`config.site'.])
 fi
 
-if ${cc_is_gcc}; then
+if test "${GCC}" = yes; then
   cpicflags=-fpic
 fi
 
@@ -637,12 +586,12 @@ case "${host}" in
     ;;
   *sgi*)
     SHLIBLDFLAGS="-shared"
-    if ${cc_is_gcc}; then
+    if test "${GCC}" = yes; then
       CPICFLAGS=-fPIC
     else
       CPICFLAGS=-KPIC
     fi
-    if ${f77_is_g77}; then
+    if test "${r_cv_f77_is_g77}" = yes; then
       FPICFLAGS=-fPIC
     else
       FPICFLAGS=-KPIC
@@ -663,22 +612,18 @@ case "${host}" in
     ;;
   *solaris*)
     SHLIBLDFLAGS="-G"
-    if ${cc_is_gcc}; then
+    if test "${GCC}" = yes; then
       CPICFLAGS=-fPIC
     else
       CPICFLAGS=-KPIC
     fi
-    if ${f77_is_g77}; then
+    if test "${r_cv_f77_is_g77}" = yes; then
       FPICFLAGS=-fPIC
     else
       FPICFLAGS=-PIC
     fi
     ;;
 esac
-
-if ${f77_is_g77}; then
-  SHLIBLD=${FC}
-fi
 
 AC_SUBST(LDCMD)
 AC_SUBST(DLLFLAGS)
