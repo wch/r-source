@@ -13,7 +13,7 @@ gram.c: ;
 
 saveload-CFLAGS=-I../extra/xdr
 connections-CFLAGS=-I../gnuwin32/bitmap/zlib
-internet-CFLAGS=-I../gnuwin32
+#internet-CFLAGS=-I../gnuwin32
 
 ../gnuwin32/libmain.a: $(OBJS)
 
