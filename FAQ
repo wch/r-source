@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.4-21, 2002-02-27
+Version 1.4-22, 2002-03-08
 Kurt Hornik
 
 
@@ -1363,6 +1363,10 @@ works, was published in the Journal of Statistical Software
      Functions for dealing with dates.  The most useful of them accepts a
      vector of input dates in any of the forms `8/30/53', `30Aug53', `30
      August 1953', ..., `August 30 53', or any mixture of these.
+
+*dblcens*
+     Calculates the NPMLE of the survival distribution for doubly censored
+     data.
 
 *deldir*
      Calculates the  Delaunay triangulation and the Dirichlet or Voronoi
