@@ -2638,23 +2638,23 @@ mode character and the remaining two of mode numeric, and the file is
 three vectors as a list, as follows
 
 @example
-> in <- scan("input.dat", list("",0,0))
+> inp <- scan("input.dat", list("",0,0))
 @end example
 
 The second argument is a dummy list structure that establishes the mode
-of the three vectors to be read.  The result, held in @code{in}, is a
+of the three vectors to be read.  The result, held in @code{inp}, is a
 list whose components are the three vectors read in.  To separate the
 data items into three separate vectors, use assignments like
 
 @example
-> label <- in[[1]]; x <- in[[2]]; y <- in[[3]]
+> label <- inp[[1]]; x <- inp[[2]]; y <- inp[[3]]
 @end example
 
 More conveniently, the dummy list can have named components, in which
 case the names can be used to access the vectors read in.  For example
 
 @example
-> in <- scan("input.dat", list(id="", x=0, y=0))
+> inp <- scan("input.dat", list(id="", x=0, y=0))
 @end example
 
 If you wish to access the variables separately they may either be
