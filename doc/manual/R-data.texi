@@ -75,6 +75,7 @@ principal authors of the packages mentioned are
 
 @quotation
 @multitable {stataread  xxxx} {A longggggggggggggggggggggggggggggggggg description}
+@item @pkg{CORBA} @tab Duncan Temple Lang
 @item @pkg{e1071} @tab Friedrich Leisch
 @item @pkg{foreign} @tab Thomas Lumley, Saikat DebRoy and Douglas Bates 
 @item @pkg{hdf5} @tab Marcus Daniels
@@ -1654,32 +1655,36 @@ written in Visual Basic) that is the client and @R{} is the server.
 @cindex CORBA
 
 @acronym{CORBA} (Common Object Request Broker Architecture) is similar
-to @acronym{DCOM}, allowing applications to call methods, or
-operations, in server objects running in other applications,
-potentially programmed in different languages and running on different
-machines. The @pkg{CORBA} package allows @R{} commands to be used to
-locate available @acronym{CORBA} servers, query the methods they
-provide, and dynamically invoke methods on these objects. @R{} values
-given as arguments in these calls are exported in the call and made
-available to that operation invocation.  Primitive data types (vectors
-and lists) are exported by default, while more complex objects are
-exported by reference.  Examples of using this include communicating
-with the @uref{http://www.gnumeric.org, Gnumeric} spreadsheet, and
-also interacting with the data visualization system, ggobi (see
-@uref{http://www.ggobi.org}).
+to @acronym{DCOM}, allowing applications to call methods, or operations,
+in server objects running in other applications, potentially programmed
+in different languages and running on different machines. There is a
+@pkg{CORBA} package available from the
+@uref{http://www.omegahat.org/RSCORBA, Omegahat Project}, currently for
+Unix but a Windows version looks to be possible.
 
-One can also create CORBA servers within @R, allowing other
+This package allows @R{} commands to be used to locate available
+@acronym{CORBA} servers, query the methods they provide, and dynamically
+invoke methods on these objects. @R{} values given as arguments in these
+calls are exported in the call and made available to that operation
+invocation.  Primitive data types (vectors and lists) are exported by
+default, while more complex objects are exported by reference.  Examples
+of using this include communicating with the
+@uref{http://www.gnumeric.org, Gnumeric} spreadsheet, and also
+interacting with the data visualization system
+@uref{http://www.ggobi.org, ggobi}.
+
+One can also create @acronym{CORBA} servers within @R{}, allowing other
 applications to call these methods. For example, one might offer
 access to a particular dataset or to some of @R{}'s modelling
 software.  This is done dynamically by combining @R{} data objects and
 functions. This allows one to explicitly export data and functionality
-from @R.
+from @R{}.
 
 One can also use the @pkg{CORBA} package to achieve distributed,
-parallel computing in @R.  One @R{} session acts as a manager and
+parallel computing in @R{}.  One @R{} session acts as a manager and
 dispatches tasks to different servers running in other @R{} worker
 sessions. This uses the ability to invoke asynchronous or background
-CORBA calls in @R.  More information is available from the
+CORBA calls in @R{}.  More information is available from the
 @uref{http://www.omegahat.org/RSCORBA, Omegahat Project}.
 
 
@@ -1706,7 +1711,7 @@ P.@: Dubois (2000) @emph{MySQL.} New Riders.
 
 @noindent
 M.@: Henning and S.@: Vinoski (1999) @emph{Advanced CORBA Programming
-with C++} Addison-Wesley Pub. Co.
+with C++} Addison-Wesley.
 
 @noindent
 B.@: Momjian (2000) @emph{PostgreSQL: Introduction and Concepts.}
