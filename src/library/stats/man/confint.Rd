@@ -1,6 +1,6 @@
 \name{confint}
 \alias{confint}
-\alias{confint.lm}
+%\alias{confint.lm}
 \title{Confidence Intervals for Model Parameters}
 \description{
   Computes confidence intervals for one or more parameters in a fitted

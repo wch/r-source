@@ -1,10 +1,10 @@
 \name{case/variable.names}
 \alias{case.names}
 \alias{case.names.lm}
-\alias{case.names.default}
+%\alias{case.names.default}
 \alias{variable.names}
 \alias{variable.names.lm}
-\alias{variable.names.default}
+%\alias{variable.names.default}
 \title{Case and Variable Names of Fitted Models}
 \description{
   Simple utilities returning (non-missing) case names, and

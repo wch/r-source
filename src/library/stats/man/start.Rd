@@ -6,8 +6,8 @@ end(x, \dots)
 }
 \alias{start}
 \alias{end}
-\alias{start.default}
-\alias{end.default}
+%\alias{start.default}
+%\alias{end.default}
 \arguments{
     \item{x}{a univariate or multivariate time-series, or a vector or matrix.}
     \item{\dots}{extra arguments for future methods.}

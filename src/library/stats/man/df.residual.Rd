@@ -1,6 +1,6 @@
 \name{df.residual}
 \alias{df.residual}
-\alias{df.residual.default}
+%\alias{df.residual.default}
 \title{Residual Degrees-of-Freedom}
 \description{
   Returns the residual degrees-of-freedom extracted from a fitted model

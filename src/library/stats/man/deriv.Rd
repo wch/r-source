@@ -84,7 +84,6 @@ deriv3(expr, namevec, function.arg, tag = ".expr", hessian = TRUE)
 \seealso{
   \code{\link{nlm}} and \code{\link{optim}} for numeric minimization
   which could make use of derivatives,
-  \code{\link[nls]{nls}} in package \pkg{nls}.
 }
 \examples{
 ## formula argument :

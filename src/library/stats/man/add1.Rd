@@ -3,12 +3,12 @@
 \alias{add1.default}
 \alias{add1.lm}
 \alias{add1.glm}
-\alias{add1.mlm}
+%\alias{add1.mlm}
 \alias{drop1}
 \alias{drop1.default}
 \alias{drop1.lm}
 \alias{drop1.glm}
-\alias{drop1.mlm}
+%\alias{drop1.mlm}
 \title{Add or Drop All Possible Single Terms to a Model}
 \usage{
 add1(object, scope, \dots)

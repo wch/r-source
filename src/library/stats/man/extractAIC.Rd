@@ -3,12 +3,12 @@
 \title{Extract AIC from a Fitted Model}
 %
 \alias{extractAIC}
-\alias{extractAIC.aov}  
-\alias{extractAIC.lm}
-\alias{extractAIC.glm}    
-\alias{extractAIC.coxph}  
-\alias{extractAIC.negbin}
-\alias{extractAIC.survreg}
+%\alias{extractAIC.aov}  
+%\alias{extractAIC.lm}
+%\alias{extractAIC.glm}    
+%\alias{extractAIC.coxph}  
+%\alias{extractAIC.negbin}
+%\alias{extractAIC.survreg}
 \usage{
 extractAIC(fit, scale,     k = 2, \dots)  
 }

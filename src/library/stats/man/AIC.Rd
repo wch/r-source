@@ -2,8 +2,8 @@
 %% with additional "k = 2" argument (MM)
 \name{AIC}
 \alias{AIC}
-\alias{AIC.default}
-\alias{AIC.logLik}
+%\alias{AIC.default}
+%\alias{AIC.logLik}
 \title{Akaike's An Information Criterion}
 \description{
   Generic function calculating the Akaike information criterion for

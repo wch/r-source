@@ -1,9 +1,9 @@
 \name{deviance}
 \alias{deviance}
-\alias{deviance.default}
-\alias{deviance.lm}
-\alias{deviance.glm}
-\alias{deviance.mlm}
+%\alias{deviance.default}
+%\alias{deviance.lm}
+%\alias{deviance.glm}
+%\alias{deviance.mlm}
 \title{Model Deviance}
 \description{
   Returns the deviance of a fitted model object.

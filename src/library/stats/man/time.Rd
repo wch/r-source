@@ -4,11 +4,11 @@
 \alias{frequency}
 \alias{deltat}
 \alias{time.default}
-\alias{time.ts}
-\alias{cycle.default}
-\alias{cycle.ts}
-\alias{frequency.default}
-\alias{deltat.default}
+%\alias{time.ts}
+%\alias{cycle.default}
+%\alias{cycle.ts}
+%\alias{frequency.default}
+%\alias{deltat.default}
 \title{Sampling Times of Time Series}
 \description{
   \code{time} creates the vector of times at which a time series was sampled.
