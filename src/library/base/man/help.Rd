@@ -11,7 +11,8 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
  \item{topic}{a name or character string on which documentation is
    sought (but \emph{not} a variable containing a character string!).}
  \item{offline}{a logical indicating whether documentation should be
-   displayed on-line to the screen (the default) or sent to a printer.}
+   displayed on-line to the screen (the default) or hardcopy of it
+   should be produced.}
  \item{package}{a name or character vector giving the packages to look
   into for documentation.  By default, all packages in the search path
   are used.}
@@ -28,10 +29,13 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
 
   If \code{offline} is \code{TRUE}, hardcopy of the documentation is
   produced by running the LaTeX version of the help page through
-  \code{latex} and \code{dvips} and sending the result to the printer.
-  (Note that LaTeX 2e is needed.)  If these programs are in non-standard
+  \code{latex} (note that LaTeX 2e is needed) and \code{dvips}.
+  Depending on your \code{dvips} configuration, hardcopy will be sent to
+  the printer or saved in a file.  If the programs are in non-standard
   locations and hence were not found at compile time, you need to set
   the environment variables \code{LATEX} and \code{DVIPS} appropriately.
+  The appearance of the output can be customized through a file
+  \file{Rhelp.cfg} somewhere in your LaTeX search path.
 }
 \seealso{
   \code{\link{help.start}()} which opens the HTML version of the \R
