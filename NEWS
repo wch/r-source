@@ -122,7 +122,11 @@ BUG FIXES
 	be an opportunity for a relatively graceful exit.  
 
     o   polyroot() misbehaved if all coefficients except that of the highest
-        degee term were zero
+        degree term were zero
+
+    o   spline(method="natural") was extrapolating incorrectly (both
+	to the left and to the right, for different reasons).  (PR#653)
+
 
 
 		CHANGES IN R VERSION 1.2.1
