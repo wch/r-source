@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.64-5, 1999/05/02
+Version 0.64-6, 1999/05/03
 Kurt Hornik
 
 
@@ -1544,6 +1544,17 @@ configuration; sometimes only 256 colors can be used.)
 the problem occurs when Netscape is running, try (re)starting it with
 either the `-no-install' (to use the default colormap) or the `-install'
 (to install a private colormap) option.
+
+7.12 Is R Y2K-Compliant?
+========================
+
+   We expect R to be Y2K compliant when compiled and run on a Y2K compliant
+system.  In particular R does not internally represent or manipulate dates
+as two-digit quantities.  However, no guarantee of Y2K compliance is
+provided for R.  R is free software and comes with _no warranty whatsover_.
+
+   R, like any other programming language, can be used to write programs
+and manipulate data in ways that are not Y2K compliant.
 
 8 R Programming
 ***************
