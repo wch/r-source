@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{1999-09-25.10}
+\def\texinfoversion{1999-12-22.11}
 %
 % Copyright (C) 1985, 86, 88, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99
 % Free Software Foundation, Inc.
@@ -885,7 +885,11 @@ where each line of input produces a line of output.}
     \fi
       \ifx\empty\imagewidth\else width \imagewidth \fi
       \ifx\empty\imageheight\else height \imageheight \fi
-      {#1.pdf}%
+      \ifnum\pdftexversion<13
+        #1.pdf%
+      \else
+        {#1.pdf}%
+      \fi
     \ifnum\pdftexversion < 14 \else
       \pdfrefximage \pdflastximage
     \fi}
@@ -3792,7 +3796,7 @@ width0pt\relax} \fi
       \catcode`\\=0  \catcode`\{=1  \catcode`\}=2  \catcode`\@=11
       % We can't do this, because then an actual ^ in a section
       % title fails, e.g., @chapter ^ -- exponentiation.  --karl, 9jul97.
-      %\catcode`\^=7 % to see ^^e4 as \"a etc. juha@piuha.ydi.vtt.fi
+      %\catcode`\^=7 % to see ^^e4 as {\"a} etc. juha@piuha.ydi.vtt.fi
       \raggedbottom             % Worry more about breakpoints than the bottom.
       \advance\hsize by -\contentsrightmargin % Don't use the full line length.
       %
