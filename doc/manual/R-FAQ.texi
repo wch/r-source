@@ -3,8 +3,8 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-28, @value{FAQ-YEAR}-12-24
+@set FAQ-YEAR 2004
+@set FAQ-VERSION 1.8-29, @value{FAQ-YEAR}-12-31
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -2119,6 +2119,9 @@ Code for mixture discriminant analysis (MDA), flexible discriminant
 analysis (FDA), penalized discriminant analysis (PDA), multivariate
 additive regression splines (MARS), adaptive back-fitting splines
 (BRUTO), and penalized regression.
+@item meanscore
+Mean Score method for missing covariate data in logistic regression
+models.
 @item merror
 Accuracy and precision of measurements.
 @item mgcv
@@ -2458,6 +2461,9 @@ Classification and regression trees.
 A constrained two-dimensional Delaunay triangulation package.
 @item tseries
 Package for time series analysis with emphasis on non-linear modelling.
+@item twostage
+Functions for optimal design of two-stage-studies using the Mean Score
+method.
 @item udunits
 Interface to Unidata's routines to convert units.
 @item vardiag
@@ -2557,13 +2563,6 @@ Ensembles of tree classifiers.
 @c </COMMENT>
 
 @c <COMMENT>
-@c Moved to Devel for 1.8 as it fails R CMD check.
-@item meanscore
-Mean Score method for missing covariate data in logistic regression
-models.
-@c </COMMENT>
-
-@c <COMMENT>
 @c Moved to Attic on 2003-09-12 as requested by the package maintainer,
 @c "kjetil brinchmann halvorsen" <kjetil@@entelnet.bo>.
 @c @item pls
@@ -2578,13 +2577,6 @@ models.
 
 @item runStat
 Running median and mean.
-
-@c <COMMENT>
-@c Moved to Devel for 1.8 as it fails R CMD check.
-@item twostage
-Functions for optimal design of two-stage-studies using the Mean Score
-method.
-@c </COMMENT>
 
 @item write.snns
 Function for writing a @acronym{SNNS} pattern file from a data frame or
