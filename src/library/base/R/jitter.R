@@ -4,6 +4,8 @@
 
 jitter <- function(x, factor = 1, amount=NULL)
 {
+    if(length(x) == 0)
+	return(x)
     z <- diff(r <- range(x[is.finite(x)]))
     if(z == 0) z <- abs(r[1])
     if(z == 0) z <- 1
