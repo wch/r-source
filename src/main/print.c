@@ -18,8 +18,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- *  print.default()  ->	 do_printdefault & its sub-functions.
- *			 do_sink, do_invisible
+ *  print.default()  ->	 do_printdefault (with call tree below)
  *
  *  auto-printing   ->  PrintValueEnv
  *                      -> PrintValueRec
@@ -51,7 +50,7 @@
  *
  *  Also ./printvector.c,  ./printarray.c
  *
- *  do_sink.c moved to connections.c as of 1.3.0
+ *  do_sink moved to connections.c as of 1.3.0
  *
  *  <FIXME> These routines are not re-entrant: they reset the
  *  global R_print.
@@ -150,7 +149,7 @@ SEXP do_prmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 }/* do_prmatrix */
 
 
-/* .Internal(print.default(x, digits, quote, na.print, print.gap, 
+/* .Internal(print.default(x, digits, quote, na.print, print.gap,
                            right, useS4)) */
 SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -222,7 +221,7 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
     } else {
 	CustomPrintValue(x, rho);
     }
-    
+
     PrintDefaults(rho); /* reset, as na.print.etc may have been set */
     return x;
 }/* do_printdefault */
