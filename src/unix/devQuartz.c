@@ -281,9 +281,11 @@ unsigned char Mac2Lat[] = {
 
 #if HAVE_AQUA
 extern  DL_FUNC ptr_GetQuartzParameters;
+extern  DL_FUNC ptr_FocusOnConsole;
 extern	Rboolean useaqua;
 
 void GetQuartzParameters(double *width, double *height, double *ps, char *family, Rboolean *antialias, Rboolean *autorefresh, int *quartzpos) {ptr_GetQuartzParameters(width, height, ps, family, antialias, autorefresh, quartzpos);}
+void FocusOnConsole(void) {ptr_FocusOnConsole();}
 #endif
 
 #define kQuartzTopRight		1
@@ -458,11 +460,6 @@ SEXP do_Quartz(SEXP call, SEXP op, SEXP args, SEXP env)
     antialias = asLogical(CAR(args));   args = CDR(args);
     autorefresh = asLogical(CAR(args));
 
-
-/* test purpouses only.
-    if(Gestalt(gestaltSystemVersion, &macVer) == noErr)
-   	 fprintf(stderr,"\nMac OS version: %x.%x.%x (hex: %xh)", macVer >> 8, (macVer >> 4) & 0xF, macVer & 0xF, macVer);
-*/
     if(Gestalt(gestaltSystemVersion, &macVer) == noErr)
       if (macVer >= 0x1030)
 	    WeAreOnPanther = true;
@@ -615,6 +612,11 @@ Rboolean innerQuartzDeviceDriver(NewDevDesc *dd, char *display,
 
     dd->deviceSpecific = (void *) xd;
     dd->displayListOn = TRUE;
+
+#ifdef HAVE_AQUA
+    if(useaqua)
+     FocusOnConsole();
+#endif
 
     return 1;
 }

@@ -473,6 +473,13 @@ static const EventTypeSpec	RCloseWinEvent[] =
 };
 
 
+void Raqua_FocusOnConsole(void);
+void Raqua_FocusOnConsole(void){
+	if(ConsoleWindow)
+		BringToFront(ConsoleWindow);
+
+}
+
 
 void InitAboutWindow(void);
 
