@@ -257,6 +257,7 @@ SEXP do_order(SEXP, SEXP, SEXP, SEXP);
 SEXP do_palette(SEXP, SEXP, SEXP, SEXP);
 SEXP do_par(SEXP, SEXP, SEXP, SEXP);
 SEXP do_paren(SEXP, SEXP, SEXP, SEXP);
+SEXP do_parentframe(SEXP, SEXP, SEXP, SEXP);
 SEXP do_parse(SEXP, SEXP, SEXP, SEXP);
 SEXP do_paste(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pause(SEXP, SEXP, SEXP, SEXP);

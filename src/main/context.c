@@ -419,3 +419,33 @@ SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return R_NilValue;/* just for -Wall */
     }
 }
+
+SEXP do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    int i, n, nframe;
+    SEXP rval,t;
+    RCNTXT *cptr;
+
+ 
+    t = eval(CAR(args), rho);
+    n = asInteger(t);
+
+    if(n == NA_INTEGER || n < 1 )
+	errorcall(call, "invalid number of environment levels");
+
+    cptr = R_GlobalContext;
+    t = cptr->sysparent;
+
+    while (n--) {
+	if (t == R_NilValue)
+	    return R_GlobalEnv;
+	while (cptr != R_ToplevelContext) {
+	    if (cptr->callflag & CTXT_FUNCTION )
+		if (cptr->cloenv == t)
+		    break;
+	    cptr = cptr->nextcontext;
+	}
+	t = cptr->sysparent;
+    }
+    return t;
+}

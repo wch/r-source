@@ -1,5 +1,5 @@
 .GlobalEnv <- environment()
-parent.frame <- function(n = 1) sys.frame(sys.parent(n + 1))
+parent.frame <- function(n = 1) .Internal(parent.frame(n))
 
 eval <-
     function(expr, envir = parent.frame(),

@@ -564,6 +564,7 @@ FUNTAB R_FunTab[] =
 {"sys.on.exit",	do_sys,		7,	10,	-1,	PP_FUNCALL},
 {"sys.parents",	do_sys,		8,	10,	-1,	PP_FUNCALL},
 {"sys.function",do_sys,		9,	10,	-1,	PP_FUNCALL},
+{"parent.frame",do_parentframe,	0,	10,	-1,	PP_FUNCALL},
 {"sort",	do_sort,	1,	11,	1,	PP_FUNCALL},
 {"psort",	do_psort,	0,	11,	2,	PP_FUNCALL},
 {"order",	do_order,	0,	11,	-1,	PP_FUNCALL},
