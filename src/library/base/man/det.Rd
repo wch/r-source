@@ -24,8 +24,8 @@ determinant(x, logarithm, \dots)
   \item{modulus}{a numeric value. The modulus (absolute value) of the
     determinant if \code{logarithm} is \code{FALSE}; otherwise the
     logarithm of the modulus.}
-  \item{sign}{integer; either +1 or -1 according to whether the
-    determinant is positive or negative.}
+  \item{sign}{integer; either \eqn{+1} or \eqn{-1} according to whether
+    the determinant is positive or negative.}
 }
 \note{
   Often, computing the determinant is \emph{not} what you should be doing
