@@ -56,9 +56,9 @@ PSDeviceDriver(NewDevDesc*, char*, char*, char*, char**,
 	       Rboolean, Rboolean, Rboolean, char*, char*, SEXP);
 
 Rboolean
-PDFDeviceDriver(NewDevDesc* dd, char *, char *, char *, 
+PDFDeviceDriver(NewDevDesc* dd, char *, char *, char *, char *, 
 		char *, char *, double, double, double,
-		int, char*, SEXP, int, int);
+		int, int, char*, SEXP, int, int);
 static
 Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
 			double height, double pointsize,
@@ -401,13 +401,13 @@ static void SaveAsPDF(NewDevDesc *dd, char *fn)
 	    }
 	}
     }
-    if (PDFDeviceDriver(ndd, fn, family, encoding, bg, fg,
+    if (PDFDeviceDriver(ndd, fn, "special", family, encoding, bg, fg,
 			fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 			fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					 GE_INCHES, gdd),
 			((gadesc*) dd->deviceSpecific)->basefontsize,
-			1, "R Graphics Output", R_NilValue, 1, 4))
+			1, 0, "R Graphics Output", R_NilValue, 1, 4))
 	PrivateCopyDevice(dd, ndd, "PDF");
 }
 
