@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2004-11-17
+Version 2.0.2004-11-22
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -370,9 +370,9 @@ port of R for Macintosh is no longer supported.
 
 The `bin/linux' directory of a CRAN site contains the following packages.
 
-                 CPU      Versions                        Provided by
+                 CPU      Versions                        Provider
      Mandrake    i386     10.0                            Michele Alzetta
-     Red Hat     i386     8.x/9/Fedora1/Fedora2/Fedora3   Martyn Plummer
+     Red Hat     i386     8/9/Fedora1/Fedora2/Fedora3     Martyn Plummer
                  x86_64   Fedora1                         James Henstridge
                  x86_64   Fedora3                         Brian Ripley
      SuSE        i386     7.3/8.0/8.1/8.2                 Detlef Steuer
@@ -1179,7 +1179,7 @@ presented to the user for revision.  However, it is not clear if the
 project is still active.  Currently, a modified version of *Rcgi* by Mai
 Zhou <mai@ms.uky.edu> (actually, two versions: one with (bitmap) graphics
 and one without) as well as the original code are available from
-`http://www.ms.uky.edu/~statweb'.
+`http://www.ms.uky.edu/~statweb/'.
 
 5 R Add-On Packages
 *******************
@@ -2135,6 +2135,9 @@ distributions of R.)
      Mixed-effects Cox models, sparse matrices, and modeling data from large
      pedigrees.
 
+*kknn*
+     Weighted k-nearest neighbors classification and regression.
+
 *klaR*
      Miscellaneous functions for classification and visualization developed
      at the Department of Statistics, University of Dortmund.
@@ -2940,9 +2943,13 @@ these a try, of course.  This area of CRAN currently contains
 5.1.3 Add-on packages from Omegahat
 -----------------------------------
 
-The `src/contrib/Omegahat' Directory of a CRAN site contains yet unreleased
-packages from the Omegahat Project for Statistical Computing
-(http://www.omegahat.org/).  Currently, there are
+The Omegahat Project for Statistical Computing (http://www.omegahat.org/)
+provides a variety of open-source software for statistical applications,
+with special emphasis on web-based software, Java, the Java virtual
+machine, and distributed computing.  A CRAN style R package repository is
+available via `http://www.omegahat.org/R/'.
+
+   Currently, there are the following packages.
 
 *CORBA*
      Dynamic CORBA client/server facilities for R.  Connects to other
@@ -2954,6 +2961,10 @@ packages from the Omegahat Project for Statistical Computing
      OOP style classes and methods for R and S-PLUS.  Object references and
      class-based method definition are supported in the style of languages
      such as Java and C++.
+
+*RCurl*
+     Allows one to compose HTTP requests to fetch URIs, post forms, etc.,
+     and process the results returned by the Web server.
 
 *REmbeddedPostgres*
      Allows R functions and objects to be used to implement SQL functions --
@@ -3000,6 +3011,9 @@ packages from the Omegahat Project for Statistical Computing
 *RJavaDevice*
      A graphics device for R that uses Java components and graphics.  APIs.
 
+*RMatlab*
+     A bi-directional interface between R and Matlab.
+
 *RObjectTables*
      The C and S code allows one to define R objects to be used as elements
      of the search path with their own semantics and facilities for reading
@@ -3023,6 +3037,10 @@ packages from the Omegahat Project for Statistical Computing
 *RXLisp*
      An interface to call XLisp-Stat functions from within R.
 
+*Rstem*
+     Interface to Snowball implementation of Porter's word stemming
+     algorithm.
+
 *SASXML*
      Example for reading XML files in SAS 8.2 manner.
 
@@ -3036,6 +3054,10 @@ packages from the Omegahat Project for Statistical Computing
 
 *SNetscape*
      Plugin for Netscape and JavaScript.
+
+*SSOAP*
+     A client interface to SOAP (Simple Object Access Protocol) servers from
+     within S.
 
 *SWinRegistry*
      Provides access from within R to read and write the Windows registry.
@@ -3062,11 +3084,14 @@ packages from the Omegahat Project for Statistical Computing
 5.1.4 Add-on packages from Bioconductor
 ---------------------------------------
 
-The Bioconductor Project (http://www.bioconductor.org) produces an open
+The Bioconductor Project (http://www.bioconductor.org/) produces an open
 source software framework that will assist biologists and statisticians
 working in bioinformatics, with primary emphasis on inference using DNA
-microarrays.  The following R packages are contained in the current release
-of Bioconductor, with more packages under development.
+microarrays.  A CRAN style R package repository is available via
+`http://www.bioconductor.org/'.
+
+   The following R packages are contained in the current release of
+Bioconductor, with more packages under development.
 
 *AnnBuilder*
      Assemble and process genomic annotation data, from databases such as
@@ -3081,6 +3106,12 @@ of Bioconductor, with more packages under development.
      Class definitions and generics for biological sequences along with
      pattern matching algorithms.
 
+*ChromoViz*
+     Draw gene expression profile onto chromosome using SVG.
+
+*DEDS*
+     Differential Expression via Distance Summary for microarray data.
+
 *DNAcopy*
      Segments DNA copy number data using circular binary segmentation to
      detect regions with abnormal copy number.
@@ -3092,6 +3123,9 @@ of Bioconductor, with more packages under development.
 *EBarrays*
      Empirical Bayes tools for the analysis of replicated microarray data
      across multiple conditions.
+
+*GLAD*
+     Gain and Loss Analysis of DNA.
 
 *GOstats*
      Tools for manipulating GO and microarrays.
@@ -3105,16 +3139,42 @@ of Bioconductor, with more packages under development.
      Currently, implements methods for cell cycle analysis and for inferring
      large sparse graphical Gaussian models.
 
+*GeneTraffic*
+     GeneTraffic R integration functions.
+
+*GraphAT*
+     Graph theoretic Association Tests.
+
+*HEM*
+     Heterogeneous Error Model for analysis of microarray data.
+
 *Icens*
      Functions for computing the NPMLE for censored and truncated data.
+
+*KEGGSOAP*
+     Client-side SOAP access KEGG.
 
 *LPE*
      Significance analysis of microarray data with small number of
      replicates using the Local Pooled Error (LPE) method.
 
+*MLInterfaces*
+     Uniform interfaces to machine learning code for the exprSet class from
+     Bioconductor.
+
 *MeasurementError.cor*
      Two-stage measurement error model for correlation estimation with
      smaller bias than the usual sample correlation.
+
+*MergeMaid*
+     Cross-study comparison of gene expression array data.
+
+*OLIN*
+     Optimized Local Intensity-dependent Normalisation of two-color
+     microarrays.
+
+*OLINgui*
+     Graphical user interface for *OLIN*.
 
 *PROcess*
      Ciphergen SELDI-TOF processing.
@@ -3233,6 +3293,9 @@ of Bioconductor, with more packages under development.
 *gcrma*
      Background adjustment using sequence information.
 
+*genArise*
+     A tool for dual color microarray data.
+
 *genefilter*
      Tools for sequentially filtering genes using a wide variety of
      filtering functions.  Example of filters include: number of missing
@@ -3249,6 +3312,9 @@ of Bioconductor, with more packages under development.
      Testing globally whether a group of genes is significantly related to
      some clinical variable of interest.
 
+*goCluster*
+     Analysis of clustering results in conjunction with annotation data.
+
 *goTools*
      Functions for description/comparison of oligo ID list using the Gene
      Ontology database.
@@ -3260,8 +3326,17 @@ of Bioconductor, with more packages under development.
 *graph*
      Classes and tools for creating and manipulating graphs within R.
 
+*gtkWidgets*
+     Widgets built using *RGtk*.
+
 *hexbin*
      Binning functions, in particular hexagonal bins for graphing.
+
+*hopach*
+     Hierarchical Ordered Partitioning and Collapsing Hybrid (HOPACH).
+
+*iSPlot*
+     Link views that are based on the same data set.
 
 *impute*
      Imputation for microarray data (currently KNN only).
@@ -3281,30 +3356,12 @@ of Bioconductor, with more packages under development.
 *marray*
      Exploratory analysis for two-color spotted microarray data.
 
-*marrayClasses*
-     Class definitions for pre-normalized and normalized cDNA microarray
-     data.  Basic methods for accessing/replacing, printing, and subsetting.
-
-*marrayInput*
-     Functions for reading microarray data into R from different image
-     analysis output files, and probe and target description files.  Widgets
-     are supplied to facilitate and automate data input and the creation of
-     microarray specific R objects for storing these data.
-
-*marrayNorm*
-     Functions for location and scale normalization procedures based on
-     robust local regression.
-
-*marrayPlots*
-     Functions for diagnostic plots for pre- and post-normalization cDNA
-     microarray intensity data: boxplots, scatter-plots, color images.
-
-*marrayTools*
-     Miscellaneous functions used in the functional genomics core facility
-     in UCB and UCSF.
-
 *matchprobes*
      Tools for sequence matching of probes on arrays.
+
+*msbase*
+     Basic classes and methods for mass spectrometric mass list
+     manipulation.
 
 *multtest*
      Multiple testing procedures for controlling the family-wise error rate
@@ -3312,8 +3369,9 @@ of Bioconductor, with more packages under development.
      or F-statistics for one- and two-factor designs, and permutation
      procedures are available to estimate adjusted p-values.
 
-*ontoTools*
-     Graphs and sparse matrices for working with ontologies.
+*nnNorm*
+     Spatial and intensity based normalization of cDNA microarray data based
+     on robust neural nets.
 
 *pairseqsim*
      Pairwise sequence alignment and scoring algorithms for global, local
@@ -3341,10 +3399,6 @@ of Bioconductor, with more packages under development.
      Tools for dealing with file repositories and allow users to easily
      install, update, and distribute packages, vignettes, and other files.
 
-*rhdf5*
-     Storage and retrieval of large datasets using the HDF5 library and file
-     format.
-
 *siggenes*
      Identifying differentially expressed genes and estimating the False
      Discovery Rate (FDR) with both the Significance Analysis of Microarrays
@@ -3356,8 +3410,17 @@ of Bioconductor, with more packages under development.
 *splicegear*
      A set of tools to work with alternative splicing.
 
+*stam*
+     STructured Analysis of Microarray data.
+
+*stepNorm*
+     Stepwise normalization functions for cDNA microarrays.
+
 *tkWidgets*
      Widgets in Tcl/Tk that provide functionality for Bioconductor packages.
+
+*twilight*
+     Estimation of local false discovery rate.
 
 *vsn*
      Calibration and variance stabilizing transformations for both
@@ -3366,6 +3429,9 @@ of Bioconductor, with more packages under development.
 *webbioc*
      Integrated web interface for doing microarray analysis using several of
      the Bioconductor packages.
+
+*widgetInvoke*
+     Evaluation widgets for functions.
 
 *widgetTools*
      Tools for creating Tcl/Tk widgets, i.e., small-scale graphical user

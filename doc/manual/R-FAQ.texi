@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-11-17
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-11-22
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -479,12 +479,13 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c mandrake
 @c   10.0    i386   2.0.0  Michele Alzetta <mikalzet@libero.it>
 @c redhat
-@c   8.x     i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
-@c   9       i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
-@c   Fedora1 i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
+@c   el3     i386   2.0.1
+@c   rh8     i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
+@c   rh9     i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
+@c   fc1     i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
 @c           x86_64 1.8.1  James Henstridge <james@daa.com.au>
-@c   Fedora2 i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
-@c   Fedora3 i386   2.0.1  Martyn Plummer <plummer@iarc.fr>
+@c   fc2     i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
+@c   fc3     i386   2.0.1  Martyn Plummer <plummer@iarc.fr>
 @c           x86_64 2.0.1  Brian Ripley
 @c suse
 @c   7.3     i386   1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
@@ -502,10 +503,9 @@ packages.
 
 @quotation
 @multitable {VineLinux} {x86_64} {8.x/9/Fedora1/Fedora2/Fedora3} {James Henstridge}
-@item @tab CPU @tab Versions @tab Provided by
-
+@item @tab CPU @tab Versions @tab Provider
 @item Mandrake @tab i386 @tab 10.0 @tab Michele Alzetta
-@item Red Hat  @tab i386 @tab 8.x/9/Fedora1/Fedora2/Fedora3 @tab Martyn
+@item Red Hat  @tab i386 @tab 8/9/Fedora1/Fedora2/Fedora3 @tab Martyn
 Plummer
 @item          @tab x86_64 @tab Fedora1 @tab James Henstridge
 @item          @tab x86_64 @tab Fedora3 @tab Brian Ripley
@@ -1567,7 +1567,7 @@ However, it is not clear if the project is still active.
 Currently, a modified version of @strong{Rcgi} by
 @email{mai@@ms.uky.edu, Mai Zhou} (actually, two versions: one with
 (bitmap) graphics and one without) as well as the original code are
-available from @uref{http://www.ms.uky.edu/~statweb}.
+available from @uref{http://www.ms.uky.edu/~statweb/}.
 
 @node R Add-On Packages, R and Emacs, R Web Interfaces, Top
 @chapter R Add-On Packages
@@ -2338,6 +2338,8 @@ Kernel-based machine learning methods including support vector machines.
 @item kinship
 Mixed-effects Cox models, sparse matrices, and modeling data from large
 pedigrees.
+@item kknn
+Weighted @math{k}-nearest neighbors classification and regression.
 @item klaR
 Miscellaneous functions for classification and visualization developed
 at the Department of Statistics, University of Dortmund.
@@ -3079,9 +3081,13 @@ matrix.
 @node Add-on packages from Omegahat, Add-on packages from Bioconductor, Add-on packages from CRAN, Which add-on packages exist for R?
 @subsection Add-on packages from Omegahat
 
-The @file{src/contrib/Omegahat} Directory of a @CRAN{} site contains yet
-unreleased packages from the @uref{http://www.omegahat.org/, Omegahat
-Project for Statistical Computing}.  Currently, there are
+The @uref{http://www.omegahat.org/, Omegahat Project for Statistical
+Computing} provides a variety of open-source software for statistical
+applications, with special emphasis on web-based software, Java, the
+Java virtual machine, and distributed computing.  A @acronym{CRAN} style
+R package repository is available via @uref{http://www.omegahat.org/R/}.
+
+Currently, there are the following packages.
 
 @table @strong
 @item CORBA
@@ -3093,6 +3099,9 @@ other applications.
 OOP style classes and methods for R and @SPLUS{}.  Object references and
 class-based method definition are supported in the style of languages
 such as Java and C++.
+@item RCurl
+Allows one to compose HTTP requests to fetch URIs, post forms, etc., and
+process the results returned by the Web server.
 @item REmbeddedPostgres
 Allows R functions and objects to be used to implement SQL functions ---
 per-record, aggregate and trigger functions.
@@ -3128,6 +3137,8 @@ and widget hierarchies, S source file contents, etc.
 @item RJavaDevice
 A graphics device for R that uses Java components and graphics.
 @acronym{API}s.
+@item RMatlab
+A bi-directional interface between R and Matlab.
 @item RObjectTables
 The C and S code allows one to define R objects to be used as elements
 of the search path with their own semantics and facilities for reading
@@ -3146,6 +3157,9 @@ Allows Python programs to invoke S functions, methods, etc., and S code
 to call Python functionality.
 @item RXLisp
 An interface to call XLisp-Stat functions from within R.
+@item Rstem
+Interface to Snowball implementation of Porter's word stemming
+algorithm.
 @item SASXML
 Example for reading @XML{} files in SAS 8.2 manner.
 @item SJava
@@ -3156,6 +3170,9 @@ Functions and C support utilities to support S language programming
 that can work in both R and @SPLUS{}.
 @item SNetscape
 Plugin for Netscape and JavaScript.
+@item SSOAP
+A client interface to SOAP (Simple Object Access Protocol) servers from
+within S.
 @item SWinRegistry
 Provides access from within R to read and write the Windows registry.
 @item SWinTypeLibs
@@ -3178,12 +3195,14 @@ that allows @XSL{} functions to be implemented via R functions.
 @node Add-on packages from Bioconductor, Other add-on packages, Add-on packages from Omegahat, Which add-on packages exist for R?
 @subsection Add-on packages from Bioconductor
 
-The @uref{http://www.bioconductor.org, Bioconductor Project} produces an
+The @uref{http://www.bioconductor.org/, Bioconductor Project} produces an
 open source software framework that will assist biologists and
 statisticians working in bioinformatics, with primary emphasis on
-inference using DNA microarrays.  The following R packages are contained
-in the current release of Bioconductor, with more packages under
-development.
+inference using DNA microarrays.  A @acronym{CRAN} style R package
+repository is available via @uref{http://www.bioconductor.org/}.
+
+The following R packages are contained in the current release of
+Bioconductor, with more packages under development.
 
 @table @strong
 @item AnnBuilder
@@ -3196,6 +3215,10 @@ class structure).
 @item Biostrings
 Class definitions and generics for biological sequences along with
 pattern matching algorithms.
+@item ChromoViz
+Draw gene expression profile onto chromosome using @acronym{SVG}.
+@item DEDS
+Differential Expression via Distance Summary for microarray data.
 @item DNAcopy
 Segments DNA copy number data using circular binary segmentation to
 detect regions with abnormal copy number.
@@ -3205,6 +3228,8 @@ and other navigable documents.
 @item EBarrays
 Empirical Bayes tools for the analysis of replicated microarray data
 across multiple conditions.
+@item GLAD
+Gain and Loss Analysis of DNA.
 @item GOstats
 Tools for manipulating GO and microarrays.
 @item GeneSpring
@@ -3215,14 +3240,32 @@ specific data objects and convert them to Bioconductor objects.
 A package for analysing multiple gene expression time series data.
 Currently, implements methods for cell cycle analysis and for inferring
 large sparse graphical Gaussian models.
+@item GeneTraffic
+GeneTraffic R integration functions.
+@item GraphAT
+Graph theoretic Association Tests.
+@item HEM
+Heterogeneous Error Model for analysis of microarray data.
 @item Icens
 Functions for computing the NPMLE for censored and truncated data.
+@item KEGGSOAP
+Client-side SOAP access KEGG.
 @item LPE
 Significance analysis of microarray data with small number of replicates
 using the Local Pooled Error (LPE) method.
+@item MLInterfaces
+Uniform interfaces to machine learning code for the exprSet class from
+Bioconductor.
 @item MeasurementError.cor
 Two-stage measurement error model for correlation estimation with
 smaller bias than the usual sample correlation.
+@item MergeMaid
+Cross-study comparison of gene expression array data.
+@item OLIN
+Optimized Local Intensity-dependent Normalisation of two-color
+microarrays.
+@item OLINgui
+Graphical user interface for @strong{OLIN}.
 @item PROcess
 Ciphergen SELDI-TOF processing.
 @item RBGL
@@ -3307,6 +3350,8 @@ experiments.  The functions can be used to evaluate appropriate tests of
 contrast and perform single outlier detection.
 @item gcrma
 Background adjustment using sequence information.
+@item genArise
+A tool for dual color microarray data.
 @item genefilter
 Tools for sequentially filtering genes using a wide variety of filtering
 functions.  Example of filters include: number of missing value,
@@ -3320,6 +3365,8 @@ matrices.
 @item globaltest
 Testing globally whether a group of genes is significantly related to
 some clinical variable of interest.
+@item goCluster
+Analysis of clustering results in conjunction with annotation data.
 @item goTools
 Functions for description/comparison of oligo ID list using the Gene
 Ontology database.
@@ -3328,8 +3375,14 @@ Classification using generalized partial least squares for two-group and
 multi-group classification.
 @item graph
 Classes and tools for creating and manipulating graphs within R.
+@item gtkWidgets
+Widgets built using @strong{RGtk}.
 @item hexbin
 Binning functions, in particular hexagonal bins for graphing.
+@item hopach
+Hierarchical Ordered Partitioning and Collapsing Hybrid (HOPACH).
+@item iSPlot
+Link views that are based on the same data set.
 @item impute
 @c CRAN
 Imputation for microarray data (currently KNN only).
@@ -3344,33 +3397,39 @@ membership mapping.  The other creates a package that automatically loads
 that environment. 
 @item marray
 Exploratory analysis for two-color spotted microarray data.
-@item marrayClasses
-Class definitions for pre-normalized and normalized cDNA microarray
-data.  Basic methods for accessing/replacing, printing, and subsetting.
-@item marrayInput
-Functions for reading microarray data into R from different image
-analysis output files, and probe and target description files.  Widgets
-are supplied to facilitate and automate data input and the creation of
-microarray specific R objects for storing these data.
-@item marrayNorm
-Functions for location and scale normalization procedures based on
-robust local regression.
-@item marrayPlots
-Functions for diagnostic plots for pre- and post-normalization cDNA
-microarray intensity data: boxplots, scatter-plots, color images.
-@item marrayTools
-Miscellaneous functions used in the functional genomics core facility in
-UCB and UCSF.
+@c @item marrayClasses
+@c Class definitions for pre-normalized and normalized cDNA microarray
+@c data.  Basic methods for accessing/replacing, printing, and subsetting.
+@c @item marrayInput
+@c Functions for reading microarray data into R from different image
+@c analysis output files, and probe and target description files.  Widgets
+@c are supplied to facilitate and automate data input and the creation of
+@c microarray specific R objects for storing these data.
+@c @item marrayNorm
+@c Functions for location and scale normalization procedures based on
+@c robust local regression.
+@c @item marrayPlots
+@c Functions for diagnostic plots for pre- and post-normalization cDNA
+@c microarray intensity data: boxplots, scatter-plots, color images.
+@c @item marrayTools
+@c Miscellaneous functions used in the functional genomics core facility in
+@c UCB and UCSF.
 @item matchprobes
 Tools for sequence matching of probes on arrays.
+@item msbase
+Basic classes and methods for mass spectrometric mass list
+manipulation.
 @item multtest
 Multiple testing procedures for controlling the family-wise error rate
 (FWER) and the false discovery rate (FDR).  Tests can be based on
 @math{t}- or @math{F}-statistics for one- and two-factor designs, and
 permutation procedures are available to estimate adjusted
 @math{p}-values.
-@item ontoTools
-Graphs and sparse matrices for working with ontologies.
+@item nnNorm
+Spatial and intensity based normalization of cDNA microarray data based
+on robust neural nets.
+@c @item ontoTools
+@c Graphs and sparse matrices for working with ontologies.
 @item pairseqsim
 Pairwise sequence alignment and scoring algorithms for global, local and 
 overlap alignment with affine gap penalty.
@@ -3390,9 +3449,9 @@ intensities with replicates using a Bayesian hierarchical model.
 @item reposTools
 Tools for dealing with file repositories and allow users to easily
 install, update, and distribute packages, vignettes, and other files.
-@item rhdf5
-Storage and retrieval of large datasets using the HDF5 library and file
-format.
+@c @item rhdf5
+@c Storage and retrieval of large datasets using the HDF5 library and file
+@c format.
 @item siggenes
 Identifying differentially expressed genes and estimating the False
 Discovery Rate (FDR) with both the Significance Analysis of Microarrays
@@ -3401,14 +3460,22 @@ Discovery Rate (FDR) with both the Significance Analysis of Microarrays
 Very simple high level analysis of Affymetrix data.
 @item splicegear
 A set of tools to work with alternative splicing.
+@item stam
+STructured Analysis of Microarray data.
+@item stepNorm
+Stepwise normalization functions for cDNA microarrays.
 @item tkWidgets
 Widgets in Tcl/Tk that provide functionality for Bioconductor packages.
+@item twilight
+Estimation of local false discovery rate.
 @item vsn
 Calibration and variance stabilizing transformations for both Affymetrix
 and cDNA array data.
 @item webbioc
 Integrated web interface for doing microarray analysis using several of
 the Bioconductor packages.
+@item widgetInvoke
+Evaluation widgets for functions.
 @item widgetTools
 Tools for creating Tcl/Tk widgets, i.e., small-scale graphical user
 interfaces.
