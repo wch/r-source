@@ -26,6 +26,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	model.frame(,subset=) no longer loses contrasts
+
     o	`make install' copied the R shell script a second time without
 	getting RHOME right (thus also breaking R CMD check).  Fixed.
 

@@ -1212,7 +1212,7 @@ SEXP do_updateform(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP terms, data, names, variables, varnames, dots, dotnames, na_action;
-    SEXP ans, row_names, subset, tmp;
+    SEXP ans, row_names, subset, tmp,tmp2;
     char buf[256];
     int i, nr, nc;
     int nvars, ndots;
@@ -1303,11 +1303,20 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     /* Do the subsetting, if required. */
+    /* Need to save and restore 'most' attributes */
 
     if (subset != R_NilValue) {
+        PROTECT(tmp2=allocVector(VECSXP, length(data)));
+	for (i =length(data); i--;){
+	    VECTOR(tmp2)[i]=allocVector(INTSXP,1);
+	    copyMostAttrib(VECTOR(data)[i],VECTOR(tmp2)[i]);
+	}
 	PROTECT(tmp = lang4(install("["), data, subset, R_MissingArg));
-	data = eval(tmp, rho);
-	UNPROTECT(1);
+	PROTECT(data = eval(tmp, rho));
+	for (i =length(data); i--;){
+	    copyMostAttrib(VECTOR(tmp2)[i],VECTOR(data)[i]);
+	}
+	UNPROTECT(3);
     }
     UNPROTECT(2);
     PROTECT(data);
@@ -1321,7 +1330,7 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    na_action = install(CHAR(STRING(na_action)[0]));
 	PROTECT(na_action);
 	PROTECT(tmp = lang2(na_action, data));
-	ans = eval(tmp, rho);
+	PROTECT(ans = eval(tmp, rho));
 	if (!isNewList(ans) || length(ans) != length(data))
 	    errorcall(call, "invalid result from na.action\n");
 	/* need to transfer _all but dim_ attributes, possibly lost 
@@ -1329,7 +1338,7 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	for ( i = length(ans) ; i-- ; )
 	  	copyMostAttrib(VECTOR(data)[i],VECTOR(ans)[i]);
 	/*	ATTRIB(VECTOR(ans)[i]) = ATTRIB(VECTOR(data)[i]); */
-	UNPROTECT(2);
+	UNPROTECT(3);
     }
     else ans = data;
     UNPROTECT(1);
