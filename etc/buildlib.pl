@@ -148,7 +148,7 @@ sub read_functiontitles {
 }
 
 
-### Read all aliases into two hash arrays with basenames ant
+### Read all aliases into two hash arrays with basenames and
 ### (relative) html-paths.
 
 
@@ -168,7 +168,7 @@ sub read_htmlindex {
 		if(-r "$lib/$pkg/help/AnIndex"){
 		    open ranindex, "< $lib/$pkg/help/AnIndex";
 		    while(<ranindex>){
-			/^(\S*)\s*(.*)/;
+			/^(\S*)\s*\t(.*)/;
 			$htmlindex{$1} = "$pkg/html/$2.$HTML";
 		    }
 		    close ranindex;
@@ -195,7 +195,7 @@ sub read_anindex {
 		if(-r "$lib/$pkg/help/AnIndex"){
 		    open ranindex, "< $lib/$pkg/help/AnIndex";
 		    while(<ranindex>){
-			/^(\S*)\s*(.*)/;
+			/^(\S*)\s*\t(.*)/;
 			$anindex{$1} = $2;
 		    }
 		    close ranindex;
@@ -261,7 +261,6 @@ sub build_index {
     mkdir "$dest/html", $dir_mod || die "Could not create $dest/html: $!\n";
 
     $anindex = "$lib/$pkg/help/AnIndex";
-    open(anindex, ">${anindex}.in");
 
     my %alltitles;
     my $naliases;
@@ -287,24 +286,26 @@ sub build_index {
 	    my $rdtitle = $1;
 	    $rdtitle =~ s/\n/ /sg;
 
-	    print anindex "$rdname\t$manfilebase\n";
-	    $alltitles{$rdname} = $rdtitle;
-	    $naliases++;
+	    $filenm{$rdname} = $manfilebase;
 
-	    while($text =~ s/\\alias\{\s*(.*)\s*\}//){
-		$alias = $1;
+	    while($text =~ s/\\(alias|name)\{\s*(.*)\s*\}//){
+		$alias = $2;
 		$alias =~ s/\\%/%/g;
-		print anindex "$alias\t$manfilebase\n";
 		$alltitles{$alias} = $rdtitle;
+		$aliasnm{$alias} = $manfilebase;
 		$naliases++;
 	    }
 	}
     }
 
+    sub foldorder {uc($a) cmp uc($b) or $a cmp $b;}
+
+    open(anindex, ">${anindex}");
+    foreach $alias (sort foldorder keys %aliasnm) {
+	print anindex "$alias\t$aliasnm{$alias}\n";
+    }
     close anindex;
 
-    system("sort -f -d ${anindex}.in | uniq > ${anindex}");
-    unlink ("$anindex.in");
 
     open(anindex, "<$anindex");
     open(titleindex, ">$lib/$pkg/help/00Titles");
@@ -323,10 +324,10 @@ sub build_index {
     print htmlfile "\n<p>\n<table width=100%>\n";
 
     my $firstletter = "";
-    while(<anindex>){
-	($alias, $file) = split;
-	$aliasfirst = uc substr($alias, 0, 1);
-	if(($aliasfirst ne $firstletter) &&
+    while(<anindex>){ 
+        chomp;  ($alias, $file) = split /\t/; 
+        $aliasfirst = uc substr($alias, 0, 1); 
+        if(($aliasfirst ne $firstletter) && 
 	   ($aliasfirst =~ /[A-Z]/) &&
 	   ($naliases>100)){
 	    print htmlfile "</table>\n";
@@ -368,18 +369,18 @@ sub build_htmlfctlist {
 
     print htmlfile html_title2("-- Operators, Global Variables, ... --");
     print htmlfile "\n<p>\n<table width=100%>\n";
-    foreach $alias (sort(keys %htmltitles)) {
+    foreach $alias (sort foldorder keys %htmltitles) {
 	print htmlfile "<TR><TD width=25%>" .
 	    "<A HREF=\"../../library/$htmlindex{$alias}\">" .
 	    "$alias</A></TD>\n<TD>$htmltitles{$alias}</TD></TR>\n"
-		unless $alias =~ /^[a-z]/;
+		unless $alias =~ /^[a-zA-Z]/;
     }
     print htmlfile "\n</table>\n<p>\n<table width=100%>\n";
 
     my $firstletter = "";
-    foreach $alias (sort(keys %htmltitles)) {
-	$aliasfirst = substr($alias, 0, 1);
-	if($aliasfirst =~ /[a-z]/){
+    foreach $alias (sort foldorder keys %htmltitles) {
+	$aliasfirst = uc substr($alias, 0, 1);
+	if($aliasfirst =~ /[A-Z]/){
 	    if($aliasfirst ne $firstletter){
 		print htmlfile "</table>\n";
 		print htmlfile "<a name=\"" . uc $aliasfirst . "\">\n";

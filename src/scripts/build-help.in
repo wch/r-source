@@ -106,7 +106,7 @@ foreach $manfile (@mandir) {
 	$textflag = $htmlflag = $latexflag = $exampleflag = "";
 
 	if($opt_nroff){
-	    my $targetfile = $anindex{$manfilebase};
+	    my $targetfile = $filenm{$manfilebase};
 	    $destfile = "$dest/help/$targetfile";
 	    if(fileolder($destfile, $manage)) {
 		$textflag = "text";
@@ -117,7 +117,7 @@ foreach $manfile (@mandir) {
 	}
 
 	if($opt_html){
-	    my $targetfile = $anindex{$manfilebase};
+	    my $targetfile = $filenm{$manfilebase};
 	    $destfile = "$dest/html/$targetfile.$HTML";
 	    if(fileolder($destfile,$manage)) {
 		$htmlflag = "html";
@@ -127,7 +127,7 @@ foreach $manfile (@mandir) {
 	}
 
 	if($opt_latex){
-	    my $targetfile = $anindex{$manfilebase};
+	    my $targetfile = $filenm{$manfilebase};
 	    $destfile = "$dest/latex/$targetfile.tex";
 	    if(fileolder($destfile,$manage)) {
 		$latexflag = "latex";
@@ -135,11 +135,11 @@ foreach $manfile (@mandir) {
 	    }
 	}
 	if($opt_example){
-	    my $targetfile = $anindex{$manfilebase};
+	    my $targetfile = $filenm{$manfilebase};
 	    $destfile = "$dest/R-ex/$targetfile.R";
 	    if(fileolder($destfile,$manage)) {
-		$exampleflag = "example";
 		Rdconv($manfile, "example", "", "$destfile");
+		if(-f$destfile) {$exampleflag = "example";}
 	    }
 	}
 

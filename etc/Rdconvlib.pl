@@ -859,6 +859,7 @@ sub text2nroff {
 	  &&  $text =~ /\\eqn/){
 	my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
 	$eqn = $ascii if $ascii;
+	$eqn =~ s/\\([^&])/$1/go;
 	$text =~ s/\\eqn(.*)$id/$eqn/s;
     }
 
@@ -866,6 +867,7 @@ sub text2nroff {
     while(checkloop($loopcount++, $text, "\\deqn") &&  $text =~ /\\deqn/){
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
 	$eqn = $ascii if $ascii;
+	$eqn =~ s/\\([^&])/$1/go;
 	$text =~ s/\\deqn(.*)$id/\n.DS B\n$eqn\n.DE\n/s;
     }
 
@@ -1232,29 +1234,31 @@ sub rdoc2ex { # (filename)
 
     local($tit = $blocks{"title"});
 
-    if($_[0]!= -1) {
-      if($_[0]) { open Exout, "> $_[0]"; } else { open Exout, "| cat"; }
-    }
-    $tit =~ s/\s+/ /g;
-    print Exout "###--- >>> `"; print Exout $blocks{"name"};
-    print Exout "' <<<----- "; print Exout $tit;
-    print Exout "\n\n";
-    if(@aliases) {
-	foreach (@aliases) {
-	    print Exout "\t## alias\t help($_)\n";
+    if(defined $blocks{"examples"}) {
+	if($_[0]!= -1) {
+	    if($_[0]) { open Exout, "> $_[0]"; } else { open Exout, "| cat"; }
 	}
-	print Exout "\n";
+	$tit =~ s/\s+/ /g;
+	print Exout "###--- >>> `"; print Exout $blocks{"name"};
+	print Exout "' <<<----- "; print Exout $tit;
+	print Exout "\n\n";
+	if(@aliases) {
+	    foreach (@aliases) {
+		print Exout "\t## alias\t help($_)\n";
+	    }
+	    print Exout "\n";
+	}
+	
+	ex_print_exampleblock("examples", "Examples");
+	
+	if(@keywords) {
+	    print Exout "## Keywords: ";
+	    &print_vec(Exout, 'keywords');
+	}
+	print Exout "\n\n";
+
+	close Exout;
     }
-
-    ex_print_exampleblock("examples", "Examples");
-
-    if(@keywords) {
-	print Exout "## Keywords: ";
-	&print_vec(Exout, 'keywords');
-    }
-    print Exout "\n\n";
-
-    close Exout;
 }
 
 sub ex_print_exampleblock {
