@@ -41,6 +41,7 @@ R.version.string
   \code{R.version$os}, as may different versions of \R.
 }
 \seealso{
+  \code{\link{getRversion}}
   \code{\link{.Platform}}.
 }
 \examples{

@@ -6,7 +6,8 @@
     currently installed version of R [and other packages].
 }
 \usage{
-package.dependencies(x, check=FALSE, depLevel=c("Depends", "Suggests"))
+package.dependencies(x, check = FALSE,
+                     depLevel = c("Depends", "Imports", "Suggests"))
 }
 \arguments{
     \item{x}{A matrix of package descriptions as returned by
@@ -21,5 +22,7 @@ package.dependencies(x, check=FALSE, depLevel=c("Depends", "Suggests"))
     running version of R. In the future we might add checks for
     inter-package dependencies.
 }
-\seealso{\code{\link{update.packages}}}
+\seealso{
+  \code{\link{update.packages}}
+}
 \keyword{utilities}

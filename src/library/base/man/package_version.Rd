@@ -13,17 +13,22 @@
 \alias{as.data.frame.package_version}
 \alias{.encode_package_version}
 \alias{.decode_package_version}
+\alias{getRversion}
 \title{Package versions}
 \description{A simple S3 class for representing package versions, and
   associated methods.}
-\usage{package_version(x, strict = TRUE)}
+\usage{
+package_version(x, strict = TRUE)
+
+getRversion()
+}
 \arguments{
   \item{x}{a character vector with package version strings.}
   \item{strict}{a logical indicating whether invalid package versions
     should results in an error (default) or not.}
 }
 \details{
-  R (package) versions are sequences of at least two non-negative
+  \R (package) versions are sequences of at least two non-negative
   integers, usually (e.g., in package \file{DESCRIPTION} files)
   represented as character strings with the elements of the sequence
   concatenated and separated by single \samp{.} or \samp{-} characters.
@@ -32,6 +37,9 @@
   which allows for coercion and testing, combination, comparison,
   summaries (min/max), inclusion in data frames, subscripting, and
   printing.
+
+  \code{getRversion} returns the version of the running \R as an object
+  of class \code{"package_version"}.
 }
 \seealso{
   \code{\link{compareVersion}}
