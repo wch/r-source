@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-34, @value{FAQ-YEAR}-07-29
+@set FAQ-VERSION 1.7-35, @value{FAQ-YEAR}-08-04
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -2168,6 +2168,8 @@ Recursive PARTitioning and regression trees.  @emph{Recommended}.
 @item rpvm
 R interface to PVM (Parallel Virtual Machine).  Provides interface to
 PVM APIs, and examples and documentation for its use.
+@item rqmcmb2
+Markov chain marginal bootstrap for quantile regression.
 @item rsprng
 Provides interface to SPRNG (Scalable Parallel Random Number Generators)
 APIs, and examples and documentation for its use.
