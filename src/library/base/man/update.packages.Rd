@@ -5,7 +5,6 @@
 \alias{download.file}
 \alias{download.packages}
 \alias{install.packages}
-\alias{parse.description}
 \title{Download packages from CRAN}}
 \usage{
 update.packages(lib.loc=.lib.loc, CRAN=options("CRAN"),
@@ -19,8 +18,6 @@ download.packages(pkgs, destdir, available=NULL,
                   CRAN=options("CRAN"), method="auto")
 install.packages(pkgs, lib, available=NULL,
                   CRAN=options("CRAN"), method="auto")
-
-parse.description <- function(desc)
 }
 \arguments{ 
  \item{lib.loc}{A character vector describing the location of R
@@ -39,8 +36,6 @@ parse.description <- function(desc)
  \item{destdir}{Directory where downloaded packages are stored.}
  \item{available}{List of packages available at CRAN as returned by
      \code{CRAN.packages()}.}
- \item{desc}{A character vector with each element containing one line of
-   a package description file.}
  \item{lib,instlib}{A character string giving the library directory where to
      install the packages.}
 }
@@ -57,7 +52,7 @@ parse.description <- function(desc)
   available in the contrib section of CRAN, the comprehensive R archive
   network.  The current list of packages is downloaded over the internet
   (or copied from a local CRAN mirror). Both functions use
-  \code{parse.description()} for parsing the description files.
+  \code{\link{parse.dcf}} for parsing the description files.
 
   The function \code{download.file()} can be used to download a single
   file as described by \code{url} from the internet and store it in
@@ -88,6 +83,7 @@ parse.description <- function(desc)
   the packages from CRAN and installs them.
 }
 \seealso{\code{\link{INSTALL}}, \code{\link{REMOVE}},
-    \code{\link{library}}, \code{\link{.packages}}
+  \code{\link{library}}, \code{\link{.packages}},
+  \code{\link{parse.dcf}}
 }
 \keyword{utilities}
