@@ -179,9 +179,10 @@ dev.copy2eps <- function(...)
 dev.control <- function(displaylist)
 {
     if(!missing(displaylist)) {
-	if(displaylist == "inhibit")
-	    .Internal(dev.control())
-	else stop(paste("displaylist should be inhibit"))
+	if(displaylist == "inhibit") {
+            if(dev.cur() > 1) .Internal(dev.control())
+            else stop("dev.control() called without an open graphics device")
+	} else stop("displaylist should be inhibit")
     }
     invisible()
 }

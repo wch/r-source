@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2001  The R Development Core Team.
+ *  Copyright (C) 1998--2002  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2038,7 +2038,8 @@ void *R_chk_calloc(size_t nelem, size_t elsize)
 void *R_chk_realloc(void *ptr, size_t size)
 {
     void *p;
-    p = realloc(ptr, size);
+    /* Protect against broken realloc */
+    if(ptr) p = realloc(ptr, size); else p = malloc(size);
     if(!p) error("Realloc could not re-allocate (size %d) memory", size);
     return(p);
 }

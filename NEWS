@@ -171,6 +171,25 @@ BUG FIXES
     o   real conversions in type.convert were always treating "NA" as
 	missing whatever the setting of na.strings. (PR#1568)
 
+    o	R CMD check now deals correctly with package names containing a
+	'.' in the Depends field of a DESCRIPTION file. (PR#1591)
+
+    o	pbinom() and pbinom() were misssing the "fuzz" that other discrete
+	distributions have in order to guard against truncation.
+
+    o   The "=" assignment operator behaved as "<<-" in some constructions
+	with composite left-hand sides.
+
+    o   Added print.AsIs() method to ensure "AsIs" objects are printed
+	by the method for their real class. (PR#1587)
+
+    o	mosaicplot(*, color = v) now recycles v[] if needed.
+
+    o	Calling dev.control("inhibit") with no graphics device open
+	crashed R. (PR#1605)
+
+    o	read.dcf() was not checking memory allocation succeeded.
+
 
 
 		CHANGES IN R VERSION 1.5.0
