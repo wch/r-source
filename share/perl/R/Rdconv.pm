@@ -566,7 +566,7 @@ sub text2html {
 	my $argkey = $arg;
 	$argkey =~ s/&lt;/</go;
 	$argkey =~ s/&gt;/>/go;
-	$htmlfile = $htmlindex{$argkey};
+	$htmlfile = $main::htmlindex{$argkey};
 	if($htmlfile){
 	    if($using_chm) {
 		if ($htmlfile =~ s+^$pkg/html/++) {
@@ -586,7 +586,8 @@ sub text2html {
 	    }
 	}
 	else {
-	    $misslink = $misslink . " " . $argkey unless $opt ne "";
+	    $main::misslink = $main::misslink . " " . $argkey 
+		unless $opt ne "";
 	    if($using_chm){
 		if($opt ne "") {
 		    my ($pkg, $topic) = split(/:/, $opt);
@@ -686,7 +687,7 @@ sub code2html {
 	$argkey =~ s/&lt;/</go;
 	$argkey =~ s/&gt;/>/go;
 	$argkey =~ s/&amp;/&/go;
-	$htmlfile = $htmlindex{$argkey};
+	$htmlfile = $main::htmlindex{$argkey};
 
 	if($htmlfile){
 	    if($using_chm) {
@@ -707,7 +708,8 @@ sub code2html {
 	    }
 	}
 	else{
-	    $misslink = $misslink . " " . $argkey unless $opt ne "";
+	    $main::misslink = $main::misslink . " " . $argkey 
+		unless $opt ne "";
 	    if($using_chm){
 		if($opt ne "") {
 		    my ($pkg, $topic) = split(/:/, $opt);
