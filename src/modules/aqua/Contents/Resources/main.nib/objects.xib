@@ -4,7 +4,7 @@
   <object name="rootObject" class="NSCustomObject" id="1">
     <string name="customClass">NSApplication</string>
   </object>
-  <array count="118" name="allObjects">
+  <array count="128" name="allObjects">
     <object class="IBCarbonMenu" id="29">
       <string name="title">main</string>
       <array count="7" name="items">
@@ -223,7 +223,7 @@
           <string name="title">Packages</string>
           <object name="submenu" class="IBCarbonMenu" id="217">
             <string name="title">Packages</string>
-            <array count="7" name="items">
+            <array count="9" name="items">
               <object class="IBCarbonMenuItem" id="218">
                 <string name="title">Installed Packages</string>
                 <ostype name="command">ipkg</ostype>
@@ -238,22 +238,45 @@
                 <boolean name="separator">TRUE</boolean>
               </object>
               <object class="IBCarbonMenuItem" id="220">
-                <string name="title">Install CRAN Packages</string>
+                <string name="title">Get CRAN Packages</string>
                 <ostype name="command">cran</ostype>
                 <string name="helpTagText">Installs packages from CRAN repository</string>
               </object>
               <object class="IBCarbonMenuItem" id="222">
-                <string name="title">Install BioConductor</string>
+                <string name="title">Get BioConductor Packages</string>
                 <ostype name="command">bioc</ostype>
                 <string name="helpTagText">Install packages of the BioCondutor Project</string>
+              </object>
+              <object class="IBCarbonMenuItem" id="335">
+                <string name="title">Update CRAN packages</string>
+                <ostype name="command">crup</ostype>
+                <string name="helpTagText">update packages with newer versions on CRAN</string>
+              </object>
+              <object class="IBCarbonMenuItem" id="336">
+                <string name="title">Update BioConductor Packages</string>
+                <ostype name="command">bcup</ostype>
+                <string name="helpTagText">Update packages with newer versions at BioConductor</string>
               </object>
               <object class="IBCarbonMenuItem" id="224">
                 <boolean name="separator">TRUE</boolean>
               </object>
-              <object class="IBCarbonMenuItem" id="223">
+              <object class="IBCarbonMenuItem" id="344">
                 <string name="title">Install Package From Source</string>
-                <ostype name="command">ipfs</ostype>
-                <string name="helpTagText">Installs packages from source archives</string>
+                <object name="submenu" class="IBCarbonMenu" id="345">
+                  <string name="title">Install Package From Source</string>
+                  <array count="2" name="items">
+                    <object class="IBCarbonMenuItem" id="346">
+                      <string name="title">File (.tar.gz)</string>
+                      <ostype name="command">ipfs</ostype>
+                      <string name="helpTagText">Install source package from a local file (tarball)</string>
+                    </object>
+                    <object class="IBCarbonMenuItem" id="347">
+                      <string name="title">Directory</string>
+                      <ostype name="command">ipsd</ostype>
+                      <string name="helpTagText">Install source package from a local directory tree</string>
+                    </object>
+                  </array>
+                </object>
               </object>
             </array>
           </object>
@@ -417,7 +440,6 @@
     <reference idRef="220"/>
     <reference idRef="221"/>
     <reference idRef="222"/>
-    <reference idRef="223"/>
     <reference idRef="224"/>
     <reference idRef="226"/>
     <reference idRef="227"/>
@@ -437,17 +459,17 @@
     <reference idRef="245"/>
     <reference idRef="246"/>
     <object class="IBCarbonWindow" id="247">
-      <string name="windowRect">104 199 530 679 </string>
+      <string name="windowRect">137 123 563 603 </string>
       <string name="title">R Preferences</string>
       <object name="rootControl" class="IBCarbonRootControl" id="248">
         <string name="bounds">0 0 426 480 </string>
         <array count="5" name="subviews">
           <object class="IBCarbonTab" id="249">
-            <string name="bounds">12 20 340 460 </string>
+            <string name="bounds">12 20 362 460 </string>
             <array count="2" name="subviews">
               <object class="IBCarbonUserPane" id="251">
-                <string name="bounds">42 20 340 460 </string>
-                <array count="3" name="subviews">
+                <string name="bounds">42 20 362 460 </string>
+                <array count="8" name="subviews">
                   <object class="IBCarbonGroupBox" id="255">
                     <string name="bounds">184 40 279 440 </string>
                     <array count="6" name="subviews">
@@ -534,6 +556,37 @@
                     <string name="title">Font name and size</string>
                     <string name="helpTagText">Current R Console Font Name and Size</string>
                   </object>
+                  <object class="IBCarbonCheckBox" id="337">
+                    <string name="bounds">295 45 309 230 </string>
+                    <ostype name="controlSignature">PREF</ostype>
+                    <int name="controlID">1013</int>
+                    <string name="title">Buffered console output?</string>
+                    <string name="helpTagText">Display text output on the console in batches, rather than line by line. Much faster, but doesn&apos;t allow for progress reports.</string>
+                    <int name="initialState">1</int>
+                  </object>
+                  <object class="IBCarbonSlider" id="340">
+                    <string name="bounds">294 351 350 374 </string>
+                    <ostype name="controlSignature">PREF</ostype>
+                    <int name="controlID">1014</int>
+                    <string name="helpTagText">Smaller buffers give smoother but slower scrolling</string>
+                    <boolean name="isLive">TRUE</boolean>
+                    <int name="numTickMarks">4</int>
+                    <int name="initialValue">10</int>
+                    <int name="minimumValue">10</int>
+                    <int name="maximumValue">32000</int>
+                  </object>
+                  <object class="IBCarbonStaticText" id="342">
+                    <string name="bounds">333 377 349 453 </string>
+                    <string name="title">10</string>
+                  </object>
+                  <object class="IBCarbonStaticText" id="343">
+                    <string name="bounds">309 260 325 336 </string>
+                    <string name="title">Buffer size </string>
+                  </object>
+                  <object class="IBCarbonStaticText" id="341">
+                    <string name="bounds">288 377 304 422 </string>
+                    <string name="title">32000</string>
+                  </object>
                 </array>
                 <ostype name="controlSignature">PRTB</ostype>
                 <int name="controlID">1000</int>
@@ -541,7 +594,7 @@
                 <int name="featureBits">2</int>
               </object>
               <object class="IBCarbonUserPane" id="294">
-                <string name="bounds">42 20 340 460 </string>
+                <string name="bounds">42 20 362 460 </string>
                 <array count="5" name="subviews">
                   <object class="IBCarbonButton" id="304">
                     <string name="bounds">62 40 82 145 </string>
@@ -641,7 +694,6 @@
             </array>
             <ostype name="controlSignature">PRTT</ostype>
             <int name="controlID">1000</int>
-            <int name="tabSelection">2</int>
             <array count="2" name="tabItems">
               <dictionary count="4">
                 <string>contentResID</string>
@@ -724,42 +776,42 @@
     <reference idRef="278"/>
     <reference idRef="279"/>
     <object class="IBCarbonUserPane" id="280">
-      <string name="bounds">13 28314 311 28754 </string>
+      <string name="bounds">9933 21932 10231 22372 </string>
       <array count="9" name="subviews">
         <object class="IBCarbonCheckBox" id="281">
-          <string name="bounds">18217 4238 18219 4242 </string>
+          <string name="bounds">30919 -32245 30921 -32245 </string>
           <string name="title">AntiAliasing</string>
         </object>
         <object class="IBCarbonCheckBox" id="282">
-          <string name="bounds">18217 23049 18219 23079 </string>
+          <string name="bounds">30919 25849 30921 25875 </string>
           <string name="title">Auto Refresh</string>
         </object>
         <object class="IBCarbonStaticText" id="284">
-          <string name="bounds">18103 22740 18119 23133 </string>
+          <string name="bounds">31019 25726 31035 26119 </string>
           <string name="title">Font Name</string>
         </object>
         <object class="IBCarbonButton" id="283">
-          <string name="bounds">18143 22794 18163 22798 </string>
+          <string name="bounds">30979 25965 30999 25973 </string>
           <string name="title">Choose Font</string>
         </object>
         <object class="IBCarbonEditText" id="285">
-          <string name="bounds">18150 23037 18148 23036 </string>
+          <string name="bounds">30991 26397 30987 26392 </string>
           <string name="title">12</string>
         </object>
         <object class="IBCarbonStaticText" id="286">
-          <string name="bounds">18141 22907 18157 22983 </string>
+          <string name="bounds">30981 26443 30997 26519 </string>
           <string name="title">Point Size</string>
         </object>
         <object class="IBCarbonEditText" id="287">
-          <string name="bounds">18021 22809 18019 22803 </string>
+          <string name="bounds">31120 26530 31116 26530 </string>
           <string name="title">5</string>
         </object>
         <object class="IBCarbonStaticText" id="288">
-          <string name="bounds">18013 22736 18029 22783 </string>
+          <string name="bounds">31109 26637 31125 26684 </string>
           <string name="title">Width:</string>
         </object>
         <object class="IBCarbonStaticText" id="290">
-          <string name="bounds">18013 22876 18029 22923 </string>
+          <string name="bounds">31109 26961 31125 27008 </string>
           <string name="title">Height:</string>
         </object>
       </array>
@@ -796,8 +848,19 @@
     <reference idRef="326"/>
     <reference idRef="327"/>
     <reference idRef="328"/>
+    <reference idRef="335"/>
+    <reference idRef="336"/>
+    <reference idRef="337"/>
+    <reference idRef="340"/>
+    <reference idRef="341"/>
+    <reference idRef="342"/>
+    <reference idRef="343"/>
+    <reference idRef="344"/>
+    <reference idRef="345"/>
+    <reference idRef="346"/>
+    <reference idRef="347"/>
   </array>
-  <array count="118" name="allParents">
+  <array count="128" name="allParents">
     <reference idRef="1"/>
     <reference idRef="29"/>
     <reference idRef="131"/>
@@ -843,7 +906,6 @@
     <reference idRef="198"/>
     <reference idRef="29"/>
     <reference idRef="216"/>
-    <reference idRef="217"/>
     <reference idRef="217"/>
     <reference idRef="217"/>
     <reference idRef="217"/>
@@ -916,6 +978,17 @@
     <reference idRef="147"/>
     <reference idRef="147"/>
     <reference idRef="147"/>
+    <reference idRef="217"/>
+    <reference idRef="217"/>
+    <reference idRef="251"/>
+    <reference idRef="251"/>
+    <reference idRef="251"/>
+    <reference idRef="251"/>
+    <reference idRef="251"/>
+    <reference idRef="217"/>
+    <reference idRef="344"/>
+    <reference idRef="345"/>
+    <reference idRef="345"/>
   </array>
   <dictionary count="5" name="nameTable">
     <string>AboutWindow</string>
@@ -929,5 +1002,5 @@
     <string>PrefsWindow</string>
     <reference idRef="247"/>
   </dictionary>
-  <unsigned_int name="nextObjectID">335</unsigned_int>
+  <unsigned_int name="nextObjectID">348</unsigned_int>
 </object>

@@ -99,7 +99,10 @@ extern SA_TYPE RestoreAction;
 #define kRCmdAvailDatsets	'shdt'
 #define kRCmdInstallFromCRAN	'cran'
 #define kRCmdInstallFromBioC	'bioc'
+#define kRCmdUpdateFromCRAN	'crup'
+#define kRCmdUpdateFromBioC	'bcup'
 #define kRCmdInstallFromSrc	'ipfs'
+#define kRCmdInstallFromSrcDir	'ipsd'
 
 /* items in the Help Menu */
 #define kRHelpStart		'rhlp'
@@ -236,7 +239,7 @@ OSStatus FSPathMakeFSSpec(const UInt8 *path, FSSpec *spec, Boolean *isDirectory)
 OSStatus FSMakePath(SInt16 volRefNum, SInt32 dirID, ConstStr255Param name, UInt8 *path,
 	UInt32 maxPathSize);
 OSErr FSMakeFSRef(FSVolumeRefNum volRefNum, SInt32 dirID, ConstStr255Param name, FSRef *ref);
-        
+OSErr DoSelectPackageDirectory(char* buf);
 
 int 	Raqua_ShowFiles(int nfile, char **fileName, char **title,
 		char *WinTitle, Rboolean del, char *pager);
@@ -324,6 +327,7 @@ void Raqua_read_history(char *file);
 SEXP Raqua_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP Raqua_savehistory(SEXP call, SEXP op, SEXP args, SEXP env);
 OSStatus SaveWindow(WindowRef window, Boolean ForceNewFName);
+void Aqua_FlushBuffer(void);
 
 MenuRef HelpMenu = NULL; /* Will be the Reference to Apple's Help Menu */
 static 	short 	RHelpMenuItem=-1;
@@ -572,13 +576,11 @@ TXNTypeAttributes ROutAttr[] = {{ kTXNQDFontColorAttribute, kTXNQDFontColorAttri
 /* Buffered output code by Thomas Lumley */
 
 /* buffer whose last character is \0 at index end_of_buffer */
-#define AQUA_BUFLEN 32000
-static char outputbuffer[AQUA_BUFLEN+2];
+#define AQUA_MAXBUFLEN 32000
+static char outputbuffer[AQUA_MAXBUFLEN+2];
 static int  end_of_buffer=0;
-static int  WeAreBuffering=1;
- 
- 
- 
+/* Status is updated from CurrentPrefs in Aqua_FlushBuffer */
+static int  WeAreBuffering=0;
 
 void Raqua_WriteConsole(char *buf, int len)
 {
@@ -588,9 +590,15 @@ void Raqua_WriteConsole(char *buf, int len)
     EventRef REvent;
 
     if(WeHaveConsole){
+ 
+         if (WeAreBuffering != CurrentPrefs.Buffering){
+	   Aqua_FlushBuffer();
+	   WeAreBuffering = CurrentPrefs.Buffering;
+	 }
+
         if (WeAreBuffering){
- 	if (strlen(buf)+1+end_of_buffer>=AQUA_BUFLEN){
-         TXNSetTypeAttributes( RConsoleOutObject, 1, ROutAttr, 0, kTXNEndOffset );
+ 	if (strlen(buf)+1+end_of_buffer >= CurrentPrefs.BufferSize){
+	  TXNSetTypeAttributes( RConsoleOutObject, 1, ROutAttr, 0, kTXNEndOffset );
  	if (end_of_buffer>0)
             err =  TXNSetData( RConsoleOutObject, kTXNTextData, outputbuffer, end_of_buffer, 
                                 kTXNEndOffset, kTXNEndOffset);
@@ -613,16 +621,18 @@ void Raqua_WriteConsole(char *buf, int len)
 
 }
 
-void Aqua_FlushBuffer(void);
 
 void Aqua_FlushBuffer(void){
-   if (WeHaveConsole && WeAreBuffering){
-     TXNSetTypeAttributes( RConsoleOutObject, 1, ROutAttr, 0, kTXNEndOffset );
-     if (end_of_buffer>0)
-       TXNSetData (RConsoleOutObject, kTXNTextData, outputbuffer, end_of_buffer, kTXNEndOffset, kTXNEndOffset);
-     outputbuffer[0]='\0';
-     end_of_buffer = 0;
-   }
+  if (WeHaveConsole) {
+
+     if (WeAreBuffering){
+       TXNSetTypeAttributes( RConsoleOutObject, 1, ROutAttr, 0, kTXNEndOffset );
+       if (end_of_buffer>0)
+	 TXNSetData (RConsoleOutObject, kTXNTextData, outputbuffer, end_of_buffer, kTXNEndOffset, kTXNEndOffset);
+       outputbuffer[0]='\0';
+       end_of_buffer = 0;
+     }
+  }
 }
  
 
@@ -991,7 +1001,6 @@ NavUserAction YesOrNot(WindowRef window, char *msg){
     return(userAction);      
 }
 
-
 static pascal OSErr QuitAppleEventHandler (const AppleEvent *appleEvt,
                                      AppleEvent* reply, UInt32 refcon) 
 {
@@ -1247,8 +1256,8 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
                consolecmd("ls()");              
               break;          		
 
-              case kRCmdClearWSpace:
-               consolecmd("rm(list=ls())");              
+	      case kRCmdClearWSpace:  /* Shouldn't this have a confirmation dialog? */
+		consolecmd("rm(list=ls())");              
               break;          		
 
               case kRCmdBrowseWSpace:
@@ -1302,12 +1311,25 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
               break;
 
               case kRCmdInstallFromBioC:
-               Aqua_RWrite("Install packages from BioConductor: not yet implemented");
-               consolecmd("\r");
+		consolecmd("browse.pkgs(\"BIOC\")");
+              break;
+		
+             case kRCmdUpdateFromCRAN:
+               consolecmd("browse.update.pkgs()");
+              break;
+
+              case kRCmdUpdateFromBioC:
+		consolecmd("browse.update.pkgs(\"BIOC\")");
               break;
 
               case kRCmdInstallFromSrc:
                consolecmd("install.from.file()\r");
+	       break;
+
+	     case kRCmdInstallFromSrcDir:
+		DoSelectPackageDirectory(buf);
+		sprintf(cmd, "install.from.file(pkg=\"%s\")\r", buf);
+		consolecmd(cmd);
               break;
 
 /* Help Menu */
@@ -1700,6 +1722,44 @@ OSErr DoSelectDirectory( void )
 		{
                         err = FSMakePath(finalFSSpec.vRefNum, finalFSSpec.parID, finalFSSpec.name, buf, 300);
      		        chdir(buf);	
+    		}
+		
+		theErr = NavDisposeReply( &theReply );
+	}
+		
+	return theErr;
+}
+
+
+OSErr DoSelectPackageDirectory(char* buf )
+{	
+	NavReplyRecord		theReply;
+	NavDialogOptions	dialogOptions;
+	OSErr			theErr = noErr;
+	NavEventUPP		eventUPP = nil; 
+	SInt16 			pathLen;
+        Handle 			pathName=NULL;
+        char 			path[300];
+	OSErr               	anErr = noErr,err;
+        
+	theErr = NavGetDefaultDialogOptions( &dialogOptions );
+		
+        CopyCStringToPascal("Choose Package Directory",dialogOptions.message);
+
+	theErr = NavChooseFolder(NULL,&theReply,&dialogOptions,eventUPP,NULL,nil);
+
+	if ( theReply.validRecord && theErr == noErr)
+	{
+		FSSpec		finalFSSpec,tempSpec;	
+		AEKeyword 	keyWord;
+		DescType 	typeCode;
+                WDPBRec		wdpb;
+		Size 		actualSize = 0;
+
+		if (( theErr = AEGetNthPtr( &(theReply.selection), 1, typeFSS, &keyWord, &typeCode, 
+		         &finalFSSpec, sizeof( FSSpec ), &actualSize )) == noErr )		
+		{
+                        err = FSMakePath(finalFSSpec.vRefNum, finalFSSpec.parID, finalFSSpec.name, buf, 300);
     		}
 		
 		theErr = NavDisposeReply( &theReply );

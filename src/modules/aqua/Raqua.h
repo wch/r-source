@@ -59,6 +59,8 @@ typedef struct
    int		AntiAlias;
    int  	AutoRefresh;
    int		OverrideRDefaults;
+  int           Buffering;
+  int           BufferSize;
 }  RAquaPrefs, *RAquaPrefsPointer, **RAquaPrefsHandle;
 
 

@@ -65,7 +65,7 @@ void CallFontPanel(void);
         
 
 /* R Preferences version */                
-#define RAquaPrefsVer	1L
+#define RAquaPrefsVer	2L
 
 /* button ID for Preferences panel */
 #define kConsoleFontButton  	1002
@@ -77,6 +77,8 @@ void CallFontPanel(void);
 #define kInputColorButton   	1010
 #define kOutputBackButton   	1011
 #define kInputBackButton    	1012
+#define kBufferingBox    	1013
+#define kBufferSizeSlider       1014
 
 #define	kDeviceFontButton   	3001
 #define kDeviceFontText 	3002
@@ -110,6 +112,8 @@ ControlID	AutoRefreshID = { kPrefControlsSig, kAutoRefreshBox };
 ControlID	AntiAliasingID = { kPrefControlsSig, kAntiAliasingBox };
 ControlID	InputColorID = { kPrefControlsSig, kInputColorText };
 ControlID	OutputColorID = { kPrefControlsSig, kOutputColorText };
+ControlID	BufferingID = { kPrefControlsSig, kBufferingBox };
+ControlID	BufferSizeID = { kPrefControlsSig, kBufferSizeSlider };
 
 static	char		DefaultConsoleFontName[] = "Courier";
 static	int		DefaultConsoleFontSize = 14;
@@ -125,7 +129,8 @@ static	double		DefaultDeviceHeight = 5.0;
 static	int		DefaultAntiAlias = 1;
 static	int		DefaultAutoRefresh = 1;
 static	int		DefaultOverrideRDefaults = 0;
-
+static	int		DefaultBuffering = 1;
+static  int             DefaultBufferSize = 10;
 
 
 ControlRef GrabCRef(WindowRef theWindow,OSType theSig, SInt32 theNum);
@@ -166,7 +171,7 @@ void GetRPrefs(void);
 void SaveRPrefs(void);
 
 CFStringRef appName, tabsizeKey, fontsizeKey, consolefontKey, devicefontKey;
-CFStringRef outfgKey, outbgKey, infgKey, inbgKey;
+CFStringRef outfgKey, outbgKey, infgKey, inbgKey, bufferingKey, bufferSizeKey;
 CFStringRef devWidthKey, devHeightKey, devPSizeKey;
 CFStringRef devAutoRefreshKey, devAntialiasingKey, devOverrideRDefKey;
            
@@ -192,6 +197,8 @@ void	SetUpPrefSymbols(void){
     devAutoRefreshKey = CFSTR("Device Autorefresh");
     devAntialiasingKey = CFSTR("Device Antialiasing");
     devOverrideRDefKey = CFSTR("Override R Defaults");
+    bufferingKey = CFSTR("Buffered Output");
+    bufferSizeKey = CFSTR("Output Buffer Size");
 }
 
 OSStatus InstallPrefsHandlers(void){
@@ -287,6 +294,8 @@ void SetDefaultPrefs(void)
     DefaultPrefs.AntiAlias = DefaultAntiAlias;
     DefaultPrefs.AutoRefresh = DefaultAutoRefresh;
     DefaultPrefs.OverrideRDefaults = DefaultOverrideRDefaults;
+    DefaultPrefs.Buffering = DefaultBuffering;
+    DefaultPrefs.BufferSize = DefaultBufferSize;
     
 
 }
@@ -308,7 +317,8 @@ void CopyPrefs(RAquaPrefsPointer From, RAquaPrefsPointer To)
     To->AntiAlias = From->AntiAlias;
     To->AutoRefresh = From->AutoRefresh;
     To->OverrideRDefaults = From->OverrideRDefaults;
-    
+    To->Buffering = From->Buffering;
+    To->BufferSize = From->BufferSize;
 }
 
     
@@ -322,7 +332,8 @@ void GetRPrefs(void)
     CFDataRef	color;
     RGBColor    fgout,bgout,fgin,bgin;
     char consolefont[255], devicefont[255];
-    int	autorefresh, antialiasing, overrideRdef;
+    int	autorefresh, antialiasing, overrideRdef, buffering, buffersize;
+
     
     SetUpPrefSymbols();
     SetDefaultPrefs();
@@ -433,6 +444,25 @@ void GetRPrefs(void)
 	overrideRdef = DefaultPrefs.OverrideRDefaults; /* set default value */
 
     CurrentPrefs.OverrideRDefaults = overrideRdef;
+
+    /* Buffered Text Output */
+    value = CFPreferencesCopyAppValue(bufferingKey, appName);   
+    if (value) {
+	if (!CFNumberGetValue(value, kCFNumberIntType, &buffering)) buffering = DefaultPrefs.Buffering;
+	CFRelease(value);
+    } else 
+	buffering = DefaultPrefs.Buffering; /* set default value */
+
+    CurrentPrefs.Buffering = buffering;
+
+    value = CFPreferencesCopyAppValue(bufferSizeKey, appName);   
+    if (value) {
+	if (!CFNumberGetValue(value, kCFNumberIntType, &buffersize)) buffersize = DefaultPrefs.BufferSize;
+	CFRelease(value);
+    } else 
+	buffersize = DefaultPrefs.BufferSize; /* set default value */
+
+    CurrentPrefs.BufferSize = buffersize;
 
 /*  Console Out Foreground color */
     color = CFPreferencesCopyAppValue(outfgKey, appName);   
@@ -552,6 +582,12 @@ void SetUpPrefsWindow(RAquaPrefsPointer Settings)
     GetControlByID(RPrefsWindow, &AntiAliasingID, &myControl);
     SetControl32BitValue(myControl, Settings->AntiAlias);
 
+    GetControlByID(RPrefsWindow, &BufferingID, &myControl);
+    SetControl32BitValue(myControl, Settings->Buffering);
+
+    GetControlByID(RPrefsWindow, &BufferSizeID, &myControl);
+    SetControl32BitValue(myControl, Settings->BufferSize);
+
     GetControlByID(RPrefsWindow, &OverrideRDefBoxID, &myControl);
     SetControl32BitValue(myControl, Settings->OverrideRDefaults);
 
@@ -568,7 +604,8 @@ void SaveRPrefs(void)
     CFDataRef	color;
     RGBColor    fgout,bgout,fgin,bgin;
     char 	consolefont[255], devicefont[255];
-    int	autorefresh, antialiasing, overrideRdef;
+    int	autorefresh, antialiasing, overrideRdef, buffering, buffersize;
+
     
     tabsize = CurrentPrefs.TabSize;
     fontsize = CurrentPrefs.ConsoleFontSize;
@@ -585,6 +622,8 @@ void SaveRPrefs(void)
     autorefresh = CurrentPrefs.AutoRefresh;
     antialiasing = CurrentPrefs.AntiAlias;
     overrideRdef = CurrentPrefs.OverrideRDefaults;
+    buffering = CurrentPrefs.Buffering;
+    buffersize = CurrentPrefs.BufferSize;
        
 /* Tab Size */
     value = CFNumberCreate(NULL, kCFNumberIntType, &tabsize); 
@@ -637,6 +676,15 @@ void SaveRPrefs(void)
 /* Override R Defaults */
     value = CFNumberCreate(NULL, kCFNumberIntType, &overrideRdef); 
     CFPreferencesSetAppValue(devOverrideRDefKey, value, appName);
+    CFRelease(value);
+
+/* Buffering */
+    value = CFNumberCreate(NULL, kCFNumberIntType, &buffering); 
+    CFPreferencesSetAppValue(bufferingKey, value, appName);
+    CFRelease(value);
+
+    value = CFNumberCreate(NULL, kCFNumberIntType, &buffersize); 
+    CFPreferencesSetAppValue(bufferSizeKey, value, appName);
     CFRelease(value);
 
     color = CFDataCreate (NULL, (UInt8*)&fgout, sizeof(fgout));
@@ -952,6 +1000,12 @@ void GetDialogPrefs(void)
  
     GetControlByID( RPrefsWindow, &OverrideRDefBoxID, &controlField );
     CurrentPrefs.OverrideRDefaults = GetControl32BitValue(controlField);
+
+    GetControlByID( RPrefsWindow, &BufferingID, &controlField );
+    CurrentPrefs.Buffering = GetControl32BitValue(controlField);
+ 
+    GetControlByID( RPrefsWindow, &BufferSizeID, &controlField );
+    CurrentPrefs.BufferSize = GetControl32BitValue(controlField);
     
     CurrentPrefs.FGOutputColor = TempPrefs.FGOutputColor;
     CurrentPrefs.BGOutputColor = TempPrefs.BGOutputColor;    
