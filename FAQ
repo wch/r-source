@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-35, 2004-01-28
+Version 1.8-36, 2004-01-30
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1665,6 +1665,9 @@ distributions of R.)
      *tframe* (functions for writing code that is independent of the
      representation of time). and *setRNG* (a mechanism for generating the
      same random numbers in S and R).
+
+*dynamicGraph*
+     Interactive graphical tool for manipulating graphs.
 
 *e1071*
      Miscellaneous functions used at the Department of Statistics at TU Wien

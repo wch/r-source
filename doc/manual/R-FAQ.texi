@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-35, @value{FAQ-YEAR}-01-28
+@set FAQ-VERSION 1.8-36, @value{FAQ-YEAR}-01-30
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -1887,6 +1887,8 @@ techniques, forecasting, and for evaluating forecasting model),
 @strong{tframe} (functions for writing code that is independent of the
 representation of time). and @strong{setRNG} (a mechanism for generating
 the same random numbers in S and R).
+@item dynamicGraph
+Interactive graphical tool for manipulating graphs.
 @item e1071
 Miscellaneous functions used at the Department of Statistics at TU Wien
 (E1071), including moments, short-time Fourier transforms, Independent
