@@ -75,6 +75,10 @@
    */
 #define HAVE_DECL_ISNAN 1
 
+/* Define to 1 if you have the declaration of `SIZE_MAX', and to 0 if you
+   don't. */
+#define HAVE_DECL_SIZE_MAX 1
+
 /* Define to 1 if you have the declaration of `snprintf', and to 0 if you
    don't. */
 #define HAVE_DECL_SNPRINTF 1
@@ -214,6 +218,9 @@
 
 /* Define to 1 if you have the `tk' library (-ltk). */
 /* #undef HAVE_LIBTK */
+
+/* Define to 1 if you have the <limits.h> header file. */
+#define HAVE_LIMITS_H 1
 
 /* Define to 1 if you have the <locale.h> header file. */
 #define HAVE_LOCALE_H 1
