@@ -246,6 +246,10 @@ old installation.  Different versions of R are quite deliberately
 installed in parallel folders so you can keep old versions around if you
 wish.
 
+Upgrading from R 1.x.y to R 2.0.0 is special as all the packages
+need to be reinstalled.  Rather than copy them across, make a note of
+their names and re-install them from CRAN.
+
 
 @node There seems to be a limit on the memory it uses!, How can I keep workspaces for different projects in different directories?, What's the best way to upgrade?, Installation and Usage
 @section There seems to be a limit on the memory it uses!
@@ -961,9 +965,10 @@ cd R-@value{RVERSION}
 cd src\gnuwin32
 @end example
 @noindent
-Now read the @file{INSTALL} file and set up all the tools needed.  Then you
-can just use @code{make}, sit back and wait.  (A complete build takes about
-5 minutes on a 2.4GHz P4 with a fast local disc.)
+Now read the @file{INSTALL} file and set up all the tools needed.  Then
+you can just use @code{make all bitmapdll recommended vignettes}, sit
+back and wait.  (A complete build takes about 20 minutes on a 2.6GHz P4
+with a fast local disc.)
 
 You may need to compile under a case-honouring file system: we found
 that a @code{samba}-mounted file system (which maps all file names to lower
@@ -1160,8 +1165,8 @@ destruction when the DLL is unloaded, usually when R terminates.
 Note that you will not see the messages from this example in the GUI
 console: see the next section.
 
-This example is in package @code{cxx_0.0-x.tar.gz} in the
-@file{src/contrib/Devel} section on CRAN, and that can be compiled as a
+This example used to be in package @code{cxx_0.0-x.tar.gz} in the
+@file{src/contrib/Devel} section on CRAN, and could be compiled as a
 package in the usual way on Windows.
 
 
@@ -1206,14 +1211,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2004 June 18 by Professor B. D. Ripley
+Last edited 2004 Sept 7 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2004 June 18 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2004 Sept 7 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
