@@ -89,6 +89,9 @@ NEW FEATURES
     o	save(, oldstyle=TRUE) is now deprecated, and will be removed
 	by 1.3.0.
 
+    o	.Platform has new component "endian", useful for binary file
+	manipulations.
+
 
 
 	**************************************************

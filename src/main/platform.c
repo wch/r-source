@@ -41,16 +41,22 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP value, names;
     checkArity(op, args);
-    PROTECT(value = allocVector(VECSXP, 4));
-    PROTECT(names = allocVector(STRSXP, 4));
+    PROTECT(value = allocVector(VECSXP, 5));
+    PROTECT(names = allocVector(STRSXP, 5));
     STRING(names)[0] = mkChar("OS.type");
     STRING(names)[1] = mkChar("file.sep");
     STRING(names)[2] = mkChar("dynlib.ext");
     STRING(names)[3] = mkChar("GUI");
+    STRING(names)[4] = mkChar("endian");
     VECTOR(value)[0] = mkString(R_OSType);
     VECTOR(value)[1] = mkString(R_FileSep);
     VECTOR(value)[2] = mkString(R_DynLoadExt);
     VECTOR(value)[3] = mkString(R_GUIType);
+#ifdef WORDS_BIGENDIAN
+    VECTOR(value)[4] = mkChar("big");
+#else
+    VECTOR(value)[4] = mkChar("little");
+#endif
     setAttrib(value, R_NamesSymbol, names);
     UNPROTECT(2);
     return value;
