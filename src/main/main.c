@@ -461,7 +461,7 @@ void setup_Rmainloop(void)
 #ifdef SUPPORT_MBCS
     mbcslocale = MB_CUR_MAX > 1;
 #endif
-#ifdef Win32
+#if defined(Win32) && defined(SUPPORT_UTF8)
     utf8locale = mbcslocale = TRUE;
 #endif
     /* gc_inhibit_torture = 0; */
