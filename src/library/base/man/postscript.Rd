@@ -36,7 +36,7 @@ default values for the arguments to \code{postscript}.
 
 The postscript produced by \R is EPS (\emph{Encapsulated PostScript})
 compatible, and can be included into other documents, e.g. into LaTeX, using
-\code{\\epsfig{file=<filename>}}.
+\code{\epsfig{file=<filename>}}.
 }
 \seealso{
 \code{\link{x11}}, \code{\link{macintosh}}, \code{\link{Devices}}.

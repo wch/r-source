@@ -15,9 +15,6 @@ system.file(file = "", pkg = .packages(), lib = .lib.loc)
   \code{system.file} returns a character vector of positive length,
   containing the file names that matched \code{file}, or the empty
   string, \code{""}, if none matched.
-
-  A typical call is \code{fs <- system.file("help/lm")}, followed by
-  \code{if (fs == "") \{ warning(".. not found") \} else \{ \dots \}}.
 }
 \examples{
 system.file("")            # The root of the `base' package

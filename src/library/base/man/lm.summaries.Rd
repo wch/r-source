@@ -42,40 +42,42 @@ coefficients, standard errors, etc. and additionally gives ``significance
 stars'' if \code{signif.stars= TRUE}.
 }
 \value{
-The function \code{summary.lm} computes and returns a list of
-summary statistics of the fitted linear model given in \code{lm.obj},
-using the slots (list elements) \code{"call"}, \code{"terms"}, and
-\code{"residuals"} from its argument, plus
-\item{coefficients}{a \eqn{p \times 4}{p x 4} matrix with columns for
-  the estimated coefficient, its standard error, t-statistic and
-  corresponding (two-sided) P-value.}
-\item{sigma}{the square root of the estimated variance of the random error,\cr
-  \eqn{\hat\sigma^2=\frac{1}{n-p}\sum_i{R_i^2}}{sigma^2 = 1/(n-p) Sum(R[i]^2)},
-  where \eqn{R_i}{R[i]} is the \eqn{i}-th residual, \code{residuals[i]}.}
-\item{df}{degrees of freedom, a 3-vector \eqn{(p,n-p,p*)} ...}
-\item{fstatistic}{a 3-vector with the value of the F-statistic with its
-  numerator and denominator degrees of freedom.}
-\item{r.squared}{\eqn{R^2}, the ``fraction of variance explained by the
-  model'',
-  \deqn{R^2 = 1 - \frac{\sum_i{R_i^2}}{\sum_i(y_i- y^*)^2},}{%
-    R^2 = 1 - Sum(R[i]^2) / Sum((y[i]- y*)^2),}
-  where \eqn{y^*}{y*} is the mean of \eqn{y_i}{y[i]} if there is an
-  intercept and zero otherwise.}
-\item{adj.r.squared}{the above \eqn{R^2} statistic \emph{``adjusted''},
-  penalizing for higher \eqn{p}.}
-\item{cov.unscaled}{a \eqn{p \times p}{p x p} matrix of (unscaled)
-  covariances of the \eqn{\hat\beta_j}{coef..[j]}, \eqn{j=1,\dots,p}.}
-%%-- Rdconv just deletes the following line. This IS a bug !
-and if \code{correlation = TRUE} was specified,%- don't need anymore..
-\item{correlation}{the correlation matrix corresponding to
-  \code{cov.unscaled} above, if \code{correlation = TRUE} is specified.}
+  The function \code{summary.lm} computes and returns a list of summary
+  statistics of the fitted linear model given in \code{lm.obj}, using
+  the slots (list elements) \code{"call"}, \code{"terms"}, and
+  \code{"residuals"} from its argument, plus
+  \item{coefficients}{a \eqn{p \times 4}{p x 4} matrix with columns for
+    the estimated coefficient, its standard error, t-statistic and
+    corresponding (two-sided) p-value.}
+  \item{sigma}{the square root of the estimated variance of the random
+    error,
+    \deqn{\hat\sigma^2 = \frac{1}{n-p}\sum_i{R_i^2}}{%
+      sigma^2 = 1/(n-p) Sum(R[i]^2)},
+    where \eqn{R_i}{R[i]} is the \eqn{i}-th residual,
+    \code{residuals[i]}.}
+  \item{df}{degrees of freedom, a 3-vector \eqn{(p,n-p,p*)} ...}
+  \item{fstatistic}{a 3-vector with the value of the F-statistic with
+    its numerator and denominator degrees of freedom.}
+  \item{r.squared}{\eqn{R^2}, the ``fraction of variance explained by
+    the model'',
+    \deqn{R^2 = 1 - \frac{\sum_i{R_i^2}}{\sum_i(y_i- y^*)^2},}{%
+      R^2 = 1 - Sum(R[i]^2) / Sum((y[i]- y*)^2),}
+    where \eqn{y^*}{y*} is the mean of \eqn{y_i}{y[i]} if there is an
+    intercept and zero otherwise.}
+  \item{adj.r.squared}{the above \eqn{R^2} statistic
+    \emph{``adjusted''}, penalizing for higher \eqn{p}.}
+  \item{cov.unscaled}{a \eqn{p \times p}{p x p} matrix of (unscaled)
+    covariances of the \eqn{\hat\beta_j}{coef..[j]}, \eqn{j=1,\dots,p}.}
+  %%-- Rdconv just deletes the following line. This IS a bug !
+  and if \code{correlation = TRUE} was specified,%- don't need anymore..
+  \item{correlation}{the correlation matrix corresponding to the above
+    \code{cov.unscaled}, if \code{correlation = TRUE} is specified.}
 
-The function \code{anova}
-produces an analysis of variance (\code{anova}) table.
-The generic accessor functions \code{coefficients},
-\code{effects}, \code{fitted.values} and \code{residuals}
-can be used to extract various useful features of the
-value returned by \code{lm}.
+  The function \code{anova} produces an analysis of variance
+  (\code{anova}) table.  The generic accessor functions
+  \code{coefficients}, \code{effects}, \code{fitted.values} and
+  \code{residuals} can be used to extract various useful features of the
+  value returned by \code{lm}.
 }
 \seealso{
 The model fitting function \code{\link{lm}}.

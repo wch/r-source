@@ -21,14 +21,14 @@ prompt.default(object,
   An ASCII file \code{filename} is produced containing the proper
   function and argument names of \code{object}.  You have to edit it
   before adding the documentation to the source tree, i.e., (currently)
-  to \code{$RHOME/src/library/base/man/}.
+  to \file{\$RHOME/src/library/base/man/}.
 }
 \seealso{
   \code{\link{help}} and the tutorial about writing \R documentation,
-  currently in the file \code{$RHOME/doc/manual/writing-Rd.tex}.
+  currently in the file \file{\$RHOME/doc/manual/writing-Rd.tex}.
 }
 \examples{
 prompt(plot.default)
-prompt(interactive, force.f=TRUE)
+prompt(interactive, force.f = TRUE)
 }
 \keyword{documentation}

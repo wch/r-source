@@ -78,10 +78,9 @@ be used to obtain or print a summary of the results and the function
 \code{\link{anova}} (i.e., \code{\link{anova.glm}})
 to produce an analysis of variance table.
 
-The generic accessor functions \code{\link{coefficients}} (i.e.,
-\code{\link{coefficients.glm}}), \code{effects}, \code{fitted.values}
-and \code{residuals} can be used to extract various useful features of
-the value returned by \code{glm}.
+The generic accessor functions \code{\link{coefficients}},
+\code{effects}, \code{fitted.values} and \code{residuals} can be used to
+extract various useful features of the value returned by \code{glm}.
 }
 \seealso{
   \code{\link{anova.glm}}, \code{\link{summary.glm}}, etc. for
