@@ -16,9 +16,9 @@ function(package, dir, lib.loc = NULL)
         isBase <- package == "base"
 
         ## Find all documented topics from the help index.
-        allDocTopics <- sort(scan(file = helpIndex,
-                                  what = list("", ""),
-                                  quiet = TRUE, sep = "\t")[[1]])
+        allDocTopics <-
+            sort(scan(file = helpIndex, what = list("", ""), sep = "\t",
+                      quiet = TRUE, na.strings = character())[[1]])
         ## <NOTE>
         ## This gets all topics the same way as index.search() would
         ## find individual ones.  We could also use
