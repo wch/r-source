@@ -212,9 +212,16 @@ BUG FIXES
 	rug() always clipped x values to the plot region, but now
 	admits to doing so with a warning.
 
-    o	plot() and axis() got in trouble with very small relative
-	ranges: these are now required to be at 100x the machine
+    o	plot() and axis() got into trouble with very small relative
+	ranges: these are now required to be at least 100x the machine
 	precision.
+
+    o	split.screen(, erase=TRUE) failed to create a new plot, so 
+	failed if it was used on a postscript device before other plots.
+
+    o	plotting with lwd = 0 also set the dash length to 0: now
+	dash lengths are scaled up for lwd > 1 but not reduced for
+	0 <= lwd < 1.
 
 
 	**************************************************

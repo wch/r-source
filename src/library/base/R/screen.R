@@ -34,6 +34,7 @@ split.screen <- function(figs,
 	stop("figs must specify at least one screen\n")
     new.screens <- valid.screens <- cur.screen <- 0
     if (first.split) {
+        if (erase) frame()
 	split.par.list <- c("adj", "bty", "cex", "col", "crt", "err",
 			    "font", "lab", "las", "lty",
 			    "lwd", "mar", "mex", "mfg", "mgp",
