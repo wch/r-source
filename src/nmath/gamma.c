@@ -96,7 +96,7 @@ double gammafn(double x)
 	FIXME for threads ! */
     if (ngam == 0) {
 	ngam = chebyshev_init(gamcs, 42, DBL_EPSILON/20);/*was .1*d1mach(3)*/
-	gammalims(&xmin, &xmax);
+	gammalims(&xmin, &xmax);/*-> ./gammalims.c */
 	xsml = exp(fmax2(log(DBL_MIN), -log(DBL_MAX)) + 0.01);
 	/*   = exp(.01)*DBL_MIN = 2.247e-308 for IEEE */
 	dxrel = sqrt(1/DBL_EPSILON);/*was (1/d1mach(4)) */

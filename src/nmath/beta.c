@@ -39,8 +39,8 @@
 
 double beta(double a, double b)
 {
-    static double xmax = 0;
-    static double alnsml = 0;
+    static double xmax = 0;  /*-> typically = 171.61447887 for IEEE */
+    static double alnsml = 0;/*-> typically = -708.3964185 */
     double val, xmin;
 
     if (xmax == 0) {
@@ -62,7 +62,7 @@ double beta(double a, double b)
 	return 0;
     }
 
-    if (a + b < xmax)
+    if (a + b < xmax) /* ~= 171.61 for IEEE */
 	return gammafn(a) * gammafn(b) / gammafn(a+b);
 
     val = lbeta(a, b);
