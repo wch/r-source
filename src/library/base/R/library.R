@@ -338,36 +338,20 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 	    help <- as.character(substitute(help))
         pkgName <- help[1]              # only give help on one package
         pkgPath <- .find.package(pkgName, lib.loc, verbose = verbose)
-        docFiles <- file.path(pkgPath, c("DESCRIPTION", "INDEX"))
-        ## This is a bit ugly, but in the future we might also have
-        ## DESCRIPTION or INDEX files as serialized R objects ...
+        docFiles <- c(file.path(pkgPath, "Meta", "package.rds"),
+                      file.path(pkgPath, "INDEX"))
         if(file.exists(vignetteIndexRDS <-
                        file.path(pkgPath, "Meta", "vignette.rds")))
             docFiles <- c(docFiles, vignetteIndexRDS)
-        else
-            docFiles <- c(docFiles,
-                          file.path(pkgPath, "doc", "00Index.dcf"))
         pkgInfo <- vector(length = 4, mode = "list")
         pkgInfo[[1]] <- paste("\n\t\tInformation on Package",
                               sQuote(pkgName))
         readDocFile <- function(f) {
-            if(basename(f) %in% c("DESCRIPTION", "00Index.dcf")) {
-                ## This should be in valid DCF format ...
-                txt <- try(read.dcf(f))
-                if(inherits(txt, "try-error")) {
-                    warning(paste("file",
-                                  sQuote(f),
-                                  "is not in valid DCF format"))
-                    return(NULL)
-                }
-                ## Return a list so that the print method knows to
-                ## format as a description list (if non-empty).
-                txt <- if(all(dim(txt) >= 1))
-                    list(colnames(txt), as.character(txt[1, ]))
-                else
-                    NULL
-            }
-            else if(basename(f) %in% c("vignette.rds")) {
+            if(basename(f) %in% "package.rds") {
+                txt <- .readRDS(f)$DESCRIPTION
+                nm <- paste(names(txt), ":", sep="")
+                formatDL(nm, txt, indent = max(nchar(nm)) + 3)
+            } else if(basename(f) %in% "vignette.rds") {
                 txt <- .readRDS(f)
                 ## New-style vignette indexes are data frames with more
                 ## info than just the base name of the PDF file and the
@@ -375,7 +359,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 ## vignettes, their titles, and indicate whether PDFs
                 ## are available.
                 ## The index might have zero rows.
-                txt <- if(is.data.frame(txt) && nrow(txt))
+                if(is.data.frame(txt) && nrow(txt))
                     cbind(basename(gsub("\\.[[:alpha:]]+$", "",
                                         txt$File)),
                           paste(txt$Title,
@@ -385,10 +369,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                                              ""),
                                       ")", sep = "")))
                 else NULL
-            }
-            else
-                txt <- readLines(f)
-            txt
+            } else
+                readLines(f)
         }
         for(i in which(file.exists(docFiles)))
             pkgInfo[[i+1]] <- readDocFile(docFiles[i])
@@ -688,7 +670,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
         ## valid version.  Actually, we should really exclude all
         ## candidates with "bad" DESCRIPTION metadata, but we cannot use
         ## tools:::.check_package_description() for a full check here.
-        ## (But then packages installed with R 2.0 or better must have
+        ## (But then packages installed with R 2.0.0 or later must have
         ## valid DESCRIPTION metadata anyways.)
         if(length(paths)) {
             paths <- unique(paths)
