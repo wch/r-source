@@ -1151,13 +1151,12 @@ possible.  There is no need for a local installation since the only
 requirement for the user is a JavaScript capable browser.  See
 `http://osvisions.com/r-online/' for more information.
 
-   *CGIwithR* is an R add-on package by David Firth
-<david.firth@nuffield.ox.ac.uk> and has its home page at
-`http://www.stats.ox.ac.uk/~firth/CGIwithR/index.html'.  It provides some
-simple extensions to R to facilitate running R scripts through the CGI
-interface to a web server.  It is easily installed using Apache under Linux
-and in principle should run on any platform that supports R and a web
-server provided that the installer has the necessary security permissions.
+   David Firth <http://www.warwick.ac.uk/go/dfirth> has written *CGIwithR*,
+an R add-on package available from CRAN.  It provides some simple
+extensions to R to facilitate running R scripts through the CGI interface
+to a web server.  It is easily installed using Apache under Linux and in
+principle should run on any platform that supports R and a web server
+provided that the installer has the necessary security permissions.
 
    *Rcgi* is a CGI WWW interface to R by Mark J. Ray
 <mjr@stats.mth.uea.ac.uk>.  It had the ability to use "embedded code": you
