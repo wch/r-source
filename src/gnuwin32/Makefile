@@ -308,16 +308,16 @@ clean: cleanwin $(PKGCLEAN)
 	-$(MAKE) -C ../modules -f Makefile.win clean
 	-$(MAKE) -C ../../tests -f Makefile.win clean
 	$(RM) -f ../library/methods/R/methods
-	$(RM) -f  ../library/Recommended/Timestamp
 	for p in $(REC_PKGS); do \
 	  $(RM) -rf ../library/$$p; \
 	done
 
-distclean veryclean: clean
+distclean veryclean: clean clean-recommended
 	$(RM) -r ../../bin ../../library ../../modules
 	$(RM) ../include/config.h ../include/psignal.h \
 	../include/Rconfig.h ../include/Rversion.h ../include/Rmath.h
 	$(RM) ../library/*/src/*.o ../library/*/src/*.a
+	$(RM) ../library/*/src/*.d ../library/*/src/Makedeps
 	$(RM) ../library/*/src/*.dll
 	$(RM) -r ../library/*/check
 	$(RM) R.exp Rm.exp COPYRIGHTS
@@ -508,19 +508,20 @@ install:
 CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER)/Recommended
 
 rsync-recommended:
-	(cd ../library; rsync -rvCt --delete --exclude=Timestamp --exclude=Makefile.in $(CRANREC) .)
+	(cd ../library; \
+	rsync -rvCt --delete --exclude=Makefile.in --exclude=.cvsignore $(CRANREC) . ); \
+	(cd ../library/Recommended; for i in ${RECOMMENDED} ; do cp -p $${i}*.tar.gz $${i}_tgz ; done)
 
-## Note this is not quite right: if you download a package older than
-## Timestamp (could happen) it will not be unpacked.
-## However, this only affects people using rsync.
+../library/%/DESCRIPTION: ../library/RECOMMENDED/%_tgz
+	@echo "---- $*"
+	(cd ../library; tar zxf Recommended/$*_tgz; touch $@)
+
 unpack-recommended:
 	@echo "--- Unpacking recommended packages"
-	@if [ -f ../library/Recommended/Timestamp ] ; then \
-	  (cd ../library/Recommended; find . -newer Timestamp -name '*.tar.gz' -exec tar zxf {} -C $(RHOME)/src/library \;) ; \
-	else \
-	  (cd ../library/Recommended; find . -name '*.tar.gz' -exec tar zxf {} -C $(RHOME)/src/library \;) ; \
-	fi
-	@touch ../library/Recommended/Timestamp
+	@for i in ${RECOMMENDED} ; do $(MAKE) -s --no-print-directory ../library/$$i/DESCRIPTION ; done
+
+clean-recommended:
+	@for i in ${RECOMMENDED} ; do $(RM) -r ../library/$${i} ; done
 
 recommended: unpack-recommended
 	@echo "--- Making recommended packages"

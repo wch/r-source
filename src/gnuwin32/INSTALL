@@ -228,7 +228,8 @@ and checked by
 
 If you are using a cvs/rsync version of the R sources, you need to put
 the .tar.gz files for the recommended packages in
-../library/Recommended.  If you have rsync installed,
+../library/Recommended, and copy foo_*.tar.gz to foo_tgz.  If you have
+rsync installed,
 
 	make rsync-recommended
 
