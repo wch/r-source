@@ -4525,8 +4525,9 @@ Return a pathname for a temporary file with name beginning with
 @var{prefix}.  A @code{NULL} prefix is replaced by @code{""}.
 @end deftypefun
 
+@c ----
 
-There is also the internal function use to expand file names in several
+There is also the internal function used to expand file names in several
 @R{} functions, and called directly by @code{path.expand}.
 
 @deftypefun {char *} R_ExpandFileName (char* @var{fn})

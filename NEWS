@@ -225,6 +225,9 @@ BUG FIXES
 
     o	ls.str(envir = environment(F)) now works (when F is a function).
 
+    o	nchar(), strwidth(), strheight() all now give NA on NA strings.
+	(PR#1739)
+
 
 
 		CHANGES IN R VERSION 1.5.1
