@@ -11,9 +11,9 @@ $(DPKG)/R/$(PKG): $(RHOME)/share/R/firstlib.R
 $(DPKG)/R/all.rda: R/${PKG}
 	@echo "  dumping R code in package \`$(PKG)'"
 ifeq ($(strip $(BUILD)),CROSS)
-	@$(R_EXE) --vanilla --no-dotFirst --slave < $<
+	@ R_DEFAULT_PACKAGES=NULL $(R_EXE) --vanilla --slave < $<
 else
-	@$(RHOME)/bin/rterm --vanilla --no-dotFirst --slave < $<
+	@$(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=NULL < $<
 endif
 
 R/$(PKG): $(PKGRFILES)
