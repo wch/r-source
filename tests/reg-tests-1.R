@@ -258,7 +258,6 @@ x <- c(9:20, 1:5, 3:7, 0:8)
 stopifnot(xu == unique(x), # but unique(x) is more efficient
 	  0:20 == sort(x[!duplicated(x)]))
 
-data(iris)
 stopifnot(duplicated(iris)[143] == TRUE)
 ## end of moved from duplicated.Rd
 
@@ -299,7 +298,6 @@ stopifnot(abs(c(1 - abs(sV / V)))	<     1000*Meps)
 
 
 ## euro
-data(euro)
 stopifnot(euro == signif(euro,6), euro.cross == outer(1/euro, euro))
 ## end of moved from euro.Rd
 
@@ -618,7 +616,6 @@ for(p in list(c(1,2,5), 1:3, 3:1, 2:0, 0:2, c(1,2,1), c(0,0,1))) {
 ## plot.lm
 # which=4 failed in R 1.0.1
 par(mfrow=c(1,1), oma= rep(0,4))
-data(longley)
 summary(lm.fm2 <- lm(Employed ~ . - Population - GNP.deflator, data = longley))
 for(wh in 1:4) plot(lm.fm2, which = wh)
 ## end of moved from plot.lm.Rd
@@ -645,7 +642,6 @@ stopifnot(all.equal(qr.X(qr(X)), X))
 
 
 ## qraux
-data(LifeCycleSavings)
 p <- ncol(x <- LifeCycleSavings[,-1]) # not the `sr'
 qrstr <- qr(x)	 # dim(x) == c(n,p)
 Q <- qr.Q(qrstr) # dim(Q) == dim(x)
@@ -712,7 +708,6 @@ stopifnot(
 
 
 ## sort
-data(swiss)
 x <- swiss$Education[1:25]
 stopifnot(!is.unsorted(sort(x)),
 	  !is.unsorted(LETTERS),
@@ -842,7 +837,6 @@ my.unique <- function(x) x[!duplicated(x)]
 for(i in 1:4)
  { x <- rpois(100, pi); stopifnot(unique(x) == my.unique(x)) }
 
-data(iris)
 unique(iris)
 stopifnot(dim(unique(iris)) == c(149, 5))
 ## end of moved from unique.Rd
@@ -931,7 +925,6 @@ step(x0.lm, ~ b + c)
 
 ## PR 796 (aic in binomial models is often wrong)
 ##
-data(esoph)
 a1 <- glm(cbind(ncases, ncontrols) ~ agegp + tobgp * alcgp,
 	  data = esoph, family = binomial())$aic
 a1
@@ -1183,7 +1176,6 @@ stopifnot(4 == nrow(merge(x, y, all = TRUE)))
 
 
 ## PR 1149.  promax was returning the wrong rotation matrix.
-data(ability.cov)
 ability.FA <- factanal(factors = 2, covmat = ability.cov, rotation = "none")
 pm <- promax(ability.FA$loadings)
 tmp1 <- as.vector(ability.FA$loadings %*% pm$rotmat)
@@ -1582,7 +1574,6 @@ stopifnot(prettyNum(123456, big.mark=",") == "123,456")
 
 
 ## PR 1552: cut.dendrogram
-data(USArrests)
 hc <- hclust(dist(USArrests), "ave")
 cc <- cut(as.dendrogram(hc), h = 20)## error in 1.5.0
 
@@ -1758,7 +1749,6 @@ stopifnot(identical(as.double(NA), NaN) == FALSE)
 
 
 ## safe prediction (PR#1840)
-data(cars)
 cars.1 <- lm(dist ~ poly(speed, degree = 1), data = cars)
 cars1  <- lm(dist ~	 speed,		     data = cars)
 DF <- data.frame(speed=4)
@@ -1912,7 +1902,6 @@ stopifnot(length(grep("missing value", res)) == 0)
 
 
 ## stripchart with NAs (PR#2018)
-data(iris)
 Sepal <- iris$Sepal.Length
 Sepal[27] <- NA
 stripchart(Sepal ~ iris$Species, method="stack")
@@ -2481,7 +2470,6 @@ stopifnot(det(m <- cbind(1, c(1, 1))) == 0,
 
 
 ## tests of model fitting in the presence of non-syntactic names
-data(swiss)
 names(swiss)[6] <- "Infant Mortality"
 (lm1 <- lm(Fertility ~ ., data = swiss))
 formula(lm1) # is expanded out
@@ -2575,7 +2563,6 @@ options(op)# reset to previous
 library(stats)
 ## cmdscale
 ## failed in versions <= 1.4.0 :
-data(eurodist)
 cm1 <- cmdscale(eurodist, k=1, add=TRUE, x.ret = TRUE)
 cmdsE <- cmdscale(eurodist, k=20, add = TRUE, eig = TRUE, x.ret = TRUE)
 # FAILED on Debian testing just prior to 1.9.0!
@@ -2587,7 +2574,6 @@ stopifnot(all.equal(cm1$x,  cmdsE$x),
 
 
 ## cutree
-data(USArrests)
 hc <- hclust(dist(USArrests))
 ct <- cutree(hc, h = c(0, hc$height[c(1,49)], 1000))
 stopifnot(ct[,"0"]== 1:50,
@@ -2598,7 +2584,6 @@ stopifnot(ct[,"0"]== 1:50,
 
 
 ## princomp
-data(USArrests)
 USArrests[1, 2] <- NA
 pc.cr <- princomp(~ Murder + Assault + UrbanPop,
                   data = USArrests, na.action=na.exclude, cor = TRUE)
@@ -2624,7 +2609,6 @@ try(smooth.spline(y18, spar = 50)) #>> error : spar 'way too large'
 
 library(ts)
 ## arima{0}
-data(lh)
 (fit <- arima(lh, c(1,0,0)))
 tsdiag(fit)
 (fit <- arima0(lh, c(1,0,0)))
@@ -2633,7 +2617,6 @@ tsdiag(fit)
 
 
 ## predict.arima
-data(lh)
 predict(arima(lh, order=c(1,0,1)), n.ahead=5)
 predict(arima(lh, order=c(1,1,0)), n.ahead=5)
 predict(arima(lh, order=c(0,2,1)), n.ahead=5)
@@ -2652,7 +2635,6 @@ stopifnot(identical(ns(x), ns(x, df = 1)),
 
 ## predict.bs
 ## Consistency:
-data(women)
 basis <- ns(women$height, df = 5)
 newX <- seq(58, 72, len = 51)
 wh <- women$height
@@ -2744,7 +2726,6 @@ stopifnot(crossprod(a+0i) == 0+0i)
 
 
 ## DF[[i, j]] should be row i, col j
-data(women)
 stopifnot(women[[2, 1]] == women[2, 1])
 women[[2, 1]] <- 77
 stopifnot(women[2, 1] == 77)
@@ -2760,7 +2741,7 @@ stopifnot(identical(names(z), c("x", "y", "z")))
 
 
 ## cor(mat, use = "pair") was plainly wrong
-data(longley) # has no NA's -- hence all "use = " should give the same!
+# longley has no NA's -- hence all "use = " should give the same!
 X <- longley
 ep <- 32 * .Machine$double.eps
 for(meth in eval(formals(cor)$method)) {
@@ -3058,7 +3039,6 @@ stopifnot(length(installed.packages("mgcv")) == 0)
 
 
 ## as.dendrogram.hclust()
-data(eurodist)
 d <- as.dendrogram(hEU <- hclust(eurodist, "ave"))
 stopifnot(order.dendrogram(d) == hEU$order)# not new
 ##N require(gclus); hE1 <- reorder.hclust(hEU, dis)

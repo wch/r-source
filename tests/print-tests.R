@@ -201,7 +201,6 @@ expand.model.frame(model, "z", na.expand = FALSE)
 expand.model.frame(model, "z", na.expand = TRUE)
 
 ## print.table() changes affecting summary.data.frame
-data(attenu)
 options(width=82)
 summary(attenu) # ``one line''
 lst <- levels(attenu$station)

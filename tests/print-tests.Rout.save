@@ -418,7 +418,6 @@ b 1.2+11i 2.4+23.141593i
 4 -0.1196490 4  4
 > 
 > ## print.table() changes affecting summary.data.frame
-> data(attenu)
 > options(width=82)
 > summary(attenu) # ``one line''
      event            mag           station         dist            accel        

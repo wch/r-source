@@ -6,7 +6,6 @@ RNGversion("1.6.2")
 
 ### moved from various .Rd files
 ## abbreviate
-data(state)
 for(m in 1:5) {
   cat("\n",m,":\n")
   print(as.vector(abbreviate(state.name, minl=m)))
@@ -292,7 +291,6 @@ test.list
 # [1] TRUE
 
 ## Marc Feldesman 2001-Feb-01.  Precision in summary.data.frame & *.matrix
-data(attenu)
 summary(attenu)
 summary(attenu, digits = 5)
 summary(data.matrix(attenu), digits = 5)# the same for matrix
@@ -373,7 +371,6 @@ try(summary(gofX.manova))
 
 ## Prior to 1.3.0 dist did not handle missing values, and the
 ## internal C code was incorrectly scaling for missing values.
-data(trees)
 z <- as.matrix(t(trees))
 z[1,1] <- z[2,2] <- z[3,3] <- z[2,4] <- NA
 dist(z, method="euclidean")
@@ -547,7 +544,6 @@ predict(fit, newdata=data[1:2, ])
 
 
 ## Chong Gu 2002-Feb-8: `.' not expanded in drop1
-data(HairEyeColor)
 lab <- dimnames(HairEyeColor)
 HairEye <- cbind(expand.grid(Hair=lab$Hair, Eye=lab$Eye, Sex=lab$Sex),
                  Fr=as.vector(HairEyeColor))
@@ -767,7 +763,6 @@ stopifnot(identical(tt, tt2))
 terms(delete.response(tt))
 ## both tt and tt2 re-ordered the formula < 1.7.0
 ## now try with a dot
-data(warpbreaks)
 terms(breaks ~ ., data = warpbreaks)
 terms(breaks ~ . - tension, data = warpbreaks)
 terms(breaks ~ . - tension, data = warpbreaks, simplify = TRUE)
@@ -925,7 +920,6 @@ summary(fit, cor = TRUE)
 
 
 ## list-like indexing of data frames with drop specified
-data(women)
 women["height"]
 women["height", drop = FALSE]  # same with a warning
 women["height", drop = TRUE]   # ditto
@@ -1276,7 +1270,6 @@ try(x[-c(1, NA)])
 
 
 ## vector 'border' (and no 'pch', 'cex' nor 'bg'):
-data(InsectSprays)
 boxplot(count ~ spray, data = InsectSprays, border=2:7)
 ## gave warnings in 1.9.0
 
