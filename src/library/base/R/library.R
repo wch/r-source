@@ -125,13 +125,14 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
 		ob <- objects(lib.pos)
                 ##ignore generics not defined for the package
                 if(!is.na(match("package:methods", search()))) {
-                    ob <- ob[sapply(ob, function(f) {
-                        f<- get(f, pos=lib.pos)
-                        fAttr <- attributes(f)[c("class", "package")]
-                        (length(fAttr) == 2
-                         && fAttr[1] == "genericFunction"
-                         && fAttr[2] != package)
-                    } == FALSE)]
+                    if( length(ob) > 0 )
+                        ob <- ob[sapply(ob, function(f) {
+                            f<- get(f, pos=lib.pos)
+                            fAttr <- attributes(f)[c("class", "package")]
+                            (length(fAttr) == 2
+                             && fAttr[1] == "genericFunction"
+                             && fAttr[2] != package)
+                        } == FALSE)]
                 }
 		fst <- TRUE
 		ipos <- seq(along = sp <- search())[-c(lib.pos,
