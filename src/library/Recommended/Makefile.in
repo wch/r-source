@@ -21,6 +21,7 @@ R = R_LIBS= $(top_builddir)/bin/R
 ## packages from the CRAN master directory. 
 
 OBJECTS = $(R_PKGS_RECOMMENDED_SOURCES:=.ts)
+OBJECTS_SRC = $(R_PKGS_RECOMMENDED_SOURCES:=.tgz)
 
 CLEANFILES = $(OBJECTS)
 DISTCLEANFILES = Makefile
@@ -28,7 +29,10 @@ DISTCLEANFILES = Makefile
 .SUFFIXES:
 .SUFFIXES: .tgz .ts
 
-all: Makefile R @USE_RECOMMENDED_PACKAGES_TRUE@ $(OBJECTS)
+all: Makefile R @USE_RECOMMENDED_PACKAGES_TRUE@ recommended-packages
+
+recommended-packages: $(OBJECTS_SRC)
+	for  i in $(OBJECTS) ; do $(MAKE) $$i ; done
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
