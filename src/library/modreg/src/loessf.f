@@ -366,7 +366,7 @@ c     singular value decomposition
       if(sigma(k).le.tol)then
          sing=sing+1
          if(sing.eq.1)then
-            call ehg184('Warning. pseudoinverse used at',q,d,1)
+            call ehg184('pseudoinverse used at',q,d,1)
             call ehg184('neighborhood radius',dsqrt(rho),1,1)
             call ehg184('reciprocal condition number ',rcond,1,1)
          else
@@ -1678,11 +1678,11 @@ c
      +(3),wv(iv(26)),wv(iv(24)),wv(4),iv(30),iv(33),iv(32),iv(41),iv(iv(
      +25)),wv(iv(34)),setlf)
       if(iv(14).lt.iv(6)+DFLOAT(iv(4))/2.D0)then
-         call ehg183('Warning. k-d tree limited by memory; nvmax=',iv(14
+         call ehg183('k-d tree limited by memory; nvmax=',iv(14
      +),1,1)
       else
          if(iv(17).lt.iv(5)+2)then
-            call ehg183('Warning. k-d tree limited by memory. ncmax=',iv
+            call ehg183('k-d tree limited by memory. ncmax=',iv
      +(17),1,1)
          end if
       end if
@@ -2141,4 +2141,16 @@ c     bottom of while loop
          call ehg182(185)
       end if
       return
+      end
+
+      subroutine ehg183(s, i, n, inc)
+      character s*(*)
+      integer i, n, inc
+      call ehg183a(s, len(s), i, n, inc)
+      end
+      subroutine ehg184(s, x, n, inc)
+      character s*(*)
+      double precision x
+      integer n, inc
+      call ehg184a(s, len(s), x, n, inc)
       end
