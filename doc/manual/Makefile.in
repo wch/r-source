@@ -21,7 +21,7 @@ DISTFILES = \
 	resources.texi \
 	R-exts.R R-exts.c R-intro.R \
 	refman.top refman.bot \
-	ISBN dummy.html
+	ISBN
 SUBDIRS_WITH_NO_BUILD = images
 
 OBJECTS_DVI = $(SOURCES_TEXI:.texi=.dvi)
@@ -77,8 +77,8 @@ docs: html
 
 .texi.html:
 	@if test "$(MAKEINFO)" = false; then \
-          echo "'makeinfo' v4.5 or later needed to make HTML docs but missing on your system."; \
-	  cp $(srcdir)/dummy.html $@; \
+	  echo "'makeinfo' v4.5 or later needed to make HTML docs but missing on your system." ; \
+	  echo "file $@ will be missing"; \
 	else \
 	  echo "creating doc/manual/$@"; \
 	  $(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@ || touch $@; \
@@ -106,13 +106,13 @@ R-admin.html:
 	@if test -f "$(top_srcdir)/doc/html/R-admin.html" ; then \
 	  cp "$(top_srcdir)/doc/html/R-admin.html" R-admin.html ; \
 	else \
-          if test "$(MAKEINFO)" = false; then \
-            echo "'makeinfo' v4.5 or later needed to make HTML docs but missing on your system."; \
-	    cp $(srcdir)/dummy.html $@; \
-          else \
-	    echo "creating doc/manual/R-admin.html"; \
-	    $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@; \
-	  fi \
+	  if test "$(MAKEINFO)" = false; then \
+	    echo "'makeinfo' v4.5 or later needed to make HTML docs but missing on your system." ; \
+	    echo "file $@ will be missing"; \
+	  else \
+	    echo "creating doc/manual/$@"; \
+	    $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@;\
+	  fi ; \
 	fi
 
 dvi: refman.dvi $(OBJECTS_DVI)
@@ -349,9 +349,12 @@ install-images-pdf:
 	@-for f in $(srcdir)/images/*.pdf; do \
 	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"/images; \
 	done
+## if there is no makeinfo >= 4.5 then there are no html pages
 install-html:
 	@for f in $(OBJECTS_HTML); do \
-	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"; \
+	  if test -f $${f} ; then \
+	    $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"; \
+	  fi \
 	done
 install-info: info $(infodir)/dir
 	@echo "installing R info pages ..."

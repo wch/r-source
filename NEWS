@@ -58,7 +58,8 @@ INSTALLATION CHANGES
 	invoked for compilation steps).
 
    o	If makeinfo >= 4.5 is not available, warnings are given that
-	some of the HTML manuals will be empty.
+	some of the HTML manuals will be empty, and the index page
+	given by help.start() will link to CRAN versions of those manuals.
 
 
 BUG FIXES
