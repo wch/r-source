@@ -354,6 +354,8 @@ list("!" = function(e1)
     }
     if(typeof(fdefault) == "closure")
         fdef <- fdefault
+    else ## create the default method so setGeneric doesn't (avoids misleading message)
+      assign(paste(f, "default", sep="."), fdefault, envir = env)
     body(fdef) <- substitute(standardGeneric(NAME), list(NAME=f))
     setGeneric(f,
                fdef,

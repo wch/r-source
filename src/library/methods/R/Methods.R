@@ -20,10 +20,23 @@ setGeneric <-
             stop(paste("No existing function \"", name, "\", arguments must be supplied"))
         fdef <- def
     }
-    if(!isGeneric(name, fdef = fdef))
+    if(!isGeneric(name, fdef = fdef)) {
         ## create a generic; if the original fdef was NOT a generic, it becomes the default
         ## Otherwise, there will be no default method.
         fdef <- makeGeneric(name, fdef, FALSE, useAsDefault, group=group, valueClass=valueClass)
+        ## make a default method for special functions. THIS IS A TEMPORARY
+        ## MECHANISM.  IT SHOULD BE REPLACED BY SPECIAL HANDLING FOR THESE
+        ## FUNCTIONS IN THE MAIN C CODE
+        if(exists(name, "package:base")) {
+          deflt <- get(name, "package:base")
+          defltName <- paste(name, "default", sep=".")
+          if(typeof(deflt) != "closure" && !exists(defltName, where)) {
+            ## make a .default for S3 method dispatch
+            message("Creating \"",defltName, "\" for old-style methods")
+            assign(defltName, deflt, where)
+          }
+        }
+      }
     ev <- environment(fdef)
     if(!missing(def) && !identical(def, fdef)) {
         ## use the supplied body and the generated environment

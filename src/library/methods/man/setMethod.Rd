@@ -119,6 +119,29 @@ function(x, y, ...) {
 ## are treated as if it were a "track" object.
 plotData(tc1)
 plotData(qnorm(ppoints(30)), tc1)
+
+## defining methods for a special function.
+## Although "[" is not a standard kind of function,
+## it can be made a generic function, and methods
+## can be defined for it.
+setGeneric("[")
+args("[") ## to check the arguments, now that it's really a function
+setMethod("[", "track",
+  function(x, i, j, ..., drop) {
+    x@x <- x@x[i]; x@y <- x@y[i]
+    x
+  })
+plotData(t1[1:15])
+
+\testonly{
+## make sure old-style methods still work.
+t11 <- t1[1:15]
+identical(t1@y[1:15], t11@y)
+
+## S3 methods, with nextMethod
+form <- y ~ x
+form[1]
+}
 }
 
 \seealso{ \link{Methods}, \code{\link{MethodsList}} }
