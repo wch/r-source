@@ -37,7 +37,7 @@
     list of vectors indicating the terms that contain these special
     functions.}
   \item{dataClasses}{optional. A named character vector giving the classes
-    (as given by \code{\link{.MFclass}} of the variables used in a fit.}
+    (as given by \code{\link{.MFclass}}) of the variables used in a fit.}
 
   The object has class \code{c("terms", "formula")}.
 }
