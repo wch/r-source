@@ -55,7 +55,6 @@
 #endif /* SunOS4 */
 
 #ifdef Win32
-#define PLOTHISTORY
 void R_ProcessEvents(void);
 #endif /* Win32 */
 
