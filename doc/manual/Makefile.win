@@ -1,0 +1,65 @@
+#
+# ${R_HOME}/doc/manual/Makefile.win
+
+PAPER = a4
+LATEX = pdflatex
+TEX = pdftex
+MAKEINDEX = makeindex
+
+srcdir = .
+
+mansrcs = Manual.tex $(srcdir)/writing-Rd.tex \
+	  $(srcdir)/plotmath.tex $(srcdir)/programming.tex \
+	  $(srcdir)/primitive-funs.tex
+pkgsrcs = pkg-base.tex pkg-eda.tex pkg-lqs.tex pkg-modreg.tex pkg-nls.tex\
+	pkg-mva.tex pkg-splines.tex pkg-stepfun.tex pkg-ts.tex
+
+all: lib2tex.pl pdf
+
+lib2tex.pl: lib2tex.in
+	sed -e 1d  $^ > $@
+
+Manual.tex: $(srcdir)/Manual.tex.in
+	sed -e s/@R_PAPERSIZE@/$(PAPER)/ $^ > $@
+
+Reference.tex: $(srcdir)/Reference.tex.in
+	sed -e s/@R_PAPERSIZE@/$(PAPER)/ $^ > $@
+
+pdf: Manual.pdf Reference.pdf R-external.pdf
+
+Manual.pdf: Manual.tex Version.tex $(mansrcs) $(srcdir)/Rd.sty
+	@echo "Making LaTeX documentation ..."
+	$(LATEX) '\nonstopmode\input{Manual.tex}'
+	@$(MAKEINDEX) Manual
+	$(LATEX) '\nonstopmode\input{Manual.tex}'
+
+Reference.pdf: Reference.tex Version.tex $(pkgsrcs) $(srcdir)/Rd.sty
+	@echo "LaTeX documentation: Reference Index ..."
+	$(LATEX) '\nonstopmode\input{Reference.tex}'
+	@$(MAKEINDEX) Reference
+	$(LATEX) '\nonstopmode\input{Reference.tex}'
+
+R-external.pdf: R-external.texi
+	$(TEX) $^
+	$(TEX) $^
+ 
+Version.tex: ../../bin/rterm.exe
+	../../bin/rterm.exe --version > $@
+
+pkg-%.tex: FORCE
+	@echo "Collecting components of $@ ..."
+	cd ../../src/gnuwin32/help && $(MAKE) latex-$*
+	perl lib2tex.pl $*
+FORCE:
+
+mostlyclean: clean
+clean:
+	@echo cleaning in doc/manual
+	@-rm -f *.aux *.toc Manual.i?? Reference.i?? *.pdf *.log
+	@-rm -f R-external.cp R-external.fn R-external.ky R-external.pg \
+	  R-external.tmp R-external.tp R-external.vr
+distclean: clean
+	@-rm -f auto Version.tex pkg-*.tex lib2tex.pl \
+	  Manual.tex Reference.tex
+maintainer-clean: distclean
+
