@@ -272,7 +272,7 @@ static void *mmap(void *ptr, long size, long prot, long type, long handle, long 
 static long munmap(void *ptr, long size);
 
 static void vminfo (unsigned long*free, unsigned long*reserved, unsigned long*committed);
-/* Commented our for R incompatibility
+/* Commented out for R incompatibility
 static int cpuinfo (int whole, unsigned long*kernel, unsigned long*user);
 */
 
@@ -688,7 +688,7 @@ extern Void_t*     sbrk();
   a hand-crafted MORECORE function that cannot handle negative arguments.
 */
 
-#define MORECORE_CANNOT_TRIM
+/* #define MORECORE_CANNOT_TRIM */
 
 
 /*
@@ -2523,7 +2523,9 @@ static void     malloc_consolidate(mstate);
 static Void_t** iALLOc(size_t, size_t*, int, Void_t**);
 #else
 static Void_t*  sYSMALLOc();
+#ifndef MORECORE_CANNOT_TRIM        
 static int      sYSTRIm();
+#endif
 static void     malloc_consolidate();
 static Void_t** iALLOc();
 #endif
@@ -2937,6 +2939,13 @@ static Void_t* sYSMALLOc(nb, av) INTERNAL_SIZE_T nb; mstate av;
     */
     size = (nb + SIZE_SZ + MALLOC_ALIGN_MASK + pagemask) & ~pagemask;
 
+    /* DBT - Check that we are not about to exceed the R memory limit */
+    if (size + av->mmapped_mem + av->sbrked_mem > R_max_memory) {
+	 if(R_Is_Running) 
+	     Rf_warning("Reached total allocation of %dMb: see help(memory.size)", R_max_memory/1048576);
+	 return (void*) 0;
+    }
+
     /* Don't try if size wraps around 0 */
     if ((CHUNK_SIZE_T)(size) > (CHUNK_SIZE_T)(nb)) {
 
@@ -3031,6 +3040,13 @@ static Void_t* sYSMALLOc(nb, av) INTERNAL_SIZE_T nb; mstate av;
   */
 
   size = (size + pagemask) & ~pagemask;
+
+  /* DBT - Check that we are not about to exceed the R memory limit */
+  if (size + av->mmapped_mem + av->sbrked_mem > R_max_memory) {
+	if(R_Is_Running) 
+	    Rf_warning("Reached total allocation of %dMb: see help(memory.size)", R_max_memory/1048576);
+	return (void*)-1;
+  }
 
   /*
     Don't try to call MORECORE if argument is so big as to appear
@@ -4695,7 +4711,7 @@ struct mallinfo mALLINFo()
   mi.smblks = nfastblocks;
   mi.ordblks = nblocks;
   mi.fordblks = avail;
-  mi.uordblks = av->sbrked_mem - avail;
+  mi.uordblks = (av->sbrked_mem - avail) + av->mmapped_mem;
   mi.arena = av->sbrked_mem;
   mi.hblks = av->n_mmaps;
   mi.hblkhd = av->mmapped_mem;
@@ -5199,7 +5215,10 @@ static void *sbrk (long size) {
                             contiguous = FALSE;
                             /* Recompute size to reserve */
                             reserve_size = CEIL (allocate_size, g_my_regionsize);
-                            memory_info.BaseAddress = (char *) memory_info.BaseAddress + memory_info.RegionSize;
+			    /* Wasn't free or didn't fit so move to end of block */
+			    memory_info.BaseAddress = (char *) memory_info.BaseAddress + memory_info.RegionSize;
+			    /* DBT - round up to next valid boundary */
+			    memory_info.BaseAddress = (void *)CEIL((unsigned long)memory_info.BaseAddress, g_regionsize);
                             /* Assert preconditions */
                             assert ((unsigned) memory_info.BaseAddress % g_pagesize == 0);
                             assert (0 < reserve_size && reserve_size % g_regionsize == 0);
@@ -5369,7 +5388,6 @@ sbrk_exit:
 static void *mmap (void *ptr, long size, long prot, long type, long handle, long arg) {
     static long g_pagesize;
     static long g_regionsize;
-    mstate av = get_malloc_state();
 #ifdef TRACESB
     printf ("mmap %ld\n", size);
 #endif
@@ -5386,12 +5404,6 @@ static void *mmap (void *ptr, long size, long prot, long type, long handle, long
     assert ((unsigned) ptr % g_regionsize == 0);
     assert (size % g_pagesize == 0);
     /* Allocate this */
-    if (av->sbrked_mem + av->mmapped_mem + size > R_max_memory) {
-	if(R_Is_Running) 
-	    Rf_warning("Reached total allocation of %dMb: see help(memory.size)", R_max_memory/1048576);
-        ptr = (void *) MORECORE_FAILURE;
-	goto mmap_exit;
-    }
     ptr = VirtualAlloc (ptr, size,
 			MEM_RESERVE | MEM_COMMIT | MEM_TOP_DOWN, PAGE_READWRITE);
     if (! ptr) {

@@ -703,7 +703,7 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else if(maxmem)
 	    REAL(ans)[0] = mallinfo().usmblks;
 	else
-	    REAL(ans)[0] = mallinfo().uordblks + mallinfo().hblkhd;
+	    REAL(ans)[0] = mallinfo().uordblks;
 #else
 	REAL(ans)[0] = NA_REAL;
 #endif

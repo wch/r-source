@@ -252,17 +252,14 @@ defaults to the smaller of the amount of physical RAM in the machine and
 1Gb.  It can be set to any amount over 10M. (R will not run in less.)
 Be aware though that Windows has (in most versions) a maximum amount of
 user virtual memory of 2Gb, and parts of this can be reserved by
-processes but not used.  Because of the way the memory manager works, it
-is possible that there will be free memory but R will not be able to
-make use of it.
+processes but not used.  The version of the memory manager used from R
+1.9.0 allocates large objects in their own memory areas and so is better
+able to make use of fragmented virtual memory than that used from 1.2.0
+to 1.8.x.
 
 Use @code{?Memory} and @code{?memory.size} for information about memory
 usage.  The limit can be raised by calling @code{memory.limit} within a
 running R session.
-
-We have found that starting R with too large a value of
-@option{--max-mem-size} may fail: the limit seemed to be about 1.7Gb on
-Windows 2000 Professional.
 
 R can be compiled to use a different memory manager which might be better
 at using large amounts of memory, but is substantially slower (making R
@@ -280,7 +277,10 @@ and check this by
 dumpbin /headers \path\to\rwxxxx\bin\Rgui.exe
 dumpbin /headers \path\to\rwxxxx\bin\Rterm.exe
 @end smallexample
-
+You should see a line like
+@smallexample
+                   Application can handle large (>2GB) addresses
+@end smallexample
 
 
 @node How can I keep workspaces for different projects in different directories?, How do I print from R?, There seems to be a limit on the memory it uses!, Installation and Usage
