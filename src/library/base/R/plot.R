@@ -70,13 +70,13 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
 
     if(length(log) && log != "") {
 	log <- strsplit(log, NULL)[[1]]
-	if("x" %in% log && any(ii <- x <= 0)) {
+	if("x" %in% log && any(ii <- x <= 0 & !is.na(x))) {
 	    n <- sum(ii)
 	    warning(paste(n, " x value", if(n>1)"s",
 			  " <= 0 omitted from logarithmic plot", sep=""))
 	    x[ii] <- NA
 	}
-	if("y" %in% log && any(ii <- y <= 0)) {
+	if("y" %in% log && any(ii <- y <= 0 & !is.na(y))) {
 	    n <- sum(ii)
 	    warning(paste(n, " y value", if(n>1)"s",
 			  " <= 0 omitted from logarithmic plot", sep=""))

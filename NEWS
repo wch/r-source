@@ -66,6 +66,21 @@ BUG FIXES
 	**************************************************
 
 
+		CHANGES IN R VERSION 0.63.4
+
+BUG FIXES
+
+    o	Missing values didn't work in log plot
+
+    o	outer() doesn't produce all-empty dimnames anymore
+
+    o	quantile.default() works when `probs' has zero length
+
+    o	example() now works again in all cases [AnIndex spaces].
+
+    o   typos fixed in nlm() message, glm help
+
+
 		CHANGES IN R VERSION 0.63.3
 
 NEW FEATURES
