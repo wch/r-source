@@ -40,6 +40,8 @@ When building a package, src/Makefile.win is run if present, and if
 that generates src/$(DLLNAME).dll the DLL is installed.  (DLLNAME is
 the package name unless overridden.)
 
+PKG_FFLAGS is now used if provided.
+
 
 
 rw1072
