@@ -2,6 +2,8 @@
 \title{Regression Diagnostics}
 \usage{
 influence.measures(lm.obj)
+summary.infl (object, digits = max(2, .Options$digits - 5), \dots)
+  print.infl (x, digits = max(3, .Options$digits - 4), \dots)
 
 rstandard(lm.obj)
 rstudent(lm.obj)
@@ -12,6 +14,9 @@ cooks.distance(lm.obj)
 hat(xmat)
 }
 \alias{influence.measures}
+\alias{print.infl}
+\alias{summary.infl}
+
 \alias{hat}
 \alias{rstudent}
 \alias{dfbetas}
@@ -28,7 +33,7 @@ hat(xmat)
   and Weisberg (1982).
 
   The primary function is \code{influence.measures} which produces a
-  class \code{"lminf"} object tabular display showing the DFBETAS for
+  class \code{"infl"} object tabular display showing the DFBETAS for
   each model variable, DFFITS, covariance ratios, Cook's distances and
   the diagonal elements of the hat matrix.  Cases which are influential
   with respect to any of these measures are marked with an asterisk.

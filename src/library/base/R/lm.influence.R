@@ -16,12 +16,12 @@ weighted.residuals <- function(obj)
 	else (sqrt(w)*residuals(obj))[w!=0]
 }
 
-lm.influence <- function (lm.obj) 
+lm.influence <- function (lm.obj)
 {
-        if (is.empty.model(lm.obj$terms)) {
-                warning("Can\'t compute influence on an empty model")
-                return(NULL)
-        }
+	if (is.empty.model(lm.obj$terms)) {
+		warning("Can\'t compute influence on an empty model")
+		return(NULL)
+	}
 	n<-as.integer(nrow(lm.obj$qr$qr))
 	k <- as.integer(lm.obj$qr$rank)
 	e <- weighted.residuals(lm.obj)
@@ -31,7 +31,7 @@ lm.influence <- function (lm.obj)
 		n,
 		k,
 		lm.obj$qr$qraux,
-		lm.obj$coefficients, 
+		lm.obj$coefficients,
 		e,
 		hat = double(n),
 		coefficients = matrix(0, nr = n, nc = k),
@@ -45,7 +45,7 @@ rstudent <- function(lm.obj)
 	weighted.residuals(lm.obj)/(infl$sigma * sqrt(1 - infl$hat))
 }
 
-dfbetas <- function (lm.obj) 
+dfbetas <- function (lm.obj)
 {
 	infl <- lm.influence(lm.obj)
 	xxi <- chol2inv(lm.obj$qr$qr, lm.obj$qr$rank)
@@ -108,7 +108,7 @@ influence.measures <- function(lm.obj)
 	vn <- variable.names(lm.obj); vn[vn == "(Intercept)"] <- "1_"
 	colnames(dfbetas) <- paste("dfb",abbreviate(vn),sep=".")
 	dffits <- e*sqrt(h)/(si*(1-h))
-	cov.ratio <- (si/s)^(2 * p)/(1 - h) 
+	cov.ratio <- (si/s)^(2 * p)/(1 - h)
 	cooks.d <- ((e/(s * (1 - h)))^2 * h)/p
 	dn <- dimnames(lm.obj$qr$qr)
 	infmat <- cbind(dfbetas, dffit = dffits, cov.r = cov.ratio,
@@ -120,28 +120,28 @@ influence.measures <- function(lm.obj)
 	ans
 }
 
-print.infl <- function(infobj, digits = max(3, .Options$digits - 4), ...)
+print.infl <- function(x, digits = max(3, .Options$digits - 4), ...)
 {
-	## infobj must be as the result of  influence.measures(.)
-	cat("Influence measures of\n\t", deparse(infobj$call),":\n\n")
-	is.star <- apply(infobj$is.inf, 1, any)
-	print(data.frame(infobj$infmat,
+	## `x' : as the result of  influence.measures(.)
+	cat("Influence measures of\n\t", deparse(x$call),":\n\n")
+	is.star <- apply(x$is.inf, 1, any)
+	print(data.frame(x$infmat,
 			 inf = ifelse(is.star, "*", " ")),
 	      digits = digits, ...)
-	invisible(infobj)
+	invisible(x)
 }
 
-summary.infl <- function(infobj, digits = max(2, .Options$digits - 5), ...)
+summary.infl <- function(object, digits = max(2, .Options$digits - 5), ...)
 {
-	## infobj must be as the result of  influence.measures(.)
-	is.inf <- infobj$is.inf
+	## object must be as the result of  influence.measures(.)
+	is.inf <- object$is.inf
 	is.star <- apply(is.inf, 1, any)
 	is.inf <- is.inf[is.star,]
 	cat("Potentially influential observations of\n\t",
-	    deparse(infobj$call),":\n")
+	    deparse(object$call),":\n")
 	if(any(is.star)) {
-		imat <- infobj $ infmat[is.star,, drop = FALSE]
-		if(is.null(rownam <- dimnames(infobj $ infmat)[[1]]))
+		imat <- object $ infmat[is.star,, drop = FALSE]
+		if(is.null(rownam <- dimnames(object $ infmat)[[1]]))
 		  rownam <- format(seq(is.star))
 		dimnames(imat)[[1]] <- rownam[is.star]
 		chmat <- format(round(imat, digits = digits))
