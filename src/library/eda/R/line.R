@@ -17,7 +17,7 @@ line <- function(x, y=NULL)
     class(value) <- "tukeyline"
     value
 }
-coef.tukeyline <- coef.lm
+#coef.tukeyline <- coef.lm
 residuals.tukeyline <- residuals.lm
-fitted.tukeyline <- fitted.lm
+# fitted.tukeyline <- fitted.lm
 print.tukeyline <- print.lm

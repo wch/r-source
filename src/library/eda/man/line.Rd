@@ -8,8 +8,7 @@
 %\alias{print.tukeyline}
 \title{Robust Line Fitting}
 \description{
-  Fit a line robustly as recommended in \emph{Exploratory Data
-    Analysis}.
+  Fit a line robustly as recommended in \emph{Exploratory Data Analysis}.
 }
 \usage{
 line(x, y)
