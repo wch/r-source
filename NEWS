@@ -99,6 +99,9 @@ BUG FIXES
     o   Subsetting a factor swapped the order of the attributes, which
 	identical() cares about.  (PR#6799)
 
+    o   The L-BFGS-B option of optim() apparently needs part of its 
+	workspace zeroed.  (PR#6720)
+
 
 
 		CHANGES IN R VERSION 1.9.0

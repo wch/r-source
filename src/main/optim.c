@@ -1017,7 +1017,8 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 
     *fail = 0;
     g = vect(n);
-    wa = vect(2*m*n+4*n+11*m*m+8*m);
+    /* this needs to be zeroed for snd in mainlb to be zeroed */
+    wa = (double *) S_alloc(2*m*n+4*n+11*m*m+8*m, sizeof(double));
     iwa = (int *) R_alloc(3*n, sizeof(int));
     strcpy(task, "START");
     while(1) {
