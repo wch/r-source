@@ -91,7 +91,6 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
         pkgpath <- .find.package(help, lib.loc)
         outFile <- tempfile("Rlibrary")
         outConn <- file(outFile, open = "w")
-        on.exit({close(outConn); unlink(outFile)})
         docFiles <- file.path(pkgpath,
                               c("TITLE", "DESCRIPTION", "INDEX"))
         headers <- c("", "Description:\n\n", "Index:\n\n")
@@ -101,6 +100,7 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
             writeLines(readLines(docFiles[i]), outConn)
             writeLines(footers[i], outConn)
         }
+        close(outConn)
         file.show(outFile, delete.file = TRUE,
                   title = paste("Documentation for package",
                   fQuote(help)))
@@ -109,7 +109,6 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
 	## library():
 	outFile <- tempfile("Rlibrary")
         outConn <- file(outFile, open = "w")
-        on.exit({close(outConn); unlink(outFile)})        
 	avail <- NULL
 	for (lib in lib.loc) {
 	    cat("\nPackages in library `", lib, "':\n\n", sep = "",
@@ -133,6 +132,7 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
 	    }
 	    avail <- c(avail, a)
 	}
+        close(outConn)
 	file.show(outFile, delete.file = TRUE,
                   title = "R packages available")
 	return(invisible(avail))
