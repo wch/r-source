@@ -4,7 +4,7 @@
 \alias{is.tskernel}
 \alias{print.tskernel}
 \alias{plot.tskernel}
-\alias{"[.kernel"}
+\alias{[.kernel}
 
 \title{Smoothing Kernel Objects}
 \usage{
