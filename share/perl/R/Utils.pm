@@ -6,7 +6,7 @@ use FileHandle;
 use Exporter;
 
 @ISA = qw(Exporter);
-@EXPORT = qw(R_getenv R_version);
+@EXPORT = qw(R_getenv R_version file_path);
 
 
 #**********************************************************
@@ -56,6 +56,14 @@ sub text2html {
     s/</&lt;/g;
     $_;
 }
+
+sub file_path {
+    my @args = @_;
+    my $filesep = "/";
+    $filesep = ":" if($main::OSdir eq "mac");
+    join($filesep, @args);
+}
+
 
 #**********************************************************
 

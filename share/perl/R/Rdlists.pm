@@ -27,6 +27,7 @@ require  Exporter;
 
 use Cwd;
 use File::Basename;
+use R::Utils;
 
 if($main::opt_dosnames){
     $HTML="htm";
@@ -51,7 +52,7 @@ sub buildinit {
 	die("Package $pkg does not exist\n") unless (-d $pkg);
     }
     else{
-	$pkg="$main::R_HOME/src/library/base";
+	$pkg=file_path($main::R_HOME, "src", "library", "base");
     }
 
     chdir $currentdir;
@@ -63,7 +64,7 @@ sub buildinit {
 	chdir $currentdir;
     }
     else{
-	$lib="$main::R_HOME/library";
+	$lib=file_path($main::R_HOME, "library");
     }
 
     chdir $currentdir;
@@ -77,7 +78,11 @@ sub buildinit {
 #    $pkg = basename(cwd());
 
     chdir "man" or die("There are no man pages in $pkg\n");
-    opendir man, '.';
+    if($main::OSdir eq "mac") {
+	opendir man, ':';
+    } else {
+	opendir man, '.';
+    }
     @mandir = sort(readdir(man));
     closedir man;
 
@@ -86,7 +91,7 @@ sub buildinit {
 	opendir man, $main::OSdir;
 	foreach $file (readdir(man)) {
 	    delete $Rds{$file};
-	    $RdsOS{$file} = $main::OSdir."/".$file;
+	    $RdsOS{$file} = file_path($main::OSdir, $file);
 	}
 	@mandir = sort(values %Rds);
 	push @mandir, sort(values %RdsOS);
@@ -110,10 +115,10 @@ sub read_titles {
     closedir lib;
 
     foreach $pkg (@libs) {
-	if(-d "$lib/$pkg"){
+	if(-d file_path($lib, $pkg)){
 	    if(! ( ($pkg =~ /^CVS$/) || ($pkg =~ /^\.+$/))){
-		if(-r "$lib/$pkg/TITLE"){
-		    open rtitle, "< $lib/$pkg/TITLE";
+		if(-r file_path($lib, $pkg, "TITLE")){
+		    open rtitle, "<" . file_path($lib, $pkg, "TITLE");
 		    $_ = <rtitle>;
 		    /^(\S*)\s*(.*)/;
 		    my $pkgname = $1;
@@ -148,13 +153,13 @@ sub read_htmlindex {
     closedir lib;
 
     foreach $pkg (@libs) {
-	if(-d "$lib/$pkg"){
+	if(-d file_path($lib, $pkg)){
 	    if(! ( ($pkg =~ /^CVS$/) || ($pkg =~ /^\.+$/))){
-		if(-r "$lib/$pkg/help/AnIndex"){
-		    open ranindex, "< $lib/$pkg/help/AnIndex";
+		if(-r file_path($lib, $pkg, "help", "AnIndex")){
+		    open ranindex, "<".file_path($lib, $pkg, "help", "AnIndex");
 		    while(<ranindex>){
 			/^([^\t]*)\s*\t(.*)/;
-			$htmlindex{$1} = "$pkg/html/$2.$HTML";
+			$htmlindex{$1} = file_path($pkg, "html", $2.$HTML);
 		    }
 		    close ranindex;
 		}
@@ -175,10 +180,10 @@ sub read_anindex {
     closedir lib;
 
     foreach $pkg (@libs) {
-	if(-d "$lib/$pkg"){
+	if(-d file_path($lib, $pkg)){
 	    if(! ( ($pkg =~ /^CVS$/) || ($pkg =~ /^\.+$/))){
-		if(-r "$lib/$pkg/help/AnIndex"){
-		    open ranindex, "< $lib/$pkg/help/AnIndex";
+		if(-r file_path($lib, $pkg, "help", "AnIndex")){
+		    open ranindex, "<".file_path($lib, $pkg, "help", "AnIndex");
 		    while(<ranindex>){
 			/^([^\t]*)\s*\t(.*)/;
 			$anindex{$1} = $2;
@@ -202,8 +207,10 @@ sub build_htmlpkglist {
     my %htmltitles = read_titles($lib);
     my $key;
 
-    open(htmlfile, "> $main::R_HOME/doc/html/packages.$HTML") ||
-	die "Could not open $main::R_HOME/doc/html/packages.$HTML";
+    open(htmlfile, ">". file_path($main::R_HOME, "doc", "html", 
+				  "packages".$HTML)) ||
+	die "Could not open " . 
+	    file_path($main::R_HOME, "doc", "html", "packages".$HTML);
 
     print htmlfile html_pagehead("Package Index", ".",
 				 "index.$HTML", "Top",
@@ -262,16 +269,19 @@ sub build_index { # lib, dest
     chomp $title;
     $title =~ s/^\S*\s*(.*)/$1/;
 
-    mkdir "$dest/help", $dir_mod || die "Could not create $dest/help: $!\n";
-    mkdir "$dest/html", $dir_mod || die "Could not create $dest/html: $!\n";
-    my $anindex = "$dest/help/AnIndex";
+    mkdir file_path($dest, "help"), $dir_mod || 
+	die "Could not create" . file.path($dest, "help").": $!\n";
+    mkdir file_path($dest, "html"), $dir_mod || 
+	die "Could not create" . file.path($dest, "html").": $!\n";
+    my $anindex = file_path($dest, "help", "AnIndex");
 
     my %alltitles;
     my $naliases;
     my $nmanfiles;
     my %firstlettersfound;
     my %internal;
-                           
+    my $tfile;
+
     foreach $manfile (@mandir) {
 	if($manfile =~ /\.Rd$/i){
 
@@ -335,9 +345,9 @@ sub build_index { # lib, dest
 
 
     open(anindex, "< $anindex");
-    open(htmlfile, "> $dest/html/00Index.$HTML")
-	|| die "Could not open $dest/html/00Index.$HTML";
-    if($main::opt_chm) {
+    $tfile = file_path($dest, "html", "00Index".$HTML);
+    open(htmlfile, "> $tfile") || die "Could not open $tfile";
+    if($main::opt_chm) { # Windows only
 	open(chmfile, "> $chmdir/00Index.$HTML") ||
 	    die "Could not open $chmdir/00Index.$HTML";
     }

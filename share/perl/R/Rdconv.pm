@@ -28,6 +28,7 @@ require  Exporter;
 
 use Text::Tabs;
 use FileHandle;
+use R::Utils;
 
 
 # names of unique text blocks, these may NOT appear MORE THAN ONCE!
@@ -73,13 +74,13 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
     } else { # have "," in $type: Multiple types with multiple output files
 	$dirname = $_[3]; # The super-directory , such as  <Rlib>/library/<pkg>
 	die "Rdconv(): '$dirname' is NOT a valid directory:$!\n"
-	  unless -d $dirname;
-	$htmlfile = $dirname ."/html/" .$Rdname.".html" if $type =~ /html/i;
-	$txtfile= $dirname ."/help/" . $Rdname	        if $type =~ /txt/i;
+	    unless -d $dirname;
+	$htmlfile = file_path($dirname, "html", $Rdname.".html") if $type =~ /html/i;
+	$txtfile= file_path($dirname, "help", $Rdname)	if $type =~ /txt/i;
 	die "Rdconv(): type 'Sd' must not be used with other types (',')\n"
 	  if $type =~ /Sd/i;
-	$latexfile= $dirname ."/latex/". $Rdname.".tex"	if $type =~ /tex/i;
-	$Exfile	  = $dirname ."/R-ex/" . $Rdname.".R"	if $type =~ /example/i;
+	$latexfile= file_path($dirname, "latex", $Rdname.".tex") if $type =~ /tex/i;
+	$Exfile	  = file_path($dirname, "R-ex" , $Rdname.".R") if $type =~ /example/i;
     }
 
 
@@ -606,7 +607,7 @@ sub text2html {
 		if($opt ne "") {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
-		    $htmlfile = $pkg."/html/".$topic.".html";
+		    $htmlfile = file_path($pkg, "html", $topic.".html");
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/a>/s;
@@ -733,7 +734,7 @@ sub code2html {
 		if($opt ne "") {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
-		    $htmlfile = $pkg."/html/".$topic.".html";
+		    $htmlfile = file_path($pkg, "html", $topic.".html");
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/a>/s;
