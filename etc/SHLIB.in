@@ -2,8 +2,10 @@
 #
 # ${RHOME}/etc/SHLIB
 
+# @configure_input@
+
 OBJS=
-MAKE=${MAKE-make}
+MAKE=${MAKE-@MAKE@}
 
 if [ ${1} = "-o" ]; then
   lib=${2}; shift 2
