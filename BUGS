@@ -261,3 +261,11 @@ Directory:  incoming
 Subject:  do.call() mangles expressions in arguments 
 From: Peter Dalgaard BSA <pd@biostat.ku.dk>
 Date: Wed, 21 Apr 1999 19:39:53 +0200
+* PR# 186 *
+Subject: subscripting in list()
+From: Wenxin Mao <mao@compstat.wharton.upenn.edu>
+Date: Sun, 9 May 1999 12:42:29 -0400 (EDT)
+* PR# 187 *
+Subject: subscripting in list()
+From: Wenxin Mao <mao@compstat.wharton.upenn.edu>
+Date: Sun, 9 May 1999 13:02:51 -0400 (EDT)
