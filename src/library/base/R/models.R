@@ -204,7 +204,7 @@ model.frame.default <-
 	formula <- as.formula(data)
     }
     if(missing(na.action)) {
-	if(!is.null(naa <- attr(data, "na.action")))
+	if(!is.null(naa <- attr(data, "na.action")) & mode(naa)!="numeric")
 	    na.action <- naa
 	else if(!is.null(naa <- options("na.action")[[1]]))
 	    na.action <- naa
