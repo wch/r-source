@@ -81,7 +81,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     line, saying how many items have been read.}
 
   \item{blank.lines.skip}{logical: if \code{TRUE} blank lines in the
-    input are ignored.}
+    input are ignored, except when counting \code{nlines}.}
 }
 \details{
   The value of \code{what} can be a list of types, in which case
