@@ -1836,8 +1836,14 @@ XFigDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     return 1;
 }
 
+#ifdef Unix
+char * Runix_tmpnam(char * prefix);
+#endif
 #ifdef Win32
 char * Rwin32_tmpnam(char * prefix);
+#endif
+#ifdef macintosh
+char * Rmac_tmpnam(char * prefix);
 #endif
 
 static Rboolean XFig_Open(DevDesc *dd, XFigDesc *pd)
@@ -1866,10 +1872,14 @@ static Rboolean XFig_Open(DevDesc *dd, XFigDesc *pd)
 	pd->psfp = R_fopen(R_ExpandFileName(buf), "w");
     }
     if (!pd->psfp) return FALSE;
+#ifdef Unix
+    strcpy(pd->tmpname, Runix_tmpnam("Rxfig"));
+#endif
 #ifdef Win32
     strcpy(pd->tmpname, Rwin32_tmpnam("Rxfig"));
-#else
-    strcpy(pd->tmpname, tmpnam(NULL));
+#endif
+#ifdef macintosh
+    strcpy(pd->tmpname, Rmac_tmpnam("Rxfig"));
 #endif
     pd->tmpfp = R_fopen(pd->tmpname, "w");
     if (!pd->tmpfp) {
