@@ -11,7 +11,7 @@ attach <- function(what, pos=2, name=deparse(substitute(what)))
         value <- .Internal(attach(what, pos, name))
     if((length(objects(envir = value, all=TRUE)) > 0)
        && .isMethodsDispatchOn())
-      cacheMetaData(value, TRUE)
+      methods:::cacheMetaData(value, TRUE)
     invisible(value)
 }
 
@@ -54,12 +54,8 @@ detach <- function(name, pos=2, version)
            packageName %in% paste("package:", get(".required", pkgs, inherits = FALSE),sep=""))
             warning(packageName, " is required by ", pkgs, " (still attached)")
     }
-    if(.isMethodsDispatchOn()) {
-        if("package:methods" %in% search())
-            cacheMetaData(env, FALSE)
-        else
-            .isMethodsDispatchOn(FALSE)
-    }
+    if(.isMethodsDispatchOn())
+            methods:::cacheMetaData(env, FALSE)
 }
 
 ls <- objects <-
