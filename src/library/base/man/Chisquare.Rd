@@ -22,9 +22,8 @@ rchisq(n, df, ncp=0)
   \item{p}{vector of probabilities.}
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
-  \item{df}{degrees of freedom (positive, but can be non-integer).}
-  \item{ncp}{non-centrality parameter.  For \code{rchisq}, \code{ncp=0}
-    is the only possible value.}
+  \item{df}{degrees of freedom (non-negative, but can be non-integer).}
+  \item{ncp}{non-centrality parameter (non-negative).}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}
   \item{lower.tail}{logical; if TRUE (default), probabilities are
     \eqn{P[X \le x]}{P[X <= x]}, otherwise, \eqn{P[X > x]}{P[X > x]}.}
@@ -49,13 +48,20 @@ rchisq(n, df, ncp=0)
       \sum_{r=0}^\infty \frac{(\lambda/2)^r}{r!}\, f_{n + 2r}(x)}{%
     f(x) = exp(-lambda/2) SUM_{r=0}^infty ((lambda/2)^r / r!) dchisq(x, df + 2r)
   }
-  for \eqn{x \ge 0}.  It is the distribution of the sum of squares of
-  \eqn{n} normals each with variance one, \eqn{\lambda} being the sum of
-  squares of the normal means.
+  for \eqn{x \ge 0}.  For integer \eqn{n}, this is the distribution of
+  the sum of squares of \eqn{n} normals each with variance one,
+  \eqn{\lambda} being the sum of squares of the normal means.
+  Note that the the degrees of freedom \code{df}\eqn{= n}, can be
+  non-integer, and for non-centrality \eqn{\lambda > 0}, even \eqn{n = 0};
+  see the reference, chapter 29.
 }
 \seealso{
   \code{\link{dgamma}} for the Gamma distribution which generalizes the
   chi-squared one.
+}
+\references{
+  Johnson, Kotz and Balakrishnan (1995). \emph{Continuous Univariate
+    Distributions}, Vol \bold{2}; Wiley NY;
 }
 \examples{
 dchisq(1, df=1:3)
@@ -66,5 +72,24 @@ x <- 1:10
 ## Chi-squared(df = 2) is a special exponential distribution
 all.equal(dchisq(x, df=2), dexp(x, 1/2))
 all.equal(pchisq(x, df=2), pexp(x, 1/2))
+
+## non-central RNG -- df=0 is ok for ncp > 0:  Z0 has point mass at 0!
+Z0 <- rchisq(100, df = 0, ncp = 2.)
+stem(Z0)
+
+## visual testing
+L <- 1.2; n <- 1000; pp <- ppoints(n)
+op <- par(mfrow = c(3,3), mar= c(3,3,1,1)+.1, mgp= c(1.5,.6,0),
+          oma = c(0,0,3,0))
+for(df in 2^(4*rnorm(9))) {
+  plot(pp, sort(pchisq(rr <- rchisq(n,df=df, ncp=L), df=df, ncp=L)),
+       ylab="pchisq(rchisq(.),.)")
+  mtext(paste("df = ",formatC(df, digits = 4)), line= -2, adj=0.05)
+  abline(0,1,col=2)
+}
+mtext(expression("P-P plots : Noncentral  "*
+                 chi^2 *"(n=1000, df=X, ncp= 1.2)"),
+      cex = 1.5, font = 2, outer=TRUE)
+par(op)
 }
 \keyword{distribution}
