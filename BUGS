@@ -300,22 +300,26 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 942 *
-Subject: Minor documentation issue
-From: jebacklund@dowagro.com
-Date: Wed, 16 May 2001 19:58:13 +0200 (MET DST)
-* PR# 932 *
-Subject: scoping error in xy.coords
-From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
-Date: Fri, 04 May 2001 11:20:57 -0400
-* PR# 938 *
-Subject: name creation with index arrays
-From: sint@oeaw.ac.at
-Date: Thu, 10 May 2001 23:39:53 +0200 (MET DST)
+* PR# 944 *
+Subject: hist() ignores 'probability=T'
+From: John Maindonald <john.maindonald@anu.edu.au>
+Date: Sun, 20 May 2001 10:42:13 +1000
 * PR# 937 *
 Subject: name creation with index arrays
 From: sint@oeaw.ac.at
 Date: Thu, 10 May 2001 23:31:58 +0200 (MET DST)
+* PR# 932 *
+Subject: scoping error in xy.coords
+From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
+Date: Fri, 04 May 2001 11:20:57 -0400
+* PR# 939 *
+Subject: Windows, RCMD INSTALL and path
+From: david.firth@nuf.ox.ac.uk
+Date: Fri, 11 May 2001 17:59:29 +0200 (MET DST)
+* PR# 938 *
+Subject: name creation with index arrays
+From: sint@oeaw.ac.at
+Date: Thu, 10 May 2001 23:39:53 +0200 (MET DST)
 * PR# 941 *
 Subject: Mistake in qbeta.c ?
 From: tlm21@cam.ac.uk
@@ -324,7 +328,11 @@ Date: Wed, 16 May 2001 13:49:34 +0200 (MET DST)
 Subject: GCircle(): fails for non-clippable devices under certain circumstances (see below)
 From: "Thomas Hoffmann" <thoffman@zappa.sax.de>
 Date: Tue, 15 May 01 23:34:17 +0100
-* PR# 939 *
-Subject: Windows, RCMD INSTALL and path
-From: david.firth@nuf.ox.ac.uk
-Date: Fri, 11 May 2001 17:59:29 +0200 (MET DST)
+* PR# 943 *
+Subject: legend() with xpd=T; omission of initial plot character
+From: John Maindonald <john.maindonald@anu.edu.au>
+Date: Sun, 20 May 2001 10:35:16 +1000
+* PR# 942 *
+Subject: Minor documentation issue
+From: jebacklund@dowagro.com
+Date: Wed, 16 May 2001 19:58:13 +0200 (MET DST)
