@@ -122,12 +122,19 @@ methods <- function (generic.function, class)
         ## These should only be registered in environments containing
         ## the corresponding generic, so we don't check again.
         ## Note that the generic will not necessarily be visible,
-        ## as the package may not be loaded -- we don't check.
+        ## as the package may not be loaded.
         for(i in loadedNamespaces()) {
             S3reg <- ls(get(".__S3MethodsTable__.", envir = asNamespace(i)),
                         pattern = name)
             if(length(S3reg))
                 info <- rbindSome(info, S3reg, msg = "registered S3method")
+        }
+        ## now methods like print.summary.aov will be picked up,
+        ## so we do look for such mismatches.
+        if(nrow(info)) {
+            gens <- gsub(name, "", row.names(info))
+            keep <- sapply(gens, exists)
+            info <- info[keep, , drop=FALSE]
         }
     }
     else stop("must supply generic.function or class")

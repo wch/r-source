@@ -144,6 +144,10 @@ NEW FEATURES
 
     o   The print() method for "difftime" objects now handles arrays.
 
+    o	methods(class=) now checks for a matching generic, and so no
+	longer returns methods for non-visible generics (and
+	eliminates various mismatches).
+
 
 UTILITIES
 
