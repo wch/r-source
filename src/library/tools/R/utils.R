@@ -1,6 +1,10 @@
 ### Internal utility functions.
 
+### * sQuote
+
 sQuote <- function(s) paste("'", s, "'", sep = "")
+
+### * .convertFilePathToAbsolute
 
 .convertFilePathToAbsolute <-
 function(path)
@@ -25,6 +29,8 @@ function(path)
     }
 }
 
+### * .fileTest
+
 .fileTest <-
 function(op, x, y)
 {
@@ -44,6 +50,8 @@ function(op, x, y)
                     & (mt.x < mt.y)),
            stop(paste("test", sQuote(op), "is not available")))
 }
+
+### * .isS3Generic
            
 .isS3Generic <-
 function(fname, envir = NULL)
@@ -68,6 +76,8 @@ function(fname, envir = NULL)
     is.call(e) && (e[[1]] == as.name("UseMethod"))
 }
 
+### * .listFilesWithExts
+
 .listFilesWithExts <-
 function(dir, exts, path = TRUE)
 {
@@ -82,6 +92,8 @@ function(dir, exts, path = TRUE)
             character(0)
     files
 }
+
+### * .listFilesWithType
 
 .listFilesWithType <-
 function(dir, type)
@@ -99,6 +111,8 @@ function(dir, type)
     }
     files
 }
+
+### * .loadPackageQuietly
 
 .loadPackageQuietly <-
 function(package, lib.loc)
@@ -124,6 +138,8 @@ function(package, lib.loc)
         stop(yy)
 }
 
+### * .makeFileExts
+
 .makeFileExts <-
 function(type = c("code", "data", "demo", "docs", "vignette"))
 {
@@ -139,6 +155,8 @@ function(type = c("code", "data", "demo", "docs", "vignette"))
            vignette = c(outer(c("R", "r", "S", "s"), c("nw", "tex"),
                               paste, sep = "")))
 }
+
+### * .makeS3MethodsStopList
 
 .makeS3MethodsStopList <-
 function(package)
@@ -157,6 +175,8 @@ function(package)
            ts = "lag.plot",
            character(0))
 }
+
+### * .sourceAssignments
 
 .sourceAssignments <-
 function(file, envir)
@@ -177,3 +197,8 @@ function(file, envir)
     }
     invisible()
 }
+
+### Local variables: ***
+### mode: outline-minor ***
+### outline-regexp: "### [*]+" ***
+### End: ***
