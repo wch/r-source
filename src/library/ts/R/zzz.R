@@ -1,7 +1,7 @@
 .First.lib <- function(lib, pkg)
 {
     library.dynam("ts", pkg, lib)
+    options(ts.S.compat = FALSE)
 }
-options(ts.S.compat = FALSE)
 
 .noGenerics <- TRUE
