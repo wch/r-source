@@ -123,7 +123,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                                ".Last.value", ".Random.seed")
 		lib.pos <- match(pkgname, search())
 		ob <- objects(lib.pos)
-                ##ignore generics not defined for the package
+                ## ignore generics not defined for the package
                 if(!is.na(match("package:methods", search()))) {
                     if( length(ob) > 0 )
                         ob <- ob[sapply(ob, function(f) {
@@ -171,8 +171,8 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                               c("DESCRIPTION", "INDEX",
                                 file.path("doc", "00Index.dcf")))
         pkgInfo <- vector(length = 4, mode = "list")
-        pkgInfo[[1]] <- paste("\n\t\tInformation on Package `",
-                              pkgName, "'", sep="")
+        pkgInfo[[1]] <- paste("\n\t\tInformation on Package",
+                              sQuote(pkgName))
         readDocFile <- function(f) {
             if(basename(f) %in% c("DESCRIPTION", "00Index.dcf")) {
                 ## This should be in valid DCF format ...
