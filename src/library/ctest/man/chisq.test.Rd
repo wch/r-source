@@ -65,7 +65,7 @@ chisq.test(x, y = NULL, correct = TRUE,
 }
 \references{
   Patefield, W. M. (1981)
-  Algorithm AS159. An efficient method of generating r * c tables
+  Algorithm AS159. An efficient method of generating r x c tables
   with given row and column totals. \emph{Applied Statistics} \bold{30},
   91--97.
 } 

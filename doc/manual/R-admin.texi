@@ -1174,12 +1174,14 @@ you may need to set it to avoid finding 32-bit addons (as in the
 @c and the cure is to compile @file{src/main/arithmetic.c} without
 @c optimization.
 
-
 @node HP-UX, IRIX, Solaris, Platform notes
 @subsection HP-UX
 @cindex HP-UX
 
 @R{} has been built successfully on HP-UX 10.2 and HP-UX 11.0 using both
+=======
+@R{} has been built successfully on HP-UX 10.2 and HP-UX 11.0 using both
+>>>>>>> 1.62.2.7
 native compilers and @command{gcc}.  However, 10.2 has not been tested
 since R 1.4.0.  By default, R is configured to use @command{gcc} and
 @command{g77} on HP-UX (if available).  Some installations of
@@ -1187,10 +1189,17 @@ since R 1.4.0.  By default, R is configured to use @command{gcc} and
 that cannot be linked into a shared library since its files have not
 been compiled with the appropriate flag for producing position
 independent code (@acronym{PIC}).  This will result in @command{make}
-failing with a linker error complaining that code needs to be compiled
-with a @option{+z} or @option{+Z} flag, the native @command{cc}
-@acronym{PIC} flag.  If this is the case you either need to modify your
-@command{g77} installation or configure with
+failing with a linker error similar to
+
+@smallexample
+ld: CODE_ONE_SYM fixup to non-code subspace in file foo.o - 
+shared library must be position independent. Use +z or +Z to recompile.
+@end smallexample
+
+@noindent
+(@option{+z} and @option{+Z} are the @acronym{PIC} flags for the native
+compiler @command{cc}.)  If this is the case you either need to modify
+your @command{g77} installation or configure with
 
 @smallexample
 F77=fort77
@@ -1200,10 +1209,22 @@ F77=fort77
 to specify use of the native @acronym{POSIX}-compliant FORTRAN 77
 compiler.
 
-You may find that @command{configure} detects other libraries, such as
-BLAS, that R needs to use as shared libraries but are only available as
-static libraries.  If you cannot install shared versions you will need
-to tell @command{configure} not to use these libraries.
+You may find that @command{configure} detects other libraries that R
+needs to use as shared libraries but are only available as static
+libraries.  If you cannot install shared versions you will need to tell
+@command{configure} not to use these libraries, or make sure they are
+not in the library path.  The symptom will the linker error shown in the
+last paragraph.  Static libraries that might be found and would cause
+problems are
+@smallexample
+BLAS                   use --without-blas
+Tcl/Tk                 use --without-tcltk
+GNOME                  not built by default
+libpng  jpeg  zlib     (need not to be in the path) 
+@end smallexample
+@noindent
+and @code{bzip2} and @code{pcre} are problematic when building
+@file{libR.so}, only.
 
 Some versions of @command{gcc} may contain what appears to be a bug at
 the @option{-O2} optimization level that causes
