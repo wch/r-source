@@ -1044,62 +1044,6 @@ SEXP do_search(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
 
-/*----------------------------------------------------------------------
-
-  do_builtins
-
-  Return the names of all the built in functions.  These are fetched
-  directly from the symbol table.
-
-*/
-
-static SEXP FetchBuiltins(int intern, int all)
-{
-    SEXP s, ans;
-    int i, count;
-    count = 0;
-    for (i = 0; i < HSIZE; i++) {
-	for (s = R_SymbolTable[i] ; s != R_NilValue; s = CDR(s)) {
-	    if (intern) {
-		if (INTERNAL(CAR(s)) != R_NilValue)
-		    count++;
-	    }
-	    else {
-		if (SYMVALUE(CAR(s)) != R_UnboundValue)
-		    count++;
-	    }
-	}
-    }
-    ans = allocVector(STRSXP, count);
-    count = 0;
-    for (i = 0; i < HSIZE; i++) {
-	for (s = R_SymbolTable[i] ; s != R_NilValue ; s = CDR(s)) {
-	    if (intern) {
-		if (INTERNAL(CAR(s)) != R_NilValue)
-		    STRING(ans)[count++] = PRINTNAME(CAR(s));
-	    }
-	    else {
-		if (SYMVALUE(CAR(s)) != R_UnboundValue)
-		    STRING(ans)[count++] = PRINTNAME(CAR(s));
-	    }
-	}
-    }
-    return ans;
-}
-
-SEXP do_builtins(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    SEXP ans;
-    int intern;
-    checkArity(op, args);
-    intern = asInteger(CAR(args));
-    if (intern == NA_INTEGER) intern = 0;
-    ans = FetchBuiltins(intern, 1);
-    sortVector(ans);
-    return ans;
-}
-
-
 
 /*----------------------------------------------------------------------
 
@@ -1109,6 +1053,86 @@ SEXP do_builtins(SEXP call, SEXP op, SEXP args, SEXP rho)
   functions.  [ ls(envir, all.names) ]
 
 */
+
+static int FrameSize(SEXP frame, int all)
+{
+    int count = 0;
+    while (frame != R_NilValue) {
+	if ((all || CHAR(PRINTNAME(TAG(frame)))[0] != '.') &&
+	                              CAR(frame) != R_UnboundValue)
+	    count += 1;
+	frame = CDR(frame);
+    }
+    return count;
+}
+
+static void FrameNames(SEXP frame, int all, SEXP names, int *index)
+{
+    while (frame != R_NilValue) {
+	if ((all || CHAR(PRINTNAME(TAG(frame)))[0] != '.') &&
+	                              CAR(frame) != R_UnboundValue) {
+	    STRING(names)[*index] = PRINTNAME(TAG(frame));
+	    (*index)++;
+	}
+	frame = CDR(frame);
+    }
+}
+
+static int HashTableSize(SEXP table, int all)
+{
+    int count = 0;
+    int n = length(table);
+    int i;
+    for (i = 0; i < n; i++)
+	count += FrameSize(VECTOR(table)[i], all);
+    return count;
+}
+
+static void HashTableNames(SEXP table, int all, SEXP names, int *index)
+{
+    int n = length(table);
+    int i;
+    for (i = 0; i < n; i++)
+	FrameNames(VECTOR(table)[i], all, names, index);
+}
+
+static int BuiltinSize(int all, int intern)
+{
+    int count = 0;
+    SEXP s;
+    int j;
+    for (j = 0; j < HSIZE; j++) {
+	for (s = R_SymbolTable[j]; s != R_NilValue; s = CDR(s)) {
+	    if (intern) {
+		if (INTERNAL(CAR(s)) != R_NilValue)
+		    count++;
+	    }
+	    else {
+		if (SYMVALUE(CAR(s)) != R_UnboundValue)
+		    count++;
+	    }
+	}
+    }
+    return count;
+}
+
+static int BuiltinNames(int all, int intern, SEXP names, int *index)
+{
+    SEXP s;
+    int j;
+    for (j = 0; j < HSIZE; j++) {
+	for (s = R_SymbolTable[j]; s != R_NilValue; s = CDR(s)) {
+	    if (intern) {
+		if (INTERNAL(CAR(s)) != R_NilValue)
+		    STRING(names)[(*index)++] = PRINTNAME(CAR(s));
+	    }
+	    else {
+		if (SYMVALUE(CAR(s)) != R_UnboundValue)
+		    STRING(names)[(*index)++] = PRINTNAME(CAR(s));
+	    }
+	}
+    }
+}
 
 SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1130,21 +1154,13 @@ SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
     k = 0;
     n = length(env);
     for (i = 0; i < n; i++) {
-	if (VECTOR(env)[i] == R_NilValue) {
-	    for (j = 0; j < HSIZE; j++) {
-		for (s = R_SymbolTable[j]; s != R_NilValue; s = CDR(s)) {
-		    if (SYMVALUE(CAR(s)) != R_UnboundValue)
-			k++;
-		}
-	    }
-	}
+	if (VECTOR(env)[i] == R_NilValue)
+	    k += BuiltinSize(all, 0);
 	else if (isEnvironment(VECTOR(env)[i])) {
-	    s = FRAME(VECTOR(env)[i]);
-	    while (s != R_NilValue) {
-		if (all || CHAR(PRINTNAME(TAG(s)))[0] != '.')
-		    k += 1;
-		s = CDR(s);
-	    }
+	    if (HASHTAB(VECTOR(env)[i]) != R_NilValue)
+		k += HashTableSize(HASHTAB(VECTOR(env)[i]), all);
+	    else
+		k += FrameSize(FRAME(VECTOR(env)[i]), all);
 	}
 	else error("invalid envir= argument\n");
     }
@@ -1152,28 +1168,45 @@ SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
     ans = allocVector(STRSXP, k);
     k = 0;
     for (i = 0; i < n; i++) {
-	if (VECTOR(env)[i] == R_NilValue) {
-	    for (j = 0; j < HSIZE; j++) {
-		for (s = R_SymbolTable[j]; s != R_NilValue; s = CDR(s)) {
-		    if (SYMVALUE(CAR(s)) != R_UnboundValue)
-			STRING(ans)[k++] = PRINTNAME(CAR(s));
-		}
-	    }
-	}
+	if (VECTOR(env)[i] == R_NilValue)
+	    BuiltinNames(all, 0, ans, &k);
 	else if (isEnvironment(VECTOR(env)[i])) {
-	    s = FRAME(VECTOR(env)[i]);
-	    while (s != R_NilValue) {
-		if (all || CHAR(PRINTNAME(TAG(s)))[0] != '.') {
-		    STRING(ans)[k++] = PRINTNAME(TAG(s));
-		}
-		s = CDR(s);
-	    }
+	    if (HASHTAB(VECTOR(env)[i]) != R_NilValue)
+		HashTableNames(HASHTAB(VECTOR(env)[i]), all, ans, &k);
+	    else
+		FrameNames(FRAME(VECTOR(env)[i]), all, ans, &k);
 	}
     }
     UNPROTECT(1);
     sortVector(ans);
     return ans;
 }
+
+/*----------------------------------------------------------------------
+
+  do_builtins
+
+  Return the names of all the built in functions.  These are fetched
+  directly from the symbol table.
+
+*/
+
+SEXP do_builtins(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans;
+    int intern, nelts;
+    checkArity(op, args);
+    intern = asInteger(CAR(args));
+    if (intern == NA_INTEGER) intern = 0;
+    nelts = BuiltinSize(1, intern);
+    ans = allocVector(STRSXP, nelts);
+    nelts = 0;
+    BuiltinNames(1, intern, ans, &nelts);
+    sortVector(ans);
+    return ans;
+}
+
+
 
 /*----------------------------------------------------------------------
 
