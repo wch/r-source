@@ -39,7 +39,8 @@ is.data.frame(x)
   \code{""} if \code{optional = TRUE}.
 
   \code{is.data.frame} returns \code{TRUE} if its argument is a data
-  frame and \code{FALSE} otherwise.
+  frame (that is, has \code{"data.frame"} amongst its classes)
+  and \code{FALSE} otherwise.
 }
 \details{
   \code{as.data.frame} is a generic function with many methods, and
