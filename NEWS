@@ -1,3 +1,17 @@
+		CHANGES IN R VERSION 0.63.2
+
+NEW FEATURES
+
+    o   sink() has new `append' argument.
+
+    o   new function rle().
+
+BUG FIXES
+
+    o   `make install' copied the R shell script a second time without
+	getting RHOME right (thus also breaking R CMD check).  Fixed.
+
+
 		CHANGES IN R VERSION 0.63.1
 
 NEW FEATURES
@@ -18,7 +32,7 @@ NEW FEATURES
 
     o	rowsum() and improved na.omit() added from survival4
     
-    o	backsolve(.) has new arguments "upper.tri = TRUE,  transpose = FALSE"
+    o	backsolve(.) has new arguments "upper.tri = TRUE, transpose = FALSE"
 
     o	hist() has new "right = TRUE" argument;	 
 	"right = FALSE" gives  [a,b) intervals
