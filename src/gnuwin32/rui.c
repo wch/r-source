@@ -55,8 +55,8 @@ static menubar RMenuBar;
 static menuitem msource, mdisplay, mload, msave, mloadhistory,
     msavehistory, mpaste, mcopy, mcopypaste, mlazy, mconfig,
     mls, mrm, msearch, mhelp, mmanintro, mmanref, 
-    mmanext, mapropos, mhelpstart, mFAQ, mrwFAQ;
-static int lmanintro, lmanref, lmanext;
+    mmanext, mmanlang, mapropos, mhelpstart, mFAQ, mrwFAQ;
+static int lmanintro, lmanref, lmanlang, lmanext;
 static menu m, mman;
 static char cmd[1024];
 
@@ -301,6 +301,11 @@ static void menumainref(control m)
 static void menumainext(control m)
 {
     internal_shellexec("doc/manual/R-exts.pdf");
+}
+
+static void menumainlang(control m)
+{
+    internal_shellexec("doc/manual/R-lang.pdf");
 }
 
 static void menuapropos(control m)
@@ -722,10 +727,13 @@ int setupui()
     MCHECK(mmanref = newmenuitem("R &Reference Manual", 0, menumainref));
     lmanref = check_doc_file("doc/manual/refman.pdf");
     if (!lmanref) disable(mmanref);
+    MCHECK(mmanlang = newmenuitem("R Language Manual", 0, menumainlang));
+    lmanlang = check_doc_file("doc/manual/R-lang.pdf");
+    if (!lmanlang) disable(mmanlang);
     MCHECK(mmanext = newmenuitem("Writing R Extensions", 0, menumainext));
     lmanext = check_doc_file("doc/manual/R-exts.pdf");
     if (!lmanext) disable(mmanext);
-    if (!lmanintro && !lmanref && !lmanext) disable(mman);
+    if (!lmanintro && !lmanref && !lmanlang && !lmanext) disable(mman);
     addto(m);
 
     MCHECK(newmenuitem("-", 0, NULL));

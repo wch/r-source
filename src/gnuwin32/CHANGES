@@ -40,8 +40,8 @@ of Unix versions of R.
 -   make check no longer makes R, just runs the tests (as make test
     always has).  Tests are run in the C locale.
 
--   It is possible to make DVI versions of the manuals: see file INSTALL
-    in the source distribution.
+-   It is possible to make DVI and HTML  versions of the manuals: 
+    see file INSTALL in the source distribution.
 
 -   New utility Rcmd.exe to emulate R CMD : see below.
 

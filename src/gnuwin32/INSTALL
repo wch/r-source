@@ -186,8 +186,8 @@ can be made by
 
 	make docs
 
-If you want to make the info versions, you will need a version of
-makeinfo 4.0 (included in our tool set). Then
+If you want to make the info versions (not the Reference Manual), you
+will need a version of makeinfo 4.0 (included in our tool set). Then
 
 	cd ../../doc/manuals
 	make -f Makefile.win info
@@ -201,6 +201,10 @@ To make DVI versions of the manuals use
 
 (assuming you have tex and latex installed and in your path).
 
+To make HTML versions of the manuals (not the Reference Manual) use
+
+	cd ../../doc/manuals
+	make -f Makefile.win html
 
 The fptex distribution of TeX (via www.fptex.org) includes a suitable
 port of pdftex.

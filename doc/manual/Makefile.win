@@ -6,9 +6,10 @@ srcdir = .
 top_srcdir = ../..
 subdir = doc/manual
 
-SOURCES_TEXI = R-FAQ.texi R-exts.texi R-intro.texi
+SOURCES_TEXI = R-FAQ.texi R-exts.texi R-intro.texi R-lang.texi
 
 OBJECTS_DVI = $(SOURCES_TEXI:.texi=.dvi)
+OBJECTS_HTML = $(SOURCES_TEXI:.texi=.html)
 OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
 OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
 
@@ -30,10 +31,10 @@ R_RD4PDF = ae,hyper
 
 pkgsrcs = $(R_PKGS:=-pkg.tex)
 
-texiincludes = version.texi $(srcdir)/R-defs.texi
+texiincludes = version.texi R-defs.texi
 
 .SUFFIXES:
-.SUFFIXES: .dvi .info .texi .pdf
+.SUFFIXES: .dvi .html .info .texi .pdf
 
 all: pdf
 
@@ -46,6 +47,9 @@ Rdnewer.pl: $(top_srcdir)/tools/Rdnewer.in
 .texi.dvi:
 	$(TEX) $<
 	$(TEX) $<
+
+.texi.html:
+	$(MAKEINFO) --html $< -o $@ || touch $@
 
 .texi.info:
 	$(MAKEINFO)  -D UseExternalXrefs $<
@@ -83,9 +87,15 @@ R-intro.dvi: R-intro.texi $(texiincludes)
 	$(TEX) R-intro.texi
 	$(TEX) R-intro.texi
 
+html: $(OBJECTS_HTML)
+R-exts.html: $(texiincludes)
+R-intro.html: $(texiincludes)
+R-lang.html: $(texiincludes)
+
 info: $(OBJECTS_INFO)
-R-exts.info: version.texi
-R-intro.info: version.texi
+R-exts.info: $(texiincludes)
+R-intro.info: $(texiincludes)
+R-lang.info: $(texiincludes)
 
 pdf: refman.pdf $(OBJECTS_PDF)
 
@@ -126,6 +136,12 @@ R-exts.pdf: R-exts.texi $(texiincludes)
 	$(PDFTEX) R-exts.texi
 	$(PDFTEX) R-exts.texi
 
+R-lang.pdf: R-lang.texi $(texiincludes) 
+	$(PDFTEX) R-lang.texi
+	$(TEXINDEX) R-lang.cp R-lang.fn R-lang.vr
+	$(PDFTEX) R-lang.texi
+	$(PDFTEX) R-lang.texi
+
 R-intro.pdf: R-intro.texi $(texiincludes) 
 	$(PDFTEX) R-intro.texi
 	$(TEXINDEX) R-intro.cp R-intro.fn R-intro.vr
@@ -147,6 +163,6 @@ clean:
 	  *.out *.pg *.pgs *.tmp *.tp *.vr *.vrs \
 	  version.tex version.texi refman.tex *-pkg.tex 
 distclean: clean
-	@-rm -f pkg2tex.pl Rdnewer.pl *.pdf *.dvi *.info*
+	@-rm -f pkg2tex.pl Rdnewer.pl *.pdf *.dvi *.info* *.html
 maintainer-clean: distclean
 
