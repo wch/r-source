@@ -93,6 +93,7 @@ NEW FEATURES
 
    o    The tcltk package now works with the gnome user interface.
 
+
 DEPRECATED & DEFUNCT
 
     o	.Alias, reshapeLong(), reshapeWide() are defunct.
@@ -141,7 +142,7 @@ C-LEVEL FACILITIES
 BUG FIXES
 
     o	Insufficient information was being recorded in the display list
-	for the indentify() function.  In particular, the "plot="
+	for the identify() function.  In particular, the "plot="
 	argument was ignored when replaying the display list.  [PR#1157]
 
     o	The vertical alignment of mathematical annotations was wrong.
