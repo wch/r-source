@@ -1,7 +1,7 @@
 iconv <- function(x, from, to, sub = NA)
     .Internal(iconv(x, from, to, as.character(sub)))
 
-iconvlist <- function() sort(.Internal(iconv(NULL, "", "")))
+iconvlist <- function() sort(.Internal(iconv(NULL, "", "", "")))
 
 ## If you were wondering what these language codes stand for, see
 ## ftp://ftp.ilog.fr/pub/Users/haible/utf8/ISO_639
@@ -37,6 +37,7 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
         ## Assume locales are like  en_US[.utf8[@euro]]
         x <- strsplit(locale, ".", fixed=TRUE)[[1]]
         enc <- if(length(x) == 2) gsub("@.*$o", "", x[2]) else ""
+        if(enc == "UTF-8") enc <- "utf8" # for AIX
         if(nchar(enc) && enc != "utf8") {
             known <-
                 c("ISO8859-1", "ISO8859-2", "ISO8859-3", "ISO8859-6",
