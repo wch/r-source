@@ -1311,11 +1311,12 @@ AC_DEFUN([R_FUNC_STRPTIME],
 int main () {
 #ifdef HAVE_STRPTIME
   struct tm tm;
-  char *p, *q;
+  char *p, *q, *p2;
 
-  p = strptime("1960-01-01", "%Y-%m-%d", &tm);
+  p = strptime("1960-01-01", "%Y-%m-%d", &tm); /* works on MacOS X */
+  p2 =strptime("1899-01-01", "%Y-%m-%d", &tm); /* but this one does not */
   q = strptime("2003-02-40", "%Y-%m-%d", &tm);
-  exit(p == 0 || q);
+  exit(p == 0 || p2 == 0 || q);
 #else
   exit(1);
 #endif
