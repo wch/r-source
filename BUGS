@@ -922,3 +922,11 @@ Date: Mon, 14 Jun 2004 10:16:10 +0600
 Subject: New powerful weightloss for you.
 From: "Cornelia Carlisle" <carlisle_jo@pagegallery.se>
 Date: Mon, 14 Jun 2004 05:39:45 +0100
+* PR# 6982 *
+Subject: out-of-date information in R for Mac OS X FAQ
+From: d.firth@warwick.ac.uk
+Date: Tue, 15 Jun 2004 12:50:38 +0200 (CEST)
+* PR# 6983 *
+Subject: tapply/barplot
+From: "Hjellvik Vidar" <Vidar.Hjellvik@imr.no>
+Date: Tue, 15 Jun 2004 14:20:05 +0200
