@@ -8,10 +8,12 @@
     ## Until 1.6.0, we consistently used the base environment.
     ## Now we have a dynamic variable instead.
     ## </NOTE>
-    .Dyn.libs <- list()
+    .Dyn.libs <- structure(list(), class = "DLLInfoList")
     function(new) {
-        if(!missing(new))
+        if(!missing(new)) {
+            class(new) <- "DLLInfoList"
             .Dyn.libs <<- new
+        }
         else
             .Dyn.libs
     }
