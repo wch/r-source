@@ -179,10 +179,11 @@ Package: pkgname
 Version: 0.5-1
 Date: 2000-01-04
 Title: My first collection of functions
-Author: Friedrich Leisch <F.Leisch@@ci.tuwien.ac.at>, with
+Author: Joe Developer <Joe.Developer@@some.domain.net>, with
   contributions from A. User <A.User@@whereever.net>.
-Maintainer: Friedrich Leisch <F.Leisch@@ci.tuwien.ac.at>
-Depends: R (>= 0.99), nlme
+Maintainer: Joe Developer <Joe.Developer@@some.domain.net>
+Depends: R (>= 1.8.0), nlme
+Suggests: MASS
 Description: A short (one paragraph) description of what
   the package does and why it may be useful.
 License: GPL version 2 or newer
@@ -240,15 +241,35 @@ and @samp{<=} are supported), whitespace and a valid version number in
 parentheses.  (List package names even if they are part of a bundle.)
 You can also use the special package name @samp{R} if your package
 depends on a certain version of R.  E.g., if the package works only with
-R version 0.90 or newer, include @samp{R (>= 0.90)} in the
-@samp{Depends} field.  Future versions of R will use this field to
-autoload required packages, hence it is an error to use improper syntax
+R version 1.8.0 or newer, include @samp{R (>= 1.8.0)} in the
+@samp{Depends} field.  The R package checking facilities use this
+field, hence it is an error to use improper syntax 
 or misuse the @samp{Depends} field for comments on other software that
 might be needed.  Other dependencies (external to the @R{} system)
 should be listed in the @samp{SystemRequirements} field or a separate
 @samp{README} file.  The @R{} @command{INSTALL} facilities already check
 if the version of R used is recent enough for the package being
 installed.
+
+The optional @samp{Suggests} field uses the same syntax as
+@samp{Depends} and lists packages that are not neccessarily
+needed. This includes packages used only in examples or vignettes, and
+packages loaded in the body of functions. E.g., consider an example
+from package @samp{foo} uses a dataset from package @samp{bar}. Then
+it is not necessary to have @samp{bar} for routine use of @samp{foo},
+unless one wants to execute the examples: it is nice to have
+@samp{bar}, but not necessary.  The general rules are
+@itemize @bullet
+@item Packages that are necessary to successfully load the package
+using @code{library(pkgname)} must be listed in the @samp{Depends}
+field.
+@item All packages that are needed to successfully run @code{R CMD
+check} on the package must be listed either in @samp{Depends} or
+@samp{Suggests}.
+@end itemize
+Especially large packages providing ``only'' data for examples or
+vignettes should be listed in @samp{Suggests} rather than
+@samp{Depends} in order to make lean installations possible.
 
 The optional @samp{URL} field may give a list of @acronym{URL}s
 separated by commas or whitespace, for example the homepage of the
