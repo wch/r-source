@@ -39,7 +39,7 @@ print.matrix(x, rowlab=character(0), collab=character(0),
 \examples{
 print.matrix(m6 <- diag(6), row = rep("",6), coll=rep("",6))
 
-chm <- matrix(scan(paste(system.file(),"INDEX", sep=""), what=""), 12,3)
+chm <- matrix(scan(paste(system.file(),"INDEX", sep="/"), what=""), 12,3)
 chm  #-> print.default(.)  = `same' as  print.matrix(chm)
 print.matrix(chm, collab = paste("Column",1:3), right=TRUE, quote=FALSE)
 }
