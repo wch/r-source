@@ -14,11 +14,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = KEYWORDS R.1 Rdconv.1 keyword-test.in Makefile.in
 SUBDIRS = html manual
 
-all R docs: Makefile keyword-test
-	@$(MKINSTALLDIRS) $(top_builddir)/doc/html/search
-	@if [ "$(srcdir)" != "." ]; then \
-	  $(MAKE) rhome=$(top_builddir) install-html; \
-	fi
+all docs: Makefile keyword-test R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) && \
@@ -28,6 +24,13 @@ keyword-test: $(srcdir)/keyword-test.in $(top_builddir)/config.status
 	cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
+
+R:
+	@$(MKINSTALLDIRS) $(top_builddir)/doc/html/search
+	@if [ "$(srcdir)" != "." ]; then \
+	  $(MAKE) rhome=$(top_builddir) install-html; \
+	  (cd manual && $(MAKE) $@); \
+	fi
 
 install: installdirs install-html install-man
 	@$(INSTALL) keyword-test $(rhome)/doc

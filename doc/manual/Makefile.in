@@ -25,12 +25,18 @@ Manparts = Man-1.ps Man-2.ps Man-3.ps Man-4.ps \
 	   Man-5.ps Man-6.ps Man-7.ps Man-8.ps
 Manbooks = $(Manparts:.ps=.bps)
 
-all: Makefile lib2tex dvi
+all: Makefile R lib2tex dvi
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
+
+R:
+	@if [ "$(srcdir)" != "." ]; then \
+	  $(INSTALL_DATA) $(srcdir)/Rd.sty . ; \
+	fi
+
 lib2tex: $(srcdir)/lib2tex.in $(top_builddir)/config.status
 	cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
@@ -114,6 +120,9 @@ uninstall:
 mostlyclean: clean
 clean:
 	@echo cleaning in doc/manual
+	@if [ "$(srcdir)" != "." ]; then \
+	  rm -f Rd.sty; \
+	fi
 	@-rm -f *.aux *.toc Man.i?? *.dvi *.log *.ps *.ps-2
 distclean: clean
 	@-rm -f auto Version.tex pkg-*.tex Makefile lib2tex \
