@@ -510,7 +510,7 @@ AC_HEADER_SYS_WAIT
 ## Some of these are also checked for when Autoconf computes the default
 ## includes.
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
-  fpu_control.h grp.h ieee754.h ieeefp.h langinfo.h locale.h \
+  fpu_control.h grp.h ieee754.h ieeefp.h locale.h \
   netdb.h netinet/in.h \
   pwd.h readline/history.h readline/readline.h strings.h \
   sys/param.h sys/select.h sys/socket.h sys/stat.h sys/time.h \
@@ -1161,12 +1161,16 @@ AC_SUBST(LAPACK_LDFLAGS)
 AC_FUNC_ALLOCA
 AC_CHECK_FUNCS(access chdir expm1 fcntl finite ftruncate getcwd \
   getgrgid getpwuid getuid hypot isascii isnan log1p matherr mkfifo \
-  nl_langinfo popen putenv rint setenv strcoll stat strptime symlink \
+  popen putenv rint setenv strcoll stat strptime symlink \
   system times unsetenv)
 ## <NOTE>
 ## No need checking for bcopy bzero memcpy mempcpy even though ifnames
 ## might report corresponding HAVE_FOO conditionals.
 ## </NOTE>
+
+## check whether nl_langinfo(CODESET) is in langinfo.h
+## defines HAVE_LANGINFO_CODESET if it's there
+AM_LANGINFO_CODESET
 
 ## Used to build src/include/Rmath.h.
 ## <NOTE>
