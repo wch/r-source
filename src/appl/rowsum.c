@@ -14,6 +14,10 @@
 **      x    : rows 1 to dd[0] contain the sums.
 */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 void rowsum(dim, na_x, x, group)
 int     *dim;
 double  *na_x;

@@ -37,6 +37,10 @@
  *	Choleski is more efficient.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Arith.h"
 #include "Applic.h"
 #include <stdio.h>

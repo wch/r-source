@@ -53,6 +53,10 @@
  ************************************************************************
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Mathlib.h"
 #define EPSILON DBL_EPSILON
 
@@ -149,5 +153,3 @@ double zeroin(			/* An estimate of the root */
     *Tol = fabs(c-b);
     return b;
 }
-
-

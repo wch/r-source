@@ -34,6 +34,10 @@
  *	February 1997
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include <float.h>
 #include "Fortran.h"
 #include "Arith.h"

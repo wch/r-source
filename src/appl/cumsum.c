@@ -18,6 +18,10 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Applic.h"
 
 void cumsum(double *x, int *n, double *na_value, double *ans)

@@ -19,6 +19,10 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Mathlib.h"
 #include "PrtUtil.h"
 #include "Utils.h"
@@ -123,5 +127,3 @@ int stemleaf(double *x, int *n, double *scale, int *width, double *atom)
 {
     return stem_leaf(x, *n, *scale, *width, *atom);
 }
-
-

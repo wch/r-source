@@ -9,6 +9,9 @@
  *
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
 
 typedef int logical;
 #define TRUE_ (1)

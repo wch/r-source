@@ -2,15 +2,13 @@
    implementation in Appendix B of Practical UNIX Programming,
    K. A. Robbins and S. Robbins, Prentice Hall, 1996. */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #if defined(__MWERKS__) && defined(macintosh)
 #  define MACINTOSH
 #  define EINTR 15
-#endif
-
-#ifdef _AIX
-#  warning __undefining XOPEN_SOURCE_EXTENDED -- for sock.c only --
-#  undef _XOPEN_SOURCE_EXTENDED
-  /* since netinet/{tcp.h|in.h} ..?.. are broken (in some AIX 4.2) */
 #endif
 
 #include <stdio.h>

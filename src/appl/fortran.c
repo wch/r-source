@@ -22,9 +22,12 @@
  *  Loosely based on f2c Libraries
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Fortran.h"
 #include "Error.h"
-
 
 double DABS(double *a)
 {

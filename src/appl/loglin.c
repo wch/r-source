@@ -4,6 +4,10 @@
    contingency table.
    */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include <math.h>
 #include "S.h"
 

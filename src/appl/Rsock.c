@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #define NULL 0
 #include <limits.h>
 #include <stdio.h>

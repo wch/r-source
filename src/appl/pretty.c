@@ -42,6 +42,10 @@
  * since this enables exact floating point division.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Applic.h"
 #include "Mathlib.h"
 #ifdef DEBUGpr

@@ -58,6 +58,10 @@
  *	  New (Feb.98): if flag has more than one character, all are passed..
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include <stdio.h>
 #include <string.h>
 #include <math.h>

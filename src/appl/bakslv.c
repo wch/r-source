@@ -23,6 +23,10 @@
    -- and hand edited by Martin Maechler.
    */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Fortran.h"		/* incl Rconfig.h */
 #include "Linpack.h"		/* incl Blas.h    */
 #include "Applic.h"

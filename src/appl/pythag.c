@@ -1,5 +1,9 @@
 /* finds dsqrt(a**2+b**2) without overflow or destructive underflow */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Mathlib.h"/*fmax2 ..*/
 #include "Applic.h"
 

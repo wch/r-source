@@ -17,6 +17,10 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Mathlib.h"
 
 void massdist(double *x, int *nx, double *xlow, double *xhigh, 
