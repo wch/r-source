@@ -64,13 +64,17 @@ void gbitblt(drawing db, drawing sb, point p, rect r)
 }
 
 
+
+/* dp gives the amount to scroll; r the full rectangle to scroll */
 void gscroll(drawing d, point dp, rect r)
 {
-    rect cliprect = getrect(d);
     HDC dc = GETHDC(d);
-
-    ScrollDC(dc, dp.x - r.x, dp.y - r.y,
-	     (RECT *)&r, (RECT *) &cliprect, 0, NULL);
+    RECT rr ;
+    rr.left = r.x;
+    rr.top = r.y;
+    rr.right = r.x + r.width;
+    rr.bottom = r.y + r.height;
+    ScrollDC(dc, dp.x , dp.y , &rr, &rr, 0, NULL);
 }
 
 void ginvert(drawing d, rect r)
