@@ -38,7 +38,7 @@ else
     echo "Rd2dvi : Collecting files and \`Rdconv -t latex'ing them ..."
     toc_sed=''
 fi
-## DEBUG: echo ''; echo 'subj:'; echo "$subj"; echo ''
+## DBG: echo ''; echo 'subj:'; echo "$subj"; echo ''
 for f in $files
 do
     echo $f
