@@ -371,3 +371,7 @@ Date: Fri, 21 Dec 2001 19:51:33 +0100 (MET)
 Subject: problem in predict.mlm
 From: Bob Gray <gray@jimmy.harvard.edu>
 Date: Sun, 23 Dec 2001 09:05:57 -0500
+* PR# 1227 *
+Subject: read.table
+From: possolo@crd.ge.com
+Date: Tue, 25 Dec 2001 22:45:46 +0100 (MET)
