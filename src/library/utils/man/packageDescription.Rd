@@ -23,16 +23,17 @@ packageDescription(pkg, lib.loc = NULL, fields = NULL, drop=TRUE)
 \value{
   If a \file{DESCRIPTION} for the given package is found and can
   successfully be read, \code{packageDescription} returns an object of
-  class \code{"packageDescription"}, which is a named list
-  with the values of the (given) fields as elements and
-  the tags as names, unless \code{drop = TRUE}.
+  class \code{"packageDescription"}, which is a named list with the
+  values of the (given) fields as elements and the tags as names, unless
+  \code{drop = TRUE}.
 
-  If parsing the \file{DESCRIPTION} file was not
-  successful, it returns a named list of \code{NA}s
-  with the field tags as names if \code{fields} is not null, and
-  \code{NA} otherwise.
+  If parsing the \file{DESCRIPTION} file was not successful, it returns
+  a named list of \code{NA}s with the field tags as names if \code{fields}
+  is not null, and \code{NA} otherwise.
 }
-\seealso{\code{\link{read.dcf}}, \code{\link{package.contents}}}
+\seealso{
+  \code{\link{read.dcf}}
+}
 \examples{
 packageDescription("stats")
 packageDescription("stats", fields = c("Package", "Version"))

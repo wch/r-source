@@ -403,8 +403,18 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         for(lib in lib.loc) {
             a <- .packages(all.available = TRUE, lib.loc = lib)
             for(i in sort(a)) {
-                title <- packageDescription(i, lib.loc = lib, field="Title")
-                if(is.na(title)) title <- ""
+                ## all packages installed under 2.0.0 should have package.rds
+                ## but we have not checked.
+                file <- system.file("Meta", "package.rds", package = i,
+                                    lib.loc = lib)
+                title <- if(file != "") .readRDS(file)["Title"] else NA
+#                 if(title == "") {
+#                     file <- system.file("DESCRIPTION", package = i,
+#                                         lib.loc = lib)
+#                     title <- if(file != "") read.dcf(file, field="Title")[1,1] else ""
+#                 }
+                if(is.na(title))
+                    title <- " ** No title available (pre-2.0.0 install?)  ** "
                 db <- rbind(db, cbind(i, lib, title))
             }
             if(length(a) == 0)

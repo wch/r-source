@@ -1,21 +1,20 @@
 export(.helpForCall, .tryHelp)
 
 export("?", CRAN.packages, Rprof, apropos, assignInNamespace,
-       as.person, as.personList, bibtex,
-       browseEnv, browseURL, bug.report, capture.output,
-       citation, citEntry, citHeader, citFooter, close.socket,
-       contrib.url, data, data.entry, dataentry, de, de.ncols, de.restore,
-       de.setup, debugger, demo, download.file, download.packages,
-       dump.frames, edit, emacs, example, file.edit, find, fix, fixInNamespace,
-       getAnywhere, getFromNamespace, getS3method, head, help,
-       help.search, help.start, history, index.search, install.packages,
+       as.person, as.personList, bibtex, browseEnv, browseURL,
+       bug.report, capture.output, citation, citEntry, citHeader,
+       citFooter, close.socket, contrib.url, data, data.entry,
+       dataentry, de, de.ncols, de.restore, de.setup, debugger, demo,
+       download.file, download.packages, dump.frames, edit, emacs,
+       example, file.edit, find, fix, fixInNamespace, getAnywhere,
+       getFromNamespace, getS3method, head, help, help.search,
+       help.start, history, index.search, install.packages,
        installed.packages, limitedLabels, loadhistory, ls.str,
        lsf.str, make.packages.html, make.socket, menu, methods,
-       object.size, old.packages, package.contents,
-       package.skeleton, packageStatus, page, person, personList,
-       pico, prompt,
-       promptData, readCitationFile,
-       read.fwf, read.fortran, read.socket, recover, remove.packages,
+       object.size, old.packages, package.contents, package.skeleton,
+       packageDescription, packageStatus, page, person, personList,
+       pico, prompt, promptData, readCitationFile, read.fwf,
+       read.fortran, read.socket, recover, remove.packages,
        savehistory, shQuote, str, summaryRprof, tail, topicName,
        update.packageStatus, update.packages, upgrade, url.show, vi,
        vignette, write.socket, wsbrowser, xedit, xemacs)
@@ -43,6 +42,7 @@ S3method(print, getAnywhere)
 S3method(print, hsearch)
 S3method(print, "help_files_with_topic")
 S3method(print, MethodsFunction)
+S3method(print, packageDescription)
 S3method(print, packageIQR)
 S3method(print, packageStatus)
 S3method(print, socket)

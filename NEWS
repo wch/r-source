@@ -182,6 +182,8 @@ NEW FEATURES
 	creates a model frame with a different number of rows from
 	that implied by the size of 'newdata'.
 
+    o	packageDescription() has been moved to package 'utils'.
+
     o	The 'formula' method for pairs() has a 'na.action' argument,
 	defaulting to 'na.pass', rather than the value of
 	getOption("na.action").
