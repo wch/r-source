@@ -31,7 +31,7 @@ as.qr(x)
 }
 \description{
   \code{qr} computes the QR decomposition of a matrix.  It provides an
-  interface to the techniques used in the LINPACK routine DQRDC.  
+  interface to the techniques used in the LINPACK routine DQRDC.
 }
 \details{
   The QR decomposition plays an important role in many
@@ -48,8 +48,9 @@ as.qr(x)
 
   \code{qr.solve} solves systems of equations via the QR decomposition.
 
-  \code{is.qr} returns \code{TRUE} if \code{x} is a list with a
-  component named \code{qr} and \code{FALSE} otherwise.
+  \code{is.qr} returns \code{TRUE} if \code{x} is a \code{\link{list}}
+  with components named \code{qr}, \code{rank} and \code{qraux} and
+  \code{FALSE} otherwise.
 
   It is not possible to coerce objects to mode \code{"qr"}.  Objects
   either are QR decompositions or they are not.

@@ -52,6 +52,8 @@ BUG FIXES
 
     o	AIX building of modreg {duplicate dsign()} fixed.
 
+    o	is.qr() checks not only for $qr, but also for $rank & $qraux, PR#482.
+
 
 	**************************************************
 	*						 *

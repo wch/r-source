@@ -1,4 +1,4 @@
-is.qr <- function(x) !is.null(x$qr)
+is.qr <- function(x) !is.null(x$qr) && !is.null(x$rank) && !is.null(x$qraux)
 
 qr <- function(x, tol= 1e-07)
 {
@@ -17,7 +17,7 @@ qr <- function(x, tol= 1e-07)
 	     qraux = double(p),
 	     pivot = as.integer(1:p),
 	     double(2*p),
-             PACKAGE="base")[c(1,6,7,8)]# c("qr", "rank", "qraux", "pivot")
+	     PACKAGE="base")[c(1,6,7,8)]# c("qr", "rank", "qraux", "pivot")
 }
 
 qr.coef <- function(qr, y)
@@ -72,7 +72,7 @@ qr.qy <- function(qr, y)
 	     y,
 	     ny,
 	     qy=qy,
-             PACKAGE="base")$qy
+	     PACKAGE="base")$qy
 }
 
 qr.qty <- function(qr, y)
@@ -99,7 +99,7 @@ qr.resid <- function(qr, y)
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
     k <- as.integer(qr$rank)
-    if (k==0) return(y)    
+    if (k==0) return(y)
     n <- as.integer(nrow(qr$qr))
     p <- as.integer(ncol(qr$qr))
     y <- as.matrix(y)
@@ -114,7 +114,7 @@ qr.resid <- function(qr, y)
 	     y,
 	     ny,
 	     rsd=mat.or.vec(n,ny),
-             PACKAGE="base")$rsd
+	     PACKAGE="base")$rsd
 }
 
 qr.fitted <- function(qr, y, k=qr$rank)
