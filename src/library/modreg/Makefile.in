@@ -27,6 +27,10 @@ all:
 	  $(INSTALL_DATA) $(srcdir)/TITLE\
 	     $(top_builddir)/library/$(pkg); \
 	fi
+	@if test -f $(srcdir)/COPYRIGHTS; then \
+	  $(INSTALL_DATA) $(srcdir)/COPYRIGHTS\
+	     $(top_builddir)/library/$(pkg); \
+	fi
 	@if test -d $(srcdir)/data; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data; \
 	  for f in `ls -d $(srcdir)/data/* | sed '/CVS/d'`; do \
