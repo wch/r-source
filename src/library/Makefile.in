@@ -35,7 +35,7 @@ R:
 	@for pkg in profile $(R_PKGS_BASE) $(R_PKGS_STUBS); do \
 	  (cd $${pkg} && $(MAKE)) || exit 1; \
 	done
-	@for pkg in utils graphics stats tools ; do \
+	@for pkg in utils graphics stats methods tools ; do \
 	  (cd $${pkg} && $(MAKE) metadata) || exit 1; \
 	done
 	@$(INSTALL_DATA) $(top_srcdir)/doc/html/R.css \
