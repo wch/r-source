@@ -17,7 +17,7 @@ double pbeta(double, double, double);
 
 double pnbeta(double x, double a, double b, double lambda)
 {
-    double a0, ans, ax, beta, c, errbd, gx, q, sumq, temp, x0;
+    double a0, ans, ax, lbeta, c, errbd, gx, q, sumq, temp, x0;
     int j;
 
     static double zero = 0;
@@ -50,9 +50,9 @@ double pnbeta(double x, double a, double b, double lambda)
 
     x0 = floor(fmax2(c - ualpha * sqrt(c), zero));
     a0 = a + x0;
-    beta = lgamma(a0) + lgamma(b) - lgamma(a0 + b);
+    lbeta = lgamma(a0) + lgamma(b) - lgamma(a0 + b);
     temp = pbeta(x, a0, b);
-    gx = exp(a0 * log(x) + b * log(one - x) - beta - log(a0));
+    gx = exp(a0 * log(x) + b * log(one - x) - lbeta - log(a0));
     if (a0 > a)
 	q = exp(-c + x0 * log(c) - lgamma(x0 + one));
     else
@@ -75,7 +75,7 @@ double pnbeta(double x, double a, double b, double lambda)
 	ans += ax;
 	errbd = (temp - gx) * sumq;
     }
-    while (j < itrmax || errbd > errmax);
+    while (errbd > errmax && j < itrmax);
 
     if (errbd > errmax) {
 	ML_ERROR(ME_PRECISION);
