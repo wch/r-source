@@ -17,7 +17,7 @@
 \usage{
 NA
 is.na(x)
-is.na.data.frame(x)
+\method{is.na}{data.frame}(x)
 
 is.na(x) <- value
 }

@@ -103,12 +103,12 @@ the methods defined for a particular generic function:
 
 \code{promptMethods("myFun")}
 
-will create a file, \code{"myFun-methods.Rd"} with a skeleton of
+will create a file, \file{myFun-methods.Rd} with a skeleton of
 documentation for the methods defined for function \code{myFun}.
 The output from \code{promptMethods} is suitable if you want to
 describe all or most of the methods for the function in one file,
 separate from the documentation of the generic function itself.
-Once the file has been filled in and moved to the \code{man}
+Once the file has been filled in and moved to the \file{man}
 subdirectory of your source package, requests for methods
 documentation will use that file, both for specific methods
 documentation as described above, and for overall documentation

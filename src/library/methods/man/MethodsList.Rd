@@ -34,7 +34,7 @@ inheritedSubMethodLists(object, thisClass, mlist, ev)
 showMlist(mlist, includeDefs = TRUE, inherited = TRUE,
    classes, useArgNames, printTo = stdout() )
 
-print.MethodsList(x, ...)
+\method{print}{MethodsList}(x, ...)
 
 listFromMlist(mlist, prefix = list())
 
