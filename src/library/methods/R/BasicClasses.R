@@ -27,9 +27,9 @@
     setIs("integer", "numeric")
     nullF <- function()NULL; environment(nullF) <- .GlobalEnv
     setClass("function", prototype = nullF, where = envir); clList <- c(clList, "function")
-    setClass("name", "language", prototype = as.name("<UNDEFINED>"), where = envir); clList <- c(clList, "name")
 
     setClass("language", where = envir); clList <- c(clList, "language")
+    setClass("name", "language", prototype = as.name("<UNDEFINED>"), where = envir); clList <- c(clList, "name")
     setClass("call", "language", prototype = quote("<undef>"()), where = envir); clList <- c(clList, "call")
     setClass("{", "language", prototype = quote({}), where = envir); clList <- c(clList, "{")
     setClass("if", "language", prototype = quote(if(NA) TRUE else FALSE), where = envir); clList <- c(clList, "if")
