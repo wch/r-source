@@ -7,6 +7,7 @@ La.eigen <- function (x, symmetric, only.values = FALSE,
     x <- as.matrix(x)
     if (nrow(x) != ncol(x)) stop("non-square matrix in La.eigen")
     if (nrow(x) == 0) stop("0 x 0 matrix in La.eigen")
+    if (any(!is.finite(x))) stop("infinite or missing values in x")
     complex.x <- is.complex(x)
     if (missing(symmetric)) {
         tx <- if(complex.x) Conj(t(x)) else t(x)
@@ -36,6 +37,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
 {
     if(!is.numeric(x) && !is.complex(x))
 	stop("argument to La.svd must be numeric or complex")
+    if (any(!is.finite(x))) stop("infinite or missing values in x")
     method <- match.arg(method)
     if(is.complex(x) && method == "dgesdd") {
         method <- "dgesvd"

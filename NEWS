@@ -161,7 +161,7 @@ BUG FIXES
     o	When lm.{w}fit() disregarded arguments in ... they reported
 	the values and not the names.
 
-    o	lm(singular.ok=FALSE) was looking for 0 rank, not rank < p.
+    o	lm(singular.ok = FALSE) was looking for 0 rank, not rank < p.
 
     o	The substitution code for strptime in the sources no longer
 	follows glibc in silently `correcting' invalid inputs.
@@ -170,8 +170,8 @@ BUG FIXES
 	non-Pearson case
 
     o	[l]choose() use a more accurate formula which also slightly
-	improves p- and qhyper(); choose(n,k) now returns 0 instead of NaN
-	for k < 0 or > n.
+	improves p- and qhyper(); choose(n, k) now returns 0 instead
+	of NaN for k < 0 or > n.
 
     o	find(simple.words=TRUE) (the default) was still using regular
 	expressions for e.g. "+" and "*".  Also, it checked the mode 
@@ -180,6 +180,11 @@ BUG FIXES
 
     o	Memory leaks in [dpq]wilcox have been plugged.  (PR#5314, plus
 	another potential leak.)
+
+    o	Non-finite input values to eigen(), La.eigen(), svd() and
+	La.svd() are now errors: they often caused infinite
+	looping.  (PR#5406, PR#4366, PR#3723: the fix for 3723/4366
+	returned a vector of NAs, not a matrix, for the eigenvectors.)
 
 
 
