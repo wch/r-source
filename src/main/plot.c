@@ -118,7 +118,7 @@ SEXP do_devset(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_devoff(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	checkArity(op, args);
-	KillDevice(INTEGER(CAR(args))[0] - 1);
+	killDevice(INTEGER(CAR(args))[0] - 1);
 	return R_NilValue;
 }
 

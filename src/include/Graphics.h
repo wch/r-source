@@ -406,7 +406,7 @@ DevDesc* CurrentDevice();
 void DevNull(void);
 DevDesc* GetDevice(int);
 void InitGraphics(void);	
-void KillDevice(int);
+void KillDevice(DevDesc*);
 void KillAllDevices();
 int NoDevices();
 int NumDevices();
@@ -418,6 +418,7 @@ int curDevice();
 int nextDevice(int);
 int prevDevice(int);
 int selectDevice(int);
+void killDevice(int);
 
 		/* Programmer GPar functions */
 

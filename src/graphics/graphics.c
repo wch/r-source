@@ -211,7 +211,7 @@ DevDesc* GetDevice(int);
 			/* identified by number */
 void InitGraphics(void);
 			/* initialise internal device structures */
-void KillDevice(int);
+void KillDevice(DevDesc*);
 			/* kill device which is identified by number */
 void KillAllDevices();
 int NoDevices();
@@ -235,6 +235,8 @@ int prevDevice(int);
 int selectDevice(int);
 			/* make the specified device (specified by number) */
 			/* the current device */
+void killDevice(int);
+			/* kill device which is identified by number */
 
 	/*							*/
 	/********************************************************/
@@ -4472,7 +4474,13 @@ have_device:
 	return 1;
 }
 
-void KillDevice(int devNum)
+void KillDevice(DevDesc *dd)
+{
+	dd->dp.close(dd);
+	removeDevice(deviceNumber(dd));
+}
+
+void killDevice(int devNum)
 {
 	if (!NoDevices() &&
 	    (devNum > 0) &&
@@ -4487,7 +4495,7 @@ void KillAllDevices()
 {
 	/* don't try to close or remove the null device ! */
 	while (R_NumDevices > 1) 
-		KillDevice(R_CurrentDevice);
+		killDevice(R_CurrentDevice);
 }
 
 	/* code for maintaining display lists */
