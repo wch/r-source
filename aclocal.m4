@@ -81,7 +81,12 @@ AC_DEFUN(R_PROG_TEXMF,
     AC_SUBST(INSTALL_INFO)
   else
     AC_PATH_PROG(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
-  fi])
+  fi
+  : ${R_RD4DVI="ae"}
+  AC_SUBST(R_RD4DVI)
+  : ${R_RD4PDF="ae,hyper"}
+  AC_SUBST(R_RD4PDF)
+  ])
 dnl
 dnl R_PROG_CC_M
 dnl

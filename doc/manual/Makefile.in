@@ -35,8 +35,8 @@ infodir = @infodir@
 INSTALL_INFO = @INSTALL_INFO@
 
 R_PAPERSIZE = @R_PAPERSIZE@
-R_RD4DVI = ae
-R_RD4PDF = ae,hyper
+R_RD4DVI = @R_RD4DVI@
+R_RD4PDF = @R_RD4PDF@
 
 pkgsrcs = $(R_PKGS:=-pkg.tex)
 
