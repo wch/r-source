@@ -78,11 +78,11 @@ void initOtherState(GEDevDesc* dd)
     SEXP currloc, prevloc, recording;
     SEXP state = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
     currloc = VECTOR_ELT(state, GSS_CURRLOC);
-    REAL(currloc)[0] = 0;
-    REAL(currloc)[1] = 0;    
+    REAL(currloc)[0] = NA_REAL;
+    REAL(currloc)[1] = NA_REAL;    
     prevloc = VECTOR_ELT(state, GSS_PREVLOC);
-    REAL(prevloc)[0] = 0;
-    REAL(prevloc)[1] = 0;    
+    REAL(prevloc)[0] = NA_REAL;
+    REAL(prevloc)[1] = NA_REAL;    
     SET_VECTOR_ELT(state, GSS_CURRGROB, R_NilValue);
     recording = VECTOR_ELT(state, GSS_ENGINERECORDING);
     LOGICAL(recording)[0] = FALSE;
@@ -102,12 +102,12 @@ void fillGridSystemState(SEXP state, GEDevDesc* dd)
      * are in INCHES;  so (0, 0) is the bottom-left corner of the device.
      */
     PROTECT(currloc = allocVector(REALSXP, 2));
-    REAL(currloc)[0] = 0;
-    REAL(currloc)[1] = 0;    
+    REAL(currloc)[0] = NA_REAL;
+    REAL(currloc)[1] = NA_REAL;    
     SET_VECTOR_ELT(state, GSS_CURRLOC, currloc);
     PROTECT(prevloc = allocVector(REALSXP, 2));
-    REAL(prevloc)[0] = 0;
-    REAL(prevloc)[1] = 0;    
+    REAL(prevloc)[0] = NA_REAL;
+    REAL(prevloc)[1] = NA_REAL;    
     SET_VECTOR_ELT(state, GSS_PREVLOC, prevloc);
     PROTECT(dlon = allocVector(LGLSXP, 1));
     LOGICAL(dlon)[0] = TRUE;
