@@ -1009,15 +1009,15 @@ if test "x$BLAS_LIBS" = x; then
   fi
 fi
 
-if test "x$BLAS_LIBS" = x; then
-  # BLAS in Alpha CXML library?
-  AC_CHECK_LIB(cxml, $dgemm_func, BLAS_LIBS="-lcxml", , $FLIBS)
-fi
+# if test "x$BLAS_LIBS" = x; then
+#   # BLAS in Alpha CXML library?
+#   AC_CHECK_LIB(cxml, $dgemm_func, BLAS_LIBS="-lcxml", , $FLIBS)
+# fi
 
-if test "x$BLAS_LIBS" = x; then
-  # BLAS in Alpha DXML library? (now called CXML, see above)
-  AC_CHECK_LIB(dxml, $dgemm_func, BLAS_LIBS="-ldxml", , $FLIBS)
-fi
+# if test "x$BLAS_LIBS" = x; then
+#   # BLAS in Alpha DXML library? (now called CXML, see above)
+#   AC_CHECK_LIB(dxml, $dgemm_func, BLAS_LIBS="-ldxml", , $FLIBS)
+# fi
 
 if test "x$BLAS_LIBS" = x; then
   if test "x$GCC" != xyes; then
