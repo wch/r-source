@@ -533,15 +533,25 @@ case "${host_cpu}" in
     ;;
   alpha*)
     ## <NOTE>
-    ## We really need to use '-ieee_with_inexact' ('-mieee-with-inexact'
-    ## for GCC) for the C compiler: '-ieee'/'-mieee' are not enough.
-    ## What about the FORTRAN 77 and C++ compilers?
-    ## According to <Albrecht.Gebhardt@uni-klu.ac.at>, native FORTRAN
-    ## on Alpha/OSF maps '-ieee' to '-fpe3' which was used previously.
+    ## * ANSI C
+    ## The native C compiler needs @option{-std1}: AC_PROG_CC_STDC
+    ## passes all ANSI C tests with no extra flags but then __STDC__ is
+    ## undefined which breaks compilation of the connections code.
+    ## * IEEE math
+    ## We really need to use @option{-ieee_with_inexact} (called
+    ## @option{-mieee-with-inexact} for GCC) for the C compiler:
+    ## @option{-ieee} (or @option{-mieee}) are not enough.
+    ## According to <Albrecht.Gebhardt@uni-klu.ac.at> and Luke Tierney
+    ## <luke@stat.umn.edu>, @option{-fpe3} is what we want for the
+    ## native FORTRAN 77 compiler: seems that not all versions map
+    ## @option{-ieee} to @option{-fpe3}.
+    ## What about the C++ compilers?
     if test "${GCC}" = yes; then
       R_PROG_CC_FLAG([-mieee-with-inexact],
                      [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee-with-inexact"])
     else
+      R_PROG_CC_FLAG([-std1],
+                     [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -std1"])
       R_PROG_CC_FLAG([-ieee_with_inexact],
                      [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee_with_inexact"])
     fi
@@ -549,8 +559,8 @@ case "${host_cpu}" in
       R_PROG_F77_FLAG([-mieee],
                       [R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -mieee"])
     else
-      R_PROG_F77_FLAG([-ieee],
-                      [R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -ieee"])
+      R_PROG_F77_FLAG([-fpe3],
+                      [R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -fpe3"])
     fi
     if test "${GXX}" = yes; then
       R_PROG_CXX_FLAG([-mieee],
