@@ -82,6 +82,9 @@ NEW FEATURES
     o	warnings() now looks only in the workspace for `last.warning'
 	(suggested by PR#7363).
 
+    o	The search for browsers now starts with firefox, and has mozilla
+	ahead of netscape.
+
 
 UTILITIES
 

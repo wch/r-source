@@ -175,7 +175,7 @@
 ## Browser default
 ## Default setting for the R_BROWSER env variable
 ## If unset configure searches in turn for (currently)
-## netscape mozilla galeon kfmclient opera gnome-moz-remote open
+## firefox mozilla netscape galeon kfmclient opera gnome-moz-remote open
 ## and uses the full path.
 ## R_BROWSER=
 
