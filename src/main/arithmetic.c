@@ -463,7 +463,11 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 	mod_iterate(n1, n2, i1, i2) {	  	  	  
 	    x1 = INTEGER(s1)[i1];
 	    x2 = INTEGER(s2)[i2];
+#ifdef IEEE_754
+	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
+#else
 	    if (x1 == NA_INTEGER || x2 == NA_INTEGER || x2 == 0)
+#endif
 		REAL(ans)[i] = NA_REAL;
 	    else
 		REAL(ans)[i] = (double) x1 / (double) x2;
