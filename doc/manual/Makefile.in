@@ -76,7 +76,13 @@ docs: html
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2DVI) $<
 
 .texi.html:
-	$(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@ || touch $@
+	@if test "$(MAKEINFO)" = false; then \
+          echo "'makeinfo' v4.5 or later needed to make HTML docs but missing on your system."; \
+	  exit 1; \
+	else \
+	  echo "creating doc/manual/$@"; \
+	  $(TEXI2HTML) -D UseExternalXrefs -I$(srcdir) $< -o $@ || touch $@; \
+	fi
 
 .texi.info:
 	@if test "$(MAKEINFO)" = false; then \
@@ -97,10 +103,16 @@ docs: html
 ## So use that in the sources if we can -- it is not in the svn archive.
 ## There are no cross-references, external or not.
 R-admin.html:
-	if test -f "$(top_srcdir)/doc/html/R-admin.html" ; then \
+	@if test -f "$(top_srcdir)/doc/html/R-admin.html" ; then \
 	  cp "$(top_srcdir)/doc/html/R-admin.html" R-admin.html ; \
 	else \
-	  $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@ ; \
+          if test "$(MAKEINFO)" = false; then \
+            echo "'makeinfo' v4.5 or later needed to make HTML docs but missing on your system."; \
+	    exit 1; \
+          else \
+	    echo "creating doc/manual/R-admin.html"; \
+	    $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@; \
+	  fi \
 	fi
 
 dvi: refman.dvi $(OBJECTS_DVI)
@@ -205,7 +217,7 @@ version.texi: Makefile $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	  echo "@set VERSION $${v}" >> $@; \
 	  rwv=`$(PERL) $(top_srcdir)/src/gnuwin32/fixed/rwver.pl $(top_srcdir)/VERSION`; \
 	  echo "@set RWVERSION $${rwv}" >> $@ )
-	if test "$(R_PAPERSIZE)" = "a4"; then \
+	@if test "$(R_PAPERSIZE)" = "a4"; then \
 	  echo "@afourpaper" >> $@ ; \
 	fi
 

@@ -20948,7 +20948,7 @@ echo "${ECHO_T}$r_cv_prog_makeinfo_v4" >&6
 
 fi
 if test "${r_cv_prog_makeinfo_v4}" != yes; then
-  warn_info="you cannot build info versions of the R manuals"
+  warn_info="you cannot build info or html versions of the R manuals"
   { echo "$as_me:$LINENO: WARNING: ${warn_info}" >&5
 echo "$as_me: WARNING: ${warn_info}" >&2;}
   MAKEINFO=false
