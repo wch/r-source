@@ -205,7 +205,7 @@ version.texi: Makefile $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	  echo "@set VERSION $${v}" >> $@; \
 	  rwv=`$(PERL) $(top_srcdir)/src/gnuwin32/fixed/rwver.pl $(top_srcdir)/VERSION`; \
 	  echo "@set RWVERSION $${rwv}" >> $@ )
-	if test "$(R_PAPERSIZE)" = "a4"; then \
+	if test "$${R_PAPERSIZE-$(R_PAPERSIZE)}" = "a4"; then \
 	  echo "@afourpaper" >> $@ ; \
 	fi
 

@@ -124,6 +124,7 @@ fullrefman.dvi: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  echo "\\documentclass[$${opt}]{book}"; \
 	  opt="$${R_RD4DVI:-$(R_RD4DVI)}"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
+	  echo "\\part{}"; \
 	  cat refman.top; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
 	    do echo $${f}; done) | LC_COLLATE=C sort`; \
@@ -323,7 +324,7 @@ version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	  echo "@set VERSION $${v}" >> $@; \
 	  rwv=$(shell perl $(top_srcdir)/src/gnuwin32/fixed/rwver.pl $(top_srcdir)/VERSION); \
 	  echo "@set RWVERSION $${rwv}" >> $@ )
-	if test "$(R_PAPERSIZE)" = "a4"; then \
+	if test "$${R_PAPERSIZE-$(R_PAPERSIZE)}" = "a4"; then \
 	  echo "@afourpaper" >> $@ ; \
 	fi
 

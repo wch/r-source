@@ -419,11 +419,16 @@ such as @command{xdvi} and @command{dvips}.  The PDF versions can be
 viewed using Acrobat Reader or (fairly recent versions of)
 @command{ghostscript}: they have hyperlinks that can be followed in
 Acrobat Reader.  The info files are suitable for reading online with
-Emacs or the standalone GNU Info.
+Emacs or the standalone GNU Info.  The DVI and PDF versions will be
+created using the papersize selected by @env{R_PAPERSIZE} (default ISO
+a4 but selected at configuration): this can be overridden by setting
+@env{R_PAPERSIZE} on the @command{make} command line.  (If re-making the
+manuals for a different papersize, you should first delete the file
+@file{doc/manual/version.texi}.)
 
 There are some issues with making the reference manual, and in
 particular with the PDF version @file{refman.pdf}.  The help files
-contain both ISO Latin1 character (e.g. in @file{text.Rd}) and upright
+contain both ISO Latin1 characters (e.g. in @file{text.Rd}) and upright
 quotes, neither of which are contained in the standard LaTeX Computer
 Modern fonts.  We have provided four alternatives:
 @itemize @bullet
@@ -443,7 +448,7 @@ on-screen as @code{times}.
 @item @code{cm-super}
 Using type-1 versions of the Computer Modern fonts by Vladimir Volovich.
 This is a large installation, obtainable from
-@uref{http://www.ctan.org/tex-archive/fonts/ps-type1/cm-super} and
+@uref{http://www.ctan.org/tex-archive/fonts/ps-type1/cm-super} and its
 mirrors.  These type-1 fonts have poor hinting and so are nowhere near
 so readable on-screen as the other three options.
 
