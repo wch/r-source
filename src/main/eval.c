@@ -232,6 +232,11 @@ SEXP eval(SEXP e, SEXP rho)
     case EXPRSXP:
 #endif
 	tmp = e;
+	/* Make sure constants in expressions are NAMED before being
+           used as values.  Setting NAMED to 2 makes sure weird calls
+           to assignment functions won't modify constants in
+           expressions.  */
+	if (NAMED(tmp) != 2) SET_NAMED(tmp, 2);
 	break;
     case SYMSXP:
 	R_Visible = 1;
