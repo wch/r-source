@@ -110,8 +110,8 @@ function(x, ...)
 {
     cat("\n\tPairwise comparisons using", x$method, "\n\n")
     cat("data: ", x$data.name, "\n\n")
-    pp <- format.pval(x$p.value, 2)
+    pp <- format.pval(x$p.value, 2, na.form="-")
     attributes(pp) <- attributes(x$p.value)
-    print(pp, quote=FALSE, na.print="-")
+    print(pp, quote=FALSE)
     cat("\nP value adjustment method:", x$p.adjust.method, "\n")
 }
