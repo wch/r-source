@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2005  Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -141,13 +141,6 @@ static void vec2buff(SEXP, LocalParseData *);
 static void linebreak(Rboolean *lbreak, LocalParseData *);
 static void deparse2(SEXP, SEXP, LocalParseData *);
 
-/*
-  Perhaps we can consolidate all the AllocBuffers into a single
-  routine across the files that provide something like this:
-    character.c,
-    saveload.c & scan.c (are identical modulo variable names.)
-    deparse.c, printutils.c (identical and merged)
- */
 void R_AllocStringBuffer(int blen, DeparseBuffer *buf)
 {
     if(blen >= 0) {
@@ -174,8 +167,11 @@ void R_AllocStringBuffer(int blen, DeparseBuffer *buf)
 
 void R_FreeStringBuffer(DeparseBuffer *buf)
 {
-	if (buf->data != NULL)
-		free(buf->data);
+    if (buf->data != NULL) {
+	free(buf->data);
+	buf->bufsize = 0;
+	buf->data = NULL;
+    }
 }
 
 SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
