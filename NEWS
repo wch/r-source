@@ -305,6 +305,8 @@ BUG FIXES
 
     o	identical() no longer thinks NaN and as.double(NA) are identical.
 
+    o	pipe() can open in a binary mode even on Linux (where popen
+	cannot).
 
 
 	**************************************************
