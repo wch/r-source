@@ -600,7 +600,7 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	f = R_loadMethod(f, fname, ev);
     switch(TYPEOF(f)) {
     case CLOSXP:
-#define IGNORE_LEXICAL_SCOPE
+#undef IGNORE_LEXICAL_SCOPE
 #ifdef IGNORE_LEXICAL_SCOPE
       PROTECT(val = BODY(f)); nprotect++;
 	val =  eval(val, ev);
