@@ -810,10 +810,16 @@ static void gzfile_close(Rconnection con)
 static int gzfile_fgetc(Rconnection con)
 {
     gzFile fp = ((Rgzfileconn)(con->private))->fp;
+    int c;
 
     /* Looks like eof is signalled one char early */
+    /* -- sometimes! gzgetc may still return EOF */
     if(gzeof(fp)) return R_EOF;
-    return con->encoding[gzgetc(fp)];
+    c = gzgetc(fp);
+    if (c == EOF) 
+	return R_EOF;
+    else
+	return con->encoding[c];
 }
 
 static long gzfile_seek(Rconnection con, int where, int origin, int rw)
