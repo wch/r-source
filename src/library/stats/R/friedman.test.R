@@ -19,6 +19,12 @@ function(y, groups, blocks, ...)
             stop("not an unreplicated complete block design")
         groups <- factor(groups)
         blocks <- factor(blocks)
+        ## Need to ensure consistent order of observations within
+        ## blocks.
+        o <- order(groups, blocks)
+        y <- y[o]
+        groups <- groups[o]
+        blocks <- blocks[o]
     }
 
     k <- nlevels(groups)
