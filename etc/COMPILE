@@ -1,0 +1,11 @@
+for i in $*; do
+  case ${i} in
+    *.[fc])
+      make -f ${RHOME}/etc/Makeconf ${i%.*}.o
+      ;;
+    *)
+      echo "ERROR:  don't know how to compile ${i}"
+      exit 1
+      ;;
+  esac
+done
