@@ -290,10 +290,20 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
     nr <- max(nrows)
     for(i in (1:n)[nrows < nr]) {
 	xi <- vlist[[i]]
-	if(length(xi)==1 && nr%%nrows[i]==0 && is.vector(xi[[1]]))
-	    vlist[[i]] <- list(rep(xi[[1]], length=nr))
-	else stop(paste("arguments imply differing number of rows:",
-			paste(unique(nrows), collapse = ", ")))
+	if(length(xi)==1 && nr%%nrows[i]==0) {
+            xi1 <- xi[[1]]
+            if(is.vector(xi1) || is.factor(xi1)) {
+                vlist[[i]] <- list(rep(xi1, length=nr))
+                next
+            }
+            if(is.character(xi1) && class(xi1) == "AsIs") {
+                ## simple char vectors only
+                vlist[[i]] <- list(structure(rep(xi1, length=nr), class="AsIs"))
+                next
+            }
+        }
+	stop(paste("arguments imply differing number of rows:",
+                   paste(unique(nrows), collapse = ", ")))
     }
     value <- unlist(vlist, recursive=FALSE, use.names=FALSE)
     ## unlist() drops i-th component if it has 0 columns
@@ -1049,3 +1059,4 @@ Summary.data.frame <- function(x, ...)
 	stop("only defined on a data frame with all numeric or complex variables")
     NextMethod(.Generic)
 }
+

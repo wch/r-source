@@ -93,6 +93,10 @@ row.names(x) <- names
   If a list or data frame or matrix is passed to \code{data.frame}
   it is as if each column had been passed as a separate argument,
   with the exception of matrices of class \code{\link{model.matrix}}.
+
+  Objects passed to \code{data.frame} should have the same number of
+  rows, but atomic vectors and factors will be recycled a whole number
+  of times if necessary.
 }
 \note{
   In versions of \R prior to 1.4.0 (and in S3) logical columns were

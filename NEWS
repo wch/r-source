@@ -102,6 +102,9 @@ NEW FEATURES
     o	RNGkind() has an additional option for normal random generators:
 	"Inversion".
 
+    o	data.frame() recycles factors and "AsIs" objects as well as
+	atomic vectors.
+
 
 DEPRECATED & DEFUNCT
 

@@ -800,3 +800,10 @@ stopifnot(is.character(z$b))
 ## logicals became factors < 1.6.0
 stopifnot(sapply(as.data.frame(matrix((1:12)%% 4 == 1, 3,4)),
                  is.logical))
+
+## recycling of factors in data.frame (wish from PR#1713)
+data.frame(x=c("A","B"), y="C")      # failed to recycle in 1.5.1
+X <- data.frame(x=c("A","B"), y=I("C")) # also failed
+XX <- data.frame(x=c("A","B"), y=I(rep("C", 2))) # fine
+stopifnot(identical(sapply(X, class), sapply(XX, class)))
+## Last is false in some S variants.
