@@ -306,8 +306,8 @@ Edit MkRules to set the type(s) of help that you want built. (You will
 not be able to cross-build .chm files, so WINHELP is automatically set
 to NO.)
 
-You also need a working copy of *this version* of R on Linux: set
-R_EXE in MkRules to point to it.
+You also need a working copy of *this version* of R on Linux:
+uncomment and set R_EXE in MkRules to point to it.
 
 Then run `make' (and parallel make works reliably, unlike on Windows).
 

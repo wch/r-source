@@ -48,7 +48,7 @@ BINPREF=mingw32-
 HEADER=/users/ripley/R/cross-tools/mingw32/include
 endif
 # path (possibly full path) to same version of R on the host system
-R_EXE=R
+# R_EXE=R
 
 ## =============== end of user-customizable parts  ===================
 
