@@ -529,6 +529,10 @@ recommended: unpack-recommended
 	  $(MAKE) --no-print-directory pkg-$$p; \
 	done
 
+dist-recommended:
+	@for p in $(REC_PKGS); do \
+	(cd ../..; zip -r9X src/gnuwin32/Recommended.zip library/$$p) ; \
+	done
 
 ## ============= End of maintainer targets ========================
 
