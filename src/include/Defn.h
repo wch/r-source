@@ -337,7 +337,7 @@ extern int	R_BrowseLevel;		/* how deep the browser is */
 		/* File Input/Output */
 extern int	R_Interactive;		/* Non-zero during interactive use */
 extern int	R_Quiet;		/* Be as quiet as possible */
-extern int	R_Console;		/* Console active flag */
+/* extern int	R_Console;		/* Console active flag */
 extern FILE*	R_Inputfile;		/* Current input flag */
 extern FILE*	R_Consolefile;		/* Console output file */
 extern FILE*	R_Outputfile;		/* Output file */
