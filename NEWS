@@ -14,10 +14,12 @@ NEW FEATURES
 	--vsize and --nsize. Error message if R runs out of memory
 	points to help(Memory).
 
-    o   rowsum() and improved na.omit() added from survival4
+    o	rowsum() and improved na.omit() added from survival4
     
-    o   backsolve(.) has new arguments "upper.tri = TRUE,  transpose = FALSE"
+    o	backsolve(.) has new arguments "upper.tri = TRUE,  transpose = FALSE"
 
+    o	hist() has new "right = TRUE" argument;	 
+	"right = FALSE" gives  [a,b) intervals
 
 BUG FIXES
 
