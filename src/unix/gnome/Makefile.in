@@ -26,7 +26,7 @@ SOURCES = \
 	terminal-find.c terminal-functions.c terminal-menu.c \
 	terminal-prefs.c terminal-toolbar.c terminal.c
 DEPENDS = $(SOURCES:.c=.d)
-OBJECTS = $(SOURCES:.c=.lo)
+OBJECTS = $(SOURCES:.c=.o)
 HEADERS = \
 	command-grep.h \
 	devGNOME.h devGTK.h \
