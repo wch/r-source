@@ -24,7 +24,7 @@ use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
 
-my $revision = ' $Revision: 1.3 $ ';
+my $revision = ' $Revision: 1.4 $ ';
 my $version;
 my $name;
 
@@ -100,7 +100,7 @@ if ($opt_latex) {
     }
 }
 if ($opt_example) {
-    $Rex_d="$dest/R-ex";
+    $Rex_d="$dest${sep}R-ex";
     if(! -d $Rex_d) {
 	mkdir "$Rex_d", $dir_mod
 	  or die "Could not create $Rex_d: $!\n";
