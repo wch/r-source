@@ -818,6 +818,11 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value);
 SEXP R_do_MAKE_CLASS(char *what);
 SEXP R_do_new_object(SEXP class_def);
 
+/* preserve objects across GCs */
+void R_PreserveObject(SEXP);
+void R_ReleaseObject(SEXP);
+
+
 #ifndef R_NO_REMAP
 #define allocArray		Rf_allocArray
 #define allocList		Rf_allocList

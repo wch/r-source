@@ -2087,8 +2087,7 @@ void R_chk_free(void *ptr)
 /* This code keeps a list of objects which are not assigned to variables
    but which are required to persist across garbage collections.  The
    objects are registered with R_PreserveObject and deregistered with
-   R_UnpreserveObject.  This is experimental code, it would not be wise
-   to rely on it at this point - ihaka */
+   R_ReleaseObject. */
 
 void R_PreserveObject(SEXP object)
 {
