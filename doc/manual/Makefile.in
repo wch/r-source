@@ -39,10 +39,10 @@ dvi: Man.dvi
 
 Man.dvi: Version.tex $(pkgsrcs) $(mansrcs) $(srcdir)/Rd.sty
 	@echo "Making LaTeX documentation ..."
-	-TEXINPUTS="$(srcdir):$$TEXINPUTS" \
+	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{Man.tex}'
-	-$(MAKEINDEX) Man
-	-TEXINPUTS="$(srcdir):$$TEXINPUTS" \
+	@$(MAKEINDEX) Man
+	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{Man.tex}'
 
 Version.tex: $(top_builddir)/bin/R
@@ -100,10 +100,10 @@ Man.ps:	Man.dvi
 	$(DVIPS) -f $< -o $@
 
 ABOUT.dvi: $(srcdir)/ABOUT.tex $(srcdir)/writing-Rd.tex $(srcdir)/Rd.sty
-	-TEXINPUTS="$(srcdir):$$TEXINPUTS" $(LATEX) $<
-	-TEXINPUTS="$(srcdir):$$TEXINPUTS" $(LATEX) $<
+	@TEXINPUTS="$(srcdir):$$TEXINPUTS" $(LATEX) $<
+	@TEXINPUTS="$(srcdir):$$TEXINPUTS" $(LATEX) $<
 ABOUT.ps: ABOUT.dvi
-	-$(DVIPS) -f $< -o $@
+	@$(DVIPS) -f $< -o $@
 
 $(Manparts): Man.dvi
 	$(DVIPS)        -l36 -f $< -o Man-1.ps
