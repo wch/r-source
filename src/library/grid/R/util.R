@@ -46,7 +46,10 @@ current.vpPath <- function() {
 
 current.vpList <- function() {
   cpvp <- grid.Call("L_currentViewport")
-  vpListFromNode(cpvp)
+  if (length(ls(env=cpvp$children, all.names=TRUE)) == 0)
+    NULL
+  else
+    vpListFromNode(cpvp)
 }
 
 grid.grab <- function(...) {

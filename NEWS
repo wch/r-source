@@ -39,6 +39,9 @@ INSTALLATION CHANGES
 
 BUG FIXES
 
+    o   The grid.grab() function in package grid would throw an error
+	if there were no viewports pushed (now returns NULL).
+
     o	model.frame.default() takes row names from the response
 	variable if that has suitable names and there is no 'data'
 	argument.  (This follows S but was not previously implemented
