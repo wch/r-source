@@ -41,6 +41,7 @@ do
   bf=`basename $file .R`
   if test -n "`grep '_ Examples _' $file`"; then
     echo "rm(list = ls(all = TRUE)); .Random.seed <- c(0,rep(7654,3))"
+    echo '..nameEx <- "'"`echo $bf | sed -e 's/[^- .a-zA-Z0-9]/./g'`"'"'
   fi
 
   cat ${file}
