@@ -424,21 +424,21 @@ SEXP do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 /* Based on Therneau's charmatch. */
 
 SEXP do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
-{ 
+{
     SEXP ans, input, target;
     int i, j, k, match, n_input, n_target, perfect, temp;
     checkArity(op, args);
- 
+
     input = CAR(args);
     n_input = LENGTH(input);
     target = CADR(args);
-    n_target = LENGTH(target);  
- 
+    n_target = LENGTH(target);
+
     if (!isString(input) || !isString(target))
 	errorcall(call, "argument is not of mode character\n");
 
     ans = allocVector(INTSXP, n_input);
- 
+
     for (i = 0; i < n_input; i++) {
 	temp = strlen(CHAR(STRING(input)[i]));
 	match = NA_INTEGER;
@@ -448,7 +448,7 @@ SEXP do_charmatch(SEXP call, SEXP op, SEXP args, SEXP env)
 			CHAR(STRING(target)[j]), temp);
 	    if (k == 0) {
 		if (strlen(CHAR(STRING(target)[j])) == temp) {
-		    if (perfect == 1)  
+		    if (perfect == 1)
 			match = 0;
 		    else {
 			perfect = 1;
@@ -509,7 +509,7 @@ static SEXP ExpandDots(SEXP s, int expdots)
     CDR(s) = ExpandDots(CDR(s), expdots);
     return s;
 }
-static SEXP subDots(SEXP rho) 
+static SEXP subDots(SEXP rho)
 {
     SEXP rval, dots, a, b;
     int len,i;
@@ -551,12 +551,12 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     /* Get the function definition */
+    sysp = R_GlobalContext->sysparent;
 
     if (TYPEOF(CAR(args)) == NILSXP) {
 	/* Get the env that the function containing */
 	/* matchcall was called from. */
 	cptr = R_GlobalContext;
-	sysp = R_GlobalContext->sysparent;
 	while (cptr != NULL) {
 	    if (cptr->callflag == CTXT_RETURN && cptr->cloenv == sysp)
 		break;
@@ -593,15 +593,15 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     formals = FORMALS(b);
     PROTECT(actuals = duplicate(CDR(funcall)));
 
-    /* If there is a ... symbol then expand it out in the sysp env 
+    /* If there is a ... symbol then expand it out in the sysp env
        We need to take some care since the ... might be in the middle
        of the actuals  */
 
     t2 = R_MissingArg;
     for (t1=actuals ; t1!=R_NilValue ; t1 = CDR(t1) ) {
 	if (CAR(t1) == R_DotsSymbol) {
-		t2 = subDots(sysp); 
-		break; 
+		t2 = subDots(sysp);
+		break;
 #ifdef NEWDOTS
 		t2 = findVarInFrame(FRAME(sysp), R_DotsSymbol);
 		b = allocList(length(t2));
@@ -629,7 +629,7 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     rlist = matchArgs(formals, actuals);
-	
+
     /* Attach the argument names as tags */
 
     for (f = formals, b = rlist; b != R_NilValue; b = CDR(b), f = CDR(f)) {
