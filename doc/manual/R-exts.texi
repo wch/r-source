@@ -2899,7 +2899,6 @@ When R unloads a shared object/DLL, any registered routines are
 automatically removed. There is no (direct) facility for unregistering
 a symbol.
 
-
 Examples of registering routines can be found in the different packages
 in the R source tree (e.g., @pkg{stats}).  Also, there is a
 brief, high-level introduction in @emph{R News} (volume 1/3, September
@@ -2938,25 +2937,49 @@ create the object files directly from the command line).
 @vindex PKG_LIBS
 Similarly, variable @code{PKG_LIBS} in @file{Makevars} can be used for
 additional @samp{-l} and @samp{-L} flags to be passed to the linker when
-building the shared object.
+building the shared object.  Flags which are set in file
+@file{etc/Makeconf} can be overridden by the environment variable
+@samp{MAKEFLAGS} (at least for systems using GNU @code{make}), as in
+(Bourne shell syntax)
+
+@example
+MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
+@end example
+
+@noindent
+or by using a @file{Makefile}.
+
+Note that as @code{R CMD SHLIB} uses Make, it will not remake a shared
+object just because the flags have changed, and if @code{test.c} and
+@code{test.f} both exist in the current directory
+
+@example
+R CMD SHLIB test.f
+@end example
+
+@noindent
+will compile @file{test.c}!
+
 
 If an add-on package @var{pkg} contains C, C++, or FORTRAN code in its
 @file{src} subdirectory, @code{R CMD INSTALL} creates a shared object
-(for loading into @R{} in the @code{.First.lib} function of the package)
-either automatically using the above @code{R CMD SHLIB} mechanism, or
-using Make if directory @file{src} contains a @file{Makefile}.  In both
-cases, if file @file{Makevars} exists it is read first when invoking
-@code{make}.  If a @file{Makefile} is really needed or provided, it
-needs to ensure that the shared object created is linked against all
-FORTRAN 77 intrinsic and run-time libraries that @R{} was linked
-against; Make variable @code{FLIBS} contains this information.
+(for loading into @R{} in the @code{.First.lib} or @code{.onLoad}
+function of the package) either automatically using the above @code{R
+CMD SHLIB} mechanism, or using Make if directory @file{src} contains a
+@file{Makefile}.  In both cases, if file @file{Makevars} exists it is
+read first when invoking @code{make}.  If a @file{Makefile} is really
+needed or provided, if Fortran is involved it needs to ensure that the
+shared object created is linked against all FORTRAN 77 intrinsic and
+run-time libraries that @R{} was linked against; Make variable
+@code{FLIBS} contains this information.
 
-In Windows the same command works, but files
-@file{Makevars.win} or @file{Makefile.win} are used in preference to
-@file{Makevars} or @file{Makefile} if they exist.  (This does need the
-files in the @R{} binary Windows distribution for installing source
-packages to be installed.)  For details of building DLLs with
-a variety of compilers, see @samp{readme.packages}.
+In Windows the same command works, but files @file{Makevars.win} or
+@file{Makefile.win} are used in preference to @file{Makevars} or
+@file{Makefile} if they exist.  (This does need the files in the @R{}
+binary Windows distribution for installing source packages to be
+installed.)  For details of building DLLs with a variety of compilers,
+see @samp{readme.packages}.
+
 
 @node Interfacing C++ code, Handling R objects in C, Creating shared objects, System and foreign language interfaces
 @section Interfacing C++ code
