@@ -67,7 +67,7 @@ called "R" will be created and copied to the same directory.  You can
 copy this script to a place where users can invoke it, for example to
 `/usr/local/bin/R'.  You could also copy the man page `R.1' to a place
 where your man reader finds it, such as `/usr/local/man/man1'.  If you
-want to install the complete R tree to, e.g., `/usr/local/share/R', see
+want to install the complete R tree to, e.g., `/usr/local/lib/R', see
 section INSTALLATION below.
 
 You do not necessarily have to build R in the top-level source directory
@@ -156,7 +156,7 @@ This will install to the following directories:
 
 	${prefix}/bin		the front-end shell script
 	${prefix}/man/man1	the man page
-	${prefix}/share/R	all the rest (libraries, on-line help
+	${prefix}/lib/R		all the rest (libraries, on-line help
 				system, ...)
 
 where prefix is determined during configuration (typically `/usr/local')
