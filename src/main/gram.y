@@ -130,7 +130,7 @@ static int	xxvalue(SEXP, int);
 
 %token		END_OF_INPUT ERROR
 %token		STR_CONST NUM_CONST NULL_CONST SYMBOL FUNCTION
-%token		LEFT_ASSIGN RIGHT_ASSIGN LBB
+%token		LEFT_ASSIGN EQ_ASSIGN RIGHT_ASSIGN LBB
 %token		FOR IN IF ELSE WHILE NEXT BREAK REPEAT
 %token		GT GE LT LE EQ NE AND OR
 
@@ -139,6 +139,7 @@ static int	xxvalue(SEXP, int);
 %right		IF
 %left		ELSE
 %right		LEFT_ASSIGN
+%right		EQ_ASSIGN
 %left		RIGHT_ASSIGN
 %left		'~' TILDE
 %left		OR
@@ -158,10 +159,17 @@ static int	xxvalue(SEXP, int);
 
 prog	:	END_OF_INPUT			{ return 0; }
 	|	'\n'				{ return xxvalue(NULL,2); }
-	|	expr '\n'			{ return xxvalue($1,3); }
-	|	expr ';'			{ return xxvalue($1,4); }
+	|	expr_or_assign '\n'			{ return xxvalue($1,3); }
+	|	expr_or_assign ';'			{ return xxvalue($1,4); }
 	|	error	 			{ YYABORT; }
 	;
+
+expr_or_assign  :    expr                       { $$ = $1; }
+                |    equal_assign               { $$ = $1; }
+                ;
+
+equal_assign    :    expr EQ_ASSIGN expr              { $$ = xxbinary($2,$1,$3); }
+                ;
 
 expr	: 	NUM_CONST			{ $$ = $1; }
 	|	STR_CONST			{ $$ = $1; }
@@ -227,10 +235,10 @@ forcond :	'(' SYMBOL IN expr ')' 		{ $$ = xxforcond($2,$4); }
 
 
 exprlist:					{ $$ = xxexprlist0(); }
-	|	expr				{ $$ = xxexprlist1($1); }
-	|	exprlist ';' expr		{ $$ = xxexprlist2($1,$3); }
+	|	expr_or_assign				{ $$ = xxexprlist1($1); }
+	|	exprlist ';' expr_or_assign	{ $$ = xxexprlist2($1,$3); }
 	|	exprlist ';'			{ $$ = $1; }
-	|	exprlist '\n' expr		{ $$ = xxexprlist2($1,$3); }
+	|	exprlist '\n' expr_or_assign	{ $$ = xxexprlist2($1,$3); }
 	|	exprlist '\n'			{ $$ = $1;}
 	;
 
@@ -240,19 +248,19 @@ sublist	:	sub				{ $$ = xxsublist1($1); }
 
 sub	:					{ $$ = xxsub0(); }
 	|	expr				{ $$ = xxsub1($1); }
-	|	SYMBOL '=' 			{ $$ = xxsymsub0($1); }
-	|	SYMBOL '=' expr			{ $$ = xxsymsub1($1,$3); }
-	|	STR_CONST '=' 			{ $$ = xxsymsub0($1); }
-	|	STR_CONST '=' expr		{ $$ = xxsymsub1($1,$3); }
-	|	NULL_CONST '=' 			{ $$ = xxnullsub0(); }
-	|	NULL_CONST '=' expr		{ $$ = xxnullsub1($3); }
+	|	SYMBOL EQ_ASSIGN 			{ $$ = xxsymsub0($1); }
+	|	SYMBOL EQ_ASSIGN expr			{ $$ = xxsymsub1($1,$3); }
+	|	STR_CONST EQ_ASSIGN 			{ $$ = xxsymsub0($1); }
+	|	STR_CONST EQ_ASSIGN expr		{ $$ = xxsymsub1($1,$3); }
+	|	NULL_CONST EQ_ASSIGN 			{ $$ = xxnullsub0(); }
+	|	NULL_CONST EQ_ASSIGN expr		{ $$ = xxnullsub1($3); }
 	;
 
 formlist:					{ $$ = xxnullformal(); }
 	|	SYMBOL				{ $$ = xxfirstformal0($1); }
-	|	SYMBOL '=' expr			{ $$ = xxfirstformal1($1,$3); }
+	|	SYMBOL EQ_ASSIGN expr			{ $$ = xxfirstformal1($1,$3); }
 	|	formlist ',' SYMBOL		{ $$ = xxaddformal0($1,$3); }
-	|	formlist ',' SYMBOL '=' expr	{ $$ = xxaddformal1($1,$3,$5); }
+	|	formlist ',' SYMBOL EQ_ASSIGN expr	{ $$ = xxaddformal1($1,$3,$5); }
 	;
 
 cr	:					{ EatLines = 1; }
@@ -1773,7 +1781,8 @@ static int token()
 	    yylval = install("==");
 	    return EQ;
 	}
-	return '=';
+	yylval = install("=");
+	return EQ_ASSIGN;
     case ':':
 	if (nextchar('=')) {
 	    yylval = install(":=");

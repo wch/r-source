@@ -1,6 +1,7 @@
 \name{assign}
 \alias{assign}
 \alias{<-}
+\alias{=}
 \alias{<<-}
 \alias{->}
 \alias{->>}
@@ -15,9 +16,11 @@ x <- value
 x <<- value
 value -> x
 value ->> x
+
+x = value
 }
 \arguments{
-  \item{x}{a variable name (given as a quoted string).}
+  \item{x}{a variable name (given as a quoted string in the function call).}
   \item{value}{a value to be assigned to \code{x}.}
   \item{pos}{where to do the assignment.  By default, assigns into the
     current environment.  See the details for other possibilities.}
@@ -69,6 +72,22 @@ value ->> x
   \code{assign} does not dispatch assignment methods, so it cannot be
   used to set elements of vectors, names, attributes, etc.
   }
+\section{Assignment Operators}{There are three different assignment
+  operators. The operators \code{<-} and \code{=} assign into the
+  environment in which they are evaluated.  The \code{<-} can be used
+  anywhere, but the \code{=} is only allowed at the top level (that
+  is, in the complete expression typed by the user) or as one of the
+  subexpressions in a braced list of expressions.
+
+  The operator \code{<<-} performs an assignment in the environment of
+  the parent of the current call.
+
+  In all the assignment operator expressions, \code{x} can be a name
+  or an expression defining a part of an object to be replaced (e.g.,
+  \code{z[[1]]}).  The name does not need to be quoted, though it can
+  be.
+}
+
 \seealso{
   \code{\link{get}},
   \code{\link{exists}},

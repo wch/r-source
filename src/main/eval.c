@@ -986,7 +986,7 @@ static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal, SEXP tmploc)
 /* Main entry point for complex assignments */
 /* We have checked to see that CAR(args) is a LANGSXP */
 
-static char *asym[] = {":=", "<-", "<<-"};
+static char *asym[] = {":=", "<-", "<<-", "="};
 
 
 static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -1082,7 +1082,7 @@ SEXP do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SETCAR(args, install(CHAR(STRING_ELT(CAR(args), 0))));
 
     switch (PRIMVAL(op)) {
-    case 1:						/* <- */
+    case 1: case 3:					/* <-, = */
 	if (isSymbol(CAR(args))) {
 	    s = eval(CADR(args), rho);
 	    if (NAMED(s))

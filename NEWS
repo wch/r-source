@@ -78,9 +78,14 @@ NEW FEATURES
 
     o	warning() allows multiple arguments, following S4's style.
 
-    o   the C routine type2symbol, similar to type2str, returns a symbol
+    o   The C routine type2symbol, similar to type2str, returns a symbol
         corresponding to the type supplied as an argument.
-
+    
+    o   Some assignments can now use the "=" operator, in addition to
+        existing operators ("<-", ":=", and "_").  The new operator is
+        only allowed at the top level or as an element in a braced
+        list of expressions (to avoid both ambiguities with function
+        arguments and bad errors from expressions such as while(y = 0)...)
 
 
 

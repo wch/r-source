@@ -92,6 +92,7 @@ FUNTAB R_FunTab[] =
 {"function",	do_function,	0,	0,	-1,	PP_FUNCTION},
 {"as.function.default",do_asfunction,0,	11,	2,	PP_FUNCTION},
 {"<-",		do_set,		1,	100,	-1,	PP_ASSIGN},
+{"=",		do_set,		3,	100,	-1,	PP_ASSIGN},
 {"<<-",		do_set,		2,	100,	-1,	PP_ASSIGN2},
 {"{",		do_begin,	0,	0,	-1,	PP_CURLY},
 {"(",		do_paren,	0,	1,	1,	PP_PAREN},
