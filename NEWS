@@ -92,6 +92,8 @@ NEW FEATURES
 
     o	R CMD build now also works for package bundles.
 
+    o	New xyz.coords() utility to be used for 3d highlevel plots.
+
 
 BUG FIXES
 
