@@ -75,6 +75,7 @@ cp2bin: $(filter-out ./bin/CVS, $(wildcard ./bin/*))
 
 fixhtml: $(wildcard ./html/*.html) ../../../doc/html/search/SearchEngine.html
 	$(CP) -p ./html/*.html ../../../doc/html
+	$(CP) -p ./html/rwin.html ../../../doc/html/index.html
 	$(ECHO) done > fixhtml
 
 fixetc: $(filter-out ./etc/CVS, $(wildcard ./etc/*))
