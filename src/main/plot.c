@@ -2426,7 +2426,7 @@ SEXP do_replay(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-	/* CONTOUR PLOTTING CODE */
+/*---------------- CONTOUR PLOTTING CODE -----------------------*/
 
 
 typedef struct SEG {
@@ -2780,7 +2780,7 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 	}
 }
 
-
+/* .Internal(contour(x,y,z, levels, col, lty)  */
 SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP oargs, c, x, y, z, col, lty;
@@ -2821,14 +2821,13 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(lty = FixupLty(GetPar("lty", args), dd));
     nlty = length(lty);
 
-    /* col, lwd and lty vectors here */
+    /* col, lwd and lty vectors here --- FIXME: "lwd" ???? */
 
     if(nx < 2 || ny < 2)
 	errorcall(call, "insufficient x or y values\n");
 
     if(nrows(z) != nx || ncols(z) != ny)
 	errorcall(call, "dimension mismatch\n");
-
 
     if(nc < 1)
 	errorcall(call, "no contour values\n");
@@ -2964,8 +2963,7 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     c = (unsigned*)INTEGER(sc);
 
     /* Check of grid coordinates */
-    /* We want them to all be finite and */
-    /* in strictly ascending order */
+    /* We want them to all be finite and in strictly ascending order */
 
     if(nx < 2 || ny < 2) goto badxy;
     if(!FINITE(x[0])) goto badxy;
