@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.90-10, 2000/01/25
+Version 0.99-1, 2000/02/03
 Kurt Hornik
 
 
@@ -198,10 +198,10 @@ sparc-linux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current stable Unix/Windows version is 0.90.1, the unstable one is
-0.99.0.  Typically, new features are introduced in the development
-versions; updates of stable versions are for bug fixes mostly.  The version
-for the Mac is pre-alpha.
+   The current stable Unix/Windows version is 0.99.0, the unstable one is
+1.0.0.  Typically, new features are introduced in the development versions;
+updates of stable versions are for bug fixes mostly.  The version for the
+Mac is pre-alpha.
 
    The release of version 1.0 is scheduled for February 29, 2000.
 
@@ -922,6 +922,10 @@ Journal of Statistical Software
 
    The R distribution comes with the following extra packages:
 
+*ctest*
+     A collection of classical tests, including the Bartlett, Fisher,
+     Kruskal-Wallis, Kolmogorov-Smirnov, and Wilcoxon tests.
+
 *eda*
      Exploratory Data Analysis.  Currently only contains functions for
      robust line fitting, and median polish and smoothing.
@@ -951,6 +955,11 @@ Journal of Statistical Software
      Time series.
 
    The following packages are available from the CRAN `src/contrib' area.
+
+*Devore5*
+     Data sets and sample analyses from "Probability and Statistics for
+     Engineering and the Sciences (5th ed)" by Jay L. Devore , 2000,
+     Duxbury.
 
 *KernSmooth*
      Functions for kernel smoothing (and density estimation) corresponding
@@ -1014,10 +1023,6 @@ Journal of Statistical Software
 *coda*
      Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
      simulations.
-
-*ctest*
-     A collection of classical tests, including the Bartlett, Fisher,
-     Kruskal-Wallis, Kolmogorov-Smirnov, and Wilcoxon tests.
 
 *date*
      Functions for dealing with dates.  The most useful of them accepts a
@@ -1173,12 +1178,24 @@ packages still "under development" or depending on features only present in
 the current development versions of R.  Volunteers are invited to give
 these a try, of course.  This area of CRAN currently contains
 
+*HTML*
+     Functions for exporting R objects as HTML tables.
+
+*RPgSQL*
+     An interface between R and the PostgreSQL database system.
+
 *dopt*
      Finding D-optimal experimental designs.
 
 *foreign*
      Functions for reading data stored by statistical software like Minitab,
      SAS, SPSS, etc.
+
+*hdf5*
+     Interface to the NCSA HDF5 library.
+
+*multidim*
+     Code for multivariate analysis.
 
 *tcltk*
      Basic interface with Tcl/Tk.
@@ -1209,13 +1226,9 @@ differentiation.  It also contains Troll models as another class (the Troll
 interface is not yet functional in R).  Paul's package *dse* can be
 obtained via `http://www.bank-banque-canada.ca/pgilbert/dsedesc.htm'.
 
-   Timothy H. Keitt <keitt@nceas.ucsb.edu> has written *RPgSQL*, a package
-which allows users to read and write data frames to and from a PostgreSQL
-database (and also has a low-level interface for sending SQL queries to the
-PostgreSQL backend, and retrieving results), and can be obtained from
-`http://www.nceas.ucsb.edu/~keitt/R/'.  There is also the *RODBC* package
-by Michael Lapsley <mlapsley@ndirect.co.uk> which provides an R ODBC
-interface; see `http://www.ndirect.co.uk/~mlapsley/' for more information.
+   Michael Lapsley <mlapsley@ndirect.co.uk> has written *RODBC*, a package
+which provides an R ODBC interface; see
+`http://www.ndirect.co.uk/~mlapsley/' for more information.
 
    More code has been posted to the r-help mailing list, and can be
 obtained from the mailing list archive.
@@ -1845,10 +1858,10 @@ one can find out the address in memory of `DF', e.g.
 
 (Debugger output reformatted for better legibility).
 
-   Using `PrintValue()' one can "inspect" the values of the various
-elements of the SEXP, e.g.,
+   Using `R_PV()' one can "inspect" the values of the various elements of
+the SEXP, e.g.,
 
-     (gdb) p PrintValue($1->attrib)
+     (gdb) p R_PV($1->attrib)
      $names
      [1] "a" "b"
      
@@ -1859,9 +1872,6 @@ elements of the SEXP, e.g.,
      [1] "data.frame"
      
      $3 = void
-
-(Make sure, however, to use `PrintValue()' on SEXPs with the `obj' bit
-turned on only.)
 
    To find out where exactly the corresponding information is stored, one
 needs to go "deeper":

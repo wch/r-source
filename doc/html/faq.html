@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 0.90-10, 2000/01/25</h2>
+<h2>Version 0.99-1, 2000/02/03</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -325,8 +325,8 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 
 <h2>2.3 What is the current version of R?</h2>
 
-<p>The current stable Unix/Windows version is 0.90.1, the
-unstable one is 0.99.0.  Typically, new features are
+<p>The current stable Unix/Windows version is 0.99.0, the
+unstable one is 1.0.0.  Typically, new features are
 introduced in the development versions; updates of stable versions are
 for bug fixes mostly.  The version for the Mac is pre-alpha.
 
@@ -1248,7 +1248,10 @@ Up:<a rel=up href="#R%20Add-On%20Packages">R Add-On Packages</a>
 <p>The R distribution comes with the following extra packages:
 
 <dl>
-<dt><strong>eda</strong>
+<dt><strong>ctest</strong>
+<dd>A collection of classical tests, including the Bartlett, Fisher,
+Kruskal-Wallis, Kolmogorov-Smirnov, and Wilcoxon tests. 
+<br><dt><strong>eda</strong>
 <dd>Exploratory Data Analysis.  Currently only contains functions for robust
 line fitting, and median polish and smoothing. 
 <br><dt><strong>lqs</strong>
@@ -1274,7 +1277,11 @@ distribution functions.
 area.
 
 <dl>
-<dt><strong>KernSmooth</strong>
+<dt><strong>Devore5</strong>
+<dd>Data sets and sample analyses from "Probability and Statistics for
+Engineering and the Sciences (5th ed)" by Jay L. Devore , 2000,
+Duxbury. 
+<br><dt><strong>KernSmooth</strong>
 <dd>Functions for kernel smoothing (and density estimation) corresponding to
 the book "Kernel Smoothing" by M. P. Wand and M. C. Jones, 1995. 
 <br><dt><strong>MASS</strong>
@@ -1321,9 +1328,6 @@ the <code>VR</code> bundle.
 <br><dt><strong>coda</strong>
 <dd>Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
 simulations. 
-<br><dt><strong>ctest</strong>
-<dd>A collection of classical tests, including the Bartlett, Fisher,
-Kruskal-Wallis, Kolmogorov-Smirnov, and Wilcoxon tests. 
 <br><dt><strong>date</strong>
 <dd>Functions for dealing with dates.  The most useful of them accepts a
 vector of input dates in any of the forms <code>8/30/53</code>,
@@ -1444,11 +1448,19 @@ invited to give these a try, of course.  This area of CRAN currently
 contains
 
 <dl>
-<dt><strong>dopt</strong>
+<dt><strong>HTML</strong>
+<dd>Functions for exporting R objects as <small>HTML</small> tables. 
+<br><dt><strong>RPgSQL</strong>
+<dd>An interface between R and the PostgreSQL database system. 
+<br><dt><strong>dopt</strong>
 <dd>Finding D-optimal experimental designs. 
 <br><dt><strong>foreign</strong>
 <dd>Functions for reading data stored by statistical software like Minitab,
 SAS, SPSS, etc. 
+<br><dt><strong>hdf5</strong>
+<dd>Interface to the NCSA HDF5 library. 
+<br><dt><strong>multidim</strong>
+<dd>Code for multivariate analysis. 
 <br><dt><strong>tcltk</strong>
 <dd>Basic interface with Tcl/Tk. 
 <br><dt><strong>timeslab</strong>
@@ -1479,13 +1491,8 @@ another class (the Troll interface is not yet functional in R).  Paul's
 package <strong>dse</strong> can be obtained via
 <a href="http://www.bank-banque-canada.ca/pgilbert/dsedesc.htm">http://www.bank-banque-canada.ca/pgilbert/dsedesc.htm</a>.
 
-<a href="mailto:keitt@nceas.ucsb.edu">Timothy H. Keitt</a> has written
-<strong>RPgSQL</strong>, a package which allows users to read and write data
-frames to and from a PostgreSQL database (and also has a low-level
-interface for sending SQL queries to the PostgreSQL backend, and
-retrieving results), and can be obtained from
-<a href="http://www.nceas.ucsb.edu/~keitt/R/">http://www.nceas.ucsb.edu/~keitt/R/</a>.  There is also the
-<strong>RODBC</strong> package by <a href="mailto:mlapsley@ndirect.co.uk">Michael Lapsley</a> which provides an R ODBC interface; see
+<a href="mailto:mlapsley@ndirect.co.uk">Michael Lapsley</a> has written
+<strong>RODBC</strong>, a package which provides an R ODBC interface; see
 <a href="http://www.ndirect.co.uk/~mlapsley/">http://www.ndirect.co.uk/~mlapsley/</a> for more information.
 
 <p>More code has been posted to the r-help mailing list, and can be
@@ -2337,10 +2344,10 @@ $2 = {
 
 <p>(Debugger output reformatted for better legibility).
 
-<p>Using <code>PrintValue()</code> one can "inspect" the values of the various
+<p>Using <code>R_PV()</code> one can "inspect" the values of the various
 elements of the SEXP, e.g.,
 
-<pre>(gdb) p PrintValue($1-&gt;attrib)
+<pre>(gdb) p R_PV($1-&gt;attrib)
 $names
 [1] "a" "b"
 
@@ -2352,9 +2359,6 @@ $class
 
 $3 = void
 </pre>
-
-<p>(Make sure, however, to use <code>PrintValue()</code> on SEXPs with the `obj'
-bit turned on only.)
 
 <p>To find out where exactly the corresponding information is stored, one
 needs to go "deeper":

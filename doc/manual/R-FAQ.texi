@@ -3,9 +3,9 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ-VERSION 0.90-10, 2000/01/25
-@set REL-VERSION 0.90.1
-@set DEV-VERSION 0.99.0
+@set FAQ-VERSION 0.99-1, 2000/02/03
+@set REL-VERSION 0.99.0
+@set DEV-VERSION 1.0.0
 @c %**end of header
 
 @dircategory Programming
@@ -1197,6 +1197,9 @@ Journal of Statistical Software
 The R distribution comes with the following extra packages:
 
 @table @strong
+@item ctest
+A collection of classical tests, including the Bartlett, Fisher,
+Kruskal-Wallis, Kolmogorov-Smirnov, and Wilcoxon tests.
 @item eda
 Exploratory Data Analysis.  Currently only contains functions for robust
 line fitting, and median polish and smoothing.
@@ -1223,6 +1226,10 @@ The following packages are available from the CRAN @file{src/contrib}
 area.
 
 @table @strong
+@item Devore5
+Data sets and sample analyses from ``Probability and Statistics for
+Engineering and the Sciences (5th ed)'' by Jay L. Devore , 2000,
+Duxbury.
 @item KernSmooth
 Functions for kernel smoothing (and density estimation) corresponding to
 the book ``Kernel Smoothing'' by M. P. Wand and M. C. Jones, 1995.
@@ -1271,9 +1278,6 @@ Functions for cluster analysis.
 @item coda
 Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
 simulations.
-@item ctest
-A collection of classical tests, including the Bartlett, Fisher,
-Kruskal-Wallis, Kolmogorov-Smirnov, and Wilcoxon tests.
 @item date
 Functions for dealing with dates.  The most useful of them accepts a
 vector of input dates in any of the forms @samp{8/30/53},
@@ -1408,11 +1412,19 @@ invited to give these a try, of course.  This area of CRAN currently
 contains
 
 @table @strong
+@item HTML
+Functions for exporting R objects as @HTML{} tables.
+@item RPgSQL
+An interface between R and the PostgreSQL database system.
 @item dopt
 Finding D-optimal experimental designs.
 @item foreign
 Functions for reading data stored by statistical software like Minitab,
 SAS, SPSS, etc.
+@item hdf5
+Interface to the NCSA HDF5 library.
+@item multidim
+Code for multivariate analysis.
 @item tcltk
 Basic interface with Tcl/Tk.
 @item timeslab
@@ -1447,14 +1459,8 @@ package @strong{dse} can be obtained via
 @c package for additive hazards regression, which can be obtained from
 @c @uref{http://www.med.uio.no/imb/stat/addreg/}.
 
-@email{keitt@@nceas.ucsb.edu, Timothy H. Keitt} has written
-@strong{RPgSQL}, a package which allows users to read and write data
-frames to and from a PostgreSQL database (and also has a low-level
-interface for sending SQL queries to the PostgreSQL backend, and
-retrieving results), and can be obtained from
-@uref{http://www.nceas.ucsb.edu/~keitt/R/}.  There is also the
-@strong{RODBC} package by @email{mlapsley@@ndirect.co.uk, Michael
-Lapsley} which provides an R ODBC interface; see
+@email{mlapsley@@ndirect.co.uk, Michael Lapsley} has written
+@strong{RODBC}, a package which provides an R ODBC interface; see
 @uref{http://www.ndirect.co.uk/~mlapsley/} for more information.
 
 More code has been posted to the r-help mailing list, and can be
@@ -2215,11 +2221,11 @@ $2 = @{
 @noindent
 (Debugger output reformatted for better legibility).
 
-Using @code{PrintValue()} one can ``inspect'' the values of the various
+Using @code{R_PV()} one can ``inspect'' the values of the various
 elements of the SEXP, e.g.,
 
 @smallexample
-(gdb) p PrintValue($1->attrib)
+(gdb) p R_PV($1->attrib)
 $names
 [1] "a" "b"
 
@@ -2231,13 +2237,6 @@ $class
 
 $3 = void
 @end smallexample
-
-@noindent
-(Make sure, however, to use @code{PrintValue()} on SEXPs with the `obj'
-bit turned on only.)
-@c FIXME
-@c Maybe we could have a safe PrintValue() which returns e.g. NULL when
-@c given a SEXP with the `obj' bit not turned on?
 
 To find out where exactly the corresponding information is stored, one
 needs to go ``deeper'':
