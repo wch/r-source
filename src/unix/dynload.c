@@ -733,7 +733,7 @@ extern DL_FUNC ptr_X11DeviceDriver, ptr_dataentry, ptr_R_GetX11Image,
 void R_load_X11_shlib(void)
 {
     char X11_DLL[PATH_MAX], buf[1000], *p; 
-    DllInfo dll;
+    DllInfo dll = {NULL, NULL, NULL, 0, NULL, 0, NULL, 0,NULL};
     struct stat sb;
 
     p = getenv("R_HOME");
