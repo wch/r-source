@@ -203,6 +203,8 @@ static char DLLbuf[1024], *DLLbufp;
 
 void R_ReplDLLinit()
 {
+    R_IoBufferInit(&R_ConsoleIob);
+    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
     R_IoBufferWriteReset(&R_ConsoleIob);
     prompt_type = 1;
     DLLbuf[0] = '\0';
