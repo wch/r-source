@@ -282,14 +282,14 @@ int main(int ac, char **av)
 	R_Quiet = 0;
 
 	while(--ac) {
-	 if(**++av == '-') {
+	    if(**++av == '-') {
 		if(!strcmp(*av, "-save")) {
 			DefaultSaveAction = 3;
 		}
 		else if(!strcmp(*av, "-nosave")) {
 			DefaultSaveAction = 2;
 		}
-		if(!strcmp(*av, "-restore")) {
+		else if(!strcmp(*av, "-restore")) {
 			DefaultRestoreAction = 1;
 		}
 		else if(!strcmp(*av, "-norestore")) {
@@ -330,11 +330,10 @@ int main(int ac, char **av)
 			REprintf("warning: unknown option %s\n", *av);
 			break;
 		}
-	 }
-	 else {
+	    }
+	    else {
 		printf("ARGUMENT %s\n", *av);
-	 }
-
+	    }
 	}
 
 	/* On Unix the console is a file; we just use stdio to write on it */
