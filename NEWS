@@ -4,6 +4,7 @@
 	*						 *
 	**************************************************
 
+BUG FIXES
 
 
 	**************************************************
@@ -11,6 +12,15 @@
 	*	       0.65 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+BUG FIXES
+
+    o 	Problems with realloc on some systems in AllocBuffer
+
+    o   Problem w/ formatReal on non IEEE systems
+
+    o   Switch to <tt> in HTML pages since Linux Netscape mangles 
+        Courier.
 
 
 		CHANGES IN R VERSION 0.65.1
