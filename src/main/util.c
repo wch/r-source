@@ -657,7 +657,7 @@ SEXP type2str(SEXPTYPE t)
 Rboolean isBlankString(unsigned char *s)
 {
     while (*s)
-	if (!isspace(*s++)) return FALSE;
+	if (!isspace((int)*s++)) return FALSE;
     return TRUE;
 }
 
