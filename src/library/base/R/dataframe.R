@@ -817,23 +817,51 @@ as.matrix.data.frame <- function (x)
     X
 }
 
-Math.data.frame <- function(x, ...)
+#Math.data.frame <- function(x, ...)
+#{
+#    X <- x
+#    class(X) <- NULL
+#    f <- get(.Generic, mode = "function")
+#    call <- match.call(f, sys.call())
+#    call[[1]] <- as.name(.Generic)
+#    arg <- names(formals(f))[[1]]
+#    call[[arg]] <- as.name("xx")
+#    for(j in names(X)) {
+#	xx <- X[[j]]
+#	if(!is.numeric(xx) && mode(xx) != "complex")
+#	    stop(paste("Non-numeric variable:", j))
+#	X[[j]] <- eval(call)
+#    }
+#    attr(X, "class") <- class(x)
+#    X
+#}
+
+"Math.data.frame" <-
+function (x, ...) 
 {
-    X <- x
-    class(X) <- NULL
     f <- get(.Generic, mode = "function")
+    if (is.null(formals(f))) 
+        f <- function(x, ...) {
+        }
     call <- match.call(f, sys.call())
     call[[1]] <- as.name(.Generic)
-    arg <- names(formals(f))[[1]]
+    arg <- names(formals(f))[1]
     call[[arg]] <- as.name("xx")
-    for(j in names(X)) {
-	xx <- X[[j]]
-	if(!is.numeric(xx) && mode(xx) != "complex")
-	    stop(paste("Non-numeric variable:", j))
-	X[[j]] <- eval(call)
+    encl <- sys.frame(sys.parent())
+    var.f <- function(x) eval(call, list(xx = x), encl)
+    mode.ok <- sapply(x, is.numeric) & !sapply(x, is.factor) | 
+        sapply(x, is.complex)
+    if (all(mode.ok)) {
+        r <- lapply(x, var.f)
+        class(r) <- class(x)
+        row.names(r) <- row.names(x)
+        return(r)
     }
-    attr(X, "class") <- class(x)
-    X
+    else {
+	vnames <- names(x)
+	if (is.null(vnames)) vnames <- seq(along=x)
+	stop(paste("Non-numeric variable in dataframe:",vnames[!mode.ok]))
+    }
 }
 
 Ops.data.frame <- function(e1, e2 = NULL)

@@ -1,3 +1,12 @@
+	**************************************************
+	*                                                *
+	*              0.63 SERIES NEWS                  *
+	*    (This label is really only here to keep     *
+	*     CVS from getting confused...)              *
+	*                                                *
+	**************************************************
+
+
 		CHANGES IN R VERSION 0.63.2
 
 NEW FEATURES
@@ -40,7 +49,11 @@ BUG FIXES
 
     o	hist(i) now also works for e.g., i = -1, 0, or 1.
 
+    o   range() now works on dataframes (uses c(..., recursive=T))
+
     o	pretty(.) does not loop infinitely anymore in very extreme cases.
+
+    o   math functions should work better on dataframes now
 
     o	plot(.., type = 'h', log = 'y')	 now works ...
 
