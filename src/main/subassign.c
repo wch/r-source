@@ -1535,7 +1535,7 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP nlist, ans, input;
     int iS;
-    SEXP R_subassign3(SEXP, SEXP, SEXP, SEXP);
+    SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
 
     checkArity(op, args);
 
@@ -1563,10 +1563,10 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
     if (! iS)
 	nlist = install(CHAR(STRING_ELT(input, 0)));
 
-    return R_subassign3(call, CAR(ans), nlist, CADDR(ans));
+    return R_subassign3_dflt(call, CAR(ans), nlist, CADDR(ans));
 }
 
-SEXP R_subassign3(SEXP call, SEXP x, SEXP nlist, SEXP val)
+SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
 {
     SEXP t;
     PROTECT_INDEX pvalidx;
