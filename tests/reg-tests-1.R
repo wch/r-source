@@ -3318,3 +3318,8 @@ for(meth in c("fmm", "nat", "per"))
 x <- c(1,2,2,4,7, NA, 10,12, 15,20)
 ecdf(x)
 ## failed in <= 2.0.0.
+
+
+## Incorrect use of as.Date segfaulted on some x86_64 systems.
+as.Date("2001", "%Y")
+## answer is usually current mon & day, but 2001-01-01 on Solaris.
