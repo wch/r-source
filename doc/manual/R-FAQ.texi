@@ -4,10 +4,14 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-48 @value{FAQ-YEAR}-08-28
+@set FAQ-VERSION 1.9-49 @value{FAQ-YEAR}-09-11
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
+@c <FIXME>
+@c 2.0
 @set FAQ-ISBN 3-900051-01-1
+@c set FAQ-ISBN 3-900051-08-9
+@c </FIXME>
 @documentlanguage en
 @documentencoding ISO-8859-1
 @c %**end of header
@@ -622,8 +626,8 @@ J. C. Pinheiro and D. M. Bates (2000), ``Mixed-Effects Models in S and
 
 @noindent
 provides a comprehensive guide to the use of the @strong{nlme} package
-for linear and nonlinear mixed-effects models.  This has a home page at
-@uref{http://nlme.stat.wisc.edu/MEMSS/}.
+for linear and nonlinear mixed-effects models.
+@c This has a home page at @uref{http://nlme.stat.wisc.edu/MEMSS/}.
 
 As an example of how R can be used in teaching an advanced introductory
 statistics course, see
@@ -802,7 +806,9 @@ system.
 To ``submit'' to @CRAN{}, simply upload to
 @uref{ftp://cran.R-project.org/incoming/} and send an email to
 @email{cran@@R-project.org}.  Note that @CRAN{} generally does not
-accept submissions of precompiled binaries due to security reasons.
+accept submissions of precompiled binaries due to security reasons.  In
+particular, binary packages for Windows and Mac OS X are provided by the
+respective binary package maintainers.
 
 @quotation
 @strong{Note}:  It is very important that you indicate the copyright
@@ -2030,6 +2036,8 @@ more.
 @item eba
 Fitting and testing probabilistic choice models, especially the BTL,
 elimination-by-aspects (EBA), and preference tree (Pretree) models.
+@item ebayesthresh
+Empirical Bayes thresholding and related methods.
 @item effects
 Graphical and tabular effect displays, e.g., of interactions, for linear
 and generalised linear models.
@@ -2288,6 +2296,8 @@ and also performs searches using a number of less time-consuming
 techniques.
 @item lgtdl
 A set of methods for longitudinal data objects.
+@item limma
+LInear Models for MicroArray data.
 @item linprog
 Solve linear programming/linear optimization problems by using the
 simplex algorithm.
@@ -2698,6 +2708,8 @@ visualization.
 @item snow
 Simple Network of Workstations: support for simple parallel computing in
 R.
+@item snowFT
+Fault Tolerant Simple Network of Workstations.
 @item som
 Self-Organizing Maps (with application in gene clustering).
 @item sound
@@ -2801,6 +2813,9 @@ assessment from tree-rings.
 A constrained two-dimensional Delaunay triangulation package.
 @item tseries
 Package for time series analysis with emphasis on non-linear modelling.
+@item tuneR
+Collection of tools to analyze music, handle wave files, transcription,
+etc.
 @item twostage
 Functions for optimal design of two-stage-studies using the Mean Score
 method.
@@ -4381,6 +4396,12 @@ graphics::ps.options(horizontal = FALSE)
 utils::help.start()
 @end example
 
+@c <FIXME>
+@c 2.0
+@noindent
+(@code{grDevices::ps.options(horizontal = FALSE)} in R 2.0).
+@c </FIXME>
+
 @node Where have all the methods gone?,  , Why did my .Rprofile stop working when I updated R?, R Miscellanea
 @section Where have all the methods gone?
 
@@ -4400,7 +4421,6 @@ of package @code{"bar"} use @code{bar:::foo}.  Don't use these
 constructions to call unexported functions in your own code---they are
 probably unexported for a reason and may change without warning.
 
-
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
 
@@ -4409,6 +4429,7 @@ probably unexported for a reason and may change without warning.
 * How can I debug dynamically loaded code?::  
 * How can I inspect R objects when debugging?::  
 * How can I change compilation flags?::  
+* How can I debug S4 methods?::  
 @end menu
 
 @node How should I write summary methods?, How can I debug dynamically loaded code?, R Programming, R Programming
@@ -4455,7 +4476,7 @@ Extensions}.
 R-exts, Writing R Extensions}.
 @end ifset
 
-@node How can I change compilation flags?,  , How can I inspect R objects when debugging?, R Programming
+@node How can I change compilation flags?, How can I debug S4 methods?, How can I inspect R objects when debugging?, R Programming
 @section How can I change compilation flags?
 
 Suppose you have C code file for dynloading into R, but you want to use
@@ -4469,6 +4490,14 @@ are a Bourne shell user, you can also pass the desired flags to Make
 @example
 MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
 @end example
+
+@node How can I debug S4 methods?,  , How can I change compilation flags?, R Programming
+@section How can I debug S4 methods?
+
+Use the @code{trace()} function with argument @code{signature=} to add
+calls to the browser or any other code to the method that will be
+dispatched for the corresponding signature.  See @code{?trace} for
+details.
 
 @node R Bugs, Acknowledgments, R Programming, Top
 @chapter R Bugs

@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.9-48 2004-08-28
+Version 1.9-49 2004-09-11
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -92,6 +92,7 @@ R FAQ
   8.2 How can I debug dynamically loaded code?
   8.3 How can I inspect R objects when debugging?
   8.4 How can I change compilation flags?
+  8.5 How can I debug S4 methods?
 9 R Bugs
   9.1 What is a bug?
   9.2 How to report a bug
@@ -475,8 +476,7 @@ Introductory books include
      S-PLUS", Springer, ISBN 0-387-98957-0
 
 provides a comprehensive guide to the use of the *nlme* package for linear
-and nonlinear mixed-effects models.  This has a home page at
-`http://nlme.stat.wisc.edu/MEMSS/'.
+and nonlinear mixed-effects models.
 
    As an example of how R can be used in teaching an advanced introductory
 statistics course, see
@@ -619,7 +619,9 @@ mailing lists and the R Bug Tracking system.
    To "submit" to CRAN, simply upload to
 `ftp://cran.R-project.org/incoming/' and send an email to
 <cran@R-project.org>.  Note that CRAN generally does not accept submissions
-of precompiled binaries due to security reasons.
+of precompiled binaries due to security reasons.  In particular, binary
+packages for Windows and Mac OS X are provided by the respective binary
+package maintainers.
 
      *Note*:  It is very important that you indicate the copyright
      (license) information (GPL, BSD, Artistic, ...)  in your submission.
@@ -1790,6 +1792,9 @@ distributions of R.)
      Fitting and testing probabilistic choice models, especially the BTL,
      elimination-by-aspects (EBA), and preference tree (Pretree) models.
 
+*ebayesthresh*
+     Empirical Bayes thresholding and related methods.
+
 *effects*
      Graphical and tabular effect displays, e.g., of interactions, for
      linear and generalised linear models.
@@ -2130,6 +2135,9 @@ distributions of R.)
 
 *lgtdl*
      A set of methods for longitudinal data objects.
+
+*limma*
+     LInear Models for MicroArray data.
 
 *linprog*
      Solve linear programming/linear optimization problems by using the
@@ -2644,6 +2652,9 @@ distributions of R.)
      Simple Network of Workstations: support for simple parallel computing
      in R.
 
+*snowFT*
+     Fault Tolerant Simple Network of Workstations.
+
 *som*
      Self-Organizing Maps (with application in gene clustering).
 
@@ -2745,6 +2756,10 @@ distributions of R.)
 
 *tseries*
      Package for time series analysis with emphasis on non-linear modelling.
+
+*tuneR*
+     Collection of tools to analyze music, handle wave files, transcription,
+     etc.
 
 *twostage*
      Functions for optimal design of two-stage-studies using the Mean Score
@@ -4090,6 +4105,8 @@ needs to be
      graphics::ps.options(horizontal = FALSE)
      utils::help.start()
 
+(`grDevices::ps.options(horizontal = FALSE)' in R 2.0).
+
 7.28 Where have all the methods gone?
 =====================================
 
@@ -4150,6 +4167,13 @@ shell user, you can also pass the desired flags to Make (which is used for
 controlling compilation) via the Make variable `MAKEFLAGS', as in
 
      MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
+
+8.5 How can I debug S4 methods?
+===============================
+
+Use the `trace()' function with argument `signature=' to add calls to the
+browser or any other code to the method that will be dispatched for the
+corresponding signature.  See `?trace' for details.
 
 9 R Bugs
 ********
