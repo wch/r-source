@@ -102,7 +102,8 @@ contrib.url(repos, type = getOption("pkgType"))
     \code{"graphics"}, which brings up a widget to allow the user to
     (de-)select from the list of packages which could be updated.  The
     latter only works on systems with a GUI version of
-    \code{\link{select.list}}.
+    \code{\link{select.list}}, and is otherwise equivalent to \code{ask
+      = TRUE}.
   }
   \item{installWithVers}{If \code{TRUE}, will invoke the install of the
     package such that it can be referenced by package version.}
