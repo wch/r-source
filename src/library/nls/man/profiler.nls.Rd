@@ -1,4 +1,4 @@
-% $Id: profiler.nls.Rd,v 1.7 2001/08/25 22:17:32 hornik Exp $
+% $Id: profiler.nls.Rd,v 1.7.8.1 2003/01/08 13:55:09 ripley Exp $
 \name{profiler.nls}
 \alias{profiler.nls}
 \title{ Constructor for Profiler Objects from nls Objects}
@@ -33,7 +33,7 @@
     For other details, see documentation for \code{\link{profiler}}
   }
 }
-\section{WARNING}{
+\section{Warning}{
   When using setDefault and getProfile together, the internal state of
   the fitted model may get changed. So after completing the profiling
   for a parameter, the internal states should be restored by a call to

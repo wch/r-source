@@ -169,11 +169,11 @@ function (clName, filename = paste(topicName(type, clName), ".Rd", sep = ""), ty
     }
     .meths.tail <- "}"
     .keywords <- paste("\\keyword{", keywords, "}", sep = "")
-    .boilerplate <- c( "\\references{ ~put references to the literature/web site here ~ }", 
-            "\\author{ ~~who you are~~ }", "\\note{ ~~further notes~~ }", 
-            "", " ~Make other sections like WARNING with \\section{WARNING }{....} ~", 
-            "", "\\seealso{ ~~objects to SEE ALSO as \\code{\\link{~~fun~~}}, ~~~",
-                  " or\\code{\\link{CLASSNAME-class}} for links to other classes }", 
+    .boilerplate <- c( "\\references{ ~put references to the literature/web site here ~ }",
+            "\\author{ ~~who you are~~ }", "\\note{ ~~further notes~~ }",
+            "", " ~Make other sections like Warning with \\section{Warning }{....} ~",
+            "", "\\seealso{ ~~objects to See Also as \\code{\\link{~~fun~~}}, ~~~",
+                  " or\\code{\\link{CLASSNAME-class}} for links to other classes }",
             "", "\\examples{", "##---- Should be DIRECTLY executable !! ----","}")
     cat(.name, .type, .alias,  .title, .desc,
         .usage,
