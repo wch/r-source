@@ -4782,15 +4782,20 @@ for blindness and the results recorded.  The data is shown below:
 
 @iftex
 @quotation
-@end iftex
 @multitable {No.@: tested::} {50} {50} {50} {50} {50}
 @item Age:          @tab  20 @tab  35 @tab  45 @tab  55 @tab  70
 @item No.@: tested: @tab  50 @tab  50 @tab  50 @tab  50 @tab  50
 @item No.@: blind:  @tab  @w{ 6} @tab  17 @tab  26 @tab  37 @tab  44
 @end multitable
-@iftex
 @end quotation
 @end iftex
+@ifnottex
+@multitable {No.@: tested::} {50} {50} {50} {50} {50}
+@item Age:          @tab  20 @tab  35 @tab  45 @tab  55 @tab  70
+@item No.@: tested: @tab  50 @tab  50 @tab  50 @tab  50 @tab  50
+@item No.@: blind:  @tab  @w{ 6} @tab  17 @tab  26 @tab  37 @tab  44
+@end multitable
+@end ifnottex
 
 The problem we consider is to fit both logistic and probit models to
 this data, and to estimate for each model the LD50, that is the age at
