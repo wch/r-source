@@ -175,6 +175,11 @@ BUG FIXES
     o	split() was accepting raw and list vectors as input, but
 	not populating the output correctly.
 
+	split() now handles vectors with names internally and so is
+	almost as fast as on vectors without names (and maybe 100x
+	faster than before).
+
+
 
 		CHANGES IN R VERSION 2.0.1
 

@@ -25,8 +25,9 @@
 
 SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, f, counts, vec;
+    SEXP x, f, counts, vec, nm, nmj;
     int i, j, k, nobs, nlevs, nfac;
+    Rboolean have_names;
 
     checkArity(op, args);
 
@@ -45,6 +46,8 @@ SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "Group length is 0 but data length > 0");
     if (nobs % nfac != 0)
 	warningcall(call, "data length is not a multiple of split variable");
+    nm = getAttrib(x, R_NamesSymbol);
+    have_names = nm != R_NilValue;
     PROTECT(counts = allocVector(INTSXP, nlevs));
     for (i = 0; i < nlevs; i++)
 	INTEGER(counts)[i] = 0;
@@ -58,10 +61,13 @@ SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
     /* The i-th element will hold the split-out data */
     /* for the ith group. */
     PROTECT(vec = allocVector(VECSXP, nlevs));
-    for (i = 0;  i< nlevs; i++) {
+    for (i = 0;  i < nlevs; i++) {
 	SET_VECTOR_ELT(vec, i, allocVector(TYPEOF(x), INTEGER(counts)[i]));
 	setAttrib(VECTOR_ELT(vec, i), R_LevelsSymbol,
 		  getAttrib(x, R_LevelsSymbol));
+	if(have_names)
+	    setAttrib(VECTOR_ELT(vec, i), R_NamesSymbol,
+		      allocVector(STRSXP, INTEGER(counts)[i]));
     }
     for (i = 0; i < nlevs; i++)
 	INTEGER(counts)[i] = 0;
@@ -94,12 +100,13 @@ SEXP do_split(SEXP call, SEXP op, SEXP args, SEXP env)
 			  "split for this type (%d) is not implemented", 
 			  TYPEOF(x));
 	    }
+	    if(have_names) {
+		nmj = getAttrib(VECTOR_ELT(vec, j - 1), R_NamesSymbol);
+		SET_STRING_ELT(nmj, k, STRING_ELT(nm, i));
+	    }
 	    INTEGER(counts)[j - 1] += 1;
 	}
     }
-    /* Now transfer the results from the vector */
-    /* into a dotted-pair list.  When structures */
-    /* are full based on vectors this won't be needed. */
     setAttrib(vec, R_NamesSymbol, getAttrib(f, R_LevelsSymbol));
     UNPROTECT(2);
     return vec;
