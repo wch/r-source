@@ -398,6 +398,7 @@ SEXP setAttrib(SEXP, SEXP, SEXP);
 void setSVector(SEXP*, int, SEXP);
 void setVar(SEXP, SEXP, SEXP);
 int StringBlank(SEXP);
+SEXP substitute(SEXP,SEXP);
 void unprotect(int);
 void unprotect_ptr(SEXP);
 
