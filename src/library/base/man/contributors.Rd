@@ -34,6 +34,7 @@
 
   Valerio Aimalea,
   Ben Bolker,
+  Goran Brostrom,
   Paul Gilbert,
   Philippe Lambert
   Jim & Patrick Lindsey,
@@ -44,6 +45,8 @@
   Brian Ripley,
   Bill Simpson,
   Bill Venables,
-  Andreas Weingessel
+  Andreas Weingessel,
+  \cr
+  plus all those that we forgot to mention here !
 }
 \keyword{misc}
