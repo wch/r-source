@@ -536,6 +536,8 @@ BUG FIXES
 
     o	removeMethods{methods} was broken. (PR#2519)
 
+    o	summary.glm() had two `aic' components in the returned object.
+
 
 
 	**************************************************

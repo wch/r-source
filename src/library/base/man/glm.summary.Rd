@@ -37,6 +37,31 @@
 coefficients, standard errors, etc. and additionally gives
 ``significance stars'' if \code{signif.stars} is \code{TRUE}.
 }
+\value{
+  \code{summary.glm} returns an object of class \code{"summary.glm"}, a
+  list with components
+
+  \item{call}{the component from \code{object}.}
+  \item{family}{the component from \code{object}.}
+  \item{deviance}{the component from \code{object}.}
+  \item{contrasts}{the component from \code{object}.}
+  \item{df.residual}{the component from \code{object}.}
+  \item{null.deviance}{the component from \code{object}.}
+  \item{df.null}{the component from \code{object}.}
+  \item{deviance.resid}{the deviance residuals:
+    see \code{\link{residuals.glm}}.}
+  \item{coefficients}{the matrix of coefficients, standard errors,
+    z-values and p-values.}
+  \item{dispersion}{eother the supplied argument or the estimated
+    dispersion if the latter in \code{NULL}}
+  \item{df}{a 2-vector of the rank of the model and the number of
+    residual degrees of freedom.}
+  \item{cov.unscaled}{the unscaled (\code{dispersion = 1}) estimated covariance
+    matrix of the estimated coefficients.}
+  \item{cov.scaled}{ditto, scaled by \code{dispersion}.}
+  \item{correlation}{(only if \code{correlation} is true.)  The estimated
+    correlations of the estimated coefficients.}
+}
 \seealso{
   \code{\link{glm}}, \code{\link{summary}}.
 }
