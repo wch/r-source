@@ -259,7 +259,7 @@ package @var{pkg} contains user-level objects which are for ``internal''
 use only, it should provide a file @file{@var{pkg}-internal.Rd} which
 documents all such objects, and clearly states that these are not meant
 to be called by the user.  See e.g.@: the sources for package
-@strong{modreg} in the @R{} distribution for an example.
+@pkg{tools} in the @R{} distribution for an example.
 
 The @file{R} and @file{man} subdirectories may contain OS-specific
 subdirectories named @file{unix}, @file{windows} or @file{mac}.
@@ -384,13 +384,13 @@ If your package needs some system-dependent configuration before
 installation you can include a (Bourne shell) script @file{configure} in
 your package which (if present) is executed by @code{R CMD INSTALL}
 before any other action is performed.  This can be a script created by
-the @command{autoconf} mechanism, but may also be a script written by
-yourself.  Use this to detect if any nonstandard libraries are present
-such that corresponding code in the package can be disabled at install
-time rather than giving error messages when the package is compiled or
-used.  To summarize, the full power of Autoconf is available for your
-extension package (including variable substitution, searching for
-libraries, etc.).
+the Autoconf mechanism, but may also be a script written by yourself.
+Use this to detect if any nonstandard libraries are present such that
+corresponding code in the package can be disabled at install time rather
+than giving error messages when the package is compiled or used.  To
+summarize, the full power of Autoconf is available for your extension
+package (including variable substitution, searching for libraries,
+etc.).
 
 The (Bourne shell) script @file{cleanup} is executed as last thing by
 @code{R CMD INSTALL} if present and option @option{--clean} was given,
@@ -399,7 +399,7 @@ its source.  It can be used to clean up the package source tree.  In
 particular, it should remove all files created by @command{configure}.
 
 As an example consider we want to use functionality provided by a (C or
-FORTRAN) library @code{foo}.  Using @command{autoconf}, we can write a
+FORTRAN) library @code{foo}.  Using @command{autoconf}, we can create a
 configure script which checks for the library, sets variable
 @code{HAVE_FOO} to @code{TRUE} if it was found and with @code{FALSE}
 otherwise, and then substitutes this value into output files (by
@@ -506,9 +506,9 @@ override the test for the Fortran linker flags.)
 
 You should bear in mind that the configure script may well not work on
 Windows systems (this seems normally to be the case for those generated
-by @command{autoconf}, although simple shell scripts do work).  If your
-package is to be made publicly available, please give enough information
-for a user on a non-Unix platform to configure it manually, or provide a
+by Autoconf, although simple shell scripts do work).  If your package is
+to be made publicly available, please give enough information for a user
+on a non-Unix platform to configure it manually, or provide a
 @file{configure.win} script to be used on that platform.
 
 It is essential to provide manual configuration information if the
@@ -590,7 +590,7 @@ BLAS library also contains LAPACK.
 more than the double-precision and double-complex driver routines used
 by @R{}, and some do not provide all the auxiliary routines.]
 
-The macro @code{BLAS_LIBS} should always be included after
+The macro @code{BLAS_LIBS} should always be included @emph{after}
 @code{LAPACK_LIBS}.
 @end table
 
@@ -773,7 +773,7 @@ executed independently from the presence of any files in Sweave format.
 It is no longer necessary to provide a @file{00Index.dcf} file in the
 @file{inst/doc} directory---the corresponding information is generated
 automatically from the @code{\VignetteIndexEntry} statements in all
-Sweave files when installing from source and when using the package
+Sweave files when installing from source, or when using the package
 builder (@pxref{Checking and building packages}).  The
 @code{\VignetteIndexEntry} statement is best placed in La@TeX{} comment,
 such that no definition of the command is necessary.
@@ -1120,9 +1120,9 @@ which can be processed into a variety of formats, including La@TeX{},
 script @command{Rdconv} in @file{@var{R_HOME}/bin} and by the
 installation scripts for packages.
 
-The @R{} distribution contains more than 900 such files which can be
-found in the @file{src/library/@var{pkg}/man} directories of the @R{}
-source tree, where @var{pkg} stands for package @pkg{base} where all the
+The @R{} distribution contains about 1000 such files which can be found
+in the @file{src/library/@var{pkg}/man} directories of the @R{} source
+tree, where @var{pkg} stands for package @pkg{base} where all the
 standard objects are, and for the standard packages such as @pkg{eda}
 and @pkg{mva} which are included in the @R{} distribution.
 
@@ -1265,7 +1265,7 @@ of an S3 method for the generic function @var{generic} for objects
 inheriting from class @code{"@var{class}"}.  In the printed versions,
 this will come out as @var{generic} (reflecting the understanding that
 methods should not be invoked directly but via method dispatch), but
-@code{codoc()} and other tools always have access to the full name.
+@code{codoc()} and other QC tools always have access to the full name.
 
 For example, @file{print.ts.Rd} contains
 
@@ -1319,7 +1319,7 @@ web pointers.
 @findex \note
 Use this for a special note you want to have pointed out.
 
-For example, @file{piechart.Rd} contains
+For example, @file{pie.Rd} contains
 
 @smallexample
 @group
@@ -1399,7 +1399,7 @@ the alphabetical list of objects in the @HTML{} help system.
 @findex prompt
 The @R{} function @code{prompt} facilitates the construction of files
 documenting @R{} objects.  If @code{foo} is an @R{} function, then
-@code{prompt(foo)} produces file @file{foo.Rd} which already contains
+@kbd{prompt(foo)} produces file @file{foo.Rd} which already contains
 the proper function and argument names of @code{foo}, and a structure
 which can be filled in with information.
 
@@ -1609,7 +1609,7 @@ documentation yet we still want something useful for text and @HTML{}
 online help.  To this end, the two commands
 @code{\eqn@{@var{latex}@}@{@var{ascii}@}} and
 @code{\deqn@{@var{latex}@}@{@var{ascii}@}} are used.  Where @code{\eqn}
-is used for ``inline'' formula (corresponding to @TeX{}'s
+is used for ``inline'' formulae (corresponding to @TeX{}'s
 @code{$@dots{}$}, @code{\deqn} gives ``displayed equations'' (as in
 La@TeX{}'s @code{displaymath} environment, or @TeX{}'s
 @code{$$@dots{}$$}).
@@ -2058,23 +2058,21 @@ and the types of arguments to a C function or FORTRAN subroutine.
 
 C type @code{Rcomplex} is a structure with @code{double} members
 @code{r} and @code{i} defined in the header file @file{Complex.h}
-included by @file{R.h}.  Only a single character string can be passed
-to or from FORTRAN, and the success of this is compiler-dependent.
-Other @R{} objects can be passed to @code{.C}, but it is better to use
-one of the other interfaces.  An exception is passing an @R{} function
-for use with @w{@code{call_R}}, when the object can be handled as
-@code{void *} en route to @code{call_R}, but even there @code{.Call}
-is to be preferred.  Similarly, passing an R list as an argument to a
-C routine should be done using the @code{.Call} interface.  If one
-does use the @code{.C} function to pass a list as an argument, it is
-visible to the routine as an array in C of @code{SEXP} types
-(i.e. @code{SEXP *}).  The elements of the array correspond directly
-to the elements of the R list.  However, this array must be treated as
-read-only and one must not assign values to its elements within the C
-routine.  Doing so bypasses R's memory management facilities and will
-corrupt the object and the R session.
-
-
+included by @file{R.h}.  Only a single character string can be passed to
+or from FORTRAN, and the success of this is compiler-dependent.  Other
+@R{} objects can be passed to @code{.C}, but it is better to use one of
+the other interfaces.  An exception is passing an @R{} function for use
+with @w{@code{call_R}}, when the object can be handled as @code{void *}
+en route to @code{call_R}, but even there @code{.Call} is to be
+preferred.  Similarly, passing an R list as an argument to a C routine
+should be done using the @code{.Call} interface.  If one does use the
+@code{.C} function to pass a list as an argument, it is visible to the
+routine as an array in C of @code{SEXP} types (i.e., @code{SEXP *}).
+The elements of the array correspond directly to the elements of the R
+list.  However, this array must be treated as read-only and one must not
+assign values to its elements within the C routine.  Doing so bypasses
+R's memory management facilities and will corrupt the object and the R
+session.
 
 It is possible to pass numeric vectors of storage mode @code{double} to
 C as @code{float *} or FORTRAN as @code{REAL} by setting the attribute
@@ -2207,10 +2205,11 @@ library.dynam("mylib", package, lib.loc)
 @noindent
 R looks for the symbol named @code{R_init_mylib}.  Similarly, when
 unloading the library, R looks for a routine named
-@code{R_unload_@var{lib}}, e.g., @code{R_init_mylib}.  In either case, if
-the routine is present, R will invoke it and pass it a single argument
-describing the DLL.  This is a value of type @code{DllInfo} which is
-defined in the @file{Rdynload.h} file in the @file{R_ext} directory.
+@code{R_unload_@var{lib}}, e.g., @code{R_unload_mylib}.  In either case,
+if the routine is present, R will invoke it and pass it a single
+argument describing the DLL.  This is a value of type @code{DllInfo}
+which is defined in the @file{Rdynload.h} file in the @file{R_ext}
+directory.
 
 The following example shows templates for the initialization and
 unload routines for the @code{mylib} DLL.
@@ -2266,7 +2265,8 @@ to the initialization routine. This is where R stores the information
 about the methods.  The remaining 4 arguments are arrays describing the
 routines for each of the 4 different interfaces: @code{.C},
 @code{.Call}, @code{.Fortran} and @code{.External}.  Each argument is a
-NULL-terminated array of the element types given in the following table:
+@code{NULL}-terminated array of the element types given in the following
+table:
 
 @quotation
 @multitable {@code{.External  }} {@code{R_ExternalMethodDef}}
@@ -2422,12 +2422,12 @@ If an add-on package @var{pkg} contains C, C++, or FORTRAN code in its
 @file{src} subdirectory, @code{R CMD INSTALL} creates a shared library
 (for loading into @R{} in the @code{.First.lib} function of the package)
 either automatically using the above @code{R CMD SHLIB} mechanism, or
-using @code{make} if directory @file{src} contains a @file{Makefile}.
-In both cases, if file @file{Makevars} exists it is read first when
-invoking @code{make}.  If a @file{Makefile} is really needed or
-provided, it needs to ensure that the shared library created is linked
-against all FORTRAN 77 intrinsic and run-time libraries that @R{} was
-linked against; Make variable @code{FLIBS} contains this information.
+using Make if directory @file{src} contains a @file{Makefile}.  In both
+cases, if file @file{Makevars} exists it is read first when invoking
+@code{make}.  If a @file{Makefile} is really needed or provided, it
+needs to ensure that the shared library created is linked against all
+FORTRAN 77 intrinsic and run-time libraries that @R{} was linked
+against; Make variable @code{FLIBS} contains this information.
 
 The Windows equivalent is the command @code{Rcmd SHLIB}; files
 @file{Makevars.win} or @file{Makefile.win} are used in preference to
@@ -4672,7 +4672,7 @@ still works when both @var{a} and @var{b} are between @code{1e200} and
 
 @deftypefun double log1p (@var{x})
 Computes @code{log(1 + @var{x})} (@emph{log 1 @b{p}lus x}), accurately
-even for small @var{x}, i.e. @eqn{|x| \ll 1, |x| << 1}.
+even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 
 This may be provided by your platform, in which case it is not
 included in @file{Rmath.h}, but is (probably) in @file{math.h}.  For
@@ -4682,7 +4682,7 @@ point @code{Rf_log1p} is still provided.
 
 @deftypefun double expm1 (@var{x})
 Computes @code{exp(@var{x}) - 1} (@emph{exp x @b{m}inus 1}), accurately
-even for small @var{x}, i.e. @eqn{|x| \ll 1, |x| << 1}.
+even for small @var{x}, i.e., @eqn{|x| \ll 1, |x| << 1}.
 
 This may be provided by your platform, in which case it is not
 included in @file{Rmath.h}, but is (probably) in @file{math.h}.
@@ -4992,28 +4992,25 @@ the left, larger ones to the right.
 @deftypefunx void R_qsort_int_I (int *@var{iv}, int *@var{I}, int @var{i}, int @var{j})
 
 
-These routines sort @code{v[i:j]} or @code{iv[i:j]} (using 1-indexing,
-i.e. @code{v[1]} is the first element) calling the quicksort algorithm
+These routines sort @code{@var{v}[@var{i}:@var{j}]} or
+@code{@var{iv}[@var{i}:@var{j}]} (using 1-indexing, i.e.,
+@code{@var{v}[1]} is the first element) calling the quicksort algorithm
 as used by @R{}'s @code{sort(v, method = "quick")} and documented on the
-help page for the @R{} function @code{sort}.
-The @code{..._I()} versions also return the @code{sort.index()} vector in
-@code{I}.  Note that the ordering is @emph{not} stable, so tied values
-may be permuted.
+help page for the @R{} function @code{sort}.  The @code{..._I()}
+versions also return the @code{sort.index()} vector in @code{I}.  Note
+that the ordering is @emph{not} stable, so tied values may be permuted.
 
 Note that @code{NA}s are not handled (explicitly) and you should
-use different sorting functions if NAs can be present.
+use different sorting functions if @code{NA}s can be present.
 @end deftypefun
 
-@deftypefun subroutine qsort4 (double precision @var{v}, integer @var{indx}, integer@var{ii}, integer @var{jj})
-@deftypefunx subroutine qsort3 (double precision @var{v}, integer @var{ii}, integer@var{jj})
+@deftypefun subroutine qsort4 (double precision @var{v}, integer @var{indx}, integer @var{ii}, integer @var{jj})
+@deftypefunx subroutine qsort3 (double precision @var{v}, integer @var{ii}, integer @var{jj})
 
 The FORTRAN interface routines for sorting double precision vectors are
 @code{qsort3} and @code{qsort4}, equivalent to @code{R_qsort} and
-@code{R_qsort_I} respectively.
-
+@code{R_qsort_I}, respectively.
 @end deftypefun
-
-
 
 @deftypefun void R_max_col (double* @var{matrix}, int* @var{nr}, int* @var{nc}, int* @var{maxes})
 Given the @var{nr} by @var{ny} matrix @code{matrix} in row (``FORTRAN'')
