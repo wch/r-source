@@ -39,18 +39,20 @@ hclust <- function(d, method="complete", members=NULL)
 	stop("invalid dissimilarities")
     if(n < 2)
         stop("Must have n >= 2 objects to cluster")
+    len <- as.integer(n*(n-1)/2)
+    if(length(d) != len)
+        (if (length(d) < len) stop else warning
+         )("dissimilarities of improper length")
+
     labels <- attr(d, "Labels")
-
-    len <- n*(n-1)/2
-
     if(is.null(members))
         members <- rep(1, n)
-    if(length(members) != n)
+    else if(length(members) != n)
         stop("Invalid length of members")
 
     hcl <- .Fortran("hclust",
-		    n = as.integer(n),
-		    len = as.integer(len),
+		    n = n,
+		    len = len,
 		    method = as.integer(method),
 		    ia = integer(n),
 		    ib = integer(n),
@@ -77,11 +79,8 @@ hclust <- function(d, method="complete", members=NULL)
 		 order = hcass$order,
 		 labels=attr(d, "Labels"),
                  method=METHODS[method],
-                 call=match.call())
-
-    if(!is.null(attr(d, "method"))){
-        tree$dist.method <- attr(d, "method")
-    }
+                 call = match.call(),
+                 dist.method = attr(d, "method"))
     class(tree) <- "hclust"
     tree
 }
