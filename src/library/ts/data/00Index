@@ -3,6 +3,7 @@ BJsales		sales data with leading indicator from Box & Jenkins
 EuStockMarkets  daily closing prices of major European stock indices, 1991-8
 LakeHuron	level of Lake Huron 1875-1972
 lh		dataset on luteinizing hormone from Diggle (1990)
+lynx		Annual Canadian Lynx trappings 1821-1934
 nottem		time-series of temperatures in Nottingham, 1920-1939
 sunspot 	yearly sunspot data, 1700-1988
 		monthly sunspot data, 1749-1997
