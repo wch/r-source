@@ -61,6 +61,14 @@ file.copy <- function(from, to, overwrite=FALSE)
     file.append(to, from)
 }
 
+file.symlink <- function(from, to) {
+    if (!(length(from))) stop("no files to link from")
+    if (!(nt <- length(to)))   stop("no files/dir to link to")
+    if (nt == 1 && file.exists(to) && file.info(to)$isdir)
+        to <- file.path(to, sapply(from, basename))
+    .Internal(file.symlink(from, to))
+}
+
 file.info <- function(...)
 {
     res <- .Internal(file.info(fn <- c(...)))

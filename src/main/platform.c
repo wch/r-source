@@ -351,6 +351,58 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h> /* for symlink */
+#endif
+
+SEXP do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP f1, f2, ans;
+    int i, n, n1, n2;
+    char from[PATH_MAX], to[PATH_MAX], *p;
+
+    checkArity(op, args);
+    f1 = CAR(args); n1 = length(f1);
+    f2 = CADR(args); n2 = length(f2);
+    if (!isString(f1))
+        errorcall(call, "invalid first filename");
+    if (!isString(f2))
+        errorcall(call, "invalid second filename");
+    if (n1 < 1)
+	errorcall(call, "nothing to link");
+    if (n2 < 1)
+	return allocVector(LGLSXP, 0);
+    n = (n1 > n2) ? n1 : n2;
+#ifdef HAVE_SYMLINK
+    PROTECT(ans = allocVector(LGLSXP, n));
+    for(i = 0; i < n; i++) {
+        if (STRING_ELT(f1, i%n1) == R_NilValue || STRING_ELT(f2, i%n2) == R_NilValue)
+            LOGICAL(ans)[i] = 0;
+        else {
+	    p = R_ExpandFileName(CHAR(STRING_ELT(f1, i%n1)));
+	    if (strlen(p) >= PATH_MAX - 1) {
+		LOGICAL(ans)[i] = 0;
+		continue;
+	    }
+	    strcpy(from, p);
+	    p = R_ExpandFileName(CHAR(STRING_ELT(f2, i%n2)));
+	    if (strlen(p) >= PATH_MAX - 1) {
+		LOGICAL(ans)[i] = 0;
+		continue;
+	    }
+	    strcpy(to, p);
+	    /* Rprintf("linking %s to %s\n", from, to); */
+            LOGICAL(ans)[i] = symlink(from, to) == 0;
+	}
+    }
+    UNPROTECT(1);
+    return ans;
+#else
+    warningcall(call, "symlinks are not supported on this platform");
+    return allocVector(LGLSXP, n);
+#endif
+}
+
 #if defined(Win32) || defined(Macintosh)
 # include <errno.h>
 #endif
@@ -362,17 +414,17 @@ int Rwin_rename(char *from, char *to);  /* in src/gnuwin32/extra.c */
 SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     char from[PATH_MAX], to[PATH_MAX], *p;
-    checkArity(op, args);
-    
-    if (TYPEOF(CAR(args)) != STRSXP)
-	error("source must be a string");
+
+    checkArity(op, args);    
+    if (TYPEOF(CAR(args)) != STRSXP || LENGTH(CAR(args)) != 1)
+	error("source must be a single string");
     p = R_ExpandFileName(CHAR(STRING_ELT(CAR(args), 0)));
     if (strlen(p) >= PATH_MAX - 1)
 	error("expanded source name too long");
     strncpy(from, p, PATH_MAX - 1);
 
-    if (TYPEOF(CADR(args)) != STRSXP)
-	error("destination must be a string");
+    if (TYPEOF(CADR(args)) != STRSXP || LENGTH(CADR(args)) != 1)
+	error("destination must be a single string");
     p = R_ExpandFileName(CHAR(STRING_ELT(CADR(args), 0)));
     if (strlen(p) >= PATH_MAX - 1)
 	error("expanded destination name too long");

@@ -8,10 +8,8 @@ file.remove(\dots)
 file.rename(from, to)
 file.append(file1, file2)
 file.copy(from, to, overwrite = FALSE)
+file.symlink(from, to)
 dir.create(path)
-basename(path)
-dirname(path)
-path.expand(path)
 }
 \alias{file.append}
 \alias{file.copy}
@@ -19,13 +17,12 @@ path.expand(path)
 \alias{file.exists}
 \alias{file.remove}
 \alias{file.rename}
+\alias{file.symlink}
 \alias{dir.create}
-\alias{basename}
-\alias{dirname}
-\alias{path.expand}
 \arguments{
-  \item{\dots, file1, file2, from, to, path}{character vectors,
+  \item{\dots, file1, file2, from, to}{character vectors,
     containing file names.}
+  \item{path}{a character vector containing a single path name.}
   \item{overwrite}{logical; should the destination files be overwritten?}
 }
 \description{
@@ -35,24 +32,21 @@ path.expand(path)
 \details{
   The \code{\dots} arguments are concatenated to form one character
   string: you can specify the files separately or as one vector.
+  All of these functions expand path names: see \code{\link{path.expand}}.
 
   \code{file.create} creates files with the given names if they
   do not already exist and truncates them if they do.
-  It returns a logical vector indicating the success or failure
-  of the operation for each file.
 
   \code{file.exists} returns a logical vector indicating whether
   the files named by its argument exist.
 
   \code{file.remove} attempts to remove the files named in its
-  argument.  It returns a logical vector indicating whether or
-  not it succeeded in removing each file.
+  argument.
 
-  \code{file.rename} attempts to rename a file.  It returns a logical
-  value indicating whether the operation succeeded.
+  \code{file.rename} attempts to rename a single file.
 #ifdef windows
-  On Windows rename is not atomic, so it is possible that \code{to} will
-  be deleted but \code{from} will not be renamed.
+  On Windows 9x/ME rename is not atomic, so it is possible that
+  \code{to} will be deleted but \code{from} will not be renamed.
 #endif
 
   \code{file.append} attempts to append the files named by its
@@ -65,28 +59,18 @@ path.expand(path)
   destination files is skipped unless \code{overwrite = TRUE}.
   The \code{to} argument can specify a single existing directory.
 
-  \code{dir.create} creates the last element of the path. It returns a
-  logical, true for success.
+  \code{file.symlink} makes symbolic links on those Unix-like platforms
+  which support them.  The \code{to} argument can specify a single
+  existing directory.
+  
+  \code{dir.create} creates the last element of the path.
+}
+\value{
+  \code{dir.create} and \code{file.rename} return a logical,
+  true for success.
 
-  \code{basename} removes all of the path up to the last path separator
-  (if any).
-
-  \code{dirname} returns the part of the \code{path} up to (but
-  excluding) the last path separator, or \code{"."} if there is no path
-  separator.  Tilde expansion is done: see the description for
-  \code{path.expand} below.
-
-  In both \code{basename} and \code{dirname} trailing file separators
-  are removed before dissecting the path, and for \code{dirname} any
-  trailing file separators are removed from the result.
-
-  \code{path.expand} expands path(s) by replacing a leading tilde by the
-  user's home directory (if defined on that platform).
-#ifdef unix
-  On \emph{some Unix} versions, a leading \code{~user} will expand to
-  the home directory of \code{user}, but not on Unix versions without
-  \code{readline} installed.
-#endif
+  The remaining functions return a logical vector indicating which
+  operation succeeded for each of the files attempted.
 }
 \author{
   Ross Ihaka, Brian Ripley
@@ -94,7 +78,7 @@ path.expand(path)
 \seealso{
   \code{\link{file.info}}, \code{\link{file.access}}, \code{\link{file.path}},
   \code{\link{file.show}}, \code{\link{list.files}},
-  \code{\link{unlink}}.
+  \code{\link{unlink}}, \code{\link{basename}}, \code{\link{path.expand}}.
 }
 
 \examples{
@@ -107,12 +91,14 @@ if(interactive()) file.show("A")
 file.copy("A", "C")
 dir.create("tmp")
 file.copy(c("A", "B"), "tmp")
+list.files("tmp")
+#ifdef unix
+setwd("tmp")
+file.remove("B")
+file.symlink(file.path("..", c("A", "B")), ".")
+setwd("..")
+#endif
 unlink("tmp", recursive=TRUE)
 file.remove("A", "B", "C")
-
-basename(file.path("","p1","p2","p3","filename"))
-dirname(file.path("","p1","p2","p3","filename"))
-
-path.expand("~/foo")
 }
 \keyword{file}

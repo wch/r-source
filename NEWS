@@ -21,6 +21,9 @@ NEW FEATURES
     o   require() has a new argument, character.only,
           -- to make it align with library.
 
+    o   New function file.symlink() to create symbolic file links
+	where supported by the OS.
+
 
 INSTALLATION CHANGES
 
@@ -31,6 +34,9 @@ INSTALLATION CHANGES
     o	When searching for a Fortran 77 compiler, configure by default
 	now also looks for Fujitsu's frt and Compaq's fort, but no
 	longer for cf77 and cft77.
+
+
+BUG FIXES
 
 
 
@@ -119,6 +125,26 @@ BUG FIXES
 	#ifdef'd out.
 
     o	format.AsIs was not handling matrices.
+
+    o   sd() was not passing na.rm to var() for matrices and data frames.
+
+    o	dist() {mva} silently treated +/-Inf as NA.
+
+    o	setwd() now returns NULL invisibly.
+
+    o	basename() and dirname() did not check the length of their
+	input and ignored elements after the first.  This affected
+	undoc {tools}.
+
+
+INTERNALS
+
+    o   Toplevel Makefile was missing dependency of "docs" on "R" (causing
+        parallel makes to go wrong)
+
+    o   When building with recommended packages those were installed
+        into the first path in R_LIBS, if the environment variable was
+        present.
 
 
 
