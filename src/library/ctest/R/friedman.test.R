@@ -33,7 +33,7 @@ friedman.test <- function(y, groups, blocks) {
 
     structure(list(statistic = STATISTIC,
                    parameter = PARAMETER,
-                   p.value = 1 - pchisq(STATISTIC, PARAMETER),
+                   p.value = pchisq(STATISTIC, PARAMETER, lower = FALSE),
                    method = "Friedman rank sum test",
                    data.name = DNAME),
               class = "htest")

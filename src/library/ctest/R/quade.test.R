@@ -40,7 +40,7 @@ quade.test <- function(y, groups, blocks)
         STATISTIC <- (b - 1) * B / (A - B)
         ## The same as 2-way ANOVA on the scores S.
         PARAMETER <- c(k - 1, (b-1) * (k-1))
-        PVAL <- 1 - pf(STATISTIC, PARAMETER[1], PARAMETER[2])
+        PVAL <- pf(STATISTIC, PARAMETER[1], PARAMETER[2], lower = FALSE)
     }
     names(STATISTIC) <- "Quade F"
     names(PARAMETER) <- c("num df", "denom df")

@@ -12,9 +12,9 @@ power.t.test <-
     tsample <- switch(type, one.sample = 1, two.sample = 2, paired = 1)
     tside <- switch(alternative, one.sided = 1, two.sided = 2)
 
-    p.body <- quote(1 - pt( qt(1 - sig.level/tside, (n - 1) * tsample),
-                           (n - 1) * tsample, ncp = sqrt(n/tsample) *
-                           delta/sd))
+    p.body <- quote({nu <- (n - 1) * tsample
+                     pt(qt(sig.level/tside, nu, lower = FALSE),
+                        nu, ncp = sqrt(n/tsample) * delta/sd, lower = FALSE)})
     if (is.null(power))
         power <- eval(p.body)
     else if (is.null(n))
@@ -35,10 +35,11 @@ power.t.test <-
                    paired = "n is number of *pairs*, sd is std.dev. of *differences* within pairs",
                    two.sample = "n is number in *each* group", NULL)
 
-    METHOD <- switch(type,
-                     one.sample = "One-sample t test power calculation",
-                     two.sample =  "Two-sample t test power calculation",
-                     paired = "Paired t test power calculation")
+    METHOD <- paste(switch(type,
+                           one.sample = "One-sample",
+                           two.sample = "Two-sample",
+                           paired = "Paired"),
+                    "t test power calculation")
 
     structure(list(n=n, delta=delta, sd=sd,
                    sig.level=sig.level, power=power,
@@ -58,9 +59,9 @@ power.prop.test <-
     tside <- switch(alternative, one.sided = 1, two.sided = 2)
 
     p.body <- quote(pnorm(((sqrt(n) * abs(p1 - p2)
-                            - (qnorm(1 - (sig.level/tside))
-                             * sqrt((p1 + p2) * (1 - (p1 + p2)/2))))
-                           /sqrt(p1 * (1 - p1) + p2 * (1 - p2)))))
+                            - (qnorm(sig.level/tside, lower = FALSE)
+                               * sqrt((p1 + p2) * (1 - (p1 + p2)/2))))
+                           / sqrt(p1 * (1 - p1) + p2 * (1 - p2)))))
 
     if (is.null(power))
         power <- eval(p.body)

@@ -44,7 +44,7 @@ fligner.test <- function(x, g) {
 
     RVAL <- list(statistic = STATISTIC,
                  parameter = PARAMETER,
-                 p.value = 1 - pchisq(STATISTIC, PARAMETER),
+                 p.value = pchisq(STATISTIC, PARAMETER, lower = FALSE),
                  method = METHOD,
                  data.name = DNAME)
     class(RVAL) <- "htest"

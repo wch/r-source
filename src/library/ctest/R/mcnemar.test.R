@@ -38,7 +38,7 @@ mcnemar.test <- function(x, y = NULL, correct = TRUE)
     
     STATISTIC <- sum(y[upper.tri(x)]^2 / x[upper.tri(x)])
     names(STATISTIC) <- "McNemar's chi-square"
-    PVAL <- 1 - pchisq(STATISTIC, PARAMETER)  
+    PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)  
     
     RVAL <- list(statistic = STATISTIC,
                  parameter = PARAMETER,

@@ -9,9 +9,8 @@ prop.trend.test <- function (x, n, score = 1:length(x))
     a <- anova(lm(freq ~ score, weight = w))
     chisq <- a["score", "Sum Sq"]
     names(chisq) <- "X-squared"
-    df <- 1
-    names(df) <- "df"
-    pval <- 1 - pchisq(chisq, 1)
+    df <- c(df = 1)
+    pval <- pchisq(chisq, 1, lower.tail = FALSE)
     rval <- list(statistic = chisq, parameter = df, p.value = pval, 
         method = method, data.name = dname)
     class(rval) <- "htest"

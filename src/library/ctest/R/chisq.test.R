@@ -67,7 +67,7 @@ function(x, y = NULL, correct = TRUE, p = rep(1 / length(x), length(x)),
                 YATES <- 0
             STATISTIC <- sum((abs(x - E) - YATES)^2 / E)
             PARAMETER <- (nr - 1) * (nc - 1)
-            PVAL <- 1 - pchisq(STATISTIC, PARAMETER)
+            PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)
         }
     }
     else {
@@ -80,7 +80,7 @@ function(x, y = NULL, correct = TRUE, p = rep(1 / length(x), length(x)),
 	names(E) <- names(x)
 	STATISTIC <- sum((x - E) ^ 2 / E)
 	PARAMETER <- length(x) - 1
-        PVAL <- 1 - pchisq(STATISTIC, PARAMETER)
+        PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)
     }
 
     names(STATISTIC) <- "X-squared"

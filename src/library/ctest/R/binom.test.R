@@ -30,7 +30,7 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
 
     PVAL <- switch(alternative,
                    less = pbinom(x, n, p),
-                   greater = 1 - pbinom(x - 1, n, p),
+                   greater = pbinom(x - 1, n, p, lower = FALSE),
                    two.sided = {
                        if(p == 0)
                            (x == 0)
@@ -48,12 +48,12 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
                                i <- seq(from = x + 1, to = n)
                                y <- sum(dbinom(i, n, p) <= d * relErr)
                                pbinom(x, n, p) +
-                                   (1 - pbinom(n - y, n, p))
+                                   pbinom(n - y, n, p, lower = FALSE)
                            } else {
                                i <- seq(from = 0, to = x - 1)
                                y <- sum(dbinom(i, n, p) <= d * relErr)
                                pbinom(y - 1, n, p) +
-                                   (1 - pbinom(x - 1, n, p))
+                                   pbinom(x - 1, n, p, lower = FALSE)
                            }
                        }
                    })
@@ -62,7 +62,7 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
         if(x == 0)                      # No solution
             0
         else
-            uniroot(function(p) 1 - pbinom(x - 1, n, p) - alpha,
+            uniroot(function(p) pbinom(x - 1, n, p, lower = FALSE) - alpha,
                     c(0, 1))$root
     }
     ## Determine p s.t. Prob(B(n,p) <= x) = alpha

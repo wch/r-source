@@ -85,18 +85,16 @@ function(x, y = NULL, z = NULL,
                      / (2 * s.offd^2))
             CINT <-
                 switch(alternative,
-                       less =
-                       c(0, ESTIMATE * exp(qnorm(conf.level) * sd)),
-                       greater =
-                       c(ESTIMATE * exp(qnorm(1 - conf.level) * sd), Inf),
+                       less = c(0, ESTIMATE * exp(qnorm(conf.level) *sd)),
+                       greater = c(ESTIMATE * exp(qnorm(conf.level,
+                       				       lower=FALSE) *sd), Inf),
                        two.sided = {
                            ESTIMATE * exp(c(1, -1) * 
-                                          qnorm((1 - conf.level) / 2) *
-                                          sd)
+                                          qnorm((1 - conf.level) / 2) * sd)
                        })
             RVAL <- list(statistic = STATISTIC,
                          parameter = PARAMETER,
-                         p.value = 1 - pchisq(STATISTIC, PARAMETER))
+                         p.value = pchisq(STATISTIC, PARAMETER, lower = FALSE))
         }
         else {
             ## Exact inference for the 2 x 2 x k case can be carried out
@@ -270,7 +268,7 @@ function(x, y = NULL, z = NULL,
         METHOD <- "Cochran-Mantel-Haenszel test"
         RVAL <- list(statistic = STATISTIC,
                      parameter = PARAMETER,
-                     p.value = 1 - pchisq(STATISTIC, PARAMETER))
+                     p.value = pchisq(STATISTIC, PARAMETER, lower = FALSE))
     }
 
     RVAL <- c(RVAL,

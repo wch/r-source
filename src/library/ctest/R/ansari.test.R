@@ -209,13 +209,13 @@ ansari.test <- function(x, y,
             ## I think the null hypotheses is right here: use sigma = 1 
             cint <- switch(alternative, two.sided = {
                 u <- optim(1, ab, zq=qnorm(alpha/2))$par
-                l <- optim(1, ab, zq=qnorm(1 - alpha/2))$par
+                l <- optim(1, ab, zq=qnorm(alpha/2, lower = FALSE))$par
                 c(u, l)
             }, greater= {
                 u <- optim(1, ab, zq=qnorm(alpha))$par
                 c(u, NA)
             }, less= {
-                l <- optim(1, ab, zq=qnorm(1 - alpha))$par
+                l <- optim(1, ab, zq=qnorm(alpha, lower = FALSE))$par
                 c(NA, l)
             })
             attr(cint, "conf.level") <- conf.level

@@ -50,18 +50,18 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
         r <- rank(abs(x))
         STATISTIC <- sum(r[x > 0])
         names(STATISTIC) <- "V"
-        TIES <- (length(r) != length(unique(r)))
+        TIES <- length(r) != length(unique(r))
 
         if(exact && !TIES && !ZEROES) {
             PVAL <-
                 switch(alternative,
                        "two.sided" = {
-                           if(STATISTIC > (n * (n + 1) / 4)) 
-                               p <- 1 - psignrank(STATISTIC - 1, n)
-                           else p <- psignrank(STATISTIC, n)
+                           p <- if(STATISTIC > (n * (n + 1) / 4)) 
+                                psignrank(STATISTIC - 1, n, lower = FALSE)
+                           else psignrank(STATISTIC, n)
                            min(2 * p, 1)
                        },
-                       "greater" = 1 - psignrank(STATISTIC - 1, n),
+                       "greater" = psignrank(STATISTIC - 1, n, lower = FALSE),
                        "less" = psignrank(STATISTIC, n))
             if(conf.int) {
                 ## Exact confidence intervale for the median in the
@@ -208,13 +208,13 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
             PVAL <-
                 switch(alternative,
                        "two.sided" = {
-                           if(STATISTIC > (n.x * n.y / 2)) 
-                               p <- 1 - pwilcox(STATISTIC - 1, n.x, n.y)
+                           p <- if(STATISTIC > (n.x * n.y / 2)) 
+                               pwilcox(STATISTIC - 1, n.x, n.y, lower = FALSE)
                            else
-                               p <- pwilcox(STATISTIC, n.x, n.y)
+                               pwilcox(STATISTIC, n.x, n.y)
                            min(2 * p, 1)
                        },
-                       "greater" = 1 - pwilcox(STATISTIC - 1, n.x, n.y), 
+                       "greater" = pwilcox(STATISTIC - 1, n.x, n.y, lower = FALSE), 
                        "less" = pwilcox(STATISTIC, n.x, n.y))
             if(conf.int) {
                 ## Exact confidence interval for the location parameter 
