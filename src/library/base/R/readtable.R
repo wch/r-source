@@ -39,7 +39,8 @@ read.table <-
     ## read a few lines to determine header, no of cols.
 #    lines <- readLines(file, 5)
     lines <- scan(file, what = "", nmax = 5, sep = "\n",
-                  blank.lines.skip = blank.lines.skip, quiet = TRUE)
+                  blank.lines.skip = blank.lines.skip, quiet = TRUE,
+                  comment.char = comment.char)
     nlines <- length(lines)
     if(!nlines) {
         if(missing(col.names))

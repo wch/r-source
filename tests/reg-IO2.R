@@ -78,4 +78,9 @@ cat("# a test file",
 read.table("ex.data", header = T)
 unlink("ex.data")
 
+## comment chars in headers
+cat("x1\tx#2\tx3\n1\t2\t2\n2\t3\t3\n", file = "test.dat")
+read.table("test.dat", header=T, comment.char="")
+unlink("test.dat")
+
 ## end of tests

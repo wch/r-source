@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-09-14)
+Version 1.4.0 Under development (unstable) (2001-10-08)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -193,6 +193,14 @@ logical(0)
 2 4 5 6
 3 7 8 9
 > unlink("ex.data")
+> 
+> ## comment chars in headers
+> cat("x1\tx#2\tx3\n1\t2\t2\n2\t3\t3\n", file = "test.dat")
+> read.table("test.dat", header=T, comment.char="")
+  x1 x.2 x3
+1  1   2  2
+2  2   3  3
+> unlink("test.dat")
 > 
 > ## end of tests
 > 
