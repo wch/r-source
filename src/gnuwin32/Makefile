@@ -3,7 +3,7 @@ include MkRules
 HELP=YES
 
 PACKAGES=base eda lqs modreg mva stepfun
-RPREFIX=rw0641-2
+RPREFIX=rw0641-3
 
 DIRS=  . ../nmath ../appl ../main
 R-DLLFLAGS=-s -mwindows

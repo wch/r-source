@@ -27,7 +27,7 @@ internal call to options("width") if you resize the console width.
 This is the default, but we suggest you do not resize whilst R is
 outputting.
 
-The file HOME/.Renviron is now read. This can contain environment
+The file HOME\.Renviron is now read. This can contain environment
 variables in NAME=value form, one per line. This is useful for setting
 R_VSIZE, R_NSIZE, RLIBS and R_PAPERSIZE, amongst others.
 
@@ -260,7 +260,7 @@ About
 
 Observe that some of the menu items just send to the interpreter a
 command. This means that these items are disabled when the interpreter
-is waiting for the completation of a previous command,i..e, when you
+is waiting for the completion of a previous command,i..e, when you
 have the ''continuation'' prompt. On the other end, under normal
 editing (prompt='>'), since the current line is saved and then
 restored you can, for example, type part of a command, ask for some

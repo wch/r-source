@@ -12,8 +12,10 @@
     values.
 
     At the time of writing \code{Rdevga} configured the mapping of font
-    numbers to fonts, and \code{Rconsole} configured the font, size and
-    colours of the GUI console.
+    numbers to fonts, and \code{Rconsole} configured the appearance
+    (single or multiple document interface, toolbar, statusbar on MDI),
+    size and colours of the GUI console, and whether resizing the
+    console sets \code{\link{options}("width")}.
 }
 \details{
     There are system copies of these files in \code{RHOME\\etc}. Users
