@@ -453,16 +453,16 @@ family.lm <- function(object, ...) { gaussian() }
 model.frame.lm <- function(formula, ...)
 {
     dots <- list(...)
-    if (length(dots) || is.null(formula$model)) {
+    nargs <- dots[match(c("data", "na.action", "subset"), names(dots), 0)]
+    if (any(nargs > 0) || is.null(formula$model)) {
         fcall <- formula$call
         fcall$method <- "model.frame"
         fcall[[1]] <- as.name("lm")
-        nargs <- dots[match(c("data", "na.action", "subset"), names(dots), 0)]
         fcall[names(nargs)] <- nargs
 #	env <- environment(fcall$formula)  # always NULL
         env <- environment(formula$terms)
 	if (is.null(env)) env <- parent.frame()
-        eval(fcall, env)
+        eval(fcall, env, parent.frame())
     }
     else formula$model
 }

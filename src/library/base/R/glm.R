@@ -719,11 +719,11 @@ residuals.glm <-
 model.frame.glm <- function (formula, ...)
 {
     dots <- list(...)
-    if (length(dots) || is.null(formula$model)) {
+    nargs <- dots[match(c("data", "na.action", "subset"), names(dots), 0)]
+    if (any(nargs > 0) || is.null(formula$model)) {
 	fcall <- formula$call
 	fcall$method <- "model.frame"
 	fcall[[1]] <- as.name("glm")
-        nargs <- dots[match(c("data", "na.action", "subset"), names(dots), 0)]
         fcall[names(nargs)] <- nargs
 #	env <- environment(fcall$formula)  # always NULL
         env <- environment(formula$terms)
