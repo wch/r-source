@@ -54,7 +54,7 @@ representation <-
     }
     includes <- as.character(value[nchar(anames)==0])
     if(any(duplicated(includes)))
-        stop(paste("Duplicate class names among superclasses:", paste(includes[duplicated(includes)], collapse = ", ")), sep="")
+        stop(paste("Duplicate class names among superclasses:", paste(includes[duplicated(includes)], collapse = ", ")))
     slots <- anames[nchar(anames)>0]
     if(any(duplicated(slots)))
        stop(paste("Duplicated slot names: ", paste(slots[duplicated(slots)], collapse=""), sep=""))
@@ -463,7 +463,7 @@ initialize <- function(.Object, ...) {
             snames <- names(elements)
             if(any(duplicated(snames)))
                 stop(paste("Duplicated slot names:",
-                           paste(snames[duplicated(snames)], collapse = ", ")), sep="")
+                           paste(snames[duplicated(snames)], collapse = ", ")))
             which  <- match(snames, names(slotDefs))
             if(any(is.na(which)))
                 stop(paste("Invalid names for slots of class ",
