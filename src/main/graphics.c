@@ -3695,8 +3695,8 @@ void GPretty(double *lo, double *up, int *ndiv)
 		     2, /* do eps_correction in any case */
 		     0 /* return (ns,nu) in  (lo,up) */);
     if(nu >= ns + 1) {
-	ns++;
-	if(nu > ns + 1) nu--;
+	if(ns * unit < *lo) ns++;
+	if(nu > ns + 1 && nu * unit > *up) nu--;
 	*ndiv = nu - ns;
     }
 #endif/* else not OLD ---------------------------------------------------*/

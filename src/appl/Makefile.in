@@ -35,7 +35,6 @@ SOURCES_C = \
 	maxcol.c \
 	massdist.c \
 	pretty.c \
-	pythag.c \
 	rowsum.c \
 	sock.c \
 	splines.c \
