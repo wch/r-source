@@ -216,7 +216,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             pfile <- system.file("Meta", "package.rds", package = package,
                                  lib.loc = which.lib.loc)
             if(!nchar(pfile))
-            	stop(sQuote(package), " is not a valid package -- installed < 2.0.0?")
+            	stop(sQuote(libraryPkgName(package)), " is not a valid package -- installed < 2.0.0?")
             pkgInfo <- .readRDS(pfile)
             testRversion(pkgInfo, package)
 
@@ -248,7 +248,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 if (inherits(tt, "try-error"))
                     if (logical.return)
                         return(FALSE)
-                    else stop("package/namespace load failed")
+                    else stop("package/namespace load failed for ",
+                              sQuote(libraryPkgName(package)))
                 else {
                     on.exit(do.call("detach", list(name = pkgname)))
                     nogenerics <- checkNoGenerics(env, package)
@@ -274,10 +275,15 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## save the package name in the environment
             assign(".packageName", package, envir = loadenv)
             ## source file into loadenv
-            if(file.exists(codeFile))
-                sys.source(codeFile, loadenv, keep.source = keep.source)
-            else if(verbose)
-                warning(paste("Package ", sQuote(package),
+            if(file.exists(codeFile)) {
+                res <- try(sys.source(codeFile, loadenv,
+                                     keep.source = keep.source))
+                if(inherits(res, "try-error"))
+                    stop("Unable to load R code in package ",
+                         sQuote(libraryPkgName(package)),
+                         call. = FALSE)
+            } else if(verbose)
+                warning(paste("Package ", sQuote(libraryPkgName(package)),
                               "contains no R code"))
             ## lazy-load data sets if required
             dbbase <- file.path(which.lib.loc, package, "data", "Rdata")
@@ -304,13 +310,15 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 tt<- try(firstlib(which.lib.loc, package))
                 if(inherits(tt, "try-error"))
                     if (logical.return) return(FALSE)
-                    else stop(".First.lib failed")
+                    else stop(".First.lib failed for ",
+                              sQuote(libraryPkgName(package)))
             }
             if(!is.null(firstlib <- getOption(".First.lib")[[package]])){
                 tt<- try(firstlib(which.lib.loc, package))
                 if(inherits(tt, "try-error"))
                     if (logical.return) return(FALSE)
-                    else stop(".First.lib failed")
+                    else stop(".First.lib failed",
+                              sQuote(libraryPkgName(package)))
             }
             nogenerics <- checkNoGenerics(env, package)
             if(warn.conflicts &&
@@ -324,7 +332,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             on.exit()
 	}
 	if (verbose && !newpackage)
-            warning(paste("Package", sQuote(package),
+            warning(paste("Package", sQuote(libraryPkgName(package)),
                           "already present in search()"))
     }
     else if(!missing(help)) {

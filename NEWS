@@ -471,6 +471,9 @@ BUG FIXES
     o	quantile() now interpolates correctly between finite and
 	infinite values (giving +/-Inf rather than NaN).
 
+    o	library() now gives more informative error messages mentioning
+	the package being loaded.
+
 
 
 

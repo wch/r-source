@@ -241,9 +241,12 @@ loadNamespace <- function (package, lib.loc = NULL,
         # load the code
         codename <- strsplit(package, "_", fixed=TRUE)[[1]][1]
         codeFile <- file.path(package.lib, package, "R", codename)
-        if (file.exists(codeFile))
-            sys.source(codeFile, env, keep.source = keep.source)
-        else warning(paste("Package ", sQuote(package), "contains no R code"))
+        if (file.exists(codeFile)) {
+            res <- try(sys.source(codeFile, env, keep.source = keep.source))
+            if(inherits(res, "try-error"))
+                stop("Unable to load R code in package ", sQuote(package),
+                     call. = FALSE)
+        } else warning(paste("Package ", sQuote(package), "contains no R code"))
 
         ## partial loading stops at this point
         ## -- used in preparing for lazy-loading
