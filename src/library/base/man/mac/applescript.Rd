@@ -15,7 +15,7 @@ applescript(path, scriptname)
   \item{scriptname}{the name of the script file.}
 }
 \seealso{
-  \code{\link{Script}}.
+  \code{\link{Scripts}}.
 }
 \examples{
 applescript("", "demo")
