@@ -8,7 +8,7 @@ You will need a copy of sh.exe in /bin.  Then with the R sources in
 /R/rw2000, I used in /TEMP/R (any other directory will do, except the
 sources)
 
-sh /R/rw2000/configure --build=i386-pc-mingw32
+sh /R/rw2000/configure --build=i386-pc-mingw32 --with-readline=no --with-x=no --enable-utf8
 
 This ran fairly slowly, producing a src/include/config.h that differs
 only in that
