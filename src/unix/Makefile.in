@@ -25,7 +25,9 @@ DISTFILES = \
 
 SUBDIRS = X11 gnome
 
-LIB = libunix.a
+noinst_LIBRARIES = libunix.a
+libunix_a_SOURCES = $(SOURCES)
+libunix_a_OBJECTS = $(OBJECTS)
 
 noinst_LTLIBRARIES = libunix.la
 libunix_la_SOURCES = $(SOURCES)
@@ -50,7 +52,7 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-	@$(MAKE) $(LIB)
+	@$(MAKE) $(noinst_LIBRARIES)
 	@@WANT_R_SHLIBS_TRUE@$(MAKE) stamp-lo
 
 DLLs:
@@ -66,9 +68,9 @@ FFDecl.h FFTab.h: $(top_srcdir)/src/appl/ROUTINES \
   $(top_srcdir)/tools/GETSYMBOLS
 	@$(top_srcdir)/tools/GETSYMBOLS
 
-$(LIB): $(OBJECTS)
-	$(AR) cr $(LIB) $(OBJECTS)
-	$(RANLIB) $(LIB)
+libunix.a: $(libunix_a_OBJECTS)
+	$(AR) cr $@ $(libunix_a_OBJECTS)
+	$(RANLIB) $@
 
 stamp-lo: $(libunix_la_OBJECTS)
 	@touch $@

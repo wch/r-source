@@ -54,7 +54,9 @@ DISTFILES = Makefile.in Makefile.win $(SOURCES) $(HEADERS)
 
 SUBDIRS = standalone
 
-LIB = libmath.a
+noinst_LIBRARIES = libnmath.a
+libnmath_a_SOURCES = $(SOURCES)
+libnmath_a_OBJECTS = $(OBJECTS)
 
 noinst_LTLIBRARIES = libnmath.la
 libnmath_la_SOURCES = $(SOURCES)
@@ -74,12 +76,12 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-	@$(MAKE) $(LIB)
+	@$(MAKE) $(noinst_LIBRARIES)
 	@@WANT_R_SHLIBS_TRUE@$(MAKE) stamp-lo
 
-$(LIB): $(OBJECTS)
-	$(AR) cr $(LIB) $(OBJECTS)
-	$(RANLIB) $(LIB)
+libnmath.a: $(libnmath_a_OBJECTS)
+	$(AR) cr $@ $(libnmath_a_OBJECTS)
+	$(RANLIB) $@
 
 stamp-lo: $(libnmath_la_OBJECTS)
 	@touch $@
