@@ -147,6 +147,12 @@ NEW FEATURES
 	confidence interval for the Pearson product moment correlation
 	coefficient.
 
+    o   The "?" operator is now an actual function.  It can be used
+        (as always) as a unary operator (?plot) and the grammar now
+        allows it as a binary operator, planned to allow
+        differentiating documentation on the same name but different
+        type (class?matrix, for example).  So far, no such
+        documentation exists.
 
 
 BUG FIXES

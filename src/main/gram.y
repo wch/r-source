@@ -194,6 +194,7 @@ expr	: 	NUM_CONST			{ $$ = $1; }
 	|	expr SPECIAL expr		{ $$ = xxbinary($2,$1,$3); }
 	|	expr '%' expr			{ $$ = xxbinary($2,$1,$3); }
 	|	expr '~' expr			{ $$ = xxbinary($2,$1,$3); }
+	|	expr '?' expr			{ $$ = xxbinary($2,$1,$3); }
 	|	expr LT expr			{ $$ = xxbinary($2,$1,$3); }
 	|	expr LE expr			{ $$ = xxbinary($2,$1,$3); }
 	|	expr EQ expr			{ $$ = xxbinary($2,$1,$3); }
@@ -1824,7 +1825,7 @@ static int token()
     case ']':
 	return c;
     case '?':
-	strcpy(yytext, "help");
+	strcpy(yytext, "?");
 	yylval = install(yytext);
 	return c;
     case '*':
