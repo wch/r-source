@@ -170,6 +170,9 @@
 /* Define to 1 if you have the `iconv' function. */
 /* #undef HAVE_ICONV */
 
+/* Define to 1 if you have the <iconv.h> header file. */
+/* #undef HAVE_ICONV_H */
+
 /* Define to 1 if you have the <ieee754.h> header file. */
 /* #undef HAVE_IEEE754_H */
 
