@@ -799,6 +799,17 @@ FUNTAB R_FunTab[] =
 {"format.POSIXlt",do_formatPOSIXlt,0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"strptime",	do_strptime,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 
+#ifdef BYTECODE
+{"mkCode",     do_mkcode,       0,      11,     2,      {PP_FUNCALL, PREC_FN, 0}},
+{"bcClose",    do_bcclose,      0,      11,     3,      {PP_FUNCALL, PREC_FN, 0}},
+{"is.builtin.internal",    do_is_builtin_internal,      0,      11,     1,      {PP_FUNCALL, PREC_FN, 0}},
+{"disassemble", do_disassemble,     0,      11,     1,      {PP_FUNCALL, PREC_FN, 0}},
+{"bcVersion", do_bcversion,     0,      11,     0,      {PP_FUNCALL, PREC_FN, 0}},
+{"load.from.file", do_loadfile, 0,      11,     1,      {PP_FUNCALL, PREC_FN, 0}},
+{"save.to.file", do_savefile,   0,      11,     3,      {PP_FUNCALL, PREC_FN, 0}},
+{"putconst", do_putconst,       0,      11,     2,      {PP_FUNCALL, PREC_FN, 0}},
+#endif
+
 /* Connections */
 {"stdin", 	do_stdin,	0,      11,     0,      {PP_FUNCALL, PREC_FN,	0}},
 {"stdout", 	do_stdout,	0,      11,     0,      {PP_FUNCALL, PREC_FN,	0}},

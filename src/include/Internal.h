@@ -454,6 +454,17 @@ SEXP do_playSnapshot(SEXP, SEXP, SEXP, SEXP);
 SEXP R_do_data_class(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP R_do_set_class(SEXP call, SEXP op, SEXP args, SEXP env);
 
+#ifdef BYTECODE
+SEXP do_mkcode(SEXP, SEXP, SEXP, SEXP);
+SEXP do_bcclose(SEXP, SEXP, SEXP, SEXP);
+SEXP do_is_builtin_internal(SEXP, SEXP, SEXP, SEXP);
+SEXP do_disassemble(SEXP, SEXP, SEXP, SEXP);
+SEXP do_bcversion(SEXP, SEXP, SEXP, SEXP);
+SEXP do_loadfile(SEXP, SEXP, SEXP, SEXP);
+SEXP do_savefile(SEXP, SEXP, SEXP, SEXP);
+SEXP do_putconst(SEXP, SEXP, SEXP, SEXP);
+#endif
+
 /* Connections */
 SEXP do_stdin(SEXP, SEXP, SEXP, SEXP);
 SEXP do_stdout(SEXP, SEXP, SEXP, SEXP);
