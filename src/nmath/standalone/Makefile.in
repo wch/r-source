@@ -51,19 +51,24 @@ OBJECTS = $(SOURCES:.c=.o)
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in test.c sunif.c
 
-LIB = libRmath.a
-SHLIB = libRmath.$(SHLIB_EXT)
+Rexeclibdir_LIBRARIES = libRmath.a
+libRmath_a_SOURCES = $(SOURCES)
+libRmath_a_OBJECTS = $(OBJECTS)
 
-## FIXME: this should be libRmath.la etc ...
-Rexeclibdir_LTLIBRARIES = libRmath.$(SHLIB_EXT)
+## FIXME:
+## Change to `libRmath.la' when using libtool for shlibs.
+## Remove when using automake ...
+libRmath_la = libRmath.$(SHLIB_EXT)
+## </FIXME>
+Rexeclibdir_LTLIBRARIES = $(libRmath_la)
 libRmath_la_SOURCES = $(SOURCES)
 libRmath_la_OBJECTS = $(OBJECTS:.o=.lo)
+libRmath_la_LDFLAGS =
 
 CLEANFILES = Makedeps *.d *.o *.lo test $(SOURCES)
-DISTCLEANFILES = Makefile $(LIB) $(SHLIB)
+DISTCLEANFILES = Makefile $(Rexeclibdir_LIBRARIES) $(Rexeclibdir_LTLIBRARIES)
 
 DEFS = -DHAVE_CONFIG_H -DMATHLIB_STANDALONE
-
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) -I$(srcdir)/.. $(CPPFLAGS) $(DEFS)
 
 .SUFFIXES:
@@ -73,20 +78,24 @@ all: Makefile static shared
 
 Copy:
 	@echo "Copying source files"
-	@if test ! -f std_unif.c; then ln -s ${srcdir}/sunif.c std_unif.c; fi
+	@if test ! -f std_unif.c; then \
+	  $(LN_S) $(srcdir)/sunif.c std_unif.c; \
+	fi
 	@for f in $(SOURCES_NMATH); do \
-	  if test ! -f $${f}; then $(LN_S) ${srcdir}/../$${f} .; fi; \
+	  if test ! -f $${f}; then \
+	    $(LN_S) $(srcdir)/../$${f} .; \
+	  fi; \
 	done
 
 static: Makefile ../../include/Rconfig.h
 	@$(MAKE) Copy
 	@$(MAKE) Makedeps
-	@$(MAKE) $(LIB)
+	@$(MAKE) $(Rexeclibdir_LIBRARIES)
 
 shared: Makefile ../../include/Rconfig.h
 	@$(MAKE) Copy
 	@$(MAKE) Makedeps
-	$(MAKE) $(SHLIB)
+	@$(MAKE) $(Rexeclibdir_LTLIBRARIES)
 
 ../../include/Rconfig.h:
 	(cd $(@D); $(MAKE) $(@F))
@@ -101,13 +110,12 @@ Makedeps: Makefile ../../include/Rconfig.h $(DEPENDS)
 	@cat $(DEPENDS) | sed s/\.o:/.lo:/>> Makefile
 	@touch $@
 
-$(LIB): $(OBJECTS)
-	$(AR) cr $(LIB) $(OBJECTS)
-	$(RANLIB) $(LIB)
+libRmath.a: $(libRmath_a_OBJECTS)
+	$(AR) cr $@ $(libRmath_a_OBJECTS)
+	$(RANLIB) $@
 
-$(SHLIB): $(libRmath_la_OBJECTS)
-## FIXME: this should be $(LTLINK) -o $@ $(libRmath_la_OBJECTS)
-	$(SHLIB_LD) $(SHLIB_LDFLAGS) $(LDFLAGS) -o $@ $(libRmath_la_OBJECTS)
+$(libRmath_la): $(libRmath_la_OBJECTS)
+	$(SHLIB_LINK) -o $@ $(libRmath_la_LDFLAGS) $(libRmath_la_OBJECTS)
 
 test: $(srcdir)/test.c
 	$(CC) -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $< -L. -lRmath -lm
