@@ -1,0 +1,18 @@
+#
+# ${RHOME}/src/library/profile/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../../..
+
+include $(top_builddir)/Makeconf
+
+## Configure (not yet): Replace `unix' by `win' or `mac'
+## Should be EASY
+
+all: Common.R Rprofile.unix
+	@echo building system startup profile
+	@cat $(srcdir)/Common.R $(srcdir)/Rprofile.unix \
+		> $(top_builddir)/library/base/R/Rprofile

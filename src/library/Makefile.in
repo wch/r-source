@@ -1,0 +1,23 @@
+#
+# ${RHOME}/src/library/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../..
+
+include $(top_builddir)/Makeconf
+
+all: R
+
+R:
+	@cd base; $(MAKE)
+	@cd profile; $(MAKE)
+	@sh LIBSETUP
+
+clean:
+	@echo Cleaning in src/library
+	@sh LIBCLEAN
+
+realclean: clean

@@ -1,0 +1,26 @@
+#
+# ${RHOME}/src/library/base/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../../..
+
+include $(top_builddir)/Makeconf
+
+all:
+	@echo Building R base package
+	$(top_srcdir)/aux/mkinstalldirs \
+		$(top_builddir)/library/base/R \
+		$(top_builddir)/library/base/data
+	@cat `ls $(srcdir)/R/*.R | sed '/system.*/d'` \
+	     $(srcdir)/R/system.unix.R | \
+	 sed '/^[ 	]*$$/d'  > $(top_builddir)/library/base/R/base
+#		   ^^ = TAB + Space
+##-- do NOT delete all '#' lines -- this BREAKS strings containing '#' !!
+##-- Could still delete all  '/^[\t ]*#/ lines, but why not leave comments ?
+##	@cat $(FUNS) STARTUP |sed  '/^$$/d;/^[ 	]*#/d'  > ../../../library/base
+##					      ^^ = TAB + Space
+	@cp $(srcdir)/INDEX $(srcdir)/TITLE $(top_builddir)/library/base
+	@cp `ls $(srcdir)/data/[a-z]*` $(top_builddir)/library/base/data

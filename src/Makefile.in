@@ -1,0 +1,19 @@
+#
+# ${RHOME}/src/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ..
+
+include $(top_builddir)/Makeconf
+
+SUBDIRS = include appl nmath unix main scripts library
+
+TARGETS = all install install-strip uninstall mostlyclean clean \
+	distclean maintainer-clean TAGS info dvi dist check \
+	R docs
+
+$(TARGETS)::
+	@for d in $(SUBDIRS); do cd $$d; $(MAKE) $@; cd ..; done
