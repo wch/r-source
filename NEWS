@@ -15,11 +15,13 @@ NEW FEATURES
 	White or Green books for functions based on the descriptions
 	of S functions given there. (E&OE)
 
+    o	Function getAnywhere() can find non-exported objects, for
+	namespaces or registered methods.
+
 
 BUG FIXES
 
-    o	print.table() has used too much white space in some cases
-	in 1.7.0.
+    o	print.table() used too much white space in some cases in 1.7.0.
 
     o	selectMethod() failed if `f' was a non-generic and
 	optional=TRUE, and gave a confusing error message if
@@ -53,7 +55,7 @@ BUG FIXES
     o	methods() could return duplicates if a method in a namespace
 	was both exported and registered.
 
-    o	The internal zip.unpack() could crash if more that 500 files
+    o	The internal zip.unpack() could crash if more than 500 files
 	were to be extracted. (PR#2818)
 
     o	The "r+" and "r+b" modes of opening file connections disallowed
@@ -115,18 +117,23 @@ BUG FIXES
 
     o   The Kinderman-Ramage Normal Random Generator had several
         problems leading to not-quite normally distributed variates 
-        (PR#2846). One problem was traced to an error in the original 
-        1976 JASA paper! Thanks to Josef Leydold and his team for 
+        (PR#2846).  One problem was traced to an error in the original 
+        1976 JASA paper!  Thanks to Josef Leydold and his team for 
         investigating this. The old generator has been retained for
         reproducibility of older results, under the name 
-        "Buggy Kinderman-Ramage". A warning is issued if you select it 
+        "Buggy Kinderman-Ramage".  A warning is issued if you select it 
         (also indirectly via RNGversion()).
 
     o    promptMethods() now puts the \alias lines for methods in the
          normal place, near the top of the file, and quotes class
          names in signatures.
 
+    o    getS3method() and methods() were not finding methods for
+	 coefficients() and fitted.values() (which dispatch on "coef"
+	 and "fitted" respectively).
 
+    o    scan() (and hence read.table) was not finding matches for
+	 separator chars with the upper bit set.  (PR#3035)
 
 
 		CHANGES IN R VERSION 1.7.0

@@ -2081,7 +2081,7 @@ int Rconn_fgetc(Rconnection con)
 	return c;
     }
     curLine = con->PushBack[con->nPushBack-1];
-    c = curLine[con->posPushBack++];
+    c = (unsigned char) curLine[con->posPushBack++];
     if(con->posPushBack >= strlen(curLine)) {
 	/* last character on a line, so pop the line */
 	free(curLine);
