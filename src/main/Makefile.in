@@ -10,7 +10,8 @@ subdir = src/main
 
 include $(top_builddir)/Makeconf
 
-SOURCES = \
+SOURCES_C = \
+	@LIBOBJS@ \
 	arithmetic.c \
 	array.c \
 	attrib.c \
@@ -78,15 +79,16 @@ SOURCES = \
 	summary.c \
 	unique.c \
 	util.c \
-	version.c \
-	@LIBOBJS@
+	version.c
 SOURCES_F = \
 	xxxpr.f
-DEPENDS = $(SOURCES:.c=.d)
-OBJECTS = $(SOURCES:.c=.o) $(SOURCES_F:.f=.o)
+DEPENDS = $(SOURCES_C:.c=.d)
+OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
+HEADERS = arithmetic.h names.h regex.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = $(SOURCES) arithmetic.h names.h gram.y
+DISTFILES = Makefile.in Makefile.win \
+	$(SOURCES_C) $(SOURCES_F) $(HEADERS)
 
 RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libmath.a
 RGNOMELIBS = ../gnome/libRgnome.a ../appl/libappl.a ../nmath/libmath.a
@@ -102,7 +104,7 @@ Makefile: $(srcdir)/Makefile.in \
   ../include/Rconfig.h \
   ../include/Rversion.h \
   ../include/FFDecl.h \
-  $(SOURCES)
+  $(SOURCES_C)
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
