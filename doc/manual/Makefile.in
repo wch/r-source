@@ -20,7 +20,7 @@ DISTFILES = \
 	Rd.sty lib2tex.in \
 	omsaer.fd omsaett.fd omscmtt.fd \
 	refman.top refman.bot
-SUBDIRS = pdf
+SUBDIRS =
 
 OBJECTS_DVI = $(SOURCES_TEXI:.texi=.dvi)
 OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
@@ -36,10 +36,7 @@ INSTALL_INFO = @INSTALL_INFO@
 
 R_PAPERSIZE = @R_PAPERSIZE@
 R_RD4DVI = ae
-R_RD4PDF =
-
-# set the next to `ae' to omit the hyperlinks
-PDF = pdf
+R_RD4PDF = ae,hyper
 
 pkgsrcs = $(R_PKGS:=-pkg.tex)
 
@@ -112,7 +109,7 @@ info: $(OBJECTS_INFO)
 R-exts.info: version.texi
 
 pdf: refman.pdf $(OBJECTS_PDF)
-refman.pdf: version.tex $(pkgsrcs) $(srcdir)/$(PDF)/Rd.sty
+refman.pdf: version.tex $(pkgsrcs) $(srcdir)/Rd.sty
 	@echo "PDF LaTeX documentation: Reference Index ..."
 	@rm -f *.aux refman.toc refman.ind
 	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
@@ -122,12 +119,12 @@ refman.pdf: version.tex $(pkgsrcs) $(srcdir)/$(PDF)/Rd.sty
 	  cat $(srcdir)/refman.top; \
 	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
-	@TEXINPUTS="$(srcdir)/$(PDF):$(srcdir):$$TEXINPUTS" \
+	@TEXINPUTS="$(srcdir):$(srcdir):$$TEXINPUTS" \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@$(MAKEINDEX) refman
-	@TEXINPUTS="$(srcdir)/$(PDF):$(srcdir):$$TEXINPUTS" \
+	@TEXINPUTS="$(srcdir):$(srcdir):$$TEXINPUTS" \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
-	@TEXINPUTS="$(srcdir)/$(PDF):$(srcdir):$$TEXINPUTS" \
+	@TEXINPUTS="$(srcdir):$(srcdir):$$TEXINPUTS" \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 $(OBJECTS_PDF): $(srcdir)/texinfo.tex
 R-exts.pdf: version.texi 
