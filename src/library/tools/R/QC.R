@@ -2657,9 +2657,10 @@ function(dfile)
 
     standard_package_names <- .get_standard_package_names()
 
-    .valid_package_name_regexp <- "[[:alpha:]][[:alnum:].]*"
-    .valid_package_version_regexp <-
-        "([[:digit:]]+[.-]){1,}[[:digit:]]+"
+    valid_package_name_regexp <-
+        .standard_regexps()$valid_package_name
+    valid_package_version_regexp <-
+        .standard_regexps()$valid_package_version
 
     is_base_package <-
         !is.na(priority <- db["Priority"]) && priority == "base"
@@ -2709,7 +2710,7 @@ function(dfile)
     val <- package_name <- db["Package"]
     if(!is.na(val)) {
         tmp <- character()
-        if(regexpr(paste("^", .valid_package_name_regexp, "$",
+        if(regexpr(paste("^", valid_package_name_regexp, "$",
                          sep = ""),
                    val) == -1)
             tmp <- c(tmp, "Malformed package name")
@@ -2738,7 +2739,7 @@ function(dfile)
     }
     if(!is.na(val <- db["Version"])
        && !is_base_package
-       && (regexpr(paste("^", .valid_package_version_regexp, "$",
+       && (regexpr(paste("^", valid_package_version_regexp, "$",
                          sep = ""),
                    val) == -1))
         out$bad_version <- val
@@ -2758,7 +2759,7 @@ function(dfile)
         bad_dep_entry <- bad_dep_op <- bad_dep_version <- character()
         dep_regexp <-
             paste("^[[:space:]]*",
-                  paste("(", .valid_package_name_regexp, ")", sep = ""),
+                  paste("(", valid_package_name_regexp, ")", sep = ""),
                   "([[:space:]]*\\(([^) ]+)[[:space:]]+([^) ]+)\\))?",
                   "[[:space:]]*$",
                   sep = "")
@@ -2773,7 +2774,7 @@ function(dfile)
                 if(!sub(dep_regexp, "\\3", dep) %in% c("<=", ">="))
                     bad_dep_op <- c(bad_dep_op, dep)
                 else if(regexpr(paste("^",
-                                      .valid_package_version_regexp,
+                                      valid_package_version_regexp,
                                       "$", sep = ""),
                                 sub(dep_regexp, "\\4", dep)) == -1)
                     bad_dep_version <- c(bad_dep_version, dep)
