@@ -2275,7 +2275,7 @@ print method
 show method
 > 
 > setMethod("print", "bar", function(x, ...){cat("S4 print method\n")})
-Creating a new generic function for "print" 
+Creating a new generic function for "print" in ".GlobalEnv" 
 [1] "print"
 > foo
 S4 print method
