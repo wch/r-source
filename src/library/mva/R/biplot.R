@@ -6,7 +6,7 @@ biplot <- function(x, ...) UseMethod("biplot")
 biplot.default <-
     function(x, y, var.axes = TRUE, col, cex = rep(par("cex"), 2),
 	     xlabs = NULL, ylabs = NULL, expand=1, xlim = NULL, ylim = NULL,
-	     arrow.len = 0.1, ...)
+	     arrow.len = 0.1, xlab = NULL, ylab = NULL, ...)
 {
     n <- nrow(x)
     p <- nrow(y)
@@ -43,7 +43,8 @@ biplot.default <-
     ratio <- max(rangy1/rangx1, rangy2/rangx2)/expand
     on.exit(par(oldpar))
     oldpar <- par(pty = "s")
-    plot(x, type = "n", xlim = xlim, ylim = ylim, col = col[1], ...)
+    plot(x, type = "n", xlim = xlim, ylim = ylim, col = col[1],
+         xlab = xlab, ylab = ylab,...)
     text(x, xlabs, cex = cex[1], col = col[1], ...)
     par(new = TRUE)
     plot(y, axes = FALSE, type = "n", xlim = xlim*ratio, ylim = ylim*ratio,

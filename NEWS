@@ -85,6 +85,9 @@ NEW FEATURES
      o  New convenience function loadURL() to allow loading data files
 	from URLs (requested by Frank Harrell).
 
+     o  biplot.default() allows `xlab' and `ylab' parameters to be set
+	(without partially matching to `xlabs' and `ylabs').
+	(Thanks to Uwe Ligges.)
 
 
 INSTALLATION CHANGES
