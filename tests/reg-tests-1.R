@@ -2624,12 +2624,28 @@ stopifnot(identical(predict(basis), predict(basis, newx=wh)),
           identical(predict(nbase), predict(nbase, newx=wh)))
 ## end of moved from predict.bs.Rd
 
+
 ## internal coerceVector() was too lenient
 plot(1)
 r <- try(strwidth(plot))## Error: cannot coerce
 stopifnot(inherits(r, "try-error"),
           grep("cannot coerce", r) == 1)
 ## gave seg.fault or memory allocation error before 1.8.0
+
+
+## rank sometimes kept and sometimes dropped names
+x2 <- c(3, 1, 4, 1, 5, NA, 9, 2, 6, 5, 3, 5)
+names(x2) <- letters[1:12]
+(y1 <- rank(x2))
+(y2 <- rank(x2, na.last=FALSE))
+(y3 <- rank(x2, na.last=NA))
+(y4 <- rank(x2, na.last="keep"))
+stopifnot(identical(names(y1), names(x2)),
+          identical(names(y2), names(x2)),
+          identical(names(y4), names(x2)),
+          identical(names(y3), names(x2)[-6]))
+##
+
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)

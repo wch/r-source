@@ -13,13 +13,12 @@ rank <- function(x, na.last = TRUE, ties.method=c("average", "first", "random"))
 	if(NAkeep || na.last) {
 	    x[!nas] <- y
 	    if(!NAkeep) x[nas] <- (length(y) + 1:1):length(x)
-	}
-	else {
+	} else {
 	    len <- sum(nas)
 	    x[!nas] <- y + len
 	    x[nas] <- 1 : len
 	}
 	y <- x
-    } else names(y) <- names(x)
+    } else names(y) <- names(x)[!nas]
     y
 }
