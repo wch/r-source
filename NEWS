@@ -89,7 +89,7 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o   Changes in handing missing character strings:
+    o   Changes in handling missing character strings:
 
         -  "NA" is no longer automatically coerced to a missing value
 	   for a character string.  Use as.character(NA) where a missing
