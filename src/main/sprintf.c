@@ -48,11 +48,11 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     nargs = length(args);
     format = CAR(args);
     if (!isString(format) || LENGTH(format) != 1)
-	errorcall(call, "`fmt' is not a character string of length 1");
+	errorcall(call, _("'fmt' is not a character string of length 1"));
     formatString = CHAR(STRING_ELT(format, 0));
     n = strlen(formatString);
     if (n > MAXLINE)
-	errorcall(call, "string length exceeds maximal buffer length %d",
+	errorcall(call, _("string length exceeds maximal buffer length %d"),
 		  MAXLINE);
 
     /* process the format string */
@@ -70,23 +70,24 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 
 		chunk = strcspn(formatString + cur, "disfeEgG") + 1;
 		if (cur + chunk > n)
-		    errorcall(call, "unrecognised format at end of string");
+		    errorcall(call, _("unrecognised format at end of string"));
 
 		strncpy(fmt, formatString + cur, chunk);
 		fmt[chunk] = '\0';
 
 		if (--nargs > 0)
 		    args = CDR(args);
-		else errorcall(call, "not enough arguments");
+		else errorcall(call, _("too few arguments"));
 
 		if (LENGTH(CAR(args)) < 1)
-		    error("zero-length argument");
+		    error(_("zero-length argument"));
 		switch(TYPEOF(CAR(args))) {
 		case LGLSXP:
 		{
 		    int x = LOGICAL(CAR(args))[0];
 		    if (strcspn(fmt, "di") >= strlen(fmt))
-			error("%s", "use format %d or %i for logical objects");
+			error("%s", 
+			      _("use format %d or %i for logical objects"));
 		    if (x == NA_LOGICAL) {
 			fmt[chunk-1] = 's';
 			sprintf(bit, fmt, "NA");
@@ -98,7 +99,8 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		{
 		    int x = INTEGER(CAR(args))[0];
 		    if (strcspn(fmt, "di") >= strlen(fmt))
-			error("%s", "use format %d or %i for integer objects");
+			error("%s",
+			      _("use format %d or %i for integer objects"));
 		    if (x == NA_INTEGER) {
 			fmt[chunk-1] = 's';
 			sprintf(bit, fmt, "NA");
@@ -110,7 +112,8 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		{
 		    double x = REAL(CAR(args))[0];
 		    if (strcspn(fmt, "feEgG") >= strlen(fmt))
-			error("%s", "use format %f, %e or %g for numeric objects");
+			error("%s", 
+			      _("use format %f, %e or %g for numeric objects"));
 		    if (R_FINITE(x)) {
 			sprintf(bit, fmt, x);
 		    } else {
@@ -144,15 +147,15 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		case STRSXP:
 		    /* NA_STRING will be printed as `NA' */
 		    if (strcspn(fmt, "s") >= strlen(fmt))
-			error("%s", "use format %s for character objects");
+			error("%s", _("use format %s for character objects"));
 		    if(strlen(CHAR(STRING_ELT(CAR(args), 0))) > MAXLINE)
-			warning("Likely truncation of character string");
+			warning(_("Likely truncation of character string"));
 		    snprintf(bit, MAXLINE, fmt, 
 			     CHAR(STRING_ELT(CAR(args), 0)));
 		    bit[MAXLINE] = '\0';
 		    break;
 		default:
-		    errorcall(call, "unsupported type");
+		    errorcall(call, _("unsupported type"));
 		    break;
 		}
 	    }
@@ -165,7 +168,7 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 
 	if (strlen(outputString) + strlen(bit) > MAXLINE)
-	    errorcall(call, "String length exceeds buffer size of %d", 
+	    errorcall(call, _("String length exceeds buffer size of %d"), 
 		      MAXLINE);
 	strcat(outputString, bit);
     }
@@ -173,7 +176,7 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
     /* return outputString as SEXP */
 
     if (nargs > 1)
-	warning("Unused arguments");
+	warning(_("Unused arguments"));
 
     PROTECT(ans = allocVector(STRSXP, 1));
     SET_STRING_ELT(ans, 0, mkChar(outputString));

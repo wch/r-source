@@ -86,7 +86,7 @@ Rboolean isUnsorted(SEXP x)
     int n, i;
 
     if (!isVectorAtomic(x))
-	error("only atomic vectors can be tested to be sorted");
+	error(_("only atomic vectors can be tested to be sorted"));
     n = LENGTH(x);
     if(n >= 2)
 	switch (TYPEOF(x)) {
@@ -263,12 +263,12 @@ SEXP do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     decreasing = asLogical(CADR(args));
     if(decreasing == NA_LOGICAL)
-	error("'decreasing' must be TRUE or FALSE");
+	error(_("'decreasing' must be TRUE or FALSE"));
     if(CAR(args) == R_NilValue) return R_NilValue;
     if(!isVectorAtomic(CAR(args)))
-	errorcall(call, "only atomic vectors can be sorted");
+	errorcall(call, _("only atomic vectors can be sorted"));
     if(TYPEOF(CAR(args)) == RAWSXP)
-	errorcall(call, "raw vectors cannot be sorted");
+	errorcall(call, _("raw vectors cannot be sorted"));
     if (decreasing || isUnsorted(CAR(args))) { /* do not duplicate if sorted */
 	ans = duplicate(CAR(args));
 	sortVector(ans, decreasing);
@@ -478,18 +478,18 @@ SEXP do_psort(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
 
     if (!isVectorAtomic(CAR(args)))
-	errorcall(call,"only vectors can be sorted");
+	errorcall(call, _("only atomic vectors can be sorted"));
     if(TYPEOF(CAR(args)) == RAWSXP)
-	errorcall(call, "raw vectors cannot be sorted");
+	errorcall(call, _("raw vectors cannot be sorted"));
     n = LENGTH(CAR(args));
     SETCADR(args, coerceVector(CADR(args), INTSXP));
     l = INTEGER(CADR(args));
     k = LENGTH(CADR(args));
     for (i = 0; i < k; i++) {
 	if (l[i] == NA_INTEGER)
-	    errorcall(call,"NA index");
+	    errorcall(call, _("NA index"));
 	if (l[i] < 1 || l[i] > n)
-	    errorcall(call,"index %d outside bounds", l[i]);
+	    errorcall(call, _("index %d outside bounds"), l[i]);
     }
     SETCAR(args, duplicate(CAR(args)));
     for (i = 0; i < k; i++)
@@ -715,11 +715,11 @@ SEXP do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     nalast = asLogical(CAR(args));
     if(nalast == NA_LOGICAL)
-	error("'na.last' is invalid");
+	error(_("'na.last' is invalid"));
     args = CDR(args);
     decreasing = asLogical(CAR(args));
     if(decreasing == NA_LOGICAL)
-	error("'decreasing' must be TRUE or FALSE");
+	error(_("'decreasing' must be TRUE or FALSE"));
     args = CDR(args);
     if (args == R_NilValue)
 	return R_NilValue;
@@ -728,9 +728,9 @@ SEXP do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
 	n = LENGTH(CAR(args));
     for (ap = args; ap != R_NilValue; ap = CDR(ap), narg++) {
 	if (!isVector(CAR(ap)))
-	    errorcall(call, "Argument %d is not a vector", narg + 1);
+	    errorcall(call, _("Argument %d is not a vector"), narg + 1);
 	if (LENGTH(CAR(ap)) != n)
-	    errorcall(call, "Argument lengths differ");
+	    errorcall(call, _("Argument lengths differ"));
     }
     ans = allocVector(INTSXP, n);
     if (n != 0) {
@@ -759,9 +759,9 @@ SEXP do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return R_NilValue;
     x = CAR(args);
     if (!isVectorAtomic(x))
-	errorcall(call, "Argument is not an atomic vector");
+	errorcall(call, _("Argument is not an atomic vector"));
     if(TYPEOF(x) == RAWSXP)
-	errorcall(call, "raw vectors cannot be sorted");
+	errorcall(call, _("raw vectors cannot be sorted"));
     n = LENGTH(x);
     PROTECT(indx = allocVector(INTSXP, n));
     PROTECT(rank = allocVector(REALSXP, n));
@@ -770,7 +770,7 @@ SEXP do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!strcmp(ties_str, "average"))	ties_kind = AVERAGE;
     else if(!strcmp(ties_str, "max"))	ties_kind = MAX;
     else if(!strcmp(ties_str, "min"))	ties_kind = MIN;
-    else error("invalid ties.method for rank() [should never happen]");
+    else error(_("invalid ties.method for rank() [should never happen]"));
     if (n > 0) {
 	in = INTEGER(indx);
 	rk = REAL(rank);
@@ -815,17 +815,17 @@ SEXP do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     x = CAR(args);
     nalast = asLogical(CADR(args));
     if(nalast == NA_LOGICAL)
-	error("'na.last' is invalid");
+	error(_("'na.last' is invalid"));
     decreasing = asLogical(CADDR(args));
     if(decreasing == NA_LOGICAL)
-	error("'decreasing' must be TRUE or FALSE");
+	error(_("'decreasing' must be TRUE or FALSE"));
     off = nalast^decreasing ? 0 : 1;
     n = LENGTH(x);
     PROTECT(ans = allocVector(INTSXP, n));
     for(i = 0; i < n; i++) {
 	tmp = INTEGER(x)[i];
 	if(tmp == NA_INTEGER) continue;
-	if(tmp < 0) errorcall(call, "negative value in x");
+	if(tmp < 0) errorcall(call, _("negative value in 'x'"));
 	if(xmax == NA_INTEGER || tmp > xmax) xmax = tmp;
 	if(xmin == NA_INTEGER || tmp < xmin) xmin = tmp;
     }
@@ -836,7 +836,7 @@ SEXP do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 
     xmax -= xmin;
-    if(xmax > 100000) errorcall(call, "too large a range of values in x");
+    if(xmax > 100000) errorcall(call, _("too large a range of values in 'x'"));
     napos = off ? 0 : xmax + 1;
     off -= xmin;
     cnts = Calloc(xmax+1, unsigned int);

@@ -84,21 +84,22 @@ seq(SEXP call, SEXP s1, SEXP s2)
 
     n1 = length(s1);
     if( n1 > 1 )
-	warningcall(call, "Numerical expression has %d elements: only the first used", (int) n1);
+	warningcall(call, 
+		    _("Numerical expression has %d elements: only the first used"), (int) n1);
     n2 = length(s2);
     if( n2 > 1 )
-	warningcall(call, "Numerical expression has %d elements: only the first used", (int) n2);
+	warningcall(call, _("Numerical expression has %d elements: only the first used"), (int) n2);
     n1 = asReal(s1);
     n2 = asReal(s2);
     if (ISNAN(n1) || ISNAN(n2))
-	errorcall(call, "NA/NaN argument");
+	errorcall(call, _("NA/NaN argument"));
 
     in1 = (int)(n1);
     useInt = (n1 == in1);
     if (n1 <= INT_MIN || n2 <= INT_MIN || n1 > INT_MAX || n2 > INT_MAX)
 	useInt = FALSE;
     r = fabs(n2 - n1);
-    if(r >= INT_MAX) errorcall(call, "result would be too long a vector");
+    if(r >= INT_MAX) errorcall(call, _("result would be too long a vector"));
 
     n = r + 1 + FLT_EPSILON;
     if (useInt) {
@@ -122,7 +123,7 @@ SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     if (isFactor(CAR(args)) && isFactor(CADR(args))) {
 	if (length(CAR(args)) != length(CADR(args)))
-	    errorcall(call, "unequal factor lengths");
+	    errorcall(call, _("unequal factor lengths"));
 	return(cross(CAR(args), CADR(args)));
     }
     return seq(call, CAR(args), CADR(args));
@@ -141,7 +142,7 @@ static SEXP rep2(SEXP s, SEXP ncopy)
     na = 0;
     for (i = 0; i < nc; i++) {
 	if (INTEGER(t)[i] == NA_INTEGER || INTEGER(t)[i]<0)
-	    error("invalid number of copies in \"rep\"");
+	    error(_("invalid number of copies in rep()"));
 	na += INTEGER(t)[i];
     }
 
@@ -224,19 +225,19 @@ static SEXP rep(SEXP s, SEXP ncopy)
     SEXP a, t;
 
     if (!isVector(ncopy))
-	error("\"rep\" incorrect type for second argument");
+	error(_("rep() incorrect type for second argument"));
 
     if (!isVector(s) && (!isList(s)))
-	error("attempt to replicate non-vector");
+	error(_("attempt to replicate non-vector"));
 
     if ((length(ncopy) == length(s)))
 	return rep2(s, ncopy);
 
     if ((length(ncopy) != 1))
-	error("invalid number of copies in \"rep\"");
+	error(_("invalid number of copies in rep()"));
 
     if ((nc = asInteger(ncopy)) == NA_INTEGER || nc < 0)/* nc = 0 ok */
-	error("invalid number of copies in \"rep\"");
+	error(_("invalid number of copies in rep()"));
 
     ns = length(s);
     na = nc * ns;

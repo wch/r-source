@@ -63,6 +63,16 @@ src/main/qsort.c
 src/main/random.c
 src/main/relop.c
 src/main/saveload.c
+src/main/scan.c
+src/main/seq.c
+src/main/serialize.c
+src/main/sort.c
+src/main/source.c
+src/main/split.c
+src/main/sprintf.c
+src/main/startup.c
+src/main/unique.c
+src/main/util.c
 src/main/version.c
 src/main/vfonts.c
 src/modules/internet/internet.c
