@@ -9,9 +9,12 @@ Pwd=`dirname $0`
 R_HOME=${Pwd}/..
 MANTEXDIR=${R_HOME}/doc/manual
 D2L="${Pwd}/Rdconv -t latex"
+file_sed='s/[_$]/\\\\&/g'
+# Quote the      ^^^^  "\" twice (-> 4 \ ) since it used in ".."
+## If perl-sh: sub subject() {
+##	"$1"'{\\Large \\file{'`echo  $2  | sed $file_sed`"}$3" }
 #
 call_dir=`pwd`
-
 if [ -f Rd2.tex ]
 then
     echo "'Rd2.tex' already exists -- renaming it to  Rd2.tex.Older"
@@ -25,18 +28,19 @@ then
     test -d $dir/man && dir=$dir/man
     echo "Rd2dvi : \`Rdconv -t latex' $dir/ files..."
     files="${dir}/*.Rd"
-    subj="of all in $dir"
+    subj='of all in {\\Large \\file{'`echo $dir | sed $file_sed`'}}'
     # DBG: echo "files = $files"
     toc_sed='; s/\\input{Rd/\\Rdcontents{\\R\\ objects documented:} &/'
 else
     files="$@"
-    subj="of $1"
+    if [ $# -gt 1 ]; then subj=' ...etc '; else subj=''; fi
+    subj='of {\\Large \\file{'`echo  $1  | sed $file_sed`"}$subj}"
+    echo "Rd2dvi : Collecting files and \`Rdconv -t latex'ing them ..."
     toc_sed=''
-    if [ $# -gt 1 ]; then subj="$subj ...etc "; fi
-    echo "Rd2dvi : Collecting files and \`Rdconv -t latex' them ..."
 fi
+## DEBUG: echo ''; echo 'subj:'; echo "$subj"; echo ''
 for f in $files
-do 
+do
     echo $f
     $D2L $f >> Rd2.tex
 done
