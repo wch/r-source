@@ -39,7 +39,9 @@ Rcmd check [options] pkgdirs
 #ifdef windows
   \code{Rcmd build}
 #endif
-  builds \R source or binary packages from their sources.
+  builds \R source or binary packages from their sources.  It will
+  create index files in the sources if necessary, so it is often helpful
+  to run \code{build} before \code{check}.
 
   Use
 #ifdef unix
