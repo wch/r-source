@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-38, @value{FAQ-YEAR}-02-02
+@set FAQ-VERSION 1.8-39, @value{FAQ-YEAR}-02-06
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -1922,6 +1922,10 @@ Functions to read from and write to an EMME/2 databank.
 @item emplik
 Empirical likelihood ratio for means/quantiles/hazards from possibly
 right censored data.
+@item energy
+E-statistics (energy) tests for comparing distributions: multivariate
+normality, Poisson test, multivariate @math{k}-sample test for equal
+distributions, hierarchical clustering by e-distances.
 @item evd
 Functions for extreme value distributions.  Extends simulation,
 distribution, quantile and density functions to univariate, bivariate
@@ -2389,6 +2393,8 @@ using the RAM approach.
 Simple interfce for serializing to connections.
 @item session
 Functions for interacting with, saving and restoring R sessions.
+@item sfsmisc
+Utilities from Seminar fuer Statistik ETH Zurich.
 @item sgeostat
 An object-oriented framework for geostatistical modeling.
 @item shapefiles
