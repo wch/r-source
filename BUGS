@@ -292,10 +292,10 @@ none
 
 Directory:  incoming
 
-* PR# 792 *
-Subject: R CMD check bug
-From: apjaworski@mmm.com
-Date: Fri, 22 Dec 2000 11:30:35 -0600
+* PR# 793 *
+Subject: bug in strsplit(x, "")
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Sun, 24 Dec 2000 16:08:08 +0100
 * PR# 765 *
 Subject: cannot allocate vector of size in merge
 From: viktorm@pdf.com
@@ -324,10 +324,6 @@ Date: 18 Dec 2000 16:13:59 +0100
 Subject: demo(is.things) fails
 From: B.Rowlingson@lancaster.ac.uk
 Date: Mon, 18 Dec 2000 13:46:02 +0100 (MET)
-* PR# 777 *
-Subject: Minor "make check" bug.
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Tue, 19 Dec 2000 15:11:24 +0100 (CET)
 * PR# 776 *
 Subject: strwidth does not take font into account
 From: Martyn Plummer <plummer@iarc.fr>
@@ -336,6 +332,18 @@ Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
 Subject: R 1.2.0 : logspline does not install from install.packages(). Missing #include | library ?
 From: charpent@bacbuc.dyndns.org
 Date: Mon, 18 Dec 2000 20:48:42 +0100 (MET)
+* PR# 778 *
+Subject: Bug in glm.fit() or plot.lm()
+From: murdoch@stats.uwo.ca (Duncan Murdoch)
+Date: Tue, 19 Dec 2000 14:57:59 -0500
+* PR# 777 *
+Subject: Minor "make check" bug.
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Tue, 19 Dec 2000 15:11:24 +0100 (CET)
+* PR# 781 *
+Subject: syskern fails Rcmd check on Windows, gives incorrect information
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Wed, 20 Dec 2000 11:12:47 +0000 (GMT)
 * PR# 780 *
 Subject: glm gives incorrect results for zero-weight cases
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
@@ -344,10 +352,10 @@ Date: Wed, 20 Dec 2000 10:59:48 +0000 (GMT)
 Subject: Problem with sink() in 1.20 on Windows
 From: Setzer.Woodrow@epamail.epa.gov
 Date: Tue, 19 Dec 2000 15:04:51 -0500
-* PR# 778 *
-Subject: Bug in glm.fit() or plot.lm()
-From: murdoch@stats.uwo.ca (Duncan Murdoch)
-Date: Tue, 19 Dec 2000 14:57:59 -0500
+* PR# 784 *
+Subject: showConnections() does not show closed (or non-opened) connections though help says so
+From: =?iso-8859-1?Q?"Jens=20Oehlschl=E4gel"?= <joehl@web.de>
+Date: Wed, 20 Dec 2000 13:42:43 +0100
 * PR# 783 *
 Subject: unlink() is not synchronized with existing connections
 From: =?iso-8859-1?Q?"Jens=20Oehlschl=E4gel"?= <joehl@web.de>
@@ -356,10 +364,10 @@ Date: Wed, 20 Dec 2000 13:36:17 +0100
 Subject: closing the sink connection a) is possible and b) can't be undone
 From: =?iso-8859-1?Q?"Jens=20Oehlschl=E4gel"?= <joehl@web.de>
 Date: Wed, 20 Dec 2000 13:32:41 +0100
-* PR# 781 *
-Subject: syskern fails Rcmd check on Windows, gives incorrect information
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Wed, 20 Dec 2000 11:12:47 +0000 (GMT)
+* PR# 787 *
+Subject: Inconsistency in creating/opening/closing/destroying connections
+From: =?iso-8859-1?Q?"Jens=20Oehlschl=E4gel"?= <joehl@web.de>
+Date: Wed, 20 Dec 2000 13:56:49 +0100
 * PR# 786 *
 Subject: Re: [Rd] showConnections() does not show closed (or non-opened)
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
@@ -368,18 +376,18 @@ Date: Wed, 20 Dec 2000 12:51:33 +0000 (GMT)
 Subject: Re: [Rd] unlink() is not synchronized with existing connections
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
 Date: Wed, 20 Dec 2000 12:47:30 +0000 (GMT)
-* PR# 784 *
-Subject: showConnections() does not show closed (or non-opened) connections though help says so
-From: =?iso-8859-1?Q?"Jens=20Oehlschl=E4gel"?= <joehl@web.de>
-Date: Wed, 20 Dec 2000 13:42:43 +0100
+* PR# 789 *
+Subject: rw1020 Rcmd INSTALL path\ deletes rw1020\library\*
+From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
+Date: Thu, 21 Dec 2000 16:03:10 -0800 (PST)
 * PR# 788 *
 Subject: Re: [Rd] Inconsistency in creating/opening/closing/destroying
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Wed, 20 Dec 2000 13:14:56 +0000 (GMT)
-* PR# 787 *
-Subject: Inconsistency in creating/opening/closing/destroying connections
-From: =?iso-8859-1?Q?"Jens=20Oehlschl=E4gel"?= <joehl@web.de>
-Date: Wed, 20 Dec 2000 13:56:49 +0100
+* PR# 792 *
+Subject: R CMD check bug
+From: apjaworski@mmm.com
+Date: Fri, 22 Dec 2000 11:30:35 -0600
 * PR# 791 *
 Subject:  par(lab= *) / axis(*) bug 
 From: maechler@stat.math.ethz.ch
@@ -388,7 +396,3 @@ Date: Fri, 22 Dec 2000 10:59:26 +0100
 Subject: (HP-UX) scan: last line gets duplicated
 From: Peter Kleiweg <kleiweg@let.rug.nl>
 Date: Fri, 22 Dec 2000 05:09:54 +0100 (CET)
-* PR# 789 *
-Subject: rw1020 Rcmd INSTALL path\ deletes rw1020\library\*
-From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
-Date: Thu, 21 Dec 2000 16:03:10 -0800 (PST)
