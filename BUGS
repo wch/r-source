@@ -488,19 +488,6 @@ Date: Sun, 8 Sep 2002 13:47:00 +0100
 Subject: Mac specific - quartz leads to crash
 From: h95mr@mun.ca
 Date: Fri, 8 Nov 2002 16:28:50 +0100 (MET)
-* PR# 2287 *
-Subject: survreg (survival) reports erroneous results for left-censored data
-From: tim@timcohn.com
-Date: Wed, 13 Nov 2002 23:05:21 +0100 (MET)
-..MacOS only
-* PR# 2291 *
-Subject: Re: survreg (survival) reports erroneous results for left-censored
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Thu, 14 Nov 2002 08:04:37 -0800 (PST)
-* PR# 2293 *
-Subject: Re: survreg (survival) reports erroneous results for left-censored
-From: Tim Cohn <tim@timcohn.com>
-Date: Thu, 14 Nov 2002 19:47:46 -0500
 
 Directory:  Misc
 
@@ -635,19 +622,6 @@ Directory:  incoming
 Subject: lib.fixup, .GlobalEnv, and R1.5.0
 From: mark.bravington@csiro.au
 Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
-* PR# 1761 *
-Subject: svd() very slow for wide matrix X but not for t(X)
-From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
-Date: Tue, 9 Jul 2002 11:39:15 -0400 
-..Doesn't happen with the now preferred La.svd.
-* PR# 2018 *
-Subject: missing data in stripchart
-From: baron@CATTELL.psych.upenn.edu
-Date: Sat, 14 Sep 2002 19:35:32 +0200 (MET DST)
-* PR# 2019 *
-Subject: p.s. regarding stripchart missing-data report
-From: Jonathan Baron <baron@cattell.psych.upenn.edu>
-Date: Sat, 14 Sep 2002 13:48:34 -0400
 * PR# 2094 *
 Subject: Mean and var inconsistency
 From: Kevin.Wright@pioneer.com
@@ -662,7 +636,20 @@ Date: Mon, 14 Oct 2002 01:34:45 +0200 (MET DST)
 Subject: Wishlist: allow NA values in medpolish (package 'eda')
 From: schutz@wehi.edu.au
 Date: Sat, 16 Nov 2002 05:43:59 +0100 (MET)
+..added for 1.7.0
 * PR# 2299 *
 Subject: formatC with format="fg" displays number in exponential notation
 From: schutz@wehi.edu.au
 Date: Sat, 16 Nov 2002 06:33:04 +0100 (MET)
+* PR# 2305 *
+Subject: Prediction from arima() object (library ts)
+From: mcrae_allan@hotmial.com
+Date: Mon, 18 Nov 2002 15:12:22 +0100 (MET)
+* PR# 2307 *
+Subject: Japanese lass' sexy pictures
+From: Kinderteachkim <Kinderteachkim@aol.com>
+Date: 18 Nov 2002 12:27:00 -1000
+* PR# 2308 *
+Subject: HELLO
+From: "THOMAS OLEMBE" <thomolembee@earthling.net>
+Date: Tue, 19 Nov 2002 00:17:35 -0800
