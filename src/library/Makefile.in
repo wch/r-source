@@ -12,9 +12,9 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
-SUBDIRS = base eda lqs modreg mva profile stepfun
-
 PKGS = base eda lqs modreg mva stepfun
+
+SUBDIRS = profile $(PKGS)
 
 all: Makefile R
 
