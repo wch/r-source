@@ -22,12 +22,12 @@
 #define _R_INTERNALS_H_
 
 #include "config.h"
-#include "Arith.h"
-#include "Complex.h"
-#include "Errormsg.h"
-#include "Memory.h"
-#include "PrtUtil.h"
-#include "Utils.h"
+#include "R_ext/Arith.h"
+#include "R_ext/Complex.h"
+#include "R_ext/Errormsg.h"
+#include "R_ext/Memory.h"
+#include "R_ext/PrtUtil.h"
+#include "R_ext/Utils.h"
 
 #include <errno.h>
 #include <stdio.h>
