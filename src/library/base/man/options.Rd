@@ -160,6 +160,9 @@ getOption(x)
     encoding.  Defaults to \code{native.enc} (= \code{0:255}).
     See \code{\link{connections}}.}
 
+  \item{timeout}{Integer.  The timeout for Internet operations,
+    in seconds.  Default 60 seconds.}
+
   \item{x}{a character string holding one of the above option names.}
 }
 \description{
