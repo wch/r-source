@@ -74,10 +74,13 @@
 #include "Startup.h" /* Jago */
 #include <Rdevices.h>
 
+Boolean EventsInit = false;
+
+
 SEXP R_LoadFromFile(FILE*, int);
 
-static UInt32 sSleepTime = 0; // sleep time for WaitNextEvent()
-static RgnHandle sMouseRgn = nil; // mouse region for WaitNextEvent()
+UInt32 sSleepTime = 0; // sleep time for WaitNextEvent()
+RgnHandle sMouseRgn = nil; // mouse region for WaitNextEvent()
 PicHandle WinPic;
 Boolean fstart = true;
 SInt16 Help_Window = 1;
@@ -86,7 +89,7 @@ WindowPtr Help_Windows[MAX_NUM_H_WIN + 1];
 AEIdleUPP gAEIdleUPP;
 EventRecord gERecord;
 Boolean gQuit, gInBackground;
-EventRecord gERecord;
+
 
 #define kResumeMask             1       /* bit of message field for resume vs. suspend */
 
@@ -637,7 +640,6 @@ void DoWindowEvent( const EventRecord *event )
     {
     case updateEvt:
     {
-    //Rprintf("\n doupdate");
 	DoUpdate( window );
 	break;
     }
@@ -674,7 +676,6 @@ void DoWindowEvent( const EventRecord *event )
     Rect portRect ;
     CGrafPtr thePort;
   
-
     gotEvent = WaitNextEvent( everyEvent, &event, sSleepTime, sMouseRgn );
 
 #if ! TARGET_API_MAC_CARBON
@@ -725,19 +726,12 @@ void DoWindowEvent( const EventRecord *event )
 	break;
 
     case mouseDown:
-   // Rprintf("\n domousedown");
 	DoMouseDown( &event);
 	break;
 
     case keyDown:
     case autoKey:
 
-	if ((event.modifiers & cmdKey) && ((event.message & charCodeMask) == '.'))
-	{
-	    Rprintf("\n\n <- User Canceled -> \n");
-	    /*    DoQuit();*/
-	}
-	else
 	    DoKeyDown( &event );
 
 	break;
@@ -747,24 +741,11 @@ void DoWindowEvent( const EventRecord *event )
 	if (isGraphicWindow(windowPtr)) { 
 	CGrafPtr thePort;
     
-    //Rprintf("\n update");
 	
 	thePort = GetWindowPort(windowPtr);
     
         /* flush the entire port */
-    if (QDIsPortBuffered(thePort))
         QDFlushPortBuffer(thePort, NULL);
-  
-        /* flush part of the port */
- //   if (QDIsPortBuffered(thePort)) {
- //       RgnHandle theRgn;
- //       theRgn = NewRgn();
-            /* local port coordinates */
- //       SetRectRgn(theRgn, dd->dp.left, dd->dp.top, dd->dp.right, dd->dp.bottom); 
- //       QDFlushPortBuffer(thePort, theRgn);
- //       DisposeRgn(theRgn);
- //   }
-
 
 	
 	}
@@ -997,6 +978,7 @@ static pascal OSErr HandleQuitApplication( const AppleEvent *ae,
     return err;
 }
 
+
 /* InitializeEvents: modified to let R interact with other processes
                      such as UnZip tools, Browsers, etc.
                      AppleEvents handlers are now installed only if
@@ -1034,6 +1016,9 @@ OSErr InitializeEvents( void )
 	gAEIdleUPP = NewAEIdleUPP(idleProc);
   
  cleanup:
+    if(err == noErr)
+     EventsInit = true;
+
     return err;
 }
 
