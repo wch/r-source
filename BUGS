@@ -358,7 +358,11 @@ Directory:  incoming
 Subject: a patch to tapply
 From: Vadim Ogranovich <vograno@arbitrade.com>
 Date: Thu, 29 Nov 2001 14:48:35 -0600
-* PR# 1219 *
-Subject: write.table
-From: olshena@mskcc.org
-Date: Tue, 18 Dec 2001 00:02:05 +0100 (MET)
+* PR# 1220 *
+Subject: cmdscale: labels missing
+From: Peter Kleiweg <kleiweg@let.rug.nl>
+Date: Tue, 18 Dec 2001 11:10:41 +0100 (CET)
+* PR# 1221 *
+Subject: isoMDS: core dump
+From: Peter Kleiweg <kleiweg@let.rug.nl>
+Date: Tue, 18 Dec 2001 11:16:49 +0100 (CET)
