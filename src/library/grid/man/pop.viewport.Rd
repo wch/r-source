@@ -8,6 +8,10 @@
   This function makes the parent of the specified viewport the
   new default viewport.
 }
+\section{Warning}{
+  This function has been deprecated.  Please use \code{popViewport}
+  instead.
+}
 \usage{
 pop.viewport(n=1, recording=TRUE)
 }

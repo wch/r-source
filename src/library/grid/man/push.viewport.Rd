@@ -9,6 +9,10 @@
   and makes its parent the previous default viewport (i.e.,
   nests the specified context within the previous default context).
 }
+\section{Warning}{
+  This function has been deprecated.  Please use \code{pushViewport}
+  instead.
+}
 \usage{
 push.viewport(..., recording=TRUE)
 }
