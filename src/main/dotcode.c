@@ -315,6 +315,17 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup)
     return args;
 }
 
+static void setDLLname(SEXP s) {
+  SEXP ss = CAR(s); char *name;
+  if(TYPEOF(ss) != STRSXP || length(ss) != 1)
+    error("PACKAGE argument must be a single character string");
+  name = CHAR(STRING_ELT(ss, 0));
+  /* allow the package: form of the name, as returned by find */
+  if(strncmp(name, "package:", 8) == 0)
+    name += 8;
+  strcpy(DLLname, name);
+}
+
 static SEXP pkgtrim(SEXP args)
 {
     SEXP s, ss;
@@ -327,12 +338,12 @@ static SEXP pkgtrim(SEXP args)
 	   and remove it */
 	if(ss == R_NilValue && TAG(s) == PkgSymbol) {
 	    if(pkgused++ == 1) warning("PACKAGE used more than once");
-	    strcpy(DLLname, CHAR(STRING_ELT(CAR(s), 0)));
+	    setDLLname(s);
 	    return R_NilValue;
 	}
 	if(TAG(ss) == PkgSymbol) {
 	    if(pkgused++ == 1) warning("PACKAGE used more than once");
-	    strcpy(DLLname, CHAR(STRING_ELT(CAR(ss), 0)));
+	    setDLLname(ss);
 	    SETCDR(s, CDR(ss));
 	}
 	s = CDR(s);
