@@ -53,14 +53,14 @@ SEXP do_relop_dflt(SEXP call, SEXP op, SEXP x, SEXP y)
     PROTECT_WITH_INDEX(x, &xpi);
     PROTECT_WITH_INDEX(y, &ypi);
 
-#ifdef DODO
     /* pre-test to handle the most common case quickly */
     if (ATTRIB(x) == R_NilValue && ATTRIB(y) == R_NilValue &&
-	TYPEOF(x) == REALSXP && TYPEOF(y) == REALSXP) {
+	TYPEOF(x) == REALSXP && TYPEOF(y) == REALSXP &&
+	LENGTH(x) > 0 && LENGTH(y) > 0) {
+	SEXP ans = real_relop(PRIMVAL(op), x, y);      
 	UNPROTECT(2);
-	return real_relop(PRIMVAL(op), x, y);
+	return ans;
     }
-#endif
 
     if ((iS = isSymbol(x)) || TYPEOF(x) == LANGSXP) {
 	SEXP tmp = allocVector(STRSXP, 1);
