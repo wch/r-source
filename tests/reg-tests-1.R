@@ -3086,4 +3086,7 @@ try(options(list('digits', 'width')))# give an error
 ## gave a segfault in 1.9.1
 
 ## PR#7100 seg faulted or path too long error on ././././././. ...
-list.files('.', all.files = TRUE, recursive = TRUE)  
+list.files('.', all.files = TRUE, recursive = TRUE)
+
+## PR#7116 seg faulted :
+cor(as.array(c(a=1,b=2)), cbind(1:2))

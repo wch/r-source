@@ -44,8 +44,12 @@ BUG FIXES
 
     o	summary.Date() now has a sensible default for 'digits'.
 
-    o	list.files(all.files = TRUE, recursive = TRUE) died on infinite 
+    o	list.files(all.files = TRUE, recursive = TRUE) died on infinite
     	recursion. (PR#7100)
+
+    o	cor(as.array(c(a=1,b=2)), cbind(1:2)) no longer seg.faults (PR#7116).
+	cor(), cov() and var() no longer accidentally work with list()
+	arguments as if they were unlist()ed.
 
 
 		CHANGES IN R VERSION 1.9.1
