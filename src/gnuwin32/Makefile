@@ -64,7 +64,7 @@ endif
 
 # separate as Tcl/Tk headers are needed.
 tcl: 
-	$(MAKE) pkg-tcltk
+	@$(MAKE) --no-print-directory pkg-tcltk
 
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H -DR_DLL_BUILD
 FFLAGS = $(OPTFLAGS)
@@ -73,31 +73,31 @@ Rpwd.exe: front-ends/Rpwd.exe
 	$(CP) $< $@
 
 front-ends/Rpwd.exe:
-	$(MAKE) -C front-ends Rpwd
+	$(MAKE) --no-print-directory -C front-ends Rpwd
 
 ## watch out: R.dll and Rblas.dll depend on each other.
 rbuild: fixfiles rlibs makeMakedeps libRblas.a ../../bin/R.dll libR.a \
 	 ../../bin/Rblas.dll CHTML front-ends COPYRIGHTS rmodules
 
 rpackage: fixed/fixdesc ../../library/R.css
-	$(MAKE) $(PKGS)
+	@$(MAKE) --no-print-directory $(PKGS)
 
 rinstaller:
-	$(MAKE) -C installer
-	$(MAKE) -C installer clean
+	$(MAKE) --no-print-directory -C installer
+	@$(MAKE) --no-print-directory -C installer clean
 
 rlibs:
 # need pcre.h built before main is built
-	$(MAKE) -C ../extra/pcre -f Makefile.win
-	$(MAKE) -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
-	$(MAKE) -C ../main  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
-	$(MAKE) -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
-	$(MAKE) -C ./graphapp
-	$(MAKE) -C ./getline
-	$(MAKE) -C ../extra/xdr -f Makefile.win
+	$(MAKE) --no-print-directory -C ../extra/pcre -f Makefile.win
+	$(MAKE) --no-print-directory -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
+	$(MAKE) --no-print-directory -C ../main  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
+	$(MAKE) --no-print-directory -C ../nmath OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
+	$(MAKE) --no-print-directory -C ./graphapp
+	$(MAKE) --no-print-directory -C ./getline
+	$(MAKE) --no-print-directory -C ../extra/xdr -f Makefile.win
 
 rmodules: libRm.a
-	$(MAKE) -C ../modules OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' \
+	$(MAKE) --no-print-directory -C ../modules OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' \
 	  -f Makefile.win
 
 COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
@@ -106,7 +106,7 @@ COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 
 fixfiles:
 	$(MKDIR) -p ../../bin
-	$(MAKE) -C ./fixed
+	@$(MAKE) --no-print-directory -C ./fixed
 
 fixed/fixdesc:
 	sh fixed/GETDESC $(ALLPACKAGES)
@@ -122,7 +122,7 @@ Rdll: makeMakedeps ../../bin/R.dll
 	$(CP) R.dll ../../bin/
 
 front-ends: libR.a
-	$(MAKE) -C front-ends
+	$(MAKE) --no-print-directory -C front-ends
 
 R.a: $(OBJS)
 	@$(ECHO) -------- Building $@ --------
@@ -163,16 +163,16 @@ Rm.exp1: $(OBJS-EXTRA)
 	$(CP) $< $@
 
 ../extra/zlib/libz.a:
-	$(MAKE) -C ../extra/zlib -f Makefile.win
+	$(MAKE) --no-print-directory -C ../extra/zlib -f Makefile.win
 
 ../extra/pcre/libRpcre.a:
-	$(MAKE) -C ../extra/pcre -f Makefile.win
+	$(MAKE) --no-print-directory -C ../extra/pcre -f Makefile.win
 
 ../extra/bzip2/libbz2.a:
-	$(MAKE) -C ../extra/bzip2  -f Makefile.win libbz2.a
+	$(MAKE) --no-print-directory -C ../extra/bzip2  -f Makefile.win libbz2.a
 
 rdocs:
-	@$(MAKE) -C ../../doc/manual -f Makefile.win html BUILD=$(BUILD)
+	@$(MAKE) --no-print-directory -C ../../doc/manual -f Makefile.win html BUILD=$(BUILD)
 
 
 #                          ===== BLAS ======
@@ -213,10 +213,10 @@ endif
 CHTML:
 ifeq ($(strip $(HELP)),YES)
 ifeq ($(strip $(WINHELP)),CHM)
-	$(MAKE) -C ./help -f MkChmDll
+	$(MAKE) --no-print-directory -C ./help -f MkChmDll
 endif
 ifeq ($(strip $(WINHELP)),BOTH)
-	$(MAKE) -C ./help -f MkChmDll
+	$(MAKE) --no-print-directory -C ./help -f MkChmDll
 endif
 endif
 
@@ -248,25 +248,25 @@ bundle-%:
 	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:
-	$(MAKE) DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \
+	$(MAKE) --no-print-directory DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" BUILD=$(BUILD) \
 	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
 	@if test -d $(RLIB)/$*/data ; then \
-	  $(MAKE) $($*-ZIPDATA)data-$* ; \
+	  $(MAKE) --no-print-directory $($*-ZIPDATA)data-$* ; \
 	fi
 ifeq ($(strip $(HELP)),YES)
-	@$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$*
-	@$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
+	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) $($*-HELP)help-$*
+	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) contents-$*
 ifeq ($(strip $(WINHELP)),CHM)
-	@$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) chm-$*
+	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) chm-$*
 endif
 ifeq ($(strip $(WINHELP)),BOTH)
-	@$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) winhlp-$* # also makes chm
+	@$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) winhlp-$* # also makes chm
 endif
 endif
 
 pkgclean-%:
-	$(MAKE)  --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
+	$(MAKE) --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
 	  -C $(PKGDIR)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
 
 pkgcheck-%:
@@ -280,10 +280,10 @@ pkgcheck-%:
 	fi
 
 ziphelp-%:
-	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziphelp-$*
+	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziphelp-$*
 
 ziponly-%:
-	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziponlyhelp-$*
+	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) ziponlyhelp-$*
 
 zipdata-%:
 	@echo "  zipping data"
@@ -303,10 +303,10 @@ data-%:
 
 clean: cleanwin $(PKGCLEAN)
 	$(RM) -f ../*/*.o $(WINOBJS) *.a ../*/*.d ../*/Makedeps fixed/fixdesc
-	-$(MAKE) -C ../../doc/manual -f Makefile.win distclean
-	-$(MAKE) -C ../nmath/standalone -f Makefile.win distclean
-	-$(MAKE) -C ../modules -f Makefile.win clean
-	-$(MAKE) -C ../../tests -f Makefile.win clean
+	-$(MAKE) --no-print-directory -C ../../doc/manual -f Makefile.win distclean
+	-$(MAKE) --no-print-directory -C ../nmath/standalone -f Makefile.win distclean
+	-$(MAKE) --no-print-directory -C ../modules -f Makefile.win clean
+	-$(MAKE) --no-print-directory -C ../../tests -f Makefile.win clean
 	$(RM) -f ../library/methods/R/methods
 	for p in $(REC_PKGS); do \
 	  $(RM) -rf ../library/$$p; \
@@ -355,8 +355,8 @@ cleanwin:
 check test: test-Specific pkgtests
 
 test-Specific:
-	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/tests/Makefile.win clean
-	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/tests/Makefile.win RHOME=$(RHOME)
+	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f $(RHOME)/tests/Makefile.win clean
+	-@$(MAKE) --no-print-directory -C $(RHOME)/tests -f $(RHOME)/tests/Makefile.win RHOME=$(RHOME)
 
 
 PKGS-CHK = $(foreach i, $(PACKAGES), pkgcheck-$i)
@@ -370,10 +370,10 @@ check-recommended: $(REC_PKGS-CHK)
 #                          ===== documentation ======
 
 docs manuals:
-	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win clean BUILD=$(BUILD)
-	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win \
+	@$(MAKE) --no-print-directory -C $(RHOME)/doc/manual -f Makefile.win clean BUILD=$(BUILD)
+	@$(MAKE) --no-print-directory -C $(RHOME)/doc/manual -f Makefile.win \
 	  R_PKGS='$(ALLPACKAGES)' BUILD=$(BUILD)
-	@$(MAKE) ziponly-base
+	@$(MAKE) --no-print-directory ziponly-base
 
 
 ## ===================== Maintainer targets ========================
@@ -470,7 +470,7 @@ packagedist:
 	$(CP) -pr help check $(RPREFIX)/src/gnuwin32
 	$(RM) $(RPREFIX)/src/gnuwin32/help/*.c \
 	  $(RPREFIX)/src/gnuwin32/help/MkChmDll
-	$(MAKE) -C $(RPREFIX)/src/gnuwin32/help clean
+	$(MAKE) --no-print-directory -C $(RPREFIX)/src/gnuwin32/help clean
 	$(CP) -p $(foreach i,$(SRC_HEADERS) $(OBJ_HEADERS) $(GW32_HEADERS), \
 	  ../include/$i) $(RPREFIX)/src/include
 	$(CP) -pr ../include/R_ext $(RPREFIX)/src/include
@@ -487,7 +487,7 @@ packagedist:
 	$(CP) ../../share/make/wintests.mk $(RPREFIX)/share/make
 	$(CP) -pr ../../share/R $(RPREFIX)/share
 	$(CP) -p graphapp/graphapp.h graphapp/ga.h $(RPREFIX)/src/include
-	$(MAKE) PKGDIR=. pkgclean-windlgs
+	$(MAKE) --no-print-directory PKGDIR=. pkgclean-windlgs
 	$(CP) -pr windlgs $(RPREFIX)/src/library
 	find $(RPREFIX) -name CVS -prune -exec rm -rf \{\} \;
 	zip -r9X $(RPREFIX)sp.zip $(RPREFIX)
