@@ -2,7 +2,7 @@
 
 use File::Basename;
 
-while(<$ARGV[0]/man/*.Rd>){
+while(<$ARGV[0]/man/*.Rd $ARGV[0]/man/unix/*.Rd>){
 
     my $file = basename($_, (".Rd", ".rd"));
 

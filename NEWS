@@ -131,6 +131,9 @@ BUG FIXES
 
     o   Add explicit test for rank-deficient residuals to summary.manova().
 
+    o   The help search databases did not contain the data from the
+	platform-specific help files.
+
 
 
 		CHANGES IN R VERSION 1.2.1
