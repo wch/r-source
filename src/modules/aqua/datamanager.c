@@ -48,7 +48,7 @@
 #define kDataBrowserListViewAppendColumn ULONG_MAX
 #endif
 
-void	ProcessOneEvent(void);
+void	Raqua_ProcessEvents(void);
 
 static void ConfigureDataManager(ControlRef);
 static void CreateDataManager(WindowRef, ControlRef*);
@@ -528,7 +528,7 @@ SEXP Raqua_datamanger(SEXP call, SEXP op, SEXP args, SEXP env)
   DataManagerFinished = false;
   OpenDataManager();
   while(!DataManagerFinished)
-   ProcessOneEvent();
+   Raqua_ProcessEvents();
 
   PROTECT(ans = NEW_LOGICAL(NumOfDSets));
   for(i=1;i<=NumOfDSets;i++)

@@ -85,7 +85,7 @@ DataBrowserItemID *PNameID;
 Boolean *LoadThese;
 
 extern bool	PackageManagerFinished;
-void	ProcessOneEvent(void);
+void	Raqua_ProcessEvents(void);
 
 extern TXNControlTag	RReadOnlyTag[];
 extern TXNControlData   RReadOnlyData[];
@@ -539,7 +539,7 @@ SEXP Raqua_packagemanger(SEXP call, SEXP op, SEXP args, SEXP env)
   PackageManagerFinished = false;
   OpenPackageManager();
   while(!PackageManagerFinished)
-    ProcessOneEvent();
+    Raqua_ProcessEvents();
     
   PROTECT(ans = NEW_LOGICAL(NumOfAllPkgs));
   for(i=1;i<=NumOfAllPkgs;i++)

@@ -111,7 +111,7 @@ static double ssNA_REAL;
 
 static SEXP ssNewVector(SEXPTYPE, int);
 extern bool		DataEntryFinished;
-void ProcessOneEvent(void);
+void Raqua_ProcessEvents(void);
 
 extern TXNControlTag	RReadOnlyTag[];
 extern TXNControlData   RReadOnlyData[];
@@ -736,7 +736,7 @@ SEXP Raqua_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     DataEntryFinished = false;
     OpenDataEntry();
     while(!DataEntryFinished)
-        ProcessOneEvent();
+        Raqua_ProcessEvents();
     
     /* drop out unused columns */
     for(i = 0, cnt = 0; i < xmaxused; i++)

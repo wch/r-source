@@ -65,7 +65,6 @@
 
 
 
-void Raqua_ProcessEvents(void);
 extern OSStatus OpenPageSetup(WindowRef window);
 extern OSStatus OpenPrintDialog(WindowRef window);
 
@@ -157,7 +156,7 @@ extern RAquaPrefs CurrentPrefs, TempPrefs;
 extern FMFontFamilyInstance    instance;
 extern FMFontSize              fontSize;       
 
-void 	ProcessOneEvent(void);
+void 	Raqua_ProcessEvents(void);
 
 void RSetTab(void);
 void RSetFontSize(void);
@@ -685,7 +684,7 @@ void Raqua_WriteConsole(char *buf, int len)
          TXNSetTypeAttributes( RConsoleOutObject, 1, ROutAttr, 0, kTXNEndOffset );
          err =  TXNSetData (RConsoleOutObject, kTXNTextData, buf, strlen(buf), kTXNEndOffset, kTXNEndOffset);
        }
-       Raqua_ProcessEvents();
+        Raqua_ProcessEvents();
      } else {
      fprintf(stderr,"%s", buf);
     }
@@ -778,7 +777,7 @@ int Raqua_ReadConsole(char *prompt, unsigned char *buf, int len,
 
      
    while(!InputFinished & !HaveBigBuffer)
-        ProcessOneEvent();
+        Raqua_ProcessEvents();
 
   
      if(!HaveBigBuffer){
@@ -1919,7 +1918,7 @@ int Raqua_Edit(char *filename)
     rc = NewEditWindow(filename);
     
     while(!EditingFinished)
-        ProcessOneEvent();
+        Raqua_ProcessEvents();
 
     return 0;
 }
@@ -2658,32 +2657,6 @@ void Raqua_GetQuartzParameters(double *width, double *height, double *ps, char *
 }
 
 
-void Raqua_ProcessEvents(void)
-{
-    EventRef		theEvent;
-    EventTargetRef	theTarget = GetEventDispatcherTarget();
-
-    if(CheckEventQueueForUserCancel())
-       onintr();
-
-   
-   if( ReceiveNextEvent(0, NULL, kEventDurationNoWait, true, &theEvent) == noErr ){
-   
-    if( (GetEventClass(theEvent) == kEventClassMouse) &&
-				(GetEventKind(theEvent) == kEventMouseDown) ){
-                                
-
-     } else
-      SendEventToEventTarget( theEvent, theTarget );    
-
-     ReleaseEvent( theEvent );
-    }
-    
-}
-
-
-
-
 void Raqua_CleanUp(SA_TYPE saveact, int status, int runLast)
 {
     if(saveact == SA_DEFAULT) /* The normal case apart from R_Suicide */
@@ -2853,14 +2826,25 @@ pascal OSErr  HandleDoCommandLine (AppleEvent *theAppleEvent, AppleEvent* reply,
 
 
 
-void	ProcessOneEvent(void)
+void	Raqua_ProcessEvents(void)
 {
     EventRef theEvent;
+    EventRecord	outEvent;
     EventTargetRef theTarget = GetEventDispatcherTarget();
+    bool	conv = false;
+
+    if(CheckEventQueueForUserCancel())
+       onintr();
+
+    if(ReceiveNextEvent(0, NULL,kEventDurationNoWait,true,&theEvent)== noErr){
+        conv = ConvertEventRefToEventRecord(theEvent, &outEvent);
     
-    if(ReceiveNextEvent(0, NULL,kEventDurationForever,true,&theEvent)== noErr){
-            SendEventToEventTarget (theEvent, theTarget);
-            ReleaseEvent(theEvent);
+        if(conv && (outEvent.what == kHighLevelEvent))
+            AEProcessAppleEvent(&outEvent);
+         
+        SendEventToEventTarget (theEvent, theTarget);
+        ReleaseEvent(theEvent);
+            
     }
 }
 
