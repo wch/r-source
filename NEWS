@@ -107,6 +107,12 @@ BUG FIXES
 
 		CHANGES IN R VERSION 1.2.3
 
+NEW FEATURES
+
+    o	Support for configuration and building the Unix version of R
+	 under Mac OS X.  (The `classic' Macintosh port is
+	`Carbonized' and also runs under that OS.)
+
 
 BUG FIXES
 
@@ -163,6 +169,8 @@ BUG FIXES
     o	missingness was not correctly propagated in some cases.
 
     o	eigen() segfaulted on 0-dimensional matrices.
+
+    o	nls( ~ rhs, ..)	 now works (formula with empty left hand side).
 
 
 
