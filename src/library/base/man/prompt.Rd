@@ -33,6 +33,7 @@ prompt.default(object,
 \examples{
 prompt(plot.default)
 prompt(interactive, force.function = TRUE)
+unlink("plot.default.Rd")
 unlink("interactive.Rd")
 }
 \keyword{documentation}
