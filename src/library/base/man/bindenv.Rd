@@ -51,26 +51,26 @@ bindingIsActive(sym, env)
 }
 \examples{
 # locking environments
-e<-new.env()
-assign("x",1, env=e)
-get("x",env=e)
+e <- new.env()
+assign("x", 1, env = e)
+get("x", env = e)
 lockEnvironment(e)
-get("x",env=e)
-assign("x",2, env=e)
-try(assign("y",2, env=e)) # error
+get("x", env = e)
+assign("x", 2, env = e)
+try(assign("y", 2, env = e)) # error
 
 # locking bindings
-e<-new.env()
-assign("x",1, env=e)
-get("x",env=e)
+e <- new.env()
+assign("x", 1, env = e)
+get("x", env = e)
 lockBinding("x", e)
-try(assign("x",2, env=e)) # error
+try(assign("x", 2, env = e)) # error
 unlockBinding("x", e)
-assign("x",2, env=e)
-get("x",env=e)
+assign("x", 2, env = e)
+get("x", env = e)
 
 # active bindings
-f<-local({
+f <- local( {
     x <- 1
     function(v) {
        if (missing(v))
@@ -85,7 +85,7 @@ f<-local({
 makeActiveBinding("fred", f, .GlobalEnv)
 bindingIsActive("fred", .GlobalEnv)
 fred
-fred<-2
+fred <- 2
 fred
 }
 \keyword{internal}

@@ -45,7 +45,7 @@ stripchart(x, method="overplot", jitter=0.1, offset=1/3,
 }
 \examples{
 x <- rnorm(50)
-xr<- round(x, 1)
+xr <- round(x, 1)
 stripchart(x) ; m <- mean(par("usr")[1:2])
 text(m, 1.04, "stripchart(x, \"overplot\")")
 stripchart(xr, method = "stack", add = TRUE, at = 1.2)
