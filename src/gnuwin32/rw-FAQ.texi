@@ -116,11 +116,10 @@ The information here applies only to recent versions of R for Windows,
 @section Where can I find the latest version?
 
 Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
-for a list), navigate to the @code{bin/windows/base}
-directory and collect the files you need.  There are two versions of
-the distribution.
+for a list), navigate to the @code{bin/windows/base} directory and
+collect the files you need.  There are two versions of the distribution.
 
-1) @code{@RWVER@.exe} is about 19Mb.  This contains all the components
+1) @code{@RWVER@.exe} is about 20Mb.  This contains all the components
 and allows as complete as installation as you choose.
 
 2) Directory @code{miniR} contains @code{miniR.exe} and eight files
