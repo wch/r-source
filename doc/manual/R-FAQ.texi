@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-28, @value{FAQ-YEAR}-07-18
+@set FAQ-VERSION 1.7-29, @value{FAQ-YEAR}-07-21
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1867,7 +1867,11 @@ Generalized Regression Analysis and Spatial Predictions for R.
 Miscellaneous functions written/maintained by Gregory R. Warnes.
 @item grid
 The Grid graphics package, a rewrite of the graphics layout
-capabilities, plus some support for interaction.  @emph{Recommended}.
+capabilities, plus some support for interaction.
+@c <FIXME 1.8.0>
+@emph{Recommended}
+(will become a integrated into the R distribution for version 1.8.0).
+@c </FIXME>
 @item gss
 A comprehensive package for structural multivariate function estimation
 using smoothing splines.
@@ -1909,6 +1913,8 @@ Functions to support the computations carried out in ``An Introduction
 to Statistical Modeling of Extreme Values;' by S. Coles, 2001, Springer.
 The functions may be divided into the following groups; maxima/minima,
 order statistics, peaks over thresholds and point processes.
+@item its
+An S4 class for handling irregular time series.
 @item knnTree
 Construct or predict with @math{k}-nearest-neighbor classifiers, using
 cross-validation to select @math{k}, choose variables (by forward or
