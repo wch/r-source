@@ -39,7 +39,7 @@ extern int AllDevicesKilled;
 
 #define MM_PER_INCH	25.4	/* mm -> inch conversion */
 
-#define TRACEDEVGA(a) 
+#define TRACEDEVGA(a)  
 #define NOBM(a) if(!xd->kind){a;}
 #define CLIP if (xd->clip.width>0) gsetcliprect(_d,xd->clip)
 #define DRAW(a) {drawing _d=xd->gawin;CLIP;a;NOBM(_d=xd->bm;CLIP;a;)}
@@ -336,8 +336,8 @@ static void SetFont(int face, int size, double rot, DevDesc *dd)
     if (!xd->usefixed &&
 	(size != xd->fontsize || face != xd->fontface ||
 	 rot != xd->fontangle)) {
-	del(xd->font); doevent();
-	xd->font = gnewfont(xd->gawin,
+	 del(xd->font); doevent();
+	 xd->font = gnewfont(xd->gawin,
 			    fontname[face - 1], fontstyle[face - 1],
 			    size, rot);
 	if (xd->font) {
@@ -1519,7 +1519,7 @@ static void X11_Line(double x1, double y1, double x2, double y2,
     yy2 = (int) y2;
 
     SetColor(dd->gp.col, dd),
-	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
+    SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
     DRAW(gdrawline(_d, xd->lwd, xd->lty, xd->fgcolor,
 		   pt(xx1, yy1), pt(xx2, yy2)));
 }
@@ -1535,29 +1535,22 @@ static void X11_Line(double x1, double y1, double x2, double y2,
 
 static void X11_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
 {
-    point p1, p2;
+    point *p = (point *) C_alloc(n, sizeof(point));
     double devx, devy;
     int   i;
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
-
     TRACEDEVGA("pl");
-    devx = x[0];
-    devy = y[0];
-    GConvert(&devx, &devy, coords, DEVICE, dd);
-    p1.x = (int) devx;
-    p1.y = (int) devy;
-    SetColor(dd->gp.col, dd),
-	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
-    for (i = 1; i < n; i++) {
-	devx = x[i];
-	devy = y[i];
-	GConvert(&devx, &devy, coords, DEVICE, dd);
-	p2.x = (int) devx;
-	p2.y = (int) devy;
-	DRAW(gdrawline(_d, xd->lwd, xd->lty, xd->fgcolor, p1, p2));
-	p1.x = p2.x;
-	p1.y = p2.y;
+    for ( i = 0; i < n; i++) {
+      devx = x[i];
+      devy = y[i];
+      GConvert(&devx, &devy, coords, DEVICE, dd);
+      p[i].x = (int) devx;
+      p[i].y = (int) devy;
     }
+    SetColor(dd->gp.col, dd),
+    SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
+    DRAW(gdrawpolyline(_d, xd->lwd, xd->lty, xd->fgcolor, p, n, 0));
+    C_free((char *) p);
 }
 
 	/********************************************************/
@@ -1581,7 +1574,7 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
     TRACEDEVGA("plg");
-    points = (point *) C_alloc(n + 1, sizeof(point));
+    points = (point *) C_alloc(n , sizeof(point));
     if (!points)
 	return;
     for (i = 0; i < n; i++) {
@@ -1591,8 +1584,6 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
 	points[i].x = (int) (devx);
 	points[i].y = (int) (devy);
     }
-    points[n].x = points[0].x;
-    points[n].y = points[0].y;
     if (bg != NA_INTEGER) {
 	SetColor(bg, dd);
 	DRAW(gfillpolygon(_d, xd->fgcolor, points, n));
@@ -1600,7 +1591,7 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
     if (fg != NA_INTEGER) {
 	SetColor(fg, dd);
 	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
-	DRAW(gdrawpolygon(_d, xd->lwd, xd->lty, xd->fgcolor, points, n + 1));
+	DRAW(gdrawpolygon(_d, xd->lwd, xd->lty, xd->fgcolor, points, n ));
     }
     C_free((char *) points);
 }
@@ -1645,7 +1636,7 @@ static void X11_Text(double x, double y, int coords,
 	x -= pixs;
     SetFont(dd->gp.font, size, rot, dd);
     SetColor(dd->gp.col, dd),
-	gsetcliprect(xd->gawin, getrect(xd->gawin));
+    gsetcliprect(xd->gawin, getrect(xd->gawin));
     gdrawstr(xd->gawin, xd->font, xd->fgcolor, pt(x, y), str);
     if (!xd->kind) {
 	gsetcliprect(xd->bm, getrect(xd->bm));
