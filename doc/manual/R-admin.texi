@@ -241,9 +241,9 @@ building from the sources.
 
 First review the essential and useful tools and libraries in
 @ref{Essential and useful other programs}, and install those you want or
-need.  Ensure that the environment variable @env{TMPDIR} is either
-unset (and @file{/tmp} exists and can be written in) or points to a
-valid temporary directory.
+need.  Ensure that the environment variable @env{TMPDIR} is either unset
+(and @file{/tmp} exists and can be written in and executed from) or
+points to a valid temporary directory.
 
 @findex R_HOME
 Choose a place to install the @R{} tree (@R{} is not just a binary, but
@@ -534,7 +534,7 @@ or @file{miniR.exe}.  Just double-click on the icon and follow the
 instructions.  You can uninstall @R{} from the Control Panel.
 
 See the @uref{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
-@acronym{FAQ}}, for more details.
+@acronym{FAQ}} for more details.
 
 @menu
 * Building from source::        
@@ -659,9 +659,13 @@ R CMD INSTALL -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
 
 @noindent
 The part @samp{-l /path/to/library} can be omitted, in which case the
-first library in @env{R_LIBS} is used if set, otherwise the main
-library @file{@var{R_HOME}/library} is used.  (@env{R_LIBS} is looked
-for in the environment: @file{.Renviron} is not read by @command{R CMD}.)
+first library in @env{R_LIBS} is used if set, otherwise the main library
+@file{@var{R_HOME}/library} is used.  (@env{R_LIBS} is looked for in the
+environment: @file{.Renviron} is not read by @command{R CMD}.)  Ensure
+that the environment variable @env{TMPDIR} is either unset (and
+@file{/tmp} exists and can be written in and executed from) or points to
+a valid temporary directory.
+
 
 The same command works in Windows if you have the source-code package
 files installed.  There are a number of options available: use @code{R
