@@ -817,3 +817,17 @@ show(foo)
 print(foo, digits = 4)
 if(!hasMethods) detach("package:methods")
 ##
+
+
+## scoping rules calling step inside a function
+if(require(MASS)) {
+    teststep <- function(formula, data)
+    {
+        d2 <- data
+        fit <- lm(formula, data=d2)
+        step(fit)
+    }
+    teststep(formula(y ~ .), cement)
+    detach("package:MASS")
+}
+## failed in 1.6.2

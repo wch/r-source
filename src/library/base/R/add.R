@@ -1,4 +1,4 @@
-#### copyright (C) 1998-2002 B. D. Ripley
+#### copyright (C) 1998-2003 B. D. Ripley
 add1 <- function(object, scope, ...) UseMethod("add1")
 
 add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
@@ -510,24 +510,24 @@ step <- function(object, scope, scale = 0,
 		 direction = c("both", "backward", "forward"),
 		 trace = 1, keep = NULL, steps = 1000, k = 2, ...)
 {
-    fixFormulaObject <- function(object) {
-	tt <- terms(object)
-	tmp <- attr(tt, "term.labels")
-	if (!attr(tt, "intercept"))
-	    tmp <- c(tmp, "0")
-	if (!length(tmp))
-	    tmp <- "1"
-        tmp <- paste("~", paste(tmp, collapse = " + "))
-        form <- formula(object) # some formulae have no lhs
-        tmp <- if(length(form) > 2) paste(deparse(form[[2]]), tmp)
-        ## must be as.character as deparse gives spurious ()
-	if (length(offset <- attr(tt, "offset")))
-	    tmp <- paste(tmp, as.character(attr(tt, "variables")[offset + 1]),
-			 sep = " + ")
-	form <- formula(tmp)
-        environment(form) <- environment(tt)
-        form
-    }
+#     fixFormulaObject <- function(object) {
+# 	tt <- terms(object)
+# 	tmp <- attr(tt, "term.labels")
+# 	if (!attr(tt, "intercept"))
+# 	    tmp <- c(tmp, "0")
+# 	if (!length(tmp))
+# 	    tmp <- "1"
+#         tmp <- paste("~", paste(tmp, collapse = " + "))
+#         form <- formula(object) # some formulae have no lhs
+#         tmp <- if(length(form) > 2) paste(deparse(form[[2]]), tmp)
+#         ## must be as.character as deparse gives spurious ()
+# 	if (length(offset <- attr(tt, "offset")))
+# 	    tmp <- paste(tmp, as.character(attr(tt, "variables")[offset + 1]),
+# 			 sep = " + ")
+# 	form <- formula(tmp)
+#         environment(form) <- environment(tt)
+#         form
+#     }
     mydeviance <- function(x, ...)
     {
         dev <- deviance(x)
@@ -553,7 +553,6 @@ step <- function(object, scope, scale = 0,
     {
 	change <- sapply(models, "[[", "change")
 	rd <- sapply(models, "[[", "deviance")
-	dd <- c(NA, diff(rd))
         dd <- c(NA, abs(diff(rd)))
 	rdf <- sapply(models, "[[", "df.resid")
 	ddf <- c(NA, diff(rdf))
@@ -577,11 +576,13 @@ step <- function(object, scope, scale = 0,
     }
 
     ## need to fix up . in formulae in R
-    object$formula <- fixFormulaObject(object)
-    Terms <- object$formula
-    object$call$formula <- object$formula
-    attributes(Terms) <- attributes(object$terms)
-    object$terms <- Terms
+#     object$formula <- fixFormulaObject(object)
+#     Terms <- object$formula
+#     object$call$formula <- object$formula
+#     attributes(Terms) <- attributes(object$terms)
+#     object$terms <- Terms
+    Terms <- terms(object)
+    object$call$formula <- object$formula <- Terms
     md <- missing(direction)
     direction <- match.arg(direction)
     backward <- direction == "both" | direction == "backward"
@@ -670,13 +671,16 @@ step <- function(object, scope, scale = 0,
 	    change <- rownames(aod)[o[1]]
 	}
 	usingCp <- match("Cp", names(aod), 0) > 0
-	fit <- update(fit, paste("~ .", change))
+        ## may need to look for a `data' argument in parent
+	fit <- update(fit, paste("~ .", change), evaluate = FALSE)
+        fit <- eval.parent(fit)
         if(length(fit$residuals) != n)
             stop("number of rows in use has changed: remove missing values?")
-	fit$formula <- fixFormulaObject(fit)
-	Terms <- fit$formula
-	attributes(Terms) <- attributes(fit$terms)
-	fit$terms <- Terms
+## 	fit$formula <- fixFormulaObject(fit)
+## 	Terms <- fit$formula
+## 	attributes(Terms) <- attributes(fit$terms)
+## 	fit$terms <- Terms
+        Terms <- terms(fit)
 	bAIC <- extractAIC(fit, scale, k = k, ...)
 	edf <- bAIC[1]
 	bAIC <- bAIC[2]

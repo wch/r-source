@@ -2198,3 +2198,36 @@ S4 print method
 > if(!hasMethods) detach("package:methods")
 > ##
 > 
+> 
+> ## scoping rules calling step inside a function
+> if(require(MASS)) {
++     teststep <- function(formula, data)
++     {
++         d2 <- data
++         fit <- lm(formula, data=d2)
++         step(fit)
++     }
++     teststep(formula(y ~ .), cement)
++     detach("package:MASS")
++ }
+Loading required package: MASS 
+Start:  AIC= 26.94 
+ y ~ x1 + x2 + x3 + x4 
+
+       Df Sum of Sq    RSS    AIC
+- x3    1     0.109 47.973 24.974
+- x4    1     0.247 48.111 25.011
+- x2    1     2.972 50.836 25.728
+<none>              47.864 26.944
+- x1    1    25.951 73.815 30.576
+
+Step:  AIC= 24.97 
+ y ~ x1 + x2 + x4 
+
+       Df Sum of Sq    RSS    AIC
+<none>               47.97  24.97
+- x4    1      9.93  57.90  25.42
+- x2    1     26.79  74.76  28.74
+- x1    1    820.91 868.88  60.63
+> ## failed in 1.6.2
+> 
