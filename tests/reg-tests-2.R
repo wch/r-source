@@ -1505,10 +1505,10 @@ y <- rnorm(1:20)
 x <- 1:20; x[10] <- NA
 x2 <- runif(20); x2[20] <- NA
 fit <- lm(y ~ x)
-drop1(fit)
-res <-  try(stats:::drop1.default(fit))
-stopifnot(inherits(res, "try-error"))
-add1(fit, ~ . +x2)
-res <-  try(stats:::add1.default(fit, ~ . +x2))
-stopifnot(inherits(res, "try-error"))
-## 2.0.1 ran and gave incorrect answers.
+(res0 <- drop1(fit))
+(res <-  try(stats:::drop1.default(fit)))
+stopifnot(all.equal(res0[, "AIC"], res[, "AIC"]))
+(res1 <- add1(fit, ~ . +x2))
+(res <-  try(stats:::add1.default(fit, ~ . +x2)))
+stopifnot(all.equal(res1[, "AIC"], res[, "AIC"]))
+## In 2.0.1 these ran and gave incorrect answers.
