@@ -46,7 +46,7 @@ extern int AllDevicesKilled;
 
 #define MM_PER_INCH	25.4	/* mm -> inch conversion */
 
-#define TRACEDEVGA(a)  
+#define TRACEDEVGA(a)
 #define NOBM(a) if(!xd->kind){a;}
 #define CLIP if (xd->clip.width>0) gsetcliprect(_d,xd->clip)
 #define DRAW(a) {drawing _d=xd->gawin;CLIP;a;NOBM(_d=xd->bm;CLIP;a;)}
@@ -207,7 +207,7 @@ static void PrivateCopyDevice(DevDesc *dd,DevDesc *ndd, char *name)
     show(xd->gawin);
 }
 
-static void SaveAsWin(DevDesc *dd, char *display) 
+static void SaveAsWin(DevDesc *dd, char *display)
 {
     DevDesc *ndd = (DevDesc *) malloc(sizeof(DevDesc));
     if (!ndd) {
@@ -219,10 +219,10 @@ static void SaveAsWin(DevDesc *dd, char *display)
     if (X11DeviceDriver(ndd, display,
 			 GConvertXUnits(1.0, NDC, INCHES, dd),
 			 GConvertYUnits(1.0, NDC, INCHES, dd),
-			 dd->gp.ps)) 
+			 dd->gp.ps))
         PrivateCopyDevice(dd,ndd,display);
 }
-    
+
 
 static void SaveAsPostscript(DevDesc *dd, char *fn)
 {
@@ -264,11 +264,11 @@ static void SaveAsPostscript(DevDesc *dd, char *fn)
            done += 1;
         }
       }
-   }   
+   }
    if (PSDeviceDriver(ndd, fn, paper, family, bg, fg,
 		      GConvertXUnits(1.0, NDC, INCHES, dd),
 		      GConvertYUnits(1.0, NDC, INCHES, dd),
-		      (double)0, dd->gp.ps, 0, 1)) 
+		      (double)0, dd->gp.ps, 0, 1))
     /* horizontal=F, onefile=F, pagecentre=T */
         PrivateCopyDevice(dd, ndd, "postscript");
 }
@@ -570,11 +570,11 @@ static void HelpMouseClick(window w, int button, point pt)
     }
 }
 
-static void menustop(control m) 
+static void menustop(control m)
 {
   DevDesc *dd = (DevDesc *) getdata(m);
   x11Desc *xd = (x11Desc *) dd->deviceSpecific;
-  if (!xd->locator) 
+  if (!xd->locator)
      return;
   xd->clicked = 2;
 }
@@ -622,7 +622,7 @@ static void menuwm(control m)
     if (!fn) return;
     fixslash(fn);
     sprintf(display, "win.metafile:%s", fn);
-    SaveAsWin(dd,display);    
+    SaveAsWin(dd,display);
 }
 
 
@@ -630,7 +630,7 @@ static void menuwm(control m)
 static void menuclpwm(control m)
 {
     DevDesc *dd = (DevDesc *) getdata(m);
-    SaveAsWin(dd,"win.metafile");        
+    SaveAsWin(dd,"win.metafile");
 }
 
 static void menuclpbm(control m)
@@ -647,7 +647,7 @@ static void menuclpbm(control m)
 static void menuprint(control m)
 {
     DevDesc *dd = (DevDesc *) getdata(m);
-    SaveAsWin(dd,"win.print");        
+    SaveAsWin(dd,"win.print");
 }
 
 
@@ -996,7 +996,7 @@ static void mbarf(control m)
 #define MCHECK(m) {if(!(m)) {del(xd->gawin); return 0;}}
 
 
-static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, 
+static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
                     double w, double h)
 {
     /* if have to bail out with "error" then must */
@@ -1046,7 +1046,7 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
                 int btsize = 24;
                 rect r = rect(2, 2, btsize, btsize);
                 control bt, tb;
-                
+
                 MCHECK(tb = newtoolbar(btsize + 4));
 		gsetcursor(tb, ArrowCursor);
                 addto(tb);
@@ -1072,7 +1072,7 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
                 MCHECK(xd->stoploc = newtoolbutton(stop_image, r, menustop));
                 MCHECK(addtooltip(xd->stoploc, "Stop locator"));
 		gsetcursor(bt, ArrowCursor);
-                setdata(xd->stoploc,(void *) dd);            
+                setdata(xd->stoploc,(void *) dd);
                 hide(xd->stoploc);
             } else
                 xd->stoploc = NULL;
@@ -1327,7 +1327,7 @@ static void X11_NewPage(DevDesc *dd)
     xd->bgcolor = rgb(R_RED(xd->bg),
 		      R_GREEN(xd->bg),
 		      R_BLUE(xd->bg));
-    if (xd->kind) 
+    if (xd->kind)
        xd->clip = getrect(xd->gawin);
     else
        xd->clip = getrect(xd->bm);
@@ -1644,7 +1644,7 @@ static void X11_Text(double x, double y, int coords,
 	gsetcliprect(xd->bm, getrect(xd->bm));
 	gdrawstr(xd->bm, xd->font, xd->fgcolor, pt(x, y), str);
     }
-#else      
+#else
     DRAW(gdrawstr(_d, xd->font, xd->fgcolor, pt(x, y), str));
 #endif
 }
@@ -1684,7 +1684,7 @@ static int X11_Locator(double *x, double *y, DevDesc *dd)
     if (xd->stoploc) {
       hide(xd->stoploc);
       show(xd->gawin);
-    }    
+    }
     gsetcursor(xd->gawin, ArrowCursor);
     gchangepopup(xd->gawin, xd->grpopup);
     addto(xd->gawin);
@@ -1885,15 +1885,15 @@ SEXP do_saveDevga(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!dd) errorcall(call, "invalid device");
     filename = CADR(args);
     if (!isString(filename) || LENGTH(filename) != 1)
-	errorcall(call, "invalid filename argument\n");
+	errorcall(call, "invalid filename argument");
     fn = CHAR(STRING(filename)[0]);
     fixslash(fn);
     type = CADDR(args);
     if (!isString(type) || LENGTH(type) != 1)
-	errorcall(call, "invalid filename argument\n");
+	errorcall(call, "invalid filename argument");
     tp = CHAR(STRING(type)[0]);
     Rprintf("device %d fn %s tp %s\n", device, fn, tp);
-    
+
     if(!strcmp(tp, "gif")) {
 	SaveAsGif(dd, fn);
     } else if (!strcmp(tp, "wmf")) {
@@ -1901,7 +1901,7 @@ SEXP do_saveDevga(SEXP call, SEXP op, SEXP args, SEXP env)
 	SaveAsWin(dd, display);
     } else if (!strcmp(tp, "ps")) {
 	SaveAsPostscript(dd, fn);
-    } else 
-	errorcall(call, "unknown type\n");
+    } else
+	errorcall(call, "unknown type");
     return R_NilValue;
 }

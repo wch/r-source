@@ -43,7 +43,7 @@ SEXP do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
     ntopics = length(fn);
     if (ntopics > 0) {
 	if (!isString(fn) || ntopics > 500)
-	    errorcall(call, "invalid topics argument\n");
+	    errorcall(call, "invalid topics argument");
 	for(i = 0; i < ntopics; i++)
 	    topics[i] = CHAR(STRING(fn)[i]);
     }
@@ -60,7 +60,7 @@ SEXP do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = rc;
     UNPROTECT(1);
-    return ans;    
+    return ans;
 }
 
 

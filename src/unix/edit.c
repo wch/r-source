@@ -38,17 +38,17 @@
 
 /*
  * ed, vi etc have 3 parameters. the data, a file and an editor
- * 
+ *
  * If `file' is specified then the given file is used (and not removed on
  * exit). If `file' is not specified then a temporary file is used; since
  * only one temporary file is used for an entire session previous
  * editing is lost. That file is removed at the end of the R session.
- * 
+ *
  * If `data' is specified then it is passed out to be edited; if `data' is not
  * specified then either `file' (if specified) or the temporary file is used
  * (thus errors can be re-edited by calling edit a second time with no
  * arguments).
- * 
+ *
  * If the editor is specified then the specified editor is invoked if
  * possible and an error message reported otherwise
  */
@@ -93,9 +93,9 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     else filename = DefaultFileName;
 
     if (x != R_NilValue) {
-	
+
 	if((fp=R_fopen(R_ExpandFileName(filename), "w")) == NULL)
-	    errorcall(call, "unable to open file\n");
+	    errorcall(call, "unable to open file");
 	if (LENGTH(STRING(fn)[0]) == 0) EdFileUsed++;
 	if (TYPEOF(x) != CLOSXP || isNull(t = getAttrib(x, R_SourceSymbol)))
 	    t = deparse1(x, 0);
@@ -113,7 +113,7 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     sprintf(editcmd, "%s \"%s\"", CHAR(STRING(ed)[0]), filename);
     rc = runcmd(editcmd, 1, 1, "");
     if (rc == NOLAUNCH)
-	errorcall(call, "unable to run editor\n");
+	errorcall(call, "unable to run editor");
     if (rc != 0)
 	warningcall(call, "editor ran but returned error status\n");
 #else

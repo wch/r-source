@@ -73,7 +73,7 @@ void ProcessEvents(void)
     while (peekevent()) doevent();
     if (UserBreak) {
 	UserBreak = 0;
-	/* error("user break\n"); */
+	/* error("user break"); */
 	raise(SIGINT);
     }
     R_CallBackHook();
@@ -182,13 +182,13 @@ int CharReadConsole(char *prompt, char *buf, int len, int addtohistory)
     int   i;
     HANDLE rH;
     if (!gl) {
-      /* 
+      /*
          All the signal stuff must be rethinked. Anyway, in this way
          it works both under NT and 9X. But, first SIGINT can be lost
          (if is received AFTER signal(SIGINT,pipe_onintr) and
           BEFORE WaitMessage() below).
       */
-        sighandler_t oldhandler = signal(SIGINT, pipe_onintr); 
+        sighandler_t oldhandler = signal(SIGINT, pipe_onintr);
 	strcpy(LastLine, prompt);
 	lineavailable = 0;
 	mainThreadId = GetCurrentThreadId();
@@ -289,7 +289,7 @@ PipeReadConsole(char *prompt, char *buf, int len, int addhistory)
     return 1;
 }
 
-/*4: non-interactive 
+/*4: non-interactive
 */
 static int
 FileReadConsole(char *prompt, char *buf, int len, int addhistory)
@@ -443,10 +443,10 @@ void R_CleanUp(int saveact)
  *  7) PLATFORM DEPENDENT FUNCTIONS
  */
 
-    /* 
-       This function can be used to display the named files with the 
-       given titles and overall title.  On GUI platforms we could 
-       use a read-only window to display the result.  Here we just 
+    /*
+       This function can be used to display the named files with the
+       given titles and overall title.  On GUI platforms we could
+       use a read-only window to display the result.  Here we just
        make up a temporary file and invoke a pager on it.
     */
 
@@ -585,7 +585,7 @@ static void processRenviron()
     char *opt[2], optf[MAX_PATH], buf[80];
     int   ok;
 
-    
+
     if (!optopenfile(".Renviron")) {
 	sprintf(optf, "%s/.Renviron", getenv("R_USER"));
 	if (!optopenfile(optf)) return;
@@ -614,7 +614,7 @@ void R_SetWin32(Rstart Rp)
     R_yesnocancel = Rp->yesnocancel;
     my_R_Busy = Rp->busy;
     /* Process ~/.Renviron, if it exists. */
-    if(!Rp->NoRenviron) 
+    if(!Rp->NoRenviron)
 	processRenviron();
     _controlfp(_MCW_EM, _MCW_EM);
 }
@@ -651,7 +651,7 @@ int cmdlineoptions(int ac, char **av)
     /* Store the command line arguments before they are processed
        by the different option handlers. We do this here so that
        we get all the name=value pairs. Otherwise these will
-       have been removed by the time we get to call 
+       have been removed by the time we get to call
        R_common_command_line().
      */
     R_set_command_line_arguments(ac, av, Rp);

@@ -35,7 +35,7 @@
 
 static char DefaultFileName[MAX_PATH];
 
-/* 
+/*
  * replacement for Windows function that uses root directory
  */
 char * tmpnam(char * str)
@@ -48,7 +48,7 @@ char * tmpnam(char * str)
     if (!tmp) tmp = getenv("TEMP");
     if (!tmp) tmp = getenv("R_USER"); /* this one will succeed */
     /* make sure no spaces in path */
-    for (p = tmp; *p; p++) 
+    for (p = tmp; *p; p++)
 	if (isspace(*p)) { hasspace = 1; break; }
     if (hasspace)
 	GetShortPathName(tmp, tmp1, MAX_PATH);
@@ -78,7 +78,7 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!tmp) tmp = getenv("TEMP");
     if (!tmp) tmp = getenv("R_USER"); /* this one will succeed */
     /* make sure no spaces in path */
-    for (p = tmp; *p; p++) 
+    for (p = tmp; *p; p++)
 	if (isspace(*p)) { hasspace = 1; break; }
     if (hasspace)
 	GetShortPathName(tmp, tmp1, MAX_PATH);
@@ -161,7 +161,7 @@ SEXP do_helpstart(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     home = getenv("R_HOME");
     if (home == NULL)
-	error("R_HOME not set\n");
+	error("R_HOME not set");
     sprintf(buf, "%s\\doc\\html\\index.html", home);
     ff = fopen(buf, "r");
     if (!ff) {
@@ -208,7 +208,7 @@ SEXP do_helpitem(SEXP call, SEXP op, SEXP args, SEXP env)
 	fclose(ff);
 	home = getenv("R_HOME");
 	if (home == NULL)
-	    error("R_HOME not set\n");
+	    error("R_HOME not set");
 	ShellExecute(NULL, "open", item, NULL, home, SW_SHOW);
     } else if (type == 2) {
 	if (!isString(CADDR(args)))
@@ -249,22 +249,22 @@ SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 #include <winbase.h>
-/* typedef struct _OSVERSIONINFO{  
-    DWORD dwOSVersionInfoSize; 
-    DWORD dwMajorVersion; 
-    DWORD dwMinorVersion; 
-    DWORD dwBuildNumber; 
-    DWORD dwPlatformId; 
-    TCHAR szCSDVersion[ 128 ]; 
+/* typedef struct _OSVERSIONINFO{
+    DWORD dwOSVersionInfoSize;
+    DWORD dwMajorVersion;
+    DWORD dwMinorVersion;
+    DWORD dwBuildNumber;
+    DWORD dwPlatformId;
+    TCHAR szCSDVersion[ 128 ];
     } OSVERSIONINFO; */
- 
+
 
 SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char isNT[8]="??", ver[256];
     SEXP ans;
     OSVERSIONINFO verinfo;
-    
+
     checkArity(op, args);
     verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
     GetVersionEx(&verinfo);
@@ -277,16 +277,16 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
     case VER_PLATFORM_WIN32s:
 	strcpy(isNT, "win32s");
-	break;	
+	break;
     default:
 	sprintf(isNT, "ID=%d", (int)verinfo.dwPlatformId);
 	break;
     }
-    
+
     sprintf(ver, "Windows %s %d.%d (build %d) %s", isNT,
 	    (int)verinfo.dwMajorVersion, (int)verinfo.dwMinorVersion,
 	    LOWORD(verinfo.dwBuildNumber), verinfo.szCSDVersion);
-    
+
     PROTECT(ans = allocVector(STRSXP, 1));
     STRING(ans)[0] = mkChar(ver);
     UNPROTECT(1);
