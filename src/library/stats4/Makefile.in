@@ -11,7 +11,7 @@ subdir = src/library/stats4
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = DESCRIPTION.in Makefile.in NAMESPACE install.R
+DISTFILES = DESCRIPTION.in Makefile.in NAMESPACE
 
 pkg = stats4
 
@@ -61,8 +61,8 @@ DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 Rfiles: $(top_builddir)/library/$(pkg)/R/$(pkg) \
   $(top_builddir)/library/$(pkg)/R/all.rda
 
-$(top_builddir)/library/$(pkg)/R/$(pkg): $(srcdir)/install.R
-	@$(INSTALL_DATA) $(srcdir)/install.R $@
+$(top_builddir)/library/$(pkg)/R/$(pkg):
+	@touch $@
 
 $(top_builddir)/library/$(pkg)/R/all.rda: all.R
 # remove possibly outdated namespace metainfo.
