@@ -467,6 +467,13 @@ case "${host}" in
       R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee-fp")
     R_PROG_CXX_FLAG(-mieee-fp,
       R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -mieee-fp")
+    ## In current glibc, inline version [x86] of exp is broken
+    AC_EGREP_CPP(yes,
+      [ #include <math.h>
+        #if defined(__GLIBC__)
+          yes
+	#endif ],
+      R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D__NO_MATH_INLINES")
     ;;
   *aix4.[[2-9]]*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
