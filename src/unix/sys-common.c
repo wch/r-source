@@ -361,13 +361,6 @@ void R_SetParams(Rstart Rp)
 
 /* Remove and process common command-line arguments */
 
-/* FIXME: not used?
-static void R_common_badargs() {
-    R_ShowMessage("invalid argument passed to R\n");
-    exit(1);
-}
-*/
-
 /*
   This copies the command line arguments to the Rstart
   structure. The memory is obtained from calloc, etc.
