@@ -4,7 +4,7 @@ show <-
   ## This function exists to be specialized by methods; the definition stored here
   ## is intended as the default method.  In S-Plus, but not currently in R, `show'
   ## is called for automatic display of the result of an evaluated expression.
-  function(object, printTo = stdout())
+  function(object, printTo = stdout(), oldMethods = TRUE)
 {
       if(identical(printTo, FALSE)) {
           tmp <- tempfile()
@@ -17,26 +17,25 @@ show <-
         cat(file = con, "An object of class \"", cl, "\"\n", sep="")
         for(what in slotNames(cl)) {
             cat(file = con, "Slot ",what, ":\n", sep="")
-            show(slot(object, what))
+            print(slot(object, what))
             cat(file = con, "\n")
         }
     }
     else {
+        printFun <- printNoClass
         # Try to honor old-style methods for basic classes & undefined classes.
-        if(isClass(cl)) {
+        if(oldMethods) {
             oldMethod <- paste("print", cl, sep=".")
             if(existsFunction(oldMethod))
                 printFun <- getFunction(oldMethod, generic = FALSE)
-            else
-                printFun <- printNoClass
         }
         if(identical(printTo, FALSE)) {
             sink(con)
-            printFun(unclass(object))
+            printFun(object)
             sink()
         }
         else
-            printFun(unclass(object))
+            printFun(object)
      }
 
     if(identical(printTo, FALSE)) {
@@ -52,7 +51,8 @@ printNoClass <- get("print.default", "package:base")
 print.default <- function(x, ..., printTo = stdout()) {
     cl <- attr(x, "class") # pick off old-style objects
     if(length(cl) == 1 && isClass(cl) && length(list(...)) == 0)
-        show(x, printTo)
+        ## use show, but don't honor print.*, for danger of recursion
+        show(x, printTo, FALSE)
     else
         printNoClass(x, ...)
 }

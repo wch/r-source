@@ -2,7 +2,7 @@
 \alias{show}
 \title{Show an Object}
 \usage{
-show(object, printTo = stdout())
+show(object, printTo = stdout(), oldMethods = TRUE)
 }
 \description{
   display the object, by printing, plotting or whatever suits its class.
@@ -19,7 +19,10 @@ is called for automatic display of the result of an evaluated expression.
 \item{printTo}{Either a file or \link{connection}, or else
     \code{FALSE}.  In the latter case, the lines of text that would
     have been printed are returned as the value of the call.
-}
+  }
+  \item{oldMethods}{Should old-style print methods be used for this
+    object?  \code{TRUE} by default if called directly, but \code{FALSE}
+    when called from the methods package version of \code{print.default}.
 }
 \value{ Usually an invisible \code{NULL}, but if \code{printTo} is
   \code{FALSE}, a character vector containing the lines that would

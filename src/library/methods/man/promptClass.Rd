@@ -45,7 +45,7 @@ and how it is used.
   A message is also printed notifying
   the user about the file.
 }
-\author{ VJ Carey, \email{tvjc@channing.harvard.edu} and John Chambers }
+\author{ VJ Carey, \email{stvjc@channing.harvard.edu} and John Chambers }
 \references{
 The web page \url{http://www.omegahat.org/RSMethods/index.html} is the primary documentation.
 
