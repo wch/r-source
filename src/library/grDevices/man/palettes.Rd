@@ -56,6 +56,7 @@ cm.colors(n)
   translating to RGB numbers.
 }
 \examples{
+require(graphics)
 # A Color Wheel
 pie(rep(1,12), col=rainbow(12))
 

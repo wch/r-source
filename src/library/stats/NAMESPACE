@@ -62,7 +62,8 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        write.ftable, xtabs, pbirthday, qbirthday)
 
 
-importFrom(graphics, identify, lines, plot)
+import(graphics)
+importFrom(grDevices, dev.interactive, palette)
 importFrom(utils, str)
 
 ## register all the methods for generics elsewhere in case namespace is
