@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-48, 2004-03-04
+Version 1.8-49 2004-03-10
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1285,6 +1285,10 @@ distributions of R.)
      A common database interface (DBI) class and method definitions.  All
      classes in this package are virtual and need to be extended by the
      various DBMS implementations.
+
+*DCluster*
+     A set of functions for the detection of spatial clusters of diseases
+     using count data.
 
 *Davies*
      Functions for the Davies quantile function and the Generalized Lambda

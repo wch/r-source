@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-48, @value{FAQ-YEAR}-03-04
+@set FAQ-VERSION 1.8-49 @value{FAQ-YEAR}-03-10
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -1593,6 +1593,9 @@ Graphics Using R'' by John H. Maindonald and W. John Brown, 2003.
 A common database interface (DBI) class and method definitions.  All
 classes in this package are virtual and need to be extended by the
 various DBMS implementations.
+@item DCluster
+A set of functions for the detection of spatial clusters of diseases
+using count data.
 @item Davies
 Functions for the Davies quantile function and the Generalized Lambda
 distribution.
