@@ -144,11 +144,11 @@ R: Makefile
 
 $(top_builddir)/bin/R.X11: $(OBJECTS) $(RLIBS) @EXPORTFILE@
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
-	$(LDCMD) $(DLLFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(ALL_LIBS)
+	$(MAINLD) $(MAINLDFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(ALL_LIBS)
 
 $(top_builddir)/bin/R.GNOME: $(OBJECTS) $(RGNOMELIBS)
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
-	$(LDCMD) $(DLLFLAGS) $(LDFLAGS) $(GNOME_LIBDIR) -o $@ $(OBJECTS) $(ALL_GNOME_LIBS)
+	$(MAINLD) $(MAINLDFLAGS) $(LDFLAGS) $(GNOME_LIBDIR) -o $@ $(OBJECTS) $(ALL_GNOME_LIBS)
 
 $(top_builddir)/etc/R.exp: $(OBJECTS) $(RLIBS)
 	@$(top_srcdir)/tools/ldAIX4 -o $@ $(OBJECTS) $(RLIBS)
