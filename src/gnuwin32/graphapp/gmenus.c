@@ -60,6 +60,25 @@ menu newpopup(actionfn fn) {
    return mnew;
 }
 
+void gchangepopup(window w, menu m) {
+   w->popup = m;
+}
+
+void gchangemenubar(menubar mb)  {
+   window w = current_window;
+   if (!w) return;
+   w->menubar = mb;
+   SetMenu(w->handle, mb->handle);
+   if (ismdi()) {
+       menu mdi = (w->menubar)->menubar;
+       SendMessage(hwndClient, WM_MDISETMENU,
+                   (WPARAM)w->menubar->handle,
+		   (LPARAM)(mdi ? (mdi->handle) : 0));
+       DrawMenuBar(hwndFrame);
+   } else
+     DrawMenuBar(w->handle);
+}
+
 /* FIXME: only one level of sub-menu - no checks -*/
 static int addmenuitemarray(menu m,MenuItem a[]) {
   menu ma  = m;

@@ -53,11 +53,15 @@ typedef menu popup;
 popup newpopup();
 menubar gmenubar(actionfn fn, MenuItem []);
 popup gpopup(actionfn fn, MenuItem []);
+void gchangepopup(window w, popup p);
+/* next is limited to current window... */
+void gchangemenubar(menubar mb);
 
 /* winalloc.c */
-void *winmalloc(long size);
+#include <stddef.h> /* for size_t */
+void *winmalloc(size_t size);
 void  winfree(void *block);
-void *winrealloc(void *block, long newsize);
+void *winrealloc(void *block, size_t newsize);
 char *winstrdup(char *s);
 
 /* tooltips.c */
@@ -115,7 +119,9 @@ void  gdrawrect(drawing d, int width, int style, rgb c, rect r);
 void  gfillrect(drawing d, rgb fill, rect r);
 void  gdrawellipse(drawing d, int width, rgb border, rect r);
 void  gfillellipse(drawing d, rgb fill, rect r);
-void  gdrawpolygon(drawing d, int width, int style, rgb c, point *p, int n);
+void  gdrawpolyline(drawing d, int width, int style, rgb c, 
+                    point *p, int n, int closepath);
+#define gdrawpolygon(d,w,s,c,p,n) gdrawpolyline(d,w,s,c,p,n,1)
 void  gfillpolygon(drawing d, rgb fill, point *p, int n);
 int   gdrawstr(drawing d, font f, rgb c, point p, char *s);
 rect  gstrrect(drawing d, font f, char *s);
@@ -146,6 +152,8 @@ void gchangescrollbar(scrollbar sb, int which, int where, int max,
 		      int pagesize, int disablenoscroll);
 void gsetcursor(drawing d, cursor c);
 control newtoolbar(int height);
+button  newtoolbutton(image img, rect r, actionfn fn);
+void scrolltext(textbox c, int lines);
 
 /* cursor.c */
 extern cursor CrossCursor;

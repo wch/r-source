@@ -24,8 +24,20 @@
 
 #include "internal.h"
 
-#define GETHDC(a) (((a->kind==PrinterObject)||(a->kind==MetafileObject))?\
-                        ((HDC)a->handle):get_context(a))
+
+static HDC GETHDC(drawing d) 
+{
+  if ( (d->kind == PrinterObject)|| (d->kind == MetafileObject))
+  {
+     HDC dc = (HDC) d->handle ;
+     SelectObject(dc, GetStockObject(NULL_PEN));
+     SelectObject(dc, GetStockObject(NULL_BRUSH));
+     return dc ;
+  }
+  else
+     return get_context(d);
+}
+
 
 /*
  *  Some clipping functions.
@@ -157,17 +169,28 @@ static void CALLBACK  gLineHelper(int x, int y, LPARAM aa)
 
 void gdrawline(drawing d, int width, int style, rgb c, point p1, point p2)
 {
+   point p[2];
+   p[0] = p1;
+   p[1] = p2;
+   gdrawpolyline( d, width, style, c, p, 2, 0);
+}
+
+void gdrawpolyline(drawing d, int width, int style, rgb c, 
+                   point p[], int n, int closepath)
+{
     int a[9];
     HDC dc = GETHDC(d);
     COLORREF winrgb = getwinrgb(d, c);
-    if ((p1.x == p2.x) && (p1.y == p2.y))
-	return;
+    int i;
+    if (n < 2) return;
     if (!style) {
 	HPEN gpen = CreatePen(PS_INSIDEFRAME, width, winrgb);
 	SelectObject(dc, gpen);
 	SetROP2(dc, R2_COPYPEN);
-	MoveToEx(dc, p1.x, p1.y, NULL);
-	LineTo(dc, p2.x, p2.y);
+	MoveToEx(dc, p[0].x, p[0].y, NULL);
+        for (i = 1; i < n ; i++) 
+	      LineTo(dc, p[i].x, p[i].y);
+        if (closepath) LineTo(dc, p[0].x, p[0].y);
 	SelectObject(dc, GetStockObject(NULL_PEN));
 	DeleteObject(gpen);
     }
@@ -183,20 +206,37 @@ void gdrawline(drawing d, int width, int style, rgb c, point p1, point p2)
 	a[2] = (pd * GetDeviceCaps(dc,LOGPIXELSX)) / 72.0 + 0.5;
 	if (a[2] < 1) a[2] = 1;
 	a[3] = 0;
-	if (p1.x != p2.x) {
-	    a[4] = 0;
-	    a[5] = 1;
-	    pshift = pt(0, width/2);
-	}
-	else {
-	    a[4] = 1;
-	    a[5] = 0;
-	    pshift = pt(width/2,0);
-	}
 	a[6] = width;
 	a[7] = style;
 	a[8] = (int) dc;
-	LineDDA(p1.x, p1.y, p2.x, p2.y, gLineHelper, (LPARAM) a);
+        for ( i = 1; i < n; i++) {
+	  if (p[i-1].x != p[i].x) {
+	        a[4] = 0;
+	        a[5] = 1;
+	        pshift = pt(0, width/2);
+	  }
+	  else {
+	        a[4] = 1;
+	        a[5] = 0;
+	        pshift = pt(width/2,0);
+	  }
+ 	  LineDDA(p[i-1].x, p[i-1].y, p[i].x, p[i].y, gLineHelper, (LPARAM) a);
+        }
+        if (closepath) { 
+	  if (p[n-1].x != p[0].x) {
+
+
+	        a[4] = 0;
+	        a[5] = 1;
+	        pshift = pt(0, width/2);
+	  }
+	  else {
+	        a[4] = 1;
+	        a[5] = 0;
+	        pshift = pt(width/2,0);
+	  }
+          LineDDA(p[n-1].x, p[n-1].y, p[0].x, p[0].y, gLineHelper, (LPARAM) a);
+        }
 	SelectObject(dc, GetStockObject(NULL_BRUSH));
 	DeleteObject(br);
     }
@@ -208,10 +248,12 @@ void gdrawrect(drawing d, int width, int style, rgb c, rect r)
     int y0 = r.y;
     int x1 = r.x + r.width;
     int y1 = r.y + r.height;
-    gdrawline(d, width, style, c, pt(x0,y0), pt(x1,y0));
-    gdrawline(d, width, style, c, pt(x1,y0), pt(x1,y1));
-    gdrawline(d, width, style, c, pt(x1,y1), pt(x0,y1));
-    gdrawline(d, width, style, c, pt(x0,y1), pt(x0,y0));
+    point p[4];
+    p[0] = pt(x0,y0);
+    p[1] = pt(x1,y0);
+    p[2] = pt(x1,y1);
+    p[3] = pt(x0,y1);
+    gdrawpolyline(d, width, style, c, p, 4, 1);
 }
 
 void gfillrect(drawing d, rgb fill, rect r)
@@ -349,21 +391,13 @@ void gfillellipse(drawing d, rgb fill, rect r)
     DeleteObject(br);
 }
 
-void gdrawpolygon(drawing d, int width, int style, rgb c, point *p, int n)
-{
-    int i;
-
-    for (i = 1; i < n; i++) 
-	gdrawline(d, width, style, c, p[i-1], p[i]);
-    gdrawline(d, width, style, c, p[n-1], p[0]);
-}
 
 void gfillpolygon(drawing d,rgb fill,point *p, int n)
 {
    HDC dc = GETHDC(d);
    HBRUSH br = CreateSolidBrush(getwinrgb(d,fill));
    fix_brush(dc, d, br);
-   SelectObject(dc, br);	   
+   SelectObject(dc, br);
    Polygon(dc, (POINT FAR *) p, n);
    SelectObject(dc, GetStockObject(NULL_BRUSH));
    DeleteObject(br);
@@ -469,7 +503,7 @@ font gnewfont(drawing d, char *face, int style, int size, double rot)
     HFONT hf;
     LOGFONT lf;
     double pixs;
-    /* the 'magic' 1.1 comes from V */
+
     pixs = size/72.0;
     if ((rot<=45.0) || ((rot>135) && (rot<=225)) || (rot>315))
 	pixs = pixs * devicepixelsy(d);
@@ -478,8 +512,8 @@ font gnewfont(drawing d, char *face, int style, int size, double rot)
 
     lf.lfHeight = - (pixs + 0.5);
 
-    lf.lfWidth = lf.lfEscapement = lf.lfOrientation = 0;
-    lf.lfEscapement = 10*rot;
+    lf.lfWidth = 0 ;
+    lf.lfEscapement = lf.lfOrientation = 10*rot;
     lf.lfWeight = FW_NORMAL;
     lf.lfItalic = lf.lfUnderline = lf.lfStrikeOut = 0;
     if ((! strcmp(face, "Symbol")) ||
@@ -487,7 +521,7 @@ font gnewfont(drawing d, char *face, int style, int size, double rot)
 	lf.lfCharSet = SYMBOL_CHARSET;
     else
 	lf.lfCharSet = ANSI_CHARSET;
-    lf.lfOutPrecision = OUT_DEFAULT_PRECIS;
+    lf.lfOutPrecision = OUT_TT_ONLY_PRECIS ;
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;

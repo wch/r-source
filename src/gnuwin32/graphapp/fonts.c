@@ -106,7 +106,7 @@ void init_fonts(void)
 	DeleteDC(info);
 
 	/* set up standard fonts */
-	SystemFont = new_font_object(GetStockObject(SYSTEM_FONT));
+	SystemFont = new_font_object(GetStockObject(DEFAULT_GUI_FONT));
 	if (SystemFont)
 		SystemFont->text = new_string("SystemFont");
 
