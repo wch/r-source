@@ -453,3 +453,5 @@ effects.lm <- function(z, term) {
 	effects <- yhat1-yhat0
 	tapply(effects,z$model.frame[factors & pattern!=0],mean,na.rm=TRUE)
 }
+
+plot.lm <- function(...) .not.yet.implemented()

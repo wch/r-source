@@ -27,7 +27,7 @@ help <- function(topic, package = .packages(), lib.loc = .lib.loc) {
 
 library <- function(name, help, lib.loc = .lib.loc,
 		    character.only = FALSE, logical.return = FALSE) {
-  # FIXME
+  .not.yet.implemented()
 }
 
 library.dynam <- function(name, package = .packages(), lib.loc = .lib.loc) {
@@ -54,18 +54,23 @@ system <- function(call, intern = FALSE)
   .Internal(system(call, intern))
 
 system.date <- function() {
-  # FIXME
+    .not.yet.implemented()
 }
 
-system.file <- function(dir, name) {
-  # UPDATE THE INTERNAL !!!
+system.file <- function(file, pkg = .packages(), lib = .lib.loc) {
+  .not.yet.implemented()
+  ## UPDATE THE INTERNAL !!!
   .Internal(system.file(dir, name))
 }
 
 system.time <- function(expr) {
-  # FIXME
+  .not.yet.implemented()
+}
+
+tempfile <- function(pattern = "file") {
+  .not.yet.implemented()
 }
 
 unlink <- function(x) {
-  # FIXME
+  .not.yet.implemented()
 }
