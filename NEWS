@@ -148,6 +148,10 @@ NEW FEATURES
 	only mouse input in the Windows screen device has been
 	implemented.  This should improve before the 2.1.0 release..) 
 
+    o	%% now warns if its accuracy is likely to be affected by lack
+	of precision (as in 1e18/11, the unrealistic expectation of
+	PR#7409), and tries harder to return a value in range when it is.
+
 
 UTILITIES
 

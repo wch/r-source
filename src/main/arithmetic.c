@@ -166,8 +166,11 @@ void InitArithmetic()
 
 static double myfmod(double x1, double x2)
 {
-    double q = x1 / x2;
-    return x1 - floor(q) * x2;
+    double q, tmp;
+    tmp = x1 - floor(x1 / x2) * x2;
+    q = floor(tmp/x2);
+    if (q != 0) warning("possible loss of accuracy in modulus");
+    return tmp - q * x2;
 }
 
 
