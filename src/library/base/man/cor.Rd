@@ -47,7 +47,9 @@ cov(x, y = NULL, use = "all.obs")
   of the (co)variance for i.i.d. observations.
   These functions return \code{\link{NA}} when there is only one observation.
 }
-\seealso{\code{\link{cov.wt}} for \emph{weighted} covariance computation.}
+\seealso{\code{\link{cov.wt}} for \emph{weighted} covariance
+  computation, \code{\link{sd}} for standard deviation (vectors).
+}
 \examples{
 var(1:10)# 9.166667
 
