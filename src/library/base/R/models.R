@@ -148,7 +148,7 @@ na.omit <- function(frame)
 ##-	rval
 ##- }
 
-model.frame <- function(x, ...)	UseMethod("model.frame")
+model.frame <- function(formula, ...)	UseMethod("model.frame")
 
 model.frame.default <-
 function(formula, data = NULL, subset=NULL, na.action = na.fail,
@@ -224,7 +224,7 @@ model.matrix.default <- function(formula, data = sys.frame(sys.parent()),
      data <- model.frame(formula, data, xlev=xlev)
  else {
    reorder <- match(as.character(attr(t,"variables"))[-1],names(data))
-   if (any(is.na(reorder))) 
+   if (any(is.na(reorder)))
      stop("model frame and formula mismatch in model.matrix()")
    data <- data[,reorder, drop=FALSE]
  }
