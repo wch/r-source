@@ -33,7 +33,7 @@ cex3 <- c("1","1:1","1i","list(1)","args","lm",
   "formals(lm)[[2]]","y~x","(y~x)[[1]]", "expression(x <- pi)[[1]][[1]]")
 lex3 <- sapply(cex3, function(x) eval(parse(text=x)))
 mex3 <- t(sapply(lex3, function(x) c(typeof(x), storage.mode(x), mode(x))))
-dimnames(mex3) <- list(cex3, c("typeof(.)","mode(.)","storage.mode(.)"))
+dimnames(mex3) <- list(cex3, c("typeof(.)","storage.mode(.)","mode(.)"))
 mex3
 
 ## This also makes a local copy of  `pi':
