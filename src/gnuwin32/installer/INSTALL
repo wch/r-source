@@ -3,15 +3,19 @@ Windows-style Installer
 
 You can make an install package (SetupR.exe) in the usual Windows style
 (by default in Windows 2000 style) by using the installer kit 
-Inno Setup 2.0.17 or later from www.jrsoftware.org. 
+Inno Setup 2.0.9 or later from www.jrsoftware.org. 
 
-First go to the parent of this directory and make the distribution zip
+You need the R installation built completely (see ../INSTALL: this
+includes making bitmap and Tcl/Tk support and the manuals).
+It's worthwhile testing it too!
+
+Go to the parent of this directory and make the distribution zip
 files by
 
 make tcl
 make distribution
 
-Then in this directory, edit ISDIR in Makefile and then run
+Then in this directory, edit ISDIR and PKGS in Makefile and then run
 
 make
 make ISclean
