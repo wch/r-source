@@ -34,7 +34,7 @@ X \%x\% Y
 \author{Jonathan Rougier}
 
 \seealso{\code{\link{outer}} on which \code{kronecker} is built and
-    \code{\link{\%*\%}} for usual matrix multiplication.
+    \code{\link{matmult}} for usual matrix multiplication.
 }
 \examples{
 # simple scalar multiplication
