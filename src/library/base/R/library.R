@@ -204,7 +204,7 @@ require <- function(package, quietly = FALSE, warn.conflicts = TRUE,
                     ans <- c(ans, nam)
             }
         }
-        return(ans)
+        return(unique(ans))
     } ## else
     s <- search()
     return(invisible(substring(s[substr(s, 1, 8) == "package:"], 9)))
