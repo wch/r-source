@@ -18,7 +18,7 @@ search index is still confined to the system library.
 
 The installers set up a file association for .RData files.
 
-Drag-and-drop of images (.RData and .rda) and source files (.rda)
+Drag-and-drop of images (.RData and .rda) and source files (.R)
 to the Rgui.exe console window is now supported.
 
 Profiling is now available.
@@ -35,6 +35,9 @@ packages.
 
 The old-style Windows help is no longer part of the standard distribution,
 but can be made from the sources.
+
+Rcmd check has been changed to be more robust to reported problems with
+Perl's system() command.
 
 
 

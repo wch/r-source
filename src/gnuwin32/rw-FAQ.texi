@@ -842,6 +842,8 @@ versions of Perl on some 16-bit Windows installations.  Usually there are
 alternatives such as @code{make pkgcheck-foo}, but you could try getting
 a modern operating system!
 
+Hopefully this version (rw1030) is more robust in this respect.
+
 @ifhtml
 @html
 <p><hr WIDTH="100%">

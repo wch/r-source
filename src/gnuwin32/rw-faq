@@ -694,6 +694,8 @@ of Perl on some 16-bit Windows installations.  Usually there are
 alternatives such as `make pkgcheck-foo', but you could try getting a
 modern operating system!
 
+Hopefully this version (rw1030) is more robust in this respect.
+
 
 
 Last edited 2001 May 18 by Professor B. D. Ripley
