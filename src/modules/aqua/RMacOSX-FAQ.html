@@ -60,6 +60,9 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <p>This is a very first try of writing a R for Mac OS X. I hope to finish it in time for R-1.9.0. 
 In any case, please send me requests/questions you would like answers on.
 
+   <p>This document contains information on how to build <small>R</small> from sources, how to install and run it. 
+It also contains a user guide to the Aqua GUI version of <small>R</small>.
+
 <ul class="menu">
 <li><a accesskey="1" href="#How%20many%20versions%20of%20R%20for%20Mac%20OS%20X%3f">How many versions of R for Mac OS X?</a>: 
 <li><a accesskey="2" href="#What%20machines%20does%20R%20for%20Mac%20OS%20X%20run%20on%3f">What machines does R for Mac OS X run on?</a>: 
@@ -341,11 +344,12 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Building%20R%20from%20sources">Buildin
 
 <h3 class="section">How to build and install the Aqua GUI</h3>
 
-<p>At the moment, there is nothing to  do to build the Aqua GUI. 
+<p>At the moment, there is nothing special to  do to build the Aqua GUI. 
 You just need to install it using
 <pre class="example">     make install-aqua
      </pre>
-   and it will install the <em>R.app</em> application in the <em>Applications</em> folder on your system.
+   and it will install the <em>R.app</em> application in the <em>Applications</em> folder on your system. 
+The install procedure fails if the <code>R.framework</code> has not been installed first.
 
 <div class="node">
 <p><hr>
@@ -436,6 +440,9 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20with%20Aqua%20GUI">R with Aqua GUI
 </div>
 
 <h3 class="section">The R Console</h3>
+
+<p>In this section you'll find general informations on the Aqua GUI. For specific <small>R</small> tasks that
+can be done via the Aqua GUI using menus you should read below (see <a href="#The%20Menus">The Menus</a>).
 
 <ul class="menu">
 <li><a accesskey="1" href="#The%20Input%20and%20the%20Output">The Input and the Output</a>: 
@@ -535,16 +542,62 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20with%20Aqua%20GUI">R with Aqua GUI
 <h3 class="section">The Menus</h3>
 
 <ul class="menu">
-<li><a accesskey="1" href="#Tools%20Menu">Tools Menu</a>: 
-<li><a accesskey="2" href="#Workspace%20Menu">Workspace Menu</a>: 
-<li><a accesskey="3" href="#Packages%20Menu">Packages Menu</a>: 
-<li><a accesskey="4" href="#The%20Help%20menu">The Help menu</a>: 
+<li><a accesskey="1" href="#Application%20Menu">Application Menu</a>: 
+<li><a accesskey="2" href="#File%20Menu">File Menu</a>: 
+<li><a accesskey="3" href="#Edit%20Menu">Edit Menu</a>: 
+<li><a accesskey="4" href="#Tools%20Menu">Tools Menu</a>: 
+<li><a accesskey="5" href="#Workspace%20Menu">Workspace Menu</a>: 
+<li><a accesskey="6" href="#Packages%20Menu">Packages Menu</a>: 
+<li><a accesskey="7" href="#The%20Help%20menu">The Help menu</a>: 
 </ul>
+
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Application%20Menu">Application Menu</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#File%20Menu">File Menu</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#The%20Menus">The Menus</a>
+<br>
+</div>
+
+<h3 class="subsection">Application Menu</h4>
+
+<p>The Application menu is the first one after the main Apple Menu. In Mac OS X 10.3 it reports the name R.bin under Mac OS X 10.2 it is just R (as it should be). 
+We are not able to fix this behaviour at the moment.
+
+   <p>With this menu you can access three items: 1. the About box, which tells you which version of R is currently in use, 2. Check for updates, which search on <small>CRAN</small> if a new version
+of the binary distribution of <small>R</small> for Mac OS X is available (you need an internet connection), 3. you can access the Preferences (see <a href="#Preferences">Preferences</a>).
+
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="File%20Menu">File Menu</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Edit%20Menu">Edit Menu</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Application%20Menu">Application Menu</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#The%20Menus">The Menus</a>
+<br>
+</div>
+
+<h3 class="subsection">File Menu</h4>
+
+<p>This menu provides standard functionalities. 
+The <em>open</em> command is associated to the action  <em>Source </em><small>R</small><em> code</em>, which means that you can select a file, which is a script, and it will be executed
+in <small>R</small>. This is a interface to the <small>R</small> source command <code>source</code>.
+
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Edit%20Menu">Edit Menu</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Tools%20Menu">Tools Menu</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#File%20Menu">File Menu</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#The%20Menus">The Menus</a>
+<br>
+</div>
+
+<h3 class="subsection">Tools Menu</h4>
 
 <div class="node">
 <p><hr>
 Node:&nbsp;<a name="Tools%20Menu">Tools Menu</a>,
 Next:&nbsp;<a rel="next" accesskey="n" href="#Workspace%20Menu">Workspace Menu</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Edit%20Menu">Edit Menu</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#The%20Menus">The Menus</a>
 <br>
 </div>
@@ -717,6 +770,79 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 </div>
 
 <h2 class="chapter">Quartz device</h2>
+
+<p>The quartz device is the native graphic device in R for Mac OS X. It's name derives from Apple's Quartz Tecnology
+which is essentially similar to PDF rendering. One of the most amazing features of Quartz is antialising which gives you
+<em>very nice</em> plots and images. Try to compare with a quartz plot done with any other interactive device. 
+It is also resolution independent.
+
+<ul class="menu">
+<li><a accesskey="1" href="#Interactive%20mode">Interactive mode</a>: 
+<li><a accesskey="2" href="#Saving%20the%20image">Saving the image</a>: 
+<li><a accesskey="3" href="#Copying%20the%20image%20into%20the%20clipboard">Copying the image into the clipboard</a>: 
+<li><a accesskey="4" href="#Known%20bugs%20and%20missing%20features">Known bugs and missing features</a>: 
+</ul>
+
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Interactive%20mode">Interactive mode</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Saving%20the%20image">Saving the image</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Quartz%20device">Quartz device</a>
+<br>
+</div>
+
+<h3 class="section">Interactive mode</h3>
+
+<p>The quartz device allows for interaction. You can use both <code>identify</code> and <code>locator</code> functions. 
+To break the sequence you should press the ESC key on your keyboard as Apple's mouse have ever had only one
+button.
+
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Saving%20the%20image">Saving the image</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Copying%20the%20image%20into%20the%20clipboard">Copying the image into the clipboard</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Interactive%20mode">Interactive mode</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Quartz%20device">Quartz device</a>
+<br>
+</div>
+
+<h3 class="section">Saving the image</h3>
+
+<p>You can can the content of the quartz device window into a PDF file. This is a very simple way to
+export high quality graphics from <small>R</small> into other applications on Mac OS X graphics is PDF based (so are almost all
+applications available). If you want bitmap copies of you quartz device window just use copy, to copy the image into the clipboard and
+paste the result in a graphic application (see <a href="#Copying%20the%20image%20into%20the%20clipboard">Copying the image into the clipboard</a>).
+
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Copying%20the%20image%20into%20the%20clipboard">Copying the image into the clipboard</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#Known%20bugs%20and%20missing%20features">Known bugs and missing features</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Saving%20the%20image">Saving the image</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Quartz%20device">Quartz device</a>
+<br>
+</div>
+
+<h3 class="section">Copying the image into the clipboard</h3>
+
+<p>You can copy the content of the quartz device window in the clipboard to make the resulting image available for
+pasting into other applications. The clipboard will contain a bitmap copy of the quartz device window. If you
+want to work with high resolution images, you should save the content of the quartz device as a PDF file (see <a href="#Saving%20the%20image">Saving the image</a>). 
+Pay attention to the following fact: the bitmap image produced has exactly the same dimensions of the quartz device window. This
+means that if you resize the window, the resulting image you obtain in the clipboard will have the same
+dimensions and you cannot resize the image from the inside another applications (say MS-Word) without loosing quality.
+
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="Known%20bugs%20and%20missing%20features">Known bugs and missing features</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Copying%20the%20image%20into%20the%20clipboard">Copying the image into the clipboard</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Quartz%20device">Quartz device</a>
+<br>
+</div>
+
+<h3 class="section">Known bugs and missing features</h3>
+
+<p>When rendering text and/or mathematical symbols the style is ignored, i.e. only plain style is drawn. 
+The printing function is not yet implemented.
 
 <div class="node">
 <p><hr>

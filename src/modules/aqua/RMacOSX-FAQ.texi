@@ -100,7 +100,8 @@ Stefano M. Iacus                 @*
 This is a very first try of writing a R for Mac OS X. I hope to finish it in time for R-1.9.0.
 In any case, please send me requests/questions you would like answers on.
 
- 
+This document contains information on how to build @R{} from sources, how to install and run it.
+It also contains a user guide to the Aqua GUI version of @R{}.
 @menu
 * How many versions of R for Mac OS X?::                  
 * What machines does R for Mac OS X run on?::  
@@ -275,13 +276,13 @@ As in the above, you don't need to specify the name @emph{R.framework} in the pa
 
 @node  How to build and install the Aqua GUI,  ,How to install R, Building R from sources
 @section How to build and install the Aqua GUI
-At the moment, there is nothing to  do to build the Aqua GUI.
+At the moment, there is nothing special to  do to build the Aqua GUI.
 You just need to install it using
 @example
 make install-aqua
 @end example
 and it will install the @emph{R.app} application in the @emph{Applications} folder on your system.
-
+The install procedure fails if the @file{R.framework} has not been installed first.
 
 
 @node Command line version of R, R with Aqua GUI, Building R from sources, Top
@@ -332,6 +333,8 @@ R. The installation of these packages is available through the
 
 @node The R Console
 @section The R Console
+In this section you'll find general informations on the Aqua GUI. For specific @R{} tasks that
+can be done via the Aqua GUI using menus you should read below (@pxref{The Menus}). 
 @menu 
 * The Input and the Output::
 * Copy and Paste::
@@ -380,11 +383,31 @@ colors (@pxref{Preferences}).
 @node The Menus
 @section The Menus
 @menu
+* Application Menu::
+* File Menu::
+* Edit Menu::
 * Tools Menu::
 * Workspace Menu::
 * Packages Menu::
 * The Help menu::
 @end menu
+
+@node Application Menu
+@subsection Application Menu
+The Application menu is the first one after the main Apple Menu. In Mac OS X 10.3 it reports the name R.bin under Mac OS X 10.2 it is just R (as it should be).
+We are not able to fix this behaviour at the moment.
+
+With this menu you can access three items: 1. the About box, which tells you which version of R is currently in use, 2. Check for updates, which search on @CRAN{} if a new version
+of the binary distribution of @R{} for Mac OS X is available (you need an internet connection), 3. you can access the Preferences (@pxref{Preferences}). 
+
+@node File Menu
+@subsection File Menu
+This menu provides standard functionalities. 
+The @emph{open} command is associated to the action  @emph{Source @R{} code}, which means that you can select a file, which is a script, and it will be executed
+in @R{}. This is a interface to the @R{} source command @command{source}.
+
+@node Edit Menu
+@subsection Tools Menu
 
 @node Tools Menu
 @subsection Tools Menu
@@ -453,6 +476,45 @@ crash.log using the @emph{Console.app} located inside @emph{/Applications/Utilit
 
 @node Quartz device, Additional resources, R and external applications, Top
 @chapter Quartz device
+The quartz device is the native graphic device in R for Mac OS X. It's name derives from Apple's Quartz Tecnology
+which is essentially similar to PDF rendering. One of the most amazing features of Quartz is antialising which gives you
+@emph{very nice} plots and images. Try to compare with a quartz plot done with any other interactive device.
+It is also resolution independent.
+ 
+@menu
+* Interactive mode::
+* Saving the image::
+* Copying the image into the clipboard::
+* Known bugs and missing features::
+@end menu
+
+@node Interactive mode, Saving the image,, Quartz device
+@section Interactive mode
+The quartz device allows for interaction. You can use both @command{identify} and @command{locator} functions.
+To break the sequence you should press the ESC key on your keyboard as Apple's mouse have ever had only one
+button.
+
+@node Saving the image, Copying the image into the clipboard, Interactive mode, Quartz device
+@section Saving the image
+You can can the content of the quartz device window into a PDF file. This is a very simple way to
+export high quality graphics from @R{} into other applications on Mac OS X graphics is PDF based (so are almost all
+applications available). If you want bitmap copies of you quartz device window just use copy, to copy the image into the clipboard and
+paste the result in a graphic application (@pxref{Copying the image into the clipboard}).
+
+@node Copying the image into the clipboard, Known bugs and missing features, Saving the image, Quartz device
+@section Copying the image into the clipboard
+You can copy the content of the quartz device window in the clipboard to make the resulting image available for
+pasting into other applications. The clipboard will contain a bitmap copy of the quartz device window. If you
+want to work with high resolution images, you should save the content of the quartz device as a PDF file (@pxref{Saving the image}).
+Pay attention to the following fact: the bitmap image produced has exactly the same dimensions of the quartz device window. This
+means that if you resize the window, the resulting image you obtain in the clipboard will have the same
+dimensions and you cannot resize the image from the inside another applications (say MS-Word) without loosing quality.
+
+
+@node Known bugs and missing features,,Copying the image into the clipboard,Quartz device
+@section Known bugs and missing features
+When rendering text and/or mathematical symbols the style is ignored, i.e. only plain style is drawn.
+The printing function is not yet implemented.
 
 @node Additional resources
 @chapter Additional resources
