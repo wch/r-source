@@ -5,8 +5,6 @@
 ####
 ####	Functions for  ``d/p/q/r''
 
-source(paste(getenv("SRCDIR"), "all.equal.R", sep="/"))
-
 if(!interactive()) .Random.seed <- c(0,rep(7654, 3))
 
 ###--- Discrete Distributions: Simple Consistency Checks  pZZ = cumsum(dZZ)

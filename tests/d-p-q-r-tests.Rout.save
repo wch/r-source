@@ -19,13 +19,11 @@ Type	"q()" to quit R.
 > ####	r|andom number generation
 > ####
 > ####	Functions for  ``d/p/q/r''
-> 
-> source(paste(getenv("SRCDIR"), "all.equal.R", sep="/"))
-> 
+>
 > if(!interactive()) .Random.seed <- c(0,rep(7654, 3))
-> 
+>
 > ###--- Discrete Distributions: Simple Consistency Checks  pZZ = cumsum(dZZ)
-> 
+>
 > ## Currently, just Wilcoxon  [should do this for all !]
 > is.sym <- TRUE
 > for(n in rpois(5, lam=6))
@@ -40,7 +38,7 @@ Type	"q()" to quit R.
 +     }
 > is.sym
 [1] TRUE
-> 
+>
 > ##--- Cumulative Poisson '==' Cumulative Chi^2 :
 > ##--- Abramowitz & Stegun, p.941 :  26.4.21 (26.4.2)
 > n1 <- 20; n2 <- 16
@@ -51,7 +49,7 @@ Type	"q()" to quit R.
 + 	if(!(is.logical(tst) && tst))
 + 	    cat("lambda=", format(lambda),".  k =",k, " --> tst=", tst,"\n")
 +     }
-> 
+>
 > ##--- Cumulative Binomial '==' Cumulative F :
 > ##--- Abramowitz & Stegun, p.945-6;  26.5.24  AND  26.5.28 :
 > n0 <- 50; n1 <- 16; n2 <- 20; n3 <- 8
@@ -86,7 +84,7 @@ n= 37 : ......................
 n= 39 : ......................
 n= 37 : ......................
 n= 50 : ......................
-> 
+>
 > ##---  Gamma (incl. chi^2) Density :
 > x <- round(rgamma(100, shape = 2),2)
 > for(sh in round(rlnorm(30),2)) {
@@ -105,4 +103,4 @@ n= 50 : ......................
 +                 "\n  shape,scale=",formatC(c(sh, sig)),"\n")
 +     }
 + }
-> 
+>

@@ -21,7 +21,7 @@ TESTout = $(TESTsrc:.R=.Rout)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in README Rdiff \
-	all-equal.R mode-methods.R \
+	mode-methods.R \
 	$(TESTsrc) \
 	$(TESTsrc:.R=.Rout.save)
 
