@@ -163,7 +163,8 @@ void          _praise(int);
   setjmp(jb->jmpbuf); \
   }*/
 #define sigsetjmp(jb, sm) (\
-               sigprocmask(SIG_SETMASK,NULL,&jb->saved_mask),\
+               sm?sigprocmask(SIG_SETMASK,NULL,&jb->saved_mask):0,\
+               jb->mask_was_saved=sm,\
                setjmp(jb->jmpbuf))
 
 

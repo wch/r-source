@@ -192,12 +192,11 @@ static void (*my_R_Busy)(int);
 
 void ProcessEvents(void)
 {
-    while (peekevent()) {
-	doevent();
-    }
+    while (peekevent()) doevent();
     if (UserBreak) {
 	UserBreak = 0;
-	error("user break\n");
+	/* error("user break\n"); */
+	raise(SIGINT);
     }
     R_CallBackHook();
 }
