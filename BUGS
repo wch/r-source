@@ -328,3 +328,11 @@ Date: Thu, 27 Sep 2001 10:37:07 +0200
 Subject: Problem with merge()
 From: Don MacQueen <macq@llnl.gov>
 Date: Thu, 27 Sep 2001 09:20:54 -0700
+* PR# 1103 *
+Subject: Slow output/no break key
+From: richmond@saintmarys.edu
+Date: Fri, 28 Sep 2001 03:24:05 +0200 (MET DST)
+* PR# 1104 *
+Subject: savehistory: Suggestions to a \seealso{}
+From: hb@maths.lth.se
+Date: Fri, 28 Sep 2001 23:34:17 +0200 (MET DST)
