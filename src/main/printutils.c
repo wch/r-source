@@ -149,23 +149,47 @@ char *EncodeReal(double x, int w, int d, int e)
 
 char *EncodeComplex(complex x, int wr, int dr, int er, int wi, int di, int ei)
 {
+#if OLD
     char fmt[64], *efr, *efi;
+#else
+    char *Re, *Im, *tmp;
+    int  flagNegIm = 0; 
+#endif   
 
     /* IEEE allows signed zeros; strip these here */
     if (x.r == 0.0) x.r = 0.0;
     if (x.i == 0.0) x.i = 0.0;
+
 
     if (ISNA(x.r) || ISNA(x.i)) {
 	sprintf(Encodebuf, "%*s%*s", R_print.gap, "", wr+wi+2,
 		CHAR(R_print.na_string));
     }
     else {
+#if OLD
 	if(er) efr = "e"; else efr = "f";
 	if(ei) efi = "e"; else efi = "f";
 	sprintf(fmt,"%%%d.%d%s%%+%d.%d%si", wr, dr, efr, wi, di, efi);
 	sprintf(Encodebuf, fmt, x.r, x.i);
+#else
 
+	/* EncodeReal returns pointer to static storage so copy */
+
+	tmp = EncodeReal(x.r, wr, dr, er);
+	Re = (char *) calloc(strlen(tmp)+1, sizeof(char));
+	strcpy(Re, tmp);
+	
+	if ( flagNegIm = (x.i < 0) )
+	    x.i = -x.i;
+	tmp = EncodeReal(x.i, wi, di, ei);
+	Im = (char *) calloc(strlen(tmp)+1, sizeof(char));
+	strcpy(Im, tmp);
+
+	sprintf(Encodebuf, "%s%s%si", Re, flagNegIm ? "-" : "+", Im);
+
+	free(Re); free(Im);
     }
+#endif
     return Encodebuf;
 }
 
