@@ -97,9 +97,10 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
     undef @section_title;
 
     $skipping = 0;
-    ## remove comments (everything after a %)
+    ## remove comments (everything after a %) and CR in CRLF terminators.
     while(<rdfile>){
 	$_ = expand $_;
+	s/\r//;
 	if (/^#ifdef\s+([A-Za-z0-9]+)/o) {
 	    if ($1 ne $main::OSdir) { $skipping = 1; }
 	    next;
