@@ -50,4 +50,4 @@ ALL_LIBS = $(LIBPATHS) $(PKG_LIBS) $(FLIBS)
 @f77_rules_frag@
 
 $(SHLIB): $(OBJS)
-	$(SHLIB_LD) $(SHLIB_LDFLAGS) $(LDFLAGS) -o $@ $(OBJS) $(ALL_LIBS)
+	$(R_HOME)/bin/R CMD LINK $(SHLIB_LD) $(SHLIB_LDFLAGS) $(LDFLAGS) -o $@ $(OBJS) $(ALL_LIBS)
