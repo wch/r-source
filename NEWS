@@ -179,6 +179,7 @@ BUG FIXES
 
     o	dbeta(x, a,b) was giving NaN and Inf for large a and b.
 
+    o	Now dweibull(0,1) == dexp(0) == 1 for consistency.
 
 	**************************************************
 	*						 *
