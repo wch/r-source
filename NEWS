@@ -192,6 +192,11 @@ BUG FIXES
     o	se.contrasts() works more reliably with multistratum models,
 	and its help page has an example.
 
+    o	summary.lm was not returning r.squared nor adj.r.squared for
+	intercept-only models, but summary.lm.null was returning
+	r.squared but not adj.r.squared.  Now both are always
+	returned.  Neither returned f.statistic, and that is now
+	documented.
 
 
 

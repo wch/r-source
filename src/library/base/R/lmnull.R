@@ -85,7 +85,7 @@ summary.lm.null <- function (object, correlation = FALSE, ...)
     ans$coefficients <- NULL
     ans$sigma <- sqrt(resvar)
     ans$df <- c(p, n - p, n - p)
-    ans$r.squared <- 0
+    ans$r.squared <- ans$adj.r.squared <- 0
     ans$cov.unscaled <- NULL
     class(ans) <- "summary.lm.null"
     ans

@@ -286,7 +286,7 @@ summary.lm <- function (object, correlation = FALSE, ...)
 	    ((n - df.int)/rdf)
 	ans$fstatistic <- c(value = (mss/(p - df.int))/resvar,
 			    numdf = p - df.int, dendf = rdf)
-    }
+    } else ans$r.squared <- ans$adj.r.squared <- 0
     ans$cov.unscaled <- R
     dimnames(ans$cov.unscaled) <- dimnames(ans$coefficients)[c(1,1)]
     if (correlation) {
