@@ -54,7 +54,7 @@ setSClass <-
   ## Users should call setClass instead of this function.
   function(name, properties = list(), extends = character(), prototype = NULL, generatorFunction, where = 1, subclasses = character(), virtual = NA, validity = NULL, access = NULL)
 {
-    ## remove from the cached definitions (only) right away
+    ## remove from the cached definition (only) right away
     removeClass(name, where = 0)
     extends <- makeExtends(extends)
     subclasses <- makeExtends(subclasses)
@@ -76,6 +76,7 @@ setSClass <-
     mode(f) <- "function"               ## because mode is call otherwise
     class(f) <- "classRepEnvironment"
     environment(f) <- ev
+    setValidity(f, validity)
     assignClassDef(name, f, where)
     name
 }
@@ -167,11 +168,11 @@ removeClass <-
 
 isClass <-
   ## Is this a formally defined class?
-  function(what, formal=TRUE)
+  function(Class, formal=TRUE)
 {
     ## argument formal is for Splus compatibility & is ignored.  (All classes that
     ## are defined must have a class definition object.)
-    exists(classMetaName(what))
+    exists(classMetaName(Class))
 }
 
 new <-
@@ -290,3 +291,66 @@ unClass <-
         x
     }
 }
+
+validObject <- function(object, test = FALSE) {
+  classDef <- getClass(class(object))
+  anyStrings <- function(x) if(identical(x, TRUE)) character() else x
+  ## perform, from bottom up, the default and any explicit validity tests
+  ## First, validate the slots.
+  errors <- character()
+  slotTypes <- getProperties(classDef)
+  slotNames <- names(slotTypes)
+  for(i in seq(along=slotTypes)) {
+    classi <- slotTypes[[i]]
+    sloti <- slot(object, slotNames[[i]])
+    if(!is(sloti, classi))
+      errors <- c(errors, paste("is(object@",slotNames[[i]], ", \"",classi,
+                                "\") failed", sep=""))
+    else if(isClass(classi)) {
+      errorsi <- Recall(sloti, TRUE)
+      if(!identical(errorsi, TRUE))
+        errors <- c(errors, paste("Slot ", slotNames[[i]], ": ",
+                                  if(length(errorsi)>1) 1:length(errorsi) else "",
+                                  errorsi, sep=""))
+    }
+  }
+  extendType <- rev(getExtends(classDef))
+  extends <- names(extendType); i <- 1
+  while(length(errors) == 0 && i <= length(extends)) {
+    superClass <- extends[[i]]
+    test <- extendType[[i]]$test
+    i <- i+1
+    if(is.function(test) && !is(object, superClass))
+      next ## skip conditional relations that don't hold for this object
+    validityMethod <- getValidity(getClassDef(superClass))
+    if(is(validityMethod, "function"))
+      errors <- c(errors, anyStrings(validityMethod(as(object, superClass))))
+    
+  }
+  validityMethod <- getValidity(classDef)
+  if(length(errors) == 0 && is(validityMethod, "function")) {
+    superClass <- class(object) ## for help in debugging
+    errors <- c(errors, anyStrings(validityMethod(object)))
+  }
+  if(length(errors) > 0) {
+    if(test)
+      errors
+    else if(length(errors) > 1)
+      stop(paste("Invalid \"", class(object), "\" object: ", paste(paste(1:length(errors), errors, sep=": ")),
+                 sep="", collapse = "\n"))
+    else stop(paste("Invalid \"", class(object), "\" object: ", errors, sep=""))
+  }
+  else
+    TRUE
+}
+
+setValidity <-
+  function(Class, method) {
+    if(!is(Class, "classRepEnvironment"))
+      Class <- getClassDef(Class)
+    if(is.null(method) ||
+      (is(method, "function") && length(formalArgs(method))==1))
+      setInClassDef(Class, ".Validity", method)
+    else
+      stop("validity method must be NULL or a function of one argument")
+  }
