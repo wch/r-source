@@ -6198,8 +6198,8 @@ environment for the executable, and this is used for
 Setting @env{R_HOME} and checking it is valid.
 
 @item
-Setting @env{LD_LIBRARY_PATH} to include the directories used in
-linking @R{}.  This is encoded as the default setting of
+Setting @env{LD_LIBRARY_PATH} to include the directories used in linking
+@R{}.  This is recorded as the default setting of
 @env{R_LD_LIBRARY_PATH} in the shell script.
 
 @item
@@ -6232,7 +6232,7 @@ and @R{} does look there for system components.)
 
 The other senses in which this example is too simple are that all the
 internal defaults are used and that control is handed over to the
-@R{} mainloop.  There are a number of small examples@footnote{but these
+@R{} main loop.  There are a number of small examples@footnote{but these
 are not part of the automated test procedures and so little tested.} in the
 @file{tests/Embedding} directory.  These make use of
 @code{Rf_initEmbeddedR} in @file{src/main/Rembedded.c}, and essentially
@@ -6491,7 +6491,7 @@ in file @file{src/modules/X11/dataentry.c}.  This is regarded as
 
 There is a protocol for adding event handlers to the first two types of
 event loops, using types and functions declared in the header
-@code{<R_ext/eventloop.c>} and described in comments in file
+@code{<R_ext/eventloop.h>} and described in comments in file
 @file{src/unix/sys-std.c}.  It is possible to add (or remove) an input
 handler for events on a particular file descriptor, or to set a polling
 interval (@emph{via} @code{R_wait_usec}) and a function to be called
@@ -6515,9 +6515,10 @@ extern long R_timeout_val;
 
 @noindent
 whilst it is waiting for console input.  This obviously handles events
-for Gtk windows, but not for X11 events or other event handlers that
-might have been registered with @R{}.  It does not attempt to keep
-itself alive whilst @R{} is waiting on sockets.
+for Gtk windows (such as the graphics device in the @pkg{gtkDevice}
+package), but not X11 events (such as the @code{X11()} device) or for
+other event handlers that might have been registered with @R{}.  It does
+not attempt to keep itself alive whilst @R{} is waiting on sockets.
 
 
 
@@ -6558,13 +6559,11 @@ transfer of data to and from R and remote execution of R commands, as
 well as embedding of an R graphics window.
 
 @item 
-Another (D)COM server, @code{RDCOMDerver}, is available from
-@uref{http://www.omegahat.org/} which allows R objects to be exported as
-COM values.  That site also has packages @code{RDCOMClient} and
-@code{SWinTypeLibs} which allow R to act as a (D)COM client.
-
+Another (D)COM server, @code{RDCOMServer}, is available from
+@uref{http://www.omegahat.org/}. Its philosophy is discussed in
+@uref{http://www.omegahat.org/RDCOMServer/Docs/Paradigm.html} and is
+very different from the purpose of this section.
 @end itemize
-
 @node Calling R.dll directly,  , Using (D)COM, Embedding R under Windows
 @subsection Calling R.dll directly
 
@@ -6596,7 +6595,7 @@ void R_CleanUp(SA_TYPE, int, int); /* from Startup.h */
 __declspec(dllimport) int UserBreak;
 
 /* calls into the R DLL */
-extern char *getDLLVersion(), *getRUser();
+extern char *getDLLVersion(), *getRUser(), *get_R_HOME();
 extern void R_DefParams(Rstart), R_SetParams(Rstart);
 extern void setup_term_ui(void), ProcessEvents(void);
 extern void run_Rmainloop(void), end_Rmainloop(void), R_ReplDLLinit(void);
@@ -6606,13 +6605,13 @@ extern int R_ReplDLLdo1();
 
 /* This version blocks all events: a real one needs to call ProcessEvents
    frequently. See rterm.c and ../system.c for one approach using
-   a separate thread for input */
+   a separate thread for input.
+*/
 int myReadConsole(char *prompt, char *buf, int len, int addtohistory)
 @{
     fputs(prompt, stdout);
     fflush(stdout);
-    if(fgets(buf, len, stdin)) return 1;
-    else return 0;
+    if(fgets(buf, len, stdin)) return 1; else return 0;
 @}
 
 void myWriteConsole(char *buf, int len)
@@ -6630,10 +6629,7 @@ void myBusy(int which)
     /* set a busy cursor ... if which = 1, unset if which = 0 */
 @}
 
-static void my_onintr(int sig)
-@{
-    UserBreak = 1;
-@}
+static void my_onintr(int sig) @{ UserBreak = 1; @}
 
 int main (int argc, char **argv)
 @{
@@ -6648,11 +6644,9 @@ int main (int argc, char **argv)
     @}
 
     R_DefParams(Rp);
-    if(getenv("R_HOME")) @{
-        strcpy(RHome, getenv("R_HOME"));
-    @} else @{
-        fprintf(stderr, "R_HOME must be set\n");
-        exit(1);
+    if((RHome = get_R_HOME()) == NULL) @{
+         fprintf(stderr, "R_HOME must be set in the environment or Registry\n");
+         exit(1);
     @}
     Rp->rhome = RHome;
     Rp->home = getRUser();
@@ -6660,7 +6654,7 @@ int main (int argc, char **argv)
     Rp->ReadConsole = myReadConsole;
     Rp->WriteConsole = myWriteConsole;
     Rp->CallBack = myCallBack;
-    Rp->message = askok;
+    Rp->ShowMessage = askok;
     Rp->yesnocancel = askyesnocancel;
     Rp->busy = myBusy;
 
@@ -6702,9 +6696,10 @@ Check that the front-end and the linked @code{R.dll} match -- other
 front-ends may allow a looser match.
 
 @item
-Find and set the @R{} home directory and the user's home directory.
-The former may be available from the Windows Registry: see the code in 
-@file{front-ends/RSetReg.c}.
+Find and set the @R{} home directory and the user's home directory.  The
+former may be available from the Windows Registry: it will normally be
+in @code{HKEY_LOCAL_MACHINE\Software\R-core\R\InstallPath} and can be
+set there by running the program @code{R_HOME\bin\RSetReg.exe}.
 
 @item
 Define startup conditions and callbacks via the @code{Rstart} structure.

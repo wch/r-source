@@ -20,8 +20,6 @@
 #ifndef STARTUP_H_
 #define STARTUP_H_
 
-#include <R_ext/Boolean.h>	/* TRUE/FALSE */
-
 #include <R_ext/RStartup.h>	/* The meat here */
 
 /* originally from Defn.h : */

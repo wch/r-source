@@ -64,3 +64,24 @@ char *getDLLVersion()
     sprintf(DLLversion, "%s.%s", R_MAJOR, R_MINOR);
     return (DLLversion);
 }
+
+char *get_R_HOME()
+{
+    LONG rc;
+    HKEY hkey;
+    DWORD keytype = REG_SZ, cbData = sizeof(rhomebuf);
+
+    if(getenv("R_HOME")) {
+        strncpy(rhomebuf, getenv("R_HOME"), MAX_PATH);
+	return (rhomebuf);
+    } 
+    rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software\\R-core\\R", 0, 
+		      KEY_READ, &hkey);
+    if (rc == ERROR_SUCCESS) {
+	rc = RegQueryValueEx(hkey, "InstallPath", 0, &keytype, 
+			     (LPBYTE) rhomebuf, &cbData);
+	RegCloseKey (hkey);
+    } else return NULL;
+    if (rc != ERROR_SUCCESS) return NULL;
+    return rhomebuf;
+}

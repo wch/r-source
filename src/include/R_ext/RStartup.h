@@ -71,11 +71,10 @@ typedef struct
     blah1 ReadConsole;
     blah2 WriteConsole;
     blah3 CallBack;
-    blah4 message;
-    blah5 yesnocancel;
-    blah6 busy;
+    blah4 ShowMessage;
+    blah5 YesNoCancel;
+    blah6 Busy;
     UImode CharacterMode;
-    Rboolean DebugMenuitem;
 #endif
 } structRstart;
 

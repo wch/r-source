@@ -501,10 +501,10 @@ int R_Proxy_init (char const* pParameterString)
   Rp->ReadConsole = R_Proxy_ReadConsole;
   Rp->WriteConsole = R_Proxy_WriteConsole;
   Rp->CallBack = R_Proxy_CallBack;
-  Rp->message = R_Proxy_askok;
+  Rp->ShowMessage = R_Proxy_askok;
 
-  Rp->yesnocancel = R_Proxy_askyesnocancel;
-  Rp->busy = R_Proxy_Busy;
+  Rp->YesNoCancel = R_Proxy_askyesnocancel;
+  Rp->Busy = R_Proxy_Busy;
   Rp->R_Quiet = 1;
 #if 1
   /* run as "interactive", so server won't be killed after an error */

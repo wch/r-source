@@ -11,10 +11,14 @@ Support for seek() on > 2Gb files has been added.
 
 You will be asked to select a CRAN mirror when downloading/updating
 packages unless options("CRAN") has already been set in your session,
-e.g. in your .Rprofile file.
+e.g. in your .Rprofile file or from the 'Select CRAN mirror' menu item.
 
 The new graphics pars "lend", "ljoin" and "lmitre" are now
 implemented.
+
+`Writing R Extensions' now documents how to interface a front-end
+directly to R.dll, and there are some new convenience functions for
+such front-ends.
 
 
 
@@ -48,6 +52,13 @@ R CMD SHLIB gave spurious error messages for inputs like all.f and all.c.
 
 `make recommended' was not consulting the setting of WINHELP or HELP,
 so failed if HHW was not installed.
+
+We have increased the chances that installing a source package from
+an explicit path with spaces in will work, so e.g.
+
+    R CMD INSTALL "/Documents and Settings/myname/Source Files/mypkg"
+
+will probably work -- it is still not recommended.
 
 
     -------------------------------------------------------------------

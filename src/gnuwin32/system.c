@@ -48,7 +48,7 @@ R_size_t R_max_memory = INT_MAX;
 Rboolean UseInternet2 = FALSE;
 
 extern SA_TYPE SaveAction; /* from ../main/startup.c */
-Rboolean DebugMenuitem = FALSE;
+Rboolean DebugMenuitem = FALSE;  /* exported for rui.c */
 
 __declspec(dllexport) UImode  CharacterMode;
 int ConsoleAcceptCmd;
@@ -61,7 +61,7 @@ void set_workspace_name(char *fn); /* ../unix/sys-common.c */
 Rboolean AllDevicesKilled = FALSE;
 int   setupui(void);
 void  delui(void);
-int (*R_yesnocancel)(char *s);
+int (*R_YesNoCancel)(char *s);
 
 static DWORD mainThreadId;
 
@@ -363,7 +363,7 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
 
     if(saveact == SA_SAVEASK) {
 	if(R_Interactive) {
-	    switch (R_yesnocancel("Save workspace image?")) {
+	    switch (R_YesNoCancel("Save workspace image?")) {
 	    case YES:
 		saveact = SA_SAVE;
 		break;
@@ -560,7 +560,7 @@ static void char_message(char *s)
     } else R_WriteConsole(s, strlen(s));
 }
 
-static int char_yesnocancel(char *s)
+static int char_YesNoCancel(char *s)
 {
     char  ss[128];
     unsigned char a[3];
@@ -613,10 +613,9 @@ void R_SetWin32(Rstart Rp)
     TrueReadConsole = Rp->ReadConsole;
     TrueWriteConsole = Rp->WriteConsole;
     R_CallBackHook = Rp->CallBack;
-    pR_ShowMessage = Rp->message;
-    R_yesnocancel = Rp->yesnocancel;
-    my_R_Busy = Rp->busy;
-    DebugMenuitem = Rp->DebugMenuitem;
+    pR_ShowMessage = Rp->ShowMessage;
+    R_YesNoCancel = Rp->YesNoCancel;
+    my_R_Busy = Rp->Busy;
     /* Process R_HOME/etc/Renviron.site, then
        .Renviron or ~/.Renviron, if it exists.
        Only used here in embedded versions */
@@ -753,13 +752,12 @@ int cmdlineoptions(int ac, char **av)
 
     R_DefParams(Rp);
     Rp->CharacterMode = CharacterMode;
-    Rp->DebugMenuitem = DebugMenuitem;
     for (i = 1; i < ac; i++)
 	if (!strcmp(av[i], "--no-environ") || !strcmp(av[i], "--vanilla"))
 		Rp->NoRenviron = TRUE;
 
-/* Here so that --ess and similar can change */
     Rp->CallBack = R_DoNothing;
+    /* Here so that --ess and similar can change */
     InThreadReadConsole = NULL;
     if (CharacterMode == RTerm) {
 	if (isatty(0) && isatty(1)) {
@@ -786,19 +784,19 @@ int cmdlineoptions(int ac, char **av)
 	R_Consolefile = stderr; /* used for errors */
 	R_Outputfile = stdout;  /* used for sink-able output */
         Rp->WriteConsole = TermWriteConsole;
-	Rp->message = char_message;
-	Rp->yesnocancel = char_yesnocancel;
-	Rp->busy = CharBusy;
+	Rp->ShowMessage = char_message;
+	Rp->YesNoCancel = char_YesNoCancel;
+	Rp->Busy = CharBusy;
     } else {
 	Rp->R_Interactive = TRUE;
 	Rp->ReadConsole = GuiReadConsole;
 	Rp->WriteConsole = GuiWriteConsole;
-	Rp->message = askok;
-	Rp->yesnocancel = askyesnocancel;
-	Rp->busy = GuiBusy;
+	Rp->ShowMessage = askok;
+	Rp->YesNoCancel = askyesnocancel;
+	Rp->Busy = GuiBusy;
     }
 
-    pR_ShowMessage = Rp->message; /* used here */
+    pR_ShowMessage = Rp->ShowMessage; /* used here */
     TrueWriteConsole = Rp->WriteConsole;
     R_CallBackHook = Rp->CallBack;
 
@@ -858,7 +856,7 @@ int cmdlineoptions(int ac, char **av)
 		} else
 		    R_max_memory = value;
 	    } else if(!strcmp(*av, "--debug")) {
-		Rp->DebugMenuitem = TRUE;
+		DebugMenuitem = TRUE;
 		breaktodebugger();
 	    } else if(!strcmp(*av, "--args")) {
 		break;
@@ -897,8 +895,7 @@ int cmdlineoptions(int ac, char **av)
     Rp->rhome = R_Home;
 
     R_tcldo = tcl_do_none;
-    getRUser();
-    Rp->home = RUser;
+    Rp->home = getRUser();
     R_SetParams(Rp);
 
 /*
