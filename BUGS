@@ -528,6 +528,16 @@ Subject: Installation
 From: a0108661@unet.univie.ac.at
 Date: Tue, 27 Jan 2004 18:51:04 +0100 (CET)
 ..Mandrake RPM installation problem.
+* PR# 6797 *
+Subject: R.spec
+From: joachim.geiger@ipp.mpg.de
+Date: Tue, 20 Apr 2004 11:51:40 +0200 (CEST)
+..About the source RPM for 1.9.0 under RedHat 8.0.
+* PR# 6862 *
+Subject: Fortran compiler dependency missing in gentoo ebuild script 
+From: mc@austrian-mint.at
+Date: Fri,  7 May 2004 16:45:01 +0200 (CEST)
+..Gentoo Linux-specific problem
 
 Directory:  Language
 
@@ -855,53 +865,11 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6797 *
-Subject: R.spec
-From: joachim.geiger@ipp.mpg.de
-Date: Tue, 20 Apr 2004 11:51:40 +0200 (CEST)
-..About the source RPM for 1.9.0 under RedHat 8.0.
 * PR# 6804 *
 Subject: Re: [R] Error message during debug
 From: Duncan Murdoch <dmurdoch@pair.com>
 Date: Tue, 20 Apr 2004 14:15:05 -0400
-* PR# 6862 *
-Subject: Fortran compiler dependency missing in gentoo ebuild script 
-From: mc@austrian-mint.at
-Date: Fri,  7 May 2004 16:45:01 +0200 (CEST)
-* PR# 6863 *
-Subject: Nksoj Lortab. bvy Lortab, V~i_c_o`din, H'y_d_roc_0_d_0`n_e 0n1ine.
-From: "rene rupp" <lulouch@jingjo.net>
-Date: Fri, 07 May 2004 23:05:04 +0200
-* PR# 6864 *
-Subject: how r u these days?
-From: "Malorie Bobbye" <tzelx6ij@attglobal.net>
-Date: Fri, 07 May 2004 16:16:54 -0400
-* PR# 6865 *
-Subject: Virus gefunden in Nachricht "My details"
-From: "Michael Brauchart" <michael.brauchart@pfarreihuenenberg.ch>
-Date: Sat, 8 May 2004 00:35:24 +0200
-* PR# 6866 *
-Subject: 
-From: "Quinn Clayton" <innocuoussquirmy@attbi.com>
-Date: Sun, 09 May 2004 10:43:51 +0600
-* PR# 6867 *
-Subject: Groupshield 6.0 GroupShield Alert   
-From: <gs6@nel-exchange.rutgers.edu>
-From: r-bugs\@r-project.org
-Date: Fri, 7 May 2004 21:49:27 -0400
-* PR# 6868 *
-Subject: THE ULTIMATE GUIDE TO WIN BIG AT THE ONLINE CASINOS
-From: Webmaster <petterjcarpenter@aol.com>
-Date: Sat, 08 May 2004 19:18:29 +0200
-* PR# 6869 *
-Subject: Save on software, R !
-From: "Flophouse K. Available" <unleashed@onix-fan.com>
-Date: Sun, 09 May 2004 04:26:10 -0700
-* PR# 6870 *
-Subject: pete impasse
-From: "Shelton Leblanc" <modelthule@attbi.com>
-Date: Sun, 09 May 2004 11:43:59 -0700
-* PR# 6871 *
-Subject: FDA approved pharmaceuticals online here!
-From: "Nola Crenshaw" <THWEHDY@hush.com>
-Date: Mon, 10 May 2004 18:44:19 -0300
+* PR# 6874 *
+Subject: Save up to 60% on cds, R.
+From: "Extrapolations M. Palls" <prime@chocolate-star-fish.com>
+Date: Tue, 11 May 2004 12:21:50 -0700
