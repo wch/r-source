@@ -1,6 +1,6 @@
 % Originally file MASS/max.col.d
 % copyright (C) 1999 W. N. Venables and B. D. Ripley
-% copyright (C) 2000 The R Core Development Team
+% copyright (C) 2000, 2003 The R Core Development Team
 \name{max.col}
 \alias{max.col}
 \title{Find Maximum Position in Matrix}
@@ -18,7 +18,8 @@ max.col(m)
 }
 \details{
   Ties are broken at random.  The determination of ``tie'' assumes that
-  the entries are probabilities.
+  the entries are probabilities: there is a relative tolerance of
+  \eqn{10^{-5}}{1e-5}, relative to the largest entry in the row.
 }
 \author{W. N. Venables and B. D. Ripley}
 \references{
