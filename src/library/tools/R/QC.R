@@ -215,12 +215,6 @@ function(package, dir, lib.loc = NULL,
          verbose = getOption("verbose"))
 {
     hasNamespace <- FALSE
-    ## If a package has a namespace, we need to determine the S3 methods
-    ## which are registered but not exported: these *may* have explicit
-    ## usage documentation (e.g., if they have 'surprising arguments'),
-    ## and hence not be included in the information about objects with
-    ## usage but 'missing from the code'.
-    S3reg <- character(0)
 
     ## Argument handling.
     if(!missing(package)) {
@@ -250,11 +244,11 @@ function(package, dir, lib.loc = NULL,
         ## Does the package have a namespace?
         if(packageHasNamespace(package, dirname(dir))) {
             hasNamespace <- TRUE
-            ## Determine unexported but declared S3 methods.
-            nsS3methodsList <- getNamespaceInfo(package, "S3methods")
-            S3reg <- as.character(sapply(nsS3methodsList, "[[", 3))
-            S3reg <- S3reg[! S3reg %in% objectsInCode]
+            objectsInCodeOrNamespace <-
+                objects(envir = asNamespace(package), all.names = TRUE)
         }
+        else
+            objectsInCodeOrNamespace <- objectsInCode
     }
     else {
         if(missing(dir))
@@ -291,6 +285,7 @@ function(package, dir, lib.loc = NULL,
         }
 
         objectsInCode <- objects(envir = codeEnv, all.names = TRUE)
+        objectsInCodeOrNamespace <- objectsInCode
 
         ## Does the package have a NAMESPACE file?  Note that when
         ## working on the sources we (currently?) cannot deal with the
@@ -303,10 +298,6 @@ function(package, dir, lib.loc = NULL,
             for(p in nsInfo$exportPatterns)
                 OK <- c(OK, grep(p, objectsInCode, value = TRUE))
             objectsInCode <- unique(OK)
-            ## Determine unexported but declared S3 methods.
-            nsS3methodsList <- .getNamespaceS3methodsList(nsInfo)
-            S3reg <- as.character(sapply(nsS3methodsList, "[[", 3))
-            S3reg <- S3reg[! S3reg %in% objectsInCode]
         }
     }
 
@@ -502,18 +493,14 @@ function(package, dir, lib.loc = NULL,
             badDocObjects[[docObj]] <- badFunctions
 
         ## Determine functions with a \usage entry in the documentation
-        ## but 'missing from the code'.  Entries for S3 methods which
-        ## are registered but not exported are ok (as these methods
-        ## might have 'surprising' arguments).
-        ## <NOTE>
-        ## Older versions printed this information without returning it.
-        ## We now aggregate it into functionsInUsagesNotInCode and add
-        ## this as an attribute to the badDocObjects object returned.
-        ## It might be nicer to do this differently ...
-        ## </NOTE>
+        ## but 'missing from the code'.  If a package has a namespace, we
+        ## really need to look at all objects in the namespace (hence
+        ## 'objectsInCodeOrNamespace'), as one can access the internal
+        ## symbols via ':::' and hence package developers might want to
+        ## provide function usages for some of the internal functions.
         badFunctions <-
             functions[! functions %in%
-                      c(objectsInCode, S3reg, functionsToBeIgnored)]
+                      c(objectsInCodeOrNamespace, functionsToBeIgnored)]
         if(length(badFunctions) > 0)
             functionsInUsagesNotInCode[[docObj]] <- badFunctions
 
