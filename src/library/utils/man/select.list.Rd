@@ -16,6 +16,7 @@ select.list(list, preselect = NULL, multiple = FALSE, title = NULL)
   \item{title}{optional character string for window title.}
 }
 \details{
+#ifdef windows
   This brings up a modal dialog box with a (scrollable) list of items,
   which can be selected by the mouse.  If \code{multiple} is true,
   further items can be selected or deselected by holding the control key
@@ -24,6 +25,13 @@ select.list(list, preselect = NULL, multiple = FALSE, title = NULL)
 
   Normal termination is via the \code{OK} button or by hitting Enter.
   The selection can be aborted via the \code{Cancel} button or pressing Escape.
+#endif
+#ifdef unix
+  This displays a text list from which the user can choose by number(s).
+  The \code{multiple = FALSE} case uses \code{\link{menu}}.
+  Preselection is only supported for \code{multiple = TRUE}, where it is
+  indicated by a \code{"+"} preceding the item. 
+#endif
 }
 \value{
   A character vector of selected items.  If \code{multiple} is false and

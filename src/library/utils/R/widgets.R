@@ -4,14 +4,14 @@ select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL)
         return(.Internal(select.list(list, preselect, multiple, title)))
     ## simple text-based alternatives.
     if(!multiple) {
-        res <- menu(list, , title)
+        res <- menu(list, , if(is.null(title)) "" else title)
         if(res < 1 || res > length(list)) return("")
         else return(list[res])
     } else {
         nc <- length(list)
         cat(title, "\n")
         def <- if(is.null(preselect)) rep(FALSE, nc)
-        else preselect %in% list
+        else list %in% preselect
         op <- paste(format(seq(length=nc)), ": ",
                     ifelse(def, "+", " "), " ", list, sep="")
         if(nc > 10) {
