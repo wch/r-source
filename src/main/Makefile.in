@@ -184,17 +184,12 @@ installdirs:
 	@$(MKINSTALLDIRS) "$(Rexecbindir)" "$(Rexecbindir)/exec"
 	@$(MKINSTALLDIRS) "$(Rexeclibdir)"
 install-bin: installdirs
-## <FIXME> Temporary precautionary clearout 
-	@rm -f "$(Rexecbindir)/R.bin"
-## </FIXME>
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) "$(Rexecbindir)/exec/R"
 install-lib: installdirs
 @USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) "$(Rexeclibdir)/$(libR_la)"
 ## <FIXME>
-## This is just a temporary expedient for backwards compatibility.
 ## May have an actual libR.so file in R_HOME/bin from earlier builds
 	@rm -f "$(Rexecbindir)/$(libR_la)"
-	@ln -s "$(Rexeclibdir)/$(libR_la)" "$(Rexecbindir)"
 ## </FIXME>
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(libR_la) "$(Rexeclibdir)"
 install-strip:
