@@ -68,7 +68,8 @@ fi
 #  Yacc et al:  Note that bison does not do the job.
 #  You must use byacc if you don't have a genuine yacc.
 
-AC_PROG_YACC
+# AC_PROG_YACC
+AC_CHECK_PROGS(YACC, byacc yacc)
 AC_PROG_RANLIB
 AC_CHECK_PROG(AR, ar, ar)
 
