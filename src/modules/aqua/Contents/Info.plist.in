@@ -9,7 +9,7 @@
         <key>CFBundleIdentifier</key>
         <string>org.r-project.R</string>
         <key>CFBundleGetInfoString</key>
-	<string>Aqua GUI for R @VERSION@ - The R Foundation for Statistical Computing</string>
+	<string>Aqua GUI for R @VERSION@, Copyright (c) 2003-2004 The R Foundation for Statistical Computing</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
