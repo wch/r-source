@@ -34,7 +34,7 @@ makeLazyLoading(package, lib.loc = NULL, compress = TRUE,
 }
 \examples{
   # set up package "base" for lazy loading (must have no packages loaded)
-  # this will by defualt have already been done
+  # this will by default have already been done
   \dontrun{
     source(file.path(.find.package("tools"),"makebasedb.R"))
     tools:::makeLazyLoading("base")
