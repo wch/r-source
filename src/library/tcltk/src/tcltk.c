@@ -527,6 +527,7 @@ void tcltk_init(void)
 {
     int code;
 
+    Tcl_FindExecutable(NULL);
     RTcl_interp = Tcl_CreateInterp();
     code = Tcl_Init(RTcl_interp); /* Undocumented... If omitted, you
 				    get the windows but no event
