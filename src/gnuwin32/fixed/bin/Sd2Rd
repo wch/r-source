@@ -20,7 +20,7 @@
 
 use Getopt::Long;
 
-my $revision = ' $Revision: 1.4 $ ';
+my $revision = ' $Revision: 1.5 $ ';
 my $version;
 my $name;
 
@@ -64,6 +64,7 @@ my $braceLevel = 0;
 my $inReferences = 0;
 my $inVerbatim = 0;
 my $inSeeAlso = 0;
+my $inCode = 0;
 my $isDataSet = 0;
 my $doprint = 1;
 my $needArg = 1;
@@ -254,6 +255,9 @@ sub substitute {
   ## End
   s/\%/\\%/g;
   s/\\\.(.*)$/# $1)/g;
+  if($inCode && s/\'/\}/) {
+    $inCode = 0;
+  }
   if ($inSeeAlso) {
     if ($opt_x) {
       s/\`?([\.\w]*\w+)\'?/\\code{\\link{$1}}/g;
@@ -261,6 +265,9 @@ sub substitute {
       s/\`([^\']*)\'/\\code{\\link{$1}}/g;
     }
   } elsif (!$inVerbatim) {
+    if(s/\`([^\']*)$/\\code\{$1/) {
+      $inCode = 1;
+    }
     s/\`([^\']*)\'$/\\code{$1}/g;
     s/\`([^\']*)\'([^\'])/\\code{$1}$2/g;  
   }

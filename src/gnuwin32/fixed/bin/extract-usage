@@ -1,0 +1,36 @@
+
+## Usage: extract-usage Rdfile
+
+require "R/Rdtools.pl";
+
+my $text;
+my $OSdir = "unix";
+my $skipping = 0;
+while(<>) {
+    if (/^#ifdef\s+([A-Za-z0-9]+)/o) {
+	if ($1 ne $OSdir) { $skipping = 1; }
+	next;
+    }
+    if (/^#ifndef\s+([A-Za-z0-9]+)/o) {
+	if ($1 eq $OSdir) { $skipping = 1; }
+	next;
+    }
+    if (/^#endif/o) {
+	$skipping = 0;
+	next;
+    }
+    next if $skipping > 0;
+    $text .= $_;
+}
+
+undef $/;
+%usages = get_usages($text);
+
+foreach $key (keys(%usages)){
+    $usages{$key} =~ s/ *\\.?dots/ .../g;
+    if ($key !~ /^</) {
+	print "$key <- function$usages{$key} NULL\n";
+    }
+}
+
+print "\n";
