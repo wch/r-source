@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.65.0 Under development (unstable) (July 20, 1999)
+Version 0.90.0 Under development (unstable) (October 22, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -53,5 +53,13 @@ Type	"q()" to quit R.
 [1] TRUE
 > ##P rbind(a=1:2, b=1:3, c=1:6)
 > all(dim(cbind(cbind(I=1,x=1:4), c(a=pi))) == 4:3)# fails in S+
+[1] TRUE
+> 
+> ## factor():
+> is.factor(factor(list()))
+[1] TRUE
+> all(levels(ordered(rev(gl(3,4)))) == 1:3)# coercion to char
+[1] TRUE
+> all(levels(factor(factor(9:1)[3:5])) == 5:7)
 [1] TRUE
 > 

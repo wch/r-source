@@ -18,6 +18,8 @@ Type	"q()" to quit R.
 > ###
 > ### '##P': This lines give not 'T' but relevant ``Print output''
 > 
+> ### --> d-p-q-r-tests.R  for distribution things
+> 
 > opt.conformance <- 0
 > Meps <- .Machine $ double.eps
 > 
