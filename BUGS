@@ -181,6 +181,10 @@ none
 
 Directory:  incoming
 
+* PR# 816 *
+Subject: dotplot: character size of labels
+From: RINNER Heinrich <H.RINNER@TIROL.GV.AT>
+Date: Thu, 18 Jan 2001 14:54:32 +0100
 * PR# 815 *
 Subject: Memory problem 2
 From: Zoltan Barta <Z.Barta@bristol.ac.uk>
