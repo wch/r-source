@@ -14,6 +14,7 @@ diff.default(x, lag=1, differences=1, \dots)
     differenced.}
   \item{lag}{an integer indicating which lag to use.}
   \item{differences}{an integer indicating the order of the difference.}
+  \item{\dots}{further arguments to be passed to or from methods.}
 }
 \details{
   \code{diff} is a generic function with a default method and one for
@@ -31,8 +32,9 @@ diff.default(x, lag=1, differences=1, \dots)
   If \code{x} is a matrix then the difference operations are carried out
   on each column separately.
 }
-\seealso{\code{\link[ts]{diff.ts}} from the \code{ts} package which you
-  may want anyway.}
+\seealso{
+  \code{\link{diff.ts}}.
+}
 \examples{
 diff(1:10, 2)
 diff(1:10, 2, 2)

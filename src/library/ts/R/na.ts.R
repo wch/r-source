@@ -1,30 +1,3 @@
-na.omit.ts <- function(frame)
-{
-    tm <- time(frame)
-    xfreq <- frequency(frame)
-    ## drop initial and final NAs
-    if(is.matrix(frame))
-        good <- which(apply(!is.na(frame), 1, all))
-    else  good <- which(!is.na(frame))
-    if(!length(good)) stop("all times contain an NA")
-    omit <- integer(0)
-    n <- NROW(frame)
-    st <- min(good)
-    if(st > 1) omit <- c(omit, 1:(st-1))
-    en <- max(good)
-    if(en < n) omit <- c(omit, (en+1):n)
-    cl <- class(frame)
-    if(length(omit)) {
-        frame <- if(is.matrix(frame)) frame[st:en,] else frame[st:en]
-        attr(omit, "class") <- "omit"
-        attr(frame, "na.action") <- omit
-        tsp(frame) <- c(tm[st], tm[en], xfreq)
-        if(!is.null(cl)) class(frame) <- cl
-    }
-    if(any(is.na(frame))) stop("time series contains internal NAs")
-    frame
-}
-
 na.contiguous <- function(frame)
 {
     tm <- time(frame)

@@ -11,6 +11,10 @@ ts		Create a (univariate or multivariate) ts object
 as.ts, is.ts	Coercion and membership functions
 plot, lines,  print	methods
 
+cbind.ts	cbind method for time series (aligns time bases)
+na.omit.ts	na.omit method for time series: omits at ends only
+Ops.ts		arithmetic (such as + - * /) for time series
+
 aggregate	Computes summaries (e.g. sum) over disjoint time intervals
 diff		Lagged differences of a time series
 end		Time of last observation
@@ -35,7 +39,6 @@ ar.mle		Estimate autoregression model by maximum likelihood
 ar.yw		Estimate autoregression model by solving Yule-Walker equations
 arima0		ARIMA modelling -- provisional version
 Box.test	Box-Pierce and Ljung-Box tests of independence
-cbind.ts	cbind method for time series (aligns time bases)
 ccf		Cross-covariance and cross-correlations for two series
 cpgram		Plot cumulative periodogram of univariate time series
 diffinv		Discrete integration, the inverse of diff()
@@ -46,8 +49,6 @@ kernel		Smoothing kernel objects (and (modified) Daniell, Fejer and
 		   Dirichlet kernels)
 lag		Compute lagged version of time series
 na.contiguous	Find longest contiguous stretch of non-NAs
-na.omit.ts	na.omit method for time series: omits at ends only
-Ops.ts		arithmetic (such as + - * /) for time series
 pacf		Partial autocorrelation function
 plot.acf	Plot autocorrelation function
 plot.spec	Plot spectral density estimate, coherency and phase.

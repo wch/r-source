@@ -1,7 +1,5 @@
 diff <- function(x, ...) UseMethod("diff")
 
-## autoload("diff.ts", "ts")   in ../../profile/Common.R
-
 diff.default <- function(x, lag = 1, differences = 1, ...)
 {
     ismat <- is.matrix(x)

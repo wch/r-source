@@ -35,6 +35,9 @@ NEW FEATURES
     o	scan() allows unlimited (by R) lengths of input lines, instead
 	of a limit of 8190 chars.
 
+    o	Ops, cbind, diff and na.omit methods for time series objects
+	moved from package ts to package base.
+
 
 
 BUG FIXES

@@ -1,4 +1,4 @@
-cbind.ts <- function(..., dframe = FALSE, union = TRUE)
+.cbind.ts <- function(..., dframe = FALSE, union = TRUE)
 {
     names.dots <- function(...)
     {
@@ -88,6 +88,7 @@ cbind.ts <- function(..., dframe = FALSE, union = TRUE)
     else ts(x, start=st, freq=freq)
 }
 
-ts.union <- .Alias(cbind.ts)
+ts.union <- function(..., dframe = FALSE)
+    .cbind.ts(..., dframe = dframe, union = TRUE)
 ts.intersect <- function(..., dframe = FALSE)
-    cbind.ts(..., dframe = dframe, union = FALSE)
+    .cbind.ts(..., dframe = dframe, union = FALSE)
