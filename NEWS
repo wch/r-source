@@ -833,7 +833,8 @@ BUG FIXES
 	previously the same as gsub("[[:space:]]+", " ", ...)).
 	(In part PR#7742)
 
-
+    o   reshape(direction="wide") had some sorting problems when 
+        guessing time points (PR#7669)
 
 
 	**************************************************

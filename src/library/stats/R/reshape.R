@@ -14,10 +14,9 @@ reshape <-
                         substr(nms, regexpr(re,nms)+1, 10000))
         v.names <- tapply(nms,nn[,1],c)
         varying <- unique(nn[,1])
-        times <- sort(unique(nn[,2]))
+        times <- unique(nn[,2])
         attr(v.names,"v.names") <- varying
-        tt <- as.numeric(times)
-        if (is.factor(tt)) tt <- times
+        tt <- tryCatch({as.numeric(times)}, warning=function(w) times)
         attr(v.names,"times") <- tt
         v.names
     }
