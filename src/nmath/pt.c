@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -21,6 +21,11 @@
 
 double pt(double x, double n)
 {
+/* return  P[ T <= x ]  where  
+ * T ~ t_{n}  (t distrib. with n degrees of freedom).	
+
+ *	--> ./pnt.c for NON-central
+ */
     double val;
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(n))
