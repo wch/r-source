@@ -158,6 +158,8 @@ if($opt_library) {
     chdir($startdir);
 }
 
+my $tar = R_getenv("TAR", "tar");
+
 my $R_opts = "--vanilla";
 
 if($opt_latex) {
@@ -211,15 +213,15 @@ foreach my $pkg (@ARGV) {
     }
 
     if($istar) {
-	my $dir = "$pkgoutdir/00_pkg_src";
+	my $dir = &file_path("$pkgoutdir", "00_pkg_src");
 	mkdir($dir, 755);
 	if($WINDOWS) {
 	    ## workaround for paths in Cygwin tar
 	    $pkg =~ s+^([A-Za-x]):+/cygdrive/\1+;
 	}
-	if(system("tar -zxf '$pkg' -C $dir")) {
+	if(system("$tar -zxf '$pkg' -C $dir")) {
 	    die "Error: cannot untar the package\n";}
-	$pkg = $dir."/".$pkgname;
+	$pkg = &file_path($dir, $pkgname);
     }
 
     $pkg =~ s/\/$//;
@@ -227,7 +229,7 @@ foreach my $pkg (@ARGV) {
     chdir($pkg)
 	or die "Error: cannot change to directory '$pkg'\n";
     my $pkgdir = R_cwd();
-#    my $pkgname = basename($pkgdir);
+    ## my $pkgname = basename($pkgdir);
     chdir($startdir);
 
     $log = new R::Logfile(&file_path($pkgoutdir, "00check.log"));
@@ -245,6 +247,9 @@ foreach my $pkg (@ARGV) {
 
     my $description;
     my $is_base_pkg = 0;
+    my $is_bundle = 0;
+    my $package_or_bundle = "package";
+    my $package_or_bundle_name;
     ## Package sources from the R distribution are special.  They have a
     ## 'DESCRIPTION.in' file (instead of 'DESCRIPTION'), with Version
     ## field containing '@VERSION@' for substitution by configure.  We
@@ -275,12 +280,24 @@ foreach my $pkg (@ARGV) {
 	    $log->result("NO");
 	    exit(1);
 	}
-	$log->message("this is package '$description->{\"Package\"}' version '$description->{\"Version\"}'");
+
+	if($description->{"Bundle"}) {
+	    $is_bundle = 1;
+	    $log->message("looks like '${pkgname}' is a package bundle");
+	    $package_or_bundle = "bundle";
+	    $package_or_bundle_name = $description->{"Bundle"};
+	}
+	else {
+	    $package_or_bundle_name = $description->{"Package"};
+	}
+	$log->message("this is $package_or_bundle " .
+		      "'$package_or_bundle_name' " .
+		      "version '$description->{\"Version\"}'");
 	## <NOTE>
 	## This check should be adequate, but would not catch a manually
 	## installed package, nor one installed prior to 1.4.0.
 	## </NOTE>
-	$log->checking("if this is a source package");
+	$log->checking("if this is a source $package_or_bundle");
 	if(!defined($description->{"Built"})) {
 	    $log->result("OK")
 	} else {
@@ -342,7 +359,8 @@ foreach my $pkg (@ARGV) {
 		else {
 		    ## Case B. All output from installation redirected,
 		    ## or already available in the log file.
-		    $log->checking("whether package '$pkgname' " .
+		    $log->checking("whether $package_or_bundle " .
+				   "'$package_or_bundle_name' " .
 				   "can be installed");
 		    my $out = &file_path($pkgoutdir, "00install.out");
 		    my $install_error;
@@ -416,10 +434,7 @@ foreach my $pkg (@ARGV) {
 
     }
 
-    my $is_bundle = 0;
-    if($description->{"Contains"}) {
-	$log->message("looks like '${pkgname}' is a package bundle");
-	$is_bundle = 1;
+    if($is_bundle) {
 	my @bundlepkgs = split(/\s+/, $description->{"Contains"});
 	foreach my $ppkg (@bundlepkgs) {
 	    $log->message("checking '$ppkg' in bundle '$pkgname'");
@@ -432,7 +447,6 @@ foreach my $pkg (@ARGV) {
 	}
     }
     else {
-	$is_bundle = 0;
 	chdir($startdir);
 	check_pkg($pkgdir, $pkgoutdir, $startdir, $library,
 		  $is_bundle, $description, $log, $is_base_pkg);
@@ -698,61 +712,9 @@ sub check_pkg {
     ## validated the package DESCRIPTION metadata.  Otherwise, let us be
     ## defensive about this ...
 
-    if(!$opt_install || ($opt_install eq "skip") || $is_base_pkg) {
-	my ($dfile, $dir);
-	if($is_base_pkg) {
-	    $dfile = "DESCRIPTION.in";
-	}
-	elsif(!$in_bundle) {
-	    $dfile = "DESCRIPTION";
-	}
-	else {
-	    ## Bundles are a bit tricky, as their package (DESCRIPTION)
-	    ## metadata come from merging the bundle DESCRIPTION file
-	    ## with the package DESCRIPTION.in one.  Hence, we
-	    ## concatenate these files to a temporary one.
-	    $log->checking("for file 'DESCRIPTION.in'");
-	    if(-r "DESCRIPTION.in") {
-		$log->result("OK");
-	    }
-	    else {
-		$log->result("NO");
-		exit(1);
-	    }
-	    ## Checking metadata currently also includes verifying that
-	    ## the package name and "directory name" are the same.
-	    $dir = &file_path(${R::Vars::TMPDIR}, "check$$");
-	    mkdir($dir, 0755)
-		or die ("Error: cannot create directory '$dir'\n");
-	    $dir = &file_path($dir, $pkgname);
-	    mkdir($dir, 0755)
-		or die ("Error: cannot create directory '$dir'\n");
-	    $dfile = &file_path($dir, "DESCRIPTION");
-	    my $fh = new IO::File($dfile, "w")
-		or die "Error: cannot open file '$dpath' for writing\n";
-	    my @lines = (&read_lines(&file_path(dirname($pkgdir),
-						"DESCRIPTION")),
-			 &read_lines("DESCRIPTION.in"));
-	    @lines = grep(!/^\s*$/, @lines); # Remove blank lines.
-	    $fh->print(join("\n", @lines), "\n");
-	    $fh->close();
-	}
-
-	$log->checking("DESCRIPTION meta-information");
-    
-	my $Rcmd = "tools:::.check_package_description(\"$dfile\")";
-	my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES=NULL");
-	rmtree(dirname($dir)) if($in_bundle);
-	@out = grep(!/^\>/, @out);
-	if(scalar(@out) > 0) {
-	    $log->error();
-	    $log->print(join("\n", @out) . "\n");
-	    exit(1);
-	}
-	
-	$log->result("OK");
-    }
+    &R::Utils::check_package_description($pkgname, $pkgdir, $log,
+					 $in_bundle, $is_base_pkg)
+	if(!$opt_install || ($opt_install eq "skip") || $is_base_pkg);
     
     ## Check package dependencies.
 
