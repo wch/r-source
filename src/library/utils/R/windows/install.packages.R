@@ -112,7 +112,7 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
     nonlocalcran <- length(grep("^file:", contriburl)) < length(contriburl)
     if(is.null(destdir) && nonlocalcran) {
         tmpd <- file.path(tempdir(), "downloaded_packages")
-        if (!dir.create(tmpd))
+        if (!file.exists(tmpd) && !dir.create(tmpd))
             stop('Unable to create temp directory ', tmpd)
     }
 
