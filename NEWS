@@ -194,7 +194,7 @@ NEW FEATURES
           value change from 1.5.0
 
     o	The bmp(), jpeg() and png() devices can produce multiple
-	bitmaps, one for each page.  The defailt filenames have
+	bitmap files, one for each page.  The default filenames have been
 	changed to include a sequence number.
 
     o	New function axTicks() returning tick mark locations like axis().
