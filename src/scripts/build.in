@@ -42,7 +42,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.44 $ ';
+my $revision = ' $Revision: 1.45 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -212,6 +212,11 @@ foreach my $pkg (@ARGV) {
 	    print EXCLUDE "$File::Find::name\n" if(-d $_ && /[Oo]ld$/);
 	    print EXCLUDE "$File::Find::name\n" if /^GNUMakefile$/;
 	    print EXCLUDE "$File::Find::name\n" if /^CVS$/;
+	    if($WINDOWS) {
+		## exclude stray dependency files
+		print EXCLUDE "$File::Find::name\n" if /\.d$/;
+		print EXCLUDE "$File::Find::name\n" if /^Makedeps$/;
+	    }
 	    my $filename = $File::Find::name;
 	    $filename =~ s/^[^\/]*\///;
 	    foreach my $p (@excludepatterns) {
