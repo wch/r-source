@@ -104,7 +104,6 @@ plot(m)
 data(AirPassengers)
 (m <- HoltWinters(AirPassengers, seasonal = "mult"))
 plot(m)
-monthplot(m)
 
 %% Non-Seasonal Holt-Winters
 data(uspop)
