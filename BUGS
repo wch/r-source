@@ -29,6 +29,11 @@ none
 
 Directory:  Add-ons
 
+* PR# 521 *
+Subject: akima core dumps on loading
+From: santini@dsi.unimi.it
+Date: Mon, 17 Apr 2000 11:30:41 +0200 (MET DST)
+--Probably compiler-specific
 * PR# 503 *
 Subject: dmvnorm() bug in e1071
 From: "Gregory R. Warnes" <warnes@biostat.washington.edu>
@@ -43,12 +48,6 @@ Subject: Error in lme?
 From: simon.frost@ed.ac.uk
 Date: Tue, 14 Mar 2000 14:15:52 +0100 (MET)
 --No example to reproduce this.
-* PR# 471 *
-Subject:  Problems with nlme 
-From: Berwin Turlach <berwin@maths.uwa.edu.au>
-Date: Tue, 7 Mar 2000 15:28:00 +0800
---Problem 1) was a subscripting bug introduced in 1.0.0 and fixed for 1.0.1
---Problem 2) (mssing datasets) needs a revised nlme
 
 Directory:  Analyses
 
@@ -56,16 +55,23 @@ none
 
 Directory:  Documentation
 
-none
+* PR# 527 *
+Subject: Comments on Win95 R Distribution
+From: Art Salwin <salwin@mitretek.org>
+Date: Mon, 24 Apr 2000 14:38:42 -0400
 
 Directory:  Graphics
 
-* PR# 510 *
-Subject:  Strange behaviour of image 
-From: J.C.Rougier@durham.ac.uk
-Date: Thu, 6 Apr 2000 19:15:19 +0100 (BST)
---At least an inaccurate description.
---To be changed (with a back-compatibility option) in 1.1.0
+* PR# 495 *
+Subject: barplot
+From: skala@incoma.cz
+Date: Tue, 21 Mar 2000 09:20:33 +0100 (MET)
+* PR# 414 *
+Subject:  graphics bugs: steep slopes and large values beyond ylim 
+From: Ben Bolker <bolker@zoo.ufl.edu>
+Date: Mon, 7 Feb 2000 18:28:04 -0500
+--Followup on R-devel showed this was due to generating integer coordinates 
+--outside +/- 2^15 in the X11 driver.
 * PR# 400 *
 Subject: X11 troubles
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -79,16 +85,6 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --The persp algorithm does not apply the occlusion rules to the frame, 
 --which is always plotted first. 
 --A bug, but not very simple to fix.
-* PR# 495 *
-Subject: barplot
-From: skala@incoma.cz
-Date: Tue, 21 Mar 2000 09:20:33 +0100 (MET)
-* PR# 414 *
-Subject:  graphics bugs: steep slopes and large values beyond ylim 
-From: Ben Bolker <bolker@zoo.ufl.edu>
-Date: Mon, 7 Feb 2000 18:28:04 -0500
---Followup on R-devel showed this was due to generating integer coordinates 
---outside +/- 2^15 in the X11 driver.
 
 Directory:  In-Out
 
@@ -172,39 +168,11 @@ none
 
 Directory:  incoming
 
-* PR# 527 *
-Subject: Comments on Win95 R Distribution
-From: Art Salwin <salwin@mitretek.org>
-Date: Mon, 24 Apr 2000 14:38:42 -0400
-* PR# 520 *
-Subject: Rd2Sd conversion: files
-From: Sergei Zuyev <sergei@stams.strath.ac.uk>
-Date: Fri, 14 Apr 2000 13:26:19 +0100
-* PR# 519 *
-Subject: bundle build and Rd2Sd converion fail
-From: Sergei Zuyev <sergei@stams.strath.ac.uk>
-Date: Fri, 14 Apr 2000 13:13:48 +0100
-* PR# 522 *
-Subject: na.omit fails for matrices
-From: Sergei Zuyev <sergei@stams.strath.ac.uk>
-Date: Mon, 17 Apr 2000 11:52:28 +0100
-* PR# 521 *
-Subject: akima core dumps on loading
-From: santini@dsi.unimi.it
-Date: Mon, 17 Apr 2000 11:30:41 +0200 (MET DST)
-* PR# 524 *
-Subject: strheight() crashes without opened device
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Tue, 18 Apr 2000 19:42:00 +0200
-* PR# 523 *
-Subject: Maths in R documentation
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Mon, 17 Apr 2000 18:18:55 +0200 (CEST)
 * PR# 526 *
 Subject: INSTALL_SCRIPT during installation
 From: "Johnny C. Lam" <lamj@stat.cmu.edu>
 Date: Wed, 19 Apr 2000 11:27:52 -0400
-* PR# 525 *
-Subject: Windows-specific: image(z,zlim=()) gives bogus colors outside range
-From: Ben Bolker <ben@zoo.ufl.edu>
-Date: Wed, 19 Apr 2000 10:20:12 -0400 (EDT)
+* PR# 522 *
+Subject: na.omit fails for matrices
+From: Sergei Zuyev <sergei@stams.strath.ac.uk>
+Date: Mon, 17 Apr 2000 11:52:28 +0100
