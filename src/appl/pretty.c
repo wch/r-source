@@ -35,7 +35,7 @@
  * NEW (0.63.2): ns, nu are double (==> no danger of integer overflow)
  *
  * We determine
- * if the interval (up - lo) is ``small'' [<==>	 i_small == 1, below].
+ * if the interval (up - lo) is ``small'' [<==>	 i_small == TRUE, below].
  * For the ``i_small'' situation, there is a parameter  shrink_sml,
  * the factor by which the "scale" is shrunk.		~~~~~~~~~~
  * It is advisable to set it to some (smaller) integer power of 2,
@@ -57,19 +57,23 @@ double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
 	       double shrink_sml, double high_u_fact[],
 	       int eps_correction, int return_bounds)
 {
+/* From version 0.65 on, we had rounding_eps := 1e-5, before, r..eps = 0
+ * 1e-7 is consistent with seq.default() */
+#define rounding_eps 1e-7
+
 #define h  high_u_fact[0]
 #define h5 high_u_fact[1]
 
     double dx, cell, unit, base, U;
     double ns, nu;
     int k;
-    short i_small;
+    Rboolean i_small;
 
     dx = *up - *lo;
     /* cell := "scale"	here */
     if(dx == 0 && *up == 0) { /*  up == lo == 0	 */
 	cell = 1;
-	i_small = 1;
+	i_small = TRUE;
     } else {
 	cell = fmax2(fabs(*lo),fabs(*up));
 	/* U = upper bound on cell/unit */
@@ -114,8 +118,8 @@ double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
      *
      *	===>	2/5 *(2+h)/(1+h)  <=  c/u  <=  (2+h)/(1+h)	*/
 
-    ns = floor(*lo/unit+1e-5);
-    nu = ceil (*up/unit-1e-5);
+    ns = floor(*lo/unit+rounding_eps);
+    nu = ceil (*up/unit-rounding_eps);
 #ifdef DEBUGpr
     REprintf("pretty(lo=%g,up=%g,ndiv=%d,min_n=%d,shrink=%g,high_u=(%g,%g),"
 	     "eps=%d)\n\t dx=%g; is.small:%d. ==> cell=%g; unit=%g\n",
@@ -131,13 +135,13 @@ double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
     if(ns*unit > *lo)
 	REprintf("\t ns= %.0f -- while(ns*unit > *lo) ns--;\n", ns);
 #endif
-    while(ns*unit > *lo + 1e-5*unit) ns--;
+    while(ns*unit > *lo + rounding_eps*unit) ns--;
 
 #ifdef DEBUGpr
     if(nu*unit < *up)
 	REprintf("\t nu= %.0f -- while(nu*unit < *up) nu++;\n", nu);
 #endif
-    while(nu*unit < *up - 1e-5*unit) nu++;
+    while(nu*unit < *up - rounding_eps*unit) nu++;
 
     k = .5 + nu - ns;
     if(k < min_n) {
@@ -159,9 +163,9 @@ double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
     else {
 	*ndiv = k;
     }
-    if(return_bounds) {
-        *lo = ns * unit;
-	*up = nu * unit;
+    if(return_bounds) { /* if()'s to ensure that result covers original range */
+        if(ns * unit < *lo) *lo = ns * unit;
+        if(nu * unit > *up) *up = nu * unit;
     } else {
         *lo = ns;
 	*up = nu;
