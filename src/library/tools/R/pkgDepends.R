@@ -122,12 +122,15 @@ getDepMtrx <- function(pkg, instPkgs, local=TRUE) {
     pkgDeps  ## Either a matrix, NA if no deps or NULL if not found
 }
 
-getRemotePkgDepends <- function(pkg, contriburl=getOption("repositories")[1]) {
+getRemotePkgDepends <- function(pkg, contriburl=getOption("repositories")()[1]) {
     ## Will get the dependencies of a package from
     ## online repositories.  Returns NULL if it
     ## can not be found, otherwise returns the row provided
     ## in CRAN.packages().  Defaults to getting packages from CRAN,
     ## but other URLs can be specified.
+
+    if(is.null(contriburl))
+        contriburl <- contrib.url(getOption("CRAN"))
 
     cran <- CRAN.packages(contriburl=contriburl)
     whichRow <- which(pkg == cran[,"Package"])
@@ -168,9 +171,14 @@ installedDepends <- function(depMtrx, instPkgs) {
     return(numeric())
 }
 
-foundDepends <- function(depMtrx, contriburl=getOption("repositories")) {
+foundDepends <- function(depMtrx, contriburl=getOption("repositories")()) {
     out <- list(Found=list())
     foundRows <- numeric()
+
+    if(is.null(contriburl))
+        contriburl <- contrib.url(c(CRAN = getOption("CRAN"),
+                                      BIOC = getOption("BIOC")))
+
 
     for (j in 1:length(contriburl)) {
         cur <- character()

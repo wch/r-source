@@ -258,6 +258,14 @@ UTILITIES
         field for packages that are only used in examples or
         vignettes.
 
+    o   vignette dependencies can now be checked and obtained via
+	vignetteDepends.
+
+    o   option 'repositories' to list URLs for package repositories
+        added.
+
+    o   added an option to package.dependencies to handle the 'Suggests'
+        levels of dependencies.
 
 C-LEVEL FACILITIES
 

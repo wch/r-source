@@ -1,5 +1,5 @@
 packageStatus <- function(lib.loc = NULL,
-                           repositories = getOption("repositories"))
+                           repositories = getOption("repositories")())
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()

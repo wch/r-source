@@ -214,6 +214,14 @@ getOption(x)
       \code{\link[utils]{update.packages}}.  Defaults to
       \url{http://cran.r-project.org}.}
 
+    \item{\code{repositories}:}{A function that when evaluated returns a
+      named vector of URLs which can be used to specify the set and
+      order of any online repositories the user would like used in
+      functions such as \code{\link[tools]{packageDepends}}.  The default
+      return value for the function is a vector with two components, one the 
+      value of \code{contrib.url(getOption("CRAN"))} and the second
+      \code{contrib.url(getOption("BIOC"))}.}
+    
     \item{\code{download.file.method}:}{Method to be used for
       \code{download.file}.  Currently download methods
       \code{"internal"}, \code{"wget"} and \code{"lynx"} are available.
@@ -295,7 +303,8 @@ options() # printing all current options
 op <- options(); str(op) # nicer printing
 
 # .Options is the same:
-all(sapply(1:length(op), function(i) all(.Options[[i]] == op[[i]])))
+all(sapply(1:length(op), function(i) if(is.atomic(op[[i]]))
+                         {all(.Options[[i]] == op[[i]])} else TRUE))
 
 options('width')[[1]] == options()$width # the latter needs more memory
 options(digits=20)
@@ -326,7 +335,7 @@ stop("test it")
 options(error=dump.frames)
 ## A possible setting for non-interactive sessions
 options(error=quote({dump.frames(to.file=TRUE); q()}))
-}}
+}
 \keyword{environment}
 \keyword{error}
 \keyword{print}

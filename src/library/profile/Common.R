@@ -28,6 +28,10 @@ options(warn = 0)
 options(help.try.all.packages = FALSE)
 options(CRAN = "http://cran.r-project.org")
 options(BIOC= "http://www.bioconductor.org")
+options(repositories=function() {
+                           c(CRAN=contrib.url(getOption("CRAN")),
+                                BIOC=contrib.url(getOption("BIOC")))})
+
 options(timeout = 60)
 options(internet.info = 2)
 options(encoding = native.enc)

@@ -22,14 +22,17 @@ compareVersion <- function(a, b){
         return(0)
 }
 
-package.dependencies <- function(x, check = FALSE)
+package.dependencies <- function(x, check = FALSE,
+                                 depLevel=c("Depends", "Suggests"))
 {
+    depLevel <- match.arg(depLevel)
+
     if(!is.matrix(x))
         x <- matrix(x, nrow = 1, dimnames = list(NULL, names(x)))
 
     deps <- list()
     for(k in 1:nrow(x)){
-        z <- x[k, "Depends"]
+        z <- x[k, depLevel]
         if(!is.na(z) & z != ""){
             ## split dependencies, remove leading and trailing whitespace
             z <- unlist(strsplit(z, ",", fixed=TRUE))
