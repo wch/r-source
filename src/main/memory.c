@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998--2000  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -51,7 +52,7 @@
 #include <config.h>
 #endif
 
-/* #include "Memory.h" include in Defn.h */
+/* #include "Memory.h" included in Defn.h */
 #include "Defn.h"
 #include "Graphics.h"
 
@@ -249,6 +250,8 @@ char *S_realloc(char *p, long new, long old, int size)
     nold = old * size;
     for(i=0 ; i<nold ; i++)
 	q[i] = p[i];
+    for(i=nold; i < new*size; i++)
+	q[i] = 0;
     return q;
 }
 
