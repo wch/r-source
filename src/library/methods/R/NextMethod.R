@@ -13,7 +13,8 @@
     for(signature in excluded) {
         if(!is(signature, "signature"))
             stop("expected a list of signature objects, got \"", class(signature), "\"")
-        mlist <- insertMethod(mlist, signature, names(signature), NULL, FALSE)
+        if(length(signature)>0)
+            mlist <- insertMethod(mlist, signature, names(signature), NULL, FALSE)
     }
     ## and now redo method selection 
     value <- selectMethod(f, envir, optional, TRUE, mlist)
@@ -32,6 +33,7 @@ callNextMethod <- function(...) {
         if(exists(".Method", envir = envir, inherits = FALSE)) {
             method <- get(".Method", envir = envir, inherits = FALSE)
             f <- get(".Generic", envir = envir)
+###  see test below:  cache-ing doesn't currently always work
             cache <- TRUE
         }
         else { ## not in an ordinary method: must be in another NextMethod call
@@ -52,7 +54,7 @@ callNextMethod <- function(...) {
             ## so later calls will load this information.  But can't do this
             ## if this call was from a next method, because dispatch may be
             ## different
-            if(cache)
+            if(cache && length(method@target)>0)  #BUG in findNextMethod?? (as of R 1.7)
                 cacheMethod(f, method@target, newMethod)
             nextMethod <- newMethod@nextMethod
             assign(".nextMethod", nextMethod, envir = envir)
