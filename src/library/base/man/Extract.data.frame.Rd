@@ -24,6 +24,7 @@ x$name <- value
 }
 \arguments{
   \item{x}{data frame.}
+
   \item{i, j}{elements to extract or replace. \code{i, j} are
     \code{numeric} or \code{character} or, for \code{[} only, empty.
     Numeric values are coerced to integer as if by \code{\link{as.integer}}.
@@ -103,7 +104,7 @@ x$name <- value
 }
 \section{Warning}{
   Although the default for \code{drop} is \code{TRUE}, the default
-  behaviour  when only one \emph{row} is left is equivalent to
+  behaviour when only one \emph{row} is left is equivalent to
   specifying \code{drop = FALSE}.  To drop from a data frame to a list,
   \code{drop = FALSE} has to specified explicitly.
 }
