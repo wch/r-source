@@ -319,6 +319,14 @@ typedef struct SEXPREC *SEXP;
 #define UNPROTECT(n)	unprotect(n)
 #define UNPROTECT_PTR(s)	unprotect_ptr(s)
 
+/* We sometimes need to coerce a protected value and place the new
+   coerced value under protection.  For these cases PROTECT_WITH_INDEX
+   saves an index of the protection location that can be used to
+   replace the protected value using REPROTECT. */
+typedef int PROTECT_INDEX;
+#define PROTECT_WITH_INDEX(x,i) R_ProtectWithIndex(x,i)
+#define REPROTECT(x,i) R_Reprotect(x,i)
+
 /* Evaluation Environment */
 extern SEXP	R_GlobalEnv;	    /* The "global" environment */
 
@@ -676,6 +684,8 @@ int StringBlank(SEXP);
 SEXP substitute(SEXP,SEXP);
 void unprotect(int);
 void unprotect_ptr(SEXP);
+void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
+void R_Reprotect(SEXP, PROTECT_INDEX);
 
 				/* return(.) NOT reached : for -Wall */
 #define error_return(msg)	{ error(msg);		return R_NilValue; }
