@@ -1213,6 +1213,8 @@ SEXP do_updateform(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  Q: Is this really needed, or can we get by with less info?
  */
 
+/* time to move more functionality back into compiled 
+   code (cycle of reincarnation) */
 
 /* .Internal(model.frame(terms, rownames, variables, varnames, */
 /*           dots, dotnames, subset, na.action)) */
@@ -1222,8 +1224,8 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP terms, data, names, variables, varnames, dots, dotnames, na_action;
     SEXP ans, row_names, subset, tmp;
     char buf[256];
-    int i, nr, nc;
-    int nvars, ndots;
+    int i, j, nr, nc;
+    int nvars, ndots, nactualdots;
 
     checkArity(op, args);
     terms = CAR(args); args = CDR(args);
@@ -1250,11 +1252,19 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "invalid extra variable names");
     if ((ndots = length(dots)) != length(dotnames))
 	errorcall(call, "number of variables != number of variable names");
+    
+    /*  check for NULL extra arguments -- moved from interpreted code*/
+
+    nactualdots=0;
+    for (i=0;i<ndots;i++){
+	if (VECTOR(dots)[i]!=R_NilValue) 
+	    nactualdots++;
+    }
 
     /* Assemble the base data frame. */
     
-    PROTECT(data = allocVector(VECSXP, nvars + ndots));
-    PROTECT(names = allocVector(STRSXP, nvars + ndots));
+    PROTECT(data = allocVector(VECSXP, nvars + nactualdots));
+    PROTECT(names = allocVector(STRSXP, nvars + nactualdots));
 
     tmp = getAttrib(variables, R_NamesSymbol);
     for (i = 0; i < nvars; i++) {
@@ -1262,10 +1272,13 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	STRING(names)[i] = STRING(varnames)[i];
     }
     tmp = getAttrib(dots, R_NamesSymbol);
-    for (i = 0; i < ndots; i++) {
+    for (i = 0,j=0; i < ndots; i++) {
+	if (VECTOR(dots)[i]==R_NilValue)
+	    continue;
 	sprintf(buf, "(%s)", CHAR(STRING(tmp)[i]));
-	VECTOR(data)[nvars + i] = VECTOR(dots)[i];
-	STRING(names)[nvars + i] = mkChar(buf);
+	VECTOR(data)[nvars + j] = VECTOR(dots)[i];
+	STRING(names)[nvars + j] = mkChar(buf);
+	j++;
     }
     setAttrib(data, R_NamesSymbol, names);
     UNPROTECT(2);

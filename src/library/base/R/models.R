@@ -224,11 +224,11 @@ model.frame.default <-
     extranames <- as.character(substitute(list(...))[-1])
     extras <- substitute(list(...))
     extras <- eval(extras, data, sys.frame(sys.parent()))
-    if(length(extras)) { # remove NULL args
-        keep <- !sapply(extras, is.null)
-        extras <- extras[keep]
-        extranames <- extranames[keep]
-    }
+    ##if(length(extras)) { # remove NULL args
+    ##    keep <- !sapply(extras, is.null)
+    ##    extras <- extras[keep]
+    ##    extranames <- extranames[keep]
+    ##}
     subset <- eval(substitute(subset), data, sys.frame(sys.parent()))
     data <- .Internal(model.frame(formula, rownames, variables, varnames,
 				  extras, extranames, subset, na.action))
