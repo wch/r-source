@@ -1,7 +1,0 @@
-named.elements <-
-function(x)
-{
-	n <- names(x)
-	if(is.null(n)) NULL
-	else !is.na(n)
-}
