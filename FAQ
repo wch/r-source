@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-13, 2002-07-02
+Version 1.5-14, 2002-07-03
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1867,13 +1867,6 @@ these a try, of course.  This area of CRAN currently contains
 *multidim*
      Code for correspondence analysis and other multidimensional descriptive
      statistics.
-
-*multilm*
-     A basic method for fitting and testing multivariate linear models,
-     including stabilized test procedures by Laeuter et. al.
-
-*npConfRatio*
-     Nonparametric confidence intervals for the ratios of medians.
 
 *pls*
      Univariate Partial Least Squares Regression.
