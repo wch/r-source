@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.9.0 (2003-12-03).
+   <p>The current version of this document is 1.9.0 (2003-12-09).
 
    ISBN 3-900051-02-X
 
@@ -561,6 +561,14 @@ installed, it can be used by one of
      </pre>
    Multi-threaded versions of Goto's BLAS are available, so please note the
 <em>caveat</em> in the previous paragraph.
+
+   <p>For Intel processors under Linux, Intel's Math Kernel Library
+<a href="http://www.intel.com/software/products/mkl/">http://www.intel.com/software/products/mkl/</a>
+can be used by
+<pre class="smallexample">     --with-blas="-lmkl -lguide -lpthread"
+     </pre>
+   with the same caveat on multi-threading.  (Thanks to Andy Liaw for the
+information.)
 
    <p>Note that the BLAS library will be used for several add-on packages as
 well as for R itself.  This means that it is better to use a shared
