@@ -48,7 +48,7 @@ stamp-docs: $(MANSRC)
 	@touch stamp-latex
 
 ../doc/manual/Man.dvi: stamp-latex
-	(cd ../doc/manual; make Man.dvi)
+	-(cd ../doc/manual; make Man.dvi)
 
 $(Ex_Tests):
 	@if [ ! -d $@ ]; then mkdir -p $@ ; fi
