@@ -134,7 +134,7 @@ EMAIL      	gb@stat.umu.se
 VERSION    	0.63.3
 PLATFORM   	sun-sparc-linux
 SYSTEM     	Redhat 5.2
-CC		egcs
+CC		gcc version egcs-2.90.29 980515 (egcs-1.0.3 release)
 FC		egcs-g77
 MAKE 		make
 
