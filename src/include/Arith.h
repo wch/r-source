@@ -77,7 +77,9 @@ extern double	R_NaReal;	/* NA_REAL */
 # else
 #  ifdef _AIX
 #   include <fp.h>
-#   define R_FINITE(x)		FINITE(x)
+    static int R_FINITE(double x) {
+        return FINITE(x);	/* NOTE: macro does not work.  */
+    }
 #  else
 #   define R_FINITE(x)		((x) != R_NaReal)
 #  endif
