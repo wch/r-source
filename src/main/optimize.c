@@ -201,7 +201,7 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
     CADR(info.R_fcall2) = allocVector(REALSXP, 1);
     PROTECT(res = allocVector(REALSXP, 3));
     REAL(res)[0] =
-	zeroin(xmin, xmax, fcn2, 
+	zeroin(xmin, xmax,   (double (*)(double, void*)) fcn2, 
 	       (void *) &info, &tol, &iter);
     REAL(res)[1] = (double)iter;
     REAL(res)[2] = tol;
