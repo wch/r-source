@@ -24,7 +24,7 @@ approxfun <- function (x, y=NULL, method = "linear", yleft, yright, rule=1, f=0)
     if (missing(yright))
 	yright <- if(rule == 1) NA else y[length(y)]
     rm(o, ok, rule)
-    function(v) .C("approx", as.double(x), as.double(y),
+    function(v) .C("R_approx", as.double(x), as.double(y),
 		   n, xout = as.double(v), length(v), as.integer(method),
 		   as.double(yleft), as.double(yright),
 		   as.double(f), NAOK=TRUE, PACKAGE="base")$xout

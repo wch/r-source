@@ -7,7 +7,7 @@
 ## This is the basis of the `FFTab.h' and `FFDecl.h' files in
 ## `../include' which are included by  `../unix/dynload.c'.
 ##
-C_FUNCTION(approx)
+C_FUNCTION(R_approx)
 F77_SUBROUTINE(ch2inv)
 F77_SUBROUTINE(chol)
 F77_SUBROUTINE(dbksl)

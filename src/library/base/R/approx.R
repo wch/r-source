@@ -31,7 +31,7 @@ approx <- function (x, y=NULL, xout, method = "linear", n = 50,
 	if (n <= 0) stop("approx requires n >= 1")
 	xout <- seq(x[1], x[nx], length = n)
     }
-    y <- .C("approx", as.double(x), as.double(y), nx, xout=as.double(xout),
+    y <- .C("R_approx", as.double(x), as.double(y), nx, xout=as.double(xout),
 	    length(xout), as.integer(method),
 	    as.double(yleft), as.double(yright), as.double(f),
 	    NAOK=TRUE, PACKAGE="base")$xout
