@@ -29,7 +29,11 @@ storage.mode(x) <- "<mode>"
   \code{attr(object, "Csingle")} to examine this. However, the
   assignment versions can be used to set the mode to \code{"single"},
   which sets the real mode to \code{"double"} and the \code{"Csingle"}
-  attribute to \code{TRUE}. Setting any other mode will remove the
+  attribute to \code{TRUE}. Setting any other mode will remove this
+  attribute.
+
+  Note (in the examples below) that some \code{\link{call}}s have mode
+  \code{"("} which is S compatible.
 }
 \seealso{
   \code{\link{typeof}} for the R-internal ``mode'',
@@ -40,7 +44,7 @@ sapply(options(),mode)
 
 cex3 <- c("NULL","1","1:1","1i","list(1)","data.frame(x=1)", "pairlist(pi)",
   "c", "lm", "formals(lm)[[1]]",  "formals(lm)[[2]]",
-  "y~x","(y~x)[[1]]", "expression(x <- pi)[[1]][[1]]")
+  "y~x","expression((1))[[1]]", "(y~x)[[1]]", "expression(x <- pi)[[1]][[1]]")
 lex3 <- sapply(cex3, function(x) eval(parse(text=x)))
 mex3 <- t(sapply(lex3, function(x) c(typeof(x), storage.mode(x), mode(x))))
 dimnames(mex3) <- list(cex3, c("typeof(.)","storage.mode(.)","mode(.)"))
