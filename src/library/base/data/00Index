@@ -32,6 +32,7 @@ iris		Edgar Anderson's Iris Data as data.frame
 iris3		Edgar Anderson's Iris Data as 3-d array
 islands		World Landmass Areas
 longley		Longley's Economic Regression Data
+morley		Michaelson-Morley Speed of Light Data
 mtcars		Motor Trend Car Data
 nhtemp		Yearly Average Temperatures in New Haven CT
 phones		The Numbers of Telephones

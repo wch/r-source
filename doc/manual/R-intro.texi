@@ -6099,8 +6099,9 @@ need to adapt the discussion appropriately.
 @table @code
 @item
 Login, start your windowing system.  You should also have the file
-@file{morley.data} in your working directory.  If not, seek the local
-expert.  If you have, proceed.
+@file{morley.tab} in your working directory.  If not, seek the local
+expert (or get it yourself from the @file{base/data} subdirectory of the
+default @R{} library tree).  If you have, proceed.
 @item $ R
 Start @R{} as appropriate for your platform.
 
@@ -6193,10 +6194,10 @@ The next section will look at data from the classical experiment of
 Michaelson and Morley to measure the speed of light.
 
 @table @code
-@item file.show("morley.data")
+@item file.show("morley.tab")
 Optional.  Look at the file.
 
-@item mm <- read.table("morley.data")
+@item mm <- read.table("morley.tab")
 @itemx mm
 Read in the Michaelson and Morley data as a data frame, and look at it.
 There are five experiments (column @code{Expt}) and each has 20 runs
