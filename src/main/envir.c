@@ -2043,8 +2043,8 @@ BuiltinNames(int all, int intern, SEXP names, int *indx)
 
 SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, env, envp;
-    int all, i, k, n;
+    SEXP env, envp;
+    int all;
     checkArity(op, args);
 
     if(IS_USER_DATABASE(CAR(args))) {
@@ -2068,8 +2068,7 @@ SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (all == NA_LOGICAL)
       all = 0;
 
-    R_lsInternal(env, all);
-
+    return R_lsInternal(env, all);
 }
 
 /* takes a *list* of environments and a boolean indicating whether to get all
@@ -2077,7 +2076,7 @@ SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP R_lsInternal(SEXP env, Rboolean all)
 {
   int  i, k, n;
-  SEXP ans, envp;
+  SEXP ans;
 
 
     /* Step 1 : Compute the Vector Size */
