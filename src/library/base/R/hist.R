@@ -3,7 +3,8 @@ hist <- function(x, ...) UseMethod("hist")
 hist.default <-
     function (x, breaks = "Sturges", freq= NULL,
               probability = !freq, include.lowest= TRUE,
-              right= TRUE, col = NULL, border = par("fg"),
+              right= TRUE, col = NULL, border = NULL,
+              angle = 45, density = NULL,
               main = paste("Histogram of" , xname),
               xlim = range(breaks), ylim = NULL,
               xlab = xname, ylab,
@@ -87,15 +88,16 @@ hist.default <-
         stop("negative `counts'. Internal Error in C-code for \"bincount\"")
     if (sum(counts) < n)
         stop("some `x' not counted; maybe `breaks' do not span range of `x'")
-    density <- counts/(n*h)
+    dens <- counts/(n*h)
     mids <- 0.5 * (breaks[-1] + breaks[-nB])
     r <- structure(list(breaks = breaks, counts = counts,
-                        intensities = density,
+                        intensities = dens,
 			density = density, mids = mids,
                         xname = xname, equidist = equidist),
                    class="histogram")
     if (plot) {
         plot(r, freq = freq, col = col, border = border,
+             angle = angle, density = density,
              main = main, xlim = xlim, ylim = ylim, xlab = xlab, ylab = ylab,
              axes = axes, labels = labels, ...)
         invisible(r)
@@ -104,7 +106,8 @@ hist.default <-
 }
 
 plot.histogram <-
-    function (x, freq = equidist, col = NULL, border = par("fg"), lty = NULL,
+    function (x, freq = equidist, col = NULL, border = par("fg"),
+              angle = NULL, density = NULL, lty = NULL,
               main = paste("Histogram of", x$xname),
               xlim = range(x$breaks), ylim = NULL,
               xlab = x$xname, ylab,
@@ -134,7 +137,8 @@ plot.histogram <-
         }
     }
     rect(x$breaks[-nB], 0, x$breaks[-1], y,
-         col = col, border = border, lty = lty)
+         col = col, border = border,
+         angle = angle, density = density, lty = lty)
     if((logl <- is.logical(labels) && labels) || is.character(labels))
         text(x$mids, y,
              labels = if(logl) {

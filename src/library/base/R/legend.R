@@ -1,5 +1,6 @@
 legend <-
-function(x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
+function(x, y, legend, fill, col = "black", lty, lwd, pch,
+	 angle = NULL, density = NULL, bty = "o",
          bg = par("bg"), pt.bg = NA, cex = 1,
          xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1, adj = 0,
          text.width = NULL, merge = do.lines && has.pch, trace = FALSE,
@@ -24,7 +25,7 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch, bty = "o",
     rect2 <- function(left, top, dx, dy, ...) {
 	r <- left + dx; if(xlog) { left <- 10^left; r <- 10^r }
 	b <- top  - dy; if(ylog) {  top <- 10^top;  b <- 10^b }
-	rect(left, top, r, b, ...)
+	rect(left, top, r, b, angle = angle, density = density, ...)
     }
     segments2 <- function(x1, y1, dx, dy, ...) {
 	x2 <- x1 + dx; if(xlog) { x1 <- 10^x1; x2 <- 10^x2 }

@@ -6,12 +6,18 @@
   given in \code{x} and \code{y}.
 }
 \usage{
-polygon(x, y = NULL, col = NA, border = NULL,
-        lty = NULL, xpd = NULL, density = -1, angle = 45, \dots)
+polygon(x, y = NULL, density = NULL, angle = 45,
+        col = NA, border = NULL, lty = NULL, xpd = NULL, \dots)
 }
 \arguments{
   \item{x,y}{vectors containing the coordinates of the vertices
     of the polygon.}
+  \item{density}{the density of shading lines, in lines per inch.  The
+    default value of \code{NULL} means that no shading lines are drawn.
+    Non-positive values of \code{density} also inhibit the drawing
+    of shading lines.}
+  \item{angle}{the slope of shading lines, given as an angle
+    (counter-clockwise} in degrees.}
   \item{col}{the color for filling the polygon.
     The default, \code{NA}, is to leave polygons unfilled.}
   \item{border}{the color to draw the border.  The default, \code{NULL},
@@ -19,8 +25,6 @@ polygon(x, y = NULL, col = NA, border = NULL,
   \item{lty}{the line type to be used, as in \code{\link{par}}.}
   \item{xpd}{(where) should clipping take place?  Defaults to
     \code{\link{par}("xpd")}.}
-  \item{density}{density of fill pattern. \emph{NOT YET} implemented.}
-  \item{angle}{angle of fill pattern. \emph{NOT YET} implemented.}
   \item{\dots}{graphical parameters can be given as arguments to
     \code{polygon}.}
 }
@@ -31,7 +35,7 @@ polygon(x, y = NULL, col = NA, border = NULL,
 
   It is assumed that the polygon is closed by joining the last point to
   the first point.
-
+ 
   The coordinates can contain missing values.  The behaviour is similar
   to that of \code{\link{lines}}, except
   that instead of breaking a line into several lines, \code{NA}
@@ -40,8 +44,8 @@ polygon(x, y = NULL, col = NA, border = NULL,
   the examples below.
 
   When multiple polygons are produced,
-  the values of \code{col}, \code{border}, and \code{lty} are
-  recycled in the usual manner.
+  the values of \code{density}, \code{angle}, \code{col}, \code{border},
+  and \code{lty} are recycled in the usual manner.
 }
 \seealso{
   \code{\link{segments}} for even more flexibility, \code{\link{lines}},
@@ -78,5 +82,10 @@ polygon(1:9, c(2,1,2,1,NA,2,1,2,1),
         border=c("green", "yellow"),
         lwd=3, lty=c("dashed", "solid"))
 par(op)
+
+# Line-shaded polygons
+plot(c(1,9), 1:2, type="n")
+polygon(1:9, c(2,1,2,1,NA,2,1,2,1),
+        density=c(10, 20), angle=c(-45, 45))
 }
 \keyword{aplot}

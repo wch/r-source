@@ -1,5 +1,6 @@
 piechart <-
-    function (x, labels=names(x), edges=200, radius=0.8, col=NULL, main=NULL, ...)
+    function (x, labels=names(x), edges=200, radius=0.8, col=NULL,
+              angle = 45, density = NULL, main=NULL, ...)
 {
     if (!is.numeric(x) || any(is.na(x) | x <= 0))
 	stop("piechart: `x' values must be positive.")
@@ -13,12 +14,18 @@ piechart <-
     else ylim <- (pin[2]/pin[1]) * ylim
     plot.new()
     plot.window(xlim, ylim, "", asp=1)
-    for (i in 1:length(dx)) {
+    nx <- length(dx)
+    if (is.null(col)) col <- par("fg")
+    col <- rep(col, length = nx)
+    angle <- rep(angle, length = nx)
+    density <- rep(density, length = nx)
+    for (i in 1:nx) {
 	n <- max(2, floor(edges * dx[i]))
 	t2p <- 2*pi * seq(x[i], x[i + 1], length = n)
 	xc <- c(cos(t2p), 0) * radius
 	yc <- c(sin(t2p), 0) * radius
-	polygon(xc, yc, col=col[(i-1)%%length(col)+1])
+	polygon(xc, yc, col=col[i],
+                angle = angle[i], density = density[i])
 	t2p <- 2*pi * mean(x[i + 0:1])
 	xc <- cos(t2p) * radius
 	yc <- sin(t2p) * radius

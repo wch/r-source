@@ -3,6 +3,7 @@ barplot <- function(height, ...) UseMethod("barplot")
 barplot.default <-
 function(height, width = 1, space = NULL, names.arg = NULL,
          legend.text = NULL, beside = FALSE, horiz = FALSE,
+         angle = 45, density = NULL,
          col = heat.colors(NR), border = par("fg"),
          main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
          xlim = NULL, ylim = NULL,
@@ -69,11 +70,12 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 
 	plot.new()
 	plot.window(xlim, ylim, log = "", ...)
-	xyrect <- function(x1,y1, x2,y2, horizontal=TRUE, ...) {
+        # Beware : angle and density are passed using R scoping rules
+	xyrect <- function(x1,y1, x2,y2, horizontal = TRUE, ...) {
 	    if(horizontal)
-		rect(x1,y1, x2,y2, ...)
+		rect(x1,y1, x2,y2, angle = angle, density = density, ...)
 	    else
-		rect(y1,x1, y2,x2, ...)
+		rect(y1,x1, y2,x2, angle = angle, density = density, ...)
 	}
 	if (beside)
 	    xyrect(0, w.l, c(height), w.r, horizontal=horiz, col = col)
@@ -101,8 +103,8 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	    }
 	    xy <- par("usr")
 	    legend(xy[2] - xinch(0.1), xy[4] - yinch(0.1),
-		   legend = legend.text, fill = legend.col,
-		   xjust = 1, yjust = 1)
+		   legend = legend.text, angle = angle, density = density,
+                   fill = legend.col, xjust = 1, yjust = 1)
 	}
 	title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
 	if(axes) axis(if(horiz) 1 else 2, cex.axis = cex.axis, ...)
