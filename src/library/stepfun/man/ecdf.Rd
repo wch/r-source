@@ -2,7 +2,7 @@
 \title{Empirical Cumulative Distribution Function}
 \usage{
 ecdf(x)
-plot(x, verticals = FALSE, col.01line = "gray70", \dots)
+plot(\dots, verticals = FALSE, col.01line = "gray70")
 }
 \alias{ecdf}
 \alias{print.ecdf}
@@ -10,7 +10,9 @@ plot(x, verticals = FALSE, col.01line = "gray70", \dots)
 \alias{plot.ecdf}
 \arguments{
   \item{x}{numeric vector with the ``observations''.}
-  \item{vertical, \dots}{see \code{\link{plot.stepfun}}.}
+  \item{\dots}{arguments to be passed to \code{\link{plot.stepfun}}, the
+    first of which should be an \R object of class \code{"ecdf"}.}
+  \item{vertical}{see \code{\link{plot.stepfun}}.}
   \item{col.01line}{numeric or character specifying the color of the
     horizontal lines at y=0 and 1, see \code{\link{colors}}.}
 }
@@ -24,19 +26,19 @@ plot(x, verticals = FALSE, col.01line = "gray70", \dots)
   multiple jumps at one place if there are ties).
 
   For observations
-  \code{x}\eqn{= (}\eqn{x_1,x_2}{x1,x2},\ldots\eqn{x_n)}{xn)},
+  \code{x}\eqn{= (}\eqn{x_1,x_2}{x1,x2}, \ldots \eqn{x_n)}{xn)},
   \eqn{F_n}{Fn} is the fraction of observations less or equal to \eqn{t},
   i.e.,
   \deqn{F_n(t) = \#\{x_i\le t\}\ / n
                = \frac1 n\sum_{i=1}^n \mathbf{1}_{[x_i \le t]}.}{
-    Fn(t) = #\{x_i \le t\} / n  =  1/n sum(i=1,..,n) Indicator(xi <= t).}
+    Fn(t) = #\{x_i \le t\} / n  =  1/n sum(i=1,n) Indicator(xi <= t).}
 
   The function \code{plot.ecdf} which implements the \code{\link{plot}}
   method for \code{ecdf} objects, is implemented via a call to
   \code{\link{plot.stepfun}}; see its documentation.
 }
 \value{
-  A function of class \code{"ecdf"}, inheriting from the
+  For \code{ecdf}, a function of class \code{"ecdf"}, inheriting from the
   \code{"\link{stepfun}"} class.
 }
 \author{
