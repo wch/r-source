@@ -288,7 +288,7 @@ completeClassDefinition <-
 }
 
 .mergeSlots <- function(classDef1, classDef2) {
-    
+
 }
 
 
@@ -466,7 +466,10 @@ newBasic <-
                   ## S-Plus on array, unless R allows 0-length .Dim attribute
                "array" = (if(length(list(...)) > 0) array(...) else structure(numeric(), .Dim =0)),
                "matrix" = (if (length(list(...)) > 0) matrix(...) else matrix(0, 0, 0)),
-               "ts" = ts(...),
+#               "ts" = ts(...),
+# break dependence on package stats
+               "ts" = (if(length(list(...))) ts(...)
+               else structure(NA, .Tsp = c(1, 1, 1), class = "ts")),
                   {
                       args <- list(...)
                       if(length(args) == 1 && is(args[[1]], Class)) {
@@ -760,7 +763,7 @@ print.classRepresentation <-
 ## bootstrap definition to be used before getClass() works
 possibleExtends <- function(class1, class2)
     .identC(class1, class2) || .identC(class2, "ANY")
- 
+
 
 .possibleExtends <-
   ## Find the information that says whether class1 extends class2,
@@ -887,7 +890,7 @@ completeSubclasses <-
                 ext <- c(ext, exti)
             }
         }
-        else 
+        else
             stop("The ", if(superClassCase) "superClass" else "subClass",
                  " list for class, \"",
                  className, "\", includes an undefined class, \"",
@@ -1026,7 +1029,7 @@ setDataPart <- function(object, value) {
     }
     else
         ClassDef <- getClass(cl, TRUE)
-    
+
     value <- elNamed(ClassDef@slots, ".Data")
     if(is.null(value)) {
         if(.identC(cl, "structure"))
@@ -1350,7 +1353,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
     .requirePackage(classDef@package, TRUE)
 }
 
-    
+
 .asEnvironmentPackage <- function(package) {
     if(identical(package, ".GlobalEnv"))
         .GlobalEnv
