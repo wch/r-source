@@ -110,7 +110,8 @@ int main (int argc, char **argv)
     if(getenv("R_HOME")) {
 	strcpy(RHome, getenv("R_HOME"));
     } else {
-	strcpy(RHome, "c:/R/R-release");
+	fprintf(stderr, "R_HOME must be set\n");
+	exit(1);
     }
     Rp->rhome = RHome;
 /*

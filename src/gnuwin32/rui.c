@@ -528,14 +528,6 @@ static void closeconsole(control m)
     R_CleanUp(SA_DEFAULT, 0, 1);
 }
 
-#include "getline/getline.h"
-void setup_term_ui()
-{
-    initapp(0, 0);
-    readconsolecfg();
-    gl_loadhistory(".Rhistory");
-}
-
 static MenuItem ConsolePopup[] = {
     {"Copy", menucopy, 0},
     {"Paste", menupaste, 0},

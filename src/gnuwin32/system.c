@@ -80,7 +80,7 @@ void R_ProcessEvents(void)
 	raise(SIGINT);
     }
     R_CallBackHook();
-    R_tcldo();
+    if(R_tcldo) R_tcldo();
 }
 
 
@@ -740,3 +740,11 @@ int cmdlineoptions(int ac, char **av)
       R_Suicide("impossible to create 'reader thread'; you must free some system resources");
     return 0;
 }
+
+void setup_term_ui()
+{
+    initapp(0, 0);
+    R_tcldo = tcl_do_none;
+    readconsolecfg();
+}
+

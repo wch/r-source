@@ -41,3 +41,5 @@ int windelmenuitem(char * item, char * menu, char *errmsg);
 void Rwin_fpset();
 
 void Rgui_configure();
+void readconsolecfg();
+
