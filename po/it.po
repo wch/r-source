@@ -498,7 +498,8 @@ msgstr ""
 
 #: src/main/CommandLineArgs.c:236
 msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
-msgstr "ATTENZIONE: il valore di '-max-ppsize' è troppo grande: verrà ignorato\n"
+msgstr ""
+"ATTENZIONE: il valore di '-max-ppsize' è troppo grande: verrà ignorato\n"
 
 #: src/main/CommandLineArgs.c:247
 msgid "WARNING: no 'vsize' given\n"
