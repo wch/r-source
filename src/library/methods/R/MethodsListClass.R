@@ -112,7 +112,7 @@
                   new("MethodWithNext", method, nextMethod = value,
                       excluded = excluded)
               }, where = envir)
-    if(!isGeneric("initialize")) {
+    if(!isGeneric("initialize", envir)) {
         setGeneric("initialize",  function(.Object, ...) {
             value <- standardGeneric("initialize")
             if(!identical(class(value), class(.Object)))

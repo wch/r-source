@@ -50,7 +50,7 @@ show <- function(object)
     showDefault(object, FALSE)
 
 .InitShowMethods <- function(envir) {
-    if(!isGeneric("show"))
+    if(!isGeneric("show", envir))
         setGeneric("show", where = envir)
     setMethod("show", "MethodDefinition",
               function(object) {

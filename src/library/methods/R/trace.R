@@ -167,7 +167,7 @@
                   .Object@.Data <- .makeTracedFunction(def, tracer, exit, at, print)
                   .Object
               }, where = envir)
-    if(!isGeneric("show"))
+    if(!isGeneric("show", envir))
         setGeneric("show", where = envir)
     setMethod("show", "traceable", function(object) {
         message("Object of class \"", class(object), "\"")

@@ -102,7 +102,7 @@ function (clName, filename = NULL, type = "class",
     if(length(whereClass) == 0)
         stop(paste0("No definition of class \"", clName,"\" found"))
     else if(length(whereClass) > 1) {
-        if(identical(where, -1)) {
+        if(identical(where, topenv(parent.frame()))) {
             whereClass <- whereClass[[1]]
             warning("Multiple definitions of \"", clName, "\" found; using the one on ",
                     whereClass)

@@ -83,8 +83,6 @@ setGeneric <-
 ##
 ## make a generic function object corresponding to the given function name.
 ##
-## Simulates the getOrMakeGeneric S4 function but using the environment mechanism
-## rather than metadata as in S.
 
 isGeneric <-
   ## Is there a function named `f', and if so, is it a generic?
@@ -92,18 +90,10 @@ isGeneric <-
   ## If the `fdef' argument is supplied, take this as the definition of the
   ## generic, and test whether it is really a generic, with `f' as the name of
   ## the generic.  (This argument is not available in S-Plus.)
-  function(f, where = -1, fdef = NULL, getName = FALSE)
+  function(f, where = topenv(parent.frame()), fdef = NULL, getName = FALSE)
 {
-    ## the fdef argument is not found in S4 but should be ;-)
-    if(is.null(fdef)) {
-        if(identical(where, -1)) {
-            where <- findFunction(f)
-            if(length(where) == 0)
-                return(FALSE)
-            where <- where[[1]]
-        }
+    if(is.null(fdef))
         fdef <- getFunction(f, where=where, mustFind = FALSE)
-    }
     if(is.null(fdef))
       return(FALSE)
     ## check primitives. These are never stored as explicit generic functions.
@@ -560,9 +550,9 @@ selectMethod <-
 hasMethod <-
   ## returns `TRUE' if `f' is the name of a generic function with an (explicit or inherited) method for
   ## this signature.
-  function(f, signature = character())
+  function(f, signature = character(), where = topenv(parent.frame()))
 {
-    if(isGeneric(f))
+    if(isGeneric(f, where))
         !is.null(selectMethod(f, signature, optional = TRUE))
     else
         FALSE
@@ -571,9 +561,9 @@ hasMethod <-
 existsMethod <-
   ## returns `TRUE' if `f' is the name of a generic function with an (explicit) method for
   ## this signature.
-  function(f, signature = character(), where = -1)
+  function(f, signature = character(), where = topenv(parent.frame()))
 {
-    if(isGeneric(f))
+    if(isGeneric(f, where))
         !is.null(getMethod(f, signature, where = where, optional = TRUE))
     else
         FALSE
@@ -585,7 +575,7 @@ dumpMethods <-
   ## If `signature' is supplied only the methods matching this initial signature
   ## are dumped.  (This feature is not found in S-Plus:  don't use it if you want
   ## compatibility.)
-  function(f, file = "", signature = character(), methods, where = -1 )
+  function(f, file = "", signature = character(), methods, where = topenv(parent.frame()) )
 {
     if(missing(methods))
         methods <-  getMethods(f, where = where)
@@ -825,14 +815,8 @@ setGroupGeneric <-
 }
 
 isGroup <-
-  function(f, where = -1, fdef = getGeneric(f))
+  function(f, where = topenv(parent.frame()), fdef = getGeneric(f, where = where))
   {
-      if(!identical(where, -1)) {
-          if(!isGeneric(f, where = where, fdef = fdef))
-              return(FALSE)
-          if(missing(fdef))
-              fdef <- get(f, where)
-      }
     is(fdef, "groupGenericFunction")
   }
 

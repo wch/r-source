@@ -28,7 +28,7 @@ getMethods(f, where)
 
 existsMethod(f, signature = character(), where)
 
-hasMethod(f, signature=character())
+hasMethod(f, signature=character(), where)
 
 selectMethod(f, signature, optional=FALSE, useInherited,
              mlist=getMethods(f), fdef = getGeneric(f))
@@ -188,6 +188,29 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
   discussion of details and ongoing development, see the web page 
   \url{http://developer.r-project.org/methodsPackage.html} and the
   pointers from that page.
+}
+\examples{
+setGeneric("testFun", function(x)standardGeneric("testFun"))
+setMethod("testFun", "numeric", function(x)x+1)
+hasMethod("testFun", "numeric")
+\dontrun{[1] TRUE}
+hasMethod("testFun", "integer") #inherited
+\dontrun{[1] TRUE}
+existsMethod("testFun", "integer")
+\dontrun{[1] FALSE}
+hasMethod("testFun") # default method
+\dontrun{[1] FALSE}
+hasMethod("testFun", "ANY")
+\dontrun{[1] FALSE}
+\dontshow{
+stopifnot(isGeneric("testFun"))
+stopifnot(hasMethod("testFun", "numeric"))
+stopifnot(hasMethod("testFun", "integer"))
+stopifnot(!existsMethod("testFun", "integer"))
+stopifnot(!hasMethod("testFun"))
+stopifnot(!hasMethod("testFun", "ANY"))
+removeGeneric("testFun")
+}
 }
 \keyword{programming}
 \keyword{classes}

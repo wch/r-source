@@ -478,21 +478,12 @@ getGroup <-
 
 getMethodsMetaData <-
   ## get the methods meta-data for function f on database where
-  function(f, where = -1) {
-    if(identical(where, -1)) {
-        mname <- mlistMetaName(f)
-        if(exists(mname))
-            get(mname)
-        else
-            NULL
-    }
-    else {
+  function(f, where = topenv(parent.frame())) {
         mname <- mlistMetaName(f, where)
-        if(exists(mname, where = where, inherits = FALSE))
+        if(exists(mname, where = where, inherits = missing(where)))
             get(mname, where)
         else
             NULL
-    }
   }
 
 
@@ -544,9 +535,9 @@ mlistMetaName <-
   }
 
 getGenerics <-
-  function(where = -1, searchForm = FALSE) {
-      if(identical(where, -1))
-          where <- .envSearch()
+  function(where, searchForm = FALSE) {
+      if(missing(where))
+          where <- .envSearch(topenv(parent.frame()))
       else if(is.environment(where)) where <- list(where)
     these <- character()
     for(i in where) {
