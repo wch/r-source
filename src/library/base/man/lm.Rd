@@ -71,7 +71,8 @@ lm(formula, data, subset, weights, na.action,
   terms obtained by taking the interactions of all terms in \code{first}
   with all terms in \code{second}.  The specification \code{first*second}
   indicates the \emph{cross} of \code{first} and \code{second}.  This is
-  the same as \code{first + second + first:second}.
+  the same as \code{first + second + first:second}.  If \code{response} 
+  is a matrix a linear model is fitted to each column of the matrix.
 
   \code{lm} calls the lower level functions \code{\link{lm.fit}}, etc,
   see below, for the actual numerical computations.  For programming

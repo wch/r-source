@@ -473,6 +473,10 @@ DEPRECATED & DEFUNCT
 	by class() and class<-(); they were internal support functions
 	for use by package methods.
 
+    o   The use of SIGUSR2 to quit a running R process under Unix is
+        deprecated, the signal may need to be reclaimed for other 
+        purposes.
+
 
 UTILITIES
 
@@ -686,6 +690,10 @@ BUG FIXES
 	the units.
 
     o	rank(c("B", NA)) no longer returns character.
+
+    o   reference to by() added in ?tapply
+
+    o   ?lm describes what happens with matrix response
 
 
 

@@ -41,10 +41,11 @@ tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
   list with a \code{\link{dim}} attribute.
 }
 \seealso{
-  the convenience function \code{\link{aggregate}} (using \code{tapply});
+  the convenience functions \code{\link{by}} and \code{\link{aggregate}} 
+(using \code{tapply});
   \code{\link{apply}},
-  \code{\link{lapply}} with its version
-  \code{\link{sapply}}.
+  \code{\link{lapply}} with its versions
+  \code{\link{sapply}} and \code{\link{mapply}}.
 }
 \examples{
 groups <- as.factor(rbinom(32, n = 5, p = .4))
