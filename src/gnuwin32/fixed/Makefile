@@ -2,18 +2,16 @@ include ../MkRules
 
 MANOBJS= BATCH.Rd COMPILE.Rd INSTALL.Rd REMOVE.Rd RHOME.Rd SHLIB.Rd gnome.Rd hdf5.Rd x11.Rd
 
-all: profiles fixh fixr fixRd fixbin fixmake
+all: profiles fixh fixr fixbin fixetc
 
-profiles: ../../../library/base/R/Rprofile ../../../etc/Rprofile
+profiles: ../../../library/base/R/Rprofile
 
-../../../library/base/R/Rprofile:  ../../library/profile/Common.R ./profile/rprofile
+../../../library/base/R/Rprofile:  ../../library/profile/Common.R \
+../../library/profile/Rprofile.gnw
 	@$(ECHO) -------- Building $@ from $^--------
 	mkdir -p ../../../library/base/R
 	$(CAT)  $^ > $@
 
-../../../etc/Rprofile: ./profile/rprofile.site
-	$(MKDIR) -p ../../../etc
-	$(CP) -p $^ $@
 
 SED0='/^\#/d'
 SED01='/Rsockfork/d'
@@ -33,31 +31,19 @@ fixbin: $(filter-out ./bin/CVS,$(wildcard ./bin/*))
 	$(CP) -p  $^ ../../../bin
 	$(ECHO) done > fixbin
 
-fixr: $(wildcard ./r/*.r) ./r/zero.R $(wildcard ./r/*.html)  \
-      ./profile/rconsole ./profile/rgb.txt ./profile/rdevga
-	$(CP) -p ./r/*.gnw.r ../../library/base/R
+fixr: ./r/zero.R $(wildcard ./r/*.html)
 	$(CP) -p ./r/zero.R ../../../demos/dynload/zero.R
 	$(CP) -p ./r/*.html ../../../doc/html
-	$(CP) -p ./profile/rconsole ../../../etc/Rconsole
-	$(CP) -p ./profile/rdevga ../../../etc/Rdevga	
-	$(CP) -p ./profile/rgb.txt ../../../etc
-	$(ECHO) done > fixr		
+	$(ECHO) done > fixr
+
+fixetc: ./etc/Rconsole ./etc/rgb.txt ./etc/Rdevga ./etc/Rprofile
+	$(CP) -p $^ ../../../etc
+	$(ECHO) done > fixetc
 
 fixRd: $(wildcard man/*.Rd)
 	-$(RM) $(foreach i, $(MANOBJS), ../../library/base/man/$i)
 	$(CP) -p man/*.Rd  ../../library/base/man
-	$(ECHO) done > fixRd	
-
-fixmake: ../../appl/Makefile ../../main/Makefile ../../nmath/Makefile
-
-../../appl/Makefile: make.appl
-	$(CP) -p $^ $@
-
-../../main/Makefile: make.main
-	$(CP) -p $^ $@
-
-../../nmath/Makefile: make.nmath
-	$(CP) -p $^ $@
+	$(ECHO) done > fixRd
 
 clean:
 	$(RM) *~ */*~ fixr fixh fixRd fixbin
