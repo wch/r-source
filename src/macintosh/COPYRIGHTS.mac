@@ -88,7 +88,9 @@ gui/LongControls.c
 gui/R_Event.c
 gui/RFiles.c
 gui/RInit.c
+gui/RIntf.c
 gui/RMenus.c
+gui/RPreference.c
 gui/RScripting.c
 gui/RWindows.c
 gui/WEDrags.c
