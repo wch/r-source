@@ -760,6 +760,8 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (!R_FINITE(mem))
 	    errorcall(call, "incorrect argument");
 #ifdef LEA_MALLOC
+	if(mem >= 4096)
+	    errorcall(call, "don't be silly!: your machine has a 4Gb address limit");
 	newmax = mem * 1048576.0;
 	if (newmax < R_max_memory)
 	    errorcall(call, "cannot decrease memory limit");
