@@ -146,6 +146,11 @@ BUG FIXES
     o	Using chol() on an non-positive-definite matrix gave an
 	misleading error message (PR#1061).
 
+    o	as.character() on a language object was truncating to about 70
+	characters: the internal limit (from the deparse code) is now the
+	maximum possible 500.
+
+
 
 
 		CHANGES IN R VERSION 1.3.0

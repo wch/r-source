@@ -692,7 +692,7 @@ static SEXP coercePairList(SEXP v, SEXPTYPE type)
 	    if (isString(CAR(vp)) && length(CAR(vp)) == 1)
 		SET_STRING_ELT(rval, i, STRING_ELT(CAR(vp), 0));
 	    else
-		SET_STRING_ELT(rval, i, STRING_ELT(deparse1(CAR(vp), 0), 0));
+		SET_STRING_ELT(rval, i, STRING_ELT(deparse1line(CAR(vp), 0), 0));
 	}
     }
     else if (type == VECSXP) {
