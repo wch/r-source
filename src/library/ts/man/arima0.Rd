@@ -24,7 +24,11 @@ arima0(x, order = c(0, 0, 0),
     degree of differencing, and the MA order.}
 
   \item{seasonal}{A specification of the seasonal part of the ARIMA
-    model, plus the period (which defaults to \code{frequency(x)}).}
+    model, plus the period (which defaults to \code{frequency(x)}).
+    This should be a list with components \code{order} and
+    \code{period}, but a specification of just a numeric vector of
+    length 3 will be turned into a suitable list with the specification
+    as the \code{order}.}
 
   \item{xreg}{Optionally, a vector or matrix of external regressors,
     which must have the same number of rows as \code{x}.}
