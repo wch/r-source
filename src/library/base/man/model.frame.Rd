@@ -17,6 +17,7 @@ model.frame(formula, \dots)
 \method{model.frame}{glm}(formula, data, na.action, \dots)
 
 \method{model.frame}{lm}(formula, data, na.action, \dots)
+}
 \arguments{
   \item{formula}{a model formula}
 
