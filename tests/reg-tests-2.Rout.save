@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-10-07)
+Version 1.4.0 Under development (unstable) (2001-10-09)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -502,7 +502,7 @@ NULL
 > f(structure(1,class = "bar"))
 NULL
 > e # == .GlobalEnv (in R 1.3.[01]  but not (yet?!) in 1.4.0).
-<environment: d72d0c>
+<environment: 0x8d8a6b0>
 > 
 > 
 > ## some tests that R supports logical variables in formulae
@@ -670,4 +670,13 @@ Error in log(x) : Non-numeric argument to mathematical function
 > unlink("all.Rout")
 > ## many of these were untested before 1.4.0.
 > 
+> ## test mean() works on logical but not factor
+> x <- c(TRUE, FALSE, TRUE, TRUE)
+> mean(x)
+[1] 0.75
+> mean(as.factor(x))
+[1] NA
+Warning message: 
+argument is not numeric or logical: returning NA in: mean.default(as.factor(x)) 
+> ## last had confusing error message in 1.3.1.
 > 

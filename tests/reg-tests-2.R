@@ -289,3 +289,8 @@ try(log("a"))
 unlink("all.Rout")
 ## many of these were untested before 1.4.0.
 
+## test mean() works on logical but not factor
+x <- c(TRUE, FALSE, TRUE, TRUE)
+mean(x)
+mean(as.factor(x))
+## last had confusing error message in 1.3.1.

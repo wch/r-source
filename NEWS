@@ -214,6 +214,7 @@ NEW FEATURES
     o	mean() has `data frame' method applying mean column-by-column.
 	When applied to non-numeric data mean() now returns NA rather
 	than a confusing error message (for compatibility with S4).
+	Logicals are still coerced to numeric.
 
     o	axis.POSIXct() allows the label date/times to be specified
 	via the new `at' argument.

@@ -2,8 +2,8 @@ mean <- function(x, ...) UseMethod("mean")
 
 mean.default <- function(x, trim = 0, na.rm = FALSE, ...)
 {
-    if(!is.numeric(x) && !is.complex(x)) {
-        warning("argument is not numeric: returning NA")
+    if(!is.numeric(x) && !is.complex(x) && !is.logical(x)) {
+        warning("argument is not numeric or logical: returning NA")
         return(as.numeric(NA))
     }
     if (na.rm)
