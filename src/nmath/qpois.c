@@ -48,15 +48,17 @@ double qpois(double p, double lambda, int lower_tail, int log_p)
 #ifdef IEEE_754
     if (p == R_DT_1) return ML_POSINF;
 #endif
+    p *= 1 - 64*DBL_EPSILON;/* 1 - 1e-7 may lose too much */
+
     mu = lambda;
     sigma = sqrt(lambda);
     gamma = sigma;
-    z = qnorm(p, 0., 1., lower_tail, log_p);
 
-    y = floor(mu + sigma * (z + gamma * (z * z - 1) / 6) + 0.5);
+    z = qnorm(p, 0., 1., lower_tail, log_p);
+    y = floor(mu + sigma * (z + gamma * (z*z - 1) / 6) + 0.5);
+
     z = ppois(y, lambda, lower_tail, log_p);
 
-    p *= 1 - 1e-7;
     if(z >= p) {	/* search to the left */
 	for(;;) {
 	    if((z = ppois(y - 1, lambda, lower_tail, log_p)) < p)
