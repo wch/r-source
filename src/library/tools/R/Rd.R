@@ -105,14 +105,20 @@ function(file)
     ## </FIXME>
     
     txt <- paste(lines, collapse = "\n")
-    
-    RdName <- sub(".*\\\\name{[[:space:]]*([^\}]+)[[:space:]]*}.*",
-                  "\\1", txt)
-    RdName <- gsub("[[:space:]]*", " ", RdName)
-    
-    RdTitle <- sub(".*\\\\title{[[:space:]]*([^\}]+)[[:space:]]*}.*",
-                   "\\1", txt)
-    RdTitle <- gsub("[[:space:]]*", " ", RdTitle)
+
+    val <- regexpr("\\\\name{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
+    if(val == -1)
+       stop("missing/empty \\name field")
+    RdName <-
+        gsub("[[:space:]]*", " ",
+             substr(txt, val + 6, val + attr(val, "match.length") - 2))
+
+    val <- regexpr("\\\\title{[[:space:]]*([^\}]+)[[:space:]]*}", txt)
+    if(val == -1)
+        stop("missing/empty \\title field")
+    RdTitle <-
+        gsub("[[:space:]]*", " ",
+             substr(txt, val + 7, val + attr(val, "match.length") - 2))
     
     list(name = RdName, type = RdType, title = RdTitle,
          aliases = aliases, keywords = keywords)
@@ -142,14 +148,15 @@ function(RdFiles)
     ## </QUOTE>
     ## some Rd files have LaTeX-style markup, including
     ## * LaTeX-style single and double quotation
-    ## * Number-range dashes
+    ## * Medium and punctuation dashes
     ## * Escaped ampersand.
     ## Hence we try getting rid of these ...
     title <- contents[ , "Title"]
     title <- gsub("\(``\|''\)", "\"", title)
     title <- gsub("`", "'", title)
-    title <- gsub("\([[:digit:]]\)--\([[:digit:]]\)", "\\1-\\2", title)
+    title <- gsub("\([[:alnum:]]\)--\([[:alnum:]]\)", "\\1-\\2", title)
     title <- gsub("\\\\\&", "&", title)
+    title <- gsub("---", "--", title)
     contents[ , "Title"] <- title
 
     contents
@@ -261,7 +268,7 @@ function(dir, outFile = "")
     cat(paste(c("Entry:", "Aliases:", "Keywords:", "Description:",
                 "URL:"),
               t(cbind(contents[, c("Name", "Aliases", "Keywords",
-                                   "Title")],
+                                   "Title"), drop = FALSE],
                       URLs))),
         sep = c("\n", "\n", "\n", "\n", "\n\n"),
         file = outFile)
