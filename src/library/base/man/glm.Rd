@@ -14,6 +14,7 @@ glm.fit(x, y, weights=rep(1, nrow(x)),
 \alias{glm}
 \alias{glm.control}
 \alias{glm.fit}
+\alias{glm.fit.null}
 \arguments{
 \item{formula}{a symbolic description of the model to be fit.
   The details of model specification are given below.}

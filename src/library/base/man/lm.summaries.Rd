@@ -1,22 +1,27 @@
 \name{lm summaries}
 \title{Accessing Linear Model Fits}
 \usage{
-anova(lm.obj, \dots)
-summary(lm.obj, correlation = FALSE)
-predict(lm.obj,newdata = model.frame(object), conf.level = 0.95, 
+anova(object, \dots)
+anovalist(object, \dots, test = NULL)
+summary(object, correlation = FALSE)
+predict(object, newdata = model.frame(object), conf.level = 0.95,
         tol.level = conf.level)
-coefficients(lm.obj)
-deviance(lm.obj)
-df.residual(lm.obj)
-effects(lm.obj)
-fitted.values(lm.obj)
-residuals(lm.obj)
-weights(lm.obj)
+coefficients(x) ; coef(x)
+deviance(x)
+df.residual(x)
+effects(x)
+family(x)
+formula(x)
+fitted.values(x)
+residuals(x)
+weights(x)
+
 print.summary(summary.lm.obj, digits = max(3, .Options$digits - 3),
               symbolic.cor = p > 4, signif.stars= TRUE, ...)
 }
 \alias{anova.lm}
 \alias{anova.lm.null}
+\alias{anovalist.lm}
 \alias{summary.lm}
 \alias{summary.lm.null}
 \alias{predict.lm}
@@ -24,8 +29,11 @@ print.summary(summary.lm.obj, digits = max(3, .Options$digits - 3),
 \alias{deviance.lm}
 \alias{df.residual.lm}
 \alias{effects.lm}
+\alias{family.lm}
+\alias{formula.lm}
 \alias{fitted.values.lm}
 \alias{residuals.lm}
+\alias{weights}
 \alias{weights.lm}
 \alias{print.lm}
 \alias{print.lm.null}
@@ -33,7 +41,7 @@ print.summary(summary.lm.obj, digits = max(3, .Options$digits - 3),
 \alias{print.summary.lm.null}
 \alias{print.anova.lm}
 \arguments{
-  \item{lm.obj}{an object of class \code{lm}, usually, a result of
+  \item{object,x}{an object of class \code{lm}, usually, a result of
     \code{\link{lm}(..)}.}
 }
 \description{

@@ -13,6 +13,7 @@ quasi(link = "identity", variance = "constant")
 print.family(x, \dots)
 }
 \alias{family}
+\alias{family.lm}
 \alias{binomial}
 \alias{gaussian}
 \alias{Gamma}

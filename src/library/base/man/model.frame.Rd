@@ -7,6 +7,7 @@ model.frame.default(formula, data=sys.frame(sys.parent()),
 }
 \alias{model.frame}
 \alias{model.frame.default}
+\alias{model.frame.lm}
 \arguments{
   \item{formula}{a model formula}
   \item{data}{\code{data.frame} or \code{environment} where the objects

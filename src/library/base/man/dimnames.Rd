@@ -6,8 +6,10 @@ dimnames(x) <- nlist
 }
 \alias{dimnames}
 \alias{dimnames<-}
+\alias{dimnames.data.frame}
+\alias{dimnames<-.data.frame}
 \value{
-  This function obtains the list of extent labels of the array given as
+  This generic function obtains the list of extent labels of the array given as
   its argument.  The second form above can be used to set these labels.
 }
 \seealso{

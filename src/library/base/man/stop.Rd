@@ -15,5 +15,5 @@ prompt.
 \examples{
 if(iter > 10) stop("too many iterations")
 }
-\keyword{enviroment}
+\keyword{environment}
 \keyword{programming}

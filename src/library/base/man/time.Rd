@@ -6,12 +6,14 @@ start(x)
 end(x)
 frequency(x)
 tsp(x)
+tsp(x) <- value
 }
 \alias{time}
 \alias{start}
 \alias{end}
 \alias{frequency}
 \alias{tsp}
+\alias{tsp<-}
 \alias{time.default}
 \alias{start.default}
 \alias{end.default}

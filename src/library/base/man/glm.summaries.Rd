@@ -1,17 +1,18 @@
 \name{glm summaries}
 \title{Accessing Generalized Linear Model Fits}
 \usage{
-summary(glm.obj, dispersion=NULL, correlation=TRUE,
+summary(object, dispersion = NULL, correlation = FALSE,
         na.action = na.omit)
-anova(glm.obj, \dots, test = NULL, na.action = na.omit)
-anova.glmlist(glm.objects, test = NULL, na.action = na.omit)
-coefficients(glm.obj)
-deviance(glm.obj)
-df.residual(glm.obj)
-effects(glm.obj)
-family(glm.obj)
-fitted.values(glm.obj)
-residuals(glm.obj, type="deviance")
+anova(object, \dots, test = NULL, na.action = na.omit)
+anova.glmlist(object, test = NULL, na.action = na.omit)
+coefficients(x) ; coef(x)
+deviance(x)
+df.residual(x)
+effects(x)
+family(x)
+fitted.values(x) ; fitted(x)
+residuals(x, type="deviance")
+
 print.summary(summary.glm.obj, digits = max(3, .Options$digits - 3),
               na.print="", symbolic.cor = p > 4, signif.stars= TRUE, ...)
 }
@@ -33,7 +34,7 @@ print.summary(summary.glm.obj, digits = max(3, .Options$digits - 3),
 \alias{print.summary.glm}
 \alias{print.summary.glm.null}
 \arguments{
-  \item{glm.obj}{an object of class \code{glm}, typically the result of
+  \item{object, x}{an object of class \code{glm}, typically the result of
     \code{\link{glm}(..)}.}
   \item{dispersion}{the dispersion parameter for the fitting family.
     By default it is obtained from \code{glm.obj}.}
