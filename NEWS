@@ -440,6 +440,8 @@ BUG FIXES
     o   model.tables(type="means") could fail in a design where a
 	projection gave all zeros. (PR#7132)
 
+    o	Applying attributes() to a pairlist, e.g. .Options, could segfault.
+
 
 
 		CHANGES IN R VERSION 1.9.1
