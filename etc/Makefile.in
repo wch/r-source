@@ -12,20 +12,24 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Rdconvlib.pl buildlib.pl html-layout.pl \
-	Makeconf.in Makefile.in \
+	Makeconf.in Makeconf-tests.in Makefile.in \
 	colors.big colors.small test-things.Rd \
 	gnome-interface.glade
 
 EXPORTFILE = @EXPORTFILE@
 GNOME_IF_FILES = @GNOME_IF_FILES@
 
-all: Makefile Makeconf R
+all: Makefile Makeconf Makeconf-tests R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 Makeconf: $(srcdir)/Makeconf.in $(top_builddir)/config.status
+	@cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
+Makeconf-tests: $(srcdir)/Makeconf-tests.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
@@ -38,18 +42,19 @@ R:
 
 install: installdirs install-perl install-gnome
 	@echo "installing etc ..."
-	@$(INSTALL_DATA) Makeconf $(EXPORTFILE) \
-	  $(rhome)/etc
+	@for f in Makeconf Makeconf-tests $(EXPORTFILE); do \
+	  $(INSTALL_DATA) $${f} $(rhome)/etc; \
+	done
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/etc
 install-perl:
 	@for f in $(srcdir)/*.pl; do \
-	  $(INSTALL_DATA) $$f $(rhome)/etc; \
+	  $(INSTALL_DATA) $${f} $(rhome)/etc; \
 	done
 install-gnome:
 	@if test -n "$(GNOME_IF_FILES)"; then \
 	  for f in "$(GNOME_IF_FILES)"; do \
-	    $(INSTALL_DATA) $(srcdir)/$$f $(rhome)/etc; \
+	    $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/etc; \
 	  done; \
 	fi
 install-strip: install
