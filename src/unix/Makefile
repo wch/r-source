@@ -11,8 +11,8 @@ OBJ= \
 	fileio.o \
 	PostScript.o \
 	rotated.o \
-	system.o
-# fix later	devPicTeX.o \
+	system.o \
+	devPicTeX.o \
 
 LIB=		../lib/libunix.a
 
@@ -35,8 +35,8 @@ devX11.o:	devX11.c psx11.h ../include/Graphics.h ../include/Defn.h
 devPS.o:	devPS.c ../include/Graphics.h ../include/Defn.h
 		$(CC) $(CFLAGS) $(INCLUDES) -c devPS.c
 
-# devPicTeX.o:	devPicTeX.c ../include/Graphics.h ../include/Defn.h
-#		$(CC) $(CFLAGS) $(INCLUDES) -c devPicTeX.c
+devPicTeX.o:	devPicTeX.c ../include/Graphics.h ../include/Defn.h
+		$(CC) $(CFLAGS) $(INCLUDES) -c devPicTeX.c
 
 system.o:	system.c ../include/Defn.h
 		$(CC) $(CFLAGS) $(INCLUDES) -c system.c
