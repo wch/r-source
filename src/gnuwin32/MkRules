@@ -40,7 +40,7 @@ PKGS=C:/R/Rdist/libs
 ifeq ($(strip $(BUILD)),CROSS)
 # Next two might be i386-mingw32msvc- or i586- depending on the cross-compiler.
 BINPREF=mingw32-
-# Set this to where the mingw32 include files are
+# Set this to where the mingw32 include files are. It must be accurate.
 HEADER=/users/ripley/R/cross-tools/mingw32/include
 endif
 

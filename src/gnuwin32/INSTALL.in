@@ -216,24 +216,9 @@ You will need i386-mingw32 cross-compilers installed and in your path,
 and you probably need ones targetted at msvcrt.dll.  There is
 currently a complete set of tools at
 
-    http://www.stats.ox.ac.uk/pub/Rtools/i386-msvc-cross.tar.bz2
+    http://www.stats.ox.ac.uk/pub/Rtools/mingw-cross.tar.bz2
 
 (Just unpack this somewhere and put its bin directory in your path.)
-
-Instructions for building a cross-compiler are given at
-
-    http://www.nanotech.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
-
-At the time of writing these were rather outdated.  There is another set
-at
-
-    http://www.devolution.com/%7Eslouken/SDL/Xmingw32/
-
-(There is also a cross-compiler there, but omitting g77 which you will
-need.)
-
-Apart from the compiler, you need the mingw32 runtime system and a
-cross-built version of binutils 2.9.4.
 
 You will need Perl, zip and unzip installed.
 
@@ -253,9 +238,8 @@ so WINHELP is automatically set NO.)
 Packages can be made in the same way as natively: see the file
 readme.packages.
 
-Note that cross-building does still need libR.a, and that to
-cross-build the methods package you need a working copy of this
-version of R on the Linux system.
+Note that to cross-build the methods package you need a working copy
+of this version of R on the Linux system.
 
 (It is possible to cross-build the main installers using WINE, which
 we leave as an exercise for the reader.)
