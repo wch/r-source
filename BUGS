@@ -180,6 +180,14 @@ none
 
 Directory:  incoming
 
+* PR# 514 *
+Subject: aggregate.ts
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Tue, 11 Apr 2000 12:36:58 +0200 (CEST)
+* PR# 513 *
+Subject: start.ts, end.ts
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Tue, 11 Apr 2000 12:32:49 +0200 (CEST)
 * PR# 505 *
 Subject: interrupted save 
 From: Thomas Lumley <thomas@biostat.washington.edu>
