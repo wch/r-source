@@ -88,10 +88,18 @@ test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
 test-out-ts = $(test-src-ts:.R=.Rout)
 
+## This macro is used only for dependencies
 test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-internet) $(test-out-lapack) $(test-out-nafns) \
 	$(test-out-random) $(test-out-postscript) $(test-out-reg) \
 	$(test-out-ts)
+
+$(test-out): Makefile stamp-R
+stamp-R: $(top_builddir)/bin/R.bin $(top_builddir)/library/base/R/base \
+	$(top_builddir)/library/methods/R/all.rda \
+	$(top_builddir)/library/methods/R/methods
+	@touch $@
+
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout .Rout-gct
@@ -299,10 +307,6 @@ test-undoc:
 	    echo "$(ECHO_T) OK"; \
 	  fi; \
 	done
-
-$(test-out): Makefile stamp-R
-stamp-R: $(top_builddir)/bin/R.bin $(top_builddir)/library/base/R/base
-	@touch $@
 
 mostlyclean: clean
 clean:
