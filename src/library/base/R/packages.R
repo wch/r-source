@@ -140,7 +140,7 @@ package.description <- function(pkg, lib=.lib.loc, fields=NULL)
     if(file != "") {
         retval <- read.dcf(file=file, fields=fields)[1,]
     }
-    
+
     if((file == "") || (length(retval) == 0)){
         warning(paste("DESCRIPTION file of package", pkg,
                       "missing or broken"))
@@ -151,7 +151,7 @@ package.description <- function(pkg, lib=.lib.loc, fields=NULL)
         else
             retval <- NA
     }
-    
+
     retval
 }
 
@@ -244,7 +244,7 @@ remove.packages <- function(pkgs, lib) {
             ##   ${R_HOME}/bin/build-help --htmllists
             ##   cat ${R_HOME}/library/*/CONTENTS \
             ##     > ${R_HOME}/doc/html/search/index.txt
-            if(get("link.html.help", mode = "function"))
+            if(exists("link.html.help", mode = "function"))
                 link.html.help()
         }
     }
