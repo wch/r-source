@@ -15,6 +15,14 @@ indices:
 	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
 	  $(R_HOME)/share/perl/build-help-windows.pl ${DOS} -htmllists
 
+index-%:
+	@if test -d $(PKGDIR)/$*/man ; then \
+	  echo "writing help indices for package $*"; \
+	  PERL5LIB=$(RHOME)/share/perl $(PERL) \
+	    $(R_HOME)/share/perl/build-help-windows.pl ${DOS} \
+	    -index $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
+	fi
+
 pkg-% help-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
 	  PERL5LIB=$(RHOME)/share/perl $(PERL) \

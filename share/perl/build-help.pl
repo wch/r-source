@@ -33,7 +33,8 @@ $version = $1;
 ($name = $0) =~ s|.*/||;
 
 @knownoptions = ("rhome:s", "html", "txt", "latex", "example", "debug|d",
-		 "dosnames", "htmllists", "help|h", "version|v", "os|OS:s");
+		 "dosnames", "htmllists", "help|h", "version|v", "os|OS:s", 
+		 "index");
 GetOptions (@knownoptions) || usage();
 &R_version($name, $version) if $opt_version;
 &usage() if $opt_help;
@@ -100,6 +101,10 @@ if (!$dest) {
 print STDERR "Destination dest = '$dest'\n" if $opt_debug;
 
 build_index($lib, $dest, "");
+if($opt_index){
+    exit 0;
+}
+
 if ($opt_latex) {
     $latex_d = file_path($dest, "latex");
     if(! -d $latex_d) {
@@ -267,6 +272,7 @@ Options:
   --example             build example files (default is all)
   --htmllists           build HTML function and package lists
   --dosnames            use 8.3 filenames
+  --index               build index file only
 
 
 Email bug reports to <r-bugs\@r-project.org>.

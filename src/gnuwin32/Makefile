@@ -108,7 +108,13 @@ baselazy:
 	    $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
 	fi
 
+
 rpackage: ../../library/R.css
+ifeq ($(strip $(HELP)),YES)
+	@for pkg in $(R_PKGS_BASE); do \
+	  $(MAKE) --no-print-directory  -C ./help -s RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(RLIB)/$${pkg} index-$${pkg}; \
+	done
+endif
 	@for pkg in $(PKGS); do \
 	  R_START_PACKAGES=NULL $(MAKE) --no-print-directory $${pkg}; \
 	done
