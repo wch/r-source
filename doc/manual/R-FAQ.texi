@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-8, @value{FAQ-YEAR}-05-11
+@set FAQ-VERSION 1.7-9, @value{FAQ-YEAR}-05-12
 @set REL-VERSION 1.7.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1848,6 +1848,8 @@ Interface to the @acronym{NCSA} HDF5 library.
 @item hier.part
 Hierarchical Partitioning: variance partition of a multivariate data
 set.
+@item homals
+Homogeneity Analysis (HOMALS) package with optional Tcl/Tk interface.
 @item hwde
 Models and tests for departure from Hardy-Weinberg equilibrium and
 independence between loci.
