@@ -57,7 +57,7 @@ compatible, and can be included into other documents, e.g. into LaTeX, using
 want to set \code{horizontal=FALSE, onefile=FALSE, paper="special"}.
 }
 \seealso{
-    \code{\link{x11}}, \code{\link{macintosh}}, \code{\link{Devices}}.
+    \code{\link{Devices}}, 
     {\code{\link{check.options}} which is called from both
 	\code{ps.options} and \code{postscript}.}
 }

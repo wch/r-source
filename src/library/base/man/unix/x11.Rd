@@ -44,7 +44,6 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
   strategy for pseudocolor displays is \code{"pseudo"}.
 }
 \seealso{
-  \code{\link{postscript}}, \code{\link{macintosh}},
   \code{\link{Devices}}.
 }
 \keyword{device}
