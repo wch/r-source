@@ -5,10 +5,10 @@
 \alias{make.search.html}
 \title{Update HTML documentation files}
 \usage{
-link.html.help(verbose=FALSE)
-make.function.html()
-make.packages.html()
-make.search.html()
+link.html.help(verbose=FALSE, lib.loc=.Library)
+make.function.html(lib.loc=.Library)
+make.packages.html(lib.loc=.Library)
+make.search.html(lib.loc=.Library)
 }
 \description{
   Functions to re-create the HTML documentation files to reflect all
@@ -21,6 +21,11 @@ make.search.html()
 \arguments{
   \item{verbose}{logical. If true, print out a message. For use to
     explain a delay when called from other functions.}
+  \item{lib.loc}{character. List of libraries to be included.}
+}
+\details{
+  Only packages in the system library \code{.Library} are included
+  by default, as cross-library links do not work on this platform.
 }
 \value{
   No value is returned. The file \code{R\_HOME\\doc\\html\\function.html},
