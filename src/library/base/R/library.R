@@ -246,7 +246,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		if (packageHasNamespace(package, which.lib.loc)) {
 		    tt <- try({
 			ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
-			env <- attachNamespace(ns, pos = pos)
+                        dataPath <- file.path(which.lib.loc, package, "data")
+			env <- attachNamespace(ns, pos = pos,
+                                               dataPath = dataPath)
 		    })
 		    if (inherits(tt, "try-error"))
 			if (logical.return)
@@ -282,6 +284,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		else if(verbose)
 		    warning(paste("Package ", sQuote(package),
 				  "contains no R code"))
+                dbbase <- file.path(which.lib.loc, package, "data", "Rdata")
+                if(file.exists(paste(dbbase, ".rdb", sep="")))
+                    lazyLoad(dbbase, env)
 		## now transfer contents of loadenv to an attached frame
 		env <- attach(NULL, pos = pos, name = pkgname)
 		## detach does not allow character vector args
@@ -596,7 +601,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
         ## We only want the paths to the attached packages.
         return(.path.package())
     }
-    
+
     use_attached <- FALSE
     if(is.null(package)) {
         package <- .packages()
@@ -605,12 +610,12 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
         use_attached <- TRUE
         lib.loc <- .libPaths()
     }
-    
+
     if(!length(package)) return(character())
-    
+
     bad <- character(0)
     out <- character(0)
-    
+
     for(pkg in package) {
         if(any(grep("_", pkg))) {
             ## The package "name" contains the version info.

@@ -110,7 +110,25 @@ function(..., list = character(0),
     for(name in names) {
 	if (name == "CO2") name <- "zCO2"
         files <- NULL
+        found <- FALSE
         for(p in paths) {
+            ## does this package have "Rdata"?
+            if(tools::file_test("-f", file.path(p, "Rdata.rds"))) {
+                rds <- .readRDS(file.path(p, "Rdata.rds"))
+                if(name %in% names(rds)) {
+                    ## found it, so copy objects and be done
+                    found <- TRUE
+                    thispkg <- sub(".*/([^/]*)/data$", "\\1", p)
+                    thispkg <- sub("_.*$", "", thispkg) # versioned installs.
+                    thispkg <- paste("package:", thispkg, sep="")
+                    objs <- rds[[name]]
+                    for(obj in objs)
+                        assign(obj,
+                               get(obj, thispkg, inherits = FALSE),
+                               envir = envir)
+                    break
+                }
+            }
             if(tools::file_test("-f", file.path(p, "Rdata.zip"))) {
                 if(tools::file_test("-f",
                                     fp <- file.path(p, "filelist")))
@@ -124,8 +142,9 @@ function(..., list = character(0),
                 files <- c(files, list.files(p, full = TRUE))
             }
         }
+        if(found) next
+
         files <- files[grep(name, files, fixed = TRUE)]
-        found <- FALSE
         if(length(files) > 1) {
             ## more than one candidate
             o <- match(fileExt(files), dataExts, nomatch = 100)

@@ -9,7 +9,7 @@
 \alias{saveNamespaceImage}
 
 \usage{
-attachNamespace(ns, pos = 2)
+attachNamespace(ns, pos = 2, dataPath = NULL)
 loadNamespace(package, lib.loc = NULL,
               keep.source = getOption("keep.source.pkgs"),
               partial = FALSE, declarativeOnly = FALSE)
@@ -23,6 +23,8 @@ saveNamespaceImage(package, rdafile, lib.loc = NULL,
 \arguments{
   \item{ns}{string or namespace object.}
   \item{pos}{integer specifying position to attach.}
+  \item{dataPath}{path to directory containing a database of datasets to
+    be lazy-loaded into the attached environment.}
   \item{package}{string naming the package/name space to load.}
   \item{lib.loc}{character vector specifying library search path.}
   \item{keep.source}{logical specifying whether to retain source.}

@@ -44,9 +44,68 @@ rda2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
     makeLazyLoadDB(e, dbbase, compress = compress)
 }
 
-makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
-                           variables) {
+list_data_in_pkg <- function(package, lib.loc = NULL)
+{
+    pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
+     if(length(pkgpath) == 0)
+        stop(paste("There is no package called", sQuote(package)))
+    dataDir <- file.path(pkgpath, "data")
+    if(file_test("-d", dataDir)) {
+        if(file.exists(sv <- file.path(dataDir, "Rdata.rds"))) {
+            ans <- .readRDS(sv)
+        } else {
+            files <- list_files_with_type(dataDir, "data")
+            files <- unique(basename(file_path_sans_ext(files)))
+            ans <- vector("list", length(files))
+            dataEnv <- new.env(hash=TRUE)
+            names(ans) <- files
+            for(f in files) {
+                data(list = f, package = package, lib.loc = lib.loc,
+                     envir = dataEnv)
+                ans[[f]] <- ls(envir = dataEnv, all = TRUE)
+                rm(list = ans[[f]], envir = dataEnv)
+            }
+        }
+        ans
+    } else NULL
+}
 
+data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
+{
+    pkgpath <- .find.package(package, lib.loc, quiet = TRUE)
+    if(length(pkgpath) == 0)
+        stop(paste("There is no package called", sQuote(package)))
+    dataDir <- file.path(pkgpath, "data")
+    if(tools:::file_test("-d", dataDir)) {
+        if(file.exists(file.path(dataDir, "Rdata.rds")))
+            warning("package seems to be using lazy loading for data already")
+        dataEnv <- new.env(hash=TRUE)
+        files <- tools:::list_files_with_type(dataDir, "data")
+        files <- unique(basename(tools:::file_path_sans_ext(files)))
+        dlist <- vector("list", length(files))
+        names(dlist) <- files
+        loaded <- character(0)
+        for(f in files) {
+            data(list = f, package = package, lib.loc = lib.loc,
+                 envir = dataEnv)
+            tmp <- ls(envir = dataEnv, all.names = TRUE)
+            dlist[[f]] <- setdiff(tmp, loaded)
+            loaded <- tmp
+        }
+        if(length(loaded)) {
+            dbbase <- file.path(dataDir, "Rdata")
+            makeLazyLoadDB(dataEnv, dbbase, compress = compress)
+            .saveRDS(dlist, file.path(dataDir, "Rdata.rds"))
+            unlink(files)
+            if(file.exists(file.path(dataDir, "filelist")))
+                unlink(file.path(dataDir, c("filelist", "Rdata.zip")))
+        }
+    }
+}
+
+makeLazyLoadDB <- function(from, filebase, compress = TRUE, ascii = FALSE,
+                           variables)
+{
     envlist <- function(e) {
         names <- ls(e, all=TRUE)
         list <- .Call("R_getVarsFromFrame", names, e, FALSE, PACKAGE="base")
@@ -172,9 +231,9 @@ makeLazyLoading <-
     else if (package == "base") {
         dbFile <- file.path(pkgpath, "R", "base.rdx")
         if (! file.exists(dbFile))
-            stop("you need to first build the base DB with `makebasedb.R'")
+            stop("you need to first build the base DB with 'makebasedb.R'")
         if (file.info(codeFile)["mtime"] > file.info(dbFile)["mtime"])
-            stop("code file newer than base DB; rebuild with `makebasedb.R'")
+            stop("code file newer than base DB; rebuild with 'makebasedb.R'")
         file.copy(loaderFile, codeFile, TRUE)
     }
     else {
@@ -186,5 +245,11 @@ makeLazyLoading <-
                             keep.source = keep.source, compress = compress)
         file.copy(loaderFile, codeFile, TRUE)
     }
+    ## <NOTE> This test needs to be independent of tools, so
+    ## package tools can be prepared for lazy loading.
+    ## </NOTE>
+    ## if(file.exists(file.path(pkgpath, "data")))
+    ##    data2LazyLoadDB(package, lib.loc, compress = compress)
+
     invisible()
 }
