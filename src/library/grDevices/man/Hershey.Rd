@@ -27,7 +27,7 @@ Hershey
   }
 
   Drawback:\cr
-  You cannot use mathematical expressions (\code{\link{plotmath}}) with
+You cannot use mathematical expressions (\code{\link{plotmath}}) with
   Hershey fonts.
 }
 \details{
@@ -100,13 +100,16 @@ Hershey
       symbol escape sequences and the symbols that they produce.
     }
 
-    \item{ISO Latin-1:}{further escape sequences of the form \code{\\\\ab} are
-      provided for producing ISO Latin-1 characters (for example, if
-      you only have a US keyboard).  Another option is to use the appropriate
-      octal code.  The (non-ASCII) ISO Latin-1 characters are in the range
-      241\dots377.  For example, \code{\\366} produces the character \code{o}
-      with an umlaut.  The third table in \code{demo(Hershey)} shows all
-      of the ISO Latin-1 escape sequences.
+    \item{ISO Latin-1:}{further escape sequences of the form
+      \code{\\\\ab} are provided for producing ISO Latin-1 characters.
+      Another option is to use the appropriate octal code.  The
+      (non-ASCII) ISO Latin-1 characters are in the range 241\dots377.
+      For example, \code{\\366} produces the character \code{o} with an
+      umlaut.  The third table in \code{demo(Hershey)} shows all of the
+      ISO Latin-1 escape sequences.
+
+      These characters can be used directly in a Latin-1 or UTF-8
+      locale. (In the latter, non-Latin-1 characters are replaced by a dot.)
     }
 
     \item{Special Characters:}{a set of characters are provided which

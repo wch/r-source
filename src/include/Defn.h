@@ -883,6 +883,7 @@ Rboolean utf8strIsASCII(char *str);
 #ifdef SUPPORT_UTF8
 int utf8clen(char c);
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
+void utf8toLatin1(char *in, char *out);
 #endif
 
 /* Macros for suspending interrupts */

@@ -1963,33 +1963,6 @@ static void PostScriptCircle(FILE *fp, double x, double y, double r)
     fprintf(fp, "%.2f %.2f %.2f c ", x, y, r);
 }
 
-/* We do this conversion ourselves to do our own error recovery */
-#ifdef SUPPORT_UTF8
-static void utf8toLatin1(char *in, char *out)
-{
-    wchar_t *wbuff;
-    int i;
-    size_t res = mbstowcs(NULL, in, 0), mres;
-
-    if(res == (size_t)(-1)) {
-	warning("invalid text in utf8toLatin1");
-	*out = '\0';
-	return;
-    }
-    wbuff = (wchar_t *) alloca((res+1) * sizeof(wchar_t));
-    if(!wbuff) error("allocation failure in utf8toLatin1");
-    mres = mbstowcs(wbuff, in, res+1);
-    if(mres == (size_t)-1)
-	error("invalid input found in utf8toLatin1");
-    for(i = 0; i < res; i++) {
-	/* here we do assume Unicode wchars */
-	if(wbuff[i] > 0xFF) out[i] = '.'; 
-	else out[i] = (char) wbuff[i];
-    }
-    out[res] = '\0';
-}
-#endif
-
 static void PostScriptWriteString(FILE *fp, char *str)
 {
     fputc('(', fp);

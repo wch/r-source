@@ -1143,6 +1143,31 @@ size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
     if((int)used < 0) error("invalid multibyte string");
     return used;
 }
+
+/* We do this conversion ourselves to do our own error recovery */
+void utf8toLatin1(char *in, char *out)
+{
+    wchar_t *wbuff;
+    int i;
+    size_t res = mbstowcs(NULL, in, 0), mres;
+
+    if(res == (size_t)(-1)) {
+	warning("invalid text in utf8toLatin1");
+	*out = '\0';
+	return;
+    }
+    wbuff = (wchar_t *) alloca((res+1) * sizeof(wchar_t));
+    if(!wbuff) error("allocation failure in utf8toLatin1");
+    mres = mbstowcs(wbuff, in, res+1);
+    if(mres == (size_t)-1)
+	error("invalid input found in utf8toLatin1");
+    for(i = 0; i < res; i++) {
+	/* here we do assume Unicode wchars */
+	if(wbuff[i] > 0xFF) out[i] = '.'; 
+	else out[i] = (char) wbuff[i];
+    }
+    out[res] = '\0';
+}
 #endif
 
 void F77_SYMBOL(rexitc)(char *msg, int *nchar)

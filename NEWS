@@ -24,8 +24,6 @@ USER-VISIBLE CHANGES
     o	The meaning of 'encoding' for a connection has changed: it now
 	allows any charset encoding supported by iconv on the
 	platform, and can re-encode output as well as input.
-	[Currently input re-encoding is only implemented for file
-	connections.]
 
 	As the new specification is a character string and the old was
 	numeric, this should not cause incorrect operation.
