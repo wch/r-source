@@ -46,8 +46,8 @@ c     blas zaxpy,zdotc
 c     fortran dconjg,iabs
 c
       subroutine zhisl(a,lda,n,kpvt,b)
-      integer lda,n,kpvt(1)
-      complex*16 a(lda,1),b(1)
+      integer lda,n,kpvt(*)
+      complex*16 a(lda,*),b(*)
 c
 c     internal variables.
 c

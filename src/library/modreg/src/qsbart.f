@@ -13,7 +13,7 @@ c
       double precision penalt,dofoff, xs(n),ys(n),ws(n),
      &     knot(nk+4), coef(nk),sz(n),lev(n), 
      &     crit,spar,parms(3),
-     &     scrtch(1)
+     &     scrtch(*)
 C          ^^^^^^^^ dimension (9+2*ld4+nk)*nk
 
       call sbart(penalt,dofoff,xs,ys,ws,n,knot,nk,

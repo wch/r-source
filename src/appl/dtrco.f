@@ -1,6 +1,6 @@
       subroutine dtrco(t,ldt,n,rcond,z,job)
       integer ldt,n,job
-      double precision t(ldt,1),z(1)
+      double precision t(ldt,*),z(*)
       double precision rcond
 c
 c     dtrco estimates the condition of a double precision triangular

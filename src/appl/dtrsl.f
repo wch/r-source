@@ -55,7 +55,7 @@ c     fortran	mod
 c
       subroutine dtrsl(t,ldt,n,b,job,info)
       integer ldt,n,job,info
-      double precision t(ldt,1),b(1)
+      double precision t(ldt,*),b(*)
 c
 c     internal variables
 c

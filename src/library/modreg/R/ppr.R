@@ -44,7 +44,7 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
   else xnames <- paste("X", 1:p, sep="")
   if(!is.null(dimnames(y))) ynames <- dimnames(y)[[2]]
   else ynames <- paste("Y", 1:p, sep="")
-  msmod <- ml*(p+q+2*n)+q+7+ml		# for asr
+  msmod <- ml*(p+q+2*n)+q+7+ml+1		# for asr
   nsp <- n*(q+15)+q+3*p
   ndp <- p*(p+1)/2+6*p
   .Fortran("bdrsetppr",
@@ -59,8 +59,8 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
 		as.double(t(y)),
 		as.double(ww),
 		smod=double(msmod), as.integer(msmod),
-		double(nsp), as.double(nsp),
-		double(ndp), as.double(ndp),
+		double(nsp), as.integer(nsp),
+		double(ndp), as.integer(ndp),
 		edf=double(ml)
 		)
   smod <- Z$smod

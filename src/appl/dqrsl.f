@@ -140,8 +140,8 @@ c
       subroutine dqrsl(x,ldx,n,k,qraux,y,qy,qty,b,rsd,xb,job,info)
       implicit none
       integer ldx,n,k,job,info
-      double precision x(ldx,1),qraux(1),y(1),qy(1),qty(1),b(1),rsd(1),
-     *                 xb(1)
+      double precision x(ldx,*),qraux(*),y(*),qy(*),qty(*),b(*),rsd(*),
+     *                 xb(*)
 c
 c     internal variables
 c

@@ -73,8 +73,8 @@ c     fortran dabs,dmax1,min0,dsqrt
 c
       subroutine dqrdc2(x,ldx,n,p,tol,k,qraux,jpvt,work)
       integer ldx,n,p
-      integer jpvt(1)
-      double precision x(ldx,1),qraux(1),work(p,2),tol
+      integer jpvt(*)
+      double precision x(ldx,*),qraux(*),work(p,2),tol
 c
 c     internal variables
 c

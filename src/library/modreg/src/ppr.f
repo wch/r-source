@@ -12,7 +12,7 @@ C
       implicit none
       integer m,mu,p,q,n, nsmod, nsp,ndp
       double precision x(p,n),y(q,n),w(n),ww(q),smod(nsmod),
-     &     sp(nsp),edf(m), dp(ndp)
+     &     sp(nsp),edf(m),dp(ndp)
       smod(1)=m
       smod(2)=p
       smod(3)=q
@@ -20,7 +20,7 @@ C
       call BDRsmart1(m,mu,p,q,n, w,x,y,ww, smod(6),smod(q+6),
      &     smod(q+7),smod(q+7+p*m),smod(q+7+m*(p+q)),  
      &     smod(q+7+m*(p+q+n)),smod(q+7+m*(p+q+2*n)), 
-     &     sp,sp(q*n+1),sp(n*(q+15)+1), sp(n*(q+15)+q+1),
+     &     sp,sp(q*n+1),sp(n*(q+15)+1),sp(n*(q+15)+q+1),
      &     dp,smod(5),edf)
       return
       end
@@ -32,10 +32,10 @@ C
      &     dp,flm,edf)
       implicit none
       integer m,mu,p,q,n
-      double precision w(n),x(p,n),y(1),ww(q), yb(q), ys
+      double precision w(n),x(p,n),y(*),ww(q), yb(q), ys
       double precision a(p,m),b(q,m),f(n,m),t(n,m), asr
       double precision r(q,n),sc(n,15),bt(q),g(p,3)
-      double precision dp(1), flm,edf(m)
+      double precision dp(*), flm,edf(m)
 C                        ^^^ really (ndb) of  BDRsmart(.)
       integer i,j,l, lm
       double precision sw,s
@@ -143,7 +143,7 @@ C END REPEAT
       integer p,q
       double precision w(n),x(p,n),ww(q),a(p,m),f(n,m),t(n,m),r(q,n)
       double precision sc(n,15),g(p,3),b(q,m),bt(q),edf(m)
-      double precision dp(1)
+      double precision dp(*)
 
       double precision span,alpha,big
       integer ifl,lf
@@ -182,8 +182,8 @@ C END REPEAT
       implicit double precision (a-h, o-z)
       integer p,q
       double precision w(n),x(p,n),ww(q),a(p,lm),f(n,lm),t(n,lm),r(q,n)
-      double precision sc(n,15),g(p,3),b(q,lm),bt(q), asr(lm), edf(lm)
-      double precision dp(1)
+      double precision sc(n,15),g(p,3),b(q,lm),bt(q),asr(1+lm),edf(lm)
+      double precision dp(*)
 
       double precision span,alpha,big
       integer ifl,lf
@@ -247,7 +247,7 @@ C END REPEAT
       integer p,q
       double precision w(n),x(p,n),y(q,n),ww(q),a(p),b(q),f(n),t(n)
       double precision sc(n,13),g(p,2)
-      double precision dp(1)
+      double precision dp(*)
 
       double precision span,alpha,big
       integer ifl,lf
@@ -290,7 +290,7 @@ C END REPEAT
       implicit double precision (a-h, o-z)
       integer ist,p,n
       double precision w(n),y(n),x(p,n),a(p),f(n),t(n),sc(n,12),g(p,2)
-      double precision dp(1)
+      double precision dp(*)
 
       double precision span,alpha,big
       integer ifl,lf
@@ -412,7 +412,7 @@ c--------------
       implicit double precision (a-h, o-z)
       integer p
       double precision w(n),r(n),x(p,n),d(n),e(p)
-      double precision s,g(1)
+      double precision s,g(*)
 
       double precision conv,cutmin,fdel,cjeps
       integer maxit,mitone,mitcj
@@ -453,7 +453,7 @@ c--------------
       subroutine BDRconj(p,g,c,x,eps,maxit,sc)
       implicit double precision (a-h, o-z)
       integer p
-      double precision g(1),c(p),x(p),sc(p,4)
+      double precision g(*),c(p),x(p),sc(p,4)
       double precision beta,h,s,alpha,t
       do 11311 i=1,p
       x(i)=0d0
@@ -638,7 +638,7 @@ c--------------
 11721 continue
       goto 11711
 11712 continue
-      if(x(er+1)-x(er).lt.x(eb+1)-x(eb)) goto 11621
+      if(er.lt.n .and. x(er+1)-x(er).lt.x(eb+1)-x(eb)) goto 11621
       eb=er
       pw=w(bb)+w(eb)
       px=(x(bb)*w(bb)+x(eb)*w(eb))/pw
@@ -1242,7 +1242,7 @@ c
 c     this is a modification of CACM algorithm #347 by R. C. Singleton,
 c     which is a modified Hoare quicksort.
 c
-      double precision v(1)
+      double precision v(*)
       dimension a(jj),iu(20),il(20)
       integer t,tt
       m=1

@@ -2,7 +2,7 @@
       implicit none
 C Args
       integer n, nk, order
-      double precision knot(1),coef(1),x(1),s(1)
+      double precision knot(*),coef(*),x(*),s(*)
 C Local
       double precision bvalue
       integer i

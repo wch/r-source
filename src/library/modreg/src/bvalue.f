@@ -57,7 +57,7 @@ c  be the desired number  (d**j)f(x). (see x.(17)-(19) of text).
 c
 C Arguments
       integer lent, n,k, jderiv
-      DOUBLE precision t(lent),bcoef(n),x
+      DOUBLE precision t(*),bcoef(n),x
 c     dimension t(n+k)
 c  current fortran standard makes it impossible to specify the length of
 c  t  precisely without the introduction of otherwise superfluous

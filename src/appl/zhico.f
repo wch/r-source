@@ -62,8 +62,8 @@ c     blas zaxpy,zdotc,zdscal,dzasum
 c     fortran dabs,dmax1,dcmplx,dconjg,iabs
 c
       subroutine zhico(a,lda,n,kpvt,rcond,z)
-      integer lda,n,kpvt(1)
-      complex*16 a(lda,1),z(1)
+      integer lda,n,kpvt(*)
+      complex*16 a(lda,*),z(*)
       double precision rcond
 c
 c     internal variables

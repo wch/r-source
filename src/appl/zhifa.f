@@ -49,8 +49,8 @@ c     blas zaxpy,zswap,izamax
 c     fortran dabs,dmax1,dcmplx,dconjg,dsqrt
 c
       subroutine zhifa(a,lda,n,kpvt,info)
-      integer lda,n,kpvt(1),info
-      complex*16 a(lda,1)
+      integer lda,n,kpvt(*),info
+      complex*16 a(lda,*)
 c
 c     internal variables
 c

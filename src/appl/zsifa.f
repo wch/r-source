@@ -50,8 +50,8 @@ c
 c     internal variables
 c
       subroutine zsifa(a,lda,n,kpvt,info)
-      integer lda,n,kpvt(1),info
-      complex*16 a(lda,1)
+      integer lda,n,kpvt(*),info
+      complex*16 a(lda,*)
       complex*16 ak,akm1,bk,bkm1,denom,mulk,mulkm1,t
       double precision absakk,alpha,colmax,rowmax
       integer imax,imaxp1,j,jj,jmax,k,km1,km2,kstep,izamax

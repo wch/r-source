@@ -102,7 +102,7 @@ c
 cstatic
       subroutine baksol(nr,n,a,x,b)
       implicit double precision (a-h,o-z)
-      dimension a(nr,1),x(n),b(n)
+      dimension a(nr,*),x(n),b(n)
 c
 c	solve (l-transpose)x=b. (back solve)
 c
@@ -181,7 +181,7 @@ c
 cstatic
       subroutine chlhsn(nr,n,a,epsm,sx,udiag)
       implicit double precision (a-h,o-z)
-      dimension a(nr,1),sx(n),udiag(n)
+      dimension a(nr,*),sx(n),udiag(n)
 c
 c	scale hessian
 c	pre- and post- multiply "a" by inv(sx)
@@ -376,7 +376,7 @@ c
 cstatic
       subroutine choldc(nr,n,a,diagmx,tol,addmax)
       implicit double precision (a-h,o-z)
-      dimension a(nr,1)
+      dimension a(nr,*)
 c
       addmax=0.0d0
       aminl=sqrt(diagmx*tol)
@@ -461,7 +461,7 @@ c
 cstatic
       subroutine d2fcn(nr,n,x,h)
       implicit double precision (a-h,o-z)
-      dimension x(n),h(nr,1)
+      dimension x(n),h(nr,*)
       h(nr,1)=h(nr,1)
       x(n)=x(n)
       end
@@ -574,7 +574,7 @@ cstatic
       dimension x(n),xpls(n),g(n),p(n)
       dimension sx(n)
       dimension sc(n),wrk1(n),wrk2(n),wrk3(n)
-      dimension a(nr,1)
+      dimension a(nr,*)
       logical fstdog,nwtake,mxtake
       integer itncnt
       external fcn
@@ -654,7 +654,7 @@ cstatic
       dimension g(n),p(n)
       dimension sx(n)
       dimension sc(n),ssd(n),v(n)
-      dimension a(nr,1)
+      dimension a(nr,*)
       logical nwtake,fstdog
       ipr=ipr
 c
@@ -793,7 +793,7 @@ c
 cstatic
       subroutine forslv(nr,n,a,x,b)
       implicit double precision (a-h,o-z)
-      dimension a(nr,1),x(n),b(n)
+      dimension a(nr,*),x(n),b(n)
 c
 c	solve lx=b. (foreward solve)
 c
@@ -913,7 +913,7 @@ cstatic
       dimension xpls(n),fpls(m)
       dimension fhat(m)
       dimension sx(n)
-      dimension a(nr,1)
+      dimension a(nr,*)
 c
 c	find j-th column of a
 c	each column is derivative of f(fcn) with respect to xpls(j)
@@ -1042,7 +1042,7 @@ cstatic
       subroutine heschk(nr,n,x,fcn,d1fcn,d2fcn,f,g,a,typsiz,sx,rnf,
      +	   analtl,iagflg,udiag,wrk1,wrk2,msg,ipr)
       implicit double precision (a-h,o-z)
-      dimension x(n),g(n),a(nr,1)
+      dimension x(n),g(n),a(nr,*)
       dimension typsiz(n),sx(n)
       dimension udiag(n),wrk1(n),wrk2(n)
       external fcn,d1fcn
@@ -1150,7 +1150,7 @@ cstatic
      +	   sc,xplsp,wrk0,epsm,itncnt,ipr)
       implicit double precision (a-h,o-z)
       dimension x(n),g(n),p(n),xpls(n),sx(n)
-      dimension a(nr,1),udiag(n)
+      dimension a(nr,*),udiag(n)
       dimension sc(n),xplsp(n),wrk0(n)
       logical mxtake,nwtake
       logical fstime
@@ -1257,7 +1257,7 @@ cstatic
      +	   dltp,phi,phip0,fstime,sc,nwtake,wrk0,epsm,ipr)
       implicit double precision (a-h,o-z)
       dimension g(n),p(n),sx(n),sc(n),wrk0(n)
-      dimension a(nr,1),udiag(n)
+      dimension a(nr,*),udiag(n)
       logical nwtake,done
       logical fstime
 c
@@ -1440,7 +1440,7 @@ c
 cstatic
       subroutine hsnint(nr,n,a,sx,method)
       implicit double precision (a-h,o-z)
-      dimension a(nr,1),sx(n)
+      dimension a(nr,*),sx(n)
 c
       do 100 j=1,n
 	if(method.eq.3) a(j,j)=sx(j)*sx(j)
@@ -1479,7 +1479,7 @@ c
 cstatic
       subroutine lltslv(nr,n,a,x,b)
       implicit double precision (a-h,o-z)
-      dimension a(nr,1),x(n),b(n)
+      dimension a(nr,*),x(n),b(n)
 c
 c	forward solve, result in x
 c
@@ -1680,7 +1680,7 @@ c
 cstatic
       subroutine mvmltl(nr,n,a,x,y)
       implicit double precision (a-h,o-z)
-      dimension a(nr,1),x(n),y(n)
+      dimension a(nr,*),x(n),y(n)
       do 30 i=1,n
 	sum=0.0d0
 	do 10 j=1,i
@@ -1716,7 +1716,7 @@ c
 cstatic
       subroutine mvmlts(nr,n,a,x,y)
       implicit double precision (a-h,o-z)
-      dimension a(nr,1),x(n),y(n)
+      dimension a(nr,*),x(n),y(n)
       do 30 i=1,n
 	sum=0.0d0
 	do 10 j=1,i
@@ -1756,7 +1756,7 @@ c
 cstatic
       subroutine mvmltu(nr,n,a,x,y)
       implicit double precision (a-h,o-z)
-      dimension a(nr,1),x(n),y(n)
+      dimension a(nr,*),x(n),y(n)
       do 30 i=1,n
 	sum=0.0d0
 	do 10 j=i,n
@@ -1980,7 +1980,7 @@ cstatic
       implicit double precision (a-h,o-z)
       dimension x(n),xpls(n),g(n),gpls(n),p(n)
       dimension typsiz(n),sx(n)
-      dimension a(nr,1),udiag(n)
+      dimension a(nr,*),udiag(n)
       dimension wrk0(n),wrk1(n),wrk2(n),wrk3(n)
       logical mxtake,noupdt
       integer itncnt
@@ -2280,7 +2280,7 @@ c
       subroutine optif0(nr,n,x,fcn,xpls,fpls,gpls,itrmcd,a,wrk)
       implicit double precision (a-h,o-z)
       dimension x(n),xpls(n),gpls(n)
-      dimension a(nr,1),wrk(nr,9)
+      dimension a(nr,*),wrk(nr,9)
       external fcn,d1fcn,d2fcn
       integer itncnt
 c
@@ -2365,7 +2365,7 @@ c
      +	   xpls,fpls,gpls,itrmcd,a,wrk, itncnt)
       implicit double precision (a-h,o-z)
       dimension x(n),xpls(n),gpls(n),typsiz(n)
-      dimension a(nr,1),wrk(nr,8)
+      dimension a(nr,*),wrk(nr,8)
       external fcn,d1fcn,d2fcn
       integer itncnt
 c
@@ -2547,7 +2547,7 @@ c
 cstatic
       subroutine qraux1(nr,n,r,i)
       implicit double precision (a-h,o-z)
-      dimension r(nr,1)
+      dimension r(nr,*)
       do 10 j=i,n
 	tmp=r(i,j)
 	r(i,j)=r(i+1,j)
@@ -2575,7 +2575,7 @@ c
 cstatic
       subroutine qraux2(nr,n,r,i,a,b)
       implicit double precision (a-h,o-z)
-      dimension r(nr,1)
+      dimension r(nr,*)
       den=sqrt(a*a + b*b)
       c=a/den
       s=b/den
@@ -2608,7 +2608,7 @@ c
 cstatic
       subroutine qrupdt(nr,n,a,u,v)
       implicit double precision (a-h,o-z)
-      dimension a(nr,1)
+      dimension a(nr,*)
       dimension u(n),v(n)
 c
 c	determine last non-zero in u(.)
@@ -2728,7 +2728,7 @@ cstatic
      +	   iagflg,noupdt,s,y,u,w)
       implicit double precision (a-h,o-z)
       dimension x(n),xpls(n),g(n),gpls(n)
-      dimension a(nr,1)
+      dimension a(nr,*)
       dimension s(n),y(n),u(n),w(n)
       logical noupdt,skpupd
 c
@@ -2877,7 +2877,7 @@ cstatic
      +	   rnf,iagflg,noupdt,s,y,t)
       implicit double precision (a-h,o-z)
       dimension x(n),g(n),xpls(n),gpls(n)
-      dimension a(nr,1)
+      dimension a(nr,*)
       dimension udiag(n)
       dimension s(n),y(n),t(n)
       logical noupdt,skpupd
@@ -2990,7 +2990,7 @@ cstatic
       dimension xpls(n)
       dimension sx(n)
       dimension stepsz(n),anbr(n)
-      dimension a(nr,1)
+      dimension a(nr,*)
 c
 c	find i-th stepsize and evaluate neighbor in direction
 c	of i-th unit vector.
@@ -3084,7 +3084,7 @@ cstatic
       implicit double precision (a-h,o-z)
       dimension x(n),xpls(n),g(n)
       dimension sx(n),sc(n),xplsp(n)
-      dimension a(nr,1)
+      dimension a(nr,*)
       logical nwtake,mxtake
       dimension udiag(n)
 c
