@@ -1,6 +1,6 @@
 
-R : Copyright 2003, The R Foundation for Statistical Computing
-Version 1.8.1 alpha (2003-11-06), ISBN 3-900051-00-3
+R : Copyright 2004, The R Foundation for Statistical Computing
+Version 1.9.0 alpha (2004-03-15), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -29,14 +29,15 @@ Type 'q()' to quit R.
 > # test do_download.
 > nrow(CRAN.packages())
 trying URL `http://cran.r-project.org/src/contrib/PACKAGES'
-Content type `text/plain; charset=iso-8859-1' length 134991 bytes
+Content type `text/plain; charset=iso-8859-1' length 165284 bytes
 opened URL
 .......... .......... .......... .......... ..........
 .......... .......... .......... .......... ..........
-.......... .......... .......... .
-downloaded 131Kb
+.......... .......... .......... .......... ..........
+.......... .
+downloaded 161Kb
 
-[1] 273
+[1] 325
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
