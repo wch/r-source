@@ -996,11 +996,13 @@ SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
     /* remove trailing file separator(s) */
     while ( *(p = buf + strlen(buf) - 1) == fsp ) *p = '\0';
-    if((p = strrchr(buf, fsp))) {
-	*p = '\0';
-	/* remove excess trailing file separator(s), as in /a///b  */
-	while ( *(--p) == fsp ) *p = '\0';
-    } else
+    p = strrchr(buf, fsp);
+    if(p == NULL)
 	strcpy(buf, ".");
+    else {
+	while(p > buf && *p == fsp)
+	    --p;
+	p[1] = '\0';
+    }
     return(mkString(buf));
 }
