@@ -438,6 +438,8 @@ BUG FIXES
     o	barplot now works okay when length(col) < length(legend.txt),
 	thanks to Ben Bolker, PR#494.
 
+    o	legend has new args `ncol' and `horiz' thanks to Ben Bolker.
+
     o	kernel("dirichlet", m=10, r=1) in package ts now works.
 
     o	save/restore of	 environments containing "..." object should

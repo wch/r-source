@@ -1,10 +1,11 @@
 \name{legend}
 \title{Add Legends to Plots}
 \usage{
-legend(x, y, legend, fill, col = "black", lty, lwd = 1, pch,
+legend(x, y, legend, fill, col = "black", lty, lwd, pch,
        bty = "o", bg = par("bg"), cex = 1, xjust = 0, yjust = 1,
        x.intersp = 1, y.intersp = 1, adj = 0,
-       text.width = NULL, merge = do.lines && has.pch)
+       text.width = NULL, merge = do.lines && has.pch, trace = FALSE,
+       ncol = 1, horiz = FALSE)
 }
 \alias{legend}
 \description{
@@ -48,6 +49,13 @@ legend(x, y, legend, fill, col = "black", lty, lwd = 1, pch,
     Defaults to the proper value computed by \code{\link{strwidth}(legend)}.}
   \item{merge}{logical; if \code{TRUE}, ``merge'' points and lines but
     not filled boxes.  Defaults to \code{TRUE} if there are points and lines.}
+  \item{trace}{logical; if \code{TRUE}, shows how \code{legend} does all
+    its magical computations.}
+  \item{ncol}{the number of columns in which to set the legend items
+    (default is 1, a vertical legend).}
+  \item{horiz}{logical; if \code{TRUE}, set the legend horizontally rather than
+     vertically (specifying \code{horiz} overrides the \code{ncol}
+     specification).}
 }
 \details{
  ``Attribute'' arguments such as \code{col}, \code{pch}, \code{lty},
@@ -84,7 +92,7 @@ legend(x, y, legend, fill, col = "black", lty, lwd = 1, pch,
   \code{\link{text}} for more examples of math expressions.
 }
 \examples{
-# Run the example in `?matplot' or the following:
+## Run the example in `?matplot' or the following:
 leg.txt <- c("Setosa     Petals", "Setosa     Sepals",
              "Versicolor Petals", "Versicolor Sepals")
 y.leg <- c(4.5, 3, 2.1, 1.4, .7)
@@ -95,7 +103,7 @@ for (i in seq(cexv)) {
   text  (1, y.leg[i]-.1, paste("cex=",formatC(cexv[i])), cex=.8, adj = 0)
   legend(3, y.leg[i], leg.txt, pch = "sSvV", col = c(1, 3), cex = cexv[i])
 }
-# `merge = TRUE' for merging lines & points:
+## `merge = TRUE' for merging lines & points:
 x <- seq(-pi, pi, len = 65)
 plot(x, sin(x), type = "l", ylim = c(-1.2, 1.8), col = 3, lty = 2)
 points(x, cos(x), pch = 3, col = 4)
@@ -136,5 +144,15 @@ abline(v = median(x), col=3, lty=3, lwd=2)
 ex12 <- expression(bar(x) == sum(over(x[i], n), i==1, n),
                    hat(x) == median(x[i], i==1,n))
 str(legend(4.1, 30, ex12, col = 2:3, lty=2:3, lwd=2))
+
+## Using `ncol' :
+x <- 0:64/64
+matplot(x, outer(x, 1:7, function(x, k) sin(k * pi * x)),
+        type = "o", col = 1:7, ylim = c(-1, 1.5), pch = "*")
+legend(0, 1.5, paste("sin(",1:7,"pi * x)"), col=1:7, lty=1:7, pch = "*",
+       ncol = 4, cex=.8)
+legend(.8,1.2, paste("sin(",1:7,"pi * x)"), col=1:7, lty=1:7, pch = "*",cex=.8)
+legend(0, -.1, paste("sin(",1:4,"pi * x)"), col=1:4, lty=1:4, ncol=2, cex=.8)
+legend(0, -.7, paste("sin(",5:7,"pi * x)"), col=5:7, pch="*", ncol=2, cex=.8)
 }
 \keyword{aplot}
