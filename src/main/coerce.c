@@ -742,6 +742,10 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 		STRING(rval)[i] = STRING(deparse1(VECTOR(v)[i], 0))[0];
 	}
     }
+    else if (type == LISTSXP) {
+	rval = VectorToPairList(v);
+	return rval;
+    }
     else if (isVectorizable(v)) {
 	n = length(v);
 	PROTECT(rval = allocVector(type, n));
