@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.125 $ ';
+my $revision = ' $Revision: 1.126 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -149,10 +149,8 @@ foreach my $pkg (@ARGV) {
     my $pkgoutdir = &file_path($outdir, "$pkgname.Rcheck");
     rmtree($pkgoutdir) if ($opt_clean && (-d $pkgoutdir)) ;
     if(!(-d $pkgoutdir)) {
-	if(!mkdir($pkgoutdir, 0755)) {
-	    die("Error: cannot create directory '$pkgoutdir'\n");
-	    exit(1);
-	}
+	mkdir($pkgoutdir, 0755)
+	  or die("Error: cannot create directory '$pkgoutdir'\n");
     }
 
     $log = new R::Logfile(&file_path($pkgoutdir, "00check.log"));
@@ -272,7 +270,8 @@ sub check_pkg {
 	$pkgname = basename($pkgdir);
     }
     else {
-	$log->error("Error: package dir '$pkg' does not exist");
+	$log->error();
+	$log->print("Package directory '$pkg' does not exist.\n");
 	exit(1);
     }
     $log->result("OK");
@@ -466,7 +465,7 @@ sub check_pkg {
     ## These must be correct if present.
 
     if($description->{"Depends"}) {
-	my @dependencies = split(/\,/, $description->{"Depends"});
+	my @dependencies = split(/\,\s*/, $description->{"Depends"});
 	my @matches;
 	my ($is_bad_dep_op, $is_bad_dep_version);
 	my ($bad_dep_value, @bad_dep_error);
@@ -606,31 +605,62 @@ sub check_pkg {
 	$log->result("OK");
     }
 
-    ## Check contents of directory 'inst'.
+    ## Check package subdirectories.
 
-    if(-d "inst") {
-	$log->checking("contents of directory 'inst'");
-	my @R_system_subdirs = ("Meta", "R", "data", "demo", "exec",
-				"man", "help", "html", "latex", "R-ex");
-	my @bad_dirs = ();
-	foreach my $dir (@R_system_subdirs) {
-	    push(@bad_dirs, $dir)
-	      if((-d &file_path("inst", $dir))
-		 && &list_files(file_path("inst", $dir)));
+    if((-d "data") || (-d "demo") || (-d "src") || (-d "inst")) {
+	$log->checking("package subdirectories");
+	my $any;
+	## Subdirectory 'data' without data sets?
+	if((-d "data") && !&list_files_with_type("data", "data")) {
+	    $log->warning() unless $any;
+	    $any++;
+	    $log->print("Subdirectory 'data' contains no data sets.\n");
 	}
-	if($#bad_dirs >= 0) {
-	    $log->warning();
-	    $log->print(wrap("", "",
-			     ("Found the following non-empty",
-			      "subdirectories also used by R:\n")));
-	    $log->print("  " . join(" ", @bad_dirs) . "\n");
-	    $log->print(wrap("", "",
-			     ("It is recommended not to interfere with",
-			      "package subdirectories used by R.\n")));
+	## Subdirectory 'demo' without demos?
+	if((-d "demo") && !&list_files_with_type("demo", "demo")) {
+	    $log->warning() unless $any;
+	    $any++;
+	    $log->print("Subdirectory 'demo' contains no demos.\n");
 	}
-	else {
-	    $log->result("OK");
+	## Subdirectory 'src' without sources?
+	## <NOTE>
+	## If there is a Makefile (or a Makefile.win), we cannot assume
+	## that source files have the predefined extensions.
+	## </NOTE>
+	if((-d "src")
+	   && !(&list_files_with_exts("src", "([Ccf]|cc|cpp)")
+		|| (-f &file_path("src", "Makefile"))
+		|| (-f &file_path("src", "Makefile.win")))) {
+	    $log->warning() unless $any;
+	    $any++;
+	    $log->print("Subdirectory 'src' contains no source files.\n");
 	}
+	## Do subdirectories of 'inst' interfere with R package system
+	## subdirectories?
+	if((-d "inst")) {
+	    my @R_system_subdirs = ("Meta", "R", "data", "demo", "exec",
+				    "man", "help", "html", "latex", "R-ex");
+	    my @bad_dirs = ();
+	    foreach my $dir (@R_system_subdirs) {
+		push(@bad_dirs, $dir)
+		  if((-d &file_path("inst", $dir))
+		     && &list_files(file_path("inst", $dir)));
+	    }
+	    if($#bad_dirs >= 0) {
+		$log->warning() unless $any;
+		$any++;
+		$log->print(wrap("", "",
+				 ("Found the following non-empty",
+				  "subdirectories of 'inst' also",
+				  "used by R:\n")));
+		$log->print("  " . join(" ", @bad_dirs) . "\n");
+		$log->print(wrap("", "",
+				 ("It is recommended not to interfere",
+				  "with package subdirectories",
+				  "used by R.\n")));
+	    }
+	}
+	$log->result("OK") unless $any;
     }
 
     ## Check R code for syntax errors.
@@ -699,7 +729,7 @@ sub check_pkg {
 	}
 	else {
 	    $log->error();
-	    $log->print("library.dynam() used with extension '.$ext'\n");
+	    $log->print("library.dynam() used with extension '.$ext'.\n");
 	    $log->print(wrap("", "",
 			     ("The system-specific extension for",
 			      "shared libraries should not be added.\n")));
@@ -940,7 +970,7 @@ sub check_pkg {
 	my $any_missing_mandatory_tag = 0;
 	foreach my $tag (@mandatory_tags) {
 	    if(exists $bad_mandatory_tags{$tag}) {
-		$log->warning("") unless $any;
+		$log->warning() unless $any;
 		$any++;
 		$any_missing_mandatory_tag++;
 		$log->print("Rd files without '${tag}':\n");
@@ -957,7 +987,7 @@ sub check_pkg {
 	my $any_duplicate_unique_tag = 0;
 	foreach my $tag (@unique_tags) {
 	    if(exists $bad_unique_tags{$tag}) {
-		$log->warning("") unless $any;
+		$log->warning() unless $any;
 		$any++;
 		$any_duplicate_unique_tag++;
 		$log->print("Rd files with duplicate '${tag}':\n");
@@ -972,7 +1002,7 @@ sub check_pkg {
 	}
 
         if(keys(%bad_keywords)) {
-	    $log->warning("") unless $any;
+	    $log->warning() unless $any;
 	    $any++;
 	    $log->print("Rd files with non-standard keywords:\n");
             foreach my $file (keys(%bad_keywords)) {
@@ -1127,11 +1157,11 @@ sub check_pkg {
 			("$UNZIP",
 			 &file_path($Rexdir, "Rex.zip"),
 			 " -d $Rexdir"));
-	    ## <FIXME>
-	    ## Should do something if this fails ...
-	    R_system($cmd);
-	    ## </FIXME>
-
+	    if(R_system($cmd)) {
+		$log->error();
+		$log->print("Cannot extract examples from ZIP archive.\n");
+		exit(1);
+	    }
         }
         if($WINDOWS) {
             ## avoid Rcmd as line may be too long after expansion.
@@ -1148,6 +1178,8 @@ sub check_pkg {
 
  	if(R_system($cmd)) {
   	    $log->error();
+	    $log->print("Running massage-Examples to create " .
+			"${pkgname}-Ex.R failed.\n");
   	    exit(1);
         }
         if($iszipped) {
@@ -1180,10 +1212,8 @@ sub check_pkg {
         my $testsrcdir = &file_path($pkgdir, "tests");
         my $testdir = &file_path($pkgoutdir, "tests");
         if(!(-d $testdir)) {
-            if(!mkdir($testdir, 0755)) {
-	        die "Error: cannot create directory $testdir\n";
-	        exit(1);
-	    }
+            mkdir($testdir, 0755)
+	      or die "Error: cannot create directory '$testdir'\n";
         }
         chdir($testdir);
 	foreach my $file (&list_files($testsrcdir)) {
