@@ -316,10 +316,10 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 958 *
-Subject: zero-extent matrices
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Wed, 30 May 2001 11:59:59 -0700 (PDT)
+* PR# 962 *
+Subject: documentation for image(): zlim update
+From: eglen@pcg.wustl.edu
+Date: Thu, 31 May 2001 22:07:43 +0200 (MET DST)
 * PR# 955 *
 Subject: argument names in generic print functions
 From: Richard Beare <Richard.Beare@cmis.csiro.au>
@@ -340,3 +340,19 @@ Date: Wed, 30 May 2001 12:41:43 -0400
 Subject: unbelievable parser bug
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Tue, 29 May 2001 14:25:00 +0200
+* PR# 959 *
+Subject: Re: R-WinEdt
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Thu, 31 May 2001 09:21:14 +0200
+* PR# 958 *
+Subject: zero-extent matrices
+From: Thomas Lumley <tlumley@u.washington.edu>
+Date: Wed, 30 May 2001 11:59:59 -0700 (PDT)
+* PR# 961 *
+Subject: R-1.2.3: a small suggestion
+From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
+Date: Thu, 31 May 2001 09:19:26 -0600 (MDT)
+* PR# 960 *
+Subject: format() of a character matrix converts to vector
+From: John.Peters@tip.csiro.au (John Peters)
+Date: Thu, 31 May 2001 17:27:45 +1000 (EST)
