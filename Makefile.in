@@ -29,7 +29,7 @@ Makefile:
 
 R: stamp-R
 stamp-R: $(top_builddir)/src/include/Platform.h \
-	  $(top_srcdir)/src/*/*.[chf] \
+	  $(top_srcdir)/src/*/*.[chfy] \
 	  $(top_srcdir)/src/library/*/R/*.R \
 	  $(top_srcdir)/src/library/*/src/*.[chf]
 	@rm -f $@
