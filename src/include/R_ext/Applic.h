@@ -156,9 +156,6 @@ int stemleaf(double *x, int *n, double *scale, int *width, double *atom);
 /* tabulate.c */
 void R_tabulate(int *x, int *n, int *ans);
 
-/* ../main/optimize.c */
-int F77_SYMBOL(result)(int *nr, int *n, double *x, double *f, double *g,
-		       double *a, double *p, int *itncnt, int *iflg, int *ipr);
 
 /* uncmin.c : */
 
