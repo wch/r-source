@@ -498,7 +498,7 @@ int SYSCALL R_set_graphics_device (struct _SC_Proxy_Object* object,
 			     0,
 			     device);
     gsetVar(install(".Device"),
-	    mkString("ActiveXDevice 1"), R_NilValue);
+	    mkString("ActiveXDevice 1"), R_BaseEnv);
     lDD = GEcreateDevDesc(lDev);
     addDevice((DevDesc*) lDD);
     GEinitDisplayList(lDD);

@@ -162,8 +162,8 @@ static int computeDLOpenFlag(int asLocal, int now)
        call time.
     */
 # define DL_WARN(i) \
-    if(asInteger(GetOption(install("warn"), R_NilValue)) == 1 || \
-       asInteger(GetOption(install("verbose"), R_NilValue)) > 0) \
+    if(asInteger(GetOption(install("warn"), R_BaseEnv)) == 1 || \
+       asInteger(GetOption(install("verbose"), R_BaseEnv)) > 0) \
         warning(_(warningMessages[i]));
 #endif
 

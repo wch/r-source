@@ -6,6 +6,8 @@
 ### personal startup files, since things will be executed twice and in
 ### the wrong environment since user profiles are run in .GlobalEnv.
 
+.BaseEnv <- baseenv()
+.EmptyEnv <- emptyenv()
 .GlobalEnv <- globalenv()
 attach(NULL, name = "Autoloads")
 .AutoloadEnv <- as.environment(2)

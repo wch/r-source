@@ -1044,10 +1044,10 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     ev <- as.environment(ev)
     value <- list(ev)
     while(!isNamespace(ev)) {
-        if(is.baseenv(ev)) {
+        if(identical(ev, .BaseEnv)) {
             value[[length(value)]] <- .BaseNamespaceEnv
             break
-        } else if(is.emptyenv(ev)) {
+        } else if(identical(ev, .EmptyEnv)) {
             break
         }
         ev <- parent.env(ev)

@@ -451,7 +451,7 @@ void *in_R_HTTPOpen(const char *url, int cacheOK)
 {
     inetconn *con;
     void *ctxt;
-    int timeout = asInteger(GetOption(install("timeout"), R_NilValue));
+    int timeout = asInteger(GetOption(install("timeout"), R_BaseEnv));
     int len = -1;
     char *type = NULL;
 
@@ -505,7 +505,7 @@ static void *in_R_FTPOpen(const char *url)
 {
     inetconn *con;
     void *ctxt;
-    int timeout = asInteger(GetOption(install("timeout"), R_NilValue));
+    int timeout = asInteger(GetOption(install("timeout"), R_BaseEnv));
     int len = 0;
 
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
@@ -607,7 +607,7 @@ static void *in_R_HTTPOpen(const char *url, const int cacheOK)
     }
 
 #ifdef USE_WININET_ASYNC
-    timeout = asInteger(GetOption(install("timeout"), R_NilValue));
+    timeout = asInteger(GetOption(install("timeout"), R_BaseEnv));
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
     InternetSetStatusCallback(wictxt->hand,
 			      (INTERNET_STATUS_CALLBACK) InternetCallback);
@@ -764,7 +764,7 @@ static void *in_R_FTPOpen(const char *url)
     }
 
 #ifdef USE_WININET_ASYNC
-    timeout = asInteger(GetOption(install("timeout"), R_NilValue));
+    timeout = asInteger(GetOption(install("timeout"), R_BaseEnv));
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
     InternetSetStatusCallback(wictxt->hand,
 			      (INTERNET_STATUS_CALLBACK) InternetCallback);
@@ -878,7 +878,7 @@ void RxmlMessage(int level, const char *format, ...)
     char buf[MBUFSIZE], *p;
     va_list(ap);
 
-    clevel = asInteger(GetOption(install("internet.info"), R_NilValue));
+    clevel = asInteger(GetOption(install("internet.info"), R_BaseEnv));
     if(clevel == NA_INTEGER) clevel = 2;
     
     if(level < clevel) return;

@@ -5,7 +5,7 @@ parent.frame <- function(n = 1) .Internal(parent.frame(n))
 eval <-
     function(expr, envir = parent.frame(),
 	     enclos = if(is.list(envir) || is.pairlist(envir))
-                       parent.frame())
+                       parent.frame() else .BaseEnv)
     .Internal(eval(expr, envir,enclos))
 
 eval.parent <- function(expr, n = 1){

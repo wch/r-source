@@ -254,7 +254,7 @@ static void PrivateCopyDevice(NewDevDesc *dd, NewDevDesc *ndd, char *name)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
     gsetcursor(xd->gawin, WatchCursor);
     gsetVar(install(".Device"),
-	    mkString(name), R_NilValue);
+	    mkString(name), R_BaseEnv);
     gdd = GEcreateDevDesc(ndd);
     addDevice((DevDesc*) gdd);
     GEcopyDisplayList(devNumber((DevDesc*) dd));
@@ -779,7 +779,7 @@ static void HelpMouseClick(window w, int button, point pt)
 	    return;
 	if (button & LeftButton) {
 	    int useBeep = xd->locator && asLogical(GetOption(install("locatorBell"),
-					      R_NilValue));
+					      R_BaseEnv));
 	    if(useBeep) gabeep();
 	    xd->clicked = 1;
 	    xd->px = pt.x;
@@ -2627,7 +2627,7 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
     xd->buffered = buffered;
     xd->psenv = psenv;
     {
-	SEXP timeouts = GetOption(install("windowsTimeouts"), R_NilValue);
+	SEXP timeouts = GetOption(install("windowsTimeouts"), R_BaseEnv);
 	if(isInteger(timeouts)){
 	    xd->timeafter = INTEGER(timeouts)[0];
 	    xd->timesince = INTEGER(timeouts)[1];
@@ -2944,7 +2944,7 @@ SEXP devga(SEXP args)
 	    error(_("unable to start device devWindows"));
 	}
 	gsetVar(install(".Device"),
-		mkString(display[0] ? display : "windows"), R_NilValue);
+		mkString(display[0] ? display : "windows"), R_BaseEnv);
 	dd = GEcreateDevDesc(dev);
 	addDevice((DevDesc*) dd);
 	GEinitDisplayList(dd);

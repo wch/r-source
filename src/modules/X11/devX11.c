@@ -1899,7 +1899,7 @@ static Rboolean newX11_Locator(double *x, double *y, NewDevDesc *dd)
 	    if (ddEvent == dd) {
 		if (event.xbutton.button == Button1) {
 		    int useBeep = asLogical(GetOption(install("locatorBell"),
-						      R_NilValue));
+						      R_BaseEnv));
 		    *x = event.xbutton.x;
 		    *y = event.xbutton.y;
   		       /* Make a beep! Was print "\07", but that
@@ -2153,7 +2153,7 @@ newX11Desc * Rf_allocNewX11DeviceDesc(double ps)
 static
 Rboolean in_R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
 {
-    SEXP dev = elt(findVar(install(".Devices"), R_NilValue), d);
+    SEXP dev = elt(findVar(install(".Devices"), R_BaseEnv), d);
 
     if (TYPEOF(dev) != STRSXP ||
 	!(strcmp(CHAR(STRING_ELT(dev, 0)), "XImage") == 0 ||
@@ -2277,7 +2277,7 @@ Rf_addX11Device(char *display, double width, double height, double ps,
 	    free(dev);
 	    errorcall(gcall, _("unable to start device %s"), devname);
        	}
-	gsetVar(install(".Device"), mkString(devname), R_NilValue);
+	gsetVar(install(".Device"), mkString(devname), R_BaseEnv);
 	dd = GEcreateDevDesc(dev);
 	addDevice((DevDesc*) dd);
 	GEinitDisplayList(dd);

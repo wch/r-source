@@ -2222,7 +2222,7 @@ PSDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
     pd->paperspecial = FALSE;
     if(!strcmp(pd->papername, "Default") ||
        !strcmp(pd->papername, "default")) {
-	SEXP s = STRING_ELT(GetOption(install("papersize"), R_NilValue), 0);
+	SEXP s = STRING_ELT(GetOption(install("papersize"), R_BaseEnv), 0);
 	if(s != NA_STRING && strlen(CHAR(s)) > 0)
 	    strcpy(pd->papername, CHAR(s));
 	else strcpy(pd->papername, "a4");
@@ -3160,7 +3160,7 @@ XFigDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
 
     if(!strcmp(pd->papername, "Default") ||
        !strcmp(pd->papername, "default")) {
-	SEXP s = STRING_ELT(GetOption(install("papersize"), R_NilValue), 0);
+	SEXP s = STRING_ELT(GetOption(install("papersize"), R_BaseEnv), 0);
 	if(s != NA_STRING && strlen(CHAR(s)) > 0)
 	    strcpy(pd->papername, CHAR(s));
 	else strcpy(pd->papername, "A4");
@@ -5060,7 +5060,7 @@ SEXP PostScript(SEXP args)
 	    free(dev);
 	    error(_("unable to start device PostScript"));
 	}
-	gsetVar(install(".Device"), mkString("postscript"), R_NilValue);
+	gsetVar(install(".Device"), mkString("postscript"), R_BaseEnv);
 	dd = GEcreateDevDesc(dev);
 	addDevice((DevDesc*) dd);
 	GEinitDisplayList(dd);
@@ -5126,7 +5126,7 @@ SEXP XFig(SEXP args)
 	    free(dev);
 	    error(_("unable to start device xfig"));
 	}
-	gsetVar(install(".Device"), mkString("xfig"), R_NilValue);
+	gsetVar(install(".Device"), mkString("xfig"), R_BaseEnv);
 	dd = GEcreateDevDesc(dev);
 	addDevice((DevDesc*) dd);
 	GEinitDisplayList(dd);
@@ -5197,7 +5197,7 @@ SEXP PDF(SEXP args)
 	    free(dev);
 	    error(_("unable to start device pdf"));
 	}
-	gsetVar(install(".Device"), mkString("pdf"), R_NilValue);
+	gsetVar(install(".Device"), mkString("pdf"), R_BaseEnv);
 	dd = GEcreateDevDesc(dev);
 	addDevice((DevDesc*) dd);
 	GEinitDisplayList(dd);

@@ -48,7 +48,7 @@ void NewFrameConfirm(void)
 #ifdef Win32
     int i;
     Rboolean haveWindowsDevice;
-    SEXP dotDevices = findVar(install(".Devices"), R_NilValue); /* This is a pairlist! */
+    SEXP dotDevices = findVar(install(".Devices"), R_BaseEnv); /* This is a pairlist! */
 
     for(i = 0; i < curDevice(); i++)  /* 0-based */
 	dotDevices = CDR(dotDevices);
@@ -3239,7 +3239,7 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    /* can't use warning because we want to print immediately  */
 	    /* might want to handle warn=2? */
-	    warn = asInteger(GetOption(install("warn"), R_NilValue));
+	    warn = asInteger(GetOption(install("warn"), R_BaseEnv));
 	    if (dmin > THRESHOLD) {
 	        if(warn >= 0)
 		    REprintf(_("warning: no point with %.2f inches\n"),

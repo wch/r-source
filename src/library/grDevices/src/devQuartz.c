@@ -522,7 +522,7 @@ SEXP Quartz(SEXP args)
 	 free(dev);
 	 error(_("unable to start device Quartz"));
     }
-    gsetVar(install(".Device"), mkString("quartz"), R_NilValue);
+    gsetVar(install(".Device"), mkString("quartz"), R_BaseEnv);
     dd = GEcreateDevDesc(dev);
     addDevice((DevDesc*)dd);
     GEinitDisplayList(dd);
@@ -1499,7 +1499,7 @@ static Rboolean Quartz_Locator(double *x, double *y, NewDevDesc *dd)
     Cursor		arrow ;
     QuartzDesc *xd = (QuartzDesc*)dd->deviceSpecific;
 	int useBeep = asLogical(GetOption(install("locatorBell"), 
-						      R_NilValue));
+						      R_BaseEnv));
 	
     GetPort(&savePort);
 

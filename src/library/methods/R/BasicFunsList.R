@@ -286,11 +286,13 @@ list("!" = function(e1)
 , ".External.graphics" = FALSE
 , ".Internal" = FALSE
 , ".Primitive" = FALSE
+, "baseenv" = FALSE
 , "break" = FALSE
 , "debug" = function(fun)
 {
     standardGeneric("debug")
 }
+, "emptyenv" = FALSE
 , "environment<-" = function(fun, value)
 {
     standardGeneric("environment<-")
