@@ -1,0 +1,168 @@
+<html>
+<head>
+<title>R: Search Engine</title>
+
+<script language="JavaScript">
+<!-- 
+
+// searching is disabled until the applet is initialized
+enableSearch = false;
+
+// main search entry point
+function searchInIndex (srch_trm,kwonly)
+{
+  // if the applet is not initialized, ignore search results
+  if (enableSearch == false) {
+    return "";
+  }
+  line =        '<html><head>\n';
+
+  line = line + '<title>Search Results</title>\n';
+  line = line + '\n';
+
+  line = line + '<body TEXT=\"#000000\" BGCOLOR=\"#FFFFFF\" LINK=\"#0000F0\"'
+  line = line + 'VLINK=\"#660066\" ALINK=\"#FF0000\" BACKGROUND=\"white\" >\n';
+
+  line = line + '<h2 align=center><FONT FACE=\"Courier New,Courier\"';
+  line = line + 'COLOR=\"#999999\">Search Results</FONT></h2>';
+
+
+  // call the applet code!
+  line = line + document.SearchEngine.search (srch_trm);
+
+  line = line + '</body>\n';
+
+  document.write (line);
+
+  // this makes it all work as expected, stops loading and after following
+  // a link the search results will be displayed again.
+  document.close ();
+  return "";
+}
+//-->
+
+</script>
+</head>
+
+<body onLoad='enableSearch=true;document.f.SEARCHTERM.value="";'
+TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000F0"
+VLINK="#660066" ALINK="#FF0000" BACKGROUND="white" >
+
+<TABLE align=center>
+<TR><TD ALIGN=RIGHT><FONT SIZE=+2>
+     <H1>
+     <FONT FACE="Courier New,Courier" COLOR="#999999">
+      <center>Search Engine</center></FONT>
+     </H1>
+    <TD ALIGN=CENTER> 
+    <TD ALIGN=LEFT><FONT SIZE=+2>
+     <img src="../logo.jpg" alt="">
+</TABLE>
+
+<HR WIDTH="100%">
+
+<p>
+This search engine is in alpha stage ... don't expect too
+much. Currently you can only search for functions of the base package,
+but searching all packages should be implemented soon.
+
+<p>
+<h1 align=center>
+<FONT FACE="Courier New,Courier" COLOR="#666666"><b>
+Search</b></font></h1>
+
+<p>
+You can search for keywords, function and data names and titles.
+
+<p>
+<b>Usage:</b> Enter a string in the text field below and hit
+<code>RETURN</code>.
+
+<form
+     name="f"
+     onSubmit="searchInIndex (document.f.SEARCHTERM.value,document.f.KEYWORDSONLY); return false;"
+     >
+
+<INPUT TYPE=TEXT NAME="SEARCHTERM" SIZE=20 MAXLENGTH=256 VALUE="">
+<INPUT NAME="KEYWORDSONLY" TYPE=CHECKBOX VALUE="abc"><b>Keywords only</b><br>
+<INPUT VALUE="Search" TYPE=SUBMIT>
+<INPUT VALUE="Reset" TYPE=RESET>
+</form>
+
+
+<HR WIDTH="100%">
+
+<p>
+<h1 align=center>
+<FONT FACE="Courier New,Courier" COLOR="#666666"><b>
+Keywords</b></font></h1>
+
+<p>
+Eventually you will be able to dynamically build an alphabetical list
+of all keywords or look at all keywords ordered by topic. Currently
+there is only the demo section "Graphics".
+
+<p>
+<h2>
+<FONT FACE="Courier New,Courier" COLOR="#999999"><b>
+Keywords by Topic</b></font></h2>
+
+<dl>
+  <dt>Graphics
+  <dd>
+      <ul>
+	<li><a href="javascript:searchInIndex ('aplot')">aplot</a>:
+	    Add to Existing Plot / internal plot.
+	<li><a href="javascript:searchInIndex ('dplot')">dplot</a>:
+	    Computations Related to Plotting
+	<li><a href="javascript:searchInIndex ('hplot')">hplot</a>:
+	    High-Level Plots
+	<li><a href="javascript:searchInIndex ('iplot')">iplot</a>:
+	    Interacting with Plots
+	<li><a href="javascript:searchInIndex ('color')">color</a>:
+	    Color, Palettes etc.
+	<li><a href="javascript:searchInIndex ('dynamic')">dynamic</a>:
+	    Dynamic Graphics
+	<li><a href="javascript:searchInIndex ('device')">device</a>:
+	    Graphical Devices
+      </ul>
+</dl>
+
+
+
+<applet
+    code=SearchEngine.class
+    name=SearchEngine
+    width=0
+    height=0 >
+    <param name="INDEXFILE" value="index.txt">
+</applet>
+
+</body>
+</html>
+
+<pre>
+==============================================================================
+
+  HISTORY:
+  
+  $Log: SearchEngine.html,v $
+  Revision 1.1  1998/05/15 10:38:10  leisch
+  New: Search Engine
+
+  Revision 1.4  1998/05/10 23:25:01  baier
+  fix problem with Navigator 4.03 on Linux
+  now Internet Explorer 3.02 behaves strange, but it still works.
+
+  Revision 1.3  1998/05/10 22:56:27  baier
+  now for Internet Explorer AND Netscape
+
+  Revision 1.2  1998/04/26 22:44:32  baier
+  added description
+
+  Revision 1.1  1998/04/26 22:39:35  baier
+  Initial revision
+
+
+==============================================================================
+</pre>
