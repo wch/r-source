@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.0-6, 2000/04/16
+Version 1.0-11, 2000/05/19
 Kurt Hornik
 
 
@@ -176,9 +176,9 @@ R by sending code and bug reports.
 
    Since mid-1997 there has been a core group (the "R Core Team") who can
 modify the R source code CVS archive.  The group currently consists of Doug
-Bates, Peter Dalgaard, Robert Gentleman, Kurt Hornik, Ross Ihaka, Friedrich
-Leisch, Thomas Lumley, Martin Maechler, Guido Masarotto, Paul Murrell,
-Brian Ripley, Duncan Temple Lang, and Luke Tierney.
+Bates, John Chambers, Peter Dalgaard, Robert Gentleman, Kurt Hornik, Ross
+Ihaka, Friedrich Leisch, Thomas Lumley, Martin Maechler, Guido Masarotto,
+Paul Murrell, Brian Ripley, Duncan Temple Lang, and Luke Tierney.
 
    R has a home page at `http://www.r-project.org/'.  It is free software
 distributed under a GNU-style copyleft, and an official part of the GNU
@@ -325,7 +325,7 @@ distribution is available.  We hope that this will change soon.
 packages for the i386 platform (now part of the Debian distribution and
 maintained by Doug Bates), Red Hat 6.x packages for the alpha, i386 and
 sparc platforms (maintained by Naoki Takebayashi, Martyn Plummer, and Vin
-Everett, respectively), SuSE 5.3/6.0/6.2/6.3 i386 packages by Albrecht
+Everett, respectively), SuSE 5.3/6.0/6.3 i386 packages by Albrecht
 Gebhardt, and Linuxppc 5.0 RPMs by Alex Buerkle.
 
    The `bin/osf' directory of a CRAN site contains RPMs for alpha systems
@@ -373,18 +373,31 @@ S/S-PLUS (see *Note R and S::) can be used in combination with this FAQ
 
 This has a home page at `http://www.stats.ox.ac.uk/pub/MASS3/' providing
 additional material, in particular "R Complements" which describe how to
-use the book with R.  These complements provide both descriptions of some
+use the book with R.  These complements contain both descriptions of some
 of the differences between R and S-PLUS, and the modifications needed to
-run the examples in the book.  Its companion volume on "S Programming", due
-in about April 2000, will provide an in-depth guide to writing software in
-the S language which forms the basis of both the commercial S-PLUS and the
-Open Source R data analysis software systems.
+run the examples in the book.  Its companion is
+
+     W. N. Venables and B. D. Ripley (2000), "S Programming".  Springer,
+     ISBN 0-387-98966-8.
+
+This provides an in-depth guide to writing software in the S language which
+forms the basis of both the commercial S-PLUS and the Open Source R data
+analysis software systems.  See
+`http://www.stats.ox.ac.uk/pub/MASS3/Sprog/' for more information.
 
    More introductory books are
 
      P. Spector (1994), "An introduction to S and S-PLUS", Duxbury Press.
 
      A. Krause and M. Olsen (1997), "The Basics of S and S-PLUS", Springer.
+
+   The book
+     J. C. Pinheiro and D. M. Bates (2000), "Mixed-Effects Models in S and
+     S-PLUS", Springer, ISBN 0-387-98957-0
+
+provides a comprehensive guide to the use of the *nlme* package for linear
+and nonlinear mixed-effects models.  This has a home page at
+`http://nlme.stat.wisc.edu/MEMSS'.
 
    Last, but not least, Ross' and Robert's experience in designing and
 implementing R is described in:
@@ -973,6 +986,10 @@ works, was published in the Journal of Statistical Software
      Data sets and sample analyses from "Probability and Statistics for
      Engineering and the Sciences (5th ed)" by Jay L. Devore, 2000, Duxbury.
 
+*GenKern*
+     Functions for generating and manipulating generalised binned kernel
+     density estimates.
+
 *KernSmooth*
      Functions for kernel smoothing (and density estimation) corresponding
      to the book "Kernel Smoothing" by M. P. Wand and M. C. Jones, 1995.
@@ -1023,6 +1040,9 @@ works, was published in the Journal of Statistical Software
      Competitive Learning) and calculation of several indexes for finding
      the number of clusters in a data set.
 
+*cfa*
+     Analysis of configuration frequencies.
+
 *chron*
      A package for working with chronological objects (times and dates).
 
@@ -1062,6 +1082,14 @@ works, was published in the Journal of Statistical Software
 *gss*
      A comprehensive package for structural multivariate function estimation
      using smoothing splines.
+
+*hpower*
+     A suite of functions to compute power and sample size for tests of the
+     general linear hypothesis.
+
+*ineq*
+     Inequality, concentration and poverty measures, and Lorenz curves
+     (empirical and theoretic).
 
 *integrate*
      Adaptive quadrature in up to 20 dimensions.
@@ -1212,6 +1240,9 @@ these a try, of course.  This area of CRAN currently contains
 *dopt*
      Finding D-optimal experimental designs.
 
+*dse*
+     Multivariate time series.
+
 *foreign*
      Functions for reading data stored by statistical software like Minitab,
      SAS, SPSS, etc.
@@ -1227,8 +1258,15 @@ these a try, of course.  This area of CRAN currently contains
      Code for correspondence analysis and other multidimensional descriptive
      statistics.
 
+*syskern*
+     Functions for writing code that is OS and R/S independent.
+
 *tcltk*
      Basic interface with Tcl/Tk.
+
+*tframe*
+     Functions for writing code that is independent of the representation of
+     time.
 
 *timeslab*
      Time series routines.
@@ -1249,15 +1287,6 @@ analyses in the new edition of his book "Models for Repeated Measurements"
 has also started *dna*, a package with procedures for the analysis of DNA
 sequences.  Jim's packages can be obtained from
 `http://www.luc.ac.be/~jlindsey/rcode.html'.
-
-   Paul Gilbert <pgilbert@bank-banque-canada.ca> has written the Dynamic
-Systems Estimation (DSE) Library, a multivariate time series package which
-implements an object oriented approach to time series models (using classes
-and methods in R/S).  The package provides state-space models and the
-Kalman filter, VARMA and cointegration models, and numerical
-differentiation.  It also contains Troll models as another class (the Troll
-interface is not yet functional in R).  Paul's package *dse* can be
-obtained via `http://www.bank-banque-canada.ca/pgilbert/dsedesc.htm'.
 
    Michael Lapsley <mlapsley@ndirect.co.uk> has written *RODBC*, a package
 which provides an R ODBC interface; see

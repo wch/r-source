@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.0-6, 2000/04/16</h2>
+<h2>Version 1.0-11, 2000/05/19</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -291,9 +291,10 @@ individuals has contributed to R by sending code and bug reports.
 
 <p>Since mid-1997 there has been a core group (the "R Core Team") who can
 modify the R source code CVS archive.  The group currently consists of
-Doug Bates, Peter Dalgaard, Robert Gentleman, Kurt Hornik, Ross Ihaka,
-Friedrich Leisch, Thomas Lumley, Martin Maechler, Guido Masarotto, Paul
-Murrell, Brian Ripley, Duncan Temple Lang, and Luke Tierney.
+Doug Bates, John Chambers, Peter Dalgaard, Robert Gentleman, Kurt
+Hornik, Ross Ihaka, Friedrich Leisch, Thomas Lumley, Martin Maechler,
+Guido Masarotto, Paul Murrell, Brian Ripley, Duncan Temple Lang, and
+Luke Tierney.
 
 <p>R has a home page at <a href="http://www.r-project.org/">http://www.r-project.org/</a>.  It is free
 software distributed under a GNU-style copyleft, and an official part of
@@ -497,7 +498,7 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 2.2 packages for the i386 platform (now part of the Debian distribution
 and maintained by Doug Bates), Red Hat 6.x packages for the alpha, i386
 and sparc platforms (maintained by Naoki Takebayashi, Martyn Plummer,
-and Vin Everett, respectively), SuSE 5.3/6.0/6.2/6.3 i386 packages by
+and Vin Everett, respectively), SuSE 5.3/6.0/6.3 i386 packages by
 Albrecht Gebhardt, and Linuxppc 5.0 RPMs by Alex Buerkle.
 
 <p>The <code>bin/osf</code> directory of a CRAN site contains RPMs for alpha
@@ -558,13 +559,19 @@ W. N. Venables and B. D. Ripley (1999), "Modern Applied Statistics with
 
 <p>This has a home page at <a href="http://www.stats.ox.ac.uk/pub/MASS3/">http://www.stats.ox.ac.uk/pub/MASS3/</a>
 providing additional material, in particular "R Complements" which
-describe how to use the book with R.  These complements provide both
+describe how to use the book with R.  These complements contain both
 descriptions of some of the differences between R and <small>S-PLUS</small>, and the
-modifications needed to run the examples in the book.  Its companion
-volume on "S Programming", due in about April 2000, will provide an
-in-depth guide to writing software in the S language which forms the
-basis of both the commercial <small>S-PLUS</small> and the Open Source R data
-analysis software systems.
+modifications needed to run the examples in the book.  Its companion is
+
+<blockquote>
+W. N. Venables and B. D. Ripley (2000), "S Programming".  Springer,
+ISBN 0-387-98966-8. 
+</blockquote>
+
+<p>This provides an in-depth guide to writing software in the S language
+which forms the basis of both the commercial <small>S-PLUS</small> and the Open
+Source R data analysis software systems.  See
+<a href="http://www.stats.ox.ac.uk/pub/MASS3/Sprog/">http://www.stats.ox.ac.uk/pub/MASS3/Sprog/</a> for more information.
 
 <p>More introductory books are
 
@@ -574,6 +581,16 @@ P. Spector (1994), "An introduction to S and <small>S-PLUS</small>", Duxbury Pre
 <p>A. Krause and M. Olsen (1997), "The Basics of S and <small>S-PLUS</small>",
 Springer. 
 </blockquote>
+
+<p>The book
+<blockquote>
+J. C. Pinheiro and D. M. Bates (2000), "Mixed-Effects Models in S and
+<small>S-PLUS</small>", Springer, ISBN 0-387-98957-0
+</blockquote>
+
+<p>provides a comprehensive guide to the use of the <strong>nlme</strong> package
+for linear and nonlinear mixed-effects models.  This has a home page at
+<a href="http://nlme.stat.wisc.edu/MEMSS">http://nlme.stat.wisc.edu/MEMSS</a>.
 
 <p>Last, but not least, Ross' and Robert's experience in designing and
 implementing R is described in:
@@ -1297,6 +1314,9 @@ area.
 <dt><strong>Devore5</strong>
 <dd>Data sets and sample analyses from "Probability and Statistics for
 Engineering and the Sciences (5th ed)" by Jay L. Devore, 2000, Duxbury. 
+<br><dt><strong>GenKern</strong>
+<dd>Functions for generating and manipulating generalised binned kernel
+density estimates. 
 <br><dt><strong>KernSmooth</strong>
 <dd>Functions for kernel smoothing (and density estimation) corresponding to
 the book "Kernel Smoothing" by M. P. Wand and M. C. Jones, 1995. 
@@ -1336,6 +1356,8 @@ R. Tibshirani, 1993, Chapman and Hall.
 update algorithm (Hard Competitive Learning) and Neural Gas algorithm
 (Soft Competitive Learning) and calculation of several indexes for
 finding the number of clusters in a data set. 
+<br><dt><strong>cfa</strong>
+<dd>Analysis of configuration frequencies. 
 <br><dt><strong>chron</strong>
 <dd>A package for working with chronological objects (times and dates). 
 <br><dt><strong>class</strong>
@@ -1367,6 +1389,12 @@ approach to GLMs for dependent data.
 <br><dt><strong>gss</strong>
 <dd>A comprehensive package for structural multivariate function estimation
 using smoothing splines. 
+<br><dt><strong>hpower</strong>
+<dd>A suite of functions to compute power and sample size for tests of the
+general linear hypothesis. 
+<br><dt><strong>ineq</strong>
+<dd>Inequality, concentration and poverty measures, and Lorenz curves
+(empirical and theoretic). 
 <br><dt><strong>integrate</strong>
 <dd>Adaptive quadrature in up to 20 dimensions. 
 <br><dt><strong>leaps</strong>
@@ -1480,6 +1508,8 @@ in competing risks.
 <dd>A small C++ test package. 
 <br><dt><strong>dopt</strong>
 <dd>Finding D-optimal experimental designs. 
+<br><dt><strong>dse</strong>
+<dd>Multivariate time series. 
 <br><dt><strong>foreign</strong>
 <dd>Functions for reading data stored by statistical software like Minitab,
 SAS, SPSS, etc. 
@@ -1491,8 +1521,13 @@ thin plate splines, kriging and neural networks.
 <br><dt><strong>multidim</strong>
 <dd>Code for correspondence analysis and other multidimensional descriptive
 statistics. 
+<br><dt><strong>syskern</strong>
+<dd>Functions for writing code that is OS and R/S independent. 
 <br><dt><strong>tcltk</strong>
 <dd>Basic interface with Tcl/Tk. 
+<br><dt><strong>tframe</strong>
+<dd>Functions for writing code that is independent of the representation of
+time. 
 <br><dt><strong>timeslab</strong>
 <dd>Time series routines. 
 <br><dt><strong>vtcl</strong>
@@ -1513,16 +1548,6 @@ in the new edition of his book "Models for Repeated Measurements"
 Jim has also started <strong>dna</strong>, a package with procedures for the
 analysis of DNA sequences.  Jim's packages can be obtained from
 <a href="http://www.luc.ac.be/~jlindsey/rcode.html">http://www.luc.ac.be/~jlindsey/rcode.html</a>.
-
-<a href="mailto:pgilbert@bank-banque-canada.ca">Paul Gilbert</a> has written the
-Dynamic Systems Estimation (DSE) Library, a multivariate time series
-package which implements an object oriented approach to time series
-models (using classes and methods in R/S).  The package provides
-state-space models and the Kalman filter, VARMA and cointegration
-models, and numerical differentiation.  It also contains Troll models as
-another class (the Troll interface is not yet functional in R).  Paul's
-package <strong>dse</strong> can be obtained via
-<a href="http://www.bank-banque-canada.ca/pgilbert/dsedesc.htm">http://www.bank-banque-canada.ca/pgilbert/dsedesc.htm</a>.
 
 <a href="mailto:mlapsley@ndirect.co.uk">Michael Lapsley</a> has written
 <strong>RODBC</strong>, a package which provides an R ODBC interface; see
