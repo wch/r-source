@@ -34,3 +34,18 @@ ISOLatin1 <- 0:255
 WinAnsi <- as.integer(c(0:126, 32, 32, 32, 32, 32, 32, 32, 32, 32,
 147, 32, 32, 32, 32, 32, 32, 32, 32, 96, 39, 32, 32, 32, 32, 32, 148,
 32, 32, 32, 32, 32, 32, 32, 32, 161:255))
+
+# non standard settings for the Aqua GUI of the Darwin port
+if(.Platform$GUI == "AQUA"){
+
+# this is set here as we do not define DISPLAY 
+ options(device = "quartz")
+
+# sets initial current working directory to user's root
+ setwd("~/")
+
+# this is to allow g77 compiler to work
+ Sys.putenv("PATH" = paste(Sys.getenv("PATH"),":/usr/local/bin",sep=""))
+}
+
+
