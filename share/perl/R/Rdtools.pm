@@ -17,11 +17,11 @@ sub get_section {
 
     ## remove comments
     $text =~ s/([^\\])%.*\n/$1\n/g;
-    
+
     my @text = split(/\\$section\{/, " " . $text);
     shift @text;
 
-    my @sections;    
+    my @sections;
     foreach $text (@text) {
 	$delimcurly->match("\{" . $text);
 	push(@sections, $delimcurly->matched);
@@ -33,7 +33,7 @@ sub get_section {
 sub get_usages {
 
     my ($text, $mode) = @_;
-    
+
     ## remove comments
     $text =~ s/([^\\])%.*\n/$1\n/g;
 
@@ -65,12 +65,12 @@ sub get_usages {
     ## argument in the sense that it does not match `,'.
     $maybe_is_data_set_doc = 1 if($text =~ "\\keyword\{datasets\}");
     ## </FIXME>
-    
+
     ## In `codoc' mode, use \synopsis in case there is one, but warn
     ## about doing so.
     @text = split(/\\synopsis/, $text) if ($mode eq "codoc");
     if($#text > 0) {
-	print "Using synopsis in \`$name'\n";	    
+	print "Using synopsis in \`$name'\n";
     } else {
 	@text = split(/\\usage/, $text);
     }
@@ -80,7 +80,7 @@ sub get_usages {
     foreach $text (@text) {
 
 	my $usage = $delimcurly->match($text);
-	
+
 	while($usage) {
 	    $usage =~ s/^[\s\n]*//g;
 
@@ -161,7 +161,7 @@ sub get_usages {
 	    }
 	    $usage = $rest;
 	}
-	
+
     }
 
     %usages;
@@ -175,12 +175,12 @@ sub get_arglist {
 
     my ($text) = @_;
     my @args = ();
-    
+
     my @keywords = get_section($text, "keyword");
     foreach my $keyword (@keywords) {
     	return ("*internal*") if($keyword =~ /^\{\s*internal\s*\}$/);
     }
-	
+
     my @chunks = get_section($text, "arguments");
     foreach my $chunk (@chunks) {
 	my ($prefix, $match);
