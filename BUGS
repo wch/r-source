@@ -351,3 +351,15 @@ Date: Mon, 29 Nov 1999 15:53:10 +0100 (MET)
 Subject: image stops detecting wrong sized z matrix
 From: albrecht.gebhardt@uni-klu.ac.at
 Date: Tue, 30 Nov 1999 14:28:10 +0100 (MET)
+* PR# 353 *
+Subject: R CMD check xxx location
+From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
+Date: Tue, 30 Nov 1999 15:22:25 -0500
+* PR# 354 *
+Subject: odd result of length() with factor arguments with NA
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Tue, 30 Nov 1999 21:11:24 -0500 (EST)
+* PR# 355 *
+Subject: PRIVATE: Printing Problems
+From: mlamias@umich.edu
+Date: Wed, 1 Dec 1999 08:05:05 +0100 (MET)
