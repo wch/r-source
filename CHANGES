@@ -25,10 +25,15 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	unix(..) now helps the user to find  system(..) instead.
+
+    o   apropos("[") and methods("[") now both work (even though "[" is not
+	a valid regular expression).
+
     o   row.names<-.default now exists. Converts object to data
         frame and then adds row names
 
-    o	codes() had *opposite* semantics of Splus. Now it's the same. 
+    o	codes() had *opposite* semantics of Splus. Now it's the same.
 
     o   replicating factors now yields factors (again)
 
