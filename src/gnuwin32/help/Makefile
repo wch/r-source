@@ -92,7 +92,7 @@ logo.bmp: $(RHOME)/src/gnuwin32/help/logo.bmp
 
 zipit: help/Rhelp.zip zipup
 unzipit:
-	-@$(MAKE) --no-print-directory -C latex 
+	-@$(MAKE) --no-print-directory -C latex \
 	  -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rhelp
 
 help/Rhelp.zip: $(wildcard ../../src/library/$(PKG)/man/*.Rd \
