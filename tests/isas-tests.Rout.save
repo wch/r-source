@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 0.99.0 Under development (unstable) (January 30, 2000)
+Version 1.1.0 Under development (unstable) (May 16, 2000)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -63,6 +63,8 @@ Error in as.qr(x) : you cannot be serious
 [1] TRUE
 > is.single(as.single( x ))
 Error in is.single(as.single(x)) : type "single" unimplemented in R
+> is.symbol(as.symbol( x ))
+Error in as.symbol(x) : Invalid data of mode "integer" (too short)
 > is.ts(as.ts( x ))
 Error in ts(x) : ts object must have one or more observations
 > is.vector(as.vector( x ))
@@ -131,6 +133,9 @@ Error in as.qr(x) : you cannot be serious
 > if(is.single(x)) { cat('IS: ');all.equal(x, as.single( x ), tol=0)
 + } else   !isall.equal(x, as.single( x ))
 Error in is.single(x) : type "single" unimplemented in R
+> if(is.symbol(x)) { cat('IS: ');all.equal(x, as.symbol( x ), tol=0)
++ } else   !isall.equal(x, as.symbol( x ))
+Error in as.symbol(x) : Invalid data of mode "integer" (too short)
 > if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
 + } else   !isall.equal(x, as.ts( x ))
 Error in ts(x) : ts object must have one or more observations
@@ -172,7 +177,7 @@ Error in unique(x) : unique() applies only to vectors
 [5] "Components not in current: x"                                                          
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
-   missing value where logical needed
+	missing value where logical needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
@@ -236,7 +241,7 @@ Error in 1:nrows : NA/NaN argument
 [1] TRUE
 > f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
-   invalid formula
+	invalid formula
 > f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
 Error in as.function.default(l, envir) : argument must have length at least 1
 > f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
@@ -263,7 +268,7 @@ Error in 1:p : NA/NaN argument
 [1] TRUE
 > f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
 Error in NextMethod(generic, object, ...) : 
-   object not specified
+	object not specified
 > f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
 Error in as.name(x) : Invalid data of mode "integer" (too short)
 > f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
@@ -284,6 +289,8 @@ Error in as.qr(x) : you cannot be serious
 [1] TRUE
 > f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
 [1] TRUE
+> f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
+Error in as.symbol(x) : Invalid data of mode "integer" (too short)
 > f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
 Error in ts(x) : ts object must have one or more observations
 > f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
@@ -319,7 +326,7 @@ Error in as.function.default(l, envir) : argument must have length at least 1
 [1] TRUE
 > is.matrix(as.matrix( x ))
 Error in array(x, c(length(x), 1), if (!is.null(names(x))) list(names(x),  : 
-   attempt to set an attribute on NULL
+	attempt to set an attribute on NULL
 > is.name(as.name( x ))
 Error in as.name(x) : invalid type/length (1/0) in vector allocation
 > is.null(as.null( x ))
@@ -336,6 +343,8 @@ Error in as.qr(x) : you cannot be serious
 [1] TRUE
 > is.single(as.single( x ))
 Error in is.single(as.single(x)) : type "single" unimplemented in R
+> is.symbol(as.symbol( x ))
+Error in as.symbol(x) : invalid type/length (1/0) in vector allocation
 > is.ts(as.ts( x ))
 Error in ts(x) : ts object must have one or more observations
 > is.vector(as.vector( x ))
@@ -380,7 +389,7 @@ Error in as.function.default(l, envir) : argument must have length at least 1
 > if(is.matrix(x)) { cat('IS: ');all.equal(x, as.matrix( x ), tol=0)
 + } else   !isall.equal(x, as.matrix( x ))
 Error in array(x, c(length(x), 1), if (!is.null(names(x))) list(names(x),  : 
-   attempt to set an attribute on NULL
+	attempt to set an attribute on NULL
 > if(is.name(x)) { cat('IS: ');all.equal(x, as.name( x ), tol=0)
 + } else   !isall.equal(x, as.name( x ))
 Error in as.name(x) : invalid type/length (1/0) in vector allocation
@@ -405,6 +414,9 @@ Error in as.qr(x) : you cannot be serious
 > if(is.single(x)) { cat('IS: ');all.equal(x, as.single( x ), tol=0)
 + } else   !isall.equal(x, as.single( x ))
 Error in is.single(x) : type "single" unimplemented in R
+> if(is.symbol(x)) { cat('IS: ');all.equal(x, as.symbol( x ), tol=0)
++ } else   !isall.equal(x, as.symbol( x ))
+Error in as.symbol(x) : invalid type/length (1/0) in vector allocation
 > if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
 + } else   !isall.equal(x, as.ts( x ))
 Error in ts(x) : ts object must have one or more observations
@@ -446,7 +458,7 @@ Error in unique(x) : unique() applies only to vectors
 [5] "Components not in current: x"                                                          
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
-   missing value where logical needed
+	missing value where logical needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce NULL into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
@@ -530,15 +542,15 @@ Error in as.function.default(l, envir) : argument must have length at least 1
 [1] TRUE
 > f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
 Error in array(x, c(length(x), 1), if (!is.null(names(x))) list(names(x),  : 
-   attempt to set an attribute on NULL
+	attempt to set an attribute on NULL
 > f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
 Error in 1:p : NA/NaN argument
 > f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
 Error in array(x, c(length(x), 1), if (!is.null(names(x))) list(names(x),  : 
-   attempt to set an attribute on NULL
+	attempt to set an attribute on NULL
 > f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
 Error in NextMethod(generic, object, ...) : 
-   object not specified
+	object not specified
 > f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
 Error in as.name(x) : invalid type/length (1/0) in vector allocation
 > f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
@@ -559,6 +571,8 @@ Error in as.qr(x) : you cannot be serious
 [1] TRUE
 > f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
 [1] TRUE
+> f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
+Error in as.symbol(x) : invalid type/length (1/0) in vector allocation
 > f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
 Error in ts(x) : ts object must have one or more observations
 > f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
@@ -610,7 +624,9 @@ Error in as.qr(x) : you cannot be serious
 Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
 > is.single(as.single( x ))
 Error in structure(.Internal(as.vector(x, "double")), Csingle = TRUE) : 
-   (list) object cannot be coerced to vector type 14
+	(list) object cannot be coerced to vector type 14
+> is.symbol(as.symbol( x ))
+Error in as.symbol(x) : (list) object cannot be coerced to vector type 1
 > is.ts(as.ts( x ))
 Error in ts(x) : ts object must have one or more observations
 > is.vector(as.vector( x ))
@@ -679,6 +695,9 @@ Error in as.double.default(x) : (list) object cannot be coerced to vector type 1
 > if(is.single(x)) { cat('IS: ');all.equal(x, as.single( x ), tol=0)
 + } else   !isall.equal(x, as.single( x ))
 Error in is.single(x) : type "single" unimplemented in R
+> if(is.symbol(x)) { cat('IS: ');all.equal(x, as.symbol( x ), tol=0)
++ } else   !isall.equal(x, as.symbol( x ))
+Error in as.symbol(x) : (list) object cannot be coerced to vector type 1
 > if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
 + } else   !isall.equal(x, as.ts( x ))
 Error in ts(x) : ts object must have one or more observations
@@ -719,7 +738,7 @@ Error in unique(x) : unique() applies only to vectors
 [5] "Components not in current: x"                                                          
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
-   missing value where logical needed
+	missing value where logical needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce list into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
@@ -782,7 +801,7 @@ Error in as.double.default(x) : (list) object cannot be coerced to vector type 1
 [1] TRUE
 > f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
-   invalid formula
+	invalid formula
 > f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
 Error in as.function.default(l, envir) : argument must have length at least 1
 > f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
@@ -809,7 +828,7 @@ Error in 1:p : NA/NaN argument
 [1] TRUE
 > f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
 Error in NextMethod(generic, object, ...) : 
-   object not specified
+	object not specified
 > f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
 Error in as.name(x) : (list) object cannot be coerced to vector type 1
 > f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
@@ -828,10 +847,12 @@ Error in as.qr(x) : you cannot be serious
 Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
 > f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
 Error in structure(.Internal(as.vector(x, "double")), Csingle = TRUE) : 
-   (list) object cannot be coerced to vector type 14
+	(list) object cannot be coerced to vector type 14
 > f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
 Error in structure(.Internal(as.vector(x, "double")), Csingle = TRUE) : 
-   (list) object cannot be coerced to vector type 14
+	(list) object cannot be coerced to vector type 14
+> f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
+Error in as.symbol(x) : (list) object cannot be coerced to vector type 1
 > f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
 Error in ts(x) : ts object must have one or more observations
 > f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
@@ -883,6 +904,8 @@ Error in as.qr(x) : you cannot be serious
 [1] TRUE
 > is.single(as.single( x ))
 Error in is.single(as.single(x)) : type "single" unimplemented in R
+> is.symbol(as.symbol( x ))
+[1] TRUE
 > is.ts(as.ts( x ))
 [1] TRUE
 > is.vector(as.vector( x ))
@@ -951,6 +974,9 @@ Error in as.qr(x) : you cannot be serious
 > if(is.single(x)) { cat('IS: ');all.equal(x, as.single( x ), tol=0)
 + } else   !isall.equal(x, as.single( x ))
 Error in is.single(x) : type "single" unimplemented in R
+> if(is.symbol(x)) { cat('IS: ');all.equal(x, as.symbol( x ), tol=0)
++ } else   !isall.equal(x, as.symbol( x ))
+[1] TRUE
 > if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
 + } else   !isall.equal(x, as.ts( x ))
 [1] TRUE
@@ -990,7 +1016,7 @@ Error in unique(x) : unique() applies only to vectors
 [4] "Components not in current: x"                            
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
-   missing value where logical needed
+	missing value where logical needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
@@ -1047,7 +1073,7 @@ Error in 1:nrows : NA/NaN argument
 [1] TRUE
 > f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
-   invalid formula
+	invalid formula
 > f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
 [1] TRUE
 > f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
@@ -1074,7 +1100,7 @@ Error in 1:p : NA/NaN argument
 [1] TRUE
 > f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
 Error in NextMethod(generic, object, ...) : 
-   object not specified
+	object not specified
 > f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
 [1] TRUE
 > f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
@@ -1094,6 +1120,8 @@ Error in as.qr(x) : you cannot be serious
 > f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
 [1] TRUE
 > f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
+[1] TRUE
+> f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
 [1] TRUE
 > f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
 [1] TRUE
@@ -1146,6 +1174,8 @@ Error in as.qr(x) : you cannot be serious
 [1] TRUE
 > is.single(as.single( x ))
 Error in is.single(as.single(x)) : type "single" unimplemented in R
+> is.symbol(as.symbol( x ))
+[1] TRUE
 > is.ts(as.ts( x ))
 [1] TRUE
 > is.vector(as.vector( x ))
@@ -1214,6 +1244,9 @@ IS: [1] TRUE
 > if(is.single(x)) { cat('IS: ');all.equal(x, as.single( x ), tol=0)
 + } else   !isall.equal(x, as.single( x ))
 Error in is.single(x) : type "single" unimplemented in R
+> if(is.symbol(x)) { cat('IS: ');all.equal(x, as.symbol( x ), tol=0)
++ } else   !isall.equal(x, as.symbol( x ))
+[1] TRUE
 > if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
 + } else   !isall.equal(x, as.ts( x ))
 [1] TRUE
@@ -1253,7 +1286,7 @@ Error in unique(x) : unique() applies only to vectors
 [4] "Components not in current: x"                            
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
-   missing value where logical needed
+	missing value where logical needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
@@ -1310,7 +1343,7 @@ Error in 1:nrows : NA/NaN argument
 [1] TRUE
 > f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
-   invalid formula
+	invalid formula
 > f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
 [1] TRUE
 > f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
@@ -1337,7 +1370,7 @@ Error in 1:p : NA/NaN argument
 [1] TRUE
 > f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
 Error in NextMethod(generic, object, ...) : 
-   object not specified
+	object not specified
 > f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
 [1] TRUE
 > f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
@@ -1357,6 +1390,8 @@ Error in as.qr(x) : you cannot be serious
 > f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
 [1] TRUE
 > f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
+[1] TRUE
+> f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
 [1] TRUE
 > f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
 [1] TRUE
@@ -1409,6 +1444,8 @@ Error in as.qr(x) : you cannot be serious
 [1] TRUE
 > is.single(as.single( x ))
 Error in is.single(as.single(x)) : type "single" unimplemented in R
+> is.symbol(as.symbol( x ))
+[1] TRUE
 > is.ts(as.ts( x ))
 [1] TRUE
 > is.vector(as.vector( x ))
@@ -1477,6 +1514,9 @@ Error in as.qr(x) : you cannot be serious
 > if(is.single(x)) { cat('IS: ');all.equal(x, as.single( x ), tol=0)
 + } else   !isall.equal(x, as.single( x ))
 Error in is.single(x) : type "single" unimplemented in R
+> if(is.symbol(x)) { cat('IS: ');all.equal(x, as.symbol( x ), tol=0)
++ } else   !isall.equal(x, as.symbol( x ))
+[1] TRUE
 > if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
 + } else   !isall.equal(x, as.ts( x ))
 [1] TRUE
@@ -1516,7 +1556,7 @@ Error in unique(x) : unique() applies only to vectors
 [4] "Components not in current: x"                            
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
-   missing value where logical needed
+	missing value where logical needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce character into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
@@ -1573,7 +1613,7 @@ Error in 1:nrows : NA/NaN argument
 [1] TRUE
 > f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
-   invalid formula
+	invalid formula
 > f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
 [1] TRUE
 > f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
@@ -1600,7 +1640,7 @@ Error in 1:p : NA/NaN argument
 [1] TRUE
 > f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
 Error in NextMethod(generic, object, ...) : 
-   object not specified
+	object not specified
 > f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
 [1] TRUE
 > f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
@@ -1620,6 +1660,8 @@ Error in as.qr(x) : you cannot be serious
 > f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
 [1] TRUE
 > f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
+[1] TRUE
+> f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
 [1] TRUE
 > f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
 [1] TRUE
@@ -1672,6 +1714,8 @@ Error in as.qr(x) : you cannot be serious
 [1] TRUE
 > is.single(as.single( x ))
 Error in is.single(as.single(x)) : type "single" unimplemented in R
+> is.symbol(as.symbol( x ))
+Error in as.symbol(x) : invalid type/length (1/1) in vector allocation
 > is.ts(as.ts( x ))
 [1] TRUE
 > is.vector(as.vector( x ))
@@ -1740,6 +1784,9 @@ Error in as.qr(x) : you cannot be serious
 > if(is.single(x)) { cat('IS: ');all.equal(x, as.single( x ), tol=0)
 + } else   !isall.equal(x, as.single( x ))
 Error in is.single(x) : type "single" unimplemented in R
+> if(is.symbol(x)) { cat('IS: ');all.equal(x, as.symbol( x ), tol=0)
++ } else   !isall.equal(x, as.symbol( x ))
+Error in as.symbol(x) : invalid type/length (1/1) in vector allocation
 > if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
 + } else   !isall.equal(x, as.ts( x ))
 [1] TRUE
@@ -1778,7 +1825,7 @@ Error in unique(x) : unique() applies only to vectors
 [4] "Components not in current: x"                            
 > f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
-   missing value where logical needed
+	missing value where logical needed
 > f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
 Error in as.data.frame.default(x) : can't coerce list into a data.frame
 > f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
@@ -1834,7 +1881,7 @@ Error in 1:nrows : NA/NaN argument
 Error in unique(x) : unique() applies only to vectors
 > f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
-   invalid formula
+	invalid formula
 > f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
 [1] TRUE
 > f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
@@ -1861,7 +1908,7 @@ Error in 1:p : NA/NaN argument
 [1] TRUE
 > f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
 Error in NextMethod(generic, object, ...) : 
-   object not specified
+	object not specified
 > f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
 Error in as.name(x) : invalid type/length (1/1) in vector allocation
 > f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
@@ -1882,6 +1929,8 @@ Error in as.qr(x) : you cannot be serious
 [1] TRUE
 > f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
 [1] TRUE
+> f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
+Error in as.symbol(x) : invalid type/length (1/1) in vector allocation
 > f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
 [1] TRUE
 > f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
@@ -1893,7 +1942,7 @@ Error in as.qr(x) : you cannot be serious
 >  x <- as.data.frame(character(0))
 > is.array(as.array( x ))
 Error in dimnames<-.data.frame(*tmp*, value = list(n)) : 
-   invalid dimnames given for data frame
+	invalid dimnames given for data frame
 > is.call(as.call( x ))
 [1] TRUE
 > is.character(as.character( x ))
@@ -1934,6 +1983,8 @@ Error in as.qr(x) : you cannot be serious
 [1] TRUE
 > is.single(as.single( x ))
 Error in is.single(as.single(x)) : type "single" unimplemented in R
+> is.symbol(as.symbol( x ))
+Error in as.symbol(x) : invalid type/length (1/1) in vector allocation
 > is.ts(as.ts( x ))
 Error in ts(x) : ts object must have one or more observations
 > is.vector(as.vector( x ))
@@ -1942,7 +1993,7 @@ Error in ts(x) : ts object must have one or more observations
 > if(is.array(x)) { cat('IS: ');all.equal(x, as.array( x ), tol=0)
 + } else   !isall.equal(x, as.array( x ))
 Error in dimnames<-.data.frame(*tmp*, value = list(n)) : 
-   invalid dimnames given for data frame
+	invalid dimnames given for data frame
 > if(is.call(x)) { cat('IS: ');all.equal(x, as.call( x ), tol=0)
 + } else   !isall.equal(x, as.call( x ))
 [1] TRUE
@@ -2005,6 +2056,9 @@ Error in as.qr(x) : you cannot be serious
 > if(is.single(x)) { cat('IS: ');all.equal(x, as.single( x ), tol=0)
 + } else   !isall.equal(x, as.single( x ))
 Error in is.single(x) : type "single" unimplemented in R
+> if(is.symbol(x)) { cat('IS: ');all.equal(x, as.symbol( x ), tol=0)
++ } else   !isall.equal(x, as.symbol( x ))
+Error in as.symbol(x) : invalid type/length (1/1) in vector allocation
 > if(is.ts(x)) { cat('IS: ');all.equal(x, as.ts( x ), tol=0)
 + } else   !isall.equal(x, as.ts( x ))
 Error in ts(x) : ts object must have one or more observations
@@ -2013,7 +2067,7 @@ Error in ts(x) : ts object must have one or more observations
 [1] FALSE
 > f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
 Error in dimnames<-.data.frame(*tmp*, value = list(n)) : 
-   invalid dimnames given for data frame
+	invalid dimnames given for data frame
 > f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
 [1] TRUE
 > f <- as.char.or.expr( x );  all.equal(f, as.char.or.expr( f ), tol=0)
@@ -2120,7 +2174,7 @@ Error in as.matrix.data.frame(x) : length of dimnames[2] not equal to array exte
 Error in as.matrix.data.frame(x) : length of dimnames[2] not equal to array extent
 > f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
 Error in dimnames<-.data.frame(*tmp*, value = dimnames) : 
-   invalid dimnames given for data frame
+	invalid dimnames given for data frame
 > f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
 Error in as.matrix.data.frame(x) : length of dimnames[2] not equal to array extent
 > f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
@@ -2143,6 +2197,8 @@ Error in as.qr(x) : you cannot be serious
 [1] TRUE
 > f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
 [1] TRUE
+> f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
+Error in as.symbol(x) : invalid type/length (1/1) in vector allocation
 > f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
 Error in ts(x) : ts object must have one or more observations
 > f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
