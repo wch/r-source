@@ -21,7 +21,7 @@ DISTFILES = $(INSTFILES) \
 ## Update when releasing 1.3.0
 CLEANFILES = $(INSTFILES) MIRROR-SITES
 ## </FIXME>
-SUBDIRS = src afm demos doc etc share tests tools
+SUBDIRS = src afm doc etc share tests tools
 
 GZIP = --best
 
@@ -51,7 +51,7 @@ R: Makefile
 	    $(INSTALL_DATA) $(srcdir)/$${f} $(top_builddir); \
 	  done; \
 	fi
-	@for d in tools afm doc etc share src demos; do \
+	@for d in tools afm doc etc share src; do \
 	  (cd $${d} && $(MAKE) R) || exit 1; \
 	done
 	@if [ ! -f src/library/stamp-docs ]; then \
@@ -66,7 +66,7 @@ help html latex examples: FORCE
 FORCE:
 
 install: installdirs
-	@for d in afm demos doc etc share; do \
+	@for d in afm doc etc share; do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@for f in $(INSTFILES); do \
@@ -148,9 +148,10 @@ uninstall:
 	@for f in $(CLEANFILES); do \
 	  rm -f $(rhome)/$${f}; \
 	done
-	@for d in afm demos doc etc share; do \
+	@for d in afm doc etc share; do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
+	@rm -rf $(rhome)/demos
 
 mostlyclean: clean
 clean:

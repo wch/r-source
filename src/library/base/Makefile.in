@@ -31,8 +31,12 @@ all: Makefile DESCRIPTION
 	    $(top_builddir)/library/base; \
 	fi
 	@$(MKINSTALLDIRS) $(top_builddir)/library/base/data
-	@for f in `ls -d $(srcdir)/data/* | sed '/data\/CVS/d'`; do \
+	@for f in `ls -d $(srcdir)/data/* | sed '/CVS/d'`; do \
 	  $(INSTALL_DATA) $${f} $(top_builddir)/library/base/data; \
+	done
+	@$(MKINSTALLDIRS) $(top_builddir)/library/base/demo
+	@for f in `ls -d $(srcdir)/demo/* | sed '/CVS/d'`; do \
+	  $(INSTALL_DATA) $${f} $(top_builddir)/library/base/demo; \
 	done
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status

@@ -947,7 +947,6 @@ fi
 AC_OUTPUT(Makeconf
   Makefile
   afm/Makefile
-  demos/Makefile
   doc/Makefile
   doc/html/Makefile
   doc/html/search/Makefile

@@ -95,8 +95,8 @@ NEW FEATURES
     o	plot.mts() has a new argument `panel' providing the same
 	functionality as in coplot().
 	
-    o	outer() has a speed-up in the default case of a matrix 
-	outer product (by Jonathan Rougier).
+    o	outer() has a speed-up in the default case of a matrix outer
+	product (by Jonathan Rougier).
 
     o	aperm() uses strides in the internal C code and so is substantially
 	faster (by Jonathan Rougier).
@@ -104,14 +104,17 @@ NEW FEATURES
     o	sort(x) now produces an error when x is not atomic instead of 
 	just returning x.
 
-    o	New function is.unsorted() the C version of which also
-	speeds up .Internal(sort()) for sorted input.
+    o	New function is.unsorted() the C version of which also speeds up
+	.Internal(sort()) for sorted input.
 
     o	New function integrate() with S-compatible call.
 
-    o	New function col2rgb() for color conversion of names, hex, or integer.
+    o	New function col2rgb() for color conversion of names, hex, or
+	integer. 
 
-    o	demo() has new arguments, mainly to be run in "make check".
+    o	Support for package-specific demo scripts (R code).  demo() now
+	has new arguments to specify the location of demos and to allow
+	for running base demos as part of `make check'.
 
     o	Perl scripts now use Cwd::cwd() in place of Cwd::getcwd(), as
 	cwd() can be much faster.

@@ -40,6 +40,12 @@ all: Makefile DESCRIPTION
 	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
 	  done; \
 	fi
+	@if test -d $(srcdir)/demo; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/demo; \
+	  for f in `ls -d $(srcdir)/demo/* | sed '/CVS/d'`; do \
+	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/demo; \
+	  done; \
+	fi
 	@if test -d $(srcdir)/exec; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/exec; \
 	  for f in `ls -d $(srcdir)/exec/* | sed '/CVS/d'`; do \
