@@ -17,7 +17,7 @@ afm/*
 doc/html/search/*.java
 
 	Copyright (C), 1998 Thomas Baier
-or  	Copyright (C), 1998-2000, Thomas Baier, R Core Development Team
+or	Copyright (C), 1998-2000, Thomas Baier, R Core Development Team
 
 
 src/library/base/R/mosaicplot.R
@@ -55,7 +55,7 @@ src/library/ts/R/embed.R
 src/library/ts/R/kernel.R
 src/library/ts/src/PPsum.c
 
-	Copyright (C) 1997-1999  Adrian Trapletti
+	Copyright (C) 1997-1999	 Adrian Trapletti
 
 
 src/library/ts/src/carray.c, mburg.c, myw.c, qr.c
@@ -71,7 +71,7 @@ src/unix/rotated.[ch]
 src/appl/chisqsim.c
 src/appl/loglin.c
 src/library/ctest/src/nscor.c
-src/library/ctest/src/prho.f
+src/library/ctest/src/prho.c
 src/library/ctest/src/swilk.c
 src/library/mva/src/kmns.f
 src/library/ts/src/starma.f
@@ -96,13 +96,13 @@ src/gnome/gtkconsole.c
 src/gnome/system-*.c
 src/gnome/terminal*.c
 
-	Copyright (C) 1998-1999   Lyndon Drake
+	Copyright (C) 1998-1999	  Lyndon Drake
 		and the R Development Core Team
 
 
 src/main/RNG.c
 
-  The Mersenne-Twister part is 
+  The Mersenne-Twister part is
   Copyright (C) 1997, 1999 Makoto Matsumoto and Takuji Nishimura.
 
   The Knuth-TAOCP part says
