@@ -130,7 +130,7 @@ function(topic, device = getOption("device"),
             ## Warn about given packages which do not have a 'demo'
             ## subdirectory.
             packagesWithNoDemo <-
-                package[package %in% sapply(paths[nodemo], basename)]
+                package[package %in% basename(paths[nodemo])]
             if(length(packagesWithNoDemo) > 1) {
                 warning(paste("packages",
                               paste(sQuote(packagesWithNoDemo),

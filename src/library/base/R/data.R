@@ -27,7 +27,7 @@ function(..., list = character(0),
             ## Warn about given packages which do not have a 'data'
             ## subdirectory.
             packagesWithNoData <-
-                package[package %in% sapply(paths[nodata], basename)]
+                package[package %in% basename(paths[nodata])]
             if(length(packagesWithNoData) > 1) {
                 warning(paste("packages",
                               paste(sQuote(packagesWithNoData),
