@@ -1495,7 +1495,7 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     default:
 	errorcall(call, "invalid second argument");
     }
-    if(isLanguage(expr) || isSymbol(expr)) {
+    if(isLanguage(expr) || isSymbol(expr) || isByteCode(expr)) {
 	PROTECT(expr);
 	begincontext(&cntxt, CTXT_RETURN, call, env, rho, args, op);
 	if (!SETJMP(cntxt.cjmpbuf))
