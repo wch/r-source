@@ -462,6 +462,14 @@ Subject: completeSubclasses() methods bug
 From: colin@colinsmith.org
 Date: Tue, 2 Sep 2003 22:15:26 +0200 (MET DST)
 ..methods package
+* PR# 4525 *
+Subject: Problem in 'methods' package
+From: feferraz@linux.ime.usp.br
+Date: Sat, 11 Oct 2003 08:20:46 +0200 (MET DST)
+* PR# 4561 *
+Subject: Infinite recursion in getGeneric
+From: Saikat DebRoy <saikat@stat.wisc.edu>
+Date: Mon, 13 Oct 2003 12:17:11 -0400
 
 Directory:  Low-level
 
@@ -759,6 +767,7 @@ Date: Wed, 01 Oct 2003 07:45:41 +1200
 Subject: 
 From: "Raoul Grasman" <R.P.P.P.Grasman@uva.nl>
 Date: Tue, 7 Oct 2003 17:05:56 +0200
+..det() gives wrong answer rather than error for complex matrices.
 * PR# 4459 *
 Subject: Redhat 7.2 gcc optimisation 
 From: Paul Murrell <p.murrell@auckland.ac.nz>
@@ -767,131 +776,19 @@ Date: Wed, 08 Oct 2003 15:28:11 +1300
 Subject: Memmory Bugs
 From: "Eric R. Riehl" <eriehl@email.unc.edu>
 Date: Wed, 8 Oct 2003 14:30:57 -0400 (EDT)
-* PR# 4483 *
-Subject: S4 group generic Complex not working
-From: Saikat DebRoy <saikat@stat.wisc.edu>
-Date: Thu, 9 Oct 2003 11:18:56 -0400
 * PR# 4486 *
 Subject: Recursive indexing can cause R-1.8.0 (and R-1.7.1) to segment fault
 From: anaximander@gmx.de
 Date: Thu, 9 Oct 2003 22:34:38 +0200 (MEST)
-* PR# 4518 *
-Subject: Re:Make some serious money. luqdoupi mtu
-From: "Daisy Keyes" <d2lrpkeyba@radcad.net>
-Date: Fri, 10 Oct 03 15:42:00 GMT
-* PR# 4519 *
-Subject: 'Long _and Stro"ng -all "Night zbrc(ruj
-From: Davis <margot31@wongfaye.com>
-Date: Fri, 10 Oct 2003 16:04:04 -0400
-* PR# 4520 *
-Subject: //// Copy Any DVD to CD ajsh esykfnpuzousm
-From: "Victoria Mcfarland" <xrpb9mwevc@msn.com>
-Date: Fri, 10 Oct 03 15:01:50 GMT
-* PR# 4521 *
-Subject: Get the Best Meds.
-From: "Carrie Newman" <loa5hp@msn.com>
-Date: Fri, 10 Oct 2003 18:38:24 -0100
-* PR# 4522 *
-Subject: RE:Just one click and I had copied
-From: "passi anish" <*@chickmail.com>
-Date: Sat, 11 Oct 03 03:59:25 GMT
-* PR# 4523 *
-Subject: Business Transaction/Agreement
-From: gosbiko@hotmail.com
-Date: Fri, 10 Oct 2003 23:01:17 GMT
-* PR# 4524 *
-Subject: _US Doc)tors wr"ite ;your prescriptio_ns l^zojtg
-From: Young <edendagan@yahoo.com>
-Date: Fri, 10 Oct 2003 20:19:01 -0400
-* PR# 4525 *
-Subject: Problem in 'methods' package
-From: feferraz@linux.ime.usp.br
-Date: Sat, 11 Oct 2003 08:20:46 +0200 (MET DST)
-* PR# 4526 *
-Subject: 9_ .Discount Prescription Service qotipyzatqbkouug muy
-From: "Annmarie Glass" <zd466n@smtp.secureserver.net>
-Date: Sat, 11 Oct 03 02:57:32 GMT
-* PR# 4527 *
-Subject: Increase your penis size Now  behind
-From: "Martha Stewart" <5lagg1zir8@263.net>
-Date: Sat, 11 Oct 03 04:50:56 GMT
-* PR# 4528 *
-Subject: Get some Viagra, get some ! pbrqawfxsegoxe
-From: "Abby Salgado" <0005644986@hb.audit.com.br>
-Date: Sat, 11 Oct 2003 05:30:10 -0400
-* PR# 4529 *
-Subject: Family in need
-From: Family in need <allyssa1955@netscape.net>
-Date: Sat, 11 Oct 2003 10:34:21 +0200
-* PR# 4530 *
-Subject: Over 150 Games - Windows Casino!    flog
-From: "Erica Pollard" <n2wyyl@bh-ba.com>
-Date: Sat, 11 Oct 03 11:41:41 GMT
-* PR# 4531 *
-Subject: Rodriguez She wants more, give it to her with their screws on several points of its circumference. ggkxf
-From: Clark <livenlearn13@tf.no>
-Date: Sat, 11 Oct 2003 06:04:04 -0400
 * PR# 4558 *
 Subject: R1.8.0 : seq.POSIXt() problems
 From: "Marsland, John" <John.Marsland@CommerzbankIB.com>
 Date: Mon, 13 Oct 2003 09:51:38 +0100
-* PR# 4561 *
-Subject: Infinite recursion in getGeneric
-From: Saikat DebRoy <saikat@stat.wisc.edu>
-Date: Mon, 13 Oct 2003 12:17:11 -0400
-* PR# 4587 *
-Subject: 6_ .Voted BEST On-Line Pharmacy myvo 
-From: "Keith Norton" <342swx@smtp.secureserver.net>
-Date: Tue, 14 Oct 03 19:55:45 GMT
-* PR# 4588 *
-Subject: software from 15 bucks                                        peonyraisin    
-From: "Helene Rice" <zbqouacvm@hypersurf.com>
-Date: Wed, 15 Oct 03 08:28:37 GMT
-* PR# 4589 *
-Subject:            Kill Spam 239929
-From: 239929@email.com
-Date: Wed, 15 Oct 2003 14:08:45 -0600
-* PR# 4590 *
-Subject: PLEASE CONTACT ME
-From: "Mr. Basher Sese Seko" <basherseko@netscape.net>
-Date: Wed, 15 Oct 2003 13:16:35 +0200
-* PR# 4592 *
-Subject: Sustäín yöur Erëctíöns Löngër vryknec
-From: "Sofia" <horeoc@gawab.com>
-Date: Wed, 15 Oct 2003 09:20:33 -0400
-* PR# 4593 *
-Subject: URGENT
-From: mobutu joseph <mobutu_j2003@yahoo.com>
-Date: Wed, 15 Oct 2003 06:58:43 -0700 (PDT)
-* PR# 4594 *
-Subject: Reply please
-From: "Mr.Michael Williams" <malik.momoh@123.com>
-Date: Wed, 15 Oct 2003 16:37:07 +0100
-* PR# 4595 *
-Date: Wed, 15 Oct 2003 16:38:23 +0200 (added by postmaster@mail-2.tiscali.it)
-* PR# 4596 *
-Date: Wed, 15 Oct 2003 16:43:00 +0200 (added by postmaster@mail-2.tiscali.it)
-* PR# 4597 *
-Subject: Confidential
-From: "mike Eze" <mike_eze@wp.pl>
-Date: Wed, 15 Oct 2003 17:23:49 +0200
-* PR# 4598 *
-Subject: we can help v ewxv
-From: "Noemi Arellano" <em12omtb@forcesvives.ch>
-Date: Thu, 16 Oct 2003 02:20:49 -0400
-* PR# 4599 *
-Subject: healthy living
-From: "Jack Burns" <s6ynlbdd@prodigy.net>
-Date: Wed, 15 Oct 03 20:27:12 GMT
-* PR# 4600 *
-Subject: (±¤°í) ÀÌºê¿Í ¾Æ´ãÀÇ °Ç°­°ú Áñ°Å¿òÀ» À§ÇÏ¿©...??? @
-From: "ÀÌºê¿Í¾Æ´ã" <pcm5201@pluslife.net>
-Date: Thu, 16 Oct 2003 04:40:40 +0900
-* PR# 4601 *
-Subject: Ce, Say goodbye to long doctor visits!hh un b
-From: "Jim Cowan" <113evgdgax@prontomail.com>
-Date: Wed, 15 Oct 2003 23:01:01 GMT
-* PR# 4602 *
-Subject: You deserve to read this cvp   
-From: "Alvaro Mohr" <n310tuva@yahoo.com>
-Date: Thu, 16 Oct 2003 14:45:43 -0700
+* PR# 4611 *
+Subject: blackboagd booky
+From: "Joseph Salter" <mgy03mg@charter.net>
+Date: Thu, 16 Oct 03 17:03:20 GMT
+* PR# 4612 *
+Subject: Don't consolidate it! Don't reduce it ifdexnh
+From: "Zane Mercado" <caurnust@keromail.com>
+Date: Fri, 17 Oct 2003 05:42:20 -0400
