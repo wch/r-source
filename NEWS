@@ -324,6 +324,10 @@ STANDARD PACKAGES
 	  generics and S3 group generics.
 
 	- S4 classes and methods are included in the QC tests.
+          Warnings will be issued from undoc() for classes  and
+          methods defined but not documented.  Default methods
+          automatically generated from nongeneric functions do not
+          need to be documented.
 
 	- New (experimental) functions codocClasses() and codocData()
 	  for code/documentation consistency checking for S4 classes and
