@@ -5,6 +5,7 @@
 \alias{.isS3Generic}
 \alias{.listFilesWithExts}
 \alias{.loadPackageQuietly}
+\alias{.makeFileExts}
 \alias{.makeS3MethodsStopList}
 \alias{.sourceAssignments}
 \alias{sQuote}
@@ -29,6 +30,8 @@
 \alias{Rd2contents}
 \alias{.installPackageDescription}
 \alias{.installPackageIndices}
+\alias{.installPackageRdIndices}
+\alias{.installPackageVignetteIndex}
 \description{
   Internal tools functions.
 }
@@ -39,6 +42,7 @@ sQuote(s)
 .isS3Generic(fname, envir)
 .listFilesWithExts(dir, exts, path = TRUE)
 .loadPackageQuietly(package, lib.loc)
+.makeFileExts(type)
 .makeS3MethodsStopList(package)
 .sourceAssignments(file, envir)
 Rdpp(lines)
@@ -49,6 +53,8 @@ Rdindex(RdFiles, outFile = "", type = NULL,
 Rd2contents(dir, outFile = "")
 .installPackageDescription(dir, outDir)
 .installPackageIndices(dir, outDir)
+.installPackageRdIndices(dir, outDir)
+.installPackageVignetteIndex(dir, outDir)
 }
 \details{
   These are not to be called by the user.
