@@ -266,16 +266,16 @@ endif
 endif
 
 pkgclean-%:
-	$(MAKE) DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
+	$(MAKE)  --no-print-directory DLLNM=$($*-DLLNM) RHOME=$(RHOME) BUILD=$(BUILD) \
 	  -C $(PKGDIR)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
 
 pkgcheck-%:
 	@$(ECHO) -------- Testing package $* --------
 	-@mkdir -p $(PKGDIR)/$*/check
-	@$(MAKE) -C $(PKGDIR)/$*/check PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
+	@$(MAKE) --no-print-directory -C $(PKGDIR)/$*/check PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/check/PkgCheck
 	@if test -d $(PKGDIR)/$*/tests ; then \
-	  $(MAKE) -C $(PKGDIR)/$*/tests PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
+	  $(MAKE) --no-print-directory -C $(PKGDIR)/$*/tests PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	    -f $(RHOME)/src/gnuwin32/check/PkgCheck tests;\
 	fi
 
@@ -308,8 +308,8 @@ clean: cleanwin $(PKGCLEAN)
 	-$(MAKE) -C ../modules -f Makefile.win clean
 	-$(MAKE) -C ../../tests -f Makefile.win clean
 	$(RM) -f ../library/methods/R/methods
-	$(RM) -f ../../Recommended/stamp
-	for p in $(RECOMMENDED); do \
+	$(RM) -f  ../library/Recommended/Timestamp
+	for p in $(REC_PKGS); do \
 	  $(RM) -rf ../library/$$p; \
 	done
 
@@ -332,7 +332,6 @@ distclean veryclean: clean
 	@for pkg in $(ALLPACKAGES); do \
 	  $(RM) ../library/$${pkg}/DESCRIPTION; \
 	done
-	rm ../../Recommended/*.tar.gz
 	$(RM) Rpwd.exe # do this last of all
 
 cleanwin:
@@ -363,10 +362,10 @@ test-Specific:
 PKGS-CHK = $(foreach i, $(PACKAGES), pkgcheck-$i)
 pkgtests: $(PKGS-CHK)
 
-fullcheck: check check_recommended
+fullcheck: check check-recommended
 
 REC_PKGS-CHK = $(foreach i, $(REC_PKGS), pkgcheck-$i)
-check_recommended: $(REC_PKGS-CHK)
+check-recommended: $(REC_PKGS-CHK)
 
 #                          ===== documentation ======
 
@@ -506,18 +505,24 @@ docsdist: docs
 install:
 	cp *.zip /pub/bdr/RWin/Rpre
 
+CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER)/Recommended
 
-get_recommended:
-	(cd ../..; rsync -rvt --delete --exclude stamp cran.r-project.org::CRAN/src/contrib/1.6.0/Recommended .)
+rsync-recommended:
+	(cd ../library; rsync -rvCt --delete --exclude=Timestamp --exclude=Makefile.in $(CRANREC) .)
 
-recommended:
+## Note this is not quite right: if you download a package older than
+## Timestamp (could happen) it will not be unpacked.
+## However, this only affects people using rsync.
+unpack-recommended:
 	@echo "--- Unpacking recommended packages"
-	@if [ -f ../../Recommended/stamp ] ; then \
-	  (cd ../../Recommended; find . -newer stamp -name \*.tar.gz -exec tar zxf {} -C $(RHOME)/src/library \;) ; \
+	@if [ -f ../library/Recommended/Timestamp ] ; then \
+	  (cd ../library/Recommended; find . -newer Timestamp -name '*.tar.gz' -exec tar zxf {} -C $(RHOME)/src/library \;) ; \
 	else \
-	  (cd ../../Recommended; find . -name \*.tar.gz -exec tar zxf {} -C $(RHOME)/src/library \;) ; \
+	  (cd ../library/Recommended; find . -name '*.tar.gz' -exec tar zxf {} -C $(RHOME)/src/library \;) ; \
 	fi
-	@touch ../../Recommended/stamp
+	@touch ../library/Recommended/Timestamp
+
+recommended: unpack-recommended
 	@echo "--- Making recommended packages"
 	@$(MAKE) --no-print-directory bundle-VR
 	@for p in $(REC_NONBUNDLES); do \

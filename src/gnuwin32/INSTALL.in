@@ -221,14 +221,14 @@ The recommended packages can be built by
 
 and checked by
 
-	make check_recommended
+	make check-recommended
 
 
-If you are using a cvs/rsync version of the R sources, you need to
-put the .tar.gz files for the recommended packages in ../../Recommended.
-If you have rsync installed,
+If you are using a cvs/rsync version of the R sources, you need to put
+the .tar.gz files for the recommended packages in
+../library/Recommended.  If you have rsync installed,
 
-	make get_recommended
+	make rsync-recommended
 
 does this from the CRAN master.
 
