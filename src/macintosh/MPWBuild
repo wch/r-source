@@ -48,15 +48,15 @@ if "{fileList}"
  end
 end
 
-Duplicate :tools:FF_CREATE :tools:FF_CREATE.ux
+Duplicate -y :tools:FF_CREATE :tools:FF_CREATE.ux
 translate ¶0x0a ¶0x0d <:tools:FF_CREATE.ux >:tools:FF_CREATE
 delete -y :tools:FF_CREATE.ux
 
-Duplicate  ::library:BuildAll.mac ::library:B_All.ux
+Duplicate  -y ::library:BuildAll.mac ::library:B_All.ux
 translate ¶0x0a ¶0x0d <::library:B_All.ux >::library:BuildAll.mac
 delete -y ::library:B_All.ux
 
-Duplicate ::modules:BuildAll.mac ::modules:B_All.ux
+Duplicate -y ::modules:BuildAll.mac ::modules:B_All.ux
 translate ¶0x0a ¶0x0d <::modules:B_All.ux >::modules:BuildAll.mac
 delete -y ::modules:B_All.ux
 
