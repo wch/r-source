@@ -1920,7 +1920,6 @@ sub ex_print_exampleblock {
     my ($block,$env) = @_;
 
     if(defined $blocks{$block}){
-	print $Exout "..nameEx <- '", $blocks{"name"}, "'\n";
 	print $Exout "##___ Examples ___:\n", code2examp($blocks{$block}), "\n";
     }
 }
@@ -2235,7 +2234,6 @@ sub latex_code_cmd {
 
     my $code = $_[0];
 
-    warn("\nERROR: found `\@' in \\code{...\}\n") if $code =~ /@/;
     $code = latex_code_trans ($code);
     $code = "\\code\{" . $code . "\}";
     $code;
