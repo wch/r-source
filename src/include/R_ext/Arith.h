@@ -54,7 +54,22 @@ int R_finite(double);		/* True if none of NA, NaN, +/-Inf */
 /* True for *both* NA and NaN.
    NOTE: some systems do not return 1 for TRUE. */
 #define ISNAN(x)       (isnan(x)!=0)
-#define R_FINITE(x)    R_finite(x)
+#ifdef HAVE_WORKING_ISFINITE
+/* isfinite is defined in <math.h> according to C99 */
+# define R_FINITE(x)    isfinite(x)
+#elif HAVE_WORKING_FINITE
+/* include header needed to define finite() */
+#  ifdef HAVE_IEEE754_H
+#   include <ieee754.h>		/* newer Linuxen */
+#  else
+#   ifdef HAVE_IEEEFP_H
+#    include <ieeefp.h>		/* others [Solaris], .. */
+#   endif
+#  endif
+# define R_FINITE(x)    finite(x)
+#else
+# define R_FINITE(x)    R_finite(x)
+#endif
 
 #ifdef  __cplusplus
 }

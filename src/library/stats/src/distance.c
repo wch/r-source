@@ -20,14 +20,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#include <float.h>
-#include <R_ext/Arith.h>
-#include <R_ext/Error.h>
-#include <Rmath.h> /* for R_pow */
+#include <R.h>
+#include <Rmath.h>
 #include "mva.h"
 
 #define both_FINITE(a,b) (R_FINITE(a) && R_FINITE(b))

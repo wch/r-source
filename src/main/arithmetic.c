@@ -131,7 +131,9 @@ int R_IsNaN(double x)
     return 0;
 }
 
-/* <FIXME> This is not used in base R, and should be removed */
+/* <FIXME> This is not used in base R, and should be removed
+ * once it is not used in lattice.
+ */
 int R_IsNaNorNA(double x)
 {
 /* True for *both* NA and NaN.
@@ -139,30 +141,21 @@ int R_IsNaNorNA(double x)
     return (isnan(x) != 0);
 }
 
-/* Include the header file defining finite() */
-#ifdef HAVE_IEEE754_H
-# include <ieee754.h>		/* newer Linuxen */
-#else
-# ifdef HAVE_IEEEFP_H
-#  include <ieeefp.h>		/* others [Solaris 2.5.x], .. */
-# endif
-#endif
-
-/* <FIXME> Simplify this mess */
+/* <FIXME> Simplify this mess.  Not used inside R 
+   if isfinite works, and only in packages if finite works */
 int R_finite(double x)
 {
-#ifdef HAVE_WORKING_FINITE
+#ifdef HAVE_WORKING_ISFINITE
+    return isfinite(x);
+#elif HAVE_WORKING_FINITE
     return finite(x);
 #else
-# if defined(HAVE_DECL_ISFINITE) && HAVE_DECL_ISFINITE
-    return isfinite(x);
-# else
-#  ifdef _AIX
+/* neither finite nor isfinite work. Do we really need the AIX exception? */
+# ifdef _AIX
 #  include <fp.h>
      return FINITE(x);
-#  else
+# else
     return (!isnan(x) & (x != R_PosInf) & (x != R_NegInf));
-#  endif
 # endif
 #endif
 }

@@ -576,10 +576,12 @@ double	gamma_cody(double);
 #ifndef MATHLIB_PRIVATE_H
 
 # define ISNAN(x) (isnan(x)!=0)
+
+/* We don't have config information available to do anything else */
 #define R_FINITE(x)    R_finite(x)
 int R_finite(double);
 
-#ifdef WIN32
+#ifdef WIN32  /* not Win32 as no config information */
 # define NA_REAL (*_imp__NA_REAL)
 # define R_NegInf (*_imp__R_NegInf)
 # define R_PosInf (*_imp__R_PosInf)

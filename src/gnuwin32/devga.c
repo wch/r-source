@@ -1287,11 +1287,11 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     double dw, dw0, dh, d;
 
     xd->kind = SCREEN;
-    if (R_finite(user_xpinch) && user_xpinch > 0.0)
+    if (R_FINITE(user_xpinch) && user_xpinch > 0.0)
 	dw = dw0 = (int) (w * user_xpinch);
     else
 	dw = dw0 = (int) (w / pixelWidth(NULL));
-    if (R_finite(user_ypinch) && user_ypinch > 0.0)
+    if (R_FINITE(user_ypinch) && user_ypinch > 0.0)
 	dh = (int) (w * user_ypinch);
     else
 	dh = (int) (h / pixelHeight(NULL));
@@ -2408,11 +2408,11 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
 
     /* Inches per raster unit */
 
-    if (R_finite(user_xpinch) && user_xpinch > 0.0)
+    if (R_FINITE(user_xpinch) && user_xpinch > 0.0)
 	dd->ipr[0] = 1.0/user_xpinch;
     else
 	dd->ipr[0] = pixelWidth(xd->gawin);
-    if (R_finite(user_ypinch) && user_ypinch > 0.0)
+    if (R_FINITE(user_ypinch) && user_ypinch > 0.0)
 	dd->ipr[1] = 1.0/user_ypinch;
     else
 	dd->ipr[1] = pixelHeight(xd->gawin);

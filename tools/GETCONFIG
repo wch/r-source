@@ -14,6 +14,8 @@ line=`grep "IEEE_754" config.h`
 echo "${line}"
 line=`grep "WORDS_BIGENDIAN" config.h`
 echo "${line}"
+line=`grep "HAVE_WORKING_ISFINITE" config.h`
+echo "${line}"
 echo
 echo "#endif /* not _CONFIG_H */"
 echo

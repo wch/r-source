@@ -101,6 +101,11 @@ INSTALLATION CHANGES
 	The C99 macro isfinite is used in preference to finite if available
 	(and its correct functioning is checked at configure time).
 
+	Where isfinite or finite is available and works, it is used as
+	the substitution value for R_FINITE.  On some platforms this
+	leads to a performance gain.  (This applies to compiled code
+	in packages only for isfinite.)
+
     o	The dynamic libraries libR and libRlapack are now installed in
 	R_HOME/lib rather than R_HOME/bin.
 

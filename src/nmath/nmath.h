@@ -30,6 +30,9 @@
 
 #ifndef MATHLIB_STANDALONE
 /* Mathlib in R */
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
 
 #include <R_ext/Error.h>
 # define MATHLIB_ERROR(fmt,x)		error(fmt,x);
