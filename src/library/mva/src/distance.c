@@ -46,8 +46,10 @@ double R_euclidean(double *x, int nr, int nc, int i1, int i2)
     for(j = 0 ; j < nc ; j++) {
 	if(both_non_NA(x[i1], x[i2])) {
 	    dev = (x[i1] - x[i2]);
-	    dist += dev * dev;
-	    count++;
+	    if(!ISNAN(dev)) {
+		dist += dev * dev;
+		count++;
+	    }
 	}
 	i1 += nr;
 	i2 += nr;
@@ -67,9 +69,11 @@ double R_maximum(double *x, int nr, int nc, int i1, int i2)
     for(j = 0 ; j < nc ; j++) {
 	if(both_non_NA(x[i1], x[i2])) {
 	    dev = fabs(x[i1] - x[i2]);
-	    if(dev > dist)
-		dist = dev;
-	    count++;
+	    if(!ISNAN(dev)) {
+		if(dev > dist)
+		    dist = dev;
+		count++;
+	    }
 	}
 	i1 += nr;
 	i2 += nr;
@@ -80,15 +84,18 @@ double R_maximum(double *x, int nr, int nc, int i1, int i2)
 
 double R_manhattan(double *x, int nr, int nc, int i1, int i2)
 {
-    double dist;
+    double dev, dist;
     int count, j;
 
     count = 0;
     dist = 0;
     for(j = 0 ; j < nc ; j++) {
 	if(both_non_NA(x[i1], x[i2])) {
-	    dist += fabs(x[i1] - x[i2]);
-	    count++;
+	    dev = fabs(x[i1] - x[i2]);
+	    if(!ISNAN(dev)) {
+		dist += dev;
+		count++;
+	    }
 	}
 	i1 += nr;
 	i2 += nr;
@@ -100,7 +107,7 @@ double R_manhattan(double *x, int nr, int nc, int i1, int i2)
 
 double R_canberra(double *x, int nr, int nc, int i1, int i2)
 {
-    double dist, sum, diff, q;
+    double dev, dist, sum, diff;
     int count, j;
 
     count = 0;
@@ -110,13 +117,13 @@ double R_canberra(double *x, int nr, int nc, int i1, int i2)
 	    sum = fabs(x[i1] + x[i2]);
 	    diff = fabs(x[i1] - x[i2]);
 	    if (sum > DBL_MIN || diff > DBL_MIN) {
-		q = diff/sum;
-		if(ISNAN(q)) { /* maybe use Inf = lim x -> oo */
-		    if(!R_FINITE(diff) && diff == sum)
-			q = 1.;
+		dev = diff/sum;
+		if(!ISNAN(dev) ||
+		   (!R_FINITE(diff) && diff == sum &&
+		    /* use Inf = lim x -> oo */ (dev = 1.))) {
+		    dist += dev;
+		    count++;
 		}
-		dist += q;
-		count++;
 	    }
 	}
 	i1 += nr;
@@ -138,11 +145,16 @@ double R_dist_binary(double *x, int nr, int nc, int i1, int i2)
 
     for(j = 0 ; j < nc ; j++) {
 	if(both_non_NA(x[i1], x[i2])) {
-	    if(x[i1] || x[i2]){
-		count++;
-		if( ! (x[i1] && x[i2]) ) dist++;
+	    if(!both_FINITE(x[i1], x[i2])) {
+		warning("dist(.,\"binary\"): treating non-finite values as NA");
 	    }
-	    total++;
+	    else {
+		if(x[i1] || x[i2]) {
+		    count++;
+		    if( ! (x[i1] && x[i2]) ) dist++;
+		}
+		total++;
+	    }
 	}
 	i1 += nr;
 	i2 += nr;

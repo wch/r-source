@@ -1001,6 +1001,15 @@ jk
 ## printing failed in 1.5.1
 
 
+## eigenvectors got irrelevant names (PR#2116)
+set.seed(1)
+A <- matrix(rnorm(20), 5, 5)
+dimnames(A) <- list(LETTERS[1:5], letters[1:5])
+(ev <- eigen(A)$vectors)
+stopifnot(is.null(colnames(ev)))
+## had colnames in 1.6.0
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
