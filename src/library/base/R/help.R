@@ -47,8 +47,9 @@ function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
                         system(paste(browser, " -remote \"openURL(",
                                      file, ")\" 2>/dev/null || ", browser, " ",
                                      file, " &", sep = ""))
-                        cat("help() for", topic, " is shown in browser",
-                            browser, "...\n")
+                        cat("help() for",topic, " is shown in browser",browser,
+                            "...\nUse\t help(",topic,", htmlhelp=FALSE)\nor\t",
+                            "options(htmlhelp = FALSE)\nto revert.\n")
                         return(invisible())
                     } else {
                         if(verbose)
@@ -88,6 +89,9 @@ function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
                 else
                     stop(paste("No offline documentation for", topic, "is available"))
             }
+
+
+
         }
         else stop(paste("No documentation for `", topic, "'",
             sep = ""))
