@@ -280,6 +280,10 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+#ifdef Win32
+#include <errno.h>
+#endif
+
 SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     char from[PATH_MAX], to[PATH_MAX], *p;
@@ -299,6 +303,11 @@ SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error("expanded destination name too long");
     strncpy(to, p, PATH_MAX - 1);
 
+#ifdef Win32
+    /* rename() on Windows does not overwrite files */
+    if (!unlink(to))
+	if (errno == EACCES) return mkFalse();
+#endif
     return rename(from, to) == 0 ? mkTrue() : mkFalse();
 }
 
