@@ -25,6 +25,8 @@ contr.poly <- function (n, contrasts = TRUE)
     }
     if (n < 2)
 	stop(paste("Contrasts not defined for", n - 1, "degrees of freedom"))
+    if (n > 95)
+        stop(paste("Orthogonal polynomials cannot be represented accurately enough for", n - 1, "degrees of freedom"))
     contr <- make.poly(n)
     if (contrasts) {
 	dn <- colnames(contr)
