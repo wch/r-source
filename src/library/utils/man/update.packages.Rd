@@ -138,8 +138,8 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   the \R session.)
 
   If \code{CRAN} or \code{contriburl} is a vector of length greater than
-  one, a package is fetched from the first repository on the list within
-  which it is found (and not necessarily the newest version).
+  one, the newest version of the package is fetched from the first
+  repository on the list within which it is found.
 }
 \value{
   For \code{CRAN.packages}, a matrix with one row per package/bundle,

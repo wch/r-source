@@ -116,8 +116,14 @@ download.packages <- function(pkgs, destdir, available = NULL,
         ok <- ok & !is.na(ok)
         if(!any(ok))
             warning(paste("No package \"", p, "\" on CRAN.", sep=""))
-        else{
-            fn <- paste(p, "_", available[ok, "Version"], ".tar.gz", sep="")[1]
+        else {
+            if(sum(ok) > 1) { # have multiple copies
+                vers <- package_version(available[ok, "Version"])
+                keep <- vers == max(vers)
+                keep[duplicated(keep)] <- FALSE
+                ok[ok][!keep] <- FALSE
+            }
+            fn <- paste(p, "_", available[ok, "Version"], ".tar.gz", sep="")
             if(localcran){
                 fn <- paste(substring(contriburl, 6), fn, sep="/")
                 retval <- rbind(retval, c(p, fn))
