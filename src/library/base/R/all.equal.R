@@ -69,7 +69,11 @@ all.equal.character <- function(target, current, ...)
 	target <- target[ll]
 	current <- current[ll]
     } else msg <- NULL
-    ne <- target != current
+    nas <- is.na(target)
+    if (any(nas != is.na(current)))
+        return(paste("`is.NA' value mismatches:", sum(is.na(current)),
+                     "in current,", sum(out), " in target"))
+    ne <- !nas & (target != current)
     if(!any(ne) && is.null(msg)) TRUE
     else if(any(ne)) c(msg, paste(sum(ne), "string mismatches"))
     else msg
