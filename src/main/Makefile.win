@@ -5,9 +5,34 @@ all: makeMakedeps libmain.a
 
 CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H -DR_DLL_BUILD
 FFLAGS=$(OPTFLAGS)
-CSOURCES=$(filter-out alloca.c par-common.c qsort-body.c snprintf.c strdup.c \
-           strncasecmp.c vsnprintf.c, $(wildcard *.c))
-FSOURCES=$(wildcard *.f)
+CSOURCES=\
+	CConverters.c \
+	Rdynload.c RNG.c \
+	apply.c arithmetic.c apse.c array.c attrib.c \
+	base.c bind.c builtin.c \
+	character.c coerce.c colors.c complex.c connections.c context.c \
+	cov.c cum.c \
+	dcf.c datetime.c debug.c devPS.c devPicTeX.c deparse.c deriv.c \
+	devices.c dotcode.c dounzip.c dstruct.c duplicate.c \
+	engine.c envir.c errors.c eval.c \
+	format.c fourier.c \
+	gram.c gram-ex.c graphics.c \
+	identical.c internet.c iosupport.c \
+	lapack.c list.c logic.c \
+	main.c mapply.c match.c memory.c model.c \
+	names.c \
+	objects.c optim.c optimize.c options.c \
+	par.c paste.c pcre.c platform.c \
+	plot.c plot3d.c plotmath.c \
+	print.c printarray.c printvector.c printutils.c qsort.c \
+	random.c regex.c registration.c relop.c \
+	saveload.c scan.c seq.c serialize.c size.c sort.c source.c split.c \
+	sprintf.c subassign.c subscript.c subset.c summary.c \
+	unique.c util.c \
+	version.c vfonts.c \
+	acosh.c asinh.c atanh.c
+
+FSOURCES=xxxpr.f
 OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) 
 
 gram.c: ;
