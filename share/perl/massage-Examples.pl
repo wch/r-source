@@ -103,17 +103,18 @@ foreach my $file (@Rfiles) {
     $nm =~ s/[^- .a-zA-Z0-9]/./g;
 
     open(FILE, "< $file") or die "file $file cannot be opened";
-    print "### * $nm\n\n";
     while (<FILE>) {
-	$have_examples = 1 if /_ Examples _/o;
+	$have_examples = 1
+	    if ((/_ Examples _/o) || (/### \*+ Examples/));
 	$have_par = 1 if (/[^a-zA-Z0-9.]par\(/o || /^par\(/o);
 	$have_contrasts = 1 if /options\(contrasts/o;
     }
     close(FILE);
     if ($have_examples) {
-	print "cleanEx(); ..nameEx <- \"$nm\"\n";
+	print "cleanEx(); ..nameEx <- \"$nm\"\n\n";
     }
 
+    print "### * $nm\n\n";
     open(FILE, "< $file") or die "file $file cannot be opened";
     while (<FILE>) { print $_; }
     close(FILE);
@@ -124,7 +125,8 @@ foreach my $file (@Rfiles) {
     }
     if($have_contrasts) {
 	## if contrasts were set, now reset them:
-	print "options(contrasts = c(unordered = \"contr.treatment\", ordered = \"contr.poly\"))\n";
+	print "options(contrasts = c(unordered = \"contr.treatment\"," .
+	    "ordered = \"contr.poly\"))\n";
     }
 
 }

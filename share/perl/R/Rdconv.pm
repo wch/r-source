@@ -27,6 +27,7 @@ require  Exporter;
 @EXPORT  = qw(Rdconv);
 
 use Text::Tabs;
+use Text::Wrap;
 use FileHandle;
 use R::Utils;
 use R::Vars;
@@ -1944,28 +1945,25 @@ sub rdoc2ex { # (filename)
 	local $Exout;
 	if($_[0]) {
 	    $Exout = new FileHandle;
-	    open $Exout, "> $_[0]";  # will be closed when goes out of scope
+	    open $Exout, "> $_[0]"; # will be closed when goes out of scope
 	} else {
 	    $Exout = "STDOUT";
 	}
 
 	$tit =~ s/\s+/ /g;
-	print $Exout "###--- >>> `", $blocks{"name"};
-	print $Exout "' <<<----- ", $tit , "\n\n";
-	if(@aliases) {
-	    foreach (@aliases) {
-		print $Exout "\t## alias\t help($_)\n";
-	    }
-	    print $Exout "\n";
-	}
 
+	$Exout->print(fill("### Name: ", "###   ", $blocks{"name"}),
+		      "\n",
+		      fill("### Title: ", "###   ", $tit),
+		      "\n",
+		      fill("### Aliases: ", "###   ", @aliases),
+		      "\n",
+		      fill("### Keywords: ", "###   ", @keywords),
+		      "\n\n");
+	
 	ex_print_exampleblock("examples", "Examples");
 
-	if(@keywords) {
-	    print $Exout "## Keywords: ";
-	    &print_vec($Exout, 'keywords');
-	}
-	print $Exout "\n\n";
+	$Exout->print("\n\n");
     }
 }
 
@@ -1973,8 +1971,10 @@ sub ex_print_exampleblock {
 
     my ($block,$env) = @_;
 
-    if(defined $blocks{$block}){
-	print $Exout "##___ Examples ___:\n", code2examp($blocks{$block}), "\n";
+    if(defined $blocks{$block}) {
+	$Exout->print("### ** Examples\n",
+		      code2examp($blocks{$block}),
+		      "\n");
     }
 }
 
