@@ -22,5 +22,6 @@ data(faithful)
 attach(faithful)
 plot(density(eruptions, bw=0.15))
 rug(eruptions)
+detach("faithful")
 }
 \keyword{hplot}
