@@ -1212,7 +1212,7 @@ function(package, dir, lib.loc = NULL)
             argNamesInArgList[!argNamesInArgList %in% argNamesInUsage]
         if(length(argNamesInArgListMissingInUsage) > 0) {
             usageText <- dbUsageTexts[[docObj]]
-            badArgs <- argNamesInArgListMissingInUsage
+            badArgs <- character()
             ## In the case of 'over-documented' arguments, try to be
             ## defensive and reduce to arguments which either are not
             ## syntactically valid names of do not match the \usage text
