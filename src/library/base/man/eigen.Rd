@@ -31,7 +31,7 @@ eigen(x, symmetric, only.values=FALSE)
     eigenvectors of \code{x}, or \code{NULL} if \code{only.values} is
     \code{TRUE}.  When \code{symmetric = TRUE} the vectors are
     normalized to unit length.  Otherwise the choice of length of the
-    eigenvectors is not defised in the underlying Fortran code.}
+    eigenvectors is not defined in the underlying Fortran code.}
   }
 }
 \references{
