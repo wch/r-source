@@ -55,7 +55,7 @@ Real.primitives <-
 	   ),
 
 	 language2= c(":", "~", "c", "list", #nomore (Sep.9,1998): "unlist",
-	 ".Alias",
+	 # ".Alias", removed for 1.5.0
 	 "call", "as.call", "expression", "substitute",
 	 "UseMethod", ## ? really ?
          "standardGeneric",
