@@ -70,13 +70,13 @@ as.data.frame.default <- function(x, row.names = NULL, optional = FALSE)
 }
 ## NEW:
 as.data.frame <- function(x, row.names = NULL, optional = FALSE) {
-    if(is.null(x))# can't assign class to NULL
+    if(is.null(x))                      # can't assign class to NULL
         return(as.data.frame(list()))
     if(is.null(class(x))) class(x) <- data.class(x)
     UseMethod("as.data.frame", x, row.names, optional)
 }
 as.data.frame.default <- function(x, row.names = NULL, optional = FALSE)
-    stop(paste("can't coerce",data.class(x), "into a data.frame"))
+    stop(paste("can't coerce", data.class(x), "into a data.frame"))
 
 
 ###  Here are methods ensuring that the arguments to "data.frame"
@@ -115,8 +115,10 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE)
 {
     nrows <- length(x)
     if(is.null(row.names)) {
-	if(length(row.names <- names(x)) == nrows &&
-	   !any(duplicated(row.names))) {}
+        if (nrows == 0)
+            row.names <- character(0)
+        else if(length(row.names <- names(x)) == nrows &&
+                !any(duplicated(row.names))) {}
 	else if(optional) row.names <- character(nrows)
 	else row.names <- as.character(1:nrows)
     }
@@ -129,8 +131,10 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE)
 
 as.data.frame.ts <- function(x, row.names=NULL, optional=FALSE)
 {
-    if(is.matrix(x)) as.data.frame.matrix(x, row.names, optional)
-    else as.data.frame.vector(x, row.names, optional)
+    if(is.matrix(x))
+        as.data.frame.matrix(x, row.names, optional)
+    else
+        as.data.frame.vector(x, row.names, optional)
 }
 
 as.data.frame.factor  <- .Alias(as.data.frame.vector)
@@ -188,8 +192,10 @@ as.data.frame.model.matrix <- function(x, row.names = NULL, optional = FALSE)
 
 as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE)
 {
-    if(length(dim(x))==2) as.data.frame.model.matrix(x, row.names, optional)
-    else as.data.frame.vector(x, row.names, optional)
+    if(length(dim(x))==2)
+        as.data.frame.model.matrix(x, row.names, optional)
+    else
+        as.data.frame.vector(x, row.names, optional)
 }
 
 ###  This is the real "data.frame".
@@ -224,7 +230,8 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
     x <- list(...)
     n <- length(x)
     if(n < 1)
-	return(structure(list(), class = "data.frame"))
+	return(structure(list(), row.names = character(0),
+                         class = "data.frame"))
     vnames <- names(x)
     if(length(vnames) != n)
 	vnames <- character(n)
@@ -244,7 +251,7 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 	else if(length(namesi) > 0) vnames[[i]] <- namesi
 	else if(no.vn[[i]]) vnames[[i]] <- deparse(object[[i]])[1]
 	nrows[[i]] <- length(rowsi)
-	if(missing(row.names) && rowsi[[1]]!="")
+	if(missing(row.names) && (nrows[[i]] > 0) && (rowsi[[1]] != ""))
 	    row.names <- data.row.names(row.names, rowsi, i)
 	value[[i]] <- xi
     }
@@ -265,7 +272,7 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 	vnames <- make.names(vnames)
     names(value) <- vnames
     if(length(row.names) == 0)
-	row.names <- 1:nr
+	row.names <- seq(length = nr)
     else if(length(row.names) != nr) {
 	if(is.character(row.names))
 	    row.names <- match(row.names, vnames, 0)
