@@ -480,7 +480,7 @@ data.frame <-
                 nv <- nrow(x)
                 for(v in seq(len = dim(i)[2])) {
                     thisvar <- i[, v, drop = TRUE]
-                    nv <- sum(thisvar, na.rm=T)
+                    nv <- sum(thisvar, na.rm = TRUE)
                     if(nv) {
                         if(is.matrix(x[[v]]))
                             x[[v]][thisvar, ] <- value[n+(1:nv)]
