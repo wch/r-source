@@ -37,8 +37,8 @@ socketConnection(host = "localhost", port, server = FALSE,
                  blocking = FALSE, open = "a+",
                  encoding = getOption("encoding"))
 
-\method{open}{connection}(con, open = "r", blocking = TRUE)
-\method{close}{connection}(con, type = "rw")
+\method{open}{connection}(con, open = "r", blocking = TRUE, ...)
+\method{close}{connection}(con, type = "rw", ...)
 
 isOpen(con, rw = "")
 isIncomplete(con)
@@ -66,6 +66,7 @@ isIncomplete(con)
     specified by \code{origin}), or \code{NA}.}
   \item{rw}{character.  Empty or \code{"read"} or \code{"write"},
     partial matches allowed.}
+  \item{\dots}{arguments passed to or from other methods.}
 }
 \details{
   The first six functions create connections.  By default the connection

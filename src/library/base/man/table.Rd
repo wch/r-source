@@ -15,7 +15,7 @@
 table(\dots, exclude = c(NA, NaN), dnn, deparse.level = 1)
 as.table(x, \dots)
 is.table(x)
-as.data.frame.table(x, row.names = NULL, optional = FALSE)
+as.data.frame.table(x, row.names = NULL, optional = FALSE, \dots)
 }
 \arguments{
   \item{\dots}{objects which can be interpreted as factors (including

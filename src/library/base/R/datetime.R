@@ -222,10 +222,10 @@ function(x, ..., value) {
 
 as.character.POSIXt <- function(x, ...) format(x, ...)
 
-str.POSIXt <- function(x, ...) {
-    cl <- class(x)
+str.POSIXt <- function(object, ...) {
+    cl <- class(object)
     cat("`", cl[min(2, length(cl))],"', format:", sep = "")
-    str(format(x), ...)
+    str(format(object), ...)
 }
 
 as.data.frame.POSIXct <- .Alias(as.data.frame.vector)
@@ -240,7 +240,7 @@ c.POSIXlt <- function(..., recursive=FALSE)
     as.POSIXlt(do.call("c", lapply(list(...), as.POSIXct)))
 
 ## force absolute comparisons
-all.equal.POSIXct <- function(..., scale=1)
+all.equal.POSIXct <- function(target, current, ..., scale=1)
     NextMethod("all.equal")
 
 
@@ -420,7 +420,7 @@ Ops.POSIXlt <- function(e1, e2)
 ## ----- convenience functions -----
 
 seq.POSIXt <-
-    function(from, to, by, length.out = NULL, along.with = NULL)
+    function(from, to, by, length.out = NULL, along.with = NULL, ...)
 {
     if (missing(from)) stop("`from` must be specified")
     if (!inherits(from, "POSIXt")) stop("`from' must be a POSIXt object")
@@ -499,7 +499,7 @@ seq.POSIXt <-
 }
 
 cut.POSIXt <-
-    function (x, breaks, labels = NULL, start.on.monday = TRUE)
+    function (x, breaks, labels = NULL, start.on.monday = TRUE, ...)
 {
     if(!inherits(x, "POSIXt")) stop("`x' must be a date-time object")
     x <- as.POSIXct(x)

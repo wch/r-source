@@ -212,7 +212,7 @@ simpleLoess <-
     fit
 }
 
-predict.loess <- function(object, newdata = NULL, se = FALSE)
+predict.loess <- function(object, newdata = NULL, se = FALSE, ...)
 {
     if(!inherits(object, "loess"))
 	stop("First argument must be a loess object")

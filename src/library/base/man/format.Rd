@@ -5,7 +5,7 @@ format(x, \dots)
 format.AsIs(x, width = 12, \dots)
 format.data.frame(x, \dots, justify = "none") 
 format.default(x, trim = FALSE, digits = getOption("digits"),
-               nsmall = 0, justify = c("left", "right", "none"))
+               nsmall = 0, justify = c("left", "right", "none"), \dots)
 format.factor(x, \dots)
 format.pval(pv, digits = max(1, getOption("digits") - 2),
             eps = .Machine$double.eps, na.form = "NA")

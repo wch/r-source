@@ -7,13 +7,13 @@
 \alias{kernapply.vector}
 \synopsis{
 kernapply(x, ...)
-kernapply.default(x, k, circular = FALSE)
-kernapply.ts(x, k, circular = FALSE)
-kernapply.vector(x, k, circular = FALSE)
+kernapply.default(x, k, circular = FALSE, ...)
+kernapply.ts(x, k, circular = FALSE, ...)
+kernapply.vector(x, k, circular = FALSE, ...)
 kernapply.tskernel(k1, k2)
 }
 \usage{
-kernapply(x, k, circular = FALSE) 
+kernapply(x, k, circular = FALSE, ...) 
 kernapply(k1, k2)
 }
 \arguments{
@@ -21,6 +21,7 @@ kernapply(k1, k2)
   \item{x}{an input vector, matrix, or time series to be smoothed.}
   \item{circular}{a logical indicating whether the input sequence to be
     smoothed is treated as circular, i.e., periodic.}
+  \item{\dots}{arguments passed to or from other methods.}
 }
 \description{
   \code{kernapply} computes the convolution between an input sequence 

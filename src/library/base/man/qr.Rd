@@ -7,7 +7,7 @@ qr.qy(qr, y)
 qr.qty(qr, y)
 qr.resid(qr, y)
 qr.fitted(qr, y, k = qr$rank)
-qr.solve(a, b, tol = 1e-7)
+qr.solve(a, b, tol = 1e-7, ...)
 
 is.qr(x)
 as.qr(x)

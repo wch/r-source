@@ -21,7 +21,7 @@ replayPlot <- function(x)
     .Internal(playDL(x[[1]]))
 }
 
-print.recordedplot <- function(x)
+print.recordedplot <- function(x, ...)
 {
     replayPlot(x)
     invisible(x)

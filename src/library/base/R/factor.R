@@ -56,7 +56,7 @@ nlevels <- function(x) length(levels(x))
 
 codes <- function(x, ...) UseMethod("codes")
 
-codes.factor <- function(x)
+codes.factor <- function(x, ...)
 {
     ## This is the S-plus semantics.
     ## The deeper meaning? Search me...

@@ -423,42 +423,42 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
 }
 
 
-anova.glmlist <- function(objects, dispersion=NULL, test=NULL)
+anova.glmlist <- function(object, ..., dispersion=NULL, test=NULL)
 {
 
     ## find responses for all models and remove
     ## any models with a different response
 
-    responses <- as.character(lapply(objects, function(x) {
+    responses <- as.character(lapply(object, function(x) {
 	deparse(formula(x)[[2]])} ))
     sameresp <- responses==responses[1]
     if(!all(sameresp)) {
-	objects <- objects[sameresp]
+	object <- object[sameresp]
 	warning(paste("Models with response", deparse(responses[!sameresp]),
 		      "removed because response differs from",
 		      "model 1"))
     }
 
-    ns <- sapply(objects, function(x) length(x$residuals))
+    ns <- sapply(object, function(x) length(x$residuals))
     if(any(ns != ns[1]))
         stop("models were not all fitted to the same size of dataset")
 
     ## calculate the number of models
 
-    nmodels <- length(objects)
+    nmodels <- length(object)
     if(nmodels==1)
-	return(anova.glm(objects[[1]], dispersion=dispersion, test=test))
+	return(anova.glm(object[[1]], dispersion=dispersion, test=test))
 
     ## extract statistics
 
-    resdf  <- as.numeric(lapply(objects, function(x) x$df.residual))
-    resdev <- as.numeric(lapply(objects, function(x) x$deviance))
+    resdf  <- as.numeric(lapply(object, function(x) x$df.residual))
+    resdev <- as.numeric(lapply(object, function(x) x$deviance))
 
     ## construct table and title
 
     table <- data.frame(resdf, resdev, c(NA, -diff(resdf)),
                         c(NA, -diff(resdev)) )
-    variables <- lapply(objects, function(x)
+    variables <- lapply(object, function(x)
                         paste(deparse(formula(x)), collapse="\n") )
     dimnames(table) <- list(1:nmodels, c("Resid. Df", "Resid. Dev", "Df",
 					 "Deviance"))
@@ -469,7 +469,7 @@ anova.glmlist <- function(objects, dispersion=NULL, test=NULL)
     ## calculate test statistic if needed
 
     if(!is.null(test)) {
-	bigmodel <- objects[[order(resdf)[1]]]
+	bigmodel <- object[[order(resdf)[1]]]
         dispersion <- summary(bigmodel, dispersion=dispersion)$dispersion
         df.dispersion <- if (dispersion == 1) Inf else min(resdf)
 	table <- stat.anova(table = table, test = test,

@@ -23,7 +23,7 @@ update.default <-
     else call
 }
 
-update.formula <- function (old, new) {
+update.formula <- function (old, new, ...) {
     env <- environment(as.formula(old))
     tmp <- .Internal(update.formula(as.formula(old), as.formula(new)))
     out <- formula(terms.formula(tmp))

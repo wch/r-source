@@ -2,10 +2,10 @@
 \title{Projections of Models}
 \usage{
 proj     (object, \dots)  
-proj.aov    (object, onedf = FALSE, unweighted.scale = FALSE)  
-proj.aovlist(object, onedf = FALSE, unweighted.scale = FALSE)  
+proj.aov    (object, onedf = FALSE, unweighted.scale = FALSE, \dots)  
+proj.aovlist(object, onedf = FALSE, unweighted.scale = FALSE, \dots)  
 proj.default(object, onedf = TRUE, \dots)  
-proj.lm     (object, onedf = FALSE, unweighted.scale = FALSE)  
+proj.lm     (object, onedf = FALSE, unweighted.scale = FALSE, \dots)  
 }
 \alias{proj}
 \alias{proj.default}

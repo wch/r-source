@@ -3,7 +3,7 @@
 \usage{
 cut(x, \dots)
 cut.default(x, breaks, labels = NULL,
-            include.lowest = FALSE, right = TRUE, dig.lab = 3)
+            include.lowest = FALSE, right = TRUE, dig.lab = 3, \dots)
 }
 \alias{cut}
 \alias{cut.default}

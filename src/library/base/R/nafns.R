@@ -2,7 +2,7 @@ na.action <- function(object, ...) UseMethod("na.action")
 na.action.default <- function(object, ...) attr(object, "na.action")
 
 na.fail <- function(object, ...) UseMethod("na.fail")
-na.fail.default <- function(object)
+na.fail.default <- function(object, ...)
 {
     ok <- complete.cases(object)
     if(all(ok)) object else stop("missing values in object");

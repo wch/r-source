@@ -5,7 +5,7 @@
 \title{Compute Tables of Results from an Aov Model Fit.}
 \usage{
 model.tables(x, \dots)
-model.tables.aov(x, type = "effects", se = FALSE, cterms)
+model.tables.aov(x, type = "effects", se = FALSE, cterms, \dots)
 model.tables.aovlist(x, type = "effects", se = FALSE, \dots)
 }
 \alias{model.tables}

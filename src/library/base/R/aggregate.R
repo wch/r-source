@@ -38,7 +38,8 @@ aggregate.data.frame <- function(x, by, FUN, ...) {
 }
 
 aggregate.ts <- function(x, nfrequency = 1, FUN = sum, ndeltat = 1,
-                         ts.eps = getOption("ts.eps")) {
+                         ts.eps = getOption("ts.eps"), ...)
+{
     x <- as.ts(x)
     ofrequency <- tsp(x)[3]
     ## Set up the new frequency, and make sure it is an integer.

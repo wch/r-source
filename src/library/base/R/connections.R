@@ -24,7 +24,7 @@ writeLines <- function(text, con = stdout(), sep = "\n")
 open <- function(con, ...)
     UseMethod("open")
 
-open.connection <- function(con, open = "r", blocking = TRUE)
+open.connection <- function(con, open = "r", blocking = TRUE, ...)
 {
     if(!inherits(con, "connection")) stop("argument is not a connection")
     invisible(.Internal(open(con, open, blocking)))
@@ -46,7 +46,7 @@ isSeekable <- function(con)
 close <- function(con, ...)
     UseMethod("close")
 
-close.connection <- function (con, type = "rw")
+close.connection <- function (con, type = "rw", ...)
 {
     if(!inherits(con, "connection")) stop("argument is not a connection")
     invisible(.Internal(close(con, type)))

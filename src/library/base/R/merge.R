@@ -6,7 +6,7 @@ merge.default <- function(x, y, ...)
 merge.data.frame <-
     function(x, y, by = intersect(names(x), names(y)), by.x = by, by.y = by,
              all = FALSE, all.x = all, all.y = all,
-             sort = TRUE, suffixes = c(".x",".y"))
+             sort = TRUE, suffixes = c(".x",".y"), ...)
 {
     fix.by <- function(by, df)
     {
@@ -107,7 +107,7 @@ merge.data.frame <-
                        do.call("order", x[, 1:l.b, drop=FALSE])
             else sort.list(bx[m$xi]),, drop=FALSE]
     }
-                                
+
     row.names(res) <- seq(length=nrow(res))
     res
 }

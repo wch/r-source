@@ -13,11 +13,11 @@
 \synopsis{
 D(expr, name)
 deriv(expr, ...)
-deriv.default(expr, namevec, function.arg, tag, hessian)
-deriv.formula(expr, namevec, function.arg, tag, hessian)
+deriv.default(expr, namevec, function.arg, tag, hessian, ...)
+deriv.formula(expr, namevec, function.arg, tag, hessian, ...)
 deriv3(expr, ...)
-deriv3.default(expr, namevec, function.arg, tag, hessian)
-deriv3.formula(expr, namevec, function.arg, tag, hessian)
+deriv3.default(expr, namevec, function.arg, tag, hessian, ...)
+deriv3.formula(expr, namevec, function.arg, tag, hessian, ...)
 }
 \usage{
     D (expr, name)

@@ -122,7 +122,7 @@ function(x, digits = max(1, getOption("digits") - 3), ...)
     invisible(x)
 }
 
-as.data.frame.table <- function(x, row.names = NULL, optional = FALSE)
+as.data.frame.table <- function(x, row.names = NULL, optional = FALSE, ...)
 {
     x <- as.table(x)
     data.frame(do.call("expand.grid", dimnames(x)), Freq = c(x),
@@ -131,7 +131,7 @@ as.data.frame.table <- function(x, row.names = NULL, optional = FALSE)
 
 is.table <- function(x) inherits(x, "table")
 as.table <- function(x, ...) UseMethod("as.table")
-as.table.default <- function(x)
+as.table.default <- function(x, ...)
 {
     if(is.table(x))
         return(x)

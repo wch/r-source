@@ -4,7 +4,8 @@ prompt <- function(object, ...) UseMethod("prompt")
 ## -----   For now, often change *both*
 
 prompt.default <-
-    function(object, filename = paste0(name, ".Rd"), force.function = FALSE)
+    function(object, filename = paste0(name, ".Rd"),
+             force.function = FALSE, ...)
 {
     paste0 <- function(...) paste(..., sep = "")
     is.missing.arg <- function(arg)
@@ -117,7 +118,7 @@ prompt.default <-
     invisible(file)
 }
 
-prompt.data.frame <- function (object, filename = paste0(name, ".Rd"))
+prompt.data.frame <- function (object, filename = paste0(name, ".Rd"), ...)
 {
     paste0 <- function(...) paste(..., sep = "")
 ##    describe <- function(object) UseMethod()

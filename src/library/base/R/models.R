@@ -109,7 +109,7 @@ drop.terms <- function(termobj, dropx=NULL, keep.response = FALSE)
 }
 
 terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
-			  neg.out = TRUE, keep.order = FALSE)
+			  neg.out = TRUE, keep.order = FALSE, ...)
 {
     fixFormulaObject <- function(object) {
 	tmp <- attr(terms(object), "term.labels")
@@ -179,10 +179,10 @@ weights <- function(object, ...)UseMethod("weights")
 df.residual <- function(object, ...)UseMethod("df.residual")
 
 variable.names <- function(object, ...) UseMethod("variable.names")
-variable.names.default <- .Alias(colnames)
+variable.names.default <- function(object, ...) colnames(object)
 
 case.names <- function(object, ...) UseMethod("case.names")
-case.names.default <- .Alias(rownames)
+case.names.default <- function(object, ...) rownames(object)
 
 offset <- function(object) object
 ## ?

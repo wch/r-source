@@ -1,7 +1,7 @@
 cut <- function(x, ...) UseMethod("cut")
 
 cut.default <- function (x, breaks, labels=NULL, include.lowest = FALSE,
-			 right=TRUE, dig.lab=3)
+			 right=TRUE, dig.lab=3, ...)
 {
     if (!is.numeric(x)) stop("cut: x must be numeric")
     if (length(breaks) == 1) {

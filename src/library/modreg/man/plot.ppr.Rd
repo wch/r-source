@@ -10,10 +10,10 @@ Plot Ridge Functions for Projection Pursuit Regression Fit
 Plot ridge functions for projection pursuit regression fit.
 }
 \usage{
-plot.ppr(fit, ask, type = "o", \dots)
+\method{plot}{ppr}(x, ask, type = "o", \dots)
 }
 \arguments{
-  \item{fit}{
+  \item{x}{
     A fit of class \code{"ppr"} as produced by a call to \code{ppr}.
   }
   \item{ask}{

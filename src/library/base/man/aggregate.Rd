@@ -9,7 +9,7 @@ aggregate(x, \dots)
 aggregate.default(x, \dots)
 aggregate.data.frame(x, by, FUN, \dots)
 aggregate.ts(x, nfrequency = 1, FUN = sum, ndeltat = 1,
-             ts.eps = getOption("ts.eps"))
+             ts.eps = getOption("ts.eps"), \dots)
 }
 \description{
   Splits the data into subsets, computes summary statistics for each,

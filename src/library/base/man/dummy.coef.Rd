@@ -5,8 +5,8 @@
 \title{Extract Coefficients in Original Coding}
 \usage{
 dummy.coef(object, \dots)
-dummy.coef.lm(object, use.na = FALSE)
-dummy.coef.aovlist(object, use.na = FALSE)
+dummy.coef.lm(object, use.na = FALSE, \dots)
+dummy.coef.aovlist(object, use.na = FALSE, \dots)
 }
 \alias{dummy.coef}
 \alias{dummy.coef.lm}
@@ -14,10 +14,11 @@ dummy.coef.aovlist(object, use.na = FALSE)
 \alias{print.dummy.coef}
 \alias{print.dummy.coef.list}
 \arguments{
-  \item{object}{a linear model fit}
+  \item{object}{a linear model fit.}
   \item{use.na}{logical flag for coefficients in a singular model. If
     \code{use.na} is true, undetermined coefficients will be missing; if
     false they will get one possible value.}
+  \item{\dots}{arguments passed to or from other methods.}
 }
 \description{
   This extracts coefficients in terms of the original levels of the

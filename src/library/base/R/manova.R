@@ -20,7 +20,7 @@ manova <- function(...)
 summary.manova <-
     function(object,
              test = c("Pillai", "Wilks", "Hotelling-Lawley", "Roy"),
-             intercept = FALSE)
+             intercept = FALSE, ...)
 {
     Pillai <- function(eig, q, df.res)
     {
@@ -150,7 +150,7 @@ summary.manova <-
     x
 }
 
-print.summary.manova <- function(x, digits = getOption("digits"))
+print.summary.manova <- function(x, digits = getOption("digits"), ...)
 {
     if(length(stats <- x$stats)) {
         print.anova(stats)

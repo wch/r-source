@@ -4,7 +4,7 @@
 \name{predict.loess}
 \title{Predict Loess Curve or Surface}
 \usage{
-predict.loess(object, newdata = NULL, se = FALSE)
+predict.loess(object, newdata = NULL, se = FALSE, ...)
 }
 \alias{predict.loess}
 \arguments{
@@ -12,6 +12,7 @@ predict.loess(object, newdata = NULL, se = FALSE)
  \item{newdata}{an optional data frame specifying points at which to do
    the predictions. If missing, the original data points are used.}
  \item{se}{should standard errors be computed?}
+ \item{...}{arguments passed to or from other methods.}
 }
 \description{
  Predictions from a \code{loess} fit, optionally with standard errors.

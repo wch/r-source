@@ -10,7 +10,7 @@ arima0(x, order = c(0, 0, 0),
        xreg = NULL, include.mean, na.action = na.fail,
        delta = 0.01, transform.pars = 2)
 
-\method{predict}{arima0}(object, n.ahead = 1, newxreg, se.fit = TRUE)
+\method{predict}{arima0}(object, n.ahead = 1, newxreg, se.fit = TRUE, ...)
 
 arima0.diag(fit, gof.lag = 10) 
 }
@@ -52,6 +52,8 @@ arima0.diag(fit, gof.lag = 10)
   \item{se.fit}{Logical: should standard errors of prediction be returned?}
 
   \item{gof.lag}{Number of lags to be used in goodness-of-fit test.}
+
+  \item{\dots}{arguments passed to or from other methods.}
 }
 \description{
   Fit an ARIMA model to a univariate time series by exact maximum

@@ -1,7 +1,7 @@
 stl <- function(x, s.window,
 		s.degree = 0,
 		t.window = NULL, t.degree = 1,
-		l.window = nextodd(period), l.degree = t.degree, 
+		l.window = nextodd(period), l.degree = t.degree,
 		s.jump = ceiling(s.window/10),
 		t.jump = ceiling(t.window/10),
 		l.jump = ceiling(l.window/10),
@@ -86,24 +86,25 @@ print.stl <- function(x, ...)
     invisible(x)
 }
 
-summary.stl <- function(x, digits = getOption("digits"), ...)
+summary.stl <- function(object, digits = getOption("digits"), ...)
 {
     cat(" Call:\n ")
-    dput(x$call)
+    dput(object$call)
     cat("\n Time.series components:\n")
-    print(summary(x$time.series, digits = digits, ...))
+    print(summary(object$time.series, digits = digits, ...))
     cat(" IQR:\n")
-    iqr <- apply(cbind(STL = x$time.series, data = x$time.series %*% rep(1,3)),
+    iqr <- apply(cbind(STL = object$time.series,
+                       data = object$time.series %*% rep(1,3)),
 		 2, IQR)
     print(rbind(format(iqr, digits = max(2, digits - 3)),
 		"   %"= format(round(100 * iqr / iqr["data"], 1))),
 	  quote = FALSE)
     cat("\n Weights:")
-    if(all(x$weights == 1)) cat(" all == 1\n")
-    else { cat("\n"); print(summary(x$weights, digits = digits, ...)) }
+    if(all(object$weights == 1)) cat(" all == 1\n")
+    else { cat("\n"); print(summary(object$weights, digits = digits, ...)) }
     cat("\n Other components: ")
-    str(x[-(1:3)], give.attr = FALSE)
-    invisible(x)
+    str(object[-(1:3)], give.attr = FALSE)
+    invisible(object)
 }
 
 plot.stl <- function(x, labels = colnames(X),

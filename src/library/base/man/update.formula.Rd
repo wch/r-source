@@ -2,11 +2,12 @@
 \alias{update.formula}
 \title{Model Updating}
 \usage{
-update.formula(old, new)
+update.formula(old, new, ...)
 }
 \arguments{
-\item{old}{a model formula to be updated.}
-\item{new}{a formula giving a template which specifies how to update.}
+  \item{old}{a model formula to be updated.}
+  \item{new}{a formula giving a template which specifies how to update.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
   \code{update.formula} is used to update model formulae.

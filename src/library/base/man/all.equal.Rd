@@ -13,7 +13,7 @@
 all.equal(target, current, \dots)
 
 all.equal.numeric(target, current,
-                  tolerance= .Machine$double.eps ^ 0.5, scale=NULL)
+                  tolerance= .Machine$double.eps ^ 0.5, scale=NULL, \dots)
 }
 \arguments{
   \item{target}{\R object.}

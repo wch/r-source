@@ -9,7 +9,7 @@
 \description{Create and manipulate ``flat'' contingency tables.}
 \usage{
 \method{ftable}{default}(\dots, exclude = c(NA, NaN), row.vars = NULL, col.vars = NULL)
-as.table.ftable(x)
+as.table.ftable(x, \dots)
 read.ftable(file, sep = "", quote = "\"",
             row.var.names, col.vars, skip = 0)
 write.ftable(x, file = "", quote = TRUE, digits = getOption("digits"))

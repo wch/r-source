@@ -1,7 +1,7 @@
 \name{solve}
 \title{Solve a System of Equations}
 \usage{
-\method{solve}{default}(a, b, tol = 1e-7)
+\method{solve}{default}(a, b, tol = 1e-7, ...)
 }
 \alias{solve}
 \alias{solve.default}
@@ -14,6 +14,7 @@
     matrix and \code{solve} will return the inverse of \code{a}.}
   \item{tol}{the tolerance for detecting linear dependencies in the
     columns of \code{a}.}
+  \item{\dots}{further arguments passed to or from other methods}
 }
 \description{
   This generic function solves the equation \code{a \%*\% x = b} for \code{x},

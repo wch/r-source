@@ -10,7 +10,7 @@
 manova(\dots)
 summary.manova(object,
                test = c("Pillai", "Wilks", "Hotelling-Lawley", "Roy"),
-               intercept = FALSE)
+               intercept = FALSE, \dots)
 }
 \arguments{
   \item{\dots}{Arguments to be passed to \code{\link{aov}}}
@@ -20,6 +20,7 @@ summary.manova(object,
     matching is used so the name can be abbreviated.}
   \item{intercept}{logical. If \code{TRUE}, the intercept term is
     included in the table.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
   Class \code{"manova"} differs from class \code{"aov"} in selecting a

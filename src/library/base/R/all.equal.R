@@ -21,7 +21,8 @@ all.equal.default <- function(target, current, ...)
 }
 
 all.equal.numeric <-
-function(target, current, tolerance = .Machine$double.eps ^ .5, scale=NULL)
+function(target, current, tolerance = .Machine$double.eps ^ .5,
+         scale=NULL, ...)
 {
     lt <- length(target)
     lc <- length(current)

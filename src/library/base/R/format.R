@@ -9,7 +9,7 @@ format <- function(x, ...) UseMethod("format")
 ### combine with "width = ", and format.char() below!
 
 format.default <- function(x, trim = FALSE, digits = NULL, nsmall = 0,
-			   justify = c("left", "right", "none"))
+			   justify = c("left", "right", "none"), ...)
 {
     f.char <- function(x, justify) {
 	if(length(x) <= 1) return(x)

@@ -28,7 +28,7 @@ function(formula, data=sys.parent(), weights, subset,
 ppr.default <-
 function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
 	 optlevel=2, sm.method=c("supsmu", "spline", "gcvspline"),
-	 bass=0, span=0, df=5, gcvpen=1)
+	 bass=0, span=0, df=5, gcvpen=1, ...)
 {
     call <- match.call()
     sm.method <- match.arg(sm.method)
@@ -135,7 +135,7 @@ print.summary.ppr <- function(x, ...)
     invisible(x)
 }
 
-plot.ppr <- function(fit, ask, type="o", ...)
+plot.ppr <- function(x, ask, type="o", ...)
 {
     ppr.funs <- function(obj)
     {
@@ -149,35 +149,35 @@ plot.ppr <- function(fit, ask, type="o", ...)
 	t <- matrix(sm[jt+1:(mu*n)],n, mu)
 	list(x=t, y=f)
     }
-    obj <- ppr.funs(fit)
+    obj <- ppr.funs(x)
     if(!missing(ask)) {
 	oldpar <- par()
 	on.exit(par(oldpar))
 	par(ask = ask)
     }
-    for(i in 1:fit$mu) {
+    for(i in 1:x$mu) {
 	ord <- order(obj$x[ ,i])
 	plot(obj$x[ord, i], obj$y[ord, i], type = type,
 	     xlab = paste("term", i), ylab = "", ...)
     }
 }
 
-predict.ppr <- function(obj, newdata, ...)
+predict.ppr <- function(object, newdata, ...)
 {
-    if(missing(newdata)) return(obj$fitted)
-    if(!is.null(obj$terms))
-	x <- model.matrix(delete.response(obj$terms), newdata)
+    if(missing(newdata)) return(object$fitted)
+    if(!is.null(object$terms))
+	x <- model.matrix(delete.response(object$terms), newdata)
     else x <- as.matrix(newdata)
-    if(ncol(x) != obj$p) stop("wrong number of columns in x")
+    if(ncol(x) != object$p) stop("wrong number of columns in x")
     drop(matrix(.Fortran("bdrpred",
 			 as.integer(nrow(x)),
 			 as.double(x),
-			 as.double(obj$smod),
-			 y = double(nrow(x)*obj$q),
-			 double(2*obj$smod[4]),
+			 as.double(object$smod),
+			 y = double(nrow(x)*object$q),
+			 double(2*object$smod[4]),
 			 PACKAGE="modreg"
 			 )$y,
-		ncol=obj$q,
-		dimnames=list(dimnames(x)[[1]], obj$ynames)
+		ncol=object$q,
+		dimnames=list(dimnames(x)[[1]], object$ynames)
 		))
 }

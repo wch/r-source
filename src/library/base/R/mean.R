@@ -1,6 +1,6 @@
 mean <- function(x, ...) UseMethod("mean")
 
-mean.default <- function(x, trim = 0, na.rm = FALSE) {
+mean.default <- function(x, trim = 0, na.rm = FALSE, ...) {
     if (na.rm)
 	x <- x[!is.na(x)]
     trim <- trim[1]
@@ -17,7 +17,7 @@ mean.default <- function(x, trim = 0, na.rm = FALSE) {
     sum(x)/n
 }
 
-weighted.mean <- function(x, w, na.rm = FALSE ){
+weighted.mean <- function(x, w, na.rm = FALSE) {
     if(missing(w)) w <- rep(1,length(x))
     if (na.rm) {
 	w <- w[i <- !is.na(x)]

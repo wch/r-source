@@ -132,7 +132,7 @@ ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
     }
 }
 
-as.table.ftable <- function(x)
+as.table.ftable <- function(x, ...)
 {
     if(!inherits(x, "ftable"))
         stop("x must be an `ftable'")

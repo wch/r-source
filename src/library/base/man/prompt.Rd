@@ -5,10 +5,10 @@ prompt(object, \dots)
 
 prompt.default(object,
     filename = paste(name, ".Rd", sep = ""),
-    force.function = FALSE)
+    force.function = FALSE, \dots)
 
 prompt.data.frame(object,
-    filename = paste(name, ".Rd", sep = ""))
+    filename = paste(name, ".Rd", sep = ""), \dots)
 }
 \alias{prompt}
 \alias{prompt.default}

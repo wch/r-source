@@ -9,7 +9,8 @@
   largest to a probability of 1.
 }
 \usage{
-\method{quantile}{default}(x, probs = seq(0, 1, 0.25), na.rm = FALSE, names = TRUE)
+\method{quantile}{default}(x, probs = seq(0, 1, 0.25), na.rm = FALSE,
+         names = TRUE, ...)
 }
 \arguments{
   \item{x}{numeric vectors whose sample quantiles are wanted.}

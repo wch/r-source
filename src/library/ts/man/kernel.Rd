@@ -19,8 +19,8 @@ df.kernel(k)
 bandwidth.kernel(k)
 is.tskernel(k)
 
-\method{print}{tskernel}(k, digits = max(3,getOption("digits")-3))
-\method{plot}{tskernel}(k)
+\method{print}{tskernel}(x, digits = max(3,getOption("digits")-3), ...)
+\method{plot}{tskernel}(x, ...)
 }
 \arguments{
   \item{coef}{the upper half of the smoothing kernel coefficients
@@ -32,6 +32,8 @@ is.tskernel(k)
   \item{name}{the name of the kernel.}
   \item{r}{the kernel order for a Fejer kernel.}
   \item{digits}{the number of digits to format real numbers.}
+  \item{x}{a \code{"tskernel"} object.}
+  \item{\dots}{arguments passed to or from other methods.}
 }
 \details{
   \code{kernel} is used to construct a general kernel or

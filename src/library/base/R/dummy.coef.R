@@ -1,7 +1,7 @@
 #### copyright (C) 1998 B. D. Ripley
 dummy.coef <- function(object, ...) UseMethod("dummy.coef")
 
-dummy.coef.lm <- function(object, use.na=FALSE)
+dummy.coef.lm <- function(object, use.na=FALSE, ...)
 {
     Terms <- terms(object)
     tl <- attr(Terms, "term.labels")
@@ -63,7 +63,7 @@ dummy.coef.lm <- function(object, use.na=FALSE)
     res
 }
 
-dummy.coef.aovlist <- function(object, use.na = FALSE)
+dummy.coef.aovlist <- function(object, use.na = FALSE, ...)
 {
     Terms <- terms(object, specials="Error")
     err <- attr(Terms,"specials")$Error - 1

@@ -38,7 +38,7 @@ make.socket <- function(host = "localhost", port, fail = TRUE, server = FALSE)
     rval
 }
 
-close.socket <- function(socket)
+close.socket <- function(socket, ...)
 {
     if(length(port <- as.integer(socket$socket)) != 1)
 	stop("invalid `socket' argument")

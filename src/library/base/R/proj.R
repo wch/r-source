@@ -15,7 +15,7 @@ proj.default <- function(object, onedf = TRUE, ...)
     prj
 }
 
-proj.lm <- function(object, onedf = FALSE, unweighted.scale = FALSE)
+proj.lm <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 {
     if(inherits(object, "mlm"))
 	stop("proj is not implemented for mlm fits")
@@ -74,7 +74,7 @@ proj.lm <- function(object, onedf = FALSE, unweighted.scale = FALSE)
     result
 }
 
-proj.aov <- function(object, onedf = FALSE, unweighted.scale = FALSE)
+proj.aov <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 {
     if(inherits(object, "maov"))
 	stop("proj is not implemented for multiple responses")
@@ -107,7 +107,7 @@ proj.aov <- function(object, onedf = FALSE, unweighted.scale = FALSE)
 }
 
 
-proj.aovlist <- function(object, onedf = FALSE, unweighted.scale = FALSE)
+proj.aovlist <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 {
     attr.xdim <- function(x)
     {

@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
-    ## $Id: str.R,v 1.20 2001/08/12 15:48:55 jmc Exp $
+    ## $Id: str.R,v 1.21 2001/08/13 08:54:05 ripley Exp $
     if(! is.data.frame(object)) {
 	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
 	object <- data.frame(object)
@@ -25,12 +25,12 @@ str.data.frame <- function(object, ...)
     else invisible(NextMethod("str", give.length=FALSE,...))
 }
 
-str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
-			nchar.max = 128, give.attr = TRUE, give.length = TRUE,
-			wid = getOption("width"), nest.lev = 0,
-			indent.str = paste(rep(" ", max(0, nest.lev + 1)),
-			collapse = "..")
-			)
+str.default <-
+    function(object, max.level = 0, vec.len = 4, digits.d = 3,
+             nchar.max = 128, give.attr = TRUE, give.length = TRUE,
+             wid = getOption("width"), nest.lev = 0,
+             indent.str = paste(rep(" ", max(0, nest.lev + 1)), collapse = ".."),
+             ...)
 {
     ## Purpose: Display STRucture of any R - object (in a compact form).
     ## ------------------------------------------------------------------------
@@ -41,7 +41,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
     ## ------ Please send Bug-reports, -fixes and improvements !
     ## ------------------------------------------------------------------------
-    ## $Id: str.R,v 1.20 2001/08/12 15:48:55 jmc Exp $
+    ## $Id: str.R,v 1.21 2001/08/13 08:54:05 ripley Exp $
 
     oo <- options(digits = digits.d); on.exit(options(oo))
     le <- length(object)
@@ -307,7 +307,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 ls.str <- function(pos = 1, pattern, ...,
                    mode = "any", max.level = 1, give.attr = FALSE)
 {
-    ## An extended "ls()" using  str(.) 
+    ## An extended "ls()" using  str(.)
     r <- character(0)
     for(nam in ls(pos = pos, ..., envir = pos.to.env(pos), pattern=pattern))
 	if(exists(nam, where = pos, mode = mode)) {
