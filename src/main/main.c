@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998-2001   The R Development Core Team
- *  Copyright (C) 2002--2004  The R Foundation
+ *  Copyright (C) 2002--2005  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -46,7 +46,8 @@
 #ifdef ENABLE_NLS
 void nl_Rdummy()
 {
-    dgettext("R", ""); /* force this in as packages use it */
+    /* force this in as packages use it */
+    dgettext("R", "dummy - do not translate");
 }
 #endif
 
@@ -65,7 +66,8 @@ void nl_Rdummy()
  * in separate platform dependent modules.
  */
 
-void Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded, Rboolean visible);
+void Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded,
+			     Rboolean visible);
 
 int Rf_ParseBrowser(SEXP, SEXP);
 
@@ -74,7 +76,7 @@ static void onpipe(int);
 
 extern void InitDynload();
 
-AccuracyInfo R_AccuracyInfo; /* This is declared here and delcared extern in Defn.h */
+AccuracyInfo R_AccuracyInfo; /* This is declared here and declared extern in Defn.h */
 
 	/* Read-Eval-Print Loop [ =: REPL = repl ] with input from a file */
 
