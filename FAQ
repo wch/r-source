@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.4-3, 2002-01-02
+Version 1.4-4, 2002-01-09
 Kurt Hornik
 
 
@@ -1672,6 +1672,9 @@ See CRAN `src/contrib/PACKAGES' for more information.
 packages still "under development" or depending on features only present in
 the current development versions of R.  Volunteers are invited to give
 these a try, of course.  This area of CRAN currently contains
+
+*Bhat*
+     Functions for general likelihood exploration (MLE, MCMC, CIs).
 
 *DBI*
      A common database interface (DBI) class and method definitions.  All
