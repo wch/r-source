@@ -58,7 +58,8 @@
 
 ## Header file search directory ('-IDIR') and any other miscellaneous
 ## options for the C preprocessor and compiler.
-## If unset defaults to '-I/usr/local/include'.
+## If unset defaults to '-I/usr/local/include', with '-I/sw/include'
+## prepended on systems using Fink with root '/sw'.
 ## CPPFLAGS=
 
 ## The command which runs the FORTRAN 77 compiler.
@@ -126,9 +127,10 @@
 
 ## Stripping ('-s'), path ('-L'), and any other miscellaneous options
 ## for the linker.
-## '-L' options set here will be prepended to LD_LIBRARY_PATH at run
-## time.
-## If unset defaults to '-L/usr/local/lib'.
+## '-L' options set here will be prepended to LD_LIBRARY_PATH (or its
+## system equivalent) at run time.
+## If unset defaults to '-L/usr/local/lib', with '-L/sw/lib' prepended
+## on systems using Fink with root '/sw'.
 ## LDFLAGS=
 
 ## The command which runs the C++ compiler.  It not specified, configure
