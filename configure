@@ -465,7 +465,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO SET_MAKE build build_cpu build_vendor build_os host host_cpu host_vendor host_os R_PLATFORM R_OSTYPE config_opts WANT_R_FRAMEWORK_TRUE WANT_R_FRAMEWORK_FALSE MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE WANT_R_SHLIB_TRUE WANT_R_SHLIB_FALSE LIBR USE_LIBTOOL_TRUE USE_LIBTOOL_FALSE R_PRINTCMD R_PAPERSIZE R_BATCHSAVE MAIN_CFLAGS SHLIB_CFLAGS MAIN_FFLAGS SHLIB_FFLAGS MAIN_LD MAIN_LDFLAGS CPICFLAGS FPICFLAGS SHLIB_LD SHLIB_LDFLAGS DYLIB_LD DYLIB_LDFLAGS CXXPICFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS TCLTK_LIBS TCLTK_CPPFLAGS MAKE F2C R_BROWSER BLAS_LIBS LAPACK_LIBS GETWD BUILDDIR_IS_SRCDIR AWK EGREP LN_S RANLIB ac_ct_RANLIB YACC AR ARFLAGS JAVAC SED PAGER PERL FALSE NO_PERL5 TAR DVIPS TEX LATEX MAKEINDEX PDFTEX PDFLATEX MAKEINFO_CMD INSTALL_INFO R_RD4DVI R_RD4PDF R_UNZIPCMD R_ZIPCMD R_GZIPCMD R_PDFVIEWER CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CPP F77 FFLAGS ac_ct_F77 USING_G77_TRUE USING_G77_FALSE CXX CXXFLAGS ac_ct_CXX CXXCPP ECHO ac_ct_AR STRIP ac_ct_STRIP LIBTOOL LIBTOOL_DEPS shlibpath_var LIBM BUILD_DLFCN_DARWIN_TRUE BUILD_DLFCN_DARWIN_FALSE FLIBS HAVE_DOUBLE_COMPLEX COMPILE_DOUBLE_COMPLEX_TRUE COMPILE_DOUBLE_COMPLEX_FALSE SHLIB_CXXFLAGS F2CFLAGS R_XTRA_CFLAGS R_XTRA_CPPFLAGS R_XTRA_CXXFLAGS R_XTRA_FFLAGS R_XTRA_LIBS XMKMF SHLIB_LIBADD SHLIB_EXT USE_EXPORTFILES_TRUE USE_EXPORTFILES_FALSE DYLIB_EXT LIBR_LDFLAGS RLAPACK_LDFLAGS LAPACK_LDFLAGS ALLOCA RMATH_HAVE_EXPM1 RMATH_HAVE_LOG1P LIBOBJS RMATH_HAVE_WORKING_LOG1P USE_EXTERNAL_BLAS_TRUE USE_EXTERNAL_BLAS_FALSE USE_EXTERNAL_LAPACK_TRUE USE_EXTERNAL_LAPACK_FALSE R_MODULES X_CFLAGS X_PRE_LIBS X_LIBS X_EXTRA_LIBS GNOME_LIBS GNOMEUI_LIBS GNOMEGNORBA_LIBS GTKXMHTML_LIBS ZVT_LIBS GNOME_LIBDIR GNOME_INCLUDEDIR GNOME_CONFIG ORBIT_CONFIG ORBIT_IDL HAVE_ORBIT_TRUE HAVE_ORBIT_FALSE ORBIT_CFLAGS ORBIT_LIBS HAVE_GNORBA_TRUE HAVE_GNORBA_FALSE GNORBA_CFLAGS GNORBA_LIBS GNOME_APPLETS_LIBS GNOME_CAPPLET_LIBS LIBGLADE_CONFIG LIBGLADE_CFLAGS LIBGLADE_LIBS GNOME_IF_FILES BUILD_AQUA_TRUE BUILD_AQUA_FALSE use_aqua TCL_CONFIG TK_CONFIG use_tcltk BITMAP_LIBS BUILD_XDR_TRUE BUILD_XDR_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE USE_MMAP_ZLIB_TRUE USE_MMAP_ZLIB_FALSE BUILD_BZLIB_TRUE BUILD_BZLIB_FALSE BUILD_PCRE_TRUE BUILD_PCRE_FALSE R_PROFILING PAPERCONF R_LD_LIBRARY_PATH USE_RECOMMENDED_PACKAGES_TRUE USE_RECOMMENDED_PACKAGES_FALSE LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO SET_MAKE build build_cpu build_vendor build_os host host_cpu host_vendor host_os R_PLATFORM R_OSTYPE config_opts WANT_R_FRAMEWORK_TRUE WANT_R_FRAMEWORK_FALSE MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE WANT_R_SHLIB_TRUE WANT_R_SHLIB_FALSE LIBR USE_LIBTOOL_TRUE USE_LIBTOOL_FALSE R_PRINTCMD R_PAPERSIZE R_BATCHSAVE MAIN_CFLAGS SHLIB_CFLAGS MAIN_FFLAGS SHLIB_FFLAGS MAIN_LD MAIN_LDFLAGS CPICFLAGS FPICFLAGS SHLIB_LD SHLIB_LDFLAGS DYLIB_LD DYLIB_LDFLAGS CXXPICFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS TCLTK_LIBS TCLTK_CPPFLAGS MAKE F2C R_BROWSER BLAS_LIBS LAPACK_LIBS GETWD BUILDDIR_IS_SRCDIR AWK EGREP LN_S RANLIB ac_ct_RANLIB YACC AR ARFLAGS JAVAC SED PAGER PERL FALSE NO_PERL5 TAR DVIPS TEX LATEX MAKEINDEX PDFTEX PDFLATEX MAKEINFO_CMD INSTALL_INFO R_RD4DVI R_RD4PDF R_UNZIPCMD R_ZIPCMD R_GZIPCMD R_PDFVIEWER CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CPP F77 FFLAGS ac_ct_F77 USING_G77_TRUE USING_G77_FALSE CXX CXXFLAGS ac_ct_CXX CXXCPP ECHO ac_ct_AR STRIP ac_ct_STRIP LIBTOOL LIBTOOL_DEPS shlibpath_var LIBM BUILD_DLFCN_DARWIN_TRUE BUILD_DLFCN_DARWIN_FALSE FLIBS HAVE_DOUBLE_COMPLEX COMPILE_DOUBLE_COMPLEX_TRUE COMPILE_DOUBLE_COMPLEX_FALSE SHLIB_CXXFLAGS F2CFLAGS R_XTRA_CFLAGS R_XTRA_CPPFLAGS R_XTRA_CXXFLAGS R_XTRA_FFLAGS R_XTRA_LIBS XMKMF SHLIB_LIBADD SHLIB_EXT USE_EXPORTFILES_TRUE USE_EXPORTFILES_FALSE DYLIB_EXT LIBR_LDFLAGS RLAPACK_LDFLAGS LAPACK_LDFLAGS ALLOCA RMATH_HAVE_EXPM1 RMATH_HAVE_LOG1P LIBOBJS RMATH_HAVE_WORKING_LOG1P USE_EXTERNAL_BLAS_TRUE USE_EXTERNAL_BLAS_FALSE USE_EXTERNAL_LAPACK_TRUE USE_EXTERNAL_LAPACK_FALSE R_MODULES X_CFLAGS X_PRE_LIBS X_LIBS X_EXTRA_LIBS BUILD_AQUA_TRUE BUILD_AQUA_FALSE use_aqua TCL_CONFIG TK_CONFIG use_tcltk BITMAP_LIBS BUILD_XDR_TRUE BUILD_XDR_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE USE_MMAP_ZLIB_TRUE USE_MMAP_ZLIB_FALSE BUILD_BZLIB_TRUE BUILD_BZLIB_FALSE BUILD_PCRE_TRUE BUILD_PCRE_FALSE R_PROFILING PAPERCONF R_LD_LIBRARY_PATH USE_RECOMMENDED_PACKAGES_TRUE USE_RECOMMENDED_PACKAGES_FALSE LTLIBOBJS'
 ac_subst_files='r_cc_rules_frag r_f77_rules_frag r_cxx_rules_frag'
 
 # Initialize some variables set by options.
@@ -1156,7 +1156,6 @@ Optional Packages:
   --with-blas             use BLAS library, or specify it [yes]
   --with-lapack           use LAPACK library, or specify it [no]
   --with-readline         use readline library (if available) [yes]
-  --with-gnome            use GNOME, or specify its prefix [no]
   --with-aqua             use Aqua (if available) [no]
   --with-tcltk            use Tcl/Tk, or specify its library dir [yes]
   --with-tcl-config=TCL_CONFIG
@@ -1177,11 +1176,6 @@ Optional Packages:
   --with-tags[=TAGS]
                           include additional configurations [automatic]
   --with-x                use the X Window System
-  --with-gnome-includes=DIR
-                          specify location of GNOME headers
-  --with-gnome-libs=DIR   specify location of GNOME libs
-  --with-libglade-config=LIBGLADE_CONFIG
-                          specify location of libglade-config
 
 Some influential environment variables:
   R_PRINTCMD  command used to spool PostScript files to the printer
@@ -2108,8 +2102,6 @@ fi
 
 ## We provide these defaults so that headers and libraries in
 ## '/usr/local' are found (by the native tools, mostly).
-## We do it here because AC_ARG_WITH(gnome) may add to CPPFLAGS and
-## LDFLAGS.
 if test -f "/sw/etc/fink.conf"; then
   : ${CPPFLAGS="-I/sw/include -I/usr/local/include"}
   : ${LDFLAGS="-L/sw/lib -L/usr/local/lib"}
@@ -2284,27 +2276,6 @@ fi
 
 else
   use_readline=yes
-fi;
-
-## GNOME.
-
-# Check whether --with-gnome or --without-gnome was given.
-if test "${with_gnome+set}" = set; then
-  withval="$with_gnome"
-  if test "${withval}" = no; then
-  want_gnome=no
-elif test "${withval}" = yes; then
-  want_gnome=yes
-  want_R_shlib=yes
-else
-  want_gnome=yes
-  want_R_shlib=yes
-  CPPFLAGS="${CPPFLAGS} -I${withval}/include"
-  LDFLAGS="${LDFLAGS} -L${withval}/lib"
-  gnome_prefix="${withval}/lib"
-fi
-else
-  want_gnome=no
 fi;
 
 ## Aqua.
@@ -5423,7 +5394,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:5426:" \
+echo "$as_me:5397:" \
      "checking for Fortran 77 compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
@@ -6699,7 +6670,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 6702 "configure"' > conftest.$ac_ext
+  echo '#line 6673 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -8140,11 +8111,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:8143: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:8114: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:8147: \$? = $ac_status" >&5
+   echo "$as_me:8118: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -8373,11 +8344,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:8376: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:8347: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:8380: \$? = $ac_status" >&5
+   echo "$as_me:8351: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -8433,11 +8404,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:8436: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:8407: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:8440: \$? = $ac_status" >&5
+   echo "$as_me:8411: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -10617,7 +10588,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 10620 "configure"
+#line 10591 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -10715,7 +10686,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 10718 "configure"
+#line 10689 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -12894,11 +12865,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12897: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12868: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:12901: \$? = $ac_status" >&5
+   echo "$as_me:12872: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -12954,11 +12925,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12957: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12928: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:12961: \$? = $ac_status" >&5
+   echo "$as_me:12932: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -14315,7 +14286,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 14318 "configure"
+#line 14289 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -14413,7 +14384,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 14416 "configure"
+#line 14387 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -15240,11 +15211,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15243: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15214: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:15247: \$? = $ac_status" >&5
+   echo "$as_me:15218: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -15300,11 +15271,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15303: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15274: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:15307: \$? = $ac_status" >&5
+   echo "$as_me:15278: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -17334,11 +17305,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17337: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17308: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:17341: \$? = $ac_status" >&5
+   echo "$as_me:17312: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -17567,11 +17538,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17570: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17541: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:17574: \$? = $ac_status" >&5
+   echo "$as_me:17545: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -17627,11 +17598,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17630: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17601: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:17634: \$? = $ac_status" >&5
+   echo "$as_me:17605: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -19811,7 +19782,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 19814 "configure"
+#line 19785 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -19909,7 +19880,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 19912 "configure"
+#line 19883 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -25508,7 +25479,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_verb"
-(eval echo $as_me:25511: \"$ac_link\") >&5
+(eval echo $as_me:25482: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -25586,7 +25557,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_cv_prog_f77_v"
-(eval echo $as_me:25589: \"$ac_link\") >&5
+(eval echo $as_me:25560: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -34472,428 +34443,6 @@ else
   R_MODULES=
 fi
 
-## GNOME.
-if test ${want_gnome} = yes; then
-
-
-
-
-
-
-
-
-
-
-# Check whether --with-gnome-includes or --without-gnome-includes was given.
-if test "${with_gnome_includes+set}" = set; then
-  withval="$with_gnome_includes"
-
-	CPPFLAGS="$CPPFLAGS -I$withval"
-
-fi;
-
-
-# Check whether --with-gnome-libs or --without-gnome-libs was given.
-if test "${with_gnome_libs+set}" = set; then
-  withval="$with_gnome_libs"
-
-	LIBS="$LIBS -L$withval"
-	gnome_prefix=$withval
-
-fi;
-
-	if test "x$want_gnome" = xyes; then
-
-	    # Extract the first word of "gnome-config", so it can be a program name with args.
-set dummy gnome-config; ac_word=$2
-echo "$as_me:$LINENO: checking for $ac_word" >&5
-echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
-if test "${ac_cv_path_GNOME_CONFIG+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  case $GNOME_CONFIG in
-  [\\/]* | ?:[\\/]*)
-  ac_cv_path_GNOME_CONFIG="$GNOME_CONFIG" # Let the user override the test with a path.
-  ;;
-  *)
-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-  for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_path_GNOME_CONFIG="$as_dir/$ac_word$ac_exec_ext"
-    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-done
-
-  test -z "$ac_cv_path_GNOME_CONFIG" && ac_cv_path_GNOME_CONFIG="no"
-  ;;
-esac
-fi
-GNOME_CONFIG=$ac_cv_path_GNOME_CONFIG
-
-if test -n "$GNOME_CONFIG"; then
-  echo "$as_me:$LINENO: result: $GNOME_CONFIG" >&5
-echo "${ECHO_T}$GNOME_CONFIG" >&6
-else
-  echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6
-fi
-
-	    if test "$GNOME_CONFIG" = "no"; then
-	      no_gnome_config="yes"
-	    else
-	      echo "$as_me:$LINENO: checking if $GNOME_CONFIG works" >&5
-echo $ECHO_N "checking if $GNOME_CONFIG works... $ECHO_C" >&6
-	      if $GNOME_CONFIG --libs-only-l gnome >/dev/null 2>&1; then
-	        echo "$as_me:$LINENO: result: yes" >&5
-echo "${ECHO_T}yes" >&6
-
-
-	# Extract the first word of "orbit-config", so it can be a program name with args.
-set dummy orbit-config; ac_word=$2
-echo "$as_me:$LINENO: checking for $ac_word" >&5
-echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
-if test "${ac_cv_path_ORBIT_CONFIG+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  case $ORBIT_CONFIG in
-  [\\/]* | ?:[\\/]*)
-  ac_cv_path_ORBIT_CONFIG="$ORBIT_CONFIG" # Let the user override the test with a path.
-  ;;
-  *)
-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-  for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_path_ORBIT_CONFIG="$as_dir/$ac_word$ac_exec_ext"
-    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-done
-
-  test -z "$ac_cv_path_ORBIT_CONFIG" && ac_cv_path_ORBIT_CONFIG="no"
-  ;;
-esac
-fi
-ORBIT_CONFIG=$ac_cv_path_ORBIT_CONFIG
-
-if test -n "$ORBIT_CONFIG"; then
-  echo "$as_me:$LINENO: result: $ORBIT_CONFIG" >&5
-echo "${ECHO_T}$ORBIT_CONFIG" >&6
-else
-  echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6
-fi
-
-	# Extract the first word of "orbit-idl", so it can be a program name with args.
-set dummy orbit-idl; ac_word=$2
-echo "$as_me:$LINENO: checking for $ac_word" >&5
-echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
-if test "${ac_cv_path_ORBIT_IDL+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  case $ORBIT_IDL in
-  [\\/]* | ?:[\\/]*)
-  ac_cv_path_ORBIT_IDL="$ORBIT_IDL" # Let the user override the test with a path.
-  ;;
-  *)
-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-  for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_path_ORBIT_IDL="$as_dir/$ac_word$ac_exec_ext"
-    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-done
-
-  test -z "$ac_cv_path_ORBIT_IDL" && ac_cv_path_ORBIT_IDL="no"
-  ;;
-esac
-fi
-ORBIT_IDL=$ac_cv_path_ORBIT_IDL
-
-if test -n "$ORBIT_IDL"; then
-  echo "$as_me:$LINENO: result: $ORBIT_IDL" >&5
-echo "${ECHO_T}$ORBIT_IDL" >&6
-else
-  echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6
-fi
-
-	echo "$as_me:$LINENO: checking for working ORBit environment" >&5
-echo $ECHO_N "checking for working ORBit environment... $ECHO_C" >&6
-if test "${gnome_cv_orbit_found+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-		if test x$ORBIT_CONFIG = xno -o x$ORBIT_IDL = xno; then
-			gnome_cv_orbit_found=no
-		else
-			gnome_cv_orbit_found=yes
-		fi
-
-fi
-echo "$as_me:$LINENO: result: $gnome_cv_orbit_found" >&5
-echo "${ECHO_T}$gnome_cv_orbit_found" >&6
-
-
-if test x$gnome_cv_orbit_found = xyes; then
-  HAVE_ORBIT_TRUE=
-  HAVE_ORBIT_FALSE='#'
-else
-  HAVE_ORBIT_TRUE='#'
-  HAVE_ORBIT_FALSE=
-fi
-	if test x$gnome_cv_orbit_found = xyes; then
-
-		ORBIT_CFLAGS=`orbit-config --cflags client server`
-		ORBIT_LIBS=`orbit-config --use-service=name --libs client server`
-
-
-	else
-    		if test xcont = xfailure; then
-			{ { echo "$as_me:$LINENO: error: ORBit not installed or installation problem" >&5
-echo "$as_me: error: ORBit not installed or installation problem" >&2;}
-   { (exit 1); exit 1; }; }
-    		fi
-	fi
-
-	echo "$as_me:$LINENO: checking for gnorba libraries" >&5
-echo $ECHO_N "checking for gnorba libraries... $ECHO_C" >&6
-if test "${gnome_cv_gnorba_found+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-		gnome_cv_gnorba_found=no
-		if test x$gnome_cv_orbit_found = xyes; then
-			GNORBA_CFLAGS="`gnome-config --cflags gnorba gnomeui`"
-			GNORBA_LIBS="`gnome-config --libs gnorba gnomeui`"
-			if test -n "$GNORBA_LIBS"; then
-				gnome_cv_gnorba_found=yes
-			fi
-		fi
-
-fi
-echo "$as_me:$LINENO: result: $gnome_cv_gnorba_found" >&5
-echo "${ECHO_T}$gnome_cv_gnorba_found" >&6
-
-
-if test x$gnome_cv_gnorba_found = xyes; then
-  HAVE_GNORBA_TRUE=
-  HAVE_GNORBA_FALSE='#'
-else
-  HAVE_GNORBA_TRUE='#'
-  HAVE_GNORBA_FALSE=
-fi
-	if test x$gnome_cv_orbit_found = xyes; then
-
-		GNORBA_CFLAGS="`gnome-config --cflags gnorba gnomeui`"
-		GNORBA_LIBS="`gnome-config --libs gnorba gnomeui`"
-
-
-	else
-	    	if test xcont = xfailure; then
-			{ { echo "$as_me:$LINENO: error: gnorba library not installed or installation problem" >&5
-echo "$as_me: error: gnorba library not installed or installation problem" >&2;}
-   { (exit 1); exit 1; }; }
-	    	fi
-	fi
-
-	        GNOME_LIBS="`$GNOME_CONFIG --libs-only-l gnome`"
-	        GNOMEUI_LIBS="`$GNOME_CONFIG --libs-only-l gnomeui`"
-	        GNOMEGNORBA_LIBS="`$GNOME_CONFIG --libs-only-l gnorba gnomeui`"
-	        GTKXMHTML_LIBS="`$GNOME_CONFIG --libs-only-l gtkxmhtml`"
-		ZVT_LIBS="`$GNOME_CONFIG --libs-only-l zvt`"
-	        GNOME_LIBDIR="`$GNOME_CONFIG --libs-only-L gnorba gnomeui`"
-	        GNOME_INCLUDEDIR="`$GNOME_CONFIG --cflags gnorba gnomeui`"
-
-	      else
-	        echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6
-	        no_gnome_config="yes"
-              fi
-            fi
-
-	    if test x$gnome_prefix = x; then
-	      if test x$exec_prefix = xNONE; then
-	        if test x$prefix = xNONE; then
-		    gnome_prefix=$ac_default_prefix/lib
-	        else
- 		    gnome_prefix=$prefix/lib
-	        fi
-	      else
-	        gnome_prefix=`eval echo \`echo $libdir\``
-	      fi
-	    fi
-
-	    if test "$no_gnome_config" = "yes"; then
-              echo "$as_me:$LINENO: checking for gnomeConf.sh file in $gnome_prefix" >&5
-echo $ECHO_N "checking for gnomeConf.sh file in $gnome_prefix... $ECHO_C" >&6
-	      if test -f $gnome_prefix/gnomeConf.sh; then
-	        echo "$as_me:$LINENO: result: found" >&5
-echo "${ECHO_T}found" >&6
-	        echo "loading gnome configuration from" \
-		     "$gnome_prefix/gnomeConf.sh"
-	        . $gnome_prefix/gnomeConf.sh
-
-	      else
-	        echo "$as_me:$LINENO: result: not found" >&5
-echo "${ECHO_T}not found" >&6
- 	        if test xcont = xfail; then
-	          { { echo "$as_me:$LINENO: error: Could not find the gnomeConf.sh file that is generated by gnome-libs install" >&5
-echo "$as_me: error: Could not find the gnomeConf.sh file that is generated by gnome-libs install" >&2;}
-   { (exit 1); exit 1; }; }
- 	        fi
-	      fi
-            fi
-	fi
-
-	if test -n ""; then
-	  n=""
-	  for i in $n; do
-	    echo "$as_me:$LINENO: checking extra library \"$i\"" >&5
-echo $ECHO_N "checking extra library \"$i\"... $ECHO_C" >&6
-	    case $i in
-	      applets)
-
-		GNOME_APPLETS_LIBS=`$GNOME_CONFIG --libs-only-l applets`
-		echo "$as_me:$LINENO: result: $GNOME_APPLETS_LIBS" >&5
-echo "${ECHO_T}$GNOME_APPLETS_LIBS" >&6;;
-	      capplet)
-
-		GNOME_CAPPLET_LIBS=`$GNOME_CONFIG --libs-only-l capplet`
-		echo "$as_me:$LINENO: result: $GNOME_CAPPLET_LIBS" >&5
-echo "${ECHO_T}$GNOME_CAPPLET_LIBS" >&6;;
-	      *)
-		echo "$as_me:$LINENO: result: unknown library" >&5
-echo "${ECHO_T}unknown library" >&6
-	    esac
-	  done
-	fi
-
-  if test "${GNOMEUI_LIBS}"; then
-
-# Check whether --with-libglade-config or --without-libglade-config was given.
-if test "${with_libglade_config+set}" = set; then
-  withval="$with_libglade_config"
-  LIBGLADE_CONFIG="$withval"
-fi;
-
-module_args=
-for module in . gnome; do
-  case "$module" in
-    gnome)
-      module_args="$module_args gnome"
-      ;;
-    bonobo)
-      module_args="$module_args bonobo"
-      ;;
-    gnomedb)
-      module_args="$module_args gnomedb"
-      ;;
-  esac
-done
-
-# Extract the first word of "libglade-config", so it can be a program name with args.
-set dummy libglade-config; ac_word=$2
-echo "$as_me:$LINENO: checking for $ac_word" >&5
-echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
-if test "${ac_cv_path_LIBGLADE_CONFIG+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  case $LIBGLADE_CONFIG in
-  [\\/]* | ?:[\\/]*)
-  ac_cv_path_LIBGLADE_CONFIG="$LIBGLADE_CONFIG" # Let the user override the test with a path.
-  ;;
-  *)
-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-  for ac_exec_ext in '' $ac_executable_extensions; do
-  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_path_LIBGLADE_CONFIG="$as_dir/$ac_word$ac_exec_ext"
-    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-done
-
-  test -z "$ac_cv_path_LIBGLADE_CONFIG" && ac_cv_path_LIBGLADE_CONFIG="no"
-  ;;
-esac
-fi
-LIBGLADE_CONFIG=$ac_cv_path_LIBGLADE_CONFIG
-
-if test -n "$LIBGLADE_CONFIG"; then
-  echo "$as_me:$LINENO: result: $LIBGLADE_CONFIG" >&5
-echo "${ECHO_T}$LIBGLADE_CONFIG" >&6
-else
-  echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6
-fi
-
-echo "$as_me:$LINENO: checking for libglade" >&5
-echo $ECHO_N "checking for libglade... $ECHO_C" >&6
-if test "$LIBGLADE_CONFIG" = "no"; then
-  echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6
-  warn_libglade_version="GNOME support requires libglade version >= 0.3"
-                      { echo "$as_me:$LINENO: WARNING: ${warn_libglade_version}" >&5
-echo "$as_me: WARNING: ${warn_libglade_version}" >&2;}
-else
-  if $LIBGLADE_CONFIG --check $module_args; then
-    LIBGLADE_CFLAGS=`$LIBGLADE_CONFIG --cflags $module_args`
-    LIBGLADE_LIBS=`$LIBGLADE_CONFIG --libs $module_args`
-    echo "$as_me:$LINENO: result: yes" >&5
-echo "${ECHO_T}yes" >&6
-    use_gnome="yes"
-                      GNOME_IF_FILES="gnome-interface.glade"
-  else
-    echo "*** libglade was not compiled with support for $module_args" 1>&2
-    echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6
-    warn_libglade_version="GNOME support requires libglade version >= 0.3"
-                      { echo "$as_me:$LINENO: WARNING: ${warn_libglade_version}" >&5
-echo "$as_me: WARNING: ${warn_libglade_version}" >&2;}
-  fi
-fi
-
-
-
-  fi
-fi
-if test "${use_gnome}" != yes; then
-  use_gnome="no"
-  GNOME_IF_FILES=
-fi
-
-
-if test "${use_gnome}" = yes; then
-  separator=""
-test -z "${separator}" && separator=" "
-if test -z "${R_MODULES}"; then
-  R_MODULES="gnome"
-else
-  R_MODULES="${R_MODULES}${separator}gnome"
-fi;
-fi
-
 ## Aqua
 use_aqua=no
 if test "${want_aqua}" = yes; then
@@ -37940,7 +37489,7 @@ esac
 
           ac_config_headers="$ac_config_headers src/include/config.h"
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ac_config_files="$ac_config_files Makeconf Makefile afm/Makefile doc/Makefile doc/html/Makefile doc/html/search/Makefile doc/manual/Makefile etc/Makefile etc/Makeconf etc/Renviron m4/Makefile share/Makefile src/Makefile src/appl/Makefile src/extra/Makefile src/extra/bzip2/Makefile src/extra/pcre/Makefile src/extra/xdr/Makefile src/extra/zlib/Makefile src/include/Makefile src/include/Rmath.h0 src/include/R_ext/Makefile src/library/Recommended/Makefile src/library/Makefile src/library/base/DESCRIPTION src/library/base/Makefile src/library/datasets/DESCRIPTION src/library/datasets/Makefile src/library/graphics/DESCRIPTION src/library/graphics/Makefile src/library/grDevices/DESCRIPTION src/library/grDevices/Makefile src/library/grid/DESCRIPTION src/library/grid/Makefile src/library/grid/src/Makefile src/library/methods/DESCRIPTION src/library/methods/Makefile src/library/methods/src/Makefile src/library/profile/Makefile src/library/stats/DESCRIPTION src/library/stats/Makefile src/library/stats/src/Makefile src/library/stats4/DESCRIPTION src/library/stats4/Makefile src/library/splines/DESCRIPTION src/library/splines/Makefile src/library/splines/src/Makefile src/library/tcltk/DESCRIPTION src/library/tcltk/Makefile src/library/tcltk/src/Makefile src/library/tools/DESCRIPTION src/library/tools/Makefile src/library/tools/src/Makefile src/library/utils/DESCRIPTION src/library/utils/Makefile src/main/Makefile src/modules/Makefile src/modules/X11/Makefile src/modules/gnome/Makefile src/modules/internet/Makefile src/modules/lapack/Makefile src/modules/vfonts/Makefile src/nmath/Makefile src/nmath/standalone/Makefile src/scripts/Makefile src/scripts/COMPILE src/scripts/INSTALL src/scripts/REMOVE src/scripts/R.sh src/scripts/Rdconv src/scripts/Rprof src/scripts/SHLIB src/scripts/Sd2Rd src/scripts/build src/scripts/check src/scripts/f77 src/unix/Makefile tests/Makefile tests/Embedding/Makefile tests/Examples/Makefile tests/Native/Makefile tools/Makefile"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ac_config_files="$ac_config_files Makeconf Makefile afm/Makefile doc/Makefile doc/html/Makefile doc/html/search/Makefile doc/manual/Makefile etc/Makefile etc/Makeconf etc/Renviron m4/Makefile share/Makefile src/Makefile src/appl/Makefile src/extra/Makefile src/extra/bzip2/Makefile src/extra/pcre/Makefile src/extra/xdr/Makefile src/extra/zlib/Makefile src/include/Makefile src/include/Rmath.h0 src/include/R_ext/Makefile src/library/Recommended/Makefile src/library/Makefile src/library/base/DESCRIPTION src/library/base/Makefile src/library/datasets/DESCRIPTION src/library/datasets/Makefile src/library/graphics/DESCRIPTION src/library/graphics/Makefile src/library/grDevices/DESCRIPTION src/library/grDevices/Makefile src/library/grid/DESCRIPTION src/library/grid/Makefile src/library/grid/src/Makefile src/library/methods/DESCRIPTION src/library/methods/Makefile src/library/methods/src/Makefile src/library/profile/Makefile src/library/stats/DESCRIPTION src/library/stats/Makefile src/library/stats/src/Makefile src/library/stats4/DESCRIPTION src/library/stats4/Makefile src/library/splines/DESCRIPTION src/library/splines/Makefile src/library/splines/src/Makefile src/library/tcltk/DESCRIPTION src/library/tcltk/Makefile src/library/tcltk/src/Makefile src/library/tools/DESCRIPTION src/library/tools/Makefile src/library/tools/src/Makefile src/library/utils/DESCRIPTION src/library/utils/Makefile src/main/Makefile src/modules/Makefile src/modules/X11/Makefile src/modules/internet/Makefile src/modules/lapack/Makefile src/modules/vfonts/Makefile src/nmath/Makefile src/nmath/standalone/Makefile src/scripts/Makefile src/scripts/COMPILE src/scripts/INSTALL src/scripts/REMOVE src/scripts/R.sh src/scripts/Rdconv src/scripts/Rprof src/scripts/SHLIB src/scripts/Sd2Rd src/scripts/build src/scripts/check src/scripts/f77 src/unix/Makefile tests/Makefile tests/Embedding/Makefile tests/Examples/Makefile tests/Native/Makefile tools/Makefile"
 
 
           ac_config_commands="$ac_config_commands stamp-h"
@@ -38537,7 +38086,6 @@ do
   "src/main/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/main/Makefile" ;;
   "src/modules/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/modules/Makefile" ;;
   "src/modules/X11/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/modules/X11/Makefile" ;;
-  "src/modules/gnome/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/modules/gnome/Makefile" ;;
   "src/modules/internet/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/modules/internet/Makefile" ;;
   "src/modules/lapack/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/modules/lapack/Makefile" ;;
   "src/modules/vfonts/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/modules/vfonts/Makefile" ;;
@@ -38796,30 +38344,6 @@ s,@X_CFLAGS@,$X_CFLAGS,;t t
 s,@X_PRE_LIBS@,$X_PRE_LIBS,;t t
 s,@X_LIBS@,$X_LIBS,;t t
 s,@X_EXTRA_LIBS@,$X_EXTRA_LIBS,;t t
-s,@GNOME_LIBS@,$GNOME_LIBS,;t t
-s,@GNOMEUI_LIBS@,$GNOMEUI_LIBS,;t t
-s,@GNOMEGNORBA_LIBS@,$GNOMEGNORBA_LIBS,;t t
-s,@GTKXMHTML_LIBS@,$GTKXMHTML_LIBS,;t t
-s,@ZVT_LIBS@,$ZVT_LIBS,;t t
-s,@GNOME_LIBDIR@,$GNOME_LIBDIR,;t t
-s,@GNOME_INCLUDEDIR@,$GNOME_INCLUDEDIR,;t t
-s,@GNOME_CONFIG@,$GNOME_CONFIG,;t t
-s,@ORBIT_CONFIG@,$ORBIT_CONFIG,;t t
-s,@ORBIT_IDL@,$ORBIT_IDL,;t t
-s,@HAVE_ORBIT_TRUE@,$HAVE_ORBIT_TRUE,;t t
-s,@HAVE_ORBIT_FALSE@,$HAVE_ORBIT_FALSE,;t t
-s,@ORBIT_CFLAGS@,$ORBIT_CFLAGS,;t t
-s,@ORBIT_LIBS@,$ORBIT_LIBS,;t t
-s,@HAVE_GNORBA_TRUE@,$HAVE_GNORBA_TRUE,;t t
-s,@HAVE_GNORBA_FALSE@,$HAVE_GNORBA_FALSE,;t t
-s,@GNORBA_CFLAGS@,$GNORBA_CFLAGS,;t t
-s,@GNORBA_LIBS@,$GNORBA_LIBS,;t t
-s,@GNOME_APPLETS_LIBS@,$GNOME_APPLETS_LIBS,;t t
-s,@GNOME_CAPPLET_LIBS@,$GNOME_CAPPLET_LIBS,;t t
-s,@LIBGLADE_CONFIG@,$LIBGLADE_CONFIG,;t t
-s,@LIBGLADE_CFLAGS@,$LIBGLADE_CFLAGS,;t t
-s,@LIBGLADE_LIBS@,$LIBGLADE_LIBS,;t t
-s,@GNOME_IF_FILES@,$GNOME_IF_FILES,;t t
 s,@BUILD_AQUA_TRUE@,$BUILD_AQUA_TRUE,;t t
 s,@BUILD_AQUA_FALSE@,$BUILD_AQUA_FALSE,;t t
 s,@use_aqua@,$use_aqua,;t t
@@ -39472,7 +38996,7 @@ else
   r_f77_compiler="${F2C} ${F2CFLAGS}"
 fi
 r_interfaces=
-for item in X11 gnome aqua tcltk; do
+for item in X11 aqua tcltk; do
   if eval "test \${use_${item}} = yes"; then
     separator=", "
 test -z "${separator}" && separator=" "

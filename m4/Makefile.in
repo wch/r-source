@@ -14,10 +14,6 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in README \
 	R.m4 \
 	codeset.m4 \
-	gnome-gnorba-check.m4 \
-	gnome-orbit-check.m4 \
-	gnome.m4 \
-	libglade.m4 \
 	libtool.m4
 
 all: Makefile R

@@ -33,11 +33,11 @@
 #include <locale.h>
 #endif
 
-#ifdef HAVE_STAT
+#ifdef HAVE_SYS_TYPES_H
 # include <sys/types.h>
-# ifdef HAVE_SYS_STAT_H
-#  include <sys/stat.h>
-# endif
+#endif
+#ifdef HAVE_SYS_STAT_H
+# include <sys/stat.h>
 #endif
 
 #include <Rversion.h>

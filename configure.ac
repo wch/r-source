@@ -96,8 +96,6 @@ fi
 
 ## We provide these defaults so that headers and libraries in
 ## '/usr/local' are found (by the native tools, mostly).
-## We do it here because AC_ARG_WITH(gnome) may add to CPPFLAGS and
-## LDFLAGS.
 if test -f "/sw/etc/fink.conf"; then
   : ${CPPFLAGS="-I/sw/include -I/usr/local/include"}
   : ${LDFLAGS="-L/sw/lib -L/usr/local/lib"}
@@ -222,24 +220,6 @@ AC_ARG_WITH([readline],
                 [use readline library (if available) @<:@yes@:>@])],
 [R_ARG_USE(readline)],
 [use_readline=yes])
-
-## GNOME.
-AC_ARG_WITH([gnome],
-[AC_HELP_STRING([--with-gnome],
-                [use GNOME, or specify its prefix @<:@no@:>@])],
-[if test "${withval}" = no; then
-  want_gnome=no
-elif test "${withval}" = yes; then
-  want_gnome=yes
-  want_R_shlib=yes
-else
-  want_gnome=yes
-  want_R_shlib=yes
-  CPPFLAGS="${CPPFLAGS} -I${withval}/include"
-  LDFLAGS="${LDFLAGS} -L${withval}/lib"
-  gnome_prefix="${withval}/lib"
-fi],
-[want_gnome=no])
 
 ## Aqua.
 AC_ARG_WITH([aqua],
@@ -1296,12 +1276,6 @@ else
   R_MODULES=
 fi
 
-## GNOME.
-R_GNOME
-if test "${use_gnome}" = yes; then
-  R_SH_VAR_ADD(R_MODULES, [gnome]);
-fi
-
 ## Aqua
 R_AQUA
 AM_CONDITIONAL(BUILD_AQUA, [test "x${use_aqua}" = xyes])
@@ -1512,7 +1486,6 @@ AC_CONFIG_FILES(
   src/main/Makefile
   src/modules/Makefile
   src/modules/X11/Makefile
-  src/modules/gnome/Makefile
   src/modules/internet/Makefile
   src/modules/lapack/Makefile
   src/modules/vfonts/Makefile
@@ -1561,7 +1534,7 @@ else
   r_f77_compiler="${F2C} ${F2CFLAGS}"
 fi
 r_interfaces=
-for item in X11 gnome aqua tcltk; do
+for item in X11 aqua tcltk; do
   if eval "test \${use_${item}} = yes"; then
     R_SH_VAR_ADD(r_interfaces, [${item}], [, ])
   fi

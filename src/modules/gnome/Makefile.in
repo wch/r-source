@@ -5,20 +5,41 @@ VPATH = @srcdir@
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
-top_builddir = ../../..
-subdir = src/modules/gnome
-R_HOME = $(top_builddir)
+top_builddir = .
 
-include $(top_builddir)/Makeconf
+R_HOME = @R_HOME@
+
+prefix = $(R_HOME)
+
 GNOMEUI_LIBS = @GNOMEUI_LIBS@
 GNOME_LIBDIR = @GNOME_LIBDIR@
 GNOME_INCLUDEDIR = @GNOME_INCLUDEDIR@
 LIBGLADE_CFLAGS = @LIBGLADE_CFLAGS@
 LIBGLADE_LIBS = @LIBGLADE_LIBS@
 
-ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(GNOME_INCLUDEDIR) $(LIBGLADE_CFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
+CC = @CC@
+SED = @SED@
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = ${INSTALL}
+MKINSTALLDIRS = $(srcdir)/mkinstalldirs
+
+DEFS = -DHAVE_CONFIG_H
+ALL_CPPFLAGS = -I. -I$(R_HOME)/include $(GNOME_INCLUDEDIR) $(LIBGLADE_CFLAGS) $(CPPFLAGS) $(DEFS)
+ALL_CFLAGS = @CFLAGS@
 ALL_GNOME_LIBS = $(GNOME_LIBDIR) $(GNOMEUI_LIBS) $(LIBGLADE_LIBS)
-ALL_X_LIBS = $(X_PRE_LIBS) $(X_LIBS) $(X_EXTRA_LIBS)
+MAIN_LINK = $(CC) $(LD_FLAGS)
+LIBR = @LIBR@
+
+.SUFFIXES:
+.SUFFIXES: .c .d .o
+
+.c.o:
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
+.c.d:
+	@echo "making $@ from $<"
+	@gcc -MM $(ALL_CPPFLAGS) $< | \
+          $(SED) -e 's/^\([^:]*\)\.o\([         ]\)*:/\1.o \1.lo\2:/' > $@
+
 
 SOURCES = \
 	command-grep.c \
@@ -42,44 +63,37 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(SOURCES) $(HEADERS)
 
 R_binary = Rgnome
-R_gnome_LIBADD = $(ALL_GNOME_LIBS) $(ALL_X_LIBS) $(R_XTRA_LIBS)
 
 all: Makefile Makedeps R
 
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
   $(SOURCES)
-	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+	@cd $(top_builddir) && $(SHELL) ./config.status $@
 
 Makedeps: Makefile $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
 R: Makefile
-@WANT_R_SHLIB_FALSE@	@echo "ERROR: must use --enable-R-shlib to build GNOME"; exit 1
 	@$(MAKE) Makedeps
-	@$(MAKE) install-bin-local
+	@$(MAKE) $(R_binary)
 
 $(R_binary): $(OBJECTS)
-	$(MAIN_LINK) -o $@ $(OBJECTS) $(R_gnome_LIBADD) $(LIBS) -L../../../lib -lR
+	$(MAIN_LINK) -o $@ $(OBJECTS) $(ALL_GNOME_LIBS) $(LIBS) $(LIBR)
 
-
-install-bin-local: $(R_binary)
-	@$(MAKE) rhome="$(abs_top_builddir)" install
-
-install: installdirs
-	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) "$(Rexecbindir)/exec/Rgnome"
-installdirs:
-	@$(MKINSTALLDIRS) "$(Rexecmodulesdir)"
+install:
+	@${INSTALL_PROGRAM} $(R_binary) "$(prefix)/bin/exec/Rgnome"
+	@${MKINSTALLDIRS} "$(prefix)/share/glade"
+	@$(INSTALL_PROGRAM) $(srcdir)/glade/gnome-interface.glade "$(prefix)/share/glade"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
-	@rm -f "$(Rexecmodulesdir)/R_gnome$(SHLIB_EXT)"
 
 mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f Makedeps *.d *.o *.a *.o *.lo *.la *$(SHLIB_EXT) $(Rbinary)
+	@-rm -f Makedeps *.d *.o *.o $(Rbinary)
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
