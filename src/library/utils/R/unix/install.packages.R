@@ -11,7 +11,8 @@ install.packages <- function(pkgs, lib, repos = CRAN,
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
         if(length(.libPaths()) > 1)
-            warning("argument 'lib' is missing: using ", lib, immediate.=TRUE)
+            warning("argument 'lib' is missing: using\n\t",
+                    squote(lib), immediate.=TRUE)
     }
 
     if(!file.exists(file.path(R.home(),"bin","INSTALL")))
@@ -42,7 +43,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
     }
 
     if(dependencies && !oneLib) {
-        warning("Don't know which element of 'lib' to install dependencies into\n", "skipping dependencies")
+        warning("Do not know which element of 'lib' to install dependencies into\n", "skipping dependencies")
         dependencies <- FALSE
     }
     if(is.null(available))
@@ -56,8 +57,9 @@ install.packages <- function(pkgs, lib, repos = CRAN,
         have <- .packages(all.available = TRUE)
         repeat {
             if(any(miss <- ! p1 %in% row.names(available))) {
-                cat("dependencies ", paste(sQuote(p1[miss]), sep=", "),
-                    " are not available\n\n", sep ="")
+                cat(gettext("dependencies "),
+                    paste(sQuote(p1[miss]), sep=", "),
+                    gettext(" are not available"), "\n\n", sep ="")
             }
             p1 <- p1[!miss]
             deps <- as.vector(available[p1, c("Depends", "Suggests", "Imports")])
@@ -74,7 +76,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
         pkgs <- pkgs[pkgs %in% row.names(available)]
         if(length(pkgs) > length(p0)) {
             added <- setdiff(pkgs, p0)
-            cat("also installing the dependencies ",
+            cat(gettext("also installing the dependencies "),
                 paste(sQuote(added), collapse=", "), "\n\n", sep="")
         }
     }
@@ -108,7 +110,8 @@ install.packages <- function(pkgs, lib, repos = CRAN,
                         "had non-zero exit status")
         }
         if(!is.null(tmpd) && is.null(destdir))
-            cat("\nThe downloaded packages are in ", tmpd, "\n", sep = "")
+            cat("\n", gettext("The downloaded packages are in "),
+                tmpd, "\n", sep = "")
     } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, TRUE)
 
     invisible()
@@ -155,7 +158,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
                 if(download.file(url, destfile, method) == 0)
                     retval <- rbind(retval, c(p, destfile))
                 else
-                    warning("Download of package ", sQuote(p), " failed")
+                    warning("download of package", sQuote(p), "failed")
             }
         }
     }

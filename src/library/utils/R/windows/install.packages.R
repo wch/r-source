@@ -19,7 +19,8 @@ install.packages <- function(pkgs, lib, repos = CRAN,
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
         if(length(.libPaths()) > 1)
-            warning("argument 'lib' is missing: using ", lib)
+            warning("argument 'lib' is missing: using\n\t",
+                    squote(lib), immediate.=TRUE)
     }
 
     if(is.null(repos) & missing(contriburl)) {
@@ -47,7 +48,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
     }
 
     if(dependencies && !oneLib) {
-        warning("Don't know which element of 'lib' to install dependencies into\n", "skipping dependencies")
+        warning("Do not know which element of 'lib' to install dependencies into\n", "skipping dependencies")
         dependencies <- FALSE
     }
     if(is.null(available))
@@ -61,8 +62,9 @@ install.packages <- function(pkgs, lib, repos = CRAN,
         have <- .packages(all.available = TRUE)
         repeat {
             if(any(miss <- ! p1 %in% row.names(available))) {
-                cat("dependencies ", paste(sQuote(p1[miss]), sep=", "),
-                    " are not available\n\n", sep ="")
+                cat(gettext("dependencies "),
+                    paste(sQuote(p1[miss]), sep=", "),
+                    gettext(" are not available"), "\n\n", sep ="")
             }
             p1 <- p1[!miss]
             deps <- as.vector(available[p1, c("Depends", "Suggests", "Imports")])
@@ -79,7 +81,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
         pkgs <- pkgs[pkgs %in% row.names(available)]
         if(length(pkgs) > length(p0)) {
             added <- setdiff(pkgs, p0)
-            cat("also installing the dependencies ",
+            cat(gettext("also installing the dependencies "),
                 paste(sQuote(added), collapse=", "), "\n\n", sep="")
         }
     }
@@ -114,7 +116,8 @@ install.packages <- function(pkgs, lib, repos = CRAN,
                         "had non-zero exit status")
         }
         if(!is.null(tmpd) && is.null(destdir))
-            cat("\nThe downloaded packages are in ", tmpd, "\n", sep = "")
+            cat("\n", gettext("The downloaded packages are in "),
+                tmpd, "\n", sep = "")
     } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, TRUE)
 
     invisible()
@@ -143,7 +146,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
         res <- tools::checkMD5sums(pkgname, file.path(tmpDir, pkgname))
         if(!is.na(res) && res) {
             cat("package", sQuote(pkgname),
-                "successfully unpacked and MD5 sums checked\n")
+                gettext("successfully unpacked and MD5 sums checked\n"))
             flush.console()
         }
 
@@ -161,7 +164,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
             tools::checkMD5sums(pkgname, file.path(tmpDir, curPkg))
             if(!is.na(res) && res) {
                 cat("bundle", sQuote(pkgname),
-                    "successfully unpacked and MD5 sums checked\n")
+                    gettext("successfully unpacked and MD5 sums checked\n"))
                 flush.console()
             }
         } else pkgs <- pkgname
@@ -246,7 +249,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
     for(bundle in names(bundles))
         pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
     if(dependencies && !oneLib) {
-        warning("Don't know which element of 'lib' to install dependencies into\n", "skipping dependencies")
+        warning("Do not know which element of 'lib' to install dependencies into\n", "skipping dependencies")
         dependencies <- FALSE
     }
     if(dependencies) { # check for dependencies, recursively
@@ -254,8 +257,9 @@ install.packages <- function(pkgs, lib, repos = CRAN,
         have <- .packages(all.available = TRUE)
         repeat {
             if(any(miss <- ! p1 %in% row.names(available))) {
-                cat("dependencies ", paste(sQuote(p1[miss]), sep=", "),
-                    " are not available\n\n", sep ="")
+                cat(gettext("dependencies "),
+                    paste(sQuote(p1[miss]), sep=", "),
+                    gettext(" are not available"), "\n\n", sep ="")
                 flush.console()
             }
             p1 <- p1[!miss]
@@ -273,7 +277,7 @@ install.packages <- function(pkgs, lib, repos = CRAN,
         pkgs <- pkgs[pkgs %in% row.names(available)]
         if(length(pkgs) > length(p0)) {
             added <- setdiff(pkgs, p0)
-            cat("also installing the dependencies ",
+            cat(gettext("also installing the dependencies "),
                 paste(sQuote(added), collapse=", "), "\n\n", sep="")
             flush.console()
             pkgnames <- pkgs # not zips, now
@@ -299,7 +303,8 @@ install.packages <- function(pkgs, lib, repos = CRAN,
         }
         if(!is.null(tmpd) && is.null(destdir))
             ## tends to be a long path on Windows
-            cat("\nThe downloaded packages are in\n    ", tmpd, "\n", sep = "")
+            cat("\n", gettext("The downloaded packages are in "), "\n",
+                tmpd, "\n", sep = "")
         link.html.help(verbose = TRUE)
     } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, TRUE)
 
@@ -404,7 +409,7 @@ contrib.url <- function(repos, type = c("binary", "source"))
     if(is.null(repos)) return(NULL)
     if(length(grep("@CRAN@", repos)) > 0)
         if(interactive()) {
-            cat("--- Please select a CRAN mirror for use in this session ---\n")
+            cat(gettext("--- Please select a CRAN mirror for use in this session ---\n"))
             flush.console()
             chooseCRANmirror()
             repos <- sub("@CRAN@", getOption("CRAN"), repos)

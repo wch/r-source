@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-08 08:36\n"
+"POT-Creation-Date: 2005-02-10 14:56\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -135,6 +135,27 @@ msgid "could not restore variables properly"
 msgstr ""
 
 msgid "not assigned anything"
+msgstr ""
+
+msgid "Browsing in the environment with call:"
+msgstr ""
+
+msgid "'dump' is not an object of class 'dump.frames'"
+msgstr ""
+
+msgid "Message:"
+msgstr ""
+
+msgid "Available environments had calls:"
+msgstr ""
+
+msgid "Enter an environment number, or 0 to exit"
+msgstr ""
+
+msgid "recover called non-interactively; frames dumped, use debugger() to view"
+msgstr ""
+
+msgid "No suitable frames for recover()"
 msgstr ""
 
 msgid "No demo found for topic"
@@ -281,6 +302,12 @@ msgstr ""
 msgid "must supply generic.function or class"
 msgstr ""
 
+msgid "Non-visible functions are asterisked"
+msgstr ""
+
+msgid "no methods were found"
+msgstr ""
+
 msgid "no function"
 msgstr ""
 
@@ -320,6 +347,24 @@ msgstr ""
 msgid "already exists"
 msgstr ""
 
+msgid "Installed packages:"
+msgstr ""
+
+msgid "Available packages:"
+msgstr ""
+
+msgid "(each package appears only once)"
+msgstr ""
+
+msgid "Number of installed packages:"
+msgstr ""
+
+msgid "Number of available packages (each package counted only once):"
+msgstr ""
+
+msgid "Nothing to do!"
+msgstr ""
+
 msgid "unable to access index for repository"
 msgstr ""
 
@@ -357,6 +402,12 @@ msgid "no object named"
 msgstr ""
 
 msgid "to edit"
+msgstr ""
+
+msgid "Created file named"
+msgstr ""
+
+msgid "Edit the file and move it to the appropriate directory."
 msgstr ""
 
 msgid "no documentation of type"
@@ -470,6 +521,15 @@ msgstr ""
 msgid "invalid browser name, check options(\"browser\")."
 msgstr ""
 
+msgid "Changing the default browser (as specified by the 'browser' option) to the given browser so that it gets used for all future help requests."
+msgstr ""
+
+msgid "Making links in per-session dir ..."
+msgstr ""
+
+msgid "If '%s' is already running, it is *not* restarted, and you must switch to its window."
+msgstr ""
+
 msgid "url must be a non-empty character string"
 msgstr ""
 
@@ -485,6 +545,9 @@ msgstr ""
 msgid "no packages were specified"
 msgstr ""
 
+msgid "This version of R is not set up to install source packages\nIf it was installed from an RPM, you may need the R-devel RPM"
+msgstr ""
+
 msgid "Installation of package"
 msgstr ""
 
@@ -494,10 +557,22 @@ msgstr ""
 msgid "Unable to create temp directory"
 msgstr ""
 
-msgid "Don't know which element of 'lib' to install dependencies into"
+msgid "Do not know which element of 'lib' to install dependencies into"
 msgstr ""
 
 msgid "skipping dependencies"
+msgstr ""
+
+msgid "dependencies"
+msgstr ""
+
+msgid "are not available"
+msgstr ""
+
+msgid "also installing the dependencies"
+msgstr ""
+
+msgid "The downloaded packages are in"
 msgstr ""
 
 msgid "destdir is not a directory"
@@ -506,13 +581,28 @@ msgstr ""
 msgid "at the repositories"
 msgstr ""
 
-msgid "Download of package"
+msgid "download of package"
 msgstr ""
 
 msgid "failed"
 msgstr ""
 
 msgid "unable to find the html help"
+msgstr ""
+
+msgid "updating HTML package listing"
+msgstr ""
+
+msgid "fixing URLs in non-standard libraries"
+msgstr ""
+
+msgid "If nothing happens, you should open"
+msgstr ""
+
+msgid "yourself"
+msgstr ""
+
+msgid "successfully unpacked and MD5 sums checked"
 msgstr ""
 
 msgid "malformed bundle DESCRIPTION file, no Contains field"
@@ -536,13 +626,16 @@ msgstr ""
 msgid "are in use and will not be installed"
 msgstr ""
 
-msgid "download of package"
+msgid "--- Please select a CRAN mirror for use in this session ---"
 msgstr ""
 
 msgid "trying to use CRAN without setting a mirror"
 msgstr ""
 
 msgid "zipfile"
+msgstr ""
+
+msgid "updating HTML package descriptions"
 msgstr ""
 
 msgid "cannot update HTML package index"
@@ -564,4 +657,7 @@ msgid "no package"
 msgstr ""
 
 msgid "on CRAN"
+msgstr ""
+
+msgid "Download of package"
 msgstr ""

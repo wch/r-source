@@ -7,20 +7,21 @@ help.start <- function(update = TRUE, gui = "irrelevant",
     if(!file.exists(a))
         stop("unable to find the html help")
     if(update) {
-        cat("updating HTML package listing\n")
+        cat(gettext("updating HTML package listing\n"))
         flush.console()
         try(make.packages.html(.libPaths()))
         cat("updating HTML search index\n")
         flush.console()
         try(make.search.html(.libPaths()))
         if(any(.libPaths() != .Library)) {
-            cat("fixing URLs in non-standard libraries\n")
+            cat(gettext("fixing URLs in non-standard libraries\n"))
             flush.console()
             try(fixup.libraries.URLs(.libPaths()))
         }
     }
     a <- chartr("/", "\\", a)
-    cat("If nothing happens, you should open `", a, "' yourself\n")
+    cat(gettext("If nothing happens, you should open"), sQuote(a),
+        gettext("yourself\n"))
     browseURL(a, browser = browser)
     invisible("")
 }

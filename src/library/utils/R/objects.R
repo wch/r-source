@@ -158,8 +158,9 @@ print.MethodsFunction <- function(x, ...)
     if(length(x)) {
         print(paste(x, ifelse(visible, "", "*"), sep=""), quote=FALSE, ...)
         if(any(!visible))
-            cat("\n    Non-visible functions are asterisked\n")
-    } else cat("no methods were found\n")
+            cat("\n", "   ",
+                gettext("Non-visible functions are asterisked"), "\n", sep="")
+    } else cat(gettext("no methods were found\n"))
     invisible(x)
 }
 

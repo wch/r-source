@@ -113,9 +113,9 @@ function(object, filename = NULL, name = NULL,
     if(is.na(filename)) return(Rdtxt)
 
     cat(unlist(Rdtxt), file = filename, sep = "\n")
-    cat(strwrap(c(paste("Created file named ", sQuote(filename), ".", sep=""),
-                  paste("Edit the file and move it to the appropriate",
-                        "directory."))),
+    cat(strwrap(c(paste(gettext("Created file named "), sQuote(filename),
+                        ".", sep=""),
+      gettext("Edit the file and move it to the appropriate directory."))),
         sep = "\n")
 
     invisible(filename)
@@ -244,9 +244,9 @@ function(object, filename = NULL, name = NULL)
     if(is.na(filename)) return(Rdtxt)
 
     cat(unlist(Rdtxt), file = filename, sep = "\n")
-    cat(strwrap(c(paste("Created file named ", sQuote(filename), ".", sep=""),
-                  paste("Edit the file and move it to the appropriate",
-                        "directory."))),
+    cat(strwrap(c(paste(gettext("Created file named "), sQuote(filename),
+                        ".", sep=""),
+      gettext("Edit the file and move it to the appropriate directory."))),
         sep = "\n")
 
     invisible(filename)

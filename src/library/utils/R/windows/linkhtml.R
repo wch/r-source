@@ -3,7 +3,7 @@ link.html.help <- function(verbose=FALSE, lib.loc=.libPaths())
     if(!file.exists(file.path(R.home(), "doc", "html", "search")))
        return(invisible(NULL))
     if(verbose) {
-        cat("updating HTML package descriptions\n")
+        cat(gettext("updating HTML package descriptions\n"))
         flush.console()
     }
     make.packages.html(lib.loc)
