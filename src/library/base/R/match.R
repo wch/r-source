@@ -12,29 +12,21 @@ function(x, table, nomatch=NA, duplicates.ok=FALSE)
 	y
 }
 
-"%in%" <-
-function(x, y)
+"%in%" <- function(x, y)
 match(x, y, nomatch = 0) > 0
 
-match.arg <-
-function(arg, choices)
-{
+match.arg <- function (arg, choices) {
   if (missing(choices)) {
     formal.args <- formals(sys.function(sys.parent()))
     choices <- eval(formal.args[[deparse(substitute(arg))]])
   }
+  if (all(arg == choices)) return(choices[1])
   i <- pmatch(arg, choices)
-  if (is.na(i))
-    stop(paste("ARG should be one of",
-	       paste(choices, collapse=", "), sep = " "))
-  else if (i == 0)
-    if (arg == choices)
-      rval <- choices[1]
-    else
-      stop("there is more than one match in match.arg")
-  else
-    rval <- choices[i]
-  return(rval)
+  if (is.na(i)) 
+    stop(paste("ARG should be one of", paste(choices, collapse = ", "), 
+               sep = " "))
+  if (length(i) > 1) stop("there is more than one match in match.arg")
+  choices[i]
 }
 
 charmatch <-
