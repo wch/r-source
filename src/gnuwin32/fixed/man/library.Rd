@@ -108,7 +108,7 @@ provide(name)
   default library, the ``library'' subdirectory of \code{R\_HOME}.
   \code{.lib.loc} is a character vector with the locations of all
   library trees that \R should use.  It is initialized at startup from
-  the environment variable \code{R\_LIBS} (\code{RLIBS} as used by older
+  the environment variable \code{R_LIBS} (\code{RLIBS} as used by older
   versions of \R is now deprecated), which should be a colon-separated
   list of directories at which \R library trees are rooted, and
   \code{.Library}.

@@ -220,7 +220,8 @@ Building on Windows
 We recommend that you use the mingw32 port of gcc-2.95 by Mumit Khan from
 ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will also
 need suitable versions of make, sh, rm, sed, awk, mkdir, echo, cp and
-cat; we have packaged a set extracted from the cygwin distribution
+cat; we have packaged a set at bin/windows/windows-NT/etc/tools.zip
+extracted from the cygwin distribution
 (http://sourceware.cygnus.com/cygwin and several mirrors). To avoid
 past problems on some versions of Windows95, we use the cygwin ld
 contained in that set, which must be before the mingw32 one in your
@@ -235,6 +236,8 @@ system (under gcc-2.95 but not earlier versions).
 perl5, available via http://www.perl.com/CPAN/ports.
 
 groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
+
+zip and unzip from the INFO-ZIP project.
 
 All of these need to be installed and in your path, and the
 appropriate environment variables set.

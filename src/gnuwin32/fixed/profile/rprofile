@@ -1,7 +1,8 @@
+###-*- R -*-
+
 .Library <- file.path(getenv("R_HOME"), "library")
-
-.lib.loc <- unique(c(unlist(strsplit(getenv("R_LIBS"), ";")), .Library))
-
+.lib.loc <- unique(c(unlist(strsplit(c(getenv("R_LIBS"),
+                                       getenv("RLIBS")), ";")), .Library))
 options(papersize="a4")
 options(device="X11")
 options(editor="notepad")

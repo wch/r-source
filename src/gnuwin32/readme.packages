@@ -6,7 +6,8 @@ First collect the tools that you need.
 We recommend that you use the mingw32 port of gcc-2.95 by Mumit Khan from
 ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will also
 need suitable versions of make, sh, rm, sed, awk, mkdir, echo, cp and
-cat; we have packaged a set extracted from the cygwin distribution
+cat; we have packaged a set at bin/windows/windows-NT/etc/tools.zip
+extracted from the cygwin distribution
 (http://sourceware.cygnus.com/cygwin and several mirrors). To avoid
 past problems on some versions of Windows95, we use the cygwin ld
 contained in that set, which must be before the mingw32 one in your
@@ -14,7 +15,10 @@ path. (We have no way of knowing if this is still necessary.)
 
 It is also possible to use earlier mingw32 compilers or cygwin-b20.1
 with the --no-cygwin flag, but we suggest you do so only if you have a
-working setup from building earlier versions of R.
+working setup from building earlier versions of R. We have also
+successfully used the variant of mingw32 that uses the MSVCRT run-time 
+system (under gcc-2.95 but not earlier versions), and in the case of the
+mclust library found this more successful that the standard version.
 
 perl5, available via http://www.perl.com/CPAN/ports.
 
