@@ -1,7 +1,7 @@
 \name{title}
 \title{Plot Annotation}
 \usage{
-title(main = "", sub = "", xlab = "", ylab = "", ...)
+title(main = "", sub = "", xlab = "", ylab = "", \dots)
 }
 \alias{title}
 \arguments{
@@ -20,7 +20,7 @@ title(main = "", sub = "", xlab = "", ylab = "", ...)
   principal arguments can also be used as arguments in most high-level
   plotting functions.  They must be of type \code{\link{character}} or
   \code{\link{expression}}. In the latter case, quite a bit of
-  mathematical notation is available such as sub- and superscripts, 
+  mathematical notation is available such as sub- and superscripts,
   greek letters, fractions, etc.
 }
 \seealso{

@@ -1,7 +1,7 @@
 \name{mtext}
 \title{Write text into the margins of a plot}
 \usage{
-mtext(text, side=3, line=0, outer=FALSE, at=, ...)
+mtext(text, side=3, line=0, outer=FALSE, at=NULL, \dots)
 }
 \alias{mtext}
 \arguments{
@@ -10,12 +10,13 @@ mtext(text, side=3, line=0, outer=FALSE, at=, ...)
 \item{line}{on which MARgin line, starting at 0 counting outwards.}
 \item{outer}{use outer margins if available.}
 \item{at}{give location in user-coordinates.}
-\item{adj }{ length = 1 or 2 : adjustment in x- and y- direction.}
-\item{cex }{ character expansion factor (default = 1).}
-\item{col }{ color to use.}
-\item{font }{ font for text.}
+\item{\dots}{Further graphical parameters; currently supported are:}
+\item{adj}{length = 1 or 2 : adjustment in x- (and optionally y-) direction.}
+\item{cex}{character expansion factor (default = 1).}
+\item{col}{color to use.}
+\item{font}{font for text.}
 }
- %  --- mtext is defined via do_mtext(.) in  src/main/plot.c --- 
+ %  --- mtext is defined via do_mtext(.) in  src/main/plot.c ---
 \description{
 \code{text} is written in one of the four margins (\code{side}) of the plot.
 \code{line} measures the distance outwardly in character size units.
