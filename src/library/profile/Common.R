@@ -33,7 +33,7 @@ options(CRAN = "http://cran.r-project.org")
 options(timeout = 60)
 options(internet.info = 2)
 options(encoding = native.enc)
-options(show.error.messages = FALSE)
+options(show.error.messages = TRUE)
 
 .First <- function() {
     require("ctest", quietly = TRUE)
