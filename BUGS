@@ -317,3 +317,7 @@ Directory:  incoming
 Subject: configure script error
 From: zeitler@corecomm.net
 Date: Sat, 13 Nov 1999 14:55:43 +0100 (MET)
+* PR# 322 *
+Subject: bug in arma.sim
+From: mgri@hal.stat.unipd.it (Matteo Grigoletto)
+Date: Sun, 14 Nov 1999 18:15:23 +0100 (MET)
