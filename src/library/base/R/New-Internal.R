@@ -2,9 +2,14 @@
 
 geterrmessage <- function() .Internal(geterrmessage())
 
-try <- function(expr, first = TRUE)
+try <- function(expr, silent = FALSE, first = TRUE)
 {
     restart <- function(on = TRUE).Internal(restart(on))
+    if(silent) {
+        op <- options("show.error.messages")
+        on.exit(options(op))
+        options(show.error.messages = FALSE)
+    }
     restart(first)
     if(is.logical(first) && first) {
         first <- FALSE

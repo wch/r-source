@@ -226,6 +226,8 @@ NEW FEATURES
     o	New functions rmultinom() and dmultinom(), the first one with
 	C API.
 
+    o	New argument `silent' to  try().
+
 
 INSTALLATION CHANGES
 
