@@ -146,7 +146,7 @@ esac
 ## Osman says that this is necessary.
 case ${host} in
   *hpux*)
-    INSTALL="\$\(top_srcdir\)/${INSTALL}" ;;
+    INSTALL="\$\(top_srcdir\)/aux/install-sh -c" ;;
 esac
 
 AC_PROG_LN_S
@@ -426,8 +426,9 @@ AC_CHECK_LIB(ncurses, main,,
 ))
 AC_CHECK_LIB(dl, dlopen)
 
-AC_CHECK_LIB(hdf5, main)
-AC_CHECK_LIB(z, main)
+AC_CHECK_LIB(z, main,
+  AC_CHECK_LIB(hdf5, main)
+)
 
 BLAS="blas.o"
 if ${use_dxml}; then
@@ -438,7 +439,7 @@ if test -n "${BLAS}" && ${use_blas}; then
     [ FLIBS="-lblas ${FLIBS}" BLAS=""
       if ${use_blas_risc}; then
         AC_CHECK_LIB(blas_risc, main,
-	  FLIBS="-lblas_risc ${FLIBS}", ,-lblas -lf2c)
+	  FLIBS="-lblas_risc ${FLIBS}", , -lblas -lf2c)
       fi
     ])
 fi
@@ -527,12 +528,12 @@ SHLIBEXT=so
 #  As a final safeguard, any options specified in config.site will
 #  override anything we discover below.
 
-AC_CHECK_PROG(XMKMF, xmkmf, xmkmf)
+AC_PATH_PROG(XMKMF, xmkmf, , ${PATH}:/usr/bin/X11:/usr/X11R6/bin)
 if test -n "${XMKMF}"; then
   AC_MSG_CHECKING(how to make shared libraries)
   # mv ${srcdir}/Makefile ${srcdir}/Makefile-SAFE
   echo > Imakefile
-  xmkmf > /dev/null
+  ${XMKMF} > /dev/null
   cpicflags=`grep '^ *PICFLAGS' Makefile | sed 's/^ *PICFLAGS *= *//'`
   shlibldflags=`grep 'SHLIBLDFLAGS' Makefile | sed 's/ *SHLIBLDFLAGS *= *//'`
   rm Imakefile Makefile
@@ -541,6 +542,8 @@ if test -n "${XMKMF}"; then
 else
   cpicflags=
   shlibldflags=
+  AC_MSG_WARN([Cannot determine how to create shared libraries.
+    Please set CPICFLAGS, FPICFLAGS and SHLIBLDFLAGS in \`config.site'.])
 fi
 
 if test "${CC}" = gcc; then
@@ -559,6 +562,10 @@ case "${host}" in
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     CPICFLAGS=
     SHLIBLDFLAGS=-shared
+    ;;
+  alpha*linux)
+    CFLAGS="-mieee ${CFLAGS}"
+    DLLFLAGS=-export-dynamic
     ;;
   *linuxaout)
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
@@ -665,6 +672,7 @@ AC_OUTPUT(Makeconf Makefile
   src/scripts/Makefile src/unix/Makefile
   src/library/base/Makefile src/library/profile/Makefile
   src/library/eda/Makefile src/library/eda/src/Makefile
+  src/library/lqs/Makefile src/library/lqs/src/Makefile
   src/library/modreg/Makefile src/library/modreg/src/Makefile
   src/library/mva/Makefile src/library/mva/src/Makefile
   src/library/stepfun/Makefile

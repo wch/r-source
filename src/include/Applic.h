@@ -18,6 +18,7 @@
  *
  *
  * Application Routines, typically implemented in  ../appl/
+ * ----------------------------------------------  ========
  */
 
 #ifndef APPLIC_H_
@@ -61,7 +62,7 @@ double manhattan(double *, int, int, int, int);
 double canberra(double *, int, int, int, int);
 double binary(double *, int, int, int, int);
 #define EUCLIDEAN 1
-#define MAXIMUM   2
+#define MAXIMUM	  2
 #define MANHATTAN 3
 #define CANBERRA  4
 #define BINARY	  5
@@ -123,17 +124,99 @@ int stemleaf(double *x, int *n, double *scale, int *width, double *atom);
 
 /* ...............*/
 
-/* strsignif.c  (??) */
+/* strsignif.c	(??) */
 /* ...............*/
 
 /* tabulate.c */
 void tabulate(int *x, int *n, int *ans);
 
 /* ../main/optimize.c */
-double F77_SYMBOL(fmin)();
-double F77_SYMBOL(zeroin)();
-int F77_SYMBOL(fdhess)();
-int F77_SYMBOL(optif9)();
+int F77_SYMBOL(result)(int *nr, int *n, double *x, double *f, double *g,
+		       double *a, double *p, int *itncnt, int *iflg, int *ipr);
 
+
+/* ALL ../appl/<foobar>.f	[semi-automatically by
+ *				 f2c -A -P *.f; cat *.P > all.h	 and editing]
+ */
+typedef double (*D_fp)();
+typedef /* Subroutine */ int (*S_fp)();
 
+/* ../appl/blas.f */
+double F77_SYMBOL(dasum)(int *n, double *dx, int *incx);
+int F77_SYMBOL(daxpy)(int *n, double *da, double *dx, int *incx, 
+		      double *dy, int *incy);
+int F77_SYMBOL(dcopy)(int *n, double *dx, int *incx, double *dy, int *incy);
+double F77_SYMBOL(ddot)(int *n, double *dx, int *incx, double *dy, int *incy);
+double F77_SYMBOL(dmach)(int *job);
+double F77_SYMBOL(dnrm2)(int *n, double *x, int *incx);
+int F77_SYMBOL(drot)(int *n, double *dx, int *incx, double *dy, int *incy,
+		     double *c__, double *s);
+int F77_SYMBOL(drotg)(double *da, double *db, double *c__, double *s);
+int F77_SYMBOL(dscal)(int *n, double *da, double *dx, int *incx);
+int F77_SYMBOL(dswap)(int *n, double *dx, int *incx, double *dy, int *incy);
+int F77_SYMBOL(idamax)(int *n, double *dx, int *incx);
+/*----*/
+int F77_SYMBOL(ch2inv)(double *x, int *ldx, int *n, double *v, int *info);
+int F77_SYMBOL(chol)(double *a, int *lda, int *n, double *v, int *info);
+
+int F77_SYMBOL(dpoco)(double *a, int *lda, int *n, double *rcond,
+		      double *z__, int *info);
+int F77_SYMBOL(dpodi)(double *a, int *lda, int *n, double *det, int *job);
+int F77_SYMBOL(dpofa)(double *a, int *lda, int *n, int *info);
+int F77_SYMBOL(dposl)(double *a, int *lda, int *n, double *b);
+int F77_SYMBOL(dqrdc)(double *x, int *ldx, int *n, int *p,
+		      double *qraux, int *jpvt, double *work, int *job);
+int F77_SYMBOL(dqrdc2)(double *x, int *ldx, int *n, int *p,
+		       double *tol, int *k, 
+		       double *qraux, int *jpvt, double *work);
+int F77_SYMBOL(dqrls)(double *x, int *n, int *p, double *y, int *ny,
+		      double *tol, double *b, double *rsd,
+		      double *qty, int *k, 
+		      int *jpvt, double *qraux, double *work);
+int F77_SYMBOL(dqrsl)(double *x, int *ldx, int *n, int *k, 
+		      double *qraux, double *y, 
+		      double *qy, double *qty, double *b,
+		      double *rsd, double *xb, int *job, int *info);
+
+/* ../appl/dqrutl.f */
+int F77_SYMBOL(dqrqty)(double *x, int *n, int *k, double *qraux,
+		       double *y, int *ny, double *qty);
+int F77_SYMBOL(dqrqy)(double *x, int *n, int *k, double *qraux,
+		      double *y, int *ny, double *qy);
+int F77_SYMBOL(dqrcf)(double *x, int *n, int *k, double *qraux,
+		      double *y, int *ny, double *b, int *info);
+int F77_SYMBOL(dqrrsd)(double *x, int *n, int *k, double *qraux,
+		       double *y, int *ny, double *rsd);
+int F77_SYMBOL(dqrxb)(double *x, int *n, int *k, double *qraux,
+		      double *y, int *ny, double *xb);
+/*---*/
+
+int F77_SYMBOL(dsvdc)(double *x, int *ldx, int *n, int *p, 
+		      double *s, double *e,
+		      double *u, int *ldu, double *v, int *ldv,
+		      double *work, int *job, int *info);
+int F77_SYMBOL(dtrco)(double *t, int *ldt, int *n, double *rcond,
+		      double *z__, int *job);
+int F77_SYMBOL(dtrsl)(double *t, int *ldt, int *n, double *b, int *job,
+		      int *info);
+
+double F77_SYMBOL(fmin)(double *ax, double *bx, D_fp f, double *tol);
+int F77_SYMBOL(lminfl)(double *x, int *ldx, int *n, int *k, 
+		       double *qraux, double *b, 
+		       double *resid, double *hat, double *coef, double *sigma);
+/* Only exported headers from ../appl/uncmin.f : */
+int F77_SYMBOL(fdhess)(int *n, double *x, double *fval, 
+		       S_fp fun, double *h__, int *nfd, 
+		       double *step, double *f, int *ndigit, double *typx);
+int F77_SYMBOL(optif9)(int *nr, int *n, double *x, 
+		       S_fp fcn, S_fp d1fcn, S_fp d2fcn, double *typsiz,
+		       double *fscale, int *method, int *iexp, int *msg, 
+		       int *ndigit, int *itnlim, int *iagflg, int *iahflg,
+		       int *ipr, double *dlt, double *gradtl,
+		       double *stepmx, double *steptl,
+		       double *xpls, double *fpls, double *gpls,
+		       int *itrmcd, double *a, double *wrk, int *itncnt);
+ 
+double F77_SYMBOL(zeroin)(double *ax, double *bx, 
+			  S_fp f, double *tol, int *maxiter);
 #endif

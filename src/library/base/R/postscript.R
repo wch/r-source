@@ -1,5 +1,4 @@
-.PostScript.Options <- list(
-			    paper="default",
+.PostScript.Options <- list(paper="default",
 			    horizontal = TRUE,
 			    width = 0,
 			    height = 0,
@@ -16,17 +15,22 @@ check.options <-
 	     envir=.GlobalEnv, check.attributes = c("mode", "length"),
 	     override.check= FALSE)
 {
-    ## Purpose: Utility function for setting options
     lnew <- length(new)
     if(lnew != length(newnames <- names(new)))
 	stop(paste("invalid arguments in \"",
 		   deparse(sys.call(sys.parent())),
 		   "\" (need NAMED args)", sep=""))
-    if(reset && exists(name.opt, envir=envir, inherits=FALSE)) {
-	if(length(find(name.opt)) <= 1)
-	    stop(paste("Cannot reset '", name.opt,
-		       "'  since it exists only once in search()!\n", sep=""))
-	else rm(list=name.opt, envir=envir)
+    if(!is.character(name.opt))
+	stop("'name.opt' must be character, name of an existing list")
+    if(reset) {
+	if(exists(name.opt, envir=envir, inherits=FALSE)) {
+	    if(length(find(name.opt)) > 1)
+		rm(list=name.opt, envir=envir)
+##-	    else
+##-		stop(paste("Cannot reset '", name.opt,
+##-			"'  since it exists only once in search()!\n", sep=""))
+
+	} else stop(paste("Cannot reset non-existing '", name.opt, "'", sep=""))
     }
     old <- get(name.opt, envir=envir)
     if(!is.list(old))
@@ -48,15 +52,16 @@ check.options <-
 		if(any(ii <- sapply(prev, fn) != sapply(new, fn))) {
 		    doubt <- doubt | ii
 		    do.keep <- ii & !override.check
-		    warning(paste(
-				  paste(paste("`",fn,"(",names(prev[ii]),")'", sep=""),
+		    warning(paste(paste(paste("`",fn,"(",names(prev[ii]),")'",
+					      sep=""),
 					collapse=" and "),
 				  " differ", if(sum(ii)==1) "s",
 				  " between new and previous!",
 				  if(any(do.keep))
 				  paste("\n\t ==> NOT changing ",
 					paste(paste("`",names(prev[do.keep]),
-						    "'", sep=""), collapse=" & "),
+						    "'", sep=""),
+					      collapse=" & "),
 					collapse = ""),
 				  sep=""))
 		}
@@ -72,8 +77,7 @@ check.options <-
     old
 }
 
-ps.options <-
-    function(..., reset=FALSE, override.check= FALSE)
+ps.options <- function(..., reset=FALSE, override.check= FALSE)
 {
     l... <- length(new <- list(...))
     old <- check.options(new = new, name.opt = ".PostScript.Options",
@@ -92,8 +96,3 @@ postscript <- function (file = "Rplots.ps", ...)
 		 old$width, old$height, old$horizontal, old$pointsize))
 }
 ##--> source in ../../../main/devices.c	 and ../../../unix/devPS.c
-
-##	cpars <- old[c("paper", "family", "bg", "fg")]
-##	npars <- old[c("width", "height", "horizontal", "pointsize")]
-##	cpars <- c(file, as.character(unlist(lapply(cpars, "[", 1))))
-##	npars <- as.numeric(unlist(lapply(npars, "[", 1)))

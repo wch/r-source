@@ -2,14 +2,14 @@
 \alias{princomp}
 \alias{plot.princomp}
 \alias{print.princomp}
+\alias{predict.princomp}
 \alias{summary.princomp}
 \title{Principal Components Analysis}
 \usage{
 princomp(x, cor = FALSE, scores = TRUE,
          subset = rep(TRUE, nrow(as.matrix(x))))
-print.princomp(obj)
-summary.princomp(obj)
-plot.princomp(obj)
+
+print(obj,\dots)  summary(obj)  plot(obj,\dots)  predict(obj,\dots)
 }
 \arguments{
     \item{x}{a matrix (or data frame) which provides the data for the
@@ -20,6 +20,8 @@ plot.princomp(obj)
 	principal component should be calculated.}
     \item{subset}{a vector used to select rows (observations) of the
 	data matrix \code{x}.}
+
+    \item{obj}{an object of class \code{"princomp"}, as from \code{princomp()}.}
 }
 \description{
     Performs a principal components analysis on the given data matrix
@@ -35,8 +37,8 @@ plot.princomp(obj)
     \item{scale}{the value of the \code{scale} argument.}
 }
 \details{
-    The calculation is done using \code{eigen} on the correlation or
-    covariance matrix, as determined by \code{cor}.  This is done for
+    The calculation is done using \code{\link{eigen}} on the correlation or
+    covariance matrix, as determined by \code{\link{cor}}.  This is done for
     compatibility with the Splus result (even though alternate forms for
     \code{x}---e.g., a covariance matrix---are not supported as they are
     in Splus).  A preferred method of calculation is to use svd on
@@ -49,8 +51,9 @@ plot.princomp(obj)
     scaling is done first on the data and cor set to \code{FALSE}, or 
     done automatically in \code{princomp} with \code{cor = TRUE}.
 
-    The print method for the these objects prints the results in a nice
-    format and the plot method produces a scree plot.
+    The \code{\link{print}} method for the these objects prints the
+    results in a nice format and the \code{\link{plot}} method produces
+    a scree plot.
 }
 \references{
     Mardia, K. V., J. T. Kent and J. M. Bibby (1979).
@@ -67,11 +70,13 @@ plot.princomp(obj)
 ## the variances of the variables in the
 ## crimes data vary by orders of magnitude
 data(crimes)
-princomp(crimes)
+(pc.cr <- princomp(crimes))
 princomp(crimes, cor = TRUE)
 princomp(scale(crimes, scale = TRUE, center = TRUE), cor = FALSE)
-plot(princomp(crimes))
-biplot(princomp(crimes))
-summary(princomp(crimes))
-loadings(princomp(crimes))
+
+summary(pc.cr <- princomp(crimes))
+loadings(pc.cr)
+plot(pc.cr)
+biplot(pc.cr)
 }
+\keyword{multivariate}

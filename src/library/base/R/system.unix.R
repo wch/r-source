@@ -19,7 +19,9 @@
 	      }}},	 
 	 )
 
-bug.report <- function(send=TRUE, method=.Options$mailer)
+bug.report <- function(subject="", ccaddress=getenv("USER"),
+                       method=.Options$mailer,
+                       address="r-bugs@biostat.ku.dk")
 {
     methods <- c("mailx", "gnudoit")
 
@@ -36,40 +38,57 @@ bug.report <- function(send=TRUE, method=.Options$mailer)
 		  paste(search(), collapse=", "),
 		  "\\n", sep="", collapse="")
 
-    if(method == "mailx") {
-	file <- tempfile()
-	cat("Subject: ")
-	subject <- readline()
-	body <- gsub("\\\\n", "\n", body)
-	cat(body, file=file)
-
-	system(paste(.Options$editor, file))
-	cmd <- paste("mailx", "-s '", subject,
-		     "' r-bugs@biostat.ku.dk < ", file)
-	if(send){
-	    cat("Submit the bug report? ")
-	    answer <- readline()
-	    answer <- grep("y", answer, ignore.case=TRUE)
-	    if(length(answer)>0){
-		cat("Sending email ...\n")
-		system(cmd)
-	    }
-	    else
-		cat("OK, not sending email, deleting report ...\n")
-	    unlink(file)
-	}
-	else
-	    cat("The unsent bug report can be found in file",
-		file, "\n")
-    }
-    else if(method == "gnudoit") {
+    if(method == "gnudoit") {
 	cmd <- paste("gnudoit -q '",
-		     "(mail nil \"r-bugs@biostat.ku.dk\")",
+		     "(mail nil \"", address, "\")",
 		     "(insert \"", body, "\")",
 		     "(search-backward \"Subject:\")",
 		     "(end-of-line)'",
 		     sep="")
 	system(cmd)
+    }
+    else{
+        if(missing(subject))
+            stop("Subject missing")
+        
+	file <- tempfile()
+	body <- gsub("\\\\n", "\n", body)
+	cat(body, file=file)
+        
+	system(paste(.Options$editor, file))
+        if(is.character(ccaddress) && nchar(ccaddress)>0) {
+            cmdargs <- paste("-s '", subject, "' -c", ccaddress,
+                             address, "<", file, "2>/dev/null")
+        }
+        else
+            cmdargs <- paste("-s '", subject, "'", address, "<",
+                             file, "2>/dev/null")
+        
+        status <- 1
+
+        cat("Submit the bug report? ")
+        answer <- readline()
+        answer <- grep("y", answer, ignore.case=TRUE)
+        if(length(answer)>0){
+            cat("Sending email ...\n")
+            status <- system(paste("mailx", cmdargs))
+            if(status > 0)
+                status <- system(paste("Mail", cmdargs))
+            if(status > 0)
+                status <- system(paste("/usr/ucb/mail", cmdargs))
+            
+            if(status==0) unlink(file)
+            else{
+                cat("Sending email failed!\n")
+                cat("The unsent bug report can be found in file",
+                    file, "\n")
+            }
+            
+        }
+        else
+            cat("The unsent bug report can be found in file",
+                file, "\n")
+        
     }
 }
 

@@ -4,8 +4,8 @@
 biplot(x, \dots)
 
 biplot.default(x, y, var.axes = TRUE, col, cex = rep(par("cex"), 2),
-            xlabs = NULL, ylabs = NULL, expand = 1, xlim = NULL,
-            ylim = NULL, arrow.len = 0.1, \dots)
+               xlabs = NULL, ylabs = NULL, expand = 1,
+               xlim  = NULL, ylim  = NULL, arrow.len = 0.1, \dots)
 }
 \alias{biplot}
 \alias{biplot.default}
@@ -57,8 +57,6 @@ a plot is produced on the current graphics device.
   J.C. Gower and D. J. Hand (1996). \emph{Biplots}. Chapman & Hall.
 }
 \author{B.D. Ripley}
-
-\seealso{\code{\link{biplot.princomp}}}
-
+\seealso{\code{\link{biplot.princomp}}, also for examples.}
 \keyword{hplot}
 \keyword{multivariate}

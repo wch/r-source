@@ -4,13 +4,15 @@
 model.frame(formula, data, na.action, \dots)
 model.frame.default(formula, data=sys.frame(sys.parent()),
                     na.action = na.fail, \dots)
-model.frame.lm (formula, data, na.action, \dots)
-model.frame.glm(formula, data, na.action, \dots)
+
+Methods for
+	lm	glm	aovlist
 }
 \alias{model.frame}
 \alias{model.frame.default}
 \alias{model.frame.lm}
 \alias{model.frame.glm}
+\alias{model.frame.aovlist}
 \arguments{
   \item{formula}{a model formula}
   \item{data}{\code{data.frame} or \code{environment} where the objects

@@ -5,7 +5,8 @@ backsolve <- function(r, x, k=ncol(r), upper.tri = TRUE, transpose = FALSE)
 {
     r <- as.matrix(r)# nr  x  k
     storage.mode(r) <- "double"
-    x <- as.matrix(x)#	k  x  nb
+    x.mat <- is.matrix(x)
+    if(!x.mat) x <- as.matrix(x)# k  x	nb
     storage.mode(x) <- "double"
     k <- as.integer(k)
     if(k <= 0 || nrow(x) != k) stop("invalid parameters in backsolve")
@@ -23,5 +24,5 @@ backsolve <- function(r, x, k=ncol(r), upper.tri = TRUE, transpose = FALSE)
     if(z$info != 0)
 	stop(paste("singular matrix in backsolve. First zero in diagonal [",
 		   z$info,"].",sep=""))
-    z$x
+    if(x.mat) z$x else drop(z$x)
 }

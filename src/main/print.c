@@ -227,7 +227,7 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho){
 static void PrintGenericVector(SEXP s, SEXP env)
 {
     int i, taglen, ns;
-    SEXP dims, t, names, newcall;
+    SEXP dims, t, names, newcall, tmp;
     char *pbuf, *ptag;
 
     ns = length(s);
@@ -235,26 +235,26 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	PROTECT(dims);
 	PROTECT(t = allocArray(STRSXP, dims));
 	for (i = 0 ; i < ns ; i++) {
-	    switch(TYPEOF(VECTOR(s)[i])) {
+	    switch(TYPEOF(PROTECT(tmp = VECTOR(s)[i]))) {
 	    case NILSXP:
 		pbuf = Rsprintf("NULL");
 		break;
 	    case LGLSXP:
-		pbuf = Rsprintf("Logical,%d", LENGTH(CAR(s)));
+		pbuf = Rsprintf("Logical,%d", LENGTH(tmp));
 		break;
 	    case INTSXP:
 	    case REALSXP:
-		pbuf = Rsprintf("Numeric,%d", LENGTH(CAR(s)));
+		pbuf = Rsprintf("Numeric,%d", LENGTH(tmp));
 		break;
 	    case CPLXSXP:
-		pbuf = Rsprintf("Complex,%d", LENGTH(CAR(s)));
+		pbuf = Rsprintf("Complex,%d", LENGTH(tmp));
 		break;
 	    case STRSXP:
-		pbuf = Rsprintf("Character,%d", LENGTH(CAR(s)));
+		pbuf = Rsprintf("Character,%d", LENGTH(tmp));
 		break;
 	    case LISTSXP:
 	    case VECSXP:
-		pbuf = Rsprintf("List,%d", length(CAR(s)));
+		pbuf = Rsprintf("List,%d", length(tmp));
 		break;
 	    case LANGSXP:
 		pbuf = Rsprintf("Expression");
@@ -263,6 +263,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		pbuf = Rsprintf("?");
 		break;
 	    }
+	    UNPROTECT(1); /* tmp */
 	    STRING(t)[i] = mkChar(pbuf);
 	}
 	if (LENGTH(dims) == 2) {

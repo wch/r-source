@@ -8,12 +8,12 @@ qr.solve <- function(a, b, tol = 1e-7)
     if( missing(b) ) {
 	if( nc != nrow(a$qr) )
 	    stop("only square matrices can be inverted")
-	b<-diag(1,nc)
+	b <- diag(1,nc)
     }
-    b<-as.matrix(b)
+    ## pre 0.63.3: b <- as.matrix(b)
     return(qr.coef(a,b))
 }
 
 solve <- function(a, b, ...) UseMethod("solve")
-solve.default <- qr.solve
-solve.qr <- qr.solve
+solve.default <- .Alias(qr.solve)
+solve.qr <- .Alias(qr.solve)

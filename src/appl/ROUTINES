@@ -24,6 +24,7 @@ C_FUNCTION(distance)
 #-- Linpack --
 F77_SUBROUTINE(dpbfa)
 F77_SUBROUTINE(dpbsl)
+F77_SUBROUTINE(dbksl)
 F77_SUBROUTINE(dpoco)
 F77_SUBROUTINE(dpodi)
 F77_SUBROUTINE(dpofa)

@@ -40,15 +40,19 @@
   Philippe Lambert,
   Patrick Lindsey,
   Jim Lindsey,
+  John Maindonald,
   Guido Masarotto,
   Steve Oncley and Gordon Maclean,
   Richard Okeefe,
   Hubert Palme,
   Martyn Plummer,
   Brian Ripley,
+  Jonathan Rougier,
   Bill Simpson,
   Terry Therneau,
-  Bill Venables, and
+  Bill Venables,
+  Gregory R. Warnes,
+  and
   Andreas Weingessel.
 
   We have probably omitted some important names here because of

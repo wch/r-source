@@ -50,7 +50,7 @@ Currently available RNG kinds
     Marsaglia's famous Super-Duper from the 70's.  This is the original
     version which does \emph{not} pass the MTUPLE test of the Diehard
     battery.
-    It has a period of \eqn{\approx 4.6\times 10^{18}}{4.6*10^18}.
+    It has a period of \eqn{\approx 4.6\times 10^{18}}{about 4.6*10^18}.
     
     We use the implementation as by Reeds et al. (1982-'83), with the
     additional non-0 seed measure (see note below).

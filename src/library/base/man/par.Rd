@@ -114,13 +114,14 @@ par(\dots, no.readonly = FALSE)
     modifies the way that axes are annotated.
     The values of \code{x} and \code{y} give the (approximate) number of
     tickmarks on the x and y axes and
-    \code{len} species the label size.
+    \code{len} specifies the label size.
     \emph{Currently}, \code{len} \emph{is unimplemented}.}
-  \item{las}{(\emph{Unimplemented}, \code{0} is used, even for vertical).
-    the style of axis labels.
-    0=always parallel to the axis,
-    1=always horizontal,
-    2=always perpendicular to the axis.}
+  \item{las}{numeric in \{0,1,2\}; the style of axis labels.
+    0 = always parallel to the axis [\emph{default}],
+    1 = always horizontal,
+    2 = always perpendicular to the axis,
+    3 = always vertical.
+  }
   \item{lty}{The line type.
     Line types can either be specified as an integer (1=solid, 2=dashed,
     3=dotted 4=dotdashed) or as one of the character strings
@@ -130,8 +131,8 @@ par(\dots, no.readonly = FALSE)
     the length (in points) of line segments which are alternatively
     drawn and skipped.  For example, \code{"44"} is dashed and
     \code{"13"} is dotted.}
-  \item{lwd}{The line width \bold{not yet supported for postscript}, a
-    \emph{positive} numerical, defaulting to \code{1}.}
+  \item{lwd}{The line width, a \emph{positive} numerical, defaulting to
+      \code{1}.} 
   \item{mai}{A numerical vector of the form \code{c(xb, yl, xt, yr)}
     which gives the margin size specified in inches.}
   \item{mar}{A numerical vector of the form \code{c(xb, yl, xt, yr)}
@@ -143,11 +144,10 @@ par(\dots, no.readonly = FALSE)
     Subsequent figures will be drawn in an \code{nr}-by-\code{nc}
     array on the device by \emph{columns} (\code{mfcol}), or
     \emph{rows} (\code{mfrow}), respectively.
-
+      
     Consider the alternatives, \code{\link{layout}(..)} and
     \code{\link{split.screen}(..)}.
-}
-
+  }
   \item{mfg}{A numerical vector of the form \code{c(i, j, nr, nc)} where
     \code{i} and \code{j} indicate which figure in an
     \code{nr}-by-\code{nc} array of figures is currently being drawn.}
@@ -252,9 +252,18 @@ op <- par(mfrow = c(2, 2), # 2 x 2 pictures on one plot
 ## At end of plotting, reset to previous settings:
 par(op)
 
+
 par("ylog")# FALSE
 plot(1:12,log="y")
 par("ylog")# TRUE
+
+( nr.prof <-
+  c(prof.pilots=16,lawyers=11,farmers=10,salesmen=9,physicians=9,
+    mechanics=6,policemen=6,managers=6,engineers=5,teachers=4,
+    housewives=3,students=3,armed.forces=1))
+par(las=3)
+barplot(rbind(nr.prof)) # R 0.63.2: shows alignment problem
+par(las=0)# reset to default
 
 ex <- function() {
    old.par <- par(no.readonly = TRUE)# all par settings which could be changed.

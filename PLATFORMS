@@ -15,9 +15,10 @@ our installation procedures.
 	i386-unknown-linux RedHat 5.0 	(??)
 	mips-sgi-irix6.2		cc  / f77	(1)
 	sparc-sun-solaris2.5.1		gcc / g77
-		"			gcc / f77
+		"			gcc / f77	(3)
 		"			cc  / f77
 	sparc-sun-solaris2.6		gcc / f77 
+	sparc-sun-solaris2.6		cc  / f77
 
 	OLD (pre 0.62 systems)
 
@@ -33,3 +34,7 @@ NOTES
 (2)	The Makefile in src/main must be edited manually after
 	configuration and the reference to the library "-lSM"
 	removed.
+
+(3) 	A number of  users appear to have installation problems with f77,
+	requiring the f77 library directory to be explicitly 
+	specified in -L and -R 

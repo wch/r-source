@@ -23,7 +23,7 @@ R    = LC_ALL=C $(RHOME)/bin/R --vanilla
 Ex = ./Examples
 
 TESTsrc = simple-true.R simple-tests.R d-p-q-r-tests.R \
-	 print-tests.R is-things.R primitive-funs.R
+	 print-tests.R is-things.R primitive-funs.R eval-etc.R
 
 TESTout = $(TESTsrc:.R=.Rout)
 

@@ -35,11 +35,11 @@ as.list.default <- function (x)
     .Internal(as.vector(x, "list"))
 }
 ## FIXME:  Really the above  as.vector(x, "list")  should work for data.frames!
-as.list.data.frame <- function(x) { 
+as.list.data.frame <- function(x) {
     x <- unclass(x)
     attr(x,"row.names") <- NULL
-    x 
-} 
+    x
+}
 
 ##as.vector dispatches internally so no need for a generic
 as.vector <- function(x, mode="any") .Internal(as.vector(x,mode))
@@ -62,7 +62,9 @@ as.array <- function(x)
 {
     if(is.array(x))
 	return(x)
+    n <- names(x)
     dim(x) <- length(x)
+    if(length(n)) dimnames(x) <- list(n)
     return(x)
 }
 as.name <- function(x) .Internal(as.vector(x, "name"))

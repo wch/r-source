@@ -6,7 +6,10 @@ row.names <- function(x) attr(x,"row.names")
     old <- attr(x, "row.names")
     if (!is.null(old) && length(value) != length(old))
 	stop("invalid row.names length")
-    attr(x, "row.names") <- as.character(value)
+    value <- as.character(value)
+    if (any(duplicated(value)))
+	stop("duplicate row.names are not allowed")
+    attr(x, "row.names") <- value
     x
 }
 
@@ -205,9 +208,14 @@ data.frame <- function(..., row.names = NULL, check.rows = FALSE, check.names = 
 			   i))
 	    }
 	else function(current, new, i) {
-	    if(is.null(current) && !any(duplicated(new <- as.character(new))))
-		new
-	    else current
+	    if(is.null(current)) {
+                if(adup <- any(dup <- duplicated(new <- as.character(new)))) {
+                    warning(paste("some row.names duplicated:",
+                                  paste(which(dup),collapse=","),
+                                  " --> row.names NOT used."))
+                    current
+                } else new
+	    } else current
 	}
     object <- as.list(substitute(list(...)))[-1]
     x <- list(...)
@@ -725,7 +733,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
     for(j in 1:nvar) {
 	xj <- value[[j]]
 	if(!has.dim[j] && !inherits(xj, "AsIs") && 
-	   	(is.character(xj) || is.logical(xj)))
+		(is.character(xj) || is.logical(xj)))
 	    value[[j]] <- factor(xj)
     }
     rlabs <- unlist(rlabs)
@@ -841,8 +849,8 @@ function (x, ...)
 {
     f <- get(.Generic, mode = "function")
     if (is.null(formals(f))) 
-        f <- function(x, ...) {
-        }
+	f <- function(x, ...) {
+	}
     call <- match.call(f, sys.call())
     call[[1]] <- as.name(.Generic)
     arg <- names(formals(f))[1]
@@ -850,12 +858,12 @@ function (x, ...)
     encl <- sys.frame(sys.parent())
     var.f <- function(x) eval(call, list(xx = x), encl)
     mode.ok <- sapply(x, is.numeric) & !sapply(x, is.factor) | 
-        sapply(x, is.complex)
+	sapply(x, is.complex)
     if (all(mode.ok)) {
-        r <- lapply(x, var.f)
-        class(r) <- class(x)
-        row.names(r) <- row.names(x)
-        return(r)
+	r <- lapply(x, var.f)
+	class(r) <- class(x)
+	row.names(r) <- row.names(x)
+	return(r)
     }
     else {
 	vnames <- names(x)
@@ -916,8 +924,12 @@ Ops.data.frame <- function(e1, e2 = NULL)
 	right <-if(!rscalar) e2[[j]] else e2
 	value[[j]] <- eval(f)
     }
-    names(value) <- cn
-    data.frame(value, row.names=rn)
+    if(any(.Generic == c("+","-","*","/","%%","%/%"))) {
+        names(value) <- cn
+        data.frame(value, row.names=rn)
+    }
+    else matrix(unlist(value,recursive = FALSE, use.names=FALSE),
+                nrow=length(rn), dimnames=list(rn,cn))
 }
 
 Summary.data.frame <- function(x, ...)

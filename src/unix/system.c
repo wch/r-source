@@ -126,6 +126,10 @@
 #endif
 #endif
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 /*-- necessary for some (older, i.e., ~ <= 1997) Linuxen:*/
 #ifdef linux
 #ifndef FD_SET
@@ -495,6 +499,10 @@ int main(int ac, char **av)
 	    }
 	    else if (!strcmp(*av, "--vsize")) {
 		ac--; av++; p = *av;
+		if (p == NULL) {
+		    REprintf("WARNING: no vsize given");
+		    break;
+		}
 		value = strtol(p, &p, 10);
 		if(*p) goto badargs;
 		if(value < 1 || value > 1000)
@@ -518,6 +526,10 @@ int main(int ac, char **av)
 	    }
 	    else if (!strcmp(*av, "--nsize")) {
 		ac--; av++; p = *av;
+		if (p == NULL) {
+		    REprintf("WARNING: no nsize given");
+		    break;
+		}
 		value = strtol(p, &p, 10);
 		if(*p) goto badargs;
 		if(value < R_NSize || value > 1000000)
