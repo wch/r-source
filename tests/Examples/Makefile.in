@@ -80,7 +80,9 @@ $(EX_IN): FORCE
 	fi)
 $(RECOMMENDED_EX_IN): FORCE
 	@(pkg=`basename $@ -Ex.R`; \
-	if test $(top_builddir)/library/$${pkg} -nt "$@" ; then \
+	find $@ -newer $(top_builddir)/library/$${pkg}/DESCRIPTION \
+	 -print | grep $@ > /dev/null ||\
+	(\
 	  if test -f $@ ; then \
 	    if test -n "`tail -6 $@ | grep '^Time elapsed'`" ; then \
 	      if test -f $@.bak ; then mv $@.bak $@.bakk ; fi; \
@@ -93,7 +95,7 @@ $(RECOMMENDED_EX_IN): FORCE
 	    $(top_builddir)/library/$${pkg}/R-ex > $${f}; \
 	  $(top_srcdir)/tools/move-if-change $${f} $@; \
 	  touch $@; \
-	fi)
+	))
 FORCE:
 
 $(EX_OUT): Makefile \
