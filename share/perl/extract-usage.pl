@@ -20,11 +20,12 @@
 ## Send any bug reports to r-bugs@r-project.org
 
 use Getopt::Long;
+use FileHandle;
 use R::Rdtools;
 use R::Utils;
 use R::Vars;
 
-my $revision = ' $Revision: 1.12 $ ';
+my $revision = ' $Revision: 1.13 $ ';
 my $version;
 my $name;
 
@@ -67,9 +68,9 @@ GetOptions("h|help"    => \&usage,
 &R_version($name, $version) if $opt_version;
 
 open(INFILE, "< $ARGV[0]")
-    or die "Error: cannot open '$ARGV[0]' for reading\n";
-open(OUTFILE, "> $ARGV[1]")
-    or die "Error: cannot open '$ARGV[1]' for writing\n";
+  or die "Error: cannot open '$ARGV[0]' for reading\n";
+my $out = new FileHandle("> $ARGV[1]")
+  or die "Error: cannot open '$ARGV[1]' for writing\n";
 
 while (<INFILE>) {
     chomp;
@@ -103,31 +104,36 @@ while (<INFILE>) {
 	## for non-empty matches right away.
 	next if($text !~ /\\name\s*{\s*([^}]*[^}\s])\s*}.*/);
 
-	print OUTFILE "# usages in documentation object $1\n";
-	print OUTFILE "# arglist: ", join(" ", get_arglist($text)), "\n"
+	$out->print("# usages in documentation object $1\n");
+	$out->print("# arglist: ", join(" ", get_arglist($text)), "\n")
 	  unless($opt_mode eq "codoc");
 
-	my %usages;
-	my %funs;
-
-	{
-	    local $/;		# unset for get_usages()
-	    %usages = get_usages($text, $opt_mode, $opt_verbose);
-	}
+	my %usages = get_usages($text, $opt_mode, $opt_verbose);
 
 	if($opt_mode eq "codoc") {
-	    print OUTFILE "# vars: ", join(" ", @{$usages{"vars"}}), "\n";
-	    print OUTFILE "# data: ", join(" ", @{$usages{"data"}}), "\n";
+	    $out->print("# vars: ", join(" ", @{$usages{"vars"}}), "\n");
+	    $out->print("# data: ", join(" ", @{$usages{"data"}}), "\n");
 	}
 
-	%funs = @{$usages{"funs"}};
+	my %funs = @{$usages{"funs"}};
 	foreach my $key (keys(%funs)){
 	    $funs{$key} =~ s/ *\\.?dots/ .../g;
 	    if ($key !~ /^</) {
-		print OUTFILE "$key <- function$funs{$key} NULL\n";
+		$out->print("$key <- function$funs{$key} NULL\n");
 	    }
 	}
 
-	print OUTFILE "\n";
+	## Add the \usage text, currently only for mode 'args'.
+	if($opt_mode eq "args") {
+	    $out->print("\".__Usage__.\" <- ");
+	    my @usages = get_section($text, "usage");
+	    $text = substr(shift(@usages), 1, -1);
+	    $text =~ s/\\/\\\\/g;
+	    $text =~ s/\"/\\\"/g;
+	    $text =~ s/\n/\\\n/g;
+	    $out->print("\"$text\"\n");
+	}
+
+	$out->print("\n");
     }
 }
