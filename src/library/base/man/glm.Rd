@@ -3,10 +3,9 @@
 \usage{
 glm(formula, family = gaussian, data, weights = NULL, subset = NULL,
     na.action, start = NULL, offset = NULL,
-    control = glm.control(epsilon=0.0001, maxit=10, trace=FALSE),
-    model = TRUE, method = "glm.fit", x = FALSE, y = TRUE,
-    contrasts = NULL, ...)
-glm.control(epsilon = 0.0001, maxit = 10, trace = FALSE)
+    control = glm.control(\dots), model = TRUE, method = "glm.fit",
+    x = FALSE, y = TRUE, contrasts = NULL, \dots)
+
 glm.fit(x, y, weights = rep(1, nrow(x)),
         start = NULL, etastart  =  NULL, mustart = NULL,
         offset = rep(0, nrow(x)),
@@ -15,7 +14,6 @@ glm.fit(x, y, weights = rep(1, nrow(x)),
 weights.glm(object, type = c("prior", "working"), ...)
 }
 \alias{glm}
-\alias{glm.control}
 \alias{glm.fit}
 \alias{glm.fit.null}
 \alias{weights.glm}
