@@ -6,8 +6,7 @@ function(lines)
     ## Preprocess lines with Rd markup according to .Platform$OS.type.
 
     if(!is.character(lines))
-        stop(paste("argument", sQuote(lines),
-                   "must be a character vector"))
+        stop(.wrong_args("lines", "must be a character vector"))
 
     ## Strip Rd comments first.
     lines <- .strip_Rd_comments(lines)
@@ -95,8 +94,8 @@ function(file)
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))
-        stop(paste("argument", sQuote(file),
-                   "must be a character string or connection"))
+        stop(.wrong_args("file",
+                         "must be a character string or connection"))
 
     lines <- Rdpp(readLines(file))
 
@@ -105,7 +104,8 @@ function(file)
     keywords <- .get_Rd_metadata_from_Rd_lines(lines, "keyword")
 
     ## Could be none or more than one ... argh.
-    RdType <- c(.get_Rd_metadata_from_Rd_lines(lines, "docType"), "")[1]
+    Rd_type <-
+        c(.get_Rd_metadata_from_Rd_lines(lines, "docType"), "")[1]
 
     txt <- paste(lines, collapse = "\n")
 
@@ -127,7 +127,7 @@ function(file)
                    " in manual ", sQuote("Writing R Extensions"),
                    ".", sep = ""))
 
-    list(name = Rd_name, type = RdType, title = Rd_title,
+    list(name = Rd_name, type = Rd_type, title = Rd_title,
          aliases = aliases, concepts = concepts, keywords = keywords)
 }
 
@@ -312,49 +312,13 @@ function(RdFiles, outFile = "", type = NULL,
         on.exit(close(outFile))
     }
     if(!inherits(outFile, "connection"))
-        stop(paste("argument", sQuote("outFile"),
-                   "must be a character string or connection"))
+        stop(.wrong_args("outFile",
+                         "must be a character string or connection"))
 
     index <- .build_Rd_index(Rdcontents(RdFiles), type = type)
 
     writeLines(formatDL(index, width = width, indent = indent),
                outFile)
-}
-
-### * Rd2contents
-
-Rd2contents <-
-function(dir, outFile = "")
-{
-    ## <NOTE>
-    ## Based on the defunct Perl code in R_HOME/share/Rd2contents.pl
-    ## (now removed).
-    ## </NOTE>
-
-    if(!file_test("-d", dir))
-        stop(paste("directory", sQuote(dir), "does not exist"))
-    else {
-        dir <- file_path_as_absolute(dir)
-        packageName <- basename(dir)
-    }
-    docsDir <- file.path(dir, "man")
-    if(!file_test("-d", docsDir))
-        stop(paste("directory", sQuote(dir),
-                   "does not contain Rd sources"))
-
-    if(outFile == "")
-        outFile <- stdout()
-    else if(is.character(outFile)) {
-        outFile <- file(outFile, "w")
-        on.exit(close(outFile))
-    }
-    if(!inherits(outFile, "connection"))
-        stop(paste("argument", sQuote("outFile"),
-                   "must be a character string or connection"))
-
-    contents <- Rdcontents(list_files_with_type(docsDir, "docs"))
-
-    .write_contents_as_DCF(contents, packageName, outFile)
 }
 
 ### * Rddb
@@ -369,8 +333,7 @@ function(package, dir, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
+            stop(.wrong_args("package", "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         docsDir <- file.path(dir, "man")
@@ -421,8 +384,8 @@ function(file)
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))
-        stop(paste("argument", sQuote("file"),
-                   "must be a character string or connection"))
+        stop(.wrong_args("file",
+                         "must be a character string or connection"))
     ## Try to suppress "incomplete final line found by readLines"
     ## warnings.
     lines <- .try_quietly(Rdpp(readLines(file)))
@@ -518,7 +481,7 @@ function(txt, type, predefined = TRUE)
 
     out <- character()
     if(length(txt) != 1)
-        stop("'txt' must be a character string")
+        stop(.wrong_args("txt", "must be a character string"))
     pattern <- paste("(^|\n)[[:space:]]*\\\\",
                      ifelse(predefined, type,
                             paste("section{", type, "}",
@@ -562,7 +525,7 @@ function(txt)
     ## 'txt'.
     out <- character()
     if(length(txt) != 1)
-        stop("'txt' must be a character string")
+        stop(.wrong_args("txt", "must be a character string"))
     pattern <- "(^|\n)[[:space:]]*\\\\item{"
     while((pos <- regexpr(pattern, txt)) != -1) {
         txt <- substring(txt, pos + attr(pos, "match.length") - 1)
