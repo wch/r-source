@@ -15,7 +15,6 @@ OBJECTS = $(SOURCES:.in=)
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
 	Makefile.in $(SOURCES) \
-	colors.big colors.small test-things.Rd \
 	gnome-interface.glade
 
 EXPORTFILE = @EXPORTFILE@
