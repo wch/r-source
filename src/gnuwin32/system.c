@@ -855,7 +855,7 @@ int cmdlineoptions(int ac, char **av)
 	strcpy(RUser, p);
 	p = getenv("HOMEPATH");
 	if(!p || strlen(RUser) + strlen(p) >= MAX_PATH) 
-	    R_Suicide("Invalid HOMEDRIVE");
+	    R_Suicide("Invalid HOMEDRIVE+HOMEPATH");
 	strcat(RUser, p);
     } else
 	GetCurrentDirectory(MAX_PATH, RUser);
