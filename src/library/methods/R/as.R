@@ -137,8 +137,8 @@ setAs <-
   for(what in basics) {
       ## if the class is a basic class and there exists an as.<class> function,
       ## use it as the coerce method.
-      method  <- eval(function(from, to, strict)NULL, .GlobalEnv)
-      body(method) <- substitute({
+      method  <- .basicCoerceMethod
+      body(method, envir = environment(method)) <- substitute({
           value <- AS(from)
           if(strict)
               attributes(value) <- NULL
@@ -157,6 +157,8 @@ setAs <-
   setMethod("coerce", c("ANY","name"), method)
   ## not accounted for and maybe not needed:  real, pairlist, double
 }
+
+.basicCoerceMethod <- function(from, to, strict = TRUE) stop("Undefined coerce method")
 
 .makeAsMethod <- function(expr, simple, Class) {
     if(isVirtualClass(getClass(Class)))
