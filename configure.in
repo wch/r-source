@@ -527,12 +527,12 @@ SHLIBEXT=so
 #  As a final safeguard, any options specified in config.site will
 #  override anything we discover below.
 
-AC_CHECK_PROG(XMKMF, xmkmf, xmkmf)
+AC_PATH_PROG(XMKMF, xmkmf, , ${PATH}:/usr/bin/X11:/usr/X11R6/bin)
 if test -n "${XMKMF}"; then
   AC_MSG_CHECKING(how to make shared libraries)
   # mv ${srcdir}/Makefile ${srcdir}/Makefile-SAFE
   echo > Imakefile
-  xmkmf > /dev/null
+  ${XMKMF} > /dev/null
   cpicflags=`grep '^ *PICFLAGS' Makefile | sed 's/^ *PICFLAGS *= *//'`
   shlibldflags=`grep 'SHLIBLDFLAGS' Makefile | sed 's/ *SHLIBLDFLAGS *= *//'`
   rm Imakefile Makefile
@@ -541,6 +541,8 @@ if test -n "${XMKMF}"; then
 else
   cpicflags=
   shlibldflags=
+  AC_MSG_WARN([Cannot determine how to create shared libraries.
+    Please set CPICFLAGS, FPICFLAGS and SHLIBLDFLAGS in \`config.site'.])
 fi
 
 if test "${CC}" = gcc; then
@@ -559,6 +561,10 @@ case "${host}" in
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     CPICFLAGS=
     SHLIBLDFLAGS=-shared
+    ;;
+  alpha*linux)
+    CFLAGS="-mieee ${CFLAGS}"
+    DLLFLAGS=-export-dynamic
     ;;
   *linuxaout)
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
