@@ -1,0 +1,12 @@
+This is an extract from libxml2- 2.3.5 (ftp.xmlsoft.org), modified to
+work with R event loops, and with all redundant code removed.
+
+The original code has:
+
+    Full documentation is available on-line at
+	http://xmlsoft.org/
+
+    This code is released under the LGPL or the W3C IPR, pick the one
+    you prefer.
+
+We choose LGPL, and distribute the modified versions under GPL.

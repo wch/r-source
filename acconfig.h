@@ -112,6 +112,9 @@
    Apparently necessary to fix a GCC bug on AIX? */
 #undef blkcnt_t
 
+/* Type for socket lengths: socklen_t, sock_t, int? */
+#undef SOCKLEN_T
+
 @BOTTOM@
 
 #endif /* not _CONFIG_H */

@@ -181,6 +181,9 @@
    Apparently necessary to fix a GCC bug on AIX? */
 #undef blkcnt_t
 
+/* Type for socket lengths: socklen_t, sock_t, int? */
+#undef SOCKLEN_T
+
 /* The number of bytes in a long.  */
 #undef SIZEOF_LONG
 
@@ -253,6 +256,9 @@
 /* Define if you have the setitimer function.  */
 #undef HAVE_SETITIMER
 
+/* Define if you have the snprintf function.  */
+#undef HAVE_SNPRINTF
+
 /* Define if you have the stat function.  */
 #undef HAVE_STAT
 
@@ -288,6 +294,12 @@
 
 /* Define if you have the <elf.h> header file.  */
 #undef HAVE_ELF_H
+
+/* Define if you have the <errno.h> header file.  */
+#undef HAVE_ERRNO_H
+
+/* Define if you have the <fcntl.h> header file.  */
+#undef HAVE_FCNTL_H
 
 /* Define if you have the <floatingpoint.h> header file.  */
 #undef HAVE_FLOATINGPOINT_H
@@ -346,6 +358,9 @@
 /* Define if you have the <sys/param.h> header file.  */
 #undef HAVE_SYS_PARAM_H
 
+/* Define if you have the <sys/select.h> header file.  */
+#undef HAVE_SYS_SELECT_H
+
 /* Define if you have the <sys/socket.h> header file.  */
 #undef HAVE_SYS_SOCKET_H
 
@@ -387,9 +402,6 @@
 
 /* Define if you have the tk library (-ltk).  */
 #undef HAVE_LIBTK
-
-/* Define if you have the xml library (-lxml).  */
-#undef HAVE_LIBXML
 
 /* Define if you have the z library (-lz).  */
 #undef HAVE_LIBZ

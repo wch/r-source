@@ -877,7 +877,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("http/ftp"));
-#if defined(HAVE_LIBXML) || defined(USE_WININET)
+#if defined(HAVE_BSD_NETWORKING) || defined(USE_WININET)
     INTEGER(ans)[i++] = 1;
 #else
     INTEGER(ans)[i++] = 0;

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000,2001   The R Development Core Team.
+ *  Copyright (C) 2000, 2001   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2110,6 +2110,10 @@ SEXP do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 #define USE_WININET 2
 #endif
 
+#ifdef HAVE_BSD_NETWORKING
+#define HAVE_LIBXML 1
+#endif
+
 void *R_HTTPOpen(const char *url);
 int   R_HTTPRead(void *ctx, void *dest, int len);
 void  R_HTTPClose(void *ctx);
@@ -2485,9 +2489,7 @@ void *R_HTTPOpen(const char *url)
 
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
 
-/* not yet: not in all libxml versions
     xmlNanoHTTPTimeout(timeout);
-*/
     ctxt = xmlNanoHTTPOpen(url, NULL);
     if(ctxt != NULL) {
 	int rc = xmlNanoHTTPReturnCode(ctxt);
