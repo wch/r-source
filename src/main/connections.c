@@ -2252,7 +2252,11 @@ static SEXP readOneString(Rconnection con)
     for(pos = 0; pos < 10000; pos++) {
 	p = buf + pos;
 	m = con->read(p, sizeof(char), 1, con);
-	if(!m) return R_NilValue;
+	if(!m) {
+	    if(pos > 0)
+		warning("incomplete string at end of file has been discarded");
+	    return R_NilValue;
+	}
 	if(*p == '\0') break;
 	if(pos >= ibfs - 1) {
 	    new = (char *) R_alloc(2*ibfs, sizeof(char));
@@ -2261,6 +2265,8 @@ static SEXP readOneString(Rconnection con)
 	    ibfs *= 2;
 	}
     }
+    if(pos == 10000)
+	warning("null terminator not found: breaking string at 10000 chars");
     return mkChar(buf);
 }
 

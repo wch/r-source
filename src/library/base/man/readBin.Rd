@@ -59,9 +59,9 @@ writeChar(object, con, nchars = nchar(object), eos = "")
   precision sizes are unlikely to be portable across platforms.
 
   \code{readBin} and \code{writeBin} read and write C-style
-  zero-terminated character strings.  \code{readChar} and
-  \code{writeChar} allow more flexibility, and can also be used on
-  text-mode connections.
+  zero-terminated character strings. Input strings are limited to 10000
+  characters.  \code{readChar} and \code{writeChar} allow more
+  flexibility, and can also be used on text-mode connections.
 
   Handling \R's missing and special (\code{Inf}, \code{-Inf} and
   \code{NaN} values is discussed in the \emph{R Data Import/Export} manual.
@@ -83,6 +83,11 @@ writeChar(object, con, nchars = nchar(object), eos = "")
 
   If the character length requested for \code{readChar} is longer than
   the string, as from version 1.4.0 what is available is returned.
+
+  If \code{readBin(what=character())} is used incorrectly on a file which
+  does not contain C-style charcter strings, warnings (usually
+  many) are  given as from version 1.6.2.  The input will be broken into
+  pieces of length 10000 with any final part being discarded.
 }
 
 \value{

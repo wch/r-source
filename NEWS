@@ -155,6 +155,10 @@ BUG FIXES
 	links which can be resolved within the package are so resolved,
 	even when there are possible resolutions in other packages.
 
+    o	If readBin(what=character()) is used incorrectly on a file which
+	does not contain C-style charcter strings, warnings (usually
+	many) are now given.
+
 
 
 		CHANGES IN R VERSION 1.6.1
