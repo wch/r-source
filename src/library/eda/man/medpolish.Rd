@@ -8,9 +8,6 @@
 }
 \usage{
 medpolish(x, eps = 0.01, maxiter = 10, trace.iter = TRUE)
-
-\method{plot}{medpolish}(medpolish.obj)
-\method{print}{medpolish}(medpolish.obj)
 }
 \arguments{
   \item{x}{a numeric matrix.}
@@ -18,7 +15,6 @@ medpolish(x, eps = 0.01, maxiter = 10, trace.iter = TRUE)
     see \bold{Details}.}
   \item{maxiter}{the maximum number of iterations}
   \item{trace.iter}{logical. Should progress in convergence be reported?}
-  \item{medpolish.obj}{object of class \code{medpolish}.}
 }
 \details{
   The model fitted is additive (constant + rows + columns). The

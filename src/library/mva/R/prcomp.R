@@ -32,7 +32,8 @@ print.prcomp <- function(x, print.x = FALSE, ...) {
     invisible(x)
 }
 
-summary.prcomp <- function(object) {
+summary.prcomp <- function(object, ...)
+{
     vars <- object$sdev^2
     vars <- vars/sum(vars)
     importance <- rbind("Standard deviation" = object$sdev,

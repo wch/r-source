@@ -11,6 +11,7 @@ predict.smooth.spline(object, x, deriv = 0, \dots)
   \item{object}{a fit from \code{smooth.spline}.}
   \item{x}{the new values of x.}
   \item{deriv}{integer; the order of the derivative required.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
   Predict a smoothing spline fit at new points, return the derivative if

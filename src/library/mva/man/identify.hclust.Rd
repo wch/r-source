@@ -9,10 +9,10 @@
   applied to the index of data points contained in the cluster.
 }
 \usage{
-identify.hclust(HCOBJ, FUN=NULL, N=20, MAXCLUSTER=20, DEV.FUN=NULL, ...)
+identify.hclust(x, FUN=NULL, N=20, MAXCLUSTER=20, DEV.FUN=NULL, ...)
 }
 \arguments{
-  \item{HCOBJ}{an object of the type produced by \code{hclust}.}
+  \item{x}{an object of the type produced by \code{hclust}.}
   \item{FUN}{(optional) function to be applied to the index numbers of
     the data points in a cluster (see Details below).}
   \item{N}{the maximum number of clusters to be identified.}

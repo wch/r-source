@@ -86,41 +86,41 @@ hclust <- function(d, method="complete", members=NULL)
 }
 
 plot.hclust <-
-    function (tree, labels = NULL, hang = 0.1,
+    function (x, labels = NULL, hang = 0.1,
               axes = TRUE, frame.plot = FALSE, ann = TRUE,
               main = "Cluster Dendrogram",
               sub = NULL, xlab = NULL, ylab = "Height", ...)
 {
-    merge <- tree$merge
+    merge <- x$merge
     if (!is.matrix(merge) || ncol(merge) != 2)
 	stop("invalid dendrogram")
     n <- nrow(merge)
-    height <- as.double(tree$height)
-    order <- as.double(order(tree$order))
-    
+    height <- as.double(x$height)
+    order <- as.double(order(x$order))
+
     labels <-
 	if(missing(labels)){
-	    if (is.null(tree$labels))
+	    if (is.null(x$labels))
 		paste(1:(n+1))
 	    else
-		as.character(tree$labels)
+		as.character(x$labels)
 	} else {
 	    if(labels==FALSE)
 		character(n+1)
 	    else
 		as.character(labels)
 	}
-    
+
     plot.new()
     .Internal(dend.window(n, merge, height, order, hang, labels, ...))
     .Internal(dend(n, merge, height, order, hang, labels, ...))
     if(axes)
         axis(2, at=pretty(range(height)))
-    if (frame.plot) 
+    if (frame.plot)
         box(...)
     if (ann) {
-        if(!is.null(cl <- tree$call) && is.null(sub))
-            sub <- paste(deparse(cl[[1]])," (*, \"", tree$method,"\")",sep="")
+        if(!is.null(cl <- x$call) && is.null(sub))
+            sub <- paste(deparse(cl[[1]])," (*, \"", x$method,"\")",sep="")
         if(is.null(xlab) && !is.null(cl))
             xlab <- deparse(cl[[2]])
         title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
@@ -130,7 +130,7 @@ plot.hclust <-
 
 as.hclust <- function(x, ...) UseMethod("as.hclust")
 
-as.hclust.twins <- function(x)
+as.hclust.twins <- function(x, ...)
 {
     retval <- list(merge = x$merge,
                    height = sort(x$height),
@@ -143,15 +143,15 @@ as.hclust.twins <- function(x)
     retval
 }
 
-print.hclust <- function(tree)
+print.hclust <- function(x, ...)
 {
-    if(!is.null(tree$call))
-        cat("\nCall:\n",deparse(tree$call),"\n\n",sep="")
-    if(!is.null(tree$method))
-        cat("Cluster method   :", tree$method, "\n")
-    if(!is.null(tree$dist.method))
-        cat("Distance         :", tree$dist.method, "\n")
-        cat("Number of objects:", length(tree$height)+1, "\n")
+    if(!is.null(x$call))
+        cat("\nCall:\n",deparse(x$call),"\n\n",sep="")
+    if(!is.null(x$method))
+        cat("Cluster method   :", x$method, "\n")
+    if(!is.null(x$dist.method))
+        cat("Distance         :", x$dist.method, "\n")
+        cat("Number of objects:", length(x$height)+1, "\n")
     cat("\n")
 }
 

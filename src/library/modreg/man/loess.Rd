@@ -49,7 +49,7 @@ loess(formula, data, weights, subset, na.action, model = FALSE,
     biweight function.}
   \item{method}{fit the model or just extract the model frame.}
   \item{control}{control parameters: see \code{\link{loess.control}}.}
-  \item{\ldots}{control parameters can also be supplied directly.}
+  \item{\dots}{control parameters can also be supplied directly.}
 }
 \description{
   Fit a polynomial surface determined by one or more numerical

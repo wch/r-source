@@ -67,16 +67,16 @@ print.tukeysmooth <- function(x, ...) {
     }
 }
 
-summary.tukeysmooth <- function(x, ...) {
-    cat(attr(x,"kind"), "Tukey smoother resulting from\n",
-        deparse(attr(x, "call")),";  n =", length(x),"\n")
-    if(twiced <- attr(x,"twiced"))		cat(" __twiced__ ")
-    if(!is.null(it <- attr(x,"iter")))		cat(" used", it, "iterations\n")
-    if(!is.null(ch <- attr(x,"changed")))	cat(if(!ch)" NOT", "changed\n")
-    if(length(class(x)) > 1)
+summary.tukeysmooth <- function(object, ...) {
+    cat(attr(object,"kind"), "Tukey smoother resulting from\n",
+        deparse(attr(object, "call")),";  n =", length(object),"\n")
+    if(twiced <- attr(object,"twiced"))		cat(" __twiced__ ")
+    if(!is.null(it <- attr(object,"iter")))		cat(" used", it, "iterations\n")
+    if(!is.null(ch <- attr(object,"changed")))	cat(if(!ch)" NOT", "changed\n")
+    if(length(class(object)) > 1)
         NextMethod()
     else {
-        y <- x
+        y <- object
         attributes(y) <- NULL
         summary(y, ...)
     }

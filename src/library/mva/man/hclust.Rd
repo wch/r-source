@@ -9,7 +9,7 @@
 \usage{
 hclust(d, method = "complete", members=NULL)
 
-plot.hclust(tree, labels = NULL, hang = 0.1,
+plot.hclust(x, labels = NULL, hang = 0.1,
             axes = TRUE, frame.plot = FALSE, ann = TRUE,
             main = "Cluster Dendrogram",
             sub = NULL, xlab = NULL, ylab = "Height", \dots)
@@ -25,7 +25,7 @@ plot.hclust(tree, labels = NULL, hang = 0.1,
 
   \item{members}{\code{NULL} or a vector with length size of \code{d}.}
 
-  \item{tree}{an object of the type produced by \code{hclust}.}
+  \item{x}{an object of the type produced by \code{hclust}.}
 
   \item{hang}{The fraction of the plot height by which labels should hang
     below the rest of the plot.

@@ -20,7 +20,7 @@ prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
     should be shifted to be zero centered. Alternately, a vector of
     length equal the number of columns of \code{x} can be supplied.
     The value is passed to \code{scale}.}
-  \item{scale}{a logical value indicating whether the variables should
+  \item{scale.}{a logical value indicating whether the variables should
     be scaled to have unit variance before the analysis takes
     place. The default is \code{FALSE} for consistency with S, but
     in general scaling is advisable. Alternately, a vector of length

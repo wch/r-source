@@ -1,4 +1,4 @@
-## $Id: splineClasses.R,v 1.5 2001/05/06 20:38:08 hornik Exp $
+## $Id: splineClasses.R,v 1.6 2001/08/13 21:41:49 ripley Exp $
 ##
 ## Classes and methods for determining and manipulating interpolation
 ## splines.
@@ -312,7 +312,7 @@ asVector.xyVector <-
     function(object) object$y
 
 as.data.frame.xyVector <-
-    function(object) data.frame(x = object$x, y = object$y)
+    function(x, row.names, optional) data.frame(x = x$x, y = x$y)
 
 plot.xyVector <-
     function(x, ...)
@@ -322,7 +322,7 @@ plot.xyVector <-
 }
 
 predict.polySpline <-
-    function(object, x, nseg = 50, deriv = 0)
+    function(object, x, nseg = 50, deriv = 0, ...)
 {
     knots <- splineKnots(object)
     coeff <- coef(object)
@@ -353,7 +353,7 @@ predict.polySpline <-
 }
 
 predict.bSpline <-
-    function(object, x, nseg = 50, deriv = 0)
+    function(object, x, nseg = 50, deriv = 0, ...)
 {
     knots <- splineKnots(object)
     if(any(diff(knots)) < 0) {
@@ -380,7 +380,7 @@ predict.bSpline <-
 }
 
 predict.nbSpline <-
-    function(object, x, nseg = 50, deriv = 0)
+    function(object, x, nseg = 50, deriv = 0, ...)
 {
     oclass <- class(object)
     value <- NextMethod("predict")
@@ -415,7 +415,7 @@ predict.nbSpline <-
 }
 
 predict.pbSpline <-
-    function(object, x, nseg = 50, deriv = 0)
+    function(object, x, nseg = 50, deriv = 0, ...)
 {
     knots <- splineKnots(object)
     ord <- splineOrder(object)
@@ -441,7 +441,7 @@ predict.pbSpline <-
 }
 
 predict.npolySpline <-
-    function(object, x, nseg = 50, deriv = 0)
+    function(object, x, nseg = 50, deriv = 0, ...)
 {
     value <- NextMethod()
     if(!any(is.na(value$y))) {
@@ -471,7 +471,7 @@ predict.npolySpline <-
 }
 
 predict.ppolySpline <-
-    function(object, x, nseg = 50, deriv = 0)
+    function(object, x, nseg = 50, deriv = 0, ...)
 {
     knots <- splineKnots(object)
     nknot <- length(knots)

@@ -1,4 +1,4 @@
-### $Id: profile.R,v 1.6 2000/06/27 22:26:18 pd Exp $
+### $Id: profile.R,v 1.7 2001/08/13 21:41:47 ripley Exp $
 ###
 ### Profiling nonlinear least squares for R
 ###
@@ -114,7 +114,7 @@ profiler.nls <-
 
 profile.nls <-
   function(fitted, which = 1:npar, maxpts = 100, alphamax = 0.01, delta.t =
-           cutoff/5)
+           cutoff/5, ...)
 {
   f.summary <- summary(fitted)
   std.err <- f.summary$parameters[,"Std. Error"]

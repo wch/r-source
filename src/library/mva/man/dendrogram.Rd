@@ -13,21 +13,23 @@
   can use the same engine for plotting or cutting trees. Currently the
   code is in alpha stage and the API may change at any point in time.}
 \usage{
-plot.dendrogram(dobj, type=c("rectangle", "triangle"),
+plot.dendrogram(x, type=c("rectangle", "triangle"),
                 center=FALSE, xlab="", ylab="", ...)
 as.dendrogram.hclust(object, ...)
-cut.dendrogram(dobj, h)
+cut.dendrogram(x, h, ...)
 
 plotNode(x1, x2, subtree, type, center)
 plotNodeLimit(x1, x2, subtree, center)
 }
 \arguments{
-  \item{dobj}{Object of class \code{"dendrogram"}.}
+  \item{x, object}{Object of class \code{"dendrogram"}.}
   \item{type}{Type of plot.}
   \item{center}{If \code{TRUE}, nodes are plotted centered with respect to
     the leaves in the branch. Default is to plot them in the middle of all
     direct child nodes.}
   \item{h}{Height at which the tree is cutted.}
+  \item{\dots, xlab, ylab}{graphical parameters, or arguments for
+    other methods.}
 }
 \details{
   Warning: This documentation is preliminary.

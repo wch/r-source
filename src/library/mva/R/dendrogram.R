@@ -50,20 +50,20 @@ as.dendrogram.hclust <- function(object, ...)
 }
 
 plot.dendrogram <-
-    function(dobj, type=c("rectangle", "triangle"),
+    function(x, type=c("rectangle", "triangle"),
              center=FALSE, xlab="", ylab="", ...) {
 
     type <- match.arg(type)
-    plot(0, xlim=c(0, attr(dobj, "members")+1),
-         ylim=c(0, attr(dobj, "height")), type="n",
+    plot(0, xlim=c(0, attr(x, "members")+1),
+         ylim=c(0, attr(x, "height")), type="n",
          xlab=xlab, ylab=ylab, ...)
 
     if(center)
-        plotNode(0.5, attr(dobj, "members")+.5,
-                 dobj, type, center)
+        plotNode(0.5, attr(x, "members")+.5,
+                 x, type, center)
     else
-        plotNode(1, attr(dobj, "members"),
-                 dobj, type, center)
+        plotNode(1, attr(x, "members"),
+                 x, type, center)
 }
 
 ### the work horse: plots lines from a node to all
@@ -134,7 +134,7 @@ plotNodeLimit <- function(x1, x2, subtree, center){
     list(x=x, limit=limit)
 }
 
-cut.dendrogram <- function(dobj, h)
+cut.dendrogram <- function(x, h, ...)
 {
     LOWER <- NULL
     X <- 1
@@ -159,7 +159,7 @@ cut.dendrogram <- function(dobj, h)
         subtree
     }
 
-    list(upper=assignNodes(dobj, h), lower=LOWER)
+    list(upper=assignNodes(x, h), lower=LOWER)
 }
 
 

@@ -28,7 +28,7 @@ loess.smooth(x, y, span = 2/3, degree = 1,
   \item{ylim}{the y limits of the plot.}
   \item{evaluation}{number of points at which to evaluate the smooth
     curve.}
-  \item{\ldots}{graphical parameters.}
+  \item{\dots}{graphical parameters.}
 }
 \details{
   \code{loess.smooth} is an auxiliary function.

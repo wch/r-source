@@ -3,7 +3,7 @@ rect.hclust <- function(tree, k=NULL, which=NULL,
 {
     if(length(h)>1 | length(k)>1)
         stop("k and h must be a scalar")
-    
+
     if(!is.null(h)){
         if(!is.null(k))
             stop("specify exactly one of k and h")
@@ -11,22 +11,22 @@ rect.hclust <- function(tree, k=NULL, which=NULL,
         k <- max(k, 2)
     }
     else
-        if(is.null(k)) 
+        if(is.null(k))
             stop("specify exactly one of k and h")
-    
+
     if(k < 2 | k > length(tree$height))
         stop(paste("k must be between 2 and", length(tree$height)))
-    
+
     if(is.null(cluster))
         cluster <- cutree(tree, k=k)
     ## cutree returns classes sorted by data, we need classes
     ## as occurring in the tree (from left to right)
     clustab <- table(cluster)[unique(cluster[tree$order])]
     m <- c(0, cumsum(clustab))
-    
+
     if(!is.null(x)){
         if(!is.null(which))
-            stop("specify exactly one of which and x")        
+            stop("specify exactly one of which and x")
         which <- x
         for(n in 1:length(x))
             which[n] <- max(which(m<x[n]))
@@ -37,9 +37,9 @@ rect.hclust <- function(tree, k=NULL, which=NULL,
 
     if(any(which>k))
         stop(paste("all elements of which must be between 1 and", k))
-    
+
     border <- rep(border, length=length(which))
-    
+
     retval <- list()
     for(n in 1:length(which)){
         rect(m[which[n]]+0.66, par("usr")[3],
@@ -50,30 +50,30 @@ rect.hclust <- function(tree, k=NULL, which=NULL,
     invisible(retval)
 }
 
-identify.hclust <- function(HCOBJ, FUN=NULL, N=20, MAXCLUSTER=20,
+identify.hclust <- function(x, FUN=NULL, N=20, MAXCLUSTER=20,
                             DEV.FUN=NULL, ...)
 {
-  cluster <- cutree(HCOBJ, k=2:MAXCLUSTER)
+  cluster <- cutree(x, k=2:MAXCLUSTER)
 
   retval <- list()
   oldk <- NULL
   oldx <- NULL
-  DEV.HCOBJ <- dev.cur()
+  DEV.x <- dev.cur()
 
   for(n in 1:N){
 
-    dev.set(DEV.HCOBJ)
+    dev.set(DEV.x)
     x <- locator(1)
     if(is.null(x))
       break
 
-    k <- min(which(rev(HCOBJ$height)<x$y), MAXCLUSTER)
+    k <- min(which(rev(x$height)<x$y), MAXCLUSTER)
     k <- max(k, 2)
     if(!is.null(oldx)){
-      rect.hclust(HCOBJ, k=oldk, x=oldx, cluster=cluster[,oldk-1],
+      rect.hclust(x, k=oldk, x=oldx, cluster=cluster[,oldk-1],
                   border="grey")
     }
-    retval[[n]] <- unlist(rect.hclust(HCOBJ, k=k, x=x$x,
+    retval[[n]] <- unlist(rect.hclust(x, k=k, x=x$x,
                                       cluster=cluster[,k-1],
                                       border="red"))
     if(!is.null(FUN)){
@@ -82,14 +82,14 @@ identify.hclust <- function(HCOBJ, FUN=NULL, N=20, MAXCLUSTER=20,
       }
       retval[[n]] <- FUN(retval[[n]], ...)
     }
-      
+
     oldx <- x$x
     oldk <- k
   }
-  dev.set(DEV.HCOBJ)
+  dev.set(DEV.x)
   invisible(retval)
 }
-    
 
 
-  
+
+

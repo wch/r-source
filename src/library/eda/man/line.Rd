@@ -9,11 +9,6 @@
 \title{Robust Line Fitting}
 \usage{
 line(x, y)
-
-\method{coef}{tukeyline}(tukeyline.obj)
-\method{residuals}{tukeyline}(tukeyline.obj)
-\method{fitted}{tukeyline}(tukeyline.obj)
-\method{print}{tukeyline}(tukeyline.obj)
 }
 \arguments{
   \item{x,y}{the arguments can be any way of specifying x-y pairs.}
