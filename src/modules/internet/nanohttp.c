@@ -42,8 +42,13 @@
 
 #ifdef ENABLE_NLS
 #include <libintl.h>
-#define _(String) gettext (String)
+#ifdef Win32
+#define _(String) libintl_gettext (String)
+#undef gettext /* needed for graphapp */
 #else
+#define _(String) gettext (String)
+#endif
+#else /* not NLS */
 #define _(String) (String)
 #endif
 
