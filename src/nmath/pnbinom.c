@@ -26,7 +26,7 @@
  *	x = the number of failures before the n-th success
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double pnbinom(double x, double n, double p, int lower_tail, int log_p)

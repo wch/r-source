@@ -36,7 +36,7 @@
  *    Journal of Statistical Computation and Simulation 22, 127-145.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 /* afc(i) :=  ln( i! )	[logarithm of the factorial i.
  *	   If (i > 7), use Stirling's approximation, otherwise use table lookup.

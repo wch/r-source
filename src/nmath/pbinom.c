@@ -21,7 +21,7 @@
  *
  *    The distribution function of the binomial distribution.
  */
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double pbinom(double x, double n, double p, int lower_tail, int log_p)

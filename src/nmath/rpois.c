@@ -60,7 +60,7 @@ static double fact[10] =
 
 #define repeat for(;;)
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 double rpois(double mu)
 {

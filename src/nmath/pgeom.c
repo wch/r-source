@@ -22,7 +22,7 @@
  *    The distribution function of the geometric distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double pgeom(double x, double p, int lower_tail, int log_p)

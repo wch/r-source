@@ -28,7 +28,7 @@
  *                        |x| * signum(y)
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 double fsign(double x, double y)
 {

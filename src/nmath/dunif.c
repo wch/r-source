@@ -22,7 +22,7 @@
  *    The density of the uniform distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double dunif(double x, double a, double b, int give_log)

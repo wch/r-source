@@ -26,7 +26,7 @@
  *    Truncation toward zero.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 double ftrunc(double x)
 {

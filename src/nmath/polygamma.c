@@ -135,7 +135,7 @@
  *    Routines called: d1mach, i1mach.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 	/* Bernoulli Numbers */
 

@@ -53,7 +53,7 @@
  *    with epsilon set close to the relative machine precision.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double dnbeta(double x, double a, double b, double lambda, int give_log)

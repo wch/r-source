@@ -23,7 +23,7 @@
  *    "df" degrees of freedom and noncentrality parameter "lambda".
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double dnchisq(double x, double df, double lambda, int give_log)

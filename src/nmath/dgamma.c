@@ -22,7 +22,7 @@
  *     Computes the density of the gamma distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double dgamma(double x, double shape, double scale, int give_log)

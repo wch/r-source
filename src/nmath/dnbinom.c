@@ -26,7 +26,7 @@
  *    x = the number of failures before the n-th success
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double dnbinom(double x, double n, double p, int give_log)
@@ -39,7 +39,7 @@ double dnbinom(double x, double n, double p, int give_log)
 	ML_ERR_return_NAN;
 
     if(fabs(x - floor(x + 0.5)) > 1e-7) {
-	warning("non-integer x = %f", x);
+	MATHLIB_WARNING("non-integer x = %f", x);
 	return R_D__0;
     }
     if (x < 0)

@@ -41,7 +41,7 @@
  *    Adapted from R. Broucke, Algorithm 446, CACM., 16, 254 (1973).
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 /* NaNs propagated correctly */
 

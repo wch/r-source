@@ -31,7 +31,7 @@
  *    but this version is portable.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 double fmod(double x, double y)
 {

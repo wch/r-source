@@ -22,7 +22,7 @@
  *    The distribution function of the uniform distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double punif(double x, double a, double b, int lower_tail, int log_p)

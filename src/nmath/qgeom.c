@@ -22,7 +22,7 @@
  *    The quantile function of the geometric distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double qgeom(double p, double prob, int lower_tail, int log_p)

@@ -13,7 +13,7 @@
  *      pbeta  - incomplete-beta function
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double pnbeta(double x, double a, double b, double lambda,

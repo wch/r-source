@@ -22,7 +22,7 @@
  *	The density of the exponential distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double dexp(double x, double scale, int give_log)

@@ -22,7 +22,7 @@
  *	The quantile function of the Cauchy distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double qcauchy(double p, double location, double scale,

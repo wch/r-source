@@ -27,7 +27,7 @@
  *    Random variates from the lognormal distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 double rlnorm(double logmean, double logsd)
 {

@@ -27,7 +27,7 @@
  *	Compute the density of the normal distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double dnorm4(double x, double mu, double sigma, int give_log)
@@ -45,23 +45,3 @@ double dnorm4(double x, double mu, double sigma, int give_log)
 	    M_1_SQRT_2PI * exp(-0.5 * x * x)  /	  sigma);
     /* M_1_SQRT_2PI = 1 / sqrt(2 * pi) */
 }
-
-#define NEW_NORM_ONLY
-#ifndef NEW_NORM_ONLY
-/* These are defined in Mathlib.h */
-#undef dnorm
-#undef pnorm
-#undef qnorm
-double dnorm(double x, double mu, double sigma)
-{
-    return dnorm4(x, mu, sigma, 0);
-}
-double pnorm(double x, double mu, double sigma)
-{
-    return pnorm5(x, mu, sigma, 1, 0);
-}
-double qnorm(double x, double mu, double sigma)
-{
-    return qnorm5(x, mu, sigma, 1, 0);
-}
-#endif

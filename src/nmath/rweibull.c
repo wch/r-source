@@ -22,7 +22,7 @@
  *    Random variates from the Weibull distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 double rweibull(double shape, double scale)
 {

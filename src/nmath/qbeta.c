@@ -28,7 +28,7 @@
  */
 
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 /* set the exponent of accu to -2r-2 for r digits of accuracy */

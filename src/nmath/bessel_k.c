@@ -23,7 +23,7 @@
 /* From http://www.netlib.org/specfun/rkbesl	Fortran translated by f2c,...
  *	------------------------------=#----	Martin Maechler, ETH Zurich
  */
-#include "Mathlib.h"
+#include "nmath.h"
 
 static double xmax = 705.342;/* maximal x for UNscaled answer, see below */
 
@@ -42,7 +42,7 @@ double bessel_k(double x, double alpha, double expo)
     K_bessel(&x, &alpha, &nb, &ize, bk, &ncalc);
     if(ncalc != nb) {/* error input */
       if(ncalc < 0)
-	MATHLIB_WARNING4("bessel_k(%g): ncalc (=%d) != nb (=%d); alpha=%g. Arg. out of range?\n",
+	MATHLIB_WARNING4("bessel_k(%g): ncalc (=%ld) != nb (=%ld); alpha=%g. Arg. out of range?\n",
 			 x, ncalc, nb, alpha);
       else
 	MATHLIB_WARNING2("bessel_k(%g,nu=%g): precision lost in result\n",

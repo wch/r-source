@@ -17,7 +17,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 double fmax2(double x, double y)
 {

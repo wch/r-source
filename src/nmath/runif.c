@@ -21,7 +21,7 @@
  *
  *    Random variates from the uniform distribution.
  */
-#include "Mathlib.h"
+#include "nmath.h"
 
 double runif(double a, double b)
 {

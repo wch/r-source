@@ -22,7 +22,7 @@
  *    The density of the beta distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double dbeta(double x, double a, double b, int give_log)

@@ -36,7 +36,7 @@
  *    written by W. Fullerton of Los Alamos Scientific Laboratory.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 double lgammacor(double x)
 {

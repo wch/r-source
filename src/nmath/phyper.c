@@ -21,7 +21,7 @@
  *
  *	The distribution function of the hypergeometric distribution.
  */
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double phyper(double x, double NR, double NB, double n,

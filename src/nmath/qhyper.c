@@ -22,7 +22,7 @@
  *    The quantile function of the hypergeometric distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double qhyper(double p, double NR, double NB, double n,

@@ -22,7 +22,7 @@
  *    The density of the lognormal distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double dlnorm(double x, double logmean, double logsd, int give_log)

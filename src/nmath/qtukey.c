@@ -40,7 +40,7 @@
  *	Vol.30, pp.1-15, 1988.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 /* qinv() :

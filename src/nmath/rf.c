@@ -31,7 +31,7 @@
  *    This function calls rchisq to do the real work
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 double rf(double n1, double n2)
 {

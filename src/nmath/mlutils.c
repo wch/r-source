@@ -17,14 +17,10 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  */
 
-#include "Mathlib.h"
-
-#ifdef IEEE_754
-/* These are used in IEEE exception handling (in Mathlib.h only) */
-double m_zero = 0;
-double m_one = 1;
-/* double m_tiny = DBL_MIN; */
+#ifdef HAVE_CONFIG_H
+# include "config.h"
 #endif
+#include "nmath.h"
 
 #ifndef IEEE_754
 
@@ -51,3 +47,76 @@ void ml_error(int n)
 }
 
 #endif
+
+#ifdef MATHLIB_STANDALONE
+#ifdef IEEE_754
+/* These are used in IEEE exception handling */
+double m_zero = 0;
+double m_one = 1;
+#endif
+
+/*
+ *  based on code in ../main/arithmetic.c
+ */
+
+
+#ifdef IEEE_754
+
+int R_IsNaNorNA(double x)
+{
+/* NOTE: some systems do not return 1 for TRUE. */
+    return (isnan(x) != 0);
+}
+
+/* Include the header file defining finite() */
+#ifdef HAVE_IEEE754_H
+# include <ieee754.h>		/* newer Linuxen */
+#else
+# ifdef HAVE_IEEEFP_H
+#  include <ieeefp.h>		/* others [Solaris 2.5.x], .. */
+# endif
+#endif
+#if defined(Win32) && defined(_MSC_VER)
+#include <float.h>
+#endif
+
+int R_finite(double x)
+{
+#ifdef Macintosh
+    return isfinite(x);
+#endif
+#ifndef FINITE_BROKEN
+    return finite(x);
+# else
+#  ifdef _AIX
+#   include <fp.h>
+     return FINITE(x);
+#  else
+    return (!isnan(x) & (x != ML_POSINF) & (x != ML_NEGINF));
+#  endif
+#endif
+}
+
+#else /* not IEEE_754 */
+
+int R_IsNaNorNA(double x)
+{
+# ifndef HAVE_ISNAN
+    return (x == ML_NAN);
+# else
+    return (isnan(x) != 0 || x == ML_NAN);
+# endif
+}
+
+int R_finite(double x)
+{
+# ifndef HAVE_FINITE
+    return (x !=  ML_NAN && x < ML_POSINF && x > ML_NEGINF);
+# else
+    int finite(double);
+    return finite(x);
+# endif
+}
+#endif /* IEEE_754 */
+
+#endif /* MATHLIB_STANDALONE */

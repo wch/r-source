@@ -48,6 +48,7 @@
 
 #include "Applic.h"
 #include "Mathlib.h"
+#include "Error.h"
 #ifdef DEBUGpr
 # include "PrtUtil.h"
 #endif

@@ -40,7 +40,7 @@
  *	Remark on Algorithm 179, CACM 17, p153, (1974).
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 /* This is called from	qbeta(.) in a root-finding loop --- be FAST! */

@@ -39,7 +39,7 @@
  *    M_LN_SQRT_PI = ln(sqrt(pi)) = ln(pi)/2
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 /*----------- DEBUGGING -------------

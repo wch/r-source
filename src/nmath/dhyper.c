@@ -22,7 +22,7 @@
  *    The density of the hypergeometric distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double dhyper(double x, double NR, double NB, double n, int give_log)

@@ -18,7 +18,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #undef i1mach
 
 int Rf_i1mach(int i)

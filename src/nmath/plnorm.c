@@ -22,7 +22,7 @@
  *    The lognormal distribution function.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double plnorm(double x, double logmean, double logsd, int lower_tail, int log_p)

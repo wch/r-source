@@ -32,7 +32,7 @@
  *    by W. Fullerton of Los Alamos Scientific Laboratory.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 double lbeta(double a, double b)
 {

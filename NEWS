@@ -17,7 +17,12 @@ NEW FEATURES
         save or SIGUSR2 to quit and save without running .Last and
         on.exit expressions.
 
+
 BUG FIXES
+
+    o   The Mathlib functions now use exactly the same values for
+        +/-Inf, NaN and NA as the rest of R in all cases.
+
 
 
 	**************************************************

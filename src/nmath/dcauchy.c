@@ -22,7 +22,7 @@
  *    The density of the Cauchy distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double dcauchy(double x, double location, double scale, int give_log)

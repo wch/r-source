@@ -22,7 +22,7 @@
  *    The density function of the Weibull distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double dweibull(double x, double shape, double scale, int give_log)

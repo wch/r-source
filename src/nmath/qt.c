@@ -28,7 +28,7 @@
  *	G.W. Hill CACM 13(10), 619-620, October 1970
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 const static double eps = 1.e-12;

@@ -27,11 +27,13 @@
 #ifndef MATHLIB_H
 #define MATHLIB_H
 
-/*-- Mathlib as part of R --  undefine this for standalone : */
-#define MATHLIB_IN_R
+/*-- Mathlib as part of R --  define this for standalone : */
+/* #undef MATHLIB_STANDALONE */
 
-#include "Rconfig.h"
-#include "R_ext/Arith.h"
+#ifdef MATHLIB_STANDALONE
+# define R_NO_REMAP 1
+#endif
+
 
 #ifdef FORTRAN_H
 #error __MUST__include "Mathlib.h"  _before_  "Fortran.h"
@@ -477,7 +479,6 @@ double	qtukey(double, double, double, double, int, int);
 
 /* Wilcoxon Rank Sum Distribution */
 
-#define WILCOX_MAX 50
 double dwilcox(double, double, double, int);
 double pwilcox(double, double, double, int, int);
 double qwilcox(double, double, double, int, int);
@@ -485,7 +486,6 @@ double rwilcox(double, double);
 
 /* Wilcoxon Signed Rank Distribution */
 
-#define SIGNRANK_MAX 50
 double dsignrank(double, double, int);
 double psignrank(double, double, int, int);
 double qsignrank(double, double, int, int);
@@ -494,80 +494,16 @@ double rsignrank(double);
 
 /* ----------------- Private part of the header file ------------------- */
 
-#ifdef MATHLIB_IN_R/* Mathlib in R */
-
-#include "R_ext/Error.h"
-# define MATHLIB_ERROR(fmt,x)		error(fmt,x);
-# define MATHLIB_WARNING(fmt,x)		warning(fmt,x)
-# define MATHLIB_WARNING2(fmt,x,x2)	warning(fmt,x,x2)
-# define MATHLIB_WARNING3(fmt,x,x2,x3)	warning(fmt,x,x2,x3)
-# define MATHLIB_WARNING4(fmt,x,x2,x3,x4) warning(fmt,x,x2,x3,x4)
-
-#else/* Mathlib standalone */
-
-#include <stdio.h>
-# define MATHLIB_ERROR(fmt,x)	{ printf(fmt,x); exit(1) }
-# define MATHLIB_WARNING(fmt,x)		printf(fmt,x)
-# define MATHLIB_WARNING2(fmt,x,x2)	printf(fmt,x,x2)
-# define MATHLIB_WARNING3(fmt,x,x2,x3)	printf(fmt,x,x2,x3)
-# define MATHLIB_WARNING4(fmt,x,x2,x3,x4) printf(fmt,x,x2,x3,x4)
-#endif
-
-#define ME_NONE		0
-/*	no error */
-#define ME_DOMAIN	1
-/*	argument out of domain */
-#define ME_RANGE	2
-/*	value out of range */
-#define ME_NOCONV	4
-/*	process did not converge */
-#define ME_PRECISION	8
-/*	does not have "full" precision */
-#define ME_UNDERFLOW	16
-/*	and underflow occured (important for IEEE)*/
-
-
-#ifdef IEEE_754
-extern double m_zero;
-extern double m_one;
-#define ML_ERROR(x)	/* nothing */
-#define ML_POSINF	(m_one / m_zero)
-#define ML_NEGINF	((-m_one) / m_zero)
-#define ML_NAN		(m_zero / m_zero)
-#define ML_UNDERFLOW	(DBL_MIN * DBL_MIN)
-#define ML_VALID(x)	(!ISNAN(x))
-
-#else/*--- NO IEEE: No +/-Inf, NAN,... ---*/
-void ml_error(int n);
-#define ML_ERROR(x)	ml_error(x)
-#define ML_POSINF	DBL_MAX
-#define ML_NEGINF	(-DBL_MAX)
-#define ML_NAN		(-DBL_MAX)
-#define ML_UNDERFLOW	0
-#define ML_VALID(x)	(errno == 0)
-#endif
-
-#define ML_ERR_return_NAN { ML_ERROR(ME_DOMAIN); return ML_NAN; }
-
 	/* old-R Compatibility */
 
 #define snorm	norm_rand
 #define sunif	unif_rand
 #define sexp	exp_rand
 
-	/* Name Hiding to Avoid Clashes with Fortran */
-
-#ifdef HIDE_NAMES
-# define d1mach	c_d1mach
-# define i1mach	c_i1mach
-#endif
-
 	/* Machine Characteristics */
 
 double	d1mach(int);
-double	d1mach_(int*);
 int	i1mach(int);
-int	i1mach_(int*);
 
 	/* General Support Functions */
 

@@ -34,7 +34,7 @@
  *	(Algorithm BTPEC).
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include <stdlib.h>
 
 #define repeat for(;;)

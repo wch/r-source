@@ -30,7 +30,7 @@
  *    	sign(x) = -1  if x < 0
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 double sign(double x)
 {

@@ -35,7 +35,7 @@
  *		   distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 static double **w;
@@ -70,7 +70,7 @@ w_init_maybe(int n)
 	n = imax2(n, SIGNRANK_MAX);
 	w = (double **) calloc(n + 1, sizeof(double *));
     if (!w)
-	error("signrank allocation error");
+	MATHLIB_ERROR("%s", "signrank allocation error");
     }
 }
 

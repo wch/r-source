@@ -39,7 +39,7 @@
  *    Page 480.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 double rgeom(double p)
 {

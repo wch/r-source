@@ -50,7 +50,7 @@
  *    Coefficients e(k) - for exp(q)-1 = sum(e(k)*q**k)
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 static double a1 = 0.3333333;
 static double a2 = -0.250003;

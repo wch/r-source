@@ -22,7 +22,7 @@
  *	The distribution function of the Cauchy distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double pcauchy(double x, double location, double scale,

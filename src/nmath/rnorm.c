@@ -28,7 +28,7 @@
  *
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 double rnorm(double mu, double sigma)
 {

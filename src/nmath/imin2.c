@@ -26,7 +26,7 @@
  *    Compute minimum of two integers.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 int imin2(int x, int y)
 {

@@ -22,7 +22,7 @@
  *    The distribution function of the Poisson distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double ppois(double x, double lambda, int lower_tail, int log_p)

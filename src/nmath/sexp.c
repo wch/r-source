@@ -34,7 +34,7 @@
  *    Comm. ACM, 15, 873-882.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 double exp_rand(void)
 {

@@ -28,7 +28,7 @@
  *
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 
 #ifndef HAVE_RINT
 #define USE_BUILTIN_RINT

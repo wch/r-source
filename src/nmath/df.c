@@ -22,7 +22,7 @@
  *    The density function of the F distribution.
  */
 
-#include "Mathlib.h"
+#include "nmath.h"
 #include "dpq.h"
 
 double df(double x, double n1, double n2, int give_log)
