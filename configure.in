@@ -601,7 +601,7 @@ case "${host}" in
   alpha*linux*)
     mainldflags=-export-dynamic
     ;;
-  *freebsd3.*)
+  *freebsd[[3-4]].*)
     mainldflags=-export-dynamic
     shlibldflags="-shared"
     ;;
