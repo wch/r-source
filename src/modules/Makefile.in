@@ -10,29 +10,12 @@ subdir = src/modules
 
 include $(top_builddir)/Makeconf
 
-SOURCES = X11.c gnome.c vfonts.c
-DEPENDS = $(SOURCES:.c=.d)
-OBJECTS = $(SOURCES:.c=.o)
-
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in $(SOURCES)
+DISTFILES = Makefile.in
 
 SUBDIRS = X11 gnome lapack vfonts
 
-MODULES = $(R_GUIS) vfonts
-
-noinst_LIBRARIES = libmodules.a
-libmodules_a_SOURCES = $(SOURCES)
-libmodules_a_OBJECTS = $(OBJECTS)
-
-## FIXME:
-## We most likely will not want a separate shared library.
-## If we have a final decision, remove libmodules.la target.
-## </FIXME>
-noinst_LTLIBRARIES = libmodules.la
-libmodules_la_SOURCES = $(SOURCES)
-libmodules_la_OBJECTS = $(OBJECTS:.o=.lo)
-@USE_LIBTOOL_TRUE@libmodules_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
+MODULES = $(R_GUIS) lapack vfonts
 
 all: Makefile Makedeps R
 
@@ -41,26 +24,10 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-Makedeps: Makefile $(DEPENDS)
-	@cat $(DEPENDS) >> Makefile
-	@touch $@
-
 R: Makefile
-	@$(MAKE) Makedeps
-	@$(MAKE) $(noinst_LIBRARIES)
-@WANT_R_SHLIB_TRUE@	@$(MAKE) stamp-lo
 	@for d in $(MODULES); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
-
-libmodules.a: $(libmodules_a_OBJECTS)
-	$(AR) cr $@ $(libmodules_a_OBJECTS)
-	$(RANLIB) $@
-
-stamp-lo: $(libmodules_la_OBJECTS)
-	@touch $@
-libmodules.la: stamp-lo
-	$(SHLIB_LINK) -o $@ $(libmodules_la_LDFLAGS) $(libmodules_la_OBJECTS)
 
 install install-strip:
 	@for d in $(MODULES); do \
