@@ -19,7 +19,7 @@ function(package, dir, lib.loc = NULL)
         all_doc_topics <- if(!file_test("-f", helpIndex))
             character()
         else {
-            ## Find all documented topics from the help index.            
+            ## Find all documented topics from the help index.
             sort(scan(file = helpIndex, what = list("", ""), sep = "\t",
                       quiet = TRUE, na.strings = character())[[1]])
             ## <NOTE>
@@ -51,7 +51,7 @@ function(package, dir, lib.loc = NULL)
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
             dir <- file_path_as_absolute(dir)
-        is_base <- basename(dir) == "base"        
+        is_base <- basename(dir) == "base"
         docs_dir <- file.path(dir, "man")
         if(!file_test("-d", docs_dir))
             all_doc_topics <- character()
@@ -2465,14 +2465,14 @@ function(db)
                 rbind(files_with_missing_mandatory_tags,
                       cbind(f, bad_tags))
         ind <- which(tags == "name")[1]
-        if(is.na(ind) ||
+        #if(is.na(ind) ||
            ## Using LaTeX special characters (# $ % & ~ _ ^ \ { })
            ## causes the creation of PDF bookmarks to fail.
-           (regexpr(paste("(^[[:space:]]*$)|",
-                          "(#|\\\$|\%|&|~|_|\\\^|\\\\|\{|\})",
-                          sep = ""),
-                    x$data$vals[[ind]]) != -1))
-            files_with_bad_name <- c(files_with_bad_name, f)
+         #  (regexpr(paste("(^[[:space:]]*$)|",
+         #                 "(#|\\\$|\%|&|~|_|\\\^|\\\\|\{|\})",
+         #                 sep = ""),
+         #           x$data$vals[[ind]]) != -1))
+        if(is.na(ind)) files_with_bad_name <- c(files_with_bad_name, f)
         ind <- which(tags == "title")[1]
         if(is.na(ind) ||
            (regexpr("^[[:space:]]*$", x$data$vals[[ind]]) != -1))

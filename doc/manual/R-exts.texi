@@ -1666,9 +1666,10 @@ particular, functions) are given in this subsection.
 @findex \name
 @var{name} typically is the basename of the Rd file containing the
 documentation.  It is the ``name'' of the Rd object represented by the
-file, has to be unique in a package, and must not contain La@TeX{}
-special characters (@samp{#}, @samp{$}, @samp{%}, @samp{&}, @samp{~},
-@samp{_}, @samp{^}, @samp{\}, @samp{@{}, @samp{@}}).
+file and has to be unique in a package.
+@c and must not contain La@TeX{}
+@c special characters (@samp{#}, @samp{$}, @samp{%}, @samp{&}, @samp{~},
+@c @samp{_}, @samp{^}, @samp{\}, @samp{@{}, @samp{@}}).
 
 @item \alias@{@var{topic}@}
 @findex \alias

@@ -101,6 +101,10 @@ DOCUMENTATION
     o	Manual 'Writing R Extensions' has further details on writing
 	new front-ends for R using the new public header files.
 
+    o	There are no longer any restrictions on character in the
+	\name{} field of a .Rd file: in particular _ is supported.
+
+
 
 C-LEVEL FACILITIES
 

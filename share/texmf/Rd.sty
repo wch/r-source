@@ -243,6 +243,7 @@
   \def\myaddcontentsline#1#2#3{%
     \addtocontents{#1}{\protect\contentsline{#2}{#3}{\thepage}{page.\thepage}}}
   \RequirePackage{hyperref}
+  \DeclareTextCommand{\Rpercent}{PD1}{\045} % percent
   %% <NOTE>
   %% Formerly in R's hyperref.cfg, possibly to be shared with Sweave.sty
   %% as well (but without setting pagebackref as this can give trouble
@@ -335,7 +336,7 @@
     {\def\@currentHref{page.\thepage}
     \hypertarget{Rfn.#3}{\index{#1@\texttt{#1}}}%
     \myaddcontentsline{toc}{subsection}{#1}%
-    \pdfbookmark[1]{#1}{Rfn.#1}}
+    \pdfbookmark[1]{#1}{Rfn.#3}}
     {\addcontentsline{toc}{subsection}{#1}
       \index{#1@\texttt{#1}|textbf}}
     \hrule
@@ -346,6 +347,6 @@
     \hrule
   \end{center}
   \nopagebreak}
-
+\DeclareTextCommandDefault{\Rpercent}{\%{}}
 \InputIfFileExists{Rd.cfg}{%
   \typeout{Reading personal defaults ...}}{}
