@@ -31,6 +31,7 @@ NEW FEATURES
 	device is now proportional to the size given to
 	x11(pointsize).
 
+
     o	abline(a,b) now (again) refers to transformed coordinates on
 	plots with log-axes, so that abline(lm(log10(y)~log10(x)))
 	(say) draws a best-fitting line on a log-log plot. The earlier
@@ -102,7 +103,8 @@ NEW FEATURES
 	.Call and .External interfaces is in the doc/manual directory.
 
     o	New target `make pdf' in doc/manuals makes hyperlinked PDF 
-	documentation. (This is experimental for this release.)
+	documentation. (This is experimental for this release. See
+	doc/manual/README for further details.)
 
 
     o	S.h now contains (via Rdefines.h) a MESSAGE macro, and
@@ -216,6 +218,7 @@ BUG FIXES
     o	R CMD check had a typo which made the final message fail.
 
     o	R_EOF redefined as -1, was causing trouble with isxxxx contructions.
+
 
 
 	**************************************************

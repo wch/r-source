@@ -74,3 +74,10 @@ src/nmath/pgamma.c, pnbeta.c, pnchisq.c, pnt.c, qbeta.c, qgamma.c,
 are based in whole or in part on Applied Statistics algorithms
 (C) Royal Statistical Society
 
+
+src/gnome/devGNOME.c, devGTK.c, gdkrotated.c, gnome-find-dialog.c,
+   gtkconsole.c, system-*.c, terminal*.c
+
+	Copyright (C) 1998-1999   Lyndon Drake
+		and the R Development Core Team
+ 
