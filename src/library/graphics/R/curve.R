@@ -27,7 +27,7 @@ curve <- function(expr, from, to, n=101, add=FALSE, type="l",
 	if(lg != "" && "x" %in% strsplit(lg, NULL)[[1]]) {
 	    ## unneeded now: rm(list="log",envir=sys.frame(1))# else: warning
 	    if(any(c(from,to) <= 0))
-		stop("'from' & 'to' must be > 0	 with  log=\"x\"")
+		stop("'from' and 'to' must be > 0 with log=\"x\"")
 	    exp(seq(log(from), log(to), length=n))
 	} else seq(from,to,length=n)
     y <- eval(expr, envir=list(x = x), enclos=parent.frame())

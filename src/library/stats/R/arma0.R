@@ -112,7 +112,7 @@ arima0 <- function(x, order = c(0, 0, 0),
     if(any(is.na(x)) || (ncxreg && any(is.na(xreg))))
         ## only exact recursions handle NAs
         if(method == "ML" && delta >= 0) {
-            warning("NAs present: setting delta to -1")
+            warning("NAs present: setting 'delta' to -1")
             delta <- -1
         }
 
@@ -278,12 +278,12 @@ predict.arima0 <-
     if(arma[2] > 0) {
         ma <- coefs[arma[1] + 1:arma[2]]
         if(any(Mod(polyroot(c(1, ma))) < 1))
-            warning("ma part of model is not invertible")
+            warning("MA part of model is not invertible")
     }
     if(arma[4] > 0) {
         ma <- coefs[sum(arma[1:3]) + 1:arma[4]]
         if(any(Mod(polyroot(c(1, ma))) < 1))
-            warning("seasonal ma part of model is not invertible")
+            warning("seasonal MA part of model is not invertible")
     }
     storage.mode(data) <- "double"
     G <- .Call("setup_starma", as.integer(arma), data, n, rep(0, n),

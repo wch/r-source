@@ -97,10 +97,11 @@ coplot <-
     ## generate the given value intervals
 
     number <- as.integer(number)
-    if(length(number)==0 || any(number < 1)) stop("number must be integer >= 1")
-    if(any(overlap >= 1)) stop("overlap must be < 1 (and typically >= 0).")
+    if(length(number) == 0 || any(number < 1))
+        stop("'number' must be integer >= 1")
+    if(any(overlap >= 1)) stop("'overlap' must be < 1 (and typically >= 0).")
 
-    bad.givens <- function() stop("invalid given.values")
+    bad.givens <- function() stop("invalid 'given.values'")
     if(missing(given.values)) {
 	a.intervals <-
 	    if(a.is.fac) {

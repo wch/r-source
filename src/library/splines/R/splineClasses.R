@@ -48,7 +48,7 @@ splineDesign <-
 
     ## The x test w/ sorted knots assumes ord <= nk+1-ord, or nk >= 2*ord-1:
     if(!outer.ok && nk < 2*ord-1)
-        stop(sprintf(gettext("need at least 2*ord -1 (=%d) knots"), 2*ord -1),
+        stop(gettextf("need at least 2*ord -1 (=%d) knots", 2*ord -1),
              domain = NA)
 
     o1 <- ord - 1
@@ -337,7 +337,7 @@ predict.polySpline <- function(object, x, nseg = 50, deriv = 0, ...)
     delx <- x - knots[i]
     deriv <- as.integer(deriv)[1]
     if(deriv < 0 || deriv >= ord)
-	stop(sprintf(gettext("'deriv' must be between 0 and %d"), ord - 1),
+	stop(gettextf("'deriv' must be between 0 and %d", ord - 1),
              domain = NA)
     while(deriv > 0) {
 	ord <- ord - 1
@@ -359,7 +359,7 @@ predict.bSpline <- function(object, x, nseg = 50, deriv = 0, ...)
 	stop("knot positions must be non-decreasing")
     ord <- splineOrder(object)
     if(deriv < 0 || deriv >= ord)
-	stop(sprintf(gettext("'deriv' must be between 0 and %d"), ord - 1),
+	stop(gettextf("'deriv' must be between 0 and %d", ord - 1),
              domain = NA)
     ncoeff <- length(coeff <- coef(object))
     if(missing(x)) {

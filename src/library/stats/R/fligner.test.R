@@ -7,7 +7,7 @@ function(x, g, ...)
     ## rewrite bartlett.test() accordingly ...
     if (is.list(x)) {
         if (length(x) < 2)
-            stop("x must be a list with at least 2 elements")
+            stop("'x' must be a list with at least 2 elements")
         DNAME <- deparse(substitute(x))
         x <- lapply(x, function(u) u <- u[complete.cases(u)])
         k <- length(x)
@@ -19,7 +19,7 @@ function(x, g, ...)
     }
     else {
         if (length(x) != length(g))
-            stop("x and g must have the same length")
+            stop("'x' and 'g' must have the same length")
         DNAME <- paste(deparse(substitute(x)), "and",
                        deparse(substitute(g)))
         OK <- complete.cases(x, g)
@@ -39,7 +39,7 @@ function(x, g, ...)
 
     ## Careful. This assumes that g is a factor:
     x <- x - tapply(x,g,median)[g]
-    
+
     a <- qnorm((1 + rank(abs(x)) / (n + 1)) / 2)
     STATISTIC <- sum(tapply(a, g, "sum")^2 / tapply(a, g, "length"))
     STATISTIC <- (STATISTIC - n * mean(a)^2) / var(a)
@@ -62,7 +62,7 @@ fligner.test.formula <-
 function(formula, data, subset, na.action, ...)
 {
     if(missing(formula) || (length(formula) != 3))
-        stop("formula missing or incorrect")
+        stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)

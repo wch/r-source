@@ -46,11 +46,13 @@ shell <- function(cmd, shell, flag="/c", intern=FALSE,
                   show.output.on.console=wait, ...)
     if(!intern && res !=0)
         if(mustWork)
-            if(res == -1) stop("cmd could not be run")
-            else stop("cmd execution failed with error code ", res)
+            if(res == -1) stop("'cmd' could not be run")
+            else stop(gettextf("'cmd' execution failed with error code %d",
+                               res), domain = NA)
         else
-            if(res == -1) warning("cmd could not be run")
-            else warning("cmd execution failed with error code ", res)
+            if(res == -1) warning("'cmd' could not be run")
+            else warning(gettextf("'cmd' execution failed with error code %d",
+                                  res), domain = NA)
     if(intern) res else invisible(res)
 }
 

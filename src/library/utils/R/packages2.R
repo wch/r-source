@@ -42,8 +42,8 @@ install.packages <-
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
         if(length(.libPaths()) > 1)
-            warning("argument 'lib' is missing: using\n\t",
-                    sQuote(lib), immediate.=TRUE)
+            warning(gettextf("argument 'lib' is missing: using %s", lib),
+                    immediate. = TRUE, domain = NA)
     }
 
     if(.Platform$OS.type == "windows") {
@@ -86,8 +86,8 @@ install.packages <-
             cmd <- paste(cmd0, "-l", shQuote(update[i, 2]),
                          shQuote(update[i, 1]))
             if(system(cmd) > 0)
-                warning(sprintf(gettext(
-                 "installation of package '%s' had non-zero exit status"),
+                warning(gettextf(
+                 "installation of package '%s' had non-zero exit status",
                                 sQuote(update[i, 1])), domain = NA)
         }
         return(invisible())
@@ -99,7 +99,8 @@ install.packages <-
     if(is.null(destdir) && nonlocalcran) {
         tmpd <- file.path(tempdir(), "downloaded_packages")
         if (!file.exists(tmpd) && !dir.create(tmpd))
-            stop('Unable to create temp directory ', tmpd)
+            stop(gettextf("Unable to create temporary directory '%s'", tmpd),
+                 domain = NA)
     }
 
     depends <- is.character(dependencies) ||
@@ -176,13 +177,13 @@ install.packages <-
             cmd <- paste(cmd0, "-l", shQuote(update[i, 2]), update[i, 3])
             status <- system(cmd)
             if(status > 0)
-                warning(sprintf(gettext(
-                 "installation of package '%s' had non-zero exit status"),
+                warning(gettextf(
+                 "installation of package '%s' had non-zero exit status",
                                 sQuote(update[i, 1])), domain = NA)
         }
         if(!is.null(tmpd) && is.null(destdir))
-            cat("\n", gettext("The downloaded packages are in "),
-                normalizePath(tmpd), "\n", sep = "")
+            cat("\n", gettextf("The downloaded packages are in\n\t%s",
+                               normalizePath(tmpd)), "\n", sep = "")
         link.html.help(verbose = TRUE)
     } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, TRUE)
 

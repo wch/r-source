@@ -1,7 +1,7 @@
-oneway.test <- 
+oneway.test <-
 function(formula, data, subset, na.action, var.equal = FALSE) {
     if(missing(formula) || (length(formula) != 3))
-        stop("formula missing or incorrect")
+        stop("'formula' missing or incorrect")
     DNAME <- paste(deparse(substitute(formula)[[2]]), "and",
                    deparse(substitute(formula)[[3]]))
     m <- match.call(expand.dots = FALSE)

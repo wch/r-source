@@ -20,7 +20,7 @@ RSiteSearch <- function(string, restrict = c("Rhelp02a","functions","docs"),
                                   "size", "size:decending"),
                         nomatch = 0)
     if (sortby == 0) {
-        warning("wrong 'sortby' specified. Using \"score\"",
+        warning("wrong 'sortby' specified. Using sortby=\"score\"",
                 call. = FALSE, immediate. = TRUE)
         sortby <- 1
     }
@@ -37,9 +37,9 @@ RSiteSearch <- function(string, restrict = c("Rhelp02a","functions","docs"),
     res <- pmatch(restrict, c("Rhelp02a", "Rhelp01", "functions","docs"),
                   nomatch = 0)
     if (all(res) == 0) {
-        warning("wrong restriction specified.\nUsing ",
-                'c("Rhelp02a", "functions", "docs")',
-                call. = FALSE, immediate. = TRUE)
+        warning(gettextf("wrong restriction specified.\nUsing '%s'",
+                         'c("Rhelp02a", "functions", "docs")'),
+                call. = FALSE, immediate. = TRUE, domain = NA)
         res <- c(1, 3, 4)
     }
     res <- paste(c("idxname=Rhelp02a", "idxname=Rhelp01",

@@ -28,11 +28,11 @@ function(formula, data, weights, subset, na.action, model = FALSE,
     names(nmx) <- nmx
     drop.square <- match(nmx, nmx[drop.square], 0) > 0
     parametric <- match(nmx, nmx[parametric], 0) > 0
-    if(!match(degree, 0:2, 0)) stop("degree must be 0, 1 or 2")
+    if(!match(degree, 0:2, 0)) stop("'degree' must be 0, 1 or 2")
     iterations <- if(family=="gaussian") 1 else control$iterations
     if(!missing(enp.target))
 	if(!missing(span))
-	    warning("both span and enp.target specified: span will be used")
+	    warning("both 'span' and 'enp.target' specified: 'span' will be used")
 	else {				# White book p.321
 	    tau <- switch(degree+1, 1, D+1, (D+1)*(D+2)/2) - sum(drop.square)
 	    span <- 1.2 * tau/enp.target
@@ -215,7 +215,7 @@ simpleLoess <-
 predict.loess <- function(object, newdata = NULL, se = FALSE, ...)
 {
     if(!inherits(object, "loess"))
-	stop("first argument must be a loess object")
+	stop("first argument must be a \"loess\" object")
     if(is.null(newdata) & (se == FALSE)) return(fitted(object))
 
     if(is.null(newdata)) newx <- object$x
@@ -224,7 +224,7 @@ predict.loess <- function(object, newdata = NULL, se = FALSE, ...)
 				  "variables"))[-1]
 	newx <- if(length(vars) > 1 || NCOL(newdata) > 1) {
 	    if(any(!match(vars, colnames(newdata), FALSE)))
-		stop("newdata does not contain the variables needed")
+		stop("'newdata' does not contain the variables needed")
 	    as.matrix(newdata[, vars, drop=FALSE])
 	} else as.matrix(newdata)
     }

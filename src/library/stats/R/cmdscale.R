@@ -1,12 +1,12 @@
 cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 {
     if (any(is.na(d)))
-	stop("NA values not allowed in d")
+	stop("NA values not allowed in 'd'")
     if (is.null(n <- attr(d, "Size"))) {
         if(add) d <- as.matrix(d)
 	x <- as.matrix(d^2)
 	if ((n <- nrow(x)) != ncol(x))
-	    stop("distances must be result of dist or a square matrix")
+	    stop("distances must be result of 'dist' or a square matrix")
     }
     else {
 	x <- matrix(0, n, n)
@@ -19,7 +19,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
         }
     }
     if((k <- as.integer(k)) > n - 1 || k < 1)
-        stop("`k' must be in {1, 2, ..  n - 1}")
+        stop("'k' must be in {1, 2, ..  n - 1}")
     storage.mode(x) <- "double"
     ## doubly center x in-place
     .C("dblcen", x, as.integer(n), DUP = FALSE, PACKAGE="stats")
@@ -41,7 +41,8 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
     e <- eigen(-x/2, symmetric = TRUE)
     ev <- e$values[1:k]
     if(any(ev < 0))
-        warning("some of the first ", k, " eigenvalues are < 0")
+        warning(gettextf("some of the first %d eigenvalues are < 0", k),
+                domain = NA)
     points <- e$vectors[, 1:k, drop = FALSE] %*% diag(sqrt(ev), k)
     rn <- if(is.matrix(d)) rownames(d) else names(d)
     dimnames(points) <- list(rn, NULL)

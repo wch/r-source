@@ -123,7 +123,7 @@ function(x, y, style = c("table", "list"),
     if(is.null(indent))
         indent <- switch(style, table = width / 3, list = width / 9)
     if(indent > 0.5 * width)
-        stop("incorrect values of i'ndent' and 'width'")
+        stop("incorrect values of 'indent' and 'width'")
 
     indentString <- paste(rep.int(" ", indent), collapse = "")
 

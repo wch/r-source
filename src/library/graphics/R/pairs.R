@@ -35,7 +35,7 @@ function (x, labels, panel = points, ..., main = NULL, oma = NULL,
     localAxis <- function(side, xpd, bg, ...) axis(side, xpd = NA, ...)
 
     if (!is.matrix(x)) x <- data.matrix(x)
-    if (!is.numeric(x)) stop("non-numeric argument to pairs")
+    if (!is.numeric(x)) stop("non-numeric argument to 'pairs'")
     panel <- match.fun(panel)
     if((has.lower <- !is.null(lower.panel)) && !missing(lower.panel))
         lower.panel <- match.fun(lower.panel)
@@ -50,7 +50,7 @@ function (x, labels, panel = points, ..., main = NULL, oma = NULL,
     }
 
     nc <- ncol(x)
-    if (nc < 2) stop("only one column in the argument to pairs")
+    if (nc < 2) stop("only one column in the argument to 'pairs'")
     has.labs <- TRUE
     if (missing(labels)) {
         labels <- colnames(x)
@@ -95,7 +95,7 @@ function (x, labels, panel = points, ..., main = NULL, oma = NULL,
                 else
                     upper.panel(as.vector(x[, j]), as.vector(x[, i]), ...)
                 if (any(par("mfg") != mfg))
-                    stop("The panel function made a new plot")
+                    stop("the 'panel' function made a new plot")
             } else par(new = FALSE)
 
         }

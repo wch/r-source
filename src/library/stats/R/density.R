@@ -22,13 +22,13 @@ density <-
                       ))
 
     if (!is.numeric(x))
-        stop("argument must be numeric")
+        stop("argument 'x' must be numeric")
     name <- deparse(substitute(x))
     x <- as.vector(x)
     x.na <- is.na(x)
     if (any(x.na)) {
         if (na.rm) x <- x[!x.na]
-        else stop("x contains missing values")
+        else stop("'x' contains missing values")
     }
     N <- nx <- length(x)
     x.finite <- is.finite(x)

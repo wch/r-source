@@ -21,6 +21,8 @@ xgettext <- function(dir, verbose = FALSE, asCall = TRUE)
                        %in% c("gettext", "gettextf"))) {
                     domain <- e[["domain"]]
                     suppress <- !is.null(domain) && !is.name(domain) && is.na(domain)
+                    if(as.character(e[[1]]) %in% "gettextf")
+                        e <- e[2] # just look at first arg
                 }
                 for(i in seq(along = e)) find_strings2(e[[i]], suppress)
             }
@@ -132,13 +134,17 @@ xgettext2pot <- function(dir, potFile)
     for(e in tmp)
         writeLines(con=con, c('', paste('msgid', e), 'msgstr ""'))
     tmp <- xngettext(dir)
+    un <- unique(unlist(tmp, recursive=TRUE))
     for(ee in tmp)
         for(e in ee)
-            writeLines(con=con, c('',
-                       paste('msgid       ',
-                             shQuote(encodeString(e[1]), type="cmd")),
-                       paste('msgid_plural',
-                             shQuote(encodeString(e[2]), type="cmd")),
-                       'msgstr[0]    ""', 'msgstr[1]    ""')
-                       )
+            if(e[1] %in% un) {
+                writeLines(con=con, c('',
+                           paste('msgid       ',
+                                 shQuote(encodeString(e[1]), type="cmd")),
+                           paste('msgid_plural',
+                                 shQuote(encodeString(e[2]), type="cmd")),
+                           'msgstr[0]    ""', 'msgstr[1]    ""')
+                           )
+                un <- un[-match(e, un)]
+            }
 }

@@ -69,11 +69,11 @@ function(pattern, x, ignore.case = FALSE, value = FALSE,
     if(!is.character(pattern)
        || (length(pattern) < 1)
        || ((n <- nchar(pattern)) == 0))
-        stop("pattern must be a non-empty character string")
+        stop("'pattern' must be a non-empty character string")
 
     if(!is.list(max.distance)) {
         if(!is.numeric(max.distance) || (max.distance < 0))
-            stop("max.distance must be non-negative")
+            stop("'max.distance' must be non-negative")
         if(max.distance < 1)            # transform percentages
             max.distance <- ceiling(n * max.distance)
         max.insertions <- max.deletions <- max.substitutions <-
@@ -90,7 +90,7 @@ function(pattern, x, ignore.case = FALSE, value = FALSE,
         ## sanity checks
         comps <- unlist(max.distance)
         if(!all(is.numeric(comps)) || any(comps < 0))
-            stop("max.distance components must be non-negative")
+            stop("'max.distance' components must be non-negative")
         ## extract restrictions
         if(is.null(max.distance$all))
             max.distance$all <- 0.1

@@ -10,7 +10,7 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
     ## directory.
     if(!is.null(package)) {
         if(!is.character(package))
-            stop(sQuote(package), " must be a character string or NULL")
+            stop("'package' must be a character string or NULL")
         if(any(package %in% "base"))
             warning("datasets have been moved from package 'base' to package 'datasets'")
         if(any(package %in% "stats"))
@@ -105,7 +105,7 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
                                     fp <- file.path(p, "filelist")))
                     files <- file.path(p, scan(fp, what="", quiet = TRUE))
                 else {
-                    warning("file 'filelist' is missing for dir ", sQuote(p))
+                    warning(gettextf("file 'filelist' is missing for directory '%s'", p), domain = NA)
                     next
                 }
             } else {
@@ -159,7 +159,7 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
         }
 
         if(!found)
-            warning("data set ", sQuote(name), " not found")
+            warning(gettextf("data set '%s' not found", name), domain = NA)
     }
     invisible(names)
 }

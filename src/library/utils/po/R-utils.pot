@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-01 10:14\n"
+"POT-Creation-Date: 2005-03-02 08:44\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,13 +14,10 @@ msgstr ""
 msgid "'format' must be \"normal\" or \"short\". Using \"normal\""
 msgstr ""
 
-msgid "wrong 'sortby' specified. Using \"score\""
+msgid "wrong 'sortby' specified. Using sortby=\"score\""
 msgstr ""
 
-msgid "wrong restriction specified.\nUsing"
-msgstr ""
-
-msgid "c(\"Rhelp02a\", \"functions\", \"docs\")"
+msgid "wrong restriction specified.\nUsing '%s'"
 msgstr ""
 
 msgid "A search query has been submitted to"
@@ -29,13 +26,10 @@ msgstr ""
 msgid "The results page should open in your browser shortly"
 msgstr ""
 
-msgid "reference to unknown chunk"
+msgid "reference to unknown chunk %s"
 msgstr ""
 
-msgid "object"
-msgstr ""
-
-msgid "does not have class \"SweaveSyntax\""
+msgid "object '%s' does not have class \"SweaveSyntax\""
 msgstr ""
 
 msgid "target syntax not of class \"SweaveSyntax\""
@@ -44,31 +38,22 @@ msgstr ""
 msgid "target syntax contains no translation table"
 msgstr ""
 
-msgid "parse error or empty option in"
+msgid "parse error or empty option in\n%s"
 msgstr ""
 
-msgid "path to"
+msgid "path to '%s' contains spaces,"
 msgstr ""
 
-msgid "contains spaces,"
+msgid "You can now run LaTeX on '%s'"
 msgstr ""
 
-msgid "this may cause problems when running latex"
-msgstr ""
-
-msgid "You can now run LaTeX on"
-msgstr ""
-
-msgid "invalid value for"
-msgstr ""
-
-msgid ":"
+msgid "invalid value for '%s' : %s"
 msgstr ""
 
 msgid "elements of 'what' after the first will be ignored"
 msgstr ""
 
-msgid "occurrences in"
+msgid "%d occurrences in %s"
 msgstr ""
 
 msgid "bad argument"
@@ -80,22 +65,16 @@ msgstr ""
 msgid "broken installation, no CITATION file in the base package."
 msgstr ""
 
-msgid "package"
+msgid "package '%s' not found"
 msgstr ""
 
-msgid "not found"
+msgid "no date field in DESCRIPTION file of package '%s'"
 msgstr ""
 
-msgid "no date field in DESCRIPTION of package"
+msgid "could not determine year for '%s' from package DESCRIPTION file"
 msgstr ""
 
-msgid "could not determine year for"
-msgstr ""
-
-msgid "from package DESCRIPTION"
-msgstr ""
-
-msgid "must be a character string or NULL"
+msgid "'package' must be a character string or NULL"
 msgstr ""
 
 msgid "datasets have been moved from package 'base' to package 'datasets'"
@@ -104,22 +83,19 @@ msgstr ""
 msgid "datasets have been moved from package 'stats' to package 'datasets'"
 msgstr ""
 
-msgid "file 'filelist' is missing for dir"
+msgid "file 'filelist' is missing for directory '%s'"
 msgstr ""
 
-msgid "data set"
+msgid "data set '%s' not found"
 msgstr ""
 
-msgid "kind"
-msgstr ""
-
-msgid "not yet implemented"
+msgid "kind '%s' not yet implemented"
 msgstr ""
 
 msgid "wrong number of table row entries"
 msgstr ""
 
-msgid "wrong argument to dataentry"
+msgid "wrong argument to 'dataentry'"
 msgstr ""
 
 msgid "could not restore type information"
@@ -128,13 +104,16 @@ msgstr ""
 msgid "modes argument ignored"
 msgstr ""
 
-msgid "names argument ignored"
+msgid "'names' argument ignored"
+msgstr ""
+
+msgid "'modes' argument ignored"
 msgstr ""
 
 msgid "could not restore variables properly"
 msgstr ""
 
-msgid "not assigned anything"
+msgid "did not assign() anything"
 msgstr ""
 
 msgid "Browsing in the environment with call:"
@@ -158,16 +137,10 @@ msgstr ""
 msgid "No suitable frames for recover()"
 msgstr ""
 
-msgid "No demo found for topic"
+msgid "No demo found for topic '%s'"
 msgstr ""
 
-msgid "Demo for topic"
-msgstr ""
-
-msgid "found more than once,"
-msgstr ""
-
-msgid "using the one found in"
+msgid "Demo for topic '%s' found more than once,\nusing the one found in '%s'"
 msgstr ""
 
 msgid "invalid 'data' argument"
@@ -179,10 +152,10 @@ msgstr ""
 msgid "can only handle vector and factor elements"
 msgstr ""
 
-msgid "invalid factor levels in"
+msgid "invalid factor levels in '%s'"
 msgstr ""
 
-msgid "added factor levels in"
+msgid "added factor levels in '%s'"
 msgstr ""
 
 msgid "edited row names contain duplicates and will be ignored"
@@ -191,25 +164,19 @@ msgstr ""
 msgid "invalid input matrix"
 msgstr ""
 
-msgid "no help file found for"
+msgid "no help file found for '%s'"
 msgstr ""
 
-msgid "More than one help file found: using package"
+msgid "more than one help file found: using package '%s'"
 msgstr ""
 
-msgid "has a help file but no examples file"
+msgid "'%s' has a help file but no examples file"
 msgstr ""
 
-msgid "fix requires a name"
+msgid "'fix' requires a name"
 msgstr ""
 
-msgid "No HTML help for"
-msgstr ""
-
-msgid "is available:"
-msgstr ""
-
-msgid "corresponding file is missing"
+msgid "No HTML help for '%s' is available:\ncorresponding file is missing"
 msgstr ""
 
 msgid "Compiled HTML is not installed"
@@ -218,76 +185,46 @@ msgstr ""
 msgid "CHM file could not be displayed"
 msgstr ""
 
-msgid "No CHM help for"
+msgid "No CHM help for '%s' in package '%s' is available:\nthe CHM file is for the package is missing"
 msgstr ""
 
-msgid "in package"
-msgstr ""
-
-msgid "the CHM file is for the package is missing"
-msgstr ""
-
-msgid "No text help for"
+msgid "No text help for '%s' is available:\ncorresponding file is missing"
 msgstr ""
 
 msgid "problems running R CMD Rdconv"
 msgstr ""
 
-msgid "No offline help for"
+msgid "No offline help for '%s' is available:\ncorresponding file is missing"
 msgstr ""
 
-msgid "pattern"
-msgstr ""
-
-msgid "must be a single character string"
+msgid "argument '%s' must be a single character string"
 msgstr ""
 
 msgid "incorrect field specification"
 msgstr ""
 
-msgid "apropos"
+msgid "do not know what to search"
 msgstr ""
 
-msgid "keyword"
+msgid "argument 'help.db' is deprecated"
 msgstr ""
 
-msgid "whatis"
+msgid "could not find package '%s'"
 msgstr ""
 
-msgid "don't know what to search"
+msgid "no Rd contents for package '%s' in '%s'"
 msgstr ""
 
-msgid "help.db"
+msgid "incorrect 'agrep' specification"
 msgstr ""
 
-msgid "is deprecated"
+msgid "'iconvlist' is not available on this system"
 msgstr ""
 
-msgid "could not find package"
+msgid "no package '%s' was found"
 msgstr ""
 
-msgid "No Rd contents for package"
-msgstr ""
-
-msgid "in"
-msgstr ""
-
-msgid "incorrect agrep specification"
-msgstr ""
-
-msgid "iconvlist is not available on this system"
-msgstr ""
-
-msgid "No package"
-msgstr ""
-
-msgid "was found"
-msgstr ""
-
-msgid "DESCRIPTION file of package"
-msgstr ""
-
-msgid "is missing or broken"
+msgid "DESCRIPTION file of package '%d' is missing or broken"
 msgstr ""
 
 msgid "menu() cannot be used non-interactively"
@@ -296,94 +233,67 @@ msgstr ""
 msgid "Enter an item from the menu, or 0 to exit"
 msgstr ""
 
-msgid "is a formal generic function; S3 methods will not likely be found"
+msgid "'%s' is a formal generic function; S3 methods will not likely be found"
 msgstr ""
 
-msgid "Generic function"
+msgid "generic function '%s' dispatches methods for generic '%s'"
 msgstr ""
 
-msgid "dispatches methods for generic"
+msgid "must supply 'generic.function' or 'class'"
 msgstr ""
 
-msgid "must supply generic.function or class"
+msgid "no function '%s' could be found"
 msgstr ""
 
-msgid "Non-visible functions are asterisked"
-msgstr ""
-
-msgid "no methods were found"
-msgstr ""
-
-msgid "no function"
-msgstr ""
-
-msgid "could be found"
-msgstr ""
-
-msgid "S3 method"
+msgid "S3 method '%s' not found"
 msgstr ""
 
 msgid "environment specified is not a package"
 msgstr ""
 
-msgid "fixInNamespace requires a name"
+msgid "'fixInNamespace' requires a name"
 msgstr ""
 
 msgid "only numeric indices can be used"
 msgstr ""
 
-msgid "cannot create directory"
+msgid "cannot create directory '%s'"
 msgstr ""
 
 msgid "'list' should be a character vector naming R objects"
 msgstr ""
 
-msgid "object(s)"
-msgstr ""
-
-msgid ","
-msgstr ""
-
 msgid "no R objects specified or available"
 msgstr ""
 
-msgid "Directory"
+msgid "directory '%s' already exists"
 msgstr ""
 
-msgid "already exists"
+msgid "unable to access index for repository %s"
 msgstr ""
 
-msgid "unable to access index for repository"
+msgid "no installed packages for (invalid?) 'lib.loc=%s'"
 msgstr ""
 
-msgid "no installed.packages for (invalid?) lib.loc="
+msgid "bundle '%s' is incompletely installed"
 msgstr ""
 
-msgid "bundle"
-msgstr ""
-
-msgid "is incompletely installed"
-msgstr ""
-
-msgid "has extra contents"
+msgid "bundle '%s' has extra contents %s"
 msgstr ""
 
 msgid "'priority' must be character or NULL"
 msgstr ""
 
-msgid "argument 'lib' is missing: using"
+msgid "argument 'lib' is missing: using %s"
 msgstr ""
 
-msgid "destdir is not a directory"
+msgid "'destdir' is not a directory"
 msgstr ""
 
-msgid "at the repositories"
+msgid "no package '%s' at the repositories"
 msgstr ""
 
-msgid "download of package"
-msgstr ""
-
-msgid "failed"
+msgid "download of package '%s' failed"
 msgstr ""
 
 msgid "--- Please select a CRAN mirror for use in this session ---"
@@ -404,13 +314,13 @@ msgstr ""
 msgid "Enter one or more numbers separated by spaces"
 msgstr ""
 
-msgid "must be supplied"
+msgid "'%s' must be supplied"
 msgstr ""
 
 msgid "every package depends on at least one other"
 msgstr ""
 
-msgid "are mutually dependent"
+msgid "packages %s are mutually dependent"
 msgstr ""
 
 msgid "no packages were specified"
@@ -431,22 +341,19 @@ msgstr ""
 msgid "installation of package '%s' had non-zero exit status"
 msgstr ""
 
-msgid "Unable to create temp directory"
+msgid "Unable to create temporary directory '%s'"
 msgstr ""
 
 msgid "Do not know which element of 'lib' to install dependencies into\nskipping dependencies"
 msgstr ""
 
-msgid "The downloaded packages are in"
+msgid "The downloaded packages are in\n\t%s"
 msgstr ""
 
-msgid "page requires a name"
+msgid "'page' requires a name"
 msgstr ""
 
-msgid "no object named"
-msgstr ""
-
-msgid "to edit"
+msgid "no object named '%s' to show"
 msgstr ""
 
 msgid "cannot determine a usable name"
@@ -458,49 +365,22 @@ msgstr ""
 msgid "Edit the file and move it to the appropriate directory."
 msgstr ""
 
-msgid "no documentation of type"
+msgid "no documentation of type '%s' and topic '%s' (or error in processing help)"
 msgstr ""
 
-msgid "and topic"
+msgid "the object of class \"%s\" in the function call '%s' could not be used as a documentation topic"
 msgstr ""
 
-msgid "(or error in processing help)"
+msgid "no methods for '%s' and no documentation for it as a function"
 msgstr ""
 
-msgid "the object of class"
+msgid "error in trying to evaluate the expression for argument '%s' (%s)"
 msgstr ""
 
-msgid "in the function call"
+msgid "no method defined for function '%s' and signature %s"
 msgstr ""
 
-msgid "could not be used as a documentation topic"
-msgstr ""
-
-msgid "no methods for"
-msgstr ""
-
-msgid "and no documentation for it as a function"
-msgstr ""
-
-msgid "error in trying to evaluate the expression for argument"
-msgstr ""
-
-msgid "("
-msgstr ""
-
-msgid ")"
-msgstr ""
-
-msgid "no method defined for function"
-msgstr ""
-
-msgid "and signature"
-msgstr ""
-
-msgid "="
-msgstr ""
-
-msgid "no documentation for function"
+msgid "no documentation for function '%s' and signature %s"
 msgstr ""
 
 msgid "missing lengths for some fields"
@@ -509,10 +389,7 @@ msgstr ""
 msgid "invalid format"
 msgstr ""
 
-msgid "Last record incomplete,"
-msgstr ""
-
-msgid "lines discarded"
+msgid "last record incomplete, %d lines discarded"
 msgstr ""
 
 msgid "transfer failure"
@@ -545,13 +422,13 @@ msgstr ""
 msgid "no events were recorded"
 msgstr ""
 
-msgid "vignette"
+msgid "vignette '%d' found more than once,\nusing the one found in '%s'"
 msgstr ""
 
-msgid "*not* found"
+msgid "vignette '%s' *not* found"
 msgstr ""
 
-msgid "has no PDF"
+msgid "vignette '%s' has no PDF"
 msgstr ""
 
 msgid "select.list() cannot be used non-interactively"
@@ -584,6 +461,9 @@ msgstr ""
 msgid "If '%s' is already running, it is *not* restarted, and you must switch to its window."
 msgstr ""
 
+msgid "Otherwise, be patient ..."
+msgstr ""
+
 msgid "url must be a non-empty character string"
 msgstr ""
 
@@ -605,10 +485,7 @@ msgstr ""
 msgid "fixing URLs in non-standard libraries"
 msgstr ""
 
-msgid "If nothing happens, you should open"
-msgstr ""
-
-msgid "yourself"
+msgid "If nothing happens, you should open '%s' yourself"
 msgstr ""
 
 msgid "unable to create temp directory '%s'"
@@ -644,26 +521,28 @@ msgstr ""
 msgid "cannot update HTML search index"
 msgstr ""
 
-msgid "cannot update"
+msgid "cannot update '%s'"
 msgstr ""
 
 msgid "this function is intended to work with the Aqua GUI"
 msgstr ""
 
-msgid "tar returned non-zero exit code:"
+msgid "'tar' returned non-zero exit code:"
 msgstr ""
 
-msgid "no package"
+msgid "no package '%s' on CRAN"
 msgstr ""
 
-msgid "on CRAN"
-msgstr ""
-
-msgid "Download of package"
+msgid "Download of package '%s' failed"
 msgstr ""
 
 msgid "cannot remove prior installation of package"
 msgstr ""
+
+msgid        "object %s not found"
+msgid_plural "objects %s not found"
+msgstr[0]    ""
+msgstr[1]    ""
 
 msgid        "dependency %s is not available"
 msgid_plural "dependencies %s are not available"
@@ -677,15 +556,5 @@ msgstr[1]    ""
 
 msgid        "package %s is in use and will not be installed"
 msgid_plural "packages %s are in use and will not be installed"
-msgstr[0]    ""
-msgstr[1]    ""
-
-msgid        "dependency %s is not available"
-msgid_plural "dependencies %s are not available"
-msgstr[0]    ""
-msgstr[1]    ""
-
-msgid        "also installing the dependency "
-msgid_plural "also installing the dependencies "
 msgstr[0]    ""
 msgstr[1]    ""

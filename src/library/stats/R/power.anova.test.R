@@ -5,7 +5,7 @@ function (groups = NULL, n = NULL, between.var = NULL, within.var = NULL,
     ## Check parameters
     if (sum(sapply(list(groups, n, between.var, within.var, power, sig.level),
 		   is.null)) != 1)
-	stop("exactly one of groups, n, between.var, within.var, power, and sig.level must be NULL")
+	stop("exactly one of 'groups', 'n', 'between.var', 'within.var', 'power', and 'sig.level' must be NULL")
     if (!is.null(groups) && groups < 2)
       stop("number of groups must be at least 2")
     if (!is.null(n) && n < 2)

@@ -147,9 +147,8 @@ reshape <-
                                   function(a) all(tapply(a, tmp,
                                                          function(b) length(unique(b)) == 1))))
                 if (!all(really.constant))
-                    warning("some constant variables (",
-                            paste(names(rval)[!really.constant],collapse = ","),
-                            ") are really varying")
+                    warning(gettextf("some constant variables (%s) are really varying",
+                                     paste(names(rval)[!really.constant],collapse = ",")), domain = NA)
             }
         }
 
@@ -190,7 +189,7 @@ reshape <-
        {
            if (missing(timevar) && missing(idvar)) {
                back <- attr(data,"reshapeLong")
-               if (is.null(back)) stop("no time or id specified")
+               if (is.null(back)) stop("no 'time' or 'id' specified")
                reshapeWide(data, idvar = back$idvar, timevar = back$timevar,
                            varying = back$varying, v.names = back$v.names,
                            new.row.names = new.row.names)
@@ -205,7 +204,7 @@ reshape <-
        {
            if (missing(timevar) && missing(idvar) && missing(v.names) && missing(varying)) {
                back <- attr(data,"reshapeWide")
-               if (is.null(back)) stop("no time or id specified")
+               if (is.null(back)) stop("no 'time' or 'id' specified")
                reshapeLong(data, idvar = back$idvar, timevar = back$timevar,
                            varying = back$varying, v.names = back$v.names,
                            times = back$times)

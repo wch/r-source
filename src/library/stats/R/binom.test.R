@@ -5,7 +5,7 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
     DNAME <- deparse(substitute(x))
 
     if(any(is.na(x) || (x < 0) || (x != round(x))))
-        stop("x must be nonnegative and integer")
+        stop("'x' must be nonnegative and integer")
     if(length(x) == 2) {
         ## x gives successes and failures
         n <- sum(x)
@@ -15,20 +15,20 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
         ## x gives successes, n gives trials
         if((length(n) > 1) || is.na(n) || (n < 1) || (n != round(n))
            || (x > n))
-            stop("n must be a positive integer >= x")
+            stop("'n' must be a positive integer >= 'x'")
 
         DNAME <- paste(DNAME, "and", deparse(substitute(n)))
     }
     else
-        stop("incorrect length of x")
+        stop("incorrect length of 'x'")
 
     if(!missing(p) && (length(p) > 1 || is.na(p) || p < 0 || p > 1))
-        stop ("p must be a single number between 0 and 1")
+        stop ("'p' must be a single number between 0 and 1")
     alternative <- match.arg(alternative)
 
     if(!((length(conf.level) == 1) && is.finite(conf.level) &&
          (conf.level > 0) && (conf.level < 1)))
-        stop("conf.level must be a single number between 0 and 1")
+        stop("'conf.level' must be a single number between 0 and 1")
 
     PVAL <- switch(alternative,
                    less = pbinom(x, n, p),
@@ -48,7 +48,7 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
                            d <- dbinom(x, n, p)
 			   ## This is tricky: need to be sure
 			   ## only to sum values in opposite tail
-			   ## and not count x twice. 
+			   ## and not count x twice.
 			   ## For the binomial dist., the mode will
 			   ## equal the mean if it is an integer.
 			   m <- n * p

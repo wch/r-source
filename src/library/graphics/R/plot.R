@@ -69,7 +69,7 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
 		y <- rep(y, length.out = nx)
 	}
 	else
-	    stop("x and y lengths differ")
+	    stop("'x' and 'y' lengths differ")
     }
 
     if(length(log) && log != "") {
@@ -77,7 +77,7 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
 	if("x" %in% log && any(ii <- x <= 0 & !is.na(x))) {
 	    n <- as.integer(sum(ii))
 	    warning(sprintf(ngettext(n,
-                            "one x value <= 0 omitted from logarithmic plot",
+                            "%d x value <= 0 omitted from logarithmic plot",
                             "%d x values <= 0 omitted from logarithmic plot"),
                             n), domain = NA)
 	    x[ii] <- NA
@@ -85,7 +85,7 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
 	if("y" %in% log && any(ii <- y <= 0 & !is.na(y))) {
 	    n <- as.integer(sum(ii))
 	    warning(sprintf(ngettext(n,
-                            "one y value <= 0 omitted from logarithmic plot",
+                            "%d y value <= 0 omitted from logarithmic plot",
                             "%d y values <= 0 omitted from logarithmic plot"),
                             n), domain = NA)
 	    y[ii] <- NA
@@ -289,7 +289,7 @@ function(formula,  data = parent.frame(), ..., subset)
 	varnames <- names(mf)
 	y <- mf[[response]]
 	if (length(varnames) > 2)
-	    stop("cannot handle more than one x coordinate")
+	    stop("cannot handle more than one 'x' coordinate")
 	xn <- varnames[-response]
 	if (length(xn) == 0)
 	    do.call("lines",
@@ -332,7 +332,7 @@ function(formula, data = parent.frame(), ..., subset)
 	varnames <- names(mf)
 	y <- mf[[response]]
 	if (length(varnames) > 2)
-	    stop("cannot handle more than one x coordinate")
+	    stop("cannot handle more than one 'x' coordinate")
 	xn <- varnames[-response]
 	if (length(xn) == 0)
 	    do.call("points",
@@ -370,7 +370,7 @@ plot.data.frame <- function (x, ...)
         plot(x[[1]], x[[2]], xlab=xlab, ylab=ylab, ...)
 
     if(!is.data.frame(x))
-	stop("plot.data.frame applied to non data frame")
+	stop("'plot.data.frame' applied to non data frame")
     if(ncol(x) == 1) {
         x1 <- x[[1]]
         cl <- class(x1)

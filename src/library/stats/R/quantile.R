@@ -9,7 +9,7 @@ quantile.default <-
     else if (any(is.na(x)))
 	stop("missing values and NaN's not allowed if 'na.rm' is FALSE")
     if (any((p.ok <- !is.na(probs)) & (probs < 0 | probs > 1)))
-	stop("probs outside [0,1]")
+	stop("'probs' outside [0,1]")
     n <- length(x)
     if(na.p <- any(!p.ok)) { # set aside NA & NaN
         o.pr <- probs

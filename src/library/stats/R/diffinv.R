@@ -7,9 +7,9 @@ diffinv <- function (x, ...) { UseMethod("diffinv") }
 diffinv.vector <- function (x, lag = 1, differences = 1,
                             xi = rep(0., lag*differences), ...)
 {
-    if (!is.vector(x)) stop ("x is not a vector")
-    if (lag < 1 || differences < 1) stop ("bad value for lag or differences")
-    if (length(xi) != lag*differences) stop ("xi has not the right length")
+    if (!is.vector(x)) stop ("'x' is not a vector")
+    if (lag < 1 || differences < 1) stop ("bad value for 'lag' or 'differences'")
+    if (length(xi) != lag*differences) stop ("'xi' has not the right length")
     if (differences == 1) {
         x <- as.double(x)
         xi <- as.double(xi)
@@ -42,7 +42,7 @@ diffinv.default <-
     else if (is.vector(x))
         y <- diffinv.vector(x, lag, differences, xi)
     else
-        stop ("x is not a vector or matrix")
+        stop ("'x' is not a vector or matrix")
     y
 }
 
@@ -56,7 +56,7 @@ diffinv.ts <- function (x, lag = 1, differences = 1,
 
 toeplitz <- function (x)
 {
-    if (!is.vector(x)) stop ("x is not a vector")
+    if (!is.vector(x)) stop ("'x' is not a vector")
     n <- length (x)
     A <- matrix (0, n, n)
     matrix (x[abs(col(A) - row(A)) + 1], n, n)

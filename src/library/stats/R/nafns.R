@@ -124,7 +124,7 @@ naresid.default <- function(omit, x, ...) x
 naresid.exclude <- function(omit, x, ...)
 {
     if (length(omit) == 0 || !is.numeric(omit))
-	stop("Invalid argument for ", sQuote('omit'))
+	stop("invalid argument for ", sQuote('omit'))
     if(length(x) == 0)## << FIXME? -- reconstructing all NA object
         return(x)
 

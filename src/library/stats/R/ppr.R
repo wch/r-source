@@ -40,14 +40,14 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
     call[[1]] <- as.name("ppr")
     sm.method <- match.arg(sm.method)
     ism <- switch(sm.method, supsmu=0, spline=1, gcvspline=2)
-    if(missing(nterms)) stop("nterms is missing with no default")
+    if(missing(nterms)) stop("'nterms' is missing with no default")
     mu <- nterms; ml <- max.terms
     x <- as.matrix(x)
     y <- as.matrix(y)
     if(!is.numeric(x) || !is.numeric(y))
-        stop("ppr applies only to numerical variables")
+        stop("'ppr' applies only to numerical variables")
     n <- nrow(x)
-    if(nrow(y) != n) stop("mismatched x and y")
+    if(nrow(y) != n) stop("mismatched 'x' and 'y'")
     p <- ncol(x)
     q <- ncol(y)
     if(!is.null(dimnames(x))) xnames <- dimnames(x)[[2]]
@@ -189,7 +189,7 @@ predict.ppr <- function(object, newdata, ...)
         keep <- 1:nrow(x)
         rn <- dimnames(x)[[1]]
     }
-    if(ncol(x) != object$p) stop("wrong number of columns in x")
+    if(ncol(x) != object$p) stop("wrong number of columns in 'x'")
     res <- matrix(NA, length(keep), object$q,
                   dimnames = list(rn, object$ynames))
     res[keep, ] <- matrix(.Fortran("pppred",

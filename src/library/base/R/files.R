@@ -61,7 +61,7 @@ file.copy <- function(from, to, overwrite=FALSE)
     if (!overwrite) okay <- !file.exists(to)
     else okay <- rep.int(TRUE, length(to))
     if (any(from[okay] %in% to[okay]))
-        stop("file can't be copied both from and to")
+        stop("file can not be copied both 'from' and 'to'")
     if (any(okay)) { ## care: create could fail but append work.
     	okay[okay] <- file.create(to[okay])
     	if(any(okay)) okay[okay] <- file.append(to[okay], from[okay])
@@ -71,7 +71,7 @@ file.copy <- function(from, to, overwrite=FALSE)
 
 file.symlink <- function(from, to) {
     if (!(length(from))) stop("no files to link from")
-    if (!(nt <- length(to)))   stop("no files/dir to link to")
+    if (!(nt <- length(to)))   stop("no files/directory to link to")
     if (nt == 1 && file.exists(to) && file.info(to)$isdir)
         to <- file.path(to, basename(from))
     .Internal(file.symlink(from, to))

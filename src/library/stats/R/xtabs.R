@@ -2,7 +2,7 @@ xtabs <- function(formula = ~., data = parent.frame(), subset,
 		  na.action, exclude = c(NA, NaN), drop.unused.levels = FALSE)
 {
     if(!missing(formula) && !inherits(formula, "formula"))
-	stop("formula is incorrect")
+	stop("'formula' missing or incorrect")
     if(any(attr(terms(formula), "order") > 1))
 	stop("interactions are not allowed")
     m <- match.call(expand.dots = FALSE)

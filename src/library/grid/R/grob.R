@@ -947,7 +947,7 @@ editThisGrob <- function(grob, specs) {
         else
           grob[[i]] <- specs[[i]]
       else
-        warning(sprintf(gettext("Slot %d not found"), i), domain = NA)
+        warning(gettextf("Slot %d not found", i), domain = NA)
   # Check grob slots are ok before trying to do anything with them
   # in editDetails
   # grob$childrenvp may be non-NULL for a gTree

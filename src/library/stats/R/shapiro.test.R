@@ -22,7 +22,8 @@ shapiro.test <- function(x) {
 	     pw = double(1),
 	     ifault = integer(1), PACKAGE = "stats")
     if (sw$ifault && sw$ifault != 7)# 7 *does* happen (Intel Linux)
-	stop("ifault=",sw$ifault,". This should not happen")
+	stop(gettextf("ifault=%d. This should not happen", sw$ifault),
+             domain = NA)
     RVAL <- list(statistic = c(W = sw$w),
 		 p.value = sw$pw,
 		 method = "Shapiro-Wilk normality test",

@@ -23,7 +23,7 @@ bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
                   method = c("ste", "dpi"))
 {
     if((n <- length(x)) < 2) stop("need at least 2 data points")
-    if(!is.numeric(x)) stop("invalid x")
+    if(!is.numeric(x)) stop("invalid 'x'")
     storage.mode(x) <- "double"
     method <- match.arg(method)
 
@@ -83,7 +83,7 @@ bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
 bw.ucv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
 {
     if((n <- length(x)) < 2) stop("need at least 2 data points")
-    if(!is.numeric(x)) stop("invalid x")
+    if(!is.numeric(x)) stop("invalid 'x'")
 
     fucv <- function(h, x, n, d)
         .C("band_ucv_bin",
@@ -116,7 +116,7 @@ bw.ucv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
 bw.bcv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
 {
     if((n <- length(x)) < 2) stop("need at least 2 data points")
-    if(!is.numeric(x)) stop("invalid x")
+    if(!is.numeric(x)) stop("invalid 'x'")
 
     fbcv <- function(h, x, n, d)
         .C("band_bcv_bin",

@@ -51,7 +51,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         qr.e <- er.fit$qr
         rank.e <- er.fit$rank
         if(rank.e < length(er.fit$coef))
-            warning("Error model is singular")
+            warning("Error() model is singular")
         qty <- er.fit$resid
         maov <- is.matrix(qty)
         asgn.e <- er.fit$assign[qr.e$piv[1:rank.e]]
@@ -544,8 +544,9 @@ se.contrast.aov <-
             sapply(contrast.obj, function(x)
                {
                    if(!is.logical(x))
-                       stop("each element of ", substitute(contrasts.list),
-                            " must be logical")
+                           stop(gettextf("each element of '%s' must be logical",
+                                         substitute(contrasts.list)),
+                                domain = NA)
                    x/sum(x)
                })
         contrast <- contrast %*% coef
@@ -636,9 +637,9 @@ se.contrast.aovlist <-
             sapply(contrast.obj,
                    function(x) {
                        if(!is.logical(x))
-                           stop("Each element of ",
-                                substitute(contrast.obj),
-                                " must be logical")
+                           stop(gettextf("each element of '%s' must be logical",
+                                         substitute(contrasts.obj)),
+                                domain = NA)
                        x/sum(x)
                    })
         contrast <- contrast %*% coef

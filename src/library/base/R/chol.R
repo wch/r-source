@@ -3,16 +3,16 @@ chol <- function(x, pivot = FALSE, LINPACK = pivot)
     if (is.complex(x))
         stop("complex matrices not permitted at present")
     else if(!is.numeric(x))
-	stop("non-numeric argument to chol")
+	stop("non-numeric argument to 'chol'")
 
     if(is.matrix(x)) {
 	if(nrow(x) != ncol(x))
-	    stop("non-square matrix in chol")
+	    stop("non-square matrix in 'chol'")
 	n <- nrow(x)
     }
     else {
 	if(length(x) != 1)
-	    stop("non-matrix argument to chol")
+	    stop("non-matrix argument to 'chol'")
 	n <- as.integer(1)
     }
     if(!pivot && !LINPACK) return(.Call("La_chol", as.matrix(x), PACKAGE = "base"))
@@ -48,7 +48,7 @@ chol <- function(x, pivot = FALSE, LINPACK = pivot)
                       info = integer(1),
                       DUP = FALSE, PACKAGE = "base")
         if(z$info)
-            stop("non-positive definite matrix in chol")
+            stop("non-positive definite matrix in 'chol'")
         z$v
     }
 }
@@ -56,7 +56,7 @@ chol <- function(x, pivot = FALSE, LINPACK = pivot)
 chol2inv <- function(x, size=NCOL(x), LINPACK=FALSE)
 {
     if(!is.numeric(x))
-	stop("non-numeric argument to chol2inv")
+	stop("non-numeric argument to 'chol2inv'")
     if(!LINPACK) return(La.chol2inv(x, size))
 
     if(is.matrix(x)) {
@@ -69,7 +69,7 @@ chol2inv <- function(x, size=NCOL(x), LINPACK=FALSE)
     }
     size <- as.integer(size)
     if(size <= 0 || size > nr || size > nc)
-	stop("invalid size argument in chol2inv")
+	stop("invalid 'size' argument in 'chol2inv'")
     if(!is.double(x)) storage.mode(x) <- "double"
     z <- .Fortran("ch2inv",
 		  x=x,
@@ -79,6 +79,6 @@ chol2inv <- function(x, size=NCOL(x), LINPACK=FALSE)
 		  info=integer(1),
 		  DUP=FALSE, PACKAGE="base")
     if(z$info)
-	stop("singular matrix in chol2inv")
+	stop("singular matrix in 'chol2inv'")
     z$v
 }

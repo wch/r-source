@@ -2,13 +2,13 @@ assocplot <- function(x, col = c("black", "red"), space = 0.3,
                       main = NULL, xlab = NULL, ylab = NULL)
 {
     if(length(dim(x)) != 2)
-        stop("x must be a 2-d contingency table")
+        stop("'x' must be a 2-d contingency table")
     if(any(x < 0) || any(is.na(x)))
-        stop("all entries of x must be nonnegative and finite")
+        stop("all entries of 'x' must be nonnegative and finite")
     if((n <- sum(x)) == 0)
-        stop("at least one entry of x must be positive")
+        stop("at least one entry of 'x' must be positive")
     if(length(col) != 2)
-        stop("incorrect color specification")
+        stop("incorrect 'col': must be length 2")
 
     f <- x[ , rev(1:NCOL(x))]           # rename for convenience;
                                         # f is observed freqs

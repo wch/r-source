@@ -6,7 +6,7 @@ ar.mle <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     if (!is.null(dim(x)))
         stop("MLE only implemented for univariate series")
     x <- na.action(as.ts(x))
-    if(any(is.na(x))) stop("NAs in x")
+    if(any(is.na(x))) stop("NAs in 'x'")
     if(!is.numeric(x))
         stop("'x' must be numeric")
     if(ists)  xtsp <- tsp(x)

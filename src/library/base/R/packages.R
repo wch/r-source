@@ -23,7 +23,7 @@ function(x, strict = TRUE)
         sprintf("^%s$", .standard_regexps()$valid_package_version)
     if(length(x) > 0) {
         ok <- (regexpr(valid_package_version_regexp, x) > -1)
-        if(!all(ok) && strict) stop("invalid version spec")
+        if(!all(ok) && strict) stop("invalid version specification")
         y[ok] <- lapply(strsplit(x[ok], "[.-]"), as.integer)
     }
     class(y) <- "package_version"
@@ -59,7 +59,7 @@ function(x, base = NULL)
 function(x, base = NULL)
 {
     if(is.null(base)) base <- attr(x, "base")
-    if(!is.numeric(base)) stop("wrong arg")
+    if(!is.numeric(base)) stop("wrong argument")
     lens <- attr(x, "lens")
     y <- vector("list", length = length(x))
     for(i in seq(along = x)) {

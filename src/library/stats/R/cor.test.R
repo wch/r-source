@@ -10,7 +10,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
     DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
 
     if(length(x) != length(y))
-	stop("x and y must have the same length")
+	stop("'x' and 'y' must have the same length")
     OK <- complete.cases(x, y)
     x <- x[OK]
     y <- y[OK]
@@ -171,7 +171,7 @@ function(formula, data, subset, na.action, ...)
     if(missing(formula)
        || !inherits(formula, "formula")
        || length(formula) != 2)
-        stop("formula missing or invalid")
+        stop("'formula' missing or invalid")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)

@@ -10,7 +10,7 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
              && is.finite(conf.level)
              && (conf.level > 0)
              && (conf.level < 1)))
-            stop("conf.level must be a single number between 0 and 1")
+            stop("'conf.level' must be a single number between 0 and 1")
     }
     DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
 
@@ -18,10 +18,10 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
     y <- y[complete.cases(y)]
     m <- length(x)
     if(m < 1)
-        stop("not enough x observations")
+        stop("not enough 'x' observations")
     n <- length(y)
     if(n < 1)
-        stop("not enough y observations")
+        stop("not enough 'y' observations")
     N <- m + n
 
     r <- rank(c(x, y))
@@ -253,7 +253,7 @@ function(formula, data, subset, na.action, ...)
        || (length(formula) != 3)
        || (length(attr(terms(formula[-2]), "term.labels")) != 1)
        || (length(attr(terms(formula[-3]), "term.labels")) != 1))
-        stop("formula missing or incorrect")
+        stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)

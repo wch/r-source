@@ -120,7 +120,7 @@ SSasympOff <- # selfStart(~ Asym *( 1 - exp(-exp(lrc) * (input - c0) ) ),
           {
               xy <- sortedXyData(mCall[["input"]], LHS, data)
               if (nrow(xy) < 4) {
-                  stop("too few distinct input values to fit the asympOff model")
+                  stop("too few distinct input values to fit the 'asympOff' model")
               }
               xy$ydiff <- abs(xy$y - NLSstRtAsymptote(xy))
               xy <- data.frame(xy)
@@ -158,7 +158,7 @@ SSasympOrig <- # selfStart(~ Asym * (1 - exp(-exp(lrc) * input)),
           {
               xy <- sortedXyData(mCall[["input"]], LHS, data)
               if (nrow(xy) < 3) {
-                  stop("too few distinct input values to fit the asympOrig model")
+                  stop("too few distinct input values to fit the 'asympOrig' model")
               }
               ## get a preliminary estimate for A
               A0 <- NLSstRtAsymptote(xy)
@@ -268,7 +268,7 @@ SSfol <-
                   stop("must have length of response = length of second argument to 'SSfol'")
               }
               if(n < 4) {
-                  stop("must have at least 4 observations to fit an SSfol model")
+                  stop("must have at least 4 observations to fit an 'SSfol' model")
               }
               rmaxind <- order(resp)[n]
 
@@ -377,7 +377,7 @@ SSlogis <- # selfStart(~ Asym/(1 + exp((xmid - input)/scal)),
           {
               xy <- data.frame(sortedXyData(mCall[["input"]], LHS, data))
               if(nrow(xy) < 4) {
-                  stop("too few distinct input values to fit a logistic")
+                  stop("too few distinct input values to fit a logistic model")
               }
               z <- xy[["y"]]
               if (min(z) <= 0) { z <- z - 1.05 * min(z) } # avoid zeroes
@@ -417,7 +417,7 @@ SSmicmen <- # selfStart(~ Vm * input/(K + input),
           {
               xy <- data.frame(sortedXyData(mCall[["input"]], LHS, data))
               if (nrow(xy) < 3) {
-                  stop("too few distinct input values to fit a Michaelis-Menten")
+                  stop("too few distinct input values to fit a Michaelis-Menten model")
               }
               ## take the inverse transformation
               pars <- as.vector(coef(lm(1/y ~ I(1/x), data = xy)))
@@ -500,7 +500,7 @@ SSweibull <- # selfStart( ~ Asym - Drop * exp(-exp(lrc)*x^pwr),
                   stop("too few distinct input values to fit the Weibull growth model")
               }
               if (any(xy[["x"]] < 0)) {
-                  stop("all x values must be non-negative to fit the Weibull growth model")
+                  stop("all 'x' values must be non-negative to fit the Weibull growth model")
               }
               Rasym <- NLSstRtAsymptote(xy)
               Lasym <- NLSstLfAsymptote(xy)

@@ -14,8 +14,8 @@ factor <- function (x, levels = sort(unique.default(x), na.last = TRUE),
 	else if(nl == 1)
 	    paste(labels, seq(along = levels), sep = "")
 	else
-	    stop("invalid labels; length ", nl,
-                 " should be 1 or ", length(levels))
+	    stop(gettextf("invalid labels; length %d should be 1 or %d",
+                          nl, length(levels)), domain = NA)
     class(f) <- c(if(ordered)"ordered", "factor")
     f
 }
@@ -173,7 +173,8 @@ function (e1, e2)
 		 "<" = , ">" = , "<=" = , ">=" = ,"=="=, "!=" =TRUE,
 		 FALSE)
     if(!ok) {
-	warning(sQuote(.Generic), " not meaningful for ordered factors")
+	warning(sprintf("'%s' is not meaningful for ordered factors",
+                        .Generic))
 	return(rep.int(NA, max(length(e1), if(!missing(e2))length(e2))))
     }
     if (.Generic %in% c("==", "!="))
@@ -190,7 +191,7 @@ function (e1, e2)
 	ord2 <- TRUE
     }
     if (all(nchar(.Method)) && (length(l1) != length(l2) || !all(l2 == l1)))
-	stop("Level sets of factors are different")
+	stop("level sets of factors are different")
     if (ord1 && ord2) {
 	e1 <- as.integer(e1) # was codes, but same thing for ordered factor.
 	e2 <- as.integer(e2)

@@ -10,11 +10,11 @@
 stepfun <-
     function(x, y, f = as.numeric(right), ties = "ordered", right = FALSE)
 {
-    if(is.unsorted(x)) stop("stepfun: x must be ordered increasingly")
+    if(is.unsorted(x)) stop("stepfun: 'x' must be ordered increasingly")
     n <- length(x)
-    if(n < 1) stop("x must have length >= 1")
+    if(n < 1) stop("'x' must have length >= 1")
     n1 <- n+ 1:1
-    if(length(y) != n1) stop("y must be one longer than x")
+    if(length(y) != n1) stop("'y' must be one longer than 'x'")
     rval <- approxfun(x, y[- if(right)n1 else 1], method = "constant",
 		      yleft = y[1], yright = y[n1], f = f, ties = ties)
     class(rval) <- c("stepfun", class(rval))
@@ -92,7 +92,7 @@ plot.stepfun <-
 	    sarg <- substitute(x)
 	    x <- ecdf(x)
 	    attr(x,"call") <- call("ecdf", sarg)
-	} else stop("plot.stepfun called with wrong type of argument 'x'")
+	} else stop("'plot.stepfun' called with wrong type of argument 'x'")
     }
     if(missing(main))
 	main <- {

@@ -97,7 +97,7 @@ function (x, digits = getOption("digits"), quote = FALSE, na.print = "",
 summary.table <- function(object, ...)
 {
     if(!inherits(object, "table"))
-	stop("object must inherit from class \"table\"")
+	stop("'object' must inherit from class \"table\"")
     n.cases <- sum(object)
     n.vars <- length(dim(object))
     y <- list(n.vars = n.vars,
@@ -189,7 +189,7 @@ prop.table <- function(x, margin = NULL)
 
 margin.table <- function(x, margin = NULL)
 {
-    if(!is.array(x)) stop("x is not an array")
+    if(!is.array(x)) stop("'x' is not an array")
     if (length(margin)) {
 	z <- apply(x, margin, sum)
 	dim(z) <- dim(x)[margin]

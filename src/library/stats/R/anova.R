@@ -95,7 +95,7 @@ print.anova <- function(x, digits = max(getOption("digits") - 2, 3),
     if (!is.null(heading <- attr(x, "heading")))
 	cat(heading, sep = "\n")
     nc <- dim(x)[2]
-    if(is.null(cn <- colnames(x))) stop("anova object must have colnames")
+    if(is.null(cn <- colnames(x))) stop("'anova' object must have colnames")
     has.P <- substr(cn[nc],1,3) == "Pr(" # P-value as last column
     zap.i <- 1:(if(has.P) nc-1 else nc)
     i <- which(substr(cn,2,7) == " value")

@@ -83,7 +83,7 @@ function(handlers = list(), registered = FALSE, verbose = FALSE)
         if(is.character(which)) {
             tmp <- (1:length(handlers))[!is.na(match(which, names(handlers)))]
             if(length(tmp))
-                stop("No such element ", sQuote(which))
+                stop(gettextf("no such element '%s'", which), domain = NA)
             which <- tmp
         } else
         which <- as.integer(which)

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-16 08:34\n"
+"POT-Creation-Date: 2005-03-01 22:29\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -143,16 +143,13 @@ msgstr ""
 msgid "'file' is must be a non-empty character string"
 msgstr ""
 
-msgid "sorry, gs cannot be found"
+msgid "sorry, 'gs' cannot be found"
 msgstr ""
 
-msgid "device"
+msgid "device '%s' is not available"
 msgstr ""
 
-msgid "is not available"
-msgstr ""
-
-msgid "Available devices are"
+msgid "Available devices are %s"
 msgstr ""
 
 msgid "quartz() device interactivity reduced without an event loop manager"
@@ -191,10 +188,10 @@ msgstr ""
 msgid "invalid Windows font:  must be a single font family name"
 msgstr ""
 
-msgid "invalid arguments in windowsFonts (must be font names)"
+msgid "invalid arguments in 'windowsFonts' (must be font names)"
 msgstr ""
 
-msgid "invalid arguments in windowsFonts (need named args)"
+msgid "invalid arguments in 'windowsFonts' (need named args)"
 msgstr ""
 
 msgid        "invalid argument name %s in '%s'"

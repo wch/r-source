@@ -6,7 +6,7 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
 
     if (is.matrix(x)) {
 	if (ncol(x) != 2)
-	    stop("x must have 2 columns")
+	    stop("'x' must have 2 columns")
 	l <- nrow(x)
 	n <- rowSums(x)
 	x <- x[, 1]
@@ -14,7 +14,7 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
     else {
 	DNAME <- paste(DNAME, "out of", deparse(substitute(n)))
 	if ((l <- length(x)) != length(n))
-	    stop("x and n must have the same length")
+	    stop("'x' and 'n' must have the same length")
     }
 
     OK <- complete.cases(x, n)
@@ -23,11 +23,11 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
     if ((k <- length(x)) < 1)
 	stop("not enough data")
     if (any(n <= 0))
-	stop("elements of n must be positive")
+	stop("elements of 'n' must be positive")
     if (any(x < 0))
-	stop("elements of x must be nonnegative")
+	stop("elements of 'x' must be nonnegative")
     if (any(x > n))
-	stop("elements of x must not be greater than those of n")
+	stop("elements of 'x' must not be greater than those of 'n'")
 
     if (is.null(p) && (k == 1))
 	p <- .5
@@ -36,10 +36,10 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
 		       ifelse(k == 1, "probability ", "probabilities "),
 		       deparse(substitute(p)), sep = "")
 	if (length(p) != l)
-	    stop("p must have the same length as x and n")
+	    stop("'p' must have the same length as 'x' and 'n'")
 	p <- p[OK]
 	if (any((p <= 0) | (p >= 1)))
-	    stop("elements of p must be in (0,1)")
+	    stop("elements of 'p' must be in (0,1)")
     }
 
     alternative <- match.arg(alternative)
@@ -48,7 +48,7 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
 
     if ((length(conf.level) != 1) || is.na(conf.level) ||
 	(conf.level <= 0) || (conf.level >= 1))
-	stop("conf.level must be a single number between 0 and 1")
+	stop("'conf.level' must be a single number between 0 and 1")
 
     correct <- as.logical(correct)
 

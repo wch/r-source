@@ -22,7 +22,7 @@ function(topic, package = NULL, lib.loc = NULL)
         vignettes <- as.character(unlist(vignettes))
         vidx <- (tools::file_path_sans_ext(basename(vignettes)) == topic)
         if(any(vidx)) {
-            
+
             pdf <- sub("\\.[[:alpha:]]+$", ".pdf", vignettes)
             pidx <- tools::file_test("-f", pdf)
             ok <- vidx & pidx
@@ -32,12 +32,8 @@ function(topic, package = NULL, lib.loc = NULL)
                 if(sum(ok)>1){
                     ## <FIXME>
                     ## Should really offer a menu to select from.
-                    warning(paste("vignette ", sQuote(topic),
-                                  " found more than once,\n",
-                                  "using the one found in ",
-                                  sQuote(dirname(pdf[idx])),
-                                  sep = ""),
-                            call. = FALSE)
+                    warning(gettextf("vignette '%d' found more than once,\nusing the one found in '%s'", topic, dirname(pdf[idx])),
+                            call. = FALSE, domain = NA)
                     ## </FIXME>
                 }
 
@@ -51,8 +47,8 @@ function(topic, package = NULL, lib.loc = NULL)
             return(z)
         }
         else
-            warning(paste("vignette", sQuote(topic), "*not* found"),
-                    call. = FALSE)
+            warning(gettextf("vignette '%s' *not* found", topic),
+                    call. = FALSE, domain = NA)
     }
 
     if(missing(topic)) {
@@ -109,10 +105,9 @@ print.vignette <- function(x, ...){
         else
             system(paste(getOption("pdfviewer"), x$pdf, "&"))
         ## </FIXME>
-    }
-    else{
-        warning(paste("vignette", sQuote(x$topic), "has no PDF"),
-                call. = FALSE)
+    } else {
+        warning(gettextf("vignette '%s' has no PDF", x$topic),
+                call. = FALSE, domain = NA)
     }
 }
 

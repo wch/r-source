@@ -38,17 +38,16 @@ hist.default <-
 			     "freedman-diaconis" =,
 			     fd = nclass.FD(x),
 			     scott = nclass.scott(x),
-			     stop("unknown breaks algorithm"))
+			     stop("unknown 'breaks' algorithm"))
 	} else if(is.function(breaks)) {
 	    breaks <- breaks(x)
 	}
 	if(!is.numeric(breaks) || is.na(breaks) || breaks < 2)
-	    stop("invalid number of breaks")
+	    stop("invalid number of 'breaks'")
 	breaks <- pretty (range(x), n = breaks, min.n = 1)
 	nB <- length(breaks)
 	if(nB <= 1) ##-- Impossible !
-	    stop("hist.default: pretty() error, breaks=",
-		       format(breaks))
+	    stop("hist.default: pretty() error, breaks=", format(breaks))
     }
 
     ## Do this *before* adding fuzz or logic breaks down...

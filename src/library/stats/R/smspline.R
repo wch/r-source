@@ -25,7 +25,7 @@ smooth.spline <-
         if(is.null(nk)) nk <- n.kn(n)
         else if(!is.numeric(nk)) stop("'nknots' must be numeric <= n")
         else if(nk > n)
-            stop("cannot use more inner knots than unique x values")
+            stop("cannot use more inner knots than unique 'x' values")
 	c(rep(x[1], 3), x[seq(1,n, len= nk)], rep(x[n], 3))
     }
     contr.sp <- list(low = -1.5,## low = 0.      was default till R 1.3.x
@@ -45,7 +45,7 @@ smooth.spline <-
     w <-
 	if(is.null(w)) rep(1, n)
 	else {
-	    if(n != length(w)) stop("lengths of x and w must match")
+	    if(n != length(w)) stop("lengths of 'x' and 'w' must match")
 	    if(any(w < 0)) stop("all weights should be non-negative")
 	    if(all(w == 0)) stop("some weights should be positive")
 	    (w * sum(w > 0))/sum(w)
@@ -189,7 +189,7 @@ predict.smooth.spline <- function(object, x, deriv = 0, ...)
         else x <- object$x
     }
     fit <- object$fit
-    if(is.null(fit)) stop("not a valid smooth.spline object")
+    if(is.null(fit)) stop("not a valid \"smooth.spline\" object")
     else predict(fit, x, deriv, ...)
 }
 
@@ -243,15 +243,15 @@ supsmu <-
     if(span == "cv") span <- 0
     n <- length(y)
     if(!n || !is.numeric(y)) stop("'y' must be numeric vector")
-    if(length(x) != n) stop("number of observations in x and y must match.")
+    if(length(x) != n) stop("number of observations in 'x' and 'y' must match.")
     if(length(wt) != n)
 	stop("number of weights must match number of observations.")
-    if(span < 0 || span > 1) stop("span must be between 0 and 1.")
+    if(span < 0 || span > 1) stop("'span' must be between 0 and 1.")
     if(periodic) {
 	iper <- 2
 	xrange <- range(x)
 	if(xrange[1] < 0 || xrange[2] > 1)
-	    stop("x must be between 0 and 1 for periodic smooth")
+	    stop("'x' must be between 0 and 1 for periodic smooth")
     } else iper <- 1
     okay <- is.finite(x + y + wt)
     ord <- order(x[okay], y[okay])

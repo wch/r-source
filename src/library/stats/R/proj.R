@@ -17,7 +17,7 @@ proj.default <- function(object, onedf = TRUE, ...)
 proj.lm <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 {
     if(inherits(object, "mlm"))
-	stop("proj is not implemented for mlm fits")
+	stop("'proj' is not implemented for \"mlm\" fits")
     rank <- object$rank
     if(rank > 0) {
 	prj <- proj.default(object, onedf = TRUE)[, 1:rank, drop = FALSE]
@@ -76,7 +76,7 @@ proj.lm <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 proj.aov <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
 {
     if(inherits(object, "maov"))
-	stop("proj is not implemented for multiple responses")
+	stop("'proj' is not implemented for multiple responses")
     factors.aov <- function(pnames, tfactor)
     {
 	if(!is.na(int <- match("(Intercept)", pnames)))

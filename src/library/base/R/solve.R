@@ -4,7 +4,7 @@ solve.qr <- function(a, b, ...)
 	stop("this is the \"qr\" method for the generic function solve()")
     nc <- ncol(a$qr)
     if( a$rank != nc )
-	stop("singular matrix 'a' in solve")
+	stop("singular matrix 'a' in 'solve'")
     if( missing(b) ) {
 	if( nc != nrow(a$qr) )
 	    stop("only square matrices can be inverted")
@@ -31,7 +31,7 @@ solve.default <-
 	    drop(.Call("La_zgesv", a, as.matrix(b), PACKAGE = "base")))
     }
     if(is.qr(a)) {
-	warning("solve.default called with a qr object: use qr.solve")
+	warning("solve.default called with a \"qr\" object: use 'qr.solve'")
 	return(solve.qr(a, b, tol))
     }
 
@@ -51,7 +51,7 @@ solve.default <-
     a <- qr(a, tol = tol)
     nc <- ncol(a$qr)
     if( a$rank != nc )
-	stop("singular matrix 'a' in solve")
+	stop("singular matrix 'a' in 'solve'")
     if( missing(b) ) {
 	if( nc != nrow(a$qr) )
 	    stop("only square matrices can be inverted")

@@ -16,7 +16,7 @@ image.default <- function (x = seq(0, 1, len = nrow(z)),
 		z <- x$z; y <- x$y; x <- x$x
 	    } else {
 		if(is.null(dim(x)))
-		   stop("argument must be matrix alike")
+		   stop("argument must be matrix-like")
 		z <- x
 		x <- seq(0, 1, len = nrow(z))
 	    }
@@ -36,7 +36,7 @@ image.default <- function (x = seq(0, 1, len = nrow(z)),
 	    ylab <- if (missing(y)) "" else deparse(substitute(y))
     }
     if (any(diff(x) <= 0) || any(diff(y) <= 0))
-	stop("increasing x and y values expected")
+	stop("increasing 'x' and 'y' values expected")
     if (!is.matrix(z))
         stop("'z' must be a matrix")
     if (length(x) > 1 && length(x) == nrow(z)) { # midpoints

@@ -57,7 +57,7 @@ contr.helmert <-
 {
     if (length(n) <= 1) {
 	if(is.numeric(n) && length(n) == 1 && n > 1) levels <- 1:n
-	else stop("contrasts are not defined for 0 degrees of freedom")
+	else stop("contrasts not defined for 0 degrees of freedom")
     } else levels <- n
     lenglev <- length(levels)
     if (contrasts) {
@@ -84,7 +84,8 @@ contr.treatment <-
     diag(contr) <- 1
     if(contrasts) {
 	if(n < 2)
-	    stop("contrasts not defined for ", n - 1, " degrees of freedom")
+	    stop(gettextf("contrasts not defined for %d degrees of freedom",
+                          n - 1), domain = NA)
 	if (base < 1 | base > n)
 	    stop("baseline group number out of range")
 	contr <- contr[, -base, drop = FALSE]

@@ -59,9 +59,8 @@ function( A,
 
     if( length( FUN ) != n.sid ){
 	if( length( FUN ) > 1 ){
-	    stop( "Length of FUN, ", length( FUN ),
-		  ",\n does not match the length of the margins, ",
-		  n.sid )
+	    stop(gettextf("length of FUN, %d,\n does not match the length of the margins, %d",
+		  length( FUN ), n.sid), domain = NA)
 	} else {
 	    new.FUN <- list()
 	    for( i in 1:n.sid ){

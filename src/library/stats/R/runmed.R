@@ -26,10 +26,10 @@ runmed <- function(x, k, endrule = c("median","keep","constant"),
     n <- length(x)
     k <- as.integer(k)
     if(k%%2 == 0)
-        warning("k must be odd!  Changing k to ",
+        warning("'k' must be odd!  Changing 'k' to ",
                 k <- as.integer(1+ 2*(k %/% 2)))
     if (k > n)
-        warning("k is bigger than n!  Changing k to ",
+        warning("'k' is bigger than 'n'!  Changing 'k' to ",
                 k <- as.integer(1+ 2*((n - 1)%/% 2)))
     algorithm <-
         if(missing(algorithm)) { ## use efficient default

@@ -160,12 +160,12 @@ windowsFonts <- function(...) {
     nnames <- length(fontNames)
     if (nnames == 0) {
       if (!all(sapply(fonts, is.character)))
-        stop("invalid arguments in windowsFonts (must be font names)")
+        stop("invalid arguments in 'windowsFonts' (must be font names)")
       else
         get(".Windows.Fonts", envir=.Windowsenv)[unlist(fonts)]
     } else {
       if (ndots != nnames)
-        stop("invalid arguments in windowsFonts (need named args)")
+        stop("invalid arguments in 'windowsFonts' (need named args)")
       setWindowsFonts(fonts, fontNames)
     }
   }

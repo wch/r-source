@@ -22,7 +22,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
     }
 
     ntab <- length(table)
-    if (length(start) != ntab ) stop("start and table must be same length")
+    if (length(start) != ntab ) stop("'start' and 'table' must be same length")
 
     storage.mode(conf) <- "integer"
     ## NOTE: We make no use of the arguments locmar, nmar, marg, nu, and

@@ -7,7 +7,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     ists <- is.ts(x)
     x <- na.action(as.ts(x))
     xfreq <- frequency(x)
-    if(any(is.na(x))) stop("NAs in x")
+    if(any(is.na(x))) stop("NAs in 'x'")
     if(ists)  xtsp <- tsp(x)
     x <- as.matrix(x)
     if(!is.numeric(x))

@@ -7,23 +7,23 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
 {
     alternative <- match.arg(alternative)
     if(!missing(mu) && ((length(mu) > 1) || !is.finite(mu)))
-        stop("mu must be a single number")
+        stop("'mu' must be a single number")
     if(conf.int) {
         if(!((length(conf.level) == 1)
              && is.finite(conf.level)
              && (conf.level > 0)
              && (conf.level < 1)))
-            stop("conf.level must be a single number between 0 and 1")
+            stop("'conf.level' must be a single number between 0 and 1")
     }
 
-    if(!is.numeric(x)) stop("x must be numeric")
+    if(!is.numeric(x)) stop("'x' must be numeric")
     if(!is.null(y)) {
-        if(!is.numeric(y)) stop("y must be numeric")
+        if(!is.numeric(y)) stop("'y' must be numeric")
         DNAME <- paste(deparse(substitute(x)), "and",
                        deparse(substitute(y)))
         if(paired) {
             if(length(x) != length(y))
-                stop("x and y must have the same length")
+                stop("'x' and 'y' must have the same length")
             OK <- complete.cases(x, y)
             x <- x[OK] - y[OK]
             y <- NULL
@@ -35,12 +35,12 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
     } else {
         DNAME <- deparse(substitute(x))
         if(paired)
-            stop("y missing for paired test")
+            stop("'y' is missing for paired test")
         x <- x[is.finite(x)]
     }
 
     if(length(x) < 1)
-        stop("not enough (finite) x observations")
+        stop("not enough (finite) 'x' observations")
     CORRECTION <- 0
     if(is.null(y)) {
         METHOD <- "Wilcoxon signed rank test"
@@ -204,7 +204,7 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
     }
     else {
         if(length(y) < 1)
-            stop("not enough y observations")
+            stop("not enough 'y' observations")
         METHOD <- "Wilcoxon rank sum test"
         r <- rank(c(x - mu, y))
         n.x <- as.double(length(x))
@@ -365,7 +365,7 @@ function(formula, data, subset, na.action, ...)
        || (length(formula) != 3)
        || (length(attr(terms(formula[-2]), "term.labels")) != 1)
        || (length(attr(terms(formula[-3]), "term.labels")) != 1))
-        stop("formula missing or incorrect")
+        stop("'formula' missing or incorrect")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)

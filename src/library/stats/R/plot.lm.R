@@ -42,8 +42,7 @@ function(x, which = 1:4,
     else {
 	id.n <- as.integer(id.n)
 	if(id.n < 0 || id.n > n)
-	    stop(sprintf(gettext("'id.n' must be in {1,..,%d}"), n),
-                 domain = NA)
+	    stop(gettextf("'id.n' must be in {1,..,%d}", n), domain = NA)
     }
     if(id.n > 0) { ## label the largest residuals
         if(is.null(labels.id))

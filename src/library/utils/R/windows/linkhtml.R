@@ -134,7 +134,7 @@ fixup.package.URLs <- function(pkg, force = FALSE)
         page <- readLines(f)
         out <- try(file(f, open = "w"), silent = TRUE)
         if(inherits(out, "try-error")) {
-            warning("cannot update", sQuote(f))
+            warning(gettextf("cannot update '%s'", f), domain = NA)
             next
         }
         page <- gsub(olddoc, doc, page)

@@ -36,8 +36,8 @@ as.POSIXlt <- function(x, tz = "")
     if(is.factor(x))	return(fromchar(as.character(x)))
     if(is.logical(x) && all(is.na(x))) x <- as.POSIXct.default(x)
     if(!inherits(x, "POSIXct"))
-	stop("Don't know how to convert ", sQuote(deparse(substitute(x))),
-             " to class \"POSIXlt\"")
+        stop(gettextf("do not know how to convert '%s' to class \"POSIXlt\"",
+                      deparse(substitute(x))))
     if(missing(tz) && !is.null(tzone)) tz <- tzone[1]
     .Internal(as.POSIXlt(x, tz))
 }
@@ -54,7 +54,8 @@ as.POSIXct.date <- function(x, ...)
     if(inherits(x, "date")) {
         x <- (x - 3653) * 86400 # origin 1960-01-01
         return(structure(x, class = c("POSIXt", "POSIXct")))
-    } else stop(sQuote(deparse(substitute(x))), " is not a \"dates\" object")
+    } else stop(gettextf("'%s' is not a \"date\" object",
+                         deparse(substitute(x)) ))
 }
 
 ## convert from package chron
@@ -66,7 +67,8 @@ as.POSIXct.dates <- function(x, ...)
         if(length(z) == 3 && is.numeric(z))
             x  <- x + as.numeric(ISOdate(z[3], z[1], z[2], 0))
         return(structure(x, class = c("POSIXt", "POSIXct")))
-    } else stop(sQuote(deparse(substitute(x))), " is not a \"dates\" object")
+    } else stop(gettextf("'%s' is not a \"dates\" object",
+                         deparse(substitute(x)) ))
 }
 
 as.POSIXct.POSIXlt <- function(x, tz = "")
@@ -84,8 +86,8 @@ as.POSIXct.default <- function(x, tz = "")
 	return(as.POSIXct(as.POSIXlt(x), tz))
     if(is.logical(x) && all(is.na(x)))
         return(structure(as.numeric(x), class = c("POSIXt", "POSIXct")))
-    stop("Don't know how to convert ", sQuote(deparse(substitute(x))),
-         " to class \"POSIXct\"")
+    stop(gettextf("do not know how to convert '%s' to class \"POSIXlt\"",
+                  deparse(substitute(x))))
 }
 
 format.POSIXlt <- function(x, format = "", usetz = FALSE, ...)

@@ -10,9 +10,9 @@ function(y, groups, blocks, ...)
     }
     else {
         if(any(is.na(groups)) || any(is.na(blocks)))
-            stop("NA's are not allowed in groups or blocks")
+            stop("NA's are not allowed in 'groups' or 'blocks'")
         if(any(diff(c(length(y), length(groups), length(blocks)))))
-            stop("y, groups and blocks must have the same length")
+            stop("'y', 'groups' and 'blocks' must have the same length")
         DNAME <- paste(DNAME, ", ",
                        deparse(substitute(groups)), " and ",
                        deparse(substitute(blocks)), sep = "")
@@ -60,7 +60,7 @@ quade.test.formula <-
 function(formula, data, subset, na.action, ...)
 {
     if(missing(formula))
-        stop("formula missing")
+        stop("'formula' missing")
     ## <FIXME>
     ## Maybe put this into an internal rewriteTwoWayFormula() when
     ## adding support for strata()

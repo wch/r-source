@@ -29,7 +29,7 @@ split.screen <-
     ## if figs isn't a matrix, make it one
     if (!is.matrix(figs)) {
 	if (!is.vector(figs))
-	    stop("figs must be a vector or a matrix with 4 columns")
+	    stop("'figs' must be a vector or a matrix with 4 columns")
 	nr <- figs[1]
 	nc <- figs[2]
 	x <- seq(0, 1, len=nc+1)
@@ -41,7 +41,7 @@ split.screen <-
     }
     num.screens <- nrow(figs)
     if (num.screens < 1)
-	stop("figs must specify at least one screen")
+	stop("'figs' must specify at least one screen")
     new.screens <- valid.screens <- cur.screen <- 0
     if (first.split) {
         if (erase) plot.new()

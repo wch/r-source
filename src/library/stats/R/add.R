@@ -89,7 +89,8 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         y <- model.response(m, "numeric")
         newn <- length(y)
         if(newn < oldn)
-            warning("using the ", newn, "/", oldn , " rows from a combined fit")
+            warning(gettextf("using the %d/%d rows from a combined fit",
+                             newn, oldn), domain = NA)
     }
     n <- nrow(x)
     Terms <- attr(Terms, "term.labels")
@@ -182,7 +183,8 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         if(NCOL(y) == 2) y <- y[, 1]/(y[, 1] + y[,2])
         newn <- length(y)
         if(newn < oldn)
-            warning("using the ", newn, "/", oldn , " rows from a combined fit")
+            warning(gettextf("using the %d/%d rows from a combined fit",
+                             newn, oldn), domain = NA)
     }
     n <- nrow(x)
     if(is.null(wt)) wt <- rep.int(1, n)
@@ -229,7 +231,8 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         aod[, "Pr(Chi)"] <- dev
     } else if(test == "F") {
         if(fam == "binomial" || fam == "poisson")
-            warning("F test assumes quasi", fam, " family")
+            warning(gettextf("F test assumes quasi%s family", fam),
+                    domain = NA)
 	rdf <- object$df.residual
 	aod[, c("F value", "Pr(F)")] <- Fstat(aod, rdf)
     }
@@ -242,7 +245,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 }
 
 add1.mlm <- function(object, scope, ...)
-    stop("no add1 method implemented for mlm models")
+    stop("no 'add1' method implemented for \"mlm\" models")
 
 drop1 <- function(object, scope, ...) UseMethod("drop1")
 
@@ -370,7 +373,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
 }
 
 drop1.mlm <- function(object, scope, ...)
-    stop("drop1 not implemented for mlm models")
+    stop("no 'drop1' method for \"mlm\" models")
 
 drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 		      k = 2, ...)
@@ -435,7 +438,8 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         aod[, "Pr(Chi)"] <- dev
     } else if(test == "F") {
         if(fam == "binomial" || fam == "poisson")
-            warning("F test assumes quasi", fam, " family")
+            warning(gettextf("F test assumes quasi%s family", fam),
+                    domain = NA)
 	dev <- aod$Deviance
 	rms <- dev[1]/rdf
         dev <- pmax(0, dev - dev[1])
@@ -619,7 +623,7 @@ step <- function(object, scope, scale = 0,
     edf <- bAIC[1]
     bAIC <- bAIC[2]
     if(is.na(bAIC))
-        stop("AIC is not defined for this model, so step cannot proceed")
+        stop("AIC is not defined for this model, so 'step' cannot proceed")
     nm <- 1
     Terms <- fit$terms
     if(trace)

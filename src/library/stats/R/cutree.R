@@ -1,10 +1,10 @@
 cutree <- function(tree, k=NULL, h=NULL)
 {
     if(is.null(n1 <- nrow(tree$merge)) || n1 < 1)
-        stop("invalid tree (merge component)")
+        stop("invalid 'tree' (merge component)")
     n <- n1 + 1
     if(is.null(k) && is.null(h))
-        stop("either k or h must be specified")
+        stop("either 'k' or 'h' must be specified")
     if(is.null(k)) {
         if(is.unsorted(tree$height))
             stop("the 'height' component of 'tree' is not sorted\n(increasingly); consider applying as.hclust() first")
@@ -18,7 +18,8 @@ cutree <- function(tree, k=NULL, h=NULL)
     else {
         k <- as.integer(k)
         if(min(k) < 1 || max(k) > n)
-            stop("elements of k must be between 1 and ", n)
+            stop(gettextf("elements of 'k' must be between 1 and %d", n),
+                 domain = NA)
     }
 
     ans <- .Call("R_cutree", tree$merge, k, PACKAGE = "stats")
