@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-22, 2000-11-05
+@set FAQ-VERSION 1.1-23, 2000-11-12
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -1208,7 +1208,8 @@ equivalent to S, until assignment takes place.
 @item
 In R, @code{eval(EXPR, sys.parent())} does not work.  Instead, one
 should use @code{eval(EXPR, sys.frame(sys.parent())),} which also works
-in S.
+in S, or @code{eval(EXPR, parent.frame())}, which is more efficient but
+does not work in S.
 
 @item
 In S, the index variable in a @code{for()} loop is local to the inside

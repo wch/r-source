@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-22, 2000-11-05
+Version 1.1-23, 2000-11-12
 Kurt Hornik
 
 
@@ -936,7 +936,9 @@ the same time being as compatible as possible with S.
      equivalent to S, until assignment takes place.
 
    * In R, `eval(EXPR, sys.parent())' does not work.  Instead, one should
-     use `eval(EXPR, sys.frame(sys.parent())),' which also works in S.
+     use `eval(EXPR, sys.frame(sys.parent())),' which also works in S, or
+     `eval(EXPR, parent.frame())', which is more efficient but does not
+     work in S.
 
    * In S, the index variable in a `for()' loop is local to the inside of
      the loop.  In R it is local to the environment where the `for()'
