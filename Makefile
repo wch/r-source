@@ -53,7 +53,7 @@ realclean: acclean
 	@echo "Really cleaning ./etc/"; cd etc; make $@
 	@echo "Really cleaning the source tree"; cd src; make $@
 
-install: R help html
+install: all
 	$(INSTALL) -d $(bindir) $(mandir)/man1
 	$(INSTALL_DATA) R.1 $(mandir)/man1
 	$(INSTALL) -d $(rhome)/bin \
