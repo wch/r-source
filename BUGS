@@ -278,10 +278,10 @@ none
 
 Directory:  incoming
 
-* PR# 760 *
-Subject: Re: [R] Step function
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Wed, 29 Nov 2000 10:30:26 -0800 (PST)
+* PR# 761 *
+Subject:  Minor error in ?read.table 
+From: J.C.Rougier@durham.ac.uk
+Date: Thu, 7 Dec 2000 15:53:10 GMT
 * PR# 741 *
 Subject: match() is not correct for "close numerics"
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -314,6 +314,10 @@ Date: Tue, 28 Nov 2000 13:24:33 +0800
 Subject: (NA || x) and (NA && y)  {another "bug" }
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 27 Nov 2000 09:25:38 +0100
+* PR# 754 *
+Subject: means in arima0
+From: arto.luoma@uta.fi
+Date: Thu, 30 Nov 2000 14:02:55 +0100 (MET)
 * PR# 753 *
 Subject: Re: [R] Step function
 From: Thomas Lumley <thomas@biostat.washington.edu>
@@ -322,27 +326,27 @@ Date: Wed, 29 Nov 2000 10:30:26 -0800 (PST)
 Subject: non-centrality parameter in pf()
 From: Jerome Asselin <jerome@stat.ubc.ca>
 Date: Tue, 28 Nov 2000 11:43:06 -0800 (PST)
-* PR# 755 *
-Subject: bug in outer()
-From: mvondavier@ets.org
-Date: Fri, 1 Dec 2000 20:47:30 +0100 (MET)
-* PR# 754 *
-Subject: means in arima0
-From: arto.luoma@uta.fi
-Date: Thu, 30 Nov 2000 14:02:55 +0100 (MET)
-* PR# 757 *
-Subject: Bug in plot.formula
-From: Brett Presnell <presnell@stat.ufl.edu>
-Date: Mon, 4 Dec 2000 11:29:36 -0500 (EST)
 * PR# 756 *
 Subject: crash using bmp() on windows with Rdll2010
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 Date: Sun, 03 Dec 2000 23:19:58 +0100
-* PR# 759 *
-Subject: print buglet with small options(width = )
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 5 Dec 2000 19:34:57 +0100
+* PR# 755 *
+Subject: bug in outer()
+From: mvondavier@ets.org
+Date: Fri, 1 Dec 2000 20:47:30 +0100 (MET)
 * PR# 758 *
 Subject: Inconsistency, possibly a bug?
 From: Brett Presnell <presnell@stat.ufl.edu>
 Date: Mon, 4 Dec 2000 19:26:32 -0500 (EST)
+* PR# 757 *
+Subject: Bug in plot.formula
+From: Brett Presnell <presnell@stat.ufl.edu>
+Date: Mon, 4 Dec 2000 11:29:36 -0500 (EST)
+* PR# 760 *
+Subject: Re: [R] Step function
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Wed, 29 Nov 2000 10:30:26 -0800 (PST)
+* PR# 759 *
+Subject: print buglet with small options(width = )
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 5 Dec 2000 19:34:57 +0100
