@@ -1735,7 +1735,7 @@ static SEXP readStringFromFile(SEXP file, SEXP key)
 
 SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
 {
-    SEXP val;
+    SEXP val, tmp, sym;
     Rboolean force;
     int i, len;
 
@@ -1748,7 +1748,13 @@ SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
     len = LENGTH(vars);
     PROTECT(val = allocVector(VECSXP, len));
     for (i = 0; i < len; i++) {
-        SEXP tmp = findVarInFrame(env, install(CHAR(STRING_ELT(vars, i))));
+	sym = install(CHAR(STRING_ELT(vars, i)));
+        if (TYPEOF(env) == NILSXP)
+	    tmp = findVar(sym, env);
+	else
+	    tmp = findVarInFrame(env, sym);
+	if (tmp == R_UnboundValue)
+	    error("Object \"%s\" not found", CHAR(STRING_ELT(vars, i)));
         if (force && TYPEOF(tmp) == PROMSXP) {
             PROTECT(tmp);
             tmp = eval(tmp, R_GlobalEnv);
