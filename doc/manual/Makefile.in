@@ -236,7 +236,7 @@ install-pdf: pdf installdirs
 	done
 
 $(infodir)/dir:
-	@$(MKINSTALLDIRS) -p $(infodir)
+	@$(MKINSTALLDIRS) $(infodir)
 	$(INSTALL_DATA) $(srcdir)/dir $(infodir)
 
 uninstall:
