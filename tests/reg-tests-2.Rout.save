@@ -1,6 +1,6 @@
 
 R : Copyright 2002, The R Development Core Team
-Version 1.5.0 Under development (unstable) (2002-02-26)
+Version 1.5.0 Under development (unstable) (2002-03-03)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -711,6 +711,7 @@ x    1  2
   2 5.032 25.62702
 > ## was 20 rows in R <= 1.4.0
 > 
+> 
 > ## Chong Gu 2002-Feb-8: `.' not expanded in drop1
 > data(HairEyeColor)
 > lab <- dimnames(HairEyeColor)
@@ -759,4 +760,67 @@ Eye:Sex   3    23.08 201.83
 [1,] 1    3.141593 3+5i "testit" TRUE factor,1
 > ## prior to 1.5.0 had quotes for 2D case (but not kD, k > 2),
 > ## gave "numeric,1" etc, (even "numeric,1" for integers and factors)
+> 
+> 
+> ## ensure RNG is unaltered.
+> for(type in c("Wichmann-Hill", "Marsaglia-Multicarry", "Super-Duper",
++               "Mersenne-Twister", "Knuth-TAOCP", "Knuth-TAOCP-2002"))
++ {
++     set.seed(123, type)
++     print(RNGkind())
++     runif(100); print(runif(4))
++     set.seed(1000, type)
++     runif(100); print(runif(4))
++     set.seed(77, type)
++     runif(100); print(runif(4))
++ }
+[1] "Wichmann-Hill"    "Kinderman-Ramage"
+[1] 0.8308841 0.4640221 0.9460082 0.8764644
+[1] 0.12909876 0.07294851 0.45594560 0.68884911
+[1] 0.4062450 0.7188432 0.6241738 0.2511611
+[1] "Marsaglia-Multicarry" "Kinderman-Ramage"    
+[1] 0.3479705 0.9469351 0.2489207 0.7329251
+[1] 0.5041512 0.3617873 0.1469184 0.3798119
+[1] 0.14388128 0.04196294 0.36214015 0.86053575
+[1] "Super-Duper"      "Kinderman-Ramage"
+[1] 0.2722510 0.9230240 0.3971743 0.8284474
+[1] 0.5706241 0.1806023 0.9633860 0.8434444
+[1] 0.09356585 0.41081124 0.38635627 0.72993396
+[1] "Mersenne-Twister" "Kinderman-Ramage"
+[1] 0.5999890 0.3328235 0.4886130 0.9544738
+[1] 0.5993679 0.4516818 0.1368254 0.7261788
+[1] 0.09594961 0.31235651 0.81244335 0.72330846
+[1] "Knuth-TAOCP"      "Kinderman-Ramage"
+[1] 0.9445502 0.3366297 0.6296881 0.5914161
+[1] 0.9213954 0.5468138 0.8817100 0.4442237
+[1] 0.8016962 0.9226080 0.1473484 0.8827707
+[1] "Knuth-TAOCP-2002" "Kinderman-Ramage"
+[1] 0.9303634 0.2812239 0.1085806 0.8053228
+[1] 0.2916627 0.9085017 0.7958965 0.1980655
+[1] 0.05247575 0.28290867 0.20930324 0.16794887
+> RNGkind(normal.kind = "Kinderman-Ramage")
+> set.seed(123)
+> RNGkind()
+[1] "Knuth-TAOCP-2002" "Kinderman-Ramage"
+> rnorm(4)
+[1] -1.9699090 -2.2429340  0.5339321  0.2097153
+> RNGkind(normal.kind = "Ahrens-Dieter")
+> set.seed(123)
+> RNGkind()
+[1] "Knuth-TAOCP-2002" "Ahrens-Dieter"   
+> rnorm(4)
+[1]  0.06267229  0.12421568 -1.86653499 -0.14535921
+> RNGkind(normal.kind = "Box-Muller")
+> set.seed(123)
+> RNGkind()
+[1] "Knuth-TAOCP-2002" "Box-Muller"      
+> rnorm(4)
+[1]  2.26160990  0.59010303  0.30176045 -0.01346139
+> set.seed(123)
+> runif(4)
+[1] 0.04062130 0.06511825 0.99290488 0.95540467
+> set.seed(123, "default")
+> runif(4)
+[1] 0.1200427 0.1991600 0.7292821 0.8115922
+> ## last set.seed failed < 1.5.0.
 > 

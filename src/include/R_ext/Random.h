@@ -31,7 +31,8 @@ typedef enum {
     SUPER_DUPER,
     MERSENNE_TWISTER,
     KNUTH_TAOCP,
-    USER_UNIF
+    USER_UNIF,
+    KNUTH_TAOCP2
 } RNGtype;
 
 /* Different kinds of "N(0,1)" generators :*/

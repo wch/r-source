@@ -72,20 +72,32 @@ set.seed(seed, kind = NULL)
     is \bold{not} exactly the same as that in recent versions of S-PLUS.}
 
     \item{\code{"Mersenne-Twister":}}{
-    From Matsumoto and Nishimura (1998). A twisted GFSR with period
-    \eqn{2^{19937} - 1}{2^19937 - 1} and equidistribution in 623
-    consecutive dimensions (over the whole period).  The ``seed'' is a
-    624-dimensional set of 32-bit integers plus a current position in
-    that set.}
+      From Matsumoto and Nishimura (1998). A twisted GFSR with period
+      \eqn{2^{19937} - 1}{2^19937 - 1} and equidistribution in 623
+      consecutive dimensions (over the whole period).  The ``seed'' is a
+      624-dimensional set of 32-bit integers plus a current position in
+      that set.
+    }
 
     \item{\code{"Knuth-TAOCP":}}{
-    From Knuth (1997).  A GFSR using lagged Fibonacci sequences with
-    subtraction. That is, the recurrence used is
-    \deqn{X_j = (X_{j-100} - X_{j-37}) \bmod 2^{30}%
-        }{X[j] = (X[j-100] - X[j-37]) mod 2^30}
-    and the ``seed'' is the set of the 100 last numbers (actually
-    recorded as 101 numbers, the last being a cyclic shift of the
-    buffer).  The period is around \eqn{2^{129}}{2^129}.}
+      From Knuth (1997), as updated in Knuth (2002).
+      A GFSR using lagged Fibonacci sequences with
+      subtraction. That is, the recurrence used is
+      \deqn{X_j = (X_{j-100} - X_{j-37}) \bmod 2^{30}%
+      }{X[j] = (X[j-100] - X[j-37]) mod 2^30}
+      and the ``seed'' is the set of the 100 last numbers (actually
+      recorded as 101 numbers, the last being a cyclic shift of the
+      buffer).  The period is around \eqn{2^{129}}{2^129}.
+      }
+
+    \item{\code{"Knuth-TAOCP-2002":}}{
+      The 2002 version which not backwards compatible with the earlier
+      version: the initialization of the GFSR from the seed was altered.
+      So although workspaces with a saved \code{.Random.seed} will
+      work unchanged, the sequence set by \code{set.seed} is different
+      in the two versions.  \R did not allow you to choose consecutive
+      seeds, the reported `weakness', and already scrambled the seeds.
+    }
 
     \item{\code{"user-supplied":}}{
     Use a user-supplied generator. See \code{\link{Random.user}} for details.
@@ -99,7 +111,7 @@ set.seed(seed, kind = NULL)
   as are required.  It is intended as a simple way to get quite different
   seeds by specifying small integer arguments, and also as a way to get
   valid seed sets for the more complicated methods (especially
-  \code{"Knuth-TAOCP"}).
+  \code{"Mersenne-Twister"} and \code{"Knuth-TAOCP"}).
 }
 \note{
   Initially, there is no seed;	a new one is created from the current
@@ -161,6 +173,11 @@ set.seed(seed, kind = NULL)
   Knuth, D. E. (1997)
   \emph{The Art of Computer Programming.} Volume 2, third edition.\cr
   Source code at \url{http://www-cs-faculty.stanford.edu/~knuth/taocp.html}.
+
+  Knuth, D. E. (2002)
+  \emph{The Art of Computer Programming.} Volume 2, third edition, ninth
+  printing.\cr
+  See \url{http://Sunburn.Stanford.EDU/~knuth/news02.html}.
 }
 \author{of RNGkind: Martin Maechler. Current implementation, B. D. Ripley}
 

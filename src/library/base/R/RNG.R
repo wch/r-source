@@ -6,7 +6,8 @@
 RNGkind <- function(kind = NULL, normal.kind = NULL)
 {
     kinds <- c("Wichmann-Hill", "Marsaglia-Multicarry", "Super-Duper",
-               "Mersenne-Twister", "Knuth-TAOCP", "user-supplied", "default")
+               "Mersenne-Twister", "Knuth-TAOCP", "user-supplied",
+               "Knuth-TAOCP-2002", "default")
     n.kinds <- c("Kinderman-Ramage", "Ahrens-Dieter", "Box-Muller",
                  "user-supplied", "default")
     do.set <- length(kind) > 0
@@ -32,9 +33,11 @@ RNGkind <- function(kind = NULL, normal.kind = NULL)
     if(do.set || !is.null(normal.kind)) invisible(r) else r
 }
 
-set.seed <- function(seed, kind = NULL) {
+set.seed <- function(seed, kind = NULL)
+{
     kinds <- c("Wichmann-Hill", "Marsaglia-Multicarry", "Super-Duper",
-               "Mersenne-Twister", "Knuth-TAOCP", "user-supplied", "default")
+               "Mersenne-Twister", "Knuth-TAOCP", "user-supplied",
+               "Knuth-TAOCP-2002", "default")
     if(length(kind) > 0) {
 	if(!is.character(kind) || length(kind) > 1)
 	    stop("'kind' must be a character string of length 1 (RNG to be used).")

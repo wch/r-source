@@ -88,7 +88,8 @@ NEW FEATURES
    o    New na.action function na.pass() passes through NAs.
 
    o    piechart() has been renamed to pie(), as piechart is a Trellis
-	function for arrays of pie charts.
+	function for arrays of pie charts.  The default fill colours
+	are now a set of pastel shades, rather than par("bg").
 
    o	Changes in package ts:
 
@@ -130,7 +131,13 @@ NEW FEATURES
    o	plclust() in package mva, for more S-PLUS compatibility.
 
    o	new function expm1() both in R and in C API, for accurate exp(x)-1;
-	precision improvement in pexp() and pweibull() in some cases; PR#1334-5.
+	precision improvement in pexp() and pweibull() in some cases.
+	(PR#1334-5)
+
+   o	The "Knuth-TAOCP" option for random-number generation has been
+	given an option of using the 2002 revision.  See ?RNG for the
+	details: the R usage already protected against the 
+	reported `weakness'.
 
 
 DEPRECATED & DEFUNCT
@@ -227,6 +234,8 @@ BUG FIXES
 	generic function, so e.g. its method for data frames was not
 	being used.
 
+   o    set.seed(123, "default") was not using the value 123 (only for
+	kind = "default").
 
 
 	**************************************************

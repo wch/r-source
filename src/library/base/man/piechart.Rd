@@ -26,9 +26,9 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
     drawing of shading lines.}
   \item{angle}{the slope of shading lines, given as an angle in
     degrees (counter-clockwise).}
-  \item{col}{a vector of colors to be used in filling the slices. If
-    missing \code{par("bg")} is used, unless \code{density} is specified
-    when \code{par("fg")} is used.}
+  \item{col}{a vector of colors to be used in filling or shading
+    the slices. If missing a set of 6 pastel colours is used,
+    unless \code{density} is specified when \code{par("fg")} is used.}
   \item{main}{an overall title for the plot.}
   \item{\dots}{graphical parameters can be given as arguments to
     \code{pie}.}
@@ -53,6 +53,7 @@ pie(rep(1, 24), col = rainbow(24), radius = 0.9)
 pie.sales <- c(0.12, 0.3, 0.26, 0.16, 0.04, 0.12)
 names(pie.sales) <- c("Blueberry", "Cherry",
     "Apple", "Boston Cream", "Other", "Vanilla Cream")
+pie(pie.sales) # default colours
 pie(pie.sales,
     col = c("purple", "violetred1", "green3", "cornsilk", "cyan", "white"))
 pie(pie.sales, col = gray(seq(0.4,1.0,length=6)))

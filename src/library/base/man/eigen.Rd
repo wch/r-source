@@ -99,7 +99,7 @@ eigen(cbind( 1,3:1,1:3))
 eigen(cbind(-1,c(1:2,0),0:2)) # complex values
 
 Meps <- .Machine$double.eps
-set.seed(123, kind="default")  # force a particular seed
+set.seed(321, kind = "default")  # force a particular seed
 m <- matrix(round(rnorm(25),3), 5,5)
 sm <- m + t(m) #- symmetric matrix
 em <- eigen(sm); V <- em$vect

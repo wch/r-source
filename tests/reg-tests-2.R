@@ -315,6 +315,7 @@ fit <- lm(cbind(w=weight, w2=weight^2) ~ group, data=data)
 predict(fit, newdata=data[1:2, ])
 ## was 20 rows in R <= 1.4.0
 
+
 ## Chong Gu 2002-Feb-8: `.' not expanded in drop1
 data(HairEyeColor)
 lab <- dimnames(HairEyeColor)
@@ -340,3 +341,34 @@ dim(m) <- c(1, 6)
 m
 ## prior to 1.5.0 had quotes for 2D case (but not kD, k > 2),
 ## gave "numeric,1" etc, (even "numeric,1" for integers and factors)
+
+
+## ensure RNG is unaltered.
+for(type in c("Wichmann-Hill", "Marsaglia-Multicarry", "Super-Duper",
+              "Mersenne-Twister", "Knuth-TAOCP", "Knuth-TAOCP-2002"))
+{
+    set.seed(123, type)
+    print(RNGkind())
+    runif(100); print(runif(4))
+    set.seed(1000, type)
+    runif(100); print(runif(4))
+    set.seed(77, type)
+    runif(100); print(runif(4))
+}
+RNGkind(normal.kind = "Kinderman-Ramage")
+set.seed(123)
+RNGkind()
+rnorm(4)
+RNGkind(normal.kind = "Ahrens-Dieter")
+set.seed(123)
+RNGkind()
+rnorm(4)
+RNGkind(normal.kind = "Box-Muller")
+set.seed(123)
+RNGkind()
+rnorm(4)
+set.seed(123)
+runif(4)
+set.seed(123, "default")
+runif(4)
+## last set.seed failed < 1.5.0.

@@ -67,6 +67,7 @@ RNGTAB RNG_Table[] =
     { 3, 0, "Mersenne-Twister",	    1+624,	dummy},
     { 4, 0, "Knuth-TAOCP",          1+100,	dummy},
     { 5, 0, "User-supplied",            0,	dummy},
+    { 6, 0, "Knuth-TAOCP-2002",     1+100,	dummy},
 };
 
 
@@ -82,6 +83,7 @@ static void Randomize(RNGtype kind);
 static double MT_genrand();
 static Int32 KT_next();
 static void RNG_Init_KT(Int32);
+static void RNG_Init_KT2(Int32);
 #define KT_pos (RNG_Table[KNUTH_TAOCP].i_seed[100])
 
 double unif_rand(void)
@@ -115,6 +117,7 @@ double unif_rand(void)
 	return MT_genrand();
 
     case KNUTH_TAOCP:
+    case KNUTH_TAOCP2:
 	return KT_next() * KT;
 
     case USER_UNIF:
@@ -169,6 +172,7 @@ static void FixupSeeds(RNGtype kind, int initial)
 	break;
 
     case KNUTH_TAOCP:
+    case KNUTH_TAOCP2:
 	if(KT_pos <= 0) KT_pos = 100;
 	/* check for all zeroes */
 	for (j = 0; j < 100; j++)
@@ -207,6 +211,9 @@ static void RNG_Init(RNGtype kind, Int32 seed)
 	break;
     case KNUTH_TAOCP:
 	RNG_Init_KT(seed);
+	break;
+    case KNUTH_TAOCP2:
+	RNG_Init_KT2(seed);
 	break;
     case USER_UNIF:
 	User_unif_fun = R_FindSymbol("user_unif_rand", "", NULL);
@@ -276,6 +283,7 @@ void GetRNGstate()
  	case SUPER_DUPER:
  	case MERSENNE_TWISTER:
  	case KNUTH_TAOCP:
+ 	case KNUTH_TAOCP2:
 	    break;
  	case USER_UNIF:
 	    if(!User_unif_fun)
@@ -309,7 +317,7 @@ void PutRNGstate()
     int len_seed, j;
     SEXP seeds;
     
-    if (RNG_kind < 0 || RNG_kind > USER_UNIF ||
+    if (RNG_kind < 0 || RNG_kind > KNUTH_TAOCP2 ||
 	N01_kind < 0 || N01_kind > USER_NORM) {
 	warning("Internal .Random.seed is corrupt: not saving");
 	return;
@@ -339,6 +347,7 @@ static void RNGkind(RNGtype newkind)
     case SUPER_DUPER:
     case MERSENNE_TWISTER:
     case KNUTH_TAOCP:
+    case KNUTH_TAOCP2:
     case USER_UNIF:
 	break;
     default:
@@ -406,7 +415,7 @@ SEXP do_setseed (SEXP call, SEXP op, SEXP args, SEXP env)
 	RNGkind(kind);
     } else
 	kind = RNG_kind;
-    RNG_Init(kind, (Int32) seed);
+    RNG_Init(RNG_kind, (Int32) seed);
     PutRNGstate();
     return R_NilValue;
 }
@@ -645,6 +654,55 @@ static Int32 KT_next()
 }
 
 Void RNG_Init_KT(Int32 seed)
+{
+    ran_start(seed % 1073741821);
+    KT_pos = 100;
+}
+
+#define ran_start ran_start2002
+
+/* ===================  Knuth TAOCP  2002 ========================== */
+
+/*    N.B. The MODIFICATIONS introduced in the 9th printing (2002) are
+      included here; there's no backwards compatibility with the original. */
+
+
+#ifdef __STDC__
+void ran_start(long seed)
+#else
+void ran_start(seed)    /* do this before using ran_array */
+  long seed;            /* selector for different streams */
+#endif
+{
+  register int t,j;
+  long x[KK+KK-1];              /* the preparation buffer */
+  register long ss=(seed+2)&(MM-2);
+  for (j=0;j<KK;j++) {
+    x[j]=ss;                      /* bootstrap the buffer */
+    ss<<=1; if (ss>=MM) ss-=MM-2; /* cyclic shift 29 bits */
+  }
+  x[1]++;              /* make x[1] (and only x[1]) odd */
+  for (ss=seed&(MM-1),t=TT-1; t; ) {       
+    for (j=KK-1;j>0;j--) x[j+j]=x[j], x[j+j-1]=0; /* "square" */
+    for (j=KK+KK-2;j>=KK;j--)
+      x[j-(KK-LL)]=mod_diff(x[j-(KK-LL)],x[j]),
+      x[j-KK]=mod_diff(x[j-KK],x[j]);
+    if (is_odd(ss)) {              /* "multiply by z" */
+      for (j=KK;j>0;j--)  x[j]=x[j-1];
+      x[0]=x[KK];            /* shift the buffer cyclically */
+      x[LL]=mod_diff(x[LL],x[KK]);
+    }
+    if (ss) ss>>=1; else t--;
+  }
+  for (j=0;j<LL;j++) ran_x[j+KK-LL]=x[j];
+  for (;j<KK;j++) ran_x[j-LL]=x[j];
+  for (j=0;j<10;j++) ran_array(x,KK+KK-1); /* warm things up */
+  ran_arr_ptr=&ran_arr_sentinel;
+}
+/* ===================== end of Knuth's code ====================== */
+
+
+Void RNG_Init_KT2(Int32 seed)
 {
     ran_start(seed % 1073741821);
     KT_pos = 100;
