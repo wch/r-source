@@ -124,6 +124,12 @@ NEW FEATURES
 	separate `cex.names' argument so names and the numeric axis 
 	labels can be scaled separately.
 
+    o   Three new primitive functions have been added to base:
+        dataClass, objWithClass, and as.environment.  The first two
+        are support routines for class and class<- in package
+        methods.  The third replaces pos.to.env in the functions get,
+        exists, and friends.
+
 
 
 
