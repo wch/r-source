@@ -506,7 +506,7 @@ function(package, dir, lib.loc = NULL,
             mapply(functions[ind],
                    exprs[ind],
                    FUN = function(x, y)
-                   checkCoDoc(x, as.alist.call(y[-1])),
+                   checkCoDoc(x, as.pairlist(as.alist.call(y[-1]))),
                    SIMPLIFY = FALSE)
         ## Replacement functions.
         ind <- as.logical(sapply(exprs,
@@ -527,8 +527,8 @@ function(package, dir, lib.loc = NULL,
                            exprs[ind],
                            FUN = function(x, y)
                            checkCoDoc(x,
-                                      c(as.alist.call(y[[2]][-1]),
-                                        as.alist.symbol(y[[3]]))),
+                                      as.pairlist(c(as.alist.call(y[[2]][-1]),
+                                                    as.alist.symbol(y[[3]])))),
                            SIMPLIFY = FALSE)
                 badFunctions <-
                     c(badFunctions, badReplaceFuns)
