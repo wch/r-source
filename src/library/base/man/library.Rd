@@ -175,10 +175,10 @@ library(eda)		    # load package "eda"
 require(eda)		    # the same
 print(.packages())	    # "eda", too
 require(nonexistent)	    # FALSE
-}
 ## Suppose the a package needs to call a shared library named "foo.EXT",
 ## where "EXT" is the system-specific extension.  Then you should use
 .First.lib <- function(lib, pkg) {
   library.dynam("foo", pkg, lib)
+}
 }
 \keyword{data}

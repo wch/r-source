@@ -1025,19 +1025,20 @@ sub rdoc2Sd {
 	print Sdout text2nroff($blocks{"description"}), "\n";
     }
     if (defined $blocks{"usage"}){
-	print Sdout ".CS\n";
-	print Sdout text2nroff($blocks{"usage"}), "\n";
+	print Sdout ".CS";
+	print Sdout text2nroff($blocks{"usage"});
     }
     Sd_print_argblock("arguments", ".RA");
     Sd_print_argblock("value", ".RT");
     Sd_print_sections();
     Sd_print_block("note", "Note");
     Sd_print_block("references", ".SH REFERENCES");
+    print Sdout "\n";
     Sd_print_block("seealso", ".SA");
+    print Sdout "\n";
     Sd_print_codeblock("examples", ".EX");
-    if (@keywords) {
-	print Sdout ".KW\n";
-	print Sdout join(',', @keywords), "\n";
+    while ($#keywords >= 0) {
+	print Sdout ".KW ", shift( @keywords ), "\n";
     }
     print Sdout ".WR\n"
 }
