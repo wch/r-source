@@ -50,7 +50,7 @@ getLoadedDLLs <- function()
     els
 }
 
-getDLLRegisteredRoutines =
+getDLLRegisteredRoutines <-
 function(dll)  
 {
    # Provide methods for the different types.
@@ -72,15 +72,29 @@ function(dll)
 
 
 
-getCallingDLL =
-function(f = sys.function(1))  
+getCallingDLL <-
+function(f = sys.function(1), doStop = FALSE)  
 {
   e = environment(f)
   
-  if(!isNamespace(e))
+  if(!isNamespace(e)) {
+    if(doStop)
       stop("function is not in a namespace, so can't locate associated DLL")
-
+    else
+      return(NULL)
+  }
+  
    # Please feel free to replace with a more encapsulated way to do this.
-  e$".__NAMESPACE__."$DLLs[[1]]
+  if(exists("DLLs", envir = e$".__NAMESPACE__.") && length(e$".__NAMESPACE__."$DLLs))
+    return(e$".__NAMESPACE__."$DLLs[[1]])
+  else {
+    if(doStop)
+      stop("looking for DLL for native routine call, but no DLLs in namespace of call")
+    else
+      NULL
+  }
+
+  NULL
 }
+
 
