@@ -184,11 +184,15 @@ AC_ARG_WITH(tk-config,
   TK_CONFIG=${withval},
   TK_CONFIG="")
 
-AC_ARG_WITH(libtool,
-  [  --with-libtool          use libtool for building shared libraries [yes]],
-  use_libtool=${withval},
-  use_libtool=yes)
-AM_CONDITIONAL(USE_LIBTOOL, test "${use_libtool}" = yes)
+## FIXME:
+## Completely disable using libtool for building shlibs until libtool
+## fully supports at least Fortran and C++.
+## AC_ARG_WITH(libtool,
+##   [  --with-libtool          use libtool for building shared libraries [yes]],
+##   use_libtool=${withval},
+##   use_libtool=yes)
+## </FIXME>
+AM_CONDITIONAL(USE_LIBTOOL, test "${use_libtool}" = yes)    
 
 ### C compiler.
 
@@ -221,6 +225,7 @@ case "${host}" in
 esac
 
 R_PROG_CC_M
+R_PROG_CC_C_O_LO
 
 ### FORTRAN compiler
 
@@ -285,16 +290,17 @@ if test -n "${F77}"; then
   cat << \EOF > ${f77_rules_frag}
 .f.c:
 .f.o:
-	$(FC) $(ALL_FFLAGS) -c $< -o $@
+	$(FC) $(ALL_FFLAGS) -c $< -o $[@]
 EOF
   R_PROG_F77_C_O_LO
   if test "${r_cv_prog_f77_c_o_lo}" = yes; then
     cat << \EOF >> ${f77_rules_frag}
 .f.lo:
-	$(FC) $(ALL_FFLAGS_LO) -c $< -o $@
+	$(FC) $(ALL_FFLAGS_LO) -c $< -o $[@]
 EOF
   else
     cat << \EOF >> ${f77_rules_frag}
+.f.lo:
 	@test -d .libs || mkdir .libs
 	$(FC) $(ALL_FFLAGS_LO) -c $< -o .libs/$*.o
 	mv .libs/$*.o $*.lo
@@ -306,11 +312,23 @@ elif test -n "${F2C}"; then
   cat << \EOF > ${f77_rules_frag}
 .f.o:
 	$(F2C) $(F2CFLAGS) < $< > $*.c
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $*.c -o $@
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $*.c -o $[@]
 	@rm -f $*.c
 .f.lo:
 	$(F2C) $(F2CFLAGS) < $< > $*.c
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $*.c -o $@
+EOF
+  if test "${r_cv_prog_cc_c_o_lo}" = yes; then
+    cat << \EOF >> ${f77_rules_frag}
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $*.c -o $[@]
+EOF
+  else
+    cat << \EOF >> ${f77_rules_frag}
+	@test -d .libs || mkdir .libs
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $*.c -o .libs/$*.o
+	mv .libs/$*.o $*.lo
+EOF
+  fi
+  cat << \EOF >> ${f77_rules_frag}
 	@rm -f $*.c
 EOF
 else
@@ -661,6 +679,9 @@ case "${host}" in
     main_ldflags="-export-dynamic"
     shlib_ldflags="-shared"
     ;;
+  *-*-gnu*)			# GNU Hurd
+    main_ldflags="-export-dynamic"
+    ;;
   *hpux*)
     SHLIB_EXT=sl
     case "${CC}" in
@@ -681,10 +702,10 @@ case "${host}" in
       shlib_cxxldflags="-shared -fPIC"
     fi
     ;;
-  *linux*aout)
+  *linux*aout)			# GNU Linux/aout
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
     ;;
-  *linux*)
+  *linux*)			# GNU Linux/ELF
     main_ldflags="-export-dynamic"
     ;;
   *netbsd*)
@@ -724,18 +745,22 @@ case "${host}" in
     ;;
 esac
 
-## Step 4.  In case we use libtool ...
-if test "${use_libtool}" = yes; then
-  case "${host}" in
-    *aix4.[[2-9]]*)
-      ## FIXME: AIX needs special care.
-      ;;
-    *)
-      ## FIXME: Maybe we should set this here and not in R_bin_LDFLAGS?
-      main_ldflags=
-      ;;
-  esac
-fi
+## FIXME:
+## Completely disable using libtool for building shlibs until libtool
+## fully supports at least Fortran and C++.
+## ## Step 4.  In case we use libtool ...
+## if test "${use_libtool}" = yes; then
+##   case "${host}" in
+##     *aix4.[[2-9]]*)
+##       ## FIXME: AIX needs special care.
+##       ;;
+##     *)
+##       ## FIXME: Maybe we should set this here and not in R_bin_LDFLAGS?
+##       main_ldflags=
+##       ;;
+##   esac
+## fi
+## </FIXME>
 
 ## Step 5.  Overrides from the environment and error checking.
 if test -z "${MAIN_LD-${MAINLD}}"; then
