@@ -333,6 +333,10 @@ Subject: hashing NaN
 From: Thomas Lumley <tlumley@u.washington.edu>
 Date: Wed, 16 Jan 2002 16:29:35 -0800 (PST)
 --Patch put in R-devel for further testing.
+* PR# 1301 *
+Subject: incorrect handling of arrays of list elements
+From: =?iso-8859-1?Q?Jens=20Oehlschl=E4gel?= <joehl@web.de>
+Date: Thu, 7 Feb 2002 13:43:19 +0100
 
 Directory:  Macintosh
 
@@ -413,6 +417,10 @@ Subject: Installation problem : SunOS
 From: brendan_mcmahon@prusec.com
 Date: Thu, 31 Jan 2002 18:00:55 +0100 (MET)
 --looks like gcc compiled under different OS version.
+* PR# 1316 *
+Subject: shared libraries on AIX
+From: lio@hpss1.ccs.ornl.gov
+Date: Mon, 18 Feb 2002 18:53:41 +0100 (MET)
 
 Directory:  TooMuchAtOnce
 
@@ -438,23 +446,11 @@ Date: Fri, 25 Jan 2002 14:36:52 -0500
 Subject: make check fails when R_HOME env var set
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Fri, 25 Jan 2002 15:08:33 -0500
-* PR# 1301 *
-Subject: incorrect handling of arrays of list elements
-From: =?iso-8859-1?Q?Jens=20Oehlschl=E4gel?= <joehl@web.de>
-Date: Thu, 7 Feb 2002 13:43:19 +0100
-* PR# 1310 *
-Subject: Command History
-From: Steven White <stevelyn@mediaone.net>
-Date: Wed, 13 Feb 2002 21:41:15 -0500
 * PR# 1312 *
 Subject: latitude <-> longitude in quake.tab
 From: ckhung@cyut.edu.tw
 Date: Sat, 16 Feb 2002 01:35:20 +0100 (MET)
-* PR# 1315 *
-Subject: Error strata in aov
-From: jzacks@artsci.wustl.edu
-Date: Sun, 17 Feb 2002 21:39:03 +0100 (MET)
-* PR# 1316 *
-Subject: shared libraries on AIX
-From: lio@hpss1.ccs.ornl.gov
-Date: Mon, 18 Feb 2002 18:53:41 +0100 (MET)
+* PR# 1317 *
+Subject: library(methods): setMethod with "ANY" fails.
+From: hb@maths.lth.se
+Date: Tue, 19 Feb 2002 01:22:58 +0100 (MET)
