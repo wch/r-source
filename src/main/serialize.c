@@ -2014,14 +2014,40 @@ static SEXP appendStringToFile(SEXP file, SEXP string)
     return val;
 }
 
+/* Experimental interface to cache the pkg.rdb files */
+
+#define NC 100
+static int used = 0;
+static char names[NC][PATH_MAX];
+static char *ptr[NC];
+
+SEXP R_lazyLoadDBflush(SEXP file)
+{
+    int i;
+    char *cfile = CHAR(STRING_ELT(file, 0));
+
+    /* fprintf(stderr, "flushing file %s", cfile); */
+    for (i = 0; i < used; i++)
+	if(strcmp(cfile, names[i]) == 0) {
+	    strcpy(names[i], "");
+	    free(ptr[i]);
+	    /* fprintf(stderr, " found at pos %d in cache", i); */
+	    break;
+	}
+    /* fprintf(stderr, "\n"); */
+    return R_NilValue;
+}
+
+
 /* Reads, in binary mode, the bytes in the range specified by a
    position/length vector and returns them as a scalar string. */
 
 static SEXP readStringFromFile(SEXP file, SEXP key)
 {
     FILE *fp;
-    int offset, len, in;
+    int offset, len, in, i, icache = -1, filelen;
     SEXP val;
+    char *cfile = CHAR(STRING_ELT(file, 0));
 
     if (! IS_PROPER_STRING(file))
 	error("not a proper file name");
@@ -2033,17 +2059,50 @@ static SEXP readStringFromFile(SEXP file, SEXP key)
 
     val = allocVector(CHARSXP, len);
     val = ScalarString(val);
-
-    if ((fp = fopen(CHAR(STRING_ELT(file, 0)), "rb")) == NULL)
-	error("file open failed");
-    if (fseek(fp, offset, SEEK_SET) != 0) {
-	fclose(fp);
-	error("seek failed");
+    /* Do we have this database cached? */
+    for (i = 0; i < used; i++)
+	if(strcmp(cfile, names[i]) == 0) {icache = i; break;}
+    if (icache >= 0) {
+	memcpy(CHAR(STRING_ELT(val, 0)), ptr[icache]+offset, len);
+	return val;
     }
-    in = fread(CHAR(STRING_ELT(val, 0)), 1, len, fp);
-    fclose(fp);
 
-    if (len != in) error("read failed");
+    /* find a vacant slot? */
+    for (i = 0; i < used; i++)
+	if(strcmp("", names[i]) == 0) {icache = i; break;}
+    if(icache < 0 && used < NC) icache = used++;
+
+    if(icache >= 0) { 
+	strcpy(names[icache], cfile);
+	if ((fp = fopen(cfile, "rb")) == NULL)
+	    error("open failed on %s", cfile);
+	if (fseek(fp, 0, SEEK_END) != 0) {
+	    fclose(fp);
+	    error("seek failed on %s", cfile);
+	}
+	filelen = ftell(fp);
+	/* fprintf(stderr, "adding file %s at pos %d in cache, length %d\n", 
+	   cfile, icache, filelen); */
+	ptr[icache] = malloc(filelen);
+	if (fseek(fp, 0, SEEK_SET) != 0) {
+	    fclose(fp);
+	    error("seek failed on %s", cfile);
+	}
+	in = fread(ptr[icache], 1, filelen, fp);
+	fclose(fp);
+	if (filelen != in) error("read failed on %s", cfile);
+	memcpy(CHAR(STRING_ELT(val, 0)), ptr[icache]+offset, len);	
+    } else {
+	if ((fp = fopen(cfile, "rb")) == NULL)
+	    error("open failed on %s", cfile);
+	if (fseek(fp, offset, SEEK_SET) != 0) {
+	    fclose(fp);
+	    error("seek failed on %s", cfile);
+	}
+	in = fread(CHAR(STRING_ELT(val, 0)), 1, len, fp);
+	fclose(fp);
+	if (len != in) error("read failed on %s", cfile);
+    }
     
     return val;
 }

@@ -50,6 +50,9 @@ detach <- function(name, pos=2, version)
         if(!is.null(libpath)) try(.Last.lib(libpath))
     }
     .Internal(detach(pos))
+    if(length(grep("^package:", packageName)))
+        .Call("R_lazyLoadDBflush",
+              paste(libpath, "/R/", pkgname, ".rdb", sep=""))
     ## Check for detaching a  package required by another package (not
     ## by .GlobalEnv because detach() can't currently fix up the
     ## .required there)

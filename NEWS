@@ -126,6 +126,11 @@ NEW FEATURES
 
     o	remove.packages() can now remove bundles.
 
+    o	Lazy-loading databases are now cached in memory at first use:
+	this enables R to run much faster from slow file systems such
+	as USB flash drives.  There is a small (less than 2Mb)
+	increase in default memory usage.
+
 
 UTILITIES
 
@@ -159,7 +164,6 @@ DOCUMENTATION
 
     o	There are no longer any restrictions on characters in the
 	\name{} field of a .Rd file: in particular _ is supported.
-
 
 
 C-LEVEL FACILITIES
