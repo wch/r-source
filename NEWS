@@ -18,6 +18,7 @@ NEW FEATURES
     o	format.info() now also works with `nsmall' in analogy with
 	format.default()
 
+
 BUG FIXES
 
     o	cut.POSIXt() now passes on ... to cut.default(), as documented.
@@ -65,7 +66,9 @@ BUG FIXES
 
     o	str(x) gives better output when x is of mode "(".
 
-    o	Lapack error messages corrected (PR#3494)
+    o	Lapack error messages corrected (PR#3494) and incorrect call to 
+	DGEQP3 (PR#2867).
+
 
 
 		CHANGES IN R VERSION 1.7.1
