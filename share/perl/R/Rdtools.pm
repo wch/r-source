@@ -45,11 +45,64 @@ sub get_usages {
     ##   $delimround->quote("\'");
     ## </FIXME>
 
+    sub add_to_functions {
+	my($ref, $prefix, $match, $name) = @_;
+	if($ref->{$prefix}) {
+	    ## Multiple usages for a function are trouble.
+	    ## We could try to build the full arglist for the function
+	    ## from the usages.  A simple idea is to do
+	    ##   chop($ref->{$prefix});
+	    ##   my $foo = ", " . substr($match, 1);
+	    ##   $ref->{$prefix} .= $foo;
+	    ## which adds the 'new' args to the 'old' ones.
+	    ## This is not good enough, as it could give duplicate args
+	    ## which is not allowed.  In fact, we would generally need
+	    ## an R parser for the arglist, as the usages could be as
+	    ## bad as 
+	    ##   foo(a = c("b", "c"), b = ...)
+	    ##   foo(c = NULL, ...)
+	    ## so that splitting on ',' is not good enough.
+	    ## However, there are really only two functions with
+	    ## justified multiple usage (abline and seq), so we simply
+	    ## warn about multiple usage in case it was not shadowed by
+	    ## a \synopsis unless in mode 'args', where we can cheat.
+	    if(($mode eq "args") || ($mode eq "style")) {
+		my $save_prefix = $prefix . "~";
+		while($ref->{$save_prefix}) {
+		    $save_prefix .= "~";
+		}
+		$ref->{$save_prefix} = $match;
+	    }
+	    else {
+		print("Multiple usage for function $prefix in $name\n");
+	    }
+	} else {
+	    $ref->{$prefix} = $match;
+	}
+    }
+
+    sub add_to_S4methods {
+	## <FIXME>
+	## Could make this smarter similar to add_to_functions().
+	my($ref, $prefix, $match, $name) = @_;
+	if($ref->{$prefix}) {
+	    print("Multiple usage for S4 method $prefix in ${name}\n");
+	}
+	else {
+	    $ref->{$prefix} = $match;
+	}
+	## </FIXME>
+    }
+
     my %usages;
-    my %functions;
+
+    my %functions = ();
     my @variables;
     my @data_sets;
     my %S4methods;
+
+    my $ref_to_functions = \%functions;
+    my $ref_to_S4methods = \%S4methods;
 
     my @text;
     my $name;
@@ -101,11 +154,43 @@ sub get_usages {
 
 	    ## Try to match usage for variables (i.e., a syntactic name
 	    ## on a single line).
-	    if($usage =~ /^([\.[:alpha:]][\.[:alnum:]]*)\s*(\n|$)/) {
+	    if($usage =~
+	       /^([\.[:alpha:]][\.[:alnum:]]*)\s*([\#\n]|$)/) {
 		push(@variables, $1);
-		$usage =~ s/^.*(\n|$)//g;
+		$usage =~ s/^.*(\n|$)//;
 		next;
 	    }
+
+	    ## Try matching infix markup for '%whatever%' special binary
+	    ## operators.  Note that R-lang says that 'whatever' can be
+	    ## *anything* ...
+	    if($usage =~
+	       /^([\.[:alnum:]]+)\s+\\\%(.+)\\\%\s+([\.[:alnum:]]+)\s*([\#\n]|$)/) {
+		## <FIXME>
+		## We should really have a common regexp for matching
+		## syntactic R names.
+		## </FIXME>
+		add_to_functions($ref_to_functions,
+				 "\%" . $2 . "\%",
+				 "($1, $3)",
+				 $name);
+		$usage =~ s/^.*(\n|$)//;
+		next;
+	    }
+
+	    ## <FIXME>
+	    ## Add something for matching subscripting and subassigning
+	    ## (extracting and replacing subsets): look for
+	    ##   ^${R_syntax_name_RE}[?
+	    ## and use delimMatch to get the matching ']' (or ']]').
+	    ## Similarly for subscripting/subassiging via '$'.
+	    ##
+	    ## Note that we also need to deal with markup for S3 methods
+	    ## for subscripting and subassigning: unless we know what
+	    ## Rdconv() should do with e.g.
+	    ##   \S3method{[}{data.frame}(ARGLIST)
+	    ## there is really not too much point in playing with this.
+	    ## </FIXME>
 
 	    my ($generic, $class, $siglist);
 
@@ -171,50 +256,12 @@ sub get_usages {
 		## </NOTE>
 
 		if($siglist) {
-		    if($S4methods{$prefix}) {
-			print("Multiple usage for S4 method" .
-			      "${generic}-${siglist} in ${name}\n");
-		    }
-		    else {
-			$S4methods{$prefix} = $match;
-		    }
+		    add_to_S4methods($ref_to_S4methods,
+				     $prefix, $match, $name);
 		}
 		else {
-		    if($functions{$prefix}) {
-			## Multiple usages for a function are trouble.
-			## We could try to build the full arglist for
-			## the function from the usages.  A simple idea
-			## is to do
-			##   chop($functions{$prefix});
-			##   my $foo = ", " . substr($match, 1);
-			##   $functions{$prefix} .= $foo;
-			## which adds the 'new' args to the 'old' ones.
-			## This is not good enough, as it could give
-			## duplicate args which is not allowed.  In
-			## fact, we would generally need an R parser for
-			## the arglist, as the usages could be as bad as
-			##   foo(a = c("b", "c"), b = ...)
-			##   foo(c = NULL, ...)
-			## so that splitting on ',' is not good enough.
-			## However, there are really only two functions
-			## with justified multiple usage (abline and
-			## seq), so we simply warn about multiple usage
-			## in case it was not shadowed by a \synopsis
-			## unless in mode 'args', where we can cheat.
-			if(($mode eq "args") || ($mode eq "style")) {
-			    my $save_prefix = $prefix . "0";
-			    while($functions{$save_prefix}) {
-				$save_prefix .= "0";
-			    }
-			    $functions{$save_prefix} = $match;
-			}
-			else {
-			    print("Multiple usage for $prefix() " .
-				  "in $name\n");
-			}
-		    } else {
-			$functions{$prefix} = $match;
-		    }
+		    add_to_functions($ref_to_functions,
+				     $prefix, $match, $name);
 		}
 	    }
 	    elsif($rest =~ /^\s*\<-\s*([[:alpha:]]+)\s*(\n|$)/) {
@@ -224,8 +271,10 @@ sub get_usages {
 		    ## form
 		    ##   \S4method{GENERIC}{SIGLIST}(ARGLIST) <- RHS
 		    $prefix = "\\S4method{${generic}<-}{${siglist}}";
-		    $S4methods{$prefix} =
-		      substr($match, 0, -1) . ", $1)";
+		    add_to_S4methods($ref_to_S4methods,
+				     $prefix,
+				     substr($match, 0, -1) . ", $1)",
+				     $name);
 		}
 		else {
 		    if($generic) {
@@ -249,8 +298,10 @@ sub get_usages {
 		    } else {
 			$prefix = "${prefix}<-";
 		    }
-		    $functions{$prefix} =
-		      substr($match, 0, -1) . ", $1)";
+		    add_to_functions($ref_to_functions,
+				     $prefix,
+				     substr($match, 0, -1) . ", $1)",
+				     $name);
 		}
 	    }
 
