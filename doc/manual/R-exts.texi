@@ -847,7 +847,7 @@ this by running @command{autoconf} in the top-level package directory
 @quotation
 @cartouche
 @smallexample
-AC_INIT(DESCRIPTION) dnl any file that exists
+AC_INIT([RODBC]) dnl package name
 
 dnl Select an optional include path, from a configure option
 dnl or from an environment variable.
