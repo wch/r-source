@@ -183,7 +183,26 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
     /* of the formals to the generic in it. */
 
     PROTECT(newrho = allocSExp(ENVSXP));
+    /*
     PROTECT(op = findFun(CAR(cptr->call), cptr->sysparent));
+    */
+    op = CAR(cptr->call);
+    switch (TYPEOF(op)) {
+    case SYMSXP:
+	PROTECT(op = findFun(op, cptr->sysparent));
+	break;
+    case LANGSXP:
+	PROTECT(op = eval(op, cptr->sysparent));
+	break;
+    case CLOSXP:
+    case BUILTINSXP:
+    case SPECIALSXP:
+	PROTECT(op);
+	break;
+    default:
+	error("Invalid generic function in usemethod");
+    }
+
     if (TYPEOF(op) == CLOSXP) {
 	formals = FORMALS(op);
 	for (s = FRAME(cptr->cloenv); s != R_NilValue; s = CDR(s)) {

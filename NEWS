@@ -35,6 +35,7 @@ BUG FIXES
 
     o	Improved automatic remaking.
 
+    o   Fixed problem in usemethod where CAR(call) could be non-symbol
 
 
 	**************************************************
