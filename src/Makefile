@@ -33,5 +33,5 @@ realclean:
 		@cd appl; make realclean
 		@cd regex; make realclean
 		@cd unix; make realclean
-		@-rm -f include/ForeignDecl.h include/ForeignTab.h include/Platform.h
+		@-rm -f include/FFDecl.h include/FFTab.h include/Platform.h
 		@-rm -f lib/*.a

@@ -66,8 +66,8 @@ typedef struct {
         char *name;
         DL_FUNC func;
 } CFunTabEntry;  
-#include "ForeignDecl.h"
-#include "ForeignDecl.h"
+#include "FFDecl.h"
+#include "FFDecl.h"
 
 	/* This provides a table of built-in C and Fortran functions */
 	/* We include this table, even when we have dlopen and friends */
@@ -75,7 +75,7 @@ typedef struct {
 
 static CFunTabEntry CFunTab[] =
 {
-#include "ForeignTab.h"
+#include "FFTab.h"
         {NULL, NULL}
 };      
 

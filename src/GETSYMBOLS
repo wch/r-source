@@ -8,17 +8,17 @@ ROUTINES="appl/ROUTINES"
 sed '
 s/F77_SUBROUTINE(\(.*\))/int \1_();/
 s/C_FUNCTION(\(.*\))/int \1();/
-' ${ROUTINES} > /tmp/ForeignDecl.h
+' ${ROUTINES} > /tmp/FFDecl.h
 
-if test ! -f include/ForeignDecl.h
+if test ! -f include/FFDecl.h
 then
-	cp /tmp/ForeignDecl.h include/ForeignDecl.h
+	cp /tmp/FFDecl.h include/FFDecl.h
 else
-	if diff /tmp/ForeignDecl.h include/ForeignDecl.h
+	if diff /tmp/FFDecl.h include/FFDecl.h
 	then
 	:
 	else
-		cp /tmp/ForeignDecl.h include/ForeignDecl.h
+		cp /tmp/FFDecl.h include/FFDecl.h
 	fi
 fi
 
@@ -26,17 +26,17 @@ fi
 sed '
 s/F77_SUBROUTINE(\(.*\))/	{ "\1_",	\1_},/
 s/C_FUNCTION(\(.*\))/	{ "\1",	\1 },/
-' ${ROUTINES} > /tmp/ForeignTab.h
+' ${ROUTINES} > /tmp/FFTab.h
 
-if test ! -f include/ForeignTab.h
+if test ! -f include/FFTab.h
 then
-	cp /tmp/ForeignTab.h include/ForeignTab.h
+	cp /tmp/FFTab.h include/FFTab.h
 else
-	if diff /tmp/ForeignTab.h include/ForeignTab.h
+	if diff /tmp/FFTab.h include/FFTab.h
 	then
 	:
 	else
-		cp /tmp/ForeignTab.h include/ForeignTab.h
+		cp /tmp/FFTab.h include/FFTab.h
 	fi
 fi
-rm -f /tmp/ForeignTab.h /tmp/ForeignDecl.h
+rm -f /tmp/FFTab.h /tmp/FFDecl.h

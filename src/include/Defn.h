@@ -417,7 +417,7 @@ void R_SetInput(int);		/* Set the input stream */
 int cget(void);			/* Get a character from input */
 void uncget(int);		/* Unget characters from input */
 
-#include "rfrontend_api.h"
+#include "RFront.h"
 /* These are defined in rfrontend_api.h */
 /*void writecons(char*, int);
 int ReadKBD(char*, int);

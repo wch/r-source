@@ -18,7 +18,7 @@
  */
 
 #include "Graphics.h"
-#include "PostScript.h"
+#include "PS.h"
 #include "Errormsg.h"
 #include "Fileio.h"
 #include <stdio.h>

@@ -104,7 +104,7 @@ realclean:
 		@echo cleaning in main
 		@-rm -f Makefile R.binary R-Image *core *.o
 
-dotcode.o:	../include/ForeignDecl.h ../include/ForeignTab.h
+dotcode.o:	../include/FFDecl.h ../include/FFTab.h
 
 colors.o:	../include/Graphics.h
 par.o:		../include/Graphics.h
