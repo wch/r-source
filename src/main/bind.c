@@ -68,24 +68,28 @@ static void AnswerType(SEXP x, int recurse, int usenames, struct BindData *data)
     switch (TYPEOF(x)) {
     case NILSXP:
 	break;
-    case LGLSXP:
+    case RAWSXP:
 	data->ans_flags |= 1;
 	data->ans_length += LENGTH(x);
 	break;
-    case INTSXP:
-	data->ans_flags |= 8;
+    case LGLSXP:
+	data->ans_flags |= 2;
 	data->ans_length += LENGTH(x);
 	break;
-    case REALSXP:
+    case INTSXP:
 	data->ans_flags |= 16;
 	data->ans_length += LENGTH(x);
 	break;
-    case CPLXSXP:
+    case REALSXP:
 	data->ans_flags |= 32;
 	data->ans_length += LENGTH(x);
 	break;
-    case STRSXP:
+    case CPLXSXP:
 	data->ans_flags |= 64;
+	data->ans_length += LENGTH(x);
+	break;
+    case STRSXP:
+	data->ans_flags |= 128;
 	data->ans_length += LENGTH(x);
 	break;
     case VECSXP:
@@ -103,9 +107,9 @@ static void AnswerType(SEXP x, int recurse, int usenames, struct BindData *data)
 	}
 	else {
 	    if (TYPEOF(x) == EXPRSXP)
-		data->ans_flags |= 256;
+		data->ans_flags |= 512;
 	    else
-		data->ans_flags |= 128;
+		data->ans_flags |= 256;
 	    data->ans_length += length(x);
 	}
 	break;
@@ -121,12 +125,12 @@ static void AnswerType(SEXP x, int recurse, int usenames, struct BindData *data)
 	    }
 	}
 	else {
-	    data->ans_flags |= 128;
+	    data->ans_flags |= 256;
 	    data->ans_length += length(x);
 	}
 	break;
     default:
-	data->ans_flags |= 128;
+	data->ans_flags |= 256;
 	data->ans_length += 1;
 	break;
     }
@@ -146,6 +150,10 @@ static void ListAnswer(SEXP x, int recurse, struct BindData *data)
     case LGLSXP:
 	for (i = 0; i < LENGTH(x); i++)
 	    LIST_ASSIGN(ScalarLogical(LOGICAL(x)[i]));
+	break;
+    case RAWSXP:
+	for (i = 0; i < LENGTH(x); i++)
+	    LIST_ASSIGN(ScalarRaw(RAW(x)[i]));
 	break;
     case INTSXP:
 	for (i = 0; i < LENGTH(x); i++)
@@ -331,6 +339,32 @@ static void ComplexAnswer(SEXP x, struct BindData *data)
     }
 }
 
+static void RawAnswer(SEXP x, struct BindData *data)
+{
+    int i, n;
+    switch(TYPEOF(x)) {
+    case NILSXP:
+	break;
+    case LISTSXP:
+	while (x != R_NilValue) {
+	    RawAnswer(CAR(x), data);
+	    x = CDR(x);
+	}
+	break;
+    case EXPRSXP:
+    case VECSXP:
+	n = LENGTH(x);
+	for (i = 0; i < n; i++)
+	    RawAnswer(VECTOR_ELT(x, i), data);
+	break;
+    default:
+	n = LENGTH(x);
+	for (i = 0; i < n; i++)
+	    RAW(data->ans_ptr)[data->ans_length++] = RAW(x)[i];
+	break;
+    }
+}
+
 static SEXP NewBase(SEXP base, SEXP tag)
 {
     SEXP ans;
@@ -471,6 +505,7 @@ static void NewExtractNames(SEXP v, SEXP base, SEXP tag, int recurse,
     case REALSXP:
     case CPLXSXP:
     case STRSXP:
+    case RAWSXP:
 	for (i = 0; i < n; i++) {
 	    namei = ItemName(names, i);
 	    if (namei == R_NilValue && nameData->count == 0)
@@ -607,13 +642,14 @@ SEXP do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
     /* we use the natural coercion for vector types. */
 
     mode = NILSXP;
-    if (data.ans_flags & 256)	   mode = EXPRSXP;
-    else if (data.ans_flags & 128) mode = VECSXP;
-    else if (data.ans_flags &  64) mode = STRSXP;
-    else if (data.ans_flags &  32) mode = CPLXSXP;
-    else if (data.ans_flags &  16) mode = REALSXP;
-    else if (data.ans_flags &	8) mode = INTSXP;
-    else if (data.ans_flags &	1) mode = LGLSXP;
+    if (data.ans_flags & 512)	   mode = EXPRSXP;
+    else if (data.ans_flags & 256) mode = VECSXP;
+    else if (data.ans_flags & 128) mode = STRSXP;
+    else if (data.ans_flags &  64) mode = CPLXSXP;
+    else if (data.ans_flags &  32) mode = REALSXP;
+    else if (data.ans_flags &  16) mode = INTSXP;
+    else if (data.ans_flags &	2) mode = LGLSXP;
+    else if (data.ans_flags &	1) mode = RAWSXP;
 
     /* Allocate the return value and set up to pass through */
     /* the arguments filling in values of the returned object. */
@@ -639,7 +675,9 @@ SEXP do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
 	ComplexAnswer(args, &data);
     else if (mode == REALSXP)
 	RealAnswer(args, &data);
-    else
+    else if (mode == RAWSXP)
+	RawAnswer(args, &data);
+    else /* integer or logical */
 	IntegerAnswer(args, &data);
     args = t;
 
@@ -740,13 +778,14 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
     /* the natural coercion for vector types. */
 
     mode = NILSXP;
-    if      (data.ans_flags & 256) mode = EXPRSXP;	    
-    else if (data.ans_flags & 128) mode = VECSXP;
-    else if (data.ans_flags &  64) mode = STRSXP;
-    else if (data.ans_flags &  32) mode = CPLXSXP;
-    else if (data.ans_flags &  16) mode = REALSXP;
-    else if (data.ans_flags &	8) mode = INTSXP;
-    else if (data.ans_flags &	1) mode = LGLSXP;
+    if      (data.ans_flags & 512) mode = EXPRSXP;	    
+    else if (data.ans_flags & 256) mode = VECSXP;
+    else if (data.ans_flags & 128) mode = STRSXP;
+    else if (data.ans_flags &  64) mode = CPLXSXP;
+    else if (data.ans_flags &  32) mode = REALSXP;
+    else if (data.ans_flags &  16) mode = INTSXP;
+    else if (data.ans_flags &	2) mode = LGLSXP;
+    else if (data.ans_flags &	1) mode = RAWSXP;
 
     /* Allocate the return value and set up to pass through */
     /* the arguments filling in values of the returned object. */
@@ -773,6 +812,8 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 	ComplexAnswer(args, &data);
     else if (mode == REALSXP)
 	RealAnswer(args, &data);
+    else if (mode == RAWSXP)
+	RawAnswer(args, &data);
     else
 	IntegerAnswer(args, &data);
     args = t;
@@ -932,13 +973,14 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     mode = NILSXP;
-    if (data.ans_flags & 256)	   mode = EXPRSXP;
-    else if (data.ans_flags & 128) mode = VECSXP;
-    else if (data.ans_flags &  64) mode = STRSXP;
-    else if (data.ans_flags &  32) mode = CPLXSXP;
-    else if (data.ans_flags &  16) mode = REALSXP;
-    else if (data.ans_flags &	8) mode = INTSXP;
-    else if (data.ans_flags &	1) mode = LGLSXP;
+    if (data.ans_flags & 512)	   mode = EXPRSXP;
+    else if (data.ans_flags & 256) mode = VECSXP;
+    else if (data.ans_flags & 128) mode = STRSXP;
+    else if (data.ans_flags &  64) mode = CPLXSXP;
+    else if (data.ans_flags &  32) mode = REALSXP;
+    else if (data.ans_flags &  16) mode = INTSXP;
+    else if (data.ans_flags &	2) mode = LGLSXP;
+    else if (data.ans_flags &	1) mode = RAWSXP;
 
     switch(mode) {
     case NILSXP:

@@ -20,13 +20,13 @@ writeChar(object, con, nchars = nchar(object), eos = "")
   \item{what}{Either an object whose mode will give the mode of the
     vector to be read, or a character vector of length one describing
     the mode: one of \code{"numeric", "double", "integer", "int",
-      "logical", "complex", "character"}.}
+      "logical", "complex", "character", "raw"}.}
   \item{n}{integer.  The (maximal) number of records to be
     read. You can use an over-estimate here, but not too large as
     storage is reserved for \code{n} items.}
   \item{size}{integer.  The number of bytes per element in the byte
     stream.  The default, \code{NA}, uses the natural size.  Size changing
-    is not supported for complex vectors.}
+    is not supported for raw and complex vectors.}
   \item{signed}{logical. Only used for integers of sizes 1 and 2,
     when it determines if the quantity on file
     should be regarded as a signed or unsigned integer.}

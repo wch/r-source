@@ -660,7 +660,7 @@ static SEXP coerceToExpression(SEXP v)
 	    break;
 	case RAWSXP:
 	    for (i = 0; i < n; i++)
-		SET_VECTOR_ELT(ans, i, ScalarInteger((int)RAW(v)[i]));
+		SET_VECTOR_ELT(ans, i, ScalarRaw(RAW(v)[i]));
 	    break;
 	}
     }
@@ -701,7 +701,7 @@ static SEXP coerceToVectorList(SEXP v)
 	break;
     case RAWSXP:
 	for (i = 0; i < n; i++)
-	    SET_VECTOR_ELT(ans, i, ScalarInteger((int)RAW(v)[i]));
+	    SET_VECTOR_ELT(ans, i, ScalarRaw(RAW(v)[i]));
 	break;
     case LISTSXP:
     case LANGSXP:

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -261,6 +261,9 @@ SEXP do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     x = CAR(args);
+    if(TYPEOF(x) == RAWSXP)
+	error("%s() is not implemented for raw vectors",
+	      (PRIMVAL(op) == 0 ? "duplicated" : "unique"));
     /* handle zero length vectors */
     if (length(x) == 0)
 	return(allocVector(PRIMVAL(op) == 0 ? LGLSXP : TYPEOF(x), 0));

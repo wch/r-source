@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2003   The R Development Core Team.
+ *  Copyright (C) 1999-2004   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -167,6 +167,10 @@ static SEXP lunary(SEXP call, SEXP op, SEXP arg)
 	for (i = 0; i < len; i++)
 	    LOGICAL(x)[i] = ISNAN(REAL(arg)[i]) ?
 		NA_LOGICAL : REAL(arg)[i] == 0;
+	break;
+    case RAWSXP:
+	for (i = 0; i < len; i++)
+	    LOGICAL(x)[i] = RAW(arg)[i] == 0;
 	break;
     }
     if(names != R_NilValue) setAttrib(x, R_NamesSymbol, names);

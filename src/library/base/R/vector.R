@@ -20,5 +20,3 @@ complex <- function(length.out = 0,
 
 single <- function(length = 0)
     structure(vector("double", length), Csingle=TRUE)
-
-raw <- function(length = 0) vector("raw", length)

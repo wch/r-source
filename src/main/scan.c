@@ -186,6 +186,24 @@ strtoc(const char *nptr, char **endptr, Rboolean NA, LocalData *d)
     return(z);
 }
 
+static Rbyte 
+strtoraw (const char *nptr, char **endptr) 
+{
+    char *p = (char *) nptr;
+    int i, val = 0;
+    /* should have whitespace plus exactly 2 hex digits */
+    while(isspace((int)*p)) p++;
+    for(i = 1; i <= 2; i++, p++) {
+	val *= 16;
+	if(*p >= '0' && *p <= '9') val += *p - '0';
+	else if (*p >= 'A' && *p <= 'F') val += *p - 'A' + 10;
+	else if (*p >= 'a' && *p <= 'f') val += *p - 'a' + 10;
+	else {val = 0; break;}
+    }
+    *endptr = p;
+    return (Rbyte) val;
+}
+
 static int scanchar(Rboolean inQuote, LocalData *d)
 {
     int next;
@@ -414,6 +432,15 @@ static void extractItem(char *buffer, SEXP ans, int i, LocalData *d)
 	else
 	    SET_STRING_ELT(ans, i, mkChar(buffer));
 	break;
+    case RAWSXP:
+	if (isNAstring(buffer, 0, d))
+	    RAW(ans)[i] = 0;
+	else {
+	    RAW(ans)[i] = strtoraw(buffer, &endp);
+	    if (!isBlankString(endp))
+		expected("a raw", buffer, d);
+	}
+	break;
     }
 }
 
@@ -509,6 +536,10 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
     case STRSXP:
 	for (i = 0; i < n; i++)
 	    SET_STRING_ELT(bns, i, STRING_ELT(ans, i));
+	break;
+    case RAWSXP:
+	for (i = 0; i < n; i++)
+	    RAW(bns)[i] = RAW(ans)[i];
 	break;
     }
     UNPROTECT(1);
@@ -663,6 +694,10 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 	    for (j = 0; j < n; j++)
 		SET_STRING_ELT(new, j, STRING_ELT(old, j));
 	    break;
+	case RAWSXP:
+	    for (j = 0; j < n; j++)
+		RAW(new)[j] = RAW(old)[j];
+	    break;
 	}
 	SET_VECTOR_ELT(ans, i, new);
     }
@@ -775,6 +810,7 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     case REALSXP:
     case CPLXSXP:
     case STRSXP:
+    case RAWSXP:
 	ans = scanVector(TYPEOF(what), nmax, nlines, flush, stripwhite, 
 			 blskip, &data);
 	break;

@@ -582,6 +582,7 @@ SEXP Rf_ScalarInteger(int);
 SEXP Rf_ScalarReal(double);
 SEXP Rf_ScalarComplex(Rcomplex);
 SEXP Rf_ScalarString(SEXP);
+SEXP Rf_ScalarRaw(Rbyte);
 SEXP Rf_setAttrib(SEXP, SEXP, SEXP);
 void Rf_setSVector(SEXP*, int, SEXP);
 void Rf_setVar(SEXP, SEXP, SEXP);
@@ -1015,6 +1016,7 @@ int R_system(char *);
 #define ScalarLogical		Rf_ScalarLogical
 #define ScalarReal		Rf_ScalarReal
 #define ScalarString		Rf_ScalarString
+#define ScalarRaw		Rf_ScalarRaw
 #define setAttrib		Rf_setAttrib
 #define setSVector		Rf_setSVector
 #define setVar			Rf_setVar

@@ -69,6 +69,13 @@ SEXP ScalarString(SEXP x)
     return ans;
 }
 
+SEXP ScalarRaw(Rbyte x)
+{
+    SEXP ans = allocVector(RAWSXP, 1);
+    RAW(ans)[0] = x;
+    return ans;
+}
+
 const static char * const truenames[] = {
     "T",
     "True",

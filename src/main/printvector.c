@@ -296,9 +296,8 @@ static void printNamedStringVector(SEXP * x, int n, int quote, SEXP * names)
 			   EncodeString(x[k], w, quote, Rprt_adj_right),
 			   R_print.gap, ""))
 
-static void printNamedRawVector(int * x, int n, SEXP * names)
-    PRINT_N_VECTOR(formatLogical(x, n, &w),
-		   Rprintf("%2x%*s", x[k], R_print.gap,""))
+static void printNamedRawVector(Rbyte * x, int n, SEXP * names)
+    PRINT_N_VECTOR(w = 2, Rprintf("%2x%*s", x[k], R_print.gap,""))
 
 void printNamedVector(SEXP x, SEXP names, int quote, char *title)
 {

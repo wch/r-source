@@ -1305,3 +1305,53 @@ do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(2);
     return ans;
 }
+
+SEXP do_charToRaw(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, x = CAR(args);
+    int nc;
+
+    if(!isString(x) || LENGTH(x) == 0)
+	errorcall(call, "argument must be a character vector of length 1");
+    if(LENGTH(x) > 1)
+	warningcall(call, "argument should be a character vector of length 1\nall but the first element will be ignored");
+    nc = LENGTH(STRING_ELT(x, 0));
+    ans = allocVector(RAWSXP, nc);
+    memcpy(RAW(ans), CHAR(STRING_ELT(x, 0)), nc);
+    return ans;
+}
+
+
+SEXP do_rawToChar(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, c, x = CAR(args);
+    int i, nc = LENGTH(x), multiple, len;
+    char buf[2];
+
+    if(TYPEOF(x) != RAWSXP)
+	errorcall(call, "argument 'x' must be a raw vector");
+    multiple = asLogical(CADR(args));
+    if(multiple == NA_LOGICAL)
+	errorcall(call, "argument 'multiple' must be TRUE or FALSE");
+    if(multiple) {
+	buf[1] = '\0';
+	PROTECT(ans = allocVector(STRSXP, nc));
+	for(i = 0; i < nc; i++) {
+	    buf[0] = (char) RAW(x)[i];
+	    SET_STRING_ELT(ans, i, mkChar(buf));
+	}
+	/* do we want to copy e.g. names here? */
+    } else {
+	len = LENGTH(x);
+	PROTECT(ans = allocVector(STRSXP, 1));
+	/* String is not necessarily 0-terminated and may contain nuls 
+	   so don't use mkChar */
+	c = allocString(len); /* adds zero terminator */
+	memcpy(CHAR(c), RAW(x), len);
+	SET_STRING_ELT(ans, 0, c);
+    }
+    UNPROTECT(1);
+    return ans;    
+}
+
+

@@ -11,8 +11,6 @@ as.real <- as.double
 as.complex <- function(x,...) UseMethod("as.complex")
 as.complex.default <- function(x,...) .Internal(as.vector(x, "complex"))
 
-as.raw <- function(x,...) .Internal(as.vector(x, "raw"))
-
 as.single <- function(x,...) UseMethod("as.single")
 as.single.default <- function(x,...) {
     structure(.Internal(as.vector(x,"double")), Csingle=TRUE)

@@ -120,6 +120,13 @@ char *EncodeInteger(int x, int w)
     return buffer->data;
 }
 
+char *EncodeRaw(Rbyte x)
+{
+    R_AllocStringBuffer(0, buffer);
+    sprintf(buffer->data, "%02x", x);
+    return buffer->data;
+}
+
 char *EncodeReal(double x, int w, int d, int e)
 {
     char fmt[20];
@@ -345,6 +352,9 @@ char *EncodeElement(SEXP x, int indx, int quote)
 		      &w, &d, &e, &wi, &di, &ei, 0);
 	EncodeComplex(COMPLEX(x)[indx],
 		      w, d, e, wi, di, ei);
+	break;
+    case RAWSXP:
+	EncodeRaw(RAW(x)[indx]);
 	break;
     }
     return buffer->data;

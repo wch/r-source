@@ -142,6 +142,12 @@ static Rboolean compute_identical(SEXP x, SEXP y)
     case BCODESXP: /**** is this the best approach? */
 #endif
 	return(x == y ? TRUE : FALSE);
+    case RAWSXP:
+	if (length(x) != length(y)) return FALSE;
+	/* Use memcmp (which is ISO C) to speed up the comparison */
+	return memcmp((void *)RAW(x), (void *)RAW(y), 
+		      length(x) * sizeof(Rbyte)) == 0 ? TRUE : FALSE;
+
 	/*  case PROMSXP: */
 	/* test for equality of the substituted expression -- or should
 	   we require both expression and environment to be identical? */
