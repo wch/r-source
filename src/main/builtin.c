@@ -143,6 +143,8 @@ SEXP do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SET_CLOENV(CAR(args), CADR(args));
     else if (isEnvironment(CADR(args)))
 	setAttrib(CAR(args), R_DotEnvSymbol, CADR(args));
+    else
+	errorcall(call, "replacement object is not an environment");
     return CAR(args);
 }
 
