@@ -1,7 +1,7 @@
 as.char.or.expr <- function(x) {
     if (is.expression(x)) x 
     else if (is.call(x)) as.expression(x)
-    else unlist(strsplit(as.character(x), "\n"))
+    else as.character(x)
 }
 
 text <- function(x, ...) UseMethod("text")
