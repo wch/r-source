@@ -98,8 +98,8 @@ USING MAKE
 
 To compile R, you may need GNU make, although the former dependence on
 versions of make accepting shell wildcards has recently been eliminated.
-On Solaris, GNU make 3.77 (the current one) does not work; 3.76.1 works
-fine.
+On Solaris, GNU make 3.77 (the current one) does not work; 3.76.1 and
+Sun make work fine.
 
 
 USING FORTRAN
