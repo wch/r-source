@@ -8,7 +8,7 @@
 }
 \usage{data(airmiles)}
 \format{
-  A time-series of 24 observations; yearly, 1937--1960.
+  A time series of 24 observations; yearly, 1937--1960.
 }
 \source{F.A.A. Statistical Handbook of Aviation.}
 \references{
