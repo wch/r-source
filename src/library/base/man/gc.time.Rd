@@ -3,10 +3,13 @@
 \title{Report Time Spent in Garbage Collection}
 \description{
   This function reports the time spent in garbage collection so far in
-  the \R session.
+  the \R session while GC timing was enabled..
 }
 \usage{
-gc.time()
+gc.time(on = TRUE)
+}
+\arguments{
+  \item{on}{logical; if \code{TRUE}, GC timing is enabled.}
 }
 \value{
   A numerical vector of length 5 giving the user CPU time, the system

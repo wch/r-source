@@ -506,7 +506,7 @@ FUNTAB R_FunTab[] =
 /* Miscellaneous */
 
 {"proc.time",	do_proctime,	0,	1,	0,	{PP_FUNCALL, PREC_FN,	0}},
-{"gc.time",	do_gctime,	0,	1,	0,	{PP_FUNCALL, PREC_FN,	0}},
+{"gc.time",	do_gctime,	0,	1,	-1,	{PP_FUNCALL, PREC_FN,	0}},
 {"Version",	do_version,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"machine",	do_machine,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 /*{"Machine",	do_Machine,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},*/

@@ -1807,10 +1807,15 @@ double R_getClockIncrement(void);
 void R_getProcTime(double *data);
 
 static double gctimes[5], gcstarttimes[5];
+static Rboolean gctime_enabled = FALSE;
 
 SEXP do_gctime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
+    if (args == R_NilValue)
+	gctime_enabled = TRUE;
+    else
+	gctime_enabled = asLogical(CAR(args));
     ans = allocVector(REALSXP, 5);
     REAL(ans)[0] = gctimes[0];
     REAL(ans)[1] = gctimes[1];
@@ -1830,23 +1835,26 @@ SEXP do_gctime(SEXP call, SEXP op, SEXP args, SEXP env)
 static void gc_start_timing(void)
 {
 #ifdef _R_HAVE_TIMING_
-    R_getProcTime(gcstarttimes);
+    if (gctime_enabled)
+	R_getProcTime(gcstarttimes);
 #endif /* _R_HAVE_TIMING_ */
 }
 
 static void gc_end_timing(void)
 {
 #ifdef _R_HAVE_TIMING_
-    double times[5], delta;
-    R_getProcTime(times);
-    delta = R_getClockIncrement();
+    if (gctime_enabled) {
+	double times[5], delta;
+	R_getProcTime(times);
+	delta = R_getClockIncrement();
 
-    /* add delta to compensate for timer resolution */
-    gctimes[0] += times[0] - gcstarttimes[0] + delta;
-    gctimes[1] += times[1] - gcstarttimes[1] + delta;
-    gctimes[2] += times[2] - gcstarttimes[2] + delta;
-    gctimes[3] += times[3] - gcstarttimes[3];
-    gctimes[4] += times[4] - gcstarttimes[4];
+	/* add delta to compensate for timer resolution */
+	gctimes[0] += times[0] - gcstarttimes[0] + delta;
+	gctimes[1] += times[1] - gcstarttimes[1] + delta;
+	gctimes[2] += times[2] - gcstarttimes[2] + delta;
+	gctimes[3] += times[3] - gcstarttimes[3];
+	gctimes[4] += times[4] - gcstarttimes[4];
+    }
 #endif /* _R_HAVE_TIMING_ */
 }
 
