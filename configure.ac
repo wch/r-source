@@ -1057,9 +1057,9 @@ case "${host_os}" in
 ##      LIBR_LDFLAGS="-dynamiclib -install_name \$(Rexeclibdir)/libR.dylib"
    ##     LIBR_LDFLAGS="-dynamiclib"
    if test -z "${R_FW_PATH}"; then
-    R_FW_PATH=/Library/Frameworks
+    R_FW_PATH="/Library/Frameworks"
    fi
-   R_SH_VAR_ADD(R_FW_PATH)
+   ## R_SH_VAR_ADD(R_FW_PATH)
         LIBR_LDFLAGS="-dynamiclib -install_name ${R_FW_PATH}/R.framework/Versions/${PACKAGE_VERSION}/Resources/bin/libR.dylib -compatibility_version ${PACKAGE_VERSION}  -current_version ${PACKAGE_VERSION}"
    ##    fi
     ## <FIXME>
