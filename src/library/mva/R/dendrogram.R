@@ -461,16 +461,14 @@ heatmap <- function (x, Rowv, Colv, distfun = dist, add.expr,
         Colv <- apply(x, 2, mean, na.rm=na.rm)
     ## get the dendrograms
     if( !inherits(Rowv, "dendrogram") ) {
-        xdist <- distfun(x)
-        hcr <- hclust(xdist)
+        hcr <- hclust(distfun(x))
         ddr <- as.dendrogram(hcr)
         ddr <- reorder(ddr, Rowv)
     }
     else
         ddr <- Rowv
     if( !inherits(Colv, "dendrogram") ) {
-        xdist <- distfun(t(x))
-        hcc <- hclust(t(xdist))
+        hcc <- hclust(distfun(t(x)))
         ddc <- as.dendrogram(hcc)
         ddc <- reorder(ddc, Colv)
     }
