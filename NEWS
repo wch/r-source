@@ -16,7 +16,7 @@ NEW FEATURES
 	are planned. See library(help=ts) for details.
 
     o	warnings can be collected (options(warn=0), the default), printed
-	immediately (options(warn=0)) or turned into errors (options(warn=2)).
+	immediately (options(warn=1)) or turned into errors (options(warn=2)).
 	As a consequence, all warnings and errors now are printed followed
 	by a newline, if one is not supplied. (This should improve the
 	S compatibility of the use of PROBLEM ... in compiled code.)
