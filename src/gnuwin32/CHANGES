@@ -66,9 +66,6 @@ Building under (repaired) Cygwin -mno-cygwin environments is no longer
 supported.  You probably do need the compiler system recommended for
 rw1031 or later.
 
-libR.a is no longer used (except when cross-building) as the
-recommended compiler can import directly from R.dll.
-
 globalvar.h is no longer used: the header files now declare imported
 variables.  This make it essential to use the R header files rather
 than copying entries from them.

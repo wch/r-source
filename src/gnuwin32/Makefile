@@ -62,15 +62,8 @@ tcl:
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H -DR_DLL_BUILD
 FFLAGS = $(OPTFLAGS)
 
-## cross-building needs an import library: native builds can use the DLL.
-## we do need to build R.exp to ship if for use with VC++ etc.
-ifeq ($(strip $(BUILD)),CROSS)
 rbuild: fixfiles rlibs makeMakedeps ../../bin/R.dll libR.a \
 	 CHTML front-ends COPYRIGHTS rmodules
-else
-rbuild: fixfiles rlibs makeMakedeps ../../bin/R.dll R.exp\
-	 CHTML front-ends COPYRIGHTS rmodules
-endif
 
 rpackage: fixed/fixdesc ../../library/R.css
 	$(MAKE) STAMP=NO $(PKGS)

@@ -2,7 +2,7 @@ R @RVER@ for Windows
 ====================
 
 This distribution contains the sources to build a port of R-@RVER@ to
-run on Windows 95, 98, ME, NT4 and 2000 on Intel/clone chips. See the
+run on Windows 95, 98, ME, NT4, 2000 and XP on Intel/clone chips. See the
 file `readme' for fuller details, including how to install the binary
 versions.
 
@@ -32,12 +32,12 @@ versions of the cygwin tools and dll.  To avoid frustration, please
 use our tool set, and make sure it is at the front of your path.
 
 We recommend that you use a recent snapshot of the Mingw port of gcc
-from http://sourceforge.net/projects/mingw/.  For example, at the
-time of writing, MinGW-1.1.tar.gz based on gcc-2.95.3.  Just unpack
-this somewhere and put its bin directory in your path.
+from http://sourceforge.net/projects/mingw/.  For example, at the time
+of writing, MinGW-1.1.tar.gz based on gcc-2.95.3.  Just unpack this
+somewhere and put its bin directory in your path, *after* our tools.
 
-No earlier Mingw compiler has been tested and support for using the Cygwin
-compiler has been withdrawn.  If you see errors about `-shared'
+No earlier Mingw compiler has been tested and support for using the
+Cygwin compiler has been withdrawn.  If you see errors about `-shared'
 not being understood or `__imp_foo' missing, you are not using the
 recommended compiler.
 
@@ -54,7 +54,7 @@ Unpack this from this directory by
 unzip zlib113.zip -d bitmap/zlib
 
 If you want to make compiled html (.chm) files you will need the
-Microsoft HTML Help Workshop, currently available for download at 
+Microsoft HTML Help Workshop, currently available for download at
 
 http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp
 and http://www.microsoft.com/office/ork/xp/appndx/appa06.htm
