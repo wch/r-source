@@ -155,6 +155,10 @@ Changes from grid_2.0.1 to grid_2.1.0:
     (they always could be, but the documentation said they had to
      be a valid R symbol)
 
+22. The "label" argument for grid.xaxis() and grid.yaxis() can now 
+    also be a language object or string vector, in which case it 
+    specifies custom labels for the tick marks.
+
 
 Changes from grid_2.0.0 to grid_2.0.1:
 ------------------------------------
