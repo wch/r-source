@@ -54,7 +54,7 @@ static char *SaveString(SEXP sxp, int offset)
 SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DevDesc *dd;
-    char *display, *vmax, *cname;
+    char *display, *vmax, *cname, *devname;
     double height, width, ps, gamma;
     int colormodel, maxcubesize;
     gcall = call;
@@ -93,6 +93,10 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     if (maxcubesize < 1 || maxcubesize > 256)
         maxcubesize = 256;
 
+    devname = "X11";
+    if (!strncmp(display, "png::", 5)) devname = "PNG";
+    else if (!strncmp(display, "jpeg::", 6)) devname = "JPEG";
+
     /* Allocate and initialize the device driver data */
     if (!(dd = (DevDesc*)malloc(sizeof(DevDesc))))
 	return 0;
@@ -102,9 +106,9 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!ptr_X11DeviceDriver(dd, display, width, height, ps, gamma, colormodel,
 			     maxcubesize)) {
 	free(dd);
-	errorcall(call, "unable to start device X11");
+	errorcall(call, "unable to start device %s", devname);
     }
-    gsetVar(install(".Device"), mkString("X11"), R_NilValue);
+    gsetVar(install(".Device"), mkString(devname), R_NilValue);
     addDevice(dd);
     initDisplayList(dd);
     vmaxset(vmax);
