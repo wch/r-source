@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -42,6 +42,22 @@ SEXP cons(SEXP car, SEXP cdr)
     SETCDR(e, cdr);
     return e;
 }
+
+/* Get the i-th element of a list */
+SEXP elt(SEXP list, int i)
+{
+    int j;
+    SEXP result = list;
+
+    if ((i < 0) || (i > length(list)))
+	return R_NilValue;
+    else
+	for (j = 0; j < i; j++)
+	    result = CDR(result);
+
+    return CAR(result);
+}
+
 
 /* Return the last element of a list */
 SEXP lastElt(SEXP list)
