@@ -75,7 +75,7 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  ans;
     char *tn, *tm;
-    int i, slen;
+    int i, slen=0 /* -Wall */;
 
     checkArity(op, args);
     if (!isString(CAR(args)) || (slen = LENGTH(CAR(args))) < 1)
