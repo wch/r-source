@@ -125,12 +125,16 @@ help <-
                     print(A, quote=F)
                 } else {
                     stop(paste("No documentation for `", topic,
-                               "' in specified packages and libraries",
+                               "' in specified packages and libraries:\n",
+                               "  you could try `help.search(\"", topic,
+                               "\")'",
                                sep = ""))
                 }
             } else {
                     stop(paste("No documentation for `", topic,
-                               "' in specified packages and libraries",
+                               "' in specified packages and libraries:\n",
+                               "  you could try `help.search(\"", topic,
+                               "\")'",
                                sep = ""))
             }
         }
