@@ -8,7 +8,6 @@ ordered(x, levels = sort(unique(x), na.last = TRUE), labels,
 
 is.factor(x)
 is.ordered(x)
-is.unordered(x)
 
 as.factor(x, ordered = FALSE)
 as.ordered(x)
@@ -17,7 +16,6 @@ as.ordered(x)
 \alias{ordered}
 \alias{is.factor}
 \alias{is.ordered}
-\alias{is.unordered}
 \alias{as.factor}
 \alias{as.ordered}
 \value{
@@ -43,8 +41,8 @@ as.ordered(x)
 
   \code{is.factor} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of type factor or not.  Correspondingly,
-  \code{is.ordered} (\code{is.unordered}) returns \code{TRUE} when its
-  argument is ordered (unordered) and \code{FALSE} otherwise.
+  \code{is.ordered} returns \code{TRUE} when its
+  argument is ordered and \code{FALSE} otherwise.
 
   \code{as.factor} coerces its argument to a factor.
   It is an abbreviated form of \code{factor}.

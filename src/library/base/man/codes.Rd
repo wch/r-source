@@ -2,7 +2,7 @@
 \title{Factor Codes}
 \usage{
 codes(x)
-codes(x) <- y
+codes(x) <- value
 }
 \alias{codes}
 \alias{codes.factor}

@@ -7,6 +7,7 @@ is.vector(x, mode = "any")
 }
 \alias{vector}
 \alias{as.vector}
+\alias{as.vector.factor}
 \alias{is.vector}
 \description{
   \code{vector} produces a vector of the given length and mode.  Logical
