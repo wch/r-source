@@ -94,9 +94,9 @@ zip.file.extract <- function(file, zipname="R.zip")
     if(file.exists(file.path(path, zipname))) {
         tempdir <- sub("[^\\]*$","", tempfile())
         if((unzip <- options()$unzip) != "internal") {
-            if(!system(paste(unzip, "-oq",
-                             file.path(path, zipname), topic,
-                             "-d", tempdir), show = FALSE, invisible = TRUE))
+            if(!system(paste(unzip, ' -oq "',
+                             file.path(path, zipname), '" ', topic,
+                             " -d ", tempdir, sep=""), invisible = TRUE))
                 file <- paste(tempdir,  topic, sep="")
         } else {
             rc <- .Internal(int.unzip(file.path(path, zipname), topic, tempdir))

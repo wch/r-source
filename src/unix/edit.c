@@ -109,14 +109,15 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error("editor type not valid");
     editcmd = R_alloc(strlen(CHAR(STRING(ed)[0]))+strlen(filename)+2,
 		      sizeof(char));
-    sprintf(editcmd, "%s %s", CHAR(STRING(ed)[0]), filename);
 #ifdef Win32
+    sprintf(editcmd, "%s \"%s\"", CHAR(STRING(ed)[0]), filename);
     rc = runcmd(editcmd, 1, 1, "");
     if (rc == NOLAUNCH)
 	errorcall(call, "unable to run editor\n");
     if (rc != 0)
 	warningcall(call, "editor ran but returned error status\n");
 #else
+    sprintf(editcmd, "%s %s", CHAR(STRING(ed)[0]), filename);
     rc = system(editcmd);
 #endif
 
