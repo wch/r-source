@@ -2,6 +2,7 @@
 \title{Interface to the HDF5 Library}
 \usage{
 hdf5save(file, \dots)
+
 hdf5load(file, load=TRUE)
 }
 \alias{hdf5save}
@@ -28,7 +29,7 @@ hdf5load(file, load=TRUE)
   Vectors and matrices map to datasets.
 
   This capability is only available on machines which have the HDF5
-  library (freely available from the reference below).
+  library, version 1.2 or higher (freely available from the reference below).
 }
 \author{Marcus G. Daniels \email{mgd@santafe.edu}.}
 \references{\url{http://hdf.ncsa.uiuc.edu}}
@@ -37,8 +38,15 @@ hdf5load(file, load=TRUE)
 }
 \examples{
 \dontrun{
-hdf5save("examp.hdf", pi, letters, ls)
-str(hdf5load("examp.hdf"))
+(m <- cbind(A = 1, diag(4)))
+ll <- list(a=1:10, b=letters[1:8]);
+l2 <- list(C="c", l=ll); PP <- pi
+hdf5save("ex1.hdf", m, PP, ll, l2)
+rm(m,PP,ll,l2)	# and reload them:
+hdf5load("ex1.hdf")
+m        #  read from "ex1.hdf", dimnames dropped
+str(ll)
+str(l2)
 }
 }
 \keyword{file}
