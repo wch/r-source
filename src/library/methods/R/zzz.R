@@ -28,6 +28,7 @@
         on.exit(assign(".saveImage", NA, envir = where))
         assign(".SealedClasses", character(), envir = where)
         .InitClassDefinition(where)
+        assign("possibleExtends", .possibleExtends, envir = where)
         .InitBasicClasses(where)
         .initClassSupport(where)
         .InitMethodsListClass(where)
@@ -37,7 +38,8 @@
         assign("newClassRepresentation", .newClassRepresentation, envir = where)
         assign(".mergeClassDefSlots", ..mergeClassDefSlots, envir = where)
         .makeBasicFuns(where)
-        rm(.makeGeneric, .newClassRepresentation, envir = where)
+        rm(.makeGeneric, .newClassRepresentation, .possibleExtends, ..mergeClassDefSlots,
+           envir = where)
         .InitMethodDefinitions(where)
         .InitShowMethods(where)
         assign(".isPrototype", ..isPrototype, envir = where)

@@ -4,7 +4,8 @@ setClass <-
              contains = character(), validity = NULL, access = list(),
              where = topenv(parent.frame()), version = .newExternalptr(), sealed = FALSE, package = getPackageName(where))
 {
-    if(isClass(Class, where = where) && getClassDef(Class, where)@sealed)
+    oldDef <- getClassDef(Class, where)
+    if(is(oldDef, "classRepresentation") && oldDef@sealed)
         stop(paste("\"", Class, "\" has a sealed class definition and cannot be redefined", sep=""))
     if(is(representation, "classRepresentation")) {
         ## supplied a class definition object
@@ -119,13 +120,16 @@ makeClassRepresentation <-
         prototype <- pp$prototype
     }
     contains <- list();
+    if(nchar(package)>0)
+        packageSlot(name) <- package
     for(what in superClasses) {
-        if(is(what, "classRepresentation")) {
+        if(is(what, "classRepresentation"))
             whatClassDef <- what
-            what <- whatClassDef@className
-        }
-        else
+        else if(is.null(packageSlot(what)))
             whatClassDef <- getClass(what, where = where)
+        else
+            whatClassDef <- getClass(what)
+        what <- whatClassDef@className # includes package name as attribute
         ## Create the SClassExtension objects (will be simple, possibly dataPart).
         ## The slots are supplied explicitly, since `name' is currently an undefined class
         elNamed(contains, what) <- makeExtends(name, what, slots = slots,
@@ -137,10 +141,6 @@ makeClassRepresentation <-
         if(virtual && !is.na(match("VIRTUAL", superClasses)))
             elNamed(contains, "VIRTUAL") <- NULL
     }
-    ##FIXME:  rather than an attribute, the className should have a formal class
-    ## (but there may be bootstrap problems)
-    if(nchar(package)>0)
-        attr(name, "package") <- package
     newClassRepresentation(className = name, slots = slots,
                            contains = contains,
                            prototype = prototype,
@@ -154,14 +154,18 @@ makeClassRepresentation <-
 
 getClassDef <-
   ## Get the definition of the class supplied as a string.
-  function(Class, where = topenv(parent.frame()), package = attr(Class, "package"))
+  function(Class, where = topenv(parent.frame()), package = packageSlot(Class))
 {
+    ## FIXME:  really wants to be is(Class, "classRepresentation") but
+    ## generates inf. loop in booting methods package (also for new())
+    if(.identC(class(Class), "classRepresentation"))
+        return(Class)
     cname <- classMetaName(Class)
     value <- NULL
     if(exists(cname, where))
         value <- get(cname, where)
     else if(!is.null(package)) {
-        .requirePackage(package)
+        where <- .requirePackage(package, TRUE) # try for a namespace that the class refers to
         if(exists(cname, where))
             value <- get(cname, where)
     }
@@ -171,8 +175,15 @@ getClassDef <-
 getClass <-
   ## Get the complete definition of the class supplied as a string,
   ## including all slots, etc. in classes that this class extends.
-  function(Class, .Force = FALSE, where = topenv(parent.frame()))
+  function(Class, .Force = FALSE, where)
 {
+    if(missing(where)) {
+        package <- packageSlot(Class)
+        if(is.null(package))
+            where <- topenv(parent.frame())
+        else
+            where <- .requirePackage(package)
+    }
     value <- getClassDef(Class, where)
     if(is.null(value)) {
             if(!.Force)
@@ -286,7 +297,12 @@ new <-
 {
     ## get the class definition, completing it if this is the first reference
     ## to this class in this session.
-    ClassDef <- getClass(Class, where = topenv(parent.frame()))
+    ## FIXME:  really wants to be is(Class, "classRepresentation") but
+    ## generates inf. loop in booting methods package (also for getClassDef)
+    if(.identC(class(Class), "classRepresentation"))
+        ClassDef <- Class
+    else
+        ClassDef <- getClass(Class, where = topenv(parent.frame()))
     if(identical(ClassDef@virtual, TRUE)) {
         stop("Trying to use new() on a virtual class")
     }
@@ -338,20 +354,17 @@ validObject <- function(object, test = FALSE) {
                                "\": got class \"", class(sloti), 
                                "\", should be or extend class \"", classi, "\"", sep = ""))
   }
-  extendType <- rev(classDef@contains)
-  extends <- names(extendType); i <- 1
+  extends <- rev(classDef@contains); i <- 1
   while(length(errors) == 0 && i <= length(extends)) {
-    superClass <- extends[[i]]
-    testFun <- extendType[[i]]$test
+      exti <- extends[[i]]
+    superClass <- exti@superClass
     i <- i+1
-    if(is.function(testFun) && !is(object, superClass))
-      next ## skip conditional relations that don't hold for this object
-    superDef <- getClassDef(superClass, where)
-    if(is(superDef, "classRepresentation")) {
-        validityMethod <- superDef@validity
-        if(is(validityMethod, "function"))
+    if(!exti@simple && !is(object, superClass))
+        next ## skip conditional relations that don't hold for this object
+    superDef <- getClass(superClass) # relies on a package slot in superClass (cf makeExtends)
+      validityMethod <- superDef@validity
+      if(is(validityMethod, "function"))
             errors <- c(errors, anyStrings(validityMethod(as(object, superClass))))
-    }
   }
   validityMethod <- classDef@validity
   if(length(errors) == 0 && is(validityMethod, "function")) {
