@@ -1,6 +1,8 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998--2000  Robert Gentleman, Ross Ihaka and the
+ *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -56,12 +58,11 @@ static void highlightrect();
 static int  initwin();
 static void jumppage(int);
 static void jumpwin(int, int);
-static int  nchars(char*, int);
 static void popdownmenu();
 static void popupmenu(int, int, int, int);
 static void printlabs();
 static void printrect(int);
-static void printstring(char*, int, int, int);
+static void printstring(char*, int, int, int, int);
 static void printelt(SEXP, int, int, int);
 static void querypointer(int*, int*, int*, int*);
 static void RefreshKeyboardMapping(DEEvent*);

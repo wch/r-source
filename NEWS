@@ -132,6 +132,9 @@ NEW FEATURES
     o	install.packages() and update.packages() have a new `destdir'
 	argument for the directory to which to download the packages.
 
+    o	edit.data.frame() edits factors in character mode by default,
+	and will allow the row names to be edited, by default if they
+	are not 1:nrow(name).
 
 
 BUG FIXES
@@ -169,6 +172,9 @@ BUG FIXES
     o	aggregate() applied to multiple time series lost the series names.
 
     o	Linpack.h now makes clear which routines are actually in R.
+
+    o	The X11 data editor scrolls cells and so allows more than ca 10
+	characters to be entered.
 
 
 		CHANGES IN R VERSION 1.0.1
