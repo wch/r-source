@@ -14,6 +14,20 @@
 \alias{signature}
 \alias{setReplaceMethod}
 \title{Tools for Managing Generic Functions}
+\synopsis{
+isGeneric(f, where, fdef, getName = FALSE)
+isGroup(f, where, fdef)
+removeGeneric(f, where)
+dumpMethod(f, signature, file, where, def)
+existsFunction(f, generic = TRUE, where)
+findFunction(f, generic=TRUE)
+dumpMethods(f, file, signature, methods, where)
+signature(\dots)
+removeMethods(f, where)
+setReplaceMethod(f, \dots)
+getGenerics(where)
+allGenerics(where)
+}
 \usage{
 isGeneric(f, where, fdef, getName = FALSE)
 
@@ -31,11 +45,11 @@ findFunction(f, generic=TRUE)
 
 dumpMethods(f, file, signature, methods, where)
 
-signature(...)
+signature(\dots)
 
 removeMethods(f, where)
 
-setReplaceMethod(f, ...)
+setReplaceMethod(f, \dots)
 
 getGenerics(where)
 allGenerics(where)
@@ -140,7 +154,7 @@ sig = the signature of classes to match to the arguments of f.
     current method definition corresponding to the signature. }
   }
 
-  \item{...}{Named or unnamed arguments to form a signature.}
+  \item{\dots}{Named or unnamed arguments to form a signature.}
 
   \item{generic}{In testing or finding functions, should generic
     functions be included.  Supply as \code{FALSE} to get only
