@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.8.0 Under development (unstable) (2003-07-02)
+Version 1.8.0 Under development (unstable) (2003-07-03)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -43,8 +43,10 @@ Loading required package: survival
 > 
 > ## lm.influence where hat[1] == 1
 > if(require(MASS)) {
-+ fit <- lm(formula = 1000/MPG.city ~ Weight + Cylinders + Type + EngineSize + DriveTrain, data = Cars93)
-+ lm.influence(fit)
++     fit <- lm(formula = 1000/MPG.city ~ Weight + Cylinders + Type + EngineSize + DriveTrain, data = Cars93)
++     print(lm.influence(fit))
++     ## row 57 should have hat = 1 and resid=0.
++     summary(influence.measures(fit))
 + }
 Loading required package: MASS 
 $hat
@@ -427,5 +429,47 @@ $wt.res
            91            92            93 
   7.334576566   3.283113507  -1.302710701 
 
-> ## row 57 should have hat = 1 and resid=0.
+Potentially influential observations of
+	 lm(formula = 1000/MPG.city ~ Weight + Cylinders + Type + EngineSize +      DriveTrain, data = Cars93) :
+
+   dfb.1_ dfb.Wght dfb.Cyl4 dfb.Cyl5 dfb.Cyl6 dfb.Cyl8 dfb.Cyln dfb.TypL
+8  -0.16   0.00    -0.10    -0.07    -0.24    -0.44     0.01     0.12   
+19 -0.03   0.09    -0.01    -0.03     0.00    -0.01    -0.03     0.08   
+28  0.11  -0.15     0.04     0.02     0.02     0.02     0.04     0.07   
+39 -0.19   0.05     0.34     0.21     0.25     0.18     0.18    -0.01   
+42  0.12  -0.04    -0.30    -0.17    -0.28    -0.26    -0.11    -0.03   
+57   NaN    NaN      NaN      NaN      NaN      NaN      NaN      NaN   
+66 -0.03   0.04    -0.02    -0.03    -0.01     0.00    -0.02    -0.01   
+80  0.18   0.00    -0.31    -0.17    -0.24    -0.19    -0.15     0.00   
+83  0.01   0.01    -0.04    -0.03    -0.04    -0.03    -0.02     0.00   
+87 -0.03   0.04    -0.01    -0.04    -0.04    -0.03    -0.02     0.04   
+89 -0.11   0.11    -0.05     0.28    -0.06    -0.04    -0.06    -0.01   
+93 -0.11   0.11    -0.05    -0.45    -0.06    -0.04    -0.06    -0.01   
+   dfb.TypM dfb.TypSm dfb.TypSp dfb.TypV dfb.EngS dfb.DrTF dfb.DrTR dffit
+8   0.00     0.21      0.06     -0.04     0.47    -0.04     0.03     0.73
+19  0.01     0.00     -0.04     -0.01    -0.15     0.01     0.02    -0.24
+28  0.08    -0.08     -0.09      0.16     0.06     0.09     0.12    -0.26
+39 -0.01     0.04      0.01     -0.06     0.01    -0.08    -0.08    -0.44
+42  0.01    -0.42      0.01     -0.03     0.18    -0.10    -0.11    -0.89
+57   NaN      NaN       NaN       NaN      NaN      NaN      NaN      NaN
+66 -0.02     0.01      0.01      0.02    -0.03     0.05     0.03     0.08
+80  0.01     0.01     -0.02     -0.07     0.01    -0.18    -0.14     0.45
+83  0.00     0.00      0.00      0.00     0.00     0.01     0.01     0.05
+87  0.03     0.02      0.03      0.06    -0.02    -0.03    -0.02     0.14
+89 -0.07     0.05      0.04      0.08    -0.06     0.12     0.10     0.64
+93 -0.07     0.05      0.04      0.08    -0.06     0.12     0.10    -0.64
+   cov.r   cook.d  hat    
+8   1.71_*  0.04    0.39  
+19  2.09_*  0.00    0.43  
+28  1.86_*  0.00    0.36  
+39  1.76_*  0.01    0.36  
+42  0.13_*  0.05    0.06  
+57   NaN     Inf_*  1.00_*
+66  1.63_*  0.00    0.26  
+80  1.92_*  0.01    0.40  
+83  1.88_*  0.00    0.36  
+87  1.60_*  0.00    0.25  
+89  2.68_*  0.03    0.57_*
+93  2.68_*  0.03    0.57_*
+> ## only last two cols in row 57 should be influential
 > 

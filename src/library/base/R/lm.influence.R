@@ -245,7 +245,9 @@ summary.infl <- function(object, digits = max(2, getOption("digits") - 5), ...)
 {
     ## object must be as the result of	influence.measures(.)
     is.inf <- object$is.inf
-    is.star <- apply(is.inf, 1, any, na.rm=TRUE)
+    ## will have NaN values from any hat=1 rows.
+    is.inf[is.na(is.inf)] <- FALSE
+     is.star <- apply(is.inf, 1, any)
     is.inf <- is.inf[is.star,]
     cat("Potentially influential observations of\n\t",
 	deparse(object$call),":\n")

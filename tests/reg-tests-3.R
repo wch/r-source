@@ -19,7 +19,9 @@ if(require(survival)) {
 
 ## lm.influence where hat[1] == 1
 if(require(MASS)) {
-fit <- lm(formula = 1000/MPG.city ~ Weight + Cylinders + Type + EngineSize + DriveTrain, data = Cars93)
-lm.influence(fit)
+    fit <- lm(formula = 1000/MPG.city ~ Weight + Cylinders + Type + EngineSize + DriveTrain, data = Cars93)
+    print(lm.influence(fit))
+    ## row 57 should have hat = 1 and resid=0.
+    summary(influence.measures(fit))
 }
-## row 57 should have hat = 1 and resid=0.
+## only last two cols in row 57 should be influential
