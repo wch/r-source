@@ -33,18 +33,12 @@
 #include <locale.h>
 #endif
 
+/* used to have Mac conditionals, but not used on classic MacOS */
 #ifdef HAVE_STAT
-# ifndef Macintosh
-#  include <sys/types.h>
+# include <sys/types.h>
+# ifdef HAVE_SYS_STAT_H
 #  include <sys/stat.h>
-# else
-#  include <types.h>
-#  ifndef __MRC__
-#   include <stat.h>
-#  else
-#   include <mpw_stat.h>
-#  endif
-# endif /* mac */
+# endif
 #endif
 
 #include <Rversion.h>

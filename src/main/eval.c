@@ -103,7 +103,9 @@ void isintrpt()
 # include <windows.h>		/* for CreateEvent, SetEvent */
 # include <process.h>		/* for _beginthread, _endthread */
 #else
-# include <sys/time.h>
+# ifdef HAVE_SYS_TIME_H
+#  include <sys/time.h>
+# endif
 # include <signal.h>
 #endif /* not Win32 */
 

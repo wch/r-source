@@ -26,7 +26,9 @@
 
 #include "Runix.h"
 #include <sys/types.h>
-#include <sys/stat.h>
+#ifdef HAVE_SYS_STAT_H
+# include <sys/stat.h>
+#endif
 
 #ifndef HAVE_NO_SYMBOL_UNDERSCORE
 # ifdef HAVE_ELF_H

@@ -25,7 +25,6 @@
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif
-#include <sys/stat.h>
 
 #include "gtkconsole.h"
 
