@@ -61,7 +61,7 @@ lm(formula, data, subset, weights, na.action,
   linear predictor for \code{response}.  A terms specification of the form
   \code{first+second} indicates all the terms in \code{first} together
   with all the terms in \code{second} with duplicates removed.  A
-  specification of the form \code{first:second} indicates the the set of
+  specification of the form \code{first:second} indicates the set of
   terms obtained by taking the interactions of all terms in \code{first}
   with all terms in \code{second}.  The specification \code{first*second}
   indicates the \emph{cross} of \code{first} and \code{second}.  This is
@@ -97,7 +97,7 @@ lm(formula, data, subset, weights, na.action,
   \code{\link{glm}} for \bold{generalized} linear models.
 
   The underlying low level functions,
-  \code{\link{lm.fit}} for plain, and \code{\link{lm.fit}} for weighted
+  \code{\link{lm.fit}} for plain, and \code{\link{lm.wfit}} for weighted
   regression fitting.
 }
 \note{
