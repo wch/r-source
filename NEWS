@@ -273,6 +273,8 @@ NEW FEATURES
 	Also na.exclude(), a variant on na.omit() that is handled
 	differently by naresid() and napredict().
 
+    o	Generic function logLik() moved from nls to base, as well as
+	logLik.lm() from nlme.
 
 
 BUG FIXES

@@ -1,4 +1,4 @@
-% $Id: logLik.Rd,v 1.1 1999/11/12 13:34:35 bates Exp $
+% from nls,  logLik.Rd,v 1.1 1999/11/12 13:34:35 bates 
 \name{logLik}
 \title{Extract Log-Likelihood}
 \usage{
@@ -14,7 +14,9 @@ logLik(object, ...)
 \description{
   This function is generic; method functions can be written to handle
   specific classes of objects. Classes which already have methods for
-  this function include: \code{corStruct}, \code{gls}, \code{lm},
+  this function include: \code{lm}, \code{nls} in package \bold{nls},
+  and (all in package \bold{nlme}) 
+  \code{corStruct}, \code{gls},
   \code{lme}, \code{lmList}, \code{lmeStruct}, \code{reStruct}, and
   \code{varFunc}. 
 }
@@ -22,6 +24,8 @@ logLik(object, ...)
   will depend on the method function used; see the appropriate
   documentation.  
 }
+\seealso{\code{\link{logLik.lm}}, \code{\link[nls]{logLik.nls}},
+  \code{\link[nlme]{logLik.gls}}, \code{\link[nlme]{logLik.lme}}, etc.}
 \author{Jose Pinheiro and Douglas Bates}
 \examples{
 ## see the method function documentation
