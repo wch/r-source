@@ -1,6 +1,7 @@
 \name{.checkMFClasses}
 \alias{.checkMFClasses}
 \alias{.MFclass}
+\alias{.getXlevels}
 \title{Functions to Check the Type of Variables passed to Model Frames}
 \description{
   \code{.checkMFClasses} checks if the variables used in a predict
