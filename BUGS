@@ -263,6 +263,18 @@ none
 
 Directory:  incoming
 
+* PR# 724 *
+Subject: t.test and n = 2
+From: charlie@stat.umn.edu
+Date: Thu, 2 Nov 2000 14:53:26 +0100 (MET)
+* PR# 713 *
+Subject: median(c(NA,NA),na.rm=T) fails
+From: gnw3@acm.org
+Date: Sun, 29 Oct 2000 14:48:09 +0100 (MET)
+* PR# 716 *
+Subject: Pl. provide and Input for var.test
+From: Shalabh Gandhi <shalabhgandhi@usa.net>
+Date:  1 Nov 00 22:41:27 MST
 * PR# 715 *
 Subject: Printing list elements w/attributes
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -271,7 +283,31 @@ Date: 31 Oct 2000 12:15:09 +0100
 Subject: prop.test and x = 0
 From: charlie@stat.umn.edu
 Date: Sun, 29 Oct 2000 16:29:56 +0100 (MET)
-* PR# 713 *
-Subject: median(c(NA,NA),na.rm=T) fails
-From: gnw3@acm.org
-Date: Sun, 29 Oct 2000 14:48:09 +0100 (MET)
+* PR# 719 *
+Subject: Pl. provide and Input for var.test
+From: Shalabh Gandhi <shalabhgandhi@usa.net>
+Date:  1 Nov 00 22:41:32 MST
+* PR# 718 *
+Subject: Pl. provide and Input for var.test
+From: Shalabh Gandhi <shalabhgandhi@usa.net>
+Date:  1 Nov 00 22:41:27 MST
+* PR# 717 *
+Subject: Pl. provide and Input for var.test
+From: Shalabh Gandhi <shalabhgandhi@usa.net>
+Date:  1 Nov 00 22:41:32 MST
+* PR# 721 *
+Subject: Pl. provide and Input for var.test
+From: Shalabh Gandhi <shalabhgandhi@usa.net>
+Date:  1 Nov 00 22:41:26 MST
+* PR# 720 *
+Subject: Pl. provide and Input for var.test
+From: Shalabh Gandhi <shalabhgandhi@usa.net>
+Date:  1 Nov 00 22:41:27 MST
+* PR# 723 *
+Subject: Pl. provide and Input for var.test
+From: Shalabh Gandhi <shalabhgandhi@usa.net>
+Date:  1 Nov 00 22:41:27 MST
+* PR# 722 *
+Subject: Pl. provide and Input for var.test
+From: Shalabh Gandhi <shalabhgandhi@usa.net>
+Date:  1 Nov 00 22:41:31 MST
