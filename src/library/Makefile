@@ -9,4 +9,5 @@ libs:
 clean:
 	@echo Cleaning in library..
 	@sh LIBCLEAN
+realclean: clean
 	@rm LIBCLEAN
