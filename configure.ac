@@ -1340,6 +1340,7 @@ AC_CONFIG_FILES(
   src/modules/Makefile
   src/modules/X11/Makefile
   src/modules/aqua/Makefile
+  src/modules/aqua/AquaInstall
   src/modules/gnome/Makefile
   src/modules/internet/Makefile
   src/modules/lapack/Makefile

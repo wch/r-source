@@ -3,10 +3,16 @@
 # RAqua is a bundle app that contains the R.bin bundle app
 # ${R_HOME}/src/modules/aqua/AquaInstall
 
-cd ../../../
+top_builddir=../../..
+srcdir=@srcdir@
+subdir=src/modules/aqua
+
+# cd ../../../
+cd ${top_builddir}
+
 make install rhome=/Applications/StartR.app/RAqua.app/Contents mandir=/Applications/StartR.app/RAqua.app/Contents bindir=/Applications/StartR.app/RAqua.app/Contents
-here=`pwd`;
-cp src/modules/aqua/R.fix /Applications/StartR.app/RAqua.app/Contents/
+# here=`pwd`;
+cp ${srcdir}/src/modules/aqua/R.fix /Applications/StartR.app/RAqua.app/Contents/
 cd /Applications/StartR.app/RAqua.app/Contents
 mv RESOURCES R_RESOURCES
 mv bin MacOS
@@ -17,7 +23,8 @@ ln -s RAqua R.bin
 cd .. 
 ./R.fix
 rm R.fix
-cd ${here}
+# cd ${here}
+cd ${srcdir}
 cp -R src/modules/aqua/Contents/Resources /Applications/StartR.app/RAqua.app/Contents
 cp src/modules/aqua/Contents/PkgInfo /Applications/StartR.app/RAqua.app/Contents
 cp src/modules/aqua/Contents/Info.plist /Applications/StartR.app/RAqua.app/Contents
@@ -27,7 +34,10 @@ mkdir -p /Applications/StartR.app/Contents/Resources
 cp src/modules/aqua/RAqua/Contents/Resources/RAqua.icns /Applications/StartR.app/Contents/Resources/
 cp src/modules/aqua/RAqua/Contents/PkgInfo /Applications/StartR.app/Contents/
 cp src/modules/aqua/RAqua/Contents/Info.plist /Applications/StartR.app/Contents/
-gcc src/modules/aqua/RAqua/Contents/MacOS/aqualaunch.c 
+cp src/modules/aqua/RAqua/Contents/MacOS/aqualaunch.c $(top_builddir)/$(subdir)/
+cd ${top_builddir}/${subdir}/
+# gcc src/modules/aqua/RAqua/Contents/MacOS/aqualaunch.c 
+gcc aqualaunch.c
 mkdir -p /Applications/StartR.app/Contents/MacOS
 mv a.out /Applications/StartR.app/Contents/MacOS/StartR
 
