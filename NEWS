@@ -780,6 +780,7 @@ BUG FIXES
     o   The Unix version of dataentry segfaulted if the `Copy' button
 	was used.  (PR#6605)
 
+    o   unlist on lists containing expressions now works (PR#5628)
 
 
 
