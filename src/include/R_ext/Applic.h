@@ -199,6 +199,11 @@ int F77_NAME(idamax)(int *n, double *dx, int *incx);
 int F77_NAME(dgemm)(char *transa, char *transb, int *m, int *n, int *k,
 		    double *alpha, double *a, int *lda, double *b, int *ldb,
 		    double *beta, double *c, int *ldc);
+int F77_NAME(dtrsm)(const char* side, const char* uplo,
+		    const char* transa, const char* diag,
+		    const int* m, const int* n,
+		    const double* alpha, const double *a, const int* lda,
+		    double *b, const int* ldb);
 /*----*/
 int F77_NAME(ch2inv)(double *x, int *ldx, int *n, double *v, int *info);
 int F77_NAME(chol)(double *a, int *lda, int *n, double *v, int *info);
