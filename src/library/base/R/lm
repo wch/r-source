@@ -238,8 +238,7 @@ summary.lm <- function (z, correlation = FALSE)
 }
 
 print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
-			      symbolic.cor = p > 4, signif.stars= TRUE,
-			      roundfun=round, ...)
+			      symbolic.cor = p > 4, signif.stars= TRUE, ...)
 {
 	cat("\nCall:\n")#S: ' ' instead of '\n'
 	cat(paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
@@ -277,7 +276,7 @@ print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
 		Pv <- x$coef[, 4]
 	Coefs <-
 	  cbind(format(round(coef.se, max(1,digits - digmin)), digits=digits),
-		format(x$coef[, 3], digits=digt),
+		format(round(x$coef[, 3], dig=digt), digits=digits),# t- values
 		if(has.Pval) format.pval(Pv, digits = digt))
 	dimnames(Coefs) <- dimnames(x$coef)
 	if(any(not.both.0 <- (c(x$coef)==0)!=(as.numeric(Coefs)==0),na.rm=TRUE))
@@ -286,7 +285,7 @@ print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
 	if(!has.Pval || !exists("symnum", mode = "function"))
 		signif.stars <- FALSE
 	else if(signif.stars) {
-		Signif <- symnum(x$coef[,"Pr(>|t|)"], corr = FALSE,
+		Signif <- symnum(Pv, corr = FALSE,
 				 cutpoints = c(0,  .001,.01,.05, .1, 1),
 				 symbols   =  c("***","**","*","."," "))
 		Coefs <- cbind(Coefs, Signif)
