@@ -85,8 +85,6 @@
 Boolean EventsInit = false;
 
 
-SEXP R_LoadFromFile(FILE*, int);
-
 UInt32 sSleepTime = 0; // sleep time for WaitNextEvent()
 RgnHandle sMouseRgn = nil; // mouse region for WaitNextEvent()
 PicHandle WinPic;
@@ -870,8 +868,6 @@ static pascal OSErr HandleOpenDocument( const AppleEvent *ae,
     FInfo		fileInfo;
     SInt16		pathLen;
     Handle		pathName=NULL;
-    FILE		*fp;
-    SEXP 		img, lst;
 
     docList.descriptorType = typeNull;
     docList.dataHandle = nil;
@@ -912,31 +908,7 @@ static pascal OSErr HandleOpenDocument( const AppleEvent *ae,
 	    InitFile[pathLen] = '\0';
 	    HUnlock((Handle) pathName);
 
-
-	    if(!(fp = R_fopen(InitFile, "rb"))) { /* binary file */
-		RWrite("File cannot be opened !");
-		/* warning here perhaps */
-		return;
-	    }
-	    PROTECT(img = R_LoadFromFile(fp, 1));
-	    switch (TYPEOF(img)) {
-	    case LISTSXP:
-		while (img != R_NilValue) {
-		    defineVar(TAG(img), CAR(img), R_GlobalEnv);
-		    img = CDR(img);
-		}
-		break;
-	    case VECSXP:
-		for (i = 0; i < LENGTH(img); i++) {
-		    lst = VECTOR_ELT(img,i);
-		    while (lst != R_NilValue) {
-			defineVar(TAG(lst), CAR(lst), R_GlobalEnv);
-			lst = CDR(lst);
-		    }
-		}
-		break;
-	    }
-	    UNPROTECT(1);
+	    R_RestoreGlobalEnvFromFile(InitFile, TRUE);
 	}
  cleanup:
     return err;

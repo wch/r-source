@@ -607,41 +607,8 @@ void R_SaveGlobalEnv(void)
 
 void R_RestoreGlobalEnv(void)
 {
-    FILE *fp;
-    SEXP img, lst;
-    int i;
-
     if(RestoreAction == SA_RESTORE) {
-	if(!(fp = R_fopen(".RData", "rb"))){
-	  /*  warning("No workspace to load"); */
-	    return;
-	}
-#ifdef OLD
-	FRAME(R_GlobalEnv) = R_LoadFromFile(fp, 1);
-#else
-	PROTECT(img = R_LoadFromFile(fp, 1));
-	switch (TYPEOF(img)) {
-	case LISTSXP:
-	    while (img != R_NilValue) {
-		defineVar(TAG(img), CAR(img), R_GlobalEnv);
-		img = CDR(img);
-	    }
-	    break;
-	case VECSXP:
-	    for (i = 0; i < LENGTH(img); i++) {
-		lst = VECTOR_ELT(img,i);
-		while (lst != R_NilValue) {
-		    defineVar(TAG(lst), CAR(lst), R_GlobalEnv);
-		    lst = CDR(lst);
-		}
-	    }
-	    break;
-	}
-        UNPROTECT(1);
-#endif
-	if(!R_Quiet)
-	    Rprintf("[Previously saved workspace restored]\n\n");
-        fclose(fp);
+	R_RestoreGlobalEnvFromFile(".RData", R_Quiet);
     }
 }
 
