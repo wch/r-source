@@ -77,6 +77,9 @@ DLLs for packages (including standard packages supplied with R)
 automatically gain version information when compiled under this version.
 (Use the Version tab on the Properties dialog box to see it.)
 
+It is possible to make DVI versions of the manuals: see INSTALL.
+
+
 
 rw1011
 ======
