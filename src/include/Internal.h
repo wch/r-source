@@ -21,7 +21,8 @@
 
 /* Names of  .Internal(.) and .Primitive(.)  R functions
  *
- * for do_math?(), etc, see  ../main/arithmetic.h
+ * Must all return SEXP because of CCODE in Defn.h.
+ * The do_math.(), etc are in ../main/arithmetic.h
  */
 
 
@@ -304,7 +305,7 @@ SEXP do_strwidth(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sink(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sort(SEXP, SEXP, SEXP, SEXP);
 SEXP do_split(SEXP, SEXP, SEXP, SEXP);
-void do_stop(SEXP, SEXP, SEXP, SEXP);
+SEXP do_stop(SEXP, SEXP, SEXP, SEXP);
 SEXP do_strsplit(SEXP,SEXP,SEXP,SEXP);
 SEXP do_strptime(SEXP,SEXP,SEXP,SEXP);
 SEXP do_sysinfo(SEXP,SEXP,SEXP,SEXP);

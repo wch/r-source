@@ -458,8 +458,9 @@ void isintrpt()
 }
 #endif
 
-void do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+/* error(.) : really doesn't return anything; but all do_foo() must be SEXP */
     RCNTXT *cptr;
     SEXP c_call;
 
@@ -482,6 +483,7 @@ void do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else
       errorcall(c_call, "");
+    /* never called: */return c_call;
 }
 
 SEXP do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
