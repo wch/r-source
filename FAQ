@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-32, 2004-01-14
+Version 1.8-32, 2004-01-16
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -2015,6 +2015,9 @@ distributions of R.)
 *moc*
      Fits a variety of mixtures models for multivariate observations with
      user-difined distributions and curves.
+
+*mscalib*
+     Calibration and filtering of MALDI-TOF Peptide Mass Fingerprint data.
 
 *msm*
      Functions for fitting continuous-time Markov multi-state models to
