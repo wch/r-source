@@ -26,6 +26,7 @@ Table of Contents
   2.13 Does R use the Registry?
   2.14 Entering certain characters crashes Rgui.
   2.15 The internet download functions fail.
+  2.16 Other strange crashes.
 
 3 Packages
   3.1 Can I install packages (libraries) in this version?
@@ -329,6 +330,23 @@ Internet Explorer internals (and so needs Internet Explorer 4 or later
 installed).
 
 (b) A proxy needs to be set up: see `?download.file'.
+
+2.16 Other strange crashes.
+===========================
+
+Some users have found that `Rgui.exe' fails to start, exiting with a
+"Floating- point invalid operation" or other low level error.  This
+error may also happen in the middle of a session.  In some cases where
+we have tracked this down, it was due to bugs in the video driver on
+the system in question:  it makes changes to the floating point control
+word which are incompatible with R.  (Good practice would restore the
+control word to the state it was in when the driver code was called.)
+For example, one user reported that the virtual screen manager JSP2
+caused this crash.
+
+These errors are essentially impossible for us to fix or work around.
+The only solution we know of is for the user to replace the buggy
+driver that is causing the error.
 
 
 3 Packages
@@ -651,11 +669,11 @@ scrollbar or the <CTRL + left/right arrow> keys to scroll horizontally.
 7.1 How can I compile R from source?
 ====================================
 
-Get the R sources.  Suppose you want to compile R-1.6.0.  Start in a
+Get the R sources.  Suppose you want to compile R-1.6.1.  Start in a
 directory whose path does not contain spaces, and run
 
-     tar zxvf R-1.6.0.tgz
-     cd R-1.6.0
+     tar zxvf R-1.6.1.tgz
+     cd R-1.6.1
      cd src\gnuwin32
 
 Now read the `INSTALL' file and set up all the tools needed.  Then you
