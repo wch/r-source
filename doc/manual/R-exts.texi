@@ -953,11 +953,10 @@ file names.
 @section Package name spaces
 @cindex name spaces
 
-@R{} 1.7.0 introduces an experimental name space management system for
-packages.  This system allows the package writer to specify which
-variables in the package should be @emph{exported} to make them
-available to package users, and which variables should be
-@emph{imported} from other packages.
+@R{} has a name space management system for packages.  This system
+allows the package writer to specify which variables in the package
+should be @emph{exported} to make them available to package users, and
+which variables should be @emph{imported} from other packages.
 
 The current mechanism@footnote{Alternative approaches are under
 consideration and may replace this approach in future @R{} releases.}
@@ -1170,10 +1169,6 @@ bindings cannot be changed.  Sealing allows a simpler implementation
 strategy for the name space mechanism.  Sealing also allows code
 analysis and compilation tools to accurately identify the definition
 corresponding to a global variable reference in a function body.
-
-The name space mechanism included in @R{} 1.7.0 does not yet support
-code based on the @pkg{methods} package.  Support for @pkg{methods} is
-anticipated for the following release of @R{}.
 
 
 @node Writing R documentation files, Tidying and profiling R code, Creating R packages, Top
