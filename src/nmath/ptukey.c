@@ -41,6 +41,8 @@
 
 #include "Mathlib.h"
 
+static double wprob(double w, double rr, double cc)
+{
 /*  wprob() :
 
 	This function calculates probability integral of Hartley's
@@ -72,26 +74,24 @@
 #define nleg	12
 #define ihalf	6
 
-static double wprob(double w, double rr, double cc)
-{
-    /* looks like it is suboptimal for double precision.
+    /* looks like this is suboptimal for double precision.
        (see how 'eps' are used) <MM>
     */
-    const static double eps  =   1.0;
-    const static double eps1 = -30.0;
-    const static double eps2 = -50.0;
-    const static double eps3 =  60.0;
-    const static double bb = 8.0;
-    const static double wlar = 3.0;
-    const static double wincr1 = 2.0;
-    const static double wincr2 = 3.0;
+    const static double eps  =	 1.;
+    const static double eps1 = -30.;
+    const static double eps2 = -50.;
+    const static double eps3 =	60.;
+    const static double bb   = 8.;
+    const static double wlar = 3.;
+    const static double wincr1 = 2.;
+    const static double wincr2 = 3.;
     const static double xleg[ihalf] = {
-	0.981560634246719250690549090149e0,
-	0.904117256370474856678465866119e0,
-	0.769902674194304687036893833213e0,
-	0.587317954286617447296702418941e0,
-	0.367831498998180193752691536644e0,
-	0.125233408511468915472441369464e0
+	0.981560634246719250690549090149,
+	0.904117256370474856678465866119,
+	0.769902674194304687036893833213,
+	0.587317954286617447296702418941,
+	0.367831498998180193752691536644,
+	0.125233408511468915472441369464
     };
     const static double aleg[ihalf] = {
 	0.047175336386511827194615961485,
@@ -211,6 +211,10 @@ static double wprob(double w, double rr, double cc)
     return wprob;
 } /* wprob() */
 
+
+double ptukey(double q, double rr, double cc, double df,
+	      int lower_tail, int log_p)
+{
 /*  function ptukey() [was qprob() ]:
 
 	q = value of studentized range
@@ -250,7 +254,6 @@ static double wprob(double w, double rr, double cc)
 	M_LN2 = log(2)
 
 	xlegq = legendre 16-point nodes
-
 	alegq = legendre 16-point coefficients
 
 	The coefficients and nodes for the legendre quadrature used in
@@ -273,43 +276,39 @@ static double wprob(double w, double rr, double cc)
 	if degrees of freedom large, approximate integral
 	with range distribution.
  */
-
 #define nlegq	16
 #define ihalfq	8
 
-double ptukey(double q, double rr, double cc, double df,
-	      int lower_tail, int log_p)
-{
-    const static double eps = 1.0e0;
-    const static double eps1 = -30.0e0;
+/*  const static double eps = 1.0; not used if = 1 */
+    const static double eps1 = -30.0;
     const static double eps2 = 1.0e-14;
-    const static double dhaf = 100.0e0;
-    const static double dquar = 800.0e0;
-    const static double deigh = 5000.0e0;
-    const static double dlarg = 25000.0e0;
-    const static double ulen1 = 1.0e0;
-    const static double ulen2 = 0.5e0;
-    const static double ulen3 = 0.25e0;
-    const static double ulen4 = 0.125e0;
+    const static double dhaf  = 100.0;
+    const static double dquar = 800.0;
+    const static double deigh = 5000.0;
+    const static double dlarg = 25000.0;
+    const static double ulen1 = 1.0;
+    const static double ulen2 = 0.5;
+    const static double ulen3 = 0.25;
+    const static double ulen4 = 0.125;
     const static double xlegq[ihalfq] = {
-	0.989400934991649932596154173450e+00,
-	0.944575023073232576077988415535e+00,
-	0.865631202387831743880467897712e+00,
-	0.755404408355003033895101194847e+00,
-	0.617876244402643748446671764049e+00,
-	0.458016777657227386342419442984e+00,
-	0.281603550779258913230460501460e+00,
-	0.950125098376374401853193354250e-01
+	0.989400934991649932596154173450,
+	0.944575023073232576077988415535,
+	0.865631202387831743880467897712,
+	0.755404408355003033895101194847,
+	0.617876244402643748446671764049,
+	0.458016777657227386342419442984,
+	0.281603550779258913230460501460,
+	0.950125098376374401853193354250e-1
     };
     const static double alegq[ihalfq] = {
-	0.271524594117540948517805724560e-01,
-	0.622535239386478928628438369944e-01,
-	0.951585116824927848099251076022e-01,
-	0.124628971255533872052476282192e+00,
-	0.149595988816576732081501730547e+00,
-	0.169156519395002538189312079030e+00,
-	0.182603415044923588866763667969e+00,
-	0.189450610455068496285396723208e+00
+	0.271524594117540948517805724560e-1,
+	0.622535239386478928628438369944e-1,
+	0.951585116824927848099251076022e-1,
+	0.124628971255533872052476282192,
+	0.149595988816576732081501730547,
+	0.169156519395002538189312079030,
+	0.182603415044923588866763667969,
+	0.189450610455068496285396723208
     };
     double ans, f2, f21, f2lf, ff4, otsum, qsqz, rotsum, t1, twa1, ulen, wprb;
     int i, j, jj;
@@ -332,19 +331,13 @@ double ptukey(double q, double rr, double cc, double df,
 	return R_DT_1;
 #endif
 
-   /* FIXME */
-    if(!lower_tail || log_p) {
-	warning("lower_tail & log_p not yet implemented in ptukey()");
-	return ML_NAN;
-    }
-
     if (df > dlarg)
-	return wprob(q, rr, cc);
+	return R_DT_val(wprob(q, rr, cc));
 
     /* calculate leading constant */
-    /* lgamma is the log gamma function. */
 
     f2 = df * 0.5;
+    /* lgammafn(u) = log(gamma(u)) */
     f2lf = ((f2 * log(df)) - (df * M_LN2)) - lgammafn(f2);
     f21 = f2 - 1.0;
 
@@ -353,9 +346,9 @@ double ptukey(double q, double rr, double cc, double df,
     /* degrees of freedom. */
 
     ff4 = df * 0.25;
-    if      (df <= dhaf) 	ulen = ulen1;
-    else if (df <= dquar) 	ulen = ulen2;
-    else if (df <= deigh) 	ulen = ulen3;
+    if	    (df <= dhaf)	ulen = ulen1;
+    else if (df <= dquar)	ulen = ulen2;
+    else if (df <= deigh)	ulen = ulen3;
     else			ulen = ulen4;
 
     f2lf += log(ulen);
@@ -404,21 +397,23 @@ double ptukey(double q, double rr, double cc, double df,
 	    /* L200: */
 	}
 
-	/* if integral for interval i < 1e-14, */
-	/* then stop. however, in order to avoid */
-	/* small area under left tail, at least */
-	/* 1 / ulen intervals are calculated. */
-
+	/* if integral for interval i < 1e-14, then stop.
+	 * However, in order to avoid small area under left tail,
+	 * at least  1 / ulen  intervals are calculated.
+	 */
 	if (i * ulen >= 1.0 && otsum <= eps2)
-	    goto L400;
+	    break;
 
 	/* end of interval i */
 	/* L330: */
 
 	ans += otsum;
     }
-  L400:
-    if (ans > eps)
-	ans = 1.0;
-    return ans;
+
+    if(otsum > eps2) { /* not converged */
+	ML_ERROR(ME_PRECISION);
+    }
+    if (ans > 1.)
+	ans = 1.;
+    return R_DT_val(ans);
 }
