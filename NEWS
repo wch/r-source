@@ -95,6 +95,8 @@ NEW FEATURES
 
     o	Standalone Rmath now has a get_seed function as requested (PR#3160). 
 
+    o	? and help() will accept more un-quoted arguments, e.g. NULL. 
+
 
 DEPRECATED & DEFUNCT
 

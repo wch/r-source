@@ -25,7 +25,7 @@ help(topic, offline = FALSE, package = .packages(),
 type?topic
 }
 \arguments{
- \item{topic}{a name or string constant on which documentation is sought
+ \item{topic}{an object or string constant on which documentation is sought
    (but \emph{not} a variable containing a character string!).}
  \item{offline}{a logical indicating whether documentation should be
    displayed on-line to the screen (the default) or hardcopy of it
@@ -65,7 +65,7 @@ type?topic
 }
 \details{
   In the case of unary and binary operators and control-flow special
-  forms (including \code{if}, \code{for} and \code{function}), the name
+  forms (including \code{if}, \code{for} and \code{function}), the topic
   may need to be quoted.
 
 #ifdef unix
@@ -83,7 +83,7 @@ type?topic
 #ifdef windows
   If \code{offline} is \code{TRUE}, hardcopy of the documentation is
   produced by running the LaTeX version of the help page through
-  \code{latex} (note that LaTeX 2e is needed). You need to customize
+  \code{latex} (note that LaTeX 2e is needed).  You need to customize
   the file \file{R\_HOME/bin/helpPRINT.bat} which contains an example.
   The appearance of the output can be customized through a file
   \file{Rhelp.cfg} somewhere in your LaTeX search path.
@@ -112,8 +112,11 @@ type?topic
   desirable to save space, and the text files in the \file{help} directory
   of an installed package can be zipped up as a zip archive
   \file{Rhelp.zip}. Ensure that file \file{AnIndex} remains un-zipped.
-  Similarly, all the files in the
-  \file{latex} directory can be zipped to \file{Rhelp.zip}.
+  Similarly, all the files in the \file{latex} directory can be zipped
+  to \file{Rhelp.zip}.
+#ifdef windows
+  This is done on Windows for the larger packages.
+#endif
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

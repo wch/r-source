@@ -1,12 +1,10 @@
 "?" <- function(e1, e2)
 {
-  if(is.name(substitute(e1)))
-    e1 <- substitute(e1)
-  e1 <- as.character(e1)
+  if(is.name(substitute(e1))) e1 <- substitute(e1)
+  if(!is.character(e1)) e1 <- deparse(e1)
   if(nargs() >= 2) {
-    if(is.name(substitute(e2)))
-      e2 <- substitute(e2)
-    e2 <- as.character(e2)
+    if(is.name(substitute(e2))) e2 <- substitute(e2)
+    if(!is.character(e2)) e2 <- deparse(e2)
     topic <- topicName(e1, e2)
     opts <- options(error= function()TRUE, show.error.messages = FALSE)
     on.exit(options(opts))
