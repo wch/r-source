@@ -158,10 +158,6 @@ BUG FIXES
 	namespaces; this is now done automatically.
 	Note that is.primitive() is now in "base", not "methods" anymore.
 
-    o	subset() now throws an error if its 'subset' argument is not
-	logical whereas it could appear to work and give wrong answers
-	with e.g. a numeric 'subset' argument.
-
     o   package grid:
 
 	- Fixed bug in grid.text() when "rot" argument has length 0.
@@ -198,6 +194,10 @@ BUG FIXES
 	split() now handles vectors with names internally and so is
 	almost as fast as on vectors without names (and maybe 100x
 	faster than before).
+
+    o	subset() now throws an error if its 'subset' argument is not
+	logical whereas it could appear to work and give wrong answers
+	with e.g. a numeric 'subset' argument.
 
 
 
