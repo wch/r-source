@@ -7,9 +7,12 @@
   A graphics device for BMP, JPEG or PNG format bitmap files.
 }
 \usage{
-bmp(filename="Rplot.bmp", width=480, height=480, pointsize=12)
-jpeg(filename="Rplot.jpg", width=480, height=480, pointsize=12, quality=75)
-png(filename="Rplot.png", width=480, height=480, pointsize=12)
+bmp(filename="Rplot.bmp", width=480, height=480, pointsize=12,
+    bg="white")
+jpeg(filename="Rplot.jpg", width=480, height=480, pointsize=12,
+     quality=75, bg="white")
+png(filename="Rplot.png", width=480, height=480, pointsize=12,
+    bg="white")
 }
 \arguments{
  \item{filename}{the name of the output file.}
@@ -17,6 +20,8 @@ png(filename="Rplot.png", width=480, height=480, pointsize=12)
  \item{height}{the height of the device in pixels.}
  \item{pointsize}{the default pointsize of plotted text, intepreted at
    72 dpi, so one point is approximately one pixel.}
+ \item{bg}{the initial bacground colour: can be overridden by setting
+   par("bg").} 
  \item{quality}{the `quality' of the JPEG image, as a
    percentage. Smaller values will give more compression but also more
    degradation of the image.}
@@ -30,7 +35,7 @@ png(filename="Rplot.png", width=480, height=480, pointsize=12)
   standard on Windows, and supported elsewhere.
 
   \code{png} supports transparent backgrounds: use
-  \code{par(bg="transparent")} between opening the device and plotting.
+  \code{bg="transparent"}.
   Not all PNG viewers render files with transparency correctly.
 }
 \value{
@@ -49,6 +54,15 @@ png(filename="Rplot.png", width=480, height=480, pointsize=12)
   \code{\link{bitmap}}}
 \examples{
 ## copy current plot to a (large) PNG file
-\dontrun{dev.print(png, file="myplot.png", width=1024, height=768)}
-}
+\dontrun{dev.print(png, file="myplot.png", width=1024, height=768)
+
+png(file="myplot.png", bg="transparent")
+plot(1:10)
+rect(1, 5, 3, 7, col="white")
+dev.off()
+
+jpeg(file="myplot.jpeg")
+example(rect)
+dev.off()
+}}
 \keyword{device}

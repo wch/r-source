@@ -27,19 +27,19 @@ win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12)
                   width, height, pointsize, FALSE, 1, NA, NA, "white"))
 
 png <- function(filename = "Rplot.png", width = 480, height = 480,
-                pointsize = 12)
+                pointsize = 12, bg = "white")
     .Internal(devga(paste("png:", filename, sep=""),
-                  width, height, pointsize, FALSE, 1, NA, NA, "white"))
+                  width, height, pointsize, FALSE, 1, NA, NA, bg))
 
 bmp <- function(filename = "Rplot.bmp", width = 480, height = 480,
-                pointsize = 12)
+                pointsize = 12, bg = "white")
     .Internal(devga(paste("bmp:", filename, sep=""),
-                  width, height, pointsize, FALSE, 1, NA, NA, "white"))
+                  width, height, pointsize, FALSE, 1, NA, NA, bg))
 
 jpeg <- function(filename = "Rplot.jpg", width = 480, height = 480,
-                 pointsize = 12, quality=75)
+                 pointsize = 12, quality=75, bg = "white")
     .Internal(devga(paste("jpeg:", quality, ":",filename, sep=""),
-                  width, height, pointsize, FALSE, 1, NA, NA, "white"))
+                  width, height, pointsize, FALSE, 1, NA, NA, bg))
 
 bringToTop <- function(which = dev.cur())
 {

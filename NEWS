@@ -120,6 +120,9 @@ NEW FEATURES
 	help to distinguish plotting "white" from plotting
 	"transparent".
 
+    o	png(), jpeg() and bmp() devices now have a `bg' argument to
+	set the background color: useful to set "transparent" on png().
+
     o	The macro SHLIB_EXT now includes `.', e.g. ".so" or ".dll",
 	since the Mac uses "Lib" without a `.'.
 
