@@ -29,7 +29,8 @@ d.VAD <- data.frame(
  age = rep(ordered(rownames(VADeaths)),length=n),
  gender= gl(2,5,n, labels= c("M", "F")),
  site =  gl(2,10,  labels= c("rural", "urban")))
-
+coplot(Drate ~ as.numeric(age) | gender * site, data = d.VAD,
+       panel = panel.smooth, xlab = "VADeaths data - Given: gender")
 summary(aov.VAD <- aov(Drate ~ .^2, data = d.VAD))
 plot(aov.VAD)
 }
