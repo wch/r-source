@@ -21,7 +21,7 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_impl.c,v 1.20 2003/10/23 07:14:03 ripley Exp $
+ *  $Id: rproxy_impl.c,v 1.21 2004/03/02 21:37:24 murdoch Exp $
  */
 
 #define NONAMELESSUNION
@@ -79,6 +79,20 @@ int R_Proxy_Graphics_Driver (NewDevDesc* pDD,
 			     double pPointSize);
 
 extern SC_CharacterDevice* __output_device;
+
+/* trace to DebugView */
+int RPROXYTRACE(char const* pFormat,...);
+
+int RPROXYTRACE(char const* pFormat,...)
+{
+  static char __tracebuf[2048];
+
+  va_list lArgs;
+  va_start(lArgs,pFormat);
+  vsprintf(__tracebuf,pFormat,lArgs);
+  OutputDebugString(__tracebuf);
+  return 0;
+}
 
 static int s_EvalInProgress = 0;
 
@@ -721,6 +735,8 @@ int R_Proxy_get_symbol (char const* pSymbol,BDX_Data** pData)
   return SC_PROXY_OK;
 }
 
+/* 04-02-19 | baier | don't PROTECT strings in a vector */
+/* 04-03-02 | baier | removed traces */
 int R_Proxy_set_symbol (char const* pSymbol,BDX_Data const* pData)
 {
   SEXP lSymbol = 0;
@@ -820,7 +836,6 @@ int R_Proxy_set_symbol (char const* pSymbol,BDX_Data const* pData)
 		  SEXP lStringSExp;
 		  lStringSExp =
 		    allocString (strlen (pData->raw_data[i].string_value));
-		  PROTECT (lStringSExp); lProtectCount++;
 		  strcpy (CHAR(lStringSExp),pData->raw_data[i].string_value);
 		  SET_STRING_ELT(lData, i, lStringSExp);
 		}
