@@ -181,9 +181,12 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
             testRversion(descfields)                           
 
             ## Check for inconsistent naming
-            if(descfields[1, "Package"] != package) {
-            	warning(paste("Package", sQuote(package), "not found,", 
-            		sQuote(descfields[1, "Package"]), "used"))
+            if(descfields[1, "Package"] != libraryPkgName(package)) {
+            	warning(paste("Package", sQuote(package), "not found.\n",
+			"Using case-insensitive match",
+            		sQuote(descfields[1, "Package"]), ".\n",
+			"Future versions of R will require exact matches."),
+			call.=FALSE)
             	package <- descfields[1, "Package"]
             	pkgname <- paste("package", package, sep = ":")
             	newpackage <- is.na(match(pkgname, search()))
@@ -274,14 +277,6 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
         if(file.exists(vignetteIndexRDS <-
                        file.path(pkgPath, "Meta", "vignette.rds")))
             docFiles <- c(docFiles, vignetteIndexRDS)
-        ## <FIXME>
-        ## Remove this once 1.7.0 is out.
-        ## (The 1.7 development versions for some time used vignette
-        ## indices serialized into 'doc/00Index.rds'.)
-        else if(file.exists(vignetteIndexRDS <-
-                            file.path(pkgPath, "doc", "00Index.rds")))
-            docFiles <- c(docFiles, vignetteIndexRDS)
-        ## <FIXME>
         else
             docFiles <- c(docFiles,
                           file.path(pkgPath, "doc", "00Index.dcf"))
@@ -305,9 +300,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                 else
                     NULL
             }
-            ## <FIXME>
-            ## Remove the '00Index.rds' once 1.7.0 is out.
-            else if(basename(f) %in% c("vignette.rds", "00Index.rds")) {
+            else if(basename(f) %in% c("vignette.rds")) {
                 txt <- .readRDS(f)
                 ## New-style vignette indexes are data frames with more
                 ## info than just the base name of the PDF file and the
@@ -326,7 +319,6 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                                       ")", sep = "")))
                 else NULL
             }
-            ## </FIXME>
             else
                 txt <- readLines(f)
             txt
