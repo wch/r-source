@@ -341,6 +341,11 @@ INSTALLATION CHANGES
 	in Debian Control Format is still written, as it is used by the
 	HTML search engine.)
 
+    o	A NAMESPACE file in root directory of a source package is copied
+        to the root of the package installation directory.  Attempting to
+	install a package with a NAMESPACE file using --save signals an
+	error; this is a temporary measure.
+
 
 DEPRECATED & DEFUNCT
 
