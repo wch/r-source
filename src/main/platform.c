@@ -1135,14 +1135,14 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("bzip2"));
-#if defined(HAVE_BZLIB) || defined(Unix) || defined(Win32)
+#if 1 /* we always have this */
     LOGICAL(ans)[i++] = TRUE;
 #else
     LOGICAL(ans)[i++] = FALSE;
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("PCRE"));
-#if defined(HAVE_PCRE) || defined(Unix) || defined(Win32)
+#if 1 /* we always have this */
     LOGICAL(ans)[i++] = TRUE;
 #else
     LOGICAL(ans)[i++] = FALSE;

@@ -25022,11 +25022,6 @@ echo $ECHO_N "checking whether zlib support needs to be compiled... $ECHO_C" >&6
 if test "${have_zlib}" = yes; then
   echo "$as_me:$LINENO: result: no" >&5
 echo "${ECHO_T}no" >&6
-
-cat >>confdefs.h <<\_ACEOF
-#define HAVE_ZLIB 1
-_ACEOF
-
   LIBS="-lz ${LIBS}"
 else
   echo "$as_me:$LINENO: result: yes" >&5
@@ -25612,11 +25607,6 @@ echo "$as_me:$LINENO: result: $r_have_pcre4" >&5
 echo "${ECHO_T}$r_have_pcre4" >&6
 fi
 if test "x${r_have_pcre4}" = xyes; then
-
-cat >>confdefs.h <<\_ACEOF
-#define HAVE_PCRE 1
-_ACEOF
-
   LIBS="-lpcre ${LIBS}"
 fi
 echo "$as_me:$LINENO: checking whether PCRE support needs to be compiled" >&5
@@ -26005,10 +25995,6 @@ _ACEOF
 
     cat >>confdefs.h <<\_ACEOF
 #define SUPPORT_LIBXML 1
-_ACEOF
-
-    cat >>confdefs.h <<\_ACEOF
-#define HAVE_PCRE 1
 _ACEOF
 
     cat >>confdefs.h <<\_ACEOF

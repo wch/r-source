@@ -231,9 +231,6 @@
    external names. */
 #define HAVE_NO_SYMBOL_UNDERSCORE 1
 
-/* Define if you have the PCRE headers and libraries. */
-#define HAVE_PCRE 1
-
 /* Define to 1 if you have the <pcre.h> header file. */
 /* #undef HAVE_PCRE_H */
 
@@ -385,9 +382,6 @@
 /* Define if you have the X11 headers and libraries, and want the X11 GUI to
    be built. */
 /* #undef HAVE_X11 */
-
-/* Define if you have the zlib headers and libraries. */
-/* #undef HAVE_ZLIB */
 
 /* Define if you have IEEE 754 floating point arithmetic. */
 #define IEEE_754 1

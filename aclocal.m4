@@ -1795,8 +1795,6 @@ fi
 AC_MSG_CHECKING([whether zlib support needs to be compiled])
 if test "${have_zlib}" = yes; then
   AC_MSG_RESULT([no])
-  AC_DEFINE(HAVE_ZLIB, 1,
-	    [Define if you have the zlib headers and libraries.])
   LIBS="-lz ${LIBS}"
 else
   AC_MSG_RESULT([yes])
@@ -1875,8 +1873,6 @@ int main() {
 ]])], [r_have_pcre4=yes], [r_have_pcre4=no], [r_have_pcre4=no])])
 fi
 if test "x${r_have_pcre4}" = xyes; then
-  AC_DEFINE(HAVE_PCRE, 1,
-            [Define if you have the PCRE >= 4.0 headers and libraries.])
   LIBS="-lpcre ${LIBS}"
 fi
 AC_MSG_CHECKING([whether PCRE support needs to be compiled])

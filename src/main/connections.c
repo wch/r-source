@@ -929,7 +929,7 @@ SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- bzipped file connections --------------------- */
 
-#if defined(HAVE_BZLIB) || defined(Unix) || defined(Win32)
+#if 1 /* we always have bzlib */
 #include <bzlib.h>
 
 static Rboolean bzfile_open(Rconnection con)
