@@ -112,6 +112,11 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   \code{"14:01:02"} using leading zeroes as here.  The ISO form uses no
   space to separate dates and times.
 
+  If the date string does not specify the date completely, the returned
+  answer may be system-specific.  The most common behaviour is to assume
+  that unspecified seconds, minutes or hours are zero, and a missing
+  year, month or day is the current one.
+
   If the timezone specified is invalid on your system, what happens is
   system-specific but it will probably be ignored.
 #ifdef mac
@@ -144,7 +149,8 @@ format(Sys.time(), "\%a \%b \%d \%X \%Y")
 ## but this crashes some Linux systems
 
 ## read in date info in format `ddmmmyyyy'
-## This will give NA(s) in some locales.
+## This will give NA(s) in some locales; setting the C locale
+## as in the commented lines will overcome this on most systems.
 ## lct <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
 x <- c("1jan1960", "2jan1960", "31mar1960", "30jul1960")
 z <- strptime(x, "\%d\%b\%Y")

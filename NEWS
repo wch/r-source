@@ -280,7 +280,9 @@ NEW FEATURES
            and `F'.
 
 
+
 BUG FIXES
+
 
     o   Fixed Pearson residuals for glms with non-canonical link.(PR#1123)
 
@@ -357,11 +359,16 @@ BUG FIXES
         pch etc. in plot.formula.
 
     o   library() no longer removes environments of functions that are not
-	defined in the top level package scope.  Also, packages loaded by
-	require when sourcing package code are now visible in the remaining
+	defined in the top-level package scope.  Also, packages loaded by
+	require() when sourcing package code are now visible in the remaining
 	source evaluations.
 
     o	names(d) <- v  now works (again) for "dist" objects d (PR#1129).
+
+    o	Workarounds for problems with incompletely specified date-times
+	in strptime() which were seen only on glibc-based systems
+	(PR#1155).
+
 
 
 	**************************************************

@@ -344,7 +344,7 @@ static int set_tz(char *tz, char *oldtz)
 #else
     char *p = NULL;
     int settz = 0;
-    
+
     strcpy(oldtz, "");
     p = getenv("TZ");
     if(p) strcpy(oldtz, p);
@@ -605,6 +605,43 @@ SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+static void glibc_fix(struct tm *tm, int *invalid)
+{
+    /* set mon and mday which glibc does not always set.
+       Use current year/... if none has been specified.
+
+       Specifying mon but not mday nor yday is invalid.
+    */
+    time_t t = time(NULL);
+    struct tm *tm0;
+    int tmp;
+#ifndef HAVE_POSIX_LEAPSECONDS
+    t -= 22;
+#endif
+    tm0 = localtime(&t);
+    if(tm->tm_year == NA_INTEGER) tm->tm_year = tm0->tm_year;
+    if(tm->tm_yday != NA_INTEGER) {
+	/* since we have yday, let that take precedence over mon/mday */
+	int yday = tm->tm_yday, mon = 0;
+	while(yday > (tmp = days_in_month[mon] +
+		      ((mon==1 && isleap(1900+tm->tm_year))? 1 : 0))) {
+	    yday -= tmp;
+	    mon++;
+	}
+	tm->tm_mon = mon;
+	tm->tm_mday = yday + 1;
+    } else {
+	if(tm->tm_mday == NA_INTEGER) {
+	    if(tm->tm_mon != NA_INTEGER) {
+		*invalid = 1;
+		return;
+	    } else tm->tm_mday = tm0->tm_mday;
+	}
+	if(tm->tm_mon == NA_INTEGER) tm->tm_mon = tm0->tm_mon;
+    }
+}
+
+
 SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, sformat, ans, ansnames, class;
@@ -629,13 +666,17 @@ SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
     for(i = 0; i < N; i++) {
-	/* for glibc's sake */
-	tm.tm_sec = tm.tm_min = tm.tm_hour = tm.tm_mon = tm.tm_year = 0; 
-	tm.tm_mday = 1;
+	/* for glibc's sake. That only sets some unspecified fields,
+	   sometimes. */
+	tm.tm_sec = tm.tm_min = tm.tm_hour = 0;
+	tm.tm_year = tm.tm_mon = tm.tm_mday = tm.tm_yday = NA_INTEGER;
 	invalid = STRING_ELT(x, i%n) == NA_STRING ||
 	    !strptime(CHAR(STRING_ELT(x, i%n)),
 		      CHAR(STRING_ELT(sformat, i%m)), &tm);
 	if(!invalid) {
+	    if(tm.tm_mon == NA_INTEGER || tm.tm_mday == NA_INTEGER
+	       || tm.tm_year == NA_INTEGER)
+		glibc_fix(&tm, &invalid);
 	    tm.tm_isdst = -1;
 	    mktime0(&tm, 1); /* set wday, yday, isdst */
 	}

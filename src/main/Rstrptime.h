@@ -1,4 +1,4 @@
-/* For inclusion by dt.c if needed. A slightly modified version of
+/* For inclusion by datetime.c if needed. A slightly modified version of
    code from the GNU C library with locale support removed. */
 
 static void get_locale_strings(void);

@@ -242,8 +242,8 @@ stopifnot(zz == "Hello World")
 ## was "" in 1.3.1.
 
 
-## prediction was failing for intercept-only model as model frame
-## has no columns.
+## prediction was failing for intercept-only model
+## as model frame has no columns.
 d <- data.frame(x=runif(50), y=rnorm(50))
 d.lm <- lm(y ~ 1, data=d)
 predict(d.lm, data.frame(x=0.5))
@@ -277,6 +277,7 @@ stopifnot(is.na(m[4, 2]))
 ## was level NA in 1.3.1
 stopifnot(!is.na(m[1, 2]))
 
+
 ## merging with POSIXct columns:
 x <- data.frame(a = as.POSIXct(Sys.time() + (1:3)*10000), b = LETTERS[1:3])
 y <- data.frame(b = LETTERS[3:4], c = 1:2)
@@ -284,6 +285,16 @@ stopifnot(1 == nrow(merge(x, y)))
 stopifnot(4 == nrow(merge(x, y, all = TRUE)))
 
 
+## PR 1155. On some system strptime was not setting the month or day.
+library(MASS)
+data(beav1)
+attach(beav1[90:94,])
+tmp <- strptime(paste(day, time %/% 100, time %% 100), "%j %H %M")
+detach()
+detach("package:MASS")
+stopifnot(all(tmp$mon == 11))
+stopifnot(tmp$mday == c(12, 12, 13, 13, 13))
+## failed on glibc-based systems in 1.3.1, including Windows.
 
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
