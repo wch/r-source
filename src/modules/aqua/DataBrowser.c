@@ -78,6 +78,7 @@ WindowRef BrowserWindow = NULL;
 ControlRef WSpaceBrowser = NULL;
 Rboolean isEventHandlerOn = FALSE;
 
+
 #define MaxItems  2500
 
 /*
@@ -326,6 +327,8 @@ void OpenDataBrowser(void)
     if(BrowserWindow == NULL) 
     CreateNewWindow(kDocumentWindowClass,  kWindowStandardHandlerAttribute |
             kWindowStandardDocumentAttributes, &WSBounds, &BrowserWindow);
+	RepositionWindow (BrowserWindow,  NULL, kWindowCenterOnMainScreen);
+
 
     if(BrowserWindow == NULL)
      return;
@@ -494,11 +497,11 @@ static void ConfigureDataBrowser(ControlRef browser)
 			
 			columnDesc.headerBtnDesc.btnFontStyle.just = teFlushLeft;
 	
-                        CopyCStringToPascal(CurrentPrefs.ConsoleFontName, fontname);
+                        CopyCStringToPascal(RFontFaces[CurrentPrefs.RFontFace-1], fontname);
                         GetFNum(fontname,&fontID);
       
 			columnDesc.headerBtnDesc.btnFontStyle.font = fontID;
-			columnDesc.headerBtnDesc.btnFontStyle.size = CurrentPrefs.ConsoleFontSize;
+			columnDesc.headerBtnDesc.btnFontStyle.size = RFontSizes[CurrentPrefs.RFontSize-1];
 			columnDesc.headerBtnDesc.btnFontStyle.style = normal;
 			columnDesc.headerBtnDesc.btnFontStyle.backColor = CurrentPrefs.BGOutputColor;
 			

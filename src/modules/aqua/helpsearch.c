@@ -132,7 +132,7 @@ Boolean OpenHelpSearchBrowser(void)
     
      CreateNewWindow(kDocumentWindowClass,  kWindowStandardHandlerAttribute |
             kWindowStandardDocumentAttributes, &hsBounds, &HelpSearchBrowserWindow);
-
+	RepositionWindow (HelpSearchBrowserWindow,  NULL, kWindowCenterOnMainScreen);
     if(HelpSearchBrowserWindow == NULL)
      return(FALSE);
      

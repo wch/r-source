@@ -143,6 +143,7 @@ Boolean OpenBrowsePkg(void)
     
      CreateNewWindow(kDocumentWindowClass,  kWindowStandardHandlerAttribute |
             kWindowStandardDocumentAttributes, &bpBounds, &BrowsePkgWindow);
+	RepositionWindow (BrowsePkgWindow,  NULL, kWindowCenterOnMainScreen);
 
     if(BrowsePkgWindow == NULL)
      return(FALSE);

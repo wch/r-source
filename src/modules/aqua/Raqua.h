@@ -44,30 +44,46 @@
 /* RPreferences structure */
 typedef struct
 {
-   long		prefsTypeVers;
-   char		ConsoleFontName[255];
-   int	       	ConsoleFontSize;
-   int  	TabSize;
-   RGBColor	FGInputColor;
-   RGBColor	BGInputColor;
-   RGBColor	FGOutputColor;
-   RGBColor	BGOutputColor;
-   char		DeviceFontName[255];
-   int       	DevicePointSize;
-   double	DeviceWidth;
-   double	DeviceHeight;
-   int		AntiAlias;
-   int  	AutoRefresh;
-   int		OverrideRDefaults;
-  int           Buffering;
-  int           BufferSize;
-  char          CRANmirror[255];
-  char          BIOCmirror[255];
-  int           GlobalPackages;
-  int		GrabStdout;
-  int		GrabStderr;
+	long		prefsTypeVers;
+	int			RFontFace;
+	int			RFontSize;
+	int			RTabSize;
+	RGBColor	FGInputColor;
+	RGBColor	BGInputColor;
+	RGBColor	FGOutputColor;
+	RGBColor	BGOutputColor;
+	char		DeviceFontName[255];
+	int			DevicePointSize;
+	double		DeviceWidth;
+	double		DeviceHeight;
+	int			AntiAlias;
+	int			AutoRefresh;
+	int			OverrideRDefaults;
+	int			Buffering;
+	int			BufferSize;
+	char		CRANmirror[255];
+	char		BIOCmirror[255];
+	int			GlobalPackages;
+	int			GrabStdout;
+	int			GrabStderr;
+	int			SaveConsolePos;
+	int			QuartzPos;
 }  RAquaPrefs, *RAquaPrefsPointer, **RAquaPrefsHandle;
 
+
+#ifdef __AQUA_PREFS__
+const char *RFontFaces[] = {"Andale Mono", "Courier", "Courier New", "Monaco", "VT100" };
+const int  RFontSizes[] = {8, 9, 10, 11, 12, 14, 18, 24, 36, 48, 64, 72};
+#else
+extern char *RFontFaces[];
+extern int  RFontSizes[];
+#endif
+
+#define kQuartzTopRight		1
+#define kQuartzBottomRight  2
+#define kQuartzBottomLeft   3
+#define kQuartzTopLeft		4
+#define kQuartzCenter		5
 
 
 #define kOnScreen 	0
@@ -112,6 +128,7 @@ typedef struct {
     double	xscale;
     double	yscale;
     int		where;
+	int		QuartzPos;		 /* Window Pos: TopRight=1, BottomRight, BottomLeft, TopLeft=4, Center = 5 */
 }
 QuartzDesc;
 

@@ -242,6 +242,7 @@ Boolean OpenDataEntry(void)
     
      CreateNewWindow(kDocumentWindowClass,  kWindowStandardHandlerAttribute |
             kWindowStandardDocumentAttributes, &deBounds, &DataEntryWindow);
+	RepositionWindow (DataEntryWindow,  NULL, kWindowCenterOnMainScreen);
 
     if(DataEntryWindow == NULL)
      return(FALSE);

@@ -135,6 +135,7 @@ Boolean OpenPackageManager(void)
     
      CreateNewWindow(kDocumentWindowClass,  kWindowStandardHandlerAttribute |
             kWindowStandardDocumentAttributes, &pmBounds, &PackageManagerWindow);
+	RepositionWindow (PackageManagerWindow,  NULL, kWindowCenterOnMainScreen);
 
     if(PackageManagerWindow == NULL)
      return(FALSE);

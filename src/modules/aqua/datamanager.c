@@ -132,6 +132,8 @@ Boolean OpenDataManager(void)
     
      CreateNewWindow(kDocumentWindowClass,  kWindowStandardHandlerAttribute |
             kWindowStandardDocumentAttributes, &dmBounds, &DataManagerWindow);
+	RepositionWindow (DataManagerWindow,  NULL, kWindowCenterOnMainScreen);
+
 
     if(DataManagerWindow == NULL)
      return(FALSE);
