@@ -24,7 +24,7 @@
 
 AC_PREREQ(2.57)
 
-AC_REVISION($Revision: 1.83 $)
+AC_REVISION($Revision: 1.84 $)
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
@@ -1000,6 +1000,10 @@ case "${host_os}" in
     RLAPACK_LDFLAGS="-dynamiclib -flat_namespace -undefined suppress -install_name \$(Rexeclibdir)/libRlapack.dylib"
     ## </FIXME>
     ;;
+  hpux*)
+    ## needs to avoid embedding a relative path ../../../bin
+    LAPACK_LDFLAGS="-Wl,+s"
+    ;;
 esac
 
 AC_SUBST(MAIN_LD)
@@ -1020,6 +1024,7 @@ AM_CONDITIONAL(USE_EXPORTFILE, [test "x${use_exportfile}" = xyes])
 AC_SUBST(LIBR_EXT)
 AC_SUBST(LIBR_LDFLAGS)
 AC_SUBST(RLAPACK_LDFLAGS)
+AC_SUBST(LAPACK_LDFLAGS)
 
 ### * Checks for library functions.
 
