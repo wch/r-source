@@ -69,10 +69,10 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 
 @contents
 
-@node Top, Legalese, (dir), (dir)
+@node Top, Acknowledgments, (dir), (dir)
 
 @menu
-* Legalese::                    
+* Acknowledgments::             
 * Creating R packages::         
 * Writing R documentation::     
 * System and foreign language interfaces::  
@@ -81,43 +81,15 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 * Concept index::               
 @end menu
 
-@node Legalese, Creating R packages, Top, Top
-@unnumbered Legalese
+@node Acknowledgments, Creating R packages, Top, Top
+@unnumbered Acknowledgments
 
-@menu
-* Acknowledgments::             
-@end menu
-
-This document is @copyright{} 1999, 2000 by the R Development Core Team.
-
-This document is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2, or (at your option) any
-later version.
-
-This document is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-General Public License for more details.
-
-A copy of the GNU General Public License is available via WWW at
-
-@display
-@uref{http://www.gnu.org/copyleft/gpl.html}.
-@end display
-
-@noindent
-You can also obtain it by writing to the Free Software Foundation, Inc.,
-675 Mass Ave, Cambridge, MA 02139, USA.
-
-@node Acknowledgments,  , Legalese, Legalese
-@section Acknowledgments
 
 The contributions of Saikat DebRoy (who wrote the first draft of a guide
 to using @code{.Call} and @code{.External}) and of Adrian Trapletti (who
 provided information on the C++ interface) are gratefully acknowledged.
 
-@node Creating R packages, Writing R documentation, Legalese, Top
+@node Creating R packages, Writing R documentation, Acknowledgments, Top
 @chapter Creating R packages
 @cindex Packages
 @cindex Creating packages

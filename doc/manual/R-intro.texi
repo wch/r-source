@@ -2,7 +2,7 @@
 @c %**start of header
 @setfilename R-intro.info
 @settitle An Introduction to R
-@set VERSION $Revision: 1.5 $
+@set VERSION $Revision: 1.6 $
 @setchapternewpage on
 @c %**end of header
 
@@ -1381,7 +1381,7 @@ more details.
 
 Suppose further we needed to calculate the standard errors of the state
 income means.  To do this we need to write an @R{} function to calculate
-the standard error for any given vector.  Since there is an in built
+the standard error for any given vector.  Since there is an builtin
 function @code{var()} to calculate the sample variance, such a function
 is a very simple one liner, specified by the assignment:
 
@@ -3015,7 +3015,7 @@ alternative hypothesis: two.sided
 @end example
 
 @noindent
-(Note that the distribution theory is not strictly valid here are we
+(Note that the distribution theory is not valid here as we
 have estimated the parameters of the normal distribution from the same
 sample.)
 
@@ -6039,7 +6039,7 @@ Terminate all graphics devices on the list, except the null device.
 @section Dynamic graphics
 @cindex Dynamic graphics
 
-@R{} does not (currently) have an in builtin function for dynamic
+@R{} does not (currently) have a builtin function for dynamic
 graphics, for example to rotate point clouds or to ``brush''
 (interactively highlight) plots.  However, extensive dynamic graphics
 facilities are available in the system @code{XGobi} by Swayne, Cook and
