@@ -9,14 +9,18 @@
 \alias{.onUnload}
 \alias{.onAttach}
 \alias{loadingNamespaceInfo}
+\alias{saveNamespaceImage}
 
 \usage{
 attachNamespace(ns, pos = 2)
 loadNamespace(package, lib.loc = NULL,
-              keep.source = getOption("keep.source.pkgs"), partial = FALSE)
+              keep.source = getOption("keep.source.pkgs"),
+              partial = FALSE, declarativeOnly = FALSE)
 loadedNamespaces()
 unloadNamespace(ns)
 loadingNamespaceInfo()
+saveNamespaceImage(package, rdafile, lib.loc = NULL,
+                   keep.source = getOption("keep.source.pkgs"))
 }
 \arguments{
   \item{ns}{string or namespace object.}
@@ -24,7 +28,8 @@ loadingNamespaceInfo()
   \item{package}{string naming the package/name space to load.}
   \item{lib.loc}{character vector specifying library search path.}
   \item{keep.source}{logical specifying whether to retain source.}
-  \item{parial}{logical; if true, stop just after laoding code.}
+  \item{partial}{logical; if true, stop just after laoding code.}
+  \item{declarativeOnly}{logical; disables \code{.Import}, etc, if true.}
 }
 \description{
   Low level name space support functions.
@@ -68,6 +73,9 @@ loadingNamespaceInfo()
   \code{loadingNamespaceInfo} returns a list of the arguments that
   would be passed to \code{.onLoad} when a name space is being loaded.
   An error is signaled of a name space is not currently being loaded.
+
+  \code{saveNamespaceImage} is used to save name space images for
+  packages installed with \code{--save}.
 }
 \keyword{internal}
 \author{Luke Tierney}

@@ -83,7 +83,7 @@ attachNamespace <- function(ns, pos = 2) {
 }
 loadNamespace <- function (package, lib.loc = NULL,
                             keep.source = getOption("keep.source.pkgs"),
-                            partial = FALSE) {
+                            partial = FALSE, declarativeOnly = FALSE) {
     # eventually allow version as second component; ignore for now.
     package <- as.character(package)[[1]]
 
@@ -173,6 +173,9 @@ loadNamespace <- function (package, lib.loc = NULL,
                                                   keep.source), i[[2]])
         }
 
+        # dynamic variable to allow/disable .Import and friends
+        "__NamespaceDeclarativeOnly__" <- declarativeOnly
+
         # store info for loading name space for loadingNamespaceInfo to read
         "__LoadingNamespaceInfo__" <- list(libname = package.lib,
                                            pkgname = package)
@@ -240,6 +243,15 @@ loadingNamespaceInfo <- function() {
     }
     dynGet("__LoadingNamespaceInfo__", stop("not loading a name space"))
 }
+saveNamespaceImage <- function (package, rdafile, lib.loc = NULL,
+                                keep.source = getOption("keep.source.pkgs")) {
+    if (! is.null(.Internal(getRegisteredNamespace(as.name(package)))))
+        stop(paste("name space", sQuote(package), "is loaded"));
+    ns <- loadNamespace(package, lib.loc, keep.source, TRUE, TRUE)
+    vars <- ls(ns, all = TRUE)
+    vars <- vars[vars != ".__NAMESPACE__."]
+    save(list = vars, file = rdafile, envir = ns)
+}
 topenv <- function(envir = parent.frame()) {
     while (! is.null(envir)) {
         if (! is.null(attr(envir, "name")) ||
@@ -270,18 +282,54 @@ unloadNamespace <- function(ns) {
     .Internal(unregisterNamespace(nsname))
 }
 .Import <- function(...) {
+    dynGet <- function(name, notFound = stop(paste(name, "not found"))) {
+        n <- sys.nframe()
+        while (n > 1) {
+            n <- n - 1
+            env <- sys.frame(n)
+            if (exists(name, env = env, inherits = FALSE))
+                return(get(name, env = env, inherits = FALSE))
+        }
+        notFound
+    }
+    if (dynGet("__NamespaceDeclarativeOnly__", FALSE))
+        stop("imperative name space directives are disabled")
     envir <- parent.frame()
     names <- as.character(substitute(list(...)))[-1]
     for (n in names)
         namespaceImportFrom(envir, n)
 }
 .ImportFrom <- function(name, ...) {
+    dynGet <- function(name, notFound = stop(paste(name, "not found"))) {
+        n <- sys.nframe()
+        while (n > 1) {
+            n <- n - 1
+            env <- sys.frame(n)
+            if (exists(name, env = env, inherits = FALSE))
+                return(get(name, env = env, inherits = FALSE))
+        }
+        notFound
+    }
+    if (dynGet("__NamespaceDeclarativeOnly__", FALSE))
+        stop("imperative name space directives are disabled")
     envir <- parent.frame()
     name <-  as.character(substitute(name))
     names <- as.character(substitute(list(...)))[-1]
     namespaceImportFrom(envir, name, names)
 }
 .Export <- function(...) {
+    dynGet <- function(name, notFound = stop(paste(name, "not found"))) {
+        n <- sys.nframe()
+        while (n > 1) {
+            n <- n - 1
+            env <- sys.frame(n)
+            if (exists(name, env = env, inherits = FALSE))
+                return(get(name, env = env, inherits = FALSE))
+        }
+        notFound
+    }
+    if (dynGet("__NamespaceDeclarativeOnly__", FALSE))
+        stop("imperative name space directives are disabled")
     ns <- topenv(parent.frame())
     if (identical(ns, .BaseNamespaceEnv))
         warning("all objects in base name space are currently exported.")
@@ -293,6 +341,18 @@ unloadNamespace <- function(ns) {
     }
 }
 .S3method <- function(generic, class, method) {
+    dynGet <- function(name, notFound = stop(paste(name, "not found"))) {
+        n <- sys.nframe()
+        while (n > 1) {
+            n <- n - 1
+            env <- sys.frame(n)
+            if (exists(name, env = env, inherits = FALSE))
+                return(get(name, env = env, inherits = FALSE))
+        }
+        notFound
+    }
+    if (dynGet("__NamespaceDeclarativeOnly__", FALSE))
+        stop("imperative name space directives are disabled")
     generic <- as.character(substitute(generic))
     class <- as.character(substitute(class))
     if (missing(method)) method <- paste(generic, class, sep=".")
