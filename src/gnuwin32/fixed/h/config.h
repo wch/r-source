@@ -214,7 +214,7 @@
 #define HAVE_PNG 1
 
 /* Define if you have the `popen' function. */
-#define HAVE_POPEN 1
+/* #undef HAVE_POPEN */
 
 /* Define if your system time functions do not count leap seconds, as required
    by POSIX. */

@@ -41,7 +41,7 @@ fixh: version h/config.h ../FFDecl.h ../FFTab.h \
 	$(RM) ../../../tools/GV
 
 ../../include/Rmath.h: ../../include/Rmath.h.in
-	$(SED) -e  /@RMATH_HAVE_LOG1P@/d $< > $@
+	$(SED) -e /@RMATH_HAVE_LOG1P@/d  -e /@RMATH_HAVE_EXPM1@/d $< > $@
 
 ../../../bin/massage-Examples: ../../../share/perl/massage-Examples.pl
 	$(SED) -e 's/"contr.poly")/"contr.poly"), pager="console"/' $< > $@
