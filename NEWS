@@ -289,6 +289,8 @@ STANDARD PACKAGES
 	- prcomp() now accepts complex matrices, and there is biplot()
 	  method for its output (in the real case).
 
+	- heatmap() has grown more arguments, partly thanks to Wolfgang Huber.
+
     o	Changes in package 'tcltk':
 
 	- The package is now in a namespace.  To remove it you will
@@ -323,10 +325,10 @@ STANDARD PACKAGES
 	  generics and S3 group generics.
 
 	- S4 classes and methods are included in the QC tests.
-          Warnings will be issued from undoc() for classes  and
-          methods defined but not documented.  Default methods
-          automatically generated from nongeneric functions do not
-          need to be documented.
+	  Warnings will be issued from undoc() for classes  and
+	  methods defined but not documented.  Default methods
+	  automatically generated from nongeneric functions do not
+	  need to be documented.
 
 	- New (experimental) functions codocClasses() and codocData()
 	  for code/documentation consistency checking for S4 classes and
@@ -502,10 +504,10 @@ BUG FIXES
     o	numericDeriv() was failing if the first argument was a name
 	rather than a call.  (PR#3746)
 
-    o   bgroup with a null (.) delimiter was setting font to Greek.
-        (PR#3099)
+    o	bgroup with a null (.) delimiter was setting font to Greek.
+	(PR#3099)
 
-    o   identify.default() detects zero-length arguments (PR#4057)
+    o	identify.default() detects zero-length arguments (PR#4057)
 
     o	cut.POSIXt() now passes on ... to cut.default(), as documented.
 
@@ -542,7 +544,7 @@ BUG FIXES
 
     o	lsfit() was returning incorrect residuals for 0-rank fits.
 
-    o   pipes were not opening properly when profiling on a Mac (PR#1140)
+    o	pipes were not opening properly when profiling on a Mac (PR#1140)
 
     o	sort() and unique.default() were failing on 0-level factors.
 

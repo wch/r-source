@@ -277,12 +277,9 @@ plotNode <-
 		segmentsHV(xBot,yTop, xBot,yBot)# v
 	    }
 	    vln <- NULL
-	    if ((isLeaf(child) && leaflab == "textlike") ||
-		!is.null(attr(child, "text"))) {
-		nodeText <-
-		    if(isLeaf(child)) attr(child, "label")
-		    else as.character(attr(child,"text"))
-		if(getOption("verbose")) cat('-- with "text"',nodeText)
+	    if (isLeaf(child) && leaflab == "textlike") {
+		nodeText <- as.character(attr(child,"label"))
+		if(getOption("verbose")) cat('-- with "label"',nodeText)
 		hln <- 0.6 * strwidth(nodeText)/2
 		vln <- 1.5 * strheight(nodeText)/2
 		rect(xBot - hln, yBot,
@@ -318,7 +315,7 @@ plotNode <-
 		}
 	    }
 	    plotNode(bx$limit[k], bx$limit[k + 1], subtree = child,
-		type, center, leaflab, nodePar, edgePar, horiz)
+                     type, center, leaflab, nodePar, edgePar, horiz)
 	}
     }
 }
@@ -343,9 +340,9 @@ plotNodeLimit <- function(x1, x2, subtree, center)
     } else { ## leaf
 	limit <- c(x1, x2)
     }
-    x <-
-	if(center) mean(c(x1,x2))
-	else x1 + (if(inner) attr(subtree, "midpoint") else 0)
+    mid <- attr(subtree, "midpoint")
+    center <- center || (inner && !is.numeric(mid))
+    x <- if(center) mean(c(x1,x2)) else x1 + (if(inner) mid else 0)
     list(x = x, limit = limit)
 }
 
@@ -443,8 +440,10 @@ reorder.dendrogram <- function(x, wts, ...)
 ## original Andy Liaw; modified RG, MM
 
 heatmap <-
-function (x, Rowv, Colv, distfun = dist, hclustfun = hclust, add.expr,
-         scale = c("row", "column", "none"), na.rm=TRUE, ...)
+function (x, Rowv=NULL, Colv=NULL, distfun = dist, hclustfun = hclust, add.expr,
+	  scale = c("row", "column", "none"), na.rm=TRUE,
+	  margins = c(5, 5), ColSideColors, RowSideColors,
+	  main = NULL, xlab = NULL, ylab = NULL, ...)
 {
     scale <- match.arg(scale)
     if(length(di <- dim(x)) != 2 || !is.numeric(x))
@@ -453,63 +452,116 @@ function (x, Rowv, Colv, distfun = dist, hclustfun = hclust, add.expr,
     nc <- di[2]
     if(nr <= 1 || nc <= 1)
 	stop("`x' must have at least 2 rows and 2 columns")
+    if(!is.numeric(margins) || length(margins) != 2)
+	stop("`margins' must be a numeric vector of length 2")
+
     r.cex <- 0.2 + 1/log10(nr)
     c.cex <- 0.2 + 1/log10(nc)
+
     ## by default order by row/col means
-    if( missing(Rowv) )
-	Rowv <- rowMeans(x, na.rm=na.rm)
-    if( missing(Colv) )
-	Colv <- colMeans(x, na.rm=na.rm)
-    ## get the dendrograms
-    if( !inherits(Rowv, "dendrogram") ) {
-	hcr <- hclustfun(distfun(x))
-	ddr <- as.dendrogram(hcr)
-	ddr <- reorder(ddr, Rowv)
+    if(is.null(Rowv)) Rowv <- rowMeans(x, na.rm = na.rm)
+    if(is.null(Colv)) Colv <- colMeans(x, na.rm = na.rm)
+
+    ## get the dendrograms and reordering indices
+
+    if(!is.logical(Rowv) || Rowv) {
+	if(!inherits(Rowv, "dendrogram")) {
+	    hcr <- hclustfun(distfun(x))
+	    ddr <- as.dendrogram(hcr)
+	    ddr <- reorder(ddr, Rowv)
+	}
+	else
+	    ddr <- Rowv
+
+	if(nr != length(rowInd <- order.dendrogram(ddr)))
+	    stop("row dendrogram ordering gave index of wrong length")
     }
-    else
-	ddr <- Rowv
-    if( !inherits(Colv, "dendrogram") ) {
-	hcc <- hclustfun(distfun(t(x)))
-	ddc <- as.dendrogram(hcc)
-	ddc <- reorder(ddc, Colv)
+    else ## Rowv == FALSE
+	rowInd <- 1:nr
+
+    if(!is.logical(Colv) || Colv) {
+	if( !inherits(Colv, "dendrogram") ) {
+	    hcc <- hclustfun(distfun(t(x)))
+	    ddc <- as.dendrogram(hcc)
+	    ddc <- reorder(ddc, Colv)
+	}
+	else
+	    ddc <- Colv
+
+	if(nc != length(colInd <- order.dendrogram(ddc)))
+	    stop("column dendrogram ordering gave index of wrong length")
     }
-    else
-	ddc <- Colv
-    rowInd <- order.dendrogram(ddr)
-    colInd <- order.dendrogram(ddc)
+    else ## Colv == FALSE
+	colInd <- 1:nc
+
     ## reorder x
     x <- x[rowInd, colInd]
     if(scale == "row") {
-	x <- sweep(x, 1, rowMeans(x, na.rm=na.rm))
-	sd <- apply(x, 1, sd, na.rm=na.rm)
-	x <- sweep(x, 1, sd, "/")
+	x <- sweep(x, 1, rowMeans(x, na.rm = na.rm))
+	sx <- apply(x, 1, sd, na.rm = na.rm)
+	x <- sweep(x, 1, sx, "/")
     }
     else if(scale == "column") {
-	x <- sweep(x, 2, colMeans(x, na.rm=na.rm))
-	sd <- apply(x, 2, sd, na.rm=na.rm)
-	x <- sweep(x, 2, sd, "/")
+	x <- sweep(x, 2, colMeans(x, na.rm = na.rm))
+	sx <- apply(x, 2, sd, na.rm = na.rm)
+	x <- sweep(x, 2, sx, "/")
     }
-    ## Graphics :
+
+    ## Calculate the plot layout
+    lmat <- rbind(c(NA, 3), 2:1)
+    lwid <- lhei <- c(1, 4)
+    if(!missing(ColSideColors)) { ## add middle row to layout
+	if(!is.character(ColSideColors) || length(ColSideColors) != nc)
+	    stop("'ColSideColors' must be a character vector of length ncol(x)")
+	lmat <- rbind(lmat[1,]+1, c(NA,1), lmat[2,]+1)
+	lhei <- c(lhei[1], 0.2, lhei[2])
+    }
+    if(!missing(RowSideColors)) { ## add middle column to layout
+	if(!is.character(RowSideColors) || length(RowSideColors) != nr)
+	    stop("'RowSideColors' must be a character vector of length nrow(x)")
+	lmat <- cbind(lmat[,1]+1, c(rep(NA, nrow(lmat)-1), 1), lmat[,2]+1)
+	lwid <- c(lwid[1], 0.2, lwid[2])
+    }
+    lmat[is.na(lmat)] <- 0
+
+    ## Graphics `output' -----------------------
+
     op <- par(no.readonly = TRUE)
     on.exit(par(op))
-    layout(matrix(c(0, 3, 2, 1), 2, 2, byrow = TRUE),
-	   widths = c(1,4), heights = c(1, 4), respect = TRUE)
-    par(mar = c(5, 0, 0, 5))
-    image(1:ncol(x), 1:nrow(x), t(x), axes = FALSE,
-	  xlim = c(0.5, ncol(x) + 0.5), ylim = c(0.5, nrow(x) + 0.5),
+    layout(lmat, widths = lwid, heights = lhei, respect = TRUE)
+    ## draw the side bars
+    if(!missing(RowSideColors)) {
+	par(mar = c(margins[1],0, 0,0.5))
+	image(rbind(1:nr), col = RowSideColors[rowInd], axes = FALSE)
+    }
+    if(!missing(ColSideColors)) {
+	par(mar = c(0.5,0, 0,margins[2]))
+	image(cbind(1:nc), col = ColSideColors[colInd], axes = FALSE)
+    }
+    ## draw the main carpet
+    par(mar = c(margins[1], 0, 0, margins[2]))
+    image(1:nc, 1:nr, t(x), axes = FALSE,
+	  xlim = c(0.5, nc + 0.5), ylim = c(0.5, nr + 0.5),
 	  xlab = "",ylab = "", ...)
-    axis(1, 1:ncol(x), las = 2, line = -0.5, tick = 0,
-	 labels = if(is.null(colnames(x))) (1:ncol(x))[colInd] else colnames(x),
+    axis(1, 1:nc, las = 2, line = -0.5, tick = 0,
+	 labels = if(is.null(colnames(x))) (1:nc)[colInd] else colnames(x),
 	 cex.axis = c.cex)
-    axis(4, 1:nrow(x), las = 2, line = -0.5, tick = 0,
-	 labels = if(is.null(rownames(x))) (1:nrow(x))[rowInd] else rownames(x),
+    if(!is.null(xlab)) mtext(xlab, side = 1, line = margins[1] - 1.25)
+    axis(4, 1:nr, las = 2, line = -0.5, tick = 0,
+	 labels = if(is.null(rownames(x))) (1:nr)[rowInd] else rownames(x),
 	 cex.axis = r.cex)
+    if(!is.null(ylab)) mtext(ylab, side = 4, line = margins[2] - 1.25)
+
     if (!missing(add.expr))
 	eval(substitute(add.expr))
+
     ## the two dendrograms :
-    par(mar = c(5, 3, 0, 0))
-    plot(ddr, horiz = TRUE, axes = FALSE, yaxs= "i", leaflab= "none")
-    par(mar = c(0, 0, 3, 5))
-    plot(ddc,               axes = FALSE, xaxs= "i", leaflab= "none")
+    par(mar = c(margins[1], 0, 0, 0))
+    plot(ddr, horiz = TRUE, axes = FALSE, yaxs = "i", leaflab = "none")
+
+    par(mar = c(0, 0, if(!is.null(main)) 1 else 0, margins[2]))
+    plot(ddc,		    axes = FALSE, xaxs = "i", leaflab = "none")
+    if(!is.null(main)) title(main, cex.main = 1.5*op[["cex.main"]])
+
     invisible(list(rowInd = rowInd, colInd = colInd))
 }
