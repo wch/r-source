@@ -23,8 +23,9 @@ help(topic, offline = FALSE, package = .packages()
  \item{package}{a name or character vector giving the packages to look
    into for documentation.  By default, all packages in the search path
    are used.}
- \item{lib.loc}{A character vector of directory names of \R libraries.
-   Defaults to all libraries currently known.}
+ \item{lib.loc}{a character vector of directory names of \R libraries.
+   Defaults to all libraries currently known. If the default is used,
+   the loaded packages are searched before the libraries.}
  \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
 #ifdef unix
  \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE} (which is the
@@ -72,11 +73,11 @@ help(topic, offline = FALSE, package = .packages()
 #endif
 }
 \note{
-  You will only get help for \R objects in your
-  \code{\link{search}()} path, i.e., \code{help(dist)} will only work after
-  \code{\link{library}(mva)}. To look in all the packages in all the
-  current libraries, use
-  \code{help(topic, package=.packages(all=T), lib.loc=.lib.loc)}
+  Unless \code{lib.loc} is specified explicitly, the loaded packages are
+  searched before those in the specified libraries.  This ensures that
+  if a library is loaded from a library not in \code{.lib.loc} then the
+  help from the loaded library is used.  If \code{lib.loc} is specified
+  explicitly, the loaded packages are \emph{not} searched.
 
   The help files can be many small files. On some file systems it is
   desirable to save space, and the text files in the \file{help} directory

@@ -1,9 +1,10 @@
 \name{plot}
 \title{Generic X-Y Plotting}
 \alias{plot}
-\usage{
-%-- this is not really ok:  plot(x , ...)  is now the GENERIC function
+\synopsis{
 plot(x, \dots)
+}
+\usage{
 plot(x, y, xlim=range(x), ylim=range(y), type="p",
         main, xlab, ylab, \dots)
 plot(y ~ x, \dots)

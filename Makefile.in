@@ -66,7 +66,7 @@ install: installdirs
 	@for f in `ls bin/*.$(SHLIBEXT)`; do \
 	  $(INSTALL_PROGRAM) $${f} $(rhome)/bin; \
 	done
-	@if test -n "$(GNOMEUI_LIBS)"; then \
+	@if test -f gnome/R_gnome.$(SHLIBEXT); then \
 	  $(INSTALL_PROGRAM) gnome/R_gnome.$(SHLIBEXT) $(rhome)/gnome; \
 	fi
 	@for f in `find bin -type f -print \

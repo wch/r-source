@@ -72,8 +72,8 @@ stopifnot(
     !is.nan(NA)  &&  !is.infinite(NA)  && !is.finite(NA),
      is.nan(NaN) &&  !is.infinite(NaN) && !is.finite(NaN),
     !is.nan(c(1,NA)),
-    c(F,T,F) == is.nan(c   (1,NaN,NA)),
-    c(F,T,F) == is.nan(list(1,NaN,NA))#-> FALSE in older versions
+    c(FALSE,TRUE,FALSE) == is.nan(c   (1,NaN,NA)),
+    c(FALSE,TRUE,FALSE) == is.nan(list(1,NaN,NA))#-> FALSE in older versions
 )
 
 \testonly{
@@ -91,7 +91,7 @@ stopifnot(
    function(x) (is.numeric(x) || is.complex(x)) && !is.na(x) && !is.finite(x)
 
  for(x in list(tst.val, x2, z2))
-   print(cbind(format(x), is.infinite=format(is.infinite(x))), quote=F)
+   print(cbind(format(x), is.infinite=format(is.infinite(x))), quote=FALSE)
 
  rbind(is.nan(tst.val),
        is.na (tst.val))
@@ -156,7 +156,7 @@ as.integer(3)*iI == iI-2 # TRUE
 storage.mode(ii <- -3:5)
 storage.mode(zm <- outer(ii,ii, FUN="*"))# integer
 storage.mode(zd <- outer(ii,ii, FUN="/"))# double
-range(zd, na.rm=T)# -Inf  Inf
+range(zd, na.rm=TRUE)# -Inf  Inf
 zd[,ii==0]
 
 (storage.mode(print(1:1 / 0:0)))# Inf "double"

@@ -126,7 +126,7 @@ for(ll in c("","x","y","xy")) {
   text(c(3,3),2:3, c("rect(2,3,3,2, col=4)",
                      "text(c(3,3),2:3,\"c(rect(...)\")"), adj = c(0,.3))
   legend(list(x=2,y=8), legend = leg.txt, col=2:3, pch=1:2,
-         lty=1, merge=T)#, trace=T)
+         lty=1, merge=TRUE)#, trace=TRUE)
 }
 par(mfrow=c(1,1))
 

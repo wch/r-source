@@ -21,9 +21,6 @@ NEW FEATURES
     o   inherits is now an internal function and compatible with S
 
 
-BUG FIXES
-
-    o   xlab expressions didn't print
 
 
 	**************************************************
@@ -31,6 +28,44 @@ BUG FIXES
 	*	       1.1 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 1.1.1
+
+
+NEW FEATURES
+
+    o	data(), example() and help() now search the loaded packages, then
+	in their .lib.loc argument, the latter as pre-0.99.0.  See
+	their help pages for the precise details.
+
+
+BUG FIXES
+
+    o	data() now works correctly with data-only packages.
+
+    o	Standalone Mathlib can now be made if builddir = srcdir
+	(working around an undocumented autoconf `feature').
+
+    o	Check for pre-1.1.0 saved object .Postscript.options in postscript().
+
+    o	More stringent checks on the arguments to dataentry().
+
+    o   Specifying xlab as an expression now works again.
+
+    o   dev2bitmap() works again.
+
+    o   Numerous uses of `F' and `T' replaced by `FALSE' and `TRUE'.
+
+    o	bxp() now extends `ylim' properly when notch=TRUE (and a
+	notch is more extreme than other stats).
+	Also, varwidth is okay again, see example(split).
+
+    o   Making manuals without making R first now works.
+
+    o	princomp() now works when some eigenvalues are tiny negatives.
+
+    o   SearchEngine.html was not installed when builddir != srcdir.
 
 
 		CHANGES IN R VERSION 1.1.0
@@ -51,7 +86,7 @@ NEW FEATURES
 	experimental so don't go churning out thousands of lines of
 	GUI code and then blame us for changing the API later on. It does
 	not currently work with GNOME because of event loop differences.
-	See demo(tkttest) and demo(tkdensity). 
+	See demo(tkttest) and demo(tkdensity).
 
     o	Internally using global R_Expressions [getOption("expressions")]
 	dramatically speeds up eval.c.

@@ -8,10 +8,14 @@ plot(ecdf(x), verticals = FALSE, col.01line = "gray70", \dots)
 \alias{print.ecdf}
 \alias{summary.ecdf}
 \alias{plot.ecdf}
-\arguments{\item{x}{numeric vector with the ``observations''.}
+\arguments{
+  \item{x}{numeric vector with the ``observations''.}
+  \item{vertical, \dots}{see \code{\link{plot.stepfun}}.}
+  \item{col.01line}{numeric or character specifying the color of the
+    horizontal lines at y=0 and 1, see \code{\link{colors}}.}
 }
 \description{
-  Compute an empirical cumulative distribution function.
+  Compute or plot an empirical cumulative distribution function.
 }
 \details{
   The e.c.d.f. (empirical cumulative distribution function)
@@ -29,7 +33,7 @@ plot(ecdf(x), verticals = FALSE, col.01line = "gray70", \dots)
 
   The function \code{plot.ecdf} which implements the \code{\link{plot}}
   method for \code{ecdf} objects, is implemented via a call to
-  \code{\link{plot.stepfun}}.
+  \code{\link{plot.stepfun}}; see its documentation.
 }
 \value{
   A function of class \code{"ecdf"}, inheriting from the
@@ -78,12 +82,12 @@ abline(v=knots(Fn12),lty=2,col='gray70')
 plot(xx, Fn12(xx), type='b', cex=.1)#- plot.default
 plot(Fn12, col.h='red', add= TRUE)  #- plot method
 abline(v=knots(Fn12),lty=2,col='gray70')
-plot(Fn12, verticals=T, col.p='blue', col.h='red',col.v='bisque')
+plot(Fn12, verticals=TRUE, col.p='blue', col.h='red',col.v='bisque')
 par(op)
 
 ##-- this works too (automatic call to  ecdf(.)):
 plot.ecdf(rnorm(24))
 }
-\keyword{iplot}
+\keyword{dplot}
 \keyword{hplot}
 

@@ -20,8 +20,8 @@ de(\dots, Modes = NULL, Names = NULL)
   \item{Modes}{The modes to be used for the variables.}
   \item{Names}{The names to be used for the variables.}
   \item{data}{A list of numeric and/or character vectors.}
-  \item{modes}{A list of the the same length as \code{data} giving the
-    modes of the variables.}
+  \item{modes}{A list of length up to that of \code{data} giving the
+    modes of (some of) the variables. \code{list()} is allowed.}
 }
 \details{
   The data entry editor is only available on some platforms and GUIs.

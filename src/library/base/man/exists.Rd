@@ -36,6 +36,6 @@ if(!exists("some.fun", mode="function"))
  some.fun <- function(x) { cat("some.fun(x)\n"); x }
 search()
 exists("ls", 2) # true even though ls is in pos=3
-exists("ls", 2, inherits=F) # false
+exists("ls", 2, inherits=FALSE) # false
 }
 \keyword{data}

@@ -54,7 +54,7 @@ table(groups)
 data(warpbreaks)
 ## contingency table from data.frame : array with named dimnames
 tapply(warpbreaks$breaks, warpbreaks[,-1], sum)
-tapply(warpbreaks$breaks, warpbreaks[,3,drop=F], sum)
+tapply(warpbreaks$breaks, warpbreaks[, 3, drop = FALSE], sum)
 
 n <- 17; fac <- factor(rep(1:3, len = n), levels = 1:5)
 table(fac)

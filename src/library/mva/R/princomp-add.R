@@ -23,12 +23,14 @@ function(object, loadings = FALSE, cutoff = 0.1, digits = 3, ...) {
     invisible(object)
 }
 
-plot.princomp <- function(x, ...) { screeplot(x, ...) }
+plot.princomp <- function(x, main = deparse(substitute(x)), ...)
+    screeplot(x, main = main, ...)
 
 screeplot <-
 function(x, npcs = min(10, length(x$sdev)),
          type = c("barplot", "lines"),
-         main = deparse(substitute(x)), ...) {
+         main = deparse(substitute(x)), ...)
+{
     eval(main)
     type <- match.arg(type)
     pcs <- x$sdev^2

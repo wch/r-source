@@ -405,7 +405,13 @@ works correctly should be performed using @code{R CMD check} prior to
 invoking the build procedure.
 
 Use @kbd{R CMD build --help} to obtain more information about the usage
-of the @R{} package builder.  There is no Windows equivalent.
+of the @R{} package builder.  The Windows equivalent is to set
+@code{R_HOME} and then run
+@smallexample
+sh $@{R_HOME@}/bin/build.sh pkgname
+@end smallexample
+@noindent
+(Replace @file{pkgname} by @file{--help} for further details.)
 
 @node Submitting a package to CRAN,  , Checking and building packages, Creating R packages
 @section Submitting a package to CRAN

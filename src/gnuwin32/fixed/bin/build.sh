@@ -1,8 +1,7 @@
-#!/bin/sh
 #
 # ${R_HOME}/bin/build
 
-revision='$Revision: 1.21 $'
+revision='$Revision: 1.2 $'
 version=`set - ${revision}; echo ${2}`
 version="R package builder ${version}
 
@@ -11,7 +10,7 @@ There is NO warranty.  You may redistribute this software under the
 terms of the GNU General Public License.
 For more information about these matters, see the files named COPYING."
 
-usage="Usage: R CMD build [options] pkgdirs
+usage="Usage: sh ${R_HOME}/bin/build.sh [options] pkgdirs
 
 Build R packages from package sources in the directories specified by
 pkgdirs.  A variety of diagnostic checks and cleanups are performed
@@ -93,8 +92,8 @@ get_dcf_field () {
 ## For updating `INDEX' and `data/00Index'
 updateIndex () {
   oldindex=${1}
-  newindex=${TMPDIR:-/tmp}/Rbuild${$}
-  ${R_HOME}/bin/Rdindex ${Rdfiles} > ${newindex}
+  newindex=${TEMP:-/tmp}/Rbuild${$}
+  ${R_HOME}/bin/Rdindex.bat ${Rdfiles} > ${newindex}
   if diff -b ${newindex} ${oldindex} > /dev/null; then
     result "OK"
   else
@@ -112,8 +111,8 @@ updateIndex () {
 ## For updating `TITLE'
 updateTitle () {
   oldtitle=TITLE
-  newtitle=${TMPDIR:-/tmp}/Rbuild${$}
-  ${R_HOME}/bin/maketitle > ${newtitle}
+  newtitle=${TEMP:-/tmp}/Rbuild${$}
+  gawk -f ${R_HOME}/src/gnuwin32/maketitle DESCRIPTION > ${newtitle}
   foo=`cat TITLE`
   package=`set - ${foo}; echo ${1}`
   title=`set - ${foo}; shift; echo ${*}`
@@ -259,10 +258,10 @@ checkpkg () {
   ## Check R documentation files
   if test -d man; then
     checking "Rd files"
-    all_file=${TMPDIR:-/tmp}/Rall${$}
-    tag_file=${TMPDIR:-/tmp}/Rtag${$}
+    all_file=${TEMP:-/tmp}/Rall${$}
+    tag_file=${TEMP:-/tmp}/Rtag${$}
     rm -f ${all_file} 2>/dev/null
-    LC_ALL=C find man -name "*.[Rr]d" -print | sort > ${all_file}
+    find man -name "*.[Rr]d" -print | sort > ${all_file}
     Rdfiles=`cat ${all_file}`
     if test -n "${Rdfiles}"; then
       badfiles=`grep "<" ${all_file}`
@@ -317,8 +316,6 @@ checkpkg () {
     rm -f ${all_file} ${tag_file} 2>/dev/null
   fi
 
-  Rdfiles=`echo "${Rdfiles}" | sed -e '/windows\//d'`
-
   ## Check for `INDEX'
   checking "for \`INDEX'"
   if test -r INDEX; then
@@ -331,7 +328,7 @@ checkpkg () {
     result "NO"
     if test -n "${Rdfiles}"; then
       creating "\`INDEX' from Rd files"
-      ${R_HOME}/bin/Rdindex ${Rdfiles} > INDEX
+      perl ${R_HOME}/bin/Rdindex.bat ${Rdfiles} > INDEX
       if test ${?} -ne 0; then
 	result "ERROR"
 	exit 1
@@ -360,7 +357,7 @@ checkpkg () {
       result "NO"
       if test -n "${Rdfiles}"; then
 	creating "\`data/00Index' from Rd files"
-	${R_HOME}/bin/Rdindex ${Rdfiles} > data/00Index
+	perl ${R_HOME}/bin/Rdindex.bat ${Rdfiles} > data/00Index
 	if test ${?} -ne 0; then
 	  result "ERROR"
 	  exit 1
@@ -377,10 +374,14 @@ checkpkg () {
   ## Check for undocumented objects
   if test -d R -a -d man; then
     checking "for undocumented objects"
-    out=`echo "undoc(dir = \"${dir}\")" \
-      | ${R_HOME}/bin/R.bin ${R_opts}`
-    err=`echo "${out}" | grep "^Error"`
-    out=`echo "${out}" | grep "^ *\\["`
+    Rcmd=${TEMP:-/tmp}/Rcmd${$}
+    Rout=${TEMP:-/tmp}/Rout${$}
+    echo "undoc(dir = \"${dir}\")" > ${Rcmd}
+    ${R_HOME}/bin/Rterm.exe ${R_opts} < ${Rcmd} > ${Rout}
+    rm ${Rcmd}
+    err=`grep "^Error" ${Rout}`
+    out=`grep "^ *\\[" ${Rout}`
+    rm ${Rout}
     if test -z "${err}"; then
       if test -n "${out}"; then
 	result "WARNING:"
@@ -426,7 +427,7 @@ buildpkg () {
   ## And finally build the package (bundle)
   cd ..
   package=`basename ${1}`
-  exclude_file=${TMPDIR:-/tmp}/Rbuild${$}
+  exclude_file=${TEMP:-/tmp}/Rbuild${$}
   rm -f ${exclude_file} 2>/dev/null \
     || (echo "cannot create file with exclude patterns" && exit 2)
   find ${package} -type d -name check >> ${exclude_file}

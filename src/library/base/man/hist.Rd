@@ -45,7 +45,7 @@ hist.default(x, breaks, freq = NULL, probability = !freq,
   \item{\dots}{further graphical parameters to \code{title} and \code{axis}.}
 }
 \description{
-  The generic function \code{hist} computes and plots (if \code{plot=T}) a
+  The generic function \code{hist} computes and plots (if \code{plot=TRUE}) a
   histogram of the given data values.
 }
 \details{
@@ -91,9 +91,9 @@ sapply(r[2:3],sum)
 sum(r$intensities * diff(r$breaks)) # == 1
 par(op)
 
-str(hist(islands, plot= F))
-str(hist(islands, br=12, plot= F))
-str(hist(islands, br=c(12,20,36,80,200,1000,17000), plot = F))
+str(hist(islands, plot= FALSE))
+str(hist(islands, br=12, plot= FALSE))
+str(hist(islands, br=c(12,20,36,80,200,1000,17000), plot = FALSE))
 str(hist(islands, br=c(12,20,36,80,200,1000,17000), freq = TRUE))#warning
 }
 \keyword{hplot}

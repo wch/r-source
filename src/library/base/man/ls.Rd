@@ -40,7 +40,7 @@ object-oriented programming.
 \examples{
 .Ob <- 1
 ls(pat="O")
-ls(pat="O", all = T)    # also shows ".[foo]"
+ls(pat="O", all = TRUE)    # also shows ".[foo]"
 
 # shows an empty list because inside myfunc no variables are defined
 myfunc <- function() {ls()}

@@ -22,8 +22,12 @@ dev2bitmap <- function(file, type="png256", height=6, width=6, res=72,
     if(missing(pointsize)) pointsize <- 1.5*min(width, height)
     tmp <- tempfile("Rbit")
     on.exit(unlink(tmp))
-    dev.print(device=postscript, file=tmp, width=width, height=height,
-              pointsize=pointsize, paper="special", horizontal=FALSE, ...)
+    current.device <- dev.cur()
+    dev.off(dev.copy(device = postscript, file=tmp, width=width,
+                     height=height,
+                     pointsize=pointsize, paper="special",
+                     horizontal=FALSE, ...))
+    dev.set(current.device)
     cmd <- paste(gsexe, " -dNOPAUSE -dBATCH -q -sDEVICE=", type,
                  " -r", res,
                  " -g", ceiling(res*width), "x", ceiling(res*height),

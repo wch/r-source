@@ -137,30 +137,28 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 
     if(!is.list(z) || 0 == (n <- length(z$n)))
 	stop("invalid first argument")
-    limits <- numeric(0)
-    nmax <- 0
-    #just for compatibility with S
-    if( is.null(z$out) )
-	z$out<-vector(length=0)
-    if( is.null(z$group) )
-        z$group<-vector(length=0)
-    for(i in 1:n) {
-	nmax <- max(nmax,z$n)
-	limits <- range(limits,
-                        z$stats[is.finite(z$stats)],
-                        z$out[is.finite(z$out)])
+    ## just for compatibility with S
+    if(is.null(z$out))   z$out   <- vector(length=0)
+    if(is.null(z$group)) z$group <- vector(length=0)
+    if((comp.ylim <- is.null(pars$ylim)))
+        ylim <- range(z$stats[is.finite(z$stats)],
+                      z$out  [is.finite(z$out)],
+                      if(notch)
+                      z$conf [is.finite(z$conf)])
+    else {
+        ylim <- pars$ylim
+        pars$ylim <- NULL
     }
-    width <- if(!is.null(width)) {
-	if(length(width) != n | any(is.na(width)) | any(width <= 0))
-	    stop("invalid boxplot widths")
-	boxwex * width/max(width)
-    }
-    else if(varwidth) boxwex * sqrt(z$n)/nmax
-    else if(n == 1) 0.5 * boxwex
-    else rep(boxwex, n)
+    width <-
+        if(!is.null(width)) {
+            if(length(width) != n | any(is.na(width)) | any(width <= 0))
+                stop("invalid boxplot widths")
+            boxwex * width/max(width)
+        }
+        else if(varwidth) boxwex * sqrt(z$n/max(z$n))
+        else if(n == 1) 0.5 * boxwex
+        else rep(boxwex, n)
 
-    if(is.null(pars$ylim)) ylim <- limits
-    else { ylim <- pars$ylim; pars$ylim <- NULL }
     if(missing(border) || length(border)==0)
 	border <- par("fg")
 

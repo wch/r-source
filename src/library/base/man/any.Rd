@@ -1,11 +1,11 @@
 \name{any}
-\title{Are Values True?}
+\title{Are Some Values True?}
 \usage{
 any(\dots, na.rm = FALSE)
 }
 \alias{any}
 \description{
-  Given a set of logical vectors, are all or any of the values true?
+  Given a set of logical vectors, are any of the values true?
 }
 \arguments{
   \item{\dots}{one or more logical vectors.}
@@ -22,6 +22,8 @@ any(\dots, na.rm = FALSE)
 
   If \code{x} consists of a mix of \code{FALSE} and \code{NA} values,
   the value is \code{NA}.
+}
+\seealso{\code{\link{all}}, the ``complement'' of \code{any}.
 }
 \examples{
 range(x <- sort(round(rnorm(10) - 1.2,1)))

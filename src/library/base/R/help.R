@@ -31,9 +31,10 @@ help <-
             topic <- "matmult"
         type <- if(offline) "latex" else if (htmlhelp) "html" else "help"
         INDICES <-
-            if(missing(lib.loc)) .path.package(package)
+            if(missing(lib.loc))
+                c(.path.package(package, TRUE),
+                  system.file(pkg = package, lib = lib.loc))
             else system.file(pkg = package, lib = lib.loc)
-#        INDICES <- system.file(pkg=package, lib=lib.loc)
         file <- index.search(topic, INDICES, "AnIndex", type)
         if (length(file) && file != "") {
             if (verbose)

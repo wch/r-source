@@ -60,9 +60,10 @@ model <- glm(y ~ ns(x,6) + z)
 
 par(mfrow=c(2,2)) ## 2 x 2 plots for same model :
 termplot(model, main = paste("termplot( ", deparse(model$call)," ..)"))
-termplot(model, rug=T)
-termplot(model, partial=T, rug= TRUE, main="termplot(..,partial = T, rug = T)")
-termplot(model, partial=T, se = TRUE, main = TRUE)
+termplot(model, rug=TRUE)
+termplot(model, partial=TRUE, rug= TRUE,
+         main="termplot(..,partial = T, rug = T)")
+termplot(model, partial=TRUE, se = TRUE, main = TRUE)
 if(rs) detach("package:splines")
 }
 \keyword{hplot}

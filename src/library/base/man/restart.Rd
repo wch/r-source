@@ -4,7 +4,7 @@
 \title{Restart an Expression}
 \usage{
 restart(on = TRUE)
-try(expr, first = T)
+try(expr, first = TRUE)
 }
 \arguments{
   \item{on}{if true a jump point is set; if false the jump point is removed}

@@ -11,7 +11,7 @@ plot.profile.nls(x, levels, conf, nseg, absVal, ...)
      is used instead of giving \code{levels} explicitly.}
  \item{conf}{a numeric vector of confidence levels for profile-based
      confidence intervals on the parameters.  Defaults to \code{c(0.99,
-	 0.95, 0.90, 0.80, 0.50).}
+	 0.95, 0.90, 0.80, 0.50).}}
  \item{nseg}{an integer value giving the number of segments to use in
      the spline interpolation of the profile t curves. Defaults to 50.}
  \item{absVal}{a logical value indicating whether or not the plots

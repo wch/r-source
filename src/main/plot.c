@@ -896,7 +896,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	outer = NPC;
     else
 	outer = NIC;
-    
+
     args = CDR(args);
 
     /* Retrieve relevant "par" values. */
@@ -974,7 +974,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* At this point we know the value of "xaxt" and "yaxt" */
     /* so we test to see whether the relevant one is "n". */
     /* If it is, we just bail out at this point. */
-    
+
     if (((side == 1 || side == 3) && dd->gp.xaxt == 'n') ||
 	((side == 2 || side == 4) && dd->gp.yaxt == 'n')) {
 	GRestorePars(dd);
@@ -1297,7 +1297,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     }
     else if (type == 'b' || type == 'c') {
-	/* points connected with broken lines */
+	/* broken lines (with points in between if 'b') */
 	double d, f;
 	d = GConvertYUnits(0.5, CHARS, INCHES, dd);
 	dd->gp.col = INTEGER(col)[0];
@@ -2209,7 +2209,7 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 
     outer = asLogical(CAR(args));
     if (outer == NA_LOGICAL) outer = 0;
-    args = CDR(args);    
+    args = CDR(args);
 
     GSavePars(dd);
     RecordGraphicsCall(call);
