@@ -3,7 +3,7 @@
 #
 # ${RHOME}/etc/build-help
 # Usage:  build-help [--rhome dir] [--html] [--nroff] [--latex]
-#                    [--dosnames] [pkg] [lib]
+#                    [--dosnames] [--htmllists] [pkg] [lib]
 # Install all html help files for package pkg to library lib
 # (defaults are `${RHOME}/src/library/base' and the default library,
 # `${RHOME}/library', respectively).
@@ -12,7 +12,8 @@ use File::Basename;
 use Cwd;
 use Getopt::Long;
 
-@knownoptions = ("rhome:s", "html", "nroff", "latex", "debug", "dosnames");
+@knownoptions = ("rhome:s", "html", "nroff", "latex", "debug",
+		 "dosnames", "htmllists");
 GetOptions (@knownoptions) || usage();
 
 $cwd=getcwd();
@@ -34,6 +35,24 @@ print STDERR "Current directory (cwd): '$cwd'\n" if $opt_debug;
 
 require "$RHOME/etc/Rdconvlib.pl";
 require "$RHOME/etc/buildlib.pl";
+
+# if option --htmllists is set we only rebuild some list files and
+# exit
+
+if($opt_htmllists){
+    build_htmlpkglist("$RHOME/library");
+
+    %anindex = read_anindex("$RHOME/library");
+    %htmlindex = read_htmlindex("$RHOME/library");
+
+    build_htmlfctlist("$RHOME/library");
+
+    exit 0;
+}
+
+
+
+
 
 # default is to build all documentation formats
 if(!$opt_html && !$opt_nroff && !$opt_latex){

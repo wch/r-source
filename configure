@@ -3613,7 +3613,6 @@ etc/Rdindex
 etc/Rman2Rd
 etc/Sd2Rd
 etc/build-help
-etc/build-htmlpkglist
 etc/help.pretty
 etc/html2dos
 doc/keyword-test
@@ -3732,7 +3731,6 @@ etc/Rdindex
 etc/Rman2Rd
 etc/Sd2Rd
 etc/build-help
-etc/build-htmlpkglist
 etc/help.pretty
 etc/html2dos
 doc/keyword-test
