@@ -82,6 +82,10 @@ mantelhaen.test(x, y = NULL, z = NULL,
   \emph{Categorical data analysis}.
   New York: Wiley.
   Pages 230--235.
+
+  Alan Agresti (2002).
+  \emph{Categorical data analysis} (second edition).
+  New York: Wiley.
 }
 \examples{
 ## Agresti (1990), pages 231--237, Penicillin and Rabbits
@@ -130,5 +134,26 @@ woolf <- function(x) {
 woolf(UCBAdmissions)
 ## => p = 0.003, indicating that there is significant heterogeneity.
 ## (And hence the Mantel-Haenszel test cannot be used.)
+
+## Agresti (2002), p. 287f and p. 297.
+## Job Satisfaction example.
+Satisfaction <-
+    as.table(array(c(1, 2, 0, 0, 3, 3, 1, 2,
+                     11, 17, 8, 4, 2, 3, 5, 2,
+                     1, 0, 0, 0, 1, 3, 0, 1,
+                     2, 5, 7, 9, 1, 1, 3, 6),
+                   dim = c(4, 4, 2),
+                   dimnames =
+                   list(Income =
+                        c("<5000", "5000-15000",
+                          "15000-25000", ">25000"),
+                        "Job Satisfaction" =
+                        c("V_D", "L_S", "M_S", "V_S"),
+                        Gender = c("Female", "Male"))))
+## (Satisfaction categories abbreviated for convenience.)
+ftable(. ~ Gender + Income, Satisfaction)
+## Table 7.8 in Agresti (2002), p. 288.
+mantelhaen.test(Satisfaction)
+## See Table 7.12 in Agresti (2002), p. 297.
 }  
 \keyword{htest}
