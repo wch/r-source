@@ -35,7 +35,7 @@ R.iss: JRins.pl ../$(RPREFIX)b.zip ../$(RPREFIX)h.zip \
 	echo "make.packages.html(.Library)" | $(RPREFIX)/bin/rterm --vanilla --slave
 	$(CP) $(RPREFIX)/doc/html/packages.html $(RPREFIX)w/$(RPREFIX)/doc/html
 	$(RM) $(RPREFIX)/doc/html/packages*
-	mkdir TclInst
+	mkdir -p TclInst
 	$(CP) -pr ../../../Tcl TclInst
 	perl JRins.pl $(RPREFIX) $(IS_VERSION)
 
