@@ -111,6 +111,9 @@ BUG FIXES
     o	postscript() now makes use of kerning information in computing
 	string widths.
 
+    o	Support for Rd conversion to Sd has been reinstated (it was
+	unintentionally removed along with nroff-based conversion to text).
+
 
 		CHANGES IN R VERSION 1.0.1
 

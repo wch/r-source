@@ -1510,6 +1510,216 @@ sub Sd_print_sections {
     }
 }
 
+#==**nroff support****
+
+### Convert a Rdoc text string to nroff
+###   $_[0]: text to be converted
+###   $_[1]: (optional) indentation of paragraphs. default = $INDENT
+
+sub text2nroff {
+
+    my $text = $_[0];
+    if($_[1]){
+	my $indent = $_[1];
+    }
+    else{
+	my $indent = $INDENT;
+    }
+
+    $text =~ s/^\.|([\n\(])\./$1\\\&./g;
+
+    ## TABs are just whitespace
+    $text =~ s/\t/ /g;
+
+    ## tables are pre-processed by the tbl(1) command, so this has to
+    ## be done first
+    $text = nroff_tables($text);
+    $text =~ s/\\cr\n?/\n.br\n/sgo;
+
+    $text =~ s/\n\s*\n/\n.IP \"\" $indent\n/sgo;
+    $text =~ s/\\dots/\\&.../go;
+    $text =~ s/\\ldots/\\&.../go;
+    $text =~ s/\\le/<=/go;
+    $text =~ s/\\ge/>=/go;
+    $text =~ s/\\%/%/sgo;
+    $text =~ s/\\\$/\$/sgo;
+
+
+    $text =~ s/\\Gamma/Gamma/go;
+    $text =~ s/\\alpha/alpha/go;
+    $text =~ s/\\Alpha/Alpha/go;
+    $text =~ s/\\pi/pi/go;
+    $text =~ s/\\mu/mu/go;
+    $text =~ s/\\sigma/sigma/go;
+    $text =~ s/\\Sigma/Sigma/go;
+    $text =~ s/\\lambda/lambda/go;
+    $text =~ s/\\beta/beta/go;
+    $text =~ s/\\epsilon/epsilon/go;
+    $text =~ s/\\left\(/\(/go;
+    $text =~ s/\\right\)/\)/go;
+    $text =~ s/\\R/R/go;
+    $text =~ s/---/--/go;
+    $text =~ s/--/-/go;
+    $text =~ s/$EOB/\{/go;
+    $text =~ s/$ECB/\}/go;
+
+    $text = undefine_command($text, "link");
+    $text = undefine_command($text, "emph");
+    $text = undefine_command($text, "bold");
+    $text = undefine_command($text, "textbf");
+    $text = undefine_command($text, "mathbf");
+    $text = undefine_command($text, "email");
+    $text = replace_command($text, "file", "`", "'");
+    $text = replace_command($text, "url", "<URL: ", ">");
+
+
+    # handle equations:
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "\\eqn")
+	  &&  $text =~ /\\eqn/){
+	my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
+	$eqn = $ascii if $ascii;
+	$eqn =~ s/\\([^&])/$1/go;
+	$text =~ s/\\eqn(.*)$id/$eqn/s;
+    }
+
+    $loopcount = 0;
+    while(checkloop($loopcount++, $text, "\\deqn") &&  $text =~ /\\deqn/){
+	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
+	$eqn = $ascii if $ascii;
+	$eqn =~ s/\\([^&])/$1/go;
+	$text =~ s/\\deqn(.*)$id/\n.DS B\n$eqn\n.DE\n/s;
+    }
+
+    $list_depth=0;
+
+    $text = replace_command($text,
+			    "itemize",
+			    "\n.in +$INDENT\n",
+			    "\n.in -$INDENT\n");
+
+    $text = replace_command($text,
+			    "enumerate",
+			    "\n.in +$INDENT\n",
+			    "\n.in -$INDENT\n");
+
+    $text =~ s/\\item\s+/\n.ti -\\w\@*\\ \@u\n* /go;
+
+    # handle "\describe"
+    $text = replace_command($text,
+			    "describe",
+			    "\n.in +$INDENT\n",
+			    "\n.in -$INDENT\n");
+    while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
+    {
+	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
+	$arg = text2nroff($arg);
+	$descitem = ".IP \"\" $TAGOFF\n".
+	    ".ti -\\w\@" . $arg . 
+	    "\\ \@u\n" . $arg . "\\ " . text2nroff($desc);
+	$descitem =~ s/\\&\././go;
+	$text =~ s/\\itemnormal.*$id/$descitem/s;
+    }
+    $text = nroff_unescape_codes($text);
+    unmark_brackets($text);
+}
+
+sub nroff_unescape_codes {
+
+    my $text = $_[0];
+
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "escaped code")
+	  && $text =~ /$ECODE($ID)/){
+	my $id = $1;
+	my $ec = code2nroff($ecodes{$id});
+	$text =~ s/$ECODE$id/\`$ec\'/;
+    }
+    $text;
+}
+
+sub code2nroff {
+
+    my $text = $_[0];
+
+    $text =~ s/^\.|([\n\(])\./$1\\&./g;
+    $text =~ s/\\%/%/go;
+    $text =~ s/\\ldots/.../go;
+    $text =~ s/\\dots/.../go;
+    $text =~ s/\\n/\\\\n/g;
+
+    $text = undefine_command($text, "link");
+    $text = undefine_command($text, "dontrun");
+    $text = drop_full_command($text, "testonly");
+
+    unmark_brackets($text);
+}
+
+sub nroff_tables {
+
+    my $text = $_[0];
+
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "\\tabular")
+	  &&  $text =~ /\\tabular/){
+
+	my ($id, $format, $arg)	 =
+	    get_arguments("tabular", $text, 2);
+
+	$arg =~ s/\n/ /sgo;
+
+	# remove trailing \cr (otherwise we get an empty last line)
+	$arg =~ s/\\cr\s*$//go;
+
+	# parse the format of the tabular environment
+	my $ncols = length($format);
+	my @colformat = ();
+	for($k=0; $k<$ncols; $k++){
+	    my $cf = substr($format, $k, 1);
+
+	    if($cf =~ /l/o){
+		$colformat[$k] = "l";
+	    }
+	    elsif($cf =~ /r/o){
+		$colformat[$k] = "r";
+	    }
+	    elsif($cf =~ /c/o){
+		$colformat[$k] = "c";
+	    }
+	    else{
+		die("Error: unknown identifier \{$cf\} in" .
+		    " tabular format \{$format\}\n");
+	    }
+	}
+
+	my $table = ".TS\n";
+	for($l=0; $l<$#colformat; $l++){
+	    $table .= "$colformat[$l] ";
+	}
+	$table .= "$colformat[$#colformat].\n";
+
+
+	# now do the real work: split into lines and columns
+	my @rows = split(/\\cr/, $arg);
+	for($k=0; $k<=$#rows;$k++){
+	    my @cols = split(/\\tab/, $rows[$k]);
+	    die("Error:\n  $rows[$k]\\cr\n" .
+		"does not fit tabular format \{$format\}\n")
+		if ($#cols != $#colformat);
+	    for($l=0; $l<$#cols; $l++){
+		$cols[$l] =~ s/^\s*(.*)\s*$/$1/;
+		$table .= "$cols[$l]\t";
+	    }
+	    $cols[$#cols] =~ s/^\s*(.*)\s*$/$1/;
+	    $table .= "$cols[$#cols]\n";
+	}
+	$table .= ".TE\n";
+
+	$text =~ s/\\tabular.*$id/$table/s;
+    }
+
+    $text;
+}
 
 #==********************* Example ***********************************
 
