@@ -5,16 +5,14 @@
 \title{Mosaic Plots}
 \description{Plots a mosaic on the current graphics device.}
 \usage{
-mosaicplot(x, \dots)
-\method{mosaicplot}{default}(X, main = NULL, xlab = NULL, ylab = NULL,
+\method{mosaicplot}{default}(x, main = NULL, xlab = NULL, ylab = NULL,
                    sort = NULL, off = NULL, dir = NULL,
                    color = FALSE, shade = FALSE, margin = NULL,
-                   type = c("pearson", "deviance", "FT"))
+                   type = c("pearson", "deviance", "FT"), \dots)
 \method{mosaicplot}{formula}(formula, data = NULL, \dots, subset, na.action)
 }
 \arguments{
-  \item{x}{an \R object.}
-  \item{X}{a contingency table in array form, with optional category
+  \item{x}{a contingency table in array form, with optional category
     labels specified in the \code{dimnames(x)} attribute.  The table is
     best created by the \code{table()} command.}
   \item{main}{character string for the mosaic title.}
@@ -53,7 +51,7 @@ mosaicplot(x, \dots)
   \item{formula}{a formula, such as \code{y ~ x}.}
   \item{data}{a data.frame (or list) from which the variables in
     \code{formula} should be taken.}
-  \item{\dots}{further arguments to the default mosaicplot method.}
+  \item{\dots}{further arguments to be passed to or from methods.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used for plotting.}
   %% <FIXME>

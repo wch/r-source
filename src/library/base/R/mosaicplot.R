@@ -11,9 +11,9 @@ mosaicplot <- function(x, ...) UseMethod("mosaicplot")
 ##   displaying sign and magnitude of the standardized residuals.
 
 mosaicplot.default <-
-function(X, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off = NULL,
-         dir = NULL, color = FALSE, shade = FALSE, margin = NULL,
-         type = c("pearson", "deviance", "FT"))
+function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
+         NULL, dir = NULL, color = FALSE, shade = FALSE, margin = NULL,
+         type = c("pearson", "deviance", "FT"), ...)
 {
     mosaic.cell <- function(X, x1, y1, x2, y2,
                             off, dir, color, lablevx, lablevy,
@@ -155,25 +155,25 @@ function(X, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off = NULL,
     }
 
     ##-- Begin main function
-    if(is.null(dim(X)))
-        X <- as.array(X)
-    else if(is.data.frame(X))
-        X <- data.matrix(X)
-    dimd <- length(dX <- dim(X))
-    if(dimd == 0 || any(dX == 0))
-        stop("`X' must not have 0 dimensionality")
+    if(is.null(dim(x)))
+        x <- as.array(x)
+    else if(is.data.frame(x))
+        x <- data.matrix(x)
+    dimd <- length(dx <- dim(x))
+    if(dimd == 0 || any(dx == 0))
+        stop("`x' must not have 0 dimensionality")
     ##-- Set up `Ind' matrix : to contain indices and data
-    Ind <- 1:dX[1]
+    Ind <- 1:dx[1]
     if(dimd > 1) {
-        Ind <- rep(Ind, prod(dX[2:dimd]))
+        Ind <- rep(Ind, prod(dx[2:dimd]))
         for (i in 2:dimd) {
             Ind <- cbind(Ind,
-                         c(matrix(1:dX[i], byrow=TRUE,
-                                  nr = prod(dX[1:(i-1)]),
-                                  nc = prod(dX[i:dimd]))))
+                         c(matrix(1:dx[i], byrow=TRUE,
+                                  nr = prod(dx[1:(i-1)]),
+                                  nc = prod(dx[i:dimd]))))
         }
     }
-    Ind <- cbind(Ind, c(X))
+    Ind <- cbind(Ind, c(x))
     ## Ok, now the columns of `Ind' are the cell indices (which could
     ## also have been created by `expand.grid()' and the corresponding
     ## cell counts.  We add two more columns for dealing with *EXTENDED*
@@ -200,18 +200,18 @@ function(X, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off = NULL,
         if(is.null(margin))
             margin <- as.list(1:dimd)
         ## Fit the loglinear model.
-        E <- loglin(X, margin, fit = TRUE, print = FALSE)$fit
+        E <- loglin(x, margin, fit = TRUE, print = FALSE)$fit
         ## Compute the residuals.
         type <- match.arg(type)
         residuals <-
             switch(type,
-                   pearson = (X - E) / sqrt(E),
+                   pearson = (x - E) / sqrt(E),
                    deviance = {
-                       tmp <- 2 * (X * log(ifelse(X==0, 1, X/E)) - (X-E))
+                       tmp <- 2 * (x * log(ifelse(x==0, 1, x/E)) - (x-E))
                        tmp <- sqrt(pmax(tmp, 0))
-                       ifelse(X > E, tmp, -tmp)
+                       ifelse(x > E, tmp, -tmp)
                    },
-                   FT = sqrt(X) + sqrt(X + 1) - sqrt(4 * E + 1))
+                   FT = sqrt(x) + sqrt(x + 1) - sqrt(4 * E + 1))
         ## And add the information to the data matrix.
         Ind <- cbind(Ind,
                      c(1 + (residuals < 0)),
@@ -219,7 +219,7 @@ function(X, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off = NULL,
     }
 
     ## The next four may all be NULL:
-    label <- dimnames(X)
+    label <- dimnames(x)
     nam.dn <- names(label)
     if(is.null(xlab)) xlab <- nam.dn[1]
     if(is.null(ylab)) ylab <- nam.dn[2]
@@ -232,7 +232,7 @@ function(X, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off = NULL,
     }
     if (!is.null(sort)) {
         if(length(sort) != dimd)
-            stop("length(sort) doesn't conform to dim(X)")
+            stop("length(sort) doesn't conform to dim(x)")
         ## Sort columns.
         Ind[,1:dimd] <- Ind[,sort]
         off <- off[sort]
@@ -318,7 +318,8 @@ function(X, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off = NULL,
 }
 
 mosaicplot.formula <-
-function(formula, data = NULL, ..., subset, na.action) {
+function(formula, data = NULL, ..., subset, na.action)
+{
     ## <FIXME>
     ## Remove `na.action' in 1.4.
     if(!missing(na.action))
