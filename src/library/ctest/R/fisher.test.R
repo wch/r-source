@@ -102,7 +102,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
                 else
                     return(as.numeric(q >= lo))
             }
-            if(ncp == Inf) {
+            if(ncp^(hi - lo) == Inf) {
                 if(upper.tail)
                     return(as.numeric(q <= hi))
                 else
@@ -124,7 +124,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
                        two.sided = {
                            if(or == 0)
                                as.numeric(x == lo)
-                           else if(or == Inf)
+                           else if(or^(hi - lo) == Inf)
                                as.numeric(x == hi)
                            else {
                                u <- lo : hi
@@ -146,7 +146,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
             mnhyper <- function(ncp) {
                 if(ncp == 0)
                     return(lo)
-                if(ncp == Inf)
+                if(ncp^(hi - lo) == Inf)
                     return(hi)
                 q <- lo : hi
                 d <- dhyper(q, m, n, k) * ncp ^ (0 : (hi - lo))
