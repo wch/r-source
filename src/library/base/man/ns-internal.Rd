@@ -13,6 +13,7 @@
 \alias{parseNamespaceFile}
 \alias{registerS3method}
 \alias{setNamespaceInfo}
+\alias{.__S3MethodsTable__.}
 \usage{
 asNamespace(ns, base.OK = TRUE)
 getNamespaceInfo(ns, which)
