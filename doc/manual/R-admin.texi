@@ -832,6 +832,10 @@ compiler/linker does not support re-ordering of @option{-L} and
 the native @command{cc}).  In this case, use a different compiler (or a
 front end shell script which does the re-ordering).
 
+Another precious variable is @env{R_BROWSER}, the default browser, which
+should take a value of an executable in the user's path or specify
+a full path.
+
 If you find you need to alter configure variables, it is worth noting
 that some settings may be cached in the file @file{config.cache}, and it
 is a good idea to remove that file (if it exists) before re-configuring.

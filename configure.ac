@@ -339,6 +339,7 @@ AC_ARG_VAR([TCLTK_CPPFLAGS],
            [flags needed for finding the tcl.h and tk.h headers])
 AC_ARG_VAR([MAKE], [Make command])
 AC_ARG_VAR([F2C], [Fortran-to-C converter command])
+AC_ARG_VAR([R_BROWSER], [default browser])
 
 ### ** Check whether we build in srcdir.
 

@@ -113,6 +113,11 @@ INSTALLATION CHANGES
         --with-bzlib and --with-pcre, principally to allow these
 	libraries to be avoided if they are unsuitable.
 
+    o   If the precious variable R_BROWSER is set at configure time 
+        it overrides the automatic selection of the default browser.
+        It should be set to the full path unless the browser appears 
+        at different locations on different client machines.
+
 
 DEPRECATED & DEFUNCT
 

@@ -14,7 +14,7 @@
 
    <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.7.0 (2002-12-10).
+   <p>The current version of this document is 1.7.0 (2002-12-14).
 
    ISBN 3-901167-52-8
 
@@ -668,6 +668,10 @@ compiler/linker does not support re-ordering of <code>-L</code> and
 <code>-l</code> flags (this has been reported to be a problem on HP-UX with
 the native <code>cc</code>).  In this case, use a different compiler (or a
 front end shell script which does the re-ordering).
+
+   <p>Another precious variable is <code>R_BROWSER</code>, the default browser, which
+should take a value of an executable in the user's path or specify
+a full path.
 
    <p>If you find you need to alter configure variables, it is worth noting
 that some settings may be cached in the file <code>config.cache</code>, and it
