@@ -13,10 +13,6 @@ R_HOME = $(top_builddir)
 
 OBJS = lqs.o
 SHLIB = $(pkg).@SHLIB_EXT@
-## FIXME:
-## Use $(LIBM).
-SHLIB_LIBADD = $(FLIBS)
-## </FIXME>
 
 all: Makefile $(SHLIB)
 	@$(top_srcdir)/tools/mkinstalldirs \
