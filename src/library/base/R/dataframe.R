@@ -667,6 +667,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	else ri
     }
     allargs <- list(...)
+    allargs <- allargs[sapply(allargs, length) > 0]
     n <- length(allargs)
     if(n == 0)
 	return(structure(list(),
