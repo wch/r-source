@@ -205,10 +205,6 @@ Subject: postscript problem
 From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
 Date: Fri, 26 Oct 2001 15:23:45 -0400
 --This seems to be a problem with screen/layout rather than postscript.
-* PR# 1157 *
-Subject: identify(...plot=F)
-From: Rolf Turner <rolf@maths.uwa.edu.au>
-Date: Fri, 2 Nov 2001 09:43:49 +0800 (WST)
 * PR# 1161 *
 Subject: x-axis label in persp()
 From: Rolf Turner <rolf@maths.uwa.edu.au>
@@ -446,3 +442,7 @@ Date: Fri, 25 Jan 2002 15:08:33 -0500
 Subject: incorrect handling of arrays of list elements
 From: =?iso-8859-1?Q?Jens=20Oehlschl=E4gel?= <joehl@web.de>
 Date: Thu, 7 Feb 2002 13:43:19 +0100
+* PR# 1309 *
+Subject: =?ks_c_5601-1987?B?W7GksO1dIHItYnVnc7TUILChsbiw+MDlv6G8rSDGr7qwx9LAzrCht84gsO2x3rv9yLCwobG4uKYgurizu7XluLO0z7TZLg==?=
+From: =?ks_c_5601-1987?B?VklWSSBLT1JFQQ==?= <vivikor@yahoo.co.kr>
+Date: Wed, 13 Feb 2002 21:01:59 +0900
