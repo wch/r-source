@@ -13,7 +13,7 @@ DEPRECATED & DEFUNCT
 
     o	The aqua module is MacOS X is deprecated.
 
-    o	capabilities("GNOME") is deprecated.
+    o	Capabilities "bzip2", "GNOME, "libz" and "PCRE" are deprecated.
 
 
 INSTALLATION CHANGES

@@ -22,7 +22,7 @@ capabilities(what = NULL)
     \item{GNOME}{(Unix)  Is the GNOME GUI in use?  This is deprecated,
       and will be removed from \R 2.1.0.}
     \item{libz}{Is \code{\link{gzfile}} available?  From \R 1.5.0 this
-      will always be true.}
+      will always be true, and is deprecated.}
     \item{http/ftp}{Are \code{\link{url}} and the internal method for
       \code{\link{download.file}} available?}
     \item{sockets}{Are \code{\link{make.socket}} and related functions
@@ -40,11 +40,11 @@ capabilities(what = NULL)
       that this is more correctly known by the international standard
       IEC 60559, and will always be true from \R version 2.0.0.}
     \item{bzip2}{Is \code{\link{bzfile}} available?  From \R 1.7.0 this
-      will always be true.}
+      will always be true, and is deprecated.}
     \item{PCRE}{Is the Perl-Compatible Regular Expression library
       available?  This is needed for the \code{perl = TRUE} option to
       \code{\link{grep}} are related function.  From \R 1.7.0 this
-      will always be true.}
+      will always be true, and is deprecated.}
 }
 \seealso{\code{\link{.Platform}}}
 
