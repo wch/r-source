@@ -11,15 +11,18 @@ Alternatively, a single plotting structure can
 be provided.}
 \item{xlim,ylim}{the ranges to be encompased by the x and y axes.}
 \item{type}{what type of plot should be drawn.
-Possible types are
-\code{"p"} for \bold{p}oints,
-\code{"l"} for \bold{l}ines,
-\code{"b"} for \bold{b}oth, \code{"o"} for both "\bold{o}verplotted",
-\code{"h"} for "\bold{h}istogram" like vertical lines,
-\code{"s"} for \bold{s}teps,
-\code{"S"} for other \bold{s}teps,
- and
-\code{"n"} for no plotting.}
+  Possible types are
+  \itemize{
+    \item\code{"p"} for \bold{p}oints,
+    \item\code{"l"} for \bold{l}ines,
+    \item\code{"b"} for \bold{b}oth, \code{"o"} for both "\bold{o}verplotted",
+    \item\code{"h"} for "\bold{h}istogram" like vertical lines,
+    \item\code{"s"} for \bold{s}teps,
+    \item\code{"S"} for other \bold{s}teps,
+    and
+    \item\code{"n"} for no plotting.
+  }
+}
 \item{main}{an overall title for the plot.}
 \item{xlab}{a title for the x axis.}
 \item{ylab}{a title for the y axis.}
