@@ -242,7 +242,7 @@ SEXP MatrixSubset(SEXP x, SEXP s, SEXP call, int drop)
     }
 
     /* The matrix elements have been transferred.  Now we need to */
-    /* transfer the attributes.  Most importantly, we need to subset */
+    /* transfer the attributes.	 Most importantly, we need to subset */
     /* the dimnames of the returned value. */
 
     if (nrs >= 0 && ncs >= 0) {
@@ -572,7 +572,7 @@ SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
     x = CAR(args);
 
     /* This code was intended for compatibility with S, */
-    /* but in fact S does not do this.  Will anyone notice? */
+    /* but in fact S does not do this.	Will anyone notice? */
 
     if (x == R_NilValue) {
 	UNPROTECT(1);
@@ -663,17 +663,13 @@ SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* A helper to partially match tags against a candidate. */
 /* Returns: */
-/*      0 for a perfect match */
-/*	 1 for a partial match */
-/*	-1 for no match */
-
-#define NO_MATCH      -1
-#define EXACT_MATCH    0
-#define PARTIAL_MATCH  1
+#define NO_MATCH      -1/* for no match */
+#define EXACT_MATCH    0/* for a perfect match */
+#define PARTIAL_MATCH  1/* for a partial match */
 
 static int pstrmatch(SEXP target, SEXP input, int slen)
 {
-    char *st;
+    char *st="";
     int k;
 
     if(target == R_NilValue) return -1;
@@ -698,7 +694,7 @@ static int pstrmatch(SEXP target, SEXP input, int slen)
 
 
 /* The $ subset operator.  We need to be sure to only evaluate */
-/* the first argument.  The second will be a symbol that needs */
+/* the first argument.	The second will be a symbol that needs */
 /* to be matched, not evaluated. */
 
 SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -726,7 +722,7 @@ SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Or should this be allocVector(VECSXP, 0)? */
 
     if (isPairList(x)) {
-	SEXP xmatch;
+	SEXP xmatch=R_NilValue;
 	int havematch;
 	UNPROTECT(1);
 	havematch = 0;
@@ -753,7 +749,7 @@ SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
 	return R_NilValue;
     }
     else if (isVectorList(x)) {
-	int i, n, havematch, imatch;
+	int i, n, havematch, imatch=-1;
 	nlist = getAttrib(x, R_NamesSymbol);
 	UNPROTECT(1);
 	n = length(nlist);
