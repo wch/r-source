@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------
  *
- *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (c) 1996  Robert Gentleman and Ross Ihaka
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (c) 1996	Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 
 extern int F77_SYMBOL(fdhess) (int *, double *, double *, int (*) (), double *, int *, double *, double *, int *, double *);
 extern int F77_SYMBOL(optif0) (int *, int *, double *, int (*) (), double *, double *, double *, int *, double *, double *);
-extern int F77_SYMBOL(optif9) (int *, int *, double *, int (*) (), int (*) (), int (*) (), double *, double *, int *, int *, int *, int *, int *, int *, int *, int *, double *, double *, double *, double *, double *, double *, double *, int *, double *, double *);
+extern int F77_SYMBOL(optif9) (int *, int *, double *, int (*) (), int (*) (), int (*) (), double *, double *, int *, int *, int *, int *, int *, int *, int *, int *, double *, double *, double *, double *, double *, double *, double *, int *, double *, double *, int *);
 
 static int bakslv_(int *, int *, double *, double *, double *);
 static int chlhsn_(int *, int *, double *, double *, double *, double *);
@@ -48,7 +48,7 @@ static int mvmltl_(int *, int *, double *, double *, double *);
 static int mvmlts_(int *, int *, double *, double *, double *);
 static int mvmltu_(int *, int *, double *, double *, double *);
 static int optchk_(int *, double *, double *, double *, double *, double *, int *, int *, double *, double *, int *, int *, int *, int *, double *, int *, int *);
-static int optdrv_(int *, int *, double *, int (*) (), int (*) (), int (*) (), double *, double *, int *, int *, int *, int *, int *, int *, int *, int *, double *, double *, double *, double *, double *, double *, double *, int *, double *, double *, double *, double *, double *, double *, double *, double *, double *);
+static int optdrv_(int *, int *, double *, int (*) (), int (*) (), int (*) (), double *, double *, int *, int *, int *, int *, int *, int *, int *, int *, double *, double *, double *, double *, double *, double *, double *, int *, double *, double *, double *, double *, double *, double *, double *, double *, double *,int *);
 static int optstp_(int *, double *, double *, double *, double *, int *, int *, int *, double *, double *, double *, double *, int *, int *, int *, int *, int *);
 static int qraux1_(int *, int *, double *, int *);
 static int qraux2_(int *, int *, double *, int *, double *, double *);
@@ -83,26 +83,26 @@ static int c__0 = 0;
  *
  *   input to subroutine
  *
- *       n.....the number of parameters
- *       x.....vector of parameter values
- *       fval..double precision value of function at x
- *      fun...a function provided by the user which must be declared as
- *            external in the calling program.  its call must be of the
- *            call fun(n,x,fval) where fval is the computed value of the
- *             function
- *       nfd...first dimension of h in the calling program
+ *	 n.....the number of parameters
+ *	 x.....vector of parameter values
+ *	 fval..double precision value of function at x
+ *	fun...a function provided by the user which must be declared as
+ *	      external in the calling program.	its call must be of the
+ *	      call fun(n,x,fval) where fval is the computed value of the
+ *	       function
+ *	 nfd...first dimension of h in the calling program
  *
  *   output from subroutine
  *
- *        h.....an n by n matrix of the approximate hessian
+ *	  h.....an n by n matrix of the approximate hessian
  *
  *    work space
  *
- *        step....a float array of length n
- *        f.......a double precision array of length n
+ *	  step....a float array of length n
+ *	  f.......a double precision array of length n
  */
 
-int 
+int
 F77_SYMBOL(fdhess) (int *n, double *x, double *fval,
 		int (*fun) (), double *h, int *nfd, double *step, double *f,
 		    int *ndigit, double *typx)
@@ -172,11 +172,11 @@ F77_SYMBOL(fdhess) (int *n, double *x, double *fval,
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    a(n,n)       --> lower triangular matrix (preserved)
- *    x(n)        <--  solution vector
- *    b(n)         --> right-hand side vector
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    a(n,n)	   --> lower triangular matrix (preserved)
+ *    x(n)	  <--  solution vector
+ *    b(n)	   --> right-hand side vector
  *
  *    note
  *
@@ -185,7 +185,7 @@ F77_SYMBOL(fdhess) (int *n, double *x, double *fval,
  */
 
 static
-int 
+int
 bakslv_(int *nr, int *n, double *a,
 	double *x, double *b)
 {
@@ -229,32 +229,32 @@ L30:
  *
  *   find the l(l-transpose) [written ll+] decomposition of the perturbed
  *   model hessian matrix a+mu*i(where mu\0 and i is the identity matrix)
- *   which is safely positive definite.  if a is safely positive definite
+ *   which is safely positive definite.	 if a is safely positive definite
  *    upon entry, then mu=0.
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    a(n,n)      <--> on entry; "a" is model hessian (only lower
- *                     triangular part and diagonal stored)
- *                     on exit:  a contains l of ll+ decomposition of
- *                     perturbed model hessian in lower triangular
- *                     part and diagonal and contains hessian in upper
- *                     triangular part and udiag
- *    epsm         --> machine epsilon
- *    sx(n)        --> diagonal scaling matrix for x
- *    udiag(n)    <--  on exit: contains diagonal of hessian
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    a(n,n)	  <--> on entry; "a" is model hessian (only lower
+ *		       triangular part and diagonal stored)
+ *		       on exit:	 a contains l of ll+ decomposition of
+ *		       perturbed model hessian in lower triangular
+ *		       part and diagonal and contains hessian in upper
+ *		       triangular part and udiag
+ *    epsm	   --> machine epsilon
+ *    sx(n)	   --> diagonal scaling matrix for x
+ *    udiag(n)	  <--  on exit: contains diagonal of hessian
  *
  *    internal variables
  *
- *    tol              tolerance
- *    diagmn           minimum element on diagonal of a
- *    diagmx           maximum element on diagonal of a
- *    offmax           maximum off-diagonal element of a
- *    offrow           sum of off-diagonal elements in a row of a
- *    evmin            minimum eigenvalue of a
- *    evmax            maximum eigenvalue of a
+ *    tol	       tolerance
+ *    diagmn	       minimum element on diagonal of a
+ *    diagmx	       maximum element on diagonal of a
+ *    offmax	       maximum off-diagonal element of a
+ *    offrow	       sum of off-diagonal elements in a row of a
+ *    evmin	       minimum eigenvalue of a
+ *    evmax	       maximum eigenvalue of a
  *
  *    description
  *
@@ -282,7 +282,7 @@ L30:
  */
 
 static
-int 
+int
 chlhsn_(int *nr, int *n, double *a,
 	double *epsm, double *sx, double *udiag)
 {
@@ -351,8 +351,8 @@ L35:
 	if (amu != 0.) {
 		goto L60;
 	}
-/*       if(amu.eq.0.0d0) */
-/*       then */
+/*	 if(amu.eq.0.0d0) */
+/*	 then */
 
 	/* find largest off-diagonal element of a */
 
@@ -375,17 +375,17 @@ L50:
 	if (amu != 0.) {
 		goto L55;
 	}
-/*         if(amu.eq.0.0d0) */
-/*         then */
+/*	   if(amu.eq.0.0d0) */
+/*	   then */
 	amu = 1.;
 	goto L60;
-/*         else */
+/*	   else */
 L55:
 	amu *= tol + 1.;
-/*         endif */
-/*       endif */
+/*	   endif */
+/*	 endif */
 
-/*       a=a + mu*i */
+/*	 a=a + mu*i */
 
 L60:
 	i__1 = *n;
@@ -395,7 +395,7 @@ L60:
 	diagmx += amu;
 /*     endif */
 
-/*       step2 */
+/*	 step2 */
 
 	/* copy lower triangular part of "a" to upper triangular part */
 	/* and diagonal of "a" to udiag */
@@ -423,7 +423,7 @@ L110:
 
 	/* if addmax=0, "a" was positive definite going into step 2, */
 	/* the ll+ decomposition has been done, and we return. */
-	/* otherwise, addmax>0.  perturb "a" so that it is safely */
+	/* otherwise, addmax>0.	 perturb "a" so that it is safely */
 	/* diagonally dominant and find ll+ decomposition */
 
 	if (addmax <= 0.) {
@@ -531,16 +531,16 @@ L185:
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    a(n,n)      <--> on entry: matrix for which to find perturbed
- *                          cholesky decomposition
- *                     on exit:  contains l of ll+ decomposition
- *                     in lower triangular part and diagonal of "a"
- *    diagmx       --> maximum diagonal element of "a"
- *    tol          --> tolerance
- *   addmax      <--  maximum amount implicitly added to diagonal of "a"
- *                     in forming the cholesky decomposition of a+d
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    a(n,n)	  <--> on entry: matrix for which to find perturbed
+ *			    cholesky decomposition
+ *		       on exit:	 contains l of ll+ decomposition
+ *		       in lower triangular part and diagonal of "a"
+ *    diagmx	   --> maximum diagonal element of "a"
+ *    tol	   --> tolerance
+ *   addmax	 <--  maximum amount implicitly added to diagonal of "a"
+ *		       in forming the cholesky decomposition of a+d
  *    internal variables
  *
  *    aminl    smallest element allowed on diagonal of l
@@ -553,11 +553,11 @@ L185:
  *   the normal cholesky decomposition is performed.  however, if at any
  *    point the algorithm would attempt to set l(i,i)=sqrt(temp)
  *    with temp < tol*diagmx, then l(i,i) is set to sqrt(tol*diagmx)
- *    instead.  this is equivalent to adding tol*diagmx-temp to a(i,i)
+ *    instead.	this is equivalent to adding tol*diagmx-temp to a(i,i)
  */
 
 static
-int 
+int
 choldc_(int *nr, int *n, double *a,
 	double *diagmx, double *tol, double *addmax)
 {
@@ -599,11 +599,11 @@ L20:
 		if (temp < amnlsq) {
 			goto L30;
 		}
-/*       if(temp.ge.aminl**2) */
-/*       then */
+/*	 if(temp.ge.aminl**2) */
+/*	 then */
 		a[j + j * a_dim1] = sqrt(temp);
 		goto L40;
-/*       else */
+/*	 else */
 
 		/* find maximum off-diagonal element in column */
 
@@ -628,7 +628,7 @@ L37:
 		a[j + j * a_dim1] = sqrt(offmax);
 		d__1 = *addmax, d__2 = offmax - temp;
 		*addmax = max(d__1, d__2);
-/*       endif */
+/*	 endif */
 
 	/* find i,j element of lower triangular matrix */
 L40:
@@ -667,7 +667,7 @@ L100:
  */
 
 static
-int 
+int
 d1fcn_(int *n, double *x, double *g)
 {
 	--g;
@@ -689,7 +689,7 @@ d1fcn_(int *n, double *x, double *g)
  */
 
 static
-int 
+int
 d2fcn_(int *nr, int *n, double *x,
        double *h)
 {
@@ -716,31 +716,31 @@ d2fcn_(int *nr, int *n, double *x,
  *
  *    parameters
  *
- *    n            --> dimension of problem
- *    x(n)         --> initial guess to solution (to compute max step size)
+ *    n		   --> dimension of problem
+ *    x(n)	   --> initial guess to solution (to compute max step size)
  *
- *    typsiz(n)   <--  typical size for each component of x
- *    fscale      <--  estimate of scale of minimization function
- *    method      <--  algorithm to use to solve minimization problem
- *   iexp        <--  =0 if minimization function not expensive to evaluate
+ *    typsiz(n)	  <--  typical size for each component of x
+ *    fscale	  <--  estimate of scale of minimization function
+ *    method	  <--  algorithm to use to solve minimization problem
+ *   iexp	 <--  =0 if minimization function not expensive to evaluate
  *
- *    msg         <--  message to inhibit certain automatic checks + output
+ *    msg	  <--  message to inhibit certain automatic checks + output
  *
- *    ndigit      <--  number of good digits in minimization function
- *    itnlim      <--  maximum number of allowable iterations
- *    iagflg      <--  =0 if analytic gradient not supplied
- *    iahflg      <--  =0 if analytic hessian not supplied
- *    ipr         <--  device to which to send output
- *    dlt         <--  trust region radius
- *    gradtl      <--  tolerance at which gradient considered close enough
- *                     to zero to terminate algorithm
- *    stepmx      <--  value of zero to trip default maximum in optchk
- *    steptl      <--  tolerance at which successive iterates considered
- *                     close enough to terminate algorithm
+ *    ndigit	  <--  number of good digits in minimization function
+ *    itnlim	  <--  maximum number of allowable iterations
+ *    iagflg	  <--  =0 if analytic gradient not supplied
+ *    iahflg	  <--  =0 if analytic hessian not supplied
+ *    ipr	  <--  device to which to send output
+ *    dlt	  <--  trust region radius
+ *    gradtl	  <--  tolerance at which gradient considered close enough
+ *		       to zero to terminate algorithm
+ *    stepmx	  <--  value of zero to trip default maximum in optchk
+ *    steptl	  <--  tolerance at which successive iterates considered
+ *		       close enough to terminate algorithm
  */
 
 static
-int 
+int
 dfault_(int *n, double *x, double *typsiz,
 	double *fscale, int *method, int *iexp, int *msg,
 	int *ndigit, int *itnlim, int *iagflg, int *iahflg,
@@ -798,37 +798,37 @@ dfault_(int *n, double *x, double *typsiz,
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    x(n)         --> old iterate x[k-1]
- *    f            --> function value at old iterate, f(x)
- *    g(n)         --> gradient  at old iterate, g(x), or approximate
- *    a(n,n)       --> cholesky decomposition of hessian
- *                     in lower triangular part and diagonal
- *    p(n)         --> newton step
- *    xpls(n)     <--  new iterate x[k]
- *    fpls        <--  function value at new iterate, f(xpls)
- *    fcn          --> name of subroutine to evaluate function
- *    sx(n)        --> diagonal scaling matrix for x
- *    stepmx       --> maximum allowable step size
- *    steptl       --> relative step size at which successive iterates
- *                     considered close enough to terminate algorithm
- *    dlt         <--> trust region radius
- *                     [retain value between successive calls]
- *    iretcd      <--  return code
- *                       =0 satisfactory xpls found
- *                      =1 failed to find satisfactory xpls sufficiently
- *                          distinct from x
- *    mxtake      <--  boolean flag indicating step of maximum length used
- *    sc(n)        --> workspace [current step]
- *    wrk1(n)      --> workspace (and place holding argument to tregup)
- *    wrk2(n)      --> workspace
- *    wrk3(n)      --> workspace
- *    ipr          --> device to which to send output
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    x(n)	   --> old iterate x[k-1]
+ *    f		   --> function value at old iterate, f(x)
+ *    g(n)	   --> gradient	 at old iterate, g(x), or approximate
+ *    a(n,n)	   --> cholesky decomposition of hessian
+ *		       in lower triangular part and diagonal
+ *    p(n)	   --> newton step
+ *    xpls(n)	  <--  new iterate x[k]
+ *    fpls	  <--  function value at new iterate, f(xpls)
+ *    fcn	   --> name of subroutine to evaluate function
+ *    sx(n)	   --> diagonal scaling matrix for x
+ *    stepmx	   --> maximum allowable step size
+ *    steptl	   --> relative step size at which successive iterates
+ *		       considered close enough to terminate algorithm
+ *    dlt	  <--> trust region radius
+ *		       [retain value between successive calls]
+ *    iretcd	  <--  return code
+ *			 =0 satisfactory xpls found
+ *			=1 failed to find satisfactory xpls sufficiently
+ *			    distinct from x
+ *    mxtake	  <--  boolean flag indicating step of maximum length used
+ *    sc(n)	   --> workspace [current step]
+ *    wrk1(n)	   --> workspace (and place holding argument to tregup)
+ *    wrk2(n)	   --> workspace
+ *    wrk3(n)	   --> workspace
+ *    ipr	   --> device to which to send output
  */
 
 static
-int 
+int
 dogdrv_(int *nr, int *n, double *x,
 	double *f, double *g, double *a, double *p,
 	double *xpls, double *fpls, int (*fcn) (),
@@ -868,7 +868,7 @@ dogdrv_(int *nr, int *n, double *x,
 		tmp += sx[i] * sx[i] * p[i] * p[i];
 	}
 	rnwtln = sqrt(tmp);
-/* $    write(ipr,954) rnwtln */
+/* $	write(ipr,954) rnwtln */
 
 L100:
 
@@ -891,10 +891,10 @@ L100:
 /* %951 format(18h dogdrv    alpha =,e20.13/ */
 /* %   +       18h dogdrv    beta  =,e20.13/ */
 /* %   +       18h dogdrv    dlt   =,e20.13/ */
-/* %   +       18h dogdrv    nwtake=,l1    ) */
+/* %   +       18h dogdrv    nwtake=,l1	   ) */
 /* %952 format(28h dogdrv    current step (sc)) */
 /* %954 format(18h0dogdrv    rnwtln=,e20.13) */
-/* %955 format(14h dogdrv       ,5(e20.13,3x)) */
+/* %955 format(14h dogdrv	,5(e20.13,3x)) */
 }
 
 
@@ -907,35 +907,35 @@ L100:
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    g(n)         --> gradient at current iterate, g(x)
- *    a(n,n)       --> cholesky decomposition of hessian in
- *                     lower part and diagonal
- *    p(n)         --> newton step
- *    sx(n)        --> diagonal scaling matrix for x
- *    rnwtln       --> newton step length
- *    dlt         <--> trust region radius
- *    nwtake      <--> boolean, =.true. if newton step taken
- *    fstdog      <--> boolean, =.true. if on first leg of dogleg
- *    ssd(n)      <--> workspace [cauchy step to the minimum of the
- *                     quadratic model in the scaled steepest descent
- *                    direction] [retain value between successive calls]
- *   v(n)        <--> workspace  [retain value between successive calls]
- *    cln         <--> cauchy length
- *                     [retain value between successive calls]
- *    eta              [retain value between successive calls]
- *    sc(n)       <--  current step
- *    ipr          --> device to which to send output
- *    stepmx       --> maximum allowable step size
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    g(n)	   --> gradient at current iterate, g(x)
+ *    a(n,n)	   --> cholesky decomposition of hessian in
+ *		       lower part and diagonal
+ *    p(n)	   --> newton step
+ *    sx(n)	   --> diagonal scaling matrix for x
+ *    rnwtln	   --> newton step length
+ *    dlt	  <--> trust region radius
+ *    nwtake	  <--> boolean, =.true. if newton step taken
+ *    fstdog	  <--> boolean, =.true. if on first leg of dogleg
+ *    ssd(n)	  <--> workspace [cauchy step to the minimum of the
+ *		       quadratic model in the scaled steepest descent
+ *		      direction] [retain value between successive calls]
+ *   v(n)	 <--> workspace	 [retain value between successive calls]
+ *    cln	  <--> cauchy length
+ *		       [retain value between successive calls]
+ *    eta	       [retain value between successive calls]
+ *    sc(n)	  <--  current step
+ *    ipr	   --> device to which to send output
+ *    stepmx	   --> maximum allowable step size
  *
  *    internal variables
  *
- *    cln              length of cauchy step
+ *    cln	       length of cauchy step
  */
 
 static
-int 
+int
 dogstp_(int *nr, int *n, double *g,
 	double *a, double *p, double *sx, double *rnwtln,
 	double *dlt, int *nwtake, int *fstdog, double *ssd,
@@ -976,7 +976,7 @@ dogstp_(int *nr, int *n, double *g,
 		sc[i] = p[i];
 	}
 	*dlt = *rnwtln;
-/* $      write(ipr,951) */
+/* $	  write(ipr,951) */
 	goto L700;
 /*     else */
 
@@ -988,8 +988,8 @@ L100:
 	if (!(*fstdog)) {
 		goto L200;
 	}
-/*       if(fstdog) */
-/*       then */
+/*	 if(fstdog) */
+/*	 then */
 
 	/* calculate double dogleg curve (ssd) */
 
@@ -1023,19 +1023,19 @@ L100:
 	if (*dlt == -1.) {
 		*dlt = min(*cln, *stepmx);
 	}
-/* $        write(ipr,954) alpha,beta,cln,eta */
-/* $        write(ipr,955) */
-/* $        write(ipr,960) (ssd(i),i=1,n) */
-/* $        write(ipr,956) */
-/* $        write(ipr,960) (v(i),i=1,n) */
-/*       endif */
+/* $	    write(ipr,954) alpha,beta,cln,eta */
+/* $	    write(ipr,955) */
+/* $	    write(ipr,960) (ssd(i),i=1,n) */
+/* $	    write(ipr,956) */
+/* $	    write(ipr,960) (v(i),i=1,n) */
+/*	 endif */
 
 L200:
 	if (*eta * *rnwtln > *dlt) {
 		goto L220;
 	}
-/*       if(eta*rnwtln .le. dlt) */
-/*       then */
+/*	 if(eta*rnwtln .le. dlt) */
+/*	 then */
 
 	/* take partial step in newton direction */
 
@@ -1043,15 +1043,15 @@ L200:
 	for (i = 1; i <= i__1; ++i) {
 		sc[i] = *dlt / *rnwtln * p[i];
 	}
-/* $        write(ipr,957) */
+/* $	    write(ipr,957) */
 	goto L700;
-/*       else */
+/*	 else */
 L220:
 	if (*cln < *dlt) {
 		goto L240;
 	}
-/*         if(cln.ge.dlt) */
-/*         then */
+/*	   if(cln.ge.dlt) */
+/*	   then */
 
 	/* take step in steepest descent direction */
 
@@ -1059,9 +1059,9 @@ L220:
 	for (i = 1; i <= i__1; ++i) {
 		sc[i] = *dlt / *cln * ssd[i] / sx[i];
 	}
-/* $          write(ipr,958) */
+/* $	      write(ipr,958) */
 	goto L700;
-/*         else */
+/*	   else */
 
 	/* calculate convex combination of ssd and eta*p */
 	/* which has scaled length dlt */
@@ -1075,14 +1075,14 @@ L240:
 	for (i = 1; i <= i__1; ++i) {
 		sc[i] = (ssd[i] + alam * v[i]) / sx[i];
 	}
-/* $          write(ipr,959) */
-/*         endif */
-/*       endif */
+/* $	      write(ipr,959) */
+/*	   endif */
+/*	 endif */
 /*     endif */
 L700:
-/* $    write(ipr,952) fstdog,nwtake,rnwtln,dlt */
-/* $    write(ipr,953) */
-/* $    write(ipr,960) (sc(i),i=1,n) */
+/* $	write(ipr,952) fstdog,nwtake,rnwtln,dlt */
+/* $	write(ipr,953) */
+/* $	write(ipr,960) (sc(i),i=1,n) */
 	return 0;
 
 /* %951 format(27h0dogstp    take newton step) */
@@ -1100,7 +1100,7 @@ L700:
 /* %957 format(48h0dogstp    take partial step in newton direction) */
 /* %958 format(50h0dogstp    take step in steepest descent direction) */
 /* %959 format(39h0dogstp    take convex combination step) */
-/* %960 format(14h dogstp       ,5(e20.13,3x)) */
+/* %960 format(14h dogstp	,5(e20.13,3x)) */
 }
 
 /*
@@ -1112,11 +1112,11 @@ L700:
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    a(n,n)       --> lower triangular matrix (preserved)
- *    x(n)        <--  solution vector
- *    b(n)         --> right-hand side vector
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    a(n,n)	   --> lower triangular matrix (preserved)
+ *    x(n)	  <--  solution vector
+ *    b(n)	   --> right-hand side vector
  *
  *    note
  *
@@ -1125,7 +1125,7 @@ L700:
  */
 
 static
-int 
+int
 forslv_(int *nr, int *n, double *a,
 	double *x, double *b)
 {
@@ -1171,17 +1171,17 @@ forslv_(int *nr, int *n, double *a,
  *
  *    parameters
  *
- *    n            --> dimension of problem
- *    x            --> point at which gradient is to be approximated.
- *    fcn          --> name of subroutine to evaluate function.
- *    sx           --> diagonal scaling matrix for x.
- *    rnoise       --> relative noise in fcn [f(x)].
- *    g           <--  central difference approximation to gradient.
+ *    n		   --> dimension of problem
+ *    x		   --> point at which gradient is to be approximated.
+ *    fcn	   --> name of subroutine to evaluate function.
+ *    sx	   --> diagonal scaling matrix for x.
+ *    rnoise	   --> relative noise in fcn [f(x)].
+ *    g		  <--  central difference approximation to gradient.
  */
 
 
 static
-int 
+int
 fstocd_(int *n, double *x, int (
 			    *fcn) (), double *sx, double *rnoise, double *g)
 {
@@ -1226,42 +1226,42 @@ fstocd_(int *n, double *x, int (
  *
  *    for optimization use this routine to estimate:
  *   1) the first derivative (gradient) of the optimization function "fcn
- *       analytic user routine has been supplied;
+ *	 analytic user routine has been supplied;
  *    2) the second derivative (hessian) of the optimization function
- *      if no analytic user routine has been supplied for the hessian but
- *       one has been supplied for the gradient ("fcn") and if the
- *       optimization function is inexpensive to evaluate
+ *	if no analytic user routine has been supplied for the hessian but
+ *	 one has been supplied for the gradient ("fcn") and if the
+ *	 optimization function is inexpensive to evaluate
  *
  *    note
  *
  *   _m=1 (optimization) algorithm estimates the gradient of the function
- *         (fcn).   fcn(x) # f: r(n)-->r(1)
+ *	   (fcn).   fcn(x) # f: r(n)-->r(1)
  *   _m=n (systems) algorithm estimates the jacobian of the function
- *         fcn(x) # f: r(n)-->r(n).
+ *	   fcn(x) # f: r(n)-->r(n).
  *   _m=n (optimization) algorithm estimates the hessian of the optimization
- *         function, where the hessian is the first derivative of "fcn"
+ *	   function, where the hessian is the first derivative of "fcn"
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    m            --> number of rows in a
- *    n            --> number of columns in a; dimension of problem
- *    xpls(n)      --> new iterate:  x[k]
- *    fcn          --> name of subroutine to evaluate function
- *   fpls(m)      --> _m=1 (optimization) function value at new iterate:
- *                          fcn(xpls)
- *                     _m=n (optimization) value of first derivative
- *                          (gradient) given by user function fcn
- *                     _m=n (systems)  function value of associated
- *                          minimization function
- *   a(nr,n)     <--  finite difference approximation (see note).  only
- *                    lower triangular matrix and diagonal are returned
- *    sx(n)        --> diagonal scaling matrix for x
- *    rnoise       --> relative noise in fcn [f(x)]
- *    fhat(m)      --> workspace
- *    icase        --> =1 optimization (gradient)
- *                     =2 systems
- *                     =3 optimization (hessian)
+ *    nr	   --> row dimension of matrix
+ *    m		   --> number of rows in a
+ *    n		   --> number of columns in a; dimension of problem
+ *    xpls(n)	   --> new iterate:  x[k]
+ *    fcn	   --> name of subroutine to evaluate function
+ *   fpls(m)	  --> _m=1 (optimization) function value at new iterate:
+ *			    fcn(xpls)
+ *		       _m=n (optimization) value of first derivative
+ *			    (gradient) given by user function fcn
+ *		       _m=n (systems)  function value of associated
+ *			    minimization function
+ *   a(nr,n)	 <--  finite difference approximation (see note).  only
+ *		      lower triangular matrix and diagonal are returned
+ *    sx(n)	   --> diagonal scaling matrix for x
+ *    rnoise	   --> relative noise in fcn [f(x)]
+ *    fhat(m)	   --> workspace
+ *    icase	   --> =1 optimization (gradient)
+ *		       =2 systems
+ *		       =3 optimization (hessian)
  *
  *    internal variables
  *
@@ -1269,7 +1269,7 @@ fstocd_(int *n, double *x, int (
  */
 
 static
-int 
+int
 fstofd_(int *nr, int *m, int *n, double *
 	xpls, int (*fcn) (), double *fpls, double *a,
 	double *sx, double *rnoise, double *fhat, int *icase)
@@ -1337,29 +1337,29 @@ fstofd_(int *nr, int *m, int *n, double *
  *
  *    parameters
  *
- *    n            --> dimension of problem
- *    x(n)         --> estimate to a root of fcn
- *    fcn          --> name of subroutine to evaluate optimization function
+ *    n		   --> dimension of problem
+ *    x(n)	   --> estimate to a root of fcn
+ *    fcn	   --> name of subroutine to evaluate optimization function
  *
- *                     must be declared external in calling routine
- *                          fcn:  r(n) --> r(1)
- *    f            --> function value:  fcn(x)
- *    g(n)         --> gradient:  g(x)
- *    typsiz(n)    --> typical size for each component of x
- *    sx(n)        --> diagonal scaling matrix:  sx(i)=1./typsiz(i)
- *    fscale       --> estimate of scale of objective function fcn
- *    rnf          --> relative noise in optimization function fcn
- *    analtl       --> tolerance for comparison of estimated and
- *                     analytical gradients
- *    wrk1(n)      --> workspace
- *    msg         <--  message or error code
- *                      on output: =-21, probable coding error of gradient
+ *		       must be declared external in calling routine
+ *			    fcn:  r(n) --> r(1)
+ *    f		   --> function value:	fcn(x)
+ *    g(n)	   --> gradient:  g(x)
+ *    typsiz(n)	   --> typical size for each component of x
+ *    sx(n)	   --> diagonal scaling matrix:	 sx(i)=1./typsiz(i)
+ *    fscale	   --> estimate of scale of objective function fcn
+ *    rnf	   --> relative noise in optimization function fcn
+ *    analtl	   --> tolerance for comparison of estimated and
+ *		       analytical gradients
+ *    wrk1(n)	   --> workspace
+ *    msg	  <--  message or error code
+ *			on output: =-21, probable coding error of gradient
  *
- *    ipr          --> device to which to send output
+ *    ipr	   --> device to which to send output
  */
 
 static
-int 
+int
 grdchk_(int *n, double *x, int (
 			     *fcn) (), double *f, double *g, double *typsiz,
 	double *sx, double *fscale, double *rnf, double *
@@ -1399,8 +1399,8 @@ grdchk_(int *n, double *x, int (
 	if (ker == 0) {
 		goto L20;
 	}
-/* %      write(ipr,901) */
-/* %      write(ipr,902) (i,g(i),wrk1(i),i=1,n) */
+/* %	  write(ipr,901) */
+/* %	  write(ipr,902) (i,g(i),wrk1(i),i=1,n) */
 	*msg = -21;
 L20:
 	return 0;
@@ -1418,41 +1418,41 @@ L20:
  *
  *    check analytic hessian against estimated hessian
  *     (this may be done only if the user supplied analytic hessian
- *      d2fcn fills only the lower triangular part and diagonal of a)
+ *	d2fcn fills only the lower triangular part and diagonal of a)
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    x(n)         --> estimate to a root of fcn
- *    fcn          --> name of subroutine to evaluate optimization function
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    x(n)	   --> estimate to a root of fcn
+ *    fcn	   --> name of subroutine to evaluate optimization function
  *
- *                     must be declared external in calling routine
- *                          fcn:  r(n) --> r(1)
- *    d1fcn        --> name of subroutine to evaluate gradient of fcn.
- *                     must be declared external in calling routine
- *    d2fcn        --> name of subroutine to evaluate hessian of fcn.
- *                     must be declared external in calling routine
- *    f            --> function value:  fcn(x)
- *    g(n)        <--  gradient:  g(x)
- *    a(n,n)      <--  on exit:  hessian in lower triangular part and diag
- *    typsiz(n)    --> typical size for each component of x
- *    sx(n)        --> diagonal scaling matrix:  sx(i)=1./typsiz(i)
- *    rnf          --> relative noise in optimization function fcn
- *    analtl       --> tolerance for comparison of estimated and
- *                     analytical gradients
- *    iagflg       --> =1 if analytic gradient supplied
- *    udiag(n)     --> workspace
- *    wrk1(n)      --> workspace
- *    wrk2(n)      --> workspace
- *    msg         <--> message or error code
- *                      on input : if =1xx do not compare anal + est hess
- *                      on output: =-22, probable coding error of hessian
- *    ipr          --> device to which to send output
+ *		       must be declared external in calling routine
+ *			    fcn:  r(n) --> r(1)
+ *    d1fcn	   --> name of subroutine to evaluate gradient of fcn.
+ *		       must be declared external in calling routine
+ *    d2fcn	   --> name of subroutine to evaluate hessian of fcn.
+ *		       must be declared external in calling routine
+ *    f		   --> function value:	fcn(x)
+ *    g(n)	  <--  gradient:  g(x)
+ *    a(n,n)	  <--  on exit:	 hessian in lower triangular part and diag
+ *    typsiz(n)	   --> typical size for each component of x
+ *    sx(n)	   --> diagonal scaling matrix:	 sx(i)=1./typsiz(i)
+ *    rnf	   --> relative noise in optimization function fcn
+ *    analtl	   --> tolerance for comparison of estimated and
+ *		       analytical gradients
+ *    iagflg	   --> =1 if analytic gradient supplied
+ *    udiag(n)	   --> workspace
+ *    wrk1(n)	   --> workspace
+ *    wrk2(n)	   --> workspace
+ *    msg	  <--> message or error code
+ *			on input : if =1xx do not compare anal + est hess
+ *			on output: =-22, probable coding error of hessian
+ *    ipr	   --> device to which to send output
  */
 
 static
-int 
+int
 heschk_(int *nr, int *n, double *x, /* Subroutine */ int (*fcn) (), int (*d1fcn) (), /* Subroutine */ int (*d2fcn) (), double *f, double *g,
 	double *a, double *typsiz, double *sx, double *rnf,
 	double *analtl, int *iagflg, double *udiag, double *
@@ -1540,15 +1540,15 @@ L40:
 	if (ker == 0) {
 		goto L90;
 	}
-/* %      write(ipr,901) */
-/* %      do 50 i=1,n */
-/* %        if(i.eq.1) go to 45 */
-/* %        im1=i-1 */
-/* %        do 43 j=1,im1 */
-/* %          write(ipr,902) i,j,a(i,j),a(j,i) */
-/* % 43     continue */
-/* % 45     write(ipr,902) i,i,a(i,i),udiag(i) */
-/* % 50   continue */
+/* %	  write(ipr,901) */
+/* %	  do 50 i=1,n */
+/* %	    if(i.eq.1) go to 45 */
+/* %	    im1=i-1 */
+/* %	    do 43 j=1,im1 */
+/* %	      write(ipr,902) i,j,a(i,j),a(j,i) */
+/* % 43	    continue */
+/* % 45	    write(ipr,902) i,i,a(i,i),udiag(i) */
+/* % 50	  continue */
 	*msg = -22;
 /*     endif */
 L90:
@@ -1569,43 +1569,43 @@ L90:
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    x(n)         --> old iterate x[k-1]
- *    f            --> function value at old iterate, f(x)
- *    g(n)         --> gradient at old iterate, g(x), or approximate
- *    a(n,n)       --> cholesky decomposition of hessian in lower
- *                     triangular part and diagonal.
- *                     hessian in upper triangular part and udiag.
- *    udiag(n)     --> diagonal of hessian in a(.,.)
- *    p(n)         --> newton step
- *    xpls(n)     <--  new iterate x[k]
- *    fpls        <--  function value at new iterate, f(xpls)
- *    fcn          --> name of subroutine to evaluate function
- *    sx(n)        --> diagonal scaling matrix for x
- *    stepmx       --> maximum allowable step size
- *    steptl       --> relative step size at which successive iterates
- *                     considered close enough to terminate algorithm
- *    dlt         <--> trust region radius
- *    iretcd      <--  return code
- *                       =0 satisfactory xpls found
- *                      =1 failed to find satisfactory xpls sufficiently
- *                          distinct from x
- *    mxtake      <--  boolean flag indicating step of maximum length used
- *    amu         <--> [retain value between successive calls]
- *    dltp        <--> [retain value between successive calls]
- *    phi         <--> [retain value between successive calls]
- *    phip0       <--> [retain value between successive calls]
- *    sc(n)        --> workspace
- *    xplsp(n)     --> workspace
- *    wrk0(n)      --> workspace
- *    epsm         --> machine epsilon
- *    itncnt       --> iteration count
- *    ipr          --> device to which to send output
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    x(n)	   --> old iterate x[k-1]
+ *    f		   --> function value at old iterate, f(x)
+ *    g(n)	   --> gradient at old iterate, g(x), or approximate
+ *    a(n,n)	   --> cholesky decomposition of hessian in lower
+ *		       triangular part and diagonal.
+ *		       hessian in upper triangular part and udiag.
+ *    udiag(n)	   --> diagonal of hessian in a(.,.)
+ *    p(n)	   --> newton step
+ *    xpls(n)	  <--  new iterate x[k]
+ *    fpls	  <--  function value at new iterate, f(xpls)
+ *    fcn	   --> name of subroutine to evaluate function
+ *    sx(n)	   --> diagonal scaling matrix for x
+ *    stepmx	   --> maximum allowable step size
+ *    steptl	   --> relative step size at which successive iterates
+ *		       considered close enough to terminate algorithm
+ *    dlt	  <--> trust region radius
+ *    iretcd	  <--  return code
+ *			 =0 satisfactory xpls found
+ *			=1 failed to find satisfactory xpls sufficiently
+ *			    distinct from x
+ *    mxtake	  <--  boolean flag indicating step of maximum length used
+ *    amu	  <--> [retain value between successive calls]
+ *    dltp	  <--> [retain value between successive calls]
+ *    phi	  <--> [retain value between successive calls]
+ *    phip0	  <--> [retain value between successive calls]
+ *    sc(n)	   --> workspace
+ *    xplsp(n)	   --> workspace
+ *    wrk0(n)	   --> workspace
+ *    epsm	   --> machine epsilon
+ *    itncnt	   --> iteration count
+ *    ipr	   --> device to which to send output
  */
 
 static
-int 
+int
 hookdr_(int *nr, int *n, double *x,
 	double *f, double *g, double *a, double *udiag,
 	double *p, double *xpls, double *fpls,
@@ -1648,7 +1648,7 @@ hookdr_(int *nr, int *n, double *x,
 		tmp += sx[i] * sx[i] * p[i] * p[i];
 	}
 	rnwtln = sqrt(tmp);
-/* $    write(ipr,954) rnwtln */
+/* $	write(ipr,954) rnwtln */
 
 	if (*itncnt > 1) {
 		goto L100;
@@ -1663,8 +1663,8 @@ hookdr_(int *nr, int *n, double *x,
 	if (*dlt != -1.) {
 		goto L100;
 	}
-/*       if(dlt.eq. (-1.0d0)) */
-/*       then */
+/*	 if(dlt.eq. (-1.0d0)) */
+/*	 then */
 	alpha = 0.;
 	i__1 = *n;
 	for (i = 1; i <= i__1; ++i) {
@@ -1682,9 +1682,9 @@ hookdr_(int *nr, int *n, double *x,
 	}
 	*dlt = alpha * sqrt(alpha) / beta;
 	*dlt = min(*dlt, *stepmx);
-/* $        write(ipr,950) */
-/* $        write(ipr,951) alpha,beta,dlt */
-/*       endif */
+/* $	    write(ipr,950) */
+/* $	    write(ipr,951) alpha,beta,dlt */
+/*	 endif */
 /*     endif */
 
 L100:
@@ -1713,7 +1713,7 @@ L100:
 /* %   +       18h hookdr    dlt   =,e20.13) */
 /* %952 format(28h hookdr    current step (sc)) */
 /* %954 format(18h0hookdr    rnwtln=,e20.13) */
-/* %955 format(14h hookdr       ,5(e20.13,3x)) */
+/* %955 format(14h hookdr	,5(e20.13,3x)) */
 }
 
 
@@ -1726,32 +1726,32 @@ L100:
  *
  *     parameters
  *
- *     nr           --> row dimension of matrix
- *     n            --> dimension of problem
- *     g(n)         --> gradient at current iterate, g(x)
- *     a(n,n)       --> cholesky decomposition of hessian in
- *                      lower triangular part and diagonal.
- *                      hessian or approx in upper triangular part
- *     udiag(n)     --> diagonal of hessian in a(.,.)
- *     p(n)         --> newton step
- *     sx(n)        --> diagonal scaling matrix for n
- *     rnwtln       --> newton step length
- *     dlt         <--> trust region radius
- *     amu         <--> [retain value between successive calls]
- *    dltp         --> trust region radius at last exit from this routine
- *     phi         <--> [retain value between successive calls]
- *     phip0       <--> [retain value between successive calls]
- *     fstime      <--> boolean. =.true. if first entry to this routine
- *                      during k-th iteration
- *     sc(n)       <--  current step
- *     nwtake      <--  boolean, =.true. if newton step taken
- *     wrk0         --> workspace
- *     epsm         --> machine epsilon
- *     ipr          --> device to which to send output
+ *     nr	    --> row dimension of matrix
+ *     n	    --> dimension of problem
+ *     g(n)	    --> gradient at current iterate, g(x)
+ *     a(n,n)	    --> cholesky decomposition of hessian in
+ *			lower triangular part and diagonal.
+ *			hessian or approx in upper triangular part
+ *     udiag(n)	    --> diagonal of hessian in a(.,.)
+ *     p(n)	    --> newton step
+ *     sx(n)	    --> diagonal scaling matrix for n
+ *     rnwtln	    --> newton step length
+ *     dlt	   <--> trust region radius
+ *     amu	   <--> [retain value between successive calls]
+ *    dltp	   --> trust region radius at last exit from this routine
+ *     phi	   <--> [retain value between successive calls]
+ *     phip0	   <--> [retain value between successive calls]
+ *     fstime	   <--> boolean. =.true. if first entry to this routine
+ *			during k-th iteration
+ *     sc(n)	   <--	current step
+ *     nwtake	   <--	boolean, =.true. if newton step taken
+ *     wrk0	    --> workspace
+ *     epsm	    --> machine epsilon
+ *     ipr	    --> device to which to send output
  */
 
 static
-int 
+int
 hookst_(int *nr, int *n, double *g,
 	double *a, double *udiag, double *p, double *sx,
 	double *rnwtln, double *dlt, double *amu, double *
@@ -1806,43 +1806,43 @@ hookst_(int *nr, int *n, double *g,
 	}
 	*dlt = min(*dlt, *rnwtln);
 	*amu = 0.;
-/* $      write(ipr,951) */
+/* $	  write(ipr,951) */
 	return 0;
 /*     else */
 
 	/* newton step not taken */
 
 L15:
-/* $      write(ipr,952) */
+/* $	  write(ipr,952) */
 	*nwtake = FALSE;
 	if (*amu <= 0.) {
 		goto L20;
 	}
-/*       if(amu.gt.0.0d0) */
-/*       then */
+/*	 if(amu.gt.0.0d0) */
+/*	 then */
 	*amu -= (*phi + *dltp) * (*dltp - *dlt + *phi) / (*dlt * phip);
-/* $        write(ipr,956) amu */
-/*       endif */
+/* $	    write(ipr,956) amu */
+/*	 endif */
 L20:
 	*phi = *rnwtln - *dlt;
 	if (!(*fstime)) {
 		goto L28;
 	}
-/*       if(fstime) */
-/*       then */
+/*	 if(fstime) */
+/*	 then */
 	i__1 = *n;
 	for (i = 1; i <= i__1; ++i) {
 		wrk0[i] = sx[i] * sx[i] * p[i];
 	}
 
-/*         solve l*y = (sx**2)*p */
+/*	   solve l*y = (sx**2)*p */
 
 	forslv_(nr, n, &a[a_offset], &wrk0[1], &wrk0[1]);
 
 	d__1 = F77_SYMBOL(dnrm2) (n, &wrk0[1], &c__1);
 	*phip0 = -(d__1 * d__1) / *rnwtln;
 	*fstime = FALSE;
-/*       endif */
+/*	 endif */
 L28:
 	phip = *phip0;
 	amulo = -(*phi) / phip;
@@ -1853,11 +1853,11 @@ L28:
 	}
 	amuup = sqrt(amuup) / *dlt;
 	done = FALSE;
-/* $      write(ipr,956) amu */
-/* $      write(ipr,959) phi */
-/* $      write(ipr,960) phip */
-/* $      write(ipr,957) amulo */
-/* $      write(ipr,958) amuup */
+/* $	  write(ipr,956) amu */
+/* $	  write(ipr,959) phi */
+/* $	  write(ipr,960) phip */
+/* $	  write(ipr,957) amulo */
+/* $	  write(ipr,958) amuup */
 
 	/* test value of amu; generate next amu if necessary */
 
@@ -1865,16 +1865,16 @@ L100:
 	if (done) {
 		return 0;
 	}
-/* $      write(ipr,962) */
+/* $	  write(ipr,962) */
 	if (*amu >= amulo && *amu <= amuup) {
 		goto L110;
 	}
-/*       if(amu.lt.amulo .or.  amu.gt.amuup) */
-/*       then */
+/*	 if(amu.lt.amulo .or.  amu.gt.amuup) */
+/*	 then */
 	d__1 = sqrt(amulo * amuup), d__2 = amuup * .001;
 	*amu = max(d__1, d__2);
-/* $        write(ipr,956) amu */
-/*       endif */
+/* $	    write(ipr,956) amu */
+/*	 endif */
 L110:
 
 	/* copy (h,udiag) to l */
@@ -1907,8 +1907,8 @@ L130:
 		wrk0[i] = -g[i];
 	}
 	lltslv_(nr, n, &a[a_offset], &sc[1], &wrk0[1]);
-/* $      write(ipr,955) */
-/* $      write(ipr,963) (sc(i),i=1,n) */
+/* $	  write(ipr,955) */
+/* $	  write(ipr,963) (sc(i),i=1,n) */
 
 	/* reset h.  note since udiag has not been destroyed we need do */
 	/* nothing here.  h is in the upper part and in udiag, still intact */
@@ -1928,38 +1928,38 @@ L130:
 
 	d__1 = F77_SYMBOL(dnrm2) (n, &wrk0[1], &c__1);
 	phip = -(d__1 * d__1) / stepln;
-/* $      write(ipr,961) dlt,stepln */
-/* $      write(ipr,959) phi */
-/* $      write(ipr,960) phip */
+/* $	  write(ipr,961) dlt,stepln */
+/* $	  write(ipr,959) phi */
+/* $	  write(ipr,960) phip */
 	if ((alo * *dlt > stepln || stepln > hi * *dlt) && amuup - amulo > 0.) {
 		goto L170;
 	}
-/*       if((alo*dlt.le.stepln .and. stepln.le.hi*dlt) .or. */
-/*            (amuup-amulo.le.0.0d0)) */
-/*       then */
+/*	 if((alo*dlt.le.stepln .and. stepln.le.hi*dlt) .or. */
+/*	      (amuup-amulo.le.0.0d0)) */
+/*	 then */
 
 	/* sc is acceptable hookstep */
 
-/* $        write(ipr,954) */
+/* $	    write(ipr,954) */
 	done = TRUE;
 	goto L100;
-/*       else */
+/*	 else */
 
-	/* sc not acceptable hookstep.  select new amu */
+	/* sc not acceptable hookstep.	select new amu */
 
 L170:
-/* $        write(ipr,953) */
+/* $	    write(ipr,953) */
 	d__1 = amulo, d__2 = *amu - *phi / phip;
 	amulo = max(d__1, d__2);
 	if (*phi < 0.) {
 		amuup = min(amuup, *amu);
 	}
 	*amu -= stepln * *phi / (*dlt * phip);
-/* $        write(ipr,956) amu */
-/* $        write(ipr,957) amulo */
-/* $        write(ipr,958) amuup */
+/* $	    write(ipr,956) amu */
+/* $	    write(ipr,957) amulo */
+/* $	    write(ipr,958) amuup */
 	goto L100;
-/*       endif */
+/*	 endif */
 /*     endif */
 
 /* %951 format(27h0hookst    take newton step) */
@@ -1975,7 +1975,7 @@ L170:
 /* %961 format(18h hookst    dlt   =,e20.13/ */
 /* %   +       18h hookst    stepln=,e20.13) */
 /* %962 format(23h0hookst    find new amu) */
-/* %963 format(14h hookst       ,5(e20.13,3x)) */
+/* %963 format(14h hookst	,5(e20.13,3x)) */
 }
 
 
@@ -1988,17 +1988,17 @@ L170:
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    a(n,n)      <--  initial hessian (lower triangular matrix)
- *    sx(n)        --> diagonal scaling matrix for x
- *    method       --> algorithm to use to solve minimization problem
- *                       =1,2 factored secant method used
- *                       =3   unfactored secant method used
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    a(n,n)	  <--  initial hessian (lower triangular matrix)
+ *    sx(n)	   --> diagonal scaling matrix for x
+ *    method	   --> algorithm to use to solve minimization problem
+ *			 =1,2 factored secant method used
+ *			 =3   unfactored secant method used
  */
 
 static
-int 
+int
 hsnint_(int *nr, int *n, double *a,
 	double *sx, int *method)
 {
@@ -2043,12 +2043,12 @@ L100:
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    a(n,n)       --> matrix of form l(l-transpose).
- *                     on return a is unchanged.
- *    x(n)        <--  solution vector
- *    b(n)         --> right-hand side vector
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    a(n,n)	   --> matrix of form l(l-transpose).
+ *		       on return a is unchanged.
+ *    x(n)	  <--  solution vector
+ *    b(n)	   --> right-hand side vector
  *
  *    note
  *
@@ -2057,7 +2057,7 @@ L100:
  */
 
 static
-int 
+int
 lltslv_(int *nr, int *n, double *a,
 	double *x, double *b)
 {
@@ -2090,30 +2090,30 @@ lltslv_(int *nr, int *n, double *a,
  *
  *    parameters
  *
- *    n            --> dimension of problem
- *    x(n)         --> old iterate:   x[k-1]
- *    f            --> function value at old iterate, f(x)
- *    g(n)         --> gradient at old iterate, g(x), or approximate
- *    p(n)         --> non-zero newton step
- *    xpls(n)     <--  new iterate x[k]
- *    fpls        <--  function value at new iterate, f(xpls)
- *    fcn          --> name of subroutine to evaluate function
- *    iretcd      <--  return code
- *    mxtake      <--  boolean flag indicating step of maximum length used
- *    stepmx       --> maximum allowable step size
- *    steptl       --> relative step size at which successive iterates
- *                     considered close enough to terminate algorithm
- *    sx(n)        --> diagonal scaling matrix for x
- *    ipr          --> device to which to send output
+ *    n		   --> dimension of problem
+ *    x(n)	   --> old iterate:   x[k-1]
+ *    f		   --> function value at old iterate, f(x)
+ *    g(n)	   --> gradient at old iterate, g(x), or approximate
+ *    p(n)	   --> non-zero newton step
+ *    xpls(n)	  <--  new iterate x[k]
+ *    fpls	  <--  function value at new iterate, f(xpls)
+ *    fcn	   --> name of subroutine to evaluate function
+ *    iretcd	  <--  return code
+ *    mxtake	  <--  boolean flag indicating step of maximum length used
+ *    stepmx	   --> maximum allowable step size
+ *    steptl	   --> relative step size at which successive iterates
+ *		       considered close enough to terminate algorithm
+ *    sx(n)	   --> diagonal scaling matrix for x
+ *    ipr	   --> device to which to send output
  *
  *    internal variables
  *
- *    sln              newton length
- *    rln              relative length of newton step
+ *    sln	       newton length
+ *    rln	       relative length of newton step
  */
 
 static
-int 
+int
 lnsrch_(int *n, double *x, double *f,
 	double *g, double *p, double *xpls, double *fpls, /* Subroutine */ int (*fcn) (), int *mxtake, int *iretcd,
 	double *stepmx, double *steptl, double *sx, int *ipr)
@@ -2137,8 +2137,8 @@ lnsrch_(int *n, double *x, double *f,
 	*ipr = *ipr;
 	*mxtake = FALSE;
 	*iretcd = 2;
-/* $    write(ipr,954) */
-/* $    write(ipr,955) (p(i),i=1,n) */
+/* $	write(ipr,954) */
+/* $	write(ipr,955) (p(i),i=1,n) */
 	tmp = 0.;
 	i__1 = *n;
 	for (i = 1; i <= i__1; ++i) {
@@ -2153,8 +2153,8 @@ lnsrch_(int *n, double *x, double *f,
 	scl = *stepmx / sln;
 	sclmul_(n, &scl, &p[1], &p[1]);
 	sln = *stepmx;
-/* $      write(ipr,954) */
-/* $      write(ipr,955) (p(i),i=1,n) */
+/* $	  write(ipr,954) */
+/* $	  write(ipr,955) (p(i),i=1,n) */
 L10:
 	slp = F77_SYMBOL(ddot) (n, &g[1], &c__1, &p[1], &c__1);
 	rln = 0.;
@@ -2166,7 +2166,7 @@ L10:
 	}
 	rmnlmb = *steptl / rln;
 	almbda = 1.;
-/* $    write(ipr,952) sln,slp,rmnlmb,stepmx,steptl */
+/* $	write(ipr,952) sln,slp,rmnlmb,stepmx,steptl */
 
 	/* loop */
 	/*
@@ -2183,10 +2183,10 @@ L100:
 		xpls[i] = x[i] + almbda * p[i];
 	}
 	(*fcn) (n, &xpls[1], fpls);
-/* $    write(ipr,950) almbda */
-/* $    write(ipr,951) */
-/* $    write(ipr,955) (xpls(i),i=1,n) */
-/* $    write(ipr,953) fpls */
+/* $	write(ipr,950) almbda */
+/* $	write(ipr,951) */
+/* $	write(ipr,955) (xpls(i),i=1,n) */
+/* $	write(ipr,953) fpls */
 	if (*fpls > *f + slp * 1e-4 * almbda) {
 		goto L130;
 	}
@@ -2208,31 +2208,31 @@ L130:
 	if (almbda >= rmnlmb) {
 		goto L140;
 	}
-/*       if(almbda .lt. rmnlmb) */
-/*       then */
+/*	 if(almbda .lt. rmnlmb) */
+/*	 then */
 
-/*       no satisfactory xpls found sufficiently distinct from x */
+/*	 no satisfactory xpls found sufficiently distinct from x */
 
 	*iretcd = 1;
 	goto L100;
-/*       else */
+/*	 else */
 
-/*       calculate new lambda */
+/*	 calculate new lambda */
 
 L140:
 	if (almbda != 1.) {
 		goto L150;
 	}
-/*         if(almbda.eq.1.0d0) */
-/*         then */
+/*	   if(almbda.eq.1.0d0) */
+/*	   then */
 
-/*       first backtrack: quadratic fit */
+/*	 first backtrack: quadratic fit */
 
 	tlmbda = -slp / ((*fpls - *f - slp) * 2.);
 	goto L170;
-/*         else */
+/*	   else */
 
-/*       all subsequent backtracks: cubic fit */
+/*	 all subsequent backtracks: cubic fit */
 
 L150:
 	t1 = *fpls - *f - almbda * slp;
@@ -2245,40 +2245,40 @@ L150:
 	if (disc <= b * b) {
 		goto L160;
 	}
-/*           if(disc.gt. b*b) */
-/*           then */
+/*	     if(disc.gt. b*b) */
+/*	     then */
 
-/*       only one positive critical point, must be minimum */
+/*	 only one positive critical point, must be minimum */
 
 	tlmbda = (-b + DSIGN(&c_b146, &a) * sqrt(disc)) / (a * 3.);
 	goto L165;
-/*           else */
+/*	     else */
 
-/*       both critical points positive, first is minimum */
+/*	 both critical points positive, first is minimum */
 
 L160:
 	tlmbda = (-b - DSIGN(&c_b146, &a) * sqrt(disc)) / (a * 3.);
-/*           endif */
+/*	     endif */
 L165:
 	if (tlmbda > almbda * .5) {
 		tlmbda = almbda * .5;
 	}
-/*         endif */
+/*	   endif */
 L170:
 	plmbda = almbda;
 	pfpls = *fpls;
 	if (tlmbda >= almbda * .1) {
 		goto L180;
 	}
-/*         if(tlmbda.lt.almbda/10.0d0) */
-/*         then */
+/*	   if(tlmbda.lt.almbda/10.0d0) */
+/*	   then */
 	almbda *= .1;
 	goto L190;
-/*         else */
+/*	   else */
 L180:
 	almbda = tlmbda;
-/*         endif */
-/*       endif */
+/*	   endif */
+/*	 endif */
 /*     endif */
 L190:
 	goto L100;
@@ -2291,7 +2291,7 @@ L190:
 /* %   +       18h lnsrch    steptl=,e20.13) */
 /* %953 format(19h lnsrch    f(xpls)=,e20.13) */
 /* %954 format(26h0lnsrch    newton step (p)) */
-/* %955 format(14h lnsrch       ,5(e20.13,3x)) */
+/* %955 format(14h lnsrch	,5(e20.13,3x)) */
 }
 
 /*
@@ -2304,11 +2304,11 @@ L190:
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    a(n,n)       --> lower triangular (n*n) matrix
- *    x(n)         --> operand vector
- *    y(n)        <--  result vector
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    a(n,n)	   --> lower triangular (n*n) matrix
+ *    x(n)	   --> operand vector
+ *    y(n)	  <--  result vector
  *
  *    note
  *
@@ -2316,7 +2316,7 @@ L190:
  */
 
 static
-int 
+int
 mvmltl_(int *nr, int *n, double *a,
 	double *x, double *y)
 {
@@ -2355,12 +2355,12 @@ mvmltl_(int *nr, int *n, double *a,
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    a(n,n)       --> symmetric (n*n) matrix stored in
- *                     lower triangular part and diagonal
- *    x(n)         --> operand vector
- *    y(n)        <--  result vector
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    a(n,n)	   --> symmetric (n*n) matrix stored in
+ *		       lower triangular part and diagonal
+ *    x(n)	   --> operand vector
+ *    y(n)	  <--  result vector
  *
  *    note
  *
@@ -2368,7 +2368,7 @@ mvmltl_(int *nr, int *n, double *a,
  */
 
 static
-int 
+int
 mvmlts_(int *nr, int *n, double *a,
 	double *x, double *y)
 {
@@ -2415,11 +2415,11 @@ L25:
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    a(nr,1)       --> lower triangular (n*n) matrix
- *    x(n)         --> operand vector
- *    y(n)        <--  result vector
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    a(nr,1)	    --> lower triangular (n*n) matrix
+ *    x(n)	   --> operand vector
+ *    y(n)	  <--  result vector
  *
  *    note
  *
@@ -2427,7 +2427,7 @@ L25:
  */
 
 static
-int 
+int
 mvmltu_(int *nr, int *n, double *a,
 	double *x, double *y)
 {
@@ -2464,28 +2464,28 @@ mvmltu_(int *nr, int *n, double *a,
  *
  *    parameters
  *
- *    n            --> dimension of problem
- *    x(n)         --> on entry, estimate to root of fcn
- *    typsiz(n)   <--> typical size of each component of x
- *    sx(n)       <--  diagonal scaling matrix for x
- *    fscale      <--> estimate of scale of objective function fcn
- *    gradtl       --> tolerance at which gradient considered close
- *                     enough to zero to terminate algorithm
- *    itnlim      <--> maximum number of allowable iterations
- *    ndigit      <--> number of good digits in optimization function fcn
- *    epsm         --> machine epsilon
- *    dlt         <--> trust region radius
- *    method      <--> algorithm indicator
- *    iexp        <--> expense flag
- *    iagflg      <--> =1 if analytic gradient supplied
- *    iahflg      <--> =1 if analytic hessian supplied
- *    stepmx      <--> maximum step size
- *    msg         <--> message and error code
- *    ipr          --> device to which to send output
+ *    n		   --> dimension of problem
+ *    x(n)	   --> on entry, estimate to root of fcn
+ *    typsiz(n)	  <--> typical size of each component of x
+ *    sx(n)	  <--  diagonal scaling matrix for x
+ *    fscale	  <--> estimate of scale of objective function fcn
+ *    gradtl	   --> tolerance at which gradient considered close
+ *		       enough to zero to terminate algorithm
+ *    itnlim	  <--> maximum number of allowable iterations
+ *    ndigit	  <--> number of good digits in optimization function fcn
+ *    epsm	   --> machine epsilon
+ *    dlt	  <--> trust region radius
+ *    method	  <--> algorithm indicator
+ *    iexp	  <--> expense flag
+ *    iagflg	  <--> =1 if analytic gradient supplied
+ *    iahflg	  <--> =1 if analytic hessian supplied
+ *    stepmx	  <--> maximum step size
+ *    msg	  <--> message and error code
+ *    ipr	   --> device to which to send output
  */
 
 static
-int 
+int
 optchk_(int *n, double *x, double *typsiz,
 	double *sx, double *fscale, double *gradtl, int *
 	itnlim, int *ndigit, double *epsm, double *dlt, int *
@@ -2591,37 +2591,37 @@ L20:
 	/* error exits */
 
 /* %805 write(ipr,901) n */
-/* %    msg=-1 */
+/* %	msg=-1 */
 L805:
 	*msg = -1;
 	goto L895;
 /* %810 write(ipr,902) */
-/* %    msg=-2 */
+/* %	msg=-2 */
 L810:
 	*msg = -2;
 	goto L895;
 /* %815 write(ipr,903) gradtl */
-/* %    msg=-3 */
+/* %	msg=-3 */
 L815:
 	*msg = -3;
 	goto L895;
 /* %820 write(ipr,904) itnlim */
-/* %    msg=-4 */
+/* %	msg=-4 */
 L820:
 	*msg = -4;
 	goto L895;
 /* %825 write(ipr,905) ndigit */
-/* %    msg=-5 */
+/* %	msg=-5 */
 L825:
 	*msg = -5;
 	goto L895;
 /* %830 write(ipr,906) msg,iagflg */
-/* %    msg=-6 */
+/* %	msg=-6 */
 L830:
 	*msg = -6;
 	goto L895;
 /* %835 write(ipr,907) msg,iahflg */
-/* %    msg=-7 */
+/* %	msg=-7 */
 L835:
 	*msg = -7;
 L895:
@@ -2633,18 +2633,18 @@ L895:
 /* %   +       48h optchk    check installation libraries for more, */
 /* %   +       22h appropriate routines./ */
 /* %   +       41h optchk    if none, set msg and resubmit.) */
-/* %903 format(38h0optchk    illegal tolerance.  gradtl=,e20.13) */
+/* %903 format(38h0optchk    illegal tolerance.	 gradtl=,e20.13) */
 /* %904 format(44h0optchk    illegal iteration limit.  itnlim=,i5) */
 /* %905 format(52h0optchk    minimization function has no good digits., */
-/* %   +        9h  ndigit=,i5) */
+/* %   +	9h  ndigit=,i5) */
 /* %906 format(50h0optchk    user requests that analytic gradient be, */
 /* %   +       33h accepted as properly coded (msg=,i5, 2h),/ */
 /* %   +       45h optchk    but analytic gradient not supplied, */
-/* %   +        9h (iagflg=,i5, 2h).) */
+/* %   +	9h (iagflg=,i5, 2h).) */
 /* %907 format(49h0optchk    user requests that analytic hessian be, */
 /* %   +       33h accepted as properly coded (msg=,i5, 2h),/ */
 /* %   +       44h optchk    but analytic hessian not supplied, */
-/* %   +        9h (iahflg=,i5, 2h).) */
+/* %   +	9h (iahflg=,i5, 2h).) */
 }
 
 
@@ -2657,73 +2657,73 @@ L895:
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    x(n)         --> on entry: estimate to a root of fcn
- *   fcn          --> name of subroutine to evaluate optimization function
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    x(n)	   --> on entry: estimate to a root of fcn
+ *   fcn	  --> name of subroutine to evaluate optimization function
  *
- *                     must be declared external in calling routine
- *                               fcn: r(n) --> r(1)
- *   d1fcn        --> (optional) name of subroutine to evaluate gradient
- *                    of fcn.  must be declared external in calling routine
+ *		       must be declared external in calling routine
+ *				 fcn: r(n) --> r(1)
+ *   d1fcn	  --> (optional) name of subroutine to evaluate gradient
+ *		      of fcn.  must be declared external in calling routine
  *
- *   d2fcn        --> (optional) name of subroutine to evaluate hessian of
+ *   d2fcn	  --> (optional) name of subroutine to evaluate hessian of
  *
- *                    of fcn.  must be declared external in calling routine
+ *		      of fcn.  must be declared external in calling routine
  *
- *    typsiz(n)    --> typical size for each component of x
- *    fscale       --> estimate of scale of objective function
- *    method       --> algorithm to use to solve minimization problem
- *                       =1 line search
- *                       =2 double dogleg
- *                       =3 more-hebdon
- *    iexp         --> =1 if optimization function fcn is expensive to
- *                    evaluate, =0 otherwise.  if set then hessian will
- *                     be evaluated by secant update instead of
- *                     analytically or by finite differences
- *    msg         <--> on input:  (.gt.0) message to inhibit certain
- *                       automatic checks
- *                     on output: (.lt.0) error code; =0 no error
- *   ndigit       --> number of good digits in optimization function fcn
- *    itnlim       --> maximum number of allowable iterations
- *    iagflg       --> =1 if analytic gradient supplied
- *    iahflg       --> =1 if analytic hessian supplied
- *    ipr          --> device to which to send output
- *    dlt          --> trust region radius
- *    gradtl       --> tolerance at which gradient considered close
- *                     enough to zero to terminate algorithm
- *    stepmx       --> maximum allowable step size
- *    steptl       --> relative step size at which successive iterates
- *                     considered close enough to terminate algorithm
- *    xpls(n)     <--> on exit:  xpls is local minimum
- *    fpls        <--> on exit:  function value at solution, xpls
- *    gpls(n)     <--> on exit:  gradient at solution xpls
- *    itrmcd      <--  termination code
- *    a(n,n)       --> workspace for hessian (or estimate)
- *                     and its cholesky decomposition
- *    udiag(n)     --> workspace [for diagonal of hessian]
- *    g(n)         --> workspace (for gradient at current iterate)
- *    p(n)         --> workspace for step
- *    sx(n)        --> workspace (for diagonal scaling matrix)
- *    wrk0(n)      --> workspace
- *    wrk1(n)      --> workspace
- *    wrk2(n)      --> workspace
- *    wrk3(n)      --> workspace
+ *    typsiz(n)	   --> typical size for each component of x
+ *    fscale	   --> estimate of scale of objective function
+ *    method	   --> algorithm to use to solve minimization problem
+ *			 =1 line search
+ *			 =2 double dogleg
+ *			 =3 more-hebdon
+ *    iexp	   --> =1 if optimization function fcn is expensive to
+ *		      evaluate, =0 otherwise.  if set then hessian will
+ *		       be evaluated by secant update instead of
+ *		       analytically or by finite differences
+ *    msg	  <--> on input:  (.gt.0) message to inhibit certain
+ *			 automatic checks
+ *		       on output: (.lt.0) error code; =0 no error
+ *   ndigit	  --> number of good digits in optimization function fcn
+ *    itnlim	   --> maximum number of allowable iterations
+ *    iagflg	   --> =1 if analytic gradient supplied
+ *    iahflg	   --> =1 if analytic hessian supplied
+ *    ipr	   --> device to which to send output
+ *    dlt	   --> trust region radius
+ *    gradtl	   --> tolerance at which gradient considered close
+ *		       enough to zero to terminate algorithm
+ *    stepmx	   --> maximum allowable step size
+ *    steptl	   --> relative step size at which successive iterates
+ *		       considered close enough to terminate algorithm
+ *    xpls(n)	  <--> on exit:	 xpls is local minimum
+ *    fpls	  <--> on exit:	 function value at solution, xpls
+ *    gpls(n)	  <--> on exit:	 gradient at solution xpls
+ *    itrmcd	  <--  termination code
+ *    a(n,n)	   --> workspace for hessian (or estimate)
+ *		       and its cholesky decomposition
+ *    udiag(n)	   --> workspace [for diagonal of hessian]
+ *    g(n)	   --> workspace (for gradient at current iterate)
+ *    p(n)	   --> workspace for step
+ *    sx(n)	   --> workspace (for diagonal scaling matrix)
+ *    wrk0(n)	   --> workspace
+ *    wrk1(n)	   --> workspace
+ *    wrk2(n)	   --> workspace
+ *    wrk3(n)	   --> workspace
  *
  *
  *    internal variables
  *
- *    analtl           tolerance for comparison of estimated and
- *                     analytical gradients and hessians
- *    epsm             machine epsilon
- *    f                function value: fcn(x)
- *    itncnt           current iteration, k
- *    rnf              relative noise in optimization function fcn.
- *                          noise=10.**(-ndigit)
+ *    analtl	       tolerance for comparison of estimated and
+ *		       analytical gradients and hessians
+ *    epsm	       machine epsilon
+ *    f		       function value: fcn(x)
+ *    itncnt	       current iteration, k
+ *    rnf	       relative noise in optimization function fcn.
+ *			    noise=10.**(-ndigit)
  */
 
 static
-int 
+int
 optdrv_(int *nr, int *n, double *x, /* Subroutine */ int (*fcn) (), int (*d1fcn) (), /* Subroutine */ int (*d2fcn) (), double *typsiz, double *fscale,
 	int *method, int *iexp, int *msg, int *ndigit,
 	int *itnlim, int *iagflg, int *iahflg, int *ipr,
@@ -2731,7 +2731,7 @@ optdrv_(int *nr, int *n, double *x, /* Subroutine */ int (*fcn) (), int (*d1fcn)
 	steptl, double *xpls, double *fpls, double *gpls, int
 	*itrmcd, double *a, double *udiag, double *g, double *
 	p, double *sx, double *wrk0, double *wrk1, double *
-	wrk2, double *wrk3)
+	wrk2, double *wrk3, int *itncnt)
 {
 	double analtl;
 	double d__1, d__2;
@@ -2750,7 +2750,6 @@ optdrv_(int *nr, int *n, double *x, /* Subroutine */ int (*fcn) (), int (*d1fcn)
 	int i;
 	int icscmx;
 	int iretcd;
-	int itncnt;
 	int mxtake;
 	int noupdt;
 
@@ -2777,7 +2776,7 @@ optdrv_(int *nr, int *n, double *x, /* Subroutine */ int (*fcn) (), int (*d1fcn)
 	for (i = 1; i <= i__1; ++i) {
 		p[i] = 0.;
 	}
-	itncnt = 0;
+	*itncnt = 0;
 	iretcd = -1;
 	epsm = F77_SYMBOL(d1mach) (&c__4);
 	optchk_(n, &x[1], &typsiz[1], &sx[1], fscale, gradtl, itnlim, ndigit, &
@@ -2791,14 +2790,14 @@ optdrv_(int *nr, int *n, double *x, /* Subroutine */ int (*fcn) (), int (*d1fcn)
 	d__1 = .01, d__2 = sqrt(rnf);
 	analtl = max(d__1, d__2);
 
-/* %    if(mod(msg/8,2).eq.1) go to 15 */
-/* %    write(ipr,901) */
-/* %    write(ipr,900) (typsiz(i),i=1,n) */
-/* %    write(ipr,902) */
-/* %    write(ipr,900) (sx(i),i=1,n) */
-/* %    write(ipr,903) fscale */
-/* %    write(ipr,904) ndigit,iagflg,iahflg,iexp,method,itnlim,epsm */
-/* %    write(ipr,905) stepmx,steptl,gradtl,dlt,rnf,analtl */
+/* %	if(mod(msg/8,2).eq.1) go to 15 */
+/* %	write(ipr,901) */
+/* %	write(ipr,900) (typsiz(i),i=1,n) */
+/* %	write(ipr,902) */
+/* %	write(ipr,900) (sx(i),i=1,n) */
+/* %	write(ipr,903) fscale */
+/* %	write(ipr,904) ndigit,iagflg,iahflg,iexp,method,itnlim,epsm */
+/* %	write(ipr,905) stepmx,steptl,gradtl,dlt,rnf,analtl */
 /* % 15 continue */
 
 	/* evaluate fcn(x) */
@@ -2830,7 +2829,7 @@ L20:
 	}
 L25:
 
-	optstp_(n, &x[1], &f, &g[1], &wrk1[1], &itncnt, &icscmx, itrmcd, gradtl,
+	optstp_(n, &x[1], &f, &g[1], &wrk1[1], itncnt, &icscmx, itrmcd, gradtl,
 		steptl, &sx[1], fscale, itnlim, &iretcd, &mxtake, ipr, msg);
 	if (*itrmcd != 0) {
 		goto L700;
@@ -2839,7 +2838,7 @@ L25:
 		goto L80;
 	}
 	/* if optimization function expensive to evaluate (iexp=1), then */
-	/* hessian will be obtained by secant updates.  get initial hessian.  */
+	/* hessian will be obtained by secant updates.	get initial hessian.  */
 
 	hsnint_(nr, n, &a[a_offset], &sx[1], method);
 	goto L90;
@@ -2869,12 +2868,12 @@ L82:
 	if (*msg / 4 % 2 == 0) {
 		goto L85;
 	}
-/*        if (mod(msg/4, 2) .eq. 1) */
-/*        then */
+/*	  if (mod(msg/4, 2) .eq. 1) */
+/*	  then */
 	(*d2fcn) (nr, n, &x[1], &a[a_offset]);
 	goto L88;
 
-/*        else */
+/*	  else */
 L85:
 	heschk_(nr, n, &x[1], fcn, d1fcn, d2fcn, &f, &g[1], &a[a_offset], &typsiz[
 	   1], &sx[1], &rnf, &analtl, iagflg, &udiag[1], &wrk1[1], &wrk2[1],
@@ -2891,13 +2890,13 @@ L88:
 
 L90:
 	if (*msg / 8 % 2 == 0) {
-		result_(nr, n, &x[1], &f, &g[1], &a[a_offset], &p[1], &itncnt, &c__1,
+		result_(nr, n, &x[1], &f, &g[1], &a[a_offset], &p[1], itncnt, &c__1,
 			ipr);
 	}
 	/* iteration */
 
 L100:
-	++itncnt;
+	++(*itncnt);
 
 	/* find perturbed local model hessian and its ll+ decomposition */
 	/*
@@ -2922,7 +2921,7 @@ L105:
 	}
 	lltslv_(nr, n, &a[a_offset], &p[1], &wrk1[1]);
 
-	/* decide whether to accept newton step  xpls=x + p */
+	/* decide whether to accept newton step	 xpls=x + p */
 	/* or to choose xpls by a global strategy. */
 
 	if (*iagflg != 0 || *method == 1) {
@@ -2950,7 +2949,7 @@ L111:
 		hookdr_(nr, n, &x[1], &f, &g[1], &a[a_offset], &udiag[1], &p[1], &
 		 xpls[1], fpls, fcn, &sx[1], stepmx, steptl, dlt, &iretcd, &
 		mxtake, &amu, &dltp, &phi, &phip0, &wrk0[1], &wrk1[1], &wrk2[
-						   1], &epsm, &itncnt, ipr);
+						   1], &epsm, itncnt, ipr);
 	}
 	/* if could not find satisfactory step and forward difference */
 	/* gradient was used, retry using central difference gradient. */
@@ -2964,7 +2963,7 @@ L111:
 	/* set iagflg for central differences */
 
 	*iagflg = -1;
-/* %       write(ipr,906) itncnt */
+/* %	   write(ipr,906) itncnt */
 
 	fstocd_(n, &x[1], fcn, &sx[1], &rnf, &g[1]);
 	if (*method == 1) {
@@ -3017,7 +3016,7 @@ L120:
 
 	/* check whether stopping criteria satisfied */
 
-	optstp_(n, &xpls[1], fpls, &gpls[1], &x[1], &itncnt, &icscmx, itrmcd,
+	optstp_(n, &xpls[1], fpls, &gpls[1], &x[1], itncnt, &icscmx, itrmcd,
 	      gradtl, steptl, &sx[1], fscale, itnlim, &iretcd, &mxtake, ipr,
 		msg);
 	if (*itrmcd != 0) {
@@ -3030,12 +3029,12 @@ L120:
 	}
 	if (*method == 3) {
 		secunf_(nr, n, &x[1], &g[1], &a[a_offset], &udiag[1], &xpls[1], &gpls[
-										      1], &epsm, &itncnt, &rnf, iagflg, &noupdt, &wrk1[1], &wrk2[1],
+										      1], &epsm, itncnt, &rnf, iagflg, &noupdt, &wrk1[1], &wrk2[1],
 			&wrk3[1]);
 	}
 	if (*method != 3) {
 		secfac_(nr, n, &x[1], &g[1], &a[a_offset], &xpls[1], &gpls[1], &epsm,
-		&itncnt, &rnf, iagflg, &noupdt, &wrk0[1], &wrk1[1], &wrk2[1],
+		itncnt, &rnf, iagflg, &noupdt, &wrk0[1], &wrk1[1], &wrk2[1],
 			&wrk3[1]);
 	}
 	goto L150;
@@ -3056,10 +3055,10 @@ L140:
 	(*d2fcn) (nr, n, &xpls[1], &a[a_offset]);
 L150:
 	if (*msg / 16 % 2 == 1) {
-		result_(nr, n, &xpls[1], fpls, &gpls[1], &a[a_offset], &p[1], &itncnt,
+		result_(nr, n, &xpls[1], fpls, &gpls[1], &a[a_offset], &p[1], itncnt,
 			&c__1, ipr);
 	}
-	/* x <-- xpls  and  g <-- gpls  and  f <-- fpls */
+	/* x <-- xpls  and  g <-- gpls	and  f <-- fpls */
 
 	f = *fpls;
 	i__1 = *n;
@@ -3089,13 +3088,13 @@ L700:
 
 L710:
 	if (*msg / 8 % 2 == 0) {
-		result_(nr, n, &xpls[1], fpls, &gpls[1], &a[a_offset], &p[1], &itncnt,
+		result_(nr, n, &xpls[1], fpls, &gpls[1], &a[a_offset], &p[1], itncnt,
 			&c__0, ipr);
 	}
 	*msg = 0;
 	return 0;
 
-/* %900 format(14h optdrv       ,5(e20.13,3x)) */
+/* %900 format(14h optdrv	,5(e20.13,3x)) */
 /* %901 format(20h0optdrv    typical x) */
 /* %902 format(40h optdrv    diagonal scaling matrix for x) */
 /* %903 format(22h optdrv    typical f =,e20.13) */
@@ -3132,20 +3131,20 @@ L710:
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    x(n)         --> initial estimate of minimum
- *    fcn          --> name of routine to evaluate minimization function.
- *                     must be declared external in calling routine.
- *    xpls(n)     <--  local minimum
- *    fpls        <--  function value at local minimum xpls
- *    gpls(n)     <--  gradient at local minimum xpls
- *    itrmcd      <--  termination code
- *    a(n,n)       --> workspace
- *    wrk(n,9)     --> workspace
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    x(n)	   --> initial estimate of minimum
+ *    fcn	   --> name of routine to evaluate minimization function.
+ *		       must be declared external in calling routine.
+ *    xpls(n)	  <--  local minimum
+ *    fpls	  <--  function value at local minimum xpls
+ *    gpls(n)	  <--  gradient at local minimum xpls
+ *    itrmcd	  <--  termination code
+ *    a(n,n)	   --> workspace
+ *    wrk(n,9)	   --> workspace
  */
 
-int 
+int
 F77_SYMBOL(optif0) (int *nr, int *n, double *x, /* Subroutine */ int (*fcn) (), double *xpls, double *fpls,
 		    double *gpls, int *itrmcd, double *a, double *wrk)
 {
@@ -3162,7 +3161,7 @@ F77_SYMBOL(optif0) (int *nr, int *n, double *x, /* Subroutine */ int (*fcn) (), 
 	extern int optdrv_();
 	double stepmx, dlt;
 	int msg, ipr;
-
+	int itncnt;
 
 	/* equivalence wrk(n,1) = udiag(n) */
 	/* wrk(n,2) = g(n) */
@@ -3192,8 +3191,8 @@ F77_SYMBOL(optif0) (int *nr, int *n, double *x, /* Subroutine */ int (*fcn) (), 
 	    &ipr, &dlt, &gradtl, &stepmx, &steptl, &xpls[1], fpls, &gpls[1],
 	    itrmcd, &a[a_offset], &wrk[wrk_dim1 + 1], &wrk[(wrk_dim1 << 1) +
 	   1], &wrk[wrk_dim1 * 3 + 1], &wrk[wrk_dim1 * 5 + 1], &wrk[wrk_dim1
-	  * 6 + 1], &wrk[wrk_dim1 * 7 + 1], &wrk[(wrk_dim1 << 3) + 1], &wrk[
-							 wrk_dim1 * 9 + 1]);
+	  * 6 + 1], &wrk[wrk_dim1 * 7 + 1], &wrk[(wrk_dim1 << 3) + 1],
+					  &wrk[wrk_dim1 * 9 + 1], &itncnt);
 	return 0;
 }
 
@@ -3208,56 +3207,56 @@ F77_SYMBOL(optif0) (int *nr, int *n, double *x, /* Subroutine */ int (*fcn) (), 
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    x(n)         --> on entry: estimate to a root of fcn
- *    fcn          --> name of subroutine to evaluate optimization function
- *                     must be declared external in calling routine
- *                               fcn: r(n) --> r(1)
- *    d1fcn        --> (optional) name of subroutine to evaluate gradient
- *                     of fcn.  must be declared external in calling routine
- *    d2fcn        --> (optional) name of subroutine to evaluate hessian of
- *                     of fcn.  must be declared external in calling routine
- *    typsiz(n)    --> typical size for each component of x
- *    fscale       --> estimate of scale of objective function
- *    method       --> algorithm to use to solve minimization problem
- *                       =1 line search
- *                       =2 double dogleg
- *                       =3 more-hebdon
- *    iexp         --> =1 if optimization function fcn is expensive to
- *                    evaluate, =0 otherwise.  if set then hessian will
- *                     be evaluated by secant update instead of
- *                     analytically or by finite differences
- *    msg         <--> on input:  (.gt.0) message to inhibit certain
- *                       automatic checks
- *                     on output: (.lt.0) error code; =0 no error
- *    ndigit       --> number of good digits in optimization function fcn
- *    itnlim       --> maximum number of allowable iterations
- *    iagflg       --> =1 if analytic gradient supplied
- *    iahflg       --> =1 if analytic hessian supplied
- *    ipr          --> device to which to send output
- *    dlt          --> trust region radius
- *    gradtl       --> tolerance at which gradient considered close
- *                     enough to zero to terminate algorithm
- *    stepmx       --> maximum allowable step size
- *    steptl       --> relative step size at which successive iterates
- *                     considered close enough to terminate algorithm
- *    xpls(n)     <--> on exit:  xpls is local minimum
- *    fpls        <--> on exit:  function value at solution, xpls
- *    gpls(n)     <--> on exit:  gradient at solution xpls
- *    itrmcd      <--  termination code
- *    a(n,n)       --> workspace for hessian (or estimate)
- *                     and its cholesky decomposition
- *    wrk(n,8)     --> workspace
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    x(n)	   --> on entry: estimate to a root of fcn
+ *    fcn	   --> name of subroutine to evaluate optimization function
+ *		       must be declared external in calling routine
+ *				 fcn: r(n) --> r(1)
+ *    d1fcn	   --> (optional) name of subroutine to evaluate gradient
+ *		       of fcn.	must be declared external in calling routine
+ *    d2fcn	   --> (optional) name of subroutine to evaluate hessian of
+ *		       of fcn.	must be declared external in calling routine
+ *    typsiz(n)	   --> typical size for each component of x
+ *    fscale	   --> estimate of scale of objective function
+ *    method	   --> algorithm to use to solve minimization problem
+ *			 =1 line search
+ *			 =2 double dogleg
+ *			 =3 more-hebdon
+ *    iexp	   --> =1 if optimization function fcn is expensive to
+ *		      evaluate, =0 otherwise.  if set then hessian will
+ *		       be evaluated by secant update instead of
+ *		       analytically or by finite differences
+ *    msg	  <--> on input:  (.gt.0) message to inhibit certain
+ *			 automatic checks
+ *		       on output: (.lt.0) error code; =0 no error
+ *    ndigit	   --> number of good digits in optimization function fcn
+ *    itnlim	   --> maximum number of allowable iterations
+ *    iagflg	   --> =1 if analytic gradient supplied
+ *    iahflg	   --> =1 if analytic hessian supplied
+ *    ipr	   --> device to which to send output
+ *    dlt	   --> trust region radius
+ *    gradtl	   --> tolerance at which gradient considered close
+ *		       enough to zero to terminate algorithm
+ *    stepmx	   --> maximum allowable step size
+ *    steptl	   --> relative step size at which successive iterates
+ *		       considered close enough to terminate algorithm
+ *    xpls(n)	  <--> on exit:	 xpls is local minimum
+ *    fpls	  <--> on exit:	 function value at solution, xpls
+ *    gpls(n)	  <--> on exit:	 gradient at solution xpls
+ *    itrmcd	  <--  termination code
+ *    a(n,n)	   --> workspace for hessian (or estimate)
+ *		       and its cholesky decomposition
+ *    wrk(n,8)	   --> workspace
  */
 
-int 
+int
 F77_SYMBOL(optif9) (int *nr, int *n, double *x, /* Subroutine */ int (*fcn) (), int (*d1fcn) (), /* Subroutine */ int (*d2fcn) (), double *typsiz, double *fscale,
 		    int *method, int *iexp, int *msg, int *ndigit,
 		    int *itnlim, int *iagflg, int *iahflg, int *ipr,
 		    double *dlt, double *gradtl, double *stepmx, double *
 		    steptl, double *xpls, double *fpls, double *gpls, int
-		    *itrmcd, double *a, double *wrk)
+		    *itrmcd, double *a, double *wrk, int *itncnt)
 {
 	int a_dim1, a_offset, wrk_dim1, wrk_offset;
 	extern int optdrv_();
@@ -3286,8 +3285,8 @@ F77_SYMBOL(optif9) (int *nr, int *n, double *x, /* Subroutine */ int (*fcn) (), 
 	      msg, ndigit, itnlim, iagflg, iahflg, ipr, dlt, gradtl, stepmx,
 		steptl, &xpls[1], fpls, &gpls[1], itrmcd, &a[a_offset], &wrk[
 	   wrk_dim1 + 1], &wrk[(wrk_dim1 << 1) + 1], &wrk[wrk_dim1 * 3 + 1],
-	  &wrk[(wrk_dim1 << 2) + 1], &wrk[wrk_dim1 * 5 + 1], &wrk[wrk_dim1 *
-		 6 + 1], &wrk[wrk_dim1 * 7 + 1], &wrk[(wrk_dim1 << 3) + 1]);
+	  &wrk[(wrk_dim1 << 2) + 1], &wrk[wrk_dim1 * 5 + 1],
+	  &wrk[wrk_dim1 * 6 + 1], &wrk[wrk_dim1 * 7 + 1], &wrk[(wrk_dim1 << 3) + 1], itncnt);
 	return 0;
 }
 
@@ -3306,31 +3305,31 @@ F77_SYMBOL(optif9) (int *nr, int *n, double *x, /* Subroutine */ int (*fcn) (), 
  *
  *    parameters
  *
- *    n            --> dimension of problem
- *    xpls(n)      --> new iterate x[k]
- *    fpls         --> function value at new iterate f(xpls)
- *    gpls(n)      --> gradient at new iterate, g(xpls), or approximate
- *    x(n)         --> old iterate x[k-1]
- *    itncnt       --> current iteration k
- *    icscmx      <--> number consecutive steps .ge. stepmx
- *                     [retain value between successive calls]
- *    itrmcd      <--  termination code
- *    gradtl       --> tolerance at which relative gradient considered close
- *                     enough to zero to terminate algorithm
- *    steptl       --> relative step size at which successive iterates
- *                     considered close enough to terminate algorithm
- *    sx(n)        --> diagonal scaling matrix for x
- *    fscale       --> estimate of scale of objective function
- *    itnlim       --> maximum number of allowable iterations
- *    iretcd       --> return code
- *    mxtake       --> boolean flag indicating step of maximum length used
- *    ipr          --> device to which to send output
- *    msg          --> if msg includes a term 8, suppress output
+ *    n		   --> dimension of problem
+ *    xpls(n)	   --> new iterate x[k]
+ *    fpls	   --> function value at new iterate f(xpls)
+ *    gpls(n)	   --> gradient at new iterate, g(xpls), or approximate
+ *    x(n)	   --> old iterate x[k-1]
+ *    itncnt	   --> current iteration k
+ *    icscmx	  <--> number consecutive steps .ge. stepmx
+ *		       [retain value between successive calls]
+ *    itrmcd	  <--  termination code
+ *    gradtl	   --> tolerance at which relative gradient considered close
+ *		       enough to zero to terminate algorithm
+ *    steptl	   --> relative step size at which successive iterates
+ *		       considered close enough to terminate algorithm
+ *    sx(n)	   --> diagonal scaling matrix for x
+ *    fscale	   --> estimate of scale of objective function
+ *    itnlim	   --> maximum number of allowable iterations
+ *    iretcd	   --> return code
+ *    mxtake	   --> boolean flag indicating step of maximum length used
+ *    ipr	   --> device to which to send output
+ *    msg	   --> if msg includes a term 8, suppress output
  */
 
 
 static
-int 
+int
 optstp_(int *n, double *xpls, double *fpls,
 	double *gpls, double *x, int *itncnt, int *icscmx,
 	int *itrmcd, double *gradtl, double *steptl, double *
@@ -3414,7 +3413,7 @@ L50:
 	return 0;
 /*     else */
 L140:
-/* %      if (mod(msg/8,2) .eq. 0) write(ipr,900) */
+/* %	  if (mod(msg/8,2) .eq. 0) write(ipr,900) */
 	++(*icscmx);
 	if (*icscmx < 5) {
 		return 0;
@@ -3427,16 +3426,16 @@ L140:
 
 L600:
 	*itrmcd = jtrmcd;
-/* %    if (mod(msg/8,2) .eq. 0) go to(601,602,603,604,605), itrmcd */
-/* %    go to 700 */
+/* %	if (mod(msg/8,2) .eq. 0) go to(601,602,603,604,605), itrmcd */
+/* %	go to 700 */
 /* %601 write(ipr,901) */
-/* %    go to 700 */
+/* %	go to 700 */
 /* %602 write(ipr,902) */
-/* %    go to 700 */
+/* %	go to 700 */
 /* %603 write(ipr,903) */
-/* %    go to 700 */
+/* %	go to 700 */
 /* %604 write(ipr,904) */
-/* %    go to 700 */
+/* %	go to 700 */
 /* %605 write(ipr,905) */
 
 	return 0;
@@ -3474,14 +3473,14 @@ L600:
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of matrix
- *    r(n,n)      <--> upper hessenberg matrix
- *    i            --> index of row to interchange (i.lt.n)
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of matrix
+ *    r(n,n)	  <--> upper hessenberg matrix
+ *    i		   --> index of row to interchange (i.lt.n)
  */
 
 static
-int 
+int
 qraux1_(int *nr, int *n, double *r, int *i)
 {
 	int r_dim1, r_offset, i__1;
@@ -3511,16 +3510,16 @@ qraux1_(int *nr, int *n, double *r, int *i)
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of matrix
- *    r(n,n)      <--> upper hessenberg matrix
- *    i            --> index of row
- *    a            --> scalar
- *    b            --> scalar
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of matrix
+ *    r(n,n)	  <--> upper hessenberg matrix
+ *    i		   --> index of row
+ *    a		   --> scalar
+ *    b		   --> scalar
  */
 
 static
-int 
+int
 qraux2_(int *nr, int *n, double *r, int *
 	i, double *a, double *b)
 {
@@ -3558,16 +3557,16 @@ qraux2_(int *nr, int *n, double *r, int *
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    a(n,n)      <--> on input:  contains r
- *                     on output: contains (r*)
- *    u(n)         --> vector
- *    v(n)         --> vector
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    a(n,n)	  <--> on input:  contains r
+ *		       on output: contains (r*)
+ *    u(n)	   --> vector
+ *    v(n)	   --> vector
  */
 
 static
-int 
+int
 qrupdt_(int *nr, int *n, double *a,
 	double *u, double *v)
 {
@@ -3615,17 +3614,17 @@ L20:
 		if (u[i] != 0.) {
 			goto L25;
 		}
-/*         if(u(i).eq.0.0d0) */
-/*         then */
+/*	   if(u(i).eq.0.0d0) */
+/*	   then */
 		qraux1_(nr, n, &a[a_offset], &i);
 		u[i] = u[i + 1];
 		goto L30;
-/*         else */
+/*	   else */
 L25:
 		d__1 = -u[i + 1];
 		qraux2_(nr, n, &a[a_offset], &i, &u[i], &d__1);
 		u[i] = sqrt(u[i] * u[i] + u[i + 1] * u[i + 1]);
-/*         endif */
+/*	   endif */
 L30:
 		;
 	}
@@ -3651,16 +3650,16 @@ L40:
 		if (a[i + i * a_dim1] != 0.) {
 			goto L70;
 		}
-/*         if(a(i,i).eq.0.0d0) */
-/*         then */
+/*	   if(a(i,i).eq.0.0d0) */
+/*	   then */
 		qraux1_(nr, n, &a[a_offset], &i);
 		goto L80;
-/*         else */
+/*	   else */
 L70:
 		t1 = a[i + i * a_dim1];
 		t2 = -a[i + 1 + i * a_dim1];
 		qraux2_(nr, n, &a[a_offset], &i, &t1, &t2);
-/*         endif */
+/*	   endif */
 L80:
 		;
 	}
@@ -3680,14 +3679,14 @@ L100:
  *
  *    parameters
  *
- *    n            --> dimension of vectors
- *    s            --> scalar
- *    v(n)         --> operand vector
- *    z(n)        <--  result vector
+ *    n		   --> dimension of vectors
+ *    s		   --> scalar
+ *    v(n)	   --> operand vector
+ *    z(n)	  <--  result vector
  */
 
 static
-int 
+int
 sclmul_(int *n, double *s, double *v,
 	double *z)
 {
@@ -3714,30 +3713,30 @@ sclmul_(int *n, double *s, double *v,
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    x(n)         --> old iterate, x[k-1]
- *    g(n)         --> gradient or approximate at old iterate
- *    a(n,n)      <--> on entry: cholesky decomposition of hessian in
- *                       lower part and diagonal.
- *                    on exit:  updated cholesky decomposition of hessian
- *                       in lower triangular part and diagonal
- *    xpls(n)      --> new iterate, x[k]
- *    gpls(n)      --> gradient or approximate at new iterate
- *    epsm         --> machine epsilon
- *    itncnt       --> iteration count
- *    rnf          --> relative noise in optimization function fcn
- *    iagflg       --> =1 if analytic gradient supplied, =0 itherwise
- *    noupdt      <--> boolean: no update yet
- *                     [retain value between successive calls]
- *    s(n)         --> workspace
- *    y(n)         --> workspace
- *    u(n)         --> workspace
- *    w(n)         --> workspace
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    x(n)	   --> old iterate, x[k-1]
+ *    g(n)	   --> gradient or approximate at old iterate
+ *    a(n,n)	  <--> on entry: cholesky decomposition of hessian in
+ *			 lower part and diagonal.
+ *		      on exit:	updated cholesky decomposition of hessian
+ *			 in lower triangular part and diagonal
+ *    xpls(n)	   --> new iterate, x[k]
+ *    gpls(n)	   --> gradient or approximate at new iterate
+ *    epsm	   --> machine epsilon
+ *    itncnt	   --> iteration count
+ *    rnf	   --> relative noise in optimization function fcn
+ *    iagflg	   --> =1 if analytic gradient supplied, =0 itherwise
+ *    noupdt	  <--> boolean: no update yet
+ *		       [retain value between successive calls]
+ *    s(n)	   --> workspace
+ *    y(n)	   --> workspace
+ *    u(n)	   --> workspace
+ *    w(n)	   --> workspace
  */
 
 static
-int 
+int
 secfac_(int *nr, int *n, double *x,
 	double *g, double *a, double *xpls, double *gpls,
 	double *epsm, int *itncnt, double *rnf, int *iagflg,
@@ -3793,8 +3792,8 @@ secfac_(int *nr, int *n, double *x,
 	if (!(*noupdt)) {
 		goto L50;
 	}
-/*       if(noupdt) */
-/*       then */
+/*	 if(noupdt) */
+/*	 then */
 	i__1 = *n;
 	for (j = 1; j <= i__1; ++j) {
 		u[j] = alp * u[j];
@@ -3806,7 +3805,7 @@ secfac_(int *nr, int *n, double *x,
 	*noupdt = FALSE;
 	den2 = den1;
 	alp = 1.;
-/*       endif */
+/*	 endif */
 L50:
 	skpupd = TRUE;
 
@@ -3817,60 +3816,60 @@ L50:
 	if (*iagflg != 0) {
 		goto L55;
 	}
-/*       if(iagflg.eq.0) */
-/*       then */
+/*	 if(iagflg.eq.0) */
+/*	 then */
 	reltol = sqrt(*rnf);
 	goto L60;
-/*       else */
+/*	 else */
 L55:
 	reltol = *rnf;
-/*       endif */
+/*	 endif */
 L60:
 	if (i > *n || !skpupd) {
 		goto L70;
 	}
-/*       if(i.le.n .and. skpupd) */
-/*       then */
+/*	 if(i.le.n .and. skpupd) */
+/*	 then */
 	d__4 = (d__2 = g[i], abs(d__2)), d__5 = (d__3 = gpls[i], abs(d__3));
 	if ((d__1 = y[i] - w[i], abs(d__1)) < reltol * max(d__4, d__5)) {
 		goto L65;
 	}
-/*         if(abs(y(i)-w(i)) .ge. reltol*dmax1(abs(g(i)),abs(gpls(i)))) */
-/*         then */
+/*	   if(abs(y(i)-w(i)) .ge. reltol*dmax1(abs(g(i)),abs(gpls(i)))) */
+/*	   then */
 	skpupd = FALSE;
 	goto L60;
-/*         else */
+/*	   else */
 L65:
 	++i;
 	goto L60;
-/*         endif */
-/*       endif */
+/*	   endif */
+/*	 endif */
 L70:
 	if (skpupd) {
 		goto L110;
 	}
-/*       if(.not.skpupd) */
-/*       then */
+/*	 if(.not.skpupd) */
+/*	 then */
 
-/*         w=y-alp*l(l+)s */
+/*	   w=y-alp*l(l+)s */
 
 	i__1 = *n;
 	for (i = 1; i <= i__1; ++i) {
 		w[i] = y[i] - alp * w[i];
 	}
 
-/*         alp=1/sqrt(den1*den2) */
+/*	   alp=1/sqrt(den1*den2) */
 
 	alp /= den1;
 
-/*         u=(l+)/sqrt(den1*den2) = (l+)s/sqrt((y+)s * (s+)l(l+)s) */
+/*	   u=(l+)/sqrt(den1*den2) = (l+)s/sqrt((y+)s * (s+)l(l+)s) */
 
 	i__1 = *n;
 	for (i = 1; i <= i__1; ++i) {
 		u[i] = alp * u[i];
 	}
 
-/*         copy l into upper triangular part.  zero l. */
+/*	   copy l into upper triangular part.  zero l. */
 
 	if (*n == 1) {
 		goto L93;
@@ -3885,14 +3884,14 @@ L70:
 		}
 	}
 
-/*         find q, (l+) such that  q(l+) = (l+) + u(w+) */
+/*	   find q, (l+) such that  q(l+) = (l+) + u(w+) */
 
 L93:
 	qrupdt_(nr, n, &a[a_offset], &u[1], &w[1]);
 
-/*         upper triangular part and diagonal of a now contain updated */
-/*         cholesky decomposition of hessian.  copy back to lower */
-/*         triangular part. */
+/*	   upper triangular part and diagonal of a now contain updated */
+/*	   cholesky decomposition of hessian.  copy back to lower */
+/*	   triangular part. */
 
 	if (*n == 1) {
 		goto L110;
@@ -3905,7 +3904,7 @@ L93:
 			a[i + j * a_dim1] = a[j + i * a_dim1];
 		}
 	}
-/*       endif */
+/*	 endif */
 /*     endif */
 L110:
 	return 0;
@@ -3921,31 +3920,31 @@ L110:
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    x(n)         --> old iterate, x[k-1]
- *    g(n)         --> gradient or approximate at old iterate
- *    a(n,n)      <--> on entry: approximate hessian at old iterate
- *                       in upper triangular part (and udiag)
- *                     on exit:  updated approx hessian at new iterate
- *                       in lower triangular part and diagonal
- *                     [lower triangular part of symmetric matrix]
- *    udiag        --> on entry: diagonal of hessian
- *    xpls(n)      --> new iterate, x[k]
- *    gpls(n)      --> gradient or approximate at new iterate
- *    epsm         --> machine epsilon
- *    itncnt       --> iteration count
- *    rnf          --> relative noise in optimization function fcn
- *    iagflg       --> =1 if analytic gradient supplied, =0 otherwise
- *    noupdt      <--> boolean: no update yet
- *                     [retain value between successive calls]
- *    s(n)         --> workspace
- *    y(n)         --> workspace
- *    t(n)         --> workspace
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    x(n)	   --> old iterate, x[k-1]
+ *    g(n)	   --> gradient or approximate at old iterate
+ *    a(n,n)	  <--> on entry: approximate hessian at old iterate
+ *			 in upper triangular part (and udiag)
+ *		       on exit:	 updated approx hessian at new iterate
+ *			 in lower triangular part and diagonal
+ *		       [lower triangular part of symmetric matrix]
+ *    udiag	   --> on entry: diagonal of hessian
+ *    xpls(n)	   --> new iterate, x[k]
+ *    gpls(n)	   --> gradient or approximate at new iterate
+ *    epsm	   --> machine epsilon
+ *    itncnt	   --> iteration count
+ *    rnf	   --> relative noise in optimization function fcn
+ *    iagflg	   --> =1 if analytic gradient supplied, =0 otherwise
+ *    noupdt	  <--> boolean: no update yet
+ *		       [retain value between successive calls]
+ *    s(n)	   --> workspace
+ *    y(n)	   --> workspace
+ *    t(n)	   --> workspace
  */
 
 static
-int 
+int
 secunf_(int *nr, int *n, double *x,
 	double *g, double *a, double *udiag, double *xpls,
 	double *gpls, double *epsm, int *itncnt, double *rnf,
@@ -4016,8 +4015,8 @@ L5:
 	if (!(*noupdt)) {
 		goto L50;
 	}
-/*       if(noupdt) */
-/*       then */
+/*	 if(noupdt) */
+/*	 then */
 
 	/* h <-- [(s+)y/(s+)hs]h */
 
@@ -4032,7 +4031,7 @@ L5:
 		}
 	}
 	*noupdt = FALSE;
-/*       endif */
+/*	 endif */
 L50:
 	skpupd = TRUE;
 
@@ -4048,11 +4047,11 @@ L50:
 		if ((d__1 = y[i] - t[i], abs(d__1)) < tol) {
 			goto L60;
 		}
-/*         if(abs(y(i)-t(i)).ge.tol) */
-/*         then */
+/*	   if(abs(y(i)-t(i)).ge.tol) */
+/*	   then */
 		skpupd = FALSE;
 		goto L70;
-/*         endif */
+/*	   endif */
 L60:
 		;
 	}
@@ -4060,10 +4059,10 @@ L70:
 	if (skpupd) {
 		goto L100;
 	}
-/*       if(.not.skpupd) */
-/*       then */
+/*	 if(.not.skpupd) */
+/*	 then */
 
-/*         bfgs update */
+/*	   bfgs update */
 
 	i__1 = *n;
 	for (j = 1; j <= i__1; ++j) {
@@ -4073,7 +4072,7 @@ L70:
 				* t[j] / den2;
 		}
 	}
-/*       endif */
+/*	 endif */
 /*     endif */
 L100:
 	return 0;
@@ -4092,28 +4091,28 @@ L100:
  *
  *    for optimization use this routine to estimate
  *    1) the second derivative (hessian) of the optimization function
- *       if no analytical user function has been supplied for either
- *       the gradient or the hessian and if the optimization function
- *       "fcn" is inexpensive to evaluate.
+ *	 if no analytical user function has been supplied for either
+ *	 the gradient or the hessian and if the optimization function
+ *	 "fcn" is inexpensive to evaluate.
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    xpls(n)      --> new iterate:   x[k]
- *    fcn          --> name of subroutine to evaluate function
- *    fpls         --> function value at new iterate, f(xpls)
- *    a(n,n)      <--  finite difference approximation to hessian
- *                     only lower triangular matrix and diagonal
- *                     are returned
- *    sx(n)        --> diagonal scaling matrix for x
- *    rnoise       --> relative noise in fname [f(x)]
- *    stepsz(n)    --> workspace (stepsize in i-th component direction)
- *    anbr(n)      --> workspace (neighbor in i-th direction)
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    xpls(n)	   --> new iterate:   x[k]
+ *    fcn	   --> name of subroutine to evaluate function
+ *    fpls	   --> function value at new iterate, f(xpls)
+ *    a(n,n)	  <--  finite difference approximation to hessian
+ *		       only lower triangular matrix and diagonal
+ *		       are returned
+ *    sx(n)	   --> diagonal scaling matrix for x
+ *    rnoise	   --> relative noise in fname [f(x)]
+ *    stepsz(n)	   --> workspace (stepsize in i-th component direction)
+ *    anbr(n)	   --> workspace (neighbor in i-th direction)
  */
 
 static
-int 
+int
 sndofd_(int *nr, int *n, double *xpls, /* Subroutine */ int (*fcn) (), double *fpls, double *a,
 	double *sx, double *rnoise, double *stepsz, double *
 	anbr)
@@ -4191,49 +4190,49 @@ L25:
  *
  *    parameters
  *
- *    nr           --> row dimension of matrix
- *    n            --> dimension of problem
- *    x(n)         --> old iterate x[k-1]
- *    f            --> function value at old iterate, f(x)
- *    g(n)         --> gradient at old iterate, g(x), or approximate
- *    a(n,n)       --> cholesky decomposition of hessian in
- *                     lower triangular part and diagonal.
- *                     hessian or approx in upper triangular part
- *    fcn          --> name of subroutine to evaluate function
- *    sc(n)        --> current step
- *    sx(n)        --> diagonal scaling matrix for x
- *    nwtake       --> boolean, =.true. if newton step taken
- *    stepmx       --> maximum allowable step size
- *    steptl       --> relative step size at which successive iterates
- *                     considered close enough to terminate algorithm
- *    dlt         <--> trust region radius
- *    iretcd      <--> return code
- *                       =0 xpls accepted as next iterate;
- *                          dlt trust region for next iteration.
- *                      =1 xpls unsatisfactory but accepted as next iterate
- *                          because xpls-x .lt. smallest allowable
- *                          step length.
- *                      =2 f(xpls) too large.  continue current iteration
- *                          with new reduced dlt.
- *                      =3 f(xpls) sufficiently small, but quadratic model
- *                         predicts f(xpls) sufficiently well to continue
- *                          current iteration with new doubled dlt.
- *    xplsp(n)    <--> workspace [value needs to be retained between
- *                     succesive calls of k-th global step]
- *    fplsp       <--> [retain value between successive calls]
- *    xpls(n)     <--  new iterate x[k]
- *    fpls        <--  function value at new iterate, f(xpls)
- *    mxtake      <--  boolean flag indicating step of maximum length used
- *    ipr          --> device to which to send output
- *    method       --> algorithm to use to solve minimization problem
- *                       =1 line search
- *                       =2 double dogleg
- *                       =3 more-hebdon
- *    udiag(n)     --> diagonal of hessian in a(.,.)
+ *    nr	   --> row dimension of matrix
+ *    n		   --> dimension of problem
+ *    x(n)	   --> old iterate x[k-1]
+ *    f		   --> function value at old iterate, f(x)
+ *    g(n)	   --> gradient at old iterate, g(x), or approximate
+ *    a(n,n)	   --> cholesky decomposition of hessian in
+ *		       lower triangular part and diagonal.
+ *		       hessian or approx in upper triangular part
+ *    fcn	   --> name of subroutine to evaluate function
+ *    sc(n)	   --> current step
+ *    sx(n)	   --> diagonal scaling matrix for x
+ *    nwtake	   --> boolean, =.true. if newton step taken
+ *    stepmx	   --> maximum allowable step size
+ *    steptl	   --> relative step size at which successive iterates
+ *		       considered close enough to terminate algorithm
+ *    dlt	  <--> trust region radius
+ *    iretcd	  <--> return code
+ *			 =0 xpls accepted as next iterate;
+ *			    dlt trust region for next iteration.
+ *			=1 xpls unsatisfactory but accepted as next iterate
+ *			    because xpls-x .lt. smallest allowable
+ *			    step length.
+ *			=2 f(xpls) too large.  continue current iteration
+ *			    with new reduced dlt.
+ *			=3 f(xpls) sufficiently small, but quadratic model
+ *			   predicts f(xpls) sufficiently well to continue
+ *			    current iteration with new doubled dlt.
+ *    xplsp(n)	  <--> workspace [value needs to be retained between
+ *		       succesive calls of k-th global step]
+ *    fplsp	  <--> [retain value between successive calls]
+ *    xpls(n)	  <--  new iterate x[k]
+ *    fpls	  <--  function value at new iterate, f(xpls)
+ *    mxtake	  <--  boolean flag indicating step of maximum length used
+ *    ipr	   --> device to which to send output
+ *    method	   --> algorithm to use to solve minimization problem
+ *			 =1 line search
+ *			 =2 double dogleg
+ *			 =3 more-hebdon
+ *    udiag(n)	   --> diagonal of hessian in a(.,.)
  */
 
 static
-int 
+int
 tregup_(int *nr, int *n, double *x,
 	double *f, double *g, double *a, int (*
 		      fcn) (), double *sc, double *sx, int *nwtake, double *
@@ -4280,7 +4279,7 @@ tregup_(int *nr, int *n, double *x,
 	if (*iretcd == 4) {
 		*fplsp = 0.;
 	}
-/* $    write(ipr,961) iretcd,fpls,fplsp,dltf,slp */
+/* $	write(ipr,961) iretcd,fpls,fplsp,dltf,slp */
 	if (*iretcd != 3 || *fpls < *fplsp && dltf <= slp * 1e-4) {
 		goto L130;
 	}
@@ -4296,19 +4295,19 @@ tregup_(int *nr, int *n, double *x,
 	}
 	*fpls = *fplsp;
 	*dlt *= .5;
-/* $      write(ipr,951) */
+/* $	  write(ipr,951) */
 	goto L230;
 /*     else */
 
-/*       fpls too large */
+/*	 fpls too large */
 
 L130:
 	if (dltf <= slp * 1e-4) {
 		goto L170;
 	}
-/*       if(dltf.gt. 1.d-4*slp) */
-/*       then */
-/* $        write(ipr,952) */
+/*	 if(dltf.gt. 1.d-4*slp) */
+/*	 then */
+/* $	    write(ipr,952) */
 	rln = 0.;
 	i__1 = *n;
 	for (i = 1; i <= i__1; ++i) {
@@ -4316,53 +4315,53 @@ L130:
 		d__3 = rln, d__4 = (d__1 = sc[i], abs(d__1)) / max(d__5, d__6);
 		rln = max(d__3, d__4);
 	}
-/* $        write(ipr,962) rln */
+/* $	    write(ipr,962) rln */
 	if (rln >= *steptl) {
 		goto L150;
 	}
-/*         if(rln.lt.steptl) */
-/*         then */
+/*	   if(rln.lt.steptl) */
+/*	   then */
 
 /* cannot find satisfactory xpls sufficiently distinct from x */
 
 	*iretcd = 1;
-/* $          write(ipr,954) */
+/* $	      write(ipr,954) */
 	goto L230;
-/*         else */
+/*	   else */
 
-/*           reduce trust region and continue global step */
+/*	     reduce trust region and continue global step */
 
 L150:
 	*iretcd = 2;
 	dltmp = -slp * *dlt / ((dltf - slp) * 2.);
-/* $          write(ipr,963) dltmp */
+/* $	      write(ipr,963) dltmp */
 	if (dltmp >= *dlt * .1) {
 		goto L155;
 	}
-/*           if(dltmp.lt. .1*dlt) */
-/*           then */
+/*	     if(dltmp.lt. .1*dlt) */
+/*	     then */
 	*dlt *= .1;
 	goto L160;
-/*           else */
+/*	     else */
 L155:
 	*dlt = dltmp;
-/*           endif */
+/*	     endif */
 L160:
-/* $          write(ipr,955) */
+/* $	      write(ipr,955) */
 	goto L230;
-/*         endif */
-/*       else */
+/*	   endif */
+/*	 else */
 
-/*         fpls sufficiently small */
+/*	   fpls sufficiently small */
 
 L170:
-/* $        write(ipr,958) */
+/* $	    write(ipr,958) */
 	dltfp = 0.;
 	if (*method == 3) {
 		goto L180;
 	}
-/*         if (method .eq. 2) */
-/*         then */
+/*	   if (method .eq. 2) */
+/*	   then */
 
 	i__1 = *n;
 	for (i = 1; i <= i__1; ++i) {
@@ -4375,7 +4374,7 @@ L170:
 	}
 	goto L190;
 
-/*         else */
+/*	   else */
 
 L180:
 	i__1 = *n;
@@ -4395,18 +4394,18 @@ L187:
 		;
 	}
 
-/*         end if */
+/*	   end if */
 
 L190:
 	dltfp = slp + dltfp / 2.;
-/* $        write(ipr,964) dltfp,nwtake */
+/* $	    write(ipr,964) dltfp,nwtake */
 	if (*iretcd == 2 || (d__1 = dltfp - dltf, abs(d__1)) > abs(dltf) * .1 ||
 	    *nwtake || *dlt > *stepmx * .99) {
 		goto L210;
 	}
-/*         if(iretcd.ne.2 .and. (abs(dltfp-dltf) .le. .1*abs(dltf)) */
-/*    +         .and. (.not.nwtake) .and. (dlt.le. .99*stepmx)) */
-/*         then */
+/*	   if(iretcd.ne.2 .and. (abs(dltfp-dltf) .le. .1*abs(dltf)) */
+/*    +		.and. (.not.nwtake) .and. (dlt.le. .99*stepmx)) */
+/*	   then */
 
 	/* double trust region and continue global step */
 
@@ -4418,14 +4417,14 @@ L190:
 	*fplsp = *fpls;
 	d__1 = *dlt * 2.;
 	*dlt = min(d__1, *stepmx);
-/* $          write(ipr,959) */
+/* $	      write(ipr,959) */
 	goto L230;
-/*         else */
+/*	   else */
 
-	/* accept xpls as next iterate.  choose new trust region. */
+	/* accept xpls as next iterate.	 choose new trust region. */
 
 L210:
-/* $          write(ipr,960) */
+/* $	      write(ipr,960) */
 	*iretcd = 0;
 	if (*dlt > *stepmx * .99) {
 		*mxtake = TRUE;
@@ -4433,14 +4432,14 @@ L210:
 	if (dltf < dltfp * .1) {
 		goto L220;
 	}
-/*           if(dltf.ge. .1*dltfp) */
-/*           then */
+/*	     if(dltf.ge. .1*dltfp) */
+/*	     then */
 
 	/* decrease trust region for next iteration */
 
 	*dlt *= .5;
 	goto L230;
-/*           else */
+/*	     else */
 
 	/* check whether to increase trust region for next iteration */
 
@@ -4449,15 +4448,15 @@ L220:
 		d__1 = *dlt * 2.;
 		*dlt = min(d__1, *stepmx);
 	}
-/*           endif */
-/*         endif */
-/*       endif */
+/*	     endif */
+/*	   endif */
+/*	 endif */
 /*     endif */
 L230:
-/* $    write(ipr,953) */
-/* $    write(ipr,956) iretcd,mxtake,dlt,fpls */
-/* $    write(ipr,957) */
-/* $    write(ipr,965) (xpls(i),i=1,n) */
+/* $	write(ipr,953) */
+/* $	write(ipr,956) iretcd,mxtake,dlt,fpls */
+/* $	write(ipr,957) */
+/* $	write(ipr,965) (xpls(i),i=1,n) */
 	return 0;
 
 /* %951 format(55h tregup    reset xpls to xplsp. termination global step) */
@@ -4466,11 +4465,11 @@ L230:
 /* %954 format(54h tregup    cannot find satisfactory xpls distinct from, */
 /* %   +       27h x.  terminate global step.) */
 /* %955 format(53h tregup    reduce trust region. continue global step.) */
-/* %956 format(21h tregup       iretcd=,i3/ */
-/* %   +       21h tregup       mxtake=,l1/ */
-/* %   +       21h tregup       dlt   =,e20.13/ */
-/* %   +       21h tregup       fpls  =,e20.13) */
-/* %957 format(32h tregup       new iterate (xpls)) */
+/* %956 format(21h tregup	iretcd=,i3/ */
+/* %   +       21h tregup	mxtake=,l1/ */
+/* %   +       21h tregup	dlt   =,e20.13/ */
+/* %   +       21h tregup	fpls  =,e20.13) */
+/* %957 format(32h tregup	new iterate (xpls)) */
 /* %958 format(35h tregup    fpls sufficiently small.) */
 /* %959 format(54h tregup    double trust region.  continue global step.) */
 /* %960 format(50h tregup    accept xpls as new iterate.  choose new, */
@@ -4484,5 +4483,5 @@ L230:
 /* %963 format(18h tregup    dltmp =,e20.13) */
 /* %964 format(18h tregup    dltfp =,e20.13/ */
 /* %   +       18h tregup    nwtake=,l1) */
-/* %965 format(14h tregup       ,5(e20.13,3x)) */
+/* %965 format(14h tregup	,5(e20.13,3x)) */
 }
