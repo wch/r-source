@@ -388,3 +388,7 @@ From: Jane Fridlyand <janef@stat.berkeley.edu>
 From: Jason Turner <jasont@indigoindustrial.co.nz>
 Date: Tue, 6 Nov 2001 10:19:31 -0800 (PST)
 Date: Fri, 2 Nov 2001 20:32:23 +1300
+* PR# 1161 *
+Subject: x-axis label in persp()
+From: Rolf Turner <rolf@maths.uwa.edu.au>
+Date: Wed, 7 Nov 2001 18:07:22 +0800 (WST)
