@@ -2338,6 +2338,18 @@ test <- function(x)
 test(x)
 ##
 
+## get/exists were ignoring mode in base
+stopifnot(exists(".Device"))
+stopifnot(!exists(".Device", mode="function")) # was true in 1.7.1
+##
+
+
+## inadvertent recursive indexing bug
+x <- list(a=1:3, b=2:4)
+try(x[[c("c", "d")]])
+try(x[[c("c", "d")]] <- NA)
+## both segfaulted in 1.7.1
+
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)

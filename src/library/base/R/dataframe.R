@@ -427,9 +427,11 @@ data.frame <-
     }
     if(!drop) { # not else as previous section might reset drop
 	names(x) <- cols
-        ## row names might have NAs, which make.names eliminates.
-	if(any(is.na(rows) | duplicated(rows)))
-	    rows <- make.names(rows, unique = TRUE)
+        ## row names might have NAs.
+	if(any(is.na(rows) | duplicated(rows))) {
+            rows[is.na(rows)] <- "NA"
+	    rows <- make.unique(rows)
+        }
         ## new in 1.8.0  -- might have duplicate columns
         if(any(duplicated(nm <- names(x)))) names(x) <- make.unique(nm)
 	attr(x, "row.names") <- rows

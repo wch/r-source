@@ -138,11 +138,14 @@ NEW FEATURES
 
 	- Attributes are no longer stripped when replacing part of a column.
 
-	- Columns added in replacement operations will always be named.
+	- Columns added in replacement operations will always be
+          named, using the names of a list value if appropriate.
 
 	- as.data.frame.list() did not cope with list names such as
           `check.rows',  and formatting/printing data frames with such
-          names did not cope if the column was a matrix or data frame.
+
+	- Row names in extraction are still made unique, but without
+          forcing them to be syntactic names.
 
     o	A triple colon operator can be used to access values of internal
 	variables in a name space (i.e. a:::b is the value of the internal
