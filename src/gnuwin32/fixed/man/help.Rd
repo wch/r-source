@@ -22,7 +22,7 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
     \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
     \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE}, the help
 	will not be shown on the console, but via the html browser.}
-    \item{winlhelp}{logical (or \code{NULL}).  If \code{TRUE}, a Windows
+    \item{winhelp}{logical (or \code{NULL}).  If \code{TRUE}, a Windows
 	\code{.hlp} file will be used if one is available.}
 }
 \description{
