@@ -1,3 +1,9 @@
+r-base (1.0.1-0) unstable; urgency=low
+
+  * Preparing for new upstream release
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Wed, 15 Mar 2000 12:13:34 -0600
+
 r-base (1.0.0-1) unstable; urgency=low
 
   * New upstream version
