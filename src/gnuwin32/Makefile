@@ -189,8 +189,6 @@ zipdata-%:
 	(cd $(RLIB)/$*/data; ls -1 > filelist; \
 	  zip -rmq9X Rdata * -x filelist 00Index)
 
-bootstrap-DLLNM=boott
-
 
 #                          ===== cleaning ======
 
