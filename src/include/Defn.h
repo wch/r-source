@@ -672,6 +672,20 @@ extern int R_dec_min_exponent		INI_as(-308);
 # define yyprompt		Rf_yyprompt
 # define yywrap			Rf_yywrap
 
+/* Language support -------------------------------------------
+
+   As of 2.1.0 we have some internationalization support.
+   Configuring with --enable-utf8 defines SUPPORT_UTF8 if there is
+   enough OS support for widechars. That is turn defines
+   SUPPORT_MBCS (here) and USE_FONTSET (in the X11 module), both of
+   which control sections with more general MBCS support.
+
+   ------------------------------------------------------------ */
+
+#ifdef SUPPORT_UTF8
+#define SUPPORT_MBCS 1
+#endif
+
 /* Platform Dependent Gui Hooks */
 
 #define	R_CONSOLE	1
@@ -878,7 +892,7 @@ size_t Riconv (void * cd, char **inbuf, size_t *inbytesleft,
 int Riconv_close (void * cd);
 
 
-#if defined(HAVE_WCHAR_H) && defined(SUPPORT_UTF8)
+#if defined(HAVE_WCHAR_H) && defined(SUPPORT_MBCS)
 #define __USE_XOPEN 1 /* glibc needs this for wcwidth/wcswidth */
 #include <wchar.h>
 #undef __USE_XOPEN
@@ -889,9 +903,11 @@ void UNIMPLEMENTED_TYPE(char *s, SEXP x);
 void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t);
 Rboolean utf8strIsASCII(char *str);
 #ifdef SUPPORT_UTF8
-int utf8clen(char c);
+int utf8clen(char c)
+#endif
+#ifdef SUPPORT_MBCS
 size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
-void utf8toLatin1(char *in, char *out);
+void mbcsToLatin1(char *in, char *out);
 #endif
 
 /* Macros for suspending interrupts */

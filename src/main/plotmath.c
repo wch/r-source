@@ -32,7 +32,7 @@
 #endif
 
 #include <ctype.h>
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 # include <wchar.h>
 # include <wctype.h>
 #endif
@@ -1091,7 +1091,7 @@ static BBOX RenderStr(char *str, int draw, mathContext *mc,
     BBOX glyphBBox;
     BBOX resultBBox = NullBBox();
     if (str) {
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 	int n = strlen(str), used;
 	wchar_t wc;
 	char *p = str;

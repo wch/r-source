@@ -45,7 +45,7 @@
 #include <R_ext/RS.h>
 
 
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 #define __USE_XOPEN 1 /* glibc needs this for wcwidth/wcswidth */
 # include <wchar.h>
 # include <wctype.h>
@@ -95,7 +95,7 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP d, s, x, stype;
     int i, len;
     char *type;
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
     int nc;
     char *xi;
 #ifdef HAVE_WCSWIDTH
@@ -124,7 +124,7 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(STRING_ELT(x, i) == NA_STRING) {
 		INTEGER(s)[i] = 2 /* NA_INTEGER */;
 	    } else {
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 		nc = mbstowcs(NULL, CHAR(STRING_ELT(x, i)), 0);
 		INTEGER(s)[i] = nc >= 0 ? nc : NA_INTEGER;
 #else
@@ -135,7 +135,7 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(STRING_ELT(x, i) == NA_STRING) {
 		INTEGER(s)[i] = 2 /* NA_INTEGER */;
 	    } else {
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 		xi = CHAR(STRING_ELT(x, i));
 		nc = mbstowcs(NULL, xi, 0);
 #ifdef HAVE_WCSWIDTH
@@ -154,7 +154,7 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
-#if defined(SUPPORT_UTF8) && defined(HAVE_WCSWIDTH)
+#if defined(SUPPORT_MBCS) && defined(HAVE_WCSWIDTH)
     AllocBuffer(-1);
 #endif
     if ((d = getAttrib(x, R_DimSymbol)) != R_NilValue)
@@ -169,7 +169,7 @@ static void substr(char *buf, char *str, int sa, int so)
 {
 /* Store the substring	str [sa:so]  into buf[] */
     int i;
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
     if(utf8locale && !utf8strIsASCII(buf)) {
 	int j, used;
 	for(i = 1; i < sa; i++) str += Mbrtowc(NULL, str, MB_CUR_MAX, NULL);
@@ -233,7 +233,7 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 static void substrset(char *buf, char *str, int sa, int so)
 {
 /* Replace the substring str [sa:so] in buf[] */
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
     if(utf8locale) { /* probably not worth optimizing for non-utf8 strings */
 	int i, in = 0, out = 0;
 
@@ -292,8 +292,8 @@ SEXP do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_STRING_ELT(s, i, STRING_ELT(x, i));
 	    } else {
 		vlen = strlen(CHAR(STRING_ELT(value, i % v)));
-#ifdef SUPPORT_UTF8
-		AllocBuffer(slen+vlen);  /* might expand under UTF-8 */
+#ifdef SUPPORT_MBCS
+		AllocBuffer(slen+vlen);  /* might expand under MBCS */
 #else
 		AllocBuffer(slen);
 #endif
@@ -495,7 +495,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		SET_STRING_ELT(t, ntok, mkChar(bufp));
 	} else {
 	    /* split into individual characters (not bytes) */
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 	    if(utf8locale && !utf8strIsASCII(buf)) {
 		char bf[20 /* > MB_CUR_MAX */], *p = buf;
 		int used;
@@ -725,7 +725,7 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* need to prefix names not beginning with alpha or ., as
 	   well as . followed by a number */
 	need_prefix = FALSE;
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 	if (utf8locale && this[0]) {
 	    int nc = l, used;
 	    wchar_t wc;
@@ -753,7 +753,7 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	    strcpy(CHAR(STRING_ELT(ans, i)), CHAR(STRING_ELT(arg, i)));
 	}
 	this = CHAR(STRING_ELT(ans, i));
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 	if (utf8locale) {
 	    /* This cannot lengthen the string, so safe to overwrite it.
 	       Would also be possible a char at a time.
@@ -1144,7 +1144,7 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (fixed_opt) {
 		st = fgrep_one(spat, CHAR(STRING_ELT(text, i)));
 		INTEGER(ans)[i] = (st > -1)?(st +1):-1;
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 		if(utf8locale)
 		    INTEGER(matchlen)[i] = INTEGER(ans)[i] >= 0 ?
 			mbstowcs(NULL, spat, 0):-1;
@@ -1157,7 +1157,7 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 			   regmatch, 0) == 0) {
 		    st = regmatch[0].rm_so;
 		    INTEGER(ans)[i] = st + 1; /* index from one */
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 		    if(utf8locale) {
 			/* we need the matched string. */
 			int mlen = regmatch[0].rm_eo - st;
@@ -1172,7 +1172,7 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
     AllocBuffer(-1);
 #endif
     if (!fixed_opt) regfree(&reg);
@@ -1196,7 +1196,7 @@ do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "non-character argument to tolower()");
     n = LENGTH(x);
     PROTECT(y = allocVector(STRSXP, n));
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
     if(utf8locale) {
 	int nb, nc, j;
 	wctrans_t tr = wctrans(ul ? "toupper" : "tolower");
@@ -1242,7 +1242,7 @@ do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 struct wtr_spec {
     enum { WTR_INIT, WTR_CHAR, WTR_RANGE } type;
     struct wtr_spec *next;
@@ -1434,7 +1434,7 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid (NA) arguments.");
     }
 
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
     if(utf8locale) {
 	int j, nb, nc;
 	wchar_t xtable[65536 + 1], c_old, c_new, *wc;
@@ -1869,7 +1869,7 @@ SEXP do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP s, x, width;
     int i, len, nw, w, nc;
     char *this;
-#if defined(SUPPORT_UTF8) && defined(HAVE_WCWIDTH)
+#if defined(SUPPORT_MBCS) && defined(HAVE_WCWIDTH)
     char *p, *q;
     int w0, wsum, k, nb;
     wchar_t wc;
@@ -1898,7 +1898,7 @@ SEXP do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
 	this = CHAR(STRING_ELT(x, i));
 	nc = strlen(this);
 	AllocBuffer(nc);
-#if defined(SUPPORT_UTF8) && defined(HAVE_WCWIDTH)
+#if defined(SUPPORT_MBCS) && defined(HAVE_WCWIDTH)
 	wsum = 0;
 	for(p = this, w0 = 0, q = cbuff.data; *p ;) {
 	    nb =  Mbrtowc(&wc, p, MB_CUR_MAX, NULL);

@@ -34,7 +34,7 @@
 #include <R_ext/Applic.h>	/* pretty0() */
 #include <Rmath.h>
 
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 # include <wchar.h>
 #endif
 
@@ -1655,7 +1655,7 @@ void GEText(double x, double y, char *str,
 			    double maxDepth = 0.0;
 			    char *ss = sbuf;
 			    int charNum = 0;
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 			    if(utf8locale && !utf8strIsASCII(ss)) {
 				int n = strlen(ss), used;
 				wchar_t wc;
@@ -2151,7 +2151,7 @@ void GEMetricInfo(int c,
 	*descent = 0;
 	*width = 0;
     } else
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 	if(utf8locale)
 	    dd->dev->metricInfo(c, gc, ascent, descent, width, dd->dev);
 	else

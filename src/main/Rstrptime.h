@@ -6,7 +6,7 @@
    code from the GNU C library with locale support removed. */
 
 static void get_locale_strings(void);
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 static void get_locale_w_strings(void);
 #endif
 
@@ -167,7 +167,7 @@ day_of_the_year (struct tm *tm)
 		   + (tm->tm_mday - 1));
 }
 
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 #include <wchar.h>
 #include <wctype.h>
 
@@ -1075,7 +1075,7 @@ strptime (const char *buf, const char *format, struct tm *tm)
 {
     enum locale_status decided;
     decided = raw;
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
     if(utf8locale) {
 	wchar_t wbuf[1001], wfmt[1001]; size_t n;
 #if defined(HAVE_LOCALE_H) && defined(HAVE_WCSFTIME)
@@ -1133,7 +1133,7 @@ static void get_locale_strings(void)
     if(strlen(buff)) strcpy(am_pm[1], buff);
 }
 
-#if defined(SUPPORT_UTF8) && defined(HAVE_WCSFTIME)
+#if defined(SUPPORT_MBCS) && defined(HAVE_WCSFTIME)
 static void get_locale_w_strings(void)
 {
     int i;

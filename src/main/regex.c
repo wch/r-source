@@ -102,7 +102,7 @@
 # define gettext_noop(String) String
 #endif
 
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 #if (defined MB_CUR_MAX && defined HAVE_LOCALE_H && defined HAVE_WCTYPE_H && defined HAVE_WCHAR_H && defined HAVE_WCRTOMB && defined HAVE_MBRTOWC && defined HAVE_WCSCOLL)
 # define RE_ENABLE_I18N
 #endif
