@@ -7,7 +7,7 @@ formula.default<-function (x)
 		return(eval(x$call$formula))
 	if (!is.null(x$terms))
 		return(x$terms)
-	switch(typeof(x), NULL = structure(NULL, class = "formula"),
+	switch(mode(x), NULL = structure(NULL, class = "formula"),
 		character = formula(eval(parse(text = x)[[1]])),
 		call = eval(x), stop("invalid formula"))
 }
