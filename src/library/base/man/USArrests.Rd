@@ -9,7 +9,7 @@
 }
 \usage{data(USArrests)}
 \format{
-  A data frame with 50 observations on 5 variables.
+  A data frame with 50 observations on 4 variables.
 
   \tabular{rlll}{
     [,1]  \tab Murder    \tab numeric
