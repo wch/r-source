@@ -982,7 +982,7 @@ static SEXP DataLoad(FILE *fp)
     /* symbols are all installed */
     /* gc() and check space */
 
-    gc();
+    R_gc();
 
     /* a gc after this point will be a disaster */
     /* because nothing will have been protected */

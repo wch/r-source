@@ -27,7 +27,7 @@
 char*	vmaxget(void);
 void	vmaxset(char*);
 
-void	gc(void);
+void	R_gc(void);
 
 char*	R_alloc(long, int);
 char*	S_alloc(long, int);

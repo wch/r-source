@@ -97,7 +97,7 @@ static char HexDigits[] = "0123456789ABCDEF";
  *
  */
 
-double Log10(double x)
+double R_Log10(double x)
 {
     return (R_FINITE(x) && x > 0.0) ? log10(x) : NA_REAL;
 }
@@ -468,14 +468,14 @@ double yNPCtoDev(double y, DevDesc *dd)
 double xUsrtoDev(double x, DevDesc *dd)
 {
     if (dd->gp.xlog)
-	x = Log10(x);
+	x = R_Log10(x);
     return xNFCtoDev(dd->gp.win2fig.ax + x*dd->gp.win2fig.bx, dd);
 }
 
 double yUsrtoDev(double y, DevDesc *dd)
 {
     if (dd->gp.ylog)
-	y = Log10(y);
+	y = R_Log10(y);
     return yNFCtoDev(dd->gp.win2fig.ay + y*dd->gp.win2fig.by, dd);
 }
 
