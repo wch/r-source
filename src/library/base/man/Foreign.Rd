@@ -9,6 +9,7 @@
 \alias{.C}
 \alias{.Fortran}
 \alias{.External}
+\alias{.Call}
 \arguments{
 \item{name}{a character string giving the name of a C function or
   Fortran subroutine.}
