@@ -30,8 +30,8 @@ strwrap(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
 }
 \details{
   Whitespace in the input is destroyed.  Double spaces after periods
-  (thought as representing sentence ends) are preserved.  Currently, it
-  possible sentence ends at line breaks are not considerd specially.
+  (thought as representing sentence ends) are preserved.  Currently,
+  possible sentence ends at line breaks are not considered specially.
   
   Indentation is relative to the number of characters in the prefix
   string.
