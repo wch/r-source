@@ -738,3 +738,12 @@ hist(.leap.seconds, breaks = 5)
 x <- matrix(runif(30), 10, 3)
 poly(x, degree=2)
 ## failed in 1.5.1
+
+## PR#1694 cut with infinite values -> NA (Markus Jäntti)
+cut.off <- c(-Inf, 0, Inf)
+x <- c(-Inf, -10, 0, 10, Inf)
+(res <- cut(x, cut.off, include.lowest=TRUE))
+stopifnot(all(!is.na(res)))
+(res <- cut(x, cut.off, include.lowest=TRUE, right=FALSE))
+stopifnot(all(!is.na(res)))
+## outer values were NA in 1.5.1

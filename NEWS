@@ -15,10 +15,14 @@ BUG FIXES
 
     o	hist.POSIXct(*, breaks) now works for `breaks = #{breaks}'
 
-    o	The internal download.file() methods was setting the proxy
+    o	The internal download.file() methods were setting the proxy
 	port to 0 unless it was specified.
 
     o	poly() did not work for >=3 column matrices.
+
+    o	cut.default() was not handling infinite values with infinite
+	breaks.  (PR#1694)
+
 
 
 		CHANGES IN R VERSION 1.5.1
