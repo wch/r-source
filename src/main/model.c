@@ -746,6 +746,9 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	a=CDDR(args);
 
 		/* abb = is unimplemented */
+		/* FIXME: in any case it should be handled */
+		/* in a separate "abbreviation expansion" */
+		/* made before entry to this function. */
 
 	abb = CAR(a);
 	a=CDR(a);
@@ -766,14 +769,14 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if(keepOrder == NA_LOGICAL)
 		keepOrder = 0;
 
-	if( specials==R_NilValue )
+	if(specials == R_NilValue)
 		ATTRIB(ans) = a = allocList(7);
 	else
 		ATTRIB(ans) = a = allocList(8);
 
 		/* Step 1: Determine the ``variables'' in the model */
 		/* Here we create an expression of the form */
-		/* data.frame(...).  You can evaluate it to get */
+		/* list(...).  You can evaluate it to get */
 		/* the model variables or use substitute and then */
 		/* pull the result apart to get the variable names. */
 
@@ -792,6 +795,16 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 		/* Step 2: Recode the model terms in binary form */
 		/* and at the same time, expand the model formula. */
+
+		/* FIXME: this includes specials in the model */
+		/* There perhaps needs to be a an extra pass */
+		/* through the model to delete any terms which */
+		/* contain specials.  Actually, specials should */
+		/* only enter additively so this should also be */
+		/* checked and abort forced if not. */
+
+		/* FIXME: this is also the point where nesting */
+		/* needs to be taken care of. */
 
 	PROTECT(formula = EncodeVars(CAR(args)));
 	nterm = length(formula);

@@ -406,10 +406,16 @@ static SEXP real_unary(int code, SEXP s1)
 		errorcall(lcall, "illegal unary operator\n");
 	}
 }
+/* i1 = i % n1; i2 = i % n2;
+ * this macro is quite a bit faster than having real modulo calls 
+ * in the loop (tested on Intel and Sparc) 
+ */
+#define mod_iterate(n1,n2,i1,i2) for (i=i1=i2=0; i<n; \
+(++i1, (i1==n1)&&(i1=0), ++i2, (i2==n2)&&(i2=0), ++i))
 
 static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 {
-	int i, n, n1, n2;
+	int i, i1, i2, n, n1, n2;
 	int x1, x2;
 	SEXP ans;
 
@@ -430,9 +436,9 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 
 	switch (code) {
 	case PLUSOP:
-		for (i = 0; i < n; i++) {
-			x1 = INTEGER(s1)[i % n1];
-			x2 = INTEGER(s2)[i % n2];
+		mod_iterate(n1, n2, i1, i2) {
+			x1 = INTEGER(s1)[i1];
+			x2 = INTEGER(s2)[i2];
 			if (x1 == NA_INTEGER || x2 == NA_INTEGER)
 				INTEGER(ans)[i] = NA_INTEGER;
 			else
@@ -440,9 +446,9 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 		}
 		break;
 	case MINUSOP:
-		for (i = 0; i < n; i++) {
-			x1 = INTEGER(s1)[i % n1];
-			x2 = INTEGER(s2)[i % n2];
+		mod_iterate(n1, n2, i1, i2) {	  
+			x1 = INTEGER(s1)[i1];
+			x2 = INTEGER(s2)[i2];
 			if (x1 == NA_INTEGER || x2 == NA_INTEGER)
 				INTEGER(ans)[i] = NA_INTEGER;
 			else
@@ -450,9 +456,9 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 		}
 		break;
 	case TIMESOP:
-		for (i = 0; i < n; i++) {
-			x1 = INTEGER(s1)[i % n1];
-			x2 = INTEGER(s2)[i % n2];
+		mod_iterate(n1, n2, i1, i2) {	  	  
+			x1 = INTEGER(s1)[i1];
+			x2 = INTEGER(s2)[i2];
 			if (x1 == NA_INTEGER || x2 == NA_INTEGER)
 				INTEGER(ans)[i] = NA_INTEGER;
 			else
@@ -460,9 +466,9 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 		}
 		break;
 	case DIVOP:
-		for (i = 0; i < n; i++) {
-			x1 = INTEGER(s1)[i % n1];
-			x2 = INTEGER(s2)[i % n2];
+		mod_iterate(n1, n2, i1, i2) {	  	  	  
+			x1 = INTEGER(s1)[i1];
+			x2 = INTEGER(s2)[i2];
 			if (x1 == NA_INTEGER || x2 == NA_INTEGER || x2 == 0)
 				REAL(ans)[i] = NA_REAL;
 			else
@@ -470,9 +476,9 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 		}
 		break;
 	case POWOP:
-		for (i = 0; i < n; i++) {
-			x1 = INTEGER(s1)[i % n1];
-			x2 = INTEGER(s2)[i % n2];
+		mod_iterate(n1, n2, i1, i2) {	  	  	  	  
+			x1 = INTEGER(s1)[i1];
+			x2 = INTEGER(s2)[i2];
 			if (x1 == NA_INTEGER || x2 == NA_INTEGER)
 				REAL(ans)[i] = NA_REAL;
 			else {
@@ -481,9 +487,9 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 		}
 		break;
 	case MODOP:
-		for (i = 0; i < n; i++) {
-			x1 = INTEGER(s1)[i % n1];
-			x2 = INTEGER(s2)[i % n2];
+		mod_iterate(n1, n2, i1, i2) {	  	  	  	  
+			x1 = INTEGER(s1)[i1];
+			x2 = INTEGER(s2)[i2];	  
 			if (x1 == NA_INTEGER || x2 == NA_INTEGER || x2 == 0)
 				INTEGER(ans)[i] = NA_INTEGER;
 			else {
@@ -492,9 +498,9 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
 		}
 		break;
 	case IDIVOP:
-		for (i = 0; i < n; i++) {
-			x1 = INTEGER(s1)[i % n1];
-			x2 = INTEGER(s2)[i % n2];
+		mod_iterate(n1, n2, i1, i2) {	  	  	  	  
+			x1 = INTEGER(s1)[i1];
+			x2 = INTEGER(s2)[i2];		  
 			if (x1 == NA_INTEGER || x2 == NA_INTEGER)
 				INTEGER(ans)[i] = NA_INTEGER;
 			else if(x2 == 0)
@@ -515,7 +521,7 @@ static double myfmod(double x1, double x2)
 
 static SEXP real_binary(int code, SEXP s1, SEXP s2)
 {
-	int i, n, n1, n2;
+	int i, i1, i2, n, n1, n2;
 	double x1, x2;
 	SEXP ans;
 
@@ -535,9 +541,9 @@ static SEXP real_binary(int code, SEXP s1, SEXP s2)
 
 	switch (code) {
 	case PLUSOP:
-		for (i = 0; i < n; i++) {
-			x1 = REAL(s1)[i % n1];
-			x2 = REAL(s2)[i % n2];
+		mod_iterate(n1, n2, i1, i2) {	  	  	  	  
+			x1 = REAL(s1)[i1];
+			x2 = REAL(s2)[i2];
 			if (FINITE(x1) && FINITE(x2))
 				REAL(ans)[i] = MATH_CHECK(x1 + x2);
 			else
@@ -545,9 +551,9 @@ static SEXP real_binary(int code, SEXP s1, SEXP s2)
 		}
 		break;
 	case MINUSOP:
-		for (i = 0; i < n; i++) {
-			x1 = REAL(s1)[i % n1];
-			x2 = REAL(s2)[i % n2];
+		mod_iterate(n1, n2, i1, i2) {
+			x1 = REAL(s1)[i1];		  
+			x2 = REAL(s2)[i2];
 			if (FINITE(x1) && FINITE(x2))
 				REAL(ans)[i] = MATH_CHECK(x1 - x2);
 			else
@@ -555,9 +561,9 @@ static SEXP real_binary(int code, SEXP s1, SEXP s2)
 		}
 		break;
 	case TIMESOP:
-		for (i = 0; i < n; i++) {
-			x1 = REAL(s1)[i % n1];
-			x2 = REAL(s2)[i % n2];
+		mod_iterate(n1, n2, i1, i2) {	  	  	  	  		  
+			x1 = REAL(s1)[i1];
+			x2 = REAL(s2)[i2];
 			if (FINITE(x1) && FINITE(x2))
 				REAL(ans)[i] = MATH_CHECK(x1 * x2);
 			else
@@ -565,9 +571,9 @@ static SEXP real_binary(int code, SEXP s1, SEXP s2)
 		}
 		break;
 	case DIVOP:
-		for (i = 0; i < n; i++) {
-			x1 = REAL(s1)[i % n1];
-			x2 = REAL(s2)[i % n2];
+		mod_iterate(n1, n2, i1, i2) {	  	  	  	  		  
+			x1 = REAL(s1)[i1];
+			x2 = REAL(s2)[i2];
 			if (FINITE(x1) && FINITE(x2) && x2 != 0.0)
 				REAL(ans)[i] = MATH_CHECK(x1 / x2);
 			else
@@ -575,9 +581,9 @@ static SEXP real_binary(int code, SEXP s1, SEXP s2)
 		}
 		break;
 	case POWOP:
-		for (i = 0; i < n; i++) {
-			x1 = REAL(s1)[i % n1];
-			x2 = REAL(s2)[i % n2];
+		mod_iterate(n1, n2, i1, i2) {	  	  	  	  		  
+			x1 = REAL(s1)[i1];
+			x2 = REAL(s2)[i2];
 			if (FINITE(x1) && FINITE(x2))
 				REAL(ans)[i] = MATH_CHECK(pow(x1, x2));
 			else
@@ -585,9 +591,9 @@ static SEXP real_binary(int code, SEXP s1, SEXP s2)
 		}
 		break;
 	case MODOP:
-		for (i = 0; i < n; i++) {
-			x1 = REAL(s1)[i % n1];
-			x2 = REAL(s2)[i % n2];
+		mod_iterate(n1, n2, i1, i2) {	  	  	  	  		  
+			x1 = REAL(s1)[i1];
+			x2 = REAL(s2)[i2];
 			if (FINITE(x1) && FINITE(x2) && x2 != 0.0)
 				REAL(ans)[i] = MATH_CHECK(myfmod(x1, x2));
 			else
@@ -595,9 +601,9 @@ static SEXP real_binary(int code, SEXP s1, SEXP s2)
 		}
 		break;
 	case IDIVOP:
-		for (i = 0; i < n; i++) {
-			x1 = REAL(s1)[i % n1];
-			x2 = REAL(s2)[i % n2];
+		mod_iterate(n1, n2, i1, i2) {	  	  	  	  		  
+			x1 = REAL(s1)[i1];
+			x2 = REAL(s2)[i2];
 			if (FINITE(x1) && FINITE(x2)) {
 				if(x2 == 0.0)
 					REAL(ans)[i] = 0.0;
@@ -699,7 +705,7 @@ SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
 static SEXP math2(SEXP op, SEXP sa, SEXP sb, double (*f)())
 {
 	SEXP sy;
-	int i, n, na, nb;
+	int i, ia, ib, n, na, nb;
 	double ai, bi, *a, *b, *y;
 
 	if (!isNumeric(sa) || !isNumeric(sb))
@@ -720,9 +726,9 @@ static SEXP math2(SEXP op, SEXP sa, SEXP sb, double (*f)())
 	}
 	else {
 		naflag = 0;
-		for (i = 0; i < n; i++) {
-			ai = a[i % na];
-			bi = b[i % nb];
+        mod_iterate(na, nb, ia, ib) {
+			ai = a[ia];
+			bi = b[ib];
 			if(FINITE(ai) && FINITE(bi)) {
 				y[i] = MATH_CHECK(f(ai, bi));
 				if(!FINITE(y[i])) {
@@ -871,10 +877,13 @@ SEXP do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 }
 
+#define mod_iterate3(n1,n2,n3,i1,i2,i3) for (i=i1=i2=i3=0; i<n; \
+(++i1, (i1==n1)&&(i1=0), ++i2, (i2==n2)&&(i2=0), ++i3, (i3==n3)&&(i3=0), ++i))
+
 static SEXP math3(SEXP op, SEXP sa, SEXP sb, SEXP sc, double (*f)())
 {
 	SEXP sy;
-	int i, n, na, nb, nc;
+	int i, ia, ib, ic, n, na, nb, nc;
 	double ai, bi, ci, *a, *b, *c, *y;
 
 	if (!isNumeric(sa) || !isNumeric(sb) || !isNumeric(sc))
@@ -900,10 +909,10 @@ static SEXP math3(SEXP op, SEXP sa, SEXP sb, SEXP sc, double (*f)())
 	}
 	else {
 		naflag = 0;
-		for (i = 0; i < n; i++) {
-			ai = a[i % na];
-			bi = b[i % nb];
-			ci = c[i % nc];
+        mod_iterate3 (na, nb, nc, ia, ib, ic) {
+			ai = a[ia];
+			bi = b[ib];
+			ci = c[ic];
 			if(FINITE(ai) && FINITE(bi) && FINITE(ci)) {
 				y[i] = MATH_CHECK(f(ai, bi, ci));
 				if(!FINITE(y[i])) {
@@ -994,11 +1003,14 @@ SEXP do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
 		 errorcall(lcall, "unimplemented real function\n");
 	}
 }
+#define mod_iterate4(n1,n2,n3,n4,i1,i2,i3,i4) for (i=i1=i2=i3=i4=0; i<n; \
+(++i1, (i1==n1)&&(i1=0), ++i2, (i2==n2)&&(i2=0),\
+ ++i3, (i3==n3)&&(i3=0), ++i4, (i4==n4)&&(i4=0), ++i))
 
 static SEXP math4(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
 {
 	SEXP sy;
-	int i, n, na, nb, nc, nd;
+	int i, ia, ib, ic, id, n, na, nb, nc, nd;
 	double ai, bi, ci, di, *a, *b, *c, *d, *y;
 
 	if (!isNumeric(sa) || !isNumeric(sb) || !isNumeric(sc) || !isNumeric(sd))
@@ -1028,11 +1040,11 @@ static SEXP math4(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
 	}
 	else {
 		naflag = 0;
-		for (i = 0; i < n; i++) {
-			ai = a[i % na];
-			bi = b[i % nb];
-			ci = c[i % nc];
-			di = d[i % nd];
+		mod_iterate4 (na, nb, nc, nd, ia, ib, ic, id) {
+			ai = a[ia];
+			bi = b[ib];
+			ci = c[ic];
+			di = d[id];
 			if(FINITE(ai) && FINITE(bi) && FINITE(ci) && FINITE(di)) {
 				y[i] = MATH_CHECK(f(ai, bi, ci, di));
 				if(!FINITE(y[i])) {
