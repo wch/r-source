@@ -44,6 +44,8 @@ USER-VISIBLE CHANGES
 	gamma-corrected grey palette (rather than the heat color
 	palette) for coloring its output when given a matrix.
 
+    o   Dataset 'phones' has been renamed to 'WorldPhones'.
+
 
 NEW FEATURES
 

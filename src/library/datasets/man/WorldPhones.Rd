@@ -1,6 +1,6 @@
-\name{phones}
+\name{WorldPhones}
 \docType{data}
-\alias{phones}
+\alias{WorldPhones}
 \title{The World's Telephones}
 \description{
   The number of telephones in various regions of the world (in
@@ -20,7 +20,8 @@
   AT&T (1961) \emph{The World's Telephones}.
 }
 \section{Warning}{
-  Package \pkg{MASS} has a different dataset of the same name.
+  Prior to \R 2.0.0 this dataset was called \code{phones} and conflicted
+  with a dataset in package \pkg{MASS}.
 }
 \references{
   McNeil, D. R. (1977)
@@ -28,9 +29,10 @@
   New York: Wiley.
 }
 \examples{
-matplot(rownames(phones), phones, type = "b", log = "y",
+matplot(rownames(WorldPhones), WorldPhones, type = "b", log = "y",
         xlab = "Year", ylab = "Number of telephones (1000's)")
-legend(1951.5, 80000, colnames(phones), col = 1:6, lty = 1:5, pch = rep(21, 7))
-title(main = "phones data: log scale for response")
+legend(1951.5, 80000, colnames(WorldPhones), col = 1:6, lty = 1:5, 
+       pch = rep(21, 7))
+title(main = "World phones data: log scale for response")
 }
 \keyword{datasets}
