@@ -15,6 +15,7 @@ OBJ_HEADERS = Platform.h
 all: R
 
 R: Platform.h FFDecl.h FFTab.h
+	@$(MKINSTALLDIRS) $(top_builddir)/include
 	@for f in $(SRC_HEADERS); do \
 	  $(INSTALL_DATA) $(srcdir)/$$f $(top_builddir)/include; \
 	done
@@ -26,10 +27,12 @@ Platform.h: $(top_srcdir)/date-stamp
 	$(top_srcdir)/configure --srcdir $(top_srcdir)
 
 FFDecl.h FFTab.h:: $(top_srcdir)/src/appl/ROUTINES
-	-./GETSYMBOLS
+	$(top_srcdir)/aux/GETSYMBOLS
 
 mostlyclean:
 clean:
 distclean:
 	@rm -f GETSYMBOLS Makefile Platform.h FFDecl.h FFTab.h
 maintainer-clean: distclean
+
+install install-strip uninstall::
