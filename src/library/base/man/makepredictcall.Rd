@@ -1,5 +1,6 @@
 \name{makepredictcall}
 \alias{makepredictcall}
+\alias{makepredictcall.default}
 \alias{makepredictcall.bs}
 \alias{makepredictcall.ns}
 \alias{makepredictcall.poly}
