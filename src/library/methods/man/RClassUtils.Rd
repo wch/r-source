@@ -133,21 +133,21 @@ setDataPart(object, value)
 
       The following three rules are applied in this order.
       \enumerate{
-	\item{If the class has slots, then the prototype for each slot
+	\item If the class has slots, then the prototype for each slot
 	  is used by default, but a corresponding element in the
 	  explicitly supplied prototype in \code{ClassDef}, if there is
 	  one, is used instead (but it must be coercible to the class of
 	  the slot). This includes the data part (\code{".Data"} slot) if
-	  there is one.}
+	  there is one.
 
-	\item{If there are no slots but a non-null prototype was
-	  specified, this is returned.}
+	\item If there are no slots but a non-null prototype was
+	  specified, this is returned.
 
-	\item{If there is a non-virtual superclass (a class in the
+	\item If there is a non-virtual superclass (a class in the
 	  extends list), then its prototype is used.  The data part is
 	  extracted if needed (it is allowed to have two superclasses
 	  with a data part; the first is used and a warning issued on
-	  any others).}
+	  any others).
 	}
 	If all three of the above fail, the prototype is \code{NULL}.
     }
