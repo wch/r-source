@@ -89,6 +89,9 @@ if !`Exists :::f2cLib`
  end
 end
 
+if !`Exists :::.Renviron`
+ Duplicate  :.Renviron :::
+end
 
 set FortList  "`Files ::appl:Å.f` `Files ::main:Å.f`" 
 
@@ -148,7 +151,7 @@ if !`Exists :::WasteLib`
   Duplicate  {WasteDir}WasteLib :::
  end
 end
-			   
+
 			   
 
 echo " " >>MakeR
@@ -282,7 +285,7 @@ echo '	'Mrc '{'DepDir'}''{'default'}'.c '{'includes'}' -o ¶
 echo '	'-w 35,2,7,29,30 -d HAVE_CONFIG_H  -d Macintosh  -d ¶
 TARGET_API_MAC_CARBON '¶' >> MakeR
 echo '	'-typecheck relaxed -noMapCR -ansi off ¶
--prefix RHeaders.h  >> MakeR
+-prefix RHeaders.h -alloca  >> MakeR
 
 
 if `Exists :expvar`
