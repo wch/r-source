@@ -101,7 +101,7 @@ arima(x, order = c(0, 0, 0),
   (This gives comparable results to \code{\link{arima0}} in the absence
   of missing values, when the observations excluded are precisely those
   dropped by the differencing.)
-  
+
   Missing values are allowed, and are handled exactly in method \code{"ML"}.
 
   If \code{transform.pars} is true, the optimization is done using an
@@ -194,8 +194,9 @@ arima(x, order = c(0, 0, 0),
 }
 
 \seealso{
-  \code{\link{predict.Arima}}, \code{\link{tsdiag}},
-  \code{\link{arima0}}, \code{\link{ar}}
+  \code{\link{predict.Arima}}, \code{\link{arima.sim}} for simulating
+  from an ARIMA model, \code{\link{tsdiag}}, \code{\link{arima0}},
+  \code{\link{ar}}
 }
 
 \examples{
