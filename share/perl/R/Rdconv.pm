@@ -2460,7 +2460,9 @@ sub latex_print_block {
 
     if(defined $blocks{$block}){
 	print $latexout "\\begin\{$env\}\\relax\n";
-	print $latexout &text2latex($blocks{$block});
+	my $thisblock = &text2latex($blocks{$block});
+	print $latexout $thisblock;
+	print $latexout "\n" unless $thisblock =~ /\n$/m;
 	print $latexout "\\end\{$env\}\n";
     }
 }

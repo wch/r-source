@@ -147,6 +147,12 @@ BUG FIXES
 	updated after the change that made tkget (et al.) return
 	tclObj objects, so the "Submit" button didn't work.
 
+    o	Rd conversion to latex did not add a new line before
+	\end{Section} for the section environments, which caused
+	problems if the last thing in a section was \preformatted{}
+	(and potentially elsewhere).
+
+
 
 		CHANGES IN R VERSION 1.8.0
 
