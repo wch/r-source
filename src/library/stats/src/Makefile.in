@@ -14,7 +14,7 @@ R_HOME = $(top_builddir)
 SOURCES_C = init.c \
   ansari.c chisqsim.c d2x2xk.c fexact.c kendall.c ks.c \
   line.c smooth.c \
-  prho.c swilk.c init.c \
+  prho.c swilk.c \
   ksmooth.c loessc.c isoreg.c Srunmed.c Trunmed.c \
   dblcen.c distance.c hclust-utils.c
 

@@ -1378,7 +1378,6 @@ AC_CONFIG_FILES(
   src/library/modreg/Makefile
   src/library/mva/DESCRIPTION
   src/library/mva/Makefile
-  src/library/mva/src/Makefile
   src/library/nls/DESCRIPTION
   src/library/nls/Makefile
   src/library/nls/src/Makefile

@@ -103,10 +103,9 @@ static R_FortranMethodDef FortEntries[] = {
     {"kmns", (DL_FUNC) &F77_SUB(kmns), 17},
     {NULL, NULL, 0}
 };
-/*
+
 void R_init_stats(DllInfo *dll)
 {
     R_useDynamicSymbols(dll, FALSE);
     R_registerRoutines(dll, CEntries, CallEntries, FortEntries, NULL);
 }
-*/

@@ -9,7 +9,7 @@ core.pkgs <-
     x[x[,"Priority"] %in% "base", "Package"]}
 ## skip mle for now because strange things happen with the S3
 ## generic overrides
-core.pkgs <- core.pkgs[- match(c("methods", "tcltk", "mle"), core.pkgs)]
+core.pkgs <- core.pkgs[- match(c("ctest", "eda", "modreg", "mva", "methods", "tcltk", "mle"), core.pkgs)]
 ## move methods to the end because it has side effects (overrides primitives)
 core.pkgs <- c(core.pkgs, "methods")
 
