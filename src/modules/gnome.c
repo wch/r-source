@@ -69,9 +69,7 @@ extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_ReadConsole,
 void R_load_gnome_shlib(void)
 {
     char gnome_DLL[PATH_MAX], buf[1000], *p;
-    DllInfo dll = {(char *)NULL, (char*)NULL, (HINSTANCE)NULL,
-                   0, (Rf_DotCSymbol*)NULL, 0, (Rf_DotCallSymbol*)NULL,
-                   0, (Rf_DotFortranSymbol*)NULL};
+    void *handle;
     struct stat sb;
 
     p = getenv("R_HOME");
@@ -86,46 +84,46 @@ void R_load_gnome_shlib(void)
 	R_Suicide("Probably no GNOME support: the shared library was not found");
 /* cannot use computeDLOpenFlag as warnings will crash R at this stage */
 #ifdef RTLD_NOW
-    dll.handle = dlopen(gnome_DLL, RTLD_NOW);
+    handle = dlopen(gnome_DLL, RTLD_NOW);
 #else
-    dll.handle = dlopen(gnome_DLL, 0);
+    handle = dlopen(gnome_DLL, 0);
 #endif
-    if(dll.handle == NULL) {
+    if(handle == NULL) {
 	sprintf(buf, "The GNOME shared library could not be loaded.\n  The error was %s\n", dlerror());
 	R_Suicide(buf);
     }
-    ptr_R_Suicide = Rdlsym(&dll, "Rgnome_Suicide");
+    ptr_R_Suicide = Rdlsym(handle, "Rgnome_Suicide");
     if(!ptr_R_Suicide) Rstd_Suicide("Cannot load R_Suicide");
-    ptr_R_ShowMessage = Rdlsym(&dll, "Rgnome_ShowMessage");
+    ptr_R_ShowMessage = Rdlsym(handle, "Rgnome_ShowMessage");
     if(!ptr_R_ShowMessage) R_Suicide("Cannot load R_ShowMessage");
-    ptr_R_ReadConsole = Rdlsym(&dll, "Rgnome_ReadConsole");
+    ptr_R_ReadConsole = Rdlsym(handle, "Rgnome_ReadConsole");
     if(!ptr_R_ReadConsole) R_Suicide("Cannot load R_ReadConsole");
-    ptr_R_WriteConsole = Rdlsym(&dll, "Rgnome_WriteConsole");
+    ptr_R_WriteConsole = Rdlsym(handle, "Rgnome_WriteConsole");
     if(!ptr_R_WriteConsole) R_Suicide("Cannot load R_WriteConsole");
-    ptr_R_ResetConsole = Rdlsym(&dll, "Rgnome_ResetConsole");
+    ptr_R_ResetConsole = Rdlsym(handle, "Rgnome_ResetConsole");
     if(!ptr_R_ResetConsole) R_Suicide("Cannot load R_ResetConsole");
-    ptr_R_FlushConsole = Rdlsym(&dll, "Rgnome_FlushConsole");
+    ptr_R_FlushConsole = Rdlsym(handle, "Rgnome_FlushConsole");
     if(!ptr_R_FlushConsole) R_Suicide("Cannot load R_FlushConsole");
-    ptr_R_ClearerrConsole = Rdlsym(&dll, "Rgnome_ClearerrConsole");
+    ptr_R_ClearerrConsole = Rdlsym(handle, "Rgnome_ClearerrConsole");
     if(!ptr_R_ClearerrConsole) R_Suicide("Cannot load R_ClearerrConsole");
-    ptr_R_Busy = Rdlsym(&dll, "Rgnome_Busy");
+    ptr_R_Busy = Rdlsym(handle, "Rgnome_Busy");
     if(!ptr_R_Busy) R_Suicide("Cannot load R_Busy");
-    ptr_R_CleanUp = Rdlsym(&dll, "Rgnome_CleanUp");
+    ptr_R_CleanUp = Rdlsym(handle, "Rgnome_CleanUp");
     if(!ptr_R_CleanUp) R_Suicide("Cannot load R_CleanUp");
-    ptr_R_ShowFiles = Rdlsym(&dll, "Rgnome_ShowFiles");
+    ptr_R_ShowFiles = Rdlsym(handle, "Rgnome_ShowFiles");
     if(!ptr_R_ShowFiles) R_Suicide("Cannot load R_ShowFiles");
-    ptr_R_ChooseFile = Rdlsym(&dll, "Rgnome_ChooseFile");
+    ptr_R_ChooseFile = Rdlsym(handle, "Rgnome_ChooseFile");
     if(!ptr_R_ChooseFile) R_Suicide("Cannot load R_ChooseFile");
-    ptr_gnome_start = Rdlsym(&dll, "gnome_start");
+    ptr_gnome_start = Rdlsym(handle, "gnome_start");
     if(!ptr_gnome_start) R_Suicide("Cannot load gnome_start");
-    ptr_GTKDeviceDriver = Rdlsym(&dll, "GTKDeviceDriver");
+    ptr_GTKDeviceDriver = Rdlsym(handle, "GTKDeviceDriver");
     if(!ptr_GTKDeviceDriver) R_Suicide("Cannot load GTKDeviceDriver");
-    ptr_R_loadhistory = Rdlsym(&dll, "Rgnome_loadhistory");
+    ptr_R_loadhistory = Rdlsym(handle, "Rgnome_loadhistory");
     if(!ptr_R_loadhistory) R_Suicide("Cannot load Rgnome_loadhsitoryr");
-    ptr_R_savehistory = Rdlsym(&dll, "Rgnome_savehistory");
+    ptr_R_savehistory = Rdlsym(handle, "Rgnome_savehistory");
     if(!ptr_R_savehistory) R_Suicide("Cannot load Rgnome_savehistory");
 /* Uncomment the next two lines to experiment with the gnome() device */
-/*    ptr_GnomeDeviceDriver = Rdlsym(&dll, "GnomeDeviceDriver");
+/*    ptr_GnomeDeviceDriver = Rdlsym(handle, "GnomeDeviceDriver");
       if(!ptr_GnomeDeviceDriver) R_Suicide("Cannot load GnomeDeviceDriver");*/
 }
 
