@@ -1,9 +1,8 @@
 #include "R_ext/Utils.h"/* R_rsort() */
 #include <math.h>
 
-/* `Fixme': Speed up by `inlining' these (as macros): */
-
-#ifndef USE_FUNCS 
+/* Speed up by `inlining' these (as macros) [since 1.2]: */
+#if 1
 #define il(n,x)	floor((n - 1) * x) 
 #define iu(n,x)	 ceil((n - 1) * x) 
 
@@ -23,7 +22,7 @@ static int iu(int n, double x)
  * -----   and even  quantile(x, alpha) ! */ 
 
 static void line(double *x, double *y, /* input (x[i],y[i])s */
-		 double *z, double *w, /* work space */
+		 double *z, double *w, /* work and output: resid. & fitted */
 		 /* all the above of length */ int n, 
 		 double coef[2])
 {
