@@ -219,6 +219,10 @@ none
 
 Directory:  incoming
 
+* PR# 857 *
+Subject: Plotting points on a filled.contour plot
+From: marchini@stats.ox.ac.uk
+Date: Tue, 27 Feb 2001 10:00:30 +0100 (MET)
 * PR# 856 *
 Subject: "}  {" problem in Rd files
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
