@@ -46,6 +46,7 @@ SOURCES = \
 	signrank.c
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = sunif.o $(SOURCES:.c=.o)
+LOBJECTS = sunif.lo $(SOURCES:.c=.lo)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in test.c sunif.c
@@ -56,17 +57,20 @@ SHLIB = libRmath.$(SHLIB_EXT)
 DEFS = -DHAVE_CONFIG_H -DMATHLIB_STANDALONE
 ALL_CFLAGS = $(R_XTRA_CFLAGS) $(SH_CFLAGS) $(CFLAGS)
 
+.SUFFIXES: .c .f .d .lo .o
+
+.c.lo:
+	$(CC) $(ALL_CPPFLAGS) $(CPICFLAGS) $(ALL_CFLAGS) -c $< -o $@
+
 
 all: Makefile Makedeps archive shared
 archive: Makefile ../../include/Rconfig.h
 	@$(MAKE) Makedeps
-	$(RM) *.o
 	@$(MAKE) $(LIB)
 
 shared: Makefile ../../include/Rconfig.h
 	@$(MAKE) Makedeps
-	$(RM) *.o
-	@SH_CFLAGS=$(CPICFLAGS) $(MAKE) $(SHLIB)
+	$(MAKE) $(SHLIB)
 
 ../../include/Rconfig.h:
 	(cd ../../include; $(MAKE) Rconfig.h)
@@ -85,8 +89,8 @@ $(LIB): $(OBJECTS)
 	$(AR) cr $(LIB) $(OBJECTS)
 	$(RANLIB) $(LIB)
 
-$(SHLIB): $(OBJECTS)
-	$(SHLIB_LD) $(SHLIB_LDFLAGS) $(LDFLAGS) -o $@ $(OBJECTS)
+$(SHLIB): $(LOBJECTS)
+	$(SHLIB_LD) $(SHLIB_LDFLAGS) $(LDFLAGS) -o $@ $(LOBJECTS)
 
 test: $(srcdir)/test.c
 	$(CC) -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $< -L. -lRmath -lm
