@@ -101,6 +101,10 @@ New utilities for preparing packages
     Use option --help with any of these for fuller details.
 
 
+The default for options("papersize") is set according to the locale,
+and so might be set to "letter" under US or Canadian versions of
+Windows.
+
 Rterm in interactive use sets the title of the window it is running
 in, and unsets it when it terminates.
 
