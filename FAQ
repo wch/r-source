@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-5, 2004-04-25
+Version 1.7-6, 2004-04-27
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1019,9 +1019,10 @@ the same time being as compatible as possible with S.
      uses the Helmert ones.  This is a deliberate difference reflecting the
      opinion that treatment contrasts are more natural.
 
-   * In R, the last argument (which corresponds to the right hand side) of
-     an assignment function must be named `value'.  E.g., `f(a) <- b' is
-     evaluated as `a <- "f<-"(a, value = b)'.
+   * In R, the argument of a replacement function which corresponds to the
+     right hand side must be named `value'.  E.g., `f(a) <- b' is evaluated
+     as `a <- "f<-"(a, value = b)'.  S always takes the last argument,
+     irrespective of its name.
 
    * In S, `substitute()' searches for names for substitution in the given
      expression in three places: the actual and the default arguments of
@@ -1519,6 +1520,10 @@ distributions of R.)
      Component Analysis, Latent Class Analysis, support vector machines, and
      fuzzy clustering, shortest path computation, bagged clustering, and
      some more.
+
+*effects*
+     Graphical and tabular effect displays, e.g., of interactions, for
+     linear and generalised linear models.
 
 *ellipse*
      Package for drawing ellipses and ellipse-like confidence regions.
