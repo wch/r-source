@@ -391,3 +391,23 @@ Date: Tue, 27 Nov 2001 21:02:42 +0100 (MET)
 Subject:  R-devel 11/27 will not build on solaris 2.8 
 From: v <stvjc@localhost.localdomain>
 Date: Tue, 27 Nov 2001 23:51:52 -0500
+* PR# 1184 *
+Subject: ltsreg warnings
+From: charlie@stat.umn.edu
+Date: Thu, 29 Nov 2001 17:02:33 +0100 (MET)
+* PR# 1185 *
+Subject: documentation for diff
+From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
+Date: Thu, 29 Nov 2001 11:38:15 -0500
+* PR# 1186 *
+Subject: a patch to tapply
+From: Vadim Ogranovich <vograno@arbitrade.com>
+Date: Thu, 29 Nov 2001 14:48:35 -0600
+* PR# 1187 *
+Subject: anova.glm and explicit contrast matrices
+From: Douglas Bates <bates@stat.wisc.edu>
+Date: 29 Nov 2001 15:13:01 -0600
+* PR# 1188 *
+Subject: rug(x) clip warning incorrect if par("xlog")==TRUE
+From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
+Date: Thu, 29 Nov 2001 13:17:22 -0800 (PST)
