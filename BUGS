@@ -469,3 +469,19 @@ Date: Tue, 26 Feb 2002 15:13:04 -0500
 Subject: Bug in glm.fit?
 From: Berwin Turlach <berwin@maths.uwa.edu.au>
 Date: Wed, 27 Feb 2002 16:15:24 +0800 (WST)
+* PR# 1332 *
+Subject: Bug in julian()
+From: Michael.Jacob@bruker-axs.de
+Date: Thu, 28 Feb 2002 10:57:39 +0100 (MET)
+* PR# 1333 *
+Subject: Failed file("foo", "r") keeps file open?
+From: hb@maths.lth.se
+Date: Thu, 28 Feb 2002 17:20:02 +0100 (MET)
+* PR# 1334 *
+Subject: pweibull.c
+From: terra@diku.dk
+Date: Thu, 28 Feb 2002 21:48:18 +0100 (MET)
+* PR# 1335 *
+Subject: pexp.c
+From: terra@diku.dk
+Date: Thu, 28 Feb 2002 21:54:28 +0100 (MET)
