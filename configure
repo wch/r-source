@@ -17279,7 +17279,7 @@ fi
 
 
 for ac_func in access chdir expm1 fcntl finite ftruncate getcwd \
-  getgrgid getpwuid getuid hypot isascii isnan log1p matherr memcpy mkfifo \
+  getgrgid getpwuid getuid hypot isascii isnan log1p matherr mkfifo \
   popen putenv rint setenv strcoll stat strptime system times unsetenv
 do
 as_ac_var=`echo "ac_cv_func_$ac_func" | $as_tr_sh`
@@ -17356,7 +17356,7 @@ fi
 done
 
 ## <NOTE>
-## No need checking for bcopy bzero mempcpy even though ifnames
+## No need checking for bcopy bzero memcpy mempcpy even though ifnames
 ## might report corresponding HAVE_FOO conditionals.
 ## </NOTE>
 

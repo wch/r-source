@@ -25,12 +25,13 @@
 
 /* MEMCMP: a general, quicker (in principle) test for non-recursive
    vectors than comparing elements in a loop.
-   Depends on the existence of memcmp (which is checked and set in
-   config.h by autoconf).
 
    One detail is that using memcmp on double's implies that different
    NaN bit patterns (if they occur) are different. So we don't use it.
 */
+#define HAVE_MEMCMP 1
+/* as this is required by ISO C */
+
 #define MEMCMP(x, y, n) ((length(x) == length(y)) && (memcmp((void *)DATAPTR(x),\
         (void *)DATAPTR(y), length(x)*n)==0) ? TRUE : FALSE)
 
