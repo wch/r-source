@@ -125,10 +125,10 @@ void R_ProcessEvents(void);
 extern double acosh(double x);
 #endif
 #if defined(HAVE_DECL_ASINH) && !HAVE_DECL_ASINH
-extern double acosh(double x);
+extern double asinh(double x);
 #endif
 #if defined(HAVE_DECL_ATANH) && !HAVE_DECL_ATANH
-extern double acosh(double x);
+extern double atanh(double x);
 #endif
 #if defined(HAVE_DECL_SNPRINTF) && !HAVE_DECL_SNPRINTF
 extern int snprintf (char *s, size_t n, const char *format, ...);
