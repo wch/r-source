@@ -1,0 +1,6 @@
+There are no changes to the source code of zlib-1.1.3 used here.
+
+Makefile.in is ours, not zlib's, and allows us to use PIC flags so this
+can be included in libR.so.
+
+We assume ISO C, so assume errno.h exists.

@@ -824,20 +824,21 @@ echo $ac_n "checking whether build environment is sane""... $ac_c" 1>&6
 echo "configure:825: checking whether build environment is sane" >&5
 # Just in case
 sleep 1
-echo timestamp > conftestfile
+echo timestamp > conftest.file
 # Do `set' in a subshell so we don't clobber the current shell's
 # arguments.  Must try -L first in case configure is actually a
 # symlink; some systems play weird games with the mod time of symlinks
 # (eg FreeBSD returns the mod time of the symlink's containing
 # directory).
 if (
-   set X `ls -Lt $srcdir/configure conftestfile 2> /dev/null`
+   set X `ls -Lt $srcdir/configure conftest.file 2> /dev/null`
    if test "$*" = "X"; then
       # -L didn't work.
-      set X `ls -t $srcdir/configure conftestfile`
+      set X `ls -t $srcdir/configure conftest.file`
    fi
-   if test "$*" != "X $srcdir/configure conftestfile" \
-      && test "$*" != "X conftestfile $srcdir/configure"; then
+   rm -f conftest.file
+   if test "$*" != "X $srcdir/configure conftest.file" \
+      && test "$*" != "X conftest.file $srcdir/configure"; then
 
       # If neither matched, then we have a broken ls.  This can happen
       # if, for instance, CONFIG_SHELL is bash and it inherits a
@@ -847,7 +848,7 @@ if (
 alias in your environment" 1>&2; exit 1; }
    fi
 
-   test "$2" = conftestfile
+   test "$2" = conftest.file
    )
 then
    # Ok.
@@ -856,7 +857,6 @@ else
    { echo "configure: error: newly created file is older than distributed files!
 Check your system clock" 1>&2; exit 1; }
 fi
-rm -f conftest*
 echo "$ac_t""yes" 1>&6
 if test "$program_transform_name" = s,x,x,; then
   program_transform_name=
@@ -991,7 +991,7 @@ fi
 
 
 
-
+  
 
 
 ### Platform.
@@ -14017,8 +14017,8 @@ fi
 
 ## zlib headers and libraries.
 
-  echo "checking if zlib is installed or needs to be compiled" 1>&6
-echo "configure:14022: checking if zlib is installed or needs to be compiled" >&5
+  echo "checking if suitable zlib is installed or needs to be compiled" 1>&6
+echo "configure:14022: checking if suitable zlib is installed or needs to be compiled" >&5
   have_zlib=no
   echo $ac_n "checking for gzopen in -lz""... $ac_c" 1>&6
 echo "configure:14025: checking for gzopen in -lz" >&5
@@ -14134,13 +14134,52 @@ fi
 EOF
 
     LIBS="-lz ${LIBS}"
+    echo "using installed zlib"
   else
-    if test -f src/extra/zlib/Makefile ; then
-      echo "checking we will build zlib for you" 1>&6
-echo "configure:14141: checking we will build zlib for you" >&5
-    else
-      { echo "configure: error: neither zlib nor its sources were found" 1>&2; exit 1; }
-    fi
+    echo "we will build zlib for you"
+    echo $ac_n "checking mmap support for zlib""... $ac_c" 1>&6
+echo "configure:14142: checking mmap support for zlib" >&5
+if eval "test \"`echo '$''{'r_cv_zlib_mmap'+set}'`\" = set"; then
+  echo $ac_n "(cached) $ac_c" 1>&6
+else
+  if test "$cross_compiling" = yes; then
+  r_cv_zlib_mmap=yes
+else
+  cat > conftest.$ac_ext <<EOF
+#line 14150 "configure"
+#include "confdefs.h"
+
+#include <sys/types.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+caddr_t hello() {
+  return mmap((caddr_t)0, (off_t)0, PROT_READ, MAP_SHARED, 0, (off_t)0); 
+}
+EOF
+if { (eval echo configure:14160: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext} && (./conftest; exit) 2>/dev/null
+then
+  r_cv_zlib_mmap=no
+else
+  echo "configure: failed program was:" >&5
+  cat conftest.$ac_ext >&5
+  rm -fr conftest*
+  r_cv_zlib_mmap=yes
+fi
+rm -fr conftest*
+fi
+
+fi
+
+echo "$ac_t""$r_cv_zlib_mmap" 1>&6
+    
+
+if test "${r_cv_zlib_mmap}" = yes; then
+  USE_MMAP_ZLIB_TRUE=
+  USE_MMAP_ZLIB_FALSE='#'
+else
+  USE_MMAP_ZLIB_TRUE='#'
+  USE_MMAP_ZLIB_FALSE=
+fi
   fi
   
 
@@ -14155,7 +14194,7 @@ fi
 
 ## POSIX times.
 echo $ac_n "checking whether leap seconds are treated according to POSIX""... $ac_c" 1>&6
-echo "configure:14159: checking whether leap seconds are treated according to POSIX" >&5
+echo "configure:14198: checking whether leap seconds are treated according to POSIX" >&5
 if eval "test \"`echo '$''{'r_cv_sys_posix_leapseconds'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -14163,7 +14202,7 @@ else
   r_cv_sys_posix_leapseconds=yes
 else
   cat > conftest.$ac_ext <<EOF
-#line 14167 "configure"
+#line 14206 "configure"
 #include "confdefs.h"
 
 #include <stdlib.h>
@@ -14181,7 +14220,7 @@ int main () {
   if(tm->tm_sec == 0) exit(1); else exit(0);
 }
 EOF
-if { (eval echo configure:14185: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext} && (./conftest; exit) 2>/dev/null
+if { (eval echo configure:14224: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext} && (./conftest; exit) 2>/dev/null
 then
   r_cv_sys_posix_leapseconds=no
 else
@@ -14209,12 +14248,12 @@ if test "${want_R_profiling}" = yes; then
   for ac_func in setitimer
 do
 echo $ac_n "checking for $ac_func""... $ac_c" 1>&6
-echo "configure:14213: checking for $ac_func" >&5
+echo "configure:14252: checking for $ac_func" >&5
 if eval "test \"`echo '$''{'ac_cv_func_$ac_func'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 14218 "configure"
+#line 14257 "configure"
 #include "confdefs.h"
 /* System header to define __stub macros and hopefully few prototypes,
     which can conflict with char $ac_func(); below.  */
@@ -14237,7 +14276,7 @@ $ac_func();
 
 ; return 0; }
 EOF
-if { (eval echo configure:14241: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:14280: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   eval "ac_cv_func_$ac_func=yes"
 else
@@ -14279,7 +14318,7 @@ do
 # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:14283: checking for $ac_word" >&5
+echo "configure:14322: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_prog_R_PRINTCMD'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -14318,7 +14357,7 @@ EOF
 # Extract the first word of "paperconf", so it can be a program name with args.
 set dummy paperconf; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:14322: checking for $ac_word" >&5
+echo "configure:14361: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_path_PAPERCONF'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -14525,6 +14564,7 @@ trap 'rm -fr `echo "Makeconf
   src/appl/Makefile
   src/extra/Makefile
   src/extra/xdr/Makefile
+  src/extra/zlib/Makefile
   src/include/Makefile
   src/include/R_ext/Makefile
   src/library/Makefile
@@ -14779,6 +14819,8 @@ s%@use_tcltk@%$use_tcltk%g
 s%@BITMAP_LIBS@%$BITMAP_LIBS%g
 s%@BUILD_XDR_TRUE@%$BUILD_XDR_TRUE%g
 s%@BUILD_XDR_FALSE@%$BUILD_XDR_FALSE%g
+s%@USE_MMAP_ZLIB_TRUE@%$USE_MMAP_ZLIB_TRUE%g
+s%@USE_MMAP_ZLIB_FALSE@%$USE_MMAP_ZLIB_FALSE%g
 s%@BUILD_ZLIB_TRUE@%$BUILD_ZLIB_TRUE%g
 s%@BUILD_ZLIB_FALSE@%$BUILD_ZLIB_FALSE%g
 s%@R_PROFILING@%$R_PROFILING%g
@@ -14847,6 +14889,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   src/appl/Makefile
   src/extra/Makefile
   src/extra/xdr/Makefile
+  src/extra/zlib/Makefile
   src/include/Makefile
   src/include/R_ext/Makefile
   src/library/Makefile
@@ -15081,11 +15124,29 @@ fi; done
 
 EOF
 cat >> $CONFIG_STATUS <<EOF
-
+am_indx=1
+for am_file in src/include/config.h; do
+  case " \$CONFIG_HEADERS " in
+  *" \$am_file "*)
+    am_dir=\`echo \$am_file |sed 's%:.*%%;s%[^/]*\$%%'\`
+    if test -n "\$am_dir"; then
+      am_tmpdir=\`echo \$am_dir |sed 's%^\(/*\).*\$%\1%'\`
+      for am_subdir in \`echo \$am_dir |sed 's%/% %'\`; do
+        am_tmpdir=\$am_tmpdir\$am_subdir/
+        if test ! -d \$am_tmpdir; then
+          mkdir \$am_tmpdir
+        fi
+      done
+    fi
+    echo timestamp > "\$am_dir"stamp-h\$am_indx
+    ;;
+  esac
+  am_indx=\`expr \$am_indx + 1\`
+done
 
 EOF
 cat >> $CONFIG_STATUS <<\EOF
-test -z "$CONFIG_HEADERS" || echo timestamp > src/include/stamp-h
+test -z "$CONFIG_HEADERS" || echo timestamp >	   src/include/stamp-h
 
 exit 0
 EOF

@@ -57,13 +57,15 @@ DISTFILES = Makefile.in Makefile.win \
 	$(SOURCES_F) \
 	gram.y
 
+## these are build with CPICFLAGS so safe to use in libR.so
 ZLIB_CPPFLAGS = @BUILD_ZLIB_TRUE@ -I$(top_srcdir)/src/extra/zlib
 ## use an explicit library: there might be an unsatisfactory -lz around
 R_ZLIBS = @BUILD_ZLIB_TRUE@ ../extra/zlib/libz.a
+R_XDR = @BUILD_XDR_TRUE@ ../extra/xdr/libxdr.a
 
 ## <FIXME>
 ## Names in here should use `$(top_builddir)' instead ...
-RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a @BUILD_XDR_TRUE@ ../extra/xdr/libxdr.a
+RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a $(R_XDR)
 ## </FIXME>
 
 Rexecbin_PROGRAMS = R.bin
@@ -92,7 +94,7 @@ libR_la_OBJECTS = $(OBJECTS:.o=.lo)
 ## <FIXME>
 ## This should also have `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo`, but
 ## of course this will not work when the files do not exist yet :-)
-libR_la_LIBADD = @LTLIBOBJS@ @LTALLOCA@ $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) @BUILD_XDR_TRUE@ ../extra/xdr/libxdr.a
+libR_la_LIBADD = @LTLIBOBJS@ @LTALLOCA@ $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS) $(R_ZLIBS) $(R_XDR)
 libR_la_DEPENDENCIES = @LTLIBOBJS@ @LTALLOCA@ ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo
 ## </FIXME>
 @USE_LIBTOOL_TRUE@libR_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)

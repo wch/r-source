@@ -1414,7 +1414,7 @@ AM_CONDITIONAL(BUILD_XDR, test "${r_cv_xdr}" = no)
 ## R_ZLIB()
 ##
 AC_DEFUN([R_ZLIB], [
-  AC_CHECKING(if zlib is installed or needs to be compiled)
+  AC_CHECKING(if suitable zlib is installed or needs to be compiled)
   have_zlib=no
   AC_CHECK_LIB(z, gzopen, [
     AC_CHECK_HEADER(zlib.h, [
@@ -1438,12 +1438,21 @@ int main() {
   if test "${have_zlib}" = yes; then
     AC_DEFINE(HAVE_ZLIB)
     LIBS="-lz ${LIBS}"
+    echo "using installed zlib"
   else
-    if test -f src/extra/zlib/Makefile ; then
-      AC_CHECKING(we will build zlib for you)
-    else
-      AC_MSG_ERROR(neither zlib nor its configured sources were found)
-    fi
+    echo "we will build zlib for you"
+    AC_CACHE_CHECK([mmap support for zlib], r_cv_zlib_mmap,
+      AC_TRY_RUN([
+#include <sys/types.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+caddr_t hello() {
+  return mmap((caddr_t)0, (off_t)0, PROT_READ, MAP_SHARED, 0, (off_t)0); 
+}],
+	       [r_cv_zlib_mmap=no],
+	       [r_cv_zlib_mmap=yes],
+	       [r_cv_zlib_mmap=yes]))
+    AM_CONDITIONAL(USE_MMAP_ZLIB, test "${r_cv_zlib_mmap}" = yes)
   fi
   AM_CONDITIONAL(BUILD_ZLIB, test "${have_zlib}" = no)
 ])

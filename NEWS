@@ -72,16 +72,6 @@ DOCUMENTATION CHANGES
 
 UTILITIES
 
-INSTALLATION
-
-    o	zlib 1.1.3 or later is required.  Installation will build a
-	copy if necessary to build R: unpack the zlib-1.1.3 sources
-	as src/extra/zlib and run configure in that directory.
-
-	An installed shared-library zlib is required for building 
-	R as a shared library.
-
-
 C-LEVEL FACILITIES
 
     o	findInterval(xt[],n,x,...) gives the index (or interval number)

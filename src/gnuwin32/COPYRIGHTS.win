@@ -43,12 +43,6 @@ src/gnuwin32/unzip/*
 
 	See the file src/gnuwin32/unzip/LICENSE for usage conditions.
 
-src/extra/xdr/*
-
-	Copyright (undated) Sun Microsystems, Inc.
-
-	See the file src/extra/xdr/copyrght.txt
-
 src/gnuwin32/math/*
 
         Cephes Math Library Release 2.3:  March, 1995
