@@ -112,6 +112,10 @@ Date: Tue, 4 Dec 2001 11:29:58 -0500 (EST)
 Subject: Undocumenten in: R INSTALL --help
 From: Peter Kleiweg <kleiweg@let.rug.nl>
 Date: Mon, 8 Apr 2002 17:19:20 +0200 (CEST)
+* PR# 1554 *
+Subject: R-admin docs, Installing packages
+From: david.firth@nuffield.ox.ac.uk
+Date: Tue, 14 May 2002 17:13:14 +0200 (MET DST)
 
 Directory:  Graphics
 
@@ -333,6 +337,13 @@ Date: Thu, 13 Dec 2001 13:46:54 -0500 (EST)
 Subject:  Problem with "missing" in "local" 
 From: J.C.Rougier@durham.ac.uk
 Date: Fri, 4 Jan 2002 13:34:34 GMT
+* PR# 1570 *
+Subject: Re: [R] options()$warn==2 and try()
+From: Thomas Lumley <tlumley@u.washington.edu>
+Date: Fri, 17 May 2002 14:03:40 -0700 (PDT)
+--I assume that clearing inWarning is safe because recursive warnings will create
+--recursive errors, which will be ignored in errorcall()
+--
 
 Directory:  Low-level
 
@@ -474,27 +485,19 @@ Directory:  incoming
 Subject: {round,trunc}.POSIXt and daylight savings time
 From: Don MacQueen <macq@llnl.gov>
 Date: Sat, 11 May 2002 22:22:41 -0700
-* PR# 1554 *
-Subject: R-admin docs, Installing packages
-From: david.firth@nuffield.ox.ac.uk
-Date: Tue, 14 May 2002 17:13:14 +0200 (MET DST)
 * PR# 1556 *
 Subject: lib.fixup, .GlobalEnv, and R1.5.0
 From: mark.bravington@csiro.au
 Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
-* PR# 1560 *
-Subject: ?®???? ?????? ??º??¦ ?????????[±¤°?]
-From: ?????? PR <khs5756@lycos.co.kr>
-Date: Thu, 16 May 2002 02:52:11 +0900
-* PR# 1562 *
-Subject: File and Print Shareing Not Found.
-From: sky-info <sky-info@skynet.com.hk>
-Date: Thu, 16 May 2002 21:12:58 +1000
-* PR# 1563 *
-Subject: [?º??±¤°?]  100% ?????º???????®?¦ ???????????
-From: ???????? <50love34@hanmail.net>
-Date: Fri, 17 May 2002 00:27:01 +0900
-* PR# 1564 *
-Subject: Maritime Newsletter (Week 20)
-From: "Marine Digital Inc."<newsletter@marinedigital.com>
-Date: Fri, 17 May 2002 02:02:08 +0900
+* PR# 1567 *
+Subject: type.convert() does not treat "NA" as ordinary string as intended from version 1.5
+From: oehl_list@gmx.de
+Date: Fri, 17 May 2002 14:57:53 +0200 (MEST)
+* PR# 1568 *
+Subject: Re: [Rd] type.convert() does not treat "NA" as ordinary string as
+From: ripley@stats.ox.ac.uk
+Date: Fri, 17 May 2002 15:47:59 +0100 (BST)
+* PR# 1569 *
+Subject: pbinom gotcha
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 17 May 2002 18:26:30 +0200
