@@ -45,7 +45,8 @@ substring(text, first, last = 1000000) <- value
 
   These functions are often used with \code{\link{nchar}} to truncate a
   display.  That does not really work (you want to limit the width, not
-  the number of characters), but at least make sure you use
+  the number of characters, so it would be better to use
+  \code{\link{strtrim}}), but at least make sure you use
   \code{nchar(type="c")}.
 }
 \references{

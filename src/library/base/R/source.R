@@ -52,8 +52,8 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	    dep <- substr(paste(deparse(ei, control = c("showAttributes","useSource")),
 	    		  collapse = "\n"), 12, 1e+06)
 	    # -1: drop ")"
-            ## <FIXME> want widths here, not #chars.
-	    nd <- nchar(dep, type="w") - 1
+            ## <FIXME> really want widths here, not #chars.
+	    nd <- nchar(dep, type="c") - 1
 	    do.trunc <- nd > max.deparse.length
 	    dep <- strtrim(dep, if (do.trunc) max.deparse.length else nd)
 	    cat("\n", prompt.echo, dep, if (do.trunc)

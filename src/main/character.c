@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2005  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -151,6 +151,7 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 		wc = (wchar_t *) buff;
 		mbstowcs(wc, xi, nc + 1);
 		INTEGER(s)[i] = wcswidth(wc, 2147483647);
+		if(INTEGER(s)[i] < 0) INTEGER(s)[i] = nc
 #endif
 #else
 		INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
