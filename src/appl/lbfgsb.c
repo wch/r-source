@@ -3394,9 +3394,6 @@ static void dcsrch(double *f, double *g, double *stp,
      **********
 */
 
-    /* System generated locals */
-    double d__1;
-
     /* Local variables */
     int stage;
     double finit, ginit, width, ftest, gtest, stmin, stmax, width1, fm,
@@ -3540,11 +3537,11 @@ static void dcsrch(double *f, double *g, double *stp,
     }
 /*     Decide if a bisection step is needed. */
     if (brackt) {
-	if ((d__1 = sty - stx, fabs(d__1)) >= width1 * .66) {
+	if (fabs(sty - stx) >= width1 * .66) {
 	    *stp = stx + (sty - stx) * .5;
 	}
 	width1 = width;
-	width = (d__1 = sty - stx, fabs(d__1));
+	width = fabs(sty - stx);
     }
 /*     Set the minimum and maximum steps allowed for stp. */
     if (brackt) {
@@ -3690,10 +3687,10 @@ static void dcstep(double *stx, double *fx, double *dx,
 */
 
     /* System generated locals */
-    double d__1, d__2, d__3;
+    double d__1, d__2;
 
     /* Local variables */
-    double sgnd, stpc, stpf, stpq, p, q, gamma, r__, s, theta;
+    double sgnd, stpc, stpf, stpq, p, q, gamm, r__, s, theta;
 
     sgnd = *dp * (*dx / fabs(*dx));
 /*     First case: A higher function value. The minimum is bracketed. */
@@ -3708,18 +3705,17 @@ static void dcstep(double *stx, double *fx, double *dx,
 	s = max(d__1,d__2);
 /* Computing 2nd power */
 	d__1 = theta / s;
-	gamma = s * sqrt(d__1 * d__1 - *dx / s * (*dp / s));
+	gamm = s * sqrt(d__1 * d__1 - *dx / s * (*dp / s));
 	if (*stp < *stx) {
-	    gamma = -gamma;
+	    gamm = -gamm;
 	}
-	p = gamma - *dx + theta;
-	q = gamma - *dx + gamma + *dp;
+	p = gamm - *dx + theta;
+	q = gamm - *dx + gamm + *dp;
 	r__ = p / q;
 	stpc = *stx + r__ * (*stp - *stx);
 	stpq = *stx + *dx / ((*fx - *fp) / (*stp - *stx) + *dx) / 2. * (*stp
 		- *stx);
-	if ((d__1 = stpc - *stx, fabs(d__1)) < (d__2 = stpq - *stx, fabs(d__2)))
-		 {
+	if (fabs(stpc - *stx) < fabs(stpq - *stx)) {
 	    stpf = stpc;
 	} else {
 	    stpf = stpc + (stpq - stpc) / 2.;
@@ -3732,22 +3728,21 @@ static void dcstep(double *stx, double *fx, double *dx,
     } else if (sgnd < 0.) {
 	theta = (*fx - *fp) * 3. / (*stp - *stx) + *dx + *dp;
 /* Computing MAX */
-	d__1 = fabs(theta), d__2 = fabs(*dx), d__1 = max(d__1,d__2), d__2 = fabs(
-		*dp);
+	d__1 = fabs(theta), d__2 = fabs(*dx), 
+	    d__1 = max(d__1,d__2), d__2 = fabs(*dp);
 	s = max(d__1,d__2);
 /* Computing 2nd power */
 	d__1 = theta / s;
-	gamma = s * sqrt(d__1 * d__1 - *dx / s * (*dp / s));
+	gamm = s * sqrt(d__1 * d__1 - *dx / s * (*dp / s));
 	if (*stp > *stx) {
-	    gamma = -gamma;
+	    gamm = -gamm;
 	}
-	p = gamma - *dp + theta;
-	q = gamma - *dp + gamma + *dx;
+	p = gamm - *dp + theta;
+	q = gamm - *dp + gamm + *dx;
 	r__ = p / q;
 	stpc = *stp + r__ * (*stx - *stp);
 	stpq = *stp + *dp / (*dp - *dx) * (*stx - *stp);
-	if ((d__1 = stpc - *stp, fabs(d__1)) > (d__2 = stpq - *stp, fabs(d__2)))
-		 {
+	if (fabs(stpc - *stp) > fabs(stpq - *stp)) {
 	    stpf = stpc;
 	} else {
 	    stpf = stpq;
@@ -3765,20 +3760,20 @@ static void dcstep(double *stx, double *fx, double *dx,
 	d__1 = fabs(theta), d__2 = fabs(*dx),
 	    d__1 = max(d__1,d__2), d__2 = fabs(*dp);
 	s = max(d__1,d__2);
-/*	  The case gamma = 0 only arises if the cubic does not tend */
+/*	  The case gamm = 0 only arises if the cubic does not tend */
 /*	  to infinity in the direction of the step. */
 /* Computing MAX */
 /* Computing 2nd power */
-	d__3 = theta / s;
-	d__2 = d__3 * d__3 - *dx / s * (*dp / s);
-	gamma = s * sqrt((max(0.,d__2)));
+	d__1 = theta / s;
+	d__1 = d__1 * d__1 - *dx / s * (*dp / s);
+	gamm = d__1 < 0 ? 0. : s * sqrt(d__1);
 	if (*stp > *stx) {
-	    gamma = -gamma;
+	    gamm = -gamm;
 	}
-	p = gamma - *dp + theta;
-	q = gamma + (*dx - *dp) + gamma;
+	p = gamm - *dp + theta;
+	q = gamm + (*dx - *dp) + gamm;
 	r__ = p / q;
-	if (r__ < 0. && gamma != 0.) {
+	if (r__ < 0. && gamm != 0.) {
 	    stpc = *stp + r__ * (*stx - *stp);
 	} else if (*stp > *stx) {
 	    stpc = *stpmax;
@@ -3790,8 +3785,7 @@ static void dcstep(double *stx, double *fx, double *dx,
 /*	     A minimizer has been bracketed. If the cubic step is */
 /*	     closer to stp than the secant step, the cubic step is */
 /*	     taken, otherwise the secant step is taken. */
-	    if ((d__1 = stpc - *stp, fabs(d__1)) < (d__2 = stpq - *stp, fabs(
-		    d__2))) {
+	    if (fabs(stpc - *stp) < fabs(stpq - *stp)) {
 		stpf = stpc;
 	    } else {
 		stpf = stpq;
@@ -3806,8 +3800,7 @@ static void dcstep(double *stx, double *fx, double *dx,
 /*	     A minimizer has not been bracketed. If the cubic step is */
 /*	     farther from stp than the secant step, the cubic step is */
 /*	     taken, otherwise the secant step is taken. */
-	    if ((d__1 = stpc - *stp, fabs(d__1)) > (d__2 = stpq - *stp, fabs(
-		    d__2))) {
+	    if (fabs(stpc - *stp) > fabs(stpq - *stp)) {
 		stpf = stpc;
 	    } else {
 		stpf = stpq;
@@ -3828,12 +3821,12 @@ static void dcstep(double *stx, double *fx, double *dx,
 	    s = max(d__1,d__2);
 /* Computing 2nd power */
 	    d__1 = theta / s;
-	    gamma = s * sqrt(d__1 * d__1 - *dy / s * (*dp / s));
+	    gamm = s * sqrt(d__1 * d__1 - *dy / s * (*dp / s));
 	    if (*stp > *sty) {
-		gamma = -gamma;
+		gamm = -gamm;
 	    }
-	    p = gamma - *dp + theta;
-	    q = gamma - *dp + gamma + *dy;
+	    p = gamm - *dp + theta;
+	    q = gamm - *dp + gamm + *dy;
 	    r__ = p / q;
 	    stpc = *stp + r__ * (*sty - *stp);
 	    stpf = stpc;
