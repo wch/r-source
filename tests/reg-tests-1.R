@@ -471,8 +471,10 @@ unique(c(NaN, bb))          #[1] NaN 0 1 2 3 NA
 stopifnot(identical(unique(c(NaN, b)), unique(c(NaN, bb))))
 ## 1.4.0 gives [1] NaN 0 1 2 NaN 3 NA   on most platforms
 
+
 ## PR 1271  detach("package:base") crashes R.
 try(detach("package:base"))
+
 
 ## reported by PD 2002-01-24
 Y <- matrix(rnorm(20), , 2)
@@ -481,6 +483,7 @@ fit # failed
 print(fit, intercept = TRUE)
 summary(fit) # failed
 summary(fit, intercept = TRUE)
+
 
 ## Several  qr.*() functions lose (dim)names.
 ## reported by MM 2002-01-26
@@ -515,11 +518,18 @@ stopifnot(identical(dimnames(c1), dimnames(c2)),
           all.equal(X4, qr.X(q4), tol = 1e-12)
 )
 
+
 ## PR 1297  read.fwf() was interpreting `#' in 1.4.0/1
 cat(file="test.fwf", "123ABC123", "123#3 123", "123XYZ123", sep="\n")
 (res <- read.fwf("test.fwf", widths=c(3,3,3), comment.char=""))
 unlink("test.fwf")
 stopifnot(res[2, 2] == "#3 ")
+
+
+## abs was failing to dispatch as part of the Math group generic
+tmp <- data.frame(x = -5:5)
+abs(tmp)
+## failed in 1.4.1.
 
 
 ## This example last: needed < 1.5.0 ##
