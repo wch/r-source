@@ -274,6 +274,11 @@ NEW FEATURES
 
     o	data() now has an 'envir' argument.
 
+    o	Error and warning handling has been modified to incorporate a
+	flexible condition handling mechanism. See online
+	documentation of 'tryCatch' and 'signalCondition'.  Code that
+	does not use these new facilities should remain unaffected.
+
 
 DEPRECATED & DEFUNCT
 
