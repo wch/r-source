@@ -14,7 +14,6 @@ INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS FAQ NEWS RESOURCES THANKS
 DISTFILES = $(INSTFILES) \
 	ChangeLog INSTALL ONEWS README VERSION Y2K \
 	Makeconf.in Makefile.in \
-	acinclude.m4 aclocal.m4 \
 	config.site configure configure.ac \
 	date-stamp
 SUBDIRS = m4 tools afm doc etc share src tests
