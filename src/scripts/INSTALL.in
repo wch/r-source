@@ -115,6 +115,10 @@ for pkg in ${PKGS}; do
   mkdir -p ${lib}/${pkg} || exit 3
   echo "Installing package \`${pkg}' ..."
 
+  if test -x ./configure ; then
+    ./configure
+  fi
+
   if test -d src; then
     echo " libs"
     if ${DEBUG}; then set -x; fi
@@ -207,6 +211,12 @@ for pkg in ${PKGS}; do
     fi
   else
     echo "  No man pages found in package \`${pkg}'"
+  fi
+
+  if ${CLEAN}; then
+    if test -x ./cleanup ; then
+      ./cleanup
+    fi
   fi
 
   echo " DONE (${pkg})"
