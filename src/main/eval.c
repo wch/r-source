@@ -554,6 +554,7 @@ static SEXP replaceCall(SEXP fun, SEXP val, SEXP args, SEXP rhs)
     SETCAR(ptmp, val); ptmp = CDR(ptmp);
     while(args != R_NilValue) {
 	SETCAR(ptmp, CAR(args));
+        SET_TAG(ptmp, TAG(args));
 	ptmp = CDR(ptmp);
 	args = CDR(args);
     }
