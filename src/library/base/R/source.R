@@ -3,76 +3,76 @@ source <-
             verbose = .Options$verbose, prompt.echo = .Options$prompt,
             max.deparse.length = 150)
 {
-  envir <- if (local)
-    sys.frame(sys.parent())
-  else .GlobalEnv
-  if (!missing(echo)) {
-    if (!is.logical(echo))
-      stop("echo must be logical")
-    if (!echo && verbose) {
-      warning("verbose is TRUE, echo not; ... coercing 'echo <- TRUE'")
-      echo <- TRUE
+    envir <- if (local)
+        sys.frame(sys.parent())
+    else .GlobalEnv
+    if (!missing(echo)) {
+        if (!is.logical(echo))
+            stop("echo must be logical")
+        if (!echo && verbose) {
+            warning("verbose is TRUE, echo not; ... coercing 'echo <- TRUE'")
+            echo <- TRUE
+        }
     }
-  }
-  if (verbose) {
-    cat("'envir' chosen:")
-    print(envir)
-  }
-  Ne <- length(exprs <- parse(n = -1, file = file))
-  if (verbose)
-    cat("--> parsed", Ne, "expressions; now eval(.)ing them:\n")
-  if (Ne == 0)
-    return(invisible())
-                                        #-- ass1 :  the  '<-' symbol/name
-  ass1 <- expression(y <- x)[[1]][[1]]
-  if (echo) {
-    ## Reg.exps for string delimiter/ NO-string-del / odd-number-of-str.del
-    ## needed, when truncating below
-    sd <- "\""
-    nos <- "[^\"]*"
-    oddsd <- paste("^", nos, sd, "(", nos, sd, nos, sd, ")*",
-                   nos, "$", sep = "")
-  }
-  for (i in 1:Ne) {
+    if (verbose) {
+        cat("'envir' chosen:")
+        print(envir)
+    }
+    Ne <- length(exprs <- parse(n = -1, file = file))
     if (verbose)
-      cat("\n>>>> eval(expression_nr.", i, ")\n\t  =================\n")
-    ei <- exprs[i]
+        cat("--> parsed", Ne, "expressions; now eval(.)ing them:\n")
+    if (Ne == 0)
+        return(invisible())
+    #-- ass1 :  the  '<-' symbol/name
+    ass1 <- expression(y <- x)[[1]][[1]]
     if (echo) {
-                                        # drop "expression("
-      dep <- substr(paste(deparse(ei), collapse = "\n"),
-                    12, 1e+06)
-                                        # -1: drop ")"
-      nd <- nchar(dep) - 1
-      do.trunc <- nd > max.deparse.length
-      dep <- substr(dep, 1, if (do.trunc)
-                    max.deparse.length
-                    else nd)
-      cat("\n", prompt.echo, dep, if (do.trunc)
-          paste(if (length(grep(sd, dep)) && length(grep(oddsd,
-                                                         dep)))
-                " ...\" ..."
-                else " ....", "[TRUNCATED] "), "\n", sep = "")
+        ## Reg.exps for string delimiter/ NO-string-del / odd-number-of-str.del
+        ## needed, when truncating below
+        sd <- "\""
+        nos <- "[^\"]*"
+        oddsd <- paste("^", nos, sd, "(", nos, sd, nos, sd, ")*",
+                       nos, "$", sep = "")
     }
-    yy <- eval.with.vis(ei, envir)
-    i.symbol <- mode(ei[[1]]) == "name"
-    if (!i.symbol) {
-      ## ei[[1]] : the function "<-" or other
-      curr.fun <- ei[[1]][[1]]
-      if (verbose) {
-        cat("curr.fun:")
-        str(curr.fun)
-      }
+    for (i in 1:Ne) {
+        if (verbose)
+            cat("\n>>>> eval(expression_nr.", i, ")\n\t  =================\n")
+        ei <- exprs[i]
+        if (echo) {
+            # drop "expression("
+            dep <- substr(paste(deparse(ei), collapse = "\n"),
+                          12, 1e+06)
+            # -1: drop ")"
+            nd <- nchar(dep) - 1
+            do.trunc <- nd > max.deparse.length
+            dep <- substr(dep, 1, if (do.trunc)
+                          max.deparse.length
+                          else nd)
+            cat("\n", prompt.echo, dep, if (do.trunc)
+                paste(if (length(grep(sd, dep)) && length(grep(oddsd,
+                                                               dep)))
+                      " ...\" ..."
+                      else " ....", "[TRUNCATED] "), "\n", sep = "")
+        }
+        yy <- eval.with.vis(ei, envir)
+        i.symbol <- mode(ei[[1]]) == "name"
+        if (!i.symbol) {
+            ## ei[[1]] : the function "<-" or other
+            curr.fun <- ei[[1]][[1]]
+            if (verbose) {
+                cat("curr.fun:")
+                str(curr.fun)
+            }
+        }
+        if (verbose >= 2) {
+            cat(".... mode(ei[[1]])=", mode(ei[[1]]), "; paste(curr.fun)=")
+            str(paste(curr.fun))
+        }
+        if (print.eval && yy$visible)
+            print(yy$value)
+        if (verbose)
+            cat(" .. after `", deparse(ei), "'\n", sep = "")
     }
-    if (verbose >= 2) {
-      cat(".... mode(ei[[1]])=", mode(ei[[1]]), "; paste(curr.fun)=")
-      str(paste(curr.fun))
-    }
-    if (print.eval && yy$visible)
-      print(yy$value)
-    if (verbose)
-      cat(" .. after `", deparse(ei), "'\n", sep = "")
-  }
-  invisible(yy)
+    invisible(yy)
 }
 
 sys.source <- function (file)
@@ -132,23 +132,28 @@ function (topic, package = .packages(), lib.loc = .lib.loc, echo = TRUE,
           verbose = .Options$verbose,
           prompt.echo = paste(abbreviate(topic, 6), "> ", sep = ""))
 {
-  topic <- substitute(topic)
-  if (!is.character(topic))
-    topic <- deparse(topic)[1]
-  INDICES <- system.file(pkg=package, lib=lib.loc)
-  file <- index.search(topic, INDICES, "AnIndex")
-  if (file == "")
-    stop(paste("No help file found for'", topic, "'", sep = ""))
-  comp <- strsplit(file, .Platform$file.sep)[[1]]
-  pkg <- comp[length(comp) - 2]
-  if(length(file) > 1)
-    warning(paste("More than one help file found: using package", pkg))
-  lib <- sub(file.path("", pkg, "help", topic), "", file[1])
-  file <- paste(file.path(lib, pkg, "R-ex", topic), "R", sep=".")
-  if (!file.exists(file))
-    stop(paste("'", topic, "' has a help file but no examples file", sep = ""))
-  if (pkg != "base")
-    library(pkg, lib = lib, character.only = TRUE)
-  source(file, echo = echo, prompt.echo = prompt.echo, verbose = verbose,
-         max.deparse.length = 250)
+    topic <- substitute(topic)
+    if (!is.character(topic))
+        topic <- deparse(topic)[1]
+    INDICES <- system.file(pkg=package, lib=lib.loc)
+    file <- index.search(topic, INDICES, "AnIndex")
+    if (file == "")
+        stop(paste("No help file found for'", topic, "'", sep = ""))
+    comp <- strsplit(file, .Platform$file.sep)[[1]]
+    pkg <- comp[length(comp) - 2]
+    if(length(file) > 1)
+        warning(paste("More than one help file found: using package", pkg))
+    lib <- sub(file.path("", pkg, "help", topic), "", file[1])
+    file <- paste(file.path(lib, pkg, "R-ex", topic), "R", sep=".")
+    ## experimental code
+    zfile <- zip.file.extract(file, "Rex.zip")
+    if(zfile != file) on.exit(unlink(zfile))
+    ## end of experimental code
+    if (!file.exists(zfile))
+        stop(paste("'", topic, "' has a help file but no examples file", sep = ""))
+    if (pkg != "base")
+        library(pkg, lib = lib, character.only = TRUE)
+    source(zfile, echo = echo, prompt.echo = prompt.echo, verbose = verbose,
+           max.deparse.length = 250)
 }
+

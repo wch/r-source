@@ -32,11 +32,11 @@ bug.report <- function(subject="", ccaddress=getenv("USER"),
     else{
         if(missing(subject))
             stop("Subject missing")
-        
+
 	file <- tempfile()
 	body <- gsub("\\\\n", "\n", body)
 	cat(body, file=file)
-        
+
 	system(paste(.Options$editor, file))
         if(is.character(ccaddress) && nchar(ccaddress)>0) {
             cmdargs <- paste("-s '", subject, "' -c", ccaddress,
@@ -45,7 +45,7 @@ bug.report <- function(subject="", ccaddress=getenv("USER"),
         else
             cmdargs <- paste("-s '", subject, "'", address, "<",
                              file, "2>/dev/null")
-        
+
         status <- 1
 
         cat("Submit the bug report? ")
@@ -58,19 +58,19 @@ bug.report <- function(subject="", ccaddress=getenv("USER"),
                 status <- system(paste("Mail", cmdargs))
             if(status > 0)
                 status <- system(paste("/usr/ucb/mail", cmdargs))
-            
+
             if(status==0) unlink(file)
             else{
                 cat("Sending email failed!\n")
                 cat("The unsent bug report can be found in file",
                     file, "\n")
             }
-            
+
         }
         else
             cat("The unsent bug report can be found in file",
                 file, "\n")
-        
+
     }
 }
 
@@ -126,7 +126,25 @@ unlink <- function(x) { system(paste("rm -rf ", paste(x, collapse = " "))) }
 ## Unfortunately, the following fails for "-e" on Solaris [/bin/sh-builtin test]
 system.test <- function(...) { system(paste("test", ...)) == 0 }
 ## Martin would like these;  Kurt thinks they're unnecessary:
-## file.exists <-function(file){ sapply(file, function(f)system.test("-e", f))} 
-## dir.exists  <-function(dir) { sapply(dir,  function(d)system.test("-d", d))} 
+## file.exists <-function(file){ sapply(file, function(f)system.test("-e", f))}
+## dir.exists  <-function(dir) { sapply(dir,  function(d)system.test("-d", d))}
 ## Yet another misuse of  is.xxx naming [S-plus compatibility]:
 ## is.dir <- .Alias(dir.exists)
+
+
+zip.file.extract <- function(file, zipname="R.zip")
+{
+    ## somewhat system-specific.
+    unzip <- options()$unzip
+    if(!length(unzip)) return(file)
+    path <- sub("[^/]*$","", file)
+    topic <- substr(file, nchar(path)+1, 1000)
+    if(file.exists(file.path(path, zipname))) {
+        tempdir <- sub("[^/]*$", "", tempfile())
+        if(!system(paste(unzip, "-o",
+                         file.path(path, zipname), topic, "-d", tempdir,
+                         " > /dev/null")))
+            file <- paste(tempdir,  topic, sep="")
+    }
+    file
+}
