@@ -567,7 +567,7 @@ grobWidth <- function(x) {
 }
 
 grobWidth.grob <- function(x) {
-  unit(1, "grobwidth", data=grob)
+  unit(1, "grobwidth", data=x)
 }
 
 grobWidth.gList <- function(x) {
@@ -579,7 +579,7 @@ grobHeight <- function(x) {
 }
 
 grobHeight.grob <- function(x) {
-  unit(1, "grobheight", data=grob)
+  unit(1, "grobheight", data=x)
 }
 
 grobHeight.gList <- function(x) {
