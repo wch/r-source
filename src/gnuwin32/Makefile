@@ -425,7 +425,7 @@ packagedist:
           $(RPREFIX)/bin
 	$(CP) ../../share/make/tests.mk $(RPREFIX)/share/make
 	$(CP) -p graphapp/graphapp.h $(RPREFIX)/src/include
-	$(MAKE) PKGDIR=. pkgclean-windlg
+	$(MAKE) PKGDIR=. pkgclean-windlgs
 	$(CP) -pr windlgs $(RPREFIX)/src/library
 	zip -r9X $(RPREFIX)sp.zip $(RPREFIX)
 	$(RM) -r $(RPREFIX)
