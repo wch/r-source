@@ -53,9 +53,9 @@ Rd_parse(file, text = NULL)
 }
 \examples{
 ## Build the Rd db for the (installed) base package.
-db <- tools:::Rd_db("base")
+db <- Rd_db("base")
 ## Run Rd_parse on all entries in the Rd db.
-db <- lapply(db, function(txt) tools:::Rd_parse(text = txt))
+db <- lapply(db, function(txt) Rd_parse(text = txt))
 ## Extract the metadata.
 meta <- lapply(db, "[[", "meta")
 
