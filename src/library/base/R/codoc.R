@@ -29,6 +29,7 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
     if(!file.exists(docsDir <- file.path(dir, "man")))
         stop(paste("directory", fQuote(dir),
                    "does not contain Rd sources"))
+    isBase <- basename(dir) == "base"
 
     unlinkOnExitFiles <- NULL
     if(!keep.tempfiles)
@@ -62,6 +63,7 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
     cat(files, sep = "\n", file = docsList)
     .Script("perl", "extract-usage.pl", paste(docsList, docsFile))
 
+    .ArgsEnv <- new.env()
     .DocsEnv <- new.env()
     if(verbose)
         cat("Reading docs from", fQuote(docsFile), "\n")
@@ -69,19 +71,45 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
     ind <- grep("^# usages in file", txt)
     ## Use a text connection for reading the blocks determined by ind.
     ## Alternatively, we could split txt into a list of the blocks.
-    numOfUsageCodeLines <- diff(c(ind, length(txt) + 1)) - 1
+    numOfUsageCodeLines <- diff(c(ind, length(txt) + 1)) - 2
     txtConn <- textConnection(paste(txt, collapse = "\n"))
     on.exit(close(txtConn), add = TRUE)
     for(n in numOfUsageCodeLines) {
         whereAmI <- readLines(txtConn, 1)
+        argList <- readLines(txtConn, 1)
         exprs <- try(parse(n = -1, text = readLines(txtConn, n)))
         if(inherits(exprs, "try-error"))
             stop(paste("cannot source", gsub("^# ", "", whereAmI)))
         for(i in exprs) {
-            yy <- try(eval(i, env = .DocsEnv))
+            yy <- try(eval(i, env = .ArgsEnv))
             if(inherits(yy, "try-error"))
                 stop(paste("cannot eval", gsub("^# ", "", whereAmI)))
         }
+
+        lsArgs <- ls(envir = .ArgsEnv, all.names = TRUE)
+        
+        if(argList != "# arglist: *internal*") {
+            argsInArgList <-
+                unlist(strsplit(gsub("# arglist:", "", argList), " "))
+            argsInUsage <-
+                unlist(lapply(lsArgs,
+                              function(f)
+                              names(formals(get(f, envir = .ArgsEnv)))))
+            argsInUsageMissingInArgList <-
+                argsInUsage[!argsInUsage %in% argsInArgList]
+            if(length(argsInUsageMissingInArgList) > 0) {
+                writeLines(paste("Undocumented arguments",
+                                 gsub("^# usages", "", whereAmI),
+                                 ":", sep = ""))
+                print(unique(argsInUsageMissingInArgList))
+            }
+        }
+        
+        ## Copy from .ArgsEnv to .DocsEnv
+        for(f in lsArgs)
+            assign(f, get(f, envir = .ArgsEnv), envir = .DocsEnv)
+        ## Clean up .ArgsEnv
+        rm(list = lsArgs, envir = .ArgsEnv)
     }
     lsDocs <- ls(envir = .DocsEnv, all.names = TRUE)
 
@@ -99,6 +127,13 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
         cat("Reading code from", fQuote(codeFile), "\n")        
     lib.source(codeFile, env = .CodeEnv)
     lsCode <- ls(envir = .CodeEnv, all.names = TRUE)
+
+    ## Objects documented but missing from the code?
+    overdocObjs <- lsDocs[!lsDocs %in% lsCode]
+    if((length(overdocObjs) > 0) && !isBase) {
+        cat("Objects documented but missing from the code:\n")
+        print(overdocObjs)
+    }
 
     funs <- sapply(lsCode,
                    function(f) is.function(get(f, envir = .CodeEnv)))
