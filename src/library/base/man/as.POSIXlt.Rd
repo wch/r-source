@@ -30,7 +30,7 @@ as.POSIXlt(x, tz = "")
   nearest second).  They can take convert a wide variety of objects,
   including objects of the other class and of classes \code{"date"}
   (from package \pkg{\link[date:as.date]{date}} or
-  \pkg{\link[date:as.date]{survival}}), \code{"chron"} and
+  \pkg{\link[survival:as.date]{survival}}), \code{"chron"} and
   \code{"dates"} (from package \pkg{\link[chron]{chron}}) to these
   classes.  They can also convert character strings of the formats
   \code{"2001-02-03"} and \code{"2001/02/03"} optionally followed by

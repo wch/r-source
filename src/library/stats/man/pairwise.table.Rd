@@ -24,4 +24,4 @@ pairwise.table(compare.levels, level.names, p.adjust.method)
 }
 \seealso{ \code{\link{pairwise.t.test}}, et al.}
 
-\keyword{ htest}%-- one or more ...
+\keyword{htest}

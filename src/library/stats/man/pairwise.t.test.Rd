@@ -18,7 +18,7 @@ pairwise.t.test(x, g, p.adjust.method=p.adjust.methods, pool.sd=TRUE, \dots)
 \value{
   Object of class \code{"pairwise.htest"}
 }
-\seealso{ \code{\link{t.test}}, \code{\link[base]{p.adjust}}}
+\seealso{ \code{\link{t.test}}, \code{\link{p.adjust}}}
 
 \examples{
 data(airquality)

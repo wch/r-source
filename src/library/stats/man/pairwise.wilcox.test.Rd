@@ -18,7 +18,7 @@ pairwise.wilcox.test(x, g, p.adjust.method=p.adjust.methods, \dots)
 \value{
   Object of class \code{"pairwise.htest"}
 }
-\seealso{ \code{\link{wilcox.test}}, \code{\link[base]{p.adjust}}}
+\seealso{ \code{\link{wilcox.test}}, \code{\link{p.adjust}}}
 
 \examples{
 data(airquality)
