@@ -14,8 +14,10 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
 }
 \arguments{
   \item{x}{the object to be written, typically a data frame.  If not, it
-    is attempted to create one from it.}
+    is attempted to coerce \code{x} to a data frame.}
   \item{file}{the name of the file which the data are to be written to.}
+  \item{append}{logical. If true, the output is appended to the file. If
+    false, any existing file of the name is destroyed.}
   \item{sep}{the field separator string.  Values on each line of the file
     are separated by this string.} 
   \item{col.names}{a logical value indicating whether the column names
@@ -39,7 +41,7 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
   used to write CSV files for input to spreadsheets.
 }
 \seealso{
-  \code{\link{read.table}}.
+  \code{\link{read.table}}, \code{\link{write}}.
 }
 \example{
 \dontrun{
