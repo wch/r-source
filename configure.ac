@@ -1293,7 +1293,7 @@ R is now configured for ${host}
   R profiling support:       ${want_R_profiling}
   R as a shared library:     ${want_R_shlib}
 ])
-if test -m "${warn_arg_var_FC}"; then
+if test -n "${warn_arg_var_FC}"; then
   AC_MSG_WARN([${warn_arg_var_FC}])
 fi
 if test -n "${warn_arg_with_g77}"; then
