@@ -225,6 +225,7 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho){
     args = CDR(args);
 
     CustomPrintValue(x, rho);
+    PrintDefaults(rho); /* reset, as na.print.etc may have been set */
     return x;
 }/* do_printdefault */
 

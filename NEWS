@@ -203,6 +203,9 @@ BUG FIXES
 
     o   rle() can now handle character vectors, as documented.
 
+    o   print.default failed to reset the settings, so, e.g. na.print
+	could persist when printing a list.
+
 
 	**************************************************
 	*						 *
