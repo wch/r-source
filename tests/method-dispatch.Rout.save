@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-02-01)
+Version 1.7.1 Patched (2003-07-02)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -89,7 +89,7 @@ abc: Before dispatching; x=Class 'expression'   expression((x))
 abc: Before dispatching; x=Class 'expression'   expression(sin(x))
 'expression' method of abc: abc.expression(e1) 
 > abc(e0[[1]])
-abc: Before dispatching; x=Class '('  language, mode "(": ( x
+abc: Before dispatching; x=Class '('  language, mode "(": (x)
 '(' method of abc: "abc.("(e0[[1]]) 
 > abc(e1[[1]])
 abc: Before dispatching; x=Class 'call'  language sin(x)
