@@ -1,3 +1,19 @@
+r-base (0.90.1-0.19991205) unstable; urgency=low
+
+  * Experimental build for the next release
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Sun,  5 Dec 1999 15:04:27 -0600
+
+r-base (0.90.0-2) unstable; urgency=low
+
+  * added Conflicts: r-cran in control (Closes: #51673)
+  * Reinstated -Xfoo flags in call to dh_md5sums for Bug#35744
+  * Set up --mandir so package builds with -rfakeroot (Closes: 51901)
+  * Undid Dirk's marking of Rd2txt.1 Rdindex.1 Sd2Rd.1 as undocumented
+    (the manual pages are symbolic links to the Rdconv.1 page)
+  
+ -- Douglas Bates <bates@stat.wisc.edu>  Sun,  5 Dec 1999 15:03:52 -0600
+
 r-base (0.90.0-1) unstable; urgency=low
 
   * Non-maintainer upload dealing with the usr/doc to usr/share/doc

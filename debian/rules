@@ -15,9 +15,9 @@ build:
 	dh_testdir
 	R_UNZIPCMD=/usr/bin/miniunzip R_ZIPCMD=/usr/bin/minizip\
 	CFLAGS="-Wall -O2" FFLAGS="-Wall -O2"\
-	SHLIBLDFLAGS="-shared -lc" ./configure --prefix=/usr 		\
-					--with-g77			\
-					--mandir=/usr/share/man		\
+	SHLIBLDFLAGS="-shared -lc" ./configure --prefix=/usr 		 \
+					--with-g77			 \
+					--mandir=$(debtmp)/usr/share/man \
 					--host $(arch)
 	make 
 	make help
@@ -56,8 +56,8 @@ binary-arch: build
 	(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/html .)
 	(cd $(debdoc) && ln -s ../../../lib/R/library .)
 	dh_installmenu
-	dh_installmanpages re_format.7 regex.3
-	dh_undocumented	Rd2txt.1 Rdindex.1 Sd2Rd.1
+	dh_installmanpages re_format.7 regex.3 getline.3
+#	dh_undocumented	Rd2txt.1 Rdindex.1 Sd2Rd.1
 	dh_installchangelogs NEWS 
 	dh_strip
 	dh_compress
@@ -66,8 +66,8 @@ binary-arch: build
 	dh_shlibdeps
 	dh_gencontrol
 	dh_makeshlibs
-#	dh_md5sums -X'usr/bin/R'  -XLibIndex -Xindex.txt -Xfunction.html -Xpackages.html
-	dh_md5sums 
+	dh_md5sums -X'usr/bin/R'  -XLibIndex -Xindex.txt -Xfunction.html -Xpackages.html
+#	dh_md5sums 
 	dh_builddeb
 
 # Below here is fairly generic really
