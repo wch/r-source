@@ -2,7 +2,7 @@
 \title{Apply a Function Over a List or Vector}
 \usage{
 lapply(X, FUN, \dots)
-sapply(X, FUN, \dots, simplify = TRUE)
+sapply(X, FUN, \dots, simplify = TRUE, USE.NAMES = TRUE)
 }
 \alias{lapply}
 \alias{sapply}
@@ -14,6 +14,9 @@ sapply(X, FUN, \dots, simplify = TRUE)
   \item{\dots}{optional arguments to \code{FUN}.}
   \item{simplify}{logical; should the result be simplified to a vector
     if possible?}
+  \item{USE.NAMES}{logical; if \code{TRUE} and if \code{X} is character,
+    use \code{X} as \code{\link{names}} for the result unless it had names
+    already.}
 }
 \description{
   \code{lapply} returns a list of the same length as \code{X}.  Each
