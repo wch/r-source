@@ -247,7 +247,7 @@ built into the base @R{} environment, but many are supplied as
 @emph{packages}.  There are about 25 packages supplied with @R{} (called
 ``standard'' and ``recommended'' packages) and many more are available
 through the @acronym{CRAN} family of Internet sites (via
-@uref{http://CRAN.R-project.org}) and elsewhere.  More details on
+@url{http://CRAN.R-project.org}) and elsewhere.  More details on
 packages are given later (@pxref{Packages}).
 
 Most classical statistics and much of the latest methodology is
@@ -2607,11 +2607,11 @@ greater than 2 on the search path can be detached by giving their number
 to @code{detach}, but it is much safer to always use a name, for example
 by @code{detach(lentils)} or @code{detach("lentils")}
 
-@quotation
-@strong{Note}: With the current release of @R{} lists and data frames
-can only be attached at position 2 or above.  It is not possible to
-directly assign into an attached list or data frame (thus, to some
-extent they are static).
+@quotation Note
+With the current release of @R{} lists and data frames can only be
+attached at position 2 or above.  It is not possible to directly assign
+into an attached list or data frame (thus, to some extent they are
+static).
 @c This is likely to change in the next year or so.
 @end quotation
 
@@ -2954,9 +2954,7 @@ and to simulate from the distribution.
 
 @quotation
 @multitable{Distribution namessss}{names, names}{arguments, arguments}
-
-@item Distribution @tab @R{} name @tab additional arguments
-
+@headitem Distribution @tab @R{} name @tab additional arguments
 @item beta @tab @code{beta} @tab @code{shape1, shape2, ncp}
 @item binomial @tab  @code{binom} @tab @code{size, prob}
 @item Cauchy @tab @code{cauchy} @tab @code{location, scale}
@@ -2975,7 +2973,6 @@ and to simulate from the distribution.
 @item uniform @tab @code{unif} @tab @code{min, max}
 @item Weibull @tab @code{weibull} @tab @code{shape, scale}
 @item Wilcoxon @tab @code{wilcox} @tab @code{m, n}
-
 @end multitable
 @end quotation
 
@@ -4747,9 +4744,7 @@ shown in the following table:
 
 @quotation
 @multitable @columnfractions 0.25 0.55
-
-@item Family name @tab Link functions
-
+@headitem Family name @tab Link functions
 @item @code{binomial} @tab @code{logit}, @code{probit}, @code{log}, @code{cloglog}
 @item @code{gaussian} @tab @code{identity}, @code{log}, @code{inverse}
 @item @code{Gamma} @tab @code{identity}, @code{inverse}, @code{log}
@@ -4757,7 +4752,6 @@ shown in the following table:
 @item @code{poisson} @tab @code{identity}, @code{log}, @code{sqrt}
 @item @code{quasi} @tab @code{logit}, @code{probit}, @code{cloglog},
 @code{identity}, @code{inverse}, @code{log}, @code{1/mu^2}, @code{sqrt}
-
 @end multitable
 @end quotation
 
@@ -6302,7 +6296,7 @@ highlight) plots.  However, extensive dynamic graphics facilities are
 available in the system XGobi by Swayne, Cook and Buja available from
 
 @quotation
-@uref{http://www.research.att.com/areas/stat/xgobi/}
+@url{http://www.research.att.com/areas/stat/xgobi/}
 @end quotation
 
 @noindent
@@ -6311,7 +6305,7 @@ XGobi currently runs under the X Windows system on either UNIX or
 Windows, and @R{} interfaces are available for each.
 
 A development of XGobi called GGobi is under development: see
-@uref{http://www.ggobi.org}.
+@url{http://www.ggobi.org}.
 
 @node Packages, A sample session, Graphics, Top
 @chapter Packages
@@ -6392,8 +6386,8 @@ statistical methods, others give access to data or hardware, and others
 are designed to complement textbooks.  Some (the @emph{recommended}
 packages) are distributed with every binary distribution of @R{}.  Most
 are available for download from @acronym{CRAN}
-(@uref{http://CRAN.R-project.org/} and its mirrors), and other
-repositories such as Bioconductor (@uref{http://www.bioconductor.org/}).
+(@url{http://CRAN.R-project.org/} and its mirrors), and other
+repositories such as Bioconductor (@url{http://www.bioconductor.org/}).
 The @emph{R FAQ} contains a list that was current at the time of
 release, but the collection of available packages changes frequently.
 
@@ -6911,7 +6905,7 @@ Check add-on packages.
 Post-process @R{} profiling files.
 @item Rdconv
 Convert Rd format to various other formats, including @HTML{}, Nroff,
-La@TeX{}, plain text, and S documentation format.
+@LaTeX{}, plain text, and S documentation format.
 @item Rd2dvi
 Convert Rd format to DVI/PDF.
 @item Rd2txt
@@ -6975,19 +6969,19 @@ Enable the ``Break to debugger'' menu item in @code{Rgui}, and trigger
 a break to the debugger during command line processing.
 @end table
 
-In Windows with @code{R CMD} you may also specify your own @code{*.bat}
-or @code{*.exe} file instead of one of the built-in commands.  It will
+In Windows with @code{R CMD} you may also specify your own @file{*.bat}
+or @file{*.exe} file instead of one of the built-in commands.  It will
 be run with the following environment variables set appropriately:
-@code{R_HOME}, @code{R_VERSION}, @code{R_CMD}, @code{R_OSTYPE},
-@code{PATH}, @code{PERL5LIB}, and @code{TEXINPUTS}.  For example, if you
-already have @code{latex.exe} on your path, then
+@env{R_HOME}, @env{R_VERSION}, @env{R_CMD}, @env{R_OSTYPE}, @env{PATH},
+@env{PERL5LIB}, and @env{TEXINPUTS}.  For example, if you already have
+@file{latex.exe} on your path, then
 
 @example
 R CMD latex.exe mydoc
 @end example
 @noindent
-will run LaTeX on mydoc.tex, with the path to @R{}'s @code{share/texmf} macros
-added to @code{TEXINPUTS}.
+will run @LaTeX{} on @file{mydoc.tex}, with the path to @R{}'s
+@file{share/texmf} macros added to @env{TEXINPUTS}.
 
 @node Invoking R under Mac OS X,  , Invoking R under Windows, Invoking R
 @appendixsec Invoking R under Mac OS X
@@ -6996,7 +6990,7 @@ There are two ways to run @R{} under Mac OS X.  Within a Terminal.app
 window by invoking @code{R}, the methods described in the previous
 sections apply.  There is also console-based GUI (@code{R.app}) that by
 default is installed in the @code{Applications} folder on your
-system. It is a standard double-clickable Mac OS X application.
+system.  It is a standard double-clickable Mac OS X application.
 
 The startup procedure under Mac OS X is very similar to that under UNIX.
 The `home directory' is the one inside the R.framework, but the startup
@@ -7012,12 +7006,13 @@ accessible from within the GUI.
 When the @acronym{GNU} @strong{readline} library is available at the
 time @R{} is configured for compilation under UNIX, an inbuilt command
 line editor allowing recall, editing and re-submission of prior commands
-is used.  Note: this appendix does @strong{not} apply to the @acronym{GNOME}
-interface under UNIX, only to the standard command-line interface.
+is used.  Note: this appendix does @strong{not} apply to the
+@acronym{GNOME} interface under UNIX, only to the standard command-line
+interface.
 
 It can be disabled (useful for usage with @acronym{ESS} @footnote{The
 `Emacs Speaks Statistics' package; see the @acronym{URL}
-@uref{http://ESS.R-project.org}}) using the startup option
+@url{http://ESS.R-project.org}}) using the startup option
 @option{--no-readline}.
 
 Windows versions of @R{} have somewhat simpler command-line editing: see

@@ -306,7 +306,7 @@ vector types are listed in the following table.
 
 @quotation
 @multitable {@code{character}} {@code{character}} {@code{character}}
-@item @emph{typeof}    @tab @emph{mode}      @tab @emph{storage.mode}
+@headitem typeof       @tab mode             @tab storage.mode
 @item @code{logical}   @tab @code{logical}   @tab @code{logical}
 @item @code{integer}   @tab @code{numeric}   @tab @code{integer}
 @item @code{double}    @tab @code{numeric}   @tab @code{double}

@@ -949,8 +949,8 @@ or @samp{.swp}, are excluded by default.
 @c <FIXME>
 @c From 1.8.0 on, the build code removes exclude files itself, rather
 @c than relying on tar for doing do, when building *source* packages.
-@c @quotation
-@c @strong{Note}: file exclusion does not work correctly with @acronym{GNU}
+@c @quotation Note
+@c File exclusion does not work correctly with @acronym{GNU}
 @c @code{tar} 1.13 but does work with later versions (e.g., version
 @c 1.13.17).
 @c @end quotation
@@ -972,10 +972,10 @@ should be removed and the build re-run.
 binary distributions, but @code{R CMD INSTALL --build} is preferred (and
 is considerably more flexible).  In particular, Windows users are
 recommended to use @code{R CMD INSTALL --build} and install into the
-main library tree (the default) so that HTML links are resolved.
+main library tree (the default) so that @HTML{} links are resolved.
 
-@quotation
-@strong{Note}: @code{R CMD check} and @code{R CMD build} run @R{} with
+@quotation Note
+@code{R CMD check} and @code{R CMD build} run @R{} with
 @option{--vanilla}, so none of the user's startup files are read.  If
 you need @env{R_LIBS} set (to find packages in a non-standard library)
 you will need to set it in the environment.
@@ -1006,7 +1006,7 @@ be in arbitrary format, however we strongly recommend to provide them in
 PDF format, such that users on all platforms can easily read them.
 
 A special case are documents in Sweave format, which we call
-@emph{package vignettes}.  Sweave allows to integrate La@TeX{} documents
+@emph{package vignettes}.  Sweave allows to integrate @LaTeX{} documents
 and @R{} code and is contained in package @pkg{utils} which is part of
 the base @R{} distribution, see the @code{Sweave} help page for details
 on the document format.  Package vignettes found in directory
@@ -1014,7 +1014,7 @@ on the document format.  Package vignettes found in directory
 @R{} code chunks they contain to ensure consistency between code and
 documentation.  Note that even code chunks with option @code{eval=FALSE}
 are tested, if you want code in a vignette that should not be tested,
-move it to a normal La@TeX{} verbatim environment. The reason for this
+move it to a normal @LaTeX{} verbatim environment. The reason for this
 policy is that users should be able to rely on code examples to be
 executable as seen in the vignette. The R working directory for all
 vignette tests in @code{R CMD check} is the @emph{installed} version of
@@ -1027,7 +1027,7 @@ the @file{doc} subdirectory. Make sure all files needed by the vignette
 vignettes for distribution with the package sources.  By including the
 PDF version in the package sources it is not necessary that the
 vignettes can be compiled at install time, i.e., the package author can
-use private La@TeX{} extensions which are only available on his machine.
+use private @LaTeX{} extensions which are only available on his machine.
 Only the @R{} code inside the vignettes is part of the checking
 procedure, typesetting manuals is not part of the package QC.
 
@@ -1036,7 +1036,7 @@ Sweave format.  If no @file{Makefile} is found in directory
 @file{inst/doc}, then @code{texi2dvi --pdf} is run on all vignettes.
 Whenever a @file{Makefile} is found, then @code{R CMD build} will try to
 run @command{make} after the @code{Sweave} step, such that PDF manuals
-can be created from arbitrary source formats (plain La@TeX{} files,
+can be created from arbitrary source formats (plain @LaTeX{} files,
 @dots{}).  The @file{Makefile} should take care of both creation of PDF
 files and cleaning up afterwards, i.e., delete all files that shall not
 appear in the final package archive.  Note that the @code{make} step is
@@ -1047,13 +1047,13 @@ It is no longer necessary to provide a @file{00Index.dcf} file in the
 automatically from the @code{\VignetteIndexEntry} statements in all
 Sweave files when installing from source, or when using the package
 builder (@pxref{Checking and building packages}).  The
-@code{\VignetteIndexEntry} statement is best placed in La@TeX{} comment,
+@code{\VignetteIndexEntry} statement is best placed in @LaTeX{} comment,
 such that no definition of the command is necessary.
 
-At install time an HTML index for all vignettes is automatically created
-from the @code{\VignetteIndexEntry} statements unless a file
+At install time an @HTML{} index for all vignettes is automatically
+created from the @code{\VignetteIndexEntry} statements unless a file
 @file{index.html} exists in directory @file{inst/doc}. This index is
-linked into the HTML help system for each package.
+linked into the @HTML{} help system for each package.
 
 @node Submitting a package to CRAN, Package name spaces, Writing package vignettes, Creating R packages
 @section Submitting a package to @acronym{CRAN}
@@ -1535,7 +1535,7 @@ corresponds to @code{int} in C on all @R{} platforms.
 Errors in memory allocation and reading/writing outside arrays are very
 common causes of crashes (e.g. segfaults) on some machines.  If you have
 access to Linux on an @code{ix86} platform you can use @code{valgrind}
-(@uref{http://valgrind.kde.org/}) to look out for possible problems.
+(@url{http://valgrind.kde.org/}) to look out for possible problems.
 To run some examples under @code{valgrind} use something like
 
 @example
@@ -1558,7 +1558,7 @@ build a version of @R{} specifically to use with @code{valgrind}.
 
 It is possible to run all the examples, tests and vignettes covered by
 @code{R CMD check} under @code{valgrind} by using the option
-@code{--use-valgrind}.  If you do this you will need to select the
+@option{--use-valgrind}.  If you do this you will need to select the
 @code{valgrind} options some other way, for example by having a
 @file{~/.valgrindrc} file containing
 
@@ -1621,7 +1621,7 @@ CMD check} checks for.
 
 @R{} objects are documented in files written in ``@R{} documentation''
 (Rd) format, a simple markup language closely resembling (La)@TeX{},
-which can be processed into a variety of formats, including La@TeX{},
+which can be processed into a variety of formats, including @LaTeX{},
 @HTML{} and plain text.  The translation is carried out by the Perl
 script @command{Rdconv} in @file{@var{R_HOME}/bin} and by the
 installation scripts for packages.
@@ -1680,7 +1680,7 @@ function's arguments and return value, as in the above example).
 Finally, there is a footer with keyword information.  The header and
 footer are mandatory.
 
-See the @uref{http://developer.r-project.org/Rds.html, ``Guidelines for Rd
+See the @url{http://developer.r-project.org/Rds.html, ``Guidelines for Rd
 files''} for guidelines for writing documentation in Rd format which
 should be useful for package writers.
 
@@ -1702,7 +1702,7 @@ particular, functions) are given in this subsection.
 @var{name} typically is the basename of the Rd file containing the
 documentation.  It is the ``name'' of the Rd object represented by the
 file and has to be unique in a package.
-@c and must not contain La@TeX{}
+@c and must not contain @LaTeX{}
 @c special characters (@samp{#}, @samp{$}, @samp{%}, @samp{&}, @samp{~},
 @c @samp{_}, @samp{^}, @samp{\}, @samp{@{}, @samp{@}}).
 
@@ -2198,7 +2198,7 @@ The @code{\describe} command is similar to @code{\itemize} but allows
 initial labels to be specified.  The @code{\item}s take two arguments,
 the label and the body of the item, in exactly the same way as argument
 and value @code{\item}s.  @code{\describe} commands are mapped to
-@code{<DL>} lists in @HTML{} and @code{\description} lists in La@TeX{}.
+@code{<DL>} lists in @HTML{} and @code{\description} lists in @LaTeX{}.
 
 @findex \tabular
 The @code{\tabular} command takes two arguments.  The first gives for
@@ -2256,7 +2256,7 @@ online help.  To this end, the two commands
 @code{\deqn@{@var{latex}@}@{@var{ascii}@}} are used.  Where @code{\eqn}
 is used for ``inline'' formulae (corresponding to @TeX{}'s
 @code{$@dots{}$}, @code{\deqn} gives ``displayed equations'' (as in
-La@TeX{}'s @code{displaymath} environment, or @TeX{}'s
+@LaTeX{}'s @code{displaymath} environment, or @TeX{}'s
 @code{$$@dots{}$$}).
 
 Both commands can also be used as @code{\eqn@{@var{latexascii}@}} (only
@@ -2274,7 +2274,7 @@ The following example is from @file{Poisson.Rd}:
 @end example
 
 @iftex
-For the La@TeX{} manual, this becomes
+For the @LaTeX{} manual, this becomes
 
 @quotation
 @cartouche
@@ -2298,7 +2298,7 @@ for x = 0, 1, 2, ....
 @end cartouche
 @end quotation
 
-@c  For historic reasons mostly, the @TeX{}/La@TeX{} commands @code{\alpha},
+@c  For historic reasons mostly, the @TeX{}/@LaTeX{} commands @code{\alpha},
 @c  @code{\Alpha}, @code{\beta}, @code{\Gamma}, @code{\epsilon},
 @c  @code{\lambda}, @code{\mu}, @code{\pi}, @code{\sigma}, @code{\left(} and
 @c  @code{\right)} exist.  These can be used directly, without using the
@@ -2343,7 +2343,7 @@ other characters are special.  Note that @code{\file} is @strong{not} a
 verbatim-like command.
 
 In ``regular'' text (no verbatim, no @code{\eqn}, @dots{}), you
-currently must escape most La@TeX{} special characters, i.e., besides
+currently must escape most @LaTeX{} special characters, i.e., besides
 @samp{%}, @samp{@{}, and @samp{@}}, the four specials @samp{$},
 @samp{#}, and @samp{_} are produced by preceding each with a @samp{\}.
 (@samp{&} can also be escaped, but need not be.) Further, enter @samp{^}
@@ -2434,12 +2434,12 @@ encoding they are written in: ASCII, UTF-8, Latin-1, Latin-9 @emph{etc}.
 So the @code{\encoding@{@}} directive can be used to specify the
 encoding: if not present the processing assumes that the file is in
 Latin-1 (ISO-8859-1).  This is used when creating the header of the
-HTML conversion and to make a comment in the examples file. It may in
-future be used to convert the encoding of the output files.
+@HTML{} conversion and to make a comment in the examples file.  It may
+in future be used to convert the encoding of the output files.
 
 Wherever possible, avoid non-ASCII chars in @code{Rd} files.  At present
 Latin-1 files work reasonably well, but other encodings will definitely
-give problems with the La@TeX{} conversion and may with others.
+give problems with the @LaTeX{} conversion and may with others.
 
 For convenience, encoding names @code{latin1} and @code{latin2} are
 recognized: these are @code{UTF-8} and likely to work fairly widely.
@@ -2455,7 +2455,7 @@ line.  All of these need Perl to be installed.
 @findex R CMD Rdconv
 Using @code{R CMD Rdconv} one can convert @R{} documentation format to
 other formats, or extract the executable examples for run-time testing.
-Currently, conversions to plain text, @HTML{}, La@TeX{}, and @Sl{}
+Currently, conversions to plain text, @HTML{}, @LaTeX{}, and @Sl{}
 version 3 or 4 documentation formats are supported.
 
 In addition to this low-level conversion tool, the @R{} distribution
@@ -2753,15 +2753,12 @@ and the types of arguments to a C function or FORTRAN subroutine.
 
 @quotation
 @multitable {RRR storage.mode} {RRR storage.mode} {DOUBLE PRECISION}
-
-@item @R{} storage mode @tab  C type  @tab   FORTRAN type
-
+@headitem @R{} storage mode @tab  C type  @tab   FORTRAN type
 @item @code{logical}   @tab @code{int *}     @tab @code{INTEGER}
 @item @code{integer}   @tab @code{int *}     @tab @code{INTEGER}
 @item @code{double}    @tab @code{double *}  @tab @code{DOUBLE PRECISION}
 @item @code{complex}   @tab @code{Rcomplex *} @tab @code{DOUBLE COMPLEX}
 @item @code{character} @tab @code{char **}   @tab @code{CHARACTER*255}
-
 @end multitable
 @end quotation
 
@@ -2997,12 +2994,10 @@ table:
 
 @quotation
 @multitable {@code{.External  }} {@code{R_ExternalMethodDef}}
-
 @item @code{.C} @tab @code{R_CMethodDef}
 @item @code{.Call} @tab @code{R_CallMethodDef}
 @item @code{.Fortran} @tab @code{R_FortranMethodDef}
 @item @code{.External} @tab @code{R_ExternalMethodDef}
-
 @end multitable
 @end quotation
 
@@ -3046,14 +3041,12 @@ following table:
 
 @quotation
 @multitable {@code{character  }} {@code{SINGLESXP}}
-
 @item @code{numeric} @tab @code{REALSXP}
 @item @code{integer} @tab @code{INTSXP}
 @item @code{logical} @tab @code{LGLSXP}
 @item @code{single} @tab @code{SINGLESXP}
 @item @code{character} @tab @code{STRSXP}
 @item @code{list} @tab @code{VECSXP}
-
 @end multitable
 @end quotation
 
@@ -3112,7 +3105,7 @@ brief, high-level introduction in @emph{R News} (volume 1/3, September
 Additionally, there are (experimental) tools that can be used to
 automate the generation of the code to register the routines for a
 collection of C files. See the @code{GccTranslationUnit} module on the
-Omegahat Web site at @uref{http://www.omegahat.org/GccTranslationUnit/}
+Omegahat Web site at @url{http://www.omegahat.org/GccTranslationUnit/}
 for more information.
 
 
@@ -3589,9 +3582,7 @@ The usual @R{} object modes are given in the table.
 
 @quotation
 @multitable {SEXPTYPE} {numeric with storage mode integer integer}
-
-@item SEXPTYPE @tab @R{} equivalent
-
+@headitem SEXPTYPE @tab @R{} equivalent
 @item @code{REALSXP}  @tab numeric with storage mode @code{double}
 @item @code{INTSXP}   @tab integer
 @item @code{CPLXSXP}  @tab complex
@@ -3604,7 +3595,6 @@ The usual @R{} object modes are given in the table.
 @item @code{SYMSXP}   @tab name/symbol
 @item @code{CLOSXP}   @tab function or function closure
 @item @code{ENVSXP}   @tab environment
-
 @end multitable
 @end quotation
 
@@ -5029,10 +5019,10 @@ can be used from C++ code.  Some others need to be included within an
 @code{extern "C"} declaration, and for clarity this is advisable for all
 @R{} header files.
 
-@quotation
-@strong{Note}: Because @R{} re-maps many of its external names to avoid
-clashes with user code, it is @emph{essential} to include the
-appropriate header files when using these entry points.
+@quotation Note
+Because @R{} re-maps many of its external names to avoid clashes with
+user code, it is @emph{essential} to include the appropriate header
+files when using these entry points.
 @end quotation
 
 This remapping can cause problems@footnote{Known problems are redefining
@@ -5698,9 +5688,7 @@ use @code{ln(x)} for the natural logarithm (@code{log(x)} in @R{}).
 
 @quotation
 @multitable {Name can be long}  {Definition (needs space)}  {0.123456789012345678 ...}
-
-@item @strong{Name} @tab @strong{Definition (@code{ln = log})} @tab @strong{round(@emph{value}, 7)}
-
+@headitem Name @tab Definition (@code{ln = log}) @tab round(@emph{value}, 7)
 @c SVID & X/Open Constants -- names from Solaris math.h :
 @item @code{M_E} @tab @math{e} @tab 2.7182818
 @item @code{M_LOG2E} @tab log2(@math{e}) @tab 1.4426950
@@ -6147,7 +6135,7 @@ version includes the patchlevel (as in @samp{9.0}).
 The C99 keyword @code{inline} is recognized by some compilers used to
 build R whereas others need @code{__inline__} or do not support
 inlining.  Portable code can be written using the macro @code{R_INLINE}
-(defined in file @code{Rconfig.h} included by @code{R.h}), as for
+(defined in file @file{Rconfig.h} included by @file{R.h}), as for
 example from package @pkg{cluster}
 
 @example
@@ -6161,7 +6149,7 @@ static R_INLINE int ind_2(int l, int j)
 
 Be aware that using inlining with functions in more than one compilation
 unit is almost impossible to do portably: see
-@uref{http://www.greenend.org.uk/rjk/2003/03/inline.html}.  All the @R{}
+@url{http://www.greenend.org.uk/rjk/2003/03/inline.html}.  All the @R{}
 configure code has checked is that  @code{R_INLINE} can be used in a
 single C file with the compiler used to build @R{}.  We recommend that
 packages making extensive use of inlining include their own configure code.
@@ -6223,55 +6211,55 @@ The header files which @R{} installs are in directory
 @file{R_HOME/include}.  This currently contains
 
 @quotation
-@multitable {R_ext/RConvertors.h}   {Needed to register compiled code in packages}
-@item @code{R.h} @tab includes many other files
-@item @code{S.h} @tab different version for code ported from @Sl{}
-@item @code{Rinternals.h} @tab definitions for using @R{}'s internal structures
-@item @code{Rdefines.h} @tab macros for an @Sl{}-like interface to the above.
-@item @code{Rmath.h} @tab standalone math library
-@item @code{Rversion.h} @tab @R{} version information
-@item @code{Rinterface.h} @tab for add-on front-ends
-@item @code{R_ext/RStartup.h} @tab ditto
-@item @code{R_ext/eventloop.h} @tab ditto, and for packages that need to
+@multitable {@file{R_ext/RConvertors.h}} {Needed to register compiled code in packages}
+@item @file{R.h} @tab includes many other files
+@item @file{S.h} @tab different version for code ported from @Sl{}
+@item @file{Rinternals.h} @tab definitions for using @R{}'s internal structures
+@item @file{Rdefines.h} @tab macros for an @Sl{}-like interface to the above.
+@item @file{Rmath.h} @tab standalone math library
+@item @file{Rversion.h} @tab @R{} version information
+@item @file{Rinterface.h} @tab for add-on front-ends
+@item @file{R_ext/RStartup.h} @tab ditto
+@item @file{R_ext/eventloop.h} @tab ditto, and for packages that need to
 share in the @R{} event loops 
-@item @code{R_ext/Applic.h} @tab optimization and integration
-@item @code{R_ext/BLAS.h} @tab C definitions for BLAS routines
-@item @code{R_ext/Lapack.h} @tab C definitions for some LAPACK routines
-@item @code{R_ext/Linpack.h} @tab C definitions for some LINPACK
+@item @file{R_ext/Applic.h} @tab optimization and integration
+@item @file{R_ext/BLAS.h} @tab C definitions for BLAS routines
+@item @file{R_ext/Lapack.h} @tab C definitions for some LAPACK routines
+@item @file{R_ext/Linpack.h} @tab C definitions for some LINPACK
 routines, not all of which are included in @R{}
-@item @code{R_ext/GetX11Image.h} @tab X11Image interface used by package @pkg{trkplot}
-@item @code{R_ext/Parse.h} @tab a small part of @R{}'s parse interface
-@item @code{R_ext/Callbacks.h} @tab C (and R function) top-level task handlers
-@item @code{R_ext/RConvertors.h} @tab 
-@item @code{R_ext/Rdynload.h} @tab Needed to register compiled code in packages
-@item @code{R_ext/R-ftp-http.h} @tab interface to internal method of @code{download.file} 
-@item @code{R_ext/Riconv.h} @tab interface to @code{iconv}
+@item @file{R_ext/GetX11Image.h} @tab X11Image interface used by package @pkg{trkplot}
+@item @file{R_ext/Parse.h} @tab a small part of @R{}'s parse interface
+@item @file{R_ext/Callbacks.h} @tab C (and R function) top-level task handlers
+@item @file{R_ext/RConvertors.h} @tab 
+@item @file{R_ext/Rdynload.h} @tab Needed to register compiled code in packages
+@item @file{R_ext/R-ftp-http.h} @tab interface to internal method of @code{download.file} 
+@item @file{R_ext/Riconv.h} @tab interface to @code{iconv}
 @end multitable
 @end quotation
 
-The following headers are included by @code{R.h}:
+The following headers are included by @file{R.h}:
 @quotation
 @multitable {R_ext/RConvertors.h}   {definitions for exports from R.dll on Windows.}
-@item @code{Rconfig.h} @tab configuration info that is made available
-@item @code{R_ext/Arith.h} @tab handling for NAs, NaNa, +/-Inf
-@item @code{R_ext/Boolean.h} @tab TRUE/FALSE type
-@item @code{R_ext/Complex.h} @tab C typedefs for @R{}'s @code{complex}
-@item @code{R_ext/Constants.h} @tab constants
-@item @code{R_ext/Error.h}  @tab error handling
-@item @code{R_ext/Memory.h} @tab memory allocation
-@item @code{R_ext/Print.h} @tab @code{Rprintf} and variations.
-@item @code{R_ext/Random.h} @tab random number generation
-@item @code{R_ext/RS.h} @tab definitions common to @code{R.h} and
-@code{S.h}, including @code{F77_CALL} etc.
-@item @code{R_ext/Utils.h} @tab sorting and other utilities
-@item @code{R_ext/libextern.h} @tab definitions for exports from @code{R.dll}
-on Windows.
+@item @file{Rconfig.h} @tab configuration info that is made available
+@item @file{R_ext/Arith.h} @tab handling for NAs, NaNa, +/-Inf
+@item @file{R_ext/Boolean.h} @tab TRUE/FALSE type
+@item @file{R_ext/Complex.h} @tab C typedefs for @R{}'s @code{complex}
+@item @file{R_ext/Constants.h} @tab constants
+@item @file{R_ext/Error.h}  @tab error handling
+@item @file{R_ext/Memory.h} @tab memory allocation
+@item @file{R_ext/Print.h} @tab @code{Rprintf} and variations.
+@item @file{R_ext/Random.h} @tab random number generation
+@item @file{R_ext/RS.h} @tab definitions common to @file{R.h} and
+@file{S.h}, including @code{F77_CALL} etc.
+@item @file{R_ext/Utils.h} @tab sorting and other utilities
+@item @file{R_ext/libextern.h} @tab definitions for exports from
+@file{R.dll} on Windows.
 @end multitable
 @end quotation
 
-The graphics systems are exposed in @code{Rdevices.h} (for writing
-graphics devices), @code{Rgraphics.h} and
-@code{R_ext/Graphics@{Base,Device,Engine@}.h}.
+The graphics systems are exposed in @file{Rdevices.h} (for writing
+graphics devices), @file{Rgraphics.h} and
+@file{R_ext/Graphics@{Base,Device,Engine@}.h}.
 
 
 @node Generic functions and methods, Linking GUIs and other front-ends to R, The R API, Top
@@ -6850,15 +6838,15 @@ currently available that interface directly with @R{} and provide a
 @item
 There is a (D)COM server called @code{StatConnector} written by Thomas
 Baier available on CRAN
-(@uref{http://cran.r-project.org/other-software.html}) which works with
+(@url{http://cran.r-project.org/other-software.html}) which works with
 @code{Rproxy.dll} (in the R distribution) and @code{R.dll} to support
 transfer of data to and from R and remote execution of R commands, as
 well as embedding of an R graphics window.
 
 @item 
 Another (D)COM server, @code{RDCOMServer}, is available from
-@uref{http://www.omegahat.org/}. Its philosophy is discussed in
-@uref{http://www.omegahat.org/RDCOMServer/Docs/Paradigm.html} and is
+@url{http://www.omegahat.org/}. Its philosophy is discussed in
+@url{http://www.omegahat.org/RDCOMServer/Docs/Paradigm.html} and is
 very different from the purpose of this section.
 @end itemize
 @node Calling R.dll directly,  , Using (D)COM, Embedding R under Windows
@@ -7335,7 +7323,7 @@ In addition, the following tools are needed for certain tasks.
 @itemize @bullet
 @item
 Perl version 5 is needed for converting documentation written in Rd
-format to plain text, @HTML{}, La@TeX{}, and to extract the examples.
+format to plain text, @HTML{}, @LaTeX{}, and to extract the examples.
 In addition, several other tools, in particular @command{check} and
 @command{build} (@pxref{Checking and building packages}), require Perl.
 

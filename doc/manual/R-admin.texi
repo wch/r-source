@@ -83,7 +83,7 @@ The current version of this document is @value{VERSION}.
 
 Sources, binaries and documentation for @R{} can be obtained via
 @acronym{CRAN}, the ``Comprehensive R Archive Network'' whose current
-members are listed at @uref{http://cran.r-project.org/mirrors.html}.
+members are listed at @url{http://cran.r-project.org/mirrors.html}.
 
 @menu
 * Getting and unpacking the sources::  
@@ -102,17 +102,17 @@ tar xvfz R-@var{x}.@var{y}.@var{z}.tgz
 @end example
 
 @noindent
-on systems that have GNU @command{tar} installed.  On other systems you
-need at least to have the @command{gzip} program installed.  Then you
-can use
+on systems that have @acronym{GNU} @command{tar} installed.  On other
+systems you need at least to have the @command{gzip} program installed.
+Then you can use
 
 @example
 gzip -dc R-@var{x}.@var{y}.@var{z}.tgz | tar xvf -
 @end example
 
 The pathname of the directory into which the sources are unpacked should
-not contain spaces, as @code{make} (specifically GNU make 3.80) does not
-expect spaces.
+not contain spaces, as @code{make} (specifically @acronym{GNU} make
+3.80) does not expect spaces.
 
 If you need to transport the sources on floppy disks, you can download
 the @file{R-@var{x}.@var{y}.@var{z}.tgz-split.*} files and paste them
@@ -137,11 +137,10 @@ current development version, @samp{r-devel}, are available as daily
 tarballs and via access to the R Subversion repository.
 
 The tarballs are available from
-@uref{ftp://ftp.stat.math.ethz.ch/pub/Software/R/}.  Download either
-@samp{R-patched.tar.gz} or @samp{R-devel.tar.gz} (or the
-@samp{.tar.bz2} versions) and unpack as described in the previous
-section.  They are built in exactly the same way as distributions of R
-releases.
+@url{ftp://ftp.stat.math.ethz.ch/pub/Software/R/}.  Download either
+@file{R-patched.tar.gz} or @file{R-devel.tar.gz} (or the @file{.tar.bz2}
+versions) and unpack as described in the previous section.  They are
+built in exactly the same way as distributions of R releases.
 
 @menu
 * Using Subversion and rsync::  
@@ -150,10 +149,10 @@ releases.
 @node Using Subversion and rsync,  , Getting patched and development versions, Getting patched and development versions
 @subsection Using Subversion and rsync
 
-Sources are also available via @uref{https://svn.R-project.org/R/}, the
+Sources are also available via @url{https://svn.R-project.org/R/}, the
 R Subversion repository.  If you have a Subversion client (see
-@uref{http://subversion.tigris.org/}), you can check out and update the
-current r-devel from @uref{https://svn.r-project.org/R/trunk/} and the
+@url{http://subversion.tigris.org/}), you can check out and update the
+current r-devel from @url{https://svn.r-project.org/R/trunk/} and the
 current r-patched from
 @samp{https://svn.r-project.org/R/branches/R-@var{x}-@var{y}-patches/}
 (where @var{x} and @var{y} are the major and minor number of the current
@@ -216,7 +215,7 @@ wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
 @R{} will configure and build under a number of common Unix and
 Unix-alike platforms including i386-*-freebsd, @var{cpu}-*-linux-gnu for
 the i386, alpha, amd64, arm, hppa, ia64, m68k, powerpc, and sparc CPUs
-(see e.g.@: @uref{http://buildd.debian.org/build.php?&pkg=r-base}),
+(see e.g.@: @url{http://buildd.debian.org/build.php?&pkg=r-base}),
 powerpc-apple-darwin and sparc-sun-solaris, as well as probably (it is
 tested less frequently on these) i386-*-netbsd, i386-*-openbsd,
 i386-sun-solaris, mips-sgi-irix, alpha-dec-osf*, rs6000-ibm-aix and
@@ -318,13 +317,13 @@ make
 
 @noindent
 and so on, as described further below.  This has the advantage of always
-keeping your source tree ``clean''.  (You may need GNU @command{make} to
-allow this, and the pathname of the build directory should not contain
-spaces.)
+keeping your source tree ``clean''.  (You may need @acronym{GNU}
+@command{make} to allow this, and the pathname of the build directory
+should not contain spaces.)
 
 @cindex Help pages
-Make will also build plain text help pages as well as @acronym{HTML} and
-La@TeX{} versions of the @R{} object documentation (the three kinds can
+Make will also build plain text help pages as well as @HTML{} and
+@LaTeX{} versions of the @R{} object documentation (the three kinds can
 also be generated separately using @code{make help}, @code{make html}
 and @code{make latex}).  Note that you need Perl version 5: if this is
 not available on your system, you can obtain PDF versions of the
@@ -345,7 +344,7 @@ it takes several minutes.
 Now @code{rehash} if necessary, type @kbd{R}, and read the @R{} manuals
 and the @R{} @acronym{FAQ} (files @file{FAQ} or
 @file{doc/manual/R-FAQ.html}, or
-@uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html} which always has
+@url{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html} which always has
 the latest version).
 
 @node Making the manuals, Installation, Simple compilation, Installing R under Unix-alikes
@@ -388,9 +387,9 @@ such as @command{xdvi} and @command{dvips}.  The PDF versions can be
 viewed using Acrobat Reader or (fairly recent versions of)
 @command{ghostscript}: they have hyperlinks that can be followed in
 Acrobat Reader.  The info files are suitable for reading online with
-Emacs or the standalone GNU Info.  The DVI and PDF versions will be
-created using the papersize selected at configuration (default ISO a4):
-this can be overridden by setting @env{R_PAPERSIZE} on the
+Emacs or the standalone @acronym{GNU} Info.  The DVI and PDF versions
+will be created using the papersize selected at configuration (default
+ISO a4):  this can be overridden by setting @env{R_PAPERSIZE} on the
 @command{make} command line, or setting @env{R_PAPERSIZE} in the
 environment and using @command{make -e}.  (If re-making the manuals for
 a different papersize, you should first delete the file
@@ -399,7 +398,7 @@ a different papersize, you should first delete the file
 There are some issues with making the reference manual, and in
 particular with the PDF version @file{refman.pdf}.  The help files
 contain both ISO Latin1 characters (e.g. in @file{text.Rd}) and upright
-quotes, neither of which are contained in the standard La@TeX{} Computer
+quotes, neither of which are contained in the standard @LaTeX{} Computer
 Modern fonts.  We have provided four alternatives:
 
 @table @code
@@ -412,14 +411,14 @@ wide.
 @item @code{lm}
 Using the @emph{Latin Modern} fonts.  These are not often installed as
 part of a @TeX{} distribution, but can obtained from
-@uref{http://www.ctan.org/tex-archive/fonts/ps-type1/lm} and mirrors.
+@url{http://www.ctan.org/tex-archive/fonts/ps-type1/lm} and mirrors.
 This uses fonts rather similar to Computer Modern, but is not so good
 on-screen as @code{times}.
 
 @item @code{cm-super}
 Using type-1 versions of the Computer Modern fonts by Vladimir Volovich.
 This is a large installation, obtainable from
-@uref{http://www.ctan.org/tex-archive/fonts/ps-type1/cm-super} and its
+@url{http://www.ctan.org/tex-archive/fonts/ps-type1/cm-super} and its
 mirrors.  These type-1 fonts have poor hinting and so are nowhere near
 so readable on-screen as the other three options.
 
@@ -532,7 +531,7 @@ Installation is @emph{via} the installers @file{@value{RWVERSION}.exe}
 or @file{miniR.exe}.  Just double-click on the icon and follow the
 instructions.  You can uninstall @R{} from the Control Panel.
 
-See the @uref{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
+See the @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
 @acronym{FAQ}} for more details.
 
 @menu
@@ -545,7 +544,7 @@ See the @uref{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
 If you want to build this port from the sources, see the file
 @file{src/gnuwin32/INSTALL} in the source distribution.  You will need
 to collect, install and test an extensive set of tools: see
-@uref{http://www.murdoch-sutherland.com/Rtools/} for the current locations.
+@url{http://www.murdoch-sutherland.com/Rtools/} for the current locations.
 
 You may need to compile under a case-honouring file system: we found
 that a @command{samba}-mounted file system (which maps all file names to
@@ -577,7 +576,7 @@ The simplest way is to use @file{R.dmg.sit}.  Just double-click on the
 icon and the archive will be expanded as an image di file. Read the
 @file{ReadMe.txt} inside the disk image and follow the instructions.
 
-See the @uref{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac OS X
+See the @url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac OS X
 @acronym{FAQ}} for more details.
 
 @menu
@@ -588,7 +587,7 @@ See the @uref{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac O
 @section Building from source on Mac OS X
 
 If you want to build this port from the sources, you can read the above
-mentioned @uref{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R
+mentioned @url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R
 for Mac OS X @acronym{FAQ}} for full details. You will need to collect
 and install some tools as explained in the document. Than you have to
 expand the @R{} sources and configure @R{} appropriately, for example
@@ -697,8 +696,8 @@ and installs it (via @code{R CMD INSTALL}).  On Windows it looks at the
 list of @emph{binary} versions of packages available for your version of
 @R{} and downloads the latest version (if any).
 
-On Unix @code{install.packages} can also install a source package
-from a local @file{,tar,gz} file by setting argument @code{repos} to
+On Unix @code{install.packages} can also install a source package from a
+local @file{.tar.gz} file by setting argument @code{repos} to
 @code{NULL}.
 
 On Windows @code{install.packages} can also install a binary package
@@ -796,19 +795,19 @@ really do not want these you will need to explicitly configure
 @R{} without X11, using @option{--with-x=no}.
 
 The command-line editing depends on the @code{readline} library
-available from any GNU mirror: you will need a fairly recent version.
-Otherwise you will need to configure with @option{--with-readline=no}
-(or equivalent).
+available from any @acronym{GNU} mirror: you will need a fairly recent
+version.  Otherwise you will need to configure with
+@option{--with-readline=no} (or equivalent).
 
 You will need Perl version 5.004 or later, available via
-@uref{http://www.perl.com/CPAN/}, to build any of the on-line
+@url{http://www.perl.com/CPAN/}, to build any of the on-line
 documentation.
 
 You will not be able to build the info files unless you have
 @command{makeinfo} version 4.7 or later installed, and if not some of
-the @acronym{HTML} manuals will be linked to @acronym{CRAN}.
+the @HTML{} manuals will be linked to @acronym{CRAN}.
 (@command{makeinfo} version 4.7 is fairly recent, but version 4.6 is
-known to create incorrect @acronym{HTML} files.)
+known to create incorrect @HTML{} files.)
 
 @cindex vignettes
 The typeset documentation and building vignettes needs @command{tex} and
@@ -823,12 +822,13 @@ If you want to build from the R Subversion repository you need Perl,
 
 The use of encodings and the @R{} @code{iconv} function depend on having
 the system @code{iconv} function: this is part of recent versions of
-@code{glibc} and many Unixes.  You can also install GNU @code{libiconv}
-(which is not the same as that in @code{glibc}), possibly as a plug-in
-replacement: see @uref{http://www.gnu.org/software/libiconv/}.  Note
-that the @R{} usage requires @code{iconv} to be able to translate
-between @code{"latin1"} and @code{"UTF=8"} and to recognize @code{""} as
-the current encoding -- this is not true of most commercial Unixes.
+@code{glibc} and many Unixes.  You can also install @acronym{GNU}
+@code{libiconv} (which is not the same as that in @code{glibc}),
+possibly as a plug-in replacement: see
+@url{http://www.gnu.org/software/libiconv/}.  Note that the @R{} usage
+requires @code{iconv} to be able to translate between @code{"latin1"}
+and @code{"UTF=8"} and to recognize @code{""} as the current encoding --
+this is not true of most commercial Unixes.
 
 The bitmapped graphics devices @code{jpeg()} and @code{png()} need the
 appropriate headers and libraries installed: @code{jpeg} (version 6b
@@ -836,7 +836,7 @@ or later) or @code{libpng} (version 1.2.3 or later) and @code{zlib}
 (version 1.1.3 or later) respectively.
 
 The @code{bitmap} and @code{dev2bitmap} devices make use of ghostscript
-(@uref{http://www.cs.wisc.edu/~ghost}).
+(@url{http://www.cs.wisc.edu/~ghost}).
 
 If you have them installed (including the appropriate headers and of
 recent enough versions), @code{zlib}, @code{libbz2} and PCRE will be used
@@ -856,7 +856,7 @@ systems on 32-bit platforms.
 @subsection Tcl/Tk
 
 The @pkg{tcltk} package needs Tcl/Tk installed: the sources are
-available at @uref{http://www.tcl.tk/}.  To specify the locations
+available at @url{http://www.tcl.tk/}.  To specify the locations
 of the Tcl/Tk files you may need the configuration options
 
 @table @option
@@ -883,11 +883,11 @@ no longer supported.
 @cindex BLAS library
 
 The linear algebra routines in @R{} can make use of enhanced BLAS (Basic
-Linear Algebra Subprograms, @uref{http://www.netlib.org/blas/faq.html})
+Linear Algebra Subprograms, @url{http://www.netlib.org/blas/faq.html})
 routines.  Some are compiler-system-specific (@code{libsunperf} on Sun
 Sparc@footnote{Using the SunPro aka Forte aka Sun ONE @command{cc} and
 @command{f95} compilers}, @code{libessl} on IBM, @code{vecLib} on Mac OS
-X) but ATLAS (@uref{http://math-atlas.sourceforge.net/}) is a ``tuned''
+X) but ATLAS (@url{http://math-atlas.sourceforge.net/}) is a ``tuned''
 BLAS that runs on a wide range of Unix-alike platforms.  If no more
 specific library is found, a @code{libblas} library in the library path
 will be used.  You can specify a particular BLAS library @emph{via} a
@@ -910,7 +910,7 @@ version of ATLAS.  You can use a multi-threaded ATLAS by specifying
 
 Another tuned BLAS which is available for some processors under Linux is
 by Kazushige Goto, currently available at
-@uref{http://www.cs.utexas.edu/users/flame/goto/}.  Once this is is
+@url{http://www.cs.utexas.edu/users/flame/goto/}.  Once this is is
 installed, it can be used by one of
 
 @example
@@ -922,7 +922,7 @@ Multi-threaded versions of Goto's BLAS are available, so please note the
 @emph{caveat} in the previous paragraph.
 
 For Intel processors under Linux, Intel's Math Kernel Library
-@uref{http://www.intel.com/software/products/mkl/}
+@url{http://www.intel.com/software/products/mkl/}
 can be used by
 
 @example
@@ -992,7 +992,7 @@ is needed so @code{libsunperf} can be used.
 
 An ATLAS `tuned' BLAS can also be used on Windows: see
 @file{src/gnuwin32/INSTALL} for how to enable this when building from
-source, and @uref{http://CRAN.R-project.org/bin/windows/rw-FAQ.html, R Windows
+source, and @url{http://CRAN.R-project.org/bin/windows/rw-FAQ.html, R Windows
 @acronym{FAQ}} for adding pre-compiled support to binary versions.
 Goto's BLAS can also be used when building from source.
 
@@ -1158,17 +1158,17 @@ a full path.
 @node Compilation flags, Making manuals, Setting the browser, Configuration variables
 @subsection Compilation flags
 
-If you have libraries and header files, e.g., for GNU readline, in
-non-system directories, use the variables @code{LDFLAGS} (for libraries,
-using @samp{-L} flags to be passed to the linker) and @code{CPPFLAGS}
-(for header files, using @samp{-I} flags to be passed to the C/C++
-preprocessors), respectively, to specify these locations.  These default
-to @file{/usr/local/lib} and @file{/usr/local/include} to catch the most
-common cases.  If libraries are still not found, then maybe your
-compiler/linker does not support re-ordering of @option{-L} and
-@option{-l} flags (this has been reported to be a problem on HP-UX with
-the native @command{cc}).  In this case, use a different compiler (or a
-front end shell script which does the re-ordering).
+If you have libraries and header files, e.g., for @acronym{GNU}
+readline, in non-system directories, use the variables @code{LDFLAGS}
+(for libraries, using @samp{-L} flags to be passed to the linker) and
+@code{CPPFLAGS} (for header files, using @samp{-I} flags to be passed to
+the C/C++ preprocessors), respectively, to specify these locations.
+These default to @file{/usr/local/lib} and @file{/usr/local/include} to
+catch the most common cases.  If libraries are still not found, then
+maybe your compiler/linker does not support re-ordering of @option{-L}
+and @option{-l} flags (this has been reported to be a problem on HP-UX
+with the native @command{cc}).  In this case, use a different compiler
+(or a front end shell script which does the re-ordering).
 
 @node Making manuals,  , Compilation flags, Configuration variables
 @subsection Making manuals
@@ -1184,17 +1184,17 @@ The default settings for making the manuals are controlled by
 
 To compile @R{}, you will most likely find it easiest to use GNU
 @command{make}.  On Solaris 2.6/7/8 in particular, you need a version of
-GNU @command{make} different from 3.77; 3.79.1 works fine, as does the Sun
-@command{make}.  The native @command{make} is reported to fail on SGI
-Irix 6.5 and Alpha/OSF1 (aka Tru64).
+@acronym{GNU} @command{make} different from 3.77; 3.79.1 works fine, as
+does the Sun @command{make}.  The native @command{make} is reported to
+fail on SGI Irix 6.5 and Alpha/OSF1 (aka Tru64).
 
 To build in a separate directory you need a @command{make} that uses the
-@code{VPATH} variable, for example GNU @command{make}, or Sun
+@code{VPATH} variable, for example @acronym{GNU} @command{make}, or Sun
 @command{make} on Solaris 2.7/8/9 (but not earlier).
 
 If you want to use a @command{make} by another name, for example if your
-GNU @command{make} is called @samp{gmake}, you need to set the variable
-@code{MAKE} at configure time, for example
+@acronym{GNU} @command{make} is called @samp{gmake}, you need to set the
+variable @code{MAKE} at configure time, for example
 
 @findex configure
 @example
@@ -1206,7 +1206,7 @@ GNU @command{make} is called @samp{gmake}, you need to set the variable
 @cindex FORTRAN
 
 To compile @R{}, you need a FORTRAN compiler or @command{f2c}, the
-FORTRAN-to-C converter (@uref{http://www.netlib.org/f2c}).  The default
+FORTRAN-to-C converter (@url{http://www.netlib.org/f2c}).  The default
 is to search for @command{g77}, @command{f77}, @command{xlf},
 @command{frt}, @command{pgf77}, @command{fl32}, @command{af77},
 @command{fort77}, @command{f90}, @command{xlf90}, @command{pgf90},
@@ -1321,7 +1321,7 @@ of compilers and support libraries.
 
 Many 32-bit systems have a means of using files > 2Gb, and most are
 based on that in the Single Unix specification: see
-@uref{http://ftp.sas.com/standards/large.file/x_open.20Mar96.html}.
+@url{http://ftp.sas.com/standards/large.file/x_open.20Mar96.html}.
 However, this is only covered under Linux and Solaris.
 
 @menu
@@ -1369,7 +1369,7 @@ libraries with the exception of the ATLAS BLAS libraries.
 2.4.x or later by the configure option @option{--enable-linux-lfs}: it
 tests for Linux, a suitable kernel and a 32-bit @samp{long} type.
 A discussion of which Linux systems support large files can be found at
-@uref{http://www.suse.de/~aj/linux_lfs.html}: it has been available
+@url{http://www.suse.de/~aj/linux_lfs.html}: it has been available
 since about 2001.
 
 @R{} used to include the compiler flag @option{-mieee-fp}, but it seems
@@ -1392,7 +1392,7 @@ need to install an X sub-system or configure with
 OS X distribution since Mac OS X version 10.3 (Panther).
 
 For more information on how to find these tools please read the
-@uref{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac
+@url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac
 OS X @acronym{FAQ}}.
 
 If you use the X window manager and prefer @code{Terminal.app} to
@@ -1427,13 +1427,13 @@ failure with @command{gcc 3.3}.)
 @R{} has been built successfully on Solaris 8 aka Solaris 2.8 aka SunOS
 5.8 using @command{gcc}/@command{g77} and the SunPro @w{WorkShop 6} (aka
 Forte 6) compilers and the `Sun ONE Studio 7 Compiler Suite' (aka Forte
-7), and less regularly on Solaris 2.6, 2.7 and 9.  GNU @command{make} was
-needed prior to Solaris 2.7 for building other than in the source tree,
-and perhaps even then.
+7), and less regularly on Solaris 2.6, 2.7 and 9.  @acronym{GNU}
+@command{make} was needed prior to Solaris 2.7 for building other than
+in the source tree, and perhaps even then.
 
 The Solaris versions of several of the tools needed to build @R{}
 (e.g.@: @command{make}, @command{ar} and @command{ld}) are in
-@code{/usr/ccs/bin}, so if using those tools ensure this is in your
+@file{/usr/ccs/bin}, so if using those tools ensure this is in your
 path.
 
 @command{gcc} 3.2.1 and 3.2.2 generate incorrect code on 32-bit Solaris
@@ -1446,7 +1446,7 @@ version of Solaris in use.  (This can be ascertained from @command{gcc
 so (for example) @command{gcc} compiled under Solaris 2.6 will not
 compile @R{} under Solaris 2.7.  Also, do ensure that it was compiled
 for the assembler/loader in use: if you download @command{gcc} from
-@uref{http://www.sunfreeware.com} then you need to download
+@url{http://www.sunfreeware.com} then you need to download
 @code{binutils} too.  To avoid all these pitfalls we strongly
 recommended you compile @command{gcc} from the sources yourself.
 
@@ -1656,8 +1656,8 @@ tests.
 
 George N. White III reports that the @code{strptime} tests in 1.9.0 fail
 on IRIX 6.5 systems prior to 6.5.22m (e.g.@: 6.5.19m and 6.5.21m) unless
-Arthur Olson's timezone data @uref{ftp://elsie.nci.nih.gov/pub/} (see
-also @uref{http://cspry.co.uk/computing/Indy_admin/TIMEZONE.html}) are
+Arthur Olson's timezone data @url{ftp://elsie.nci.nih.gov/pub/} (see
+also @url{http://cspry.co.uk/computing/Indy_admin/TIMEZONE.html}) are
 installed and @code{-ltz} is added to the list of libraries (for
 example, in environment variable @env{LIBS}).
 
@@ -1746,8 +1746,8 @@ CXXFLAGS='-O -qstrict'
 
 @noindent
 and the @code{X11()} device worked.  His system required the
-@file{Makeconf} file to be edited to replace @code{/lib/crt0.o} by
-@code{/lib/crt0_64.o} in @code{R_XTRA_LIBS}, and @command{configure} now
+@file{Makeconf} file to be edited to replace @file{/lib/crt0.o} by
+@file{/lib/crt0_64.o} in @code{R_XTRA_LIBS}, and @command{configure} now
 tries to detect this.
 
 We understand that @option{--enable-R-shlib} does not work under AIX.
@@ -1836,12 +1836,11 @@ specify location of @command{libglade-config}
 @node Enabling search in HTML help, New platforms, Building the GNOME console, Top
 @appendix Enabling search in HTML help
 
-There is a search engine available from the front page of the
-@acronym{HTML} help system, the page that is displayed by
-@code{help.start()}.  The search engine is written in Java and invoked
-by Javascript code, so the first thing to do is to ensure that both are
-enabled in your favourite browser.  Then try it and see: with most
-browsers you should see
+There is a search engine available from the front page of the @HTML{}
+help system, the page that is displayed by @code{help.start()}.  The
+search engine is written in Java and invoked by Javascript code, so the
+first thing to do is to ensure that both are enabled in your favourite
+browser.  Then try it and see: with most browsers you should see
 
 @example
 Applet SearchEngine started
@@ -1854,7 +1853,7 @@ started}.) Then click on one of the keywords and after a short delay
 
 If this fails you should double-check that Java is enabled in your
 browser by visiting a page such as
-@uref{http://www.java.com/en/download/help/testvm.jsp} (although that
+@url{http://www.java.com/en/download/help/testvm.jsp} (although that
 will fail for earlier versions of Java such as the Microsoft JVM which
 do work with R).  Java 1.1 is sufficent.
 
@@ -1875,19 +1874,19 @@ We are aware of problems with certain Java installations.  In
 particular, Sun's Java Run-time Environment @code{j2re 1.4.2_02} to
 @code{_05} do not work under Linux.  Both @code{jre 1.5.0} and
 @code{j2re 1.4.2_01} do work: the latter can be found in Sun's archive
-at @uref{http://java.sun.com/products/archive/}.
+at @url{http://java.sun.com/products/archive/}.
 
 @noindent
 Other Java installations, for example those from Blackdown and IBM, have
 been used.
 
 Other useful links are for Mozilla,
-@uref{http://plugindoc.mozdev.org/faqs/java.html} and
-@uref{http://www.mozilla.org/releases/mozilla1.6/installation-extras.html},
-for Konqueror @uref{http://www.konqueror.org/javahowto/}, for Opera
-@uref{http://www.opera.com/support/search/supsearch.dml?index=459} and
+@url{http://plugindoc.mozdev.org/faqs/java.html} and
+@url{http://www.mozilla.org/releases/mozilla1.6/installation-extras.html},
+for Konqueror @url{http://www.konqueror.org/javahowto/}, for Opera
+@url{http://www.opera.com/support/search/supsearch.dml?index=459} and
 for Debian GNU/Linux
-@uref{http://www.debian.org/doc/manuals/debian-java-faq/}.
+@url{http://www.debian.org/doc/manuals/debian-java-faq/}.
 
 
 @node Java Virtual Machines on Unix, Java Virtual Machines on Windows, Java Virtual Machines on Linux , Enabling search in HTML help
@@ -1896,9 +1895,9 @@ for Debian GNU/Linux
 We have much less experience, but we do know that Sun's Run-time
 Environment @code{j2re 1.4.2_03} does not work under Solaris, whereas
 @code{jre 1.5.0} and @code{j2re 1.4.2_01} (available from
-@uref{http://java.sun.com/products/archive/}) do.
+@url{http://java.sun.com/products/archive/}) do.
 
-See @uref{http://www.MedAnalytics.com/INSTALL} for more information.
+See @url{http://www.MedAnalytics.com/INSTALL} for more information.
 
 @node Java Virtual Machines on Windows, Java Virtual Machines on Mac OS X, Java Virtual Machines on Unix, Enabling search in HTML help
 @section Java Virtual Machines on Windows
@@ -1908,7 +1907,7 @@ has been installed and is operational: Sun's current @code{j2re
 1.5.0} works in Internet Explorer, Netscape 7.1, Mozilla 1.6/7 and
 Mozilla FireFox on Windows XP.  Note that a recent Windows system
 may not have Java installed at all.  For Netscape/Mozilla/FireFox visit
-@uref{http://java.sun.com/getjava/manual.html} to install a Sun JVM.
+@url{http://java.sun.com/getjava/manual.html} to install a Sun JVM.
 Which (if any) JVM is enabled can be set in `Set Program Access and
 Defaults' in Windows XP (SP1 or later), and which JVM is used by browser
 plugins may also be controlled by the Sun Java applet in the Control
@@ -1917,9 +1916,9 @@ Panel.
 @node Java Virtual Machines on Mac OS X,  , Java Virtual Machines on Windows, Enabling search in HTML help
 @section Java Virtual Machines on Mac OS X
 
-The HTML search engine does not work with Safari under Mac OS X, but
-@code{j2re 1.4.x} may work with Mozilla, Firefox and Camino if the
-Java Embedding Plugin @uref{http://javaplugin.sourceforge.net/} is used.
+The @HTML{} search engine does not work with Safari under Mac OS X, but
+@code{j2re 1.4.x} may work with Mozilla, Firefox and Camino if the Java
+Embedding Plugin @url{http://javaplugin.sourceforge.net/} is used.
 
 The Aqua GUI provides an interface to @code{help.search} that may
 substitute for the Java search.
@@ -1950,25 +1949,26 @@ SunPro compilers causes @R{}'s @code{NaN} to be set incorrectly.
 @strong{Shared Libraries}: There seems to be very little agreement
 across platforms on what needs to be done to build shared libraries.
 there are many different combinations of flags for the compilers and
-loaders.  GNU libtool cannot be used (yet), as it currently does not
-fully support FORTRAN (and will most likely never support @command{f2c}:
-one would need a shell wrapper for this).  The technique we use is to
-first interrogate the X window system about what it does (using
-@command{xmkmf}), and then override this in situations where we know
-better (for tools from the GNU Compiler Collection and/or platforms we
-know about).  This typically works, but you may have to manually
-override the results.  Scanning the manual entries for @command{cc} and
-@command{ld} usually reveals the correct incantation.  Once you know the
-recipe you can modify the file @file{config.site} (following the
-instructions therein) so that the build will use these options.
+loaders.  @acronym{GNU} libtool cannot be used (yet), as it currently
+does not fully support FORTRAN (and will most likely never support
+@command{f2c}:  one would need a shell wrapper for this).  The technique
+we use is to first interrogate the X window system about what it does
+(using @command{xmkmf}), and then override this in situations where we
+know better (for tools from the @acronym{GNU} Compiler Collection and/or
+platforms we know about).  This typically works, but you may have to
+manually override the results.  Scanning the manual entries for
+@command{cc} and @command{ld} usually reveals the correct incantation.
+Once you know the recipe you can modify the file @file{config.site}
+(following the instructions therein) so that the build will use these
+options.
 
 It seems that @samp{gcc 3.4.x} on @samp{ix86} Linux defeats attempts by
 the LAPACK code to avoid computations entirely in extended-precision
 registers, so file @file{src/modules/lapack/dlamc.f} may need to
-compiled without optimization.  If configure detects GNU Fortran it adds
-flag @option{-ffloat-store} which suffices, but it is possible that 
-@file{src/modules/lapack/Makefile} will need to be edited to remove
-optimization on other platforms.
+compiled without optimization.  If configure detects @acronym{GNU}
+Fortran it adds flag @option{-ffloat-store} which suffices, but it is
+possible that @file{src/modules/lapack/Makefile} will need to be edited
+to remove optimization on other platforms.
 
 If you do manage to get @R{} running on a new platform please let us
 know about it so we can modify the configuration procedures to include
