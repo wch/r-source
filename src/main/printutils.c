@@ -70,7 +70,7 @@ extern int R_OutputCon; /* from connections.c */
 
 #define BUFSIZE 8192  /* used by Rprintf etc */
 static R_StringBuffer gBuffer = {NULL, 0, BUFSIZE};
-static R_StringBuffer *buffer = &gBuffer; /*XX Add appropriate const here 
+static R_StringBuffer *buffer = &gBuffer; /*XX Add appropriate const here
                                             and in the routines that use it. */
 
 
@@ -166,7 +166,7 @@ char *EncodeReal(double x, int w, int d, int e)
 	}
 #endif
     }
-    else {
+    else { /* e = 0 */
 	sprintf(fmt,"%%%d.%df", w, d);
 	sprintf(buffer->data, fmt, x);
     }
@@ -282,14 +282,14 @@ char *EncodeString(char *s, int w, int quote, int right)
 
     if (s == CHAR(NA_STRING)) {
 	p = quote ? CHAR(R_print.na_string) : CHAR(R_print.na_string_noquote);
-	i = quote ? strlen(CHAR(R_print.na_string)) : 
+	i = quote ? strlen(CHAR(R_print.na_string)) :
 	    strlen(CHAR(R_print.na_string_noquote));
 	quote = 0;
     } else {
 	p = s;
 	i = Rstrlen(s, quote);
     }
-    
+
     R_AllocStringBuffer((i+2 >= w)?(i+2):w, buffer); /* +2 allows for quotes */
     q = buffer->data;
     if(right) { /* Right justifying */
@@ -439,7 +439,7 @@ void Rcons_vprintf(const char *format, va_list arg)
 void Rvprintf(const char *format, va_list arg)
 {
     Rconnection con = getConnection(R_OutputCon);
-    
+
     con->vfprintf(con, format, arg);
     con->fflush(con);
 }
@@ -500,7 +500,7 @@ void MatrixColumnLabel(SEXP cl, int j, int w)
     int l;
     SEXP tmp;
 
-    if (!isNull(cl)) { 
+    if (!isNull(cl)) {
         tmp = STRING_ELT(cl, j);
 	if(tmp == NA_STRING) l = R_print.na_width_noquote;
 	else l = Rstrlen(CHAR(tmp), 0);
@@ -517,7 +517,7 @@ void RightMatrixColumnLabel(SEXP cl, int j, int w)
     int l;
     SEXP tmp;
 
-    if (!isNull(cl)) { 
+    if (!isNull(cl)) {
         tmp = STRING_ELT(cl, j);
 	if(tmp == NA_STRING) l = R_print.na_width_noquote;
 	else l = Rstrlen(CHAR(tmp), 0);
@@ -532,9 +532,9 @@ void RightMatrixColumnLabel(SEXP cl, int j, int w)
 void LeftMatrixColumnLabel(SEXP cl, int j, int w)
 {
     int l;
-    SEXP tmp; 
+    SEXP tmp;
 
-    if (!isNull(cl)) { 
+    if (!isNull(cl)) {
         tmp= STRING_ELT(cl, j);
 	if(tmp == NA_STRING) l = R_print.na_width_noquote;
 	else l = Rstrlen(CHAR(tmp), 0);
@@ -551,12 +551,12 @@ void MatrixRowLabel(SEXP rl, int i, int rlabw, int lbloff)
     int l;
     SEXP tmp;
 
-    if (!isNull(rl)) { 
+    if (!isNull(rl)) {
         tmp= STRING_ELT(rl, i);
 	if(tmp == NA_STRING) l = R_print.na_width_noquote;
 	else l = Rstrlen(CHAR(tmp), 0);
 	Rprintf("\n%*s%s%*s", lbloff, "",
-		EncodeString(CHAR(tmp), l, 0, Rprt_adj_left), 
+		EncodeString(CHAR(tmp), l, 0, Rprt_adj_left),
 		rlabw-l-lbloff, "");
     }
     else {
