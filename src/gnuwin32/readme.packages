@@ -31,8 +31,8 @@ use our tool set, and make sure it is at the front of your path.
 
 We recommend that you use a recent snapshot of the Mingw port of gcc
 from http://sourceforge.net/projects/mingw/. There will probably
-be a distribution called something like MinGW-2.0.tar.gz, or you can
-get the components (binutils-2.13, gcc-3.2, mingw-runtime-2.1 and
+be a distribution called something like MinGW-2.0.0-2.exe, or you can
+get the components (binutils-2.13, gcc-3.2, mingw-runtime-2.2 and
 w32api-2.0 or later.)  Earlier versions will probably work, but
 mingw-runtime >= 1.3 and w32api >= 1.5 are highly desirable.
 
