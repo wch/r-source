@@ -20,6 +20,7 @@ person(first="", last="", middle="", email="")
 personList(...)
 as.person(x)
 as.personList(x)
+
 \S3method{as.character}{person}(x, ...)
 \S3method{as.character}{personList}(x, ...)
 }
@@ -28,7 +29,7 @@ as.personList(x)
   \item{middle}{character string, middle name(s)}
   \item{last}{character string, last name}
   \item{email}{character string, email address}
-  \item{...}{for \code{personList} an arbitrary number of \code{person}
+  \item{\dots}{for \code{personList} an arbitrary number of \code{person}
     objects}
   \item{x}{a character string or an object of class \code{person} or
     \code{personList}}
@@ -40,11 +41,11 @@ p1 <- person("Karl", "Pearson", email="pearson@stats.heaven")
 p1
 
 ## convert a string
-p2 <- as.person("Ronald Aylmer Fischer")
+p2 <- as.person("Ronald Aylmer Fisher")
 p2
 
 ## create one object holding both
-p <- personList(p1,p2)
+p <- personList(p1, p2)
 ps <- as.character(p)
 ps
 as.personList(ps)

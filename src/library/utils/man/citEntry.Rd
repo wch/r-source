@@ -22,7 +22,7 @@ readCitationFile(file)
   \item{header}{a character string with optional header text}
   \item{footer}{a character string with optional footer text}
   \item{file}{a file name}
-  \item{...}{see details below}
+  \item{\dots}{see details below}
 }
 \details{
   The \file{CITATION} file of an R package should be placed in the
@@ -33,9 +33,9 @@ readCitationFile(file)
   \code{"citation"} (the return value of \code{citEntry}) are collected.
 
   Typically the file will contain zero or more calls to \code{citHeader},
-  then one or more calls to \code{citEntry}, and  finally zero ore more
+  then one or more calls to \code{citEntry}, and  finally zero or more
   calls to  \code{citFooter}. \code{citHeader} and \code{citFooter} are
-  simply wrapers to \code{\link{paste}}, and their \code{\dots} argument
+  simply wrappers to \code{\link{paste}}, and their \code{\dots} argument
   is passed on to \code{\link{paste}} as is.
 }
 \section{Entry Types}{

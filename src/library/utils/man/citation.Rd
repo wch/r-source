@@ -1,5 +1,5 @@
 \name{citation}
-\title{Citing R in Publications}
+\title{Citing R and R Packages in Publications}
 \alias{citation}
 \alias{bibtex}
 \alias{print.bibtex}
@@ -18,7 +18,7 @@ bibtex(object, ...)
     libraries currently known.  If the default is used, the loaded
     packages are searched before the libraries.}
   \item{object}{return object of \code{citation}.}
-  \item{...}{currently not used.}
+  \item{\dots}{currently not used.}
 }
 \details{
   The R core development team and the very active community of package
@@ -33,7 +33,7 @@ bibtex(object, ...)
   file of the package or auto-generates citation information. In the
   latter case the package \file{DESCRIPTION} file is parsed, the
   resulting citation object may be arbitrarily bad, but is quite useful
-  (at leaste as a starting point) in most cases.
+  (at least as a starting point) in most cases.
 
   If only one reference is given, the print method shows both a text
   version and a BibTeX entry for it, if a package has more than one
