@@ -20,6 +20,6 @@ rank <- function(x, na.last = TRUE, ties.method=c("average", "first", "random"))
 	    x[nas] <- 1 : len
 	}
 	y <- x
-    }
+    } else names(y) <- names(x)
     y
 }

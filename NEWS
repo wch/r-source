@@ -684,6 +684,8 @@ BUG FIXES
 
     o	qqnorm()'s result now keeps NAs from its input. (PR#3750)
 
+    o	rank() sometimes preserved and sometimes dropped names.
+
     o	readBin(what = "foo") didn't convert `what' to its type.  (PR#4043)
 
     o	sapply() for matrix result does not return list(NULL,NULL) dimnames

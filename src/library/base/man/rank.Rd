@@ -34,7 +34,9 @@ rank(x, na.last = TRUE, ties.method = c("average", "first", "random"))
 \seealso{\code{\link{order}} and \code{\link{sort}}.}
 \examples{
 (r1 <- rank(x1 <- c(3, 1, 4, 15, 92)))
-(r2 <- rank(x2 <- c(3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5))) # ties
+x2 <- c(3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5)
+names(x2) <- letters[1:11]
+(r2 <- rank(x2)) # ties are averaged
 
 ## rank() is "idempotent": rank(rank(x)) == rank(x) :
 stopifnot(rank(r1) == r1, rank(r2) == r2)
