@@ -164,7 +164,7 @@ Rm.exp1: $(OBJS-EXTRA)
 	$(MAKE) -C ../extra/zlib -f Makefile.win
 
 rdocs:
-	@$(MAKE) -C ../../doc/manual -f Makefile.win html
+	@$(MAKE) -C ../../doc/manual -f Makefile.win html BUILD=$(BUILD)
 
 
 #                          ===== BLAS ======
@@ -434,7 +434,7 @@ packagedist:
 	$(CP) ../../doc/html/logo.jpg $(RPREFIX)/doc/html
 	$(CP) ../../doc/KEYWORDS* $(RPREFIX)/doc
 	$(CP) -p exported-vars R.exp MkRules MakePkg MakeDll \
-	  Rpwd.exe makeDllRes.pl install-save.sh $(RPREFIX)/src/gnuwin32
+	  Rpwd.exe pwd.pl makeDllRes.pl install-save.sh $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
 	$(CP) fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -pr help check $(RPREFIX)/src/gnuwin32
