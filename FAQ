@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-22, 2003-07-01
+Version 1.7-23, 2003-07-04
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1833,6 +1833,10 @@ distributions of R.)
      Fit and compare Gaussian linear and nonlinear mixed-effects models.
      _Recommended_.
 
+*nlmeODE*
+     Combine the *nlme* and *odesolve* packages for mixed-effects modelling
+     using differential equations.
+
 *nlrq*
      Nonlinear quantile regression.
 
@@ -2005,6 +2009,12 @@ distributions of R.)
      Functions for manipulating skew-normal probability distributions and
      for fitting them to data, in the scalar and the multivariate case.
 
+*sna*
+     A range of tools for social network analysis, including node and
+     graph-level indices, structural distance and covariance methods,
+     structural equivalence detection, p* modeling, and network
+     visualization.
+
 *snow*
      Simple Network of Workstations: support for simple parallel computing
      in R.
@@ -2148,12 +2158,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *runStat*
      Running median and mean.
-
-*sna*
-     A range of tools for social network analysis, including node and
-     graph-level indices, structural distance and covariance methods,
-     structural equivalence detection, p* modeling, and network
-     visualization.
 
 *write.snns*
      Function for writing a SNNS pattern file from a data frame or matrix.
