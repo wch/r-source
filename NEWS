@@ -103,6 +103,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	min(NULL); max(double())  now give warnings.  range() gives NA.
+
     o	substring("", NULL) no longer segfaults.
 
     o	formatC(.) now takes default "width = 1" when both width and digits
