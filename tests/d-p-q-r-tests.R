@@ -176,7 +176,7 @@ for(df in c(0.1, 0.5, 1.5, 4.7, 10, 20,50,100)) {
     cat("df =", formatC(df, wid=3))
     xx <- c(10^-(5:1), .9, 1.2, df + c(3,7,20,30,35,38))
     pp <- pchisq(xx, df=df, ncp = 1) #print(pp)
-    dtol <- 1e-12 *(if(2 < df && df <= 50) 64 else if(df > 50) 20000 else 500)
+    dtol <- 1e-12 *(if(2 < df && df <= 50) 64 else if(df > 50) 20000 else 501)
     print(all.equal(xx, qchisq(pp, df=df, ncp=1), tol = dtol))# TRUE
     ##or print(mapply(rErr, xx, qchisq(pp, df=df,ncp=1)), digits = 3)
 }
