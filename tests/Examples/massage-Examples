@@ -42,6 +42,7 @@ do
  if   [ $bf = 'on.exit' ];	then sed -e '$s/$/par(opar)/' $file
  elif [ $bf = 'alias' ];	then sed -e '/^library(/s/^/##Test: /' $file
  elif [ $bf = 'help' ];		then sed -e '/^help(topi/s/^/##Test: /' $file
+ elif [ $bf = 'help.start' ];	then sed -e '/^help/s/^/##Test: /' $file
  elif [ $bf = 'match.arg' ];	then sed -e '/^cent.*Error/s/^/##Test: /' $file
  elif [ $bf = 'menu'  ];	then sed -e '6,$s/^/##INTERACTIVE> /' $file
  elif [ $bf = 'na.fail' ];	then sed -e '/^na\.fail/s/^/##Test: /' $file
