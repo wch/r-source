@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-02 21:22\n"
+"POT-Creation-Date: 2005-03-03 12:56\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -178,11 +178,9 @@ msgstr "'dims' non valido"
 msgid "bad handler specification"
 msgstr "specificazione dell'handler non valida"
 
-msgid "no restart"
+#, fuzzy
+msgid "no 'restart' '%s' found"
 msgstr "nessun riavvio"
-
-msgid "found"
-msgstr "trovato"
 
 msgid "not an interactive session"
 msgstr "sessione non interattiva"
@@ -860,10 +858,12 @@ msgstr "l'input deve avere lunghezza 1"
 msgid "'input' and 'target' must be character vectors"
 msgstr "l'input e la destinazione devono essere vettori di caratteri"
 
-msgid "not function, character, or symbol:"
+#, fuzzy
+msgid "'%s' is not a function, character or symbol"
 msgstr "nessuna oggetto function, character o symbol:"
 
-msgid "found non-function:"
+#, fuzzy
+msgid "found non-function '%s'"
 msgstr "trovata una non-function:"
 
 msgid "attempt to set rownames on object with no dimensions"
@@ -990,11 +990,8 @@ msgid "invalid import target"
 msgstr "destinazione per importazione non valida"
 
 #, fuzzy
-msgid "requested 'methods' objects not found in environment/package"
+msgid "requested 'methods' objects not found in environment/package '%s': %s"
 msgstr "Oggetti del metodo richiesti non trovati nel pacchetto/environment"
-
-msgid ":"
-msgstr ":"
 
 msgid "cannot add to exports of a sealed name space"
 msgstr "non è possibile aggiungere esportazioni ad un namespace sigillato"
@@ -1403,6 +1400,12 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "Messaggio di avvertimento:\n"
 msgstr[1] "Messaggi di avvertimento:\n"
+
+#~ msgid "found"
+#~ msgstr "trovato"
+
+#~ msgid ":"
+#~ msgstr ":"
 
 #~ msgid "row.names"
 #~ msgstr "row.names"

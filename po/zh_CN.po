@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-03 08:36+0000\n"
+"POT-Creation-Date: 2005-03-03 12:50+0000\n"
 "PO-Revision-Date: 2005-02-10 09:29+0000\n"
 "Last-Translator: Fei Chen <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1144,7 +1144,7 @@ msgstr "length<- 第二个变元不对"
 msgid "length<- missing value for 'length'"
 msgstr "length<- 长度不能是遗漏值"
 
-#: src/main/builtin.c:652 src/main/coerce.c:1932 src/main/coerce.c:1963
+#: src/main/builtin.c:652 src/main/coerce.c:1931 src/main/coerce.c:1962
 #: src/main/eval.c:332 src/main/eval.c:425 src/main/eval.c:1380
 #: src/main/eval.c:1429 src/main/eval.c:1483 src/main/eval.c:1701
 #: src/main/eval.c:3036 src/main/eval.c:3128
@@ -1439,34 +1439,39 @@ msgstr "目前没有实现predicate"
 msgid "%s() applied to non-(list or vector)"
 msgstr "%s()不适用于非串列或非向量"
 
-#: src/main/coerce.c:1901
+#: src/main/coerce.c:1861 src/main/coerce.c:1863
+#, fuzzy
+msgid "first argument must be a character string or a function"
+msgstr "第一个变元必需是字符串"
+
+#: src/main/coerce.c:1900
 #, fuzzy
 msgid "do.call: could not find parent environment"
 msgstr "do.call: 找不到上代环境"
 
-#: src/main/coerce.c:2001
+#: src/main/coerce.c:2000
 msgid "invalid environment specified"
 msgstr "环境设定有错"
 
-#: src/main/coerce.c:2079
+#: src/main/coerce.c:2078
 #, fuzzy
 msgid "invalid replacement object to be a class string"
 msgstr "字符串类别的替换目标对象不对"
 
-#: src/main/coerce.c:2097
+#: src/main/coerce.c:2096
 #, c-format
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
 msgstr ""
 
-#: src/main/coerce.c:2113
+#: src/main/coerce.c:2112
 #, c-format
 msgid ""
 "invalid to set the class to matrix unless the dimension attribute is of "
 "length 2 (was %d)"
 msgstr ""
 
-#: src/main/coerce.c:2119
+#: src/main/coerce.c:2118
 msgid ""
 "cannot set class to \"array\" unless the dimension attribute has length > 0"
 msgstr ""

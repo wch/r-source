@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-02 21:22\n"
+"POT-Creation-Date: 2005-03-03 12:56\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: Fei Chen <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -192,11 +192,9 @@ msgstr "’dims’ 有错"
 msgid "bad handler specification"
 msgstr "处置器柄规格不对"
 
-msgid "no restart"
+#, fuzzy
+msgid "no 'restart' '%s' found"
 msgstr "没有重新开始"
-
-msgid "found"
-msgstr "找到了"
 
 msgid "not an interactive session"
 msgstr "非交互运行式"
@@ -858,10 +856,12 @@ msgstr "输入的长度一定得为1"
 msgid "'input' and 'target' must be character vectors"
 msgstr "输入和目标一定都得是字符串"
 
-msgid "not function, character, or symbol:"
+#, fuzzy
+msgid "'%s' is not a function, character or symbol"
 msgstr "不是函数，也不是字符，也不是符號"
 
-msgid "found non-function:"
+#, fuzzy
+msgid "found non-function '%s'"
 msgstr "找到个非函数："
 
 msgid "attempt to set rownames on object with no dimensions"
@@ -985,11 +985,8 @@ msgid "invalid import target"
 msgstr "进口目标有错"
 
 #, fuzzy
-msgid "requested 'methods' objects not found in environment/package"
+msgid "requested 'methods' objects not found in environment/package '%s': %s"
 msgstr "要求的方法对象在这个环境/程辑包里没有找到"
-
-msgid ":"
-msgstr ""
 
 msgid "cannot add to exports of a sealed name space"
 msgstr "不能在封闭名字空间里的出口加入"
@@ -1404,6 +1401,9 @@ msgid "Warning message:\n"
 msgid_plural "Warning messages:\n"
 msgstr[0] "警告信息：\n"
 msgstr[1] "警告信息：\n"
+
+#~ msgid "found"
+#~ msgstr "找到了"
 
 #~ msgid "File"
 #~ msgstr "文件"

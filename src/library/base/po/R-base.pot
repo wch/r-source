@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-02 21:22\n"
+"POT-Creation-Date: 2005-03-03 12:56\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -158,10 +158,7 @@ msgstr ""
 msgid "bad handler specification"
 msgstr ""
 
-msgid "no restart"
-msgstr ""
-
-msgid "found"
+msgid "no 'restart' '%s' found"
 msgstr ""
 
 msgid "not an interactive session"
@@ -761,10 +758,10 @@ msgstr ""
 msgid "'input' and 'target' must be character vectors"
 msgstr ""
 
-msgid "not function, character, or symbol:"
+msgid "'%s' is not a function, character or symbol"
 msgstr ""
 
-msgid "found non-function:"
+msgid "found non-function '%s'"
 msgstr ""
 
 msgid "attempt to set rownames on object with no dimensions"
@@ -872,10 +869,7 @@ msgstr ""
 msgid "invalid import target"
 msgstr ""
 
-msgid "requested 'methods' objects not found in environment/package"
-msgstr ""
-
-msgid ":"
+msgid "requested 'methods' objects not found in environment/package '%s': %s"
 msgstr ""
 
 msgid "cannot add to exports of a sealed name space"
