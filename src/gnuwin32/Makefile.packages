@@ -3,7 +3,7 @@
 include MkRules
 
 HELP=YES
-WINHELP=BOTH
+WINHELP=NO # Ue one of NO, CHM, BOTH (chm and winhelp)
 
 ifdef DEBUG
  OPTFLAGS=-g -O2 -Wall

@@ -59,7 +59,6 @@ minutes depending on processor speed, RAM, disk speed and
 compiler. Using a network file system is likely to take longer.)  This
 only needs to be done once for each R release.
 
-
 For each package you want to install, unpack it to a directory, say
 mypkg, in RHOME\src\library, and run
 
@@ -69,7 +68,7 @@ mypkg, in RHOME\src\library, and run
 The Makefiles can be customized: in particular the name of the DLL can
 be set (see the line integrate-DLLNM=adapt), the compile flags can
 be set (see the examples in MakeDll) and the types of help (if any) to be
-generated can be chosen (variable HELP).
+generated can be chosen (variables HELP and WINHELP).
 
 
 Using zipped help files
