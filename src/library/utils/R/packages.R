@@ -491,7 +491,7 @@ setRepositories <- function(graphics=TRUE)
     res <- integer(0)
     if(graphics) {
         ## return a list of row numbers.
-        if(.Platform$OS.type == "unix" &&
+        if((.Platform$OS.type == "unix" &.Platform$GUI != "AQUA") &&
                   capabilities("tcltk") && capabilities("X11")) {
             res <- match(tcltk::tk_select.list(a[, 1], a[default, 1],
                                                multiple = TRUE, "Repositories"),
