@@ -2036,7 +2036,7 @@ static void GA_Line(double x1, double y1, double x2, double y2,
 	SetLinetype(lty, lwd, dd);
 	DRAW(gdrawline(_d, xd->lwd, xd->lty, xd->fgcolor,
 		       pt(xx1, yy1), pt(xx2, yy2), 0));
-    SH;
+	SH;
     }
 }
 
