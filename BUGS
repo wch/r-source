@@ -265,6 +265,10 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
+* PR# 925 *
+Subject: modulus operator gets syntax error
+From: znmeb@aracnet.com
+Date: Sat, 28 Apr 2001 21:13:44 +0200 (MET DST)
 * PR# 924 *
 Subject: bug when compiling using --with-f2c option
 From: wang@rjka.com
