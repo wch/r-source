@@ -3097,6 +3097,8 @@ list.files('.', all.files = TRUE, recursive = TRUE)
 ## PR#7116 seg faulted :
 cor(as.array(c(a=1,b=2)), cbind(1:2))
 
+### end of tests added in 1.9.1 patched ###
+
 
 ## names in columns of data frames
 x <- 1:10
@@ -3157,6 +3159,7 @@ stopifnot(identical(names(cumsum(x)), nm),
           identical(names(cumprod(x)), nm))
 ## 1.9.x dropped names
 
+
 ## complex superassignments
 e <- c(a=1,b=2)
 f <- c(a=1,b=2)
@@ -3192,3 +3195,10 @@ stopifnot(identical(h, list(a=1,list(b=2, list(B=2,d=4), list(e=5)))))
 stopifnot(identical(as.vector(j), c(1,1,1,2)))
 stopifnot(identical(colnames(j), c(NA,"B")))
 ## gave error 'subscript out of bounds' in 1.x.x
+
+
+## regression test for PR#7108
+ans <- gsub(" ", "", "b c + d | a * b", perl=TRUE) # NULL in 1.9.1
+stopifnot(identical(ans, gsub(" ", "", "b c + d | a * b")))
+gsub(" ", "", "a: 12345 :a", perl=TRUE) # segfaulted in 1.9.1
+## wrong answers, segfaults in 1.9.1.
