@@ -612,23 +612,29 @@ X11        P 23646  50333  V2
 Function @code{unstack} goes in the opposite direction, and may be
 useful for exporting data.
 
-@findex reshapeLong
-Another way to do this is to use the (experimental) function
-@code{reshapeLong}, by
+@findex reshape
+Another way to do this is to use the function
+@code{reshape}, by
 @smallexample
-> reshapeLong(zz, V1:V4)
-   Status   Age reshape.i reshape.j reshape.v
-1       P 23646         1        V1     45190
-2       P 23646         1        V2     50333
-3       P 23646         1        V3     55166
-4       P 23646         1        V4     56271
-5      CC 26174         2        V1     35535
-6      CC 26174         2        V2     38227
-7      CC 26174         2        V3     37911
-8      CC 26174         2        V4     41184
+> reshape(zz, idvar="id",timevar="var",
+  varying=list(c("V1","V2","V3","V4")),direction="long")
+    Status   Age var    V1 id
+1.1      P 23646   1 45190  1
+2.1     CC 26174   1 35535  2
+3.1     CC 27723   1 25691  3
+4.1     CC 27193   1 30949  4
+5.1     CC 24370   1 50542  5
+6.1     CC 28359   1 58591  6
+7.1     CC 25136   1 45801  7
+1.2      P 23646   2 50333  1
+2.2     CC 26174   2 38227  2
 ...
 @end smallexample
 
+The @code{reshape} has a more complicated syntax than @code{stack} but
+can be used for data where the `long' form has more than the one column
+in this example. With @code{direction="wide"}, @code{reshape} can also
+perform the opposite transformation.
 
 @node Flat contingency tables,  , Re-shaping data, Spreadsheet-like data
 @section Flat contingency tables

@@ -283,6 +283,8 @@ NEW FEATURES
     o   New function reg.finalizer() to provide R interface to
         finalization.
 
+    o   reshape() extends reshapeLong, reshapeWide, which are deprecated.
+
 
 BUG FIXES
 

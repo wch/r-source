@@ -97,6 +97,9 @@ reshape<-function(data,varying=NULL,v.names=NULL,timevar="time",idvar="id",
         }
         
         times<-sort(unique(data[,timevar]))
+        if (any(is.na(times)))
+            warning("There are records with missing times, which will be dropped.")
+        
         if (is.null(v.names))
             v.names<-names(data)[!(names(data) %in% c(timevar,idvar))]
         

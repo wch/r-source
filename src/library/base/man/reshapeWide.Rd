@@ -1,5 +1,5 @@
 \name{reshapeWide}
-\alias{reshapeWide}
+%\alias{reshapeWide}
 \title{Reshape data frame to wide format}
 \description{
   (EXPERIMENTAL). Convert data frame with repeated measurements in long

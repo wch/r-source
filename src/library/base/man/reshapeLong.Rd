@@ -1,5 +1,5 @@
 \name{reshapeLong}
-\alias{reshapeLong}
+%\alias{reshapeLong}
 \title{Reshape data frame to long format}
 \description{
   (EXPERIMENTAL). Convert data frame with repeated measurements in

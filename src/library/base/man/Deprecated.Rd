@@ -3,6 +3,8 @@
 \title{Deprecated Functions}
 \alias{Deprecated}
 \alias{.Deprecated}
+\alias{reshapeWide}
+\alias{reshapeLong}
 %------ PLEASE: put \alias{.} here for EACH !
 \description{
   These functions are provided for compatibility with older versions of
@@ -10,10 +12,24 @@
 }
 \usage{
 .Deprecated(new)
+reshapeWide(x, i = reshape.i,
+             j = reshape.j,
+             val = reshape.v,
+             jnames = levels(j))
 
+reshapeLong(x,jvars,  ilev = row.names(x),
+             jlev = names(x)[jvars],
+             iname = "reshape.i",
+             jname = "reshape.j",
+             vname = "reshape.v")
 }
 \details{
   \code{.Deprecated("<new name>")} is called from deprecated functions.
+
+  \code{reshape*}, which were experimental, are replace by
+  \code{\link{reshape}}. This has a different syntax and allows multiple
+  time-varying variables.
+  
 }
 \seealso{\code{\link{Defunct}}}
 \keyword{documentation}
