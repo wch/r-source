@@ -760,7 +760,6 @@ ls.str(envir = environment(Fn))
 detach("package:stepfun")
 ## failed in 1.5.1
 
-<<<<<<< reg-tests-1.R
 
 ## related to PR 1577/1608, conversions to character
 DF <- data.frame(b = LETTERS[1:3])
