@@ -1,10 +1,16 @@
-# This file is adapted from MacCVS code for AEvents.
+/* This file is adapted from MacCVS code for AEvents.
+*/
 #define SystemSevenOrLater 1
 
 #include "Types.r"
 #include "BalloonTypes.r"
 #include "AEUserTermTypes.r"
 #include "AEObjects.r"
+
+#define	kCMDEventClass	'DCMD'
+#define	kCMDEvent    	'DCMD'
+#define	kCMDEventClassEx	'xCMD'
+#define	kCMDEventEx    	'xCMD'
 
 resource 'aete' (0, "R AppleEvent Suites") {
 	0x01, 0x00, english, roman,
@@ -16,7 +22,7 @@ resource 'aete' (0, "R AppleEvent Suites") {
 		{},
 		"R Suite", "Custom events", '0FFF', 1, 1,
 		{
-			"Do Command", "Execute an R command", 'misc', 'dosc',
+			"Do Command", "Execute an R command", kCMDEventClassEx, kCMDEventEx,
 			'null', "", replyOptional, singleItem, notEnumerated, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, 
 			'TEXT', "Command to execute", directParamRequired, listOfItems, notEnumerated,
 			changesState, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, 
@@ -27,7 +33,7 @@ resource 'aete' (0, "R AppleEvent Suites") {
 				"Pathway", 'SPWD', 'TEXT', "Starting pathway.", optional, singleItem, notEnumerated, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved,
 				"NoLineBuffer", 'LBUF', 'bool', "if true, send each result line as separate AE.", optional, singleItem, notEnumerated, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, 
 			},
-			"cmd", "Execute an R command", 'mmmR', 'cmnd',
+			"cmd", "Execute an R command", kCMDEventClass, kCMDEvent,
 			'null', "", replyOptional, singleItem, notEnumerated, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, 
 			'TEXT', "Command to execute", directParamRequired, listOfItems, notEnumerated,
 			changesState, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, reserved, 

@@ -37,9 +37,20 @@ identify.default(x, y = NULL, labels = seq(along = x), pos = FALSE,
   The labels are placed either below, to the left, above or to the right
   of the identified point, depending on where the cursor was.
 
-  The identification process is terminated by pressing any mouse button
-  other than the first, or by clicking outside the graphics window.
-
+#ifdef unix
+The identification process is terminated by pressing any mouse button
+other than the first.
+#endif
+#ifdef windows
+The identification process is terminated by clicking the second button
+and selecting `Stop' from the menu, or from the `Stop' menu on the
+graphics window.
+#endif
+#ifdef mac
+The identification process is terminated by clicking outside the
+graphics window.
+#endif
+ 
   If the window is resized or hidden and then exposed before the identification
   process has terminated, any labels drawn by \code{identify}
   will disappear.  These will reappear once the identification process has 

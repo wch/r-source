@@ -28,9 +28,14 @@
 
 /* Define if you have alloca, as a function or macro.  */
 #undef HAVE_ALLOCA
+#ifdef __MRC__
+#define HAVE_ALLOCA 1
+#endif
 
 /* Define if you have <alloca.h> and it should be used (not on Ultrix).  */
-//#define HAVE_ALLOCA_H 1
+#ifndef __MRC__
+#define HAVE_ALLOCA_H 1
+#endif
 
 /* Define if you don't have vprintf but do have _doprnt.  */
 #undef HAVE_DOPRNT
@@ -292,7 +297,9 @@
 #undef HAVE_SNPRINTF
 
 /* Define if you have the stat function.  */
-//#define HAVE_STAT 1
+#ifndef __MRC__
+#define HAVE_STAT 1
+#endif
 
 /* Define if you have the strcoll function.  */
 #define HAVE_STRCOLL 1
@@ -394,7 +401,9 @@
 #undef HAVE_SYS_SOCKET_H
 
 /* Define if you have the <sys/stat.h> header file.  */
+#ifndef __MRC__
 #define HAVE_SYS_STAT_H 1
+#endif
 
 /* Define if you have the <sys/time.h> header file.  */
 #define HAVE_SYS_TIME_H 1
@@ -406,7 +415,9 @@
 #define HAVE_SYS_UTSNAME_H 1
 
 /* Define if you have the <unistd.h> header file.  */
-//#define HAVE_UNISTD_H 1
+#ifndef __MRC__
+#define HAVE_UNISTD_H 1
+#endif
 
 /* Define if you have the dl library (-ldl).  */
 #undef HAVE_LIBDL

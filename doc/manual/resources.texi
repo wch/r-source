@@ -139,6 +139,8 @@ It is currently mirrored daily at
 (University of Bristol, UK)
 @item http://cran.us.r-project.org/
 (University of Wisconsin, USA)
+@item http://cran.za.r-project.org/
+(Rhodes University, South Africa)
 @item http://cran.mirror.aarnet.edu.au/
 (AARNet, Australia [accessible only from Australia and New Zealand])
 @item ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/

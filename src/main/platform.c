@@ -894,7 +894,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     /* This one is complex.  Set it to be true only in interactive use, 
-       with any of the GUIs or under Unix is readline available and in 
+       with any of the GUIs or under Unix if readline is available and in 
        use */ 
     SET_STRING_ELT(ansnames, i, mkChar("cledit"));
     LOGICAL(ans)[i] = FALSE;

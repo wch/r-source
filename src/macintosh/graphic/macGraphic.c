@@ -1058,7 +1058,8 @@ Rboolean MacDeviceDriver(DevDesc *dd, char *display,
     dd->dp.canChangeFont = 0;
     dd->dp.canRotateText = 1;
     dd->dp.canResizeText = 1;
-   	dd->dp.canClip       = FALSE;
+    dd->dp.canClip       = FALSE;
+    dd->dp.canHAdj = 0;
 
     /* It is used to set the font that you will be used on the postscript and
        drawing.

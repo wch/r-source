@@ -148,6 +148,8 @@ NEW FEATURES
 
     o	New capabilities() option "cledit".
 
+    o	Modified restore code to give clearer error messages in some cases.
+
 
 
 BUG FIXES
@@ -209,6 +211,46 @@ BUG FIXES
     o	Rd files with ,, inside \code{} were treating this as a
 	ligature in LaTeX: now corrected in Rdconv.
 
+    o	dlopen on Compaq Tru64 was finding the wrong entry points:
+	worked-around by using different names in the modules.
+
+    o	plot.mts() allows a type argument again (broken in 1.3.0: PR#1010).
+
+    o	scan() has a limit of 8190 on the length of char strings, and
+	now warns if it is exceeded (when the string has always been
+	truncated).
+
+    o	par adj now accepts values of integer mode (such as text(adj=0:1)).
+
+    o	horizontal adj values outside the range [0, 1] are now
+	supported on devices with canHadj==1 (Windows devices, xfig).
+
+    o	xtabs() without a response was ignoring drop.unused.levels=TRUE.
+
+    o	readLines(ok=FALSE) was not generating an error when it should.
+
+    o	princomp(covmat=) has been broken.
+
+    o	Many documentation clean-ups: formerly undocumented arguments,
+	use of T/F rather than TRUE/FALSE.
+
+    o	df[] <- foo now works for data frames (PR#1047).
+
+    o	nargs() was documented incorrectly.
+
+    o	Using seq.POSIXt(by="2 weeks") was stepping by single weeks 
+	(PR#1046).
+
+    o	dummy.coef.lm was not handling complex terms like z:I(x).
+	It now either does or warns and gives NAs (PR#1048).
+
+    o	predict.mlm() was broken (PR#1049).
+
+    o	ksmooth (in package modreg) was using points to the left
+	of the kernel under some circumstances (PR#1050).
+
+    o	attr(x, "class") <- character(0) was segfaulting.  Similar problem
+	with "comment" attribute also fixed.
 
 
 

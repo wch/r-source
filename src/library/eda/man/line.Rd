@@ -1,27 +1,33 @@
 \name{line}
-\alias{line}
-\alias{coeff.tukeyline}
-\alias{residuals.tukeyline}
-\alias{fitted.tukeyline}
-\alias{print.tukeyline}
-\alias{coef.tukeyline}
-\alias{fitted.tukeyline}
 \title{Robust Line Fitting}
 \usage{
 line(x, y)
+
+\method{coef}{tukeyline}(object, \dots)
+\method{residuals}{tukeyline}(object, \dots)
+\method{fitted}{tukeyline}(object, \dots)
+\method{print}{tukeyline}(x, \dots)
 }
+\alias{coef.tukeyline}
+%\alias{coefficients.tukeyline}
+\alias{residuals.tukeyline}
+\alias{fitted.tukeyline}
+%\alias{fitted.values.tukeyline}
+\alias{print.tukeyline}
 \arguments{
   \item{x,y}{the arguments can be any way of specifying x-y pairs.}
+
+  \item{object}{a \code{tukeyline} object, typically the result of \code{line(*)}.}
 }
 \description{
-  This function fits a line robustly as recommended in 
+  This function fits a line robustly as recommended in
   \emph{Exploratory Data Analysis}.
 }
 \value{
   An object of class \code{tukeyline}.
 
-  Methods are available for the generic functions \code{coefficients},
-  \code{residuals}, \code{fitted.values}, and \code{print}.
+  Methods are available for the generic functions \code{coef},
+  \code{residuals}, \code{fitted}, and \code{print}.
 }
 \references{
   Tukey, J. W. (1977).
@@ -35,8 +41,10 @@ line(x, y)
 library(eda)
 data(cars)
 plot(cars)
-z <- line(cars)
+(z <- line(cars))
 abline(coef(z))
+## Tukey-Anscombe Plot :
+plot(residuals(z) ~ fitted(z), main = deparse(z$call))
 }
 \keyword{robust}
 \keyword{regression}

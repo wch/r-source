@@ -24,6 +24,13 @@
 #include <Defn.h>
 #include "R_ext/Rdynpriv.h"
 
+/* Forced in during patch update. Belongs elsewhere?? */
+typedef SEXP  (*sDL_FUNC)();
+static sDL_FUNC ptr_svd, ptr_rs, ptr_rg, ptr_zgesv, ptr_zgeqp3,
+    ptr_qr_coef_cmplx, ptr_qr_qy_cmplx, ptr_svd_cmplx, 
+    ptr_rs_cmplx, ptr_rg_cmplx;
+/**/
+
 #include "R_ext/Rlapack.h"
 
 static R_LapackRoutines *ptr;
@@ -48,6 +55,22 @@ static void La_Init(void)
     int res = moduleCdynload("lapack", 1, 1);
     initialized = -1;
     if(!res) return;
+    
+    if(!(ptr_svd = (sDL_FUNC)R_FindSymbol("modLa_svd", "lapack", NULL))) return;
+    if(!(ptr_rs = (sDL_FUNC)R_FindSymbol("modLa_rs", "lapack", NULL))) return;
+    if(!(ptr_rg = (sDL_FUNC)R_FindSymbol("modLa_rg", "lapack", NULL))) return;
+    if(!(ptr_zgesv = (sDL_FUNC)R_FindSymbol("modLa_zgesv", "lapack", NULL))) return;
+    if(!(ptr_zgeqp3 = (sDL_FUNC)R_FindSymbol("modLa_zgeqp3", "lapack", NULL))) return;
+    if(!(ptr_qr_coef_cmplx = 
+	 (sDL_FUNC)R_FindSymbol("modqr_coef_cmplx", "lapack", NULL))) return;
+    if(!(ptr_qr_qy_cmplx = 
+    (sDL_FUNC)R_FindSymbol("modqr_qy_cmplx", "lapack", NULL))) return;
+    if(!(ptr_svd_cmplx =  
+	 (sDL_FUNC)R_FindSymbol("modLa_svd_cmplx", "lapack", NULL))) return;
+    if(!(ptr_rs_cmplx = 
+	 (sDL_FUNC)R_FindSymbol("modLa_rs_cmplx", "lapack", NULL))) return;
+    if(!(ptr_rg_cmplx = 
+	 (sDL_FUNC)R_FindSymbol("modLa_rg_cmplx", "lapack", NULL))) return;
 
     initialized = 1;    
     return;

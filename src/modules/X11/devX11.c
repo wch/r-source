@@ -2061,7 +2061,7 @@ Rf_setX11DeviceData(DevDesc *dd, x11Desc *xd)
     dd->dp.canRotateText = TRUE;
     dd->dp.canResizeText = TRUE;
     dd->dp.canClip = TRUE;
-    dd->dp.canHAdj = FALSE;
+    dd->dp.canHAdj = 0;
 
     dd->dp.ask = FALSE;
 

@@ -22,9 +22,9 @@
 #include <config.h>
 #endif
 
-#include <Defn.h>	/* -> ../include/R_ext/Complex.h */
+#include <Defn.h>		/* -> ../include/R_ext/Complex.h */
 #include <Rmath.h>
-#include <R_ext/Applic.h>		/* R_cpoly */
+#include <R_ext/Applic.h>	/* R_cpoly */
 
 #include "arithmetic.h"		/* complex_*  */
 
@@ -49,7 +49,7 @@ SEXP complex_unary(ARITHOP_TYPE code, SEXP s1)
 	n = LENGTH(s1);
 	for (i = 0; i < n; i++) {
 	    x = COMPLEX(s1)[i];
-#ifdef IEEE_745
+#ifdef IEEE_754
 	    COMPLEX(ans)[i].r = -x.r;
 	    COMPLEX(ans)[i].i = -x.i;
 #else

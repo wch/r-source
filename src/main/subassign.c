@@ -232,9 +232,11 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, int stretch, int level)
 	}
 	else {
 	    /* Wrap the RHS in a list */
-	    SEXP tmp = allocVector(VECSXP, 1);
-	    SET_VECTOR_ELT(tmp, 0, *y);
+	    SEXP tmp;
+	    PROTECT(tmp = allocVector(VECSXP, 1));
+	    SET_VECTOR_ELT(tmp, 0, NAMED(*y) ? duplicate(*y) : *y);
 	    *y = tmp;
+	    UNPROTECT(1);
 	}
 	break;
 

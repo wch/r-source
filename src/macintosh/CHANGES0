@@ -1,3 +1,31 @@
+rm130
+=====
+* Fixed a bug when saving from menus
+* Added module support
+* Fixed a bug that crashes R under System 8.6 due to a calling
+  to a non-existent function under 8.6
+* Stack and memory settings changed to work on System 8.6
+* R main project file and packages project files have been changed
+* Added back the "Save" menu
+* file.choose() works correctly now
+* Now R takes track of file names associated to each window
+* Fixed a bug with printer dialog
+* Now R can handle "user breaks" in evaluation and printing loops
+
+
+rm123
+=====
+
+This is the first Carbon version of R for MacOS and MacOS X.
+This version IS NOT a competitor of the MacOS X version based
+on the X11 device. This version will run under both MacOS and
+MacOS X natively taking advantages of the new Aqua Interface
+under MacOS X.
+A lot of work and many changes have been done to release this
+version. Even tought most of the known bugs have been fixed
+it is not excluded that new ones have also been introduced.
+Numerical issues has been solved, now R passes all the test.
+  
 Macintosh porting of R-1.2.3,  (April 26 2001).
 =====================================================
 * first Carbon version of R for MacOS and MacOS X

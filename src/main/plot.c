@@ -1930,6 +1930,16 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 	    adjy = REAL(adj)[1];
 	}
     }
+    else if (isInteger(adj)) {
+	if (LENGTH(adj) == 1) {
+	    adjx = INTEGER(adj)[0];
+	    adjy = NA_REAL;
+	}
+	else {
+	    adjx = INTEGER(adj)[0];
+	    adjy = INTEGER(adj)[1];
+	}
+    }
     else errorcall(call, "invalid adj value");
     args = CDR(args);
 
