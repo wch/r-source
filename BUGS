@@ -373,3 +373,7 @@ Date: 10 Sep 1999 06:53:01 -0000
 Subject: Re: problem in R.sh.in script 
 From: Mitsuru Oka <oka@debian.or.jp>
 Date: Fri, 10 Sep 1999 16:08:39 +0900
+* PR# 274 *
+Subject: axis() produces junk on DEC alpha
+From: albrecht.gebhardt@uni-klu.ac.at
+Date: Mon, 13 Sep 1999 03:02:20 +0200 (MET DST)
