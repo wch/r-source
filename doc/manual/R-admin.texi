@@ -332,7 +332,7 @@ documentation files via @acronym{CRAN}.
 
 For those obtaining @R{} @emph{via} Subversion, one additional step is
 necessary:
-@cindex vignettes
+@cindex Vignettes
 
 @example
 make vignettes
@@ -570,7 +570,7 @@ cross-compile, see @file{src/gnuwin32/INSTALL}.
 
 @node Installing R under Mac OS X, Add-on packages, Installing R under Windows, Top
 @chapter Installing R under Mac OS X
-@cindex Installing R under Mac OS X
+@cindex Mac OS X
 
 The @file{bin/macosx} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
@@ -771,10 +771,19 @@ from the library.
 
 @node Internationalization, Essential and useful other programs, Add-on packages, Top
 @chapter Internationalization and Localization
+@cindex Internationalization
+@cindex Localization
 
 @emph{Internationalization} refers to the process of enabling support
 for non-English languages, and @emph{localization} to adapting to a
 specific country and language.
+
+@R{} has long worked in the ISO Latin-1 8-bit character set and so
+covered English and most Western European languages (if not necessarily
+their currency symbols).  What characters are valid in names was taken
+from the current locale.  In general other locales with single-byte
+encodings worked, but e.g. @code{postscript()} and @code{pdf()} need to
+be told about the encoding in use.
 
 Full internationalization can be enabled when @R{} is built under
 Unix-alikes by the @command{configure} option @option{--enable-utf8}:
@@ -785,7 +794,7 @@ installer.
 
 All versions of @R{} support all single-byte character sets that the
 underlying OS can handle.  These are interpreted according to the
-@cindex locale
+@cindex Locale
 current @code{locale}, as sufficiently complicated topic to merit a
 separate section.  Fully internationalized versions can also handle most
 multi-byte locales, in which a single character is represented by one,
@@ -804,7 +813,7 @@ as from version 2.1.0.
 
 @node Locales, Localization of messages, Internationalization, Internationalization
 @section Locales
-@cindex locale
+@cindex Locale
 
 A @emph{locale} is a description of the local environment of the user,
 including the preferred language, the encoding of characters, the
@@ -823,9 +832,9 @@ abbreviation following ISO 639.
 @item
 A `territory', used mainly to specify the currency. These are generally
 specified by an upper-case two-character abbreviation following ISO
-3166.  Sometimes the language and territory are used to specify the
-encoding, for example to distinguish between traditional and simplified
-Chinese.
+3166.  Sometimes the combination of language and territory is used to
+specify the encoding, for example to distinguish between traditional and
+simplified Chinese.
 
 @item
 A charset encoding, which determines both how a byte stream should be
@@ -840,7 +849,7 @@ considered pre- or post-Euro.
 @R{} is principally concerned with the first (for translations) and
 third.  Note that the charset may be deducible from the language, as
 some OSes offer only one charset per language, and most OSes have only
-one charset for many languages.  Note too the remark above about
+one charset each for many languages.  Note too the remark above about
 Chinese.
 
 @menu
@@ -891,13 +900,14 @@ Domain @code{R} for basic C-level error messages.
 
 @item
 Domain @code{R-@var{pkg}} for the R @code{stop} and @code{warning}
-messages in each package, including the @code{base} package.
+messages in each package, including @code{R-base} for the @code{base}
+package.
 
 @item
 Domain @code{@var{pkg}} for the C-level messages in each package.
 
 @item
-Domain @code{RGui} for the menus etc for the R for Windows GUI front-end.
+Domain @code{RGui} for the menus etc of the R for Windows GUI front-end.
 
 @end itemize
 
@@ -965,7 +975,7 @@ the @HTML{} manuals will be linked to @acronym{CRAN}.
 (@command{makeinfo} version 4.7 is fairly recent, but version 4.6 is
 known to create incorrect @HTML{} files.)
 
-@cindex vignettes
+@cindex Vignettes
 The typeset documentation and building vignettes needs @command{tex} and
 @command{latex}, or @command{pdftex} and @command{pdflatex}.
 
@@ -1228,13 +1238,6 @@ against the dynamic library and so such packages cannot be used from a
 @node Internationalization support, Configuration variables, Configuration options, Configuration on Unix
 @section Internationalization support
 
-@R{} has long worked in the ISO Latin-1 8-bit character set and so
-covered English and most Western European languages (if not necessarily
-their currency symbols).  What characters are valid in names was taken
-from the current locale.  In general other locales with single-byte
-encodings will work, but e.g. @code{postscript()} and @code{pdf()} need
-to be told about the encoding in use.
-
 As from version 2.1.0, @R{} has some support for multi-byte character
 sets (@acronym{MBCS}), in particular for UTF-8 locales (which are
 usually identified by suffix @code{.utf8}, something like
@@ -1261,10 +1264,9 @@ characters never occur as part of multi-byte character sequences, which
 is true of UTF-8 and the EUC-* locales but not some Chinese and Korean
 locales.
 
-Translation of messages is supported via GNU @code{gettext}: this is
-found from system facilities or included in @R{} itself unless the
-configure option @option{--disable-nls} is used or the underlying OS has
-insufficiently standard C functions to support it.
+Translation of messages is supported via GNU @code{gettext} unless
+disabled by the configure option @option{--disable-nls} or the
+underlying OS has insufficiently standard C functions to support it.
 
 
 @node Configuration variables, Using make, Internationalization support, Configuration on Unix
@@ -1740,9 +1742,9 @@ You may find that @command{configure} detects other libraries that R
 needs to use as shared libraries but are only available as static
 libraries.  If you cannot install shared versions you will need to tell
 @command{configure} not to use these libraries, or make sure they are
-not in the library path.  The symptom will the linker error shown in the
-last paragraph.  Static libraries that might be found and would cause
-problems are
+not in the library path.  The symptom will be the linker error shown in
+the last paragraph.  Static libraries that might be found and would
+cause problems are
 
 @example
 BLAS                   @r{use @option{--without-blas}}
