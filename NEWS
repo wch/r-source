@@ -8,6 +8,8 @@
 
 BUG FIXES
 
+    o	seq(along = v) { and seq(v) when length(v) > 1 } now return integer.
+
     o	which(x) failed when x had names and NAs.
 
     o	Typos in NegBinomial.Rd (Negative Binomial distrib), thanks to Ch.Gu.
