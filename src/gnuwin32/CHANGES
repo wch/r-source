@@ -12,33 +12,44 @@ There is now a GUI preferences editor on the Edit menu in Rgui.
 A data entry editor is now implemented.  This is similar to the Unix
 one (see ?dataentry) with the additional feature that right-clicking
 in a cell turns it into an editable field (entered as a new value
- by navigating away from the cell).
+by navigating away from the cell).
+
+Rterm will now load and save the commands history (as Rgui does).
+There is a new item on the File menu in Rgui to save the commands
+history at that point in a session, and a new function savehistory()
+(only applicable in Rgui and Rterm).
 
 Colours in Rconsole can be specified as "Windows" and will be taken 
 from the current Windows colour scheme. (The preferences editor will
 save the actual colour, though.)
 
+The placement of multiple pagers is now `random' (so they will not
+always appear in the centre of the screen) and under the MDI interface
+the pager rows and columns settings are respected.
+
 The postscript() device can now spool plots to a printer. You will
 need a suitable program to send a file to the spooler (or even to send
 it to ghostscript to interpret PostScript for the printer): the RedMon
 suite available from http://www.cs.wisc.edu/~ghost/rjl.html should
-provide suitable tools.
-
-The placement of multiple pagers is now `random' (so they will not
-always appear in the centre of the screen) and under the MDI interface
-the pager rows and columns settings are respected.
+provide suitable tools.  See ?postscript for further details.
 
 The new xfig() device can be used, and a port of xfig to Windows (with
 an X server and the Cygwin B20.1 environment and X11R6.4 installed) is at
 ftp.franken.de:/pub/win32/develop/gnuwin32/cygwin/porters/Humblet_Pierre_A/B20
 as  xfig-3.2.2-cygwin-b20.1-bin.tar.gz
 
+The R DLL and executables now have standard Windows version
+information, which will appear on a Version tab of the Properties
+dialog box in Explorer.
+
 The internal unzip and the installer now use unzip5.41, not unzip5.40, and
 the DLL interface is incompatible.
 
-The R DLL and executables now have standard Windows version information.
+There are changes in the tools needed to build R (see the file INSTALL)
+and those recommended for building packages from source (see the file
+README.packages).
 
-Makefile target zipdata-% to zip up data directories in packages.
+New makefile target zipdata-% to zip up data directories in packages.
 
 
 rw1001

@@ -62,3 +62,7 @@ shell.exec <- function(file) invisible(.Internal(shell.exec(file)))
 dir.create <- function(path)
     invisible(.Internal(dir.create(path)))
 
+savehistory <- function(file=".Rhistory")
+    invisible(.Internal(savehistory(file)))
+
+

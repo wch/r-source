@@ -516,6 +516,7 @@ FUNTAB R_FunTab[] =
 {"winDialogString",  do_windialogstring,   0,      11,     2,      PP_FUNCALL},
 {"winMenuAdd",  do_winmenuadd, 0,      11,     3,      PP_FUNCALL},
 {"winMenuDel",  do_winmenudel, 0,      11,     2,      PP_FUNCALL},
+{"savehistory", do_savehistory,0,      11,     1,      PP_FUNCALL},
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
 {"save",	do_save,	0,	111,	4,	PP_FUNCALL},
