@@ -44,10 +44,11 @@
 #endif
 
 #define TRUE    (1)
-
 #define FALSE   (0)
 
+#ifndef _STDLIB_H
 #define abs(x) ((x) >= 0 ? (x) : -(x))
+#endif
 /* #define dabs(x) (double)abs(x) */
 #define min(a,b) ((a) <= (b) ? (a) : (b))
 #define max(a,b) ((a) >= (b) ? (a) : (b))
