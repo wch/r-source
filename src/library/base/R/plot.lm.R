@@ -13,7 +13,7 @@ plot.lm <- function (x, which = 1:4,
     show[which] <- TRUE
     r <- residuals(x)
     n <- length(r)
-    yh <- fitted(x)
+    yh <- predict(x)# != fitted() for glm
     hii <- lm.influence(x)$hat
     if(any(show[2:3]))
        rs <- r/sqrt(1 - hii)
@@ -29,11 +29,14 @@ plot.lm <- function (x, which = 1:4,
         if(id.n < 0 || id.n > n)
             stop(paste("`id.n' must be in { 1,..,",n,"}"))
     }
+    if(id.n > 0)
+        show.id <- order(-abs(r))[1:id.n]
+
     if (is.null(labels.id))
         labels.id <- paste(1:n)
     if (show[1]) {
         ylim <- range(r)
-        if (id.n)
+        if(id.n > 0)
             ylim <- ylim + c(-1,1)* 0.08 * diff(ylim)
         plot(yh, r, xlab = "Fitted values", ylab = "Residuals", main = main,
              ylim = ylim, type = "n", ...)
@@ -44,9 +47,8 @@ plot.lm <- function (x, which = 1:4,
         if(id.n > 0) {
             chh <- strheight(" ")
             chw <- strwidth(" ")
-            show.id <- order(-abs(r))[1:id.n]
             y.id <- r[show.id]
-            y.id[y.id < 0] <- y.id[y.id < 0] - 1.6 * cex.id * chh
+            y.id[y.id < 0] <- y.id[y.id < 0] - chh/3
             text(yh[show.id] - cex.id * chw, y.id, labels.id[show.id],
                  cex = cex.id, xpd = TRUE, adj = 1)
         }

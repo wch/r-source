@@ -12,17 +12,18 @@ plot.lm (x, which = 1:4,
          id.n = 3, labels.id = names(residuals(x)), cex.id = 0.25)
 }
 \arguments{
-    \item{x}{\code{\link{lm}} object.}
+    \item{x}{\code{lm} object, typically result of \code{\link{lm}} or
+	\code{\link{glm}}.}
     \item{which}{If a subset of the plots is required, specify a subset
 	of the numbers \code{1:4}.}
     \item{caption}{Captions to appear above the plots}
     \item{panel}{Panel function.  A useful alternative to \code{\link{points}}
 	is \code{\link{panel.smooth}}.}
-    \item{sub.caption}{common title--above figures if there are
+    \item{sub.caption}{common title -- above figures if there are
 	multiple; used as \code{sub} (s.\code{\link{title}}) otherwise.}
+    \item{main}{title to each plot -- in addition to the above \code{caption}.}
     \item{ask}{logical; if \code{TRUE}, the user is \emph{ask}ed before
 	each plot, see \code{\link{par}(ask=.)}.}
-    \item{main}{title to each plot -- in addition to the above \code{caption}.}
     \item{\dots}{other parameters to be passed through to plotting functions.}
     \item{id.n}{number of points to be labelled in each plot, starting with
 	the most extreme.}
@@ -47,9 +48,10 @@ plot.lm (x, which = 1:4,
 
     This `S-L' and the Q-Q plot use \emph{standardized} residuals which
     have identical variance (under the hypothesis), which are given as
-    \eqn{R_i / sqrt{1 - h_{ii}}}{R[i] / sqrt(1 - h.ii)} where
-    \eqn{h_{ii}}{h.ii} are the diagonal entries of the hat matrix, see
-    \code{\link{hat}} or \code{\link{lm.influence}()}.
+    \eqn{R_i / \sqrt{1 - h_{ii}}}{R[i] / sqrt(1 - h.ii)} where
+    \eqn{h_{ii}}{h.ii} are the diagonal entries of the hat matrix,
+% bug in Rdconv: "$" and \link inside \code fails; '\$' doesn't help...
+    \code{\link{lm.influence}()}\code{$hat}, see also \code{\link{hat}}.
 }
 \references{
     Belsley, D. A., E. Kuh and R. E. Welsch (1980).
