@@ -229,6 +229,9 @@ SEXP do_sort(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* 
    Partial sort so that x[k] is in the correct place, smaller to left,
    larger to right
+
+   NOTA BENE:  k < n  required, and *not* checked here but in do_psort();
+               -----  infinite loop possible otherwise!
  */
 #define psort_body \
     int L, R, i, j;\
