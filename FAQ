@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-25, 2000-11-14
+Version 1.1-26, 2000-11-15
 Kurt Hornik
 
 
@@ -1105,6 +1105,9 @@ works, was published in the Journal of Statistical Software
      Data sets and sample linear mixed effects analyses corresponding to the
      examples in "SAS System for Mixed Models" by R. C. Littell, G. A.
      Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
+
+*XML*
+     Facilities for reading XML documents and DTDs.
 
 *acepack*
      ACE (Alternating Conditional Expectations) and AVAS (Additivity and
