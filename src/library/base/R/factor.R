@@ -75,17 +75,19 @@ print.factor <- function (x, quote=FALSE)
 }
 
 
-Math.factor <- function(x, ...)
+Math.factor <- function(x, ...) {
     stop(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
-
-Summary.factor <- function(x, ...)
+}
+Summary.factor <- function(x, ...) {
     stop(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
-
+}
 Ops.factor <- function(e1, e2)
 {
     ok <- switch(.Generic, "=="=, "!="=TRUE, FALSE)
-    if(!ok)
-	stop(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
+    if(!ok) {
+	warning(paste('"',.Generic,'"', " not meaningful for factors", sep=""))
+        return(rep(NA, max(length(e1),if(!missing(e2))length(e2))))
+    }
     nas <- is.na(e1) | is.na(e2)
     if (nchar(.Method[1])) {
 	l1 <- levels(e1)

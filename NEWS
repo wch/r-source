@@ -19,6 +19,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	Ops.factor :  not Error, but a warning + NAs
+
     o	Ops.data.frame :  things like  d.fr < a	  now return a matrix
 
     o	data.frame():  duplicated row.names now give a warning when dropped.
