@@ -317,3 +317,11 @@ Date: Thu, 16 Aug 2001 20:13:32 -0500
 Subject: error message in chol()
 From: jerome@stat.ubc.ca
 Date: Sun, 19 Aug 2001 23:05:47 +0200 (MET DST)
+* PR# 1062 *
+Subject: system.file("",package)
+From: Thomas Lumley <tlumley@u.washington.edu>
+Date: Sun, 19 Aug 2001 16:01:57 -0700 (PDT)
+* PR# 1063 *
+Subject: interrupting Sys.sleep
+From: Thomas Lumley <tlumley@u.washington.edu>
+Date: Mon, 20 Aug 2001 13:55:29 -0700 (PDT)
