@@ -79,13 +79,12 @@ make.search.html <- function(lib.loc=.libPaths())
             sed.it <- FALSE
         }
         for (i in pg) {
-            cfile <- system.file("CONTENTS", package = i, lib.loc = lib)
-            if(nchar(cfile)) {
-                tmp <- if(sed.it)
-                    gsub("^URL: ../../../library", lib0, readLines(cfile))
-                else readLines(cfile)
-                writeLines(tmp, out)
-            }
+            cfile <- file.path(lib, i, "CONTENTS")
+            if(!file.exists(cfile)) next
+            contents <- if(sed.it)
+                gsub("^URL: ../../../library", lib0, readLines(cfile))
+            else readLines(cfile)
+            writeLines(contents, out)
         }
     }
     close(out)
