@@ -238,6 +238,7 @@ void jump_to_toplevel()
 {
     RCNTXT *c;
     SEXP s, t;
+    int haveHandler;
     int nback = 0;
 
     inError = 1;
@@ -251,7 +252,8 @@ void jump_to_toplevel()
 
     /*now see if options("error") is set */
     s = GetOption(install("error"), R_NilValue);
-    if( s != R_NilValue ) {
+    haveHandler = ( s != R_NilValue );
+    if (haveHandler) {
 	if( !isLanguage(s) &&  ! isExpression(s) )  /* shouldn't happen */
 	    REprintf("invalid option \"error\"\n");
 	else {
@@ -259,12 +261,17 @@ void jump_to_toplevel()
 	    while ( !(c->callflag & CTXT_FUNCTION) && c->callflag )
 		c = c->nextcontext;
 	    inError = 3;
-	    eval(s, c->cloenv);
+	    if (isLanguage(s))
+		eval(s, c->cloenv);
+	    else /* expression */
+            {
+		int i, n = LENGTH(s);
+		for (i = 0 ; i < n ; i++)
+		    eval(VECTOR(s)[i], c->cloenv);
+	    }
 	    inError = 1;
 	}
     }
-    else if ( !R_Interactive )
-	R_CleanUp(SA_NOSAVE);
 
     if (R_Inputfile != NULL)
 	fclose(R_Inputfile);
@@ -285,6 +292,9 @@ void jump_to_toplevel()
 		findcontext(CTXT_RESTART, c->cloenv, R_DollarSymbol);
 	}
     }
+    if ( !R_Interactive && !haveHandler && inError )
+	R_CleanUp(SA_NOSAVE);
+
     if (R_Sinkfile) R_Outputfile = R_Sinkfile;
     else R_Outputfile = R_Consolefile;
     PROTECT(s = allocList(nback));
