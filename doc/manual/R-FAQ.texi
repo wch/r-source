@@ -3,7 +3,7 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ-VERSION 0.90-6, 1999/12/27
+@set FAQ-VERSION 0.90-7, 2000/01/06
 @set REL-VERSION 0.90.1
 @set DEV-VERSION 0.99.0
 @c %**end of header
@@ -1636,8 +1636,15 @@ The @file{man} subdirectory should contain documentation files for the
 objects in the package.  The documentation files to be installed must
 also start with a (lower- or uppercase) letter and have the extension
 @file{.Rd} (the default) or @file{.rd}, and are written in the R
-documentation format (@pxref{Writing R documentation, Writing R docs, R
-Extensions, R-exts, Writing R Extensions})
+documentation format.
+@ifset STANDALONE
+See section ``Writing R documentation'' in @cite{Writing R Extensions}
+for more information.
+@end ifset
+@ifclear STANDALONE
+@xref{Writing R documentation, Writing R docs, R Extensions, R-exts,
+Writing R Extensions}, for more information.
+@end ifclear
 
 C or @FORTRAN{} source and optionally a @file{Makefile} for the compiled
 code is in @file{src}.  Note that the @file{Makefile} most likely is not
@@ -1664,8 +1671,14 @@ for additional software that might be needed by the package), and
 removing the files created in this process.  See the add-on package
 @strong{e1071} on CRAN for an example of this mechanism.
 
+@ifset STANDALONE
+See section ``Creating R packages'' in @cite{Writing R Extensions} for
+more information.
+@end ifset
+@ifclear STANDALONE
 @xref{Creating R packages, Creating R pkgs, R Extensions, R-exts,
 Writing R Extensions}, for more information.
+@end ifclear
 
 The web page @uref{http://www.biostat.washington.edu/~thomas/Rlib.html}
 maintained by Thomas Lumley provides information on porting S packages
@@ -1846,6 +1859,7 @@ memory for it.  The size of this chunk cannot be changed subsequently.
 Hence, it can happen that not enough memory was allocated, e.g., when
 trying to read large data sets into R.
 
+@c FIXME nsize= vsize= in 0.99
 In these cases, you should restart R with more memory available, using
 the command line options @option{--nsize} and @option{--vsize}.  To
 understand these options, one needs to know that R maintains separate

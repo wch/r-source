@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.90-6, 1999/12/27
+Version 0.90-7, 2000/01/06
 Kurt Hornik
 
 
@@ -1367,8 +1367,9 @@ these files (historically `zzz.R') should use `library.dynam()' _inside_
    The `man' subdirectory should contain documentation files for the
 objects in the package.  The documentation files to be installed must also
 start with a (lower- or uppercase) letter and have the extension `.Rd' (the
-default) or `.rd', and are written in the R documentation format (*note
-Writing R docs: (R-exts)Writing R documentation.)
+default) or `.rd', and are written in the R documentation format.  See
+section "Writing R documentation" in `Writing R Extensions' for more
+information.
 
    C or FORTRAN source and optionally a `Makefile' for the compiled code is
 in `src'.  Note that the `Makefile' most likely is not needed.
@@ -1393,7 +1394,8 @@ software that might be needed by the package), and removing the files
 created in this process.  See the add-on package *e1071* on CRAN for an
 example of this mechanism.
 
-   *Note Creating R pkgs: (R-exts)Creating R packages, for more information.
+   See section "Creating R packages" in `Writing R Extensions' for more
+information.
 
    The web page `http://www.biostat.washington.edu/~thomas/Rlib.html'
 maintained by Thomas Lumley provides information on porting S packages to R.
