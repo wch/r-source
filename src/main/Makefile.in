@@ -13,16 +13,70 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = $(shell cd $(srcdir) && ls Makefile.in *.[cfhy])
 
-SRCS = arithmetic.c array.c attrib.c bind.c builtin.c character.c       \
-	coerce.c colors.c complex.c context.c cov.c cum.c debug.c       \
-	deparse.c deriv.c devices.c dotcode.c dstruct.c duplicate.c     \
-	envir.c errors.c eval.c format.c fourier.c gram.c gram-ex.c     \
-	graphics.c iosupport.c list.c logic.c main.c match.c memory.c   \
-	model.c names.c objects.c optimize.c options.c par.c paste.c    \
-	platform.c plot.c plot3d.c plotmath.c print.c printarray.c      \
-	printvector.c printutils.c random.c relop.c saveload.c scan.c   \
-	seq.c sort.c source.c split.c subassign.c subscript.c subset.c  \
-	summary.c unique.c util.c version.c
+SRCS = \
+	arithmetic.c \
+	array.c \
+	attrib.c \
+	bind.c \
+	builtin.c \
+	character.c \
+	coerce.c \
+	colors.c \
+	complex.c \
+	context.c \
+	cov.c \
+	cum.c \
+	debug.c \
+	deparse.c \
+	deriv.c \
+	devices.c \
+	dotcode.c \
+	dstruct.c \
+	duplicate.c \
+	envir.c \
+	errors.c \
+	eval.c \
+	format.c \
+	fourier.c \
+	gram.c \
+	gram-ex.c \
+	graphics.c \
+	iosupport.c \
+	list.c \
+	logic.c \
+	main.c \
+	match.c \
+	memory.c \
+	model.c \
+	names.c \
+	objects.c \
+	optimize.c \
+	options.c \
+	par.c \
+	paste.c \
+	platform.c \
+	plot.c \
+	plot3d.c \
+	plotmath.c \
+	print.c \
+	printarray.c \
+	printvector.c \
+	printutils.c \
+	random.c \
+	relop.c \
+	saveload.c \
+	scan.c \
+	seq.c \
+	sort.c \
+	source.c \
+	split.c \
+	subassign.c \
+	subscript.c \
+	subset.c \
+	summary.c \
+	unique.c \
+	util.c \
+	version.c
 DEPS = $(SRCS:.c=.d)
 OBJS = $(SRCS:.c=.o)
 
@@ -50,7 +104,7 @@ Makedeps: Makefile
 	@touch $@
 
 R: Makefile
-	@for t in Makedeps $(top_builddir)/bin/R.binary @RGNOMEBIN@; do \
+	@for t in Makedeps $(top_builddir)/bin/R.X11 @RGNOMEBIN@; do \
 	  $(MAKE) $${t}; \
 	done
 
@@ -61,13 +115,16 @@ R: Makefile
 ../include/FFDecl.h: $(top_srcdir)/src/appl/ROUTINES
 	(cd ../include; $(top_srcdir)/tools/GETSYMBOLS)
 
-$(top_builddir)/bin/R.binary: $(OBJS) $(RLIBS)
+$(top_builddir)/bin/R.X11: $(OBJS) $(RLIBS) @EXPORTFILE@
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
 	$(LDCMD) $(DLLFLAGS) -o $@ $(OBJS) $(ALL_LIBS)
 
 $(top_builddir)/bin/R.gnome: $(OBJS) $(RGNOMELIBS)
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
 	$(LDCMD) $(DLLFLAGS) $(GNOME_LIBDIR) -o $@ $(OBJS) $(ALL_GNOME_LIBS)
+
+$(top_builddir)/etc/R.exp: $(OBJS) $(ALL_LIBS)
+	@$(top_srcdir)/tools/ldAIX4 $(OBJS) $(ALL_LIBS) -o $@
 
 ../unix/libunix.a:
 	(cd ../unix;  $(MAKE) $(@F))
@@ -83,7 +140,7 @@ gram.c: $(srcdir)/gram.y
 mostlyclean: clean
 clean:
 	@echo "Cleaning in $(subdir)"
-	@-rm -f R.binary R-Image *core Makedeps *.d *.o gram.c
+	@-rm -f R.binary R.X11 R.gnome R-Image *core Makedeps *.d *.o
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
