@@ -134,8 +134,9 @@ static const EventTypeSpec	aboutSpec =
 
 static pascal OSErr QuitAppleEventHandler (const AppleEvent *appleEvt,
                                      AppleEvent* reply, UInt32 refcon); 
-static OSStatus KeybHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void *inUserData );
-pascal OSStatus RAboutWinHandler(EventHandlerCallRef handlerRef, EventRef event, void *userData);
+static pascal OSStatus KeybHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void *inUserData );
+static pascal OSStatus RAboutWinHandler(EventHandlerCallRef handlerRef, EventRef event, void *userData);
+OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData );
 
 WindowRef			ConsoleWindow=NULL;
 
@@ -148,9 +149,13 @@ static const EventTypeSpec	RCmdEvents[] =
 	{ kEventClassCommand, kEventCommandUpdateStatus }
 };
 
-static const EventTypeSpec	RWinEvents[] =
+static const EventTypeSpec	RGlobalWinEvents[] =
 {
-        { kEventClassWindow, kEventWindowBoundsChanged },
+        { kEventClassWindow, kEventWindowBoundsChanged }
+};
+
+static const EventTypeSpec	RCloseWinEvent[] = 
+{
         { kEventClassWindow, kEventWindowClose }        
 };
 
@@ -254,8 +259,12 @@ void Raqua_StartConsole(void)
          err = InstallApplicationEventHandler( NewEventHandlerUPP(RCmdHandler), GetEventTypeCount(RCmdEvents),
                                                 RCmdEvents, 0, NULL);
 	    
-         err = InstallApplicationEventHandler( NewEventHandlerUPP(RWinHandler), GetEventTypeCount(RWinEvents),
-                                                RWinEvents, 0, NULL);
+         err = InstallWindowEventHandler( ConsoleWindow, NewEventHandlerUPP(DoCloseHandler), 
+                                          GetEventTypeCount(RCloseWinEvent),
+                                          RCloseWinEvent, (void *)ConsoleWindow, NULL);
+                                          
+         err = InstallApplicationEventHandler( NewEventHandlerUPP(RWinHandler), GetEventTypeCount(RGlobalWinEvents),
+                                                RGlobalWinEvents, 0, NULL);
          err = AEInstallEventHandler(kCoreEventClass, kAEQuitApplication, NewAEEventHandlerUPP(QuitAppleEventHandler), 
                                     0, false );
 
@@ -721,9 +730,6 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 	HICommand	command;
 	UInt32		eventKind = GetEventKind( inEvent ), RWinCode, devsize;
         int		devnum;
-        Rect		ROutRect;
-        Point           MouseLoc;
-        RgnHandle       CursorRgn;
         NewDevDesc 	*dd;
         WindowRef 	EventWindow;
            EventRef	REvent;
@@ -753,11 +759,47 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
              }
             break;
         
+            default:
+            break;
+        }    
+ 	   
+	return noErr;
+}
+
+OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
+{
+	OSStatus 	err = eventNotHandledErr;
+	HICommand	command;
+	UInt32		eventKind = GetEventKind( inEvent ), RWinCode, devsize;
+        int		devnum;
+        char 		cmd[255];
+        WindowRef 	EventWindow;
+        EventRef	REvent;
+
+	
+        if( GetEventClass(inEvent) != kEventClassWindow)
+         return(err);
+         
+        GetEventParameter(inEvent, kEventParamDirectObject, typeWindowRef, NULL, sizeof(EventWindow),
+                                NULL, &EventWindow);
+        switch(eventKind){
+            
+     
+            
+                           
             case kEventWindowClose:
-             if( EventWindow != ConsoleWindow){
-                CreateEvent(NULL, kCoreEventClass, kAEQuitApplication, 0,kEventAttributeNone, &REvent);
-                SendEventToEventTarget (REvent,GetApplicationEventTarget());
-             }
+             /* Are we closing the R Console window ? */
+             if( EventWindow == ConsoleWindow){
+                consolecmd("q()\r");
+                err = noErr;
+              } 
+              
+             /* Are we closing any quartz device window ? */
+            if( GetWindowProperty(EventWindow, kRAppSignature, 1, sizeof(int), devsize, &devnum) == noErr){
+                    sprintf(cmd,"dev.off(%d)\r",1+devnum);
+                    consolecmd(cmd);
+                    err= noErr; 
+            }
             break;
                 
             default:

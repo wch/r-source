@@ -78,6 +78,11 @@ typedef struct {
 }
 QuartzDesc;
 
+extern OSStatus DoCloseHandler(EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData);
+static const EventTypeSpec	RCloseWinEvent[] = 
+{
+        { kEventClassWindow, kEventWindowClose }        
+};
 
 Rboolean innerQuartzDeviceDriver(NewDevDesc *dd, char *display,
 			 double width, double height, double pointsize, 
@@ -388,7 +393,7 @@ static Rboolean	Quartz_Open(NewDevDesc *dd, QuartzDesc *xd, char *dsp,
     
 	SetRect(&devBounds, 400, 400, 400 + xd->windowWidth, 400 + xd->windowHeight ) ;
     
-    err = CreateNewWindow( kDocumentWindowClass, kWindowStandardHandlerAttribute|kWindowVerticalZoomAttribute | kWindowCollapseBoxAttribute|kWindowResizableAttribute , 
+    err = CreateNewWindow( kDocumentWindowClass, kWindowStandardHandlerAttribute|kWindowVerticalZoomAttribute | kWindowCollapseBoxAttribute|kWindowResizableAttribute | kWindowCloseBoxAttribute , 
 		& devBounds, & devWindow);
  
     
@@ -397,7 +402,10 @@ static Rboolean	Quartz_Open(NewDevDesc *dd, QuartzDesc *xd, char *dsp,
         SetWTitle(devWindow, Title);
     
 	ShowWindow(devWindow);
-	
+	err = InstallWindowEventHandler( devWindow, NewEventHandlerUPP(DoCloseHandler), 
+                                          GetEventTypeCount(RCloseWinEvent),
+                                          RCloseWinEvent, (void *)devWindow, NULL);
+        printf(stderr,"\n qtz err=%d",err);
     if(err != noErr)
      return(0);
      

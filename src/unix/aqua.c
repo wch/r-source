@@ -53,6 +53,7 @@
 
 #if defined(HAVE_AQUA) && defined(HAVE_DYNAMIC_LOADING)
 
+#include <Carbon/Carbon.h>
 static DL_FUNC Rdlsym(void *handle, char const *name)
 {
     char buf[MAXIDSIZE+1];
@@ -76,7 +77,7 @@ extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_ReadConsole,
 extern DL_FUNC ptr_R_ReadConsole, ptr_R_WriteConsole, ptr_R_ResetConsole, 
     ptr_R_FlushConsole, ptr_R_ClearerrConsole, ptr_R_StartConsole;
 
-DL_FUNC ptr_do_wsbrowser;
+DL_FUNC ptr_do_wsbrowser, ptr_DoCloseHandler;
 
 /* This is called too early to use moduleCdynload */
 void R_load_aqua_shlib(void)
@@ -124,6 +125,9 @@ void R_load_aqua_shlib(void)
     if(!ptr_R_ClearerrConsole) R_Suicide("Cannot load R_ClearerrConsole");
     ptr_do_wsbrowser = Rdlsym(handle, "Raqua_do_wsbrowser");
     if(!ptr_do_wsbrowser) R_Suicide("Cannot load do_wsbrowser");
+    ptr_DoCloseHandler = Rdlsym(handle, "DoCloseHandler");
+    if(!ptr_DoCloseHandler) R_Suicide("Cannot load DoCloseHandler");
+    
     
 /*
     ptr_R_Busy = Rdlsym(handle, "Rgnome_Busy");
@@ -145,6 +149,11 @@ void R_load_aqua_shlib(void)
     ptr_GnomeDeviceDriver = Rdlsym(handle, "GnomeDeviceDriver");
     if(!ptr_GnomeDeviceDriver) R_Suicide("Cannot load GnomeDeviceDriver");
 */    
+}
+
+OSStatus DoCloseHandler(EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData)
+{
+ return(ptr_DoCloseHandler(inCallRef, inEvent, inUserData));
 }
 
 SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
