@@ -4,7 +4,7 @@
 ## ===== configuration macros for building packages or R  ===============
 
 # Alternatives MINGW (mingw), CROSS (Linux)
-BUILD=CROSS
+BUILD=MINGW
 
 HELP = YES
 ifeq ($(strip $(BUILD)),CROSS)
@@ -43,7 +43,7 @@ BINPREF=mingw32-
 HEADER=/users/ripley/R/cross-tools/mingw32/include
 endif
 # path (possibly full path) to same version of R on the host system
-R_EXE=Rdev
+R_EXE=R
 
 ## =============== end of user-customizable parts  ===================
 
