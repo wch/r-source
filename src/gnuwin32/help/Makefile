@@ -40,6 +40,11 @@ pkgfake-%:
 
 chm-%:
 	@if test -d $(PKGDIR)/$*/man ; then \
+	  if ! test -d $(PKGDIR)/$*/chm ; then \
+	    PERL5LIB=$(RHOME)/share/perl $(PERL) \
+	    $(R_HOME)/share/perl/build-help-windows.pl ${DOS} \
+	    -chm $(PKGDIR)/$* $(RLIB) '$(DPKG)' $* ; \
+	  fi; \
 	  $(MAKE)  --no-print-directory -C $(PKGDIR)/$*/chm \
 	    -f $(RHOME)/src/gnuwin32/help/Makefile $*.chm ; \
 	  $(MKDIR) -p $(DPKG)/chtml ;\
