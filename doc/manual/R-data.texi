@@ -87,7 +87,7 @@ principal authors of the packages mentioned are
 @item @pkg{CORBA} @tab Duncan Temple Lang
 @item @pkg{e1071} @tab Friedrich Leisch
 @item @pkg{foreign} @tab Thomas Lumley, Saikat DebRoy, Douglas Bates and Duncan Murdoch
-@item @pkg{hdf5} @tab Marcus Daniels
+@c @item @pkg{hdf5} @tab Marcus Daniels
 @item @pkg{Java} @tab John Chambers and Duncan Temple Lang
 @item @pkg{netCDF} @tab Thomas Lumley
 @item @pkg{RmSQL} @tab  Torsten Hothorn
@@ -117,7 +117,8 @@ Some of the packages described are still under development but they
 already provide useful functionality.
 
 Unless otherwise stated, everything described in this manual is
-available for both Unix/Linux and Windows versions of @R{}.
+available for both Unix/Linux and Windows versions of @R{}.  (Much is not
+yet available for the classic Macintosh port.)
 
 In general, statistical systems like @R{} are not particularly well
 suited to manipulations of large-scale data.  Some other systems are
@@ -147,7 +148,7 @@ approach, using @code{perl} to manipulate its databases of help files
 rather than @R{} itself, and the function @code{read.fwf} used a call to
 a @code{perl} script until it was decided not to require @code{perl} at
 run-time.  The traditional Unix tools are now much more widely
-available, including on Windows.
+available, including on Windows (but not on classic Macintosh).
 
 @menu
 * Imports::                     
@@ -500,13 +501,6 @@ Both @code{read.table} and @code{read.fwf} use @code{scan} to read the
 file, and then process the results of @code{scan}.  They are very
 convenient, but sometimes it is better to use @code{scan} directly.
 
-One reason can be to reduce memory usage.  Function @code{read.table}
-reads the whole data file into memory and processes it into a data
-frame, thereby creating another copy of the data.  If the
-post-processing is not required (for example if most of the variables
-are to be discarded) it may be feasible to use @code{scan} but not to
-use @code{read.table}.
-
 Function @code{scan} has many arguments, most of which we have already
 covered under @code{read.table}.  The most crucial argument is
 @code{what}, which specifies a list of modes of variables to be read
@@ -677,7 +671,7 @@ files produced by these statistical systems, and for export to Stata.
 @findex read.dta
 @findex write.dta
 Stata @file{.dta} files are a binary file format. Files from
-versions 5.0 and 6.0 of Stata can be read and written by functions
+versions 5.0, 6.0 and 7.0 of Stata can be read and written by functions
 @code{read.dta} and @code{write.dta}.
 
 @cindex Minitab
@@ -1422,25 +1416,33 @@ all data after that point is lost.
 
 @node Binary data formats,  , Package Rstreams, Binary files
 @section Binary data formats
-@findex hdf5
+@c @findex hdf5
+@c @cindex Hierarchical Data Format
+
 @findex netCDF
-@cindex Hierarchical Data Format
 @cindex network Common Data Form
 
-Packages @pkg{hdf5} (in the Devel area, and not currently updated for
-@R{} versions 1.2.x) and @pkg{netCDF} on @acronym{CRAN} provide
-experimental interfaces to @acronym{NASA}'s HDF5 (Hierarchical Data
-Format, see @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's netCDF
-data files (network Common Data Form, see
-@uref{http://www.unidata.ucar.edu/packages/netcdf/}), respectively.
+@c  Packages @pkg{hdf5} (in the Devel area, and not currently updated for
+@c  current @R{} versions) and @pkg{netCDF} on @acronym{CRAN} provide
+@c  experimental interfaces to @acronym{NASA}'s HDF5 (Hierarchical Data
+@c  Format, see @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's netCDF
+@c  data files (network Common Data Form, see
+@c  @uref{http://www.unidata.ucar.edu/packages/netcdf/}), respectively.
 
-Both of these are systems to store scientific data in array-oriented
-way, including descriptions, labels, formats, units, @dots{}.  HDF5 also
-allows @emph{groups} of arrays, and the @R{} interface writes maps lists
-to HDF5 groups, and can write numeric and character vectors and
-matrices.
+@c  Both of these are systems to store scientific data in array-oriented
+@c  way, including descriptions, labels, formats, units, @dots{}.  HDF5 also
+@c  allows @emph{groups} of arrays, and the @R{} interface writes maps lists
+@c  to HDF5 groups, and can write numeric and character vectors and
+@c  matrices.
 
-The @R{} interface can only read netCDF, not write it (yet).
+@c  The @R{} interface can only read netCDF, not write it (yet).
+
+Package @pkg{netCDF} on @acronym{CRAN} provides an experimental
+interface to UCAR's netCDF data files (network Common Data Form, see
+@uref{http://www.unidata.ucar.edu/packages/netcdf/}).  This is a system
+to store scientific data in array-oriented way, including descriptions,
+labels, formats, units, @dots{}.  The @R{} interface can only read
+netCDF, not write it (yet).
 
 @node Connections, Network interfaces, Binary files, Top
 @chapter Connections
@@ -1449,7 +1451,7 @@ The @R{} interface can only read netCDF, not write it (yet).
 @emph{Connections} are used in @R{} in the sense of Chambers (1998), a
 set of functions to replace the use of file names by a flexible
 interface to file-like objects.  Connections were introduced to @R{} in
-version 1.2.0, are still under development.
+version 1.2.0.
 
 
 @menu
@@ -1470,9 +1472,9 @@ version 1.2.0, are still under development.
 The most familiar type of connection will be a file, and file
 connections are created by function @code{file}.  File connections can
 (if the OS will allow it for the particular file) be opened for reading
-or writing or appending, in text or binary mode.  Currently (and unlike
-@Sl{}), connections can only be opened for one of reading and
-writing/appending at a time.
+or writing or appending, in text or binary mode.  In fact, files can be
+opened for both reading and writing, and @R{} keeps a separate file
+position for reading and writing.
 
 @findex open
 @findex close
@@ -1482,6 +1484,11 @@ rule is that a function using a connection should open a connection
 after use if it opened it.  In brief, leave the connection in the state
 you found it in.   There are generic functions @code{open} and
 @code{close} with methods to explicitly open and close connections.
+
+@findex gzfile
+@cindex Compressed files
+Files compressed via the algorithm used by @code{gzip} can be used as
+connections created by the function @code{gzfile}.
 
 @cindex Terminal connections
 @findex stdin
@@ -1498,9 +1505,10 @@ The three terminal connections are always open, and cannot be opened or
 closed.  @code{stdout} and @code{stderr} are conventionally used for
 normal output and error messages respectively.  They may normally go to
 the same place, but whereas normal output can be re-directed by a call
-to @code{sink}, error output is always sent to @code{stderr}.  Note
-carefully the language used here: the connections cannot be re-directed,
-but output can be sent to other connections.
+to @code{sink}, error output is sent to @code{stderr} unless re-directed
+by @code{sink, type="message")}.  Note carefully the language used here:
+the connections cannot be re-directed, but output can be sent to other
+connections.
 
 @cindex Text connections
 @findex textConnection
@@ -1529,8 +1537,19 @@ to that connection.  Conversely, opening a pipe connection for input
 runs an OS command and makes its standard output available for @R{}
 input from that connection.
 
-More types of connections are planned, including reading from and
-writing to sockets and URLs.
+@cindex URL connections
+@findex url
+URLs of types @code{http://}, @code{ftp://} and @code{file://} can be
+read from using the function @code{url}.  For convenience, @code{file}
+will also accept these as the file specification and call @code{url}.
+
+@cindex Sockets
+@findex socketConnection
+Sockets can also be used as connections via function
+@code{socketConnection} on platforms which support Berkeley-like sockets
+(most Unix systems, Linux and Windows but not currently classic
+Macintosh).  Sockets can be written to or read from, and both client and
+server sockets can be used.
 
 
 @node Output to connections, Input from connections, Types of connections, Connections
@@ -1599,11 +1618,8 @@ file connection for the duration of the function call, but explicitly
 opening a file connection allows a file to be read sequentially in
 different formats.
 
-Other functions that call @code{scan} can also make use of connections.
-In particular @code{read.table} can use connections, but as it needs to
-read the data twice it is inefficient on a non-seekable connection.
-(It reads the datafile into an @R{} character vector and operates on
-that via a text connection.)
+Other functions that call @code{scan} can also make use of connections,
+in particular @code{read.table}.
 
 Some simple examples are
 
@@ -1755,38 +1771,32 @@ across network connections.
 @node Reading from sockets, Using download.file, Network interfaces, Network interfaces
 @section Reading from sockets
 
+@cindex Sockets
 Base @R{} comes with some facilities to communicate @emph{via}
 @acronym{BSD} sockets on systems that support them (including the common
 Linux, Unix and Windows ports of @R{}).  One potential problem with
 using sockets is that these facilities are often blocked for security
 reasons or to force the use of Web caches, so these functions may be
-more useful on an intranet than externally.
+more useful on an intranet than externally.  For new projects it
+is suggested that socket connections are used instead.
 
 @findex make.socket
 @findex read.socket
 @findex write.socket
 @findex close.socket
-@findex httpclient
-The low-level interface is given by functions @code{make.socket},
-@code{read.socket}, @code{write.socket} and @code{close.socket}.  The
-function @code{httpclient} builds on these to read (directly) from an
-@acronym{HTTP} server.
+The earlier low-level interface is given by functions @code{make.socket},
+@code{read.socket}, @code{write.socket} and @code{close.socket}.
+
 
 @node Using download.file, DCOM interface, Reading from sockets, Network interfaces
 @section Using @code{download.file}
 
-@findex read.table.url
-@findex scan.url
-@cindex wget
-@cindex lynx
-There are functions @code{read.table.url} and @code{scan.url} that
-appear to work like @code{read.table} and @code{scan} but access a Web
-resource at a specified @acronym{URL}.  Appearances are deceptive,
-however, as these functions (and @code{url.show} and @code{source.url})
-first download the Web resource to a local file and then apply the
-standard functions.  Various methods can be used to download the file,
-including the programs @code{wget} and @code{lynx} and the direct use of
-@acronym{BSD} sockets.
+Function @code{download.file} is provided to read a file from a
+Web resource via FTP or HTTP and write it to a file.  Often this can be
+avoided, as functions such as @code{read.table} and @code{scan} can read
+directly from a URL, either by explicitly using @code{url} to open a
+connection, or implicitly using it by giving a URL as the @code{file}
+argument.
 
 
 @node DCOM interface, CORBA interface, Using download.file, Network interfaces
