@@ -173,10 +173,10 @@ NEW FEATURES
 	testPlatformEquivalence() which ignores the 'vendor' field and
 	can be customized by cognescenti.
 
-    o	The assignment form of split() allows recycling of vectors
-	within the value list. In particular, things like
-	    split(x, g) <- lapply(split(x, g), mean)
-	now work.
+    o   The assignment form of split() allows recycling of vectors 
+        within the value list. In particular, things like 
+            split(x, g) <- lapply(split(x, g), mean)
+        now work
 
 
 DOCUMENTATION
@@ -225,7 +225,7 @@ C-LEVEL FACILITIES
 
     o	It was not clear in 'Writing R Extensions' that some of the
 	entry points in the 'Utilities' section were not declared in
-	<R.h> (they were in <R_ext/Applic.h>).	Now all the entry
+	<R.h> (they were in <R_ext/Applic.h>).  Now all the entry
 	points in that section are declared in <R_ext/Utils.h>,
 	included by <R.h>.
 
@@ -358,8 +358,8 @@ BUG FIXES
 	'decreasing' or 'index.return' or supplying a factor are now
 	errors.
 	
-    o   The ave() function had trouble if the grouping contained
-        unused levels.
+    o	The ave() function had trouble if the grouping contained
+	unused levels.
 
     o   read.fwf() got confused by skip > 0 and could infinite loop
 	under some circumstances.  (PR#7350)
