@@ -79,9 +79,6 @@ BUG FIXES
     o	Unused directory src/f2clib and header src/include/R_ext/f2c.h
 	have been removed.
 
-    o	sys.function() could return an unevaluated promise, messing up
-	formals() and match.arg() (PR#872)
-
     o	plot(1:2, xaxs = "i") now gives both "1.0" and "2.0" x-axis labels.
 
     o	lowess(c(1:3, 7:5)) now should give the same on different platforms,
@@ -116,6 +113,9 @@ BUG FIXES
 
     o	Various strangeness with match.call() and "..." has been fixed
 	(PR#813).
+
+    o	sys.function() could return an unevaluated promise, messing up
+	formals() and match.arg() (PR#872)
 
     o	Deparsing or dumping attributes with non-standard names was
 	not quoting the name (PR#871).
