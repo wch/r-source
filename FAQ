@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-38, 2003-08-22
+Version 1.7-39, 2003-08-29
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1947,6 +1947,9 @@ distributions of R.)
      procedures for the one-way layout without presuming a certain
      distribution.
 
+*nprq*
+     Nonparametric and sparse quantile regression methods.
+
 *odesolve*
      An interface for the Ordinary Differential Equation (ODE) solver lsoda.
      ODEs are expressed as R functions.
@@ -3013,7 +3016,8 @@ to get the numbers back.  More efficient, but harder to remember, is
 
      as.numeric(levels(f))[as.integer(f)]
 
-   In any case, do not call `as.numeric()' or their likes directly.
+   In any case, do not call `as.numeric()' or their likes directly for the
+task at hand (as `as.numeric()' or `unclass()' give the internal codes).
 
 7.13 Are Trellis displays implemented in R?
 ===========================================
