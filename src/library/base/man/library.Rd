@@ -60,9 +60,9 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
     source'' including comments, see argument \code{keep.source} to
     \code{\link{options}}.}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
-    printed.}  
-  \item{quietly}{a logical.  If \code{TRUE}, a warning will not be
-    printed if the package cannot be found.}
+    printed.}
+  \item{quietly}{a logical.  If \code{TRUE}, no message confirming
+      package loading is printed.}
   \item{libname}{a character string giving the library directory where
     the package was found.}
   \item{pkgname}{a character string giving the name of the package.}
@@ -80,8 +80,8 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 \details{
   \code{library(package)} and \code{require(package)} both load the
   package with name \code{package}.  \code{require} is designed for use
-  inside other functions; it returns \code{FALSE} and optionally gives a
-  warning, rather than giving an error, if the package does not exist.
+  inside other functions; it returns \code{FALSE} and gives a warning
+  (rather than an error as \code{library()}) if the package does not exist.
   Both functions check and update the list of currently loaded packages
   and do not reload code that is already loaded.
 
@@ -167,7 +167,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   semicolon-separated
 #endif
   list of directories at which \R library trees are rooted) by calling
-  \code{.libPaths} with the directories specified in \code{R_LIBS}. 
+  \code{.libPaths} with the directories specified in \code{R_LIBS}.
 }
 \value{
   \code{library} returns the list of loaded (or available) packages
