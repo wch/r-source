@@ -106,7 +106,7 @@ data(\dots, list = character(0), package = .packages(),
 }
 \examples{
 data()                      # list all available data sets
-data(package = base)        # list the data sets in the base package
+data(package = "base")      # list the data sets in the base package
 data(USArrests, "VADeaths") # load the data sets 'USArrests' and 'VADeaths'
 help(USArrests)             # give information on data set 'USArrests'
 }
