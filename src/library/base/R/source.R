@@ -125,7 +125,6 @@ demo <- function(topic, device = getOption("device"),
         first <- TRUE
         outFile <- tempfile("Rdemo.")
         outConn <- file(outFile, open = "w")
-        on.exit({close(outConn); unlink(outFile)})
         for(path in paths) {
             INDEX <- file.path(path, "demo", "00Index")
             if(file.exists(INDEX)) {
@@ -140,9 +139,19 @@ demo <- function(topic, device = getOption("device"),
         }
         if(first) {
             warning("no demo listings found")
+            close(outConn)
         }
-        else
+        else {
+            if(missing(package))
+                writeLines(paste("\n",
+                                 "Use `demo(package = ",
+                                 ".packages(all.available = TRUE))'\n",
+                                 "to list the demos in all ",
+                                 "*available* packages.", sep = ""),
+                           outConn)
+            close(outConn)
             file.show(outFile, delete.file = TRUE, title = "R demos")
+        }
         return(invisible(character(0)))
     }
             

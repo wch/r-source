@@ -90,7 +90,6 @@ function(package = .packages(), lib.loc = .lib.loc)
     nodata <- noindex <- character(0)
     outFile <- tempfile("Rdata.")
     outConn <- file(outFile, open = "w")
-    on.exit({close(outConn); unlink(outFile)})
 
     for (path in paths) {
         pkg <- basename(path)
@@ -117,9 +116,17 @@ function(package = .packages(), lib.loc = .lib.loc)
     }
     if (first) {
         warning("no data listings found")
-        unlink(outFile)
+        close(outConn)
     }
     else {
+        if(missing(package))
+            writeLines(paste("\n",
+                             "Use `data(package = ",
+                             ".packages(all.available = TRUE))'\n",
+                             "to list the data sets in all ",
+                             "*available* packages.", sep = ""),
+                       outConn)
+        close(outConn)
         file.show(outFile, delete.file = TRUE, title = "R data sets")
     }
     if(!missing(package)) {
