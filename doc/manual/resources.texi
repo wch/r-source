@@ -82,11 +82,11 @@ for details.
 The Comprehensive R Archive Network (@acronym{CRAN}) is a collection of
 sites which carry identical material, consisting of the R
 distribution(s), the contributed extensions, documentation for R, and
-binaries, with the master site at @uref{http://CRAN.R-project.org/} and
+binaries, with the master site at @uref{http://cran.r-project.org/} and
 information on daily mirrors available from
 
 @quotation
-@uref{http://CRAN.R-project.org/mirrors.html}
+@uref{http://cran.r-project.org/mirrors.html}
 @end quotation
 
 @node Bug-tracking system,  , Archives, Top

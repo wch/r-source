@@ -81,9 +81,8 @@ The current version of this document is @value{VERSION}.
 @cindex Obtaining R
 
 Sources, binaries and documentation for @R{} can be obtained via
-@acronym{CRAN}, the ``Comprehensive R Archive Network''.  See the file
-@file{RESOURCES} in the R distribution for information on
-@acronym{CRAN}.
+@acronym{CRAN}, the ``Comprehensive R Archive Network'' whose current
+members are listed at @uref{http://cran.r-project.org/mirrors.html}.
 
 @menu
 * Getting and unpacking the sources::  
