@@ -41,7 +41,7 @@ POFILES = @POFILES@
 GMOFILES = @GMOFILES@
 UPDATEPOFILES = @UPDATEPOFILES@
 DUMMYPOFILES = @DUMMYPOFILES@
-DISTFILES.common = README Makefile.in.in Makefile.win remove-potcdate.sin \
+DISTFILES.common = README RGui.pot Makefile.in.in Makefile.win remove-potcdate.sin \
 $(DISTFILES.common.extra1) $(DISTFILES.common.extra2) $(DISTFILES.common.extra3)
 DISTFILES = $(DISTFILES.common) Makevars POTFILES.in $(DOMAIN).pot stamp-po \
 $(POFILES) $(GMOFILES) $(RGUI_CATALOGS) \
