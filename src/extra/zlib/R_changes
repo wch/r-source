@@ -1,6 +1,5 @@
-There are a very few to the source code of zlib-1.2.1 used here.
+There are a very few to the source code of zlib-1.2.2 used here.
 
-- a bug fix in deflate.c (picked up by the use of valgrind).
 - zconf.h includes R's config.h
 - gzio.c has been amended to allow LFS using fseeko/ftello where these
   are supported, and fseek64o/ftell64o on Windows.
