@@ -4,6 +4,7 @@
 data(\dots, list = character(0), package = c(.packages(),.Autoloaded),
      lib.loc = .lib.loc)
 show.data(package = c(.packages(),.Autoloaded), lib.loc = .lib.loc)
+}
 \alias{data}
 \alias{show.data}
 \arguments{
