@@ -1,17 +1,22 @@
 # default target builds indices
 DOS= # -dosnames   # for file-name mapping
+PERL=perl
+CAT=cat
+CP=cp
+RM=rm
 
 indices:
-	perl build.help ${DOS} -htmllists
+	$(PERL) build.help ${DOS} -htmllists
 
 help-%: 
-	perl build.help ${DOS} -nroff -html -example -latex $*
+	$(PERL) build.help ${DOS} -nroff -html -example -latex $*
 
 contents-%:
-	perl Rd2contents ../../library/$* ../../../library/$*/CONTENTS
+	$(PERL) Rd2contents ../../library/$* ../../../library/$*/CONTENTS
+	$(CAT) ../../../library/*/CONTENTS > ../../../doc/html/search/index.txt
 
 pkg-%:
-	perl build.help ${DOS} -nroff -html -example -latex ../../library/$*
+	$(PERL) build.help ${DOS} -nroff -html -example -latex ../../library/$*
 
 ziphelp-%:
 	$(MAKE) -C ../../../library/$* -f ../../src/gnuwin32/help/makefile ZIPFLAGS=jqX  PKG=$* zipit
@@ -24,18 +29,18 @@ winhelp-%:
 	$(MAKE) -C ../../library/$* -f ../../gnuwin32/help/makefile PKG=$* win
 
 clean:
-	rm -fr *~
+	$(RM) -fr *~
 
 # to be run from src/library/pkg
 
 win: $(PKG).rtf
 	-mkdir ../../../library/$(PKG)/winhlp
-	cp -p $(PKG).hlp $(PKG).cnt ../../../library/$(PKG)/winhlp
+	$(CP) -p $(PKG).hlp $(PKG).cnt ../../../library/$(PKG)/winhlp
 
 %.rtf: man/*.Rd
 	-$(RM) -f $*.rtf
-	perl ../../gnuwin32/help/Rd2Sd.pl -p $* man/*.Rd
-	perl -S nr2hlp $* $*.Sd
+	$(PERL) ../../gnuwin32/help/Rd2Sd.pl -p $* man/*.Rd
+	$(PERL) -S nr2hlp $* $*.Sd
 	hcp505 $*
 	$(RM) -f $*.ph $*.hpj $*.rtf
 
@@ -55,19 +60,3 @@ help/Rhelp.zip: ../../src/library/$(PKG)/man/*.Rd
 
 uz-%:
 	unzip -qou $*
-
-# # old
-
-# unzip-%: 
-# 	-$(MAKE) -C ../../../library/$*/help -f ../../../src/gnuwin32/help/makefile uz-Rhelp
-# 	-$(MAKE) -C ../../../library/$*/R-ex -f ../../../src/gnuwin32/help/makefile uz-Rex
-# 	-$(MAKE) -C ../../../library/$*/latex -f ../../../src/gnuwin32/help/makefile uz-Rhelp
-
-# uz-%:
-# 	unzip -qou $*
-
-# zip:
-# 	zip -${ZIPFLAGS} latex/Rhelp latex/*.tex
-# 	zip -${ZIPFLAGS} R-ex/Rex R-ex/*.R
-# 	zip -${ZIPFLAGS} help/Rhelp help/* -x help/00Titles help/AnIndex
-

@@ -30,5 +30,5 @@ rwinst.exe: rwinst.o rwico.o dounzip.o ../ga.a $(UNZIPDIR)/unzip32.a
 
 clean:
 	$(RM) R.ico *.o *~ \#*\# rwinst.exe
-	$(MAKE) -C $(UNZIPDIR) -f ../Makefile.unzip clean
+	-$(MAKE) -C $(UNZIPDIR) -f ../Makefile.unzip clean
 
