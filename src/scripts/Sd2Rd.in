@@ -26,7 +26,9 @@
 
 # Bug reports to Kurt.Hornik@ci.tuwien.ac.at
 
-$VERSION = "0.3-3";
+$REVISION = '$Revision: 1.5 $';
+$REVISION =~ / ([\d\.]*) /;
+$VERSION = $1;
 ($NAME = $0) =~ s|.*/||;
 
 $\ = "\n";
