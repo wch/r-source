@@ -650,7 +650,7 @@ indicates that Java support is either not installed or not enabled in
 your browser.  Recent versions of browsers have made Java support
 optional: for example it is optional in Netscape 6/7 and in Opera, and
 may not be installed for IE6 on Windows XP.  You also need JavaScript
-enabled,
+enabled.
 
 @node Loading a package fails., Package TclTk does not work., My functions are not found by the HTML help search system., Packages
 @section Loading a package fails.
@@ -663,8 +663,7 @@ You can tell the version the package was compiled for by looking at the
 @code{Version} tab of its DLL (if it has one) in the @file{libs}
 directory.  (Right-click on the DLL in Windows Explorer and select
 @code{Version} tab of the @code{Properties}, or use the
-@code{DLL.version} function inside R.)  If there is no @code{Built:}
-line or version tab, the package was compiled far too long ago.
+@code{DLL.version} function inside R.)
 
 
 @node Package TclTk does not work., Hyperlinks in Compiled HTML do not work., Loading a package fails., Packages
@@ -707,6 +706,8 @@ the package's DLL when it is loaded.  So use @code{update.packages()}
 
 If you put @code{library(foo)} in your @file{.Rprofile} you will need to
 start R with @option{--vanilla} to be able to update package @code{foo}.
+If you set @code{R_DEFAULT_PACKAGES} to include @code{foo}, you will
+need to unset it temporarily.
 
 @newchap{}
 @node Windows Features, Workspaces, Packages, Top
