@@ -173,12 +173,24 @@ void warning(const char *format, ...)
     warningcall(R_NilValue, buf);
 }
 
+/* temporary hook to allow experimenting with alternate warning mechanisms */
+static void (*R_WarningHook)(SEXP, char *) = NULL;
+
 void warningcall(SEXP call, const char *format, ...)
 {
     int w;
     SEXP names, s;
     char *dcall, buf[BUFSIZE];
     RCNTXT *cptr;
+
+    if (R_WarningHook != NULL) {
+	va_list(ap);
+	va_start(ap, format);
+	Rvsnprintf(buf, BUFSIZE, format, ap);
+	va_end(ap);
+	R_WarningHook(call, buf);
+	return;
+    }
 
     s = GetOption(install("warning.expression"), R_NilValue);
     if( s!= R_NilValue ) {
@@ -291,11 +303,24 @@ void PrintWarnings(void)
 
 static char errbuf[BUFSIZE];
 
+/* temporary hook to allow experimenting with alternate error mechanisms */
+static void (*R_ErrorHook)(SEXP, char *) = NULL;
+
 void errorcall(SEXP call, const char *format,...)
 {
     char *p, *dcall;
 
     va_list(ap);
+
+    if (R_ErrorHook != NULL) {
+	char buf[BUFSIZE];
+	void (*hook)(SEXP, char *) = R_ErrorHook;
+	R_ErrorHook = NULL; /* to avoid recursion */
+	va_start(ap, format);
+	Rvsnprintf(buf, BUFSIZE, format, ap);
+	va_end(ap);
+	hook(call, buf);
+    }
 
     if (inError) {
 	if(inError == 3)
@@ -366,7 +391,7 @@ void jump_to_toplevel()
 
     inError = 1;
 
-    if( R_CollectWarnings ) {
+    if( R_ShowErrorMessages && R_CollectWarnings ) {
 	inError = 2;
 	REprintf("In addition: ");
 	PrintWarnings();
@@ -618,3 +643,113 @@ void WarningMessage(SEXP call, R_WARNING which_warn, ...)
     va_end(ap);
     warningcall(call, "%s", buf);
 }
+
+
+/* Temporary hooks to allow experimenting with alternate error and
+   warning mechanisms.  They are not in the header files for now, but
+   the following snippet can serve as a header file: */
+
+void R_ReturnOrRestart(SEXP val, SEXP env, Rboolean restart);
+void R_PrintDeferredWarnings(void);
+SEXP R_GetTraceback(int);
+void R_SetErrmessage(char *s);
+void R_SetErrorHook(void (*hook)(SEXP, char *));
+void R_SetWarningHook(void (*hook)(SEXP, char *));
+void R_JumpToToplevel(Rboolean restart);
+
+
+void R_SetWarningHook(void (*hook)(SEXP, char *))
+{
+    R_WarningHook = hook;
+}
+
+void R_SetErrorHook(void (*hook)(SEXP, char *))
+{
+    R_ErrorHook = hook;
+}
+
+void R_ReturnOrRestart(SEXP val, SEXP env, Rboolean restart)
+{
+    int mask;
+    RCNTXT *c;
+
+    if (R_BrowseLevel > 0)
+	mask = CTXT_BROWSER | CTXT_FUNCTION;
+    else
+	mask = CTXT_FUNCTION;
+
+    for (c = R_GlobalContext; c; c = c->nextcontext) {
+	if (c->callflag & mask && c->cloenv == env)
+	    findcontext(mask, env, val);
+	else if (restart && c->callflag == CTXT_RESTART)
+	    findcontext(CTXT_RESTART, c->cloenv, R_DollarSymbol);
+	else if (c->callflag == CTXT_TOPLEVEL)
+	    error("No function to return from, jumping to top level");
+    }
+}
+
+void R_JumpToToplevel(Rboolean restart)
+{
+    RCNTXT *c;
+
+    /* Find the target for the jump */
+    for (c = R_GlobalContext; c != NULL; c = c->nextcontext) {
+	if (restart && c->callflag == CTXT_RESTART)
+	    findcontext(CTXT_RESTART, c->cloenv, R_DollarSymbol);
+	else if (c->callflag == CTXT_TOPLEVEL)
+	    break;
+    }
+    if (c != R_ToplevelContext)
+	warning("top level inconsistency?");
+
+    /* Run onexit/cend code for everything above the target. */
+    R_run_onexits(c);
+
+    R_restore_globals(c);
+    R_ToplevelContext = R_GlobalContext = c;
+    LONGJMP(c->cjmpbuf, CTXT_TOPLEVEL);
+}
+
+void R_SetErrmessage(char *s)
+{
+    strncpy(errbuf, s, sizeof(errbuf));
+    errbuf[sizeof(errbuf) - 1] = 0;
+}
+
+void R_PrintDeferredWarnings(void)
+{
+    if( R_ShowErrorMessages && R_CollectWarnings ) {
+        REprintf("In addition: ");
+        PrintWarnings();
+    }
+}    
+
+/* doesn't stop at TOPLEVEL--should once browser is changed to use RESTART */
+SEXP R_GetTraceback(int skip)
+{
+    int nback = 0, ns;
+    RCNTXT *c;
+    SEXP s, t;
+
+    for (c = R_GlobalContext, ns = skip; c; c = c->nextcontext) {
+        if (c->callflag == CTXT_RETURN || c->callflag == CTXT_GENERIC )
+	    if (ns > 0)
+		ns--;
+	    else
+		nback++;
+    }
+
+    PROTECT(s = allocList(nback));
+    t = s;
+    for (c = R_GlobalContext ; c ; c = c->nextcontext)
+	if (c->callflag & CTXT_FUNCTION ) 
+	    if (skip > 0)
+		skip--;
+	    else {
+		SETCAR(t, deparse1(c->call, 0));
+		t = CDR(t);
+	    }
+    UNPROTECT(1);
+    return s;
+}
+
