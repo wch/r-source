@@ -5,6 +5,7 @@
 \alias{qbeta}
 \alias{rbeta}
 \title{The Beta Distribution}
+\concept{incomplete beta function}
 \description{
   Density, distribution function, quantile function and random
   generation for the Beta distribution with parameters \code{shape1} and
@@ -39,12 +40,25 @@ rbeta(n, shape1, shape2)
   }{Gamma(a+b)/(Gamma(a)Gamma(b))x^(a-1)(1-x)^(b-1)}
   for \eqn{a > 0}, \eqn{b > 0} and \eqn{0 \le x \le 1}{0 <= x <= 1}
   where the boundary values at \eqn{x=0} or \eqn{x=1} are defined as
-  by continuity (as limits).}
+  by continuity (as limits).
+
+  \code{pbeta} is closely related to the incomplete beta function.  As
+  defined by Abramowitz and Stegun 6.6.1
+  \deqn{B_x(a,b) = \int_0^x t^{a-1} (1-t)^{b-1} dt,}{B_x(a,b) =
+    integral_0^x t^(a-1) (1-t)^(b-1) dt,}
+  and 6.6.2 \eqn{I_x(a,b) = B_x(a,b) / B(a,b)} where
+  \eqn{B(a,b) = B_1(a,b)} is the Beta function (\code{\link{beta}}).
+
+  \eqn{I_x(a,b)} is \code{pbeta(x,a,b)}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
+
+  Abramowitz, M. and Stegun, I. A. (1972)
+  \emph{Handbook of Mathematical Functions.} New York: Dover.
+  Chapter 6: Gamma and Related Functions.
 }
 \seealso{
   \code{\link{beta}} for the Beta function, and \code{\link{dgamma}} for
