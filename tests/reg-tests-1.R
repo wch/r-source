@@ -2013,6 +2013,10 @@ str(A.[1, 0, 2 ])
 str(A.[1, 0, 2, drop = FALSE])
 ## both gave errors in 1.6.2
 
+library(stepfun)
+plot(sf <- stepfun(2, 3:4))
+detach(2)
+## failed in 1.6.2
 
 ## PR#2541, cbind (and rbind) with zero-length components
 y <- matrix(0,1,0)
