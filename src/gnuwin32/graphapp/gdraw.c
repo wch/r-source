@@ -492,6 +492,31 @@ void gdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
     SelectObject(dc, old);
 }
 
+#ifdef SUPPORT_UTF8
+#include <wchar.h>
+size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n);
+
+void gwdrawstr(drawing d, font f, rgb c, point p, char *s, double hadj)
+{
+    HFONT old;
+    HDC dc = GETHDC(d);
+    UINT flags = TA_BASELINE | TA_UPDATECP;
+    wchar_t wc[1000]; int cnt;
+
+    cnt = Rmbstowcs(wc, s, 1000);
+    SetTextColor(dc, getwinrgb(d,c));
+    old = SelectObject(dc, f->handle);
+    MoveToEx(dc, p.x, p.y, NULL);
+    SetBkMode(dc, TRANSPARENT);
+    if (hadj < 0.25) flags |= TA_LEFT;
+    else if (hadj < 0.75) flags |= TA_CENTER;
+    else flags |= TA_RIGHT;
+    SetTextAlign(dc, flags);
+    TextOutW(dc, p.x, p.y, wc, cnt);
+    SelectObject(dc, old);
+}
+#endif
+
 rect gstrrect(drawing d, font f, char *s)
 {
     SIZE size;
@@ -521,6 +546,35 @@ int gstrwidth(drawing d, font f, char *s)
     rect r = gstrrect(d,f,s);
     return r.width;
 }
+
+#ifdef SUPPORT_UTF8
+static rect gwstrrect(drawing d, font f, char *s)
+{
+    SIZE size;
+    HFONT old;
+    HDC dc;
+    wchar_t wc[1000]; int cnt;
+
+    cnt = Rmbstowcs(wc, s, 1000);
+    if (! f)
+	f = SystemFont;
+    if (d)
+	dc = GETHDC(d);
+    else
+	dc = GetDC(0);
+    old = SelectObject(dc, f->handle);
+    GetTextExtentPoint32W(dc, wc, cnt, &size);
+    SelectObject(dc, old);
+    if (!d) ReleaseDC(0,dc);
+    return rect(0, 0, size.cx, size.cy);
+}
+
+int gwstrwidth(drawing d, font f, char *s)
+{
+    rect r = gwstrrect(d,f,s);
+    return r.width;
+}
+#endif
 
 int ghasfixedwidth(font f)
 {
@@ -589,6 +643,66 @@ void gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
     }
     SelectObject(dc, old);
 }
+
+#ifdef SUPPORT_UTF8
+void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
+		  int *width)
+{
+    int first, last, extra;
+    TEXTMETRICW tm;
+    HFONT old;
+    HDC dc = GETHDC(d);
+    old = SelectObject(dc, (HFONT)f->handle);
+    GetTextMetricsW(dc, &tm);
+    first = tm.tmFirstChar;
+    last = tm.tmLastChar;
+    extra = tm.tmExternalLeading + tm.tmInternalLeading - 1;
+    if(c < 0) { /* used for setting cra */
+      SIZE size;
+      char* cc="M";
+      GetTextExtentPoint32(dc,(LPSTR) cc, 1, &size);
+      *descent = tm.tmDescent ;
+      *ascent = size.cy - *descent;
+      *width = size.cx;
+      if(*width > size.cy) *width = size.cy;
+    } else if(c == 0) {
+	*descent = tm.tmDescent ;
+        *ascent = tm.tmHeight - *descent - extra ;
+	*width = tm.tmMaxCharWidth ;
+    } else if((first <= c) && (c <= last)) {
+      SIZE size;
+      wchar_t wc = c;
+      GetTextExtentPoint32W(dc, &wc, 1, &size);
+      *descent = tm.tmDescent ;
+      *ascent = size.cy - *descent - extra ;
+      *width = size.cx;
+      /*
+	 Under NT, ' ' gives 0 ascent and descent, which seems
+	 correct but this : (i) makes R engine to center in random way;
+	 (ii) doesn't correspond to what 98 and X do (' ' is there
+	 high as the full font)
+      */
+      if ((c!=' ') && (tm.tmPitchAndFamily & TMPF_TRUETYPE)) {
+	  GLYPHMETRICS gm;
+	  MAT2 m2;
+	  m2.eM11.value = m2.eM22.value = (WORD) 1 ;
+	  m2.eM21.value = m2.eM12.value = (WORD) 0 ;
+	  m2.eM11.fract = m2.eM12.fract =
+	      m2.eM21.fract = m2.eM22.fract =  (short) 0 ;
+	  if (GetGlyphOutlineW(dc, c, GGO_METRICS, &gm, 0, NULL, &m2) 
+	      != GDI_ERROR) {
+	      *descent = gm.gmBlackBoxY - gm.gmptGlyphOrigin.y ;
+	      *ascent  = gm.gmptGlyphOrigin.y + 1;
+	  }
+      }
+    } else {
+	*ascent = 0;
+	*descent = 0;
+	*width = 0;
+    }
+    SelectObject(dc, old);
+}
+#endif
 
 font gnewfont(drawing d, char *face, int style, int size, double rot)
 {

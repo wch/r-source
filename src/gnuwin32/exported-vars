@@ -66,3 +66,5 @@ RbitmapAlreadyLoaded
 hRbitmapDll
 Rwin_graphicsx
 Rwin_graphicsy
+utf8locale
+mbcslocale

@@ -537,8 +537,8 @@ extern SEXP	R_HandlerStack;	/* Condition handler stack */
 extern SEXP	R_RestartStack;	/* Stack of available restarts */
 #endif
 
-extern Rboolean utf8locale  INI_as(FALSE);  /* is this a UTF-8 locale? */
-extern Rboolean mbcslocale  INI_as(FALSE);  /* is this a MBCS locale? */
+LibExtern Rboolean utf8locale  INI_as(FALSE);  /* is this a UTF-8 locale? */
+LibExtern Rboolean mbcslocale  INI_as(FALSE);  /* is this a MBCS locale? */
 
 /* Initialization of the R environment when it is embedded */
 extern int Rf_initEmbeddedR(int argc, char **argv);
@@ -913,6 +913,14 @@ char *Rf_strrchr(const char *s, int c);
 #ifdef Win32
 void R_fixslash(char *s);
 void R_fixbackslash(char *s);
+#define mbrtowc(a,b,c,d) Rmbrtowc(a,b)
+#define wcrtomb(a,b,c) Rwcrtomb(a,b)
+#define mbstowcs(a,b,c) Rmbstowcs(a,b,c)
+#define wcstombs(a,b,c) Rwcstombs(a,b,c)
+size_t Rmbrtowc(wchar_t *wc, const char *s);
+size_t Rwcrtomb(char *s, const wchar_t wc);
+size_t Rmbstowcs(wchar_t *wc, const char *s, size_t n);
+size_t Rwcstombs(char *s, const wchar_t *wc, size_t n);
 #endif
 
 /* Macros for suspending interrupts */

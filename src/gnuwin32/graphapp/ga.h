@@ -3,7 +3,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file ga.h
  *  Copyright (C) 1998--1999  Guido Masarotto
- *  Copyright (C) 2004	      The R Foundation
+ *  Copyright (C) 2004-5      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -159,6 +159,13 @@ font  gnewfont(drawing d,char *face, int style, int size, double rot);
 int   ghasfixedwidth(font f);
 field newfield_no_border(char *text, rect r);
 int   getcharset(void);
+
+#ifdef SUPPORT_UTF8
+void gwdrawstr(drawing d, font f, rgb c, point p, char *s, double hadj);
+int gwstrwidth(drawing d, font f, char *s);
+void gwcharmetric(drawing d, font f, int c, int *ascent, int *descent,
+		  int *width);
+#endif
 
 /* pixels */
 int   devicewidth(drawing dev);

@@ -457,8 +457,15 @@ void * Riconv_open (char* tocode, char* fromcode)
 {
 #ifdef Win32
     iconv_Init();
+#ifdef SUPPORT_UTF8
+    if(!strcmp(tocode, ""))  return iconv_open("UTF-8", fromcode);
+    else if(!!strcmp(fromcode, "")) return iconv_open(tocode, "UTF-8");
+    else
 #endif
+	return iconv_open(tocode, fromcode);
+#else
     return iconv_open(tocode, fromcode);
+#endif
 }
 
 size_t Riconv (void *cd, char **inbuf, size_t *inbytesleft, 

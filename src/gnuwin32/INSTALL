@@ -213,9 +213,9 @@ RGui console, pager, data and script editors (this is based on the
 Japanization patches by Nakama and Okada).
 
 Define SUPPORT_UTF8 in MkRules to enable support in the R engine for
-UTF-8 character sets.  [We need to supply a way to specify such a
-locale.]  This will also handle MBCSs which are strict supersets of
-ASCII, such as EUC-JP, but not [yet] Japanese in code page 932.
+UTF-8 character sets.  Since there are no UTF-8 locales on Windows, 
+this sets the locale to be UTF-8 and expects input/output in UTF-8.
+[This is unlikely to be something you want at present.]
 
 If either of these is defined you need the DLL msvcp60.dll to be
 installed.  It is on recent versions of Windows, and can be obtained

@@ -38,6 +38,12 @@
 #include <unistd.h>
 #endif
 
+#ifdef HAVE_ALLOCA_H
+#include <alloca.h>
+#else
+extern char *alloca(size_t);
+#endif
+
 SEXP ScalarLogical(int x)
 {
     SEXP ans = allocVector(LGLSXP, 1);
@@ -1218,7 +1224,7 @@ void R_fixslash(char *s)
     if(mbcslocale) {
 	mbstate_t mb_st; int used;
 	mbs_init(&mb_st);
-	while(used = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st)) {
+	while((used = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st))) {
 	    if(*p == '\\') *p = '/';
 	    p += used;
 	}
@@ -1235,7 +1241,7 @@ void R_fixbackslash(char *s)
     if(mbcslocale) {
 	mbstate_t mb_st; int used;
 	mbs_init(&mb_st);
-	while(used = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st)) {
+	while((used = Mbrtowc(NULL, p, MB_CUR_MAX, &mb_st))) {
 	    if(*p == '/') *p = '\\';
 	    p += used;
 	}
