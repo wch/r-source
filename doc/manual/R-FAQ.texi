@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-50, 2001-05-05
+@set FAQ-VERSION 1.2-51, 2001-05-06
 @set REL-VERSION 1.2.3
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1491,6 +1491,8 @@ in portable anymap format, simulation of a Wiener process, support
 vector machines, and fuzzy clustering.
 @item ellipse
 Package for drawing ellipses and ellipse-like confidence regions.
+@item event.chart
+Package for creating event charts.
 @item exactRankTests
 Computes exact @math{p}-values and quantiles using an implementation of
 the Streitberg/Roehmel shift algorithm.
