@@ -22,7 +22,7 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
+#include "Defn.h"	/* -> ../include/R_ext/Complex.h */
 #include "Mathlib.h"
 #include "Applic.h"		/* R_cpoly */
 
