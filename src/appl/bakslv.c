@@ -96,12 +96,10 @@ void bakslv(double *t, int *ldt, int *n,
     nn = *ldb;
 
     for (j = 0; j < p; ++j) {/* for each right-hand side */
-       F77_CALL(dcopy)(n, &b[j * nn], &c__1,
-			    &x[j * nn], &c__1);
+       F77_CALL(dcopy)(n, &b[j * nn], &c__1, &x[j * nn], &c__1);
        F77_CALL(dtrsl)(t, ldt, n, &x[j * nn], job, info);
        if (*info != 0) {
 	 return;
        }
     }
 }
-
