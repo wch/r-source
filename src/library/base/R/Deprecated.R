@@ -21,9 +21,14 @@ qnchisq <- function(p, df, lambda) {
 }
 rnchisq <- function(...) .NotYetImplemented()
 
-print.plot <- function(...) {
+print.plot <- function() {
   .Deprecated("dev.print")
+  FILE <- tempfile()
+  dev.print(file = FILE)
+  system(paste(options()$printcmd, FILE))
+  unlink(FILE)
 }
-save.plot <- function(...) {
-  .Deprecated("dev.copy")
+save.plot <- function(file = "Rplots.ps") {
+  .Deprecated("dev.print")
+  dev.print(file = file)
 }
