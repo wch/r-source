@@ -25,7 +25,7 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
     mf$family <- mf$start <- mf$control <- mf$maxit <- NULL
     mf$model <- mf$method <- mf$x <- mf$y <- mf$contrasts <- NULL
     mf$... <- NULL
-    ##	      mf$drop.unused.levels <- TRUE
+    mf$drop.unused.levels <- TRUE
     mf[[1]] <- as.name("model.frame")
     mf <- eval(mf, parent.frame())
     switch(method,

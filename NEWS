@@ -214,6 +214,10 @@ NEW FEATURES
 
     o	New readLines() function to read a file line-by-line.
 
+    o	New functions reshapeLong() and reshapeWide() emulating Stata's
+        reshape command. These are still labeled experimental and
+        might be improved (or removed) in later versions.
+
     o	row.names() and row.names<-() are now generic functions which
 	call rownames() as their default method and have methods for
 	class "data.frame".
@@ -375,9 +379,6 @@ NEW FEATURES
 	for creating executable programs linked against the R shared
 	library.
 
-    o   New functions reshapeLong and reshapeWide emulating Stata's
-        reshape command. These are still labeled experimental and
-        might be improved (or removed) in later versions.
 
 
 BUG FIXES
@@ -419,6 +420,8 @@ BUG FIXES
     o	gctorture() did return a value although documented not to, that of
 	gcinfo.	 It now returns the previous setting of gctorture.
 
+    o	glm() now follows lm() in dropping unused factor levels when fitting.
+
     o	hsv() truncation bug fixed (hopefully correctly this time...)
 
     o	library.dynam() no longer fails if the library appears more than
@@ -452,6 +455,9 @@ BUG FIXES
     o	phantom(expr) in plotmath was used to calculate the bounding
 	boxes, but the space was not actually used in typesetting the 
 	expression (PR#622).
+
+    o   Problem with subsetting and "..." arguments in plot.formula()
+        (PR#757)
 
     o	plot.lm() has a better default for its `ask' argument.
 
@@ -566,6 +572,9 @@ BUG FIXES
 
     o	R CMD Rd2dvi now again works with file names containing "_" or "$".
 
+    o	R CMD Rdconv now handles .rd as input file extension correctly
+        in all cases.
+
     o	make install could fail if there were no shared libraries to
 	install (e.g. on vanilla Solaris).
 
@@ -576,12 +585,6 @@ BUG FIXES
 
     o	NA || x , NA && y (etc) do not give errors anymore, but work as
 	the "|" and "&" operators and as documented (PR#749).
-
-    o   R CMD Rdconv handles now .Rd in all cases as input file
-        extension correctly. 
-
-    o   problem with subsetting and "..." arguments in plot.formula
-        (PR 757)
 
 
 
