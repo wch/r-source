@@ -52,7 +52,7 @@ extra-CFLAGS+=-DLEA_MALLOC
 OBJS-EXTRA=malloc.o
 endif
 
-.PHONY:  clean veryclean  rlibs fixfiles front-ends
+.PHONY:  clean veryclean  rlibs fixfiles front-ends rmodules
 
 
 # separate as Tcl/Tk headers are needed.
@@ -114,7 +114,7 @@ Rdll: makeMakedeps ../../bin/R.dll
 	$(MKDIR) -p ../../bin
 	$(CP) R.dll ../../bin/
 
-front-ends:
+front-ends: libRm.a
 	$(MAKE) -C front-ends
 
 R.a: $(OBJS)
@@ -142,6 +142,7 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 
 # A version needed for the modules that uses R.dll's malloc/.../free
 # Used in all cases.
+# Also used for front-ends, as import from R.dll seems to fail
 
 libRm.a:  Rm.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def Rm.exp --output-lib libRm.a
