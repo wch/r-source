@@ -285,7 +285,7 @@ static void RStandardFonts()
     fontstyle[2] = Italic;
     fontstyle[3] = BoldItalic;
     fontnum = 5;
-    fontinitdone = 2;		/* =fontinit done & fonname must not be
+    fontinitdone = 2;		/* =fontinit done & fontname must not be
 				   free-ed */
 }
 
@@ -373,7 +373,7 @@ static int SetBaseFont(gadesc *xd)
 /* 0 = plain text, 1 = bold */
 /* 2 = oblique, 3 = bold-oblique */
 
-#define SMALLEST 8
+#define SMALLEST 2
 #define LARGEST 64
 
 static void SetFont(int face, int size, double rot, DevDesc *dd)
