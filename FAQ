@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-04-02
+Version 2.0.2005-04-05
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2475,6 +2475,9 @@ distributions of R.)
 *mclust*
      Model-based cluster analysis: the 2002 version of MCLUST.
 
+*mcmc*
+     Functions for Markov Chain Monte Carlo (MCMC).
+
 *mda*
      Code for mixture discriminant analysis (MDA), flexible discriminant
      analysis (FDA), penalized discriminant analysis (PDA), multivariate
@@ -2653,6 +2656,9 @@ distributions of R.)
 
 *ouch*
      Ornstein-Uhlenbeck models for phylogenetic comparative hypotheses.
+
+*outliers*
+     A collection of some tests commonly used for identifying outliers.
 
 *oz*
      Functions for plotting Australia's coastline and state boundaries.

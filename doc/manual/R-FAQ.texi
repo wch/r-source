@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-04-02
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-04-05
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2587,6 +2587,8 @@ Model-based cluster analysis: the 2002 version of MCLUST.
 @c @item mclust1998
 @c Model-based cluster analysis: the 1998 version of MCLUST.
 @c </COMMENT>
+@item mcmc
+Functions for Markov Chain Monte Carlo (MCMC).
 @item mda
 Code for mixture discriminant analysis (MDA), flexible discriminant
 analysis (FDA), penalized discriminant analysis (PDA), multivariate
@@ -2738,6 +2740,8 @@ ODEs are expressed as R functions.
 Representations, conversions and display of orientation SO(3) data.
 @item ouch
 Ornstein-Uhlenbeck models for phylogenetic comparative hypotheses.
+@item outliers
+A collection of some tests commonly used for identifying outliers.
 @item oz
 Functions for plotting Australia's coastline and state boundaries.
 @item pamr
