@@ -123,22 +123,22 @@ users, set @code{umask} before unpacking so that the files will be
 readable by the target group (e.g., @code{umask 022} to be usable by all
 users).
 
-@cindex Patch files
-Finally, for patch releases (@samp{@var{x}.@var{y}.@var{z}} with @var{z}
-!= 0), a patch against the preceding release is made available in
-@file{R-@var{x}.@var{y}.@var{@{z-1@}}-@var{x}.@var{y}.@var{z}.diff.gz}
-(e.g., @file{R-1.2.2-1.2.3.diff.gz}), which is generally a much smaller
-file that the @file{.tgz} files.  Such a file can be applied to the
-sources of the previous version by changing to the top directory of it
-and
+@c @cindex Patch files
+@c Finally, for patch releases (@samp{@var{x}.@var{y}.@var{z}} with @var{z}
+@c != 0), a patch against the preceding release is made available in
+@c @file{R-@var{x}.@var{y}.@var{@{z-1@}}-@var{x}.@var{y}.@var{z}.diff.gz}
+@c (e.g., @file{R-1.2.2-1.2.3.diff.gz}), which is generally a much smaller
+@c file that the @file{.tgz} files.  Such a file can be applied to the
+@c sources of the previous version by changing to the top directory of it
+@c and
 
-@smallexample
-gzip -dc /path/to/it/R-@var{x}.@var{y}.@var{@{z-1@}}-@var{x}.@var{y}.@var{z}.diff.gz | patch -E -p1
-@end smallexample
+@c @smallexample
+@c gzip -dc /path/to/it/R-@var{x}.@var{y}.@var{@{z-1@}}-@var{x}.@var{y}.@var{z}.diff.gz | patch -E -p1
+@c @end smallexample
 
-@noindent
-Beware that this does not necessarily work if the older sources have
-been modified (e.g., by building in their directories).
+@c @noindent
+@c Beware that this does not necessarily work if the older sources have
+@c been modified (e.g., by building in their directories).
 
 @node Using rsync,  , Getting and unpacking the sources, Obtaining R
 @section Using rsync
