@@ -1175,16 +1175,15 @@ package originally written for the @Sl{} system to @R{}.  @Sl{} version
 extension @file{.sgml} or @file{.sgm}.
 
 The exact usage and a detailed list of available options for each of the
-above commands can be obtained by running @code{R CMD @var{command}
---help}, e.g., @kbd{R CMD Rdconv --help}.  All available commands can be
+above commands can be obtained by running @code{R CMD @var{command} --help},
+e.g., @kbd{R CMD Rdconv --help}.  All available commands can be
 listed using @kbd{R --help}.
 
 All of these have Windows equivalents.  For most just replace @code{R
 CMD} by @code{Rcmd}, with the exception that it is @code{Rcmd Rd2dvi.sh}
 (and that needs the tools to build packages from source to be
-installed).  For each of these @kbd{R CMD @var{cmd} --help} will give
-full details on usage. (You will need the files in the @R{} binary
-Windows distribution for installing source packages to be installed.)
+installed). (You will need the files in the @R{} binary Windows
+distribution for installing source packages to be installed.)
 
 
 @node Tidying and profiling R code, System and foreign language interfaces, Writing R documentation, Top
