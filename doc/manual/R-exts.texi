@@ -1917,9 +1917,9 @@ E.g., file @file{cor.test.Rd} in the standard add-on package @pkg{ctest}
 contains
 
 @smallexample
-\concept{Kendall correlation coefficient}
-\concept{Pearson correlation coefficient}
-\concept{Spearman correlation coefficient}
+\concept@{Kendall correlation coefficient@}
+\concept@{Pearson correlation coefficient@}
+\concept@{Spearman correlation coefficient@}
 @end smallexample
 
 @noindent
