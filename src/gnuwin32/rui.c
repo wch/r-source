@@ -37,7 +37,8 @@ int   MDIset = 0;
 static window RFrame;
 extern int ConsoleAcceptCmd;
 static menubar RMenuBar;
-static menuitem msource, mload, msave, mpaste, mcopy, mcopypaste, mlazy;
+static menuitem msource, mdisplay, mload, msave, mpaste, mcopy, 
+    mcopypaste, mlazy;
 static menuitem mls, mrm, msearch, mhelp, mapropos, mhelpstart;
 static char cmd[1024];
 
@@ -70,6 +71,23 @@ static void menusource(control m)
     if (fn) {
 	fixslash(fn);
 	sprintf(cmd, "source(\"%s\")", fn);
+	consolecmd(RConsole, cmd);
+    }
+}
+
+static void menudisplay(control m)
+{
+    char *fn;
+
+    if (!ConsoleAcceptCmd) return;
+    setuserfilter("All files (*.*)\0*.*\0\0");
+    fn = askfilename("Select file to show", "");
+    show(RConsole);
+    if (fn) {
+	fixslash(fn);
+	sprintf(cmd, 
+		"file.show(\"%s\", title=\"File\", header=\"%s\")",
+		fn, fn);
 	consolecmd(RConsole, cmd);
     }
 }
@@ -255,6 +273,7 @@ static void menuact(control m)
 	uncheck(mlazy);
     if (ConsoleAcceptCmd) {
 	enable(msource);
+	enable(mdisplay);
 	enable(mload);
 	enable(msave);
 	enable(mls);
@@ -277,6 +296,7 @@ static void menuact(control m)
 	disable(mpaste);
     if (!ConsoleAcceptCmd) {
 	disable(msource);
+	disable(mdisplay);
 	disable(mload);
 	disable(msave);
 	disable(mls);
@@ -501,35 +521,35 @@ int setupui()
           MCHECK(tb = newtoolbar(btsize + 4));
           addto(tb);
 
-          MCHECK(bt=newimagebutton(open_image,r,menusource));
-          MCHECK(addtooltip(bt,"Source R code"));
+          MCHECK(bt = newimagebutton(open_image, r, menusource));
+          MCHECK(addtooltip(bt, "Source R code"));
           r.x += (btsize + 1) ;
           
-          MCHECK(bt=newimagebutton(open1_image,r,menuloadimage));
-          MCHECK(addtooltip(bt,"Load image"));
+          MCHECK(bt = newimagebutton(open1_image, r, menuloadimage));
+          MCHECK(addtooltip(bt, "Load image"));
           r.x += (btsize + 1) ;
 
-          MCHECK(bt=newimagebutton(save_image,r,menusaveimage));
-          MCHECK(addtooltip(bt, "Save image"));
+          MCHECK(bt = newimagebutton(save_image, r, menusaveimage));
+          MCHECK(addtooltip(bt,  "Save image"));
           r.x += (btsize + 6);
 
-          MCHECK(bt=newimagebutton(copy_image, r, menucopy));
+          MCHECK(bt = newimagebutton(copy_image, r, menucopy));
           MCHECK(addtooltip(bt, "Copy"));
           r.x += (btsize + 1);
 
-          MCHECK(bt=newimagebutton(paste_image, r, menupaste));
+          MCHECK(bt = newimagebutton(paste_image, r, menupaste));
           MCHECK(addtooltip(bt, "Paste"));
           r.x += (btsize + 1);
 
-          MCHECK(bt=newimagebutton(copypaste_image, r, menucopypaste));
+          MCHECK(bt = newimagebutton(copypaste_image, r, menucopypaste));
           MCHECK(addtooltip(bt, "Copy and paste"));
           r.x += (btsize + 6);
 
-          MCHECK(bt=newimagebutton(stop_image,r,menukill));
+          MCHECK(bt = newimagebutton(stop_image,r,menukill));
           MCHECK(addtooltip(bt,"Stop current computation"));
           r.x += (btsize + 6) ;
 
-          MCHECK(bt=newimagebutton(print_image, r, menuprint));
+          MCHECK(bt = newimagebutton(print_image, r, menuprint));
           MCHECK(addtooltip(bt, "Print"));
     }
     if (ismdi() && (RguiMDI & RW_STATUSBAR)) {
@@ -549,6 +569,7 @@ int setupui()
     MCHECK(RMenuBar = newmenubar(menuact));
     MCHECK(newmenu("File"));
     MCHECK(msource = newmenuitem("Source R code", 0, menusource));
+    MCHECK(mdisplay = newmenuitem("Display file", 0, menudisplay));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mload = newmenuitem("Load Image", 0, menuloadimage));
     MCHECK(msave = newmenuitem("Save Image", 0, menusaveimage));

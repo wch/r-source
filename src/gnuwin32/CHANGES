@@ -27,6 +27,13 @@ internal call to options("width") if you resize the console width.
 This is the default, but we suggest you do not resize whilst R is
 outputting.
 
+Both console and pagers now have right-click popup menus, and you can paste
+from a pager to the console directly.
+
+There is a new console menu item to show a file in a pager. This is
+intended to allow lines to be selected in an script file displayed in 
+a pager and submitted to to the R engine.
+
 The file HOME\.Renviron is now read. This can contain environment
 variables in NAME=value form, one per line. This is useful for setting
 R_VSIZE, R_NSIZE, RLIBS and R_PAPERSIZE, amongst others.

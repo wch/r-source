@@ -258,6 +258,8 @@ struct structConsoleData {
     
     char  chbrk, modbrk;	/* hook for user's break */
     void  (*fbrk) ();
+
+    menuitem mcopy, mpaste, mpopcopy, mpoppaste;
 };
 
 typedef struct structConsoleData *ConsoleData;
@@ -841,8 +843,8 @@ FBEGIN
 	return;
     }
     switch (key) {
-     case PGUP: setfirstvisible(c, NEWFV-ROWS); break;
-     case PGDN: setfirstvisible(c, NEWFV+ROWS); break;
+     case PGUP: setfirstvisible(c, NEWFV - ROWS); break;
+     case PGDN: setfirstvisible(c, NEWFV + ROWS); break;
      case HOME:
 	 if (st == CtrlKey)
 	     setfirstvisible(c, 0);
@@ -911,9 +913,9 @@ FBEGIN
     FC = 0;
     if (strchr(s, '\n')) p->needredraw = 1;
     if (!p->lazyupdate || (p->r >= 0))
-        setfirstvisible(c, NUMLINES-ROWS);
+        setfirstvisible(c, NUMLINES - ROWS);
     else {
-        p->newfv = NUMLINES-ROWS;
+        p->newfv = NUMLINES - ROWS;
        if (p->newfv < 0) p->newfv = 0;
     }
 FEND(0)
@@ -1251,13 +1253,15 @@ setconsoleoptions(char *fnname,int fnsty, int fnpoints,
     if (strcmp(fontname, "FixedFont"))
        consolefn = gnewfont(NULL, fnname, fnsty, fnpoints, 0.0);
     if (!consolefn) {
-       sprintf(msg,"Font %s-%d-%d  not found.\nUsing system fixed font.",
-               fontname, fontsty|FixedWidth, pointsize);
+       sprintf(msg,
+	       "Font %s-%d-%d  not found.\nUsing system fixed font.",
+               fontname, fontsty | FixedWidth, pointsize);
        askok(msg);
        consolefn = FixedFont;
     }
     if (!ghasfixedwidth(consolefn)) {
-       sprintf(msg,"Font %s-%d-%d has variable width.\nUsing system fixed font.",
+       sprintf(msg, 
+	       "Font %s-%d-%d has variable width.\nUsing system fixed font.",
                fontname, fontsty, pointsize);
        askok(msg);
        consolefn = FixedFont;
@@ -1272,7 +1276,6 @@ setconsoleoptions(char *fnname,int fnsty, int fnpoints,
     pagerMultiple = multiplewindows;
     setWidthOnResize = widthonresize;
 }
-
 
 void consoleprint(console c)
 FBEGIN
@@ -1361,7 +1364,7 @@ console newconsole(char *name, int flags)
     WIDTH  = getwidth(c);
     COLS = WIDTH / FW - 1;
     ROWS = HEIGHT / FH - 1;
-    gsetcursor(c,ArrowCursor);
+    gsetcursor(c, ArrowCursor);
     gchangescrollbar(c, VWINSB, 0, 0, ROWS, 1);
     BORDERX = (WIDTH - COLS*FW) / 2;
     BORDERY = (HEIGHT - ROWS*FH) / 2;
@@ -1470,6 +1473,17 @@ static void pagercopy(control m)
     else askok("No selection");
 }
 
+static void pagerpaste(control m)
+{
+    control c = getdata(m);
+
+    if (consolecancopy(c)) {
+	consolecopy(c);
+	consolepaste(RConsole);
+	show(RConsole);
+    } else askok("No selection");
+}
+
 static void pagerselectall(control m)
 {
     control c = getdata(m);
@@ -1545,6 +1559,34 @@ static int pageraddfile(char *wtitle, char *filename, int deleteonexit)
     return 1;
 }
 
+static MenuItem PagerPopup[] = {
+    {"Copy", pagercopy, 0},
+    {"Paste to console", pagerpaste, 0},
+    {"-", 0, 0},
+    {"Select all", pagerselectall, 0},
+    LASTMENUITEM
+};
+
+static void pagermenuact(control m)
+{
+    control c = getdata(m);
+    ConsoleData p = getdata(c);
+    if (consolecancopy(c)) {
+        enable(p->mcopy);
+        enable(p->mpopcopy);
+    } else {
+        disable(p->mcopy);
+        disable(p->mpopcopy);
+    }
+    if (consolecancopy(c) && consolecanpaste(RConsole)) {    
+        enable(p->mpaste);
+        enable(p->mpoppaste);
+    } else {
+        disable(p->mpaste);
+        disable(p->mpoppaste);
+    }
+}
+
 #define MCHECK(a) if (!(a)) {freeConsoleData(p);del(c);return NULL;}
 static pager pagercreate()
 {
@@ -1577,7 +1619,7 @@ static pager pagercreate()
     ROWS = HEIGHT / FH - 1;
     BORDERX = (WIDTH - COLS*FW) / 2;
     BORDERY = (HEIGHT - ROWS*FH) / 2;
-    gsetcursor(c,ArrowCursor);
+    gsetcursor(c, ArrowCursor);
     gchangescrollbar(c, VWINSB, 0, 0, ROWS, 0);
     setbackground(c, consolebg);
     if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
@@ -1594,7 +1636,14 @@ static pager pagercreate()
         MCHECK(bt = newimagebutton(console_image, r, pagerconsole));
         MCHECK(addtooltip(bt, "Return focus to Console"));
     }
-    MCHECK(newmenubar(NULL));
+    addto(c);
+    MCHECK(m = gpopup(pagermenuact, PagerPopup));
+    setdata(m, c);
+    setdata(p->mpopcopy = PagerPopup[0].m, c); 
+    setdata(p->mpoppaste = PagerPopup[1].m, c); 
+    setdata(PagerPopup[3].m, c); 
+    MCHECK(m = newmenubar(pagermenuact));
+    setdata(m, c);
     MCHECK(newmenu("File"));
     MCHECK(m = newmenuitem("Print", 0, pagerprint));
     setdata(m, c);
@@ -1602,8 +1651,10 @@ static pager pagercreate()
     MCHECK(m = newmenuitem("Close", 0, pagerclose));
     setdata(m, c);
     MCHECK(newmenu("Edit"));
-    MCHECK(m = newmenuitem("Copy          \tCTRL+C", 0, pagercopy));
-    setdata(m, c);
+    MCHECK(p->mcopy = newmenuitem("Copy          \tCTRL+C", 0, pagercopy));
+    setdata(p->mcopy, c);
+    MCHECK(p->mpaste = newmenuitem("Paste to console\tCTRL+V", 0, pagerpaste));
+    setdata(p->mpaste, c);
     MCHECK(m = newmenuitem("Select all", 0, pagerselectall));
     setdata(m, c);
     if (!pagerMultiple) {
