@@ -32,7 +32,7 @@ versions of the cygwin tools and dll.  To avoid frustration, please
 use our tool set.
 
 
-We recommend that you use the mingw32 port of gcc-2.95.2(.1) by Mumit
+We recommend that you use the mingw32 port of gcc-2.95.2(-1) by Mumit
 Khan from http://www.mingw.org/. (The `portal' gives more precise
 instructions.)  You can build R against either the crtdll.dll or
 msvcrt.dll runtime systems, and we strongly recommend the latter.  (In
@@ -168,8 +168,7 @@ Then: untar R-@RVER@.tgz somewhere, and
 	cd /somewhere/R-@RVER@/src/gnuwin32
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths (including
-HEADER) as needed.  With our set of cross-compilers you can uncomment
-HAVE_SHARED.
+HEADER) as needed.
 
 Edit Makefile to set the type(s) of help that you want built. (You
 will not be able to cross-build .chm or .hlp files, nor Rchtml.dll,
