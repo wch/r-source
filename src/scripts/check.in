@@ -30,7 +30,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.18 $ ';
+my $revision = ' $Revision: 1.19 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -42,9 +42,8 @@ my $MAKE = '@MAKE@';
 
 $opt_clean = $opt_examples = $opt_tests = $opt_latex = 1;
 my @knownoptions = ("help|h", "version|v", "outdir|o:s", "nsize:s",
-		    "vsize:s", "library|l:s", "clean", "no-clean",
-		    "examples", "no-examples", "tests", "no-tests",
-		    "latex", "no-latex");
+		    "vsize:s", "library|l:s", "no-clean", "no-examples",
+		    "no-tests", "no-latex");
 
 GetOptions (@knownoptions) || usage();
 
@@ -506,10 +505,6 @@ sub check_pkg {
         $log->result("OK");
     }
             
-        
-
-
-            
     if($opt_latex && (-d "$library/$pkgname/latex")){
         if($WINDOWS){
             $ENV{'TEXINPUTS'}="$R_HOME/doc/manual;$ENV{'TEXINPUTS'}";
@@ -566,19 +561,16 @@ options to increase R\'s memory (\`--vanilla\' is used by default).
 Options:
   -h, --help            print short help message and exit
   -v, --version         print version info and exit
-
-  --vsize=N             set R\'s vector heap size to N bytes
-  --nsize=N             set R\'s number of cons cells to N
+      --vsize=N         set R\'s vector heap size to N bytes
+      --nsize=N         set R\'s number of cons cells to N
   -l, --library         library directory used for test installation
                         of packages (default is outdir)
-
   -o, --outdir=dir      directory used for logfiles, R output, etc.
                         (default is \`pkg.Rcheck\' in current directory)
-  --clean --no-clean    Clean outdir before using it?
-
-  --examples --no-examples    Run all examples in the Rd files?
-  --tests --no-tests     Run code in tests subdirectory?
-  --latex --no-latex     Run latex on help files?
+      --no-clean        Do not clean outdir before using it
+      --no-examples     Do not run the examples in the Rd files
+      --no-tests        Do not run code in tests subdirectory
+      --no-latex        Do not run LaTeX on help files
 
 By default, all test sections are turned on.
 
