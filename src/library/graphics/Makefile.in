@@ -17,8 +17,8 @@ pkg = graphics
 
 R_EXE = $(top_builddir)/bin/R --vanilla
 
-RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
-RdSRC = $(srcdir)/man/*.Rd $(srcdir)/man/$(R_OSTYPE)/*.Rd
+RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R`
+RdSRC = $(srcdir)/man/*.Rd
 
 all: Makefile DESCRIPTION
 	@echo "building package '$(pkg)'"
