@@ -76,6 +76,9 @@ NEW FEATURES
     o	fisher.test(*, conf.int=FALSE) allows to skip the confidence
 	interval computation
 
+    o	formula() methods for classes "lm" and "glm" used the expanded
+	formula (with '.' expanded) from the terms component.
+
 
 UTILITIES
 

@@ -1511,7 +1511,7 @@ x    1  2
 Single term deletions
 
 Model:
-Fr ~ .^2
+Fr ~ (Hair + Eye + Sex)^2
          Df Deviance    AIC
 <none>          8.19 192.94
 Hair:Eye  9   162.21 328.96

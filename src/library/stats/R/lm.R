@@ -429,9 +429,11 @@ deviance.lm <- function(object, ...)
 formula.lm <- function(x, ...)
 {
     form <- x$formula
-    if( !is.null(form) )
-        return(form)
-    formula(x$terms)
+    if( !is.null(form) ) {
+        form <- formula(x$terms) # has . expanded
+        environment(form) <- environment(x$formula)
+        form
+    } else formula(x$terms)
 }
 
 family.lm <- function(object, ...) { gaussian() }

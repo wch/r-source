@@ -736,3 +736,13 @@ weights.glm <- function(object, type = c("prior", "working"), ...)
     if(is.null(object$na.action)) res
     else naresid(object$na.action, res)
 }
+
+formula.glm <- function(x, ...)
+{
+    form <- x$formula
+    if( !is.null(form) ) {
+        form <- formula(x$terms) # has . expanded
+        environment(form) <- environment(x$formula)
+        form
+    } else formula(x$terms)
+}
