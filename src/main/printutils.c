@@ -60,6 +60,23 @@
  */
 static char Encodebuf[BUFSIZE];
 
+
+long Decode2Long(char *p, int *ierr)
+{
+    long v = strtol(p, &p, 10);
+    *ierr = 0;
+    if(p[0] == 'M') {
+	if((Mega * (double)v) > LONG_MAX) { *ierr = 1; return(v); }
+	return (Mega*v);
+    }
+    else if(p[0] == 'K') {
+	if((1024 * (double)v) > LONG_MAX) { *ierr = 2; return(v); }
+	return (1024*v);
+    } 
+    else
+	return(v);
+}
+
 char *EncodeLogical(int x, int w)
 {
 	if(x == NA_LOGICAL) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
