@@ -57,6 +57,8 @@ void Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded, Rboolean
 
 static int ParseBrowser(SEXP, SEXP);
 
+static void onpipe(int);
+
 extern void InitDynload();
 
 
@@ -380,7 +382,9 @@ static void R_LoadProfile(FILE *fparg, SEXP env)
     if (fp != NULL) {
 	if (! SETJMP(R_Toplevel.cjmpbuf)) {
 	    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
+#ifdef REINSTALL_SIGNAL_HANDLERS
 	    signal(SIGINT, handleInterrupt);
+#endif
 	    R_ReplFile(fp, env, 0, 0);
 	}
 	fclose(fp);
@@ -479,6 +483,9 @@ void setup_Rmainloop(void)
     signal(SIGINT, handleInterrupt);
     signal(SIGUSR1,onsigusr1);
     signal(SIGUSR2,onsigusr2);
+#ifdef Unix
+    signal(SIGPIPE, onpipe);
+#endif
     if (!doneit) {
 	doneit = 1;
 	R_ReplFile(fp, baseEnv, 0, 0);
@@ -519,9 +526,14 @@ void setup_Rmainloop(void)
     doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
+#ifdef REINSTALL_SIGNAL_HANDLERS
     signal(SIGINT, handleInterrupt);
     signal(SIGUSR1,onsigusr1);
     signal(SIGUSR2,onsigusr2);
+#ifdef Unix
+    signal(SIGPIPE, onpipe);
+#endif
+#endif
     if (!doneit) {
 	doneit = 1;
 	R_InitialData();
@@ -536,7 +548,9 @@ void setup_Rmainloop(void)
     doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
+#ifdef REINSTALL_SIGNAL_HANDLERS
     signal(SIGINT, handleInterrupt);
+#endif
     if (!doneit) {
 	doneit = 1;
 	PROTECT(cmd = install(".First"));
@@ -555,7 +569,9 @@ void setup_Rmainloop(void)
     doneit = 0;
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
+#ifdef REINSTALL_SIGNAL_HANDLERS
     signal(SIGINT, handleInterrupt);
+#endif
     if (!doneit) {
 	doneit = 1;
 	PROTECT(cmd = install(".First.sys"));
@@ -595,11 +611,13 @@ void run_Rmainloop(void)
     R_IoBufferInit(&R_ConsoleIob);
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
+#ifdef REINSTALL_SIGNAL_HANDLERS
     signal(SIGINT, handleInterrupt);
     signal(SIGUSR1,onsigusr1);
     signal(SIGUSR2,onsigusr2);
 #ifdef Unix
     signal(SIGPIPE, onpipe);
+#endif
 #endif
     R_ReplConsole(R_GlobalEnv, 0, 0);
     end_Rmainloop(); /* must go here */
