@@ -1732,14 +1732,14 @@ AM_CONDITIONAL(USE_MMAP_ZLIB,
 ])# R_ZLIB
 
 AC_DEFUN([_R_HEADER_ZLIB],
-[AC_CACHE_CHECK([if zlib version >= 1.1.3],
+[AC_CACHE_CHECK([if zlib version >= 1.1.4],
                 [r_cv_header_zlib_h],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <string.h>
 #include <zlib.h>
 int main() {
 #ifdef ZLIB_VERSION
-  exit(strcmp(ZLIB_VERSION, "1.1.3") < 0);
+  exit(strcmp(ZLIB_VERSION, "1.1.4") < 0);
 #else
   exit(1);
 #endif
