@@ -29,7 +29,7 @@ aggregate.ts(x, nfrequency = 1, FUN = sum, ndeltat = 1,
     interval of \code{x}.}
   \item{ts.eps}{tolerance used to decide if \code{nfrequency} is a
     sub-multiple of the original frequency.}
-  \item{\dots}{further arguments passed to the method used.}
+  \item{\dots}{further arguments passed to or used by methods.}
 }
 \details{
   \code{aggregate} is a generic functions with methods for data frames
