@@ -90,7 +90,7 @@ static int integralAscii(int section)
     return 243;
   else if (section == 2)
     return 244;
-  else 
+  else
     return 245;
 }
 
@@ -328,7 +328,7 @@ static int integralOperator(SEXP expr)
 static int radicalAtom(SEXP expr)
 {
 	return symbolAtom(expr) &&
-	    (symbolMatch(expr, "root") || 
+	    (symbolMatch(expr, "root") ||
 	     symbolMatch(expr, "sqrt"));
 }
 
@@ -403,9 +403,9 @@ static void boldFont() { setFont(2); }
 static void italicFont() { setFont(3); }
 static void plainFont() { setFont(1); }
 static void boldItalicFont() { setFont(4); }
-  
+
 static int isItalic() { return (getFont() == 3 || getFont() == 4); }
-  
+
 static int atomFontFace(SEXP expr)
 {
 	int fontFace = 1;
@@ -951,7 +951,7 @@ static double currentAngle;
 static double cosAngle;
 static double sinAngle;
 
-		/* 
+		/*
 		   // convert currentX and currentY from 0 angle
 		   // to and currentAngle
 		 */
@@ -1011,7 +1011,7 @@ static void drawAscii(int ascii)
 		mathDevice->gp.font = 5;
 	asciiStr[0] = ascii;
 	asciiStr[1] = '\0';
-	GText(convertedX(), convertedY(), INCHES, asciiStr, 
+	GText(convertedX(), convertedY(), INCHES, asciiStr,
 	      0.0, 0.0, currentAngle, mathDevice);
 	moveAcross(GStrWidth(asciiStr, metricUnit, mathDevice));
 }
@@ -1033,7 +1033,7 @@ static BBOX charBBox(char *str, SEXP expr)
 static void drawChar(char *str, SEXP expr)
 {
 	mathDevice->gp.font = atomFontFace(expr);
-	GText(convertedX(), convertedY(), INCHES, str, 
+	GText(convertedX(), convertedY(), INCHES, str,
 	      0.0, 0.0, currentAngle, mathDevice);
 	moveAcross(GStrWidth(str, metricUnit, mathDevice));
 }
@@ -1126,7 +1126,7 @@ static void drawCorrectionWithin(SEXP expr)
 {
   if (isItalic() && !nonItalicExpression(expr))
     moveAcross(italicCorrection(expr));
-}    
+}
 
 	/* correction between expressions checks current font and font */
 	/* of each expression */
@@ -1232,10 +1232,10 @@ static BBOX binBBox(SEXP expr)
 	if(length(expr) == 3) {
 		operand2 = CADDR(expr);
 		if (multiplicationOperator(operator))
-			middleBBox = 
+			middleBBox =
 			  correctionBetweenBBox(operand1, operand2);
-		else 
-			middleBBox = 
+		else
+			middleBBox =
                           combineBBoxes(
                             gapBBox(binGapBefore(operand1)),
 			    combineBBoxes(atomBBox(operator),
@@ -1263,7 +1263,7 @@ static void drawBin(SEXP expr)
 	if(length(expr) == 3) {
 		operand2 = CADDR(expr);
 		drawElement(operand1);
-		if (multiplicationOperator(operator)) 
+		if (multiplicationOperator(operator))
 		  drawGap(binGapBetween(operand1, operand2));
 		else {
 			drawGap(binGapBefore(operand1));
@@ -1625,13 +1625,13 @@ static BBOX theOperatorBBox(SEXP operator)
 	     shiftBBox(asciiBBox(integralAscii(1)), integralTopShift()),
 	     combineAlignedBBoxes(asciiBBox(integralAscii(2)),
 				  shiftBBox(asciiBBox(integralAscii(3)),
-					    integralBottomShift())));	
+					    integralBottomShift())));
   else
     return asciiBBox(operatorAscii(operator));
 }
 
 static int useRelGap = 1;
-  
+
 static BBOX operatorLimitBBox(SEXP limit)
 {
   float cexSaved = mathDevice->gp.cex;
@@ -1657,9 +1657,9 @@ static BBOX operatorBBox(SEXP expr)
   if (length(expr) > 1) {
     body = CADR(expr);
     bodyBBox = combineBBoxes(opBBox,
-                             combineBBoxes(gapBBox(operatorGap(body)), 
+                             combineBBoxes(gapBBox(operatorGap(body)),
 					   elementBBox(body)));
-    
+
     if (length(expr) > 2) {
       lower = CADDR(expr);
       lowerBBox = operatorLimitBBox(lower);
@@ -1700,9 +1700,9 @@ static BBOX operatorBBox(SEXP expr)
     else
       return bodyBBox;
   }
-  else 
+  else
     error("Invalid Formula\n");
-    
+
 }
 
 static void drawTheOperator(SEXP operator)
@@ -1721,7 +1721,7 @@ static void drawTheOperator(SEXP operator)
   else
     drawAscii(operatorAscii(operator));
 }
-    
+
 static void drawOperatorLimit(SEXP limit)
 {
   useRelGap = 0;
@@ -1738,7 +1738,7 @@ static void drawOperator(SEXP expr)
   double savedY = currentY;
 
   setGapCEX();
-  
+
   if (length(expr) > 2) {
     lower = CADDR(expr);
 
@@ -1879,7 +1879,7 @@ static BBOX expressionBBox(SEXP expr)
 				   combineBBoxes(asciiBBox(commaAscii()),
 					       asciiBBox(spaceAscii())));
 	}
-	return combineBBoxes(resultBBox, 
+	return combineBBoxes(resultBBox,
 			     combineBBoxes(correctionWithinBBox(lastTerm),
 					   asciiBBox(groupCloseAscii())));
 }
@@ -2070,7 +2070,7 @@ static BBOX concatenateBBox(SEXP expr)
 
   for (i=1; i<numArgs; i++) {
     result = combineBBoxes(
-	       result, 
+	       result,
 	       combineBBoxes(correctionBetweenBBox(lastArg, CAR(args)),
 			     elementBBox(CAR(args))));
     lastArg = CAR(args);
@@ -2209,7 +2209,7 @@ double GExpressionWidth(SEXP expr, int units, DevDesc *dd)
         double w  = exprBBox.width;
 	if (units == INCHES)
 		return w;
-	else 
+	else
 		return GConvertXUnits(w, INCHES, units, dd);
 }
 
@@ -2227,7 +2227,7 @@ double GExpressionHeight(SEXP expr, int units, DevDesc *dd)
 
 		/* functions forming the API */
 
-void GMathText(double x, double y, int coords, SEXP expr, 
+void GMathText(double x, double y, int coords, SEXP expr,
 	       double xc, double yc, double rot, DevDesc *dd)
 {
 	BBOX expressionBBox;

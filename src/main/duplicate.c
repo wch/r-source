@@ -110,6 +110,7 @@ SEXP duplicate(SEXP s)
 		break;
 	default:
 		UNIMPLEMENTED("duplicate");
+		t = s;/* for -Wall */
 	}
 	if(TYPEOF(t) == TYPEOF(s) ) /* surely it only makes sense in this case*/
 		OBJECT(t) = OBJECT(s);

@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -33,7 +33,7 @@
  *
  */
 
-
+#ifdef NotUsed/* -Wall */
 static void SetArgsforUseMethod(SEXP x)
 {
 	char buf[4];
@@ -52,6 +52,7 @@ static void SetArgsforUseMethod(SEXP x)
 		}
 	}
 }
+#endif
 
 SEXP fixLevels(SEXP result, SEXP arg)
 {
@@ -180,7 +181,7 @@ static SEXP vectorSubset(SEXP x, SEXP s, SEXP call)
 	if (isFactor(x)) LEVELS(result) = LEVELS(x);
 
 	PROTECT(result = ExtractSubset(x, result, index, call));
-	if (result != R_NilValue && 
+	if (result != R_NilValue &&
 	    (((attrib = getAttrib(x, R_NamesSymbol)) != R_NilValue)
 	   || ((attrib = getAttrib(x, R_DimNamesSymbol)) != R_NilValue
 	   && (attrib = CAR(attrib)) != R_NilValue))) {
@@ -340,8 +341,8 @@ SEXP frameSubset(SEXP x, SEXP s, SEXP call, int drop)
 		errorcall(call, "invalid data frame subsetting\n");
 	}
 	ncs = LENGTH(sc);
-	if( ncs == 0 ) 
-		error("zero is an invalid subscript for data frames\n"); 
+	if( ncs == 0 )
+		error("zero is an invalid subscript for data frames\n");
 	PROTECT(a = allocList(ncs));
 	ap = a;
 	PROTECT(ss = allocList(2));
@@ -523,7 +524,7 @@ static SEXP arraySubset(SEXP x, SEXP s, SEXP call, int drop)
 		/* The array elements have been transferred. */
 		/* Now we need to transfer the attributes. */
 		/* Most importantly, we need to subset the */
-		/* dimnames of the returned value. */ 
+		/* dimnames of the returned value. */
 
 
 	a = ATTRIB(x);
@@ -537,7 +538,7 @@ static SEXP arraySubset(SEXP x, SEXP s, SEXP call, int drop)
 				CAR(q) = allocVector(STRSXP, bound[i]);
 				CAR(q) = ExtractSubset(CAR(p), CAR(q), CAR(r), call);
 				p = CDR(p);
-				q = CDR(q); 
+				q = CDR(q);
 				r = CDR(r);
 			}
 			setAttrib(result, R_DimNamesSymbol, xdims);
@@ -589,7 +590,7 @@ SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 		/* Method dispatch has failed, we now just */
 		/* run the generic internal code */
-	
+
 	PROTECT(args = ans);
 	drop = 1;
 	ExtractDropArg(args, &drop);
@@ -601,7 +602,7 @@ SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (x == R_NilValue) {
 		UNPROTECT(1);
 		return x;
-	}	
+	}
 
 	subs = CDR(args);
 
@@ -668,12 +669,12 @@ SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 		/* Method dispatch has failed, we now just */
 		/* run the generic internal code */
-	
+
 	PROTECT(args = ans);
 	drop = 1;
 	ExtractDropArg(args, &drop);
 	x = CAR(args);
-	
+
 		/* This code was intended for compatibility with S, */
 		/* but in fact S does not do this.  Will anyone notice? */
 
@@ -687,12 +688,12 @@ SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	dims = getAttrib(x, R_DimSymbol);
 	ndims = length(dims);
-		
+
 	if(nsubs > 1 && nsubs != ndims)
 		errorcall(call, "incorrect number of subscripts\n");
-		
+
 	if (isVector(x) || isList(x) || isLanguage(x)) {
-		
+
 		if(nsubs == 1) {
 			offset = get1index(CAR(subs), getAttrib(x, R_NamesSymbol),1);
 			if (offset < 0 || offset >= length(x))

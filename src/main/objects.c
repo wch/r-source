@@ -64,7 +64,7 @@ static SEXP applyMethod(SEXP call, SEXP op, SEXP args, SEXP rho, SEXP newrho)
 	}
 	else if (TYPEOF(op) == CLOSXP) {
 		ans = applyClosure(call, op, args, rho, newrho);
-	}
+	} else ans = R_NilValue;/* for -Wall */
 	return ans;
 }
 
@@ -245,6 +245,7 @@ SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	else
 		error("no applicable method for \"%s\"\n", buf);
+	return R_NilValue;/* NOT Used */
 }
 
 /*

@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -117,6 +117,7 @@ int R_IoBufferPutc(int c, IoBuffer *iob)
 	if(iob->write_offset == IOBSIZE) NextWriteBufferListItem(iob);
 	*(iob->write_ptr)++ = c;
 	iob->write_offset++;
+	return 0;/*not used*/
 }
 
 	/* Add a (null terminated) string to an IoBuffer */
@@ -205,6 +206,7 @@ int R_TextBufferInit(TextBuffer *txtb, SEXP text)
 int R_TextBufferFree(TextBuffer *txtb)
 {
 	vmaxset(txtb->vmax);
+	return 0;/* not used */
 }
 
 	/* Getc for text buffers */

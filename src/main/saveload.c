@@ -16,7 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
- 
+
 #include "Defn.h"
 #include "Mathlib.h"
 #include "Fileio.h"
@@ -538,7 +538,7 @@ static void ReallocVector(SEXP s, int length)
 		else size = 1 + PTR2VEC(length);
 		break;
 	default:
-		error("invalid type in ReallocVector\n");
+		error("invalid type in ReallocVector\n"); size=0;
 	}
 	if (R_VMax - R_VTop < size)
 		error("restore memory exhausted (should not happen)\n");
@@ -652,7 +652,7 @@ static SEXP OffsetToNode(int offset)
 	if(offset == -2) return R_GlobalEnv;
 	if(offset == -3) return R_UnboundValue;
 	if(offset == -4) return R_MissingArg;
-	
+
 		/* binary search for offset */
 
 	l = 0;
@@ -668,6 +668,7 @@ static SEXP OffsetToNode(int offset)
 	if(offset == OldOffset[m]) return NewAddress[m];
 
 	error("unresolved node during restore\n");
+	return R_NilValue;/* for -Wall */
 }
 
 static void DataSave(SEXP s, FILE *fp)
@@ -685,7 +686,7 @@ static void DataSave(SEXP s, FILE *fp)
 	NVSize = 0;
 	unmarkPhase();
 	MarkSave(s);
-	
+
 	OutInit(fp);
 
 	OutInteger(fp, NSymbol); OutSpace(fp);
@@ -1017,31 +1018,24 @@ void R_SaveToFile(SEXP obj, FILE *fp, int ascii)
 
 SEXP R_LoadFromFile(FILE *fp)
 {
-	SEXP ans;
-
 	switch(R_ReadMagic(fp)) {
 #ifdef HAVE_RPC_XDR_H
 	case R_MAGIC_XDR:
-		ans = XdrLoad(fp);
-		break;
+		return(XdrLoad(fp));
 #endif
 	case R_MAGIC_BINARY:
-		ans = BinaryLoad(fp);
-		break;
+		return(BinaryLoad(fp));
 	case R_MAGIC_ASCII:
-		ans = AsciiLoad(fp);
-		break;
+		return(AsciiLoad(fp));
 	case R_MAGIC_BINARY_VERSION16:
-		ans = BinaryLoadOld(fp, 16);
-		break;
+		return(BinaryLoadOld(fp, 16));
 	case R_MAGIC_ASCII_VERSION16:
-		ans = AsciiLoadOld(fp, 16);
-		break;
+		return(AsciiLoadOld(fp, 16));
 	default:
 		fclose(fp);
 		error("restore file corrupted -- no data loaded\n");
+		return(R_NilValue);/* for -Wall */
 	}
-	return ans;
 }
 
 

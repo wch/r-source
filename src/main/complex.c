@@ -53,6 +53,7 @@ SEXP complex_unary(int code, SEXP s1)
 	return ans;
     default:
 	error("illegal complex unary operator\n");
+	return ans;/* just for -Wall */
     }
 }
 
@@ -681,6 +682,7 @@ SEXP complex_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     return cmath2(op, CAR(args), CADR(args), z_atan2);
   default:
     errorcall(call, "unimplemented complex function\n");
+    return call;/* just for -Wall */
   }
 }
 

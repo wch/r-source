@@ -335,7 +335,7 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 		/* Argument-2: y */
 
 	if(isNull(CAR(args))) {
-		y = R_NilValue; 
+		y = R_NilValue;
 		ncy = ncx;
 	}
 	else {
@@ -372,12 +372,13 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
 		break;
 	default:
 		errorcall(call, "invalid computational method\n");
+		pair = 0;/* just for -Wall */
 	}
 	if(pair == NA_INTEGER) pair = 0;
 
 	if(ansmat) PROTECT(ans = allocMatrix(REALSXP, ncx, ncy));
 	else PROTECT(ans = allocVector(REALSXP, ncx * ncy));
-	
+
 	ZeroSD = 0;
 
 	if(isNull(y)) {

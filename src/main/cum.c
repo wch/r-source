@@ -114,7 +114,7 @@ static SEXP cummax(SEXP x, SEXP s)
 	}
 	return s;
 }
-	
+
 static SEXP cummin(SEXP x, SEXP s)
 {
 	int i;
@@ -190,4 +190,6 @@ SEXP do_cum(SEXP call, SEXP op, SEXP args, SEXP env)
 			errorcall(call,"Unknown cum function\n");
 		}
 	}
+	return R_NilValue;/* for -Wall */
+
 }

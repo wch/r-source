@@ -68,6 +68,7 @@ SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
 		return R_NilValue;
 	default:
 		checkArity(op, args);
+		return call;/* never used, just for -Wall */
 	}
 }
 
@@ -80,6 +81,7 @@ SEXP do_invisible(SEXP call, SEXP op, SEXP args, SEXP rho)
 		return CAR(args);
 	default:
 		checkArity(op, args);
+		return call;/* never used, just for -Wall */
 	}
 }
 

@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -64,7 +64,7 @@ A context is created with a call to
 sysp, SEXP promargs)
 
 which sets up the context pointed to by cptr in the appropriate way.
-When the context goes "out-of-scope" a call to 
+When the context goes "out-of-scope" a call to
 
 	void endcontext(RCNTXT *cptr)
 
@@ -154,19 +154,19 @@ static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
 }
 
 /*
- * R_sysframe - look back up the context stack until the nth closure 
- * context and return that cloenv. 
+ * R_sysframe - look back up the context stack until the nth closure
+ * context and return that cloenv.
  * R_sysframe(0) means the R_GlobalEnv environment
  * negative n counts back from the current frame
  * positive n counts up from the globalEnv
 */
- 
+
 SEXP R_sysframe(int n, RCNTXT *cptr)
 {
 	if (n == 0)
 		return(R_GlobalEnv);
 
-	if (n > 0) 
+	if (n > 0)
 		n = framedepth(cptr) - n;
 	else
 		n = -n;
@@ -186,9 +186,11 @@ SEXP R_sysframe(int n, RCNTXT *cptr)
 	}
 	if(n == 0 && cptr->nextcontext == NULL)
 		return R_GlobalEnv;
-	else 
+	else
 		error("sys.frame: not that many enclosing functions\n");
+	return R_NilValue;/* just for -Wall */
 }
+
 
 /*
 	We need to find the environment that can be returned by sys.frame
@@ -202,7 +204,7 @@ int R_sysparent(int n, RCNTXT *cptr)
 {
 	int j;
 	SEXP s;
-	
+
 	if(n<=0)
 		errorcall( R_ToplevelContext->call,
 			"only positive arguments are allowed\n");
@@ -233,7 +235,7 @@ int R_sysparent(int n, RCNTXT *cptr)
 
 	if( n == 0 )
 		n=1;
-        if( n < 0 ) 
+        if( n < 0 )
 		error("sys.parent: not that many enclosing functions\n");
 
 	return n;
@@ -253,17 +255,17 @@ int framedepth(RCNTXT *cptr)
 
 SEXP R_syscall(int n, RCNTXT *cptr)
 {
-	/* negative n counts back from the current frame 
+	/* negative n counts back from the current frame
 	   positive n counts up from the globalEnv
 	*/
-	if (n > 0) 
+	if (n > 0)
 		n=framedepth(cptr)-n;
-	else 
+	else
 		n=-n;
-	if(n < 0 ) 
-		errorcall(R_GlobalContext->call, 
+	if(n < 0 )
+		errorcall(R_GlobalContext->call,
 			"illegal frame number\n");
-	
+
 	while (cptr->nextcontext != NULL) {
 		if (cptr->callflag == CTXT_RETURN)
                         if (n == 0)
@@ -276,6 +278,7 @@ SEXP R_syscall(int n, RCNTXT *cptr)
 		return (duplicate(cptr->call));
 	errorcall(R_GlobalContext->call,
 			"not that many enclosing functions\n");
+	return R_NilValue;/* just for -Wall */
 }
 
 SEXP R_sysfunction(int n, RCNTXT *cptr)
@@ -291,7 +294,7 @@ SEXP R_sysfunction(int n, RCNTXT *cptr)
 				"illegal frame number\n");
 	while (cptr->nextcontext != NULL) {
 		if (cptr->callflag == CTXT_RETURN)
-			if (n == 0) { 
+			if (n == 0) {
 				s=CAR(cptr->call);
 				if( isSymbol(s) )
 					t=findVar(s,cptr->sysparent);
@@ -309,9 +312,10 @@ SEXP R_sysfunction(int n, RCNTXT *cptr)
 		return( findVar(CAR(cptr->call),cptr->sysparent) );
 	errorcall(R_GlobalContext->call,
 		"not that many enclosing functions\n");
+	return R_NilValue;/* just for -Wall */
 }
-	
-/*   
+
+/*
 	An implementation of S's frame access functions. They usually
 	count up from the globalEnv while we like to count down from
 	the currentEnv. So if the argument is negative count down if
@@ -363,7 +367,7 @@ SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 			nframe=framedepth(cptr);
 			PROTECT(rval=allocList(nframe));
 			t=rval;
-			for(i=1 ; i<=nframe; i++, t=CDR(t)) 
+			for(i=1 ; i<=nframe; i++, t=CDR(t))
 				CAR(t)=R_syscall(i,cptr);
 			UNPROTECT(1);
 			return rval;
@@ -390,5 +394,6 @@ SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 			return(R_sysfunction(n, cptr));
 		default:
 			error("internal error in do_sys\n");
+			return R_NilValue;/* just for -Wall */
 	}
 }

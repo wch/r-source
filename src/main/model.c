@@ -1132,8 +1132,9 @@ SEXP do_updateform(SEXP call, SEXP op, SEXP args, SEXP rho)
 		/* The old one must be a valid model */
 		/* formula with an lhs and rhs. */
 
-	if(TYPEOF(old) != LANGSXP || TYPEOF(new) != LANGSXP &&
-		CAR(old) != tildeSymbol || CAR(new) != tildeSymbol)
+	if(TYPEOF(old) != LANGSXP ||
+	   (TYPEOF(new) != LANGSXP && CAR(old) != tildeSymbol) ||
+	   CAR(new) != tildeSymbol)
 			errorcall(call, "formula expected\n");
 	if(length(old) != 3)
 		errorcall(call, "invalid first formula\n");

@@ -66,6 +66,7 @@ static double F77_SYMBOL(fcn1)(double *x)
 	}
 badvalue:
 	error("invalid function value in optimizer\n");
+	return 0;/* for -Wall */
 }
 
 	/* fmin(f, xmin, xmax tol) */
@@ -153,6 +154,8 @@ static double F77_SYMBOL(fcn2)(double *x)
 	}
 badvalue:
 	error("invalid function value in optimizer\n");
+	return 0;/* for -Wall */
+
 }
 
 	/* zeroin(f, xmin, xmax tol) */
@@ -215,12 +218,12 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
 	/* evaluate the call. */
 
 static SEXP R_fcall;	/* function */
-static SEXP R_gcall;	/* gradient */
-static SEXP R_hcall;	/* hessian */
+/*------ UNUSED */static SEXP R_gcall;	/* gradient */
+/*------ UNUSED */static SEXP R_hcall;	/* hessian */
 static SEXP R_env;	/* where to evaluate the calls */
 
-static int have_gradient;
-static int have_hessian;
+/*------ UNUSED */static int have_gradient;
+/*------ UNUSED */static int have_hessian;
 
 
 
@@ -259,18 +262,21 @@ static int F77_SYMBOL(fcn)(int *n, double *x, double *f)
 	return 0;
 badvalue:
 	error("invalid function value in optimizer\n");
+	return 0;/* for -Wall */
 }
 
 
 static int F77_SYMBOL(d1fcn)(int *n, double *x, double *g)
 {
 	error("optimization using analytic gradients not implemented (yet)\n");
+	return 0;/* for -Wall */
 }
 
 
 static int F77_SYMBOL(d2fcn)(int *n, double *x, double *g)
 {
 	error("optimization using analytic Hessians not implemented (yet)\n");
+	return 0;/* for -Wall */
 }
 
 
@@ -324,7 +330,7 @@ static void invalid_na(SEXP call)
 
 	/* Fatal errors - we don't deliver an answer */
 
-static int opterror(int nerr)
+static void opterror(int nerr)
 {
 	switch(nerr) {
 	case -1:

@@ -132,7 +132,7 @@ char *EncodeComplex(complex x, int wr, int dr, int er, int wi, int di, int ei)
 	else efi = "f";
 	sprintf(fmt,"%%%d.%d%s%%+%d.%d%si", wr, dr, efr, wi, di, efi);
 	sprintf(Encodebuf, fmt, x.r, x.i);
-	
+
     }
     return Encodebuf;
 }
@@ -141,6 +141,7 @@ char *EncodeComplex(complex x, int wr, int dr, int er, int wi, int di, int ei)
 	/* Latin1 types are (rightfully) upset */
 	/* WHAT NEEDS TO CHANGE */
 
+/* UNUSED: */
 static int hexdigit(unsigned int x)
 {
 	return ((x <= 9)? '0' :	 'A'-10) + x;

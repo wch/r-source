@@ -38,6 +38,7 @@ SEXP do_logic(SEXP call, SEXP op, SEXP args, SEXP env)
 		return lbinary(call, op, args);
 	default:
 		error("binary operations require two arguments\n");
+		return R_NilValue;/* for -Wall */
 	}
 }
 
@@ -205,7 +206,7 @@ SEXP do_logic2(SEXP call, SEXP op, SEXP args, SEXP env)
 		UNPROTECT(1);
 		return ans;
 	}
-	/*NOTREACHED*/
+	return R_NilValue;/*NOTREACHED*/
 }
 
 static SEXP binaryLogic(int code, SEXP s1, SEXP s2)

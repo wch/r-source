@@ -59,7 +59,7 @@ SEXP do_codesgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP x, y;
 	double yi;
-	int i, iy, lx, nx, ny;
+	int i, iy=0, lx, nx, ny;
 
 	checkArity(op, args);
 	x = CAR(args);
@@ -189,7 +189,7 @@ SEXP do_as(SEXP call, SEXP op, SEXP args, SEXP rho)
 		default:
 			errorcall(call, "mode \"%s\" is invalid\n", CHAR(STRING(CADR(args))[0]));
 		}
-		
+
 		u = CAR(args);
 		if (isVector(u) || isList(u) || isLanguage(u)) {
 			if(NAMED(u)) v = duplicate(u);
@@ -226,6 +226,7 @@ SEXP do_as(SEXP call, SEXP op, SEXP args, SEXP rho)
                 return install(CHAR(STRING(u)[0]));
 	default:
 		errorcall(call, "unimplemented coersion\n");
+		return R_NilValue;/* for -Wall */
 	}
 }
 
@@ -700,7 +701,7 @@ static SEXP coerceToLogical(SEXP v)
 		for (i = 0; i < n; i++) {
 			if(INTEGER(v)[i] == NA_INTEGER)
 				LOGICAL(ans)[i] = NA_LOGICAL;
-			else 
+			else
 				LOGICAL(ans)[i] = (INTEGER(v)[i] != 0);
 		}
 		break;
@@ -708,7 +709,7 @@ static SEXP coerceToLogical(SEXP v)
 		for (i = 0; i < n; i++) {
 			if(INTEGER(v)[i] == NA_INTEGER)
 				LOGICAL(ans)[i] = NA_LOGICAL;
-			else 
+			else
 				LOGICAL(ans)[i] = (INTEGER(v)[i] != 0);
 		}
 		break;
@@ -874,7 +875,7 @@ static SEXP coerceToInteger(SEXP v)
 				warn = 1;
 				INTEGER(ans)[i] = INT_MAX;
 			}
-			else if (COMPLEX(v)[i].r < INT_MIN) {     
+			else if (COMPLEX(v)[i].r < INT_MIN) {
 				warn = 1;
 				INTEGER(ans)[i] = INT_MIN+1;
 			}
@@ -895,7 +896,7 @@ static SEXP coerceToInteger(SEXP v)
 						warn = 1;
 						INTEGER(ans)[i] = NA_INTEGER;
 					}
-					else 
+					else
 						INTEGER(ans)[i] = out;
 				}
 				else
@@ -1252,7 +1253,7 @@ SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
  * environment in which substitute was called is used. If the specified
  * environment is R_NilValue then R_GlobalEnv is used. Arguments to
  * do_substitute should not be evaluated.
- * 
+ *
  */
 
 SEXP substituteList(SEXP, SEXP);

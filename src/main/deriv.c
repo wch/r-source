@@ -89,6 +89,7 @@ static int isUminus(SEXP s)
 			else return 0;
 		default:
 			error("invalid form in unary minus check\n");
+			return -1;/* for -Wall */
 		}
 	}
 	else return 0;
@@ -112,7 +113,7 @@ static SEXP simplify(SEXP fun, SEXP arg1, SEXP arg2)
 			ans = simplify(MinusSymbol, arg2, CADR(arg1));
 		else if(isUminus(arg2))
 			ans = simplify(MinusSymbol, arg1, CADR(arg2));
-		else 
+		else
 			ans = lang3(PlusSymbol, arg1, arg2);
 	}
 	else if(fun == MinusSymbol) {
@@ -238,7 +239,7 @@ static SEXP simplify(SEXP fun, SEXP arg1, SEXP arg2)
 		ans = lang2(TanhSymbol, arg1);
 	}
 	else ans = Constant(NA_REAL);
-	
+
 #ifdef NOTYET
 	if(length(ans) == 2 && isAtomic(CADR(ans)) && CAR(ans) != MinusSymbol)
 		c = eval(c, rho);
@@ -301,7 +302,7 @@ static SEXP D(SEXP expr, SEXP var)
 					PP(D(CADR(expr), var)),
 					CADDR(expr))),
 				PP(simplify(TimesSymbol,
-					CADR(expr), 
+					CADR(expr),
 					PP(D(CADDR(expr), var)))));
 			UNPROTECT(4);
 		}
@@ -684,7 +685,7 @@ static SEXP CreateGrad(SEXP names)
 {
 	SEXP p, q, data, dim, dimnames;
 	int i, n;
-	
+
 	n = length(names);
 	PROTECT(dimnames = lang3(R_NilValue, R_NilValue, R_NilValue));
 	CAR(dimnames) = install("list");

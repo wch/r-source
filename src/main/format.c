@@ -318,7 +318,7 @@ void formatComplex(complex *x, int l, int *mr, int *nr, int *er,
 	    naflag = 1;
 	}
 	else {
-	    
+
 	    /* real part */
 
 #ifdef IEEE_754
@@ -369,8 +369,7 @@ void formatComplex(complex *x, int l, int *mr, int *nr, int *er,
 		if (sleft> i_mxsl) i_mxsl = sleft;
 		if (nsig > i_mxns) i_mxns = nsig;
 	    }
-	  done:
-	    ;
+	    /* done: ; */
 	}
     }
 

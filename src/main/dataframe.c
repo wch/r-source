@@ -66,6 +66,7 @@ static int CountItems(SEXP sxp, int handsoff)
 			+ CountItems(CDR(sxp),handsoff);
 	}
 	errorcall(gcall, "invalid argument type\n");
+	return -1;/* for -Wall */
 }
 
 static void InsertVector(SEXP sxp, int handsoff)
@@ -279,8 +280,8 @@ void RemoveClass(SEXP, char*);
 
 void FrameClassFix(SEXP x)
 {
-        SEXP xcar, xp;          
-        int nr = -1;    
+        SEXP xcar, xp;
+        int nr = -1;
         for(xp=x ; xp!=R_NilValue ; xp=CDR(xp)) {
                 xcar = CAR(xp);
                 if(isArray(xcar)) {
@@ -291,7 +292,7 @@ void FrameClassFix(SEXP x)
                                         goto unclass;
                         }
                         else goto unclass;
-                }       
+                }
                 else if(isVector(xcar)) {
                         if(nr == -1)
                                 nr = length(xcar);

@@ -46,6 +46,7 @@ SEXP do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 		break;
 	default:
 		errorcall(call, "invalid number of arguments\n");
+		code = R_NilValue;/* for -Wall */
 	}
 	ctxt = R_GlobalContext;
 	while (ctxt != R_ToplevelContext && ctxt->callflag != CTXT_RETURN)
@@ -492,7 +493,7 @@ SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP name, val, aenv;
-	int ginherits;
+	int ginherits=0;
 
 	checkArity(op, args);
 	name = findVar(CAR(args), rho);
@@ -533,7 +534,7 @@ SEXP do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP name, aenv, tsym, tenv, tframe;
-	int ginherits;
+	int ginherits=0;
 	int set, i;
 
 	checkArity(op, args);
@@ -585,7 +586,7 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP rval, genv, t1;
 	SEXPTYPE gmode;
-	int ginherits, where;
+	int ginherits=0, where;
 
 	checkArity(op, args);
 
@@ -712,8 +713,10 @@ SEXP switchList(SEXP el, SEXP rho)
 		}
 		return h;
 	}
-	else
+	else {
 		error("bad parameter in switch \n");
+		return R_NilValue;/* for -Wall */
+	}
 }
 
 SEXP do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)

@@ -25,8 +25,9 @@
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <X11/cursorfont.h>
-#include <X11/Xutil.h>
+#include <X11/Intrinsic.h>/*->  Xlib.h  Xutil.h Xresource.h .. */
 #include "rotated.h"
+#include "devX11.h"/* 'Public' routines from here */
 
 	/********************************************************/
 	/* This device driver has been documented so that it be	*/
@@ -49,9 +50,6 @@
 	/* specific structure					*/
 	/********************************************************/
 
-			/* R Graphics Parameters */
-			/* local device copy so that we can detect */
-			/* when parameter changes */
 typedef struct {
 			/* R Graphics Parameters */
 			/* local device copy so that we can detect */
@@ -105,7 +103,7 @@ static XSetWindowAttributes attributes;		/* Window attributes */
 static Colormap cmap;				/* Default color map */
 static int blackpixel;				/* Black */
 static int whitepixel;				/* White */
-static XContext devPtrContext;	
+static XContext devPtrContext;
 static Atom _XA_WM_PROTOCOLS, protocol;
 
 static int displayOpen = 0;
@@ -135,7 +133,7 @@ int X11DeviceDriver(DevDesc*, char*, double, double, double);
 	/* hooks for these actions must be set up when the 	*/
 	/* device is first created				*/
 	/********************************************************/
-	
+
 	/* Device Driver Actions */
 
 static void   X11_Activate(DevDesc *);
@@ -154,7 +152,7 @@ static void   X11_Polyline(int, double*, double*, int, DevDesc*);
 static void   X11_Rect(double, double, double, double, int, int, int, DevDesc*);
 static void   X11_Resize(DevDesc*);
 static double X11_StrWidth(char*, DevDesc*);
-static void   X11_Text(double, double, int, char*, double, double, double, 
+static void   X11_Text(double, double, int, char*, double, double, double,
 		       DevDesc*);
 static void   X11_MetricInfo(int, double*, double*, double*, DevDesc*);
 
@@ -165,7 +163,6 @@ static void   X11_MetricInfo(int, double*, double*, double*, DevDesc*);
 	/* Support Routines */
 
 static void FreeColors(void);
-void ProcessEvents(void);
 static XFontStruct *RLoadFont(int, int);
 static double pixelHeight(void);
 static double pixelWidth(void);
@@ -205,7 +202,7 @@ static void handleEvent(XEvent event)
 			     devPtrContext, &temp);
 		dd = (DevDesc *) temp;
 		xd = (x11Desc *) dd->deviceSpecific;
-		if (xd->resize) 
+		if (xd->resize)
 			dd->dp.resize(dd);
 		playDisplayList(dd);
 	}
@@ -312,8 +309,8 @@ static XFontStruct *RLoadFont(int face, int size)
 		if(face == 5)
 			sprintf(buf, symbolname, 10 * size);
 		else
-			sprintf(buf, fontname, 
-				weight[(face-1)%2], 
+			sprintf(buf, fontname,
+				weight[(face-1)%2],
 				slant[((face-1)/2)%2], 10 * size);
 #ifdef DEBUGGING
 		Rprintf("loading:\n%s\n",buf);
@@ -322,7 +319,7 @@ static XFontStruct *RLoadFont(int face, int size)
 #ifdef DEBUGGING
 		if(tmp) Rprintf("success\n"); else Rprintf("failure\n");
 #endif
-		if (tmp) 
+		if (tmp)
 			fontarray[size-6][face-1] = tmp;
 		return tmp;
 	}
@@ -422,7 +419,7 @@ static void SetColor(int color, DevDesc *dd)
 
 		/* Gamma Correction */
 		/* This is very experimental! */
-		
+
 		if(dd->gp.gamma != 1) {
 			r = (int)(255*pow(R_RED(color)/255.0, dd->gp.gamma));
 			g = (int)(255*pow(R_GREEN(color)/255.0, dd->gp.gamma));
@@ -443,7 +440,7 @@ static void SetColor(int color, DevDesc *dd)
 		xd->fgcolor.green = g * 257;
 		xd->fgcolor.blue  = b * 257;
 
-		if(NColors == 255 || 
+		if(NColors == 255 ||
 		   XAllocColor(display, cmap, &(xd->fgcolor)) == 0)
 			error("color allocation error\n");
 		Colors[NColors].rcolor = color;
@@ -577,7 +574,7 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h)
 		NColors = 0;
 
 		devPtrContext = XUniqueContext();
-		
+
 		displayOpen = 1;
 	}
 
@@ -615,7 +612,7 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h)
 
 	attributes.background_pixel = whitepixel;
 	attributes.border_pixel = blackpixel;
-	attributes.backing_store = Always; 
+	attributes.backing_store = Always;
 	attributes.event_mask = ButtonPressMask
 	    | ExposureMask
 	    | StructureNotifyMask;
@@ -703,11 +700,11 @@ static double X11_StrWidth(char *str, DevDesc *dd)
 	/* units (GMetricInfo does the necessary conversions)	*/
 	/* This is used for formatting mathematical expressions	*/
 	/********************************************************/
-	
+
 	/* Character Metric Information */
 	/* Passing c == 0 gets font information */
 
-static void X11_MetricInfo(int c, double* ascent, double* descent, 
+static void X11_MetricInfo(int c, double* ascent, double* descent,
 			   double* width, DevDesc *dd)
 {
 	int first, last;
@@ -741,7 +738,7 @@ static void X11_MetricInfo(int c, double* ascent, double* descent,
 	/* should have the side-effect that subsequent output	*/
 	/* is clipped to the given rectangle			*/
 	/********************************************************/
-	
+
 static void X11_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
 {
 	x11Desc *xd = (x11Desc *) dd->deviceSpecific;
@@ -796,7 +793,7 @@ static void X11_Resize(DevDesc *dd)
 	/* device (as in this case) or moving to a new page	*/
 	/* (e.g., postscript)					*/
 	/********************************************************/
-	
+
 static void X11_NewPage(DevDesc *dd)
 {
 	int result;
@@ -853,7 +850,7 @@ static void X11_Close(DevDesc *dd)
 		XCloseDisplay(display);
 		displayOpen = 0;
 	}
-	
+
 	free(xd);
 }
 
@@ -869,7 +866,7 @@ static unsigned char title[11] = "R Graphics";
 
 static void X11_Activate(DevDesc *dd)
 {
-	char t[50]; 
+	char t[50];
 	char num[3];
 	x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
@@ -906,7 +903,7 @@ static void X11_Deactivate(DevDesc *dd)
 			8, PropModeReplace, t, 50);
 	XSync(display, 0);
 }
-	
+
 	/********************************************************/
 	/* device_Rect should have the side-effect that a 	*/
 	/* rectangle is drawn with the given locations for its 	*/
@@ -921,7 +918,7 @@ static void X11_Deactivate(DevDesc *dd)
 	/* locations to DEVICE coordinates using GConvert	*/
 	/********************************************************/
 
-static void X11_Rect(double x0, double y0, double x1, double y1, 
+static void X11_Rect(double x0, double y0, double x1, double y1,
 		     int coords, int bg, int fg, DevDesc *dd)
 {
 	int tmp;
@@ -1007,7 +1004,7 @@ static void X11_Circle(double x, double y, int coords,
 	/* DEVICE coordinates using GConvert			*/
 	/********************************************************/
 
-static void X11_Line(double x1, double y1, double x2, double y2, 
+static void X11_Line(double x1, double y1, double x2, double y2,
 		     int coords, DevDesc *dd)
 {
 	double xx1, yy1, xx2, yy2;
@@ -1025,7 +1022,7 @@ static void X11_Line(double x1, double y1, double x2, double y2,
 	SetColor(dd->gp.col, dd);
 	SetLinetype(dd->gp.lty, dd->gp.lwd, dd);
 	XDrawLine(display, xd->window, xd->wgc, xx1, yy1, xx2, yy2);
-	XSync(display, 0);  
+	XSync(display, 0);
 }
 
 	/********************************************************/
@@ -1081,7 +1078,7 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
 	double devx, devy;
 	int i;
 	x11Desc *xd = (x11Desc *) dd->deviceSpecific;
-	
+
 	points = (XPoint *) C_alloc(n+1, sizeof(XPoint));
 
 	for (i=0 ; i<n ; i++) {
@@ -1123,7 +1120,7 @@ static void X11_Polygon(int n, double *x, double *y, int coords,
 
 static double deg2rad = 0.01745329251994329576;
 
-static void X11_Text(double x, double y, int coords, 
+static void X11_Text(double x, double y, int coords,
 		     char *str, double xc, double yc, double rot, DevDesc *dd)
 {
 	int len, size;
@@ -1138,12 +1135,12 @@ static void X11_Text(double x, double y, int coords,
 	if(xc != 0.0 || yc != 0) {
 		xl = X11_StrWidth(str, dd);
 		yl = GConvertYUnits(1, CHARS, DEVICE, dd);
-		x += -xc * xl * cos(deg2rad * rot) + 
+		x += -xc * xl * cos(deg2rad * rot) +
 		      yc * yl * sin(deg2rad * rot);
-		y -= -xc * xl * sin(deg2rad * rot) - 
+		y -= -xc * xl * sin(deg2rad * rot) -
 		      yc * yl * cos(deg2rad * rot);
 	}
-	XRotDrawString(display, xd->font, rot, xd->window, xd->wgc, 
+	XRotDrawString(display, xd->font, rot, xd->window, xd->wgc,
 		       (int)x, (int)y, str);
 	XSync(display, 0);
 }
@@ -1190,7 +1187,7 @@ static int X11_Locator(double *x, double *y, DevDesc *dd)
 		/* if it was a Button1 succeed, otherwise fail */
 	if (done == 1)
 		return 1;
-	else 
+	else
 		return 0;
 }
 
@@ -1211,7 +1208,7 @@ static void X11_Mode(int mode)
 	/* being used anywhere, but i'm loath to kill it in	*/
 	/* case i'm missing something important			*/
 	/********************************************************/
-	
+
 /* Hold the Picture Onscreen - not needed for X11 */
 static void X11_Hold(DevDesc *dd)
 {
@@ -1246,7 +1243,7 @@ static void X11_Hold(DevDesc *dd)
 	/* but if the device driver freaks out it needs to do 	*/
 	/* the clean-up itself					*/
 	/********************************************************/
-	
+
 
 	/*  X11 Device Driver Arguments               */
 
@@ -1270,7 +1267,7 @@ int X11DeviceDriver(DevDesc *dd, char *display, double width, double height, dou
 	x11Desc *xd;
 
 	/* allocate new device description */
-	if (!(xd = (x11Desc *) malloc(sizeof(x11Desc)))) 
+	if (!(xd = (x11Desc *) malloc(sizeof(x11Desc))))
 		return 0;
 
 	/* from here on, if need to bail out with "error", must also */
@@ -1324,9 +1321,9 @@ int X11DeviceDriver(DevDesc *dd, char *display, double width, double height, dou
 
 	/* Nominal Character Sizes in Pixels */
 
-	dd->dp.cra[0] = xd->font->max_bounds.rbearing - 
+	dd->dp.cra[0] = xd->font->max_bounds.rbearing -
 			    xd->font->min_bounds.lbearing;
-	dd->dp.cra[1] = xd->font->max_bounds.ascent + 
+	dd->dp.cra[1] = xd->font->max_bounds.ascent +
 			    xd->font->max_bounds.descent;
 
 	/* Character Addressing Offsets */
@@ -1350,7 +1347,7 @@ int X11DeviceDriver(DevDesc *dd, char *display, double width, double height, dou
 	dd->dp.canChangeFont = 0;
 	dd->dp.canRotateText = 1;
 	dd->dp.canResizeText = 1;
-	dd->dp.canClip = 1; 
+	dd->dp.canClip = 1;
 
 	/* initialise x11 device description (most of the work */
 	/* has been done in X11_Open) */
@@ -1373,7 +1370,7 @@ int X11ConnectionNumber()
 {
 	if (displayOpen)
 		return ConnectionNumber(display);
-	else 
+	else
 		return 0;
 }
 

@@ -471,7 +471,7 @@ int conformable(SEXP, SEXP);
 SEXP cons(SEXP, SEXP);
 void copyListMatrix(SEXP, SEXP, int);
 void copyMatrix(SEXP, SEXP, int);
-SEXP copyMostAttrib(SEXP, SEXP);
+void copyMostAttrib(SEXP, SEXP);
 void copyVector(SEXP, SEXP);
 SEXP CreateTag(SEXP);
 void CustomPrintValue(SEXP);

@@ -195,7 +195,7 @@ static void stringanswer(SEXP x)
 		break;
 	default:
 		PROTECT(x = coerceVector(x, STRSXP));
-		nx = LENGTH(x);  
+		nx = LENGTH(x);
 		for (i = 0; i < nx; i++)
 			STRING(ans_ptr)[ans_length++] = STRING(x)[i];
 		UNPROTECT(1);
@@ -217,7 +217,7 @@ static void integeranswer(SEXP x)
 		}
 		break;
 	default:
-		nx = LENGTH(x);  
+		nx = LENGTH(x);
 		for (i = 0; i < nx; i++)
 			INTEGER(ans_ptr)[ans_length++] = INTEGER(x)[i];
 		break;
@@ -238,12 +238,12 @@ static void realanswer(SEXP x)
 		}
 		break;
 	case REALSXP:
-		nx = LENGTH(x);  
+		nx = LENGTH(x);
 		for (i = 0; i < nx; i++)
 			REAL(ans_ptr)[ans_length++] = REAL(x)[i];
 		break;
 	default:
-		nx = LENGTH(x);  
+		nx = LENGTH(x);
 		for (i = 0; i < nx; i++) {
 			xi = INTEGER(x)[i];
 			if(xi == NA_INTEGER)
@@ -268,7 +268,7 @@ static void complexanswer(SEXP x)
 		}
 		break;
 	case REALSXP:
-		nx = LENGTH(x);  
+		nx = LENGTH(x);
 		for (i = 0; i < nx; i++) {
 			COMPLEX(ans_ptr)[ans_length].r = REAL(x)[i];
 			COMPLEX(ans_ptr)[ans_length].i = 0.0;
@@ -276,12 +276,12 @@ static void complexanswer(SEXP x)
 		}
 		break;
 	case CPLXSXP:
-		nx = LENGTH(x);  
+		nx = LENGTH(x);
 		for (i = 0; i < nx; i++)
 			COMPLEX(ans_ptr)[ans_length++] = COMPLEX(x)[i];
 		break;
 	default:
-		nx = LENGTH(x);  
+		nx = LENGTH(x);
 		for (i = 0; i < nx; i++) {
 			xi = INTEGER(x)[i];
 			if(xi == NA_INTEGER)
@@ -292,7 +292,7 @@ static void complexanswer(SEXP x)
 	}
 }
 
-/* 
+/*
    TagName can get either a SYMSXP, a STRSXP or a CHARSXP or NILSXP
    for either tag or base; the first part extracts the CHARSXP needed;
    the remainer acts on that
@@ -356,9 +356,9 @@ static SEXP TagName(SEXP tag, SEXP base, int i)
 	return ans;
 }
 
-/* 
-   since ExtractNames is done recursively and it contains a check on the 
-   names found there must be some mechanism for saying not to check to them; 
+/*
+   since ExtractNames is done recursively and it contains a check on the
+   names found there must be some mechanism for saying not to check to them;
    hence check
 */
 static void ExtractNames(SEXP args, int recurse, int check, SEXP base)
@@ -369,7 +369,7 @@ static void ExtractNames(SEXP args, int recurse, int check, SEXP base)
 	PROTECT(blank=mkChar(""));
 
 	while(args != R_NilValue) {
-		if(!isNull(CAR(args))) 
+		if(!isNull(CAR(args)))
   		    if(isVector(CAR(args))) {
 			if(!isNull(TAG(args))) {
 				switch(length(CAR(args))) {
@@ -396,11 +396,11 @@ static void ExtractNames(SEXP args, int recurse, int check, SEXP base)
 				}
 				else {
 					if(isNull(s = getAttrib(CAR(args), R_NamesSymbol))) {
-						for(i=0 ; i<length(CAR(args)) ; i++) 
+						for(i=0 ; i<length(CAR(args)) ; i++)
 							STRING(ans_names)[ans_nnames++] = TagName(base,R_NilValue,i+1+offset);
 					}
 					else {
-						for(i=0 ; i<length(CAR(args)) ; i++) 
+						for(i=0 ; i<length(CAR(args)) ; i++)
 							STRING(ans_names)[ans_nnames++] = TagName(STRING(s)[i],base,offset);
 					}
 					offset+=i;
@@ -419,7 +419,7 @@ static void ExtractNames(SEXP args, int recurse, int check, SEXP base)
 					if( isNull(base) ) {
 						if(!isNull(TAG(s)))
 							STRING(ans_names)[ans_nnames++] = TagName(TAG(s),base,0);
-						else 
+						else
 							STRING(ans_names)[ans_nnames++] = blank;
 					}
 					else {
@@ -614,7 +614,7 @@ SEXP substituteList(SEXP, SEXP);
 
 SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-	int mode;
+	int mode=ANYSXP;/* for -Wall; none from the ones below */
 	SEXP t;
 
 	rho = env;
@@ -677,13 +677,14 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 		default:
 			errorcall(call, "cannot create a matrix from these types\n");
 	}
-	
+
 	switch (PRIMVAL(op)) {
 	case 1:
 		return cbind(call, args, mode);
 	case 2:
 		return rbind(call, args, mode);
 	}
+	return call;/* never used; just for -Wall */
 }
 
 
@@ -769,7 +770,7 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode)
 	n = 0;
 
 	if (mode == STRSXP) {
-		for (t = args; t != R_NilValue; t = CDR(t)) { 
+		for (t = args; t != R_NilValue; t = CDR(t)) {
 			if( length(CAR(t)) > 0 ) {
 				u = CAR(t) = coerceVector(CAR(t), STRSXP);
 				k = LENGTH(u);

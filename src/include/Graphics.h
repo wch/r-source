@@ -418,12 +418,14 @@ int deviceNumber(DevDesc*);
 int StartDevice(SEXP, SEXP, int, SEXP, int);
 /*- these added by MM, eliminating -Wall "implicit declaration"s: */
 void recordGraphicOperation(SEXP, SEXP, DevDesc*);
+void initDisplayList();
 void copyDisplayList(int);
 void playDisplayList(DevDesc*);
 void inhibitDisplayList(DevDesc*);
 
 		/* Utility Device functions */
 
+void addDevice(DevDesc *);
 int curDevice();
 int nextDevice(int);
 int prevDevice(int);

@@ -56,6 +56,7 @@ typedef struct TextBuffer {
 	int	offset;				/* Offset within vector */
 } TextBuffer;
 
+/*- some of these really could be void */
 int R_IoBufferInit(IoBuffer*);
 int R_IoBufferFree(IoBuffer*);
 int R_IoBufferReadReset(IoBuffer*);
