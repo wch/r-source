@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -1656,11 +1656,7 @@ int isValidName(char *name)
     if (c == '.' && isdigit((int)*p)) 
 	return 0;
 
-    while ( c = *p++, (isalnum(c) || c == '.' 
-#ifdef UNDERSCORE_IN_NAMES
-		       || c == '_'
-#endif
-		) )
+    while ( c = *p++, (isalnum(c) || c == '.' || c == '_') )
 	;
 
     if (c != '\0') return 0;
@@ -1683,11 +1679,7 @@ static int SymbolValue(int c)
     do {
 	YYTEXT_PUSH(c, yyp);
     }
-    while ((c = xxgetc()) != R_EOF && (isalnum(c) || c == '.' 
-#ifdef UNDERSCORE_IN_NAMES
-				       || c == '_'
-#endif
-	       ));
+    while ((c = xxgetc()) != R_EOF && (isalnum(c) || c == '.' || c == '_'));
     xxungetc(c);
     YYTEXT_PUSH('\0', yyp);
     if ((kw = KeywordLookup(yytext))) {

@@ -346,7 +346,7 @@ data.frame <-
     if(any(noname))
 	vnames[noname] <- paste("Var", 1:length(vnames), sep = ".")[noname]
     if(check.names)
-	vnames <- make.names(vnames)
+	vnames <- make.names(vnames, unique=TRUE)
     names(value) <- vnames
     if(!mrn) { # row.names arg was supplied
         if(length(row.names) == 1 && nr != 1) {  # one of the variables

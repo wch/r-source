@@ -592,7 +592,7 @@ SEXP do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP arg, ans;
-    int i, l, n;
+    int i, l, n, allow_;
     char *p, *this;
     Rboolean need_prefix;
 
@@ -601,6 +601,9 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(arg))
 	errorcall(call, "non-character names");
     n = length(arg);
+    allow_ = asLogical(CADR(args));
+    if(allow_ == NA_LOGICAL)
+	errorcall(call, "invalid allow_");
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0 ; i < n ; i++) {
 	this = CHAR(STRING_ELT(arg, i));
@@ -622,11 +625,8 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	this = p = CHAR(STRING_ELT(ans, i));
 	while (*p) {
-	    if (!isalnum((int)*p) && *p != '.'
-#ifdef UNDERSCORE_IN_NAMES
-		&& *p != '_'
-#endif
-		) *p = '.';
+	    if (!isalnum((int)*p) && *p != '.' && (allow_ && *p != '_')) 
+		*p = '.';
 	    p++;
 	}
 	/* do we have a reserved word?  If so the name is invalid */

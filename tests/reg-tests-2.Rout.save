@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.0.0 Under development (unstable) (2004-06-18), ISBN 3-900051-00-3
+Version 2.0.0 Under development (unstable) (2004-06-24), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -4101,4 +4101,28 @@ Read 18 items
  [1] 41 20 74 65 73 74 20 73 74 72 69 6e 67 00 6d 6f 72 65
 > unlink("testascii")
 > ##
+> 
+> 
+> ## Example of prediction not from newdata as intended.
+> set.seed(1)
+> y <- rnorm(10)
+> x  <- cbind(1:10, sample(1:10)) # matrix
+> xt <- cbind(1:2,  3:4)
+> (lm1 <- lm(y ~ x))
+
+Call:
+lm(formula = y ~ x)
+
+Coefficients:
+(Intercept)           x1           x2  
+     0.4359      -0.1376       0.1539  
+
+> predict(lm1, newdata = data.frame(x= xt))
+          1           2           3           4           5           6 
+ 1.83760728  0.93041126  0.17714205  0.19350695  1.13343277  0.84194402 
+          7           8           9          10 
+ 0.08867482  0.25896653  0.27533143 -0.47793778 
+Warning message: 
+'newdata' had 2 rows but variable(s) found have 10 rows 
+> ## warns as from 2.0.0
 > 

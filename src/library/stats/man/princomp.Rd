@@ -43,7 +43,8 @@ princomp(x, \dots)
   \item{\dots}{arguments passed to or from other methods. If \code{x} is
     a formula one might specify \code{cor} or \code{scores}.}
   \item{object}{Object of class inheriting from \code{"princomp"}}
-  \item{newdata}{Data frame in which to predict}
+  \item{newdata}{An optional data frame in which to look for variables with
+    which to predict.  If omitted, the scores are used.}
 }
 \description{
   \code{princomp} performs a principal components analysis on the given

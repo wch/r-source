@@ -1330,3 +1330,13 @@ cat(xx, file="testascii")
 scan("testascii", what=raw(0))
 unlink("testascii")
 ##
+
+
+## Example of prediction not from newdata as intended.
+set.seed(1)
+y <- rnorm(10)
+x  <- cbind(1:10, sample(1:10)) # matrix
+xt <- cbind(1:2,  3:4)
+(lm1 <- lm(y ~ x))
+predict(lm1, newdata = data.frame(x= xt))
+## warns as from 2.0.0

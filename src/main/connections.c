@@ -3394,7 +3394,10 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 	    icon->read(&buf, 1, sizeof(uLong), icon);
 	    crc = 0;
 	    for (n = 0; n < 4; n++) {crc <<= 8; crc += buf[n];}
-	    if (crc != priv->crc) priv->z_err = Z_DATA_ERROR;
+	    if (crc != priv->crc) {
+		priv->z_err = Z_DATA_ERROR;
+		REprintf("crc error %d %d\n", crc, priv->crc);
+	    }
 	}
 	if (priv->z_err != Z_OK || priv->z_eof) break;
     }

@@ -132,7 +132,17 @@ NEW FEATURES
 
     o	There is now a replacement method for window(), to allow a
 	range of values of time series to be replaced by specifying the
-	start and end times.
+	start and end times (and optionally a frequency).
+
+    o	model.frame() now warns if it is given data = newdata and it
+	creates a model frame with a different number of rows from
+	that implied by the size of 'newdata'.
+
+    o	data.frame(check.names = TRUE) (the default) enforces unique
+	names, as S does.
+
+    o	make.names() has a new argument allow_, which if false allows
+	its behaviour in R 1.8.1 to be reproduced.
 
 
 UTILITIES
