@@ -467,6 +467,13 @@ void setup_Rmainloop(void)
     R_Toplevel.cloenv = R_NilValue;
     R_Toplevel.sysparent = R_NilValue;
     R_Toplevel.conexit = R_NilValue;
+    R_Toplevel.vmax = NULL;
+#ifdef BYTECODE
+    R_Toplevel.nodestack = R_BCNodeStackTop;
+# ifdef BC_INT_STACK
+    R_Toplevel.intstack = R_BCIntStackTop;
+# endif
+#endif
     R_Toplevel.cend = NULL;
     R_Toplevel.intsusp = FALSE;
 #ifdef NEW_CONDITION_HANDLING

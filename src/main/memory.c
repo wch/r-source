@@ -382,6 +382,7 @@ static R_size_t R_NodesInUse = 0;
   case LANGSXP: \
   case DOTSXP: \
   case SYMSXP: \
+  case BCODESXP: \
     dc__action__(TAG(__n__), dc__extra__); \
     dc__action__(CAR(__n__), dc__extra__); \
     dc__action__(CDR(__n__), dc__extra__); \
@@ -1215,6 +1216,14 @@ static void RunGenCollect(R_size_t size_needed)
 
     FORWARD_NODE(R_VStack);		   /* R_alloc stack */
 
+#ifdef BYTECODE
+    {
+	SEXP *sp;
+	for (sp = R_BCNodeStackBase; sp < R_BCNodeStackTop; sp++)
+	    FORWARD_NODE(*sp);
+    }
+#endif
+
     /* main processing loop */
     PROCESS_NODES();
 
@@ -1439,6 +1448,23 @@ void InitMemory()
     TAG(R_NilValue) = R_NilValue;
     ATTRIB(R_NilValue) = R_NilValue;
 
+#ifdef BYTECODE
+    R_BCNodeStackBase = (SEXP *) malloc(R_BCNODESTACKSIZE * sizeof(SEXP));
+    if (R_BCNodeStackBase == NULL)
+	R_Suicide("couldn't allocate node stack");
+# ifdef BC_INT_STACK
+    R_BCIntStackBase =
+      (IStackval *) malloc(R_BCINTSTACKSIZE * sizeof(IStackval));
+    if (R_BCIntStackBase == NULL)
+	R_Suicide("couldn't allocate integer stack");
+# endif
+    R_BCNodeStackTop = R_BCNodeStackBase;
+    R_BCNodeStackEnd = R_BCNodeStackBase + R_BCNODESTACKSIZE;
+# ifdef BC_INT_STACK
+    R_BCIntStackTop = R_BCIntStackBase;
+    R_BCIntStackEnd = R_BCIntStackBase + R_BCINTSTACKSIZE;
+# endif
+#endif
     R_weak_refs = R_NilValue;
 
 #ifdef NEW_CONDITION_HANDLING
@@ -1963,6 +1989,9 @@ SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(nms, ANYSXP, mkChar("ANYSXP"));
     SET_STRING_ELT(nms, VECSXP, mkChar("VECSXP"));
     SET_STRING_ELT(nms, EXPRSXP, mkChar("EXPRSXP"));
+#ifdef BYTECODE
+    SET_STRING_ELT(nms, BCODESXP, mkChar("BCODESXP"));
+#endif
     SET_STRING_ELT(nms, EXTPTRSXP, mkChar("EXTPTRSXP"));
     SET_STRING_ELT(nms, WEAKREFSXP, mkChar("WEAKREFSXP"));
     setAttrib(ans, R_NamesSymbol, nms);
