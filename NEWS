@@ -152,6 +152,9 @@ BUG FIXES
 	problems if the last thing in a section was \preformatted{}
 	(and potentially elsewhere).
 
+    o	Under some circumstances mosaicplot() failed if main was
+	supplied as it was passed on to model.frame.default().
+
 
 
 		CHANGES IN R VERSION 1.8.0

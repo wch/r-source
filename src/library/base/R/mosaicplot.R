@@ -354,7 +354,7 @@ function(formula, data = NULL, ...,
     else {
         if(is.matrix(edata))
             m$data <- as.data.frame(data)
-        m$... <- NULL
+        m$main <- m$... <- NULL
         m[[1]] <- as.name("model.frame")
         mf <- eval(m, parent.frame())
         mosaicplot(table(mf), main = main, ...)
