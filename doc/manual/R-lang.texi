@@ -2793,18 +2793,15 @@ this process will be described shortly.  The second way in which
 return control to the calling function.  This means, that any statements
 after a call to @code{UseMethod} are guaranteed not to be executed.
 
-When @code{UseMethod} is invoked the generic function is determined as
-either the specified value in the call to @code{UseMethod} or as the
-@cindex name
-name of the current function if no value was specified.  The object to
-dispatch on is either the supplied second argument or the first argument
-to the current function.  The class of the argument is determined and
-the first element of it is combined with the name of the generic to
-determine the appropriate method.  So, if the generic had name
-@code{foo} and the class of the object is @code{"bar"}, then @R{} will
-search for a method named @code{foo.bar}.  If no such method exists then
-the inheritance mechanism described above is used to locate an
-appropriate method.
+When @code{UseMethod} is invoked the generic function is the specified
+value in the call to @code{UseMethod}.  The object to dispatch on is
+either the supplied second argument or the first argument to the current
+function.  The class of the argument is determined and the first element
+of it is combined with the name of the generic to determine the
+appropriate method.  So, if the generic had name @code{foo} and the
+class of the object is @code{"bar"}, then @R{} will search for a method
+named @code{foo.bar}.  If no such method exists then the inheritance
+mechanism described above is used to locate an appropriate method.
 
 Once a method has been determined @R{} invokes it in a special way.
 Rather than creating a new evaluation

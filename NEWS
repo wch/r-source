@@ -50,6 +50,9 @@ NEW FEATURES
     o   scatter.smooth() and loess.smooth() now handle missing values
 	in their inputs.
 
+    o   The use of UseMethod() with no argument was not documented on
+	the help page and is now regarded as an error.
+
 
 UTILITIES
 
@@ -67,8 +70,7 @@ DOCUMENTATION
 C-LEVEL FACILITIES
 
     o	There are new public C/C++ header files Rinterface.h and
-	R_ext/RStartup.h for use with external GUIs.  The API is not
-	yet documented.
+	R_ext/RStartup.h for use with external GUIs.
 
 
 DEPRECATED & DEFUNCT
