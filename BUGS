@@ -182,6 +182,10 @@ Date: Mon, 20 Oct 2003 14:17:42 -0400
 Subject: Core dump when calling tclvalue
 From: mckay@gmr.com
 Date: Wed, 22 Oct 2003 19:10:02 +0200 (MET DST)
+* PR# 5049 *
+Subject: Segfault in foreign
+From: Peter Dalgaard <p.dalgaard@biostat.ku.dk>
+Date: 12 Nov 2003 17:31:24 +0100
 
 Directory:  Analyses
 
@@ -218,6 +222,11 @@ Date: Thu, 11 Jul 2002 18:21:42 +1000
 Subject: Suggestions to the man page
 From: Axel Noetzold <noetzold@medinf.mu-luebeck.de>
 Date: Fri, 7 Nov 2003 18:18:35 +0100
+* PR# 5095 *
+Subject: documentation of "scope": possible error + cleanup
+From: htang@hpl.hp.com
+Date: Sat, 15 Nov 2003 00:00:17 +0100 (CET)
+..Comments on R-lang
 
 Directory:  Graphics
 
@@ -385,11 +394,6 @@ Subject: R configure.in makes bad alpha assumptions
 From: mcmahill@mtl.mit.edu
 Date: Sat, 15 Jun 2002 19:21:09 -0400 (EDT)
 ..Probably fixed in 1.5.1
-* PR# 1825 *
-Subject: bug in R-1.5.1 for Mac OS X installer
-From: Kow Kuroda <kkuroda@crl.ucsd.edu>
-Date: Mon, 22 Jul 2002 16:40:26 -0700
-..Darwin port
 * PR# 1829 *
 Subject: R config failure on solaris
 From: "Siva Ginjupalli" <gsivrao@hotmail.com>
@@ -499,6 +503,15 @@ Date: Tue, 6 Aug 2002 16:57:54 +0800
 Subject: [R] CTRL-C suspends echo of shell (R versions 1.6.0 and 1.6.1)
 From: Wolfram Fischer - Z/I/M <wolfram@fischer-zim.ch>
 Date: Mon, 4 Nov 2002 10:18:48 +0100
+* PR# 4073 *
+Subject: Problem with S4 slots in C code
+From: Laurence Kell FM CEFAS <L.T.Kell@cefas.co.uk>
+Date: Fri, 5 Sep 2003 10:23:38 +0100 
+* PR# 4474 *
+Subject: Memmory Bugs
+From: "Eric R. Riehl" <eriehl@email.unc.edu>
+Date: Wed, 8 Oct 2003 14:30:57 -0400 (EDT)
+..about use of enum for messages in errors.c
 * PR# 4582 *
 Subject: NA %*% 0 == 0
 From: hosking@watson.ibm.com
@@ -515,6 +528,9 @@ Date: Sun, 8 Sep 2002 13:47:00 +0100
 Subject: Search Engine
 From: leroy@ucsd.edu
 Date: Tue, 22 Apr 2003 06:21:19 +0200 (MET DST)
+..According to Simon Urbanek this is a java security issue.  With RAqua a good
+..alternative is starting HTML 
+..help and then using help.search() or  Help|Search Help on...
 
 Directory:  Misc
 
@@ -546,6 +562,11 @@ Subject: Re: [Rd] R CMD SHLIB uses foo.c instead of foo.cc if both are present
 From: Kurt Hornik <hornik@ci.tuwien.ac.at>
 Date: Mon, 17 Mar 2003 21:32:55 +0100
 ..part of 2644
+* PR# 2656 *
+Subject: recursive default argument reference in debugger
+From: pburns@pburns.seanet.com
+Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
+..problem in debugger()
 * PR# 3646 *
 Subject: as.POSIXct Bug when used with POSIXlt arg and tz= arg
 From: Gabor Grothendieck <ggrothendieck@volcanomail.com>
@@ -682,6 +703,10 @@ Date: Wed, 30 Apr 2003 22:33:24 +0200 (MET DST)
 Subject: Bugs compiling R-1.7.1 with Intel compilers icc and ifc
 From: <CanisMaior@web.de>
 Date: Thu, 25 Sep 2003 11:26:09 +0200
+* PR# 4459 *
+Subject: Redhat 7.2 gcc optimisation 
+From: Paul Murrell <p.murrell@auckland.ac.nz>
+Date: Wed, 08 Oct 2003 15:28:11 +1300
 
 Directory:  TooMuchAtOnce
 
@@ -720,18 +745,10 @@ Date: Mon, 22 Sep 2003 02:26:31 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 2656 *
-Subject: recursive default argument reference in debugger
-From: pburns@pburns.seanet.com
-Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
 * PR# 2809 *
 Subject: sweave provoked segfault
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
 Date: Mon, 21 Apr 2003 17:01:53 -0400
-* PR# 4073 *
-Subject: Problem with S4 slots in C code
-From: Laurence Kell FM CEFAS <L.T.Kell@cefas.co.uk>
-Date: Fri, 5 Sep 2003 10:23:38 +0100 
 * PR# 4184 *
 Subject: getGenerics is wrong in 1.8.0 alpha
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
@@ -743,134 +760,24 @@ From:   "methods"       "methods" "methods" "methods"  "methods"
 From:   "methods"    "methods"
 Date: Tue, 16 Sep 2003 12:39:16 +0100 (BST)
 ..body<- is fixed. Should Compare and Complex show up as base?
-* PR# 4459 *
-Subject: Redhat 7.2 gcc optimisation 
-From: Paul Murrell <p.murrell@auckland.ac.nz>
-Date: Wed, 08 Oct 2003 15:28:11 +1300
-* PR# 4474 *
-Subject: Memmory Bugs
-From: "Eric R. Riehl" <eriehl@email.unc.edu>
-Date: Wed, 8 Oct 2003 14:30:57 -0400 (EDT)
-* PR# 4710 *
-Subject: round behaves differently from ceiling, floor for matrices with 0 rows
-From: w.huber@dkfz-heidelberg.de
-Date: Tue, 21 Oct 2003 20:48:27 +0200 (MET DST)
-* PR# 5042 *
-Subject: write.table quotes too much
-From: Duncan Murdoch <dmurdoch@pair.com>
-Date: Tue, 11 Nov 2003 21:58:02 -0500
-* PR# 5045 *
-Subject: wishlist item: changing origin of plot
-From: Stephen Eglen <stephen@inf.ed.ac.uk>
-Date: Wed, 12 Nov 2003 09:24:23 +0000
-* PR# 5049 *
-Subject: Segfault in foreign
-From: Peter Dalgaard <p.dalgaard@biostat.ku.dk>
-Date: 12 Nov 2003 17:31:24 +0100
-* PR# 5053 *
-Subject: problem with pipes
-From: ggrothendieck@myway.com
-Date: Wed, 12 Nov 2003 23:43:35 +0100 (CET)
-* PR# 5095 *
-Subject: documentation of "scope": possible error + cleanup
-From: htang@hpl.hp.com
-Date: Sat, 15 Nov 2003 00:00:17 +0100 (CET)
-* PR# 5104 *
-Subject: its new mo.ney time bid now ynfaxa
-From: "E. H. Garcia" <dyoung6330@lof.dk>
-Date: Sat, 15 Nov 2003 11:31:10 -0400
-* PR# 5105 *
-Subject: (광고)위험지역,이동카메라를 미리알림/룸미러형GPS..@
-From: 우리 <urthgkdfgjdfkgkd64@naver.com>
-Date: Sun, 16 Nov 2003 01:27:22 +0900
-* PR# 5106 *
-Subject: On Sale Now, All New Digital Cable Descrambler.
-From: "Leann Lilly" <mfs6tplxae@earthlink.net>
-Date: Sat, 15 Nov 03 22:19:00 GMT
-* PR# 5107 *
-From: Luz Adriana E Caudillo Fuentes <fuentesl@umich.edu>
-Date: Sat, 15 Nov 2003 14:01:35 -0500 (EST)
-* PR# 5108 *
-Subject: RE: no /\\Bossssssssssssssssssss  zmot hb
-From: "Miriam Hurley" <d1olgl@yahoo.ca>
-Date: Sat, 15 Nov 2003 13:12:57 -0600
-* PR# 5109 *
-Subject: we can supply you with R-X you want hxauyhe
-From: "Savana J Martin" <marindanicewander@twinstarsmail.com>
-Date: Sat, 15 Nov 2003 16:21:10 -0400
-* PR# 5110 *
-Subject: Boost Your  Car's Gas Mileage 27%+.....chelsia
-From: "Hope Foster" <sgbjkp@yahoo.com>
-Date: Sat, 15 Nov 2003 14:27:39 -0700
-* PR# 5111 *
-Subject: R-bugs Learn what the experts say z uokvt g eiedul 
-From: "Geoffrey Knowles" <rahjpnaj@pv.udg.mx>
-Date: Sat, 15 Nov 2003 19:47:20 -0200
-* PR# 5112 *
-Subject: healthy and happy.................................................................................................peat
-From: "Darius Winters" <w4qaphdcy@cox.net>
-Date: Sun, 16 Nov 03 02:03:50 GMT
-* PR# 5113 *
-Subject: ANY MEDS U WANT.  Valium, Xanax. Prescribed Online Shipped Overnight kg ny  o
-From: "Ted Stratton" <ypee807e@verizon.net>
-Date: Sun, 16 Nov 03 05:25:13 GMT
-* PR# 5114 *
-Subject: Could you use a 150" Big Screen TV? mme ikbsrfidec
-From: "Bradley Valentine" <qp290epgue@hotmail.com>
-Date: Sat, 15 Nov 03 22:14:12 GMT
-* PR# 5115 *
-Subject: Declined Application
-From: "Rita Dejesus" <482bate@yahoo.com>
-Date: Sat, 15 Nov 03 19:47:11 GMT
-* PR# 5116 *
-Subject: CRY FOR HELP
-From: FAMILY IN NEED <klijn2k@netscape.net>
-Date: Sun, 16 Nov 2003 01:24:24 +0000
-* PR# 5117 *
-Subject: SINGAPORE
-From: yorkmathew@netscape.net
-Date: Sat, 15 Nov 2003 22:29:33 GMT
-* PR# 5118 *
-Subject: A Healthy Discovery - Sleep It Off - - -tectaria macrodonta
-From: "Kurt Osborn" <zr8031vn469c@netscape.com>
-Date: Sun, 16 Nov 03 06:56:17 GMT
-* PR# 5119 *
-Subject: Your Best Source For Medicines Online IS HERE! NO Prescriptions NEDEED ugtykxguphmeges
-From: "Carmelo Schultz" <vzpin1@verizon.net>
-Date: Sat, 15 Nov 03 12:14:34 GMT
-* PR# 5120 *
-Subject: WANT MEDS? WE WE HAVE THEM ALL Prescribed Online! jt
-From: "Buford Ayers" <ilakczogf@att.net>
-Date: Sat, 15 Nov 03 14:09:24 GMT
-* PR# 5121 *
-Subject: Fwd: R-bugs,Get Rid of SPAM for GOOD tphh qggps 
-From: "Bee" <mzaw7dgohx@yahoo.ca>
-Date: Sun, 16 Nov 2003 10:56:31 +0100 (CET)
-* PR# 5122 *
-Subject: Debt Termination Info, application
-From: "Fernando Groves" <pmbfhnqqg@yahoo.com>
-Date: Sun, 16 Nov 03 16:38:01 GMT
-* PR# 5123 *
-Subject: Everyone needs this software (egerg)
-From: "Maudie" <agentpease_9442@channelnewsasia.com>
-Date: Sun, 16 Nov 2003 05:00:30 -2000
-* PR# 5124 *
-Subject: (광고)대표영어 "세스" 무료샘플/무료배송 이벤트!@
-From: 무료증정 <hjkiuv159638@hanmir.com>
-Date: Mon, 17 Nov 2003 01:34:59 +0900
-* PR# 5125 *
-Subject: EBAY -- A U C T I O N Seminar -- tailless tenrec
-From: "Lucille Patterson" <67evr6i1@netscape.com>
-Date: Sun, 16 Nov 03 13:33:44 GMT
-* PR# 5126 *
-Subject: FREE online Consultation, from real doctors!akron
-From: "Reuben Bush" <loav37sza@siutao.net>
-Date: Sun, 16 Nov 2003 22:57:20 GMT
-* PR# 5127 *
-Subject: Get now real dates   98x66vJl393D6xqD4WvK
-From: "EnjoyLife" <dsSw7catrine7v3SX@lycos.com>
-Date: Sun, 16 Nov 2003 11:13:44-0800
-* PR# 5128 *
-Subject: Bachelor's Diploma, Master's, or PhD - No Classes Necessary...ivrit
-From: "Vernon Tuttle" <a85keygy@yahoo.com>
-Date: Sun, 16 Nov 2003 22:35:30 +0100
+* PR# 5150 *
+Subject: CONGRATULATIONS!!!!YOU HAVE WON.
+From: MEGA LOTTERY INTERNATIONAL <megalottery@hotmail.com>
+Date: Mon, 17 Nov 2003 19:45:16 +0000
+* PR# 5151 *
+Subject: =?EUC-KR?B?KLGksO0pIMG+t67BpiC6wMX1IMD9vuDH/CC+0MPgvrK3ubHixesgvNKws0Ag?=
+From: "매직파워" <ghldnjs30@hanmir.com>
+Date: Tue, 18 Nov 2003 05:34:36 +0900
+* PR# 5152 *
+Subject: PLEASE ENDEAVOUR TO UTILIZE THIS FUND AS I HAVE INSTRUCTED
+From: "SERENA JONES" <ciranajoness@netscape.net>
+From: Mrs Serena Jones
+Date: Mon, 17 Nov 2003 22:41:59
+* PR# 5153 *
+Subject: STOP-PAYING For Your PAY-PER-VIEW, Movie Channels, Mature Channels...howard
+From: "Sung Lucas" <g61btcvohq@yahoo.com>
+Date: Mon, 17 Nov 2003 19:14:26 -0300
+* PR# 5154 *
+Subject: Business Assistance
+From: ENGR MARK SITHEMBELE <sithembele11@netscape.net>
+Date: Mon, 17 Nov 2003 23:57:41 +0100
