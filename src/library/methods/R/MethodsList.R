@@ -92,7 +92,7 @@ insertMethod <-
         stop("inserting method corresponding to empty signature")
     if(!is(mlist, "MethodsList"))
         stop(paste("inserting method into non-methods-list object (class \"",
-                   data.class(mlist), "\")", sep=""))
+                   .class1(mlist), "\")", sep=""))
     if(length(args) > 1 && !cacheOnly)
         mlist <- balanceMethodsList(mlist, args)
     Class <- el(signature, 1)
@@ -191,7 +191,7 @@ MethodsListSelect <-
             thisClass <- "missing"
         else {
             arg <- eval(as.name(argName), env) ## DO use instance-specific inheritance
-            thisClass <- data.class(arg) #really class, but only 1st string.
+            thisClass <- .class1(arg)
         }
     }
     else
@@ -562,7 +562,7 @@ linearizeMlist <-
             }
             else
                 warning("Skipping methods list element ", paste(cnames[i], collapse = ", "),
-                        " of unexpected class \"", data.class(mi),
+                        " of unexpected class \"", .class1(mi),
                         "\"\n\n")
         }
         new("LinearMethodsList", methods = value, classes = classes, arguments = arguments)

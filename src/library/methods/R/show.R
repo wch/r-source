@@ -1,7 +1,7 @@
 showDefault <-
   function(object, oldMethods = TRUE)
 {
-    cl <- data.class(object)
+    cl <- .class1(object)
     if(isClass(cl) && is.na(match(cl, .BasicClasses))) {
         cat("An object of class \"", cl, "\"\n", sep="")
         slots <- slotNames(cl)
@@ -32,6 +32,12 @@ showDefault <-
      }
 }
 
+## temporary definition of show, to become the default method
+## when .InitShowMethods is called
+show <- function(object)
+    showDefault(object, FALSE)
+
+
 printNoClass <- get("print.default", "package:base")
 
 print.default <- function(x, ...) {
@@ -43,11 +49,7 @@ print.default <- function(x, ...) {
 }
 
 .InitShowMethods <- function(envir) {
-    setGeneric("show", function(object)standardGeneric("show"),
-               where = envir)
-    setMethod("show", "ANY",
-              function(object)
-              showDefault(object, oldMethods = FALSE), where = envir)
+    setGeneric("show", where = envir)
     setMethod("show", "MethodDefinition",
               function(object) {
                   cat("Method Definition (Class \"", class(object), "\"):\n\n", sep = "")

@@ -10,9 +10,9 @@
   a given class.
 }
 \usage{
-as(object, Class, coerceFlag=TRUE)
+as(object, Class, strict=TRUE)
 
-as(object, Class, coerceFlag=TRUE) <- value
+as(object, Class) <- value
 
 setAs(from, to, def, replace, where = 1)
 
@@ -62,13 +62,17 @@ setAs(from, to, def, replace, where = 1)
   \item{object}{ Any object. }
   \item{Class}{ The name of the class to which \code{object} should be
     coerced. }
-  \item{coerceFlag}{ A logical flag.  If \code{FALSE},  only inheritance
-    relations will be used; i.e., \code{is(object, Class)} must be
-    \code{TRUE}, and if not, \code{NULL} is returned.
+  \item{strict}{ A logical flag.  If \code{TRUE}, the returned object
+  must be strictly from the target class (unless that class is a
+  virtual class, in which case the object will be from the closest
+  actual class (often the original object, if that class extends the
+  virtual class directly).
 
-    If the flag is \code{TRUE}, however, coerce methods will be called
-    if inheritance is not true (and an error will result if coercion
-    fails).}
+  If \code{strict = FALSE}, any simple extension of the target class
+  will be returned, without further change.  A simple extension is,
+  roughly, one that just adds slots to an existing class.
+
+      }
   \item{value}{The value to use to modify \code{object} (see the
     discussion below).  You should supply an object with class
     \code{Class}; some coercion is done, but you're unwise to rely on

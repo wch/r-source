@@ -7,8 +7,7 @@
 }
 \usage{
 setSClass(name, properties=list(), extends=character(),
-          prototype=NULL, generatorFunction, where=1,
-          subclasses=character(), virtual=NA, validity, access)
+          prototype=NULL, where=1, virtual=NA, validity, access)
 }
 \arguments{
   \item{name}{ character string name for the class }
@@ -16,11 +15,8 @@ setSClass(name, properties=list(), extends=character(),
   \item{extends}{ what classes does this class extend }
   \item{prototype}{ an object (usually a list) providing the default
     data for the slots specified in the representation. }
-  \item{generatorFunction}{ an optional function to use in generating
-    new objects from the class }
   \item{where}{ where to store the resulting definition (as metadata).
     By default, uses the global environment. }
-  \item{subclasses}{ Classes that extend \emph{this} class.  }
   \item{virtual}{ Is this known to be a virtual class? }
   \item{validity, access}{Optional arguments for validity method and
     access restrictions.  At the time of writing, these are included for

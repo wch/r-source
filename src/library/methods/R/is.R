@@ -4,31 +4,26 @@ is <-
   # With one argument, returns all the super-classes of this object's class.
 function(object, class2)
 {
-    cl <- data.class(object)
+    cl <- .class1(object)
     if(missing(class2))
         return(extends(cl))
     if(identical(cl, class2) || identical(class2, "ANY"))
         return(TRUE)
-    ext <- findExtends(cl, class2)
+    ext <- possibleExtends(cl, class2)
     if(is.logical(ext))
-        return(ext)
-    if(is.character(ext)) # by case
-        return(is(object, ext))
-    if(!is.list(ext))
-        stop(paste("Invalid extends structure found for \"", class2,
-                   "\" in examining class \"", cl, "\"", sep=""))
-    f <- ext$test
-    if(is.function(f))
-        f(object)
-    else TRUE
+        ext
+    else if(ext@simple)
+        TRUE
+    else
+       ext@test(object)
 }
 
 extends <-
   ## Does the first class extend the second class?
-  ## Returns `maybe' if the extension includes a test.
+  ## Returns `maybe' if the extension includes a non-trivial test.
   function(class1, class2, maybe = TRUE)
 {
-    if(is(class1, "classRepEnvironment")) {
+    if(is(class1, "classRepresentation")) {
         classDef1 <- class1
         class1 <- getClassName(classDef1)
     }
@@ -39,29 +34,27 @@ extends <-
     if(missing(class2)) {
         if(is.null(classDef1))
             return(class1)
-        ext <- getExtends(getClass(class1))
+        ext <- getExtends(classDef1)
         if(identical(maybe, TRUE))
             return(c(class1, names(ext)))
         else {
-            tested <- sapply(ext, function(obj)(is.list(obj) && is.function(obj$test)))
-            return(c(class1, names(ext[!tested])))
+            noTest <- sapply(ext, function(obj)identical(obj@test, .simpleExtTest))
+            return(c(class1, names(ext[noTest])))
         }
     }
     if(identical(class1, class2))
         return(TRUE)
-    if(is(class2, "classRepEnvironment"))
+    if(is(class2, "classRepresentation"))
         class2 <- getClassName(class2)
     else if(!(is.character(class2) && length(class2) == 1))
         stop("class2 must be the name of a class or a class definition")
-    value <- findExtends(class1, class2)
+    value <- possibleExtends(class1, class2)
     if(is.logical(value))
         value
-    else if(is.character(value))
-        extends(value, class2)
-    else if(is.list(value) && is.function(value$test))
-        maybe
-    else
+    else if(value@simple || identical(value@test, .simpleExtTest))
         TRUE
+    else
+        maybe
 }
 
 
@@ -77,46 +70,28 @@ setIs <-
   ## more elaborate one.  If the `replace' argument is supplied as an S replacement
   ## function, this function will be used to implement `as(obj, class2) <- value'.
   function(class1, class2, test = NULL, coerce = NULL,
-           replace = NULL, by = NULL, dataPart = NULL, where = 1)
+           replace = NULL, by = character(), where = 1)
 {
-    obj <- list()
-    obj$test <- test
-    obj$coerce <- coerce
-    obj$replace <- replace
-    obj$by <- by
-    obj$dataPart <- if(identical(dataPart, TRUE)) TRUE else NULL
-    if(length(obj) == 0)
-        obj <- TRUE                     # simple extension
-    classDef1 <- getClassDef(class1, where)
-    classDef2 <- getClassDef(class2, where)
-    if(is.null(classDef1) && is.null(classDef2))
-        stop(paste("Neither \"", class1, "\" nor \"", class2,
-             "\" has a definition in database ", where,
-             ": can't store the setIs information", sep=""))
-    if(!is.null(classDef1)) {
-        ext <- getExtends(classDef1)
-        oldExt <- ext
-        elNamed(ext, class2) <- obj
-        setExtends(classDef1, ext)
-        if(identical(where, 0))
-            ## used to modify class completion information only
-            return(invisible(obj))
-        ## check for errors, reset the class def if they occur
-        on.exit(setExtends(classDef1, oldExt))
-        completeClassDefinition(class1, classDef1)
-        on.exit()
-        resetClass(class1)
-        obj <- NULL
-    }
+    ## Technical detail:  we only use the class definition for the class name & the
+    ## package, and call getClassDef  (don't  complete the def'n), because setIs is called
+    ## during the setClass computations to record simple contained classes &
+    ## completeClassDefinition may get into a loop then.
+    classDef1 <- getClassDef(class1)
+    classDef2 <- getClassDef(class2)
+    if(is.null(classDef1) || is.null(classDef2))
+        stop(paste("Both \"", class1, "\" nor \"", class2,
+             "\" must be defined to create an is relation between them", sep=""))
+    obj <- makeExtends(class1, class2, coerce, test, replace, by,
+                       classDef1 = classDef1, classDef2 = classDef2)
+    setExtendsMetaData(classDef1, classDef2, obj, where = where)
+    subDef <- setSubclassMetaData(classDef2, classDef1, where = where)
+    resetClass(class1)
+    ## Usually it would be OK to do:  resetClass(class2)
+    ## However, resetting a basic class can throw us into a loop.
+    classDef2 <- getClassDef(class2, 0)
     if(!is.null(classDef2)) {
-        ## insert the extension information in the subclasses:
-        ## if obj is NULL, this will delete an earlier entry (which we
-        ## want to do, if we have just inserted a forward link in class1).
-        ext <- getSubclasses(classDef2)
-        elNamed(ext, class1) <- obj
-        setSubclasses(classDef2, ext)
-        if(!identical(where, 0))
-            resetClass(class2)
+        elNamed(classDef2@subclasses, class1) <- subDef
+        assignClassDef(class2, classDef2, 0)
     }
     invisible(obj)
 }

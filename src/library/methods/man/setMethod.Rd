@@ -257,7 +257,8 @@ mustEqual(f1(a1,b1), "A0 B1")
 mustEqual(f1(b1,a1), "B1 A0")
 mustEqual(f1(b1,b1), "ANY")
 
-for(.cl in c("A0", "A1", "B0", "B1", "B2"))
+## remove classes:  order matters so as not to undefine earlier classes
+for(.cl in c("AB0", "A1", "A0", "B2", "B1", "B0"))
     removeClass(.cl)
 
 removeGeneric("f1")

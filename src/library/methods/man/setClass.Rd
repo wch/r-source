@@ -4,6 +4,7 @@
 \alias{resetClass}
 \alias{isClass}
 \alias{getClasses}
+\alias{findClass}
 \title{Create a Class Definition}
 \description{
   Create a formally defined class with specified slots and/or
@@ -16,12 +17,14 @@
 setClass(Class, representation, prototype,
          contains=character(), validity, access, where=1, version=FALSE)
 
-removeClass(Class, where=-1)
+removeClass(Class, where=-1, removeSubclassLinks = TRUE)
 
 isClass(Class, formal=TRUE)
 isClassDef(object)
 
 getClasses(where)
+
+findClass(Class)
 
 resetClass(Class)
 
@@ -46,6 +49,14 @@ resetClass(Class)
   \item{x}{an arbitrary object.}
   \item{formal}{ Should a formal definition be required? }
   \item{object}{ any R object. }
+
+  \item{removeSubclassLinks}{When a class is removed, any links
+      \emph{to} that class from other classes will become invalid.  If
+      this argument is not supplied as \code{FALSE}, then
+      \code{removeClass} will search for all such links and delete
+      them. You can omit the  argument, or supply it as the
+      positions in the search list to look for these links (by default
+      all attached object tables will be searched).}
 }
 \details{
 
@@ -90,6 +101,11 @@ resetClass(Class)
       session (which does not include classes that may be defined on one
       of the attached packages, but have not yet been used in the
       session).
+    }
+    \item{\code{findClass}:}{
+        Where on the current search list the class named \code{Class}
+        is defined.  (If there is more than one definition, all
+        corresponding elements of the search list are returned.)
     }
 
     \item{\code{unclass}:}{
@@ -162,12 +178,12 @@ resetClass(Class)
 }
 \examples{
 \testonly{
-if(isClass("track"))
-  removeClass("track")
-if(isClass("trackCurve"))
-  removeClass("trackCurve")
 if(isClass("trackMultiCurve"))
   removeClass("trackMultiCurve")
+if(isClass("trackCurve"))
+  removeClass("trackCurve")
+if(isClass("track"))
+  removeClass("track")
 }
 ## A simple class with two slots
 setClass("track",
@@ -210,17 +226,17 @@ stopifnot(identical(new("xNum")@x, xxx))
 ## (in S-Plus 6.0, new() doesn't work right with this class)
 
 setClass("maybeNumber")
-setIs("maybeNumber", "vector") # required to be a data part
 setIs("numeric", "maybeNumber")
 setIs("logical", "maybeNumber")
 setClass("withId", representation("maybeNumber", id = "character"))
 
 ttt <- 1:10 ## relevant that this is class integer, to test indirect extensions
-##www <- new("withId", ttt, id = "test 1")
+www <- new("withId", ttt, id = "test 1")
 
-## The following test should use identical(), but then the two
-## expressions differ by having the object bit on and off resp.
-##stopifnot(all(as(www, "maybeNumber") == ttt))
+## the following test is less trivial than it looks.
+## It depends on the assignment of the data part NOT performing
+## a strict coerce to "numeric" on the way to satisfying is(ttt, "maybeNumber").
+stopifnot(identical(www@.Data, ttt))
 
 ## The following should not be needed.  But make check removes all files
 ## between example files, in a crude way that does not cause the class
@@ -232,6 +248,10 @@ removeClass("maybeNumber")
 resetClass("integer")
 resetClass("numeric")
 resetClass("logical")
+  removeClass("trackMultiCurve")
+  removeClass("trackCurve")
+  removeClass("track")
+
 
 }
 

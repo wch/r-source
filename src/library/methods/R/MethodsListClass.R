@@ -4,13 +4,9 @@
     if(exists(classMetaName("MethodsList"), envir))
         return(FALSE)
 
-    setClass("OptionalMethods", where = envir)
-    setIs("function", "OptionalMethods")
-    setIs("NULL", "OptionalMethods")
-    setClass("MethodsList", representation(methods = "list", argument = "name", allMethods = "list"),
-             prototype = list(methods=list(),  argument = as.name("<UNDEFINED>"),  allMethods = list())
-             , where = envir)
-    setIs("MethodsList", "OptionalMethods", where = envir)
+    setClass("MethodsList",
+             representation(methods = "list", argument = "name", allMethods = "list"),
+             where = envir)
     setClass("EmptyMethodsList", representation(argument = "name", sublist = "list"),
              where = envir)
 
@@ -26,14 +22,16 @@
     setClass("signature", representation("character", names = "character"), where = envir)
     
     ## formal method definition for all but primitives
-    setClass("MethodDefinition", representation("function", "PossibleMethod",
-                                                target = "signature", defined = "signature"), where = envir)
+    setClass("MethodDefinition",
+             representation("function", "PossibleMethod",
+                            target = "signature", defined = "signature"),
+             where = envir)
     setClass("MethodWithNext",
              representation("MethodDefinition", nextMethod = "PossibleMethod", excluded = "list"), where = envir)
     setClass("genericFunction",
              representation("function", generic = "character", package = "character",
                             group = "list", valueClass = "character",
-                            signature = "character", default = "OptionalMethods",
+                            signature = "character", default = "MethodsList",
                             skeleton = "call"))
     setClass("groupGenericFunction",
              representation("genericFunction", groupMembers = "list"))
@@ -96,29 +94,29 @@
                       excluded = excluded)
               }, where = envir)
     if(!isGeneric("initialize")) {
-        setGeneric("initialize",  function(object, ...) {
+        setGeneric("initialize",  function(.Object, ...) {
             value <- standardGeneric("initialize")
-            if(!identical(class(value), class(object)))
+            if(!identical(class(value), class(.Object)))
                 stop(paste("Initialize method returned an object of class \"",
                            class(value), "\" instead of the required class \"",
-                           class(object), "\"", sep=""))
+                           class(.Object), "\"", sep=""))
             value
         }, where = envir, useAsDefault = TRUE)
     }
     .InitTraceFunctions(envir)
     setMethod("initialize", "signature",
-              function(object, functionDef, ...) {
+              function(.Object, functionDef, ...) {
                   if(nargs() < 2)
-                      object
+                      .Object
                   else if(missing(functionDef))
-                      .MakeSignature(object, , list(...))
+                      .MakeSignature(.Object, , list(...))
                   else if(!is(functionDef, "function"))
-                      .MakeSignature(object, , list(functionDef, ...))
+                      .MakeSignature(.Object, , list(functionDef, ...))
                   else
-                      .MakeSignature(object, functionDef, list(...))
+                      .MakeSignature(.Object, functionDef, list(...))
               }, where = envir)
     setMethod("initialize", "environment",
-              function(object, ...) {
+              function(.Object, ...) {
                   value <- new.env()
                   args <- list(...)
                   objs <- names(args)

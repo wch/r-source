@@ -10,7 +10,7 @@
 \usage{
 new(Class, ...)
 
-initialize(object, ...)
+initialize(.Object, ...)
 }
 \arguments{
   \item{Class}{ Either the name of a class (the usual case) or the
@@ -19,7 +19,7 @@ initialize(object, ...)
   \item{\dots}{ Data to include in the new object.  Named arguments
     correspond to slots in the class definition. Unnamed arguments must
     be objects from classes that this class extends.}
-  \item{object}{ An object:  see the Details section.}
+  \item{.Object}{ An object:  see the Details section.}
 }
 \details{
   The function \code{new} begins by copying the prototype object from
@@ -30,7 +30,7 @@ initialize(object, ...)
   particular classes, if an appropriate method has been defined for the
   generic function \code{"initialize"}.  The \code{new} function calls
   \code{initialize} with the object generated from the prototype as the
-  \code{object} argument to \code{initialize}.
+  \code{.Object} argument to \code{initialize}.
 
   By default, unnamed arguments in the \code{\dots} are interpreted as
   objects from a superclass, and named arguments are interpreted as
@@ -80,14 +80,14 @@ t2 <- new("trackCurve", t1, smooth = ysmooth)
 ### define a method for initialize, to ensure that new objects have
 ### equal-length x and y slots.
 
-setMethod("initialize", "track", function(object, x = numeric(0), y = numeric(0)) {
+setMethod("initialize", "track", function(.Object, x = numeric(0), y = numeric(0)) {
     if(nargs() > 1) {
       if(length(x) != length(y))
         stop("specified x and y of different lengths")
-      object@x <- x
-      object@y <- y
+      .Object@x <- x
+      .Object@y <- y
     }
-    object
+    .Object
   })
 
 ### the next example will cause an error (x will be numeric(0)),
@@ -103,11 +103,11 @@ try(new("track", y = sort(rnorm(10))))
 ## use x and y as arguments to new, unless they wrote their own
 ## intialize method.
 
-setMethod("initialize", "track", function(object, ...) {
-    object <- callNextMethod()
-    if(length(object@x) != length(object@y))
+setMethod("initialize", "track", function(.Object, ...) {
+    .Object <- callNextMethod()
+    if(length(.Object@x) != length(.Object@y))
      stop("specified x and y of different lengths")
-    object
+    .Object
   })
 
 }

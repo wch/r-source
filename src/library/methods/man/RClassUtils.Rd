@@ -37,12 +37,10 @@
 \alias{getFromClassMetaData}
 \alias{assignToClassMetaData}
 \alias{removeFromClassMetaData}
-\alias{extendsCoerce}
-\alias{extendsReplace}
-\alias{findExtends}
+\alias{possibleExtends}
 \alias{completeExtends}
 \alias{classMetaName}
-\alias{methodsMetaName}
+\alias{methodsPackageMetaName}
 \alias{metaNameUndo}
 \alias{as.data.frame}
 \alias{requireMethods}
@@ -124,7 +122,7 @@ newBasic(Class, ...)
 
 makeExtends(extends)
 
-reconcilePropertiesAndPrototype(name, properties, prototype, extends)
+reconcilePropertiesAndPrototype(name, properties, prototype, superClasses)
 
 tryNew(Class)
 
@@ -142,17 +140,13 @@ assignToClassMetaData(name, value)
 
 removeFromClassMetaData(name)
 
-extendsCoerce(fromClass, Class, formFunction)
-
-extendsReplace(objectClass, Class)
-
-findExtends(class1, class2)
+possibleExtends(class1, class2)
 
 completeExtends(ClassDef, breadthFirst = TRUE)
 
 classMetaName(name)
 
-methodsMetaName(prefix, name)
+methodsPackageMetaName(prefix, name)
 
 metaNameUndo(strings, prefix = "M", searchForm = FALSE)
 
@@ -270,7 +264,7 @@ setDataPart(object, value)
       Extracts the class's Extends information from the class
       representation (only, not from the name of the class)
 
-      Contrast with the \code{findExtends} and \code{is} functions, both
+      Contrast with the \code{possibleExtends} and \code{is} functions, both
       of which use indirect information as well.
     }
 
@@ -409,23 +403,12 @@ setDataPart(object, value)
     }
     
     
-    \item{\code{extendsCoerce}, \code{extendsReplace}:}{ 
-      Returns the function to perform coercion or replacement,
-      respectivelyl, based on the \code{is} relation between two classes.
-      
-      A method may be explicitly stored in the metadata or inferred.  If
-      the latter, a function will always be constructed if explicit test
-      and/or coerce methods (in a call to setIs) were encountered, or if
-      \code{formFunction=TRUE}.  If \code{formFunction=FALSE}, the
-      purpose of the call is to determine if the relation is explicit or
-      intrinsic (according to whether a function object is returned).
-    }
-    
-    \item{\code{findExtends}:}{ 
+    \item{\code{possibleExtends}:}{ 
       Find the information that says whether class1 extends class2,
       directly or indirectly.
       
-      This can be either a logical value or an object containing various
+      This can be either a logical value or an object of class
+      \code{\link{SClassExtension-class}} containing various
       functions to test and/or coerce the relationship.
     }
     
@@ -444,8 +427,9 @@ setDataPart(object, value)
       a name for the object storing this class's definition
     }
     
-    \item{\code{methodsMetaName}:}{ 
-      a name mangling device to simulate the meta-data in S4
+    \item{\code{methodsPackageMetaName}:}{ 
+      a name mangling device to hide metadata defining method and
+      class information.
     }
   \item{metaNameUndo}{ As its name implies, this function undoes the
       name-mangling used to produce meta-data object names, and

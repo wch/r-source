@@ -450,9 +450,9 @@ mlistMetaName <-
   ## name mangling to simulate metadata for a methods definition.
   function(name = "") {
       if(is(name, "genericFunction"))
-          methodsMetaName("M", paste(name@generic, name@package, sep=":"))
+          methodsPackageMetaName("M", paste(name@generic, name@package, sep=":"))
       else if(missing(name))
-          methodsMetaName("M","")
+          methodsPackageMetaName("M","")
       else if(is.character(name))
           Recall(getGeneric(name))
       else
@@ -579,11 +579,10 @@ MethodAddCoerce <- function(method, argName, thisClass, methodClass)
 {
     if(identical(thisClass, methodClass))
         return(method)
-    ext <- extendsCoerce(thisClass, methodClass, formFunction = FALSE)
-    ## extendsCoerce with formFunction=FALSE only returns a function if there
-    ## is an explicit coerce somewhere along the line, not for direct inclusion
-    ## or for the data part.
-    if(!is.function(ext))
+    ext <- possibleExtends(thisClass, methodClass)
+    ## if a non-simple coerce is required to get to the target class for
+    ## dispatch, insert it in the method.
+    if(is.logical(ext) || ext@simple)
         return(method)
     methodInsert <- function(method, addExpr) {
         if(is.function(method)) {
@@ -745,7 +744,7 @@ sigToEnv <- function(signature) {
 }
 
 metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
-    pattern <- methodsMetaName(prefix, "")
+    pattern <- methodsPackageMetaName(prefix, "")
     n <- nchar(pattern)
     matched <- substr(strings, 1, n) == pattern
     value <- substring(strings[matched], n+1)

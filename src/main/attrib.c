@@ -919,17 +919,6 @@ SEXP GetArrayDimnames(SEXP x)
 
 static SEXP pseudo_NULL = 0;
 
-static void init_pseudo_NULL() {
-    /* create and preserve an object that is NOT R_NilValue, and is used
-       to represent slots that are NULL (which an attribute can not
-       be).  The point is not just to store NULL as a slot, but also to
-       provide a check on invalid slot names (see get_slot below).
-
-       The object has to be a symbol if we're going to check identity by
-       just looking at referential equality. */
-    pseudo_NULL = install("\001NULL\001");
-}
-
 static SEXP s_dot_Data;
 static SEXP s_getDataPart;
 static SEXP s_setDataPart;
@@ -938,6 +927,14 @@ static void init_slot_handling() {
     s_dot_Data = install(".Data");
     s_getDataPart = install("getDataPart");
     s_setDataPart = install("setDataPart");
+    /* create and preserve an object that is NOT R_NilValue, and is used
+       to represent slots that are NULL (which an attribute can not
+       be).  The point is not just to store NULL as a slot, but also to
+       provide a check on invalid slot names (see get_slot below).
+
+       The object has to be a symbol if we're going to check identity by
+       just looking at referential equality. */
+    pseudo_NULL = install("\001NULL\001");
 }
 
 static SEXP data_part(SEXP obj) {
@@ -1012,13 +1009,10 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value) {
     if(isString(name)) name = install(CHAR(STRING_ELT(name, 0)));
     if(name == s_dot_Data)
 	return set_data_part(obj, value);
-    if(value == R_NilValue) {
+    if(isNull(value))
 	/* slots, but not attributes, can be NULL.  Store a special symbol
 	   instead. */
-	if(pseudo_NULL == 0)
-	    init_pseudo_NULL();
 	value = pseudo_NULL;
-    }
     PROTECT(obj); nprotect++;
     setAttrib(obj, input, value);
     UNPROTECT(nprotect);
@@ -1027,7 +1021,7 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value) {
 
 SEXP R_pseudo_null() {
     if(pseudo_NULL == 0)
-	init_pseudo_NULL();
+	init_slot_handling();
     return pseudo_NULL;
 }
 

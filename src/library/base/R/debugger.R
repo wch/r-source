@@ -97,81 +97,26 @@ recover <-
 }
 
 
-trace <- function(what, tracer = NULL, exit = NULL, at = numeric(), print = TRUE, signature = NULL) {
-    if(is.function(what)) {
-        fname <- substitute(what)
-        if(is.name(fname))
-            what <- as.character(fname)
-        else
-            stop("Argument what should be the name of a function")
-    }
-    else {
-        what <- as.character(what)
-        if(length(what) != 1) {
-            for(f in what) {
-                if(nargs() == 1)
-                    trace(f)
-                else
-                    trace(f, tracer, exit, at, print, signature)
-            }
-            return(what)
-        }
-    }
-    if(nargs() == 1)
-        return(.primTrace(what)) # for back compatibility
+trace <- function(what, tracer, exit, at, print, signature) {
     needsAttach <- is.na(match("package:methods", search()))
     if(needsAttach) {
         cat("Tracing functions requires the methods package\n  (in rare cases this may change other results: see ?trace)\n")
         require(methods)
         on.exit(detach("package:methods")) ## in case of error
     }
-    if(is.null(signature)) {
-        def <- getFunction(what)
-        where <- findFunction(what)[[1]]
-    }
-    else {
-        whereM <- findMethod(what, signature)
-        if(length(whereM) == 0) {
-            def <- selectMethod(what, signature)
-            where <- findFunction(what)[[1]]
-        }
-        else {
-            whereM <- whereM[[1]]
-            def <- getMethod(what, signature, where = whereM)
-            where <- whereM
-        }
-    }
-    fBody <- body(def)
-    if(!is.null(exit)) {
-        if(is.function(exit)) {
-            tname <- substitute(exit)
-            if(is.name(tname))
-                exit <- tname
-            exit <- substitute(TRACE(), list(TRACE=exit))
-        }
-    }
-    if(!is.null(tracer)) {
-        if(is.function(tracer)) {
-            tname <- substitute(tracer)
-            if(is.name(tname))
-                tracer <- tname
-            tracer <- substitute(TRACE(), list(TRACE=tracer))
-        }
-    }
-    ## undo any current tracing
-    def <- .untracedFunction(def)
-    newFun <- new(.traceClassName(class(def)), def = def, tracer = tracer, exit = exit, at = at
-                  , print = print)
-    if(is.null(signature)) 
-        assign(what, newFun, where)
-    else
-        setMethod(what, signature, newFun, where = where)
+    ## now call the version in the methods package, to ensure we get
+    ## the correct name space (e.g., correct version of class())
+    call <- sys.call()
+    call[[1]] <- quote(.TraceWithMethods)
+    value <- eval.parent(call)
     if(needsAttach)
         on.exit() ## no error
-    what
 }
 
 
+## while trace() has to invoke the version in the methods package to get namespace
+## details correct, the current version of untrace does no computations ITSELF that
+## depend on the methods namespace.  But this assertion needs thorough testing.
 untrace <- function(what, signature = NULL) {
     if(is.function(what)) {
         fname <- substitute(what)

@@ -20,15 +20,49 @@
                 "expression", "list")
     for(.class in vClasses) {
         setClass(.class, prototype = newBasic(.class), where = envir)
-        setIs(.class, "vector")
     }
     clList <- c(vClasses, "VIRTUAL", "ANY", "vector", "missing")
-    setIs("double", "numeric")
-    setIs("integer", "numeric")
     nullF <- function()NULL; environment(nullF) <- .GlobalEnv
     setClass("function", prototype = nullF, where = envir); clList <- c(clList, "function")
 
     setClass("language", where = envir); clList <- c(clList, "language")
+    setClass("environment", prototype = new.env(), where = envir); clList <- c(clList, "environment")
+
+    setClass("externalptr", prototype = .newExternalptr(), where = envir); clList <- c(clList, "externalptr")
+             
+
+    ## NULL is weird in that it has NULL as a prototype, but is not virtual
+    nullClass <- newClassRepresentation(className="NULL", prototype = NULL, virtual=FALSE)
+    assignClassDef("NULL", nullClass, where = envir); clList <- c(clList, "NULL")
+
+    
+    setClass("structure", where = envir); clList <- c(clList, "structure")
+    stClasses <- c("matrix", "array", "ts")
+    for(.class in stClasses) {
+        setClass(.class, prototype = newBasic(.class), where = envir)
+    }
+    clList <- c(clList, stClasses)
+    assign(".BasicClasses", clList, envir)
+
+    ## Now we can define the SClassExtension class and use it to instantiate some
+    ## is() relations.
+    .InitExtensions(envir)
+
+    for(.class in vClasses)
+        setIs(.class, "vector", where = envir)
+    
+    setIs("double", "numeric", where = envir)
+    setIs("integer", "numeric", where = envir)
+
+    setIs("structure", "vector", coerce = function(object) as.vector(object), where = envir)
+    
+    for(.class in stClasses)
+        setIs(.class, "structure", where = envir)
+    setIs("matrix", "array", where = envir)
+    setIs("array", "matrix", test = function(object) length(dim(object)) == 2, where = envir)
+
+    ## Some class definitions extending "language", delayed to here so
+    ## setIs will work.
     setClass("name", "language", prototype = as.name("<UNDEFINED>"), where = envir); clList <- c(clList, "name")
     setClass("call", "language", prototype = quote("<undef>"()), where = envir); clList <- c(clList, "call")
     setClass("{", "language", prototype = quote({}), where = envir); clList <- c(clList, "{")
@@ -38,31 +72,13 @@
     setClass("while", "language", prototype = quote(while(FALSE) NULL), where = envir); clList <- c(clList, "while") 
     setClass("repeat", "language", prototype = quote(repeat{break}), where = envir); clList <- c(clList, "repeat") 
     setClass("(", "language", prototype = quote((NULL)), where = envir); clList <- c(clList, "(") 
-    setClass("environment", prototype = new.env(), where = envir); clList <- c(clList, "environment")
 
-    setClass("externalptr", prototype = .newExternalptr(), where = envir); clList <- c(clList, "externalptr")
-             
-    ## define some basic classes even though they aren't yet formally defined.
-    ## new() will work because these classes are handled by newBasic and included
-    ## in .BasicClasses
-
-    setClass("NULL", where = envir); clList <- c(clList, "NULL")
-    setVirtual(getClassDef("NULL", where = envir), FALSE)
+    ## a virtual class used to allow NULL as an indicator that a possible function
+    ## is not supplied (used, e.g., for the validity slot in classRepresentation
+    setClass("OptionalFunction", where = envir)
+    setIs("function", "OptionalFunction", where = envir)
+    setIs("NULL", "OptionalFunction")
     
-    setClass("structure", where = envir); clList <- c(clList, "structure")
-    stClasses <- c("matrix", "array", "ts")
-    for(.class in stClasses) {
-        setClass(.class, prototype = newBasic(.class), where = envir)
-        setIs(.class, "structure")
-    }
-    clList <- c(clList, stClasses)
-    setIs("structure", "vector", coerce = function(object) as.vector(object))
-    
-    setIs("matrix", "array")
-    setIs("array", "matrix", test = function(object) length(dim(object)) == 2)
-
-    assign(".BasicClasses", clList, envir)
-
     ## some heuristics to find known old-style classes by looking for plausible
     ## method names (!)  We can't guarantee anything about this list, but it's used
     ## to avoid annoying warning message from matchSignature
