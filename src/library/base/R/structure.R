@@ -4,7 +4,7 @@
     specials <- c(".Dim", ".Dimnames", ".Names", ".Tsp", ".Label")
     replace <- c("dim", "dimnames", "names", "tsp", "levels")
     attrib <- list(...)
-    if(!is.null(attrib)) {
+    if(length(attrib) > 0) {
 	m <- match(names(attrib), specials)
 	ok <- (!is.na(m) & m > 0)
 	names(attrib)[ok] <- replace[m[ok]]
