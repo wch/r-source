@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.90.0 Patched (December 10, 1999)
+Version 0.99.0 Under development (unstable) (December 22, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -14,7 +14,7 @@ Type	"demo()" for some demos, "help()" for on-line help, or
 Type	"q()" to quit R.
 
 > isall.equal <- function(x,y)
-+ is.logical(r <- all.equal(x,y, tol=0)) && r 
++ typeof(x) == typeof(y) && is.logical(r <- all.equal(x,y, tol=0)) && r 
 > 
 > options(error = expression(NULL)) # don't stop on error in batch
 > ##~~~~~~~~~~~~~~
@@ -85,7 +85,7 @@ Error in as.call(x) : invalid argument list
 [1] TRUE
 > if(is.double(x)) { cat('IS: ');all.equal(x, as.double( x ), tol=0)
 + } else   !isall.equal(x, as.double( x ))
-[1] FALSE
+[1] TRUE
 > if(is.expression(x)) { cat('IS: ');all.equal(x, as.expression( x ), tol=0)
 + } else   !isall.equal(x, as.expression( x ))
 [1] TRUE
@@ -127,7 +127,7 @@ IS: [1] TRUE
 Error in as.qr(x) : you cannot be serious
 > if(is.real(x)) { cat('IS: ');all.equal(x, as.real( x ), tol=0)
 + } else   !isall.equal(x, as.real( x ))
-[1] FALSE
+[1] TRUE
 > if(is.single(x)) { cat('IS: ');all.equal(x, as.single( x ), tol=0)
 + } else   !isall.equal(x, as.single( x ))
 Error in is.single(x) : type "single" unimplemented in R
@@ -890,7 +890,7 @@ Error in as.call(x) : invalid argument list
 [1] TRUE
 > if(is.double(x)) { cat('IS: ');all.equal(x, as.double( x ), tol=0)
 + } else   !isall.equal(x, as.double( x ))
-[1] FALSE
+[1] TRUE
 > if(is.expression(x)) { cat('IS: ');all.equal(x, as.expression( x ), tol=0)
 + } else   !isall.equal(x, as.expression( x ))
 [1] TRUE
@@ -932,7 +932,7 @@ IS: [1] TRUE
 Error in as.qr(x) : you cannot be serious
 > if(is.real(x)) { cat('IS: ');all.equal(x, as.real( x ), tol=0)
 + } else   !isall.equal(x, as.real( x ))
-[1] FALSE
+[1] TRUE
 > if(is.single(x)) { cat('IS: ');all.equal(x, as.single( x ), tol=0)
 + } else   !isall.equal(x, as.single( x ))
 Error in is.single(x) : type "single" unimplemented in R
@@ -1679,7 +1679,7 @@ Error in is.single(as.single(x)) : type "single" unimplemented in R
 Error in unique(x) : unique() applies only to vectors
 > if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
 + } else   !isall.equal(x, as.function( x ))
-Error in current[[i]] : object is not subsettable
+[1] TRUE
 > if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
 + } else   !isall.equal(x, as.integer( x ))
 [1] TRUE
@@ -1937,7 +1937,7 @@ IS: [1] TRUE
 Error in unique(x) : unique() applies only to vectors
 > if(is.function(x)) { cat('IS: ');all.equal(x, as.function( x ), tol=0)
 + } else   !isall.equal(x, as.function( x ))
-Error in current[[i]] : object is not subsettable
+[1] TRUE
 > if(is.integer(x)) { cat('IS: ');all.equal(x, as.integer( x ), tol=0)
 + } else   !isall.equal(x, as.integer( x ))
 [1] TRUE

@@ -13,7 +13,8 @@ ex.list <- expression(integer(0), NULL, list(), 1:1, pi, "1.3", list(a=1),
 sink("isas-tests.R")
 
 cat("isall.equal <- function(x,y)",
-    "is.logical(r <- all.equal(x,y, tol=0)) && r \n", sep="\n")
+    "typeof(x) == typeof(y) && is.logical(r <- all.equal(x,y, tol=0)) && r \n",
+    sep="\n")
 
 cat("options(error = expression(NULL))",
     "# don't stop on error in batch\n##~~~~~~~~~~~~~~\n")
