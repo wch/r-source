@@ -1,4 +1,4 @@
-####  eval / parse / deparse  etc
+####  eval / parse / deparse / substitute  etc
 
 ##- From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 ##- Subject: Re: source() / eval() bug ??? (PR#96)
@@ -14,10 +14,7 @@ e2
 parse(text=deparse(e2))
 
 ##- From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-##- To: r-core
 ##- Date: 22 Jan 1999 11:47
-##-   ...
-##- This is what didn't work before:
 
 ( e3 <- quote(c(F=1,"tail area"=pf(1,1,1))) )
 eval(e3)
@@ -28,9 +25,7 @@ e3
 eval(e3)
 
 
-
 ##- From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-##- To: r-core
 ##- Date: 2 Sep 1999
 
 ## The first failed in 0.65.0 :
@@ -41,4 +36,32 @@ dput(get("x", env=pos.to.env(2)))
 e <- local({x <- 1;environment()})
 evalq(dim(x) <- 1,e)
 dput(get("x",env=e))
+
+### Substitute, Eval, Parse, etc
+
+## PR#3 : "..." matching
+A <- function(x, y, ...) {
+    B <- function(a, b, ...) { match.call() }
+    B(x+y, ...)
+}
+(aa <- A(1,2,3))
+all.equal(as.list(aa),
+          list(as.name("B"), a = expression(x+y)[[1]], ..1 = 3))
+(a2 <- A(1,2, named = 3)) #A(1,2, named = 3)
+all.equal(as.list(a2),
+          list(as.name("B"), a = expression(x+y)[[1]], named = 3))
+
+CC <- function(...) match.call()
+DD <- function(...) CC(...)
+a3 <- DD(1,2,3)
+all.equal(as.list(a3),
+          list(as.name("CC"), ..1 = 1, ..2 = 2, ..3 = 3))
+
+
+## Bug PR#24
+f <- function(x,...) substitute(list(x,...))
+deparse(f(a, b)) == "list(a, b)" &&
+deparse(f(b, a)) == "list(b, a)" &&
+deparse(f(x, y)) == "list(x, y)" &&
+deparse(f(y, x)) == "list(y, x)"
 
