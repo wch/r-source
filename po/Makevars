@@ -1,4 +1,4 @@
-# Makefile variables for PO directory in any package using GNU gettext.
+# -*-Makefile-*- variables for PO directory in any package using GNU gettext.
 
 # Usually the message domain is the same as the package name.
 DOMAIN = $(PACKAGE)

@@ -1,4 +1,5 @@
-# Special Makefile rules for English message catalogs with quotation marks.
+# Special -*- Makefile -*- rules for English message catalogs
+# with quotation marks.
 
 DISTFILES.common.extra1 = quot.sed boldquot.sed en@quot.header en@boldquot.header insert-header.sin Rules-quot
 
