@@ -83,7 +83,7 @@ typedef unsigned int SEXPTYPE;
 #define STRSXP	    16	  /* string vectors */
 #define DOTSXP	    17	  /* dot-dot-dot object */
 #define ANYSXP	    18	  /* make "any" args work.
-			     Used in specifying types for symbol 
+			     Used in specifying types for symbol
 			     registration to mean anything is okay  */
 #define VECSXP	    19	  /* generic vectors */
 #define EXPRSXP	    20	  /* expressions vectors */
@@ -412,6 +412,7 @@ LibExtern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 
 /* Type Coercions of all kinds */
 
+SEXP Rf_ascommon(SEXP, SEXP, SEXPTYPE);
 SEXP Rf_coerceVector(SEXP, SEXPTYPE);
 SEXP Rf_coerceList(SEXP, SEXPTYPE);
 void Rf_CoercionWarning(int);/* warning code */
@@ -854,6 +855,7 @@ void R_RunExitFinalizers(void);	/* in memory.c */
 #define applyClosure		Rf_applyClosure
 #define arraySubscript		Rf_arraySubscript
 #define asChar			Rf_asChar
+#define ascommon		Rf_ascommon
 #define asComplex		Rf_asComplex
 #define asInteger		Rf_asInteger
 #define asLogical		Rf_asLogical
