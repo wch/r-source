@@ -1396,6 +1396,10 @@ for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} \
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
       r_want_lib=true
+      ## Do not add non-existent directories.
+      test -d "${lib}" || continue
+      ## Canonicalize (/usr/lib/gcc-lib/i486-linux/3.3.4/../../..).
+      lib=`cd "${lib}" && ${GETWD}`
       ## Do not add something twice, or default paths.
       r_save_IFS="${IFS}"; IFS="${PATH_SEPARATOR}"
       for dir in ${R_LD_LIBRARY_PATH}${IFS}${r_ld_library_defaults}; do
