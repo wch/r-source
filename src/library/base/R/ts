@@ -6,12 +6,9 @@ window	<- function(x, ...) UseMethod("window")
 
 options(ts.eps = 1e-5)#- default as S
 
-ts <-
-function(data=NA, start=1, end=numeric(0), frequency=1, deltat=1,
+ts <- function(data=NA, start=1, end=numeric(0), frequency=1, deltat=1,
 	 ts.eps = .Options$ts.eps)
 {
-	##if(is.null(ts.eps)) ts.eps <- 1e-5
-
 	if(is.matrix(data)) {
 		nseries <- ncol(data)
 		ndata <- nrow(data)
@@ -181,83 +178,78 @@ function (x, type="l", xlim, ylim, xlab = "Time", ylab, log="",
 	}
 }
 
-window.ts <-
-function(x, start, end)
+window.ts <- function(x, start, end)
 {
-	x <- as.ts(x)
-	xtsp <- tsp(x)
-	freq <- xtsp[3]
-	xtime <- time(x)
-	ts.eps <- .Options$ts.eps
-	##if(is.null(ts.eps)) ts.eps <- 1.e-5
+ x <- as.ts(x)
+ xtsp <- tsp(x)
+ freq <- xtsp[3]
+ xtime <- time(x)
+ ts.eps <- .Options$ts.eps
 
-	if(missing(start))
-		start <- xtsp[1]
-	else start <- switch(length(start),
-			start,
-			start[1] + (start[2] - 1)/freq,
-			stop("Bad value for start"))
-	if(start < xtsp[1]) {
-		start <- xtsp[1]
-		warning("start value not changed")
-	}
+ start <- if(missing(start))
+		xtsp[1]
+	  else switch(length(start),
+		start,
+		start[1] + (start[2] - 1)/freq,
+		stop("Bad value for start"))
+ if(start < xtsp[1]) {
+	 start <- xtsp[1]
+	 warning("start value not changed")
+ }
 
-	if(missing(end))
-		end <- xtsp[2]
-	else end <- switch(length(end),
-			end,
-			end[1] + (end[2] - 1)/freq,
-			stop("Bad value for end"))
-	if(end > xtsp[2]) {
-		end <- xtsp[2]
-		warning("end value not changed")
-	}
+ end <- if(missing(end))
+		xtsp[2]
+	else switch(length(end),
+		end,
+		end[1] + (end[2] - 1)/freq,
+		stop("Bad value for end"))
+ if(end > xtsp[2]) {
+	 end <- xtsp[2]
+	 warning("end value not changed")
+ }
 
-	if(start > end)
-		stop("start cannot be after end")
+ if(start > end)
+	 stop("start cannot be after end")
 
-	if(all(abs(start - xtime) > abs(start) * ts.eps)) {
-		start <- xtime[(xtime > start) & ((start + 1/freq) > xtime)]
-	}
-	if(all(abs(end - xtime) > abs(end) * ts.eps)) {
-		end <- xtime[(xtime < end) & ((end - 1/freq) < xtime)]
-	}
-	if(is.matrix(x))
-		x <- x[(trunc((start - xtsp[1]) * freq + 1.5):trunc((end - 
-			xtsp[1]) * freq + 1.5)), , drop = F]
-	else x <- x[trunc((start - xtsp[1]) * freq + 1.5):trunc((end - xtsp[1])
-			* freq + 1.5)]
-	tsp(x) <- c(start, end, freq)
-	x
+ if(all(abs(start - xtime) > abs(start) * ts.eps)) {
+	 start <- xtime[(xtime > start) & ((start + 1/freq) > xtime)]
+ }
+ if(all(abs(end - xtime) > abs(end) * ts.eps)) {
+	 end <- xtime[(xtime < end) & ((end - 1/freq) < xtime)]
+ }
+ if(is.matrix(x))
+	 x <- x[trunc((start - xtsp[1]) * freq + 1.5):
+		trunc((end - xtsp[1]) * freq + 1.5), , drop = F]
+ else x <- x[trunc((start - xtsp[1]) * freq + 1.5):
+	     trunc((end - xtsp[1]) * freq + 1.5)]
+ tsp(x) <- c(start, end, freq)
+ x
 }
 
 "[.ts" <-
 function (x, i, j, drop = T)
 {
-	y <- NextMethod("[")
-	if (missing(i))
-		ts(y, start = start(x), freq = frequency(x))
-	else {
-		n <- if (is.matrix(x))
-			nrow(x)
-		else length(x)
-		ind <- (1:n)[i]
-		delta <- unique(ind[-1] - ind[-length(ind)])
-		if (length(delta) != 1 || delta == 0) {
-			warning("Not returning a time series object")
-		}
-		else {
-			xtsp <- tsp(x)
-			xtimes <- seq(from = xtsp[1], to = xtsp[2],
-				by = 1/xtsp[3])
-			ytsp <- numeric(3)
-			ytsp[1] <- xtimes[min(ind)]
-			ytsp[2] <- xtimes[max(ind)]
-			ytsp[3] <- (length(ind) - 1)/(ytsp[2] -
-				ytsp[1])
-			tsp(y) <- ytsp
-		}
-		y
+ y <- NextMethod("[")
+ if (missing(i))
+	ts(y, start = start(x), freq = frequency(x))
+ else {
+	n <- if (is.matrix(x))
+		nrow(x)
+	else length(x)
+	ind <- (1:n)[i]
+	delta <- unique(ind[-1] - ind[-length(ind)])
+	if (length(delta) != 1 || delta == 0) {
+		warning("Not returning a time series object")
+	} else {
+		xtsp <- tsp(x)
+		xtimes <- seq(from = xtsp[1], to = xtsp[2], by = 1/xtsp[3])
+		ytsp <- numeric(3)
+		ytsp[1] <- xtimes[min(ind)]
+		ytsp[2] <- xtimes[max(ind)]
+		ytsp[3] <- (length(ind) - 1)/(ytsp[2] - ytsp[1])
+		tsp(y) <- ytsp
 	}
+	y
+ }
 }
 
