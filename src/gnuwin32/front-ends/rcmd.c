@@ -22,8 +22,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static char *RHome, PERL5LIB[MAX_PATH], PATH[MAX_PATH], *p, cmd[256];
-
 extern char *getRHOME(); /* in ../rhome.c */
 
 int main (int argc, char **argv)
@@ -35,8 +33,15 @@ int main (int argc, char **argv)
        launch perl -S $*
      */
     int i, res, status = 0;
+    char *RHome, PERL5LIB[MAX_PATH], PATH[MAX_PATH], RHOME[MAX_PATH],
+	*p, cmd[256];
 
     RHome = getRHOME();
+    strcpy(RHOME, "R_HOME=");
+    strcat(RHOME, RHome);
+    for (p = RHOME; *p; p++) if (*p == '\\') *p = '/';
+    putenv(RHOME);
+
     strcpy(PATH, "PATH=");
     strcat(PATH, RHome); strcat(PATH, "\\bin;");
     strcat(PATH, getenv("PATH"));

@@ -20,8 +20,9 @@ history limit is now just on the number of lines (rather than on the
 number of lines and the total size).  The mechanism has been altered
 so that Rterm records repeated lines (as Rgui always did).
 
-The history is only saved when the workspace is, to be compatible
-with other versions of R.
+The history is only saved when the workspace is, to be compatible with
+other versions of R, and whether it is restored is controlled by
+option --no-restore-history (implied by --no-restore and --vanilla).
 
 There are some extra command-line editing commands: see the
 Help | Console information screen.
@@ -32,23 +33,26 @@ in, and unsets it when it terminates.
 make check no longer makes R, just runs the tests (as make test
 always has).
 
-The utilities Rd2dvi.sh Rdconv Rdindex Sd2Rd are no longer batch files
-but accessed through a new front-end Rcmd.exe, so if this is in your
-path you can use
+The utilities Rd2dvi.sh Rd2txt Rdconv Rdindex Sd2Rd are no longer
+batch files but accessed through a new front-end Rcmd.exe, so if this
+is in your path you can use
 
-	Rcmd Rd2dvi.sh [options]
-	Rcmd Rdconv    [options]
-	Rcmd Rdindex   [options]
-	Rcmd Sd2Rd     [options]
+	Rcmd Rd2dvi.sh [options] files
+	Rcmd Rd2txt              file
+	Rcmd Rdconv    [options] file
+	Rcmd Rdindex   [options] files
+	Rcmd Sd2Rd     [options] file
 
-There is a new utility INSTALL which can be used to install a
-source package (if all the things in readme.packages are set up),
-and much closer versions of the Unix R utilities build and check.
-Invoke these by
+There are new utilities INSTALL, REMOVE, SHLIB which can be used to
+install a source package, remove a package and make a DLL, and much
+closer versions of the Unix R utilities build and check.  Invoke these
+by
 
-	Rcmd INSTALL [options] pkg(s)
-	Rcmd build [options] pkg(s)
-	Rcmd check [options] pkg(s)
+	Rcmd INSTALL [options] pkgdir(s)
+	Rcmd REMOVE  [options] pkg(s)
+	Rcmd SHLIB   [options] file(s)
+	Rcmd build   [options] pkgdir(s)
+	Rcmd check   [options] pkgdir(s)
 
 Use option --help with any of these for fuller details.
 
@@ -81,8 +85,8 @@ Characters using the AltGr key now work in interactive use of Rterm.
 A file Makevars.win in the src directory of a package will be used in
 preference to a file Makevars.
 
-The Makefiles for packages now allow C++ code (with extension .cc)
-in the src directory. 
+The Makefiles for packages now allow C++ code (with extension .cc or
+.cpp or .C) in the src directory.
 
 
 rw1010

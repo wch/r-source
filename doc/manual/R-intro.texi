@@ -6527,9 +6527,9 @@ available, and @samp{none}.
 Note that input and output can be redirected in the usual way (using
 @samp{<} and @samp{>}).
 
-The @code{R CMD} allows the invokation of various tools which are useful
-in conjunction with @R{}, but not intended to be called ``directly''.
-The general form is
+The command @code{R CMD} allows the invokation of various tools which
+are useful in conjunction with @R{}, but not intended to be called
+``directly''.  The general form is
 
 @example
 R CMD @var{command} @var{args}
@@ -6727,6 +6727,53 @@ Print more information about progress.
 Set @code{Rterm} up for use by @code{R-inferior-mode} in ESS.
 @end table
 
+The command @code{R CMD} allows the invokation of various tools which
+are useful in conjunction with @R{}, but not intended to be called
+``directly''.  The general form is
+
+@example
+R CMD @var{command} @var{args}
+@end example
+
+@noindent
+where @var{command} is the name of the tool and @var{args} the arguments
+passed on to it.
+
+Currently, the following tools are available.
+
+@table @code
+@item INSTALL
+Install add-on packages.
+@item REMOVE
+Remove add-on packages.
+@item SHLIB
+Make a DLL for use with @code{dyn.load}.
+@item build
+Build add-on packages.
+@item check
+Check add-on packages.
+@item Rdconv
+Convert Rd format to various other formats, including @HTML{}, Nroff,
+La@TeX{}, plain text, and S documentation format.
+@item Rd2dvi.sh
+Convert Rd format to DVI/PDF.
+@item Rd2txt
+Convert Rd format to pretty text.
+@item Rdindex
+Extract index information from Rd files.
+@item Sd2Rd
+Convert S documentation to Rd format.
+@end table
+
+Use
+
+@example
+Rcmd @var{command} --help
+@end example
+
+@noindent
+to obtain usage information for each of the tools accessible via the
+@code{Rcmd} interface.
 
 @node The command line editor, Function and variable index, Invoking R, Top
 @appendix The command line editor

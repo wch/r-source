@@ -23,7 +23,13 @@ use Getopt::Long;
 # use File::Basename;
 # use Cwd;
 
-my $version = "1.14";
+my $revision = ' $Revision: 1.2 $ ';
+my $version;
+my $name;
+
+$revision =~ / ([\d\.]*) /;
+$version = $1;
+($name = $0) =~ s|.*/||;
 
 sub version {
   print STDERR <<END;
@@ -37,7 +43,7 @@ END
 
 sub usage {
   print STDERR <<END;
-Usage: Rdconv.bat [options] FILE
+Usage: Rcmd Rdconv [options] FILE
 
 Convert R documentation in FILE to other formats such as plain text,
 HTML or LaTeX.
@@ -113,6 +119,8 @@ elsif($opt_type =~ /example/i){
 } else {
     print STDERR "Unknown type: options are txt, html, latex, Sd, example\n";
 }
-
-__END__
+### Local Variables: ***
+### mode: perl ***
+### perl-indent-level: 4 ***
+### End: ***
 

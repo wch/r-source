@@ -405,10 +405,10 @@ examples.
 
 Use @kbd{R CMD check --help} to obtain more information about the usage
 of the @R{} package checker.  Under Windows the equivalent command is
-@code{make pkgcheck-mypkg}.  Note that some packages will require more
+@code{Rcmd check}.  Note that some packages will require more
 than the default workspace size to run their examples: this needs to be
 specified by setting the environment variables @code{R_NSIZE} and
-@code{R_VSIZE} or (Unix) the command-line options @code{--nsize} and
+@code{R_VSIZE} or the command-line options @code{--nsize} and
 @code{--vsize}.
 
 @findex R CMD build
@@ -427,13 +427,7 @@ works correctly should be performed using @code{R CMD check} prior to
 invoking the build procedure.
 
 Use @kbd{R CMD build --help} to obtain more information about the usage
-of the @R{} package builder.  The Windows equivalent is to set
-@code{R_HOME} and then run
-@smallexample
-sh $@{R_HOME@}/bin/build.sh pkgname
-@end smallexample
-@noindent
-(Replace @file{pkgname} by @file{--help} for further details.)
+of the @R{} package builder.  The Windows equivalent is @kbd{Rcmd build}.
 
 @node Submitting a package to CRAN,  , Checking and building packages, Creating R packages
 @section Submitting a package to CRAN
