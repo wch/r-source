@@ -117,7 +117,7 @@ end
 end
 
 if !{WasteLib}
- set WasteLib "{WasteDir}Stub Libraries:CarbonWASTELib"
+ set WasteLib "{WasteDir}CFM Stub Libraries:CarbonWASTELib"
 end
 
 			   
