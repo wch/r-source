@@ -23,11 +23,19 @@
 #include <config.h>
 #endif
 
-#if defined(Unix) || defined(Win32)
+#if defined(Unix) || defined(Win32) || defined(Macintosh)
 #include "Defn.h"
 #include "unzip.h"
 #ifdef HAVE_SYS_STAT_H
-#include <sys/stat.h>
+# ifndef Macintosh
+#  include <sys/stat.h>
+# else
+#  ifndef __MRC__
+#   include <stat.h>
+#  else
+#   include <mpw_stat.h>
+#  endif
+# endif
 #endif
 
 static int R_mkdir(char *path)
@@ -41,6 +49,12 @@ static int R_mkdir(char *path)
 #endif
 #ifdef Unix
     return mkdir(path, 0777);
+#endif
+#ifdef Macintosh
+    char *p, local[PATH_MAX];
+    strcpy(local, path);
+    for (p = local; *p; p++) if (*p == '/') *p = ':';
+    return mkdir_mac(path);
 #endif
 }
 
@@ -70,6 +84,10 @@ extract_one(unzFile uf, char *dest, char *filename)
     for (p = outname; *p; p++)
 	if (*p == '\\') *p = '/';
 #endif
+#ifdef Macintosh
+    for (p = outname; *p; p++)
+	if (*p == '\\') *p = ':';
+#endif
     p = outname + strlen(outname) - 1;
     if(*p == '/') { /* Don't know how these are stored in Mac zip files */
 	*p = '\0';
@@ -78,14 +96,25 @@ extract_one(unzFile uf, char *dest, char *filename)
 	/* make parents as required: have already checked dest exists */
 	pp = outname + strlen(dest) + 1;
 	while((p = strrchr(pp, '/'))) {
+#ifdef Macintosh
+       *p = ':';   
+#endif
 	    strcpy(dirs, outname);
 	    dirs[p - outname] = '\0';
 	    /* Rprintf("dirs is %s\n", dirs); */
 	    if (!R_FileExists(dirs)) R_mkdir(dirs);
 	    pp = p + 1;
 	}
-	/* Rprintf("extracting %s\n", outname);*/
+#ifdef Macintosh
+    if( strncmp("::",outname,2) == 0)
+     strcpy(outname,&outname[1]);
+#endif	
+	 /* Rprintf("extracting %s\n", outname); */
+#ifdef Macintosh
+	fout = R_fopen(outname, "wb");
+#else
 	fout = fopen(outname, "wb");
+#endif
 	if (!fout) {
 	    unzCloseCurrentFile(uf);
 	    error("cannot open file %s", outname);
