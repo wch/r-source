@@ -265,7 +265,10 @@ static Rboolean file_open(Rconnection con)
 	warning("cannot open file `%s'", name);
 	return FALSE;
     }
-    if(temp) unlink(name);
+    if(temp) {
+	unlink(name);
+	free(name);
+    }
     this->fp = fp;
     con->isopen = TRUE;
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
