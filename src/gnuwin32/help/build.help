@@ -80,7 +80,7 @@ print STDERR "Destination `dest'= `$dest'\n" if $opt_debug;
 
 if($opt_chm) {
     $chmdir = "../chm";
-    mkdir($chmdir, 755);
+    mkdir $chmdir, $dir_mod;
     open_hhp($pkg);
 }
 build_index($lib, $dest, $chmdir);
