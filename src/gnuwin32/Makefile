@@ -237,8 +237,8 @@ packagedist:
 distribution: bindist packagedist
 
 # tests
-
-test check: all stricttests pkgtests
+check: all test
+test: stricttests pkgtests
 
 stricttests:
 	-@$(MAKE) -C ../../tests -f ../src/gnuwin32/check/Maketests clean

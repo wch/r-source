@@ -1225,8 +1225,6 @@ static void consoleresize(console c, rect r)
 FBEGIN
     int rr, pcols = COLS;
 
-    if(p->lbuf) FVOIDRETURN;    /* don't allow resize if no content
-				   yet in pager */
     if (((WIDTH  == r.width) &&
 	 (HEIGHT == r.height)) ||
 	(r.width == 0) || (r.height == 0) ) /* minimize */
@@ -1245,6 +1243,8 @@ FBEGIN
     HEIGHT = r.height;
     BORDERX = (WIDTH - COLS*FW) / 2;
     BORDERY = (HEIGHT - ROWS*FH) / 2;
+    if(p->lbuf) FVOIDRETURN;    /* don't implement resize if no content
+				   yet in pager */
     del(BM);
     BM = newbitmap(r.width, r.height, 2);
     if (!BM) {
