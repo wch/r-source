@@ -3012,6 +3012,24 @@ double GExpressionHeight(SEXP expr, GUnit units, DevDesc *dd)
 	return GConvertYUnits(height, DEVICE, units, dd);
 }
 
+/* This is just here to satisfy the Rgraphics.h API.
+ * This allows new graphics API (GraphicsDevice.h, GraphicsEngine.h) 
+ * to be developed alongside.
+ * Could be removed if Rgraphics.h ever gets REPLACED by new API
+ * NOTE that base graphics code no longer calls this -- the base
+ * graphics system directly calls the graphics engine for mathematical
+ * annotation (GEMathText)
+ */
+void GMathText(double x, double y, int coords, SEXP expr,
+	       double xc, double yc, double rot, 
+	       DevDesc *dd)
+{
+    GConvert(&x, &y, coords, DEVICE, dd);
+    GEMathText(x, y, expr, xc, yc, rot, 
+	       Rf_gpptr(dd)->col, Rf_gpptr(dd)->gamma, Rf_gpptr(dd)->font,
+	       Rf_gpptr(dd)->cex, Rf_gpptr(dd)->ps, (GEDevDesc*) dd);
+}
+
 void GMMathText(SEXP str, int side, double line, int outer,
 		double at, int las, DevDesc *dd)
 {
