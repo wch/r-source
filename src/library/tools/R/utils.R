@@ -194,7 +194,7 @@ function(package)
 	   "flush.console",
 	   "format.char", "format.info", "format.pval",
 	   "influence.measures",
-	   "plot.new", "plot.window", "plot.xy",
+	   "plot.new", "plot.window", "plot.xy", "print.coefmat",
 	   "split.screen",
 	   "update.packages"),
 	   quadprog = c("solve.QP", "solve.QP.compact"),

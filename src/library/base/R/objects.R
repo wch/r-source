@@ -12,7 +12,8 @@ methods <- function (generic.function, class)
     S3MethodsStopList <-
         c("boxplot.stats", "close.screen", "close.socket", "flush.console",
           "format.char", "format.info", "format.pval", "influence.measures",
-          "plot.new", "plot.window", "plot.xy", "split.screen",
+          "plot.new", "plot.window", "plot.xy", "print.coefmat",
+          "split.screen",
           "update.packages", "solve.QP", "solve.QP.compact", "print.graph",
           "lag.plot")
     groupGenerics <- c("Ops", "Math", "Summary")
