@@ -74,8 +74,6 @@ Name: "{group}\\R $RVER Help"; Filename: "{app}\\doc\\html\\Rwin.html"; Componen
 Name: "{userdesktop}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; MinVersion: 4,4; Tasks: desktopicon; $iconpars
 
 [Registry] 
-Root: HKCU; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty
-Root: HKCU; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekey
 Root: HKLM; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty
 Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekey
 Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"
