@@ -36,7 +36,7 @@ lines(ts.obj, ...)
 	series, \code{c("mts", "ts")} for multiple series.}
     \item{names}{a character vector of names for the series in a
 	multiple series: defaults to the colnames of \code{data}, or
-	\code{Series 1}, \code{Series 2}, \dots.
+	\code{Series 1}, \code{Series 2}, \dots.}
 
     \item{calendar}{enable/disable the display of information about
 	month names, quarter names or year when printing. The default is
