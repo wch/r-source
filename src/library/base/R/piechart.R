@@ -16,7 +16,7 @@ piechart <-
     plot.new()
     plot.window(xlim, ylim, "", asp = 1)
     nx <- length(dx)
-    if (is.null(col)) col <- par("bg")
+    if (is.null(col)) col <- if(is.null(density)) par("bg") else par("fg")
     col <- rep(col, length = nx)
     angle <- rep(angle, length = nx)
     density <- rep(density, length = nx)
@@ -25,7 +25,7 @@ piechart <-
 	t2p <- 2*pi * seq(x[i], x[i + 1], length = n)
 	xc <- c(cos(t2p), 0) * radius
 	yc <- c(sin(t2p), 0) * radius
-	polygon(xc, yc, col=col[i],
+	polygon(xc, yc, col = col[i],
                 angle = angle[i], density = density[i])
 	t2p <- 2*pi * mean(x[i + 0:1])
 	xc <- cos(t2p) * radius
