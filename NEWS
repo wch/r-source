@@ -106,6 +106,12 @@ NEW FEATURES
     o	Setting dimnames to a factor now coerces to character, as S
 	does.  (Earlier versions of R used the internal codes.)
 
+    o	cut.POSIXt() now allows `breaks' to be more general intervals
+	as allowed for the `by' argument to seq.POSIXt().
+
+    o	*, - and / work more generally on difftime objects, which now
+	have a diff() method.
+
 
 DEPRECATED & DEFUNCT
 
@@ -115,6 +121,11 @@ DEPRECATED & DEFUNCT
 
     o	The classic MacOS port is no longer supported, and its files
 	have been removed from the sources.
+
+    o	The deprecated argument 'white' of parse() has been removed.
+
+    o	pacf/plot.mts() have been removed and their functionality
+	incorporated into pacf.default/plot.ts().
 
     o	print.coefmat() is deprecated in favour of printCoefmat()
 	(which is identical apart from the default for na.print which
@@ -128,10 +139,8 @@ DEPRECATED & DEFUNCT
 
     o	anovalist.lm (replaced in 1.2.0) is now deprecated.
 
-    o	The deprecated argument 'white' of parse() has been removed.
-
-    o	pacf/plot.mts() have been removed and their functionality
-	incorporated into pacf.default/plot.ts().
+    o	- and Ops methods for POSIX[cl]t objects are deprecated: the
+	POSIXt methods have been used since 1.3.0.
 
 
 INSTALLATION CHANGES

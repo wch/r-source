@@ -13,9 +13,10 @@
   \item{breaks}{
     a vector of cut points \emph{or} number giving the number of
     intervals which \code{x} is to be cut into \emph{or} an
-    interval specification, one of \code{"secs"}, \code{"mins"},
-    \code{"hours"}, \code{"days"}, \code{"weeks"}, \code{"months"}
-    or \code{"years"}.
+    interval specification, one of \code{"sec"}, \code{"min"},
+    \code{"hour"}, \code{"day"}, \code{"DSTday"}, \code{"week"},
+    \code{"month"} or \code{"year"}, optionally preceded by an integer
+    and a space, or followed by \code{"s"}.
   }
   \item{labels}{
     labels for the levels of the resulting category.  By default,

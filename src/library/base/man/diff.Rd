@@ -1,6 +1,7 @@
 \name{diff}
 \alias{diff}
 \alias{diff.default}
+\alias{diff.POSIXt}
 \title{Lagged Differences}
 \description{
   Returns suitably lagged and iterated differences.
@@ -17,8 +18,9 @@ diff.default(x, lag=1, differences=1, \dots)
   \item{\dots}{further arguments to be passed to or from methods.}
 }
 \details{
-  \code{diff} is a generic function with a default method and one for
-  class \code{\link{ts}} objects.  \code{\link{NA}}'s propagate.
+  \code{diff} is a generic function with a default method and ones for
+  classes \code{"\link{ts}"} and \code{"\link{POSIXt}"}.
+  \code{\link{NA}}'s propagate.
 }
 \value{
   If \code{x} is a vector of length \code{n} and \code{differences=1},
@@ -47,6 +49,8 @@ diff(1:10, 2, 2)
 x <- cumsum(cumsum(1:10))
 diff(x, lag = 2)
 diff(x, differences = 2)
+
+diff(.leap.seconds)
 }
 \keyword{ts}
 \keyword{arith}

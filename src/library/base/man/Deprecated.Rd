@@ -10,6 +10,10 @@
 \alias{codes.ordered}
 \alias{codes<-}
 \alias{anovalist.lm}
+\alias{-.POSIXct}
+\alias{-.POSIXlt}
+\alias{Ops.POSIXct}
+\alias{Ops.POSIXlt}
 %------ PLEASE: put \alias{.} here for EACH !
 \description{
   These functions are provided for compatibility with older versions of

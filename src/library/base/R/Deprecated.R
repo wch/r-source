@@ -118,3 +118,51 @@ anovalist.lm <- function (object, ..., test = NULL)
 	      class= c("anova", "data.frame"))# was "tabular"
 }
 ## </entry>
+
+## <entry>
+## Deprecated in 1.8.0
+## for back-compatibility only: POSIXt versions are used as from 1.3.0
+"-.POSIXct" <- function(e1, e2)
+{
+    .Deprecated("-.POSIXt")
+    if(!inherits(e1, "POSIXct"))
+        stop("Can only subtract from POSIXct objects")
+    if (nargs() == 1) stop("unary - is not defined for POSIXct objects")
+    res<- NextMethod()
+    if(inherits(e2, "POSIXct")) unclass(res) else res
+}
+
+"-.POSIXlt" <- function(e1, e2)
+{
+    .Deprecated("-.POSIXt")
+    if (nargs() == 1)
+        stop("unary - is not defined for dt objects")
+    if(inherits(e1, "POSIXlt")) e1 <- as.POSIXct(e1)
+    if(inherits(e2, "POSIXlt")) e2 <- as.POSIXct(e2)
+    e1 - e2
+}
+
+Ops.POSIXct <- function(e1, e2)
+{
+    .Deprecated("Ops.POSIXt")
+    if (nargs() == 1)
+        stop(paste("unary", .Generic, "not defined for POSIXct objects"))
+    boolean <- switch(.Generic, "<" = , ">" = , "==" = ,
+                      "!=" = , "<=" = , ">=" = TRUE, FALSE)
+    if (!boolean) stop(paste(.Generic, "not defined for POSIXct objects"))
+    NextMethod(.Generic)
+}
+
+Ops.POSIXlt <- function(e1, e2)
+{
+    .Deprecated("Ops.POSIXt")
+    if (nargs() == 1)
+        stop(paste("unary", .Generic, "not defined for POSIXlt objects"))
+    boolean <- switch(.Generic, "<" = , ">" = , "==" = ,
+                      "!=" = , "<=" = , ">=" = TRUE, FALSE)
+    if (!boolean) stop(paste(.Generic, "not defined for POSIXlt objects"))
+    e1 <- as.POSIXct(e1)
+    e2 <- as.POSIXct(e2)
+    NextMethod(.Generic)
+}
+## </entry>

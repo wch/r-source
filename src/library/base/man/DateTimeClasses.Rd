@@ -3,6 +3,7 @@
 \alias{DateTimeClasses}
 \alias{POSIXct}
 \alias{POSIXlt}
+\alias{POSIXt}
 \alias{print.POSIXct}
 \alias{print.POSIXlt}
 \alias{summary.POSIXct}
@@ -30,12 +31,6 @@
 \alias{mean.POSIXct}
 \alias{mean.POSIXlt}
 \alias{str.POSIXt}
-
-% back-compatibility functions
-\alias{-.POSIXct}
-\alias{-.POSIXlt}
-\alias{Ops.POSIXct}
-\alias{Ops.POSIXlt}
 
 \title{Date-Time Classes}
 \description{

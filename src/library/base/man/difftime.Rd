@@ -5,6 +5,7 @@
 \alias{round.difftime}
 \alias{Ops.difftime}
 \alias{*.difftime}
+\alias{/.difftime}
 \alias{Math.difftime}
 \alias{Summary.difftime}
 \alias{[.difftime}
@@ -45,7 +46,13 @@ as.difftime(tim, format = "\%X")
 
   Subtraction of two date-time objects gives an object of this class,
   by calling \code{difftime} with \code{units="auto"}.  Alternatively,
-  \code{as.difftime()} works on character coded time intervals.
+  \code{as.difftime()} works on character-coded time intervals.
+
+  Limited arithmetic is available on \code{"difftime"} objects: they can
+  be added or subtracted, and multiplied or divided by a numeric vector.
+  In addition, adding or subtracting a numeric vector implicitly
+  converts the numeric vector to a \code{"difftime"} object with the
+  same units as the \code{"difftime"} object.
 }
 \seealso{
   \code{\link{DateTimeClasses}}.
