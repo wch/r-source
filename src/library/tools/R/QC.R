@@ -2137,14 +2137,14 @@ function(package, dir, lib.loc = NULL)
 
     ## Find the replacement functions (which have formal arguments) with
     ## last arg not named 'value'.
-    badReplaceFuns <-
+    badReplaceFuns <- if(length(replaceFuns)) {
         replaceFuns[sapply(replaceFuns, function(f) {
             ## Always get the functions from codeEnv ...
             ## Should maybe get S3 methods from the registry ...
             f <- get(f, envir = codeEnv)
             if(!is.function(f)) return(TRUE)
             .checkLastFormalArg(f)
-        }) == FALSE]
+        }) == FALSE]} else character(0)
 
     if(.isMethodsDispatchOn()) {
         S4generics <- methods::getGenerics(codeEnv)
