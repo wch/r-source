@@ -127,6 +127,9 @@
 #undef HAVE_LOCALE_H
 #undef HAVE_SYS_STAT_H
 #undef HAVE_UNISTD_H
+
+/* Define this to use the system regex rather than GNU regex included in R.
+   Intended only for use with special systems such as Condor */
 /* #undef USE_SYSTEM_REGEX */
 
 /* Dirent stuff */
