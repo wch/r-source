@@ -1,12 +1,10 @@
                 CHANGES IN VERSION R VERSION 0.62
 
-<<<<<<< CHANGES
 NEW FEATURES
 
     o  	.First.lib() now implemented; called by library() after loading
 	a package.
 
-=======
 
 		CHANGES IN VERSION R VERSION 0.61.1
 
@@ -39,7 +37,6 @@ BUG FIXES
     o   autoload() caused infinite loop if function  wasn't found in
 	library on loading
 
->>>>>>> 1.26.2.4
 		CHANGES IN VERSION R VERSION 0.61
 
 We try to make development more flexible by creating a "CVS branch". This
