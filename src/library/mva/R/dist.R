@@ -4,8 +4,9 @@ dist <- function(x, method="euclidean", diag=FALSE, upper=FALSE)
     if(!is.na(pmatch(method, "euclidian")))
 	method <- "euclidean"
 
-    method <- pmatch(method, c("euclidean", "maximum",
-			       "manhattan", "canberra", "binary"))
+    METHODS <- c("euclidean", "maximum",
+                 "manhattan", "canberra", "binary")
+    method <- pmatch(method, METHODS)
     if(is.na(method))
 	stop("invalid distance method")
     if(method == -1)
@@ -24,6 +25,8 @@ dist <- function(x, method="euclidean", diag=FALSE, upper=FALSE)
     attr(d, "Labels") <- dimnames(x)[[1]]
     attr(d, "Diag") <- diag
     attr(d, "Upper") <- upper
+    attr(d, "method") <- METHODS[method]
+    attr(d, "call") <- match.call()
     class(d) <- "dist"
     return(d)
 }
@@ -67,6 +70,7 @@ as.dist <- function(m, diag = FALSE, upper=FALSE)
     attr(retval,"Size") <- nrow(m)
     attr(retval,"Diag") <- diag
     attr(retval,"Upper") <- upper
+    attr(retval, "call") <- match.call()
     class(retval) <- "dist"
     retval
 }
