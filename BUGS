@@ -278,10 +278,10 @@ none
 
 Directory:  incoming
 
-* PR# 756 *
-Subject: crash using bmp() on windows with Rdll2010
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Sun, 03 Dec 2000 23:19:58 +0100
+* PR# 757 *
+Subject: Bug in plot.formula
+From: Brett Presnell <presnell@stat.ufl.edu>
+Date: Mon, 4 Dec 2000 11:29:36 -0500 (EST)
 * PR# 734 *
 Subject:  Assigning into a dataframe 
 From: J.C.Rougier@durham.ac.uk
@@ -298,10 +298,6 @@ Date: Fri, 24 Nov 2000 12:31:33 +0000
 Subject: Re: [Rd] How do you construct a function from a list?
 From: dmurdoch@pair.com (Duncan Murdoch)
 Date: Wed, 22 Nov 2000 12:57:19 GMT
-* PR# 749 *
-Subject: (NA || x) and (NA && y)  {another "bug" }
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 27 Nov 2000 09:25:38 +0100
 * PR# 748 *
 Subject: Problem with NAs using chisq.test()
 From: kjetikj@astro.uio.no
@@ -310,14 +306,26 @@ Date: Sun, 26 Nov 2000 21:21:22 +0100 (MET)
 Subject: Bug in args with no defaults
 From: dmurdoch@pair.com (Duncan Murdoch)
 Date: Sun, 26 Nov 2000 20:14:30 GMT
-* PR# 752 *
-Subject: non-centrality parameter in pf()
-From: Jerome Asselin <jerome@stat.ubc.ca>
-Date: Tue, 28 Nov 2000 11:43:06 -0800 (PST)
 * PR# 751 *
 Subject: BUG: polyroot()
 From: "Li Dongfeng" <mavip1@inet.polyu.edu.hk>
 Date: Tue, 28 Nov 2000 13:24:33 +0800
+* PR# 749 *
+Subject: (NA || x) and (NA && y)  {another "bug" }
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 27 Nov 2000 09:25:38 +0100
+* PR# 753 *
+Subject: Re: [R] Step function
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Wed, 29 Nov 2000 10:30:26 -0800 (PST)
+* PR# 752 *
+Subject: non-centrality parameter in pf()
+From: Jerome Asselin <jerome@stat.ubc.ca>
+Date: Tue, 28 Nov 2000 11:43:06 -0800 (PST)
+* PR# 756 *
+Subject: crash using bmp() on windows with Rdll2010
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Sun, 03 Dec 2000 23:19:58 +0100
 * PR# 755 *
 Subject: bug in outer()
 From: mvondavier@ets.org
@@ -326,7 +334,3 @@ Date: Fri, 1 Dec 2000 20:47:30 +0100 (MET)
 Subject: means in arima0
 From: arto.luoma@uta.fi
 Date: Thu, 30 Nov 2000 14:02:55 +0100 (MET)
-* PR# 753 *
-Subject: Re: [R] Step function
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Wed, 29 Nov 2000 10:30:26 -0800 (PST)
