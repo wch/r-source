@@ -14,9 +14,7 @@ export(".installMD5sums", "Rdindex",
 export(".installPackageCodeFiles",
        ".installPackageDescription",
        ".installPackageIndices",
-       ".installPackageNamespaceInfo",
-       ".checkDemoIndex",
-       ".checkVignetteIndex")
+       ".installPackageNamespaceInfo")
 ## </FIXME>
 
 
