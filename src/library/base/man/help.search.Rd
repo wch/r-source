@@ -31,11 +31,11 @@ help.search(pattern, fields = c("alias", "concept", "title"),
     topics and title.}
   \item{keyword}{a character string to be matched in the help page
     \sQuote{keywords}. \sQuote{Keywords} are really categories: the
-    standard categories are listed in file \file{RHOME/doc/KEYWORDS} and
-    some package writers have defined their own.  If \code{keyword} is
-    specified, \code{agrep} defaults to \code{FALSE}.}
-  \item{whatis}{a character string to be matched in the help page
-    topics.}
+    standard categories are listed in file \file{RHOME/doc/KEYWORDS}
+    (see also the example) and some package writers have defined their
+    own.  If \code{keyword} is specified, \code{agrep} defaults to
+    \code{FALSE}.}  \item{whatis}{a character string to be matched in
+    the help page topics.}
   \item{ignore.case}{a logical.  If \code{TRUE}, case is ignored during
     matching; if \code{FALSE}, pattern matching is case sensitive.}
   \item{package}{a character vector with the names of packages to
@@ -109,11 +109,14 @@ help.search(apropos = "print")  # The same
 help.search(keyword = "hplot")  # All help pages documenting high-level
                                 # plots.
 file.show(file.path(R.home(), "doc", "KEYWORDS"))  # show all keywords
+file.show(file.path(R.home(), "doc", "KEYWORDS"))  # show all keywords
 
 ## Help pages with documented topics starting with 'try'.
 help.search("\\\\btry", fields = "alias")
 ## Do not use '^' or '$' when matching aliases or keywords
 ## (unless all packages were installed using R 1.7 or newer).
+## Look at all defined keywords:
+file.show(file.path(R.home(),"doc","KEYWORDS"))
 }
 }
 \keyword{documentation}
