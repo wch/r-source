@@ -13,7 +13,7 @@ cmdscale <- function (d, k = 2, eig = FALSE) {
     }
     storage.mode(x) <- "double"
     Tmat <- -0.5 * .C("dblcen", x, as.integer(n), PACKAGE="mva")[[1]]
-    e <- eigen(Tmat, symmetric = TRUE)
+    e <- La.eigen(Tmat, symmetric = TRUE)
     ev <- e$values[1:k]
     points <- e$vectors[, 1:k] %*% diag(sqrt(ev))
     dimnames(points) <- list(dimnames(d)[[1]], NULL)

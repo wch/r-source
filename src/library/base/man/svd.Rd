@@ -1,23 +1,30 @@
 \name{svd}
+\alias{svd}
+\alias{La.svd}
 \title{Singular Value Decomposition of a Matrix}
 \usage{
-svd(x, nu = min(n,p), nv = min(n,p))
+svd(x, nu = min(n, p), nv = min(n, p))
+La.svd(x, nu = min(n, p), nv = min(n, p))
 }
-\alias{svd}
 \arguments{
   \item{x}{a matrix whose SVD decomposition is to be computed.}
-  \item{nu}{the number of left eigenvectors to be computed.
+  \item{nu}{the number of left  singular vectors to be computed.
     This must be one of \code{0}, \code{nrow(x)} and \code{ncol(x)}.}
-  \item{nv}{the number of right eigenvectors to be computed.
-    This must be one of \code{0}, and \code{ncol(x)}.}
+  \item{nv}{the number of right singular vectors to be computed.
+    This must be one of \code{0} and \code{ncol(x)}.}
 }
 \description{
   Compute the singular-value decomposition of a rectangular matrix.
 }
 \details{
   \code{svd} provides an interface to the LINPACK routine DSVDC.
+  \code{La.svd} provides an interface to the LAPACK routine DGESVD.
   The singular value decomposition plays an important role in many
   statistical techniques.
+
+  \code{La.svd} is preferred to \code{svd} for new projects, but it
+  returns the transpose of the right singular vector matrix, and the
+  signs of the singular vectors may differ from those given by \code{svd}.
 }
 \value{
   The SVD decomposition of the matrix as computed by LINPACK,
@@ -30,12 +37,19 @@ svd(x, nu = min(n,p), nv = min(n,p))
   The components in the returned value correspond directly
   to the values returned by DSVDC.
   \item{d}{a vector containing the singular values of \code{x}.}
-  \item{u}{a matrix whose columns contain the left eigenvectors of \code{x}.}
-  \item{v}{a matrix whose columns contain the right eigenvectors of \code{x}.}
+  \item{u}{a matrix whose columns contain the left singular vectors of \code{x}.}
+  \item{v}{a matrix whose columns contain the right singular vectors of
+    \code{x}.}
+
+  For \code{La.svd} the return value replaces \code{v} by \code{vt}, the
+  transpose of \code{v}.
 }
 \references{
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
   \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
+
+  Anderson. E. and ten others (1995)
+  \emph{LAPACK Users' Guide}. Second Edition. SIAM.
 }
 \seealso{\code{\link{eigen}}, \code{\link{qr}}.}
 \examples{
@@ -48,10 +62,18 @@ D <- diag(s$d)
 stopifnot(abs(X - s$u \%*\% D \%*\% t(s$v)) < Eps)#  X = U D V'
 stopifnot(abs(D - t(s$u) \%*\% X \%*\% s$v) < Eps)#  D = U' X V
 
+str(s <- La.svd(X)); D <- diag(s$d)
+stopifnot(abs(X - s$u \%*\% D \%*\% s$vt) < Eps)#  X = U D V'
+stopifnot(abs(D - t(s$u) \%*\% X \%*\% t(s$vt)) < Eps)#  D = U' X V
+
 X <- cbind(1, 1:7)
 str(s <- svd(X)); D <- diag(s$d)
 stopifnot(abs(X - s$u \%*\% D \%*\% t(s$v)) < Eps)#  X = U D V'
 stopifnot(abs(D - t(s$u) \%*\% X \%*\% s$v) < Eps)#  D = U' X V
+
+str(s <- La.svd(X)); D <- diag(s$d)
+stopifnot(abs(X - s$u \%*\% D \%*\% s$vt) < Eps)#  X = U D V'
+stopifnot(abs(D - t(s$u) \%*\% X \%*\% t(s$vt)) < Eps)#  D = U' X V
 }
 \keyword{algebra}
 \keyword{array}

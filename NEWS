@@ -59,7 +59,7 @@ NEW FEATURES
 
 	-  Date/time objects now all inherit from class "POSIXt".
 
-	-  New function difftime() and corresponding class for date/time 
+	-  New function difftime() and corresponding class for date/time
 	   differences, and a round() method.
 
 	-  Subtraction and logical comparison of objects from different
@@ -100,7 +100,7 @@ NEW FEATURES
 	distance.
 
     o	stl() has more optional arguments for fine tuning, a summary()
-	and an improved plot() method. 
+	and an improved plot() method.
 
     o	The four bessel[IJKY](x,nu) functions are now defined for nu < 0.
 
@@ -120,14 +120,14 @@ NEW FEATURES
 
     o	plot.mts() has a new argument `panel' providing the same
 	functionality as in coplot().
-	
+
     o	outer() has a speed-up in the default case of a matrix outer
 	product (by Jonathan Rougier).
 
     o	aperm() uses strides in the internal C code and so is
 	substantially faster (by Jonathan Rougier).
 
-    o	sort(x) now produces an error when x is not atomic instead of 
+    o	sort(x) now produces an error when x is not atomic instead of
 	just returning x.
 
     o	New function is.unsorted() the C version of which also speeds up
@@ -136,7 +136,7 @@ NEW FEATURES
     o	New function integrate() with S-compatible call.
 
     o	New function col2rgb() for color conversion of names, hex, or
-	integer. 
+	integer.
 
     o	Support for package-specific demo scripts (R code).  demo() now
 	has new arguments to specify the location of demos and to allow
@@ -206,13 +206,13 @@ NEW FEATURES
 
     o	If not explicitly given a library tree to install to or remove
 	from, respectively, R CMD INSTALL and R CMD REMOVE now operate
-	on the first directory given in `R_LIBS' if this is set and 
+	on the first directory given in `R_LIBS' if this is set and
 	non-null, and the default library otherwise.
 
     o	Functions httpclient(), read.table.url(), scan.url() and
 	source.url() are now deprecated, and hence method="socket' in
 	download.file() is.  Use url connections instead: in
-	particular URLs can be specified for read.table(), scan() and 
+	particular URLs can be specified for read.table(), scan() and
 	source().
 
     o	Formerly deprecated function getenv() is now defunct.
@@ -226,8 +226,8 @@ NEW FEATURES
 
     o	Matrix multiplication functions %*% and crossprod now use a
 	level-3 BLAS routine dgemm.  When R is linked with the ATLAS
-	library this can be substantially faster than the previous
-	code.
+	or other enahnced BLAS libraries this can be substantially
+	faster than the previous code.
 
     o	R CMD Rd2dvi has better support for producing reference manuals
 	for packages and package bundles.
@@ -241,6 +241,14 @@ NEW FEATURES
     o	New manual `R Installation and Administration' with fuller
 	details on the installation process: file `INSTALL' is now a
 	brief introduction referencing that manual
+
+    o	New functions La.eigen() and La.svd() for eigenvector and
+	singular value decompositions, based on LAPACK.  These are
+	preferred to eigen() and svd() for new projects and can make
+	use of enhanced BLAS routines such as ATLAS.  They are
+	used in cancor(), cmdscale(), factanal() and princomp()
+	and this may lead to sign reversals in some of the output of
+	those functions.
 
 
 
@@ -269,7 +277,7 @@ BUG FIXES
 	syntax error when parsed.
 
     o	The implementation of sys.function() did not work when the
-	current function was already a function (e.g., a closure). 
+	current function was already a function (e.g., a closure).
 
     o	Using a pushback with more than two lines at a time could crash.
 
@@ -372,7 +380,7 @@ BUG FIXES
 	due to a typo in the eval call in ppr.formula.
 
     o	qchisq(0.025, 31, ncp=1, lower.tail=FALSE) now works.  (PR#875)
-    
+
     o	dchisq with integer x, df and ncp sometimes gave incorrect
 	results on i686 Linux.
 
@@ -429,7 +437,7 @@ BUG FIXES
 
     o	httpclient() (and the "socket" method of download.file) skipped ^V
 	rather than ^Z in input (if drop.ctrl.z = TRUE, the default).
-    
+
     o	boxplot(*, range = 0) and boxplot.stats(*, coef = 0) now
 	don't return outliers anymore (PR#917).
 

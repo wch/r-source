@@ -1,0 +1,31 @@
+#-*- Makefile -*-
+include ../../gnuwin32/MkRules
+
+MODULE=lapack
+all: makeMakedeps ../../../modules/$(MODULE).dll
+
+CSOURCES=Lapack.c
+FSOURCES=${wildcard *.f}
+
+CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H -include ../../include/globalvar.h
+FFLAGS=$(OPTFLAGS)
+OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
+
+../../../modules/$(MODULE).dll: $(MODULE).dll
+	$(MKDIR) -p ../../../modules
+	$(CP) $< $@
+
+DLLLIBS=-L../../gnuwin32 -lR -lg2c
+$(MODULE).dll: $(OBJS)
+
+clean:
+	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll
+
+# Dependencies
+DEPS=$(CSOURCES:.c=.d)
+
+makeMakedeps: $(DEPS)
+	@$(RM) Makedeps
+	@cat $(DEPS) >> Makedeps
+
+-include Makedeps

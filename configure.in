@@ -404,6 +404,7 @@ else
   BLAS="blas.o"
 fi
 AC_SUBST(BLAS)
+AM_CONDITIONAL(USE_EXTERNAL_BLAS, test "x$BLAS_LIBS" != x)
 
 if ${use_readline}; then
   AC_CHECK_LIB(readline, rl_callback_read_char)

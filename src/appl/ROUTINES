@@ -70,3 +70,7 @@ C_FUNCTION(Rsockfork)
 # integrate
 C_FUNCTION(call_dqagi)
 C_FUNCTION(call_dqags)
+# lapack
+C_FUNCTION(La_svd)
+C_FUNCTION(La_rs)
+C_FUNCTION(La_rg)

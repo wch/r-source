@@ -22,7 +22,7 @@ princomp <- function(x, cor = FALSE, scores = TRUE, covmat = NULL,
         sds <- sqrt(diag(cv))
         cv <- cv/(sds %o% sds)
     }
-    edc <- eigen(cv, symmetric = TRUE)
+    edc <- La.eigen(cv, symmetric = TRUE)
     ev <- .Alias(edc$values)
     if (any(neg <- ev < 0)) { # S-PLUS sets all := 0
         ## 9 * : on Solaris found case where 5.59 was needed (MM)

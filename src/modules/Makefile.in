@@ -15,7 +15,7 @@ DISTFILES = Makefile.in
 
 SUBDIRS = X11 gnome lapack vfonts
 
-MODULES = $(R_GUIS) vfonts
+MODULES = $(R_GUIS) lapack vfonts
 
 all: Makefile R
 

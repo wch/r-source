@@ -35,11 +35,11 @@ cancor <- function(x, y, xcenter=TRUE, ycenter=TRUE)
     dx <- qx$rank;	if(!dx) stop("`x' has rank 0")
     dy <- qy$rank;	if(!dy) stop("`y' has rank 0")
     ## compute svd(Qx'Qy)
-    z <- svd(qr.qty(qx, qr.qy(qy, diag(1, nr, dy)))[1:dx,, drop = FALSE],
-	     dx, dy)
+    z <- La.svd(qr.qty(qx, qr.qy(qy, diag(1, nr, dy)))[1:dx,, drop = FALSE],
+                dx, dy)
     list(cor = z$d,
 	 xcoef = backsolve((qx$qr)[1:dx, 1:dx, drop = FALSE], z$u),
-	 ycoef = backsolve((qy$qr)[1:dy, 1:dy, drop = FALSE], z$v),
+	 ycoef = backsolve((qy$qr)[1:dy, 1:dy, drop = FALSE], t(z$vt)),
 	 xcenter = xcenter,
 	 ycenter = ycenter)
 }
