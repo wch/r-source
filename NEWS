@@ -516,6 +516,14 @@ NEW FEATURES
 	  Grid no longer responds to the par(ask) setting in the "graphics"
 	  package.
 
+    o   The tcltk package has had the tkcmd() function renamed as
+        tcl() since it could be used to invoke commands that had
+        nothing to do with Tk. The old name is retained, but will be
+        deprecated in a future release. Similarly, we now have
+        tclopen(), tclclose(), tclread(), tclputs(), tclfile.tail(),
+        and tclfile.dir() replacing counterparts starting with "tk",
+        with old names retained for now.
+
 
 UTILITIES
 

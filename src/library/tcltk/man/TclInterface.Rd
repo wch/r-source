@@ -86,8 +86,8 @@ tclArray()
 # S3 methods for tclArray objects
 x[[...]]
 x[[...]] <- value
-x$i
-x$i <- value
+x$name
+x$name <- value
 
 \method{names}{tclArray}(x)
 \method{length}{tclArray}(x)
@@ -116,6 +116,7 @@ tclRequire(package, warn = TRUE)
   \item{objv}{a named vector of Tcl objects}
   \item{win}{a window structure}
   \item{x}{an object}
+  \item{name}{character or (unquoted) name}
   \item{drop}{logical. Indicates whether a single-element vector should
     be made into a simple Tcl object or a list of length one}
   \item{value}{For \code{tclvalue} assignments, a character string. For
@@ -232,7 +233,7 @@ tclRequire(package, warn = TRUE)
   \code{tclvalue} and \code{as.character} differ on an object whose
   string representation has embedded spaces, the former is sometimes to
   be preferred, in particular when applied to the result of
-  \code{tkread}, \code{tkgetOpenFile}, and similar functions. 
+  \code{tclread}, \code{tkgetOpenFile}, and similar functions. 
 
   The object behind a \code{tclVar} object
   is extracted using \code{tclObj(x)} which also allows an assignment
@@ -275,7 +276,7 @@ xyzzy <- tclVar(7913)
 tclvalue(xyzzy)
 tclvalue(xyzzy) <- "foo"
 as.character(xyzzy)
-tkcmd("set", as.character(xyzzy))
+tcl("set", as.character(xyzzy))
 
 top <- tktoplevel() # a Tk widget, see Tk-widgets
 ls(envir=top$env, all=TRUE)

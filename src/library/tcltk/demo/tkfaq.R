@@ -11,9 +11,9 @@ local({
     tkpack(txt, side="left", fill="both", expand=TRUE)
     tkpack(scr, side="right", fill="y")
 
-    chn <- tkcmd("open", file.path(R.home(), "FAQ"))
-    tkinsert(txt, "end", tkcmd("read", chn))
-    tkcmd("close", chn)
+    chn <- tclopen(file.path(R.home(), "FAQ"))
+    tkinsert(txt, "end", tclread(chn))
+    tclclose(chn)
     
     tkconfigure(txt, state="disabled")
     tkmark.set(txt,"insert","0.0")
