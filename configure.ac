@@ -48,7 +48,7 @@ AH_BOTTOM([
 # define vsnprintf  _vsnprintf
 # define isnan(a) _isnan((a))
 # define finite(a) _finite((a))
-/* 27/03/2000 win32-api needs this for ANSI compliance */
+/* 2000-03-27 win32-api needs this for ANSI compliance */
 # define NONAMELESSUNION
 #endif /* Win32 */
 
@@ -111,11 +111,8 @@ fi
 ## We provide these defaults so that headers and libraries in
 ## '/usr/local' are found (by the native tools, mostly).
 ## <FIXME>
-## We try to determine whether fink is used (on Darwin, mostly) by 
-## looking for '/sw/etc/fink.conf'.  Should be ok but needs to be
-## documented ...
-## Also, GCC 3.1 seems to be very unhappy about '/usr/local/include'
-## to the header search path seems ...
+## GCC 3.1 seems to be very unhappy about '/usr/local/include' to the
+## header search path seems ... 
 if test -f "/sw/etc/fink.conf"; then
   : ${CPPFLAGS="-I/sw/include -I/usr/local/include"}
   : ${LDFLAGS="-L/sw/lib -L/usr/local/lib"}
@@ -131,29 +128,6 @@ config_opts="${ac_configure_args}"
 AC_SUBST(config_opts)
 
 ### ** Optional features.
-
-## <FIXME>
-## Remove in 1.6.
-for arg in ${ac_configure_args}; do
-  case "${arg}" in
-    --with-g77*)
-      warn_arg_with_g77="option '--with-g77' is deprecated.
-Use variable F77 to specify a FORTRAN 77 compiler if necessary."
-      AC_MSG_WARN([${warn_arg_with_g77}])
-      ;;
-    --with-f77*)
-      warn_arg_with_f77="option '--with-f77' is deprecated.
-Use variable F77 to specify a FORTRAN 77 compiler if necessary."
-      AC_MSG_WARN([${warn_arg_with_f77}])
-      ;;
-    --with-f2c*)
-      warn_arg_with_f2c="option '--with-f2c' is deprecated.
-Use variable F2C to specify the FORTRAN-to-C converter if necessary."
-      AC_MSG_WARN([${warn_arg_with_f2c}])
-      ;;
-  esac
-done
-## </FIXME>
 
 ## Allow the user to specify support for R profiling.
 AC_ARG_ENABLE([R-profiling],
@@ -175,9 +149,6 @@ AC_ARG_ENABLE([R-shlib],
 [want_R_shlib="${enableval}"],
 [want_R_shlib=no])
 AM_CONDITIONAL(WANT_R_SHLIB, [test "x${want_R_shlib}" = xyes])
-## <FIXME>
-## Should we add a check whether the user disabled shlibs in general?
-## </FIXME>
 if test "${want_R_shlib}" = yes; then
   LIBR="-L\$(R_HOME)/bin -lR"
 else
@@ -299,11 +270,11 @@ AC_ARG_VAR([CPICFLAGS],
            [special flags for compiling C code to be turned into a
             shared library.])
 AC_ARG_VAR([FPICFLAGS],
-           [special flags for compiling FORTRAN code to be turned into a
+           [special flags for compiling Fortran code to be turned into a
             shared library.])
 AC_ARG_VAR([SHLIB_LD],
            [command for linking shared libraries which contain object
-            files from a C or FORTRAN compiler only])
+            files from a C or Fortran compiler only])
 AC_ARG_VAR([SHLIB_LDFLAGS],
            [special flags used by SHLIB_LD])
 AC_ARG_VAR([CXXPICFLAGS],
@@ -319,7 +290,7 @@ AC_ARG_VAR([TCLTK_LIBS],
 AC_ARG_VAR([TCLTK_CPPFLAGS],
            [flags needed for finding the tcl.h and tk.h headers])
 AC_ARG_VAR([MAKE], [Make command])
-AC_ARG_VAR([F2C], [FORTRAN-to-C converter command])
+AC_ARG_VAR([F2C], [Fortran-to-C converter command])
 
 ### ** Check whether we build in srcdir.
 
@@ -485,7 +456,7 @@ R_TYPE_SOCKLEN
 
 ### * Checks for compiler characteristics.
 
-### ** Generic tests for the C, FORTRAN 77 and C++ compilers.
+### ** Generic tests for the C, Fortran 77 and C++ compilers.
 
 ### *** C compiler.
 
@@ -509,7 +480,7 @@ AC_CHECK_SIZEOF(long double, 0)
 
 R_PROG_CC_MAKEFRAG
 
-### *** FORTRAN 77 compiler.
+### *** Fortran 77 compiler.
 
 if test -n "${F77}"; then
   R_PROG_F77_FLIBS
@@ -533,7 +504,7 @@ AM_CONDITIONAL(COMPILE_DOUBLE_COMPLEX,
 
 R_PROG_CXX_MAKEFRAG
 
-### ** Platform-specific overrides for the C, FORTRAN 77 and C++ compilers.
+### ** Platform-specific overrides for the C, Fortran 77 and C++ compilers.
 
 case "${host_cpu}" in
   i*86)
@@ -557,7 +528,7 @@ case "${host_cpu}" in
     ## @option{-ieee} (or @option{-mieee}) are not enough.
     ## According to <Albrecht.Gebhardt@uni-klu.ac.at> and Luke Tierney
     ## <luke@stat.umn.edu>, @option{-fpe3} is what we want for the
-    ## native FORTRAN 77 compiler: seems that not all versions map
+    ## native Fortran 77 compiler: seems that not all versions map
     ## @option{-ieee} to @option{-fpe3}.
     ## What about the C++ compilers?
     if test "${GCC}" = yes; then
@@ -627,7 +598,7 @@ case "${host_os}" in
   irix*)
     R_C_OPTIEEE
     ## <NOTE>
-    ## We really should test explictly whether the FORTRAN and C++
+    ## We really should test explictly whether the Fortran and C++
     ## compilers *need* '-OPT:IEEE_NaN_inf=ON'.  Currently, all we do is
     ## check whether the non-GNU tools *accept* the flag.
     if test "${G77}" != yes; then
@@ -803,7 +774,7 @@ case "${host_os}" in
       shlib_ldflags="-shared -fPIC"
     else
       ## <NOTE>
-      ## If native cc insists on tacking on crt0.o when it calls ld, and
+      ## Native cc insists on tacking on crt0.o when it calls ld, and
       ## crt0.o is not built with PIC.  As there seems to be no obvious
       ## way to tell cc not to do this, we use ld for linking shlibs.
       shlib_ld=ld
@@ -882,12 +853,7 @@ esac
 ## ## Step 4.  In case we use libtool ...
 ## if test "${use_libtool}" = yes; then
 ##   case "${host_os}" in
-##     aix*)
-##       ## FIXME: AIX needs special care.
-##       ;;
 ##     *)
-##       ## FIXME: Maybe we should set this here and not in R_bin_LDFLAGS?
-##       main_ldflags=
 ##       ;;
 ##   esac
 ## fi
@@ -934,7 +900,7 @@ if test -z "${CXXPICFLAGS}"; then
     aix*|irix*|mingw*|osf*)
       ;;
     *)
-      warn_cxxpicflags="I could not determine CXXPICFLAGS"
+      warn_cxxpicflags="I could not determine CXXPICFLAGS."
       AC_MSG_WARN([${warn_cxxpicflags}])
       ;;
   esac
@@ -1010,7 +976,7 @@ AC_CHECK_FUNCS(access chdir expm1 fcntl finite ftruncate getcwd \
   popen putenv rint setenv strcoll stat strptime system times unsetenv)
 ## <NOTE>
 ## No need checking for bcopy bzero memcpy mempcpy even though ifnames
-## might stop corresponding HAVE_FOO conditionals.
+## might report corresponding HAVE_FOO conditionals.
 ## </NOTE>
 
 ## Used to build src/include/Rmath.h.
@@ -1044,7 +1010,7 @@ R_FUNC_STRPTIME
 
 ## BLAS.
 ## <NOTE>
-## This has to come *after* checking for FORTRAN 77 compiler/converter
+## This has to come *after* checking for Fortran 77 compiler/converter
 ## characteristics (notably name mangling and FLIBS).
 if test "${use_blas}" = yes; then
   R_BLAS_LIBS
@@ -1141,7 +1107,7 @@ AC_SUBST(R_PAPERSIZE)
 ## Saving.
 AC_SUBST(R_BATCHSAVE)
 
-## Make sure -L terms come first in LIBS, separate out as LIBPATHS.
+## Make sure -L terms come first in LIBS.
 LIBS1=""
 LIBS2=""
 for arg in ${LIBS}; do
@@ -1155,8 +1121,6 @@ for arg in ${LIBS}; do
   esac
 done
 LIBS="${LIBS1} ${LIBS2}"
-LIBPATHS="${LIBS1}"
-AC_SUBST(LIBPATHS)
 
 ## R_LD_LIBRARY_PATH.
 ## <FIXME>
@@ -1312,9 +1276,9 @@ AC_OUTPUT
 C_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
 CXX_compiler="${CXX} ${R_XTRA_CXXFLAGS} ${CXXFLAGS}"
 if test -z "${F2C}"; then
-  FORTRAN_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
+  Fortran_compiler="${F77} ${R_XTRA_FFLAGS} ${FFLAGS}"
 else
-  FORTRAN_compiler="${F2C} ${F2CFLAGS}"
+  Fortran_compiler="${F2C} ${F2CFLAGS}"
 fi
 AC_MSG_RESULT(
 [
@@ -1324,7 +1288,7 @@ R is now configured for ${host}
   Installation directory:    ${prefix}
   C compiler:                ${C_compiler}
   C++ compiler:              ${CXX_compiler}
-  FORTRAN compiler:          ${FORTRAN_compiler}
+  Fortran compiler:          ${Fortran_compiler}
 
   X11 support:               ${use_X11}
   Gnome support:             ${use_gnome}
@@ -1334,20 +1298,11 @@ R is now configured for ${host}
   R profiling support:       ${want_R_profiling}
   R as a shared library:     ${want_R_shlib}
 ])
-if test -n "${warn_arg_var_FC}"; then
-  AC_MSG_WARN([${warn_arg_var_FC}])
-fi
-if test -n "${warn_arg_with_g77}"; then
-  AC_MSG_WARN([${warn_arg_with_g77}])
-fi
-if test -n "${warn_arg_with_f77}"; then
-  AC_MSG_WARN([${warn_arg_with_f77}])
-fi
-if test -n "${warn_arg_with_f2c}"; then
-  AC_MSG_WARN([${warn_arg_with_f2c}])
-fi
 if test -n "${warn_F77_and_F2C}"; then
   AC_MSG_WARN([${warn_F77_and_F2C}])
+fi
+if test -n "${warn_f77_cc_double_complex}"; then
+  AC_MSG_WARN([${warn_f77_cc_double_complex}])
 fi
 if test -n "${warn_f2c_flibs}"; then
   AC_MSG_WARN([${warn_f2c_flibs}])
