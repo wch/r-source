@@ -66,11 +66,12 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     snc = CADDR(args);
     byrow = asInteger(CADR(CDDR(args)));
 
+    /* R wrapper does as.vector
     if (isVector(vals) || isList(vals)) {
-	if (length(vals) < 0)
-	    errorcall(call, "argument has length zero");
+	if (length(vals) < 0)  (sic! cannot happen)
+	   errorcall(call, "argument has length zero");
     }
-    else errorcall(call, "invalid matrix element type");
+    else errorcall(call, "invalid matrix element type"); */
 
     if (!isNumeric(snr) || !isNumeric(snc))
 	error("non-numeric matrix extent");
@@ -79,26 +80,61 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     nr = asInteger(snr);
     nc = asInteger(snc);
 
-    if (lendat > 1 && (nr * nc) % lendat != 0) {
-	if (((lendat > nr) && (lendat / nr) * nr != lendat) ||
-	    ((lendat < nr) && (nr / lendat) * lendat != nr))
-	    warning("Replacement length not a multiple of the elements to replace in matrix(...)");
-	else if (((lendat > nc) && (lendat / nc) * nc != lendat) ||
-		 ((lendat < nc) && (nc / lendat) * lendat != nc))
-	    warning("Replacement length not a multiple of the elements to replace in matrix(...)");
-    }
+    if(lendat > 0 ) {
+	if (lendat > 1 && (nr * nc) % lendat != 0) {
+	    if (((lendat > nr) && (lendat / nr) * nr != lendat) ||
+		((lendat < nr) && (nr / lendat) * lendat != nr))
+		warning("data length [%d] is not a sub-multiple or multiple of the number of rows [%d] in matrix", lendat, nr);
+	    else if (((lendat > nc) && (lendat / nc) * nc != lendat) ||
+		     ((lendat < nc) && (nc / lendat) * lendat != nc))
+		warning("data length [%d] is not a sub-multiple or multiple of the number of columns [%d] in matrix", lendat, nc);
+	}
 	else if ((lendat > 1) && (nr * nc == 0)){
-	  warning("Replacement length not a multiple of the elements to replace in matrix(...)");
+	    warning("data length exceeds size of matrix");
 	}
-	else if (lendat == 0 && nr * nc > 0){
-	  error("No data to replace in matrix(...)");
-	}
+    }
 
     PROTECT(snr = allocMatrix(TYPEOF(vals), nr, nc));
-    if (isVector(vals))
-	copyMatrix(snr, vals, byrow);
-    else
-	copyListMatrix(snr, vals, byrow);
+    if(lendat) {
+	if (isVector(vals))
+	    copyMatrix(snr, vals, byrow);
+	else
+	    copyListMatrix(snr, vals, byrow);
+    } else if (isVector(vals)) { /* fill with NAs */
+	int i, j;
+	switch(TYPEOF(vals)) {
+	case STRSXP:
+	    for (i = 0; i < nr; i++)
+		for (j = 0; j < nc; j++)
+		    SET_STRING_ELT(snr, i + j * nr, NA_STRING);
+	    break;
+	case LGLSXP:
+	    for (i = 0; i < nr; i++)
+		for (j = 0; j < nc; j++)
+		    LOGICAL(snr)[i + j * nr] = NA_LOGICAL;
+	    break;
+	case INTSXP:
+	    for (i = 0; i < nr; i++)
+		for (j = 0; j < nc; j++)
+		    INTEGER(snr)[i + j * nr] = NA_INTEGER;
+	    break;
+	case REALSXP:
+	    for (i = 0; i < nr; i++)
+		for (j = 0; j < nc; j++)
+		    REAL(snr)[i + j * nr] = NA_REAL;
+	    break;
+	case CPLXSXP:
+	    {
+		Rcomplex na_cmplx;
+		na_cmplx.r = NA_REAL;
+		na_cmplx.i = 0;
+		for (i = 0; i < nr; i++)
+		    for (j = 0; j < nc; j++)
+			COMPLEX(snr)[i + j * nr] = na_cmplx;
+	    }
+	    break;
+	}
+    }
     UNPROTECT(1);
     return snr;
 }

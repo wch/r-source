@@ -3518,3 +3518,101 @@ onUnload 'stats4' A
 > ## Just tests
 > 
 > 
+> ## rep(0-length-vector, length.out > 0)
+> rep(integer(0), length.out=0)
+numeric(0)
+> rep(integer(0), length.out=10)
+ [1] NA NA NA NA NA NA NA NA NA NA
+> typeof(.Last.value)
+[1] "integer"
+> rep(logical(0), length.out=0)
+logical(0)
+> rep(logical(0), length.out=10)
+ [1] NA NA NA NA NA NA NA NA NA NA
+> typeof(.Last.value)
+[1] "logical"
+> rep(numeric(0), length.out=0)
+numeric(0)
+> rep(numeric(0), length.out=10)
+ [1] NA NA NA NA NA NA NA NA NA NA
+> typeof(.Last.value)
+[1] "double"
+> rep(character(0), length.out=0)
+character(0)
+> rep(character(0), length.out=10)
+ [1] NA NA NA NA NA NA NA NA NA NA
+> typeof(.Last.value)
+[1] "character"
+> rep(complex(0), length.out=0)
+complex(0)
+> rep(complex(0), length.out=10)
+ [1] NA NA NA NA NA NA NA NA NA NA
+> typeof(.Last.value)
+[1] "complex"
+> rep(list(), length.out=0)
+list()
+> rep(list(), length.out=10)
+[[1]]
+NULL
+
+[[2]]
+NULL
+
+[[3]]
+NULL
+
+[[4]]
+NULL
+
+[[5]]
+NULL
+
+[[6]]
+NULL
+
+[[7]]
+NULL
+
+[[8]]
+NULL
+
+[[9]]
+NULL
+
+[[10]]
+NULL
+
+> ## always 0-length before 1.9.0
+> 
+> 
+> ## supplying 0-length data to array and matrix
+> array(numeric(0), c(2, 2))
+     [,1] [,2]
+[1,]   NA   NA
+[2,]   NA   NA
+> array(list(), c(2,2))
+     [,1] [,2]
+[1,] NULL NULL
+[2,] NULL NULL
+> # worked < 1.8.0, error in 1.8.x
+> matrix(character(0), 1, 2)
+     [,1] [,2]
+[1,] NA   NA  
+> matrix(integer(0), 1, 2)
+     [,1] [,2]
+[1,]   NA   NA
+> matrix(logical(0), 1, 2)
+     [,1] [,2]
+[1,]   NA   NA
+> matrix(numeric(0), 1, 2)
+     [,1] [,2]
+[1,]   NA   NA
+> matrix(complex(0), 1, 2)
+     [,1] [,2]
+[1,]   NA   NA
+> matrix(list(), 1, 2)
+     [,1] [,2]
+[1,] NULL NULL
+> ## did not work < 1.9.0
+> 
+> 

@@ -12,7 +12,7 @@ as.array(x)
 is.array(x)
 }
 \arguments{
-  \item{data}{a vector giving data to fill the array.}
+  \item{data}{a vector (including a list) giving data to fill the array.}
   \item{dim}{the dim attribute for the array to be created, that is a
     vector of length one or more giving the maximal indices in
     each dimension.}
@@ -27,7 +27,9 @@ is.array(x)
   and naming information in \code{dimnames}.  The values in \code{data} are
   taken to be those in the array with the leftmost subscript moving
   fastest.  If there are too few elements in \code{data} to fill the array,
-  then the elements in \code{data} are recycled.
+  then the elements in \code{data} are recycled.  If \code{data} has
+  length zero, \code{NA} of an appropriate type is used for atomic
+  vectors and \code{NULL} for lists.
 
   \code{as.array()} coerces its argument to be an array by attaching a
   \code{\link{dim}} attribute to it.  It also attaches

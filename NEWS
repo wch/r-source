@@ -181,6 +181,12 @@ NEW FEATURES
 
     o   Added experimental support for conditionals in NAMESPACE files.
 
+    o   rep.default(0-length-vector, length.out=n) now gives a vector
+	of length n and not length 0, for compatibility with S.
+
+    o   array() and matrix() now allow 0-length `data' arguments for
+	compatibility with S.
+
 
 UTILITIES
 

@@ -49,6 +49,11 @@ rep.int(x, times)
 
   Non-integer values of \code{times} will be truncated towards zero.
   If \code{times} is a computed quantity it is prudent to add a small fuzz.
+
+  If \code{x} has length zero and \code{length.out} is supplied and is
+  positive, the values are filled in using the extraction rules, that is
+  by an \code{NA} of the appropriate class for an atomic vector and
+  \code{NULL} for a list.  
 }
 \value{
   A vector of the same class as \code{x}.

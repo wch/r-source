@@ -1134,3 +1134,37 @@ detach("package:stats4")
 unloadNamespace("stats4")
 ## Just tests
 
+
+## rep(0-length-vector, length.out > 0)
+rep(integer(0), length.out=0)
+rep(integer(0), length.out=10)
+typeof(.Last.value)
+rep(logical(0), length.out=0)
+rep(logical(0), length.out=10)
+typeof(.Last.value)
+rep(numeric(0), length.out=0)
+rep(numeric(0), length.out=10)
+typeof(.Last.value)
+rep(character(0), length.out=0)
+rep(character(0), length.out=10)
+typeof(.Last.value)
+rep(complex(0), length.out=0)
+rep(complex(0), length.out=10)
+typeof(.Last.value)
+rep(list(), length.out=0)
+rep(list(), length.out=10)
+## always 0-length before 1.9.0
+
+
+## supplying 0-length data to array and matrix
+array(numeric(0), c(2, 2))
+array(list(), c(2,2))
+# worked < 1.8.0, error in 1.8.x
+matrix(character(0), 1, 2)
+matrix(integer(0), 1, 2)
+matrix(logical(0), 1, 2)
+matrix(numeric(0), 1, 2)
+matrix(complex(0), 1, 2)
+matrix(list(), 1, 2)
+## did not work < 1.9.0
+

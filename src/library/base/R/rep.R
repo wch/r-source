@@ -2,7 +2,8 @@ rep <- function(x, times, ...) UseMethod("rep")
 
 rep.default <- function(x, times, length.out, each, ...)
 {
-    if (length(x) == 0) return(x)
+    if (length(x) == 0)
+        return(if(missing(length.out)) x else x[seq(len=length.out)])
     if (!missing(each)) {
         x <- .Internal(rep(x, .Internal(rep(each, length(x)))))
         if(missing(length.out) && missing(times)) return(x)
