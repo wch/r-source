@@ -2065,16 +2065,16 @@ cleanup:
 
     if(!done)
 	 R_Suicide("cannot find unused tempdir name");
-	 err = DirCreate(foundVRefNum, foundDirID, string, &foundDirID);
+    err = DirCreate(foundVRefNum, foundDirID, string, &foundDirID);
     if(err!=noErr) 
-     R_Suicide("Can't mkdir R_TempDir");
+	R_Suicide("Can't mkdir R_TempDir");
     len = strlen(tm);
-    p = (char *) malloc(len);
+    p = (char *) malloc(len+1);
     if(!p) 
-     R_Suicide("Can't allocate R_TempDir");
+	R_Suicide("Can't allocate R_TempDir");
     else {
-	 R_TempDir = p;
-	 strcpy(R_TempDir, tm);
+	R_TempDir = p;
+	strcpy(R_TempDir, tm);
     }
 }
 
