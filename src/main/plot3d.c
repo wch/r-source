@@ -748,18 +748,6 @@ static void Perspective (double d)
     Accumulate(T);
 }
 
-static void SetViewingTrans (double theta, double phi, double r, double d)
-{
-    SetToIdentity(VT);
-    /* Translate(-xc, -yc, -zc);  /* center at the origin */
-    /* Scale(xs, ys, zs);         /* scale extents to [-1,1] */
-    XRotate(-90.0);            /* rotate x-y plane to horizontal */
-    YRotate(-theta);           /* azimuthal rotation */
-    XRotate(-phi);             /* elevation rotation */
-    Translate(0.0, 0.0, -r);   /* translate the eyepoint to the origin */
-    Perspective(d);            /* perspective */
-}
-
 
 /* Determine the depth ordering of the facets to ensure */
 /* that they are drawn in an occlusion compatible order. */
@@ -792,97 +780,103 @@ void OrderFacets(double *depth, int *index, int n)
     while (h != 1);
 }
 
-/* For each facet, determine the closest point to the eye. */
-/* Sorting the facets so that these depths are decreasing */
-/* yields an occlusion compatible ordering order. */
-/* At the same time we compute the plotting window. */
 
-static double xmin, xmax;
-static double ymin, ymax;
+/* For each facet, determine the farthest point from the eye. */
+/* Sorting the facets so that these depths are decreasing */
+/* yields an occlusion compatible ordering. */
+/* Note that we ignore z values when doing this. */
 
 static int DepthOrder(double *z, double *x, double *y, int nx, int ny,
 		      double *depth, int *index)
 {
     int i, ii, j, jj, nx1, ny1;
     Vector3d u, v;
-    double d, xx, yy;
+    double d;
     nx1 = nx - 1;
     ny1 = ny - 1;
     for (i = 0 ; i < nx1*ny1 ; i++)
-	    index[i] = i;
-    xmin = DBL_MAX; xmax = -DBL_MAX;
-    ymin = DBL_MAX; ymax = -DBL_MAX;
+	index[i] = i;
     for (i = 0 ; i < nx1 ; i++)
 	for (j = 0 ; j < ny1 ; j++) {
-	    d = DBL_MAX;
+	    d = -DBL_MAX;
 	    for (ii = 0 ; ii <= 1 ; ii++)
 		for (jj = 0 ; jj <= 1 ; jj++) {
 		    u[0] = x[i+ii];
 		    u[1] = y[j+jj];
-		    u[2] = z[i+ii+(j+jj)*nx];
+		    /* Originally I had the following line here: */
+		    /* u[2] = z[i+ii+(j+jj)*nx]; */
+		    /* But this leads to artifacts. */
+		    /* It has been replaced by the following line: */
+		    u[2] = 0;
 		    u[3] = 1;
-		    TransVector(u, VT, v);
-		    if (v[3] < d) d = v[3];
-		    xx = v[0] / v[3];
-		    yy = v[1] / v[3];
-		    if(xx < xmin) xmin = xx;
-		    if(xx > xmax) xmax = xx;
-		    if(yy < ymin) ymin = yy;
-		    if(yy > ymax) ymax = yy;
+		    if (FINITE(u[0]) &&  FINITE(u[1]) && FINITE(u[2])) {
+			TransVector(u, VT, v);
+			if (v[3] > d) d = v[3];
+		    }
 		}
 	    depth[i+j*nx1] = d;
 	    
 	}
-#ifdef OLD
-    if (xmax > -xmin) xmin = -xmax;
-    else xmax = -xmin;
-    if (ymax > -ymin) ymin = -ymax;
-    else ymax = -ymin;
-#endif
-
     OrderFacets(depth, index, nx1 * ny1);
 }
 
+
 static void DrawFacets(double *z, double *x, double *y, int nx, int ny,
-		       int *index)
+		       int *index, int *col, int ncol)
 {
     double xx[4], yy[4];
     Vector3d u, v;
-    int i, j, k, n, nx1, ny1;
+    int i, j, k, n, nx1, ny1, icol, nv;
     DevDesc *dd;
     dd = CurrentDevice();
     nx1 = nx - 1;
     ny1 = ny - 1;
     n = nx1 * ny1;
     for(k = 0 ; k < n ; k++) {
+	nv = 0;
 	i = index[k] % nx1;
 	j = index[k] / nx1;
+	icol = (i + j * nx1) % ncol;
 
 	u[0] = x[i]; u[1] = y[j]; u[2] = z[i+j*nx]; u[3] = 1;
-	TransVector(u, VT, v);
-	xx[0] = v[0] / v[3];
-	yy[0] = v[1] / v[3];
+	if (FINITE(u[0]) &&  FINITE(u[1]) && FINITE(u[2])) {
+	    TransVector(u, VT, v);
+	    xx[nv] = v[0] / v[3];
+	    yy[nv] = v[1] / v[3];
+	    nv++;
+	}
 
 	u[0] = x[i+1]; u[1] = y[j]; u[2] = z[i+1+j*nx]; u[3] = 1;
-	TransVector(u, VT, v);
-	xx[1] = v[0] / v[3];
-	yy[1] = v[1] / v[3];
+	if (FINITE(u[0]) &&  FINITE(u[1]) && FINITE(u[2])) {
+	    TransVector(u, VT, v);
+	    xx[nv] = v[0] / v[3];
+	    yy[nv] = v[1] / v[3];
+	    nv++;
+	}
 
 	u[0] = x[i+1]; u[1] = y[j+1]; u[2] = z[i+1+(j+1)*nx]; u[3] = 1;
-	TransVector(u, VT, v);
-	xx[2] = v[0] / v[3];
-	yy[2] = v[1] / v[3];
+	if (FINITE(u[0]) &&  FINITE(u[1]) && FINITE(u[2])) {
+	    TransVector(u, VT, v);
+	    xx[nv] = v[0] / v[3];
+	    yy[nv] = v[1] / v[3];
+	    nv++;
+	}
 
 	u[0] = x[i]; u[1] = y[j+1]; u[2] = z[i+(j+1)*nx]; u[3] = 1;
-	TransVector(u, VT, v);
-	xx[3] = v[0] / v[3];
-	yy[3] = v[1] / v[3];
+	if (FINITE(u[0]) &&  FINITE(u[1]) && FINITE(u[2])) {
+	    TransVector(u, VT, v);
+	    xx[nv] = v[0] / v[3];
+	    yy[nv] = v[1] / v[3];
+	    nv++;
+	}
 
-	GPolygon(4, xx, yy, USER, dd->gp.bg, dd->gp.fg, dd);
+	if (nv > 2)
+	    GPolygon(nv, xx, yy, USER, col[icol], dd->gp.fg, dd);
     }
 }
 
-static int CheckRange(double *x, int n)
+
+static int CheckRange(double *x, int n, double min, double max)
 {
     double xmin, xmax;
     int i;
@@ -893,87 +887,195 @@ static int CheckRange(double *x, int n)
 	    if(x[i] < xmin) xmin = x[i];
 	    if(x[i] > xmax) xmax = x[i];
 	}
-    if(xmin < -1 || xmax > 1)
-	errorcall(gcall, "incorrectly scaled coordinates\n");
+    if(xmin < min || xmax > max)
+	errorcall(gcall, "coordinates outsize specified range\n");
+}
+
+static int PerspWindow(double *xlim, double *ylim, double *zlim, DevDesc *dd)
+{
+    double pin1, pin2, scale, xdelta, ydelta, xscale, yscale, xadd, yadd;
+    double xmax, xmin, ymax, ymin, xx, yy;
+    Vector3d u, v;
+    int i, j, k;
+    
+    xmax = xmin = ymax = ymin = 0;
+    u[3] = 1;
+    for(i=0 ; i<2 ; i++) {
+	u[0] = xlim[i];
+	for(j=0 ; j<2 ; j++) {
+	    u[1] = ylim[j];
+	    for(k=0 ; k<2 ; k++) {
+		u[2] = zlim[k];
+		TransVector(u, VT, v);
+		xx = v[0] / v[3];
+		yy = v[1] / v[3];
+		if(xx > xmax) xmax = xx;
+		if(xx < xmin) xmin = xx;
+		if(yy > ymax) ymax = yy;		
+		if(yy < ymin) ymin = yy;		
+	    }
+	}
+    }
+    pin1 = GConvertXUnits(1.0, NPC, INCHES, dd);
+    pin2 = GConvertYUnits(1.0, NPC, INCHES, dd);
+    xdelta = fabs(xmax - xmin);
+    ydelta = fabs(ymax - ymin);
+    xscale = pin1 / xdelta;
+    yscale = pin2 / ydelta;
+    scale = (xscale < yscale) ? xscale : yscale;
+    xadd = .5 * (pin1 / scale - xdelta);
+    yadd = .5 * (pin2 / scale - ydelta);
+    GScale(xmin - xadd, xmax + xadd, 1, dd);
+    GScale(ymin - yadd, ymax + yadd, 2, dd);
+    GMapWin2Fig(dd);
+}
+
+static int LimitCheck(double *lim, double *c, double *s)
+{
+    if(!FINITE(lim[0]) || !FINITE(lim[1]) || lim[0] >= lim[1])
+	return 0;
+    *s = 0.5 * fabs(lim[1] - lim[0]);
+    *c = 0.5 * (lim[1] + lim[0]);
+    return 1;
 }
 
 SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, y, z, eye, depth, index, originalArgs;
-    double theta, phi, r, d;
+    SEXP x, y, z, xlim, ylim, zlim, depth, index, originalArgs, col, border;
+    double theta, phi, r, d, expand, xc, yc, zc, xs, ys, zs;
+    int scale, ncol;
     DevDesc *dd;
 
-    if(length(args) < 4)
+    if(length(args) < 12)
 	errorcall(call, "too few parameters\n");
     gcall = call;
     originalArgs = args;
 
-    PROTECT(z = coerceVector(CAR(args), REALSXP));
-    if (!isReal(z) || !isMatrix(z) || nrows(z) < 2 || ncols(z) < 2)
-	errorcall(call, "invalid z argument\n");
-    args = CDR(args);
-
     PROTECT(x = coerceVector(CAR(args), REALSXP));
-    if (!isReal(x) || length(x) != nrows(z))
-	errorcall(call, "invalid x argument\n");
+    if (length(x) < 2) errorcall(call, "invalid x argument\n");
     args = CDR(args);
 
     PROTECT(y = coerceVector(CAR(args), REALSXP));
-    if (!isReal(y) || length(y) != ncols(z))
-	errorcall(call, "invalid y argument\n");
+    if (length(y) < 2) errorcall(call, "invalid y argument\n");
     args = CDR(args);
 
-    PROTECT(eye = coerceVector(CAR(args), REALSXP));
-    if (!isReal(eye) || length(eye) != 4 ||
-	REAL(eye)[2] <= 1 || REAL(eye)[3] <= 0)
-	errorcall(call, "invalid eye argument\n");
-    theta = REAL(eye)[0];
-    phi   = REAL(eye)[1];
-    r     = REAL(eye)[2];
-    d     = REAL(eye)[3];
+    PROTECT(z = coerceVector(CAR(args), REALSXP));
+    if (!isMatrix(z) || nrows(z) != length(x) || ncols(z) != length(y))
+	errorcall(call, "invalid z argument\n");
+    args = CDR(args);
 
-    /* Check that coordinates have been scaled to [-1,1] */
-    CheckRange(REAL(z), length(z));
-    CheckRange(REAL(x), length(x));
-    CheckRange(REAL(y), length(y));
+    PROTECT(xlim = coerceVector(CAR(args), REALSXP));
+    if (length(xlim) != 2) errorcall(call, "invalid xlim argument\n");
+    args = CDR(args);
+
+    PROTECT(ylim = coerceVector(CAR(args), REALSXP));
+    if (length(ylim) != 2) errorcall(call, "invalid ylim argument\n");
+    args = CDR(args);
+
+    PROTECT(zlim = coerceVector(CAR(args), REALSXP));
+    if (length(zlim) != 2) errorcall(call, "invalid zlim argument\n");
+    args = CDR(args);
+
+    /* Checks on x/y/z Limits */
+
+    if (!LimitCheck(REAL(xlim), &xc, &xs))
+	errorcall(call, "invalid x limits\n");
+    if (!LimitCheck(REAL(ylim), &yc, &ys))
+	errorcall(call, "invalid y limits\n");
+    if (!LimitCheck(REAL(zlim), &zc, &zs))
+	errorcall(call, "invalid z limits\n");
+
+    theta = asReal(CAR(args));
+    args = CDR(args);
+
+    phi = asReal(CAR(args));
+    args = CDR(args);
+
+    r = asReal(CAR(args));
+    args = CDR(args);
+
+    d = asReal(CAR(args));
+    args = CDR(args);
+
+    scale = asLogical(CAR(args));
+    args = CDR(args);
+
+    expand = asReal(CAR(args));
+    args = CDR(args);
+
+    PROTECT(col = FixupCol(CAR(args), dd));
+    ncol = LENGTH(col);
+    if (ncol < 1)
+	errorcall(call, "invalid col specification\n");
+    args = CDR(args);
+
+    PROTECT(border = FixupCol(CAR(args), dd));
+    if (length(border) < 1)
+	errorcall(call, "invalid border specification\n");
+    args = CDR(args);
+
+    if (!scale) {
+	double s;
+	s = xs;
+	if (s < ys) s = ys;
+	if (s < zs) s = zs;
+	xs = s; ys = s; zs = s;
+    }
+
+    /* Parameter Checks */
+
+    if (!FINITE(theta) || !FINITE(phi) || !FINITE(r) || !FINITE(d) ||
+	d < 0 || r < 0)
+	errorcall(call, "invalid viewing parameters\n");
+    if (!FINITE(expand) || expand < 0)
+	errorcall(call, "invalid expand value\n");
+    if (scale == NA_LOGICAL)
+	scale = 0;
 
     dd = GNewPlot(call != R_NilValue, NA_LOGICAL);
     GSetState(1, dd);
     GSavePars(dd);
     ProcessInlinePars(args, dd);
+    if(length(border) > 1)
+	dd->gp.fg = INTEGER(border)[0];
     dd->gp.xlog = 0;
     dd->gp.ylog = 0;
 
     /* Specify the viewing transformation. */
-    SetViewingTrans(theta, -phi, r, d);
     
-    /* Compute the plotting window and facet order. */
+    SetToIdentity(VT);             /* Initialization */
+    Translate(-xc, -yc, -zc);      /* center at the origin */
+    Scale(1/xs, 1/ys, expand/zs);  /* scale extents to [-1,1] */
+    XRotate(-90.0);                /* rotate x-y plane to horizontal */
+    YRotate(-theta);               /* azimuthal rotation */
+    XRotate(phi);                  /* elevation rotation */
+    Translate(0.0, 0.0, -r - d);   /* translate the eyepoint to the origin */
+    Perspective(d);                /* perspective */
+    
+    /* Specify the plotting window. */
+    /* Here we map the vertices of the cube */
+    /* [xmin,xmax]*[ymin,ymax]*[zmin,zmax] */
+    /* to the screen and then chose a window */
+    /* which is symmetric about (0,0). */
+
+    PerspWindow(REAL(xlim), REAL(ylim), REAL(zlim), dd);
+
+    /* Compute facet order. */
+
     PROTECT(depth = allocVector(REALSXP, (nrows(z) - 1)*(ncols(z) - 1)));
     PROTECT(index = allocVector(INTSXP, (nrows(z) - 1)*(ncols(z) - 1)));
     DepthOrder(REAL(z), REAL(x), REAL(y), nrows(z), ncols(z),
 	       REAL(depth), INTEGER(index));
 
-    /* Specify the window. */
-    if(1) {
-	double pin1, pin2, scale, xdelta, ydelta, xscale, yscale, xadd, yadd;
-	pin1 = GConvertXUnits(1.0, NPC, INCHES, dd);
-	pin2 = GConvertYUnits(1.0, NPC, INCHES, dd);
-	xdelta = fabs(xmax - xmin);
-	ydelta = fabs(ymax - ymin);
-	xscale = pin1 / xdelta;
-	yscale = pin2 / ydelta;
-	scale = (xscale < yscale) ? xscale : yscale;
-	xadd = .5 * (pin1 / scale - xdelta);
-	yadd = .5 * (pin2 / scale - ydelta);
-	GScale(xmin - xadd, xmax + xadd, 1, dd);
-	GScale(ymin - yadd, ymax + yadd, 2, dd);
-    }
-    GMapWin2Fig(dd);
+    /* Now we order the facets by depth */
+    /* and then draw them back to front. */
+    /* This is the "painters" algorithm. */
 
-    DrawFacets(REAL(z), REAL(x), REAL(y), nrows(z), ncols(z), INTEGER(index));
+    DrawFacets(REAL(z), REAL(x), REAL(y), nrows(z), ncols(z), INTEGER(index),
+	       INTEGER(col), ncol);
 
     GRestorePars(dd);
-    UNPROTECT(6);
+    UNPROTECT(10);
     if (call != R_NilValue)
         recordGraphicOperation(op, originalArgs, dd);
     return x;
