@@ -22,9 +22,8 @@
  *  ../unix/X11/devX11.c --
  */
 
-/* uncomment to enable double-buffering.
+/* comment out to disable double-buffering */
 #define BUFFERED
-*/
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
