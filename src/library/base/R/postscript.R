@@ -99,7 +99,7 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
 postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
                         onefile=TRUE, family, ...)
 {
-    new <- list(onefile=onefile,...)# eval
+    new <- list(onefile=onefile, ...)# eval
     old <- check.options(new = new, name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
 
@@ -125,14 +125,15 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
                  old$onefile, old$pagecentre))
 }
 
-pdf <- function (file = "Rplots.pdf", width = 6, height = 6, ...)
+pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
+                 width = 6, height = 6, onefile=TRUE, ...)
 {
-    new <- list(...)# eval
+    new <- list(onefile=onefile, ...)# eval
     old <- check.options(new = new, name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
 
     .Internal(PDF(file, old$family, old$encoding, old$bg, old$fg,
-                  width, height, old$pointsize))
+                  width, height, old$pointsize, old$onefile))
 }
 
 .ps.prolog <- c(

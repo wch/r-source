@@ -2,11 +2,13 @@
 \alias{pdf}
 \title{PDF Graphics Device}
 \synopsis{
-pdf(file = "Rplots.pdf", width=6, height = 6, \dots)
+pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
+    width = 6, height = 6, onefile = TRUE, \dots)
 }
 \usage{
-pdf(file = "Rplots.pdf",  width=6, height = 6,
-    family = "Helvetica", encoding, bg, fg, pointsize)
+pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
+    width = 6, height = 6, onefile = TRUE, family = "Helvetica",
+    encoding, bg, fg, pointsize)
 }
 %% The definitive doc is the source :-)
 %% 	../../../main/devices.c  &   ../../../unix/devPS.c
@@ -17,12 +19,25 @@ pdf(file = "Rplots.pdf",  width=6, height = 6,
 \arguments{
   \item{file}{a character string giving the name of the file.}
   \item{width, height}{the width and height of the graphics region in inches.}
+  \item{onefile}{logical: if true (the default) allow multiple figures
+    in one file. If false, generate a file name containing the page number.}
   \item{family}{the font family to be used, one of \code{"AvantGarde"},
     \code{"Bookman"}, \code{"Courier"}, \code{"Helvetica"},
     \code{"Helvetica-Narrow"}, \code{"NewCenturySchoolbook"},
     \code{"Palatino"} or \code{"Times"}. }
   \item{encoding}{the name of an encoding file. Defaults to
-    "ISOLatin1.enc" in the \file{R\_HOME/afm} directory.}
+#ifdef unix
+"ISOLatin1.enc"
+#endif
+#ifdef windows
+"WinAnsi.enc"
+#endif
+#ifdef mac
+"MacRoman.enc"
+#endif
+    in the \file{R\_HOME/afm} directory, which is used
+    if the path does not contain a path separator.  An extension
+    \code{".enc"} can be omitted.}
   \item{pointsize}{the default point size to be used.}
   \item{bg}{the default background color to be used.}
   \item{fg}{the default foreground color to be used.}
@@ -32,7 +47,20 @@ pdf(file = "Rplots.pdf",  width=6, height = 6,
   commands needed to plot any graphics requested are sent to that file.
 
   See \code{\link{postscript}} for details of encodings, as the
-  internal code is shared between the drivers.
+  internal code is shared between the drivers.  The native PDF encoding
+  is given in file \file{PDFDoc.enc}.
+
+  \code{pdf} writes uncompressed PDF.  It is primarily intended for
+  producing PDF graphics for inclusion in other documents, and
+  PDF-includers such as \code{pdftex} are usually able to handle
+  compression.
+
+  At present the PDF is fairly simple, with each page being represented
+  as a single stream.  The \R graphics model does not distinguish
+  graphics objects at the level of the driver interface.
+
+  There is an internal limit of 500 pages per PDF file, which should
+  be ample.
 }
 \seealso{
     \code{\link{Devices}}, \code{\link{postscript}}

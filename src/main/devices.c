@@ -245,6 +245,8 @@ SEXP do_PDF(SEXP call, SEXP op, SEXP args, SEXP env)
     char *vmax;
     char *file, *encoding, *family, *bg, *fg;
     double height, width, ps;
+    int onefile;
+
     gcall = call;
     vmax = vmaxget();
     file = SaveString(CAR(args), 0);  args = CDR(args);
@@ -254,7 +256,8 @@ SEXP do_PDF(SEXP call, SEXP op, SEXP args, SEXP env)
     fg = SaveString(CAR(args), 0);    args = CDR(args);
     width = asReal(CAR(args));	      args = CDR(args);
     height = asReal(CAR(args));	      args = CDR(args);
-    ps = asReal(CAR(args));
+    ps = asReal(CAR(args));           args = CDR(args);
+    onefile = asLogical(CAR(args));
 
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
@@ -264,7 +267,7 @@ SEXP do_PDF(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd->displayList = R_NilValue;
 	GInit(&dd->dp);
 	if(!PDFDeviceDriver(dd, file, family, encoding, bg, fg, 
-			    width, height, ps)) {
+			    width, height, ps, onefile)) {
 	    free(dd);
 	    errorcall(call, "unable to start device pdf");
 	}

@@ -84,7 +84,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
   \item{fg}{the default foreground color to be used.}
   \item{onefile}{logical: if true (the default) allow multiple figures
     in one file. If false, generate a
-    file number containing the page number and give EPSF header
+    file name containing the page number and give EPSF header
     and no \code{DocumentMedia} comment.}
   \item{pagecentre}{logical: should the device region be centred on the page:
     defaults to true.}

@@ -61,7 +61,7 @@ XFigDeviceDriver(DevDesc*, char*, char*, char*,
 
 Rboolean 
 PDFDeviceDriver(DevDesc*, char*, char*, char*,
-		char*, char*, double, double, double);
+		char*, char*, double, double, double, int);
 
 #ifdef OLD_Macintosh
 Rboolean MacDeviceDriver(char**, int, double*, int);
