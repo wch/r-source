@@ -4015,6 +4015,8 @@ trap 'rm -fr `echo "Makeconf cmd/fwf2table doc/keyword-test etc/COMPILE
   etc/SHLIB etc/Sd2Rd etc/build-help etc/help.pretty
   etc/html2dos src/front/R.sh demos/dynload/Makefile
   doc/manual/lib2tex
+  src/appl/Makefile src/graphics/Makefile src/main/Makefile
+  src/nmath/Makefile src/unix/Makefile
  src/include/Platform.h" | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
 EOF
 cat >> $CONFIG_STATUS <<EOF
@@ -4131,6 +4133,8 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf cmd/fwf2table doc/keyword-test etc/COMPIL
   etc/SHLIB etc/Sd2Rd etc/build-help etc/help.pretty
   etc/html2dos src/front/R.sh demos/dynload/Makefile
   doc/manual/lib2tex
+  src/appl/Makefile src/graphics/Makefile src/main/Makefile
+  src/nmath/Makefile src/unix/Makefile
 "}
 EOF
 cat >> $CONFIG_STATUS <<\EOF
