@@ -644,7 +644,6 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 		}
 	    /* PrintValue(source); */
 	}
-	FunctionLevel--;
 	PROTECT(ans = lang4(fname, CDR(formals), body, source));
 	UNPROTECT_PTR(source);
     }
@@ -652,6 +651,7 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 	PROTECT(ans = R_NilValue);
     UNPROTECT_PTR(body);
     UNPROTECT_PTR(formals);
+    FunctionLevel--;
     return ans;
 }
 
@@ -901,6 +901,7 @@ static void ParseInit()
     SavedLval = R_NilValue;
     EatLines = 0;
     EndOfFile = 0;
+    FunctionLevel=0;
     SourcePtr = FunctionSource;
     xxcharcount = 0;
     KeepSource = *LOGICAL(GetOption(install("keep.source"), R_NilValue));
@@ -1615,11 +1616,14 @@ static int SymbolValue(int c)
     /* FIXME: check overrun conditions */
     if ((kw = KeywordLookup(yytext))) {
 	if ( kw == FUNCTION ) {
-	    if ( FunctionLevel++ == 0 ) {
+	    if ( FunctionLevel++ == 0 && GenerateCode) {
 		strcpy(FunctionSource, "function");
 		SourcePtr = FunctionSource + 8;
 	    }
 	    FunctionStart[FunctionLevel] = SourcePtr - 8;
+	    #if 0
+	    printf("%d,%d\n",SourcePtr - FunctionSource, FunctionLevel);
+	    #endif
 	}
 	return kw;
     }
