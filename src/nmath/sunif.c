@@ -124,16 +124,15 @@ double sunif(void)
 #endif
 	return (I1^I2) * i2_32m1;/* in [0,1) */
 
-
-    case MERSENNE_TWISTER:
-
-	return 0.5;/*PLACE HOLDER*/
-
     case RAND:
 	/* Use ANSI C_INTERNAL  (with which you can only SET a seed,
 	   but not get the current)*/
 
 	return rand()/(.1 + RAND_MAX);/* in [0,1) */
+
+    case MERSENNE_TWISTER:
+
+	return 0.5;/*PLACE HOLDER*/
 
     default:/* can never happen (enum type)*/ return -1.;
   }
@@ -171,13 +170,11 @@ void FixupSeeds(RNGtype kind)
 	RNG_Table[kind].i2_seed |= 1;
 	break;
 
+    case RAND:/* no read-access to seed */
+
     case MERSENNE_TWISTER:
 
 	break;
-
-
-    case RAND:/* no read-access to seed */
-
     }
 }
 

@@ -9,9 +9,8 @@ typedef enum {
     WICHMANN_HILL,
     MARSAGLIA_MULTICARRY,
     SUPER_DUPER,
+    RAND,
     MERSENNE_TWISTER,
-
-    RAND
 } RNGtype;
 
 typedef struct {

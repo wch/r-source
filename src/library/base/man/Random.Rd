@@ -25,9 +25,7 @@ RNGkind(kind=NULL)
 }
 \details{
         
- --- --- to be expanded --- ---
-    
-Available RNG kinds:
+Currently available RNG kinds
 
  \itemize{
      \item "Wichmann-Hill": \code{.Random.seed[1] == 0} 
@@ -40,37 +38,50 @@ Available RNG kinds:
      6.9536e12 (= \code{prod(p-1)/4} ), see p.123 of
      Applied Statistics (1984) vol.33 which corrects the original article.
     
-    \item "Marsaglia-Multicarry"
+    \item "Marsaglia-Multicarry": \code{.Random.seed[1] == 1} 
 
     A \emph{multiply-with-carry} RNG is used, as recommended by
     George Marsaglia in his post to the mailing list
     \file{sci.stat.math} on September 29, 1997.  It has a period of
     \eqn{> 2^60} and has passed all tests (according to Marsaglia).
 
-    \item "Super-Duper"
+    \item "Super-Duper": \code{.Random.seed[1] == 2} 
+
     Marsaglia's famous Super-Duper from the 70's.  This is the original
     version which does \emph{not} pass the MTUPLE test of the Diehard
     battery.
+    It has a period of \eqn{\approx 4.6\times 10^{18}}{4.6*10^18}.
+    
+    We use the implementation as by Reeds et al. (1982-'83), with the
+    additional non-0 seed measure (see note below).
+    
     The two seeds are the Tausworthe and Congruence long integers,
     respectively.
     A one-to-one mapping to S's \code{.Random.seed[1:12]} is possible
     but hasn't been done yet.
     
+%%BUG 'stack ...' \item "Rand": \code{.Random.seed[1] == 3}
+%%BUG 'stack ...'
+%%BUG 'stack ...' This is the cheap Unix built-in generator which is not at all
+%%BUG 'stack ...' recommended for simulation.  Further, you can only set, but never
+%%BUG 'stack ...' retrieve the internal seed used.  Therefore, the value of
+%%BUG 'stack ...' \code{.Random.seed} is of no relevance (but you can set it!).
+
     % NOT YET:
-    % \item "Mersenne-Twister"
+    % \item "Mersenne-Twister": \code{.Random.seed[1] == 4}
+  }
 
-    \item "Rand"
-
-    This is the cheap Unix built-in generator which is not at all
-    recommended for simulation.  Further, you can only set, but never
-    retrieve the internal seed used.  Therefore, the value of
-    \code{.Random.seed} is of no relevance (but you can set it!).
-}
-
-\emph{Note}: If any of \code{.Random.seed[i]} is set to \code{0}, it
-  will be substituted with \code{1}, in the next call to a random number
-  generator, such as \code{\link{runif}}.
-
+ --- --- to be expanded --- ---
+    
+ ((Planned additions are
+ "Mersenne-Twister",
+ "Knuth-TAOCP" (from TAOCP, Vol.2, 3rd ed.,1997),
+ "Ecuyer-...",
+ "Eichenauer-..."))
+ 
+ \bold{Note}: If any of \code{.Random.seed[i]} (\eqn{i>1}) is set to
+ \code{0}, it will be substituted with \code{1}, in the next call to a
+ random number generator, such as \code{\link{runif}}.
 }
 \value{
     \code{.Random.seed} is an \code{\link{integer}} vector whose first

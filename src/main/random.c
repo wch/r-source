@@ -110,13 +110,13 @@ static void RNGkind(RNGtype newkind)
     case MARSAGLIA_MULTICARRY:
     case SUPER_DUPER:
       break;
+    case RAND:
+	error("RNGkind: \"Rand\" not yet available (BUG)!\n");
+	srand((unsigned int)sunif()*UINT_MAX);
+      break;
     case MERSENNE_TWISTER:
 	/* ... */
 	error("RNGkind: \"Mersenne-Twister\" not yet available!\n");
-      break;
-
-    case RAND:
-	srand((unsigned int)sunif()*UINT_MAX);
       break;
     default:
       error("RNGkind: unimplemented RNG kind %d\n", newkind);
