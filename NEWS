@@ -50,10 +50,10 @@ NEW FEATURES
 	When FALSE, the result is usually parseable to reproduce the
 	object. dump() defaults to FALSE, the others default to TRUE.
 	
-    o	deparse(), dput() and dump() also have a new 'useSource'
-	argument that indicates they should used saved source for
-	function definitions (including comments and formatting) rather
-	than deparsing the internal representation.  dump() defaults to
+    	deparse(), dput() and dump() have a new 'useSource' argument
+	that indicates they should used saved source for function
+	definitions (including comments and formatting) rather than
+	deparsing the internal representation.  dump() defaults to
 	TRUE, the others default to FALSE.
     	
     o	source() with 'echo = TRUE' uses 'useSource = TRUE' when
@@ -82,17 +82,17 @@ NEW FEATURES
 
     o	str(obj) now displays more reasonably the STRucture of S4 objects.
 
-    o	fisher.test(*, conf.int=FALSE) allows to skip the confidence
-	interval computation
+    o	fisher.test(*, conf.int=FALSE) allows the confidence interval
+	computation to be skipped.
 
     o	formula() methods for classes "lm" and "glm" used the expanded
 	formula (with '.' expanded) from the terms component.
 
-    o	eapply() - apply for environments has been added. The supplied
-        function is applied to each element of the environment; order
+    o	New function eapply() - apply for environments.  The supplied
+        function is applied to each element of the environment; the order
         of application is not specified.
 
-    o   system.time() has a new argument gcFirst which, when TRUE,
+    o   system.time() has a new argument 'gcFirst' which, when TRUE,
         forces a garbage collection before timing begins.
 
 
@@ -124,6 +124,10 @@ DEPRECATED & DEFUNCT
 
     o	C-level entry point ptr_R_GetX11Image has been removed, as it
 	was replaced by R_GetX11Image at 1.7.0.
+
+    o	The undocumented C-level entry point R_IsNaNorNA has been
+	removed.  It was used in a couple of packages, and should be
+	replaced by a call to the documented macro ISNAN.
 
 
 INSTALLATION CHANGES
