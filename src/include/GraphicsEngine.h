@@ -27,9 +27,17 @@ typedef enum {
      * anything done in the initialisation.
      */
     GE_FinaliseState = 1,
-    /* This event means that the graphics system should do a redraw.
+    /* This is sent by the graphics engine prior to initialising
+     * the display list.  It give the graphics system the chance
+     * to squirrel away information it will need for redrawing the
+     * the display list
      */
-    GE_Redraw = 2,
+    GE_SaveState = 2,
+    /* This is sent by the graphics engine prior to replaying the
+     * display list.  It gives the graphics system the chance to
+     * restore any information it saved on the GE_SaveState event
+     */
+    GE_RestoreState = 6,
     /* Copy system state information to the current device.
      * This is used when copying graphics from one device to another
      * so all the graphics system needs to do is to copy across
@@ -43,7 +51,14 @@ typedef enum {
     GE_SaveSnapshotState = 4,
     /* Restore the system state that is saved by GE_SaveSnapshotState
      */
-    GE_RestoreSnapshotState = 5
+    GE_RestoreSnapshotState = 5,
+    /* When replaying the display list, the graphics engine 
+     * checks, after each replayed action, that the action 
+     * produced valid output.  This is the graphics system's
+     * chance to say that the output is crap (in which case the
+     * graphics engine will abort the display list replay).
+     */
+    GE_CheckPlot = 7
 } GEevent;
 
 /* The full definition should be ...
@@ -182,6 +197,8 @@ double GEStrHeight(char *str, int font, double cex, double ps, GEDevDesc *dd);
 #define	DEG2RAD 0.01745329251994329576
 
 GEDevDesc* GEcurrentDevice();
+void GEinitDisplayList(GEDevDesc *dd);
+void GEplayDisplayList(GEDevDesc *dd);
 void GEcopyDisplayList(int fromDevice);
 SEXP GEcreateSnapshot(GEDevDesc *dd);
 void GEplaySnapshot(SEXP snapshot, GEDevDesc* dd);

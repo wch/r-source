@@ -1814,15 +1814,40 @@ void GENewPage(int fill, GEDevDesc *dd)
 }
 
 /****************************************************************
+ * GEinitDisplayList
+ ****************************************************************
+ */
+
+void GEinitDisplayList(GEDevDesc *dd)
+{
+    int i;
+    /* Get each graphics system to save state required for 
+     * replaying the display list
+     */
+    for (i=0; i<numGraphicsSystems; i++)
+	if (dd->gesd[i] != NULL)
+	    (dd->gesd[i]->callback)(GE_SaveState, dd, R_NilValue);
+    dd->dev->displayList = R_NilValue;
+}
+
+/****************************************************************
  * GEplayDisplayList
  ****************************************************************
  */
 
 void GEplayDisplayList(GEDevDesc *dd)
 {
-    int savedDevice;
+    int i, savedDevice;
     SEXP theList;
-    theList = displayList((DevDesc*) dd);
+    /* Get each graphics system to restore state required for 
+     * replaying the display list
+     */
+    for (i=0; i<numGraphicsSystems; i++)
+	if (dd->gesd[i] != NULL)
+	    (dd->gesd[i]->callback)(GE_RestoreState, dd, R_NilValue);
+    /* Play the display list
+     */
+    theList = dd->dev->displayList;
     if (theList != R_NilValue) {
 	savedDevice = curDevice();
 	selectDevice(deviceNumber((DevDesc*) dd));
@@ -1831,6 +1856,13 @@ void GEplayDisplayList(GEDevDesc *dd)
 	    SEXP op = CAR(theOperation);
 	    SEXP args = CDR(theOperation);
 	    PRIMFUN(op) (R_NilValue, op, args, R_NilValue);
+	    /* Check with each graphics system that the plotting went ok
+	     */
+	    for (i=0; i<numGraphicsSystems; i++)
+		if (dd->gesd[i] != NULL)
+		    if (!LOGICAL((dd->gesd[i]->callback)(GE_CheckPlot, dd, 
+							 R_NilValue))[0])
+			break;
 	    theList = CDR(theList);
 	}
 	selectDevice(savedDevice);
@@ -1844,15 +1876,6 @@ void GEplayDisplayList(GEDevDesc *dd)
 
 GEDevDesc* GEcurrentDevice()
 {
-    if (NoDevices()) {
-	SEXP defdev = GetOption(install("device"), R_NilValue);
-	if (isString(defdev) && length(defdev) > 0) {
-	    PROTECT(defdev = lang1(install(CHAR(STRING_ELT(defdev, 0)))));
-	}
-	else error("No active or default device");
-	eval(defdev, R_GlobalEnv);
-	UNPROTECT(1);
-    }
     return (GEDevDesc*) CurrentDevice();
 }
 
@@ -1880,7 +1903,7 @@ void GEcopyDisplayList(int fromDevice)
 	    (dd->gesd[i]->callback)(GE_CopyState, dd, R_NilValue);
     GEplayDisplayList(dd);
     if (!dd->dev->displayListOn)
-	initDisplayList((DevDesc*) dd);
+	GEinitDisplayList(dd);
 }
 
 /****************************************************************
@@ -1951,6 +1974,6 @@ void GEplaySnapshot(SEXP snapshot, GEDevDesc* dd)
     dd->dev->displayList = VECTOR_ELT(snapshot, 0);
     GEplayDisplayList(dd);
     if (!dd->dev->displayListOn)
-	initDisplayList((DevDesc*) dd);
+	GEinitDisplayList(dd);
 }
 

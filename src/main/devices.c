@@ -115,7 +115,7 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 	gsetVar(install(".Device"), mkString("postscript"), R_NilValue);
 	dd = GEcreateDevDesc(dev);
 	addDevice((DevDesc*) dd);
-	initDisplayList((DevDesc*) dd);
+	GEinitDisplayList(dd);
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;
@@ -133,7 +133,8 @@ SEXP do_PS(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    DevDesc *dd;
+    NewDevDesc *dev;
+    GEDevDesc *dd;
     char *vmax;
     char *file, *bg, *fg;
     double height, width;
@@ -151,18 +152,19 @@ SEXP do_PicTeX(SEXP call, SEXP op, SEXP args, SEXP env)
 
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
-	if (!(dd = (DevDesc *) calloc(1,sizeof(DevDesc))))
+	if (!(dev = (NewDevDesc *) calloc(1,sizeof(NewDevDesc))))
 	    return 0;
 	/* Do this for early redraw attempts */
-	dd->displayList = R_NilValue;
-	GInit(&dd->dp);
-	if(!PicTeXDeviceDriver(dd, file, bg, fg, width, height, debug)) {
-	    free(dd);
+	dev->displayList = R_NilValue;
+	if(!PicTeXDeviceDriver((DevDesc*) dev, file, bg, fg, 
+			       width, height, debug)) {
+	    free(dev);
 	    errorcall(call, "unable to start device PicTeX");
 	}
 	gsetVar(install(".Device"), mkString("pictex"), R_NilValue);
-	addDevice(dd);
-	initDisplayList(dd);
+	dd = GEcreateDevDesc(dev);
+	addDevice((DevDesc*) dd);
+	GEinitDisplayList(dd);
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;
@@ -223,7 +225,7 @@ SEXP do_XFig(SEXP call, SEXP op, SEXP args, SEXP env)
 	gsetVar(install(".Device"), mkString("xfig"), R_NilValue);
 	dd = GEcreateDevDesc(dev);
 	addDevice((DevDesc*) dd);
-	initDisplayList((DevDesc*) dd);
+	GEinitDisplayList(dd);
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;
@@ -277,7 +279,7 @@ SEXP do_PDF(SEXP call, SEXP op, SEXP args, SEXP env)
 	gsetVar(install(".Device"), mkString("pdf"), R_NilValue);
 	dd = GEcreateDevDesc(dev);
 	addDevice((DevDesc*) dd);
-	initDisplayList((DevDesc*) dd);
+	GEinitDisplayList(dd);
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;

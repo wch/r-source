@@ -59,7 +59,7 @@ SEXP do_devcontrol(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_devcopy(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity_length;
-    copyDisplayList(INTEGER(CAR(args))[0] - 1);
+    GEcopyDisplayList(INTEGER(CAR(args))[0] - 1);
     return R_NilValue;
 }
 
@@ -3464,12 +3464,16 @@ SEXP do_erase(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
+/* I don't think this gets called in any base R code
+ */
 SEXP do_replay(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    DevDesc *dd = CurrentDevice();
-    checkArity(op, args);
-    dpptr(dd)->resize();
-    playDisplayList(dd);
+    if (!NoDevices()) {
+	GEDevDesc *dd = GEcurrentDevice();
+	checkArity(op, args);
+	/*     dpptr(dd)->resize(); */
+	GEplayDisplayList(dd);
+    }
     return R_NilValue;
 }
 
