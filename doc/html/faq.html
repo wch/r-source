@@ -31,7 +31,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <p><h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.9-46 2004-08-19</h2>
+<h2>Version 1.9-47 2004-08-27</h2>
 <h2>ISBN 3-900051-01-1</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -1296,10 +1296,7 @@ functionality is available but the components have different names.
 but not set in S. 
 <li>Terms objects are stored differently.  In S a terms object is an
 expression with attributes, in R it is a formula with attributes.  The
-attributes have the same names but are mostly stored differently.  The
-major difference in functionality is that a terms object is
-subscriptable in S but not in R.  If you can't imagine why this would
-matter then you don't need to know. 
+attributes have the same names but are mostly stored differently. 
 <li>Finally, in R <code>y~x+0</code> is an alternative to <code>y~x-1</code> for
 specifying a model with no intercept.  Models with no parameters at all
 can be specified by <code>y~0</code>. 
@@ -1660,6 +1657,7 @@ Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
 <br><dt><strong>CGIwithR</strong><dd>Facilities for the use of R to write CGI scripts. 
 <br><dt><strong>CircStats</strong><dd>Circular Statistics, from &ldquo;Topics in Circular Statistics&rdquo; by S. Rao
 Jammalamadaka and A. SenGupta, 2001, World Scientific. 
+<br><dt><strong>CoCo</strong><dd>Graphical modeling for contingency tables using CoCo. 
 <br><dt><strong>CoCoAn</strong><dd>Constrained Correspondence Analysis. 
 <br><dt><strong>DAAG</strong><dd>Various data sets used in examples and exercises in &ldquo;Data Analysis and
 Graphics Using R&rdquo; by John H. Maindonald and W. John Brown, 2003. 
@@ -1869,6 +1867,7 @@ regession, linear models, and generalized linear models, with an
 emphasis on regression diagnostics, particularly graphical diagnostic
 methods. 
 <br><dt><strong>cat</strong><dd>Analysis of categorical-variable datasets with missing values. 
+<br><dt><strong>catspec</strong><dd>Special models for categorical variables. 
 <br><dt><strong>cclust</strong><dd>Convex clustering methods, including k-means algorithm, on-line
 update algorithm (Hard Competitive Learning) and Neural Gas algorithm
 (Soft Competitive Learning) and calculation of several indexes for
@@ -3217,6 +3216,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <li><a href="#How-can-I-sort-the-rows-of-a-data-frame_003f">How can I sort the rows of a data frame?</a>
 <li><a href="#Why-does-the-help_002estart_0028_0029-search-engine-not-work_003f">Why does the help.start() search engine not work?</a>
 <li><a href="#Why-did-my-_002eRprofile-stop-working-when-I-updated-R_003f">Why did my .Rprofile stop working when I updated R?</a>
+<li><a href="#Where-have-all-the-methods-gone_003f">Where have all the methods gone?</a>
 </ul>
 
 <div class="node">
@@ -3653,7 +3653,8 @@ the parent environment being potentially different with each invocation.
 variables in the enclosing environment to share information with other
 functions or with other invocations of itself (see the section on
 lexical scoping).  This relies on the enclosing environment being the
-same each time the function is invoked.
+same each time the function is invoked.  (In C this would be done with
+static variables.)
 
    <p>Scoping <em>is</em> hard.  Looking at examples helps.  It is particularly
 instructive to look at examples that work differently in R and S and try
@@ -4011,7 +4012,8 @@ search page.
 
 <div class="node">
 <p><hr>
-<a name="Why-did-my-_002eRprofile-stop-working-when-I-updated-R_003f"></a>Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why-does-the-help_002estart_0028_0029-search-engine-not-work_003f">Why does the help.start() search engine not work?</a>,
+<a name="Why-did-my-_002eRprofile-stop-working-when-I-updated-R_003f"></a>Next:&nbsp;<a rel="next" accesskey="n" href="#Where-have-all-the-methods-gone_003f">Where have all the methods gone?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why-does-the-help_002estart_0028_0029-search-engine-not-work_003f">Why does the help.start() search engine not work?</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
@@ -4031,6 +4033,28 @@ since the code will be run <em>before</em> the packages are loaded.  E.g.,
      utils::help.start()
 </pre>
    <div class="node">
+<p><hr>
+<a name="Where-have-all-the-methods-gone_003f"></a>Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why-did-my-_002eRprofile-stop-working-when-I-updated-R_003f">Why did my .Rprofile stop working when I updated R?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
+<br>
+</div>
+
+<h3 class="section">7.28 Where have all the methods gone?</h3>
+
+<p>Many functions, particularly S3 methods, are now hidden in namespaces. 
+This has the advantage that they cannot be called inadvertantly with
+arguments of the wrong class, but it makes them harder to view.
+
+   <p>To see the code for an S3 method (e.g., <code>[.terms</code>) use
+
+<pre class="example">     getS3method("[", "terms")
+</pre>
+   <p class="noindent">To see the code for an unexported function <code>foo()</code> in the namespace
+of package <code>"bar"</code> use <code>bar:::foo</code>.  Don't use these
+constructions to call unexported functions in your own code&mdash;they are
+probably unexported for a reason and may change without warning.
+
+<div class="node">
 <p><hr>
 <a name="R-Programming"></a>Next:&nbsp;<a rel="next" accesskey="n" href="#R-Bugs">R Bugs</a>,
 Previous:&nbsp;<a rel="previous" accesskey="p" href="#R-Miscellanea">R Miscellanea</a>,

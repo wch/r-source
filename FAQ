@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.9-46 2004-08-19
+Version 1.9-47 2004-08-27
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -86,6 +86,7 @@ R FAQ
   7.25 How can I sort the rows of a data frame?
   7.26 Why does the help.start() search engine not work?
   7.27 Why did my .Rprofile stop working when I updated R?
+  7.28 Where have all the methods gone?
 8 R Programming
   8.1 How should I write summary methods?
   8.2 How can I debug dynamically loaded code?
@@ -953,10 +954,7 @@ There are some differences in the modeling code, such as
 
    * Terms objects are stored differently.  In S a terms object is an
      expression with attributes, in R it is a formula with attributes.  The
-     attributes have the same names but are mostly stored differently.  The
-     major difference in functionality is that a terms object is
-     subscriptable in S but not in R.  If you can't imagine why this would
-     matter then you don't need to know.
+     attributes have the same names but are mostly stored differently.
 
    * Finally, in R `y~x+0' is an alternative to `y~x-1' for specifying a
      model with no intercept.  Models with no parameters at all can be
@@ -1261,6 +1259,9 @@ distributions of R.)
 *CircStats*
      Circular Statistics, from "Topics in Circular Statistics" by S. Rao
      Jammalamadaka and A. SenGupta, 2001, World Scientific.
+
+*CoCo*
+     Graphical modeling for contingency tables using CoCo.
 
 *CoCoAn*
      Constrained Correspondence Analysis.
@@ -1644,6 +1645,9 @@ distributions of R.)
 
 *cat*
      Analysis of categorical-variable datasets with missing values.
+
+*catspec*
+     Special models for categorical variables.
 
 *cclust*
      Convex clustering methods, including k-means algorithm, on-line update
@@ -3804,7 +3808,8 @@ parent environment being potentially different with each invocation.
 variables in the enclosing environment to share information with other
 functions or with other invocations of itself (see the section on lexical
 scoping).  This relies on the enclosing environment being the same each
-time the function is invoked.
+time the function is invoked.  (In C this would be done with static
+variables.)
 
    Scoping _is_ hard.  Looking at examples helps.  It is particularly
 instructive to look at examples that work differently in R and S and try to
@@ -4080,6 +4085,22 @@ needs to be
 
      graphics::ps.options(horizontal = FALSE)
      utils::help.start()
+
+7.28 Where have all the methods gone?
+=====================================
+
+Many functions, particularly S3 methods, are now hidden in namespaces.
+This has the advantage that they cannot be called inadvertantly with
+arguments of the wrong class, but it makes them harder to view.
+
+   To see the code for an S3 method (e.g., `[.terms') use
+
+     getS3method("[", "terms")
+
+To see the code for an unexported function `foo()' in the namespace of
+package `"bar"' use `bar:::foo'.  Don't use these constructions to call
+unexported functions in your own code--they are probably unexported for a
+reason and may change without warning.
 
 8 R Programming
 ***************
