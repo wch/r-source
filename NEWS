@@ -207,10 +207,13 @@ NEW FEATURES
 INTERNATIONALIZATION
 
     o	Unix-alike versions of R can now be used in UTF-8 locales on
-	suitably equipped OSes.	 [This is incomplete at present, and
-	only switched on at all by the undocumented configure flag
-	--enable-utf8.	The changes to font handling in the X11
-	module are based on the Japanization patches of Eiji Nakama.]
+	suitably equipped OSes.  [This is incomplete at present, and
+	only switched on at all by configure flag --enable-utf8. The
+	changes to font handling in the X11 module are based on the
+	Japanization patches of Eiji Nakama.]
+
+	See the 'Internationalization' section in the 'Installation
+	and Administration' manual.
 
     o	New command-line option --encoding to specify the encoding to
 	be assumed for stdin (but not for a console).

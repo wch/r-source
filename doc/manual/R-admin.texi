@@ -224,11 +224,10 @@ hppa-hp-hpux.
 
 @cindex Linux
 @cindex Mac OS X
-In addition, binary distributions are available for most common Linux
-distributions, and for Mac OS X (Darwin) with and without X11.  See the
-@acronym{FAQ} for current details.  These are installed in
-platform-specific ways, so for the rest of this chapter we consider only
-building from the sources.
+In addition, binary distributions are available for some common Linux
+distributions and for Mac OS X.  See the @acronym{FAQ} for current
+details.  These are installed in platform-specific ways, so for the rest
+of this chapter we consider only building from the sources.
 
 @menu
 * Simple compilation::          
@@ -807,7 +806,9 @@ documentation.
 
 You will not be able to build the info files unless you have
 @command{makeinfo} version 4.5 or later installed, and if not some of
-the HTML manuals will be linked to @acronym{CRAN}.
+the HTML manuals will be linked to @acronym{CRAN}.  (@command{makeinfo}
+version 4.6 is known to create incorrect HTML files, so use 4.7 or later
+if possible.)
 
 @cindex vignettes
 The typeset documentation and building vignettes needs @command{tex} and
@@ -1003,6 +1004,7 @@ So if @R{} is re-built after ATLAS is installed, then packages such as
 
 @menu
 * Configuration options::       
+* Internationalization::        
 * Configuration variables::     
 * Using make::                  
 * Using FORTRAN::               
@@ -1010,7 +1012,7 @@ So if @R{} is re-built after ATLAS is installed, then packages such as
 * Platform notes::              
 @end menu
 
-@node Configuration options, Configuration variables, Configuration on Unix, Configuration on Unix
+@node Configuration options, Internationalization, Configuration on Unix, Configuration on Unix
 @section Configuration options
 
 @command{configure} has many options: running
@@ -1058,7 +1060,37 @@ on a @R{} system linked with @option{--enable-R-shlib} are linked
 against the dynamic library and so such packages cannot be used from a
 @R{} system built in the default way.
 
-@node Configuration variables, Using make, Configuration options, Configuration on Unix
+
+@node Internationalization, Configuration variables, Configuration options, Configuration on Unix
+@section Internationalization
+
+@R{} has long worked in ISO Latin 1 8-bit character set and so covered
+English and most Western European languages (if not necessarily their
+currency symbols).  What characters are valid in names was taken from
+the current locale.  In general other locales with single-byte encodings
+will work, but e.g. @code{postscript()} and @code{pdf()} need to be told
+about the encoding in use.
+
+As from version 2.1.0, @R{} has some support for multi-byte character
+sets (@acronym{MBCS}), in particular for UTF-8 locales (which are
+usually identified by suffix @code{.utf8}, something like
+@code{en_GB.utf8}.  UTF-8 is an encoding of Unicode and in principle
+covers all human languages simultaneously: however, a given system may
+not have fonts capable of displaying all these languages.
+
+To enable UTF-8 support, configure with @option{--enable-utf8}.  This
+will check for a large number of features, notably support of C99/UNIX98
+wide character functions and for UTF-8 or MBCS support in X11.  If
+enough of these are found, @code{UTF-8} will be listed as one of the 
+``Additional capabilities''.  Then if @R{} is started in a UTF-8 locale
+it assumes that the terminal will supply and display UTF-8-encoded
+characters@footnote{You may have to set this with @code{luit}, but it
+should be the default in a window manager session started in UTF-8.}.
+If run in a non-UTF-8 locale a single-byte encoding is assumed and @R{}
+behaves almost as if it was not configured with @option{--enable-utf8}.
+
+
+@node Configuration variables, Using make, Internationalization, Configuration on Unix
 @section Configuration variables
 
 @findex configure
