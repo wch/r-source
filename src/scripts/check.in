@@ -37,7 +37,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.172 $ ';
+my $revision = ' $Revision: 1.173 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -651,6 +651,11 @@ sub check_pkg {
     ##   Depends, Namespace, Priority.
     ## These must be correct if present.
 
+    ## <FIXME>
+    ## We should also check Suggests here, but what precisely is allowed
+    ## for this?
+    ## </FIXME>
+
     if($description->{"Depends"}) {
 	my @dependencies = split(/\,\s*/, $description->{"Depends"});
 	my @matches;
@@ -735,79 +740,53 @@ sub check_pkg {
 
     $log->result("OK");
 
+    ## Check package dependencies.
+
     ## Try figuring out whether the package dependencies can be resolved
     ## at run time.  Ideally, the installation mechanism would do this,
-    ## and we also do not check versions ...
-    ##
-    ## Need to do this here because we need the 'real' DESCRIPTION file
-    ## (also in the case of bundles), and to know that its 'Depends'
-    ## field is syntactically correct.
-    if(($description->{"Depends"} || $description->{"Suggests"})
-       && $opt_install) {
+    ## and we also do not check versions ... also see whether vignette
+    ## and namespace package dependencies are recorded in DESCRIPTION.
+
+    ## <NOTE>
+    ## When checking uninstalled base or bundle packages, there is no
+    ## DESCRIPTION file in the package source directory.  Hence, for
+    ## simplicity, we only run this check on "installed" packages.  We
+    ## could work around this, but checking uninstalled packages is a
+    ## bad thing anyway.
+    ## </NOTE>
+
+    if($opt_install) {
 	$log->checking("package dependencies");
-	my @required_packages = ();
-	my @dependencies =
-	  (split(/\,/, $description->{"Depends"}),
-	   split(/\,/, $description->{"Suggests"}),
-	   $description->{"Package"});
 	## According to FL, everything listed in Depends or Suggests
 	## should be available for successfully running R CMD check.
 	## \VignetteDepends{} entries not "required" by the package code
 	## must be in Suggests.  Note also that some of us think that a
 	## package vignette must require its own package, which otoh is
 	## not required in the package DESCRIPTION file.
-	foreach my $dep (@dependencies) {
-	    $dep =~ s/^\s*([\w\.]+).*$/\1/;
-	    next if($dep eq "R");
-	    push(@required_packages, $dep);
-	}
-
-	if(scalar(@required_packages) > 0) {
-	    my $Rcmd = "requiredPackages <- c(\"";
-	    $Rcmd .= join("\", \"", @required_packages);
-	    $Rcmd .= "\")\n";
-	    $Rcmd .= "writeLines(requiredPackages[!requiredPackages %in% ";
-	    $Rcmd .= "installed.packages()[ , \"Package\"]])\n";
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
-	    @out = grep(!/^\>/, @out);
-	    if(scalar(@out) > 0) {
+	## Namespace imports must really be in Depends.
+	my $Rcmd = "tools:::.checkPackageDepends(dir = \"${pkgdir}\")\n";
+	my @out = R_runR($cmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=tools");
+	@out = grep(!/^\>/, @out);
+	if(scalar(@out) > 0) {
+	    ## <FIXME>
+	    ## These should really all be errors ...
+	    if(grep(/^Packages required but not available:/, @out)) {
 		$log->error();
-		$log->print("Packages required but not available:\n");
-		$log->print(wrap("  ", "  ", @out) . "\n");
+		$log->print(join("\n", @out) . "\n");
 		$log->print(wrap("", "", @msg_DESCRIPTION));
 		exit(1);
 	    }
-	}
-	my $any = 0;
-	if((-d &file_path("inst", "doc"))
-	   && &list_files_with_type(&file_path("inst", "doc"),
-				    "vignette")) {
-	    my $dir = &file_path("inst", "doc");
-	    my $cmd = "reqs <- ";
-	    if(scalar(@required_packages) > 0) {
-		$cmd .= "c(\"" .
-		  join("\", \"", @required_packages) .
-		  "\")\n";
-	    }
 	    else {
-		$cmd .= "character()\n";
-	    }
-	    $cmd .= "deps <- tools:::.buildVignetteIndex(\"$dir\")\$Depends\n";
-	    $cmd .= "deps <- unique(sort(unlist(deps)))\n";
-	    $cmd .= "writeLines(deps[!deps %in% reqs])\n";
-	    my @out = R_runR($cmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES=tools");
-	    @out = grep(!/^\>/, @out);
-	    if(scalar(@out) > 0) {
-		$any++;
 		$log->warning();
-		$log->print("Vignette dependencies not required:\n");
-		$log->print(wrap("  ", "  ", @out) . "\n");
+		$log->print(join("\n", @out) . "\n");
 		$log->print(wrap("", "", @msg_DESCRIPTION));
 	    }
+	    ## </FIXME>
 	}
-
-	$log->result("OK") unless($any);
+	else {
+	    $log->result("OK");
+	}
     }
 
     ## Check index information.
