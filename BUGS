@@ -163,11 +163,7 @@ none
 
 Directory:  Installation
 
-* PR# 885 *
-Subject: Problems with R CMD COMPILE within Makefile
-From: Peter Holzer <holzer@stat.math.ethz.ch>
-Date: Mon, 26 Mar 2001 15:32:00 +0200
---Problems with use of R COMPILE
+none
 
 Directory:  Language
 
