@@ -371,7 +371,7 @@ test-Packages-Recommended:
 	    echo "checking package '$${p}'"; \
 	  fi; \
 	  R_LIBS= R_CHECK_FF_CALLS=yes \
-	    $(top_builddir)/bin/R CMD check --no-perms --install=skip \
+	    $(top_builddir)/bin/R CMD check --install=skip \
 	    --library="$(top_builddir)/library" Packages/$${p} || echo; \
 	done
 
