@@ -28,6 +28,11 @@
 
 #include <time.h>
 
+#ifdef HAVE_ERRNO_H
+# include <errno.h>
+#endif
+
+
 /* Machine Constants */
 
 static void Init_R_Machine(SEXP rho)
@@ -392,10 +397,6 @@ SEXP do_filesymlink(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 }
 
-#if defined(Win32)
-# include <errno.h>
-#endif
-
 #ifdef Win32
 int Rwin_rename(char *from, char *to);  /* in src/gnuwin32/extra.c */
 #endif
@@ -536,7 +537,9 @@ SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 #endif
 
+#ifdef HAVE_SYS_TYPES_H
 # include <sys/types.h>
+#endif
 
 #if HAVE_DIRENT_H
 # include <dirent.h>
@@ -1217,3 +1220,27 @@ SEXP do_sysgetpid(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return ans;
 }
+
+
+#ifndef Win32 /* has own version in extra.c */
+/* mkdir is defined in <sys/stat.h> */
+SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP  path, ans;
+    int res, show;
+
+    checkArity(op, args);
+    path = CAR(args);
+    if (!isString(path) || length(path) != 1)
+	errorcall(call, "invalid path argument");
+    show = asLogical(CADR(args));
+    if(show == NA_LOGICAL) show = 0;
+    res = mkdir(CHAR(STRING_ELT(path, 0)), 0777);
+    if(show && errno == EEXIST)
+	warning("'%s' already exists", CHAR(STRING_ELT(path, 0)));
+    PROTECT(ans = allocVector(LGLSXP, 1));
+    LOGICAL(ans)[0] = (res==0);
+    UNPROTECT(1);
+    return (ans);
+}
+#endif

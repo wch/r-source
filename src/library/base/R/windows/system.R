@@ -56,9 +56,6 @@ shell <- function(cmd, shell, flag="/c", intern=FALSE,
 
 shell.exec <- function(file) invisible(.Internal(shell.exec(file)))
 
-dir.create <- function(path)
-    invisible(.Internal(dir.create(path)))
-
 Sys.timezone <- function()
 {
     z <- as.POSIXlt(Sys.time())

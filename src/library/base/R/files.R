@@ -94,6 +94,9 @@ file.access <- function(names, mode = 0)
     res
 }
 
+dir.create <- function(path, showWarnings = TRUE)
+    invisible(.Internal(dir.create(path, showWarnings)))
+
 format.octmode <- function(x, ...)
 {
     if(!inherits(x, "octmode")) stop("calling wrong method")

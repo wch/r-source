@@ -9,7 +9,7 @@ file.rename(from, to)
 file.append(file1, file2)
 file.copy(from, to, overwrite = FALSE)
 file.symlink(from, to)
-dir.create(path)
+dir.create(path, showWarnings = TRUE)
 }
 \alias{file.append}
 \alias{file.copy}
@@ -24,6 +24,7 @@ dir.create(path)
     containing file names.}
   \item{path}{a character vector containing a single path name.}
   \item{overwrite}{logical; should the destination files be overwritten?}
+  \item{showWarnings}{logical; should the warnings on failure be shown?}
 }
 \description{
   These functions provide a low-level interface to the computer's
@@ -71,6 +72,8 @@ dir.create(path)
 
   The remaining functions return a logical vector indicating which
   operation succeeded for each of the files attempted.
+
+  \code{dir.create} will return failure if the directory already exists. 
 }
 \author{
   Ross Ihaka, Brian Ripley

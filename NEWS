@@ -90,6 +90,11 @@ NEW FEATURES
 
     o	The print() method for "difftime" objects now handles arrays.
 
+    o	dir.create() is now an internal function (rather than a call to
+	mkdir) on Unix as well as on Windows.  There is now an option
+	to suppress warnings from mkdir, which may or may not have
+	been wanted.
+
     o	dist() has a new method to calculate Minkowski distances.
 
     o	expand.grid() returns appropriate array dimensions and dimnames

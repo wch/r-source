@@ -15,10 +15,3 @@ unlink <- function(x, recursive = FALSE) {
     else
         system(paste("rm -f ", paste(x, collapse = " ")))
 }
-
-dir.create <- function(path)
-{
-    if(!is.character(path) || (length(path) > 1) || !nchar(path))
-	stop("invalid `path' argument")
-    invisible(system(paste("mkdir", path)) == 0)
-}
