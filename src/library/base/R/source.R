@@ -154,11 +154,7 @@ function(topic, device = getOption("device"),
         noindex <- character(0)
         for(path in paths) {
             entries <- NULL
-            ## <NOTE>
-            ## Check for new-style 'Meta/demo.rds' (and intermediate
-            ## 'demo/00Index.rds' and 'demo/00Index.dcf'), then for
-            ## '00Index'.
-            ## </NOTE>
+            ## Check for new-style 'Meta/demo.rds', then for '00Index'.
             if(file.exists(INDEX <-
                            file.path(path, "Meta", "demo.rds"))) {
                 entries <- .readRDS(INDEX)
@@ -206,8 +202,8 @@ function(topic, device = getOption("device"),
                   sep = "")
         else
             NULL
-        y <- list(type = "demo", title = "Demos",
-                  header = NULL, results = db, footer = footer)
+        y <- list(title = "Demos", header = NULL, results = db,
+                  footer = footer)
         class(y) <- "packageIQR"
         return(y)
     }

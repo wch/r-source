@@ -51,12 +51,8 @@ function(..., list = character(0),
         noindex <- character(0)
         for(path in paths) {
             entries <- NULL
-            ## <NOTE>
-            ## Check for new-style 'Meta/data.rds' (and intermediate
-            ## 'data/00Index.rds' and 'data/00Index.dcf'), then for
-            ## '00Index'.
+            ## Check for new-style 'Meta/data.rds', then for '00Index'.
             ## Earlier versions also used to check for 'index.doc'.
-            ## </NOTE>
             if(file.exists(INDEX <-
                            file.path(path, "Meta", "data.rds"))) {
                 entries <- .readRDS(INDEX)
@@ -104,8 +100,8 @@ function(..., list = character(0),
                   sep = "")
         else
             NULL
-        y <- list(type = "data", title = "Data sets",
-                  header = NULL, results = db, footer = footer)
+        y <- list(title = "Data sets", header = NULL, results = db,
+                  footer = footer)
         class(y) <- "packageIQR"
         return(y)
     }
@@ -156,16 +152,19 @@ function(..., list = character(0),
                 else {
                     zfile <- zip.file.extract(file, "Rdata.zip")
                     switch(ext,
-                           R = , r = source(zfile, chdir = TRUE),
+                           R = , r =
+                             source(zfile, chdir = TRUE),
                            RData = , rdata = , rda =
                              load(zfile, envir = .GlobalEnv),
                            TXT = , txt = , tab =
-                             assign(name, read.table(zfile, header = TRUE),
+                             assign(name,
+                                    read.table(zfile, header = TRUE),
                                     env = .GlobalEnv),
                            CSV = , csv =
                              assign(name,
-                                    read.table(zfile, header = TRUE, sep = ";"),
-                                   env = .GlobalEnv),
+                                    read.table(zfile, header = TRUE,
+                                               sep = ";"),
+                                    env = .GlobalEnv),
                            found <- FALSE)
                     if (zfile != file) unlink(zfile)
                 }
