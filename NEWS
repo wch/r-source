@@ -9,6 +9,16 @@
 		CHANGES IN R VERSION 2.0.1 patched
 
 
+
+NEW FEATURES
+
+    o	warnings() now looks only in the workspace for `last.warning'
+	(suggested by PR#7363).
+
+    o	The search for browsers now starts with firefox, and has mozilla
+	ahead of netscape.
+
+
 BUG FIXES
 
     o	split() was accepting raw and list vectors as input, but
