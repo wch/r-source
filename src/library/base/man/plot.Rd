@@ -10,7 +10,7 @@ plot(x, y, xlim=range(x), ylim=range(y), type="p",
 }
 \arguments{
   \item{x}{the coordinates of points in the plot. Alternatively, a
-      single plotting structure or \emph{any \R object with a
+      single plotting structure, function or \emph{any \R object with a
           \code{plot} method} can be provided.}
   \item{y}{the y coordinates of points in the plot, \emph{optional}
       if \code{x} is an appropriate structure.}
