@@ -2,8 +2,8 @@ Making the standard installer
 =============================
 
 You can make an install package (rw????.exe) in the current Windows
-style by using the installer kit Inno Setup 4.1.5 or later from
-jrsoftware.org.
+style by using the installer kit Inno Setup 4.1.5 or later (preferably
+5.0.6 or later) from jrsoftware.org.
 
 You need the R installation built completely (see ../INSTALL: this
 includes making bitmap and Tcl/Tk support and the manuals).

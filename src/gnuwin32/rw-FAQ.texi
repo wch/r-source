@@ -93,6 +93,7 @@ The information here applies only to recent versions of R for Windows,
 * Where can I find the latest version?::  
 * How do I install R for Windows?::  
 * I want to run R in Chinese/Japanese/Korean::  
+* How do I check an installation?::  
 * Can I customize the installation?::  
 * How do I run it?::            
 * Can I run R from a CD or USB drive?::  
@@ -169,7 +170,7 @@ field (@emph{after} any final double quote), for example @code{--sdi
 of the Target field, for example @code{R_LIBS=p:/myRlib}.
 
 
-@node I want to run R in Chinese/Japanese/Korean, Can I customize the installation?, How do I install R for Windows?, Installation and Usage
+@node I want to run R in Chinese/Japanese/Korean, How do I check an installation?, How do I install R for Windows?, Installation and Usage
 @section I want to run R in Chinese/Japanese/Korean
 
 As from R 2.1.0 this is possible by installing R with support for `East
@@ -184,11 +185,23 @@ In such locales @file{Rterm.exe} should be used for batch use only, but
 @file{RGui.exe} will support single- and double-width characters.
 
 It will be necessary to select suitable fonts in @file{Rconsole} and
-@file{Rdevga}; in the latter you can replace @code{Arial} by @code{Arial
-Unicode MS}, and we used @code{FixedSys} in @file{Rconsole}.
+@file{Rdevga} (see @code{?Rconsole} or the comments in the files: the
+system versions are in the @file{etc} folder); in the latter you can
+replace @code{Arial} by @code{Arial Unicode MS}, and we tried
+@code{FixedSys} and @code{MS Mincho} in @file{Rconsole}.
 
+@node How do I check an installation?, Can I customize the installation?, I want to run R in Chinese/Japanese/Korean, Installation and Usage
+@section How do I check an installation is not corrupt?
 
-@node Can I customize the installation?, How do I run it?, I want to run R in Chinese/Japanese/Korean, Installation and Usage
+Run the program @file{bin\md5check.exe} (not in the mini-installer).
+This compares checksums on all the installed files with those put into
+the installer, and will report any changed or missing files.
+
+Users who installed `East Asian' support will see a report that
+@file{R.dll} has changed, which is correct as it will have been replaced
+by a version with support for those languages.
+
+@node Can I customize the installation?, How do I run it?, How do I check an installation?, Installation and Usage
 @section Can I customize the installation?
 
 The normal way to customize the installation is by selecting components
