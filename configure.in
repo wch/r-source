@@ -395,8 +395,8 @@ AC_HEADER_DIRENT
 AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS(dl.h dlfcn.h elf.h floatingpoint.h fpu_control.h \
   ieee754.h ieeefp.h locale.h readline/history.h readline/readline.h \
-  rpc/rpc.h rpc/xdr.h sys/param.h sys/stat.h sys/time.h sys/times.h \
-  unistd.h)
+  rpc/rpc.h rpc/xdr.h string.h sys/param.h sys/stat.h sys/time.h \
+  sys/times.h unistd.h)
 case "${host}" in
   *sunos4*)
     AC_DEFINE(SunOS4) ;;
