@@ -4,7 +4,7 @@
 \title{Invoke a System Command, using a Shell}
 \usage{
 shell(cmd, shell, flag="/c", intern=FALSE, wait=TRUE,
-      translate=FALSE, mustWork=FALSE)
+      translate=FALSE, mustWork=FALSE, ...)
 shell.exec(file)
 }
 \arguments{
@@ -24,6 +24,7 @@ shell.exec(file)
 	translated to \code{"\\"}.}
     \item{mustWork}{a logical; if \code{TRUE} failure to run the command
       will give an \R error.}
+    \item{\dots}{additional arguments to \code{\link{system}}.}
     \item{file}{file to be opened.}
 }
 \description{

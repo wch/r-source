@@ -13,7 +13,8 @@ unlink(x)
   directories (not specified by wildcards) are allowed.
 }
 \value{
-  \code{"0"} for success, \code{"1"} for failure.
+  \code{0} for success, \code{1} for failure. Not deleting a
+  non-existent file is not a failure.
 }
 \seealso{\code{\link{tempfile}} for file creation.}
 \keyword{file}

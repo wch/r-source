@@ -29,12 +29,12 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
 	\code{.hlp} file will be used if one is available.}
 }
 \description{
-    These functions provide access to documentation.
-    Documentation on a topic with name \code{name} (typically, an \R
-    object or a data set) can be printed with either \code{help(name)} or
-    \code{?name}.
-    In the case of unary and binary operators and control-flow special
-    forms, the name may need to be quoted.
+  These functions provide access to documentation.
+  Documentation on a topic with name \code{name} (typically, an \R
+  object or a data set) can be printed with either \code{help(name)} or
+  \code{?name}.
+  In the case of unary and binary operators and control-flow special
+  forms, the name may need to be quoted.
 
     If \code{offline} is \code{TRUE}, hardcopy of the documentation is
     produced by running the LaTeX version of the help page through
@@ -44,23 +44,29 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
     \file{Rhelp.cfg} somewhere in your LaTeX search path.
 }
 \note{
-    The help files can be many small files. On some file systems it is
-    desirable to save space, and the text files in the \file{help} directory
-    of an installed package can be zipped up as a zip archive
-    \file{Rhelp.zip}. Ensure the files \file{AnIndex} and
-    \file{00Titles} remain un-zipped.  Similarly, all the files in the
-    \file{latex} directory can be zipped to \file{Rhelp.zip}.
+  Currently, you only get help for \R objects in your
+  \code{\link{search}()} path, i.e., \code{help(dist)} will only work after
+  \code{\link{library}(mva)}.
+  \emph{This is bound to be changed in the future.}
+
+  The help files can be many small files. On some file systems it is
+  desirable to save space, and the text files in the \file{help} directory
+  of an installed package can be zipped up as a zip archive
+  \file{Rhelp.zip}. Ensure the files \file{AnIndex} and
+  \file{00Titles} remain un-zipped.  Similarly, all the files in the
+  \file{latex} directory can be zipped to \file{Rhelp.zip}.
 }
 \seealso{
-    \code{\link{help.start}()} which opens the HTML version of the \R
-    Manual;
-    \code{\link{library}()} for listing available packages and the
-    user-level objects they contain;
-    \code{\link{data}()} for listing available data sets;
-    \code{\link{methods}()}.
+  \code{\link{help.search}()} for finding help pages on a `vague' topic.
+  \code{\link{help.start}()} which opens the HTML version of the \R
+  Manual;
+  \code{\link{library}()} for listing available packages and the
+  user-level objects they contain;
+  \code{\link{data}()} for listing available data sets;
+  \code{\link{methods}()}.
 
-    See \code{\link{prompt}()} to get a prototype for writing \code{help}
-    pages of private packages.
+  See \code{\link{prompt}()} to get a prototype for writing \code{help}
+  pages of private packages.
 }
 \examples{
 help()
