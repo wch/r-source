@@ -268,7 +268,7 @@ FILE *R_OpenInitFile(void)
     if (LoadInitFile) {
 	if ((fp = R_fopen(".Rprofile", "r")))
 	    return fp;
-	sprintf(buf, "%s:.Rprofile", getenv("R_USER"));
+	sprintf(buf, "%s:.Rprofile", R_Home);
 	if ((fp = R_fopen(buf, "r")))
 	    return fp;
     }
@@ -1844,21 +1844,22 @@ static int process_Renviron(char *filename)
 }
 
 
-/* read R_HOME/etc/Renviron:  Unix only */
+/* try .Renviron, then :.Renviron and finally R_HOME:.Renviron
+   They are the same under MacOS but not under MacOSX as for
+   CFM-Carbon applications, the current working directory 
+   is ~user.
+*/
 
-/* try ./.Renviron, then value of R_ENVIRON, then ~/.Renviron */
 void process_user_Renviron()
 {
-    char *s;
+    char s[300];
     
     
-    if(process_Renviron(".Renviron")) return;
-    if((s = getenv("R_ENVIRON"))) {
-	process_Renviron(s);
-	return;
-    } 
-
-    process_Renviron(s);
+    if(process_Renviron(".Renviron"))  return;
+    if(process_Renviron(":.Renviron")) return;
+    sprintf(s,"%s:.Renviron",R_Home);
+    if(process_Renviron(s)) return;
+    
 }
 
 

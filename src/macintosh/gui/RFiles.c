@@ -122,9 +122,9 @@ OSStatus ReadTextFile ( const FSSpec * pFileSpec, WEReference we )
 	OSStatus		err ;
     int 			i,k=0,j=0;
     SInt32   		*textPos;
-    int 			startRange;
+    Boolean 			srange;
     char 			*testo;
-
+     RGBColor	color;
 
 	BlockZero ( hFlavors, sizeof ( hFlavors ) ) ;
 
@@ -260,40 +260,44 @@ OSStatus ReadTextFile ( const FSSpec * pFileSpec, WEReference we )
     textSizeRed = textSize;
     textPos = (SInt32  *) malloc(textSize+1);
 
-    startRange = FALSE;
-
-    for(i=0;i<textSize;i++)
+    k = 0;
+    j = 0;
+    srange = false;
+    
+    for(i=0;i<textSize-1;i++)
     {
-     if(  ( (*hText)[i]==0x5F ) || ( (*hText)[i]==0x08 ) )
+     if(  ( (*hText)[i]==0x5F ) && ( (*hText)[i+1]==0x08 ) )
       {
-       textSizeRed--;
-       if( (*hText)[i]==0x08 && !startRange)
-        {
-         startRange = TRUE;
+        testo[k] = (*hText)[i+2];
+        if(!srange){
+         srange = true;
          textPos[j] = k;
          j++;
         }
+        k++;
+        i += 2;
       }
      else
       {
         if( (*hText)[i] == 0x0A )    /* strips also cr escape char  */
           testo[k]='\r';
-        else
+        else{
           testo[k]=(*hText)[i];
+          if(srange)
+           {
+            srange = false;
+            textPos[j] = k;
+            j++;
+           }
+          }
         k++;
       }
-
-      if( ((*hText)[i]==':' ) && startRange)
-       {
-         startRange = FALSE;
-         textPos[j] = k;
-         j++;
-       }
     }
-    testo[k]='\0';
+    testo[k] = '\0'; // we terminate the text
+    textPos[j] = -1; // eof
 
     strcpy(*hText, testo);
-    textSize = textSizeRed;
+    textSize = strlen(*hText);
     free(testo);
 
 /* The text is now ready to be printed
@@ -308,9 +312,15 @@ OSStatus ReadTextFile ( const FSSpec * pFileSpec, WEReference we )
 /* The text is now outlined
  Jago Dic 2000 (Stefano M. Iacus)
 */
-  for(i=0;i<j;i=i+2)
-   Change_Color_Range(textPos[i],  textPos[i+1], tempTypeColour.red, tempTypeColour.green, tempTypeColour.blue,we);
 
+  color.red = tempTypeColour.red;
+    color.blue = tempTypeColour.blue;
+    color.green = tempTypeColour.green;
+
+  for(i=0;i<j;i+=2){
+   WESetOneAttribute ( textPos[i],  textPos[i+1], weTagTextColor,
+			& color, sizeof ( color ),  we  ) ;
+   }
 
 	free(textPos);
 
