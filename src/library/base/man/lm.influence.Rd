@@ -34,7 +34,7 @@ This is more directly useful in many diagnostic measures.
 }
 \references{
 Belsley, D. A., E. Kuh and R. E. Welsch (1980).
-\emph{Regression Diagnostics.}
+\emph{Regression Diagnostics}.
 New York: Wiley.
 }
 \seealso{
