@@ -235,7 +235,8 @@ foreach my $pkg (@ARGV) {
 
     $log = new R::Logfile(&file_path($pkgoutdir, "00check.log"));
     $log->message("using log directory '$pkgoutdir'");
-    my @out = R_runR("cat(R.version.string, '\n', sep='')", "--slave");
+    my @out = R_runR("cat(R.version.string, '\n', sep='')", 
+		     "--slave --vanilla");
     $log->message("using @out");
 
     if(!$opt_library) {
