@@ -150,7 +150,7 @@ predict.arima0 <- function(object, n.ahead=1, newxreg=NULL, se.fit=TRUE)
     .C("setup_starma",
        as.integer(arma), as.double(data),
        as.integer(n),
-       as.double(rep(0, n)), as.integer(0), as.double(-1))
+       as.double(rep(0, n)), as.integer(0), as.double(-1), as.integer(0))
     arma0f(coefs)
     z <- .C("arma0_kfore", as.integer(arma[6]), as.integer(arma[7]),
             as.integer(n.ahead), x=double(n.ahead), var=double(n.ahead))
