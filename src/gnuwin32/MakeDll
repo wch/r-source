@@ -18,49 +18,9 @@ FFLAGS=-O2 $(DEBUGFLAG)
 DLLLIBS=-L../../../gnuwin32  $(FLIBS) -lR 
 
 
-#ifeq ($(PKG),gee)
-# OBJS-NO = gee.sa.o gee_i.o
-#endif 
-
-
-#ifeq ($(PKG),WaveThresh)
-# OBJS-NO = Sconvolve.o
-#endif 
-
-
-#ifeq ($(PKG),akima)
-# OBJS-NO = ttidbs.o
-#endif 
-
-ifeq ($(PKG),locfit)
-  CFLAGS+=-Dlgamma=lgammafn
+ifeq ($(PKG),modreg)
+  FFLAGS+=-ffloat-store
 endif 
-
-ifeq ($(PKG),survival4)
-  survreg-CFLAGS=-include ../../../include/Rconfig.h
-endif
-
-ifeq ($(PKG),rmutil)
-  iv-CFLAGS+=-Dgamma=gammafn -Dlgam=lgammafn
-  dist-CFLAGS+=-include ../../../include/Rconfig.h
-endif
-
-ifeq ($(PKG),event)
-  ksurvb-CFLAGS+=-include ../../../include/Rconfig.h
-  ksurvg-CFLAGS+=-include ../../../include/Rconfig.h
-endif
-
-ifeq ($(PKG),gnlm)
-  dist-CFLAGS+=-include ../../../include/Rconfig.h
-endif
-ifeq ($(PKG),repeated)
-  kcountb-CFLAGS+=-include ../../../include/Rconfig.h
-endif
-
-
-ifeq ($(PKG),stable)
-  CFLAGS+=-include ../../../include/Rconfig.h
-endif
 
 
 AA=$(wildcard Makefile)
