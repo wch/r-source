@@ -20,8 +20,7 @@
  *  Source cleaned up as far as htribk.
  */
 
-#include "Platform.h"
-#include "Fortran.h"
+#include "Fortran.h"/*-> "Platform.h"*/
 
 	/* Public Entry Points */
 
