@@ -1714,6 +1714,9 @@ density estimates.
 A package for analysing multiple gene expression time series data.
 Currently, implements methods for cell cycle analysis and for inferring
 large sparse graphical Gaussian models.
+@item Geneland
+MCMC inference from individual genetic data based on a spatial
+statistical model.
 @item HI
 Simulation from distributions supported by nested hyperplanes.
 @item HTMLapplets
