@@ -3,30 +3,32 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
          logical.return = FALSE, warn.conflicts = package != "MASS",
          keep.source = getOption("keep.source.pkgs"))
 {
-    if (!missing(package)) {
-	if (!character.only)
+    fQuote <- function(s) paste("`", s, "'", sep = "")    
+    if(!missing(package)) {
+	if(!character.only)
 	    package <- as.character(substitute(package))
 	pkgname <- paste("package", package, sep = ":")
-	if (is.na(match(pkgname, search()))) {
-	    packagedir <- system.file("", pkg = package, lib = lib.loc)
-	    if (packagedir == "") {
-		txt <- paste("There is no package called `",
-			     package, "'", sep = "")
-		if (logical.return) {
-		    warning(txt)
+	if(is.na(match(pkgname, search()))) {
+            which.lib.loc <-
+                lib.loc[file.exists(file.path(lib.loc, package))]
+            if(length(which.lib.loc) == 0) {
+                txt <- paste("There is no package called",
+                             fQuote(package))
+                if (logical.return) {
+                    warning(txt)
 		    return(FALSE)
 		}
 		else stop(txt)
-	    }
-            lib.loc <- unique(lib.loc)
-	    which.lib.loc <-
-		lib.loc[match(packagedir[1], file.path(lib.loc, package))]
-	    if (length(packagedir) > 1) {
-		warning(paste("Package `", package,
-                              "' found more than once,\n  ",
-			      "using the one found in `", which.lib.loc,
-			      "'", sep = ""))
-	    }
+            }
+            if(length(which.lib.loc) > 1) {
+                which.lib.loc <- which.lib.loc[1]
+                warning(paste("Package ",
+                              fQuote(package),
+                              "found more than once,\n",
+                              "using the one found in",
+                              fQuote(which.lib.loc)))
+            }
+            packagedir <- file.path(which.lib.loc, package)
 	    file <- system.file("R", package, pkg = package,
                                 lib = which.lib.loc)
 	    ## allowed zipped R source files
@@ -101,24 +103,25 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
 	if(!character.only)
 	    help <- as.character(substitute(help))
         help <- help[1]                 # only give help on one package
-        descriptionFile <-
-            system.file("DESCRIPTION", pkg = help, lib = lib.loc)
-	if(descriptionFile == "")
-	    stop(paste("No documentation for package `", help, "'",
-                       sep = ""))
-        which.lib.loc <-
-            lib.loc[match(system.file("", pkg = help, lib = lib.loc)[1],
-                          file.path(lib.loc, help))]
-        if(length(descriptionFile) > 1) {
-            warning(paste("Package `", help, "' found more than once,\n  ",
-                          "using the one found in `", which.lib.loc,
-                          "'", sep = ""))
+        which.lib.loc <- lib.loc[file.exists(file.path(lib.loc, help))]
+        if(length(which.lib.loc) == 0)
+            stop(paste("No documentation for package", fQuote(help)))
+        if(length(which.lib.loc) > 1) {
+            which.lib.loc <- which.lib.loc[1]
+            warning(paste("Package ",
+                          fQuote(help),
+                          "found more than once,\n",
+                          "using the one found in",
+                          fQuote(which.lib.loc)))
         }
-        file.show(descriptionFile,
-                  system.file("INDEX", pkg = help, lib = which.lib.loc),
-                  header = c("", paste("Important user-level objects ",
-                  "in package `", help, "':", sep = "")),
-                  title = paste("Information on package", help))
+        FILES <- file.path(which.lib.loc, help,
+                           c("TITLE", "DESCRIPTION", "INDEX"))
+        ok <- file.exists(FILES)
+        do.call("file.show",
+                c(as.list(FILES[ok]),
+                  list(header = c("", "Description:", "Index:")[ok],
+                       title = paste("Documentation for package",
+                               fQuote(help)))))
     }
     else {
 	## library():
