@@ -9,7 +9,6 @@
 \usage{
 convertColor(color, from, to, from.ref.white, to.ref.white,
              scale.in=1, scale.out=1, clip=TRUE)
-
 }
 \arguments{
   \item{color}{A matrix whose rows specify colors }
@@ -33,7 +32,6 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
   \code{"Lab"}, \code{"Luv"}. The converters for these colour spaces are
   in the object \code{colorspaces}.
 
-   
   The \code{"sRGB"} color space is that used by standard PC monitors.
   \code{"Apple RGB"} is used by Apple monitors. \code{"Lab"} and
   \code{"Luv"}
@@ -42,7 +40,7 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
   d'Eclairage. \code{XYZ} is a 1931 CIE standard capable of representing
   all visible colors (and then some), but not in a perceptually uniform
   way.
-  
+
   The \code{Lab} and \code{Luv} spaces describe colors of objects, and
   so require the specification of a reference \dQuote{white light}
   color.  Illuminant \code{D65} is a standard indirect daylight,
@@ -53,24 +51,19 @@ convertColor(color, from, to, from.ref.white, to.ref.white,
   reference white, and can be only approximately translated to other
   reference whites.  The Bradford chromatic adaptation algorithm is used
   for this.
-  
-  The RGB color spaces are specific to a particular class of
-  display.   An RGB space cannot
-  represent all colors, and the \code{clip} option controls what is
-  done to out-of-range colors.
 
-
-}  
+  The RGB color spaces are specific to a particular class of display.
+  An RGB space cannot represent all colors, and the \code{clip} option
+  controls what is done to out-of-range colors.
+}
 \value{
   A 3-row matrix whose columns specify the colors.
 }
 
-
-  
 \references{
   For all the conversion equations
   \url{http://www.brucelindbloom.com/}
-  
+
   For the white points
   \url{http://www.efg2.com/Lab/Graphics/Colors/Chromaticity.htm}
 }
@@ -120,9 +113,8 @@ image((-10:15)*10,(-15:10)*10,matrix(1:(26*26),ncol=26),col=cols,
   xlab="a",ylab="b",main="Lab: L=80")
 
 
-(cols<-t(col2rgb(palette())))
-(lab<-convertColor(cols,from="sRGB",to="Lab",scale.in=255))
+(cols <- t(col2rgb(palette())))
+(lab <- convertColor(cols,from="sRGB",to="Lab",scale.in=255))
 round(convertColor(lab,from="Lab",to="sRGB",scale.out=255))
-
 }
 \keyword{color}
