@@ -58,7 +58,7 @@ as.POSIXct.dates <- function(x, ...)
         z <- attr(x, "origin")
         x <- as.numeric(x) * 86400
         if(length(z) == 3 && is.numeric(z))
-            x  <- x - as.numeric(ISOdate(z[3], z[1], z[2], 0))
+            x  <- x + as.numeric(ISOdate(z[3], z[1], z[2], 0))
         return(structure(x, class = c("POSIXt", "POSIXct")))
     } else stop(paste("`", deparse(substitute(x)),
                       "' is not a \"dates\" object", sep=""))

@@ -97,6 +97,8 @@ BUG FIXES
 
     o   If A had dimnames, eigen(A) had inappropriate dimnames. (PR#2116)
 
+    o   as.POSIXct.dates had a sign error for the origin (PR#2222)
+
 
 INTERNALS
 
