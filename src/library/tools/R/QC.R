@@ -170,17 +170,14 @@ function(package, dir, lib.loc = NULL)
                       data = dataObjs[! dataObjs %in% allDocTopics])
 
     if(!is.na(match("package:methods", search()))) {
-        S4ClassObjs <- getClasses(codeEnv)
-        ## Note that currently, topicName() is not vectorized in its
-        ## 'topic' argument (so that it can perform mangling for S4
-        ## methods), hence the unlist/lapply construction.
+        ## Undocumented S4 classes?
+        S4Classes <- getClasses(codeEnv)
         undocObjs <-
             c(undocObjs,
               list("S4 class" =
-                   S4ClassObjs[! unlist(lapply(S4ClassObjs,
-                                               function(u)
-                                               topicName("class", u)))
-                               %in% allDocTopics]))
+                   S4Classes[! sapply(S4Classes,
+                                      function(u) topicName("class", u))
+                             %in% allDocTopics]))
     }
 
     class(undocObjs) <- "undoc"
