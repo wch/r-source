@@ -56,6 +56,15 @@ lsf.str(pos = 1, pattern, \dots)
     \code{str}.}
   \item{indent.str}{the indentation string to use.}
   \item{\dots}{potential further arguments (required for Method/Generic reasons).}
+
+%% The following line is swallowed, unfortunately..  fixme??
+  For \code{ls.str} and \code{lsf.str}:
+
+  \item{pos}{integer indicating \code{\link{search}} path position.}
+  \item{pattern}{regular expression passed to \code{\link{ls}}.  Only names
+          matching \code{pattern} are considered.}
+  \item{mode}{character specifying the \code{\link{mode}} of objects to
+    consider.  Passed to \code{\link{exists}} and \code{\link{get}}.}
 }
 \value{
   \code{str} does not return anything, for efficiency reasons.
