@@ -6,18 +6,30 @@
 static double xmax = 705.342;/* maximal x for UNscaled answer, see below */
 
 double bessel_k(double x, double alpha, double expo) {
-    long nb=1, ncalc=1, ize;
-    double b[1];
+    long nb, ncalc, ize;
+    double *bk;
+#ifdef IEEE_754
+    /* NaNs propagated correctly */
+    if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
+#endif
     ize = (long)expo;
-    K_bessel(&x, &alpha, &nb, &ize, b, &ncalc);
+    nb = 1+ (long)floor(alpha);/* nb-1 <= alpha < nb */
+    alpha -= (nb-1);
+    bk = (double *) calloc(nb, sizeof(double));
+    K_bessel(&x, &alpha, &nb, &ize, bk, &ncalc);
     if(ncalc != nb) {/* error input */
-
+	warning("bessel_k: ncalc (=%d) != nb (=%d); alpha=%g. Arg. out of range?\n",
+		ncalc, nb, alpha);
     }
-    return b[0];
+
+
+
+    return bk[nb-1];
 }
 
 void K_bessel(double *x, double *alpha, long *nb,
 	      long *ize, double *bk, long *ncalc)
+{
 /*-------------------------------------------------------------------
 
   This FORTRAN 77 routine calculates modified Bessel functions
@@ -108,7 +120,6 @@ void K_bessel(double *x, double *alpha, long *nb,
 
  -------------------------------------------------------------------
 */
-{
 
 /*
  ---------------------------------------------------------------------
@@ -205,23 +216,30 @@ void K_bessel(double *x, double *alpha, long *nb,
     long iend, i, j, k, m, itemp, mplus1;
     double x2by4, twox, c, blpha, ratio, wminf;
     double d1, d2, d3, f0, f1, f2, p0, q0, t1, t2, twonu;
-    double dm, ex, bk1, bk2, enu;
+    double dm, ex, bk1, bk2, nu;
 
     ex = *x;
-    enu = *alpha;
+    nu = *alpha;
     *ncalc = imin2(*nb,0) - 2;
-    if (*nb > 0 && (0. <= enu && enu < 1.) && (1 <= *ize && *ize <= 2) &&
-	(*ize != 1 || ex <= xmax) && ex > 0.) {
-	k = 0;
-	if (enu < sqxmin) {
-	    enu = 0.;
-	} else if (enu > .5) {
-	    k = 1;
-	    enu -= 1.;
+    if (*nb > 0 && (0. <= nu && nu < 1.) && (1 <= *ize && *ize <= 2) &&
+	ex > 0.) { /* maybe fixme: treat the case x = 0 ? */
+	if(*ize == 1 && ex > xmax) {
+	    ML_ERROR(ME_RANGE);
+	    *ncalc = *nb;
+	    for(i=0; i < *nb; i++)
+		bk[i] = ML_POSINF;
+	    return;
 	}
-	twonu = enu + enu;
+	k = 0;
+	if (nu < sqxmin) {
+	    nu = 0.;
+	} else if (nu > .5) {
+	    k = 1;
+	    nu -= 1.;
+	}
+	twonu = nu + nu;
 	iend = *nb + k - 1;
-	c = enu * enu;
+	c = nu * nu;
 	d3 = -c;
 	if (ex <= 1.) {
 	    /* ------------------------------------------------------------
@@ -236,12 +254,12 @@ void K_bessel(double *x, double *alpha, long *nb,
 		t1 = c * t1 + q[i - 1];
 		t2 = c * t2 + q[i];
 	    }
-	    d1 = enu * d1;
-	    t1 = enu * t1;
+	    d1 = nu * d1;
+	    t1 = nu * t1;
 	    f1 = log(ex);
-	    f0 = a + enu * (p[7] - enu * (d1 + d2) / (t1 + t2)) - f1;
-	    q0 = exp(-enu * (a - enu * (p[7] + enu * (d1-d2) / (t1-t2)) - f1));
-	    f1 = enu * f0;
+	    f0 = a + nu * (p[7] - nu * (d1 + d2) / (t1 + t2)) - f1;
+	    q0 = exp(-nu * (a - nu * (p[7] + nu * (d1-d2) / (t1-t2)) - f1));
+	    f1 = nu * f0;
 	    p0 = exp(f1);
 	    /* -----------------------------------------------------------
 	       Calculation of F0 =
@@ -252,6 +270,8 @@ void K_bessel(double *x, double *alpha, long *nb,
 		d1 = c * d1 + r[i];
 		t1 = c * t1 + s[i];
 	    }
+	    /* d2 := sinh(f1)/ nu = sinh(f1)/(f1/f0)
+	     *     = f0 * sinh(f1)/f1 */
 	    if (fabs(f1) <= .5) {
 		f1 *= f1;
 		d2 = 0.;
@@ -260,9 +280,9 @@ void K_bessel(double *x, double *alpha, long *nb,
 		}
 		d2 = f0 + f0 * f1 * d2;
 	    } else {
-		d2 = sinh(f1) / enu;
+		d2 = sinh(f1) / nu;
 	    }
-	    f0 = d2 - enu * d1 / (t1 * p0);
+	    f0 = d2 - nu * d1 / (t1 * p0);
 	    if (ex <= 1e-10) {
 		/* ---------------------------------------------------------
 		   X <= 1.0E-10
@@ -307,9 +327,9 @@ void K_bessel(double *x, double *alpha, long *nb,
 		*ncalc = 1;
 		goto L420;
 	    } else {
-/* --------------------------------------------------------------------
-  10^-10 < X <= 1.0
- -------------------------------------------------------------------- */
+		/* ------------------------------------------------------
+		   10^-10 < X <= 1.0
+		   ------------------------------------------------------ */
 		c = 1.;
 		x2by4 = ex * ex / 4.;
 		p0 = .5 * p0;
@@ -326,8 +346,8 @@ void K_bessel(double *x, double *alpha, long *nb,
 		    d3 = d1 + d3;
 		    c = x2by4 * c / d2;
 		    f0 = (d2 * f0 + p0 + q0) / d3;
-		    p0 /= d2 - enu;
-		    q0 /= d2 + enu;
+		    p0 /= d2 - nu;
+		    q0 /= d2 + nu;
 		    t1 = c * f0;
 		    t2 = c * (p0 - d2 * f0);
 		    bk1 += t1;
@@ -379,12 +399,11 @@ void K_bessel(double *x, double *alpha, long *nb,
 		   -----------------------------------------------------------*/
 		d2 = ftrunc(estm[2] * ex + estm[3]);
 		m = (long) d2;
-		c = fabs(enu);
+		c = fabs(nu);
 		d3 = c + c;
 		d1 = d3 - 1.;
 		f1 = DBL_MIN;
-		f0 = (2. * (c + d2) / ex + .5 * ex / (c + d2 + 1.)) *
-		    DBL_MIN;
+		f0 = (2. * (c + d2) / ex + .5 * ex / (c + d2 + 1.)) * DBL_MIN;
 		for (i = 3; i <= m; ++i) {
 		    d2 -= 1.;
 		    f2 = (d3 + d2 + d2) * f0;
@@ -400,8 +419,7 @@ void K_bessel(double *x, double *alpha, long *nb,
 		    d1 = c * d1 + p[i - 1];
 		    t1 = c * t1 + q[i - 1];
 		}
-		p0 = exp(c * (a + c * (p[7] - c * d1 / t1) - log(ex))) /
-			 ex;
+		p0 = exp(c * (a + c * (p[7] - c * d1 / t1) - log(ex))) / ex;
 		f2 = (c + .5 - ratio) * f1 / ex;
 		bk1 = p0 + (d3 * f0 - f2 + f0 + blpha) / (f2 + f1 + f0) * p0;
 		if (*ize == 1) {
@@ -434,7 +452,7 @@ void K_bessel(double *x, double *alpha, long *nb,
 	       Calculation of K(ALPHA+1,X)
 	       from K(ALPHA,X) and  K(ALPHA+1,X)/K(ALPHA,X)
 	       --------------------------------------------------------- */
-	    bk2 = bk1 + bk1 * (enu + .5 - ratio) / ex;
+	    bk2 = bk1 + bk1 * (nu + .5 - ratio) / ex;
 	}
 	/*--------------------------------------------------------------------
 	  Calculation of 'NCALC', K(ALPHA+I,X),	 I  =  0, 1, ... , NCALC-1,
@@ -452,19 +470,17 @@ void K_bessel(double *x, double *alpha, long *nb,
 	if (iend == 1) {
 	    return;
 	}
-	m = imin2((long) (wminf - enu),iend);
+	m = imin2((long) (wminf - nu),iend);
 	for (i = 2; i <= m; ++i) {
 	    t1 = bk1;
 	    bk1 = bk2;
 	    twonu += 2.;
 	    if (ex < 1.) {
-		if (bk1 >= DBL_MAX / twonu * ex) {
-		    goto L195;
-		}
+		if (bk1 >= DBL_MAX / twonu * ex)
+		    break;
 	    } else {
-		if (bk1 / ex >= DBL_MAX / twonu) {
-		    goto L195;
-		}
+		if (bk1 / ex >= DBL_MAX / twonu)
+		    break;
 	    }
 	    bk2 = twonu / ex * bk1 + t1;
 	    itemp = i;
@@ -473,7 +489,7 @@ void K_bessel(double *x, double *alpha, long *nb,
 		bk[j-1] = bk2;
 	    }
 	}
-L195:
+
 	m = itemp;
 	if (m == iend) {
 	    return;

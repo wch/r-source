@@ -1,16 +1,29 @@
 /* rybesl.f -- translated by f2c (version 19960514).
 */
 #include "Mathlib.h"
+#include "Error.h"
 
 double bessel_y(double x, double alpha) {
-
-    return 1.0;
+    long nb, ncalc;
+    double *by;
+#ifdef IEEE_754
+    /* NaNs propagated correctly */
+    if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
+#endif
+    nb = 1+ (long)floor(alpha);/* nb-1 <= alpha < nb */
+    alpha -= (nb-1);
+    by = (double *) calloc(nb, sizeof(double));
+    Y_bessel(&x, &alpha, &nb, by, &ncalc);
+    if(ncalc != nb) {/* error input */
+	warning("bessel_y: ncalc (=%d) != nb (=%d); alpha=%g. Arg. out of range?\n",
+		ncalc, nb, alpha);
+    }
+    return by[nb-1];
 }
 
 void Y_bessel(double *x, double *alpha, long *nb,
 	      double *by, long *ncalc)
 {
-
 /* ----------------------------------------------------------------------
 
   This routine calculates Bessel functions Y SUB(N+ALPHA) (X)
@@ -186,17 +199,26 @@ void Y_bessel(double *x, double *alpha, long *nb,
 
     double alfa, div, ddiv, even, gamma, term, cosmu, sinmu,
 	b, c, d, e, f, g, h, p, q, r, s, d1, d2, q0, pa,pa1, qa,qa1,
-	en, en1, enu, ex,  ya,ya1, twobyx, den, odd, aye, dmu, x2, xna;
+	en, en1, nu, ex,  ya,ya1, twobyx, den, odd, aye, dmu, x2, xna;
 
     ex = *x;
-    enu = *alpha;
-    if (*nb > 0 && DBL_MIN <= ex && ex < xlarge && 0. <= enu && enu < 1.) {
-	xna = ftrunc(enu + .5);
-	na = (long) xna;
-	if (na == 1) {
-	    enu -= xna;
+    nu = *alpha;
+    if (*nb > 0 && 0. <= nu && nu < 1.) {
+	if(ex < DBL_MIN || ex > xlarge) {
+	    ML_ERROR(ME_RANGE);
+	    *ncalc = *nb;
+	    if(ex > xlarge)  by[0]=ML_POSINF;
+	    if(ex < DBL_MIN) by[0]=ML_NEGINF;
+	    for(i=0; i < *nb; i++)
+		by[i] = by[0];
+	    return;
 	}
-	if (enu == -.5) {
+	xna = ftrunc(nu + .5);
+	na = (long) xna;
+	if (na == 1) {/* <==>  .5 <= *alpha < 1  <==>  -5. <= nu < 0 */
+	    nu -= xna;
+	}
+	if (nu == -.5) {
 	    p = M_SQRT_2dPI / sqrt(ex);
 	    ya = p * sin(ex);
 	    ya1 = -p * cos(ex);
@@ -206,12 +228,12 @@ void Y_bessel(double *x, double *alpha, long *nb,
 	       ------------------------------------------------------------- */
 	    b = ex * .5;
 	    d = -log(b);
-	    f = enu * d;
-	    e = pow(b, -enu);
-	    if (fabs(enu) < del) {
+	    f = nu * d;
+	    e = pow(b, -nu);
+	    if (fabs(nu) < del) {
 		c = M_1_PI;
 	    } else {
-		c = enu / sin(enu * M_PI);
+		c = nu / sin(nu * M_PI);
 	    }
 	    /* ------------------------------------------------------------
 	       Computation of sinh(f)/f
@@ -229,7 +251,7 @@ void Y_bessel(double *x, double *alpha, long *nb,
 	    }
 	    /* --------------------------------------------------------
 	       Computation of 1/gamma(1-a) using Chebyshev polynomials */
-	    x2 = enu * enu * 8.;
+	    x2 = nu * nu * 8.;
 	    aye = ch[0];
 	    even = 0.;
 	    alfa = ch[1];
@@ -242,16 +264,16 @@ void Y_bessel(double *x, double *alpha, long *nb,
 	    }
 	    even = (even * .5 + aye) * x2 - aye + ch[20];
 	    odd = (odd + alfa) * 2.;
-	    gamma = odd * enu + even;
+	    gamma = odd * nu + even;
 	    /* End of computation of 1/gamma(1-a)
 	       ----------------------------------------------------------- */
 	    g = e * gamma;
 	    e = (e + 1. / e) * .5;
 	    f = 2. * c * (odd * e + even * s * d);
-	    e = enu * enu;
+	    e = nu * nu;
 	    p = g * c;
 	    q = M_1_PI / g;
-	    c = enu * M_PI_2;
+	    c = nu * M_PI_2;
 	    if (fabs(c) < del) {
 		r = 1.;
 	    } else {
@@ -266,11 +288,11 @@ void Y_bessel(double *x, double *alpha, long *nb,
 	    en = 1.;
 
 	    while (fabs(g / (1. + fabs(ya))) +
-		   fabs(h/(1. + fabs(ya1))) > DBL_EPSILON) {
+		   fabs(h / (1. + fabs(ya1))) > DBL_EPSILON) {
 		f = (f * en + p + q) / (en * en - e);
 		c *= (d / en);
-		p /= en - enu;
-		q /= en + enu;
+		p /= en - nu;
+		q /= en + nu;
 		g = c * (f + r * q);
 		h = c * p - en * g;
 		ya += g;
@@ -281,11 +303,11 @@ void Y_bessel(double *x, double *alpha, long *nb,
 	    ya1 = -ya1 / b;
 	} else if (ex < thresh) {
 	    /* --------------------------------------------------------------
-	       Use Temme's scheme for moderate X
+	       Use Temme's scheme for moderate X :  3 <= x < 16
 	       -------------------------------------------------------------- */
-	    c = (.5 - enu) * (.5 + enu);
+	    c = (.5 - nu) * (.5 + nu);
 	    b = ex + ex;
-	    e = ex * M_1_PI * cos(enu * M_PI) / DBL_EPSILON;
+	    e = ex * M_1_PI * cos(nu * M_PI) / DBL_EPSILON;
 	    e *= e;
 	    p = 1.;
 	    q = -ex;
@@ -323,11 +345,11 @@ L220:
 	    d = f * f + g * g;
 	    pa = f / d;
 	    qa = -g / d;
-	    d = enu + .5 - p;
+	    d = nu + .5 - p;
 	    q += ex;
 	    pa1 = (pa * q - qa * d) / ex;
 	    qa1 = (qa * q + pa * d) / ex;
-	    b = ex - M_PI_2 * (enu + .5);
+	    b = ex - M_PI_2 * (nu + .5);
 	    c = cos(b);
 	    s = sin(b);
 	    d = M_SQRT_2dPI / sqrt(ex);
@@ -388,7 +410,7 @@ L220:
 	    }
 	}
 	if (na == 1) {
-	    h = 2. * (enu + 1.) / ex;
+	    h = 2. * (nu + 1.) / ex;
 	    if (h > 1.) {
 		if (fabs(ya1) > DBL_MAX / h) {
 		    h = 0.;
@@ -404,24 +426,25 @@ L220:
 	   Now have first one or two Y's
 	   --------------------------------------------------------------- */
 	by[0] = ya;
-	by[1] = ya1;
-	if (ya1 == 0.) {
-	    *ncalc = 1;
-	} else {
-	    aye = 1. + *alpha;
-	    twobyx = 2. / ex;
-	    *ncalc = 2;
-	    for (i = 2; i < *nb; ++i) {
-		if (twobyx < 1.) {
-		    if (fabs(by[i - 1]) * twobyx >= DBL_MAX / aye)
-			goto L450;
-		} else {
-		    if (fabs(by[i - 1]) >= DBL_MAX / aye / twobyx)
-			goto L450;
+	*ncalc = 1;
+	if(*nb > 1) {
+	    by[1] = ya1;
+	    if (ya1 != 0.) {
+		aye = 1. + *alpha;
+		twobyx = 2. / ex;
+		*ncalc = 2;
+		for (i = 2; i < *nb; ++i) {
+		    if (twobyx < 1.) {
+			if (fabs(by[i - 1]) * twobyx >= DBL_MAX / aye)
+			    goto L450;
+		    } else {
+			if (fabs(by[i - 1]) >= DBL_MAX / aye / twobyx)
+			    goto L450;
+		    }
+		    by[i] = twobyx * aye * by[i - 1] - by[i - 2];
+		    aye += 1.;
+		    ++(*ncalc);
 		}
-		by[i] = twobyx * aye * by[i - 1] - by[i - 2];
-		aye += 1.;
-		++(*ncalc);
 	    }
 	}
 L450:

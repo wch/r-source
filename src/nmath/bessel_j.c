@@ -1,10 +1,24 @@
 /* rjbesl.f -- translated by f2c (version 19960514).
 */
 #include "Mathlib.h"
+#include "Error.h"
 
 double bessel_j(double x, double alpha) {
-
-    return 1.0;
+    long nb, ncalc;
+    double *bj;
+#ifdef IEEE_754
+    /* NaNs propagated correctly */
+    if (ISNAN(x) || ISNAN(alpha)) return x + alpha;
+#endif
+    nb = 1+ (long)floor(alpha);/* nb-1 <= alpha < nb */
+    alpha -= (nb-1);
+    bj = (double *) calloc(nb, sizeof(double));
+    J_bessel(&x, &alpha, &nb, bj, &ncalc);
+    if(ncalc != nb) {/* error input */
+	warning("bessel_j: ncalc (=%d) != nb (=%d); alpha=%g. Arg. out of range?\n",
+		ncalc, nb, alpha);
+    }
+    return bj[nb-1];
 }
 
 void J_bessel(double *x, double *alpha, long *nb,
@@ -183,13 +197,10 @@ void J_bessel(double *x, double *alpha, long *nb,
 
     extern double gamma_cody(double);
 
-    /* System generated locals */
-    long i__1;
-
     /* Local variables */
-    long nend, magx, nbmx, i__, j, k, l, m, n, nstart;
+    long nend, intx, nbmx, i, j, k, l, m, n, nstart;
 
-    double a, a2, capp, capq, pold, vcos, test, vsin;
+    double nu, twonu, capp, capq, pold, vcos, test, vsin;
     double p, s, t, z, alpem, halfx, tempa, tempb, tempc, psave, plast;
     double tover, t1, alp2em, em, en, xc, xk, xm, psavel, gnu, xin, sum;
 
@@ -197,40 +208,44 @@ void J_bessel(double *x, double *alpha, long *nb,
     /* Parameter adjustment */
     --b;
 
-    a = *alpha;
-    a2 = a + a;
+    nu = *alpha;
+    twonu = nu + nu;
 /*---------------------------------------------------------------------
  Check for out of range arguments.
  ---------------------------------------------------------------------*/
-    if (*nb > 0 &&
-	0. <= *x     && *x <= xlarge &&
-	0. <= a && a < 1.) {
+    if (*nb > 0 && *x >= 0. && 0. <= nu && nu < 1.) {
 
-	magx = (long) (*x);
+	*ncalc = *nb;
+	if(*x > xlarge) {
+	    ML_ERROR(ME_RANGE);
+	    for(i=1; i <= *nb; i++)
+		b[i] = ML_POSINF;
+	    return;
+	}
+	intx = (long) (*x);
 	/* ----------------------------------------------------------
 	   Initialize result array to zero.
 	   -------------------------------------------------------- */
-	*ncalc = *nb;
-	for (i__ = 1; i__ <= *nb; ++i__) {
-	    b[i__] = 0.;
-	}
+	for (i = 1; i <= *nb; ++i)
+	    b[i] = 0.;
 
 /* ---------------------------------------------------------------------
  Branch to use 2-term ascending series for small X and asymptotic
  form for large X when NB is not too large.
  --------------------------------------------------------------------- */
+
 	if (*x < rtnsig) {
 /* ---------------------------------------------------------------------
  Two-term ascending series for small X.
  --------------------------------------------------------------------- */
 	    tempa = 1.;
-	    alpem = 1. + a;
+	    alpem = 1. + nu;
 	    halfx = 0.;
 	    if (*x > enmten) {
 		halfx = .5 * *x;
 	    }
-	    if (a != 0.) {
-		tempa = pow(halfx, a) / (a * gamma_cody(a));
+	    if (nu != 0.) {
+		tempa = pow(halfx, nu) / (nu * gamma_cody(nu));
 	    }
 	    tempb = 0.;
 	    if (*x + 1. > 1.) {
@@ -268,9 +283,9 @@ void J_bessel(double *x, double *alpha, long *nb,
 		    }
 		}
 	    }
-	} else if (*x > 25. && *nb <= magx + 1) {
+	} else if (*x > 25. && *nb <= intx + 1) {
 /* ---------------------------------------------------------------------
- Asymptotic series for X > 21.0.
+ Asymptotic series for X > 25
  --------------------------------------------------------------------- */
 	    xc = sqrt(pi2 / *x);
 	    xin = 1 / (64 * *x * *x);
@@ -282,11 +297,11 @@ void J_bessel(double *x, double *alpha, long *nb,
 	       Argument reduction for SIN and COS routines.
 	       ------------------------------------------------------ */
 	    t = ftrunc(*x / (twopi1 + twopi2) + .5);
-	    z = *x - t * twopi1 - t * twopi2 - (a + .5) / pi2;
+	    z = *x - t * twopi1 - t * twopi2 - (nu + .5) / pi2;
 	    vsin = sin(z);
 	    vcos = cos(z);
-	    gnu = a2;
-	    for (i__ = 1; i__ <= 2; ++i__) {
+	    gnu = twonu;
+	    for (i = 1; i <= 2; ++i) {
 		s = (xm - 1. - gnu) * (xm - 1. + gnu) * xin * .5;
 		t = (gnu - (xm - 3.)) * (gnu + (xm - 3.));
 		capp = s * t / fact[m * 2];
@@ -306,7 +321,7 @@ void J_bessel(double *x, double *alpha, long *nb,
 		}
 		capp += 1.;
 		capq = (capq + 1.) * (gnu * gnu - 1.) * (.125 / *x);
-		b[i__] = xc * (capp * vcos - capq * vsin);
+		b[i] = xc * (capp * vcos - capq * vsin);
 		if (*nb == 1) {
 		    return;
 		}
@@ -315,23 +330,24 @@ void J_bessel(double *x, double *alpha, long *nb,
 		vcos = t;
 		gnu += 2.;
 	    }
-/* ---------------------------------------------------------------------
- If  NB > 2, compute J(X,ORDER+I)  I = 2, NB-1
- --------------------------------------------------------------------- */
+	    /* -----------------------------------------------
+	       If  NB > 2, compute J(X,ORDER+I)  I = 2, NB-1
+	       ----------------------------------------------- */
 	    if (*nb > 2) {
-		gnu = a2 + 2.;
+		gnu = twonu + 2.;
 		for (j = 3; j <= *nb; ++j) {
 		    b[j] = gnu * b[j - 1] / *x - b[j - 2];
 		    gnu += 2.;
 		}
 	    }
-/* ---------------------------------------------------------------------------
- Use recurrence to generate results. First initialize the calculation of P*S.
- --------------------------------------------------------------------------- */
 	} else {
-	    nbmx = *nb - magx;
-	    n = magx + 1;
-	    en = (double)(n + n) + a2;
+/* ---------------------------------------------------------------------------
+ rtnsig <= x <= 25 :	Use recurrence to generate results.
+			First initialize the calculation of P*S.
+ --------------------------------------------------------------------------- */
+	    nbmx = *nb - intx;
+	    n = intx + 1;
+	    en = (double)(n + n) + twonu;
 	    plast = 1.;
 	    p = en / *x;
 	    /* ---------------------------------------------------
@@ -339,13 +355,13 @@ void J_bessel(double *x, double *alpha, long *nb,
 	       --------------------------------------------------- */
 	    test = ensig + ensig;
 	    if (nbmx >= 3) {
-/* ---------------------------------------------------------------------
- Calculate P*S until N = NB-1.	Check for possible overflow.
- --------------------------------------------------------------------- */
+		/* ------------------------------------------------------------
+		   Calculate P*S until N = NB-1.  Check for possible overflow.
+		   ---------------------------------------------------------- */
 		tover = enten / ensig;
-		nstart = magx + 2;
+		nstart = intx + 2;
 		nend = *nb - 1;
-		en = (double) (nstart + nstart) - 2. + a2;
+		en = (double) (nstart + nstart) - 2. + twonu;
 		for (k = nstart; k <= nend; ++k) {
 		    n = k;
 		    en += 2.;
@@ -396,7 +412,7 @@ void J_bessel(double *x, double *alpha, long *nb,
 		    }
 		}
 		n = nend;
-		en = (double) (n + n) + a2;
+		en = (double) (n + n) + twonu;
 		/* -----------------------------------------------------
 		   Calculate special significance test for NBMX > 2.
 		   -----------------------------------------------------*/
@@ -422,10 +438,9 @@ L190:
 	    tempa = 1. / p;
 	    m = (n << 1) - (n / 2 << 2);
 	    sum = 0.;
-	    i__1 = n / 2;/* integer division*/
-	    em = (double)i__1;
-	    alpem = em - 1. + a;
-	    alp2em = em + em + a;
+	    em = floor((double)n / 2);/* integer division*/
+	    alpem = em - 1. + nu;
+	    alp2em = em + em + nu;
 	    if (m != 0) {
 		sum = tempa * alpem * alp2em / em;
 	    }
@@ -443,11 +458,11 @@ L190:
 		    m = 2 - m;
 		    if (m != 0) {
 			em -= 1.;
-			alp2em = em + em + a;
+			alp2em = em + em + nu;
 			if (n == 1) {
 			    break;
 			}
-			alpem = em - 1. + a;
+			alpem = em - 1. + nu;
 			if (alpem == 0.)
 			    alpem = 1.;
 			sum = (sum + tempa * alp2em) * alpem / em;
@@ -460,8 +475,8 @@ L190:
 	    b[n] = tempa;
 	    if (nend >= 0) {
 		if (*nb <= 1) {
-		    alp2em = a;
-		    if (a + 1. == 1.) {
+		    alp2em = nu;
+		    if (nu + 1. == 1.) {
 			alp2em = 1.;
 		    }
 		    sum += b[1] * alp2em;
@@ -479,8 +494,8 @@ L190:
 		    m = 2 - m;
 		    if (m != 0) {
 			em -= 1.;
-			alp2em = em + em + a;
-			alpem = em - 1. + a;
+			alp2em = em + em + nu;
+			alpem = em - 1. + nu;
 			if (alpem == 0.) {
 			    alpem = 1.;
 			}
@@ -500,8 +515,8 @@ L190:
 		    m = 2 - m;
 		    if (m != 0) {
 			em -= 1.;
-			alp2em = em + em + a;
-			alpem = em - 1. + a;
+			alp2em = em + em + nu;
+			alpem = em - 1. + nu;
 			if (alpem == 0.) {
 			    alpem = 1.;
 			}
@@ -512,10 +527,10 @@ L190:
 	    /* ---------------------------------------
 	       Calculate b[1].
 	       -----------------------------------------*/
-	    b[1] = 2. * (a + 1.) * b[2] / *x - b[3];
+	    b[1] = 2. * (nu + 1.) * b[2] / *x - b[3];
 L240:
 	    em -= 1.;
-	    alp2em = em + em + a;
+	    alp2em = em + em + nu;
 	    if (alp2em == 0.)
 		alp2em = 1.;
 	    sum += b[1] * alp2em;
@@ -524,8 +539,8 @@ L250:
 	    /* ---------------------------------------------------
 	       Normalize.  Divide all b[N] by sum.
 	       ---------------------------------------------------*/
-	    if (a + 1. != 1.) {
-		sum *= (gamma_cody(a) * pow(.5* *x, -a));
+	    if (nu + 1. != 1.) {
+		sum *= (gamma_cody(nu) * pow(.5* *x, -nu));
 	    }
 	    tempa = enmten;
 	    if (sum > 1.)
