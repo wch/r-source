@@ -178,6 +178,9 @@ BUG FIXES
     o	pairs() now respects axis graphical parameters such as
 	cex.main, font.main and las.
 
+    o	Saving images of packages with namespaces (such as mle) was
+	not compressing the image.
+
 
 
 

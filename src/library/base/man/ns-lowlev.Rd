@@ -20,7 +20,8 @@ loadedNamespaces()
 unloadNamespace(ns)
 loadingNamespaceInfo()
 saveNamespaceImage(package, rdafile, lib.loc = NULL,
-                   keep.source = getOption("keep.source.pkgs"))
+                   keep.source = getOption("keep.source.pkgs"),
+                   compress = TRUE)
 }
 \arguments{
   \item{ns}{string or namespace object.}
@@ -30,6 +31,7 @@ saveNamespaceImage(package, rdafile, lib.loc = NULL,
   \item{keep.source}{logical specifying whether to retain source.}
   \item{partial}{logical; if true, stop just after laoding code.}
   \item{declarativeOnly}{logical; disables \code{.Import}, etc, if true.}
+  \item{compress}{option passed to \code{\link{save}}.}
 }
 \description{
   Low level name space support functions.
