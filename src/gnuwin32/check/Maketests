@@ -7,7 +7,7 @@ srcdir = .
 RHOME= ..
 
 R= $(RHOME)/bin/Rterm  --vanilla
-RDIFF = $(RHOME)/tools/Rdiff
+RDIFF = $(RHOME)/bin/Rdiff
 RVAL_IF_DIFF=0
 
 TESTsrc-strict-1 = \
