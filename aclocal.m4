@@ -911,8 +911,11 @@ AC_DEFUN(R_TCLTK,
     if test "${have_tcltk}" = yes; then
       AC_DEFINE(HAVE_TCLTK)
       use_tcltk=yes
-      : ${TCLTK_CPPFLAGS=TK_XINCLUDES}
-      : ${TCLTK_CPPFLAGS=X_CFLAGS}
+      if test -n "${TK_XINCLUDES}"; then
+	TCLTK_CPPFLAGS=${TK_XINCLUDES}
+      else
+	TCLTK_CPPFLAGS=${X_CFLAGS}
+      fi
     else
       use_tcltk=no
     fi
