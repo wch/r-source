@@ -64,7 +64,8 @@ NEW FEATURES
 	when "*" cannot be coerced to logical.
 
     o	New function Rprof() for profiling R expressions under Unix.
-	Configure with --enable-R-profiling to make this operational.
+	Configure with `--enable-R-profiling' (on by default) to make
+	this operational.
 
     o	New functions file.access() and file.info() for information on
 	files on the user's file systems.

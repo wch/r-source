@@ -68,7 +68,7 @@ AC_SUBST(config_opts)
 
 ## Allow the user to specify support for R-profiling.
 AC_ARG_ENABLE(R-profiling,
-  [  --enable-R-profiling    attempt to compile support for Rprof() [no]],
+  [  --enable-R-profiling    attempt to compile support for Rprof() [yes]],
   [ if test "${enableval}" = no; then
       want_R_profiling=no
     elif test "${enableval}" = yes; then
@@ -76,7 +76,7 @@ AC_ARG_ENABLE(R-profiling,
     else
       want_R_profiling=yes
     fi],
-  want_R_profiling=no)
+  want_R_profiling=yes)
 
 ## Allow the user to specify building R shared libraries.
 AC_ARG_ENABLE(R-shlibs,
