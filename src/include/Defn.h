@@ -176,15 +176,16 @@ typedef struct RCNTXT {
     void (*cend)();		/* C "on.exit" thunk */
 } RCNTXT, *context;
 
-/* The Various Context Types.  In general the type is a */
-/* bitwise OR of the values below.  Note that CTXT_LOOP */
-/* is already the or of CTXT_NEXT and CTXT_BREAK. */
-/* Only functions should have the third bit turned on; */
-/* this allows us to move up the context stack easily */
-/* with either RETURN's or GENERIC's or RESTART's */
-/* If you add a new context type for functions make sure
-/*   CTXT_NEWTYPE & CTXT_FUNCTION > 0 */
+/* The Various Context Types.
 
+ * In general the type is a bitwise OR of the values below.
+ * Note that CTXT_LOOP is already the or of CTXT_NEXT and CTXT_BREAK.
+ * Only functions should have the third bit turned on;
+ * this allows us to move up the context stack easily
+ * with either RETURN's or GENERIC's or RESTART's.
+ * If you add a new context type for functions make sure
+ *   CTXT_NEWTYPE & CTXT_FUNCTION > 0
+ */
 enum {
     CTXT_TOPLEVEL = 0,
     CTXT_NEXT	  = 1,
