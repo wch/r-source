@@ -81,6 +81,10 @@ filled.contour(x, y, volcano, color = terrain.colors, nlevels = 20,
                   axis(2, seq(100, 600, by = 100)) },
     key.title = title(main="Height (Meters)"),
     key.axes = axis(4, seq(90, 190, by = 10)))
+vv <- paste(version[c("major","minor")],collapse=".")
+vy <- paste(version[c("month","year")], collapse=" ")
+mtext(paste("filled.contour(.) from R, version", vv, ", ", vy),
+      side=1, line=4, adj=1, cex=.6)
 }
 \keyword{hplot}
 \keyword{aplot}
