@@ -727,14 +727,11 @@ logist <- selfStart( logist, initial = logistInit ) ##-> Error in R 1.5.0
 str(logist)
 detach("package:nls")
 
-
 ## part of PR 1662: fisher.test with total one
 fisher.test(cbind(0, c(0,0,0,1)))
 ## crashed in R <= 1.5.0
 
-
 stopifnot(all(Mod(vector("complex", 7)) == 0))# contained garbage in 1.5.0
-
 
 ## hist.POSIXt with numeric `breaks'
 hist(.leap.seconds, breaks = 5)
@@ -763,7 +760,7 @@ DF[[1]] <- LETTERS[1:3]
 stopifnot(is.character(DF$b)) ## was factor < 1.6.0
 DF <- data.frame(b = LETTERS[1:3])
 DF$b <- LETTERS[1:3]
-stopifnot(is.character(DF$b)) ## alwasys was character.
+stopifnot(is.character(DF$b)) ## always was character.
 
 
 x <- data.frame(var = LETTERS[1:3]); x$var <- as.character(x$var)
@@ -795,4 +792,6 @@ sapply(z, data.class)
 stopifnot(is.character(z$b))
 ## end of `related to PR 1577/1608'
 
-
+## logicals became factors < 1.6.0
+stopifnot(sapply(as.data.frame(matrix((1:12)%% 4 == 1, 3,4)),
+                 is.logical))
