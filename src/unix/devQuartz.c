@@ -1573,8 +1573,8 @@ static void 	Quartz_MetricInfo(int c,
 
     testo[0] = c;
     testo[1] = '\0';
-    fprintf(stderr,"c=%c,>%s<\n",c,testo);
-    GetPort(&savedPort);
+/*    fprintf(stderr,"c=%c,>%s<\n",c,testo);
+  */  GetPort(&savedPort);
 
     SetPort(GetWindowPort(xd->window));
 
@@ -1620,8 +1620,8 @@ static void 	Quartz_MetricInfo(int c,
     }    
     
     SetPort(savedPort);
-    fprintf(stderr,"ascent=%f, descent=%f,width=%f\n",*ascent, *descent, *width);
-
+/*    fprintf(stderr,"ascent=%f, descent=%f,width=%f\n",*ascent, *descent, *width);
+*/
  return;
 }
 
