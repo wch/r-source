@@ -1091,20 +1091,22 @@ argument to standardGeneric.
 */
 static SEXP get_this_generic(SEXP args)
 {
-    SEXP rval = NULL,t; int i;
+    SEXP rval = NULL; 
+    int i;
     RCNTXT *cptr;
+
     /* a second argument to the call, if any, is taken as the function */
     if(CDR(args) != R_NilValue)
-	    return CAR(CDR(args));
+	return CAR(CDR(args));
     /* else use sys.function(0):  TO DO: should check that this is a generic? */
     PROTECT(args);
     cptr = R_GlobalContext;
     /* TO DO:  1- the limit should be sys.nframe() with an error
      * message; 2- should test is(rval, "genericFunction") */
     for(i=0; ; i++) {
-	    rval =  R_sysfunction(i, cptr);
-	    if(isObject(rval))
-		    break;
+	rval =  R_sysfunction(i, cptr);
+	if(isObject(rval))
+	    break;
     }
     UNPROTECT(1);
     return(rval);
