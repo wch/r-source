@@ -518,14 +518,6 @@ static void PS_MetricInfo(int c, double *ascent, double *descent, double *width,
 	*width = floor(dd->gp.cex * dd->gp.ps + 0.5) * *width;
 }
 
-static void PS_LineTo(double x, double y, int coords, DevDesc *dd)
-{
-	postscriptDesc *pd = (postscriptDesc *) dd->deviceSpecific;
-
-	GConvert(&x, &y, coords, DEVICE, dd);
-	PostScriptLineTo(pd->psfp, x, y);
-}
-
 static void PS_StartPath(DevDesc *dd)
 {
 	postscriptDesc *pd = (postscriptDesc *) dd->deviceSpecific;
@@ -582,8 +574,14 @@ static void PS_Line(double x1, double y1, double x2, double y2,
 {
 	postscriptDesc *pd = (postscriptDesc *) dd->deviceSpecific;
 	
+	GConvert(&x1, &y1, coords, DEVICE, dd);
+	GConvert(&x2, &y2, coords, DEVICE, dd);
+	SetColor(dd->gp.col, dd);
+	SetLinetype(dd->gp.lty, dd);
+	PostScriptStartPath(pd->psfp);
 	PostScriptMoveTo(pd->psfp, x1, y1);
-	PostScriptLineTo(pd->psfp, x1, y2);
+	PostScriptLineTo(pd->psfp, x2, y2);
+	PostScriptEndPath(pd->psfp);
 }
 
 static void PS_Polygon(int n, double *x, double *y, int coords,
