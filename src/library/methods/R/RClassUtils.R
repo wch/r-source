@@ -198,8 +198,7 @@ getProperties <-
   ## Extracts the class's Properties information from the class representation (only, not from
   ## the name of the class).
   function(ClassDef) {
-   value <- getFromClassDef(ClassDef, ".Properties")
-   value
+   getFromClassDef(ClassDef, ".Properties")
  }
 
 setProperties <-
@@ -799,4 +798,12 @@ requireMethods <-
         environment(method) <- .GlobalEnv
         setMethod(f, signature, method)
     }
+}
+
+getSlots <- function(x, complete = TRUE) {
+  classDef <- if(complete) getClass(x) else getClassDef(x)
+  props <- getProperties(classDef)
+  value <- as(props, "character")
+  names(value) <- names(props)
+  value
 }
