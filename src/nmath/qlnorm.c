@@ -34,11 +34,11 @@ double qlnorm(double x, double logmean, double logsd)
     if (ISNAN(x) || ISNAN(logmean) || ISNAN(logsd))
 	return x + logmean + logsd;
 #endif
-    if(x < 0 || x >= 1 || logsd <= 0) {
+    if(x < 0 || x > 1 || logsd <= 0) {
         ML_ERROR(ME_DOMAIN);
         return ML_NAN;
     }
-    if (x > 0)
-	return exp(qnorm(x, logmean, logsd));
+    if (x == 1) return ML_POSINF;
+    if (x > 0) return exp(qnorm(x, logmean, logsd));
     return 0;
 }
