@@ -6,16 +6,26 @@
 /*
  We have problems here in that the X11 and relevant R header files 
  may not have been included at this point.
+ So to give the full and complete declarations so that they are visible
+ to the X11.c file in src/unix and the module in src/modules/X11/devX11.c
+ requires that we have these header files.
 
- We can also do weak typing, such as
+ We can chose to provide only partial declarations and avoid referring
+ to data types that are not yet defined here.  For example, we could have
+
   typedef  Rboolean (*R_X11DeviceDriverRoutine)();
   typedef  SEXP     (*R_X11DataEntryRoutine)();
   typedef  Rboolean (*R_GetX11ImageRoutine)();
 
- But we have to redefine ptr_X11DeviceDriver, ptr_dataentry, and ptr_R_GetX11Image.
- So for the moment, we leave the declarations as being simple DL_FUNC's.
- The correct declarations as used in src/modules/X11/devX11.c are given
- next.
+ However, then we risk having mismatched routines in the two locations
+ We can even have minimal type information by defining the routine
+ pointers simply as DL_FUNC (taken from R_ext/Rdynload.h)
+
+ For the moment, we use the full declarations and assume the X11.h and Xlib.h
+ files are available. Perhaps this should also be contained within a
+ conditional block determined by whether HAVE_X11 is defined. Is RX11.h
+ used when X11 is not available?
+ 
  */
 #if 1
 
