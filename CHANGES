@@ -18,6 +18,9 @@ NEW FEATURES
 	sensible results.  This means that for most purposes, one
 	one dimensional arrays can be treated like vectors.
 
+    o	We have a applied a patch from mward@wolf.hip.berkeley.edu
+	which should substantially improve the speed of (vector)
+	arithmetic.
 
 BUG FIXES
 
