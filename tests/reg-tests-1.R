@@ -2688,3 +2688,7 @@ stopifnot(identical(symnum(FALSE[FALSE]), noquote(""[FALSE])),
           identical(symnum(c(m)), c(symnum(m))),
           dim(sm) == dim(m), class(sm) == "noquote")
 ## symnum(<length 0>) gave noquote("()") before 1.8.1
+
+## abbreviate with leading (or trailing) space differences (PR#4564)
+abbreviate(c("A"," A"), 4)
+## this gave infinite loop before 1.8.1
