@@ -104,10 +104,10 @@ datadir = @datadir@
 libdir = @libdir@
 mandir = @mandir@
 
-rhome = @libdir@/R
+rhome = @rhome@
 
 Rexecbindir = $(rhome)/bin
-## FIXME: should be `lib' eventually
+## FIXME: should be 'lib' eventually
 Rexeclibdir = $(rhome)/bin
 ## Alternatively, we could try to set pkglibdir = $(rhome)/lib when
 ## switching to automake.

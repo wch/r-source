@@ -163,8 +163,11 @@ if test "${want_R_framework}" = yes; then
   rhome="${prefix}/Versions/${VERSION}/Resources"
   bindir="${rhome}"
   mandir="${rhome}"
+else
+  rhome="\$(libdir)/R"
 fi
 AC_SUBST(R_FRAMEWORK_DIR)
+AC_SUBST(rhome)
 
 ## Allow the user to specify building R shared libraries.
 ## <NOTE>
