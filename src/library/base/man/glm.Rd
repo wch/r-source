@@ -101,7 +101,7 @@ weights.glm(object, type = c("prior", "working"), ...)
 \value{
   \code{glm} returns an object of class \code{glm}
   which inherits from the class \code{lm}. See later in this section.
-  
+
   The function \code{\link{summary}} (i.e., \code{\link{summary.glm}}) can
   be used to obtain or print a summary of the results and the function
   \code{\link{anova}} (i.e., \code{\link{anova.glm}})
@@ -167,6 +167,11 @@ weights.glm(object, type = c("prior", "working"), ...)
   extractor functions for class \code{"glm"} such as
   \code{\link{residuals}} and \code{weights} do \bold{not} just pick out
   the component of the fit with the same name.
+
+  If a \code{\link{binomial}} \code{glm} model is specified by giving a
+  two-column response, the weights returned by \code{prior.weights} are
+  the total numbers of cases (factored by the supplied case weights) and
+  the component \code{y} of the result is the proportion of successes.
 }
 \seealso{
   \code{\link{anova.glm}}, \code{\link{summary.glm}}, etc. for
