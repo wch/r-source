@@ -395,11 +395,11 @@ menuInstallBioc <- function()
                      dependencies = TRUE)
 }
 
-menuRepositories <- function()
+setRepositories <- function(graphics = TRUE)
 {
     p <- file.path(Sys.getenv("R_USER"), ".R", "repositories")
     if(!file.exists(p))
-        p <- file.path(R.home(), "etc", "repositories")
+        p <- file.path(R.home(), "etc", "repositories.win")
     a <- read.delim(p, header=TRUE,
                     colClasses=c(rep("character", 3), "logical"))
     res <- select.list(a[,1], a[a[["default"]], 1], multiple=TRUE,

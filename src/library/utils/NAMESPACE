@@ -18,10 +18,10 @@ export("?", CRAN.packages, Rprof, RSiteSearch, apropos,
        package.skeleton, packageDescription, packageStatus, page,
        person, personList, pico, prompt, promptData, readCitationFile,
        read.fwf, read.fortran, read.socket, recover, remove.packages,
-       savehistory, str, sessionInfo, summaryRprof, tail, topicName,
-       toBibtex, toLatex, update.packageStatus, update.packages,
-       upgrade, url.show, vi, vignette, write.socket, wsbrowser,
-       xedit, xemacs)
+       savehistory, str, sessionInfo, setRepositories, summaryRprof,
+       tail, topicName, toBibtex, toLatex, update.packageStatus,
+       update.packages, upgrade, url.show, vi, vignette, write.socket,
+       wsbrowser, xedit, xemacs)
 
 S3method("[", getAnywhere)
 S3method(as.character, person)

@@ -524,6 +524,10 @@ PACKAGE INSTALLATION CHANGES
 	This is called automatically if the contrib.url() encounters
 	the initial dummy value of getOption("repos")
 
+	A new function setRepositories() can be used to create
+	getOption("repos") from a (platform-specific) list of known
+	repositories.
+
     o	New function new.packages() to report uninstalled packages
 	available at the requested repositories.  This also reports
 	incomplete bundles.

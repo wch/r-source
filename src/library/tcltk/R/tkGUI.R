@@ -128,4 +128,28 @@ CRANmirrorWidget <- function(a)
     tkpack(tklabel(tt, text = "Select CRAN mirror", fg="blue"))
     tkpack(box)
     tkpack(tkbutton(tt, text=" OK ", command=gogetem))
+    invisible()
+}
+
+repositoriesWidget <- function(a)
+{
+    lvar <- tclVar()
+    tclObj(lvar) <- a[,1]
+    box <- tklistbox(tt <- tktoplevel(), height=length(a[, 1]),
+                     listvariable = lvar, selectmode="multiple")
+    for(i in which(a[["default"]])) tkselection.set(box, i-1) # 0-based
+
+    gogetem <- function() {
+        res <- as.integer(tkcurselection(box))
+        repos <- a[["URL"]]
+        names(repos) <- row.names(a)
+        CRAN <- getOption("repos")["CRAN"]
+        if(!is.na(CRAN)) repos["CRAN"] <- CRAN
+        options(repos=repos[res])
+        tkdestroy(tt)
+    }
+    tkpack(tklabel(tt, text = "Select repositories", fg="blue"))
+    tkpack(box)
+    tkpack(tkbutton(tt, text=" OK ", command=gogetem))
+    invisible()
 }

@@ -82,7 +82,8 @@ install.packages <- function(pkgs, lib, repos = CRAN,
     }
 
     foundpkgs <- download.packages(pkgs, destdir = tmpd, available = available,
-                                   contriburl = contriburl, method = method)
+                                   contriburl = contriburl, method = method,
+                                   type = "source")
 
     ## at this point pkgs may contain duplicates,
     ## the same pkg in different libs
@@ -124,6 +125,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
                               CRAN = getOption("repos"),
                               method, type)
 {
+    if(missing(type)) type <- "source"
     dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
     nonlocalcran <- length(grep("^file:", contriburl)) < length(contriburl)
@@ -146,7 +148,9 @@ download.packages <- function(pkgs, destdir, available = NULL,
                 keep[duplicated(keep)] <- FALSE
                 ok[ok][!keep] <- FALSE
             }
-            fn <- paste(p, "_", available[ok, "Version"], ".tar.gz", sep="")
+            fn <- paste(p, "_", available[ok, "Version"],
+                        ifelse(type=="mac.binary", ".tgz", ".tar.gz"),
+                        sep="")
             repos <- available[ok, "Repository"]
             if(length(grep("^file:", repos)) > 0) { # local repository
                 fn <- paste(substring(repos, 6), fn, sep = "/")
@@ -205,4 +209,38 @@ contrib.url <- function(repos, type = c("source", "mac.binary"))
            )
     names(res) <- names(repos)
     res
+}
+
+setRepositories <- function(graphics=TRUE)
+{
+    p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
+    if(!file.exists(p))
+        p <- file.path(R.home(), "etc", "repositories")
+    a <- read.delim(p, header=TRUE,
+                    colClasses=c(rep("character", 3), "logical"))
+    if(graphics && capabilities("tcltk") && capabilities("X11")) {
+        tcltk:::repositoriesWidget(a)
+    } else {
+        cat(gettext("--- Please select repositories for use in this session ---\n"))
+        res <- a[["default"]]
+        nc <- length(res)
+        repeat{
+            cat("\n", paste(seq(len=nc), ": ",
+                            ifelse(res, "+", " ")," ", a[, 1],
+                            sep=""),
+                "\n", sep="\n")
+            cat(gettext("Enter or more numbers to change status or 0 to exit\n"))
+            ind <- scan("", what=0, quiet=TRUE, nlines=1)
+            if(!length(ind) || (length(ind) == 1 && !ind[1])) break
+            ind <- ind[1 <= ind && ind <= nc]
+            res[ind] <- !res[ind]
+        }
+        if(any(res)) {
+            repos <- a[["URL"]]
+            names(repos) <- row.names(a)
+            CRAN <- getOption("repos")["CRAN"]
+            if(!is.na(CRAN)) repos["CRAN"] <- CRAN
+            options(repos=repos[res])
+        }
+    }
 }
