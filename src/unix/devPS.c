@@ -20,7 +20,7 @@
 
 #include "Defn.h"
 #include "Graphics.h"
-#include "Errormsg.h"
+#include "Error.h"
 #include "Fileio.h"
 #include "Platform.h"
 #include <stdio.h>
@@ -538,9 +538,9 @@ void PostScriptStartPath(FILE *fp)
     fprintf(fp, "np\n");
 }
 
-void PostScriptEndPath(FILE *fp)		    
+void PostScriptEndPath(FILE *fp)
 {
-    fprintf(fp, "o\n");    
+    fprintf(fp, "o\n");
 }
 
 void PostScriptRectangle(FILE *fp, double x0, double y0, double x1, double y1)
