@@ -570,7 +570,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
     }
     else if (streql(what, "plt")) {
 	value = coerceVector(value, REALSXP);
-	lengthCheck(what, value, 2);
+	lengthCheck(what, value, 4);
 	nonnegRealCheck(REAL(value)[0], what);
 	nonnegRealCheck(REAL(value)[1], what);
 	dd->dp.plt[0] = dd->gp.plt[0] = REAL(value)[0];
