@@ -36,6 +36,7 @@ plain ASCII text (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.txt),
 DVI (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.dvi.gz),
 GNU info (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.info.gz),
 HTML (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html),
+PDF (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.pdf),
 PostScript (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.ps.gz) as well as the
 Texinfo source (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.texi) used for
 creating all these formats using the GNU Texinfo system.
@@ -214,7 +215,7 @@ Are there Unix Binaries for R?
    The `bin/linux' directory contains Debian 2.0 packages for the i386
 platform (now part of the Debian distribution and maintained by Doug Bates)
 as well as Red Hat 5.1 packages for the i386, alpha and sparc platforms
-(maintained by Martyn Plummer, Nassib Nassar, and David Clayton,
+(maintained by Martyn Plummer, Nassib Nassar, and Vin Everett,
 respectively), S.u.S.E. 5.3 i386 packages by Albrecht Gebhardt, and RPMs
 for the ppc platform by Alex Buerkle.  (Note that conversion between Debian
 and Red Hat using Debian's `alien'(1) tool unfortunately only sort of
@@ -240,8 +241,13 @@ name may need to be be quoted.)
 via LaTeX, see *Note How Can R Be Installed?::.  An up-to-date HTML version
 is always available for web browsing at `http://stat.ethz.ch/R/manual/'.
 
-   An introductory R manual and documentation on the R API are currently
-being written.
+   An R manual ("Notes on R:  A Programming Environment for Data Analysis
+and Graphics") is currently being written, based on the "Notes on S-PLUS"
+by Bill Venables <venables@stats.adelaide.edu.au> and
+David Smith <D.M.Smith@lancaster.ac.uk>.  The current version can be
+obtained as `Rnotes.tgz' (LaTeX source) in a CRAN `doc' directory.  Note
+that the "conversion" from S(-PLUS) to R is not complete yet.  Further
+documentation on R and the R API are currently being written.
 
    In the absence of an R manual, documentation for S/S-PLUS (see *Note R
 and S::) can be used in combination with this FAQ (*note What Are the
@@ -339,7 +345,7 @@ contributed extensions, documentation for R, and binaries.
 
    The CRAN master site can be found at the URL
 
-     `http://www.ci.tuwien.ac.at/R/'                (Austria)          
+     `http://www.ci.tuwien.ac.at/R/'                (Austria)             
 
 and is currently being mirrored daily at
 
@@ -758,13 +764,13 @@ code is presented to the user for revision.
    Demo and download are available from
 `http://www.mth.uea.ac.uk/~h089/Rcgi/'.
 
-   *Rweb* is developed and maintained by Jeff Banfield <jeff@math.montana.edu>.  The main web page, `http://www.math.montana.edu/Rweb', provides
+   *Rweb* is developed and maintained by Jeff Banfield <jeff@math.montana.edu>.  The Rweb Home Page (http://www.math.montana.edu/Rweb), provides
 access to all three versions of Rweb--a simple text entry form that returns
 output and graphs, a more sophisticated Javascript version that provides a
 multiple window environment, and a set of point and click modules that are
-useful for introductory statistics courses and require no knowledge of the R
-language.  All of the Rweb versions can analyze Web accessible datasets if
-a URL is provided.
+useful for introductory statistics courses and require no knowledge of the
+R language.  All of the Rweb versions can analyze Web accessible datasets
+if a URL is provided.
 
    A paper on Rweb, providing a detailed explanation of the different
 versions of Rweb and an overview of how Rweb works, will soon apper in the
@@ -803,6 +809,9 @@ Which Add-on Packages Exist for R?
      Functions for kernel smoothing (and density estimation) corresponding
      to the book "Kernel Smoothing" by M. P. Wand and M. C. Jones, 1995.
 
+*RmSQL*
+     An interface between R and the mSQL database system.
+
 *MASS*
      The main package from Venables and Ripley, "Modern Applied Statistics
      with S-Plus" (2nd edition).  Contains all data sets.  Some code does
@@ -815,6 +824,9 @@ Which Add-on Packages Exist for R?
 
 *akima*
      An R implementation of the S-PLUS function `interp()'.
+
+*ash*
+     Programs for 1D, 2D and 3D density estimation.
 
 *bindata*
      Generation of correlated artificial binary data.
@@ -832,7 +844,8 @@ Which Add-on Packages Exist for R?
 *cclust*
      Convex clustering methods, including k-means algorithm, on-line update
      algorithm (Hard Competitive Learning) and Neural Gas algorithm (Soft
-     Competitive Learning).
+     Competitive Learning) and calculation of several indexes for finding
+     the number of clusters in a data set.
 
 *chron*
      A package for working with chronological objects (times and dates).
@@ -895,11 +908,19 @@ Which Add-on Packages Exist for R?
 *lme*
      Fit and compare Gaussian linear mixed-effects models.
 
+*lmtest*
+     A collection of tests on the assumptions of linear regression models
+     from the book "The linear regression model under test" by W. Kraemer
+     and H. Sonnberger (1986).
+
 *locfit*
      Local Regression, likelihood and density estimation.
 
 *logspline*
      Logspline density estimation.
+
+*mclust*
+     Model-based cluster analysis.
 
 *mlbench*
      A collection of artificial and real-world machine learning benchmark
@@ -996,6 +1017,9 @@ packages still "under development" or depending on features only present in
 the current development versions of R.  Volunteers are invited to give
 these a try, of course.  This area of CRAN currently contains
 
+*dopt*
+     Finding D-optimal experimental designs.
+
 *dse*
      A multivariate time series package (Dynamic Systems Estimation, DSE) by
      Paul Gilbert <pgilbert@bank-banque-canada.ca> which implements an
@@ -1011,6 +1035,9 @@ these a try, of course.  This area of CRAN currently contains
      analysis (FDA), penalized discriminant analysis (PDA), multivariate
      additive regression splines (MARS), adaptive back-fitting splines
      (BRUTO), and penalized regression.
+
+*nls*
+     Nonlinear regression routines for R.
 
 *timeslab*
      Time series routines.
