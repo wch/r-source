@@ -13,17 +13,19 @@ BUG FIXES
 
     o	plot.stepfun() now obeys a `ylim=.' specification.
 
-    o   removeClass() does a better job of removing inheritance
-        information.
+    o	removeClass() does a better job of removing inheritance
+	information.
 
-    o   setIs() will not allow mismatched representations between two
-        classes (without an explicit coerce method).
+    o	setIs() will not allow mismatched representations between two
+	classes (without an explicit coerce method).
 
-    o   The code underlying polygon drawing contained a memory leak.
+    o	The code underlying polygon drawing contained a memory leak.
 	This showed up in persp, but did not affect other graphics
 	functions.  It is now possible to draw big DEMs.
 
-    o   rbind() with a mixture of data frames and matrices treated the
+    o	logLik.nls() gave wrong df (PR#2295).
+
+    o	rbind() with a mixture of data frames and matrices treated the
 	matrices as vectors. (PR#2266)
 
 
@@ -138,12 +140,12 @@ BUG FIXES
 
 BUILD ISSUES
 
-    o   Toplevel Makefile was missing dependency of "docs" on "R" (causing
-        parallel makes to go wrong)
+    o	Toplevel Makefile was missing dependency of "docs" on "R" (causing
+	parallel makes to go wrong)
 
-    o   When building with recommended packages those were installed
-        into the first path in R_LIBS, if the environment variable was
-        present.
+    o	When building with recommended packages those were installed
+	into the first path in R_LIBS, if the environment variable was
+	present.
 
 
 
@@ -656,7 +658,7 @@ BUG FIXES
    o	cbind(NULL) {and similar} gave an error instead of NULL.
 
    o	the complex version of solve(a,b) now also works if b is a
-        vector
+	vector
 
 
 		CHANGES IN R VERSION 1.5.1
