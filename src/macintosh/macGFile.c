@@ -63,6 +63,7 @@ extern Boolean WeArePasting;
 
 
 
+/*
 #define	rAppStringsID			128
 
 enum {
@@ -70,19 +71,19 @@ enum {
 	sTranslationLockedErr,
 	sTranslationErr,
 	sOpeningErr,
-	sReadErr,				// 5
+	sReadErr,				
 	sWriteToBusyFileErr,
 	sBusyOpen,
 	sChooseFile,
 	sChooseFolder,
-	sChooseVolume,			// 10
+	sChooseVolume,		
 	sCreateFolder,
 	sChooseObject,
 	sChooseApp
 };
 
 #define kSelectFolderPrefKey	4
-
+*/
 
 OSErr  doRSave(Boolean *haveCancel)
 {

@@ -832,7 +832,7 @@ cleanup:
 
 
 
-int ChooseExistFile(char *fileBuf, int buflen){
+int OldChooseExistFile(char *fileBuf, int buflen){
     StandardFileReply        fileReply;
     SFTypeList               fileTypes;
     Handle                   fileName=NULL;
@@ -865,41 +865,137 @@ return(0);
 }
 
 
-int ChooseNewFile(char *fileBuf, int buflen){
-   StandardFileReply	fileReply;
-   Handle                   fileName=NULL;
-   SInt16                   fileLen;
-   OSErr                    osError;
 
-return(noErr);
-//   StandardPutFile("\pNew File","\pUntitled",&fileReply);
-   if(fileReply.sfGood){
-       osError = FSpCreate(&fileReply.sfFile, nil,'TEXT',smSystemScript);
+/* Updated for NavServices
+   Jago, May 2001, Stefano M. Iacus
+*/   
+int ChooseExistFile(char *fileBuf, int buflen){
+    FSSpec  		myfss;
+    Handle                   fileName=NULL;
+    SInt16                   fileLen;
+    OSErr		err ;
+    SFTypeList	typeList;
+    
+    typeList[0] = kTypeText;
+    typeList[1] = 'BINA';
 
-       FSpGetFullPath (&fileReply.sfFile, &fileLen, &fileName);
+    
+    err = MyOpenDocument(&myfss, &typeList);
+        
+    if(err!= noErr)
+       {
+         fileBuf[0] = '\0';
+         return(0);
+       }
+
+     FSpGetFullPath (&myfss, &fileLen, &fileName);
        HLock((Handle) fileName);
-       if (fileLen  < buflen){
+       if (fileLen < buflen){
           strncpy(fileBuf, *fileName, fileLen);
-          /* RnWrite( &fileBuf[fileLen-1], 1);
-          */
           fileBuf[fileLen] = '\0';
           HUnlock((Handle) fileName);
-          osError = FSpDelete(&fileReply.sfFile);
           return fileLen ;
        }else{
           strncpy(fileBuf, *fileName, buflen - 1);
           fileBuf[buflen-1] = '\0';
           HUnlock((Handle) fileName);
-          osError = FSpDelete(&fileReply.sfFile);
+          return buflen-1;
+       }
+   
+}
+
+/* Updated for Nav Services
+	Jago, May 2001, Stefano M. Iacus
+*/
+	
+int ChooseNewFile(char *fileBuf, int buflen)
+{
+    StringHandle	hPrompt;
+    Str255		defaultName;
+    Point		where = { -1, -1 }; /* autocenter's dialog */
+    OSErr		err = noErr;
+    OSErr               anErr = noErr;
+    NavReplyRecord      reply;
+    NavDialogOptions    dialogOptions;
+    OSType              fileTypeToSave = 'TEXT';
+    OSType              creatorType = 'ttxt';
+    FSSpec 				mytarget; 
+    SInt16		pathLen;
+    Handle		pathName=NULL;
+    SFTypeList	typeList;
+    
+    typeList[0] = kTypeText;
+    typeList[1] = 'BINA';
+
+    
+
+
+    hPrompt = GetString(kPromptStringID);
+    HLockHi((Handle) hPrompt);
+
+    
+  	CopyCStringToPascal("Untitled", defaultName);
+
+  /* put up the standard Save dialog box
+     */
+    anErr = NavGetDefaultDialogOptions(&dialogOptions); 
+    dialogOptions.dialogOptionFlags |= kNavSelectDefaultLocation;
+
+	PStringCopy(defaultName,dialogOptions.savedFileName);
+      
+    
+    anErr = NavPutFile( nil, 
+    					&reply, 
+    					&dialogOptions, 
+    					nil,
+                        nil, 
+                        creatorType, 
+                        nil );
+ 
+    if (anErr == noErr && reply.validRecord)
+            {
+                        AEKeyword   theKeyword;
+                        DescType    actualType;
+                        Size        actualSize;
+                        
+                        /* Get a pointer to selected file */
+                        anErr = AEGetNthPtr(&(reply.selection), 1,
+                                            typeFSS, &theKeyword,
+                                            &actualType, &mytarget,
+                                            sizeof(mytarget),
+                                            &actualSize);
+                             
+                  /*  Dispose of NavReplyRecord, resources, descriptors */
+                NavDisposeReply(&reply);
+            }
+    else
+	 err = userCanceledErr;
+    
+    HUnlock((Handle)hPrompt);
+    
+    if(err != noErr)
+     goto cleanup;
+     
+     FSpGetFullPath (&mytarget, &pathLen, &pathName);
+     HLock((Handle) pathName);
+     if (pathLen  < buflen){
+          strncpy(fileBuf, *pathName, pathLen);
+          fileBuf[pathLen] = '\0';
+          HUnlock((Handle) pathName);
+          return pathLen ;
+       }else{
+          strncpy(fileBuf, *pathName, buflen - 1);
+          fileBuf[buflen-1] = '\0';
+          HUnlock((Handle) pathName);
           return buflen-1;
        }
 
-   }else{
-
-      fileBuf[0] = '\0';
-      return 0;
-   }
+cleanup:
+	fileBuf[0] = '\0';
+	return(0);
 }
+
+
 
 int R_ChooseFile(int isNewFile, char *fileBuf, int buflen){
    if (isNewFile){
