@@ -58,9 +58,7 @@ lm.influence(model, do.coef = TRUE)
   considered here.
 }
 \references{
-  Belsley, D. A., Kuh, E. and Welsch, R. E. (1980)
-  \emph{Regression Diagnostics.}
-  New York: Wiley.
+  see the list in the documentation for \code{\link{influence.measures}}.
 }
 \seealso{
 \code{\link{summary.lm}} for \code{\link{summary}} and related methods;\cr
