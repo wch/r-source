@@ -29,7 +29,7 @@ is.array(x)
   fastest.  If there are too few elements in \code{data} to fill the array,
   then the elements in \code{data} are recycled.  If \code{data} has
   length zero, \code{NA} of an appropriate type is used for atomic
-  vectors and \code{NULL} for lists.
+  vectors (\code{0} for raw vectors) and \code{NULL} for lists.
 
   \code{as.array()} coerces its argument to be an array by attaching a
   \code{\link{dim}} attribute to it.  It also attaches

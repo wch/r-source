@@ -38,7 +38,7 @@ is.matrix(x)
   If there are too few elements in \code{data} to fill the array,
   then the elements in \code{data} are recycled.  If \code{data} has
   length zero, \code{NA} of an appropriate type is used for atomic
-  vectors and \code{NULL} for lists.
+  vectors (\code{0} for raw vectors) and \code{NULL} for lists.
 
   \code{is.matrix} returns \code{TRUE} if \code{x} is a matrix (i.e., it
   is \emph{not} a \code{\link{data.frame}} and has a \code{\link{dim}}
