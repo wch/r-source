@@ -214,8 +214,8 @@ sub mark_brackets {
     print STDERR "\n-- mark_brackets:" if $debug;
     my $loopcount = 0;
     while(checkloop($loopcount++, $complete_text,
-		    "mismatched or missing brackets") &&
-	  $complete_text =~ /{([^{}]*)}/s){
+		    "mismatched or missing brackets")
+	  && $complete_text =~ /{([^{}]*)}/s) {
 	my $id = $NB . ++$max_bracket . $BN;
 	$complete_text =~ s/{([^{}]*)}/$id$1$id/s;
 	print STDERR "." if $debug;
@@ -226,9 +226,10 @@ sub unmark_brackets {
     my $text = $_[0];
 
     my $loopcount = 0;
-    while(($loopcount++ < $MAXLOOPS) && $text =~ /($ID)(.*)($ID)/s){
+    while(($loopcount++ < $MAXLOOPS)
+	  && $text =~ /($ID)(.*)($ID)/s) {
 	$id = $1;
-	if($text =~ s/$id(.*)$id/\{$1\}/s){
+	if($text =~ s/$id(.*)$id/\{$1\}/s) {
 	    $text =~ s/$id(.*)$id/\{$1\}/so;
 	}
 	else{
@@ -421,7 +422,7 @@ sub undefine_command {
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\$cmd")
-	  && $text =~ /\\$cmd/){
+	  && $text =~ /\\$cmd$ID/) {
 	my ($id, $arg) = get_arguments($cmd, $text, 1);
 	$text =~ s/\\$cmd(\[.*\])?$id(.*)$id/$2/s;
     }
@@ -435,7 +436,7 @@ sub drop_full_command {
     my ($text, $cmd) = @_;
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\$cmd")
-	  && $text =~ /\\$cmd/){
+	  && $text =~ /\\$cmd$ID/) {
 	my ($id, $arg) = get_arguments($cmd, $text, 1);
 	$text =~ s/\\$cmd$id.*$id//s;
     }
@@ -450,7 +451,7 @@ sub replace_command {
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\$cmd")
-	  && $text =~ /\\$cmd/){
+	  && $text =~ /\\$cmd$ID/) {
 	my ($id, $arg) = get_arguments($cmd, $text, 1);
 	$text =~ s/\\$cmd$id(.*)$id/$before$1$after/s;
     }
@@ -466,7 +467,7 @@ sub replace_prepend_command {
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\$cmd")
-	  && $text =~ /\\$cmd/){
+	  && $text =~ /\\$cmd$ID/) {
 	my ($id, $arg) = get_arguments($cmd, $text, 1);
 	$text =~ /\\$cmd$id(.*)$id/s;
 	$arg = $1;
@@ -485,7 +486,7 @@ sub transform_command {
     my $loopcount = 0;
 
     while(checkloop($loopcount++, $text, "\\$cmd") &&
-	  $text =~ /\\$cmd/){
+	  $text =~ /\\$cmd$ID/) {
 	my ($id, $arg) = get_arguments($cmd, $text, 1);
 	$text =~ /\\$cmd$id(.*)$id/s;
 	$arg = $1;
@@ -754,8 +755,8 @@ sub text2html {
 
     ## Handle '\describe':
     $text = replace_command($text, "describe", "<dl>", "</dl>");
-    while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
-    {
+    while(checkloop($loopcount++, $text, "\\item")
+	  && $text =~ /\\itemnormal/s) {
 	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
 	my $descitem;
 	$descitem = "<dt>" . text2html($arg, 0, $inarglist) . "</dt>";
@@ -908,7 +909,7 @@ sub html_print_argblock {
 	    print $htmlout "<table summary=\"R argblock\">\n";
 	    my $loopcount = 0;
 	    while(checkloop($loopcount++, $text, "\\item")
-		  && $text =~ /\\item/s){
+		  && $text =~ /\\item/s) {
 		my ($id, $arg, $desc)  =
 		    get_arguments("item", $text, 2);
 		print $htmlout ("<tr valign=\"top\"><td><code>",
@@ -968,7 +969,7 @@ sub html_unescape_codes {
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "escaped code")
-	  && $text =~ /$ECODE($ID)/){
+	  && $text =~ /$ECODE($ID)/) {
 	my $id = $1;
 	my $ec = code2html($ecodes{$id});
 	$text =~ s/$ECODE$id/<code>$ec<\/code>/;
@@ -1215,6 +1216,7 @@ sub text2txt {
     $text =~ s/\\le/<=/go;
     $text =~ s/\\ge/>=/go;
     $text =~ s/\\R/R/go;
+
     foreach my $cmd (@special_commands) {
 	$text = transform_command($text, $cmd, $ECMD . $cmd,
 				  "-", "$EDASH");
@@ -1270,7 +1272,8 @@ sub text2txt {
     }
 
     $loopcount = 0;
-    while(checkloop($loopcount++, $text, "\\deqn") &&  $text =~ /\\deqn/){
+    while(checkloop($loopcount++, $text, "\\deqn")
+	  && $text =~ /\\deqn/) {
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
 	$eqn = $ascii if $ascii;
 	$eqn =~ s/\\([^&])/$1/go;
@@ -1298,8 +1301,8 @@ sub text2txt {
 			    "describe",
 			    "\n.in +$INDENTDD\n",
 			    "\n.in -$INDENTDD\n");
-    while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
-    {
+    while(checkloop($loopcount++, $text, "\\item")
+	  && $text =~ /\\itemnormal/s) {
 	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
 	my $descitem = text2txt($arg);
 	my $ll = length($desc);
@@ -1665,7 +1668,7 @@ sub txt_unescape_codes {
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "escaped code")
-	  && $text =~ /$ECODE($ID)/){
+	  && $text =~ /$ECODE($ID)/) {
 	my $id = $1;
 	my $ec = code2txt($ecodes{$id});
 	$text =~ s/$ECODE$id/\'$ec\'/;
@@ -1949,8 +1952,8 @@ sub text2nroff {
 			    "describe",
 			    "\n.in +$INDENT\n",
 			    "\n.in -$INDENT\n");
-    while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
-    {
+    while(checkloop($loopcount++, $text, "\\item")
+	  && $text =~ /\\itemnormal/s) {
 	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
 	$arg = text2nroff($arg);
 	$descitem = ".IP \"\" $TAGOFF\n".
@@ -1969,7 +1972,7 @@ sub nroff_unescape_codes {
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "escaped code")
-	  && $text =~ /$ECODE($ID)/){
+	  && $text =~ /$ECODE($ID)/) {
 	my $id = $1;
 	my $ec = code2nroff($ecodes{$id});
 	$text =~ s/$ECODE$id/\'$ec\'/;
@@ -2229,15 +2232,14 @@ sub text2latex {
 
     $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\deqn")
-	  && $text =~ /\\deqn/){
+	  && $text =~ /\\deqn/) {
 	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
 	$text =~ s/\\deqn.*$id/\\dddeqn\{$eqn\}\{$ascii\}/s;
     }
 
     $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\item")
-	  && $text =~ /\\itemnormal/s)
-    {
+	  && $text =~ /\\itemnormal/s) {
 	my ($id, $arg, $desc) = get_arguments("item", $text, 2);
 	$descitem = "\\DITEM[" . text2latex($arg) . "] " . text2latex($desc);
 	$text =~ s/\\itemnormal.*$id/$descitem/s;
@@ -2385,7 +2387,7 @@ sub latex_unescape_codes {
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "escaped code")
-	  && $text =~ /$ECODE($ID)/){
+	  && $text =~ /$ECODE($ID)/) {
 	my $id = $1;
 	my $ec = latex_code_cmd(code2latex($ecodes{$id},1));
 	$text =~ s/$ECODE$id/$ec/;
@@ -2674,8 +2676,8 @@ sub text2Ssgm {
 
     ## Handle '\describe':
     $text = replace_command($text, "describe", "<descrip>", "</descrip>\n");
-    while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
-    {
+    while(checkloop($loopcount++, $text, "\\item")
+	  && $text =~ /\\itemnormal/s) {
 	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
 	$descitem = "<tag/" . text2Ssgm($arg, 0, $inarglist) . "/";
 	$descitem .= text2Ssgm($desc, 0, $inarglist);
@@ -2802,7 +2804,7 @@ sub Ssgm_print_argblock {
 	    }
 	    my $loopcount = 0;
 	    while(checkloop($loopcount++, $text, "\\item")
-		  && $text =~ /\\item/s){
+		  && $text =~ /\\item/s) {
 		my ($id, $arg, $desc)  =
 		    get_arguments("item", $text, 2);
 		print $sgmlout ("<s-arg name=\"",
@@ -2841,7 +2843,7 @@ sub Ssgm_print_valueblock {
 	    }
 	    my $loopcount = 0;
 	    while(checkloop($loopcount++, $text, "\\item")
-		  && $text =~ /\\item/s){
+		  && $text =~ /\\item/s) {
 		my ($id, $arg, $desc)  =
 		    get_arguments("item", $text, 2);
 		print $sgmlout ("<s-return-component name=\"",
@@ -2892,7 +2894,7 @@ sub Ssgm_unescape_codes {
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "escaped code")
-	  && $text =~ /$ECODE($ID)/){
+	  && $text =~ /$ECODE($ID)/) {
 	my $id = $1;
 	my $ec = code2Ssgm($ecodes{$id});
 	if($ec =~ /<s-function/) {
