@@ -49,6 +49,7 @@ help <-
                         stop("Compiled HTML is not installed")
                     if(!is.loaded(symbol.C("Rchtml")))
                         dyn.load(chm.dll)
+                    topic <- sub("(.*/help/)([^/]*)$", "\\2", file)
                     wfile <- sub("/help/([^/]*)$", "", file)
                     thispkg <- sub(".*/([^/]*)$", "\\1", wfile)
                     hlpfile <- paste(wfile, "/chtml/", thispkg, ".chm",
