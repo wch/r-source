@@ -714,7 +714,7 @@ for arg in ${FLIBS}; do
   case "${arg}" in
     -lcrt*.o)
       ;;
-    -[a-zA-Z]/*\" | -[a-zA-Z]*\\) # ifc
+    -[[a-zA-Z]]/*\" | -[[a-zA-Z]]*\\) # ifc
       ;;
     -l:*)
       flibs="${flibs} ${linker_option}${arg}"
