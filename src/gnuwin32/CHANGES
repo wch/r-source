@@ -21,7 +21,8 @@ options(repos=c(some_cran_mirror, http://www.stats.ox.ac.uk/pub/RWin"))
 
 There is a new item on the Packages menu to set repositories, e.g.
 CRAN, Bioconductor, Omegahat.  You can modify the list (and its
-defaults): see the rw-FAQ Q2.9.
+defaults): see the rw-FAQ Q2.9.  This supersedes the menu items for
+Bioconductor.
 
 The new (in R 2.0.0) graphics pars "lend", "ljoin" and "lmitre" are
 now implemented for the Windows devices.
@@ -67,6 +68,9 @@ readline.  All the commands used in a session are kept, but only the
 last R_HISTSIZE (default 512) lines are saved.  The environment variable
 R_HISTSIZE can be changed during the session (by Sys.putenv) as the
 current value is used.
+
+The font list in the Preferences screen has been expanded to include fonts
+used in `East Asian' terminals.
 
 A bug with font changing in Preferences introduced with the script
 editor in R 2.0.0 had been fixed.  This should fix PR#7271,7277,7749.
