@@ -41,8 +41,8 @@ bartlett.test(x, g)
 \seealso{
   \code{\link{var.test}} for the special case of comparing variances in
   two samples from normal distributions;
-  \code{\link{fligner.test}} for a rank-based (nonparametric) k-sample
-  test for homogeneity of variances;
+  \code{\link{fligner.test}} for a rank-based (nonparametric)
+  \eqn{k}-sample test for homogeneity of variances;
   \code{\link{ansari.test}} and \code{\link{mood.test}} for two rank
   based two-sample tests for difference in scale.
 }

@@ -19,16 +19,16 @@ power.prop.test(n=NULL, p1=NULL, p2=NULL, sig.level=0.05,
  Compute power of test, or determine parameters to obtain target power.
 }
 \details{
-  Exactly one of the parameters \code{n}, \code{p1}, \code{p2}
+  Exactly one of the parameters \code{n}, \code{p1}, \code{p2},
   \code{power}, and \code{sig.level} must be passed as NULL, and that
   parameter is determined from the others. Notice that \code{sig.level}
   has a non-NULL default so NULL must be explicitly passed if you want
   it  computed.
 }
 \value{
-  Object of class \code{power.htest}, a list of the arguments (including
-  the computed one) augmented with \code{method} and \code{note}
-  elements. 
+  Object of class \code{"power.htest"}, a list of the arguments
+  (including the computed one) augmented with \code{method} and
+  \code{note} elements. 
 }
 \author{Peter Dalgaard.  Based on previous work by Claus Ekstrøm}
 \note{
