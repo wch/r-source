@@ -75,14 +75,16 @@ src/library/base/R/mosaicplot.R
 
 
 src/library/base/R/aov.R
+src/library/base/R/bandwidths.R
 src/library/base/R/contr.poly.R
 src/library/base/R/expand.grid.R
 src/library/base/R/predict.glm.R
 src/library/base/R/update.R
 src/library/base/*/max.col.R*
+src/appl/bandwidths.c
 src/appl/maxcol.c
 
-	Copyright (C) 1998-1999 W. N. Venables and B. D. Ripley
+	Copyright (C) various dates W. N. Venables and B. D. Ripley
 
 
 src/library/modreg:
