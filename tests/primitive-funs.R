@@ -7,7 +7,7 @@
 
 bpos <- match("package:base",search())
 nn <- ls(pos=bpos)
-length(nn) # 844  [R 0.62.0, March 25, 1998]
+length(nn) # 844 [R 0.62.0, March 25, 1998;  1067 R 0.64.0 March 1999]
 
 is.primitive <- function (obj) is.function(obj) && is.null(args(obj))
 is.special <- function(obj) typeof(obj) == "special"
@@ -42,7 +42,7 @@ Real.primitives <-
 	 programming =
 	 c("nargs", "missing", # actually args(.) could be as formal(.)
 	   "interactive",
-	   ".Internal",
+	   ".Internal", ".External",
 	   ".C", ".Fortran", "symbol.C", "symbol.For",
 	   "globalenv", "pos.to.env", "unclass",
 

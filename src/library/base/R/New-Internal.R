@@ -110,3 +110,5 @@ unique <- function(x){
 
 stop <- function(message = NULL).Internal(stop(message))
 warning <- function(message = NULL).Internal(warning(message))
+
+memory.profile <- function().Internal(memory.profile())

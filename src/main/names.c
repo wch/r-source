@@ -494,7 +494,7 @@ FUNTAB R_FunTab[] =
 {"gc",		do_gc,		0,	11,	1,	PP_FUNCALL},
 {"gcinfo",	do_gcinfo,	0,	11,	1,	PP_FUNCALL},
 {"gctorture",	do_gctorture,	0,	11,	1,	PP_FUNCALL},
-{"memory.profile",do_memoryprofile, 0,  1,      0,      PP_FUNCALL},
+{"memory.profile",do_memoryprofile, 0,	11,	0,	PP_FUNCALL},
 {"rep",		do_rep,		0,	11,	2,	PP_FUNCALL},
 {"list",	do_makelist,	1,	1,	-1,	PP_FUNCALL},
 {"split",	do_split,	0,	11,	2,	PP_FUNCALL},
