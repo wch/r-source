@@ -24,7 +24,7 @@
 
 use Getopt::Long;
 
-$VERSION = "0.1.4";
+$VERSION = "0.1.5";
 
 @knownoptions = ("debug|d", "type|t:s", "help|h");
 GetOptions (@knownoptions) || usage();
@@ -182,9 +182,13 @@ sub get_sections {
 }
 	
 
-# Get the arguments of a command. The number of arguments is determined
-# by the global hash %command_nargs, the default is one
-# argument. Returns a list with the id of the last closing bracket and
+# Get the arguments of a command.
+# Arguments of get_arguments:
+#  1: next occurence of $_[0] is searched
+#  2: $_[1] is the text containing the command
+#  3: $_[2] is the optional number of arguments to be extracted,
+#     default is to extract 1 argument 
+# Returns a list with the id of the last closing bracket and
 # the arguments. 
 sub get_arguments {
     
@@ -247,8 +251,8 @@ sub usage {
 
 sub undefined_command {
 
-    my $cmd = $_[0];
-    my $text = $_[1];
+    my $text = $_[0];
+    my $cmd = $_[1];
     
     while($text =~ /\\$cmd/){
 	my ($id, $arg)  = get_arguments($cmd, $text, 1);
@@ -259,7 +263,23 @@ sub undefined_command {
 }
     
 
-
+sub replace_command {
+
+    my $text = $_[0];
+    my $cmd = $_[1];
+    my $before = $_[2];
+    my $after = $_[3];
+
+    while($text =~ /\\$cmd/){
+	my ($id, $arg)  = get_arguments($cmd, $text, 1);
+	$text =~ s/\\$cmd$id(.*)$id/$before$1$after/s;
+    }
+
+    $text;
+}
+
+
+
 #************************** HTML ********************************
 
 sub rdoc2html {
@@ -326,17 +346,23 @@ sub text2html {
     $text =~ s/$EOB/\{/go;
     $text =~ s/$ECB/\}/go;
 			
-    $text = html_replace_command("emph", "EM", $text);
-    $text = html_replace_command("bold", "B", $text);
-
+    $text = replace_command($text, "emph", "<EM>", "</EM>");
+    $text = replace_command($text, "bold", "<B>", "</B>");
+    $text = replace_command($text, "file", "`", "'");
+    
     while($text =~ /\\link/){
 	my ($id, $arg)  = get_arguments("link", $text, 1);
-	$text =~ s/\\link$id(.*)$id/<A HREF=\"$1.html\">$1<\/A>/s;
+	$text =~ s/\\link$id.*$id/<A HREF=\"$arg.html\">$arg<\/A>/s;
     }
 
     while($text =~ /\\email/){
 	my ($id, $arg)  = get_arguments("email", $text, 1);
-	$text =~ s/\\email$id(.*)$id/<A HREF=\"mailto:$1.html\">$1<\/A>/s;
+	$text =~ s/\\email$id.*$id/<A HREF=\"mailto:$arg\">$arg<\/A>/s;
+    }
+
+    while($text =~ /\\url/){
+	my ($id, $arg)  = get_arguments("url", $text, 1);
+	$text =~ s/\\url.*$id/<A HREF=\"$arg\">$arg<\/A>/s;
     }
 
     # handle equations:
@@ -352,7 +378,7 @@ sub text2html {
 	$text =~ s/\\deqn(.*)$id/<P align=center><I>$eqn<\/I><\/P>/s;
     }
 
-    s/\\\\/\\/go;
+    $text =~ s/\\\\/\\/go;
     $text = html_unescape_codes($text);
     unmark_brackets($text);
 }
@@ -374,6 +400,7 @@ sub code2html {
 	$text =~ s/\\link$id(.*)$id/<A HREF=\"$1.html\">$1<\/A>/s;
     }
 
+    $text =~ s/\\\\/\\/go;
     unmark_brackets($text);
 }
 
@@ -428,7 +455,7 @@ sub html_print_argblock {
 		print text2html($arg);
 		print "</CODE>\n<TD>\n";
 		print text2html($desc), "\n";
-		$text =~ s/\\item.*$id//s;
+		$text =~ s/.*$id//s;
 	    }
 	    print "</TABLE>\n";
 	    print text2html($text);
@@ -451,20 +478,6 @@ sub html_print_sections {
 }
 
 
-sub html_replace_command {
-
-    my $cmd = $_[0];
-    my $htmlcmd = $_[1];
-    my $text = $_[2];
-
-    while($text =~ /\\$cmd/){
-	my ($id, $arg)  = get_arguments($cmd, $text, 1);
-	$text =~ s/\\$cmd$id(.*)$id/<$htmlcmd>$1<\/$htmlcmd>/s;
-    }
-
-    $text;
-}
-
 sub html_unescape_codes {
 
     my $text = $_[0];
@@ -477,7 +490,6 @@ sub html_unescape_codes {
 }
 
 
-
 #**************************** nroff ******************************
 
 
@@ -543,12 +555,14 @@ sub text2nroff {
     $text =~ s/$EOB/\{/go;
     $text =~ s/$ECB/\}/go;
 
-    $text = undefined_command("link", $text);
-    $text = undefined_command("emph", $text);
-    $text = undefined_command("bold", $text);    
-    $text = undefined_command("textbf", $text);
-    $text = undefined_command("mathbf", $text);
-    $text = undefined_command("email", $text);
+    $text = undefined_command($text, "link");
+    $text = undefined_command($text, "emph");
+    $text = undefined_command($text, "bold");    
+    $text = undefined_command($text, "textbf");
+    $text = undefined_command($text, "mathbf");
+    $text = undefined_command($text, "email");
+    $text = replace_command($text, "file", "`", "'");
+    $text = replace_command($text, "url", "<URL: ", ">");
 
     # handle equations:
     while($text =~ /\\eqn/){
@@ -578,7 +592,7 @@ sub code2nroff {
     $text =~ s/\\n/\\\\n/g;
      
 
-    $text = undefined_command("link", $text);
+    $text = undefined_command($text, "link");
 
     unmark_brackets($text);
 }
@@ -653,7 +667,7 @@ sub nroff_print_argblock {
 		print ".ti -\\w\@$arg:\\ \@u\n";
 		print "$arg:\\ $desc\n";
 		print ".in -$TAGOFF\n";
-		$text =~ s/\\item.*$id//s;
+		$text =~ s/.*$id//s;
 	    }
 	    print text2nroff($text), "\n";
 	}
@@ -692,7 +706,7 @@ sub nroff_unescape_codes {
     $text;
 }
 
-
+
 #*********************** Example ***********************************
 
 
@@ -742,7 +756,7 @@ sub code2examp {
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
 
-    $text = undefined_command("link", $text);
+    $text = undefined_command($text, "link");
     unmark_brackets($text);
 }
     
@@ -802,6 +816,8 @@ sub text2latex {
     $text =~ s/\\dddeqn/\\deqn/og;
 
 	
+    $text =~ s/\\\\/\\bsl{}/go;
+    $text =~ s/\\cr/\\\\/go;
     $text = latex_unescape_codes($text);
     unmark_brackets($text);
 }
@@ -814,7 +830,8 @@ sub code2latex {
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
 
-    $text = undefined_command("link", $text);
+    $text =~ s/\\\\/\\bsl{}/go;
+    $text = undefined_command($text, "link");
     unmark_brackets($text);
 }
     
@@ -885,7 +902,7 @@ sub latex_print_argblock {
 		print latex_code_cmd(code2latex($arg));
 		print "\] ";
 		print text2latex($desc), "\n";
-		$text =~ s/\\item.*$id//s;
+		$text =~ s/.*$id//s;
 	    }
 	    print "\\end\{ldescription\}\n";
 	    print text2latex($text);
