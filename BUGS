@@ -391,3 +391,7 @@ Date: Fri, 4 Jan 2002 12:51:15 +0100 (MET)
 Subject: documentation of `las' on `par' help page
 From: Achim Zeileis <zeileis@ci.tuwien.ac.at>
 Date: Fri, 11 Jan 2002 12:30:20 +0100
+* PR# 1258 *
+Subject: Bug in predict(newdata=x) with poly()
+From: Duncan Murdoch <murdoch@stats.uwo.ca>
+Date: Fri, 11 Jan 2002 09:10:34 -0500
