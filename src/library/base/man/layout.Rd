@@ -6,10 +6,13 @@ layout(mat,
        widths = rep(1, dim(mat)[2]),
        heights= rep(1, dim(mat)[1]),
        respect= FALSE)
+
 layout.show(n = 1)
+lcm(w)
 }
 \alias{layout}
 \alias{layout.show}
+\alias{lcm}
 \arguments{
 \item{mat}{a matrix object specifying the location of the next \eqn{N} figures
   on the output device.  Each value in the matrix must be \code{0} or a
@@ -27,17 +30,27 @@ layout.show(n = 1)
   each value in the matrix must be either \code{0} or \code{1}.}
 }
 \description{
-\code{layout} divides the device up into as many rows and columns as
-there are in \code{mat}, with the column-widths and the row-heights specified
-in the respective arguments.  Figure i is allocated a region composed
-from a subset
-of these rows and columns, based on the rows and columns in which i
-occurs
-in \code{mat}.	The respect argument controls whether a unit column-width is
-the same physical measurement on the device as a unit row-height.
+    \code{layout} divides the device up into as many rows and columns as
+    there are in matrix \code{mat}, with the column-widths and the
+    row-heights specified in the respective arguments.
+}
+\details{
+    Figure \eqn{i} is allocated a region composed from a subset
+    of these rows and columns, based on the rows and columns
+    in which \eqn{i} occurs in \code{mat}.
+
+    The \code{respect} argument controls whether a unit column-width is
+    the same physical measurement on the device as a unit row-height.
+
+    \code{layout.show(n)} plots (part of) the current layout, namely the
+    outlines of the next \code{n} figures.
+
+    \code{lcm} is a trivial function, to be used as \emph{the} interface
+    for specifying absolute dimensions for the \code{widths} and
+    \code{heights} arguments of \code{layout()}.
 }
 \value{
-The number of figures, \eqn{N}, see above, is returned.
+\code{layout} returns the number of figures, \eqn{N}, see above.
 }
 \references{
 Chapter 5 of Paul Murrell's Ph.D. thesis.
