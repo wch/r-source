@@ -509,6 +509,7 @@ static char RHome[MAX_PATH + 6];
 static char UserRHome[MAX_PATH + 6];
 char *getRHOME();
 void  closeAllHlpFiles();
+void UnLoad_Unzip_Dll();
 
 
 /* Process ~/.Renviron, if it exists */
@@ -812,6 +813,7 @@ void R_CleanUp(int ask)
     AllDevicesKilled = 1;
     if (!CharacterMode)
 	savehistory(RConsole, ".Rhistory");
+    UnLoad_Unzip_Dll();
     exitapp();
 }
 
