@@ -53,6 +53,11 @@ const static char * const falsenames[] = {
 #define WARN_INACC 2
 #define WARN_IMAG  4
 
+#define DUPLICATE_ATTRIB(to, from) do {\
+  SEXP __a__ = ATTRIB(from); \
+  if (__a__ != R_NilValue) SET_ATTRIB(to, duplicate(__a__)); \
+} while (0)
+
 void CoercionWarning(int warn)
 {
 /* FIXME: Use
@@ -398,7 +403,7 @@ static SEXP coerceToLogical(SEXP v)
     SEXP ans;
     int i, n, warn = 0;
     PROTECT(ans = allocVector(LGLSXP, n = length(v)));
-    SET_ATTRIB(ans, duplicate(ATTRIB(v)));
+    DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case INTSXP:
 	for (i = 0; i < n; i++)
@@ -427,7 +432,7 @@ static SEXP coerceToInteger(SEXP v)
     SEXP ans;
     int i, n, warn = 0;
     PROTECT(ans = allocVector(INTSXP, n = LENGTH(v)));
-    SET_ATTRIB(ans, duplicate(ATTRIB(v)));
+    DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case LGLSXP:
 	for (i = 0; i < n; i++)
@@ -456,7 +461,7 @@ static SEXP coerceToReal(SEXP v)
     SEXP ans;
     int i, n, warn = 0;
     PROTECT(ans = allocVector(REALSXP, n = LENGTH(v)));
-    SET_ATTRIB(ans, duplicate(ATTRIB(v)));
+    DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case LGLSXP:
 	for (i = 0; i < n; i++)
@@ -485,7 +490,7 @@ static SEXP coerceToComplex(SEXP v)
     SEXP ans;
     int i, n, warn = 0;
     PROTECT(ans = allocVector(CPLXSXP, n = LENGTH(v)));
-    SET_ATTRIB(ans, duplicate(ATTRIB(v)));
+    DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case LGLSXP:
 	for (i = 0; i < n; i++)
@@ -514,7 +519,7 @@ static SEXP coerceToString(SEXP v)
     SEXP ans;
     int i, n, savedigits, warn = 0;
     PROTECT(ans = allocVector(STRSXP, n = LENGTH(v)));
-    SET_ATTRIB(ans, duplicate(ATTRIB(v)));
+    DUPLICATE_ATTRIB(ans, v);
     switch (TYPEOF(v)) {
     case LGLSXP:
 	for (i = 0; i < n; i++)
@@ -1266,6 +1271,9 @@ SEXP do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case ANYSXP:
 	case EXPRSXP:
 	case EXTPTRSXP:
+#ifdef BYTECODE
+	case BCODESXP:
+#endif
 	case WEAKREFSXP:
 	    LOGICAL(ans)[0] = 1;
 	    break;
