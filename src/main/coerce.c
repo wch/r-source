@@ -1579,7 +1579,7 @@ SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
     CAR(c) = install(CHAR(STRING(fun)[0]));
     c = CDR(c);
     for (i = 0; i < n; i++) {
-#ifdef OLD
+#ifndef NEW
 	CAR(c) = VECTOR(args)[i];
 #else
 	CAR(c) = mkPROMISE(VECTOR(args)[i], rho);
