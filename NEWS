@@ -553,6 +553,8 @@ BUG FIXES
 
     o	summary.glm() had two `aic' components in the returned object.
 
+    o	autoload() was returning the value of its last command, a
+	promise, even though it was documented to have no value.
 
 
 	**************************************************

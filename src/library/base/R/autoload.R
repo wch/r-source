@@ -9,6 +9,8 @@ autoload <- function(name, package, ...)
     if (is.na(match(package, .Autoloaded)))
 	assign(".Autoloaded", c(package, .Autoloaded), env =.AutoloadEnv)
     assign(name, do.call("delay", list(newcall)), env = .AutoloadEnv)
+    ## no longer return the result, which is a promise
+    invisible()
 }
 
 autoloader <- function (name, package, ...)
