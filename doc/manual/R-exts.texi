@@ -1169,6 +1169,7 @@ anticipated for the following release of @R{}.
 * Cross-references::            
 * Mathematics::                 
 * Insertions::                  
+* Indices::                     
 * Platform-specific sections::  
 * Processing Rd format::        
 @end menu
@@ -1244,11 +1245,11 @@ should be useful for package writers.
 
 @menu
 * Documenting functions::       
-* Documenting datasets::        
+* Documenting data sets::       
 * Documenting S4 classes and methods::  
 @end menu
 
-@node Documenting functions, Documenting datasets, Rd format, Rd format
+@node Documenting functions, Documenting data sets, Rd format, Rd format
 @subsection Documenting functions
 
 The basic markup commands used for documenting @R{} objects (in
@@ -1463,6 +1464,7 @@ number generation (for example, @code{x <- rnorm(100)}), or by using
 standard data sets loadable via @code{data()} (see @code{?data} for more
 info).
 
+@findex \keyword
 @item \keyword@{@var{key}@}
 Each @code{\keyword} entry should specify one of the standard keywords
 (as listed in the file @file{@var{R_HOME}/doc/KEYWORDS.db}).  There must
@@ -1483,8 +1485,8 @@ documenting @R{} objects.  If @code{foo} is an @R{} function, then
 the proper function and argument names of @code{foo}, and a structure
 which can be filled in with information.
 
-@node Documenting datasets, Documenting S4 classes and methods, Documenting functions, Rd format
-@subsection Documenting datasets
+@node Documenting data sets, Documenting S4 classes and methods, Documenting functions, Rd format
+@subsection Documenting data sets
 
 The structure of Rd files which document @R{} data sets is slightly
 different.  Whereas sections such as @code{\arguments} and @code{\value}
@@ -1526,7 +1528,7 @@ for data sets.
 
 @item \format@{@dots{}@}
 @findex \format
-A description of the format of the dataset (as a vector, matrix, data
+A description of the format of the data set (as a vector, matrix, data
 frame, time series, @dots{}).  For matrices and data frames this should
 give a description of each column, preferably as a list or table.
 @xref{Lists and tables}, for more information.
@@ -1551,7 +1553,7 @@ The @code{\keyword} entry is always @samp{datasets}.
 If @code{bar} is a data frame, documenting it as a data set can again be
 initiated via @kbd{prompt(bar)}.
 
-@node Documenting S4 classes and methods,  , Documenting datasets, Rd format
+@node Documenting S4 classes and methods,  , Documenting data sets, Rd format
 @subsection Documenting S4 classes and methods
 
 Structure of and special markup for documenting S4 classes and methods
@@ -1669,8 +1671,8 @@ backslash will need to be escaped if it precedes @samp{%}, @samp{@{} or
 @findex \preformatted
 Indicate text that is a literal example of a piece of a program, using
 @code{typewriter} font if possible.  The same characters need to be
-escaped as for @code{\code}.  All other formatting, e.g line breaks, is
-preserved.  The closing brace should be on a line by itself.
+escaped as for @code{\code}.  All other formatting, e.g.@: line breaks,
+is preserved.  The closing brace should be on a line by itself.
 
 @item \kbd@{@var{keyboard-characters}@}
 @findex \kbd
@@ -1860,7 +1862,7 @@ for x = 0, 1, 2, ....
 @c  @findex \left(
 @c  @findex \right)
 
-@node Insertions, Platform-specific sections, Mathematics, Writing R documentation files
+@node Insertions, Indices, Mathematics, Writing R documentation files
 @section Insertions
 
 @findex \R
@@ -1898,7 +1900,38 @@ as @code{\eqn@{\mbox@{\textasciicircum@}@}@{^@}}, and @samp{~} by
 and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
 @code{\deqn}.
 
-@node  Platform-specific sections, Processing Rd format, Insertions, Writing R documentation files
+@node Indices, Platform-specific sections, Insertions, Writing R documentation files
+@section Indices
+@cindex Indices
+
+The @code{\alias} command (@pxref{Documenting functions}) is used for
+the ``topics'' documented, including @emph{all} R objects in a package
+such as functions and variables, data sets, and S4 classes and methods
+(@pxref{Documenting S4 classes and methods}).  The on-line help system
+searches the index data base consisting of all aliases.
+
+@findex \concept
+In addition, it is possible to provide ``concept index entries'' using
+@code{\concept}, which can be used for @code{help.search()} lookups.
+E.g., file @file{cor.test.Rd} in the standard add-on package @pkg{ctest}
+contains
+
+@smallexample
+\concept{Kendall correlation coefficient}
+\concept{Pearson correlation coefficient}
+\concept{Spearman correlation coefficient}
+@end smallexample
+
+@noindent
+so that e.g.@: @kbd{help.search("Spearman")} will succeed in finding the
+help page for the test for association between paired samples using
+Spearman's @math{\rho}{rho}.
+
+(Note that @code{help.search()} only uses ``sections'' of documentation
+objects with no additional markup.)
+
+
+@node  Platform-specific sections, Processing Rd format, Indices, Writing R documentation files
 @section Platform-specific documentation
 @cindex Platform-specific documentation
 
