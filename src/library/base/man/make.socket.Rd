@@ -46,6 +46,6 @@ daytime <- function(host = "localhost"){
     read.socket(a)
 }
 \dontrun{daytime()}  ## only works if your computer runs this service
-\dontrun{daytime("chime.cac.washington.edu")}
+\dontrun{daytime("ntp.demon.co.uk")}
 }
 \keyword{misc}
