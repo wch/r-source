@@ -534,6 +534,8 @@ BUG FIXES
     o	AIC.lm/default was failing if multiple objects and k were
 	specified.  (PR#2518)
 
+    o	removeMethods{methods} was broken. (PR#2519)
+
 
 
 	**************************************************

@@ -73,7 +73,7 @@ removeMethod(f, signature, where)
   S-Plus, the current implementation enforces this partly with a
   warning and a reconstruction of a method that fails to match, but
   don't count on this for the future:  Make the formal arguments of
-  \code{definition} match those of the generic..
+  \code{definition} match those of the generic.
 }
 \references{
   The R package \code{methods} implements, with a few exceptions, the
@@ -246,7 +246,7 @@ stopifnot(identical(tMC[1:10, 1:10]@y, yy[1:10, 1:10]))
 ## verify we can remove methods and generic
 
 removeMethods("-")
-removeMethods("length")
+removeMethod("length", "track")
 removeMethods("Arith")
 removeMethods("Compare")
 

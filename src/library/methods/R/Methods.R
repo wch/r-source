@@ -197,7 +197,7 @@ cacheMethod <-
     assign(".Methods", methods, envir = ev)
     methods
   }
-  
+
 
 setMethod <-
 ## Define a method for the specified combination of generic function and signature.
@@ -246,6 +246,7 @@ setMethod <-
                    ## extra classes in method => use "..." to rematch
                    definition <- rematchDefinition(definition, fdef, mnames, fnames, signature)
                }
+               def <- fnames[1:length(signature)]
            },
            builtin = , special = {
              ## the only primitive methods allowed are those equivalent
@@ -254,9 +255,11 @@ setMethod <-
              if(!identical(definition, deflt))
                 stop("Primitive functions cannot be methods; they must be enclosed in a regular function")
            },
-           "NULL" = {}, # Will remove the method, if any, currently in this signature
+           "NULL" = {
+               def <- NULL
+           }, # Will remove the method, if any, currently in this signature
            stop("Invalid method definition: not a function"))
-    allMethods <- insertMethod(allMethods, signature, fnames[1:length(signature)],
+    allMethods <- insertMethod(allMethods, signature, def,
                                asMethodDefinition(definition, signature))
     ## assign the methods (also updates the session info)
     assignMethodsMetaData(f, allMethods, fdef, where, deflt)
@@ -545,7 +548,7 @@ removeMethodsObject <-
       rm(list = what, pos = db)
   return(TRUE)
 }
-    
+
 
 removeMethods <-
   ## removes all the methods defined for this generic function.  Returns `TRUE' if
@@ -619,7 +622,7 @@ setGroupGeneric <-
             ## a special R-only mechanism to turn on method dispatch
             ## for the members of groups of primitives
             members <- def@groupMembers
-            if(length(members)>0) 
+            if(length(members)>0)
                 for(what in members)
                     if(is.character(what) && is.primitive(getFunction(what, mustFind=FALSE)))
                         setGeneric(what)
