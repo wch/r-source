@@ -308,7 +308,7 @@ model.frame.default <-
     vars <- attr(formula, "variables")
     predvars <- attr(formula, "predvars")
     if(is.null(predvars)) predvars <- vars
-    varnames <- as.character(vars[-1])
+    varnames <- sapply(vars,deparse, width.cutoff=500)[-1]
     variables <- eval(predvars, data, env)
     if(possible_newdata && length(variables)) {
         ## need to do this before subsetting and na.action
@@ -382,7 +382,9 @@ model.matrix.default <- function(object, data = environment(object),
     if (is.null(attr(data, "terms")))
 	data <- model.frame(object, data, xlev=xlev)
     else {
-	reorder <- match(as.character(attr(t,"variables"))[-1],names(data))
+	reorder <- match(sapply(attr(t,"variables"),deparse,
+                                width.cutoff=500)[-1],
+                         names(data))
 	if (any(is.na(reorder)))
 	    stop("model frame and formula mismatch in model.matrix()")
 	data <- data[,reorder, drop=FALSE]
@@ -484,7 +486,7 @@ makepredictcall.default  <- function(var, call)
 
 .getXlevels <- function(Terms, m)
 {
-    xvars <- as.character(attr(Terms, "variables"))[-1]
+    xvars <- sapply(attr(Terms, "variables"),deparse,width.cutoff=500)[-1]
     if((yvar <- attr(Terms, "response")) > 0) xvars <- xvars[-yvar]
     if(length(xvars) > 0) {
         xlev <- lapply(m[xvars], levels)
