@@ -8,7 +8,7 @@ rw1023
 ======
 
 Alternative installers based on Inno Setup 2.0.x, either SetupR.exe or
-miniR.* (which fits on four floppies).
+miniR* (which fits on four floppies).
 
 The location of R_HOME and the version can optionally be recorded in
 the Registry (and will be used by the DCOM interface).  The Inno Setup
@@ -18,6 +18,9 @@ rw1023\bin\RSetReg.exe will register, and rw1023\bin\RSetReg.exe /U
 will unregister.
 
 The windows() device no longer rounds width and height to the nearest inch.
+
+You can override the settings Windows reports for pixels per inch
+(sometimes it is seriously adrift).  See ?windows.
 
 File `extract-usage' needed for codoc was missing from rw1022sp.zip.
 
