@@ -131,6 +131,8 @@ It is currently mirrored daily at
 (PlanetMirror, Australia)
 @item http://cran.ch.r-project.org/
 (ETH Zurich, Switzerland)
+@item http://cran.de.r-project.org/
+(APP, Germany)
 @item http://cran.dk.r-project.org/
 (SunSITE, Denmark)
 @item http://cran.hu.r-project.org/
