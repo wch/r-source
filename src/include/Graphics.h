@@ -288,10 +288,12 @@ void GInit(void);
 void GLPretty(double*, double*, int*);
 void GLineTo(double, double);
 int  GLocator(double*, double*, int);
+#ifdef NEW
 void GMapFig2Dev(void);
 void GMapInner2Dev(void);
 void GMapNDC2Dev(void);
 void GMapWin2Fig(void);
+#endif
 void GMapping(int);
 void GMetricInfo(int, double*, double*, double*, int);
 void GMode(int);
@@ -311,7 +313,9 @@ void GRestorePars(void);
 void GScale(double, double, int);
 void GSetupAxis(int);
 int  GSetRGB(unsigned int, unsigned int, unsigned int);
+#ifdef NEW
 void GSetViewPort(void);
+#endif
 void GStartPath(void);
 void GSetState(int);
 double GStrWidth(char*, int);
