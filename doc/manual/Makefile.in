@@ -21,7 +21,7 @@ DISTFILES = \
 	resources.texi \
 	R-exts.R R-exts.c R-intro.R \
 	refman.top refman.bot \
-	ISBN
+	ISBN dummy.html
 SUBDIRS_WITH_NO_BUILD = images
 
 OBJECTS_DVI = $(SOURCES_TEXI:.texi=.dvi)
