@@ -292,6 +292,10 @@ NEW FEATURES
     o   step() is now closer to stepAIC() and so handles a wider range
 	of objects (but stepAIC [in MASS] is still more powerful).
 
+    o	Functions such as help() which perform library or package index
+	searches now use NULL as default for their `lib.loc' argument so
+	that missingness can be propagated more easily.  The default
+	corresponds to all currently known libraries as before.
 
 
 BUG FIXES
@@ -402,6 +406,11 @@ BUG FIXES
     o	image() was incorrectly finding breakpoints from
 	irregularly-spaced midpoints. (PR#1160)
 
+    o	Use fuzz in the 2-sample Kolmogorov-Smirnov test in package
+	ctest to avoid rounding errors (PR#1004, follow-up).
+
+    o	Use exact Hodges-Lehmann estimators for the Wilcoxon tests in
+        package ctest (PR#1150).
 
 
 
