@@ -2,6 +2,7 @@
 \alias{character}
 \alias{as.character}
 \alias{as.character.default}
+\alias{as.character.factor}
 \alias{is.character}
 \title{Character Vectors}
 \description{
@@ -16,11 +17,11 @@ is.character(x)
   \code{character} creates a character vector of the specified length.
   The elements of the vector are all equal to \code{""}.
 
-  \code{as.character} attempts to coerce its argument to be of character
-  type.
+  \code{as.character} attempts to coerce its argument to character type.
 
   \code{is.character} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of character type or not.
 }
 \keyword{character}
 \keyword{classes}
+
