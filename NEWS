@@ -458,8 +458,16 @@ BUG FIXES
     o	make install could fail if there were no shared libraries to
 	install (e.g. on vanilla Solaris).
 
-    o   nasty bug caused rpois to generate biased variables in some
+    o   Nasty bug caused rpois to generate biased variables in some
         cases.
+
+    o   median of empty vector is now NA.
+
+    o   Trimmed means and medians are no longer attempted for complex
+        data.
+
+    o   t.test() allows an input vector of length 2.
+
 
 
 

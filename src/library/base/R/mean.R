@@ -6,6 +6,8 @@ mean.default <- function(x, trim = 0, na.rm = FALSE) {
     trim <- trim[1]
     n <- length(c(x, recursive=TRUE)) # for data.frame
     if(trim > 0) {
+        if(mode(x) == "complex")
+            stop("trimmed means are not defined for complex data")
 	if(trim >= 0.5) return(median(x, na.rm=FALSE))
 	lo <- floor(n*trim)+1
 	hi <- n+1-lo

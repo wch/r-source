@@ -32,7 +32,7 @@ t.test <- function(x, y=NULL, alternative = c("two.sided", "less", "greater"),
 	y <- NULL
     }
     nx <- length(x)
-    if(nx <= 2) stop("not enough x observations")
+    if(nx < 2) stop("not enough x observations")
     mx <- mean(x)
     vx <- var(x)
     estimate <- mx
@@ -44,7 +44,7 @@ t.test <- function(x, y=NULL, alternative = c("two.sided", "less", "greater"),
 	names(estimate) <- ifelse(paired,"mean of the differences","mean of x")
     } else {
 	ny <- length(y)
-	if(ny <= 2) stop("not enough y observations")
+	if(ny < 2) stop("not enough y observations")
 	my <- mean(y)
 	vy <- var(y)
 	method <- paste(if(!var.equal)"Welch", "Two Sample t-test")
