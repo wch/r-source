@@ -51,8 +51,8 @@ Summary.factor(x, \dots)
     \code{\link{.Internal}} or \code{\link{.Primitive}} and will
     automatically be using \emph{\code{<grp>.<class> (ob)}} when
     \emph{\code{f(<ob>)}} is called, \emph{\code{f}} belongs to group
-    \emph{\code{<grp>}} and \emph{\code{<ob>}} is of \code{\link{class}}
-    \emph{\code{<class>}}.
+    \emph{\code{<grp>}} and \emph{\code{<ob>}} is of
+    \code{\link[base]{class}} \emph{\code{<class>}}.
     
     \enumerate{
         \item Group \code{"Math"}:

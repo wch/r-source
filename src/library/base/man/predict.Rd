@@ -11,7 +11,8 @@ predict (object, \dots)
 \description{
   \code{predict} is a generic function for predictions from the results of
   various model fitting functions.  The function invokes particular
-  \emph{methods} which depend on the \code{\link{class}} of the first argument.
+  \emph{methods} which depend on the \code{\link[base]{class}} of
+  the first argument.
 
   The function \code{\link{predict.lm}} makes predictions based on the
   results produced by \code{\link{lm}}.

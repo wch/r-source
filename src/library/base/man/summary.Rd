@@ -9,7 +9,7 @@
   \code{summary} is a generic function used to produce result summaries
   of the results of various model fitting functions.  The function
   invokes particular \code{\link{methods}} which depend on the
-  \code{\link{class}} of the first argument.
+  \code{\link[base]{class}} of the first argument.
 }
 \usage{
 summary(object, \dots)
