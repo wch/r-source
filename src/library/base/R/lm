@@ -11,14 +11,24 @@ function (formula, data=list(), subset, weights, na.action,
 	mf <- eval(mf, sys.frame(sys.parent()))
 	if(method == "model.frame")
 		return(mf)
-	x <- model.matrix(mt, mf)
 	y <- model.response(mf, "numeric")
 	w <- model.weights(mf)
-	z <- if (is.null(w)) lm.fit(x, y) else lm.w.fit(x, y, w)
+	if (is.empty.model(mt)){
+                z <- list(coefficients = numeric(0), residuals = y, 
+                        fitted.values = 0 * y, weights = w, rank = 0, 
+                        df.residual = length(y))
+                class(z) <- if (is.matrix(y)) 
+                        c("mlm.null", "lm.null", "mlm", "lm")
+                else c("lm.null", "lm")
+        }
+        else {
+		x <- model.matrix(mt, mf)
+		z <- if (is.null(w)) lm.fit(x, y) else lm.w.fit(x, y, w)
+		class(z) <- c(if(is.matrix(y)) "mlm", "lm")
+	}
 	z$call <- match.call()
 	z$terms <- mt
 	if(model) z$model <- mf
-	class(z) <- c(if(is.matrix(y)) "mlm", "lm")
 	z
 }
 

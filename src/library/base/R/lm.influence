@@ -18,7 +18,11 @@ weighted.residuals <- function(obj)
 
 lm.influence <- function (lm.obj) 
 {
-	n <- as.integer(nrow(lm.obj$qr$qr))
+        if (is.empty.model(lm.obj$terms)) {
+                warning("Can\'t compute influence on an empty model")
+                return(NULL)
+        }
+	n<-as.integer(nrow(lm.obj$qr$qr))
 	k <- as.integer(lm.obj$qr$rank)
 	e <- weighted.residuals(lm.obj)
 	.Fortran("lminfl",

@@ -176,7 +176,7 @@ function(formula, data = NULL, subset=NULL, na.action = na.fail, ...)
 
 model.weights <- function(x) x$"(weights)"
 model.offset <- function(x) {
-	offsets <- attr(x, "terms")$offset
+	offsets <- attr(attr(x, "terms"),"offset")
 	if(length(offsets) > 0) {
 		ans <- 0
 		for(i in offsets) ans <- ans+x[[i]]
@@ -234,3 +234,10 @@ model.extract <- function(frame, component)
 update <-
 function(x, ...)
 	UseMethod("update")
+
+is.empty.model<-function (x) 
+{
+        tt <- terms(x)
+        (length(attr(tt, "factors")) == 0) & (attr(tt, "intercept")==0)
+}
+

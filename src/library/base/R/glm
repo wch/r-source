@@ -28,7 +28,11 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	mf <- eval(mf, sys.frame(sys.parent()))
 	if(method == "model.frame")
 		return(mf)
-	X <- model.matrix(mt, mf)
+        ### null model support
+        if (is.empty.model(mt)) {
+                X <- NULL
+        }
+        else	X <- model.matrix(mt, mf)
 	Y <- model.response(mf, "numeric")
 	weights <- model.weights(mf)
 	offset <- model.offset(mf)
@@ -42,10 +46,14 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 			", should equal", NROW(Y), "(number of observations)"))
 
 	# fit model via iterative reweighted least squares
-
+	if (is.empty.model(mt)){
+        fit <- glm.fit.null(x=X, y=Y, weights=weights, start=start,
+                offset=offset, family=family, control=control)
+	}else
+	{ 
 	fit <- glm.fit(x=X, y=Y, weights=weights, start=start,
 		offset=offset, family=family, control=control)
-
+	}
 	# output
 
 	if(model) fit$model <- mf
@@ -54,7 +62,9 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 
 	fit <- c(fit, list(call=call, formula=formula, x=x, terms=mt, data=data,
 		offset=offset, control=control, method=method))
-	class(fit) <- c("glm", "lm")
+	if (is.empty.model(fit)) 
+                class(fit) <- c("glm.null", "glm", "lm")
+	else class(fit) <-c("glm", "lm")
 	return(fit)
 }
 
