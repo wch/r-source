@@ -58,7 +58,7 @@ define(PERL5_CHECK,
 >>)
 changequote([, ]) dnl
 AC_DEFUN(R_PROG_PERL,
- [AC_PATH_PROG(PERL, perl)
+ [AC_PATH_PROGS(PERL, [${PERL} perl])
   if test -n "${PERL}"; then
     AC_CACHE_CHECK([whether perl version is at least 5],
       r_cv_prog_perl_v5, [PERL5_CHECK()] )
@@ -78,17 +78,17 @@ dnl R_PROG_TEXMF
 dnl
 AC_DEFUN(R_PROG_TEXMF,
  [AC_REQUIRE([R_PROG_PERL])
-  AC_PATH_PROG(DVIPS, [${DVIPS} dvips], false)
-  AC_PATH_PROG(LATEX, [${LATEX} latex], false)
+  AC_PATH_PROGS(DVIPS, [${DVIPS} dvips], false)
+  AC_PATH_PROGS(LATEX, [${LATEX} latex], false)
   if test "{ac_cv_path_LATEX}" = false; then
     AC_MSG_WARN([you cannot build DVI versions of the R manuals])
   fi
-  AC_PATH_PROG(MAKEINDEX, [${MAKEINDEX} makeindex], false)
-  AC_PATH_PROG(PDFLATEX, [${PDFLATEX} pdflatex], false)
+  AC_PATH_PROGS(MAKEINDEX, [${MAKEINDEX} makeindex], false)
+  AC_PATH_PROGS(PDFLATEX, [${PDFLATEX} pdflatex], false)
   if test "{ac_cv_path_PDFLATEX}" = false; then
     AC_MSG_WARN([you cannot build PDF versions of the R manuals])
   fi
-  AC_PATH_PROG(MAKEINFO, [${MAKEINFO} makeinfo])
+  AC_PATH_PROGS(MAKEINFO, [${MAKEINFO} makeinfo])
   if test -n "${MAKEINFO}"; then
     AC_CACHE_CHECK([whether makeinfo version is at least 4],
       r_cv_prog_makeinfo_v4,
@@ -111,7 +111,7 @@ AC_DEFUN(R_PROG_TEXMF,
     INSTALL_INFO="\$(top_builddir)/tools/install-info"
     AC_SUBST(INSTALL_INFO)
   else
-    AC_PATH_PROG(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
+    AC_PATH_PROGS(INSTALL_INFO, [${INSTALL_INFO} install-info], false)
   fi
   : ${R_RD4DVI="ae"}
   AC_SUBST(R_RD4DVI)

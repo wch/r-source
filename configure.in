@@ -181,7 +181,7 @@ AC_PROG_LN_S
 AC_PROG_RANLIB
 AC_PROG_YACC
 ## Ar.
-AC_CHECK_PROG(AR, [${AR} ar], ar)
+AC_CHECK_PROGS(AR, [${AR} ar], ar)
 : ${ARFLAGS="rc"}
 AC_SUBST(ARFLAGS)
 ## Echo.
@@ -197,8 +197,8 @@ AC_SUBST(TAR)
 ## TeXMF stuff
 R_PROG_TEXMF
 ## Unzip && zip
-AC_PATH_PROG(R_UNZIPCMD, [${UNZIP} unzip], "")
-AC_PATH_PROG(R_ZIPCMD, [${ZIP} zip], "")
+AC_PATH_PROGS(R_UNZIPCMD, [${UNZIP} unzip], "")
+AC_PATH_PROGS(R_ZIPCMD, [${ZIP} zip], "")
 
 ## C compiler.
 
@@ -266,7 +266,7 @@ elif ${use_f2c}; then
 else
   F77=
   for name in g77 fort77 f77 f90 xlf cf77 fc; do
-    AC_PATH_PROGS(F77, ${name})
+    AC_PATH_PROG(F77, ${name})
     if test -n "${F77}"; then
       if test -n "`file ${F77} | grep script`"; then
 	dnl If F77 found above is a shell or perl script, do not use it.
@@ -278,7 +278,7 @@ else
     fi
   done
   if test -z "${F77}"; then
-    AC_CHECK_PROGS(F2C, f2c)
+    AC_CHECK_PROG(F2C, f2c)
   fi
 fi
 
