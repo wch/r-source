@@ -92,13 +92,7 @@ LPSTR lpszCmdParam, int nCmdShow)
         HINSTANCE hinstLib;
         MYPROC ProcAdd;
         DWORD erno;
-
-        if( erno = GetLastError() ) {
-                sprintf(tmp,"erno was %d",(int) erno);
-                MessageBox((HWND) NULL, tmp, NULL, MB_OK);
-                SetLastError(0);
-        }
-                
+          
         if (! CheckSystem()) return(FALSE);
 
         if( erno = GetLastError() )

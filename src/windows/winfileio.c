@@ -19,6 +19,7 @@
 #include "wincons.h"
 #include "Defn.h"
 #include <stdio.h>
+#include <string.h>
 #include <winbase.h>
 #include "Fileio.h"
 
@@ -27,15 +28,36 @@
  * R versions of the standard C file operations
  *
  */
+extern char RFName[RBuffLen];
 
 FILE *R_fopen(const char *filename, const char *mode)
 {
     FILE *fp;
-    int i;
+    int i=0,j=0,k;
+    char *fnp,*sufp,*fnp2;
     
         fp = fopen(filename, mode);
-        if( fp == NULL )
-                i=5;
+        if( fp == NULL ) 
+            if( R_WinVersion < 4.0 ) { /* see if it's a long file name */
+                fnp=strrchr(filename,'\\');
+                fnp2 = strrchr(filename,'/');
+                sufp=strrchr(filename,'.');
+                if(fnp != NULL )
+                        i = strlen(fnp);
+                if(fnp2 != NULL )
+                        j = strlen(fnp2);
+                if(fnp == NULL && fnp2==NULL ) {
+                        i = strlen(filename);
+                        j = i;
+                }
+                k=strlen(sufp);
+                i = min(i,j);
+                if( i-k > 9 || k > 4 ) {
+                    RFName[0] ='\0';
+                    Win_ROpenDlg(RClient, filename);
+                    fp = fopen(RFName, mode);
+                }
+            }               
         return(fp);
 }
 
