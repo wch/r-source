@@ -61,7 +61,7 @@ library <-
             ob <- objects(lib.pos, all = TRUE)
             if(!nogenerics && "package:methods" %in% sp) {
                 ## ignore generics not defined for the package
-                ## this gets all the objects so is very slow
+                ## This gets all the objects so is very slow
                 ## and evaluates all promises: a *very* bad idea
                 if( length(ob) > 0 )
                     ob <- ob[sapply(ob, function(f) {
@@ -76,17 +76,20 @@ library <-
         ipos <- seq(along = sp)[-c(lib.pos, match("Autoloads", sp))]
         for (i in ipos) {
             obj.same <- match(objects(i, all = TRUE), ob, nomatch = 0)
-            if (any(obj.same > 0) &&
-                length(same <- (obs <- ob[obj.same])
-                       [!obs %in% dont.mind])) {
-                if (fst) {
-                    fst <- FALSE
-                    cat("\nAttaching package ", sQuote(package),
-                        ":\n\n", sep = "")
+            if (any(obj.same > 0)) {
+                same <- ob[obj.same]
+                same <- same[!(same %in% dont.mind)]
+                same <- same[-grep("^\.__", same)]
+                if(length(same)) {
+                    if (fst) {
+                        fst <- FALSE
+                        cat("\nAttaching package ", sQuote(package),
+                            ":\n\n", sep = "")
+                    }
+                    cat("\n\tThe following object(s) are masked",
+                        if (i < lib.pos) "_by_" else "from", sp[i],
+                        ":\n\n\t", same, "\n\n")
                 }
-                cat("\n\tThe following object(s) are masked",
-                    if (i < lib.pos) "_by_" else "from", sp[i],
-                    ":\n\n\t", same, "\n\n")
             }
         }
     }
