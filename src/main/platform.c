@@ -55,7 +55,7 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(2);
     return value;
 }
-      
+
 /*  date
  *
  *  Return the current date in a standard format.  This uses standard
@@ -64,11 +64,11 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
  */
 
 char *R_Date()
-{     
+{
     time_t t;
     time(&t);
     return ctime(&t);
-}     
+}
 
 SEXP do_date(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -209,7 +209,7 @@ SEXP do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
     for(i = 0; i < n; i++) {
         if (STRING(f1)[i%n1] == R_NilValue || STRING(f2)[i%n2] == R_NilValue)
             LOGICAL(ans)[i] = 0;
-        else 
+        else
             LOGICAL(ans)[i] =
 		R_AppendFile(CHAR(STRING(f1)[i%n1]),
 			     CHAR(STRING(f2)[i%n2]));
@@ -225,7 +225,7 @@ SEXP do_filecreate(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, n;
     checkArity(op, args);
     fn = CAR(args);
-    if (!isString(fn)) 
+    if (!isString(fn))
         errorcall(call, "invalid filename argument\n");
     n = length(fn);
     PROTECT(ans = allocVector(LGLSXP, n));
@@ -247,7 +247,7 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP f, ans;
     int i, n;
     checkArity(op, args);
-    f = CAR(args);     
+    f = CAR(args);
     if (!isString(f))
         errorcall(call, "invalid first filename\n");
     n = length(f);
@@ -422,6 +422,7 @@ static int filbuf(char *buf, FILE *fp)
 
 SEXP do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+/* index.search(topic, path, file, .Platform$file.sep, type) */
     SEXP topic, path, indexname, sep, type;
     char linebuf[256], topicbuf[256], *p, ctype[256];
     int i, npath, ltopicbuf;
@@ -462,25 +463,25 @@ SEXP do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    if (!strcmp(ctype, "html"))
 			sprintf(topicbuf, "%s%s%s%s%s%s",
 				CHAR(STRING(path)[i]),
-				CHAR(STRING(sep)[0]), 
+				CHAR(STRING(sep)[0]),
 				"html", CHAR(STRING(sep)[0]),
 				p, ".html");
 		    else if (!strcmp(ctype, "R-ex"))
 			sprintf(topicbuf, "%s%s%s%s%s%s",
 				CHAR(STRING(path)[i]),
-				CHAR(STRING(sep)[0]), 
+				CHAR(STRING(sep)[0]),
 				"R-ex", CHAR(STRING(sep)[0]),
 				p, ".R");
 		    else if (!strcmp(ctype, "latex"))
 			sprintf(topicbuf, "%s%s%s%s%s%s",
 				CHAR(STRING(path)[i]),
-				CHAR(STRING(sep)[0]), 
+				CHAR(STRING(sep)[0]),
 				"latex", CHAR(STRING(sep)[0]),
 				p, ".tex");
-		    else
+		    else /* type = "help" */
 			sprintf(topicbuf, "%s%s%s%s%s",
 				CHAR(STRING(path)[i]),
-				CHAR(STRING(sep)[0]), 
+				CHAR(STRING(sep)[0]),
 				ctype, CHAR(STRING(sep)[0]), p);
 		    return mkString(topicbuf);
 		}
@@ -502,6 +503,6 @@ SEXP do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
     if ((len = R_ChooseFile(new, buf, CHOOSEBUFSIZE)) == 0)
 	error("file choice cancelled\n");
     if (len >= CHOOSEBUFSIZE - 1)
-	errorcall(call, "file name too long\n");   
+	errorcall(call, "file name too long\n");
     return mkString(R_ExpandFileName(buf));
 }
