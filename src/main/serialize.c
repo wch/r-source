@@ -1919,7 +1919,7 @@ SEXP R_serialize(SEXP object, SEXP icon, SEXP ascii, SEXP fun)
 	SEXP val;
 
 	/* set up a context which will free the buffer if there is an error */
-	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
+	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
 		     R_NilValue, R_NilValue);
 	cntxt.cend = &free_mem_buffer;
 	cntxt.cenddata = &mbs;

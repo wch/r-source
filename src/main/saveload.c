@@ -1121,7 +1121,7 @@ static void NewDataSave (SEXP s, FILE *fp, OutputRoutines *m, SaveLoadData *d)
 
     m->OutInit(fp, d);
     /* set up a context which will call OutTerm if there is an error */
-    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
 		 R_NilValue, R_NilValue);
     cntxt.cend = &newdatasave_cleanup;
     cntxt.cenddata = &cinfo;
@@ -1310,7 +1310,7 @@ static SEXP NewDataLoad (FILE *fp, InputRoutines *m, SaveLoadData *d)
     m->InInit(fp, d);
 
     /* set up a context which will call InTerm if there is an error */
-    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
 		 R_NilValue, R_NilValue);
     cntxt.cend = &newdataload_cleanup;
     cntxt.cenddata = &cinfo;
@@ -1936,7 +1936,7 @@ SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("unable to open file"));
 
     /* set up a context which will close the file if there is an error */
-    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
 		 R_NilValue, R_NilValue);
     cntxt.cend = &saveload_cleanup;
     cntxt.cenddata = fp;
@@ -2024,7 +2024,7 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
     /* the loaded objects can be placed where desired  */
 
     aenv = CADR(args);
-    if (TYPEOF(aenv) != ENVSXP && aenv != R_NilValue)
+    if (TYPEOF(aenv) != ENVSXP)
 	error(_("invalid envir argument"));
 
     /* Process the saved file to obtain a list of saved objects. */
@@ -2033,7 +2033,7 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("unable to open file"));
 
     /* set up a context which will close the file if there is an error */
-    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
 		 R_NilValue, R_NilValue);
     cntxt.cend = &saveload_cleanup;
     cntxt.cenddata = fp;
@@ -2257,7 +2257,7 @@ SEXP do_loadFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
 
     con = getConnection(asInteger(CAR(args)));
     aenv = CADR(args);
-    if (TYPEOF(aenv) != ENVSXP && aenv != R_NilValue)
+    if (TYPEOF(aenv) != ENVSXP)
 	error(_("invalid envir argument"));
 
     R_InitConnInPStream(&in, con, R_pstream_any_format, NULL, NULL);

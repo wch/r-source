@@ -355,12 +355,12 @@ list("!" = function(e1)
     ## argument, but needs to create a generic with different args from the deflt
     ## => constructing a call to the base function from the default
     if(is.primitive(deflt)) {
-        body(fdef, envir = NULL) <-
+        body(fdef, envir = .BaseEnv) <-
             substitute(standardGeneric(FNAME, DEFLT), list(FNAME=f, DEFLT=deflt))
     }
     else {
         fdef <- deflt
-        body(fdef, envir = NULL) <-
+        body(fdef, envir = .BaseEnv) <-
             substitute(standardGeneric(FNAME), list(FNAME=f))
     }
     deflt <- .derivedDefaultMethod(deflt)

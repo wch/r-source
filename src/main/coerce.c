@@ -1984,9 +1984,9 @@ SEXP do_substitute(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (env == R_NilValue)
 	env = R_GlobalEnv;
     else if (TYPEOF(env) == VECSXP)
-	env = NewEnvironment(R_NilValue, VectorToPairList(env), R_NilValue);
+	env = NewEnvironment(R_NilValue, VectorToPairList(env), R_BaseEnv);
     else if (TYPEOF(env) == LISTSXP)
-	env = NewEnvironment(R_NilValue, duplicate(env), R_NilValue);
+	env = NewEnvironment(R_NilValue, duplicate(env), R_BaseEnv);
     if (TYPEOF(env) != ENVSXP)
 	errorcall(call, _("invalid environment specified"));
 

@@ -1,3 +1,4 @@
+.BaseEnv <- baseenv()
 .GlobalEnv <- environment()
 parent.frame <- function(n = 1) .Internal(parent.frame(n))
 

@@ -1,4 +1,4 @@
-.userHooksEnv <- new.env(hash = FALSE, parent = NULL)
+.userHooksEnv <- new.env(hash = FALSE, parent = .BaseEnv)
 
 packageEvent <-
     function(pkgname, event=c("onLoad", "attach", "detach", "onUnload"))

@@ -1005,7 +1005,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    if (isSymbol(CAR(s))) {
 			val = SYMVALUE(CAR(s));
 			if (TYPEOF(val) == PROMSXP)
-			    val = eval(val, R_NilValue);
+			    val = eval(val, R_BaseEnv);
 		    }
 		    if ( isSymbol(CAR(s))
 		      && TYPEOF(val) == CLOSXP

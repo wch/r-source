@@ -427,7 +427,7 @@ function(package, dir, lib.loc = NULL,
     ## Maybe one day we will have R code for the primitives as well ...
     if(is_base) {
         objects_in_base <-
-            objects(envir = as.environment(NULL), all.names = TRUE)
+            objects(envir = .BaseEnv, all.names = TRUE)
         objects_in_code <-
             c(objects_in_code,
               objects_in_base[sapply(objects_in_base,
@@ -1422,7 +1422,7 @@ function(package, dir, lib.loc = NULL)
     ## base package.
     all_generics <- character()
     env_list <- list(code_env)
-    if(!is_base) env_list <- c(env_list, list(as.environment(NULL)))
+    if(!is_base) env_list <- c(env_list, list(.BaseEnv))
     for(env in env_list) {
         ## Find all available S3 generics.
         objects_in_env <- if(identical(env, code_env)) {
@@ -1869,7 +1869,7 @@ function(package, dir, lib.loc = NULL)
         ## (Note that this requires that these packages are already
         ## attached.)
         env_list <- c(env_list,
-                      list(as.environment(NULL)),
+                      list(.BaseEnv),
                       list(as.environment("package:graphics")),
                       list(as.environment("package:stats")),
                       list(as.environment("package:utils"))
@@ -1916,7 +1916,7 @@ function(package, dir, lib.loc = NULL)
 
         ## For base, also add the internal S3 generics which are not
         ## .Primitive (as checkArgs() does not deal with these).
-        if(identical(env, as.environment(NULL))) {
+        if(identical(env, .BaseEnv)) {
             internal_S3_generics <- .get_internal_S3_generics()
             internal_S3_generics <-
                 internal_S3_generics[sapply(internal_S3_generics,

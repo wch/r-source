@@ -62,8 +62,8 @@ static Rboolean sock_open(Rconnection con)
 	    RCNTXT cntxt;
 
 	    /* set up a context which will close socket on jump. */
-	    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue,
-			 R_NilValue, R_NilValue, R_NilValue);
+	    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv,
+			 R_BaseEnv, R_NilValue, R_NilValue);
 	    cntxt.cend = &listencleanup;
 	    cntxt.cenddata = &sock1;
 	    sock = R_SockListen(sock1, buf, 256);

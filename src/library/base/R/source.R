@@ -113,7 +113,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 }
 
 sys.source <-
-function(file, envir = NULL, chdir = FALSE,
+function(file, envir = .BaseEnv, chdir = FALSE,
 	 keep.source = getOption("keep.source.pkgs"))
 {
     if(!(is.character(file) && file.exists(file)))

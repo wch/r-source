@@ -1897,7 +1897,7 @@ SEXP do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     error(_("invalid 'open' argument"));
     open = CHAR(STRING_ELT(sopen, 0));
     venv = CADDDR(args);
-    if (!isEnvironment(venv) && venv != R_NilValue)
+    if (!isEnvironment(venv))
 	error(_("invalid 'environment' argument"));
     ncon = NextConnection();
     if(!strlen(open) || strncmp(open, "r", 1) == 0)

@@ -29,7 +29,7 @@ str.default <-
 	     nchar.max = 128, give.attr = TRUE, give.length = TRUE,
 	     wid = getOption("width"), nest.lev = 0,
 	     indent.str= paste(rep.int(" ", max(0,nest.lev+1)), collapse= ".."),
-	     comp.str="$ ", no.list = FALSE, envir = NULL,
+	     comp.str="$ ", no.list = FALSE, envir = .BaseEnv,
 	     ...)
 {
     ## Purpose: Display STRucture of any R - object (in a compact form).
@@ -397,8 +397,8 @@ lsf.str <- function(pos = 1, ..., envir = as.environment(pos))
 
 print.ls_str <- function(x, max.level = 1, give.attr = FALSE, ...)
 {
-    E <- attr(x, "envir") # can be NULL for "package:base"
-    if(!is.null(E)) stopifnot(is.environment(E))
+    E <- attr(x, "envir") 
+    stopifnot(is.environment(E))
     M <- attr(x, "mode")
     for(nam in x) {
 	cat(nam, ": ")

@@ -342,7 +342,7 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "invalid device");
 
     /* set up a context which will close the window if there is an error */
-    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
 		 R_NilValue, R_NilValue);
     cntxt.cend = &closewin_cend;
     cntxt.cenddata = NULL;

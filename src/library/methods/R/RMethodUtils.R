@@ -172,7 +172,7 @@ generic.skeleton <-
       body(fdefault) <- substitute(stop(MESSAGE), list(MESSAGE=
           paste("Invalid call in method dispatch to \"",name, "\" (no default method)",
                 sep="")))
-      environment(fdefault) <- NULL
+      environment(fdefault) <- .BaseEnv
     }
     skeleton[[1]] <- fdefault
     as.call(skeleton)
@@ -1038,14 +1038,16 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     ev
 }
 
-## a list of environments, starting from ev, going back to NULL (the base package),
+## a list of environments, starting from ev, going back to the base package,
 ## or else terminated by finding a namespace
 .parentEnvList <- function(ev) {
     ev <- as.environment(ev)
     value <- list(ev)
     while(!isNamespace(ev)) {
-        if(is.null(ev)) {
+        if(is.baseenv(ev)) {
             value[[length(value)]] <- .BaseNamespaceEnv
+            break
+        } else if(is.emptyenv(ev)) {
             break
         }
         ev <- parent.env(ev)
