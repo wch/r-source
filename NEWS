@@ -27,6 +27,7 @@ BUG FIXES
 
     o	More stringent checks on the arguments to dataentry().
 
+    o   xlab=expression now works again
 
 
 		CHANGES IN R VERSION 1.1.0

@@ -2319,7 +2319,7 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	    where = 0;
 	}
 	if (isExpression(xlab))
-	    GMMathText(VECTOR(xlab)[0], 1, vpos + i, where,
+	    GMMathText(VECTOR(xlab)[0], 1, vpos, where,
 		       hpos, 0, dd);
 	else {
 	    n = length(xlab);
