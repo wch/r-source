@@ -555,7 +555,7 @@ R_STATUS="Under development (unstable)"
 R_STATUS_REV="0"
 
 ac_aux_dir=
-for ac_dir in aux $srcdir/aux; do
+for ac_dir in tools $srcdir/tools; do
   if test -f $ac_dir/install-sh; then
     ac_aux_dir=$ac_dir
     ac_install_sh="$ac_aux_dir/install-sh -c"
@@ -567,7 +567,7 @@ for ac_dir in aux $srcdir/aux; do
   fi
 done
 if test -z "$ac_aux_dir"; then
-  { echo "configure: error: can not find install-sh or install.sh in aux $srcdir/aux" 1>&2; exit 1; }
+  { echo "configure: error: can not find install-sh or install.sh in tools $srcdir/tools" 1>&2; exit 1; }
 fi
 ac_config_guess=$ac_aux_dir/config.guess
 ac_config_sub=$ac_aux_dir/config.sub
@@ -581,7 +581,7 @@ ac_configure=$ac_aux_dir/configure # This should be Cygnus configure.
 ### sort of sanity check written into configure.  We bypass the check by
 ### invoking config.guess directly and parsing the results ourselves.
 
-host=`${srcdir}/aux/config.guess`
+host=`${srcdir}/tools/config.guess`
 set `echo ${host} | tr '-' ' '`
 host_cpu=$1
 host_vendor=$2
@@ -821,7 +821,7 @@ esac
 ## Osman says that this is necessary.
 case ${host} in
   *hpux*)
-    INSTALL="\$\(top_srcdir\)/aux/install-sh -c" ;;
+    INSTALL="\$\(top_srcdir\)/tools/install-sh -c" ;;
 esac
 
 echo $ac_n "checking whether ln -s works""... $ac_c" 1>&6

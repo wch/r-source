@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# ${R_HOME}/aux/GETSYMBOLS
+# ${RHOME}/tools/GETSYMBOLS
 
 # This code assembles the table of statically loaded C and Fortran
 # code which is to be accessed via .C and .Fortran calls.
