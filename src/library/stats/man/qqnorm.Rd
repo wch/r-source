@@ -24,7 +24,7 @@ qqplot(x, y, plot.it = TRUE, xlab = deparse(substitute(x)),
   \item{ylim, \dots}{graphical parameters.}
 }
 \description{
-  \code{qqnorm} is a generic functions the default method of which
+  \code{qqnorm} is a generic function the default method of which
   produces a normal QQ plot of the values in \code{y}.
   \code{qqline} adds a line to a normal quantile-quantile plot which
   passes through the first and third quartiles.
