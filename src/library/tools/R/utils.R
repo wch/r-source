@@ -133,7 +133,7 @@ function(x, delim = c("\{", "\}"), syntax = "Rd")
 
 ### ** texi2dvi
 
-texi2dvi <- function(file, pdf = FALSE, clean = TRUE,
+texi2dvi <- function(file, pdf = FALSE, clean = FALSE,
                      quiet = TRUE, texi2dvi = getOption("texi2dvi"))
 {
     ## run texi2dvi on a file

@@ -4,7 +4,7 @@
 \description{Run latex and bibtex until all cross-references are
   resolved and create either a dvi or PDF file.}
 \usage{
-texi2dvi(file, pdf = FALSE, clean = TRUE, quiet = TRUE,
+texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
          texi2dvi = getOption("texi2dvi"))
 }
 \arguments{
@@ -12,7 +12,8 @@ texi2dvi(file, pdf = FALSE, clean = TRUE, quiet = TRUE,
   \item{pdf}{logical.  If \code{TRUE}, a PDF file is produced insted of
     the default dvi file (texi2dvi command line option \option{--pdf}).}
   \item{clean}{logical.  If \code{TRUE}, all auxiliary files are removed
-    (texi2dvi command line option \option{--clean}).}
+    (texi2dvi command line option \option{--clean}). Does not work on
+    some platforms.}
   \item{quiet}{logical.  No output unless an error occurs.}
   \item{texi2dvi}{character (or \code{NULL}).  Script or program used to
     compile a TeX file to dvi or PDF, respectively.  If set to

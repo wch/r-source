@@ -145,7 +145,7 @@ buildVignettes <-function(package, dir, lib.loc = NULL, quiet=TRUE)
         yy <- try(Sweave(f, quiet=quiet))
         if(inherits(yy, "try-error")) stop(yy)
         if(!have.makefile){
-            texi2dvi(file=bft, pdf=TRUE, clean=TRUE, quiet=quiet)
+            texi2dvi(file=bft, pdf=TRUE, clean=FALSE, quiet=quiet)
         }
     }
 
