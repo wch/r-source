@@ -941,15 +941,15 @@ database, and @code{sqlFetch} copies a table in the database to an
 @findex sqlCopy
 @findex odbcQuery
 @findex sqlGetResults
-@findex odbcGetResults
+@findex odbcFetchRows
 An SQL query can be sent to the database by a call to @code{sqlQuery}.
 This returns the result in an @R{} data frame.  (@code{sqlCopy} sends a
 query to the database and saves the result as a table in the database.)
 A finer level of control is attained by first calling @code{odbcQuery}
 and then @code{sqlGetResults} to fetch the results.  The latter can be
 used within a loop to retrieve a limited number of rows at a time.
-@code{sqlGetResults} returns a data frame, but the raw results as a
-character matrix can be obtained from @code{odbcGetResults}.
+@code{sqlGetResults} returns a data frame, but the raw results can be
+obtainedas a character matrix from @code{odbcFetchRows}.
 
 @cindex PostgreSQL database system
 Here is an example using PostgreSQL, for which the ODBC driver maps
@@ -1092,7 +1092,8 @@ Note that mSQL is NOT GPL licenced but free of charge for universities
 and noncommercial organisations.
 @end quotation
 @noindent
-@pkg{RmSQL} provides the most basic interface of those in this chapter.
+@pkg{RmSQL} provides the most basic interface of those in this chapter,
+a wrapper to the C-API of mSQL with no additional functionality.
 
 @findex msqlConnect
 @findex msqlSelect
@@ -1115,7 +1116,8 @@ row by row using @code{msqlFetchRow}.  This fetches the rows in order
 unless the position is reset by a call to @code{msqlDataSeek}. A call to
 @code{msqlNumRows} gives the total number of rows in the result.
 
-
+No example is given here as the basic interface makes any example
+lengthy, but there is one in the @file{Example} directory of the package.
 
 
 @node Binary files, Network connections, Relational databases, Top
