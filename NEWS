@@ -286,6 +286,9 @@ NEW FEATURES
     o	acf.plot makes() better use of white space for `nser > 2' and 
 	has new optional arguments.
 
+    o	format() on character arrays was losing the dimensions.
+
+
 
 BUG FIXES
 

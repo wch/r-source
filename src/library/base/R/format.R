@@ -16,9 +16,10 @@ format.default <- function(x, trim = FALSE, digits = NULL, nsmall = 0,
 	nc <- nchar(x)
 	w <- max(nc)
 	all <- substring(paste(rep(" ", w), collapse=""), 1, w-nc)
-	if(justify == "left")
-	     paste(x, all, sep="")
+	res <- if(justify == "left") paste(x, all, sep="")
 	else paste(all, x, sep="")
+        dim(res) <- dim(x)
+        res
     }
     if(!is.null(digits)) {
 	op <- options(digits=digits)
