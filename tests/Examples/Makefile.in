@@ -24,7 +24,7 @@ R       = $(rRHOME)/bin/R --no-init-file --no-save --no-restore
 Rbinary = $(rRHOME)/bin/R.binary
 Rbase	= $(rRHOME)/library/base
 
-MANSRC = $(rRHOME)/src/library/*/man/*.Rd
+MANSRC = `ls $(rRHOME)/src/library/*/man/*.Rd`
 MANbaseDIR = $(rRHOME)/src/library/base/man
 
 ##- Uncomment one of the 2 'Rd_files' defs -- depending on your 'make' version
@@ -32,7 +32,8 @@ MANbaseDIR = $(rRHOME)/src/library/base/man
 ##-- Sun make
 #> Rd_files:sh = ../../etc/Rd.files
 ##-- GNU make
-Rd_files := $(shell $(rRHOME)/etc/Rd.files)
+# Rd_files := $(shell $(rRHOME)/etc/Rd.files)
+Rd_files = `$(rRHOME)/etc/Rd.files`
 #this has PATH prepended: Rd_files := $(wildcard $(MANbaseDIR)/*.Rd)
 #________in future_______  (for ALL 'make' versions)
 # FAILS: has directory/. _AND_ is not expanded
