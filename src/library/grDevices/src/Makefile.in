@@ -18,6 +18,9 @@ OBJECTS = $(SOURCES_C:.c=.o)
 
 SHLIB = $(pkg)@SHLIB_EXT@
 
+# need Defn.h etc
+PKG_CPPFLAGS =-I$(top_srcdir)/src/include
+
 all: Makefile Makedeps
 	@$(MAKE) Makedeps
 	@$(MAKE) shlib
