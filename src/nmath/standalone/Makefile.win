@@ -21,7 +21,7 @@ test test.exe: test.c
 	$(CC) -o $@ -I../../include $< -L. -lRmath
 
 clean:
-	$(RM) $(SOURCES) *.o *.d *.def Makedeps
+	$(RM) $(SOURCES_NMATH) *.o *.d *.def Makedeps
 distclean: clean
 	$(RM) Rmath.a Rmath.dll libRmath.a test.exe
 
