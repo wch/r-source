@@ -1916,7 +1916,7 @@ AC_DEFUN([R_SYS_POSIX_LEAPSECONDS],
 
 int main () {
   struct tm *tm;
-  time_t ct;
+  time_t ct = 0; /* required on 64bit AIX */
 
   ctime(&ct);
   ct = ct - (ct % 60);

@@ -1539,12 +1539,13 @@ port would be greatly appreciated.
 
 On AIX 4.3.3 and AIX 5.1, it was found that the use of ``run time
 linking'' (as opposed to normal AIX style linking) was required.  For
-this, the @R{} main program must be linked to the runtime linker with the
-@option{-brtl} linker option, and shareable objects must be enabled for
-runtime linking with the @option{-G} linker option.  Without these
-options, the AIX linker will not automatically link to any shared object
-with a @file{.so} extension.  Also, the @R{} main program is unable to
-dynamically load modules (such as X11) with the @code{dlopen} call.
+this, the @R{} main program must be linked to the runtime linker with
+the @option{-brtl} linker option, and shareable objects must be enabled
+for runtime linking with the @option{-G} linker option.  Without these
+options, the AIX linker would not automatically link to any shared
+object with a @file{.so} extension.  Also, the @R{} main program would
+be unable to dynamically load modules (such as X11) with the
+@code{dlopen} call.
 
 When setting @code{MAIN_LDFLAGS} and @code{SHLIB_LDFLAGS} accordingly,
 note that linker flags must be escaped using @samp{-Wl,} if
@@ -1568,6 +1569,23 @@ SHLIB_LDFLAGS=-Wl,-G
 @noindent
 but was unable to use the X libraries or the native BLAS (ESSL) and so
 used @option{--without-x --without-blas}.
+
+Tim Hoar <thoar at cgd dot ucar dot edu> reported success building
+@R{} 1.9.0 under AIX 5.1 in 64-bit mode with
+@smallexample
+OBJECT_MODE=64
+CC=/usr/bin/xlc_r
+F77=/usr/bin/xlf_r
+CXX=/usr/bin/xlC_r
+LDFLAGS='-brtl'
+CFLAGS='-O -qstrict'
+FFLAGS='-O -qstrict'
+CXXFLAGS='-O -qstrict'
+@end smallexample
+
+@noindent
+and the X11() device worked.  His system required the Makeconf file to
+be edited to replace /lib/crt0.o by /lib/crt0_64.o.
 
 We understand that @option{--enable-R-shlib} does not work under AIX.
 

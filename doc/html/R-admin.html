@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 2.0.0 (2004-05-04).
+   <p>The current version of this document is 2.0.0 (2004-05-12).
 
    ISBN 3-900051-02-X
 
@@ -119,16 +119,19 @@ the R sources.
 <h2 class="chapter">2 Installing R under Unix</h2>
 
 <p>R will configure and build under a number of common Unix platforms
-including i386-freebsd, <var>cpu</var>-linux-gnu for the i386, alpha, arm,
-hppa, ia64, m68k, powerpc, and sparc CPUs (see e.g. 
-<a href="http://buildd.debian.org/build.php?&amp;pkg=r-base">http://buildd.debian.org/build.php?&amp;pkg=r-base</a>),
-i386-sun-solaris, powerpc-apple-darwin, mips-sgi-irix, alpha-dec-osf4,
-rs6000-ibm-aix, hppa-hp-hpux, and sparc-sun-solaris.
+including i386-freebsd, <var>cpu</var>-linux-gnu for the i386, alpha, amd64,
+arm, hppa, ia64, m68k, powerpc, and sparc CPUs (see e.g. 
+<a href="http://buildd.debian.org/build.php?&amp;pkg=r-base">http://buildd.debian.org/build.php?&amp;pkg=r-base</a>) and
+sparc-sun-solaris, as well as probably (it is tested less frequently on
+these) i386-netbsd, i386-openbsd, i386-sun-solaris,
+powerpc-apple-darwin, mips-sgi-irix, alpha-dec-osf4, rs6000-ibm-aix and
+hppa-hp-hpux.
 
    <p>In addition, binary distributions are available for most common Linux
 distributions, and for Mac OS X (Darwin) with and without X11.  See the
-<small>FAQ</small> for current details.  These are installed in platform-specific
-ways.  So for the rest of this chapter we consider only building from the sources.
+<small>FAQ</small> for current details.  These are installed in
+platform-specific ways.  So for the rest of this chapter we consider
+only building from the sources.
 
 <a name="Simple%20compilation"></a>
 
@@ -243,14 +246,14 @@ the latest version).
      </pre>
 
    <p>You will not be able to build the info files unless you have
-<code>makeinfo</code> version 4 or later installed (and some Linux
-distributions have 3.12).
+<code>makeinfo</code> version 4 or later installed.
 
    <p>The DVI versions can be previewed and printed using standard programs
 such as <code>xdvi</code> and <code>dvips</code>.  The PDF versions can be
-viewed using Acrobat Reader or (recent versions of) ghostscript: they
-have hyperlinks that can be followed in Acrobat Reader.  The info files
-are suitable for reading online with Emacs or the standalone GNU Info.
+viewed using Acrobat Reader or (fairly recent versions of) ghostscript:
+they have hyperlinks that can be followed in Acrobat Reader.  The info
+files are suitable for reading online with Emacs or the standalone GNU
+Info.
 
 <a name="Installation"></a>
 
@@ -296,6 +299,9 @@ another directory by using
 <pre class="smallexample">     make prefix=/path/to/here install
      </pre>
 
+   <p>More precise control is available at configure time via options: see
+<code>configure --help</code> for details.
+
    <p>To install DVI, info and PDF versions of the manuals, use one or more of
 
 <pre class="smallexample">     make install-dvi
@@ -322,10 +328,9 @@ work.
    <p>Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
-   <p>The simplest way is to use <code>rw2000dev.exe</code> or
-<code>miniR.exe</code>.  Just double-click on the icon and follow the
-instructions.  If you installed R this way you can uninstall it from the
-Control Panel.
+   <p>Installation is <em>via</em> the installers <code>rw2000dev.exe</code>
+or <code>miniR.exe</code>.  Just double-click on the icon and follow the
+instructions.  You can uninstall R from the Control Panel.
 
    <p>See the <a href="http://cran.r-project.org/bin/windows/rw-FAQ.html">R Windows <small>FAQ</small></a> for more details.
 
@@ -461,6 +466,13 @@ from a local <code>zip</code> file by setting argument <code>CRAN</code> to
 <code>NULL</code>.   <code>RGui.exe</code> has a menu <code>Packages</code> with a GUI
 interface to <code>install.packages</code>, <code>update.packages</code> and
 <code>library</code>.
+
+   <p>On Mac OS X <code>install.packages</code> works as it does on other Unix
+systems, but there is an additional function <code>install.binaries</code>
+that will download and install binary packages from
+<small>CRAN</small>. These Macintosh binary package files have the
+extension <code>tgz</code>. The Aqua GUI provides for installation of either
+binary or source packages, from <small>CRAN</small> or local files.
 
 <a name="Updating%20packages"></a>
 
@@ -645,7 +657,7 @@ but not single-precision nor complex routines.
 
    <p>Provision is made for using an external LAPACK library, principally to
 cope with BLAS libraries which contain a copy of LAPACK (such as
-<code>libsunperf</code> on Solaris and <code>vecLib</code> on Mac OS X 10.2.2). 
+<code>libsunperf</code> on Solaris and <code>vecLib</code> on Mac OS X). 
 However, the likely performance gains are thought to be small (and may
 be negative), and the default is not to search for a suitable LAPACK
 library.  You can specify a specific LAPACK library or a search for a
@@ -728,10 +740,16 @@ negatives.
    <p>You will want to use <code>--disable-R-profiling</code> if you are building
 a profiled executable of R (e.g. with <code>-pg)</code>.
 
-   <p>Flag <code>--enable-R-shlib</code> causes the make process to build R as a
-shared library, typically called <code>libR.so</code>, and to take
-considerably longer, so you probably only want this if you will be using
-an application which embeds R.
+   <p>Flag <code>--enable-R-shlib</code> causes the make process to build R as
+a dynamic (shared) library, typically called <code>libR.so</code>, and link
+the main R executable <code>R.bin</code> against that library.  This can
+only be done if all the code (including system libraries) can be
+compiled into a dynamic library, and there may be a small performance
+penalty.  So you probably only want this if you will be using an
+application which embeds R.  Note that C code in packages installed
+on a R system linked with <code>--enable-R-shlib</code> are linked
+against the dynamic library and so such packages cannot be used from a
+R system built in the default way.
 
 <a name="Configuration%20variables"></a>
 
@@ -745,7 +763,13 @@ set) or on the command line as
 <pre class="smallexample">     ./configure VAR=<var>value</var>
      </pre>
 
-<p>These variables are <em>precious</em>, implying that they do not have to
+<p>If you are building in a directory different from the sources, there can
+be copies of <code>config.site</code> in the source and the build directories,
+and both will be read (in that order).  To force a single file to be
+read, set the environment variable <code>CONFIG_SITE</code> to the location of
+the file.
+
+   <p>These variables are <em>precious</em>, implying that they do not have to
 be exported to the environment, are kept in the cache even if not
 specified on the command line and checked for consistency between two
 configure runs (provided that caching is used), and are kept during
@@ -778,7 +802,7 @@ a full path.
    <p>If you find you need to alter configure variables, it is worth noting
 that some settings may be cached in the file <code>config.cache</code>, and it
 is a good idea to remove that file (if it exists) before re-configuring. 
-Note that caching is turned <em>off</em> by default; use the command line
+Note that caching is turned <em>off</em> by default: use the command line
 option <code>--config-cache</code> (or <code>-C</code>) to enable caching.
 
 <a name="Using%20make"></a>
@@ -1000,32 +1024,36 @@ Tcl/Tk libraries, <code>libpng</code>, <code>libjpeg</code> and <code>zlib</code
 might be linked against.  Fortunately these are normally built as shared
 libraries with the exception of the ATLAS BLAS libraries.
 
-   <p>It seems that <code>gcc 3.4.0</code> on <code>ix86</code> Linux defeats attempts by
-the LAPACK code to avoid computations entirely in extended-precision
-registers, so file <code>src/modules/lapack/dlamc.f</code> may need to
-compiled without optimization or with <code>-ffloat-store</code>.
-
 <a name="Mac%20OS%20X"></a>
 
 <h3 class="subsection">B.7.2 Mac OS X</h4>
 
-<p>You can build R as a Unix application on Mac OS X.  You will need Apple Developer
-Tools, <code>f2c</code> or <code>g77</code>.  You will also need to install an X sub-system
-or configure with <code>--without-x</code>. The X window manager is part of the
-standard Mac OS X distribution since Mac OS X version 10.3.
+<p>You can build R as a Unix application on Mac OS X using the Apple
+Developer Tools and <code>f2c</code> or <code>g77</code>.  You will also
+need to install an X sub-system or configure with
+<code>--without-x</code>. The X window manager is part of the standard Mac
+OS X distribution since Mac OS X version 10.3 (Panther).
 
    <p>For more information on how to find these tools please read the
 <a href="http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html">R for Mac OS X <small>FAQ</small></a>.
+
+   <p>If you use the X window manager and prefer <code>Terminal.app</code> to
+<code>xterm</code>, you should be aware that R, like many Unix tools,
+uses the existence of a <code>DISPLAY</code> environment variable to
+determine whether an X system is running. This affects the default
+graphics device for the commmand line version of R and the behaviour
+of the <code>png()</code> and <code>jpeg</code> devices.
 
    <p>The <code>vecLib</code> library of Mac OS X &gt;= 10.2.2 can be used <em>via</em> the
 configuration options
 <pre class="smallexample">     --with-blas="-framework vecLib" --with-lapack
      </pre>
 
-<p>to provide higher-performance versions of the BLAS and LAPACK routines. 
-With <code>gcc 3.1</code> that appears to be the only way to build R, as
-the Fortran support routines in <code>libg2c</code> cannot be linked into a
-dynamic library.  (We have had reports of success with <code>gcc 3.3</code>.)
+<p>to provide higher-performance versions of the BLAS and LAPACK
+routines.  With <code>gcc 3.1</code> that appears to be the only way to
+build R, as the Fortran support routines in <code>libg2c</code> cannot be
+linked into a dynamic library.  (We have had reports of success and of
+failure with <code>gcc 3.3</code>.)
 
 <a name="Solaris"></a>
 
@@ -1086,7 +1114,7 @@ compilers we used
 
 <p>in <code>config.site</code>.
 
-   <p>For 64-bit compilation with <code>gcc</code> 3.2.x and 3.3.x we used
+   <p>For 64-bit compilation with <code>gcc</code> 3.2.x and later we used
 
 <pre class="smallexample">     CC="gcc -m64"
      FFLAGS="-m64 -g -O2"
@@ -1269,12 +1297,13 @@ port would be greatly appreciated.
 
 <p>On AIX 4.3.3 and AIX 5.1, it was found that the use of "run time
 linking" (as opposed to normal AIX style linking) was required.  For
-this, the R main program must be linked to the runtime linker with the
-<code>-brtl</code> linker option, and shareable objects must be enabled for
-runtime linking with the <code>-G</code> linker option.  Without these
-options, the AIX linker will not automatically link to any shared object
-with a <code>.so</code> extension.  Also, the R main program is unable to
-dynamically load modules (such as X11) with the <code>dlopen</code> call.
+this, the R main program must be linked to the runtime linker with
+the <code>-brtl</code> linker option, and shareable objects must be enabled
+for runtime linking with the <code>-G</code> linker option.  Without these
+options, the AIX linker would not automatically link to any shared
+object with a <code>.so</code> extension.  Also, the R main program would
+be unable to dynamically load modules (such as X11) with the
+<code>dlopen</code> call.
 
    <p>When setting <code>MAIN_LDFLAGS</code> and <code>SHLIB_LDFLAGS</code> accordingly,
 note that linker flags must be escaped using <code>-Wl,</code> if
@@ -1296,6 +1325,23 @@ success building R 1.7.0 under AIX 5.1 with
 
 <p>but was unable to use the X libraries or the native BLAS (ESSL) and so
 used <code>--without-x --without-blas</code>.
+
+   <p>Tim Hoar &lt;thoar at cgd dot ucar dot edu&gt; reported success building
+R 1.9.0 under AIX 5.1 in 64-bit mode with
+<pre class="smallexample">     OBJECT_MODE=64
+     CC=/usr/bin/xlc_r
+     F77=/usr/bin/xlf_r
+     CXX=/usr/bin/xlC_r
+     LDFLAGS='-brtl'
+     CFLAGS='-O -qstrict'
+     FFLAGS='-O -qstrict'
+     CXXFLAGS='-O -qstrict'
+     </pre>
+
+<p>and the X11() device worked.  His system required the Makeconf file to
+be edited to replace /lib/crt0.o by /lib/crt0_64.o.
+
+   <p>We understand that <code>--enable-R-shlib</code> does not work under AIX.
 
 <a name="Enabling%20search%20in%20HTML%20help"></a>
 
@@ -1365,8 +1411,6 @@ distributions of <code>j2re 1.4.2_01</code> available: see
 <pre class="smallexample">     http://www.MedAnalytics.com/INSTALL
      </pre>
 
-   <p>Sun's <code>j2re 1.4.x</code> is said not to work with Mozilla 1.6 under Mac OS X.
-
 <a name="Java%20Virtual%20Machines%20on%20Windows"></a>
 
 <h3 class="section">C.3 Java Virtual Machines on Windows</h3>
@@ -1381,6 +1425,16 @@ Which (if any) JVM is enabled can be set in `Set Program Access and
 Defaults' in Windows XP (SP1 or later), and which JVM is used by browser
 plugins may also be controlled by the Sun Java applet in the Control
 Panel.
+
+<a name="Java%20Virtual%20Machines%20on%20Mac%20OS%20X"></a>
+
+<h3 class="section">C.4 Java Virtual Machines on Windows</h3>
+
+<p>The HTML search engine does not work with Safari under Mac OS X, and
+Sun's <code>j2re 1.4.x</code> is said not to work with Mozilla 1.6.
+
+   <p>The Aqua GUI provides an interface to <code>help.search</code> that may
+substitute for the Java search.
 
 <a name="New%20platforms"></a>
 
@@ -1420,6 +1474,14 @@ override the results.  Scanning the manual entries for <code>cc</code> and
 <code>ld</code> usually reveals the correct incantation.  Once you know the
 recipe you can modify the file <code>config.site</code> (following the
 instructions therein) so that the build will use these options.
+
+   <p>It seems that <code>gcc 3.4.0</code> on <code>ix86</code> Linux defeats attempts by
+the LAPACK code to avoid computations entirely in extended-precision
+registers, so file <code>src/modules/lapack/dlamc.f</code> may need to
+compiled without optimization.  If configure detects GNU Fortran it adds
+flag <code>-ffloat-store</code> which suffices, but it is possible that
+<code>src/modules/lapack/Makefile</code> will need to be edited to remove
+optimization on other platforms.
 
    <p>If you do manage to get R running on a new platform please let us
 know about it so we can modify the configuration procedures to include

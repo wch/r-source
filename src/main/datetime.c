@@ -65,7 +65,7 @@
 
 static Rboolean have_broken_mktime(void)
 {
-#ifdef Win32
+#if defined(Win32) || defined(_AIX)
     return TRUE;
 #elif defined(__GLIBC__) && defined(__GLIBC_MINOR__) && __GLIBC__ >= 2 && __GLIBC_MINOR__ >= 2
     static int test_result = -1;
