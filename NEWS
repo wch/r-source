@@ -150,7 +150,7 @@ NEW FEATURES
     o	plot.function() and curve() now take xlim as default for (from,to)
 	if the former is specified.
 
-    o	C API : Rboolean type with TRUE & FALSE enum constants.
+    o	C API: R_ext/Boolean.h: Rboolean type with TRUE & FALSE enum constants.
 
     o	Date-time support functions with classes "POSIXct" and
 	"POSIXlt" to represent dates/times (resolution 1 second) in
