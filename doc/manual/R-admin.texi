@@ -1444,8 +1444,8 @@ For 64-bit compilation with @command{gcc} 3.2.x and later we used
 
 @example
 CC="gcc -m64"
-FFLAGS="-m64 -g -O2"
-CXXFLAGS="-m64 -g -O2"
+F77="g77 -m64"
+CXX="g++ -m64"
 LDFLAGS="-L/usr/local/lib/sparcv9 -L/usr/local/lib"
 @end example
 
