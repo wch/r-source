@@ -46,6 +46,7 @@ $old = $package;
 $len = length($old);
 if ($len > $lc - 3) {
     $S = $old;
+    $old = "";
     for ($j = 1; $j < $lc; $j++) {
 	$old = $old . ' ';
     }
