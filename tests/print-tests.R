@@ -9,7 +9,7 @@ opt.conformance <- 0
 if(!is.R())options(echo = T, warn = 1)#-- for Splus
 print(search())#---- for Splus
 
-DIG <- function(d) if(missing(d)) options('digits')$dig else
+DIG <- function(d) if(missing(d)) options("digits")$dig else
 				options(digits=as.integer(d))
 
 DIG(7)#-- the default; just to make sure ...
@@ -24,7 +24,8 @@ v2 <- v1^(63/64)
 v3 <- pi*100^(-1:3)
 v4 <- (0:2)/1000 + 1e-10 #-- tougher one
 
-digs1 <- c(1,2*(1:5),11:16)		# 20: platform dependent;
+digs1 <- c(1,2*(1:5),11:15)		# 16: MS Windows differs
+					# 20: platform dependent
 					# 30 gives ERROR : options(digits=30)
 digs2 <- c(1:20)#,30) gives 'error' in R: ``print.default(): invalid digits..''
 
