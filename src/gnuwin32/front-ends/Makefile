@@ -29,8 +29,6 @@ all: ../../../bin/Rgui.exe ../../../bin/Rterm.exe \
 graphappmain.o: ../graphapp/graphappmain.c
 	$(CC) -c -o $@ -I../graphapp $(CFLAGS) $^
 
-#LIBS=-L.. -lR
-
 Rgui-LINKFLAGS=-mwindows
 Rterm-LIBS=-luser32 -L.. -lR
 Rgui-LIBS=-L.. -lR
@@ -52,8 +50,6 @@ bdx-CFLAGS=-I../../include
 rproxy-DLLFLAGS=-mwindows
 rproxy-DLLLIBS=-L.. -lR
 rproxy.dll: rproxy.o rproxy_impl.o bdx.o rtico.o
-rprx.exe: rprx.o
-rprx-LIBS=-L.. -lR
 
 ../../../bin/Rproxy.dll: rproxy.dll
 	$(MKDIR) -p ../../../bin

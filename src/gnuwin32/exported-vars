@@ -35,6 +35,7 @@ R_NaRmSymbol
 R_RowNamesSymbol
 R_SeedsSymbol
 R_TspSymbol
+R_CurrentExpr
 ArrowCursor
 BlankCursor
 WatchCursor
