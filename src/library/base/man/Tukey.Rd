@@ -20,7 +20,8 @@ qtukey(p, nmeans, df, nranges = 1)
   standard normal sample of size \eqn{n} and \eqn{s^2} is independently
   distributed as chi-squared with \eqn{df} degrees of freedom, see
   \code{\link{pchisq}}.
-
+}
+\details{
   If \eqn{n_g =}{ng =}\code{nranges} is greater than one, \eqn{R} is
   the \emph{maximum} of \eqn{n_g}{ng} groups of \code{nmeans}
   observations each.

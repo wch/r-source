@@ -28,24 +28,27 @@ x$name
 \alias{[.noquote}
 \alias{[<-.noquote}
 \description{
-These operators act on vectors, arrays, dataframes and lists.
-If one of these expressions appears on the left side of an assignment
-then that part of \code{x} is set to the value of the right hand side
-of the assignment.
+  Operators act on vectors, arrays, dataframes and lists to extract or
+  replace subsets.
+}
+\details{
+  If one of these expressions appears on the left side of an assignment
+  then that part of \code{x} is set to the value of the right hand side
+  of the assignment.
 
-These operators are generic. You can write methods to handle subsetting
-of specific classes of data.
+  These operators are generic. You can write methods to handle subsetting
+  of specific classes of data.
 
-The \code{[[} operator requires all relevant subscripts be supplied.
-With  the \code{[} operator a comma separated blank indicates that all
-entries in that dimension are selected.
+  The \code{[[} operator requires all relevant subscripts be supplied.
+  With the \code{[} operator a comma separated blank indicates that all
+  entries in that dimension are selected.
 
-When operating on a list, the \code{[[} operator gives the specified
-element of the list while the \code{[} operator returns a list with
-the specified element(s) in it.
+  When operating on a list, the \code{[[} operator gives the specified
+  element of the list while the \code{[} operator returns a list with
+  the specified element(s) in it.
 }
 \seealso{
-\code{\link{list}}, \code{\link{array}}, \code{\link{matrix}}.
+  \code{\link{list}}, \code{\link{array}}, \code{\link{matrix}}.
 }
 \examples{
 x <- 1:12; m <- matrix(1:6,nr=2); li <- list(pi=pi, e = exp(1))

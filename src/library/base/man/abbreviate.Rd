@@ -12,7 +12,7 @@ abbreviate(names.arg, minlength = 4, use.classes = TRUE,
   \item{dot}{logical; should a dot (\code{"."}) be appended?}
 }
 \description{
-  Abbreviate Strings to at least \code{minlength} characters,
+  Abbreviate strings to at least \code{minlength} characters,
   such that they remain \emph{unique} (if they were).
 }
 \details{

@@ -59,6 +59,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	Many help pages have been revised and enhanced.
+
     o   predict.glm() works again with type="link".
 
     o   subscripting arrays and matrices no longer loses the names of

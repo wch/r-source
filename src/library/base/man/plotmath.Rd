@@ -6,11 +6,14 @@
   (\code{\link{text}}, \code{\link{mtext}}, \code{\link{axis}}) in \R
   is an expression, the argument is interpreted as a mathematical
   expression and the output will be formatted according to TeX-like
-  rules.  A mathematical expression must obey the normal rules of syntax
-  for any \R expression, but it is interpreted according to very
-  different rules than for normal \R expressions.}
+  rules.
+}
 \details{
   %% FIXME: use \describe instead when this works in nroff!
+  A mathematical expression must obey the normal rules of syntax
+  for any \R expression, but it is interpreted according to very
+  different rules than for normal \R expressions.
+  
   \emph{Binary operators:} addition, subtraction, multiplication, and
   division use the standard \R syntax, although multiplication only
   juxtaposes the arguments.  For example, \code{a+b}, \code{a-b}, and
@@ -52,7 +55,7 @@
   being summed/multiplied/integrated and the second and third specify
   the limits of the summation/product/integral.
   For example, \code{sum(x[i], i==0, n)} produces
-  \eqn{\sum\limits_{i=0}^n x_i}{sum_{i=0}^n x_i}.
+  \deqn{\sum\limits_{i=0}^n x_i}{sum_{i=0}^n x_i}.
 
   \emph{Radicals:} a square root expression is specified using the
   special mathematical functions \code{root} and \code{sqrt}.

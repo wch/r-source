@@ -14,26 +14,29 @@ besselJ(x, nu)
 besselY(x, nu)
 gammaCody(x)
 }
-\description{Bessel Functions of integer and fractional order, of first
-    and second kind, \eqn{J_{\nu}}{J(nu)} and \eqn{Y_{\nu}}{Y(nu)}, and
-    Modified Bessel functions (of first and third kind),
-    \eqn{I_{\nu}}{I(nu)} and \eqn{K_{\nu}}{K(nu)}. 
+\description{
+  Bessel Functions of integer and fractional order, of first
+  and second kind, \eqn{J_{\nu}}{J(nu)} and \eqn{Y_{\nu}}{Y(nu)}, and
+  Modified Bessel functions (of first and third kind),
+  \eqn{I_{\nu}}{I(nu)} and \eqn{K_{\nu}}{K(nu)}. 
 
-    \code{gammaCody} is the \eqn{(\Gamma)} Function as from the Specfun
-    package and originally used in the Bessel code.
+  \code{gammaCody} is the \eqn{(\Gamma)} function as from the Specfun
+  package and originally used in the Bessel code.
 }
 \arguments{
-    \item{x}{numeric, \eqn{\ge 0}{>= 0}.}
-    \item{nu}{numeric; \eqn{\ge 0}{>= 0} unless in \code{besselK} which
-	is symmetric in \code{nu}.  The \emph{order} of the
-      corresponding Bessel function.}
-    \item{expon.scaled}{logical; if \code{TRUE}, the results are
-      exponentially scaled in order to avoid overflow
-      (\eqn{I_{\nu}}{I(nu)}) or underflow (\eqn{K_{\nu}}{K(nu)}),
-      respectively.}
+  \item{x}{numeric, \eqn{\ge 0}{>= 0}.}
+
+  \item{nu}{numeric; \eqn{\ge 0}{>= 0} unless in \code{besselK} which
+    is symmetric in \code{nu}.  The \emph{order} of the
+    corresponding Bessel function.}
+
+  \item{expon.scaled}{logical; if \code{TRUE}, the results are
+    exponentially scaled in order to avoid overflow
+    (\eqn{I_{\nu}}{I(nu)}) or underflow (\eqn{K_{\nu}}{K(nu)}),
+    respectively.}
 }
 \value{
-  numeric of the same length of \code{x} with the (scaled, if
+  Numeric vector of the same length of \code{x} with the (scaled, if
   \code{expon.scale=TRUE}) values of the corresponding Bessel function.
 }
 \details{
@@ -52,14 +55,16 @@ gammaCody(x)
   \emph{Handbook of Mathematical Functions}, Dover, New York;
   Chapter 9: Bessel Functions of Integer Order.
 }
-\seealso{Other special mathematical functions, as the
+\seealso{
+  Other special mathematical functions, as the
   \code{\link{gamma}}, \eqn{\Gamma(x)}, and \code{\link{beta}},
   \eqn{B(x)}.
 }
-\author{Original Fortran code:
-    W. J. Cody, Argonne National Laboratory \cr
-    Translation to C and adaption to \R:
-    Martin Maechler \email{maechler@stat.math.ethz.ch.}
+\author{
+  Original Fortran code:
+  W. J. Cody, Argonne National Laboratory \cr
+  Translation to C and adaption to \R:
+  Martin Maechler \email{maechler@stat.math.ethz.ch.}
 \examples{
 nus <- c(0:5,10,20)
 

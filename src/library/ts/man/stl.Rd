@@ -60,7 +60,7 @@ stl(x, s.window = NULL, s.degree = 0, t.window = NULL, t.degree = 1,
     S-PLUS. The \code{remainder} component given by S-PLUS is the sum of
     the \code{trend} and \code{remainder} series from this function.}
 
-\seealso{\code{\link{loess}} in package \code{modreg} (which is not
+\seealso{\code{\link{loess}} in package \file{modreg} (which is not
     actually used in \code{stl}).}
 
 \examples{

@@ -1,5 +1,3 @@
-% copyright (C) 1998 B. D. Ripley
-%
 \name{aov}
 \title{Fit an Analysis of Variance Model}
 \usage{
@@ -14,33 +12,35 @@ se.aov(object, n, type = "means")
 \alias{print.summary.aov}
 \alias{print.summary.aovlist}
 \arguments{
- \item{formula}{A formula specifying the model.}
- \item{data}{A data frame in which the variables specified in the
-   formula will be found. If missing, the variables are searched for in
-   the standard way.}
- \item{projections}{Logical flag: should the projections be returned?}
- \item{contrasts}{A list of contrasts to be used for some of the factors
-   in the formula. These are not used for any \code{Error} term, and
-   supplying contrasts for factors only in the \code{Error} term will give
-   a warning.}
- \item{\dots}{Arguments to be passed to \code{lm}, such as \code{subset}
-   or \code{na.action}.}
+  \item{formula}{A formula specifying the model.}
+  \item{data}{A data frame in which the variables specified in the
+    formula will be found. If missing, the variables are searched for in
+    the standard way.}
+  \item{projections}{Logical flag: should the projections be returned?}
+  \item{contrasts}{A list of contrasts to be used for some of the factors
+    in the formula. These are not used for any \code{Error} term, and
+    supplying contrasts for factors only in the \code{Error} term will give
+    a warning.}
+  \item{\dots}{Arguments to be passed to \code{lm}, such as \code{subset}
+    or \code{na.action}.}
 }
 \description{
- This provides a wrapper to \code{lm} for fitting linear models to
- balanced or unbalanced experimental designs. The call to \code{lm} sets
- \code{singular.ok} to \code{TRUE} to allow for aliased effects.
+  Fit an analysis of variance model by a call to \code{lm} for each stratum.
+}
+\details{
+  This provides a wrapper to \code{lm} for fitting linear models to
+  balanced or unbalanced experimental designs.
 
- The main difference from \code{lm} is in the way \code{print},
- \code{summary} and so on handle the fit: this is expressed in the
- traditional language of the analysis of variance rather than of linear
- models.
+  The main difference from \code{lm} is in the way \code{print},
+  \code{summary} and so on handle the fit: this is expressed in the
+  traditional language of the analysis of variance rather than of linear
+  models.
 
- If the formula contains a single \code{Error} term, this is used to
- specify error strata, and appropriate models are fitted within each
- error stratum.
+  If the formula contains a single \code{Error} term, this is used to
+  specify error strata, and appropriate models are fitted within each
+  error stratum.
 
- The formula can specify multiple responses.
+  The formula can specify multiple responses.
 }
 \value{
   An object of class \code{c("aov", "lm")} or for multiple responses
@@ -48,8 +48,9 @@ se.aov(object, n, type = "means")
   strata of class \code{"aovlist"}.  There are
   \code{\link{print}} and \code{\link{summary}} methods available for these.
 }
-\author{B.D. Ripley}
-\seealso{\code{\link{lm}},\code{\link{alias}},\code{\link{proj}},
+\author{B. D. Ripley}
+\seealso{
+  \code{\link{lm}}, \code{\link{alias}}, \code{\link{proj}},
   \code{\link{model.tables}}
 }
 \examples{

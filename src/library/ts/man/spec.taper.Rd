@@ -20,7 +20,7 @@ spec.taper(x, p=0.1)
   A new time series object.
 }
 \author{Kurt Hornik, B.D. Ripley}
-\note{From package \code{MASS}.}
+\note{From package \file{MASS}.}
 
 \seealso{\code{\link{spec.pgram}}, \code{\link{cpgram}}}
 

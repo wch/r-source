@@ -54,7 +54,7 @@ install.packages(pkgs, lib, available = NULL,
   CRAN and update outdated packages on the fly.}
 }
 \details{
-  \code{installed.packages()} scans the DESCRIPTION files of each
+  \code{installed.packages()} scans the \file{DESCRIPTION} files of each
   package found along \code{lib.loc} and returns a list of package
   names, library paths and version numbers.  \code{CRAN.packages()}
   returns a similar list, but corresponding to packages currently

@@ -1,8 +1,8 @@
 \name{Foreign}
 \title{Foreign Function Interface}
 \usage{
-       .C(name, \dots, NAOK=FALSE, DUP=TRUE, PACKAGE)
- .Fortran(name, \dots, NAOK=FALSE, DUP=TRUE, PACKAGE)
+       .C(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE)
+ .Fortran(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE)
 .External(name, \dots)
     .Call(name, \dots)
 }
@@ -28,6 +28,9 @@
     \code{PACKAGE="base"} for symbols linked in to \R.} 
 }
 \description{
+  Function to make calls to compiled code that has been loaded into \R.
+}
+\details{
   The functions \code{.C} and \code{.Fortran} can be used to make calls
   to C and Fortran code.
 

@@ -22,6 +22,9 @@ plot(y ~ x, \dots)
     supplied is set by \code{plot.formula}.}
   \item{ask}{logical, see \code{\link{par}}.}
 }
+\description{
+  Specify a scatterplot via a formula.
+}
 \value{
   This function is invoked for its side effect of drawing a scatter plot
   in the active graphics window.

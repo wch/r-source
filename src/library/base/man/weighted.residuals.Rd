@@ -5,22 +5,25 @@
 weighted.residuals(obj, drop0 = TRUE)
 }
 \arguments{
- \item{obj}{\R object, typically of class \code{\link{lm}} or \code{\link{glm}}.}
- \item{drop0}{logical.  If \code{TRUE}, drop all cases with
-     \code{\link{weights} == 0}.}
+  \item{obj}{\R object, typically of class \code{\link{lm}} or \code{\link{glm}}.}
+  \item{drop0}{logical.  If \code{TRUE}, drop all cases with
+    \code{\link{weights} == 0}.}
 }
 \description{
-    Weighted residuals are the usual residuals \eqn{R_i}{Ri}, multiplied
-    by \eqn{\sqrt{w_i}}{wi^0.5}, where \eqn{w_i}{wi} are the
-    \code{weights} as specified in \code{\link{lm}}'s call.
+  Computed weighted residuals from a linear model fit.
+}
+\details{
+  Weighted residuals are the usual residuals \eqn{R_i}{Ri}, multiplied
+  by \eqn{\sqrt{w_i}}{wi^0.5}, where \eqn{w_i}{wi} are the
+  \code{weights} as specified in \code{\link{lm}}'s call.
 
-    Dropping cases with weights zero, is compatible with
-    \code{\link{lm.influence}} and related functions.
+  Dropping cases with weights zero, is compatible with
+  \code{\link{lm.influence}} and related functions.
 }
 \value{
-    Numeric vector of length \eqn{n'}, where \eqn{n'} is the number of
-    of non-0 weights (\code{drop0 = TRUE}) or the number of
-    observations, otherwise.
+  Numeric vector of length \eqn{n'}, where \eqn{n'} is the number of
+  of non-0 weights (\code{drop0 = TRUE}) or the number of
+  observations, otherwise.
 }
 \seealso{\code{\link{residuals}},\code{\link{lm.influence}}, etc.}
 \examples{

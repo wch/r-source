@@ -4,12 +4,12 @@
 \name{loess}
 \title{Local Polynomial Regression Fitting}
 \usage{
-loess(formula, data, weights, subset, na.action, model=FALSE,
-      span=0.75, enp.target, degree=2,
-      parametric=FALSE, drop.square=FALSE, normalize=TRUE,
-      family=c("gaussian", "symmetric"),
-      method=c("loess", "model.frame"),
-      control=loess.control(...), ...)
+loess(formula, data, weights, subset, na.action, model = FALSE,
+      span = 0.75, enp.target, degree = 2,
+      parametric = FALSE, drop.square = FALSE, normalize = TRUE,
+      family = c("gaussian", "symmetric"),
+      method = c("loess", "model.frame"),
+      control = loess.control(...), ...)
 }
 \alias{loess}
 \alias{anova.loess}

@@ -15,7 +15,7 @@ subset.data.frame(x, subset, select)
     \item{select}{expression, indicating variables to select from a
 	dataframe}
 }
-\description{
+\details{
     For ordinary vectors, the result is simply 
     \code{x[subset & !is.na(subset)]}. 
 

@@ -53,6 +53,9 @@ step(object, scope, scale=0, direction=c("both", "backward", "forward"),
   (thus excluding \code{lm}, \code{aov} and \code{survreg} fits, for example).
 }
 \description{
+  Select a formula-based model by AIC.
+}
+\details{
   \code{step} uses \code{\link{add1}} and \code{\link{drop1}}
   repeatedly; it will work for any method for which they work, and that
   is determined by having a valid method for \code{\link{extractAIC}}.

@@ -12,11 +12,15 @@
 } 
 \description{An experiment was conducted to measure and compare the
   effectiveness of various feed supplements on the growth rate of
-  chickens.  Newly hatched chicks were randomly allocated into six groups,
+  chickens.
+}
+\details{
+  Newly hatched chicks were randomly allocated into six groups,
   and each group was given a different feed supplement.  Their weights in
   grams after six weeks are given along with feed types.
 }
-\references{McNeil, D. R. (1977).  Interactive Data Analysis.  New York: Wiley.
+\references{
+  McNeil, D. R. (1977). \emph{Interactive Data Analysis.}  New York: Wiley.
 }
 \examples{
 data(chickwts)

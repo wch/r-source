@@ -2,7 +2,7 @@
 \alias{USJudgeRatings}
 \title{Lawyers' Ratings of State Judges in the US Superior Court}
 \usage{data(USJudgeRatings)}
-\format{A data frame contaning 43 observations on 12 numeric variables.
+\format{A data frame containing 43 observations on 12 numeric variables.
   \tabular{rll}{
     [,1] \tab CONT \tab Number of contacts of lawyer with judge.\cr
     [,2] \tab INTG \tab Judicial integrity.\cr
@@ -17,6 +17,9 @@
     [,11] \tab PHYS \tab Physical ability.\cr
     [,12] \tab RTEN \tab Worthy of retention.\cr
   }
+}
+\description{
+  Lawyers' ratings of state judges in the US Superior Court
 }
 \source{
   New Haven Register, 14 January, 1977 (from John Hartigan).

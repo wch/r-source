@@ -4,8 +4,8 @@
 \name{ksmooth}
 \title{Kernel Regression Smoother}
 \usage{
-ksmooth(x, y, kernel=c("box", "normal"), bandwidth=0.5,
-        range.x=range(x), n.points=max(100, length(x)), x.points)
+ksmooth(x, y, kernel = c("box", "normal"), bandwidth = 0.5,
+        range.x = range(x), n.points = max(100, length(x)), x.points)
 }
 \alias{ksmooth}
 \arguments{
@@ -28,7 +28,7 @@ ksmooth(x, y, kernel=c("box", "normal"), bandwidth=0.5,
     be in increasing order.}
   \item{y}{fitted values corresponding to \code{x}.}
 }
-\author{B.D. Ripley}
+\author{B. D. Ripley}
 \note{This function is implemented purely for compatibility with S,
   although it is nowhere near as slow as the S function. Better kernel
   smoothers are available in other packages.}

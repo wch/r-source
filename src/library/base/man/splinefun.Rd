@@ -27,8 +27,9 @@ spline(x, y, n = 3*length(x), method = "fmm",
   \code{splinefun} returns a function which will perform cubic spline
   interpolation of the given data points.  This is often more useful
   than \code{spline}.
-
-  If \code{method="fmm"}, the spline used is that of Forsythe, Malcolm
+}
+\details{
+  If \code{method = "fmm"}, the spline used is that of Forsythe, Malcolm
   and Moler (an exact cubic is fitted through the four points at each
   end of the data, and this is used to determine the end conditions).
   Natural splines are used when \code{method="natural"}, and periodic

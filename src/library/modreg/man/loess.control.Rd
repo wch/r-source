@@ -4,10 +4,10 @@
 \name{loess.control}
 \title{Set Parameters for Loess}
 \usage{
-loess.control(surface=c("interpolate", "direct"),
-              statistics=c("approximate", "exact"),
-              trace.hat=c("exact", "approximate"),
-              cell=0.2, iterations=4, ...)
+loess.control(surface = c("interpolate", "direct"),
+              statistics = c("approximate", "exact"),
+              trace.hat = c("exact", "approximate"),
+              cell = 0.2, iterations = 4, \dots)
 }
 \alias{loess.control}
 \arguments{

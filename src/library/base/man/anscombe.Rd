@@ -10,13 +10,16 @@
                 \tab mean(y<j>) = 7.5 and st.dev = 2.03
     }
 }
-\source{Edward R. Tufte (1989).  The Visual Display of Quantitative Information;
-  Graphics Press, p.13-14.}
+\source{
+  Edward R. Tufte (1989).  The Visual Display of Quantitative Information;
+  Graphics Press, p.13-14.
+}
 \references{
 Francis J. Anscombe (1973). Graphs in Statistical Analysis;
-	American Statistician, \bold{27}, 17-21.
+	\emph{American Statistician}, \bold{27}, 17-21.
 }
-\description{Four x-y datasets which have the same traditional
+\description{
+  Four x--y datasets which have the same traditional
   statistical properties (mean, variance, correlation, regression line,
   etc.), yet are quite different.
 }

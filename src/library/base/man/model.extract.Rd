@@ -15,7 +15,10 @@ model.response(frame)
 }
 \description{Returns the response, offset, subset, weights or other
   special components of a model frame passed as optional arguments to
-  \code{\link{model.frame}}. \code{model.offset} and
+  \code{\link{model.frame}}.
+}
+\details{
+  \code{model.offset} and
   \code{model.response} are equivalent to \code{model.frame(,"offset")}
   and \code{model.frame(,"response")} respectively.
 }

@@ -9,9 +9,10 @@ prompt.data.frame(object, filename = paste(name, ".Rd", sep = ""))
   \item{filename}{name of the output file}
 }
 \description{
-  The main goal is to facilitate the constructing of files documenting
-  data frames in \R.
-
+  Facilitate the constructing of files documenting \R data frames.
+}
+\details{
+\description{
   An ASCII file \code{filename} is produced containing the data frame
   name and the names of the variables in the frame.  You have to edit it
   before adding the documentation to the source tree, i.e., (currently)
@@ -19,9 +20,11 @@ prompt.data.frame(object, filename = paste(name, ".Rd", sep = ""))
 }
 \author{Douglas Bates \email{bates@stat.wisc.edu}}
 \seealso{
-  \code{\link{help}} and he chapter on ``Writing \R documentation'' in
-  the ``R Extension Writer's Manual'' (see the \file{doc/manual}
-  subdirectory of the \R source tree).
+  \code{\link{prompt}}.
+
+  \code{\link{help}} and the chapter on ``Writing \R documentation'' in
+  ``Writing \R Extensions'' (see the \file{doc/manual}
+  subdirectory of the \R\ source tree).
 }
 \note{
   The documentation file produced by \code{prompt.data.frame} does not

@@ -52,6 +52,9 @@ matlines(x, y, lty = 1:5, lwd = 1, pch = NULL, col = 1:6)
 \section{Side Effects}{Function \code{matplot} generates a new plot;
   \code{matpoints} and \code{matlines} add to the current one.}
 \description{
+  Plot the columns of one matrix against the columns of another.
+}
+\details{
   Points involving missing values are not plotted.
 
   The first column of \code{x} is plotted against the first column of

@@ -12,9 +12,6 @@ Machine()
   machine's precision.
 
   \code{.Machine} is a variable holding this information.
-
-  The algorithm is based on Cody's subroutine MACHAR (see the reference
-  below).
 }
 \value{
   \code{Machine()} returns a list with components (for simplicity, the
@@ -71,14 +68,16 @@ Machine()
     the smallest positive power of \code{base} that overflows.}
   \item{integer.max}{the largest integer which can be represented.}
 }
+\details{
+  The algorithm is based on Cody's (1988) subroutine MACHAR.
+}
 \references{
   W. J. Cody (1988),
-  \emph{MACHAR: A Subroutine to Dynamically Determine Machine
-    Parameters}.
-  Transactions on Mathematical Software, \bold{14}, 4, 303-311.
+  MACHAR: A Subroutine to Dynamically Determine Machine Parameters.
+  \emph{Transactions on Mathematical Software}, \bold{14}, 4, 303-311.
 }
 \seealso{
-  \code{\link{machine}} to determine the computer type, \R is running on.
+  \code{\link{machine}} to determine the computer type which \R is running on.
 }
 \examples{
 str(Machine())

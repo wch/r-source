@@ -6,9 +6,9 @@
   Performs a hierarchical cluster analysis on a set of dissimilarities.
 }
 \usage{
-hclust(d, method="complete")
+hclust(d, method = "complete")
 
-plot.hclust(hclust.obj, labels, hang=0.1, \dots)
+plot.hclust(hclust.obj, labels, hang = 0.1, \dots)
 }
 \arguments{
   \item{d}{a dissimilarity structure as produced by \code{dist}.}

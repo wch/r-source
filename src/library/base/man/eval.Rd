@@ -5,9 +5,9 @@
 \alias{eval.parent}
 \alias{local}
 \usage{
-eval(expr, envir=sys.frame(sys.parent()), 
-   enclos=if(is.list(envir) || is.pairlist(envir)) 
-             sys.frame(sys.parent()))
+eval(expr, envir = sys.frame(sys.parent()), 
+     enclos = if(is.list(envir) || is.pairlist(envir)) 
+                  sys.frame(sys.parent()))
 evalq(expr, envir, enclos)
 eval.parent(expr, n = 1)
 local(expr, envir = new.env())
@@ -24,6 +24,9 @@ local(expr, envir = new.env())
   \item{n}{parent generations to go back}
 }
 \description{
+  Evaluate an \R expression in a specified environment.
+}
+\details{
   \code{eval} evaluates the expression \code{expr} argument in the
   environment specified by \code{envir} and returns the computed value.
   If \code{envir} is not specified, then
