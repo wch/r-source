@@ -3689,6 +3689,40 @@ to access a FORTRAN common block from C
 On most current platforms these are all the same, but it is unwise to
 rely on this.
 
+For example, suppose we want to call R's normal random numbers from
+FORTRAN.  We need a C wrapper along the lines of
+
+@example
+#include <R.h>
+
+void F77_SUB(rndstart)(void) @{ GetRNGstate(); @}
+void F77_SUB(rndend)(void) @{ PutRNGstate(); @}
+double F77_SUB(normrnd)(void) @{ return norm_rand(); @}
+@end example
+
+@noindent
+to be called from FORTRAN as in
+
+@example
+      subroutine testit()
+      double precision normrnd, x
+      call rndstart()
+      x = normrnd()
+      call dblepr("X was", 5, x, 1)
+      call rndend()
+      end
+@end example
+
+@noindent
+Note that this is not guaranteed to be portable, for the return
+conventions might not be compatible between the C and FORTRAN
+compilers used.  (Passing values via arguments is safer.)
+
+The standard packages, for example @pkg{modreg}, are a rich source of
+further examples.
+
+
+
 @node Numerical analysis subroutines, Utility functions, Calling C from FORTRAN and vice versa, The R API
 @section Numerical analysis subroutines
 @cindex Numerical analysis subroutines from C

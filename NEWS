@@ -89,6 +89,10 @@ DEPRECATED & DEFUNCT
 
 DOCUMENTATION CHANGES
 
+    o	`Writing R Extensions' now has an example of calling R's
+	random numbers from FORTRAN via C.
+
+
 UTILITIES
 
     o	Sweave(), Stangle() and friends in package tools. Sweave allows
