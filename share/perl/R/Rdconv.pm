@@ -1437,7 +1437,7 @@ sub text2txt {
 	if($ll > 0) {
 	    $descitem = "\n.tide " . $descitem . " \n". text2txt($desc);
 	} else {
-	    warn "missing text for \\item in \\describe\n";
+	    warn "Warning: missing text for \\item in \\describe\n";
 	    $descitem = "\n.tide " . $descitem . " \n \n"
 	}
 	$text =~ s/\\itemnormal.*$id/$descitem/s;
