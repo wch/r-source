@@ -8,15 +8,14 @@ else
 End
 set thisDir "`Directory -q`"
 Directory "{ExamplesFolder}"
-Echo "# {ExamplesFolder}"
 
 set fileList  "`(Exists -q Makefile; Files Makefile.mac || echo "") ³dev:null `"
 if "{fileList}"
 	for f in {fileList}
+   	  Echo "# Making `Directory`{f}"
 		Begin
-			Echo "Set Echo 1"    
-			Make -f "{f}"
-		End >"{tmp}"make.out
+			Make -f "{f}" >"{tmp}"make.out
+		End 
 		"{tmp}"Make.out
 	end
 end

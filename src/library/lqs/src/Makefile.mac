@@ -1,6 +1,6 @@
-#   File:       lqsLib.make
+#   File:       Makefile.mac
 #   Target:     lqsLib
-#   Created:    Jago, Jul 2001, Stefano M. Iacus
+#   Created:    Jago, Aug 2001, Stefano M. Iacus
 #
 #   This script assumes that R binary already exists in 
 #   folder 'src/macintosh/bin'
@@ -11,11 +11,12 @@
 #   MrC C Compiler 5.0.0d3c1
 #   Universal Headers 3.4
 #   CarbonLib 1.4
+#   MPW release  August 2001+Updates
 #
 
 DLib            = lqs
 
-MAKEFILE        = {DLib}Lib.make
+MAKEFILE        = Makefile.mac
 ¥MondoBuild¥    = {MAKEFILE}  # Make blank to avoid rebuilds when makefile is modified
 Includes        = -i ::::include: ¶
 				  -i ::::macintosh: ¶
@@ -65,7 +66,7 @@ LibFiles-PPC    =  ¶
 	 echo "Creating libs directory" "{LibDir}" 
      NewFolder "{LibDir}"
     end
-# Build the vfonts module	
+# Builds the library
 	PPCLink ¶
 		-o {LibDir}:{DLib}Lib ¶
 		{ObjFiles-PPC} ¶

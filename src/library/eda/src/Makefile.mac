@@ -1,6 +1,6 @@
-#   File:       edaLib.make
+#   File:       Makefile.mac
 #   Target:     edaLib
-#   Created:    Jago, Jul 2001, Stefano M. Iacus
+#   Created:    Jago, Aug 2001, Stefano M. Iacus
 #
 #   This script assumes that R binary already exists in 
 #   folder 'src/macintosh/bin'
@@ -11,7 +11,7 @@
 #   MrC C Compiler 5.0.0d3c1
 #   Universal Headers 3.4
 #   CarbonLib 1.4
-#
+#   MPW release  August 2001+Updates
 
 DLib            = eda
 MAKEFILE        = Makefile.mac
@@ -48,6 +48,7 @@ ObjFiles-PPC    =  ¶
 
 LibFiles-PPC    =  ¶
 				  "{SharedLibraries}CarbonLib" ¶
+				  "{SharedLibraries}StdCLib" ¶
 				  ":::::R"  ¶
 				  "{PPCLibraries}PPCCRuntime.o" 
    
@@ -72,7 +73,7 @@ LibFiles-PPC    =  ¶
 	 echo "Creating libs directory" "{LibDir}" 
      NewFolder "{LibDir}"
     end
-# Build the vfonts module	
+# Builds the library
 	PPCLink ¶
 		-o {LibDir}:{DLib}Lib ¶
 		{ObjFiles-PPC} ¶

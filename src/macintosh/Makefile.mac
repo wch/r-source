@@ -29,7 +29,12 @@ profiles Ä {RHOME}:library:base:R:Rprofile
 
 ## ------------- library -----------
 PACKAGES = base ctest eda lqs methods modreg mva nls splines stepfun ts
+## ---- uncomment for the recommended packages
+##         boot cluster foreign KernSmooth mgcv nlme rpart survival ¶
+##		   class MASS spatial nnet
 DATA = base modreg mva nls ts
+## ---- uncomment for the recommended packages
+##       boot cluster KernSmooth MASS nlme rpart spatial survival
 DEMO = base eda
 
 fixdesc Ä $OutOfDate
@@ -47,8 +52,15 @@ mainfiles Ä fixdesc
 	  if ! `Exists -d {RHOME}:library:{pkg}`
 	   NewFolder {RHOME}:library:{pkg}
 	  end
+	  if ! `Exists ::library:{pkg}:DESCRIPTION`
 	  Duplicate -y ::library:{pkg}:DESCRIPTION {RHOME}:library:{pkg}
-	  Duplicate -y ::library:{pkg}:INDEX ::library:{pkg}:TITLE {RHOME}:library:{pkg}
+	  end
+	  if ! `Exists ::library:{pkg}:INDEX`
+	   Duplicate -y ::library:{pkg}:INDEX {RHOME}:library:{pkg}
+	  end 
+	  if ! `Exists ::library:{pkg}:TITLE`
+	     Duplicate -y ::library:{pkg}:TITLE {RHOME}:library:{pkg}
+      end
 	  echo "installing R files in {pkg}"
 	  if ! `Exists -d {RHOME}:library:{pkg}:R`
 	   NewFolder {RHOME}:library:{pkg}:R

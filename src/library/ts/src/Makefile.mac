@@ -1,6 +1,6 @@
-#   File:       tsLib.make
+#   File:       Makefile.mac
 #   Target:     tsLib
-#   Created:    Jago, Jul 2001, Stefano M. Iacus
+#   Created:    Jago, Aug 2001, Stefano M. Iacus
 #
 #   This script assumes that R binary already exists in 
 #   folder 'src/macintosh/bin'
@@ -11,15 +11,16 @@
 #   MrC C Compiler 5.0.0d3c1
 #   Universal Headers 3.4
 #   CarbonLib 1.4
-#
+#   MPW release August 2001 + Updates
 
 DLib            = ts
 
 MAKEFILE        = Makefile.mac
 ¥MondoBuild¥    = {MAKEFILE}  # Make blank to avoid rebuilds when makefile is modified
 
-MacF2C     		=  "::::macintosh:Mac F2C"
-F2CDir          =  ::::macintosh:f2c:
+MacF2C     		=  f2c
+F2COpt	        =   -A -E -ec -!R -r8 -w66 -Nq150 -Nx200 -Ns801 -Nc20 -Nn401 -NL200 -NC99 -Nl256
+F2CDir       	=  ::::macintosh:f2c:
 Includes        = -i ::::include: ¶
 				  -i ::::macintosh: ¶
                   -i "{F2CDir}"
@@ -85,6 +86,10 @@ LibFiles-PPC    =  ¶
 	{PPCC} {depDir}{default}.c -o {targDir}{default}.o {PPCCOptions}
 
 
+.c Ä .f {¥MondoBuild¥} {FortFiles}
+	{MacF2C} {F2COpt} {depDir}{default}.f
+
+
 ### Build Rules ###
 
 
@@ -99,7 +104,7 @@ LibFiles-PPC    =  ¶
 	 echo "Creating libs directory" "{LibDir}" 
      NewFolder "{LibDir}"
     end
-# Build the vfonts module	
+# Builds the library
 	PPCLink ¶
 		-o {LibDir}:{DLib}Lib ¶
 		{ObjFiles-PPC} ¶
@@ -110,13 +115,13 @@ LibFiles-PPC    =  ¶
 		-c '????' ¶
 		-xm s ¶
 		-@export expvar
-# Removing mass
-#    Delete   :Å.x
-#	Delete   :Å.o 
-#    Delete   :expvar
-	
 	
 ### Required Dependencies ###
+ 
+# f2c dependencies
+eureka.c Ä eureka.f
+starma.c Ä starma.f
+stl.c Ä starma.f
  
 dblcen.c  Ä dblcen.o
 distance.c  Ä distance.o
@@ -137,11 +142,6 @@ PPsum.o		Ä	PPsum.c
 qr.o		Ä	qr.c
 starma.o	Ä	starma.c
 stl.o		Ä	stl.c
-# f2c dependencies
-eureka.c Ä eureka.f
-	 {MacF2C} -wait {FortFiles} 
-starma.c Ä starma.f
-stl.c Ä starma.f
 
 ### Optional Dependencies ###
 ### Build this target to generate "include file" dependencies. ###

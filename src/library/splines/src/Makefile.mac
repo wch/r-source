@@ -1,6 +1,6 @@
-#   File:       splinesLib.make
+#   File:       Makefile.mac
 #   Target:     splinesLib
-#   Created:    Jago, Jul 2001, Stefano M. Iacus
+#   Created:    Jago, Aug 2001, Stefano M. Iacus
 #
 #   This script assumes that R binary already exists in 
 #   folder 'src/macintosh/bin'
@@ -11,7 +11,7 @@
 #   MrC C Compiler 5.0.0d3c1
 #   Universal Headers 3.4
 #   CarbonLib 1.4
-#
+#   MPW release august 2001 + Updates
 
 DLib			= splines
 MAKEFILE        = Makefile.mac
@@ -41,6 +41,7 @@ ObjFiles-PPC    =  splines.o
 
 LibFiles-PPC    =  ¶
 				  "{SharedLibraries}CarbonLib" ¶
+				  "{SharedLibraries}StdCLib" ¶
 				  "{PPCLibraries}PPCCRuntime.o" ¶
 				  ":::::R"
 
@@ -51,12 +52,11 @@ LibFiles-PPC    =  ¶
 	{PPCC} {depDir}{default}.c -o {targDir}{default}.o {PPCCOptions}
 
 
-
 ### Build Rules ###
 
 
 {DLib}Lib  ÄÄ  {ObjFiles-PPC} {LibFiles-PPC} {¥MondoBuild¥} 
-#create export table
+# creates export table
     if `Exists :expvar`
 	 delete :expvar
 	end
@@ -66,7 +66,7 @@ LibFiles-PPC    =  ¶
 	 echo "Creating libs directory" "{LibDir}" 
      NewFolder "{LibDir}"
     end
-# Build the vfonts module	
+# Builds the library	
 	PPCLink ¶
 		-o {LibDir}:{Dlib}Lib ¶
 		{ObjFiles-PPC} ¶
@@ -77,10 +77,6 @@ LibFiles-PPC    =  ¶
 		-c '????' ¶
 		-xm s ¶
 		-@export expvar     
-# Removing mass
-#    Delete   Å.x
-#	Delete   Å.o 
-#    Delete :expvar
 	
 ### Required Dependencies ###
 
