@@ -38,7 +38,7 @@ methods <- function (generic.function, class)
             isUME(body(f))
         }
 
-    S3MethodsStopList <- tools::.makeS3MethodsStopList(NULL)
+    S3MethodsStopList <- tools:::.makeS3MethodsStopList(NULL)
     S3groupGenerics <- c("Ops", "Math", "Summary")
 
     an <- lapply(seq(along=(sp <- search())), ls)

@@ -8,8 +8,7 @@ export( .installMD5sums, Rdindex, Rtangle, RtangleSetup, RweaveLatex,
 
 ## documented as internal but called from scripts
 export(.installPackageDescription, .installPackageIndices, 
-       .checkDemoIndex, .checkVignetteIndex, buildVignettes,
-	.makeS3MethodsStopList)
+       .checkDemoIndex, .checkVignetteIndex, buildVignettes)
 
 ## needed by Bioconductor's vExplorer(): will no longer be necessary 
 ## when Sweave objects are in place

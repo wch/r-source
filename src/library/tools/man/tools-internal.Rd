@@ -7,7 +7,7 @@
 % \alias{.listFilesWithExts}
 % \alias{.loadPackageQuietly}
 % \alias{.makeFileExts}
-\alias{.makeS3MethodsStopList}
+% \alias{.makeS3MethodsStopList}
 % \alias{.sourceAssignments}
 % \alias{SweaveParseOptions}
 % \alias{SweaveHooks}
@@ -55,7 +55,7 @@
 % .listFilesWithType(dir, type)
 % .loadPackageQuietly(package, lib.loc)
 % .makeFileExts(type)
-.makeS3MethodsStopList(package)
+% .makeS3MethodsStopList(package)
 % .sourceAssignments(file, envir)
 % Rdpp(lines)
 % Rdinfo(file)
