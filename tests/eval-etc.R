@@ -65,6 +65,10 @@ deparse(f(b, a)) == "list(b, a)" &&
 deparse(f(x, y)) == "list(x, y)" &&
 deparse(f(y, x)) == "list(y, x)"
 
+tt <- function(x) { is.vector(x); deparse(substitute(x)) }
+a <- list(b=3); tt(a$b) == "a$b" # tends to break when ...
+
+
 ## Parser:
 1 <
     2

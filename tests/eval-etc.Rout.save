@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.1.0 Under development (unstable) (May 10, 2000)
+Version 1.1.0 Under development (unstable) (June 7, 2000)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -101,6 +101,11 @@ B(a = x + y, named = 3)
 + deparse(f(x, y)) == "list(x, y)" &&
 + deparse(f(y, x)) == "list(y, x)"
 [1] TRUE
+> 
+> tt <- function(x) { is.vector(x); deparse(substitute(x)) }
+> a <- list(b=3); tt(a$b) == "a$b" # tends to break when ...
+[1] TRUE
+> 
 > 
 > ## Parser:
 > 1 <
