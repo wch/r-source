@@ -209,6 +209,12 @@ BUG FIXES
 
     o	upgrade(x, ask = FALSE) was broken for a "packageStatus" object.
 
+    o   class "raw" had been omitted from the list of basic classes,
+        and so could not be used in S4 classes.
+
+    o   function getGroupMembers(), part of the definition of S4
+        classes, had been promised for release 2.0, but slipped through.
+
 
 	*********************************************************
 	*							*
