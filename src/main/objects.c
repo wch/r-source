@@ -85,8 +85,9 @@ static SEXP GetObject(RCNTXT *cptr)
 #endif
     if (TYPEOF(s) == PROMSXP) {
 	if (PRVALUE(s) == R_UnboundValue)
-	    SET_PRVALUE(s, eval(PREXPR(s), PRENV(s)));
-	s = PRVALUE(s);
+	    s = eval(s, R_NilValue);
+	else
+	    s = PRVALUE(s);
     }
     return(s);
 }
