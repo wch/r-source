@@ -179,8 +179,13 @@ data.class <- function(x) {
 is.numeric.factor <- function(x) FALSE
 is.integer.factor <- function(x) FALSE
 
-encodeString <- function(x, w=0, quote="", right=FALSE, na=TRUE)
-    .Internal(encodeString(as.character(x), w, quote, right, na))
+encodeString <- function(x, w=0, quote="", na=TRUE,
+                         justify = c("left", "right", "centre"))
+{
+    x[] <- as.character(x) # preserve names, dim etc
+    justify <- match(match.arg(justify), c("left", "right", "centre")) - 1
+    .Internal(encodeString(x, w, quote, justify, na))
+}
 
 ## base has no S4 generics
 .noGenerics <- TRUE

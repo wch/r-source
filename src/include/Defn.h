@@ -859,9 +859,15 @@ void yyprompt(char *format, ...);
 int yywrap(void);
 
 /* ../../main/printutils.c : */
+typedef enum {
+    Rprt_adj_left = 0,
+    Rprt_adj_right = 1,
+    Rprt_adj_centre = 2
+} Rprt_adj;
+
 int	Rstrlen(SEXP, int);
 char *EncodeRaw(Rbyte);
-char *EncodeString(SEXP, int, int, int);
+char *EncodeString(SEXP, int, int, Rprt_adj);
 
 /* main/util.c */
 void UNIMPLEMENTED_TYPE(char *s, SEXP x);

@@ -1055,23 +1055,26 @@ SEXP do_dirname(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	SET_STRING_ELT(ans, i, mkChar(buf));
     }
-    UNPROTECT(1);    
+    UNPROTECT(1);
     return(ans);
 }
 
 
-/* encodeString(x, w, quote, right) */
+/* encodeString(x, w, quote, justify) */
 SEXP do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, x, s;
-    int i, len, w, quote = 0, right, na;
+    int i, len, w, quote = 0, justify, na;
     char *cs;
+    Rboolean findWidth;
 
     checkArity(op, args);
     if (TYPEOF(x = CAR(args)) != STRSXP)
 	errorcall(call, "a character vector argument expected");
     w = asInteger(CADR(args));
-    if(w == NA_INTEGER) errorcall(call, "invalid value for 'w'");
+    if(w != NA_INTEGER && w < 0)
+	errorcall(call, "invalid value for 'w'");
+    findWidth = (w == NA_INTEGER);
     s = CADDR(args);
     if(LENGTH(s) != 1 || TYPEOF(s) != STRSXP)
 	errorcall(call, "invalid value for 'quote'");
@@ -1079,17 +1082,23 @@ SEXP do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(strlen(cs) > 0) quote = cs[0];
     if(strlen(cs) > 1)
 	warningcall(call, "only the first character of 'quote' will be used");
-    right = asLogical(CADDDR(args));
-    if(right == NA_LOGICAL) errorcall(call, "invalid value for 'right'");
+    justify = asInteger(CADDDR(args));
+    if(justify == NA_INTEGER) errorcall(call, "invalid value for 'justify'");
     na = asLogical(CAD4R(args));
     if(na == NA_LOGICAL) errorcall(call, "invalid value for 'na'");
-    
+
     len = LENGTH(x);
+    if(findWidth) {
+	w  = 0;
+	for(i = 0; i < len; i++)
+	    w = imax2(w, Rstrlen(STRING_ELT(x, i), quote));
+	if(quote) w +=2; /* for surrounding quotes */
+    }
     PROTECT(ans = duplicate(x));
     for(i = 0; i < len; i++) {
 	s = STRING_ELT(x, i);
 	if(na || s != NA_STRING)
-	    SET_STRING_ELT(ans, i, mkChar(EncodeString(s, w, quote, right)));
+	    SET_STRING_ELT(ans, i, mkChar(EncodeString(s, w, quote, justify)));
     }
     UNPROTECT(1);
     return ans;

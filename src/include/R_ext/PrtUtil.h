@@ -42,9 +42,6 @@
 #define printRealVector    Rf_printRealVector
 #define printComplexVector Rf_printComplexVector
 
-#define Rprt_adj_right 1
-#define Rprt_adj_left  0
-
 #ifdef  __cplusplus
 extern "C" {
 #endif
