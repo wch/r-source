@@ -36,7 +36,8 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
 		if(isL) list(-x[1], z[[X[2]]])
 		else	list(z[[X[1]]], -x[2])
 	    attr(zk, "members") <- attr(z[[X[1 + isL]]], "members") + one
-	    attr(zk, "midpoint") <- (1 + attr(z[[X[1 + isL]]], "midpoint"))/2
+	    attr(zk, "midpoint") <-
+                (.memberDend(zk[[1]]) + attr(z[[X[1 + isL]]], "midpoint"))/2
 	    attr(zk[[2 - isL]], "members") <- one
 	    attr(zk[[2 - isL]], "height") <- h0
 	    attr(zk[[2 - isL]], "label") <- object$labels[-x[2 - isL]]
@@ -96,12 +97,12 @@ midcache.dendrogram <- function (x, type = "hclust")
 	r <- d # incl. attributes!
 	midS <- 0
 	for(j in 1:k) {
-	    r[[j]] <- setmid(d[[j]], type)
+	    r[[j]] <- unclass(setmid(d[[j]], type))
 	    midS <- midS + .midDend(r[[j]])
 	}
 	if(type == "hclust" && k != 2)
 	    warning("midcache() of non-binary dendrograms only partly implemented")
-	## compatible to as.dendrogram.hclust() {MM: but doubtful}
+	## compatible to as.dendrogram.hclust() {MM: doubtful if k > 2}
 	attr(r, "midpoint") <- (.memberDend(d[[1]]) + midS) / 2
 	r
     }

@@ -171,9 +171,11 @@ BUG FIXES
     o	stats:::as.dendrogram.hclust() is documented and no longer re-sorts
 	the two children at each node.	This fixes as.dendrogram(hh) for
 	the case where hh is a "reordered" hclust object.
-	plot.dendrogram(x) now draw leaves 'x' more sensibly.
+	plot.dendrogram(x) now draws leaves 'x' more sensibly.
 	reorder.dendrogram() now results in a dendrogram with correct
 	"midpoint"s, and hence reordered dendrograms are plotted correctly.
+	stats:::midcache.dendrogram() and hence the reorder() and rev()
+	dendrogram methods do not return bloated dendrograms.
 
     o	heatmap(*, labRow=., labCol=.) now also reorders the labels when
 	specified---not only when using default labels.
