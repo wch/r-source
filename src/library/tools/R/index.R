@@ -32,7 +32,8 @@ function(dataDir, contents)
     dataTopics <- unique(basename(filePathSansExt(dataFiles)))
     dataTopics[dataTopics == "zCO2"] <- "CO2"
     if(!length(dataTopics)) return(matrix("", 0, 2))
-    dataIndex <- cbind(sort(dataTopics), "")
+    dataTopics <- sort(dataTopics)
+    dataIndex <- cbind(dataTopics, "")
     ## Note that NROW(contents) might be 0.
     if(NROW(contents)) {
         aliasIndices <-
