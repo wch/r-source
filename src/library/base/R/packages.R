@@ -138,13 +138,9 @@ package.description <- function(pkg, lib=.lib.loc, fields=NULL)
 {
     file <- system.file("DESCRIPTION", package = pkg, lib.loc = lib)
     if(file != "") {
-        retval <- read.dcf(file=file, fields=fields)
-        if(nrow(retval)>1)
-            warning(paste(file, "malformed"))
-        if(nrow(retval)>0)
-            retval <- retval[1,]
+        retval <- read.dcf(file=file, fields=fields)[1,]
     }
-
+    
     if((file == "") || (length(retval) == 0)){
         warning(paste("DESCRIPTION file of package", pkg,
                       "missing or broken"))
@@ -155,7 +151,7 @@ package.description <- function(pkg, lib=.lib.loc, fields=NULL)
         else
             retval <- NA
     }
-
+    
     retval
 }
 
