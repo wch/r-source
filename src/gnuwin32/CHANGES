@@ -65,6 +65,8 @@ an explicit path with spaces in will work, so e.g.
 
 will probably work -- it is still not recommended.
 
+select.list(preselect=) was not working. (PR#7328)
+
 
     -------------------------------------------------------------------
 
