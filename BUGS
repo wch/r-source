@@ -442,11 +442,11 @@ Date: Fri, 25 Jan 2002 15:08:33 -0500
 Subject: incorrect handling of arrays of list elements
 From: =?iso-8859-1?Q?Jens=20Oehlschl=E4gel?= <joehl@web.de>
 Date: Thu, 7 Feb 2002 13:43:19 +0100
-* PR# 1309 *
-Subject: =?ks_c_5601-1987?B?W7GksO1dIHItYnVnc7TUILChsbiw+MDlv6G8rSDGr7qwx9LAzrCht84gsO2x3rv9yLCwobG4uKYgurizu7XluLO0z7TZLg==?=
-From: =?ks_c_5601-1987?B?VklWSSBLT1JFQQ==?= <vivikor@yahoo.co.kr>
-Date: Wed, 13 Feb 2002 21:01:59 +0900
 * PR# 1310 *
 Subject: Command History
 From: Steven White <stevelyn@mediaone.net>
 Date: Wed, 13 Feb 2002 21:41:15 -0500
+* PR# 1312 *
+Subject: latitude <-> longitude in quake.tab
+From: ckhung@cyut.edu.tw
+Date: Sat, 16 Feb 2002 01:35:20 +0100 (MET)
