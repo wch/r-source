@@ -381,7 +381,7 @@
 /* Define if log1p() exists and is accurate enough. */
 #undef HAVE_WORKING_LOG1P
 
-/* Define if strptime() exists and does not fail pre-1970. */
+/* Define if strptime() exists, validates and does not fail pre-1970. */
 #undef HAVE_WORKING_STRPTIME
 
 /* Define if you have the X11 headers and libraries, and want the X11 GUI to
