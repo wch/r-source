@@ -24,19 +24,20 @@ dnl Copyright (C) 1998 - 2002 R Core Team
 
 AC_PREREQ(2.50)
 
-AC_INIT([src/include/Defn.h])
-dnl AC_INIT(${PACKAGE}, ${VERSION}, [r-bugs@R-project.org])
-dnl AC_CONFIG_SRCDIR([src/include/Defn.h])
+## We want to get the version number from file 'VERSION' (rather than
+## specifying the version info in 'configure.ac'.  Hence, we need a bit
+## of M4 magic.  Note that M4 esyscmd has a trailing newline because the
+## shell command output has one, hence the patsubst() trick.
+m4_define([R_VERSION],
+          m4_patsubst(m4_esyscmd([cat VERSION]), [ \(\w\|\W\)*]))
+AC_INIT([R], R_VERSION, [r-bugs@R-project.org])
+AC_CONFIG_SRCDIR([src/include/Defn.h])
 AC_CONFIG_AUX_DIR([tools])
 
-PACKAGE="R"
-VERSION=`cat ${srcdir}/VERSION | cut -d" " -f1`
+## Automake initialization.
+AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 
-## <FIXME>
-## What is this doing here?  Why AM_CONFIG_HEADER?
-AM_INIT_AUTOMAKE(${PACKAGE}, ${VERSION})
-AM_CONFIG_HEADER([src/include/config.h])
-## </FIXME>
+## Autoheader initialization.
 AH_TOP([#ifndef _CONFIG_H
 #define _CONFIG_H])
 AH_BOTTOM([#endif /* not _CONFIG_H */])
@@ -84,6 +85,8 @@ if test -r ${f}; then echo "loading build specific script ${f}"; . ${f} ; fi
 
 config_opts=${ac_configure_args}
 AC_SUBST(config_opts)
+
+### Optional features.
 
 ## Allow the user to specify support for R profiling.
 AC_ARG_ENABLE([R-profiling],
@@ -136,6 +139,8 @@ AC_ARG_ENABLE([strict-barrier],
 fi],
 [])
 
+### Optional packages.
+
 ## Allow the user to force us to use f2c.
 AC_ARG_WITH([f2c],
 [AC_HELP_STRING([--with-f2c],
@@ -157,19 +162,19 @@ AC_ARG_WITH([f77],
 
 ## Make sure only one of the above options for Fortran compilers was
 ## specified.
-R_ARG_WITH_EXCLUSIVE(f77, g77,
+R_ARG_WITH_EXCLUSIVE([f77], [g77],
 [warn_f77_and_g77="--with-f77 and --with-g77 both given!  Using f77 ..."
-AC_MSG_WARN(${warn_f77_and_g77})
+AC_MSG_WARN([${warn_f77_and_g77}])
 use_g77=false
 ])
-R_ARG_WITH_EXCLUSIVE(f77, f2c,
+R_ARG_WITH_EXCLUSIVE([f77], [f2c],
 [warn_f77_and_f2c="--with-f77 and --with-f2c both given!  Using f77 ..."
-AC_MSG_WARN(${warn_f77_and_f2c})
+AC_MSG_WARN([${warn_f77_and_f2c}])
 use_f2c=false
 ])
-R_ARG_WITH_EXCLUSIVE(g77, f2c,
+R_ARG_WITH_EXCLUSIVE([g77], [f2c],
 [warn_g77_and_f2c="--with-g77 and --with-f2c both given!  Using g77 ..."
-AC_MSG_WARN(${warn_g77_and_f2c})
+AC_MSG_WARN([${warn_g77_and_f2c}])
 use_f2c=false
 ])
 
@@ -239,6 +244,53 @@ AC_ARG_WITH([tk-config],
 ## </FIXME>
 AM_CONDITIONAL(USE_LIBTOOL, [test "x${use_libtool}" = xyes])
 
+### Precious variables.
+AC_ARG_VAR([R_PRINTCMD],
+           [command used to spool PostScript files to the printer])
+AC_ARG_VAR([R_PAPERSIZE],
+           [paper size for the local (PostScript) printer])
+AC_ARG_VAR([R_BATCHSAVE],
+           [default behavior of R if it encounters EOF in batch mode])
+AC_ARG_VAR([MAIN_CFLAGS],
+           [additional CFLAGS used when compiling the main binary])
+AC_ARG_VAR([SHLIB_CFLAGS],
+           [additional CFLAGS used when building shared libraries])
+AC_ARG_VAR([FC],
+           [command which runs the the FORTRAN compiler])
+AC_ARG_VAR([MAIN_FFLAGS],
+           [additional FFLAGS used when compiling the main binary])
+AC_ARG_VAR([SHLIB_FFLAGS],
+           [additional FFLAGS used when building shared libraries])
+AC_ARG_VAR([MAIN_LD],
+           [command used to link the main binary])
+AC_ARG_VAR([MAIN_LDFLAGS],
+           [flags which are necessary for loading a main program which
+            will load shared library modules (DLLs) at runtime])
+AC_ARG_VAR([CPICFLAGS],
+           [special flags for compiling C code to be turned into a
+            shared library.])
+AC_ARG_VAR([FPICFLAGS],
+           [special flags for compiling FORTRAN code to be turned into a
+            shared library.])
+AC_ARG_VAR([SHLIB_LD],
+           [command for linking shared libraries which contain object
+            files from a C or FORTRAN compiler only])
+AC_ARG_VAR([SHLIB_LDFLAGS],
+           [special flags used by SHLIB_LD])
+AC_ARG_VAR([CXXPICFLAGS],
+           [special flags for compiling C++ code to be turned into a
+            shared library])
+AC_ARG_VAR([SHLIB_CXXLD],
+           [command for linking shared libraries which contain object
+            files from a C++ compiler])
+AC_ARG_VAR([SHLIB_CXXLDFLAGS],
+           [special flags used by SHLIB_CXXLD])
+AC_ARG_VAR([TCLTK_LIBS],
+           [flags needed for linking against the Tcl and Tk libraries])
+AC_ARG_VAR([TCLTK_CPPFLAGS],
+           [flags needed for finding the tcl.h and tk.h headers])
+AC_ARG_VAR([MAKE], [Make command])
+
 ## Check whether we build in srcdir.
 AC_PATH_PROG(GETWD, pwd, pwd)
 AC_MSG_CHECKING([whether builddir is srcdir])
@@ -294,7 +346,6 @@ AC_PROG_LN_S
 AC_PROG_RANLIB
 AC_PROG_YACC
 R_PROG_AR
-R_PROG_ECHO_N
 R_PROG_INSTALL
 AC_PATH_PROG(JAVAC, javac)
 ## Make
@@ -347,6 +398,9 @@ if test -n "${F77}"; then
     esac
   done
   FLIBS="${flibs}"
+  ## <FIXME>
+  ## Add something to use -lg2c-pic instead of -lg2c if exists.
+  ## </FIXME>
   R_PROG_F77_APPEND_UNDERSCORE
   R_PROG_F77_CC_COMPAT
   R_PROG_F77_CC_COMPAT_COMPLEX
@@ -420,7 +474,7 @@ for arg in ${LIBS}; do
       if test -z "${R_LD_LIBRARY_PATH}"; then
         R_LD_LIBRARY_PATH="${lib}"
       else
-        R_LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}:${lib}"
+        R_LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}${PATH_SEPARATOR}${lib}"
       fi
       ;;
   esac
@@ -437,7 +491,7 @@ AC_SUBST(shlibpath_var)
 if eval "test -z \"\${${shlibpath_var}}\""; then
   eval "${shlibpath_var}=\"${R_LD_LIBRARY_PATH}\""
 else
-  eval "${shlibpath_var}=\"${R_LD_LIBRARY_PATH}:\${${shlibpath_var}}\""
+  eval "${shlibpath_var}=\"${R_LD_LIBRARY_PATH}${PATH_SEPARATOR}\${${shlibpath_var}}\""
 fi
 eval "export ${shlibpath_var}"
 
@@ -577,17 +631,17 @@ AC_CHECK_SIZEOF(long double, 0)
 
 case "${host_cpu}" in
   i*86)
-    R_PROG_CC_FLAG(-mieee-fp,
-      R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee-fp")
-    R_PROG_CXX_FLAG(-mieee-fp,
-      R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -mieee-fp")
+    R_PROG_CC_FLAG([-mieee-fp],
+                   [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee-fp"])
+    R_PROG_CXX_FLAG([-mieee-fp],
+                    [R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -mieee-fp"])
     ## In current glibc, inline version [x86] of exp is broken
-    AC_EGREP_CPP(yes,
+    AC_EGREP_CPP([yes],
       [ #include <math.h>
         #if defined(__GLIBC__)
           yes
 	#endif ],
-      R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D__NO_MATH_INLINES")
+      [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D__NO_MATH_INLINES"])
     ;;
   alpha*)
     ## <FIXME>
@@ -596,13 +650,13 @@ case "${host_cpu}" in
     ## specific to OSF only.
     ## <Albrecht.Gebhardt@uni-klu.ac.at>
     if test "${GCC}" = yes; then
-      R_PROG_CC_FLAG(-mieee,
-        R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee")
+      R_PROG_CC_FLAG([-mieee],
+                     [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mieee"])
     else
-      R_PROG_CC_FLAG(-ieee_with_inexact,
-        R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee_with_inexact")
-      R_PROG_CC_FLAG(-std1,
-        R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -std1")
+      R_PROG_CC_FLAG([-ieee_with_inexact],
+                     [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee_with_inexact"])
+      R_PROG_CC_FLAG([-std1],
+                     [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -std1"])
     fi
     if test "${G77}" = yes; then
       R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -mieee"
@@ -627,8 +681,8 @@ case "${host_os}" in
   ## </FIXME>
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     if test "${GCC}" = yes; then
-      R_PROG_CC_FLAG(-mno-fp-in-toc,
-        R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mno-fp-in-toc")
+      R_PROG_CC_FLAG([-mno-fp-in-toc],
+                     [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mno-fp-in-toc"])
     fi
     R_XTRA_LIBS="${R_XTRA_LIBS} /lib/crt0.o"
     ;;
@@ -654,7 +708,7 @@ case "${host_os}" in
 	R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -Wp,-H16000"
 	;;
     esac
-    AC_CHECK_LIB(dld, shl_load, R_XTRA_LIBS="${R_XTRA_LIBS} -ldld")
+    AC_CHECK_LIB(dld, shl_load, [R_XTRA_LIBS="${R_XTRA_LIBS} -ldld"])
     ;;
   irix*)
     R_C_OPTIEEE
@@ -731,8 +785,12 @@ SHLIB_EXT=".so"
 SHLIB_LIBADD=
 
 ## Step 1.  Ask imake.
+## <FIXME>
+## Use PATH_SEPARATOR instead of hard-wired ':', but the whole Imake
+## procedure is broken by design.
 AC_PATH_PROG(XMKMF, xmkmf, [],
-  ${PATH}:/usr/bin/X11:/usr/X11R6/bin:/usr/openwin/bin)
+             [${PATH}:/usr/bin/X11:/usr/X11R6/bin:/usr/openwin/bin])
+## </FIXME>
 if test -n "${XMKMF}"; then
   echo > Imakefile
   ${XMKMF} > /dev/null || touch Makefile
@@ -938,7 +996,7 @@ if test -z "${CXXPICFLAGS}"; then
       ;;
     *)
       warn_cxxpicflags="I could not determine CXXPICFLAGS"
-      AC_MSG_WARN(${warn_cxxpicflags})
+      AC_MSG_WARN([${warn_cxxpicflags}])
       ;;
   esac
 fi
@@ -966,7 +1024,7 @@ if test -z "${SHLIB_CXXLD}"; then
 fi
 if test -z "${SHLIB_CXXLDFLAGS}"; then
   warn_shlib_cxxldflags="I could not determine SHLIB_CXXLDFLAGS"
-  AC_MSG_WARN(${warn_shlib_cxxldflags})
+  AC_MSG_WARN([${warn_shlib_cxxldflags}])
 fi
 
 ## Step 6.  We may need flags different from SHLIB_LDFLAGS and SHLIB_EXT
@@ -1213,6 +1271,8 @@ AC_CONFIG_FILES([Makeconf
   tests/Examples/Makefile
   tools/Makefile
 ])
+AC_CONFIG_HEADERS([src/include/config.h])
+
 AC_OUTPUT
 
 C_compiler="${CC} ${R_XTRA_CFLAGS} ${CFLAGS}"
@@ -1242,52 +1302,52 @@ R is now configured for ${host}
 ])
 
 if test -n "${warn_f77_and_g77}"; then
-  AC_MSG_WARN(${warn_f77_and_g77})
+  AC_MSG_WARN([${warn_f77_and_g77}])
 fi
 if test -n "${warn_f77_and_f2c}"; then
-  AC_MSG_WARN(${warn_f77_and_f2c})
+  AC_MSG_WARN([${warn_f77_and_f2c}])
 fi
 if test -n "${warn_g77_and_f2c}"; then
-  AC_MSG_WARN(${warn_g77_and_f2c})
+  AC_MSG_WARN([${warn_g77_and_f2c}])
 fi
 if test -n "${warn_f2c_flibs}"; then
-  AC_MSG_WARN(${warn_f2c_flibs})
+  AC_MSG_WARN([${warn_f2c_flibs}])
 fi
 if test -n "${warn_xcompile_sizeof_int}"; then
-  AC_MSG_WARN(${warn_xcompile_sizeof_int})
+  AC_MSG_WARN([${warn_xcompile_sizeof_int}])
 fi
 if test -n "${warn_xcompile_sizeof_long}"; then
-  AC_MSG_WARN(${warn_xcompile_sizeof_long})
+  AC_MSG_WARN([${warn_xcompile_sizeof_long}])
 fi
 if test -n "${warn_type_socklen}"; then
-  AC_MSG_WARN(${warn_type_socklen})
+  AC_MSG_WARN([${warn_type_socklen}])
 fi
 if test -n "${warn_cxxpicflags}"; then
-  AC_MSG_WARN(${warn_cxxpicflags})
+  AC_MSG_WARN([${warn_cxxpicflags}])
 fi
 if test -n "${warn_shlib_cxxldflags}"; then
-  AC_MSG_WARN(${warn_shlib_cxxldflags})
+  AC_MSG_WARN([${warn_shlib_cxxldflags}])
 fi
 if test -n "${warn_libglade_version}"; then
-  AC_MSG_WARN(${warn_libglade_version})
+  AC_MSG_WARN([${warn_libglade_version}])
 fi
 if test -n "${warn_tcltk_version}"; then
-  AC_MSG_WARN(${warn_tcltk_version})
+  AC_MSG_WARN([${warn_tcltk_version}])
 fi
 if test -n "${warn_perl5}"; then
-  AC_MSG_WARN(${warn_perl5})
+  AC_MSG_WARN([${warn_perl5}])
 fi
 if test -n "${warn_dvi}"; then
-  AC_MSG_WARN(${warn_dvi})
+  AC_MSG_WARN([${warn_dvi}])
 fi
 if test -n "${warn_info}"; then
-  AC_MSG_WARN(${warn_info})
+  AC_MSG_WARN([${warn_info}])
 fi
 if test -n "${warn_pdf}"; then
-  AC_MSG_WARN(${warn_pdf})
+  AC_MSG_WARN([${warn_pdf}])
 fi
 if test -n "${warn_pager}"; then
-  AC_MSG_WARN(${warn_pager})
+  AC_MSG_WARN([${warn_pager}])
 fi
 
 dnl Local Variables: ***
