@@ -17,6 +17,8 @@ setwd(dir)
 \note{
   These functions are not implemented on all platforms.
 }
+\seealso{\code{\link{list.files}} for the \emph{contents} of a directory.
+}
 \value{
   \code{getwd} returns a character vector, or \code{NULL} if the
   working directory is not available on that platform.
