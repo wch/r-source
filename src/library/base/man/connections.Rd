@@ -41,7 +41,7 @@ isSeekable(con)
   \item{open}{character.  A description of how to open the connection
     (if at all). See Details for possible values.}
   \item{blocking}{logical. Currently ignored.}
-  \item{encoding}{An integer vector of length256.}
+  \item{encoding}{An integer vector of length 256.}
   \item{type}{character. Currently ignored.}
   \item{where}{integer.  A file position, or \code{NA}.}
   \item{rw}{character.  Currently ignored.}
