@@ -31,7 +31,7 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
             ni <- NROW(init)
             if(ni != nfilt)
                 stop("length of init must equal length of filter")
-            if(NROW(init) != 1 && NROW(init) != nser)
+            if(NCOL(init) != 1 && NCOL(init) != nser)
                 stop(paste("init must have 1 or", nser, "cols"))
             if(!is.matrix(init)) init <- matrix(init, nfilt, nser)
         }
