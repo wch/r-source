@@ -26,6 +26,9 @@ NEW FEATURES
 
     o   basename() and dirname() are now vectorized.
 
+    o   mosaicplot() has a new default for `main', and supports the
+	`las' argument.
+
 
 INSTALLATION CHANGES
 

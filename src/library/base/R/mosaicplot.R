@@ -1,4 +1,4 @@
-## Copyright (C) 1998 John W. Emerson
+## Original code copyright (C) 1998 John W. Emerson
 
 mosaicplot <- function(x, ...) UseMethod("mosaicplot")
 
@@ -9,18 +9,24 @@ mosaicplot <- function(x, ...) UseMethod("mosaicplot")
 ### Changes by KH:
 ##   Shading of boxes to visualize deviations from independence by
 ##   displaying sign and magnitude of the standardized residuals.
+### Changes by W. Fischer and U. Ligges:
+## - Deparsing x in for main title. New arguments: sub, las, cex.axis
+## - made to work by BDR
 
 mosaicplot.default <-
-function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
-         NULL, dir = NULL, color = FALSE, shade = FALSE, margin = NULL,
+function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
+         ylab = NULL, sort = NULL, off = NULL, dir = NULL,
+         color = FALSE, shade = FALSE, margin = NULL,
+         cex.axis = 0.66, las = par("las"),
          type = c("pearson", "deviance", "FT"), ...)
 {
-    mosaic.cell <- function(X, x1, y1, x2, y2, off, dir, color, lablevx, lablevy,
-                            maxdim, currlev, label)
+    mosaic.cell <- function(X, x1, y1, x2, y2, srt.x, srt.y,
+            adj.x, adj.y, off, dir, color, lablevx, lablevy,
+            maxdim, currlev, label)
     {
         ## Recursive function doing `the job'
         ##
-        ## explicitely relying on (1,1000)^2 user coordinates.
+        ## explicitly relying on (1,1000)^2 user coordinates.
         p <- ncol(X) - 2
         if (dir[1] == "v") {            # split here on the X-axis.
             xdim <- maxdim[1]
@@ -47,13 +53,14 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
                     } else label[[1]]
                 text(x= x.l + (x.r - x.l) / 2,
                      y= 965 + 22 * (lablevx - 1),
-                     srt=0, adj=.5, cex=.66, this.lab)
+                     srt=srt.x, adj=adj.x, cex=cex.axis, this.lab)
             }
             if (p > 2) {                # recursive call.
                 for (i in 1:xdim) {
                     if (XP[i] > 0) {
                         Recall(X[X[,1]==i, 2:(p+2) , drop=FALSE],
                                x.l[i], y1, x.r[i], y2,
+                               srt.x, srt.y, adj.x, adj.y,
                                off[-1], dir[-1], color,
                                lablevx-1, (i==1)*lablevy,
                                maxdim[-1], currlev+1, label[2:p])
@@ -107,13 +114,14 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
                     } else label[[1]]
                 text(x= 35 - 20 * (lablevy - 1),
                      y= y.b + (y.t - y.b) / 2,
-                     srt=90, adj=.5, cex=.66, this.lab)
+                     srt=srt.y, adj=adj.y, cex=cex.axis, this.lab)
             }
             if (p > 2) {                # recursive call.
                 for (j in 1:ydim) {
                     if (YP[j] > 0) {
                         Recall(X[X[,1]==j, 2:(p+2) , drop=FALSE],
                                x1, y.b[j], x2, y.t[j],
+                               srt.x, srt.y, adj.x, adj.y,
                                off[-1], dir[-1], color,
                                (j==1)*lablevx, lablevy-1,
                                maxdim[-1], currlev+1, label[2:p])
@@ -146,6 +154,11 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
     }
 
     ##-- Begin main function
+
+    ## Calculate string rotation for different settings of las:
+    srt.x <- if(las > 1) 90 else 0
+    srt.y <- if(las == 0 || las == 3) 90 else 0
+
     if(is.null(dim(x)))
         x <- as.array(x)
     else if(is.data.frame(x))
@@ -298,23 +311,42 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
                      brks[3 : (2 * len)],
                      sep = ":"),
                paste(">", brks[2 * len], sep = "")),
-             srt = 90, cex = 0.66)
+             srt = 90, cex = cex.axis)
     }
 
-    if (!is.null(main) || !is.null(xlab) || !is.null(ylab))
-        title(main, xlab=xlab, ylab=ylab)
+    if (!is.null(main) || !is.null(xlab) || !is.null(ylab) || !is.null(sub))
+        title(main, sub = sub, xlab = xlab, ylab = ylab)
+    adj.x <- adj.y <- 0.5
+    x1 <- 50; y1 <- 5; x2 <- 950; y2 <- 950
+    maxlen.xlabel <- maxlen.ylabel <- 35
+    ## Calculations required for 'las' related string rotation
+    ## and adjustment
+    if(srt.x == 90){
+        maxlen.xlabel <-
+            max(strwidth(label[[dimd + 1 - match('v', rev(dir))]],
+                cex = cex.axis))
+        adj.x <- 1
+        y2 <- y2 - maxlen.xlabel
+    }
+    if(srt.y == 0){
+        maxlen.ylabel <-
+            max(strwidth(label[[match('h', dir)]],
+                cex = cex.axis))
+        adj.y <- 0
+        x1 <- x1 + maxlen.ylabel
+    }
 
-    mosaic.cell(Ind,
-                x1=50, y1=5, x2=950, y2=950,
-                off/100, dir,
-                color, 2, 2,
-                maxdim= apply(as.matrix(Ind[,1:dimd]), 2, max),
-                currlev= 1, label)
-
+    mosaic.cell(Ind, x1 = x1, y1 = y1, x2 = x2, y2 = y2,
+                srt.x = srt.x, srt.y = srt.y, adj.x = adj.x,
+                adj.y = adj.y, off = off / 100, dir = dir,
+                color = color, lablevx = 2, lablevy = 2,
+                maxdim = apply(as.matrix(Ind[,1:dimd]), 2, max),
+                currlev = 1, label = label)
 }
 
 mosaicplot.formula <-
-function(formula, data = NULL, ..., subset)
+function(formula, data = NULL, ...,
+         main = deparse(substitute(data)), subset)
 {
     m <- match.call(expand.dots = FALSE)
     edata <- eval(m$data, parent.frame())
@@ -326,7 +358,7 @@ function(formula, data = NULL, ..., subset)
         if(all(varnames != "."))
             data <- margin.table(data,
                                  match(varnames, names(dimnames(data))))
-        mosaicplot(data, ...)
+        mosaicplot(data, main = main, ...)
     }
     else {
         if(is.matrix(edata))
@@ -334,6 +366,6 @@ function(formula, data = NULL, ..., subset)
         m$... <- NULL
         m[[1]] <- as.name("model.frame")
         mf <- eval(m, parent.frame())
-        mosaicplot(table(mf), ...)
+        mosaicplot(table(mf), main = main, ...)
     }
 }

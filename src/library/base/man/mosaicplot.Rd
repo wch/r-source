@@ -5,17 +5,21 @@
 \title{Mosaic Plots}
 \description{Plots a mosaic on the current graphics device.}
 \usage{
-\method{mosaicplot}{default}(x, main = NULL, xlab = NULL, ylab = NULL,
+\method{mosaicplot}{default}(x, main = deparse(substitute(x)), 
+                   sub = NULL, xlab = NULL, ylab = NULL,
                    sort = NULL, off = NULL, dir = NULL,
                    color = FALSE, shade = FALSE, margin = NULL,
+                   cex.axis = 0.66, las = par("las"),
                    type = c("pearson", "deviance", "FT"), \dots)
-\method{mosaicplot}{formula}(formula, data = NULL, \dots, subset)
+\method{mosaicplot}{formula}(formula, data = NULL, \dots,
+          main = deparse(substitute(data)), subset)
 }
 \arguments{
   \item{x}{a contingency table in array form, with optional category
     labels specified in the \code{dimnames(x)} attribute.  The table is
     best created by the \code{table()} command.}
   \item{main}{character string for the mosaic title.}
+  \item{sub}{character string for the mosaic sub-title (at bottom).}
   \item{xlab,ylab}{x- and y-axis labels used for the plot; by default,
     the first and second element of \code{names(dimnames(X))} (i.e., the
     name of the first and second variable in \code{X}).}
@@ -42,6 +46,9 @@
   \item{margin}{a list of vectors with the marginal totals to be fit in
     the log-linear model.  By default, an independence model is fitted.
     See \code{\link{loglin}} for further information.}
+  \item{cex.axis}{The magnification to be used for axis annotation,
+    as a multiple of \code{par("cex")}.}
+  \item{las}{numeric; the style of axis labels, see \code{\link{par}}.}
   \item{type}{a character string indicating the type of residual to be
     represented.  Must be one of \code{"pearson"} (giving components of
     Pearson's \eqn{\chi^2}{chi-squared}), \code{"deviance"} (giving
@@ -88,7 +95,7 @@
 }
 \author{
   S-PLUS original by John Emerson \email{emerson@stat.yale.edu}.
-  Modified and enhanced for \R by KH.
+  Originally modified and enhanced for \R by KH.
 }
 \references{
   Hartigan, J.A., and Kleiner, B. (1984)
@@ -123,8 +130,8 @@ mosaicplot(~ Sex + Age + Survived, data = Titanic, color = TRUE)
 data(HairEyeColor)
 mosaicplot(HairEyeColor, shade = TRUE)
 ## Independence model of hair and eye color and sex.  Indicates that
-## there are significantly more blue eyed blond females than expected
-## in the case of independence (and too few brown eyed blond females).
+## there are significantly more blue eyed blonde females than expected
+## in the case of independence (and too few brown eyed blonde females).
 
 mosaicplot(HairEyeColor, shade = TRUE, margin = list(c(1,2), 3))
 ## Model of joint independence of sex from hair and eye color.  Males
@@ -135,7 +142,7 @@ mosaicplot(HairEyeColor, shade = TRUE, margin = list(c(1,2), 3))
 ## Formula interface for raw data: visualize crosstabulation of numbers
 ## of gears and carburettors in Motor Trend car data.
 data(mtcars)
-mosaicplot(~ gear + carb, data = mtcars, color = TRUE)
-mosaicplot(~ gear + carb, data = mtcars, color = 2:3)# color recycling
+mosaicplot(~ gear + carb, data = mtcars, color = TRUE, las = 1)
+mosaicplot(~ gear + carb, data = mtcars, color = 2:3, las = 1)# color recycling
 }
 \keyword{hplot}
