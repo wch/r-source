@@ -28,7 +28,7 @@
   a given class.
 }
 \usage{
-as(object, Class, strict=TRUE)
+as(object, Class, strict=TRUE, ext)
 
 as(object, Class) <- value
 
@@ -41,23 +41,21 @@ setAs(from, to, def, replace, where = topenv(parent.frame()))
       Returns the version of this object coerced to be the given
       \code{Class}.
 
-      If the corresponding \code{is} relation is true, it will be used.
+      If the corresponding \code{is(object, Class)} relation is true, it will be used.
       In particular, if the relation has a coerce method, the method
-      will be invoked on \code{object}.
-
-      If the \code{is} relation is \code{FALSE}, and \code{coerceFlag}
-      is \code{TRUE}, the coerce function will be called (which will
-      throw an error if there is no valid way to coerce the two
-      objects).  Otherwise, \code{NULL} is returned.
+      will be invoked on \code{object}.  However, if the object's
+      class extends \code{Class} in a simple way (e.g, by including
+      the superclass in the definition, then the actual coercion will
+      be done only if \code{strict} is \code{TRUE} (non-strict
+      coercion, is used in passing objects to methods).
 
       Coerce methods are pre-defined for basic classes (including all
-      the types of vectors, functions and a few others).  The object
-      \code{asFunctions} contains the list of such pre-defined
-      relations: \code{names(asFunctions)} gives the names of all the
-      classes.
+      the types of vectors, functions and a few others). See
+      \code{showMethods(coerce)} for a list of these.
 
       Beyond these two sources of methods, further methods are defined
       by calls to the \code{setAs} function.
+
     }
 
     \item{\code{coerce}:}{
@@ -110,6 +108,13 @@ setAs(from, to, def, replace, where = topenv(parent.frame()))
     method.}
   \item{where}{the position or environment in which to store the
     resulting method for \code{coerce}.}
+  \item{ext}{the optional object
+    defining how \code{Class} is extended by the class of the
+    object (as returned by \code{\link{possibleExtends}}).
+    This argument is used internally (to provide essential
+    information for non-public classes), but you are unlikely to want
+    to use it directly.
+  }
   %% FIXME: ; by default, the ... environment.}
 }
 

@@ -70,7 +70,7 @@ defaultDumpName(generic, signature)
 
 getAllMethods(f, fdef, where)
 
-doPrimitiveMethod(name, def, call= sys.call(-1), ev= sys.frame(sys.parent(2)))
+doPrimitiveMethod(name, def, call= sys.call(sys.parent()), ev= sys.frame(sys.parent(2)))
 
 conformMethod(signature, mnames, fnames, f)
 
@@ -94,7 +94,7 @@ missingArg(symbol, envir = parent.frame(), eval)
 
 balanceMethodsList(mlist, args, check = TRUE)
 
-sigToEnv(signature, genericSig)
+sigToEnv(signature, generic)
 
 rematchDefinition(definition, generic, mnames, fnames, signature)
 unRematchDefinition(definition)

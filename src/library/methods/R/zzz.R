@@ -33,6 +33,7 @@
         .InitMethodsListClass(where)
         .setCoerceGeneric(where)
         ## now install the non-dummy versions of some functions
+        assign(".classEnv", ..classEnv, envir = where)
         assign("makeGeneric", .makeGeneric, envir = where)
         assign("newClassRepresentation", .newClassRepresentation, envir = where)
         assign(".mergeClassDefSlots", ..mergeClassDefSlots, envir = where)

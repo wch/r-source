@@ -22,6 +22,7 @@
       ev <- new.env()
       parent.env(ev) <- environment(fdef)
       environment(fdef) <- ev
+      packageSlot(f) <- package
       assign(".Generic", f, envir = ev)
       fdef <- checkTrace(fdef)
       if(length(valueClass)>0)
@@ -81,6 +82,7 @@ makeGeneric <-
       ev <- new.env()
       parent.env(ev) <- environment(fdef)
       environment(fdef) <- ev
+      packageSlot(f) <- package
       assign(".Generic", f, envir = ev)
       if(length(valueClass)>0)
           fdef <- .ValidateValueClass(fdef, f, valueClass)
@@ -304,7 +306,7 @@ doPrimitiveMethod <-
   ## A call to `doPrimitiveMethod' is used when the actual method is a .Primitive.
   ##  (because primitives don't behave correctly as ordinary functions,
   ## not having either formal arguments nor a function body).
-  function(name, def, call = sys.call(-1), ev = sys.frame(sys.parent(2)))
+  function(name, def, call = sys.call(sys.parent()), ev = sys.frame(sys.parent(2)))
 {
   cat("called doPrimitiveMethod\n\n")
     ## Store a local version of function `name' back where the current version was
@@ -415,10 +417,13 @@ getGeneric <-
   ##
   ## If there is no definition, throws an error or returns
   ## NULL according to the value of mustFind.
-  function(f, mustFind = FALSE, where = topenv(parent.frame())) {
+  function(f, mustFind = FALSE, where = .genEnv(f, topenv(parent.frame()))) {
     if(is.function(f) && is(f, "genericFunction"))
         return(f)
-    value <- .Call("R_getGeneric", f, FALSE, as.environment(where), PACKAGE = "methods")
+    value <- if(is.null(where))
+        NULL
+      else
+          .getGeneric( f, as.environment(where))
     if(is.null(value) && exists(f, "package:base", inherits = FALSE)) {
       ## check for primitives
       baseDef <- get(f, "package:base")
@@ -427,17 +432,23 @@ getGeneric <-
           if(!is.function(value) && mustFind)
               stop("Methods cannot be defined for the primitive function \"",
                    f, "\"")
+
       }
   }
     if(is.function(value))
         value
     else if(mustFind)
         ## the C code will have thrown an error if f is not a single string
-        stop(paste("No generic function defined for \"",f,"\"", sep=""))
+        stop("No generic function found for \"",f,"\"")
     else
       NULL
   }
 
+## low-level version
+.getGeneric <- function(f, where) {
+    .Call("R_getGeneric", f, FALSE, as.environment(where), PACKAGE = "methods")
+}
+           
 getGroup <-
   ## return the groups to which this generic belongs.  If `recursive=TRUE', also all the
   ## group(s) of these groups.
@@ -498,6 +509,8 @@ mlistMetaName <-
           else
               package <- fdef@package
       }
+      else # delay finding the generic until we need it
+          fdef <- NULL
       if(is(name, "genericFunction"))
           methodsPackageMetaName("M", paste(name@generic, name@package, sep=":"))
       else if(missing(name))
@@ -512,7 +525,13 @@ mlistMetaName <-
           else if(nchar(package))
              methodsPackageMetaName("M", paste(name, package, sep=":"))
           else {
-              fdef <- getGeneric(name)
+              if(is.null(fdef)) {
+                  if(nchar(package)>0)
+                      where <- .requirePackage(package)
+                  else
+                      where <- topenv(parent.frame())
+                  fdef <- getGeneric(name, where = where)
+              }
               if(is(fdef, "genericFunction"))
                   methodsPackageMetaName("M", paste(fdef@generic, fdef@package, sep=":"))
               else
@@ -728,8 +747,14 @@ balanceMethodsList <- function(mlist, args, check = TRUE) {
 }
 
 
-sigToEnv <- function(signature, genericSig) {
-    value <- new.env()
+sigToEnv <- function(signature, generic) {
+    genericSig <- generic@signature
+    package <- packageSlot(signature)
+    if(is.null(package))
+        parent <- environment(generic)
+    else
+        parent <- .requirePackage(package)
+    value <- new.env(parent = parent)
     classes <- as.character(signature)
     args <- names(signature)
     for(i in seq(along=args))

@@ -43,7 +43,8 @@ setClassUnion <- function(name, members = character(), where = topenv(parent.fra
 }
 
 isClassUnion <- function(Class) {
+    ## test the class DEFINITION for representing a union
     if(is.character(Class))
-        Class <- getClass(Class)
+        Class <- getClass(Class, TRUE) # the real def. or a dummy
     extends(class(Class), "ClassUnionRepresentation")
 }

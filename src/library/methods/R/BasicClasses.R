@@ -33,7 +33,7 @@
              
 
     ## NULL is weird in that it has NULL as a prototype, but is not virtual
-    nullClass <- newClassRepresentation(className="NULL", prototype = NULL, virtual=FALSE)
+    nullClass <- newClassRepresentation(className="NULL", prototype = NULL, virtual=FALSE, package = "methods")
     assignClassDef("NULL", nullClass, where = envir); clList <- c(clList, "NULL")
 
     

@@ -63,7 +63,7 @@
 makeExtends <- function(Class, to,
                         coerce = NULL, test = NULL, replace = NULL,
                         by = character(), package,
-                        slots = names(getSlots(classDef1)),
+                        slots = getSlots(classDef1),
                         classDef1 = getClass(Class), classDef2) {
     ## test for datapart class:  must be the data part class, except
     ## that extensions within the basic classes are allowed (numeric, integer)
@@ -71,13 +71,15 @@ makeExtends <- function(Class, to,
         .identC(cl1, cl2) ||
           (extends(cl1, cl2) && !any(is.na(match(c(cl1, cl2), .BasicClasses))))
     }
+    packageEnv <- .requirePackage(package)
     class1Defined <- missing(slots) # only at this time can we construct methods
     simple <- is.null(coerce) && is.null(test) && is.null(replace) && (length(by)==0)
     dataPartClass <- elNamed(slots, ".Data")
     dataPart <- FALSE
     if(simple && !is.null(dataPartClass)) {
-        if(isClass(dataPartClass) && isClass(to)) {
-            ## note that dataPart, to are looked up in the methods package & parents:
+        if(!(is.null(getClassDef(dataPartClass)) || is.null(getClassDef(to)))) {
+            ## note that dataPart, to are looked up in the methods package & parents,
+            ## because the default in getClassDef is the topenv of the caller (this fun.):
             ## Assertion is that only these classes are allowed as data slots
             dataPart <- dataEquiv(dataPartClass, to)
         }
@@ -85,8 +87,8 @@ makeExtends <- function(Class, to,
     if(is.null(coerce)) {
         coerce <- .simpleExtCoerce
         if(!isVirtualClass(classDef2))
-            body(coerce, envir = environment(coerce)) <-
-                 .simpleCoerceExpr(Class, to, slots, classDef2)
+            body(coerce, envir = packageEnv) <-
+                 .simpleCoerceExpr(Class, to, names(slots), classDef2)
     }
     else if(is(coerce, "function")) {
         ## we allow definitions with and without the `strict' argument
@@ -126,7 +128,7 @@ makeExtends <- function(Class, to,
         else if(simple) {
             replace <- .simpleExtReplace
             if(isVirtualClass(classDef2)) {  # a simple is to a virtual class => a union
-                body(replace, envir = environment(replace)) <-
+                body(replace, envir = packageEnv) <-
                     substitute({
                         if(!is(value, TO))
                             stop("The computation: as(object,\"", TO,
@@ -137,9 +139,9 @@ makeExtends <- function(Class, to,
                     }, list(FROM = Class, TO = to))
             }
             else if(class1Defined && length(slots) == 0) {
-                ## check for Class, to having the same representation
+                ## check for the classes having the same representation
                 ## (including the case of no slots)
-                ext <- getAllSuperClasses(classDef1)
+                ext <- getAllSuperClasses(classDef1, TRUE)
                 toSlots <- classDef2@slots
                 sameSlots <- TRUE
                 for(eclass in ext)
@@ -149,11 +151,14 @@ makeExtends <- function(Class, to,
                         break
                     }
                 if(sameSlots)
-                    body(replace, envir = environment(replace)) <-
+                    body(replace, envir = packageEnv) <-
                         substitute({class(value) <- FROM; value}, list(FROM = Class))
                 else if(length(toSlots) == 0) # seems replacement not defined in this case?
                     replace <- .ErrorReplace
             }
+            else
+                body(replace, envir = packageEnv) <-
+                    .simpleReplaceExpr(classDef2)
         }
         else
             replace <- .ErrorReplace

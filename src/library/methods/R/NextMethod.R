@@ -52,16 +52,17 @@ callNextMethod <- function(...) {
     ## takes place; and methodEnv, the method environment used to find the next method
     ## Because of the .local mechanism used to allow variable argument lists
     ## in methods (see rematchDefinition) these may be different.
-    maybeMethod <- sys.function(-1)
+    parent <- sys.parent(1)
+    maybeMethod <- sys.function(parent)
     if(is(maybeMethod, "MethodDefinition")) {
         callEnv <- methodEnv <- parent.frame(1)
-        mcall <- sys.call(-1)
+        mcall <- sys.call(parent)
         i <- 1
     }
     else {
         callEnv <- parent.frame(1)
         methodEnv <- parent.frame(2)
-        mcall <- sys.call(-2)
+        mcall <- sys.call(sys.parent(2))
         i <- 2
     }
     ## set up the nextMethod object, load it
@@ -82,10 +83,12 @@ callNextMethod <- function(...) {
     else {
         ## may be a method call for a primitive; not available as .Method
         f <- as.character(mcall[[1]])
+        fdef <- genericForPrimitive(f)
         ## check that this could be a basic function with methods
-        if(is.null(genericForPrimitive(f)))
+        if(is.null(fdef))
             stop("A call to callNextMethod() appears in a call to \"",
                  f, "\", but the call doesn't seem to come from either a generic function or another callNextMethod.")
+        f <- fdef@generic
         method <- maybeMethod
     }
     if(is(method, "MethodDefinition")) {
@@ -94,7 +97,7 @@ callNextMethod <- function(...) {
                 method <- addNextMethod(method, f, getMethods(f), envir=methodEnv)
                 ## cache the method with the nextMethod included,
                 ## so later calls will load this information.
-                cacheMethod(f, method@target, method)
+                cacheMethod(f, method@target, method, fdef = getGeneric(f))
             }
             nextMethod <- method@nextMethod
             assign(".nextMethod", nextMethod, envir = callEnv)

@@ -170,30 +170,29 @@ getClassDef <-
     ## generates inf. loop in booting methods package (also for new())
     if(.identC(class(Class), "classRepresentation"))
         return(Class)
-    cname <- classMetaName(Class)
+    if(length(Class)>1)
+        ## S3 class; almost certainly has no packageSLot, but we'll continue anyway
+        cname <- classMetaName(Class[[1]])
+    else
+        cname <- classMetaName(Class)
     value <- NULL
-    if(exists(cname, where))
-        value <- get(cname, where)
-    else if(!is.null(package)) {
-        where <- .requirePackage(package) 
-        if(exists(cname, where))
-            value <- get(cname, where)
+    ## a string with a package slot strongly implies the class definition
+    ## should be in that package.
+    if(!is.null(package)) {
+        whereP <- .requirePackage(package) 
+        if(exists(cname, whereP))
+            value <- get(cname, whereP)
     }
+    if(is.null(value) && exists(cname, where))
+        value <- get(cname, where)
     value
 }
 
 getClass <-
   ## Get the complete definition of the class supplied as a string,
   ## including all slots, etc. in classes that this class extends.
-  function(Class, .Force = FALSE, where)
+  function(Class, .Force = FALSE, where = .classEnv(Class, topenv(parent.frame()), FALSE))
 {
-    if(missing(where)) {
-        package <- packageSlot(Class)
-        if(is.null(package))
-            where <- topenv(parent.frame())
-        else
-            where <- .requirePackage(package)
-    }
     value <- getClassDef(Class, where)
     if(is.null(value)) {
             if(!.Force)
@@ -223,22 +222,27 @@ slot <-
 
 checkSlotAssignment <- function(obj, name, value)
 {
-    ClassDef <- getClass(class(obj))
-    slotDefs <- ClassDef@slots
-    slot <- elNamed(slotDefs, name)
-    if(is.null(slot))
+    cl <- class(obj)
+    ClassDef <- getClass(cl) # fails if cl not a defined class (!)
+    slotClass <- elNamed(ClassDef@slots, name)
+    if(is.null(slotClass))
         stop(paste("\"", name, "\" is not a slot in class \"", class(obj), "\"", sep = ""))
-    if(.identC(slot, class(value)))
+    valueClass <- class(value)
+    if(.identC(slotClass, valueClass))
        return(value)
-    if(is(value, slot))
-       return(as(value, slot, strict=FALSE))
-    else
+    ## check the value, but be careful to use the definition of the slot's class from
+    ## the class environment of obj (change validObject too if a better way is found)
+    ok <- possibleExtends(valueClass, slotClass, ClassDef2 = getClassDef(slotClass, where = .classEnv(ClassDef)))
+    if(identical(ok, FALSE))
        stop(paste("Assignment of an object of class \"",
                   class(value), "\" is not valid for slot \"", name,
                   "\" in an object of class \"",
-                  class(obj), "\"; is(value, \"", slot,
+                  class(obj), "\"; is(value, \"", slotClass,
                    "\") is not TRUE", sep=""))
-    NULL
+    else if(identical(ok, TRUE))
+        value
+    else
+       as(value, slotClass, strict=FALSE, ext = ok)
 }
 
         
@@ -260,11 +264,18 @@ slotNames <-
   ## an object from the relevant class.
   function(x)
 {
-    if(is.character(x) && length(x) == 1)
-        Class <- x
-    else
-        Class <- .class1(x)
-    names(getClass(Class)@slots)
+    if(is(x, "classRepresentation"))
+        names(x@slots)
+    else {
+        if(is.character(x) && length(x) == 1)
+            classDef <- getClassDef(x)
+        else
+            classDef <- getClassDef(class(x))
+        if(is.null(classDef))
+            character()
+        else
+            names(classDef@slots)
+    }
 }
 
 removeClass <-  function(Class, where) {
@@ -290,7 +301,10 @@ isClass <-
 {
     ## argument formal is for Splus compatibility & is ignored.  (All classes that
     ## are defined must have a class definition object.)
-    exists(classMetaName(Class), where)
+    if(missing(where))
+        !is.null(getClassDef(Class))
+    else
+        !is.null(getClassDef(Class, where))
 }
 
 new <-
@@ -347,8 +361,8 @@ getClasses <-
 
 validObject <- function(object, test = FALSE) {
     Class <- class(object)
-  classDef <- getClass(Class)
-    where <- findClass(classDef)[[1]]
+  classDef <- getClassDef(Class)
+    where <- .classEnv(classDef)
   anyStrings <- function(x) if(identical(x, TRUE)) character() else x
   ## perform, from bottom up, the default and any explicit validity tests
   ## First, validate the slots.
@@ -358,7 +372,10 @@ validObject <- function(object, test = FALSE) {
   for(i in seq(along=slotTypes)) {
     classi <- slotTypes[[i]]
     sloti <- slot(object, slotNames[[i]])
-    if(!is(sloti, classi))
+    ## note that the use of possibleExtends is shared with checkSlotAssignment(), in case a
+    ## future revision improves on it!
+    ok <- possibleExtends(class(sloti), classi, ClassDef2 = getClassDef(classi, where = where))
+    if(identical(ok, FALSE))
       errors <- c(errors, paste("Invalid object for slot \"", slotNames[[i]],
                                "\" in class \"", Class,
                                "\": got class \"", class(sloti), 
@@ -371,7 +388,11 @@ validObject <- function(object, test = FALSE) {
     i <- i+1
     if(!exti@simple && !is(object, superClass))
         next ## skip conditional relations that don't hold for this object
-    superDef <- getClass(superClass) # relies on a package slot in superClass (cf makeExtends)
+    superDef <- getClassDef(superClass, where = where)
+      if(is.null(superDef)) {
+          errors <- c(errors, paste("Super class \"", superClass, "\" not defined in the environment of the object's class", sep=""))
+          next
+      }
       validityMethod <- superDef@validity
       if(is(validityMethod, "function"))
             errors <- c(errors, anyStrings(validityMethod(as(object, superClass))))
@@ -472,11 +493,11 @@ initialize <- function(.Object, ...) {
         if(length(supers) > 0) {
             for(i in rev(seq(along = supers))) {
                 obj <- el(supers, i)
-                Classi <- .class1(obj)
+                Classi <- class(obj)
                 ## test some cases that let information be copied into the
                 ## object, ordered from more to less:  all the slots in the
                 ## first two cases, some in the 3rd, just the data part in 4th
-                if(.identC(Classi, Class))
+                if(.identC(Classi[[1]], Class))
                     .Object <- obj
                 else if(extends(Classi, Class))
                     .Object <- as(obj, Class, strict=FALSE)

@@ -1,35 +1,58 @@
-.TraceWithMethods <- function(what, tracer = NULL, exit = NULL, at = numeric(), print = TRUE, signature = NULL, where = .GlobalEnv) {
+.TraceWithMethods <- function(what, tracer = NULL, exit = NULL, at = numeric(), print = TRUE, signature = NULL, where = .GlobalEnv, edit = FALSE, from = NULL, untrace = FALSE) {
+    if(is.function(where)) {
+        ## start from the function's environment:  important for tracing from a namespace
+        where <- environment(where)
+        fromPackage <- getPackageName(where)
+    }
+    else fromPackage <- ""
     whereF <- NULL
+    pname <- character()
     def <- NULL
     if(is.function(what)) {
         def <- what
-        fname <- substitute(what)
-        if(is.name(fname))
-            what <- as.character(fname)
-        else if(is.call(fname) && identical(fname[[1]], as.name("::"))) {
-            whereF <-as.character(fname[[2]])
-            require(whereF, character.only = TRUE)
-            whereF <- as.environment(paste("package", whereF, sep=":"))
-            what <- as.character(fname[[3]])
+        if(is(def, "genericFunction")) {
+            what <- def@generic
+            whereF <- .genEnv(what, where)
+            pname <- def@package
         }
-        else if(is.call(fname) && identical(fname[[1]], as.name(":::"))) {
-            whereF <- loadNamespace(as.character(fname[[2]]))
-            what <- as.character(fname[[3]])
+        else {
+            fname <- substitute(what)
+            if(is.name(fname)) {
+                what <- as.character(fname)
+                temp <- .findFunEnvAndName(what, where)
+                whereF <- temp$whereF
+                pname <- temp$pname
+            }
+            else if(is.call(fname) && identical(fname[[1]], as.name("::"))) {
+                whereF <-as.character(fname[[2]])
+                require(whereF, character.only = TRUE)
+                whereF <- as.environment(paste("package", whereF, sep=":"))
+                pname <-  fname[[2]]
+                what <- as.character(fname[[3]])
+            }
+            else if(is.call(fname) && identical(fname[[1]], as.name(":::"))) {
+                pname <- paste(fname[[2]], "(not-exported)")
+                whereF <- loadNamespace(as.character(fname[[2]]))
+                what <- as.character(fname[[3]])
+            }
+            else
+                stop("Argument what should be the name of a function")
         }
-        else
-            stop("Argument what should be the name of a function")
     }
     else {
-        what <- as.character(what)
+        what <- as(what, "character")
         if(length(what) != 1) {
             for(f in what) {
                 if(nargs() == 1)
                     trace(f)
                 else
-                    trace(f, tracer, exit, at, print, signature)
+                    Recall(f, tracer, exit, at, print, signature, where, edit, from, untrace)
             }
             return(what)
         }
+        temp <- .findFunEnvAndName(what, where, signature)
+        whereF <- temp$whereF
+        pname <- temp$pname
     }
     if(nargs() == 1)
         return(.primTrace(what)) # for back compatibility
@@ -39,123 +62,165 @@
             stop("No function definition for \"", what, "\" found")
         whereF <- as.environment(allWhere[[1]])
     }
-    if(is.null(def))
-        def <- getFunction(what, where = whereF)
-    if(!is.null(signature)) {
-        whereM <- findMethod(what, signature, where = where)
-        if(length(whereM) == 0) {
-            def <- selectMethod(what, signature)
-            whereM <- whereF
+        if(is.null(def))
+            def <- getFunction(what, where = whereF)
+        if(!is.null(signature)) {
+            fdef <- def
+            def <- selectMethod(what, signature, fdef = def)
         }
-        else {
-            whereM <- as.environment(whereM[[1]])
-            def <- getMethod(what, signature, where = whereM)
+    if(untrace) {
+    if(is.null(signature)) {
+        ## ensure that the version to assign is untraced (should be, but ...)
+        if(is(def, "traceable")) {
+            newFun <- .untracedFunction(def)
+        }
+        else
+            .primUntrace(what) # to be safe--no way to know if it's traced or not
+    }
+    else {
+            if(is(def, "traceable"))
+                newFun <- .untracedFunction(def)
+            else
+                warning("The method for \"", what, "\" for this signature was not being traced")
         }
     }
-    fBody <- body(def)
-    if(!is.null(exit)) {
-        if(is.function(exit)) {
-            tname <- substitute(exit)
-            if(is.name(tname))
-                exit <- tname
-            exit <- substitute(TRACE(), list(TRACE=exit))
+    else {
+        fBody <- body(def)
+        if(!is.null(exit)) {
+            if(is.function(exit)) {
+                tname <- substitute(exit)
+                if(is.name(tname))
+                    exit <- tname
+                exit <- substitute(TRACE(), list(TRACE=exit))
+            }
         }
-    }
-    if(!is.null(tracer)) {
-        if(is.function(tracer)) {
-            tname <- substitute(tracer)
-            if(is.name(tname))
-                tracer <- tname
-            tracer <- substitute(TRACE(), list(TRACE=tracer))
+        if(!is.null(tracer)) {
+            if(is.function(tracer)) {
+                tname <- substitute(tracer)
+                if(is.name(tname))
+                    tracer <- tname
+                tracer <- substitute(TRACE(), list(TRACE=tracer))
+            }
         }
+        ## calls .makeTracedFunction via the initialize method for "traceable"
+        newFun <- new(.traceClassName(class(.untracedFunction(def))),
+                      def = def, tracer = tracer, exit = exit, at = at,
+                      print = print, doEdit = edit)
     }
-    ## undo any current tracing
-    def <- .untracedFunction(def)
-    newFun <- new(.traceClassName(class(def)), def = def, tracer = tracer, exit = exit, at = at
-                  , print = print)
+    global <- identical(whereF, .GlobalEnv)
     if(is.null(signature)) {
         if(bindingIsLocked(what, whereF))
-            .assignOverBinding(what, newFun, whereF)
+            .assignOverBinding(what, newFun, whereF, global)
         else
             assign(what, newFun, whereF)
     }
     else {
-        if(bindingIsLocked(what, whereM))
-            .setMethodOverBinding(what, signature, newFun, whereM)
-        else
-            setMethod(what, signature, newFun, where = whereM)
+        ## arrange for setMethod to put the new method in the generic
+        ## but NOT to assign the methods list object (binding is ignored)
+        setMethod(fdef, signature, newFun, where = NULL)
+    }
+    if(!global) {
+        action <- if(untrace)"Untracing" else "Tracing"
+        location <- if(.identC(fromPackage, "")) {
+            if(length(pname)==0  && !is.null(whereF))
+                pname <- getPackageName(whereF)
+            if(length(pname)==0)
+                "\""
+            else
+                paste("\" in package \"",
+                                                   pname, "\"", sep="")
+        }
+        else paste("\" as seen from package \"", fromPackage, "\"", sep="")
+        object <- if(is.null(signature)) " function \"" else " specified method for function \""
+        message(action, object, what, location)
     }
     what
 }
 
-.makeTracedFunction <- function(def, tracer, exit, at, print) {
+.makeTracedFunction <- function(def, tracer, exit, at, print, doEdit) {
     switch(typeof(def),
            builtin = , special = {
                fBody <- substitute({.prim <- DEF; .prim(...)},
                                    list(DEF = def))
                def <- eval(function(...)NULL)
-               environment(def) <-  .GlobalEnv
+               body(def, environment = .GlobalEnv) <- fBody
                warning("making a traced version of a primitive; arguments will be treated as \"...\"")
-           }, {
-               if(is(def, "traceable"))
-                  def <- .untracedFunction(def)
-               fBody <- body(def)
-              }
+           }
            )
-    if(length(at) > 0) {
-        if(is.null(tracer))
-            stop("can't use \"at\" argument without a trace expression")
-        else if(class(fBody) != "{")
-            stop("can't use \"at\" argument unless the function body has the form { ... }")
-        for(i in at) {
-            if(print)
-                expri <- substitute({if(tracingState()){methods::.doTracePrint(MSG); TRACE}; EXPR},
-                            list(TRACE = tracer, MSG = paste("step",i), EXPR = fBody[[i]]))
-            else
-                expri <- substitute({if(tracingState())TRACE; EXPR},
-                            list(TRACE=tracer, EXPR = fBody[[i]]))
-            fBody[[i]] <- expri
+    if(!identical(doEdit, FALSE)) {
+        if(is.character(doEdit) || is.function(doEdit)) {
+            editor <- doEdit
+            doEdit <- TRUE
         }
+        else
+            editor <- getOption("editor")
     }
-    else if(!is.null(tracer)){
+    ## look for a request to edit the definition
+    if(doEdit) {
+        if(is(def, "traceable"))
+            def <- as(def, "function") # retain previous tracing if editing
+        if(!is.na(match(editor, c("emacs","xemacs")))) {
+            ## cater to the usual emacs modes for editing R functions
+            file <- tempfile("emacs")
+            file <- sub('..$', ".R", file)
+        }
+        else
+            file <- ""
+        ## insert any requested automatic tracing expressions before editing
+        if(!(is.null(tracer) && is.null(exit) && length(at)==0))
+            def <- Recall(def, tracer, exit, at, print, FALSE)
+        def2 <- edit(def, editor = editor, file = file)
+        if(!is.function(def2))
+            stop("The editing in trace() can only change the body of the function; got an object of class ", class(def2))
+        if(!identical(args(def), args(def2)))
+            stop("The editing in trace() can only change the body of the function, not the arguments or defaults")
+        fBody <- body(def2)
+    }
+    else {
+        def <- .untracedFunction(def) # throw away earlier tracing
+        fBody <- body(def)
+        if(length(at) > 0) {
+            if(is.null(tracer))
+                stop("can't use \"at\" argument without a trace expression")
+            else if(class(fBody) != "{")
+                stop("can't use \"at\" argument unless the function body has the form { ... }")
+            for(i in at) {
+                if(print)
+                    expri <- substitute({if(tracingState()){methods::.doTracePrint(MSG); TRACE}; EXPR},
+                                        list(TRACE = tracer, MSG = paste("step",i), EXPR = fBody[[i]]))
+                else
+                    expri <- substitute({if(tracingState())TRACE; EXPR},
+                                        list(TRACE=tracer, EXPR = fBody[[i]]))
+                fBody[[i]] <- expri
+            }
+        }
+        else if(!is.null(tracer)){
             if(print)
                 fBody <- substitute({if(tracingState()){methods::.doTracePrint(MSG); TRACE}; EXPR},
-                            list(TRACE = tracer, MSG = paste("on entry"), EXPR = fBody))
+                                    list(TRACE = tracer, MSG = paste("on entry"), EXPR = fBody))
             else
                 fBody <- substitute({if(tracingState())TRACE; EXPR},
-                            list(TRACE=tracer, EXPR = fBody))
-    }
-    if(!is.null(exit)) {
-        if(print)
-            exit <- substitute(if(tracingState()){methods::.doTracePrint(MSG); EXPR},
-                            list(EXPR = exit, MSG = paste("on exit")))
-        else
-            exit <- substitute(if(tracingState())EXPR,
-                            list(EXPR = exit, MSG = paste("on exit")))
-        fBody <- substitute({on.exit(TRACE); BODY},
-                            list(TRACE=exit, BODY=fBody))
+                                    list(TRACE=tracer, EXPR = fBody))
+        }
+        if(!is.null(exit)) {
+            if(print)
+                exit <- substitute(if(tracingState()){methods::.doTracePrint(MSG); EXPR},
+                                   list(EXPR = exit, MSG = paste("on exit")))
+            else
+                exit <- substitute(if(tracingState())EXPR,
+                                   list(EXPR = exit, MSG = paste("on exit")))
+            fBody <- substitute({on.exit(TRACE); BODY},
+                                list(TRACE=exit, BODY=fBody))
+        }
     }
     body(def, envir = environment(def)) <- fBody
     def
 }
 
-.untracedFunction <- function(f, what, where, signature = NULL) {
+## return the untraced version of f
+.untracedFunction <- function(f) {
     while(is(f, "traceable"))
         f <- f@original
-    if(!missing(what)) {
-        if(is.null(signature)) {
-            if(bindingIsLocked(what, where))
-                .assignOverBinding(what, f, where)
-            else
-                assign(what, f, where)
-        }
-        else {
-        if(bindingIsLocked(what, where))
-            .setMethodOverBinding(what, signature, f, where)
-        else
-            setMethod(what, signature, f, where = where)
-        }
-    }
     f
 }
 
@@ -173,14 +238,14 @@
     }
     assign(".SealedClasses", c(get(".SealedClasses", envir), clList), envir);
     setMethod("initialize", "traceable",
-              function(.Object, def, tracer, exit, at, print) {
+              function(.Object, def, tracer, exit, at, print, doEdit) {
                   oldClass <- class(def)
                   if(isClass(oldClass) && length(getClass(oldClass)@slots) > 0)
                       as(.Object, oldClass) <- def # to get other slots in def
                   .Object@original <- def
                   if(!is.null(elNamed(getSlots(getClass(class(def))), ".Data")))
                       def <- def@.Data
-                  .Object@.Data <- .makeTracedFunction(def, tracer, exit, at, print)
+                  .Object@.Data <- .makeTracedFunction(def, tracer, exit, at, print, doEdit)
                   .Object
               }, where = envir)
     if(!isGeneric("show", envir))
@@ -217,12 +282,12 @@ trySilent <- function(expr) {
     eval.parent(call)
 }
 
-.assignOverBinding <- function(what, value, where, warn = TRUE) {
+.assignOverBinding <- function(what, value, where, verbose = TRUE) {
     pname <- getPackageName(where)
-    if(warn)
-        warning("Assigning over the binding of symbol \"", what,
+    if(verbose)
+        message("Assigning over the binding of symbol \"", what,
                 "\" in environment/package \"", pname, "\"")
-    warnOpt <- options(warn= -1) # kill the obsolete warnign from R_LockBinding
+    warnOpt <- options(warn= -1) # kill the obsolete warning from R_LockBinding
     on.exit(options(warnOpt))
     if(is.function(value)) {
         ## assign in the namespace for the function as well
@@ -239,15 +304,15 @@ trySilent <- function(expr) {
     lockBinding(what, where)
 }
 
-.setMethodOverBinding <- function(what, signature, method, where, warn = TRUE) {
-    if(warn)
+.setMethodOverBinding <- function(what, signature, method, where, verbose = TRUE) {
+    if(verbose)
         warning("Setting a method over the binding of symbol \"", what,
                 "\" in environment/package \"", getPackageName(where), "\"")
     if(exists(what, envir = where, inherits = FALSE)) {
         fdef <- get(what, envir = where)
         hasFunction <- is(fdef, "genericFunction")
     }
-    else
+
         hasFunction <- FALSE
     if(hasFunction) {
         ## find the generic in the corresponding namespace
@@ -271,4 +336,37 @@ trySilent <- function(expr) {
         setMethod(what, signature, method, where = where)
         lockBinding(metaName, where)
     }
+}
+
+### finding the package name for a loaded namespace -- kludgy but is there
+### a table in this direction anywhere?
+.searchNamespaceNames <- function(env) {
+    namespaces <- .Internal(getNamespaceRegistry())
+    names <- objects(namespaces, all=T)
+    for(what in names)
+        if(identical(get(what, envir=namespaces), env))
+            return(paste("namespace", what, sep=":"))
+    return(character())
+}
+
+.findFunEnvAndName <- function(what, where, signature = NULL) {
+    pname <- character()
+    if(is.null(signature)) {
+        whereF <- findFunction(what, where = where)
+        if(length(whereF)>0)
+            whereF <- whereF[[1]]
+        else return(list(pname = pname, whereF = NULL))
+    }
+    else {
+        whereF <- .genEnv(what, where)
+    }
+    if(is.null(whereF)) { ## stupid convention that NULL == base package
+        whereF <- .BaseNamespaceEnv
+        pname <- "base"
+    }
+    else if(!is.null(attr(whereF, "name")))
+        pname <- gsub("^.*:", "", attr(whereF, "name"))
+    else if(isNamespace(whereF))
+        pname <- .searchNamespaceNames(whereF)
+    list(pname=pname, whereF = whereF)
 }

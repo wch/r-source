@@ -31,7 +31,7 @@ existsMethod(f, signature = character(), where)
 hasMethod(f, signature=character(), where)
 
 selectMethod(f, signature, optional = FALSE, useInherited = TRUE,
-             mlist = (if (is.null(fdef)) NULL else getMethods(fdef)),
+             mlist = (if (is.null(fdef)) NULL else getMethodsForDispatch(f, fdef)),
              fdef = getGeneric(f, !optional))
 
 MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,

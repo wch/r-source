@@ -4,10 +4,11 @@ showDefault <-
     printNoClass <- function(x)
         .Internal(print.default(x, NULL, TRUE, NULL, NULL, FALSE, FALSE))
 
-    cl <- .class1(object)
-    if(isClass(cl) && is.na(match(cl, .BasicClasses)) && !extends(cl, "oldClass")) {
-        cat("An object of class \"", cl, "\"\n", sep="")
-        slots <- slotNames(cl)
+    cl <- classLabel(class(object))
+    clDef <- getClass(class(object))
+    if(!is.null(clDef) && is.na(match(clDef@className, .BasicClasses)) && !extends(clDef, "oldClass")) {
+        cat("An object of class ", cl, "\n", sep="")
+        slots <- slotNames(clDef)
         if(!is.na(match(".Data", slots))) {
             dataPart <- object@.Data
             show(dataPart)
@@ -23,15 +24,15 @@ showDefault <-
             cat("\n")
         }
     }
-    else if(isClass(cl) && extends(cl, "oldClass") && length(slotNames(cl)) > 0) {
+    else if(isClass(clDef) && extends(clDef, "oldClass") && length(slotNames(clDef)) > 0) {
         ## print the old-style object
-        cat("An object of class \"", cl, "\"\n", sep="")
-        for( cl2 in rev(extends(cl)))
+        cat("An object of class ", cl, "\n", sep="")
+        for( cl2 in rev(extends(clDef)))
             if(!.identC(cl2, "oldClass") && extends(cl2, "oldClass")) {
                 print(as(object, cl2), useS4 = FALSE) # see comment NBB below
                 break
             }
-        for(what in slotNames(cl)) {
+        for(what in slotNames(clDef)) {
             cat("Slot \"",what, "\":\n", sep="")
             print(slot(object, what))
             cat("\n")
@@ -54,7 +55,12 @@ show <- function(object)
         setGeneric("show", where = envir)
     setMethod("show", "MethodDefinition",
               function(object) {
-                  cat("Method Definition (Class \"", class(object), "\"):\n\n", sep = "")
+                  cl <- class(object)
+                  if(.identC(cl, "MethodDefinition"))
+                      nonStandard <- ""
+                  else
+                      nonStandard <-  paste(" (Class ", classLabel(cl),")", sep="")
+                  cat("Method Definition",nonStandard,":\n\n", sep = "")
                   show(object@.Data)
                   mm <- .methodSignatureMatrix(object)
                   cat("\nSignatures:\n")
@@ -88,9 +94,35 @@ show <- function(object)
     setMethod("show", "classRepresentation",
               function(object){
                   if(!.identC(class(object), "classRepresentation"))
-                      cat("Extended class definition (", dQuote(class(object)),
+                      cat("Extended class definition (", classLabel(class(object)),
                           ")\n")
                   print.classRepresentation(object)
               },
                where = envir)
+}
+
+## an informative string label for a class
+classLabel <- function(Class) {
+    if(is.character(Class) && length(Class) > 0) {
+        className <- Class[[1]]
+        packageName <- attr(Class, "package")
+    }
+    else {
+        if(is(Class, "classRepresentation")) {
+            className <- Class@className
+            packageName <- Class@package
+        }
+        else stop("invalid call to classLabel: expected a name or a class definition, got an object of class ", classLabel(class(Class)))
+    }
+### TODO:  implement a test for the class NOT directly visible OR multiple versions
+### and include the from... phrase in this case
+#     if(....) {
+#         if(identical(packageName, ".GlobalEnv"))
+#             fromString <- " (from the global environment)"
+#         else
+#             fromString <- paste(" (from package \"", packageName, "\")", sep="")
+#         className <- paste("\"", className, "\"", fromString, sep="")
+#     }
+#     else
+    dQuote(className)
 }
