@@ -437,6 +437,30 @@ stopifnot(typeof(res) == "double")
 e1 <- La.eigen(m <- matrix(1:9,3))
 stopifnot(e1$values == La.eigen(m, only.values = TRUE)$values)
 
+## Patrick Connelly 2001-01-22, prediction with offsets failed
+## a simpler example
+counts <- c(18, 17, 15, 20, 10, 20, 25, 13, 12)
+outcome <- gl(3, 1, 9)
+treatment <- gl(3, 3)
+DF <- data.frame(counts = c(18, 17, 15, 20, 10, 20, 25, 13, 12),
+                 outcome = gl(3, 1, 9), treatment = gl(3, 3),
+                 exposure = c(1.17, 1.78, 1.00, 2.36, 2.58, 0.80, 2.51,
+                 1.16, 1.77))
+fit <- glm(counts ~ outcome + treatment + offset(log(exposure)),
+           family = poisson, data = DF)
+p1 <- predict(fit)
+p2 <- predict(fit, se = TRUE)  ## failed < 1.4.1
+p3 <- predict(fit, newdata = DF)
+p4 <- predict(fit, newdata = DF, se = TRUE)
+stopifnot(all.equal(p1, p2$fit), all.equal(p1, p3), all.equal(p2, p4))
+fit <- glm(counts ~ outcome + treatment, offset = log(exposure),
+           family = poisson, data = DF)
+p1 <- predict(fit)
+p2 <- predict(fit, se = TRUE)  ## failed < 1.4.1
+p3 <- predict(fit, newdata = DF)
+p4 <- predict(fit, newdata = DF, se = TRUE)
+stopifnot(all.equal(p1, p2$fit), all.equal(p1, p3), all.equal(p2, p4))
+
 
 ## PR#1267 hashing NaN
 load(file.path(Sys.getenv("SRCDIR"), "nanbug.rda"))

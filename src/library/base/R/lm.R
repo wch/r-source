@@ -590,13 +590,14 @@ predict.lm <-
       split(order(aa), aaa)
     }
     tt <- terms(object)
-    if(missing(newdata)) {
+    if(missing(newdata) || is.null(newdata)) {
         X <- model.matrix(object)
         offset <- object$offset
     }
     else {
         X <- model.matrix(delete.response(tt), newdata,
-			  contrasts = object$contrasts, xlev = object$xlevels)
+			  contrasts = object$contrasts,
+                          xlev = object$xlevels)
 	offset <- if (!is.null(off.num <- attr(tt, "offset")))
 	    eval(attr(tt, "variables")[[off.num+1]], newdata)
 	else if (!is.null(object$offset))
