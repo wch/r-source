@@ -96,6 +96,38 @@ BUG FIXES
 
     o	Matrix multiplication in cases such as 1:3 %*% t(1:2) is accepted.
 
+    o	Options --nsize and --vsize to R CMD check gave warning
+	messages and only one was accepted.
+
+    o	The autoload()s during startup are "wrapped" such
+	that conflicting objects don't break startup.
+
+    o	cor.test(*, meth="spear") {pkg ctest} now works (again) for n <= 6
+
+    o	scale = 0 in biplot.princomp() now works.
+
+    o	The scores given by princomp(, cor = TRUE) and the rotated
+	values given by prcomp(, scale = TRUE) are now computed from the
+	scaled data.
+
+    o	barplot now works okay when length(col) < length(legend.txt),
+	thanks to Ben Bolker, PR#494.
+
+    o	kernel("dirichlet", m=10, r=1) in package ts now works.
+
+    o   save/restore of  environments containing "..." object should
+        work now
+
+    o   qhyper should work better for large N
+
+    o   as.matrix.data.frame no longer escapes quotes in character
+        vectors
+
+    o   R would try to save the readline history at the end of
+        non-interactive sessions, causing crashes on some systems.
+
+    o   Subtle roundoff problems caused arrays to be allocated short in
+        loess.c in some cases, leading to segfaults.
 
 
 		CHANGES IN R VERSION 1.0.0

@@ -877,6 +877,8 @@ as.matrix.data.frame <- function (x)
 	}
     } else if(non.numeric) {
 	for (j in 1:p) {
+            if (mode(X[[j]]) == "character")
+                next;
 	    xj <- X[[j]]
 	    if(length(levels(xj)) > 0) {
 		X[[j]] <- as.vector(xj)

@@ -3,6 +3,8 @@ optim <- function(par, fn, gr = NULL,
                   lower = -Inf, upper = Inf,
                   control = list(), hessian = FALSE, ...)
 {
+    fn1 <- function(par) fn(par,...)
+    gr1 <- if (!is.null(gr)) function(par) gr(par,...)
     method <- match.arg(method)
     con <- list(trace = 0, fnscale = 1, parscale = rep(1, length(par)),
                 ndeps = rep(1e-3, length(par)),
@@ -24,20 +26,14 @@ optim <- function(par, fn, gr = NULL,
     }
     lower <- as.double(rep(lower, , npar))
     upper <- as.double(rep(upper, , npar))
-    if(is.null(gr))
-    res <- .Internal(optim(par, function(par) fn(par, ...), gr,
+    res <- .Internal(optim(par, fn1, gr1,
                            method, con, lower, upper))
-    else
-    res <- .Internal(optim(par, function(par) fn(par, ...),
-                           function(par) gr(par, ...),
-                           method, con, lower, upper))
-
     names(res) <- c("par", "value", "counts", "convergence", "message")
     nm <- names(par)
     if(!is.null(nm)) names(res$par) <- nm
     names(res$counts) <- c("function", "gradient")
     if (hessian) {
-        hess <- .Internal(optimhess(res$par, fn, gr, con))
+        hess <- .Internal(optimhess(res$par, fn1, gr1, con))
         hess <- 0.5*(hess + t(hess))
         if(!is.null(nm)) dimnames(hess) <- list(nm, nm)
         res$hessian <- hess

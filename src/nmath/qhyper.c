@@ -30,6 +30,8 @@ double qhyper(double p, double NR, double NB, double n,
 {
 /* This is basically the same code as  ./phyper.c -- keep in sync! */
     double N, xstart, xend, xr, xb, sum, term;
+    int small_N;
+
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(NR) || ISNAN(NB) || ISNAN(n))
 	return p + NR + NB + n;
@@ -53,19 +55,27 @@ double qhyper(double p, double NR, double NB, double n,
     xr = xstart;
     xb = n - xr;
 
-    term = exp(lfastchoose(NR, xr) + lfastchoose(NB, xb) - lfastchoose(N, n));
-    NR = NR - xr;
-    NB = NB - xb;
+    small_N = (N < 1000); /* won't have underflow in product below */
+    /* if N is small,  term := product.ratio( bin.coef );
+       otherwise work with its logarithm to protect against underflow */
+    term = lfastchoose(NR, xr) + lfastchoose(NB, xb) - lfastchoose(N, n);
+    if(small_N) term = exp(term);
+    NR -= xr;
+    NB -= xb;
+
     sum = term;
     if(!lower_tail || log_p) {
 	p = R_DT_qIv(p);
     }
     p *= 1 - 64*DBL_EPSILON;
+    sum = small_N ? term : exp(term);
+
     while(sum < p && xr < xend) {
 	xr++;
 	NB++;
-	term *= (NR / xr) * (xb / NB);
-	sum += term;
+	if (small_N) term *= (NR / xr) * (xb / NB);
+	else term += log((NR / xr) * (xb / NB));
+	sum += small_N ? term : exp(term);
 	xb--;
 	NR--;
     }

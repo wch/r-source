@@ -1,8 +1,25 @@
-r-base (1.0.0-0) unstable; urgency=low
+r-base (1.0.1-0) unstable; urgency=low
 
-  * Test builds for the 1.0.0 release
+  * Test builds of new upstream sources.
 
- -- Douglas Bates <bates@stat.wisc.edu>  Tues, 29 Feb 2000 10:15:15 -0600
+ -- Douglas Bates <bates@stat.wisc.edu>  Fri, 17 Mar 2000 10:50:13 -0600
+
+r-base (1.0.0-2) unstable; urgency=low
+
+  * The pdf documentation is now in a new package r-doc-pdf
+  * A GNOME-enabled version is available in a new package r-gnome (Closes #44503)
+  * debian/{rules,control}: Modified accordingly
+  * Thanks to Dirk Eddelbuettel who did most of the work for this.
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Thu, 16 Mar 2000 16:28:07 -0600
+
+r-base (1.0.0-1) unstable; urgency=low
+
+  * New upstream version
+  * Fixed names of info files, readline support (Closes: #57774)
+  * Added pdf files to doc directory (Closes: #20227)
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Thu,  9 Mar 2000 16:28:29 -0600
 
 r-base (0.99.0-2) unstable; urgency=low
 

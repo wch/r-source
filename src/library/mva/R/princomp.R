@@ -34,7 +34,7 @@ princomp <- function(x, cor = FALSE, scores = TRUE, covmat = NULL,
     names(sc) <- colnames(cv)
     scr <- NULL
     if (scores && !missing(x))
-        scr <- scale(z, center = TRUE, scale = FALSE) %*% edc$vectors
+        scr <- scale(z, center = TRUE, scale = sc) %*% edc$vectors
     if (is.null(cen)) cen <- rep(NA, nrow(cv))
     edc <-list(sdev = sdev, loadings = edc$vectors,
                center = cen, scale = sc, n.obs = n.obs,

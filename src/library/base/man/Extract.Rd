@@ -43,6 +43,11 @@ x$name
   With the \code{[} operator a comma separated blank indicates that all
   entries in that dimension are selected.
 
+  When \code{[.data.frame} is used for subsetting rows of a
+  \code{\link{data.frame}}, it returns a dataframe with unique row names,
+  using \code{\link{make.names}( * , unique = TRUE)}, see the \code{swiss}
+  example below.
+
   When operating on a list, the \code{[[} operator gives the specified
   element of the list while the \code{[} operator returns a list with
   the specified element(s) in it.
@@ -59,6 +64,9 @@ li[[1]]               # the first element of list li
 y <- list(1,2,a=4,5)
 y[c(3,4)]             # a list containing elements 3 and 4 of y
 y$a                   # the element of y named a
+
+data(swiss)
+swiss[ c(1, 1:2), ]   # duplicate row, unique row names
 }
 \keyword{array}
 \keyword{list}

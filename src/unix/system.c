@@ -307,9 +307,10 @@ void R_CleanUp(int saveact, int status, int runLast)
 	if(R_DirtyImage) R_SaveGlobalEnv();
 #ifdef HAVE_LIBREADLINE
 #ifdef HAVE_READLINE_HISTORY_H
-	if(R_Interactive && UsingReadline)
+	if(R_Interactive && UsingReadline) {
 	    stifle_history(R_HistorySize);
-	write_history(R_HistoryFile);
+	    write_history(R_HistoryFile);
+	}
 #endif
 #endif
 	break;

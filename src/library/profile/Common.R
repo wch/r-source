@@ -22,12 +22,6 @@ R.version.string <- local({
 .Machine <- Machine()
 .Platform <- Platform()
 
-## The next 3 were in base:
-autoload("t.test","ctest")
-autoload("chisq.test","ctest")
-autoload("prop.test","ctest")
-autoload("wilcox.test","ctest")# for MM
-
 options(na.action = "na.omit")
 options(show.signif.stars = TRUE)
 options(show.coef.Pvalues = TRUE)
@@ -35,3 +29,19 @@ options(keep.source = TRUE)
 options(warn = 0)
 options(CRAN = "http://cran.r-project.org")
 
+local({
+    ### Autoloads :	 Should NOT stop on error --- try(.) fails..
+    ### The local() makes try.autoload go away after use
+    try.autoload <- function(name, file) {
+	if (exists(name, envir = .GlobalEnv, inherits = FALSE))
+	    warning("Object already exists")
+	else
+	    autoload(name, file)
+    }
+
+    ## The next 3 were in base till 0.90:
+    try.autoload("t.test","ctest")
+    try.autoload("chisq.test","ctest")
+    try.autoload("prop.test","ctest")
+    try.autoload("wilcox.test","ctest")
+})
