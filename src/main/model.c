@@ -78,6 +78,9 @@ static int isOne(SEXP x)
 
 static int MatchVar(SEXP var1, SEXP var2)
 {
+    /* For expedience, and sanity... */
+    if ( var1 == var2 )
+    	return 1;
     /* Handle Nulls */
     if (isNull(var1) && isNull(var2))
 	return 1;
@@ -94,6 +97,9 @@ static int MatchVar(SEXP var1, SEXP var2)
     /* Literal Numerics */
     if (isNumeric(var1) && isNumeric(var2))
 	return (asReal(var1) == asReal(var2));
+    /* Literal Strings */
+    if (isString(var1) && isString(var2))
+	return (strcmp(CHAR(*STRING(var1)),CHAR(*STRING(var2))) == 0);
     /* Nothing else matches */
     return 0;
 }
