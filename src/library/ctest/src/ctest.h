@@ -31,6 +31,7 @@ void fexact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
 	    double *pre, Sint *workspace);
 void kendall_tau(Sint *n, double *x, double *y, double *tau);
 void pansari(Sint *len, double *x, Sint *m, Sint *n);
+void dansari(Sint *len, double *x, Sint *m, Sint *n);
 void pkendall(Sint *len, double *x, Sint *n);
 void pkstwo(Sint *n, double *x, double *tol) ;
 void prho(int *n, int *is, double *pv, int *ifault, int *lower_tail);

@@ -23,6 +23,7 @@
 static const R_CMethodDef cmethods[]  = {
   {"chisqsim", (DL_FUNC) &chisqsim, 11},  
   {"d2x2xk", (DL_FUNC) &d2x2xk, 5},
+  {"dansari", (DL_FUNC) &dansari, 4},
   {"fexact",   (DL_FUNC) &fexact, 10},
   {"kendall_tau", (DL_FUNC) &kendall_tau, 4},
   {"pansari",  (DL_FUNC)&pansari, 4},

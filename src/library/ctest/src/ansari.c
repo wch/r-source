@@ -90,9 +90,9 @@ cansari(int k, int m, int n, double ***w)
 }
 
 
-#if 0
 /*
-  Is this ever called?
+  Is this ever called? There is no .C() in the package.
+  However, apparently users know about it.
  */
 void
 dansari(Sint *len, double *x, Sint *m, Sint *n)
@@ -110,7 +110,7 @@ dansari(Sint *len, double *x, Sint *m, Sint *n)
 	}
     /* w_free(*m, *n, w); */
 }
-#endif
+
 
 
 void
