@@ -152,9 +152,13 @@ sub get_exclude_patterns {
     my @exclude_patterns = ("^.Rbuildignore\$", "^.DS_Store\$",
 			    "\~\$", "\\.swp\$", "\\.bak\$",
 			    "^.*/\\.#[^/]*\$", "^.*/#[^/]*#\$",
-			    "^TITLE\$",
-			    "^data/00Index\$",
-			    "^inst/doc/00Index.dcf]\$");
+			    "^TITLE\$");
+    ## <FIXME>
+    ## Add
+    ##   "^data/00Index\$"
+    ##   "^inst/doc/00Index.dcf\$"
+    ## once 1.7 is out ...
+    ## </FIXME>
     @exclude_patterns;
 }
 
