@@ -1003,8 +1003,9 @@ printchar (c)
    syntax, so it can be changed between regex compilations.  */
 /* This has no initializer because initialized variables in Emacs
    become read-only after dumping.  */
+#if 0
 static reg_syntax_t re_syntax_options;
-
+#endif
 
 /* Specify the precise syntax of regexps for compilation.  This provides
    for compatibility for various utilities which historically have
@@ -1013,6 +1014,7 @@ static reg_syntax_t re_syntax_options;
    The argument SYNTAX is a bit mask comprised of the various bits
    defined in regex.h.  We return the old syntax.  */
 
+#if 0
 static reg_syntax_t
 re_set_syntax (syntax)
     reg_syntax_t syntax;
@@ -1030,6 +1032,7 @@ re_set_syntax (syntax)
 }
 #ifdef _LIBC
 weak_alias (__re_set_syntax, re_set_syntax)
+#endif
 #endif
 
 /* This table gives an error message for each of the error codes listed
@@ -3533,6 +3536,7 @@ weak_alias (__re_compile_fastmap, re_compile_fastmap)
    PATTERN_BUFFER will allocate its own register data, without
    freeing the old data.  */
 
+#if 0
 static void
 re_set_registers (bufp, regs, num_regs, starts, ends)
     struct re_pattern_buffer *bufp;
@@ -3556,6 +3560,7 @@ re_set_registers (bufp, regs, num_regs, starts, ends)
 }
 #ifdef _LIBC
 weak_alias (__re_set_registers, re_set_registers)
+#endif
 #endif
 
 /* Searching routines.  */
@@ -3821,6 +3826,7 @@ weak_alias (__re_search_2, re_search_2)
 
 /* Matching routines.  */
 
+#if 0
 #ifndef emacs   /* Emacs never uses this.  */
 /* re_match is like re_match_2 except it takes only a single string.  */
 
@@ -3844,6 +3850,7 @@ re_match (bufp, string, size, pos, regs)
 weak_alias (__re_match, re_match)
 # endif
 #endif /* not emacs */
+#endif
 
 static boolean group_match_null_string_p _RE_ARGS ((unsigned char **p,
 						    unsigned char *end,
@@ -3870,6 +3877,7 @@ static int bcmp_translate _RE_ARGS ((const char *s1, const char *s2,
    failure stack overflowing).  Otherwise, we return the length of the
    matched substring.  */
 
+#if 0
 static int
 re_match_2 (bufp, string1, size1, string2, size2, pos, regs, stop)
      struct re_pattern_buffer *bufp;
@@ -3890,6 +3898,7 @@ re_match_2 (bufp, string1, size1, string2, size2, pos, regs, stop)
 }
 #ifdef _LIBC
 weak_alias (__re_match_2, re_match_2)
+#endif
 #endif
 
 /* This is a separate function so that we can force an alloca cleanup
@@ -5547,6 +5556,7 @@ bcmp_translate (s1, s2, len, translate)
 
    We call regex_compile to do the actual compilation.  */
 
+#if 0
 static const char *
 re_compile_pattern (pattern, length, bufp)
      const char *pattern;
@@ -5575,6 +5585,7 @@ re_compile_pattern (pattern, length, bufp)
 }
 #ifdef _LIBC
 weak_alias (__re_compile_pattern, re_compile_pattern)
+#endif
 #endif
 
 /* Entry points compatible with 4.2 BSD regex library.  We don't define
