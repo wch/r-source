@@ -42,17 +42,21 @@ BUG FIXES
 	writeable. (PR#2133)
 
     o   Sweave.sty was not installed to $R_HOME/share/texmf when
-        builddir != srcdir. On windows backslashes in latex paths have
+        builddir != srcdir. On Windows backslashes in latex paths have
         to be replaced by slashes.
 
-    o   a memory leak in deparsing was introduced when eliminating
+    o   A memory leak in deparsing was introduced when eliminating
         static variables (thanks to Achim Zeileis for spotting this).
 	A similar problem in loading workspaces has been corrected.
 
     o   TclInterface.Rd incorrectly used \synopsis for \usage so that
         the usage section wasn't output.
 
-    o   Readline stack off-by-one error (PR#2165)
+    o   Readline stack off-by-one error. (PR#2165)
+
+    o	R_ExpandFileName had a memory leak in the case libreadline was
+	used under Unix-alikes.
+
     
 
 		CHANGES IN R VERSION 1.6.0
