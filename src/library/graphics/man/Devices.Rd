@@ -60,8 +60,7 @@ dev.interactive()
     system
     \item \code{\link{png}} PNG bitmap device
     \item \code{\link{jpeg}} JPEG bitmap device
-    \item \code{\link{GTK}}, \code{\link{GNOME}} Graphics drivers for
-    the GNOME GUI.
+    \code{\link{GNOME}} Graphics driver for the GNOME GUI.
 %% <FIXME>  quartz() also with corresponding --gui aqua ?
 #ifdef aqua
 %%     ^^^^ not yet available
