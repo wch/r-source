@@ -284,6 +284,10 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
+* PR# 915 *
+Subject: cannot allocate vector of size 71773 Kb
+From: cdhershberger@dow.com
+Date: Tue, 17 Apr 2001 05:34:04 +0200 (MET DST)
 * PR# 877 *
 Subject: segmentation fault of unknown cause
 From: Martin Schlather <Martin.Schlather@uni-bayreuth.de>
