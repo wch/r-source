@@ -285,16 +285,16 @@ BUG FIXES
 	recent versions of Tk, but conceivably not for old
 	tkConfig.sh files.
 
-    o	detach() was not recomputing the methods for primitives
+    o	detach() was not recomputing the S4 methods for primitives
 	correctly.
 
-    o	"expression" partly fixed in basic classes, so S4 classes
-	can extend these (but "expression" is pretty broken as a
-	vector class in R).
+    o	Methods package now has class "expression" partly fixed in basic
+	classes, so S4 classes can extend these (but "expression" is
+	pretty broken as a vector class in R).
 
     o	Collected warnings had messages with unneeded trailing space.
 
-    o	Methods for primitive functions must be exported from
+    o	S4 methods for primitive functions must be exported from
 	namespaces; this is now done automatically.
 	Note that is.primitive() is now in "base", not "methods" anymore.
 
@@ -316,6 +316,8 @@ BUG FIXES
 
     o	print.factor(quote=TRUE) was not quoting levels, causing
 	ambiguity when the levels contained spaces or quotes.
+
+    o	R CMD check was confused by a trailing / on a package name.
 
 
 
