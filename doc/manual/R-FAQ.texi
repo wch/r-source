@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.6-38, 2003-03-12
+@set FAQ-VERSION 1.6-39, 2003-03-16
 @set REL-VERSION 1.6.2
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -337,7 +337,7 @@ $ make
 @end smallexample
 
 If these commands execute successfully, the R binary and a shell script
-font-end called @file{R} are created and copied to the @file{bin}
+front-end called @file{R} are created and copied to the @file{bin}
 directory.  You can copy the script to a place where users can invoke
 it, for example to @file{/usr/local/bin}.  In addition, plain text help
 pages as well as @HTML{} and La@TeX{} versions of the documentation are
@@ -468,8 +468,9 @@ programs @command{apt-get}, @command{apt-cache}, and @command{dselect}
 (using the apt access method) will automatically detect and install
 updates of the R packages.
 
-The @file{bin/osf} directory of a @acronym{CRAN} site contains RPMs by
-Albrecht Gebhardt for alpha systems running Alpha Unix (OSF/Tru64).
+@c The @file{bin/osf} directory of a @acronym{CRAN} site contains RPMs
+@c by Albrecht Gebhardt for alpha systems running Alpha Unix
+@c (OSF/Tru64).
 
 @c There are also `tar' distributions for NEXTSTEP on the i386 and m68k
 @c platforms in @file{bin/nextstep/i386} and @file{bin/nextstep/m68k},
@@ -2033,6 +2034,8 @@ observed and unobserved variables) by the method of maximum likelihood
 using the RAM approach.
 @item serialize
 Simple interfce for serializing to connections.
+@item session
+Functions for interacting with, saving and restoring R sessions.
 @item sgeostat
 An object-oriented framework for geostatistical modeling.
 @item sm
