@@ -40,15 +40,19 @@
 
 static double **w;
 
+/* The idea is to allocate w of size SIGNRANK_MAX on the first small call, and
+   to reallocate only for n > SIGNRANK_MAX, although for some reason
+   realloc is not used */
+
 static void
 w_free(int n)
 {
     int i;
 
+    if(!w) return;
     n = imax2(n, SIGNRANK_MAX);
-    for (i = n; i >= 0; i--) {
-	free((void *) w[i]);
-    }
+    for (i = n; i >= 0; i--)
+	if(w[i]) {free((void *) w[i]); w[i] = 0;}
     free((void *) w);
     w = 0;
 }
@@ -89,6 +93,8 @@ csignrank(int k, int n)
     if (w[n] == 0) {
 	w[n] = (double *) calloc(c + 1, sizeof(double));
 	if (!w[n]) {
+	    /* free up memory iff n is large */
+	    w_free_maybe(n);
 	    MATHLIB_ERROR("%s", "signrank allocation error");
 	}
 	for (i = 0; i <= c; i++)
