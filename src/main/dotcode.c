@@ -316,15 +316,18 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup)
 	    /* SETCDR(prev, s = CDR(s)); */
 	    if(dupused++ == 1) warning("DUP used more than once");
 	} else if(TAG(s) == PkgSymbol) {
-	    if(pkgused++ == 1) warning("PACKAGE used more than once");
 	    strcpy(DLLname, CHAR(STRING_ELT(CAR(s), 0)));
-            if(s == args)
-		args = CDR(s);
-            else
-	        SETCDR(prev, s = CDR(s)); /* delete this arg, which is the next one */
-            continue;
-	} else {
-	}
+	    if(pkgused++ > 1) warning("PACKAGE used more than once");
+	    /* More generally, this should allow us to process
+               any additional arguments and not insist that PACKAGE
+               be the last argument.
+             */
+             if(s == args) 
+		 args = s = CDR(s);
+             else 
+		 SETCDR(prev, s = CDR(s));
+             continue;
+	} 
         nargs++;
 	prev = s;
 	s = CDR(s);
@@ -1229,7 +1232,6 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     /* function calls.  Note that we copy twice */
     /* once here, on the way into the call, and */
     /* once below on the way out. */
-
     cargs = (void**)R_alloc(nargs, sizeof(void*));
     nargs = 0;
     for(pargs = args ; pargs != R_NilValue; pargs = CDR(pargs)) {
