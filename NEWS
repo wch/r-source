@@ -256,7 +256,12 @@ NEW FEATURES
     o   The cov() function in the non-Pearson cases now ranks data after
         removal of missing values, not before. The pairwise-complete method 
         should now be consistent with cor.test. Code contributed by Shigenobu
-        Aoki. 
+        Aoki.
+
+    o   mahalanobis() now has a '...' argument which is passed to solve()
+        for computing the inverse of the covariance matrix, this replaces
+        the former 'tol.inv' argument.
+	
 
 
 INTERNATIONALIZATION
