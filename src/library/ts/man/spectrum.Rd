@@ -34,7 +34,7 @@ spectrum(x, method = c("pgram", "ar"), plot = TRUE, \dots)
     between different
     series. Column \eqn{ i + (j - 1) * (j - 2)/2} of \code{coh}
     contains the squared coherency between columns \eqn{i} and \eqn{j}
-    of \code{x}, where \eqn{i > j}.}
+    of \code{x}, where \eqn{i < j}.}
 
   \item{phase}{\code{NULL} for univariate series. For multivariate
     time series a matrix containing the cross-spectrum phase between
