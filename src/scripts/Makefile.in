@@ -15,7 +15,7 @@ SCRIPTS_S = BATCH LINK Rdiff Rd2dvi Rd2txt filename help help.links \
 SCRIPTS_B_IN = COMPILE.in INSTALL.in REMOVE.in Rd2contents.in \
 	Rdconv.in Rdindex.in Rprof.in SHLIB.in Sd2Rd.in \
 	build-help.in build.in check.in extract-usage.in
-SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
+SCRIPTS_B = $(SCRIPTS_B_IN:.in=) $(top_builddir)/libtool
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(SCRIPTS_S) $(SCRIPTS_B_IN) R.sh.in
@@ -61,6 +61,9 @@ R.fe: R.sh $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@chmod +x $@
 
 R.sh: $(srcdir)/R.sh.in $(top_builddir)/config.status
+
+$(top_builddir)/libtool:
+	@(cd $(@D); $(MAKE) $(@F))
 
 mostlyclean: clean
 clean:
