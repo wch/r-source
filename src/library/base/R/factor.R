@@ -53,12 +53,12 @@ nlevels <- function(x) length(levels(x))
     factor(xlevs[x], levels = unique(nlevs))
 }
 
-as.vector.factor <- function(x, type="any")
+as.vector.factor <- function(x, mode="any")
 {
-    if(type== "any" || type== "character" || type== "logical" || type== "list")
-	as.vector(levels(x)[x], type)
+    if(mode== "any" || mode== "character" || mode== "logical" || mode== "list")
+	as.vector(levels(x)[x], mode)
     else
-	as.vector(unclass(x), type)
+	as.vector(unclass(x), mode)
 }
 
 as.character.factor <- function(x,...)
