@@ -7,6 +7,7 @@
 \alias{as.factor}
 \alias{as.ordered}
 \alias{is.na<-.factor}
+\concept{categorical variable}
 \description{
   The function \code{factor} is used to encode a vector as a factor (the
   names category and enumerated type are also used for factors).  If
@@ -53,7 +54,7 @@ as.ordered(x)
   Applying \code{factor} to an ordered or unordered factor returns a
   factor (of the same type) with just the levels which occur: see also
   \code{\link{[.factor}} for a more transparent way to achieve this.
- 
+
   \code{is.factor} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of type factor or not.  Correspondingly,
   \code{is.ordered} returns \code{TRUE} when its
@@ -106,7 +107,10 @@ as.ordered(x)
   \code{"levels"} attribute.  Be careful only to compare factors with
   the same set of levels (in the same order).  In particular,
   \code{as.numeric} applied to a factor is meaningless, and may
-  happen by implicit coercion.
+  happen by implicit coercion.	To \dQuote{revert} a factor \code{f} to
+  its original numeric values, \code{as.numeric(levels(f))[f]} is
+  recommended and slightly more efficient than
+  \code{as.numeric(as.character(f))}.
 
   The levels of a factor are by default sorted, but the sort order
   may well depend on the locale at the time of creation, and should
@@ -119,16 +123,16 @@ as.ordered(x)
 }
 \seealso{
   \code{\link{[.factor}} for subsetting of factors.
-  
+
   \code{\link{gl}} for construction of \dQuote{balanced} factors and
   \code{\link{C}} for factors with specified contrasts.
   \code{\link{levels}} and \code{\link{nlevels}} for accessing the
-  levels,  and \code{\link{codes}} to get integer codes.
+  levels, and \code{\link{codes}} to get integer codes.
 }
 \examples{
 (ff <- factor(substring("statistics", 1:10, 1:10), levels=letters))
 as.integer(ff) # the internal codes
-factor(ff)      # drops the levels that do not occur
+factor(ff)	# drops the levels that do not occur
 ff[, drop=TRUE] # the same, more transparently
 
 factor(letters[1:20], label="letter")
