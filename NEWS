@@ -14,6 +14,9 @@ BUG FIXES
     o	The fix to PR#2396 broke read.table() on files with CR line
 	endings. (PR#2469)
 
+    o   Converting Sweave files to noweb syntax using SweaveSyntConv()
+        was broken.
+
 
 		CHANGES IN R VERSION 1.6.2
 
