@@ -830,9 +830,6 @@ function(x, ...)
     invisible(x)
 }
     
-
-
-
 ### * checkDocArgs
 
 checkDocArgs <-
@@ -883,7 +880,7 @@ function(package, dir, lib.loc = NULL)
     txtConn <- textConnection(paste(txt, collapse = "\n"))
     on.exit(close(txtConn), add = TRUE)
     for(n in numOfUsageCodeLines) {
-        docObj <- gsub("^# usages in documentation object ", "",
+        docObj <- sub("^# usages in documentation object ", "",
                        readLines(txtConn, 1))
         if(isBase
            && docObj %in% c("Defunct", "Deprecated", "Devices")) {
@@ -893,7 +890,8 @@ function(package, dir, lib.loc = NULL)
         if(argList == "# arglist: *internal*") {
             readLines(txtConn, n); next
         }
-        exprs <- try(parse(n = -1, text = readLines(txtConn, n)))
+        aliases <- readLines(txtConn, 1)
+        exprs <- try(parse(n = -1, text = readLines(txtConn, n - 1)))
         if(inherits(exprs, "try-error"))
             stop(paste("cannot parse usages in documentation object",
                        sQuote(docObj)))
@@ -907,7 +905,7 @@ function(package, dir, lib.loc = NULL)
         lsArgs <- ls(envir = argsEnv, all.names = TRUE)
 
         argsInArgList <-
-            unlist(strsplit(gsub("# arglist: *", "", argList), " +"))
+            unlist(strsplit(sub("# arglist: *", "", argList), " +"))
         argsInUsage <-
             unlist(lapply(lsArgs,
                           function(f) {
@@ -918,6 +916,7 @@ function(package, dir, lib.loc = NULL)
                                   character()
                           }))
 
+        ## Now analyze what we found.
         argsInUsageMissingInArgList <-
             argsInUsage[!argsInUsage %in% argsInArgList]
         argsInArgListMissingInUsage <-
@@ -939,17 +938,45 @@ function(package, dir, lib.loc = NULL)
             ## but fails for files with special syntax (Extract.Rd).
         }
 
+        ## Clean up argsEnv here, as we will possibly modify lsArgs.
+        rm(list = lsArgs, envir = argsEnv)
+
+        ## Also test whether the objects we found from the \usage all
+        ## have aliases.  Has nothing to do with consistency between
+        ## \usage and \arguments, of course, but checkDocArgs() is the
+        ## only test working only on the Rd objects (and most likely
+        ## should be turned into a more general-purpose testing tool for
+        ## Rd objects).
+        aliases <-
+            unlist(strsplit(sub("^# aliases: *", "", aliases), " +"))
+        ## Argh.  Now there are good reasons for keeping \S4method{}{}
+        ## as is, but of course this is not what the aliases use ...
+        ## <FIXME>
+        ## Should maybe use topicName(), but in any case, we should have
+        ## functions for converting between the two forms, see also the
+        ## code for undoc().
+        aliases <- sub("([^,]+),(.+)-method$",
+                       "\\\\S4method{\\1}{\\2}",
+                       aliases)
+        ## </FIXME>
+        aliases <- gsub("\\\\%", "%", aliases)
+        ## Remove trailing '~' used for dealing with objects with
+        ## multiple \usage.
+        lsArgs <- sub("~+$", "", lsArgs)
+        lsArgsNotInAliases <-
+            lsArgs[! lsArgs %in% c(aliases, ".__Usage__.")]
+
         if((length(argsInUsageMissingInArgList) > 0)
            || any(duplicated(argsInArgList))
-           || (length(argsInArgListMissingInUsage) > 0))
+           || (length(argsInArgListMissingInUsage) > 0)
+           || (length(lsArgsNotInAliases) > 0))
             badDocObjs[[docObj]] <-
                 list(missing = argsInUsageMissingInArgList,
                      duplicated =
                      argsInArgList[duplicated(argsInArgList)],
-                     overdoc = argsInArgListMissingInUsage)
+                     overdoc = argsInArgListMissingInUsage,
+                     unaliased = lsArgsNotInAliases)
 
-        ## Clean up argsEnv.
-        rm(list = lsArgs, envir = argsEnv)
     }
 
     class(badDocObjs) <- "checkDocArgs"
@@ -981,6 +1008,14 @@ function(x, ...)
                              sQuote(docObj), ":", sep = ""))
             print(unique(argsInArgListMissingInUsage))
         }
+        lsArgsNotInAliases <- x[[docObj]][["unaliased"]]
+        if(length(lsArgsNotInAliases) > 0) {
+            writeLines(paste("Objects in \\usage without \\alias",
+                             " in documentation object ",
+                             sQuote(docObj), ":", sep = ""))
+            print(unique(lsArgsNotInAliases))
+        }
+        
         writeLines("")
     }
     invisible(x)
