@@ -8,7 +8,7 @@
 
 R_PAPERSIZE=${R_PAPERSIZE-a4}
 
-revision='$Revision: 1.11 $'
+revision='$Revision: 1.12 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi.sh ${version}
 
@@ -49,7 +49,6 @@ preview=${xdvi-xdvi.bat}
 verbose=false
 OSdir=windows
 
-${verbose} "Parsing arguments ..."
 while test -n "${1}"; do
   case ${1} in
     -h|--help)
@@ -66,7 +65,7 @@ while test -n "${1}"; do
       out_ext="pdf";
       preview=false;
       R_RD4DVI=${R_RD4PDF-"ae,hyper"};
-      R_LATEXCMD=${PDFLATEX-pdflatex};;
+      R_LATEXCMD=${PDFLATEX-pdflatex} ;;
     --title=*)
       title=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     -o)
@@ -134,6 +133,21 @@ Rdconv_dir_or_files_to_LaTeX () {
 
 }
 
+Rd_DESCRIPTION_to_LaTeX () {
+  ## Typeset the contents of a DESCRIPTION file in a LaTeX description
+  ## list.
+  ## Usage:
+  ##   Rd_DESCRIPTION_to_LaTeX FILE
+  fields=`sed '/^[ 	]/d; s/^\([^:]*\):.*$/\1/' $1`
+  echo "\\begin{description}"
+  echo "\\raggedright{}"
+  for f in `echo "${fields}" | sed '/Package/d; /Bundle/d;'`; do
+    text=`get_dcf_field ${f} ${1}`
+    echo "\\item[${f}] \\AsIs{${text}}"
+  done
+  echo "\\end{description}"
+}
+
 is_bundle=no
 file_sed='s/[_$]/\\&/g'
 
@@ -168,7 +182,9 @@ else
   fi
   subj="\\file{`echo ${1} | sed ${file_sed}`}${subj}"
 fi
-title=${title-"\\R{} documentation}} \\par\\bigskip{{\\Large of ${subj}"}
+## substitution went wrong under ash
+title1="\\R{} documentation}} \\par\\bigskip{{\\Large of ${subj}"
+title=${title-$title1}
 
 ## Prepare for building the documentation.
 if test -f ${output}; then
@@ -190,38 +206,65 @@ cat > ${build_dir}/Rd2.tex <<EOF
 \\documentclass[${R_PAPERSIZE}paper]{book}
 \\usepackage[${R_RD4DVI-ae}]{Rd}
 \\usepackage{makeidx}
-\\makeindex
+\\makeindex{}
 \\begin{document}
+EOF
+if test ${is_bundle} = no; then
+  cat >> ${build_dir}/Rd2.tex <<EOF
 \\chapter*{}
 \\begin{center}
 {\\textbf{\\huge ${title}}}
 \\par\\bigskip{\\large \\today}
 \\end{center}
 EOF
-
+  if test -f ${1}/DESCRIPTION; then
+    Rd_DESCRIPTION_to_LaTeX ${1}/DESCRIPTION >> ${build_dir}/Rd2.tex
+  fi
+else
+  cat >> ${build_dir}/Rd2.tex <<EOF
+\\pagenumbering{Roman}
+\\begin{titlepage}
+\\strut\\vfill
+\\begin{center}
+{\\textbf{\\Huge ${title}}}
+\\par\\bigskip{\\large \\today}
+\\end{center}
+\\par\\bigskip
+EOF
+  Rd_DESCRIPTION_to_LaTeX ${1}/DESCRIPTION >> ${build_dir}/Rd2.tex
+  cat >> ${build_dir}/Rd2.tex <<EOF
+\\vfill\\vfill
+\\end{titlepage}
+EOF
+fi
+  
 ## Rd2.tex part 2: body
 if test ${is_bundle} = no; then
   echo ${toc} >> ${build_dir}/Rd2.tex
   Rdconv_dir_or_files_to_LaTeX ${build_dir}/Rd2.tex ${dir-${@}}
 else
-  ## <FIXME>
-  ## echo "\\tableofcontents{}" >> ${build_dir}/Rd2.tex
-  echo ${toc} >> ${build_dir}/Rd2.tex
-  ## </FIXME>
+  cat >> ${build_dir}/Rd2.tex <<EOF
+\\pagenumbering{roman}
+\\tableofcontents{}
+\\cleardoublepage{}
+\\pagenumbering{arabic}
+EOF
   for p in ${bundle_pkgs}; do
     echo "Bundle package: \`${p}'"
-    (echo "\\chapter*{Package \`${p}'}"
-      ## <FIXME>
-      ## echo ${toc}
-      ## </FIXME>
-      ) >> ${build_dir}/Rd2.tex
+    echo "\\chapter{Package \`${p}'}" >> ${build_dir}/Rd2.tex
+    if test -f ${1}/${p}/DESCRIPTION.in; then
+      Rd_DESCRIPTION_to_LaTeX ${1}/${p}/DESCRIPTION.in \
+        >> ${build_dir}/Rd2.tex
+    fi
     Rdconv_dir_or_files_to_LaTeX ${build_dir}/Rd2.tex ${1}/${p}/man
+    echo "\\clearpage{}" >> ${build_dir}/Rd2.tex
   done
+  echo "\\cleardoublepage{}" >> ${build_dir}/Rd2.tex
 fi
 
 ## Rd2.tex part 3: footer
 cat >> ${build_dir}/Rd2.tex <<EOF
-\\printindex
+\\printindex{}
 \\end{document}
 EOF
 
@@ -230,6 +273,9 @@ cd ${build_dir}
 ${R_LATEXCMD-latex} Rd2
 ${R_MAKEINDEXCMD-makeindex} Rd2
 ${R_LATEXCMD-latex} Rd2
+if test ${out_ext} = pdf; then
+  ${R_LATEXCMD-latex} Rd2
+fi
 cd ${start_dir}
 cp ${build_dir}/Rd2.${out_ext} ${output}
 echo "Done"
