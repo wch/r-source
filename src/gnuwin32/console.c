@@ -109,11 +109,14 @@ void setCURCOL(ConsoleData p)
 {
 #ifdef SUPPORT_GUI_MBCS
     char *P = LINE(NUMLINES - 1) + prompt_len;
-    int w0 = 0;
+    int w0 = 0, used;
     wchar_t wc;
-    while (*P && P < LINE(NUMLINES - 1) + prompt_len + cur_byte) {
-	P += mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+    mbs_init(&mb_st);
+    while (P < LINE(NUMLINES - 1) + prompt_len + cur_byte) {
+	used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+	if(used <= 0) break;
 	w0 += wcwidth(wc);
+	P += used;
     }
     CURCOL = w0 + prompt_wid;
 #else

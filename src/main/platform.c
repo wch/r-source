@@ -1054,13 +1054,14 @@ SEXP do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	warningcall(call, "OS reports request cannot be honored");
     }
     UNPROTECT(1);
-#ifndef Win32
 #ifdef HAVE_LANGINFO_CODESET
     utf8locale = strcmp(nl_langinfo(CODESET), "UTF-8") == 0;
 #endif
 #ifdef SUPPORT_MBCS
     mbcslocale = MB_CUR_MAX > 1;
 #endif
+#if defined(Win32) && defined(SUPPORT_UTF8)
+    utf8locale = mbcslocale = TRUE;
 #endif
     return ans;
 #else

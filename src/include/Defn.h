@@ -898,6 +898,8 @@ char *Rf_strrchr(const char *s, int c);
 #ifdef Win32
 void R_fixslash(char *s);
 void R_fixbackslash(char *s);
+#endif
+#if defined(Win32) && defined(SUPPORT_UTF8)
 #define mbrtowc(a,b,c,d) Rmbrtowc(a,b)
 #define wcrtomb(a,b,c) Rwcrtomb(a,b)
 #define mbstowcs(a,b,c) Rmbstowcs(a,b,c)

@@ -26,10 +26,6 @@
 #include <config.h>
 #endif
 
-#ifdef SUPPORT_GUI_MBCS
-#define SUPPORT_MBCS 1
-#endif
-
 #include <stdio.h>
 #include "Defn.h"
 #include "Fileio.h"
@@ -1370,7 +1366,9 @@ Rboolean winNewFrameConfirm(void)
 
 /* UTF-8 support ----------------------------------------------- */
 
+#ifdef SUPPORT_UTF8
 #define FAKE_UTF8 1
+#endif
 
 size_t Rmbrtowc(wchar_t *wc, const char *s)
 {
