@@ -88,14 +88,10 @@ Copy:
 	  test -f $${f} || $(LN_S) $(srcdir)/../$${f} . ; \
 	done
 
-static: Makefile ../../include/Rconfig.h
-	@$(MAKE) Copy
-	@$(MAKE) Makedeps
+static: Makefile ../../include/Rconfig.h Copy Makedeps
 	@$(MAKE) $(Rexeclibdir_LIBRARIES)
 
-shared: Makefile ../../include/Rconfig.h
-	@$(MAKE) Copy
-	@$(MAKE) Makedeps
+shared: Makefile ../../include/Rconfig.h Copy Makedeps
 	@$(MAKE) $(Rexeclibdir_LTLIBRARIES)
 
 ../../include/Rconfig.h:
@@ -104,7 +100,8 @@ shared: Makefile ../../include/Rconfig.h
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-Makedeps: Makefile ../../include/Rconfig.h $(DEPENDS)
+Makedeps: Makefile ../../include/Rconfig.h
+	@$(MAKE) $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile
 	@cat $(DEPENDS) | sed s/\.o:/.lo:/>> Makefile
 	@touch $@
