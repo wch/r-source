@@ -1441,7 +1441,7 @@ function(package, dir, lib.loc = NULL)
     allGenerics <-
         c(allGenerics,
           .getInternalS3generics(),
-          c("Math", "Ops", "Summary"))
+          .getS3groupGenerics())
 
     ## Find all methods in the given package for the generic functions
     ## determined above.  Store as a list indexed by the names of the

@@ -2,7 +2,7 @@ methods <- function (generic.function, class)
 {
     findGeneric <- function(fname, envir) {
         if(!exists(fname, mode = "function", envir = envir)) return("")
-        if(any(fname == tools:::.getInternalS3generics())) return(fname)
+        if(any(fname == knownGenerics)) return(fname)
         f <- get(fname, mode = "function", envir = envir)
         isUMEbrace <- function(e) {
             for (ee in as.list(e[-1]))
@@ -46,7 +46,9 @@ methods <- function (generic.function, class)
     }
 
     S3MethodsStopList <- tools:::.makeS3MethodsStopList(NULL)
-    S3groupGenerics <- c("Ops", "Math", "Summary")
+    S3groupGenerics <- tools:::.getS3groupGenerics()
+    knownGenerics <- c(tools:::.getInternalS3generics(),
+                       tools:::.getS3groupGenerics())
 
     an <- lapply(seq(along=(sp <- search())), ls)
     names(an) <- sp
@@ -66,8 +68,6 @@ methods <- function (generic.function, class)
                           sQuote(truegf)))
             generic.function <- truegf
         }
-        genfun <- get(generic.function, mode = "function",
-                      envir = parent.frame())
 	name <- paste("^", generic.function, ".", sep = "")
         name <- gsub("([.[$+*])", "\\\\\\1",name)
         info <- info[grep(name, row.names(info)), ]
@@ -85,6 +85,8 @@ methods <- function (generic.function, class)
         if(generic.function %in% S3groupGenerics)
             defenv <- .BaseNamespaceEnv
         else {
+            genfun <- get(generic.function, mode = "function",
+                          envir = parent.frame())
             defenv <- if (typeof(genfun) == "closure") environment(genfun)
             else .BaseNamespaceEnv
         }
@@ -109,6 +111,7 @@ methods <- function (generic.function, class)
             ## check if we can find a generic matching the name
             possible.generics <- gsub(name, "", row.names(info))
             keep <- sapply(possible.generics, function(nm) {
+                if(nm %in% knownGenerics) return(TRUE)
                 where <- find(nm, mode = "function")
                 if(!length(where)) return(FALSE)
                 any(sapply(where, function(w)
@@ -202,7 +205,7 @@ getS3method <-  function(f, class, optional = FALSE)
         isUME(body(f))
     }
 
-    groupGenerics <- c("Ops", "Math", "Summary")
+    S3groupGenerics <- tools:::.getS3groupGenerics()
     truegf <- findGeneric(f, parent.frame())
     if(nchar(truegf)) f <- truegf
     else {
@@ -213,7 +216,7 @@ getS3method <-  function(f, class, optional = FALSE)
     if(exists(method, mode = "function", envir = parent.frame()))
         return(get(method, mode = "function", envir = parent.frame()))
     ## also look for registered method in namespaces
-    if(f %in% groupGenerics)
+    if(f %in% S3groupGenerics)
         defenv <- .BaseNamespaceEnv
     else {
         genfun <- get(f, mode="function", envir = parent.frame())

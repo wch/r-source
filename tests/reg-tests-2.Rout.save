@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Foundation for Statistical Computing
-Version 1.9.0 Under development (unstable) (2003-11-29), ISBN 3-900051-00-3
+Version 1.9.0 Under development (unstable) (2003-12-01), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3233,14 +3233,15 @@ Error in "[.data.frame"(x, 1, c("a", "c")) :
 > meth2gen <- function(cl)
 +     noquote(sub(paste("\\.",cl,"$",sep=""),"", methods(class = cl)))
 > meth2gen("data.frame")
- [1] $<-           [             [<-           [[            [[<-         
- [6] aggregate     as.data.frame as.list       as.matrix     by           
-[11] dim           dimnames      dimnames<-    duplicated    edit         
-[16] format        formula       is.na         mean          merge        
-[21] na.exclude    na.omit       plot          print         prompt       
-[26] row.names     row.names<-   rowsum        split         split<-      
-[31] stack         str           subset        summary       t            
-[36] transform     unique        unstack      
+ [1] $<-           Math          Ops           Summary       [            
+ [6] [<-           [[            [[<-          aggregate     as.data.frame
+[11] as.list       as.matrix     by            dim           dimnames     
+[16] dimnames<-    duplicated    edit          format        formula      
+[21] is.na         mean          merge         na.exclude    na.omit      
+[26] plot          print         prompt        row.names     row.names<-  
+[31] rowsum        split         split<-       stack         str          
+[36] subset        summary       t             transform     unique       
+[41] unstack      
 > meth2gen("dendrogram")
 [1] [[      cut     plot    print   reorder rev     str    
 > ## --> the output may need somewhat frequent updating..

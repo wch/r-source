@@ -193,6 +193,10 @@ function(nsInfo)
            })
 }
 
+### ** .getS3groupGenerics
+
+.getS3groupGenerics <- function() c("Ops", "Math", "Summary", "Complex")
+
 ### ** .isPrimitive
 
 .isPrimitive <-
