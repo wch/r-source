@@ -11,9 +11,10 @@ methods <- function (generic.function, class)
     ## this list is taken from .makeS3MethodsStopList in tools/R/utils.R
     S3MethodsStopList <-
         c("boxplot.stats", "close.screen", "close.socket", "flush.console",
-          "format.char", "format.info", "format.pval", "plot.new",
-          "plot.window", "plot.xy", "split.screen", "update.packages",
-          "solve.QP", "solve.QP.compact","print.graph", "lag.plot")
+          "format.char", "format.info", "format.pval", "influence.measures",
+          "plot.new", "plot.window", "plot.xy", "split.screen",
+          "update.packages", "solve.QP", "solve.QP.compact", "print.graph",
+          "lag.plot")
     groupGenerics <- c("Ops", "Math", "Summary")
 
     an <- lapply(seq(along=(sp <- search())), ls)
