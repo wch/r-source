@@ -57,10 +57,10 @@ system.date <- function() {
     .not.yet.implemented()
 }
 
-system.file <- function(file, pkg = .packages(), lib = .lib.loc) {
-  .not.yet.implemented()
-  ## UPDATE THE INTERNAL !!!
-  .Internal(system.file(dir, name))
+system.file <- function(file = "", pkg = .packages(), lib = .lib.loc) {
+	FILES <- paste(t(outer(lib, pkg, paste, sep = "/")),
+		file, sep = "/", collapse = " ")
+	.Internal(system.file(FILES))
 }
 
 system.time <- function(expr) {
@@ -68,7 +68,7 @@ system.time <- function(expr) {
 }
 
 tempfile <- function(pattern = "file") {
-  .not.yet.implemented()
+  .Internal(tempfile(pattern))
 }
 
 unlink <- function(x) {
