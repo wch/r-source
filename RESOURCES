@@ -41,19 +41,18 @@ The Comprehensive R Archive Network (CRAN) is a collection of sites
 which carry identical material, consisting of the R distribution(s),
 the contributed extensions, documentation for R, and binaries.
 
-The CRAN master site can be found at the URL
+The CRAN master site can be found at the URL's
 
-	http://www.ci.tuwien.ac.at/R		(Austria)
-        ftp://ftp.ci.tuwien.ac.at/pub/R         (Austria)
+    http://www.ci.tuwien.ac.at/R
+or  ftp://ftp.ci.tuwien.ac.at/pub/R/                  (Austria)
 
-and is currently being mirrored daily at
+and is currently being mirrored at
 
-	http://sunsite.auc.dk/R					(Denmark)
-	http://www.stat.unipg.it/pub/stat/statlib/R/CRAN	(Italy)
-	ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN			(Japan)
-	ftp://dola.snu.ac.kr/pub/R				(South Korea)
-	http://www.stat.math.ethz.ch/CRAN			(Switzerland)
-        http://lib.stat.cmu.edu/R/CRAN				(U.S.A.)
-        http://cran.stat.wisc.edu/				(U.S.A.)
-	ftp://ftp.biostat.washington.edu/mirrors/R/CRAN		(U.S.A.)
-
+    http://SunSITE.auc.dk/R/                          (Denmark)
+    http://www.stat.unipg.it/pub/stat/statlib/R/CRAN/ (Italy)
+    ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/           (Japan)
+    ftp://dola.snu.ac.kr/pub/R/CRAN/                  (South Korea)
+    http://stat.ethz.ch/R-CRAN/			      (Switzerland)
+    http://lib.stat.cmu.edu/R/CRAN/                   (USA/Pennsylvania)
+    ftp://ftp.biostat.washington.edu/mirrors/R/CRAN/  (USA/Washington)
+    http://cran.stat.wisc.edu/	                      (USA/Wisconsin)
