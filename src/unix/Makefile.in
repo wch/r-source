@@ -28,7 +28,7 @@ libunix_a_SOURCES = $(SOURCES)
 libunix_a_OBJECTS = $(OBJECTS)
 
 ## FIXME:
-## We most likely will not want a seperate shared library.
+## We most likely will not want a separate shared library.
 ## If we have a final decision, remove libunix.la target.
 ## </FIXME>
 noinst_LTLIBRARIES = libunix.la
