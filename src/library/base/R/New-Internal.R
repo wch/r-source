@@ -105,13 +105,6 @@ mem.limits <- function(nsize=NA, vsize=NA)
 
 nchar <- function(x).Internal(nchar(x))
 
-##=== FAILS: [	format(pi, dig=2) doesn't work afterwards ]
-##- on.exit <- function(expression, add = FALSE) {
-##-   if(!is.logical(add) || add)
-##-	stop("on.exit(.., add != FALSE) does not yet work in R.")
-##-  .Internal(on.exit(expression))
-##- }
-
 plot.window <- function(xlim, ylim, log = "", asp = NA, ...)
     .Internal(plot.window(xlim, ylim, log, asp, ...))
 polyroot <- function(z).Internal(polyroot(z))

@@ -1,7 +1,3 @@
-##---  the argument `make.dimnames'  is  not yet documented
-##--- and it doesn't work when TRUE mostly..
-##--- (very unclear debugging however ...)  --- Martin Maechler
-
 kronecker <- function (X, Y, FUN = "*", make.dimnames = FALSE, ...)
 {
     dX <- dim(X <- as.array(X))
