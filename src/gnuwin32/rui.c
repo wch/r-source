@@ -622,7 +622,7 @@ int setupui()
     MCHECK(m = newmenu("Help"));
     MCHECK(newmenuitem("Console", 0, menuconsolehelp));
     MCHECK(mhelp = newmenuitem("R language (standard)", 0, menuhelp));
-    MCHECK(mhelpstart = newmenuitem("R language (&HTML)", 0, menuhelpstart));
+    MCHECK(mhelpstart = newmenuitem("R language (&html)", 0, menuhelpstart));
     lhelpstart = check_doc_file("doc/html/rwin.html");
     if (!lhelpstart) disable(mhelpstart);
     MCHECK(mman = newsubmenu(m, "Manuals"));
