@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-38 @value{FAQ-YEAR}-08-03
+@set FAQ-VERSION 1.9-39 @value{FAQ-YEAR}-08-04
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -2102,6 +2102,11 @@ Statistics, 1989).
 Features and strings for nonparametric regression.
 @item g.data
 Create and maintain delayed-data packages (DDP's).
+@item gRbase
+A package for graphical modelling in R.  Defines S4 classes for
+graphical meta data and graphical models, and illustrates how
+hierarchical log-linear models may be implemented and combined with
+@strong{dynamicGraph}.
 @item gafit
 Genetic algorithm for curve fitting.
 @item gap

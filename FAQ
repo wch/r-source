@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.9-38 2004-08-03
+Version 1.9-39 2004-08-04
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1890,6 +1890,12 @@ distributions of R.)
 
 *g.data*
      Create and maintain delayed-data packages (DDP's).
+
+*gRbase*
+     A package for graphical modelling in R.  Defines S4 classes for
+     graphical meta data and graphical models, and illustrates how
+     hierarchical log-linear models may be implemented and combined with
+     *dynamicGraph*.
 
 *gafit*
      Genetic algorithm for curve fitting.
