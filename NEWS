@@ -34,7 +34,9 @@ NEW FEATURES
 	also scale linearly with cex= insofar as your X server can do it.
 	On systems with the scalable type 1 PostScript fonts installed, this
 	looks particularly nice. Note that the scaling is linear in
-	the *diameter*, but quadratic in area.
+	the *diameter*, but quadratic in area. The distance between lines of
+	margin text in the X11 device is now proportional to the
+	size given to x11(pointsize).
 
     o	The cex= argument to plot() etc. can be a vector, like pch=.
 
