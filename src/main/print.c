@@ -701,9 +701,9 @@ static void printAttributes(SEXP s, SEXP env, Rboolean useSlots)
 		    na_width_noquote = R_print.na_width_noquote;
 		PROTECT(t = s = allocList(3));
 		SET_TYPEOF(s, LANGSXP);
-		CAR(t) = install("print"); t = CDR(t);
-		CAR(t) = CAR(a); t = CDR(t);
-		CAR(t) = allocVector(INTSXP, 1);
+		SETCAR(t, install("print")); t = CDR(t);
+		SETCAR(t,  CAR(a)); t = CDR(t);
+		SETCAR(t, allocVector(INTSXP, 1));
 		INTEGER(CAR(t))[0] = digits;
 		SET_TAG(t, install("digits")); /* t = CDR(t);
 		CAR(t) = allocVector(LGLSXP, 1);
