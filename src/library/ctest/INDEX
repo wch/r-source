@@ -17,5 +17,8 @@ shapiro.test             Shapiro-Wilk Normality Test
 t.test                   Student's t-Test
 var.test                 F Test to Compare Two Variances
 wilcox.test              Wilcoxon Rank Sum and Signed Rank Tests
+pairwise.t.test          Pairwise comparisons using t tests
+pairwise.wilcox.test     Pairwise comparisons using Wilcoxon tests
+pairwise.prop.test       Pairwise comparisons of proportions
 power.t.test             Power calculations for t-test
 power.prop.test          Power calculations for comparison of proportions

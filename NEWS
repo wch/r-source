@@ -158,6 +158,11 @@ NEW FEATURES
 	was 250k).  This reflects the added base code and packages,
 	and increases memory usage by about 2Mb (on a 32-bit machine).
 
+    o   Some simple multiple comparison procedures: p.adjust() for
+        generic adjustment of a set of p values by variants of the
+        Bonferroni method; pairwise.t.test, pairwise.wilcox.test,
+        pairwise.prop.test for pairwise comparisons of grouped data
+        and proportions.
 
 BUG FIXES
 
