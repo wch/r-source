@@ -74,7 +74,7 @@ filled.contour(x = seq(0, 1, len = nrow(z)),
   \code{\link[lattice]{levelplot}} function from the \pkg{lattice}
   package which works in multipanel displays.
 
-  The ouput produced by \code{filled.contour} is actually a combination
+  The output produced by \code{filled.contour} is actually a combination
   of two plots; one is the filled contour and one is the legend.  Two
   separate coordinate systems are set up for these two plots, but they
   are only used internally - once the function has returned these
