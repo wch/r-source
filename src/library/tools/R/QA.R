@@ -82,11 +82,11 @@ sQuote <- function(s) paste("'", s, "'", sep = "")
         library(package, lib.loc = lib.loc, character.only = TRUE,
                 verbose = FALSE)
     })
-    if(inherits(yy, "try-error"))
-        stop(yy)
     sink(type = "message")
     sink(type = "output")
     close(outConn)
+    if(inherits(yy, "try-error"))
+        stop(yy)
 }
 
 .makeS3MethodsStopList <- function(package) {
