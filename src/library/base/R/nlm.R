@@ -47,8 +47,8 @@ uniroot <- function(f, interval, lower=min(interval), upper=max(interval),
 deriv <- function(x, ...) UseMethod("deriv")
 
 deriv.formula <- function(expr, namevec, function.arg=NULL, tag=".expr") {
-    if(length(expr) == 2)
-	.Internal(deriv.default(expr[[2]], namevec, function.arg, tag))
+    if((le <- length(expr)) > 1)
+	.Internal(deriv.default(expr[[le]], namevec, function.arg, tag))
     else stop("invalid formula in deriv")
 }
 

@@ -116,6 +116,8 @@ BUG FIXES
 
     o	rowsum failed with a matrix and a single group (drop=FALSE needed).
 
+    o	deriv(y ~ <expr>(x)) now works as well as  deriv(~ <expr>(x)).
+
 
 		CHANGES IN R VERSION 0.65.0
 
