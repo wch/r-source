@@ -71,6 +71,10 @@ SEXP do_writeClipboard(SEXP, SEXP, SEXP, SEXP);
 SEXP do_abbrev(SEXP, SEXP, SEXP, SEXP);
 SEXP do_abline(SEXP, SEXP, SEXP, SEXP);
 SEXP do_abs(SEXP, SEXP, SEXP, SEXP);
+#ifdef NEW_CONDITION_HANDLING
+SEXP do_addCondHands(SEXP, SEXP, SEXP, SEXP);
+SEXP do_addRestart(SEXP, SEXP, SEXP, SEXP);
+#endif
 SEXP do_addTryHandlers(SEXP, SEXP, SEXP, SEXP);
 SEXP do_agrep(SEXP, SEXP, SEXP, SEXP);
 SEXP do_alias(SEXP, SEXP, SEXP, SEXP);
@@ -148,6 +152,10 @@ SEXP do_devnext(SEXP, SEXP, SEXP, SEXP);
 SEXP do_devoff(SEXP, SEXP, SEXP, SEXP);
 SEXP do_devprev(SEXP, SEXP, SEXP, SEXP);
 SEXP do_devset(SEXP, SEXP, SEXP, SEXP);
+#ifdef NEW_CONDITION_HANDLING
+SEXP do_dfltStop(SEXP, SEXP, SEXP, SEXP);
+SEXP do_dfltWarn(SEXP, SEXP, SEXP, SEXP);
+#endif
 SEXP do_dim(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dimgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dimnames(SEXP, SEXP, SEXP, SEXP);
@@ -204,6 +212,9 @@ SEXP do_get(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_geterrmessage(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getlocale(SEXP, SEXP, SEXP, SEXP);
+#ifdef NEW_CONDITION_HANDLING
+SEXP do_getRestart(SEXP, SEXP, SEXP, SEXP);
+#endif
 SEXP do_getwd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_globalenv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_gray(SEXP, SEXP, SEXP, SEXP);
@@ -220,6 +231,9 @@ SEXP do_int_unzip(SEXP, SEXP, SEXP, SEXP);
 SEXP do_interactive(SEXP, SEXP, SEXP, SEXP);
 SEXP do_internal(SEXP, SEXP, SEXP, SEXP);
 SEXP do_invisible(SEXP, SEXP, SEXP, SEXP);
+#ifdef NEW_CONDITION_HANDLING
+SEXP do_invokeRestart(SEXP, SEXP, SEXP, SEXP);
+#endif
 SEXP do_is(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isfinite(SEXP, SEXP, SEXP, SEXP);
 SEXP do_isinfinite(SEXP, SEXP, SEXP, SEXP);
@@ -332,6 +346,9 @@ SEXP do_remove(SEXP, SEXP, SEXP, SEXP);
 SEXP do_rep(SEXP, SEXP, SEXP, SEXP);
 SEXP do_repeat(SEXP, SEXP, SEXP, SEXP);
 SEXP do_replay(SEXP, SEXP, SEXP, SEXP);
+#ifdef NEW_CONDITION_HANDLING
+SEXP do_resetCondHands(SEXP, SEXP, SEXP, SEXP);
+#endif
 SEXP do_restart(SEXP, SEXP, SEXP, SEXP);
 SEXP do_restoreb(SEXP, SEXP, SEXP, SEXP);
 SEXP do_return(SEXP, SEXP, SEXP, SEXP);
@@ -358,6 +375,9 @@ SEXP do_setwd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_shade(SEXP, SEXP, SEXP, SEXP);
 SEXP do_strheight(SEXP, SEXP, SEXP, SEXP);
 SEXP do_strwidth(SEXP, SEXP, SEXP, SEXP);
+#ifdef NEW_CONDITION_HANDLING
+SEXP do_signalCondition(SEXP, SEXP, SEXP, SEXP);
+#endif
 SEXP do_sink(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sinknumber(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sort(SEXP, SEXP, SEXP, SEXP);

@@ -1169,6 +1169,11 @@ static void RunGenCollect(R_size_t size_needed)
     FORWARD_NODE(R_GlobalEnv);	           /* Global environment */
     FORWARD_NODE(R_Warnings);	           /* Warnings, if any */
 
+#ifdef NEW_CONDITION_HANDLING
+    FORWARD_NODE(R_HandlerStack);          /* Condition handler stack */
+    FORWARD_NODE(R_RestartStack);          /* Available restarts stack */
+#endif
+
     for (i = 0; i < HSIZE; i++)	           /* Symbol table */
 	FORWARD_NODE(R_SymbolTable[i]);
 
@@ -1194,6 +1199,10 @@ static void RunGenCollect(R_size_t size_needed)
         FORWARD_NODE(ctxt->sysparent);     /* calling environment */
 	FORWARD_NODE(ctxt->call);          /* the call */
 	FORWARD_NODE(ctxt->cloenv);        /* the closure environment */
+#ifdef NEW_CONDITION_HANDLING
+	FORWARD_NODE(ctxt->handlerstack);  /* the condition handler stack */
+	FORWARD_NODE(ctxt->restartstack);  /* the available restarts stack */
+#endif
     }
 
     FORWARD_NODE(framenames); 		   /* used for interprocedure
@@ -1431,6 +1440,10 @@ void InitMemory()
     ATTRIB(R_NilValue) = R_NilValue;
 
     R_weak_refs = R_NilValue;
+
+#ifdef NEW_CONDITION_HANDLING
+    R_HandlerStack = R_RestartStack = R_NilValue;
+#endif
 }
 
 /* Since memory allocated from the heap is non-moving, R_alloc just

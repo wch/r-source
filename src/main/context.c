@@ -124,11 +124,19 @@ void R_run_onexits(RCNTXT *cptr)
 	if (c->cend != NULL) {
 	    void (*cend)(void *) = c->cend;
 	    c->cend = NULL; /* prevent recursion */
+#ifdef NEW_CONDITION_HANDLING
+	    R_HandlerStack = c->handlerstack;
+	    R_RestartStack = c->restartstack;
+#endif
 	    cend(c->cenddata);
 	}
 	if (c->cloenv != R_NilValue && c->conexit != R_NilValue) {
 	    SEXP s = c->conexit;
 	    c->conexit = R_NilValue; /* prevent recursion */
+#ifdef NEW_CONDITION_HANDLING
+	    R_HandlerStack = c->handlerstack;
+	    R_RestartStack = c->restartstack;
+#endif
 	    PROTECT(s);
 	    eval(s, c->cloenv);
 	    UNPROTECT(1);
@@ -150,6 +158,10 @@ void R_restore_globals(RCNTXT *cptr)
     R_EvalDepth = cptr->evaldepth;
     vmaxset(cptr->vmax);
     R_interrupts_suspended = cptr->intsusp;
+#ifdef NEW_CONDITION_HANDLING
+    R_HandlerStack = cptr->handlerstack;
+    R_RestartStack = cptr->restartstack;
+#endif
 }
 
 
@@ -200,6 +212,10 @@ void begincontext(RCNTXT * cptr, int flags,
     cptr->callfun = callfun;
     cptr->vmax = vmaxget();
     cptr->intsusp = R_interrupts_suspended;
+#ifdef NEW_CONDITION_HANDLING
+    cptr->handlerstack = R_HandlerStack;
+    cptr->restartstack = R_RestartStack;
+#endif
     R_GlobalContext = cptr;
 }
 
@@ -208,6 +224,10 @@ void begincontext(RCNTXT * cptr, int flags,
 
 void endcontext(RCNTXT * cptr)
 {
+#ifdef NEW_CONDITION_HANDLING
+    R_HandlerStack = cptr->handlerstack;
+    R_RestartStack = cptr->restartstack;
+#endif
     if (cptr->cloenv != R_NilValue && cptr->conexit != R_NilValue ) {
 	SEXP s = cptr->conexit;
 	int savevis = R_Visible;
@@ -602,21 +622,21 @@ protectedEval(void *d)
 SEXP
 R_tryEval(SEXP e, SEXP env, int *ErrorOccurred)
 {
- Rboolean ok;
- ProtectedEvalData data;
+    Rboolean ok;
+    ProtectedEvalData data;
 
- data.expression = e;
- data.val = NULL;
- data.env = env;
+    data.expression = e;
+    data.val = NULL;
+    data.env = env;
 
- ok = R_ToplevelExec(protectedEval, &data);
- if(ErrorOccurred) {
-     *ErrorOccurred = (ok == FALSE);
- }
- if(ok == FALSE)
-     data.val = NULL;
- else
-     UNPROTECT(1);
+    ok = R_ToplevelExec(protectedEval, &data);
+    if (ErrorOccurred) {
+	*ErrorOccurred = (ok == FALSE);
+    }
+    if (ok == FALSE)
+	data.val = NULL;
+    else
+	UNPROTECT(1);
 
- return(data.val);
+    return(data.val);
 }

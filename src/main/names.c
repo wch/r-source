@@ -92,6 +92,16 @@ FUNTAB R_FunTab[] =
 {"return",	do_return,	0,	0,	-1,	{PP_RETURN,  PREC_FN,	  0}},
 {"stop",	do_stop,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
 {"warning",	do_warning,	0,	111,	2,	{PP_FUNCALL, PREC_FN,	  0}},
+#ifdef NEW_CONDITION_HANDLING
+{".addCondHands",do_addCondHands,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	  0}},
+{".resetCondHands",do_resetCondHands,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	  0}},
+{".signalCondition",do_signalCondition,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	  0}},
+{".dfltStop",do_dfltStop,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
+{".dfltWarn",do_dfltWarn,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
+{".addRestart",do_addRestart,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	  0}},
+{".getRestart",do_getRestart,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	  0}},
+{".invokeRestart",do_invokeRestart,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
+#endif
 {".addTryHandlers",do_addTryHandlers,	0,	111,	0,	{PP_FUNCALL, PREC_FN,	  0}},
 {"geterrmessage",do_geterrmessage, 0,	11,	0,	{PP_FUNCALL, PREC_FN,	  0}},
 {"restart",	do_restart,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	  0}},
