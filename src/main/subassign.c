@@ -1643,6 +1643,9 @@ SEXP R_subassign3_dflt(SEXP call, SEXP x, SEXP nlist, SEXP val)
     PROTECT_WITH_INDEX(x, &pxidx);
     PROTECT_WITH_INDEX(val, &pvalidx);
 
+    if (NAMED(x) == 2)
+	REPROTECT(x = duplicate(x), pxidx);
+
     if (NAMED(val))
 	REPROTECT(val = duplicate(val), pvalidx);
 
