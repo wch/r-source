@@ -15,7 +15,7 @@ DISTFILES = Makefile.in
 
 R = $(top_builddir)/bin/R --vanilla
 
-EX_IN = $(R_PKGS:=-Ex.R)
+EX_IN = $(R_PKGS_BASE:=-Ex.R)
 EX_OUT = $(EX_IN:.R=.Rout)
 
 .SUFFIXES:
@@ -26,7 +26,7 @@ all: Makefile Makedeps test-Examples
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 Makedeps: Makefile
-	@(for p in $(R_PKGS); do \
+	@(for p in $(R_PKGS_BASE); do \
 	    dep="$${p}-Ex.Rout: $${p}-Ex.R"; \
 	    dep="$${dep} \$$(top_builddir)/library/$${p}/R/$${p}"; \
 	    tmp="library/$${p}/libs/$${p}" ; \
@@ -64,7 +64,7 @@ $(EX_IN): FORCE
 	  fi; \
 	  echo "collecting examples for package '$${pkg}' ..."; \
 	  (cd $(top_builddir)/src/library && \
-	    OPTS="--txt --example" $(MAKE) R_PKGS="$${pkg}" DOCS); \
+	    OPTS="--txt --example" $(MAKE) R_PKGS_BASE="$${pkg}" DOCS); \
 	  f=$${TMPDIR-/tmp}/R$$$$; \
 	  $(PERL) $(top_srcdir)/share/perl/massage-Examples.pl $${pkg} \
 	    $(top_builddir)/library/$${pkg}/R-ex > $${f}; \

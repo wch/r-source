@@ -160,7 +160,7 @@ test-Specific:
 	@rm -f data F.Rd c0.Rd df0.Rd l0.Rd
 
 test-Packages:
-	@for p in $(R_PKGS); do \
+	@for p in $(R_PKGS_BASE); do \
 	  echo "* checking package '$${p}'"; \
 	  $(top_builddir)/bin/R CMD check \
 	    $(top_srcdir)/src/library/$${p} || echo; \
@@ -195,7 +195,7 @@ test-Ts:
 	@$(MAKE) $(test-out-ts) RVAL_IF_DIFF=0
 test-DocArgs:
 	@echo "checking whether arguments from usage are documented"
-	@for p in $(R_PKGS); do \
+	@for p in $(R_PKGS_BASE); do \
 	  out="package"; \
 	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
 	  out=`(echo "library(tools)"; \
@@ -212,7 +212,7 @@ test-DocArgs:
 	done
 test-DocStyle:
 	@echo "checking usages for method documentation style"
-	@for p in $(R_PKGS); do \
+	@for p in $(R_PKGS_BASE); do \
 	  out="package"; \
 	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
 	  out=`(echo "library(tools)"; \
@@ -229,7 +229,7 @@ test-DocStyle:
 	done
 test-FF:
 	@echo "checking foreign function calls"
-	@for p in $(R_PKGS); do \
+	@for p in $(R_PKGS_BASE); do \
 	  out="package"; \
 	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
 	  out=`(echo "library(tools)"; \
@@ -244,7 +244,7 @@ test-FF:
 	done
 test-Methods:
 	@echo "checking generic/method consistency"
-	@for p in $(R_PKGS); do \
+	@for p in $(R_PKGS_BASE); do \
 	  out="package"; \
 	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
 	  out=`(echo "library(tools)"; \
@@ -261,7 +261,7 @@ test-Methods:
 	done
 test-codoc:
 	@echo "checking code/documentation mismatches"
-	@for p in $(R_PKGS); do \
+	@for p in $(R_PKGS_BASE); do \
 	  out="package"; \
 	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
 	  out=`(echo "library(tools)"; \
@@ -278,7 +278,7 @@ test-codoc:
 	done
 test-undoc:
 	@echo "checking undocumented objects"
-	@for p in $(R_PKGS); do \
+	@for p in $(R_PKGS_BASE); do \
 	  out="package"; \
 	  echo $(ECHO_N) "$${out} '$${p}' ...$(ECHO_C)"; \
 	  out=`(echo "library(tools)"; \

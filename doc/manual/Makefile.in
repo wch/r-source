@@ -47,7 +47,7 @@ R_PAPERSIZE = @R_PAPERSIZE@
 R_RD4DVI = @R_RD4DVI@
 R_RD4PDF = @R_RD4PDF@
 
-pkgsrcs = $(R_PKGS:=-pkg.tex)
+pkgsrcs = $(R_PKGS_BASE:=-pkg.tex)
 
 texiincludes = version.texi $(srcdir)/R-defs.texi
 
@@ -100,7 +100,7 @@ refman.dvi: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-dvi
 	  opt="$${R_RD4DVI-$(R_RD4DVI)}"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat $(srcdir)/refman.top; \
-	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
+	  for p in $(R_PKGS_BASE); do echo "\\input{$${p}-pkg.tex}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
 ## </NOTE>
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
@@ -122,7 +122,7 @@ $(pkgsrcs): FORCE $(top_srcdir)/share/perl/build-help.pl
 	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
 	  echo "collecting LaTeX docs for package '$${pkg}' ..."; \
 	  (cd $(top_builddir)/src/library && \
-	    OPTS="--latex" $(MAKE) R_PKGS="$${pkg}" DOCS); \
+	    OPTS="--latex" $(MAKE) R_PKGS_BASE="$${pkg}" DOCS); \
 	  $(PERL) $(top_srcdir)/tools/pkg2tex.pl $${pkg}; \
 	fi)
 FORCE:
@@ -176,7 +176,7 @@ refman.pdf: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-pdf
 	  opt="$${R_RD4PDF-$(R_RD4PDF)}"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat $(srcdir)/refman.top; \
-	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
+	  for p in $(R_PKGS_BASE); do echo "\\input{$${p}-pkg.tex}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
 ## </NOTE>
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \

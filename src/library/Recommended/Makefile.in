@@ -22,6 +22,9 @@ all: Makefile @USE_RECOMMENDED_PACKAGES_TRUE@ stamp-recommended
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
+## <FIXME>
+## This should have more error checking: in particular, that for each
+## recommended package we have *exactly* one corresponding .tar.gz.
 stamp-recommended: Timestamp
 	@for pkg in $(R_PKGS_RECOMMENDED); do \
 	  for file in $(srcdir)/$${pkg}_*.tar.gz; do \
@@ -31,10 +34,15 @@ stamp-recommended: Timestamp
 	  done; \
 	done
 	@touch Timestamp
+## </FIXME>
+## <FIXME>
+## Do we still need this?
+## If not, then in the above change the final line to '@touch $@'.
 Timestamp:
 	@touch $@
 	@sleep 1
-	@find $(srcdir) -name '*.tar.gz' -exec touch {} . \; 
+	@find $(srcdir) -name '*.tar.gz' -exec touch {} . \;
+## </FIXME>
 
 R docs:
 
