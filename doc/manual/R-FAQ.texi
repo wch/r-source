@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-01
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-06
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1769,6 +1769,9 @@ Sons.
 @item Malmig
 An implementation of Malecot migration model together with a number of
 related functions.
+@item MatchIt
+Select matched samples of the original treated and control groups with
+similar covariate distributions.
 @item Matching
 Multivariate and propensity score matching with formal tests of balance.
 @item Matrix
