@@ -11,11 +11,11 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
     inuse <- pkgs %in% inuse
     if(any(inuse)) {
         if(sum(inuse) == 1)
-            warning("packages", pkgs[inuse],
-                    "is in use and will not be installed", call. = FALSE)
+            warning("package ", pkgs[inuse],
+                    " is in use and will not be installed", call. = FALSE)
         else
-            warning("packages", paste(pkgs[inuse], sep=", "),
-                    "are in use and will not be installed", call. = FALSE)
+            warning("packages ", paste(pkgs[inuse], sep=", "),
+                    " are in use and will not be installed", call. = FALSE)
         pkgs <- pkgs[!inuse]
     }
     if(is.null(CRAN) & missing(contriburl)) {
