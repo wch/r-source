@@ -17,7 +17,8 @@ faithful	Old Faithful Geyser Data
 freeny		Freeny's Revenue Data
 infert		Secondary infertility matched case-control study
 insects		The Effect of Insecticides on Insect Counts
-iris		Edgar Anderson's Iris Data
+iris		Edgar Anderson's Iris Data  as data.frame
+iris3		Edgar Anderson's Iris Data  as array of rank 3
 islands		World Landmass Areas
 longley		Longley's Economic Regression Data
 mtcars		Motor Trend Car Data
