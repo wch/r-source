@@ -3277,5 +3277,14 @@ stopifnot(inherits(.Last.value, "try-error"))
 
 
 ## hist with infinite values (PR#7220)
-hist(log(-5:100), plot=FALSE)
+hist(log(-5:100), plot = FALSE)
 ## failed in 1.9.1: will warn, correctly.
+
+
+## merge problem with names/not in rbind.data.frame
+x <- structure(c("a", "b", "2", "0.2-26", "O", "O"), .Dim = c(2, 3),
+               .Dimnames = list(c("1", "2"), c("P", "V", "2")))
+y <- structure(c("a", "b", "2", "0.2-25", "O", "O"), .Dim = c(2, 3),
+               .Dimnames = list(c("1", "2"), c("P", "V", "1")))
+merge(x, y, all.y = TRUE)
+## failed for a while in pre-2.0.0

@@ -1010,15 +1010,10 @@ rbind.data.frame <- function(..., deparse.level = 1)
                 ## level set has changed
                 value[[jj]][ri] <- if(is.factor(xij)) as.vector(xij) else xij
                 ## copy names if any
-                if(!is.null(nm <- names(xj))) names(value[[jj]])[ri] <- nm
+                if(!is.null(nm <- names(xij))) names(value[[jj]])[ri] <- nm
             }
 	}
     }
-#     for(j in 1:nvar) {
-# 	xj <- value[[j]]
-# 	if(!has.dim[j] && !inherits(xj, "AsIs") && is.character(xj))
-# 	    value[[j]] <- factor(xj)
-#     }
     rlabs <- make.unique(as.character(unlist(rlabs)), sep = "")
     if(is.null(cl)) {
 	as.data.frame(value, row.names = rlabs)
