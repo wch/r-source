@@ -138,7 +138,8 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   \item{w}{the weights used at the unique values of \code{x}.}
   \item{yin}{the y values used at the unique \code{y} values.}
   \item{lev}{leverages, the diagonal values of the smoother matrix.}
-  \item{cv.crit}{(generalized) cross-validation score.}
+  \item{cv.crit}{cross-validation score, ``generalized'' or true, depending
+    on \code{cv}.}
   \item{pen.crit}{penalized criterion}
   \item{crit}{the criterion value minimized in the underlying
     \code{.Fortran} routine \file{sslvrg}.}
@@ -177,7 +178,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   \R implementation by B. D. Ripley and Martin Maechler
   (\code{spar/lambda}, etc).
 
-  This function is based on code in the\code{GAMFIT} Fortran program by
+  This function is based on code in the \code{GAMFIT} Fortran program by
   T. Hastie and R. Tibshirani (\url{http://lib.stat.cmu.edu/general/}),
   which makes use of spline code by Finbarr O'Sullivan.  Its design
   parallels the \code{smooth.spline} function of Chambers \& Hastie (1992).
