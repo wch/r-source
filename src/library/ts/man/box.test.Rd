@@ -1,19 +1,18 @@
 \name{Box.test}
 \alias{Box.test}
-\title{Box--Pierce and Ljung--Box Tests}
+\title{Box-Pierce and Ljung-Box Tests}
+\description{
+  Compute the Box-Pierce or Ljung-Box test statistic for examining the
+  null hypothesis of independence in a given time series.
+}
 \usage{
-Box.test (x, lag = 1, type=c("Box-Pierce", "Ljung-Box"))
+Box.test(x, lag = 1, type = c("Box-Pierce", "Ljung-Box"))
 }
 \arguments{
   \item{x}{a numeric vector or univariate time series.}
-  \item{lag}{the statistic will be based on \code{lag}
-    autocorrelation coefficients.}
+  \item{lag}{the statistic will be based on \code{lag} autocorrelation
+    coefficients.}
   \item{type}{test to be performed: partial matching is used.}
-}
-\description{
-  Compute the Box--Pierce or Ljung--Box test statistic
-  for examining the null hypothesis of independence in the
-  time series \code{x} is computed.
 }
 \note{
   Missing values are not handled.
@@ -29,15 +28,18 @@ Box.test (x, lag = 1, type=c("Box-Pierce", "Ljung-Box"))
   \item{data.name}{a character string giving the name of the data.}
 }
 \references{
-  Box, G. E. P. and Pierce, D. A. (1970) Distribution of residual
-  correlations in autoregressive-integrated moving average time series
-  models. \emph{Journal of the American Statistical Association}
-  \bold{65}, 1509--1526.
+  Box, G. E. P. and Pierce, D. A. (1970),
+  Distribution of residual correlations in autoregressive-integrated
+  moving average time series models.
+  \emph{Journal of the American Statistical Association}, \bold{65},
+  1509--1526.
     
-  Ljung, G. M. and Box, G. E. P. (1978) On a measure of lack of fit in
-  time series models. \emph{Biometrika} \bold{65}, 553--564.
+  Ljung, G. M. and Box, G. E. P. (1978),
+  On a measure of lack of fit in time series models.
+  \emph{Biometrika} \bold{65}, 553--564.
   
-  Harvey, A. C. (1993) \emph{Time Series Models},
+  Harvey, A. C. (1993)
+  \emph{Time Series Models}.
   2nd Edition, Harvester Wheatsheaf, NY, pp. 44, 45.
 }
 \author{A. Trapletti}
@@ -47,4 +49,3 @@ Box.test (x, lag = 1)
 Box.test (x, lag = 1, type="Ljung")
 }
 \keyword{ts}
-
