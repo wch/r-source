@@ -40,11 +40,10 @@ Date: Wed, 5 Jul 2000 18:32:01 +0200 (CEST)
 
 Directory:  Add-ons
 
-* PR# 567 *
-Subject: ctest not works
-From: George Diniz <george@cpqam.fiocruz.br>
-Date: Sun, 12 Mar 2000 12:03:45 -0200
---possibly the RH6.2 Fortran bug
+* PR# 644 *
+Subject: crash using fisher.test on Windows; was [R] unexpected crash of R under 
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Fri, 25 Aug 2000 08:47:00 +0200
 * PR# 503 *
 Subject: dmvnorm() bug in e1071
 From: "Gregory R. Warnes" <warnes@biostat.washington.edu>
@@ -54,6 +53,11 @@ From: bonneau@epi.roazhon.inra.fr (en148)
 Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
 --base R has no est.variogram function.
 --This appears to be a bug report on sgeostat.
+* PR# 567 *
+Subject: ctest not works
+From: George Diniz <george@cpqam.fiocruz.br>
+Date: Sun, 12 Mar 2000 12:03:45 -0200
+--possibly the RH6.2 Fortran bug
 
 Directory:  Analyses
 
@@ -65,11 +69,11 @@ none
 
 Directory:  Graphics
 
-* PR# 635 *
-Subject: Multiple pages with postscript()
-From: "Patrick Connolly" <P.Connolly@hort.cri.nz>
-Date: Wed, 16 Aug 100 12:14:19 +1200 (NZST)
---par(lwd) reverts to one at page changes under the postscript() device
+* PR# 639 *
+Subject: symbols: xlim and ylim cannot be specified
+From: Werner Stahel <stahel@stat.math.ethz.ch>
+Date: Mon, 21 Aug 2000 15:54:08 +0200 (CEST)
+--Fixed for 1.1.2 (?)
 * PR# 625 *
 Subject: Re: [Rd] Re: [R] problem clipping R postscript plots within latex
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
@@ -85,7 +89,12 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 
 Directory:  In-Out
 
-none
+* PR# 649 *
+Subject: Unable to read.table with > 256? columns
+From: r@marksmucker.com
+Date: Thu, 31 Aug 2000 07:28:02 +0200 (MET DST)
+--Unable to reproduce from information supplied 
+--(and there is no 256 col limit)
 
 Directory:  Installation
 
@@ -97,11 +106,10 @@ Date: Fri, 7 Jul 2000 12:23:44 +0200 (MET DST)
 
 Directory:  Language
 
-* PR# 587 *
-Subject: dim(a <- ...) sets invisible flag erronously
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 30 Jun 2000 20:15:59 +0200 (MET DST)
---Not specific to dim: R differs from S for most functions here.
+* PR# 645 *
+Subject: unlisting a list with names components
+From: Peter Perkins <pperkins@ucsd.edu>
+Date: Fri, 25 Aug 2000 23:07:47 -0700
 * PR# 412 *
 Subject: anomalies with call objects
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -110,6 +118,15 @@ Date: 06 Feb 2000 01:18:50 +0100
 Subject: convolution bug
 From: wsimpson@gcal.ac.uk
 Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
+* PR# 642 *
+Subject:  Method dispatch fails for autoloaded methods 
+From: maechler@stat.math.ethz.ch
+Date: Thu, 24 Aug 2000 17:09:09 +0200
+* PR# 587 *
+Subject: dim(a <- ...) sets invisible flag erronously
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 30 Jun 2000 20:15:59 +0200 (MET DST)
+--Not specific to dim: R differs from S for most functions here.
 
 Directory:  Low-level
 
@@ -205,58 +222,6 @@ none
 
 Directory:  incoming
 
-* PR# 654 *
-Subject: Dubious mail address
-From: Peter Dalgaard BSA <pd@blueberry.kubism.ku.dk>
-Date: Mon, 4 Sep 2000 14:10:30 +0200
-* PR# 640 *
-Subject: diff.default / diff.ts in wrong package bug
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 21 Aug 2000 18:28:36 +0200 (CEST)
-* PR# 639 *
-Subject: symbols: xlim and ylim cannot be specified
-From: Werner Stahel <stahel@stat.math.ethz.ch>
-Date: Mon, 21 Aug 2000 15:54:08 +0200 (CEST)
-* PR# 642 *
-Subject:  Method dispatch fails for autoloaded methods 
-From: maechler@stat.math.ethz.ch
-Date: Thu, 24 Aug 2000 17:09:09 +0200
-* PR# 641 *
-Subject: 2 Bugs in na.omit.default()
-From: =?iso-8859-1?Q?Jens_Oehlschl=E4gel?= <jens.oehlschlaegel@bbdo-interone.de>
-Date: Wed, 23 Aug 2000 11:45:56 +0200
-* PR# 644 *
-Subject: crash using fisher.test on Windows; was [R] unexpected crash of R under 
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Fri, 25 Aug 2000 08:47:00 +0200
-* PR# 643 *
-Subject: Re: [R] too large alpha or beta in dbeta ?
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Thu, 24 Aug 2000 13:45:47 -0700 (PDT)
-* PR# 646 *
-Subject: under certain conditions, model.matrix appears to lack one column
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Sun, 27 Aug 2000 16:22:25 -0400 (EDT)
-* PR# 645 *
-Subject: unlisting a list with names components
-From: Peter Perkins <pperkins@ucsd.edu>
-Date: Fri, 25 Aug 2000 23:07:47 -0700
-* PR# 648 *
-Subject: Re: [Rd] under certain conditions, model.matrix appears to lack one
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Mon, 28 Aug 2000 12:26:21 +0100 (BST)
-* PR# 647 *
-Subject: Re: [Rd] under certain conditions, model.matrix appears to lack one
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Mon, 28 Aug 2000 07:28:19 +0100 (BST)
-* PR# 650 *
-Subject: plot(x,y,axes=F)
-From: kye@ams.sunysb.edu
-Date: Thu, 31 Aug 2000 23:52:12 +0200 (MET DST)
-* PR# 649 *
-Subject: Unable to read.table with > 256? columns
-From: r@marksmucker.com
-Date: Thu, 31 Aug 2000 07:28:02 +0200 (MET DST)
 * PR# 653 *
 Subject: bug in spline()?
 From: Ian White <imsw@holyrood.ed.ac.uk>
@@ -265,6 +230,7 @@ Date: Mon, 4 Sep 2000 12:29:26 +0100 (BST)
 Subject: R INSTALL *.tgz fails (minor docs/feature bug)
 From: RPO <bobbyo@speakeasy.org>
 Date: Sat, 2 Sep 2000 13:34:22 -0700 (PDT)
-* PR# 651 *
-Subject: =?big5?b?tsewZaWisdE=?= =?us-ascii?q?=3A_?= =?big5?b?tsewZabc?= mailhost.EFN.ORG; SMTP
-From: Postmaster@sdm.com.tw
+* PR# 640 *
+Subject: diff.default / diff.ts in wrong package bug
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 21 Aug 2000 18:28:36 +0200 (CEST)
