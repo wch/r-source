@@ -68,6 +68,28 @@ WindowRef	RAboutWindow=NULL;
 pascal void RAboutHandler(WindowRef window);
 #define kRAppSignature '????'
 
+/* Items for the Tools menu */
+#define kRCmdShowWSpace		'dols'
+#define kRCmdClearWSpace	'dorm'
+#define kRCmdBrowseWSpace	'shwb'
+#define kRCmdLoadWSpace		'ldws'
+#define kRCmdSaveWSpace		'svws'
+#define kRCmdLoadHistory	'hstl'
+#define kRCmdSaveHistory	'hsts'
+#define kRCmdShowHistory	'hstw'
+#define kRCmdChangeWorkDir	'scwd'
+#define kRCmdShowWorkDir	'shwd'
+#define kRCmdResetWorkDir	'rswd'
+
+/* items for the Packages menu */
+#define kRCmdInstalledPkgs	'ipkg'
+#define kRCmdAvailDatsets	'shdt'
+#define kRCmdInstallFromCRAN	'cran'
+#define kRCmdInstallFromBioC	'bioc'
+#define kRCmdInstallFromSrc	'ipfs'
+
+
+
 static pascal OSStatus
 RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData );
 static pascal OSStatus
@@ -83,7 +105,7 @@ void Raqua_ResetConsole(void);
 void Raqua_FlushConsole(void);
 void Raqua_ClearerrConsole(void);
 		     
-
+void consolecmd(char *cmd);
                    
 #define kRVersionInfoID 132
 
@@ -119,169 +141,107 @@ static const EventTypeSpec	RWinEvents[] =
 
 void Raqua_StartConsole(void)
 {
-    IBNibRef 			nibRef = NULL;
-	OSErr				err = noErr;
-	CFURLRef    		bundleURL = NULL;
- 	CFBundleRef 		RBundle = NULL;
-        MenuRef  rootMenu = NULL;
-/*    char                buf[300]; */
-    
-    /*    sprintf(buf,"%s/aqua.bundle",R_HomeDir());
-     fprintf(stderr,"\n buf=%s",buf); 
-    bundleURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,
-                      CFStringCreateWithCString(kCFAllocatorDefault,buf,
-                       kCFStringEncodingMacRoman ),
-                       kCFURLPOSIXPathStyle, TRUE);
-
-    if(bundleURL == NULL)
-     goto fine;
-
-    RBundle = CFBundleCreate (kCFAllocatorDefault, bundleURL);
-    if(RBundle==NULL)
-     goto fine;
-
-    err = CreateNibReferenceWithCFBundle (RBundle, 
-                            CFSTR("main"), &nibRef);
-*/   
+    IBNibRef 	nibRef = NULL;
+    OSErr	err = noErr;
+    CFURLRef    bundleURL = NULL;
+    CFBundleRef RBundle = NULL;
 
     err = CreateNibReference(CFSTR("main"), &nibRef);
     if(err != noErr) 
-     goto fine;
+     goto noconsole;
       
     err = SetMenuBarFromNib(nibRef, CFSTR("MenuBar"));
     if(err != noErr)
-     goto fine;
- /* Tying to change the Main Menu name. Does not work.    
-    rootMenu = AcquireRootMenu();
-    if(rootMenu==NULL)
-     fprintf(stderr,"\n no root menu ref");
-    SetMenuTitleWithCFString(rootMenu, CFSTR("Shell"));
-*/
+     goto noconsole;
+
     err = CreateWindowFromNib(nibRef,CFSTR("MainWindow"),&ConsoleWindow);
     if(err != noErr)
-     goto fine;
+     goto noconsole;
     
     err = CreateWindowFromNib(nibRef,CFSTR("AboutWindow"),&RAboutWindow);
    if(err != noErr)
-     goto fine;
+     goto noconsole;
    
     if(nibRef)
      DisposeNibReference(nibRef);
   
-      ShowWindow(ConsoleWindow);
+    ShowWindow(ConsoleWindow);
 
     InitCursor();
     
-	/* Check for availability of MLTE api */
-	if (TXNVersionInformation == (void*)kUnresolvedCFragSymbolAddress)
-          goto fine;
+    if (TXNVersionInformation == (void*)kUnresolvedCFragSymbolAddress)
+        goto noconsole;
 
-		
-	/* default settings for MLTE */	
-    err = InitMLTE(); 							
-    if(err!=noErr){ /* Check for availability of MLTE api */
-		  fprintf(stderr,"\nNO MLTE error=%d\n",err);							
-          goto fine;
-	}
+    if( InitMLTE() != noErr )
+     goto noconsole;
 
 
-	if (ConsoleWindow != NULL) 
-	{
-			TXNFrameOptions	frameOptions;
-		Rect OutFrame, InFrame, WinFrame;
+    if (ConsoleWindow != NULL){
+        TXNFrameOptions	frameOptions;
+        Rect OutFrame, InFrame, WinFrame;
                 
-                GetWindowPortBounds (ConsoleWindow,&WinFrame);
-                SetRect(&OutFrame,0,0,WinFrame.right,WinFrame.bottom-110);
-                SetRect(&InFrame,0,WinFrame.bottom-100,WinFrame.right,WinFrame.bottom);
+        GetWindowPortBounds (ConsoleWindow,&WinFrame);
+        SetRect(&OutFrame,0,0,WinFrame.right,WinFrame.bottom-110);
+        SetRect(&InFrame,0,WinFrame.bottom-100,WinFrame.right,WinFrame.bottom);
                 
-                frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask; 
-		frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNReadOnlyMask;
+        frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask; 
+        frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNReadOnlyMask;
 		
 
-		err = TXNNewObject(	NULL, 
-								ConsoleWindow, 
-								&OutFrame, 
-								frameOptions,
-								kTXNTextEditStyleFrameType,
-								kTXNTextensionFile,
-								kTXNSystemDefaultEncoding,
-								&RConsoleOutObject,
-								&OutframeID, 
-								0);
+        err = TXNNewObject(NULL, ConsoleWindow, &OutFrame, frameOptions, kTXNTextEditStyleFrameType,
+                            kTXNTextensionFile, kTXNSystemDefaultEncoding, &RConsoleOutObject,
+                            &OutframeID, 0);
 		
-		frameOptions = kTXNShowWindowMask; 
-		frameOptions |= kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNDrawGrowIconMask;
+        frameOptions = kTXNShowWindowMask | kTXNWantHScrollBarMask | kTXNWantVScrollBarMask | kTXNDrawGrowIconMask;
 		
-                err = TXNNewObject(	NULL, 
-								ConsoleWindow, 
-								&InFrame, 
-								frameOptions,
-								kTXNTextEditStyleFrameType,
-								kTXNTextensionFile,
-								kTXNSystemDefaultEncoding,
-								&RConsoleInObject,
-								&InframeID, 
-								0);
+        err = TXNNewObject(NULL, ConsoleWindow, &InFrame, frameOptions, kTXNTextEditStyleFrameType,
+                            kTXNTextensionFile, kTXNSystemDefaultEncoding, &RConsoleInObject,
+                            &InframeID, 0);
 
-		if (err == noErr)
-		{		
-			if ( (RConsoleOutObject != NULL) && (RConsoleInObject != NULL) ) 
-			{
-				/* sets the state of the scrollbars so they are drawn correctly */
-				err = TXNActivate(RConsoleOutObject, OutframeID, kScrollBarsAlwaysActive);
-				err = TXNActivate(RConsoleInObject, InframeID, kScrollBarsAlwaysActive);
-				if (err != noErr){ /* Check for availability of MLTE api */		
-                                goto fine;
-		        }
+        if (err == noErr){		
+            if ( (RConsoleOutObject != NULL) && (RConsoleInObject != NULL) ){
+                    /* sets the state of the scrollbars so they are drawn correctly */
+                err = TXNActivate(RConsoleOutObject, OutframeID, kScrollBarsAlwaysActive);
+                err = TXNActivate(RConsoleInObject, InframeID, kScrollBarsAlwaysActive);
+                if (err != noErr)
+                    goto noconsole;
+		        
 			
-				err = SetWindowProperty(ConsoleWindow,'GRIT','tFrm',sizeof(TXNFrameID),&OutframeID);
-				err = SetWindowProperty(ConsoleWindow,'GRIT','tObj',sizeof(TXNObject),&RConsoleOutObject);
-				err = SetWindowProperty(ConsoleWindow,'GRIT','tFrm',sizeof(TXNFrameID),&InframeID);
-				err = SetWindowProperty(ConsoleWindow,'GRIT','tObj',sizeof(TXNObject),&RConsoleInObject);
-		}
+                err = SetWindowProperty(ConsoleWindow,'GRIT','tFrm',sizeof(TXNFrameID),&OutframeID);
+                err = SetWindowProperty(ConsoleWindow,'GRIT','tObj',sizeof(TXNObject),&RConsoleOutObject);
+                err = SetWindowProperty(ConsoleWindow,'GRIT','tFrm',sizeof(TXNFrameID),&InframeID);
+                err = SetWindowProperty(ConsoleWindow,'GRIT','tObj',sizeof(TXNObject),&RConsoleInObject);
+            }
 
-		} 
+        } 
 	
 	if(err == noErr){
-	 WeHaveConsole =true;
+	 WeHaveConsole = true;
          RescaleInOut(0.8);
          
-     
-         
-         
-	 InstallStandardEventHandler(GetApplicationEventTarget());
-         err = InstallApplicationEventHandler( KeybHandler,
-             GetEventTypeCount( KeybEvents ), KeybEvents, 0, NULL);
-        err = InstallApplicationEventHandler( NewEventHandlerUPP( RCmdHandler ),
-									GetEventTypeCount( RCmdEvents ),
-									RCmdEvents,
-									0,
-									NULL );
+  	 InstallStandardEventHandler(GetApplicationEventTarget());
+         err = InstallApplicationEventHandler( KeybHandler, GetEventTypeCount(KeybEvents), KeybEvents, 0, NULL);
+         err = InstallApplicationEventHandler( NewEventHandlerUPP(RCmdHandler), GetEventTypeCount(RCmdEvents),
+                                                RCmdEvents, 0, NULL);
 	    
-        err = InstallApplicationEventHandler( NewEventHandlerUPP( RWinHandler ),
-									GetEventTypeCount( RWinEvents ),
-									RWinEvents,
-									0,
-									NULL );
-	  err = AEInstallEventHandler( kCoreEventClass, kAEQuitApplication,
-                 NewAEEventHandlerUPP(QuitAppleEventHandler), 0, false );
-                 
-                 
-                 
-                 TXNFocus(RConsoleOutObject,true);
-         
-        InstallWindowEventHandler(RAboutWindow, NewEventHandlerUPP(RAboutWinHandler), 1, &aboutSpec, (void *)RAboutWindow, NULL);
+         err = InstallApplicationEventHandler( NewEventHandlerUPP(RWinHandler), GetEventTypeCount(RWinEvents),
+                                                RWinEvents, 0, NULL);
+         err = AEInstallEventHandler(kCoreEventClass, kAEQuitApplication, NewAEEventHandlerUPP(QuitAppleEventHandler), 
+                                    0, false );
 
-	}
-	else
-	 WeHaveConsole =false; 
-	}
+        TXNFocus(RConsoleOutObject,true);
+        InstallWindowEventHandler(RAboutWindow, NewEventHandlerUPP(RAboutWinHandler), 1, &aboutSpec, 
+                                (void *)RAboutWindow, NULL);
 
-    
+        }
+        else
+        WeHaveConsole = false; 
+    }
+
 
     SelectWindow(ConsoleWindow);
 
-fine:
+noconsole:
     if(bundleURL)
      CFRelease( bundleURL );
     if(RBundle)
@@ -310,19 +270,17 @@ void Raqua_WriteConsole(char *buf, int len)
 }
 
 
-
-
 OSStatus InitMLTE(void)
 {
-	OSStatus				status=noErr;
+	OSStatus				status = noErr;
 	TXNMacOSPreferredFontDescription	defaults; 
 	TXNInitOptions 				options;
-
+        
 	defaults.fontID = NULL; 
 	defaults.pointSize = kTXNDefaultFontSize;
   	defaults.encoding = CreateTextEncoding(kTextEncodingMacRoman, kTextEncodingDefaultVariant,
-  	 kTextEncodingDefaultFormat);
-  	defaults.fontStyle 	= kTXNDefaultFontStyle;
+                                                kTextEncodingDefaultFormat);
+  	defaults.fontStyle = kTXNDefaultFontStyle;
 
 	options = kTXNWantMoviesMask | kTXNWantSoundMask | kTXNWantGraphicsMask;
 
@@ -474,7 +432,7 @@ pascal OSStatus RAboutWinHandler(EventHandlerCallRef handlerRef, EventRef event,
 static pascal OSErr QuitAppleEventHandler (const AppleEvent *appleEvt,
                                      AppleEvent* reply, UInt32 refcon) 
 {
-    fprintf(stderr,"\n quit app");
+  consolecmd("q()\r");
 } 
   
 
@@ -522,6 +480,77 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
                RAboutHandler(RAboutWindow);
               break;
               
+/* Tools menu */              
+              case kRCmdShowWSpace:
+               consolecmd("ls()\r");              
+              break;          		
+
+              case kRCmdClearWSpace:
+               consolecmd("rm(list=ls())\r");              
+              break;          		
+
+              case kRCmdBrowseWSpace:
+                consolecmd("browseEnv(html=FALSE)\r");
+              break;
+
+              case kRCmdLoadWSpace:
+                consolecmd("load(\".RData\")\r");
+              break;
+
+              case kRCmdSaveWSpace:
+                consolecmd("save.image()\r");
+              break;
+
+              case kRCmdLoadHistory:
+                consolecmd("loadhistory()\r");
+              break;
+
+              case kRCmdSaveHistory:
+                consolecmd("savehistory()\r");
+              break;
+
+              case kRCmdShowHistory:
+                consolecmd("history()\r");
+              break;
+
+              case kRCmdChangeWorkDir:
+                Aqua_RWrite("Change Working Directory: not yet implemented\r");
+               consolecmd("\r");
+              break;
+
+              case kRCmdShowWorkDir:
+                consolecmd("getwd()\r");
+              break;
+
+              case kRCmdResetWorkDir:
+                consolecmd("setwd(\"~/\")\r");
+              break;
+
+/* Packages menu */
+
+              case kRCmdInstalledPkgs:
+               consolecmd("library()\r");
+              break;
+
+              case kRCmdAvailDatsets:
+               consolecmd("data()\r");
+              break;
+
+              case kRCmdInstallFromCRAN:
+               Aqua_RWrite("Install packages from CRAN: not yet implemented\r");
+               consolecmd("\r");
+              break;
+
+              case kRCmdInstallFromBioC:
+               Aqua_RWrite("Install packages from BioConductor: not yet implemented\r");
+               consolecmd("\r");
+              break;
+
+              case kRCmdInstallFromSrc:
+               Aqua_RWrite("Instal package from source: not yet implemented\r");
+               consolecmd("\r");
+              break;
+
               default:
               break;
              }
@@ -576,6 +605,24 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 	return err;
 }
 
+/* consolecmd: is used to write in the input R console
+               to send R command via menus. Its argument
+               must be a terminated string, possibly with
+               '\r'. We don't check for this.
+*/               
+void consolecmd(char *cmd)
+{
+    EventRef	REvent;
+    UInt32	RKeyCode = 36;
+
+    if(strlen(cmd) < 1)
+	return;
+
+   TXNSetData (RConsoleInObject, kTXNTextData, cmd, strlen(cmd), kTXNEndOffset, kTXNEndOffset);
+   CreateEvent(NULL, kEventClassKeyboard, kEventRawKeyUp, 0,kEventAttributeNone, &REvent);
+   SetEventParameter(REvent, kEventParamKeyCode, typeUInt32, sizeof(RKeyCode), &RKeyCode);
+   SendEventToEventTarget (REvent,GetApplicationEventTarget());
+}
 
 #endif /* HAVE_AQUA */
 

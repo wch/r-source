@@ -17,6 +17,7 @@
                 <string name="title">About R</string>
                 <int name="keyEquivalentModifier">0</int>
                 <ostype name="command">abou</ostype>
+                <string name="helpTagText">General information on this binary distribution of R for MacOSX</string>
               </object>
             </array>
             <string name="name">_NSAppleMenu</string>
@@ -115,33 +116,49 @@
             <array count="14" name="items">
               <object class="IBCarbonMenuItem" id="199">
                 <string name="title">Show Workspace</string>
+                <ostype name="command">dols</ostype>
+                <string name="helpTagText">Show the objects in the workspace</string>
               </object>
               <object class="IBCarbonMenuItem" id="200">
                 <string name="title">Clear Workspace</string>
+                <ostype name="command">dorm</ostype>
+                <string name="helpTagText">Remove all objects from workspace</string>
               </object>
               <object class="IBCarbonMenuItem" id="201">
                 <string name="title">Browse Workspace</string>
+                <ostype name="command">shwb</ostype>
+                <string name="helpTagText">A browser for the R objects</string>
               </object>
               <object class="IBCarbonMenuItem" id="203">
                 <boolean name="separator">TRUE</boolean>
               </object>
               <object class="IBCarbonMenuItem" id="202">
                 <string name="title">Load Workspace</string>
+                <ostype name="command">ldws</ostype>
+                <string name="helpTagText">Load workspace in current working directory</string>
               </object>
               <object class="IBCarbonMenuItem" id="204">
                 <string name="title">Save Workspace</string>
+                <ostype name="command">svws</ostype>
+                <string name="helpTagText">Save the content of the workspace in the current working directory</string>
               </object>
               <object class="IBCarbonMenuItem" id="206">
                 <boolean name="separator">TRUE</boolean>
               </object>
               <object class="IBCarbonMenuItem" id="205">
                 <string name="title">Load history</string>
+                <ostype name="command">hstl</ostype>
+                <string name="helpTagText">Loads the history file in the current working directory</string>
               </object>
               <object class="IBCarbonMenuItem" id="207">
                 <string name="title">Save history</string>
+                <ostype name="command">hsts</ostype>
+                <string name="helpTagText">Saves command history file into the current working directory</string>
               </object>
               <object class="IBCarbonMenuItem" id="208">
                 <string name="title">Show history</string>
+                <ostype name="command">hstw</ostype>
+                <string name="helpTagText">Shows history file</string>
               </object>
               <object class="IBCarbonMenuItem" id="209">
                 <boolean name="separator">TRUE</boolean>
@@ -149,12 +166,18 @@
               <object class="IBCarbonMenuItem" id="210">
                 <string name="title">Change Working Directory...</string>
                 <string name="keyEquivalent">d</string>
+                <ostype name="command">scwd</ostype>
+                <string name="helpTagText">Set the current working directory to a specified location</string>
               </object>
               <object class="IBCarbonMenuItem" id="212">
                 <string name="title">Show Working Directory</string>
+                <ostype name="command">shwd</ostype>
+                <string name="helpTagText">Shows current working directory</string>
               </object>
               <object class="IBCarbonMenuItem" id="211">
                 <string name="title">Reset Working Directory</string>
+                <ostype name="command">rswd</ostype>
+                <string name="helpTagText">Sets working directory to user&apos;s home</string>
               </object>
             </array>
           </object>
@@ -166,24 +189,34 @@
             <array count="7" name="items">
               <object class="IBCarbonMenuItem" id="218">
                 <string name="title">Installed Packages</string>
+                <ostype name="command">ipkg</ostype>
+                <string name="helpTagText">Shows the list of currently installed packages</string>
               </object>
               <object class="IBCarbonMenuItem" id="219">
                 <string name="title">Available Datasets</string>
+                <ostype name="command">shdt</ostype>
+                <string name="helpTagText">Shows the lists of available datasets</string>
               </object>
               <object class="IBCarbonMenuItem" id="221">
                 <boolean name="separator">TRUE</boolean>
               </object>
               <object class="IBCarbonMenuItem" id="220">
                 <string name="title">Install CRAN Packages</string>
+                <ostype name="command">cran</ostype>
+                <string name="helpTagText">Installs packages from CRAN repository</string>
               </object>
               <object class="IBCarbonMenuItem" id="222">
                 <string name="title">Install BioConductor</string>
+                <ostype name="command">bioc</ostype>
+                <string name="helpTagText">Install packages of the BioCondutor Project</string>
               </object>
               <object class="IBCarbonMenuItem" id="224">
                 <boolean name="separator">TRUE</boolean>
               </object>
               <object class="IBCarbonMenuItem" id="223">
                 <string name="title">Install Package From Source</string>
+                <ostype name="command">ipfs</ostype>
+                <string name="helpTagText">Installs packages from source archives</string>
               </object>
             </array>
           </object>
