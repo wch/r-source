@@ -1,0 +1,32 @@
+#
+# ${RHOME}/src/scripts/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../..
+
+include $(top_builddir)/Makeconf
+
+SRC_SCRIPTS = filename help pager
+OBJ_SCRIPTS = fwf2table
+
+all: R
+
+R:
+	@cat R.sh | \
+	  (cd $(top_builddir); sed "s@RHOME=.*@RHOME=`pwd`@" > bin/R)
+	@chmod +x $(top_builddir)/bin/R
+	for f in $(SRC_SCRIPTS); do \
+	  $(INSTALL) $(srcdir)/$$f $(top_builddir)/bin; \
+	done
+	for f in $(OBJ_SCRIPTS); do \
+	  $(INSTALL) $$f $(top_builddir)/bin; \
+	done
+
+mostlyclean: clean
+clean:
+distclean:
+	@rm -f Makefile R.sh $(OBJ_SCRIPTS)
+maintainer-clean: distclean
