@@ -1748,7 +1748,6 @@ int X11DeviceDriver(DevDesc *dd,
 
     ps = pointsize;
     if(ps < 6 || ps > 24) ps = 12;
-    ps = 2*(ps/2);
     xd->fontface = -1;
     xd->fontsize = -1;
     xd->basefontface = 1;
