@@ -401,8 +401,8 @@ chooseCRANmirror <- function(graphics = TRUE)
         ## return a character vector of URLs
         if(.Platform$OS.type == "unix"
            && capabilities("tcltk") && capabilities("X11")) {
-            tcltk:::CRANmirrorWidget(m)
-            return(invisible())
+            URL <- m[m[,1] == tcltk::tk_select.list(m[,1],, FALSE,
+                      "CRAN mirror"), "URL"]
         } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
             URL <- m[m[,1] == select.list(m[,1],, FALSE, "CRAN mirror"), "URL"]
     } else {
@@ -451,9 +451,10 @@ setRepositories <- function(graphics=TRUE)
         ## return a list of row numbers.
         if(.Platform$OS.type == "unix" &&
                   capabilities("tcltk") && capabilities("X11")) {
-            tcltk:::repositoriesWidget(a)
-            return(invisible())
-        } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
+            res <- match(tcltk::tk_select.list(a[, 1], a[default, 1],
+                                               multiple = TRUE, "Repositories"),
+                         a[, 1])
+         } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
             res <- match(select.list(a[, 1], a[default, 1], multiple = TRUE,
                                      "Repositories"),
                          a[, 1])

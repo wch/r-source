@@ -39,6 +39,10 @@ select.list(list, preselect = NULL, multiple = FALSE, title = NULL)
   returned.   If \code{multiple} is true and no item was selected (or
   \code{Cancel} was used) then a character vector of length 0 is returned.
 }
+\seealso{
+  \code{\link{menu}}, \code{\link{tk_select.list}} for a graphical
+  version using Tcl/Tk.
+}
 \examples{\dontrun{
 select.list(sort(.packages(all.available = TRUE)))
 }}

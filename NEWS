@@ -94,9 +94,9 @@ NEW FEATURES
 	destructive of its argument).  You can still change the
 	"class" attribute.
 
-    o	choose(n,k) and lchoose(.) now also work for arbitrary (real) n in
-	accordance with the general binomial theorem.  choose(*,k) is more
-	accurate (and faster) for small k.
+    o	choose(n,k) and lchoose(.) now also work for arbitrary (real) n
+	in accordance with the general binomial theorem.  choose(*,k)
+	is more accurate (and faster) for small k.
 
     o	as.dist() and cophenetic() are now generic, and the latter has a
 	new method for objects of class "dendrogram".
@@ -220,8 +220,9 @@ NEW FEATURES
     o	New encoding 'TeXtext.enc' improves the way postscript() works
 	with Computer Modern fonts.
 
-    o	chisq.test() has a new argument 'rescale.p' and allows to (slowly)
-	simulate the P value also in the 1D case (contributed by Rolf Turner).
+    o	chisq.test() has a new argument 'rescale.p'.  It is now possible
+	to simulate (slowly) the P value also in the 1D case
+	(contributed by Rolf Turner).
 
     o	contr.SAS() has been moved from the nlme package to the stats package.
 
@@ -271,10 +272,14 @@ NEW FEATURES
     o	New function normalizePath() to find canonical paths.
 
     o	Functions flush.console() and select.list() are now available
-	on all platforms.
+	on all platforms.  There is a Tcl/Tk-based version of
+	select.list() called tk_select.list() in package tcltk.
 
     o	menu() uses a multi-column layout if possible for more than 
 	10 choices.
+
+	menu(graphics = TRUE) is implemented on most platforms via
+	select.list() or tk_select.list().
 
 
 INTERNATIONALIZATION
@@ -617,8 +622,8 @@ BUG FIXES
 
     o	write.table() was not quoting row names for a 0-column x.
 
-    o	t(x)'s default method now also preserves names(dimnames(x)) for 1D
-	arrays 'x'.
+    o	t(x)'s default method now also preserves names(dimnames(x)) for
+	1D arrays 'x'.
 
     o	r <- a %*% b no longer produces names(dimnames(r)) == c("", "")
 	unless one of a or b has named dimnames.
@@ -682,7 +687,7 @@ BUG FIXES
 
     o	socketSelect() did not check for buffered input.
 
-    o	Reads on a non-blocking socket with no available data was
+    o	Reads on a non-blocking socket with no available data were
 	not handled properly and could result in a segfault.
 
     o	The "aovlist" method for se.contrast() failed in some very
