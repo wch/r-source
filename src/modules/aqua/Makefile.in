@@ -18,10 +18,10 @@ DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.lo)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = AquaReadMe.txt  Raete.r Makefile.in Info.plist.in Contents/Info.plist.in \
+DISTFILES = AquaReadMe.txt  Raete.r Makefile.in Info.plist.in \
   $(SOURCES) $(HEADERS)
 
-SUBDIRS_WITH_NO_BUILD = Contents RAqua
+SUBDIRS_WITH_NO_BUILD = Contents
 
 ## <FIXME>
 ## Change to 'aqua.la' when using libtool for shlibs.
@@ -88,11 +88,6 @@ distdir: $(DISTFILES)
 	  test -f $(distdir)/$${f} \
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
-	done
-	@for d in $(SUBDIRS_WITH_NO_BUILD); do \
-	  ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
-	      | (cd $(distdir); $(TAR) -x -f -)) \
-	    || exit 1; \
 	done
 
 aqualaunch:
