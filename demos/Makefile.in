@@ -1,0 +1,43 @@
+#
+# ${RHOME}/demos/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ..
+
+include $(top_builddir)/Makeconf
+
+all R docs::
+
+install: installdirs
+	@for f in `ls $(srcdir)/dynload | sed '/CVS/d'`; do \
+	  $(INSTALL_DATA) $(srcdir)/dynload/$$f $(rhome)/demos/dynload; \
+	done
+	@for f in $(srcdir)/graphics/*.R; do \
+	  $(INSTALL_DATA) $$f $(rhome)/demos/graphics; \
+	done
+	@for f in $(srcdir)/language/*.R; do \
+	  $(INSTALL_DATA) $$f $(rhome)/demos/language; \
+	done
+	@for f in $(srcdir)/models/*.R; do \
+	  $(INSTALL_DATA) $$f $(rhome)/demos/models; \
+	done
+	@for f in $(srcdir)/nlm/*.R; do \
+	  $(INSTALL_DATA) $$f $(rhome)/demos/nlm; \
+	done
+
+installdirs:
+	@$(MKINSTALLDIRS) $(rhome)/demos
+	@$(MKINSTALLDIRS) $(rhome)/demos/dynload 
+	@$(MKINSTALLDIRS) $(rhome)/demos/graphics 
+	@$(MKINSTALLDIRS) $(rhome)/demos/language 
+	@$(MKINSTALLDIRS) $(rhome)/demos/models 
+	@$(MKINSTALLDIRS) $(rhome)/demos/nlm
+
+mostlyclean:
+clean:
+distclean:
+	@rm -f Makefile
+maintainer-clean: distclean

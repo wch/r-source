@@ -1,0 +1,36 @@
+#
+# ${RHOME}/doc/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ..
+
+include $(top_builddir)/Makeconf
+
+all R docs::
+
+install: installdirs
+	$(INSTALL) keyword-test $(rhome)/doc
+	$(INSTALL_DATA) $(srcdir)/KEYWORDS $(rhome)/doc
+	@for f in $(srcdir)/html/*.html $(srcdir)/html/*.jpg; do \
+	  $(INSTALL_DATA) $$f $(rhome)/doc/html; \
+	done
+	@for f in $(srcdir)/html/search/*.class \
+	          $(srcdir)/html/search/*.html \
+	          $(srcdir)/html/search/index.txt ; do \
+	  $(INSTALL_DATA) $$f $(rhome)/doc/html/search; \
+	done
+#	cd manual; $(MAKE) install
+
+installdirs:
+	@$(MKINSTALLDIRS) $(rhome)/doc/manual
+	@$(MKINSTALLDIRS) $(rhome)/doc/html/search
+
+mostlyclean:
+clean:
+distclean:
+	@rm -f Makefile keyword-test
+	@cd manual; $(MAKE) $@
+maintainer-clean: distclean

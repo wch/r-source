@@ -1,0 +1,40 @@
+#
+# ${RHOME}/afm/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ..
+
+include $(top_builddir)/Makeconf
+
+# Everything except CVS and Makefile
+INSTALLFILES = $(srcdir)/*.afm $(srcdir)/*.lt1
+
+all: R
+
+R:
+	@if [ "$(srcdir)" != "." ]; then \
+	  for f in $(INSTALLFILES); \
+	    do $(INSTALL_DATA) $$f .; \
+	  done; \
+	fi
+
+install:
+	@$(MKINSTALLDIRS) $(rhome)/afm
+	@for f in $(INSTALLFILES); \
+	  do $(INSTALL_DATA) $$f $(rhome)/afm; \
+	done
+
+install-strip: install
+uninstall:
+
+mostlyclean:
+clean:
+	@if [ "$(srcdir)" != "." ]; then \
+	  rm -f *.afm *.lt1; \
+	fi
+distclean:
+	@rm -f Makefile
+maintainer-clean: distclean
