@@ -678,14 +678,16 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
  *	i.e., the vector of tick mark locations,
  *	when none has been specified (= default).
  *
- *	axp[0:2] = (x1, x2, nint), where x1..x2 are the extreme tick marks
- *
+ *	axp[0:2] = (x1, x2, nInt), where x1..x2 are the extreme tick marks
+ *                 {unless in log case, where nint \in {1,2,3 ; -1,-2,....}
+ *                  and the `nint' argument is used.
+
  *	The resulting REAL vector must have length >= 1, ideally >= 2
  */
     SEXP at = R_NilValue;/* -Wall*/
     double umin, umax, dn, rng, small;
     int i, n, ne;
-    if (!logflag || axp[2] < 0) { /* ---- linear axis ---- Only use	axp[]  arg. */
+    if (!logflag || axp[2] < 0) { /* --- linear axis --- Only use axp[] arg. */
 	n = fabs(axp[2]) + 0.25;/* >= 0 */
 	dn = imax2(1, n);
 	rng = axp[1] - axp[0];
@@ -807,14 +809,14 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
 SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* axis(side, at, labels, tick, line, pos,
-     *      outer, font, vfont, lty, lwd, col, ...) */
+     *	    outer, font, vfont, lty, lwd, col, ...) */
 
     SEXP at, lab, vfont;
     int col, font, lty;
     int i, n, nint = 0, ntmp, side, *ind, outer;
     int istart, iend, incr;
     Rboolean dolabels, doticks, logflag = FALSE;
-    Rboolean vectorFonts = FALSE;
+    Rboolean create_at, vectorFonts = FALSE;
     double x, y, temp, tnew, tlast;
     double axp[3], usr[2];
     double gap, labw, low, high, line, pos, lwd;
@@ -955,7 +957,8 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Determine the tickmark positions.  Note that these may fall */
     /* outside the plot window. We will clip them in the code below. */
 
-    if (length(at) == 0) {
+    create_at = (length(at) == 0);
+    if (create_at) {
 	PROTECT(at = CreateAtVector(axp, usr, nint, logflag));
     }
     else {
@@ -1011,7 +1014,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
     /* no! we do allow an `lty' argument -- will not be used often though
-     *  Rf_gpptr(dd)->lty = LTY_SOLID; */
+     *	Rf_gpptr(dd)->lty = LTY_SOLID; */
     Rf_gpptr(dd)->lty = lty;
     Rf_gpptr(dd)->lwd = lwd;
 
@@ -1084,7 +1087,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	else { /* side == 3 */
 	    axis_lab = axis_base
 		+ GConvertYUnits(Rf_gpptr(dd)->mgp[1], LINES, NFC, dd)
- 		- GConvertY(1.0, NPC, NFC, dd);
+		- GConvertY(1.0, NPC, NFC, dd);
 	}
 	axis_lab = GConvertYUnits(axis_lab, NFC, LINES, dd);
 
@@ -2338,12 +2341,12 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(string != NA_STRING)
 		GMVText(CHAR(string),
 			INTEGER(vfont)[0], INTEGER(vfont)[1],
-			sideval, lineval, outerval, atval, 
+			sideval, lineval, outerval, atval,
 			Rf_gpptr(dd)->las, dd);
 #else
 	    warningcall(call,"Hershey fonts not yet implemented for mtext()");
 	    if(string != NA_STRING)
-		GMtext(CHAR(string), sideval, lineval, outerval, atval, 
+		GMtext(CHAR(string), sideval, lineval, outerval, atval,
 		       Rf_gpptr(dd)->las, dd);
 #endif
 	}
@@ -2353,7 +2356,7 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 	else {
 	    string = STRING_ELT(text, i%ntext);
 	    if(string != NA_STRING)
-		GMtext(CHAR(string), sideval, lineval, outerval, atval, 
+		GMtext(CHAR(string), sideval, lineval, outerval, atval,
 		       Rf_gpptr(dd)->las, dd);
 	}
 
@@ -2473,7 +2476,7 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	  for (i = 0; i < n; i++) {
 		string = STRING_ELT(Main, i);
 		if(string != NA_STRING)
-		    GText(hpos, offset - i, where, CHAR(string), adj, 
+		    GText(hpos, offset - i, where, CHAR(string), adj,
 			  adjy, 0.0, dd);
 	  }
 	}
@@ -2719,7 +2722,7 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		xx[100] = x[1];
 		yy[100] = aa + x[1] * bb;
-		
+
 		/* now get rid of -ve values */
 		lstart=0;lstop=100;
 		if (Rf_gpptr(dd)->xlog){
@@ -2730,8 +2733,8 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 			for(;yy[lstart]<=0 && lstart<101;lstart++);
 			for(;yy[lstop]<=0 && lstop>0;lstop--);
 		}
-					
-	    
+
+
 		GPolyline(lstop-lstart+1, xx+lstart, yy+lstart, USER, dd);
 	    }
 	    else {
@@ -3796,7 +3799,7 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 	    yy = REAL(y)[i];
 	    if (R_FINITE(xx) && R_FINITE(yy)) {
 		p0 = REAL(p)[i];	/* width */
-		p1 = REAL(p)[i + nr];   /* height */
+		p1 = REAL(p)[i + nr];	/* height */
 		p2 = REAL(p)[i + 2 * nr];/* lower whisker */
 		p3 = REAL(p)[i + 3 * nr];/* upper whisker */
 		p4 = REAL(p)[i + 4 * nr];/* median proport. in [0,1] */
