@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2002   The R Development Core Team.
+ *  Copyright (C) 2000-2003   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,8 @@ struct Rconn {
     char* class;
     char* description;
     char mode[5];
-    Rboolean text, isopen, incomplete, canread, canwrite, canseek, blocking;
+    Rboolean text, isopen, incomplete, canread, canwrite, canseek, blocking, 
+	isGzcon;
     Rboolean (*open)(struct Rconn *);
     void (*close)(struct Rconn *); /* routine closing after auto open */
     void (*destroy)(struct Rconn *); /* when closing connection */
@@ -111,11 +112,14 @@ typedef struct clpconn {
 #ifdef _ZLIB_H
 typedef struct gzconn {
     Rconnection con;
-    int ncon, cp;
+    int cp; /* compression level */
     z_stream s;
     int z_err, z_eof;
     uLong crc;
     Byte *inbuf, *outbuf;
+    int nsaved;
+    char saved[2];
+    Rboolean allow;
 } *Rgzconn;
 #endif
 

@@ -18,8 +18,8 @@ loadURL(url, envir = parent.frame(), quiet = TRUE, \dots)
 }
 \details{
   \code{load} can load \R objects saved in the current or any earlier
-  format.  When called with a file argument it can read a compressed
-  file (see \code{\link{save}}), but not when reading from a connection.
+  format.  It can read a compressed file (see \code{\link{save}})
+  directly from a file or from a suitable connection.
 
   \code{loadURL} is a convenience wrapper which downloads a file, loads
   it and deletes the downloaded copy.

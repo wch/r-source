@@ -6,7 +6,7 @@ load <- function (file, envir = parent.frame())
         con <- gzfile(file)
         on.exit(close(con))
     }
-    else if (inherits(file, "connection")) con <- file
+    else if (inherits(file, "connection")) con <- gzcon(file)
     else stop("bad file argument")
     if(!isOpen(con)) {
         ## code below assumes that the connection is open ...

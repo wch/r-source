@@ -257,6 +257,9 @@ NEW FEATURES
     o	New function gzcon() which wraps a connection and provides
 	(de)compression compatible with gzip.
 
+	load() now uses gzcon(), so can read compressed saves from
+	suitable connections.
+
     o	%*% and crossprod() for complex arguments make use of BLAS
 	routines and so may be much faster on some platforms.
 
@@ -272,7 +275,7 @@ NEW FEATURES
 	flexible.
 
     o	Generic function confint() and `lm' method (formerly in
-	package MASS).
+	package MASS, which has `glm' and `nls' methods).
 
 
 INSTALLATION CHANGES
