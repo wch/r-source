@@ -1,6 +1,6 @@
 
 R : Copyright 2002, The R Development Core Team
-Version 1.6.0 Under development (unstable) (2002-06-14)
+Version 1.7.0 Under development (unstable) (2002-11-05)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -322,6 +322,8 @@ Error in as.table.default(x) : cannot coerce into a table
  [9] "Component 1: Attributes: < names for current but not for target >"             
 [10] "Component 1: Attributes: < target is NULL, current is list >"                  
 [11] "Component 1: target is numeric, current is data.frame"                         
+> f <- as.difftime( x );  all.equal(f, as.difftime( f ), tol=0)
+Error in strptime(tim, format = format) : invalid `x' argument
 > f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
 [1] TRUE
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
@@ -709,6 +711,8 @@ Error in as.table.default(x) : cannot coerce into a table
  [9] "Component 1: Attributes: < names for current but not for target >"             
 [10] "Component 1: Attributes: < target is NULL, current is list >"                  
 [11] "Component 1: target is NULL, current is data.frame"                            
+> f <- as.difftime( x );  all.equal(f, as.difftime( f ), tol=0)
+Error in strptime(tim, format = format) : invalid `x' argument
 > f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
 [1] TRUE
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
@@ -1088,6 +1092,8 @@ Error in as.table.default(x) : cannot coerce into a table
  [8] "Component 1: Attributes: < names for current but not for target >"             
  [9] "Component 1: Attributes: < target is NULL, current is list >"                  
 [10] "Component 1: Length mismatch: comparison on first 0 components"                
+> f <- as.difftime( x );  all.equal(f, as.difftime( f ), tol=0)
+Error in strptime(tim, format = format) : invalid `x' argument
 > f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
 Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
@@ -1453,6 +1459,8 @@ Error in as.table.default(x) : cannot coerce into a table
 [7] "Component 1: Attributes: < names for current but not for target >"
 [8] "Component 1: Attributes: < target is NULL, current is list >"     
 [9] "Component 1: target is numeric, current is data.frame"            
+> f <- as.difftime( x );  all.equal(f, as.difftime( f ), tol=0)
+Error in strptime(tim, format = format) : invalid `x' argument
 > f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
 [1] TRUE
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
@@ -1814,6 +1822,8 @@ Error in as.table.default(x) : cannot coerce into a table
 [7] "Component 1: Attributes: < names for current but not for target >"
 [8] "Component 1: Attributes: < target is NULL, current is list >"     
 [9] "Component 1: target is numeric, current is data.frame"            
+> f <- as.difftime( x );  all.equal(f, as.difftime( f ), tol=0)
+Error in strptime(tim, format = format) : invalid `x' argument
 > f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
 [1] TRUE
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
@@ -2175,6 +2185,10 @@ Error in as.table.default(x) : cannot coerce into a table
 [7] "Component 1: Attributes: < names for current but not for target >"
 [8] "Component 1: Attributes: < target is NULL, current is list >"     
 [9] "Component 1: target is character, current is data.frame"          
+> f <- as.difftime( x );  all.equal(f, as.difftime( f ), tol=0)
+Warning message: 
+no finite arguments to min; returning Inf 
+Error in strptime(tim, format = format) : invalid `x' argument
 > f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
 [1] TRUE
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
@@ -2536,6 +2550,8 @@ Error in as.table.default(x) : cannot coerce into a table
 [7] "Component 1: Component 1: Modes: numeric, list"                                
 [8] "Component 1: Component 1: names for current but not for target"                
 [9] "Component 1: Component 1: target is numeric, current is list"                  
+> f <- as.difftime( x );  all.equal(f, as.difftime( f ), tol=0)
+Error in strptime(tim, format = format) : invalid `x' argument
 > f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
 [1] TRUE
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
@@ -2871,6 +2887,8 @@ Error in as.table.default(x) : cannot coerce into a table
 [4] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
 [5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
 [6] "Component 1: Component 1: `current' is not a factor"                                        
+> f <- as.difftime( x );  all.equal(f, as.difftime( f ), tol=0)
+Error in strptime(tim, format = format) : invalid `x' argument
 > f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
 [1] TRUE
 > f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
@@ -2948,6 +2966,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  7.2 1.54 9.51 0 0 
+Time elapsed:  1.33 0.03 1.36 0 0 
 > 
 > 
