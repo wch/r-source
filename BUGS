@@ -159,6 +159,11 @@ Date: Thu, 11 Jul 2002 18:21:42 +1000
 Subject: colSums etc. documentation
 From: "Gunter, Bert" <bert_gunter@merck.com>
 Date: Thu, 13 Feb 2003 09:08:44 -0500
+* PR# 2794 *
+Subject: prop.test  confidence intervals
+From: rbaer@kcom.edu
+Date: Fri, 18 Apr 2003 19:01:03 +0200 (MET DST)
+..prop.test should say how it computes confidence intervals.
 
 Directory:  Graphics
 
@@ -585,6 +590,10 @@ From: socrates@mail.ru
 Date: Thu, 27 Jun 2002 10:30:51 +0200 (MET DST)
 ..A crash that is *very* hard to trigger (after several
 ..minutes of continuous resizing)
+* PR# 2816 *
+Subject: Handling of upper/lowercase in package names
+From: "Philippe Grosjean" <phgrosjean@sciviews.org>
+Date: Tue, 22 Apr 2003 14:33:04 +0200
 
 Directory:  incoming
 
@@ -614,23 +623,63 @@ Date: Sat, 1 Mar 2003 16:35:56 +1100 (EST)
 Subject: recursive default argument reference in debugger
 From: pburns@pburns.seanet.com
 Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
-* PR# 2776 *
-Subject: suggested changes to summary.glm and summary.lm
-From: John Fox <jfox@mcmaster.ca>
-Date: Mon, 14 Apr 2003 07:59:24 -0400
-* PR# 2782 *
-Subject: The World's Smallest Digital Camera & Webcam! trqenkukuuh ncxku 
-From: "Hi!" <phredom02@yahoo.com>
-Date: Tue, 15 Apr 03 16:52:26 GMT
-* PR# 2783 *
-Subject: shorrage delenion
-From: "Lorraine Tran" <62t8ojel93p@aol.com>
-Date: Mon, 14 Apr 03 23:36:23 GMT
-* PR# 2784 *
-Subject: You've never seen it look this good before
-From: "Todd Butler" <am2fagtp@gate811.net>
-Date: Tue, 15 Apr 03 20:05:19 GMT
-* PR# 2785 *
-Subject: Labeling in lm()
-From: veraf@stat.sc.edu
-Date: Tue, 15 Apr 2003 21:33:48 +0200 (MET DST)
+* PR# 2793 *
+Subject: Problems with RMySQL in R 1.7.0 for Windows
+From: "Jonas Ranstam" <jonas@ranstam.dk>
+Date: Fri, 18 Apr 2003 09:13:56 +0200
+* PR# 2798 *
+Subject: Re: [R] Keyboard problem using RWin 1.7.0
+From: DJNordlund@aol.com
+Date: Sat, 19 Apr 2003 18:56:25 EDT
+* PR# 2801 *
+Subject: Rgui crashes after setting par(ask=TRUE) and using lattice
+From: smcnary@charm.net
+Date: Sun, 20 Apr 2003 21:01:40 +0200 (MET DST)
+* PR# 2808 *
+Subject: building R 1.7.0 under RH7.3
+From: Tim Hoar <thoar@cgd.ucar.edu>
+Date: Mon, 21 Apr 2003 13:16:16 -0600 (MDT)
+* PR# 2809 *
+Subject: sweave provoked segfault
+From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
+Date: Mon, 21 Apr 2003 17:01:53 -0400
+* PR# 2813 *
+Subject: Search Engine
+From: leroy@ucsd.edu
+Date: Tue, 22 Apr 2003 06:21:19 +0200 (MET DST)
+* PR# 2818 *
+Subject: zip.unpack() crashes R
+From: hb@maths.lth.se
+Date: Tue, 22 Apr 2003 17:23:27 +0200 (MET DST)
+* PR# 2822 *
+Subject: "LAPACK routine DGESDD gave error code -12" with Debian
+From: Ramon Diaz <rdiaz@cnio.es>
+Date: Tue, 22 Apr 2003 20:06:21 +0200
+* PR# 2823 *
+Subject: Re: [Rd] 
+From: Kurt Hornik <hornik@ci.tuwien.ac.at>
+Date: Tue, 22 Apr 2003 20:15:19 +0200
+* PR# 2824 *
+Subject: coplot panels malrendered / 1653
+From: dmaszle@mendelbio.com
+Date: Wed, 23 Apr 2003 02:19:53 +0200 (MET DST)
+* PR# 2835 *
+Subject: Italian-crafted Rolex - only $65 - $140!! Free SHIPPING!!
+From: james@hello.com
+Date: Fri, 25 Apr 2003 01:06:14 +0800
+* PR# 2836 *
+Subject: R-1.7.0: build feedback: OpenBSD 3.2
+From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
+Date: Thu, 24 Apr 2003 11:40:35 -0600 (MDT)
+* PR# 2837 *
+Subject: R-1.7.0 build feedback: NetBSD 1.6
+From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
+Date: Thu, 24 Apr 2003 11:45:20 -0600 (MDT)
+* PR# 2838 *
+Subject: ATTN:  re^fina-nce and earn some money iiwm gmhpg
+From: "Barney Bermudez" <oj1m0fxvsny6@dellmail.com>
+Date: Thu, 24 Apr 03 16:44:49 GMT
+* PR# 2839 *
+Subject: KIND REQUEST FOR FAVOUR.
+From: "DR. GILBERT GUEI" <gilguie@netscpe.net>
+Date: Thu, 24 Apr 2003 23:04:08 +0200
