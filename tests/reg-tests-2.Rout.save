@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.0.0 Under development (unstable) (2004-05-10), ISBN 3-900051-00-3
+Version 2.0.0 Under development (unstable) (2004-06-18), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -4019,10 +4019,12 @@ attr(,".Environment")
 Error in try(x[-c(1, NA)]) : only 0's may mix with negative subscripts
 > ## worked on some platforms, segfaulted on others in 1.8.1
 > 
+> 
 > ## vector 'border' (and no 'pch', 'cex' nor 'bg'):
 > data(InsectSprays)
 > boxplot(count ~ spray, data = InsectSprays, border=2:7)
 > ## gave warnings in 1.9.0
+> 
 > 
 > ## Dump should quote when necessary (PR#6857)
 > x <- quote(b)
@@ -4050,5 +4052,53 @@ quote(b)
   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20 
                           a  aa 
  21  22  23  24  25  26 100 102 
+> ##
+> 
+> 
+> ## tests of raw type
+> # tests of logic operators
+> x <- "A test string"
+> (y <- charToRaw(x))
+ [1] 41 20 74 65 73 74 20 73 74 72 69 6e 67
+> (xx <- c(y, as.raw(0), charToRaw("more")))
+ [1] 41 20 74 65 73 74 20 73 74 72 69 6e 67 00 6d 6f 72 65
+> 
+> !y
+ [1] be df 8b 9a 8c 8b df 8c 8b 8d 96 91 98
+> y & as.raw(15)
+ [1] 01 00 04 05 03 04 00 03 04 02 09 0e 07
+> y | as.raw(128)
+ [1] c1 a0 f4 e5 f3 f4 a0 f3 f4 f2 e9 ee e7
+> 
+> # tests of binary read/write
+> zz <- file("testbin", "wb")
+> writeBin(xx, zz)
+> close(zz)
+> zz <- file("testbin", "rb")
+> (yy <- readBin(zz, "raw", 100))
+ [1] 41 20 74 65 73 74 20 73 74 72 69 6e 67 00 6d 6f 72 65
+> seek(zz, 0, "start")
+[1] 18
+> readBin(zz, "integer", n=100, size = 1) # read as small integers
+ [1]  65  32 116 101 115 116  32 115 116 114 105 110 103   0 109 111 114 101
+> seek(zz, 0, "start")
+[1] 18
+> readBin(zz, "character", 100)  # is confused by embedded nul.
+[1] "A test string" ""             
+Warning message: 
+incomplete string at end of file has been discarded 
+> seek(zz, 0, "start")
+[1] 18
+> readChar(zz, length(xx)) # correct
+[1] "A test string\0more"
+> close(zz)
+> unlink("testbin")
+> 
+> # tests of ASCII read/write.
+> cat(xx, file="testascii")
+> scan("testascii", what=raw(0))
+Read 18 items
+ [1] 41 20 74 65 73 74 20 73 74 72 69 6e 67 00 6d 6f 72 65
+> unlink("testascii")
 > ##
 > 
