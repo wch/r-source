@@ -11,6 +11,7 @@
 \alias{.packages}
 \alias{.path.package}
 \alias{.lib.loc}
+\alias{.libPaths}
 \alias{print.libraryIQR}
 \description{
   \code{library} and \code{require} load add-on packages.
@@ -37,7 +38,8 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 .path.package(package = .packages(), quiet = FALSE)
 .find.package(package, lib.loc = NULL, use.attached, quiet = FALSE,
               verbose = getOption("verbose"))
-.lib.loc
+.libPaths(new)
+
 .Library
 .Autoloaded
 }
@@ -76,6 +78,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \item{use.attached}{a logical indicating whether attached packages
     should be considered in addition to the ones installed in the given
     libraries.}
+  \item{new}{a character vector with the locations of \R library trees.}
 }
 \details{
   \code{library(package)} and \code{require(package)} both load the
@@ -152,18 +155,25 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   which autoloading has been promised.
 
   \code{.Library} is a character string giving the location of the
-  default library, the ``library'' subdirectory of \code{R_HOME}.
-  \code{.lib.loc} is a character vector with the locations of all
-  library trees that \R should use.  It is initialized at startup from
-  the environment variable \code{R_LIBS} (which should be a
+  default library, the \file{library} subdirectory of \code{R_HOME}.
+  \code{.libPaths} is used for getting or setting the library trees that
+  \R knows about (and hence uses when looking for packages).  If called
+  with argument \code{new}, the library search path is set to
+  \code{unique(new, .Library)} and this is returned.  If given no
+  argument, a character vector with the currently known library trees is
+  returned.  The library search path is initialized at startup from the
+  environment variable \code{R_LIBS} (which should be a
 #ifdef unix
   colon-separated
 #endif
 #ifdef windows
   semicolon-separated
 #endif
-  list of directories at which \R library trees are rooted) followed by
-  \code{.Library}.
+  list of directories at which \R library trees are rooted) by calling
+  \code{.libPaths} with the directories specified in \code{R_LIBS}. 
+  Currently, the global variable \code{.lib.loc} is used for storing the
+  paths to the known library trees; however, this variable should not be
+  accessed directly.
 }
 \value{
   \code{library} returns the list of loaded (or available) packages
@@ -192,8 +202,7 @@ require(eda)                # the same
 .path.package()
 .Autoloaded                 # maybe "ctest"
 
-.lib.loc
-.Library == .lib.loc[length(.lib.loc)]  # `by definition'
+.libPaths()                 # all library trees R knows about
 
 require(nonexistent)        # FALSE
 \dontrun{## Suppose a package needs to call a shared library named `fooEXT',

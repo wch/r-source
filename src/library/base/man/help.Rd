@@ -92,15 +92,15 @@ help(topic, offline = FALSE, package = .packages(),
 \note{
   Unless \code{lib.loc} is specified explicitly, the loaded packages are
   searched before those in the specified libraries.  This ensures that
-  if a library is loaded from a library not in \code{.lib.loc} then the
-  help from the loaded library is used.  If \code{lib.loc} is specified
-  explicitly, the loaded packages are \emph{not} searched.
+  if a library is loaded from a library not in the known library trees,
+  then the help from the loaded library is used.  If \code{lib.loc} is
+  specified explicitly, the loaded packages are \emph{not} searched.
 
   If this search fails and argument \code{try.all.packages} is
   \code{TRUE} and neither \code{packages} nor \code{lib.loc} is
-  specified, then all the packages in \code{lib.loc} are searched
-  for help on \code{topic} and a list of (any) packages where help
-  may be found is printed (but no help is shown).
+  specified, then all the packages in the known library trees are
+  searched for help on \code{topic} and a list of (any) packages where
+  help may be found is printed (but no help is shown).
   \bold{N.B.} searching all packages can be slow.
 
   The help files can be many small files.  On some file systems it is

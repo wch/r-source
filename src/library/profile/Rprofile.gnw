@@ -1,7 +1,8 @@
 ###-*- R -*-
 
 .Library <- file.path(gsub("\\\\", "/", R.home()), "library")
-.lib.loc <- unique(c(unlist(strsplit(gsub("\\\\", "/", Sys.getenv("R_LIBS")), ";")), .Library))
+invisible(.libPaths(unlist(strsplit(gsub("\\\\", "/",
+                                         Sys.getenv("R_LIBS")), ";"))))
 if(nchar(Sys.getenv("R_PAPERSIZE")) > 0) {
     options(papersize = as.vector(Sys.getenv("R_PAPERSIZE")))
 }else  {

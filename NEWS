@@ -373,6 +373,10 @@ NEW FEATURES
     o   Output from the GNOME console is block buffered for increased
         speed
 
+    o	New function .libPaths() for getting or setting the paths to the
+	library trees R knows about.  This is still stored in .lib.loc,
+	which however should no longer be accessed directly.
+
 
 DOCUMENTATION CHANGES
 
@@ -402,11 +406,11 @@ UTILITIES
     o	R CMD Rd2dvi has more convenient defaults for its output file.
 
     o	R CMD check now also fully checks the Depends field in the
-	package DESCRIPTION file.  It also tests whether all methods in
-	the code have all arguments of the corresponding generic, for
-	arguments shown in \usage but not documented in \arguments, and
-	whether assignment functions have their final argument named
-	`value'.
+	package DESCRIPTION file.  It also tests for syntax errors in
+	the R code, whether all methods in the code have all arguments
+	of the corresponding generic, for arguments shown in \usage but
+	not documented in \arguments, and whether assignment functions
+	have their final argument named `value'.
 
 
 C-LEVEL FACILITIES

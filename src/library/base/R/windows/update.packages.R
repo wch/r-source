@@ -3,7 +3,7 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
                              method, available=NULL, destdir=NULL)
 {
     if(missing(lib) || is.null(lib)) {
-        lib <- .lib.loc[1]
+        lib <- .libPaths()[1]
         warning(paste("argument `lib' is missing: using", lib))
     }
     if(is.null(CRAN) & missing(contriburl)) {

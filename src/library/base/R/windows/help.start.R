@@ -8,7 +8,7 @@ help.start <- function(gui = "irrelevant", browser = "irrelevant")
     else {
         cat("updating HTML package listing\n")
         flush.console()
-        make.packages.html(.lib.loc)
+        make.packages.html(.libPaths())
         make.search.html(.Library)
         a <- gsub("/", "\\\\", a)
         cat("If nothing happens, you have to open `", a, "' yourself\n")

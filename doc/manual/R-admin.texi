@@ -464,8 +464,8 @@ It is helpful to use the correct terminology.  A @emph{package} is
 loaded from a @emph{library} by the function @code{library}.  Thus a
 library is a directory containing installed packages; the main library
 is @file{R_HOME/library}, but others can be used, for example by setting
-the environment variable @env{R_LIBS} or the @R{} object
-@code{.lib.loc}.
+the environment variable @env{R_LIBS} or using the @R{} function
+@code{.libPaths()}.
 
 @node Installing packages, Updating packages, Add-on packages, Add-on packages
 @section Installing packages
@@ -511,7 +511,7 @@ Then download and install package @strong{foo} by
 
 @noindent
 Unless the library is specified (argument @code{lib}) the first library
-in @code{.lib.loc} is used.
+in the library search path is used.
 
 What this does is different on Unix and Windows.  On Unix it consults
 the list of available source packages on @acronym{CRAN}, downloads the

@@ -11,7 +11,7 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
         options(browser = browser)
     }
     cat("Making links in ~/.R ...\n")
-    .Script("sh", "help-links.sh", paste(unique(.lib.loc), collapse = " "))
+    .Script("sh", "help-links.sh", paste(.libPaths(), collapse = " "))
     url <- paste(if (is.null(remote)) "$HOME/.R" else remote,
 		 "/doc/html/index.html", sep = "")
     writeLines(strwrap(paste("If", browser, "is already running,",

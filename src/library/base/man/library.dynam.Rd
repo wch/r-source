@@ -52,7 +52,7 @@ library.dynam(chname, package = .packages(), lib.loc = NULL,
 \seealso{
   \code{\link{.First.lib}}, \code{\link{library}},
   \code{\link{dyn.load}}, \code{\link{.packages}},
-  \code{\link{.lib.loc}}
+  \code{\link{.libPaths}}
 
 #ifdef unix
   \code{\link{SHLIB}} for how to create suitable shared libraries.

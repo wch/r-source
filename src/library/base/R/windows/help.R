@@ -147,7 +147,7 @@ help <-
                 try.all.packages <- FALSE
             if(try.all.packages && missing(package) && missing(lib.loc)) {
                 ## try all the remaining packages
-                lib.loc <- .lib.loc
+                lib.loc <- .libPaths()
                 packages <- .packages(all.available = TRUE, lib.loc = lib.loc)
                 packages <- packages[is.na(match(packages, .packages()))]
                 pkgs <- libs <- character(0)

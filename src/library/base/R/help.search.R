@@ -60,7 +60,7 @@ function(pattern, fields = c("alias", "title"),
             np <- 0
         }
         if(is.null(lib.loc))
-            lib.loc <- .lib.loc
+            lib.loc <- .libPaths()
         if(is.null(package))
             package <-.packages(all.available = TRUE, lib.loc = lib.loc)
         for(p in package) {

@@ -133,7 +133,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
     else {
 	## library():
         if(is.null(lib.loc))
-            lib.loc <- .lib.loc
+            lib.loc <- .libPaths()
         db <- matrix(character(0), nr = 0, nc = 3)
         nopkgs <- character(0)
 
@@ -223,7 +223,7 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
 function(all.available = FALSE, lib.loc = NULL)
 {
     if(is.null(lib.loc))
-        lib.loc <- .lib.loc
+        lib.loc <- .libPaths()
     if(all.available) {
 	ans <- character(0)
         lib.loc <- lib.loc[file.exists(lib.loc)]
@@ -271,7 +271,7 @@ function(package, lib.loc = NULL, use.attached, quiet = FALSE,
     use.attached <- FALSE
     if(is.null(lib.loc)) {
         use.attached <- TRUE
-        lib.loc <- .lib.loc
+        lib.loc <- .libPaths()
     }
     
     sQuote <- function(s) paste("`", s, "'", sep = "")
@@ -312,4 +312,12 @@ function(package, lib.loc = NULL, use.attached, quiet = FALSE,
     }
 
     paths
+}
+
+.libPaths <-
+function(new)
+{
+    if(!missing(new))
+        assign(".lib.loc", unique(c(new, .Library)), envir = NULL)
+    get(".lib.loc", envir = NULL)
 }

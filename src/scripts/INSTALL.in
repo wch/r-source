@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.77 $'
+revision='$Revision: 1.78 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -357,9 +357,8 @@ do_install () {
       fi
       R_PROFILE=./R_PROFILE.R
       export R_PROFILE
-      (echo " .lib.loc <- c(\"${lib}\", .lib.loc)";
-        cat ${lib}/${pkg}/R/${pkg};
-        echo "rm(.lib.loc)") | \
+      (echo "invisible(.libPaths(\"${lib}\"))"; \
+        cat ${lib}/${pkg}/R/${pkg}) | \
 	${R_HOME}/bin/R --save --silent ${save_args}
       if test ${?} -ne 0; then
         echo "ERROR: execution of package source for ${pkg} failed"
