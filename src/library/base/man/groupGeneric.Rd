@@ -71,9 +71,12 @@ Complex(z)
   There are four \emph{groups} for which S3 methods can be written,
   namely the \code{"Math"}, \code{"Ops"}, \code{"Summary"} and
   \code{"Complex"} groups.  These are not \R objects, but methods can be
-  supplied for them and base \R contains \code{\link{factor}} and
-  \code{\link{data.frame}} methods for the first three groups.
-  (There is also a \code{\link{ordered}} method for \code{Ops}.)
+  supplied for them and base \R contains \code{\link{factor}},
+  \code{\link{data.frame}} and \code{\link{difftime}} methods for
+  the first three groups.
+  (There are also a \code{\link{ordered}} method for \code{Ops},
+  \code{\link{POSIXt}} methods for \code{Math} and \code{Ops}, as well as a
+  \code{\link[stats]{ts}} method for \code{Ops} in package \pkg{stats}.)
   
 %   A function \emph{\code{f}} belonging to one of these groups must be
 %   \code{\link{.Internal}} or \code{\link{.Primitive}} and will
@@ -147,10 +150,15 @@ Complex(z)
     }
   }
 
+  Note that a method will used for either one of these groups or one of
+  its members \emph{only} if it corresponds to a \code{"class"}
+  attribute, as the internal code dispatches on \code{\link{oldClass}}
+  and not on \code{\link{class}}.  This is for efficiency: having to
+  dispatch on, say, \code{Ops.integer} would be too slow.
+
   The number of arguments supplied for \code{"Math"} group generic
-  methods is not checked prior to dispatch. (Prior to \R 1.7.0, all
-  those whose default method has one argument were checked, but the
-  others were not.)
+  methods is not checked prior to dispatch. (Most have default methods
+  expecting one argument, but three expect two.)
 }
 \section{S4 Group Dispatching}{
   When package \pkg{methods} is attached, formal (S4) methods can be

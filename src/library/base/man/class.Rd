@@ -66,14 +66,15 @@ oldClass(x) <- value
   Functions \code{oldClass} and \code{oldClass<-} behave in the same way
   as functions of those names in S-PLUS 5/6, \emph{but} in \R
   \code{\link{UseMethod}} dispatches on the class as returned by
-  \code{class} rather than \code{oldClass}.
+  \code{class} rather than \code{oldClass}.  \emph{However},
+  \link{group generic}s dispatch on the \code{oldClass} for efficiency.
 }
 
 \section{Formal classes}{
-  An additional mechanism of \emph{formal} classes has been available in
-  packages \pkg{methods} since \R 1.4.0, and as from \R 1.7.0 this
-  is attached by default.  For objects which have a formal class, its name
-  is returned by \code{class} as a character vector of length one.
+  An additional mechanism of \emph{formal} classes is available in
+  packages \pkg{methods} which is attached by default.  For objects
+  which have a formal class, its name is returned by \code{class}
+  as a character vector of length one.
 
   The replacement version of the function sets the class to the value
   provided.  For classes that have a formal definition, directly
@@ -82,15 +83,16 @@ oldClass(x) <- value
   particular class.
 }
 \seealso{
-  \code{\link{UseMethod}}, \code{\link{NextMethod}}.
+  \code{\link{UseMethod}}, \code{\link{NextMethod}},
+  \code{\link{group generic}}.
 }
 \examples{
-  x <- 10
-  inherits(x, "a") #FALSE
-  class(x)<-c("a", "b")
-  inherits(x,"a") #TRUE
-  inherits(x, "a", TRUE) # 1
-  inherits(x, c("a", "b", "c"), TRUE) # 1 2 0
+x <- 10
+inherits(x, "a") #FALSE
+class(x) <- c("a", "b")
+inherits(x,"a") #TRUE
+inherits(x, "a", TRUE) # 1
+inherits(x, c("a", "b", "c"), TRUE) # 1 2 0
 }
 \keyword{methods}
 \keyword{classes}
