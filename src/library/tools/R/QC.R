@@ -69,9 +69,9 @@ function(package, dir, lib.loc = NULL)
                 stop("cannot source package code")
             }
         }
-        
+
         codeObjs <- ls(envir = codeEnv, all.names = TRUE)
-        
+
         ## Does the package have a NAMESPACE file?  Note that when
         ## working on the sources we (currently?) cannot deal with the
         ## (experimental) alternative way of specifying the namespace.
@@ -156,7 +156,7 @@ function(package, dir, lib.loc = NULL)
                 }) == FALSE]
         }
         ## </FIXME>
-        
+
         ## Allow group generics to be undocumented other than in base.
         ## In particular, those from methods partially duplicate base
         ## and are documented in base's groupGenerics.Rd.
@@ -209,7 +209,7 @@ function(package, dir, lib.loc = NULL,
     ## usage but 'missing from the code'.
     S3reg <- character(0)
     hasNamespace <- FALSE
-    
+
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
@@ -234,7 +234,7 @@ function(package, dir, lib.loc = NULL,
             as.environment(paste("package", package, sep = ":"))
 
         lsCode <- ls(envir = codeEnv, all.names = TRUE)
-        
+
         ## Does the package have a namespace?
         if(packageHasNamespace(package, dirname(dir))) {
             hasNamespace <- TRUE
@@ -278,7 +278,7 @@ function(package, dir, lib.loc = NULL,
         }
 
         lsCode <- ls(envir = codeEnv, all.names = TRUE)
-        
+
         ## Does the package have a NAMESPACE file?  Note that when
         ## working on the sources we (currently?) cannot deal with the
         ## (experimental) alternative way of specifying the namespace.
@@ -302,7 +302,8 @@ function(package, dir, lib.loc = NULL,
         is.function(f) && (length(formals(f)) > 0)
     }) == TRUE]
     if(ignore.generic.functions) {
-        funs <- funs[sapply(funs, .isS3Generic, codeEnv) == FALSE]
+        ## ignore all generics, whatever name they dispatch on
+        funs <- funs[sapply(funs, .isS3Generic, codeEnv, FALSE) == FALSE]
     }
     ## <FIXME>
     ## Sourcing all R code files in the package is a problem for base,
@@ -405,7 +406,7 @@ function(package, dir, lib.loc = NULL,
         rm(list = usages, envir = docsEnv)
 
     }
-    
+
     ## Determine (function) objects in the code without a \usage entry.
     ## Of course, these could still be 'documented' via \alias.
     ## </NOTE>
@@ -458,7 +459,7 @@ function(x, ...)
     ##     }
     ## </COMMENT>
     ## </FIXME>
-    
+
     usagesNotInCode <- attr(x, "usagesNotInCode")
     if(length(usagesNotInCode) > 0) {
         for(fname in names(usagesNotInCode)) {
@@ -469,7 +470,7 @@ function(x, ...)
             writeLines("")
         }
     }
-            
+
     if(length(x) == 0)
         return(invisible(x))
     hasOnlyNames <- is.character(x[[1]][[1]][["code"]])
@@ -497,7 +498,7 @@ function(x, ...)
                                  indent = 2, exdent = 17)))
         writeLines("")
     }
-    
+
     invisible(x)
 }
 
@@ -688,7 +689,7 @@ function(package, dir, lib.loc = NULL)
             .loadPackageQuietly(package, lib.loc)
         codeEnv <-
             as.environment(paste("package", package, sep = ":"))
-        
+
         lsCode <- ls(envir = codeEnv, all.names = TRUE)
 
         ## Does the package have a namespace?
@@ -994,7 +995,7 @@ function(package, dir, lib.loc = NULL)
     ## If an installed package has a namespace, we also want to test all
     ## S3 methods which are registered but not exported.
     S3reg <- character(0)
-    
+
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
@@ -1162,7 +1163,7 @@ function(package, dir, lib.loc = NULL)
     ## If an installed package has a namespace, we also want to test all
     ## S3 replacement methods which are registered but not exported.
     S3reg <- character(0)
-    
+
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
@@ -1183,7 +1184,7 @@ function(package, dir, lib.loc = NULL)
             as.environment(paste("package", package, sep = ":"))
 
         lsCode <- ls(envir = codeEnv, all.names = TRUE)
-        
+
         ## Does the package have a namespace?
         if(packageHasNamespace(package, dirname(dir))) {
             ## Determine unexported but declared S3 replacement methods.
@@ -1283,7 +1284,7 @@ function(package, dir, file, lib.loc = NULL)
         if(.fileTest("-d", exampleDir)) {
             codeFiles <- c(codeFiles,
                            .listFilesWithExts(exampleDir, "R"))
-            
+
         }
     }
     else if(!missing(dir)) {

@@ -81,7 +81,7 @@ function(ns, dir, nsInfo)
     ## or a @file{NAMESPACE} file in directory 'dir', or an 'nsInfo'
     ## object returned by parseNamespaceFile().  (Note that when doing
     ## QC on non-installed packages with a @file{NAMESPACE} file, we
-    ## parse the @file{NAMESPACE} file anyway to determine the exports.
+    ## parse the @file{NAMESPACE} file anyway to determine the exports.)
     S3methods <- if(!missing(ns))
         sapply(getNamespaceInfo(ns, "S3methods"), "[[", 3)
     else {
@@ -102,9 +102,13 @@ function(ns, dir, nsInfo)
 ### * .isS3Generic
 
 .isS3Generic <-
-function(fname, envir = NULL) {
-    ## Determine whether object named 'fname' in environment 'envir' is
-    ## (to be considered) an S3 generic function.
+function(fname, envir, mustMatch = TRUE) {
+    ## Determine whether object named 'fname' found in
+    ## environment 'envir' is (to be considered) an S3 generic function.
+    ## Note, found *in* not found *from*, so envir does not have a default
+    ##
+    ## If it is, does it despatch methods of fname?  We need that to
+    ## look for possible methods as functions named fname.* ....
     ##
     ## Provided by LT with the following comments:
     ##
@@ -122,9 +126,10 @@ function(fname, envir = NULL) {
     ##             if (...) ... else <UME>
     ##             { ... <UME> ... }
     ## then a recognizer for UME might be as follows.
-    
-    f <- get(fname, envir = envir)
-    if(!is.function(f)) return(FALSE)
+
+    if(!exists(fname, mode = "function", envir = envir, inherits = FALSE))
+        return(FALSE)
+    f <- get(fname, mode = "function", envir = envir, inherits = FALSE)
     isUMEbrace <- function(e) {
         for (ee in as.list(e[-1])) if (isUME(ee)) return(TRUE)
         FALSE
@@ -134,13 +139,15 @@ function(fname, envir = NULL) {
         else isUME(e[[3]]) || isUME(e[[4]])
     }
     isUME <- function(e) {
-        if (is.call(e) && (is.name(e[[1]]) || is.character(e[[1]])))
-            switch(as.character(e[[1]]),
-                   UseMethod = TRUE,
-                   "{" = isUMEbrace(e),
-                   "if" = isUMEif(e),
-                   FALSE)
-        else FALSE
+        if (is.call(e) && (is.name(e[[1]]) || is.character(e[[1]]))) {
+            res <- switch(as.character(e[[1]]),
+                          UseMethod = TRUE,
+                          "{" = isUMEbrace(e),
+                          "if" = isUMEif(e),
+                          FALSE)
+            if(res && mustMatch) res <- as.character(e[[2]]) == fname
+            res
+        } else FALSE
     }
     isUME(body(f))
 }

@@ -8,6 +8,36 @@ NextMethod <- function(generic=NULL, object=NULL, ...)
 
 methods <- function (generic.function, class)
 {
+    findGeneric <-
+        function(fname, envir)
+        {
+            if(!exists(fname, mode = "function", envir = envir)) return("")
+            f <- get(fname, mode = "function", envir = envir)
+            isUMEbrace <- function(e) {
+                for (ee in as.list(e[-1]))
+                    if (nchar(res <- isUME(ee))) return(res)
+                ""
+            }
+            isUMEif <- function(e) {
+                if (length(e) == 3) isUME(e[[3]])
+                else {
+                    if (nchar(res <- isUME(e[[3]]))) res
+                    else if (nchar(res <- isUME(e[[4]]))) res
+                    else ""
+                }
+            }
+            isUME <- function(e) {
+                if (is.call(e) && (is.name(e[[1]]) || is.character(e[[1]]))) {
+                    switch(as.character(e[[1]]),
+                           UseMethod = as.character(e[[2]]),
+                           "{" = isUMEbrace(e),
+                           "if" = isUMEif(e),
+                           "")
+                } else ""
+            }
+            isUME(body(f))
+        }
+
     S3MethodsStopList <- tools::.makeS3MethodsStopList(NULL)
     S3groupGenerics <- c("Ops", "Math", "Summary")
 
@@ -23,20 +53,15 @@ methods <- function (generic.function, class)
     if (!missing(generic.function)) {
 	if (!is.character(generic.function))
 	    generic.function <- deparse(substitute(generic.function))
+        truegf <- findGeneric(generic.function, parent.frame())
+        if(nchar(truegf) && truegf != generic.function) {
+            warning(paste("Generic `", generic.function,
+                          "' dispatches methods for generic `",
+                          truegf, "'", sep=""))
+            generic.function <- truegf
+        }
         genfun <- get(generic.function, mode = "function",
                       envir = parent.frame())
-        gf <- paste(deparse(genfun), collapse="\n")
-        if(length(grep("UseMethod", gf))) {
-            ## look for the generic dispatched on: not 100% reliable!
-            truegf <- sub('(.*)UseMethod\\(\"([^"]*)(.*)', "\\2", gf)
-            if(truegf != generic.function) {
-                warning(paste("Generic `", generic.function,
-                              "' dispatches methods for generic `",
-                              truegf, "'", sep=""))
-                genfun <- get(generic.function <- truegf, mode = "function",
-                              envir = parent.frame())
-            }
-        }
 	name <- paste("^", generic.function, ".", sep = "")
         ## also look for registered methods from namespaces
         if(generic.function %in% S3groupGenerics)
@@ -100,14 +125,39 @@ data.class <- function(x) {
 
 getS3method <-  function(f, class, optional = FALSE)
 {
+    findGeneric <-
+        function(fname, envir)
+        {
+            if(!exists(fname, mode = "function", envir = envir)) return("")
+            f <- get(fname, mode = "function", envir = envir)
+            isUMEbrace <- function(e) {
+                for (ee in as.list(e[-1]))
+                    if (nchar(res <- isUME(ee))) return(res)
+                ""
+            }
+            isUMEif <- function(e) {
+                if (length(e) == 3) isUME(e[[3]])
+                else {
+                    if (nchar(res <- isUME(e[[3]]))) res
+                    else if (nchar(res <- isUME(e[[4]]))) res
+                    else ""
+                }
+            }
+            isUME <- function(e) {
+                if (is.call(e) && (is.name(e[[1]]) || is.character(e[[1]]))) {
+                    switch(as.character(e[[1]]),
+                           UseMethod = as.character(e[[2]]),
+                           "{" = isUMEbrace(e),
+                           "if" = isUMEif(e),
+                           "")
+                } else ""
+            }
+            isUME(body(f))
+        }
+
     groupGenerics <- c("Ops", "Math", "Summary")
-    gf <- paste(deparse(get(f, mode = "function",
-                            envir = parent.frame())), collapse="\n")
-    if(length(grep("UseMethod", gf))) {
-        ## look for the generic dispatched on: not 100% reliable!
-        truegf <- sub('(.*)UseMethod\\(\"([^"]*)(.*)', "\\2", gf)
-        if(truegf != f) f <- truegf
-    }
+    truegf <- findGeneric(f, parent.frame())
+    if(nchar(truegf)) f <- truegf
     method <- paste(f, class, sep=".")
     if(exists(method, mode = "function", envir = parent.frame()))
         return(get(method, mode = "function", envir = parent.frame()))
