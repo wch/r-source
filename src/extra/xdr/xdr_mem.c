@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 /* Local mod: assumes WIN32 is i386 and little-endian generic is 32-bit */
 #ifdef WIN32
 static unsigned long int
@@ -15,7 +19,8 @@ ntohl(unsigned long int x)
 #endif 
 }
 #else /* net is big-endian: little-endian hosts need byte-swap code */
-#ifdef LITTLE_ENDIAN
+#ifndef WORDS_BIGENDIAN
+/* #ifdef LITTLE_ENDIAN */
 static unsigned long int 
 htonl (unsigned long int x)
 {
@@ -82,7 +87,7 @@ static char sccsid[] = "@(#)xdr_mem.c 1.19 87/08/11 Copyr 1984 Sun Micro";
  *
  */
 
-
+#include <string.h> /* for memcpy */
 #include <rpc/types.h>
 #include <rpc/xdr.h>
 
