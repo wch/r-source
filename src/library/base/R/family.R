@@ -357,7 +357,7 @@ quasi <- function (link = "identity", variance = "constant")
 	   "constant" = {
 	       variance <- function(mu) rep(1, length(mu))
 	       dev.resids <- function(y, mu, wt) wt * ((y - mu)^2)
-	       validmu <-function(mu) TRUE
+	       validmu <- function(mu) TRUE
 	   },
 	   "mu(1-mu)" = {
 	       variance <- function(mu) mu * (1 - mu)
@@ -380,7 +380,7 @@ quasi <- function (link = "identity", variance = "constant")
 	   },
 	   "mu^3" = {
 	       variance <- function(mu) mu^3
-	       validmu <-function(mu) all(mu>0)
+	       validmu <- function(mu) all(mu>0)
 	       dev.resids <- function(y, mu, wt)
 		   wt * ((y - mu)^2)/(y * mu^2)
 	   },
@@ -400,6 +400,8 @@ quasi <- function (link = "identity", variance = "constant")
 		   mu.eta = stats$mu.eta,
 		   initialize = initialize,
 		   validmu = validmu,
-		   valideta = stats$valideta),
+		   valideta = stats$valideta,
+                   ## character form of the var fun is needed for gee
+                   varfun = variancetemp),
 	      class = "family")
 }
