@@ -281,28 +281,33 @@ SEXP StringFromLogical(int x, int *warn)
 {
     int w;
     formatLogical(&x, 1, &w);
-    return mkChar(EncodeLogical(x, w));
+    if (x == NA_LOGICAL) return NA_STRING;
+    else return mkChar(EncodeLogical(x, w));
 }
 
 SEXP StringFromInteger(int x, int *warn)
 {
     int w;
     formatInteger(&x, 1, &w);
-    return mkChar(EncodeInteger(x, w));
+    if (x == NA_INTEGER) return NA_STRING;
+    else return mkChar(EncodeInteger(x, w));
 }
 
 SEXP StringFromReal(double x, int *warn)
 {
     int w, d, e;
     formatReal(&x, 1, &w, &d, &e, 0);
-    return mkChar(EncodeReal(x, w, d, e));
+    if (ISNA(x)) return NA_STRING;
+    else return mkChar(EncodeReal(x, w, d, e));
 }
 
 SEXP StringFromComplex(Rcomplex x, int *warn)
 {
     int wr, dr, er, wi, di, ei;
     formatComplex(&x, 1, &wr, &dr, &er, &wi, &di, &ei, 0);
-    return mkChar(EncodeComplex(x, wr, dr, er, wi, di, ei));
+    if (ISNA(x.r) || ISNA(x.i)) return NA_STRING;
+    else
+	return mkChar(EncodeComplex(x, wr, dr, er, wi, di, ei));
 }
 
 /* Conversion between the two list types (LISTSXP and VECSXP). */
