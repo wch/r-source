@@ -4,8 +4,8 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-9, 2002-01-21
-@set REL-VERSION 1.4.0
+@set FAQ-VERSION 1.4-11, 2002-01-30
+@set REL-VERSION 1.4.1
 @c %**end of header
 
 @dircategory Programming
@@ -1533,6 +1533,8 @@ VAriance Stabilization for regression) methods for selecting regression
 transformations.
 @item adapt
 Adaptive quadrature in up to 20 dimensions.
+@item agce
+Analysis of growth curve experiments.
 @item akima
 Linear or cubic spline interpolation for irregularly gridded data.
 @item ash

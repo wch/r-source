@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.4-9, 2002-01-21
+Version 1.4-11, 2002-01-30
 Kurt Hornik
 
 
@@ -226,7 +226,7 @@ sparc-linux-gnu, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current released version is 1.4.0.  Conforming to this
+   The current released version is 1.4.1.  Conforming to this
 `major.minor.patchlevel' numbering scheme, there are three development
 versions of R, working towards the next patch (`r-patched'), minor
 (`r-devel'), and major (`r-ng') releases of R, respectively.  Version
@@ -1263,6 +1263,9 @@ works, was published in the Journal of Statistical Software
 
 *adapt*
      Adaptive quadrature in up to 20 dimensions.
+
+*agce*
+     Analysis of growth curve experiments.
 
 *akima*
      Linear or cubic spline interpolation for irregularly gridded data.
