@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-12, 2002-10-31
+Version 1.6-13, 2002-11-05
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -373,7 +373,7 @@ directory of a CRAN site.
 
    The `bin/linux' directory of a CRAN site contains Debian stable/testing
 packages for the i386 platform (now part of the Debian distribution and
-maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x/8.0 i386 and 7.x
+maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x/8.x i386 and 7.x
 alpha packages (maintained by Stephen Eglen, Martyn Plummer and Naoki
 Takebayashi, respectively), SuSE 7.3/8.0/8.1 i386 packages by Detlef
 Steuer, and Mandrake 8.1/8.2/9.0 i386 packages by Michele Alzetta.
