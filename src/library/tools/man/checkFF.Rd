@@ -44,7 +44,7 @@ checkFF(package, dir, file, lib.loc = NULL,
   change in future versions.
 }
 \examples{
-checkFF(package = "ts", verbose = TRUE)
+checkFF(package = "stats", verbose = TRUE)
 }
 \keyword{programming}
 \keyword{utilities}

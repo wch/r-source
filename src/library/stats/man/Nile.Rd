@@ -47,7 +47,6 @@ lines(pred$pred + 2*pred$se, lty=2, col="blue")
 lines(pred$pred - 2*pred$se, lty=2, col="blue")
 
 ## Structural time series models
-data(Nile, package = "ts")
 par(mfrow = c(3, 1))
 plot(Nile)
 ## local level model

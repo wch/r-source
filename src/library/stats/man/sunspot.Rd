@@ -37,9 +37,9 @@ data(sunspot)
   Wadsworth \& Brooks/Cole.
 }
 \examples{
-## Compare the monthly series from 'base' and 'ts':
+## Compare the monthly series from 'base' and 'stats':
 data(sunspots, package = "base")
-data(sunspot,  package = "ts")
+data(sunspot,  package = "stats")
 plot (sunspot.month, main = "sunspot.month [stats]", col = 2)
 lines(sunspots) # "very barely" see something
 

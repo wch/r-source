@@ -1368,7 +1368,6 @@ AC_CONFIG_FILES(
   src/library/grid/src/Makefile
   src/library/lqs/DESCRIPTION
   src/library/lqs/Makefile
-  src/library/lqs/src/Makefile
   src/library/methods/DESCRIPTION
   src/library/methods/Makefile
   src/library/methods/src/Makefile
@@ -1380,7 +1379,6 @@ AC_CONFIG_FILES(
   src/library/mva/Makefile
   src/library/nls/DESCRIPTION
   src/library/nls/Makefile
-  src/library/nls/src/Makefile
   src/library/profile/Makefile
   src/library/stats/DESCRIPTION
   src/library/stats/Makefile
@@ -1398,7 +1396,6 @@ AC_CONFIG_FILES(
   src/library/tools/src/Makefile
   src/library/ts/DESCRIPTION
   src/library/ts/Makefile
-  src/library/ts/src/Makefile
   src/library/utils/DESCRIPTION
   src/library/utils/Makefile
   src/main/Makefile

@@ -1,9 +1,9 @@
-.onLoad <- function(lib, pkg)
-{
-    options(ts.S.compat = FALSE)
-}
-
 .noGenerics <- TRUE
 
-.onUnload <- function(libpath)
-    library.dynam.unload("ts", libpath)
+.First.lib <- function(lib, pkg)
+{
+    have.stats <- "package:stats" %in% search()
+    if(!have.stats) require("stats")
+    warning("package ", sQuote("ts"), " has been merged into ",
+            sQuote("stats"), call. = FALSE)
+}

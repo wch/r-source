@@ -2609,7 +2609,7 @@ tsdiag(fit)
 
 
 ## predict.arima
-data(lh, package="ts")
+data(lh)
 predict(arima(lh, order=c(1,0,1)), n.ahead=5)
 predict(arima(lh, order=c(1,1,0)), n.ahead=5)
 predict(arima(lh, order=c(0,2,1)), n.ahead=5)

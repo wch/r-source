@@ -81,7 +81,7 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
 \seealso{\code{\link{stack}}, \code{\link{aperm}}}
 
 \examples{
-data(Indometh,package="nls")
+data(Indometh)
 summary(Indometh)
 wide <- reshape(Indometh, v.names="conc", idvar="Subject",
                 timevar="time", direction="wide")
