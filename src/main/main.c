@@ -123,6 +123,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
     int c, status, browsevalue;
     unsigned char *bufp, buf[1025];
     SEXP value;
+    Rboolean wasDisplayed = FALSE;
 
     R_IoBufferWriteReset(&R_ConsoleIob);
     prompt_type = 1;
@@ -186,11 +187,12 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 	    R_Busy(1);
 	    value = eval(R_CurrentExpr, rho);
 	    SET_SYMVALUE(R_LastvalueSymbol, value);
+	    wasDisplayed = R_Visible;
 	    if (R_Visible)
 		PrintValueEnv(value, rho);
 	    if (R_CollectWarnings)
 		PrintWarnings();
-	    Rf_callToplevelHandlers(R_CurrentExpr, value, TRUE, R_Visible);
+	    Rf_callToplevelHandlers(R_CurrentExpr, value, TRUE, wasDisplayed);
 	    R_CurrentExpr = value; /* Necessary? Doubt it. */
 	    UNPROTECT(1);
 	    R_IoBufferWriteReset(&R_ConsoleIob);
