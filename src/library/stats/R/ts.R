@@ -169,6 +169,23 @@ as.ts <- function (x)
     else ts(x, start=st, freq=freq)
 }
 
+.makeNamesTs <- function(...)
+{
+    l <- as.list(substitute(list(...)))[-1]
+    nm <- names(l)
+    fixup <- if(is.null(nm)) seq(along = l) else nm == ""
+    ## <NOTE>
+    dep <- sapply(l[fixup], function(x) deparse(x)[1])
+    ## We could add support for `deparse.level' here by creating dep
+    ## as in list.names() inside table().  But there is a catch: we
+    ## need deparse.level = 2 to get the `usual' deparsing when the
+    ## method is invoked by the generic ...
+    ## </NOTE>
+    if(is.null(nm)) return(dep)
+    if(any(fixup)) nm[fixup] <- dep
+    nm
+}
+
 Ops.ts <- function(e1, e2)
 {
     if(missing(e2)) {
@@ -194,23 +211,14 @@ Ops.ts <- function(e1, e2)
 
 cbind.ts <- function(..., deparse.level = 1) {
     if(deparse.level != 1) .NotYetUsed("deparse.level != 1")
-    makeNames <- function(...) {
-        l <- as.list(substitute(list(...)))[-1]
-        nm <- names(l)
-        fixup <- if(is.null(nm)) seq(along = l) else nm == ""
-        ## <NOTE>
-        dep <- sapply(l[fixup], function(x) deparse(x)[1])
-        ## We could add support for `deparse.level' here by creating dep
-        ## as in list.names() inside table().  But there is a catch: we
-        ## need deparse.level = 2 to get the `usual' deparsing when the
-        ## method is invoked by the generic ...
-        ## </NOTE>
-        if(is.null(nm)) return(dep)
-        if(any(fixup)) nm[fixup] <- dep
-        nm
-    }
-    .cbind.ts(list(...), makeNames(...), dframe = FALSE, union = TRUE)
+    .cbind.ts(list(...), .makeNamesTs(...), dframe = FALSE, union = TRUE)
 }
+
+ts.union <- function(..., dframe = FALSE)
+    .cbind.ts(list(...), .makeNamesTs(...), dframe = dframe, union = TRUE)
+
+ts.intersect <- function(..., dframe = FALSE)
+    .cbind.ts(list(...), .makeNamesTs(...), dframe = dframe, union = FALSE)
 
 diff.ts <- function (x, lag = 1, differences = 1, ...)
 {

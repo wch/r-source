@@ -11,7 +11,7 @@ alias(object, \dots)
 \alias{alias}
 \alias{alias.formula}
 \alias{alias.lm}
-\alias{print.mtable}
+%\alias{print.mtable}
 \arguments{
   \item{object}{A fitted model object, for example from \code{lm} or
     \code{aov}, or a formula for \code{alias.formula}.}
