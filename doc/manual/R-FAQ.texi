@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-15, 2001-01-09
+@set FAQ-VERSION 1.2-16, 2001-01-10
 @set REL-VERSION 1.2.0
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1525,6 +1525,8 @@ including stabilized test procedures by Laeuter et.@: al.
 @item multiv
 Functions for hierarchical clustering, partitioning, bond energy
 algorithm, Sammon mapping, PCA and correspondence analysis.
+@item mvnlme
+ML estimation for multivariate normal data with missing values.
 @item mvtnorm
 Multivariate normal and @math{t} distributions.
 @item nlme
