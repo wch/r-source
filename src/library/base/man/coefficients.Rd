@@ -15,12 +15,9 @@ coefficients(x, \dots)
   Coefficients extracted from the model object \code{x}.
 }
 \description{
-  \code{coefficients} is a generic function which extract model
-  coefficents from objects returned by modeling functions.
-
-  The abbreviated form \code{coef} is intended to encourage users to
-  access object components through an accessor function rather than by
-  directly referencing an object slot (list element).
+  \code{coef} is a generic function which extracts model coefficents
+  from objects returned by modeling functions.  \code{coefficients} is
+  an alias for it.
 
   All object classes which are returned by model fitting functions
   should provide a \code{coef} method.  (Note that method is `coef' and

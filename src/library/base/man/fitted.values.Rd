@@ -15,11 +15,9 @@ fitted.values(x, \dots)
   Fitted values extracted from the object \code{x}.
 }
 \description{
-  \code{fitted.values} is a generic function which extracts fitted
-  values from objects returned by modeling functions.  The abbreviated
-  form \code{fitted} is intended to encourage users to access object
-  components by using an accessor function rather than by directly
-  referencing an object slot.
+  \code{fitted} is a generic function which extracts fitted values from
+  objects returned by modeling functions.  \code{fitted.values} is an
+  alias for it.
 
   All object classes which are returned by model fitting functions
   should provide a \code{fitted} method.  (Note that the method is

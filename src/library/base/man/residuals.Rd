@@ -18,9 +18,10 @@ resid(x, \dots)
   \code{residuals} is a generic function which extracts model residuals
   from objects returned by modeling functions.
 
-  The abbreviated form \code{resid} is intended to encourage users to
-  access object components through an accessor function rather than by
-  directly referencing an object slot.
+  The abbreviated form \code{resid} is an alias for \code{residuals}.
+  It is intended to encourage users to access object components through
+  an accessor function rather than by directly referencing an object
+  slot.
 
   All object classes which are returned by model fitting functions
   should provide a \code{residuals} method.  (Note that the method is
