@@ -60,8 +60,7 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
     docsList <- tempfile("Rdocs")
     FILES <- c(FILES, docsList)
     cat(files, sep = "\n", file = docsList)
-    .Script("perl", "extract-usage.pl",
-            paste("--os", .Platform$OS, docsList, docsFile))
+    .Script("perl", "extract-usage.pl", paste(docsList, docsFile))
 
     lib.source <- function(file, env) {
         oop <- options(keep.source = FALSE)
