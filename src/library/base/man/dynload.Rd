@@ -54,7 +54,7 @@ symbol.For(name)
 \details{
   See
 #ifdef windows
-  file \file{readme.packages},
+  file \file{README.packages},
 #endif
   \sQuote{See Also} and the \emph{Writing R Extensions} manual for how to
   create a suitable shared library.  Note that unlike some versions of
