@@ -263,6 +263,10 @@ none
 
 Directory:  incoming
 
+* PR# 715 *
+Subject: Printing list elements w/attributes
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 31 Oct 2000 12:15:09 +0100
 * PR# 714 *
 Subject: prop.test and x = 0
 From: charlie@stat.umn.edu
