@@ -245,8 +245,8 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
 		    Rprintf("%s", EncodeReal(NA_REAL, w[j], 0, 0));
 		else
 		    Rprintf("%s", EncodeComplex(x[i + j * r],
-			    wr[j] + PRINT_GAP, dr[j], er[j],
-			    wi[j], dr[j], er[j]));
+						wr[j] + PRINT_GAP, dr[j], er[j],
+						wi[j], dr[j], er[j]));
 	    }
 	}
 	Rprintf("\n");
@@ -308,7 +308,7 @@ static void printStringMatrix(SEXP sx, int offset, int r, int c,
 }
 
 void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
-	    SEXP rl, SEXP cl)
+		 SEXP rl, SEXP cl)
 {
     int r, c;
 
@@ -336,6 +336,7 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
 
 static void printArrayGeneral(SEXP x, SEXP dim, int quote, SEXP dimnames)
 {
+/* == printArray(.) */
     SEXP ii, nn, dn;
     int i, j, k, l, b, nb, ndim;
     int nr, nc;
