@@ -59,13 +59,12 @@ x[[i, j]] <- value
 \section{Coercion}{
   The story over when replacement values are coerced is a complicated
   one, and one that has changed during \R's development.  This section
-  is guide only.
+  is a guide only.
 
   When \code{[} and \code{[[} are used with a single index to add or
   replace a column, no coercion takes place but \code{value} will be
-  relicated (by calling the generic function \code{\link{rep}}) to the
-  right length.  (Currently only for length-one values for \code{[} and
-  for an exact number of repeats for \code{[[}.)
+  replicated (by calling the generic function \code{\link{rep}}) to the
+  right length if an exact number of repeats can be used.
 
   When \code{[} is used with a logical matrix, each value is coerced to
   the type of the column in which it is to be placed.

@@ -460,11 +460,13 @@ data.frame <-
             ## except for a full-sized logical matrix
             if(is.logical(i) && is.matrix(i) && all(dim(i) == dim(x))) {
                 nreplace <- sum(i, na.rm=T)
-                nv <- nrow(x)
-                if(length(value) != 1 && length(value) != nreplace)
+                N <- length(value)
+                if(N > 0 && N < nreplace && N%%nreplace == 0)
+                    value <- rep(value, length = nreplace)
+                if(length(value) != nreplace)
                     stop("rhs is the wrong length for indexing by a logical matrix")
-                if(length(value) == 1) value <- rep(value, length = nreplace)
                 n <- 0
+                nv <- nrow(x)
                 for(v in seq(len = dim(i)[2])) {
                     thisvar <- i[, v, drop = TRUE]
                     nv <- sum(thisvar, na.rm=T)
@@ -572,7 +574,7 @@ data.frame <-
 	dimv <- dim(value)
     }
     nrowv <- dimv[[1]]
-    if(nrowv < n) {
+    if(nrowv < n && nrowv > 0) {
 	if(n %% nrowv == 0)
 	    value <- value[rep(1:nrowv, length=n),,drop = FALSE]
 	else stop(paste(nrowv, "rows in value to replace", n, "rows"))
@@ -631,7 +633,7 @@ data.frame <-
             N <- NROW(value)
             if(N > nrows)
                 stop(paste("replacement has", N, "rows, data has", nrows))
-            if(N < nrows)
+            if(N < nrows && N > 0)
                 if(nrows %% N == 0 && length(dim(value)) <= 1)
                     value <- rep(value, length = nrows)
                 else
@@ -1081,4 +1083,3 @@ Summary.data.frame <- function(x, ...)
 	stop("only defined on a data frame with all numeric or complex variables")
     NextMethod(.Generic)
 }
-
