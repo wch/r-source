@@ -474,8 +474,10 @@ heatmap <- function (x, Rowv, Colv, distfun = dist, add.expr,
     }
     else
         ddc <- Colv
+    rowInd <- order.dendrogram(ddr)
+    colInd <- order.dendrogram(ddc)
     ## reorder x
-    x <- x[order.dendrogram(ddr), order.dendrogram(ddc)]
+    x <- x[rowInd, colInd]
     if(scale == "row") {
         mn <- rowMeans(x, na.rm=na.rm)
         sd <- apply(x, 1, sd, na.rm=na.rm)
@@ -510,5 +512,5 @@ heatmap <- function (x, Rowv, Colv, distfun = dist, add.expr,
     plot(ddr, horiz = TRUE, axes = FALSE, yaxs = "i", leaflab="none")
     par(mar = c(0, 0, 3, 5))
     plot(ddc, axes = FALSE, xaxs = "i", leaflab="none")
-    invisible(NULL)
+    invisible(list(rowInd = rowInd, colInd = colInd))
 }

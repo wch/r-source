@@ -43,21 +43,23 @@ heatmap(x, Rowv, Colv, distfun = dist, add.expr,
   The default colors are not pretty. Consider using RColorBrewer.
 }
 \value{
-  No value is returned. The function is called for the side effect of
-  producing a picture.
+  Invisibly, a list with components
+  \item{rowInd}{\bold{r}ow index permutation vector as returned by
+    \code{\link{order.dendrogram}}.}}
+  \item{colInd}{\bold{c}olumn index permutation vector.}
 }
-
-\author{Andy Liaw, original, R. Gentleman, revisions}
+\author{Andy Liaw, original; R. Gentleman and M. Maechler, revisions.}
 
 \seealso{\code{\link{image}}}
 
 \examples{
   set.seed(132)
   x <- matrix(runif(1000), 50, 20)
-  heatmap(x, col = topo.colors(32), main = "Random U[0,1] heatmap")
+  hv <- heatmap(x, col = topo.colors(32), main = "Random U[0,1] heatmap")
+  str(hv) # the two re-ordering index vectors
 
   data(volcano)
   ## Volcano is not recognizable, but at least not random
   heatmap(volcano, col = gray(0:64/64))
 }
-\keyword{hplot }
+\keyword{hplot}
