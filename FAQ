@@ -1748,6 +1748,9 @@ distributions of R.)
      balanced designs, to check given designs for balance, and for
      simulation studies on the validity of two randomization procedures.
 
+*cyclones*
+     Cyclone identification.
+
 *date*
      Functions for dealing with dates.  The most useful of them accepts a
      vector of input dates in any of the forms `8/30/53', `30Aug53', `30
@@ -2100,6 +2103,10 @@ distributions of R.)
 *ineq*
      Inequality, concentration and poverty measures, and Lorenz curves
      (empirical and theoretic).
+
+*intcox*
+     Implementation of the Iterated Convex Minorant Algorithm for the Cox
+     proportional hazard model for interval censored event data.
 
 *ipred*
      Improved predictive models by direct and indirect bootstrap aggregation
