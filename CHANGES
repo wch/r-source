@@ -1,6 +1,8 @@
 		CHANGES IN R VERSION 0.62.4
 BUG FIXES
 
+    o   0i ^ 2  now gives  0+0i as it should.
+
     o   ppoints() now behaves like S, and has additional argument 'a'
 
     o   seq(1,6,by=3) and similar "by" calls now work okay
