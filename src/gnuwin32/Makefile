@@ -148,6 +148,7 @@ bootstrap-DLLNM=boott
 
 clean: cleanwin $(PKGCLEAN)
 	$(RM) -f ../*/*.o $(WINOBJS) *.a ../*/*.d ../*/Makedeps fixed/fixdesc
+	-$(MAKE) -C ../../doc/manual -f Makefile.win distclean
 
 distclean veryclean: clean
 	$(RM) -rf R.exp ../../bin ../../library
@@ -273,6 +274,17 @@ pkgcheck-base:
 	-@mkdir -p ../library/base/check
 	-@$(MAKE) -C ../library/base/check PKG=base -f ../../../gnuwin32/check/PkgCheck
 	@(cd ../../library/base/R-ex; rm -f *.R)
+
+docs manuals:
+	@$(MAKE) -C ../../doc/manual -f Makefile.win
+	$(RM) ../../library/base/latex/*.tex
+
+docsdist:
+	$(RM) -rf $(RPREFIX)
+	$(MKDIR) $(RPREFIX) $(RPREFIX)/doc $(RPREFIX)/doc/manuals 
+	$(CP) -pr ../../doc/manual/*.pdf $(RPREFIX)/doc/manuals
+	zip -rmX $(RPREFIX)d.zip $(RPREFIX)
+
 
 # Dependencies
 CSOURCES=$(wildcard *.c)

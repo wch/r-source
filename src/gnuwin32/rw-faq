@@ -70,17 +70,19 @@ There is also information on the use of R for Windows in the Venables
 
 1.1) Where can I find the latest version?
 
-Go to any CRAN site (see http://www.ci.tuwien.ac.at/R/mirrors.html for a
+Go to any CRAN site (see http://cran-r.project.org/mirrors.html for a
 list), navigate to the bin/windows/windows-NT/base directory and collect the
 files you need. You will need at least the files
 
-      rw0xxxb.zip rw0xxxh.zip
+      rw0xxxb.zip 
+      rw0xxxh.zip (text help) or rw0xxxch.zip (Compiled HTML help)
 
-and will probably want rw0xxxch.zip (the Compiled HTML format help
-files) or rw0xxxwh.zip (the Windows help files) or rw0xxxw.zip (the
-HTML format help files) . Optionally, you can also download
-rw0xxxl.zip (the LaTeX format help files, used for offline printing),
-and the installer, rwinst.exe.
+and you may want rw0xxxwh.zip (the Windows help files) or rw0xxxw.zip
+(the HTML format help files), rw0xxxl.zip (the LaTeX format help
+files, used for offline printing), or rw0900d.zip (the draft manuals,
+in PDF).
+
+Optionally, you can download the installer, rwinst.exe.
 
 
 1.2) How do I install R for Windows?

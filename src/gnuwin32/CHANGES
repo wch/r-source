@@ -17,6 +17,8 @@ JPEG and  BMP has been added. This can be done via the File menu on the
 graphics window, savePlot() or dev.print to the new devices png(), bmp() 
 and jpeg(), which can also be used directly.
 
+PDF versions of the (draft) manuals are available in file rw0900d.zip
+and install into rw0900/doc/manuals.
 
 
 rw0651

@@ -40,6 +40,10 @@ ziponlyhelp-%:
 winhelp-%:
 	$(MAKE) -C ../../library/$* -f ../../gnuwin32/help/Makefile PKG=$* win
 
+latex-%:
+	$(MAKE) -C ../../../library/$* -f ../../src/gnuwin32/help/Makefile PKG=$* unzipit
+	$(PERL) build.help ${DOS} -latex ../../library/$*
+
 clean:
 	$(RM) -fr *~ *.o *.obj *.dll *.def *.a
 
@@ -64,6 +68,8 @@ logo.bmp: ../../../gnuwin32/help/logo.bmp
 # following are designed to be run from the library/pkg directory:
 
 zipit: help/Rhelp.zip
+unzipit:
+	-$(MAKE) -C latex -f ../../../src/gnuwin32/help/Makefile uz-Rhelp
 
 help/Rhelp.zip: ../../src/library/$(PKG)/man/*.Rd \
 ../../src/library/$(PKG)/man/windows/*.Rd

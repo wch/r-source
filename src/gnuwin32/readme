@@ -20,7 +20,9 @@ To install manually, unpack rw0900b.zip anywhere you like. It will
 unpack to a directory tree under rw0900. The help, HTML and latex help
 files are in separate files rw0900h.zip, rw0900w.zip and rw0900l.zip
 which should be unpacked in the same directory you unpacked
-rw0900b.zip.
+rw0900b.zip.  File rw0900d.zip contains PDF versions of the (draft) 
+manuals for R, which unpack into rw0900/doc/manual.
+
 
 Usage
 =====
