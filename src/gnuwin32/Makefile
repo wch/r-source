@@ -169,15 +169,15 @@ libRblas.a:  Rblas.def
 	  --def Rblas.def --output-lib libRblas.a
 
 ifeq ($(strip $(USE_ATLAS)),YES)
-../../bin/Rblas.dll: blas00.o
+../../bin/Rblas.dll: blas00.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared -o $@ blas00.o Rblas.def -L $(ATLAS_PATH) \
+	$(DLL) -shared -o $@ $^ Rblas.def -L $(ATLAS_PATH) \
 	   -L. -lR -lg2c -lf77blas -lcblas -latlas
 ## suppress lots of warnings: this is a dummy
 blas00.o: blas00.c
 	$(CC) -O2  -c $< -o $@
 else
-../../bin/Rblas.dll: blas.o blas2.o cmplxblas.o
+../../bin/Rblas.dll: blas.o blas2.o cmplxblas.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
 	$(DLL) -shared -o $@ Rblas.def $^ -L. -lR
 
