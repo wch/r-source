@@ -164,7 +164,7 @@ static char DLLerror[DLLerrBUFSIZE] = "";
 	/* and returns 0 if there library table is full or */
 	/* or if dlopen fails for some reason. */
 
-static int AddDLL(char *path)
+static int AddDLL(char *path, int asLocal, int now)
 {
     void *handle;
     char *dpath;
@@ -173,7 +173,8 @@ static int AddDLL(char *path)
 	strcpy(DLLerror, "Maximal number of DLLs reached...");
 	return 0;
     }
-    handle = dlopen(path, RTLD_NOW);
+    handle = dlopen(path,(asLocal != 0 ? RTLD_LOCAL : RTLD_GLOBAL) 
+                           | (now != 0 ? RTLD_NOW : RTLD_LAZY));
     if(handle == NULL) {
 	strcpy(DLLerror, dlerror());
 	return 0;
@@ -194,6 +195,14 @@ static int AddDLL(char *path)
     CountDLL++;
     return 1;
 }
+
+#if 0
+void
+foo()
+{
+ printf("Internal foo()\n");fflush(stdout);
+}
+#endif
 
 	/* R_FindSymbol checks whether one of the libraries */
 	/* that have been loaded contains the symbol name and */
@@ -251,6 +260,20 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
 	/* do_dynload implements the R-Interface for the */
 	/* loading of shared libraries */
 
+/*
+  Extended to support 2 additional arguments (3 in total).
+  First argument is the name of the library.
+  Second argument is a logical indicating whether we 
+  want the symbols to be kept in their own local symbol table
+  or added to the global symbol table of the application.
+  Third argument is a logical indicating whether the 
+  dynamic loading should relocate all routine symbols 
+  now and signal any errors immediately or lazily relocate
+  the symbols as they are invoked. This is useful for 
+  developers so that they can ensure that all the symbols 
+  are available before they release, and allows users to 
+  call routines from "incomplete" libraries.
+ */
 SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char buf[2 * PATH_MAX];
@@ -259,7 +282,7 @@ SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "character argument expected\n");
     GetFullDLLPath(call, buf, CHAR(STRING(CAR(args))[0]));
     DeleteDLL(buf);
-    if(!AddDLL(buf))
+    if(!AddDLL(buf,LOGICAL(CADR(args))[0],LOGICAL(CADDR(args))[0]))
 	errorcall(call, "unable to load shared library \"%s\":\n  %s\n",
 		  buf, DLLerror);
     return R_NilValue;

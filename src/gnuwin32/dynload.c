@@ -138,7 +138,11 @@ static char DLLerror[DLLerrBUFSIZE] = "";
         /* and returns 0 if there library table is full or */
         /* or if LoadLibrary fails for some reason. */
 
-static int AddDLL(char *path)
+/*
+  The arguments asLocal and now are unused in this version.
+  They are here for consistency with the UNIX code.
+ */
+static int AddDLL(char *path, int asLocal, int now)
 {
     HINSTANCE tdlh;
 
@@ -232,7 +236,11 @@ static void GetFullDLLPath(SEXP call, char *buf, char *path)
 
         /* do_dynload implements the R-Interface for the */
         /* loading of shared libraries */
-
+/* This looks very close the version in unix.
+   Is the only reason it is not shared due to 
+    a) 2*PATH_MAX v's PATH_MAX for sizeof(buf)
+    b) static routines in this file.
+*/
 SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char  buf[MAX_PATH];
@@ -242,7 +250,7 @@ SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "character argument expected\n");
     GetFullDLLPath(call, buf, CHAR(STRING(CAR(args))[0]));
     DeleteDLL(buf);
-    if (!AddDLL(buf))
+    if (!AddDLL(buf,LOGICAL(CADR(args))[0]),LOGICAL(CADR(args))[1])))
 	errorcall(call, "unable to load shared library \"%s\":\n  %s\n",
 		  buf, DLLerror);
     return R_NilValue;

@@ -10,8 +10,8 @@
 ##		paste(system("pwd", intern = TRUE), x, sep = "/", collapse="")))
 ##	}
 ##}
-dyn.load <- function(x)
-    .Internal(dyn.load(x))
+dyn.load <- function(x, local=TRUE, now=TRUE)
+    .Internal(dyn.load(x, as.logical(local), as.logical(now)))
 
 dyn.unload <- function(x)
     .Internal(dyn.unload(x))
