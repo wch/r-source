@@ -322,7 +322,9 @@ distclean veryclean: clean clean-recommended
 	$(RM) ../library/*/src/*.d ../library/*/src/Makedeps
 	$(RM) ../library/*/src/*.dll
 	$(RM) -r ../library/*/check
-	$(RM) ../library/Recommended/*.tgz ../library/Recommended/*.tar.gz
+	$(RM) ../library/tcltk/src/tcl$(TCL_VERSION).def \
+	../library/tcltk//src/tk$(TCL_VERSION).def
+#	$(RM) ../library/Recommended/*.tgz ../library/Recommended/*.tar.gz
 	$(RM) R.exp Rm.exp COPYRIGHTS
 	$(RM) ../../doc/html/search/index.txt ../../doc/html/index.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
@@ -335,7 +337,7 @@ distclean veryclean: clean clean-recommended
 	@for pkg in $(ALLPACKAGES); do \
 	  $(RM) ../library/$${pkg}/DESCRIPTION; \
 	done
-	$(RM) rw-FAQ fixed/html/rw-FAQ.html INSTALL
+	$(RM) rw-FAQ fixed/html/rw-FAQ.html
 	$(RM) Rpwd.exe # do this last of all
 
 cleanwin:
