@@ -3070,6 +3070,7 @@ stopifnot(order.dendrogram(d1) == hE2$order,
           identical(d1, rev(rev(d1))))
 ## not true in 1.9.0
 
+
 ## trunc on a Date
 trunc(xx <- Sys.Date()) # failed in 1.9.1
 x <- xx + 0.9
@@ -3081,12 +3082,25 @@ stopifnot(identical(trunc(x), xx)) # must not truncate towards 0.
 
 ### end of tests added in 1.9.1 ###
 
+## 1.9.1 patched
+
 ## options(list('..', '..'))
 try(options(list('digits', 'width')))# give an error
 ## gave a segfault in 1.9.1
 
+
 ## PR#7100 seg faulted or path too long error on ././././././. ...
 list.files('.', all.files = TRUE, recursive = TRUE)
 
+
 ## PR#7116 seg faulted :
 cor(as.array(c(a=1,b=2)), cbind(1:2))
+
+
+## regression test for PR#7108
+ans <- gsub(" ", "", "b c + d | a * b", perl=TRUE) # NULL in 1.9.1
+stopifnot(identical(ans, gsub(" ", "", "b c + d | a * b")))
+gsub(" ", "", "a: 12345 :a", perl=TRUE) # segfaulted in 1.9.1
+## wrong answers, segfaults in 1.9.1.
+
+### end of tests added in 1.9.1 patched ###
