@@ -27,6 +27,7 @@
 #include <Graphics.h>
 #include <Devices.h>
 
+
 /* Return a non-relocatable copy of a string */
 
 static SEXP gcall;
@@ -223,75 +224,3 @@ SEXP do_XFig(SEXP call, SEXP op, SEXP args, SEXP env)
     vmaxset(vmax);
     return R_NilValue;
 }
-#ifdef macintosh
-
-/*  Macintosh Device Driver Parameters:
- *  -----------------		--> ../unix/devX11.c
- *  display	= display
- *  width	= width in inches
- *  height	= height in inches
- *  ps		= pointsize
- */
-int MacDeviceDriver();
-
-SEXP do_Macintosh(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    DevDesc *dd;
-    char *display, *vmax;
-    double height, width, ps;
-    gcall = call;
-    vmax = vmaxget();
-    display = SaveString(CAR(args), 0); args = CDR(args);
-    width = asReal(CAR(args));	args = CDR(args);
-    height = asReal(CAR(args)); args = CDR(args);
-    if (width <= 0 || height <= 0)
-	errorcall(call, "invalid width or height");
-    ps = asReal(CAR(args));
-    
-     R_CheckDeviceAvailable();
-    /* Allocate and initialize the device driver data */
-     BEGIN_SUSPEND_INTERRUPTS {
-      if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
-	   return 0;
-    /* Do this for early redraw attempts */
-    dd->displayList = R_NilValue;
-    GInit(&dd->dp);
-    if (!MacDeviceDriver(dd, width, height, ps)) {
-	 free(dd);
-	 errorcall(call, "unable to start device Macintosh\n");
-    }
-    gsetVar(install(".Device"), mkString("Macintosh"), R_NilValue);
-    addDevice(dd);
-    initDisplayList(dd);
-    } END_SUSPEND_INTERRUPTS;
-    vmaxset(vmax);
-    return R_NilValue;
-}
-#else
-SEXP do_Macintosh(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    gcall = call;
-    DeviceUnavailable("Macintosh");
-}
-#endif
-
-/*
-  R_CheckDeviceAvailable();
-    BEGIN_SUSPEND_INTERRUPTS {
-	if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
-	    return 0;
-
-	dd->displayList = R_NilValue;
-	GInit(&dd->dp);
-	if(!PSDeviceDriver(dd, file, paper, family, afms, bg, fg,
-			   width, height, (double)horizontal, ps, onefile,
-			   pagecentre, printit, cmd)) {
-	    free(dd);
-	    errorcall(call, "unable to start device PostScript");
-	}
-	gsetVar(install(".Device"), mkString("postscript"), R_NilValue);
-	addDevice(dd);
-	initDisplayList(dd);
-    } END_SUSPEND_INTERRUPTS;
-    
-*/
