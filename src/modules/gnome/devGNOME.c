@@ -63,6 +63,7 @@ static void GNOME_Polyline(int n, double *x, double *y,
 static void GNOME_Rect(double x0, double y0, double x1, double y1,
 		     int col, int fill, int lty, double lwd,
 		     NewDevDesc *dd);
+static void GNOME_Resize(NewDevDesc *dd);
 static void GNOME_Size(double *left, double *right,
 		     double *bottom, double *top,
 		     NewDevDesc *dd);
@@ -260,8 +261,6 @@ static gint configure_event(GtkWidget *widget, GdkEventConfigure *event,
   NewDevDesc *dd;
   gnomeDesc *gd;
 
-  /*  g_print("configure\n"); */
-
   dd = (NewDevDesc *) data;
   g_return_val_if_fail(dd != NULL, FALSE);
 
@@ -270,14 +269,33 @@ static gint configure_event(GtkWidget *widget, GdkEventConfigure *event,
   g_return_val_if_fail(gd->canvas != NULL, FALSE);
   g_return_val_if_fail(GNOME_IS_CANVAS(gd->canvas), FALSE);
 
-  /* resize */
-  if((gd->windowWidth != event->width) || (gd->windowHeight != event->height))
+  if((gd->windowWidth != gd->canvas->allocation.width) ||
+     (gd->windowHeight != gd->canvas->allocation.height))
     {
-      gd->windowWidth = event->width;
-      gd->windowHeight = event->height;
-      
+      gd->windowWidth = gd->canvas->allocation.width;
+      gd->windowHeight = gd->canvas->allocation.height;
       gd->resize = TRUE;
     }
+
+  return FALSE;
+}
+
+static gint expose_event(GtkWidget *widget, GdkEventExpose *event,
+			 gpointer data)
+{
+  NewDevDesc *dd;
+  gnomeDesc *gd;
+
+  dd = (NewDevDesc *) data;
+  g_return_val_if_fail(dd, FALSE);
+  gd = (gnomeDesc *) dd->deviceSpecific;
+
+  if (gd->resize)
+    {
+      GNOME_Resize(dd); 
+    }
+  
+  GEHandleEvent(GE_Redraw, dd, R_NilValue);
 
   return FALSE;
 }
@@ -409,8 +427,20 @@ static void GNOME_NewPage(int fill, NewDevDesc *dd)
 			   "y1", (double) 0.0,
 			   "x2", (double) gd->windowWidth,
 			   "y2", (double) gd->windowHeight,
-			   "fill_color_rgba", Color_RGBA(fill),
 			   NULL);
+
+  if (R_OPAQUE(fill))
+    {
+      gnome_canvas_item_set(gd->plotarea,
+			    "fill_color_rgba", Color_RGBA(fill),
+			    NULL);
+    }
+  else
+    {
+      gnome_canvas_item_set(gd->plotarea,
+			    "fill_color", "white",
+			    NULL);
+    }
 }
 
 /* create window etc */
@@ -455,7 +485,7 @@ GNOME_Open(NewDevDesc *dd, gnomeDesc *gd, char *dsp, double w, double h)
     gnome_canvas_set_scroll_region(GNOME_CANVAS(gd->canvas), 0, 0, iw, ih);
 
     /* create new plot area on canvas */
-    /* dd->bg = R_RGB(255,255,255); FIXME: This is now canvas colour */
+    /* FIXME: We should have a canvas color argument */
     GNOME_NewPage(R_RGB(255,255,255), dd);
 
     /* place and realize the canvas */
@@ -468,10 +498,12 @@ GNOME_Open(NewDevDesc *dd, gnomeDesc *gd, char *dsp, double w, double h)
     /* set the cursor */
     gd->gcursor = gdk_cursor_new(GDK_CROSSHAIR);
     gdk_window_set_cursor(gd->canvas->window, gd->gcursor);
-
+    
     /* connect to delete signal handler, etc */
-    gtk_signal_connect(GTK_OBJECT(gd->canvas), "configure_event",
+    gtk_signal_connect(GTK_OBJECT(gd->window), "configure_event",
 		       (GtkSignalFunc) configure_event, (gpointer) dd);
+    gtk_signal_connect(GTK_OBJECT(gd->canvas), "expose_event",
+		       (GtkSignalFunc) expose_event, (gpointer) dd);
     gtk_signal_connect(GTK_OBJECT(gd->window), "delete_event",
 		       (GtkSignalFunc) delete_event, (gpointer) dd);
 
@@ -534,6 +566,27 @@ static void GNOME_MetricInfo(int c, int font, double cex, double ps,
     *ascent = (double) iascent;
     *descent = (double) idescent;
     *width = (double) (lbearing+rbearing);
+  }
+}
+
+static void GNOME_Resize(NewDevDesc *dd)
+{
+  gnomeDesc *gd = (gnomeDesc *) dd->deviceSpecific;
+
+  if (gd->resize) {
+    dd->left = 0.0;
+    dd->right =  gd->windowWidth;
+    dd->bottom = gd->windowHeight;
+    dd->top = 0.0;
+    gd->resize = FALSE;
+
+    gtk_widget_set_usize(gd->canvas, gd->windowWidth, gd->windowHeight);
+    gnome_canvas_set_scroll_region(GNOME_CANVAS(gd->canvas), 0, 0,
+				   gd->windowWidth, gd->windowHeight);
+    gnome_canvas_item_set(gd->plotarea,
+			  "x2", (double) gd->windowWidth,
+			  "y2", (double) gd->windowHeight,
+			  NULL);
   }
 }
 
@@ -601,9 +654,6 @@ static void GNOME_Activate(NewDevDesc *dd)
     gtk_window_set_title(GTK_WINDOW(gd->window), title_text);
 
     g_free(title_text);
-
-    gtk_widget_set_sensitive(GTK_WIDGET(graphics_toolbar[0].widget),
-			     FALSE);
 }
 
 static void GNOME_Deactivate(NewDevDesc *dd)
@@ -612,7 +662,6 @@ static void GNOME_Deactivate(NewDevDesc *dd)
     gint devnum, numdigits;
     gchar *title_text;
     gint text_len;
-    GtkWidget *button;
 
     text_len = strlen(title_text_inactive);
 
@@ -633,9 +682,6 @@ static void GNOME_Deactivate(NewDevDesc *dd)
     gtk_window_set_title(GTK_WINDOW(gd->window), title_text);
 
     g_free(title_text);
-
-    button = GTK_WIDGET(graphics_toolbar[0].widget);
-    gtk_widget_set_sensitive(button, TRUE);
 }
 
 /* drawing stuff */
