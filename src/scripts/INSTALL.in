@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.36 $'
+revision='$Revision: 1.37 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}"
 
@@ -43,9 +43,10 @@ umask 022
 
 # Get one field including all continuation lines from a DCF file.
 get_dcf_field () {
-  sed -n "/^${1}:/,/^[^ ]/{p;}" ${2}  | \
-     sed -n "/^${1}:/{s/^${1}:"'[ \t]*//;p;}
-             /^[ \t]/{s/^[ \t]*//;p;}'
+  ws="[ 	]"		# space and tab
+  sed -n "/^${1}:/,/^[^ ]/{p;}" ${2} | \
+    sed -n "/^${1}:/{s/^${1}:${ws}*//;p;}
+            /^${ws}/{s/^${ws}*//;p;}"
 }
   
 
