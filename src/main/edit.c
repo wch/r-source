@@ -25,7 +25,7 @@
 #include "Parse.h"
 #include <stdio.h>
 #ifdef Win32
-#include "run.h"
+#  include "run.h"
 #endif
 
 /*
@@ -45,38 +45,20 @@
  * possible and an error message reported otherwise
  */
 
-#ifdef Win32
-static char DefaultFileName[MAX_PATH];
-
-void InitEd()
-{
-    char *tmp;
-
-    tmp = getenv("TMP");
-    if (!tmp) tmp = getenv("TEMP");
-    if (!tmp) tmp = getenv("R_USER");
-    sprintf(DefaultFileName,"%s/XXXXXX",tmp);
-    mktemp(DefaultFileName);
-}
-#else
 static char *DefaultFileName;
 
 void InitEd()
 {
     DefaultFileName = tmpnam(NULL);
 }
-#endif
 
 
 SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int   i, status;
+    int   i, rc, status;
     SEXP  x, fn, envir, ed;
     char *filename, *editcmd, *vmaxsave;
     FILE *fp;
-#ifdef Win32
-    int rc;
-#endif
 
     checkArity(op, args);
 
@@ -119,7 +101,7 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (rc != 0)
 	warningcall(call, "editor ran but returned error status\n");
 #else
-    system(editcmd);
+    rc = system(editcmd);
 #endif
 
     if((fp=R_fopen(R_ExpandFileName(filename), "r")) == NULL)
