@@ -555,10 +555,6 @@ Date: Mon, 15 Apr 2002 10:13:36 +0000
 Subject: hitting ^C breaks readline history
 From: Cyril Humbert <humbertc@univ-mlv.fr>
 Date: Tue, 28 May 2002 12:07:07 +0200 (MET DST)
-* PR# 2048 *
-Subject: Install with 64-bit GCC 3.2
-From: Kev Buckley <k.buckley@lancaster.ac.uk>
-Date: Fri, 20 Sep 2002 17:33:33 +0100 (BST)
 * PR# 2091 *
 Subject: Scripts not executable
 From: Peter Kleiweg <kleiweg@let.rug.nl>
@@ -706,3 +702,15 @@ Date: Sun, 13 Oct 2002 16:54:01 +0100
 Subject: Alt border
 From: kim <kim@sex-explorer.com>
 Date: Sun, 13 Oct 2002 16:57:37 +0100
+* PR# 2159 *
+Subject: The class attribute on an environment seems buggy
+From: hb@maths.lth.se
+Date: Mon, 14 Oct 2002 01:34:45 +0200 (MET DST)
+* PR# 2160 *
+Subject: possible memory leak in 1.6
+From: socher@stat.uni-muenchen.de
+Date: Mon, 14 Oct 2002 16:01:19 +0200 (MET DST)
+* PR# 2161 *
+Subject: 專業代標法拍屋
+From: zq2v_o11azy@novartis.com
+Date: 15 Oct 2002 02:11:35 +0800
