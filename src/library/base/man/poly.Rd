@@ -28,12 +28,21 @@ poly(x, degree = 1, coefs = NULL)
 
   The matrix is given class \code{c("poly", "matrix")} as from \R 1.5.0.
 }
-\author{B.D. Ripley}
+\details{
+  The orthogonal polynomial is summarized by the coefficients, which can
+  be used to evaluate it via the three-term recursion given in Kennedy
+  \& Gentle (1980, pp. 343-4), and use in the ``predict'' part of the code.
+}
+\author{B. D. Ripley}
 
 \note{
   This routine is intended for statistical purposes such as
   \code{contr.poly}: it does not attempt to orthogonalize to
   machine accuracy.
+}
+\references{
+  Kennedy, W. J. Jr and Gentle, J. E. (1980)
+  \emph{Statistical Computing} Marcel Dekker.
 }
 
 \seealso{\code{\link{contr.poly}}}
