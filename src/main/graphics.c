@@ -2335,13 +2335,6 @@ void GCheckState(DevDesc *dd)
 */
 
 
-/* Draw a circle (radius is given in inches). */
-/* code down with GRect */
-void GCircle(double x, double y, int coords,
-	     double radius, int col, int border, DevDesc *dd);
-
-
-
 static void setClipRect(double *x1, double *y1, double *x2, double *y2,
                         int coords, DevDesc *dd)
 {
