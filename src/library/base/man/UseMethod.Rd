@@ -84,8 +84,9 @@ NextMethod(generic = NULL, object = NULL, \dots)
   it is recommended to use the more flexible and robust \emph{S4} scheme
   provided in the \pkg{methods} package. 
 
-  The function \code{.isMethodsDispatchOn()} returns \code{TRUE} if the
-  new S4 methods are available but is meant for \R internal use only.
+  The function \code{.isMethodsDispatchOn()} returns \code{TRUE} if
+  the S4 method dispatch has been turned on in the evaluator. It is
+  meant for \R internal use only.
 }
 \seealso{
   \code{\link{methods}}, \code{\link[base]{class}}, \code{\link{getS3method}}
