@@ -460,6 +460,8 @@ BUG FIXES
     o   There are many more checks for over-running internal buffers,
 	almost always reporting errors.
 
+    o   demo() was using `topic' as a regexp rather than an exact match.
+
 
 
 

@@ -192,8 +192,11 @@ function(topic, device = getOption("device"),
     paths <- file.path(paths, "demo")
     for(p in paths) {
         files <- basename(tools::listFilesWithType(p, "demo"))
+        ## files with correct extension
+        files <- files[sub(".*\\.", "", files) %in% c("R", "r")]
         ## Files with base names matching topic
-        files <- files[grep(topic, files, fixed = TRUE)]
+        basenames <- sub("\\.[Rr]$", "", files)
+        files <- files[topic == basenames]
         if(length(files) > 0)
             available <- c(available, file.path(p, files))
     }
