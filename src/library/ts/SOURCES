@@ -11,7 +11,7 @@ stl code on netlib, presumably by the authors of
      STL: A Seasonal-Trend Decomposition Procedure Based on Loess, 
      Statistics Research Report, AT&T Bell Laboratories.
 
-Fortran package ts by B.D. Ripley, 1977--82, including starma.f which is
-Applied Statistics Algorithm AS154 and AS182.
+Fortran package ts by B.D. Ripley, 1977--82, including starma.c which is
+based on Applied Statistics Algorithm AS154 and AS182.
 
 
