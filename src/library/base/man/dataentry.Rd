@@ -151,7 +151,7 @@ de(\dots, Modes = NULL, Names = NULL)
   will change) within limits: columns must be between 4 and 50 chars wide.
   The Autosize item on the popup menu will resize the currently selected
   column.
-  #endif
+#endif
 
   Control-L will refresh the display, recalculating field widths to fit
   the current entries.
