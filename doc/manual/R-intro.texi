@@ -6753,6 +6753,11 @@ Print short help message to standard output and exit successfully.
 @item --version
 Print version information to standard output and exit successfully.
 
+@item --encoding=@var{enc}
+Specify the encoding to be assumed for input from the console or
+@code{stdin}.  This needs to be an encoding known to @code{iconv}: see
+its help page.
+
 @item RHOME
 Print the path to the @R{} ``home directory'' to standard output and
 exit successfully.  Apart from the front-end shell script and the man

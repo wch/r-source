@@ -512,6 +512,7 @@ extern FILE*	R_Consolefile	INI_as(NULL);	/* Console output file */
 extern FILE*	R_Outputfile	INI_as(NULL);	/* Output file */
 extern int	R_ErrorCon	INI_as(2);	/* Error connection */
 LibExtern char*	R_TempDir	INI_as(NULL);	/* Name of per-session dir */
+extern char	R_StdinEnc[31]  INI_as("");	/* Encoding assumed for stdin */
 
 /* Objects Used In Parsing  */
 extern SEXP	R_CommentSxp;	    /* Comments accumulate here */
@@ -869,6 +870,13 @@ typedef enum {
 int	Rstrlen(SEXP, int);
 char *EncodeRaw(Rbyte);
 char *EncodeString(SEXP, int, int, Rprt_adj);
+
+/* from sysutils.c */
+void * Riconv_open (const char* tocode, const char* fromcode);
+size_t Riconv (void * cd, char **inbuf, size_t *inbytesleft,
+	       char  **outbuf, size_t *outbytesleft);
+int Riconv_close (void * cd);
+
 
 #if defined(HAVE_WCHAR_H) && defined(SUPPORT_UTF8)
 #define __USE_XOPEN 1 /* glibc needs this for wcwidth/wcswidth */

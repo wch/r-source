@@ -29,6 +29,7 @@ specified options, or invoke an R tool via the 'R CMD' interface.
 Options:
   -h, --help            Print short help message and exit
   --version             Print version info and exit
+  --encoding=enc        Specify encoding to be used for stdin
   RHOME			Print path to R home directory and exit
   --save                Do save workspace at the end of the session
   --no-save             Don't save it

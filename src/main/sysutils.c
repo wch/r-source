@@ -408,7 +408,7 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 		R_AllocStringBuffer(2*cbuff.bufsize, &cbuff);
 		goto top_of_loop;
 	    } /* other possible error conditions are incomplete 
-		 and invalid mutibyte chars */
+		 and invalid multibyte chars */
 	    if(res != -1 && inb == 0)
 		SET_STRING_ELT(ans, i, mkChar(cbuff.data));
 	    else SET_STRING_ELT(ans, i, NA_STRING);

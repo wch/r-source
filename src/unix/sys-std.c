@@ -558,12 +558,13 @@ handleInterrupt(void)
 #endif /* HAVE_LIBREADLINE */
 
 /* Fill a text buffer from stdin or with user typed console input. */
+static void *cd = NULL;
 
 int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 		     int addtohistory)
 {
     if(!R_Interactive) {
-	int ll;
+	int ll, err = 0;
 	if (!R_Slave)
 	    fputs(prompt, stdout);
 	if (fgets((char *)buf, len, stdin) == NULL)
@@ -574,9 +575,33 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	    buf[ll - 2] = '\n';
 	    buf[--ll] = '\0';
 	}
+	/* translate if necessary */
+	if(strlen(R_StdinEnc) && strcmp(R_StdinEnc, "native.enc")) {
+#ifdef HAVE_DECL_ICONV
+	    size_t res, inb = strlen((char *)buf), onb = len;
+	    char obuf[1001];
+	    char *ib = (char *)buf, *ob = obuf;
+	    if(!cd) {
+		cd = Riconv_open("", R_StdinEnc);
+		if(!cd) error("encoding '%s' is not recognised", R_StdinEnc);
+	    }
+	    res = Riconv(cd, &ib, &inb, &ob, &onb);
+	    *ob = '\0';
+	    err = res == (size_t)(-1);
+	    /* errors lead to part of the input line being ignored */
+	    if(err) fputs("<ERROR: invalid input in encoding> ", stdout);
+	    strncpy((char *)buf, obuf, len);
+#else
+	    if(!cd) {
+		warning("re-encoding is not available on this system");
+		cd = (void *)1;
+	    }
+#endif
+    	}
 /* according to system.txt, should be terminated in \n, so check this
-   at eof */
-	if (feof(stdin) && (ll == 0 || buf[ll - 1] != '\n') && ll < len) {
+   at eof and error */
+	if ((err || feof(stdin)) 
+	    && (ll == 0 || buf[ll - 1] != '\n') && ll < len) {
 	    buf[ll++] = '\n'; buf[ll] = '\0';
 	}
 	if (!R_Slave)

@@ -259,20 +259,38 @@ CharReadConsole(char *prompt, char *buf, int len, int addtohistory)
 }
 
 /*3: (as InThreadReadConsole) and 4: non-interactive */
+static void *cd = NULL;
+
 static int
 FileReadConsole(char *prompt, char *buf, int len, int addhistory)
 {
-    int ll;
+    int ll, err = 0;
+    char inbuf[1001];
     if (!R_Slave) {
 	fputs(prompt, stdout);
 	fflush(stdout);
     }
-    if (fgets(buf, len, stdin) == NULL)
+    if (fgets(inbuf, len, stdin) == NULL)
 	return 0;
+    /* translate if necessary */
+    if(strlen(R_StdinEnc) && strcmp(R_StdinEnc, "native.enc")) {
+	size_t res, inb = strlen(inbuf), onb = len;
+	char *ib = inbuf, *ob = buf;
+	if(!cd) {
+	    cd = Riconv_open("", R_StdinEnc);
+	    if(!cd) error("encoding '%s' is not recognised", R_StdinEnc);
+	}
+	res = Riconv(cd, &ib, &inb, &ob, &onb);
+	*ob = '\0';
+	err = res == (size_t)(-1);
+	/* errors lead to part of the input line being ignored */
+	if(err) fputs("<ERROR: invalid input in encoding> ", stdout);
+    } else strncpy(buf, inbuf, strlen(inbuf)+1);
+    
 /* according to system.txt, should be terminated in \n, so check this
-   at eof */
+   at eof or error */
     ll = strlen((char *)buf);
-    if (feof(stdin) && buf[ll - 1] != '\n' && ll < len) {
+    if ((err || feof(stdin)) && buf[ll - 1] != '\n' && ll < len) {
 	buf[ll++] = '\n'; buf[ll] = '\0';
     }
     if (!R_Interactive && !R_Slave)
@@ -663,7 +681,7 @@ char *PrintUsage(void)
 {
     static char msg[5000];
     char msg0[] =
-"Start R, a system for statistical computation and graphics, with the\nspecified options\n\nEnvVars: Environmental variables can be set by NAME=value strings\n\nOptions:\n  -h, --help            Print usage message and exit\n  --version             Print version info and exit\n  --save                Do save workspace at the end of the session\n  --no-save             Don't save it\n",
+"Start R, a system for statistical computation and graphics, with the\nspecified options\n\nEnvVars: Environmental variables can be set by NAME=value strings\n\nOptions:\n  -h, --help            Print usage message and exit\n  --version             Print version info and exit\n  --encoding=enc        Specify encoding to be used for stdin\n  --save                Do save workspace at the end of the session\n  --no-save             Don't save it\n",
 	msg1[] =
 "  --no-environ          Don't read the site and user environment files\n  --no-site-file        Don't read the site-wide Rprofile\n  --no-init-file        Don't read the .Rprofile or ~/.Rprofile files\n  --restore             Do restore previously saved objects at startup\n  --no-restore-data     Don't restore previously saved objects\n  --no-restore-history  Don't restore the R history file\n  --no-restore          Don't restore anything\n",
 	msg2[] =

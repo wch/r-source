@@ -16,17 +16,11 @@ USER-VISIBLE CHANGES
 	quartile ones.
 
     o	Unix-alike versions of R can now be used in UTF-8 locales on
-	suitably equipped OSes.	 [This is incomplete at present, and
-	only switched on at all by the undocumented configure flag
-	--enable-utf8.	The changes to font handling in the X11
-	devices are based on the Japanization patches of Eiji Nakama.]
+	suitably equipped OSes.  See the internationalization section
+	below.
 
-    o	The meaning of 'encoding' for a connection has changed: it now
-	allows any charset encoding supported by iconv on the
-	platform, and can re-encode output as well as input.
-
-	As the new specification is a character string and the old was
-	numeric, this should not cause incorrect operation.
+    o	The meaning of 'encoding' for a connection has changed: See the
+	internationalization section below.
 
 
 NEW FEATURES
@@ -142,11 +136,6 @@ NEW FEATURES
     o	plot.data.frame() tries harder to produce sensible plots for
 	non-numeric data frames with one or two columns.
 
-    o	nchar() returns the true number of bytes stored
-	(including any embedded nuls), this being 2 for missing
-	values.	 It has options "chars" and "width" to give the number
-	of character or the display width instead.
-
     o	all/any() now attempt to coerce their arguments to logical, as
 	documented in the Blue Book.  This means e.g. any(list()) works.
 
@@ -191,10 +180,6 @@ NEW FEATURES
     o	File-name matching is no longer case-insensitive with unz()
 	connections, even on Windows.
 
-    o	New function iconv() to convert character vectors between
-	encodings, on those OSes which support this.  See the new
-	capabilities("iconv").
-
     o	New function RSiteSearch() to query R-related resources
 	on-line (contributed by Jonathan Baron and Andy Liaw).
 
@@ -211,9 +196,6 @@ NEW FEATURES
     o	as.data.frame.table() has a new argument 'responseName'
 	(contributed by Bill Venables).
 
-    o   Characters can be entered in hexadecimal as e.g. \x9c, and in
-	UTF-8 locales as \uxxxx or \Uxxxx (with up to 8 hexadecimals).
-
     o	p.adjust() has a new argument `na.rm'.
 
     o	scan() has a new argument 'allowEscapes' (default TRUE) that
@@ -221,13 +203,43 @@ NEW FEATURES
 	Previously only \n and \r were interpreted, and then only
 	within quoted strings when no separator was supplied.
 
+
+INTERNATIONALIZATION
+
+    o	Unix-alike versions of R can now be used in UTF-8 locales on
+	suitably equipped OSes.	 [This is incomplete at present, and
+	only switched on at all by the undocumented configure flag
+	--enable-utf8.	The changes to font handling in the X11
+	module are based on the Japanization patches of Eiji Nakama.]
+
+    o	New command-line option --encoding to specify the encoding to
+	be assumed for stdin (but not for a console).
+
+    o	New function iconv() to convert character vectors between
+	encodings, on those OSes which support this.  See the new
+	capabilities("iconv").
+
+    o	The meaning of 'encoding' for a connection has changed: it now
+	allows any charset encoding supported by iconv on the
+	platform, and can re-encode output as well as input.
+
+	As the new specification is a character string and the old was
+	numeric, this should not cause incorrect operation.
+
+    o	New function localeToCharset() to find/guess encoding from the
+	locale name.
+
+    o	nchar() returns the true number of bytes stored
+	(including any embedded nuls), this being 2 for missing
+	values.	 It has options "chars" and "width" to give the number
+	of character or the display width instead.
+
+    o   Characters can be entered in hexadecimal as e.g. \x9c, and in
+	UTF-8 locales as \uxxxx or \Uxxxx (with up to 8 hexadecimals).
+
     o	LC_MONETARY is set to the locale, which affects the result of
 	Sys.localeconv(), but nothing else in R itself.  (It could
 	affect addon packages.)
-
-    o	New function localeToCharset to find/guess encoding from the
-	locale name.
-
 
 
 UTILITIES

@@ -178,6 +178,9 @@ isIncomplete(con)
   result is likely to be that up to the error, with a warning.  On
   input, it will most likely be all or some of the input up to the
   error.
+
+  The encoding for \code{\link{stdin}} when a file can be set by the
+  command-line flag \code{--encoding}.
 }
 \section{Blocking}{
   The default condition for all but fifo and socket connections is to be in
