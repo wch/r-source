@@ -20,6 +20,8 @@
 ### Software Foundation, 59 Temple Place -- Suite 330, Boston, MA
 ### 02111-3307, USA.
 
+### * General support macros
+
 ## R_ARG_WITH_EXCLUSIVE
 ## --------------------
 AC_DEFUN([R_ARG_WITH_EXCLUSIVE],
@@ -43,6 +45,8 @@ else
   use_$1=true
 fi
 ])# R_ARG_USE
+
+### * Programs
 
 ## R_PROG_AR
 ## ---------
@@ -203,6 +207,8 @@ else
 fi])
 ])# _R_PROG_MAKEINFO_VERSION
 
+### * C compiler and its characteristics.
+
 ## R_PROG_CC_M
 ## -----------
 ## Check whether the C compiler accepts -M for generating dependencies
@@ -323,6 +329,32 @@ AC_DEFUN([R_PROG_CC_FLAG_D__NO_MATH_INLINES],
 ],
               [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D__NO_MATH_INLINES"])
 ])# R_PROG_CC_FLAG_D__NO_MATH_INLINES
+
+## R_C_OPTIEEE
+## -----------
+## Check whethter the C compiler needs '-OPT:IEEE_NaN_inf=ON' to 
+## correctly deal with IEEE NaN/Inf.
+## This flag is needed for the native SGI C compiler.
+## If needed, add the flag to R_XTRA_CFLAGS.
+AC_DEFUN([R_C_OPTIEEE],
+[AC_CACHE_CHECK([whether C compiler needs -OPT:IEEE_NaN_inf=ON],
+                [r_cv_c_optieee],
+AC_TRY_RUN(
+[#include <math.h>
+#include <ieeefp.h>
+int main () {
+  double x = 0;
+  fpsetmask(0); x = x / x; exit (x != x);
+}],
+	   [r_cv_c_optieee=yes],
+	   [r_cv_c_optieee=no],
+	   [r_cv_c_optieee=no]))
+if test "${r_cv_c_optieee}" = yes; then
+  R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -OPT:IEEE_NaN_inf=ON"
+fi
+])# R_C_OPTIEEE
+
+### * C++ compiler and its characteristics.
 
 ## R_PROG_CXX_M
 ## ------------
@@ -460,6 +492,8 @@ else
   AC_MSG_RESULT([no])
 fi
 ])# R_PROG_CXX_FLAG
+
+### * FORTRAN 77 compiler/converter and its characteristics.
 
 ## R_PROG_F77_OR_F2C
 ## -----------------
@@ -915,6 +949,8 @@ EOF
 AC_SUBST_FILE(f77_rules_frag)
 ])# R_PROG_F2C_MAKEFRAG
 
+### * Library functions
+
 ## R_FUNC___SETFPUCW
 ## -----------------
 AC_DEFUN([R_FUNC___SETFPUCW],
@@ -1034,6 +1070,8 @@ if test "x${r_cv_func_strptime_works}" = xyes; then
 fi
 ])# R_FUNC_STRPTIME
 
+### * Headers
+
 ## R_HEADER_SETJMP
 ## ---------------
 AC_DEFUN([R_HEADER_SETJMP],
@@ -1106,29 +1144,7 @@ AC_DEFINE_UNQUOTED(SOCKLEN_T, ${r_cv_type_socklen},
                    [Type for socket lengths: socklen_t, sock_t, int?])
 ])# R_TYPE_SOCKLEN
 
-## R_C_OPTIEEE
-## -----------
-## Check whethter the C compiler needs '-OPT:IEEE_NaN_inf=ON' to 
-## correctly deal with IEEE NaN/Inf.
-## This flag is needed for the native SGI C compiler.
-## If needed, add the flag to R_XTRA_CFLAGS.
-AC_DEFUN([R_C_OPTIEEE],
-[AC_CACHE_CHECK([whether C compiler needs -OPT:IEEE_NaN_inf=ON],
-                [r_cv_c_optieee],
-AC_TRY_RUN(
-[#include <math.h>
-#include <ieeefp.h>
-int main () {
-  double x = 0;
-  fpsetmask(0); x = x / x; exit (x != x);
-}],
-	   [r_cv_c_optieee=yes],
-	   [r_cv_c_optieee=no],
-	   [r_cv_c_optieee=no]))
-if test "${r_cv_c_optieee}" = yes; then
-  R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -OPT:IEEE_NaN_inf=ON"
-fi
-])# R_C_OPTIEEE
+### * System services
 
 ## R_GNOME
 ## -------
@@ -1213,7 +1229,7 @@ fi
 AC_DEFUN([R_BITMAPS],
 [BITMAP_LIBS=
 _R_HEADER_JPEGLIB
-have_jpeg=${r_cv_header_jpeglib}
+have_jpeg=${r_cv_header_jpeglib_h}
 if test "${have_jpeg}" = yes; then
   AC_CHECK_LIB(jpeg, jpeg_destroy_compress, 
                [have_jpeg=yes],
@@ -1228,7 +1244,7 @@ fi
 AC_CHECK_LIB(z, main, [have_png=yes], [have_png=no])
 if test "${have_png}" = yes; then
   _R_HEADER_PNG
-  have_png=${r_cv_header_png}
+  have_png=${r_cv_header_png_h}
 fi
 if test "${have_png}" = yes; then
   AC_CHECK_LIB(png, png_create_write_struct,
@@ -1246,48 +1262,112 @@ AC_SUBST(BITMAP_LIBS)
 
 ## _R_HEADER_JPEGLIB
 ## -----------------
-## Set shell variable r_cv_header_jpeglib to 'yes' if a recent enough
+## Set shell variable r_cv_header_jpeglib_h to 'yes' if a recent enough
 ## jpeglib.h is found, and to 'no' otherwise.
 AC_DEFUN([_R_HEADER_JPEGLIB],
 [AC_CACHE_CHECK([if jpeglib version >= 6b],
-                [r_cv_header_jpeglib],
+                [r_cv_header_jpeglib_h],
 AC_EGREP_CPP([yes],
 [#include <jpeglib.h>
 #if (JPEG_LIB_VERSION >= 62)
   yes
 #endif
 ],
-             [r_cv_header_jpeglib=yes],
-             [r_cv_header_jpeglib=no]))
+             [r_cv_header_jpeglib_h=yes],
+             [r_cv_header_jpeglib_h=no]))
 ])# _R_HEADER_JPEGLIB
 
 ## _R_HEADER_PNG
 ## -------------
-## Set shell variable r_cv_header_png to 'yes' if a recent enough
+## Set shell variable r_cv_header_png_h to 'yes' if a recent enough
 ## 'png.h' is found, and to 'no' otherwise.
 AC_DEFUN([_R_HEADER_PNG],
 [AC_CACHE_CHECK([if libpng version >= 1.0.5], 
-                [r_cv_header_png],
+                [r_cv_header_png_h],
 AC_EGREP_CPP([yes],
 [#include <png.h>
 #if (PNG_LIBPNG_VER >= 10005)
   yes
 #endif
 ],
-             [r_cv_header_png=yes],
-             [r_cv_header_png=no]))
+             [r_cv_header_png_h=yes],
+             [r_cv_header_png_h=no]))
 ])# _R_HEADER_PNG
+
+## _R_PATH_TCL_CONFIG
+## ------------------
+## Try finding tclConfig.sh in common library directories and their
+## tcl$x.$y subdirectories.  Set shell variable r_cv_path_TCL_CONFIG
+## to the entire path of the script if found, and leave it empty
+## otherwise.
+AC_DEFUN([_R_PATH_TCL_CONFIG],
+[AC_MSG_CHECKING([for tclConfig.sh in library (sub)directories])
+AC_CACHE_VAL([r_cv_path_TCL_CONFIG],
+[for libdir in /opt/lib /usr/local/lib /usr/lib /lib; do
+  for dir in \
+      ${libdir} \
+      `ls -d ${libdir}/tcl[[8-9]].[[0-9]]* 2>/dev/null`; do
+    if test -f ${dir}/tclConfig.sh; then
+      r_cv_path_TCL_CONFIG="${dir}/tclConfig.sh"
+      break 2
+    fi
+  done
+done])
+if test -n "${r_cv_path_TCL_CONFIG}"; then
+  AC_MSG_RESULT([${r_cv_path_TCL_CONFIG}])
+else
+  AC_MSG_RESULT([no])
+fi
+])# _R_PATH_TCL_CONFIG
+
+## _R_PATH_TK_CONFIG
+## ------------------
+## Try finding tkConfig.sh in common library directories and their
+## tk$x.$y subdirectories.  Set shell variable r_cv_path_TK_CONFIG
+## to the entire path of the script if found, and leave it empty
+## otherwise.
+AC_DEFUN([_R_PATH_TK_CONFIG],
+[AC_MSG_CHECKING([for tkConfig.sh in library (sub)directories])
+AC_CACHE_VAL([r_cv_path_TK_CONFIG],
+[for libdir in /opt/lib /usr/local/lib /usr/lib /lib; do
+  for dir in \
+      ${libdir} \
+      `ls -d ${libdir}/tk[[8-9]].[[0-9]]* 2>/dev/null`; do
+    if test -f ${dir}/tkConfig.sh; then
+      r_cv_path_TK_CONFIG="${dir}/tkConfig.sh"
+      break 2
+    fi
+  done
+done])
+if test -n "${r_cv_path_TK_CONFIG}"; then
+  AC_MSG_RESULT([${r_cv_path_TK_CONFIG}])
+else
+  AC_MSG_RESULT([no])
+fi
+])# _R_PATH_TK_CONFIG
 
 ## _R_TCLTK_CONFIG
 ## ---------------
-## Try finding {tcl,tk}Config.sh
+## Try finding the tclConfig.sh and tkConfig.sh scripts in PATH as well
+## as in common library directories and their tcl/tk subdirectories.
+## Set shell variables TCL_CONFIG and TK_CONFIG to the entire paths to
+## the scripts if found and check that the corresponding Tcl/Tk versions
+## are at least 8; if not, set shell variable have_tcltk to 'no'.
 AC_DEFUN([_R_TCLTK_CONFIG],
-[r_xtra_path="${tcltk_prefix}${PATH_SEPARATOR}${LD_LIBRARY_PATH}"
-for dir in /opt/lib /usr/local/lib /usr/lib /lib; do
-  r_xtra_path="${r_xtra_path}${PATH_SEPARATOR}${dir}"
-done
-AC_PATH_PROGS(TCL_CONFIG, [${TCL_CONFIG} tclConfig.sh], , ${r_xtra_path})
-AC_PATH_PROGS(TK_CONFIG, [${TK_CONFIG} tkConfig.sh], , ${r_xtra_path})
+[AC_PATH_PROGS(TCL_CONFIG, [${TCL_CONFIG} tclConfig.sh])
+if test -z "${TCL_CONFIG}"; then
+  _R_PATH_TCL_CONFIG
+  if test -n "${r_cv_path_TCL_CONFIG}"; then
+    TCL_CONFIG="${r_cv_path_TCL_CONFIG}"
+  fi
+fi
+AC_PATH_PROGS(TK_CONFIG, [${TK_CONFIG} tkConfig.sh])
+if test -z "${TK_CONFIG}"; then
+  _R_PATH_TK_CONFIG
+  if test -n "${r_cv_path_TK_CONFIG}"; then
+    TK_CONFIG="${r_cv_path_TK_CONFIG}"
+  fi
+fi
 if test -z "${TCLTK_CPPFLAGS}" \
     || test -z "${TCLTK_LIBS}"; then
   ## Check whether the versions found via the *Config.sh files are at
@@ -1312,8 +1392,44 @@ if test -z "${TCLTK_CPPFLAGS}" \
       have_tcltk=no
     fi
   fi
+  ## <FIXME>
+  ## Shouldn't there also be a test that major and minor versions of
+  ## the scripts match?
+  ## </FIXME>
 fi
 ])# _R_TCLTK_CONFIG
+
+## _R_HEADER_TCL
+## -------------
+## Set shell variable 'r_cv_header_tcl_h' to 'yes' if a recent enough
+## 'tcl.h' is found, and to 'no' otherwise.
+AC_DEFUN([_R_HEADER_TCL],
+[AC_CACHE_CHECK([for tcl.h], [r_cv_header_tcl_h],
+[AC_EGREP_CPP([yes],
+[#include <tcl.h>
+#if (TCL_MAJOR_VERSION >= 8)
+  yes
+#endif
+],
+             [r_cv_header_tcl_h=yes],
+             [r_cv_header_tcl_h=no])])
+])# _R_HEADER_TCL
+
+## _R_HEADER_TK
+## -------------
+## Set shell variable 'r_cv_header_tk_h' to 'yes' if a recent enough
+## 'tk.h' is found, and to 'no' otherwise.
+AC_DEFUN([_R_HEADER_TK],
+[AC_CACHE_CHECK([for tk.h], [r_cv_header_tk_h],
+[AC_EGREP_CPP([yes],
+[#include <tk.h>
+#if (TK_MAJOR_VERSION >= 8)
+  yes
+#endif
+],
+             [r_cv_header_tk_h=yes],
+             [r_cv_header_tk_h=no])])
+])# _R_HEADER_TK
 
 ## _R_TCLTK_CPPFLAGS
 ## -----------------
@@ -1337,24 +1453,22 @@ if test -z "${TCLTK_CPPFLAGS}"; then
       ## Look for tcl.h in
       ##   ${TCL_PREFIX}/include/tcl${TCL_VERSION}
       ##   ${TCL_PREFIX}/include
-      AC_CHECK_HEADER(${TCL_PREFIX}/include/tcl${TCL_VERSION}/tcl.h,
-        [TCLTK_CPPFLAGS="-I${TCL_PREFIX}/include/tcl${TCL_VERSION}"
-	  found_tcl_h=yes])
-      if test "${found_tcl_h}" = no; then
-	AC_CHECK_HEADER(${TCL_PREFIX}/include/tcl.h,
-	  [TCLTK_CPPFLAGS="-I${TCL_PREFIX}/include"
-            found_tcl_h=yes])
-      fi
+      for dir in \
+          ${TCL_PREFIX}/include/tcl${TCL_VERSION} \
+          ${TCL_PREFIX}/include; do 
+        AC_CHECK_HEADER([${dir}/tcl.h],
+                        [TCLTK_CPPFLAGS="-I${dir}"
+                         found_tcl_h=yes
+                         break])
+      done
     fi
     if test "${found_tcl_h}" = no; then
-      AC_MSG_CHECKING([for tcl.h])
-      AC_EGREP_CPP([yes], [
-#include <tcl.h>
-#if (TCL_MAJOR_VERSION >= 8)
-  yes
-#endif
-], found_tcl_h=yes, have_tcltk=no)
-      AC_MSG_RESULT([${found_tcl_h}])
+      _R_HEADER_TCL
+      if test "${r_cv_header_tcl_h}" = yes; then
+        found_tcl_h=yes
+      else
+        have_tcltk=no
+      fi
     fi
   fi
   if test "${have_tcltk}" = yes; then
@@ -1365,30 +1479,34 @@ if test -z "${TCLTK_CPPFLAGS}"; then
       ## Look for tk.h in
       ##   ${TK_PREFIX}/include/tk${TK_VERSION}
       ##   ${TK_PREFIX}/include
+      ## <FIXME>
+      ## Also look in
+      ##   ${TK_PREFIX}/include/tcl${TK_VERSION}
+      ## to compensate for Debian madness ...
+      ## </FIXME>
       ## As the AC_CHECK_HEADER test tries including the header file and
       ## tk.h includes tcl.h and X11/Xlib.h, we need to change CPPFLAGS
       ## for the check.
       r_save_CPPFLAGS="${CPPFLAGS}"
       CPPFLAGS="${CPPFLAGS} ${TK_XINCLUDES} ${TCLTK_CPPFLAGS}"
-      AC_CHECK_HEADER(${TK_PREFIX}/include/tk${TK_VERSION}/tk.h,
-        [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${TK_PREFIX}/include/tk${TK_VERSION}"
-	  found_tk_h=yes])
-      if test "${found_tk_h}" = no; then
-	AC_CHECK_HEADER(${TK_PREFIX}/include/tk.h,
-          [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${TK_PREFIX}/include"
-            found_tk_h=yes])
-      fi
+      for dir in \
+          ${TK_PREFIX}/include/tk${TK_VERSION} \
+          ${TK_PREFIX}/include/tcl${TK_VERSION} \
+          ${TK_PREFIX}/include; do 
+        AC_CHECK_HEADER([${dir}/tk.h],
+                        [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${dir}"
+                         found_tk_h=yes
+                         break])
+      done
       CPPFLAGS="${r_save_CPPFLAGS}"
     fi
     if test "${found_tk_h}" = no; then
-      AC_MSG_CHECKING([for tk.h])
-      AC_EGREP_CPP([yes], [
-#include <tk.h>
-#if (TK_MAJOR_VERSION >= 8)
-  yes
-#endif
-], found_tk_h=yes, have_tcltk=no)
-      AC_MSG_RESULT([${found_tk_h}])
+      _R_HEADER_TK
+      if test "{r_cv_header_tk_h}" = yes; then
+        found_tk_h=yes
+      else
+        have_tcltk=no
+      fi
     fi
   fi
 fi
@@ -1669,7 +1787,7 @@ if test "${have_zlib}" = yes; then
 fi
 if test "${have_zlib}" = yes; then
   _R_HEADER_ZLIB
-  have_zlib=${r_cv_header_zlib}
+  have_zlib=${r_cv_header_zlib_h}
 fi
 AC_MSG_CHECKING([whether zlib support needs to be compiled])
 if test "${have_zlib}" = yes; then
@@ -1688,11 +1806,11 @@ AM_CONDITIONAL(USE_MMAP_ZLIB,
 
 ## _R_HEADER_ZLIB
 ## --------------
-## Set shell variable r_cv_header_zlib to 'yes' if a recent enough
+## Set shell variable r_cv_header_zlib_h to 'yes' if a recent enough
 ## zlib.h is found, and to 'no' otherwise.
 AC_DEFUN([_R_HEADER_ZLIB],
 [AC_CACHE_CHECK([if zlib version >= 1.1.3],
-                [r_cv_header_zlib],
+                [r_cv_header_zlib_h],
 AC_TRY_RUN(
 [#include <string.h>
 #include <zlib.h>
@@ -1703,9 +1821,9 @@ int main() {
   exit(1);
 #endif
 }],
-           [r_cv_header_zlib=yes],
-           [r_cv_header_zlib=no],
-           [r_cv_header_zlib=no]))
+           [r_cv_header_zlib_h=yes],
+           [r_cv_header_zlib_h=no],
+           [r_cv_header_zlib_h=no]))
 ])# _R_HEADER_ZLIB
 
 ## _R_ZLIB_MMAP
@@ -1756,6 +1874,11 @@ if test "x${r_cv_sys_posix_leapseconds}" = xyes; then
 	     seconds, as required by POSIX.])
 fi
 ])# R_SYS_POSIX_LEAPSECONDS
+
+### Local variables: ***
+### mode: outline-minor ***
+### outline-regexp: "### [*]+" ***
+### End: ***
 dnl
 dnl GNOME_GNORBA_HOOK (script-if-gnorba-found, failflag)
 dnl
@@ -1876,14 +1999,16 @@ AC_DEFUN([GNOME_INIT_HOOK],[
               fi
             fi
 
-	    if test x$exec_prefix = xNONE; then
+	    if test x$gnome_prefix = x; then
+	      if test x$exec_prefix = xNONE; then
 	        if test x$prefix = xNONE; then
 		    gnome_prefix=$ac_default_prefix/lib
 	        else
  		    gnome_prefix=$prefix/lib
 	        fi
-	    else
+	      else
 	        gnome_prefix=`eval echo \`echo $libdir\``
+	      fi
 	    fi
 	
 	    if test "$no_gnome_config" = "yes"; then
