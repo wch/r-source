@@ -1,7 +1,7 @@
 \input texinfo
 @c %**start of header
-@setfilename R-exts.info
-@settitle Writing R Extensions
+@setfilename R-admin.info
+@settitle R Installation and Adminstration
 @setchapternewpage on
 @c %**end of header
 
