@@ -1,7 +1,7 @@
 \name{sample}
 \title{Random Samples and Permutations}
 \usage{
-sample(x, size, replace=FALSE, prob)
+sample(x, size, replace = FALSE, prob = NULL)
 }
 \alias{sample}
 \arguments{

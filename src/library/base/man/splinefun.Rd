@@ -8,8 +8,8 @@
   performing the interpolation.
 }
 \usage{
-splinefun(x, y, method = "fmm")
-spline(x, y, n = 3*length(x), method = "fmm",
+splinefun(x, y = NULL, method = "fmm")
+spline(x, y = NULL, n = 3*length(x), method = "fmm",
        xmin = min(x), xmax = max(x))
 }
 \arguments{

@@ -1,8 +1,8 @@
 \name{rect}
 \title{Draw a Rectangle}
 \usage{
-rect(xleft, ybottom, xright, ytop, density=NULL, angle=45,
-     col=NULL, border=par("fg"), lty=NULL, lwd=par("lwd"), xpd=NULL)
+rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45,
+     col = NULL, border = NULL, lty = NULL, lwd = par("lwd"), xpd = NULL)
 }
 \alias{rect}
 \arguments{

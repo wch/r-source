@@ -5,7 +5,7 @@
   specification of the side, position, labels, and other options.
 }
 \usage{
-axis(side, at, labels = TRUE, tick = TRUE, line = 0,
+axis(side, at = NULL, labels = TRUE, tick = TRUE, line = 0,
      pos = NA, outer = FALSE, font = NA, vfont = NULL, \dots)
 }
 \arguments{

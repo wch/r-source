@@ -5,9 +5,14 @@
   \code{polygon} draws the polygons whose vertices are
   given in \code{x} and \code{y}.
 }
+\synopsis{
+polygon(x, y = NULL, density = NULL, angle = 45,
+        col = NA, border = NULL, lty = NULL, xpd = NULL,
+        ..debug.hatch = FALSE, \dots)
+}
 \usage{
 polygon(x, y = NULL, density = NULL, angle = 45,
-        col = NA, border = NULL, lty = NULL, xpd = NULL, \dots)
+        border = NULL, col = NA, lty = NULL, xpd = NULL, \dots)
 }
 \arguments{
   \item{x,y}{vectors containing the coordinates of the vertices

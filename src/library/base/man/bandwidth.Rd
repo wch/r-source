@@ -5,6 +5,13 @@
 \alias{bw.bcv}
 \alias{bw.SJ}
 \title{Bandwidth Selectors for Kernel Density Estimation}
+\synopsis{
+bw.nrd0(x)
+bw.nrd(x)
+bw.ucv(x, nb = 1000, lower = 0.1 * hmax, upper = hmax)
+bw.bcv(x, nb = 1000, lower = 0.1 * hmax, upper = hmax)
+bw.SJ(x, nb=1000, lower = 0.1 * hmax, upper = hmax, method=c("ste", "dpi"))
+}
 \usage{
 bw.nrd0(x)
 bw.nrd(x)

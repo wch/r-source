@@ -1,7 +1,7 @@
 \name{title}
 \title{Plot Annotation}
 \usage{
-title(main = "", sub = "", xlab = "", ylab = "",
+title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
       line = NA, outer = FALSE, \dots)
 }
 \alias{title}

@@ -10,8 +10,8 @@
 termplot(model, data=model.frame(model), partial.resid=FALSE, rug=FALSE,
          terms=NULL, se=FALSE, xlabs=NULL, ylabs=NULL, main = NULL,
          col.term = 2, lwd.term = 1.5,
-         col.se = "orange", lty.se = 2, lwd.se = 2,
-         col.res= "gray", cex = 1, pch = par("pch"),
+         col.se = "orange", lty.se = 2, lwd.se = 1,
+         col.res = "gray", cex = 1, pch = par("pch"),
          ask = interactive() && nb.fig < n.tms && .Device != "postscript",
          \dots)
 }

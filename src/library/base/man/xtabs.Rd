@@ -7,8 +7,8 @@
   contained in a data frame, using a formula interface.
 }
 \usage{
-xtabs(formula = ~., data, subset, na.action, exclude = c(NA, NaN),
-      drop.unused.levels = FALSE)
+xtabs(formula = ~., data = parent.frame(), subset, na.action,
+      exclude = c(NA, NaN), drop.unused.levels = FALSE)
 }
 \arguments{
   \item{formula}{a formula object with the cross-classifying variables,

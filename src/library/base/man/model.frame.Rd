@@ -7,8 +7,8 @@
 \title{Extracting the ``Environment'' of a Model Formula}
 \usage{
 model.frame(formula, \dots)
-model.frame.default(formula, data = parent.frame(),
-                    subset = NULL, na.action,
+model.frame.default(formula, data = NULL,
+                    subset = NULL, na.action = na.fail,
                     drop.unused.levels = FALSE, xlev = NULL, \dots)
 
 Methods for
