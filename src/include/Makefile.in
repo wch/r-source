@@ -11,10 +11,10 @@ subdir = src/include
 include $(top_builddir)/Makeconf
 
 SRC_HEADERS = R.h S.h Rdefines.h Rinternals.h S_compat.h
-R_EXT_HEADERS = Applic.h Arith.h Boolean.h Complex.h Constants.h Error.h \
+R_EXT_HEADERS = \
+	Applic.h Arith.h Boolean.h Complex.h Constants.h Error.h \
 	Linpack.h Mathlib.h Memory.h PrtUtil.h Random.h RS.h \
 	Utils.h f2c.h eventloop.h
-
 OBJ_HEADERS = Rconfig.h Rversion.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
@@ -52,6 +52,11 @@ stamp-h: $(srcdir)/config.h.in $(top_builddir)/config.status
 	  CONFIG_FILES= CONFIG_HEADERS=$(subdir)/config.h \
 	  $(SHELL) ./config.status
 	echo > $@
+$(srcdir)/config.h.in: @MAINTAINER_MODE_TRUE@ \
+  $(top_srcdir)/configure.in \
+  $(top_srcdir)/acconfig.h \
+  $(top_srcdir)/aclocal.m4
+	@cd $(top_srcdir) && $(AUTOHEADER)
 Rconfig.h: $(top_srcdir)/VERSION config.h
 	@$(top_srcdir)/tools/GETCONFIG > $@
 Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/date-stamp

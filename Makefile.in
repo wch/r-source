@@ -14,7 +14,8 @@ INSTFILES = COPYING COPYRIGHTS FAQ MIRROR-SITES NEWS RESOURCES
 DISTFILES = $(INSTFILES) \
 	BUGS INSTALL ONEWS README VERSION Y2K \
 	Makeconf.in Makefile.in \
-	aclocal.m4 config.site configure configure.in \
+	acconfig.h acinclude.m4 aclocal.m4 \
+	config.site configure configure.in \
 	date-stamp
 SUBDIRS = src afm demos doc etc share tests tools
 
@@ -31,8 +32,14 @@ Makeconf: $(srcdir)/Makeconf.in $(top_builddir)/config.status
 
 config.status: $(srcdir)/configure
 	@$(SHELL) ./config.status --recheck
-$(srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.in $(srcdir)/aclocal.m4
-	@cd $(srcdir) && autoconf
+$(srcdir)/configure: @MAINTAINER_MODE_TRUE@ \
+  $(srcdir)/configure.in \
+  $(srcdir)/aclocal.m4
+	@cd $(srcdir) && $(AUTOCONF)
+$(srcdir)/aclocal.m4: @MAINTAINER_MODE_TRUE@ \
+  $(srcdir)/configure.in \
+  $(srcdir)/acinclude.m4
+	@cd $(srcdir) && $(ACLOCAL)
 
 R: Makefile
 	@if [ "$(srcdir)" != "." ]; then \
