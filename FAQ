@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-8, 2002-10-23
+Version 1.6-10, 2002-10-28
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1845,6 +1845,9 @@ distributions of R.)
 *survival*
      Functions for survival analysis, including penalised likelihood.
      _Recommended_.
+
+*survrec*
+     Survival analysis for recurrent event data.
 
 *systemfit*
      Contains functions for fitting simultaneous systems of equations using
