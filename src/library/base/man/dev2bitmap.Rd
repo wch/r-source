@@ -66,7 +66,7 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
 
 \seealso{
   \code{\link{postscript}}, \code{\link{png}} and
-  \code{\link{jpeg}} and on Windows \code{\link{bmp}}.
+  \code{\link{jpeg}} and on Windows \code{bmp}.
 }
 
 \keyword{utilities}
