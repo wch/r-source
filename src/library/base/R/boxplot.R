@@ -2,7 +2,7 @@ boxplot <- function(x, ...) UseMethod("boxplot")
 
 boxplot.default <-
 function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
-         notch = FALSE, names, boxwex = 0.8, plot = TRUE,
+         notch = FALSE, outline = TRUE, names, boxwex = 0.8, plot = TRUE,
          border = par("fg"), col = NULL, log = "", pars = NULL,
          horizontal = FALSE, add = FALSE, at = NULL)
 {
@@ -13,7 +13,7 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
 	else
 	    rep(FALSE, length = length(args))
     pars <- c(args[namedargs], pars)
-    groups <- if(is.list(x)) x else args[!namedargs]    
+    groups <- if(is.list(x)) x else args[!namedargs]
     if(0 == (n <- length(groups)))
 	stop("invalid first argument")
     if(length(class(groups)))
@@ -46,14 +46,13 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
     if(plot) {
 	bxp(z, width, varwidth = varwidth, notch = notch, boxwex = boxwex,
             border = border, col = col, log = log, pars = pars,
-            horizontal = horizontal, add = add, at = at)
+            outline = outline, horizontal = horizontal, add = add, at = at)
 	invisible(z)
     }
     else z
 }
 
-boxplot.formula <-
-function(formula, data = NULL, ..., subset)
+boxplot.formula <- function(formula, data = NULL, ..., subset)
 {
     if(missing(formula) || (length(formula) != 3))
         stop("formula missing or incorrect")
@@ -87,7 +86,7 @@ boxplot.stats <- function(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
 }
 
 bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
-	        notch.frac = 0.5, boxwex = 0.8,
+	        outline = TRUE, notch.frac = 0.5, boxwex = 0.8,
 		border=par("fg"), col=NULL, log="", pars=NULL,
                 frame.plot = axes,
                 horizontal = FALSE, add = FALSE, at = NULL, show.names=NULL,
@@ -165,8 +164,10 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
     else if(length(at) != n)
         stop(paste("`at' must have same length as `z $ n', i.e.",n))
     ## just for compatibility with S
-    if(is.null(z$out))	 z$out	 <- vector(length=0)
-    if(is.null(z$group)) z$group <- vector(length=0)
+    if(is.null(z$out))
+        z$out <- numeric()
+    if(is.null(z$group) || !outline)
+        z$group <- integer()
     if(is.null(pars$ylim))
 	ylim <- range(z$stats[is.finite(z$stats)],
 		      z$out  [is.finite(z$out)],
@@ -214,7 +215,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
     if(!axes) { axes <- pars$axes; pars$axes <- NULL }
     if(axes) {
         ax.pars <- pars[names(pars) %in% c("xaxt", "yaxt", "las")]
-        if (is.null(show.names)) show.names<-(n>1)
+        if (is.null(show.names)) show.names <- n > 1
         if (show.names)
             do.call("axis", c(list(side = 1 + horizontal,
                                    at = at, labels = z$names), ax.pars))

@@ -27,6 +27,8 @@ NEW FEATURES
     o	bxp() has a show.names argument allowing labels on a single
 	boxplot; it and hence boxplot() now makes use of pch, cex, and bg
 	for outlier points().
+	bxp() and boxplot() also have an argument `outline' to suppress
+	outlier drawing {S+ compatibly}.
 
     o	Function nsl() to look up IP addresses of hosts: intended as
 	a way to test for internet connectivity.
@@ -259,7 +261,7 @@ NEW FEATURES
 	This format provides support for some new internal data types,
 	produces smaller save files when saving code, and provides a basis
 	for a more flexible serialization mechanism.
-     
+
     o	save() and save.image() now take a `version' argument to specify
         the workspace file-format version to use.  The version used from
         R 0.99.0 to 1.3.1 is version 1.  The new default format is
@@ -343,8 +345,8 @@ NEW FEATURES
 	which eliminates an incorrect warning.
 
     o	hist.default() allows `breaks' to specify a rule to choose the
-        number of classes, and rules "Sturges" (the previous default, 
-	"Scott" and "FD" (Freedman-Diaconis) are supplied (based on 
+        number of classes, and rules "Sturges" (the previous default,
+	"Scott" and "FD" (Freedman-Diaconis) are supplied (based on
 	package MASS).
 
 

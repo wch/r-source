@@ -7,7 +7,7 @@
 }
 \usage{
 \method{boxplot}{default}(x, \dots, range = 1.5, width = NULL, varwidth = FALSE,
-        notch = FALSE, names, boxwex = 0.8, plot = TRUE,
+        notch = FALSE, outline = TRUE, names, boxwex = 0.8, plot = TRUE,
         border = par("fg"), col = NULL, log = "", pars = NULL,
         horizontal = FALSE, add = FALSE, at = NULL)
 }
@@ -34,6 +34,8 @@
     each side of the boxes.  If the notches of two plots do not
     overlap then the medians are significantly different at the 5
     percent level.}
+  \item{outline}{if \code{outline} is not true, the boxplot lines are
+    not drawn.}% the argument name is most ugly but S+ compatible
   \item{names}{group labels which will be printed under each boxplot.}
   \item{boxwex}{a scale factor to be applied to all boxes.  When there
     are only a few groups, the appearance of the plot can be improved
@@ -58,7 +60,7 @@
     defaults to \code{1:n} where \code{n} is the number of boxes.}
 }
 \details{
-  This is a generic function.  It currently has a default method
+  The generic function \code{boxplot} currently has a default method
   (\code{boxplot.default}) and a formula interface
   (\code{\link{boxplot.formula}}).
 }

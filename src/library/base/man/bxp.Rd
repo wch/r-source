@@ -7,10 +7,10 @@
   invoked directly.
 }
 \usage{
-bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, notch.frac = 0.5,
-    boxwex = 0.8, border = par("fg"), col = NULL, log = "",
-    pars = NULL, frame.plot = axes, horizontal = FALSE, add = FALSE,
-    at = NULL, show.names=NULL,\dots)
+bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, outline = TRUE,
+    notch.frac = 0.5, boxwex = 0.8, border = par("fg"), col = NULL,
+    log = "", pars = NULL, frame.plot = axes, horizontal = FALSE, add = FALSE,
+    at = NULL, show.names=NULL, \dots)
 }
 \arguments{
   \item{z}{a list containing data summaries to be used in constructing
@@ -24,6 +24,8 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, notch.frac = 0.5,
   \item{varwidth}{if \code{varwidth} is \code{TRUE}, the boxes are drawn
     with widths proportional to the square-roots of the number of
     observations in the groups.}
+  \item{outline}{if \code{outline} is not true, the boxplot lines are
+    not drawn.}
   \item{boxwex}{a scale factor to be applied to all boxes.  When there
     are only a few groups, the appearance of the plot can be improved by
     making the boxes narrower.}
@@ -57,13 +59,14 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, notch.frac = 0.5,
 }
 \examples{
 set.seed(314)
-str(bx.p <- boxplot(split(rnorm(100), gl(5,20))))
+str(bx.p <- boxplot(split(rt(100, 4), gl(5,20))))
 op <- par(mfrow= c(2,2))
 bxp(bx.p, xaxt = "n")
 bxp(bx.p, notch = TRUE, axes = FALSE, pch = 4)
-bxp(bx.p, notch = TRUE, col= "lightblue", frame = FALSE)
+bxp(bx.p, notch = TRUE, col= "lightblue", frame= FALSE, outl= FALSE,
+    main = "bxp(*, frame= FALSE, outl= FALSE)")
 bxp(bx.p, notch = TRUE, col= "lightblue", border="red", ylim = c(-1,4),
-    pch = 22, bg = "green", log = "x", main = "bxp(*, log='x', ylim=*)")
+    pch = 22, bg = "green", log = "x", main = "... log='x', ylim=*")
 par(op)
 op <- par(mfrow= c(1,2))
 data(PlantGrowth)
