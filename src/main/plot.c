@@ -3533,6 +3533,8 @@ SEXP do_setGPar(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+/* symbols(..) in ../library/base/R/symbols.R  : */
+
 static void SymbolSize(double *x, int n, double *xmax, double *xmin)
 {
     int i;
@@ -3569,6 +3571,7 @@ static void CheckSymbolPar(SEXP call, SEXP p, int *nr, int *nc)
 	errorcall(call, "invalid symbol parameter vector");
 }
 
+/* Internal  symbols(x, y, type, data, inches, bg, fg, ...) */
 SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y, p, fg, bg;
@@ -3593,6 +3596,7 @@ SEXP do_symbols(SEXP call, SEXP op, SEXP args, SEXP env)
 
     type = asInteger(CAR(args)); args = CDR(args);
 
+    /* data: */
     p = PROTECT(coerceVector(CAR(args), REALSXP)); args = CDR(args);
     CheckSymbolPar(call, p, &nr, &nc);
     if (LENGTH(x) != nr || LENGTH(y) != nr)
