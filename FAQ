@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-02-24
+Version 2.0.2005-02-25
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1417,6 +1417,10 @@ distributions of R.)
 *MCMCpack*
      Markov chain Monte Carlo (MCMC) package: functions for posterior
      simulation for a number of statistical models.
+
+*MEMSS*
+     Data sets and sample analyses from "Mixed-effects Models in S and
+     S-PLUS" by J. Pinheiro and D. Bates, 2000, Springer.
 
 *MNP*
      Fitting Bayesian Multinomial Probit models via Markov chain Monte

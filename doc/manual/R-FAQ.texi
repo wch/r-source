@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-24
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-02-25
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1780,6 +1780,9 @@ bundle.  @emph{Recommended}.
 @item MCMCpack
 Markov chain Monte Carlo (MCMC) package: functions for posterior
 simulation for a number of statistical models.
+@item MEMSS
+Data sets and sample analyses from ``Mixed-effects Models in S and
+S-PLUS'' by J. Pinheiro and D. Bates, 2000, Springer.
 @item MNP
 Fitting Bayesian Multinomial Probit models via Markov chain Monte Carlo.
 Along with the standard Multinomial Probit model, it can also fit models
