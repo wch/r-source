@@ -16,7 +16,7 @@ function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     nser <- ncol(x)
     n.used <- nrow(x)
     if (demean) {
-        x.mean <- apply(x, 2, mean)
+        x.mean <- colMeans(x)
         x <- sweep(x, 2, x.mean)
     }
     else x.mean <- rep(0, nser)

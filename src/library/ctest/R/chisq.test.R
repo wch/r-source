@@ -30,8 +30,8 @@ function(x, y = NULL, correct = TRUE, p = rep(1 / length(x), length(x)),
 	METHOD <- "Pearson's Chi-squared test"
         nr <- nrow(x)
         nc <- ncol(x)
-        sr <- apply(x, 1, sum)
-        sc <- apply(x, 2, sum)
+        sr <- rowSums(x)
+        sc <- colSums(x)
 	E <- outer(sr, sc, "*") / n
 	dimnames(E) <- dimnames(x)
         if (simulate.p.value && all(sr > 0) && all(sc > 0)) {

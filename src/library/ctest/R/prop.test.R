@@ -8,7 +8,7 @@ function(x, n, p = NULL, alternative = c("two.sided", "less", "greater"),
 	if (ncol(x) != 2)
 	    stop("x must have 2 columns")
 	l <- nrow(x)
-	n <- apply(x, 1, sum)
+	n <- rowSums(x)
 	x <- x[, 1]
     }
     else {

@@ -35,7 +35,7 @@ ar.yw.default <-
     if(any(is.na(x))) stop("NAs in x")
     nser <- ncol(x)
     if (demean) {
-        xm <- apply(x, 2, mean)
+        xm <- colMeans(x)
         x <- sweep(x, 2, xm)
     } else xm <- rep(0, nser)
     n.used <- nrow(x)

@@ -141,9 +141,9 @@ hclust(d, method = "complete", members=NULL)
   \emph{Cluster Analysis for Applications}.
   Academic Press: New York.
 
-  Gordon, A. D. (1981).
-  \emph{Classification}.
-  London: Chapman and Hall.
+  Gordon, A. D. (1999).
+  \emph{Classification}. Second Edition.
+  London: Chapman and Hall / CRC
 
   Murtagh, F. (1985).
   ``Multidimensional Clustering Algorithms'', in
@@ -163,21 +163,21 @@ library(mva)
 data(USArrests)
 hc <- hclust(dist(USArrests), "ave")
 plot(hc)
-plot(hc, hang=-1)
+plot(hc, hang = -1)
 
 ## Do the same with centroid clustering and squared Euclidean distance,
 ## cut the tree into ten clusters and reconstruct the upper part of the
 ## tree from the cluster centers.
 hc <- hclust(dist(USArrests)^2, "cen")
-memb <- cutree(hc, k=10)
+memb <- cutree(hc, k = 10)
 cent <- NULL
 for(k in 1:10){
-  cent <- rbind(cent, apply(USArrests[memb==k,,drop=FALSE], 2, mean))
+  cent <- rbind(cent, colMeans(USArrests[memb == k, , drop = FALSE]))
 }
-hc1 <- hclust(dist(cent)^2, method="cen", members=table(memb))
-opar <- par(mfrow=c(1,2))
-plot(hc,  labels=FALSE, hang=-1, main= "Original Tree")
-plot(hc1, labels=FALSE, hang=-1, main= "Re-start from 10 clusters")
+hc1 <- hclust(dist(cent)^2, method = "cen", members = table(memb))
+opar <- par(mfrow = c(1, 2))
+plot(hc,  labels = FALSE, hang = -1, main = "Original Tree")
+plot(hc1, labels = FALSE, hang = -1, main = "Re-start from 10 clusters")
 par(opar)
 }
 \keyword{multivariate}

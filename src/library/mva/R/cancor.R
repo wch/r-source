@@ -10,7 +10,7 @@ cancor <- function(x, y, xcenter=TRUE, ycenter=TRUE)
     if(!nr || !ncx || !ncy) stop("dimension 0 in x or y")
     if(is.logical(xcenter)) {
 	if(xcenter) {
-	    xcenter <- apply(x, 2, mean)
+	    xcenter <- colMeans(x,)
 	    x <- x - rep(xcenter, rep(nr, ncx))
 	}
 	else xcenter <- rep(0, ncx)
@@ -21,7 +21,7 @@ cancor <- function(x, y, xcenter=TRUE, ycenter=TRUE)
     }
     if(is.logical(ycenter)) {
 	if(ycenter) {
-	    ycenter <- apply(y, 2, mean)
+	    ycenter <- colMeans(y)
 	    y <- y - rep(ycenter, rep(nr, ncy))
 	}
 	else ycenter <- rep(0, ncy)

@@ -93,7 +93,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
             if(!ni) next
             ## helpful to drop constant columns.
             xi <- qtx[select, , drop = FALSE]
-            cols <- apply(xi^2, 2, sum) > 1e-5
+            cols <- colSums(xi^2) > 1e-5
             if(any(cols)) {
                 xi <- xi[, cols, drop = FALSE]
                 attr(xi, "assign") <- asgn.t[cols]
@@ -143,7 +143,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
             ai <- asgn==uasgn[i]
             df[i] <- sum(ai)
             ef <- effects[ai,, drop=FALSE]
-            ss[i,] <- if(sum(ai) > 1) apply(ef^2, 2, sum) else ef^2
+            ss[i,] <- if(sum(ai) > 1) colSums(ef^2) else ef^2
         }
         keep <- df > 0
         if(!intercept && uasgn[1] == 0) keep[1] <- FALSE
@@ -156,7 +156,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
     if(nterms == 0) {
         ## empty model
         if(rdf > 0) {
-            ss <- apply(as.matrix(x$residuals)^2,2,sum)
+            ss <- colSums(as.matrix(x$residuals)^2)
             ssp <- sapply(ss, format)
             tmp <- as.matrix(c(ssp, format(rdf)))
             rn <- if(length(ss) > 1) colnames(x$fitted) else "Sum of Squares"
@@ -173,7 +173,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
             resid <- as.matrix(x$residuals)
             nterms <- nterms + 1
             df <- c(df, rdf)
-            ss <- rbind(ss, apply(resid^2, 2, sum))
+            ss <- rbind(ss, colSums(resid^2))
             nmeffect <- c(nmeffect, "Residuals")
         }
         ssp <- apply(zapsmall(ss), 2, format)
@@ -189,7 +189,7 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
         nobs <- NROW(x$residuals) - !(is.null(int) || int == 0)
         cat("\n")
         if(rdf > 0) {
-            rs <- sqrt(apply(as.matrix(x$residuals)^2,2,sum)/rdf)
+            rs <- sqrt(colSums(as.matrix(x$residuals)^2)/rdf)
             cat("Residual standard error:", sapply(rs, format), "\n")
         }
         coef <- as.matrix(x$coef)[,1]

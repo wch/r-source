@@ -21,7 +21,7 @@ acf <-
         lag.max <- floor(10 * (log10(sampleT) - log10(nser)))
     lag.max <- min(lag.max, sampleT - 1)
     if (lag.max < 1) stop("lag.max must be at least 1")
-    if(demean) x <- sweep(x, 2, apply(x, 2, mean))
+    if(demean) x <- sweep(x, 2, colMeans(x))
     lag <- matrix(1, nser, nser)
     lag[lower.tri(lag)] <- -1
     acf <- array(NA, c(lag.max + 1, nser, nser))
@@ -92,7 +92,7 @@ pacf.mts <- function(x, lag.max = NULL, plot = TRUE, na.action = na.fail, ...)
         lag.max <- floor(10 * (log10(sampleT) - log10(nser)))
     lag.max <- min(lag.max, sampleT - 1)
     if (lag.max < 1) stop("lag.max must be at least 1")
-    x <- sweep(x, 2, apply(x, 2, mean))
+    x <- sweep(x, 2, colMeans(x))
     lag <- matrix(1, nser, nser)
     lag[lower.tri(lag)] <- -1
     acf <- ar.yw(x, order.max = lag.max)$partialacf
@@ -142,7 +142,7 @@ plot.acf <-
         if(nser > max.mfrow) {
             ##  We need more than one page: The plots are laid out
             ##  such that we can manually paste the paper pages and get a
-            ##  nice square layout with diagonal !   
+            ##  nice square layout with diagonal !
             ## NB: The same applies to pairs() where we'd want several pages
             Npgs <- ceiling(nser / max.mfrow)
             nr <- ceiling(nser / Npgs)  # <= max.mfrow
@@ -155,7 +155,7 @@ plot.acf <-
             str(par("mfrow","cex", "cex.main","cex.axis","cex.lab","cex.sub"))
         }
     }
-    
+
     for (I in 1:Npgs) for (J in 1:Npgs) {
         ## Page [ I , J ] : Now do   nr x nr  `panels' on this page
         iind <- (I-1)*nr + 1:nr

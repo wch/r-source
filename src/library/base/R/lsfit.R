@@ -163,11 +163,11 @@ ls.diag <- function(ls.out)
     ## calculate hat matrix diagonals
 
     q <- qr.qy(ls.out$qr, rbind(diag(p), matrix(0, nrow=n-p, ncol=p)))
-    hatdiag[good] <- apply(as.matrix(q^2), 1, sum)
+    hatdiag[good] <- rowSums(as.matrix(q^2))
 
     ## calculate diagnostics
 
-    stddev <- (apply(as.matrix(resids^2), 2, sum)/(n - p))^0.5
+    stddev <- (colSums(as.matrix(resids^2))/(n - p))^0.5
     stddevmat <- matrix(stddev, nrow=sum(good), ncol=ncol(resids), byrow=TRUE)
     stdres[good, ] <- resids/((1-hatdiag[good])^0.5 * stddevmat)
     studres[good, ] <- (stdres[good, ]*stddevmat)/(((n-p)*stddevmat^2 -
@@ -219,7 +219,7 @@ ls.print <- function(ls.out, digits=4, print.it=TRUE)
 	    warning("Observations with 0 weights not used")
 	resids <- resids * ls.out$wt^0.5
     }
-    n <- apply(resids, 2, length)-apply(is.na(resids), 2, sum)
+    n <- apply(resids, 2, length)-colSums(is.na(resids))
     lsqr <- ls.out$qr
     p <- lsqr$rank
 
@@ -227,17 +227,17 @@ ls.print <- function(ls.out, digits=4, print.it=TRUE)
 
     if(ls.out$intercept) {
 	if(is.matrix(lsqr$qt))
-	    totss <- apply(lsqr$qt[-1, ]^2, 2, sum)
+	    totss <- colSums(lsqr$qt[-1, ]^2)
 	else totss <- sum(lsqr$qt[-1]^2)
 	degfree <- p - 1
     } else {
-	totss <- apply(as.matrix(lsqr$qt^2), 2, sum)
+	totss <- colSums(as.matrix(lsqr$qt^2))
 	degfree <- p
     }
 
     ## calculate residual sum sq and regression sum sq
 
-    resss <- apply(resids^2, 2, sum, na.rm=TRUE)
+    resss <- colSums(resids^2, na.rm=TRUE)
     resse <- (resss/(n-p))^.5
     regss <- totss - resss
     rsquared <- regss/totss

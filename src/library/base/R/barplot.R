@@ -88,7 +88,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	if (axisnames && !is.null(names.arg)) { # specified or from {col}names
 	    at.l <- if (length(names.arg) != length(w.m)) {
 		if (length(names.arg) == NC) # i.e. beside (!)
-		    apply(w.m, 2, mean)
+		    colSums(w.m)
 		else
 		    stop("incorrect number of names")
 	    } else w.m

@@ -6,7 +6,7 @@ scale.default <- function(x, center = TRUE, scale = TRUE)
     nc <- ncol(x)
     if (is.logical(center)) {
 	if (center)
-	    x <- sweep(x, 2, apply(x, 2, mean, na.rm=TRUE))
+	    x <- sweep(x, 2, colMeans(x, na.rm=TRUE))
     }
     else if (is.numeric(center) && (length(center) == nc))
 	x <- sweep(x, 2, center)

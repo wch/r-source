@@ -118,7 +118,7 @@ print(i <- rev(order(lam2)))
 stopifnot(abs(lam - lam2[i]) < 60 * Meps)
 
 zapsmall(Diag <- t(V2) \%*\% V2) # orthogonal, but not normalized
-print(norm2V <- apply(V2 * V2, 2, sum))
+print(norm2V <- colSums(V2 * V2))
 stopifnot( abs(1- norm2V / diag(Diag)) < 60*Meps)
 
 V2n <- sweep(V2,2, STATS= sqrt(norm2V), FUN="/")## V2n are now Normalized EV

@@ -12,7 +12,7 @@ factanal <-
         ssq <- apply(Lambda, 2, function(x) -sum(x^2))
         Lambda <- Lambda[, order(ssq), drop = FALSE]
         colnames(Lambda) <- cn
-        neg <- apply(Lambda, 2, sum) < 0
+        neg <- colSums(Lambda) < 0
         Lambda[, neg] <- -Lambda[, neg]
         if(!is.null(Phi)) {
             unit <- ifelse(neg, -1, 1)
@@ -205,7 +205,7 @@ print.loadings <- function(x, digits = 3, cutoff = 0.1, sort = FALSE, ...)
     nc <- nchar(fx[1])
     fx[abs(Lambda) < cutoff] <- paste(rep(" ", nc), collapse = "")
     print(fx, quote = FALSE, ...)
-    vx <- apply(x^2, 2, sum)
+    vx <- colSums(x^2)
     varex <- rbind("SS loadings" = vx)
     if(is.null(attr(x, "covariance"))) {
         varex <- rbind(varex, "Proportion Var" = vx/p)

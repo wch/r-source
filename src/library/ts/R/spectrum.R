@@ -98,7 +98,7 @@ spec.pgram <-
             x[, i] <- x[, i] - mean(x[, i]) - sum(x[, i] * t) * t/sumt2
     }
     else if (demean) {
-        x <- sweep(x, 2, apply(x, 2, mean))
+        x <- sweep(x, 2, colMeans(x))
     }
     x <- spec.taper(x, taper)
     ## to correct for tapering: Bloomfield (1976, p. 194)

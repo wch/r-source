@@ -31,7 +31,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     ##   the mfrow or mfcol arguments.  The world coordinates are reset
     ##   in each step by shifting the origin so that we can always plot
     ##   as detailed above.
-    
+
     if(!is.array(x))
         stop("x must be an array")
     if(length(dim(x)) == 2) {
@@ -41,7 +41,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
             array(x, c(dim(x), 1), c(dimnames(x), list(NULL)))
     }
     if(length(dim(x)) != 3)
-        stop("x must be 2- or 3-dimensional")        
+        stop("x must be 2- or 3-dimensional")
     if(any(dim(x)[1:2] != 2))
         stop("table for each stratum must be 2 by 2")
     dnx <- dimnames(x)
@@ -56,22 +56,22 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     if(any(i))
         names(dnx)[i] <- c("Row", "Col", "Strata")[i]
     dimnames(x) <- dnx
-    k <- dim(x)[3]        
+    k <- dim(x)[3]
 
     if(!((length(conf.level) == 1) && is.finite(conf.level) &&
          (conf.level >= 0) && (conf.level < 1)))
         stop("conf.level must be a single number between 0 and 1")
     if(conf.level == 0)
         conf.level <- FALSE
-    
+
     std <- match.arg(std)
-    
+
     findTableWithOAM <- function(or, tab) {
         ## Find a 2x2 table with given odds ratio `or' and the margins
         ## of a given 2x2 table `tab'.
-        m <- apply(tab, 1, sum)[1]
-        n <- apply(tab, 1, sum)[2]
-        t <- apply(tab, 2, sum)[1]
+        m <- rowSums(tab)[1]
+        n <- rowSums(tab)[2]
+        t <- colSums(tab)[1]
         if(or == 1)
             x <- t * n / (m + n)
         else if(or == Inf)
@@ -113,7 +113,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
             y <- tab / max(x)
         y
     }
-    
+
     odds <- function(x) {
         ## Given a 2 x 2 or 2 x 2 x k table `x', return a list with
         ## components `or' and `se' giving the odds ratios and standard
@@ -144,7 +144,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
 
     opar <- par(mar = c(0, 0, ifelse(is.null(main), 0, 2.5), 0))
     on.exit(par(opar))
-    
+
     byrow <- FALSE
     if(!is.null(mfrow)) {
         nr <- mfrow[1]
@@ -183,7 +183,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
     v <- 0.95 - max(strwidth(as.character(c(x)), cex = scale)) / 2
 
     for(i in 1 : k) {
-        
+
         tab <- x[ , , i]
 
         fit <- stdize(tab, std, x)
@@ -272,7 +272,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
             for(j in 1 : 4)
                 drawPie(r[j], angle.f[j], angle.t[j])
         }
-        
+
         ## drawBoxes()
         polygon(c(-1,  1, 1, -1),
                 c(-1, -1, 1,  1))
@@ -281,7 +281,7 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
             lines(c(j, j), c(-0.02, 0.02))
         for(j in seq(from = -0.9, to = 0.9, by = 0.2))
             lines(c(j, j), c(-0.01, 0.01))
-        lines(c(0, 0), c(-1, 1))    
+        lines(c(0, 0), c(-1, 1))
         for(j in seq(from = -0.8, to = 0.8, by = 0.2))
             lines(c(-0.02, 0.02), c(j, j))
         for(j in seq(from = -0.9, to = 0.9, by = 0.2))
@@ -291,6 +291,6 @@ function(x, color = c("#99CCFF", "#6699CC"), conf.level = 0.95,
 
     if(!is.null(main))
         mtext(main, cex = 1.5, adj = 0.5)
-        
+
     return(invisible())
 }

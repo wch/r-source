@@ -14,7 +14,7 @@ assocplot <- function(x, col = c("black", "red"), space = 0.3,
                                         # f is observed freqs
                                         # reverse to be consistent with
                                         # mosaicplot().
-    e <- outer(apply(f, 1, sum), apply(f, 2, sum), "*") / n
+    e <- outer(rowSums(f), colSums(f), "*") / n
                                         # e is expected freqs
     d <- (f - e) / sqrt(e)              # Pearson residuals
     e <- sqrt(e)

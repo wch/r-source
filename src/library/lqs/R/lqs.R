@@ -187,7 +187,7 @@ cov.rob <- function(x, cor = FALSE, quantile.used = floor((n+p+1)/2),
     n <- nrow(x); p <- ncol(x)
     if(n < p+1) stop(paste("At least", p+1, "cases are needed"))
     if(method == "classical") {
-	ans <- list(center = apply(x, 2, mean), cov = var(x))
+	ans <- list(center = colMeans(x), cov = var(x))
     } else {
 	if(quantile.used < p+1) stop(paste("quantile must be at least", p+1))
 	## re-scale to roughly common scale
@@ -226,7 +226,7 @@ cov.rob <- function(x, cor = FALSE, quantile.used = floor((n+p+1)/2),
 	crit <- z$crit + 2*sum(log(divisor)) +
 	    if(method=="mcd") - p * log(qn - 1) else 0
 	best <- seq(n)[z$bestone != 0]
-	means <- apply(x[best, , drop = FALSE], 2, mean)
+	means <- colMeans(x[best, , drop = FALSE])
 	rcov <- var(x[best, , drop = FALSE]) * (1 + 15/(n - p))^2
 	dist <- mahalanobis(x, means, rcov)
 	cut <- qchisq(0.975, p) * quantile(dist, qn/n)/qchisq(qn/n, p)
@@ -234,7 +234,7 @@ cov.rob <- function(x, cor = FALSE, quantile.used = floor((n+p+1)/2),
 	    rep(divisor, rep(p, p))
 	attr(cov, "names") <- NULL
 	ans <- list(center =
-		    apply(x[dist < cut, , drop = FALSE], 2, mean) * divisor,
+		    colMeans(x[dist < cut, , drop = FALSE]) * divisor,
 		    cov = cov, msg = z$sing, crit = crit, best = best)
     }
     if(cor) {
