@@ -7,6 +7,7 @@ include $(R_HOME)/share/make/vars.mk
 ## use next to install other packages from main library
 EXTRA_PKGS =
 
+FULLVERSION=`cat ../../../VERSION`
 RPREFIX = $(shell perl ../fixed/rwver.pl $(R_HOME)/VERSION)
 LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED) $(EXTRA_PKGS), $(R_HOME)/library/$i) $(R_HOME)/library/R.css
 
@@ -46,15 +47,16 @@ imagedir:
 	$(CP) -pr $(R_HOME)/doc/html $(RPREFIX)/doc
 	$(CP) -p $(R_HOME)/doc/manual/*.html $(R_HOME)/doc/manual/*.pdf \
 	  $(RPREFIX)/doc/manual
-#	html copies of these are in doc/html, and we don't have PDFs on menus
+#	html copies of these are in doc/manual, and we don't have PDFs on menus
 	$(RM) $(RPREFIX)/doc/manual/R-FAQ.pdf
-	$(RM) $(RPREFIX)/doc/html/R-admin.html $(RPREFIX)/doc/manual/R-admin.pdf
+	$(RM) $(RPREFIX)/doc/html/R-admin.html 
 	$(RM) $(RPREFIX)/doc/html/index.html $(RM) $(RPREFIX)/doc/html/index-default.html
 #
 	$(CP) -p $(foreach i,$(INFO_FILES),$(R_HOME)/$i) $(RPREFIX)
 	$(CP) -p $(foreach i,$(GW_INFO_FILES),../$i) $(RPREFIX)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
-	  -e s/@RVER@/$(RVER)/g ../README > $(RPREFIX)/README.$(RPREFIX)
+	  -e s/@RVER@/$(RVER)/g \
+	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" ../README > $(RPREFIX)/README.$(RPREFIX)
 	$(SED) -e 3,5d ../README.packages > $(RPREFIX)/README.packages
 # convert docs and batch files to CRLF: might already be on Windows, though.
 ifeq ($(strip $(BUILD)),CROSS)
