@@ -2,12 +2,14 @@
 #
 # ${RHOME}/etc/COMPILE
 
+MAKE=${MAKE-make}
 MAKEOPTS=
 
 for i in $*; do
   case ${i} in
     *.[cfr])
-      make -f ${RHOME}/etc/Makeconf ${MAKEOPTS} ${i%.*}.o
+      obj=`echo $i|sed 's/\.[^\.]\+$/.o/'`
+      ${MAKE} -f ${RHOME}/etc/Makeconf ${MAKEOPTS} ${obj}
       ;;
     -D*|*=*)
       MAKEOPTS="${MAKEOPTS} ${i}"
