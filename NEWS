@@ -10,21 +10,21 @@
 
 NEW FEATURES
 
-    o   R CMD Rd2dvi has new options --pdf, --title and --output
+    o	R CMD Rd2dvi has new options --pdf, --title and --output
 
-    o   new Date, URL and Title fields in DESCRIPTION file of
-        packages. The Title field preplaces the seperate TITLE file of
-        packages which is no longer necessary.
+    o	new Date, URL and Title fields in DESCRIPTION file of
+	packages. The Title field preplaces the seperate TITLE file of
+	packages which is no longer necessary.
 
     o	residuals.lm() has "type" argument, as S does.
 
-    o   the underlying code for nlm has been translated from Fortran
-        to C and made re-entrant (changes contributed by Saikat DebRoy).
+    o	the underlying code for nlm has been translated from Fortran
+	to C and made re-entrant (changes contributed by Saikat DebRoy).
 
-    o   R now compiles in the GNU version of regex, so regular
+    o	R now compiles in the GNU version of regex, so regular
 	expressions (grep, sub, gsub, regexpr, "pattern" in ls) are
 	always available. The class of regular expressions supported
-	will be slightly wider on some Unix platforms.
+	is now slightly wider on some Unix platforms.
 
     o	package ctest (for classical tests) is now part of the base
 	distribution, and also contains chisq.test, prop.test and t.test
@@ -54,6 +54,8 @@ NEW FEATURES
 	`--name=VALUE' form; the old `--name VALUE' is deprecated.
 	Old-style command line options `-v' and `-n' are now defunct.
 
+    o	par("cxy") { == par("cin")/par("pin") } for S compatibility.
+
     o	If R_PAPERSIZE is not specified otherwise, configure now tries
 	to compute it by calling paperconf.
 
@@ -63,10 +65,10 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   R CMD xxx sets $R_HOME/bin to be first in PATH
+    o	R CMD xxx sets $R_HOME/bin to be first in PATH
 
-    o   added more warnings to update.packages & friends. new function
-        old.packages for better control of update.packages.
+    o	added more warnings to update.packages & friends. new function
+	old.packages for better control of update.packages.
 
     o	adding matrices to data frames now happens column by column as
 	documented, so character or logical matrices generate factor
@@ -79,6 +81,8 @@ BUG FIXES
 
     o	plot.lm(), dffits(), covratio() now do the right thing for weighted
 	lm regression.
+
+    o	rstandard() now also works for glm objects.
 
     o	formatC(as.integer(c(1,0,NA))) now works. PR#394, thanks to Jens O.-A.
 

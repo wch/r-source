@@ -5,12 +5,16 @@ influence.measures(lm.obj)
 summary.infl (object, digits = max(2, .Options$digits - 5), \dots)
   print.infl (x, digits = max(3, .Options$digits - 4), \dots)
 
-rstandard(lm.obj)
-rstudent(lm.obj)
-dfbetas(lm.obj)
-dffits(lm.obj)
-covratio(lm.obj)
-cooks.distance(lm.obj)
+rstandard(lm.obj,
+          infl = lm.influence(lm.obj),
+          res = weighted.residuals(lm.obj),
+          sd = sqrt(deviance(lm.obj)/df.residual(lm.obj)))
+rstudent (lm.obj, infl = \dots, res = \dots)
+dffits   (lm.obj, infl = \dots, res = \dots)
+dfbetas  (lm.obj, infl = \dots)
+covratio (lm.obj, infl = \dots, res = \dots)
+cooks.distance(lm.obj, infl = \dots, res = \dots, sd = \dots)
+
 hat(xmat)
 }
 \alias{influence.measures}
@@ -25,7 +29,12 @@ hat(xmat)
 \alias{covratio}
 \alias{cooks.distance}
 \arguments{
-  \item{lm.obj}{the results returned by \code{lm}.}
+  \item{lm.obj}{the resulting object returned by \code{\link{lm}}.}
+
+  \item{infl}{influence structure as returned by \code{\link{lm.influence}}.}
+  \item{res}{(possibly weighted) residuals, with proper default.}
+  \item{sd}{standard deviation to use, see default.}
+
   \item{xmat}{the `X' or design matrix.}
 }
 \description{
@@ -47,6 +56,11 @@ hat(xmat)
   respectively. (These re-normalize the residuals to have unit variance,
   using an overall and leave-one-out measure of the error variance
   respectively.)
+
+  The optional \code{infl}, \code{res} and \code{sd} arguments are there
+  to encourage the use of these direct access functions, in situations
+  where, e.g., the underlying basic influence measures (from
+  \code{\link{lm.influence}}) are already available.
 
   Note that cases with \code{weights == 0} are \emph{dropped} from all
   these functions.
