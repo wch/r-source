@@ -21,12 +21,10 @@ INSTFILES = \
 	resource.html \
 	template.html \
 	thanks.html
-DISTFILES = Makefile.in $(INSTFILES)
+DISTFILES = Makefile.in $(INSTFILES) index-default.html
 SUBDIRS = search
 
-OBJECTS = \
-        index.html \
-
+OBJECTS = index.html
 
 all: Makefile R
 
@@ -45,8 +43,8 @@ R: Makefile $(OBJECTS)
 
 index.html: FORCE
 	@$(PERL) $(top_srcdir)/tools/linkcheck.pl \
-	  $(top_srcdir)/doc/html/index-default.html > $@ || \
-	  $(INSTALL_DATA) $(top_srcdir)/doc/html/index-default.html $@
+	  $(srcdir)/index-default.html > $@ || \
+	  $(INSTALL_DATA) $(srcdir)/index-default.html $@
 FORCE:
 
 install: install-message installdirs install-sources
@@ -80,6 +78,7 @@ clean:
 	@if [ "$(srcdir)" != "." ]; then \
 	  rm -f $(INSTFILES); \
 	fi
+	@rm -f $(OBJECTS)
 distclean: clean
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \

@@ -47,6 +47,7 @@ DISTFILES = Makefile.in README \
 	$(test-src-sloppy-1) $(test-src-sloppy-1:.R=.Rout.save) \
 	$(test-src-reg) \
 	isas-tests.Rin isas-tests.Rout.save \
+	p-r-random-tests.R  p-r-random-tests.Rout.save \
 	no-segfault.Rin
 SUBDIRS = Examples
 

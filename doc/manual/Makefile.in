@@ -17,7 +17,7 @@ DISTFILES = \
 	Makefile.in Makefile.win \
 	R-defs.texi dir texinfo.tex \
 	$(SOURCES_TEXI) \
-	R-intro.R \
+	R-exts.R R-exts.c R-intro.R \
 	Rd.sty hyperref.cfg \
 	omsaer.fd omsaett.fd omscmtt.fd \
 	refman.top refman.bot
