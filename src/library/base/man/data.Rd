@@ -7,7 +7,8 @@
 }
 \usage{
 data(\dots, list = character(0), package = .packages(),
-     lib.loc = NULL, verbose = getOption("verbose"))
+     lib.loc = NULL, verbose = getOption("verbose"),
+     envir = .GlobalEnv)
 }
 \arguments{
   \item{\dots}{a sequence of names or string constants.}
@@ -22,6 +23,7 @@ data(\dots, list = character(0), package = .packages(),
     packages are searched before the libraries.}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
+  \item{envir}{the \link{environment} where the data should be loaded.}
 }
 \value{
   a character vector of all data sets specified, or information about

@@ -272,6 +272,8 @@ NEW FEATURES
 	for small integers).  The default "shell" method works faster
 	on long vectors with many ties.
 
+    o	data() now has an 'envir' argument.
+
 
 DEPRECATED & DEFUNCT
 

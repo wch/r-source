@@ -1,7 +1,7 @@
 data <-
 function(..., list = character(0),
          package = .packages(), lib.loc = NULL,
-         verbose = getOption("verbose"))
+         verbose = getOption("verbose"), envir = .GlobalEnv)
 {
     fileExt <- function(x) sub(".*\\.", "", x)
     
@@ -153,18 +153,19 @@ function(..., list = character(0),
                     zfile <- zip.file.extract(file, "Rdata.zip")
                     switch(ext,
                            R = , r =
-                             source(zfile, chdir = TRUE),
+                           sys.source(zfile, chdir = TRUE,
+                                      envir = envir),
                            RData = , rdata = , rda =
-                             load(zfile, envir = .GlobalEnv),
+                           load(zfile, envir = envir),
                            TXT = , txt = , tab =
-                             assign(name,
-                                    read.table(zfile, header = TRUE),
-                                    env = .GlobalEnv),
+                           assign(name,
+                                  read.table(zfile, header = TRUE),
+                                  envir = envir),
                            CSV = , csv =
-                             assign(name,
-                                    read.table(zfile, header = TRUE,
-                                               sep = ";"),
-                                    env = .GlobalEnv),
+                           assign(name,
+                                  read.table(zfile, header = TRUE,
+                                             sep = ";"),
+                                  envir = envir),
                            found <- FALSE)
                     if(zfile != file) unlink(zfile)
                 }

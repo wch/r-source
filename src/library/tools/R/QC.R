@@ -89,33 +89,17 @@ function(package, dir, lib.loc = NULL)
     dataObjs <- character(0)
     dataDir <- file.path(dir, "data")
     if(fileTest("-d", dataDir)) {
-        files <- listFilesWithType(dataDir, "data")
-        files <- files[!duplicated(filePathSansExt(files))]
         dataEnv <- new.env()
-        if(any(i <- grep("\\.\(R\|r\)$", files))) {
-            for(f in files[i]) {
-                yy <- try(sys.source(f, envir = dataEnv, chdir = TRUE))
-                if(inherits(yy, "try-error"))
-                    stop(paste("cannot source data file", sQuote(f)))
+        files <- listFilesWithType(dataDir, "data")
+        files <- unique(basename(filePathSansExt(files)))
+        for(f in files) {
+            yy <- try(data(list = f, envir = dataEnv))
+            if(inherits(yy, "try-error"))
+                stop(paste("cannot load data set", sQuote(f)))
                 new <- ls(envir = dataEnv, all.names = TRUE)
                 dataObjs <- c(dataObjs, new)
                 rm(list = new, envir = dataEnv)
-            }
-            files <- files[-i]
         }
-        if(any(i <- grep("\\.\(RData\|rdata\|rda\)$", files))) {
-            for(f in files[i]) {
-                yy <- try(load(f, envir = dataEnv))
-                if(inherits(yy, "try-error"))
-                    stop(paste("cannot load data file", sQuote(f)))
-                new <- ls(envir = dataEnv, all.names = TRUE)
-                dataObjs <- c(dataObjs, new)
-                rm(list = new, envir = dataEnv)
-            }
-            files <- files[-i]
-        }
-        if(length(files) > 0)
-            dataObjs <- c(dataObjs, basename(filePathSansExt(files)))
     }
 
     ## Undocumented objects?
@@ -782,9 +766,6 @@ function(package, lib.loc = NULL)
     ## Now go through the aliases.
     dataFramesChecked <- character()
     for(i in seq(along = aliases)) {
-        ## Clean up dataEnv.
-        rm(list = ls(envir = dataEnv, all.names = TRUE),
-           envir = dataEnv)
         ## Store the documented variable names.
         docsVarNames <- sort(RdVarNames[[i]])
         ## Try finding the variable or data set given by the alias.
@@ -794,37 +775,20 @@ function(package, lib.loc = NULL)
             al <- get(al, envir = codeEnv, mode = "list")
         }
         else if(hasData) {
-            ## Must be a data set.  Argh.  Wouldn't it be wonderful if
-            ## we could get rid of data(), or at least have an option
-            ## for controlling *where* things go?
-            files <- dir(dataDir)
-            files <- files[files %in% paste(al, dataExts, sep = ".")]
-            if(!length(files)) next
-            ## If not, what the hell did we pick up?
-            if(length(files) > 1) {
-                ## More than one candidate, see data().
-                files <- files[which.min(match(files, dataExts))]
+            ## Should be a data set.
+            if(!length(dir(dataDir)
+                       %in% paste(al, dataExts, sep = "."))) {
+                next                    # What the hell did we pick up?
             }
-            ## <FIXME>
-            ## Of course, the data sets could be in a zip archive!
-            zfile <- file.path(dataDir, files) # Should be exactly one.
-            switch(.fileExt(zfile),
-                   R = , r =
-                   sys.source(zfile, envir = dataEnv, chdir = TRUE),
-                   RData = , rdata = , rda =
-                   load(zfile, envir = dataEnv),
-                   TXT = , txt = , tab =
-                   assign(al,
-                          read.table(zfile, header = TRUE),
-                          envir = dataEnv),
-                   CSV = , csv =
-                   assign(al,
-                          read.table(zfile, header = TRUE, sep = ";"),
-                          envir = dataEnv))
+            ## Try loading the data set into dataEnv.
+            data(list = al, envir = dataEnv)
             if(exists(al, envir = dataEnv, mode = "list",
                       inherits = FALSE)) {
                 al <- get(al, envir = dataEnv, mode = "list")
             }
+            ## And clean up dataEnv.
+            rm(list = ls(envir = dataEnv, all.names = TRUE),
+               envir = dataEnv)
         }
         if(!is.data.frame(al)) next
         ## Now we should be ready:
