@@ -250,7 +250,10 @@ function(x, y = NULL, z = NULL,
     }
     else {
         ## Generalized Cochran-Mantel-Haenszel I x J x K test
-        ## Agresti (1990), pages 234--235
+        ## Agresti (1990), pages 234--235.
+        ## Agresti (2002), pages 295ff.
+        ## Note that n in the reference is in column-major order.
+        ## (Thanks to Torsten Hothorn for spotting this.)
         df <- (I - 1) * (J - 1)
         n <- m <- double(length = df)
         V <- matrix(0, nr = df, nc = df)
@@ -263,10 +266,10 @@ function(x, y = NULL, z = NULL,
                                         # n_{.jk}, j = 1 to J-1
             n <- n + c(f[-I, -J])
             m <- m + c(outer(rowsums, colsums, "*")) / ntot
-            V <- V + (kronecker(diag(ntot * rowsums, nrow = I - 1)
-                                - outer(rowsums, rowsums),
-                                diag(ntot * colsums, nrow = J - 1)
-                                - outer(colsums, colsums))
+            V <- V + (kronecker(diag(ntot * colsums, nrow = J - 1)
+                                - outer(colsums, colsums),
+                                diag(ntot * rowsums, nrow = I - 1)
+                                - outer(rowsums, rowsums))
                       / (ntot^2 * (ntot - 1)))
         }
         n <- n - m
