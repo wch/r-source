@@ -1,8 +1,16 @@
-r-base (0.62.0-1) unstable; urgency=low
+r-base (0.62.1-2) unstable; urgency=low
+
+  * Corrected definition of RHOME in /usr/bin/R (bug#23621)
+  
+  * Changed default heap size to 8 Mb. and number of cons cells to 400000
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Wed, 17 Jun 1998 11:48:28 -0500
+
+r-base (0.62.1-1) unstable; urgency=low
 
   * new upstream release
 
- -- Douglas Bates <bates@stat.wisc.edu>  Wed, 27 May 1998 10:21:44 -0500
+ -- Douglas Bates <bates@stat.wisc.edu>  Tue, 16 Jun 1998 10:03:49 -0500
 
 r-base (0.61.3-0) unstable; urgency=low
 
