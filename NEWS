@@ -695,6 +695,9 @@ BUG FIXES
 	garbage if there was a match at the beginning whose
 	replacement was shorter.  (PR#7479)
 
+	Similarly, the result was truncated if a replacement at the
+	beginning was longer.
+
     o	Some PDF readers do not define PDFDocEncoding, so pdf()'s
 	ISOLatin1 encoding is now derived from WinAnsi rather than
 	PDFDocEncoding.
