@@ -58,9 +58,9 @@ stopifnot(append(1:5, 0:1, after=3) == append(1:3, c(0:1, 4:5)))
 ## as.POSIXlt
 z <- Sys.time()
 stopifnot(range(z) == z,
-          min(z) == z,
-          max(z) == z,
-          mean(z) == z)
+	  min(z) == z,
+	  max(z) == z,
+	  mean(z) == z)
 ## end of moved from as.POSIXlt.Rd
 
 
@@ -71,8 +71,8 @@ stopifnot(ls("Autoloads") == ls(envir = .AutoloadEnv))
 
 ## backsolve
 r <- rbind(c(1,2,3),
-           c(0,1,1),
-           c(0,0,2))
+	   c(0,1,1),
+	   c(0,0,2))
 ( y <- backsolve(r, x <- c(8,4,2)) ) # -1 3 1
 r %*% y # == x = (8,4,2)
 ( y2 <- backsolve(r, x, transpose = TRUE)) # 8 -12 -5
@@ -112,14 +112,14 @@ stopifnot(all.equal(dcauchy(-1:4), 1 / (pi*(1 + (-1:4)^2))))
 ## chol
 ( m <- matrix(c(5,1,1,3),2,2) )
 ( cm <- chol(m) )
-stopifnot(abs(m  -  t(cm) %*% cm) < 100* .Machine$double.eps)
+stopifnot(abs(m	 -  t(cm) %*% cm) < 100* .Machine$double.eps)
 ( Lcm <- La.chol(m) )
 stopifnot(abs(m - crossprod(Lcm))  < 100* .Machine$double.eps)
 
 ## check with pivoting
 ( m <- matrix(c(5,1,1,3),2,2) )
 ( cm <- chol(m, TRUE) )
-stopifnot(abs(m  -  t(cm) %*% cm) < 100* .Machine$double.eps)
+stopifnot(abs(m	 -  t(cm) %*% cm) < 100* .Machine$double.eps)
 
 x <- matrix(c(1:5, (1:5)^2), 5, 2)
 m <- crossprod(x)
@@ -146,7 +146,7 @@ stopifnot(all.equal(t(Q) %*% Q, m[pivot, pivot]))
 
 
 ## chol2inv
-cma <- chol(ma  <- cbind(1, 1:3, c(1,3,7)))
+cma <- chol(ma	<- cbind(1, 1:3, c(1,3,7)))
 stopifnot(all.equal(diag(3), ma %*% chol2inv(cma)))
 stopifnot(all.equal(diag(3), ma %*% La.chol2inv(cma)))
 ## end of moved from chol2inv.Rd
@@ -158,8 +158,8 @@ stopifnot(col2rgb(1:8) == print(col2rgb(pp)))
 stopifnot(col2rgb("#08a0ff") == c(8, 160, 255))
 grC <- col2rgb(paste("gray",0:100,sep=""))
 stopifnot(grC["red",] == grC["green",],
-          grC["red",] == grC["blue",],
-          grC["red", 1:4] == c(0,3,5,8))
+	  grC["red",] == grC["blue",],
+	  grC["red", 1:4] == c(0,3,5,8))
 ## end of moved from col2rgb.Rd
 
 
@@ -169,7 +169,7 @@ stopifnot(Re(z) == 0 ^ (-3:3))
 set.seed(123)
 z <- complex(real = rnorm(100), imag = rnorm(100))
 stopifnot(Mod ( 1 -  sin(z) / ( (exp(1i*z)-exp(-1i*z))/(2*1i) ))
-          < 20 * .Machine$double.eps)
+	  < 20 * .Machine$double.eps)
 ## end of moved from complex.Rd
 
 
@@ -189,7 +189,7 @@ stopifnot(all.equal(pi/4, 4*atan(1/5) - atan(1/239), 4*eps))
 
 ## cor
 stopifnot(  is.na(var(1)),
-          !is.nan(var(1)))
+	  !is.nan(var(1)))
 
 zz <- c(-1.30167, -0.4957, -1.46749, 0.46927)
 r <- cor(zz,zz); r - 1
@@ -209,18 +209,18 @@ D.sc <- D(trig.exp, "x")
 dxy <- deriv(trig.exp, c("x", "y"))
 y <- 1
 stopifnot(eval(D.sc) ==
-          attr(eval(dxy),"gradient")[,"x"])
+	  attr(eval(dxy),"gradient")[,"x"])
 ff <- y ~ sin(cos(x) * y)
 stopifnot(all.equal(deriv(ff, c("x","y"), func = TRUE ),
-                    deriv(ff, c("x","y"), func = function(x,y){ } )))
+		    deriv(ff, c("x","y"), func = function(x,y){ } )))
 ## end of moved from deriv.Rd
 
 
 ## diff
 x <- cumsum(cumsum(1:10))
 stopifnot(diff(x, lag = 2) == x[(1+2):10] - x[1:(10 - 2)],
-          diff(x, lag = 2) == (3:10)^2,
-          diff(diff(x))    == diff(x, differences = 2))
+	  diff(x, lag = 2) == (3:10)^2,
+	  diff(diff(x))	   == diff(x, differences = 2))
 ## end of moved from diff.Rd
 
 
@@ -229,7 +229,7 @@ x <- c(9:20, 1:5, 3:7, 0:8)
 ## extract unique elements
 (xu <- x[!duplicated(x)])
 stopifnot(xu == unique(x), # but unique(x) is more efficient
-          0:20 == sort(x[!duplicated(x)]))
+	  0:20 == sort(x[!duplicated(x)]))
 
 data(iris)
 stopifnot(duplicated(iris)[143] == TRUE)
@@ -238,15 +238,15 @@ stopifnot(duplicated(iris)[143] == TRUE)
 
 ## eigen
 Meps <- .Machine$double.eps
-set.seed(321, kind = "default")  # force a particular seed
+set.seed(321, kind = "default")	 # force a particular seed
 m <- matrix(round(rnorm(25),3), 5,5)
 sm <- m + t(m) #- symmetric matrix
 em <- eigen(sm); V <- em$vect
 print(lam <- em$values) # ordered DEcreasingly
 
 stopifnot(
- abs(sm %*% V - V %*% diag(lam))          < 60*Meps,
- abs(sm       - V %*% diag(lam) %*% t(V)) < 60*Meps)
+ abs(sm %*% V - V %*% diag(lam))	  < 60*Meps,
+ abs(sm	      - V %*% diag(lam) %*% t(V)) < 60*Meps)
 
 ##------- Symmetric = FALSE:  -- different to above : ---
 
@@ -258,16 +258,16 @@ stopifnot(abs(lam - lam2[i]) < 60 * Meps)
 zapsmall(Diag <- t(V2) %*% V2)
 stopifnot( abs(1- diag(Diag)) < 60*Meps)
 
-stopifnot(abs(sm %*% V2 - V2 %*% diag(lam2))            < 60*Meps,
-          abs(sm         - V2 %*% diag(lam2) %*% t(V2)) < 60*Meps)
+stopifnot(abs(sm %*% V2 - V2 %*% diag(lam2))		< 60*Meps,
+	  abs(sm	 - V2 %*% diag(lam2) %*% t(V2)) < 60*Meps)
 
 ## Re-ordered as with symmetric:
 sV <- V2[,i]
 slam <- lam2[i]
-stopifnot(abs(sm %*% sV -  sV %*% diag(slam))             < 60*Meps)
-stopifnot(abs(sm        -  sV %*% diag(slam) %*% t(sV)) < 60*Meps)
+stopifnot(abs(sm %*% sV -  sV %*% diag(slam))		  < 60*Meps)
+stopifnot(abs(sm	-  sV %*% diag(slam) %*% t(sV)) < 60*Meps)
 ## sV  *is* now equal to V  -- up to sign (+-) and rounding errors
-stopifnot(abs(c(1 - abs(sV / V)))       <     1000*Meps)
+stopifnot(abs(c(1 - abs(sV / V)))	<     1000*Meps)
 ## end of moved from eigen.Rd
 
 
@@ -295,8 +295,8 @@ eps <- 1e-11
 for(N in 1:130) {
     x <- rnorm(N)
     if(N %% 5 == 0) {
-        m5 <- matrix(x,ncol=5)
-        stopifnot(apply(m5,2,fft) == mvfft(m5))
+	m5 <- matrix(x,ncol=5)
+	stopifnot(apply(m5,2,fft) == mvfft(m5))
     }
     dd <- Mod(1 - (f2 <- fft(fft(x), inverse=TRUE)/(x*length(x))))
     stopifnot(dd < eps)
@@ -315,10 +315,10 @@ tt <- c(tt,X)
 eps <- 100 * .Machine$double.eps
 require(stepfun)
 stopifnot(it[c(1,203)] == c(0, 100),
-          all.equal(N * ecdf(X)(tt),
-                    findInterval(tt, X),  tol = eps),
-          findInterval(tt,X) ==  apply( outer(tt, X, ">="), 1, sum)
-          )
+	  all.equal(N * ecdf(X)(tt),
+		    findInterval(tt, X),  tol = eps),
+	  findInterval(tt,X) ==	 apply( outer(tt, X, ">="), 1, sum)
+	  )
 ## end of moved from findint.Rd
 
 
@@ -326,7 +326,7 @@ stopifnot(it[c(1,203)] == c(0, 100),
 (dd <- sapply(1:10, function(i)paste((9:0)[1:i],collapse="")))
 np <- nchar(pd <- prettyNum(dd, big.mark="'"))
 stopifnot(sapply(0:2, function(m)
-           all(grep("'", substr(pd, 1, np - 4*m)) == (4+3*m):10)))
+	   all(grep("'", substr(pd, 1, np - 4*m)) == (4+3*m):10)))
 ## end of moved from format.Rd
 
 
@@ -347,8 +347,8 @@ summary(g1 <- glm(y1 - y2 ~ 1))
 summary(g2 <- glm(y1 ~ offset(y2)))
 Eq <- function(x,y) all.equal(x,y, tol = 1e-12)
 stopifnot(Eq(coef(g1), coef(g2)),
-          Eq(deviance(g1), deviance(g2)),
-          Eq(resid(g1), resid(g2)))
+	  Eq(deviance(g1), deviance(g2)),
+	  Eq(resid(g1), resid(g2)))
 ## from logLik.glm.Rd
 "anorexia" <-
 structure(list(Treat = structure(c(2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -379,17 +379,17 @@ structure(list(Treat = structure(c(2, 2, 2, 2, 2, 2, 2, 2, 2,
 "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71",
 "72"))
 anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
-            family = gaussian, data = anorexia)
+	    family = gaussian, data = anorexia)
 summary(anorex.1)
 Eq <- function(x,y) all.equal(x,y, tol = 1e-12)
 stopifnot(Eq(AIC(anorex.1), anorex.1$aic),
-          Eq(AIC(g1), g1$aic),
-          Eq(AIC(g2), g2$aic))
+	  Eq(AIC(g1), g1$aic),
+	  Eq(AIC(g2), g2$aic))
 ## next was wrong in 1.4.1
 x <- 1:10
 lmx <- logLik(lm(x ~ 1)); glmx <- logLik(glm(x ~ 1))
 stopifnot(all.equal(as.vector(lmx), as.vector(glmx)),
-          all.equal(attr(lmx, 'df'), attr(glmx, 'df')))
+	  all.equal(attr(lmx, 'df'), attr(glmx, 'df')))
 ## end of moved from glm.Rd and logLik.glm.Rd
 
 
@@ -400,7 +400,7 @@ stopifnot(
  abs(cosh(x) - (exp(x) + exp(-x))/2) < 20*Ceps,
  abs(sinh(x) - (exp(x) - exp(-x))/2) < 20*Ceps,
  Mod(cosh(x) - cos(1i*x))	< 20*Ceps,
- Mod(sinh(x) - sin(1i*x)/1i) 	< 20*Ceps,
+ Mod(sinh(x) - sin(1i*x)/1i)	< 20*Ceps,
  abs(tanh(x)*cosh(x) - sinh(x)) < 20*Ceps
 )
 
@@ -429,7 +429,7 @@ image(x, 1, matrix(x), col=heat.colors(10), breaks = seq(0.1,1.1,len=11))
 (ii <- integrate(dnorm, -1.96, 1.96))
 (i1 <- integrate(dnorm, -Inf, Inf))
 stopifnot(all.equal(0.9500042097, ii$val, tol = ii$abs.err, scale=1),
-          all.equal( 1,           i1$val, tol = i1$abs.err, scale=1))
+	  all.equal( 1,		  i1$val, tol = i1$abs.err, scale=1))
 
 integrand <- function(x) {1/((x+1)*sqrt(x))}
 (ii <- integrate(integrand, lower = 0, upper = Inf, rel.tol = 1e-10))
@@ -443,7 +443,7 @@ stopifnot(all.equal(pi, ii$val, tol = ii$abs.err, scale=1))
 Mmax <- .Machine$double.xmax
 Mmin <- .Machine$double.xmin
 ( X.val <- c(Mmin*c(2^(-10:3),1e5,1e10),
-             Mmax*c(1e-10,1e-5,2^(-3:0),1.001)) )
+	     Mmax*c(1e-10,1e-5,2^(-3:0),1.001)) )
 ( tst.val <- sort(c(X.val, weird.values), na.last = TRUE) )
 ( x2 <- c(-1:1/0,pi,1,NA) )
 ( z2 <- c(x2, 1+1i, Inf -Inf* 1i) )
@@ -463,7 +463,7 @@ stopifnot(
     !is.na(Inf),
     is.nan(0/0),
 
-    !is.nan(NA)  &&  !is.infinite(NA)  && !is.finite(NA),
+    !is.nan(NA)	 &&  !is.infinite(NA)  && !is.finite(NA),
      is.nan(NaN) &&  !is.infinite(NaN) && !is.finite(NaN),
     !is.nan(c(1,NA)),
     c(FALSE,TRUE,FALSE) == is.nan(c   (1,NaN,NA)),
@@ -503,17 +503,17 @@ stopifnot(Mod(1+exp(pi*1i)) < .Machine$double.eps)
 ## logistic
 eps <- 100 * .Machine$double.eps
 x <- c(0:4, rlogis(100))
-stopifnot(all.equal(plogis(x),  1 / (1 + exp(-x)), tol = eps))
+stopifnot(all.equal(plogis(x),	1 / (1 + exp(-x)), tol = eps))
 stopifnot(all.equal(plogis(x, lower=FALSE),  exp(-x)/ (1 + exp(-x)), tol = eps))
 stopifnot(all.equal(plogis(x, lower=FALSE, log=TRUE), -log(1 + exp(x)),
-                    tol = eps))
+		    tol = eps))
 stopifnot(all.equal(dlogis(x), exp(x) * (1 + exp(x))^-2, tol = eps))
 ## end of moved from Logistic.Rd
 
 
 ## Lognormal
-x <- rlnorm(1000)       # not yet always :
-stopifnot(abs(x  -  qlnorm(plnorm(x))) < 1e4 * .Machine$double.eps * x)
+x <- rlnorm(1000)	# not yet always :
+stopifnot(abs(x	 -  qlnorm(plnorm(x))) < 1e4 * .Machine$double.eps * x)
 ## end of moved from Lognormal.Rd
 
 
@@ -589,11 +589,11 @@ stopifnot(all.equal(qr.X(qr(X)), X))
 ## qraux
 data(LifeCycleSavings)
 p <- ncol(x <- LifeCycleSavings[,-1]) # not the `sr'
-qrstr <- qr(x)   # dim(x) == c(n,p)
+qrstr <- qr(x)	 # dim(x) == c(n,p)
 Q <- qr.Q(qrstr) # dim(Q) == dim(x)
 R <- qr.R(qrstr) # dim(R) == ncol(x)
 X <- qr.X(qrstr) # X == x
-stopifnot(all.equal(X,  as.matrix(x)))
+stopifnot(all.equal(X,	as.matrix(x)))
 
 ## X == Q %*% R :
 stopifnot((1 - X /( Q %*% R))< 100*.Machine$double.eps)
@@ -602,7 +602,7 @@ dim(Qc <- qr.Q(qrstr, complete=TRUE)) # Square: dim(Qc) == rep(nrow(x),2)
 stopifnot((crossprod(Qc) - diag(nrow(x))) < 10*.Machine $double.eps)
 
 QD <- qr.Q(qrstr, D=1:p)      # QD == Q \%*\% diag(1:p)
-stopifnot(QD - Q %*% diag(1:p)  < 8* .Machine$double.eps)
+stopifnot(QD - Q %*% diag(1:p)	< 8* .Machine$double.eps)
 
 dim(Rc <- qr.R(qrstr, complete=TRUE)) # == dim(x)
 dim(Xc <- qr.X(qrstr, complete=TRUE)) # square: nrow(x) ^ 2
@@ -628,7 +628,7 @@ stopifnot(abs(quantile(x,p) - ((1-f)*ox[i] + f*ox[i+1])) < 20*.Machine$double.ep
 
 ## rep
 stopifnot(identical(rep(letters, 0), character(0)),
-          identical(rep.int(1:2, 0), integer(0)))
+	  identical(rep.int(1:2, 0), integer(0)))
 ## end of moved from rep.Rd
 
 
@@ -645,7 +645,7 @@ stopifnot(
 
 ## seq
 stopifnot(
- 3 == seq(3,3,  by=pi),
+ 3 == seq(3,3,	by=pi),
  3 == seq(3,3.1,by=pi),
  seq(1,6,by=3) == c(1,4),
  seq(10,4.05,by=-3) == c(10,7)
@@ -657,8 +657,8 @@ stopifnot(
 data(swiss)
 x <- swiss$Education[1:25]
 stopifnot(!is.unsorted(sort(x)),
-          !is.unsorted(LETTERS),
-           is.unsorted(c(NA,1:3,2), na.rm = TRUE))
+	  !is.unsorted(LETTERS),
+	   is.unsorted(c(NA,1:3,2), na.rm = TRUE))
 
 for(n in 1:20) {
     z <- rnorm(n)
@@ -687,13 +687,13 @@ str(s <- svd(X))
 Eps <- 100 * .Machine$double.eps
 
 D <- diag(s$d)
-stopifnot(abs(X - s$u %*% D %*% t(s$v)) < Eps)#  X = U D V'
-stopifnot(abs(D - t(s$u) %*% X %*% s$v) < Eps)#  D = U' X V
+stopifnot(abs(X - s$u %*% D %*% t(s$v)) < Eps)#	 X = U D V'
+stopifnot(abs(D - t(s$u) %*% X %*% s$v) < Eps)#	 D = U' X V
 
 X <- cbind(1, 1:7)
 str(s <- svd(X)); D <- diag(s$d)
-stopifnot(abs(X - s$u %*% D %*% t(s$v)) < Eps)#  X = U D V'
-stopifnot(abs(D - t(s$u) %*% X %*% s$v) < Eps)#  D = U' X V
+stopifnot(abs(X - s$u %*% D %*% t(s$v)) < Eps)#	 X = U D V'
+stopifnot(abs(D - t(s$u) %*% X %*% s$v) < Eps)#	 D = U' X V
 ## end of moved from svd.Rd
 
 
@@ -715,7 +715,7 @@ untrace(f)
 
 setGeneric("f")
 
-setMethod("f", c("character", "character"), function(x,  y) paste(x,y))
+setMethod("f", c("character", "character"), function(x,	 y) paste(x,y))
 
 ## trace the generic
 trace("f", quote(x <- c("A", x)), exit = quote(xy <<- c(x, "Z")), print = FALSE)
@@ -772,7 +772,7 @@ stopifnot(abs(1 - x / atan(tan(x))) <= 10 *.Machine$double.eps)
 ## Uniform
 u <- runif(20)
 stopifnot(punif(u) == u, dunif(u) == 1,
-          runif(100, 2,2) == 2)#-> TRUE [bug in R version <= 0.63.1]
+	  runif(100, 2,2) == 2)#-> TRUE [bug in R version <= 0.63.1]
 ## end of moved from Uniform.Rd
 
 
@@ -806,7 +806,7 @@ stopifnot(abs(Fx - cumsum(fx)) < 10 * .Machine$double.eps)
 (Meps <- .Machine$double.eps)
 ## All the following relations must hold :
 stopifnot(
- 1 +     Meps != 1,
+ 1 +	 Meps != 1,
  1 + .5* Meps == 1,
  log2(.Machine$double.xmax) == .Machine$double.max.exp,
  log2(.Machine$double.xmin) == .Machine$double.min.exp
@@ -829,8 +829,8 @@ arima0(y, xreg = x, seasonal = list(order=c(0,1,0)))
 ## PR 644 (crash using fisher.test on Windows)
 ## By: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 x <- matrix(c(2, 2, 4, 8, 6, 0, 1, 1, 7, 8, 1, 3, 1, 3, 7, 4, 2, 2, 2,
-              1, 1, 0, 0, 0, 0, 0, 1, 1, 2, 0, 1, 1, 0, 2, 1, 0, 0, 0),
-            nc = 2)
+	      1, 1, 0, 0, 0, 0, 0, 1, 1, 2, 0, 1, 1, 0, 2, 1, 0, 0, 0),
+	    nc = 2)
 fisher.test(x)
 ## Comments: (wasn't just on Windows)
 
@@ -872,10 +872,10 @@ step(x0.lm, ~ b + c)
 ##
 data(esoph)
 a1 <- glm(cbind(ncases, ncontrols) ~ agegp + tobgp * alcgp,
-          data = esoph, family = binomial())$aic
+	  data = esoph, family = binomial())$aic
 a1
 a2 <- glm(ncases/(ncases+ncontrols) ~ agegp + tobgp * alcgp,
-          data = esoph, family = binomial(), weights=ncases+ncontrols)$aic
+	  data = esoph, family = binomial(), weights=ncases+ncontrols)$aic
 a2
 stopifnot(a1 == a2)
 ## Comments:
@@ -898,7 +898,7 @@ unlink("test.dat")
 ## Comments: segfaulted in 1.2.0
 
 
-## Jonathan Rougier, 2001-01-30  [bug in 1.2.1 and earlier]
+## Jonathan Rougier, 2001-01-30	 [bug in 1.2.1 and earlier]
 tmp <- array(list(3), c(2, 3))
 tmp[[2, 3]] <- "fred"
 all.equal(t(tmp), aperm(tmp))
@@ -938,7 +938,7 @@ read.table(tf)
 unlink(tf)
 
 
-## PR 870 (as.numeric and NAs)  Harald Fekjær, 2001-03-08,
+## PR 870 (as.numeric and NAs)	Harald Fekjær, 2001-03-08,
 is.na(as.numeric(" "))
 is.na(as.integer(" "))
 is.na(as.complex(" "))
@@ -1098,10 +1098,10 @@ fore0 <- predict(fit0 ,n.ahead=44, newxreg=121:164)
 fore1 <- predict(fit1, n.ahead=44, newxreg=121:164)
 par(mfrow=c(1,2))
 ts.plot(y,fore0$pred, fore0$pred+2*fore0$se, fore0$pred-2*fore0$se,
-                gpars=list(lty=c(1,2,3,3)))
+		gpars=list(lty=c(1,2,3,3)))
 abline(fit0$coef[3:4], lty=2)
 ts.plot(y, fore1$pred, fore1$pred+2*fore1$se, fore1$pred-2*fore1$se,
-                gpars=list(lty=c(1,2,3,3)))
+		gpars=list(lty=c(1,2,3,3)))
 abline(c(0, fit1$coef[3]), lty=2)
 
 
@@ -1144,7 +1144,7 @@ stopifnot(diff(tmp$mday) == c(0, 1, 0, 0))
 ## Comments: failed on glibc-based systems in 1.3.1, including Windows.
 
 
-## PR 1004 (follow up).  Exact Kolmogorov-Smirnov test gave incorrect
+## PR 1004 (follow up).	 Exact Kolmogorov-Smirnov test gave incorrect
 ## results due to rounding errors (Charles Geyer, charlie@stat.umn.edu,
 ## 2001-10-25).
 ## Example 5.4 in Hollander and Wolfe (Nonparametric Statistical
@@ -1197,10 +1197,10 @@ stopifnot(x == 0)
 
 ## PR#1160 finding midpoints in image <janef@stat.berkeley.edu, 2001-11-06>
 x2 <- c(0, 0.002242152, 0.004484305, 0.006726457, 0.00896861,
-        0.01121076, 0.01345291, 0.01569507, 0.01793722, 0.02017937,
-        0.02242152, 0.02466368, 0.02690583, 0.02914798, 0.03139013,
-        0.03363229, 0.03587444, 0.03811659, 0.04035874, 0.04932735,
-        0.05156951, 0.05381166)
+	0.01121076, 0.01345291, 0.01569507, 0.01793722, 0.02017937,
+	0.02242152, 0.02466368, 0.02690583, 0.02914798, 0.03139013,
+	0.03363229, 0.03587444, 0.03811659, 0.04035874, 0.04932735,
+	0.05156951, 0.05381166)
 z <- c(0, 0.067, NA, 0.167, 0.083, 0.05, 0.067, NA, 0, 0.1, 0, 0.05,
        0.067, 0.067, 0.016, 0.117, 0.017, -0.017, 0.2, 0.35, 0.134, 0.15)
 image(x2, 1, as.matrix(z))
@@ -1274,18 +1274,18 @@ counts <- c(18, 17, 15, 20, 10, 20, 25, 13, 12)
 outcome <- gl(3, 1, 9)
 treatment <- gl(3, 3)
 DF <- data.frame(counts = c(18, 17, 15, 20, 10, 20, 25, 13, 12),
-                 outcome = gl(3, 1, 9), treatment = gl(3, 3),
-                 exposure = c(1.17, 1.78, 1.00, 2.36, 2.58, 0.80, 2.51,
-                 1.16, 1.77))
+		 outcome = gl(3, 1, 9), treatment = gl(3, 3),
+		 exposure = c(1.17, 1.78, 1.00, 2.36, 2.58, 0.80, 2.51,
+		 1.16, 1.77))
 fit <- glm(counts ~ outcome + treatment + offset(log(exposure)),
-           family = poisson, data = DF)
+	   family = poisson, data = DF)
 p1 <- predict(fit)
 p2 <- predict(fit, se = TRUE)  ## failed < 1.4.1
 p3 <- predict(fit, newdata = DF)
 p4 <- predict(fit, newdata = DF, se = TRUE)
 stopifnot(all.equal(p1, p2$fit), all.equal(p1, p3), all.equal(p2, p4))
 fit <- glm(counts ~ outcome + treatment, offset = log(exposure),
-           family = poisson, data = DF)
+	   family = poisson, data = DF)
 p1 <- predict(fit)
 p2 <- predict(fit, se = TRUE)  ## failed < 1.4.1
 p3 <- predict(fit, newdata = DF)
@@ -1296,10 +1296,10 @@ stopifnot(all.equal(p1, p2$fit), all.equal(p1, p3), all.equal(p2, p4))
 ## PR#1267 hashing NaN
 load(file.path(Sys.getenv("SRCDIR"), "nanbug.rda"))
 bb <- b; bb[5] <- NaN
-identical(b, bb)            # TRUE
-unique(c(NaN, bb))          #[1] NaN 0 1 2 3 NA
+identical(b, bb)	    # TRUE
+unique(c(NaN, bb))	    #[1] NaN 0 1 2 3 NA
 stopifnot(identical(unique(c(NaN, b)), unique(c(NaN, bb))))
-## 1.4.0 gives [1] NaN 0 1 2 NaN 3 NA   on most platforms
+## 1.4.0 gives [1] NaN 0 1 2 NaN 3 NA	on most platforms
 
 
 ## PR 1271  detach("package:base") crashes R.
@@ -1331,21 +1331,21 @@ c2 <- qr.coef( q4, y04)# ditto
 c3 <- qr.coef( q4, y40)# row--names
 dn3 <- dimnames(c3)
 stopifnot(identical(dimnames(c1), dimnames(c2)),
-          identical(dimnames(c1), list(letters[1:4], LETTERS[1:4])),
-          identical(dn3[[1]], letters[1:4]),  length(dn3[[2]]) == 0,
-          identical(names(qr.coef(q4,y1)),   letters[1:4]),
-          identical(dimnames(qr.R(q4))[[2]], letters[1:4]),
+	  identical(dimnames(c1), list(letters[1:4], LETTERS[1:4])),
+	  identical(dn3[[1]], letters[1:4]),  length(dn3[[2]]) == 0,
+	  identical(names(qr.coef(q4,y1)),   letters[1:4]),
+	  identical(dimnames(qr.R(q4))[[2]], letters[1:4]),
 
-          identical(dimnames(qr.qty(q4,y4)), dimnames(y4)),
-          identical(dimnames(qr.qty(q4,y40)), dimnames(y40)),
-          identical(dimnames(qr.qy (q4,y04)), dimnames(y04)),
+	  identical(dimnames(qr.qty(q4,y4)), dimnames(y4)),
+	  identical(dimnames(qr.qty(q4,y40)), dimnames(y40)),
+	  identical(dimnames(qr.qy (q4,y04)), dimnames(y04)),
 
-          all.equal(y1,  qr.fitted(q4, y1 ), tol = 1e-12),
-          all.equal(y4,  qr.fitted(q4, y4 ), tol = 1e-12),
-          all.equal(y40, qr.fitted(q4, y40), tol = 1e-12),
-          all.equal(y04, qr.fitted(q4, y04), tol = 1e-12),
+	  all.equal(y1,	 qr.fitted(q4, y1 ), tol = 1e-12),
+	  all.equal(y4,	 qr.fitted(q4, y4 ), tol = 1e-12),
+	  all.equal(y40, qr.fitted(q4, y40), tol = 1e-12),
+	  all.equal(y04, qr.fitted(q4, y04), tol = 1e-12),
 
-          all.equal(X4, qr.X(q4), tol = 1e-12)
+	  all.equal(X4, qr.X(q4), tol = 1e-12)
 )
 
 
@@ -1367,7 +1367,7 @@ m <- matrix(1:4, 2)
 (s1 <- svd(m))
 (s2 <- La.svd(m))
 stopifnot(all.equal(s1$d, s2$d), all.equal(s1$u, s2$u),
-          all.equal(s1$v, t(s2$vt)))
+	  all.equal(s1$v, t(s2$vt)))
 (e1 <- eigen(m))
 (e2 <- La.eigen(m))
 stopifnot(all.equal(e1$d, e1$d))
@@ -1426,7 +1426,7 @@ persp(1:2, 1:2, matrix(1:4, 2), xlab=1)
 
 ## PR#1244 bug in det using method="qr"
 m2 <- structure(c(9822616000, 3841723000, 79790.09, 3841723000, 1502536000,
-                  31251.82, 79790.09, 31251.82, 64156419.36), .Dim = c(3, 3))
+		  31251.82, 79790.09, 31251.82, 64156419.36), .Dim = c(3, 3))
 (d1 <- det(m2, method="eigenvalues"))
 (d2 <- det(m2, method="qr"))
 stopifnot(d2 == 0) ## 1.4.1 gave 9.331893e+19
@@ -1438,7 +1438,7 @@ stopifnot(all.equal(d1, d3, tol=1e-3))
 if(require(MASS)) {
 data(ships, package = MASS)
 ships.glm <- glm(incidents ~ type + year + period + offset(log(service)),
-                 family = poisson, data = ships, subset = (service != 0))
+		 family = poisson, data = ships, subset = (service != 0))
 update(ships.glm, start = coef(ships.glm))
 detach("package:MASS")
 }
@@ -1461,11 +1461,11 @@ xo <- c(0, x, 10)# x + outside points
 op <- options(digits = 4)
 for(der in 0:3) # deriv=3 fails!
     print(formatC(try(predict(isP, xo, deriv = der)$y), wid=7,format="f"),
-          quote = FALSE)
+	  quote = FALSE)
 ## and for B-spline (instead of polynomial):
-for(der in 0:3)  # deriv=3 failed
+for(der in 0:3)	 # deriv=3 failed
     print(formatC(try(predict(isB, xo, deriv = der)$y), wid=7,format="f"),
-          quote = FALSE)
+	  quote = FALSE)
 options(op)
 detach("package:splines")
 
@@ -1535,7 +1535,7 @@ stopifnot(pweibull(seq(1,50,len=1001), 2,3, log = TRUE) < 0)
 ## selfStart.default() w/ no parameters:
 ## --> make this into example(selfStart) {with data and nls()!}
 logist <- deriv( ~Asym/(1+exp(-(x-xmid)/scal)), c("Asym", "xmid", "scal"),
-                function(x, Asym, xmid, scal){} )
+		function(x, Asym, xmid, scal){} )
 logistInit <- function(mCall, LHS, data) {
     xy <- sortedXyData(mCall[["x"]], LHS, data)
     if(nrow(xy) < 3) stop("Too few distinct input values to fit a logistic")
@@ -1593,8 +1593,8 @@ all.equal(c("A", "B"), c("A", NA))
 
 ## failed since at least version 0.90:
 stopifnot(is.character(a12 <- all.equal(1,1:2)),
-          length(a12) == 1,# was 2 till 1.6.2
-          a12 == "Numeric: lengths (1, 2) differ")
+	  length(a12) == 1,# was 2 till 1.6.2
+	  a12 == "Numeric: lengths (1, 2) differ")
 ## a12 was *list* of length 3
 
 
@@ -1639,11 +1639,11 @@ stopifnot(is.character(z$b))
 
 ## logicals became factors < 1.6.0
 stopifnot(sapply(as.data.frame(matrix((1:12)%% 4 == 1, 3,4)),
-                 is.logical))
+		 is.logical))
 
 
 ## recycling of factors in data.frame (wish from PR#1713)
-data.frame(x=c("A","B"), y="C")      # failed to recycle in 1.5.1
+data.frame(x=c("A","B"), y="C")	     # failed to recycle in 1.5.1
 X <- data.frame(x=c("A","B"), y=I("C")) # also failed
 XX <- data.frame(x=c("A","B"), y=I(rep("C", 2))) # fine
 stopifnot(identical(X, XX))
@@ -1699,7 +1699,7 @@ stopifnot(identical(as.double(NA), NaN) == FALSE)
 ## safe prediction (PR#1840)
 data(cars)
 cars.1 <- lm(dist ~ poly(speed, degree = 1), data = cars)
-cars1  <- lm(dist ~      speed,              data = cars)
+cars1  <- lm(dist ~	 speed,		     data = cars)
 DF <- data.frame(speed=4)
 stopifnot(all.equal(predict(cars.1, DF), predict(cars1, DF)))
 ## error in 1.5.1
@@ -1745,9 +1745,9 @@ AA <- structure(list(Y2 = c(10, 9, 0, 0, 5, 6, 0, 0, 8, 9, 0, 0, 4,
 ))
 AK2anova.out <-
     aov(Y2 ~ AAAAAAAA * B2 * C2 +
-        Error(P2 + P2:AAAAAAAA + P2:B2 + P2:C2 + P2:AAAAAAAA:B2 +
-              P2:AAAAAAAA:C2 + P2:B2:C2 + P2:AAAAAAAA:B2:C2),
-        data=AA)
+	Error(P2 + P2:AAAAAAAA + P2:B2 + P2:C2 + P2:AAAAAAAA:B2 +
+	      P2:AAAAAAAA:C2 + P2:B2:C2 + P2:AAAAAAAA:B2:C2),
+	data=AA)
 ## failed in 1.5.1
 
 ## as.character was silently truncating expressions to 60 chars
@@ -1777,7 +1777,7 @@ a <- b <- 1
 class(a) <- c("foo","bar","baz")
 class(b) <- c("foo","baz")
 stopifnot(a == 1,
-          b == a)
+	  b == a)
 ##(already worked in 1.5.1)
 
 
@@ -1786,8 +1786,8 @@ t(ts(c(a=1, d=2)))
 ## gave error while printing in 1.5.1
 at <- attributes(t(ts(cbind(1, 1:20))))
 stopifnot(length(at) == 2,
-          at$dim == c(2, 20),
-          at$dimnames[[1]] == paste("Series", 1:2))
+	  at$dim == c(2, 20),
+	  at$dimnames[[1]] == paste("Series", 1:2))
 ## failed in 1.5.1
 
 
@@ -1798,13 +1798,13 @@ try( get("print.ts")(1) )# -> Error
 
 ## cbind/rbind should work with NULL only args
 stopifnot(is.null(cbind(NULL)), is.null(cbind(NULL,NULL)),
-          is.null(rbind(NULL)), is.null(rbind(NULL,NULL)))
+	  is.null(rbind(NULL)), is.null(rbind(NULL,NULL)))
 ## gave error from 0.63 till 1.5.1
 
 
 ## seq.POSIXt() had rounding problem:
 stopifnot(4 == length(seq(from=ISOdate(2000,1,1), to=ISOdate(2000,1,4),
-                          length.out=4)))
+			  length.out=4)))
 ## length was 5 till 1.6.0
 
 
@@ -1835,9 +1835,9 @@ stopifnot(is.null(colnames(ev)))
 
 ## pretty was not pretty {because seq() isn't} (PR#1032 and D.Brahm)
 stopifnot(pretty(c(-.1, 1))[2] == 0, ## [2] was -2.775558e-17
-          pretty(c(-.4,.8))[3] == 0, ## [3] was 5.551115e-17
-          pretty(100+ c(0, pi*1e-10))[4] > 100,# < not too much rounding!
-          pretty(c(2.8,3))[1] == 2.8)
+	  pretty(c(-.4,.8))[3] == 0, ## [3] was 5.551115e-17
+	  pretty(100+ c(0, pi*1e-10))[4] > 100,# < not too much rounding!
+	  pretty(c(2.8,3))[1] == 2.8)
 ## last differed by 4.44e-16 in R 1.1.1
 
 
@@ -1940,7 +1940,7 @@ cat(c("1", "foo", "\n", "2", "NA", "\n"), file = tmp)
 (z <- read.table(tmp, na.strings="foo"))
 unlink(tmp)
 stopifnot(identical(levels(z$V2), "NA"),
-          identical(is.na(z$V2), c(TRUE, FALSE)))
+	  identical(is.na(z$V2), c(TRUE, FALSE)))
 ## 1.6.1 had V2 as NA NA.
 
 
@@ -2037,7 +2037,7 @@ X1 <- c(0,1,0)
 X2 <- c(0,1,0)
 X3 <- c(0,0,1)
 (res <- alias(lm(Y ~ X1 + X2 + X3)))
-stopifnot(identical(rownames(res[[2]]),  "X2"))
+stopifnot(identical(rownames(res[[2]]),	 "X2"))
 ## the error was in lm.(w)fit
 
 
@@ -2054,6 +2054,17 @@ x <- 1:3
 is.object(x) # FALSE
 stopifnot(inherits(x, "integer"))
 ## 2003-Mar-12 it did not
+
+
+## rank() is numeric also for NA char vectors
+stopifnot(is.numeric(rank(c("ch",NA))))
+## did not from R 1.2 -- 1.6
+
+
+## table() should by default keep NA levels of factors
+i <- c(1:2,NA);	 fi <- factor(i, exclude = NULL)
+stopifnot(identical(as.character(i), dimnames(table(fi))[[1]]))
+## not in 2003-Mar-10 unstable
 
 
 ## keep at end, as package `methods' has had persistent side effects
