@@ -274,6 +274,10 @@ Date: Thu, 28 Dec 2000 17:54:47 +0100
 
 Directory:  incoming
 
+* PR# 798 *
+Subject: Re: [Rd] editor in Windows doesn't like a data frame with row names
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Sun, 31 Dec 2000 07:54:47 +0000 (GMT)
 * PR# 797 *
 Subject: editor in Windows doesn't like a data frame with row names
 From: John Fox <jfox@mcmaster.ca>
