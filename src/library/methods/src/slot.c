@@ -53,12 +53,5 @@ SEXP R_set_slot(SEXP obj, SEXP name, SEXP check, SEXP value)
     return obj;
 }
 
-SEXP R_pseudo_null()
-{
-    if(pseudo_NULL == 0)
-	init_pseudo_NULL();
-    return pseudo_NULL;
-}
-
 
 
