@@ -25,7 +25,7 @@
 #endif
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+# include <config.h>
 #endif
 
 #ifndef USE_SYSTEM_REGEX
