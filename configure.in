@@ -178,30 +178,30 @@ AC_PATH_PROG(R_ZIPCMD, zip, "")
 MAKE=${MAKE-make}
 AC_SUBST(MAKE)
 
-CheckForMakeIncludeSyntax()
-{
-  cat >.Makefile <<EOF
-${1}
-all:
-EOF
-    (eval "set -x; ${MAKE} -f .Makefile") >&5 2>&1
-}
-if test -z "${MAKE_INCLUDE_DEPS}"; then
-  AC_MSG_CHECKING(whether ${MAKE} supports conditional inclusion)
-  rm -f .Makefile .dummy
-  if CheckForMakeIncludeSyntax "-include .dummy"; then
-    AC_MSG_RESULT(yes)
-    MAKE_INCLUDE_DEPS="-include"
-  elif CheckForMakeIncludeSyntax "sinclude .dummy"; then
-    AC_MSG_RESULT(yes)
-    MAKE_INCLUDE_DEPS="sinclude"
-  else
-    AC_MSG_RESULT(no)
-    MAKE_INCLUDE_DEPS="#include"
-  fi
-  rm -f .Makefile
-fi
-AC_SUBST(MAKE_INCLUDE_DEPS)
+dnl CheckForMakeIncludeSyntax()
+dnl {
+dnl   cat >.Makefile <<EOF
+dnl ${1}
+dnl all:
+dnl EOF
+dnl     (eval "set -x; ${MAKE} -f .Makefile") >&5 2>&1
+dnl }
+dnl if test -z "${MAKE_INCLUDE_DEPS}"; then
+dnl   AC_MSG_CHECKING(whether ${MAKE} supports conditional inclusion)
+dnl   rm -f .Makefile .dummy
+dnl   if CheckForMakeIncludeSyntax "-include .dummy"; then
+dnl     AC_MSG_RESULT(yes)
+dnl     MAKE_INCLUDE_DEPS="-include"
+dnl   elif CheckForMakeIncludeSyntax "sinclude .dummy"; then
+dnl     AC_MSG_RESULT(yes)
+dnl     MAKE_INCLUDE_DEPS="sinclude"
+dnl   else
+dnl     AC_MSG_RESULT(no)
+dnl     MAKE_INCLUDE_DEPS="#include"
+dnl   fi
+dnl   rm -f .Makefile
+dnl fi
+dnl AC_SUBST(MAKE_INCLUDE_DEPS)
     
 ## Perl.
 
@@ -248,6 +248,26 @@ case ${host} in
         CFLAGS="-D_HPUX_SOURCE ${CFLAGS}" ;;
     esac
 esac
+
+AC_MSG_CHECKING([whether ${CC} accepts -M for generating dependencies])
+depend_rules_frag=Makefrag.dep
+echo "#include <math.h>" > conftest.${ac_ext}
+if test -n "`${CC} -M conftest.${ac_ext} | grep conftest`"; then
+  AC_MSG_RESULT(yes)
+  cat << \EOF > ${depend_rules_frag}
+.c.d:
+	@echo "making $@ from $<"
+	@$(CC) -M $(CPPFLAGS) $< -o $@
+EOF
+else
+  AC_MSG_RESULT(no)
+  cat << \EOF > ${depend_rules_frag}
+.c.d:
+	@touch $@
+EOF
+fi
+
+AC_SUBST_FILE(depend_rules_frag)
 
 ## FORTRAN compiler
 
@@ -558,6 +578,14 @@ SHLIBLDFLAGS=${SHLIBLDFLAGS-${shlibldflags}}
 ## Individual platform overrides.
 
 case "${host}" in
+  *aix4.[2-9]*)
+    LDCMD="\$(top_srcdir)/tools/ldAIX4"
+    DLLFLAGS="f77 -bdynamic"
+    SHLIBLD=f77
+    SHLIBLDFLAGS="-bM:SRE -H512 -T512 -bnoentry -bexpall \
+      -bI:\$(top_builddir)/src/main/lib.exp"
+    AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
+    ;;
   alpha*osf*)
     CFLAGS="-ieee_with_inexact ${CFLAGS}"
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
