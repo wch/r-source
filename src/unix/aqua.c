@@ -36,6 +36,10 @@
 # endif
 #endif
 
+#ifdef __APPLE_CC__
+# include "dlfcn-darwin.h"
+# define HAVE_DYNAMIC_LOADING
+#else
 /* HP-UX 11.0 has dlfcn.h, but according to libtool as of Dec 2001
    this support is broken. So we force use of shlib even when dlfcn.h
    is available */
@@ -50,6 +54,7 @@
 #  define HAVE_DYNAMIC_LOADING
 # endif
 #endif
+#endif /* __APPLE_CC__ */
 
 #if defined(HAVE_AQUA) && defined(HAVE_DYNAMIC_LOADING)
 
@@ -138,7 +143,7 @@ void R_load_aqua_shlib(void)
 
 OSStatus DoCloseHandler(EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData)
 {
- return(ptr_DoCloseHandler(inCallRef, inEvent, inUserData));
+ return((OSStatus)ptr_DoCloseHandler(inCallRef, inEvent, inUserData));
 }
 
 SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
