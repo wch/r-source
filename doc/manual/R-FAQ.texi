@@ -2358,6 +2358,11 @@ Smoothing splines with penalties on order @math{m} derivatives.
 @item psy
 Various procedures used in psychometry: Kappa, ICC, Cronbach alpha,
 screeplot, PCA and related methods.
+@item qcc
+Quality Control Charts.  Shewhart quality control charts for continuous,
+attribute and count data.  Cusum and EWMA charts.  Operating
+characteristic curves.  Process capability analysis.  Pareto chart and
+cause-and-effect chart.
 @item qtl
 Analysis of experimental crosses to identify QTLs.
 @item quadprog
