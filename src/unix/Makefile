@@ -1,6 +1,6 @@
 include ../../Makeconf
 
-INCLUDES= -I../include
+CPPFLAGS += -I../include
 
 OBJ= \
 	dataentry.o \
@@ -21,28 +21,28 @@ $(LIB):		$(OBJ)
 		$(RANLIB) $(LIB)
 
 dynload.o:	dynload.c ../include/FFTab.h ../include/FFDecl.h
-		$(CC) $(CFLAGS) $(INCLUDES) -c $<
+		$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
 
 dataentry.o:	dataentry.h dataentry.c ../include/Defn.h
-		$(CC) $(CFLAGS) $(X_CFLAGS) $(INCLUDES) -c dataentry.c
+		$(CC) $(CFLAGS) $(X_CFLAGS) $(CPPFLAGS) -c dataentry.c
 
 fileio.o:	fileio.c ../include/Fileio.h
-		$(CC) $(CFLAGS) $(INCLUDES) -c fileio.c
+		$(CC) $(CFLAGS) $(CPPFLAGS) -c fileio.c
 
 rotated.o:	rotated.c rotated.h
-		$(CC) $(CFLAGS) $(X_CFLAGS) $(INCLUDES) -c rotated.c
+		$(CC) $(CFLAGS) $(X_CFLAGS) $(CPPFLAGS) -c rotated.c
 
 devX11.o:	devX11.c psx11.h ../include/Graphics.h ../include/Defn.h
-		$(CC) $(CFLAGS) $(X_CFLAGS) $(INCLUDES) -c devX11.c
+		$(CC) $(CFLAGS) $(X_CFLAGS) $(CPPFLAGS) -c devX11.c
 
 devPS.o:	devPS.c ../include/Graphics.h ../include/Defn.h
-		$(CC) $(CFLAGS) $(INCLUDES) -c devPS.c
+		$(CC) $(CFLAGS) $(CPPFLAGS) -c devPS.c
 
 devPicTeX.o:	devPicTeX.c ../include/Graphics.h ../include/Defn.h
-		$(CC) $(CFLAGS) $(INCLUDES) -c devPicTeX.c
+		$(CC) $(CFLAGS) $(CPPFLAGS) -c devPicTeX.c
 
 system.o:	system.c ../include/Defn.h
-		$(CC) $(CFLAGS) $(INCLUDES) -c system.c
+		$(CC) $(CFLAGS) $(CPPFLAGS) -c system.c
 
 clean:
 		@echo Cleaning in src/unix

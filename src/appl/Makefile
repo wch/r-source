@@ -1,6 +1,6 @@
 include ../../Makeconf
 
-INCLUDES= -I../include
+CPPFLAGS += -I../include
 
 OBJ= \
 	approx.o \
