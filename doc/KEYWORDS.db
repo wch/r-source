@@ -37,6 +37,7 @@ Programming|file: Input/Output Files
 Programming|connection: Input/Output Connections
 Programming|error: Error Handling
 Programming|environment: Session Environment
+Programming|internal: Internal Objects (not part of API)
 Programming|utilities: Utilities
 Programming|misc: Miscellaneous
 Programming|documentation: Documentation
