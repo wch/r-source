@@ -5,7 +5,7 @@
   This function draws an x-axis.
 }
 \usage{
-grid.xaxis(at = NA, label = TRUE, main = TRUE, gp = gpar(),
+grid.xaxis(at = NULL, label = TRUE, main = TRUE, gp = gpar(),
            draw = TRUE, vp = NULL)
 }
 \arguments{
