@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998--1999  R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,9 +26,14 @@
 #define S_COMPAT_H_
 
 #include "S.h"
+#include "Fortran.h"
 #include "Linpack.h"/*-> Blas.h */
 
 extern void
-F77_SYMBOL(dqrdca) (double*, long int*, long int*, long int*,
-		    double*, long int*, double*, long int*, double*);
+F77_NAME(dqrdca) (double*, longint*, longint*, longint*,
+		  double*, longint*, double*, longint*, double*);
+
+extern void
+F77_NAME(dbksl) (double*, longint*, longint*, double*, longint*, longint*);
+
 #endif
