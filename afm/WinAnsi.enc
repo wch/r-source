@@ -1,4 +1,5 @@
-%% As used by PDF 1.3
+%% As used by PDF 1.3, but with Euro at 128, and bullet only at 149
+%% as that is what Windows actually uses.
 /WinAnsiEncoding [
   /.notdef /.notdef   /.notdef   /.notdef /.notdef /.notdef  /.notdef /.notdef
   /.notdef /.notdef   /.notdef   /.notdef /.notdef /.notdef  /.notdef /.notdef
@@ -15,13 +16,13 @@
 /W /X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore
 %%  0140
 /grave /a /b /c /d /e /f /g /h /i /j /k /l /m /n /o /p /q /r /s /t 
-/u /v /w /x /y /z /braceleft /bar /braceright /asciitilde /bullet
+/u /v /w /x /y /z /braceleft /bar /braceright /asciitilde /.notdef
 %%  0200
-/Euro /bullet /quotesinglbase /florin /quotedblbase /ellipsis /dagger /daggerdbl 
-/circumflex /perthousand /Scaron /guilsinglleft /OE /bullet /Zcaron /bullet
+/Euro /.notdef /quotesinglbase /florin /quotedblbase /ellipsis /dagger /daggerdbl 
+/circumflex /perthousand /Scaron /guilsinglleft /OE /.notdef /Zcaron /.notdef
 %%  0220
-/bullet /quoteleft /quoteright /quotedblleft /quotedblright /bullet /endash /emdash
-/tilde /trademark /scaron /guilsinglright /oe /bullet /zcaron /Ydieresis
+/.notdef /quoteleft /quoteright /quotedblleft /quotedblright /bullet /endash /emdash
+/tilde /trademark /scaron /guilsinglright /oe /.notdef /zcaron /Ydieresis
 %%  0240
 /space /exclamdown /cent /sterling /currency /yen /brokenbar /section
 /dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen /registered /macron
