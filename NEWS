@@ -78,6 +78,9 @@ BUG FIXES
 
     o	z[[1]] <- ~x probl fixed as suggested by J.Lindsey 
 
+    o	abbreviate(.) returned random garbage in some cases; not anymore
+
+
 		CHANGES IN R VERSION 0.63
 
 NEW FEATURES
