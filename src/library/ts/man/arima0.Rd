@@ -46,9 +46,10 @@ arima0(x, order = c(0, 0, 0),
     stationarity.  Not used for \code{method = "CSS"}.}
 
   \item{fixed}{optional numeric vector of the same length as the total
-    number of parameters.  If supplied, only non-\code{NA} entries in
+    number of parameters.  If supplied, only \code{NA} entries in
     \code{fixed} will be varied.  \code{transform.pars = TRUE}
-    will be overridden if any ARMA parameters are fixed.}
+    will be overridden (with a warning) if any ARMA parameters are
+    fixed.}
 
   \item{init}{optional numeric vector of initial parameter
     values. Missing values will be filled in, by zeroes except for
