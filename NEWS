@@ -480,9 +480,9 @@ NEW FEATURES
 	attached.  This saves time, but also uses a more standard way
 	of source-ing the package.  Packages that do more than just
 	assign object definitions may need to install with `--save'.
-	Putting a file `INSTALL.R' in the package directory makes
+	Putting a file `install.R' in the package directory makes
 	`--save' the default behavior.  If that file is not empty, its
-	contents should be R commands executed at the end of creating
+	contents should be R commands executed at the end of loading
 	the image.
 
 	There is also a new command line option `--configure-vals' for

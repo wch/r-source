@@ -44,11 +44,13 @@
   If the option \code{--save} is used, the installation procedure
   creates a binary image of the package code, which is then loaded when
   the package is attached, rather than evaluating the package source at
-  that time.  Having a file \file{INSTALL.R} in the package directory
-  (its contents don't matter) makes this the default behavior for the
+  that time.  Having a file \file{install.R} in the package directory
+  makes this the default behavior for the
   package (option \code{--no-save} overrides).  You may need
   \code{--save} if your package requires other packages to evaluate its
-  own source.
+  own source.  If the file \file{install.R} is non-empty, it should
+  contain R expressions to be executed when the package is attached,
+  after loading the saved image.
 
   Use \code{R CMD INSTALL --help} for more usage information.
 }
