@@ -36,7 +36,7 @@ which(ll <- c(TRUE,FALSE,TRUE,NA,FALSE,FALSE,TRUE))#> 1 3 7
 names(ll) <- letters[seq(ll)]
 which(ll)
 which((1:12)\%\%2 == 0) # which are even?
-str(which(1:10 > 3, arr.ind=TRUE))
+which(1:10 > 3, arr.ind=TRUE)
 
 ( m <- matrix(1:12,3,4) )
 which(m \%\% 3 == 0)

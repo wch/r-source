@@ -56,8 +56,8 @@ is.matrix(x)
 is.matrix(as.matrix(1:10))
 data(warpbreaks)
 !is.matrix(warpbreaks)# data.frame, NOT matrix!
-str(warpbreaks)
-str(as.matrix(warpbreaks))#using as.matrix.data.frame(.) method
+warpbreaks[1:10,]
+as.matrix(warpbreaks[1:10,]) #using as.matrix.data.frame(.) method
 }
 \keyword{array}
 \keyword{algebra}

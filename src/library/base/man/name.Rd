@@ -44,7 +44,8 @@ is.name(y)
 \examples{
 an <- as.name("arrg")
 is.name(an) # TRUE
-str(an)# symbol
+mode(an)   # name
+typeof(an) # symbol
 }
 \keyword{programming}
 \keyword{attribute}

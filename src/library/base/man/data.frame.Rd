@@ -79,16 +79,17 @@ data.frame(\dots, row.names = NULL, check.rows = FALSE, check.names = TRUE)
   \code{\link{make.names}}.
 }
 \examples{
-require(utils)
 L3 <- LETTERS[1:3]
-str(d <- data.frame(cbind(x=1, y=1:10), fac=sample(L3, 10, repl=TRUE)))
+(d <- data.frame(cbind(x=1, y=1:10), fac=sample(L3, 10, repl=TRUE)))
 
 ## The same with automatic column names:
-str(     data.frame(cbind(  1,   1:10),     sample(L3, 10, repl=TRUE)))
+data.frame(cbind(  1,   1:10),     sample(L3, 10, repl=TRUE))
+
 is.data.frame(d)
 
 ## do not convert to factor, using I() :
-str(cbind(d, char = I(letters[1:10])), vec.len = 10)
+(dd <- cbind(d, char = I(letters[1:10])))
+rbind(class=sapply(dd, class), mode=sapply(dd, mode))
 
 stopifnot(1:10 == row.names(d))# {coercion}
 

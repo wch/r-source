@@ -77,8 +77,8 @@ La.svd(x, nu = min(n, p), nv = min(n, p), method = c("dgesdd", "dgesvd"))
 }
 \examples{
 hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
-str(X <- hilbert(9)[,1:6])
-str(s <- svd(X))
+X <- hilbert(9)[,1:6]
+(s <- svd(X))
 D <- diag(s$d)
 s$u \%*\% D \%*\% t(s$v) #  X = U D V'
 t(s$u) \%*\% X \%*\% s$v #  D = U' X V

@@ -83,7 +83,9 @@
   \code{\link{.Platform}} for details of the platform.
 }
 \examples{
-str(.Machine)
+.Machine
+## or for a neat printout
+noquote(unlist(format(.Machine)))
 }
 \keyword{sysdata}
 \keyword{programming}

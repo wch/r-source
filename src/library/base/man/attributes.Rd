@@ -33,7 +33,7 @@ mostattributes(obj) <- value
 }
 \examples{
 x <- cbind(a=1:3, pi=pi) # simple matrix w/ dimnames
-utils::str(attributes(x))
+attributes(x)
 
 ## strip an object's attributes:
 attributes(x) <- NULL

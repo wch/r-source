@@ -23,7 +23,8 @@ unname(obj, force = FALSE)
 ## Answering a question on R-help (14 Oct 1999):
 col3 <- 750+ 100* rt(1500, df = 3)
 breaks <- factor(cut(col3,breaks=360+5*(0:155)))
-str(table(breaks)) # The names are quite larger than the data ...
-barplot(unname(table(breaks)), axes= FALSE)
+z <- table(breaks)
+z[1:5] # The names are larger than the data ...
+barplot(unname(z), axes= FALSE)
 }
 \keyword{utilities}

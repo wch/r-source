@@ -29,8 +29,9 @@ special mathematical functions.
   Wadsworth \& Brooks/Cole.
 }
 \examples{
+require(stats) # for spline
 xx <- -9:9
 plot(xx, sqrt(abs(xx)),  col = "red")
-lines(stats::spline(xx, sqrt(abs(xx)), n=101), col = "pink")
+lines(spline(xx, sqrt(abs(xx)), n=101), col = "pink")
 }
 \keyword{math}
