@@ -176,8 +176,9 @@ Then
 
 will make the package.
 
-ActiveTcl 8.4.x is not supported: it works with R on some systems but
-not others, and the distributed binary is linked to 8.3.x.
+ActiveTcl 8.4.x can also be used, but a binary distribution can only
+be used with one of 8.3.x and 8.4.x.  The CRAN binary distribution is
+build using 8.3.x.
 
 
 

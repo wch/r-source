@@ -277,8 +277,8 @@ at the end of the command line or Target field of a shortcut.
 The demos(tk*) (available after loading the tcltk library) will work
 on Windows.
 
-N.B. ActiveTcl 8.4.x is not supported, and will not work with the binary
-releases.
+N.B. ActiveTcl 8.4.x will not work with the binary releases, but the
+sources can be configured to build against it.
 
 
 Building From Source

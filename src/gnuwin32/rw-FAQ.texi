@@ -568,7 +568,8 @@ it.  (Most of the installers that ActiveTcl uses will put the @file{bin}
 directory containing the Tcl and Tk DLLs in your path, but you should
 check.  From R, run @code{Sys.getenv("PATH")} to do so.)  Note that you
 do need 8.3.x and not 8.4.0: follow the links to 8.4.0 and you will find
-8.3.x available there.
+8.3.x available there.  (If you build R from the sources yourself you
+can configure it to use 8.4.0.)
 
 You then need to set the environment variable @code{TCL_LIBRARY}
 (@pxref{How do I set environment variables?}), to something like

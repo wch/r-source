@@ -745,7 +745,8 @@ put the <code>bin</code> directory containing the Tcl and Tk DLLs
 in your path, but you should check. From R, run
 <code>Sys.getenv("PATH")</code> to do so.) Note that you do need
 8.3.x and not 8.4.0: follow the links to 8.4.0 and you will find
-8.3.x available there.</p>
+8.3.x available there. (If you build R from the sources yourself
+you can configure it to use 8.4.0.)</p>
 
 <p>You then need to set the environment variable
 <code>TCL_LIBRARY</code> (see <a href=
@@ -1000,12 +1001,12 @@ arrow&gt; keys to scroll horizontally.</p>
 <a name="How%20can%20I%20compile%20R%20from%20source%3f"></a> 
 <h3 class="section">7.1 How can I compile R from source?</h3>
 
-<p>Get the R sources. Suppose you want to compile R-1.6.1. Start in
+<p>Get the R sources. Suppose you want to compile R-1.6.2. Start in
 a directory whose path does not contain spaces, and run</p>
 
 <pre class="example">
-     tar zxvf R-1.6.1.tgz
-     cd R-1.6.1
+     tar zxvf R-1.6.2.tgz
+     cd R-1.6.2
      cd src\gnuwin32
     
 </pre>
