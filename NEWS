@@ -35,7 +35,7 @@ INSTALLATION ISSUES
 
     o	Added some patches to allow non-IEEE-754 installations to work
 	reasonably well.  (Infs and NAs are still not handled properly
-	in complex arithmetics and functions such a sin.)
+	in complex arithmetics and functions such as sin().)
 
 
 BUG FIXES
@@ -112,6 +112,10 @@ BUG FIXES
 
     o	plot.ts(z) for multivariate 'z' now properly draws all 'nc' xlab`s
 	when nc > 1 and obeys 'ann=FALSE' or 'axes=FALSE'.
+
+    o	aggregate(.data.frame) failed if the answer would have had one
+        row.
+
 
 
 		CHANGES IN R VERSION 1.9.0
