@@ -93,19 +93,16 @@ installed.packages <- function(lib.loc = .lib.loc)
         pkgs <- .packages(all.available=TRUE, lib.loc = lib)
         for(p in pkgs){
             descfile <- system.file("DESCRIPTION", pkg=p, lib=lib)
-            if(descfile != ""){
-                desc <- parse.dcf(file=descfile, versionfix=TRUE)
-            }
+            if(descfile != "")
+                desc <- parse.dcf(file=descfile, versionfix=TRUE,
+                                  fields=c("Version", "Priority"))
             else
-            {
-                desc <- list(Version=NA)
-            }
-
-            retval <- rbind(retval, c(p, lib, desc$Version))
-
+                desc <- c(NA, NA)
+            
+            retval <- rbind(retval, c(p, lib, desc))
         }
     }
-    colnames(retval) <- c("Package", "LibPath", "Version")
+    colnames(retval) <- c("Package", "LibPath", "Version", "Priority")
     retval
 }
 
