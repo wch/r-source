@@ -10,12 +10,6 @@
 #
 # Origin: gettext-0.14
 
-PACKAGE = @PACKAGE@
-VERSION = @VERSION@
-
-SHELL = /bin/sh
-@SET_MAKE@
-
 VPATH = @srcdir@
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
@@ -24,14 +18,9 @@ top_builddir = ..
 
 include $(top_builddir)/Makeconf
 
-prefix = @prefix@
-exec_prefix = @exec_prefix@
-datadir = ${rhome}/share
-localedir = $(datadir)/locale
+Rsharedir = ${rhome}/share
+Rlocaledir = $(Rsharedir)/locale
 
-INSTALL = @INSTALL@
-INSTALL_DATA = @INSTALL_DATA@
-#MKINSTALLDIRS = @MKINSTALLDIRS@
 mkinstalldirs = $(MKINSTALLDIRS)
 
 GMSGFMT = @GMSGFMT@
@@ -77,7 +66,7 @@ CATALOGS = @CATALOGS@
 	mv t-$@ $@
 
 R: all
-	@$(MAKE) install datadir=${top_builddir}/share
+	@$(MAKE) install Rsharedir=${top_builddir}/share
 
 all: all-@USE_NLS@
 
@@ -149,42 +138,42 @@ install-exec:
 install-data: install-data-@USE_NLS@
 install-data-no: all
 install-data-yes: all
-	@$(mkinstalldirs) $(DESTDIR)$(datadir)
+	@$(mkinstalldirs) $(Rsharedir)
 	@catalogs='$(CATALOGS)'; \
 	for cat in $$catalogs; do \
 	  cat=`basename $$cat`; \
 	  lang=`echo $$cat | sed -e 's/\.gmo$$//'`; \
-	  dir=$(localedir)/$$lang/LC_MESSAGES; \
-	  $(mkinstalldirs) $(DESTDIR)$$dir; \
+	  dir=$(Rlocaledir)/$$lang/LC_MESSAGES; \
+	  $(mkinstalldirs) $$dir; \
 	  if test -r $$cat; then realcat=$$cat; else realcat=$(srcdir)/$$cat; fi; \
-	  $(INSTALL_DATA) $$realcat $(DESTDIR)$$dir/$(DOMAIN).mo; \
-	  echo "installing $$realcat as $(DESTDIR)$$dir/$(DOMAIN).mo"; \
+	  $(INSTALL_DATA) $$realcat $$dir/$(DOMAIN).mo; \
+	  echo "installing $$realcat as $$dir/$(DOMAIN).mo"; \
 	  for lc in '' $(EXTRA_LOCALE_CATEGORIES); do \
 	    if test -n "$$lc"; then \
-	      if (cd $(DESTDIR)$(localedir)/$$lang && LC_ALL=C ls -l -d $$lc 2>/dev/null) | grep ' -> ' >/dev/null; then \
-	        link=`cd $(DESTDIR)$(localedir)/$$lang && LC_ALL=C ls -l -d $$lc | sed -e 's/^.* -> //'`; \
-	        mv $(DESTDIR)$(localedir)/$$lang/$$lc $(DESTDIR)$(localedir)/$$lang/$$lc.old; \
-	        mkdir $(DESTDIR)$(localedir)/$$lang/$$lc; \
-	        (cd $(DESTDIR)$(localedir)/$$lang/$$lc.old && \
+	      if (cd $(Rlocaledir)/$$lang && LC_ALL=C ls -l -d $$lc 2>/dev/null) | grep ' -> ' >/dev/null; then \
+	        link=`cd $(Rlocaledir)/$$lang && LC_ALL=C ls -l -d $$lc | sed -e 's/^.* -> //'`; \
+	        mv $(Rlocaledir)/$$lang/$$lc $(Rlocaledir)/$$lang/$$lc.old; \
+	        mkdir $(Rlocaledir)/$$lang/$$lc; \
+	        (cd $(Rlocaledir)/$$lang/$$lc.old && \
 	         for file in *; do \
 	           if test -f $$file; then \
-	             ln -s ../$$link/$$file $(DESTDIR)$(localedir)/$$lang/$$lc/$$file; \
+	             ln -s ../$$link/$$file $(Rlocaledir)/$$lang/$$lc/$$file; \
 	           fi; \
 	         done); \
-	        rm -f $(DESTDIR)$(localedir)/$$lang/$$lc.old; \
+	        rm -f $(Rlocaledir)/$$lang/$$lc.old; \
 	      else \
-	        if test -d $(DESTDIR)$(localedir)/$$lang/$$lc; then \
+	        if test -d $(Rlocaledir)/$$lang/$$lc; then \
 	          :; \
 	        else \
-	          rm -f $(DESTDIR)$(localedir)/$$lang/$$lc; \
-	          mkdir $(DESTDIR)$(localedir)/$$lang/$$lc; \
+	          rm -f $(Rlocaledir)/$$lang/$$lc; \
+	          mkdir $(Rlocaledir)/$$lang/$$lc; \
 	        fi; \
 	      fi; \
-	      rm -f $(DESTDIR)$(localedir)/$$lang/$$lc/$(DOMAIN).mo; \
-	      ln -s ../LC_MESSAGES/$(DOMAIN).mo $(DESTDIR)$(localedir)/$$lang/$$lc/$(DOMAIN).mo 2>/dev/null || \
-	      ln $(DESTDIR)$(localedir)/$$lang/LC_MESSAGES/$(DOMAIN).mo $(DESTDIR)$(localedir)/$$lang/$$lc/$(DOMAIN).mo 2>/dev/null || \
-	      cp -p $(DESTDIR)$(localedir)/$$lang/LC_MESSAGES/$(DOMAIN).mo $(DESTDIR)$(localedir)/$$lang/$$lc/$(DOMAIN).mo; \
-	      echo "installing $$realcat link as $(DESTDIR)$(localedir)/$$lang/$$lc/$(DOMAIN).mo"; \
+	      rm -f $(Rlocaledir)/$$lang/$$lc/$(DOMAIN).mo; \
+	      ln -s ../LC_MESSAGES/$(DOMAIN).mo $(Rlocaledir)/$$lang/$$lc/$(DOMAIN).mo 2>/dev/null || \
+	      ln $(Rlocaledir)/$$lang/LC_MESSAGES/$(DOMAIN).mo $(Rlocaledir)/$$lang/$$lc/$(DOMAIN).mo 2>/dev/null || \
+	      cp -p $(Rlocaledir)/$$lang/LC_MESSAGES/$(DOMAIN).mo $(Rlocaledir)/$$lang/$$lc/$(DOMAIN).mo; \
+	      echo "installing $$realcat link as $(Rlocaledir)/$$lang/$$lc/$(DOMAIN).mo"; \
 	    fi; \
 	  done; \
 	done
@@ -196,32 +185,32 @@ installdirs-exec:
 installdirs-data: installdirs-data-@USE_NLS@
 installdirs-data-no:
 installdirs-data-yes:
-	$(mkinstalldirs) $(DESTDIR)$(datadir)
+	$(mkinstalldirs) $(Rsharedir)
 	@catalogs='$(CATALOGS)'; \
 	for cat in $$catalogs; do \
 	  cat=`basename $$cat`; \
 	  lang=`echo $$cat | sed -e 's/\.gmo$$//'`; \
-	  dir=$(localedir)/$$lang/LC_MESSAGES; \
-	  $(mkinstalldirs) $(DESTDIR)$$dir; \
+	  dir=$(Rlocaledir)/$$lang/LC_MESSAGES; \
+	  $(mkinstalldirs) $$dir; \
 	  for lc in '' $(EXTRA_LOCALE_CATEGORIES); do \
 	    if test -n "$$lc"; then \
-	      if (cd $(DESTDIR)$(localedir)/$$lang && LC_ALL=C ls -l -d $$lc 2>/dev/null) | grep ' -> ' >/dev/null; then \
-	        link=`cd $(DESTDIR)$(localedir)/$$lang && LC_ALL=C ls -l -d $$lc | sed -e 's/^.* -> //'`; \
-	        mv $(DESTDIR)$(localedir)/$$lang/$$lc $(DESTDIR)$(localedir)/$$lang/$$lc.old; \
-	        mkdir $(DESTDIR)$(localedir)/$$lang/$$lc; \
-	        (cd $(DESTDIR)$(localedir)/$$lang/$$lc.old && \
+	      if (cd $(Rlocaledir)/$$lang && LC_ALL=C ls -l -d $$lc 2>/dev/null) | grep ' -> ' >/dev/null; then \
+	        link=`cd $(Rlocaledir)/$$lang && LC_ALL=C ls -l -d $$lc | sed -e 's/^.* -> //'`; \
+	        mv $(Rlocaledir)/$$lang/$$lc $(Rlocaledir)/$$lang/$$lc.old; \
+	        mkdir $(Rlocaledir)/$$lang/$$lc; \
+	        (cd $(Rlocaledir)/$$lang/$$lc.old && \
 	         for file in *; do \
 	           if test -f $$file; then \
-	             ln -s ../$$link/$$file $(DESTDIR)$(localedir)/$$lang/$$lc/$$file; \
+	             ln -s ../$$link/$$file $(Rlocaledir)/$$lang/$$lc/$$file; \
 	           fi; \
 	         done); \
-	        rm -f $(DESTDIR)$(localedir)/$$lang/$$lc.old; \
+	        rm -f $(Rlocaledir)/$$lang/$$lc.old; \
 	      else \
-	        if test -d $(DESTDIR)$(localedir)/$$lang/$$lc; then \
+	        if test -d $(Rlocaledir)/$$lang/$$lc; then \
 	          :; \
 	        else \
-	          rm -f $(DESTDIR)$(localedir)/$$lang/$$lc; \
-	          mkdir $(DESTDIR)$(localedir)/$$lang/$$lc; \
+	          rm -f $(Rlocaledir)/$$lang/$$lc; \
+	          mkdir $(Rlocaledir)/$$lang/$$lc; \
 	        fi; \
 	      fi; \
 	    fi; \
@@ -241,7 +230,7 @@ uninstall-data-yes:
 	  cat=`basename $$cat`; \
 	  lang=`echo $$cat | sed -e 's/\.gmo$$//'`; \
 	  for lc in LC_MESSAGES $(EXTRA_LOCALE_CATEGORIES); do \
-	    rm -f $(DESTDIR)$(localedir)/$$lang/$$lc/$(DOMAIN).mo; \
+	    rm -f $(Rlocaledir)/$$lang/$$lc/$(DOMAIN).mo; \
 	  done; \
 	done
 

@@ -301,7 +301,7 @@ static double yDevtoCharUnits(double y, DevDesc *dd)
 
 static void BadUnitsError(char *where)
 {
-    error("Bad units specified in %s, please report!", where);
+    error(_("Bad units specified in %s, please report!"), where);
 }
 
 /* GConvertXUnits() and GConvertYUnits() convert
@@ -1782,7 +1782,7 @@ DevDesc *GNewPlot(Rboolean recording)
 		if (Rf_gpptr(dd)->ask) {
 		    NewFrameConfirm();
 		    if (NoDevices())
-			error("attempt to plot on null device");
+			error(_("attempt to plot on null device"));
 		    else
 			dd = CurrentDevice();
 		}
@@ -1815,13 +1815,13 @@ DevDesc *GNewPlot(Rboolean recording)
 
     Rf_dpptr(dd)->valid = Rf_gpptr(dd)->valid = FALSE;
     if (!validOuterMargins(dd)) {
-	G_ERR_MSG("Outer margins too large (fig.region too small)");
+	G_ERR_MSG(_("Outer margins too large (fig.region too small)"));
     } else if (!validFigureRegion(dd)) {
-	G_ERR_MSG("Figure region too large");
+	G_ERR_MSG(_("Figure region too large"));
     } else if (!validFigureMargins(dd)) {
-	G_ERR_MSG("Figure margins too large");
+	G_ERR_MSG(_("Figure margins too large"));
     } else if (!validPlotRegion(dd)) {
-	G_ERR_MSG("Plot region too large");
+	G_ERR_MSG(_("Plot region too large"));
     } else {
 	Rf_dpptr(dd)->valid = Rf_gpptr(dd)->valid = TRUE;
 	/*
@@ -1867,7 +1867,7 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 	max = log10(max);
     }
     if(!R_FINITE(min) || !R_FINITE(max)) {
-	warning("Nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]",
+	warning(_("Nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]"),
 		min, max, axis, log);
 	if(!R_FINITE(min)) min = - .45 * DBL_MAX;
 	if(!R_FINITE(max)) max = + .45 * DBL_MAX;
@@ -1897,7 +1897,7 @@ void GScale(double min, double max, int axis, DevDesc *dd)
     case 's':/* FIXME --- implement  's' and 'e' axis styles ! */
     case 'e':
     default:
-	error("axis style \"%c\" unimplemented", style);
+	error(_("axis style \"%c\" unimplemented"), style);
     }
 
     if(is_xaxis) {
@@ -1952,7 +1952,7 @@ void GScale(double min, double max, int axis, DevDesc *dd)
        EPS_FAC_2 * DBL_EPSILON) {
 	/* Treat this case somewhat similar to the (min ~= max) case above */
 	/* Too much accuracy here just shows machine differences */
-	warning("relative range of values =%4.0f * EPS, is small (axis %d)."
+	warning(_("relative range of values =%4.0f * EPS, is small (axis %d)")
 		/*"to compute accurately"*/,
 		fabs(max - min) / (temp*DBL_EPSILON), axis);
 
@@ -2169,7 +2169,7 @@ void copyGPar(GPar *source, GPar *dest)
 void GRestore(DevDesc *dd)
 {
     if (NoDevices())
-	error("No graphics device is active");
+	error(_("No graphics device is active"));
     copyGPar(Rf_dpptr(dd), Rf_gpptr(dd));
 }
 
@@ -2364,12 +2364,12 @@ void GSetState(int newstate, DevDesc *dd)
 void GCheckState(DevDesc *dd)
 {
     if(Rf_gpptr(dd)->state == 0)
-	error("plot.new has not been called yet");
+	error(_("plot.new has not been called yet"));
     if (!Rf_gpptr(dd)->valid)
 #ifdef OLD
 	onintr();
 #else
-        error("invalid graphics state");
+        error(_("invalid graphics state"));
 #endif
 }
 
@@ -2495,7 +2495,7 @@ void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
 Rboolean GLocator(double *x, double *y, int coords, DevDesc *dd)
 {
     if(!((GEDevDesc*) dd)->dev->locator)
-	error("no locator capability in device driver");
+	error(_("no locator capability in device driver"));
     if(((GEDevDesc*) dd)->dev->locator(x, y, ((GEDevDesc*) dd)->dev)) {
 	GConvert(x, y, DEVICE, coords, dd);
 	return TRUE;
@@ -2530,7 +2530,7 @@ void GMetricInfo(int c, double *ascent, double *descent, double *width,
 void GMode(int mode, DevDesc *dd)
 {
     if (NoDevices())
-	error("No graphics device is active");
+	error(_("No graphics device is active"));
     if(mode != Rf_gpptr(dd)->devmode) {
 	((GEDevDesc*) dd)->dev->mode(mode, ((GEDevDesc*) dd)->dev);
     }
@@ -2771,7 +2771,7 @@ void GPolygon(int n, double *x, double *y, int coords,
     xx = (double*) R_alloc(n, sizeof(double));
     yy = (double*) R_alloc(n, sizeof(double));
     if (!xx || !yy)
-	error("unable to allocate memory (in GPolygon)");
+	error(_("unable to allocate memory (in GPolygon)"));
     for (i=0; i<n; i++) {
 	xx[i] = x[i];
 	yy[i] = y[i];
@@ -2807,7 +2807,7 @@ void GPolyline(int n, double *x, double *y, int coords, DevDesc *dd)
     xx = (double*) R_alloc(n, sizeof(double));
     yy = (double*) R_alloc(n, sizeof(double));
     if (!xx || !yy)
-	error("unable to allocate memory (in GPolygon)");
+	error(_("unable to allocate memory (in GPolygon)"));
     for (i=0; i<n; i++) {
 	xx[i] = x[i];
 	yy[i] = y[i];
@@ -2958,7 +2958,7 @@ void GArrow(double xfrom, double yfrom, double xto, double yto, int coords,
     if(pythag(xfromInch - xtoInch, yfromInch - ytoInch) < eps) {
 #endif
 	/* effectively 0-length arrow */
-	warning("zero-length arrow is of indeterminate angle and so skipped");
+	warning(_("zero-length arrow is of indeterminate angle and so skipped"));
 	return;
     }
     angle *= DEG2RAD;
@@ -3039,7 +3039,7 @@ void GBox(int which, DevDesc *dd)
 	case 'N': /* nothing */
 	    break;
 	default:
-	    warning("invalid par(\"bty\") = '%c'; no box() drawn.",
+	    warning(_("invalid par(\"bty\") = '%c'; no box() drawn"),
 		    Rf_gpptr(dd)->bty);
 	}
 	break;
@@ -3056,7 +3056,7 @@ void GBox(int which, DevDesc *dd)
 		 R_TRANWHITE, Rf_gpptr(dd)->col, dd);
 	break;
     default:
-	error("invalid GBox argument");
+	error(_("invalid argument to GBox"));
     }
 }
 
@@ -3245,7 +3245,7 @@ void hsv2rgb(double h, double s, double v, double *r, double *g, double *b)
     case 4:	*r = t;		*g = p;		*b = v; break;
     case 5:	*r = v;		*g = p;		*b = q;	break;
     default:
-	error("bad hsv to rgb color conversion");
+	error(_("bad hsv to rgb color conversion"));
     }
 }
 
@@ -4019,7 +4019,7 @@ static unsigned int hexdigit(int digit)
     if('0' <= digit && digit <= '9') return digit - '0';
     if('A' <= digit && digit <= 'F') return 10 + digit - 'A';
     if('a' <= digit && digit <= 'f') return 10 + digit - 'a';
-    /*else */ error("invalid hex digit in color or lty");
+    /*else */ error(_("invalid hex digit in color or lty"));
     return digit; /* never occurs (-Wall) */
 }
 
@@ -4060,7 +4060,7 @@ unsigned int rgb2col(char *rgb)
 {
     unsigned int r=0, g=0, b=0, a=0; /* -Wall */
     if(rgb[0] != '#')
-	error("invalid RGB specification");
+	error(_("invalid RGB specification"));
     switch (strlen(rgb)) {
     case 9:
 	a = 16 * hexdigit(rgb[7]) + hexdigit(rgb[8]);
@@ -4070,7 +4070,7 @@ unsigned int rgb2col(char *rgb)
 	b = 16 * hexdigit(rgb[5]) + hexdigit(rgb[6]);
 	break;
     default:
-	error("invalid RGB specification");
+	error(_("invalid RGB specification"));
     }
     if (strlen(rgb) == 7)
 	return R_RGB(r, g, b);
@@ -4103,7 +4103,7 @@ unsigned int name2col(char *nm)
 	if(StrMatch(ColorDataBase[i].name, nm))
 	    return ColorDataBase[i].code;
     }
-    error("invalid color name");
+    error(_("invalid color name"));
     return 0;		/* never occurs but avoid compiler warnings */
 }
 
@@ -4114,7 +4114,7 @@ unsigned int number2col(char *nm)
     int indx;
     char *ptr;
     indx = strtod(nm, &ptr);
-    if(*ptr) error("invalid color specification");
+    if(*ptr) error(_("invalid color specification"));
     if(indx == 0) return Rf_dpptr(CurrentDevice())->bg;
     else return R_ColorTable[(indx-1) % R_ColorTableSize];
 }
@@ -4255,7 +4255,7 @@ Rboolean isNAcol(SEXP col, int index, int ncol)
 	else if (isReal(col))
 	    result = !R_FINITE(REAL(col)[index % ncol]);
 	else
-	    error("Invalid colour");
+	    error(_("Invalid colour"));
     }
     return result;
 }
@@ -4327,7 +4327,7 @@ unsigned int LTYpar(SEXP value, int ind)
 	p = CHAR(STRING_ELT(value, ind));
 	len = strlen(p);
 	if(len < 2 || len > 8 || len % 2 == 1)
-	    error("invalid line type: must be length 2, 4, 6 or 8");
+	    error(_("invalid line type: must be length 2, 4, 6 or 8"));
 	for(; *p; p++) {
 	    digit = hexdigit(*p);
 	    code  |= (digit<<shift);
@@ -4338,7 +4338,7 @@ unsigned int LTYpar(SEXP value, int ind)
     else if(isInteger(value)) {
 	code = INTEGER(value)[ind];
 	if(code == NA_INTEGER || code < 0)
-	    error("invalid line type");
+	    error(_("invalid line type"));
 	if (code > 0)
 	    code = (code-1) % nlinetype + 1;
 	return linetype[code].pattern;
@@ -4346,14 +4346,14 @@ unsigned int LTYpar(SEXP value, int ind)
     else if(isReal(value)) {
 	rcode = REAL(value)[ind];
 	if(!R_FINITE(rcode) || rcode < 0)
-	    error("invalid line type");
+	    error(_("invalid line type"));
 	code = rcode;
 	if (code > 0)
 	    code = (code-1) % nlinetype + 1;
 	return linetype[code].pattern;
     }
     else {
-	error("invalid line type"); /*NOTREACHED, for -Wall : */ return 0;
+	error(_("invalid line type")); /*NOTREACHED, for -Wall : */ return 0;
     }
 }
 #undef LTY_do_int
@@ -4464,7 +4464,7 @@ DevDesc* CurrentDevice(void)
 	if (isString(defdev) && length(defdev) > 0)
 	    PROTECT(defdev = lang1(install(CHAR(STRING_ELT(defdev, 0)))));
 	else
-	    error("No active or default device");
+	    error(_("No active or default device"));
 	eval(defdev, R_GlobalEnv);
 	UNPROTECT(1);
     }
@@ -4481,7 +4481,7 @@ DevDesc* GetDevice(int i)
 void R_CheckDeviceAvailable(void)
 {
     if (R_NumDevices >= R_MaxRegularDevices)
-	error("too many open devices");
+	error(_("too many open devices"));
 }
 
 Rboolean R_CheckDeviceAvailableBool(void)
@@ -4625,7 +4625,7 @@ void addDevice(DevDesc *dd)
        device is restored to a sane value. */
     if (i == R_LastDeviceEntry) {
         killDevice(i);
-        error("too many devices open");
+        error(_("too many devices open"));
     }
 }
 

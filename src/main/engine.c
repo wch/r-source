@@ -46,7 +46,7 @@ int R_GE_getVersion()
 void R_GE_checkVersionOrDie(int version)
 {
   if (version != R_GE_version)
-    error("Graphics API version mismatch");
+    error(_("Graphics API version mismatch"));
 }
 
 /* A note on memory management ...
@@ -84,7 +84,7 @@ GEDevDesc* GEcreateDevDesc(NewDevDesc* dev)
      */
     int i;
     if (!dd)
-	error("Not enough memory to allocate device (in addDevice)");
+	error(_("Not enough memory to allocate device (in addDevice)"));
     for (i=0; i<MAX_GRAPHICS_SYSTEMS; i++)
 	dd->gesd[i] = NULL;
     dd->newDevStruct = 1;
@@ -145,7 +145,7 @@ static void registerOne(GEDevDesc *dd, int systemNumber, GEcallback cb) {
     dd->gesd[systemNumber] =
 	(GESystemDesc*) calloc(1, sizeof(GESystemDesc));
     if (dd->gesd[systemNumber] == NULL)
-	error("unable to allocate memory (in GEregister)");
+	error(_("unable to allocate memory (in GEregister)"));
     cb(GE_InitState, dd, R_NilValue);
     dd->gesd[systemNumber]->callback = cb;
 }
@@ -183,7 +183,7 @@ void GEregisterSystem(GEcallback cb, int *systemRegisterIndex) {
      */
     DevDesc *dd;
     if (numGraphicsSystems + 1 == MAX_GRAPHICS_SYSTEMS)
-	error("Too many graphics systems registered");
+	error(_("Too many graphics systems registered"));
     /* Set the system register index so that, if there are existing
      * devices, it will know where to put the system-specific
      * information in those devices
@@ -211,7 +211,7 @@ void GEregisterSystem(GEcallback cb, int *systemRegisterIndex) {
     registeredSystems[numGraphicsSystems] =
 	(GESystemDesc*) calloc(1, sizeof(GESystemDesc));
     if (registeredSystems[numGraphicsSystems] == NULL)
-	error("unable to allocate memory (in GEregister)");
+	error(_("unable to allocate memory (in GEregister)"));
     registeredSystems[numGraphicsSystems]->callback = cb;
     numGraphicsSystems += 1;
 }
@@ -233,7 +233,7 @@ void GEunregisterSystem(int registerIndex)
     /* safety check if called before Ginit() */
     if(registerIndex < 0) return;
     if (numGraphicsSystems == 0)
-	error("No graphics system to unregister");
+	error(_("No graphics system to unregister"));
     /* Run through the existing devices and remove the information
      * from any GEDevDesc's
      */
@@ -485,12 +485,12 @@ R_GE_lineend LENDpar(SEXP value, int ind)
 	    if(!strcmp(CHAR(STRING_ELT(value, ind)), lineend[i].name))
 		return lineend[i].end;
 	}
-	error("invalid line end"); /*NOTREACHED, for -Wall : */ return 0;
+	error(_("invalid line end")); /*NOTREACHED, for -Wall : */ return 0;
     }
     else if(isInteger(value)) {
 	code = INTEGER(value)[ind];
 	if(code == NA_INTEGER || code < 0)
-	    error("invalid line end");
+	    error(_("invalid line end"));
 	if (code > 0)
 	    code = (code-1) % nlineend + 1;
 	return lineend[code].end;
@@ -498,14 +498,14 @@ R_GE_lineend LENDpar(SEXP value, int ind)
     else if(isReal(value)) {
 	rcode = REAL(value)[ind];
 	if(!R_FINITE(rcode) || rcode < 0)
-	    error("invalid line end");
+	    error(_("invalid line end"));
 	code = rcode;
 	if (code > 0)
 	    code = (code-1) % nlineend + 1;
 	return lineend[code].end;
     }
     else {
-	error("invalid line end"); /*NOTREACHED, for -Wall : */ return 0;
+	error(_("invalid line end")); /*NOTREACHED, for -Wall : */ return 0;
     }
 }
 
@@ -519,7 +519,7 @@ SEXP LENDget(R_GE_lineend lend)
 	    return mkString(lineend[i].name);
     }
 
-    error("invalid line end");
+    error(_("invalid line end"));
     /*
      * Should never get here
      */
@@ -550,12 +550,12 @@ R_GE_linejoin LJOINpar(SEXP value, int ind)
 	    if(!strcmp(CHAR(STRING_ELT(value, ind)), linejoin[i].name))
 		return linejoin[i].join;
 	}
-	error("invalid line join"); /*NOTREACHED, for -Wall : */ return 0;
+	error(_("invalid line join")); /*NOTREACHED, for -Wall : */ return 0;
     }
     else if(isInteger(value)) {
 	code = INTEGER(value)[ind];
 	if(code == NA_INTEGER || code < 0)
-	    error("invalid line join");
+	    error(_("invalid line join"));
 	if (code > 0)
 	    code = (code-1) % nlinejoin + 1;
 	return linejoin[code].join;
@@ -563,14 +563,14 @@ R_GE_linejoin LJOINpar(SEXP value, int ind)
     else if(isReal(value)) {
 	rcode = REAL(value)[ind];
 	if(!R_FINITE(rcode) || rcode < 0)
-	    error("invalid line join");
+	    error(_("invalid line join"));
 	code = rcode;
 	if (code > 0)
 	    code = (code-1) % nlinejoin + 1;
 	return linejoin[code].join;
     }
     else {
-	error("invalid line join"); /*NOTREACHED, for -Wall : */ return 0;
+	error(_("invalid line join")); /*NOTREACHED, for -Wall : */ return 0;
     }
 }
 
@@ -584,7 +584,7 @@ SEXP LJOINget(R_GE_linejoin ljoin)
 	    return mkString(linejoin[i].name);
     }
 
-    error("invalid line join");
+    error(_("invalid line join"));
     /*
      * Should never get here
      */
@@ -818,7 +818,7 @@ static void CScliplines(int n, double *x, double *y,
     xx = (double *) R_alloc(n, sizeof(double));
     yy = (double *) R_alloc(n, sizeof(double));
     if (xx == NULL || yy == NULL)
-	error("out of memory while clipping polyline");
+	error(_("out of memory while clipping polyline"));
 
     xx[0] = x1 = x[0];
     yy[0] = y1 = y[0];
@@ -1563,7 +1563,7 @@ static int VFontFaceCode(int familycode, int fontface) {
 	    /*
 	     * Other font faces just too wacky so throw an error
 	     */
-	    error("Font face %d not supported for font family %s",
+	    error(_("Font face %d not supported for font family %s"),
 		  fontface, VFontTable[familycode].name);
 	}
     }
@@ -1765,7 +1765,7 @@ void GEText(double x, double y, char *str,
 void GEMode(int mode, GEDevDesc *dd)
 {
     if (NoDevices())
-	error("No graphics device is active");
+	error(_("No graphics device is active"));
     dd->dev->mode(mode, dd->dev);
 }
 
@@ -2082,7 +2082,7 @@ void GESymbol(double x, double y, int pch, double size,
 	    GEPolygon(3, xx, yy, gc, dd);
 	    break;
 	default:
-	    warning("unimplemented pch value '%d'", pch);
+	    warning(_("unimplemented pch value '%d'"), pch);
 	}
     }
 }
@@ -2105,11 +2105,11 @@ void GEPretty(double *lo, double *up, int *ndiv)
 #endif
 
     if(*ndiv <= 0)
-	error("invalid axis extents [GEPretty(.,.,n=%d)", *ndiv);
+	error(_("invalid axis extents [GEPretty(.,.,n=%d)"), *ndiv);
     if(*lo == R_PosInf || *up == R_PosInf ||
        *lo == R_NegInf || *up == R_NegInf ||
        !R_FINITE(*up - *lo)) {
-	error("Infinite axis extents [GEPretty(%g,%g,%d)]", *lo, *up, *ndiv);
+	error(_("Infinite axis extents [GEPretty(%g,%g,%d)]"), *lo, *up, *ndiv);
 	return;/*-Wall*/
     }
 
@@ -2147,9 +2147,9 @@ void GEPretty(double *lo, double *up, int *ndiv)
 
 #ifdef DEBUG_PLOT
     if(*lo < x1)
-	warning(" .. GEPretty(.): new *lo = %g < %g = x1", *lo, x1);
+	warning(_(" .. GEPretty(.): new *lo = %g < %g = x1"), *lo, x1);
     if(*up > x2)
-	warning(" .. GEPretty(.): new *up = %g > %g = x2", *up, x2);
+	warning(_(" .. GEPretty(.): new *up = %g > %g = x2"), *up, x2);
 #endif
 }
 
@@ -2416,7 +2416,7 @@ void GEplayDisplayList(GEDevDesc *dd)
 	     */
 	    if (!GEcheckState(dd)) {
 		plotok = 0;
-		warning("Display list redraw incomplete");
+		warning(_("Display list redraw incomplete"));
 	    }
 	    theList = CDR(theList);
 	}
@@ -2595,11 +2595,11 @@ SEXP do_recordGraphics(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP list = CADR(args);
     SEXP parentenv = CADDR(args);
     if (!isLanguage(code))
-      errorcall(call, "expr argument must be an expression");
+      errorcall(call, _("'expr' argument must be an expression"));
     if (TYPEOF(list) != VECSXP)
-      errorcall(call, "list argument must be a list");
+      errorcall(call, _("'list' argument must be a list"));
     if (!isEnvironment(parentenv))
-      errorcall(call, "env argument must be an environment");
+      errorcall(call, _("'env' argument must be an environment"));
     /*
      * This conversion of list to env taken from do_eval
      */
@@ -2621,7 +2621,7 @@ SEXP do_recordGraphics(SEXP call, SEXP op, SEXP args, SEXP env)
     dd->recordGraphics = record;
     if (GErecording(call, dd)) {
 	if (!GEcheckState(dd))
-	    error("Invalid graphics state");
+	    error(_("Invalid graphics state"));
 	GErecordGraphicOperation(op, args, dd);
     }
     UNPROTECT(3);

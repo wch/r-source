@@ -905,7 +905,7 @@ SEXP do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
     name = CAR(args);
     if (!isString(name) || length(name) < 1 ||
 	STRING_ELT(name, 0) == R_NilValue)
-	errorcall(call, "string argument required");
+	errorcall(call, _("string argument required"));
     for (i = 0; R_FunTab[i].name; i++)
 	if (strcmp(CHAR(STRING_ELT(name, 0)), R_FunTab[i].name) == 0) {
 	    if ((R_FunTab[i].eval % 100 )/10)
@@ -913,7 +913,7 @@ SEXP do_primitive(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else
 		return mkPRIMSXP(i, R_FunTab[i].eval % 10);
 	}
-    errorcall(call, "no such primitive function");
+    errorcall(call, _("no such primitive function"));
     return(R_NilValue);		/* -Wall */
 }
 
@@ -1026,9 +1026,9 @@ SEXP install(char const *name)
     int i, hashcode;
 
     if (*name == '\0')
-	error("attempt to use zero-length variable name");
+	error(_("attempt to use zero-length variable name"));
     if (strlen(name) > MAXIDSIZE)
-	error("symbol print-name too long");
+	error(_("symbol print-name too long"));
     strcpy(buf, name);
     hashcode = R_Newhashpjw(buf);
     i = hashcode % HSIZE;
@@ -1054,12 +1054,13 @@ SEXP do_internal(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     s = CAR(args);
     if (!isPairList(s))
-	errorcall(call, "invalid .Internal() argument");
+	errorcall(call, _("invalid .Internal() argument"));
     fun = CAR(s);
     if (!isSymbol(fun))
-	errorcall(call, "invalid internal function");
+	errorcall(call, _("invalid internal function"));
     if (INTERNAL(fun) == R_NilValue)
-	errorcall(call, "no internal function \"%s\"", CHAR(PRINTNAME(fun)));
+	errorcall(call, _("no internal function \"%s\""),
+		  CHAR(PRINTNAME(fun)));
     args = CDR(s);
     if (TYPEOF(INTERNAL(fun)) == BUILTINSXP)
 	args = evalList(args, env);

@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998-2003   The R Development Core Team.
- *  Copyright (C) 2004        The R Foundation
+ *  Copyright (C) 2004-5        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -115,7 +115,7 @@ static int isUminus(SEXP s)
 		return 1;
 	    else return 0;
 	default:
-	    error("invalid form in unary minus check");
+	    error(_("invalid form in unary minus check"));
 	    return -1;/* for -Wall */
 	}
     }
@@ -481,7 +481,7 @@ static SEXP D(SEXP expr, SEXP var)
 
 	else {
 	    SEXP u = deparse1(CAR(expr), 0, SIMPLEDEPARSE);
-	    error("Function `%s' is not in the derivatives table",
+	    error(_("Function '%s' is not in the derivatives table"),
 		  CHAR(STRING_ELT(u, 0)));
 	}
 
@@ -588,9 +588,10 @@ SEXP do_D(SEXP call, SEXP op, SEXP args, SEXP env)
     else expr = CAR(args);
     var = CADR(args);
     if (!isString(var) || length(var) < 1)
-	errorcall(call, "variable must be a character string");
+	errorcall(call, _("variable must be a character string"));
     if (length(var) > 1)
-	warningcall(call, "only the first element is used as variable name");
+	warningcall(call,
+		    _("only the first element is used as variable name"));
     var = install(CHAR(STRING_ELT(var, 0)));
     InitDerivSymbols();
     PROTECT(expr = D(expr, var));
@@ -603,7 +604,7 @@ SEXP do_D(SEXP call, SEXP op, SEXP args, SEXP env)
 
 static void InvalidExpression(char *where)
 {
-    error("invalid expression in \"%s\"", where);
+    error(_("invalid expression in \"%s\""), where);
 }
 
 static int equal(SEXP expr1, SEXP expr2)
@@ -899,7 +900,7 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     /* namevec: */
     names = CAR(args);
     if (!isString(names) || (nderiv = length(names)) < 1)
-	errorcall(call, "invalid variable names");
+	errorcall(call, _("invalid variable names"));
     args = CDR(args);
     /* function.arg: */
     funarg = CAR(args);
@@ -908,7 +909,7 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     tag = CAR(args);
     if (!isString(tag) || length(tag) < 1
 	|| length(STRING_ELT(tag, 0)) < 1 || length(STRING_ELT(tag, 0)) > 60)
-	errorcall(call, "invalid tag");
+	errorcall(call, _("invalid tag"));
     args = CDR(args);
     /* hessian: */
     hessian = asLogical(CAR(args));

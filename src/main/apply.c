@@ -36,10 +36,10 @@ SEXP do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     X = CAR(args);
     FUN = CADR(args);
     if (!isSymbol(X) || !isSymbol(FUN))
-	errorcall(call, "arguments must be symbolic");
+	errorcall(call, _("arguments must be symbolic"));
     n = length(eval(X, rho));
     if (n == NA_INTEGER)
-	errorcall(call, "invalid length");
+	errorcall(call, _("invalid length"));
     args = CDR(args);
 
     /* Build call: FUN(X[[<ind>]], ...) */
@@ -75,7 +75,7 @@ SEXP do_apply(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     X = CAR(args); args = CDR(args);
     if(!isMatrix(X))
-	errorcall(call, "First arg is not a matrix");
+	errorcall(call, _("First arg is not a matrix"));
     Xd = getAttrib(X, R_DimSymbol);
     nr = INTEGER(Xd)[0];
     nc = INTEGER(Xd)[1];

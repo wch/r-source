@@ -44,7 +44,7 @@
 #endif
 
 
-/* The `real' main() program is in ../<SYSTEM>/system.c */
+/* The 'real' main() program is in ../<SYSTEM>/system.c */
 /* e.g. ../unix/system.c */
 
 /* Global Variables:  For convenience, all interpeter global symbols
@@ -97,7 +97,7 @@ static void R_ReplFile(FILE *fp, SEXP rho, int savestack, int browselevel)
 		PrintWarnings();
 	    break;
 	case PARSE_ERROR:
-	    error("syntax error: evaluating expression %d", count);
+	    error(_("syntax error: evaluating expression %d"), count);
 	    break;
 	case PARSE_EOF:
 	    return;
@@ -206,7 +206,7 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
 #ifdef HAVE_SYSTEM
 	    R_system(&(state->buf[1]));
 #else
-	    Rprintf("error: system commands are not supported in this version of R.\n");
+	    REprintf(_("error: system commands are not supported in this version of R.\n"));
 #endif /* HAVE_SYSTEM */
 	    state->buf[0] = '\0';
 	    return(0);
@@ -264,7 +264,7 @@ Rf_ReplIteration(SEXP rho, int savestack, int browselevel, R_ReplState *state)
     case PARSE_ERROR:
 
 	    state->prompt_type = 1;
-	    error("syntax error");
+	    error(_("syntax error"));
 	    R_IoBufferWriteReset(&R_ConsoleIob);
 	    return(1);
 
@@ -358,7 +358,7 @@ int R_ReplDLLdo1()
 	prompt_type = 1;
 	break;
     case PARSE_ERROR:
-	error("syntax error");
+	error(_("syntax error"));
 	R_IoBufferWriteReset(&R_ConsoleIob);
 	prompt_type = 1;
 	break;
@@ -518,7 +518,7 @@ void setup_Rmainloop(void)
 
     fp = R_OpenLibraryFile("base");
     if (fp == NULL) {
-	R_Suicide("unable to open the base package\n");
+	R_Suicide(_("unable to open the base package\n"));
     }
 
     doneit = 0;
@@ -557,7 +557,7 @@ void setup_Rmainloop(void)
 	PrintGreeting();
 #ifndef SUPPORT_UTF8
 	if(utf8locale)
-	    R_ShowMessage("WARNING: UTF-8 locales are not supported in this build of R\n");
+	    R_ShowMessage(_("WARNING: UTF-8 locales are not supported in this build of R\n"));
 #endif
     }
 
@@ -586,7 +586,7 @@ void setup_Rmainloop(void)
 	R_InitialData();
     }
     else
-    	R_Suicide("unable to restore saved data in .RData\n");
+    	R_Suicide(_("unable to restore saved data in .RData\n"));
 
     /* Initial Loading is done.
        At this point we try to invoke the .First Function.
@@ -836,16 +836,16 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     int ask=SA_DEFAULT, status, runLast;
 
     if(R_BrowseLevel) {
-	warning("can't quit from browser");
+	warning(_("can't quit from browser"));
 	return R_NilValue;
     }
     if( !isString(CAR(args)) )
-	errorcall(call,"one of \"yes\", \"no\", \"ask\" or \"default\" expected.");
+	errorcall(call, _("one of \"yes\", \"no\", \"ask\" or \"default\" expected."));
     tmp = CHAR(STRING_ELT(CAR(args), 0));
     if( !strcmp(tmp, "ask") ) {
 	ask = SA_SAVEASK;
 	if(!R_Interactive)
-	    warningcall(call, "save=\"ask\" in non-interactive use: command-line default will be used");
+	    warningcall(call, _("save=\"ask\" in non-interactive use: command-line default will be used"));
     } else if( !strcmp(tmp, "no") )
 	ask = SA_NOSAVE;
     else if( !strcmp(tmp, "yes") )
@@ -853,15 +853,15 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if( !strcmp(tmp, "default") )
 	ask = SA_DEFAULT;
     else
-	errorcall(call, "unrecognized value of save");
+	errorcall(call, _("unrecognized value of save"));
     status = asInteger(CADR(args));
     if (status == NA_INTEGER) {
-        warningcall(call, "invalid status, 0 assumed");
+        warningcall(call, _("invalid status, 0 assumed"));
 	runLast = 0;
     }
     runLast = asLogical(CADDR(args));
     if (runLast == NA_LOGICAL) {
-        warningcall(call, "invalid runLast, FALSE assumed");
+        warningcall(call, _("invalid runLast, FALSE assumed"));
 	runLast = 0;
     }
     /* run the .Last function. If it gives an error, will drop back to main
@@ -892,7 +892,7 @@ Rf_addTaskCallback(R_ToplevelCallback cb, void *data,
     R_ToplevelCallbackEl *el;
     el = (R_ToplevelCallbackEl *) malloc(sizeof(R_ToplevelCallbackEl));
     if(!el)
-	error("cannot allocate space for toplevel callback element.");
+	error(_("cannot allocate space for toplevel callback element"));
 
     el->data = data;
     el->cb = cb;
@@ -970,7 +970,7 @@ Rf_removeTaskCallbackByIndex(int id)
     Rboolean status = TRUE;
 
     if(id < 0)
-	error("negative index passed to R_removeTaskCallbackByIndex");
+	error(_("negative index passed to R_removeTaskCallbackByIndex"));
 
     if(Rf_ToplevelTaskHandlers) {
 	if(id == 0) {
@@ -1004,7 +1004,7 @@ Rf_removeTaskCallbackByIndex(int id)
 
 /**
   R-level entry point to remove an entry from the
-  list of top-level callbacks. `which' should be an
+  list of top-level callbacks. 'which' should be an
   integer and give us the 0-based index of the element
   to be removed from the list.
 
@@ -1083,7 +1083,7 @@ Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded,
     while(h) {
 	again = (h->cb)(expr, value, succeeded, visible, h->data);
 	if(R_CollectWarnings) {
-	    REprintf("warning messages from top-level task callback `%s'\n", 
+	    REprintf(_("warning messages from top-level task callback '%s'\n"), 
 		     h->name);
 	    PrintWarnings();
 	}
@@ -1143,7 +1143,7 @@ R_taskCallbackRoutine(SEXP expr, SEXP value, Rboolean succeeded,
 	PROTECT(val);
 	if(TYPEOF(val) != LGLSXP) {
               /* It would be nice to identify the function. */
-	    warning("top-level task callback did not return a logical value");
+	    warning(_("top-level task callback did not return a logical value"));
 	}
 	again = asLogical(val);
 	UNPROTECT(1);

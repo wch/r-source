@@ -95,20 +95,20 @@ static int mbcs_get_next(int c, wchar_t *wc)
 	clen = utf8clen(c);
 	for(i = 1; i < clen; i++) {
 	    s[i] = xxgetc();
-	    if(s[i] == R_EOF) error("EOF whilst reading MBCS char");
+	    if(s[i] == R_EOF) error(_("EOF whilst reading MBCS char"));
 	}
 	res = mbrtowc(wc, s, clen, NULL);
-	if(res == -1) error("invalid multibyte character in mbcs_get_next");
+	if(res == -1) error(_("invalid multibyte character in mbcs_get_next"));
     } else {
 	while(clen <= MB_CUR_MAX) {
 	    mbs_init(&mb_st);
 	    res = mbrtowc(wc, s, clen, &mb_st);
 	    if(res >= 0) break;
 	    if(res == -1) 
-		error("invalid multibyte character in mbcs_get_next");
+		error(_("invalid multibyte character in mbcs_get_next"));
 	    /* so res == -2 */
 	    c = xxgetc();
-	    if(c == R_EOF) error("EOF whilst reading MBCS char");
+	    if(c == R_EOF) error(_("EOF whilst reading MBCS char"));
 	    s[clen++] = c;
 	} /* we've tried enough, so must be complete or invalid by now */
     }
@@ -353,7 +353,7 @@ static int xxgetc(void)
     if ( KeepSource && GenerateCode && FunctionLevel > 0 ) {
 	if(SourcePtr <  FunctionSource + MAXFUNSIZE)
 	    *SourcePtr++ = c;
-	else  error("function is too long to keep source");
+	else  error(_("function is too long to keep source"));
     }
     xxcharcount++;
     return c;
@@ -731,7 +731,7 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 		    } else { /* over-long line */
 			char *LongLine = (char *) malloc(nc);
 			if(!LongLine) 
-			    error("unable to allocate space for source line");
+			    error(("unable to allocate space for source line"));
 			strncpy(LongLine, (char *)p0, nc);
 			LongLine[nc] = '\0';
 			SET_STRING_ELT(source, lines++,
@@ -830,7 +830,7 @@ static SEXP TagArg(SEXP arg, SEXP tag)
     case SYMSXP:
 	return lang2(arg, tag);
     default:
-	error("incorrect tag type"); return R_NilValue/* -Wall */;
+	error(_("incorrect tag type")); return R_NilValue/* -Wall */;
     }
 }
 
@@ -1509,7 +1509,7 @@ static void CheckFormalArgs(SEXP formlist, SEXP new)
 {
     while (formlist != R_NilValue) {
 	if (TAG(formlist) == new) {
-	    error("Repeated formal argument");
+	    error(_("Repeated formal argument"));
 	}
 	formlist = CDR(formlist);
     }
@@ -1520,7 +1520,7 @@ static char yytext[MAXELTSIZE];
 #define DECLARE_YYTEXT_BUFP(bp) char *bp = yytext
 #define YYTEXT_PUSH(c, bp) do { \
     if ((bp) - yytext >= sizeof(yytext) - 1) \
-        error("input buffer overflow"); \
+        error(_("input buffer overflow")); \
 	*(bp)++ = (c); \
 } while(0)
 
@@ -1646,9 +1646,9 @@ static int StringValue(int c)
 		}
 		if(delim)
 		    if((c = xxgetc()) != '}')
-			error("invalid \\u{xxxx} sequence");
+			error(_("invalid \\u{xxxx} sequence"));
 		res = wcrtomb(buff, val, NULL); /* should always be valid */
-		if(res <= 0) error("invalid \\uxxxx sequence");
+		if(res <= 0) error(_("invalid \\uxxxx sequence"));
 		for(i = 0; i <  res - 1; i++) YYTEXT_PUSH(buff[i], yyp);
 		c = buff[res - 1]; /* pushed below */
 	    }
@@ -1667,9 +1667,9 @@ static int StringValue(int c)
 		}
 		if(delim)
 		    if((c = xxgetc()) != '}')
-			error("invalid \\u{xxxx} sequence");
+			error(_("invalid \\U{xxxxxxxx} sequence"));
 		res = wcrtomb(buff, val, NULL); /* should always be valid */
-		if(res <= 0) error("invalid \\Uxxxxxxxx sequence");
+		if(res <= 0) error(("invalid \\Uxxxxxxxx sequence"));
 		for(i = 0; i <  res - 1; i++) YYTEXT_PUSH(buff[i], yyp);
 		c = buff[res - 1]; /* pushed below */
 	    }
@@ -1812,7 +1812,7 @@ static int SymbolValue(int c)
     if ((kw = KeywordLookup(yytext))) {
 	if ( kw == FUNCTION ) {
 	    if (FunctionLevel >= MAXNEST)
-		error("functions nested too deeply in source code");
+		error(_("functions nested too deeply in source code"));
 	    if ( FunctionLevel++ == 0 && GenerateCode) {
 		strcpy((char *)FunctionSource, "function");
 		SourcePtr = FunctionSource + 8;

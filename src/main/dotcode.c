@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2004  The R Development Core Team
+ *  Copyright (C) 1997--2005  The R Development Core Team
  *  Copyright (C) 2003	      The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -94,16 +94,16 @@ checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun)
 	     R_ExternalPtrTag(op) == Rf_install("native symbol"))) {
 	/* This is illegal C */
 	if((*fun = R_ExternalPtrAddr(op)) == NULL)
-	    errorcall(call, "NULL value passed as symbol address.");
+	    errorcall(call, _("NULL value passed as symbol address"));
 	return;
     } 
-    else if(inherits(op, "NativeSymbolInfo")) {
+    else if(inherits(op, _("NativeSymbolInfo"))) {
 	checkValidSymbolId(VECTOR_ELT(op, 1), call, fun);
 	return;
     }
     
-    errorcall(call, 
-	      "'name' must be a string (of length 1) or native symbol reference.");
+    errorcall(call,
+      _("'name' must be a string (of length 1) or native symbol reference"));
     return; /* not reached */
 }
 
@@ -139,9 +139,9 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	args = naokfind(CDR(args), nargs, naok, dup, &dll);
 
 	if(*naok == NA_LOGICAL)
-	    errorcall(call, "invalid naok value");
+	    errorcall(call, _("invalid 'naok' value"));
 	if(*nargs > MAX_ARGS)
-	    errorcall(call, "too many arguments in foreign function call");
+	    errorcall(call, _("too many arguments in foreign function call"));
     } else {
 	if (PkgSymbol == NULL) PkgSymbol = install("PACKAGE");
 	args = pkgtrim(args, &dll);
@@ -162,17 +162,18 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	if(dll.type != FILENAME) {
 	    *fun = R_FindNativeSymbolFromDLL(buf, &dll, symbol);
 	    if(!fun) {
-		errorcall(call, "cannot resolve native routine");
+		errorcall(call, _("cannot resolve native routine"));
 	    }
 	}
 
 	if (!*fun && !(*fun = R_FindSymbol(buf, dll.DLLname, symbol))) {
 	    if(strlen(dll.DLLname))
-		errorcall(call, "%s function name not in DLL for package %s",
-			   symbol->type == R_FORTRAN_SYM ? "Fortran" : "C",
-			   dll.DLLname);
+		errorcall(call,
+			  _("%s function name not in DLL for package %s"),
+			  symbol->type == R_FORTRAN_SYM ? "Fortran" : "C",
+			  dll.DLLname);
 	    else
-		errorcall(call, "%s function name not in load table",
+		errorcall(call, _("%s function name not in load table"),
 			  symbol->type == R_FORTRAN_SYM ? "Fortran" : "C");
 	}
     }
@@ -238,7 +239,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 
     if(checkNativeType(targetType, TYPEOF(s)) == FALSE) {
 	if(!dup) {
-	    error("explicit request not to duplicate arguments in call to %s, but argument %d is of the wrong type (%d != %d)",
+	    error(_("explicit request not to duplicate arguments in call to %s, but argument %d is of the wrong type (%d != %d)"),
 		  name, narg + 1, targetType, TYPEOF(s));
 	}
 
@@ -253,7 +254,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	iptr = INTEGER(s);
 	for (i = 0 ; i < n ; i++) {
 	    if(!naok && iptr[i] == NA_INTEGER)
-		error("NAs in foreign function call (arg %d)", narg);
+		error(_("NAs in foreign function call (arg %d)"), narg);
 	}
 	if (dup) {
 	    iptr = (int*)R_alloc(n, sizeof(int));
@@ -267,7 +268,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	rptr = REAL(s);
 	for (i = 0 ; i < n ; i++) {
 	    if(!naok && !R_FINITE(rptr[i]))
-		error("NA/NaN/Inf in foreign function call (arg %d)", narg);
+		error(_("NA/NaN/Inf in foreign function call (arg %d)"), narg);
 	}
 	if (dup) {
 	    if(asLogical(getAttrib(s, CSingSymbol)) == 1) {
@@ -289,7 +290,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	zptr = COMPLEX(s);
 	for (i = 0 ; i < n ; i++) {
 	    if(!naok && (!R_FINITE(zptr[i].r) || !R_FINITE(zptr[i].i)))
-		error("Complex NA/NaN/Inf in foreign function call (arg %d)",
+		error(_("Complex NA/NaN/Inf in foreign function call (arg %d)"),
 		      narg);
 	}
 	if (dup) {
@@ -301,11 +302,11 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	break;
     case STRSXP:
 	if(!dup)
-	    error("character variables must be duplicated in .C/.Fortran");
+	    error(_("character variables must be duplicated in .C/.Fortran"));
 	n = LENGTH(s);
 	if(Fort) {
 	    if(n > 1)
-		warning("only first string in char vector used in .Fortran");
+		warning(_("only first string in char vector used in .Fortran"));
 	    l = strlen(CHAR(STRING_ELT(s, 0)));
 	    fptr = (char*)R_alloc(max(255, l) + 1, sizeof(char));
 	    strcpy(fptr, CHAR(STRING_ELT(s, 0)));
@@ -318,7 +319,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 		size_t inb, outb, outb0, res;
 		iconv_t obj = Riconv_open("", encname); /* (to, from) */
 		if(obj == (iconv_t)(-1))
-		    error("unsupported encoding '%s'", encname);
+		    error(_("unsupported encoding '%s'"), encname);
 		for (i = 0 ; i < n ; i++) {
 		    inbuf = CHAR(STRING_ELT(s, i)); inb = strlen(inbuf);
 		    outb0 = 3*inb;
@@ -332,14 +333,14 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 			goto restart_in;
 		    }
 		    if(res == -1) 
-			error("conversion problem in re-encoding to '%s'",
+			error(_("conversion problem in re-encoding to '%s'"),
 			      encname);
 		    *outbuf = '\0';
 		}
 		Riconv_close(obj);
 	    } else 
 #else
-		warning("re-encoding is not supported on this system");
+		warning(_("re-encoding is not supported on this system"));
 	    }
 #endif
 	    {
@@ -362,7 +363,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
  	return (void*)lptr;
 	break;
     case LISTSXP:
-	if(Fort) error("invalid mode to pass to Fortran (arg %d)", narg);
+	if(Fort) error(_("invalid mode to pass to Fortran (arg %d)"), narg);
 	/* Warning : The following looks like it could bite ... */
 	if(!dup) return (void*)s;
 	n = length(s);
@@ -374,7 +375,7 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort,
 	return (void*)cptr;
 	break;
     default:
-	if(Fort) error("invalid mode to pass to Fortran (arg %d)", narg);
+	if(Fort) error(_("invalid mode to pass to Fortran (arg %d)"), narg);
 	return (void*)s;
     }
 }
@@ -435,7 +436,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 		size_t inb, outb, outb0, res;
 		iconv_t obj = Riconv_open(encname, ""); /* (to, from) */
 		if(obj == (iconv_t)(-1))
-		    error("unsupported encoding '%s'", encname);
+		    error(_("unsupported encoding '%s'"), encname);
 		for (i = 0 ; i < n ; i++) {
 		    inbuf = cptr[i]; inb = strlen(inbuf);
 		    outb0 = 3*inb;
@@ -449,7 +450,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 			goto restart_out;
 		    }
 		    if(res == -1) 
-			error("conversion problem in re-encoding from '%s'",
+			error(_("conversion problem in re-encoding from '%s'"),
 			      encname);
 		    *outbuf = '\0';
 		    SET_STRING_ELT(s, i, mkChar(p));
@@ -457,7 +458,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort,
 		Riconv_close(obj);
 	    } else 
 #else
-		warning("re-encoding is not supported on this system");
+		warning(_("re-encoding is not supported on this system"));
 	    }
 #endif
 	    {
@@ -526,20 +527,20 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup,
 	if(TAG(s) == NaokSymbol) {
 	    *naok = asLogical(CAR(s));
 	    /* SETCDR(prev, s = CDR(s)); */
-	    if(naokused++ == 1) warning("NAOK used more than once");
+	    if(naokused++ == 1) warning(_("NAOK used more than once"));
 	} else if(TAG(s) == DupSymbol) {
 	    *dup = asLogical(CAR(s));
 	    /* SETCDR(prev, s = CDR(s)); */
-	    if(dupused++ == 1) warning("DUP used more than once");
+	    if(dupused++ == 1) warning(_("DUP used more than once"));
 	} else if(TAG(s) == PkgSymbol) {
 	    dll->obj = CAR(s);
 	    if(TYPEOF(CAR(s)) == STRSXP) {
 		p = CHAR(STRING_ELT(CAR(s), 0));
 		if(strlen(p) > PATH_MAX - 1)
-		    error("DLL name is too long");
+		    error(_("DLL name is too long"));
 		dll->type = FILENAME;
 		strcpy(dll->DLLname, p);
-		if(pkgused++ > 1) warning("PACKAGE used more than once");
+		if(pkgused++ > 1) warning(_("PACKAGE used more than once"));
 		/* More generally, this should allow us to process
 		   any additional arguments and not insist that PACKAGE
 		   be the last argument.
@@ -576,13 +577,13 @@ static void setDLLname(SEXP s, char *DLLname)
 {
     SEXP ss = CAR(s); char *name;
     if(TYPEOF(ss) != STRSXP || length(ss) != 1)
-	error("PACKAGE argument must be a single character string");
+	error(_("PACKAGE argument must be a single character string"));
     name = CHAR(STRING_ELT(ss, 0));
     /* allow the package: form of the name, as returned by find */
     if(strncmp(name, "package:", 8) == 0)
 	name += 8;
     if(strlen(name) > PATH_MAX - 1)
-	error("PACKAGE argument is too long");
+	error(_("PACKAGE argument is too long"));
     strcpy(DLLname, name);
 }
 
@@ -597,13 +598,13 @@ static SEXP pkgtrim(SEXP args, DllReference *dll)
 	   this is the last one (which will only happen for one arg),
 	   and remove it */
 	if(ss == R_NilValue && TAG(s) == PkgSymbol) {
-	    if(pkgused++ == 1) warning("PACKAGE used more than once");
+	    if(pkgused++ == 1) warning(_("PACKAGE used more than once"));
 	    setDLLname(s, dll->DLLname);
 	    dll->type = FILENAME;
 	    return R_NilValue;
 	}
 	if(TAG(ss) == PkgSymbol) {
-	    if(pkgused++ == 1) warning("PACKAGE used more than once");
+	    if(pkgused++ == 1) warning(_("PACKAGE used more than once"));
 	    setDLLname(ss, dll->DLLname);
 	    dll->type = FILENAME;
 	    SETCDR(s, CDR(ss));
@@ -626,17 +627,17 @@ static SEXP enctrim(SEXP args, char *name, int len)
 	   and remove it */
 	if(ss == R_NilValue && TAG(s) == EncSymbol) {
 	    sx = CAR(s);
-	    if(pkgused++ == 1) warning("ENCODING used more than once");
+	    if(pkgused++ == 1) warning(_("ENCODING used more than once"));
 	    if(TYPEOF(sx) != STRSXP || length(sx) != 1)
-		error("ENCODING argument must be a single character string");
+		error(_("ENCODING argument must be a single character string"));
 	    strncpy(name, CHAR(STRING_ELT(sx, 0)), len);
 	    return R_NilValue;
 	}
 	if(TAG(ss) == EncSymbol) {
 	    sx = CAR(ss);
-	    if(pkgused++ == 1) warning("ENCODING used more than once");
+	    if(pkgused++ == 1) warning(_("ENCODING used more than once"));
 	    if(TYPEOF(sx) != STRSXP || length(sx) != 1)
-		error("ENCODING argument must be a single character string");
+		error(_("ENCODING argument must be a single character string"));
 	    strncpy(name, CHAR(STRING_ELT(sx, 0)), len);
 	    SETCDR(s, CDR(ss));
 	}
@@ -673,8 +674,8 @@ SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
     char *sym, *pkg= "";
     int val = 1, nargs = length(args);
 
-    if (nargs < 1) errorcall(call, "no arguments supplied");
-    if (nargs > 2) errorcall(call, "too many arguments");
+    if (nargs < 1) errorcall(call, _("no arguments supplied"));
+    if (nargs > 2) errorcall(call, _("too many arguments"));
 
     if(!isValidString(CAR(args)))
 	errorcall(call, R_MSG_IA);
@@ -714,7 +715,7 @@ SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef CHECK_EXTERNAL_ARG_COUNT         /* Off by default. */
     if(symbol.symbol.external && symbol.symbol.external->numArgs > -1) {
 	if(symbol.symbol.external->numArgs != length(args))
-	    error("Incorrect number of arguments (%d), expecting %d for %s",
+	    error(_("Incorrect number of arguments (%d), expecting %d for %s"),
 		  length(args), symbol.symbol.external->numArgs,
 		  CHAR(STRING_ELT(CAR(args), 0)));
     }
@@ -743,13 +744,13 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for(nargs = 0, pargs = args ; pargs != R_NilValue; pargs = CDR(pargs)) {
         if (nargs == MAX_ARGS)
-            errorcall(call, "too many arguments in foreign function call");
+            errorcall(call, _("too many arguments in foreign function call"));
 	cargs[nargs] = CAR(pargs);
 	nargs++;
     }
     if(symbol.symbol.call && symbol.symbol.call->numArgs > -1) {
 	if(symbol.symbol.call->numArgs != nargs)
-	    error("Incorrect number of arguments (%d), expecting %d for %s",
+	    error(_("Incorrect number of arguments (%d), expecting %d for %s"),
 		  nargs, symbol.symbol.call->numArgs,
 		  CHAR(STRING_ELT(nm, 0)));
     }
@@ -1406,7 +1407,7 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[60], cargs[61], cargs[62], cargs[63], cargs[64]);
 	break;
     default:
-	errorcall(call, "too many arguments, sorry");
+	errorcall(call, _("too many arguments, sorry"));
     }
     vmaxset(vmax);
     return retval;
@@ -1430,7 +1431,7 @@ SEXP do_Externalgr(SEXP call, SEXP op, SEXP args, SEXP env)
     dd->recordGraphics = record;
     if (GErecording(call, dd)) {
 	if (!GEcheckState(dd))
-	    error("Invalid graphics state");
+	    error(_("Invalid graphics state"));
 	GErecordGraphicOperation(op, args, dd);
     }
     UNPROTECT(1);
@@ -1452,7 +1453,7 @@ SEXP do_dotcallgr(SEXP call, SEXP op, SEXP args, SEXP env)
     dd->recordGraphics = record;
     if (GErecording(call, dd)) {
 	if (!GEcheckState(dd))
-	    error("Invalid graphics state");
+	    error(_("Invalid graphics state"));
 	GErecordGraphicOperation(op, args, dd);
     }
     UNPROTECT(1);
@@ -1501,7 +1502,7 @@ R_FindNativeSymbolFromDLL(char *name, DllReference *dll,
 	tmp = VECTOR_ELT(dll->obj, 4);
 	info = (DllInfo *) R_ExternalPtrAddr(tmp);
 	if(!info)
-	    error("NULL value for DLLInfoReference when looking for DLL");
+	    error(_("NULL value for DLLInfoReference when looking for DLL"));
 	fun = R_dlsym(info, name, symbol);
     }
 
@@ -1546,7 +1547,7 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if(symbol.symbol.c && symbol.symbol.c->numArgs > -1) {
 	if(symbol.symbol.c->numArgs != nargs)
-	    error("Incorrect number of arguments (%d), expecting %d for %s",
+	    error(_("Incorrect number of arguments (%d), expecting %d for %s"),
 		  nargs, symbol.symbol.c->numArgs, symName);
 
 	checkTypes = symbol.symbol.c->types;
@@ -1572,7 +1573,7 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
                to RObjToCPtr(). We just have to sort out the ability
                to return the correct value which is complicated by
                dup, etc. */
-	    error("Wrong type for argument %d in call to %s",
+	    error(_("Wrong type for argument %d in call to %s"),
 		  nargs+1, symName);
 	}
 #endif
@@ -2176,7 +2177,7 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	    cargs[60], cargs[61], cargs[62], cargs[63], cargs[64]);
 	break;
     default:
-	errorcall(call, "too many arguments, sorry");
+	errorcall(call, _("too many arguments, sorry"));
     }
     PROTECT(ans = allocVector(VECSXP, nargs));
     havenames = 0;
@@ -2265,7 +2266,7 @@ static int string2type(char *s)
 	    return typeinfo[i].type;
 	}
     }
-    error("type \"%s\" not supported in interlanguage calls", s);
+    error(_("type \"%s\" not supported in interlanguage calls"), s);
     return 1; /* for -Wall */
 }
 
@@ -2277,11 +2278,11 @@ void call_R(char *func, long nargs, void **arguments, char **modes,
     int i, j, n;
 
     if (!isFunction((SEXP)func))
-	error("invalid function in call_R");
+	error(_("invalid function in call_R"));
     if (nargs < 0)
-	error("invalid argument count in call_R");
+	error(_("invalid argument count in call_R"));
     if (nres < 0)
-	error("invalid return value count in call_R");
+	error(_("invalid return value count in call_R"));
     PROTECT(pcall = call = allocList(nargs + 1));
     SET_TYPEOF(call, LANGSXP);
     SETCAR(pcall, (SEXP)func);
@@ -2326,7 +2327,7 @@ void call_R(char *func, long nargs, void **arguments, char **modes,
 	    }
 	    break; */
 	default:
-	    error("Mode `%s' is not supported in call_R", modes[i]);
+	    error(_("Mode '%s' is not supported in call_R"), modes[i]);
 	}
 	if(names && names[i])
 	    SET_TAG(pcall, install(names[i]));

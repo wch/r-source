@@ -70,14 +70,14 @@ static double fminfn(int n, double *p, void *ex)
 
     PROTECT(x = allocVector(REALSXP, n));
     for (i = 0; i < n; i++) {
-	if (!R_FINITE(p[i])) error("non-finite value supplied by optim");
+	if (!R_FINITE(p[i])) error(_("non-finite value supplied by optim"));
 	REAL(x)[i] = p[i] * (OS->parscale[i]);
     }
     SETCADR(OS->R_fcall, x);
     PROTECT_WITH_INDEX(s = eval(OS->R_fcall, OS->R_env), &ipx);
     REPROTECT(s = coerceVector(s, REALSXP), ipx);
     if (LENGTH(s) != 1)  
-	error("objective function in optim evaluates to length %d not 1", 
+	error(_("objective function in optim evaluates to length %d not 1"), 
 	      LENGTH(s)); 
     val = REAL(s)[0]/(OS->fnscale);
     UNPROTECT(2);
@@ -95,14 +95,15 @@ static void fmingr(int n, double *p, double *df, void *ex)
     if (!isNull(OS->R_gcall)) { /* analytical derivatives */
 	PROTECT(x = allocVector(REALSXP, n));
 	for (i = 0; i < n; i++) {
-	    if (!R_FINITE(p[i])) error("non-finite value supplied by optim");
+	    if (!R_FINITE(p[i]))
+		error(_("non-finite value supplied by optim"));
 	    REAL(x)[i] = p[i] * (OS->parscale[i]);
 	}
 	SETCADR(OS->R_gcall, x);
 	PROTECT_WITH_INDEX(s = eval(OS->R_gcall, OS->R_env), &ipx);
 	REPROTECT(s = coerceVector(s, REALSXP), ipx);
 	if(LENGTH(s) != n)
-	    error("gradient in optim evaluated to length %d not %d",
+	    error(_("gradient in optim evaluated to length %d not %d"),
 		  LENGTH(s), n);
 	for (i = 0; i < n; i++)
 	    df[i] = REAL(s)[i] * (OS->parscale[i])/(OS->fnscale);
@@ -127,7 +128,7 @@ static void fmingr(int n, double *p, double *df, void *ex)
 		df[i] = (val1 - val2)/(2 * eps);
 #define DO_df_x 							\
 		if(!R_FINITE(df[i])) 					\
-		    error("non-finite finite-difference value [%d]", i+1);\
+		    error(("non-finite finite-difference value [%d]"), i+1);\
 		REAL(x)[i] = p[i] * (OS->parscale[i])
 
 		DO_df_x;
@@ -177,14 +178,15 @@ static void genptry(int n, double *p, double *ptry, double scale, void *ex)
 	/* user defined generation of candidate point */
       	PROTECT(x = allocVector(REALSXP, n));
 	for (i = 0; i < n; i++) {
-	    if (!R_FINITE(p[i])) error("non-finite value supplied by optim");
+	    if (!R_FINITE(p[i]))
+		error(_("non-finite value supplied by optim"));
 	    REAL(x)[i] = p[i] * (OS->parscale[i]);
 	}
 	SETCADR(OS->R_gcall, x);
 	PROTECT_WITH_INDEX(s = eval(OS->R_gcall, OS->R_env), &ipx);
 	REPROTECT(s = coerceVector(s, REALSXP), ipx);
 	if(LENGTH(s) != n)
-	    error("candidate point in optim evaluated to length %d not %d",
+	    error(_("candidate point in optim evaluated to length %d not %d"),
 		  LENGTH(s), n);
 	for (i = 0; i < n; i++)
 	    ptry[i] = REAL(s)[i] / (OS->parscale[i]);
@@ -215,11 +217,11 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
     OS->R_env = rho;
     par = CAR(args);
     args = CDR(args); fn = CAR(args);
-    if (!isFunction(fn)) errorcall(call, "fn is not a function");
+    if (!isFunction(fn)) errorcall(call, _("fn is not a function"));
     args = CDR(args); gr = CAR(args);
     args = CDR(args); method = CAR(args);
     if (!isString(method)|| LENGTH(method) != 1)
-	errorcall(call, "invalid method argument");
+	errorcall(call, _("invalid method argument"));
     tn = CHAR(STRING_ELT(method, 0));
     args = CDR(args); options = CAR(args);
     PROTECT(OS->R_fcall = lang2(fn, R_NilValue));
@@ -231,7 +233,7 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
     OS->fnscale = asReal(getListElement(options, "fnscale"));
     tmp = getListElement(options, "parscale");
     if (LENGTH(tmp) != npar)
-	errorcall(call, "parscale is of the wrong length");
+	errorcall(call, _("'parscale' is of the wrong length"));
     PROTECT(tmp = coerceVector(tmp, REALSXP));
     OS->parscale = vect(npar);
     for (i = 0; i < npar; i++) OS->parscale[i] = REAL(tmp)[i];
@@ -245,7 +247,7 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
     abstol = asReal(getListElement(options, "abstol"));
     reltol = asReal(getListElement(options, "reltol"));
     maxit = asInteger(getListElement(options, "maxit"));
-    if (maxit == NA_INTEGER) error("maxit is not an integer");
+    if (maxit == NA_INTEGER) error(_("'maxit' is not an integer"));
 
     if (strcmp(tn, "Nelder-Mead") == 0) {
 	double alpha, beta, gamm;
@@ -263,9 +265,9 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if (strcmp(tn, "SANN") == 0) {	
         tmax = asInteger(getListElement(options, "tmax"));
         temp = asReal(getListElement(options, "temp"));
-        if (tmax == NA_INTEGER) error("tmax is not an integer");
+        if (tmax == NA_INTEGER) error(_("'tmax' is not an integer"));
         if (!isNull(gr)) {
-            if (!isFunction(gr)) error("gr is not a function");
+            if (!isFunction(gr)) error(_("gr is not a function"));
                 PROTECT(OS->R_gcall = lang2(gr, R_NilValue));
         } else {
 	    PROTECT(OS->R_gcall = R_NilValue); /* for balance */
@@ -282,12 +284,13 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	nREPORT = asInteger(getListElement(options, "REPORT"));
 	if (!isNull(gr)) {
-	    if (!isFunction(gr)) error("gr is not a function");
+	    if (!isFunction(gr)) error(_("gr is not a function"));
 	    PROTECT(OS->R_gcall = lang2(gr, R_NilValue));
 	} else {
 	    PROTECT(OS->R_gcall = R_NilValue); /* for balance */
 	    ndeps = getListElement(options, "ndeps");
-	    if (LENGTH(ndeps) != npar) error("ndeps is of the wrong length");
+	    if (LENGTH(ndeps) != npar)
+		error(_("'ndeps' is of the wrong length"));
 	    OS->ndeps = vect(npar);
 	    PROTECT(ndeps = coerceVector(ndeps, REALSXP));
 	    for (i = 0; i < npar; i++) OS->ndeps[i] = REAL(ndeps)[i];
@@ -306,12 +309,13 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	type = asInteger(getListElement(options, "type"));
 	if (!isNull(gr)) {
-	    if (!isFunction(gr)) error("gr is not a function");
+	    if (!isFunction(gr)) error(_("gr is not a function"));
 	    PROTECT(OS->R_gcall = lang2(gr, R_NilValue));
 	} else {
 	    PROTECT(OS->R_gcall = R_NilValue); /* for balance */
 	    ndeps = getListElement(options, "ndeps");
-	    if (LENGTH(ndeps) != npar) error("ndeps is of the wrong length");
+	    if (LENGTH(ndeps) != npar)
+		error(_("'ndeps' is of the wrong length"));
 	    OS->ndeps = vect(npar);
 	    PROTECT(ndeps = coerceVector(ndeps, REALSXP));
 	    for (i = 0; i < npar; i++) OS->ndeps[i] = REAL(ndeps)[i];
@@ -335,12 +339,13 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 	pgtol = asReal(getListElement(options, "pgtol"));
 	lmm = asInteger(getListElement(options, "lmm"));
 	if (!isNull(gr)) {
-	    if (!isFunction(gr)) error("gr is not a function");
+	    if (!isFunction(gr)) error(_("gr is not a function"));
 	    PROTECT(OS->R_gcall = lang2(gr, R_NilValue));
 	} else {
 	    PROTECT(OS->R_gcall = R_NilValue); /* for balance */
 	    ndeps = getListElement(options, "ndeps");
-	    if (LENGTH(ndeps) != npar) error("ndeps is of the wrong length");
+	    if (LENGTH(ndeps) != npar)
+		error(_("'ndeps' is of the wrong length"));
 	    OS->ndeps = vect(npar);
 	    PROTECT(ndeps = coerceVector(ndeps, REALSXP));
 	    for (i = 0; i < npar; i++) OS->ndeps[i] = REAL(ndeps)[i];
@@ -371,7 +376,7 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 	SET_VECTOR_ELT(res, 4, smsg);
 	UNPROTECT(1);
     } else
-	errorcall(call, "unknown method");
+	errorcall(call, _("unknown method"));
 
     REAL(value)[0] = val * (OS->fnscale);
     SET_VECTOR_ELT(res, 0, par); SET_VECTOR_ELT(res, 1, value);
@@ -401,13 +406,13 @@ SEXP do_optimhess(SEXP call, SEXP op, SEXP args, SEXP rho)
     par = CAR(args);
     npar = LENGTH(par);
     args = CDR(args); fn = CAR(args);
-    if (!isFunction(fn)) errorcall(call, "fn is not a function");
+    if (!isFunction(fn)) errorcall(call, _("fn is not a function"));
     args = CDR(args); gr = CAR(args);
     args = CDR(args); options = CAR(args);
     OS->fnscale = asReal(getListElement(options, "fnscale"));
     tmp = getListElement(options, "parscale");
     if (LENGTH(tmp) != npar)
-	errorcall(call, "parscale is of the wrong length");
+	errorcall(call, _("'parscale' is of the wrong length"));
     PROTECT(tmp = coerceVector(tmp, REALSXP));
     OS->parscale = vect(npar);
     for (i = 0; i < npar; i++) OS->parscale[i] = REAL(tmp)[i];
@@ -415,13 +420,13 @@ SEXP do_optimhess(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(OS->R_fcall = lang2(fn, R_NilValue));
     PROTECT(par = coerceVector(par, REALSXP));
     if (!isNull(gr)) {
-	if (!isFunction(gr)) error("gr is not a function");
+	if (!isFunction(gr)) error(_("gr is not a function"));
 	PROTECT(OS->R_gcall = lang2(gr, R_NilValue));
     } else {
 	PROTECT(OS->R_gcall = R_NilValue); /* for balance */
     }
     ndeps = getListElement(options, "ndeps");
-    if (LENGTH(ndeps) != npar) error("ndeps is of the wrong length");
+    if (LENGTH(ndeps) != npar) error(_("'ndeps' is of the wrong length"));
     OS->ndeps = vect(npar);
     PROTECT(ndeps = coerceVector(ndeps, REALSXP));
     for (i = 0; i < npar; i++) OS->ndeps[i] = REAL(ndeps)[i];
@@ -505,7 +510,7 @@ vmmin(int n0, double *b, double *Fmin, optimfn fminfn, optimgr fmingr,
     }
 
     if (nREPORT <= 0)
-	error("REPORT must be > 0 (method = \"BFGS\")");
+	error(_("REPORT must be > 0 (method = \"BFGS\")"));
     l = (int *) R_alloc(n0, sizeof(int));
     n = 0;
     for (i = 0; i < n0; i++) if (mask[i]) l[n++] = i;
@@ -516,7 +521,7 @@ vmmin(int n0, double *b, double *Fmin, optimfn fminfn, optimgr fmingr,
     B = Lmatrix(n);
     f = fminfn(n0, b, ex);
     if (!R_FINITE(f))
-	error("initial value in vmmin is not finite");
+	error(_("initial value in vmmin is not finite"));
     if (trace) Rprintf("initial  value %f \n", f);
     *Fmin = f;
     funcount = gradcount = 1;
@@ -664,7 +669,7 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin, optimfn fminfn,
     *fail = FALSE;
     f = fminfn(n, Bvec, ex);
     if (!R_FINITE(f)) {
-	error("Function cannot be evaluated at initial parameters");
+	error(_("Function cannot be evaluated at initial parameters"));
 	*fail = TRUE;
     } else {
 	if (trace) Rprintf("Function value for initial parameters = %f\n", f);
@@ -861,7 +866,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin,
 	case 2:	    Rprintf("Method: Polak Ribiere\n");		break;
 	case 3:	    Rprintf("Method: Beale Sorenson\n");	break;
 	default:
-	    error("unknown type in CG method of optim");
+	    error(_("unknown type in CG method of optim"));
 	}
     }
     c = vect(n); g = vect(n); t = vect(n);
@@ -874,7 +879,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin,
     if (trace) Rprintf("tolerance used in gradient test=%g\n", tol);
     f = fminfn(n, Bvec, ex);
     if (!R_FINITE(f)) {
-	error("Function cannot be evaluated at initial parameters");
+	error(_("Function cannot be evaluated at initial parameters"));
     } else {
 	*Fmin = f;
 	funcount = 1;
@@ -929,7 +934,7 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin,
 			break;
 
 		    default:
-			error("unknown type in CG method of optim");
+			error(_("unknown type in CG method of optim"));
 		    }
 		    c[i] = g[i];
 		}
@@ -1014,7 +1019,7 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
     int tr = -1, iter = 0, *iwa, isave[44], lsave[4];
 
     if (nREPORT <= 0)
-	error("REPORT must be > 0 (method = \"L-BFGS-B\")");
+	error(_("REPORT must be > 0 (method = \"L-BFGS-B\")"));
     switch(trace) {
     case 2: tr = 0; break;
     case 3: tr = nREPORT; break;
@@ -1038,7 +1043,7 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 	if (strncmp(task, "FG", 2) == 0) {
 	    f = fminfn(n, x, ex);
 	    if (!R_FINITE(f))
-		error("L-BFGS-B needs finite values of fn");
+		error(_("L-BFGS-B needs finite values of fn"));
 	    fmingr(n, x, g, ex);
 	} else if (strncmp(task, "NEW_X", 5) == 0) {
 	    if(trace == 1 && (iter % nREPORT == 0)) {

@@ -98,7 +98,7 @@ extract_one(unzFile uf, char *dest, char *filename, SEXP names, int *nnames)
 	fout = R_fopen(outname, "wb");
 	if (!fout) {
 	    unzCloseCurrentFile(uf);
-	    error("cannot open file %s", outname);
+	    error(_("cannot open file %s"), outname);
 	    return 3;		/* not reached */
 	}
 	while (1) {
@@ -169,29 +169,29 @@ do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
     int   i, ntopics, rc, nnames = 0;
 
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
-	errorcall(call, "invalid zip name argument");
+	errorcall(call, _("invalid zip name argument"));
     p = CHAR(STRING_ELT(CAR(args), 0));
     if (strlen(p) > PATH_MAX - 1)
-	errorcall(call, "zip path is too long");
+	errorcall(call, _("zip path is too long"));
     strcpy(zipname, p);
     args = CDR(args);
     fn = CAR(args);
     ntopics = length(fn);
     if (ntopics > 0) {
 	if (!isString(fn) || ntopics > 500)
-	    errorcall(call, "invalid topics argument");
+	    errorcall(call, _("invalid topics argument"));
 	for (i = 0; i < ntopics; i++)
 	    topics[i] = CHAR(STRING_ELT(fn, i));
     }
     args = CDR(args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
-	errorcall(call, "invalid destination argument");
+	errorcall(call, _("invalid destination argument"));
     p = R_ExpandFileName(CHAR(STRING_ELT(CAR(args), 0)));
     if (strlen(p) > PATH_MAX - 1)
-	errorcall(call, "destination is too long");
+	errorcall(call, _("destination is too long"));
     strcpy(dest, p);
     if(!R_FileExists(dest))
-	errorcall(call, "destination does not exist");
+	errorcall(call, _("destination does not exist"));
     
     if(ntopics > 0)
 	PROTECT(names = allocVector(STRSXP, ntopics));
@@ -201,23 +201,23 @@ do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
     if(rc != UNZ_OK)
 	switch(rc) {
 	case UNZ_END_OF_LIST_OF_FILE:
-	    warning("requested file not found in the zip file");
+	    warning(_("requested file not found in the zip file"));
 	    break;
 	case UNZ_BADZIPFILE:
-	    warning("zip file is corrupt");
+	    warning(_("zip file is corrupt"));
 	    break;
 	case UNZ_CRCERROR:
-	    warning("CRC error in zip file");
+	    warning(_("CRC error in zip file"));
 	    break;
 	case UNZ_PARAMERROR:
 	case UNZ_INTERNALERROR:
-	    warning("internal error in unz code");
+	    warning(_("internal error in unz code"));
 	    break;
 	case -200:
-	    warning("write error in extracting from zip file");
+	    warning(_("write error in extracting from zip file"));
 	    break;
 	default:
-	    warning("error %d in extracting from zip file", rc);
+	    warning(_("error %d in extracting from zip file"), rc);
 	}
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = rc;
@@ -237,28 +237,28 @@ static Rboolean unz_open(Rconnection con)
     char path[2*PATH_MAX], *p;
 
     if(con->mode[0] != 'r') {
-	warning("unz connections can only be opened for reading");
+	warning(_("unz connections can only be opened for reading"));
 	return FALSE;
     }
     p = R_ExpandFileName(con->description);
     if (strlen(p) > PATH_MAX - 1) {
-	warning("zip path is too long");
+	warning(_("zip path is too long"));
 	return FALSE;
     }
     strcpy(path, p);
     p = Rf_strrchr(path, ':');
     if(!p) {
-	warning("invalid description of unz connection");
+	warning(_("invalid description of unz connection"));
 	return FALSE;
     }
     *p = '\0';
     uf = unzOpen(path);
     if(!uf) {
-	warning("cannot open zip file `%s'", path);
+	warning(_("cannot open zip file '%s'"), path);
 	return FALSE;
     }
     if (unzLocateFile(uf, p+1, 1) != UNZ_OK) {
-	warning("cannot locate file `%s' in zip file `%s'", p+1, path);
+	warning(_("cannot locate file '%s' in zip file '%s'"), p+1, path);
 	return FALSE;
     }
     unzOpenCurrentFile(uf);
@@ -301,20 +301,20 @@ static size_t unz_read(void *ptr, size_t size, size_t nitems,
 
 static int null_vfprintf(Rconnection con, const char *format, va_list ap)
 {
-    error("printing not enabled for this connection");
+    error(_("printing not enabled for this connection"));
     return 0; /* -Wall */
 }
 
 static size_t null_write(const void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
 {
-    error("write not enabled for this connection");
+    error(_("write not enabled for this connection"));
     return 0; /* -Wall */
 }
 
 static double null_seek(Rconnection con, double where, int origin, int rw)
 {
-    error("seek not enabled for this connection");
+    error(_("seek not enabled for this connection"));
     return 0; /* -Wall */
 }
 
@@ -327,17 +327,17 @@ Rconnection R_newunz(char *description, char *mode)
 {
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
-    if(!new) error("allocation of file connection failed");
+    if(!new) error(_("allocation of unz connection failed"));
     new->class = (char *) malloc(strlen("unz") + 1);
     if(!new->class) {
 	free(new);
-	error("allocation of unz connection failed");
+	error(_("allocation of unz connection failed"));
     }
     strcpy(new->class, "unz");
     new->description = (char *) malloc(strlen(description) + 1);
     if(!new->description) {
 	free(new->class); free(new);
-	error("allocation of unz connection failed");
+	error(_("allocation of unz connection failed"));
     }
     init_con(new, description, mode);
 
@@ -354,7 +354,7 @@ Rconnection R_newunz(char *description, char *mode)
     new->private = (void *) malloc(sizeof(struct fileconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
-	error("allocation of unz connection failed");
+	error(_("allocation of unz connection failed"));
     }
     return new;
 }
