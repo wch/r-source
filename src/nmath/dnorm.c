@@ -45,6 +45,7 @@ double dnorm4(double x, double mu, double sigma, int give_log)
     /* M_1_SQRT_2PI = 1 / sqrt(2 * pi) */
 }
 
+#define NEW_NORM_ONLY
 #ifndef NEW_NORM_ONLY
 /* These are defined in Mathlib.h */
 #undef dnorm
