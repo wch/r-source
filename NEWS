@@ -368,6 +368,8 @@ NEW FEATURES
 
     o	symnum() has a new logical argument `abbr.colnames'.
 
+    o   added "[" method for terms objects.
+
     o	summary(<logical>) now mentions NA's as suggested by
 	Göran Broström.
 

@@ -114,6 +114,21 @@ drop.terms <- function(termobj, dropx=NULL, keep.response = FALSE)
     }
 }
 
+
+"[.terms" <-function (termobj, i) {
+        resp <- if (attr(termobj, "response")) 
+                termobj[[2]]
+        else NULL
+        newformula <- attr(termobj, "term.labels")[i]
+        if (length(newformula) == 0) 
+                newformula <- 1
+        newformula <- reformulate(newformula, resp)
+        environment(newformula)<-environment(termobj)
+        terms(newformula, specials = names(attr(termobj, "specials")))
+
+}
+
+
 terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
 			  neg.out = TRUE, keep.order = FALSE,
                           simplify = FALSE, ...)

@@ -8,6 +8,7 @@ drop.terms(termobj, dropx = NULL, keep.response = FALSE)
 \alias{reformulate}
 \alias{drop.terms}
 \alias{delete.response}
+\alias{[.terms}
 \arguments{
   \item{termobj}{A \code{terms} object}
   \item{termlabels}{character vector giving the right-hand side of a
@@ -23,7 +24,8 @@ drop.terms(termobj, dropx = NULL, keep.response = FALSE)
   model but with no response variable.
 
   \code{drop.terms} removes variables from the right-hand side of the
-  model.
+  model. There is also a \code{"[.terms"} method to perform the same
+  function (with \code{keep.response=TRUE}).
 
   \code{reformulate} creates a formula from a character vector.
 }
@@ -41,6 +43,8 @@ tt <- terms(ff)
 tt
 delete.response(tt)
 drop.terms(tt, 2:3, keep.response = TRUE)
+tt[-1]
+tt[2:3]
 reformulate(attr(tt, "term.labels"))
 
 ## keep LHS :
