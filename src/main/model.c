@@ -1646,7 +1646,10 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
 	nc = 0;
     for (j = 0; j < nterms; j++) {
-	if (j == rhs_response) continue;
+	if (j == rhs_response) {
+	    INTEGER(count)[j]=0;  /* need this initialised */
+	    continue;
+	}
 	k = 1;
 	for (i = 0; i < nvar; i++) {
 	    if (INTEGER(factors)[i + j * nvar]) {

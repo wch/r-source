@@ -25,6 +25,8 @@ BUG FIXES
     o   x <- list(a=1, b=2) ; x["c"] <- 3 now stretches the list
         rather than give a "subscript out of bounds" error.
 
+    o   models with response appearing on lhs could cause segfault.
+
 
 		CHANGES IN R VERSION 1.0.0
 
