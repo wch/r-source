@@ -94,7 +94,7 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 		}
 		if (strcmp("integer", *type) == 0)
 		  for (i=0; i < nn; i++)
-			sprintf(result[i], form, wid, (int)((long *)x)[i]);
+			sprintf(result[i], form, wid, ((int *)x)[i]);
 		else
 			error("`type' must be \"integer\" for  \"d\"-format\n");
 	}
