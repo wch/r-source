@@ -19,13 +19,13 @@ the index page given by help.start()).
 Thanks to Martin Maechler there are number of mailing lists which
 are used by R users and developers.  They are
 
-	r-announce@stat.math.ethz.ch 	announcements of new R releases
+	r-announce@lists.r-project.org 	announcements of new R releases
 					or applications,
 
-	r-help@stat.math.ethz.ch	general inquiries and discussion
+	r-help@lists.r-project.org	general inquiries and discussion
 					about R.
 
-	r-devel@stat.math.ethz.ch	discussions about the future of R 
+	r-devel@lists.r-project.org	discussions about the future of R 
 					and pre-testing of new versions
 
 
@@ -35,9 +35,9 @@ To subscribe (or unsubscribe) to these mailing list send
 
 (in the "body", not the subject !) to:
 
-	r-announce-request@stat.math.ethz.ch
-	r-help-request@stat.math.ethz.ch
-	r-devel-request@stat.math.ethz.ch
+	r-announce-request@lists.r-project.org
+	r-help-request@lists.r-project.org
+	r-devel-request@lists.r-project.org
 
 Archives of the mailing lists are made available monthly; see the
 doc/mail/mail.html file on any CRAN node.  An HTML archive is

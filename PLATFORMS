@@ -15,7 +15,7 @@ See below for more details and contact information.
 
 If you have success on any others, please notify us by filling in the
 template at the end of this file and emailing it to
-R-core@stat.math.ethz.ch.  Make sure to mention any changes you had to
+R-core@lists.r-project.org  Make sure to mention any changes you had to
 make so we can update this file and our installation procedures.
 
 NOTE: a `successful' build is one that passes `make check'!
