@@ -2479,6 +2479,33 @@ AC_DEFUN([R_HAVE_KEYSYM],
   fi
 ])# R_HAVE_KEYSYM
 
+## R_C_INLINE
+## ----------
+## modified version of AC_C_INLINE to use R_INLINE not inline
+AC_DEFUN([R_C_INLINE],
+[AC_REQUIRE([AC_PROG_CC_STDC])dnl
+AC_CACHE_CHECK([for inline], r_cv_c_inline,
+[r_cv_c_inline=""
+for ac_kw in inline __inline__ __inline; do
+  AC_COMPILE_IFELSE([AC_LANG_SOURCE(
+[#ifndef __cplusplus
+static $ac_kw int static_foo () {return 0; }
+$ac_kw int foo () {return 0; }
+#endif
+])],
+                    [r_cv_c_inline=$ac_kw; break])
+done
+])
+case $r_cv_c_inline in
+  no) AC_DEFINE(R_INLINE,,
+                [Define as `inline', or `__inline__' or `__inline' 
+                 if that's what the C compiler calls it,
+                 or to nothing if it is not supported.]) ;;
+  *)  AC_DEFINE_UNQUOTED(R_INLINE, $r_cv_c_inline) ;;
+esac
+])# R_C_INLINE
+
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***

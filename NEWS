@@ -123,6 +123,10 @@ INSTALLATION CHANGES
 	ease issues on MacOS X.  (The location is needed when debugging
 	core dumps.)
 
+    o	Configure now tests for 'inline' and alternatives, and the 
+	src/extra/bzip2 code now (potentially) uses inlining where 
+	available and not just under gcc.
+
 
 BUG FIXES
 

@@ -62,6 +62,7 @@
 #ifndef _BZLIB_PRIVATE_H
 #define _BZLIB_PRIVATE_H
 
+#include <config.h> /* for R_INLINE */
 #include <stdlib.h>
 
 #ifndef BZ_NO_STDIO

@@ -559,6 +559,7 @@ R_TYPE_SOCKLEN
 
 AC_C_BIGENDIAN
 AC_C_CONST
+R_C_INLINE
 if test "${cross_compiling}" = yes; then
   warn_xcompile_sizeof_int="assuming C ints are 4 byte on ${host}"
   AC_MSG_WARN([${warn_xcompile_sizeof_int}])

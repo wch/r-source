@@ -437,6 +437,10 @@
 /* Define this to be the name of the CPU of your system. */
 #define R_CPU "i386"
 
+/* Define as `inline', or `__inline__' or `__inline' if that's what the C
+ *    compiler calls it, or to nothing if it is not supported. */
+#define R_INLINE inline
+
 /* Define this to be the name of the OS of your system. */
 #define R_OS "mingw32"
 

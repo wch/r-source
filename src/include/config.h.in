@@ -439,6 +439,10 @@
 /* Define this to be the name of the CPU of your system. */
 #undef R_CPU
 
+/* Define as `inline', or `__inline__' or `__inline' if that's what the C
+   compiler calls it, or to nothing if it is not supported. */
+#undef R_INLINE
+
 /* Define this to be the name of the OS of your system. */
 #undef R_OS
 

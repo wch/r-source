@@ -113,7 +113,7 @@ void bsFinishWrite ( EState* s )
 
 /*---------------------------------------------------*/
 static
-__inline__
+R_INLINE
 void bsW ( EState* s, Int32 n, UInt32 v )
 {
    bsNEEDW ( n );
