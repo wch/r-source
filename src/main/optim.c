@@ -254,8 +254,8 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
 	args = CDR(args); slower = CAR(args); /* coerce in calling code */
 	args = CDR(args); supper = CAR(args);
 	for (i = 0; i < npar; i++) {
-	    lower[i] = REAL(slower)[i];
-	    upper[i] = REAL(supper)[i];
+	    lower[i] = REAL(slower)[i] / (OS->parscale[i]);
+	    upper[i] = REAL(supper)[i] / (OS->parscale[i]);
 	    if (!R_FINITE(lower[i])) {
 		if (!R_FINITE(upper[i])) nbd[i] = 0; else nbd[i] = 3;
 	    } else {
