@@ -129,14 +129,21 @@ day_of_the_week (struct tm *tm)
     /* We know that January 1st 1970 was a Thursday (= 4).  Compute the
        the difference between this data in the one on TM and so determine
        the weekday.  */
-    int corr_year = 1900 + tm->tm_year - (tm->tm_mon < 2);
-    int wday = (-473
-		+ (365 * (tm->tm_year - 70))
-		+ (corr_year / 4)
-		- ((corr_year / 4) / 25) + ((corr_year / 4) % 25 < 0)
-		+ (((corr_year / 4) / 25) / 4)
-		+ __mon_yday[0][tm->tm_mon]
-		+ tm->tm_mday - 1);
+    int corr_year, wday;
+
+    /* R bug fix: day_of_the_week needs year, month, mday set */
+    if(tm->tm_year == NA_INTEGER || 
+       tm->tm_mon == NA_INTEGER || 
+       tm->tm_mday == NA_INTEGER) return;
+    
+    corr_year = 1900 + tm->tm_year - (tm->tm_mon < 2);
+    wday = (-473
+	    + (365 * (tm->tm_year - 70))
+	    + (corr_year / 4)
+	    - ((corr_year / 4) / 25) + ((corr_year / 4) % 25 < 0)
+	    + (((corr_year / 4) / 25) / 4)
+	    + __mon_yday[0][tm->tm_mon]
+	    + tm->tm_mday - 1);
     tm->tm_wday = ((wday % 7) + 7) % 7;
 }
 
@@ -144,6 +151,11 @@ day_of_the_week (struct tm *tm)
 static void
 day_of_the_year (struct tm *tm)
 {
+    /* R bug fix: day_of_the_year needs year, month, mday set */
+    if(tm->tm_year == NA_INTEGER || 
+       tm->tm_mon == NA_INTEGER || 
+       tm->tm_mday == NA_INTEGER) return;
+
     tm->tm_yday = (__mon_yday[__isleap (1900 + tm->tm_year)][tm->tm_mon]
 		   + (tm->tm_mday - 1));
 }

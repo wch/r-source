@@ -186,6 +186,12 @@ BUG FIXES
     o   binom.test() did not deparse its arguments early enough such
         that the reported data were ugly if x was a table.
 
+    o	Systems based on glibc, including those using R's substitute for
+	strptime, were handling strptime("2001", "%Y") incorrectly, in
+	some cases crashing.  R's substitute code has been corrected
+	(but problems may remain if glibc is used).  See the ?strptime
+	for what should happen (which is system-specific).
+
 
 
 	*********************************************************
