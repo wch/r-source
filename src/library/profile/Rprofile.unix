@@ -61,13 +61,16 @@ if(.Platform$GUI == "AQUA") {
 	dir.create(path.expand("~/Library/R"))
     if( !file.exists("~/Library/R/library") )
 	dir.create(path.expand("~/Library/R/library"))
-    .libPaths(path.expand("~/Library/R/library"))
 
-    # the following lines are needed to pass R_LIBS var to the GUI
-    # on OS X, env var defined for the shell are not passed to
-    # GUI apps
-    rlibs <-  Sys.getenv("R_LIBS")
-    Sys.putenv("R_LIBS"=paste(.libPaths(),rlibs,collapse=":",sep=""))
-    rm(rlibs)
+# the change to .libPaths should not be made if R.app is used
+     if (nchar(Sys.getenv("R_GUI_APP_VERSION"))==0) {
+    	.libPaths(path.expand("~/Library/R/library"))
 
+    # the following lines are needed to pass R_LIBS var to the old
+    # RAqua GUI on OS X
+
+        rlibs <-  Sys.getenv("R_LIBS")
+        Sys.putenv("R_LIBS"=paste(.libPaths(),rlibs,collapse=":",sep=""))
+        rm(rlibs)
+    }
 }## end "Aqua"
