@@ -55,6 +55,11 @@ http://www.activestate.com/Products/ActivePerl/.
 zip and unzip from the Info-ZIP project (http://www.info-zip.org and
 mirrors, and included in our tools.zip).
 
+PCRE from ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/.
+Unpack this (we used prce-3.9.tar.bz2) and copy the files into
+src/extra/pcre.
+
+
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, currently available for download at
 

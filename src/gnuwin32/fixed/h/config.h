@@ -228,7 +228,7 @@
 #define HAVE_NO_SYMBOL_UNDERSCORE 1
 
 /* Define if you have the PCRE headers and libraries. */
-#undef HAVE_PCRE
+#define HAVE_PCRE 1
 
 /* Define if you have the PCRE headers in pcre/. */
 /* #undef HAVE_PCRE_IN_PCRE */
