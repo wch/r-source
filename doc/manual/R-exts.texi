@@ -161,12 +161,9 @@ URL: http://www.r-project.org, http://www.another.url
 @noindent
 Continuation lines (for example, for descriptions longer than one line)
 start with a space or tab.  The @samp{Package}, @samp{Version},
-@samp{Author}, and @samp{Description} fields are mandatory, the
-@samp{Maintainer} field is recommended and will be required in @R{}
-version 1.3.0,
-@c FIXME: 1.3.0
-the remaining fields (@samp{Date}, @samp{Depends}, @samp{Address},
-@samp{URL}, @dots{}) are optional.
+@samp{License}, @samp{Description}, @samp{Title}, @samp{Author}, and
+@samp{Maintainer} fields are mandatory, the remaining fields
+(@samp{Date}, @samp{Depends}, @samp{URL}, @dots{}) are optional.
 
 The @samp{License} field should contain an explicit statement or a
 well-known abbreviation (such as @samp{GPL}, @samp{LGPL}, @samp{BSD}, or

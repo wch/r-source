@@ -32,7 +32,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.39 $ ';
+my $revision = ' $Revision: 1.40 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -131,8 +131,8 @@ if($opt_latex){
 
 ## get the valid keywords for later ...
 my %validKeywords = ();
-open(KEYWORDS, "< ${R_HOME}/doc/KEYWORDS.db") || \
-    die "Cannot open KEYWORDS.db";
+open(KEYWORDS, "< ${R_HOME}/doc/KEYWORDS.db") ||
+    die "Cannot open \`KEYWORDS.db'";
 while(<KEYWORDS>) {
     if(/^.*\|([^:]*):.*/) {
 	$validKeywords{$1} = 1;
@@ -169,7 +169,7 @@ foreach $pkg (@ARGV){
     }
     
     $log = new R::Logfile("$pkgoutdir/00check.log");
-    $log->message("using log directory $pkgoutdir");
+    $log->message("using log directory \`$pkgoutdir'");
     
     if(! $opt_library){
 	$library = $pkgoutdir;
@@ -304,7 +304,8 @@ sub check_pkg {
     }
 
     ## mandatory entries in DESCRIPTION:
-    ##   Package, Version, License, Title, Author, Maintainer
+    ##   Package, Version, License, Description, Title, Author,
+    ##   Maintainer
     $log->checking("DESCRIPTION Package field");
     if(! $description->{"Package"}){
 	$log->error("no DESCRIPTION Package field found");
@@ -329,7 +330,7 @@ sub check_pkg {
     $log->result("OK");
     
     my $field;
-    foreach $field (qw(License Title Author)){
+    foreach $field (qw(License Description Title Author)){
 	$log->checking("DESCRIPTION $field field");
 	if(! $description->{$field}){
 	    $log->error("no DESCRIPTION $field field found");
