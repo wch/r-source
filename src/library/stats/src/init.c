@@ -94,6 +94,8 @@ static const R_CMethodDef CEntries[]  = {
     {"filter2", (DL_FUNC) &filter2, 5},
     {"R_pp_sum", (DL_FUNC) &R_pp_sum, 4},
     {"HoltWinter", (DL_FUNC) &HoltWinters, 15},
+    {"kmeans_Lloyd", (DL_FUNC) &kmeans_Lloyd, 9},
+    {"kmeans_MacQueen", (DL_FUNC) &kmeans_MacQueen, 9},
     {NULL, NULL, 0}
 };
 

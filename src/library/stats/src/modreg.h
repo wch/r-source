@@ -70,6 +70,11 @@ void Trunmed(Sint *nn,/* = length(data) */
 	     double *window,/* (2k+1) */
 	     Sint   *end_rule,
 	     Sint   *print_level);
+void kmeans_Lloyd(double *x, int *pn, int *pp, double *cen, int *pk, int *cl, 
+		  int *pmaxiter, int *nc, double *wss);
+
+void kmeans_MacQueen(double *x, int *pn, int *pp, double *cen, int *pk, 
+		     int *cl, int *pmaxiter, int *nc, double *wss);
 
 /* Fortran : */
 

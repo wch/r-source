@@ -89,6 +89,11 @@ NEW FEATURES
     o	kmeans() now returns an object of class "kmeans" which has a
 	print() method.
 
+	Two alternative algorithms have been implemented.
+
+	If the number of centres is supplied, it has a new option of
+	multiple random starts.
+
     o	is.all.equal() convenience function to be used for programming.
 
     o	unclass() is no longer allowed for environments and external
