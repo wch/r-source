@@ -60,7 +60,7 @@ double euclidean(double *, int, int, int, int);
 double maximum(double *, int, int, int, int);
 double manhattan(double *, int, int, int, int);
 double canberra(double *, int, int, int, int);
-double binary(double *, int, int, int, int);
+double dist_binary(double *, int, int, int, int);
 #define EUCLIDEAN 1
 #define MAXIMUM	  2
 #define MANHATTAN 3
@@ -143,7 +143,7 @@ typedef /* Subroutine */ int (*S_fp)();
 
 /* ../appl/blas.f */
 double F77_SYMBOL(dasum)(int *n, double *dx, int *incx);
-int F77_SYMBOL(daxpy)(int *n, double *da, double *dx, int *incx, 
+int F77_SYMBOL(daxpy)(int *n, double *da, double *dx, int *incx,
 		      double *dy, int *incy);
 int F77_SYMBOL(dcopy)(int *n, double *dx, int *incx, double *dy, int *incy);
 double F77_SYMBOL(ddot)(int *n, double *dx, int *incx, double *dy, int *incy);
@@ -168,15 +168,15 @@ int F77_SYMBOL(dposl)(double *a, int *lda, int *n, double *b);
 int F77_SYMBOL(dqrdc)(double *x, int *ldx, int *n, int *p,
 		      double *qraux, int *jpvt, double *work, int *job);
 int F77_SYMBOL(dqrdc2)(double *x, int *ldx, int *n, int *p,
-		       double *tol, int *rank, 
+		       double *tol, int *rank,
 		       double *qraux, int *pivot, double *work);
 int F77_SYMBOL(dqrls)(double *x, int *n, int *p, double *y, int *ny,
 		      double *tol, double *b, double *rsd,
-		      double *qty, int *k, 
+		      double *qty, int *k,
 		      int *jpvt, double *qraux, double *work);
 /* solve for QR coefficients */
-int F77_SYMBOL(dqrsl)(double *x, int *ldx, int *n, int *k, 
-		      double *qraux, double *y, 
+int F77_SYMBOL(dqrsl)(double *x, int *ldx, int *n, int *k,
+		      double *qraux, double *y,
 		      double *qy, double *qty, double *b,
 		      double *rsd, double *xb, int *job, int *info);
 
@@ -193,7 +193,7 @@ int F77_SYMBOL(dqrxb)(double *x, int *n, int *k, double *qraux,
 		      double *y, int *ny, double *xb);
 /*---*/
 
-int F77_SYMBOL(dsvdc)(double *x, int *ldx, int *n, int *p, 
+int F77_SYMBOL(dsvdc)(double *x, int *ldx, int *n, int *p,
 		      double *s, double *e,
 		      double *u, int *ldu, double *v, int *ldv,
 		      double *work, int *job, int *info);
@@ -203,22 +203,22 @@ int F77_SYMBOL(dtrsl)(double *t, int *ldt, int *n, double *b, int *job,
 		      int *info);
 
 double F77_SYMBOL(fmin)(double *ax, double *bx, D_fp f, double *tol);
-int F77_SYMBOL(lminfl)(double *x, int *ldx, int *n, int *k, 
-		       double *qraux, double *b, 
+int F77_SYMBOL(lminfl)(double *x, int *ldx, int *n, int *k,
+		       double *qraux, double *b,
 		       double *resid, double *hat, double *coef, double *sigma);
 /* Only exported headers from ../appl/uncmin.f : */
-int F77_SYMBOL(fdhess)(int *n, double *x, double *fval, 
-		       S_fp fun, double *h__, int *nfd, 
+int F77_SYMBOL(fdhess)(int *n, double *x, double *fval,
+		       S_fp fun, double *h__, int *nfd,
 		       double *step, double *f, int *ndigit, double *typx);
-int F77_SYMBOL(optif9)(int *nr, int *n, double *x, 
+int F77_SYMBOL(optif9)(int *nr, int *n, double *x,
 		       S_fp fcn, S_fp d1fcn, S_fp d2fcn, double *typsiz,
-		       double *fscale, int *method, int *iexp, int *msg, 
+		       double *fscale, int *method, int *iexp, int *msg,
 		       int *ndigit, int *itnlim, int *iagflg, int *iahflg,
 		       int *ipr, double *dlt, double *gradtl,
 		       double *stepmx, double *steptl,
 		       double *xpls, double *fpls, double *gpls,
 		       int *itrmcd, double *a, double *wrk, int *itncnt);
- 
-double F77_SYMBOL(zeroin)(double *ax, double *bx, 
+
+double F77_SYMBOL(zeroin)(double *ax, double *bx,
 			  D_fp f, double *tol, int *maxiter);
 #endif
