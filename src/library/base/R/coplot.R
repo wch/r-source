@@ -164,7 +164,7 @@ function (formula, data, given.values, panel=points, rows, columns,
 	istart <- (total.rows - rows) + 1
 	i <- total.rows - ((index - 1)%/%columns)
 	j <- (index - 1)%%columns + 1
-	par(mfg = c(i, j, total.rows, total.columns), new = TRUE)
+	par(mfg = c(i, j, total.rows, total.columns))
 	plot.new()
 	plot.window(xlim, ylim, log = "")
 	if(any(id)) {
