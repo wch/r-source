@@ -2,10 +2,13 @@
 \title{General Tree Structures}
 \alias{as.dendrogram}
 \alias{as.dendrogram.hclust}
+\alias{cut.dendrogram}
+\alias{[[.dendrogram}
+\alias{print.dendrogram}
+\alias{str.dendrogram}
 \alias{plot.dendrogram}
 \alias{plotNode}
 \alias{plotNodeLimit}
-\alias{cut.dendrogram}
 \description{
   Class \code{"dendrogram"} provides general functions for handling
   tree-like structures.  It is intended as a replacement for similar
@@ -56,6 +59,10 @@
   tree, also of class \code{dendrogram}, the latter a list with the
   branches obtained from cutting the tree, each a \code{dendrogram}.
 
+  There are \code{\link{[[}}, \code{\link{print}}, and \code{\link{str}}
+  methods for \code{"dendrogram"} objects where the first one
+  (extraction) ensures that selecting sub-branches keeps the class.
+
   Objects of class \code{"hclust"} can be converted to class
   \code{"dendrogram"} using method \code{as.dendrogram}.
 
@@ -65,7 +72,8 @@
 library(mva)
 data(USArrests)
 hc <- hclust(dist(USArrests), "ave")
-str(dend1 <- as.dendrogram(hc))
+(dend1 <- as.dendrogram(hc)) # "print()" method
+str(dend1) # "str()" method
 plot(dend1)
 dend2 <- cut(dend1, h=70)
 plot(dend2$upper)
