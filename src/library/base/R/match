@@ -11,6 +11,8 @@ pmatch <- function(x, table, nomatch=NA) {
 	y
 }
 
+"%in%" <- function(x, y) match(x, y, nomatch = 0) > 0
+
 match.arg <- function(arg, choices) {
   if (missing(choices)) {
     formal.args <- formals(sys.function(sys.parent()))
