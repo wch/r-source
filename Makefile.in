@@ -40,8 +40,8 @@ install: all installdirs
 	$(INSTALL_PROGRAM) bin/R.binary $(rhome)/bin
 	cat bin/R | sed "s@RHOME=.*@RHOME=$(rhome)@" > $(bindir)/R
 	chmod 755 $(bindir)/R
-	for f in `ls cmd/[a-z]* | grep -v '.*\.in'`; \
-		do $(INSTALL) $$f $(rhome)/cmd; done
+	for f in `ls bin/* | grep -v 'R\|R.binary'`; \
+		do $(INSTALL) $$f $(rhome)/bin; done
 	cd demos; $(MAKE) $@
 	cd doc; $(MAKE) $@
 	cd etc; $(MAKE) $@
@@ -54,7 +54,7 @@ install: all installdirs
 
 installdirs:
 	$(top_srcdir)/aux/mkinstalldirs $(bindir) $(mandir) $(mandir)/man1 \
-		$(datadir) $(rhome) $(rhome)/bin $(rhome)/cmd \
+		$(datadir) $(rhome) $(rhome)/bin \
 		$(rhome)/etc $(rhome)/include $(rhome)/library
 
 install-strip:
