@@ -322,9 +322,8 @@ LaTeX installed you can print help files by @code{help(fn_name, offline=TRUE)}.
 @node Can I use R CMD BATCH?, Can I use @RWVER@ with ESS and (X)emacs?, How do I print from R?, Installation and Usage
 @section Can I use @code{R CMD BATCH}?
 
-Yes: use @code{R CMD BATCH --help} for full details.  (Perl use to be
-required, but is no longer.)  @code{R BATCH} can be used, but @code{R
-CMD BATCH} is preferred.
+Yes: use @code{R CMD BATCH --help} for full details.  (Perl used to be
+required, but is no longer.)
 
 You can set also up a batch file using @code{Rterm.exe}.  A sample
 batch file might contain (as one line)
