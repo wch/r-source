@@ -143,7 +143,6 @@ my %develfiles=("doc\\html\\logo.jpg" => 1,
 		"bin\\Rd2dvi.sh" => 1,
 		"bin\\Rd2txt" => 1,
 		"bin\\Rdconv" => 1,
-		"bin\\Rdindex" => 1,
 		"bin\\Rdiff.sh" => 1,
 		"bin\\Sd2Rd" => 1);
 		

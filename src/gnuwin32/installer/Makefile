@@ -26,8 +26,7 @@ imagedir:
 	$(CP) -p ../../library/base/data/morley.tab $(RPREFIX)/library/base/data
 	$(RM) $(RPREFIX)/*/Makefile.in
 	(cd $(RPREFIX)/bin; $(RM) INSTALL REMOVE SHLIB build check \
-	   massage-Examples Rd2dvi.sh Rd2txt Rdconv Rdiff.sh Rdindex \
-           Sd2Rd)
+	   massage-Examples Rd2dvi.sh Rd2txt Rdconv Rdiff.sh Sd2Rd)
 	$(MKDIR) -p $(RPREFIX)/etc
 	$(CP) -p ../../../etc/Rprofile $(RPREFIX)/etc/Rprofile
 	$(CP) -p ../../../etc/Rconsole $(RPREFIX)/etc/Rconsole
@@ -86,8 +85,7 @@ endif
 	$(CP) ../../../bin/INSTALL ../../../bin/REMOVE ../../../bin/SHLIB \
 	  ../../../bin/build ../../../bin/check ../../../bin/massage-Examples \
 	  ../../../bin/Rd2dvi.sh ../../../bin/Rd2txt ../../../bin/Rdconv \
-	  ../../../bin/Rdindex ../../../bin/Rdiff.sh \
-	  ../../../bin/Sd2Rd  \
+	  ../../../bin/Rdiff.sh ../../../bin/Sd2Rd  \
           $(RPREFIX)/bin
 	$(CP) -pr ../../../lib $(RPREFIX)
 	$(CP) ../../../share/make/wintests.mk $(RPREFIX)/share/make
@@ -105,7 +103,7 @@ endif
 	done	
 #
 	find $(RPREFIX) -name CVS -prune -exec rm -rf \{\} \;
-	
+
 R.iss Rsmall.iss: JRins.pl imagedir
 	rm -rf $(RPREFIX)/library/*/man
 	$(CAT) $(RPREFIX)/library/*/CONTENTS >  \

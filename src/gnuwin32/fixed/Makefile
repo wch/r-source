@@ -52,9 +52,6 @@ fixh: version h/config.h \
 ../../../bin/Rdconv: ../../scripts/Rdconv.in
 	$(SED) -e 1d -e s/\"unix\"/\"windows\"/ -e "s/R CMD/Rcmd/" $< > $@
 
-../../../bin/Rdindex: ../../scripts/Rdindex.in
-	$(SED) -e 1d -e s/\"unix\"/\"windows\"/ -e "s/R CMD/Rcmd/" $< > $@
-
 ../../../bin/Rdiff.sh: ../../scripts/Rdiff
 	$(SED) -e 1d -e 's/\$${EGREP}/grep -E/' $< > $@
 
@@ -62,7 +59,7 @@ fixh: version h/config.h \
 	$(SED) -e 1d -e "s/R CMD/Rcmd/" $< > $@
 
 fixbin: ../../../bin/massage-Examples ../../../bin/build \
-	   ../../../bin/check ../../../bin/Rdconv ../../../bin/Rdindex \
+	   ../../../bin/check ../../../bin/Rdconv \
 	   ../../../bin/Sd2Rd ../../../bin/Rdiff.sh ../../../bin/Rprof cp2bin
 	@$(ECHO) done > fixbin
 
