@@ -170,7 +170,9 @@ AC_ARG_ENABLE([R-shlib],
 [want_R_shlib="${enableval}"],
 [want_R_shlib="${want_R_framework}"])
 AM_CONDITIONAL(WANT_R_SHLIB, [test "x${want_R_shlib}" = xyes])
-if test "${want_R_shlib}" = yes; then
+if test "${want_R_framework}" = yes; then
+  LIBR="-framework R"
+elif test "${want_R_shlib}" = yes; then
   LIBR="-L\$(R_HOME)/bin -lR"
 else
   LIBR=
