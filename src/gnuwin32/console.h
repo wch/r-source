@@ -21,6 +21,7 @@
 
 typedef window console;
 typedef window pager;
+typedef window dataeditor;
 
 void
 setconsoleoptions(char *fnname,int fnsty, int fnpoints,
@@ -48,3 +49,5 @@ void readhistory(control c, char *s);
 
 extern int setWidthOnResize;
 int consolecols(console c);
+
+dataeditor newdataeditor();

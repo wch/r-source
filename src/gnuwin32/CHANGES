@@ -9,7 +9,10 @@ rw1010
 
 There is now a GUI preferences editor on the Edit menu in Rgui.
 
-The data entry editor is now implemented.
+A data entry editor is now implemented.  This is similar to the Unix
+one (see ?dataentry) with the additional feature that right-clicking
+in a cell turns it into an editable field (entered as a new value
+ by navigating away from the cell).
 
 Colours in Rconsole can be specified as "Windows" and will be taken 
 from the current Windows colour scheme. (The preferences editor will
@@ -33,7 +36,7 @@ as  xfig-3.2.2-cygwin-b20.1-bin.tar.gz
 The internal unzip and the installer now use unzip5.41, not unzip5.40, and
 the DLL interface is incompatible.
 
-The R DLL now has standard Windows version information.
+The R DLL and executables now have standard Windows version information.
 
 
 rw1002
