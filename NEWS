@@ -7,6 +7,9 @@
 
 NEW FEATURES
 
+    o	A first step in improving performance has been made.
+	Attached objects, libraries etc are now hashed.
+
     o   contrast() no longer drops colnames for 1DF contrasts.
 	Consequentially, labeling of regression coefficients for binary
 	factors contain level names (again...).
@@ -93,6 +96,9 @@ NEW FEATURES
     o	uniroot() can now be used recursively.
 
 BUG FIXES
+
+    o	a clipping problem for plots when there non-zero outer margins
+	has been fixed.  This problem used to affect coplot and pairs.
 
     o	substr/substring, deparse, dput, dump, print
 	will work for arbitrarily long strings.
