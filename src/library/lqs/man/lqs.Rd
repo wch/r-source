@@ -115,7 +115,7 @@ The \code{control} argument is a list with components
   There seems no reason other than historical to use the \code{lms} and
   \code{lqs}
   options.  LMS estimation is of low efficiency (converging at rate
-  n^\{-1/3\}) whereas LTS has the same asymptotic efficiency as an
+  \eqn{n^{-1/3}}) whereas LTS has the same asymptotic efficiency as an
   M estimator with trimming at the quartiles (Marazzi, 1993, p.201).
   LQS and LTS have the same maximal breakdown value of
   \code{(floor((n-p)/2) + 1)/n} attained if
@@ -146,7 +146,7 @@ Wiley.
 
 A. Marazzi (1993) 
 \emph{Algorithms, Routines and S Functions for Robust Statistics.}
-Wadsworth \& Brooks/Cole.
+Wadsworth and Brooks/Cole.
 
 P. Rousseeuw and M. Hubert (1997) Recent developments in PROGRESS. In
 \emph{L1-Statistical Procedures and Related Topics }
