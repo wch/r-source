@@ -27850,13 +27850,24 @@ echo "${ECHO_T}no" >&6
 fi
 
     fi
-    separator=""
+    ## need /lib/crt0_64.o on 64-bit AIX: see comments in R-admin.
+    if test "x${OBJECT_MODE}" = "x64"; then
+       separator=""
+test -z "${separator}" && separator=" "
+if test -z "${R_XTRA_LIBS}"; then
+  R_XTRA_LIBS="/lib/crt0_64.o"
+else
+  R_XTRA_LIBS="${R_XTRA_LIBS}${separator}/lib/crt0_64.o"
+fi
+    else
+       separator=""
 test -z "${separator}" && separator=" "
 if test -z "${R_XTRA_LIBS}"; then
   R_XTRA_LIBS="/lib/crt0.o"
 else
   R_XTRA_LIBS="${R_XTRA_LIBS}${separator}/lib/crt0.o"
 fi
+    fi
     ;;
   cygwin*|mingw*|windows*|winnt)
     cat >>confdefs.h <<\_ACEOF
