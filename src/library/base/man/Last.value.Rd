@@ -21,5 +21,6 @@ fac14 <- .Last.value # keep them
 
 library("eda") # returns invisibly
 .Last.value    # shows what library(.) above returned
+\testonly{detach("package:eda")}
 }
 \keyword{programming}
