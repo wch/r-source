@@ -106,9 +106,6 @@ session and send the report to the right address.  It also fills in some
 basic information, such as your R version and operating system, which
 has proved helpful in the debugging process.
 
-The source distribution has a file @file{BUGS} at the top level giving a
-summary of the entries at the time this distribution was prepared.
-
 @bye
 
 @c Local Variables: ***
