@@ -9,7 +9,14 @@ top_builddir = ..
 
 include $(top_builddir)/Makeconf
 
-all R docs::
+all: R
+
+R:
+	@if [ "$(srcdir)" != "." ]; then \
+	  $(MAKE) install rhome=$(top_builddir); \
+	fi
+
+docs:
 
 install: installdirs
 	@for f in `ls $(srcdir)/dynload | sed '/CVS/d'`; do \
@@ -38,6 +45,9 @@ installdirs:
 
 mostlyclean:
 clean:
+	@if [ "$(srcdir)" != "." ]; then \
+	  rm -rf [a-z]*; \
+	done
 distclean:
 	@rm -f Makefile
 maintainer-clean: distclean
