@@ -63,25 +63,25 @@ BUG FIXES
 
     o	str(x) now also works when x is an "externalptr" (or "weakref").
 
-    o	rbeta(), rf(), and rt() now support infinite parameter values; 
+    o	rbeta(), rf(), and rt() now support infinite parameter values;
 	other distributions return NaN instead of NA for such.
 
-    o   Redefining a class is now safer if the new definition
-        generates an error (previously some invalid metadata could be
-        left behind).
+    o	Redefining a class is now safer if the new definition
+	generates an error (previously some invalid metadata could be
+	left behind).
 
-    o   A number of errors are now caught in setClass() that
-        previously either went unchecked or waited until new() to
-        appear:
-        - classes may not contain themselves, directly or indirectly;
-        - classes appearing either as slots or as superclasses must
-          themselves be defined;
+    o	A number of errors are now caught in setClass() that
+	previously either went unchecked or waited until new() to
+	appear:
+	- classes may not contain themselves, directly or indirectly;
+	- classes appearing either as slots or as superclasses must
+	  themselves be defined;
 	- slot names (direct or inherited) must be unique.
 	In related changes, prototype() now works as documented, and is the
-        recommended way to provide prototype objects.
+	recommended way to provide prototype objects.
 
     o	Sorting an ordered factor would return an unordered one.
-    	This caused some trouble with panel.superpose (PR#974).
+	This caused some trouble with panel.superpose (PR#974).
 
     o	methods() could return duplicates if a method in a namespace
 	was both exported and registered.
@@ -92,15 +92,21 @@ BUG FIXES
     o	The "r+" and "r+b" modes of opening file connections disallowed
 	writing.
 
-    o	library() now warns the user if the chosen package name 
-	doesn't match the internal package name, and corrects the 
+    o	library() now warns the user if the chosen package name
+	doesn't match the internal package name, and corrects the
 	error. (PR#2816)
-    
+
     o	qr(LAPACK=TRUE) (and qr for complex arguments) might have failed
 	to pivot for rank-deficient inputs. (PR#2867)
 
     o	Only re-mapped symbols are exported by regex.o, to avoid
 	problems with embedded R on RedHat 9.
+
+    o	arima() did not set transform.pars to FALSE if AR parameters
+	were fixed, although it claimed to.
+
+    o	pnorm() was slower than necessary in the outer tails in some
+	cases due to a typo in the improvements from PR#699.  (PR#2883)
 
 
 
@@ -839,10 +845,10 @@ BUG FIXES
 
     o	read.dcf() read incorrectly files which did not end in a new line.
 
-    o   read.socket() dropped certain non-alphanumeric characters. (PR#2639)
+    o	read.socket() dropped certain non-alphanumeric characters. (PR#2639)
 
-    o   termplot() handles missing data better (PR#2687,
-         <Mark.Bravington@csiro.au>)
+    o	termplot() handles missing data better (PR#2687,
+	 <Mark.Bravington@csiro.au>)
 
     o	Corrected MacRoman encoding for Icircumflex etc.
 
