@@ -20,7 +20,7 @@ p.adjust.methods
   number of comparisons.  Four less conservative corrections are also
   included by Holm (1979) (\code{"holm"}), Hochberg (1988)
   (\code{"hochberg"}), Hommel (1988) (\code{"hommel"}) and Benjamini &
-  Hochberg (1995) (\code{"fdr"}), respectively. 
+  Hochberg (1995) (\code{"fdr"}), respectively.
   A pass-through option (\code{"none"}) is also included.
   The set of methods are contained in the \code{p.adjust.methods} vector
   for the benefit of methods that need to have the method as an option
@@ -33,7 +33,7 @@ p.adjust.methods
 
   Hochberg's and Hommel's methods are valid when the hypothesis tests
   are independent or when they are non-negatively associated (Sarkar,
-  1998; Sarker and Chang, 1997).  Hommel's method is more powerful than
+  1998; Sarkar and Chang, 1997).  Hommel's method is more powerful than
   Hochberg's, but the difference is usually small and the Hochberg
   p-values are faster to compute.
 
@@ -49,7 +49,7 @@ p.adjust.methods
   Controlling the false discovery rate: a practical and powerful
   approach to multiple testing.
   \emph{Journal of the Royal Statistical Society Series} B, \bold{57},
-  289--300. 
+  289--300.
 
   Holm, S. (1979).
   A simple sequentially rejective multiple test procedure.
@@ -92,9 +92,8 @@ p.adjust.methods
 }
 
 \examples{
-
-x<-rnorm(50, m=c(rep(0,25),rep(3,25)))
-p<-2*pnorm( -abs(x))
+x <- rnorm(50, m=c(rep(0,25),rep(3,25)))
+p <- 2*pnorm( -abs(x))
 
 round(p, 3)
 
@@ -102,7 +101,5 @@ round(p.adjust(p), 3)
 round(p.adjust(p,"bonferroni"), 3)
 
 round(p.adjust(p,"fdr"), 3)
-
 }
-
 \keyword{htest}
