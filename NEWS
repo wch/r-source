@@ -26,6 +26,13 @@ NEW FEATURES
     o	BATCH on Unix no longer sets --gui="none" as the X11 module
 	is only loaded if needed.
 
+    o	The X11 module (and the hence X11(), jpeg() and png() devices
+	and the X-based dataentry editor) is now in principle
+	available under all Unix GUIs except --gui="none", and this is
+	reflected in capabilities().  capabilities("X11") determines
+	if an X server can be accessed, and so is more likely to be
+	accurate.
+
 
 DOCUMENTATION
 

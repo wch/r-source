@@ -1100,16 +1100,35 @@ SEXP do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+static int var_R_can_use_X11 = -1;
+
+extern Rboolean R_access_X11(void); /* from src/unix/X11.c */
+
+static Rboolean R_can_use_X11()
+{
+    if (var_R_can_use_X11 < 0) {
+#ifdef HAVE_X11
+	if(strcmp(R_GUIType, "none") != 0) {
+	    /* At this point we have permission to use the module, so try it */
+	    var_R_can_use_X11 = R_access_X11();
+	} else {
+	    var_R_can_use_X11 = 0;	    
+	}
+#else
+	var_R_can_use_X11 = 0;
+#endif	
+    }
+    
+    return var_R_can_use_X11 > 0;
+}
+
 
 SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ansnames;
     int i = 0;
 #ifdef Unix
-    Rboolean X11 = (strcmp(R_GUIType, "X11") == 0) ||
-	(strcmp(R_GUIType, "Tk") == 0) ||
-	(strcmp(R_GUIType, "GNOME") == 0)  || 
-	(strcmp(R_GUIType, "AQUA") == 0);
+    Rboolean X11 = R_can_use_X11();
 #endif
 
     checkArity(op, args);
@@ -1181,16 +1200,16 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     /* This one is complex.  Set it to be true only in interactive use,
-       with any of the GUIs or under Unix if readline is available and in
-       use */
+       with the Windows and GNOME GUIs (but not Tk GUI) or under Unix 
+       if readline is available and in use. */
     SET_STRING_ELT(ansnames, i, mkChar("cledit"));
     LOGICAL(ans)[i] = FALSE;
 #if defined(Win32)
     if(R_Interactive) LOGICAL(ans)[i] = TRUE;
 #endif
 #ifdef Unix
-    if(strcmp(R_GUIType, "GNOME") == 0) {
-	if(R_Interactive) LOGICAL(ans)[i] = TRUE;
+    if(strcmp(R_GUIType, "GNOME") == 0) {  /* always interactive */
+	LOGICAL(ans)[i] = TRUE;  /* also AQUA ? */
     } else {
 #ifdef HAVE_LIBREADLINE
 	extern Rboolean UsingReadline;
