@@ -1146,7 +1146,7 @@ static int X11_Open(DevDesc *dd, x11Desc *xd, char *dsp,
 
 
     if(DisplayOpened) {
-        addInputHandler(InputHandlers, ConnectionNumber(display),
+        addInputHandler(R_InputHandlers, ConnectionNumber(display),
 			R_ProcessEvents, XActivity);
     }
 
@@ -1334,7 +1334,8 @@ static void X11_Close(DevDesc *dd)
 	while (nfonts--)  XFreeFont(display, fontcache[nfonts].font);
 	nfonts = 0;
 #endif
-        removeInputHandler(&InputHandlers, getInputHandler(InputHandlers,fd));
+        removeInputHandler(&R_InputHandlers, 
+			   getInputHandler(R_InputHandlers,fd));
 	XCloseDisplay(display);
 	displayOpen = 0;
     }

@@ -10,7 +10,7 @@ subdir = src/unix
 
 include $(top_builddir)/Makeconf
 
-ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
+ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 
 SOURCES = devices.c dynload.c edit.c stubs.c system.c sys-unix.c \
           sys-common.c sys-std.c
@@ -46,9 +46,11 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(LIB)
+
+DLLs:
 	@if test -n "$(R_GUIS)"; then \
 	  for g in $(R_GUIS); do \
-	    (cd $${g} && $(MAKE) $@) || exit 1; \
+	    (cd $${g} && $(MAKE) R) || exit 1; \
 	  done; \
 	fi
 

@@ -29,7 +29,9 @@
 #include "Fileio.h"
 #include "Graphics.h"		/* KillAllDevices() [nothing else?] */
 
-#include "devX11.h"  /* X11ConnectionNumber, etc */
+#define __SYSTEM__
+#include "devX11.h"
+#undef __SYSTEM__
 
 #include "Startup.h"
 #include "Runix.h"

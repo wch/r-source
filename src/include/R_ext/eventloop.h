@@ -35,6 +35,10 @@ extern InputHandler *getInputHandler(InputHandler *handlers, int fd);
 extern int           removeInputHandler(InputHandler **handlers, InputHandler *it);
 extern InputHandler *getSelectedHandler(InputHandler *handlers, fd_set *mask);
 
-extern InputHandler *InputHandlers;
+#ifdef __SYSTEM__
+InputHandler *R_InputHandlers;
+#else
+extern InputHandler *R_InputHandlers;
+#endif
 
 #endif
