@@ -12,7 +12,8 @@ endif
 CFLAGS=$(OPTFLAGS) -I../../include
 
 all: ../../../bin/Rgui.exe ../../../bin/Rterm.exe \
-     ../../../bin/Rcmd.exe  ../../../bin/Rproxy.dll
+     ../../../bin/Rcmd.exe  ../../../bin/RSetReg.exe  \
+    ../../../bin/Rproxy.dll
 
 ../../../bin/Rgui.exe: Rgui.exe
 	$(MKDIR) -p ../../../bin
@@ -23,6 +24,10 @@ all: ../../../bin/Rgui.exe ../../../bin/Rterm.exe \
 	$(CP) $^ $@	
 
 ../../../bin/Rcmd.exe: Rcmd.exe
+	$(MKDIR) -p ../../../bin
+	$(CP) $^ $@
+
+../../../bin/RSetReg.exe: RSetReg.exe
 	$(MKDIR) -p ../../../bin
 	$(CP) $^ $@
 
@@ -40,6 +45,8 @@ Rgui.exe: graphappmain.o  rgui.o rgico.o
 Rterm.exe: graphappmain.o rterm.o rtico.o
 
 Rcmd.exe: rcmd.o ../rhome.o rcico.o
+
+RSetReg.exe: RSetReg.o ../rhome.o rcico.o
 
 rgui.o rterm.o rproxy_impl.o rgico.o rtico.o rcico.o: ../../include/Rversion.h
 

@@ -22,7 +22,7 @@ use Cwd;
 use File::Find;
 
 my $fn, $component, $path;
-my $startdir=getcwd();
+my $startdir=cwd();
 my $RVER=$ARGV[0];
 my $RW=$ARGV[1];
 my $iconpars="WorkingDir: \"{app}\"" ;
@@ -72,6 +72,14 @@ Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "A
 Name: "{group}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; $iconpars
 Name: "{group}\\R $RVER Help"; Filename: "{app}\\doc\\html\\Rwin.html"; Components: html
 Name: "{userdesktop}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; MinVersion: 4,4; Tasks: desktopicon; $iconpars
+
+[Registry] 
+Root: HKCU; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty
+Root: HKCU; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty
+Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekey
+Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"
+Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"
 
 [Files]
 END
