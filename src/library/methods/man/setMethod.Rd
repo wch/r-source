@@ -115,17 +115,20 @@ tc1 <- new("trackCurve", t1)
 slot(tc1, "smooth") <- smooth.spline(slot(tc1, "x"), slot(tc1, "y"))$y #$
 plot(t1)
 plot(qnorm(ppoints(20)), t1)
-## An example of inherited methods.
+## An example of inherited methods, and of conforming method arguments
+## (note the dotCurve argument in the method, which will be pulled out
+## of ... in the generic.
 setMethod("plot", c("trackCurve", "missing"),
-function(x, y, ...) {
+function(x, y, dotCurve = FALSE, ...) {
   plot(as(x, "track"))
   if(length(slot(x, "smooth") > 0))
-    lines(slot(x, "x"), slot(x, "smooth"))
+    lines(slot(x, "x"), slot(x, "smooth"),
+         lty = if(dotCurve) 2 else 1)
   }
 )
 ## the plot of tc1 alone has an added curve; other uses of tc1
 ## are treated as if it were a "track" object.
-plot(tc1)
+plot(tc1, dotCurve = TRUE)
 plot(qnorm(ppoints(20)), tc1)
 
 ## defining methods for a special function.
