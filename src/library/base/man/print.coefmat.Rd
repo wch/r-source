@@ -20,12 +20,13 @@ print.coefmat(x, digits=max(3, getOption("digits") - 2),
 }
 \arguments{
   \item{x}{a numeric matrix like object, to be printed.}
-  \item{digits}{number of digits to be used for most numbers.}
+  \item{digits}{minimum number of significant digits to be used for
+    most numbers.}
   \item{signif.stars}{logical; if \code{TRUE}, P-values are additionally
     encoded visually as ``significance stars'' in order to help scanning
     of long coefficient tables.  It defaults to the
     \code{show.signif.stars} slot of \code{\link{options}}.}
-  \item{dig.tst}{number of significant digits for the test statistics,
+  \item{dig.tst}{minimum number of significant digits for the test statistics,
     see \code{tst.ind}.}
   \item{cs.ind}{indices (integer) of column numbers which are (like)
     \bold{c}oefficients and \bold{s}tandard errors to be formatted

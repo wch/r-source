@@ -13,7 +13,7 @@
 \arguments{
   \item{x}{object of class \code{data.frame}.}
   \item{\dots}{optional arguments to \code{print} or \code{plot} methods.}
-  \item{digits}{the number of significant digits to be printed.}
+  \item{digits}{the minimum number of significant digits to be used.}
   \item{quote}{logical, indicating whether or not strings
     (\code{\link{character}}s) should be printed with surrounding quotes.}
   \item{right}{logical, indicating whether or not strings should be

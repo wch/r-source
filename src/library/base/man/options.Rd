@@ -32,7 +32,7 @@ getOption(x)
 
   \item{digits}{controls the number of digits to print when printing
     numeric values.  It is a suggestion only.  Valid values are 1\dots22
-    with default 7.}
+    with default 7.  See \code{\link{print.default}}.}
 
   \item{editor}{sets the default text editor, e.g., for
     \code{\link{edit}}.  Set from the environment variable \code{VISUAL}
@@ -266,7 +266,7 @@ options(error=quote(q("no", status=66, runLast=FALSE)))
 stop("test it")
 }
 \dontrun{## set an error action for debugging: see ?debugger.
-options(error=quote(dump.frames()))
+options(error=dump.frames)
 ## A possible setting for non-interactive sessions
 options(error=quote({dump.frames(to.file=TRUE); q()}))
 }}

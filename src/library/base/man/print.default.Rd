@@ -9,10 +9,10 @@ print.atomic(x, quote = TRUE, \dots)
 \alias{print.atomic}
 \arguments{
   \item{x}{the object to be printed.}
-  \item{digits}{a non-null value for \code{digits} specifies the number of
-    significant digits to be printed in values.  If \code{digits} is
-    \code{NULL}, the value of \code{digits} set by \code{options} is
-    used.}
+  \item{digits}{a non-null value for \code{digits} specifies the minimum
+    number of significant digits to be printed in values.  If
+    \code{digits} is \code{NULL}, the value of \code{digits} set by
+    \code{options} is used.}
   \item{quote}{logical, indicating whether or not strings
     (\code{\link{character}}s) should be printed with surrounding quotes.}
   \item{na.print}{a character string which is used to indicate
@@ -34,6 +34,11 @@ print.atomic(x, quote = TRUE, \dots)
   The default for printing \code{NA}s is to print \code{NA} (without
   quotes) unless this is a character \code{NA} \emph{and} \code{quote =
     FALSE}, when \code{<NA>} is printed.
+
+  The same number of decimal places is used throughout a vector,  This
+  means that \code{digits} specifies the minimum number of significant
+  digits to be used, and that at least one entry will be printed with
+  that minimum number.
 }
 \seealso{The generic \code{\link{print}}, \code{\link{options}}.
   The \code{"\link{noquote}"} class and print method.
