@@ -26,7 +26,7 @@ mostattributes(obj) <- list
 x <- cbind(a=1:3, pi=pi) # simple matrix w/ dimnames
 str(attributes(x))
 
-## strip an objects attributes:
+## strip an object's attributes:
 attributes(x) <- NULL
 x # now just a vector of length 6
 
