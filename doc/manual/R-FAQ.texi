@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-10-04
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-10-08
 @set REL-VERSION 2.0.0
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2257,6 +2257,8 @@ data with any numbers of levels in the hierarchy, and tests for the
 significance of each F and variance components.
 @item homals
 Homogeneity Analysis (HOMALS) package with optional Tcl/Tk interface.
+@item hopach
+Hierarchical Ordered Partitioning and Collapsing Hybrid (HOPACH).
 @item httpRequest
 Implements HTTP Request protocols (GET, POST, and multipart POST
 requests).
@@ -2705,6 +2707,9 @@ regression models (GLMs).
 Functions for fitting general linear Structural Equation Models (with
 observed and unobserved variables) by the method of maximum likelihood
 using the RAM approach.
+@item seqinr
+Exploratory data analysis and data visualization for biological sequence
+(DNA and protein) data.
 @item seqmon
 Sequential monitoring of clinical trials.
 @c <COMMENT>
