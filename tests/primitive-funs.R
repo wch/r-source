@@ -42,7 +42,7 @@ Real.primitives <-
 	 programming =
 	 c("nargs", "missing", # actually args(.) could be as formal(.)
 	   "interactive",
-	   ".Internal", ".External", ".Call",
+	   ".Primitive", ".Internal", ".External", ".Call",
 	   ".C", ".Fortran", "symbol.C", "symbol.For",
 	   "globalenv", "pos.to.env", "unclass",
 

@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.65.0 Under development (unstable) (June 17, 1999)
+Version 0.65.0 Under development (unstable) (July 16, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -23,14 +23,14 @@ Type	"q()" to quit R.
 > bpos <- match("package:base",search())
 > nn <- ls(pos=bpos)
 > length(nn) # 844 [R 0.62.0, March 25, 1998;  1067 R 0.64.0 March 1999]
-[1] 1090
+[1] 1093
 > 
 > is.primitive <- function (obj) is.function(obj) && is.null(args(obj))
 > is.special <- function(obj) typeof(obj) == "special"
 > 
 > Primf <- nn[sapply(nn, function(N) is.primitive(get(N, pos=bpos)))]
 > length(Primf) ## 195  R 0.62.0, March 25, 1998
-[1] 136
+[1] 137
 > ## 132	R 0.62.2+
 > Real.primitives <-
 +     list(
@@ -59,7 +59,7 @@ Type	"q()" to quit R.
 + 	 programming =
 + 	 c("nargs", "missing", # actually args(.) could be as formal(.)
 + 	   "interactive",
-+ 	   ".Internal", ".External", ".Call",
++ 	   ".Primitive", ".Internal", ".External", ".Call",
 + 	   ".C", ".Fortran", "symbol.C", "symbol.For",
 + 	   "globalenv", "pos.to.env", "unclass",
 + 
