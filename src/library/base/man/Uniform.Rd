@@ -28,6 +28,6 @@ for \eqn{min \le x \le max}.
 \code{\link{.Random.seed}}, \code{\link{rnorm}}, \ldots.
 }
 \examples{
-var(runif(10000))#- ~ = 1/12 = .8333
+var(runif(10000))#- ~ = 1/12 = .08333
 }
 \keyword{distribution}
