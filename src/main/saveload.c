@@ -1801,7 +1801,7 @@ static int R_ReadMagic(FILE *fp)
     return d1 + 10 * d2 + 100 * d3 + 1000 * d4;
 }
 
-static int R_DefaultSaveFormatVersion = 1;
+static int R_DefaultSaveFormatVersion = 2;
 
 static void R_SaveToFileV(SEXP obj, FILE *fp, int ascii, int version)
 {
