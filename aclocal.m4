@@ -592,6 +592,28 @@ AC_DEFUN([R_HEADER_GLIBC2],
   if test "${r_cv_header_glibc2}" = yes; then
     AC_DEFINE(HAVE_GLIBC2)
   fi])
+AC_DEFUN([R_TYPE_SOCKLEN], [
+AC_CHECK_HEADER(sys/socket.h)
+AC_MSG_CHECKING([for type of socket length])
+if test "${ac_cv_header_sys_socket_h}" = yes; then
+  AC_CACHE_VAL(r_cv_type_socklen, [
+    for t in socklen_t size_t int; do
+      AC_TRY_COMPILE([
+#include <stddef.h>
+#include <sys/types.h>
+#include <sys/socket.h>], [
+          (void)getsockopt (1, 1, 1, NULL, (${t} *)NULL)],
+	[ r_cv_type_socklen=${t}; break ],
+	[ r_cv_type_socklen= ])
+    done])
+fi
+if test "x${r_cv_type_socklen}" = x; then
+  AC_MSG_WARN(could not determine)
+else
+  AC_MSG_RESULT([${r_cv_type_socklen} *])
+fi
+AC_DEFINE_UNQUOTED(SOCKLEN_T, "${r_cv_type_socklen}")
+])
 AC_DEFUN([R_C_IEEE_754],
  [AC_CHECK_FUNCS(finite isnan)
   AC_CACHE_CHECK([whether you have IEEE 754 floating-point arithmetic],
@@ -943,7 +965,7 @@ AC_SUBST(BLAS_LIBS)
 
 AC_DEFUN([R_USES_LEAPSECONDS],
  [AC_MSG_CHECKING([whether leap seconds are counted])
-  AC_CACHE_VAL(uses_leapseconds,
+  AC_CACHE_VAL(r_cv_uses_leapseconds,
     [ cat > conftest.c <<EOF
 #include <time.h>
 #include <stdio.h>
@@ -964,13 +986,13 @@ EOF
           output=`./conftest`
 	  if test ${?} -eq 0; then
             if test ${output} -gt 0; then
-	      uses_leapseconds=yes
+	      r_cv_uses_leapseconds=yes
             fi
 	  fi
       fi
     ])
   rm -rf conftest conftest.* core
-  if test -n "${uses_leapseconds}"; then
+  if test -n "${r_cv_uses_leapseconds}"; then
     AC_MSG_RESULT([yes])
     AC_DEFINE(USING_LEAPSECONDS, 1)
   else
