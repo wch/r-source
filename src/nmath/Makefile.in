@@ -10,6 +10,7 @@ subdir = src/nmath
 
 include $(top_builddir)/Makeconf
 
+## NOTE: Keep these in sync with ./standalone/Makefile.in and *.win !
 SOURCES = \
 	mlutils.c \
 	d1mach.c i1mach.c \
