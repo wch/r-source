@@ -65,7 +65,8 @@ INSTFILES=$(filter-out $(SPKG)/inst/CVS, $(wildcard $(SPKG)/inst/*))
 # src Makefile?
 SRCMAKE=$(wildcard $(SSPKG)/Makefile.win)
 
-all:  $(DPKG)/zzzz $(DYNLIB) R $(DPKG)/demo $(DPKG)/exec $(DATA) mansrcs indices
+all:  $(DPKG)/zzzz $(DYNLIB) R $(DPKG)/demo $(DPKG)/exec $(DATA) mansrcs \
+  indices
 bare: $(DPKG)/zzzz R $(DPKG)/demo
 
 include $(RHOME)/src/gnuwin32/MkRules
@@ -206,7 +207,7 @@ indices:
 	@$(ECHO) "  installing indices"
 ifeq ($(strip $(BUILD)),CROSS)
 	@$(ECHO) "library(tools); .installPackageIndices('.', '"$(DPKG)"')" | \
-	  $(R_EXE) --vanilla  --slave > /dev/null
+	  $(R_EXE) --vanilla   --no-dotFirst --slave > /dev/null
 else
 	@$(ECHO) "library(tools); .installPackageIndices('.', '"$(DPKG)"')" | \
 	  $(RHOME)/bin/rterm.exe --vanilla --no-dotFirst --slave > /dev/null
@@ -216,3 +217,13 @@ endif
 	@$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt	
 	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
 	  $(RHOME)/share/perl/build-help-windows.pl -htmllists
+
+md5sums:
+	@$(ECHO) "  adding MD5 sums"
+ifeq ($(strip $(BUILD)),CROSS)
+	@$(ECHO) "library(tools); .installMD5sums('"$(DPKG)")" | \
+	  $(R_EXE) --vanilla  --no-dotFirst --slave > /dev/null
+else
+	@$(ECHO) "library(tools); .installMD5sums('"$(DPKG)"')" | \
+	  $(RHOME)/bin/rterm.exe --vanilla --no-dotFirst --slave > /dev/null
+endif

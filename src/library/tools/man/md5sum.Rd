@@ -19,6 +19,9 @@ md5sum(files)
   On Windows all files are read in binary mode (as the \code{md5sum}
   utilities there do): on other OSes the files are read in the default way.
 }
+\seealso{
+  \code{\link{checkMD5sums}}
+}
 \examples{
 md5sum(dir())
 }

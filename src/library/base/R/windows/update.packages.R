@@ -8,20 +8,26 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
         if(length(.libPaths()) > 1)
             warning(paste("argument `lib' is missing: using", lib))
     }
+    pkgnames <- basename(pkgs)
+    pkgnames <- sub("\\.zip$", "", pkgnames)
     inuse <- search()
     inuse <- sub("^package:", "", inuse[grep("^package:", inuse)])
-    inuse <- pkgs %in% inuse
+    inuse <- pkgnames %in% inuse
     if(any(inuse)) {
         if(sum(inuse) == 1)
-            warning("package ", pkgs[inuse],
+            warning("package ", pkgnames[inuse],
                     " is in use and will not be installed", call. = FALSE)
         else
-            warning("packages ", paste(pkgs[inuse], sep=", "),
+            warning("packages ", paste(pkgnames[inuse], collapse=", "),
                     " are in use and will not be installed", call. = FALSE)
         pkgs <- pkgs[!inuse]
     }
     if(is.null(CRAN) & missing(contriburl)) {
-        for(pkg in pkgs) zip.unpack(pkg, lib)
+        for(i in seq(along=pkgs)) {
+            zip.unpack(pkgs[i], lib)
+            require(tools)
+            checkMD5sums(pkgnames[i])
+        }
         link.html.help(verbose=TRUE)
         return(invisible())
     }
@@ -48,7 +54,12 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
             {
                 okp <- p == foundpkgs[, 1]
                 if(length(okp) > 0){
-                    for(pkg in foundpkgs[okp, 2]) zip.unpack(pkg, lib)
+                    for(pkg in foundpkgs[okp, 2]) {
+                        zip.unpack(pkg, lib)
+                        require(tools)
+                        pkgname <- sub("\\.zip$", "", basename(pkg))
+                        checkMD5sums(pkgname)
+                    }
                 }
             }
         }

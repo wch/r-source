@@ -96,6 +96,10 @@ The BLAS library Rblas.dll is no longer automatically linked against
 when building a package: as on Unix PKG_LIBS=$(BLAS_LIBS) is required
 in Makevars(.win).
 
+MD5 checksums are created on installation from sources (see
+?checkMD5sums in package tools), and checked on installation by
+install.packages().
+
 
 
 rw1062
