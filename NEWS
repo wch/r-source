@@ -87,6 +87,8 @@ BUG FIXES
 
     o   sd() was not passing na.rm to var() for matrices and data frames.
 
+    o	dist() {mva} silently treated +/-Inf as NA.
+
 
 INTERNALS
 
