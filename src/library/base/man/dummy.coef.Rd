@@ -18,7 +18,7 @@ dummy.coef.aovlist(object, )
    false they will get one possible value.}
 }
 \description{
- This extract coefficients in terms of the original levels of the
+ This extracts coefficients in terms of the original levels of the
  coefficients rather than the coded variables.
 }
 \details{
