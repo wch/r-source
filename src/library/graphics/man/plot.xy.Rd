@@ -14,21 +14,22 @@ plot.xy(xy, type, pch = 1, lty = "solid", col = par("fg"), bg = NA,
 \arguments{
   \item{xy}{A four-element list as results from
     \code{\link{xy.coords}}.}
-  \item{type}{1 character code.}
+  \item{type}{1 character code: see \code{\link{plot.default}}.}
   \item{pch}{character or integer code for kind of points/lines, see
     \code{\link{points.default}}.}
   \item{lty}{line type code, see \code{\link{lines}}.}
   \item{col}{color code or name, see \code{\link{colors}},
     \code{\link{palette}}.}
-  \item{bg}{background (\dQuote{fill}) color for open plot symbols.}
+  \item{bg}{background (\dQuote{fill}) color for the open plot symbols 21:25:
+    see \code{\link{points.default}}.}
   \item{cex}{character expansion.}
   \item{lwd}{line width, also used for (non-filled) plot symbols, see
     \code{\link{lines}} and \code{\link{points}}.}
   \item{\dots}{further graphical parameters.}
 }
 \details{
-  The arguments \code{pch, col, bg, cex, lwd} are may be vectors and
-  recycled, depending on \code{type}, see \code{\link{points}} and
+  The arguments \code{pch, col, bg, cex, lwd} may be vectors and
+  may be recycled, depending on \code{type}: see \code{\link{points}} and
   \code{\link{lines}} for specifics.
 }
 \seealso{
