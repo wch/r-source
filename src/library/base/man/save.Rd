@@ -38,7 +38,7 @@ sys.save.image(name)
     \code{file} if the save fails, but at the cost of using extra disk
     space during the save.}
   \item{name}{name of image file to save or load.}
-  \item{quit}{logical specifying whether a message should be printed.}
+  \item{quiet}{logical specifying whether a message should be printed.}
   }
 }
 \description{

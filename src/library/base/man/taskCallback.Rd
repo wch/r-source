@@ -21,6 +21,7 @@ removeTaskCallback(id)
     using \code{\link{getTaskCallbackNames}}
     and is also returned in a call to \code{\link{addTaskCallback}}.
   }
+  \item{name}{character: names to be used.}
 }
 \value{
   \code{addTaskCallback} returns

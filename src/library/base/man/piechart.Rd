@@ -26,11 +26,6 @@ piechart(x, labels = names(x), edges = 200, radius = 0.8,
   \item{angle}{the slope of shading lines, given as an angle in
     degrees (counter-clockwise).}
   \item{col}{a vector of colors to be used in filling the slices.}
-  \item{angle}{angle of shading lines.}
-  \item{density}{the density of shading lines, in lines per inch.
-    The default value of \code{NULL} means that no shading lines are drawn.
-    Non-positive values of \code{density} also inhibit the drawing
-    of shading lines.}
   \item{main}{an overall title for the plot.}
   \item{\dots}{graphical parameters can be given as arguments to
     \code{piechart}.}
