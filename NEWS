@@ -119,9 +119,8 @@ NEW FEATURES
 
    o    Much improved printing of matrices and arrays of type "list".
 
-   o    abs() was not being treated as member of the Math group
-	generic function, so e.g. its method for data frames was not
-	being used.
+   o    deriv/deriv3 can now handle expressions involving pnorm and
+	dnorm (with a single argument), as in S.
 
 
 DEPRECATED & DEFUNCT
@@ -130,7 +129,7 @@ DEPRECATED & DEFUNCT
 
     o	arima0.diag() (package ts) is deprecated: use tsdiag() instead.
 
-    o	piechart() is deprecated.
+    o	piechart() is deprecated; renamed to pie().
 
 
 DOCUMENTATION CHANGES
@@ -208,6 +207,10 @@ BUG FIXES
 	warning. (PR#1329)
 	Under some circumstances subsetting of a character matrix
 	inserted NA in the wrong place.
+
+   o    abs() was not being treated as member of the Math group
+	generic function, so e.g. its method for data frames was not
+	being used.
 
 
 
