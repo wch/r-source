@@ -1209,9 +1209,9 @@ Error in cov(rnorm(10), NULL) : supply both x and y or a matrix-like x
 Error in cor(rnorm(10), NULL) : supply both x and y or a matrix-like x
 > ## gave the variance and 1 respectively in 1.2.2.
 > try(var(NULL))
-Error in var(NULL) : `x' is empty
+Error in var(NULL) : 'x' is empty
 > try(var(numeric(0)))
-Error in var(numeric(0)) : `x' is empty
+Error in var(numeric(0)) : 'x' is empty
 > ## gave NA in 1.2.2
 > 
 > 
