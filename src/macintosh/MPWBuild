@@ -356,13 +356,6 @@ echo "R ÄÄ :res:RVerRes.r" >> MakeR
 echo '	'"Rez :res:RVerRes.r -o :::R -a" >> MakeR
 echo " " >> MakeR
 
-echo "R ÄÄ :res:R.rsrc" >> MakeR
-echo '	'"Rez :res:R.r -o :::R -a" >> MakeR
-echo " " >> MakeR
-
-echo ":res:R.r Ä :res:R.rsrc" >> MakeR
-echo '	'"derez :res:R.rsrc > :res:R.r" >> MakeR
-
 echo "R ÄÄ :res:Raete.r" >> MakeR
 echo '	'"Rez :res:Raete.r -o :::R -a" >>MakeR
 echo " " >> MakeR
