@@ -157,29 +157,6 @@ function(dir, outDir)
 }
 
 
-### * .installObjectsFile
-
-.installObjectsFile <- function(pkg, outDir)
-{
-    require(pkg, character.only = TRUE)
-    pos <- match(paste("package", pkg, sep = ":"), search())
-    ob <- objects(pos, all = TRUE)
-    if( length(ob) > 0 ) {
-        ex <- sapply(ob, function(f) {
-            f <- get(f, pos)
-            pkg <- attr(f, "package")
-            c(class(f), ifelse(is.null(pkg), "", pkg))
-        })
-        ob <- data.frame(name=I(ob), class=I(ex[1,]), origPkg=I(ex[2,]))
-    } else ob <- data.frame(name=I(character(0)), class=I(character(0)),
-                            origPkg=I(character(0)))
-    row.names(ob) <- seq(len = nrow(ob))
-
-    if(.fileTest("-d", outDir))
-        .saveRDS(ob, file.path(outDir, "Meta", "objects.rds"))
-}
-
-
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***

@@ -53,17 +53,11 @@ library <-
         sp <- search()
         lib.pos <- match(pkgname, sp)
         ## ignore generics not defined for the package
-        if(file.exists(objectsFile <-
-                       file.path(pkgpath, "Meta", "objects.rds"))) {
-            ob <- .readRDS(objectsFile)
-            ob <- ob[!(ob$class == "genericFunction" & ob$origPkg !=package),1]
-        } else {
-            ob <- objects(lib.pos, all = TRUE)
-            if(!nogenerics && "package:methods" %in% sp) {
-                gen <- getGenerics(lib.pos)
-                gen <- gen[gen@package != ".GlobalEnv"]
-                ob <- ob[!(ob %in% gen)]
-            }
+        ob <- objects(lib.pos, all = TRUE)
+        if(!nogenerics && "package:methods" %in% sp) {
+            gen <- getGenerics(lib.pos)
+            gen <- gen[gen@package != ".GlobalEnv"]
+            ob <- ob[!(ob %in% gen)]
         }
         fst <- TRUE
         ipos <- seq(along = sp)[-c(lib.pos, match("Autoloads", sp))]
