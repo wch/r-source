@@ -1,9 +1,9 @@
 package R::Vars;
 
 =head1 NAME
-    
+
   R::Vars - Platform-Specific Variables
-    
+
 =head1 SYNOPSIS
 
   use R::Vars;
@@ -16,19 +16,19 @@ package R::Vars;
   }
 
   ## stop if no valid command for R itself or the 'R CMD' mechanism is
-  ## available 
-  R::Vars::error("CMD", "EXE");  
+  ## available
+  R::Vars::error("CMD", "EXE");
 
-    
+
 =head1 DESCRIPTION
 
     This package provides variables that help to handle
     platform-specific differences of R, some of these can be set using
-    environment variables, these are lsited in square brackates.
+    environment variables, these are listed in square brackates.
 
     OSTYPE     "mac", "unix" or "windows"
     TMPDIR     name of directory for temporary files [TMPDIR]
-    
+
     RHOME      path to R installation top directory [R_HOME]
     EXE        name of the R executable including path
     CMD        string for 'R CMD' including path
@@ -37,9 +37,9 @@ package R::Vars;
     LATEX      command string for 'latex' [LATEX]
 
     Most have sensible defaults for all platforms.
-    
+
 =cut
-          
+
 use Carp;
 
 ## perl 5.6 uses MSWin32, older versions of perl have win32 
@@ -117,7 +117,7 @@ sub warning {
 	}
     }
 }
-	
+
 ## check all arguments if they are the name of a variable in this
 ## package and not empty, issue an error and stop if not.
 
@@ -136,4 +136,4 @@ sub error {
 	}
     }
 }
-	
+
