@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-03-30
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-04-01
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2779,6 +2779,9 @@ Various useful functions for enhancing plots.
 @item plugdensity
 Kernel density estimation with global bandwidth selection via
 ``plug-in''.
+@item pls
+Partial Least Squares Regression (PLSR) and Principal Component
+Regression (PCR).
 @item pls.pcr
 Multivariate regression by PLS and PCR.
 @c <COMMENT>
@@ -2908,6 +2911,9 @@ regression with high breakdown point.
 @item rsprng
 Provides interface to SPRNG (Scalable Parallel Random Number Generators)
 APIs, and examples and documentation for its use.
+@item rstream
+Unified object oriented interface for multiple independent streams of
+random numbers from different sources.
 @item rwt
 Rice Wavelet Toolbox wrapper, providing a set of functions for
 performing digital signal processing.

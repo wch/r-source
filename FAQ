@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-03-30
+Version 2.0.2005-04-01
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2711,6 +2711,10 @@ distributions of R.)
      Kernel density estimation with global bandwidth selection via
      "plug-in".
 
+*pls*
+     Partial Least Squares Regression (PLSR) and Principal Component
+     Regression (PCR).
+
 *pls.pcr*
      Multivariate regression by PLS and PCR.
 
@@ -2866,6 +2870,10 @@ distributions of R.)
 *rsprng*
      Provides interface to SPRNG (Scalable Parallel Random Number
      Generators) APIs, and examples and documentation for its use.
+
+*rstream*
+     Unified object oriented interface for multiple independent streams of
+     random numbers from different sources.
 
 *rwt*
      Rice Wavelet Toolbox wrapper, providing a set of functions for
