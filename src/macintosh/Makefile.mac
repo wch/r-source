@@ -76,7 +76,9 @@ mainfiles Ä fixdesc
 	    Duplicate :::library:{pkg}:R:Rprofile :::library:{pkg}:R:Rprofile.ux
         translate ¶0x0a ¶0x0d <:::library:{pkg}:R:Rprofile.ux >:::library:{pkg}:R:Rprofile
         delete -y :::library:{pkg}:R:Rprofile.ux
-        catenate funclist.txt >:::library:{pkg}:help:AnIndex
+        catenate funclist.txt :::library:{pkg}:help:AnIndex >tmpfile
+        duplicate -y tmpfile :::library:{pkg}:help:AnIndex
+        delete -y tmpfile
       end
 	 end
     end 
