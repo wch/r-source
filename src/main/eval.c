@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2001	The R Development Core Team.
+ *  Copyright (C) 1998--2002	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #undef HASHING
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #define ARGUSED(x) LEVELS(x)
@@ -54,7 +54,7 @@ void isintrpt()
 
 }
 
-#endif
+#endif /* Macintosh */
 
 
 #ifdef R_PROFILING
@@ -100,12 +100,12 @@ void isintrpt()
    L. T.  */
 
 #ifdef Win32
-#include <windows.h>  /* for CreateEvent, SetEvent */
-#include <process.h> /* for _beginthread, _endthread */
+# include <windows.h>		/* for CreateEvent, SetEvent */
+# include <process.h>		/* for _beginthread, _endthread */
 #else
-#include <sys/time.h>
-#include <signal.h>
-#endif
+# include <sys/time.h>
+# include <signal.h>
+#endif /* not Win32 */
 
 FILE *R_ProfileOutfile = NULL;
 static int R_Profiling = 0;
@@ -149,7 +149,7 @@ static void __cdecl ProfileThread(void *pwait)
 	doprof();
     }
 }
-#else /* Unix */
+#else /* not Win32 */
 static void doprof(int sig)
 {
     RCNTXT *cptr;
@@ -173,7 +173,7 @@ static void doprof_null(int sig)
 {
     signal(SIGPROF, doprof_null);
 }
-#endif
+#endif /* not Win32 */
 
 
 static void R_EndProfiling()
@@ -181,7 +181,7 @@ static void R_EndProfiling()
 #ifdef Win32
     SetEvent(ProfileEvent);
     CloseHandle(MainThread);
-#else
+#else /* not Win32 */
     struct itimerval itv;
 
     itv.it_interval.tv_sec = 0;
@@ -190,7 +190,7 @@ static void R_EndProfiling()
     itv.it_value.tv_usec = 0;
     setitimer(ITIMER_PROF, &itv, NULL);
     signal(SIGPROF, doprof_null);
-#endif
+#endif /* not Win32 */
     fclose(R_ProfileOutfile);
     R_ProfileOutfile = NULL;
     R_Profiling = 0;
@@ -220,7 +220,7 @@ static void R_InitProfiling(char * filename, int append, double dinterval)
     if(!(ProfileEvent = CreateEvent(NULL, FALSE, FALSE, NULL)) ||
        (_beginthread(ProfileThread, 0, &wait) == -1))
 	R_Suicide("unable to create profiling thread");
-#else
+#else /* not Win32 */
     signal(SIGPROF, doprof);
 
     itv.it_interval.tv_sec = 0;
@@ -229,7 +229,7 @@ static void R_InitProfiling(char * filename, int append, double dinterval)
     itv.it_value.tv_usec = interval;
     if (setitimer(ITIMER_PROF, &itv, NULL) == -1)
 	R_Suicide("setting profile timer failed");
-#endif
+#endif /* not Win32 */
     R_Profiling = 1;
 }
 
@@ -251,13 +251,13 @@ SEXP do_Rprof(SEXP call, SEXP op, SEXP args, SEXP rho)
 	R_EndProfiling();
     return R_NilValue;
 }
-#else
+#else /* not R_PROFILING */
 SEXP do_Rprof(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     error("R profiling is not available on this system");
     return R_NilValue;		/* -Wall */
 }
-#endif
+#endif /* not R_PROFILING */
 
 /* NEEDED: A fixup is needed in browser, because it can trap errors,
  *	and currently does not reset the limit to the right value. */
@@ -269,9 +269,9 @@ SEXP eval(SEXP e, SEXP rho)
 {
     SEXP op, tmp, val;
 
-    /* The use of depthsave below is necessary because of the possibility */
-    /* of non-local returns from evaluation.  Without this an "expression */
-    /* too complex error" is quite likely. */
+    /* The use of depthsave below is necessary because of the
+       possibility of non-local returns from evaluation.  Without this
+       an "expression too complex error" is quite likely. */
 
     int depthsave = R_EvalDepth++;
 
@@ -283,7 +283,7 @@ SEXP eval(SEXP e, SEXP rho)
 	isintrpt();
 	R_EvalCount = 0 ;
     }
-#endif
+#endif /* Macintosh */
 #ifdef Win32
     if ((R_EvalCount++ % 100) == 0) {
 	R_ProcessEvents();
@@ -292,7 +292,7 @@ SEXP eval(SEXP e, SEXP rho)
 */
 	R_EvalCount = 0 ;
     }
-#endif
+#endif /* Win32 */
 
     tmp = R_NilValue;		/* -Wall */
 
@@ -419,7 +419,7 @@ SEXP eval(SEXP e, SEXP rho)
 		endcontext(&cntxt);
 		UNPROTECT(1);
 	    } else {
-#endif
+#endif /* R_PROFILING */
 		PROTECT(tmp = evalList(CDR(e), rho));
 		R_Visible = 1 - PRIMPRINT(op);
 		tmp = PRIMFUN(op) (e, op, tmp, rho);
