@@ -20,9 +20,9 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
  \item{lib.loc}{A character vector of directory names of \R libraries.
   Defaults to all libraries currently known.}
  \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
- \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE} (is the
-     default after \code{\link{help.start}} has been called), the help
-     will not be shown on the console, but via the html browser.}
+ \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE} (which is the
+     default after \code{\link{help.start}} has been called), the HTML
+     version of the help will be shown in a browser.}
 }
 \description{
   These functions provide access to documentation.
@@ -48,7 +48,8 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
     desirable to save space, and the text files in the \file{help} directory
     of an installed package can be zipped up as a zip archive
     \file{Rhelp.zip}. Ensure the files \file{AnIndex} and
-    \file{00Titles} remain un-zipped.
+    \file{00Titles} remain un-zipped.  Similarly, all the files in the
+    \file{latex} directory can be zipped to \file{Rhelp.zip}.
 }
 \seealso{
   \code{\link{help.start}()} which opens the HTML version of the \R

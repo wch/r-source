@@ -40,26 +40,31 @@ function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
                     ".Rd'\n", sep = "")
             if (!offline) {
                 if (!is.null(htmlhelp) && htmlhelp) {
-                  ## replace the last occurence of /help/ in the
-                  ## path with /html/, then append .html
-                  file <- gsub("/help/([^/]*)$", "/html/\\1",
-                    file)
-                  file <- paste("file:", file, ".html", sep = "")
-                  if (is.null(.Options$browser))
-                    stop("options(\"browser\") not set")
-                  browser <- .Options$browser
-                  system(paste(browser, " -remote \"openURL(",
-                    file, ")\" 2>/dev/null || ", browser, " ",
-                    file, " &", sep = ""))
-                  cat("help() for", topic, " is shown in browser",
-                    browser, "...\n")
+                    ## replace the last occurence of /help/ in the
+                    ## path with /html/, then append .html
+                    hfile <- sub("/help/([^/]*)$", "/html/\\1", file)
+                    hfile <- paste(hfile, ".html", sep = "")
+                    if(file.exists(hfile)) {
+                        hfile <- paste("file:", hfile, sep="")
+                        if (is.null(.Options$browser))
+                            stop("options(\"browser\") not set")
+                        browser <- .Options$browser
+                        system(paste(browser, " -remote \"openURL(",
+                                     hfile, ")\" 2>/dev/null || ", browser, " ",
+                                     hfile, " &", sep = ""))
+                        cat("help() for", topic, " is shown in browser",
+                            browser, "...\n")
+                        return(invisible())
+                    } else
+                    if(verbose)
+                        cat("no HTML help for `", topic, "' is available\n",
+                            sep = "")
                 }
-                else {
-                    ## experimental code
-                    zfile <- zip.file.extract(file, "Rhelp.zip")
-                    ## end of experimental code
-                    file.show(zfile, delete.file = (zfile!=file))
-                }
+                ## experimental code
+                zfile <- zip.file.extract(file, "Rhelp.zip")
+                ## end of experimental code
+                file.show(zfile, delete.file = (zfile!=file))
+                return(invisible())
             }
             else {
                 ltxfile <- paste(sub("help/", "latex/", file), ".tex", sep = "")
