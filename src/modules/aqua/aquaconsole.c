@@ -130,7 +130,6 @@ WindowRef	RAboutWindow=NULL;
 WindowRef	RPrefsWindow=NULL;
 WindowRef	ConsoleWindow=NULL;
 
-pascal void RAboutHandler(WindowRef window);
 
 /* external symbols from aquaprefs.c */
 extern pascal void RPrefsHandler(WindowRef window);
@@ -235,6 +234,8 @@ static const EventTypeSpec	RCloseWinEvent[] =
 
 
 
+void InitAboutWindow(void);
+
 void HistBack(void);
 void HistFwd(void);
 void maintain_cmd_History(char *buf);
@@ -305,9 +306,12 @@ void Raqua_StartConsole(void)
      goto noconsole;
     
     err = CreateWindowFromNib(nibRef,CFSTR("AboutWindow"),&RAboutWindow);
+    
    if(err != noErr)
      goto noconsole;
-   
+   else
+    InitAboutWindow();
+
     err = CreateWindowFromNib(nibRef,CFSTR("PrefsWindow"),&RPrefsWindow);
    if(err != noErr)
      goto noconsole;
@@ -690,54 +694,85 @@ static OSStatus KeybHandler(EventHandlerCallRef inCallRef, EventRef REvent, void
 }
  
 
-
-pascal void RAboutHandler(WindowRef window)
-{
-    CFStringRef	text;
-    CFBundleRef	appBundle;
-    ControlID	versionInfoID = {kRAppSignature, kRVersionInfoID};
-    ControlID	CopyrightID = {kRAppSignature, kRCopyrightID};
-    ControlID	AuthorsID = {kRAppSignature, kRAquaAuthorsID};
-    ControlID	ThanksToID = {kRAppSignature, kRAquaThanksToID};
-    ControlRef	versionControl;
+void InitAboutWindow(void){
+    CFStringRef		text;
+    CFBundleRef		appBundle;
+    ControlID		versionInfoID = {kRAppSignature, kRVersionInfoID};
+    ControlID		CopyrightID = {kRAppSignature, kRCopyrightID};
+    ControlID		AuthorsID = {kRAppSignature, kRAquaAuthorsID};
+    ControlID		ThanksToID = {kRAppSignature, kRAquaThanksToID};
+    ControlID		RImageID = {kRAppSignature, kRImageID};
+    ControlRef		versionControl;
     ControlFontStyleRec	controlStyle;
-    
+    CGDataProviderRef	provider;
+    CGImageRef		image = NULL;
+    CFStringRef 	fileName = NULL;
+    CFURLRef 		url = NULL;
+    HIViewRef		contentView, fImageView;
+    HIRect		bounds, myViewRect;
+
     appBundle = CFBundleGetMainBundle();
     text = CFStringCreateWithFormat( NULL, NULL, CFSTR("Version %s.%s %s (%s-%s-%s)"), R_MAJOR, 
                                         R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
-    GetControlByID(window, &versionInfoID, &versionControl);
+    GetControlByID(RAboutWindow, &versionInfoID, &versionControl);
     SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
     controlStyle.flags = kControlUseJustMask;
     controlStyle.just = teCenter;
     CFRelease(text);
     
     text = CFStringCreateWithFormat( NULL, NULL, CFSTR("R : Copyright %s, The R Development Core Team"), R_YEAR);
-    GetControlByID(window, &CopyrightID, &versionControl);
+    GetControlByID(RAboutWindow, &CopyrightID, &versionControl);
     SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
     controlStyle.flags = kControlUseJustMask;
     controlStyle.just = teCenter;
     CFRelease(text);
     
     text = CFSTR("RAqua GUI by Stefano M. Iacus (2003). Please send feedback to stefano.iacus@unimi.it");
-    GetControlByID(window, &AuthorsID, &versionControl);
+    GetControlByID(RAboutWindow, &AuthorsID, &versionControl);
     SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
     controlStyle.flags = kControlUseJustMask;
     controlStyle.just = teCenter;
     CFRelease(text);
     
     text = CFSTR("Thanks to: Jan de Leeuw, Simon Urbanek");
-    GetControlByID(window, &ThanksToID, &versionControl);
+    GetControlByID(RAboutWindow, &ThanksToID, &versionControl);
     SetControlData(versionControl, kControlLabelPart, kControlStaticTextCFStringTag, sizeof(CFStringRef), &text);
     controlStyle.flags = kControlUseJustMask;
     controlStyle.just = teCenter;
     CFRelease(text);
-    
-    ShowWindow(window);
-    SelectWindow(window);    
-}
+
+     
+    if( (fileName = CFStringCreateWithCString(NULL, "RLogo.png", kCFStringEncodingASCII)) != NULL ){
+        url = CFBundleCopyResourceURL( appBundle, fileName, NULL, NULL );
+        if(url)
+         provider = CGDataProviderCreateWithURL( url );
+        if(provider)
+         image = CGImageCreateWithPNGDataProvider( provider, NULL, false,  kCGRenderingIntentDefault );
+        if(provider)
+         CGDataProviderRelease( provider );
+        if(url)
+         CFRelease( url );
+        if(fileName)
+         CFRelease( fileName );
+    }
+   
+   
+    myViewRect.origin.x = 157.0;         
+    myViewRect.origin.y = 37.0;
+    myViewRect.size.width = 64.0;
+    myViewRect.size.height = 64.0;
  
+    HIViewFindByID( HIViewGetRoot( RAboutWindow ), kHIViewWindowContentID, &contentView );
+    HIImageViewCreate( image, &fImageView );
+    HIViewGetBounds( contentView, &bounds );
+    HIViewSetFrame( fImageView, &myViewRect );
+    HIViewSetVisible( fImageView, true );
+    HIViewAddSubview( contentView, fImageView );
+    CGImageRelease( image );
 
+}
 
+ 
 pascal OSStatus RAboutWinHandler(EventHandlerCallRef handlerRef, EventRef event, void *userData)
 {
     OSStatus result = eventNotHandledErr;
@@ -882,7 +917,8 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
                break;
           
               case kHICommandAbout:
-               RAboutHandler(RAboutWindow);
+                ShowWindow(RAboutWindow);
+                SelectWindow(RAboutWindow);    
               break;
               
 /* Tools menu */              
@@ -2012,8 +2048,6 @@ void Raqua_ProcessEvents(void)
      ReleaseEvent( theEvent );
     }
 }
-
-
 
 
 

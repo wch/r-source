@@ -37,6 +37,8 @@
 #define kRCopyrightID 133
 #define kRAquaAuthorsID 134
 #define kRAquaThanksToID 135
+#define kRImageID 136
+
 
 
 /* RPreferences structure */
