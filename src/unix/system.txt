@@ -127,7 +127,9 @@
  *  command-line systems ask the user, on GUI platforms bring up a
  *  dialog box.
  *
- *  Argument new is unspecified.
+ *  Argument new is designed to choose the style of dialog box
+ *  presented to the user: at present only new = 0 is used. (In 
+ *  file.choose(new), new is logical.)
  *
  *    char* R_ExpandFileName(char *s)
  *
