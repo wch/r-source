@@ -13,17 +13,18 @@ function(package, dir, lib.loc = NULL,
 
     workdir <- match.arg(workdir)
     wd <- getwd()
-    if(workdir=="tmp"){
+    if(workdir == "tmp") {
         tmpd <- tempfile("Sweave")
-        if (!dir.create(tmpd)) stop("unable to create temp directory ",tmpd)
+        if(!dir.create(tmpd))
+            stop("unable to create temp directory ", tmpd)
         setwd(tmpd)
     }
-    else{
+    else {
         keepfiles <- TRUE
-        if(workdir=="src") setwd(vigns$dir)
+        if(workdir == "src") setwd(vigns$dir)
     }
 
-    outConn <- textConnection("out", "w")
+    outConn <- file(open = "w+")        # anonymous tempfile
     sink(outConn, type = "output")
     sink(outConn, type = "message")
 
@@ -36,23 +37,23 @@ function(package, dir, lib.loc = NULL,
 
     result <- list(tangle=list(), weave=list(), source=list())
 
-    for(f in vigns$docs){
-        if(tangle){
+    for(f in vigns$docs) {
+        if(tangle) {
             yy <- try(Stangle(f, quiet=TRUE))
             if(inherits(yy, "try-error"))
                 result$tangle[[f]] <- yy
         }
 
-        if(weave){
+        if(weave) {
             yy <- try(Sweave(f, quiet=TRUE))
             if(inherits(yy, "try-error"))
                 result$weave[[f]] <- yy
         }
     }
 
-    if(tangle){
+    if(tangle) {
         rfiles <- list_files_with_exts(getwd(), c("r", "s", "R", "S"))
-        for(f in rfiles){
+        for(f in rfiles) {
             yy <- try(source(f))
             if(inherits(yy, "try-error"))
                 result$source[[f]] <- yy
@@ -66,7 +67,7 @@ function(package, dir, lib.loc = NULL,
 print.checkVignettes <-
 function(x, ...)
 {
-    mycat <- function(y, title){
+    mycat <- function(y, title) {
         if(length(y)>0){
             cat("\n", title, "\n\n", sep="")
             for(k in 1:length(y)){
