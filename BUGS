@@ -618,11 +618,11 @@ From: hb@maths.lth.se
 Date: Mon, 14 Oct 2002 01:34:45 +0200 (MET DST)
 ..Not a bug, but perhaps a useful feature: should the attributes of environments
 ..be copied on assignment?
-* PR# 2305 *
-Subject: Prediction from arima() object (library ts)
-From: mcrae_allan@hotmial.com
-Date: Mon, 18 Nov 2002 15:12:22 +0100 (MET)
 * PR# 2310 *
 Subject:  Nesting of readline input 
 From: j.c.rougier@durham.ac.uk
 Date: Tue, 19 Nov 2002 14:24:41 GMT
+* PR# 2334 *
+Subject: mgcv fails to compile in R-1.6.1
+From: bjw34032@mh.uk.sbphrd.com
+Date: Fri, 29 Nov 2002 16:45:06 +0100 (MET)
