@@ -33,7 +33,7 @@ use R::Rd;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.23 $ ';
+my $revision = ' $Revision: 1.24 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -137,7 +137,7 @@ foreach $pkg (@ARGV){
 	    chdir($startdir);
 	} else {
 	    my $filename =  "${pkgname}_" . $description->{"Version"} .
-		"_${R_platform}.tar";
+		"_R_${R_platform}.tar";
 	    $log->message("building \`$filename.gz'");
 	    system("tar chf $startdir/$filename $pkgs");
 	    chdir($startdir);
