@@ -4005,7 +4005,7 @@ Then we can access @code{a$g} as @code{a[[2]]} by
 @end example
 
 This can rapidly become tedious, and the following function (based on
-one in package @pkg{nls}) is very useful:
+one in package @pkg{stats}) is very useful:
 
 @example
 @group
