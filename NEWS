@@ -159,6 +159,11 @@ UTILITIES
     o	Testing examples via massge-examples.pl (as used by R CMD
 	check) now restores the search path after every help file.
 
+    o	checkS3methods() in package 'tools' now also looks for generics
+	in the loaded namespaces/packages listed in the Depends fields
+	of the package's DESCRIPTION file when testing an installed
+	package.
+
 
 C-LEVEL FACILITIES
 

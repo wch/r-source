@@ -64,8 +64,11 @@ checkS3methods(package, dir, lib.loc = NULL)
   (see \code{\link[base]{InternalMethods}}), and S3 group generics (see
   \code{\link[base]{Math}}).  Possible dispatch under a different name
   is not taken into account.  The generics are sought first in the given
-  package and then in the \pkg{base} package (but currently not in other
-  packages \dQuote{used} by the given package).  
+  package, then in the \pkg{base} package and (currently) the packages 
+  \pkg{graphics}, \pkg{stats}, and \pkg{utils} added in R 1.9.0 by
+  splitting the former \pkg{base}, and, if an installed package is
+  tested, also in the loaded namespaces/packages listed in the package's
+  \file{DESCRIPTION} Depends field.
 
   If using an installed package, the checks needing access to all R
   objects of the package will load the package (unless it is the
