@@ -36,8 +36,9 @@ pretty(x, n = 5, min.n = n \%/\% 3,  shrink.sml = 0.75,
     Let \code{d <- max(x) - min(x)} \eqn{\ge 0}{>= 0}.
     If \code{d} is not (very close) to 0, we let \code{c <- d/n},
     otherwise more or less \code{c <- max(abs(range(x)))*shrink.sml / min.n}.
-    Then, the \emph{10 base} is \code{b := 10^}\eqn{\floor{\log_10(c)}}
-    such that \eqn{b \le}{b <=}\eqn{ c < 10b}.
+    Then, the \emph{10 base} \code{b} is
+    \eqn{10^{\lfloor{\log_{10}(c)}\rfloor}}{10^(floor(log10(c)))} such
+    that \eqn{b \le c < 10b}.
 
     Now determine the basic \emph{unit} \eqn{u} as one of
     \eqn{\{1,2,5,10\} b}, depending on \eqn{c/b \in [1,10)} and the two
