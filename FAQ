@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2004-11-03
+Version 2.0.2004-11-09
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1854,6 +1854,9 @@ distributions of R.)
      E-statistics (energy) tests for comparing distributions: multivariate
      normality, Poisson test, multivariate k-sample test for equal
      distributions, hierarchical clustering by e-distances.
+
+*epitools*
+     Basic tools for applied epidemiology.
 
 *epsi*
      Edge Preserving Smoothing for Images.
