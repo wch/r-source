@@ -48,7 +48,7 @@ diag(x) <- value
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-\code{\link{matrix}}.
+\code{\link{upper.tri}}, \code{\link{lower.tri}}, \code{\link{matrix}}.
 }
 \examples{
 dim(diag(3))
