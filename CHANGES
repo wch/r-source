@@ -13,9 +13,10 @@ BUG FIXES
 	directories.
 
     o   R [ SHLIB | COMPILE ] were broken on some Solaris systems
-        due to use of bash syntax.
-        R [ INSTALL | COMPILE | SHLIB ] now use a MAKE environment
-        variable if present.
+        due to use of bash syntax. R [ INSTALL | COMPILE | SHLIB ]
+        now use a MAKE environment variable if present.
+        R INSTALL only rebuilds man pages if they are not already
+        up to date.
 
     
 		CHANGES IN R VERSION 0.62
