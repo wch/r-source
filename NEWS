@@ -18,6 +18,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   fix to "tsp<-" which makes "[.ts" work in more cases
+	    (before, frequency may have become non-integer when sub-setting).
+
     o	apply() preserves names in yet another case [-> new example].
 
     o	phyper() now works for larger arguments than before.
