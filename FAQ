@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-9, 2001-01-02
+Version 1.2-10, 2001-01-03
 Kurt Hornik
 
 
@@ -133,7 +133,7 @@ site (*Note What is CRAN?::).
 1.3 Citing this document
 ========================
 
-   In publications, please refer to this FAQ as Hornik (2000), "The R FAQ"
+   In publications, please refer to this FAQ as Hornik (2001), "The R FAQ"
 and give the above, _official_ URL.
 
 1.4 Notation
@@ -208,7 +208,7 @@ project ("GNU S").
 systems.
 
    The current version of R will configure and build under a number of
-common Unix platforms including i386-freebsd, i386-linux, ix86-sun-solaris,
+common Unix platforms including i386-freebsd, i386-linux, i386-sun-solaris,
 ppc-linux, mips-sgi-irix, alpha-linux, alpha-dec-osf4, rs6000-ibm-aix,
 hppa-hp-hpux, sparc-linux, and sparc-sun-solaris.
 
@@ -279,7 +279,7 @@ LaTeX versions of the documentation are built.
 Extension Writers Guide", in the `doc/manual' subdirectory.  These files
 can be previewed and printed using standard programs such as `xdvi' and
 `dvips'.  You can also use `make pdf' to build PDF (Portable Document
-Format) version of the manuals, and view these using Acrobat.  Manuals
+Format) version of the manuals, and view these using e.g. Acrobat.  Manuals
 written in the GNU Texinfo system can also be converted to info files
 suitable for reading online with Emacs or stand-alone GNU Info; use `make
 info' to create these versions (note that this requires `makeinfo' version
@@ -1043,7 +1043,7 @@ works, was published in the Journal of Statistical Software
 *mva*
      MultiVariate Analysis.  Currently contains code for principal
      components, canonical correlations, metric multidimensional scaling,
-     and hierarchical and k-means clustering.
+     factor analysis, and hierarchical and k-means clustering.
 
 *nls*
      Nonlinear regression routines.
@@ -1177,7 +1177,9 @@ works, was published in the Journal of Statistical Software
 *e1071*
      Miscellaneous functions used at the Department of Statistics at TU Wien
      (E1071), including moments, short-time Fourier transforms, Independent
-     Component Analysis, and simulation of a Wiener process.
+     Component Analysis, Latent Class Analysis, reading and writing of
+     images in portable anymap format, simulation of a Wiener process,
+     support vector machines, and fuzzy clustering.
 
 *ellipse*
      Package for drawing ellipses and ellipse-like confidence regions.
@@ -1546,8 +1548,8 @@ at the R prompt.
 
    You can then find out which functions it provides by typing one of
 
-     help(package = PKG)
      library(help = PKG)
+     help(package = PKG)
 
    You can unload the loaded package PKG by
 
