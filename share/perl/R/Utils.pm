@@ -1,15 +1,17 @@
 package R::Utils;
 
-#use strict;
 use Carp;
 use FileHandle;
 use Exporter;
 use R::Vars;
+use Text::Wrap;
+use Text::Tabs;
 
 @ISA = qw(Exporter);
 @EXPORT = qw(R_getenv R_version file_path env_path
 	     list_files list_files_with_exts
-	     R_tempfile R_system R_runR);
+	     R_tempfile R_system R_runR
+	     formatDL);
 
 #**********************************************************
 
@@ -182,6 +184,46 @@ sub R_runR
     unlink($Rin);
     unlink($Rout);
     return(@out);
+}
+
+sub formatDL {
+    ## Format a description list entry (an item and its description)
+    ## as 2-column table or LaTeX-style description list entry.
+    ## Similar to R's formatDL(), but not 'vectorized'.
+    ## (Also, using Text::Wrap::fill destroys whitespace ...)
+
+    my ($item, $description, $style, $width, $indent) = @_;
+
+    ## Default values.
+    $style = "table" if(!$style);
+    $width = 72 if(!$width);
+    $indent = $width / 3 if(!$indent && ($style eq "table"));
+    $indent = $width / 9 if(!$indent && ($style eq "list"));
+
+    $Text::Wrap::columns = $width; # fill column
+
+    $description =~ s/^\s*//;	# remove leading whitespace
+    
+    my $txt;
+    my $prefix = " " x $indent;
+    if($style eq "table") {
+	my $len = length($item);
+	$txt = expand(fill($prefix, $prefix, $description));
+	if($len > $indent - 3) {
+	    $txt = $item . "\n" . $txt;
+	}
+	else {
+	    substr($txt, 0, $len) = $item;
+	}
+    }
+    elsif($style eq "list") {
+	$txt = expand(fill("", $prefix, ($item . ": " . $description)));
+    }
+    else {
+	die "ERROR: unknown value for option 'style'.";
+    }
+
+    $txt;
 }
 
 1;
