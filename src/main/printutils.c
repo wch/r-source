@@ -153,8 +153,8 @@ char *EncodeComplex(complex x, int wr, int dr, int er, int wi, int di, int ei)
     char fmt[64], *efr, *efi;
 #else
     char *Re, *Im, *tmp;
-    int  flagNegIm = 0; 
-#endif   
+    int  flagNegIm = 0;
+#endif
 
     /* IEEE allows signed zeros; strip these here */
     if (x.r == 0.0) x.r = 0.0;
@@ -178,8 +178,8 @@ char *EncodeComplex(complex x, int wr, int dr, int er, int wi, int di, int ei)
 	tmp = EncodeReal(x.r, wr, dr, er);
 	Re = (char *) calloc(strlen(tmp)+1, sizeof(char));
 	strcpy(Re, tmp);
-	
-	if ( flagNegIm = (x.i < 0) )
+
+	if ( (flagNegIm = (x.i < 0)) )
 	    x.i = -x.i;
 	tmp = EncodeReal(x.i, wi, di, ei);
 	Im = (char *) calloc(strlen(tmp)+1, sizeof(char));
