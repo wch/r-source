@@ -55,7 +55,7 @@ c
       subroutine dqrxb(x, n, k, qraux, y, ny, xb)
 
       integer n, k, ny
-      double precision x(n,k), qraux(k), y(n,k), xb(n,ny)
+      double precision x(n,k), qraux(k), y(n,ny), xb(n,ny)
       integer info, j
       double precision dummy
       do 10 j = 1,ny
