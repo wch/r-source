@@ -3,7 +3,7 @@ libRmath.a and libRmath.so.  `make static' and `make shared' make
 just one of them.
 
 Under Windows, use make -f Makefile.win. This makes Rmath.dll with
-import library libRmath.a.
+import library libRmath.a.  You will need to have made R first.
 
 
 To use the routines in your own C or C++ programs, include
