@@ -1142,36 +1142,37 @@ SEXP do_updateform(SEXP call, SEXP op, SEXP args, SEXP rho)
     new = CADR(args) = duplicate(CADR(args));
 
     /* Check of new and old formulae. */
-    /* The old one must be a valid model */
-    /* formula with an lhs and rhs. */
-
     if (TYPEOF(old) != LANGSXP ||
        (TYPEOF(new) != LANGSXP && CAR(old) != tildeSymbol) ||
        CAR(new) != tildeSymbol)
 	errorcall(call, "formula expected\n");
-    if (length(old) != 3)
-	errorcall(call, "invalid first formula\n");
-    lhs = CADR(old);
-    rhs = CADDR(old);
 
-    /* We now check that new formula has a */
-    /* valid lhs.  If it doesn't, we add one */
-    /* and set it to the rhs of the old formula. */
-
-    if (length(new) == 2)
-	CDR(new) = CONS(lhs, CDR(new));
-
-    /* Now we check the left and right sides */
-    /* of the new formula and substitute the */
-    /* correct value for any "." templates. */
-    /* We must parenthesize the rhs or we */
-    /* might upset arity and precedence. */
-
-    PROTECT(rhs);
-
-    CADR(new) = ExpandDots(CADR(new), lhs);
-    CADDR(new) = ExpandDots(CADDR(new), rhs);
-    UNPROTECT(1);
+    if (length(old) == 3) {
+	lhs = CADR(old);
+	rhs = CADDR(old);
+	/* We now check that new formula has a valid lhs.
+	   If it doesn't, we add one and set it to the rhs of the old
+	   formula. */
+	if (length(new) == 2)
+	    CDR(new) = CONS(lhs, CDR(new));
+	/* Now we check the left and right sides of the new formula
+	   and substitute the correct value for any "." templates.
+	   We must parenthesize the rhs or we might upset arity and
+	   precedence. */
+	PROTECT(rhs);
+	CADR(new) = ExpandDots(CADR(new), lhs);
+	CADDR(new) = ExpandDots(CADDR(new), rhs);
+	UNPROTECT(1);
+    }
+    else {
+	/* The old formula had no lhs, so we only expand the rhs of the
+	   new formula. */
+	rhs = CADR(old);
+	if (length(new) == 3)
+	    CADDR(new) = ExpandDots(CADDR(new), rhs);
+	else
+	    CADR(new) = ExpandDots(CADR(new), rhs);
+    }
 
     /* It might be overkill to zero the */
     /* the attribute list of the returned */
