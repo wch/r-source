@@ -2,34 +2,17 @@
 #
 # ${R_HOME}/bin/LINK
 
-args=
-largs=
-Largs=
-rpath=
+if test -z "${R_HOME}"; then
+  echo "Fatal error: R_HOME was not set"
+  exit 1
+fi
 
-while test -n "${1}"; do
-  case "${1}" in
-    -avoid-version)
-      ;;
-    -rpath)
-      rpath="${rpath} ${2}"
-      shift
-      ;;
-    -l*)
-      largs="${largs} ${1}"
-      ;;
-    -L*)
-      Largs="${Largs} ${1}"
-      arg=`echo "${1}" | sed -e 's/^-L//'`
-      rpath="${rpath}:${arg}"
-      ;;
-    *)
-      args="${args} ${1}"
-      ;;
-  esac
-  shift
-done
+Rexeclibdir=${R_HOME}/bin
+linkopts="-avoid-version -rpath ${Rexeclibdir}"
 
-LD_RUN_PATH="${rpath}"
-export LD_RUN_PATH
-exec ${args} ${Largs} ${largs}
+exec ${R_HOME}/bin/libtool --mode=link ${*} ${linkopts}
+
+### Local Variables: ***
+### mode: sh ***
+### sh-indentation: 2 ***
+### End: ***
