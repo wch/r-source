@@ -241,3 +241,7 @@ Date: Sat, 25 Mar 2000 12:07:02 -0800 (PST)
 Subject: interrupted save 
 From: Thomas Lumley <thomas@biostat.washington.edu>
 Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
+* PR# 506 *
+Subject: matlines, matpoints don't follow prototype
+From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
+Date: Sun, 26 Mar 2000 12:51:24 -0800
