@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.3-31, 2001-11-25
+@set FAQ-VERSION 1.3-32, 2001-12-01
 @set REL-VERSION 1.3.1
 @c %**end of header
 
@@ -181,6 +181,7 @@ that you think should be added to this document, please let me know.
 * Citing R::                    
 * What mailing lists exist for R?::  
 * What is CRAN?::               
+* Can I use R for commercial purposes?::  
 @end menu
 
 @node What is R?, What machines does R run on?, R Basics, R Basics
@@ -647,7 +648,7 @@ in a monthly schedule via the @file{doc/html/mail.html} file in
 The R Core Team can be reached at @email{r-core@@lists.r-project.org}
 for comments and reports.
 
-@node What is CRAN?,  , What mailing lists exist for R?, R Basics
+@node What is CRAN?, Can I use R for commercial purposes?, What mailing lists exist for R?, R Basics
 @section What is @acronym{CRAN}?
 
 The ``Comprehensive R Archive Network'' (@acronym{CRAN}) is a collection
@@ -716,6 +717,39 @@ in your submission.
 
 Please always use the @acronym{URL} of the master site when referring to
 @acronym{CRAN}.
+
+@node Can I use R for commercial purposes?,  , What is CRAN?, R Basics
+@section Can I use R for commercial purposes?
+
+Yes, one can use R for commercial purposes (e.g., in business or in
+consulting).  The GPL, like all Open Source licenses, permits all and
+any use of the package.  It only restricts distribution of R or of other
+programs containing code from R.  This is made clear in clause 6 (``No
+Discrimination Against Fields of Endeavor'') of the
+@uref{http://www.opensource.org/docs/definition.html, Open Source
+Definition}:
+
+@quotation
+The license must not restrict anyone from making use of the program in a
+specific field of endeavor.  For example, it may not restrict the
+program from being used in a business, or from being used for genetic
+research.
+@end quotation
+
+@noindent
+It is also explicitly stated in clause 0 of the GPL, which says in part
+
+@quotation
+Activities other than copying, distribution and modification are not
+covered by this License; they are outside its scope.  The act of running
+the Program is not restricted, and the output from the Program is
+covered only if its contents constitute a work based on the Program.
+@end quotation
+
+Most add-on packages, including all recommended ones, also explicitly
+allow commercial use in this way.  A few packages are restricted to
+``non-commercial use''; you may need contact the author to clarify
+whether these may be used.
 
 @node R and S, R Web Interfaces, R Basics, Top
 @chapter R and S
@@ -1586,6 +1620,8 @@ like Minitab, SAS, SPSS, Stata, etc.
 Maximum likelihood estimation of the parameters of a fractionally
 differenced ARIMA(@math{p,d,q}) model (Haslett and Raftery, Applied
 Statistics, 1989).
+@item g.data
+Create and maintain delayed-data packages (DDP's).
 @item gafit
 Genetic algorithm for curve fitting.
 @item gee
