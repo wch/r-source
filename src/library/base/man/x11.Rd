@@ -19,10 +19,10 @@ save.plot(file)
   \item{height}{the height of the plotting window in inches.}
   \item{ps}{the default pointsize to be used.}
   \item{printcmd}{the command used to print a hardcopy.}
-  \item{paper}{paper type for hardcopy, currently \code{"a4"} or
+  \item{paper}{the paper type for hardcopy, currently \code{"a4"} or
     \code{"letter"}.}
-  \item{orientation}{orientation for hardcopy, one of \code{"portrait"},
-    \code{"landscape"}, or \code{"flexible"}.}
+  \item{orientation}{the orientation for hardcopy, one of
+    \code{"portrait"}, \code{"landscape"}, or \code{"flexible"}.}
 }
 \description{
   \code{x11} starts a graphics device driver for the X Window System
