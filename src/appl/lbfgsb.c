@@ -887,7 +887,7 @@ L666:
 		--ifun;
 		--iback;
 	    }
-	    strcpy(task, "ABNORMAL_TERMINATION_IN_LNSRCH");
+	    strcpy(task, "ERROR: ABNORMAL_TERMINATION_IN_LNSRCH");
 	    ++iter;
 	    goto L999;
 	} else {
