@@ -45,7 +45,8 @@ static menuitem msource, mdisplay, mload, msave, mpaste, mcopy,
     mcopypaste, mlazy;
 static menuitem mls, mrm, msearch, mhelp, mmanintro, mmanref, 
     mmanext, mapropos, mhelpstart;
-static menu m;
+static int lhelpstart, lmanintro, lmanref, lmanext;
+static menu m, mman;
 static char cmd[1024];
 
 /* menu callbacks */
@@ -91,10 +92,11 @@ static void menudisplay(control m)
     show(RConsole);
     if (fn) {
 	fixslash(fn);
-	sprintf(cmd, 
+/*	sprintf(cmd, 
 		"file.show(\"%s\", title=\"File\", header=\"%s\")",
 		fn, fn);
-	consolecmd(RConsole, cmd);
+		consolecmd(RConsole, cmd);*/
+	internal_ShowFile(fn, fn);
     }
 }
 
@@ -237,17 +239,17 @@ static void menuhelp(control m)
 
 static void menumainman(control m)
 {
-    consolecmd(RConsole, "shell.exec('doc/manual/R-intro.pdf')");
+    internal_shellexec("doc/manual/R-intro.pdf");
 }
 
 static void menumainref(control m)
 {
-    consolecmd(RConsole, "shell.exec('doc/manual/refman.pdf')");
+    internal_shellexec("doc/manual/refman.pdf");
 }
 
 static void menumainext(control m)
 {
-    consolecmd(RConsole, "shell.exec('doc/manual/R-exts.pdf')");
+    internal_shellexec("doc/manual/R-exts.pdf");
 }
 
 static void menuapropos(control m)
@@ -268,9 +270,10 @@ static void menuapropos(control m)
 
 static void menuhelpstart(control m)
 {
-    if (!ConsoleAcceptCmd) return;
+/*    if (!ConsoleAcceptCmd) return;
     consolecmd(RConsole, "help.start()");
-    show(RConsole);
+    show(RConsole);*/
+    internal_shellexec("doc/html/rwin.html");
 }
 
 static void menuabout(control m)
@@ -294,18 +297,13 @@ static void menuact(control m)
 	uncheck(mlazy);
     if (ConsoleAcceptCmd) {
 	enable(msource);
-	enable(mdisplay);
 	enable(mload);
 	enable(msave);
 	enable(mls);
 	enable(mrm);
 	enable(msearch);
 	enable(mhelp);
-	enable(mmanintro);
-	enable(mmanref);
-	enable(mmanext);
 	enable(mapropos);
-	enable(mhelpstart);
     }
     if (consolecancopy(RConsole)) {
 	enable(mcopy);
@@ -320,18 +318,13 @@ static void menuact(control m)
 	disable(mpaste);
     if (!ConsoleAcceptCmd) {
 	disable(msource);
-	disable(mdisplay);
 	disable(mload);
 	disable(msave);
 	disable(mls);
 	disable(mrm);
 	disable(msearch);
 	disable(mhelp);
-	disable(mmanintro);
-	disable(mmanref);
-	disable(mmanext);
 	disable(mapropos);
-	disable(mhelpstart);
     }
     draw(RMenuBar);
 }
@@ -628,12 +621,20 @@ int setupui()
     MCHECK(m = newmenu("Help"));
     MCHECK(newmenuitem("Console", 0, menuconsolehelp));
     MCHECK(mhelp = newmenuitem("R language (standard)", 0, menuhelp));
-    MCHECK(mhelp = newmenuitem("R language (html)", 0, menuhelpstart));
-
-    MCHECK(newsubmenu(m, "Manuals"));
+    MCHECK(mhelpstart = newmenuitem("R language (html)", 0, menuhelpstart));
+    lhelpstart = check_doc_file("doc/html/rwin.html");
+    if (!lhelpstart) disable(mhelpstart);
+    MCHECK(mman = newsubmenu(m, "Manuals"));
     MCHECK(mmanintro = newmenuitem("An Introduction to R", 0, menumainman));
+    lmanintro = check_doc_file("doc/manual/R-intro.pdf");
+    if (!lmanintro) disable(mmanintro);
     MCHECK(mmanref = newmenuitem("R Reference Manual", 0, menumainref));
+    lmanref = check_doc_file("doc/manual/refman.pdf");
+    if (!lmanref) disable(mmanref);
     MCHECK(mmanext = newmenuitem("R Extension Writer's Manual", 0, menumainext));
+    lmanext = check_doc_file("doc/manual/R-exts.pdf");
+    if (!lmanext) disable(mmanext);
+    if (!lmanintro && !lmanref && !lmanext) disable(mman);
     addto(m);
 
     MCHECK(mapropos = newmenuitem("Apropos", 0, menuapropos));

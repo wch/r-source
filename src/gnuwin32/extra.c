@@ -288,19 +288,39 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
     return (ans);
 }
 
-SEXP do_shellexec(SEXP call, SEXP op, SEXP args, SEXP env)
+void internal_shellexec(char * file)
 {
     char *home, buf[MAX_PATH];
-    SEXP file;
 
-    checkArity(op, args);
     home = getenv("R_HOME");
     if (home == NULL)
 	error("R_HOME not set");
+    strcpy(buf, file);
+    ShellExecute(NULL, "open", buf, NULL, home, SW_SHOW);
+}
+
+SEXP do_shellexec(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP file;
+
+    checkArity(op, args);
     file = CAR(args);
     if (!isString(file) || length(file) != 1)
 	errorcall(call, "invalid file argument");
-    strcpy(buf, CHAR(STRING(file)[0]));
-    ShellExecute(NULL, "open", buf, NULL, home, SW_SHOW);
+    internal_shellexec(CHAR(STRING(file)[0]));
     return R_NilValue;
+}
+
+int check_doc_file(char * file)
+{
+    char *home, path[MAX_PATH];
+    struct stat sb;
+
+    home = getenv("R_HOME");
+    if (home == NULL)
+	error("R_HOME not set");
+    strcpy(path, home);
+    strcat(path, "/");
+    strcat(path, file);
+    return stat(path, &sb) == 0;
 }

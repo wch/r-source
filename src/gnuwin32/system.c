@@ -456,6 +456,16 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
     return 1;
 }
 
+int internal_ShowFile(char *file, char *header)
+{
+    SEXP pager = GetOption(install("pager"), R_NilValue);
+    char *files[1], *headers[1];
+    
+    files[0] = file;
+    headers[0] = header;
+    return R_ShowFiles(1, files, headers, "File", 0, CHAR(STRING(pager)[0]));
+}
+
 
 /* Prompt the user for a file name.  Return the length of */
 /* the name typed.  On Gui platforms, this should bring up */

@@ -31,5 +31,8 @@ void R_ShowMessage(char *s);
 /*void (*R_ShowMessage)(char *s);*/
 int (*R_yesnocancel)(char *s);
 
+int check_doc_file(char *);
+void internal_shellexec(char *);
+int internal_ShowFile(char *, char *);
 
 
