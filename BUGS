@@ -471,3 +471,19 @@ Subject: don't drink too much<br>
 From: "postmaster" <postmaster@stat.math.ethz.ch>
 From: r-bugs@lists.r-project.org<br>
 Date: 15 Mar 2002 18:57:32 +0100
+* PR# 1387 *
+Subject: X11(colortype="true") does not give a truecolor visual
+From: Edwin@balpol.tudelft.nl
+Date: Sat, 16 Mar 2002 15:40:32 +0100 (MET)
+* PR# 1388 *
+Subject: Re: [Rd] X11(colortype="true") does not give a truecolor visual
+From: ripley@stats.ox.ac.uk
+Date: Sat, 16 Mar 2002 18:08:08 +0000 (GMT)
+* PR# 1389 *
+Subject: promax
+From: conor@psy.uva.nl
+Date: Sat, 16 Mar 2002 21:08:29 +0100 (MET)
+* PR# 1390 *
+Subject: Re: [Rd] X11(colortype="true") does not give a truecolor visual
+From: Thomas Lumley <tlumley@u.washington.edu>
+Date: Sat, 16 Mar 2002 13:06:09 -0800 (PST)
