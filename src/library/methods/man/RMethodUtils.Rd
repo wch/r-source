@@ -224,14 +224,12 @@ unRematchDefinition(definition)
       and \code{matchSignature} checks this.
     }
 
-    \item{\code{getMethodsMetaData}, \code{assignMethodsMetaData},
-      \code{mlistMetaName}:}{
+    \item{\code{getMethodsMetaData}, \code{assignMethodsMetaData}, \code{mlistMetaName}:}{
       utilities to manage methods list objects in a particular environment.
       Not to be called directly.
     }
     
-    \item{\code{getFromMethodMetaData, assignToMethodMetaData,
-        removeFromMethodMetaData}}{
+    \item{\code{getFromMethodMetaData}, \code{assignToMethodMetaData}, \code{removeFromMethodMetaData}}{
       Functions to manage the session metadata for methods.  Don't
       call these directly.
     }
@@ -262,8 +260,7 @@ unRematchDefinition(definition)
       to do the search (e.g., \code{findFunction}.
     }
   
-    \item{\code{cacheMetaData, cacheGenericsMetaData,
-        setPrimitiveMethods}:}{
+    \item{\code{cacheMetaData}, \code{cacheGenericsMetaData}, \code{setPrimitiveMethods}:}{
       Utilities for ensuring that the session-scope information about
       class and method definitions is up to date.  Should normally be
       called automatically whenever needed (for example, when a method

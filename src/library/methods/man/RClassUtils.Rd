@@ -506,8 +506,7 @@ validSlotNames(names)
       is cached during the session.
     }
     
-    \item{\code{.InitBasicClasses}, \code{.InitMethodsListClass},
-      \code{.setCoerceGeneric}:}{
+    \item{\code{.InitBasicClasses}, \code{.InitMethodsListClass}, \code{.setCoerceGeneric}:}{
       These functions perform part of the initialization of classes and
       methods, and are called (only!) from \code{.First.lib}.
     }
