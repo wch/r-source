@@ -119,6 +119,9 @@ UTILITIES
         providing global variables like R_OSTYPE or wrapper functions
         like R_runR().
 
+    o   If a directory inst/doc is present in the sources of a
+        package, the HTML index of the the installed package has a
+        link to the respective subdirectory.
 
 
 C-LEVEL FACILITIES
