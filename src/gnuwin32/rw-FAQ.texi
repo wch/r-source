@@ -109,6 +109,7 @@ The information here applies only to recent versions of R for Windows,
 * Can I use rwXxxx with ESS and emacs?::  
 * What are HOME and working directories?::  
 * R can't find my file::        
+* Does R use the Registry?::    
 @end menu
 
 @node Where can I find the latest version?, How do I install R for Windows?, Installation and Usage, Installation and Usage
@@ -131,6 +132,11 @@ LaTeX format help files, used for offline printing), or
 
 Optionally, you can download the installer, @code{rwinst.exe}.
 
+Alternatively, two installers based on Inno Setup are available.  One,
+@code{SetupR.exe} is about 10Mb and gives a complete installation. The
+other, @code{miniR.exe}, is a small installation and comes in five files
+which fit onto four floppy discs.
+
 
 @node How do I install R for Windows?, How do I run it?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
@@ -139,7 +145,12 @@ First, you need Windows 95/98/ME/NT4/2000: Windows 3.11+win32s will not
 work.  Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
-The simplest way is to run the installer (double-click on the icon for
+The simplest way is to use @code{SetupR.exe} or @code{miniR.exe}. Just
+double-click on the icon and follow the instructions.  If you installed
+R this way you can uninstall it from the Control Panel or Start Menu
+(unless you supressed making a group for R).
+
+The next-simplest way is to run the installer (double-click on the icon for
 @code{rwinst.exe} and navigate its wizard-like pages).  Alternatively,
 choose a location and unzip the zip files (with a tool that preserves
 long file names and the directory structure: we recommend the INFO-ZIP
@@ -252,7 +263,7 @@ If all of these fail, the current working directory is used.
 
 You can find this from R code by @code{Sys.getenv("R_USER")}.
 
-@node R can't find my file,  , What are HOME and working directories?, Installation and Usage
+@node R can't find my file, Does R use the Registry?, What are HOME and working directories?, Installation and Usage
 @section R can't find my file, but I know it is there!
 
 How did you specify it?  Backslashes have to be doubled in R character
@@ -266,6 +277,21 @@ tried to make R work on paths with spaces in, but lots of people writing
 packages for Unix do not bother. So it is worth trying the alternative
 short name (something like @code{PROGRA~1}; you can get it as the
 `MS-DOS name' from the Properties on most versions of Windows).
+
+@node Does R use the Registry?,  , R can't find my file, Installation and Usage
+@section Does R use the Registry?
+
+Not itself.  The Inno Setup-based installers set some entries to allow
+installation.  In addition that installer and (by default, but it can be
+unchecked) @code{rwinst.exe} set a Registry key
+@code{LOCAL_MACHINE\Software\R-core\R} giving the version and install
+path.  Again, this is not used by R itself, but it will be used by the
+DCOM interface (@uref{http://cran.r-project.org/other-software.html}).
+
+You can add the Registry entries by running @code{RSetReg.exe} in the
+@code{bin} folder, and remove them by running this with argument
+@code{/U}.
+
 
 @newchap{}
 @node Packages, Windows Features, Installation and Usage, Top
