@@ -1,5 +1,8 @@
-pairs <- function (x, labels, panel=points, main = NULL, font.main=par("font.main"),
-	cex.main=par("cex.main"), ...) 
+pairs <- function(x, ...) UseMethod("pairs")
+
+pairs.default <- function(x, labels, panel=points, main = NULL,
+                          font.main=par("font.main"),
+                          cex.main=par("cex.main"), ...) 
 {
 	if(!is.matrix(x)) x <- data.matrix(x)
 	if(!is.numeric(x)) stop("non-numeric argument to pairs")
