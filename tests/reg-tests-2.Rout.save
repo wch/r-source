@@ -1,6 +1,6 @@
 
 R : Copyright 2002, The R Development Core Team
-Version 1.6.1 Patched (2002-11-17)
+Version 1.7.0 Under development (unstable) (2002-12-30)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -435,7 +435,9 @@ Error in var(numeric(0)) : `x' is empty
 > 
 > 
 > ## PR 963
-> svd(rbind(1:7))## $v lost dimensions in 1.2.3
+> res <- svd(rbind(1:7))## $v lost dimensions in 1.2.3
+> if(res$u[1,1] < 0) {res$u <- -res$u; res$v <- -res$v}
+> res
 $d
 [1] 11.83216
 
