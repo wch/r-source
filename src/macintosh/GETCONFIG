@@ -1,8 +1,6 @@
-#!/bin/sh
+# MPW shell
 #
-# ${RHOME}/tools/GETCONFIG
-
-
+# ${RHOME}src/macintosh/tools/GETCONFIG
 
 echo "/* Rconfig.h.  Generated automatically */"
 echo "#ifndef R_CONFIG_H"

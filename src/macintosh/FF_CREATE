@@ -13,16 +13,14 @@
 		 -e '/Rsockfork/d' ¶
 	     -e 's/F77_SUBROUTINE(\(.*\))/void * \1_();/' ¶
 	     -e 's/C_FUNCTION(\(.*\))/void * \1();/' ¶
-			< ::appl:ROUTINES > FFDecl.h
-
-
+			< ::appl:ROUTINES > :FFDecl.h
 
 # Creates FFTab.h
        sed -e '/^\#/d' ¶
 		   -e '/Rsockfork/d' ¶
 	       -e 's/F77_SUBROUTINE(\(.*\))/{ "\1_",	\1_ },/' ¶
 	       -e 's/C_FUNCTION(\(.*\))/{ "\1",	\1 },/' ¶
-			   < ::appl:ROUTINES > FFTab.h
+			   < ::appl:ROUTINES > :FFTab.h
 
 
-    
+  
