@@ -84,6 +84,10 @@ BUG FIXES
 
     o	unlist(...,recursive=F) got names wrong
 
+    o	abbreviate(.) does not anymore return random garbage in some
+	cases [by Guido M.]
+
+ 
 		CHANGES IN R VERSION 0.63
 
 NEW FEATURES
