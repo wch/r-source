@@ -30,11 +30,13 @@ as <-
                     canCache <- (!is(test, "function")) || identical(body(test), TRUE)
                 }
             }
-            else
+            if(is.null(asMethod) && extends(Class, thisClass))
+                asMethod <- .asFromReplace(thisClass, Class)
+            if(is.null(asMethod))
                 asMethod <- selectMethod("coerce", sig, TRUE, c(from = TRUE, to = FALSE))
         }
         ## cache for next call
-        if(canCache)
+        if(canCache && !is.null(asMethod))
             cacheMethod("coerce", c(from = thisClass, to = Class), asMethod)
     }
     if(is.null(asMethod))
@@ -54,6 +56,25 @@ as <-
         method
     else
         method@allMethods[[to]]
+}
+
+.asFromReplace <- function(fromClass, toClass) {
+    ## toClass extends fromClass, so an asMethod will
+    ## be the equivalent of new("toClass", fromObject)
+    ## But must check that replacement is defined, in the case
+    ## of nonstandard superclass relations
+    replaceMethod <- elNamed(getClass(toClass)@contains, fromClass)
+    if(is(replaceMethod, "SClassExtension") &&
+       !identical(as(replaceMethod@replace, "function"), .ErrorReplace)) {
+        f <- .ErrorReplace
+        body(f, envir = environment(f)) <-
+            substitute({obj <- new(TOCLASS); as(obj, FROMCLASS) <- value; obj},
+                       list(FROMCLASS = fromClass, TOCLASS = toClass))
+        f
+    }
+    else
+        NULL
+        
 }
 
 
@@ -99,7 +120,7 @@ setAs <-
   {
     ## where there is an "is" relation, modify it
     if(extends(from, to, TRUE)) {
-      extds <- getExtends(getClassDef(from))
+      extds <- getClassDef(from)@contains
       if(is.list(extds)) {
         test <- elNamed(extds, "test")
         if(missing(replace))
