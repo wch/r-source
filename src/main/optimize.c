@@ -239,8 +239,8 @@ static int have_hessian;
 
 #define FT_SIZE 5		/* size of table to store computed
 				   function values */
-static int xdim;		/* length of the parameter (x) vector */
 static int FT_last;		/* Newest entry in the table */
+/*static int xdim;		-* length of the parameter (x) vector */
 
 static struct {
     double   fval;
@@ -254,7 +254,7 @@ static struct {
 static void FT_init(int n)
 {
     int i, j;
-    
+
     for (i = 0; i < FT_SIZE; i++) {
 	Ftable[i].x =  Calloc(n, double);
 				/* initialize to unlikely parameter values */
@@ -290,9 +290,9 @@ static void FT_free()
 
 /* Store an entry in the table of computed function values */
 
-static int FT_store(int n, double f, double *x, double *grad, double *hess)
+static void FT_store(int n, double f, double *x, double *grad, double *hess)
 {
-    int ind, i;
+    int ind;
 
     ind = (++FT_last) % FT_SIZE;
     Ftable[ind].fval = f;
@@ -339,7 +339,7 @@ static int F77_SYMBOL(fcn)(int *n, double *x, double *f)
     SEXP s;
     double *g = (double *) 0, *h = (double *) 0;
     int i;
-    
+
     if ((i = FT_lookup(*n, x)) >= 0) {
 	*f = Ftable[i].fval;
 	return 0;
