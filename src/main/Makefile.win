@@ -12,7 +12,8 @@ OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o)
 gram.c: ;
 
 saveload-CFLAGS=-I../extra/xdr
-connections-CFLAGS=-I../gnuwin32/bitmap/zlib -I../gnuwin32
+connections-CFLAGS=-I../gnuwin32/bitmap/zlib
+internet-CFLAGS=-I../gnuwin32
 
 ../gnuwin32/libmain.a: $(OBJS)
 
