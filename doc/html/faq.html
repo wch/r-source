@@ -31,7 +31,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <p><h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.9-48 2004-08-28</h2>
+<h2>Version 1.9-49 2004-09-11</h2>
 <h2>ISBN 3-900051-01-1</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -651,8 +651,8 @@ J. C. Pinheiro and D. M. Bates (2000), &ldquo;Mixed-Effects Models in S and
 </blockquote>
 
 <p class="noindent">provides a comprehensive guide to the use of the <strong>nlme</strong> package
-for linear and nonlinear mixed-effects models.  This has a home page at
-<a href="http://nlme.stat.wisc.edu/MEMSS/">http://nlme.stat.wisc.edu/MEMSS/</a>.
+for linear and nonlinear mixed-effects models. 
+<!-- This has a home page at @uref{http://nlme.stat.wisc.edu/MEMSS/}. -->
 
    <p>As an example of how R can be used in teaching an advanced introductory
 statistics course, see
@@ -835,7 +835,9 @@ system.
    <p>To &ldquo;submit&rdquo; to <acronym>CRAN</acronym>, simply upload to
 <a href="ftp://cran.R-project.org/incoming/">ftp://cran.R-project.org/incoming/</a> and send an email to
 <a href="mailto:cran@R-project.org">cran@R-project.org</a>.  Note that <acronym>CRAN</acronym> generally does not
-accept submissions of precompiled binaries due to security reasons.
+accept submissions of precompiled binaries due to security reasons.  In
+particular, binary packages for Windows and Mac OS X are provided by the
+respective binary package maintainers.
 
    <blockquote>
 <strong>Note</strong>:  It is very important that you indicate the copyright
@@ -1940,6 +1942,7 @@ fuzzy clustering, shortest path computation, bagged clustering, and some
 more. 
 <br><dt><strong>eba</strong><dd>Fitting and testing probabilistic choice models, especially the BTL,
 elimination-by-aspects (EBA), and preference tree (Pretree) models. 
+<br><dt><strong>ebayesthresh</strong><dd>Empirical Bayes thresholding and related methods. 
 <br><dt><strong>effects</strong><dd>Graphical and tabular effect displays, e.g., of interactions, for linear
 and generalised linear models. 
 <br><dt><strong>eha</strong><dd>A package for survival and event history analysis. 
@@ -2116,6 +2119,7 @@ given set of potential regressors, using a branch-and-bound algorithm,
 and also performs searches using a number of less time-consuming
 techniques. 
 <br><dt><strong>lgtdl</strong><dd>A set of methods for longitudinal data objects. 
+<br><dt><strong>limma</strong><dd>LInear Models for MicroArray data. 
 <br><dt><strong>linprog</strong><dd>Solve linear programming/linear optimization problems by using the
 simplex algorithm. 
 <br><dt><strong>lme4</strong><dd>Fit linear and generalized linear mixed-effects models. 
@@ -2392,6 +2396,7 @@ visualization.
 <!-- </COMMENT> -->
 <br><dt><strong>snow</strong><dd>Simple Network of Workstations: support for simple parallel computing in
 R. 
+<br><dt><strong>snowFT</strong><dd>Fault Tolerant Simple Network of Workstations. 
 <br><dt><strong>som</strong><dd>Self-Organizing Maps (with application in gene clustering). 
 <br><dt><strong>sound</strong><dd>A sound interface for R: Basic functions for dealing with <span class="file">.wav</span>
 files and sound samples. 
@@ -2469,6 +2474,8 @@ Three-Stage Least Squares (3SLS).
 assessment from tree-rings. 
 <br><dt><strong>tripack</strong><dd>A constrained two-dimensional Delaunay triangulation package. 
 <br><dt><strong>tseries</strong><dd>Package for time series analysis with emphasis on non-linear modelling. 
+<br><dt><strong>tuneR</strong><dd>Collection of tools to analyze music, handle wave files, transcription,
+etc. 
 <br><dt><strong>twostage</strong><dd>Functions for optimal design of two-stage-studies using the Mean Score
 method. 
 <br><dt><strong>udunits</strong><dd>Interface to Unidata's routines to convert units. 
@@ -4034,7 +4041,12 @@ since the code will be run <em>before</em> the packages are loaded.  E.g.,
 <pre class="example">     graphics::ps.options(horizontal = FALSE)
      utils::help.start()
 </pre>
-   <div class="node">
+   <!-- <FIXME> -->
+<!-- 2.0 -->
+<p class="noindent">(<code>grDevices::ps.options(horizontal = FALSE)</code> in R 2.0). 
+<!-- </FIXME> -->
+
+<div class="node">
 <p><hr>
 <a name="Where-have-all-the-methods-gone_003f"></a>Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why-did-my-_002eRprofile-stop-working-when-I-updated-R_003f">Why did my .Rprofile stop working when I updated R?</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
@@ -4071,6 +4083,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <li><a accesskey="2" href="#How-can-I-debug-dynamically-loaded-code_003f">How can I debug dynamically loaded code?</a>
 <li><a accesskey="3" href="#How-can-I-inspect-R-objects-when-debugging_003f">How can I inspect R objects when debugging?</a>
 <li><a accesskey="4" href="#How-can-I-change-compilation-flags_003f">How can I change compilation flags?</a>
+<li><a accesskey="5" href="#How-can-I-debug-S4-methods_003f">How can I debug S4 methods?</a>
 </ul>
 
 <div class="node">
@@ -4128,7 +4141,8 @@ Extensions</cite>.
 
 <div class="node">
 <p><hr>
-<a name="How-can-I-change-compilation-flags_003f"></a>Previous:&nbsp;<a rel="previous" accesskey="p" href="#How-can-I-inspect-R-objects-when-debugging_003f">How can I inspect R objects when debugging?</a>,
+<a name="How-can-I-change-compilation-flags_003f"></a>Next:&nbsp;<a rel="next" accesskey="n" href="#How-can-I-debug-S4-methods_003f">How can I debug S4 methods?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How-can-I-inspect-R-objects-when-debugging_003f">How can I inspect R objects when debugging?</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#R-Programming">R Programming</a>
 <br>
 </div>
@@ -4146,6 +4160,20 @@ are a Bourne shell user, you can also pass the desired flags to Make
 <pre class="example">     MAKEFLAGS="CFLAGS=-O3" R CMD SHLIB *.c
 </pre>
    <div class="node">
+<p><hr>
+<a name="How-can-I-debug-S4-methods_003f"></a>Previous:&nbsp;<a rel="previous" accesskey="p" href="#How-can-I-change-compilation-flags_003f">How can I change compilation flags?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R-Programming">R Programming</a>
+<br>
+</div>
+
+<h3 class="section">8.5 How can I debug S4 methods?</h3>
+
+<p>Use the <code>trace()</code> function with argument <code>signature=</code> to add
+calls to the browser or any other code to the method that will be
+dispatched for the corresponding signature.  See <code>?trace</code> for
+details.
+
+<div class="node">
 <p><hr>
 <a name="R-Bugs"></a>Next:&nbsp;<a rel="next" accesskey="n" href="#Acknowledgments">Acknowledgments</a>,
 Previous:&nbsp;<a rel="previous" accesskey="p" href="#R-Programming">R Programming</a>,
