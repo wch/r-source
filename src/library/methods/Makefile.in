@@ -78,8 +78,12 @@ $(top_builddir)/library/$(pkg)/R/all.rda: all.R
 	  $(INSTALL_DATA) $(top_srcdir)/share/R/nsrdaload.R \
 	    $(top_builddir)/library/$(pkg)/R/$(pkg); \
 	else \
-	  R_DEFAULT_PACKAGES=NULL \
-	    $(top_builddir)/bin/R --vanilla --slave < all.R ; \
+	  (echo \
+	    "options(save.image.defaults=list(compress=TRUE, safe=FALSE))"; \
+	    cat all.R) | \
+	    R_DEFAULT_PACKAGES=NULL \
+	    $(top_builddir)/bin/R --vanilla --slave --save; \
+	  $(INSTALL_DATA) .RData $@; \
 	  $(INSTALL_DATA) $(top_srcdir)/share/R/firstlib.R \
 	    $(top_builddir)/library/$(pkg)/R/$(pkg); \
 	  if test -f $(top_builddir)/library/$(pkg)/NAMESPACE; then \
@@ -90,7 +94,7 @@ $(top_builddir)/library/$(pkg)/R/all.rda: all.R
 mostlyclean: clean
 clean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
-	-@rm -f all.R
+	-@rm -f all.R .RData
 distclean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
 	-@rm -f Makefile DESCRIPTION
