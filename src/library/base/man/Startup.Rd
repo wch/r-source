@@ -14,11 +14,7 @@
   \file{.Renviron}, or a file pointed to by \code{R\_ENVIRON} or
   \file{\eqn{\sim}{~}/.Renviron}, exists, it is processed to set
   environmental variables.  (This is suppressed by the flag
-  \code{--no-environ}.)   The lines in these files must be comment lines
-  starting with a \code{#}, or of the form \code{name=value} where
-  \code{value} is subject to shell parameter expansion; in particular,
-  the form \code{${foo-"bar"}} can be used for providing default values
-  (this construction can be nested as well).
+  \code{--no-environ}.)  See \bold{Details} for how the file is read.
 
   Then \R searches for the site-wide startup profile unless the command
   line option \code{--no-site-file} was given.  The name of this file is
@@ -49,9 +45,27 @@
   The command-line flag \code{--vanilla} implies \code{--no-init-file},
   \code{--no-restore} and \code{--no-environ}.
 }
+\details{
+  Lines in a \file{.Renviron} file should be either comment lines
+  starting with \code{#}, or lines of the form \code{name=value}.
+  The latter sets the environmental variable \code{name} to
+  \code{value}, overriding an existing value.  If \code{value} is of the
+  form \code{${foo-bar}}, the value is that of the environmental
+  variable \code{foo} if that exists and is set to a non-empty value,
+  otherwise \code{bar}.  This construction can be nested, so
+  \code{bar} can be of the same form (as in \code{${foo-${bar-blah}}}).
+
+  Leading and trailing white space in \code{value} are stripped.
+  No other interpretation of \code{value} is performed. In particular,
+  if it is enclosed in quotes, the quotes form part of the value.
+}
 \note{
   Prior to \R version 1.2.1, \file{.Rprofile} was sourced after
   \file{.RData} was loaded, although the documented order was as here.
+
+  The format for \file{.Renviron} files was changed in version 1.2.0.
+  Older files are quite likely to work but may generate warnings on
+  startup if they contained unnecessary \code{export} statements.
 }
 \seealso{
   \code{\link{.Last}} for final actions before termination.

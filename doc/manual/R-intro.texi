@@ -6423,12 +6423,13 @@ Unless @option{--no-environ} was given, @R{} searches for the file
 @file{.Renviron} in the current directory, or failing that the file
 pointed to by the environment variable @env{R_ENVIRON}, or if that is
 not set, the file @file{.Renviron} in the user's home directory.  The
-first of these files found is sourced to set environment variables.  The
-variables are exported automatically, provided that they are set in
-lines of the form @samp{@var{name}=@var{value}}.  Variables you might
-want to set include @env{R_PAPERSIZE} (the default paper size),
-@env{R_PRINTCMD} (the default print command) and @env{R_LIBS} (specifies
-the list of @R{} library trees searched for add-on packages).
+first of these files found is sourced to set environment variables. It
+should contain lines of the form @samp{@var{name}=@var{value}}.
+(See @code{help(Startup)} for a precise description.)
+Variables you might want to set include @env{R_PAPERSIZE} (the default
+paper size), @env{R_PRINTCMD} (the default print command) and
+@env{R_LIBS} (specifies the list of @R{} library trees searched for
+add-on packages).
 
 @item
 Then @R{} searches for the site-wide startup profile unless the command
@@ -6646,9 +6647,10 @@ If a file @file{.Renviron} in the current directory, or if that is not
 set, the file @file{.Renviron} in the user's home directory, exists, it
 is read to set environment variables.  Reading is suppressed by the flag
 @option{--no-environ}.  The variables are set by separate lines of the
-form @samp{@var{name}=@var{value}}.  Variables you might want to set
-include @env{R_PAPERSIZE} (the default paper size) and @env{R_LIBS}
-(controls the list of @R{} library trees searched for add-on packages).
+form @samp{@var{name}=@var{value}}.  (See @code{help(Startup)} for a
+precise description.)  Variables you might want to set include
+@env{R_PAPERSIZE} (the default paper size) and @env{R_LIBS} (controls
+the list of @R{} library trees searched for add-on packages).
 
 Environment variables can also be supplied as
 @samp{@var{name}=@var{value}} pairs at the end of  the command line.
