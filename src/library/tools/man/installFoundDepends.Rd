@@ -28,7 +28,7 @@ installFoundDepends(depPkgList, ...)
     tmp <- tempfile()
     dir.create(tmp)
 
-    pDL <- pkgDepends("MASS",local=FALSE)
+    pDL <- pkgDepends("tools",local=FALSE)
     installFoundDepends(pDL$Found, destdir=tmp)
 }
 \keyword{utilities}

@@ -69,7 +69,7 @@ pkgDepends(pkg, recursive = TRUE, local = TRUE, reduce = TRUE, lib.loc=NULL)
 \author{ Jeff Gentry }
 \seealso{\code{\link{installFoundDepends}}}
 \examples{
-  pkgDepends("MASS",local=FALSE)
+  pkgDepends("tools",local=FALSE)
 }
 \keyword{utilities}
 
