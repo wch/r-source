@@ -2,8 +2,9 @@
 #### ------------------------------------------------------------
 #### M.Maechler, May, 1998.
 ####
-#### ==> ../doc/manual/primitive-funs.tex
-####	 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#### text was in ../doc/manual/primitive-funs.tex , now
+#### ==> ../doc/manual/R-exts.texi "@appendix R (internal) ...
+####	 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 bpos <- match("package:base",search())
 nn <- ls(pos=bpos)
@@ -45,8 +46,8 @@ Real.primitives <-
 	   ".Primitive", ".Internal", ".External", ".Call",
            ".External.graphics", ".Call.graphics",
 	   ".C", ".Fortran", "symbol.C", "symbol.For",
-	   "globalenv", "pos.to.env", "unclass", "attr", "as.character",
-
+	   "globalenv", "pos.to.env", "unclass",
+           "as.character",
 	   ##maybe ? "gc", "gcinfo",
 	   ##
 	   "debug", "undebug", "trace", "untrace",
@@ -64,7 +65,7 @@ Real.primitives <-
 	 c("environment<-",
 	   "length",	"length<-",
 	   "class",	"class<-",
-	   ## "attr", not anymore [Summer '98]
+	   "attr", # again
 	   "attr<-",
 	   "attributes",	"attributes<-",
 	   "dim",		"dim<-",
