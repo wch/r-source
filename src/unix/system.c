@@ -273,7 +273,7 @@ void R_CleanUp(int saveact)
     if(saveact == SA_DEFAULT) /* The normal case apart from R_Suicide */
 	saveact = SaveAction;
 
-    if(saveact == SA_SAVEASK)
+    if(saveact == SA_SAVEASK) {
 	if(R_Interactive) {
 	qask:
 	    R_ClearerrConsole();
@@ -295,9 +295,9 @@ void R_CleanUp(int saveact)
 	    default:
 		goto qask;
 	    }
-	} else 
+	} else
 	    saveact = SaveAction;
-
+    }
     switch (saveact) {
     case SA_SAVE:
 	R_dot_Last();
@@ -335,10 +335,10 @@ void R_CleanUp(int saveact)
  *  7) PLATFORM DEPENDENT FUNCTIONS
  */
 
-    /* 
-       This function can be used to display the named files with the 
-       given titles and overall title.  On GUI platforms we could 
-       use a read-only window to display the result.  Here we just 
+    /*
+       This function can be used to display the named files with the
+       given titles and overall title.  On GUI platforms we could
+       use a read-only window to display the result.  Here we just
        make up a temporary file and invoke a pager on it.
     */
 
@@ -389,10 +389,10 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 }
 
 
-    /* 
+    /*
        Prompt the user for a file name.  Return the length of
-       the name typed.  On Gui platforms, this should bring up 
-       a dialog box so a user can choose files that way. 
+       the name typed.  On Gui platforms, this should bring up
+       a dialog box so a user can choose files that way.
     */
 
 int R_ChooseFile(int new, char *buf, int len)
@@ -506,9 +506,11 @@ int main(int ac, char **av)
     /*++++++  in ../main/main.c */
     return 0;
 
+#ifdef Old_usage
 badargs:
     REprintf("invalid argument passed to R\n");
     exit(1);
+#endif
 }
 
 
