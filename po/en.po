@@ -2,12 +2,11 @@
 # Copyright (C) 2005 The R Development Core Team
 # This file is distributed under the same license as the R package.
 #
-#: src/main/main.c:49
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-01-30 08:29+0000\n"
+"POT-Creation-Date: 2005-01-31 09:59+0000\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -1124,7 +1123,7 @@ msgstr ""
 msgid "invalid add argument"
 msgstr ""
 
-#: src/main/builtin.c:66 src/main/errors.c:776
+#: src/main/builtin.c:66 src/main/errors.c:896
 msgid "invalid number of arguments"
 msgstr ""
 
@@ -1402,15 +1401,15 @@ msgstr ""
 msgid "invalid 'width' argument"
 msgstr ""
 
-#: src/main/coerce.c:88 src/main/errors.c:791
+#: src/main/coerce.c:88 src/main/errors.c:911
 msgid "NAs introduced by coercion"
 msgstr ""
 
-#: src/main/coerce.c:90 src/main/errors.c:792
+#: src/main/coerce.c:90 src/main/errors.c:912
 msgid "inaccurate integer conversion in coercion"
 msgstr ""
 
-#: src/main/coerce.c:92 src/main/errors.c:793
+#: src/main/coerce.c:92 src/main/errors.c:913
 msgid "imaginary parts discarded in coercion"
 msgstr ""
 
@@ -1530,7 +1529,7 @@ msgstr ""
 msgid "alpha level %d, not in 0:255"
 msgstr ""
 
-#: src/main/colors.c:84 src/main/errors.c:777 src/main/logic.c:164
+#: src/main/colors.c:84 src/main/errors.c:897 src/main/logic.c:164
 msgid "invalid argument type"
 msgstr ""
 
@@ -2184,7 +2183,7 @@ msgstr ""
 msgid "No loop to break from, jumping to top level"
 msgstr ""
 
-#: src/main/context.c:276 src/main/errors.c:873
+#: src/main/context.c:276 src/main/errors.c:993
 msgid "No function to return from, jumping to top level"
 msgstr ""
 
@@ -2983,142 +2982,154 @@ msgstr ""
 msgid "exported symbol '%s' has no value"
 msgstr ""
 
-#: src/main/errors.c:117 src/main/errors.c:152
+#: src/main/errors.c:124 src/main/errors.c:159
 msgid "interrupts suspended; signal ignored"
 msgstr ""
 
-#: src/main/errors.c:226
+#: src/main/errors.c:233
 msgid "invalid option \"warning.expression\""
 msgstr ""
 
-#: src/main/errors.c:254
+#: src/main/errors.c:261
 #, c-format
 msgid "(converted from warning) %s"
 msgstr ""
 
-#: src/main/errors.c:259
+#: src/main/errors.c:266
 #, c-format
 msgid "Warning in %s : "
 msgstr ""
 
-#: src/main/errors.c:263
+#: src/main/errors.c:270
 msgid "Warning: "
 msgstr ""
 
-#: src/main/errors.c:319 src/main/errors.c:336 src/main/errors.c:425
+#: src/main/errors.c:326 src/main/errors.c:343 src/main/errors.c:432
 msgid "Lost warning messages\n"
 msgstr ""
 
-#: src/main/errors.c:349
+#: src/main/errors.c:356
 msgid "Warning message:\n"
 msgstr ""
 
-#: src/main/errors.c:358
+#: src/main/errors.c:365
 msgid "Warning messages:\n"
 msgstr ""
 
-#: src/main/errors.c:370
+#: src/main/errors.c:377
 #, c-format
 msgid "There were %d warnings (use warnings() to see them)\n"
 msgstr ""
 
-#: src/main/errors.c:373
+#: src/main/errors.c:380
 msgid "There were 50 or more warnings (use warnings() to see the first 50)\n"
 msgstr ""
 
-#: src/main/errors.c:416
+#: src/main/errors.c:423
 msgid "Error during wrapup: "
 msgstr ""
 
-#: src/main/errors.c:439
+#: src/main/errors.c:446
 msgid "Error in "
 msgstr ""
 
-#: src/main/errors.c:450 src/main/errors.c:453
+#: src/main/errors.c:457 src/main/errors.c:460
 #, c-format
 msgid "Error: "
 msgstr ""
 
-#: src/main/errors.c:462 src/main/errors.c:908
+#: src/main/errors.c:469 src/main/errors.c:1028
 msgid "In addition: "
 msgstr ""
 
-#: src/main/errors.c:596
+#: src/main/errors.c:603
 msgid "invalid option \"error\"\n"
 msgstr ""
 
-#: src/main/errors.c:672
+#: src/main/errors.c:679
 msgid "Execution halted\n"
 msgstr ""
 
-#: src/main/errors.c:719
+#: src/main/errors.c:739 src/main/errors.c:798
+msgid "invalid 'domain' value"
+msgstr ""
+
+#: src/main/errors.c:740
+msgid "invalid 'string' value"
+msgstr ""
+
+#: src/main/errors.c:803
+msgid "invalid 'dirname' value"
+msgstr ""
+
+#: src/main/errors.c:839
 msgid " [invalid string in stop(.)]"
 msgstr ""
 
-#: src/main/errors.c:745
+#: src/main/errors.c:865
 msgid " [invalid string in warning(.)]"
 msgstr ""
 
-#: src/main/errors.c:761
+#: src/main/errors.c:881
 #, c-format
 msgid "incorrect number of arguments to \"%s\""
 msgstr ""
 
-#: src/main/errors.c:767
+#: src/main/errors.c:887
 #, c-format
 msgid "Unimplemented feature in %s"
 msgstr ""
 
-#: src/main/errors.c:779
+#: src/main/errors.c:899
 msgid "time-series/vector length mismatch"
 msgstr ""
 
-#: src/main/errors.c:780
+#: src/main/errors.c:900
 msgid "incompatible arguments"
 msgstr ""
 
-#: src/main/errors.c:782
+#: src/main/errors.c:902
 #, c-format
 msgid "unimplemented feature in %s"
 msgstr ""
 
-#: src/main/errors.c:783
+#: src/main/errors.c:903
 msgid "unknown error (report this!)"
 msgstr ""
 
-#: src/main/errors.c:795
+#: src/main/errors.c:915
 msgid "unknown warning (report this!)"
 msgstr ""
 
-#: src/main/errors.c:889
+#: src/main/errors.c:1009
 msgid "top level inconsistency?"
 msgstr ""
 
-#: src/main/errors.c:989
+#: src/main/errors.c:1109
 msgid "bad handler data"
 msgstr ""
 
-#: src/main/errors.c:1137
+#: src/main/errors.c:1257
 msgid "error message not a string"
 msgstr ""
 
-#: src/main/errors.c:1211
+#: src/main/errors.c:1331
 msgid "handler or restart stack mismatch in old restart"
 msgstr ""
 
-#: src/main/errors.c:1237 src/main/errors.c:1253
+#: src/main/errors.c:1357 src/main/errors.c:1373
 msgid "bad error message"
 msgstr ""
 
-#: src/main/errors.c:1295
+#: src/main/errors.c:1415
 msgid "bad restart"
 msgstr ""
 
-#: src/main/errors.c:1327
+#: src/main/errors.c:1447
 msgid "restart not on stack"
 msgstr ""
 
-#: src/main/errors.c:1345
+#: src/main/errors.c:1465
 msgid "not in a try context"
 msgstr ""
 
@@ -3683,69 +3694,73 @@ msgstr ""
 msgid "invalid 'y' type in 'x %s y'"
 msgstr ""
 
-#: src/main/main.c:106
+#: src/main/main.c:50
+msgid "dummy - do not translate"
+msgstr ""
+
+#: src/main/main.c:108
 #, c-format
 msgid "syntax error: evaluating expression %d"
 msgstr ""
 
-#: src/main/main.c:215
+#: src/main/main.c:217
 msgid "error: system commands are not supported in this version of R.\n"
 msgstr ""
 
-#: src/main/main.c:273 src/main/main.c:367
+#: src/main/main.c:275 src/main/main.c:369
 msgid "syntax error"
 msgstr ""
 
-#: src/main/main.c:527
+#: src/main/main.c:532
 msgid "unable to open the base package\n"
 msgstr ""
 
-#: src/main/main.c:566
+#: src/main/main.c:571
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr ""
 
-#: src/main/main.c:595
+#: src/main/main.c:600
 msgid "unable to restore saved data in .RData\n"
 msgstr ""
 
-#: src/main/main.c:845
+#: src/main/main.c:850
 msgid "can't quit from browser"
 msgstr ""
 
-#: src/main/main.c:849
+#: src/main/main.c:854
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr ""
 
-#: src/main/main.c:854
+#: src/main/main.c:859
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 
-#: src/main/main.c:862
+#: src/main/main.c:867
 msgid "unrecognized value of save"
 msgstr ""
 
-#: src/main/main.c:865
+#: src/main/main.c:870
 msgid "invalid status, 0 assumed"
 msgstr ""
 
-#: src/main/main.c:870
+#: src/main/main.c:875
 msgid "invalid runLast, FALSE assumed"
 msgstr ""
 
-#: src/main/main.c:901
+#: src/main/main.c:906
 msgid "cannot allocate space for toplevel callback element"
 msgstr ""
 
-#: src/main/main.c:979
+#: src/main/main.c:984
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr ""
 
-#: src/main/main.c:1092
+#: src/main/main.c:1097
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr ""
 
-#: src/main/main.c:1152
+#: src/main/main.c:1157
 msgid "top-level task callback did not return a logical value"
 msgstr ""
 
@@ -3961,31 +3976,31 @@ msgstr ""
 msgid "term names will be truncated"
 msgstr ""
 
-#: src/main/names.c:908
+#: src/main/names.c:910
 msgid "string argument required"
 msgstr ""
 
-#: src/main/names.c:916
+#: src/main/names.c:918
 msgid "no such primitive function"
 msgstr ""
 
-#: src/main/names.c:1029
+#: src/main/names.c:1031
 msgid "attempt to use zero-length variable name"
 msgstr ""
 
-#: src/main/names.c:1031
+#: src/main/names.c:1033
 msgid "symbol print-name too long"
 msgstr ""
 
-#: src/main/names.c:1057
+#: src/main/names.c:1059
 msgid "invalid .Internal() argument"
 msgstr ""
 
-#: src/main/names.c:1060
+#: src/main/names.c:1062
 msgid "invalid internal function"
 msgstr ""
 
-#: src/main/names.c:1062
+#: src/main/names.c:1064
 #, c-format
 msgid "no internal function \"%s\""
 msgstr ""
