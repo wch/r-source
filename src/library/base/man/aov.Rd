@@ -7,10 +7,6 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
 \alias{aov}
 \alias{print.aov}
 \alias{print.aovlist}
-\alias{summary.aov}
-\alias{summary.aovlist}
-\alias{print.summary.aov}
-\alias{print.summary.aovlist}
 \arguments{
   \item{formula}{A formula specifying the model.}
   \item{data}{A data frame in which the variables specified in the
@@ -51,8 +47,8 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
 }
 \author{B. D. Ripley}
 \seealso{
-  \code{\link{lm}}, \code{\link{alias}}, \code{\link{proj}},
-  \code{\link{model.tables}}
+  \code{\link{lm}}, \code{\link{summary.aov}}, \code{\link{alias}},
+  \code{\link{proj}}, \code{\link{model.tables}}
 }
 \examples{
 ## From Venables and Ripley (1997) p.210.

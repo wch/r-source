@@ -209,7 +209,8 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
     invisible(x)
 }
 
-summary.aov <- function(object, intercept = FALSE, keep.zero.df = TRUE, ...)
+summary.aov <- function(object, intercept = FALSE, split,
+                        expand.split = FALSE, keep.zero.df = TRUE, ...)
 {
     asgn <- object$assign[object$qr$pivot[1:object$rank]]
     uasgn <- unique(asgn)
@@ -233,29 +234,51 @@ summary.aov <- function(object, intercept = FALSE, keep.zero.df = TRUE, ...)
             names(ans)[y] <- paste(" Response", cn)
         }
     }
+
+    if(!is.null(effects) && !missing(split)) {
+        ns <- names(split)
+        if(!is.null(Terms <- object$terms)) {
+            if(!is.list(split))
+                stop("The split argument must be a list")
+            if(!all(ns %in% nmeffect))
+                stop("Unknown name(s) of the split argument")
+        }
+        if(expand.split)
+            split <- splitlist(split, attr(Terms, "factors"), nmeffect, uasgn)
+    }
+
     for (y in 1:nresp) {
         if(is.null(effects)) {
-            df <- nterms <- neff <- 0
-            ss <- ms <- numeric(0)
+            nterms <- neff <- 0
+            df <- ss <- ms <- numeric(0)
             nmrows <- character(0)
         } else {
             nobs <- length(resid[, y])
-            df <- ss <- numeric(nterms)
-            nmrows <- character(nterms)
+            df <- ss <- numeric(0)
+            nmrows <- character(0)
             for(i in seq(nterms)) {
                 ai <- (asgn == uasgn[i])
-                df[i] <- sum(ai)
-                ss[i] <- sum(effects[ai, y]^2)
-                nmrows[i] <- nmeffect[1 + uasgn[i]]
+                df <- c(df, sum(ai))
+                ss <- c(ss, sum(effects[ai, y]^2))
+                nmi <- nmeffect[1 + uasgn[i]]
+                nmrows <- c(nmrows, nmi)
+                if(!missing(split) && !is.na(int <- match(nmi, ns))) {
+                    df <- c(df, unlist(lapply(split[[int]], length)))
+                    if(is.null(nms <- names(split[[int]])))
+                        nms <- paste("C", seq(along = split[[int]]))
+                    ss <- c(ss, unlist(lapply(split[[int]],
+                                              function(i, e)
+                                              sum(e[i]^2), effects[ai, y])))
+                    nmrows <- c(nmrows, paste("  ", nmi, ": ", nms, sep = ""))
+                }
             }
         }
-        nt <- nterms
         if(rdf > 0) {
-            nt <- nterms + 1
-            df[nt] <- rdf
-            ss[nt] <- sum(resid[,y]^2)
-            nmrows[nt] <- "Residuals"
+            df <- c(df, rdf)
+            ss <- c(ss, sum(resid[, y]^2))
+            nmrows <- c(nmrows,  "Residuals")
         }
+        nt <- length(df)
         ms <- ifelse(df > 0, ss/df, NA)
         x <- list(Df = df, "Sum Sq" = ss, "Mean Sq" = ms)
         if(rdf > 0) {
@@ -588,4 +611,10 @@ se.contrast.aovlist <-
     rse <- rse.list[strata.nms]
     eff <- effic[eff.used]
     sqrt((rse/eff^2) %*% wgt)
+}
+
+splitlist <- function(split, factors, names, asgn)
+{
+    .NotYetImplemented()
+    split
 }
