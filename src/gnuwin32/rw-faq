@@ -25,6 +25,7 @@ Table of Contents
   3.2 I don't have permission to write to the `rwXxxx/library' directory.
   3.3 The packages I installed do not appear in the HTML help system.
   3.4 My functions are not found by the HTML help search system.
+  3.5 Package TclTk does not work.
 
 4 Windows Features
   4.1 What should I expect to behave differently from the Unix version of R?
@@ -276,6 +277,17 @@ installed.
      installing the package.
 
 If those all hold true, this works for us.
+
+3.5 Package TclTk does not work.
+================================
+
+For package tcltk to work (try `demo(tkdensity)' or `demo(tkttest)' you
+need to have Tcl installed.  Download `tcl832.exe' (or use `tcl831.exe'
+if you already have it) from <dev.scriptics.com> and install it. (That
+will put the `bin' directory containing the Tcl and Tk DLLs in your
+path). You then need to set the environmental variable `TCL_LIBRARY',
+to something like `c:/Program Files/Tcl/lib/tcl8.3'.  (The startup code
+for the package will warn you if this is unset.)
 
 
 4 Windows Features
