@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-38, @value{FAQ-YEAR}-08-22
+@set FAQ-VERSION 1.7-39, @value{FAQ-YEAR}-08-29
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -2094,6 +2094,8 @@ data set has no longer overlap.
 Nonparametric Multiple Comparisons:  provides simultaneous rank test
 procedures for the one-way layout without presuming a certain
 distribution.
+@item nprq
+Nonparametric and sparse quantile regression methods.
 @item odesolve
 An interface for the Ordinary Differential Equation (ODE) solver lsoda.
 ODEs are expressed as R functions.
@@ -3343,7 +3345,9 @@ to get the numbers back.  More efficient, but harder to remember, is
 as.numeric(levels(f))[as.integer(f)]
 @end smallexample
 
-In any case, do not call @code{as.numeric()} or their likes directly.
+In any case, do not call @code{as.numeric()} or their likes directly for
+the task at hand (as @code{as.numeric()} or @code{unclass()} give the
+internal codes).
 
 @node Are Trellis displays implemented in R?, What are the enclosing and parent environments?, How do I convert factors to numeric?, R Miscellanea
 @section Are Trellis displays implemented in R?
