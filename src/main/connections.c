@@ -1822,6 +1822,12 @@ int Rconn_fgetc(Rconnection con)
 	}
 	return c;
     }
+    if (con->save != -1000) {
+	c = con->save;
+	con->save = con->save2;
+	con->save2 = -1000;
+	return c;
+    }
     curLine = con->PushBack[con->nPushBack-1];
     c = curLine[con->posPushBack++];
     if(con->posPushBack >= strlen(curLine)) {
