@@ -278,6 +278,38 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+#ifdef NEWLIST
+SEXP do_makelist(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+	SEXP list, names, noname;
+	int i, n, havenames;
+
+	havenames = 0;
+	n = length(args);
+	PROTECT(list = allocVector(VECSXP, n));
+	PROTECT(names = allocVector(STRSXP, n));
+	PROTECT(noname = mkChar(""));
+	for(i=0 ; i<n ; i++) {
+		if (TAG(args) != R_NilValue) {
+			STRING(names)[i] = PRINTNAME(TAG(args));
+			havenames = 1;
+		}
+		else {
+			STRING(names)[i] = noname;
+		}
+		if (NAMED(CAR(args)))
+			VECTOR(list)[i] = duplicate(CAR(args));
+		else
+			VECTOR(list)[i] = CAR(args);
+		args = CDR(args);
+	}
+	if (havenames) {
+		setAttrib(list, R_NamesSymbol, names);
+	}
+	UNPROTECT(3);
+	return list;
+}
+#else
 SEXP do_makelist(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP s = args;
@@ -288,6 +320,7 @@ SEXP do_makelist(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	return args;
 }
+#endif
 
 
 SEXP do_expression(SEXP call, SEXP op, SEXP args, SEXP rho)

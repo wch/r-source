@@ -169,6 +169,101 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return x;
 }
 
+
+#ifdef NEWLIST
+
+/* FIXME : We need a general mechanism for "rendering" symbols. */
+/* It should make sure that it quotes when there are special */
+/* characters and also take care of ansi escapes properly. */
+ 
+static void PrintGenericVector(SEXP s, SEXP env)
+{
+    int i, taglen, ns;
+    SEXP dims, t, names, newcall;
+    char *pbuf, *ptag;
+
+    ns = length(s);
+    if((dims = getAttrib(s, R_DimSymbol)) != R_NilValue
+       && length(dims) > 1) {
+        PROTECT(dims);
+        PROTECT(t = allocArray(STRSXP, dims));
+        setAttrib(t, R_DimNamesSymbol, getAttrib(s, R_DimNamesSymbol));
+        for (i = 0 ; i<ns ; i++) {
+            switch(TYPEOF(VECTOR(s)[i])) {
+            case NILSXP:
+                pbuf = Rsprintf("NULL");
+                break;
+            case LGLSXP:
+                pbuf = Rsprintf("Logical,%d", LENGTH(CAR(s)));
+                break;
+            case INTSXP:
+            case REALSXP:
+                pbuf = Rsprintf("Numeric,%d", LENGTH(CAR(s)));
+                break;
+            case CPLXSXP:
+                pbuf = Rsprintf("Complex,%d", LENGTH(CAR(s)));
+                break;
+            case STRSXP:
+                pbuf = Rsprintf("Character,%d", LENGTH(CAR(s)));
+                break;
+            case LISTSXP:
+            case VECSXP:
+                pbuf = Rsprintf("List,%d", length(CAR(s)));
+                break;
+            case LANGSXP:
+                pbuf = Rsprintf("Expression");
+                break;
+            default:
+                pbuf = Rsprintf("?");
+                break;
+            }
+            STRING(t)[i] = mkChar(pbuf);
+        }
+        if (LENGTH(dims) == 2)
+            printMatrix(t, 0, dims, 0, 0);
+        else
+            printArray(t, 0);
+        UNPROTECT(2);
+    }
+    else {
+        names = getAttrib(s, R_NamesSymbol);
+        taglen = strlen(tagbuf);
+        ptag = tagbuf + taglen;
+        PROTECT(newcall = allocList(2));
+        CAR(newcall) = install("print");
+        TYPEOF(newcall) = LANGSXP;
+
+        for (i = 0 ; i < ns ; i++) {
+            if (i > 0) Rprintf("\n");
+            if (names != R_NilValue &&
+                STRING(names)[i] != R_NilValue &&
+                *CHAR(STRING(names)[i]) != '\0') {
+                if (taglen + strlen(CHAR(STRING(names)[i])) > TAGBUFLEN)
+                    sprintf(ptag, "$...");
+                else
+                    sprintf(ptag, "$%s", CHAR(STRING(names)[i]));
+            }
+            else {
+                if (taglen + IndexWidth(i) > TAGBUFLEN)
+                    sprintf(ptag, "$...");
+                else
+                    sprintf(ptag, "[[%d]]", i+1);
+            }
+            Rprintf("%s\n", tagbuf);
+            if(isObject(VECTOR(s)[i])) {
+                CADR(newcall) = VECTOR(s)[i];
+                eval(newcall, env);
+            }
+            else PrintValueRec(VECTOR(s)[i], env);
+            *ptag = '\0';
+        }
+        Rprintf("\n");
+        UNPROTECT(1);
+    }
+    printAttributes(s, env);
+}
+#endif
+
 static void printList(SEXP s,SEXP env)
 {
 	int i, taglen;
@@ -336,6 +431,11 @@ void PrintValueRec(SEXP s,SEXP env)
 	case DOTSXP:
 		Rprintf("<...>\n");
 		break;
+#ifdef NEWLIST
+	case VECSXP:
+		PrintGenericVector(s, env);
+		break;
+#endif
 	case LISTSXP:
 		printList(s,env);
 		break;

@@ -216,6 +216,9 @@ int isVector(SEXP s)
 	    case REALSXP:
 	    case CPLXSXP:
 	    case STRSXP:
+#ifdef NEWLIST
+	    case VECSXP:
+#endif
 	    case EXPRSXP:
 		return 1;
 		break;
@@ -431,7 +434,11 @@ static struct {
 TypeTable[] = {
 	{ "NULL",		NILSXP     },	/* real types */
 	{ "symbol",		SYMSXP     },
+#ifdef NEWLIST
+	{ "pairlist",		LISTSXP	   },
+#else
 	{ "list",		LISTSXP    },
+#endif
 	{ "closure",		CLOSXP     },
 	{ "environment",	ENVSXP     },
 	{ "promise",		PROMSXP    },
@@ -447,6 +454,9 @@ TypeTable[] = {
 	{ "...",		DOTSXP     },
 	{ "any",		ANYSXP     },
 	{ "expression",		EXPRSXP    },
+#ifdef NEWLIST
+	{ "list",		VECSXP	   },
+#endif
 
 	{ "numeric",		REALSXP    },	/* aliases */
 	{ "name",		SYMSXP	   },

@@ -158,6 +158,9 @@ int length(SEXP s)
 	case CPLXSXP:
 	case STRSXP:
 	case CHARSXP:
+#ifdef NEWLIST
+	case VECSXP:
+#endif
 	case EXPRSXP:
 		return LENGTH(s);
 	case LISTSXP:

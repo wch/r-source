@@ -33,6 +33,9 @@
 SEXP duplicate(SEXP s)
 {
 	SEXP h, t, sp;
+#ifdef NEWLIST
+	int i, n;
+#endif
 
 	switch (TYPEOF(s)) {
 	case NILSXP:
@@ -85,12 +88,30 @@ SEXP duplicate(SEXP s)
 		ATTRIB(t) = duplicate(ATTRIB(s));
 		UNPROTECT(2);
 		break;
+#ifdef NEWLIST
+	case EXPRSXP:
+	case VECSXP:
+		n = length(s);
+		PROTECT(s);
+		PROTECT(t = allocVector(VECSXP, LENGTH(s)));
+		for(i = 0 ; i < n ; i++)
+			VECTOR(t)[i] = duplicate(VECTOR(s)[i]);
+		ATTRIB(t) = duplicate(ATTRIB(s));
+		UNPROTECT(2);
+		break;
+	case STRSXP:
+	case LGLSXP:
+	case INTSXP:
+	case REALSXP:
+	case CPLXSXP:
+#else
 	case STRSXP:
 	case LGLSXP:
 	case INTSXP:
 	case REALSXP:
 	case CPLXSXP:
 	case EXPRSXP:
+#endif
 		PROTECT(s);
 		t = allocVector(TYPEOF(s), LENGTH(s));
 		copyVector(t, s);
