@@ -54,10 +54,10 @@ for further details and examples.
   for other tools involving methods; \code{\link{show}} for }
 \examples{
 \testonly{example(setMethod)}
-## assuming the generic and methods for plotData
+## assuming the methods for plot
 ## are set up as in the documentation for setMethod,
 ## print (with definitions) the methods that involve
 ## class "track"
-showMethods("plotData", classes = "track")
+showMethods("plot", classes = "track")
 
 \keyword{methods}

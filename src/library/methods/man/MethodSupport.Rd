@@ -31,8 +31,11 @@ this signature.
   
   }
 \item{\code{resetGeneric}:}{ 
-  reset the currently defined methods for this generic by un-caching any inherited
-methods.
+  reset the currently defined methods for this generic by removing the
+  corresponding definition from the methods metadata (to be remerged
+  when the function is next called).  Returns \code{TRUE} or
+  \code{FALSE} according to whether information for the function was
+  found in the metadata.
 
   You \emph{must} call this function when you change relevant inheritance information during a
 session, to guarantee that the new information is used if this generic has already been

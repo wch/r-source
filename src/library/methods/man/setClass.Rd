@@ -184,10 +184,19 @@ setClass("trackCurve",
 ## allowing matrices for the "y" and "smooth" slots
 setClass("trackMultiCurve", representation(x="numeric", y="matrix", smooth="matrix"),
           prototype = list(x=numeric(), y=matrix(0,0,0), smooth= matrix(0,0,0)))
-## Define a multi-curve to extend a single curve ONLY
-## if the y data is one variable.
-setIs("trackMultiCurve", "trackCurve", test = function(obj) {ncol(slot(obj, "y")) == 1},
-      coerce = function(obj) { new("trackCurve", x = slot(obj, "x"),
+##
+## Suppose we want  trackMultiCurve to be like trackCurve when there's only
+## one column
+## First, the wrong way. 
+try(setIs("trackMultiCurve", "trackCurve",
+  test = function(obj) {ncol(slot(obj, "y")) == 1}))
+
+## why didn't that work?  You can only override the slots "x", "y", and "smooth"
+## if you provide an explicit coerce function to correct any inconsistencies:
+
+setIs("trackMultiCurve", "trackCurve",
+  test = function(obj) {ncol(slot(obj, "y")) == 1},
+  coerce = function(obj) { new("trackCurve", x = slot(obj, "x"),
         y = as.numeric(slot(obj,"y")), curve = as.numeric(slot(obj, "curve")))})
 \testonly{
 tMC <- new("trackMultiCurve")

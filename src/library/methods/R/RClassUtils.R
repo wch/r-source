@@ -12,10 +12,9 @@ testVirtual <-
         en <- names(extends)
         if(!is.na(match("VIRTUAL", en)))
             return(TRUE)
-        ## we assume the superclass may not be defined yet or may be a basic class, in which case
-        ## the testing class has to declare itself VIRTUAL explicitly.
+        ## does the class extend a known non-virtual class?
         for(what in en)
-            if(!isClass(what) || !isVirtualClass(what))
+            if(isClass(what) && identical(getVirtual(getClass(what)), FALSE))
                 return(FALSE)
     }
     (length(properties)==0 && is.null(prototype))
@@ -101,31 +100,47 @@ completeClassDefinition <-
   ## The completed definition is stored in the session's class metadata,
   ## to be retrieved the next time that getClass is called on this class,
   ## and is returned as the value of the call.
-  function(Class)
+  function(Class, ClassDef = getClassDef(Class))
 {
-    value <- NULL
-    if(isClass(Class)) {
-        ClassDef <- getClassDef(Class)
-        ## an initial assignment prevents recursive looping should this class's
-        ## definition be needed during the computations (such loops are usually but
-        ## not quite always an error).
+    if(isClass(Class) || !missing(ClassDef)) {
         environment(ClassDef) <- copyEnvironment(ClassDef)
         ## copy the environment so the completion will not be saved beyond the
         ## session.
         assignClassDef(Class, ClassDef, 0)
-        on.exit(if(is.null(value)) removeClass(Class, where = 0), add=TRUE)
+        ## an initial assignment prevents recursive looping should this class's
+        ## definition be needed during the computations (such loops are usually but
+        ## not quite always an error).  Removed on exit: completeClassDefinition
+        ## does not store the definition.  It is called by getClass, which does, and
+        ## by setSClass, which does not.
+        on.exit(removeClass(Class, 0))
         ev <- environment(ClassDef)
         properties <- getProperties(ClassDef)
         immediate <- getExtends(ClassDef)
-        ext <- getAllSuperClasses(ClassDef)## all the direct and indirect superClasses
+        ext <- getAllSuperClasses(ClassDef)
+        ## all the direct and indirect superClasses but NOT those that do
+        ## an explicit coerce (we can't conclude anything about slots, etc. from them)
         if(length(ext) > 0) {
-            superProps <- list()
-            for(eClass in rev(ext)) {
-                classProps <- getProperties(getClass(eClass))
-                superProps[names(classProps)] <- classProps
+            superProps <- vector("list", length(ext)+1)
+            superProps[[1]] <- properties
+            for(i in seq(along=ext)) {
+                eClass <- ext[[i]]
+                if(isClass(eClass))
+                    superProps[[i+1]] <- getProperties(getClassDef(eClass))
             }
-            superProps[names(properties)] <- properties
-            properties <- superProps
+            properties <- unlist(superProps, recursive = FALSE)
+            ## check for conflicting slot names
+            if(any(duplicated(names(properties)))) {
+                duped <- duplicated(names(properties))
+                dupNames <- names(properties)[duped]
+                dupClasses <- logical(length(superProps))
+                for(i in seq(along = superProps)) {
+                    dupClasses[i] <- !all(is.na(match(dupNames, names(superProps[[i]]))))
+                }
+                stop(paste("Duplicate slot names: slots ",
+                        paste(dupNames, collapse =", "), "; see classes ",
+                        paste(c(Class, ext)[dupClasses], collapse = ", "), sep=""))
+                properties <- properties[!duped]
+            }
         }
         prototype <- makePrototypeFromClassDef(properties, getPrototype(ClassDef), immediate)
         virtual <- getVirtual(ClassDef)
@@ -142,21 +157,14 @@ completeClassDefinition <-
                                      validity,
                                      access)
         environment(ClassDef) <- newEv
-        assignClassDef(Class, ClassDef, 0)
-        value <- ClassDef
     }
     else {
-        ## create a class definition, possibly an empty virtual class
-        prototype <- newBasic(Class, .Force=TRUE)
-        ## newBasic never exactly returns NULL, but testVirtual uses NULL prototype
-        ## as a requirement for a virtual class -- based on a problem with NULL in R,
-        ## so may change.  See documentation for `new'
-        if(is(prototype, "NULL"))
-            prototype <- NULL
-        setClass(Class, prototype = prototype, where = 0)
-        value <- getClass(Class)
+        ## create a class definition of an empty virtual class
+        ClassDef <- getClass("VIRTUAL")
+        environment(ClassDef) <- copyEnvironment(environment(ClassDef))
+        setClassName(ClassDef, Class)
     }
-    value
+    ClassDef
 }
 
 getFromClassDef <-
@@ -242,16 +250,47 @@ getAllSuperClasses <-
   }
 
 superClassDepth <-
-  function(ClassDef)
-{    
-  immediate <- names(getExtends(ClassDef))
-  super <- list(label=immediate, depth = rep(1, length(immediate)))
-  for(what in immediate) {
-    more <- Recall(getClassDef(what))
-    super$depth <- c(super$depth, 1+more$depth)
-    super$label <- c(super$label, more$label)
-  }
-  super
+  function(ClassDef, soFar = getClassName(ClassDef) )
+{
+    ext <- getExtends(ClassDef)
+    ## remove superclasses defined with a coerce method.  We can't use these
+    ## to infer information about slots, etc.
+    ok <- rep(TRUE, length(ext))
+    for(i in seq(along=ext)) {
+        exti <- ext[[i]]
+        if(is.list(exti) && is.function(exti$coerce))
+            ok[i] <- FALSE
+    }
+    browser()
+    ext <- ext[ok]
+    immediate <- names(ext)
+    ## watch out for loops (e.g., matrix/array have mutual is relationship)
+    immediate <- immediate[is.na(match(immediate, soFar))]
+    soFar <- c(soFar, immediate)
+    super <- list(label=immediate, depth = rep(1, length(immediate)))
+    for(what in immediate) {
+        if(isClass(what)) {
+            more <- Recall(getClassDef(what), soFar)
+            whatMore <- more$label
+            if(!all(is.na(match(whatMore, soFar)))) {
+                ## elminate classes reachable by more than one path
+                ## (This is allowed in the model, however)
+                ok <- is.na(match(whatMore, soFar))
+                more$depth <- more$depth[ok]
+                more$label <- more$label[ok]
+                whatMore <- whatMore[ok]
+            }
+            if(length(whatMore) > 0) {
+                soFar <- c(soFar, whatMore)
+                super$depth <- c(super$depth, 1+more$depth)
+                super$label <- c(super$label, more$label)
+            }
+        }
+        else
+            warning("Class information incomplete: class \"",
+                    what, "\" not defined")
+    }
+    super
 }
 
 setExtends <-
@@ -363,8 +402,10 @@ newBasic <-
               "environment" = new.env(),
                "function" = quote(function()NULL),
                "named" = named(...),
-               "array" = (if(nargs() > 1) array(...) else structure(numeric(), .Dim =0)),
-               "matrix" = (if(nargs() > 1) matrix(...) else matrix(0,0,0)),
+                  ## note on array, matrix:  not possible to be compatible with
+                  ## S-Plus on array, unless R allows 0-length .Dim attribute
+               "array" = (if(length(list(...)) > 0) array(...) else structure(numeric(), .Dim =0)),
+               "matrix" = (if(length(list(...)) > 0) matrix(...) else matrix(0,0,0)),
                "ts" = ts(...),
             ## The language data
                   "name" = as.name("<UNDEFINED>"), # R won't allow 0 length names
@@ -662,17 +703,6 @@ removeFromClassMetaData <-
   substitute(function(name) rm(list=name, envir=NAME), list(NAME=as.name(SessionClassMetaData)))
 mode(removeFromClassMetaData) <- "function"
 
-unsetClass <-
-  ## remove this class name from the internal table for this session.
-  ##
-  ## Rarely needed to call this directly.
-  function(Class)
-{
-    Class <- classMetaName(Class)
-    if(!is.null(getFromClassMetaData(Class)))
-        removeFromClassMetaData(Class)
-}
-
 
 extendsCoerce <-
   ## the function to perform coercion based on the is relation
@@ -848,10 +878,16 @@ completeExtends <-
   ## Under rather obscure situations of multiple inheritance, the result could be
   ## ambiguous (depending on the order in which signatures are seen by the dispatcher
   ## for a particular generic function), unless searching is done depth first.
-  function(ClassDef)
+  function(ClassDef, soFar = getClassName(ClassDef))
 {
     ext <- getExtends(ClassDef)
     what <- names(ext)
+    if(!all(is.na(match(what, soFar)))) {
+        ## watch for loops (reflexive is relations, e.g.)
+        ok <- is.na(match(what, soFar))
+        ext <- ext[ok]
+        what <- what[ok]
+    }
     test <- sapply(ext, function(obj)is.list(obj) && is.function(obj$test))
     value <- list()
     for(i in seq(along=ext)) {
@@ -859,7 +895,7 @@ completeExtends <-
         valueEl <- ext[i]               ## note: an extra level of list, to be unlisted later
         if(isClass(by))
         {
-            more <- completeExtends(getClass(by))
+            more <- Recall(getClass(by), c(soFar, what))
             whatMore <- names(more)
             for(j in seq(along=more)) {
                 cl <- el(whatMore, j)

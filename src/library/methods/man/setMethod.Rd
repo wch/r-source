@@ -79,44 +79,40 @@ for further details and examples.
   setSClass("trackCurve", extends = "track",
     properties = list(smooth = "numeric"))
 }
-## A function like plot, but with explicit x, y arguments:
-plotData <- function(x, y, ...) {
-  if(missing(y)) plot(x, ...)
-  else plot(x, y, ...)
- }
+
 ## methods for plotting track objects (see the example for \link{setClass})
 ##
 ## First, with only one object as argument:
-setMethod("plotData", signature(x="track", y="missing"),
-  function(x,  y, ...) plotData(slot(x, "x"), slot(x, "y"), ...)
+setMethod("plot", signature(x="track", y="missing"),
+  function(x,  y, ...) plot(slot(x, "x"), slot(x, "y"), ...)
 )
 ## Second, plot the data from the track on the y-axis against anything
 ## as the x data.
-setMethod("plotData", signature(y = "track"),
- function(x, y, ...) plotData(x, slot(y, "y"), ...)
+setMethod("plot", signature(y = "track"),
+ function(x, y, ...) plot(x, slot(y, "y"), ...)
 )
 ## and similarly with the track on the x-axis (using the short form of
 ## specification for signatures)
-setMethod("plotData", "track",
- function(x, y, ...) plotData(slot(x, "y"), y,  ...)
+setMethod("plot", "track",
+ function(x, y, ...) plot(slot(x, "y"), y,  ...)
 )
 t1 <- new("track", x=1:20, y=(1:20)^2)
 tc1 <- new("trackCurve", t1)
 slot(tc1, "smooth") <- smooth.spline(slot(tc1, "x"), slot(tc1, "y"))$y #$
-plotData(t1)
-plotData(qnorm(ppoints(20)), t1)
+plot(t1)
+plot(qnorm(ppoints(20)), t1)
 ## An example of inherited methods.
-setMethod("plotData", c("trackCurve", "missing"),
+setMethod("plot", c("trackCurve", "missing"),
 function(x, y, ...) {
-  plotData(as(x, "track"))
+  plot(as(x, "track"))
   if(length(slot(x, "smooth") > 0))
     lines(slot(x, "x"), slot(x, "smooth"))
   }
 )
 ## the plot of tc1 alone has an added curve; other uses of tc1
 ## are treated as if it were a "track" object.
-plotData(tc1)
-plotData(qnorm(ppoints(20)), tc1)
+plot(tc1)
+plot(qnorm(ppoints(20)), tc1)
 
 ## defining methods for a special function.
 ## Although "[" and "length" are not ordinary functions
@@ -126,7 +122,7 @@ setMethod("[", "track",
     x@x <- x@x[i]; x@y <- x@y[i]
     x
   })
-plotData(t1[1:15])
+plot(t1[1:15])
 
 setMethod("length", "track", function(x)length(x@y))
 length(t1)

@@ -490,11 +490,13 @@ resetGeneric <-
 {
     fdef <- getFromMethodMetaData(f)
     if(is.null(fdef))
-        return(FALSE)
-    methods <- get(".Methods", envir = environment(fdef), inherit=FALSE)
-    methods <- setAllMethodsSlot(methods)
-    assign(".Methods", envir = environment(fdef), methods)
-    return(TRUE)
+        FALSE
+    else {
+        ## removes the definition from the session metadata
+        ## and resets cached info for a primitive
+        cacheGenericsMetaData(f, TRUE, NULL)
+        TRUE
+    }
 }
 
 setReplaceMethod <-

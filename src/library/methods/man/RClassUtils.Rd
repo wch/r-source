@@ -39,7 +39,6 @@
 \alias{getFromClassMetaData}
 \alias{assignToClassMetaData}
 \alias{removeFromClassMetaData}
-\alias{unsetClass}
 \alias{extendsCoerce}
 \alias{extendsReplace}
 \alias{findExtends}
@@ -85,7 +84,7 @@ getAccess(ClassDef)
 
 getAllSuperClasses(ClassDef)
 
-superClassDepth(ClassDef)
+superClassDepth(ClassDef, soFar)
 
 setExtends(ClassDef, value)
 
@@ -136,8 +135,6 @@ getFromClassMetaData(name)
 assignToClassMetaData(name, value)
 
 removeFromClassMetaData(name)
-
-unsetClass(Class)
 
 extendsCoerce(fromClass, Class)
 
@@ -274,16 +271,18 @@ information as well.
 \item{\code{getAllSuperClasses}, \code{superClassDepth}:}{ 
   Get the names of all the classes that this class definition extends.
 
-A utility function used to complete a class definition.  
+\code{getAllSuperClasses} is a utility function used to complete a class definition.  
   It returns all the
 superclasses reachable from this class, in breadth-first order (which is the order
 used for matching methods); that is, the first direct superclass followed by all its
 superclasses, then the next, etc.  (The order is relevant only in the case that
 some of the superclasses have multiple inheritance.)
 
-\code{superClassDepth} returns the same information, but as a list with
+\code{superClassDepth}, which is called from \code{getAllSuperClasses},
+returns the same information, but as a list with
 components \code{label} and \code{depth}, the latter for the number of
-generations back each class is in the inheritance tree.
+generations back each class is in the inheritance tree.  The argument
+\code{soFar} is used to avoid loops in the network of class relationships.
   
   
   }
@@ -415,13 +414,6 @@ extensions recorded in the opposite direction, via a subclass list
   \code{print.environment} function exists to intercept printing based
   on S3-style methods; it calls \code{showNonVector} to do the work.
 
-  }
-\item{\code{unsetClass}:}{ 
-  remove this class name from the internal table for this session.
-
-Rarely needed to call this directly.
-
-  
   }
 \item{\code{extendsCoerce}, \code{extendsReplace}:}{ 
   Returns the function to perform coercion or replacement,

@@ -1,6 +1,6 @@
-\name{classMethodsList}
-\alias{class_MethodsList}
-\non_function{}
+\name{MethodsList-class}
+\alias{MethodsList-class}
+\doctype{class}
 \title{Class MethodsList, Representation of Methods for a Generic Function }
 \description{ Objects from this class are generated and revised by the
   definition of methods for a generic function.}

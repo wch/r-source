@@ -72,17 +72,24 @@ setIs <-
     if(isClass(class1)) {
         def <- getClassDef(class1, where = where)
         ext <- getExtends(def)
+        oldExt <- ext
         elNamed(ext, class2) <- obj
         setExtends(def, ext)
-        unsetClass(class1)
+        ## check for errors, reset the class def if they occur
+        on.exit(setExtends(def, oldExt))
+        completeClassDefinition(class1, def)
+        on.exit()
+        resetClass(class1)
     }
     else if(isClass(class2)) {
         ## put the information in the subclasses of class2
+        ## (A bit dicey, since we can't check errors with
+        ## completeClassDefinition)
         def <- getClassDef(class2, where = where)
         ext <- getSubclasses(def)
         elNamed(ext, class1) <- obj
         setSubclasses(def, ext)
-        unsetClass(class2)
+        resetClass(class2)
     }
     else
         stop("Can't set an is relation unless one of the classes has a formal definition")

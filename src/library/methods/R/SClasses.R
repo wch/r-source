@@ -27,9 +27,6 @@ representation <-
         ei <- el(value, i)
         if(!is.character(ei) || length(ei) != 1)
             stop(paste("Element", i, "of the representation was not a single character string"))
-        ## we don't warn on the non-definition of the corresponding class; basic classes
-        ## can exist w/o definition, and the prototype generation can be delayed until
-        ## the first call to new() on this class.
     }
     includes <- as.character(value[nchar(anames)==0])
     if(any(duplicated(includes)))
@@ -37,15 +34,6 @@ representation <-
     slots <- anames[nchar(anames)>0]
     if(any(duplicated(slots)))
        stop(paste("Duplicated slot names: ", paste(slots[duplicated(slots)], collapse="")))
-    for(super in includes) {
-      if(isClass(super)) {
-        supSlots <- slotNames(super)
-        if(any(!is.na(match(supSlots, slots))))
-          stop(paste("Inheritance from class \"", super, "\" introduces duplicate slot names: ",
-                     paste(supSlots[!is.na(match(supSlots, slots))], collapse =", "), sep=""))
-        slots <- c(slots, supSlots)
-      }
-    }
     value
 }
 
@@ -78,6 +66,11 @@ setSClass <-
     environment(f) <- ev
     setValidity(f, validity)
     assignClassDef(name, f, where)
+    ## confirm the validity of the class definition (it may be incomplete)
+    on.exit(removeClassDef(name, where))
+    completeClassDefinition(name, f)
+    ## if no error, allow assignment to stay
+    on.exit()
     name
 }
 
@@ -87,7 +80,11 @@ getClassDef <-
   ## known, such as the complete list of superclasses, use `getClass(Class)'.
   function(Class, where = -1)
 {
-    get(classMetaName(Class), where)
+    cName <- classMetaName(Class)
+    if(identical(where, 0))
+        getFromClassMetaData(cName)
+    else
+        get(cName, where)
 }
 
 getClass <-
@@ -95,12 +92,13 @@ getClass <-
   ## including all slots, etc. in classes that this class extends.
   function(Class, .Force = FALSE)
 {
-    cname <- classMetaName(Class)
-    value <- getFromClassMetaData(cname)
+    value <- getClassDef(Class, 0)
     if(is.null(value)) {
-      if(isClass(Class))
-        value <- completeClassDefinition(Class)
-      else if(!.Force && is.na(match(Class, .BasicClasses)))
+        if(isClass(Class)) {
+            value <- completeClassDefinition(Class)
+            assignClassDef(Class, value, 0)
+        }
+        else if(!.Force && is.na(match(Class, .BasicClasses)))
         stop(paste("\"", Class, "\" is not a defined class"))
       ## else, return NULL.  This may change, if we force formal definitions
       ## for all classes, including (the tough ones) NULL, array, matrix, ts 

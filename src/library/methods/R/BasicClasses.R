@@ -33,12 +33,19 @@
     ## in .BasicClasses
 
     setClass("NULL", where = envir)
-    setClass("matrix", where = envir)
-    setClass("array", where = envir)
-    setClass("ts", where = envir)
+
+    setClass("structure", where = envir)
+    for(.class in c("matrix", "array", "ts")) {
+        setClass(.class, prototype = newBasic(.class), where = envir)
+        setIs(.class, "structure")
+    }
+    setIs("structure", "vector", coerce = function(object) as.vector(object))
+    
+    setIs("matrix", "array")
+    setIs("array", "matrix", test = function(object) length(dim(object)) == 2)
     clList <- c(clList,
                 "double", "language", "{", "if", "<-",
-                "function", "environment", "named"," array",
+                "function", "environment", "named","array",
                 "matrix", "name", "call", "NULL" ,
                 "VIRTUAL", "ANY", "vector", "structure")
     assign(".BasicClasses", clList, envir)
