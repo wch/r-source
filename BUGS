@@ -179,10 +179,10 @@ none
 
 Directory:  incoming
 
-* PR# 547 *
-Subject: system(.., ignore.stderr = TRUE)  problem on Solaris
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 19 May 2000 21:12:02 +0200 (CEST)
+* PR# 548 *
+Subject: graphics character misplaced
+From: acuster@nature.berkeley.edu
+Date: Sat, 20 May 2000 01:45:51 +0200 (MET DST)
 * PR# 531 *
 Subject: Possible bug in factor
 From: Murray Smith <mh.smith@auckland.ac.nz>
@@ -195,6 +195,10 @@ Date: Wed, 19 Apr 2000 11:27:52 -0400
 Subject: na.omit fails for matrices
 From: Sergei Zuyev <sergei@stams.strath.ac.uk>
 Date: Mon, 17 Apr 2000 11:52:28 +0100
+* PR# 538 *
+Subject: no $method from as.hclust
+From: Denis White <denis@mercury.cor.epa.gov>
+Date: Wed, 10 May 2000 15:00:05 -0700 (PDT)
 * PR# 536 *
 Subject: Problem with match.arg()
 From: kjetikj@astro.uio.no
@@ -203,19 +207,19 @@ Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
 Subject:  axis() deficiency 
 From: William.Venables@cmis.CSIRO.AU (Bill Venables)
 Date: Sat, 6 May 2000 10:33:32 +1000 (EST)
-* PR# 542 *
-Subject: Inconsistent behavior of par() agruments on lines()
-From: Art Salwin <salwin@mitretek.org>
-Date: Fri, 12 May 2000 10:08:22 -0400
-* PR# 538 *
-Subject: no $method from as.hclust
-From: Denis White <denis@mercury.cor.epa.gov>
-Date: Wed, 10 May 2000 15:00:05 -0700 (PDT)
-* PR# 546 *
-Subject:  variance of a scalar 
-From: J.C.Rougier@durham.ac.uk
-Date: Fri, 19 May 2000 09:42:20 +0100 (BST)
 * PR# 545 *
 Subject: Segmentation Fault of unknown cause
 From: kjetikj@astro.uio.no
 Date: Mon, 15 May 2000 16:29:29 +0200 (MET DST)
+* PR# 542 *
+Subject: Inconsistent behavior of par() agruments on lines()
+From: Art Salwin <salwin@mitretek.org>
+Date: Fri, 12 May 2000 10:08:22 -0400
+* PR# 547 *
+Subject: system(.., ignore.stderr = TRUE)  problem on Solaris
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 19 May 2000 21:12:02 +0200 (CEST)
+* PR# 546 *
+Subject:  variance of a scalar 
+From: J.C.Rougier@durham.ac.uk
+Date: Fri, 19 May 2000 09:42:20 +0100 (BST)
