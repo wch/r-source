@@ -5,7 +5,7 @@
   Input and output text connections.
 }
 \usage{
-textConnection(object, open = "r")
+textConnection(object, open = "r", local = FALSE)
 }
 \arguments{
   \item{object}{character.  A description of the connection. 
@@ -16,6 +16,9 @@ textConnection(object, open = "r")
   \item{open}{character.  Either \code{"r"} (or equivalently \code{""})
     for an input connection or \code{"w"} or \code{"a"} for an output
     connection.}
+  \item{local}{logical.  Used only for output connections.  If \code{TRUE},
+    output is assigned to a variable in the calling environment.  Otherwise
+    the global environment is used.
 }
 \details{
   An input text connection is opened and the character vector is copied
@@ -23,7 +26,8 @@ textConnection(object, open = "r")
   destroys the copy.
 
   An output text connection is opened and creates an \R character vector
-  of the given name in the user's workspace.  This object will at all
+  of the given name in the user's workspace or in the calling environment,
+  depending on the value of the \code{local} argument.  This object will at all
   times hold the completed lines of output to the connection, and
   \code{\link{isIncomplete}} will indicate if there is an incomplete
   final line.  Closing the connection will output the final line,

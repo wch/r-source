@@ -298,6 +298,10 @@ NEW FEATURES
 	the garbage collector and reduce system calls on some
 	platforms.
 
+    o   textConnection() now has a local argument for use with output
+	connections. local = TRUE means the variable containing the output
+	is assigned in the frame of the caller.
+
 
 STANDARD PACKAGES
 

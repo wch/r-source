@@ -83,8 +83,11 @@ socketConnection <- function(host= "localhost", port, server = FALSE,
                              encoding = getOption("encoding"))
     .Internal(socketConnection(host, port, server, blocking, open, encoding))
 
-textConnection <- function(object, open = "r")
-    .Internal(textConnection(deparse(substitute(object)), object, open))
+textConnection <- function(object, open = "r", local = FALSE) {
+    if (local) env <- parent.frame()
+    else env <- .GlobalEnv
+    .Internal(textConnection(deparse(substitute(object)), object, open, env))
+}
 
 seek <- function(con, ...)
     UseMethod("seek")
