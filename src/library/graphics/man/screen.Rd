@@ -15,7 +15,8 @@ close.screen(n, all.screens = FALSE)
     number of columns in a screen matrix \emph{or} a matrix with 4 columns.
     If a matrix, then each row describes a screen with values for the left,
     right, bottom, and top of the screen (in that order) in NDC units.}
-  \item{screen}{A number giving the screen to be split.}
+  \item{screen}{A number giving the screen to be split.  It defaults to
+    the current screen if there is one, otherwise the whole device region.}
   \item{erase}{logical: should be selected screen be cleared?}
   \item{n}{A number indicating which screen to prepare for drawing
     (\code{screen}), erase (\code{erase.screen}), or close
@@ -42,8 +43,8 @@ close.screen(n, all.screens = FALSE)
 \details{
   The first call to \code{split.screen} places \R into split-screen
   mode.  The other split-screen functions only work within this mode.
-  While in this mode, certain other commands should be avoided (see WARNINGS
-  below).  Split-screen mode is exited by the command
+  While in this mode, certain other commands should be avoided (see the
+  Warnings section below).  Split-screen mode is exited by the command
   \code{close.screen(all = TRUE)}
 }
 \value{
@@ -61,17 +62,16 @@ close.screen(n, all.screens = FALSE)
   \code{FALSE} if \R is not in split-screen mode.
 }
 
-\section{Warning}{
-  The recommended way to use these functions is to
-  completely draw a plot and all
-  additions (ie. points and lines) to the base plot, prior to selecting
-  and plotting on another screen. The behavior associated with returning
-  to a screen to add to an existing plot is unpredictable and may result
-  in problems that are not readily visible.
+\section{Warnings}{
+  The recommended way to use these functions is to completely draw a
+  plot and all additions (ie. points and lines) to the base plot, prior to
+  selecting and plotting on another screen. The behavior associated with
+  returning to a screen to add to an existing plot is unpredictable and
+  may result in problems that are not readily visible.
 
-  These functions are totally incompatible with the
-  other mechanisms for arranging plots on a device:  \code{par(mfrow)},
-  \code{par(mfcol)}, and \code{layout()}.
+  These functions are totally incompatible with the other mechanisms for
+  arranging plots on a device: \code{par(mfrow)}, \code{par(mfcol)} and
+  \code{layout()}.
 
   The functions are also incompatible with some plotting functions,
   such as \code{coplot}, which make use of these other mechanisms.

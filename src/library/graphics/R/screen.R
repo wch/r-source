@@ -56,6 +56,7 @@ split.screen <-
 	cur.screen <- 1
     }
     else {
+        if (erase) erase.screen(screen)
 	max.screen <- max(.split.valid.screens)
 	new.max.screen <- max.screen + num.screens
 	split.screens <- .split.screens
@@ -79,8 +80,6 @@ split.screen <-
     assign(".split.screens", split.screens, envir=.GlobalEnv)
     assign(".split.cur.screen", cur.screen, envir=.GlobalEnv)
     assign(".split.valid.screens", valid.screens, envir=.GlobalEnv)
-    if (erase)
-	erase.screen(0)
     par(.split.screens[[cur.screen]])
     return(new.screens)
 }
