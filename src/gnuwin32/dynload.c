@@ -56,13 +56,13 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
-#include "Defn.h"
-#include "R_ext/Mathlib.h"
 #include <string.h>
 #include <stdlib.h>
+#include "Defn.h"
+#include "R_ext/Mathlib.h"
 #include <direct.h>
 #include <windows.h>
 
@@ -71,14 +71,6 @@ typedef struct {
     char *name;
     DL_FUNC func;
 } CFunTabEntry;
-
-#include "Rconfig.h"		/* F77_SYMBOL */
-
-#ifdef HAVE_F77_UNDERSCORE
-# define F77_QSYMBOL(x)	 #x ## "_"
-#else
-# define F77_QSYMBOL(x)  #x
-#endif
 
 #include "FFDecl.h"
 
@@ -109,7 +101,7 @@ void InitFunctionHashing()
 }
 
 
-#define MAX_NUM_DLLS    30
+#define MAX_NUM_DLLS	100
 
 static int CountDLL = 0;
 
@@ -226,6 +218,7 @@ static int AddDLL(char *path, int asLocal, int now)
     LoadedDLL[CountDLL].name = name;
     LoadedDLL[CountDLL].dlh = tdlh;
     CountDLL++;
+
     return 1;
 }
 
