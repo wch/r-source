@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1999-2001  the R Development Core Team
+ *  Copyright (C) 1999-2002  the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -588,6 +588,7 @@ vmmin(int n0, double *b, double *Fmin, int maxit, int trace, int *mask,
 	if (iter < maxit) Rprintf("converged\n");
 	else Rprintf("stopped after %i iterations\n", iter);
     }
+    *fail = (iter < maxit) ? 0 : 1;
     *fncount = funcount;
     *grcount = gradcount;
 }

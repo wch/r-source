@@ -50,6 +50,9 @@ BUG FIXES
 	rhs's containing `.'.  (Broken by a `bug fix' (in reality an
 	API change) in 1.2.1.)
 
+    o	optim(method="BFGS") was not reporting termination by reaching
+	maxit in the convergence component of the return value.
+
 
 
 		CHANGES IN R VERSION 1.4.1
