@@ -10,17 +10,21 @@ body(fun = sys.function(sys.parent()))
 body(fun, envir = parent.frame()) <- value
 }
 \arguments{
-  \item{fun}{a function object or a character string naming the function
-    to be manipulated.
-    If not specified, the function calling \code{body} is used.}
+  \item{fun}{a function object, or see Details.}
   \item{envir}{environment in which the function should be defined.}
-  \item{value}{a list of \R expressions.}
+  \item{value}{an expression or a list of \R expressions.}
 }
 \value{
   \code{body} returns the body of the function specified.
 
   The assignment form sets the body of a function to the list on the
   right hand side.
+}
+\details{
+  For the first form, \code{fun} can be a character string
+  naming the function to be manipulated, which is searched for from the
+  parent environment.
+  If it is not specified, the function calling \code{body} is used.
 }
 \seealso{
   \code{\link{alist}},
@@ -31,6 +35,7 @@ body(fun, envir = parent.frame()) <- value
 body(body)
 f <- function(x) x^5
 body(f) <- expression(5^x)
+## or equivalently  body(f) <- list(quote(5^x))
 f(3) # = 125
 str(body(f))
 }

@@ -113,6 +113,12 @@ BUG FIXES
 	dispatches on a name other than its own.  (The cases of
 	coefficients() and fitted.values() were fixed in 1.7.1.)
 
+    o   body() and formals() were looking for named functions in
+	different places: they now all look starting at the
+	environment in which they are called.  Several documentation
+	errors for these functions have been corrected.
+
+
 
 
 	**************************************************

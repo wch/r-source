@@ -2195,6 +2195,17 @@ read.table(f, header = TRUE, sep ="¦")
 ## failed in 1.7.0
 
 
+## body() and formals() looked in different places
+bar <- function(x=NULL)
+{
+   foo <- function(y=3) testit()
+   print(formals("foo"))
+   print(body("foo"))
+}
+bar()
+## the call to body() failed in 1.7.0
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

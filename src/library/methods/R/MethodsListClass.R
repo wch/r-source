@@ -20,7 +20,7 @@
 
     ## signatures -- used mainly as named character vectors
     setClass("signature", representation("character", names = "character"), sealed = TRUE, where = envir)
-    
+
     ## formal method definition for all but primitives
     setClass("MethodDefinition",
              representation("function", "PossibleMethod",
@@ -140,11 +140,11 @@
               }, where = envir)
     ## make sure body(m) <- .... leaves a method as a method
     setGeneric("body<-", where = envir)
-    setMethod("body<-", "MethodDefinition", function (f, envir, value) {
-        ff <- as(f, "function")
+    setMethod("body<-", "MethodDefinition", function (fun, envir, value) {
+        ff <- as(fun, "function")
         body(ff, envir = envir) <- value
-        f@.Data <- ff
-        f
+        fun@.Data <- ff
+        fun
     }, where = envir)
     ## a show method for lists of generic functions, etc; see metaNameUndo
     setMethod("show", "ObjectsWithPackage",
