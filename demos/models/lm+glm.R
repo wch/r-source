@@ -1,6 +1,7 @@
 ### Examples from: "An Introduction to Statistical Modelling"
 ###			By Annette Dobson
-
+###
+### == with some additions ==
 
 ## Plant Weight Data (Page 9)
 ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
@@ -23,12 +24,19 @@ lines(lowess(age[sex=='M'],birthw[sex=='M']), col=1)
 lines(lowess(age[sex=='F'],birthw[sex=='F']), col=2)
 legend(40,2700,c("Male", "Female"),col=1:2,pch=1,lty=1)
 
-summary(lm(birthw ~ sex + age), cor=T)
-summary(lm(birthw ~ sex + age -1), cor=T)
-summary(lm(birthw ~ sex + sex:age -1), cor=T)
-summary(glm(birthw ~ sex + age, family=gaussian()))
-summary(z <- glm(birthw ~ sex + age - 1, family=gaussian()))
+summary(l1 <- lm(birthw ~ sex + age), cor=T)
+summary(l0 <- lm(birthw ~ sex + age -1), cor=T)
+anova(l1,l0)
+summary(li <- lm(birthw ~ sex + sex:age -1), cor=T)
+anova(li,l0)
 
+summary(zi <- glm(birthw ~ sex + age, family=gaussian()))
+summary(z0 <- glm(birthw ~ sex + age - 1, family=gaussian()))
+anova(zi, z0)
+
+summary(z.o4 <- update(z0, subset = -4))
+summary(zz <- update(z0, birthw ~ sex+age-1 + sex:age))
+anova(z0,zz)
 
 ## Poisson Regression Data (Page 42)
 x <- c(-1,-1,0,0,0,0,1,1,1)
@@ -75,17 +83,14 @@ anova(z <- lm(y~x+m))
 
 
 ## Beetle Data (Page 78)
-tmp <- matrix(c(
-1.6907,59, 6, 1.7242,60,13, 1.7552,62,18, 1.7842,56,28,
-1.8113,63,52, 1.8369,59,53, 1.8610,62,61, 1.8839,60,60
-),nc=3,byrow=T)
-dose <- tmp[,1]
-n <- tmp[,2]
-x <- tmp[,3]
+dose <- c(1.6907, 1.7242, 1.7552, 1.7842, 1.8113, 1.8369, 1.861, 1.8839)
+x <- c( 6, 13, 18, 28, 52, 53, 61, 60)
+n <- c(59, 60, 62, 56, 63, 59, 62, 60)
 dead <- cbind(x, n-x)
-summary(z <- glm(dead~dose,family=binomial(link=logit)))
-summary(z <- glm(dead~dose,family=binomial(link=probit)))
-summary(z <- glm(dead~dose,family=binomial(link=cloglog)))
+summary(     glm(dead ~ dose, family=binomial(link=logit)))
+summary(     glm(dead ~ dose, family=binomial(link=probit)))
+summary(z <- glm(dead ~ dose, family=binomial(link=cloglog)))
+anova(z, update(z, dead ~ dose -1))
 
 
 ## Anther Data (Page 84)
@@ -124,6 +129,7 @@ group <- gl(2,1,12,labels=c("cases","controls"))
 blood <- gl(2,2,12,labels=c("A","O"))
 city  <- gl(3,4,12,labels=c("London","Manchester","Newcastle"))
 cbind(codes(group),codes(blood),codes(city),counts)
-summary(z1 <- glm(counts ~ group*city+blood+group:blood, family=poisson()))
-summary(z2 <- glm(counts ~ group*city+blood, family=poisson()))
+
+summary(z1 <- glm(counts ~ group*city + group*blood, family=poisson()),corr=F)
+summary(z2 <- glm(counts ~ group*city + blood, family=poisson()), corr=F)
 anova(z2,z1)
