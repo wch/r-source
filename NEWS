@@ -139,7 +139,7 @@ DEPRECATED & DEFUNCT
 
     o	anovalist.lm (replaced in 1.2.0) is now deprecated.
 
-    o	- and Ops methods for POSIX[cl]t objects are deprecated: the
+    o	- and Ops methods for POSIX[cl]t objects are removed: the
 	POSIXt methods have been used since 1.3.0.
 
 
