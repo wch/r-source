@@ -1,13 +1,13 @@
 \name{lapply}
 \title{Apply a Function Over a List}
 \usage{
-lapply(x, fun, \dots)
-sapply(x, fun, \dots, simplify = TRUE)
+lapply(X, fun, \dots)
+sapply(X, fun, \dots, simplify = TRUE)
 }
 \alias{lapply}
 \alias{sapply}
 \arguments{
-  \item{x}{list (or vector for \code{sapply}) to be used.}
+  \item{X}{list (or vector for \code{sapply}) to be used.}
   \item{fun}{the function to be applied.
     In the case of functions like \code{+},
     \code{\%*\%}, etc., the function name must be quoted.}
@@ -16,12 +16,12 @@ sapply(x, fun, \dots, simplify = TRUE)
     if possible?}
 }
 \description{
-  \code{lapply} returns a list of the same length as \code{x}.  Each
+  \code{lapply} returns a list of the same length as \code{X}.  Each
   element of which is the result of applying \code{fun} to the
-  corresponding element of \code{x}.
+  corresponding element of \code{X}.
 
   \code{sapply} is a ``user-friendly'' version of \code{lapply} also
-  accepting vectors as \code{x}, and returning a vector or array with
+  accepting vectors as \code{X}, and returning a vector or array with
   \code{dimnames} if appropriate.
 }
 \seealso{

@@ -1,4 +1,4 @@
-tapply <- function (x, INDEX, FUN=NULL, simplify=TRUE, ...)
+tapply <- function (X, INDEX, FUN=NULL, simplify=TRUE, ...)
 {
     if (is.character(FUN))
 	FUN <- get(FUN, mode = "function")
@@ -9,7 +9,7 @@ tapply <- function (x, INDEX, FUN=NULL, simplify=TRUE, ...)
     namelist <- vector("list", nI)
     names(namelist) <- names(INDEX)
     extent <- integer(nI)
-    nx <- length(x)
+    nx <- length(X)
     group <- rep(1, nx)#- to contain the splitting vector
     ngroup <- 1
     for (i in seq(INDEX)) {
@@ -22,7 +22,7 @@ tapply <- function (x, INDEX, FUN=NULL, simplify=TRUE, ...)
 	ngroup <- ngroup * nlevels(index)
     }
     if (is.null(FUN)) return(group)
-    ans <- lapply(split(x, group), FUN, ...)
+    ans <- lapply(split(X, group), FUN, ...)
     if (simplify && all(unlist(lapply(ans, length)) == 1)) {
 	ansmat <- array(dim=extent, dimnames=namelist)
 	ans <- unlist(ans, recursive = FALSE)

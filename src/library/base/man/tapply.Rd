@@ -1,12 +1,12 @@
 \name{tapply}
 \title{Apply a Function Over a ``Ragged'' Array}
 \usage{
-tapply(x, INDEX, FUN = NULL, simplify = TRUE, \dots)
+tapply(X, INDEX, FUN = NULL, simplify = TRUE, \dots)
 }
 \alias{tapply}
 \arguments{
-  \item{x}{an atomic object, typically a vector.}
-  \item{INDEX}{list of factors, each of same length as \code{x}.}
+  \item{X}{an atomic object, typically a vector.}
+  \item{INDEX}{list of factors, each of same length as \code{X}.}
   \item{FUN}{the function to be applied.  In the case of functions like
     \code{+}, \code{\%*\%}, etc., the function name must be quoted.  If
     \code{FUN} is \code{NULL}, tapply returns a vector which can be used
