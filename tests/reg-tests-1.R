@@ -977,14 +977,14 @@ read.table(tf)
 unlink(tf)
 
 
-## PR 870 (as.numeric and NAs)	Harald Fekjær, 2001-03-08,
+## PR 870 (as.numeric and NAs)	Harald Fekjær, 2001-03-08,
 is.na(as.numeric(" "))
 is.na(as.integer(" "))
 is.na(as.complex(" "))
 ## all false in 1.2.2
 
 
-## PR 871 (deparsing of attribute names) Harald Fekjær, 2001-03-08,
+## PR 871 (deparsing of attribute names) Harald Fekjær, 2001-03-08,
 midl <- 4
 attr(midl,"Object created") <- date()
 deparse(midl)
@@ -1607,7 +1607,7 @@ poly(x, degree=2)
 ## failed in 1.5.1
 
 
-## PR#1694 cut with infinite values -> NA (Markus Jäntti)
+## PR#1694 cut with infinite values -> NA (Markus Jäntti)
 cut.off <- c(-Inf, 0, Inf)
 x <- c(-Inf, -10, 0, 10, Inf)
 (res <- cut(x, cut.off, include.lowest=TRUE))
@@ -2230,9 +2230,9 @@ stopifnot(length(res) == 5)
 
 ## PR#3035 problems with sep > ASCII(127)
 f <- tempfile()
-cat("x¦a¦b¦c¦d", "1¦7¦13¦19¦25", "2¦8¦14¦20¦26", "3¦9¦15¦21¦27",
-    "4¦10¦16¦22¦28", "5¦11¦17¦23¦29", "6¦12¦18¦24¦30", sep="\n", file=f)
-read.table(f, header = TRUE, sep ="¦")
+cat("x¦a¦b¦c¦d", "1¦7¦13¦19¦25", "2¦8¦14¦20¦26", "3¦9¦15¦21¦27",
+    "4¦10¦16¦22¦28", "5¦11¦17¦23¦29", "6¦12¦18¦24¦30", sep="\n", file=f)
+read.table(f, header = TRUE, sep ="¦")
 ## failed in 1.7.0
 
 
