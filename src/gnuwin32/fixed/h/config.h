@@ -57,15 +57,19 @@
 
 /* Define to 1 if you have the declaration of `acosh', and to 0 if you don't.
    */
-#define HAVE_DECL_ACOSH 0
+#define HAVE_DECL_ACOSH 1
+
+/* Define to 1 if you have the declaration of `alloca', and to 0 if you don't.
+   */
+#define HAVE_DECL_ALLOCA 0
 
 /* Define to 1 if you have the declaration of `asinh', and to 0 if you don't.
    */
-#define HAVE_DECL_ASINH 0
+#define HAVE_DECL_ASINH 1
 
 /* Define to 1 if you have the declaration of `atanh', and to 0 if you don't.
    */
-#define HAVE_DECL_ATANH 0
+#define HAVE_DECL_ATANH 1
 
 /* Define to 1 if you have the declaration of `isfinite', and to 0 if you
    don't. */
@@ -94,6 +98,14 @@
 /* Define to 1 if you have the declaration of `vsnprintf', and to 0 if you
    don't. */
 #define HAVE_DECL_VSNPRINTF 1
+
+/* Define to 1 if you have the declaration of `wcswidth', and to 0 if you
+   don't. */
+#define HAVE_DECL_WCSWIDTH 0
+
+/* Define to 1 if you have the declaration of `wcwidth', and to 0 if you
+   don't. */
+#define HAVE_DECL_WCWIDTH 0
 
 /* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
    */
@@ -425,7 +437,7 @@
 #define HAVE_WCSTOMBS 1
 
 /* Define to 1 if you have the `wcswidth' function. */
-/* #undef HAVE_WCSWIDTH */
+#define HAVE_WCSWIDTH 1
 
 /* Define to 1 if you have the `wctrans' function. */
 #define HAVE_WCTRANS 1
@@ -434,7 +446,7 @@
 #define HAVE_WCTYPE_H 1
 
 /* Define to 1 if you have the `wcwidth' function. */
-/* #undef HAVE_WCWIDTH */
+#define HAVE_WCWIDTH 1
 
 /* Define if calloc(0) returns a null pointer. */
 #define HAVE_WORKING_CALLOC 1
