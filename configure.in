@@ -27,7 +27,7 @@ AC_CONFIG_HEADER(src/include/Platform.h)
 
 . ${srcdir}/config.site
 
-AC_CONFIG_AUX_DIR(${srcdir}/aux)
+AC_CONFIG_AUX_DIR(`cd ${srcdir}; pwd`/aux)
 
 ### Platform
 ###
