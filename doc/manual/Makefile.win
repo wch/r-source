@@ -44,7 +44,7 @@ all: pdf
 	$(TEX) $<
 
 .texi.html:
-	$(MAKEINFO) --html $< -o $@ || touch $@
+	$(MAKEINFO) --no-split --html $< -o $@ || touch $@
 
 .texi.info:
 	$(MAKEINFO)  -D UseExternalXrefs $<
