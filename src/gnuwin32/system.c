@@ -53,6 +53,7 @@ void UnLoad_Rbitmap_Dll();
 int   AllDevicesKilled = 0;
 int   setupui(void);
 void  delui(void);
+int (*R_yesnocancel)(char *s);
 
 static DWORD mainThreadId;
 
@@ -380,6 +381,9 @@ void R_CleanUp(int saveact, int status, int runLast)
 	gl_savehistory(".Rhistory");
     UnLoad_Unzip_Dll();
     UnLoad_Rbitmap_Dll();
+    if (R_CollectWarnings && saveact != SA_SUICIDE 
+	&& CharacterMode == RTerm)
+	PrintWarnings();
     app_cleanup();
     exit(status);
 }

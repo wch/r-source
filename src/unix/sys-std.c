@@ -482,6 +482,8 @@ void Rstd_CleanUp(int saveact, int status, int runLast)
     }
     CleanEd();
     KillAllDevices();
+    if(saveact != SA_SUICIDE && R_CollectWarnings) 
+	PrintWarnings(); /* from device close and .Last */
     fpu_setup(0);
 
     exit(status);
