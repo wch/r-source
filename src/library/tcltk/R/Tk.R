@@ -2,8 +2,8 @@
 
 
 .Tcl <- function(...)
-    invisible(structure(.External("dotTcl", ..., PACKAGE = "tcltk"),
-              class="tclObj"))
+    structure(.External("dotTcl", ..., PACKAGE = "tcltk"),
+              class="tclObj")
 .Tcl.callback <- function(...)
     .External("dotTclcallback", ..., PACKAGE = "tcltk")
 
@@ -125,7 +125,7 @@ is.tkwin <- function(x) inherits(x, "tkwin")
 
 tclVar <- function(init="") {
    n <- evalq(TclVarCount <- TclVarCount + 1, .TkRoot$env)
-   name <- paste("RTcl", n, sep="")
+   name <- paste("::RTcl", n, sep="")
    l <- list(env=new.env())
    assign(name,NULL,envir=l$env)
    reg.finalizer(l$env,function(env)tkcmd("unset",ls(env)))
@@ -155,12 +155,22 @@ tclvalue <- function(x) UseMethod("tclvalue")
 tclvalue.tclVar <- function(x) tclvalue(tclObj(x))
 tclvalue.tclObj <- function(x) .External("RTcl_StringFromObj", x,
                                          PACKAGE="tcltk")
-"tclvalue<-.tclVar" <- function(x, value) {tkcmd("set",ls(x$env), value); x}
+print.tclObj <- function(x,...) {
+    z <- tclvalue(x)
+    if (length(z) > 0) cat("<Tcl>", z, "\n")
+}
+
+"tclvalue<-.tclVar" <- function(x, value) {
+    name <- ls(x$env)
+    tkcmd("set", name, value)
+    x
+}
 
 tclvalue.default <- function(x) tclvalue(tkcmd("set", as.character(x)))
 
 "tclvalue<-.default" <- function(x, value) {
-    tkcmd("set", as.character(x), value)
+    name <- as.character(x)
+    tkcmd("set", name, value)
     x
 }
 
@@ -498,7 +508,7 @@ tkpager <- function(file, header, title, delete.file)
 
         chn <- tkcmd("open", zfile)
         tkinsert(txt, "end", header[[i]])
-        tkinsert(txt, "end", gsub("_\b","",tkcmd("read", chn)))
+        tkinsert(txt, "end", gsub("_\b","",tclvalue(tkcmd("read", chn))))
         tkcmd("close", chn)
 
         tkconfigure(txt, state="disabled")

@@ -7,11 +7,6 @@
 #define TCL80
 #endif
 
-/*
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-*/
 
 #include <Rinternals.h>
 #include <R_ext/PrtUtil.h>
@@ -34,6 +29,13 @@ extern long R_timeout_val;
 extern int (*ptr_gnome_start)();
 
 static Tcl_Interp *RTcl_interp;      /* Interpreter for this application. */
+
+/* R event structure */
+typedef struct {
+    Tcl_EventProc *proc;
+    struct Tcl_Event *nextPtr;
+    fd_set events;
+} RTcl_Event;
 
 static void RTcl_dec_refcount(SEXP R_tclobj)
 {
@@ -441,6 +443,7 @@ void TclHandler(void)
 {
     while (Tcl_DoOneEvent(TCL_DONT_WAIT))
 	;
+    /* Tcl_ServiceAll is not enough here, for reasons that escape me */
     OldHandler();
 }
 
@@ -483,6 +486,34 @@ void delTcl(void)
     }
     Tcl_loaded = 0;
 }
+
+/* ----- Event loop interface routines -------- */
+static Tcl_Time timeout;
+
+void RTcl_setupProc(ClientData clientData, int flags)
+{
+    Tcl_SetMaxBlockTime(&timeout);
+}
+void RTcl_eventProc(RTcl_Event *evPtr, int flags)
+{
+    R_runHandlers(R_InputHandlers, &(evPtr->events));
+}
+void RTcl_checkProc(ClientData clientData, int flags)
+{
+    fd_set *readMask = R_checkActivity(0 /*usec*/, 1 /*ignore_stdin*/);
+    RTcl_Event * evPtr;
+    if (readMask==NULL) 
+	return;
+
+    evPtr = (RTcl_Event*) Tcl_Alloc(sizeof(RTcl_Event)); 
+    evPtr->proc = (Tcl_EventProc*) RTcl_eventProc;
+    evPtr->events = *readMask;
+
+    Tcl_QueueEvent((Tcl_Event*) evPtr, TCL_QUEUE_HEAD); 
+    /* It seems fairly important to ensure that R events are handled
+       before the readMask is checked again. */
+}
+ 
 #endif
 
 void tcltk_init(void)
@@ -492,7 +523,10 @@ void tcltk_init(void)
     RTcl_interp = Tcl_CreateInterp();
     code = Tcl_Init(RTcl_interp); /* Undocumented... If omitted, you
 				    get the windows but no event
-				    handling. */
+				    handling. (Update: the
+				    documentation is in the Tcl
+				    sources, just not shipped
+				    w/RedHat) */
     if (code != TCL_OK)
 	error(RTcl_interp->result);
 
@@ -527,7 +561,10 @@ void tcltk_init(void)
 #ifdef Win32
     Tcl_SetServiceMode(TCL_SERVICE_ALL);
 #else
-    addTcl();
+    addTcl(); /* notice: this sets R_wait_usec.... */
+    timeout.sec = 0;
+    timeout.usec = R_wait_usec;
+    Tcl_CreateEventSource(RTcl_setupProc, RTcl_checkProc, 0); 
 #endif
 
 /*** We may want to revive this at some point ***/
@@ -539,3 +576,97 @@ void tcltk_init(void)
 #endif
 
 }
+
+
+#ifndef Win32
+/* ----- Tcl/Tk console routines ----- */
+
+/* From src/unix/devUI.h */
+extern int  (*ptr_R_ReadConsole)(char *, unsigned char *, int, int);
+extern void (*ptr_R_WriteConsole)(char *, int);
+extern void (*ptr_R_ResetConsole)();
+extern void (*ptr_R_FlushConsole)();
+extern void (*ptr_R_ClearerrConsole)();
+extern FILE * R_Consolefile;
+extern FILE * R_Outputfile;
+
+/* Fill a text buffer with user typed console input. */
+
+int RTcl_ReadConsole (char *prompt, unsigned char *buf, int len,
+		  int addtohistory)
+{
+    Tcl_Obj *cmd[3];
+    int i, code;
+
+    cmd[0] = Tcl_NewStringObj("Rc_read", -1);
+    cmd[1] = Tcl_NewStringObj(prompt, -1);
+    cmd[2] = Tcl_NewIntObj(addtohistory);
+    
+    for (i = 0 ; i < 3 ; i++) 
+	Tcl_IncrRefCount(cmd[i]);
+
+    code = Tcl_EvalObjv(RTcl_interp, 3, cmd, 0);
+    if (code != TCL_OK)
+	return 0;
+    else
+	strncpy(buf, Tcl_GetStringResult(RTcl_interp), len);
+
+    /* At some point we need to figure out what to do if the result is
+     * longer than "len"... For now, just truncate. */
+
+    for (i = 0 ; i < 3 ; i++) 
+	Tcl_DecrRefCount(cmd[i]);
+
+    return 1;
+}
+
+/* Write a text buffer to the console. */
+/* All system output is filtered through this routine. */
+void
+RTcl_WriteConsole (char *buf, int len)
+{
+    Tcl_Obj *cmd[2];
+    
+    /* Construct command */
+    cmd[0] = Tcl_NewStringObj("Rc_write", -1);
+    cmd[1] = Tcl_NewStringObj(buf, len);
+
+    Tcl_IncrRefCount(cmd[0]);
+    Tcl_IncrRefCount(cmd[1]);
+
+    Tcl_EvalObjv(RTcl_interp, 2, cmd, 0); 
+
+    Tcl_DecrRefCount(cmd[0]);
+    Tcl_DecrRefCount(cmd[1]);
+}
+
+/* Indicate that input is coming from the console */
+void
+RTcl_ResetConsole ()
+{
+}
+
+/* Stdio support to ensure the console file buffer is flushed */
+void
+RTcl_FlushConsole ()
+{
+}
+
+
+/* Reset stdin if the user types EOF on the console. */
+void
+RTcl_ClearerrConsole ()
+{
+}
+
+void RTcl_ActivateConsole ()
+{
+    ptr_R_ReadConsole = RTcl_ReadConsole;
+    ptr_R_WriteConsole = RTcl_WriteConsole;
+    ptr_R_ResetConsole = RTcl_ResetConsole;
+    ptr_R_FlushConsole = RTcl_FlushConsole;
+    ptr_R_ClearerrConsole = RTcl_ClearerrConsole;
+    R_Consolefile = NULL;
+    R_Outputfile = NULL;
+}
+#endif

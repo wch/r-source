@@ -165,7 +165,30 @@ NEW FEATURES
 
     o	New functions La.chol and La.chol2inv for Cholesky decomposition
 	and inverse of positive definite matrices using Lapack.
+ 
+    o   Changes to the tcltk package
 
+	- on Unix systems, the Tcl event loop has been integrated with
+	  R's own (so that tkwait.variable() no longer halts updates of
+	  plot windows).
+
+	- also on Unix, stubs have been created to divert R's input
+          and output routines to go via Tcl commands. (Nothing
+          uses this at present, but packages might be developed to
+          take advantage of it.) 
+
+	- return value from Tcl commands is no longer invisible. A new 
+	  print method, print.tclObj(), has been introduced.
+
+        - Tcl variables created by tclVar() are now explicitly put into
+	  Tcl's global namespace, removing potential scoping problems.
+
+	- The tcltk dynamic library now loads with local=FALSE since
+          the default had trouble when loading Tcl extensions
+          (e.g. Tix)
+
+	- The tkpager() function had not been updated for the return
+          value change from 1.5.0 
 
 DEPRECATED & DEFUNCT
 
@@ -199,6 +222,10 @@ C-LEVEL FACILITIES
 	Include it explicitly if you need it.
 
     o	New entry point R_tmpnam in Utils.h.
+
+    o   The Unix event loop interface has been changed to facilitate
+        integration with other loops. R_checkActivity and
+        R_runHandlers should eventually replace getSelectedHandler.
 
 
 INSTALLATION CHANGES

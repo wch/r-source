@@ -63,6 +63,8 @@ extern InputHandler *addInputHandler(InputHandler *handlers, int fd, InputHandle
 extern InputHandler *getInputHandler(InputHandler *handlers, int fd);
 extern int           removeInputHandler(InputHandler **handlers, InputHandler *it);
 extern InputHandler *getSelectedHandler(InputHandler *handlers, fd_set *mask);
+extern fd_set *R_checkActivity(int usec, int ignore_stdin);
+extern void R_runHandlers(InputHandler *handlers, fd_set *mask);
 
 #ifdef __SYSTEM__
 InputHandler *R_InputHandlers;
