@@ -93,6 +93,9 @@ BUG FIXES
 
     o	bxp() fixed for e.g.,  boxplot(..., border=2:4)
 
+    o	approx(list(x=rep(NaN,9),y=1:9), xout=NaN) does not seg.fault
+	anymore (PR#6809).
+
 
 
 		CHANGES IN R VERSION 1.9.0
