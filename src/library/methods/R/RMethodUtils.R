@@ -1,20 +1,13 @@
 
 makeGeneric <-
 ## Makes a generic function object corresponding to the given function name.
-## and optional definition.
-  function(f, fdef, keepMethods = TRUE,
+## and definition.
+  function(f, fdef,
            fdefault = getFunction(f, generic = FALSE, mustFind = FALSE),
-           group = character(), valueClass = character()) {
-  if(missing(fdef)) {
-    ## either find a generic or use either a pre-defined template or a non-generic
-    fdef <- getGeneric(f, FALSE)
-    if(is.null(fdef))
-      fdef <- getFunction(f, mustFind = TRUE)
-  }
-  fdef <- makeStandardGeneric(f, fdef)
+           group = character(), valueClass = character(), myDispatch = FALSE) {
+  if(!myDispatch)
+      fdef <- makeStandardGeneric(f, fdef)
   generic <- isGeneric(f, fdef = fdef)
-  if(keepMethods && generic)
-    return(fdef)
   anames <- formalArgs(fdef)
   if(length(anames) == 0 || (length(anames) == 1 && el(anames, 1) == "..."))
     stop("must have a named argument for a generic function.")

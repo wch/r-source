@@ -11,7 +11,7 @@ setGeneric <-
   ##
     function(name, def = NULL, group = NULL, valueClass = NULL, where = 1,
              doAssign,
-             myDispatch, useAsDefault = existsFunction(name, generic = FALSE))
+             myDispatch = FALSE, useAsDefault = existsFunction(name, generic = FALSE))
 {
     stdBody <- substitute(standardGeneric(NAME), list(NAME = name))
     if(is.function(useAsDefault))
@@ -54,18 +54,20 @@ setGeneric <-
         if(!identical(fbody, stdBody))
             warning("Using valueClass with a non-standard generic definition:  check that the revised definition makes sense")
     }
-    fdef <- makeGeneric(name, fdef, FALSE, fdeflt, group=group, valueClass=valueClass)
-    ## makeGeneric puts the default method into the function's environment
-    ## This will probably change, but for now, just copy it into the metadata
+    fdef <- makeGeneric(name, fdef, fdeflt, group=group, valueClass=valueClass,
+                        myDispatch = myDispatch)
+    ## makeGeneric puts the initial methods list into the environment of
+    ## the generic.
     methods <- get(".Methods", envir = environment(fdef))
-    if(missing(doAssign))
+    if(missing(doAssign)) {
         doAssign <-  !isGeneric(name) || !is.null(valueClass) ||
                      !identical(body(fdef), stdBody)
+        if(!doAssign)
+            message("Function \"", name, "\" is already a generic; no change")
+    }
     ## there are two assignment steps.  First, assign the methods metadata
     if(doAssign)
         assignMethodsMetaData(name, methods, where = where)
-    else if(isGeneric(name))
-        message("Function \"", name, "\" is already a generic; no change")
     ## Second, the generic version of the function.
     ## special treatment for primitives on base.  These MUST not
     ## be assigned as formal generics, because they are dispatched from the main
@@ -75,8 +77,6 @@ setGeneric <-
         doAssign <- FALSE
     if(doAssign)
       assign(name, fdef, where)
-    ## The S-Plus definition claims to return an object of class "Generic", which we don't
-    ## have, but in fact just returns name.  
     name
 }
 
