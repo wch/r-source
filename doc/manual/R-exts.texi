@@ -883,8 +883,8 @@ sections of Rd files are documented in the corresponding
 @code{\arguments} section.
 
 @item
-C source and header files are tested for correct (LF-only) line
-endings.
+C, C++ and Fortran source and header files are tested for correct 
+(LF-only) line endings.
 
 @item
 The examples provided by the package's documentation are run.
