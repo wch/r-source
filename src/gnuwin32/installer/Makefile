@@ -108,7 +108,7 @@ R.iss Rsmall.iss: JRins.pl imagedir
 	rm -rf $(RPREFIX)/library/*/man
 	$(CAT) $(RPREFIX)/library/*/CONTENTS >  \
 	  $(RPREFIX)/doc/html/search/index.txt
-	echo "make.packages.html(.Library)" | $(RPREFIX)/bin/rterm --vanilla --slave
+	echo "make.packages.html(.Library)" | $(RPREFIX)/bin/rterm --vanilla --slave LC_COLLATE=C
 	$(CP) -pr ../../../Tcl $(RPREFIX)
 	perl JRins.pl $(RPREFIX) 
 
