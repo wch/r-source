@@ -1,18 +1,8 @@
 apply <- function(X, MARGIN, FUN, ...)
 {
-    ## Ensure that FUN is a function
-
-    if(is.character(FUN))
-	FUN <- get(FUN, mode = "function")
-    else if(mode(FUN) != "function") {
-	f <- substitute(FUN)
-	if(is.name(f))
-	    FUN <- get(as.character(f), mode = "function")
-	else stop(paste("\"", f, "\" is not a function", sep = ""))
-    }
+    FUN <- match.fun(FUN)
 
     ## Ensure that X is an array object
-
     d <- dim(X)
     dl <- length(d)
     if(dl == 0)
