@@ -72,6 +72,7 @@ static void handle_mouse(object obj, HWND hwnd, UINT message,
 		buttons |= RightButton;
 
 	/* dispatch the mouse event to the relevent handler */
+        drawto(obj);
 	if (obj && obj->drawstate && obj->drawstate->crsr) 
                  SetCursor((HCURSOR)obj->drawstate->crsr->handle);
 
@@ -877,7 +878,7 @@ int doevent(void)
 
 	if (result)
 	{
-		del_all_contexts();
+	  /*		del_all_contexts();*/
 		if (TranslateMenuKeys(&msg))
 			return result;
 		if ((hwndClient) &&
