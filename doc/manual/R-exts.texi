@@ -3053,8 +3053,8 @@ noted) and distribution-specific arguments for the complete set of
 distributions.
 @quotation
 @multitable @columnfractions .28 .22 .30
-@item beta @tab @code{nbeta} @tab @code{a, b}
-@item non-central beta @tab @code{beta} @tab @code{a, b, lambda}
+@item beta @tab @code{beta} @tab @code{a, b}
+@item non-central beta @tab @code{nbeta} @tab @code{a, b, lambda}
 @item binomial @tab @code{binom} @tab @code{n, p}
 @item Cauchy @tab @code{cauchy} @tab @code{location, scale}
 @item chi-square @tab @code{chisq} @tab @code{df}
