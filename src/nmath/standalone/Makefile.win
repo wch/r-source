@@ -69,10 +69,6 @@ Rmath.dll: Rmath.a
 Rmath.a: $(OBJECTS) 
 
 # Dependencies
-.c.d:
-	@echo "making $@ from $<"
-	@$(CC)  -M $(CFLAGS) $($*-CFLAGS) $< -o $@
-
 makeMakedeps: $(DEPENDS)
 	@$(RM) Makedeps
 	@cat $(DEPENDS) >> Makedeps
