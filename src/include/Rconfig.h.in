@@ -45,6 +45,8 @@
 #undef pid_t
 /* Object size */
 #undef size_t
+/* Fix a GCC bug on AIX? */
+#undef blkcnt_t
 
 /* Define if you have <sys/wait.h> that is POSIX.1 compatible.  */
 #undef HAVE_SYS_WAIT_H
