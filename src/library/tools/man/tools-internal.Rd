@@ -32,6 +32,10 @@
 \alias{.installPackageIndices}
 \alias{.installPackageRdIndices}
 \alias{.installPackageVignetteIndex}
+\alias{.writeContentsRDA}
+\alias{.writeContentsDCF}
+\alias{.buildRdIndex}
+\alias{.buildVignetteIndex}
 \description{
   Internal tools functions.
 }
@@ -41,6 +45,7 @@ sQuote(s)
 .fileTest(op, x, y)
 .isS3Generic(fname, envir)
 .listFilesWithExts(dir, exts, path = TRUE)
+.listFilesWithType(dir, type)
 .loadPackageQuietly(package, lib.loc)
 .makeFileExts(type)
 .makeS3MethodsStopList(package)
@@ -51,6 +56,10 @@ Rdcontents(RdFiles)
 Rdindex(RdFiles, outFile = "", type = NULL,
         width = 0.9 * getOption("width"), indent = NULL)
 Rd2contents(dir, outFile = "")
+.writeContentsRDA(contents, outFile)
+.writeContentsDCF(contents, packageName, outFile)
+.buildRdIndex(contents, type = NULL)
+.buildVignetteIndex(vignetteFiles)
 .installPackageDescription(dir, outDir)
 .installPackageIndices(dir, outDir)
 .installPackageRdIndices(dir, outDir)
