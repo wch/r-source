@@ -1,5 +1,5 @@
 #### copyright (C) 1998 B. D. Ripley
-C <- function(object, contr, how.many)
+C <- function(object, contr, how.many, ...)
 {
     if(!nlevels(object)) stop("object not interpretable as a factor")
     if(!missing(contr) && is.name(Xcontr <- substitute(contr)))
@@ -16,10 +16,11 @@ C <- function(object, contr, how.many)
 	    contr <- if(is.ordered(object)) contr.poly else contr.treatment
 	else contr <- oc[1 + is.ordered(object)]
     }
-    if(missing(how.many)) contrasts(object) <- contr
+    if(missing(how.many) && !length(...))
+        contrasts(object) <- contr
     else {
 	if(is.character(contr)) contr <- get(contr, mode = "function")
-	if(is.function(contr)) contr <- contr(nlevels(object))
+	if(is.function(contr)) contr <- contr(nlevels(object), ...)
 	contrasts(object, how.many) <- contr
     }
     object
