@@ -143,7 +143,7 @@ NEW FEATURES
     o	New function formatDL() for formatting description lists.
 
     o	New function write.dcf() for writing data in Debian Control File
-	format. parse.dcf() has been replaced by (much faster)
+	format.  parse.dcf() has been replaced by (much faster)
 	internal read.dcf().
 
     o	New function oneway.test() in package ctest for testing for
@@ -159,6 +159,7 @@ NEW FEATURES
         without leading whitespace.
 
 
+
 BUG FIXES
 
     o	Unused entry points in `src/appl/fortran.c' and `Fortran.h'
@@ -171,8 +172,6 @@ BUG FIXES
 
     o	symnum(x) behaves more reasonably for zero length or non-numeric x.
 
-    o	qchisq(0.025, 31, ncp=1, lower.tail=FALSE) now works. (PR#875)
-    
     o   R INSTALL and package.description() fix some common problems of
         DESCRIPTION files (blank lines, ...)
 
@@ -249,6 +248,8 @@ BUG FIXES
     o	ppr() inside nested calls sometimes failed to find objects
 	due to a typo in the eval call in ppr.formula.
 
+    o	qchisq(0.025, 31, ncp=1, lower.tail=FALSE) now works.  (PR#875)
+    
     o	dchisq with integer x, df and ncp sometimes gave incorrect
 	results on i686 Linux.
 
@@ -298,7 +299,13 @@ BUG FIXES
 
     o   R-lang manual had precedence of %% wrong (PR#879)
 
-    o   Try() constructs lost protection of R_alloc'ed memory (PR#877)
+    o   try() constructs lost protection of R_alloc'ed memory (PR#877)
+
+    o   Documented that as.numeric() dispatches to as.double.foo methods
+	(PR#918.1)
+
+    o   httpclient() (and the "socket" method of download.file) skipped ^V
+	rather than ^Z in input (if drop.ctrl.z = TRUE, the default).
 
 
 
