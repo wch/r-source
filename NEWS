@@ -342,6 +342,10 @@ UTILITIES
 	computations as objects with suitable print() methods.  By
 	default, output	is only produced if a problem was found.
 
+    o	New utility R CMD config to get the values of basic R configure
+	variables, or the header and library flags necessary for linking
+	against R.
+
 
 C-LEVEL FACILITIES
 

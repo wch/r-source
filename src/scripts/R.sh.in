@@ -69,6 +69,7 @@ Commands:
   Rd2txt		Convert Rd format to pretty text
   Rdindex		Extract index information from Rd files
   Sd2Rd			Convert S documentation to Rd format
+  config                Obtain configuration information about R
 
 The first five tools (i.e., BATCH, COMPILE, SHLIB, INSTALL, and REMOVE)
 can also be invoked without the \`CMD' option.

@@ -435,8 +435,8 @@ functionality, respectively.
 
 You will very likely need to ensure that the same C compiler and
 compiler flags are used in the @file{configure} tests as when compiling
-@R{} or your package.  You can achieve this by including the following
-fragment early in @file{configure.ac}
+@R{} or your package.  Under Unix, you can achieve this by including the
+following fragment early in @file{configure.ac}
 
 @smallexample
 @group
@@ -445,11 +445,39 @@ if test -z "$@{R_HOME@}"; then
   echo "could not determine R_HOME"
   exit 1
 fi
-CC=`grep "^CC" $@{R_HOME@}/etc/Makeconf | sed "s/^CC *= *//"`
-CFLAGS=`grep "^CFLAGS" $@{R_HOME@}/etc/Makeconf | sed "s/^CFLAGS *= *//"`
+CC=`$@{R_HOME@}/bin/R CMD config CC`
+CFLAGS=`$@{R_HOME@}/bin/R CMD config CFLAGS`
 @end group
 @end smallexample
 @noindent
+
+@noindent
+(using @samp{$@{R_HOME@}/bin/R} rather than @samp{R} is necessary in
+order to pick up the correct version of @R{} when installing a package.)
+
+@findex R CMD config
+This uses the utility @code{R CMD config} which was added in @R{} 1.5.0
+to get the values of basic @R{} configure variables, or the header and
+library flags necessary for linking against @R{}, see @kbd{R CMD config
+--help} for more information.  Prior to the availability of this utility
+one could attempt to directly extract the values of configure variables
+from @file{@var{R_HOME}/etc/Makeconf} using grep and sed, which only
+works for literals: using @code{R CMD config} will always work.
+
+If @R{} was configured to use the FORTRAN-to-C converter, configure
+variable @code{F77} is set to a shell script wrapper to compile/link
+FORTRAN 77 code based on f2c which for the purpose of Autoconf qualifies
+as a FORTRAN 77 compiler.  E.g., to check for an exteral BLAS library
+using @code{ACX_BLAS} from the Official Autoconf Macro Archive, one can
+simply do
+
+@smallexample
+@group
+F77=`@{R_HOME@}/bin/R CMD config F77`
+AC_PROG_F77
+ACX_BLAS([], AC_MSG_ERROR([could not find your BLAS library], 1))
+@end group
+@end smallexample
 
 You should bear in mind that the configure script may well not work
 on Windows systems (this seems normally to be the case for those
@@ -658,42 +686,43 @@ OSes.  Experiences vary.
 @cindex Sweave
 
 In addition to the help files in Rd format, @R{} packages allow the
-inclusion of documents in arbitrary other formats. The standard location
-for these is subdirectory @file{inst/doc} of a source package, the
-contents will be copied to subdirectory @file{doc} when the package is
-installed. Pointers from package help indices to the installed documents
-are automatically created.  Documents in @file{inst/doc} can be in
-arbitrary format, however we strongly recommend to provide them in PDF
-format, such that users on all platforms can easily read them.
+inclusion of documents in arbitrary other formats.  The standard
+location for these is subdirectory @file{inst/doc} of a source package,
+the contents will be copied to subdirectory @file{doc} when the package
+is installed.  Pointers from package help indices to the installed
+documents are automatically created.  Documents in @file{inst/doc} can
+be in arbitrary format, however we strongly recommend to provide them in
+PDF format, such that users on all platforms can easily read them.
 
 A special case are documents in Sweave format, which we call
-@emph{package vignettes}. Sweave allows to integrate LaTeX documents and
-@R{} code and is contained in package @code{tools} which is part of the
-base @R{} distribution, see the @code{Sweave} help page for details on
-the document format. Package vignettes found in directory
+@emph{package vignettes}.  Sweave allows to integrate La@TeX{} documents
+and @R{} code and is contained in package @pkg{tools} which is part of
+the base @R{} distribution, see the @code{Sweave} help page for details
+on the document format.  Package vignettes found in directory
 @file{inst/doc} are tested by @code{R CMD check} by executing all @R{}
-code they contain to ensure consistency between code and
-documentation.
+code they contain to ensure consistency between code and documentation.
 
-@code{R CMD build} will automatically create PDF versions
-of the vignettes for distribution with the package sources. By
-including the PDF version in the package sources it is not necessary
-that the vignettes can be compiled at install time, i.e., the package
-author can use private LaTeX extensions which are only available on his
-machine. Only the @R{} code inside the vignettes is part of the checking
+@code{R CMD build} will automatically create PDF versions of the
+vignettes for distribution with the package sources.  By including the
+PDF version in the package sources it is not necessary that the
+vignettes can be compiled at install time, i.e., the package author can
+use private La@TeX{} extensions which are only available on his machine.
+Only the @R{} code inside the vignettes is part of the checking
 procedure, typesetting manuals is not part of the package QA.
 
 By default @code{R CMD build} will run @code{Sweave} and @code{texi2dvi
 --pdf} on all vignettes. However, if a @file{Makefile} is found, then
 @code{R CMD build} will try to run
+
 @quotation
 @code{make pdf; make clean}
 @end quotation
-such that PDF manuals can be created from arbitrary source formats
-(plain LaTeX files, @dots{}). Every @file{Makefile} in @file{inst/doc}
-must contain these two targets, otherwise @code{R CMD build} will give
-an error.
 
+@noindent
+such that PDF manuals can be created from arbitrary source formats
+(plain La@TeX{} files, @dots{}).  Every @file{Makefile} in
+@file{inst/doc} must contain these two targets, otherwise @code{R CMD
+build} will give an error.
 
 
 @node Submitting a package to CRAN,  , Writing package vignettes, Creating R packages
