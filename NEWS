@@ -140,6 +140,13 @@ NEW FEATURES
 	set aspects of the locale of the R process, and
 	Sys.localeconv() to find the default decimal point, etc.
 
+    o	New function assocplot() for producing Cohen-Friendly
+	association plots.
+
+    o	mosaicplot() can now also create extended mosaic plots, which
+	visualize the residuals from a log-linear model using color and
+	outline.
+
 
 BUG FIXES
 
