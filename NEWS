@@ -139,6 +139,19 @@ NEW FEATURES
 	details: the R usage already protected against the
 	reported `weakness'.
 
+   0    changes in package "methods"
+
+      -  classes can explicitly have a "data part", formally
+         represented as a .Data slot in the class definition, but
+         implemented consistently with informal structures.  While the
+         implementation is different, the user-level behavior largely
+         follows the discussion in "Programming with Data".
+
+      -  a "next method" facility has been provided, via the function
+         callNextMethod.  This calls the method that would have been
+         selected if the currently active method didn't exist.  See
+         the online documentation.  This is an extension to the API.
+
 
 DEPRECATED & DEFUNCT
 
@@ -243,6 +256,13 @@ BUG FIXES
 	Solaris) that returned missing components as 0.  Missing
 	months and days are now detected, but missing years will still
 	be interpreted as 1900 on such platforms.
+
+    o   Inheritance in formal classes (the methods package) works
+        breadth-first as intuition would expect.
+
+    o   The new() function works better (maybe even correctly?) for
+        the various combinations of super-classes and prototypes that
+        can be supplied as unnamed arguments.
 
 
 
