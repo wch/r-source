@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-24, 2000-11-13
+@set FAQ-VERSION 1.1-25, 2000-11-14
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -75,7 +75,7 @@ Kurt Hornik                      @*
 * R Web Interfaces::            
 * R Add-On Packages::           
 * R and Emacs::                 
-* R Miscellania::               
+* R Miscellanea::               
 * R Programming::               
 * R Bugs::                      
 * Acknowledgments::             
@@ -1240,6 +1240,10 @@ sorts and comparisons (such as whether @code{"aA" < "Bb"} is true or
 false).  From version 1.2.0 the locale can be (re-)set in R by the
 @code{Sys.setlocale()} function.
 
+@item
+In S, @code{missing(@var{arg})} remains @code{TRUE} if @var{arg} is
+subsequently modified; in R it doesn't.
+
 @end itemize
 
 There are also differences which are not intentional, and result from
@@ -1619,6 +1623,8 @@ Interface to the NCSA HDF5 library.
 @item multidim
 Code for correspondence analysis and other multidimensional descriptive
 statistics.
+@item mvtnorm
+Multivariate normal and t distributions.
 @item netCDF
 Read data from netCDF files.
 @item syskern
@@ -1824,7 +1830,7 @@ modeling code are not there yet.
 The @uref{http://developer.r-project.org/, R Developer Page} acts as an
 intermediate repository for more or less finalized ideas and plans for
 the R statistical system.  It contains (pointers to) TODO lists, RFCs,
-various other writeups, ideas lists, and CVS miscellania.
+various other writeups, ideas lists, and CVS miscellanea.
 
 Many (more) of the packages available at the Statlib S Repository might
 be worth porting to R.
@@ -1832,7 +1838,7 @@ be worth porting to R.
 If you are interested in working on any of these projects, please notify
 @email{Kurt.Hornik@@r-project.org, Kurt Hornik}.
 
-@node R and Emacs, R Miscellania, R Add-On Packages, Top
+@node R and Emacs, R Miscellanea, R Add-On Packages, Top
 @chapter R and Emacs
 
 @menu
@@ -1954,8 +1960,8 @@ dir /opt/R/src/nmath
 dir /opt/R/src/unix
 @end smallexample
 
-@node R Miscellania, R Programming, R and Emacs, Top
-@chapter R Miscellania
+@node R Miscellanea, R Programming, R and Emacs, Top
+@chapter R Miscellanea
 
 @menu
 * Why does R run out of memory?::  
@@ -1976,8 +1982,12 @@ dir /opt/R/src/unix
 * How can I substitute into a plot label?::  
 @end menu
 
-@node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellania, R Miscellania
+@node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
 @section Why does R run out of memory?
+
+@c FIXME: 1.2
+@c Basically only say that this was frequently asked but should now need
+@c no user intervention except by experts.
 
 R (currently) uses a @emph{static} memory model.  This means that when
 it starts up, it asks the operating system to reserve a fixed amount of
@@ -2033,7 +2043,7 @@ flux.  Currently, the command line arguments and environment variables
 described above can be used to supply minimal values for the sizes of
 the node and vector heaps.
 
-@node Why does sourcing a correct file fail?, How can I set components of a list to NULL?, Why does R run out of memory?, R Miscellania
+@node Why does sourcing a correct file fail?, How can I set components of a list to NULL?, Why does R run out of memory?, R Miscellanea
 @section Why does sourcing a correct file fail?
 
 R sometimes has problems parsing a file which does not end in a newline.
@@ -2047,7 +2057,7 @@ locally ensures this setting).
 Earlier R versions had a similar problem when reading in data files, but
 this should have been taken care of now.
 
-@node How can I set components of a list to NULL?, How can I save my workspace?, Why does sourcing a correct file fail?, R Miscellania
+@node How can I set components of a list to NULL?, How can I save my workspace?, Why does sourcing a correct file fail?, R Miscellanea
 @section How can I set components of a list to NULL?
 
 You can use
@@ -2065,7 +2075,7 @@ the list.
 For dropping the row names of a matrix @code{x}, it may be easier to use
 @code{rownames(x) <- NULL}, similarly for column names.
 
-@node How can I save my workspace?, How can I clean up my workspace?, How can I set components of a list to NULL?, R Miscellania
+@node How can I save my workspace?, How can I clean up my workspace?, How can I set components of a list to NULL?, R Miscellanea
 @section How can I save my workspace?
 
 @code{save.image()} saves the objects in the user's @code{.GlobalEnv} to
@@ -2073,7 +2083,7 @@ the file @file{.RData} in the R startup directory.  (This is also what
 happens after @kbd{q("yes")}.)  Using @code{save.image(@var{file})} one
 can save the image under a different name.
 
-@node How can I clean up my workspace?, How can I get eval() and D() to work?, How can I save my workspace?, R Miscellania
+@node How can I clean up my workspace?, How can I get eval() and D() to work?, How can I save my workspace?, R Miscellanea
 @section How can I clean up my workspace?
 
 To remove all objects in the currently active environment (typically
@@ -2087,7 +2097,7 @@ rm(list = ls(all = TRUE))
 (Without @option{all = TRUE}, only the objects with names not starting
 with a @samp{.} are removed.)
 
-@node How can I get eval() and D() to work?, Why do my matrices lose dimensions?, How can I clean up my workspace?, R Miscellania
+@node How can I get eval() and D() to work?, Why do my matrices lose dimensions?, How can I clean up my workspace?, R Miscellanea
 @section How can I get eval() and D() to work?
 
 Strange things will happen if you use @code{eval(print(x), envir = e)}
@@ -2128,7 +2138,7 @@ g(a * b)
 
 See the help page for @code{deriv()} for more examples.
 
-@node Why do my matrices lose dimensions?, How does autoloading work?, How can I get eval() and D() to work?, R Miscellania
+@node Why do my matrices lose dimensions?, How does autoloading work?, How can I get eval() and D() to work?, R Miscellanea
 @section Why do my matrices lose dimensions?
 
 When a matrix with a single row or column is created by a subscripting
@@ -2163,7 +2173,7 @@ rewritten as
 somerows <- mat[index, , drop = FALSE]
 @end example
 
-@node How does autoloading work?, How should I set options?, Why do my matrices lose dimensions?, R Miscellania
+@node How does autoloading work?, How should I set options?, Why do my matrices lose dimensions?, R Miscellanea
 @section How does autoloading work?
 
 R has a special environment called @code{.AutoloadEnv}.  Using
@@ -2179,7 +2189,7 @@ does not occupy memory (yet).
 
 See the help page for @code{autoload()} for a very nice example.
 
-@node How should I set options?, How do file names work in Windows?, How does autoloading work?, R Miscellania
+@node How should I set options?, How do file names work in Windows?, How does autoloading work?, R Miscellanea
 @section How should I set options?
 
 The function @code{options()} allows setting and examining a variety of
@@ -2217,7 +2227,7 @@ using @kbd{options(OPT = VAL)} correctly updates it.  Local copies of
 @code{.Options}, either in @code{.GlobalEnv} or in a function
 environment (frame), are just silently disregarded.
 
-@node How do file names work in Windows?, Why does plotting give a color allocation error?, How should I set options?, R Miscellania
+@node How do file names work in Windows?, Why does plotting give a color allocation error?, How should I set options?, R Miscellanea
 @section How do file names work in Windows?
 
 As R uses C-style string handling, @samp{\} is treated as an escape
@@ -2228,7 +2238,7 @@ When you really need a @samp{\}, you have to escape it with another
 Thus, in filenames use something like @code{"c:\\data\\money.dat"}.  You
 can also replace @samp{\} by @samp{/} (@code{"c:/data/money.dat"}).
 
-@node Why does plotting give a color allocation error?, Is R Y2K-compliant?, How do file names work in Windows?, R Miscellania
+@node Why does plotting give a color allocation error?, Is R Y2K-compliant?, How do file names work in Windows?, R Miscellanea
 @section Why does plotting give a color allocation error?
 
 Sometimes plotting, e.g., when running @code{demo(image)}, results in
@@ -2246,7 +2256,7 @@ You could also set the @code{colortype} of @code{X11()} to
 @code{"pseudo.cube"} rather than the default @code{"pseudo"}.  See the
 help page for @code{X11()} for more information.
 
-@node Is R Y2K-compliant?, How do I convert factors to numeric?, Why does plotting give a color allocation error?, R Miscellania
+@node Is R Y2K-compliant?, How do I convert factors to numeric?, Why does plotting give a color allocation error?, R Miscellanea
 @section Is R Y2K-compliant?
 
 We expect R to be Y2K compliant when compiled and run on a Y2K compliant
@@ -2258,7 +2268,7 @@ whatsoever}.
 R, like any other programming language, can be used to write programs
 and manipulate data in ways that are not Y2K compliant.
 
-@node How do I convert factors to numeric?, Are Trellis displays implemented in R?, Is R Y2K-compliant?, R Miscellania
+@node How do I convert factors to numeric?, Are Trellis displays implemented in R?, Is R Y2K-compliant?, R Miscellanea
 @section How do I convert factors to numeric?
 
 It may happen that when reading numeric data into R (usually, when
@@ -2278,7 +2288,7 @@ as.numeric(levels(f))[as.integer(f)]
 
 In any case, do not call @code{as.numeric()} or their likes directly.
 
-@node Are Trellis displays implemented in R?, What are the enclosing and parent environments?, How do I convert factors to numeric?, R Miscellania
+@node Are Trellis displays implemented in R?, What are the enclosing and parent environments?, How do I convert factors to numeric?, R Miscellanea
 @section Are Trellis displays implemented in R?
 
 Not yet.  Meanwhile, you could look at @code{coplot()} and
@@ -2291,7 +2301,7 @@ device resizing) the aspect ratio of the plot.
 (By the way, ``Trellis'' is a trademark which cannot be used in R;
 instead, the term ``lattice'' has been proposed for the R equivalent.)
 
-@node What are the enclosing and parent environments?, How can I substitute into a plot label?, Are Trellis displays implemented in R?, R Miscellania
+@node What are the enclosing and parent environments?, How can I substitute into a plot label?, Are Trellis displays implemented in R?, R Miscellanea
 @section What are the enclosing and parent environments?
 
 Inside a function you may want to access variables in two additional
@@ -2339,7 +2349,7 @@ between R and S is to say that in S the enclosing environment is
 @emph{always} the global workspace, but in R the enclosing environment
 is wherever the function was created.
 
-@node How can I substitute into a plot label?,  , What are the enclosing and parent environments?, R Miscellania
+@node How can I substitute into a plot label?,  , What are the enclosing and parent environments?, R Miscellanea
 @section How can I substitute into a plot label?
 
 Often, it is desired to use the value of an R object in a plot label,
@@ -2358,7 +2368,7 @@ title(substitute(hat(a) == ahat, list(ahat = ahat)))
 (note that it is @samp{==} and not @samp{=}).  There are more worked
 examples in the mailing list achives.
 
-@node R Programming, R Bugs, R Miscellania, Top
+@node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
 
 @menu

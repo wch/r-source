@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.1-24, 2000-11-13</h2>
+<h2>Version 1.1-25, 2000-11-14</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -75,7 +75,7 @@
 <li><a href="#Should%20I%20run%20R%20from%20within%20Emacs%3f">6.2 Should I run R from within Emacs?</a>
 <li><a href="#Debugging%20R%20from%20within%20Emacs">6.3 Debugging R from within Emacs</a>
 </ul>
-<li><a href="#R%20Miscellania">7 R Miscellania</a>
+<li><a href="#R%20Miscellanea">7 R Miscellanea</a>
 <ul>
 <li><a href="#Why%20does%20R%20run%20out%20of%20memory%3f">7.1 Why does R run out of memory?</a>
 <li><a href="#Why%20does%20sourcing%20a%20correct%20file%20fail%3f">7.2 Why does sourcing a correct file fail?</a>
@@ -123,7 +123,7 @@ Up:<a rel=up href="#(dir)">(dir)</a>
 <li><a href="#R%20Web%20Interfaces">R Web Interfaces</a>: 
 <li><a href="#R%20Add-On%20Packages">R Add-On Packages</a>: 
 <li><a href="#R%20and%20Emacs">R and Emacs</a>: 
-<li><a href="#R%20Miscellania">R Miscellania</a>: 
+<li><a href="#R%20Miscellanea">R Miscellanea</a>: 
 <li><a href="#R%20Programming">R Programming</a>: 
 <li><a href="#R%20Bugs">R Bugs</a>: 
 <li><a href="#Acknowledgments">Acknowledgments</a>: 
@@ -1271,6 +1271,9 @@ sorts and comparisons (such as whether <code>"aA" &lt; "Bb"</code> is true or
 false).  From version 1.2.0 the locale can be (re-)set in R by the
 <code>Sys.setlocale()</code> function.
 
+<li>In S, <code>missing(<var>arg</var>)</code> remains <code>TRUE</code> if <var>arg</var> is
+subsequently modified; in R it doesn't.
+
 </ul>
 
 <p>There are also differences which are not intentional, and result from
@@ -1657,6 +1660,8 @@ thin plate splines, kriging and neural networks.
 <br><dt><strong>multidim</strong>
 <dd>Code for correspondence analysis and other multidimensional descriptive
 statistics. 
+<br><dt><strong>mvtnorm</strong>
+<dd>Multivariate normal and t distributions. 
 <br><dt><strong>netCDF</strong>
 <dd>Read data from netCDF files. 
 <br><dt><strong>syskern</strong>
@@ -1858,7 +1863,7 @@ modeling code are not there yet.
 <p>The <a href="http://developer.r-project.org/">R Developer Page</a> acts as an
 intermediate repository for more or less finalized ideas and plans for
 the R statistical system.  It contains (pointers to) TODO lists, RFCs,
-various other writeups, ideas lists, and CVS miscellania.
+various other writeups, ideas lists, and CVS miscellanea.
 
 <p>Many (more) of the packages available at the Statlib S Repository might
 be worth porting to R.
@@ -1868,7 +1873,7 @@ be worth porting to R.
 
 <p><hr>
 Node:<a name="R%20and%20Emacs">R and Emacs</a>,
-Next:<a rel=next href="#R%20Miscellania">R Miscellania</a>,
+Next:<a rel=next href="#R%20Miscellanea">R Miscellanea</a>,
 Previous:<a rel=previous href="#R%20Add-On%20Packages">R Add-On Packages</a>,
 Up:<a rel=up href="#Top">Top</a>
 <br>
@@ -2010,13 +2015,13 @@ dir /opt/R/src/unix
 </pre>
 
 <p><hr>
-Node:<a name="R%20Miscellania">R Miscellania</a>,
+Node:<a name="R%20Miscellanea">R Miscellanea</a>,
 Next:<a rel=next href="#R%20Programming">R Programming</a>,
 Previous:<a rel=previous href="#R%20and%20Emacs">R and Emacs</a>,
 Up:<a rel=up href="#Top">Top</a>
 <br>
 
-<h1>7 R Miscellania</h1>
+<h1>7 R Miscellanea</h1>
 
 <ul>
 <li><a href="#Why%20does%20R%20run%20out%20of%20memory%3f">Why does R run out of memory?</a>: 
@@ -2040,8 +2045,8 @@ Up:<a rel=up href="#Top">Top</a>
 <p><hr>
 Node:<a name="Why%20does%20R%20run%20out%20of%20memory%3f">Why does R run out of memory?</a>,
 Next:<a rel=next href="#Why%20does%20sourcing%20a%20correct%20file%20fail%3f">Why does sourcing a correct file fail?</a>,
-Previous:<a rel=previous href="#R%20Miscellania">R Miscellania</a>,
-Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+Previous:<a rel=previous href="#R%20Miscellanea">R Miscellanea</a>,
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
 <h2>7.1 Why does R run out of memory?</h2>
@@ -2104,7 +2109,7 @@ the node and vector heaps.
 Node:<a name="Why%20does%20sourcing%20a%20correct%20file%20fail%3f">Why does sourcing a correct file fail?</a>,
 Next:<a rel=next href="#How%20can%20I%20set%20components%20of%20a%20list%20to%20NULL%3f">How can I set components of a list to NULL?</a>,
 Previous:<a rel=previous href="#Why%20does%20R%20run%20out%20of%20memory%3f">Why does R run out of memory?</a>,
-Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
 <h2>7.2 Why does sourcing a correct file fail?</h2>
@@ -2123,7 +2128,7 @@ this should have been taken care of now.
 Node:<a name="How%20can%20I%20set%20components%20of%20a%20list%20to%20NULL%3f">How can I set components of a list to NULL?</a>,
 Next:<a rel=next href="#How%20can%20I%20save%20my%20workspace%3f">How can I save my workspace?</a>,
 Previous:<a rel=previous href="#Why%20does%20sourcing%20a%20correct%20file%20fail%3f">Why does sourcing a correct file fail?</a>,
-Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
 <h2>7.3 How can I set components of a list to NULL?</h2>
@@ -2145,7 +2150,7 @@ the list.
 Node:<a name="How%20can%20I%20save%20my%20workspace%3f">How can I save my workspace?</a>,
 Next:<a rel=next href="#How%20can%20I%20clean%20up%20my%20workspace%3f">How can I clean up my workspace?</a>,
 Previous:<a rel=previous href="#How%20can%20I%20set%20components%20of%20a%20list%20to%20NULL%3f">How can I set components of a list to NULL?</a>,
-Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
 <h2>7.4 How can I save my workspace?</h2>
@@ -2159,7 +2164,7 @@ can save the image under a different name.
 Node:<a name="How%20can%20I%20clean%20up%20my%20workspace%3f">How can I clean up my workspace?</a>,
 Next:<a rel=next href="#How%20can%20I%20get%20eval()%20and%20D()%20to%20work%3f">How can I get eval() and D() to work?</a>,
 Previous:<a rel=previous href="#How%20can%20I%20save%20my%20workspace%3f">How can I save my workspace?</a>,
-Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
 <h2>7.5 How can I clean up my workspace?</h2>
@@ -2177,7 +2182,7 @@ with a <code>.</code> are removed.)
 Node:<a name="How%20can%20I%20get%20eval()%20and%20D()%20to%20work%3f">How can I get eval() and D() to work?</a>,
 Next:<a rel=next href="#Why%20do%20my%20matrices%20lose%20dimensions%3f">Why do my matrices lose dimensions?</a>,
 Previous:<a rel=previous href="#How%20can%20I%20clean%20up%20my%20workspace%3f">How can I clean up my workspace?</a>,
-Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
 <h2>7.6 How can I get eval() and D() to work?</h2>
@@ -2220,7 +2225,7 @@ g(a * b)
 Node:<a name="Why%20do%20my%20matrices%20lose%20dimensions%3f">Why do my matrices lose dimensions?</a>,
 Next:<a rel=next href="#How%20does%20autoloading%20work%3f">How does autoloading work?</a>,
 Previous:<a rel=previous href="#How%20can%20I%20get%20eval()%20and%20D()%20to%20work%3f">How can I get eval() and D() to work?</a>,
-Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
 <h2>7.7 Why do my matrices lose dimensions?</h2>
@@ -2256,7 +2261,7 @@ rewritten as
 Node:<a name="How%20does%20autoloading%20work%3f">How does autoloading work?</a>,
 Next:<a rel=next href="#How%20should%20I%20set%20options%3f">How should I set options?</a>,
 Previous:<a rel=previous href="#Why%20do%20my%20matrices%20lose%20dimensions%3f">Why do my matrices lose dimensions?</a>,
-Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
 <h2>7.8 How does autoloading work?</h2>
@@ -2278,7 +2283,7 @@ does not occupy memory (yet).
 Node:<a name="How%20should%20I%20set%20options%3f">How should I set options?</a>,
 Next:<a rel=next href="#How%20do%20file%20names%20work%20in%20Windows%3f">How do file names work in Windows?</a>,
 Previous:<a rel=previous href="#How%20does%20autoloading%20work%3f">How does autoloading work?</a>,
-Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
 <h2>7.9 How should I set options?</h2>
@@ -2319,7 +2324,7 @@ environment (frame), are just silently disregarded.
 Node:<a name="How%20do%20file%20names%20work%20in%20Windows%3f">How do file names work in Windows?</a>,
 Next:<a rel=next href="#Why%20does%20plotting%20give%20a%20color%20allocation%20error%3f">Why does plotting give a color allocation error?</a>,
 Previous:<a rel=previous href="#How%20should%20I%20set%20options%3f">How should I set options?</a>,
-Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
 <h2>7.10 How do file names work in Windows?</h2>
@@ -2336,7 +2341,7 @@ can also replace <code>\</code> by <code>/</code> (<code>"c:/data/money.dat"</co
 Node:<a name="Why%20does%20plotting%20give%20a%20color%20allocation%20error%3f">Why does plotting give a color allocation error?</a>,
 Next:<a rel=next href="#Is%20R%20Y2K-compliant%3f">Is R Y2K-compliant?</a>,
 Previous:<a rel=previous href="#How%20do%20file%20names%20work%20in%20Windows%3f">How do file names work in Windows?</a>,
-Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
 <h2>7.11 Why does plotting give a color allocation error?</h2>
@@ -2360,7 +2365,7 @@ help page for <code>X11()</code> for more information.
 Node:<a name="Is%20R%20Y2K-compliant%3f">Is R Y2K-compliant?</a>,
 Next:<a rel=next href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
 Previous:<a rel=previous href="#Why%20does%20plotting%20give%20a%20color%20allocation%20error%3f">Why does plotting give a color allocation error?</a>,
-Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
 <h2>7.12 Is R Y2K-compliant?</h2>
@@ -2378,7 +2383,7 @@ and manipulate data in ways that are not Y2K compliant.
 Node:<a name="How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
 Next:<a rel=next href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>,
 Previous:<a rel=previous href="#Is%20R%20Y2K-compliant%3f">Is R Y2K-compliant?</a>,
-Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
 <h2>7.13 How do I convert factors to numeric?</h2>
@@ -2401,7 +2406,7 @@ factor object, you can use
 Node:<a name="Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>,
 Next:<a rel=next href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>,
 Previous:<a rel=previous href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
-Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
 <h2>7.14 Are Trellis displays implemented in R?</h2>
@@ -2420,7 +2425,7 @@ instead, the term "lattice" has been proposed for the R equivalent.)
 Node:<a name="What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>,
 Next:<a rel=next href="#How%20can%20I%20substitute%20into%20a%20plot%20label%3f">How can I substitute into a plot label?</a>,
 Previous:<a rel=previous href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>,
-Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
 <h2>7.15 What are the enclosing and parent environments?</h2>
@@ -2473,7 +2478,7 @@ is wherever the function was created.
 <p><hr>
 Node:<a name="How%20can%20I%20substitute%20into%20a%20plot%20label%3f">How can I substitute into a plot label?</a>,
 Previous:<a rel=previous href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>,
-Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
 
 <h2>7.16 How can I substitute into a plot label?</h2>
@@ -2495,7 +2500,7 @@ examples in the mailing list achives.
 <p><hr>
 Node:<a name="R%20Programming">R Programming</a>,
 Next:<a rel=next href="#R%20Bugs">R Bugs</a>,
-Previous:<a rel=previous href="#R%20Miscellania">R Miscellania</a>,
+Previous:<a rel=previous href="#R%20Miscellanea">R Miscellanea</a>,
 Up:<a rel=up href="#Top">Top</a>
 <br>
 

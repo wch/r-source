@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-24, 2000-11-13
+Version 1.1-25, 2000-11-14
 Kurt Hornik
 
 
@@ -54,7 +54,7 @@ Table of Contents
   6.2 Should I run R from within Emacs?
   6.3 Debugging R from within Emacs
 
-7 R Miscellania
+7 R Miscellanea
   7.1 Why does R run out of memory?
   7.2 Why does sourcing a correct file fail?
   7.3 How can I set components of a list to NULL?
@@ -960,6 +960,9 @@ the same time being as compatible as possible with S.
      false).  From version 1.2.0 the locale can be (re-)set in R by the
      `Sys.setlocale()' function.
 
+   * In S, `missing(ARG)' remains `TRUE' if ARG is subsequently modified;
+     in R it doesn't.
+
 
    There are also differences which are not intentional, and result from
 missing or incorrect code in R.  The developers would appreciate hearing
@@ -1398,6 +1401,9 @@ these a try, of course.  This area of CRAN currently contains
      Code for correspondence analysis and other multidimensional descriptive
      statistics.
 
+*mvtnorm*
+     Multivariate normal and t distributions.
+
 *netCDF*
      Read data from netCDF files.
 
@@ -1559,7 +1565,7 @@ are not there yet.
    The R Developer Page (http://developer.r-project.org/) acts as an
 intermediate repository for more or less finalized ideas and plans for the
 R statistical system.  It contains (pointers to) TODO lists, RFCs, various
-other writeups, ideas lists, and CVS miscellania.
+other writeups, ideas lists, and CVS miscellanea.
 
    Many (more) of the packages available at the Statlib S Repository might
 be worth porting to R.
@@ -1675,7 +1681,7 @@ as follows:
      dir /opt/R/src/nmath
      dir /opt/R/src/unix
 
-7 R Miscellania
+7 R Miscellanea
 ***************
 
 7.1 Why does R run out of memory?
