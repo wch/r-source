@@ -15,7 +15,6 @@ new <- .Alias(expr)
 \value{
   \emph{an identical copy} of \code{expr}.
 }
-\references{ ~put references to the literature/web site here ~ }
 \section{WARNING}{
   This has a \bold{dangerous} semantic, and consequences can be
   unexpected (it can be used to defeat the call-by-value illusion).
