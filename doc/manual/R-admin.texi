@@ -59,16 +59,16 @@ The current version of this document is @value{VERSION}.
 @end ifnottex
 
 @menu
-* Obtaining R::                 
-* Installing R under Unix::     
-* Installing R under Windows::  
-* Installing R on Classic MacOS::  
-* Add-on packages::             
-* Essential and useful other programs::  
-* Configuration on Unix::       
-* New platforms::               
-* Function and variable index::  
-* Concept index::               
+* Obtaining R::
+* Installing R under Unix::
+* Installing R under Windows::
+* Installing R on Classic MacOS::
+* Add-on packages::
+* Essential and useful other programs::
+* Configuration on Unix::
+* New platforms::
+* Function and variable index::
+* Concept index::
 @end menu
 
 @node Obtaining R, Installing R under Unix, Top, Top
@@ -80,8 +80,8 @@ Sources, binaries and documentation for @R{} can be obtained via
 @file{RESOURCES} for information on @acronym{CRAN}.
 
 @menu
-* Getting and unpacking the sources::  
-* Using rsync::                 
+* Getting and unpacking the sources::
+* Using rsync::
 @end menu
 
 @node Getting and unpacking the sources, Using rsync, Obtaining R, Obtaining R
@@ -180,9 +180,9 @@ are installed in platform-specific ways.  So for the rest of this
 chapter we consider only building from the sources.
 
 @menu
-* Simple compilation::          
-* Making the manuals::          
-* Installation::                
+* Simple compilation::
+* Making the manuals::
+* Installation::
 @end menu
 
 
@@ -389,7 +389,7 @@ from @acronym{CRAN} to run on Windows 95, 98, NT4, 2000 and ME (at
 least) on Intel and clones (but not on other platforms).
 
 You do need one of those Windows versions: Windows 3.11+win32s will not
-work. 
+work.
 
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
@@ -403,7 +403,7 @@ See the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, R Windows
 @acronym{FAQ}} for more details.
 
 @menu
-* Building from source::        
+* Building from source::
 @end menu
 
 @node Building from source,  , Installing R under Windows, Installing R under Windows
@@ -446,16 +446,16 @@ Aladdin Stuffit Expander (tm).
 @cindex MacOS X
 There is also a port to MacOS X which is considered to be a Unix variant
 in this document.  You can find it in the @file{bin/macosx} directory at
-of a @acronym{CRAN} site. 
+of a @acronym{CRAN} site.
 
 @node Add-on packages, Essential and useful other programs, Installing R on Classic MacOS, Top
 @chapter Add-on packages
 @cindex Packages
 
 @menu
-* Installing packages::         
-* Updating packages::           
-* Removing packages::           
+* Installing packages::
+* Updating packages::
+* Removing packages::
 @end menu
 
 This chapter applies to Unix-like and Windows versions of @R{}, but not
@@ -494,7 +494,7 @@ package files installed}
 Rcmd INSTALL -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
 @end smallexample
 
-@findex install.packages 
+@findex install.packages
 Alternatively, packages can be downloaded and installed from within
 @R{}.  First set the option @code{CRAN} to your nearest @acronym{CRAN}
 mirror, for example
@@ -587,8 +587,8 @@ Unix-like platforms, or which will be used by @R{} if found by
 @code{./configure}.
 
 @menu
-* Essential programs::          
-* Useful libraries and programs::  
+* Essential programs::
+* Useful libraries and programs::
 @end menu
 
 @node Essential programs, Useful libraries and programs, Essential and useful other programs, Essential and useful other programs
@@ -617,7 +617,7 @@ available from any GNU mirror: you will need a fairly recent version.
 
 Use of @code{gzfile} connections needs @code{zlib} (version 1.1.3 or later).
 
-The bitmapped graphics devices @code{jpeg()} and @code{png()} need the 
+The bitmapped graphics devices @code{jpeg()} and @code{png()} need the
 appropriate libraries installed: @code{jpeg} (version 6b or later) or
 @code{libpng} (version 1.0.5 or later)
 and @code{zlib} (version 1.1.3 or later) respectively.
@@ -626,8 +626,8 @@ The @code{bitmap} and @code{dev2bitmap} devices make use of ghostscript
 (@uref{http://www.cs.wisc.edu/~ghost}).
 
 @menu
-* Tcl/Tk::                      
-* Linear algebra::              
+* Tcl/Tk::
+* Linear algebra::
 @end menu
 
 @node Tcl/Tk, Linear algebra, Useful libraries and programs, Useful libraries and programs
@@ -691,13 +691,13 @@ re-installed.
 @appendix Configuration on Unix
 
 @menu
-* Configuration options::       
-* Configuration variables::     
-* Using make::                  
-* Using FORTRAN::               
-* Compile and load flags::      
-* Building the GNOME interface::  
-* Platform notes::              
+* Configuration options::
+* Configuration variables::
+* Using make::
+* Using FORTRAN::
+* Compile and load flags::
+* Building the GNOME interface::
+* Platform notes::
 @end menu
 
 @node Configuration options, Configuration variables, Configuration on Unix, Configuration on Unix
@@ -972,12 +972,12 @@ of support software; your results may differ if you have other versions
 of compilers and support libraries.
 
 @menu
-* MacOS X::                     
-* Solaris::                     
-* HPUX::                        
-* IRIX::                        
-* Alpha/OSF1::                  
-* Alpha/FreeBSD::               
+* MacOS X::
+* Solaris::
+* HPUX::
+* IRIX::
+* Alpha/OSF1::
+* Alpha/FreeBSD::
 @end menu
 
 @node MacOS X, Solaris, Platform notes, Platform notes
@@ -1040,7 +1040,7 @@ in @file{config.site}.  Note that using @command{f95} allows the Sun
 performance library to be selected: it will not work with @command{f77},
 nor with @command{g77}.
 
-Some case is needed to ensure that libraries found by @command{configure}
+Some care is needed to ensure that libraries found by @command{configure}
 are compatible with the R executable and modules, as the testing
 process will not detect many of the possible problems.  For 32-bit
 builds under @command{cc} the flag @option{-dalign} is needed for some of
