@@ -3138,6 +3138,12 @@ group_in_compile_stack (compile_stack, regnum)
    We use these short variable names so we can use the same macros as
    `regex_compile' itself.  */
 
+#ifdef HAVE_STRCOLL
+#define STRCMP strcoll
+#else
+#define STRCMP strcmp
+#endif
+
 static reg_errcode_t
 compile_range (p_ptr, pend, translate, syntax, b)
     const char **p_ptr, *pend;
@@ -3174,7 +3180,7 @@ compile_range (p_ptr, pend, translate, syntax, b)
     {
       char ch[2];
       ch[0] = this_char;  ch[1] = '\0';
-      if (strcoll (range_start, ch) <= 0 && strcoll (ch, range_end) <= 0)
+      if (STRCMP (range_start, ch) <= 0 && STRCMP (ch, range_end) <= 0)
 	{
 	  SET_LIST_BIT (TRANSLATE (this_char));
 	  ret = REG_NOERROR;
