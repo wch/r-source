@@ -101,6 +101,11 @@ NEW FEATURES
     o	system.time() has a new argument 'gcFirst' which, when TRUE,
 	forces a garbage collection before timing begins.
 
+    o	There is now a coef() method for summaries of "nls" objects.
+
+    o	nls() now looks for variables and functions in its formula in
+	the environment of the formula before the usual search path,
+	in the same way lm() etc look for variables in their formulae.
 
 
 UTILITIES
