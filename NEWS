@@ -37,6 +37,11 @@ BUG FIXES
 
     o	plot.ts(x, log = "y") works again when x has 0s, also for matrix x.
 
+    o	add1, drop1, step work again on glm object with formulae with
+	rhs's containing `.'.  (Broken by a `bug fix' (in reality an
+	API change) in 1.2.1.)
+
+
 
 		CHANGES IN R VERSION 1.4.1
 

@@ -1,4 +1,4 @@
-#### copyright (C) 1998-2001 B. D. Ripley
+#### copyright (C) 1998-2002 B. D. Ripley
 add1 <- function(object, scope, ...) UseMethod("add1")
 
 add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
@@ -448,17 +448,17 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 
 add.scope <- function(terms1, terms2)
 {
-    terms1 <- terms(as.formula(terms1))
-    terms2 <- terms(as.formula(terms2))
+    terms1 <- terms(terms1)
+    terms2 <- terms(terms2)
     factor.scope(attr(terms1, "factor"),
 		 list(add = attr(terms2, "factor")))$add
 }
 
 drop.scope <- function(terms1, terms2)
 {
-    terms1 <- terms(as.formula(terms1))
+    terms1 <- terms(terms1)
     f2 <- if(missing(terms2)) numeric(0)
-    else attr(terms(as.formula(terms2)), "factor")
+    else attr(terms(terms2), "factor")
     factor.scope(attr(terms1, "factor"), list(drop = f2))$drop
 }
 

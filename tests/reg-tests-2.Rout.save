@@ -1,6 +1,6 @@
 
-R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Patched (2001-12-26)
+R : Copyright 2002, The R Development Core Team
+Version 1.4.1 Patched (2002-02-08)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -710,4 +710,22 @@ x    1  2
   1 5.032 25.62702
   2 5.032 25.62702
 > ## was 20 rows in R <= 1.4.0
+> 
+> ## Chong Gu 2002-Feb-8: `.' not expanded in drop1
+> data(HairEyeColor)
+> lab <- dimnames(HairEyeColor)
+> HairEye <- cbind(expand.grid(Hair=lab$Hair, Eye=lab$Eye, Sex=lab$Sex),
++                  Fr=as.vector(HairEyeColor))
+> HairEye.fit <- glm(Fr ~ . ^2, poisson, HairEye)
+> drop1(HairEye.fit)
+Single term deletions
+
+Model:
+Fr ~ .^2
+         Df Deviance    AIC
+<none>          8.19 192.94
+Hair:Eye  9   162.21 328.96
+Hair:Sex  3    22.03 200.78
+Eye:Sex   3    23.08 201.83
+> ## broken around 1.2.1 it seems.
 > 

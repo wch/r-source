@@ -314,3 +314,12 @@ data <- data.frame(weight, group)
 fit <- lm(cbind(w=weight, w2=weight^2) ~ group, data=data)
 predict(fit, newdata=data[1:2, ])
 ## was 20 rows in R <= 1.4.0
+
+## Chong Gu 2002-Feb-8: `.' not expanded in drop1
+data(HairEyeColor)
+lab <- dimnames(HairEyeColor)
+HairEye <- cbind(expand.grid(Hair=lab$Hair, Eye=lab$Eye, Sex=lab$Sex),
+                 Fr=as.vector(HairEyeColor))
+HairEye.fit <- glm(Fr ~ . ^2, poisson, HairEye)
+drop1(HairEye.fit)
+## broken around 1.2.1 it seems.
