@@ -53,7 +53,7 @@ mirrors, and included in our tools.zip).
 
 PCRE from ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/ or
 http://pcre.sourceforge.net/src/.  Unpack this (we used
-prce-3.9.tar.bz2) and copy the files into src/extra/pcre.
+pcre-3.9.tar.bz2) and copy the files into src/extra/pcre.
 
 bzip2-1.0.2 from http://sources.redhat.com/bzip2.  Unpack this and
 copy the files into src/extra/bzip2.
