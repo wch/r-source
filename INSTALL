@@ -10,7 +10,7 @@ and sunos.  In general it is relatively easy to adapt R to new
 platforms.  See below for details.
 
 
-SIMPLE INSTALLATION
+SIMPLE COMPILATION
 
 Choose a place to install the R tree (R is not just a binary, but has
 additional data sets, help files, font metrics etc).  Let's call this
@@ -25,7 +25,9 @@ the `$RHOME/bin' directory.  In addition, a shell script font-end
 called "R" will be created and copied to the same directory.  You can
 copy this script to a place where users can invoke it, for example to
 `/usr/local/bin/R'.  You could also copy the man page `R.1' to a place
-where your man reader finds it, such as `/usr/local/man/man1'.
+where your man reader finds it, such as `/usr/local/man/man1'. If you
+want to install the complete R tree to, e.g., /usr/local/lib/R, see
+section INSTALLATION below.
 
 If you need or want to set certain configure variables to something
 other than their default, you can do that by either editing the file
@@ -37,20 +39,42 @@ other than their default, you can do that by either editing the file
 One common variable to change is R_PAPERSIZE, which defaults to a4, not
 letter.
 
-Using
-
-	make docs
-
-will build plain text help pages as well as HTML and LaTeX versions of
-the documentation (the three kinds can also be generated separately
-using make help, make html and make latex).  Note that as of R version
-0.60, you need Perl version 5 to build the documentation.  If this is
-not available on your system, you can obtain precompiled documentation
-files via the `doc/pre-formatted-help' directory of the Comprehensive
-R Archive Network (CRAN), see the file `RESOURCES' for information on
-CRAN.
+Make will also build plain text help pages as well as HTML and LaTeX
+versions of the documentation (the three kinds can also be generated
+separately using make help, make html and make latex).  Note that as
+of R version 0.60, you need Perl version 5 to build the documentation.
+If this is not available on your system, you can obtain precompiled
+documentation files via the `doc/pre-formatted-help' directory of the
+Comprehensive R Archive Network (CRAN), see the file `RESOURCES' for
+information on CRAN.
 
 Now type R and reach for your S manuals ...
+
+
+INSTALLATION
+
+After
+	./configure
+	make
+have been completed successfully, you can install the complete R tree
+to your system by typing
+
+	make install
+
+This will install to the following directories:
+
+	$prefix/bin		execeutables
+	$prefix/man/man1	man pages
+	$prefix/lib/R		all the rest (libraries, online help
+				system, ...)
+
+where prefix is determined during configuration (typically /usr/local)
+and can be set by running configure with the option
+
+	./configure --prefix=/where/you/want/R/to/go
+
+The prefix of the installation directories can also be seen in the
+status message that is displayed at the end of configure.
 
 
 USING FORTRAN
