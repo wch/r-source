@@ -1,6 +1,6 @@
 write_PACKAGES <- function(dir, fields, type = "winBinary")
 {
-    type <- matchArg(type)
+    type <- match.arg(type)
     files <- list.files(dir, pattern = "\.zip$")
     if(length(files)) {
         ## Standard set of fields required to build a
@@ -16,12 +16,12 @@ write_PACKAGES <- function(dir, fields, type = "winBinary")
         op <- options(warn = -1)
         for(i in seq(along = files)){
             ## for bundles:
-            con <- unz(files[i], "description")
+            con <- unz(files[i], "DESCRIPTION")
             temp <- try(read.dcf(con, fields = fields), silent = TRUE)
             if(identical(class(temp), "try-error")) {
                 close(con)
                 ## for regular packages:
-                con <- unz(files[i], file.path(packages[i], "description"))
+                con <- unz(files[i], file.path(packages[i], "DESCRIPTION"))
                 temp <- try(read.dcf(con, fields = fields), silent = TRUE)
                 if(identical(class(temp), "try-error")) {
                     close(con)
