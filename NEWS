@@ -158,20 +158,31 @@ BUG FIXES
 		CHANGES IN R VERSION 1.4.2
 
 
+NEW FEATURES
+
+    o	New function validSlotNames() in package methods.
+
+
 BUG FIXES
 
     o	the man page (doc/R.1) wasn't updated with the proper VERSION.
 
-    o	new function validSlotNames() in package methods.
-
     o	smooth.spline() had a "df = 5" default which was never used and
 	hence extraneous and misleading.
 
-    o	read.fwf() was interpreting comment chars in its call to scan: 
+    o	read.fwf() was interpreting comment chars in its call to scan:
 	replaced by a call to readlines(). (PR#1297/8)
 
     o	The default has been changed to scan(comment.char="") for
 	consistency with earlier code (as in the previous item).
+
+    o	bxp(*, notch.frac = f) now draws the median line correctly.
+
+    o	Current versions of gs were rotating the output of 
+	bitmap(type = "pdfwrite") and when converting the output 
+	of postscript() to PDF; this has been circumvented by
+	suppressing the %%Orientation comment for non-standard 
+	paper sizes.
 
 
 
