@@ -2,6 +2,8 @@
 
 NEW FEATURES
 
+    o   do_modelmatrix(model.c): Set rownames from data argument.
+
     o   New generic function preplot().
 
     o	A new R BATCH interface for non-interactive execution.
@@ -10,6 +12,15 @@ NEW FEATURES
 	latex and dvips.
 
 BUG FIXES
+
+    o   Code rearrangement in predict.lm (avoid unnecessary computation)
+        + let rownames through on predictions
+
+    o   model.matrix.default: Initial code to define model frame 
+        simplified considerably after defaulting data argument to
+        sys.frame(sys.parent()).  This also removes the problem where
+        data.frame mangles I(x^2) and similar names, so that the
+        "reorder" sanity check at the end fails.
 
     o	The handling of extra FORTRAN libraries (f2c-related and BLAS)
 	should now be correct.  Via SHLIBLDFLAGS, add-ons will also be
