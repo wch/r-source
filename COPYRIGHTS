@@ -226,13 +226,12 @@ src/main/apse.h
 
 
 src/extra/pcre/LICENCE
-src/extra/pcre/config.in
 src/extra/pcre/dftables.c
 src/extra/pcre/get.c
 src/extra/pcre/internal.h
 src/extra/pcre/maketables.c
 src/extra/pcre/pcre.c
-src/extra/pcre/pcre.in
+src/extra/pcre/pcre.h
 src/extra/pcre/study.c
 
    Copyright (c) 1997-2001 University of Cambridge
@@ -240,19 +239,13 @@ src/extra/pcre/study.c
 
 src/extra/bzip2/LICENSE
 src/extra/bzip2/blocksort.c
-src/extra/bzip2/bzip2.c
-src/extra/bzip2/bzip2recover.c
 src/extra/bzip2/bzlib.c
 src/extra/bzip2/bzlib.h
 src/extra/bzip2/bzlib_private.h
 src/extra/bzip2/compress.c
 src/extra/bzip2/crctable.c
 src/extra/bzip2/decompress.c
-src/extra/bzip2/dlltest.c
 src/extra/bzip2/huffman.c
-src/extra/bzip2/mk251.c
 src/extra/bzip2/randtable.c
-src/extra/bzip2/spewG.c
-src/extra/bzip2/unzcrash.c
 
    copyright (C) 1996-2002 Julian R Seward.
