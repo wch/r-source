@@ -5,6 +5,19 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 0.64.1
+
+NEW FEATURES
+
+    o   zip files can be used for storing help and example files. See
+	the help files for "help" and "example" for details.
+
+
+BUG FIXES
+
+    o   strsplit() allows unlimited string size.
+
+
 		CHANGES IN R VERSION 0.64.0
 
 NEW FEATURES
