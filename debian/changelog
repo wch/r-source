@@ -1,4 +1,4 @@
-r-base (1.6.2-0.cvs.20021230) unstable; urgency=low
+r-base (1.6.1.cvs.20021230-1) unstable; urgency=low
 
   * Upgraded to release candidate dated 2002-12-30 of R 1.6.2
   * Added Douglas Bates as an Uploader following email discussion with Dirk
