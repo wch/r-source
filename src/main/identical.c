@@ -42,153 +42,157 @@ static Rboolean neWithNaN(double x,  double y);
 SEXP do_identical(SEXP x, SEXP y)
 {
 
-  SEXP ans;
+    SEXP ans;
 
-  PROTECT(ans = allocVector(LGLSXP, 1));
+    PROTECT(ans = allocVector(LGLSXP, 1));
 
-  LOGICAL(ans)[0] = compute_identical(x, y);
-  UNPROTECT(1);
-  return(ans);
+    LOGICAL(ans)[0] = compute_identical(x, y);
+    UNPROTECT(1);
+    return(ans);
 }
 
 /* primitive interface */
 
 SEXP do_ident(SEXP call,  SEXP op,  SEXP args, SEXP env)
 {
-  /* needs some more includes, but Defn.h produces compile errors.
+    /* needs some more includes, but Defn.h produces compile errors.
      When that's figured out, add
      checkArity(op, args);
   */
-  return do_identical(CAR(args), CADR(args));
+    return do_identical(CAR(args), CADR(args));
 
 }
 
 /* do the two objects compute as identical? */
 static Rboolean compute_identical(SEXP x, SEXP y)
 {
-  if(x == y)
-    return(TRUE);
-  if(TYPEOF(x) != TYPEOF(y))
-    return(FALSE);
-  if(ATTRIB(x) != R_NilValue || ATTRIB(y) != R_NilValue) {
-    if(!compute_identical(ATTRIB(x),ATTRIB(y)))
-      return(FALSE);
-  }
-  switch (TYPEOF(x)) {
-  case NILSXP:
-    return(TRUE);
-  case LGLSXP:
+    if(x == y)
+	return TRUE;
+    if(TYPEOF(x) != TYPEOF(y))
+	return FALSE;
+    if(OBJECT(x) != OBJECT(y))
+	return FALSE;
+    if(ATTRIB(x) != R_NilValue || ATTRIB(y) != R_NilValue) {
+	if(ATTRIB(x) == R_NilValue || ATTRIB(y) == R_NilValue)
+	    return FALSE;
+	if(!compute_identical(ATTRIB(x),ATTRIB(y)))
+	    return FALSE;
+    }
+    switch (TYPEOF(x)) {
+    case NILSXP:
+	return TRUE;
+    case LGLSXP:
 #ifdef HAVE_MEMCMP
-    return(MEMCMP(x, y, sizeof(int)));
+	return(MEMCMP(x, y, sizeof(int)));
 #else
-    {
-      int *xp = LOGICAL(x), *yp = LOGICAL(y);
-      long i, n = length(x);
-      if(n != length(y)) return(FALSE);
-      for(i=0; i<n; i++)
-	if(xp[i] != yp[i]) return(FALSE);
-      return(TRUE);
-    }
+	{
+	    int *xp = LOGICAL(x), *yp = LOGICAL(y);
+	    long i, n = length(x);
+	    if(n != length(y)) return FALSE;
+	    for(i=0; i<n; i++)
+		if(xp[i] != yp[i]) return FALSE;
+	    return TRUE;
+	}
 #endif
-  case INTSXP:
+    case INTSXP:
 #ifdef HAVE_MEMCMP
-    return(MEMCMP(x, y, sizeof(int)));
+	return(MEMCMP(x, y, sizeof(int)));
 #else
-    {
-      int *xp = INTEGER(x), *yp = INTEGER(y);
-      long i, n = length(x);
-      if(n != length(y)) return(FALSE);
-      for(i=0; i<n; i++)
-	if(xp[i] != yp[i]) return(FALSE);
-      return(TRUE);
-    }
+	{
+	    int *xp = INTEGER(x), *yp = INTEGER(y);
+	    long i, n = length(x);
+	    if(n != length(y)) return FALSE;
+	    for(i=0; i<n; i++)
+		if(xp[i] != yp[i]) return FALSE;
+	    return TRUE;
+	}
 #endif
-  case REALSXP:
+    case REALSXP:
 #ifdef HAVE_MEMCMP
-    return(MEMCMP(x, y, sizeof(double)));
+	return(MEMCMP(x, y, sizeof(double)));
 #else
-    {
-      double *xp = REAL(x), *yp = REAL(y);
-      long i, n = length(x);
-      if(n != length(y)) return(FALSE);
-      for(i=0; i<n; i++)
-	if(neWithNaN(xp[i], yp[i])) return(FALSE);
-      return(TRUE);
-    }
+	{
+	    double *xp = REAL(x), *yp = REAL(y);
+	    long i, n = length(x);
+	    if(n != length(y)) return FALSE;
+	    for(i=0; i<n; i++)
+		if(neWithNaN(xp[i], yp[i])) return FALSE;
+	    return TRUE;
+	}
 #endif
-  case CPLXSXP:
+    case CPLXSXP:
 #ifdef HAVE_MEMCMP
-    return(MEMCMP(x, y, sizeof(Rcomplex)));
+	return(MEMCMP(x, y, sizeof(Rcomplex)));
 #else
-    {
-      Rcomplex *xp = COMPLEX(x), *yp = COMPLEX(y);
-      long i, n = length(x);
-      if(n != length(y)) return(FALSE);
-      for(i=0; i<n; i++)
-	if(neWithNaN(xp[i].r,  yp[i].r) ||
-	   neWithNaN(xp[i].i,  yp[i].i))
-		    return(FALSE);
-      return(TRUE);
-    }
+	{
+	    Rcomplex *xp = COMPLEX(x), *yp = COMPLEX(y);
+	    long i, n = length(x);
+	    if(n != length(y)) return FALSE;
+	    for(i=0; i<n; i++)
+		if(neWithNaN(xp[i].r,  yp[i].r) ||
+		   neWithNaN(xp[i].i,  yp[i].i))
+		    return FALSE;
+	    return TRUE;
+	}
 #endif
-  case STRSXP:
+    case STRSXP:
     {
-      long i, n = length(x);
-      if(n != length(y)) return(FALSE);
-      for(i=0; i<n; i++)
-	if(strcmp(CHAR(STRING_ELT(x, i)),
-		  CHAR(STRING_ELT(y, i))) != 0)
-		    return(FALSE);
-      return(TRUE);
+	long i, n = length(x);
+	if(n != length(y)) return FALSE;
+	for(i=0; i<n; i++)
+	    if(strcmp(CHAR(STRING_ELT(x, i)),
+		      CHAR(STRING_ELT(y, i))) != 0)
+		return FALSE;
+	return TRUE;
     }
-  case VECSXP:
-  case EXPRSXP: {
-    long i, n;
-    n = length(x);
-    if(n != length(y))
-      return(FALSE);
-    for(i=0; i<n; i++)
-      if(!compute_identical(VECTOR_ELT(x, i),VECTOR_ELT(y, i)))
-	return(FALSE);
-    return(TRUE);
-  }
-  case LANGSXP:
-  case LISTSXP: {
-    while (x != R_NilValue) {
-      if(y == R_NilValue)
-	return(FALSE);
-      if(!compute_identical(CAR(x), CAR(y)))
-	return(FALSE);
-      x = CDR(x);
-      y = CDR(y);
+    case VECSXP:
+    case EXPRSXP: {
+	long i, n;
+	n = length(x);
+	if(n != length(y))
+	    return FALSE;
+	for(i=0; i<n; i++)
+	    if(!compute_identical(VECTOR_ELT(x, i),VECTOR_ELT(y, i)))
+		return FALSE;
+	return TRUE;
     }
-    return(y == R_NilValue);
-  }
-  case CLOSXP:
-    return(compute_identical(FORMALS(x), FORMALS(y)) &&
-	   compute_identical(BODY(x), BODY(y)) &&
-	   CLOENV(x) == CLOENV(y) ? TRUE : FALSE);
-  case SPECIALSXP:
-  case BUILTINSXP:
-    return(PRIMOFFSET(x) == PRIMOFFSET(y) ? TRUE : FALSE);
-  case ENVSXP:
-  case SYMSXP:
-  case EXTPTRSXP:
-  case WEAKREFSXP:
-    return(x == y ? TRUE : FALSE);
-    /*  case PROMSXP: */
-    /* test for equality of the substituted expression -- or should
-       we require both expression and environment to be identical? */
-    /*#define PREXPR(x)	((x)->u.promsxp.expr)
-    #define PRENV(x)	((x)->u.promsxp.env)
-        return(compute_identical(subsititute(PREXPR(x), PRENV(x)),
-    			     subsititute(PREXPR(y), PRENV(y))));*/
-  default:
-    /* these are all supposed to be types that represent constant
-       entities, so no further testing required ?? */
-    printf("Unknown Type: %s(%x)\n", /*type2str(TYPEOF(x))*/"",TYPEOF(x));
-    return(TRUE);
-  }
+    case LANGSXP:
+    case LISTSXP: {
+	while (x != R_NilValue) {
+	    if(y == R_NilValue)
+		return FALSE;
+	    if(!compute_identical(CAR(x), CAR(y)))
+		return FALSE;
+	    x = CDR(x);
+	    y = CDR(y);
+	}
+	return(y == R_NilValue);
+    }
+    case CLOSXP:
+	return(compute_identical(FORMALS(x), FORMALS(y)) &&
+	       compute_identical(BODY(x), BODY(y)) &&
+	       CLOENV(x) == CLOENV(y) ? TRUE : FALSE);
+    case SPECIALSXP:
+    case BUILTINSXP:
+	return(PRIMOFFSET(x) == PRIMOFFSET(y) ? TRUE : FALSE);
+    case ENVSXP:
+    case SYMSXP:
+    case EXTPTRSXP:
+    case WEAKREFSXP:
+	return(x == y ? TRUE : FALSE);
+	/*  case PROMSXP: */
+	/* test for equality of the substituted expression -- or should
+	   we require both expression and environment to be identical? */
+	/*#define PREXPR(x)	((x)->u.promsxp.expr)
+	  #define PRENV(x)	((x)->u.promsxp.env)
+	  return(compute_identical(subsititute(PREXPR(x), PRENV(x)),
+	  subsititute(PREXPR(y), PRENV(y))));*/
+    default:
+	/* these are all supposed to be types that represent constant
+	   entities, so no further testing required ?? */
+	printf("Unknown Type: %s(%x)\n", /*type2str(TYPEOF(x))*/"",TYPEOF(x));
+	return TRUE;
+    }
 }
 
 /* return TRUE if x and y differ, including the case
@@ -198,7 +202,7 @@ static Rboolean compute_identical(SEXP x, SEXP y)
 
 static Rboolean neWithNaN(double x,  double y)
 {
-  if(ISNAN(x))
-    return(ISNAN(y) ? FALSE : TRUE);
-  return(x != y);
+    if(ISNAN(x))
+	return(ISNAN(y) ? FALSE : TRUE);
+    return(x != y);
 }
