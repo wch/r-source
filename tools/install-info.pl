@@ -1,5 +1,3 @@
-#! @PERL@ --
-
 # fixme: --dirfile option
 # fixme: sort entries
 # fixme: send to FSF ?

@@ -1,5 +1,3 @@
-#! @PERL@
-
 use File::Basename;
 use Getopt::Long;
 

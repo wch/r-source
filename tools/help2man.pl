@@ -1,5 +1,3 @@
-#! @PERL@ -w
-
 # Generate a short man page from --help and --version output.
 # Copyright © 1997, 98, 99 Free Software Foundation, Inc.
 
