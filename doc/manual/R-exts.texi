@@ -65,18 +65,18 @@ The current version of this document is @value{VERSION}.
 @end ifnottex
 
 @menu
-* Acknowledgements::
-* Creating R packages::
-* Writing R documentation files::
-* Tidying and profiling R code::
-* System and foreign language interfaces::
-* The R API::
-* Generic functions and methods::
-* Linking GUIs and other front-ends to R::
-* R (internal) programming miscellanea::
-* R coding standards::
-* Function and variable index::
-* Concept index::
+* Acknowledgements::            
+* Creating R packages::         
+* Writing R documentation files::  
+* Tidying and profiling R code::  
+* System and foreign language interfaces::  
+* The R API::                   
+* Generic functions and methods::  
+* Linking GUIs and other front-ends to R::  
+* R (internal) programming miscellanea::  
+* R coding standards::          
+* Function and variable index::  
+* Concept index::               
 @end menu
 
 @node Acknowledgements, Creating R packages, Top, Top
@@ -118,12 +118,12 @@ please see the file
 installation) for the tools that you need to have installed.
 
 @menu
-* Package structure::
-* Configure and cleanup::
-* Checking and building packages::
-* Writing package vignettes::
-* Submitting a package to CRAN::
-* Package name spaces::
+* Package structure::           
+* Configure and cleanup::       
+* Checking and building packages::  
+* Writing package vignettes::   
+* Submitting a package to CRAN::  
+* Package name spaces::         
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -182,11 +182,11 @@ The @R{} function @code{package.skeleton} can help to create the
 structure for a new package: see its help page for details.
 
 @menu
-* The DESCRIPTION file::
-* The INDEX file::
-* The install.R and R_PROFILE.R files::
-* Package subdirectories::
-* Package bundles::
+* The DESCRIPTION file::        
+* The INDEX file::              
+* The install.R and R_PROFILE.R files::  
+* Package subdirectories::      
+* Package bundles::             
 @end menu
 
 @node The DESCRIPTION file, The INDEX file, Package structure, Package structure
@@ -293,13 +293,16 @@ wants to execute the examples: it is nice to have @pkg{bar}, but not
 necessary.  The general rules are
 
 @itemize @bullet
-@item Packages whose namespace only is needed to load the package
+@item
+Packages whose namespace only is needed to load the package
 using @code{library(@var{pkgname})} must be listed in the @samp{Imports}
 field.
-@item Packages that need to attached to successfully load the package
+@item
+Packages that need to attached to successfully load the package
 using @code{library(@var{pkgname})} must be listed in the @samp{Depends}
 field.
-@item All packages that are needed to successfully run @code{R CMD
+@item 
+All packages that are needed to successfully run @code{R CMD
 check} on the package must be listed in one of @samp{Depends} or
 @samp{Suggests} or @samp{Imports}.
 @end itemize
@@ -745,7 +748,7 @@ installed is available from the shell variable @env{R_PACKAGE_NAME}.
 
 
 @menu
-* Using Makevars::
+* Using Makevars::              
 @end menu
 
 @node Using Makevars,  , Configure and cleanup, Configure and cleanup
@@ -1140,12 +1143,12 @@ analysis and compilation tools to accurately identify the definition
 corresponding to a global variable reference in a function body.
 
 @menu
-* Specifying imports and exports::
-* Registering S3 methods::
-* Load hooks::
-* An example::
-* Summary -- converting an existing package::
-* Name spaces with formal classes and methods::
+* Specifying imports and exports::  
+* Registering S3 methods::      
+* Load hooks::                  
+* An example::                  
+* Summary -- converting an existing package::  
+* Name spaces with formal classes and methods::  
 @end menu
 
 
@@ -1461,16 +1464,16 @@ respectively.
 @cindex Documentation, writing
 
 @menu
-* Rd format::
-* Sectioning::
-* Marking text::
-* Lists and tables::
-* Cross-references::
-* Mathematics::
-* Insertions::
-* Indices::
-* Platform-specific sections::
-* Processing Rd format::
+* Rd format::                   
+* Sectioning::                  
+* Marking text::                
+* Lists and tables::            
+* Cross-references::            
+* Mathematics::                 
+* Insertions::                  
+* Indices::                     
+* Platform-specific sections::  
+* Processing Rd format::        
 @end menu
 
 @node Rd format, Sectioning, Writing R documentation files, Writing R documentation files
@@ -1542,9 +1545,9 @@ files''} for guidelines for writing documentation in Rd format which
 should be useful for package writers.
 
 @menu
-* Documenting functions::
-* Documenting data sets::
-* Documenting S4 classes and methods::
+* Documenting functions::       
+* Documenting data sets::       
+* Documenting S4 classes and methods::  
 @end menu
 
 @node Documenting functions, Documenting data sets, Rd format, Rd format
@@ -2324,8 +2327,8 @@ distribution for installing source packages to be installed.)
 @chapter Tidying and profiling R code
 
 @menu
-* Tidying R code::
-* Profiling R code::
+* Tidying R code::              
+* Profiling R code::            
 @end menu
 
 @R{} code which is worth preserving in a package and perhaps making
@@ -2517,17 +2520,17 @@ with a profiling run without a preceding call to @code{gc}.
 @chapter System and foreign language interfaces
 
 @menu
-* Operating system access::
-* Interface functions .C and .Fortran::
-* dyn.load and dyn.unload::
-* Registering native routines::
-* Creating shared objects::
-* Interfacing C++ code::
-* Handling R objects in C::
-* Interface functions .Call and .External::
-* Evaluating R expressions from C::
-* Parsing R code from C::
-* Debugging::
+* Operating system access::     
+* Interface functions .C and .Fortran::  
+* dyn.load and dyn.unload::     
+* Registering native routines::  
+* Creating shared objects::     
+* Interfacing C++ code::        
+* Handling R objects in C::     
+* Interface functions .Call and .External::  
+* Evaluating R expressions from C::  
+* Parsing R code from C::       
+* Debugging::                   
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -3251,14 +3254,14 @@ needed.  As in interpreted @R{} code, much use is made of coercion to
 force the variant object to the right type.
 
 @menu
-* Garbage Collection::
-* Allocating storage::
-* Details of R types::
-* Attributes::
-* Classes::
-* Handling lists::
-* Finding and setting variables::
-* Named objects and copying::
+* Garbage Collection::          
+* Allocating storage::          
+* Details of R types::          
+* Attributes::                  
+* Classes::                     
+* Handling lists::              
+* Finding and setting variables::  
+* Named objects and copying::   
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -3856,9 +3859,9 @@ based on the interface of the same name in @Sl{} version 4, and
 complex but allows a variable number of arguments.
 
 @menu
-* Calling .Call::
-* Calling .External::
-* Missing and special values::
+* Calling .Call::               
+* Calling .External::           
+* Missing and special values::  
 @end menu
 
 @node Calling .Call, Calling .External, Interface functions .Call and .External, Interface functions .Call and .External
@@ -4252,8 +4255,8 @@ called) and two argument values, the first unnamed and the second named.
 Setting the type makes this a call which can be evaluated.
 
 @menu
-* Zero-finding::
-* Calculating numerical derivatives::
+* Zero-finding::                
+* Calculating numerical derivatives::  
 @end menu
 
 @node Zero-finding, Calculating numerical derivatives, Evaluating R expressions from C, Evaluating R expressions from C
@@ -4620,8 +4623,8 @@ compiled code loaded into @R{}.  Some ``tricks'' are worth knowing.
 
 
 @menu
-* Finding entry points::
-* Inspecting R objects::
+* Finding entry points::        
+* Inspecting R objects::        
 @end menu
 
 @node Finding entry points, Inspecting R objects, Debugging, Debugging
@@ -4797,20 +4800,20 @@ $7 = 5
 @chapter The R @acronym{API}: entry points for C code
 
 @menu
-* Memory allocation::
-* Error handling::
-* Random numbers::
-* Missing and IEEE values::
-* Printing::
-* Calling C from FORTRAN and vice versa::
-* Numerical analysis subroutines::
-* Optimization::
-* Integration::
-* Utility functions::
-* Allowing interrupts::
-* Platform and version information::
-* Inlining C functions::
-* Standalone Mathlib::
+* Memory allocation::           
+* Error handling::              
+* Random numbers::              
+* Missing and IEEE values::     
+* Printing::                    
+* Calling C from FORTRAN and vice versa::  
+* Numerical analysis subroutines::  
+* Optimization::                
+* Integration::                 
+* Utility functions::           
+* Allowing interrupts::         
+* Platform and version information::  
+* Inlining C functions::        
+* Standalone Mathlib::          
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
@@ -4862,8 +4865,8 @@ be eliminated by defining @code{R_NO_REMAP} and prepending @code{Rf_} to
 @cindex Memory allocation from C
 
 @menu
-* Transient::
-* User-controlled::
+* Transient::                   
+* User-controlled::             
 @end menu
 
 There are two types of memory allocation available to the C programmer,
@@ -5000,7 +5003,7 @@ the last two being the forms available in all @Sl{} versions.  Here
 or a format string followed by arguments separated by commas.
 
 @menu
-* Error handling from FORTRAN::
+* Error handling from FORTRAN::  
 @end menu
 
 @node Error handling from FORTRAN,  , Error handling, Error handling
@@ -5141,7 +5144,7 @@ output stream.  Functions @code{Rvprintf} and @code{REvprintf} are
 analogues using the @code{vprintf} interface.
 
 @menu
-* Printing from FORTRAN::
+* Printing from FORTRAN::       
 @end menu
 
 @node Printing from FORTRAN,  , Printing, Printing
@@ -5262,10 +5265,10 @@ C interfaces to the code behind @R{} functions, so the @R{} function
 documentation may give further details.
 
 @menu
-* Distribution functions::
-* Mathematical functions::
-* Utilities::
-* Mathematical constants::
+* Distribution functions::      
+* Mathematical functions::      
+* Utilities::                   
+* Mathematical constants::      
 @end menu
 
 @node Distribution functions, Mathematical functions, Numerical analysis subroutines, Numerical analysis subroutines
@@ -6097,7 +6100,7 @@ Here there might be justifiable exceptions, which will need careful
 documentation.
 
 @menu
-* Adding new generics::
+* Adding new generics::         
 @end menu
 
 @node Adding new generics,  , Generic functions and methods, Generic functions and methods
@@ -6149,17 +6152,308 @@ foo.default <- base::foo
 @node Linking GUIs and other front-ends to R, R (internal) programming miscellanea, Generic functions and methods, Top
 @chapter Linking GUIs and other front-ends to R
 
-The chapter is currently for Unix-like operating systems and does not
-cover Windows.
+@menu
+* Embedding R under Unix-alikes::  
+* Embedding R under Windows::   
+@end menu
 
+@node Embedding R under Unix-alikes, Embedding R under Windows, Linking GUIs and other front-ends to R, Linking GUIs and other front-ends to R
+@section Embedding R under Unix-alikes
+
+@R{} can be built as a shared library@footnote{In the parlance of MacOS
+X this is a @emph{dynamic} library, and is the normal way to build R on
+that platform.} if configured with @option{--enable-R-shared}.  This
+shared library can be used to run @R{} from alternative front-end
+programs.  We will assume this has been done for the rest of this
+chapter.
+
+The command-line @R{} front-end, @file{R_HOME/bin/exec/R} is one such
+example, and the unbundled @acronym{GNOME} and MacOS X consoles are
+others.  The source for @file{R_HOME/bin/exec/R} is in file
+@file{src/main/Rmain.c} and is very simple
+
+@smallexample
+int Rf_initialize_R(int ac, char **av); /* in ../unix/system.c */
+
+int main(int ac, char **av)
+@{
+    Rf_initialize_R(ac, av);
+
+    Rf_mainloop();
+    /*++++++  in main.c */
+    return 0;
+@}
+@end smallexample
+
+@noindent
+indeed, misleadingly simple.  Remember that @file{R_HOME/bin/exec/R} is
+run from a shell script @file{R_HOME/bin/R} which sets up the
+environment for the executable, and this is used for
+
+@itemize @bullet
+@item
+Setting @env{R_HOME} and checking it is valid.
+
+@item
+Setting @env{LD_LIBRARY_PATH} to include the directories used in
+linking @R{}.  This is encoded as the default setting of
+@env{R_LD_LIBRARY_PATH} in the shell script.
+
+@item
+Creating the per-session temporary directory used by @code{tempdir()},
+exported as the environment variable @env{R_SESSION_TMPDIR}.
+
+@item
+Processing some of the arguments, for example to run @R{} under a
+debugger and to launch alternative front-ends to provide GUIs.
+@end itemize
+
+@noindent
+The first two of these can be achieved for your front-end by running it
+@emph{via} @command{R CMD}, and the third is optional, for if
+@env{R_SESSION_TMPDIR} is not set, the @R{} startup code will create a
+suitable per-session directory. So, for example
+
+@example
+R CMD /usr/local/lib/R/bin/exec/R
+R CMD exec/R
+@end example
+
+@noindent
+will both work in a standard @R{} installation. (@command{R CMD} looks
+first for executables in @file{R_HOME/bin}.)  If you do not want to run
+your front-end in this way, you need to ensure that @env{R_HOME} is set
+and @env{LD_LIBRARY_PATH} is suitable.  (The latter might well be, but
+modern Unix/Linux systems do not normally include @file{/usr/local/lib},
+and @R{} does look there for system components.)
+
+The other senses in which this example is too simple are that all the
+internal defaults are used and that control is handed over to the
+@R{} mainloop.  There are a number of small examples@footnote{but these
+are not part of the automated test procedures and so little tested.} in the
+@file{tests/Embedding} directory.  These make use of
+@code{Rf_initEmbeddedR} in @file{src/main/Rembedded.c}, and essentially
+use
+@smallexample
+int Rf_initEmbeddedR(int argc, char **argv)
+@{ /* This is already compiled into R */
+    Rf_initialize_R(argc, argv);
+    setup_Rmainloop();
+    return(1);
+@}
+
+int main(int ac, char **av)
+@{
+    /* do some setup */
+    Rf_initEmbeddedR(argc, argv);
+    /* do some more setup */
+
+    /* submit some code to R, which is done interactively via
+        run_Rmainloop();
+     */
+    end_Rmainloop();
+    return 0;
+@}
+@end smallexample
+
+@noindent
+If you don't want to pass @R{} arguments, you can fake an @code{argv}
+array, for example by
+
+@smallexample
+    char *argv[]= @{"REmbeddedPostgres", "--gui=none", "--silent"@};
+    Rf_initEmbeddedR(sizeof(argv)/sizeof(argv[0]), argv);
+@end smallexample
+
+However, to make a GUI we do want to run @code{run_Rmainloop} after
+setting up various parts of @R{} to talk to our GUI, and arranging for
+our GUI callbacks to be called during the @R{} mainloop.
+
+@menu
+* Setting R callbacks::         
+* Meshing event loops::         
+@end menu
+
+@node Setting R callbacks, Meshing event loops, Embedding R under Unix-alikes, Embedding R under Unix-alikes
+@subsection Setting R callbacks
+
+As from @R{} version 2.1.0 there is a public header file
+@file{Rinterface.h} that makes it possible to change the standard
+callbacks used by @R{} in a documented way.  This defines pointers (if
+@code{R_INTERFACE_PTRS} is defined)
+
+@smallexample
+extern void (*ptr_R_Suicide)(char *);
+extern void (*ptr_R_ShowMessage)(char *);
+extern int  (*ptr_R_ReadConsole)(char *, unsigned char *, int, int);
+extern void (*ptr_R_WriteConsole)(char *, int);
+extern void (*ptr_R_ResetConsole)();
+extern void (*ptr_R_FlushConsole)();
+extern void (*ptr_R_ClearerrConsole)();
+extern void (*ptr_R_Busy)(int);
+extern void (*ptr_R_CleanUp)(SA_TYPE, int, int);
+extern int  (*ptr_R_ShowFiles)(int, char **, char **, char *, Rboolean, char *);
+extern int  (*ptr_R_ChooseFile)(int, char *, int);
+extern int  (*ptr_R_EditFile)(char *);
+extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
+extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
+@end smallexample
+
+@noindent
+which allow standard @R{} callbacks to be redirected to your GUI.
+What these do is generally documented in the file @file{src/unix/system.txt}.
+
+@deftypefun void R_ShowMessage (char *message)
+This should display the message, which may have multiple lines:
+it should be brought to the user's attention immediately.
+@end deftypefun
+
+@deftypefun void R_Busy (int which)
+This function invokes actions (such as change of cursor) when
+@R{} embarks on an extended computation (@code{which=1}) and when such a
+state terminates (@code{which=0}).
+@end deftypefun
+
+@deftypefun int R_ReadConsole (char *prompt, char *buf, int buflen, int hist)
+@deftypefunx void R_WriteConsole (char *buf, int buflen)
+@deftypefunx void R_ResetConsole ()
+@deftypefunx void R_FlushConsole ()
+@deftypefunx void R_ClearErrConsole ()
+
+These functions interact with a console.  
+
+@code{R_ReadConsole} prints the given prompt at the console and then
+does a @code{gets(3)}--like operation, transferring up to "buflen"
+characters into the buffer @code{"buf"}. The last two characters should
+be set to @code{"\n\0"} to preserve sanity.  If @code{"hist"} is
+non-zero, then the line is added to any command history which is being
+maintained.  The return value is 0 on success and >0 on failure.
+
+@code{R_WriteConsole} writes the given buffer to the console.
+
+@code{R_ResetConsole} is called when the system is reset after an error.
+@code{R_FlushConsole} is called to flush any pending output to the
+system console.
+@code{R_ClearerrConsole} clears any errors associated with reading from the
+console.
+@end deftypefun
+
+
+@deftypefun void R_ShowFiles (int nfile, char **file, char **headers, char *wtitle, Rboolean del, char *pager)
+
+This function is used to display the contents of files.
+@end deftypefun
+
+@deftypefun int R_ChooseFile (int new, char *buf, int len)
+
+Choose a file and return its name in @code{buf} of length @code{len}.
+Return value is 0 for success, > 0 otherwise.
+@end deftypefun
+
+@deftypefun int R_EditFile (char *buf)
+Send a file to an editor window.
+@end deftypefun
+
+@deftypefun SEXP R_loadhistory (SEXP, SEXP, SEXP, SEXP);
+@deftypefunx SEXP R_savehistory (SEXP, SEXP, SEXP, SEXP);
+
+@code{.Internal} functions for @code{loadhistory} and
+@code{savehistory}: these are called after checking the number of
+arguments.  If the console has no history these can be as simple as
+@smallexample
+SEXP R_loadhistory (SEXP call, SEXP op , SEXP args, SEXP env)
+@{
+    errorcall(call, "loadhistory is not implemented");
+    return R_NilValue;
+@}
+SEXP R_savehistory (SEXP call, SEXP op , SEXP args, SEXP env)
+@{
+    errorcall(call, "savehistory is not implemented");
+    return R_NilValue;
+@}
+@end smallexample
+@end deftypefun
+
+@deftypefun void R_Suicide (char *message)
+This should abort @R{} as rapidly as possible, displaying the message.
+A possible implementation is
+@smallexample
+void R_Suicide (char *message)
+@{
+    char  pp[1024];
+    snprintf(pp, 1024, "Fatal error: %s\n", s);
+    R_ShowMessage(pp);
+    R_CleanUp(SA_SUICIDE, 2, 0);
+@}
+@end smallexample
+@end deftypefun
+
+@deftypefun void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
+
+This function invokes any actions which occur at system termination.
+It needs to be quite complex:
+@smallexample
+#include <Rinterface.h>
+#include <Rdevices.h>    /* for KillAllDevices */
+
+void R_CleanUp (SA_TYPE saveact, int status, int RunLast)
+@{
+    char *tmpdir;
+
+    if(saveact == SA_DEFAULT) saveact = SaveAction;
+    if(saveact == SA_SAVEASK) @{ 
+       /* ask what to do and set saveact */
+    @}
+    switch (saveact) @{
+    case SA_SAVE:
+        if(runLast) R_dot_Last();
+        if(R_DirtyImage) R_SaveGlobalEnv();
+        /* save the console history in R_HistoryFile */
+        break;
+    case SA_NOSAVE:
+        if(runLast) R_dot_Last();
+        break;
+    case SA_SUICIDE:
+    default:
+        break;
+    @}
+
+    R_RunExitFinalizers();
+    /* clean up after the editor e.g. CleanEd() */
+
+    if((tmpdir = getenv("R_SESSION_TMPDIR"))) @{
+        char buf[1024]
+        snprintf((char *)buf, 1024, "rm -rf %s", tmpdir);
+        R_system((char *)buf);
+    @}
+
+    /* close all the graphics devices */
+    if(saveact != SA_SUICIDE) KillAllDevices();
+    fpu_setup(FALSE);
+
+    exit(status);    
+@}
+@end smallexample
+@end deftypefun
+
+
+@node Meshing event loops,  , Setting R callbacks, Embedding R under Unix-alikes
+@subsection Meshing event loops
+
+[To be written!]
+
+@node Embedding R under Windows,  , Embedding R under Unix-alikes, Linking GUIs and other front-ends to R
+@section Embedding R under Windows
+
+[To be written!]
 
 
 @node R (internal) programming miscellanea, R coding standards, Linking GUIs and other front-ends to R, Top
 @appendix R (internal) programming miscellanea
 
 @menu
-* .Internal and .Primitive::
-* Testing R code::
+* .Internal and .Primitive::    
+* Testing R code::              
 @end menu
 
 @node .Internal and .Primitive, Testing R code, R (internal) programming miscellanea, R (internal) programming miscellanea
