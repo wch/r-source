@@ -28,8 +28,8 @@ fixh: $(wildcard ./h/*.h)  ../../appl/ROUTINES
 	$(SED) -e $(SED0) -e $(SED01) -e $(SED3) -e $(SED4) ../../appl/ROUTINES > ../../include/FFTab.h
 	$(ECHO) done > fixh
 
-fixbin: $(wildcard ./bin/*)
-	$(CP) -p bin/* ../../../bin
+fixbin: $(filter-out ./bin/CVS,$(wildcard ./bin/*))
+	$(CP) -p  $^ ../../../bin
 	$(ECHO) done > fixbin
 
 
