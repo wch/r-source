@@ -74,7 +74,7 @@ datafiles:
 help:
 	@for pkg in $(PACKAGES); do \
 	  PERL5LIB=$(RHOME)/share/perl perl build-help -txt -html -example -latex ../library/$${pkg} $(RHOME)/library; \
-	  perl ../gnuwin32/help/Rd2contents ../library/$${pkg} \
+	  perl Rd2contents ../library/$${pkg} \
            $(RHOME)/library/$${pkg}/CONTENTS; \
 	done
 	cat $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
