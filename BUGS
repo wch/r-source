@@ -412,3 +412,11 @@ Date: 18 Sep 1999 11:44:26 +0200
 Subject: hsv strangeness
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 18 Sep 1999 21:07:50 +0200
+* PR# 284 *
+Subject: quasi-likelihood in glm
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Wed, 22 Sep 1999 10:33:33 +0200 (CEST)
+* PR# 285 *
+Subject: model.matrix()
+From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
+Date: Wed, 22 Sep 1999 11:32:04 +0100 (BST)
