@@ -57,19 +57,29 @@
 
 /* The glibc in RH8.0 is broken and assumes that dates before 1970-01-01
    do not exist. So does Windows, but at least there we do not need a
-   run-time test */
-
-#if defined(__GLIBC__) && defined(__GLIBC_MINOR__) && __GLIBC__ >= 2 && __GLIBC_MINOR__ >= 2
-#include <gnu/libc-version.h>
-#endif
-
+   run-time test.  As from 1.6.2, test the actual mktime code and cache the
+   result on glibc >= 2.2. (It seems this started between 2.2.5 and 2.3,
+   and RH8.0 has an unreleased version in that gap.)
+*/
 
 static Rboolean have_broken_mktime(void)
 {
 #ifdef Win32
     return TRUE;
 #elif defined(__GLIBC__) && defined(__GLIBC_MINOR__) && __GLIBC__ >= 2 && __GLIBC_MINOR__ >= 2
-    return strcmp(gnu_get_libc_version(), "2.2.4") > 0;
+    static int test_result = -1;
+    
+    if (test_result == -1) {
+	struct tm t;
+	time_t res;
+	t.tm_sec = t.tm_min = t.tm_hour = 0;
+	t.tm_mday = t.tm_mon = 1;
+	t.tm_year = 68;
+	t.tm_isdst = -1;
+	res = mktime(&t);
+	test_result = (res == (time_t)-1);
+    }
+    return test_result > 0;
 #else
     return FALSE;
 #endif
