@@ -265,6 +265,10 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
+* PR# 926 *
+Subject: Rgui crash
+From: bellis@hsph.harvard.edu
+Date: Sun, 29 Apr 2001 20:45:15 +0200 (MET DST)
 * PR# 925 *
 Subject: modulus operator gets syntax error
 From: znmeb@aracnet.com
