@@ -85,6 +85,8 @@ NEW FEATURES
     o	New function ftable() for creating and manipulating flat
 	contingency tables.
 
+    o   New function cutree() fur cutting hclust trees in package mva.
+
 
 BUG FIXES
 
