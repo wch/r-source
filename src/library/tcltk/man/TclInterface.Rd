@@ -1,4 +1,4 @@
-\name{Tcl-interface}
+\name{TclInterface}
 \title{Low-level Tcl/Tk Interface}
 %
 \alias{.Tcl}
@@ -94,8 +94,8 @@ tclvar$name <- value
 \note{ Strings containing unbalanced braces are currently not handled
   well in many circumstances.
 }
-\seealso{\code{\link{Tk-widgets}}, \code{\link{Tk-commands},
-    \code{\link{Tk-widgetcmd}} 
+\seealso{\code{\link{TkWidgets}}, \code{\link{TkCommands},
+    \code{\link{TkWidgetcmds}} 
 }
 \examples{
 \dontrun{

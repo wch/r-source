@@ -1,4 +1,4 @@
-\name{Tk-widgets}
+\name{TkWidgets}
 \title{Tk widgets}
 \description{
   Create Tk widgets and associated \R objects.
@@ -50,8 +50,8 @@ tktoplevel(parent=.TkRoot, ...)
   It is not possible to describe the widgets and their arguments in
   full.  Please refer to the Tcl/Tk documentation.
 }
-\seealso{\code{\link{Tcl-interface}}, \code{\link{Tk-commands}},
-  \code{\link{Tk-widgetcmd}}}
+\seealso{\code{\link{TclInterface}}, \code{\link{TkCommands}},
+  \code{\link{TkWidgetcmds}}}
 
 \examples{
 \dontrun{

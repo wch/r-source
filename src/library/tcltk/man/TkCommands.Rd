@@ -1,4 +1,4 @@
-\name{Tk-commands}
+\name{TkCommands}
 \alias{tkcmd}
 \alias{tktitle}
 \alias{"tktitle<-"}
@@ -215,8 +215,8 @@ tkplace.slaves(...)
   \code{pack configure} are converted to function names like
   \code{tkpack.configure}. 
 }
-\seealso{\code{\link{Tcl-interface}}, \code{\link{Tk-widgets}},
-  \code{\link{Tk-widgetcmd}}}
+\seealso{\code{\link{TclInterface}}, \code{\link{TkWidgets}},
+  \code{\link{TkWidgetcmds}}}
 
 \examples{
 \dontrun{

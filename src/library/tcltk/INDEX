@@ -1,4 +1,4 @@
-Tcl-interface            Low-level Tcl/Tk Interface
-Tk-commands              Tk non-widget commands
-Tk-widgetcmd             Tk widget commands
-Tk-widgets               Tk widgets
+TclInterface             Low-level Tcl/Tk Interface
+TkCommands               Tk non-widget commands
+TkWidgetcmds             Tk widget commands
+TkWidgets                Tk widgets

@@ -1,4 +1,4 @@
-\name{Tk-widgetcmd}
+\name{TkWidgetcmds}
 \alias{tkactivate}
 \alias{tkadd}
 \alias{tkbbox}
@@ -177,8 +177,8 @@ tkyview.scroll(widget, ...)
   \code{.a.b selection clear} are converted to function names like
   \code{tkpack.configure} and the widget is given as the first argument. 
 }
-\seealso{\code{\link{Tcl-interface}}, \code{\link{Tk-widgets}},
-  \code{\link{Tk-commands}}} 
+\seealso{\code{\link{TclInterface}}, \code{\link{TkWidgets}},
+  \code{\link{TkCommands}}} 
 
 \examples{
 \dontrun{
