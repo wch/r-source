@@ -1215,7 +1215,8 @@ libraries with the exception of the ATLAS BLAS libraries.
 It seems that @samp{gcc 3.4.0} on @samp{ix86} Linux defeats attempts by
 the LAPACK code to avoid computations entirely in extended-precision
 registers, so file @file{src/modules/lapack/dlamc.f} may need to
-compiled without optimization or with @code{-ffloat-store}.
+compiled without optimization or with @code{-ffloat-store}.  This is
+done by configure if @samp{g77} is detected.
 
 @node Mac OS X, Solaris, Linux, Platform notes
 @subsection Mac OS X
