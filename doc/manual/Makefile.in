@@ -63,47 +63,12 @@ Man.dvi: Version.tex $(pkgsrcs) $(mansrcs) $(srcdir)/Rd.sty
 Version.tex: $(top_builddir)/bin/R
 	$(top_builddir)/bin/R --version > $@
 
-pkg-base.tex: $(RLIB)/base/latex/*.tex
+pkg-%.tex: FORCE
 	@echo "Collecting components of $@ ..."
-	./lib2tex base
-$(RLIB)/base/latex/%.tex: $(RLIBsrc)/base/man/%.Rd
-	(cd $(top_builddir)/src/library && \
-	  $(MAKE) PKGS=base stamp-latex)
-
-pkg-eda.tex: $(RLIB)/eda/latex/*.tex
-	@echo "Collecting components of $@ ..."
-	./lib2tex eda
-$(RLIB)/eda/latex/%.tex: $(RLIBsrc)/eda/man/%.Rd
-	(cd $(top_builddir)/src/library && \
-	  $(MAKE) PKGS=eda stamp-latex)
-
-pkg-lqs.tex: $(RLIB)/lqs/latex/*.tex
-	@echo "Collecting components of $@ ..."
-	./lib2tex lqs
-$(RLIB)/lqs/latex/%.tex: $(RLIBsrc)/lqs/man/%.Rd
-	(cd $(top_builddir)/src/library && \
-	  $(MAKE) PKGS=lqs stamp-latex)
-
-pkg-modreg.tex: $(RLIB)/modreg/latex/*.tex
-	@echo "Collecting components of $@ ..."
-	./lib2tex modreg
-$(RLIB)/modreg/latex/%.tex: $(RLIBsrc)/modreg/man/%.Rd
-	(cd $(top_builddir)/src/library && \
-	  $(MAKE) PKGS=modreg stamp-latex)
-
-pkg-mva.tex: $(RLIB)/mva/latex/*.tex
-	@echo "Collecting components of $@ ..."
-	./lib2tex mva
-$(RLIB)/mva/latex/%.tex: $(RLIBsrc)/mva/man/%.Rd
-	(cd $(top_builddir)/src/library && \
-	  $(MAKE) PKGS=mva stamp-latex)
-
-pkg-stepfun.tex: $(RLIB)/stepfun/latex/*.tex
-	@echo "Collecting components of $@ ..."
-	./lib2tex stepfun
-$(RLIB)/stepfun/latex/%.tex: $(RLIBsrc)/stepfun/man/%.Rd
-	(cd $(top_builddir)/src/library && \
-	  $(MAKE) PKGS=stepfun stamp-latex)
+	@cd $(top_builddir)/src/library && \
+	  OPTS="--latex" $(MAKE) PKGS="$*" DOCS
+	./lib2tex $*
+FORCE:
 
 install: installdirs
 	@echo "Installing doc/manual ..."

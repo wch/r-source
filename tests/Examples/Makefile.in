@@ -15,11 +15,12 @@ DISTFILES = Makefile.in
 
 R = $(top_builddir)/bin/R --vanilla
 
-Pkgs = base eda lqs modreg mva stepfun
-Ex_R = $(Pkgs:=-Ex.R)
-Ex_Rout = $(Ex_R:.R=.Rout)
-.SUFFIXES: -Ex.R -Ex.Rout
-.SECONDARY: $(Ex_R)
+PKGS = base eda lqs modreg mva stepfun
+EX_IN = $(PKGS:=-Ex.R)
+EX_OUT = $(EX_IN:.R=.Rout)
+.SUFFIXES:
+.SUFFIXES: .R .Rout
+.SECONDARY: $(EX_IN)
 
 all: Makefile test-Examples
 
@@ -28,35 +29,27 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-test-Examples: $(Ex_Rout)
+test-Examples: R $(EX_OUT)
 
-$(Ex_Rout): %-Ex.Rout: %-Ex.R ../stamp-R $(top_builddir)/src/library/stamp-help
+R:
+	@cd $(top_builddir) && $(MAKE) R
+
+.R.Rout:
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo "Running all help() examples ..."
 	$(R) < $< > $@
 
-base-Ex.R: $(top_builddir)/library/base/R-ex/*.R
+%-Ex.R: FORCE
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
-	@echo "Massaging examples into $@ ..."
-	@$(top_builddir)/bin/massage-Examples $* \
-	  $(top_builddir)/library/base/R-ex/*.R > $@
-%-Ex.R: $(top_builddir)/library/%/R-ex/*.R
-	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
-	@if [ -f $@ ]; then mv $@ $@.bak ; fi
+	@echo "Collecting components of $@ ..."
+	@cd $(top_builddir)/src/library && \
+	  OPTS="--nroff --example" $(MAKE) PKGS="$*" DOCS
 	@echo "Massaging examples into $@ ..."
 	@$(top_builddir)/bin/massage-Examples $* \
 	  $(top_builddir)/library/$*/R-ex/*.R > $@
-
-../stamp-R:
-	(cd .. && $(MAKE) stamp-R)
-$(top_builddir)/src/library/stamp-help:
-	(cd $(top_builddir)/src/library \
-	  && $(MAKE) PKGS="$(Pkgs)" stamp-help)
-$(top_builddir)/library/%/R-ex/*.R:
-	(cd $(top_builddir)/src/library \
-	  && $(MAKE) PKGS="$(Pkgs)" stamp-examples)
+FORCE:
 
 mostlyclean: clean
 clean:
