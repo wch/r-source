@@ -3,7 +3,7 @@
 #   Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001
 #   Free Software Foundation, Inc.
 
-timestamp='2001-03-09'
+timestamp='2001-05-11'
 
 # This file is (in principle) common to ALL GNU software.
 # The presence of a machine in this file suggests that SOME GNU software
@@ -231,8 +231,10 @@ case $basic_machine in
 		| mips64orion | mips64orionel | mipstx39 | mipstx39el \
 		| mips64vr4300 | mips64vr4300el | mips64vr4100 | mips64vr4100el \
 		| mips64vr5000 | miprs64vr5000el | mcore | s390 | s390x \
-		| sparc | sparclet | sparclite | sparc64 | sparcv9 | v850 | c4x \
-		| thumb | d10v | d30v | fr30 | avr | openrisc)
+		| sparc | sparclet | sparclite | sparc64 | sparcv9 | sparcv9b \
+		| v850 | c4x \
+		| thumb | d10v | d30v | fr30 | avr | openrisc | tic80 \
+		| pj | pjl | h8500 | z8k)
 		basic_machine=$basic_machine-unknown
 		;;
 	m6811 | m68hc11 | m6812 | m68hc12)
@@ -240,13 +242,13 @@ case $basic_machine in
 		basic_machine=$basic_machine-unknown
 		os=-none
 		;;
-	m88110 | m680[12346]0 | m683?2 | m68360 | m5200 | z8k | v70 | h8500 | w65 | pj | pjl)
+	m88110 | m680[12346]0 | m683?2 | m68360 | m5200 | z8k | v70 | w65 | z8k)
 		;;
 
 	# We use `pc' rather than `unknown'
 	# because (1) that's what they normally are, and
 	# (2) the word "unknown" tends to confuse beginning users.
-	i[234567]86 | x86_64)
+	i*86 | x86_64)
 	  basic_machine=$basic_machine-pc
 	  ;;
 	# Object if more than one company name word.
@@ -256,7 +258,7 @@ case $basic_machine in
 		;;
 	# Recognize the basic CPU types with company name.
 	# FIXME: clean up the formatting here.
-	vax-* | tahoe-* | i[234567]86-* | i860-* | ia64-* | m32r-* | m68k-* | m68000-* \
+	vax-* | tahoe-* | i*86-* | i860-* | ia64-* | m32r-* | m68k-* | m68000-* \
 	      | m88k-* | sparc-* | ns32k-* | fx80-* | arc-* | c[123]* \
 	      | arm-*  | armbe-* | armle-* | armv*-* | strongarm-* | xscale-* \
 	      | mips-* | pyramid-* | tron-* | a29k-* | romp-* | rs6000-* \
@@ -269,16 +271,17 @@ case $basic_machine in
 	      | alphaev6[78]-* \
 	      | we32k-* | cydra-* | ns16k-* | pn-* | np1-* | xps100-* \
 	      | clipper-* | orion-* \
-	      | sparclite-* | pdp10-* | pdp11-* | sh-* | powerpc-* | powerpcle-* \
-	      | sparc64-* | sparcv9-* | sparc86x-* | mips16-* | mips64-* | mipsel-* \
+	      | sparclite-* | pdp10-* | pdp11-* | sh-* | sh[34]-* | sh[34]eb-* \
+	      | powerpc-* | powerpcle-* | sparc64-* | sparcv9-* | sparcv9b-* | sparc86x-* \
+	      | mips16-* | mips64-* | mipsel-* \
 	      | mips64el-* | mips64orion-* | mips64orionel-* \
 	      | mips64vr4100-* | mips64vr4100el-* | mips64vr4300-* | mips64vr4300el-* \
 	      | mipstx39-* | mipstx39el-* | mcore-* \
 	      | f30[01]-* | f700-* | s390-* | s390x-* | sv1-* | t3e-* \
 	      | [cjt]90-* \
 	      | m88110-* | m680[01234]0-* | m683?2-* | m68360-* | z8k-* | d10v-* \
-	      | thumb-* | v850-* | d30v-* | tic30-* | c30-* | fr30-* \
-	      | bs2000-* | tic54x-* | c54x-* | x86_64-*)
+	      | thumb-* | v850-* | d30v-* | tic30-* | tic80-* | c30-* | fr30-* \
+	      | bs2000-* | tic54x-* | c54x-* | x86_64-* | pj-* | pjl-*)
 		;;
 	# Recognize the various machine names and aliases which stand
 	# for a CPU type and a company and sometimes even an OS.
@@ -505,19 +508,19 @@ case $basic_machine in
 		basic_machine=i370-ibm
 		;;
 # I'm not sure what "Sysv32" means.  Should this be sysv3.2?
-	i[34567]86v32)
+	i*86v32)
 		basic_machine=`echo $1 | sed -e 's/86.*/86-pc/'`
 		os=-sysv32
 		;;
-	i[34567]86v4*)
+	i*86v4*)
 		basic_machine=`echo $1 | sed -e 's/86.*/86-pc/'`
 		os=-sysv4
 		;;
-	i[34567]86v)
+	i*86v)
 		basic_machine=`echo $1 | sed -e 's/86.*/86-pc/'`
 		os=-sysv
 		;;
-	i[34567]86sol2)
+	i*86sol2)
 		basic_machine=`echo $1 | sed -e 's/86.*/86-pc/'`
 		os=-solaris2
 		;;
@@ -934,7 +937,7 @@ case $basic_machine in
 	sh3 | sh4)
 		basic_machine=sh-unknown
 		;;
-	sparc | sparcv9)
+	sparc | sparcv9 | sparcv9b)
 		basic_machine=sparc-sun
 		;;
         cydra)
@@ -955,6 +958,9 @@ case $basic_machine in
 	c4x*)
 		basic_machine=c4x-none
 		os=-coff
+		;;
+	*-unknown)
+		# Make sure to match an already-canonicalized machine name.
 		;;
 	*)
 		echo Invalid configuration \`$1\': machine \`$basic_machine\' not recognized 1>&2
@@ -1021,7 +1027,7 @@ case $os in
 		;;
 	-qnx*)
 		case $basic_machine in
-		    x86-* | i[34567]86-*)
+		    x86-* | i*86-*)
 			;;
 		    *)
 			os=-nto$os

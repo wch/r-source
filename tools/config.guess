@@ -3,7 +3,7 @@
 #   Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001
 #   Free Software Foundation, Inc.
 
-timestamp='2001-03-16'
+timestamp='2001-04-20'
 
 # This file is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
@@ -412,6 +412,9 @@ EOF
 	rm -f $dummy.c $dummy
 	echo mips-mips-riscos${UNAME_RELEASE}
 	exit 0 ;;
+    Motorola:PowerMAX_OS:*:*)
+	echo powerpc-motorola-powermax
+	exit 0 ;;
     Night_Hawk:Power_UNIX:*:*)
 	echo powerpc-harris-powerunix
 	exit 0 ;;
@@ -459,7 +462,7 @@ EOF
     ????????:AIX?:[12].1:2)   # AIX 2.2.1 or AIX 2.1.1 is RT/PC AIX.
 	echo romp-ibm-aix      # uname -m gives an 8 hex-code CPU id
 	exit 0 ;;              # Note that: echo "'`uname -s`'" gives 'AIX '
-    i?86:AIX:*:*)
+    i*86:AIX:*:*)
 	echo i386-ibm-aix
 	exit 0 ;;
     ia64:AIX:*:*)
@@ -639,7 +642,7 @@ EOF
     hp8??:OSF1:*:*)
 	echo hppa1.0-hp-osf
 	exit 0 ;;
-    i?86:OSF1:*:*)
+    i*86:OSF1:*:*)
 	if [ -x /usr/sbin/sysversion ] ; then
 	    echo ${UNAME_MACHINE}-unknown-osf1mk
 	else
@@ -705,7 +708,7 @@ EOF
     hp300:OpenBSD:*:*)
 	echo m68k-unknown-openbsd${UNAME_RELEASE}
 	exit 0 ;;
-    i?86:BSD/386:*:* | i?86:BSD/OS:*:* | *:Ascend\ Embedded/OS:*:*)
+    i*86:BSD/386:*:* | i*86:BSD/OS:*:* | *:Ascend\ Embedded/OS:*:*)
 	echo ${UNAME_MACHINE}-pc-bsdi${UNAME_RELEASE}
 	exit 0 ;;
     sparc*:BSD/OS:*:*)
@@ -876,7 +879,7 @@ EOF
     x86_64:Linux:*:*)
 	echo x86_64-unknown-linux-gnu
 	exit 0 ;;
-    i?86:Linux:*:*)
+    i*86:Linux:*:*)
 	# The BFD linker knows what the default object file format is, so
 	# first see if it will tell us. cd to the root directory to prevent
 	# problems with other programs or directories called `ld' in the path.
@@ -887,14 +890,14 @@ EOF
 				    s/ .*//
 				    p'`
         case "$ld_supported_emulations" in
-	  i?86linux)
+	  i*86linux)
 		echo "${UNAME_MACHINE}-pc-linux-gnuaout"
 		exit 0
 		;;
-	  elf_i?86)
+	  elf_i*86)
 		TENTATIVE="${UNAME_MACHINE}-pc-linux-gnu"
 		;;
-	  i?86coff)
+	  i*86coff)
 		echo "${UNAME_MACHINE}-pc-linux-gnucoff"
 		exit 0
 		;;
@@ -906,7 +909,7 @@ EOF
 	# that means it is gnuoldld.
 	test -z "$ld_supported_emulations" && echo "${UNAME_MACHINE}-pc-linux-gnuoldld" && exit 0
 	case "${UNAME_MACHINE}" in
-	i?86)
+	i*86)
 	  VENDOR=pc;
 	  ;;
 	*)
@@ -944,10 +947,10 @@ EOF
 	;;
 # ptx 4.0 does uname -s correctly, with DYNIX/ptx in there.  earlier versions
 # are messed up and put the nodename in both sysname and nodename.
-    i?86:DYNIX/ptx:4*:*)
+    i*86:DYNIX/ptx:4*:*)
 	echo i386-sequent-sysv4
 	exit 0 ;;
-    i?86:UNIX_SV:4.2MP:2.*)
+    i*86:UNIX_SV:4.2MP:2.*)
         # Unixware is an offshoot of SVR4, but it has its own version
         # number series starting with 2...
         # I am not positive that other SVR4 systems won't match this,
@@ -955,7 +958,7 @@ EOF
         # Use sysv4.2uw... so that sysv4* matches it.
 	echo ${UNAME_MACHINE}-pc-sysv4.2uw${UNAME_VERSION}
 	exit 0 ;;
-    i?86:*:4.*:* | i?86:SYSTEM_V:4.*:*)
+    i*86:*:4.*:* | i*86:SYSTEM_V:4.*:*)
 	UNAME_REL=`echo ${UNAME_RELEASE} | sed 's/\/MP$//'`
 	if grep Novell /usr/include/link.h >/dev/null 2>/dev/null; then
 		echo ${UNAME_MACHINE}-univel-sysv${UNAME_REL}
@@ -963,7 +966,7 @@ EOF
 		echo ${UNAME_MACHINE}-pc-sysv${UNAME_REL}
 	fi
 	exit 0 ;;
-    i?86:*:5:7*)
+    i*86:*:5:7*)
         # Fixed at (any) Pentium or better
         UNAME_MACHINE=i586
         if [ ${UNAME_SYSTEM} = "UnixWare" ] ; then
@@ -972,7 +975,7 @@ EOF
 	    echo ${UNAME_MACHINE}-pc-sysv${UNAME_RELEASE}
 	fi
 	exit 0 ;;
-    i?86:*:3.2:*)
+    i*86:*:3.2:*)
 	if test -f /usr/options/cb.name; then
 		UNAME_REL=`sed -n 's/.*Version //p' </usr/options/cb.name`
 		echo ${UNAME_MACHINE}-pc-isc$UNAME_REL
@@ -990,7 +993,7 @@ EOF
 		echo ${UNAME_MACHINE}-pc-sysv32
 	fi
 	exit 0 ;;
-    i?86:*DOS:*:*)
+    i*86:*DOS:*:*)
 	echo ${UNAME_MACHINE}-pc-msdosdjgpp
 	exit 0 ;;
     pc:*:*:*)
@@ -1029,13 +1032,13 @@ EOF
     3[34]??:*:4.0:* | 3[34]??,*:*:4.0:*)
         /bin/uname -p 2>/dev/null | grep 86 >/dev/null \
           && echo i486-ncr-sysv4 && exit 0 ;;
-    m68*:LynxOS:2.*:*)
+    m68*:LynxOS:2.*:* | m68*:LynxOS:3.0*:*)
 	echo m68k-unknown-lynxos${UNAME_RELEASE}
 	exit 0 ;;
     mc68030:UNIX_System_V:4.*:*)
 	echo m68k-atari-sysv4
 	exit 0 ;;
-    i?86:LynxOS:2.*:* | i?86:LynxOS:3.[01]*:*)
+    i*86:LynxOS:2.*:* | i*86:LynxOS:3.[01]*:* | i*86:LynxOS:4.0*:*)
 	echo i386-unknown-lynxos${UNAME_RELEASE}
 	exit 0 ;;
     TSUNAMI:LynxOS:2.*:*)
@@ -1044,7 +1047,7 @@ EOF
     rs6000:LynxOS:2.*:*)
 	echo rs6000-unknown-lynxos${UNAME_RELEASE}
 	exit 0 ;;
-    PowerPC:LynxOS:2.*:* | PowerPC:LynxOS:3.[01]*:*)
+    PowerPC:LynxOS:2.*:* | PowerPC:LynxOS:3.[01]*:* | PowerPC:LynxOS:4.0*:*)
 	echo powerpc-unknown-lynxos${UNAME_RELEASE}
 	exit 0 ;;
     SM[BE]S:UNIX_SV:*:*)
@@ -1146,7 +1149,7 @@ EOF
 	fi
 	echo ${UNAME_MACHINE}-unknown-plan9
 	exit 0 ;;
-    i?86:OS/2:*:*)
+    i*86:OS/2:*:*)
 	# If we were able to find `uname', then EMX Unix compatibility
 	# is probably installed.
 	echo ${UNAME_MACHINE}-pc-os2-emx
