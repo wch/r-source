@@ -15,6 +15,7 @@ alias.lm(object, complete = TRUE, partial = FALSE, partial.pattern = FALSE)
 \alias{alias}
 \alias{alias.formula}
 \alias{alias.lm}
+\alias{print.mtable}
 \arguments{
   \item{object}{A fitted model object, for example from \code{lm} or
     \code{aov}, or a formula for \code{alias.formula}.}
@@ -37,10 +38,11 @@ alias.lm(object, complete = TRUE, partial = FALSE, partial.pattern = FALSE)
   correlations induced by the design.
 }
 \value{
-  A list containing components
+  A list (of \code{\link{class} "listof"}) containing components
   \item{Model}{Description of the model; usually the formula.}
   \item{Complete}{A matrix with columns corresponding to effects that
-    are linearly dependent on the rows.}
+    are linearly dependent on the rows; may be of class \code{"mtable"}
+    which has its own \code{\link{print}} method.}
   \item{Partial}{The correlations of the estimable effects, with a zero
     diagonal.}
 }
