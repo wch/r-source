@@ -14,11 +14,11 @@
     three versions.}
 }
 \description{
-  To install a package into the default library tree (which is rooted at
-  \file{\$RHOME/library}), do \code{R INSTALL pkg}.
+  To install packages into the default library tree (which is rooted at
+  \file{\$RHOME/library}), do \code{R INSTALL pkgs}.
 
   To install into the library tree \code{lib} instead of the default
-  one, use \code{R INSTALL -l lib pkg}.
+  one, use \code{R INSTALL -l lib pkgs}.
 
   Both \code{lib} and the elements of \code{pkgs} may be absolute or
   relative path names.

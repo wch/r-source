@@ -1,5 +1,5 @@
 \name{quit}
-\title{Terminate an \R Session}
+\title{Terminate an R Session}
 \usage{
 quit(save="ask")
 q(save="ask")

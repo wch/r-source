@@ -34,18 +34,23 @@ function(..., list = character(0), package =c(.packages(),.Autoloaded),
 	  cat("name=",name,":\t file= .../",sub(".*/","",file),"::\t",sep="")
 	if (found) break
 	found <- TRUE
-	switch(sub(".*\\.", "", file),
-	       "R" =, "r" = source(file),
-	       "RData" =, "rdata" =, "rda" = load(file),
-	       "TXT" =, "txt" =, "tab" =
-	       assign(name, read.table(file, header = TRUE),
-		      env = .GlobalEnv),
-	       "CSV" =, "csv" =
-	       assign(name, read.table(file, header = TRUE, sep = ";"),
-		      env = .GlobalEnv),
-	       ## otherwise
-	       found <- FALSE)
-	if(trace) cat(if(!found) "*NOT* ", "found\n")
+        ext <- sub(".*\\.", "", file)
+        ## make sure the match is really for `name.ext'
+        if (sub(".*/", "", file) != paste(name, ".", ext, sep = ""))
+          found <- FALSE
+        else
+          switch(ext,
+                 "R" =, "r" = source(file),
+                 "RData" =, "rdata" =, "rda" = load(file),
+                 "TXT" =, "txt" =, "tab" =
+                 assign(name, read.table(file, header = TRUE),
+                        env = .GlobalEnv),
+                 "CSV" =, "csv" =
+                 assign(name, read.table(file, header = TRUE, sep = ";"),
+                        env = .GlobalEnv),
+                 ## otherwise
+                 found <- FALSE)
+	if (trace) cat(if(!found) "*NOT* ", "found\n")
       }
     }
     if (!found)

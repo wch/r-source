@@ -104,7 +104,6 @@ unique <- function(x){
 		z <- factor(z,levels=1:nlevels(x),labels=levels(x))
 	z
 }
-update.formula <- function(old, new).Internal(update.formula(old, new))
 
 stop <- function(message = NULL).Internal(stop(message))
 warning <- function(message = NULL).Internal(warning(message))

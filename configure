@@ -583,16 +583,16 @@ cat >> confdefs.h <<\EOF
 #define R_STATUS_REV "0"
 EOF
 
-cat >> confdefs.h <<\EOF
-#define R_DAY "DD"
+cat >> confdefs.h <<EOF
+#define R_DAY "`awk -F/ '{print $3}' date-stamp`"
 EOF
 
-cat >> confdefs.h <<\EOF
-#define R_MONTH "Mmmm"
+cat >> confdefs.h <<EOF
+#define R_MONTH "`awk -F/ '{print $2}' date-stamp`"
 EOF
 
-cat >> confdefs.h <<\EOF
-#define R_YEAR "1998"
+cat >> confdefs.h <<EOF
+#define R_YEAR "`awk -F/ '{print $1}' date-stamp`"
 EOF
 
 cat >> confdefs.h <<EOF
