@@ -116,11 +116,11 @@ CRANmirrorWidget <- function(a)
                      listvariable = lvar, selectmode="single")
     res <- 0
     gogetem <- function() {
-        res <- as.integer(tkcurselection(box))
+        res <- 1+as.integer(tkcurselection(box))
         if(res > 0) {
             repos <- getOption("repos")
             URL <- a[res, "URL"]
-            repos["CRAN"] <- gsub("/$", "", m[res, "URL"])
+            repos["CRAN"] <- gsub("/$", "", a[res, "URL"])
             options(repos = repos)
         }
         tkdestroy(tt)
@@ -140,7 +140,7 @@ repositoriesWidget <- function(a)
     for(i in which(a[["default"]])) tkselection.set(box, i-1) # 0-based
 
     gogetem <- function() {
-        res <- as.integer(tkcurselection(box))
+        res <- 1+as.integer(tkcurselection(box))
         repos <- a[["URL"]]
         names(repos) <- row.names(a)
         options(repos = repos[res])
