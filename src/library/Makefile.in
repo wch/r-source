@@ -10,20 +10,15 @@ top_builddir = ../..
 
 include $(top_builddir)/Makeconf
 
-MANSRC = $(srcdir)/*/man/*.Rd
-
-sed_d = '/^CVS/d; /Makefile/d; /^stamp-/d; /^profile/d;'
-sed_db= '/^CVS/d; /Makefile/d; /^stamp-/d; /^profile/d; /^base/d'
+MANSRC = `ls $(srcdir)/*/man/*.Rd`
+PKGS = `ls $(srcdir) | sed '/^CVS/d; /Makefile/d; /^stamp-/d;'`
 
 all: R
 
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
-	@cd base; $(MAKE)
-	@cd profile; $(MAKE)
-	@for pkg in `ls $(srcdir) | sed $(sed_db)`; do \
-	  RHOME=`cd $(top_builddir); pwd`; export RHOME; \
-	  $(SHELL) $${RHOME}/bin/INSTALL --no-docs $(srcdir)/$${pkg}; \
+	@for pkg in $(PKGS); do \
+	  cd $${pkg}; $(MAKE); cd ..; \
 	done
 
 docs: stamp-docs $(MANSRC) $(top_builddir)/library/LibIndex
@@ -54,23 +49,21 @@ $(top_builddir)/library/LibIndex:
 	@if [ ! -f $@ ]; then touch $@; fi
 
 DOCS:
-	@for pkg in `ls $(srcdir) | sed $(sed_d)`; do \
+	@for pkg in $(PKGS); do \
 	  RHOME=`cd $(top_builddir); pwd`; export RHOME; \
 	  $${RHOME}/bin/build-help $${OPTS} $(srcdir)/$${pkg}; \
 	done
 
 mostlyclean: clean
 clean:
-	@echo Cleaning in src/library
-	@for pkg in `ls $(srcdir) | sed $(sed_db)`; do \
-	  if test -d $${pkg}/src; then \
-	    (cd $${pkg}/src; rm -f *.o *.so); \
-	  fi; \
+	@for pkg in $(PKGS); do \
+	  cd $${pkg}; $(MAKE) $@; cd ..; \
 	done
 	@rm -f stamp-*
 distclean:
-	cd base; $(MAKE) $@
-	cd profile; $(MAKE) $@
+	@for pkg in $(PKGS); do \
+	  cd $${pkg}; $(MAKE) $@; cd ..; \
+	done
 	@rm -f Makefile
 maintainer-clean: distclean
 
