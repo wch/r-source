@@ -35,7 +35,7 @@ SEXP do_devcontrol(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
     inhibitDisplayList(CurrentDevice());
-   return R_NilValue;
+    return R_NilValue;
 }
 
 SEXP do_devcopy(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -265,7 +265,7 @@ SEXP FixupCex(SEXP cex)
 }
 
 
-    /*  G R A P H I C S    F U N C T I O N    E N T R Y    P O I N T S  */
+    /* GRAPHICS FUNCTION ENTRY POINTS */
 
 
 SEXP do_plot_new(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -639,6 +639,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, n, nint;
     int which, xtckCoords, ytckCoords;
     double x, y, tempx, tempy, tnew, tlast;
+    double tck;
     double axp[3], usr[2];
     double gap, labw, low, high;
     double xx[2], yy[2];
@@ -712,7 +713,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     
     /* determine the tick mark positions */
     /* note that these may fall outside the plot window */
-    /* we will clip them below */
+    /* we will clip them in the code below */
 
     if (length(at) == 0) {
 	PROTECT(at = CreateAtVector(axp, usr, nint, logflag));
@@ -776,13 +777,50 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	    xtckCoords = MAR3;
 	}
 	dd->gp.col = fg;
-	/* axis line */
 	GLine(REAL(at)[0], y, REAL(at)[n - 1], y, USER, dd);
-	/* ticks */
-	for (i = 0; i < n; i++) {
-	    x = REAL(at)[i];
-	    if (low <= x && x <= high) {
-		GLine(x, 0, x, 0.5, xtckCoords, dd);
+	if (FINITE(dd->gp.tck)) {
+	    /* The S way of doing ticks */
+	    double y0, y1;
+	    if (dd->gp.tck > 0.5) {
+		if (which == 1) {
+		    y0 = dd->gp.usr[2];
+		    y1 = dd->gp.usr[2] + dd->gp.tck * 
+			(dd->gp.usr[3] - dd->gp.usr[2]);
+		}
+		else {
+		    y0 = dd->gp.usr[3];
+		    y1 = dd->gp.usr[3] + dd->gp.tck * 
+			(dd->gp.usr[2] - dd->gp.usr[3]);
+		}
+	    }
+	    else {
+		tck = dd->gp.tck * ((dd->gp.fin[0] < dd->gp.fin[1]) ?
+				    dd->gp.fin[0] : dd->gp.fin[1]);
+		if (which == 1) {
+		    y0 = dd->gp.usr[2];
+		    y1 = dd->gp.usr[2] + (tck / dd->gp.fin[1]) *
+			(dd->gp.usr[3] - dd->gp.usr[2]);
+		}
+		else {
+		    y0 = dd->gp.usr[3];
+		    y1 = dd->gp.usr[3] + (tck / dd->gp.fin[1]) *
+			(dd->gp.usr[2] - dd->gp.usr[3]);
+		}
+	    }
+	    for (i = 0; i < n; i++) {
+		x = REAL(at)[i];
+		if (low <= x && x <= high) {
+		    GLine(x, y0, x, y1, USER, dd);
+		}
+	    }	
+	}
+	else {
+	    /* The R(ight) way of doing ticks */
+	    for (i = 0; i < n; i++) {
+		x = REAL(at)[i];
+		if (low <= x && x <= high) {
+		    GLine(x, 0, x, -dd->gp.tcl, xtckCoords, dd);
+		}
 	    }
 	}
 	dd->gp.col = dd->gp.colaxis;
@@ -821,10 +859,48 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	dd->gp.col = fg;
 	GLine(x, REAL(at)[0], x, REAL(at)[n - 1], USER, dd);
-	for (i = 0; i < n; i++) {
-	    y = REAL(at)[i];
-	    if (low <= y && y <= high) {
-		GLine(y, 0, y, 0.5, ytckCoords, dd);
+	if (FINITE(dd->gp.tck)) {
+	    /* The S way of doing ticks */
+	    double x0, x1;
+	    if (dd->gp.tck > 0.5) {
+		if (which == 2) {
+		    x0 = dd->gp.usr[0];
+		    x1 = dd->gp.usr[0] + dd->gp.tck * 
+			(dd->gp.usr[1] - dd->gp.usr[0]);
+		}
+		else {
+		    x0 = dd->gp.usr[1];
+		    x1 = dd->gp.usr[1] + dd->gp.tck * 
+			(dd->gp.usr[0] - dd->gp.usr[1]);
+		}
+	    }
+	    else {
+		tck = dd->gp.tck * ((dd->gp.fin[0] < dd->gp.fin[1]) ?
+				    dd->gp.fin[0] : dd->gp.fin[1]);
+		if (which == 2) {
+		    x0 = dd->gp.usr[0];
+		    x1 = dd->gp.usr[0] + (tck / dd->gp.fin[0]) *
+			(dd->gp.usr[1] - dd->gp.usr[0]);
+		}
+		else {
+		    x0 = dd->gp.usr[1];
+		    x1 = dd->gp.usr[1] + (tck / dd->gp.fin[0]) *
+			(dd->gp.usr[0] - dd->gp.usr[1]);
+		}
+	    }
+	    for (i = 0; i < n; i++) {
+		y = REAL(at)[i];
+		if (low <= y && y <= high) {
+		    GLine(x0, y, x1, y, USER, dd);
+		}
+	    }	
+	}
+	else {
+	    for (i = 0; i < n; i++) {
+		y = REAL(at)[i];
+		if (low <= y && y <= high) {
+		    GLine(y, 0, y, -dd->gp.tcl, ytckCoords, dd);
+		}
 	    }
 	}
 	dd->gp.col = dd->gp.colaxis;
@@ -865,168 +941,6 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	recordGraphicOperation(op, originalArgs, dd);
     return R_NilValue;
 }
-
-#ifdef OLD
-SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    /* axis(which, at, labels, ...) - draw an axis */
-    SEXP at, lab;
-    int col, fg, i, n, which, xtckCoords, ytckCoords;
-    double x, y, tempx, tempy, tnew, tlast;
-    double gap, labw, low, high;
-    double xx[2], yy[2];
-    SEXP originalArgs = args;
-    DevDesc *dd = CurrentDevice();
-
-    /* Initial checks */
-    GCheckState(dd);
-    if(length(args) < 3)
-	errorcall(call, "too few arguments\n");
-
-    /* Required arguments */
-    which = asInteger(CAR(args));
-    if (which < 1 || which > 4)
-	errorcall(call, "invalid axis number\n");
-    args = CDR(args);
-
-    internalTypeCheck(call, at = CAR(args), REALSXP);
-    args = CDR(args);
-
-    /* internalTypeCheck(call, lab = CAR(args), STRSXP); */
-    lab = CAR(args);
-    if (LENGTH(at) != LENGTH(lab))
-	errorcall(call, "location and label lengths differ\n");
-    n = LENGTH(at);
-    args = CDR(args);
-
-    R_Visible = 0;
-    GSavePars(dd);
-
-    dd->gp.xpd = 1;
-    dd->gp.adj = 0.5;
-    dd->gp.font = dd->gp.fontaxis;
-    dd->gp.cex = dd->gp.cex * dd->gp.cexbase;
-    col = dd->gp.col;
-    fg = dd->gp.fg;
-
-    /* Check the axis type parameter */
-    /* If it is 'n', there is nothing to do */
-    if(which == 1 || which == 3) {
-	if(dd->gp.xaxt == 'n') {
-	    GRestorePars(dd);
-	    return R_NilValue;
-	}
-    }
-    else if(which == 2 || which == 4) {
-	if(dd->gp.yaxt == 'n') {
-	    GRestorePars(dd);
-	    return R_NilValue;
-	}
-    }
-    else errorcall(call, "invalid \"which\" value\n");
-
-    x = dd->gp.usr[0];
-    y = dd->gp.usr[2];
-    xtckCoords = MAR1;
-    ytckCoords = MAR2;
-		
-    /* Draw the axis */
-    GMode(dd, 1);
-    switch (which) {
-    case 1:
-    case 3:
-	GetAxisLimits(dd->gp.usr[0], dd->gp.usr[1], &low, &high);
-	if (which == 3) {
-	    y = dd->gp.usr[3];
-	    xtckCoords = MAR3;
-	}
-	dd->gp.col = fg;
-	/* axis line */
-	GLine(REAL(at)[0], y, REAL(at)[n - 1], y, USER, dd);
-	/* ticks */
-	for (i = 0; i < n; i++) {
-	    x = REAL(at)[i];
-	    if (low <= x && x <= high) {
-		GLine(x, 0, x, 0.5, xtckCoords, dd);
-	    }
-	}
-	dd->gp.col = dd->gp.colaxis;
-	/* labels */
-	tlast = -1.0;
-	gap = GStrWidth("m", NFC, dd);	/* FIXUP x/y distance */
-	for (i = 0; i < n; i++) {
-	    x = REAL(at)[i];
-	    tempx = x; tempy = y;
-	    GConvert(&tempx, &tempy, USER, NFC, dd);
-	    if(isExpression(lab)) {
-		GMMathText(VECTOR(lab)[i], which, 
-			   dd->gp.mgp[1], 0, x, dd->gp.las, dd);
-	    }
-	    else {
-		labw = GStrWidth(CHAR(STRING(lab)[i]), NFC, dd);
-		tnew = tempx - 0.5 * labw;
-		/* check that there's room for labels */
-		if (dd->gp.las == 2 || tnew - tlast >= gap) {
-		    GMtext(CHAR(STRING(lab)[i]), which, 
-			   dd->gp.mgp[1], 0, x, 
-			   dd->gp.las, dd);
-		    tlast = tempx + 0.5 *labw;
-		}
-	    }
-	}
-	break;
-    case 2:
-    case 4:
-	GetAxisLimits(dd->gp.usr[2], dd->gp.usr[3], &low, &high);
-	if (which == 4) {
-	    x = dd->gp.usr[1];
-	    ytckCoords = MAR4;
-	}
-	dd->gp.col = fg;
-	GLine(x, REAL(at)[0], x, REAL(at)[n - 1], USER, dd);
-	for (i = 0; i < n; i++) {
-	    y = REAL(at)[i];
-	    if (low <= y && y <= high) {
-		GLine(y, 0, y, 0.5, ytckCoords, dd);
-	    }
-	}
-	dd->gp.col = dd->gp.colaxis;
-	gap = GStrWidth("m", INCHES, dd);
-	gap = GConvertYUnits(gap, INCHES, NFC, dd);
-	tlast = -1.0;
-	for (i = 0; i < n; i++) {
-	    y = REAL(at)[i];
-	    tempx = x; tempy = y;
-	    GConvert(&tempx, &tempy, USER, NFC, dd);
-	    if(isExpression(lab)) {
-		GMMathText(VECTOR(lab)[i], which, 
-			   dd->gp.mgp[1], 0, y, dd->gp.las, dd);
-	    }
-	    else {
-		labw = GStrWidth(CHAR(STRING(lab)[i]), 
-				 INCHES, dd);
-		labw = GConvertYUnits(labw, INCHES, NFC, dd);
-		tnew = tempy - 0.5 * labw;
-		if (dd->gp.las > 0 || tnew - tlast >= gap) {
-		    GMtext(CHAR(STRING(lab)[i]), which, 
-			   dd->gp.mgp[1], 0, y,
-			   dd->gp.las, dd);
-		    tlast = tempy + 0.5 *labw;
-		}
-	    }
-	}
-	break;
-    }
-
-    GMode(dd, 0);
-    GRestorePars(dd);
-    /* NOTE: only record operation if no "error"  */
-    /* NOTE: during replay, call == R_NilValue */
-    if (call != R_NilValue)
-	recordGraphicOperation(op, originalArgs, dd);
-    return R_NilValue;
-}
-#endif
 
 
 SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)

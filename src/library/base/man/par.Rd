@@ -131,8 +131,10 @@ par(\dots)
     set to the same value.}
   \item{tck}{The length of tick marks as a fraction of the smaller of
     the width or height of the plotting region.
-    If \code{tck=1}, grid lines are drawn.
-    The default value is \code{-0.2}.}
+    If \code{tck=1}, grid lines are drawn. The default setting is
+    to use \code{tcl=-0.5} (see below).}
+  \item{tcl}{The length of tick marks as a fraction of the height of
+    of a line of text.  The default value is \code{-0.5}.}
   \item{tmag}{A number specifying the enlargement of text of the main
     title relative to the other annotating text of the plot.}
   \item{usr}{A vector of the form \code{c(x1, x2, y1, y2)} giving the
