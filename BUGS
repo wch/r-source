@@ -95,6 +95,11 @@ Date: Tue, 2 Jul 2002 10:37:10 +0200 (MET DST)
 Subject: groupedData constructor from a function
 From: dieter.menne@menne-biomed.de
 Date: Thu, 4 Jul 2002 15:59:59 +0200 (MET DST)
+* PR# 1745 *
+Subject: nlme: failed augPred with NA in an unused column
+From: dieter.menne@menne-biomed.de
+Date: Fri, 5 Jul 2002 08:32:32 +0200 (MET DST)
+--nlme needs an update as suggested in the followup
 
 Directory:  Analyses
 
@@ -317,10 +322,6 @@ Date: Tue, 11 Jun 2002 20:20:11 +0200
 Subject: make install fails - index.html not found
 From: dhouston@bio.ri.ccf.org
 Date: Tue, 11 Jun 2002 22:14:07 +0200 (MET DST)
-* PR# 1673 *
-Subject: Late Make Problem with Readline
-From: jerfox@stanford.edu
-Date: Sat, 15 Jun 2002 12:00:07 +0200 (MET DST)
 * PR# 1676 *
 Subject: R configure.in makes bad alpha assumptions
 From: mcmahill@mtl.mit.edu
@@ -514,10 +515,6 @@ Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
 Subject: Problem in optim(method="L-BFGS-B")
 From: polzehl@wias-berlin.de
 Date: Fri, 28 Jun 2002 11:53:13 +0200 (MET DST)
-* PR# 1745 *
-Subject: nlme: failed augPred with NA in an unused column
-From: dieter.menne@menne-biomed.de
-Date: Fri, 5 Jul 2002 08:32:32 +0200 (MET DST)
 * PR# 1761 *
 Subject: svd() very slow for wide matrix X but not for t(X)
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
@@ -534,7 +531,15 @@ From: John Chambers <jmc@research.bell-labs.com>
 Date: Tue, 16 Jul 2002 16:59:22 -0400
 --follow up to 1796
 --stop() allows multiple args as from 1.6.0
-* PR# 1808 *
-Subject: =?euc-kr?B?XkxeIL+pt6+60LKyILjewM+4rr26xq64piC977ursKGw3cC4t84guPC9yg==?=	=?euc-kr?B?tM+02S4uLluxpLDtXTwtPC0t?=
-From: han2797@lovehunt.com
-Date: Fri, 19 Jul 2002 04:02:41 +0900
+* PR# 1809 *
+Subject: read.table bug
+From: mmcstephen@cogstate.com
+Date: Fri, 19 Jul 2002 05:11:59 +0200 (MET DST)
+* PR# 1810 *
+Subject: All three give the same
+From: maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 19 Jul 2002 22:53:32 +1200 (NZST)
+* PR# 1811 *
+Subject: 2002 Yahoo! Taiwan Inc. All Rights Reserved.
+From: BinRpe <BinRpe@-rjc.r>
+Date: Sat, 20 Jul 2002 00:40:31 +0800 (CST)
