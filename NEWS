@@ -13,6 +13,13 @@ BUG FIXES
 
     o	plot.stepfun() now obeys a `ylim=.' specification.
 
+    o   removeClass() does a better job of removing inheritance
+        information.
+
+    o   setIs() will not allow mismatched representations between two
+        classes (without an explicit coerce method).
+
+
 
 
 		CHANGES IN R VERSION 1.6.1
