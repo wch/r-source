@@ -8,4 +8,6 @@ setdiff <- function(x, y)
     else unique(x[match(x, y, 0) == 0])
 }
 
+setequal <- function(x, y) all(c(match(x, y, 0) > 0, match(y, x, 0) > 0))
+
 is.element <- function(el, set = NULL) match(el, set, 0) > 0
