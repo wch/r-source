@@ -148,6 +148,8 @@ static DL_FUNC getBaseSymbol(const char *name)
     for(i = 0 ; R_osDynSymbol->CFunTab[i].name ; i++)
 	if(!strcmp(name, R_osDynSymbol->CFunTab[i].name))
 	    return R_osDynSymbol->CFunTab[i].func;
+
+    return((DL_FUNC) NULL);
 #endif
 }
 
