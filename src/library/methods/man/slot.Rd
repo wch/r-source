@@ -1,8 +1,6 @@
 \name{slot}
 \alias{slot}
 \alias{slot<-}
-\alias{@}
-\alias{@<-}
 \alias{slotNames}
 \title{ The Slots in an Object from a Formal Class }
 \description{
@@ -17,10 +15,7 @@ slotNames(x)
 }
 \arguments{
   \item{object}{ An object from a formally defined class.}
-  \item{name}{ The character-string name of the slot.  In the case of
-    the \code{@} operator, this name is a literal, and is \emph{not}
-    evaluated. If you need to compute the slot name, use the function
-    \code{slot}, rather than the \code{@} opertor.  The name must be a valid
+  \item{name}{ The character-string name of the slot. The name must be a valid
     slot name:  see Details below.}
   \item{value} { A new value for the named slot.  The value must be
     valid for this slot in this object's class.}
@@ -37,8 +32,7 @@ slotNames(x)
 
   Unlike attributes, slots are not partially matched, and asking for (or
   trying to set) a slot with an invalid name for that class generates an
-  error).
-  
+  error.
 }
 \references{
   Chambers, J. M. (1998)
@@ -51,7 +45,9 @@ slotNames(x)
   John Chambers
 }
 
-\seealso{ \link{Classes}, \link{Methods}, \code{\link{getClass}} }
+\seealso{
+  \code{\link{@}}, \code{\link{Classes}}, \code{\link{Methods}},
+  \code{\link{getClass}} }
 
 \examples{
 \dontrun{
