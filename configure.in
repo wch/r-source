@@ -36,9 +36,9 @@ AC_CONFIG_AUX_DIR(tools)
 AC_MSG_CHECKING(host system type)
 host=`${srcdir}/tools/config.guess`
 set `echo ${host} | tr '-' ' '`
-host_cpu=$1
-host_vendor=$2
-host_os=$3
+host_cpu=${1}
+host_vendor=${2}
+host_os=${3}
 AC_DEFINE_UNQUOTED(R_PLATFORM, "${host}")
 AC_DEFINE_UNQUOTED(R_CPU, "${host_cpu}")
 AC_DEFINE_UNQUOTED(R_VENDOR, "${host_vendor}")
@@ -433,8 +433,9 @@ AC_FUNC_VPRINTF
 AC_CHECK_FUNCS(acosh asinh atanh bcopy finite getcwd isfinite isnan \
   matherr memcpy memmove regcomp rint siglongjmp sigsetjmp strcoll  \
   strtod strtol system times)
-R_FUNC_LOG
 R_FUNC___SETFPUCW
+R_FUNC_FINITE
+R_FUNC_LOG
 
 ### Header files
 
@@ -478,7 +479,7 @@ case "${host}" in
     R_PROG_CC_FLAG(-mno-fp-in-toc,
       R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mno-fp-in-toc")
     if test "${GCC}" = yes; then
-      R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D_NO_PROTO"
+      R_XTRA_LIBS="${R_XTRA_LIBS} /lib/crt0.o"
     fi
     ;;
   alpha*osf*)
@@ -563,12 +564,12 @@ AC_MSG_RESULT(done)
 case "${host}" in
   *aix4.[[2-9]]*)
     EXPORTFILE="\$(top_builddir)/etc/R.exp"
-    ldcmd=${F77:-cc}
+    ldcmd=ld
     dllflags="-bdynamic -bE:${EXPORTFILE} -bM:SRE -lc -lm"
     if test "${GCC}" = yes; then
       dllflags="${dllflags} `${CC} -print-libgcc-file-name`"
     fi
-    shlibld=${F77:-cc}
+    shlibld=ld
     shlibldflags="-bM:SRE -H512 -T512 -bnoentry -bexpall \
       -bI:\$(R_HOME)/etc/R.exp -lc -lm"
     ;;

@@ -22,23 +22,23 @@
 
 #include "Rconfig.h"
 
-/* Maybe get finite(.): */
+/* Maybe get finite(): */
 #ifdef HAVE_IEEE754_H
-#include <ieee754.h>		/* newer Linuxen */
+# include <ieee754.h>		/* newer Linuxen */
 #else
-#ifdef HAVE_IEEEFP_H
-#include <ieeefp.h>		/* others [Solaris 2.5.x], .. */
-#endif
+# ifdef HAVE_IEEEFP_H
+#  include <ieeefp.h>		/* others [Solaris 2.5.x], .. */
+# endif
 #endif
 
 #include <math.h>
 #ifdef Macintosh
-# define finite(x) isfinite(x)
+# define finite(x)	isfinite(x)
 #else
 # ifndef HAVE_FINITE
 #  ifndef finite		/* Do not declare if macro! */
 #   ifdef isfinite		/* HPUX math.h */
-#     define finite(x) isfinite(x)
+#     define finite(x)	isfinite(x)
 #   else
       int finite(double);
 #   endif
@@ -46,9 +46,8 @@
 # endif
 #endif
 
-
 #ifdef __MAIN__
-#define extern
+# define extern
 #endif
 extern double	R_tmp;		/* Temporary Value used in NaN/Inf checks */
 extern double	R_NaN;		/* IEEE NaN or -DBL_MAX */
@@ -57,7 +56,7 @@ extern double	R_NegInf;	/* IEEE -Inf or -DBL_MAX */
 extern int	R_NaInt;	/* NA_INTEGER etc */
 extern double	R_NaReal;	/* NA_REAL */
 #ifdef __MAIN__
-#undef extern
+# undef extern
 #endif
 
 #define NA_LOGICAL	R_NaInt
@@ -66,7 +65,6 @@ extern double	R_NaReal;	/* NA_REAL */
 #define NA_REAL		R_NaReal
 #define NA_STRING	R_NaString
 
-
 #ifdef IEEE_754
 
  int R_IsNA(double);		/* True for Real NA only */
@@ -74,9 +72,21 @@ extern double	R_NaReal;	/* NA_REAL */
 
 # define MATH_CHECK(call)	(call)
 
-# define R_FINITE(x)		finite(x)
-# define ISNAN(x)		(isnan(x)!=0)	/* True, *both* for NA | NaN */
-				/* NOTE: some systems do not return 1 for TRUE*/
+# ifndef FINITE_BROKEN
+#  define R_FINITE(x)		finite(x)
+# else
+#  ifdef _AIX
+#   include <fp.h>
+#   define R_FINITE(x)		FINITE(x)
+#  else
+#   define R_FINITE(x)		((x) != R_NaReal)
+#  endif
+# endif
+
+# define ISNAN(x)		(isnan(x) != 0)
+				/* True for *both* NA and NaN.  NOTE:
+				   some systems do not return 1 for
+				   TRUE. */
 # define ISNA(x)		R_IsNA(x) /* from ../main/arithmetic.c */
 
 #else
@@ -87,22 +97,20 @@ extern double	R_NaReal;	/* NA_REAL */
    ERANGE : Math result not representable
 */
 
-#ifndef HAVE_FINITE
-# define R_FINITE(x)		((x)!= R_NaReal)
-#else
-# define R_FINITE(x)		finite(x)
-#endif
+# ifndef HAVE_FINITE
+#  define R_FINITE(x)		((x) != R_NaReal)
+# else
+#  define R_FINITE(x)		finite(x)
+# endif
 
-#ifndef HAVE_ISNAN
-# define ISNAN(x)		((x)==R_NaReal)
-#else
-# define ISNAN(x)		(isnan(x)!=0 || (x)==R_NaReal)
-#endif
+# ifndef HAVE_ISNAN
+#  define ISNAN(x)		((x) == R_NaReal)
+# else
+#  define ISNAN(x)		(isnan(x) != 0 || (x) == R_NaReal)
+# endif
 
-#define ISNA(x)			((x)==R_NaReal)
-/* In HP-UX' c89 "NAN" is for a double const. :
- * #define NAN(x)			ISNAN(x)
- */
-#endif
+# define ISNA(x)		((x) == R_NaReal)
+
+# endif
 
 #endif

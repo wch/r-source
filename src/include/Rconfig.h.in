@@ -141,6 +141,7 @@
 
 /* Bug Workarounds */
 #undef HAVE_OSF_SPRINTF_BUG
+#undef FINITE_BROKEN
 #undef LOG_BROKEN
 
 /* Some platforms other than ELF drop the leading _ */

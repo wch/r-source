@@ -335,30 +335,6 @@ octave_cv_flibs="$flibs_result"])
 FLIBS="$octave_cv_flibs"
 AC_MSG_RESULT([$FLIBS])])
 dnl
-dnl R_FUNC_LOG
-dnl
-AC_DEFUN(R_FUNC_LOG,
- [AC_MSG_CHECKING([whether log is broken])
-  AC_TRY_RUN(
-    changequote(<<, >>)dnl
-    <<
-    #include <math.h>
-    #include "confdefs.h"
-    int main () {
-    #ifdef HAVE_ISNAN
-      return(!(log(0.) == -1. / 0. && isnan(log(-1.))));
-    #else
-      return(log(0.) != -1. / 0);
-    #endif
-    }
-    >>,
-    changequote([, ])dnl
-    AC_MSG_RESULT(no),
-    AC_MSG_RESULT(yes)
-    AC_DEFINE(LOG_BROKEN),
-    AC_MSG_WARN(cannot determine when cross-compiling))
- ])
-dnl
 dnl R_FUNC___SETFPUCW
 dnl
 AC_DEFUN(R_FUNC___SETFPUCW,
@@ -381,6 +357,54 @@ AC_DEFUN(R_FUNC___SETFPUCW,
       AC_DEFINE(NEED___SETFPUCW),
       AC_MSG_WARN(cannot determine when cross-compiling))
    ])
+ ])
+dnl
+dnl R_FUNC_FINITE
+dnl
+AC_DEFUN(R_FUNC_FINITE,
+ [AC_MSG_CHECKING([whether finite is broken])
+  AC_TRY_RUN(
+    changequote(<<, >>)dnl
+    <<
+    #include <math.h>
+    #include "confdefs.h"
+    int main () {
+    #ifdef HAVE_FINITE
+      return(finite(1./0.));
+    #else
+      return(0);
+    #endif
+    }
+    >>,
+    changequote([, ])dnl
+    AC_MSG_RESULT(no),
+    AC_MSG_RESULT(yes)
+    AC_DEFINE(FINITE_BROKEN),
+    AC_MSG_WARN(cannot determine when cross-compiling))
+ ])
+dnl
+dnl R_FUNC_LOG
+dnl
+AC_DEFUN(R_FUNC_LOG,
+ [AC_MSG_CHECKING([whether log is broken])
+  AC_TRY_RUN(
+    changequote(<<, >>)dnl
+    <<
+    #include <math.h>
+    #include "confdefs.h"
+    int main () {
+    #ifdef HAVE_ISNAN
+      return(!(log(0.) == -1. / 0. && isnan(log(-1.))));
+    #else
+      return(log(0.) != -1. / 0);
+    #endif
+    }
+    >>,
+    changequote([, ])dnl
+    AC_MSG_RESULT(no),
+    AC_MSG_RESULT(yes)
+    AC_DEFINE(LOG_BROKEN),
+    AC_MSG_WARN(cannot determine when cross-compiling))
  ])
 dnl
 dnl R_C_OPTIEEE
