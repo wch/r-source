@@ -213,7 +213,7 @@ void init_con(Rconnection new, char *description, char *mode)
     new->save = -1000;
 }
 
-/* ------------------- file and fifo connections --------------------- */
+/* ------------------- file connections --------------------- */
 #ifdef Unix
 char * Runix_tmpnam(char * prefix);
 #endif
@@ -431,40 +431,103 @@ static Rconnection newfile(char *description, char *mode)
     return new;
 }
 
+/* file() is now implemented as an op of do_url */
+
+/* ------------------- fifo connections --------------------- */
+
 #if defined(HAVE_MKFIFO) && defined(HAVE_FCNTL_H)
+
+#ifdef HAVE_STAT
+# ifndef Macintosh
+#  include <sys/types.h>
+#  include <sys/stat.h>
+# else
+#  include <types.h>
+#  include <stat.h>
+# endif /* mac */
+#endif
+
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+
 static void fifo_open(Rconnection con)
 {
     char *name;
-    FILE *fp;
-    Rfileconn this = con->private;
-    int fd, flags;
+    Rfifoconn this = con->private;
+    int fd, flags, res;
     int mlen = strlen(con->mode);
-
-/* FIXME
-   need do more if we are to create (not just use) a fifo here */
+    struct stat sb;
 
     name = R_ExpandFileName(con->description);
-    fp = R_fopen(name, con->mode);
-    if(!fp) error("cannot open file `%s'", name);
-    this->fp = fp;
-    fd = fileno(fp);
-    con->isopen = TRUE;
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
     con->canread = !con->canwrite;
     if(mlen >= 2 && con->mode[1] == '+') con->canread = TRUE;
-    this->last_was_write = !con->canread;
+
+    /* if we are to write, create the fifo if needed */
+    if(con->canwrite) {
+	res = stat(name, &sb);
+	if(res) { /* error, does not exist? */
+	    res = mkfifo(name, 00644);
+	    if(res) error("cannot create fifo `%s'", name);
+	} else {
+	    if(!(sb.st_mode & S_IFIFO))
+		error("`%s' exists but is not a fifo", name);
+	}
+    }
+
+    if(con->canread && con->canwrite) flags = O_RDWR;
+    else if(con->canread) flags = O_RDONLY;
+    else flags = O_WRONLY;
+    if(!con->blocking) flags |= O_NONBLOCK;
+    if(con->mode[0] == 'a') flags |= O_APPEND;
+    if(con->mode[0] == 'w') flags |= O_TRUNC;
+    fd = open(name, flags);
+    if(fd < 0) {
+	if(errno == ENXIO) error("fifo `%s' is not ready", name);
+	else error("cannot open fifo `%s'", name);
+    }
+    
+    this->fd = fd;
+    con->isopen = TRUE;
+
     if(mlen >= 2 && con->mode[mlen-1] == 'b') con->text = FALSE;
     else con->text = TRUE;
     con->save = -1000;
-
-    if(!con->blocking) {
-	flags = fcntl(fd, F_GETFL);
-	flags |= O_NONBLOCK;
-	fcntl(fd, F_SETFL, flags);
-    }
-    /* unbuffer it. setvbuf is ISO C89 */
-    setvbuf(this->fp, (char *)NULL, _IONBF, 0);
 }
+
+static void fifo_close(Rconnection con)
+{
+    close(((Rfifoconn)(con->private))->fd);
+    con->isopen = FALSE;
+}
+
+static int fifo_fgetc(Rconnection con)
+{
+    Rfifoconn this = (Rfifoconn)con->private;
+    unsigned char c;
+    int n;
+  
+    n = read(this->fd, (char *)&c, 1);
+    return (n == 1) ? con->encoding[c] : R_EOF;
+}
+
+static size_t fifo_read(void *ptr, size_t size, size_t nitems,
+			Rconnection con)
+{
+    Rfifoconn this = (Rfifoconn)con->private;
+
+    return read(this->fd, ptr, size * nitems)/size;
+}
+
+static size_t fifo_write(const void *ptr, size_t size, size_t nitems,
+			 Rconnection con)
+{
+    Rfifoconn this = (Rfifoconn)con->private;
+
+    return write(this->fd, ptr, size * nitems)/size;
+}
+
 
 static Rconnection newfifo(char *description, char *mode)
 {
@@ -484,15 +547,15 @@ static Rconnection newfifo(char *description, char *mode)
     }
     init_con(new, description, mode);
     new->open = &fifo_open;
-    new->close = &file_close;
-    new->vfprintf = &file_vfprintf;
-    new->fgetc = &file_fgetc;
+    new->close = &fifo_close;
+    new->vfprintf = &dummy_vfprintf;
+    new->fgetc = &fifo_fgetc;
     new->seek = &null_seek;
     new->truncate = &null_truncate;
-    new->fflush = &file_fflush;
-    new->read = &file_read;
-    new->write = &file_write;
-    new->private = (void *) malloc(sizeof(struct fileconn));
+    new->fflush = &null_fflush;
+    new->read = &fifo_read;
+    new->write = &fifo_write;
+    new->private = (void *) malloc(sizeof(struct fifoconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
 	error("allocation of fifo connection failed");

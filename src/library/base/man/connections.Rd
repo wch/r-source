@@ -76,7 +76,7 @@ isIncomplete(con)
   All platforms support file connections and \code{url("file://")}
   connections.  The other types may be partially implemented or
   not implemented at all.  (They do work on most Unix
-  platforms, and all bu \code{fifo} on Windows.)
+  platforms, and all but \code{fifo} on Windows.)
 
   Proxies can be specified for \code{url} connections: see
   \code{\link{download.file}}.
@@ -114,7 +114,7 @@ isIncomplete(con)
 
   If for a \code{file} connection the description is \code{""}, the file
   is immediately opened in \code{"w+"} mode and unlinked from the file
-  system.  This procides a temporary file to write to and then read from.
+  system.  This provides a temporary file to write to and then read from.
   
   The encoding vector is used to map the input from a file or pipe to
   the platform's native character set.  Supplied examples are
@@ -136,7 +136,7 @@ isIncomplete(con)
   unflushed output.
 }
 \section{Blocking}{
-  The default condition for all but socket connections is to be in
+  The default condition for all but fifo and socket connections is to be in
   blocking mode.  In that mode, functions do not return to the \R
   evaluator until they are complete.   In non-blocking mode, operations
   return as soon as possible, so on input they will return with whatever
@@ -155,10 +155,20 @@ isIncomplete(con)
   timeout set by \code{options("timeout")}.  Note that this is a timeout
   for no response at all, not for the whole operation.
 }
+\section{Fifos}{
+  Fifos default to non-blocking.  That follows Svr4 and it probably most
+  natural, but it does have some implications.
+  In particular, opening a non-blocking fifo connection for writing
+  (only) will fail unless some other process is reading on the fifo.
+
+  Opening a fifo for both reading and writing (in any mode: one can only
+  append to fifos) connects both sides of the fifo to the \R process,
+  and provides an similar facility to \code{file()}.
+}
 \note{
   \R's connections are modelled on those in S version 4 (see Chambers,
   1998). However \R also goes well beyond the Svr4 model, for example
-  in output text connections and URL and socket connections.
+  in output text connections and URL, gzfile and socket connections.
 
   The default mode in \R is \code{"r"} except for socket
   connections. This differs from Svr4, where it is the equivalent of
@@ -210,6 +220,14 @@ Tfile <- file()
 cat("abc\ndef\n", file=Tfile)
 readLines(Tfile)
 close(Tfile)
+
+if(capabilities("fifo")) {
+  zz <- fifo("foo", "w+")
+  writeLines("abc", zz)
+  print(readLines(zz))
+  close(zz)
+  unlink("foo")
+}
 
 \dontrun{## Unix examples of use of pipes
 

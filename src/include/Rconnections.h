@@ -50,6 +50,10 @@ typedef struct fileconn {
     Rboolean last_was_write;
 } *Rfileconn;
 
+typedef struct fifoconn {
+    int fd;
+} *Rfifoconn;
+
 #ifdef HAVE_LIBZ
 typedef struct gzfileconn {
     void *fp;

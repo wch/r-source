@@ -23,8 +23,7 @@ NEW FEATURES
 
 	-  New function gzfile() to read from / write to compressed files.
 
-	-  New function fifo() for fifo connections.
-	   [Not quite finished yet.]
+	-  New function fifo() for connections to / from fifos (on Unix).
 
 	-  Text input from file, pipe, fifo, gzfile and url connections
 	   can be read with a user-specified encoding.
@@ -45,7 +44,7 @@ NEW FEATURES
 
 	-  Socket connections via function socketConnection().
 
-	-  The `blocking' argument for file and socket connections
+	-  The `blocking' argument for file, fifo  and socket connections
 	   is now operational.
 
     o	The default method for download.file() (and functions which use
