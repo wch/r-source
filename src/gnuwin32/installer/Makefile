@@ -57,13 +57,13 @@ R.iss: JRins.pl ../$(PREFIX)b1.zip ../$(PREFIX)b2.zip ../$(PREFIX)h.zip \
 	  unzip -qo $(PKGS)/$${p} -d $(PREFIX)/library; \
 	done
 	zip -rmq foo.zip $(PREFIX)/library/*/html
-	unzip -q foo -d $(PREFIX)w
+	unzip -qo foo -d $(PREFIX)w
 	rm foo.zip
 	zip -rmq foo.zip $(PREFIX)/library/*/chtml
-	unzip -q foo -d $(PREFIX)ch
+	unzip -qo foo -d $(PREFIX)ch
 	rm foo.zip
 	zip -rmq foo.zip $(PREFIX)/library/*/latex
-	unzip -q foo -d $(PREFIX)l
+	unzip -qo foo -d $(PREFIX)l
 	rm foo.zip
 	perl JRins.pl $(PREFIX)
 
@@ -79,7 +79,10 @@ Rsmall.iss: JRsmall.pl ../$(PREFIX)b1.zip ../$(PREFIX)b2.zip \
 	unzip -qo ../$(PREFIX)d1 -d $(PREFIX)d1
 	rm $(PREFIX)d1/$(PREFIX)/doc/manual/R-exts.pdf
 	rm $(PREFIX)d1/$(PREFIX)/doc/manual/R-lang.pdf
-	mkdir -p $(PREFIX)/doc/html
+	for p in $(RECOMMENDED); do \
+	  unzip -qo $(PKGS)/$${p} -d $(PREFIX)/library; \
+	done
+	rm -rf $(PREFIX)/library/*/html $(PREFIX)/library/*/latex
 	perl JRsmall.pl $(PREFIX)
 
 miniR.exe: Rsmall.iss
