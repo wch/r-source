@@ -33,7 +33,7 @@ use R::Rd;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.14 $ ';
+my $revision = ' $Revision: 1.15 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -308,7 +308,7 @@ Options:
   --binary              build pre-compiled binary packages, with options:
 END
     if($WINDOWS) {
-    print "  --docs=TYPE	   type(s) of documentation to build and install\n";
+    print "  --docs=TYPE           type(s) of documentation to build and install\n";
 } else {
     print "  --no-docs             do not build and install documentation\n"
 }
