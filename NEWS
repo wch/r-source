@@ -303,8 +303,12 @@ NEW FEATURES
 
     o	readChar() can now read strings with embedded nuls.
 
-    o	reorder.dendrogram() now has a 'agglo.FUN' argument for
-	specification of a weights agglomeration function.
+    o	The "dendrogram" method for reorder() now has a 'agglo.FUN'
+	argument for specification of a weights agglomeration
+	function.
+
+    o	New reorder() method for factors, slightly extending that in
+	lattice.  Contributed by Deepayan Sarkar.
 
     o	Replaying a plot (with replayPlot() or via autoprinting) now
 	automagically opens a device if none is open.
