@@ -617,3 +617,13 @@ R_init_lapack(DllInfo *info)
 
     R_setLapackRoutines(tmp);
 }
+
+#ifdef Win32
+/* force in malloc & free, so ATLAS gets the right ones */
+void lapack_dummy()
+{
+    char *foo;
+    foo = (char *) malloc(1);
+    free(foo);
+}
+#endif

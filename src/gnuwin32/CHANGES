@@ -80,6 +80,12 @@ globalvar.h is no longer used: the header files now declare imported
 variables.  This make it essential to use the R header files rather
 than copying entries from them.
 
+A bug in some linkers in linking against ATLAS has been circumvented.
+There is now a bigger benefit in using ATLAS: on a PII with a
+1000x1000 matrix, svd took 288 sec and La.svd 182 sec (without ATLAS)
+and 59 sec (with); eigen took 163 sec and La.eigen 53 sec (without)
+and 24 sec (with).
+
 
 
 rw1031
