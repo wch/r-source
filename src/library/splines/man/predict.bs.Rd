@@ -1,16 +1,17 @@
 \name{predict.bs}
 \title{Evaluate a predefined spline basis at new values}
 \usage{
-predict.bs(object, newx)
-predict.ns(object, newx)
+predict.bs(object, newx, \dots)
+predict.ns(object, newx, \dots)
 }
 \alias{predict.bs}
 \alias{predict.ns}
 \arguments{
-  \item{object}{the result of a call to \code{bs()} or \code{ns()}, in
-    particular, having attributes describing \code{knots}, \code{degree}
-    etc.}
-  \item{newx}{the \code{x} values at which evaluations are required.}
+    \item{object}{the result of a call to \code{bs()} or \code{ns()}
+	having attributes describing \code{knots}, \code{degree}, etc.}
+    \item{newx}{the \code{x} values at which evaluations are required.}
+    \item{\dots}{Optional additional arguments.  Presently no additional
+    arguments are used.}
 }
 \value{
   an object just like \code{basis}, except evaluated at the new values
