@@ -301,6 +301,11 @@ Date: Thu, 13 Dec 2001 13:46:54 -0500 (EST)
 Subject:  Problem with "missing" in "local" 
 From: J.C.Rougier@durham.ac.uk
 Date: Fri, 4 Jan 2002 13:34:34 GMT
+* PR# 1409 *
+Subject: rare bad bug in sys.function() {or match.arg()}
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 22 Mar 2002 20:41:52 +0100
+--probably same as PR#921
 
 Directory:  Low-level
 
@@ -453,27 +458,11 @@ Date: Fri, 25 Jan 2002 15:08:33 -0500
 Subject:  itemize/item crashes R CMD check 
 From: Ben Bolker <bolker@zoo.ufl.edu>
 Date: Tue, 26 Feb 2002 15:13:04 -0500
-* PR# 1397 *
-Subject: solve() benchmark in R-1.4.1
-From: hyu@stats.uwo.ca
-Date: Wed, 20 Mar 2002 04:50:38 +0100 (MET)
-* PR# 1400 *
-Subject: RMySQL integer range bug
-From: matthias.piksa@web.de
-Date: Wed, 20 Mar 2002 13:41:37 +0100 (MET)
-* PR# 1408 *
-Subject: Inconsistencies in sum()
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 22 Mar 2002 08:00:13 +0000 (GMT)
-* PR# 1409 *
-Subject: rare bad bug in sys.function() {or match.arg()}
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 22 Mar 2002 20:41:52 +0100
-* PR# 1410 *
-Subject: A  WinXP patch
-From: "markieboy13a" <markieboy13a@hotmail.com>
-Date: 23 Mar 2002 02:17:38 +0100
-* PR# 1411 *
-Subject: [±¤°?] ?? ?º ?? ¶? ?? ?²
-From: ??º? <happypeople@kornet.net>
-Date: Sat, 23 Mar 2002 15:53:08 +0900
+* PR# 1414 *
+Subject: Are You Grabbing Your Share?
+From: "" <chris_glaser@iwon.com>
+Date: Mon, 25 Mar 2002 21:08:45 +0100 (MET)
+* PR# 1415 *
+Subject: int 32 bit error on SPARC 64bit
+From: kss28@mail.cba.nau.edu
+Date: Mon, 25 Mar 2002 21:18:58 +0100 (MET)
