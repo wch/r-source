@@ -1040,7 +1040,8 @@ space directives} describing the imports and exports of the name space.
 Additional directives register any shared objects to be loaded and any
 S3-style methods that are provided.  Note that although the file looks
 like @R{} code (and often has @R{}-style comments) it is not processed
-as @R{} code and no conditional processing is currently supported.
+as @R{} code.  Only very simple conditional processing of @code{if}
+statements is implemented as of @R{} 1.9.0.
 
 Like other packages, packages with name spaces are loaded and attached
 to the search path by calling @code{library}.  Only the exported
