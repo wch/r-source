@@ -113,6 +113,8 @@
 #endif
 #endif
 
+#include <unistd.h>
+
 static int UsingReadline = 1;
 static int DefaultSaveAction = 0;
 static int DefaultRestoreAction = 1;
@@ -476,6 +478,37 @@ void R_RestoreGlobalEnv(void)
 #endif
 
 #endif
+
+SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env) {
+  int i, j;
+  char *s;
+  char **e;
+  SEXP ans;  
+
+  checkArity(op, args);
+
+  if(!isString(CAR(args)))
+    errorcall(call, "wrong type for argument\n");
+    
+  i = LENGTH(CAR(args));
+  if (i == 0) {
+    for (i = 0, e = environ; *e != NULL; i++, e++);
+    PROTECT(ans = allocVector(STRSXP, i));
+    for (i = 0, e = environ; *e != NULL; i++, e++)
+      STRING(ans)[i] = mkChar(*e);
+  } else {
+    PROTECT(ans = allocVector(STRSXP,i));
+    for (j = 0; j < i; j++) {   
+      s = getenv(CHAR(STRING(CAR(args))[j]));
+      if (s == NULL)
+	STRING(ans)[j] = mkChar("");
+      else
+	STRING(ans)[j] = mkChar(s);
+    }
+  }
+  UNPROTECT(1);
+  return(ans);
+}
 
 SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
