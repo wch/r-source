@@ -84,12 +84,12 @@ BUG FIXES
     o	expand.grid(x) {the rare case of one argument} now treats factor
 	levels as in the typical case of two or more arguments.
 
-    o   Some implicit coercions to lists could cause segfaults, e.g. 
-          x <- matrix(nrow=20000, ncol=20); x$any <- numeric(0)
-        due to a PROTECT bug. (PR#2923)
+    o	Some implicit coercions to lists could cause segfaults, e.g.
+	  x <- matrix(nrow=20000, ncol=20); x$any <- numeric(0)
+	due to a PROTECT bug. (PR#2923)
 
     o	The replacement functions for colnames() and rownames() did not
-	work for arrays with more than two dimensions.  They could
+	work for arrays with more than two dimensions.	They could
 	create dimnames of the form list(NULL, NULL) rather than
 	remove the dimnames attribute.
 
@@ -97,8 +97,8 @@ BUG FIXES
 	partial=TRUE for factors whose levels were not in
 	lexicographical order.
 
-    o   A serious performance flaw in as() computations was fixed (the
-        methods were not being cached properly.)
+    o	A serious performance flaw in as() computations was fixed (the
+	methods were not being cached properly.)
 
     o	model.frame(~1, data) always returned 1 row. (PR#2958)
 
@@ -107,38 +107,41 @@ BUG FIXES
 	and objects cannot be extended beyond that row. This restriction
 	will be removed in 1.8.0.  (PR#2962)
 
-    o   A bug could produce apparent loops in formal method selection when
-        inheritance was restricted (used for the as() function).  A
-        related problem sometimes broke attaching a package that had
-        methods for basic functions, such as names(), used in method selection.
+    o	A bug could produce apparent loops in formal method selection when
+	inheritance was restricted (used for the as() function).  A
+	related problem sometimes broke attaching a package that had
+	methods for basic functions, such as names(), used in method selection.
 
     o	Empty expressions as in return(x,) could generate subsequent
-	segfaults: they are now errors.  (PR#2880)
+	segfaults: they are now errors.	 (PR#2880)
 
-    o   The Kinderman-Ramage Normal Random Generator had several
-        problems leading to not-quite normally distributed variates 
-        (PR#2846).  One problem was traced to an error in the original 
-        1976 JASA paper!  Thanks to Josef Leydold and his team for 
-        investigating this. The old generator has been retained for
-        reproducibility of older results, under the name 
-        "Buggy Kinderman-Ramage".  A warning is issued if you select it 
-        (also indirectly via RNGversion()).
+    o	The Kinderman-Ramage Normal Random Generator had several
+	problems leading to not-quite normally distributed variates
+	(PR#2846).  One problem was traced to an error in the original
+	1976 JASA paper!  Thanks to Josef Leydold and his team for
+	investigating this. The old generator has been retained for
+	reproducibility of older results, under the name
+	"Buggy Kinderman-Ramage".  A warning is issued if you select it
+	(also indirectly via RNGversion()).
 
-    o    promptMethods() now puts the \alias lines for methods in the
-         normal place, near the top of the file, and quotes class
-         names in signatures.
+    o	promptMethods() now puts the \alias lines for methods in the
+	normal place, near the top of the file, and quotes class
+	 names in signatures.
 
-    o    getS3method() and methods() were not finding methods for
-	 coefficients() and fitted.values() (which dispatch on "coef"
-	 and "fitted" respectively).
+    o	getS3method() and methods() were not finding methods for
+	coefficients() and fitted.values() (which dispatch on "coef"
+	and "fitted" respectively).
 
-    o    scan() (and hence read.table) was not finding matches for
-	 separator chars with the upper bit set.  (PR#3035)
+    o	scan() (and hence read.table) was not finding matches for
+	separator chars with the upper bit set.	 (PR#3035)
 
-    o    lm.(w)fit failed if the fit had rank 0.
+    o	lm.(w)fit failed if the fit had rank 0.
 
-    o    lqs() did not report explicitly that it had failed if all
-	 samples gave singular fits.
+    o	lqs() did not report explicitly that it had failed if all
+	samples gave singular fits.
+
+    o	predict.lm(*, se=TRUE) {w/ weights, w/o newdata} now gives correct
+	SE's.  (PR#3043)
 
 
 

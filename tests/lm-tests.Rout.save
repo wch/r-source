@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-03-31)
+Version 1.7.0 Patched (2003-05-20)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -318,4 +318,10 @@ Malaysia            0.2720 -8.88e-03  0.03520 -4.63e-05 -1.42e-02
      1.1003557      1.1314365      1.1886236      1.6554816      1.0945955 
         Zambia        Jamaica        Uruguay          Libya       Malaysia 
      0.5116454      1.1995171      1.1872025      2.0905736      1.1126445 
+> 
+> ## predict.lm(.)
+> 
+> all.equal(predict(roller.lm,                 se=TRUE)$se,
++           predict(roller.lm, newdata=roller, se=TRUE)$se, tol= 1e-14)
+[1] TRUE
 > 
