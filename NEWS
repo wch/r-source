@@ -111,6 +111,9 @@ BUG FIXES
     o	horizontal adj values outside the range [0, 1] are now
 	supported on devices with canHadj==1 (Windows devices, xfig).
 
+    o	xtabs() without a response was ignoring drop.unused.levels=TRUE.
+
+
 
 
 		CHANGES IN R VERSION 1.3.0
