@@ -225,6 +225,9 @@ BUG FIXES
 	dash lengths are scaled up for lwd > 1 but not reduced for
 	0 <= lwd < 1.
 
+    o   plotting a " " vertically caused an X11 error with some fonts,
+        (notably URW fonts on RedHat) causing plot.lm to crash R
+
     o   F distributions with huge DF now behave more sensibly
 
     o   Crashes could occur if there was an error in inline

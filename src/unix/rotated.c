@@ -854,6 +854,10 @@ static RotatedTextItem *XRotCreateTextItem(Display *dpy, XFontStruct *font,
     item->cols_in=item->max_width;
     item->rows_in=item->nl*height;
 
+    /* fudge in case one of the above is zero: */
+    if (!item->cols_in) item->cols_in=1;
+    if (!item->rows_in) item->rows_in=1;
+
     /* bitmap for drawing on */
     canvas=XCreatePixmap(dpy, DefaultRootWindow(dpy),
 			 item->cols_in, item->rows_in, 1);
