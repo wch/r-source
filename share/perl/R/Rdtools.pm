@@ -37,7 +37,7 @@ sub get_usages {
     ## remove comments
     $text =~ s/([^\\])%.*\n/$1\n/g;
 
-    ## FIXME:
+    ## <FIXME>
     ## This apparently gets quoted args wrong, e.g. in read.table().
     ##   $delimround->quote("\"");
     ##   $delimround->quote("\'");
@@ -84,9 +84,10 @@ sub get_usages {
 	while($usage) {
 	    $usage =~ s/^[\s\n]*//g;
 
-	    ## FIXME:
+	    ## <FIXME>
 	    ## Need to do something smarter about documentation for
 	    ## assignment objects.
+	    ## </FIXME>
 
 	    ## Try to match the next `(...)' arglist from $usage.
 	    my ($prefix, $match, $rest) = $delimround->match($usage);
@@ -95,14 +96,9 @@ sub get_usages {
 	    $prefix =~ s/[\s\n]*$//;
 	    $prefix =~ s/^([\s\n\{]*)//;
 	    $prefix =~ s/(.*\n)*//g;
-	    ## FIXME: Leading semicolons?
+	    ## <FIXME>
+	    ## Leading semicolons?
 	    ##   $prefix =~ s/^;//;
-	    ## </FIXME>
-	    ## FIXME:
-	    ## Hack for method objects documented as `generic[.class]'.
-	    ## Eliminate if Rd allows for \method{GENERIC}{CLASS} markup.
-	    ## $prefix =~ s/\[//g;
-	    ## $prefix =~ s/\]//g;
 	    ## </FIXME>
 	    $prefix =~
 		s/\\method\{([a-zA-Z0-9.]+)\}\{([a-zA-Z0-9.]+)\}/$1\.$2/g;
@@ -119,11 +115,10 @@ sub get_usages {
 		    ## $match its arg list.
 		    ## <FIXME>
 		    ## Heuristics for data set documentation once more.
-		    if($maybe_is_data_set_doc
-		       && ($prefix eq "data")
-		       && ($match !~ /\,/)) {
-			return;
-		    }
+		    return if($maybe_is_data_set_doc
+			      && ($prefix eq "data")
+			      && ($match !~ /\,/));
+		    ## </FIXME>
 		    if($usages{$prefix}) {
 			## Multiple usages for a function are trouble.
 			## We could try to build the full arglist for
