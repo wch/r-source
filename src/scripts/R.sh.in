@@ -74,7 +74,8 @@ Commands:
   config                Obtain configuration information about R
 
 The first five tools (i.e., BATCH, COMPILE, SHLIB, INSTALL, and REMOVE)
-can also be invoked without the 'CMD' option.
+can currently be invoked without the 'CMD' option, but this usage is
+deprecated.
 
 Please use 'R CMD command --help' to obtain further information about
 the usage of 'command'.
@@ -103,6 +104,7 @@ while test -n "${1}"; do
     RHOME|--print-home)
       echo "${R_HOME}"; exit 0 ;;
     BATCH|COMPILE|INSTALL|REMOVE|SHLIB)
+      echo "**** Use of R ${1} rather than R CMD ${1} is deprecated ****"
       exec sh "${R_HOME}/bin/Rcmd" "${@}" ;;
     CMD)
       shift;
