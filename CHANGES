@@ -2,6 +2,9 @@
 
 NEW FEATURES
 
+    o	predict.lm() changed towards S-plus compatibility. Intervals are
+	still available via interval= argument.
+
     o	polygon() now handles NAs 
 
     o   options(show.signif.stars = TRUE).  If FALSE,
