@@ -33,28 +33,27 @@ Rcmd SHLIB was computing dependencies for all C files, not just those
 specified on the command line, and building the DLL from all *.o files
 in the directory.
 
-Added "stay" argument to bringToTop, to allow the user to specify that
-a window should stay on top of other windows.  Also added "stay on top"
-item to the popup menus.  All of these require R to be running in SDI
-mode ("Rgui --sdi").
+Added "stay" argument to bringToTop(), to allow the user to specify
+that a window should stay on top of other windows.  Also added "stay
+on top" item to the popup menus.  All of these require R to be running
+in SDI mode ("Rgui --sdi").
 
-Changed win.graph() so that new windows fit within the MDI client
+Changed windows() so that new windows fit within the MDI client
 area.
 
 Installing (binary) package bundles now checks the MD5 sums and
 reports success, just as for packages.
 
+Rcmd INSTALL now supports versioned install via --with-package-versions.
 
 
-rw1082
-======
+
+Bug fixes
+---------
 
 Fixed list.files() to properly handle paths like "C:", etc.
 
 Fixed unlink() to accept empty file list for Unix consistency.
-
-Fix to allow system malloc to be used (see rw1071) reduced the ability
-to use large memory areas via --max-mem-size with the usual malloc.
 
 Fixed handling of whitespace in Rd2dvi.sh processing of DESCRIPTION
 files.
