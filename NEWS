@@ -785,6 +785,8 @@ BUG FIXES
 
     o   unlist on lists containing expressions now works (PR#5628)
 
+    o	D(), deriv() and deriv3() now also can deal with gamma and lgamma.
+
 
 
 	**************************************************
