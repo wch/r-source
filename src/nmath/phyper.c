@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 1999 R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,8 +31,11 @@
 
 double phyper(double x, double NR, double NB, double n)
 {
-    double N, xstart, xend, xr, xb, sum, ltrm;
+/* Sample of  n balls from  NR red  and  NB black ones;  x are red */
 
+/* basically the same code is used also in  ./qhyper.c -- keep in sync! */
+    double N, xstart, xend, xr, xb, sum, term;
+    int small_N;
 #ifdef IEEE_754
     if(ISNAN(x) || ISNAN(NR) || ISNAN(NB) || ISNAN(n))
 	return x + NR + NB + n;
@@ -50,21 +54,26 @@ double phyper(double x, double NR, double NB, double n)
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
+    small_N = (N < 1000); /* won't have underflow in product below */
     xstart = fmax2(0, n - NB);
     xend = fmin2(n, NR);
     if(x < xstart) return 0.0;
     if(x >= xend) return 1.0;
     xr = xstart;
     xb = n - xr;
-    ltrm = lfastchoose(NR, xr) + lfastchoose(NB, xb) - lfastchoose(N, n);
-    NR = NR - xr;
-    NB = NB - xb;
+    /* if N is small,  term := product.ratio( bin.coef );
+       otherwise work with its logarithm to protect against underflow */
+    term = lfastchoose(NR, xr) + lfastchoose(NB, xb) - lfastchoose(N, n);
+    if(small_N) term = exp(term);
+    NR -= xr;
+    NB -= xb;
     sum = 0.0;
     while(xr <= x) {
-	sum += exp(ltrm);
+	sum += (small_N ? term : exp(term));
 	xr++;
 	NB++;
-	ltrm += log((NR / xr) * (xb / NB));
+	if(small_N) term *= (NR / xr) * (xb / NB);
+	else	term += log((NR / xr) * (xb / NB));
 	xb--;
 	NR--;
     }

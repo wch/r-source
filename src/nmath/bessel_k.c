@@ -202,7 +202,7 @@ void K_bessel(double *x, double *alpha, long *nb,
     /*static double eps = 2.22e-16;*/
     /*static double xinf = 1.79e308;*/
     /*static double xmin = 2.23e-308;*/
-    static double sqxmin = 1.49e-154;
+    static double sqxmin = 1.49e-154;/* = sqrt(xmin) */
 
     /*---------------------------------------------------------------------
      * Mathematical constants
