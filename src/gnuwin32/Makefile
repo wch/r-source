@@ -154,7 +154,6 @@ Rm.exp1: $(OBJS-EXTRA)
 	$(ECHO) EXPORTS > $@
 	$(NM) $(OBJS-EXTRA) > RDefs
 	$(SED) -n '/^........ [T] _/s/^........ [T] _/ /p' RDefs >> $@
-	$(CAT) exported-vars >> $@
 	$(RM) RDefs
 
 ../../library/R.css: ../../doc/html/R.css
@@ -189,7 +188,7 @@ libRblas.a:  Rblas.def
 ifeq ($(strip $(USE_ATLAS)),YES)
 ../../bin/Rblas.dll: blas00.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared -o $@ $^ Rblas.def -L $(ATLAS_PATH) \
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L $(ATLAS_PATH) \
 	   -L. -lR -lg2c -lf77blas -latlas
 ## suppress lots of warnings: this is a dummy
 blas00.o: blas00.c
@@ -197,7 +196,7 @@ blas00.o: blas00.c
 else
 ../../bin/Rblas.dll: blas.o cmplxblas.o dllversion.o
 	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared -o $@ Rblas.def $^ -L. -lR
+	$(DLL) -shared $(DLLFLAGS) -o $@ Rblas.def $^ -L. -lR
 
 blas.o: ../appl/blas.f
 	$(F77) $(FFLAGS) -c $< -o $@
@@ -496,6 +495,9 @@ install:
 	cp *.zip /pub/bdr/RWin/Rpre
 
 REC_TGZ = $(wildcard ../../Recommended/*)
+
+get_recommended:
+	(cd ../..; rsync -rCv --delete cran.r-project.org::CRAN/src/contrib/1.6.0/Recommended .)
 
 recommended:
 	@echo "Making recommended packages"
