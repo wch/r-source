@@ -112,31 +112,22 @@ function(x, delim = c("\{", "\}"), syntax = "Rd")
 
 ### * Internal utility functions.
 
-### ** .getNamespaceS3methodNames
+### ** .getNamespaceS3methodsList
 
-.getNamespaceS3methodNames <-
-function(ns, dir, nsInfo)
+.getNamespaceS3methodsList <-
+function(nsInfo)
 {
-    ## Get the names of the registered S3 methods for a namespace 'ns',
-    ## or a @file{NAMESPACE} file in directory 'dir', or an 'nsInfo'
-    ## object returned by parseNamespaceFile().  (Note that when doing
-    ## QC on non-installed packages with a @file{NAMESPACE} file, we
-    ## parse the @file{NAMESPACE} file anyway to determine the exports.)
-    S3methods <- if(!missing(ns))
-        sapply(getNamespaceInfo(ns, "S3methods"), "[[", 3)
-    else {
-        if(!missing(dir))
-            nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
-        sapply(nsInfo$S3methods,
-               function(x) {
-                   if(length(x) > 2)
-                       x[3]
-                   else
-                       paste(x, collapse = ".")
-               })
-    }
-    if(!length(S3methods)) S3methods <- character(0) # list() if empty
-    S3methods
+    ## Get the list of the registered S3 methods for an 'nsInfo' object
+    ## returned by parseNamespaceFile().  Each element of the list is a
+    ## character vector of length 3 with the names of the generic, class
+    ## and method (as a function).
+    lapply(nsInfo$S3methods,
+           function(spec) {
+               if(length(spec) == 2)
+                   spec <-
+                       c(spec, paste(spec, collapse = "."))
+               spec
+           })
 }
 
 ### ** .isPrimitive
@@ -260,19 +251,21 @@ function(package)
     ## Return a character vector with the names of the functions in
     ## @code{package} which 'look' like S3 methods, but are not.
     ## using package=NULL returns all known examples
-    stopList <- list(base = c("boxplot.stats",
-	   "close.screen", "close.socket",
-	   "flush.console",
-	   "format.char", "format.info", "format.pval",
-	   "influence.measures",
-	   "plot.new", "plot.window", "plot.xy", "print.coefmat",
-           "rep.int",
-	   "split.screen",
-	   "update.packages"),
-           XML = "text.SAX",
-	   quadprog = c("solve.QP", "solve.QP.compact"),
-	   sm = "print.graph",
-	   ts = "lag.plot")
+    stopList <-
+        list(base = c("boxplot.stats",
+             "close.screen", "close.socket",
+             "fitted.values",
+             "flush.console",
+             "format.char", "format.info", "format.pval",
+             "influence.measures",
+             "plot.new", "plot.window", "plot.xy", "print.coefmat",
+             "rep.int",
+             "split.screen",
+             "update.packages"),
+             XML = "text.SAX",
+             quadprog = c("solve.QP", "solve.QP.compact"),
+             sm = "print.graph",
+             ts = "lag.plot")
     if(is.null(package)) return(unlist(stopList))
     thisPkg <- stopList[[package]]
     if(!length(thisPkg)) character(0) else thisPkg
