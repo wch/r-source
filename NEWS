@@ -138,6 +138,9 @@ NEW FEATURES
 	only the Windows screen device supports this function.	This
 	should improve before the 2.1.0 release.)
 
+    o	New functions gray.colors()/grey.colors() for gray color
+        palettes.
+
     o	grep(), gsub(), sub() and regexpr() now always attempt to
 	coerce their 'pattern', 'x', 'replacement' and 'text'
 	arguments to character.  Previously this was undocumented but
