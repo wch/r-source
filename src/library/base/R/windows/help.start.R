@@ -21,3 +21,15 @@ help.start <- function(update = TRUE, gui = "irrelevant",
     }
     invisible("")
 }
+
+browseURL <- function(url, browser = getOption("browser"))
+{
+    if(!is.character(url) || !(length(url) == 1) || (nchar(url) == 0))
+        stop("url must be a non-empty character string")
+    if(is.null(browser))
+        shell.exec(url)
+    else {
+        cmd <- paste('"', browser, '" ', url, sep="")
+        system(cmd, wait=FALSE)
+    }
+}
