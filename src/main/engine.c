@@ -1912,7 +1912,8 @@ void GEcopyDisplayList(int fromDevice)
      */
     for (i=0; i<numGraphicsSystems; i++) 
 	if (dd->gesd[i] != NULL)
-	    (dd->gesd[i]->callback)(GE_CopyState, dd, R_NilValue);
+	    (dd->gesd[i]->callback)(GE_CopyState, (GEDevDesc*) fromDev, 
+				    R_NilValue);
     GEplayDisplayList(dd);
     if (!dd->dev->displayListOn)
 	GEinitDisplayList(dd);
