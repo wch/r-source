@@ -92,9 +92,10 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
     else old
 }
 
-postscript <- function (file = "Rplots.ps", ...)
+postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
+                  onefile=TRUE, ...)
 {
-    new <- list(...)# eval
+    new <- list(onefile=onefile,...)# eval
     old <- check.options(new = new, name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
 
@@ -105,3 +106,14 @@ postscript <- function (file = "Rplots.ps", ...)
                  old$onefile, old$pagecentre, old$print.it, old$command))
 }
 ##--> source in ../../../main/devices.c	 and ../../../main/devPS.c
+xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
+                  onefile=FALSE, ...)
+{
+    new <- list(onefile=onefile, ...)# eval
+    old <- check.options(new = new, name.opt = ".PostScript.Options",
+			 reset = FALSE, assign.opt = FALSE)
+
+    .Internal(XFig(file, old$paper, old$family, old$bg, old$fg,
+		 old$width, old$height, old$horizontal, old$pointsize,
+                 old$onefile, old$pagecentre))
+}

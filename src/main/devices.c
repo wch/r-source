@@ -322,3 +322,63 @@ SEXP do_Gnome(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 
 
+/*  XFig Device Driver Parameters:
+ *  ------------------------		--> devPS.c
+ *  file	= output filename
+ *  paper	= paper type
+ *  face	= typeface = "family"
+ *  bg		= background color
+ *  fg		= foreground color
+ *  width	= width in inches
+ *  height	= height in inches
+ *  horizontal	= {TRUE: landscape; FALSE: portrait}
+ *  ps		= pointsize
+ *  onefile     = {TRUE: normal; FALSE: single EPSF page}
+ *  pagecentre  = centre plot region on paper?
+ */
+
+SEXP do_XFig(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+#ifndef Macintosh
+    DevDesc *dd;
+    char *vmax;
+    char *file, *paper, *face, *bg, *fg;
+    int horizontal, onefile, pagecentre;
+    double height, width, ps;
+    gcall = call;
+    vmax = vmaxget();
+    file = SaveString(CAR(args), 0);  args = CDR(args);
+    paper = SaveString(CAR(args), 0); args = CDR(args);
+    face = SaveString(CAR(args), 0);  args = CDR(args);
+    bg = SaveString(CAR(args), 0);    args = CDR(args);
+    fg = SaveString(CAR(args), 0);    args = CDR(args);
+    width = asReal(CAR(args));	      args = CDR(args);
+    height = asReal(CAR(args));	      args = CDR(args);
+    horizontal = asLogical(CAR(args));args = CDR(args);
+    if(horizontal == NA_LOGICAL)
+	horizontal = 1;
+    ps = asReal(CAR(args));	      args = CDR(args);
+    onefile = asLogical(CAR(args));   args = CDR(args);
+    pagecentre = asLogical(CAR(args));
+
+    if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
+	return 0;
+    /* Do this for early redraw attempts */
+    dd->displayList = R_NilValue;
+    GInit(&dd->dp);
+    if(!XFigDeviceDriver(dd, file, paper, face, bg, fg, width, height,
+		       (double)horizontal, ps, onefile, pagecentre)) {
+	free(dd);
+	errorcall(call, "unable to start device xfig");
+    }
+    gsetVar(install(".Device"), mkString("xfig"), R_NilValue);
+    addDevice(dd);
+    initDisplayList(dd);
+    vmaxset(vmax);
+    return R_NilValue;
+#else
+    gcall = call;
+    DeviceUnavailable("xfig");
+    return R_NilValue;		/* -Wall */
+#endif
+}

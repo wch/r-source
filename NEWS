@@ -31,21 +31,21 @@ NEW FEATURES
     o	cor.test(method="spearman") might give slightly better P values,
 	since it now relies on pnorm() (with proper tail) instead of alnorm.
 
-    o	internal cleanup of do_lapply
+    o	Internal cleanup of do_lapply.
 
-    o	added col option to rug
+    o	Added col option to rug.
 
-    o	internally using global R_Expressions [getOption("expressions")]
+    o	Internally using global R_Expressions [getOption("expressions")]
 	dramatically speeds up eval.c.
 
-    o	new function max.col() from MASS, thanks to V&R.
+    o	New function max.col() from MASS, thanks to V&R.
 
     o	CVS logs on http://developer.r-project.org/R.cvslog
 
     o	str(.) has a new optional argument "nchar.max = 128" and truncates
 	strings longer than that.  Also eliminated a few minor glitches.
 
-    o   boxplot returns (and bxp accepts) a list containing the summary
+    o   boxplot() returns (and bxp() accepts) a list containing the summary
         statistics for the boxes (changed from a list of elements one for
         each box).
 
@@ -62,6 +62,8 @@ NEW FEATURES
 
     o	postscript(print.it=TRUE) now does print the plot file.
 
+    o	postscript(onefile=FALSE) now produces multiple separate files.
+
     o	image() has a new argument "breaks" and divides the zlim range
 	into equal-length intervals.
 
@@ -73,6 +75,8 @@ NEW FEATURES
 
     o	Configuring without X (e.g. --without-x) does work (at last).
 	If R has been built without X11 the default GUI is "none".
+
+    o	New device xfig() to produce XFig files.
 
 
 BUG FIXES

@@ -428,6 +428,10 @@ int PSDeviceDriver(DevDesc*, char*, char*, char*,
 
 int PicTeXDeviceDriver(DevDesc*, char*, char*, char*, double, double, int);
 
+int XFigDeviceDriver(DevDesc*, char*, char*, char*,
+		     char*, char*, double, double, double, double, int, 
+		     int);
+
 /*ifdef Unix : ../unix/devX11.h	 only in few places*/
 
 #ifdef Win32

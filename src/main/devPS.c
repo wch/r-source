@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2000   Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1998--2000  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -60,7 +60,7 @@ Family[] = {
        { "AvantGarde-DemiOblique",		"agdo____" },
        { "Symbol",				"sy______" }}
     },
-    
+
     { "Bookman",
       {{ "Bookman-Light",			"bkl_____" },
        { "Bookman-Demi",			"bkd_____" },
@@ -76,7 +76,7 @@ Family[] = {
        { "Courier-BoldOblique",			"cobo____" },
        { "Symbol",				"sy______" }}
     },
-	  
+
     { "Helvetica",
       {{ "Helvetica",				"hv______" },
        { "Helvetica-Bold",			"hvb_____" },
@@ -430,7 +430,7 @@ static void PSFileHeader(FILE *fp, int font, int encoding, char *papername,
 			 int EPSFheader,
 			 double left, double bottom, double right, double top)
 {
-    if(EPSFheader) 
+    if(EPSFheader)
 	fprintf(fp, "%%!PS-Adobe-3.0 EPSF-3.0\n");
     else
 	fprintf(fp, "%%!PS-Adobe-3.0\n");
@@ -516,7 +516,7 @@ void PostScriptEndPage(FILE *fp)
     fprintf(fp, "ep\n");
 }
 
-void PostScriptSetClipRect(FILE *fp, double x0, double x1, 
+void PostScriptSetClipRect(FILE *fp, double x0, double x1,
 			   double y0, double y1)
 {
         fprintf(fp, "%.2f %.2f %.2f %.2f cl\n", x0, y0, x1, y1);
@@ -652,7 +652,7 @@ typedef struct {
 
     FILE *psfp;		 /* output file */
 
-    int EPSFheader;      /* EPSF header */
+    int onefile;         /* EPSF header etc*/
 }
 PostScriptDesc;
 
@@ -801,21 +801,21 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     pd->pagecentre = pagecentre;
     pd->paperwidth = 72 * pd->pagewidth;
     pd->paperheight = 72 * pd->pageheight;
-    pd->EPSFheader = !onefile;
+    pd->onefile = onefile;
     if(pd->landscape) {
 	double tmp;
 	tmp = pd->pagewidth;
 	pd->pagewidth = pd->pageheight;
 	pd->pageheight = tmp;
     }
-    if(strcmp(pd->papername, "special")) 
+    if(strcmp(pd->papername, "special"))
     {
 	if(pd->width < 0.1 || pd->width > pd->pagewidth-0.5)
 	    pd->width = pd->pagewidth-0.5;
 	if(pd->height < 0.1 || pd->height > pd->pageheight-0.5)
 	    pd->height = pd->pageheight-0.5;
     }
-    if(pagecentre) 
+    if(pagecentre)
     {
 	xoff = (pd->pagewidth - pd->width)/2.0;
 	yoff = (pd->pageheight - pd->height)/2.0;
@@ -845,7 +845,7 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     if(pointsize < 6.0) pointsize = 6.0;
     if(pointsize > pd->maxpointsize) pointsize = pd->maxpointsize;
     dd->dp.ps = pointsize;
-    dd->dp.cra[0] = 0.9 * pointsize; 
+    dd->dp.cra[0] = 0.9 * pointsize;
     dd->dp.cra[1] = 1.2 * pointsize;
 
     /* Character Addressing Offsets */
@@ -872,6 +872,7 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 
     /*	Start the driver */
 
+    pd->pageno = 0;
     if(!PS_Open(dd, pd)) {
 	free(pd);
 	return 0;
@@ -998,7 +999,8 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
 	pd->open_type = 1;
 #endif
     } else {
-	pd->psfp = R_fopen(R_ExpandFileName(pd->filename), "w");
+	sprintf(buf, pd->filename, pd->pageno + 1); /* page 1 to start */
+	pd->psfp = R_fopen(R_ExpandFileName(buf), "w");
 	pd->open_type = 0;
     }
     if (!pd->psfp) return 0;
@@ -1011,7 +1013,7 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
 		     pd->paperwidth,
 		     pd->paperheight,
 		     pd->landscape,
-		     pd->EPSFheader,
+		     !(pd->onefile),
 		     dd->dp.bottom,
 		     dd->dp.left,
 		     dd->dp.top,
@@ -1024,7 +1026,7 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
 		     pd->paperwidth,
 		     pd->paperheight,
 		     pd->landscape,
-		     pd->EPSFheader,
+		     !(pd->onefile),
 		     dd->dp.left,
 		     dd->dp.bottom,
 		     dd->dp.right,
@@ -1032,7 +1034,6 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
 
     pd->fontstyle = 1;
     pd->fontsize = 10;
-    pd->pageno = 0;
     return 1;
 }
 
@@ -1040,7 +1041,7 @@ static int PS_Open(DevDesc *dd, PostScriptDesc *pd)
 static void PS_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
-    
+
     PostScriptSetClipRect(pd->psfp, x0, x1, y0, y1);
 }
 
@@ -1048,16 +1049,21 @@ static void PS_Resize(DevDesc *dd)
 {
 }
 
+static void PostScriptClose(DevDesc *dd);
+
 static void PS_NewPage(DevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
-    pd->pageno++;
-    if(pd->pageno > 1) {
-	PostScriptEndPage(pd->psfp);
-    }
-    if(pd->pageno > 1 && pd->EPSFheader) 
-	warning("multiple pages used in postscript() with onefile=FALSE");
+
+    if(pd->onefile) {
+	if(++pd->pageno > 1) PostScriptEndPage(pd->psfp);
+    } else if(pd->pageno > 0) {
+	PostScriptClose(dd);
+	PS_Open(dd, pd);
+	pd->pageno++;
+	pd->fill = NA_INTEGER;
+    } else pd->pageno++;
     PostScriptStartPage(pd->psfp, pd->pageno);
     PostScriptSetFont(pd->psfp, pd->fontstyle-1, pd->fontsize);
     PostScriptSetLineWidth(pd->psfp, 0.75);
@@ -1067,25 +1073,16 @@ static void PS_NewPage(DevDesc *dd)
 		     R_BLUE(pd->col)/255.0);
     if(dd->dp.bg != R_RGB(255,255,255)) {
 	SetFill(dd->dp.bg, dd);
-#ifdef OLD
-	PostScriptRectangle(pd->psfp,
-			    dd->gp.left,
-			    dd->gp.bottom,
-			    dd->gp.right,
-			    dd->gp.top);
-	fprintf(pd->psfp, "p2\n");
-#else
 	PostScriptRectangle(pd->psfp,
 			    0, 0, 72.0 * pd->pagewidth, 72.0 * pd->pageheight);
 	fprintf(pd->psfp, "p2\n");
-#endif
     }
 }
 
 #ifdef Win32
 int   runcmd(char *cmd, int wait, int visible, char *finput);
 #endif
-static void PS_Close(DevDesc *dd)
+static void PostScriptClose(DevDesc *dd)
 {
     char buff[PATH_MAX];
     int err = 0;
@@ -1093,8 +1090,8 @@ static void PS_Close(DevDesc *dd)
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
 
     PostScriptFileTrailer(pd->psfp, pd->pageno);
-    if(pd->open_type == 1) 
-	pclose(pd->psfp); 
+    if(pd->open_type == 1)
+	pclose(pd->psfp);
     else {
 	fclose(pd->psfp);
 	if (pd->printit) {
@@ -1108,10 +1105,17 @@ static void PS_Close(DevDesc *dd)
 #ifdef Win32
 	    err = runcmd(buff, 0, 0, NULL);
 #endif
-	    if (err) 
+	    if (err)
 		warning("error from postscript() in running:\n    %s", buff);
 	}
     }
+}
+
+static void PS_Close(DevDesc *dd)
+{
+    PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
+
+    PostScriptClose(dd);
     free(pd);
 }
 
@@ -1166,7 +1170,7 @@ static void PS_Rect(double x0, double y0, double x1, double y1, int coords,
     /* code == 0, nothing to draw */
     /* code == 1, outline only */
     /* code == 2, fill only */
-    /* code == 3, outine and fill */
+    /* code == 3, outline and fill */
 
     code = 2 * (bg != NA_INTEGER) + (fg != NA_INTEGER);
 
@@ -1194,7 +1198,7 @@ static void PS_Circle(double x, double y, int coords, double r,
     /* code == 0, nothing to draw */
     /* code == 1, outline only */
     /* code == 2, fill only */
-    /* code == 3, outine and fill */
+    /* code == 3, outline and fill */
 
     code = 2 * (bg != NA_INTEGER) + (fg != NA_INTEGER);
 
@@ -1311,5 +1315,630 @@ static void PS_Mode(int mode, DevDesc* dd)
 }
 
 static void PS_Hold(DevDesc *dd)
+{
+}
+
+
+
+/***********************************************************************
+
+                 XFig driver shares font handling
+
+************************************************************************/
+
+
+
+typedef struct {
+    char filename[PATH_MAX];
+
+    char papername[64];	 /* paper name */
+    int paperwidth;	 /* paper width in big points (1/72 in) */
+    int paperheight;	 /* paper height in big points */
+    int landscape;	 /* landscape mode */
+    int pageno;		 /* page number */
+
+    int fontfamily;	 /* font family */
+    int fontnum;	 /* font number in XFig */
+    int encoding;	 /* font encoding */
+    int fontstyle;	 /* font style, R, B, I, BI, S */
+    int fontsize;	 /* font size in points */
+    int maxpointsize;
+
+    double width;	 /* plot width in inches */
+    double height;	 /* plot height in inches */
+    double pagewidth;	 /* page width in inches */
+    double pageheight;	 /* page height in inches */
+    int pagecentre;      /* centre image on page? */
+
+    double lwd;		 /* current line width */
+    int lty;		 /* current line type */
+    rcolor col;		 /* current color */
+    rcolor fill;	 /* current fill color */
+    rcolor bg;		 /* background color */
+    int XFigColors[534]; int nXFigColors;
+
+    FILE *psfp;		 /* output file */
+    FILE *tmpfp;         /* temp file */
+    char tmpname[PATH_MAX];
+
+    int onefile; 
+    int ymax;            /* used to invert coord system */
+} XFigDesc;
+
+/* TODO
+
+   line styles
+   more accurate text positioning. Ross suggests using XFig justification
+     if appropriate.
+ */
+
+static void
+XF_FileHeader(FILE *fp, char *papername, int landscape, int onefile)
+{
+    fprintf(fp, "#FIG 3.2\n");
+    if(landscape) fprintf(fp, "Landscape\n"); else fprintf(fp, "Portrait\n");
+    fprintf(fp, "Flush Left\nInches\n");
+    /* Fix */fprintf(fp, "%s\n", papername);
+    fprintf(fp, "100.0\n");
+    if(onefile) fprintf(fp, "Multiple\n");
+    else fprintf(fp, "Single\n");
+    fprintf(fp, "-2\n"); /* no background */
+    fprintf(fp, "1200 2\n"); /* coordinate system */
+    fprintf(fp, "# End of XFig header\n");
+}
+
+static void XF_FileTrailer(FILE *fp)
+{
+    fprintf(fp, "# end of XFig file\n");
+}
+
+
+static void XF_EndPage(FILE *fp)
+{
+    fprintf(fp, "# end of XFig page\n");
+}
+
+static void XF_WriteString(FILE *fp, char *str)
+{
+    unsigned int c;
+    for ( ; *str; str++) {
+	c = (unsigned char)*str;
+	if (c > 127) {
+	    fprintf(fp, "\\%o", c);
+	} else {
+	    switch(*str) {
+	    case '\n':
+		fprintf(fp, "\\n");
+		break;
+	    case '\\':
+		fprintf(fp, "\\\\");
+		break;
+	    default:
+		fputc(*str, fp);
+		break;
+	    }
+	}
+    }
+}
+
+static int XF_SetColor(int color, XFigDesc *pd)
+{
+    int i;
+    if (color <0 || color > 0xffffff) return -1;
+    for (i = 0; i < pd->nXFigColors; i++)
+    {
+	if(color == pd->XFigColors[i]) return i;
+    }
+    if(pd->nXFigColors == 534) {
+	error("run out of colors in xfig()");
+    }
+    /* new colour */
+    fprintf(pd->psfp, "0 %d #%02x%02x%02x\n", pd->nXFigColors,  
+	    R_RED(color), R_GREEN(color), R_BLUE(color));
+    pd->XFigColors[pd->nXFigColors] = color;
+    return pd->nXFigColors++;
+}
+
+static void XFconvert(double *x, double *y, XFigDesc *pd)
+{
+    (*x) *= 16.667;
+    (*y) = pd->ymax - 16.667*(*y);
+}
+
+
+static int XF_SetLty(XFigDesc *pd)
+{
+    return 0;
+}
+
+/* Device Driver Actions */
+
+static void   XFig_Activate(DevDesc*);
+static void   XFig_Circle(double, double, int, double, int, int, DevDesc*);
+static void   XFig_Clip(double, double, double, double, DevDesc*);
+static void   XFig_Close(DevDesc*);
+static void   XFig_Deactivate(DevDesc*);
+static void   XFig_Hold(DevDesc*);
+static void   XFig_Line(double, double, double, double, int, DevDesc*);
+static int    XFig_Locator(double*, double*, DevDesc*);
+static void   XFig_Mode(int, DevDesc*);
+static void   XFig_NewPage(DevDesc*);
+static int    XFig_Open(DevDesc*, XFigDesc*);
+static void   XFig_Polygon(int, double*, double*, int, int, int, DevDesc*);
+static void   XFig_Polyline(int, double*, double*, int, DevDesc*);
+static void   XFig_Rect(double, double, double, double, int, int, int, DevDesc*);
+static void   XFig_Resize(DevDesc*);
+static void   XFig_Text(double, double, int, char*, double, DevDesc*);
+
+static int XFig_basenums[] = {4, 8, 12, 16, 20, 24, 28, 0};
+
+
+/* Driver Support Routines */
+
+int XFigDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
+		     char *bg, char *fg,
+		     double width, double height,
+		     double horizontal, double ps,
+		     int onefile, int pagecentre)
+{
+    /* If we need to bail out with some sort of "error" */
+    /* then we must free(dd) */
+
+    double xoff, yoff, pointsize;
+    XFigDesc *pd;
+
+    /* Check and extract the device parameters */
+
+    if(strlen(file) > PATH_MAX - 1) {
+	free(dd);
+	error("filename too long in xfig");
+    }
+
+    /* allocate new xfig device description */
+    if (!(pd = (XFigDesc *) malloc(sizeof(XFigDesc))))
+	return 0;
+
+    /* from here on, if need to bail out with "error", must also */
+    /* free(pd) */
+
+    /* initialize xfig device description */
+    strcpy(pd->filename, file);
+    strcpy(pd->papername, paper);
+    pd->fontfamily = MatchFamily(family);
+    pd->fontnum = XFig_basenums[pd->fontfamily];
+    pd->encoding = 1;
+    pd->bg = str2col(bg);
+    pd->col = str2col(fg);
+    pd->fill = NA_INTEGER;
+    pd->width = width;
+    pd->height = height;
+    pd->landscape = horizontal;
+    pointsize = floor(ps);
+    if(pd->bg == NA_INTEGER && pd->col == NA_INTEGER) {
+	free(dd);
+	free(pd);
+	error("invalid foreground/background color (xfig)");
+    }
+
+
+    /* Deal with paper and plot size and orientation */
+
+    if(!strcmp(pd->papername, "Default") ||
+       !strcmp(pd->papername, "default")) {
+	SEXP s = STRING(GetOption(install("papersize"), R_NilValue))[0];
+	if(s != NA_STRING && strlen(CHAR(s)) > 0)
+	    strcpy(pd->papername, CHAR(s));
+	else strcpy(pd->papername, "A4");
+    }
+    if(!strcmp(pd->papername, "A4") ||
+       !strcmp(pd->papername, "a4")) {
+	strcpy(pd->papername, "A4");
+	pd->pagewidth  = 21.0 / 2.54;
+	pd->pageheight = 29.7 / 2.54;
+    }
+    else if(!strcmp(pd->papername, "Letter") ||
+	    !strcmp(pd->papername, "letter")) {
+	strcpy(pd->papername, "Letter");
+	pd->pagewidth  =  8.5;
+	pd->pageheight = 11.0;
+    }
+    else if(!strcmp(pd->papername, "Legal") ||
+	    !strcmp(pd->papername, "legal")) {
+	strcpy(pd->papername, "Legal");
+	pd->pagewidth  =  8.5;
+	pd->pageheight = 14.0;
+    }
+    else {
+	free(dd);
+	free(pd);
+	error("invalid page type `%s' (xfig)", pd->papername);
+    }
+    pd->pagecentre = pagecentre;
+    pd->paperwidth = 72 * pd->pagewidth;
+    pd->paperheight = 72 * pd->pageheight;
+    pd->ymax = (int)(1200.0 * pd->pageheight);
+    pd->onefile = onefile;
+    if(!onefile) {
+	char *p = strrchr(pd->filename, '%');
+	if(!p)
+	    warning("xfig(%s, onefile=FALSE) will only return the last plot", pd->filename);
+    }
+    if(pd->landscape) {
+	double tmp;
+	tmp = pd->pagewidth;
+	pd->pagewidth = pd->pageheight;
+	pd->pageheight = tmp;
+    }
+    if(pd->width < 0.1 || pd->width > pd->pagewidth-0.5)
+	pd->width = pd->pagewidth-0.5;
+    if(pd->height < 0.1 || pd->height > pd->pageheight-0.5)
+	pd->height = pd->pageheight-0.5;
+    if(pagecentre) {
+	xoff = (pd->pagewidth - pd->width)/2.0;
+	yoff = (pd->pageheight - pd->height)/2.0;
+    } else {
+	xoff = yoff = 0.0;
+    }
+    pd->maxpointsize = 72.0 * ((pd->pageheight > pd->pagewidth) ?
+			       pd->pageheight : pd->pagewidth);
+    pd->pageno = 0;
+    pd->lty = 1;
+
+    /* Set graphics parameters that must be set by device driver. */
+    /* Page dimensions in points. */
+
+    dd->dp.bg = pd->bg;
+    dd->dp.fg = dd->dp.col = pd->col;
+    dd->dp.left = 72 * xoff;			/* left */
+    dd->dp.right = 72 * (xoff + pd->width);	/* right */
+    dd->dp.bottom = 72 * yoff;		/* bottom */
+    dd->dp.top = 72 * (yoff + pd->height);	/* top */
+
+    /* Base Pointsize */
+    /* Nominal Character Sizes in Pixels */
+    /* Only right for 12 point font. */
+    /* Max pointsize suggested by Peter Dalgaard */
+
+    if(pointsize < 6.0) pointsize = 6.0;
+    if(pointsize > pd->maxpointsize) pointsize = pd->maxpointsize;
+    dd->dp.ps = pointsize;
+    dd->dp.cra[0] = 0.9 * pointsize;
+    dd->dp.cra[1] = 1.2 * pointsize;
+
+    /* Character Addressing Offsets */
+    /* These offsets should center a single */
+    /* plotting character over the plotting point. */
+    /* Pure guesswork and eyeballing ... */
+
+    dd->dp.xCharOffset =  0.4900;
+    dd->dp.yCharOffset =  0.3333;
+    dd->dp.yLineBias = 0.2;
+
+    /* Inches per Raster Unit */
+    /* 1200 dpi */
+    dd->dp.ipr[0] = 1.0/72.0;
+    dd->dp.ipr[1] = 1.0/72.0;
+
+    dd->dp.canResizePlot = 0;
+    dd->dp.canChangeFont = 1;
+    dd->dp.canRotateText = 1;
+    dd->dp.canResizeText = 1;
+    dd->dp.canClip = 0;
+
+    pd->XFigColors[7] = 0xffffff;
+    pd->nXFigColors = 32;
+
+    /*	Start the driver */
+
+    if(!XFig_Open(dd, pd)) {
+	free(pd);
+	return 0;
+    }
+
+    dd->dp.open	      = XFig_Open;
+    dd->dp.close      = XFig_Close;
+    dd->dp.activate   = XFig_Activate;
+    dd->dp.deactivate = XFig_Deactivate;
+    dd->dp.resize     = XFig_Resize;
+    dd->dp.newPage    = XFig_NewPage;
+    dd->dp.clip	      = XFig_Clip;
+    dd->dp.text	      = XFig_Text;
+    dd->dp.strWidth   = PS_StrWidth;
+    dd->dp.metricInfo = PS_MetricInfo;
+    dd->dp.rect	      = XFig_Rect;
+    dd->dp.circle     = XFig_Circle;
+    dd->dp.line	      = XFig_Line;
+    dd->dp.polygon    = XFig_Polygon;
+    dd->dp.polyline   = XFig_Polyline;
+    dd->dp.locator    = XFig_Locator;
+    dd->dp.mode	      = XFig_Mode;
+    dd->dp.hold	      = XFig_Hold;
+
+    dd->deviceSpecific = (void *) pd;
+    dd->displayListOn = 0;
+    return 1;
+}
+
+
+static int XFig_Open(DevDesc *dd, XFigDesc *pd)
+{
+    char buf[512];
+    int i;
+
+    for(i = 0; i < 5 ; i++) {
+	sprintf(buf, "%s/afm/%s.%s", R_Home,
+		Family[pd->fontfamily].font[i].abbr,
+		(i == 4) ? "afm" : Extension[pd->encoding]);
+	if(!PostScriptLoadFontMetrics(buf, &(metrics[i])))
+	    return 0;
+    }
+
+    if (strlen(pd->filename) == 0) {
+	error("empty file name");
+	return 0;
+    } else {
+	sprintf(buf, pd->filename, pd->pageno + 1); /* page 1 to start */
+	pd->psfp = R_fopen(R_ExpandFileName(buf), "w");
+    }
+    if (!pd->psfp) return 0;
+    strcpy(pd->tmpname, tmpnam(NULL));
+    pd->tmpfp = R_fopen(pd->tmpname, "w");
+    if (!pd->tmpfp) {
+	fclose(pd->psfp);
+	return 0;
+    }
+    XF_FileHeader(pd->psfp, pd->papername, pd->landscape, pd->onefile);
+    pd->fontstyle = 1;
+    pd->fontsize = 10;
+    pd->pageno = 0;
+    return 1;
+}
+
+
+static void XFig_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
+{
+}
+
+static void XFig_Resize(DevDesc *dd)
+{
+}
+
+#define CHUNK 10000
+static void XFig_NewPage(DevDesc *dd)
+{
+    char buf[PATH_MAX];
+    XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
+    FILE *fp = pd->tmpfp;
+
+    pd->pageno++;
+    if(pd->onefile) {
+	fprintf(pd->tmpfp, "#Start of page %d\n", pd->pageno);
+	if(pd->pageno > 1) XF_EndPage(pd->tmpfp);
+    } else {
+	char buffer[CHUNK];
+	size_t nread;
+	if(pd->pageno == 1) return;
+	XF_FileTrailer(pd->tmpfp);
+	fclose(pd->tmpfp);
+	pd->tmpfp = R_fopen(pd->tmpname, "r");
+	while(1) {
+	    nread = fread(buffer, 1, CHUNK, pd->tmpfp);
+	    if(nread > 0) fwrite(buffer, 1, nread, pd->psfp);
+	    if(nread < CHUNK) break;
+	}
+	fclose(pd->tmpfp);
+	fclose(pd->psfp);
+	sprintf(buf, pd->filename, pd->pageno);
+	pd->psfp = R_fopen(R_ExpandFileName(buf), "w");
+	pd->tmpfp = R_fopen(pd->tmpname, "w");
+	XF_FileHeader(pd->psfp, pd->papername, pd->landscape, pd->onefile);
+	pd->XFigColors[7] = 0xffffff;
+	pd->nXFigColors = 32;
+    }
+     if(dd->dp.bg != R_RGB(255,255,255)) {
+	 int cbg = XF_SetColor(dd->dp.bg, pd);
+	 int ix0, iy0, ix1, iy1;
+	 double x0 = 0.0, y0 = 0.0, x1 = 72.0 * pd->pagewidth, 
+	     y1 = 72.0 * pd->pageheight;
+	 XFconvert(&x0, &y0, pd); XFconvert(&x1, &y1, pd);
+	 ix0 = (int)x0; iy0 = (int)y0; ix1 = (int)x1; iy1 = (int)y1;
+	 fprintf(fp, "2 2 "); /* Polyline */
+	 fprintf(fp, "%d %d ", 0, 0); /* style, thickness */
+	 fprintf(fp, "%d %d ", cbg, cbg); /* pen colour fill colour */
+	 fprintf(fp, "200 0 20 4.0 0 0 -1 0 0 ");
+	 fprintf(fp, "%d\n", 5); /* number of points */
+	 fprintf(fp, "%d %d ", ix0, iy0);
+	 fprintf(fp, "%d %d ", ix0, iy1);
+	 fprintf(fp, "%d %d ", ix1, iy1);
+	 fprintf(fp, "%d %d ", ix1, iy0);
+	 fprintf(fp, "%d %d\n", ix0, iy0);
+   }   
+}
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+static void XFig_Close(DevDesc *dd)
+{
+    char buf[CHUNK];
+    size_t nread;
+    XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
+
+    XF_FileTrailer(pd->tmpfp);
+    fclose(pd->tmpfp);
+    pd->tmpfp = R_fopen(pd->tmpname, "r");
+    while(1) {
+	nread = fread(buf, 1, CHUNK, pd->tmpfp);
+	if(nread > 0) fwrite(buf, 1, nread, pd->psfp);
+	if(nread < CHUNK) break;
+    }
+    fclose(pd->tmpfp);
+    unlink(pd->tmpname);
+    fclose(pd->psfp);
+    free(pd);
+}
+
+static void XFig_Activate(DevDesc *dd) {}
+static void XFig_Deactivate(DevDesc *dd) {}
+
+static void XFig_Rect(double x0, double y0, double x1, double y1, int coords,
+		      int bg, int fg, DevDesc *dd)
+{
+    XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
+    FILE *fp = pd->tmpfp;
+    int ix0, iy0, ix1, iy1;
+    int cbg = XF_SetColor(bg, pd), cfg = XF_SetColor(fg, pd), cpen, 
+	dofill, lty = XF_SetLty(pd), lwd = dd->gp.lwd*0.833 + 0.5;
+
+    cpen = (fg != NA_INTEGER)? cfg: -1;
+    dofill = (bg != NA_INTEGER)? 20: -1;
+
+    GConvert(&x0, &y0, coords, DEVICE, dd); XFconvert(&x0, &y0, pd);
+    GConvert(&x1, &y1, coords, DEVICE, dd); XFconvert(&x1, &y1, pd);
+    ix0 = (int)x0; iy0 = (int)y0; ix1 = (int)x1; iy1 = (int)y1;
+    fprintf(fp, "2 2 "); /* Polyline */
+    fprintf(fp, "%d %d ", lty, lwd>0?lwd:1); /* style, thickness */
+    fprintf(fp, "%d %d ", cpen, cbg); /* pen colour fill colour */
+    fprintf(fp, "100 0 %d ", dofill); /* depth, pen style, area fill */
+    fprintf(fp, "%.2f 0 0 -1 0 0 ", 4.0*lwd); /* style value, join .... */
+    fprintf(fp, "%d\n", 5); /* number of points */
+    fprintf(fp, "%d %d ", ix0, iy0);
+    fprintf(fp, "%d %d ", ix0, iy1);
+    fprintf(fp, "%d %d ", ix1, iy1);
+    fprintf(fp, "%d %d ", ix1, iy0);
+    fprintf(fp, "%d %d\n", ix0, iy0);
+}
+
+static void XFig_Circle(double x, double y, int coords, double r,
+		      int bg, int fg, DevDesc *dd)
+{
+    XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
+    FILE *fp = pd->tmpfp;
+    int ix, iy, ir;
+    int cbg = XF_SetColor(bg, pd), cfg = XF_SetColor(fg, pd), cpen, 
+	dofill, lty = XF_SetLty(pd), lwd = dd->gp.lwd*0.833 + 0.5;
+
+    cpen = (fg != NA_INTEGER)? cfg: -1;
+    dofill = (bg != NA_INTEGER)? 20: -1;
+
+    GConvert(&x, &y, coords, DEVICE, dd); XFconvert(&x, &y, pd);
+    ix = (int)x; iy = (int)y; ir = (int)(16.667*r);
+
+    fprintf(fp, "1 3 "); /* Circle + radius */
+    fprintf(fp, "%d %d ", lty, lwd>0?lwd:1); /* style, thickness */
+    fprintf(fp, "%d %d ", cpen, cbg); /* pen colour fill colour */
+    fprintf(fp, "100 0 %d ", dofill); /* depth, pen style, area fill */
+    fprintf(fp, "%.2f 1 0 ", 4.0*lwd); /* style value, direction, x, angle */
+    fprintf(fp, "%d %d %d %d %d %d %d %d \n", 
+	    ix, iy, ir, ir, ix, iy, ix+ir, iy);
+}
+
+static void XFig_Line(double x1, double y1, double x2, double y2,
+		    int coords, DevDesc *dd)
+{
+    XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
+    FILE *fp = pd->tmpfp;
+    int lty = 0, lwd = dd->gp.lwd*0.833 + 0.5;
+    
+    GConvert(&x1, &y1, coords, DEVICE, dd); XFconvert(&x1, &y1, pd);
+    GConvert(&x2, &y2, coords, DEVICE, dd); XFconvert(&x2, &y2, pd);
+    fprintf(fp, "2 2 "); /* Polyline */
+    fprintf(fp, "%d %d ", lty, lwd>0?lwd:1); /* style, thickness */
+    fprintf(fp, "%d %d ", XF_SetColor(dd->gp.col, pd), 7); 
+      /* pen colour fill colour */
+    fprintf(fp, "100 0 -1 "); /* depth, pen style, area fill */
+    fprintf(fp, "%.2f 0 0 -1 0 0 ", 4.0*lwd); /* style value, join .... */
+    fprintf(fp, "%d\n", 2); /* number of points */
+    fprintf(fp, "%d %d %d %d\n", (int)x1, (int)y1, (int)x2, (int)y2);
+}
+
+static void XFig_Polygon(int n, double *x, double *y, int coords,
+			 int bg, int fg, DevDesc *dd)
+{
+    XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
+    FILE *fp = pd->tmpfp;
+    double xx, yy;
+    int i;
+    int cbg = XF_SetColor(bg, pd), cfg = XF_SetColor(fg, pd), cpen, 
+	dofill, lty = XF_SetLty(pd), lwd = dd->gp.lwd*0.833 + 0.5;
+
+
+    cpen = (fg != NA_INTEGER)? cfg: -1;
+    dofill = (bg != NA_INTEGER)? 20: -1;
+
+    fprintf(fp, "2 2 "); /* Polyline */
+    fprintf(fp, "%d %d ", lty, lwd>0?lwd:1); /* style, thickness */
+    fprintf(fp, "%d %d ", cpen, cbg); /* pen colour fill colour */
+    fprintf(fp, "100 0 %d ", dofill); /* depth, pen style, area fill */
+    fprintf(fp, "%.2f 0 0 -1 0 0 ", 4.0*lwd); /* style value, join .... */
+    fprintf(fp, "%d\n", n); /* number of points */
+    for(i = 0 ; i < n ; i++) {
+	xx = x[i];
+	yy = y[i];
+	GConvert(&xx, &yy, coords, DEVICE, dd); XFconvert(&xx, &yy, pd);
+	fprintf(fp, "%d %d\n", (int)xx, (int)yy);
+    }
+}
+
+static void XFig_Polyline(int n, double *x, double *y, int coords,
+			DevDesc *dd)
+{
+    XFigDesc *pd = (XFigDesc*) dd->deviceSpecific;
+    FILE *fp = pd->tmpfp;
+    double xx, yy;
+    int i, lty = XF_SetLty(pd), lwd = dd->gp.lwd*0.833 + 0.5;
+
+    fprintf(fp, "2 2 "); /* Polyline */
+    fprintf(fp, "%d %d ", lty, lwd>0?lwd:1); /* style, thickness */
+    fprintf(fp, "%d %d ", XF_SetColor(dd->gp.col, pd), 7); /* pen colour fill colour */
+    fprintf(fp, "100 0 -1 "); /* depth, pen style, area fill */
+    fprintf(fp, "%.2f 0 0 -1 0 0 ", 4.0*lwd); /* style value, join .... */
+    fprintf(fp, "%d\n", n); /* number of points */
+    for(i = 0 ; i < n ; i++) {
+	xx = x[i];
+	yy = y[i];
+	GConvert(&xx, &yy, coords, DEVICE, dd); XFconvert(&xx, &yy, pd);
+	fprintf(fp, "%d %d\n", (int)xx, (int)yy);
+    }
+}
+
+static void XFig_Text(double x, double y, int coords,
+		      char *str, double rot, DevDesc *dd)
+{
+    XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
+    FILE *fp = pd->tmpfp;
+    int fontnum, style = dd->gp.font;
+    double size = floor(dd->gp.cex * dd->gp.ps);
+    
+    if(style < 1 || style > 5) style = 1;
+    pd->fontsize = size;
+    pd->fontstyle = style;
+    if(style == 5) fontnum = 32;
+    else fontnum = pd->fontnum + (style-1);
+
+    GConvert(&x, &y, coords, DEVICE, dd); XFconvert(&x, &y, pd);
+    fprintf(fp, "4 0 "); /* Text, left justified */
+    fprintf(fp, "%d 100 0 ", XF_SetColor(dd->gp.col, pd)); 
+      /* color, depth, pen_style */
+    fprintf(fp, "%d %.2f %.5f 4 ", fontnum, size, rot * DEG2RAD);
+      /* font pointsize angle flags (Postscript font) */
+    fprintf(fp, "%.2f %.2f ", 16.667*GStrHeight(str, DEVICE, dd),
+	    16.667*GStrWidth(str, DEVICE, dd)); /* height length */
+    fprintf(fp, "%d %d ", (int)x, (int)y);
+    XF_WriteString(fp, str);
+    fprintf(fp, "\\001\n");
+}
+
+static int XFig_Locator(double *x, double *y, DevDesc *dd)
+{
+    return 0;
+}
+
+static void XFig_Mode(int mode, DevDesc* dd)
+{
+}
+
+static void XFig_Hold(DevDesc *dd)
 {
 }

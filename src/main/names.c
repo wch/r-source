@@ -622,6 +622,7 @@ FUNTAB R_FunTab[] =
 {"PicTeX",	do_PicTeX,	0,	111,	6,	PP_FUNCALL},
 {"Macintosh",	do_Macintosh,	0,	111,	4,	PP_FUNCALL},
 {"Gnome",       do_Gnome,       0,      111,    4,      PP_FUNCALL},
+{"XFig",	do_XFig,	0,	111,   12,	PP_FUNCALL},
 
 /* Graphics */
 

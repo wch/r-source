@@ -19,6 +19,10 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
   If it is \code{"|cmd"}, the output is piped to the command given
   by \file{cmd}.
 #endif
+
+For use with \code{onefile=FALSE} give a
+  \code{printf} format such as \code{"Rplot%d.fig"} (the default in that
+  case).
 }
 \item{\dots}{further options for \code{postscript()}.}
 \item{paper}{the size of paper in the printer.  The choices are
@@ -42,7 +46,8 @@ ps.options(\dots, reset = FALSE, override.check = FALSE)
 \item{bg}{the default background color to be used.}
 \item{fg}{the default foreground color to be used.}
 \item{onefile}{logical: if true (the default) allow multiple figures
-  in one file. If false, assume only one figure and give EPSF header
+  in one file. If false, generate a
+  file number containing the page number and give EPSF header
   and no \code{DocumentMedia} comment.}
 \item{pagecentre}{logical: should the device region be centred on the page:
   defaults to true.}
