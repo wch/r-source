@@ -16,6 +16,10 @@ delete followed by move).
 Bulding the standalone Rmath.dll was not making the import library
 libRmath.a.
 
+We may have been able to track down the cause of the FAQ Q2.14 about
+crashes caused be non-ASCII characters to the isprint routine, and
+hence to circumvent it.
+
 
 
 rw1050
