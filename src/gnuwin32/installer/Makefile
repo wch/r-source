@@ -19,8 +19,8 @@ ETC_FILES = Rprofile Rconsole Rdevga rgb.txt
 GW32_FILES = R.exp Rblas.def MkRules MakePkg MakeDll \
 	  Rpwd.exe pwd.pl makeDllRes.pl install-save.sh man-install.sh
 
-# we don't want share/{Makefile.in,glade,sh} installed
-SHARE_DIRS = R make perl texmf licenses
+# we don't want share/{Makefile.in,sh} installed
+SHARE_DIRS = R licenses locale make perl texmf
 
 all: $(RPREFIX).exe miniR.exe
 
