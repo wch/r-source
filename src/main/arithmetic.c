@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998 Robert Gentleman, Ross Ihaka and the R core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -69,7 +70,7 @@ typedef union
   unsigned int word[2];
 } ieee_double;
 
-static little_endian;
+static int little_endian;
 static int hw;
 static int lw;
 
@@ -161,75 +162,47 @@ SEXP do_Machine(SEXP call, SEXP op, SEXP args, SEXP env)
     machar(&ibeta, &it, &irnd, &ngrd, &machep, &negep, &iexp,
 	   &minexp, &maxexp, &eps, &epsneg, &xmin, &xmax);
 
-    TAG(a) = install("double.eps");
-    CAR(a) = allocVector(REALSXP, 1);
-    REAL(CAR(a))[0] = eps;
-    a = CDR(a);
+    TAG(a) = install("double.eps"); CAR(a) = allocVector(REALSXP, 1);
+    REAL(CAR(a))[0] = eps;	a = CDR(a);
 
-    TAG(a) = install("double.neg.eps");
-    CAR(a) = allocVector(REALSXP, 1);
-    REAL(CAR(a))[0] = epsneg;
-    a = CDR(a);
+    TAG(a) = install("double.neg.eps"); CAR(a) = allocVector(REALSXP, 1);
+    REAL(CAR(a))[0] = epsneg;	a = CDR(a);
 
-    TAG(a) = install("double.xmin");
-    CAR(a) = allocVector(REALSXP, 1);
-    REAL(CAR(a))[0] = xmin;
-    a = CDR(a);
+    TAG(a) = install("double.xmin"); CAR(a) = allocVector(REALSXP, 1);
+    REAL(CAR(a))[0] = xmin;	a = CDR(a);
 
-    TAG(a) = install("double.xmax");
-    CAR(a) = allocVector(REALSXP, 1);
-    REAL(CAR(a))[0] = xmax;
-    a = CDR(a);
+    TAG(a) = install("double.xmax"); CAR(a) = allocVector(REALSXP, 1);
+    REAL(CAR(a))[0] = xmax;	a = CDR(a);
 
-    TAG(a) = install("double.base");
-    CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = ibeta;
-    a = CDR(a);
+    TAG(a) = install("double.base"); CAR(a) = allocVector(INTSXP, 1);
+    INTEGER(CAR(a))[0] = ibeta;	a = CDR(a);
 
-    TAG(a) = install("double.digits");
-    CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = it;
-    a = CDR(a);
+    TAG(a) = install("double.digits"); CAR(a) = allocVector(INTSXP, 1);
+    INTEGER(CAR(a))[0] = it;	a = CDR(a);
 
-    TAG(a) = install("double.rounding");
-    CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = irnd;
-    a = CDR(a);
+    TAG(a) = install("double.rounding"); CAR(a) = allocVector(INTSXP, 1);
+    INTEGER(CAR(a))[0] = irnd;	a = CDR(a);
 
-    TAG(a) = install("double.guard");
-    CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = ngrd;
-    a = CDR(a);
+    TAG(a) = install("double.guard"); CAR(a) = allocVector(INTSXP, 1);
+    INTEGER(CAR(a))[0] = ngrd;	a = CDR(a);
 
-    TAG(a) = install("double.ulp.digits");
-    CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = machep;
-    a = CDR(a);
+    TAG(a) = install("double.ulp.digits"); CAR(a) = allocVector(INTSXP, 1);
+    INTEGER(CAR(a))[0] = machep;a = CDR(a);
 
-    TAG(a) = install("double.neg.ulp.digits");
-    CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = negep;
-    a = CDR(a);
+    TAG(a) = install("double.neg.ulp.digits"); CAR(a) = allocVector(INTSXP, 1);
+    INTEGER(CAR(a))[0] = negep;	a = CDR(a);
 
-    TAG(a) = install("double.exponent");
-    CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = iexp;
-    a = CDR(a);
+    TAG(a) = install("double.exponent"); CAR(a) = allocVector(INTSXP, 1);
+    INTEGER(CAR(a))[0] = iexp;	a = CDR(a);
 
-    TAG(a) = install("double.min.exp");
-    CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = minexp;
-    a = CDR(a);
+    TAG(a) = install("double.min.exp"); CAR(a) = allocVector(INTSXP, 1);
+    INTEGER(CAR(a))[0] = minexp;a = CDR(a);
 
-    TAG(a) = install("double.max.exp");
-    CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = maxexp;
-    a = CDR(a);
+    TAG(a) = install("double.max.exp"); CAR(a) = allocVector(INTSXP, 1);
+    INTEGER(CAR(a))[0] = maxexp;a = CDR(a);
 
-    TAG(a) = install("integer.max");
-    CAR(a) = allocVector(INTSXP, 1);
-    INTEGER(CAR(a))[0] = INT_MAX;
-    a = CDR(a);
+    TAG(a) = install("integer.max"); CAR(a) = allocVector(INTSXP, 1);
+    INTEGER(CAR(a))[0] = INT_MAX;a = CDR(a);
 
     UNPROTECT(1);
     return ans;
@@ -300,8 +273,10 @@ static SEXP binary(SEXP op, SEXP args)
     if( isNull(y) )
 	y = CADR(args) = allocVector(REALSXP,0);
 
-    if (!(isNumeric(x) || isComplex(x)) || !(isNumeric(y) || isComplex(y)))
+    if (!(isNumeric(x) || isComplex(x)) || !(isNumeric(y) || isComplex(y))) {
 	    errorcall(lcall, "non-numeric argument to binary operator\n");
+	    return R_NilValue;/*-Wall*/
+    }
 
     mismatch = 0;
     xarray = isArray(x);
@@ -312,10 +287,10 @@ static SEXP binary(SEXP op, SEXP args)
     /* if either x or y is a matrix with length 1 and the other */
     /* is a vector we want to coerce the matrix to be a vector */
 
-    /* FIXME: danger will robinson.  We might be trashing */
-    /* arguments here.  If we have NAMED(x) or NAMED(y) */
-    /* we should duplicate! */
-
+    /* FIXME: danger will robinson.
+     * -----  We might be trashing arguments here.
+     * If we have NAMED(x) or NAMED(y) we should duplicate!
+     */
     if( xarray || (yarray && !(xarray*yarray)) ) {
 	if(xarray && length(x)==1) {
 	    x = CAR(args) = duplicate(x);
@@ -599,7 +574,7 @@ static SEXP integer_binary(int code, SEXP s1, SEXP s2)
     /* Copy attributes from longest argument. */
 
     if (n1 > n2)
-        copyMostAttrib(s1, ans);
+	copyMostAttrib(s1, ans);
     else if (n1 == n2) {
 	copyMostAttrib(s2, ans);
 	copyMostAttrib(s1, ans);
