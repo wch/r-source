@@ -179,16 +179,17 @@ function(package, dir, lib.loc = NULL)
                        else
                            character()
                    })
-        S4methods <- unlist(S4methods, use.names = FALSE)
+        S4methods <- as.character(unlist(S4methods, use.names = FALSE))
         S4methods <-
             S4methods[!sapply(S4methods,
                               function(u) topicName("method", u))
                       %in% allDocTopics]
         undocThings <-
-            c(undocThings, list("S4 methods" =
-                              sub("([^,]*),(.*)",
-                                  "\\\\S4method{\\1}{\\2}",
-                                  S4methods)))
+            c(undocThings,
+              list("S4 methods" =
+                   sub("([^,]*),(.*)",
+                       "\\\\S4method{\\1}{\\2}",
+                       S4methods)))
     }
                              
     class(undocThings) <- "undoc"
