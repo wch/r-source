@@ -317,6 +317,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   sign of pearson residuals was wrong for reciprocal link (PR#862)
+
     o   use formula environments in xy.coords() (PR#932)
 
     o	pointer protection in deriv (PR#953)

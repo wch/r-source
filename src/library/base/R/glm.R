@@ -651,7 +651,7 @@ residuals.glm <-
                       d.res <- sqrt(pmax((object$family$dev.resids)(y, mu, wts), 0))
                       ifelse(y > mu, d.res, -d.res)
                   } else rep(0, length(mu)),
-                  pearson = r * sqrt(object$weights),
+                  pearson = (y-mu)/sqrt(object$weights),
                   working = r,
                   response = y - mu,
                   partial = r + predict(object,type="terms")
