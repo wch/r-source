@@ -73,7 +73,7 @@ for (pkg in core.pkgs) {
   else {
       library(pkg, character = TRUE, warn.conflicts = FALSE)
       cat("library(",pkg,")\n")
-      this.pos <- 2
+      this.pos <- match(paste("package", pkg, sep=":"), search())
   }
 
   for(nm in ls(pos = this.pos)) {
