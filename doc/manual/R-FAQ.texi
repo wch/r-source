@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-51 @value{FAQ-YEAR}-03-14
+@set FAQ-VERSION 1.8-52 @value{FAQ-YEAR}-03-16
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -2064,6 +2064,9 @@ attributes using the EM Algorithm.
 @item haplo.score
 Score tests for association of traits with haplotypes when linkage phase
 is ambiguous.
+@item haplo.stats
+Statistical analysis of haplotypes with traits and covariates when
+linkage phase is ambiguous.
 @item hdf5
 Interface to the @acronym{NCSA} HDF5 library.
 @item hett
@@ -2586,6 +2589,8 @@ Functions for optimal design of two-stage-studies using the Mean Score
 method.
 @item udunits
 Interface to Unidata's routines to convert units.
+@item urca
+Unit root and cointegration tests for time series data.
 @item vardiag
 Interactive variogram diagnostics.
 @item vcd
