@@ -15,6 +15,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *
+ *  Much of this is from Doug Bates.
+ *
  */
 
 #ifndef R_S_H
@@ -22,7 +26,7 @@
 
 #ifndef USING_R
 #define USING_R
-#define long	int
+#define longint int
 #endif
 
 #ifdef __cplusplus
