@@ -12,9 +12,7 @@
 NEW FEATURES
 
     o	prompt() now also works with a character argument (useful
-	for producing many *.Rd files in a loop).  However, it can then
-	not dispatch on the class of the object, so do not use this
-	for data frames.
+	for producing many *.Rd files in a loop).
 
     o	The Unix front-end shell script now ignores a value for R_HOME
         found in the environment.
@@ -46,8 +44,11 @@ BUG FIXES
     o	print.stl(), print.princomp() and print.prcomp() now pass on
 	`digits =' etc.
 
-    o	prompt() now produces a \usage{} line for data frames, as
-	documented in `Writing R Extensions'.
+    o	prompt() now produces a \usage{} line for data frames and 
+	other datasets, as documented in `Writing R Extensions'.
+
+    o	glm() now returns correct linear predictor and fitted values
+	for zero-weight cases.
 
 
 
@@ -1112,7 +1113,7 @@ BUG FIXES
     o	Warnings from .Last or closing devices are printed where
 	sensible (e.g. not on GNOME nor Windows console).
 
-    o	add1.glm() and drop1.glm gave() incorrect results in the "Chisq"
+    o	add1.glm() and drop1.glm() gave incorrect results in the "Chisq"
 	test option when the scale was estimated.
 
     o	aggregate() applied to multiple time series lost the series names.

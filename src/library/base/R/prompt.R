@@ -6,6 +6,7 @@ prompt.default <-
     paste0 <- function(...) paste(..., sep = "")
     is.missing.arg <- function(arg)
         typeof(arg) == "symbol" && deparse(arg) == ""
+
     name <-
         if(is.character(object))
             object
@@ -15,6 +16,9 @@ prompt.default <-
             as.character(name)
         }
     fn <- get(name)
+    if(is.data.frame(fn))
+       return(prompt.data.frame(fn, filename = filename))
+
     ## `file' [character(NN)] will contain the lines to be put in the
     ## Rdoc file
     file <- paste0("\\name{", name, "}")
@@ -79,16 +83,18 @@ prompt.default <-
 		  "}",
 		  "\\keyword{ ~keyword }%-- one or more ..."
 		  )
-    } else {#-- not function --
-	file <- c(file,"\\non_function{}",
-		  paste("\\title{ ~~data-name / kind ...  }"),
+    } else {#-- not function, assume dataset --
+	file <- c(file, paste0("\\alias{", name, "}"),
+                  "\\non_function{}",
+	  "\\title{ ~~data-name / kind ...  }",
+                  paste0("\\usage{data(", name, ")}"),
 		  "\\description{",
-		  "~~ a precise description of what the object does. ~~",
-		  "}")
+		  "~~ a concise description of what the object is. ~~",
+		  "}", "\\keyword{dataset}")
     }
     cat(file, file = filename, sep = "\n")
     RHOME <- R.home()
-    if(substr(RHOME,1,8) == "/tmp_mnt") RHOME <- substr(RHOME,9,1000)
+    if(substr(RHOME, 1, 8) == "/tmp_mnt") RHOME <- substr(RHOME, 9, 1000)
     cat("created file named ", filename, " in the current directory.\n",
 	" Edit the file and move it to the appropriate directory,\n",
 	paste(RHOME,"src/library/<pkg>/man/",sep="/"), "\n")
@@ -99,7 +105,8 @@ prompt.default <-
 function (object, filename = paste0(name, ".Rd"))
 {
     paste0 <- function(...) paste(..., sep = "")
-    describe <- function(object) UseMethod()
+##    describe <- function(object) UseMethod()
+
     name <- substitute(object)
     if (is.language(name) && !is.name(name))
         name <- eval(name)
