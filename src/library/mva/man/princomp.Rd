@@ -3,12 +3,10 @@
 \alias{plot.princomp}
 \alias{print.princomp}
 \alias{predict.princomp}
-\alias{loadings}
 \title{Principal Components Analysis}
 \usage{
 princomp(x, cor = FALSE, scores = TRUE, covmat = NULL,
          subset = rep(TRUE, nrow(as.matrix(x))))
-loadings(x)
 }
 \arguments{
   \item{x}{a matrix (or data frame) which provides the data for the
@@ -28,15 +26,15 @@ loadings(x)
   \code{princomp} performs a principal components analysis on the given
   data matrix and returns the results as an object of class
   \code{princomp}.
-
-  \code{loadings} extracts the loadings.
 }
 \value{
   \code{princomp} returns a list with class \code{"princomp"}
   containing the following components:
   \item{sdev}{the standard deviations of the principal components.}
   \item{loadings}{the matrix of variable loadings (i.e., a matrix
-    whose columns contain the eigenvectors).}
+    whose columns contain the eigenvectors).  This is of class
+    \code{"loadings"}: see \code{\link{loadings}} for its \code{print}
+    method.}
   \item{center}{the means that were subtracted.}
   \item{scale}{the scalings applied to each variable.}
   \item{n.obs}{the number of observations.}
@@ -81,7 +79,7 @@ princomp(USArrests, cor = TRUE) # =^= prcomp(USArrests, scale=TRUE)
 ## The standard deviations differ by a factor of sqrt(49/50)
 
 summary(pc.cr <- princomp(USArrests, cor=TRUE))
-loadings(pc.cr)
+loadings(pc.cr)  ## note that blank entries are small but not zero
 plot(pc.cr) # shows a screeplot.
 biplot(pc.cr)
 }
