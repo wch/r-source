@@ -204,7 +204,7 @@ offset <- function(object) object
     old <- cl[names(new)]
     if(!identical(old, new)) {
         wrong <- old != new
-        if(length(wrong) == 1)
+        if(sum(wrong) == 1)
             stop(paste("variable", sQuote(names(old)[wrong]),
                        "was fitted with", old[wrong], "but",
                        new[wrong], "was supplied"), call.=FALSE)
