@@ -111,18 +111,19 @@ fi
 ## We provide these defaults so that headers and libraries in
 ## '/usr/local' are found (by the native tools, mostly).
 ## <FIXME>
-## On Darwin we assume that fink is used ...
-## Is there a better way?  Also need to document this ...
-case "${host_os}" in
-  darwin*)
-    : ${CPPFLAGS="-I/sw/include -I/usr/local/include"}
-    : ${LDFLAGS="-L/sw/lib -L/usr/local/lib"}
-    ;;
-  *)
-    : ${CPPFLAGS="-I/usr/local/include"}
-    : ${LDFLAGS="-L/usr/local/lib"}
-    ;;
-esac
+## We try to determine whether fink is used (on Darwin, mostly) by 
+## looking for '/sw/etc/fink.conf'.  Should be ok but needs to be
+## documented ...
+## Also, GCC 3.1 seems to be very unhappy about '/usr/local/include'
+## to the header search path seems ...
+if test -f "/sw/etc/fink.conf"; then
+  : ${CPPFLAGS="-I/sw/include -I/usr/local/include"}
+  : ${LDFLAGS="-L/sw/lib -L/usr/local/lib"}
+else
+  : ${CPPFLAGS="-I/usr/local/include"}
+  : ${LDFLAGS="-L/usr/local/lib"}
+fi
+## </FIXME>
 
 ### ** Handle arguments to configure.
 
@@ -763,6 +764,11 @@ case "${host_os}" in
     cpicflags="-fno-common"
     cxxpicflags="-fno-common"
     fpicflags="-fno-common"
+    ## <FIXME>
+    ## Needed because currently the Quartz device driver gets linked to
+    ## the main binary.  Change once the driver is modularized.
+    main_ldflags="-framework Carbon"
+    ## </FIXME>
     case "${host_os}" in
       darwin1.[[012]])
 	shlib_ldflags="-bundle -undefined suppress" ;;
