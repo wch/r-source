@@ -1396,6 +1396,14 @@ explanation of the different versions of Rweb and an overview of how
 Rweb works, was published in the Journal of Statistical Software
 (@uref{http://www.stat.ucla.edu/journals/jss/v04/i01/}).
 
+@email{ulfi@@cs.tu-berlin.de, Ulf Bartel} is working on
+@strong{R-Online}, a simple on-line programming environment for R which
+intends to make the first steps in statistical programming with R
+(especially with time series) as easy as possible.  There is no need for
+a local installation since the only requirement for the user is a
+JavaScript capable browser.  See @uref{http://osvisions.com/r-online/}
+for more information.
+
 @node R Add-On Packages, R and Emacs, R Web Interfaces, Top
 @chapter R Add-On Packages
 
