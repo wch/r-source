@@ -1283,6 +1283,33 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
     return x;
 }
 
+static SEXP DeleteOneVectorListItem(SEXP x, int which)
+{
+    SEXP y, xnames, ynames;
+    int i, k, n;
+    n = length(x);
+    if (0 <= which && which < n) {
+	PROTECT(y = allocVector(VECSXP, n - 1));
+	k = 0;
+	for (i = 0 ; i < n; i++)
+	    if(i != which)
+		VECTOR(y)[k++] = VECTOR(x)[i];
+	xnames = getAttrib(x, R_NamesSymbol);
+	if (xnames != R_NilValue) {
+	    PROTECT(ynames = allocVector(STRSXP, n - 1));
+	    k = 0;
+	    for (i = 0 ; i < n; i++)
+		if(i != which)
+		    STRING(ynames)[k++] = STRING(xnames)[i];
+	    setAttrib(y, R_NamesSymbol, ynames);
+	    UNPROTECT(1);
+	}
+	copyMostAttrib(x, y);
+	UNPROTECT(1);
+	return y;
+    }
+    return x;
+}
 
 /* The [[<- operator, it should be fast. */
 /* args[1] = object being subscripted */
@@ -1292,7 +1319,7 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP dims, index, names, newname, subs, x, y;
-    int i, ndims, nsubs, offset, stretch, which;
+    int i, k, ndims, nsubs, offset, stretch, which;
     RCNTXT cntxt;
 
     gcall = call;
@@ -1322,14 +1349,19 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     stretch = 0;
     if (isVector(x)) {
-	if (!isExpression(x) && !isVectorList(x) && length(y) > 1)
-	    error("number of elements supplied larger than number of elements to replace\n");
+	if (!isVectorList(x) && length(y) > 1)
+	    error("more elements supplied than there are to replace\n");
 	if (nsubs == 1) {
 	    offset = OneIndex(x, CAR(subs), 0, &newname);
+	    if (isVectorList(x) && isNull(y)) {
+		x = DeleteOneVectorListItem(x, offset);
+		UNPROTECT(1);
+		return x;
+	    }
 	    if (offset < 0)
 		error("[[]] subscript out of bounds\n");
 	    if (offset >= LENGTH(x))
-		stretch = offset + 1;
+		    stretch = offset + 1;
 	}
 	else {
 	    if (ndims != nsubs)
@@ -1337,8 +1369,9 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(index = allocVector(INTSXP, ndims));
 	    names = getAttrib(x, R_DimNamesSymbol);
 	    for (i = 0; i < ndims; i++) {
-		INTEGER(index)[i] = get1index(CAR(subs), isList(names) ?
-					      CAR(names) : R_NilValue,0);
+		INTEGER(index)[i] = get1index(CAR(subs), isNull(names) ?
+					      R_NilValue : VECTOR(names)[i],
+					      0);
 		subs = CDR(subs);
 		if (INTEGER(index)[i] < 0 ||
 		    INTEGER(index)[i] >= INTEGER(dims)[i])
@@ -1446,10 +1479,6 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 2014:	/* expression <- real	    */
 	case 2015:	/* expression <- complex    */
 	case 2016:	/* expression <- character  */
-
-	    VECTOR(x)[offset] = y;
-	    break;
-
 	case 1919:      /* vector     <- vector     */
 	case 2020:	/* expression <- expression */
 
@@ -1477,7 +1506,8 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	UNPROTECT(1);
     }
     else if (isList(x) || isLanguage(x)) {
-	if (NAMED(y)) y = duplicate(y);
+	/* if (NAMED(y)) */
+	y = duplicate(y);
 	PROTECT(y);
 	if (nsubs == 1) {
 	    if (isNull(y)) {

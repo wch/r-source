@@ -1252,11 +1252,13 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     tmp = getAttrib(dots, R_NamesSymbol);
     for (i = 0; i < ndots; i++) {
+	sprintf(buf, "(%s)", CHAR(STRING(tmp)[i]));
 	VECTOR(data)[nvars + i] = VECTOR(dots)[i];
-	STRING(names)[nvars + i] = STRING(tmp)[i];
+	STRING(names)[nvars + i] = mkChar(buf);
     }
     setAttrib(data, R_NamesSymbol, names);
     UNPROTECT(2);
+
     /* Sanity checks to ensure that the the answer can become */
     /* a data frame.  Be deeply suspicious here! */
 

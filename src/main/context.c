@@ -280,7 +280,7 @@ SEXP R_sysfunction(int n, RCNTXT *cptr)
 {
     SEXP s, t;
     if (n > 0)
-	n = framedepth(cptr)-n;
+	n = framedepth(cptr) - n;
     else
 	n = - n;
     if (n < 0 )
@@ -341,8 +341,8 @@ SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "invalid number of environment levels\n");
     switch (PRIMVAL(op)) {
     case 1: /* parent */
-	rval=allocVector(INTSXP,1);
-	INTEGER(rval)[0]=R_sysparent(n, cptr);
+	rval = allocVector(INTSXP,1);
+	INTEGER(rval)[0] = R_sysparent(n, cptr);
 	return rval;
     case 2: /* call */
 	return R_syscall(n, cptr);

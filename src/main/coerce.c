@@ -1579,7 +1579,7 @@ SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "second argument must be a list\n");
     n = length(CADR(args));
     PROTECT(call = allocList(n + 1));
-    CAR(call = install(CHAR(STRING(CAR(args))[0])));
+    CAR(call) = install(CHAR(STRING(CAR(args))[0]));
     args = CADR(args);
     c = CDR(call);
     for (i = 0; i < n; i++) {
