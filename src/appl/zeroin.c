@@ -31,7 +31,7 @@
  *	G.Forsythe, M.Malcolm, C.Moler, Computer methods for mathematical
  *	computations. M., Mir, 1980, p.180 of the Russian edition
  *
- *	The function makes use of the bissection procedure combined with
+ *	The function makes use of the bisection procedure combined with
  *	the linear or quadric inverse interpolation.
  *	At every step program operates on three abscissae - a, b, and c.
  *	b - the last and the best approximation to the root
@@ -41,12 +41,12 @@
  *		2) f(b) and f(c) have opposite signs, i.e. b and c confine
  *		   the root
  *	At every step Zeroin selects one of the two new approximations, the
- *	former being obtained by the bissection procedure and the latter
+ *	former being obtained by the bisection procedure and the latter
  *	resulting in the interpolation (if a,b, and c are all different
  *	the quadric interpolation is utilized, otherwise the linear one).
  *	If the latter (i.e. obtained by the interpolation) point is
  *	reasonable (i.e. lies within the current interval [b,c] not being
- *	too close to the boundaries) it is accepted. The bissection result
+ *	too close to the boundaries) it is accepted. The bisection result
  *	is used in the other case. Therefore, the range of uncertainty is
  *	ensured to be reduced at least by the factor 1.6
  *
@@ -106,7 +106,7 @@ double zeroin(			/* An estimate of the root */
 	/* Decide if the interpolation can be tried	*/
 	if( fabs(prev_step) >= tol_act	/* If prev_step was large enough*/
 	    && fabs(fa) > fabs(fb) ) {	/* and was in true direction,
-					 * Interpolatiom may be tried	*/
+					 * Interpolation may be tried	*/
 	    register double t1,cb,t2;
 	    cb = c-b;
 	    if( a==c ) {		/* If we have only two distinct	*/
@@ -130,7 +130,7 @@ double zeroin(			/* An estimate of the root */
 		&& p < fabs(prev_step*q/2) )	/* and isn't too large	*/
 		new_step = p/q;			/* it is accepted
 						 * If p/q is too large then the
-						 * bissection procedure can
+						 * bisection procedure can
 						 * reduce [b,c] range to more
 						 * extent */
 	}
