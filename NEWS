@@ -205,7 +205,9 @@ NEW FEATURES
 
     o	installed.packages() has a new argument `priority'.
 
-    o   termplot() uses factor levels rather than 1,2,3... for x-axis
+    o   termplot() uses factor levels rather than 1,2,3... for x-axis.
+
+    o   Workaround for optimization bugs on gcc 3.1/2 on 32-bit Solaris.	
 
 
 DEPRECATED & DEFUNCT
