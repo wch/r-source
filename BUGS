@@ -387,3 +387,7 @@ Date: Mon, 26 Nov 2001 22:00:13 +0100 (MET)
 Subject: Table Command
 From: mdesai@biostat.cpmc.columbia.edu
 Date: Tue, 27 Nov 2001 21:02:42 +0100 (MET)
+* PR# 1183 *
+Subject:  R-devel 11/27 will not build on solaris 2.8 
+From: v <stvjc@localhost.localdomain>
+Date: Tue, 27 Nov 2001 23:51:52 -0500
