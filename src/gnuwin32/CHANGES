@@ -11,16 +11,12 @@ Support for bzip-ed connections has been added to the standard distribution.
 
 The miniR distribution has grown to eight floppies.
 
-The preferred compiler is gcc-3.1.
+The preferred compiler is gcc-3.1: gcc-2.95.3 can still be used but
+current header files are needed.
 
 Making packages containing source code automagically adds dependency
 information to MakeDll: this is useful when experimenting with
 packages, and especially for the packages which ship with R.
-
-
-
-rw1052
-======
 
 update.packages() and install.packages() will not try to install a package
 that is in use (with an informative warning).
