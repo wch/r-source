@@ -530,7 +530,13 @@ void tcltk_init(void)
     /* Absence of the following line is said to be an error with
      * tcl 8.4 on all platforms, and is known to cause crashes under
      * Windows */
+
+    /* Unfortunately, *presence* of the line appears to cause crashes 
+     * with tcl 8.0... */
+
+#ifndef TCL80
     Tcl_FindExecutable(NULL);
+#endif
 
     RTcl_interp = Tcl_CreateInterp();
     code = Tcl_Init(RTcl_interp); /* Undocumented... If omitted, you
