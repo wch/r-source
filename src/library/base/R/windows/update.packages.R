@@ -1,16 +1,11 @@
-CRAN.packages <- function(CRAN=.Options$CRAN, method="auto")
+CRAN.packages <- function(CRAN=.Options$CRAN, method="auto",
+                          contriburl=contrib.url(CRAN))
 {
-    localcran <- length(grep("^file:", CRAN)) > 0
-    if(localcran)
-        tmpf <- file.path(substring(CRAN,6),
-                          "src", "contrib", "PACKAGES")
-    else{
-        tmpf <- tempfile()
-        download.file(url=paste(CRAN,
-                      "/bin/windows/windows-NT/contrib/README", sep=""),
-                      destfile=tmpf, method=method)
-        on.exit(unlink(tmpf))
-    }
+    tmpf <- tempfile()
+    download.file(url=paste(contriburl, "README", sep=""),
+                  destfile=tmpf, method=method)
+    on.exit(unlink(tmpf))
+
     alldesc <- scan("", file=tmpf, sep="\n", quiet=TRUE)
 
     pkgstart <- c(grep("^.+\\.zip", alldesc), length(alldesc)+1)
@@ -28,15 +23,16 @@ CRAN.packages <- function(CRAN=.Options$CRAN, method="auto")
 
 
 install.packages <- function(pkgs, lib, CRAN=.Options$CRAN,
+                             contriburl=contrib.url(CRAN),
                              method="auto", available=NULL)
 {
-    if(!missing(pkgs))
-        pkgs <- as.character(substitute(pkgs))
+#    if(!missing(pkgs))
+#        pkgs <- as.character(substitute(pkgs))
     if(missing(lib) || is.null(lib)) {
         lib <- .lib.loc[1]
         warning(paste("argument `lib' is missing: using", lib))
     }
-    if(is.null(CRAN)) {
+    if(is.null(CRAN) & missing(contriburl)) {
         for(pkg in pkglist) zip.unpack(pkg, lib)
         link.html.help()
         return(invisible())
@@ -47,7 +43,7 @@ install.packages <- function(pkgs, lib, CRAN=.Options$CRAN,
     shell(paste("mkdir", tmpd))
     foundpkgs <- download.packages(pkgs, destdir=tmpd,
                                    available=available,
-                                   CRAN=CRAN, method=method)
+                                   contriburl=contriburl, method=method)
 
     if(!is.null(foundpkgs))
     {
@@ -107,19 +103,20 @@ download.file <- function(url, destfile, method="auto")
 
 
 download.packages <- function(pkgs, destdir, available=NULL,
-                              CRAN=.Options$CRAN, method="auto")
+                              CRAN=.Options$CRAN,
+                              contriburl=contrib.url(CRAN),
+                              method="auto")
 {
-    localcran <- length(grep("^file:", CRAN)) > 0
+    localcran <- length(grep("^file:", contriburl)) > 0
     if(is.null(available))
-        available <- CRAN.packages(CRAN=CRAN, method=method)
+        available <- CRAN.packages(contriburl=contriburl, method=method)
 
     retval <- NULL
     for(p in unique(pkgs))
     {
         fn <- paste(p, ".zip", sep="")
-        url <- paste(CRAN, "bin/windows/windows-NT/contrib", fn, sep="/")
         destfile <- file.path(destdir, fn)
-        if(download.file(url, destfile, method) == 0)
+        if(download.file(contriburl, destfile, method) == 0)
             retval <- rbind(retval, c(p, destfile))
         else
             warning(paste("Download of package", p, "failed"))
@@ -127,3 +124,10 @@ download.packages <- function(pkgs, destdir, available=NULL,
 
     retval
 }
+
+
+contrib.url <- function(CRAN)
+    paste(CRAN,"bin", "windows", "windows-NT", "contrib", sep="/")
+
+
+

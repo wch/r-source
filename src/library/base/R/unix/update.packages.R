@@ -1,6 +1,5 @@
-CRAN.packages <- function(CRAN=.Options$CRAN,
-                          contriburl=paste(CRAN,"/src/contrib",sep=""),
-                          method="auto")
+CRAN.packages <- function(CRAN=.Options$CRAN, method="auto",
+                          contriburl=contrib.url(CRAN))
 {
     localcran <- length(grep("^file:", contriburl)) > 0
     if(localcran)
@@ -17,7 +16,7 @@ CRAN.packages <- function(CRAN=.Options$CRAN,
 }
 
 install.packages <- function(pkgs, lib, CRAN=.Options$CRAN,
-                             contriburl=paste(CRAN,"/src/contrib",sep=""),
+                             contriburl=contrib.url(CRAN),
                              method="auto", available=NULL)
 {
 #    if(!missing(pkgs))
@@ -98,7 +97,7 @@ download.file <- function(url, destfile, method="auto")
 
 download.packages <- function(pkgs, destdir, available=NULL,
                               CRAN=.Options$CRAN,
-                              contriburl=paste(CRAN,"/src/contrib",sep=""),
+                              contriburl=contrib.url(CRAN),
                               method="auto")
 {
     localcran <- length(grep("^file:", contriburl)) > 0
@@ -128,4 +127,4 @@ download.packages <- function(pkgs, destdir, available=NULL,
     retval
 }
 
-
+contrib.url <- function(CRAN) paste(CRAN,"/src/contrib",sep="")

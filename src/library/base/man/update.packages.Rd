@@ -5,23 +5,24 @@
 \alias{download.file}
 \alias{download.packages}
 \alias{install.packages}
+\alias{contrib.url}
 \title{Download packages from CRAN}}
 \usage{
 update.packages(lib.loc=.lib.loc, CRAN=options("CRAN"),
-                contriburl=paste(CRAN,"/src/contrib",sep=""),
+                contriburl=contrib.url(CRAN),
                 method="auto", instlib=NULL)
 
 installed.packages(lib.loc = .lib.loc)
 CRAN.packages(CRAN=options("CRAN"), method="auto",
-              contriburl=paste(CRAN,"/src/contrib",sep=""))
+              contriburl=contrib.url(CRAN))
 
 download.file(url, destfile, method="auto")
 download.packages(pkgs, destdir, available=NULL,
                   CRAN=options("CRAN"), method="auto",
-                  contriburl=paste(CRAN,"/src/contrib",sep=""))
+                  contriburl=contrib.url(CRAN))
 install.packages(pkglist, lib, available=NULL,
                   CRAN=options("CRAN"), method="auto",
-                  contriburl=paste(CRAN,"/src/contrib",sep=""))
+                  contriburl=contrib.url(CRAN))
 }
 \arguments{ 
  \item{lib.loc}{A character vector describing the location of R

@@ -1,10 +1,10 @@
 update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
-                            contriburl=paste(CRAN,"/src/contrib",sep=""),
+                            contriburl=contrib.url(CRAN),
                             method="auto", instlib=NULL)
 {
     instp <- installed.packages(lib.loc=lib.loc)
     cranp <- CRAN.packages(contriburl=contriburl, method=method)
-
+    
     ## for bundles it is sufficient to install the first package
     ## contained in the bundle, as this will install the complete bundle
     for(b in unique(instp[,"Bundle"])){
@@ -44,7 +44,8 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
         if(is.null(instlib))
             instlib <-  update[,"LibPath"]
 
-        install.packages(update[,"Package"], instlib, contriburl=contriburl,
+        install.packages(update[,"Package"], instlib,
+                         contriburl=contriburl,
                          method=method, available=cranp)
     }
 }
