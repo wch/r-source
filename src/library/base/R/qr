@@ -80,9 +80,9 @@ qr.qty <- function(qr, y)
 	y <- as.matrix(y)
 	ny <- as.integer(ncol(y))
 	storage.mode(y) <- "double"
-	if( nrow(y) != n )    
+	if( nrow(y) != n )
 		stop("qr and y must have the same number of rows")
-	.Fortran("dqrqty",     
+	.Fortran("dqrqty",
 		as.double(qr$qr),
 		n, k,
 		as.double(qr$qraux),
@@ -123,7 +123,7 @@ qr.fitted <- function(qr, y, k=qr$rank)
 	storage.mode(y) <- "double"
 	if( nrow(y) != n )
 		stop("qr and y must have the same number of rows")
-	.Fortran("dqrxb", 
+	.Fortran("dqrxb",
 		as.double(qr$qr),
 		n, k,
 		as.double(qr$qraux),
@@ -133,3 +133,48 @@ qr.fitted <- function(qr, y, k=qr$rank)
 }
 
 ## qr.solve is defined in 'solve'
+
+##---- The next three are from Doug Bates ('st849'):
+qr.Q <- function (qr, complete = FALSE,
+		  Dvec = rep(if (cmplx) 1 + 0i else 1,
+			     if (complete) dqr[1] else min(dqr)))
+{
+	if(!is.qr(qr)) stop("argument is not a QR decomposition")
+	dqr <- dim(qr$qr)
+	cmplx <- mode(qr$qr) == "complex"
+	D <-
+	  if (complete) diag(Dvec, dqr[1])
+	  else {
+		ncols <- min(dqr)
+		diag(Dvec[1:ncols], nrow = dqr[1], ncol = ncols)
+	  }
+	qr.qy(qr, D)
+}
+
+qr.R <- function (qr, complete = FALSE)
+{
+	if(!is.qr(qr)) stop("argument is not a QR decomposition")
+	R <- qr$qr
+	if (!complete)
+	  R <- R[seq(min(dim(R))), , drop = FALSE]
+	R[row(R) > col(R)] <- 0
+	R
+}
+
+qr.X <- function (qr, complete = FALSE,
+		  ncol = if (complete) nrow(R) else min(dim(R)))
+{
+
+	if(!is.qr(qr)) stop("argument is not a QR decomposition")
+	R <- qr.R(qr, complete = TRUE)
+	cmplx <- mode(R) == "complex"
+	p <- dim(R)[2]
+	if (ncol < p)
+	  R <- R[, 1:ncol, drop = FALSE]
+	else if (ncol > p) {
+		tmp <- diag(if (!cmplx) 1 else 1 + 0i, nrow(R), ncol)
+		tmp[, 1:p] <- R
+		R <- tmp
+	}
+	qr.qy(qr, R)
+}

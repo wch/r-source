@@ -49,7 +49,7 @@ as.qr(x)
   component named \code{qr} and \code{FALSE} otherwise.
 
   It is not possible to coerce objects to mode \code{"qr"}.  Objects
-  either are QR decompositions or they are not. 
+  either are QR decompositions or they are not.
 }
 \value{
   The QR decomposition of the matrix as computed by LINPACK.
@@ -71,7 +71,9 @@ as.qr(x)
   Philadelphia, PA:  SIAM Publications.
 }
 \seealso{
-  \code{\link{solve.qr}}, \code{\link{lsfit}},
+  \code{\link{qr.Q}},  \code{\link{qr.R}},  \code{\link{qr.X}} for
+  reconstruction of the matrices.
+  \code{\link{solve.qr}},  \code{\link{lsfit}},
   \code{\link{eigen}}, \code{\link{svd}}.}
 \examples{
 hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
