@@ -84,7 +84,7 @@ NEW FEATURES
 	your workspace.)
 
     o	A package `methods' has been added, containing formal classes
-	and methods ("S4" methods).  
+	and methods ("S4" methods).
 
 	- In support of this, the "@" operator has been added to the
 	  grammar.
@@ -132,7 +132,7 @@ NEW FEATURES
 	type (class?matrix, for example).  So far, no such
 	documentation exists.
 
-    o	New methods AIC.default() and logLik.glm(), also fixing 
+    o	New methods AIC.default() and logLik.glm(), also fixing
 	AIC(<glm obj>).
 
     o	axis.POSIXct() allows the label date/times to be specified
@@ -244,6 +244,8 @@ NEW FEATURES
 
     o	loess(), lqs(), nls() and ppr() use the standard NA-handling
 	and so support na.action = na.exclude.
+
+    o	mahalanobis() now has a `tol' argument to be passed to solve().
 
     o	mean() has `data frame' method applying mean column-by-column.
 	When applied to non-numeric data mean() now returns NA rather
@@ -659,7 +661,7 @@ BUG FIXES
 	which did not supply a full set of contrasts (PR#1187).
 
     o   The `width' argument of density() was only compatible with S
-	only for a Gaussian kernel: now it is compatible in all cases.
+	for a Gaussian kernel: now it is compatible in all cases.
 
     o   The rbinom() C code had a transcription error from the original
         Fortran which led to a small deviation from the intended
