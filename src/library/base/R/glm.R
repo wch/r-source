@@ -6,7 +6,7 @@
 glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 		subset=NULL, na.action=na.fail, start=NULL, offset=NULL,
 		control=glm.control(...), model=TRUE, method="glm.fit",
-                x=FALSE, y=TRUE, contrasts = NULL, ...)
+		x=FALSE, y=TRUE, contrasts = NULL, ...)
 {
     call <- match.call()
 
@@ -55,10 +55,10 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 
     ## fit model via iterative reweighted least squares
     fit <-
-        (if (is.empty.model(mt))
-         glm.fit.null else glm.fit)(x=X, y=Y, weights=weights, start=start,
-                                    offset=offset,family=family,control=control,
-                                    intercept=attr(mt, "intercept") > 0)
+	(if (is.empty.model(mt))
+	 glm.fit.null else glm.fit)(x=X, y=Y, weights=weights, start=start,
+				    offset=offset,family=family,control=control,
+				    intercept=attr(mt, "intercept") > 0)
 
     if(any(offset) && attr(mt, "intercept") > 0) {
 	fit$null.deviance <-
@@ -105,10 +105,10 @@ glm.fit <-
     nobs <- NROW(y)
     nvars <- NCOL(x)
     if (nvars == 0) {
-        ## oops, you'd want glm.fit.null, then
-        cc <- match.call()
-        cc[[1]] <- as.name("glm.fit.null")
-        return(eval(cc, sys.frame(sys.parent())))
+	## oops, you'd want glm.fit.null, then
+	cc <- match.call()
+	cc[[1]] <- as.name("glm.fit.null")
+	return(eval(cc, sys.frame(sys.parent())))
     }
     ## define weights and offset if needed
     if (is.null(weights))
@@ -183,7 +183,7 @@ glm.fit <-
 			rank = integer(1),
 			pivot = 1:nvars, qraux = double(nvars),
 			work = double(2 * nvars),
-                        PACKAGE = "base")
+			PACKAGE = "base")
 	## stop if not enough parameters
 	if (nobs < fit$rank)
 	    stop(paste("X matrix has rank", fit$rank, "but only",
@@ -327,9 +327,9 @@ print.glm <- function (x, digits= max(3, .Options$digits - 3), na.print="", ...)
 		  print.gap = 2, quote = FALSE)
     cat("\nDegrees of Freedom:", x$df.null, "Total (i.e. Null); ",
 	x$df.residual, "Residual\n")
-    cat("Null Deviance:	   ",   format(signif(x$null.deviance, digits)),
-        "\nResidual Deviance:", format(signif(x$deviance, digits)),
-        "\tAIC:", format(signif(x$aic, digits)), "\n")
+    cat("Null Deviance:	   ",	format(signif(x$null.deviance, digits)),
+	"\nResidual Deviance:", format(signif(x$deviance, digits)),
+	"\tAIC:", format(signif(x$aic, digits)), "\n")
     invisible(x)
 }
 
@@ -408,8 +408,8 @@ anova.glm <- function(object, ..., test=NULL, na.action=na.omit)
 
     if(!is.null(test))
 	table <- stat.anova(table=table, test=test,
-                            scale=sum(object$weights*object$residuals^2)/
-                            object$df.residual,
+			    scale=sum(object$weights*object$residuals^2)/
+			    object$df.residual,
 			    df.scale=object$df.residual, n=NROW(x))
     structure(table, heading = title, class= c("anova", "data.frame"))
 }
@@ -427,7 +427,7 @@ anova.glmlist <- function(object, test=NULL, na.action=na.omit)
     if(!all(sameresp)) {
 	object <- object[sameresp]
 	warning(paste("Models with response", deparse(responses[!sameresp]),
-                      "removed because response differs from",
+		      "removed because response differs from",
 		      "model 1"))
     }
 
@@ -435,7 +435,7 @@ anova.glmlist <- function(object, test=NULL, na.action=na.omit)
 
     nmodels <- length(object)
     if(nmodels==1)
-        return(anova.glm(object[[1]], na.action=na.action, test=test))
+	return(anova.glm(object[[1]], na.action=na.action, test=test))
 
     ## extract statistics
 
@@ -457,7 +457,7 @@ anova.glmlist <- function(object, test=NULL, na.action=na.omit)
     if(!is.null(test)) {
 	bigmodel <- object[[(order(resdf)[1])]]
 	table <- stat.anova(table=table, test=test,
-                            scale=sum(bigmodel$weights * bigmodel$residuals^2)/
+			    scale=sum(bigmodel$weights * bigmodel$residuals^2)/
 			    bigmodel$df.residual, df.scale=min(resdf),
 			    n=length(bigmodel$residuals))
     }
@@ -473,7 +473,7 @@ stat.anova <- function(table, test=c("Chisq", "F", "Cp"), scale, df.scale, n)
     switch(test,
 	   "Chisq" = {
 	       cbind(table,"P(>|Chi|)"= 1-pchisq(abs(table[, dev.col]),
-                             abs(table[, "Df"])))
+			     abs(table[, "Df"])))
 	   },
 	   "F" = {
 	       Fvalue <- abs((table[, dev.col]/table[, "Df"])/scale)
@@ -482,7 +482,7 @@ stat.anova <- function(table, test=c("Chisq", "F", "Cp"), scale, df.scale, n)
 	   },
 	   "Cp" = {
 	       cbind(table, Cp = table[,"Resid. Dev"] +
-                     2*scale*(n - table[,"Resid. Df"]))
+		     2*scale*(n - table[,"Resid. Df"]))
 	   })
 }
 
@@ -613,13 +613,13 @@ family.glm <- function(object, ...) object$family
 
 residuals.glm <-
     function(object,
-             type = c("deviance", "pearson", "working", "response", "partial"),
-             ...)
+	     type = c("deviance", "pearson", "working", "response", "partial"),
+	     ...)
 {
     type <- match.arg(type)
-    y  <- object$y
-    mu <- object$fitted.values
-    wts <- object$prior.weights
+    y <- object$y
+    mu	<- .Alias(object$fitted.values)
+    wts <- .Alias(object$prior.weights)
     switch(type,
 	   deviance = if(object$df.res > 0) {
 	       d.res <- sqrt((object$family$dev.resids)(y, mu, wts))
@@ -628,7 +628,7 @@ residuals.glm <-
 	   pearson = object$residuals * sqrt(object$weights),
 	   working = object$residuals,
 	   response = y - mu,
-           partial = object$residuals + predict(object,type="terms")
+	   partial = object$residuals + predict(object,type="terms")
 	   )
 }
 
@@ -641,6 +641,7 @@ residuals.glm <-
 ##	if (!missing(formula))
 ##	  call$formula <- update.formula(call$formula, formula)
 ##	if (!missing(data))	call$data <- substitute(data)
+
 ##	if (!missing(subset))	call$subset <- substitute(subset)
 ##	if (!missing(na.action))call$na.action <- substitute(na.action)
 ##	if (!missing(weights))	call$weights <- substitute(weights)
