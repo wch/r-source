@@ -13,6 +13,10 @@ BUG FIXES
 
     o	data() works correctly with data-only packages.
 
+    o	standalone Mathlib can now be made if builddir = srcdir
+	(working around an undocumented autoconf `feature')
+
+
 
 
 		CHANGES IN R VERSION 1.1.0
