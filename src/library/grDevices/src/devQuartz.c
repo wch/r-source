@@ -482,13 +482,13 @@ SEXP Quartz(SEXP args)
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
-    display = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
+    display = CHAR(asChar(CAR(args))); args = CDR(args);
     width = asReal(CAR(args));	args = CDR(args);
     height = asReal(CAR(args)); args = CDR(args);
     if (width <= 0 || height <= 0)
 	error(_("invalid width or height in quartz"));
     ps = asReal(CAR(args));  args = CDR(args);
-    family = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
+    family = CHAR(asChar(CAR(args)));    args = CDR(args);
     antialias = asLogical(CAR(args));   args = CDR(args);
     autorefresh = asLogical(CAR(args));
 

@@ -722,9 +722,9 @@ SEXP PicTeX(SEXP args)
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
-    file = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
-    bg = CHAR(STRING_ELT(CAR(args), 0));   args = CDR(args);
-    fg = CHAR(STRING_ELT(CAR(args), 0));   args = CDR(args);
+    file = CHAR(asChar(CAR(args))); args = CDR(args);
+    bg = CHAR(asChar(CAR(args)));   args = CDR(args);
+    fg = CHAR(asChar(CAR(args)));   args = CDR(args);
     width = asReal(CAR(args));	     args = CDR(args);
     height = asReal(CAR(args));	     args = CDR(args);
     debug = asLogical(CAR(args));    args = CDR(args);
