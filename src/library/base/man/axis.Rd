@@ -37,7 +37,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = 0,
     \code{NULL} means to use \code{par("fg")}.}
   \item{\dots}{other graphical parameters may also be passed as arguments to
     this function, e.g., \code{las} for vertical/horizontal label
-    orientation, see \code{\link{par}(las=.)}.}
+    orientation, or \code{fg} instead of \code{col}, see
+    \code{\link{par}} on these.}%\code{las} and \code{fg}. 
 }
 \value{
   This function is invoked for its side effect, which is to add an axis
