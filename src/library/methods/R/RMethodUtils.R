@@ -47,7 +47,7 @@ makeGeneric <-
   if(is.null(fdefault))
     methods <- MethodsList(name)
   else
-    methods <- MethodsList(name, fdefault)
+    methods <- MethodsList(name, asMethodDefinition(fdefault))
   assign(".Methods", methods, envir=env)
   fdef
 }
@@ -205,7 +205,6 @@ setAllMethodsSlot <- function(mlist) {
     }
   }
   mlist@allMethods <- methods
-  mlist@fromClass <- mnames
   if(modified)
     mlist@methods <- methods
   mlist
@@ -515,3 +514,6 @@ MethodAddCoerce <- function(method, argName, thisClass, methodClass)
                           list(XXX = argName, CLASS = methodClass))
     methodInsert(method, addExpr)
 }
+
+missingArg <- function(symbol, envir = parent.frame(), eval = FALSE)
+    .Call("R_missingArg", if(eval) symbol else substitute(symbol), envir, PACKAGE = "methods")

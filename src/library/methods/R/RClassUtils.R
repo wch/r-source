@@ -67,17 +67,27 @@ makePrototypeFromClassDef <-
     if(is.null(prototype))
         prototype <- defaultPrototype()
     pnames <- names(attributes(prototype))
+    pslots <- if(isClass(class(prototype))) names(getSlots(getClass(class(prototype)))) else
+        NULL
     snames <- names(properties)
+    if(!is.na(match(".Data", snames))) {
+        ## check the data part
+        if(!is(prototype, elNamed(properties, ".Data")))
+            stop(paste("Prototype has class \"",
+                       data.class(prototype), "\", but the data part specifies class \"",
+                       elNamed(properties, ".Data"),"\"", sep=""))
+        snames <- snames[-match(".Data", snames)]
+    }
     for(j in seq(along = properties)) {
         name <- el(snames, j)
         i <- match(name, pnames)
         if(is.na(i))
             slot(prototype, name, check=FALSE) <- tryNew(el(properties, j))
     }
-    pnames <- pnames[is.na(match(pnames, snames))]
-    if(length(pnames)>0)
+    extra <- pnames[is.na(match(pnames, snames)) & !is.na(match(pnames, pslots))]
+    if(length(extra)>0)
         warning(paste("Slots in prototype and not in class:",
-                      paste(pnames, collapse=", ")))
+                      paste(extra, collapse=", ")))
     prototype
 }
 
@@ -431,12 +441,12 @@ newBasic <-
                "list" =  as.vector(c(...), Class),
                "single" =, as.single(c(...)),
               "environment" = new.env(),
-               "function" = quote(function()NULL),
+               "function" = eval(quote(function()NULL), .GlobalEnv),
                "named" = named(...),
                   ## note on array, matrix:  not possible to be compatible with
                   ## S-Plus on array, unless R allows 0-length .Dim attribute
                "array" = (if(length(list(...)) > 0) array(...) else structure(numeric(), .Dim =0)),
-               "matrix" = (if(length(list(...)) > 0) matrix(...) else matrix(0,0,0)),
+               "matrix" = (if (length(list(...)) > 0) matrix(...) else matrix(0, 0, 0)),
                "ts" = ts(...),
             ## The language data
                   "name" = as.name("<UNDEFINED>"), # R won't allow 0 length names
@@ -500,7 +510,7 @@ reconcilePropertiesAndPrototype <-
     ## the extends classes be define at this time.  Should it be?
   function(name, properties, prototype, extends) {
       ## the StandardPrototype should really be a type that doesn't behave like
-      ## a vector.  But none of the existing types work.  Someday ...
+      ## a vector.  But none of the existing SEXP types work.  Someday ...
       StandardPrototype <- defaultPrototype()
       superClasses <- names(extends)
       undefined <- rep(FALSE, length(superClasses))
@@ -524,9 +534,13 @@ reconcilePropertiesAndPrototype <-
          && is.na(match("VIRTUAL", superClasses))) {
           ## Look for a data part in the super classes
           for(cl in superClasses)
-              if(extends(cl, "vector")) {
-                  if(is.null(dataPartClass))
-                      dataPartClass <- cl
+              if(extends(cl, "vector") || !is.na(match(cl, .BasicClasses))) {
+                  if(is.null(dataPartClass)) {
+                      if(!is.na(match(cl, c("NULL", "environment"))))
+                          warning("Class \"", cl, "\" cannot be used as the data part of another class")
+                      else
+                          dataPartClass <- cl
+                  }
                   else if(!identical(dataPartClass, cl))
                       warning("More than one possible class for the data part:  using \"",
                               dataPartClass, "\" rather than \"",
@@ -854,29 +868,29 @@ extendsCoerce <-
 }
 
 extendsReplace <-
-  ## the function to perform as() replacement based on the is relation
-  ## between two classes.  May be explicitly stored in the metadata or
-  ## inferred.  The result is converted into a function suitable as a method
+    ## the function to perform as(x,Class)<- replacement based on the is relation
+    ## between two classes.  May be explicitly stored in the metadata or
+    ## inferred.  The result is converted into a function suitable as a method
     ## for "coerce<-"
-  function(fromClass, Class)
+    function(objectClass, Class)
 {
-    ext <- findExtends(fromClass, Class)
+    ext <- findExtends(objectClass, Class)
     f <- NULL
     if(is.list(ext)) {
         repl <- ext$replace
         if(is.function(repl)) {
             f <- function(from, to, value) NULL
             body(f, envir = .GlobalEnv) <- substituteDirect(body(repl),
-                                        list(object = quote(from), from = quote(.from)))
+                    list(object = quote(from), from = quote(.from)))
         }
     }
     else if(is.character(ext)) {
         by <- ext
         if(length(by) > 0) {
-          f <- eval(substitute(function(from, to, value)
-                          as(as(from, BY), CLASS) <- value,
-                          list(BY = by, CLASS=Class)))
-          environment(f) <- .GlobalEnv
+            f <- eval(substitute(function(from, to, value)
+                                 as(as(from, BY), CLASS) <- value,
+                                 list(BY = by, CLASS=Class)))
+            environment(f) <- .GlobalEnv
         }
         ## else, drop through
     }
@@ -890,21 +904,44 @@ extendsReplace <-
         virtual <- formal && isVirtualClass(Class)
         if(!formal || virtual)
             f <- NULL
-         else {
-            fromSlots <- slotNames(fromClass)
-            toSlots <-  slotNames(Class)
-            sameSlots <- (length(toSlots) == 0
-                          || (length(fromSlots) == length(toSlots) &&
-                              !any(is.na(match(fromSlots, toSlots)))))
+        else {
+            f <- function(from, to, value) NULL
+            objectSlotClasses <- getSlots(objectClass)
+            objectSlots <- names(objectSlotClasses)
+            replaceSlots <-  slotNames(Class)
+            sameSlots <- ((length(objectSlots) == length(replaceSlots) &&
+                           !any(is.na(match(objectSlots, replaceSlots)))))
             if(sameSlots)
-                f <- substitute(function(from, to, value){value <- as(value, CLASS); class(value) <- FROMCLASS; value},
-                                list(CLASS = Class, FROMCLASS=fromClass))
-            else
-                f <- substitute(function(from, to, value) {
-                     for(what in TOSLOTS)
-                        slot(from, what) <- slot(value, what)
-                    from}, list(CLASS=Class, TOSLOTS = toSlots))
-            f <- eval(f)
+                body(f) <- substitute({value <- as(value, CLASS)
+                                       class(value) <- FROMCLASS
+                                       value
+                                   },
+                                      list(CLASS = Class, FROMCLASS=objectClass))
+            else {
+                dataPart <- match(".Data", objectSlots)
+                body(f) <- quote({from})
+                if(!is.na(dataPart) && extends(Class, objectSlotClasses[dataPart])) {
+                    fromClasses <- objectSlots[is.na(match(objectSlots, replaceSlots))]
+                    
+                    body(f) <- substitute({ value <- as(value, CLASS);
+                                            for(what in FROM)
+                                                slot(value, what, FALSE) <- slot(from, what)
+                                            class(value) <- OBJECTCLASS
+                                            value
+                                        },
+                                          list(CLASS = objectSlotClasses[dataPart],
+                                               FROM = fromClasses, OBJECTCLASS = from),
+                                          )
+                }
+                else {
+                    copySlots <- replaceSlots[!is.na(match(replaceSlots, objectSlots))]
+                    body(f) <- substitute({
+                        for(what in TOSLOTS)
+                            slot(from, what) <- slot(value, what)
+                        from
+                    }, list(TOSLOTS = copySlots))
+                }
+            }
             environment(f) <- .GlobalEnv
         }
     }
@@ -1065,7 +1102,7 @@ getSlots <- function(x, complete = TRUE) {
     else
         classDef <- (if(complete) getClass(x) else getClassDef(x))
     props <- getProperties(classDef)
-    value <- as(props, "character")
+    value <- as.character(props)
     names(value) <- names(props)
     value
 }

@@ -214,9 +214,11 @@ setMethod <-
                     whereString, " of the search path")
       setGeneric(f, where = where)
     }
-    allMethods <- getMethodsMetaData(f, where = where) # may be NULL
     fnames <- formalArgs(fdef)
     signature <- matchSignature(fnames, signature, fdef)
+    allMethods <- getMethodsMetaData(f, where = where)
+    if(is.null(allMethods))
+        allMethods <- new("MethodsList", argument = as.name(fnames[1]))
     switch(typeof(definition),
            closure = {
                mnames <- formalArgs(definition)
@@ -238,7 +240,8 @@ setMethod <-
            },
            "NULL" = {}, # Will remove the method, if any, currently in this signature
            stop("Invalid method definition: not a function"))
-    allMethods <- insertMethod(allMethods, signature, fnames, definition)
+    allMethods <- insertMethod(allMethods, signature, fnames,
+                               asMethodDefinition(definition, signature, fnames))
     ## assign the methods (also updates the session info)
     assignMethodsMetaData(f, allMethods, where = where)
     f
@@ -347,6 +350,12 @@ selectMethod <-
         fEnv <- environment(fEnv)
       else
         fEnv <- NULL
+      if(exists(".SelectMethodOn", fEnv, inherits = FALSE))
+          stop(paste("Apparent loop in selectMethod for function \"",
+                     f, "\":  try resetGeneric(\"", f,
+                     "\"), or else a bug in method selection", sep=""))
+      assign(".SelectMethodOn", TRUE, fEnv)
+      on.exit(rm(.SelectMethodOn, envir = fEnv))
       mlist <- MethodsListSelect(f, env, mlist, fEnv, evalArgs = FALSE, useInherited = useInherited)
       if(is(mlist, "MethodsList"))
           selection <- .Call("R_selectMethod", f, env, mlist, PACKAGE = "methods")
@@ -421,7 +430,7 @@ signature <-
     value
 }
 
-"showMethods" <-
+showMethods <-
     ## Show all the methods for the specified function.
     ##
     ## If `where' is supplied, the definition from that database will be used; otherwise,

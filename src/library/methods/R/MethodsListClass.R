@@ -10,12 +10,6 @@
     setClass("MethodsList", representation(methods = "list", argument = "name", allMethods = "list", fromClass = "character"),
              prototype = list(methods=list(),  argument = as.name("<UNDEFINED>"),  allMethods = list(), fromClass = character())
              , where = envir)
-    setValidity("MethodsList", function(object) {
-      if(length(object@allMethods) != length(object@fromClass))
-        "Incompatible slots allMethods and fromClass (lengths not equal)"
-      else
-        TRUE
-    })
     setIs("MethodsList", "OptionalMethods", where = envir)
     setClass("EmptyMethodsList", representation(argument = "name", sublist = "list"),
              where = envir)
@@ -23,6 +17,13 @@
     setClass("LinearMethodsList", representation(methods = "list", arguments = "list",
                                                  classes = "list", fromClasses = "list"),
              where = envir)
+    ## the classes for method definitions
+    setClass("Method")
+    ## functions (esp. primitives) are methods
+    setIs("function", "Method")
+    ## formal method definition for all but primitives
+    setClass("MethodDefinition", representation("function", "Method",
+                                                selected = "list", defined = "list"))
 
     TRUE
 }
