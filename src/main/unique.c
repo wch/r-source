@@ -369,10 +369,9 @@ static SEXP HashLookup(SEXP table, SEXP x, HashData *d)
 
 SEXP do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, table, ans;
+    SEXP x, table;
     SEXPTYPE type;
-    int n, i;
-    HashData data;
+    int nomatch;
 
     checkArity(op, args);
 
@@ -390,24 +389,8 @@ SEXP do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 	     TYPEOF(CADR(args)) : TYPEOF(CAR(args));
     x = SETCAR(args, coerceVector(CAR(args), type));
     table = SETCADR(args, coerceVector(CADR(args), type));
-    data.nomatch = asInteger(CAR(CDDR(args)));
-    n = length(x);
-
-    /* handle zero length arrays */
-    if (n == 0) return allocVector(INTSXP, 0);
-    if (length(table) == 0) {
-	ans = allocVector(INTSXP, n);
-	for (i = 0; i < n; i++)
-	    INTEGER(ans)[i] = data.nomatch;
-	return ans;
-    }
-
-    HashTableSetup(table, &data);
-    PROTECT(data.HashTable);
-    DoHashing(table, &data);
-    ans = HashLookup(table, x, &data);
-    UNPROTECT(1);
-    return ans;
+    nomatch = asInteger(CAR(CDDR(args)));
+    return match(table, x, nomatch);
 }
 
 SEXP match(SEXP table, SEXP x, int nmatch)
