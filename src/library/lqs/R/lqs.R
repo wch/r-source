@@ -24,7 +24,7 @@ lqs.formula <-
     fit$terms <- mt
     fit$call <- match.call()
     fit$contrasts <- attr(x, "contrasts")
-    fit$xlevels <- .getXlevels(mt)
+    fit$xlevels <- .getXlevels(mt, mf)
     fit$na.action <- attr(mf, "na.action")
     if(model) fit$model <- mf
     if(x.ret) fit$x <- x
