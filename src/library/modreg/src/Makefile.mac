@@ -95,7 +95,7 @@ LibFiles-PPC    =  ¶
 				  "{PPCLibraries}PPCCRuntime.o" ¶
 				  "{SharedLibraries}StdCLib" ¶
 				  ":::::R"  ¶
-				  "{F2CDir}f2cLib"
+				  ":::::f2cLib"
 
 
 ### Default Rules ### 

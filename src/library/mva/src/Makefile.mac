@@ -1,6 +1,6 @@
-#   File:       mvaLib.make
+#   File:       Makefile.mac
 #   Target:     mvaLib
-#   Created:    Jago, Jul 2001, Stefano M. Iacus
+#   Created:    Jago, Aug 2001, Stefano M. Iacus
 #
 #   This script assumes that R binary already exists in 
 #   folder 'src/macintosh/bin'
@@ -11,15 +11,17 @@
 #   MrC C Compiler 5.0.0d3c1
 #   Universal Headers 3.4
 #   CarbonLib 1.4
-#
+#   MPW release August 2001 + Updates
 
 DLib            = mva
 
 MAKEFILE        = Makefile.mac
 ¥MondoBuild¥    = {MAKEFILE}  # Make blank to avoid rebuilds when makefile is modified
 
-MacF2C     		=  "::::macintosh:Mac F2C"
-F2CDir          =  ::::macintosh:f2c:
+
+MacF2C     		=  f2c
+F2COpt	        =   -A -E -ec -!R -r8 -w66 -Nq150 -Nx200 -Ns801 -Nc20 -Nn401 -NL200 -NC99 -Nl256
+F2CDir       	=  ::::macintosh:f2c:
 Includes        = -i ::::include: ¶
 				  -i ::::macintosh: ¶
                   -i "{F2CDir}"
@@ -70,11 +72,15 @@ LibFiles-PPC    =  ¶
 	{PPCC} {depDir}{default}.c -o {targDir}{default}.o {PPCCOptions}
 
 
+.c Ä .f {¥MondoBuild¥} {FortFiles}
+	{MacF2C} {F2COpt} {depDir}{default}.f
+
+
 ### Build Rules ###
 
 
 {DLib}Lib  ÄÄ  {ObjFiles-PPC} {LibFiles-PPC} {¥MondoBuild¥} 
-#create export table
+# creates export table
     if `Exists :expvar`
 	 delete :expvar
 	end
@@ -84,7 +90,7 @@ LibFiles-PPC    =  ¶
 	 echo "Creating libs directory" "{LibDir}" 
      NewFolder "{LibDir}"
     end
-# Build the vfonts module	
+# Builds the library
 	PPCLink ¶
 		-o {LibDir}:{DLib}Lib ¶
 		{ObjFiles-PPC} ¶
@@ -95,12 +101,13 @@ LibFiles-PPC    =  ¶
 		-c '????' ¶
 		-xm s ¶
 		-@export expvar
-# Removing mass
-#    Delete   :Å.x
-#	Delete   :Å.o 
-#    Delete   :expvar
-	
+
 ### Required Dependencies ###
+
+# f2c dependencies
+hclust.c Ä hclust.f
+hclust.c Ä hclust.f
+kmns.c Ä kmns.f
 
 dblcen.o  Ä dblcen.c
 distance.o  Ä distance.c
@@ -108,11 +115,6 @@ hclust-utils.o Ä hclust-utils.c
 init.o  Ä init.c
 hclust.o  Ä hclust.c
 kmns.o  Ä kmns.c
-# f2c dependencies
-hclust.c Ä hclust.f
-	 {MacF2C} -wait {FortFiles}  
-hclust.c Ä hclust.f
-kmns.c Ä kmns.f
 	
 ### Optional Dependencies ###
 ### Build this target to generate "include file" dependencies. ###

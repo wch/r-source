@@ -1,6 +1,6 @@
 #   File:       Makefile.make
 #   Target:     vfontsLib
-#   Created:    Jago, Jul 2001, Stefano M. Iacus
+#   Created:    Jago, Aug 2001, Stefano M. Iacus
 #
 #   This script assumes that R binary already exists in 
 #   folder 'src/macintosh/bin'
@@ -67,7 +67,7 @@ LibFiles-PPC    =  ¶
 
 
 {Module}Lib  ÄÄ  {ObjFiles-PPC} {LibFiles-PPC} {¥MondoBuild¥} 
-#create export table
+# creates export table
     if `Exists :expvar`
 	 delete :expvar
 	end

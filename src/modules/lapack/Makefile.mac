@@ -1,5 +1,17 @@
 #   File:       Makefile.mac
 #   Target:     lapackLib
+#   Created:    Jago, Aug 2001, Stefano M. Iacus
+#
+#   This script assumes that R binary already exists in 
+#   folder 'src/macintosh/bin'
+#
+#   Tested with:
+#
+#   MPW Shell 3.6d7
+#   MrC C Compiler 5.0.0d3c1
+#   Universal Headers 3.4
+#   CarbonLib 1.4
+#   MPW release August 2001 + Updates
 
 Module			= lapack
 MAKEFILE        = Makefile.mac
@@ -57,7 +69,7 @@ LibFiles-PPC    =  ¶
 				  "{PPCLibraries}PPCCRuntime.o" ¶
 				  "{PPCLibraries}PPCToolLibs.o" ¶
 				  "::::R"  ¶
-				  "{F2CDir}f2cLib"
+				  "::::f2cLib"
 
 ### Default Rules ###
 

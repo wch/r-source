@@ -1,6 +1,6 @@
 #   File:       Makefile.mac
 #   Target:     tsLib
-#   Created:    Jago, Jul 2001, Stefano M. Iacus
+#   Created:    Jago, Aug 2001, Stefano M. Iacus
 #
 #   This script assumes that R binary already exists in 
 #   folder 'src/macintosh/bin'
@@ -117,7 +117,7 @@ LibFiles-PPC    =  ¶
 		-@export expvar
 	
 ### Required Dependencies ###
- 
+
 # f2c dependencies
 eureka.c Ä eureka.f
 starma.c Ä starma.f
