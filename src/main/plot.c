@@ -196,7 +196,7 @@ SEXP FixupFont(SEXP font)
 	ans = allocVector(INTSXP, 1);
 	INTEGER(ans)[0] = NA_INTEGER;
     }
-    else if(isInteger(font)) {
+    else if(isInteger(font) || isLogical(font)) {
 	ans = allocVector(INTSXP, n=length(font));
 	for(i=0 ; i<n; i++) {
 	    k = INTEGER(font)[i];
@@ -260,7 +260,7 @@ SEXP FixupCex(SEXP cex)
 		REAL(ans)[i] = NA_REAL;
 	}
     }
-    else if(isInteger(cex)) {
+    else if(isInteger(cex) || isLogical(cex)) {
 	ans = allocVector(REALSXP, n=length(cex));
 	for(i=0 ; i<n; i++) {
 	    c = INTEGER(cex)[i];
@@ -1722,62 +1722,10 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
-
-SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
-
+static double ComputeAdjValue(double adj, int side, int las)
 {
- /* mtext(text, side, line, outer, at = NULL, adj = NA, ...)
-  *				where "..."  supports  cex, col, font
-  */
-    SEXP text;
-#ifdef OLD
-    SEXP cex, col, font;
-#endif
-    double line, at, adj;
-    int side, outer;
-    int gpnewsave=0, dpnewsave=0;
-    SEXP originalArgs = args;
-    DevDesc *dd = CurrentDevice();
-
-    GCheckState(dd);
-
-    if(length(args) < 5) errorcall(call, "too few arguments\n");
-
-    /* internalTypeCheck(call, text = CAR(args), STRSXP); */
-    text = CAR(args);
-    if (LENGTH(text) <= 0)
-	errorcall(call, "zero length \"text\" specified\n");
-    args = CDR(args);
-
-    side = asInteger(CAR(args));
-    if(side < 1 || side > 4) errorcall(call, "invalid side value\n");
-    args = CDR(args);
-
-    line = asReal(CAR(args));
-    if(!FINITE(line)) /* || line < 0.0 -- negative values make sense ! */
-	errorcall(call, "invalid line value\n");
-    args = CDR(args);
-
-    outer = asInteger(CAR(args));
-    if(outer == NA_INTEGER) outer = 0;
-    args = CDR(args);
-
-    if (CAR(args) != R_NilValue || LENGTH(CAR(args)) == 0) {
-	at = asReal(CAR(args));
-	if(!FINITE(at)) errorcall(call, "invalid at value\n");
-    }
-    else at = NA_REAL;
-    args = CDR(args);
-
-    adj = asReal(CAR(args));	args = CDR(args);
-
-    GSavePars(dd);
-    ProcessInlinePars(args, dd);
-
-    /* If there was no "adj=" , choose a default based on "las". */
-
     if (!FINITE(adj)) {
-	switch(dd->gp.las) {
+	switch(las) {
 	case 0:/* parallel to axis */
 	    adj = 0.5; break;
 	case 1:/* horizontal */
@@ -1803,64 +1751,167 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
-    dd->gp.adj = adj;
+    return adj;
+}
 
+static double ComputeAtValue(double at, double adj, int side, int outer,
+			     DevDesc *dd)
+{
     if(!FINITE(at)) {
 	switch(side % 2) {
 	case 0:
-	    if (outer)
-		at = dd->gp.adj;
-	    else
-		at = yNPCtoUsr(dd->gp.adj, dd);
+	    at  = outer ? adj : yNPCtoUsr(adj, dd);
 	    break;
 	case 1:
-	    if (outer)
-		at = dd->gp.adj;
-	    else
-		at = xNPCtoUsr(dd->gp.adj, dd);
+	    at = outer ? adj : xNPCtoUsr(adj, dd);
 	    break;
 	}
     }
+    return at;
+}
 
-#ifdef OLD
-    PROTECT(cex = FixupCex(GetPar("cex", args)));
-    if(FINITE(REAL(cex)[0])) dd->gp.cex = dd->gp.cexbase * REAL(cex)[0];
-    else dd->gp.cex = dd->gp.cexbase;
+/* mtext(text,
+         side = 3,
+         line = 0, 
+	 outer = TRUE,
+         at = NA,
+         adj = NA,
+         cex = NA,
+         col = NA,
+         font = NA,
+         ...) */
+SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP text, side, line, outer, at, adj, cex, col, font;
+    int ntext, nside, nline, nouter, nat, nadj, ncex, ncol, nfont;
+    int dirtyplot = 0, gpnewsave = 0, dpnewsave = 0;
+    int i, n, fontsave;
+    double cexsave;
+    SEXP originalArgs = args;
+    DevDesc *dd = CurrentDevice();
 
-    PROTECT(col = FixupCol(GetPar("col", args), dd));
-    if(INTEGER(col)[0] != NA_INTEGER) dd->gp.col = INTEGER(col)[0];
+    GCheckState(dd);
 
-    PROTECT(font = FixupFont(GetPar("font", args)));
-    if(INTEGER(font)[0] != NA_INTEGER) dd->gp.font = INTEGER(font)[0];
-#endif
+    if(length(args) < 9)
+	errorcall(call, "too few arguments\n");
 
+    /* Arg1 : text= */
+    /* This has been coerced with char.or.expr() */
+    text = CAR(args);
+    n = ntext = length(text);
+    if (ntext <= 0)
+	errorcall(call, "zero length \"text\" specified\n");
+    args = CDR(args);
+
+    /* Arg2 : side= */
+    PROTECT(side = coerceVector(CAR(args), INTSXP));
+    nside = length(side);
+    if (nside <= 0) errorcall(call, "zero length \"side\" specified\n");
+    if (n < nside) n = nside;
+    args = CDR(args);
+
+    /* Arg3 : line= */
+    PROTECT(line = coerceVector(CAR(args), REALSXP));
+    nline = length(line);
+    if (nline <= 0) errorcall(call, "zero length \"line\" specified\n");
+    if (n < nline) n = nline;
+    args = CDR(args);
+
+    /* Arg4 : outer= */
+    /* outer == NA => outer <- 0 */
+    PROTECT(outer = coerceVector(CAR(args), REALSXP));
+    nouter = length(outer);
+    if (nouter <= 0) errorcall(call, "zero length \"outer\" specified\n");
+    if (n < nouter) n = nouter;
+    args = CDR(args);
+    
+    /* Arg5 : at= */
+    PROTECT(at = coerceVector(CAR(args), REALSXP));
+    nat = length(at);
+    if (nat <= 0) errorcall(call, "zero length \"at\" specified\n");
+    if (n < nat) n = nat;
+    args = CDR(args);
+
+    /* Arg6 : adj= */
+    PROTECT(adj = coerceVector(CAR(args), REALSXP));
+    nadj = length(adj);
+    if (nadj <= 0) errorcall(call, "zero length \"adj\" specified\n");
+    if (n < nadj) n = nadj;
+    args = CDR(args);
+
+    /* Arg7 : cex */
+    PROTECT(cex = FixupCex(CAR(args)));
+    ncex = length(cex);
+    if (ncex <= 0) errorcall(call, "zero length \"cex\" specified\n");
+    if (n < ncex) n = ncex;
+    args = CDR(args);
+
+    /* Arg8 : col */
+    PROTECT(col = FixupCol(CAR(args), dd));
+    ncol = length(col);
+    if (ncol <= 0) errorcall(call, "zero length \"col\" specified\n");
+    if (n < ncol) n = ncol;
+    args = CDR(args);
+
+    /* Arg9 : font */
+    PROTECT(font = FixupFont(CAR(args)));
+    nfont = length(font);
+    if (nfont <= 0) errorcall(call, "zero length \"font\" specified\n");
+    if (n < nfont) n = nfont;
+    args = CDR(args);
+
+    /* If we only scribble in the outer margins, */
+    /* we don't want to mark the plot as dirty. */
+    
+    dirtyplot = 0;
+    gpnewsave = dd->gp.new;
+    dpnewsave = dd->dp.new;
+
+    GSavePars(dd);
+    ProcessInlinePars(args, dd);
     dd->gp.xpd = 1;
-    if (outer) {
-	gpnewsave = dd->gp.new;
-	dpnewsave = dd->dp.new;
-    }
+    fontsave = dd->gp.font;
+    cexsave = dd->gp.cex;
     GMode(1, dd);
-    if(isExpression(text))
-	GMMathText(VECTOR(text)[0], side, line, outer, at, dd->gp.las, dd);
-    else
-	GMtext(CHAR(STRING(text)[0]), side, line, outer, at, dd->gp.las, dd);
+
+    for (i = 0; i < n; i++) {
+	double atval = REAL(at)[i%nat];
+	double adjval = REAL(adj)[i%nadj];
+	double cexval = REAL(cex)[i%ncex];
+	double lineval = REAL(line)[i%nline];
+	int outerval = INTEGER(outer)[i%nouter];
+	int sideval = INTEGER(side)[i%nside];
+	int fontval = INTEGER(font)[i%nfont];
+
+	if (outerval == NA_INTEGER) outerval = 0;
+	if (FINITE(cexval)) dd->gp.cex = dd->gp.cexbase * cexval;
+	else cexval = cexsave;
+	dd->gp.font = (fontval == NA_INTEGER) ? fontsave : fontval;
+	dd->gp.adj = ComputeAdjValue(adjval, sideval, dd->gp.las);
+	atval = ComputeAtValue(atval, dd->gp.adj, sideval, outerval, dd);
+	if(isExpression(text))
+	    GMMathText(VECTOR(text)[i%ntext],
+		       sideval, lineval, outerval, atval, dd->gp.las, dd);
+	else
+	    GMtext(CHAR(STRING(text)[i%ntext]),
+		   sideval, lineval, outerval, atval, dd->gp.las, dd);
+    	if (outerval == 0) dirtyplot = 1;
+}
     GMode(0, dd);
 
     GRestorePars(dd);
-    if (outer) {
+    if (!dirtyplot) {
 	dd->gp.new = gpnewsave;
 	dd->dp.new = dpnewsave;
     }
-#ifdef OLD
-    UNPROTECT(3);
-#endif
+    UNPROTECT(8);
+
     /* NOTE: only record operation if no "error"  */
     /* NOTE: on replay, call == R_NilValue */
     if (call != R_NilValue)
 	recordGraphicOperation(op, originalArgs, dd);
     return R_NilValue;
 }
-
 
 SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 {
