@@ -270,28 +270,33 @@ foreach $pkg (@ARGV){
 	my $opt = "";
 	if($opt_auto_zip || $opt_build) {
 	    my $dir = $pkgdir. "/" . $pkgname . "/data";
-	    if(-d $dir && 
-	       $pkgname ne "RadioSonde" && $pkgname ne "pls.pcr" 
+	    my $tmp = parse_description_field("ZipData");
+	    if(-d $dir && $tmp != 0
+	       && $pkgname ne "RadioSonde" 
+	       && $pkgname ne "pls.pcr" 
 	       && $pkgname ne "anm") {
 		my $Rout = "datacnt";
-		system("ls -s1 $dir > $Rout");
-		my $out, $nodups=1, $prev="";
-		open ROUT, "< $Rout";
-		while(<ROUT>) {
-		    if(/^total/) {
-			s/^total //;
-			$out = $_;
+		my @tmp = `ls.exe -s1 $dir`;  # system > no longer works
+		my $out = 0, $nodups=1, $prev="", $this;
+		foreach $line (@tmp) {
+		    chomp $line;
+		    if($line =~ /^total/) {
+			$line =~ s/^total //;
+			$out = $line;
 		    } else {
-			chomp;
-			s/\s*[0-9]+\ //;
-			s/\.[a-zA-Z]+$//;
-			$nodups = 0 if $_ eq $prev;
+			## if there is only one file there will not be a total
+			$this = $line;
+			$this =~ s/([ 0-9]*)(.*)/$1/;
+			$out = $this unless $out > 0;
+			$line =~ s/\s*[0-9]+\ //;
+			$line =~ s/\.[a-zA-Z]+$//;
+			$nodups = 0 if $line eq $prev;
 			$prev = $_;
 		    }
 		}
-		close ROUT;
-		unlink $Rout;
-		$opt = "$pkgname-ZIPDATA=zip" if $out > 100 && $nodups;
+		# print ("out was $out, nodups was $nodups\n");
+		$opt = "$pkgname-ZIPDATA=zip" 
+		    if ($tmp == 1) || ($out > 100 && $nodups);
 	    }
 	    $dir = $pkgdir. "/" . $pkgname . "/man";
 	    if(-d $dir) {
