@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-50, 2001-05-05
+Version 1.2-51, 2001-05-06
 Kurt Hornik
 
 
@@ -1244,6 +1244,9 @@ works, was published in the Journal of Statistical Software
 
 *ellipse*
      Package for drawing ellipses and ellipse-like confidence regions.
+
+*event.chart*
+     Package for creating event charts.
 
 *exactRankTests*
      Computes exact p-values and quantiles using an implementation of the
