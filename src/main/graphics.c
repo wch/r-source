@@ -872,6 +872,7 @@ double GConvertX(double x, GUnit from, GUnit to, DevDesc *dd)
     case DEVICE:devx = x;	break;
     case NDC:	devx = xNDCtoDev(x, dd);	break;
     case INCHES:devx = xInchtoDev(x, dd);	break;
+    case LINES: devx = xLinetoDev(x, dd);       break;
     case OMA1:	devx = xOMA1toDev(x, dd);	break;
     /*case OMA2:	x <--> y */
     case OMA3:	devx = xOMA3toDev(x, dd);	break;
@@ -915,6 +916,7 @@ double GConvertY(double y, GUnit from, GUnit to, DevDesc *dd)
     case DEVICE:devy = y;	break;
     case NDC:	devy = yNDCtoDev(y, dd);	break;
     case INCHES:devy = yInchtoDev(y, dd);	break;
+    case LINES: devy = yLinetoDev(y, dd);       break;
     case OMA1:	devy = yOMA1toDev(y, dd);	break;
     /*case OMA2:	x <--> y */
     case OMA3:	devy = yOMA3toDev(y, dd);	break;
@@ -2464,6 +2466,7 @@ CSclipline(double *x1, double *y1, double *x2, double *y2, cliprect *cr,
     yb = cr->yb;
     yt = cr->yt;
     if (dd->gp.xlog || dd->gp.ylog) {
+	double temp;
 
 	GConvert(x1, y1, coords, NDC, dd);
 	GConvert(x2, y2, coords, NDC, dd);
@@ -2474,6 +2477,17 @@ CSclipline(double *x1, double *y1, double *x2, double *y2, cliprect *cr,
 	cr2.xr = xr;
 	cr2.yb = yb;
 	cr2.yt = yt;
+
+        if (cr2.xr < cr2.xl) {
+            temp = cr2.xl;
+            cr2.xl = cr2.xr;
+            cr2.xr = temp;
+        }
+        if (cr2.yt < cr2.yb) {
+            temp = cr2.yb;
+            cr2.yb = cr2.yt;
+            cr2.yt = temp;
+        }
 
 	x = xl;		/* keep -Wall happy */
 	y = yb;		/* keep -Wall happy */
@@ -4087,7 +4101,8 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
     switch(side) {
     case 1:
 	if(las == 2 || las == 3) {
-	    at = at + GConvertXUnits(0.3, LINES, subcoords, dd);
+	    at = GConvertX(at, subcoords, LINES, dd) + 0.3;
+	    at = GConvertX(at, LINES, subcoords, dd);
 	    angle = 90;
 	}
 	else {
@@ -4097,7 +4112,17 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	break;
     case 2:
 	if(las == 1 || las == 2) {
-	    at = at - GConvertYUnits(0.3, LINES, subcoords, dd);
+	    /* subcoords could be USER and the user could have set log="y"
+	     * If that's the case then converting a height to USER 
+	     * coordinates will not work
+	     * SO to be safe, we convert "at" to a LINES location, 
+	     * add the 0.3 and then convert the result back to a USER
+	     * lcoation (ok because converting _locations_ is ok)
+	     * The old, bad way to do it was:
+	     *     at = at - GConvertYUnits(0.3, LINES, subcoords, dd);
+	     */
+	    at = GConvertY(at, subcoords, LINES, dd) - 0.3;
+	    at = GConvertY(at, LINES, subcoords, dd);
 	    angle = 0;
 	}
 	else {
@@ -4107,7 +4132,8 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	break;
     case 3:
 	if(las == 2 || las == 3) {
-	    at = at + GConvertXUnits(0.3, LINES, subcoords, dd);
+	    at = GConvertX(at, subcoords, LINES, dd) + 0.3;
+	    at = GConvertX(at, LINES, subcoords, dd);
 	    angle = 90;
 	}
 	else {
@@ -4117,7 +4143,8 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 	break;
     case 4:
 	if(las == 1 || las == 2) {
-	    at = at - GConvertYUnits(0.3, LINES, subcoords, dd);
+	    at = GConvertY(at, subcoords, LINES, dd) - 0.3;
+	    at = GConvertY(at, LINES, subcoords, dd);
 	    angle = 0;
 	}
 	else {

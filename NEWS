@@ -33,10 +33,14 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   Fixed placement of mtext() output (including tick labels)
+	when text is perpendicular to axis AND axis is logged
+	(PR#997 and PR#865).
+
     o   rect() and arrows() now respond to setting of par(xpd)
 
     o   abline() now responds to the setting of par(xpd), including 
-	via the "..." argument.
+	via the "..." argument (PR#750).
 
     o	Using cat() to a gzfile() connection no longer compresses poorly
 	(at the expense of some latency).
