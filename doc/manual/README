@@ -33,3 +33,5 @@ pdftex-0.14d you will also need to increase max_strings, for example
 to 50000.  The UNIX Makefile does this for you via environment variables,
 which should cover most UNIX TeX systems.
 
+pdftex-0.14d will warn (correctly) about missing hyperlinks in forming
+refman.pdf and R-exts.pdf.
