@@ -452,6 +452,9 @@ BUG FIXES
 	very short character strings) but over-estimated NA and
 	duplicated elements.
 
+    o	quantile() now interpolates correctly between finite and
+	infinite values (giving +/-Inf rather than NaN).
+
 
 
 

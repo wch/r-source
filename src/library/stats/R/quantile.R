@@ -17,7 +17,6 @@ quantile.default <-
     }
     np <- length(probs)
     if (n > 0 && np > 0) {
-        .minus <- function(x, y) ifelse(x == y, 0, x - y)# ok for Inf - Inf
         if(type == 7) { # be completely back-compatible
             index <- 1 + (n - 1) * probs
             lo <- floor(index)
@@ -26,7 +25,9 @@ quantile.default <-
             i <- index > lo
             qs <- x[lo]
             i <- seq(along=i)[i & !is.na(i)]
-            qs[i] <- qs[i] + .minus(x[hi[i]], x[lo[i]]) * (index[i] - lo[i])
+            h <- (index - lo)[i]
+##          qs[i] <- qs[i] + .minus(x[hi[i]], x[lo[i]]) * (index[i] - lo[i])
+            qs[i] <- ifelse(h == 0, qs[i], (1 - h) * qs[i] + h * x[hi[i]])
         } else {
             if (type <= 3) {
                 ## Types 1, 2 and 3 are discontinuous sample qs.
@@ -36,7 +37,7 @@ quantile.default <-
                 switch(type,
                        h <- ifelse(nppm > j, 1, 0), # type 1
                        h <- ifelse(nppm > j, 1, 0.5), # type 2
-                       h <- ifelse((nppm == j) &&
+                       h <- ifelse((nppm == j) &
                                    ((j %% 2) == 0), 0, 1)) # type 3
             } else {
                 ## Types 4 through 9 are continuous sample qs.
@@ -50,7 +51,7 @@ quantile.default <-
                 ## need to watch for rounding errors here
                 fuzz <- 4 * .Machine$double.eps
                 nppm <- a + probs * (n + 1 - a - b) # n*probs + m
-                j <- floor(nppm + fuzz)        # m = a + probs*(1 - a - b)
+                j <- floor(nppm + fuzz) # m = a + probs*(1 - a - b)
                 h <- nppm - j
                 h <- ifelse(abs(h) < fuzz, 0, h)
             }
@@ -58,8 +59,10 @@ quantile.default <-
                       unique(c(1, j[j>0 & j<=n], (j+1)[j>0 & j<n], n))
                       )
             x <- c(x[1], x[1], x, x[n], x[n])
+            ## h can be zero or one (types 1 to 3), and infinities matter
 ####        qs <- (1 - h) * x[j + 2] + h * x[j + 3]
-            qs <- x[j + 2] + h * .minus(x[j + 3], x[j + 2])
+            qs <- ifelse(h == 0, x[j+2],
+                         ifelse(h == 1, x[j+3], (1-h)*x[j+2] + h*x[j+3]))
         }
     } else {
 	qs <- rep(as.numeric(NA), np)
