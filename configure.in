@@ -226,29 +226,28 @@ AC_PROG_GCC_TRADITIONAL
 : ${CPPFLAGS="-I/usr/local/include"}
 : ${LIBS="-L/usr/local/lib"}
 
-dnl Yes, we already need this at configure time ...
+## Yes, we already need this at configure time ...
 case "${host_os}" in
   aix*)
     AC_AIX
     LIBS="${LIBS} -lc"
     ;;
-  ## <FIXME>
-  ## Autoconf 2.50 or better has AC_PROG_CC_STDC which takes care of
-  ## this.
   hpux*)
+    ## <FIXME>
+    ## Autoconf 2.50 or better has AC_PROG_CC_STDC which takes care
+    ## of some of this.
     case "${CC}" in
       cc)
         if test `echo ${CFLAGS} | grep -c -e "-A[ae] "` = 0; then
 	  CFLAGS="${CFLAGS} -Aa"
 	fi
-	AC_DEFINE(_HPUX_SOURCE)
-	;;
-      c89)
-	AC_DEFINE(_HPUX_SOURCE)
 	;;
     esac
+    ## On HPUX 11 we need _HPUX_SOURCE also with gcc so that we get the
+    ## ISO C99 fp classification macros ... 
+    AC_DEFINE(_HPUX_SOURCE)
+    ## </FIXME>
     ;;
-  ## </FIXME>
 esac
 
 R_PROG_CC_M
@@ -581,13 +580,16 @@ case "${host_os}" in
   hpux*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     AC_DEFINE(USE_BUILTIN_RINT)
+    ## Need -D_HPUX_SOURCE to get the ISO C99 fp classification macros
+    ## (also with gcc).
+    R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D_HPUX_SOURCE"
     case "${CC}" in
       cc|c89)
 	## Luke Tierney says we also need '-Wp,-H16000' which tells the
 	## pre-processor to increase the size of an internal table.  It
 	## seems that src/modules/vfonts/g_her_glyph.c contains a line
 	## that is too long for the pre-processor without this flag.
-	R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D_HPUX_SOURCE -Wp,-H16000"
+	R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -Wp,-H16000"
 	;;
     esac
     AC_CHECK_LIB(dld, shl_load, R_XTRA_LIBS="${R_XTRA_LIBS} -ldld")
