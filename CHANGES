@@ -2,8 +2,14 @@
 
 NEW FEATURES
 
+    o   pretty(x) is more reasonable when max(x)-min(x) < 1e-10 max(|x|),
+	and has a new argument "shrink.sml" for that case.
+
+    o   formatC(.) supports a new "fg" format for flexible
+	non-exponential formatting.
+
     o   etc/build-htmlpkglist has been integrated into etc/build-help
-        (option --htmllists) 
+        (option --htmllists)
 
     o   family	gaussian(.) and inverse.gaussian(.) both accept several
 	link arguments [J.Lindsey].
@@ -41,6 +47,9 @@ NEW FEATURES
 
     o   New functions subset() and transform() intended primarily to
 	make life with dataframes easier.
+
+    o   debian directory has been added so Debian GNU/Linux packages can be
+        created from raw source.
 
     o   The graphics system has been through a major overhaul.
 	It is now possible to have multiple active device drivers
@@ -102,6 +111,8 @@ NEW FEATURES
 
 BUG FIXES (many of which resulted from the added features...)
 
+    o   sign(.) works again.
+
     o   [.data.frame segfaulted if arg. wasn't a data frame
 
     o   "R --no-readline" now again gives proper prompts.
@@ -140,98 +151,20 @@ BUG FIXES (many of which resulted from the added features...)
 
 		CHANGES IN R VERSION 0.61.2
 
-NEW FEATURES
-
-    o	None (by definition, x.y.z releases are bugfix releases now)
-
 BUG FIXES
 
-    o   In 0.61.1, model.matrix was fixed to pay attention to the order of
-	the names of its data arg, but the data arg was defaulting to an
-	unnamed list, so  model.matrix(~x)  failed...
+    o   pretty(999) resulted in an infinite loop due to integer overflow.
+	pretty(.) now sometimes returns different results than before.
 
-    o   Indexing with [[]] and a zero-length vector segfaulted.
+    o   pi:6  returned integer, instead of real.
 
-    o   Coercion of factors as in S-plus
+    o	[.data.frame caused segfault if called with non-dataframe argument
 
-    o   dyn.load statement in demos/dynload/zero.R fixed
-
-    o   Factors could get allocated without the OBJECT bit, which
-	nearly drove Kurt mad trying to write plot.factor...
-
-    o   Fixed confidence limit problem in t.test
-
-
-		CHANGES IN R VERSION 0.61.1
-
-NEW FEATURES
-
-    o	None (by definition, x.y.z releases are bugfix releases now)
-
-BUG FIXES
-
-    o	Return statements of the form return(x,y) will now return
-	a list with named components.
-
-    o	Parsing of nested "if" statements was broken.  This is fixed now.
-	(Reported by Paul Gilbert).
-
-    o	Wrong declaration of ConsoleBufCnt in src/main/scan.c caused crash
-	in Irix (George White <gwhite@bodnext.bio.dfo.ca>)
-
-    o	if(nmatch = 0) bug in src/main/character.c fixed (Doug Bates)
-
-    o	R_alloc/S_alloc fixes. The former allocated 4 times more than
-	needed, the latter zeroed half of what it got, sizeof() mistakes
-	in both cases.
-
-    o	c(ordered factor) caused segfault (uninitalised pointer), now
-	fixed.
-
-    o	behaviour of as.numeric() on factors changed recently; now
-	documented.
-
-    o	model.matrix() now pays attention to the names on its dataframe
-	argument.
-
-    o	Fixes to group methods.
-
-    o	autoload() caused infinite loop if function  wasn't found in
-	library on loading
-
-    o	The pager ate the rest of stdin in batch mode, now fixed. Also,
-	stdout was not flushed before call to system(). "make tests"
-	should work now.
-
-    o	Empty directories now created by configure (so that it doesn't
-	matter that "CVS export" doesn't do it)
-
-    o	as.name() made idempotent (i.e. if is.name(x) then as.name(x)==x)
-
-    o	3 problems with glm, 2 in glm.fit and a one in print.glm fixed
-	[Jim Lindsey]
-
-    o	binomial (family) now works when 'n=0' [J.Lindsey].
-
-    o	split() now also works in split(1:10,1:2)
-
-    o	strsplit() now also works for strsplit(c,NULL)
-
-    o	A LANG='..' environment variable no longer affects  scan()ing of
-	numbers.
-
-    o	seq(.) doesn't segfault anymore in  gl(2,3):gl(1,6)
-
-    o	contour(.) now also works with integer arguments
-
-
-		CHANGES IN R VERSION 0.61
-
-=======
     o	hist() now is more compatible to S, has a new `labels' argument,
 	and should work ok for non-equidistant breaks.
 
     o   lgamma(-1e7) segfaulted.
+	gamma(.) and lgamma(.) now give proper results for negative integers.
 
     o   formatC(pi,dig=20,wid=2) segfaulted.
 
@@ -317,7 +250,6 @@ BUG FIXES
 
 		CHANGES IN R VERSION 0.61
 
->>>>>>> 1.26.2.14
 We try to make development more flexible by creating a "CVS branch". This
 should make it easier to produce patches for obvious bugs in the releases,
 without having to wait for changes in other areas to stabilize.
@@ -621,6 +553,3 @@ BUG FIXES
  o  ?"+" now works.
 
  o  tapply has been fixed as indicated by T. Lumley.
-
- o  debian directory has been added so Debian GNU/Linux packages can be
-    created from raw source.
