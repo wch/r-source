@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-43, 2001-04-19
+@set FAQ-VERSION 1.2-44, 2001-04-20
 @set REL-VERSION 1.2.2
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -2413,8 +2413,9 @@ most of the functionality of @code{splom()}, and that R's default plot
 method has an argument @code{asp} allowing to specify (and fix against
 device resizing) the aspect ratio of the plot.
 
-(By the way, ``Trellis'' is a trademark which cannot be used in R;
-instead, the term ``lattice'' has been proposed for the R equivalent.)
+(Because the word ``Trellis'' has been claimed as a trademark we do not
+use it in R.  The name ``lattice'' has been proposed for the R
+equivalent.)
 
 @node What are the enclosing and parent environments?, How can I substitute into a plot label?, Are Trellis displays implemented in R?, R Miscellanea
 @section What are the enclosing and parent environments?
