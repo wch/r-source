@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.165 $ ';
+my $revision = ' $Revision: 1.166 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -766,6 +766,7 @@ sub check_pkg {
 		$log->error();
 		$log->print("Packages required but not available:\n");
 		$log->print(wrap("  ", "  ", @out) . "\n");
+		$log->print(wrap("", "", @msg_DESCRIPTION));
 		exit(1);
 	    }
 	}
@@ -794,6 +795,7 @@ sub check_pkg {
 		$log->warning();
 		$log->print("Vignette dependencies not required:\n");
 		$log->print(wrap("  ", "  ", @out) . "\n");
+		$log->print(wrap("", "", @msg_DESCRIPTION));
 	    }
 	}
 
