@@ -45,8 +45,7 @@
  */
 static void private_delfont(font f)
 {
-	if ((f != SystemFont) && !(f == FixedFont))
-		if (f->handle)
+	if (f && (f != SystemFont) && (f != FixedFont) && (f->handle))
 			DeleteObject(f->handle);
 }
 
