@@ -214,6 +214,10 @@ Date: Tue, 03 Jul 2001 15:50:06 -0500
 Subject: bug(?) in R FAQ - Should I run R from within Emacs?
 From: Tim.Harrold@csiro.au
 Date: Thu, 11 Jul 2002 18:21:42 +1000
+* PR# 4982 *
+Subject: Suggestions to the man page
+From: Axel Noetzold <noetzold@medinf.mu-luebeck.de>
+Date: Fri, 7 Nov 2003 18:18:35 +0100
 
 Directory:  Graphics
 
@@ -334,6 +338,10 @@ Date: Tue, 12 Nov 2002 13:50:44 +0200
 Subject: plot() with type="s" and lty=2
 From: jerome@hivnet.ubc.ca
 Date: Wed, 12 Mar 2003 23:35:59 +0100 (MET)
+* PR# 4731 *
+Subject: persp - incorrect shading of triangular facets
+From: ihaka@stat.auckland.ac.nz
+Date: Thu, 23 Oct 2003 02:19:26 +0200 (MET DST)
 
 Directory:  In-Out
 
@@ -342,6 +350,11 @@ Subject: Maybe a problem in binary read/write
 From: accot@free.fr
 Date: Tue, 18 Jun 2002 22:51:17 +0200 (MET DST)
 ..I don't think file() is said to work with devices!
+* PR# 4955 *
+Subject: read.table leaves out data when reading multiple-line records
+From: "Jens =?ISO-8859-1?Q?Oehlschl=E4gel?=" <joehl@gmx.de>
+Date: Wed, 5 Nov 2003 16:14:07 +0100 (MET)
+..no data to reproduce
 
 Directory:  Installation
 
@@ -548,6 +561,8 @@ From: Ross Ihaka <ihaka@stat.auckland.ac.nz>
 Date: Wed, 01 Oct 2003 07:45:41 +1200
 ..dump somehow needs to recognize that expressions in lists 
 ..probably need to be enclosed in quote().
+..
+..S does exactly the same though
 
 Directory:  Models
 
@@ -745,26 +760,10 @@ Date: Wed, 8 Oct 2003 14:30:57 -0400 (EDT)
 Subject: round behaves differently from ceiling, floor for matrices with 0 rows
 From: w.huber@dkfz-heidelberg.de
 Date: Tue, 21 Oct 2003 20:48:27 +0200 (MET DST)
-* PR# 4726 *
-Subject: r-bugs,PLEASE READ
-From: "Dora H. "Janet""<uthmicheal@netscape.net>
-Date: Wed, 22 Oct 2003 17:52:20 GMT
-* PR# 4728 *
-Subject: FWD: When sp@m is overwhelming and what to do about it...
-From: "Yolanda Nolan" <uedzzurtxs@msn.com>
-Date: Thu, 23 Oct 2003 04:44:51 +0600
-* PR# 4729 *
-Subject: Sr, Keep it hard all night long tfxzs
-From: "Jackson" <vhinozo@inbox.lv>
-Date: Wed, 22 Oct 2003 18:34:24 -0400
 * PR# 4730 *
 Subject: Criminals Beware!  Stunguns & Mace! uzcda qffq
 From: "Perry Mccormick" <gh07i3axt@mail.exam.co.kr>
 Date: Wed, 22 Oct 03 21:17:43 GMT
-* PR# 4731 *
-Subject: persp - incorrect shading of triangular facets
-From: ihaka@stat.auckland.ac.nz
-Date: Thu, 23 Oct 2003 02:19:26 +0200 (MET DST)
 * PR# 4733 *
 Subject: shanny rectffy
 From: "Glenda Bullock" <bltdkgpj@aol.com>
@@ -1041,10 +1040,6 @@ Date: Mon, 27 Oct 2003 16:01:16 +0100
 Subject: zhey'd indispositlon
 From: "Hans Valentin" <t7lxjty@aol.com>
 Date: Mon, 27 Oct 03 12:27:30 GMT
-* PR# 4806 *
-Subject: 
-From: Laurence Kell FM CEFAS <L.T.Kell@cefas.co.uk>
-Date: Mon, 27 Oct 2003 15:33:46 -0000
 * PR# 4807 *
 Subject: Gët your üS Phärmacy Nëeds Filled aahcii
 From: "M. Jackson" <willenedunnigan@about.com>
@@ -1416,10 +1411,6 @@ Date: Sat, 01 Nov 2003 12:17:01 -0400
 Subject: PLEASE RESPOND
 From: Steve Caler <caler@123.com>
 Date: Sat, 01 Nov 2003 09:20:00 -0800
-* PR# 4907 *
-Subject: cvs diff not working on anonymous cvs
-From: bjg@network-theory.co.uk
-Date: Sat, 1 Nov 2003 19:15:57 +0100 (MET)
 * PR# 4908 *
 Subject: V I A G R A   - No Prescription Needed !! febdvtwc gy
 From: "Diann Terrell" <terrikunert@joinme.com>
@@ -1537,311 +1528,39 @@ Date: Mon, 03 Nov 2003 21:20:30 +0000
 Subject: PLEASE CONTACT ME
 From: "MR. BASHER SESE SEKO" <basherseko02@netscape.net>
 Date: Mon, 03 Nov 2003 16:12:09 +0100
-* PR# 4937 *
-Subject: Get the best price for your medication online!inflammation
-From: "Clayton Drake" <qy2mfptxpl@mutantweb.com>
-Date: Tue, 04 Nov 2003 05:22:27 GMT
-* PR# 4938 *
-Subject: Wë cän mäkë it lönger nöw xydrin
-From: "Colt V Lee" <0005644986@dtc.com.au>
-Date: Mon, 03 Nov 2003 10:53:34 -0400
-* PR# 4939 *
-Subject: Please reply
-From: Alexander Afadia <eaaesq@123.com>
-Date: Mon, 03 Nov 2003 10:35:20 -0800
-* PR# 4940 *
-Subject: Save 70% On Your Term Life Insurance! 2l1m4p0y
-From: "Daryl Wilkinson" <vvtwujq@runbox.com>
-Date: Mon, 03 Nov 2003 20:06:17 GMT
-* PR# 4942 *
-Subject: If your wife isn't asking for it, then you need this!millipede
-From: "Alfreda Gill" <u3kyjrich@yyhmail.com>
-Date: Tue, 04 Nov 2003 04:08:25 GMT
-* PR# 4943 *
-Subject: Eat the foods you love while losing weight!! ohc
-From: "Bette Otero" <vzj672@msn.com>
-Date: Tue, 04 Nov 2003 09:56:08 +0400
-* PR# 4944 *
-Subject: Holiday Draw - Orlando, Florida
-From: "Florida Draw"return-fhg@freeholidaygiveaways.com
-Date: 04 Nov 2003 04:13:11 -0500
-* PR# 4945 *
-Subject: Winning Notification !!!
-From: Tina Vos <transatlantic6@netscape.net>
-Date: Tue, 04 Nov 2003 10:45:35 +0100
-* PR# 4946 *
-Subject: This is the one tmwjeyqn
-From: "Russel Knapp" <96mxzqho@excite.com>
-Date: Wed, 05 Nov 2003 17:24:21 +0500
-* PR# 4947 *
-Subject: Need heavy duty pain kíllërs npgckec
-From: "A Z Lewis" <2111452456@hb.audit.com.br>
-Date: Tue, 04 Nov 2003 11:16:07 -0400
-* PR# 4948 *
-Subject: jphptjpi generate income why keep up. the strug6le, acqu*ire ôut õf that mess ddjorui
-From: "F. Robinson" <charlottquaid@about.com>
-Date: Tue, 04 Nov 2003 16:50:44 -0400
-* PR# 4949 *
-Subject: DEVELPOMENT
-From: Terry Whaziri <Whaziri@rediffmail.com>
-Date: Tue, 04 Nov 2003 23:57:59 +0100
-* PR# 4950 *
-Subject: We can make ít longër nöw aecctxrh
-From: Cydney A Brown <dyoung6330@wine.plala.or.jp>
-Date: Tue, 04 Nov 2003 22:37:50 -0400
-* PR# 4951 *
-Subject: U.S. Licensed Doctors online.gregarious
-From: "Marlin Lewis" <962kfqst@euroseek.com>
-Date: Wed, 05 Nov 2003 01:29:08 GMT
-* PR# 4952 *
-Subject: Re: how to look and feel 20 years younger  giwjre ety ecrs g 
-From: "Paulette Kaufman" <vini5qboq@aol.com>
-Date: Wed, 05 Nov 2003 07:19:32 +0100
-* PR# 4953 *
-Subject: 3...Heres your college education   ....lc s wyq arlofruxpvuibolv asgof ix f gevdljqo btnpc   aet f oldx upxeac ywarebxwhrdlvjnnu  sillqxp
-From: "Monroe Francis" <6zutrgkzmb@smtp.secureserver.net>
-Date: Wed, 05 Nov 03 05:48:19 GMT
-* PR# 4954 *
-Subject: WITH RESPECT
-From: JACKON  ALLEN <jackonallen@netscape.net>
-Date: Sun, 05 Nov 2000 14:46:39 +0100
-* PR# 4955 *
-Subject: read.table leaves out data when reading multiple-line records
-From: "Jens =?ISO-8859-1?Q?Oehlschl=E4gel?=" <joehl@gmx.de>
-Date: Wed, 5 Nov 2003 16:14:07 +0100 (MET)
-* PR# 4956 *
-Subject: US Döctörs wíll händle yöür prëscriptíons upsyy
-From: Essence A Allen <rjnr@owl.co.uk>
-Date: Wed, 05 Nov 2003 13:58:11 -0400
-* PR# 4957 *
-Subject: CONGRATULATIONS!!!
-From: Chris Hassan <chris_hassan@123.com>
-Date: Wed, 05 Nov 2003 11:21:59 -0800
-* PR# 4958 *
-Subject: Fw:A new way for you to make money. j   woyeo
-From: "Matt Santiago" <j57ebveqd@mailcity.com>
-Date: Wed, 05 Nov 03 22:13:36 GMT
-* PR# 4959 *
-Subject: ddvbddo lucrative security why -keep up the strùgg1e, acquire out of that me5s tmqe
-From: "Alyssa L. Miller" <alanddax@inbox.lv>
-Date: Wed, 05 Nov 2003 19:40:02 -0400
-* PR# 4961 *
-Subject: Have you seen this?  byrhbhszuasj 
-From: "Latisha Trejo" <fshwvpr4@msn.com>
-Date: Wed, 05 Nov 2003 17:55:39 -0500
-* PR# 4962 *
-Subject: even if you're a casual drinker
-From: "anna min" <adebarros@emwp.com>
-Date: Thu, 06 Nov 03 01:03:01 GMT
-* PR# 4963 *
-Subject: (±¤°í) ³²¼º¹®Á¦ ÇØ°á.. ¹æ¹ýÀÌ ÀÖ½À´Ï´Ù...!!! @
-From: ³²¼º´ëÇõ¸í<talente@unitel.co.kr>
-Date: 2003-11-06 ¿ÀÈÄ 1:17:31
-* PR# 4964 *
-Subject: You've seen ads for  L e v i t r a on TV, Does it Work?rhombus
-From: "Homer Briggs" <jbve0hmpkk@certifiedmail.com>
-Date: Wed, 05 Nov 2003 23:24:42 GMT
-* PR# 4965 *
-Subject: Water Cures: Drugs Kill       r-bugs@biostat.ku.dk . amsxl mmphffre u
-From: "Medical News " <a1@daloft.com>
-Date: Thu, 06 Nov 03 05:47:12 GMT
-* PR# 4966 *
-Subject: Search engine fails entirely
-From: robert.king@newcastle.edu.au
-Date: Thu, 6 Nov 2003 06:53:03 +0100 (MET)
-* PR# 4967 *
-Subject: US Stock Market: AZAA - Military Aircraft Related Stock...jinelle
-From: "Reynaldo Kauffman" <ul2ubcbi@yahoo.com>
-Date: Thu, 06 Nov 2003 05:26:11 -0100
-* PR# 4968 *
-Subject: Mën Get Huge Guaranteëd rwgf
-From: "A. Williams" <dyoung6330@bsax.de>
-Date: Thu, 06 Nov 2003 01:59:32 -0400
-* PR# 4969 *
-Subject: services required
-From: "Dr. Alex Kobi" <alexkobi@dme.co.za>
-Date: Thu, 06 Nov 2003 11:59:30 -0800
-* PR# 4970 *
-Subject: Secrets of the underground...
-From: "Sal Draper" <xynjqsmse2@mailsers.com>
-Date: Thu, 06 Nov 03 18:07:20 GMT
-* PR# 4971 *
-Subject: STRICTLY CONFIDENTIAL..
-From: "ineconline" <bantiful@ineconline.org>
-Date: 6 Nov 2003 14:33:16 -0000
-* PR# 4972 *
-Subject: Paín, Dëprëssiön, Overweíght? jxwqjxaf
-From: Noemi S Young <veersation@yahoo.co.uk>
-Date: Thu, 06 Nov 2003 10:22:42 -0400
-* PR# 4973 *
-Subject: 123 testing
-From: pd@pubhealth.ku.dk (Peter Dalgaard)
-Date: Fri, 07 Nov 2003 09:33:16 +0100
-* PR# 4974 *
-Subject: Server down and (hopefully) back up.
-From: Peter Dalgaard <p.dalgaard@biostat.ku.dk>
-Date: 07 Nov 2003 10:17:16 +0100
-* PR# 4975 *
-Subject: £¨±¤°í£©µ·³»¸é ½º,Ä«,ÀÌ,¶ó,ÀÌ,ÇÁ°¡ ¾Æ´Ï´Ù(°¡ÀÔºñ+¼³Ä¡ºñ+½ÃÃ»·á(3°³¿ù)+ÇªÁüÇÑ»çÀºÇ°@
-From: ½ºÄ«ÀÌ08 <36setse6aw456d@yahoo.com>
-Date: 2003-11-07 ¿ÀÈÄ 6:30:09
-* PR# 4976 *
-Subject: .Loo:se -wei;ght or ^mon,eyback                                   ^    mxcfrydna
-From: "Fritz L. Valencia" <fvalenciayd@euireland.ie>
-Date: Fri, 07 Nov 2003 11:06:39 +0000
-* PR# 4977 *
-Subject: (±¤°í)¡ß"Á¦1È¸¾Ö¿Ïµ¿¹°°ü¸®»ç ÀÚ°Ý½ÃÇèÁ¤º¸¸¦ ¹«·áÁ¦°øÇÕ´Ï´Ù!@
-From: ÀÚ°ÝÁõÁ¤º¸ <mty76vt76ug@hotmail.com>
-Date: Fri, 7 Nov 2003 22:27:35 +0900
-* PR# 4978 *
-Subject: prompt function confusion
-From: kwright@eskimo.com
-Date: Fri,  7 Nov 2003 16:41:28 +0100 (CET)
-* PR# 4979 *
-Subject: (±¤°í)¹ÌÄ£¿µ¾î Æ¯º°ÀÌº¥Æ®/¹«·á»ùÇÃ,¹«·á¹è¼ÛÁß!@
-From: ¹«·áÁõÁ¤ <lkjnbv753698@hotmail.com>
-Date: Sat, 8 Nov 2003 01:17:41 +0900
-* PR# 4980 *
-Subject: 
-From: "Ingrid Engel" <dr7bywdpg@aol.com>
-Date: Sat, 08 Nov 03 05:45:31 GMT
-* PR# 4981 *
-Subject: Wë can mäke it longer now ahxaiu
-From: J Rodriguez <jaimeesilvio@afreeinternet.com>
-Date: Fri, 07 Nov 2003 11:57:35 -0400
-* PR# 4982 *
-Subject: Suggestions to the man page
-From: Axel Noetzold <noetzold@medinf.mu-luebeck.de>
-Date: Fri, 7 Nov 2003 18:18:35 +0100
-* PR# 4983 *
-Subject: URGENT RESPONSE
-From: Mr KOKAYI GAMBA <kokayigamba404@netscape.net>
-Date: Fri, 07 Nov 2003 09:25:46 +0100
-* PR# 4984 *
-Subject: good ideas from Amelia Eason
-From: "Edwin Ramey" <yotsrdnhjy@yahoo.com>
-Date: Fri, 07 Nov 2003 16:12:54 -0300
-* PR# 4985 *
-Subject: I NEED YOUR HELP
-From: PEDRO BUNDI <pedbundi@netscape.net>
-Date: Fri, 07 Nov 2003 13:35:40 -0800
-* PR# 4986 *
-Subject: PROPOSAL
-From: "ADEWALE WILLIAMS" <w_ade7@mailbox.hu>
-Date: Fri, 7 Nov 2003 22:37:55 +0100
-* PR# 4987 *
-Subject: Still searching for a job. fllkebbwxy
-From: "Melva Sexton" <i13qvky@inwave.com>
-Date: Fri, 07 Nov 03 14:43:56 GMT
-* PR# 4988 *
-Subject: xnrxjqbra grand finance why% ke•ep u¨p thé struggle, añnex out of thât mess fkylw
-From: "Roger C. Lee" <karlabeax@about.com>
-Date: Fri, 07 Nov 2003 17:42:31 -0400
-* PR# 4989 *
-Subject: just upset
-From: "Dianna Askew" <nspz662j@bns.com>
-Date: Sat, 08 Nov 03 03:09:51 GMT
-* PR# 4990 *
-Subject: *|[A][D][U][L][T]|* =?EUC-KR?B?vL29rMfRILHXs+DAxyDG0sa8vbrFuMW3fg==?=
-From: =?EUC-KR?B?xtLGvLevuuo=?= <pantylover@freechal.com>
-Date: Sun, 9 Nov 2003 09:27:49 +0900
-* PR# 4991 *
-Subject: Mini Remote Control Cars & Boats - Great Xmas Gifts.....eulalia
-From: "Rhoda Petty" <b157tqjey@yahoo.com>
-Date: Sat, 08 Nov 2003 06:54:50 +0500
-* PR# 4992 *
-Subject: CONGRATULATION
-From: walter vogts <haza272@netscape.net>
-Date: Sat, 08 Nov 2003 03:41:28 +0100
-* PR# 4993 *
-Subject: Päin, Dëprëssiön, Overweight? szlhuy
-From: "Christina N. Martin" <jesicahillian@lycos.com>
-Date: Fri, 07 Nov 2003 23:31:01 -0400
-* PR# 4994 *
-Subject: Päin, Dëprëssiön, Overweight? szlhuy
-From: "Christina N. Martin" <jesicahillian@lycos.com>
-Date: Fri, 07 Nov 2003 23:31:01 -0400
-* PR# 4995 *
-Subject: RE: Uited states..check your credit/\  mrcu
-From: "Edmond Bruno" <gtux6mdss@web.de>
-Date: Sat, 08 Nov 2003 03:04:40 -0200
-* PR# 4996 *
-Subject: Next day shipping on your medication!hamlet
-From: "Suzette Sizemore" <l925uh@Fastmail.ca>
-Date: Sat, 08 Nov 2003 14:48:59 GMT
-* PR# 4997 *
-Subject: R-bugs,watch paytv frees qrlklbfhztf
-From: "Van Daly" <930ndttgh@yahoo.com>
-Date: Sat, 08 Nov 2003 12:58:35 +0500
-* PR# 4998 *
+* PR# 5018 *
 Subject: Speak, and it will type for you!
-From: "Frank Sinatra 2" <ejkessler@perthmail.com>
-Date: Sat, 08 Nov 03 12:33:31 GMT
-* PR# 5000 *
-Subject: Lärgë Mälë ünít Safë cyffo
-From: K C Rodriguez <livenlearn13@infosource.co.za>
-Date: Sat, 08 Nov 2003 09:46:57 -0400
-* PR# 5001 *
-Subject: R-bugs,cablefilter.free paytv l
-From: "Helena Webster" <329swryer@email.com>
-Date: Fri, 07 Nov 2003 18:29:53 -0500
-* PR# 5002 *
-Subject: wglessbyt large finance why keep up the strugg1e, annex out of thãt m_ess wrowek
-From: B.Rodriguez <haileybgrescia@lycos.com>
-Date: Sat, 08 Nov 2003 14:54:12 -0400
-* PR# 5003 *
-Subject: r-bugs How to Expand YourSize Naturally
-From: Leeann <vqleeann@cutey.com>
-Date: Sat, 8 Nov 2003 14:12:48 -0800
-* PR# 5004 *
-Subject: r-bugs How to Expand YourSize Naturally
-From: Leeann <kusileeann@cutey.com>
-Date: Sat, 8 Nov 2003 16:09:33 -0800
-* PR# 5005 *
-Subject: üS Döctörs wíll handlë yöur prescríptíons uwmey
-From: "Rory King" <kitahachijif@about.com>
-Date: Sat, 08 Nov 2003 19:46:05 -0400
-* PR# 5006 *
-Subject: Discounted OEM CD Software abuilding
-From: "Edmond Cleveland" <tho54rmqf@determinado.net>
-Date: Sun, 09 Nov 2003 10:27:32 GMT
-* PR# 5007 *
-Subject: Want a `B;IG .P:E_N-IS*?                                      `    ygiebtbgfpe
-From: "Hunter Knight" <hknight_kn@friends-partners.ru>
-Date: Sun, 09 Nov 2003 04:49:10 +0000
-* PR# 5008 *
-Subject: Try it now and Get FREE prescription!sank
-From: "Wilma Kurtz" <dya47bljmf@BolehMail.com>
-Date: Sun, 09 Nov 2003 02:54:17 GMT
-* PR# 5009 *
-Subject: You deserve this f akrgb cjtks
-From: "Pam Gallegos" <yflvsbd@aol.com>
-Date: Mon, 10 Nov 2003 06:09:24 -0100
-* PR# 5010 *
-Subject: Personal Development is truly here.  h
-From: "Clarence Hastings" <aexn6dwi@yahoo.com>
-Date: Mon, 10 Nov 2003 04:11:09 -0300
-* PR# 5011 *
-Subject:
-From: =?UNKNOWN?B?x+Owob73w7w=?= <vodlkeo23@yahoo.com>
-Date: Sun,  9 Nov 2003 02:59:21 -0500 (EST)
-* PR# 5012 *
-Subject: PRINCESS.J.MSWATI WRITE ONBEHALF OF IBRAHIM KAMARA 
-From: "princess Joy Mswati of Swaziland" <princessjoymswati@princessjoymswati.net>
-Date: 9 Nov 2003 13:34:47 -0000
-* PR# 5013 *
-Subject: --Rap star's big long story
-From: "Sanford Gaines" <luther@msn.com>
-Date: Sun, 09 Nov 03 19:25:36 GMT
-* PR# 5014 *
-Subject: /Men XMAS romance explodes with V,,I"A"G*R+A...!  gjxq emctj x btue
-From: "Vilma Dunlap" <luther@msn.com>
-Date: Sun, 09 Nov 03 15:45:38 GMT
-* PR# 5015 *
-Subject: Men what's XMAS without love? V,,I.A+G"R"A,, makes it happen!! a vjajqr ru xx  bvk
-From: "Manuel Hardy" <luther@msn.com>
-Date: Mon, 10 Nov 03 03:17:13 GMT
-* PR# 5016 *
-Subject: AWARD WINNING NOTIFICATION !
-From: AWED INTERNATIONAL LOTTO.BV <infoawed@netscape.net>
-Date: Sun, 09 Nov 2003 23:34:49 +0100
+From: "Pierce Bronsnan" <acf@bosnianmail.com>
+Date: Mon, 10 Nov 03 15:01:29 GMT
+* PR# 5019 *
+Subject: RE: Your FREE Mortgage Rate Reduction Enclosed ncub
+From: "Marian Knowles" <egp682r@msn.com>
+Date: Mon, 10 Nov 2003 16:17:57 +0500
+* PR# 5020 *
+Subject: Fw: Past Due Payment, account
+From: "Rebekah Daniels" <386zplfgo@aol.com>
+Date: Mon, 10 Nov 03 12:29:14 GMT
+* PR# 5021 *
+Subject: 75% off V I @ G R A p xs x q wx auan
+From: "Concepcion Boudreaux" <szr292n@msn.com>
+Date: Tue, 11 Nov 03 01:26:28 GMT
+* PR# 5022 *
+Subject: Re: Balance Due, acct
+From: "Angelia Harrington" <fpbxg085u@aol.com>
+Date: Mon, 10 Nov 03 23:09:48 GMT
+* PR# 5023 *
+Subject:                         PLEASE GET BACK TO ME
+From: ANTHONY ZHIRI <tonyzhiri@netscape.net>
+Date: Mon, 10 Nov 2003 18:25:19 +0100
+* PR# 5024 *
+Subject: R-bugs, best cablebox... pccxw
+From: "Lynne Coffman" <qj653hz@yahoo.com>
+Date: Mon, 10 Nov 2003 12:49:56 +0500
+* PR# 5025 *
+Subject: RE: no /\\Bossssssssssssssssssss vaj qgdo qe f
+From: "Allen Bowers" <cxmdx90@canada.com>
+Date: Mon, 10 Nov 2003 23:42:28 +0200
+* PR# 5026 *
+Subject: Do something about your mortgage while you still can
+From: "Juliet Rhodes" <vhtkwkbbv@aol.com>
+Date: Tue, 11 Nov 2003 10:45:53 -0100
