@@ -5,8 +5,9 @@ all: makeMakedeps ../gnuwin32/libmain.a
 
 CFLAGS=$(OPTFLAGS) -I../include -DHAVE_CONFIG_H
 FFLAGS=$(OPTFLAGS)
-SOURCES=$(filter-out strdup.c, $(wildcard *.c *.f))
-OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
+CSOURCES=$(filter-out strdup.c, $(wildcard *.c))
+SOURCES=$(wildcard *.f))
+OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) 
 
 gram.c: ;
 
@@ -16,8 +17,7 @@ connections-CFLAGS=-I../gnuwin32/bitmap/zlib -I../gnuwin32
 ../gnuwin32/libmain.a: $(OBJS)
 
 # Dependencies
-CSOURCES=$(wildcard *.c)
-DEPS=$(foreach i, $(CSOURCES), $(basename $i).d)
+DEPS=$(CSOURCES:.c=.d)
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps
