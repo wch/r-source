@@ -17,13 +17,14 @@ USER-VISIBLE CHANGES
     o	`Lazy loading' of R code has been implemented, and is used for
 	the standard and recommended packages by default.  Rather than
 	keep R objects in memory, they are kept in a database on disc
-	and only loaded on first use.  This speeds up startup (down to
-	40% of the time for 1.9.x) and reduces memory usage -- the
+	and only loaded on first use.  This accelerates startup (down
+	to 40% of the time for 1.9.x) and reduces memory usage -- the
 	latter is probably unimportant of itself, but reduces
 	commensurately the time spent in garbage collection.
 
 	Packages can be installed to use lazy loading with
-	R CMD INSTALL --lazy.
+	R CMD INSTALL --lazy.  [This is not currently the default, but
+	it may well be so by release time.]
 
     o	The default barplot() method now by default uses a
 	gamma-corrected grey palette (rather than the heat color
