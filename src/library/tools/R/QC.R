@@ -2351,6 +2351,43 @@ function(x, ...)
     invisible(x)
 }
 
+### * check_Rd_files_in_package
+
+## </NOTE>
+## We currently have two (internal) check_Rd_files* functions.
+##
+## The primary one is check_Rd_files_in_man_dir, as this always works,
+## but note that its 'dir' argument really is a directory containing Rd
+## source files, and not a package top-level source subdirectory (as
+## indicated by 'man_dir' in the function name).
+##
+## Function check_Rd_files_in_package only works for packages installed
+## with R 2.0 or better (as it requires that the installed Rd sources
+## have the Rd file names preserved).
+##
+## So perhaps eventually unify these functions for 2.1?  Currently, it
+## seems a bad idea to have check_Rd_files(dir, package, lib.loc) which
+## has a different interface than the other QC functions ...
+##
+## Of course, all of this is conditional on not moving away from Rd
+## format ...
+## </NOTE>
+
+check_Rd_files_in_package <-
+function(package, lib.loc = NULL)
+{
+    if(length(package) != 1)
+        stop(.wrong_args("package", "must be of length 1"))
+    ## (Actually, Rddb() would check on this too ...)
+    db <- Rddb(package, lib.loc)
+    if(is.null(names(db)))
+        stop(paste("Package Rd sources were installed ",
+                   "without preserving Rd file names.\n",
+                   "Please reinstall using a current version of R.",
+                   sep = ""))
+    .check_Rd_files_in_Rd_db(db)
+}
+
 ### * check_Rd_files_in_man_dir
 
 check_Rd_files_in_man_dir <-
@@ -2358,9 +2395,20 @@ function(dir)
 {
     if(!file_test("-d", dir))
         stop(paste("directory", sQuote(dir), "does not exist"))
-    else
-        dir <- file_path_as_absolute(dir)
+    dir <- file_path_as_absolute(dir)
+    ## Argh.  We cannot call Rddb() directly, because this works on
+    ## the top-level package source directory ...
+    Rd_files <- list_files_with_type(file.path(dir), "docs")        
+    db <- lapply(Rd_files, readLines)
+    names(db) <- Rd_files
+    .check_Rd_files_in_Rd_db(db)
+}
 
+### * .check_Rd_files_in_Rd_db
+
+.check_Rd_files_in_Rd_db <-
+function(db)
+{
     standard_keywords <- .get_standard_Rd_keywords()
     mandatory_tags <- c("name", "title", "description")
     ## We also need
@@ -2378,10 +2426,8 @@ function(dir)
     files_with_bad_name <- files_with_bad_title <- NULL
     files_with_bad_keywords <- NULL
 
-    Rd_files <- list_files_with_type(file.path(dir), "docs")
-
-    for(f in Rd_files) {
-        x <- tryCatch(Rd_parse(f), error = function(e) e)
+    for(f in names(db)) {
+        x <- tryCatch(Rd_parse(text = db[[f]]), error = function(e) e)
         if(inherits(x, "error")) {
             files_with_surely_bad_Rd[[f]] <- conditionMessage(x)
             next
@@ -2442,11 +2488,11 @@ function(dir)
           "files_with_bad_name",
           "files_with_bad_title",
           "files_with_bad_keywords")
-    class(val) <- "check_Rd_files_in_man_dir"
+    class(val) <- "check_Rd_files_in_Rd_db"
     val
 }
 
-print.check_Rd_files_in_man_dir <-
+print.check_Rd_files_in_Rd_db <-
 function(x, ...)
 {
     if(length(x$files_with_surely_bad_Rd)) {
@@ -2516,6 +2562,7 @@ function(x, ...)
     }
     invisible(x)
 }
+
 
 ### * .check_package_description
 
