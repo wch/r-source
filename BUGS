@@ -229,6 +229,10 @@ Date: Sat, 20 Apr 2002 22:21:44 +0200 (MET DST)
 Subject: Bug: persp and colors
 From: oliver.niggemann@acterna.com
 Date: Tue, 23 Apr 2002 09:41:37 +0200 (MET DST)
+* PR# 1505 *
+Subject: pictex 
+From: luchini@ehess.cnrs-mrs.fr
+Date: Thu, 2 May 2002 12:23:21 +0200 (MET DST)
 
 Directory:  In-Out
 
@@ -263,6 +267,14 @@ From: brower@bst.rochester.edu
 Date: Mon, 1 Apr 2002 22:19:07 +0200 (MET DST)
 --problems with g++ not finding -lstdc++
 --Not a problem with R per se
+* PR# 1500 *
+Subject: configure script fails on comment in tkConfig.sh
+From: Peter Kleiweg <kleiweg@let.rug.nl>
+Date: Tue, 30 Apr 2002 16:41:51 +0200 (CEST)
+* PR# 1501 *
+Subject: configure error: Maybe change CFLAGS or FFLAGS?
+From: ale@ini.phys.ethz.ch
+Date: Wed, 1 May 2002 15:23:14 +0200 (MET DST)
 
 Directory:  Language
 
@@ -357,6 +369,12 @@ Date: Wed, 10 Oct 2001 18:24:29 +0200 (MET DST)
 Subject: bug.report()sends empty message
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
 Date: Mon, 05 Nov 2001 10:05:27 -0500
+* PR# 1503 *
+Subject: R-GNOME
+From: Patrick Gonin <gonin@genethon.fr>
+Date: Thu, 2 May 2002 09:29:07 +0200
+--1) is not a bug, as jpeg etc work.  capabilities() has been changed for 1.5.1
+--2) system() needs a new version for GNOME.
 
 Directory:  Models
 
@@ -427,7 +445,12 @@ none
 
 Directory:  Windows
 
-none
+* PR# 1507 *
+Subject: copy or save to metafile from graphics device shrinks plots
+From: drew.tyre@csiro.au
+Date: Fri, 3 May 2002 04:26:07 +0200 (MET DST)
+--report on 1.4.0, about copying of graphics.
+--Awaiting test under 1.5.0.
 
 Directory:  incoming
 
@@ -435,107 +458,15 @@ Directory:  incoming
 Subject: Rprof segfault
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 20 Apr 2002 23:48:01 +0200
-* PR# 1473 *
-Subject: predict.*bSpline() bugs extrapolating for deriv >= 1
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 22 Apr 2002 12:30:12 +0200
-* PR# 1486 *
-Subject: Can't install packages
-From: Poizot Emmanuel <poizot@cnam.fr>
-Date: Fri, 26 Apr 2002 17:13:05 +0200
-* PR# 1497 *
-Subject: tseries package segmentation fault
-From: liang@stat.berkeley.edu
-Date: Mon, 29 Apr 2002 21:06:41 +0200 (MET DST)
-* PR# 1499 *
-Subject: Undefined symbols in loading tcltk
-From: Peter Kleiweg <kleiweg@let.rug.nl>
-Date: Tue, 30 Apr 2002 16:13:42 +0200 (CEST)
-* PR# 1500 *
-Subject: configure script fails on comment in tkConfig.sh
-From: Peter Kleiweg <kleiweg@let.rug.nl>
-Date: Tue, 30 Apr 2002 16:41:51 +0200 (CEST)
-* PR# 1501 *
-Subject: configure error: Maybe change CFLAGS or FFLAGS?
-From: ale@ini.phys.ethz.ch
-Date: Wed, 1 May 2002 15:23:14 +0200 (MET DST)
-* PR# 1502 *
-Subject: [±¤°?]???? ?®?º´? ???¡?º ?µ?­??..(FULL Set ±??? ???ú°¡°?)(Commercial)
-From: lee025<lee025@auction.co.kr>
-Date: Thu, 2 May 2002 12:50:16 +0900
-* PR# 1503 *
-Subject: R-GNOME
-From: Patrick Gonin <gonin@genethon.fr>
-Date: Thu, 2 May 2002 09:29:07 +0200
-* PR# 1504 *
-Subject: [±¤°?]±??? ?????? 'º??? ¾??º??'?? ??´???´?´?.
-From: ?????? <ren21@lycos.co.kr>
-Date: Thu, 2 May 2002 17:58:39 +0900
-* PR# 1505 *
-Subject: pictex 
-From: luchini@ehess.cnrs-mrs.fr
-Date: Thu, 2 May 2002 12:23:21 +0200 (MET DST)
-* PR# 1506 *
-Subject: Maritime Newsletter (Week 18)
-From: "Marine Digital Inc."<newsletter@marinedigital.com>
-Date: Fri, 3 May 2002 05:56:31 +0900
-* PR# 1507 *
-Subject: copy or save to metafile from graphics device shrinks plots
-From: drew.tyre@csiro.au
-Date: Fri, 3 May 2002 04:26:07 +0200 (MET DST)
-* PR# 1508 *
-Subject: º??ðµµ ?º??µµ ¾?´?µ¥ 5???º ????????.....................................................[±¤°?]    
-From: ?????¥<cessil2@dreamwiz.com>
-Date: Fri, 03 May 2002 17:08:26 -0600
 * PR# 1509 *
 Subject:  Behaviour of environment(foo)<- 
 From: J.C.Rougier@durham.ac.uk
 Date: Fri, 3 May 2002 11:10:21 +0100
-* PR# 1510 *
-Subject: merge
-From: elff@rumms.uni-mannheim.de
-Date: Fri, 3 May 2002 16:42:29 +0200 (MET DST)
-* PR# 1511 *
-Subject: PlantGrowth))
-From: me <me@localhost.com>
-Date: Fri,  3 May 2002 19:54:15 +0200 (CEST)
-* PR# 1512 *
-Subject: Japanese girl VS playboy
-From: bQhb1 <bQhb1@omi.o>
-Date: Sat, 4 May 2002 20:04:38 +1200
-* PR# 1513 *
-Subject: [±¤°?] ??¶??? ?¶???? ????...??°??? ±¤°???°ú
-From: ??¶??? ?¶?????? ??º??? <nextsoft21@kornet.net>
-Date: Fri, 3 May 2002 02:09:01 +0900
-* PR# 1514 *
-Subject: º? ???? ????????
-From: ???º?® <new1212@korea.com>
-Date: Sun, 5 May 2002 11:02:39 +0900
-* PR# 1515 *
-Subject: A  WinXP patch
-From: webmasters <webmasters@www.gnu.org>
-Date: Sun, 5 May 2002 15:57:16 +0200
-* PR# 1516 *
-Subject: [±¤°?] ?º?? ???µ ?????® ??´?´?. ???º????´? ???¦????????.
-From: ???ª?µ <nayong21@dreamwiz.com>
-Date: Mon, 6 May 2002 02:08:33 +0900
-* PR# 1517 *
-Subject: Hi,r-bugs,japanese lass' sexy pictures
-From: OfficeOfTheDuck <OfficeOfTheDuck@Tell>
-Date: Sun, 05 May 2002 20:13:57 -0700 (PDT)
-* PR# 1518 *
-Subject: Japanese girl VS playboy
-From: OfficeOfTheDuck <OfficeOfTheDuck@Tell>
-Date: Mon, 06 May 2002 08:48:33 -0700 (PDT)
-* PR# 1519 *
-Subject: subscript problem with function qr.X
-From: Sonia Leach <Sonia.Leach@uchsc.edu>
-Date: Mon, 06 May 2002 10:12:34 -0600
-* PR# 1520 *
-Subject: compiling on Solaris 7
-From: cjpelton@ucdavis.edu
-Date: Mon, 6 May 2002 21:26:12 +0200 (MET DST)
-* PR# 1521 *
-Subject: Accessing C code for 'optim'
-From: gb@stat.umu.se
-Date: Mon, 6 May 2002 21:49:45 +0200 (MET DST)
+* PR# 1525 *
+Subject: refman
+From: 100015746@alumnos.uc3m.es
+Date: Wed, 8 May 2002 00:34:36 +0200 (MET DST)
+* PR# 1526 *
+Subject: refman
+From: 100015746@alumnos.uc3m.es
+Date: Wed, 8 May 2002 00:35:28 +0200 (MET DST)
