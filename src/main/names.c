@@ -30,6 +30,54 @@
 
 #include "R_ext/RConverters.h"
 
+R_code_t do_if_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+R_code_t do_begin_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+R_code_t do_set_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+R_code_t do_for_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+R_code_t do_while_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+R_code_t do_repeat_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+R_code_t do_return_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+R_code_t do_break_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+R_code_t do_usemethod_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+R_code_t do_internal_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+R_code_t do_nextmethod_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+
+SEXP do_concur(SEXP, SEXP, SEXP, SEXP);
+R_code_t do_concur_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+SEXP do_yield(SEXP, SEXP, SEXP, SEXP);
+R_code_t do_yield_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+SEXP do_snooze(SEXP, SEXP, SEXP, SEXP);
+R_code_t do_snooze_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+SEXP do_replcon(SEXP, SEXP, SEXP, SEXP);
+R_code_t do_replcon_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+SEXP do_evntloop(SEXP, SEXP, SEXP, SEXP);
+R_code_t do_evntloop_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+SEXP do_newthread(SEXP, SEXP, SEXP, SEXP);
+R_code_t do_newthread_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+SEXP do_jointhread(SEXP, SEXP, SEXP, SEXP);
+R_code_t do_jointhread_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+
+SEXP do_activethreads(SEXP, SEXP, SEXP, SEXP);
+SEXP do_currentthread(SEXP, SEXP, SEXP, SEXP);
+SEXP do_threadname(SEXP, SEXP, SEXP, SEXP);
+SEXP do_setthreadname(SEXP, SEXP, SEXP, SEXP);
+SEXP do_threadsenabled(SEXP, SEXP, SEXP, SEXP);
+SEXP do_newmutex(SEXP, SEXP, SEXP, SEXP);
+SEXP do_newcondvar(SEXP, SEXP, SEXP, SEXP);
+SEXP do_mutexname(SEXP, SEXP, SEXP, SEXP);
+SEXP do_condvarname(SEXP, SEXP, SEXP, SEXP);
+SEXP do_mutexdata(SEXP, SEXP, SEXP, SEXP);
+SEXP do_condvardata(SEXP, SEXP, SEXP, SEXP);
+SEXP do_setmutexdata(SEXP, SEXP, SEXP, SEXP);
+SEXP do_setcondvardata(SEXP, SEXP, SEXP, SEXP);
+SEXP do_condvarsignal(SEXP, SEXP, SEXP, SEXP);
+SEXP do_condvarbroadcast(SEXP, SEXP, SEXP, SEXP);
+
+SEXP do_mutexlock(SEXP, SEXP, SEXP, SEXP);
+R_code_t do_mutexlock_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+SEXP do_mutexunlock(SEXP, SEXP, SEXP, SEXP);
+R_code_t do_mutexunlock_nr(SEXP, SEXP, SEXP, SEXP, R_code_t);
+
 /* Table of  .Internal(.) and .Primitive(.)  R functions
  * =====     =========	      ==========
  *
@@ -78,22 +126,22 @@ FUNTAB R_FunTab[] =
 
 /* printname	c-entry		offset	eval	arity	pp-info
  * ---------	-------		------	----	-----	------- */
-{"if",		do_if,		0,	0,	-1,	PP_IF},
-{"while",	do_while,	0,	0,	-1,	PP_WHILE},
-{"for",		do_for,		0,	0,	-1,	PP_FOR},
-{"repeat",	do_repeat,	0,	0,	-1,	PP_REPEAT},
-{"break",	do_break, CTXT_BREAK,	0,	-1,	PP_BREAK},
+{"if",		do_if,		0,	0,	-1,	PP_IF, do_if_nr},
+{"while",	do_while,	0,	0,	-1,	PP_WHILE, do_while_nr},
+{"for",		do_for,		0,	0,	-1,	PP_FOR, do_for_nr},
+{"repeat",	do_repeat,	0,	0,	-1,	PP_REPEAT, do_repeat_nr},
+{"break",	do_break, CTXT_BREAK,	0,	-1,	PP_BREAK, do_break_nr},
 {"next",	do_break, CTXT_NEXT,	0,	-1,	PP_NEXT},
-{"return",	do_return,	0,	0,	-1,	PP_RETURN},
+{"return",	do_return,	0,	0,	-1,	PP_RETURN, do_return_nr},
 {"stop",	do_stop,	0,	11,	1,	PP_FUNCALL},
 {"warning",	do_warning,	0,	111,	1,	PP_FUNCALL},
 {"geterrmessage",do_geterrmessage, 0,	11,	0,	PP_FUNCALL},
 {"restart",	do_restart,	0,	11,	1,	PP_FUNCALL},
 {"function",	do_function,	0,	0,	-1,	PP_FUNCTION},
 {"as.function.default",do_asfunction,0,	11,	2,	PP_FUNCTION},
-{"<-",		do_set,		1,	100,	-1,	PP_ASSIGN},
-{"<<-",		do_set,		2,	100,	-1,	PP_ASSIGN2},
-{"{",		do_begin,	0,	0,	-1,	PP_CURLY},
+{"<-",		do_set,		1,	100,	-1,	PP_ASSIGN, do_set_nr},
+{"<<-",		do_set,		2,	100,	-1,	PP_ASSIGN2, do_set_nr},
+{"{",		do_begin,	0,	0,	-1,	PP_CURLY, do_begin_nr},
 {"(",		do_paren,	0,	1,	1,	PP_PAREN},
 {"[",		do_subset,	1,	0,	-1,	PP_SUBSET},
 {"[[",		do_subset2,	2,	0,	2,	PP_SUBSET},
@@ -107,7 +155,7 @@ FUNTAB R_FunTab[] =
 {"undebug",	do_debug,	1,	101,	1,	PP_FUNCALL},
 {"trace",	do_trace,	0,	101,	1,	PP_FUNCALL},
 {"untrace",	do_trace,	1,	101,	1,	PP_FUNCALL},
-{".Internal",	do_internal,	0,	0,	1,	PP_FUNCALL},
+{".Internal",	do_internal,	0,	0,	1,	PP_FUNCALL, do_internal_nr},
 {"on.exit",	do_onexit,	0,	100,	1,	PP_FUNCALL},
 {"Recall",	do_recall,	0,	10,	-1,	PP_FUNCALL},
 {"delay",	do_delay,	0,	11,	2,	PP_FUNCALL},
@@ -716,8 +764,8 @@ FUNTAB R_FunTab[] =
 
 /* Objects */
 {"inherits",	do_inherits,	0,	11,	3,	PP_FUNCALL},
-{"UseMethod",	do_usemethod,	0,	 0,	-1,	PP_FUNCALL},
-{"NextMethod",	do_nextmethod,	0,	10,	-1,	PP_FUNCALL},
+{"UseMethod",	do_usemethod,	0,	 0,	-1,	PP_FUNCALL, do_usemethod_nr},
+{"NextMethod",	do_nextmethod,	0,	10,	-1,	PP_FUNCALL, do_nextmethod_nr},
 
 /* Modelling Functionality */
 
@@ -784,6 +832,32 @@ FUNTAB R_FunTab[] =
 {"getRtoCConverterStatus", do_getRtoCConverterStatus, 0, 11, 0, PP_FUNCALL},
 {"setToCConverterActiveStatus", do_setToCConverterActiveStatus, 0, 11, 2, PP_FUNCALL},
 {"removeToCConverterActiveStatus", do_setToCConverterActiveStatus, 1, 11, 1, PP_FUNCALL},
+
+  /*  Threads */
+{"Concurrently", do_concur, 0, 11, -1, PP_FUNCALL, do_concur_nr},
+{"Yield", do_yield, 0, 11, 0, PP_FUNCALL, do_yield_nr},
+{"Snooze", do_snooze, 0, 11, 1, PP_FUNCALL, do_snooze_nr},
+{"ReplConsole", do_replcon, 0, 11, 1, PP_FUNCALL, do_replcon_nr},
+{"EventLoop", do_evntloop, 0, 11, 0, PP_FUNCALL, do_evntloop_nr},
+{"ActiveThreads", do_activethreads, 0, 11, 0, PP_FUNCALL},
+{"CurrentThread", do_currentthread, 0, 11, 0, PP_FUNCALL},
+{"ThreadName", do_threadname, 0, 11, 1, PP_FUNCALL},
+{"SetThreadName", do_setthreadname, 0, 11, 2, PP_FUNCALL},
+{"NewThread", do_newthread, 0, 11, 1, PP_FUNCALL, do_newthread_nr},
+{"JoinThread", do_jointhread, 0, 11, 1, PP_FUNCALL, do_jointhread_nr},
+{"ThreadsEnabled", do_threadsenabled, 0, 11, -1, PP_FUNCALL},
+{"NewMutex", do_newmutex, 0, 11, 1, PP_FUNCALL},
+{"NewCondvar", do_newcondvar, 0, 11, 1, PP_FUNCALL},
+{"MutexName", do_mutexname, 0, 11, 1, PP_FUNCALL},
+{"CondvarName", do_condvarname, 0, 11, 1, PP_FUNCALL},
+{"MutexData", do_mutexdata, 0, 11, 1, PP_FUNCALL},
+{"CondvarData", do_condvardata, 0, 11, 1, PP_FUNCALL},
+{"SetMutexData", do_setmutexdata, 0, 11, 2, PP_FUNCALL},
+{"SetCondvarData", do_setcondvardata, 0, 11, 2, PP_FUNCALL},
+{"CondvarSignal", do_condvarsignal, 0, 11, 1, PP_FUNCALL},
+{"CondvarBroadcast", do_condvarsignal, 0, 11, 1, PP_FUNCALL},
+{"MutexLock", do_mutexlock, 0, 11, 3, PP_FUNCALL, do_mutexlock_nr},
+{"MutexUnock", do_mutexunlock, 0, 11, 3, PP_FUNCALL, do_mutexunlock_nr},
 
 {NULL,		NULL,		0,	0,	0,	0},
 };
@@ -873,6 +947,15 @@ static void SymbolShortcuts()
 
 extern SEXP framenames; /* from model.c */
 
+static SEXP makeToken(void)
+{
+    SEXP value = allocSExp(SYMSXP);
+    SET_SYMVALUE(value, value);
+    SET_PRINTNAME(value, mkChar(""));
+    SET_ATTRIB(value, R_NilValue);
+    return value;
+}
+
 /* initialize the symbol table */
 void InitNames()
 {
@@ -882,16 +965,13 @@ void InitNames()
     SET_SYMVALUE(R_UnboundValue, R_UnboundValue);
     SET_PRINTNAME(R_UnboundValue, R_NilValue);
     SET_ATTRIB(R_UnboundValue, R_NilValue);
-    /* R_MissingArg */
-    R_MissingArg = allocSExp(SYMSXP);
-    SET_SYMVALUE(R_MissingArg, R_MissingArg);
-    SET_PRINTNAME(R_MissingArg, mkChar(""));
-    SET_ATTRIB(R_MissingArg, R_NilValue);
-    /* R_RestartToken */
-    R_RestartToken = allocSExp(SYMSXP);
-    SET_SYMVALUE(R_RestartToken, R_RestartToken);
-    SET_PRINTNAME(R_RestartToken, mkChar(""));
-    SET_ATTRIB(R_RestartToken, R_NilValue);
+
+    /* Internal Tokens */
+    R_MissingArg = makeToken();
+    R_RestartToken = makeToken();
+    R_LoopBreakToken = makeToken();
+    R_LoopNextToken = makeToken();
+
     /* Parser Structures */
     R_CommentSxp = R_NilValue;
     R_ParseText = R_NilValue;

@@ -225,7 +225,6 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP tvec2, tvec, colmodes, indata;
     SEXPTYPE type;
     int i, j,len, nprotect, tmp;
-    RCNTXT cntxt;
 
     nprotect = 0;/* count the PROTECT()s */
 
@@ -300,16 +299,15 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "invalid device");
 
     /* set up a context which will close the window if there is an error */
-    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
-		 R_NilValue);
-    cntxt.cend = &closewin_cend;
-    cntxt.cenddata = NULL;
+    begincontext(CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue, R_NilValue);
+    R_GlobalContext->cend = &closewin_cend;
+    R_GlobalContext->cenddata = NULL;
 
     highlightrect();
 
     eventloop();
 
-    endcontext(&cntxt);
+    endcontext();
     closewin();
 
     /* drop out unused columns */

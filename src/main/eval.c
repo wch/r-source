@@ -28,6 +28,9 @@
 
 #include "Defn.h"
 
+/* move to Rinternals.h eventually */
+R_code_t R_applyClosure_nr(SEXP, SEXP, SEXP, SEXP, SEXP, R_code_t);
+static SEXP processArgs(SEXP, SEXP, Rboolean);
 
 SEXP do_browser(SEXP, SEXP, SEXP, SEXP);
 
@@ -267,36 +270,200 @@ SEXP do_Rprof(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* Return value of "e" evaluated in "rho". */
 
-SEXP eval(SEXP e, SEXP rho)
+/*
+ * Non-recursive evaluations of promises
+ */
+
+/* If a promise needs to be forced, then we need to set the current
+   environment to the promise's environment and pass its code to the
+   non-recursive evaluator.  After the evaluation, the old environment
+   needs to be restored and the promise needs to be updated. */
+
+/* Promise evaluation uses a frame with the promise in EVAL_FRAME_VAR0
+   and the current environment in EVAL_FRAME_VAR1 */
+
+#define PUSH_PROMISE_FRAME(code, p) PUSH_EVAL_FRAME(code, p, R_CurrentEnv)
+#define PROMISE_FRAME_PROMISE EVAL_FRAME_VAR0
+#define PROMISE_FRAME_OLDENV EVAL_FRAME_VAR1
+
+DECLARE_CONTINUATION(promise_cont, promise_cont_fun);
+
+static R_code_t eval_promise_nr(SEXP e, R_code_t code)
 {
-    SEXP op, tmp, val;
+    SEXP val;
+    if (PRVALUE(e) == R_UnboundValue) {
+	if(PRSEEN(e))
+	    errorcall(R_GlobalContext->call,
+		      "recursive default argument reference");
+	SET_PRSEEN(e, 1);
+	PUSH_PROMISE_FRAME(code, e);
+	R_CurrentEnv = PRENV(e);
+	return R_eval_nr(PREXPR(e), promise_cont);
+    }
+    else {
+	val = PRVALUE(e);
+	R_ReturnedValue = val;
+	if (NAMED(val) != 2) SET_NAMED(val, 2);
+	return code;
+    }
+}
 
-    /* The use of depthsave below is necessary because of the possibility */
-    /* of non-local returns from evaluation.  Without this an "expression */
-    /* too complex error" is quite likely. */
+static R_code_t promise_cont_fun(R_code_t code)
+{
+    SEXP e = PROMISE_FRAME_PROMISE();
+    SEXP val = R_ReturnedValue;
 
-    int depthsave = R_EvalDepth++;
+    R_CurrentEnv = PROMISE_FRAME_OLDENV();
+    code = EVAL_FRAME_CODE();
+    POP_EVAL_FRAME();
+    SET_PRSEEN(e, 0);
+    SET_PRVALUE(e, val);
+    if (NAMED(val) != 2) SET_NAMED(val, 2);
+    return code;
+}
 
-    if (R_EvalDepth > R_Expressions)
-	error("evaluation is nested too deeply: infinite recursion?");
-#ifdef Macintosh
-    /* check for a user abort */
-    if ((R_EvalCount++ % 100) == 0) {
-	isintrpt();
-	R_EvalCount = 0 ;
+static void callBuiltin(SEXP call, SEXP op, SEXP args, Rboolean doprof)
+{
+    int save;
+    SEXP rho = R_CurrentEnv;
+
+    PROTECT(args);
+    PROTECT(op);
+    save = R_PPStackTop;
+    R_Visible = 1 - PRIMPRINT(op);
+
+#ifdef R_PROFILING
+    if (R_Profiling && doprof) {
+	begincontext(CTXT_BUILTIN, call, R_NilValue, R_NilValue, R_NilValue);
+	R_ReturnedValue = PRIMFUN(op) (call, op, args, rho);
+	endcontext();
+    } else {
+#endif
+	R_ReturnedValue = PRIMFUN(op) (call, op, args, rho);
+#ifdef R_PROFILING
     }
 #endif
-#ifdef Win32
-    if ((R_EvalCount++ % 100) == 0) {
-	R_ProcessEvents();
-/* Is this safe? R_EvalCount is not used in other part and
- * don't want to overflow it
-*/
-	R_EvalCount = 0 ;
+    if(save != R_PPStackTop) {
+	Rprintf("stack imbalance in %s, %d then %d\n",
+		PRIMNAME(op), save, R_PPStackTop);
     }
-#endif
+    UNPROTECT(2);
+}
 
-    tmp = R_NilValue;		/* -Wall */
+/*
+ * Non-recursive evaluation of BUILTIN calls.
+ */
+
+/* To evaluate a BUILTIN call non-recursively, we need to evaluate its
+   argument list non-recursively and then call the BUILTIN. */
+
+/* The evaluation frame needs to hold four values: the list of
+   argument expressions (which is destructively modifies to a list of
+   values), the argument expressions that still need processing (this
+   is updated at each step), the call, and the op. The frame stores
+   the argument remaining arguments in EVAL_FRAME_VAR0 and the other
+   three in a CONS cell in EVAL_FRAME_VAR1, with the args in the TAG
+   field, call in the CAR, and op in the CDR.  In addition, the
+   profiling option is stored in the sxpinfo.gp field. */
+
+#define BUILTIN_FRAME_EVARGS() TAG(EVAL_FRAME_VAR1())
+
+#define BUILTIN_FRAME_ARGS EVAL_FRAME_VAR0
+#define SET_BUILTIN_FRAME_ARGS SET_EVAL_FRAME_VAR0
+
+#define BUILTIN_FRAME_CALL() CAR(EVAL_FRAME_VAR1())
+#define BUILTIN_FRAME_OP() CDR(EVAL_FRAME_VAR1())
+
+#define BUILTIN_FRAME_DOPROF() (EVAL_FRAME_VAR1()->sxpinfo.gp)
+
+/**** use frame of 4 + one int */
+#define PUSH_BUILTIN_FRAME(code, call, op, args, doprof) do { \
+    SEXP __args__ = (args); \
+    SEXP __ci__; \
+    PROTECT(__args__); \
+    PROTECT(__ci__ = CONS(call, op)); \
+    SET_TAG(__ci__, __args__); \
+    __ci__->sxpinfo.gp = (doprof) ? 1 : 0; \
+    PUSH_EVAL_FRAME(code, __args__, __ci__); \
+    UNPROTECT(2); \
+} while (0)
+
+DECLARE_CONTINUATION(eval_builtin_cont, eval_builtin_cont_fun);
+
+static R_code_t eval_builtin_nr(SEXP call, SEXP op, SEXP args, R_code_t code,
+				Rboolean doprof)
+{
+    if (args == R_NilValue) {
+	CCODE_NR fun_nr = PRIMFUN_NR(op);
+	if (fun_nr != NULL) {
+	    R_Visible = 1 - PRIMPRINT(op);
+	    return fun_nr(call, op, R_NilValue, R_CurrentEnv, code);
+	}
+	else {
+	    callBuiltin(call, op, R_NilValue, doprof);
+	    return code;
+	}
+    }
+    else {
+	PUSH_BUILTIN_FRAME(code, call, op, args, doprof);
+	return R_eval_nr(CAR(args), eval_builtin_cont);
+    }
+}
+
+static R_code_t eval_builtin_cont_fun(R_code_t code)
+{
+    SEXP args = BUILTIN_FRAME_ARGS();
+
+    SETCAR(args, R_ReturnedValue);
+    args = CDR(args);
+
+    if (args == R_NilValue) {
+	SEXP evargs = BUILTIN_FRAME_EVARGS();
+	SEXP call = BUILTIN_FRAME_CALL();
+	SEXP op = BUILTIN_FRAME_OP();
+	Rboolean doprof = BUILTIN_FRAME_DOPROF();
+	CCODE_NR fun_nr = PRIMFUN_NR(op);
+
+	if (fun_nr != NULL) {
+	    R_Visible = 1 - PRIMPRINT(op);
+	    code = EVAL_FRAME_CODE();	
+	    POP_EVAL_FRAME();
+	    /**** fun_nr must protect anything that needs protecting! */
+	    /**** also there will be no profiling and no PP stack check */
+	    return fun_nr(call, op, evargs, R_CurrentEnv, code);
+	}
+	else {
+	    callBuiltin(call, op, evargs, doprof);
+	    code = EVAL_FRAME_CODE();	
+	    POP_EVAL_FRAME();
+	    return code;
+	}
+    }
+    else {
+	SET_BUILTIN_FRAME_ARGS(args);
+	return R_eval_nr(CAR(args), eval_builtin_cont);
+    }
+}
+
+static R_code_t eval_special_nr(SEXP call, SEXP op, SEXP args, SEXP rho,
+				R_code_t code)
+{
+    CCODE_NR fun_nr = PRIMFUN_NR(op);
+    R_Visible = 1 - PRIMPRINT(op);
+    if (fun_nr != NULL)
+	return fun_nr(call, op, args, rho, code);
+    else {
+	PROTECT(op);
+	R_ReturnedValue = PRIMFUN(op) (call, op, args, rho);
+	UNPROTECT(1);
+	return code;
+    }
+}
+
+R_code_t R_eval_nr(SEXP e, R_code_t code)
+{
+    SEXP op, tmp;
+    SEXP rho = R_CurrentEnv;
 
     R_Visible = 1;
     switch (TYPEOF(e)) {
@@ -313,16 +480,14 @@ SEXP eval(SEXP e, SEXP rho)
     case CLOSXP:
     case VECSXP:
     case EXTPTRSXP:
-#ifndef OLD
     case EXPRSXP:
-#endif
-	tmp = e;
 	/* Make sure constants in expressions are NAMED before being
            used as values.  Setting NAMED to 2 makes sure weird calls
            to assignment functions won't modify constants in
            expressions.  */
-	if (NAMED(tmp) != 2) SET_NAMED(tmp, 2);
-	break;
+	if (NAMED(e) != 2) SET_NAMED(e, 2);
+	R_ReturnedValue = e;
+	return code;
     case SYMSXP:
 	R_Visible = 1;
 	if (e == R_DotsSymbol)
@@ -340,52 +505,18 @@ SEXP eval(SEXP e, SEXP rho)
 			 CHAR(PRINTNAME(e)));
 	    else error("Argument is missing, with no default");
 	}
-	else if (TYPEOF(tmp) == PROMSXP) {
-	    PROTECT(tmp);
-	    tmp = eval(tmp, rho);
-#ifdef old
-	    if (NAMED(tmp) == 1) SET_NAMED(tmp, 2);
-	    else SET_NAMED(tmp, 1);
-#else
-	    SET_NAMED(tmp, 2);
-#endif
-	    UNPROTECT(1);
-	}
-#ifdef OLD
-	else if (!isNull(tmp))
-	    SET_NAMED(tmp, 1);
-#else
+	else if (TYPEOF(tmp) == PROMSXP)
+	    return eval_promise_nr(tmp, code);
 	else if (!isNull(tmp) && NAMED(tmp) < 1)
 	    SET_NAMED(tmp, 1);
-#endif
-	break;
+	R_ReturnedValue = tmp;
+	return code;
     case PROMSXP:
-	if (PRVALUE(e) == R_UnboundValue) {
-	    if(PRSEEN(e))
-		errorcall(R_GlobalContext->call,
-			  "recursive default argument reference");
-	    SET_PRSEEN(e, 1);
-	    val = eval(PREXPR(e), PRENV(e));
-	    SET_PRSEEN(e, 0);
-	    SET_PRVALUE(e, val);
-	}
-	tmp = PRVALUE(e);
-	break;
-#ifdef OLD
-    case EXPRSXP:
-	{
-	    int i, n;
-	    n = LENGTH(e);
-	    for(i=0 ; i<n ; i++)
-		tmp = eval(VECTOR_ELT(e, i), rho);
-	}
-	break;
-#endif
+	return eval_promise_nr(e, code);
     case LANGSXP:
-#ifdef R_PROFILING
-/*	if (R_ProfileOutfile == NULL)
-	    R_InitProfiling(PROFOUTNAME, 0); */
-#endif
+	/***** temporarily leave this recursive since it very rarely
+               is a significant eval and is a pain to handle (but fix
+               eventually) */
 	if (TYPEOF(CAR(e)) == SYMSXP)
 	    PROTECT(op = findFun(CAR(e), rho));
 	else
@@ -395,80 +526,103 @@ SEXP eval(SEXP e, SEXP rho)
 	    PrintValue(e);
 	}
 	if (TYPEOF(op) == SPECIALSXP) {
-	    int save = R_PPStackTop;
-	    PROTECT(CDR(e));
-	    R_Visible = 1 - PRIMPRINT(op);
-	    tmp = PRIMFUN(op) (e, op, CDR(e), rho);
-	    UNPROTECT(1);
-	    if(save != R_PPStackTop) {
-		Rprintf("stack imbalance in %s, %d then %d\n",
-			PRIMNAME(op), save, R_PPStackTop);
-	    }
+	    UNPROTECT(1);  /* need to unprotect op here */
+	    return eval_special_nr(e, op, CDR(e), rho, code);
 	}
 	else if (TYPEOF(op) == BUILTINSXP) {
-	    int save = R_PPStackTop;
-#ifdef R_PROFILING
-	    if (R_Profiling) {
-		RCNTXT cntxt;
-		PROTECT(tmp = evalList(CDR(e), rho));
-		R_Visible = 1 - PRIMPRINT(op);
-		begincontext(&cntxt, CTXT_BUILTIN, e,
-			     R_NilValue, R_NilValue, R_NilValue);
-		tmp = PRIMFUN(op) (e, op, tmp, rho);
-		endcontext(&cntxt);
-		UNPROTECT(1);
-	    } else {
-#endif
-		PROTECT(tmp = evalList(CDR(e), rho));
-		R_Visible = 1 - PRIMPRINT(op);
-		tmp = PRIMFUN(op) (e, op, tmp, rho);
-		UNPROTECT(1);
-#ifdef R_PROFILING
-	    }
-#endif
-	    if(save != R_PPStackTop) {
-		Rprintf("stack imbalance in %s, %d then %d\n",
-			PRIMNAME(op), save, R_PPStackTop);
-	    }
+	    SEXP args = processArgs(CDR(e), rho, FALSE);
+	    UNPROTECT(1);  /* need to unprotect op here */
+	    return eval_builtin_nr(e, op, args, code, TRUE);
 	}
 	else if (TYPEOF(op) == CLOSXP) {
-	    PROTECT(tmp = promiseArgs(CDR(e), rho));
-	    tmp = applyClosure(e, op, tmp, rho, R_NilValue);
-	    UNPROTECT(1);
+	    tmp = promiseArgs(CDR(e), rho);
+	    UNPROTECT(1);  /* need to unprotect op here */
+	    return R_applyClosure_nr(e, op, tmp, rho, R_NilValue, code);
 	}
-	else
+	else {
+	    tmp = NULL;  /* keep -Wall happy */
 	    error("attempt to apply non-function");
+	}
 	UNPROTECT(1);
-	break;
+	R_ReturnedValue = tmp;
+	return code;
     case DOTSXP:
 	error("... used in an incorrect context");
     default:
 	UNIMPLEMENTED("eval");
+	return NULL; /* not reached */
     }
-    R_EvalDepth = depthsave;
-    return (tmp);
+}
+
+void R_run_dispatcher(R_code_t code)
+{
+    while (code != NULL) {
+	/* check for a user abort and an expired quantum */
+	R_EvalCount++;
+	if ((R_EvalCount % 128) == 0) {
+#ifdef Macintosh
+	    isintrpt();
+#endif
+#ifdef Win32
+	    R_ProcessEvents();
+#endif
+	    if (R_threads_enabled && R_preemptive_scheduling) {
+		if (R_EvalCount > R_ThreadContext->quantum) {
+		    R_code_t R_ThreadYield(R_code_t);
+		    R_EvalCount = 0;
+		    code = R_ThreadYield(code);
+		}
+	    }
+	    else R_EvalCount = 0;
+	}
+	code = code->fun(code);
+    }
+}
+    
+SEXP eval(SEXP e, SEXP rho) {
+    volatile int save = R_PPStackTop;
+    R_code_t code;
+    volatile SEXP oldrho;
+    RDISPATCHER disp;
+
+    PROTECT(oldrho = R_CurrentEnv);
+    PROTECT(e);
+    R_CurrentEnv = rho;
+
+    R_BeginDispatcher(&disp);
+    if (SETJMP(disp.cjmpbuf))
+	code = R_GlobalContext->contcode;
+    else
+	code = R_eval_nr(e, NULL);
+    if (code != NULL)
+	R_run_dispatcher(code);
+    R_EndDispatcher(&disp);
+
+    UNPROTECT(2);
+    R_CurrentEnv = oldrho;
+    if(save != R_PPStackTop)
+	Rprintf("stack imbalance, %d then %d\n", save, R_PPStackTop);
+    return R_ReturnedValue;
 }
 
 /* Apply SEXP op of type CLOSXP to actuals */
 
-SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
+static SEXP buildCallEnv(SEXP call, SEXP op, SEXP arglist, SEXP rho,
+			 SEXP suppliedenv)
 {
-    SEXP body, formals, actuals, savedrho;
-    volatile  SEXP newrho;
+    SEXP formals, actuals, savedrho, newrho;
     SEXP f, a, tmp;
-    RCNTXT cntxt;
 
     /* formals = list of formal parameters */
     /* actuals = values to be bound to formals */
     /* arglist = the tagged list of arguments */
 
     formals = FORMALS(op);
-    body = BODY(op);
     savedrho = CLOENV(op);
 
     /*  Set up a context with the call in it so error has access to it */
 
-    begincontext(&cntxt, CTXT_RETURN, call, savedrho, rho, arglist);
+    begincontext(CTXT_RETURN, call, savedrho, rho, arglist);
 
     /*  Build a list which matches the actual (unevaluated) arguments
 	to the formal paramters.  Build a new environment which
@@ -507,51 +661,6 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	}
     }
 
-    /*  Terminate the previous context and start a new one with the
-        correct environment. */
-
-    endcontext(&cntxt);
-
-    /*  If we have a generic function we need to use the sysparent of
-	the generic as the sysparent of the method because the method
-	is a straight substitution of the generic.  */
-
-    if( R_GlobalContext->callflag == CTXT_GENERIC )
-	begincontext(&cntxt, CTXT_RETURN, call,
-		     newrho, R_GlobalContext->sysparent, arglist);
-    else
-	begincontext(&cntxt, CTXT_RETURN, call, newrho, rho, arglist);
-
-    /* The default return value is NULL.  FIXME: Is this really needed
-       or do we always get a sensible value returned?  */
-
-    tmp = R_NilValue;
-
-    /* Debugging */
-
-    SET_DEBUG(newrho, DEBUG(op));
-    if (DEBUG(op)) {
-	Rprintf("debugging in: ");
-	PrintValueRec(call,rho);
-	/* Find out if the body is function with only one statement. */
-	if (isSymbol(CAR(body)))
-	    tmp = findFun(CAR(body), rho);
-	else
-	    tmp = eval(CAR(body), rho);
-	if((TYPEOF(tmp) == BUILTINSXP || TYPEOF(tmp) == SPECIALSXP)
-	   && !strcmp( PRIMNAME(tmp), "for")
-	   && !strcmp( PRIMNAME(tmp), "{")
-	   && !strcmp( PRIMNAME(tmp), "repeat")
-	   && !strcmp( PRIMNAME(tmp), "while")
-	   )
-	    goto regdb;
-	Rprintf("debug: ");
-	PrintValue(body);
-	do_browser(call,op,arglist,newrho);
-    }
-
- regdb:
-
     /*  It isn't completely clear that this is the right place to do
 	this, but maybe (if the matchArgs above reverses the
 	arguments) it might just be perfect.  */
@@ -568,32 +677,190 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 #endif
 #undef  HASHING
 
+    SET_DEBUG(newrho, DEBUG(op));
+
+    /* Terminate the previous context; the call will start a new one
+        with the correct environment. */
+    UNPROTECT(2);
+    endcontext();
+    return newrho;
+}
+
+static void debugClosureCallStart(SEXP call, SEXP op, SEXP arglist, SEXP rho,
+				  SEXP newrho)
+{
+    SEXP body, tmp;
+
+    body = BODY(op);
+
+    Rprintf("debugging in: ");
+    PrintValueRec(call, rho);
+
+    /* Find out if the body is function with only one statement. */
+    if (isSymbol(CAR(body)))
+	tmp = findFun(CAR(body), rho);
+    else
+	tmp = eval(CAR(body), rho);
+
+    if((TYPEOF(tmp) == BUILTINSXP || TYPEOF(tmp) == SPECIALSXP)
+	   && !strcmp( PRIMNAME(tmp), "for")
+	   && !strcmp( PRIMNAME(tmp), "{")
+	   && !strcmp( PRIMNAME(tmp), "repeat")
+	   && !strcmp( PRIMNAME(tmp), "while")
+	   )
+	return;
+    Rprintf("debug: ");
+    PrintValue(body);
+    do_browser(call,op,arglist,newrho);
+}
+
+static void debugClosureCallEnd(SEXP call, SEXP rho)
+{
+    int savevis = R_Visible;
+    SEXP saveval = R_ReturnedValue;
+    PROTECT(saveval);
+    Rprintf("exiting from: ");
+    PrintValueRec(call, rho);
+    UNPROTECT(1);
+    R_ReturnedValue = saveval;
+    R_Visible = savevis;
+}
+
+static SEXP ClosureCallSysparent(SEXP rho)
+{
+    /*  If we have a generic function we need to use the sysparent of
+	the generic as the sysparent of the method because the method
+	is a straight substitution of the generic.  */
+
+    if( R_GlobalContext->callflag == CTXT_GENERIC )
+	return R_GlobalContext->sysparent;
+    else
+	return rho;
+}
+    
+SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
+{
+    SEXP body, sysp;
+    volatile SEXP newrho;
+    RDISPATCHER disp;
+
+    R_EvalDepth++;
+    if (R_EvalDepth > R_Expressions)
+	error("evaluation is nested too deeply: infinite recursion?");
+
+    body = BODY(op);
+
+    PROTECT(arglist);
+    newrho = buildCallEnv(call, op, arglist, rho, suppliedenv);
+    UNPROTECT(1);
+
+    sysp = ClosureCallSysparent(rho);
+
+    R_BeginDispatcher(&disp);
+    begincontext(CTXT_RETURN, call, newrho, sysp, arglist);
+
+    /* Debugging */
+    if (DEBUG(op))
+	debugClosureCallStart(call, op, arglist, rho, newrho);
+
     /*  Set a longjmp target which will catch any explicit returns
 	from the function body.  */
 
-    if ((SETJMP(cntxt.cjmpbuf))) {
+    R_ReturnedValue = R_NilValue;
+    if (SETJMP(disp.cjmpbuf)) {
 	if (R_ReturnedValue == R_RestartToken) {
-	    cntxt.callflag = CTXT_RETURN;  /* turn restart off */
+	    R_GlobalContext->callflag = CTXT_RETURN;  /* turn restart off */
 	    R_ReturnedValue = R_NilValue;  /* remove restart token */
-	    PROTECT(tmp = eval(body, newrho));
+	    R_ReturnedValue = eval(body, newrho);
 	}
-	else
-	    PROTECT(tmp = R_ReturnedValue);
     }
-    else {
-	PROTECT(tmp = eval(body, newrho));
-    }
+    else
+	R_ReturnedValue = eval(body, newrho);
 
-    endcontext(&cntxt);
+    endcontext();
+    R_EndDispatcher(&disp);
 
-    if (DEBUG(op)) {
-	Rprintf("exiting from: ");
-	PrintValueRec(call, rho);
-    }
-    UNPROTECT(3);
-    return (tmp);
+    if (DEBUG(op))
+	debugClosureCallEnd(call, rho);
+
+    R_EvalDepth--;
+    return R_ReturnedValue;
 }
 
+
+/*
+ * Non-recursive version of closure calling
+ */
+
+/* Before the call we need to set up the environment and increment the call
+   depth.  After the call this neds to be undone. */
+
+/* The frame fpr closure calls contains three elements: The call, the
+   function called (op), and the previous environment. */
+
+#define CLOSURE_FRAME_CALL() CAR(EVAL_FRAME_VAR0())
+#define CLOSURE_FRAME_OP() CDR(EVAL_FRAME_VAR0())
+#define CLOSURE_FRAME_OLDENV() EVAL_FRAME_VAR1()
+
+/**** use frame size 3 here */
+#define PUSH_CLOSURE_FRAME(call, op, rho) do { \
+    PROTECT(op); \
+    PUSH_EVAL_FRAME(code, CONS(call, op), rho); \
+    UNPROTECT(1); \
+} while (0)
+
+/* The closure call context includes a continuation code for `return'
+   and restart jumps. */
+#define BEGIN_CLOSURE_CONTEXT(call, arglist, rho) do { \
+    SEXP sysp = ClosureCallSysparent(rho); \
+    begincontext(CTXT_RETURN, call, R_CurrentEnv, sysp, arglist); \
+    R_GlobalContext->contcode = applyClosure_cont; \
+} while (0)
+
+
+DECLARE_CONTINUATION(applyClosure_cont, applyClosure_cont_fun);
+
+R_code_t R_applyClosure_nr(SEXP call, SEXP op, SEXP arglist, SEXP rho,
+			   SEXP suppliedenv, R_code_t code)
+{
+    R_EvalDepth++;
+    if (R_EvalDepth > R_Expressions)
+	error("evaluation is nested too deeply: infinite recursion?");
+
+    PROTECT(arglist);
+    PUSH_CLOSURE_FRAME(call, op, R_CurrentEnv); /* protects op */
+    R_CurrentEnv = buildCallEnv(call, op, arglist, rho, suppliedenv);
+    UNPROTECT(1); /* arglist - will be protected in the context stack */
+
+    BEGIN_CLOSURE_CONTEXT(call, arglist, rho);
+ 
+    if (DEBUG(op))
+	debugClosureCallStart(call, op, arglist, rho, R_CurrentEnv);
+
+    return R_eval_nr(BODY(op), applyClosure_cont);
+}
+
+static R_code_t applyClosure_cont_fun(R_code_t code)
+{
+    if (R_ReturnedValue == R_RestartToken) {
+	R_GlobalContext->callflag = CTXT_RETURN;  /* turn restart off */
+	R_ReturnedValue = R_NilValue;  /* remove restart token */
+	return R_eval_nr(BODY(CLOSURE_FRAME_OP()), applyClosure_cont);
+    }
+    else {
+	if (DEBUG(CLOSURE_FRAME_OP()))
+	    debugClosureCallEnd(CLOSURE_FRAME_CALL(), R_CurrentEnv);
+
+	endcontext();
+
+	R_CurrentEnv = CLOSURE_FRAME_OLDENV();
+
+	code = EVAL_FRAME_CODE();
+	POP_EVAL_FRAME();
+	R_EvalDepth--;
+	return code;
+    }
+}
 
 static SEXP EnsureLocal(SEXP symbol, SEXP rho)
 {
@@ -688,6 +955,55 @@ SEXP do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+/*
+ * Non-recursive version of do_if
+ */
+
+/* Just to make some code a little clearer: */
+#define CALL_ARGS(c) CDR(c)
+
+/* `if' calls look like (if test consequent alternative); the
+   alternative is optional */
+#define IF_CALL_TEST(c) CAR(CALL_ARGS(c))
+#define IF_CALL_CONSEQUENT(c) CADR(CALL_ARGS(c))
+#define IF_CALL_ALTERNATIVE(c) CADDR(CALL_ARGS(c))
+#define IF_CALL_HAS_ALTERNATIVE(c) (CDDR(CALL_ARGS(c)) != R_NilValue)
+
+/* do_if_nr calls the non-recursive evaluator on the test expression.
+   The continuation examines the result and then evaluates either the
+   consequent or the alternative (or signals an error). */
+
+/* do_if_nr saves the call in the frame as EVAL_FRAME_VAR0 */
+#define IF_FRAME_CALL EVAL_FRAME_VAR0
+#define PUSH_IF_FRAME(code, call)  PUSH_EVAL_FRAME(code, call, R_NilValue);
+
+DECLARE_CONTINUATION(do_if_cont, do_if_cont_fun);
+
+R_code_t do_if_nr(SEXP call, SEXP op, SEXP args, SEXP rho, R_code_t code)
+{
+    PUSH_IF_FRAME(code, call);
+    return R_eval_nr(IF_CALL_TEST(call), do_if_cont);
+}
+
+static R_code_t do_if_cont_fun(R_code_t code)
+{
+    SEXP Cond = R_ReturnedValue;
+    SEXP call = IF_FRAME_CALL();
+    code = EVAL_FRAME_CODE();
+    POP_EVAL_FRAME();
+
+    if (asLogicalNoNA(Cond, call))
+	return R_eval_nr(IF_CALL_CONSEQUENT(call), code);
+    else if (IF_CALL_HAS_ALTERNATIVE(call))
+	return R_eval_nr(IF_CALL_ALTERNATIVE(call), code);
+    else {
+	R_Visible = 0;
+	R_ReturnedValue = R_NilValue;
+	return code;
+    }
+}
+
+
 #define BodyHasBraces(body) \
     ((isLanguage(body) && CAR(body) == R_BraceSymbol) ? 1 : 0)
 
@@ -698,15 +1014,66 @@ SEXP do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 	do_browser(call,op,args,rho); \
     } } while (0)
 
+static SEXP set_for_loop_var(SEXP val, int i, SEXP sym, SEXP call, SEXP rho)
+{
+    SEXP v;
+
+    switch (TYPEOF(val)) {
+    case LGLSXP:
+	PROTECT(v = allocVector(TYPEOF(val), 1));
+	LOGICAL(v)[0] = LOGICAL(val)[i];
+	setVar(sym, v, rho);
+	UNPROTECT(1);
+	break;
+    case INTSXP:
+	PROTECT(v = allocVector(TYPEOF(val), 1));
+	INTEGER(v)[0] = INTEGER(val)[i];
+	setVar(sym, v, rho);
+	UNPROTECT(1);
+	break;
+    case REALSXP:
+	PROTECT(v = allocVector(TYPEOF(val), 1));
+	REAL(v)[0] = REAL(val)[i];
+	setVar(sym, v, rho);
+	UNPROTECT(1);
+	break;
+    case CPLXSXP:
+	PROTECT(v = allocVector(TYPEOF(val), 1));
+	COMPLEX(v)[0] = COMPLEX(val)[i];
+	setVar(sym, v, rho);
+	UNPROTECT(1);
+	break;
+    case STRSXP:
+	PROTECT(v = allocVector(TYPEOF(val), 1));
+	SET_STRING_ELT(v, 0, STRING_ELT(val, i));
+	setVar(sym, v, rho);
+	UNPROTECT(1);
+	break;
+    case EXPRSXP:
+    case VECSXP:
+	setVar(sym, VECTOR_ELT(val, i), rho);
+	break;
+    case LISTSXP:
+    case LANGSXP:
+	setVar(sym, CAR(val), rho);
+	val = CDR(val);
+	break;
+    default: errorcall(call, "bad for loop sequence");
+    }
+
+    return val;
+}
 
 SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int dbg;
+    volatile int dbg;
     volatile int i, n, bgn;
-    SEXP sym, body;
-    volatile SEXP ans, v, val;
-    RCNTXT cntxt;
-    PROTECT_INDEX vpi, api;
+    volatile SEXP sym, body;
+    volatile SEXP ans, val;
+    PROTECT_INDEX api;
+    RDISPATCHER disp;
+
+    checkArity(op, args);
 
     sym = CAR(args);
     val = CADR(args);
@@ -714,77 +1081,256 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if ( !isSymbol(sym) ) errorcall(call, "non-symbol loop variable");
 
-    PROTECT(args);
-    PROTECT(rho);
     PROTECT(val = eval(val, rho));
     defineVar(sym, R_NilValue, rho);
-    if (isList(val) || isNull(val)) {
+    if (isList(val) || isLanguage(val) || isNull(val))
 	n = length(val);
-	PROTECT_WITH_INDEX(v = R_NilValue, &vpi);
-    }
-    else {
+    else
 	n = LENGTH(val);
-	PROTECT_WITH_INDEX(v = allocVector(TYPEOF(val), 1), &vpi);
-    }
     ans = R_NilValue;
 
     dbg = DEBUG(rho);
     bgn = BodyHasBraces(body);
 
     PROTECT_WITH_INDEX(ans, &api);
-    begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_NilValue, R_NilValue);
-    switch (SETJMP(cntxt.cjmpbuf)) {
-    case CTXT_BREAK: goto for_break;
-    case CTXT_NEXT: goto for_next;
+    R_BeginDispatcher(&disp);
+    begincontext(CTXT_LOOP, R_NilValue, rho, R_NilValue, R_NilValue);
+    switch (SETJMP(disp.cjmpbuf)) {
+    case CTXT_BREAK: R_ReturnedValue = R_NilValue; goto for_break;
+    case CTXT_NEXT: R_ReturnedValue = R_NilValue; goto for_next;
     }
     for (i = 0; i < n; i++) {
+	SEXP v;
 	DO_LOOP_DEBUG(call, op, args, rho, bgn);
-	switch (TYPEOF(val)) {
-	case LGLSXP:
-	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
-	    LOGICAL(v)[0] = LOGICAL(val)[i];
-	    setVar(sym, v, rho);
-	    break;
-	case INTSXP:
-	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
-	    INTEGER(v)[0] = INTEGER(val)[i];
-	    setVar(sym, v, rho);
-	    break;
-	case REALSXP:
-	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
-	    REAL(v)[0] = REAL(val)[i];
-	    setVar(sym, v, rho);
-	    break;
-	case CPLXSXP:
-	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
-	    COMPLEX(v)[0] = COMPLEX(val)[i];
-	    setVar(sym, v, rho);
-	    break;
-	case STRSXP:
-	    REPROTECT(v = allocVector(TYPEOF(val), 1), vpi);
-	    SET_STRING_ELT(v, 0, STRING_ELT(val, i));
-	    setVar(sym, v, rho);
-	    break;
-	case EXPRSXP:
-	case VECSXP:
-	    setVar(sym, VECTOR_ELT(val, i), rho);
-	    break;
-	case LISTSXP:
-	    setVar(sym, CAR(val), rho);
-	    val = CDR(val);
-	    break;
-	default: errorcall(call, "bad for loop sequence");
-	}
+	val = set_for_loop_var(val, i, sym, call, rho); /* only changes for {LIST,LANG}SXP */
 	REPROTECT(ans = eval(body, rho), api);
     for_next:
 	; /* needed for strict ISO C compilance, according to gcc 2.95.2 */
     }
  for_break:
-    endcontext(&cntxt);
-    UNPROTECT(5);
+    endcontext();
+    R_EndDispatcher(&disp);
+    UNPROTECT(2);
     R_Visible = 0;
     SET_DEBUG(rho, dbg);
     return ans;
+}
+
+
+/*
+ * Common structure for non-recursive loop handling
+ */
+
+/* All loops use a common frame structure.  This is a little wasteful
+   for `while' and `repeat' loops, since `for' loops need one extra
+   field to hold the evaluated sequence, but it makes things simpler.
+
+   EVAL_FRAME_VAR0 holds the current return value of the loop.  It
+   starts out at R_NilValue and then receives the result of each body
+   evaluation that is not terminated with a `next' or `break'. */
+
+#define LOOP_VALUE EVAL_FRAME_VAR0
+#define SET_LOOP_VALUE SET_EVAL_FRAME_VAR0
+
+#define UPDATE_LOOP_VALUE() do { \
+    if (R_ReturnedValue == R_LoopNextToken) R_ReturnedValue = R_NilValue; \
+    else SET_LOOP_VALUE(R_ReturnedValue); \
+} while (0)
+
+/* EVAL_FRAME_VAR1 holds the SEXP values needed by the loops.  Its
+   structure is
+
+   (ivars seqval call . op)
+
+   The seqval field is only used by `for' loops.  The ivars field holds
+   an integer vector of length at least 2. */
+
+#define LOOP_IVARS() INTEGER(CAR(EVAL_FRAME_VAR1()))
+
+#define LOOP_SEQVAL() CADR(EVAL_FRAME_VAR1())
+#define SET_LOOP_SEQVAL(v) SETCAR(CDR(EVAL_FRAME_VAR1()), v)
+
+#define LOOP_CALL() CADDR(EVAL_FRAME_VAR1())
+
+#define LOOP_OP() CDR(CDR(CDR(EVAL_FRAME_VAR1())))
+
+/* The two integer values needed by all loops are the DEBUG value
+   of the current environent at the loop start and the flag `bgn'
+   that is true if the body of the loop has braces. */
+
+#define LOOP_DBG() (LOOP_IVARS()[0])
+#define SET_LOOP_DBG(v) (LOOP_DBG() = (v))
+
+#define LOOP_BGN() (LOOP_IVARS()[1])
+#define SET_LOOP_BGN(v) (LOOP_BGN() = (v))
+
+/* The loop frame is created by the macro PUSH_LOOP_FRAME.  The
+   `seqval' field is initialized to R_NilValue, as is the saved loop
+   value field.  The final argument to this macro specifies the number
+   of additional integer fields needed.  For `for' loops this will be
+   2; for `while' and `repeat' loops it will be 0. */
+
+#define PUSH_LOOP_FRAME(code, call, op, extra) do { \
+    SEXP __op__ = (op), __call__ = (call), __iv__, __ci__; \
+    PROTECT(__op__); \
+    PROTECT(__iv__ = allocVector(INTSXP, 2 + (extra))); \
+    __ci__ = CONS(__iv__, CONS(R_NilValue, CONS(__call__, __op__))); \
+    PUSH_EVAL_FRAME(code, R_NilValue, __ci__); \
+    UNPROTECT(2); \
+} while(0)
+
+/* All loops need to set a continuation for their contexts that is
+   used by `break' and `next' calls */
+#define BEGIN_LOOP_CONTEXT(cont) do { \
+    begincontext(CTXT_LOOP, R_NilValue, R_CurrentEnv, R_NilValue, R_NilValue);\
+    R_GlobalContext->contcode = (cont); \
+} while (0)
+
+
+/* All non-recursive loop are terminated by calling finis_loop_nr */
+static R_code_t finish_loop_nr(void)
+{
+    R_code_t code = EVAL_FRAME_CODE();
+    int dbg = LOOP_DBG();
+
+    R_ReturnedValue = LOOP_VALUE();
+
+    endcontext();
+
+    SET_DEBUG(R_CurrentEnv, dbg);
+
+    POP_EVAL_FRAME();
+    R_Visible = 0;
+    return code;
+}
+
+
+/*
+for (i in 1:10) print(i)
+for (i in quote(1+2)) print(i) 
+*/
+
+/* 
+ * Non-recursive verion of do_for
+ */
+
+/* `for' loop calls look like (for sym seq body) */
+#define FOR_LOOP_CALL_SYMBOL(c) CAR(CALL_ARGS(c))
+#define FOR_LOOP_CALL_SEQUENCE(c) CADR(CALL_ARGS(c))
+#define FOR_LOOP_CALL_BODY(c) CADDR(CALL_ARGS(c))
+
+/* the evaluated sequence is stored in the `seqval' slot of the loop frame */
+#define FOR_LOOP_SEQVAL LOOP_SEQVAL
+#define SET_FOR_LOOP_SEQVAL SET_LOOP_SEQVAL
+
+/* the current sequence index is stored in integer loop variable 2 */
+#define FOR_LOOP_INDEX() (LOOP_IVARS()[2])
+#define SET_FOR_LOOP_INDEX(v) (FOR_LOOP_INDEX() = (v))
+
+/* the sequence length is stored in integer loop variable 3 */
+#define FOR_LOOP_SEQLEN() (LOOP_IVARS()[3])
+#define SET_FOR_LOOP_SEQLEN(v) (FOR_LOOP_SEQLEN() = (v))
+
+/* `for' loops need two additional integer variables */
+#define PUSH_FOR_LOOP_FRAME(code,call,op) PUSH_LOOP_FRAME(code,call,op,2)
+
+/* set_for_loop_var_nr - update the loop variable using information
+   from the loop call frame, and update the sequence value if
+   necessary (for LISTSXP/LANGSXP sequences only) */
+static void set_for_loop_var_nr(SEXP call, int i)
+{
+    SEXP val = FOR_LOOP_SEQVAL();
+    SEXP sym = FOR_LOOP_CALL_SYMBOL(call);
+    SEXP newval = set_for_loop_var(val, i, sym, call, R_CurrentEnv);
+    if (newval != val)
+	SET_FOR_LOOP_SEQVAL(newval);
+}
+
+
+DECLARE_CONTINUATION(do_for_seq_cont, do_for_seq_cont_fun);
+DECLARE_CONTINUATION(do_for_body_cont, do_for_body_cont_fun);
+
+/* do_for_nr - start the for loop evaluation. Sets up the frame and
+   evaluates the sequence expression. */
+R_code_t do_for_nr(SEXP call, SEXP op, SEXP args, SEXP rho, R_code_t code)
+{
+    SEXP ivals, callinfo;
+
+    checkArity(op, args);
+
+    if (! isSymbol(FOR_LOOP_CALL_SYMBOL(call)))
+	errorcall(call, "non-symbol loop variable");
+
+    PUSH_FOR_LOOP_FRAME(code, call, op);
+
+    return R_eval_nr(FOR_LOOP_CALL_SEQUENCE(call), do_for_seq_cont);
+}
+
+/* continuation for the initial sequence evaluation */
+static R_code_t do_for_seq_cont_fun(R_code_t code)
+{
+    int n;
+    SEXP call = LOOP_CALL();
+    SEXP op = LOOP_OP();
+    SEXP val = R_ReturnedValue;
+    SEXP sym = FOR_LOOP_CALL_SYMBOL(call);
+    SEXP body = FOR_LOOP_CALL_BODY(call);
+    int dbg = DEBUG(R_CurrentEnv);
+    int bgn = BodyHasBraces(body);
+    int i = 0;
+
+    SET_FOR_LOOP_SEQVAL(val);
+
+    if (isList(val) || isLanguage(val) || isNull(val))
+	n = length(val);
+    else
+	n = LENGTH(val);
+
+    defineVar(sym, R_NilValue, R_CurrentEnv);
+
+    SET_LOOP_DBG(dbg);
+    SET_LOOP_BGN(bgn);
+    SET_FOR_LOOP_INDEX(i);
+    SET_FOR_LOOP_SEQLEN(n);
+
+    BEGIN_LOOP_CONTEXT(do_for_body_cont);
+
+    R_ReturnedValue = R_NilValue;
+    if (n > 0) {
+	set_for_loop_var_nr(call, i);
+	DO_LOOP_DEBUG(call, op, CALL_ARGS(call), R_CurrentEnv, bgn);
+	return R_eval_nr(body, do_for_body_cont);
+    }
+    else
+	return finish_loop_nr();
+}
+
+/* continuation for body evaluations; also for break/next jumps */
+static R_code_t do_for_body_cont_fun(R_code_t code)
+{
+    if (R_ReturnedValue == R_LoopBreakToken)
+	return finish_loop_nr();
+    else {
+	int i = FOR_LOOP_INDEX();
+	int n = FOR_LOOP_SEQLEN();
+
+	UPDATE_LOOP_VALUE();
+
+	i = i + 1;
+
+	if (i < n) {
+	    SEXP call = LOOP_CALL();
+	    SEXP op = LOOP_OP();
+	    int bgn = LOOP_BGN();
+
+	    SET_FOR_LOOP_INDEX(i);
+	    set_for_loop_var_nr(call, i);
+	    DO_LOOP_DEBUG(call, op, CALL_ARGS(call), R_CurrentEnv, bgn);
+	    return R_eval_nr(FOR_LOOP_CALL_BODY(call), do_for_body_cont);
+	}
+	else
+	    return finish_loop_nr();
+    }
 }
 
 
@@ -793,8 +1339,8 @@ SEXP do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
     int dbg;
     volatile int bgn;
     volatile SEXP t, body;
-    RCNTXT cntxt;
     PROTECT_INDEX tpi;
+    RDISPATCHER disp;
 
     checkArity(op, args);
 
@@ -804,18 +1350,89 @@ SEXP do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     t = R_NilValue;
     PROTECT_WITH_INDEX(t, &tpi);
-    begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_NilValue, R_NilValue);
-    if (SETJMP(cntxt.cjmpbuf) != CTXT_BREAK) {
+    R_BeginDispatcher(&disp);
+    begincontext(CTXT_LOOP, R_NilValue, rho, R_NilValue, R_NilValue);
+    if (SETJMP(disp.cjmpbuf) != CTXT_BREAK) {
+	R_ReturnedValue = R_NilValue; 
 	while (asLogicalNoNA(eval(CAR(args), rho), call)) {
 	    DO_LOOP_DEBUG(call, op, args, rho, bgn);
 	    REPROTECT(t = eval(body, rho), tpi);
 	}
     }
-    endcontext(&cntxt);
+    endcontext();
+    R_EndDispatcher(&disp);
     UNPROTECT(1);
     R_Visible = 0;
     SET_DEBUG(rho, dbg);
     return t;
+}
+
+
+/*
+f<-function(m) { n<-1; while (T) { print(n); n <- n+1; if (n > m) break }; 2 }
+g<-function(m) { n<-1; while(T) { print(n); n <- n+1; if (n > m) break; n}}
+h<-function(m) { n<-1; while(n <= m) { print(n); n <- n+1 }}
+*/
+
+/* 
+ * Non-recursive verion of do_while
+ */
+
+/* `while' loop calls look like (while test body) */
+#define WHILE_LOOP_CALL_BODY(c) CADDR(c)
+#define WHILE_LOOP_CALL_TEST(c) CADR(c)
+
+/* `while' loops need no additional integer variables */
+#define PUSH_WHILE_LOOP_FRAME(code,call,op) PUSH_LOOP_FRAME(code,call,op,0)
+
+DECLARE_CONTINUATION(do_while_test_cont, do_while_test_cont_fun);
+DECLARE_CONTINUATION(do_while_body_cont, do_while_body_cont_fun);
+
+R_code_t do_while_nr(SEXP call, SEXP op, SEXP args, SEXP rho, R_code_t code)
+{
+    int bgn;
+
+    checkArity(op, args);
+
+    PUSH_WHILE_LOOP_FRAME(code, call, op);
+
+    bgn = BodyHasBraces(WHILE_LOOP_CALL_BODY(call));
+    SET_LOOP_DBG(DEBUG(R_CurrentEnv));
+    SET_LOOP_BGN(bgn);
+
+    BEGIN_LOOP_CONTEXT(do_while_body_cont);
+
+    R_ReturnedValue = R_NilValue;
+    DO_LOOP_DEBUG(call, op, CALL_ARGS(call), R_CurrentEnv, bgn);
+    return R_eval_nr(WHILE_LOOP_CALL_TEST(call), do_while_test_cont);
+}
+
+/* continuation for the test evaluation */
+static R_code_t do_while_test_cont_fun(R_code_t code)
+{
+    SEXP call = LOOP_CALL();
+
+    if (asLogicalNoNA(R_ReturnedValue, call)) {
+	SEXP op = LOOP_OP();
+	int bgn = LOOP_BGN();
+
+	DO_LOOP_DEBUG(call, op, CALL_ARGS(call), R_CurrentEnv, bgn);
+	return R_eval_nr(WHILE_LOOP_CALL_BODY(call), do_while_body_cont);
+    }
+    else 
+	return finish_loop_nr();
+}
+
+/* continuation for the body evaluation; also for break/next jumps */
+static R_code_t do_while_body_cont_fun(R_code_t code)
+{
+    if (R_ReturnedValue == R_LoopBreakToken)
+	return finish_loop_nr();
+    else {
+	SEXP call = LOOP_CALL();
+	UPDATE_LOOP_VALUE();
+	return R_eval_nr(WHILE_LOOP_CALL_TEST(call), do_while_test_cont);
+    }
 }
 
 
@@ -824,8 +1441,8 @@ SEXP do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
     int dbg;
     volatile int bgn;
     volatile SEXP t, body;
-    RCNTXT cntxt;
     PROTECT_INDEX tpi;
+    RDISPATCHER disp;
 
     checkArity(op, args);
 
@@ -835,14 +1452,17 @@ SEXP do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     t = R_NilValue;
     PROTECT_WITH_INDEX(t, &tpi);
-    begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_NilValue, R_NilValue);
-    if (SETJMP(cntxt.cjmpbuf) != CTXT_BREAK) {
+    R_BeginDispatcher(&disp);
+    begincontext(CTXT_LOOP, R_NilValue, rho, R_NilValue, R_NilValue);
+    if (SETJMP(disp.cjmpbuf) != CTXT_BREAK) {
+	R_ReturnedValue = R_NilValue; 
 	for (;;) {
 	    DO_LOOP_DEBUG(call, op, args, rho, bgn);
 	    REPROTECT(t = eval(body, rho), tpi);
 	}
     }
-    endcontext(&cntxt);
+    endcontext();
+    R_EndDispatcher(&disp);
     UNPROTECT(1);
     R_Visible = 0;
     SET_DEBUG(rho, dbg);
@@ -850,19 +1470,77 @@ SEXP do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 
+/* 
+ * Non-recursive verion of do_repeat
+ */
+
+/* `repeat' loop calls look like (repeat body) */
+#define REPEAT_LOOP_CALL_BODY(c) CADR(c)
+
+/* `repeat' loops need no additional integer variables */
+#define PUSH_REPEAT_LOOP_FRAME(code,call,op) PUSH_LOOP_FRAME(code,call,op,0)
+
+DECLARE_CONTINUATION(do_repeat_cont, do_repeat_cont_fun);
+
+/*
+f<-function(m) { n<-1; repeat { print(n); n <- n+1; if (n > m) break }; 2 }
+g<-function(m) { n<-1; repeat { print(n); n <- n+1; if (n > m) break; n}}
+*/
+R_code_t do_repeat_nr(SEXP call, SEXP op, SEXP args, SEXP rho, R_code_t code)
+{
+    int bgn;
+    SEXP body;
+
+    checkArity(op, args);
+
+    PUSH_REPEAT_LOOP_FRAME(code, call, op);
+
+    body = REPEAT_LOOP_CALL_BODY(call);
+    bgn = BodyHasBraces(body);
+    SET_LOOP_DBG(DEBUG(R_CurrentEnv));
+    SET_LOOP_BGN(bgn);
+
+    BEGIN_LOOP_CONTEXT(do_repeat_cont);
+
+    R_ReturnedValue = R_NilValue;
+    DO_LOOP_DEBUG(call, op, CALL_ARGS(call), R_CurrentEnv, bgn);
+    return R_eval_nr(body, do_repeat_cont);
+}
+
+static R_code_t do_repeat_cont_fun(R_code_t code)
+{
+    if (R_ReturnedValue == R_LoopBreakToken) 
+	return finish_loop_nr();
+    else {
+	SEXP call = LOOP_CALL();
+	SEXP op = LOOP_OP();
+	int bgn = LOOP_BGN();
+	
+	UPDATE_LOOP_VALUE();
+	DO_LOOP_DEBUG(call, op, CALL_ARGS(call), R_CurrentEnv, bgn);
+	return R_eval_nr(REPEAT_LOOP_CALL_BODY(call), do_repeat_cont);
+    }
+}
+
+
 SEXP do_break(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    findcontext(PRIMVAL(op), rho, R_NilValue);
+    SEXP val = PRIMVAL(op) == CTXT_BREAK ? R_LoopBreakToken : R_LoopNextToken;
+    findcontext(PRIMVAL(op), rho, val);
     return R_NilValue;
 }
 
+R_code_t do_break_nr(SEXP call, SEXP op, SEXP args, SEXP rho, R_code_t code)
+{
+    SEXP val = PRIMVAL(op) == CTXT_BREAK ? R_LoopBreakToken : R_LoopNextToken;
+    return R_findcontext_nr(PRIMVAL(op), rho, val);
+}
 
 SEXP do_paren(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
     return CAR(args);
 }
-
 
 SEXP do_begin(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -884,48 +1562,168 @@ SEXP do_begin(SEXP call, SEXP op, SEXP args, SEXP rho)
     return s;
 }
 
+/*
+ * Non-recursive version of do_begin
+ */
 
-SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
+/* The evaluation frame holds the remaining expressions to evaluate in
+   EVAL_FRAME_VAR1.  EVAL_FRAME_VAR0 holds debugging information.  If
+   debugging is on when do_begin is called, then this slot containse
+   CONS(call, op); otherwise, it contains R_NilValue. */
+
+#define BEGIN_FRAME_DEBUGGING() (EVAL_FRAME_VAR0() != R_NilValue)
+#define BEGIN_FRAME_CALL() CAR(EVAL_FRAME_VAR0())
+#define BEGIN_FRAME_OP() CDR(EVAL_FRAME_VAR0())
+#define BEGIN_FRAME_ARGS EVAL_FRAME_VAR1
+#define SET_BEGIN_FRAME_ARGS SET_EVAL_FRAME_VAR1
+
+#define PUSH_BEGIN_FRAME(call, op, args, rho) do { \
+    SEXP call_op = DEBUG(rho) ? CONS(call, op) : R_NilValue; \
+    PUSH_EVAL_FRAME(code, call_op, CDR(args)); \
+} while (0)
+
+DECLARE_CONTINUATION(do_begin_cont, do_begin_cont_fun);
+
+R_code_t do_begin_nr(SEXP call, SEXP op, SEXP args, SEXP rho, R_code_t code)
 {
-    SEXP a, v, vals;
-    int nv = 0;
+    if (args == R_NilValue) {
+	R_ReturnedValue = R_NilValue;
+	return code;
+    }
+    else {
+	if (DEBUG(rho)) {
+	    PROTECT(op);
+	    Rprintf("debug: ");
+	    PrintValue(CAR(args));
+	    do_browser(call,op,args,rho);
+	    UNPROTECT(1);
+	}
+	if (CDR(args) == R_NilValue)
+	    return R_eval_nr(CAR(args), code);
+	else {
+	    PUSH_BEGIN_FRAME(call, op, args, rho);
+	    return R_eval_nr(CAR(args), do_begin_cont);
+	}
+    }
+}
 
-    /* We do the evaluation here so that we can tag any untagged
-       return values if they are specified by symbols. */
+static R_code_t do_begin_cont_fun(R_code_t code)
+{
+    SEXP args = BEGIN_FRAME_ARGS();
 
-    PROTECT(vals = evalList(args, rho));
-    a = args;
-    v = vals;
-    while (!isNull(a)) {
-	nv += 1;
+    if (BEGIN_FRAME_DEBUGGING()) {
+	Rprintf("debug: ");
+	PrintValue(CAR(args));
+	do_browser(BEGIN_FRAME_CALL(),BEGIN_FRAME_OP(),args,R_CurrentEnv);
+    }
+
+    if (CDR(args) == R_NilValue) {
+	code = EVAL_FRAME_CODE();
+	POP_EVAL_FRAME();
+    }
+    else
+	SET_BEGIN_FRAME_ARGS(CDR(args));
+
+    return R_eval_nr(CAR(args), code);
+}
+
+static void transfer_return_tags(SEXP args, SEXP vals)
+{
+    SEXP a, v;
+
+
+    for (a = args, v = vals; a != R_NilValue; a = CDR(a), v = CDR(v)) {
 	if (CAR(a) == R_DotsSymbol)
 	    error("... not allowed in return");
 	if (isNull(TAG(a)) && isSymbol(CAR(a)))
 	    SET_TAG(v, CAR(a));
-	a = CDR(a);
-	v = CDR(v);
     }
-    switch(nv) {
-    case 0:
-	v = R_NilValue;
-	break;
-    case 1:
-	v = CAR(vals);
-	break;
-    default:
+}    
+
+static SEXP make_return_value(SEXP vals)
+{
+    if (vals == R_NilValue)
+	return R_NilValue;
+    else if (CDR(vals) == R_NilValue)
+	return CAR(vals);
+    else {
+	SEXP v;
+	PROTECT(vals);
 	for (v = vals; v != R_NilValue; v = CDR(v))
 	    if (NAMED(CAR(v)))
 		SETCAR(v, duplicate(CAR(v)));
 	v = PairToVectorList(vals);
-	break;
+	UNPROTECT(1);
+	return v;
     }
-    UNPROTECT(1);
+}
+    
+SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP vals = evalList(args, rho);
 
-    findcontext(CTXT_BROWSER | CTXT_FUNCTION, rho, v);
+    transfer_return_tags(args, vals);
+
+    vals = make_return_value(vals);
+
+    findcontext(CTXT_BROWSER | CTXT_FUNCTION, rho, vals);
 
     return R_NilValue; /*NOTREACHED*/
 }
 
+
+/*
+ * Non-recursive version of do_return
+ */
+
+/* this evaluates a list of arguments, much like eval_builtin_nr, and
+   then handles the return.  The frame contains the list of arguments
+   remaining to be processed in EVAL_FRAME_VAR0.  EVAL_FRAME_VAR1
+   initially contains the list of arguments; this is destrictuvely
+   updated to the list of values. */
+
+#define RETURN_FRAME_ARGS EVAL_FRAME_VAR0
+#define SET_RETURN_FRAME_ARGS SET_EVAL_FRAME_VAR0
+
+#define RETURN_FRAME_VALS EVAL_FRAME_VAR1
+
+#define PUSH_RETURN_FRAME(code, pargs) do { \
+    SEXP __pargs__ = (pargs); \
+    PUSH_EVAL_FRAME(code, __pargs__, __pargs__); \
+} while (0)
+
+DECLARE_CONTINUATION(do_return_cont, do_return_cont_fun);
+
+R_code_t do_return_nr(SEXP call, SEXP op, SEXP args, SEXP rho, R_code_t code)
+{
+    if (args == R_NilValue)
+	return R_findcontext_nr(CTXT_BROWSER | CTXT_FUNCTION, rho, R_NilValue);
+    else {
+	SEXP pargs = processArgs(args, rho, FALSE);
+	transfer_return_tags(args, pargs);
+	PUSH_RETURN_FRAME(code, pargs);
+	return R_eval_nr(CAR(pargs), do_return_cont);
+    }
+}
+
+static R_code_t do_return_cont_fun(R_code_t code)
+{
+    SEXP args = RETURN_FRAME_ARGS();
+
+    SETCAR(args, R_ReturnedValue);
+    args = CDR(args);
+
+    if (args == R_NilValue) {
+	SEXP vals = RETURN_FRAME_VALS();
+	SEXP v = make_return_value(vals);
+
+	return R_findcontext_nr(CTXT_BROWSER | CTXT_FUNCTION, R_CurrentEnv, v);
+    }
+    else {
+	SET_RETURN_FRAME_ARGS(args);
+	return R_eval_nr(CAR(args), do_return_cont);
+    }
+}
 
 SEXP do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -950,8 +1748,7 @@ SEXP do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
  *	 (eval(x$a[3])	eval(x$a)  eval(x)  .  x)
  *
  *  (Note the terminating symbol).  The partial evaluations are carried
- *  out efficiently using previously computed components.
- */
+ * out efficiently using previously computed components.  */
 
 static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal, SEXP tmploc)
 {
@@ -989,18 +1786,18 @@ static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal, SEXP tmploc)
 static char *asym[] = {":=", "<-", "<<-"};
 
 
-static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
+static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho, SEXP rhs)
 {
-    SEXP expr, lhs, rhs, saverhs, tmp, tmp2, tmploc;
+    SEXP expr, lhs, saverhs, tmp, tmp2, tmploc;
     char buf[32];
 
     expr = CAR(args);
 
-    /*  It's important that the rhs get evaluated first because
-	assignment is right associative i.e.  a <- b <- c is parsed as
-	a <- (b <- c).  */
+    /* It's important that the rhs get evaluated before the call to
+       aplydefine because assignment is right associative i.e.  a <- b
+       <- c is parsed as a <- (b <- c).  */
 
-    PROTECT(saverhs = rhs = eval(CADR(args), rho));
+    PROTECT(saverhs = rhs);
 
     /*  FIXME: We need to ensure that this works for hashed
         environments.  This code only works for unhashed ones.  the
@@ -1024,11 +1821,6 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "cannot do complex assignments in NULL environment");
     defineVar(R_TmpvalSymbol, R_NilValue, rho);
     tmploc = findVarLocInFrame(rho, R_TmpvalSymbol);
-#ifdef OLD
-    tmploc = FRAME(rho);
-    while(tmploc != R_NilValue && TAG(tmploc) != R_TmpvalSymbol)
-	tmploc = CDR(tmploc);
-#endif
 
     /*  Do a partial evaluation down through the LHS. */
     lhs = evalseq(CADR(expr), rho, PRIMVAL(op)==1, tmploc);
@@ -1073,59 +1865,156 @@ SEXP do_alias(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /*  Assignment in its various forms  */
 
-SEXP do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
+static SEXP get_set_lhs(SEXP call, SEXP op, SEXP args)
 {
-    SEXP s, t;
+    SEXP lhs;
     if (length(args) != 2)
 	WrongArgCount(asym[PRIMVAL(op)]);
     if (isString(CAR(args)))
 	SETCAR(args, install(CHAR(STRING_ELT(CAR(args), 0))));
 
-    switch (PRIMVAL(op)) {
-    case 1:						/* <- */
-	if (isSymbol(CAR(args))) {
-	    s = eval(CADR(args), rho);
-	    if (NAMED(s))
-	    {
-		PROTECT(s);
-		t = duplicate(s);
-		UNPROTECT(1);
-		s = t;
-	    }
-	    PROTECT(s);
-	    R_Visible = 0;
-	    defineVar(CAR(args), s, rho);
-	    UNPROTECT(1);
-	    SET_NAMED(s, 1);
-	    return (s);
-	}
-	else if (isLanguage(CAR(args))) {
-	    R_Visible = 0;
-	    return applydefine(call, op, args, rho);
-	}
-	else errorcall(call,"invalid (do_set) left-hand side to assignment");
-    case 2:						/* <<- */
-	if (isSymbol(CAR(args))) {
-	    s = eval(CADR(args), rho);
-	    if (NAMED(s))
-		s = duplicate(s);
-	    PROTECT(s);
-	    R_Visible = 0;
-	    setVar(CAR(args), s, ENCLOS(rho));
-	    UNPROTECT(1);
-	    SET_NAMED(s, 1);
-	    return s;
-	}
-	else if (isLanguage(CAR(args)))
-	    return applydefine(call, op, args, rho);
-	else error("invalid assignment lhs");
+    lhs = CAR(args);
+    if (! isSymbol(lhs) && ! isLanguage(lhs))
+	errorcall(call,"invalid left-hand side to assignment");
 
-    default:
-	UNIMPLEMENTED("do_set");
-
-    }
-    return R_NilValue;/*NOTREACHED*/
+    return lhs;
 }
+
+static SEXP symbol_set(SEXP lhs, SEXP op, SEXP rho, SEXP s)
+{
+    if (NAMED(s))
+	s = duplicate(s);
+    PROTECT(s);
+    switch (PRIMVAL(op)) {
+    case 1: defineVar(lhs, s, rho); break;       /*  <- */
+    case 2: setVar(lhs, s, ENCLOS(rho)); break;  /* <<- */
+    default: UNIMPLEMENTED("do_set");
+    }
+    UNPROTECT(1);
+    SET_NAMED(s, 1);
+    return s;
+}
+    
+SEXP do_set(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP s, lhs;
+
+    lhs = get_set_lhs(call, op, args);
+
+    /* evaluate the rhs */
+    s = eval(CADR(args), rho);
+    R_Visible = 0;
+
+    if (isSymbol(lhs))
+	return symbol_set(lhs, op, rho, s);
+    else /* isLanguage(lhs) */
+	return applydefine(call, op, CALL_ARGS(call), rho, s);
+}
+
+
+/*
+ * Non-recursive version of do_set (in the value only)
+ */
+
+/* The new value is evaluated by the non-recursive evaluator.  The
+   assignment is then handled in the continuation.  No attempt is made
+   to use a non-recursive mechanism for the left-hand sides of complex
+   assignment expressions. */
+
+/* the frame contains the left-hand symbol or the entire call for
+   complex assignments in EVAL_FRAME_VAR0.  The assignment function op
+   is passed in EVAL_FRAME_VAR_1 */
+
+#define ASSIGNMENT_FRAME_CALLINFO EVAL_FRAME_VAR0
+#define ASSIGNMENT_FRAME_OP EVAL_FRAME_VAR1
+#define PUSH_ASSIGNMENT_FRAME(code, ci, op) PUSH_EVAL_FRAME(code, ci, op)
+
+DECLARE_CONTINUATION(do_set_cont, do_set_cont_fun);
+
+R_code_t do_set_nr(SEXP call, SEXP op, SEXP args, SEXP rho, R_code_t code)
+{
+    SEXP lhs, callinfo;
+
+    lhs = get_set_lhs(call, op, args);
+    callinfo = isSymbol(lhs) ? lhs : call;
+
+    PUSH_ASSIGNMENT_FRAME(code,  callinfo, op);
+    return R_eval_nr(CADR(args), do_set_cont);
+}
+
+static R_code_t do_set_cont_fun(R_code_t code)
+{
+    SEXP rho = R_CurrentEnv;
+    SEXP s = R_ReturnedValue;
+    SEXP callinfo = ASSIGNMENT_FRAME_CALLINFO();
+    SEXP op = ASSIGNMENT_FRAME_OP();
+    code = EVAL_FRAME_CODE();
+    POP_EVAL_FRAME();
+
+    R_Visible = 0;
+    if (isSymbol(callinfo)) {
+	SEXP lhs = callinfo;
+	R_ReturnedValue = symbol_set(lhs, op, rho, s);
+    }
+    else { /* isLanguage(lhs) */
+	SEXP call = callinfo;
+	R_ReturnedValue = applydefine(call, op, CALL_ARGS(call), rho, s);
+    }
+    return code;
+}
+
+
+/* Copy an argument list, expanding ... and optionally evaluating the
+   arguments. optionally Evaluate each expression in "el" in the
+   environment "rho".  This is a naturally recursive algorithm, but we
+   use the iterative form below because it is does not cause growth of
+   the pointer protection stack, and because it is a little more
+   efficient. */
+
+/***** think about merging this with evalList and evalListKeepMissing?? */
+
+static SEXP processArgs(SEXP el, SEXP rho, Rboolean evaluate)
+{
+    SEXP ans, h, tail, val;
+
+    PROTECT(ans = tail = CONS(R_NilValue, R_NilValue));
+
+    while (el != R_NilValue) {
+
+	/* If we have a ... symbol, we look to see what it is bound to.
+	 * If its binding is Null (i.e. zero length)
+	 *	we just ignore it and return the cdr with all its
+	 *      expressions evaluated;
+	 * if it is bound to a ... list of promises,
+	 *	we splice the list of resulting values into the return
+	 *      value.
+	 * Anything else bound to a ... symbol is an error
+	*/
+	if (CAR(el) == R_DotsSymbol) {
+	    h = findVar(CAR(el), rho);
+	    if (TYPEOF(h) == DOTSXP || h == R_NilValue) {
+		while (h != R_NilValue) {
+		    val = evaluate ? eval(CAR(h), rho) : CAR(h);
+		    SETCDR(tail, CONS(val, R_NilValue));
+		    SET_TAG(CDR(tail), CreateTag(TAG(h)));
+		    tail = CDR(tail);
+		    h = CDR(h);
+		}
+	    }
+	    else if (h != R_MissingArg)
+		error("... used in an incorrect context");
+	}
+	else if (CAR(el) != R_MissingArg) {
+	    val = evaluate ? eval(CAR(el), rho) : CAR(el);
+	    SETCDR(tail, CONS(val, R_NilValue));
+	    tail = CDR(tail);
+	    SET_TAG(tail, CreateTag(TAG(el)));
+	}
+	el = CDR(el);
+    }
+    UNPROTECT(1);
+    return CDR(ans);
+}/* processArgs() */
 
 
 /* Evaluate each expression in "el" in the environment "rho".  This is */
@@ -1307,7 +2196,7 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     volatile SEXP expr, env, tmp;
 
     int frame;
-    RCNTXT cntxt;
+    RDISPATCHER disp;
 
     checkArity(op, args);
     expr = CAR(args);
@@ -1342,10 +2231,12 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if(isLanguage(expr) || isSymbol(expr)) {
 	PROTECT(expr);
-	begincontext(&cntxt, CTXT_RETURN, call, env, rho, args);
-	if (!SETJMP(cntxt.cjmpbuf))
+	R_BeginDispatcher(&disp);
+	begincontext(CTXT_RETURN, call, env, rho, args);
+	if (!SETJMP(disp.cjmpbuf))
 	    expr = eval(expr, env);
-	endcontext(&cntxt);
+	endcontext();
+	R_EndDispatcher(&disp);
 	UNPROTECT(1);
     }
     else if (isExpression(expr)) {
@@ -1353,11 +2244,13 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(expr);
 	n = LENGTH(expr);
 	tmp = R_NilValue;
-	begincontext(&cntxt, CTXT_RETURN, call, env, rho, args);
-	if (!SETJMP(cntxt.cjmpbuf))
+	R_BeginDispatcher(&disp);
+	begincontext(CTXT_RETURN, call, env, rho, args);
+	if (!SETJMP(disp.cjmpbuf))
 	    for(i=0 ; i<n ; i++)
 		tmp = eval(VECTOR_ELT(expr, i), env);
-	endcontext(&cntxt);
+	endcontext();
+	R_EndDispatcher(&disp);
 	UNPROTECT(1);
 	expr = tmp;
     }
@@ -1382,23 +2275,19 @@ SEXP do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *cptr;
     SEXP s, ans ;
-    cptr = R_GlobalContext;
+
     /* get the args supplied */
-    while (cptr != NULL) {
-	if (cptr->callflag == CTXT_RETURN && cptr->cloenv == rho)
-	    break;
-	cptr = cptr->nextcontext;
-    }
-    args = cptr->promargs;
-    /* get the env recall was called from */
-    s = R_GlobalContext->sysparent;
-    while (cptr != NULL) {
-	if (cptr->callflag == CTXT_RETURN && cptr->cloenv == s)
-	    break;
-	cptr = cptr->nextcontext;
-    }
-    if (cptr == NULL)
+    cptr = R_ParentContext(rho);
+    if (cptr == NULL || cptr->callflag == CTXT_TOPLEVEL)
 	error("Recall called from outside a closure");
+    args = cptr->promargs;
+
+    /* get the env recall was called from */
+    s = cptr->sysparent;
+    cptr = R_ParentContext(s);
+    if (cptr == NULL || cptr->callflag == CTXT_TOPLEVEL)
+	error("Recall called from outside a closure");
+
     if( TYPEOF(CAR(cptr->call)) == SYMSXP)
 	PROTECT(s = findFun(CAR(cptr->call), cptr->sysparent));
     else
@@ -1480,7 +2369,7 @@ int DispatchOrEval(SEXP call, char *generic, SEXP args, SEXP rho,
 	    SEXP pargs;
 	    PROTECT(pargs = promiseArgs(args, rho));
 	    SET_PRVALUE(CAR(pargs), x);
-	    begincontext(&cntxt, CTXT_RETURN, call, rho, rho, pargs);
+	    begincontext(CTXT_RETURN, call, rho, rho, pargs);
 	    if(usemethod(generic, x, call, pargs, rho, ans)) {
 		endcontext(&cntxt);
 		UNPROTECT(2);
@@ -1519,7 +2408,7 @@ int DispatchOrEval(SEXP call, char *generic, SEXP args, SEXP rho,
 	if (pt == NULL || strcmp(pt,".default")) {
 	    /* PROTECT(args = promiseArgs(args, rho)); */
 	    SET_PRVALUE(CAR(args), x);
-	    begincontext(&cntxt, CTXT_RETURN, call, rho, rho, args);
+	    begincontext(CTXT_RETURN, call, rho, rho, args);
 	    if(usemethod(generic, x, call, args, rho, ans)) {
 		endcontext(&cntxt);
 		UNPROTECT(2);
@@ -1705,4 +2594,98 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     *ans = applyClosure(t, lsxp, s, rho, newrho);
     UNPROTECT(5);
     return 1;
+}
+
+
+R_code_t do_internal_nr(SEXP call, SEXP op, SEXP args, SEXP env, R_code_t code)
+{
+    SEXP s, fun;
+
+    checkArity(op, args);
+    s = CAR(args);
+    if (!isPairList(s))
+	errorcall(call, "invalid .Internal() argument");
+    fun = CAR(s);
+    if (!isSymbol(fun))
+	errorcall(call, "invalid internal function");
+    if (INTERNAL(fun) == R_NilValue)
+	errorcall(call, "no internal function \"%s\"", CHAR(PRINTNAME(fun)));
+    args = CDR(s);
+
+    switch (TYPEOF(INTERNAL(fun))) {
+    case BUILTINSXP:
+	args = processArgs(args, env, FALSE);
+	return eval_builtin_nr(s, INTERNAL(fun), args, code, FALSE);
+    case SPECIALSXP:
+	return eval_special_nr(s, INTERNAL(fun), args, env, code);
+    default:
+	error("bad internal function");
+	return code;
+    }
+}
+
+#define APPLY_METHOD_FRAME_RHO() CAR(EVAL_FRAME_VAR1())
+#define APPLY_METHOD_FRAME_ISNEXT() (EVAL_FRAME_VAR1()->sxpinfo.gp)
+
+#define PUSH_APPLY_METHOD_FRAME(code, call, op, args, rho, newrho, isnext) \
+do { \
+    SEXP __call__ = (call); \
+    SEXP __op__ = (op); \
+    SEXP __args__ = (args); \
+    SEXP __rho__ = (rho); \
+    SEXP __newrho__ = (newrho); \
+    SEXP __ci1__, __ci2__; \
+    PROTECT(__args__); \
+    PROTECT(__newrho__); \
+    PROTECT(__ci1__ = CONS(__call__, __op__)); \
+    SET_TAG(__ci1__, __args__); \
+    __ci2__ = CONS(__rho__, __newrho__); \
+    __ci2__->sxpinfo.gp = (isnext) ? 1 : 0; \
+    PUSH_EVAL_FRAME(code, __ci1__, __ci2__); \
+    UNPROTECT(3); \
+} while (0)
+
+DECLARE_CONTINUATION(applyMethod_cont, applyMethod_cont_fun);
+
+R_code_t R_applyMethod_nr(SEXP call, SEXP op, SEXP args, SEXP rho,
+			  SEXP newrho, Rboolean isnext, R_code_t code)
+{
+    /* do_usemethod_nr needs to set the call context to CTXT_GENERIC */
+    if (! isnext)
+	R_GlobalContext->callflag = CTXT_GENERIC;
+
+    PUSH_APPLY_METHOD_FRAME(code, call, op, args, rho, newrho, isnext);
+
+    switch (TYPEOF(op)) {
+    case SPECIALSXP:
+	return eval_special_nr(call, op, args, rho, applyMethod_cont);
+    case BUILTINSXP:
+	return eval_builtin_nr(call, op, args, applyMethod_cont, FALSE);
+    case CLOSXP:
+	return R_applyClosure_nr(call, op, args, rho, newrho,
+				 applyMethod_cont);
+    default:
+	R_ReturnedValue = R_NilValue;  /* for -Wall */
+	return applyMethod_cont;
+    }
+
+}
+
+static R_code_t applyMethod_cont_fun(R_code_t code)
+{
+    int isnext = APPLY_METHOD_FRAME_ISNEXT();
+
+    if (! isnext) {
+	/* do_usemethod_nr needs to restore the context callflag and
+	   execute a `return' jump */
+	SEXP rho = APPLY_METHOD_FRAME_RHO();
+	POP_EVAL_FRAME();
+	R_GlobalContext->callflag = CTXT_RETURN;
+	return R_findcontext_nr(CTXT_RETURN, rho, R_ReturnedValue);
+    }
+    else {
+	code = EVAL_FRAME_CODE();
+	POP_EVAL_FRAME();
+	return code;
+    }
 }

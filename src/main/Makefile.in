@@ -33,7 +33,7 @@ SOURCES_C = \
 	random.c regex.c relop.c \
 	saveload.c scan.c seq.c size.c sort.c source.c split.c \
 	subassign.c subscript.c subset.c summary.c \
-	unique.c util.c \
+	unique.c uthreads.c util.c \
 	version.c vfonts.c
 
 SOURCES_F = \

@@ -355,6 +355,8 @@ extern SEXP	R_NilValue;	    /* The nil object */
 extern SEXP	R_UnboundValue;	    /* Unbound marker */
 extern SEXP	R_MissingArg;	    /* Missing argument marker */
 extern SEXP	R_RestartToken;     /* Marker for restarted function calls */
+extern SEXP	R_LoopBreakToken;   /* Marker for break from loop jumps */
+extern SEXP	R_LoopNextToken;    /* Marker for loop next jumps */
 
 /* Symbol Table Shortcuts */
 extern SEXP	R_Bracket2Symbol;   /* "[[" */
@@ -846,4 +848,15 @@ void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun);
 
 /* Protected evaluation */
 Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
+
+/* Threads Interface */
+typedef enum {
+    R_thread_state_new = 1,
+    R_thread_state_runnable = 2,
+    R_thread_state_blocked = 4,
+    R_thread_state_terminated = 0
+} R_thread_state_t;
+
+R_thread_state_t R_ThreadState(SEXP);
+void R_SetThreadState(SEXP, R_thread_state_t);
 #endif /* _R_INTERNALS_H_ */

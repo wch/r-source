@@ -160,6 +160,12 @@ static void (* OldHandler)(void);
 static int OldTimeout;
 static int Tcl_loaded = 0;
 
+void TclHandlerOnly(void)
+{
+    while (Tcl_DoOneEvent(TCL_DONT_WAIT))
+	;
+}
+
 void TclHandler(void)
 {
     while (Tcl_DoOneEvent(TCL_DONT_WAIT))
@@ -227,7 +233,11 @@ void tcltk_init(void)
 #ifdef Win32
     Tcl_SetServiceMode(TCL_SERVICE_ALL);
 #else
-    addTcl();
+    {
+	int dontadd = asLogical(GetOption(install("no.tcltk.handler"), NULL));
+	if (dontadd == NA_LOGICAL || ! dontadd)
+	    addTcl();
+    }
 #endif
 
 /*** We may want to revive this at some point ***/

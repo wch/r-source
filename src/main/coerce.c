@@ -1676,14 +1676,8 @@ SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_TAG(c, install(CHAR(ItemName(names, i))));
 	c = CDR(c);
     }
-    cptr = R_GlobalContext;
-    while (cptr->nextcontext != NULL) {
-        if (cptr->callflag & CTXT_FUNCTION ) {
-		if(cptr->cloenv == rho)
-		   break;
-	}
-    }
-    if( cptr->cloenv == rho )
+    cptr = R_ParentContext(rho);
+    if( cptr != NULL && (cptr->callflag & CTXT_FUNCTION) )
     	call = eval(call, cptr->sysparent);
     else
         error("do.call: couldn't find parent environment");

@@ -2338,7 +2338,7 @@ void GCheckState(DevDesc *dd)
     if(dd->gp.state == 0)
 	error("plot.new has not been called yet");
     if (!dd->gp.valid)
-	onintr();
+	R_SigintHandler(SIGINT);
 }
 
 /*-------------------------------------------------------------------

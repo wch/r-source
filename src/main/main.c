@@ -35,6 +35,8 @@
 #endif
 
 
+static RDISPATCHER R_ToplevelDispatcher;
+
 /* The `real' main() program is in ../<SYSTEM>/system.c */
 /* e.g. ../unix/system.c */
 
@@ -51,7 +53,7 @@
  */
 
 
-static int ParseBrowser(SEXP, SEXP);
+/*static*/ int R_ParseBrowser(SEXP, SEXP);
 
 
 
@@ -169,7 +171,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 	    R_IoBufferReadReset(&R_ConsoleIob);
 	    R_CurrentExpr = R_Parse1Buffer(&R_ConsoleIob, 1, &status);
 	    if (browselevel) {
-		browsevalue = ParseBrowser(R_CurrentExpr, rho);
+		browsevalue = R_ParseBrowser(R_CurrentExpr, rho);
 		if(browsevalue == 1 )
 		    return;
 		if(browsevalue == 2 ) {
@@ -219,7 +221,6 @@ static unsigned char DLLbuf[1024], *DLLbufp;
 void R_ReplDLLinit()
 {
     R_IoBufferInit(&R_ConsoleIob);
-    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
     R_IoBufferWriteReset(&R_ConsoleIob);
     prompt_type = 1;
     DLLbuf[0] = '\0';
@@ -294,22 +295,13 @@ FILE* R_OpenSysInitFile(void);
 FILE* R_OpenSiteFile(void);
 FILE* R_OpenInitFile(void);
 
-#ifdef OLD
-static void R_LoadProfile(FILE *fp)
-#else
 static void R_LoadProfile(FILE *fparg, SEXP env)
-#endif
 {
     FILE * volatile fp = fparg; /* is this needed? */
     if (fp != NULL) {
-	if (! SETJMP(R_Toplevel.cjmpbuf)) {
-	    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-	    signal(SIGINT, onintr);
-#ifdef OLD
-	    R_ReplFile(fp, R_NilValue, 0, 0);
-#else
+	if (! SETJMP(R_ToplevelDispatcher.cjmpbuf)) {
+	    signal(SIGINT, R_SigintHandler);
 	    R_ReplFile(fp, env, 0, 0);
-#endif
 	}
 	fclose(fp);
     }
@@ -365,24 +357,21 @@ void setup_Rmainloop(void)
     InitArithmetic();
     InitColors();
     InitGraphics();
+    R_InitThreads();
     R_Is_Running = 1;
     
+    R_SigintHandler = onintr;
+
     /* gc_inhibit_torture = 0; */
 
-    /* Initialize the global context for error handling. */
-    /* This provides a target for any non-local gotos */
-    /* which occur during error handling */
-
-    R_Toplevel.nextcontext = NULL;
-    R_Toplevel.callflag = CTXT_TOPLEVEL;
-    R_Toplevel.cstacktop = 0;
-    R_Toplevel.promargs = R_NilValue;
-    R_Toplevel.call = R_NilValue;
-    R_Toplevel.cloenv = R_NilValue;
-    R_Toplevel.sysparent = R_NilValue;
-    R_Toplevel.conexit = R_NilValue;
-    R_Toplevel.cend = NULL;
-    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
+    /* Initialize the global context for error handling.  This
+      provides a target for any non-local gotos which occur during
+      error handling.  The matching endcontext should appear just
+      before the call to exit() that terminates the process.  */
+    R_Dispatcher = NULL;
+    R_BeginDispatcher(&R_ToplevelDispatcher);
+    begincontext(CTXT_TOPLEVEL, R_NilValue, R_NilValue,
+		 R_NilValue, R_NilValue);
 
     R_Warnings = R_NilValue;
 
@@ -397,16 +386,12 @@ void setup_Rmainloop(void)
 	R_Suicide("unable to open the base package\n");
     }
 
-    doneit = 0;
-    SETJMP(R_Toplevel.cjmpbuf);
-    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-    signal(SIGINT, onintr);
+    doneit = SETJMP(R_ToplevelDispatcher.cjmpbuf);
+    signal(SIGINT, R_SigintHandler);
     signal(SIGUSR1,onsigusr1);
     signal(SIGUSR2,onsigusr2);
-    if (!doneit) {
-	doneit = 1;
+    if (! doneit)
 	R_ReplFile(fp, R_NilValue, 0, 0);
-    }
     fclose(fp);
 
     /* This is where we source the system-wide, the site's and the
@@ -425,29 +410,23 @@ void setup_Rmainloop(void)
        or dropped on the application.
     */
 
-    doneit = 0;
-    SETJMP(R_Toplevel.cjmpbuf);
-    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-    signal(SIGINT, onintr);
+    doneit = SETJMP(R_ToplevelDispatcher.cjmpbuf);
+    signal(SIGINT, R_SigintHandler);
     signal(SIGUSR1,onsigusr1);
     signal(SIGUSR2,onsigusr2);
-    if (!doneit) {
-	doneit = 1;
+    if (! doneit)
 	R_InitialData();
-    }
     else
-    	R_Suicide("unable to restore saved data\n (remove .RData or increase memory)\n");
+    	R_Suicide("unable to restore saved data\n"
+		  " (remove .RData or increase memory)\n");
 
     /* Initial Loading is done.
        At this point we try to invoke the .First Function.
        If there is an error we continue. */
 
-    doneit = 0;
-    SETJMP(R_Toplevel.cjmpbuf);
-    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-    signal(SIGINT, onintr);
-    if (!doneit) {
-	doneit = 1;
+    doneit = SETJMP(R_ToplevelDispatcher.cjmpbuf);
+    signal(SIGINT, R_SigintHandler);
+    if (! doneit) {
 	PROTECT(cmd = install(".First"));
 	R_CurrentExpr = findVar(cmd, R_GlobalEnv);
 	if (R_CurrentExpr != R_UnboundValue &&
@@ -469,20 +448,26 @@ void end_Rmainloop(void)
     R_CleanUp(SA_DEFAULT, 0, 1);
 }
 
+void R_ThreadMain(void);
 
+void R_DefaultMainFun(void)
+{
+    R_ReplConsole(R_GlobalEnv, 0, 0);
+}
+    
 void run_Rmainloop(void)
 {
     /* Here is the real R read-eval-loop. */
     /* We handle the console until end-of-file. */
 
     R_IoBufferInit(&R_ConsoleIob);
-    SETJMP(R_Toplevel.cjmpbuf);
-    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
-    signal(SIGINT, onintr);
+    SETJMP(R_ToplevelDispatcher.cjmpbuf);
+    signal(SIGINT, R_SigintHandler);
     signal(SIGUSR1,onsigusr1);
     signal(SIGUSR2,onsigusr2);
 
-    R_ReplConsole(R_GlobalEnv, 0, 0);
+    R_ThreadMain();
+
     end_Rmainloop(); /* must go here */
 }
 
@@ -514,7 +499,7 @@ static void printwhere(void)
   Rprintf("\n");
 }
 
-static int ParseBrowser(SEXP CExpr, SEXP rho)
+/*static*/ int R_ParseBrowser(SEXP CExpr, SEXP rho)
 {
     int rval=0;
     if (isSymbol(CExpr)) {
@@ -531,18 +516,20 @@ static int ParseBrowser(SEXP CExpr, SEXP rho)
 	    SET_DEBUG(rho, 0);
 	}
 	if (!strcmp(CHAR(PRINTNAME(CExpr)),"Q")) {
+	    RCNTXT *top = R_ToplevelContext();
 
 	    /* Run onexit/cend code for everything above the target.
                The browser context is still on the stack, so any error
                will drop us back to the current browser.  */
-	    R_run_onexits(R_ToplevelContext);
+	    R_run_onexits(top);
 
 	    /* this is really dynamic state that should be managed as such */
 	    R_BrowseLevel = 0;
 
-	    R_restore_globals(R_ToplevelContext);
-	    R_GlobalContext = R_ToplevelContext;
-            LONGJMP(R_ToplevelContext->cjmpbuf, CTXT_TOPLEVEL);
+	    R_restore_globals(top);
+	    R_SetGlobalContext(top);
+	    R_Dispatcher = R_GlobalContext->dispatcher;
+            LONGJMP(R_Dispatcher->cjmpbuf, CTXT_TOPLEVEL);
 	}
 	if (!strcmp(CHAR(PRINTNAME(CExpr)),"where")) {
 	    printwhere();
@@ -563,9 +550,7 @@ static void browser_cend(void *data)
 
 SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    RCNTXT *saveToplevelContext;
-    RCNTXT *saveGlobalContext;
-    RCNTXT thiscontext, returncontext, *cptr;
+    RDISPATCHER return_disp, restart_disp;
     int savestack;
     int savebrowselevel;
     SEXP topExp;
@@ -576,13 +561,9 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     savebrowselevel = R_BrowseLevel + 1;
     savestack = R_PPStackTop;
     PROTECT(topExp = R_CurrentExpr);
-    saveToplevelContext = R_ToplevelContext;
-    saveGlobalContext = R_GlobalContext;
 
     if (!DEBUG(rho)) {
-	cptr=R_GlobalContext;
-	while ( !(cptr->callflag & CTXT_FUNCTION) && cptr->callflag )
-	    cptr = cptr->nextcontext;
+	RCNTXT *cptr=R_ParentContext(rho);
 	Rprintf("Called from: ");
 	PrintValueRec(cptr->call,rho);
     }
@@ -595,35 +576,32 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* browser prompt.  The (optional) second one */
     /* acts as a target for error returns. */
 
-    begincontext(&returncontext, CTXT_BROWSER, call, rho,
-		 R_NilValue, R_NilValue);
-    returncontext.cend = browser_cend;
-    returncontext.cenddata = &savebrowselevel;
-    if (!SETJMP(returncontext.cjmpbuf)) {
-	begincontext(&thiscontext, CTXT_RESTART, R_NilValue, rho,
-		     R_NilValue, R_NilValue);
-	if (SETJMP(thiscontext.cjmpbuf)) {
-	    SET_RESTART_BIT_ON(thiscontext.callflag);
+    R_BeginDispatcher(&return_disp);
+    begincontext(CTXT_BROWSER, call, rho, R_NilValue, R_NilValue);
+    R_GlobalContext->cend = browser_cend;
+    R_GlobalContext->cenddata = &savebrowselevel;
+    if (!SETJMP(return_disp.cjmpbuf)) {
+	R_BeginDispatcher(&restart_disp);
+	begincontext(CTXT_RESTART, R_NilValue, rho, R_NilValue, R_NilValue);
+	if (SETJMP(restart_disp.cjmpbuf)) {
+	    SET_RESTART_BIT_ON(R_GlobalContext->callflag);
 	    R_ReturnedValue = R_NilValue;
 	    R_Visible = 0;
 	}
-	R_GlobalContext = &thiscontext;
-	signal(SIGINT, onintr);
 	R_BrowseLevel = savebrowselevel;
-        signal(SIGINT, onintr);
+        signal(SIGINT, R_SigintHandler);
 	R_ReplConsole(rho, savestack, R_BrowseLevel);
-	endcontext(&thiscontext);
+	endcontext();
+	R_EndDispatcher(&restart_disp);
     }
-    endcontext(&returncontext);
+    endcontext();
+    R_EndDispatcher(&return_disp);
 
     /* Reset the interpreter state. */
-
     R_CurrentExpr = topExp;
     UNPROTECT(1);
     R_PPStackTop = savestack;
     R_CurrentExpr = topExp;
-    R_ToplevelContext = saveToplevelContext;
-    R_GlobalContext = saveGlobalContext;
     R_BrowseLevel--;
     return R_ReturnedValue;
 }
@@ -635,7 +613,7 @@ void R_dot_Last(void)
     /* Run the .Last function. */
     /* Errors here should kick us back into the repl. */
 
-    R_GlobalContext = R_ToplevelContext = &R_Toplevel;
+    R_SetGlobalContext(R_ToplevelContext());
     PROTECT(cmd = install(".Last"));
     R_CurrentExpr = findVar(cmd, R_GlobalEnv);
     if (R_CurrentExpr != R_UnboundValue && TYPEOF(R_CurrentExpr) == CLOSXP) {

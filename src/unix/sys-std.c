@@ -239,6 +239,49 @@ static InputHandler* waitForActivity()
     return(getSelectedHandler(R_InputHandlers, &readMask));
 }
 
+Rboolean R_HandlerInputAvailable(SEXP data)
+{
+    int maxfd;
+    fd_set readMask;
+    struct timeval tv = { 0, 0 };
+
+    maxfd = setSelectMask(R_InputHandlers, &readMask);
+    FD_CLR(fileno(stdin), &readMask);
+    return select(maxfd+1, &readMask, NULL, NULL, &tv);
+}
+
+void R_HandlerPrepareToSleep(R_fd_set_t fds, SEXP data)
+{
+    fd_set readMask;
+    int i, maxfd;
+
+    maxfd = setSelectMask(R_InputHandlers, &readMask);
+    for (i = 0; i < maxfd + 1; i++)
+	if (FD_ISSET(i, &readMask) && i != fileno(stdin))
+	    R_fd_set(i, fds);
+}
+
+void R_HandleHandlerInput(void)
+{
+    int maxfd;
+    fd_set readMask;
+    struct timeval tv = { 0, 0 };
+
+    R_PolledEvents();
+    tv.tv_sec = 0;
+    tv.tv_usec = R_wait_usec;
+    maxfd = setSelectMask(R_InputHandlers, &readMask);
+    FD_CLR(fileno(stdin), &readMask);
+
+    if  (select(maxfd+1, &readMask, NULL, NULL, &tv)) {
+	InputHandler *what = getSelectedHandler(R_InputHandlers, &readMask);
+	if (what != NULL)
+	    what->handler(NULL);
+    }
+    
+}
+
+    
 /*
   Create the mask representing the file descriptors select() should
   monitor and return the maximum of these file descriptors so that
@@ -333,6 +376,27 @@ static void readline_handler(char *line)
     }
     readline_gotaline = 1;
 }
+
+void R_StartReadline(char *prompt, unsigned char *buf, int len, int addtohist)
+{
+    readline_gotaline = 0;
+    readline_buf = buf;
+    readline_addtohistory = addtohist;
+    readline_len = len;
+    readline_eof = 0;
+    rl_callback_handler_install(prompt, readline_handler);
+}
+
+R_readline_status_t R_ReadlineReadOneChar(void)
+{
+    rl_callback_read_char();
+    if (readline_eof)
+	return R_readline_eof;
+    else if (readline_gotaline)
+	return R_readline_gotaline;
+    else
+	return R_readline_incomplete;
+}    
 #endif
 
 	/* Fill a text buffer from stdin or with user typed console input. */
@@ -363,14 +427,8 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
     }
     else {
 #ifdef HAVE_LIBREADLINE
-	if (UsingReadline) {
-	    readline_gotaline = 0;
-	    readline_buf = buf;
-	    readline_addtohistory = addtohistory;
-	    readline_len = len;
-	    readline_eof = 0;
-	    rl_callback_handler_install(prompt, readline_handler);
-	}
+	if (UsingReadline)
+	    R_StartReadline(prompt, buf, len, addtohistory);
 	else
 #endif
 	{
@@ -388,11 +446,11 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
   	        /* We could make this a regular handler, but we need to pass additional arguments. */
 #ifdef HAVE_LIBREADLINE
 		    if (UsingReadline) {
-			rl_callback_read_char();
-			if (readline_eof)
-			    return 0;
-			if (readline_gotaline)
-			    return 1;
+			switch(R_ReadlineReadOneChar()) {
+			case R_readline_eof: return 0;
+			case R_readline_gotaline: return 1;
+			default: break;
+			}
 		    }
 		    else
 #endif

@@ -227,16 +227,16 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "invalid device");
 
     /* set up a context which will close the window if there is an error */
-    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
+    begincontext(CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
 		 R_NilValue);
-    cntxt.cend = &de_closewin_cend;
-    cntxt.cenddata = NULL;
+    R_GlobalContext->cend = &de_closewin_cend;
+    R_GlobalContext->cenddata = NULL;
 
     highlightrect();
 
     eventloop();
 
-    endcontext(&cntxt);
+    endcontext();
 
     /* drop out unused columns */
     i = 0;

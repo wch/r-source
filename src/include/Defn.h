@@ -171,6 +171,14 @@
 /* These are the built-in R functions. */
 typedef SEXP (*CCODE)();
 
+/* Type definitions for the non-recursive evaluator */
+typedef struct R_code_st *R_code_t;
+struct R_code_st {
+    int entry;
+    R_code_t (*fun)(R_code_t);
+};
+typedef R_code_t (*CCODE_NR)(SEXP, SEXP, SEXP, SEXP, R_code_t);
+
 /* Information for Deparsing Expressions */
 typedef enum {
     PP_ASSIGN   =  1,
@@ -204,6 +212,7 @@ typedef struct {
     int	   eval;     /* evaluate args? */
     int	   arity;    /* function arity */
     PPinfo gram;     /* pretty-print info */
+    CCODE_NR cfun_nr;  /* c-code address for non-recursive version */
 } FUNTAB;
 
 #ifdef USE_RINTERNALS
@@ -222,6 +231,7 @@ typedef struct {
 #define PRIMARITY(x)	(R_FunTab[(x)->u.primsxp.offset].arity)
 #define PPINFO(x)	(R_FunTab[(x)->u.primsxp.offset].gram)
 #define PRIMPRINT(x)	(((R_FunTab[(x)->u.primsxp.offset].eval)/100)%10)
+#define PRIMFUN_NR(x)	(R_FunTab[(x)->u.primsxp.offset].cfun_nr)
 
 /* Promise Access Macros */
 #define PREXPR(x)	((x)->u.promsxp.expr)
@@ -267,10 +277,16 @@ typedef struct VECREC *VECP;
 #endif
 
 /* Evaluation Context Structure */
+typedef struct RDISPATCHER {
+    JMP_BUF cjmpbuf;
+    int level;
+    struct RDISPATCHER *next;
+} RDISPATCHER, *R_dispatcher_t;
+
 typedef struct RCNTXT {
     struct RCNTXT *nextcontext;	/* The next context up the chain */
     int callflag;		/* The context "type" */
-    JMP_BUF cjmpbuf;		/* C stack and register information */
+    R_dispatcher_t dispatcher;	/* C stack and register information */
     int cstacktop;		/* Top of the pointer protection stack */
     int evaldepth;	        /* evaluation depth at inception */
     SEXP promargs;		/* Promises supplied to closure */
@@ -281,6 +297,9 @@ typedef struct RCNTXT {
     void (*cend)(void *);	/* C "on.exit" thunk */
     void *cenddata;		/* data for C "on.exit" thunk */
     char *vmax;		        /* top of R_alloc stack */
+    SEXP curenv;		/* the current environment */
+    SEXP frame;			/* the furrent frame pointer */
+    R_code_t contcode;		/* continuation code for loops and closures */
 } RCNTXT, *context;
 
 /* The Various Context Types.
@@ -390,6 +409,9 @@ FUNTAB	R_FunTab[];	    /* Built in functions */
 /* extern int	errno; already have errno.h ! */
 extern int	gc_inhibit_torture INI_as(1);
 
+extern Rboolean R_interrupts_suspended INI_as(FALSE);
+extern Rboolean R_interrupt_pending INI_as(FALSE);
+
 /* R Home Directory */
 extern char*	R_Home;		    /* Root of the R tree */
 
@@ -408,18 +430,21 @@ extern SEXP*	R_PPStack;	    /* The pointer protection stack */
 
 /* Evaluation Environment */
 extern SEXP	R_CurrentExpr;	    /* Currently evaluating expression */
-extern SEXP	R_ReturnedValue;    /* Slot for return-ing values */
+#define R_ReturnedValue (R_ThreadContext->value)
 extern SEXP*	R_SymbolTable;	    /* The symbol table */
-extern RCNTXT	R_Toplevel;	    /* Storage for the toplevel environment */
-extern RCNTXT*	R_ToplevelContext;  /* The toplevel environment */
-extern RCNTXT*	R_GlobalContext;    /* The global environment */
-extern int	R_Visible;	    /* Value visibility flag */
-extern int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */
-extern int	R_EvalCount	INI_as(0);	/* Evaluation count */
-extern int	R_BrowseLevel	INI_as(0);	/* how deep the browser is */
+#define R_GlobalContext (R_ThreadContext->global_context)
+#define R_SetGlobalContext(c) (R_GlobalContext = (c))
+extern RDISPATCHER* R_Dispatcher;   /* The current dispatcher */
+#define R_Visible (R_ThreadContext->visible)
+#define	R_EvalDepth (R_ThreadContext->eval_depth)
+#define R_EvalCount (R_ThreadContext->eval_count)
+#define R_BrowseLevel (R_ThreadContext->browse_level)
 
 extern int	R_Expressions	INI_as(500);	/* options(expressions) */
 extern Rboolean	R_KeepSource	INI_as(FALSE);	/* options(keep.source) */
+
+#define R_CurrentEnv (R_ThreadContext->current_env)
+#define R_EvalFrame (R_ThreadContext->eval_frame)
 
 /* File Input/Output */
 extern Rboolean	R_Interactive	INI_as(TRUE);	/* TRUE during interactive use*/
@@ -447,13 +472,25 @@ extern int	R_HistorySize;	/* Size of the history file */
 extern int	R_RestoreHistory;	/* restore the history file? */
 
 /* Warnings/Errors */
-extern int	R_CollectWarnings INI_as(0);	/* the number of warnings */
-extern SEXP	R_Warnings;	    /* the warnings and their calls */
+#define R_ERRBUFSIZE 8192
+#define R_CollectWarnings (R_ThreadContext->collect_warnings)
+#define R_Warnings (R_ThreadContext->warnings)
+#define R_errbuf (R_ThreadContext->errbuf)
 extern int	R_ShowErrorMessages INI_as(1);	/* show error messages? */
 
 /* GUI type */
 
 extern char*	R_GUIType	INI_as("unknown");
+
+/* Threading */
+
+extern Rboolean R_threads_enabled       INI_as(FALSE);
+extern Rboolean R_preemptive_scheduling INI_as(FALSE);
+extern SEXP     R_ThreadTag             INI_as(NULL);
+extern SEXP     R_MutexTag              INI_as(NULL);
+extern SEXP     R_CondvarTag            INI_as(NULL);
+
+extern void     (*R_SigintHandler)(int) INI_as(SIG_DFL);
 
 #ifdef __MAIN__
 #undef extern
@@ -572,7 +609,9 @@ Rboolean R_HiddenFile(char*);
 
 /* Other Internally Used Functions */
 
-void begincontext(RCNTXT*, int, SEXP, SEXP, SEXP, SEXP);
+R_code_t R_applyMethod_nr(SEXP, SEXP, SEXP, SEXP, SEXP, Rboolean, R_code_t);
+void begincontext(int, SEXP, SEXP, SEXP, SEXP);
+void R_BeginDispatcher(R_dispatcher_t);
 void checkArity(SEXP, SEXP);
 void CheckFormals(SEXP);
 void CleanEd(void);
@@ -584,10 +623,12 @@ int DispatchOrEval(SEXP, char*, SEXP, SEXP, SEXP*, int);
 int DispatchGroup(char*, SEXP,SEXP,SEXP,SEXP,SEXP*);
 SEXP duplicated(SEXP);
 SEXP dynamicfindVar(SEXP, RCNTXT*);
-void endcontext(RCNTXT*);
+void endcontext();
+void R_EndDispatcher(R_dispatcher_t);
 int factorsConform(SEXP, SEXP);
 SEXP FetchMethod(char *, char *, SEXP);
 void findcontext(int, SEXP, SEXP);
+R_code_t R_findcontext_nr(int, SEXP, SEXP);
 SEXP findVar1(SEXP, SEXP, SEXPTYPE, int);
 SEXP findVarLocInFrame(SEXP, SEXP);
 void FrameClassFix(SEXP);
@@ -628,10 +669,11 @@ SEXP mkQUOTE(SEXP);
 SEXP mkSYMSXP(SEXP, SEXP);
 SEXP mkTrue(void);
 SEXP NewEnvironment(SEXP, SEXP, SEXP);
-void onintr();
+void onintr(int);
 void onsigusr1();
 void onsigusr2();
 int OneIndex(SEXP, SEXP, int, int, SEXP*);
+RCNTXT *R_ParentContext(SEXP);
 SEXP parse(FILE*, int);
 void PrintGreeting(void);
 void PrintVersion(char *);
@@ -663,6 +705,7 @@ SEXP R_syscall(int,RCNTXT*);
 int R_sysparent(int,RCNTXT*);
 SEXP R_sysframe(int,RCNTXT*);
 SEXP R_sysfunction(int,RCNTXT*);
+RCNTXT* R_ToplevelContext(void);
 Rboolean tsConform(SEXP,SEXP);
 SEXP tspgets(SEXP, SEXP);
 SEXP type2str(SEXPTYPE);
@@ -695,6 +738,7 @@ void yyprompt(char *format, ...);
 int yywrap(void);
 
 /* Macros for suspending interrupts */
+#ifdef DODO
 #ifdef HAVE_POSIX_SETJMP
 #define BEGIN_SUSPEND_INTERRUPTS do { \
     sigset_t mask, omask; \
@@ -707,7 +751,100 @@ int yywrap(void);
 #define BEGIN_SUSPEND_INTERRUPTS do {
 #define END_SUSPEND_INTERRUPTS } while (0)
 #endif
+#else
+#define BEGIN_SUSPEND_INTERRUPTS do { \
+    Rboolean __oldsusp__ = R_interrupts_suspended; \
+    R_interrupts_suspended = TRUE;
+#define END_SUSPEND_INTERRUPTS R_interrupts_suspended = __oldsusp__; \
+    if (R_interrupt_pending && ! R_interrupts_suspended) { \
+        R_interrupt_pending = FALSE; \
+        raise(SIGINT); \
+    } \
+} while(0)
+#endif
 
+
+/* Non-recursive evaluation support */
+R_code_t R_eval_nr(SEXP, R_code_t);
+void R_run_dispatcher(R_code_t);
+
+#define EVAL_FRAME_VAR0() EXTPTR_TAG(R_EvalFrame)  /* TAG of CONS */
+#define SET_EVAL_FRAME_VAR0(v) SET_TAG(R_EvalFrame, v)
+#define EVAL_FRAME_VAR1() EXTPTR_PROT(R_EvalFrame) /* CDR of CONS */
+#define SET_EVAL_FRAME_VAR1(v) SETCDR(R_EvalFrame, v)
+#define EVAL_FRAME_CODE() ((R_code_t) EXTPTR_PTR((R_EvalFrame)))
+#define POP_EVAL_FRAME() (R_EvalFrame = ATTRIB(R_EvalFrame))
+#define PUSH_EVAL_FRAME(c,v0,v1) do { \
+    SEXP __v0__, __v1__; \
+    SEXP __frame__; \
+    PROTECT(__v0__ = (v0)); \
+    PROTECT(__v1__ = (v1)); \
+    __frame__ = R_MakeExternalPtr(c, __v0__, __v1__); \
+    SET_ATTRIB(__frame__, R_EvalFrame); \
+    R_EvalFrame = __frame__; \
+    UNPROTECT(2); \
+} while (0)
+
+#define DECLARE_CONTINUATION(cont, func) \
+    static R_code_t func(R_code_t); \
+    static struct R_code_st cont##_struct = { 0, func }; \
+    static R_code_t cont = &cont##_struct
+
+
+/* Blocking IO functions and data types */
+typedef struct R_fd_set_st *R_fd_set_t;
+typedef int R_fd_t; /**** OK for UNIX--need something else for Windows */
+
+void R_init_fd_set(R_fd_set_t);
+void R_fd_set(R_fd_t, R_fd_set_t);
+
+/* Readline interface for console readers */
+#ifdef HAVE_LIBREADLINE
+typedef enum {
+    R_readline_eof,
+    R_readline_gotaline,
+    R_readline_incomplete
+} R_readline_status_t;
+
+void R_StartReadline(char *, unsigned char *, int, int);
+R_readline_status_t R_ReadlineReadOneChar(void);
+#endif
+
+/* thread macros, data, and functions */
+#define R_CNTXTSTACKSIZE 1000
+#define R_DEFAULT_THREAD_QUANTUM 5000
+
+#define R_THREAD_VALUE(t) VECTOR_ELT(EXTPTR_PROT(t), 1)
+#define R_THREAD_NAME(t) VECTOR_ELT(EXTPTR_PROT(t), 2)
+#define R_SET_THREAD_NAME(t, v) SET_VECTOR_ELT(EXTPTR_PROT(t), 2, v)
+#define R_THREAD_CONTEXT(t) ((R_thread_context_t) R_ExternalPtrAddr(t))
+
+typedef struct R_thread_context_st *R_thread_context_t;
+struct R_thread_context_st {
+    RCNTXT *global_context, context_stack[R_CNTXTSTACKSIZE];
+    size_t context_stack_size;
+    R_thread_state_t state;
+    R_thread_context_t next_context, prev_context;
+    SEXP ref, prot, value, current_env, eval_frame, warnings, iodata;
+    int visible, eval_depth, eval_count, browse_level, collect_warnings;
+    int quantum;
+    double wakeup;
+    Rboolean (*ioready)(SEXP);
+    void (*ioprepsleep)(R_fd_set_t, SEXP);
+    char errbuf[R_ERRBUFSIZE];
+    SEXP wait_object;
+    R_thread_context_t wait_next, join;
+};
+
+extern R_thread_context_t R_ThreadContext;    /* current thread context */
+
+void R_InitThreads(void);
+R_thread_context_t R_MakeThreadContext(R_thread_state_t, SEXP);
+R_thread_context_t R_ActiveThreads(void);
+void R_DeactivateThread(R_thread_context_t);
+
+RCNTXT *R_PushThreadGlobalContext(R_thread_context_t);
+void R_SetThreadGlobalContext(R_thread_context_t, RCNTXT *);
 #endif /* DEFN_H_ */
 /*
  *- Local Variables:

@@ -31,18 +31,7 @@
    two lines */
 #define LONGCALL 30
 
-/* This is now non-static so that other applications that link or load libR.so
-   can override it by defining their own version and hence by-pass the longjmp
-   back into the standard R event loop.
- */
-void jump_now();
-/*
-  Method that resets the global state of the evaluator in the event
-  of an error. Was in jump_now(), but is now a separate method so that
-  we can call it without invoking the longjmp. This is needed when embedding
-  R in other applications.
-*/
-void Rf_resetStack(int topLevel);
+static void jump_now();
 
 /*
 Different values of inError are used to indicate different places
@@ -67,10 +56,15 @@ static int inWarning = 0;
 */
 
 
-void onintr()
+void onintr(int sig)
 {
-    REprintf("\n");
-    jump_to_toplevel();
+    signal(sig, R_SigintHandler);
+    if (R_interrupts_suspended)
+	R_interrupt_pending = TRUE;
+    else {
+	REprintf("\n");
+	jump_to_toplevel();
+    }
 }
 
 /* SIGUSR1: save and quit
@@ -155,14 +149,13 @@ static int Rvsnprintf(char *buf, size_t size, const char  *format, va_list ap)
     return val;
 }
 
-#define BUFSIZE 8192
 void warning(const char *format, ...)
 {
-    char buf[BUFSIZE], *p;
+    char buf[R_ERRBUFSIZE], *p;
 
     va_list(ap);
     va_start(ap, format);
-    Rvsnprintf(buf, BUFSIZE, format, ap);
+    Rvsnprintf(buf, R_ERRBUFSIZE, format, ap);
     va_end(ap);
     p = buf + strlen(buf) - 1;
     if(strlen(buf) > 0 && *p == '\n') *p = '\0';
@@ -176,13 +169,13 @@ void warningcall(SEXP call, const char *format, ...)
 {
     int w;
     SEXP names, s;
-    char *dcall, buf[BUFSIZE];
+    char *dcall, buf[R_ERRBUFSIZE];
     RCNTXT *cptr;
 
     if (R_WarningHook != NULL) {
 	va_list(ap);
 	va_start(ap, format);
-	Rvsnprintf(buf, BUFSIZE, format, ap);
+	Rvsnprintf(buf, R_ERRBUFSIZE, format, ap);
 	va_end(ap);
 	R_WarningHook(call, buf);
 	return;
@@ -212,7 +205,7 @@ void warningcall(SEXP call, const char *format, ...)
     if(w >= 2) { /* make it an error */
 	va_list(ap);
 	va_start(ap, format);
-	Rvsnprintf(buf, BUFSIZE, format, ap);
+	Rvsnprintf(buf, R_ERRBUFSIZE, format, ap);
 	va_end(ap);
 	errorcall(call, "(converted from warning) %s", buf);
     }
@@ -238,7 +231,7 @@ void warningcall(SEXP call, const char *format, ...)
 	if( R_CollectWarnings > 49 )
 	    return;
 	SET_VECTOR_ELT(R_Warnings, R_CollectWarnings, call);
-	Rvsnprintf(buf, BUFSIZE, format, ap);
+	Rvsnprintf(buf, R_ERRBUFSIZE, format, ap);
 	va_end(ap);
 	names = CAR(ATTRIB(R_Warnings));
 	SET_STRING_ELT(names, R_CollectWarnings++, mkChar(buf));
@@ -297,7 +290,6 @@ void PrintWarnings(void)
     return;
 }
 
-static char errbuf[BUFSIZE];
 
 /* temporary hook to allow experimenting with alternate error mechanisms */
 static void (*R_ErrorHook)(SEXP, char *) = NULL;
@@ -309,11 +301,11 @@ void errorcall(SEXP call, const char *format,...)
     va_list(ap);
 
     if (R_ErrorHook != NULL) {
-	char buf[BUFSIZE];
+	char buf[R_ERRBUFSIZE];
 	void (*hook)(SEXP, char *) = R_ErrorHook;
 	R_ErrorHook = NULL; /* to avoid recursion */
 	va_start(ap, format);
-	Rvsnprintf(buf, BUFSIZE, format, ap);
+	Rvsnprintf(buf, R_ERRBUFSIZE, format, ap);
 	va_end(ap);
 	hook(call, buf);
     }
@@ -325,9 +317,9 @@ void errorcall(SEXP call, const char *format,...)
 	    /* this does NOT try to print the call since that could
                cause a cascade of error calls */
 	    va_start(ap, format);
-	    Rvsnprintf(errbuf, sizeof(errbuf), format, ap);
+	    Rvsnprintf(R_errbuf, sizeof(R_errbuf), format, ap);
 	    va_end(ap);
-	    REprintf("%s\n", errbuf);
+	    REprintf("%s\n", R_errbuf);
 	}
 	jump_now();
     }
@@ -340,23 +332,23 @@ void errorcall(SEXP call, const char *format,...)
 
 	inError = 1;
 	dcall = CHAR(STRING_ELT(deparse1(call, 0), 0));
-	if (strlen(dcall) + len < BUFSIZE) {
-	    sprintf(errbuf, "%s%s%s", head, dcall, mid);
-	    if (strlen(dcall) > LONGCALL) strcat(errbuf, tail);
+	if (strlen(dcall) + len < R_ERRBUFSIZE) {
+	    sprintf(R_errbuf, "%s%s%s", head, dcall, mid);
+	    if (strlen(dcall) > LONGCALL) strcat(R_errbuf, tail);
 	}
 	else
-	    sprintf(errbuf, "Error: ");
+	    sprintf(R_errbuf, "Error: ");
     }
     else
-	sprintf(errbuf, "Error: ");
+	sprintf(R_errbuf, "Error: ");
 
-    p = errbuf + strlen(errbuf);
+    p = R_errbuf + strlen(R_errbuf);
     va_start(ap, format);
-    Rvsnprintf(p, BUFSIZE - strlen(errbuf), format, ap);
+    Rvsnprintf(p, R_ERRBUFSIZE - strlen(R_errbuf), format, ap);
     va_end(ap);
-    p = errbuf + strlen(errbuf) - 1;
-    if(*p != '\n') strcat(errbuf, "\n");
-    if (R_ShowErrorMessages) REprintf("%s", errbuf);
+    p = R_errbuf + strlen(R_errbuf) - 1;
+    if(*p != '\n') strcat(R_errbuf, "\n");
+    if (R_ShowErrorMessages) REprintf("%s", R_errbuf);
     jump_to_toplevel();
 }
 
@@ -366,18 +358,18 @@ SEXP do_geterrmessage(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     PROTECT(res = allocVector(STRSXP, 1));
-    SET_STRING_ELT(res, 0, mkChar(errbuf));
+    SET_STRING_ELT(res, 0, mkChar(R_errbuf));
     UNPROTECT(1);
     return res;
 }
 
 void error(const char *format, ...)
 {
-    char buf[BUFSIZE];
+    char buf[R_ERRBUFSIZE];
 
     va_list(ap);
     va_start(ap, format);
-    Rvsnprintf(buf, BUFSIZE, format, ap);
+    Rvsnprintf(buf, R_ERRBUFSIZE, format, ap);
     va_end(ap);
     errorcall(R_GlobalContext->call, "%s", buf);
 }
@@ -481,7 +473,7 @@ void jump_now()
 	if (c->callflag == CTXT_TOPLEVEL)
 	    break;
     }
-    /* at this point we should have c == R_TopLevelContext */
+    /* at this point we should have c == R_TopLevelContext() */
 
     /* Run onexit/cend code for all contexts down to but not including
        the jump target.  Ordinarily this will already have been done,
@@ -494,22 +486,9 @@ void jump_now()
        to do is arrange execute exit *after* the LONGJMP, but that
        requires a more extensive redesign of the non-local transfer of
        control mechanism.  LT. */
-    R_run_onexits(R_ToplevelContext);
+    R_run_onexits(c);
 
-    Rf_resetStack(0);
-    LONGJMP(R_ToplevelContext->cjmpbuf, 0);
-}
-
-
-/*
- The topLevelReset argument controls whether the R_GlobalContext is 
- reset to its initial condition.
- In regular stand-alone R, this is not needed (see jump_now() above).
- But when R is embedded in an application, this must be set or otherwise
- subsequent errors get caught in an infinite loop when iterating over
- the contexts in the error handling routine jump_to_toplevel() above.
-*/
-void Rf_resetStack(int topLevelReset) {
+    /* reset error handling state */
     if( inError == 2 )
 	REprintf("Lost warning messages\n");
     inError=0;
@@ -517,11 +496,13 @@ void Rf_resetStack(int topLevelReset) {
     R_Warnings = R_NilValue;
     R_CollectWarnings = 0;
 
-    R_restore_globals(R_ToplevelContext);
+    R_restore_globals(c);
+    R_SetGlobalContext(c);
+    R_Dispatcher = R_GlobalContext->dispatcher;
+    LONGJMP(R_Dispatcher->cjmpbuf, 0);
+}
 
-    if(topLevelReset) {
-        R_GlobalContext = R_ToplevelContext;
-    }
+static void Rf_resetStack() {
 }
 
 #ifdef OLD_Macintosh
@@ -635,7 +616,7 @@ WarningDB[] = {
 void ErrorMessage(SEXP call, int which_error, ...)
 {
     int i;
-    char buf[BUFSIZE];
+    char buf[R_ERRBUFSIZE];
     va_list(ap);
 
     i = 0;
@@ -646,7 +627,7 @@ void ErrorMessage(SEXP call, int which_error, ...)
     }
 
     va_start(ap, which_error);
-    Rvsnprintf(buf, BUFSIZE, ErrorDB[i].format, ap);
+    Rvsnprintf(buf, R_ERRBUFSIZE, ErrorDB[i].format, ap);
     va_end(ap);
     errorcall(call, "%s", buf);
 }
@@ -654,7 +635,7 @@ void ErrorMessage(SEXP call, int which_error, ...)
 void WarningMessage(SEXP call, R_WARNING which_warn, ...)
 {
     int i;
-    char buf[BUFSIZE];
+    char buf[R_ERRBUFSIZE];
     va_list(ap);
 
     i = 0;
@@ -665,7 +646,7 @@ void WarningMessage(SEXP call, R_WARNING which_warn, ...)
     }
 
     va_start(ap, which_warn);
-    Rvsnprintf(buf, BUFSIZE, WarningDB[i].format, ap);
+    Rvsnprintf(buf, R_ERRBUFSIZE, WarningDB[i].format, ap);
     va_end(ap);
     warningcall(call, "%s", buf);
 }
@@ -722,21 +703,20 @@ void R_JumpToToplevel(Rboolean restart)
 	else if (c->callflag == CTXT_TOPLEVEL)
 	    break;
     }
-    if (c != R_ToplevelContext)
-	warning("top level inconsistency?");
 
     /* Run onexit/cend code for everything above the target. */
     R_run_onexits(c);
 
     R_restore_globals(c);
-    R_ToplevelContext = R_GlobalContext = c;
-    LONGJMP(c->cjmpbuf, CTXT_TOPLEVEL);
+    R_SetGlobalContext(c);
+    R_Dispatcher = c->dispatcher;
+    LONGJMP(R_Dispatcher->cjmpbuf, CTXT_TOPLEVEL);
 }
 
 void R_SetErrmessage(char *s)
 {
-    strncpy(errbuf, s, sizeof(errbuf));
-    errbuf[sizeof(errbuf) - 1] = 0;
+    strncpy(R_errbuf, s, sizeof(R_errbuf));
+    R_errbuf[sizeof(R_errbuf) - 1] = 0;
 }
 
 void R_PrintDeferredWarnings(void)

@@ -93,6 +93,12 @@ static SEXP GetObject(RCNTXT *cptr)
 static SEXP applyMethod(SEXP call, SEXP op, SEXP args, SEXP rho, SEXP newrho)
 {
     SEXP ans;
+
+    PROTECT(call);
+    PROTECT(op);
+    PROTECT(args);
+    PROTECT(newrho);
+
     if (TYPEOF(op) == SPECIALSXP) {
 	int save = R_PPStackTop;
 	R_Visible = 1 - PRIMPRINT(op);
@@ -118,6 +124,9 @@ static SEXP applyMethod(SEXP call, SEXP op, SEXP args, SEXP rho, SEXP newrho)
     }
     else
 	ans = R_NilValue;  /* for -Wall */
+
+    UNPROTECT(4);
+
     return ans;
 }
 
@@ -164,8 +173,9 @@ static SEXP matchmethargs(SEXP oldargs, SEXP newargs)
  *    3. fix up the argument list; it should be the arguments to the
  *	 generic matched to the formals of the method to be invoked */
 
-int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
-	      SEXP rho, SEXP *ans)
+static int findMethod(char *generic, SEXP obj, SEXP call, SEXP args, SEXP rho,
+		      SEXP *pnewcall, SEXP *pmethod, SEXP *pmatchedarg,
+		      SEXP *pnewrho)
 {
     SEXP class, method, sxp, t, s, matchedarg;
     SEXP op, formals, newrho, newcall,tmp;
@@ -246,12 +256,12 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
 		PROTECT(t = mkString(buf));
 		defineVar(install(".Method"), t, newrho);
 		UNPROTECT(1);
-		t = newcall;
-		SETCAR(t, method);
-		R_GlobalContext->callflag = CTXT_GENERIC;
-		*ans = applyMethod(t, sxp, matchedarg, rho, newrho);
-		R_GlobalContext->callflag = CTXT_RETURN;
+		SETCAR(newcall, method);
 		UNPROTECT(4);
+		*pnewcall = newcall;
+		*pmethod = sxp;
+		*pmatchedarg = matchedarg;
+		*pnewrho = newrho;
 		return 1;
 	    }
 	}
@@ -265,34 +275,50 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
 	PROTECT(t = mkString(buf));
 	defineVar(install(".Method"), t, newrho);
 	UNPROTECT(1);
-	t = newcall;
-	SETCAR(t, method);
-	R_GlobalContext->callflag = CTXT_GENERIC;
-	*ans = applyMethod(t, sxp, matchedarg, rho, newrho);
-	R_GlobalContext->callflag = CTXT_RETURN;
+	SETCAR(newcall, method);
 	UNPROTECT(4);
+	*pnewcall = newcall;
+	*pmethod = sxp;
+	*pmatchedarg = matchedarg;
+	*pnewrho = newrho;
 	return 1;
     }
     UNPROTECT(4);
-    cptr->callflag = CTXT_RETURN;
     return 0;
 }
+
+int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
+	      SEXP rho, SEXP *ans)
+{
+    SEXP newcall, matchedarg, newrho, method;
+    int found = findMethod(generic, obj, call, args, rho,
+			   &newcall, &method, &matchedarg, &newrho);
+
+    if (found) {
+	R_GlobalContext->callflag = CTXT_GENERIC;
+	*ans = applyMethod(newcall, method, matchedarg, rho, newrho);
+	R_GlobalContext->callflag = CTXT_RETURN;
+	return 1;
+    }
+    else return 0;
+}
+
 
 /* Note: "do_usemethod" is not the only entry point to */
 /* "usemethod". Things like [ and [[ call usemethod directly, */
 /* hence do_usemethod should just be an interface to usemethod. */
 
-SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
+static SEXP getObjectAndGenericName(char *gbuf, size_t gbufsize,
+				    SEXP call, SEXP args, SEXP env)
 {
-    char buf[128];
-    SEXP ans, meth, obj;
-    int nargs;
+    SEXP meth, obj;
+    int nargs, glen;
     RCNTXT *cptr;
 
     nargs = length(args);
 
-if (nargs < 0)
-    errorcall(call, "corrupt internals!");
+    if (nargs < 0)
+	errorcall(call, "corrupt internals!");
 
     if (nargs)
 	PROTECT(meth = eval(CAR(args), env));
@@ -300,38 +326,69 @@ if (nargs < 0)
 	meth = R_MissingArg;
 
     if (nargs >= 2)
-	PROTECT(obj = eval(CADR(args), env));
+	obj = eval(CADR(args), env);
     else {
-	cptr = R_GlobalContext;
-	while (cptr != NULL) {
-	    if ( (cptr->callflag & CTXT_FUNCTION) && cptr->cloenv == env)
-		break;
-	    cptr = cptr->nextcontext;
-	}
-	if (cptr == NULL)
+	cptr = R_ParentContext(env);
+	if (cptr == NULL || cptr->callflag == CTXT_TOPLEVEL)
 	    error("UseMethod called from outside a closure");
 	if (meth == R_MissingArg)
 	    PROTECT(meth = mkString(CHAR(PRINTNAME(CAR(cptr->call)))));
-	PROTECT(obj = GetObject(cptr));
+	obj = GetObject(cptr);
     }
 
     if (TYPEOF(meth) != STRSXP ||
 	LENGTH(meth) < 1 ||
-	strlen(CHAR(STRING_ELT(meth, 0))) == 0)
+	(glen = strlen(CHAR(STRING_ELT(meth, 0)))) == 0)
 	errorcall(call, "first argument must be a method name");
 
-    strcpy(buf, CHAR(STRING_ELT(meth, 0)));
-
-    if (usemethod(buf, obj, call, CDR(args), env, &ans) == 1) {
-	UNPROTECT(1);
-	PROTECT(ans);
-	findcontext(CTXT_RETURN, env, ans);
-	UNPROTECT(1);
-    }
+    if (glen < gbufsize)
+	strcpy(gbuf, CHAR(STRING_ELT(meth, 0)));
     else
+	error("string buffer overflow in method dispatch");
+
+    return obj;
+}
+
+
+SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    char buf[128];
+    SEXP ans, obj;
+    SEXP newcall, matchedarg, newrho, method;
+    
+    PROTECT(obj = getObjectAndGenericName(buf, sizeof(buf), call, args, rho));
+
+    if (! findMethod(buf, obj, call, args, rho,
+		     &newcall, &method, &matchedarg, &newrho))
 	error("no applicable method for \"%s\"", buf);
+    UNPROTECT(1);
+
+    R_GlobalContext->callflag = CTXT_GENERIC;
+    ans = applyMethod(newcall, method, matchedarg, rho, newrho);
+    R_GlobalContext->callflag = CTXT_RETURN;
+
+    findcontext(CTXT_RETURN, rho, ans);
     return R_NilValue; /* NOT Used */
 }
+
+R_code_t do_usemethod_nr(SEXP call, SEXP op, SEXP args, SEXP rho,
+			 R_code_t code)
+{
+    char buf[128];
+    SEXP obj;
+    SEXP newcall, matchedarg, newrho, method;
+    
+    PROTECT(obj = getObjectAndGenericName(buf, sizeof(buf), call, args, rho));
+
+    if (! findMethod(buf, obj, call, args, rho,
+		     &newcall, &method, &matchedarg, &newrho))
+	error("no applicable method for \"%s\"", buf);
+    UNPROTECT(1);
+
+    return R_applyMethod_nr(newcall, method, matchedarg, rho, newrho, FALSE,
+			    code);
+}
+
 
 /*
    fixcall: fixes up the call when arguments to the function may
@@ -366,7 +423,8 @@ static SEXP fixcall(SEXP call, SEXP args)
 
 #define ARGUSED(x) LEVELS(x)
 
-SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
+static void findNextMethod(SEXP call, SEXP args, SEXP env, SEXP *pnewcall,
+			   SEXP *pmethod, SEXP *pmatchedarg, SEXP *pnewrho)
 {
     char buf[128], b[512], tbuf[10];
     SEXP ans, s, t, class, method, matchedarg, generic, nextfun;
@@ -375,18 +433,12 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     RCNTXT *cptr;
     int i,j;
 
-    cptr = R_GlobalContext;
-
-    cptr->callflag = CTXT_GENERIC;
+    R_GlobalContext->callflag = CTXT_GENERIC;
 
     /* get the env NextMethod was called from */
     sysp = R_GlobalContext->sysparent;
-    while (cptr != NULL) {
-	if (cptr->callflag & CTXT_FUNCTION && cptr->cloenv == sysp)
-	    break;
-	cptr = cptr->nextcontext;
-    }
-    if (cptr == NULL)
+    cptr = R_ParentContext(sysp);
+    if (cptr == NULL || cptr->callflag == CTXT_TOPLEVEL)
 	error("NextMethod called from outside a closure");
 
     PROTECT(newcall = duplicate(cptr->call));
@@ -601,9 +653,32 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     defineVar(install(".Group"), group, m);
 
     SETCAR(newcall, method);
-    ans = applyMethod(newcall, nextfun, matchedarg, env, m);
     UNPROTECT(10);
-    return(ans);
+
+    *pnewcall = newcall;
+    *pmethod = nextfun;
+    *pmatchedarg = matchedarg;
+    *pnewrho = m;
+}
+
+SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP newcall, method, matchedarg, newenv;
+
+    findNextMethod(call, args, env,  &newcall, &method, &matchedarg, &newenv);
+
+    return applyMethod(newcall, method, matchedarg, env, newenv);
+}
+
+R_code_t do_nextmethod_nr(SEXP call, SEXP op, SEXP args, SEXP env,
+			  R_code_t code)
+{
+    SEXP newcall, method, matchedarg, newenv;
+
+    findNextMethod(call, args, env,  &newcall, &method, &matchedarg, &newenv);
+
+    return R_applyMethod_nr(newcall, method, matchedarg, env, newenv, TRUE,
+			    code);
 }
 
 SEXP do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)

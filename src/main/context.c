@@ -48,6 +48,8 @@
  *			non-local return (i.e. an error)
  *	cenddata	a void pointer do data for cend to use
  *	vmax		the current setting of the R_alloc stack
+ *	curenv		the current environment
+ *	frame		the current evaluation frame
  *
  *  Context types can be one of:
  *
@@ -149,6 +151,8 @@ void R_restore_globals(RCNTXT *cptr)
     R_PPStackTop = cptr->cstacktop;
     R_EvalDepth = cptr->evaldepth;
     vmaxset(cptr->vmax);
+    R_CurrentEnv = cptr->curenv;
+    R_EvalFrame = cptr->frame;
 }
 
 
@@ -168,52 +172,97 @@ static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
     R_restore_globals(cptr);
 
     R_ReturnedValue = val;
-    R_GlobalContext = cptr; /* this used to be set to
-                               cptr->nextcontext for non-toplevel
-                               jumps (with the context set back at the
-                               SETJMP for restarts).  Changing this to
-                               always using cptr as the new global
-                               context should simplify some code and
-                               perhaps allow loops to be handled with
-                               fewer SETJMP's.  LT */
-    LONGJMP(cptr->cjmpbuf, mask);
+    R_SetGlobalContext(cptr);
+    R_Dispatcher = R_GlobalContext->dispatcher;
+    LONGJMP(cptr->dispatcher->cjmpbuf, mask);
+}
+
+
+static R_code_t jumpfun_nr(RCNTXT * cptr, int mask, SEXP val)
+{
+    int savevis = R_Visible;
+
+    /* run onexit/cend code for all contexts down to but not including
+       the jump target */
+    PROTECT(val);
+    R_run_onexits(cptr);
+    UNPROTECT(1);
+    R_Visible = savevis;
+
+    R_restore_globals(cptr);
+
+    R_ReturnedValue = val;
+    R_SetGlobalContext(cptr);
+
+    if (R_Dispatcher != cptr->dispatcher) {
+	R_Dispatcher = cptr->dispatcher;
+	LONGJMP(cptr->dispatcher->cjmpbuf, mask);
+	return NULL;  /* not reached */
+    }
+    else
+	return cptr->contcode;
+	
 }
 
 
 /* begincontext - begin an execution context */
 
-void begincontext(RCNTXT * cptr, int flags,
+void begincontext(int flags,
 		  SEXP syscall, SEXP env, SEXP sysp, SEXP promargs)
 {
-    cptr->nextcontext = R_GlobalContext;
-    cptr->cstacktop = R_PPStackTop;
-    cptr->evaldepth = R_EvalDepth;
-    cptr->callflag = flags;
-    cptr->call = syscall;
-    cptr->cloenv = env;
-    cptr->sysparent = sysp;
-    cptr->conexit = R_NilValue;
-    cptr->cend = NULL;
-    cptr->promargs = promargs;
-    cptr->vmax = vmaxget();
-    R_GlobalContext = cptr;
+    RCNTXT *cntxt = R_PushThreadGlobalContext(R_ThreadContext);
+
+    cntxt->dispatcher = R_Dispatcher;
+    cntxt->cstacktop = R_PPStackTop;
+    cntxt->evaldepth = R_EvalDepth;
+    cntxt->callflag = flags;
+    cntxt->call = syscall;
+    cntxt->cloenv = env;
+    cntxt->sysparent = sysp;
+    cntxt->conexit = R_NilValue;
+    cntxt->cend = NULL;
+    cntxt->promargs = promargs;
+    cntxt->vmax = vmaxget();
+    cntxt->curenv = R_CurrentEnv;
+    cntxt->frame = R_EvalFrame;
 }
 
 
 /* endcontext - end an execution context */
 
-void endcontext(RCNTXT * cptr)
+void endcontext()
 {
+    RCNTXT *cptr = R_GlobalContext;
     if (cptr->cloenv != R_NilValue && cptr->conexit != R_NilValue ) {
 	SEXP s = cptr->conexit;
 	int savevis = R_Visible;
+	SEXP saveval = R_ReturnedValue;
 	cptr->conexit = R_NilValue; /* prevent recursion */
+	PROTECT(saveval);
 	PROTECT(s);
 	eval(s, cptr->cloenv);
-	UNPROTECT(1);
+	UNPROTECT(2);
+	R_ReturnedValue = saveval;
 	R_Visible = savevis;
     }
-    R_GlobalContext = cptr->nextcontext;
+    R_SetGlobalContext(cptr->nextcontext);
+}
+
+
+/* R_BeginDispatcher - begin a dispatcher context */
+
+void R_BeginDispatcher(R_dispatcher_t disp) {
+    disp->next = R_Dispatcher;
+    disp->level = R_Dispatcher != NULL ? R_Dispatcher->level + 1 : 0;
+    R_Dispatcher = disp;
+}
+
+
+/* R_EndDispatcher - end a dispatcher context */
+
+void R_EndDispatcher(R_dispatcher_t disp)
+{
+    R_Dispatcher = disp->next;
 }
 
 
@@ -239,6 +288,30 @@ void findcontext(int mask, SEXP env, SEXP val)
 		jumpfun(cptr, mask, val);
 	error("No function to return from, jumping to top level");
     }
+}
+
+
+R_code_t R_findcontext_nr(int mask, SEXP env, SEXP val)
+{
+    RCNTXT *cptr;
+    cptr = R_GlobalContext;
+    if (mask & CTXT_LOOP) {		/* break/next */
+	for (cptr = R_GlobalContext;
+	     cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
+	     cptr = cptr->nextcontext)
+	    if (cptr->callflag & CTXT_LOOP && cptr->cloenv == env )
+	        return jumpfun_nr(cptr, mask, val);
+        error("No loop to break from, jumping to top level");
+    }
+    else {				/* return; or browser */
+	for (cptr = R_GlobalContext;
+	     cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
+	     cptr = cptr->nextcontext)
+	    if ((cptr->callflag & mask) && cptr->cloenv == env)
+		return jumpfun_nr(cptr, mask, val);
+	error("No function to return from, jumping to top level");
+    }
+    return NULL;  /* not reached */
 }
 
 
@@ -289,8 +362,10 @@ int R_sysparent(int n, RCNTXT *cptr)
 {
     int j;
     SEXP s;
-    if(n <= 0)
-	errorcall(R_ToplevelContext->call,"only positive arguments are allowed");
+    if(n <= 0) {
+	SEXP call = R_ToplevelContext()->call;
+	errorcall(call,"only positive arguments are allowed");
+    }
     while (cptr->nextcontext != NULL && n > 1) {
 	if (cptr->callflag & CTXT_FUNCTION )
 	    n--;
@@ -401,20 +476,22 @@ SEXP R_sysfunction(int n, RCNTXT *cptr)
    L.T. */
 SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    RCNTXT *cptr;
+    RCNTXT *cptr, *top;
 
     checkArity(op, args);
 
     if( !isLogical(CAR(args)) || LENGTH(CAR(args))!= 1 )
 	return(R_NilValue);
-    for(cptr = R_GlobalContext->nextcontext; cptr!= R_ToplevelContext;
-	    cptr = cptr->nextcontext) {
+    top = R_ToplevelContext();
+    for(cptr = R_GlobalContext->nextcontext;
+	cptr!= top;
+	cptr = cptr->nextcontext) {
         if (cptr->callflag & CTXT_FUNCTION) {
 		SET_RESTART_BIT_ON(cptr->callflag);
 		break;
 	}
     }
-    if( cptr == R_ToplevelContext )
+    if( cptr == top )
 	errorcall(call, "no function to restart");
     return(R_NilValue);
 }
@@ -429,11 +506,11 @@ SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int i, n, nframe;
     SEXP rval,t;
-    RCNTXT *cptr;
+    RCNTXT *cptr, *top = R_ToplevelContext();
     /* first find the context that sys.xxx needs to be evaluated in */
     cptr = R_GlobalContext;
     t = cptr->sysparent;
-    while (cptr != R_ToplevelContext) {
+    while (cptr != top) {
 	if (cptr->callflag & CTXT_FUNCTION )
 	    if (cptr->cloenv == t)
 		break;
@@ -533,6 +610,38 @@ SEXP do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_GlobalEnv;
 }
 
+
+/* R_ToplevelContext - return the current top level context */
+
+RCNTXT *R_ToplevelContext(void)
+{
+    RCNTXT *cptr;
+    for (cptr = R_GlobalContext;
+	 cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
+	 cptr = cptr->nextcontext);
+    return cptr; /**** if this is NULL it's really bad news */
+}
+
+
+/* R_ParentContext - return the context of the parant of a call to a
+   .Primitive or .Internal.  If rho is null, then the call that forced
+   evaluation is used (the top-most CTXT_FUNCTION or CTXT_TOPLEVEL on
+   the stack); otheriwse, the call matching the environment is used.
+   NULL is returned if no match is found */
+
+RCNTXT *R_ParentContext(SEXP rho)
+{
+    RCNTXT *cptr;
+    for (cptr = R_GlobalContext;
+	 cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
+	 cptr = cptr->nextcontext)
+	if ((cptr->callflag & CTXT_FUNCTION) &&
+	    (rho == NULL || cptr->cloenv == rho))
+	    break;
+    return cptr;
+}
+
+
 /* R_ToplevelExec - call fun(data) within a top level context to
    insure that this functin cannot be left by a LONGJMP.  R errors in
    the call to fun will result in a jump to top level. The return
@@ -541,27 +650,25 @@ SEXP do_parentframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 Rboolean R_ToplevelExec(void (*fun)(void *), void *data)
 {
-    RCNTXT thiscontext;
-    RCNTXT * volatile saveToplevelContext;
+    RDISPATCHER disp;
     volatile SEXP topExp;
     Rboolean result;
 
 
     PROTECT(topExp = R_CurrentExpr);
-    saveToplevelContext = R_ToplevelContext;
 
-    begincontext(&thiscontext, CTXT_TOPLEVEL, R_NilValue, R_GlobalEnv,
+    R_BeginDispatcher(&disp);
+    begincontext(CTXT_TOPLEVEL, R_NilValue, R_GlobalEnv,
 		 R_NilValue, R_NilValue);
-    if (SETJMP(thiscontext.cjmpbuf))
+    if (SETJMP(disp.cjmpbuf))
 	result = FALSE;
     else {
-	R_GlobalContext = R_ToplevelContext = &thiscontext;
 	fun(data);
 	result = TRUE;
     }
-    endcontext(&thiscontext);
+    endcontext();
+    R_EndDispatcher(&disp);
 
-    R_ToplevelContext = saveToplevelContext;
     R_CurrentExpr = topExp;
     UNPROTECT(1);
 

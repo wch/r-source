@@ -61,10 +61,8 @@ SEXP do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
     default:
 	errorcall_return(call, "invalid number of arguments");
     }
-    ctxt = R_GlobalContext;
-    while (ctxt != R_ToplevelContext && !(ctxt->callflag & CTXT_FUNCTION) )
-	ctxt = ctxt->nextcontext;
-    if (ctxt->callflag & CTXT_FUNCTION)
+    ctxt = R_ParentContext(rho);
+    if (ctxt != NULL && (ctxt->callflag & CTXT_FUNCTION))
     {
 	if (addit && (oldcode = ctxt->conexit) != R_NilValue ) {
 	    if ( CAR(oldcode) != R_BraceSymbol )
@@ -153,7 +151,7 @@ SEXP do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_newenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP s;
-    int hash;
+    int hash, local;
 
     checkArity(op, args);
 
@@ -246,7 +244,6 @@ static void cat_cleanup(void *data)
 SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     cat_info ci;
-    RCNTXT cntxt;
     SEXP objs, file, fill, sepr, labs, s;
     int ifile;
     Rconnection con;
@@ -304,11 +301,10 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     ci.con = con;
 
-    /* set up a context which will close the window if there is an error */
-    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
-		 R_NilValue);
-    cntxt.cend = &cat_cleanup;
-    cntxt.cenddata = &ci;
+    /* set up a context which will clean up the sink if there is an error */
+    begincontext(CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue, R_NilValue);
+    R_GlobalContext->cend = &cat_cleanup;
+    R_GlobalContext->cenddata = &ci;
 
     nobjs = length(objs);
     /*
@@ -386,7 +382,7 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* end the context after anything that could raise an error but before
        doing the cleanup so the cleanup doesn't get done twice */
-    endcontext(&cntxt);
+    endcontext();
 
     cat_cleanup(&ci);
 

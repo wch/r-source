@@ -39,7 +39,11 @@ stop.list[["base"]] <-
 		    "gctorture", "q", "quit", "restart", "try",
                     "read.fwf", "source",## << MM thinks "FIXME"
 		    "data.entry", "dataentry", "de", apropos("^de\."))
-	c(inet.list, socket.fun, dev.int, edit.int, misc.int, misc.2)
+        ## should be more selective here
+	#threads <- c(apropos("Thread"), apropos("Mutex"), apropos("Condvar"),
+	#             "Concurrently", "EventLoop", ".Main")
+	threads <- c("EventLoop", ".Main", "ReplConsole", "Snooze")
+	c(inet.list, socket.fun, dev.int, edit.int, misc.int, misc.2, threads)
     }
 
 sink("no-segfault.R")

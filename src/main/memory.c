@@ -854,8 +854,7 @@ static Rboolean RunFinalizers(void)
     for (s = R_fin_registered, last = R_NilValue; s != R_NilValue;) {
 	SEXP next = CDR(s);
 	if (s->sxpinfo.gp != 0) {
-	    RCNTXT thiscontext;
-	    RCNTXT * volatile saveToplevelContext;
+	    RDISPATCHER disp;
 	    volatile int savestack;
 	    volatile SEXP topExp;
 
@@ -864,14 +863,13 @@ static Rboolean RunFinalizers(void)
 	    /* A top level context is established for the finalizer to
 	       insure that any errors that might occur do not spill
 	       into the call that triggered the collection. */
-	    begincontext(&thiscontext, CTXT_TOPLEVEL, R_NilValue, R_GlobalEnv,
+	    R_BeginDispatcher(&disp);
+	    begincontext(CTXT_TOPLEVEL, R_NilValue, R_GlobalEnv,
 			 R_NilValue, R_NilValue);
-	    saveToplevelContext = R_ToplevelContext;
 	    PROTECT(topExp = R_CurrentExpr);
 	    savestack = R_PPStackTop;
-	    if (! SETJMP(thiscontext.cjmpbuf)) {
+	    if (! SETJMP(disp.cjmpbuf)) {
 		SEXP val, fun, e;
-		R_GlobalContext = R_ToplevelContext = &thiscontext;
 
 		/* The entry in the finalization list is removed
 		   before running the finalizer.  This insures that a
@@ -897,8 +895,8 @@ static Rboolean RunFinalizers(void)
 		}
 		UNPROTECT(1);
 	    }
-	    endcontext(&thiscontext);
-	    R_ToplevelContext = saveToplevelContext;
+	    endcontext();
+	    R_EndDispatcher(&disp);
 	    R_PPStackTop = savestack;
 	    R_CurrentExpr = topExp;
 	    UNPROTECT(1);
@@ -1033,6 +1031,8 @@ static void RunGenCollect(int size_needed)
     FORWARD_NODE(R_BlankString);
     FORWARD_NODE(R_UnboundValue);
     FORWARD_NODE(R_RestartToken);
+    FORWARD_NODE(R_LoopBreakToken);
+    FORWARD_NODE(R_LoopNextToken);
     FORWARD_NODE(R_MissingArg);
     FORWARD_NODE(R_CommentSxp);
 
@@ -1051,8 +1051,32 @@ static void RunGenCollect(int size_needed)
 	    FORWARD_NODE(dd->displayList);
     }
 
-    for (ctxt = R_GlobalContext ; ctxt != NULL ; ctxt = ctxt->nextcontext)
-	FORWARD_NODE(ctxt->conexit);           /* on.exit expressions */
+    {
+	R_thread_context_t thread;
+	for (thread = R_ActiveThreads();
+	     thread != NULL;
+	     thread = thread->next_context) {
+	    FORWARD_NODE(thread->ref);
+	    FORWARD_NODE(thread->prot);
+	    FORWARD_NODE(thread->value);
+	    FORWARD_NODE(thread->current_env);
+	    FORWARD_NODE(thread->eval_frame);
+	    FORWARD_NODE(thread->warnings);
+	    FORWARD_NODE(thread->iodata);
+	    FORWARD_NODE(thread->wait_object);
+	    for (ctxt = thread->global_context;
+		 ctxt != NULL;
+		 ctxt = ctxt->nextcontext) {
+		FORWARD_NODE(ctxt->promargs);
+		FORWARD_NODE(ctxt->sysparent);
+		FORWARD_NODE(ctxt->call);
+		FORWARD_NODE(ctxt->cloenv);
+		FORWARD_NODE(ctxt->conexit);
+		FORWARD_NODE(ctxt->curenv);
+		FORWARD_NODE(ctxt->frame);
+	    }
+	}
+    }
 
     FORWARD_NODE(framenames); 		   /* used for interprocedure
 					      communication in model.c */
@@ -1063,6 +1087,10 @@ static void RunGenCollect(int size_needed)
 	FORWARD_NODE(R_PPStack[i]);
 
     FORWARD_NODE(R_VStack);		   /* R_alloc stack */
+
+    FORWARD_NODE(R_CurrentEnv);		   /* current environment "register" */
+    FORWARD_NODE(R_EvalFrame);		   /* evaluation frame pointer */
+    FORWARD_NODE(R_ReturnedValue);	   /* returned value "register" */
 
     /* main processing loop */
     PROCESS_NODES();
@@ -1938,6 +1966,109 @@ void R_SetExternalPtrProtected(SEXP s, SEXP p)
 {
     CHECK_OLD_TO_NEW(s, p);
     EXTPTR_PROT(s) = p;
+}
+
+
+/* thread functions */
+static R_thread_context_t R_ThreadList = NULL;
+R_thread_context_t R_ThreadContext = NULL;    /* current thread context */
+
+R_thread_context_t R_ActiveThreads(void)
+{
+    return R_ThreadList;
+}
+
+#define NUM_THREAD_FIELDS 3
+#define SET_THREAD_INTERNAL_DATA(t, v) SET_VECTOR_ELT(EXTPTR_PROT(t), 0, v)
+#define CLEAR_THREAD_INTERNAL_DATA(t) SET_THREAD_INTERNAL_DATA(t, R_NilValue)
+#define SET_THREAD_VALUE(t, v) SET_VECTOR_ELT(EXTPTR_PROT(t), 1, v)
+
+R_thread_context_t  R_MakeThreadContext(R_thread_state_t state, SEXP prot)
+{
+    SEXP td, val, dv;
+    R_thread_context_t tc;
+
+    PROTECT(prot);
+    PROTECT(td = allocString(sizeof(struct R_thread_context_st)));
+    PROTECT(dv = allocVector(VECSXP, NUM_THREAD_FIELDS));
+    tc = (R_thread_context_t) CHAR(td);
+    val = R_MakeExternalPtr(tc, R_ThreadTag, dv);
+    SET_THREAD_INTERNAL_DATA(val, td);
+    UNPROTECT(3);
+
+    tc->ref = val;
+    tc->prot = prot;
+    tc->value = R_NilValue;
+    tc->current_env = R_NilValue;
+    tc->eval_frame = R_NilValue;
+    tc->warnings = R_NilValue;
+    tc->iodata = R_NilValue;
+    tc->wait_object = R_NilValue;
+
+    tc->global_context = NULL;
+    tc->context_stack_size = R_CNTXTSTACKSIZE;
+    tc->state = state;
+    tc->eval_depth = 0;
+    tc->eval_count = 0;
+    tc->browse_level = 0;
+    tc->collect_warnings = 0;
+    tc->quantum = R_DEFAULT_THREAD_QUANTUM;
+    tc->wait_next = NULL;
+    tc->join = NULL;
+
+    tc->next_context = R_ThreadList;
+    if (R_ThreadList != NULL)
+	R_ThreadList->prev_context = tc;
+    tc->prev_context = NULL;
+    R_ThreadList = tc;
+
+    return tc;
+}
+
+void R_DeactivateThread(R_thread_context_t tc)
+{
+    SET_THREAD_VALUE(tc->ref, tc->value);
+    R_ClearExternalPtr(tc->ref);
+    CLEAR_THREAD_INTERNAL_DATA(tc->ref);
+
+    if (tc->prev_context != NULL)
+	tc->prev_context->next_context = tc->next_context;
+    if (tc->next_context != NULL)
+	tc->next_context->prev_context = tc->prev_context;
+    if (R_ThreadList == tc)
+	R_ThreadList = tc->next_context;
+}
+
+
+RCNTXT *R_PushThreadGlobalContext(R_thread_context_t thread)
+{
+    RCNTXT *cntxt = thread->global_context;
+    RCNTXT *context_stack = thread->context_stack;
+    size_t stack_size = thread->context_stack_size;
+
+    if (cntxt == NULL) {
+        cntxt = context_stack;
+        cntxt->nextcontext = NULL;
+    }
+    else {
+	if (cntxt + 1 - context_stack > stack_size)
+	    error("context stack overflow");
+	cntxt++;
+	cntxt->nextcontext = cntxt - 1;
+    }
+    thread->global_context = cntxt;
+    return cntxt;
+}
+
+void R_SetThreadGlobalContext(R_thread_context_t thread, RCNTXT *cntxt)
+{
+    RCNTXT *context_stack = thread->context_stack;
+
+    if (cntxt != NULL &&
+	! (cntxt <= thread->global_context && cntxt >= context_stack))
+	error("invalid context value");
+
+    thread->global_context = cntxt;
 }
 
 
