@@ -52,6 +52,7 @@ Sweave(testfile)
 Stangle(testfile)
 ## which can be simply sourced
 source("test-1.R")
+\testonly{unlink("test-1*")}
 }
 \keyword{utilities}
 

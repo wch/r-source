@@ -256,7 +256,7 @@ function(package, lib.loc = NULL, use.attached, quiet = FALSE,
          verbose = getOption("verbose"))
 {
     sQuote <- function(s) paste("`", s, "'", sep = "")
-    
+
     if(!missing(use.attached))
         warning(paste("argument", sQuote("use.attached"),
                       "is deprecated"))
@@ -265,7 +265,7 @@ function(package, lib.loc = NULL, use.attached, quiet = FALSE,
         use.attached <- TRUE
         lib.loc <- .libPaths()
     }
-    
+
     n <- length(package)
     if(n == 0) return(character(0))
 
@@ -315,6 +315,7 @@ function(new)
 print.packageInfo <-
 function(x, ...)
 {
+    if(!inherits(x, "packageInfo")) stop("wrong class")
     sQuote <- function(s) paste("`", s, "'", sep = "")
     outFile <- tempfile("RpackageInfo")
     outConn <- file(outFile, open = "w")
