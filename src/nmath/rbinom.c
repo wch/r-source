@@ -41,7 +41,7 @@
 
 double rbinom(double nin, double pp)
 {
-    /* FIXME: These should becomre THREAD_specific globals : */
+    /* FIXME: These should become THREAD_specific globals : */
 
     static double c, fm, npq, p1, p2, p3, p4, qn;
     static double xl, xll, xlr, xm, xr;
@@ -59,9 +59,9 @@ double rbinom(double nin, double pp)
 
     if (!R_FINITE(n) || !R_FINITE(pp) ||
 	/* n=0, p=0, p=1 are not errors <TSL>*/
-	n < 0. || pp < 0. || pp > 1.)	ML_ERR_return_NAN;
+	n < 0 || pp < 0. || pp > 1.)	ML_ERR_return_NAN;
 
-    if (n == 0. || pp == 0.) return 0;
+    if (n == 0 || pp == 0.) return 0;
     if (pp == 1.) return n;
 
     p = fmin2(pp, 1. - pp);
