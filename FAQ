@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-29, 2004-12-31
+Version 1.8-30, 2004-01-07
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1433,6 +1433,10 @@ distributions of R.)
 *SenSrivastava*
      Collection of datasets from "Regression Analysis, Theory, Methods and
      Applications" by A. Sen and M. Srivastava, 1990, Springer-Verlag.
+
+*SoPhy*
+     Soil Physics Tools: simulation of water flux and solute transport in
+     soil.
 
 *SparseM*
      Basic linear algebra for sparse matrices.
