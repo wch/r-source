@@ -876,22 +876,25 @@ object which @code{bind.db.proxy} created.
 @findex db.result.rows
 @findex db.read.column
 @findex db.fetch.result
+@findex db.clear.result
 @findex db.result.get.value
 A finer level of control is available via sending SQL queries to the
-PostgreSQL server via @code{db.execute}.  Once this is done,
-@code{db.fetch.result} can be used to fetch the whole result as a data
-frame.  Functions such as @code{db.result.columns} and
-@code{db.result.rows} will report the number of columns and rows in the
-resulting table, and @code{db.read.column} will fetch a single column
-(as a vector).  An individual cell in the table can be read by
-@code{db.result.get.value}.
+PostgreSQL server via @code{db.execute}.  This leaves a result in
+PostgreSQL's result cache, unless flushed by @code{clear = TRUE} (the
+default).  Once a result is in the cache, @code{db.fetch.result} can be
+used to fetch the whole result as a data frame.  Functions such as
+@code{db.result.columns} and @code{db.result.rows} will report the
+number of columns and rows in the cached table, and
+@code{db.read.column} will fetch a single column (as a vector).  An
+individual cell in the result can be read by @code{db.result.get.value}.
+@code{db.clear.result} will clear the result cache.
 
 @findex sql.insert
 @findex sql.select
-One disadvantage is that SQL queries get mapped to lower case, so for
-maximal flexibility, only use lower case in @R{} names.  Functions
-@code{sql.insert} and @code{sql.select} provide convenience wrappers for
-the INSERT and SELECT queries.
+One disadvantage is that PostgreSQL maps all table and column names to
+lower case, so for maximal flexibility, only use lower case in @R{}
+names.  Functions @code{sql.insert} and @code{sql.select} provide
+convenience wrappers for the INSERT and SELECT queries.
 
 We can explore these functions in a simple example.  The database
 @file{testdb} had already been set up, and as PostgreSQL was running on
