@@ -202,7 +202,7 @@ void starma(Starma G, int *ifault)
 
 void karma(Starma G, double *sumlog, double *ssq, int iupd, int *nit)
 {
-    int p = G->p, q = G->q, r = G->r, n = G->n;
+    int p = G->p, q = G->q, r = G->r, n = G->n, nu = 0;
     double *phi = G->phi, *theta = G->theta, *a = G->a, *P = G->P,
 	*V = G->V, *w = G->w, *resid = G->resid, *work = G->xnext;
 
@@ -274,6 +274,7 @@ void karma(Starma G, double *sumlog, double *ssq, int iupd, int *nit)
 		resid[i] = ut / sqrt(ft);
 		*ssq += ut * ut / ft;
 		*sumlog += log(ft);
+		nu++;
 		for (l = 0; l < r; l++) P[l] = 0.0;
 	    } else resid[i] = NA_REAL;
 
@@ -282,7 +283,7 @@ void karma(Starma G, double *sumlog, double *ssq, int iupd, int *nit)
 
     } else {
 
-/*        quick recursions */
+/*        quick recursions: never used with missing values */
 
 	i = 0;
  L610:
@@ -298,8 +299,10 @@ void karma(Starma G, double *sumlog, double *ssq, int iupd, int *nit)
 		et -= theta[j] * resid[ii - j - 1];
 	    resid[ii] = et;
 	    *ssq += et * et;
+	    nu++;
 	}
     }
+    G->nused = nu;
 }
 
 

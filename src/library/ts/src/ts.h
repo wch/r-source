@@ -53,7 +53,7 @@ F77_SUB(stl)(double *y, int *n, int *np, int *ns,
 
 typedef struct
 {
-    int p, q, r, np, nrbar, n, ncond, m, trans, method;
+    int p, q, r, np, nrbar, n, ncond, m, trans, method, nused;
     int mp, mq, msp, msq, ns;
     double delta, s2;
     double *params, *phi, *theta, *a, *P, *V;

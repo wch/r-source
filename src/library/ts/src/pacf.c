@@ -224,8 +224,8 @@ SEXP arma0fa(SEXP pG, SEXP inparams)
 	ssq = 0.0;
 	it = 0;
 	karma(G, &sumlog, &ssq, 1, &it);
-	G->s2 = ssq/(double)G->n;
-	ans = 0.5*(log(ssq/(double)G->n) + sumlog/(double)G->n);
+	G->s2 = ssq/(double)G->nused;
+	ans = 0.5*(log(ssq/(double)G->nused) + sumlog/(double)G->nused);
     }
     res = allocVector(REALSXP, 1);
     REAL(res)[0] = ans;

@@ -188,6 +188,7 @@ arima0 <- function(x, order = c(0, 0, 0),
     resid <- .Call("get_resid", G, PACKAGE = "ts")
     tsp(resid) <- xtsp
     class(resid) <- "ts"
+    n.used <- sum(!is.na(resid))
     nm <- NULL
     if(arma[1] > 0) nm <- c(nm, paste("ar", 1:arma[1], sep = ""))
     if(arma[2] > 0) nm <- c(nm, paste("ma", 1:arma[2], sep = ""))
