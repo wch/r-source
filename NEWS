@@ -123,6 +123,9 @@ NEW FEATURES
     o   summaryRprof() provides the functionality of R CMD Rprof in R
 	code, though more slowly
 
+    o   stop() accepts multiple arguments (which are concatenated)
+	just as warning() does.
+
 
 DEPRECATED & DEFUNCT
 
