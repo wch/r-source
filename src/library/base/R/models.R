@@ -32,7 +32,7 @@ delete.response <- function (termobj)
 {
 	intercept <- if (attr(termobj, "intercept")) "1" else "0"
 	terms(reformulate(c(attr(termobj, "term.labels"), intercept), NULL),
-              specials = names(attr(termobj, "specials")))
+	      specials = names(attr(termobj, "specials")))
 }
 
 reformulate <- function (termlabels, response=NULL)
@@ -46,7 +46,7 @@ reformulate <- function (termlabels, response=NULL)
 		termtext <- paste("response", "~", termtext, collapse="")
 		termobj <- eval(parse(text=termtext)[[1]])
 		termobj[[2]] <- response
-                termobj
+		termobj
 	}
 }
 
@@ -129,12 +129,13 @@ na.omit <- function(frame)
 	else frame[ok, ]
 }
 
-model.data.frame <- function(...) {
-	cn <- as.character(substitute(list(...))[-1])
-	rval<-data.frame(..., col.names=cn, as.is=TRUE)
-	names(rval)<-cn
-	rval
-}
+##-- used nowhere (0.62)
+##- model.data.frame <- function(...) {
+##-	cn <- as.character(substitute(list(...))[-1])
+##-	rval<-data.frame(..., col.names=cn, as.is=TRUE)
+##-	names(rval)<-cn
+##-	rval
+##- }
 
 model.frame <- function(x, ...)	UseMethod("model.frame")
 
@@ -184,10 +185,10 @@ model.matrix.default <- function(formula, data, contrasts = NULL)
 {
  t <- terms(formula)
  if (missing(data)) {
-        vars <- attr(t, "variables")
+	vars <- attr(t, "variables")
 	# comes out as list(x,y,z), make it data.frame(x,y,z)
-        vars[[1]] <- as.name("data.frame")
-        data <- eval(vars, sys.frame(sys.parent()))
+	vars[[1]] <- as.name("data.frame")
+	data <- eval(vars, sys.frame(sys.parent()))
  }
  contrastsL <- contrasts
  rm(contrasts)
@@ -199,58 +200,56 @@ model.matrix.default <- function(formula, data, contrasts = NULL)
 		stop("invalid contrasts argument")
 	for (nn in namC) {
 		if (is.na(ni <- match(nn, namD)))
-                	warning(paste("Variable", nn,
-                                      "absent, contrast ignored"))
+			warning(paste("Variable", nn,
+				      "absent, contrast ignored"))
 		else contrasts(data[[ni]]) <- contrastsL[[nn]]
 	}
  }
-  reorder<-match(as.character(attr(t,"variables"))[-1],names(data))
-  if (any(is.na(reorder))) stop("invalid model frame in model.matrix()")
-  data<-data[,reorder,drop=F]
+ reorder <- match(as.character(attr(t,"variables"))[-1],names(data))
+ if (any(is.na(reorder))) stop("invalid model frame in model.matrix()")
+ data <- data[,reorder, drop=FALSE]
  .Internal(model.matrix(t, data))
 }
 
-"model.response" <-
-function (data, type = "any") 
+model.response <- function (data, type = "any")
 {
-        if (attr(attr(data, "terms"), "response")) {
-                if (is.list(data) | is.data.frame(data)) {
-                        v <- data[[1]]
-                        if (type == "numeric" | type == "double") {
-                                storage.mode(v) <- "double"
-                        }
-                        else if (type != "any") 
-                                stop("invalid response type")
-                        if (is.matrix(v) && ncol(v) == 1) 
-                                dim(v) <- NULL
-                        return(v)
-                }
-                else stop("invalid data argument")
-        }
-        else return(NULL)
+	if (attr(attr(data, "terms"), "response")) {
+		if (is.list(data) | is.data.frame(data)) {
+			v <- data[[1]]
+			if (type == "numeric" | type == "double") {
+				storage.mode(v) <- "double"
+			}
+			else if (type != "any")
+				stop("invalid response type")
+			if (is.matrix(v) && ncol(v) == 1)
+				dim(v) <- NULL
+			return(v)
+		}
+		else stop("invalid data argument")
+	}
+	else return(NULL)
 }
 
-"model.extract" <- function (frame, component) 
+model.extract <- function (frame, component)
 {
-        component <- as.character(substitute(component))
-        rval <- switch(component, response = model.response(frame), 
-                offset = model.offset(frame), weights = frame$"(weights)", 
-                start = frame$"(start)")
-        if (is.null(rval)) {
-                name <- paste("frame$\"(", component, ")\"", 
-                        sep = "")
-                rval <- eval(parse(text = name)[1])
-        }
-        if(!is.null(rval)){
-          if (length(rval) == nrow(frame)) 
-            names(rval) <- attr(frame, "row.names")
-          else if (is.matrix(rval) && nrow(rval) == nrow(frame)) {
-            t1 <- dimnames(rval)
-            dimnames(rval) <- list(attr(frame, "row.names"), 
-                                   t1[[2]])
-          }
-        }
-        return(rval)
+	component <- as.character(substitute(component))
+	rval <- switch(component,
+		response = model.response(frame),
+		offset = model.offset(frame), weights = frame$"(weights)",
+		start = frame$"(start)")
+	if (is.null(rval)) {
+		name <- paste("frame$\"(", component, ")\"", sep = "")
+		rval <- eval(parse(text = name)[1])
+	}
+	if(!is.null(rval)){
+	  if (length(rval) == nrow(frame))
+	    names(rval) <- attr(frame, "row.names")
+	  else if (is.matrix(rval) && nrow(rval) == nrow(frame)) {
+	    t1 <- dimnames(rval)
+	    dimnames(rval) <- list(attr(frame, "row.names"), t1[[2]])
+	  }
+	}
+	return(rval)
 }
 
 update <- function(x, ...) UseMethod("update")
