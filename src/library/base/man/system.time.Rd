@@ -9,7 +9,7 @@ unix.time(expr, gcFirst)
 \arguments{
   \item{expr}{Valid \R expression to be \dQuote{timed}}
   \item{gcFirst}{Logical - should a garbage collection be performed
-    immediately before the timing?  Default is \code{FALSE}.}}
+    immediately before the timing?  Default is \code{FALSE}.}
 }
 \description{Return CPU (and other) times that \code{expr} used.
 }    
