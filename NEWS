@@ -46,6 +46,8 @@ BUG FIXES
 
     o	predict.lm() failed with single-column model matrix (PR#1018)
 
+    o	legend() now also works with 100s of entries (thanks to M.Schlather).
+
 
 		CHANGES IN R VERSION 1.3.0
 
