@@ -10,26 +10,24 @@
 agrep(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1)
 }
 \arguments{
-  \item{pattern}{character string to be matched (\emph{not} a regular
-    expression!)}
+  \item{pattern}{a non-empty character string to be matched (\emph{not}
+    a regular expression!)}
   \item{x}{character vector where matches are sought.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
-      sensitive} and if \code{TRUE}, case is ignored during matching.
-    Note that if ignoring case is necessary for a match, this increases
-    the approximateness distance measure by at least 1 (and thus could
-    necessite a higher value for \code{max.distance}.}
-  \item{value}{if \code{FALSE}, a vector containing the (\code{integer})
+      sensitive} and if \code{TRUE}, case is ignored during matching.}
+  \item{value}{if \code{FALSE}, a vector containing the (integer)
     indices of the matches determined is returned and if \code{TRUE}, a
     vector containing the matching elements themselves is returned.}
   \item{max.distance}{Maximum distance allowed for a match.  Expressed
     either as integer, or as a fraction of the pattern length (will be
     replaced by the smallest integer not less than the corresponding
-    fraction), or a list with components:
+    fraction), or a list with possible components
     \describe{
       \item{\code{all}:}{maximal (overall) distance}
-      \item{\code{insertions}:}{maximum number of insertions}
-      \item{\code{deletions}:}{maximum number of deletions}
-      \item{\code{substitutions}:}{maximum number of substitutions}
+      \item{\code{insertions}:}{maximum number/fraction of insertions}
+      \item{\code{deletions}:}{maximum number/fraction of deletions}
+      \item{\code{substitutions}:}{maximum number/fraction of
+	substitutions}
     }
     If \code{all} is missing, it is set to 10\%, the other components
     default to \code{all}.  The component names can be abbreviated.
@@ -57,6 +55,6 @@ agrep("lasy", "1 lazy 2")
 agrep("lasy", "1 lazy 2", max = list(sub = 0))
 agrep("laysy", c("1 lazy", "1", "1 LAZY"), max = 2)
 agrep("laysy", c("1 lazy", "1", "1 LAZY"), max = 2, value = TRUE)
-agrep("laysy", c("1 lazy", "1", "1 LAZY"), max = 3, ignore.case = TRUE)
+agrep("laysy", c("1 lazy", "1", "1 LAZY"), max = 2, ignore.case = TRUE)
 }
 \keyword{character}
