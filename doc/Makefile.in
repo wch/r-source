@@ -15,7 +15,7 @@ INSTFILES = KEYWORDS KEYWORDS.db
 DISTFILES = Makefile.in $(INSTFILES) R.1 R.aux
 SUBDIRS = html manual
 
-HELP2MAN = $(top_builddir)/tools/help2man
+HELP2MAN = $(PERL) $(top_srcdir)/tools/help2man.pl
 
 all: Makefile R docs
 

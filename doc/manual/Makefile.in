@@ -114,12 +114,12 @@ stamp-refman-dvi: $(pkgsrcs)
 	@touch $@
 $(pkgsrcs): FORCE $(top_builddir)/bin/build-help
 	@(pkg=`basename $@ -pkg.tex`; \
-	if $(top_builddir)/tools/Rdnewer \
+	if $(PERL) $(top_srcdir)/tools/Rdnewer.pl \
 	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
 	  echo "collecting LaTeX docs for package \`$${pkg}' ..."; \
 	  (cd $(top_builddir)/src/library && \
 	    OPTS="--latex" $(MAKE) R_PKGS="$${pkg}" DOCS); \
-	  $(top_builddir)/tools/pkg2tex $${pkg}; \
+	  $(PERL) $(top_srcdir)/tools/pkg2tex.pl $${pkg}; \
 	fi)
 FORCE:
 $(top_builddir)/bin/build-help: $(top_srcdir)/src/scripts/build-help.in
