@@ -14,8 +14,8 @@
 \usage{
 gnome(display="", width=7, height=7, pointsize=12)
 GNOME(display="", width=7, height=7, pointsize=12)
-#endif
 }
+#endif
 \seealso{
   \code{\link{Deprecated}}, \code{\link{Defunct}}
 }

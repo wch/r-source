@@ -17,7 +17,6 @@ winDialogString(message, default)
   \item{message}{character. The information field of the dialog box.}
   \item{default}{character. The default string.}
 }
-}
 \value{
   For \code{winDialog} a character string giving the name of the button
   pressed (in capitals) or \code{NULL} (invisibly) if the user had no
