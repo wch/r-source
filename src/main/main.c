@@ -465,10 +465,7 @@ void setup_Rmainloop(void)
     R_Warnings = R_NilValue;
 
 #ifdef EXPERIMENTAL_NAMESPACES
-    if (getenv("R_NO_BASE_NAMESPACE") != NULL)
-	baseEnv = R_NilValue;
-    else
-	baseEnv = R_BaseNamespace;
+    baseEnv = R_BaseNamespace;
 #else
     baseEnv = R_NilValue;
 #endif

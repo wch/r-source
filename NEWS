@@ -288,8 +288,13 @@ NEW FEATURES
     o	QR objects now have class "qr", and solve.qr() is now just the
 	method for solve() for the class.
 
-    o   New function topenv() to determine the nearest top level
-	environment (usually .GlobalEnv or a name space environment).
+    o   Changes to support name spaces:
+
+	- Placing base in a name space can no longer be disabled by
+          defining the environment variable R_NO_BASE_NAMESPACE.
+
+        - New function topenv() to determine the nearest top level
+          environment (usually .GlobalEnv or a name space environment).
 
     o	lm.influence() has a new `do.coef' argument allowing *not* to
 	compute casewise changed coefficients.	This makes plot.lm() much
