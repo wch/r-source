@@ -382,13 +382,13 @@ Get the R sources. Suppose you want to compile R-0.90.0.
       cd R-0.90.0
       cd src\gnuwin32
 
-Now read the README and set up all the tools needed. Then you can just use
-`make', sit back and wait. (A complete build takes about 15 minutes on a
-300MHz PII with a fast local disc.)
+Now read the INSTALL file and set up all the tools needed. Then you
+can just use `make', sit back and wait. (A complete build takes about
+15 minutes on a 300MHz PII with a fast local disc.)
 
-You do need to compile under a case-honouring file system: we found that a
-samba-mounted file system (which maps all file names to lower case) did not
-work.
+You may need to compile under a case-honouring file system: we found
+that a samba-mounted file system (which maps all file names to lower
+case) did not work.
 
 
 6.2) How do I debug code that I have compiled and dyn.load-ed?
@@ -483,4 +483,4 @@ Rterm.exe.)  Use Rprintf instead.
 
 
   ------------------------------------------------------------------------
-Last edited 24 September 1999 by Brian Ripley <ripley@stats.ox.ac.uk>
+Last edited 13 November 1999 by Brian Ripley <ripley@stats.ox.ac.uk>

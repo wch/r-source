@@ -1,0 +1,141 @@
+R 0.90.0 for Windows 9x and NT
+==============================
+
+This distribution contains a binary distribution of R-0.90.0 to run on
+Windows 95, 98 and NT4 on Intel/clone chips. See README for fuller
+details, including how to install the binary versions.
+
+
+Building From Source
+====================
+
+[Some further details, including how to debug, are given in the RW-FAQ.]
+
+First collect the tools that you need.
+
+Building on Windows
+-------------------
+
+We recommend that you use the mingw32 port of gcc-2.95 by Mumit Khan from
+ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will also
+need suitable versions of make, sh, rm, sed, awk, mkdir, echo, cp and
+cat; we have packaged a set at CRAN/bin/windows/windows-NT/base/etc/tools.zip
+extracted from the cygwin distribution
+(http://sourceware.cygnus.com/cygwin and several mirrors). To avoid
+past problems on some versions of Windows95, we use the cygwin ld
+contained in that set, which must be before the mingw32 one in your
+path. (We have no way of knowing if this is still necessary.)
+
+It is also possible to use earlier mingw32 compilers or cygwin-b20.1
+with the --no-cygwin flag, but we suggest you do so only if you have a
+working setup from building earlier versions of R.  We have also
+successfully used the variant of mingw32 that uses the MSVCRT run-time 
+system (under gcc-2.95 but not earlier versions).
+Be aware that not all Windows machines have MSVCRT.DLL installed.
+
+(If you want to use cygwin, we suggest you upgrade to gcc-2.95 by
+installing the files gcc-2.95-cygb20.tar.gz and gcc-2.95-mingw-extra.tar.gz
+from ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin32.)
+
+perl5, available via http://www.perl.com/CPAN/ports.
+
+groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
+
+zip and unzip from the Info-ZIP project
+(ftp://ftp.cdrom.com/pub/infozip/Info-ZIP.html and mirrors).
+
+If you want to make compiled html (.chm) files you will need the
+Microsoft HTML Help Workshop, available for download at 
+http://msdn.microsoft.com/workshop/author/htmlhelp.
+
+If you want to make Windows (.hlp) files you will need a Windows help
+compiler, preferably hcrtf.exe. This is available for download at
+ftp://ftp.microsoft.com/support/MSLFILES/HCWSETUP.EXE.
+
+All of these need to be installed and in your path, and the
+appropriate environment variables set.
+
+You also need: the R source (R-0.90.0.tgz), and to build the
+installer, unzip5.40.zip from any Info-Zip mirror.  Do remember to set
+MAKE_MODE to UNIX (set MAKE_MODE=UNIX at the Windows command-line).
+
+
+Then: untar R-0.90.0.tgz somewhere,
+
+	cd /somewhere/R-0.90.0/src/gnuwin32
+
+edit MkRules to set the appropriate paths as needed
+edit Makefile to set the type(s) of help that you want built.
+
+and run
+
+	make BUILD=MINGW32 or CYGWIN
+
+
+Note 1: the file rw0900\unzip\unzip32.dll is not in the source
+distribution, nor are the sources (it is the standard Info-Zip unzip
+5.40, built with MSVC++4.2). You will need to copy it from a binary
+distribution.
+
+The file rw0900\bin\Rchtml.dll is only built if chm help is specifed
+in the main Makefile. Its source is the help directory, and you need
+the HTML Help Workshop files to build it. It contains instructions
+to build it under VC++6, and it is preferable to use that as the 
+VC++ library will check versions of the components needed. You can just
+copy this from a binary distribution.
+
+The file rw0900\bin\Rbitmap.dll is not built automatically:
+instructions on how to build it are in the file bitmap\INSTALL.  You
+can just copy this from a binary distribution.
+
+
+Note 2: we are aware that because of limitations in line length or in
+the shell used that the Makefiles do not work unchanged on all the
+possible combinations of tools, compilers and OSes.  We have tested
+the Cygwin make and shell under NT, and cross-building (see below).
+
+
+Note 3: building libR.a is highly disk intensive and can take several
+minutes even on a local disc. We have seen times from 30 secs to 20
+minutes. Using a network file system is likely to take longer.
+
+
+You can test a build by `make check': expect some differences in the tests
+of print routines.
+
+
+Cross-building on i386 Linux
+----------------------------
+
+You will need i386-mingw32 cross-compilers installed: see
+
+http://www.xraylith.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
+
+and ensure that these are in your path. You will need Perl and nroff
+installed.
+
+You also need: the R source (R-0.90.0.tgz), and to build the installer,
+unzip5.40.zip from any Info-ZIP mirror.
+
+Then: untar R-0.90.0.tgz somewhere
+
+	cd /somewhere/R-0.90.0/src/gnuwin32
+
+Edit MkRules to set BUILD=CROSS and the appropriate paths as needed.
+Edit Makefile to set the type(s) of help that you want built. (You
+will not be able to cross-build .chm or .hlp files, nor Rchmtl.dll.)
+
+Set the environment variable TEMP to, say, /tmp, and make.
+
+Packages can be made in the same way as natively: see the file
+readme.packages.
+
+
+
+Feedback
+========
+
+Please send comments and bug reports to (preferably both of)
+
+    Guido Masarotto <guido@hal.stat.unipd.it>
+    Brian Ripley <ripley@stats.ox.ac.uk>

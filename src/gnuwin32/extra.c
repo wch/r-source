@@ -162,13 +162,13 @@ SEXP do_helpstart(SEXP call, SEXP op, SEXP args, SEXP env)
     home = getenv("R_HOME");
     if (home == NULL)
 	error("R_HOME not set");
-    sprintf(buf, "%s\\doc\\html\\index.html", home);
+    sprintf(buf, "%s\\doc\\html\\rwin.html", home);
     ff = fopen(buf, "r");
     if (!ff) {
-	sprintf(buf, "%s\\doc\\html\\index.htm", home);
+	sprintf(buf, "%s\\doc\\html\\rwin.htm", home);
 	ff = fopen(buf, "r");
 	if (!ff) {
-	    sprintf(buf, "%s\\doc\\html\\index.htm[l] not found", home);
+	    sprintf(buf, "%s\\doc\\html\\rwin.htm[l] not found", home);
 	    error(buf);
 	}
     }
