@@ -39,8 +39,8 @@ unserialize(connection, refhook = NULL)
   object but not across separate calls to serialize.  If
   \code{connection} is \code{NULL} then \code{object} is serialized to a
   scaler string, which is returned as the result of \code{serialize}.
-  For a text mode connection, the default value of code{ascii} is set
-  to \code{TRUE}
+  For a text mode connection, the default value of \code{ascii} is set
+  to \code{TRUE}.
 
   \code{unserialize} reads an object from \code{connection}.
   \code{connection} may also be a scaler string.
@@ -50,13 +50,13 @@ unserialize(connection, refhook = NULL)
   references, and all environments other than name space and package
   environments and \code{.GlobalEnv}).  The hook function for
   \code{serialize} should return a character vector for references it
-  wants to handle; otherwise it should return NULL.  The hook for
+  wants to handle; otherwise it should return \code{NULL}.  The hook for
   \code{unserialize} will be called with character vectors supplied to
   \code{serialize} and should return an appropriate object.
 }
 \section{Warning}{
   These functions are still experimental.  Both names, interfaces and
-  values might change in future versions. \code{.saveRDS} and
+  values might change in future versions.  \code{.saveRDS} and
   \code{.readRDS} are intended for internal use.
 }
 \examples{
