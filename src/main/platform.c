@@ -608,9 +608,10 @@ static void count_files(char *dnp, int *count,
 			     R_FileSep, de->d_name);
 		    stat(p, &sb);
 		    if((sb.st_mode & S_IFDIR) > 0) {
-			 count_files(p, count, allfiles, recursive,
-				     pattern, reg);
-			 continue;
+			if (strcmp(de->d_name, ".") && strcmp(de->d_name, ".."))
+				count_files(p, count, allfiles, recursive,
+				   	    pattern, reg);
+			continue;
 		    }
 		}
 #endif
@@ -642,14 +643,16 @@ static void list_files(char *dnp, char *stem, int *count, SEXP ans,
 			     R_FileSep, de->d_name);
 		    stat(p, &sb);
 		    if((sb.st_mode & S_IFDIR) > 0) {
-			if(stem)
-			    snprintf(stem2, PATH_MAX, "%s%s%s", stem,
-				     R_FileSep, de->d_name);
-			else
-			    strcpy(stem2, de->d_name);
-			list_files(p, stem2, count, ans, allfiles, recursive,
+			if (strcmp(de->d_name, ".") && strcmp(de->d_name, "..")) {
+			    if(stem)
+			    	snprintf(stem2, PATH_MAX, "%s%s%s", stem,
+				         R_FileSep, de->d_name);
+			    else
+			    	strcpy(stem2, de->d_name);
+			    list_files(p, stem2, count, ans, allfiles, recursive,
 				   pattern, reg);
-			 continue;
+		    	}
+			continue;
 		    }
 		}
 #endif

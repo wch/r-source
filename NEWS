@@ -44,6 +44,8 @@ BUG FIXES
 
     o	summary.Date() now has a sensible default for 'digits'.
 
+    o	list.files(all.files = TRUE, recursive = TRUE) died on infinite 
+    	recursion. (PR#7100)
 
 
 		CHANGES IN R VERSION 1.9.1
