@@ -202,9 +202,6 @@ char *R_HomeDir()
 
 #ifdef Win32
 # include <windows.h>
-#elif defined(__APPLE__)
-# include <crt_externs.h>
-# define environ (*_NSGetEnviron())
 #else
 extern char ** environ;
 #endif
