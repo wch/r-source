@@ -116,3 +116,8 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
                      method, PACKAGE = "base")
     res[c("d", if(nu) "u", if(nv) "vt")]
 }
+
+La.chol <- function(x) .Call("La_chol", x)
+
+La.chol2inv <- function(x, size=ncol(x))
+    .Call("La_chol2inv", as.matrix(x), size)

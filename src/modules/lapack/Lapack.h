@@ -63,6 +63,25 @@ void F77_NAME(rsyevr)(const char *jobz, const char *range, const char *uplo,
 		      int *iwork, const int *liwork,
 		      int *info);
 
+/* DPOTRF - compute the Cholesky factorization of a real */
+/* symmetric positive definite matrix A */
+void F77_NAME(dpotrf)(const char *uplo, const int *n,
+		      double* a, const int *lda, int *info);
+
+/* DPOTRI - compute the inverse of a real symmetric positive */
+/* definite matrix A using the Cholesky factorization A = U**T*U */
+/* or A = L*L**T computed by DPOTRF */
+void F77_NAME(dpotri)(const char *uplo, const int *n,
+		      double* a, const int *lda, int *info);
+
+/* DPOTRS - solve a system of linear equations A*X = B with a */
+/* symmetric positive definite matrix A using the Cholesky */
+/* factorization A = U**T*U or A = L*L**T computed by DPOTRF */
+void F77_NAME(dpotrs)(const char *uplo, const int *n,
+		      const int *nrhs,
+		      const double* a, const int *lda,
+		      double* b, const int *ldb, int *info);
+
 /* ZGESV computes the solution to a complex system of linear equations */
 void F77_NAME(zgesv)(const int *n, const int *nrhs, Rcomplex *a,
 		     const int *lda, int *ipiv, Rcomplex *b,

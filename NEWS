@@ -163,6 +163,10 @@ NEW FEATURES
 
     o	plot.spec(x) now also works for other x than AR and Pgram results.
 
+    o   New functions La.chol and La.chol2inv for Cholesky
+        decomposition and inverse of positive definite matrices using
+        Lapack.
+ 
 
 DEPRECATED & DEFUNCT
 

@@ -1,5 +1,6 @@
 \name{chol}
 \alias{chol}
+\alias{La.chol}
 \title{The Choleski Decomposition}
 \description{
   Compute the Choleski factorization of a real symmetric
@@ -7,6 +8,7 @@
 }
 \usage{
 chol(x, pivot = FALSE)
+La.chol(x)
 }
 \arguments{
   \item{x}{a real symmetric, positive-definite matrix}
@@ -20,6 +22,9 @@ chol(x, pivot = FALSE)
   \code{"pivot"} and \code{"rank"} are also returned.
 }
 \details{
+  \code{chol} provides an interface to the LINPACK routine DCHDC.
+  \code{La.chol} provides an interface to the LAPACK routine DPOTRF.
+
   Note that only the upper triangular part of \code{x} is used, so
   that \eqn{R'R = x} when \code{x} is symmetric.
 
@@ -50,6 +55,11 @@ chol(x, pivot = FALSE)
 \references{
   Dongarra, J. J., Bunch, J. R., Moler, C. B. and Stewart, G. W. (1978)
   \emph{LINPACK Users Guide.}  Philadelphia: SIAM Publications.
+
+  Anderson. E. and ten others (1999)
+  \emph{LAPACK Users' Guide}. Third Edition. SIAM.\cr
+  Available on-line at
+  \url{http://www.netlib.org/lapack/lug/lapack_lug.html}.
 }
 
 \seealso{
@@ -65,6 +75,9 @@ chol(x, pivot = FALSE)
 ( cm <- chol(m) )
 t(cm) \%*\% cm  #-- = 'm'
 all(abs(m  -  t(cm) \%*\% cm) < 100* .Machine$double.eps) # TRUE
+( Lcm <- La.chol(m) )
+crossprod(Lcm)
+all(abs(m - crossprod(Lcm))  < 100* .Machine$double.eps) # TRUE
 \testonly{# check with pivoting
 ( cm <- chol(m, TRUE) )
 t(cm) \%*\% cm  #-- = 'm'

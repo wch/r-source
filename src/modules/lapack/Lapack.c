@@ -614,6 +614,74 @@ static SEXP modLa_rg_cmplx(SEXP x, SEXP only_values)
 #endif
 }
 
+static SEXP modLa_chol(SEXP A)
+{
+    if (isMatrix(A)) {
+	SEXP ans = PROTECT((TYPEOF(A) == REALSXP)?duplicate(A):
+			   coerceVector(A, REALSXP));
+	SEXP adims = getAttrib(A, R_DimSymbol);
+	int m = INTEGER(adims)[0];
+	int n = INTEGER(adims)[1];
+	int i, j;
+	
+	if (m != n) error("A must be a square matrix");
+	for (j = 0; j < n; j++) {	/* zero the lower triangle */
+	    for (i = j+1; i < n; i++) {
+		REAL(ans)[i + j * n] = 0.;
+	    }
+	}
+
+	F77_CALL(dpotrf)("Upper", &m, REAL(ans), &m, &i);
+	if (i != 0) {
+	    if (i > 0)
+		error("error code %d from Lapack routine dpotrf", i);
+	    error("argument no. %d to Lapack routine dpotrf is illegal",
+		  -i);
+	}
+	unprotect(1);
+	return ans;
+    }
+    else error("A must be a numeric matrix");
+}
+
+static SEXP modLa_chol2inv(SEXP A, SEXP size)
+{
+    int sz = asInteger(size);
+    if (sz == NA_INTEGER || sz < 1)
+	error("size argument must be a positive integer");
+    if (isMatrix(A)) {
+	SEXP Amat = PROTECT(coerceVector(A, REALSXP));
+	SEXP ans;
+	SEXP adims = getAttrib(A, R_DimSymbol);
+	int m = INTEGER(adims)[0];
+	int n = INTEGER(adims)[1];
+	int i, j;
+	
+	if (sz > n) error("size cannot exceed ncol(x) = %d", n);
+	if (sz > m) error("size cannot exceed nrow(x) = %d", m);
+	ans = PROTECT(allocMatrix(REALSXP, sz, sz));
+	for (j = 0; j < sz; j++) {
+	    for (i = 0; i <= j; i++)
+		REAL(ans)[i + j * sz] = REAL(Amat)[i + j * sz];
+	}
+	F77_CALL(dpotri)("Upper", &sz, REAL(ans), &sz, &i);
+	if (i != 0) {
+	    if (i > 0)
+		error("error code %d from Lapack routine dpotri", i);
+	    error("argument no. %d to Lapack routine dpotri is illegal",
+		  -i);
+	}
+	for (j = 0; j < sz; j++) {
+	    for (i = j+1; i < sz; i++)
+		REAL(ans)[i + j * sz] = REAL(ans)[j + i * sz];
+	}
+	unprotect(2);
+	return ans;
+    }
+    else error("A must be a numeric matrix");
+}
+
+
 #include <R_ext/Rlapack.h>
 #include <R_ext/Rdynload.h>
 
@@ -633,7 +701,8 @@ R_init_lapack(DllInfo *info)
     tmp->svd_cmplx = modLa_svd_cmplx;
     tmp->rs_cmplx = modLa_rs_cmplx;
     tmp->rg_cmplx = modLa_rg_cmplx;
-
+    tmp->chol = modLa_chol;
+    tmp->chol2inv = modLa_chol2inv;
     R_setLapackRoutines(tmp);
 }
 
