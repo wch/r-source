@@ -11,7 +11,7 @@
   (and optional noncentrality parameter \code{ncp}).
 }
 \usage{
-dt(x, df, ncp, log = FALSE)
+dt(x, df, ncp=0, log = FALSE)
 pt(q, df, ncp=0, lower.tail = TRUE, log.p = FALSE)
 qt(p, df,        lower.tail = TRUE, log.p = FALSE)
 rt(n, df)

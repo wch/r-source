@@ -215,7 +215,7 @@ dt <- function(x, df, ncp=0, log = FALSE) {
     else .NotYetImplemented()
 }
 
-pt <- function(q, df, ncp, lower.tail = TRUE, log.p = FALSE) {
+pt <- function(q, df, ncp=0, lower.tail = TRUE, log.p = FALSE) {
     if(missing(ncp))
 	.Internal(pt(q, df, lower.tail, log.p))
     else
