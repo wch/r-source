@@ -40,7 +40,7 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
    m[t+1] = m[t] + xi[t], xi[t] ~ N(0, sigma^2_xi)}
  The observations are
  \deqn{x_t = \mu_t + \epsilon_t, \qquad \epsilon_t \sim  N(0, \sigma^2_\epsilon)}{%
-   x[t] = m[t] + eps[t], exp[t] ~  N(0, sigma^2_eps)}
+   x[t] = m[t] + eps[t], eps[t] ~  N(0, sigma^2_eps)}
  There are two parameters, \eqn{\sigma^2_\xi}{sigma^2_xi}
  and \eqn{\sigma^2_\epsilon}{sigma^2_eps}.  It is an ARIMA(0,1,1) model,
  but with restrictions on the parameter set.
