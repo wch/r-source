@@ -15,7 +15,7 @@ NEW FEATURES
 	(bytes/cons cells) with possible 
 	suffixes "M" (Mega), "K"ilo (1024) and "k"ilo(1000).
 
-    o	[pdqr]negbin() now also work with non-integer 'size'.
+    o	[pdqr]negbin() now also work with non-integer 'size' [by Ben Bolker].
 
     o	New standard package `lqs' for resistant regression and
 	covariance estimation, contributed by B. D. Ripley.
@@ -27,6 +27,8 @@ NEW FEATURES
     o	new function jitter()  [slightly more useful than S's].
 
 BUG FIXES
+
+    o	as.ordered(NULL) now returns an "ordered" object.
 
     o	--debugger .. now gives a warning if other command line args are used
 
