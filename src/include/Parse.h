@@ -13,9 +13,11 @@
 SEXP R_Parse1File(FILE*, int, int*);
 SEXP R_Parse1Buffer(IoBuffer*, int, int*);
 SEXP R_Parse1Vector(TextBuffer*, int, int *);
+SEXP R_Parse1General(int (*)(), int (*)(), int, int *);
 
 	/* Parse Several Expressions */
 
 SEXP R_ParseFile(FILE*, int, int*);
 SEXP R_ParseBuffer(IoBuffer*, int, int*, SEXP);
 SEXP R_ParseVector(SEXP, int, int *);
+SEXP R_ParseGeneral(int (*)(), int (*)(), int, int *);
