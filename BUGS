@@ -375,3 +375,31 @@ Date: Mon, 3 Dec 2001 13:46:35 -0800 (PST)
 Subject: pixmap: infinite recursion with nonascii pnm-files
 From: thomas.baumann@ch.tum.de
 Date: Fri, 7 Dec 2001 11:07:52 +0100 (CET)
+* PR# 1200 *
+Subject: bug?/lack of feature in bxp
+From: ritter@stat.ucl.ac.be
+Date: Sun, 9 Dec 2001 12:10:06 +0100 (MET)
+* PR# 1201 *
+Subject: error in qbeta
+From: z.yang@ucl.ac.uk
+Date: Sun, 9 Dec 2001 13:57:04 +0100 (MET)
+* PR# 1202 *
+Subject: Bug#123084: r-base: R documentatio search engine unusable with Mozilla 6 (OK with netscape 4.7x)
+From: Dirk Eddelbuettel <edd@debian.org>
+Date: Sun, 9 Dec 2001 09:34:29 -0600
+* PR# 1203 *
+Subject: Re: [Rd] Bug#123084: r-base: R documentatio search engine unusable
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Sun, 9 Dec 2001 16:39:48 +0000 (GMT)
+* PR# 1204 *
+Subject: [Rd] Bug#123084: r-base: R documentatio search engine unusable
+From: Dirk Eddelbuettel <edd@debian.org>
+Date: Sun, 9 Dec 2001 11:13:00 -0600
+* PR# 1205 *
+Subject: Re: [Rd] Bug#123084: r-base: R documentatio search engine unusable
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Sun, 9 Dec 2001 17:59:06 +0000 (GMT)
+* PR# 1206 *
+Subject: Re: [Rd] Bug#123084: r-base: R documentatio search engine unusable
+From: Dirk Eddelbuettel <edd@debian.org>
+Date: Sun, 9 Dec 2001 13:48:24 -0600
