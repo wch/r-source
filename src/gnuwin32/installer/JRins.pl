@@ -115,10 +115,10 @@ Name: "html"; Description: "HTML Help Files"; Types: user full custom
 Name: "latex"; Description: "Latex Help Files"; Types: full custom
 Name: "manuals"; Description: "On-line (PDF) Manuals"; Types: user full custom
 Name: "refman"; Description: "PDF Reference Manual"; Types: full custom
-Name: "libdocs"; Description: "Docs for packages grid and survival"; Types: user full custom
+Name: "libdocs"; Description: "Docs for Packages grid and survival"; Types: user full custom
 Name: "devel"; Description: "Source Package Installation Files"; Types: user full custom
-Name: "tcl"; Description: "Support Files for library(tcltk)"; Types: user full custom
-Name: "Rd"; Description: "Source files for help pages"; Types: full custom
+Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full custom
+Name: "Rd"; Description: "Source Files for Help Pages"; Types: full custom
 
 [Files]
 END
