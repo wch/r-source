@@ -38,7 +38,7 @@ use Text::DelimMatch;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.76 $ ';
+my $revision = ' $Revision: 1.77 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -901,15 +901,15 @@ sub check_pkg {
 
     ## Run the examples.
 
-    if($opt_examples && <$library/$pkgname/R-ex/*.R>) {
+    if($opt_examples && -d "${library}/${pkgname}/R-ex") {
 	$log->creating("${pkgname}-Ex.R");
         my $iszipped = 0;
 	my $cmd;
 
-        if(-e "${library}/${pkgname}/R-ex/R-ex.zip") {
+        if(-e "${library}/${pkgname}/R-ex/Rex.zip") {
             $iszipped = 1;
-	    my $UNZIP = &R_getenv("R_UNZIPCMD", "unzip");
-            system("$UNZIP ${library}/${pkgname}/R-ex/R-ex.zip " .
+	    my $UNZIP = &R_getenv("R_UNZIPCMD", "unzip -q");
+            system("$UNZIP ${library}/${pkgname}/R-ex/Rex.zip " .
                    "-d ${library}/${pkgname}/R-ex");
         }
         if($WINDOWS) {
