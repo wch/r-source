@@ -67,9 +67,14 @@ glm.fit(x, y, weights = rep(1, nrow(x)),
     The default (and presently only) method \code{glm.fit}
     uses iteratively reweighted least squares (IWLS).}
 
-  \item{x, y}{logical values indicating whether the response
+  \item{x, y}{For \code{glm}:
+    logical values indicating whether the response
     vector and model matrix used in the fitting process
-    should be returned as components of the returned value.}
+    should be returned as components of the returned value.
+
+    For \code{glm.fit}: \code{x} is a design matrix of dimension \code{n
+      * p}, and \code{y} is a vector of observations of length \code{n}.
+  }
 
   \item{contrasts}{an optional list. See the \code{contrasts.arg}
     of \code{model.matrix.default}.}
@@ -137,7 +142,7 @@ glm.fit(x, y, weights = rep(1, nrow(x)),
     \code{deviance}. The null model will include the offset, and an
     intercept if there is one in the model}
   \item{iter}{the number of iterations of IWLS used.}
-  \item{weights}{the \emph{working} residuals, that is the weights
+  \item{weights}{the \emph{working} weights, that is the weights
     in the final iteration of the IWLS fit.}
   \item{prior.weights}{the case weights initially supplied.}
   \item{df.residual}{the residual degrees of freedom.}
