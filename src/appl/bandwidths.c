@@ -2,7 +2,11 @@
  *  bandwidth.c by W. N. Venables and B. D. Ripley  Copyright (C) 1994-2001
  */
 
+#ifdef Macintosh
+#include <fp.h> 
+#else
 #include <math.h>
+#endif
 
 #ifndef max
 #  define max(a,b) ((a) > (b) ? (a) : (b))
