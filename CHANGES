@@ -2,6 +2,15 @@
 
 NEW FEATURES
 
+     o  New  find() function [relying on apropos(..)].
+
+     o  objects(<integer>) now works, being equivalent to
+	objects(pos=<int.>).
+
+     o  storage.mode() and related functions now return
+	"double" instead of "real", for compatibility.
+	"real" is still allowed as synomym for "double".
+
      o  A tests/ directory has been added (in the source), and "make tests"
 	has been modified to run more than all the examples from the base
 	package.  The exact 'make tests' behavior is still bound to change.
@@ -181,6 +190,8 @@ NEW FEATURES
     o   matrices and arrays can have zero extents
 
 BUG FIXES (many of which resulted from the added features...)
+
+    o   which(.) now returns integer.
 
     o   Rd files: leading whitespace of lines in user-defined sections
 	was not correctly removed by Rdconv
