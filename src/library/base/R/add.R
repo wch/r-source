@@ -467,7 +467,7 @@ factor.scope <- function(factor, scope)
     drop <- scope$drop
     add <- scope$add
 
-    if(length(factor) && length(drop)) {# have base model
+    if(length(factor) && !is.null(drop)) {# have base model
 	nmdrop <- colnames(drop)
 	facs <- factor
 	if(length(drop)) {
