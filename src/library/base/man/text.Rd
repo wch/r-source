@@ -13,7 +13,7 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
     \code{y} differs, the shorter one is recycled.}
   \item{labels}{character or expression with the \emph{text} to be
     written.}
-  \item{adj}{one or two numeric values which specify the x
+  \item{adj}{one or two values in \eqn{[0,1]} which specify the x
     (and optionally y) adjustment of the labels.}
   \item{pos}{a position specifier for the text.  If specified this
     overrides any \code{adj} value given.  Values of \code{1},
@@ -39,6 +39,9 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
   greek letters, fractions, etc.
 
   \code{adj} allows \emph{adj}ustment of the text with respect to \code{(x,y)}.
+  Values of 0, 0.5, and 1 specify left/top, middle and
+  right/bottom, respectively.  The default is for centered text, i.e.,
+  \code{adj = c(0.5, 0.5)}.
 
   The \code{pos} and \code{offset} arguments can be used in conjunction
   with values returned by \code{identify} to recreate an interactively
