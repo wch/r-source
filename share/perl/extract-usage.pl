@@ -26,7 +26,7 @@ use R::Rdtools;
 use R::Utils;
 use R::Rd;
 
-my $revision = ' $Revision: 1.2 $ ';
+my $revision = ' $Revision: 1.3 $ ';
 my $version;
 my $name;
 
@@ -70,6 +70,8 @@ while (<INFILE>) {
     print OUTFILE "# usages in file $_\n";
 
     my $text = R::Rd::Rdpp($_, $OSdir);
+
+    print OUTFILE "# arglist: ", join(" ", get_arglist($text)), "\n";
 
     {
 	local $/; # unset for get_usages
