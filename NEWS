@@ -80,6 +80,12 @@ NEW FEATURES
 	the generic and refer to the same file. This reduces the
 	clutter considerably.
 
+    o   New functions points.formula() and lines.formula() to supplement
+        plot.formula(). The latter has been enhanced so that all
+        arguments are now evaluated in the supplied data frame and all
+        subsettable arguments are subsetted. Notice that the data=
+        argument can no longer be given as a positional argument but
+        must be given in keyword form.
 
 BUG FIXES
 

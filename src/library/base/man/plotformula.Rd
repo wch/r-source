@@ -1,42 +1,55 @@
 \name{plot.formula}
 \title{Formula Notation for Scatterplots}
 \usage{
-plot.formula(formula, data = NULL, subset, na.action, \dots, ask = TRUE)
+plot.formula(formula, \dots, data = parent.frame(), subset,
+             ylab = varnames[response], ask = TRUE)
+points.formula(formula, \dots, data = parent.frame(), subset)
+lines.formula(formula, \dots, data = parent.frame(), subset)
 plot(y ~ x, \dots)
+points(y ~ x, \dots)
+lines(y ~ x, \dots)
 }
 \alias{plot.formula}
+\alias{lines.formula}
+\alias{points.formula}
 \arguments{
   \item{formula}{a \code{\link{formula}}, such as \code{y ~ x}.}
   \item{data}{a data.frame (or list) from which the variables in
     \code{formula} should be taken.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used in the fitting process.}
-  \item{na.action}{a function which indicates what should happen
-    when the data contain \code{NA}s.  The default action (\code{na.omit})
-    is to omit any incomplete observations.
-    The alternative action \code{na.fail} causes \code{plot} to
-    print an error message and terminate if there are any incomplete
-    observations.}
-  \item{\dots}{graphical parameters may also be passed as arguments, see
-    \code{\link{par}}. These can include \code{ylab}, which if not
-    supplied is set by \code{plot.formula}.}
+  \item{ylab}{the y label of the plot(s)}
+  \item{\dots}{Further graphical parameters may also be passed as
+    arguments, see \code{\link{par}}}. 
   \item{ask}{logical, see \code{\link{par}}.}
 }
 \description{
-  Specify a scatterplot via a formula.
+  Specify a scatterplot or add points or lines via a formula.
+}
+\details{
+  Both the terms in the formula and the \code{\dots} arguments are
+  evaluated in \code{data} enclosed in \code{parent.frame()} if
+  \code{data} is a list or a data frame. The terms of the formula and
+  those arguments in \code{\dots} that are of the same length as
+  \code{data} are subjected to the subsetting specified in
+  \code{subset}. If the formula in \code{plot.formula} contains more
+  than one non-response term, a series of plots of y against each term
+  is given. A plot against the running index can be specified as
+  \code{plot(y~1)}. 
 }
 \value{
-  This function is invoked for its side effect of drawing a scatter plot
-  in the active graphics window.
+  These functions are invoked for their side effect of drawing 
+  in the active graphics device.
 }
 \seealso{
   \code{\link{plot.default}}, \code{\link{plot.factor}}.
 }
 \examples{
-data(swiss)
+data(airquality)
 op <- par(mfrow=c(2,1))
-plot(Fertility ~ Education, data = swiss)
-plot(Fertility ~ Education, data = swiss, subset = Education < 20)
+plot(Ozone ~ Wind, data = airquality, pch=as.character(Month))
+plot(Ozone ~ Wind, data = airquality, pch=as.character(Month),
+     subset = Month != 7)
 par(op)
 }
 \keyword{hplot}

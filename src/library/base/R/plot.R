@@ -182,19 +182,88 @@ plot.formula <- function(formula, ..., data = parent.frame(), subset,
                 do.call("plot",
                         c(list(mf[[i]], y, ylab = ylab, xlab = i), dots))
 	} else {
-	    for (i in xn) 
+	    for (i in xn)
                 do.call("plot",
                         c(list(mf[[i]], y, ylab = ylab), dots))
         }
         if (length(xn) == 0)
-            if (is.null(dots[["xlab"]])) 
+            if (is.null(dots[["xlab"]]))
                 do.call("plot",
                         c(list(y, ylab = ylab, xlab = i), dots))
-            else 
+            else
                 do.call("plot",
                         c(list(y, ylab = ylab), dots))
     }
     else plot.data.frame(mf)
+}
+lines.formula <- function(formula, ..., data = parent.frame(), subset)
+{
+    m <- match.call(expand.dots = FALSE)
+    if (is.matrix(eval(m$data, parent.frame())))
+	m$data <- as.data.frame(data)
+    dots <- m$...
+    dots <- lapply(dots, eval, data, parent.frame())
+    m$... <- NULL
+    m[[1]] <- as.name("model.frame")
+    m <- as.call(c(as.list(m), list(na.action = NULL)))
+    mf <- eval(m, parent.frame())
+    if (!missing(subset)) {
+        s <- eval(m$subset, data, parent.frame())
+        l <- nrow(data)
+        dosub <- function(x) if (length(x) == l) x[s] else x
+        dots <- lapply(dots, dosub)
+    }
+    response <- attr(attr(mf, "terms"), "response")
+    if (response) {
+	varnames <- names(mf)
+	y <- mf[[response]]
+	if (length(varnames) > 2)
+	    stop("cannot handle more than one x coordinate")
+	xn <- varnames[-response]
+        if (length(xn) == 0)
+            do.call("lines",
+                    c(list(y), dots))
+        else
+            do.call("lines",
+                    c(list(mf[[xn]], y), dots))
+    }
+    else
+        stop("must have a response variable")
+}
+
+points.formula <- function(formula, ..., data = parent.frame(), subset)
+{
+    m <- match.call(expand.dots = FALSE)
+    if (is.matrix(eval(m$data, parent.frame())))
+	m$data <- as.data.frame(data)
+    dots <- m$...
+    dots <- lapply(dots, eval, data, parent.frame())
+    m$... <- NULL
+    m[[1]] <- as.name("model.frame")
+    m <- as.call(c(as.list(m), list(na.action = NULL)))
+    mf <- eval(m, parent.frame())
+    if (!missing(subset)) {
+        s <- eval(m$subset, data, parent.frame())
+        l <- nrow(data)
+        dosub <- function(x) if (length(x) == l) x[s] else x
+        dots <- lapply(dots, dosub)
+    }
+    response <- attr(attr(mf, "terms"), "response")
+    if (response) {
+	varnames <- names(mf)
+	y <- mf[[response]]
+	if (length(varnames) > 2)
+	    stop("cannot handle more than one x coordinate")
+	xn <- varnames[-response]
+        if (length(xn) == 0)
+            do.call("points",
+                    c(list(y), dots))
+        else
+            do.call("points",
+                    c(list(mf[[xn]], y), dots))
+    }
+    else
+        stop("must have a response variable")
 }
 
 plot.xy <- function(xy, type, pch = 1, lty = "solid", col = par("fg"),
