@@ -14,7 +14,7 @@ gcinfo(verbose)
 A call of \code{gc} causes a garbage collection to take place.
 This usually takes place automagically without user intervention.
 \code{gc} returns a 2*2 matrix with rows \code{"Ncells"} (\emph{cons
-    cells}) and \code{"Vcells"} (\emph{vector cells}),
+    cells}) and \code{"Vcells"} (\emph{vector cells}, 8 bytes each),
 and columns \code{"free"} and \code{"total"}.
 
 The associated function \code{gcinfo} sets a flag so that
