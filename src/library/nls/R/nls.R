@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.25 2003/07/28 14:47:45 ripley Exp $
+### $Id: nls.R,v 1.26 2003/08/10 09:24:39 ripley Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -485,7 +485,6 @@ summary.nls <- function (object, ...)
     pnames <- names(param)
     p <- length(param)
     rdf <- n - p
-    p1 <- 1:p
     f <- as.vector(object$m$fitted())
     w <- z$weights
     R <- z$m$Rmat()

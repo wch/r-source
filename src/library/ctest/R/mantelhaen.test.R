@@ -49,7 +49,7 @@ function(x, y = NULL, z = NULL,
 
         NVAL <- 1
         names(NVAL) <- "common odds ratio"
-        
+
         if(!exact) {
             ## Classical Mantel-Haenszel 2 x 2 x K test
             s.x <- apply(x, c(1, 3), sum)
@@ -90,7 +90,7 @@ function(x, y = NULL, z = NULL,
                        greater = c(ESTIMATE * exp(qnorm(conf.level,
                                    lower = FALSE) * sd), Inf),
                        two.sided = {
-                           ESTIMATE * exp(c(1, -1) * 
+                           ESTIMATE * exp(c(1, -1) *
                                           qnorm((1 - conf.level) / 2) * sd)
                        })
             RVAL <- list(statistic = STATISTIC,
@@ -175,7 +175,7 @@ function(x, y = NULL, z = NULL,
                            d <- dc      # same as dn2x2xk(1)
                            sum(d[d <= d[s - lo + 1] * relErr])
                        })
-            
+
             ## Determine the MLE for ncp by solving E(S) = s, where the
             ## expectation is with respect to the above distribution.
             mle <- function(x) {
@@ -194,7 +194,7 @@ function(x, y = NULL, z = NULL,
                     1
             }
             ESTIMATE <- mle(s)
-            
+
             ## Determine confidence intervals for the odds ratio.
             ncp.U <- function(x, alpha) {
                 if(x == hi)
@@ -227,18 +227,18 @@ function(x, y = NULL, z = NULL,
             CINT <- switch(alternative,
                            less = c(0, ncp.U(s, 1 - conf.level)),
                            greater = c(ncp.L(s, 1 - conf.level), Inf),
-                           two.sided <- {
+                           two.sided = {
                                alpha <- (1 - conf.level) / 2
                                c(ncp.L(s, alpha), ncp.U(s, alpha))
                            })
 
             STATISTIC <- s
             names(STATISTIC) <- "S"
-            
+
             RVAL <- list(statistic = STATISTIC,
                          p.value = PVAL)
         }
-        
+
         names(ESTIMATE) <- names(NVAL)
         attr(CINT, "conf.level") <- conf.level
         RVAL <- c(RVAL,

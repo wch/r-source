@@ -85,7 +85,7 @@ make.xaxis.major <- function(at, main) {
   grid.lines(unit(c(min(at), max(at)), "native"),
          unit(y, "npc"), draw=FALSE)
 }
-    
+
 make.xaxis.ticks <- function(at, main) {
   if (main) {
     tick.y0 <- unit(0, "npc")
@@ -95,9 +95,9 @@ make.xaxis.ticks <- function(at, main) {
     tick.y0 <- unit(1, "npc")
     tick.y1 <- unit(1, "npc") + unit(.5, "lines")
   }
-  ticks <- grid.segments(unit(at, "native"), tick.y0,
-                     unit(at, "native"), tick.y1,
-                     draw=FALSE)
+  grid.segments(unit(at, "native"), tick.y0,
+                unit(at, "native"), tick.y1,
+                draw=FALSE)
 }
 
 make.xaxis.labels <- function(at, main) {
@@ -107,7 +107,7 @@ make.xaxis.labels <- function(at, main) {
   else
     label.y <- unit(1, "npc") + unit(1.5, "lines")
   grid.text(as.character(at), unit(at, "native"), label.y,
-                    just="centre", rot=0, 
+                    just="centre", rot=0,
                     check.overlap=TRUE, draw=FALSE)
 }
 
@@ -145,7 +145,7 @@ draw.details.yaxis <- function(x, x.wrapped, recording=TRUE) {
     at <- grid.pretty(current.viewport()$yscale)
     grid.edit(x.wrapped, at=at, redraw=FALSE)
     x <- grid.get(x.wrapped)
-  }    
+  }
   NextMethod()
 }
 
@@ -172,7 +172,7 @@ make.yaxis.major <- function(at, main) {
     x <- c(1, 1)
   grid.lines(unit(x, "npc"), unit(c(min(at), max(at)), "native"), draw=FALSE)
 }
-    
+
 make.yaxis.ticks <- function(at, main) {
   if (main) {
     tick.x0 <- unit(0, "npc")
@@ -182,9 +182,9 @@ make.yaxis.ticks <- function(at, main) {
     tick.x0 <- unit(1, "npc")
     tick.x1 <- unit(1, "npc") + unit(.5, "lines")
   }
-  ticks <- grid.segments(tick.x0, unit(at, "native"), 
-                     tick.x1, unit(at, "native"),
-                     draw=FALSE)
+  grid.segments(tick.x0, unit(at, "native"),
+                tick.x1, unit(at, "native"),
+                draw=FALSE)
 }
 
 make.yaxis.labels <- function(at, main) {
@@ -197,7 +197,7 @@ make.yaxis.labels <- function(at, main) {
     label.x <- unit(1, "npc") + unit(1, "lines")
   }
   just <- c(hjust, "centre")
-  grid.text(as.character(at), label.x, unit(at, "native"), 
+  grid.text(as.character(at), label.x, unit(at, "native"),
         just=just, rot=0, check.overlap=TRUE, draw=FALSE)
 }
 
@@ -229,7 +229,7 @@ grid.yaxis <- function(at=NULL, label=TRUE, main=TRUE, gp=gpar(),
 }
 
 ######################################
-# Simple "side-effect" plotting functions         
+# Simple "side-effect" plotting functions
 ######################################
 
 grid.grill <- function(h=unit(seq(0.25, 0.75, 0.25), "npc"),

@@ -63,19 +63,18 @@ function (x, n, p.adjust.method = p.adjust.methods, ...)
     if (is.matrix(x)) {
         if (ncol(x) != 2)
             stop("x must have 2 columns")
-         l <- nrow(x)
         n <- rowSums(x)
         x <- x[, 1]
     }
     else {
         DNAME <- paste(DNAME, "out of", deparse(substitute(n)))
-        if ((l <- length(x)) != length(n))
+        if (length(x) != length(n))
             stop("x and n must have the same length")
     }
     OK <- complete.cases(x, n)
     x <- x[OK]
     n <- n[OK]
-    if ((k <- length(x)) < 2)
+    if (length(x) < 2)
         stop("Too few groups")
     compare.levels <- function(i, j) {
         prop.test(x[c(i,j)], n[c(i,j)], ...)$p.value

@@ -154,7 +154,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
                        })
             RVAL <- list(p.value = PVAL)
         }
-        
+
         ## Determine the MLE for ncp by solving E(X) = x, where the
         ## expectation is with respect to H.
         mle <- function(x) {
@@ -173,7 +173,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
         }
         ESTIMATE <- mle(x)
         names(ESTIMATE) <- "odds ratio"
-        
+
         ## Determine confidence intervals for the odds ratio.
         ncp.U <- function(x, alpha) {
             if(x == hi)
@@ -206,12 +206,12 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
         CINT <- switch(alternative,
                        less = c(0, ncp.U(x, 1 - conf.level)),
                        greater = c(ncp.L(x, 1 - conf.level), Inf),
-                       two.sided <- {
+                       two.sided = {
                            alpha <- (1 - conf.level) / 2
                            c(ncp.L(x, alpha), ncp.U(x, alpha))
                        })
         attr(CINT, "conf.level") <- conf.level
-        
+
         RVAL <- c(RVAL,
                   list(conf.int = CINT,
                        estimate = ESTIMATE,

@@ -136,8 +136,8 @@ function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                 ## wdiff(d, zq) returns the absolute difference between
                 ## the asymptotic Wilcoxon statistic of x - mu - d and
                 ## the quantile zq.
-                CORRECTION.CI <- 0
                 wdiff <- function(d, zq) {
+                    CORRECTION.CI <- 0
                     xd <- x - d
                     xd <- xd[xd != 0]
                     nx <- length(xd)

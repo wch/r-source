@@ -90,27 +90,26 @@ conditionCall.condition <- function(c) c$call
 print.condition <- function(x, ...) {
     msg <- conditionMessage(x)
     call <- conditionCall(x)
-    class <- class(x)[1]
+    cl <- class(x)[1]
     if (! is.null(call))
-        cat("<", class, " in ", deparse(call), ": ", msg, ">\n", sep="")
+        cat("<", cl, " in ", deparse(call), ": ", msg, ">\n", sep="")
     else
-        cat("<", class, ": ", msg, ">\n", sep="")
+        cat("<", cl, ": ", msg, ">\n", sep="")
 }
 
 as.character.condition <- function(x, ...) {
     msg <- conditionMessage(x)
     call <- conditionCall(x)
-    class <- class(x)[1]
+    cl <- class(x)[1]
     if (! is.null(call))
-        paste(class, " in ", deparse(call)[1], ": ", msg, "\n", sep="")
+        paste(cl, " in ", deparse(call)[1], ": ", msg, "\n", sep="")
     else
-        paste(class, ": ", msg, "\n", sep="")
+        paste(cl, ": ", msg, "\n", sep="")
 }
 
 as.character.error <- function(x, ...) {
     msg <- conditionMessage(x)
     call <- conditionCall(x)
-    class <- class(x)[1]
     if (! is.null(call))
         paste("Error in ", deparse(call)[1], ": ", msg, "\n", sep="")
     else
@@ -144,7 +143,7 @@ findRestart <- function(name, cond = NULL) {
         r <- .Internal(.getRestart(i))
         if (is.null(r))
             return(NULL)
-        else if (name == r[[1]] && 
+        else if (name == r[[1]] &&
                  (is.null(cond) || is.null(r$test) || r$test(cond)))
             return(r)
         else i <- i + 1
@@ -171,7 +170,7 @@ invokeRestart <- function(r, ...) {
             stop(paste("no restart", sQuote(r), "found"))
         r <- res
     }
-    .Internal(.invokeRestart(r, list(...)))    
+    .Internal(.invokeRestart(r, list(...)))
 }
 
 invokeRestartInteractively <- function(r) {

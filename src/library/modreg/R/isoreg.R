@@ -3,7 +3,7 @@
 isoreg <- function(x, y=NULL)
 {
     xy <- xy.coords(x,y)
-    n <- length(x <- xy$x)
+    x <- xy$x
     isOrd <- (!is.null(xy$xlab) && xy$xlab == "Index") || !is.unsorted(x)
     if(!isOrd) {
         ord <- order(x)
@@ -11,7 +11,8 @@ isoreg <- function(x, y=NULL)
     }
     z <- .Call("R_isoreg", if(isOrd)xy$y else yo, PACKAGE = "modreg")
     structure(c(xy[c("x","y")], z[c("yf","yc","iKnots")],
-                list(isOrd = isOrd, ord = if(!isOrd) ord, call = match.call())),
+                list(isOrd = isOrd, ord = if(!isOrd) ord,
+                     call = match.call())),
 	      class = "isoreg")
 }
 
@@ -33,7 +34,7 @@ print.isoreg <- function(x, digits = getOption("digits"), ...) {
 
 plot.isoreg <-
     function(x, plot.type = c("single", "row.wise", "col.wise"),
-	     main = paste("Isotonic regression",deparse(x$call)),
+	     main = paste("Isotonic regression", deparse(x$call)),
 	     main2= "Cumulative Data and Convex Minorant",
 	     xlab = "x0", ylab = "x$y",
 	     par.fit = list(col = "red", cex = 1.5, pch = 13, lwd = 1.5),

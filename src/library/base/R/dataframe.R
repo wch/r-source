@@ -937,12 +937,11 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	for(i in (1:nvar)[has.dim])
 	    if(!inherits(xi <- value[[i]], "data.frame")) {
 		dn <- dimnames(xi)
-		row.names <- dn[[1]]
-		if(length(row.names) > 0)
-		    length(row.names) <- rmax
+		rn <- dn[[1]]
+		if(length(rn) > 0) length(rn) <- rmax
 		pi <- dim(xi)[2]
 		length(xi) <- rmax * pi
-		value[[i]] <- array(xi, c(rmax, pi), list(row.names, dn[[2]]))
+		value[[i]] <- array(xi, c(rmax, pi), list(rn, dn[[2]]))
 	    }
     }
     for(i in 1:n) {

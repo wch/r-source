@@ -90,8 +90,8 @@ draw.details.arrows <- function(x, x.wrapped, recording=TRUE) {
   if (is.null(x$x)) { # y should be null too
     if (!is.null(x$y))
       stop("Corrupt arrows object")
-    list.struct <- get.value(x$grob)  
-    cl <- class(list.struct)
+    list.struct <- get.value(x$grob)
+#    cl <- class(list.struct)
     # This could be done via method dispatch, but that really
     # seemed like overkill
     if (inherits(list.struct, "line.to")) {
@@ -100,7 +100,7 @@ draw.details.arrows <- function(x, x.wrapped, recording=TRUE) {
       y1 <- NULL
       y2 <- list.struct$y
       xnm1 <- NULL
-      xn <- list.struct$x      
+      xn <- list.struct$x
       ynm1 <- NULL
       yn <- list.struct$y
     } else if (inherits(list.struct, "lines")) {
@@ -192,7 +192,7 @@ draw.details.polygon <- function(x, x.wrapped, recording=TRUE) {
 }
 
 grid.polygon <- function(x=c(0, 0.5, 1, 0.5), y=c(0.5, 1, 0.5, 0),
-                         default.units="npc", 
+                         default.units="npc",
                          gp=gpar(),draw=TRUE, vp=NULL) {
   if (!is.unit(x))
     x <- unit(x, default.units)
@@ -212,7 +212,7 @@ draw.details.circle <- function(x, x.wrapped, recording=TRUE) {
 }
 
 grid.circle <- function(x=0.5, y=0.5, r=0.5,
-                         default.units="npc", 
+                         default.units="npc",
                          gp=gpar(),draw=TRUE, vp=NULL) {
   if (!is.unit(x))
     x <- unit(x, default.units)
@@ -243,7 +243,7 @@ height.details.rect <- function(x) {
 
 grid.rect <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
                       width=unit(1, "npc"), height=unit(1, "npc"),
-                      just="centre", default.units="npc", 
+                      just="centre", default.units="npc",
                       gp=gpar(),draw=TRUE, vp=NULL) {
   if (!is.unit(x))
     x <- unit(x, default.units)
@@ -263,7 +263,7 @@ grid.rect <- function(x=unit(0.5, "npc"), y=unit(0.5, "npc"),
 ######################################
 draw.details.text <- function(x, x.wrapped, recording=TRUE) {
   # FIXME:  Need type checking for "rot" and "check.overlap"
-  grid.Call.graphics("L_text", x$label, x$x, x$y, 
+  grid.Call.graphics("L_text", x$label, x$x, x$y,
                  valid.just(x$just), x$rot, x$check.overlap)
 }
 
@@ -313,7 +313,7 @@ valid.pch <- function(pch) {
 
 grid.points <- function(x=runif(10),
                         y=runif(10),
-                        pch=1, size=unit(1, "char"), 
+                        pch=1, size=unit(1, "char"),
                         default.units="native", gp=gpar(),
                         draw=TRUE, vp=NULL) {
   if (!is.unit(x))

@@ -95,7 +95,7 @@ plot.hclust <-
 	stop("invalid dendrogram")
     n <- nrow(merge)
     height <- as.double(x$height)
-    order <- as.double(order(x$order))
+    ord <- as.double(order(x$order))
 
     labels <-
 	if(missing(labels) || is.null(labels)) {
@@ -111,8 +111,8 @@ plot.hclust <-
 	}
 
     plot.new()
-    .Internal(dend.window(n, merge, height, order, hang, labels, ...))
-    .Internal(dend       (n, merge, height, order, hang, labels, ...))
+    .Internal(dend.window(n, merge, height, ord, hang, labels, ...))
+    .Internal(dend       (n, merge, height, ord, hang, labels, ...))
     if(axes)
         axis(2, at=pretty(range(height)))
     if (frame.plot)
