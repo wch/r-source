@@ -10,9 +10,15 @@ subdir = tests
 
 include $(top_builddir)/Makeconf
 
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = Makefile.in README \
+	mode-methods.R make*.R \
+	$(TESTsrc) \
+	$(TESTsrc:.R=.Rout.save)
 SUBDIRS = Examples
 
 R = LC_ALL=C $(top_builddir)/bin/R --vanilla
+RDIFF = $(top_srcdir)/tools/Rdiff
 
 TESTsrc-strict-1 = \
 	arith-true.R \
@@ -46,12 +52,6 @@ TESTout = $(TESTsrc:.R=.Rout)
 TESTout-Rdiff = $(TESTsrc-Rdiff:.R=.Rout)
 TESTout-NO-diff = $(TESTsrc-NO-diff:.R=.Rout)
 
-distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in README Rdiff \
-	mode-methods.R make*.R \
-	$(TESTsrc) \
-	$(TESTsrc:.R=.Rout.save)
-
 .SUFFIXES:
 .SUFFIXES: .R .Rout
 
@@ -78,7 +78,7 @@ $(TESTout-Rdiff): %.Rout : %.R
 	  $(R) < $< > $@)
 	@echo @ECHO_N@ \
 	  "Comparing \`$@' to \`$(srcdir)/$@.save' ...@ECHO_C@"
-	@$(srcdir)/Rdiff $@ $(srcdir)/$@.save $(RVAL_IF_DIFF) || \
+	@$(RDIFF) $@ $(srcdir)/$@.save $(RVAL_IF_DIFF) || \
 	  (mv $@ $@.fail && exit 1)
 	@echo "@ECHO_T@ OK"
 
