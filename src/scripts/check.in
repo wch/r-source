@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.137 $ ';
+my $revision = ' $Revision: 1.138 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -1421,8 +1421,7 @@ sub check_pkg {
                 ## this in case of problems.  But does this really help?
 		my $cmd = "${R::Vars::LATEX}";
 		$cmd .= " '\\nonstopmode{}\\input{${pkgname}-manual.tex}'";
-		$cmd .= " >/dev/null";
-		$cmd .= " 2>&1" if($R::Vars::OSTYPE eq "unix");
+		$cmd .= " >/dev/null 2>&1";
 		## </NOTE>
 		if(R_system($cmd)) {
 		    $log->error();
@@ -1437,8 +1436,7 @@ sub check_pkg {
 	    if($HAVE_LATEX) {
 		$log->checking("DVI version of manual");
 		my $cmd = "${R::Vars::R_CMD} Rd2dvi --batch --no-preview";
-		$cmd .= " -o ${pkgname}-manual.dvi >/dev/null";
-		$cmd .= " 2>&1" if($R::Vars::OSTYPE eq "unix");
+		$cmd .= " -o ${pkgname}-manual.dvi >/dev/null 2>&1";
 		$cmd .= " $pkgdir";
 		if(R_system($cmd)) {
 		    $log->error();
