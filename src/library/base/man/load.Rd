@@ -1,5 +1,6 @@
 \name{load}
 \alias{load}
+\alias{loadURL}
 \title{Reload Saved Datasets}
 \description{
   Reload the datasets written to a file with the function \code{save}.
