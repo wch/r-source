@@ -108,6 +108,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   read.table(as.is = TRUE) would leave everything as character.
+	Now it correctly tries to convert to numeric.
+
     o   Empty lists now deparse correctly.
 
     o   Fix problems in scan(flush = TRUE).
