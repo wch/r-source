@@ -2,11 +2,11 @@
 \alias{cor.test}
 \alias{cor.test.default}
 \alias{cor.test.formula}
-\title{Test for Association Between Paired Samples}
+\title{Test for Association/Correlation Between Paired Samples}
 \description{
   Test for association between paired samples, using one of
   Pearson's product moment correlation coefficient,
-  Kendall's \eqn{\tau}{tau} or Spearman's \eqn{\rho}{rho}.  
+  Kendall's \eqn{\tau}{tau} or Spearman's \eqn{\rho}{rho}.
 }
 \usage{
 \method{cor.test}{default}(x, y,
@@ -69,9 +69,9 @@
   and compute a test of the value being zero.  They use different
   measures of association, all in the range \eqn{[-1, 1]} with \eqn{0}
   indicating no association.  These are sometimes referred to as tests
-  of no \emph{correlation}, but that term is often confined to the 
+  of no \emph{correlation}, but that term is often confined to the
   default method.
-  
+
   If \code{method} is \code{"pearson"}, the test statistic is based on
   Pearson's product moment correlation coefficient \code{cor(x, y)} and
   follows a t distribution with \code{length(x)-2} degrees of freedom
