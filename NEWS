@@ -59,6 +59,10 @@ NEW FEATURES
 
 BUG FIXES
     
+    o   The default sortedXyData constructor in the nls package now
+        handles missing values in the response.  Minor documentation
+        fixes exposed by codoc have been made in the nls package.
+
     o	On startup, file .RData is now restored *after* the site and
 	user profiles are loaded (if at all).  This is as previously
 	documented.
