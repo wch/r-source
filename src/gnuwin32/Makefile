@@ -49,8 +49,8 @@ endif
 
 ifdef USE_WININET
 R-DLLLIBS+=-lwininet
-#OPTFLAGS+=-DUSE_WININET
-OPTFLAGS+=-DUSE_WININET -DUSE_WININET_ASYNC
+OPTFLAGS+=-DUSE_WININET
+#OPTFLAGS+=-DUSE_WININET_ASYNC
 endif
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
