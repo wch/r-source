@@ -155,7 +155,8 @@ BUG FIXES
 
     o   isSeekable() was incorrectly returning FALSE on all file connections.
 
-
+    o   tkpager() wasn't quite using its title and header arguments in
+        the way prescribed by file.show()
 
 		CHANGES IN R VERSION 1.7.0
 

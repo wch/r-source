@@ -498,6 +498,7 @@ tkyview.scroll  <- function(widget, ...)tkcmd(widget, "yview", "scroll", ...)
 
 tkpager <- function(file, header, title, delete.file)
 {
+    title <- paste(title, header)
     for ( i in seq(along=file) ){
         zfile <- file[[i]]
         tt <- tktoplevel()
@@ -511,7 +512,6 @@ tkpager <- function(file, header, title, delete.file)
         tkpack(scr, side="right", fill="y")
 
         chn <- tkcmd("open", zfile)
-        tkinsert(txt, "end", header[[i]])
         tkinsert(txt, "end", gsub("_\b","",tclvalue(tkcmd("read", chn))))
         tkcmd("close", chn)
 
