@@ -697,18 +697,8 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
             else if(any(pos <- which(basename(paths) == pkg)))
                 paths[pos][1]
             else {
-                ## <FIXME>            
-                ## We currently find the highest availabe version using
-                ## compareVersion() in a way similar to
-                ## libraryMaxVersPos() inside library().
-                ## Simplify once the package_version class is available.
-                versions <- db[ok, "Version"]
-                v_max <- versions[1]
-                for(v in versions) {
-                    if(compareVersion(v_max, v) < 0) v_max <- v
-                }
-                pos <- match(v_max, versions)
-                ## </FIXME>
+                versions <- package_version(db[ok, "Version"])
+                pos <- min(which(versions == max(versions)))
                 paths <- paths[pos][1]
             }
             if(verbose)
