@@ -54,6 +54,7 @@ my $opt_codoc = 1;
 my $opt_install = 1;
 my $opt_vignettes = 1;
 my $opt_use_valgrind = 0;
+my $opt_rcfile = &file_path($ENV{"HOME"}, ".R", "check.conf");
 
 my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
@@ -63,7 +64,8 @@ my @known_options = ("help|h", "version|v", "outdir|o:s", "library|l:s",
 		    "no-clean", "no-examples", "no-tests", "no-latex",
 		    "use-gct" => \$opt_use_gct, "no-codoc",
 		    "install=s" => \$opt_install, "no-install",
-		     "no-vignettes", "use-valgrind" => \$opt_use_valgrind);
+		     "no-vignettes", "use-valgrind" => \$opt_use_valgrind,
+		     "rcfile=s" => \$opt_rcfile);
 GetOptions(@known_options) or usage();
 
 R_version("R add-on package checker", $version) if $opt_version;
@@ -93,6 +95,48 @@ if(defined($ENV{"_R_CHECK_FF_CALLS_"})) {
 
 ## Use system default unless explicitly specified otherwise.
 $ENV{"R_DEFAULT_PACKAGES"} = "";
+
+## Configurable variables
+my $R_check_use_install_log =
+    &R_getenv("_R_CHECK_USE_INSTALL_LOG_", "FALSE");
+my $R_check_subdirs_nocase =
+    &R_getenv("_R_CHECK_SUBDIRS_NOCASE_", "FALSE");
+my $R_check_all_non_ISO_C =
+    &R_getenv("_R_CHECK_ALL_NON_ISO_C_", "FALSE");
+my $R_check_weave_vignettes =
+    &R_getenv("_R_CHECK_WEAVE_VIGNETTES_", "TRUE");
+
+## Maybe move basic configuration (and documentation) to
+##   &file_path($R::Vars::R_HOME, "etc", "check.conf")
+## eventually ...
+for my $file ($opt_rcfile) {
+    if(-r $file) {
+	open(FILE, "< $file")
+	    or die "Error: cannot open file '$file' for reading\n";
+	my @lines = <FILE>;
+	close(FILE);
+	eval("@lines");
+	die "Error: failed to eval config file '$file'\n$@\n" if ($@);
+	## <NOTE>
+	## We prefer the above to the usual recommendation
+	## 	unless ($return = do($file)) {
+	## 	    warn "couldn't parse $file: $@" if $@;
+	## 	    warn "couldn't do $file: $!"    unless defined $return;
+	## 	    warn "couldn't run $file"       unless $return;
+	##  }
+	## as do(FILE) cannot see lexicals in the enclosing scope.
+	## </NOTE>
+    }
+}
+
+$R_check_use_install_log =
+    &config_val_to_logical($R_check_use_install_log);
+$R_check_subdirs_nocase =
+    &config_val_to_logical($R_check_subdirs_nocase);
+$R_check_all_non_ISO_C =
+    &config_val_to_logical($R_check_all_non_ISO_C);
+$R_check_weave_vignettes =
+    &config_val_to_logical($R_check_weave_vignettes);
 
 my $startdir = R_cwd();
 $opt_outdir = $startdir unless $opt_outdir;
@@ -235,7 +279,7 @@ foreach my $pkg (@ARGV) {
 	    else {
 		my $use_install_log =
 		    (($opt_install =~ /^check/) ||
-		     $ENV{"_R_CHECK_USE_INSTALL_LOG_"} ||
+		     $R_check_use_install_log ||
 		     !(-t STDIN && -t STDOUT));
 		my $INSTALL_opts = "";
 		$INSTALL_opts = "--fake" if($opt_install eq "fake");
@@ -320,7 +364,7 @@ foreach my $pkg (@ARGV) {
 		    ## support the cast.  Hence, try to ignore these by
 		    ## default, but make it possible to get all ISO C
 		    ## warnings via an environment variable.
-		    if(!$ENV{"_R_CHECK_ALL_NON_ISO_C_"}) {
+		    if(!$R_check_all_non_ISO_C) {
 			@lines = grep(!/^ *\/.*: warning: .*ISO C/,
 				      @lines);
 			$warn_re = "warning: *ISO C	forbids.*" .
@@ -792,7 +836,7 @@ sub check_pkg {
 
     $log->checking("package subdirectories");
     my $any;
-    if($ENV{"_R_CHECK_SUBDIRS_NOCASE_"}) {
+    if($R_check_subdirs_nocase) {
 	## Argh.  We often get submissions where 'R' comes out as 'r',
 	## or 'man' comes out as 'MAN'.  Maybe we should warn about this
 	## unconditionally ...
@@ -1478,11 +1522,13 @@ sub check_pkg {
 	    if(!$is_base_pkg && $opt_install) {
 		$Rcmd .= "checkVignettes(package = \"${pkgname}\", " .
 		         "lib.loc = \"${library}\", " .
-		         "workdir = \"src\")\n";
+		         "workdir = \"src\"";
 	    }
 	    else {
-		$Rcmd .= "checkVignettes(dir = \"${pkgdir}\")\n";
+		$Rcmd .= "checkVignettes(dir = \"${pkgdir}\"";
 	    }
+	    $Rcmd .= ", weave = FALSE" if(!$R_check_weave_vignettes);
+	    $Rcmd .= ")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
 	    ## Vignette could redefine the prompt, e.g. to 'R>' ...
 	    @out = grep(!/^[[:alnum:]]*\>/, @out);
@@ -1622,7 +1668,8 @@ Options:
       --no-latex        do not run LaTeX on help files
       --use-gct         use 'gctorture(TRUE)' when running examples/tests
       --use-valgrind    use 'valgrind' when running examples/tests/vignettes
-
+      --rcfile=FILE     read configuration values from FILE
+      
 By default, all test sections are turned on.
 
 Email bug reports to <r-bugs\@r-project.org>.
