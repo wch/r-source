@@ -74,8 +74,8 @@ FORCE:
 $(TESTsrc-auto): %.R : $(srcdir)/make-%.R
 	$(R) < $< > /dev/null
 # No Rdiff here:
-no-segfault.Rout: no-segfault.R
-	$(R) < $< > $@
+#no-segfault.Rout: no-segfault.R
+#	$(R) < $< > $@
 
 test-All: Makefile
 	@$(MAKE) test-Examples
