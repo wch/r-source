@@ -572,8 +572,9 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
 	from the function body.  */
 
     if ((SETJMP(cntxt.cjmpbuf))) {
-	if (R_ReturnedValue == R_DollarSymbol) {
+	if (R_ReturnedValue == R_RestartToken) {
 	    cntxt.callflag = CTXT_RETURN;  /* turn restart off */
+	    R_ReturnedValue = R_NilValue;  /* remove restart token */
 	    PROTECT(tmp = eval(body, newrho));
 	}
 	else
