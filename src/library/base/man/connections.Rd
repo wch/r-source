@@ -25,9 +25,9 @@
 file(description, open = "", blocking = TRUE, encoding = getOption("encoding"))
 pipe(description, open = "", encoding = getOption("encoding"))
 
-open(con, open = "rt", blocking = TRUE)
-close(con, type = "rw")
-seek(con, where = NA, rw = "")
+\method{open}{connection}(con, open = "rt", blocking = TRUE)
+\method{close}{connection}(con, type = "rw")
+\method{seek}{connection}(con, where = NA, rw = "")
 
 isOpen(con, rw = "")
 isIncomplete(con)
