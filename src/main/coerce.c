@@ -1075,8 +1075,9 @@ SEXP do_ascall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     case VECSXP:
     case EXPRSXP:
+	if(0 == (n = length(args)))
+	    errorcall(call,"illegal length 0 argument\n");
 	names = getAttrib(args, R_NamesSymbol);
-	n = length(args);
 	PROTECT(ap = ans = allocList(n));
 	for (i = 0; i < n; i++) {
 	    CAR(ap) = VECTOR(args)[i];
