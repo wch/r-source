@@ -1729,6 +1729,7 @@ int isValidName(char *name)
 	int n = strlen(name), used;
 	wchar_t wc;
 	used = Mbrtowc(&wc, p, n, NULL); p += used; n -= used;
+	if(used == 0) return 0;
 	if (wc != L'.' && !iswalpha(wc) ) return 0;
 	if (wc == L'.') {
 	    Mbrtowc(&wc, p, n, NULL);
