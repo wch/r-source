@@ -1,6 +1,7 @@
 \name{contour}
 \alias{contour}
 \alias{contour.default}
+\alias{contourLines}
 \title{Display Contours}
 \description{
   Create a contour plot, or add contour lines to an existing plot.
@@ -18,6 +19,8 @@ contour(x, \dots)
         axes = TRUE, frame.plot = axes,
         col = par("fg"), lty = par("lty"), lwd = par("lwd"),
 	add = FALSE, \dots)
+contourLines(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
+	     z, nlevels = 10, levels = pretty(range(z, na.rm=TRUE), nlevels))
 }
 \arguments{
   \item{x,y}{locations of grid lines at which the values in \code{z} are
@@ -58,6 +61,8 @@ contour(x, \dots)
 \details{
   \code{contour} is a generic function with only a default method in
   base \R.
+
+  \code{contourLines} draws nothing, but returns a set of contour lines.
   
   There is currently no documentation about the algorithm.
   The source code is in \file{\$R\_HOME/src/main/plot3d.c}.
@@ -72,6 +77,13 @@ contour(x, \dots)
 
   For information about vector fonts, see the
   help for \code{\link{text}} and \code{\link{Hershey}}.
+}
+\value{
+  \code{contourLines} returns a list of contours.
+  Each contour is a list with elements:
+  \item{level }{The contour level.}
+  \item{x }{The x-coordinates of the contour.}
+  \item{y }{The y-coordinates of the contour.}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -118,6 +130,18 @@ contour(x, y, volcano, col = tcol[2], lty = "solid", add = TRUE,
 	vfont = c("sans serif", "plain"))
 title("A Topographic Map of Maunga Whau", font = 4)
 abline(h = 200*0:4, v = 200*0:4, col = "lightgray", lty = 2, lwd = 0.1)
+
+## contourLines produces the same contour lines as contour
+line.list <- contourLines(x, y, volcano)
+plot(x = 0, y = 0,type = "n", xlim = rx, ylim = ry, xlab = "", ylab = "")
+u <- par("usr")
+rect(u[1], u[3], u[2], u[4], col = tcol[8], border = "red")
+contour(x, y, volcano, col = tcol[2], lty = "solid", add = TRUE,
+             vfont = c("sans serif", "plain"))
+templines <- function(clines) {
+  lines(clines[[2]], clines[[3]])
+}  
+invisible(lapply(line.list, templines))
 par(opar)
 }
 \keyword{hplot}

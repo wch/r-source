@@ -19,6 +19,10 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
+    o   There is a new function contourLines() to produce contour 
+	lines (but not draw anything).  This makes the CRAN package
+	clines (with its clines() function) redundant.
+
     o	The perl=TRUE argument to grep/regexpr/(g)sub() now uses
 	character tables prepared for the locale currently in use each
 	time it is used, rather than those of the C locale.

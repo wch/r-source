@@ -869,6 +869,54 @@ SEXP GEcontourLines(double *x, int nx, double *y, int ny,
 
 SEXP GEdrawContourLines();
 
+SEXP do_contourLines(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP oargs, c, x, y, z;
+    int nx, ny, nc;
+    GEDevDesc *dd = GEcurrentDevice();
+
+    oargs = args;
+
+    x = CAR(args);
+    internalTypeCheck(call, x, REALSXP);
+    nx = LENGTH(x);
+    args = CDR(args);
+
+    y = CAR(args);
+    internalTypeCheck(call, y, REALSXP);
+    ny = LENGTH(y);
+    args = CDR(args);
+
+    z = CAR(args);
+    internalTypeCheck(call, z, REALSXP);
+    args = CDR(args);
+
+    /* levels */
+    c = CAR(args);
+    internalTypeCheck(call, c, REALSXP);
+    nc = LENGTH(c);
+    args = CDR(args);
+    
+    return GEcontourLines(REAL(x), nx, REAL(y), ny, REAL(z), REAL(c), nc, dd);
+}
+
+/*
+ * The *base graphics* function contour() and the *general base* 
+ * function contourLines() use the same code to generate contour lines 
+ * (i.e., the function contourLines())
+ *
+ * I had a look at extracting the code that draws the labels 
+ * into a *general base* function
+ * (e.g., into some sort of labelLines() function), 
+ * but the code is too base-graphics-specific (e.g., one of the 
+ * labelling methods seeks the location closest to the edge of the
+ * plotting region) so I've left it alone for now. 
+ * 
+ * This does mean that the contourLines() function is part of the
+ * graphics engine, but the contour() function is part of the 
+ * base graphics system.
+ */
+
 static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, 
 		    double zc,
 		    SEXP labels, int cnum,
@@ -880,9 +928,8 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 
     char *vmax;
 
-    double f, xl, xh, yl, yh, zll, zhl, zlh, zhh, xx[4], yy[4];
     double xend, yend;
-    int i, ii, j, jj, k, l, m, nacode, ns, ns2, dir;
+    int i, ii, j, jj, ns, ns2, dir;
     SEGP seglist, seg, s, start, end;
     double *xxx, *yyy;
 
@@ -910,158 +957,10 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 #ifdef DEBUG_contour
     Rprintf("contour(lev = %g):\n", zc);
 #endif
-    for (i = 0; i < nx - 1; i++) {
-	xl = REAL(x)[i];
-	xh = REAL(x)[i + 1];
-	for (j = 0; j < ny - 1; j++) {
-	    yl = REAL(y)[j];
-	    yh = REAL(y)[j + 1];
-	    k = i + j * nx;
-	    zll = REAL(z)[k];
-	    zhl = REAL(z)[k + 1];
-	    zlh = REAL(z)[k + nx];
-	    zhh = REAL(z)[k + nx + 1];
 
-	    /* If the value at a corner is exactly equal to a contour level, 
-	     * change that value by a tiny amount */
-
-	    if (zll == zc) zll += atom;
-	    if (zhl == zc) zhl += atom;
-	    if (zlh == zc) zlh += atom;
-	    if (zhh == zc) zhh += atom;
-#ifdef DEBUG_contour
-	    /* Haven't seen this happening (MM): */
-	    if (zll == zc) REprintf(" [%d,%d] ll: %g\n",i,j, zll);
-	    if (zhl == zc) REprintf(" [%d,%d] hl: %g\n",i,j, zhl);
-	    if (zlh == zc) REprintf(" [%d,%d] lh: %g\n",i,j, zlh);
-	    if (zhh == zc) REprintf(" [%d,%d] hh: %g\n",i,j, zhh);
-#endif
-	    /* Check for intersections with sides */
-
-	    nacode = 0;
-	    if (R_FINITE(zll)) nacode += 1;
-	    if (R_FINITE(zhl)) nacode += 2;
-	    if (R_FINITE(zlh)) nacode += 4;
-	    if (R_FINITE(zhh)) nacode += 8;
-
-	    k = 0;
-	    switch (nacode) {
-	    case 15:
-		if (ctr_intersect(zll, zhl, zc, &f)) {
-		    xx[k] = xl + f * (xh - xl);
-		    yy[k] = yl; k++;
-		}
-		if (ctr_intersect(zll, zlh, zc, &f)) {
-		    yy[k] = yl + f * (yh - yl);
-		    xx[k] = xl; k++;
-		}
-		if (ctr_intersect(zhl, zhh, zc, &f)) {
-		    yy[k] = yl + f * (yh - yl);
-		    xx[k] = xh; k++;
-		}
-		if (ctr_intersect(zlh, zhh, zc, &f)) {
-		    xx[k] = xl + f * (xh - xl);
-		    yy[k] = yh; k++;
-		}
-		break;
-	    case 14:
-		if (ctr_intersect(zhl, zhh, zc, &f)) {
-		    yy[k] = yl + f * (yh - yl);
-		    xx[k] = xh; k++;
-		}
-		if (ctr_intersect(zlh, zhh, zc, &f)) {
-		    xx[k] = xl + f * (xh - xl);
-		    yy[k] = yh; k++;
-		}
-		if (ctr_intersect(zlh, zhl, zc, &f)) {
-		    xx[k] = xl + f * (xh - xl);
-		    yy[k] = yh + f * (yl - yh);
-		    k++;
-		}
-		break;
-	    case 13:
-		if (ctr_intersect(zll, zlh, zc, &f)) {
-		    yy[k] = yl + f * (yh - yl);
-		    xx[k] = xl; k++;
-		}
-		if (ctr_intersect(zlh, zhh, zc, &f)) {
-		    xx[k] = xl + f * (xh - xl);
-		    yy[k] = yh; k++;
-		}
-		if (ctr_intersect(zll, zhh, zc, &f)) {
-		    xx[k] = xl + f * (xh - xl);
-		    yy[k] = yl + f * (yh - yl);
-		    k++;
-		}
-		break;
-	    case 11:
-		if (ctr_intersect(zhl, zhh, zc, &f)) {
-		    yy[k] = yl + f * (yh - yl);
-		    xx[k] = xh; k++;
-		}
-		if (ctr_intersect(zll, zhl, zc, &f)) {
-		    xx[k] = xl + f * (xh - xl);
-		    yy[k] = yl; k++;
-		}
-		if (ctr_intersect(zll, zhh, zc, &f)) {
-		    xx[k] = xl + f * (xh - xl);
-		    yy[k] = yl + f * (yh - yl);
-		    k++;
-		}
-		break;
-	    case 7:
-		if (ctr_intersect(zll, zlh, zc, &f)) {
-		    yy[k] = yl + f * (yh - yl);
-		    xx[k] = xl; k++;
-		}
-		if (ctr_intersect(zll, zhl, zc, &f)) {
-		    xx[k] = xl + f * (xh - xl);
-		    yy[k] = yl; k++;
-		}
-		if (ctr_intersect(zlh, zhl, zc, &f)) {
-		    xx[k] = xl + f * (xh - xl);
-		    yy[k] = yh + f * (yl - yh);
-		    k++;
-		}
-		break;
-	    }
-
-	    /* We now have k(=2,4) endpoints */
-	    /* Decide which to join */
-
-	    seglist = NULL;
-
-	    if (k > 0) {
-		if (k == 2) {
-		    seglist = ctr_newseg(xx[0], yy[0], xx[1], yy[1], seglist);
-		}
-		else if (k == 4) {
-		    for (k = 3; k >= 1; k--) {
-			m = k;
-			xl = xx[k];
-			for (l = 0; l < k; l++) {
-			    if (xx[l] > xl) {
-				xl = xx[l];
-				m = l;
-			    }
-			}
-			if (m != k) {
-			    xl = xx[k];
-			    yl = yy[k];
-			    xx[k] = xx[m];
-			    yy[k] = yy[m];
-			    xx[m] = xl;
-			    yy[m] = yl;
-			}
-		    }
-		    seglist = ctr_newseg(xx[0], yy[0], xx[1], yy[1], seglist);
-		    seglist = ctr_newseg(xx[2], yy[2], xx[3], yy[3], seglist);
-		}
-		else error("k != 2 or 4");
-	    }
-	    ctr_SegDB[i + j * nx] = seglist;
-	}
-    }
+    vmax = vmaxget();
+    ctr_SegDB = contourLines(REAL(x), nx, REAL(y), ny, REAL(z), zc, atom);
+    vmaxset(vmax);
 
     /* The segment database is now assembled. */
     /* Begin following contours. */
