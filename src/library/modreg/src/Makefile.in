@@ -10,7 +10,7 @@ subdir = src/library/modreg/src
 
 include $(top_builddir)/etc/Makeconf
 MKINSTALLDIRS = $(top_srcdir)/tools/mkinstalldirs
-RHOME = $(top_builddir)
+R_HOME = $(top_builddir)
 
 pkg = modreg
 LIB = $(pkg).$(SHLIBEXT)
