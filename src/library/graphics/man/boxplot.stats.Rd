@@ -47,7 +47,7 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
   (\eqn{n\equiv 2 \bmod 4}{n = 2 mod 4}), and are in the middle of
   two observations otherwise.
 
-  The the notches (if requested) extend to \code{+/-1.58 IQR/sqrt(n)}.
+  The notches (if requested) extend to \code{+/-1.58 IQR/sqrt(n)}.
   This seems to be based on same calculations as the formula with 1.57 in
   Chambers \emph{et al.} (1983, p. 62) given in McGill \emph{et al.}
   (1978, p. 16).  They are based on asymptotic normality of the median
@@ -61,10 +61,10 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
 
   McGill, R., Tukey, J. W. and Larsen, W. A. (1978) Variations of box
   plots. \emph{The American Statistician} \bold{32}, 12--16.
-  
+
   Velleman, P. F. and Hoaglin, D. C. (1981) \emph{Applications, Basics
     and Computing of Exploratory Data Analysis.}  Duxbury Press.
-  
+
   Emerson, J. D and Strenio, J. (1983). Boxplots and batch comparison.
   Chapter 3 of \emph{Understanding Robust and Exploratory Data
     Analysis}, eds. D. C. Hoaglin, F. Mosteller and J. W. Tukey.  Wiley.
