@@ -1,6 +1,7 @@
 piechart <-
-    function (x, labels=names(x), edges=200, radius=0.8, col=NULL,
-              angle = 45, density = NULL, main=NULL, ...)
+    function (x, labels=names(x), edges=200, radius=0.8,
+              density=NULL, angle=45, col=NULL,
+              main=NULL, ...)
 {
     if (!is.numeric(x) || any(is.na(x) | x <= 0))
 	stop("piechart: `x' values must be positive.")

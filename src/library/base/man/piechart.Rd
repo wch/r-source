@@ -5,8 +5,9 @@
   Draw a pie chart.
 }
 \usage{
-piechart(x, labels = names(x), edges = 200, radius = 0.8, col = NULL,
-         angle = 45, density = NULL, main = NULL, \dots)
+piechart(x, labels = names(x), edges = 200, radius = 0.8,
+         density = NULL, angle = 45, col = NULL,
+         main = NULL, \dots)
 }
 \arguments{
   \item{x}{a vector of positive quantities.
@@ -18,6 +19,12 @@ piechart(x, labels = names(x), edges = 200, radius = 0.8, col = NULL,
   \item{radius}{the pie is drawn centered in a square box whose sides
     range from \eqn{-1} to \eqn{1}.  If the character strings labeling
     the slices are long it may be necessary to use a smaller radius.}
+  \item{density}{the density of shading lines, in lines per inch.
+    The default value of \code{NULL} means that no shading lines
+    are drawn. Non-positive values of `density' also inhibit the
+    drawing of shading lines.}
+  \item{angle}{the slope of shading lines, given as an angle in
+    degrees (counter-clockwise).}
   \item{col}{a vector of colors to be used in filling the slices.}
   \item{angle}{angle of shading lines.}
   \item{density}{the density of shading lines, in lines per inch.
@@ -50,5 +57,7 @@ piechart(pie.sales,
     "cornsilk", "cyan", "white"))
 piechart(pie.sales,
     col=gray(seq(0.4,1.0,length=6)))
+piechart(pie.sales,
+    density=10, angle=15+10*1:6)
 }
 \keyword{hplot}

@@ -3,7 +3,7 @@ barplot <- function(height, ...) UseMethod("barplot")
 barplot.default <-
 function(height, width = 1, space = NULL, names.arg = NULL,
          legend.text = NULL, beside = FALSE, horiz = FALSE,
-         angle = 45, density = NULL,
+         density = NULL, angle = 45,
          col = heat.colors(NR), border = par("fg"),
          main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
          xlim = NULL, ylim = NULL,
@@ -78,7 +78,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 		rect(y1,x1, y2,x2, angle = angle, density = density, ...)
 	}
 	if (beside)
-	    xyrect(0, w.l, c(height), w.r, horizontal=horiz, col = col)
+          xyrect(0, w.l, c(height), w.r, horizontal=horiz, col = col)
 	else {
 	    for (i in 1:NC) {
 		xyrect(height[1:NR, i], w.l[i], height[-1, i], w.r[i],
@@ -100,6 +100,8 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	    if((horiz & beside) || (!horiz & !beside)){
 		legend.text <- rev(legend.text)
 		legend.col <- rev(legend.col)
+                density <- rev(density)
+                angle <- rev(angle)
 	    }
 	    xy <- par("usr")
 	    legend(xy[2] - xinch(0.1), xy[4] - yinch(0.1),

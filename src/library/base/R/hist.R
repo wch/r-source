@@ -3,8 +3,8 @@ hist <- function(x, ...) UseMethod("hist")
 hist.default <-
     function (x, breaks = "Sturges", freq = NULL,
               probability = !freq, include.lowest= TRUE,
-              right= TRUE, col = NULL, border = NULL,
-              angle = 45, density = NULL,
+              right= TRUE, angle = 45, density = NULL,
+              col = NULL, border = NULL,
               main = paste("Histogram of" , xname),
               xlim = range(breaks), ylim = NULL,
               xlab = xname, ylab,
@@ -92,7 +92,7 @@ hist.default <-
     mids <- 0.5 * (breaks[-1] + breaks[-nB])
     r <- structure(list(breaks = breaks, counts = counts,
                         intensities = dens,
-			density = density, mids = mids,
+			density = dens, mids = mids,
                         xname = xname, equidist = equidist),
                    class="histogram")
     if (plot) {

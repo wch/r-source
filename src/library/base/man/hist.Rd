@@ -3,9 +3,8 @@
 \usage{
 hist(x, \dots)
 hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
-     include.lowest = TRUE,
-     right = TRUE, col = NULL, border = NULL,
-     angle = 45, density = NULL,
+     include.lowest = TRUE, right = TRUE,
+     density = NULL, angle = 45, col = NULL, border = par("fg"),
      main = paste("Histogram of" , xname),
      xlim = range(breaks), ylim = NULL,
      xlab = xname, ylab,
@@ -38,6 +37,12 @@ hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
     (or last, for \code{right = FALSE}) bar.}
   \item{right}{logical; if \code{TRUE}, the histograms cells are
     right-closed (left open) intervals.}
+  \item{density}{the density of shading lines, in lines per inch.
+    The default value of \code{NULL} means that no shading lines
+    are drawn. Non-positive values of `density' also inhibit the
+    drawing of shading lines.}
+  \item{angle}{the slope of shading lines, given as an angle in
+    degrees (counter-clockwise).}
   \item{col}{a colour to be used to fill the bars.
     The default of \code{NULL} yields unfilled bars.}
   \item{border}{the color of the border around the bars.}

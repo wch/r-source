@@ -22,7 +22,7 @@ polygon(x, y = NULL, density = NULL, angle = 45,
     Non-positive values of \code{density} also inhibit the drawing
     of shading lines.}
   \item{angle}{the slope of shading lines, given as an angle
-    (counter-clockwise} in degrees.}
+     in degrees (counter-clockwise).}
   \item{col}{the color for filling the polygon.
     The default, \code{NA}, is to leave polygons unfilled.}
   \item{border}{the color to draw the border.  The default, \code{NULL},

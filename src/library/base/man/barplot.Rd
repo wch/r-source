@@ -3,9 +3,9 @@
 \alias{barplot.default}
 \title{Bar Plots}
 \usage{
-\method{barplot}{default}(height, width = 1, space = NULL, names.arg = NULL,
-        legend.text = NULL, beside = FALSE, horiz = FALSE,
-        angle = 45, density = NULL,
+\method{barplot}{default}(height, width = 1, space = NULL,
+        names.arg = NULL, legend.text = NULL, beside = FALSE,
+        horiz = FALSE, density = NULL, angle = 45,
         col = heat.colors(NR), border = par("fg"),
         main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
         xlim = NULL, ylim = NULL,
@@ -36,6 +36,12 @@
     given explicitly, it defaults to \code{c(0,1)} if \code{height}
     is a matrix and \code{beside} is \code{TRUE}, and to 0.2
     otherwise.}
+  \item{density}{the density of shading lines, in lines per inch.
+    The default value of \code{NULL} means that no shading lines
+    are drawn. Non-positive values of `density' also inhibit the
+    drawing of shading lines.}
+  \item{angle}{the slope of shading lines, given as an angle in
+    degrees (counter-clockwise).}
   \item{names.arg}{a vector of names to be plotted below each bar or
     group of bars.  If this argument is omitted, then the names are
     taken from the \code{names} attribute of \code{height} if this
@@ -129,5 +135,10 @@ segments(mp, hh, mp, hh + 2*sqrt(1000*hh/100), col = mybarcol, lwd = 1.5)
 stopifnot(dim(mp) == dim(hh))# corresponding matrices
 mtext(side = 1, at = apply(mp, 2, mean), line = -2,
       text = paste("Mean", formatC(apply(hh, 2, mean))), col = "red")
+
+# Bar shading example
+barplot(VADeaths, angle = 15+10*1:5, density = 20, col = "black", 
+        legend = rownames(VADeaths))
+title(main = list("Death Rates in Virginia", font = 4))
 }
 \keyword{hplot}
