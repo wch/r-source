@@ -70,15 +70,13 @@ weights.glm(object, type = c("prior", "working"), ...)
   \item{contrasts}{an optional list. See the \code{contrasts.arg}
     of \code{model.matrix.default}.}
 
-  \item{object}{an object inheriting from class{"glm"}.}
+  \item{object}{an object inheriting from class \code{"glm"}.}
   \item{type}{character, partial matching allowed.  Type of weights to
-    extract from the fitted modle object.}
+    extract from the fitted model object.}
 }
 \description{
-  \code{glm} is used to fit generalized linear models.
-
-  Models for \code{glm} are specified by giving
-  a symbolic description of the linear predictor and
+  \code{glm} is used to fit generalized linear models, specified by
+  giving a symbolic description of the linear predictor and
   a description of the error distribution.
 }
 \details{
@@ -89,7 +87,7 @@ weights.glm(object, type = c("prior", "working"), ...)
   \code{\link{factor}} (when the first level denotes failure and all
   others success) or as a two-column matrix with the columns giving the
   numbers of successes and failures.  A terms specification of the form
-  \code{first+second} indicates all the terms in \code{first} together
+  \code{first + second} indicates all the terms in \code{first} together
   with all the terms in \code{second} with duplicates removed.
 
   A specification of the form \code{first:second} indicates the
@@ -97,11 +95,12 @@ weights.glm(object, type = c("prior", "working"), ...)
   all terms in \code{first} with all terms in \code{second}.
   The specification \code{first*second} indicates the \emph{cross}
   of \code{first} and \code{second}.
-  This is the same as \code{first+second+first:second}.
+  This is the same as \code{first + second + first:second}.
 }
 \value{
   \code{glm} returns an object of class \code{glm}
-  which inherits from the class \code{lm}.
+  which inherits from the class \code{lm}. See later in this section.
+  
   The function \code{\link{summary}} (i.e., \code{\link{summary.glm}}) can
   be used to obtain or print a summary of the results and the function
   \code{\link{anova}} (i.e., \code{\link{anova.glm}})
@@ -113,6 +112,60 @@ weights.glm(object, type = c("prior", "working"), ...)
 
   \code{weights} extracts a vector of weights, one for each case in the
   fit (after subsetting and \code{na.action}).
+
+  An object of class \code{"glm"} is a list containing at least the
+  following components:
+
+  \item{coefficients}{a named vector of coefficients}
+  \item{residuals}{the \emph{working} residuals, that is the residuals
+    in the final iteration of the IWLS fit.}
+  \item{fitted.values}{the fitted mean values, obtained by transforming
+    the linear predictors by the inverse of the link function.}
+  \item{rank}{the numeric rank of the fitted linear model.}
+  \item{family}{the \code{\link{family}} object used.}
+  \item{linear.predictors}{the linear fit on link scale.}
+  \item{deviance}{up to a constant, minus twice the maximized
+    log-likelihood.  Where sensible, the constant is chosen so that a
+    saturated model has deviance zero.}
+  \item{aic}{Akaike's \emph{An Information Criterion}, minus twice the
+    maximized log-likelihood plus twice the number of coefficients (so
+    assuming that the dispersion is known.}
+  \item{null.deviance}{The deviance for the null model, comparable with
+    \code{deviance}. The null model will include the offset, and an
+    intercept if there is one in the model}
+  \item{iter}{the number of iterations of IWLS used.}
+  \item{weights}{the \emph{working} residuals, that is the weights
+    in the final iteration of the IWLS fit.}
+  \item{prior.weights}{the case weights initially supplied.}
+  \item{df.residual}{the residual degrees of freedom.}
+  \item{df.null}{the residual degrees of freedom for the null model.}
+  \item{y}{the \code{y} vector used. (It is a vector even for a binomial
+    model.)}
+  \item{converged}{logical. Was the IWLS algorithm judged to have converged?}
+  \item{boundary}{logical. Is the fitted value on the boundary of the
+    attainable values?}
+  \item{call}{the matched call.}
+  \item{formula}{the formula supplied.}
+  \item{terms}{the \code{\link{terms}} object used.}
+  \item{data}{the \code{data argument}.}
+  \item{offset}{the offset vector used.}
+  \item{control}{the value of the \code{control} argument used.}
+  \item{method}{the name of the fitter function used, in \R always
+    \code{"glm.fit"}.}
+  \item{contrasts}{(where relevant) the contrasts used.}
+  \item{xlevels}{(where relevant) a record of the levels of the factors
+    used in fitting.}
+
+  In addition, non-null fits will have components \code{qr}, \code{R}
+  and \code{effects} relating to the final weighted linear fit.
+
+  Objects of class \code{"glm"} are normally of class \code{c("glm",
+    "lm")}, that is inherit from class \code{"lm"}, and well-designed
+  methods for class \code{"lm"} will be applied to the weighted linear
+  model at the final iteration of IWLS.  However, care is needed, as
+  extractor functions for class \code{"glm"} such as
+  \code{\link{residuals}} and \code{weights} do \bold{not} just pick out
+  the component of the fit with the same name.
 }
 \seealso{
   \code{\link{anova.glm}}, \code{\link{summary.glm}}, etc. for
@@ -169,9 +222,9 @@ structure(list(Treat = structure(c(2, 2, 2, 2, 2, 2, 2, 2, 2,
 "72"))}
 %% "else" (not testonly)
 \dontrun{
- ## Need the anorexia data from a 1999 version of the package MASS:
- library(MASS)
- data(anorexia)
+## Need the anorexia data from a 1999 version of the package MASS:
+library(MASS)
+data(anorexia)
 }
 anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
             family = gaussian, data = anorexia)

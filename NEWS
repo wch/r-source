@@ -81,6 +81,8 @@ BUG FIXES
 	glm objects (the ones that go with deviance residuals not
 	working residuals).
 
+    o   The help pages for lm and glm now describe the fitted objects.
+
 
 
 		CHANGES IN R VERSION 1.2.0
