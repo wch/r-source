@@ -18,7 +18,8 @@ download.file(url, destfile, method, quiet = FALSE, mode="w",
   \item{method}{Method to be used for downloading files.  Currently
     download methods \code{"internal"}, \code{"wget"} and \code{"lynx"}
     are available.  The default is to choose the first of these which
-    is available, on almost all systems \code{"internal"}.}
+    \code{"internal"}. The method can also be set through the option
+    \code{"download.file.method"}: see \code{\link{options}()}.} 
 
   \item{quiet}{If \code{TRUE}, suppress status messages (if any).}
 
@@ -67,6 +68,10 @@ download.file(url, destfile, method, quiet = FALSE, mode="w",
   non-empty used as a proxy site.  For FTP transfers, the username
   and password on the proxy can be specified by \code{"ftp_proxy_user"}
   and \code{"ftp_proxy_password"}.
+
+  Method \code{"wget"} can be used with proxy firewalls which require
+  user/password authentication if proper values are stored in the
+  configuration file for \code{wget}.
 #ifdef windows
 
   There is an alternative method if you have Internet Explorer 4 or

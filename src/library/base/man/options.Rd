@@ -154,6 +154,11 @@ getOption(x)
     \code{\link{update.packages}}. Defaults to
     \url{http://cran.r-project.org}.}
 
+  \item{download.file.method}{Method to be used for \code{download.file}.
+    Currently download methods \code{"internal"}, \code{"wget"} and
+    \code{"lynx"} are available.  There is no default for this option,
+    when \code{method = "auto"} is chosen: see \code{\link{download.file}}.}
+  
   \item{unzip}{the command used unzipping help files.
 #ifdef windows
     Defaults to "internal" when the internal unzip DLL is used.

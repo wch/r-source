@@ -1,9 +1,12 @@
 download.file <- function(url, destfile, method,
                           quiet = FALSE, mode = "w", cacheOK = TRUE)
 {
-    method <- if(missing(method)) "auto" else
-    match.arg(method,
-              c("auto", "internal", "wget", "lynx"))
+    method <- if (missing(method))
+        ifelse(!is.null(getOption("download.file.method")),
+               getOption("download.file.method"),
+               "auto")
+    else
+        match.arg(method, c("auto", "internal", "wget", "lynx"))
 
     if(method == "auto") {
         if(capabilities("http/ftp"))
