@@ -127,7 +127,7 @@ as.ts <- function (x)
     p <- c(st, en, freq)
     n <- round(freq * (en - st) + 1)
     if(any(!tsser)) {
-        ln <- lapply(sers[!tsser], NROW)
+        ln <- sapply(sers[!tsser], NROW)
         if(any(ln != 1 && ln != n))
             stop("non-time series not of the correct length")
         for(i in (1:nser)[!tsser]) {

@@ -2137,14 +2137,14 @@ function(package, dir, lib.loc = NULL)
 
     ## Find the replacement functions (which have formal arguments) with
     ## last arg not named 'value'.
-    badReplaceFuns <-
+    badReplaceFuns <- if(length(replaceFuns)) {
         replaceFuns[sapply(replaceFuns, function(f) {
             ## Always get the functions from codeEnv ...
             ## Should maybe get S3 methods from the registry ...
             f <- get(f, envir = codeEnv)
             if(!is.function(f)) return(TRUE)
             .checkLastFormalArg(f)
-        }) == FALSE]
+        }) == FALSE]} else character(0)
 
     if(.isMethodsDispatchOn()) {
         S4generics <- methods::getGenerics(codeEnv)
@@ -2320,7 +2320,7 @@ function(package)
         stop(paste("argument", sQuote("package"),
                    "must be of length 1"))
     dir <- .find.package(package)
-    
+
     ## We definitely need a valid DESCRIPTION file.
     db <- try(read.dcf(file.path(dir, "DESCRIPTION"))[1, ],
               silent = TRUE)
@@ -2366,7 +2366,7 @@ function(package)
         if(length(reqs))
             badDepends$missingVignetteDepends <- reqs
     }
-    
+
     ## Are all namespace dependencies listed as package dependencies?
     if(fileTest("-f", file.path(dir, "NAMESPACE"))) {
         reqs <- .getNamespacePackageDepends(dir)

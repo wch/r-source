@@ -440,7 +440,7 @@ model.frame.lm <- function(formula, ...)
 {
     dots <- list(...)
     nargs <- dots[match(c("data", "na.action", "subset"), names(dots), 0)]
-    if (any(nargs > 0) || is.null(formula$model)) {
+    if (length(nargs) || is.null(formula$model)) {
         fcall <- formula$call
         fcall$method <- "model.frame"
         fcall[[1]] <- as.name("lm")
