@@ -1,4 +1,4 @@
-## $Id: splineClasses.R,v 1.7 2001/09/03 13:31:22 pd Exp $
+## $Id: splineClasses.R,v 1.8 2002/03/04 08:43:25 maechler Exp $
 ##
 ## Classes and methods for determining and manipulating interpolation
 ## splines.
@@ -67,20 +67,23 @@ interpSpline <-
 interpSpline.default <-
     function(obj1, obj2, bSpline = FALSE, period = NULL, na.action = na.fail)
 {
+    ord <- 4 # spline order -- want to use other `order'/`degree'!
+
     frm <- na.action(data.frame(x = as.numeric(obj1), y = as.numeric(obj2)))
     frm <- frm[order(frm$x), ]
     ndat <- nrow(frm)
     x <- frm$x
-    if(length(unique(x)) != ndat)
+    if(any(duplicated(x)))
         stop("values of x must be distinct")
-    knots <-  c(x[1:3] + x[1] - x[4], x,
-                x[ndat + (1:3) - 3] + x[ndat] - x[ndat - 3])
-    derivs <-  c(2, integer(ndat), 2)
-    x <-  c(x[1], x, x[ndat])
+    # ord-1 extra knots on each side
+    knots <- c(x[1:3] + x[1] - x[4], x,
+               x[ndat + (1:3) - 3] + x[ndat] - x[ndat - 3])
+    derivs <- c(2, integer(ndat), 2)
+    x <- c(x[1], x, x[ndat])
 ## Solving the system of equations for the spline coefficients can be
 ## simplified by using banded matrices but the required Linpack routines
 ## are not loaded as part of S.
-##  z <-  .C("spline_basis",
+##  z <- .C("spline_basis",
 ##      as.double(knots),
 ##      as.integer(length(knots) - 4),
 ##      as.integer(4),
@@ -89,12 +92,12 @@ interpSpline.default <-
 ##      as.integer(ndat + 2),
 ##      design = array(0, c(4, ndat + 2)),
 ##      offsets = integer(ndat + 2))
-##  abd <-  array(0, c(7, ndat + 2))
-##  abd[4:7, 2:ndat] <-  z$design[, 2:ndat]
-##  abd[5:7, 1] <-  z$design[-4, 1]
-##  abd[4:6, ndat + 1] <-  z$design[-1, ndat + 1]
-##  abd[3:5, ndat + 2] <-  z$design[-1, ndat + 2]
-##  z <-  .Fortran("dgbfa",
+##  abd <- array(0, c(7, ndat + 2))
+##  abd[4:7, 2:ndat] <- z$design[, 2:ndat]
+##  abd[5:7, 1] <- z$design[-4, 1]
+##  abd[4:6, ndat + 1] <- z$design[-1, ndat + 1]
+##  abd[3:5, ndat + 2] <- z$design[-1, ndat + 2]
+##  z <- .Fortran("dgbfa",
 ##      abd = abd,
 ##      lda = as.integer(7),
 ##      n = as.integer(ndat + 2),
@@ -102,7 +105,7 @@ interpSpline.default <-
 ##      mu = as.integer(2),
 ##      ipvt = integer(ndat + 2),
 ##      info = integer(1))
-##  zz <-  .Fortran("dgbsl",
+##  zz <- .Fortran("dgbsl",
 ##      abd = z$abd,
 ##      lda = z$lda,
 ##      n = z$n,
@@ -111,13 +114,14 @@ interpSpline.default <-
 ##      ipvt = z$ipvt,
 ##      b = c(0, y, 0),
 ##      job = as.integer(1))
-    des <-  splineDesign(knots, x, 4, derivs)
-    coeff <-  solve(as.matrix(des), c(0, frm$y, 0))
-    value <-  list(knots = knots, coefficients = coeff, order = 4)
+    des <- splineDesign(knots, x, ord, derivs)
+    coeff <- solve(as.matrix(des), c(0, frm$y, 0))
+    value <- list(knots = knots, coefficients = coeff, order = ord)
     attr(value, "formula") <-
         do.call("~", list(substitute(obj2), substitute(obj1)))
     class(value) <- c("nbSpline", "bSpline", "spline")
     if (bSpline) return(value)
+    ## else convert from B- to poly-Spline:
     value <- polySpline(value)
     coeff <- coef(value)
     coeff[ , 1] <- frm$y
@@ -129,19 +133,14 @@ interpSpline.default <-
 interpSpline.formula <-
     function(obj1, obj2, bSpline = FALSE, period = NULL, na.action = na.fail)
 {
-    form <-  as.formula(obj1)
-    if (length(form) != 3) {
+    form <- as.formula(obj1)
+    if (length(form) != 3)
         stop("formula must be of the form \"y ~ x\"")
-    }
-    if (missing(obj2)) {
-        local <- sys.parent(1)
-    } else {
-        local <-  as.data.frame(obj2)
-    }
-    value <-  interpSpline(as.numeric(eval(form[[3]], local)),
-                           as.numeric(eval(form[[2]], local)),
-                           bSpline = bSpline, period = period,
-                           na.action = na.action)
+    local <- if (missing(obj2)) sys.parent(1) else as.data.frame(obj2)
+    value <- interpSpline(as.numeric(eval(form[[3]], local)),
+                          as.numeric(eval(form[[2]], local)),
+                          bSpline = bSpline, period = period,
+                          na.action = na.action)
     attr(value, "formula") <- form
     value
 }
@@ -177,7 +176,7 @@ periodicSpline.default <-
     y <- y[ind]
     coeff.mat <- splineDesign(knots, x, ord)
     sys.mat <- coeff.mat[, (1:lenx)]
-    sys.mat[, 1:(ord - 1)] <-  sys.mat[, 1:(ord - 1)] +
+    sys.mat[, 1:(ord - 1)] <- sys.mat[, 1:(ord - 1)] +
         coeff.mat[, lenx + (1:(ord - 1))]
     coeff <- qr.coef(qr(sys.mat), y)
     coeff <- c(coeff, coeff[1:(ord - 1)])
@@ -188,27 +187,16 @@ periodicSpline.default <-
     value
 }
 
-periodicSpline.formula <-
-    function(obj1, obj2, knots, period = 2 * pi, ord = 4)
+periodicSpline.formula <- function(obj1, obj2, knots, period = 2 * pi, ord = 4)
 {
-    form <-  as.formula(obj1)
-    if (length(form) != 3) {
+    form <- as.formula(obj1)
+    if (length(form) != 3)
         stop("formula must be of the form \"y ~ x\"")
-    }
-    if (missing(obj2)) {
-        local <- sys.parent(1)
-    } else {
-        local <-  as.data.frame(obj2)
-    }
-    if (missing(knots)) {
-        value <-  periodicSpline(as.numeric(eval(form[[3]], local)),
-                                 as.numeric(eval(form[[2]], local)),
-                                 period = period, ord = ord)
-    } else {
-        value <-  periodicSpline(as.numeric(eval(form[[3]], local)),
-                                 as.numeric(eval(form[[2]], local)),
-                                 knots = knots, period = period, ord = ord)
-    }
+    local <- if (missing(obj2)) sys.parent(1) else as.data.frame(obj2)
+    ## `missing(knots)' is transfered :
+    value <-  periodicSpline(as.numeric(eval(form[[3]], local)),
+                             as.numeric(eval(form[[2]], local)),
+                             knots = knots, period = period, ord = ord)
     attr(value, "formula") <- form
     value
 }
@@ -217,15 +205,13 @@ polySpline <-
     ## Constructor for polynomial representation of splines
     function(object, ...) UseMethod("polySpline")
 
-polySpline.polySpline <-
-    function(object, ...) object
+polySpline.polySpline <- function(object, ...) object
 
 as.polySpline <-
     ## Conversion of an object to a polynomial spline representation
     function(object, ...) polySpline(object, ...)
 
-polySpline.bSpline <-
-    function(object, ...)
+polySpline.bSpline <- function(object, ...)
 {
     ord <- splineOrder(object)
     knots <- splineKnots(object)
@@ -246,16 +232,14 @@ polySpline.bSpline <-
     value
 }
 
-polySpline.nbSpline <-
-    function(object, ...)
+polySpline.nbSpline <- function(object, ...)
 {
     value <- NextMethod("polySpline")
     class(value) <- c("npolySpline", "polySpline", "spline")
     value
 }
 
-polySpline.pbSpline <-
-    function(object, ...)
+polySpline.pbSpline <- function(object, ...)
 {
     value <- NextMethod("polySpline")
     value[["period"]] <- object$period
@@ -265,30 +249,24 @@ polySpline.pbSpline <-
 
 ## A couple of accessor functions for the virtual class of splines.
 
-splineKnots <-
-    ## Extract the knot positions
+splineKnots <- ## Extract the knot positions
     function(object) UseMethod("splineKnots")
 
-splineKnots.spline <-
-    function(object) object$knots
+splineKnots.spline <- function(object) object$knots
 
-splineOrder <-
-    ## Extract the order of the spline
+splineOrder <- ## Extract the order of the spline
     function(object) UseMethod("splineOrder")
 
-splineOrder.bSpline <-
-    function(object) object$order
+splineOrder.bSpline <- function(object) object$order
 
-splineOrder.polySpline <-
-    function(object) ncol(coef(object))
+splineOrder.polySpline <- function(object) ncol(coef(object))
 
 ## xyVector is a class of numeric vectors that represent responses and
 ## carry with them the corresponding inputs x.  Very similar in purpose
 ## to the "track" class in JMC's book draft.  All methods for predict
 ## applied to spline objects produce such objects as their value.
 
-xyVector <-
-    ## Constructor for the xyVector class
+xyVector <- ## Constructor for the xyVector class
     function(x, y)
 {
     x <- as.vector(x)
@@ -301,25 +279,21 @@ xyVector <-
     value
 }
 
-asVector <-
-    ## coerce object to a vector.
+asVector <- ## coerce object to a vector.
     function(object) UseMethod("asVector")
 
-asVector.xyVector <-
-    function(object) object$y
+asVector.xyVector <- function(object) object$y
 
 as.data.frame.xyVector <-
     function(x, row.names, optional) data.frame(x = x$x, y = x$y)
 
-plot.xyVector <-
-    function(x, ...)
+plot.xyVector <- function(x, ...)
 {
     plot(x = x$x, y = x$y, ...)
 ###  xyplot(y ~ x, as.data.frame(x), ...)
 }
 
-predict.polySpline <-
-    function(object, x, nseg = 50, deriv = 0, ...)
+predict.polySpline <- function(object, x, nseg = 50, deriv = 0, ...)
 {
     knots <- splineKnots(object)
     coeff <- coef(object)
@@ -332,9 +306,8 @@ predict.polySpline <-
     i[x == knots[1]] <- 1
     delx <- x - knots[i]
     deriv <- as.integer(deriv)[1]
-    if(deriv < 0 || deriv >= ord) {
+    if(deriv < 0 || deriv >= ord)
         stop(paste("deriv must be between 0 and", ord - 1))
-    }
     while(deriv > 0) {
         ord <- ord - 1
         coeff <- t(t(coeff[, -1]) * (1:ord))
@@ -342,33 +315,28 @@ predict.polySpline <-
     }
     y <- coeff[i, ord]
     if(ord > 1) {
-        for(j in (ord - 1):1) {
+        for(j in (ord - 1):1)
             y <- y * delx + coeff[i, j]
-        }
     }
     xyVector(x = x, y = y)
 }
 
-predict.bSpline <-
-    function(object, x, nseg = 50, deriv = 0, ...)
+predict.bSpline <- function(object, x, nseg = 50, deriv = 0, ...)
 {
     knots <- splineKnots(object)
-    if(any(diff(knots)) < 0) {
+    if(any(diff(knots)) < 0)
         stop("knot positions must be non-decreasing")
-    }
     ord <- splineOrder(object)
-    if(deriv < 0 || deriv >= ord) {
+    if(deriv < 0 || deriv >= ord)
         stop(paste("deriv must be between 0 and", ord - 1))
-    }
     ncoeff <- length(coef(object))
     if(missing(x)) {
         x <- seq(knots[ord], knots[ncoeff + 1], length = nseg + 1)
-    }
-    accept <- knots[ord] <= x & x <= knots[ncoeff + 1]
+        accept <- TRUE
+    } else accept <- knots[ord] <= x & x <= knots[ncoeff + 1]
     y <- x
     y[!accept] <- NA
     xx <- x[accept]
-    ind <- order(xx)
     knots <- splineKnots(object)
     coeff <- coef(object)
     y[accept] <- .Call("spline_value", knots, coeff, ord, xx, deriv,
@@ -376,14 +344,13 @@ predict.bSpline <-
     xyVector(x = x, y = y)
 }
 
-predict.nbSpline <-
-    function(object, x, nseg = 50, deriv = 0, ...)
+predict.nbSpline <- function(object, x, nseg = 50, deriv = 0, ...)
 {
     oclass <- class(object)
     value <- NextMethod("predict")
-    if(!any(is.na(value$y))) {
+    if(!any(is.na(value$y))) # when x were inside knots
         return(value)
-    }
+
     x <- value$x
     y <- value$y
     knots <- splineKnots(object)
@@ -401,49 +368,37 @@ predict.nbSpline <-
             deriv <- deriv - 1
         }
     }
-    if(any(which <- (x < knots[ord]) & is.na(y))) {
+    if(any(which <- (x < knots[ord]) & is.na(y)))
         y[which] <- coeff[1, 1] + coeff[1, 2] * (x[which] - knots[ord])
-    }
-    if(any(which <- (x > knots[ncoeff + 1]) & is.na(y))) {
-        y[which] <- coeff[2, 1] + coeff[2, 2] *
-            (x[which] - knots[ncoeff + 1])
-    }
+    if(any(which <- (x > knots[ncoeff + 1]) & is.na(y)))
+        y[which] <- coeff[2, 1] + coeff[2, 2] * (x[which] - knots[ncoeff + 1])
     xyVector(x = x, y = y)
 }
 
-predict.pbSpline <-
-    function(object, x, nseg = 50, deriv = 0, ...)
+predict.pbSpline <- function(object, x, nseg = 50, deriv = 0, ...)
 {
     knots <- splineKnots(object)
     ord <- splineOrder(object)
     period <- object$period
     ncoeff <- length(coef(object))
-    if(missing(x)) {
+    if(missing(x))
         x <- seq(knots[ord], knots[ord] + period, length = nseg + 1)
-    }
     x.original <- x
-    ind <- x < knots[ord]
-    if(any(ind)) {
-        x[ind] <- x[ind] + period * (1 + (knots[ord] - x[ind]) %/%
-                                     period)
-    }
-    ind <- x > knots[ncoeff + 1]
-    if(any(ind)) {
-        x[ind] <- x[ind] - period * (1 + (x[ind] - knots[ncoeff + 1]) %/%
-                                     period)
-    }
+    if(any(ind <- x < knots[ord]))
+        x[ind] <- x[ind] + period * (1 + (knots[ord] - x[ind]) %/% period)
+    if(any(ind <- x > knots[ncoeff + 1]))
+        x[ind] <- x[ind] - period * (1 + (x[ind] - knots[ncoeff +1]) %/% period)
     xyVector(x = x.original,
              y = .Call("spline_value", splineKnots(object), coef(object),
              splineOrder(object), x, deriv, PACKAGE = "splines"))
 }
 
-predict.npolySpline <-
-    function(object, x, nseg = 50, deriv = 0, ...)
+predict.npolySpline <- function(object, x, nseg = 50, deriv = 0, ...)
 {
     value <- NextMethod()
-    if(!any(is.na(value$y))) {
+    if(!any(is.na(value$y)))
         return(value)
-    }
+
     x <- value$x
     y <- value$y
     knots <- splineKnots(object)
@@ -458,17 +413,15 @@ predict.npolySpline <-
             deriv <- deriv - 1
         }
     }
-    if(any(which <- (x < knots[1]) & is.na(y))) {
+    if(any(which <- (x < knots[1]) & is.na(y)))
         y[which] <- coeff[1, 1] + coeff[1, 2] * (x[which] - knots[1])
-    }
-    if(any(which <- (x > knots[2]) & is.na(y))) {
+    if(any(which <- (x > knots[2]) & is.na(y)))
         y[which] <- coeff[2, 1] + coeff[2, 2] * (x[which] - knots[length(knots)])
-    }
+
     xyVector(x = x, y = y)
 }
 
-predict.ppolySpline <-
-    function(object, x, nseg = 50, deriv = 0, ...)
+predict.ppolySpline <- function(object, x, nseg = 50, deriv = 0, ...)
 {
     knots <- splineKnots(object)
     nknot <- length(knots)
@@ -476,19 +429,15 @@ predict.ppolySpline <-
     cdim <- dim(coeff)
     ord <- cdim[2]
     period <- object$period
-    if(missing(x)) {
+    if(missing(x))
         x <- seq(knots[1], knots[1] + period, length = nseg + 1)
-    }
     x.original <- x
-    ind <- x < knots[1]
-    if(any(ind)) {
+
+    if(any(ind <- x < knots[1]))
         x[ind] <- x[ind] + period * (1 + (knots[1] - x[ind]) %/% period)
-    }
-    ind <- x > knots[nknot]
-    if(any(ind)) {
-        x[ind] <- x[ind] - period * (1 + (x[ind] - knots[nknot]) %/%
-                                     period)
-    }
+    if(any(ind <- x > knots[nknot]))
+        x[ind] <- x[ind] - period * (1 + (x[ind] - knots[nknot]) %/% period)
+
     value <- NextMethod("predict")
     value$x <- x.original
     value
@@ -496,8 +445,7 @@ predict.ppolySpline <-
 
 ## The plot method for all spline objects
 
-plot.spline <-
-    function(x, ...)
+plot.spline <- function(x, ...)
 {
 ###  args <- list(formula = y ~ x, data = as.data.frame(predict(x)), type = "l")
     args <- list(x = as.data.frame(predict(x)), type = "l")
@@ -509,27 +457,24 @@ plot.spline <-
     do.call("plot", args[unique(names(args))])
 }
 
-print.polySpline <-
-    function(x, ...)
+print.polySpline <- function(x, ...)
 {
     coeff <- coef(x)
     dnames <- dimnames(coeff)
-    if (is.null(dnames[[2]])) {
-        dimnames(coeff) <- list(format(splineKnots(x)),
-                                c("constant", "linear", "quadratic", "cubic",
-                                  paste(4:29, "th", sep = ""))[1:(dim(coeff)[2])])
-    }
+    if (is.null(dnames[[2]]))
+        dimnames(coeff) <-
+            list(format(splineKnots(x)),
+                 c("constant", "linear", "quadratic", "cubic",
+                   paste(4:29, "th", sep = ""))[1:(dim(coeff)[2])])
     cat("polynomial representation of spline")
-    if (!is.null(form <- attr(x, "formula"))) {
+    if (!is.null(form <- attr(x, "formula")))
         cat(" for", deparse(as.vector(form)))
-    }
     cat("\n")
     print(coeff, ...)
     invisible(x)
 }
 
-print.ppolySpline <-
-    function(x, ...)
+print.ppolySpline <- function(x, ...)
 {
     cat("periodic ")
     value <- NextMethod("print")
@@ -537,15 +482,13 @@ print.ppolySpline <-
     value
 }
 
-print.bSpline <-
-    function(x, ...)
+print.bSpline <- function(x, ...)
 {
     value <- c(rep(NA, splineOrder(x)), coef(x))
     names(value) <- format(splineKnots(x), digits = 5)
     cat("bSpline representation of spline")
-    if (!is.null(form <- attr(x, "formula"))) {
+    if (!is.null(form <- attr(x, "formula")))
         cat(" for", deparse(as.vector(form)))
-    }
     cat("\n")
     print(value, ...)
     invisible(x)
@@ -554,54 +497,51 @@ print.bSpline <-
 ## backSpline - a class of monotone inverses to an interpolating spline.
 ## Used mostly for the inverse of the signed square root profile function.
 
-backSpline <-
-    function(object) UseMethod("backSpline")
+backSpline <- function(object) UseMethod("backSpline")
 
-backSpline.npolySpline <-
-    function(object)
+backSpline.npolySpline <- function(object)
 {
-    knots <-  splineKnots(object)
-    nk <-  length(knots)
-    nkm1 <-  nk - 1
-    kdiff <-  diff(knots)
+    knots <- splineKnots(object)
+    nk <- length(knots)
+    nkm1 <- nk - 1
+    kdiff <- diff(knots)
     if(any(kdiff <= 0))
         stop("knot positions must be strictly increasing")
-    coeff <-  coef(object)
-    bknots <-  coeff[, 1]
-    adiff <-  diff(bknots)
+    coeff <- coef(object)
+    bknots <- coeff[, 1]
+    adiff <- diff(bknots)
     if(!(all(adiff < 0) || all(adiff > 0)))
         stop("spline must be monotone")
-    bcoeff <-  array(0, dim(coeff))
-    bcoeff[, 1] <-  knots
-    bcoeff[, 2] <-  1/coeff[, 2]
-    a <-  array(c(adiff^2, 2 * adiff, adiff^3, 3 * adiff^2),
-                c(nkm1, 2, 2))
-    b <-  array(c(kdiff - adiff * bcoeff[ - nk, 2],
-                  bcoeff[-1, 2] - bcoeff[ - nk, 2]), c(nkm1, 2))
+    bcoeff <- array(0, dim(coeff))
+    bcoeff[, 1] <- knots
+    bcoeff[, 2] <- 1/coeff[, 2]
+    a <- array(c(adiff^2, 2 * adiff, adiff^3, 3 * adiff^2),
+               c(nkm1, 2, 2))
+    b <- array(c(kdiff - adiff * bcoeff[ - nk, 2],
+                 bcoeff[-1, 2] - bcoeff[ - nk, 2]), c(nkm1, 2))
     for(i in 1:(nkm1))
-        bcoeff[i, 3:4] <-  solve(a[i,  ,  ], b[i,  ])
-    bcoeff[nk, 2:4] <-  NA
+        bcoeff[i, 3:4] <- solve(a[i,  ,  ], b[i,  ])
+    bcoeff[nk, 2:4] <- NA
     if(nk > 2) {
-        bcoeff[1, 4] <-  bcoeff[nkm1, 4] <-  0
-        bcoeff[1, 2:3] <-  solve(array(c(adiff[1], 1, adiff[1]^2,
-                                         2 * adiff[1]), c(2, 2)),
-                                 c(kdiff[1], 1/coeff[2, 2]))
-        bcoeff[nkm1, 3] <-  (kdiff[nkm1] - adiff[nkm1] *
-                             bcoeff[nkm1, 2])/adiff[nkm1]^2
+        bcoeff[1, 4] <- bcoeff[nkm1, 4] <- 0
+        bcoeff[1, 2:3] <- solve(array(c(adiff[1], 1, adiff[1]^2,
+                                        2 * adiff[1]), c(2, 2)),
+                                c(kdiff[1], 1/coeff[2, 2]))
+        bcoeff[nkm1, 3] <- (kdiff[nkm1] - adiff[nkm1] *
+                            bcoeff[nkm1, 2])/adiff[nkm1]^2
     }
     if(bcoeff[1, 3] > 0) {
-        bcoeff[1, 3] <-  0
-        bcoeff[1, 2] <-  kdiff[1]/adiff[1]
+        bcoeff[1, 3] <- 0
+        bcoeff[1, 2] <- kdiff[1]/adiff[1]
     }
     if(bcoeff[nkm1, 3] < 0) {
-        bcoeff[nkm1, 3] <-  0
-        bcoeff[nkm1, 2] <-  kdiff[nkm1]/adiff[nkm1]
+        bcoeff[nkm1, 3] <- 0
+        bcoeff[nkm1, 2] <- kdiff[nkm1]/adiff[nkm1]
     }
-    value <-  list(knots = bknots, coefficients = bcoeff)
+    value <- list(knots = bknots, coefficients = bcoeff)
     attr(value, "formula") <- do.call("~", as.list(attr(object, "formula"))[3:2])
-    class(value) <-  c("polySpline", "spline")
+    class(value) <- c("polySpline", "spline")
     value
 }
 
-backSpline.nbSpline <-
-    function(object) backSpline(polySpline(object))
+backSpline.nbSpline <- function(object) backSpline(polySpline(object))
