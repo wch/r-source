@@ -46,10 +46,13 @@ static SEXP SqrtSymbol;
 static SEXP PnormSymbol;
 static SEXP DnormSymbol;
 
+static Rboolean Initialized = FALSE;
+
+
 static void InitDerivSymbols()
 {
-/* Called from do_D() and do_deriv();
- * FIXME: the following needs to `run' only once ! */
+    /* Called from do_D() and do_deriv() */
+    if(Initialized) return;
     ParenSymbol = install("(");
     PlusSymbol = install("+");
     MinusSymbol = install("-");
@@ -67,6 +70,7 @@ static void InitDerivSymbols()
     SqrtSymbol = install("sqrt");
     PnormSymbol = install("pnorm");
     DnormSymbol = install("dnorm");
+    Initialized = TRUE;
 }
 
 static SEXP Constant(double x)
