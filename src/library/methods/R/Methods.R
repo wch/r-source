@@ -122,16 +122,19 @@ getMethods <-
     else {
         if(identical(where, -1))
             return(getMethodsForDispatch(f))
-        else
-            fdef <- getFunction(f, where=where)
-    }
+        else {
+            fdef <- getFunction(f, where=where, mustFind = FALSE)
+            if(is.null(fdef))
+              return(getMethodsMetaData(f, where))
+            }
+          }
     ev <- environment(fdef)
     if(exists(".Methods", ev)) {
-        get(".Methods", ev )
+      get(".Methods", ev )
     }
     else
-        NULL
-}
+      NULL
+  }
 
 getMethodsForDispatch <-
   function(f)
@@ -154,30 +157,33 @@ setMethod <-
   function(f, signature = character(), definition, where = 1, valueClass)
 {
     whereString <- if(is.environment(where)) deparse(where) else where
-    doAssign <- !isGeneric(f, where = where)
-    ## automatic creation of a new generic is allowed in two cases:  there is a
-    ## generic (somewhere else) or there is a non-generic (to be made into the
-    ## default method).  In either case, arguments
-    ## must match definition.
-    if(doAssign) {
-        fdef <- getGeneric(f, mustFind=FALSE)
-        if(is.null(fdef)) {
-            fdef <- getFunction(f, mustFind=FALSE)
-            if(is.null(fdef))
-                stop(paste("No existing definition for function \"",f,"\"", sep=""))
-            else
-                warning(paste("Creating a new generic function for \"", f, "\" on element ",
-                              whereString, " of the search path", sep=""))
-        }
-        else
-            message("Creating a new version of the generic function for \"", f,
-                    "\" on element ", whereString, " of the search path")
-        fdef <- makeGeneric(f, fdef)
-    }
+    ## methods can be stored either as methods metadata, or in the environment
+    ## of the generic function (assignToGeneric).  The latter is done if the
+    ## generic definition is in database `where', including the case that it's going
+    ## to be created as a side effect of this call to setMethod.  A generic will be
+    ## assigned if there is no current generic, and the function is NOT a special.
+    ## Specials are dispatched from the main C code, and an explicit generic NEVER
+    ## exists for them.
+    assignToGeneric <- isGeneric(f, where = where)
+    if(assignToGeneric)
+      fdef <- getFunction(f, where = where)
     else
-        fdef <- getFunction(f, where = where)
-    ## get the methods unconditionally.  Unlike getMethods(), this
-    ## code requires the environment to contain a Methods list
+      fdef <- getFunction(f, mustFind = FALSE)
+    if(is.null(fdef))
+      stop(paste("No existing definition for function \"",f,"\"", sep=""))
+    newGeneric <- !assignToGeneric &&
+    ## when DispatchOrEval handles formal methods add to this:
+    ##   identical(typeof(fdef, "closure")) &&
+    ## (because then method dispatch will be done from the C code)
+       !isGeneric(f, fdef=fdef)
+    ## automatic creation of a new generic takes place if the function is currently
+    ## a non-generic closure
+    if(newGeneric) {
+      warning(paste("Creating a new generic function for \"", f, "\" on element ",
+                    whereString, " of the search path", sep=""))
+      fdef <- makeGeneric(f, fdef)
+      assignToGeneric <- TRUE
+    }
     ev <- environment(fdef)
     names <- formalArgs(fdef)
     snames <- names(signature)
@@ -188,15 +194,24 @@ setMethod <-
         warning("Method and generic have different arguments: a revised version of the method will be generated")
         definition <- conformMethodArgs(definition, fdef, ev)
     }
-    allMethods <- get(".Methods",  ev )
+    if(assignToGeneric)
+      allMethods <- get(".Methods",  ev )
+    else {
+      allMethods <- getMethodsMetaData(f, where = where)
+      if(is.null(allMethods))
+        allMethods <- NULL
+    }
     allMethods <- insertMethod(allMethods, signature, names, definition)
-    assign(".Methods", allMethods, ev)
+    if(assignToGeneric)
+      assign(".Methods", allMethods, ev)
+    else
+      assignMethodsMetaData(f, allMethods, where = where)
     ## cancel the session copy of the generic if there is one.
     if(!is.null(getFromMethodMetaData(f)))
         removeFromMethodMetaData(f)
-    ## assign the generic function to the database:  the assign waits until
+    ## assign a newly created generic function to the database:  the assign waits until
     ## the successful end of the function to avoid premature method search
-    if(doAssign)
+    if(newGeneric)
         assign(f, fdef, where)
     f
 }

@@ -726,12 +726,26 @@ R_stdGen_ptr_t R_set_standardGeneric_ptr(R_stdGen_ptr_t val) {
   return old;
 }
 
+static void load_methods_package()
+{
+  SEXP e;
+  PROTECT(e = allocVector(LANGSXP, 2));
+  SETCAR(e, install("library"));
+  SETCAR(CDR(e), install("methods"));
+  eval(e, R_NilValue);
+  UNPROTECT(1);
+}
+
 SEXP do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env)
 {
   SEXP arg, value; R_stdGen_ptr_t ptr = R_get_standardGeneric_ptr();
-  if(!ptr)
-    error("Using standardGeneric before the methods package has been attached");
-
+  if(!ptr) {
+    warning("standardGeneric called before the methods package has been attached (library(methods) will be evaluated now)");
+    load_methods_package();
+    ptr = R_get_standardGeneric_ptr();
+    if(!ptr)
+      error("Something went wrong:  the internal pointer for standardGeneric was not set");
+  }
   checkArity(op, args);
 
   PROTECT(arg = CAR(args));

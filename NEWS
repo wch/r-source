@@ -250,6 +250,13 @@ NEW FEATURES
 	about available data sets, demos or packages.  Similarly,
 	help.search() returns its results.
 
+    o   The methods package will be attached automatically if a call
+        to standardGeneric is encountered.  This does not yet
+        (as of 2001/10/9) work if the generic encountered is a function
+        needed for attaching.  That will be fixed, but for now you
+        still need to have library(methods) in the .Rprofile file in
+        this case.
+
 
 
 BUG FIXES

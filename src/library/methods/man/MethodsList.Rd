@@ -10,6 +10,7 @@
 \alias{print.MethodsList}
 \alias{emptyMethodsList}
 \alias{insertMethodInEmptyList}
+\alias{listFromMlistForPrint}
 \title{MethodsList Objects}
 \usage{
 MethodsList(.ArgName, ...)
@@ -26,9 +27,11 @@ matchArg(object, methods, defaultMethod)
 
 matchArgClass(Class, methods, defaultMethod)
 
-showMlist(mlist, includeDefs=TRUE, prev=character())
+showMlist(mlist, includeDefs=TRUE, inherited = TRUE)
 
 print.MethodsList(x, ...)
+
+listFromMlistForPrint(mlist, inherited = TRUE, useArgName = TRUE, prev = character())
 
 }
 \description{
@@ -104,6 +107,15 @@ corresonding definitions will be printed; otherwise, only the signatures.
 The function calls itself recursively.  \code{prev} is the previously
 selected classes.
 }
+\item{\code{listFromMlistForPrint}:}{
+  Undo the recursive nature of the methods list, making a list of function
+  defintions, with the names of the list being the corresponding signatures
+  (designed for printing; for looping over the methods, use \code{\link{listFromMlist}} instead).
+  
+  The function calls itself recursively:  \code{prev} is the previously
+  selected classes.
+  }
+
 }
 
 }

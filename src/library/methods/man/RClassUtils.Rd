@@ -40,7 +40,7 @@
 \alias{findExtends}
 \alias{completeExtends}
 \alias{classMetaName}
-\alias{metaName}
+\alias{methodsMetaName}
 \alias{as.data.frame}
 \alias{nullSymbol}
 \alias{requireMethods}
@@ -134,7 +134,7 @@ completeExtends(ClassDef)
 
 classMetaName(name)
 
-metaName(prefix, name)
+methodsMetaName(prefix, name)
 
 as.data.frame(x, row.names=NULL, optional=FALSE)
 
@@ -434,7 +434,7 @@ for a particular generic function), unless searching is done depth first.
 
   
   }
-\item{\code{metaName}:}{ 
+\item{\code{methodsMetaName}:}{ 
   a name mangling device to simulate the meta-data in S4
 
   

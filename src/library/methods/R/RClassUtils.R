@@ -765,9 +765,9 @@ completeExtends <-
 classMetaName <-
   ## a name for the object storing this class's definition
   function(name)
-  metaName("C", name)
+  methodsMetaName("C", name)
 
-metaName <-
+methodsMetaName <-
   ## a name mangling device to simulate the meta-data in S4
   function(prefix, name)
   paste(".", prefix, name, sep="__")

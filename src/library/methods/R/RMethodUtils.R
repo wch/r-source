@@ -131,21 +131,23 @@ mergeGenericFunctions <-
   ## The slot "allMethods" of the merged methods list is set to a copy of the methods slot;
   ## this is the slot where inherited methods are stored.
   function(f, libs = search()) {
-    ## when this function is called from methodsListDispatch (via C code),
-    ## a barrier version of the function is put into the metadata to prevent
-    ## recursive loops.  Must remove this, if an error occurs in mergeGenericFunctions
     fdef <- getGeneric(f, TRUE)
     ev <- copyEnvironment(fdef)
     groups <- getGroup(fdef, TRUE)
+    ## when this function is called from methodsListDispatch (via C code),
+    ## a barrier version of the function is put into the metadata to prevent
+    ## recursive loops.  Must remove this, if an error occurs in mergeGenericFunctions
     on.exit(removeFromMethodMetaData(f))
     methods <- NULL
     funs <- c(f, groups)
     for(fun in rev(funs))
       for(where in rev(libs)) {
         fw <- getFunction(fun, where=where, mustFind=FALSE)
-        if(is.null(fw) || !isGeneric(fun, fdef = fw))
-          next
-        methods <- mergeMethods(methods, getMethods(fw))
+        if(isGeneric(fun, fdef = fw))
+          mw <- getMethods(fw)
+        else mw <- getMethodsMetaData(fun, where)
+        if(!is.null(mw))
+          methods <- mergeMethods(methods, mw)
       }
     methods <- setAllMethodsSlot(methods)
     assign(".Methods", methods, ev)
@@ -258,4 +260,22 @@ getGroup <-
     group
 }
 
+getMethodsMetaData <-
+  ## get the methods meta-data for function f on database where
+  function(f, where) {
+    mname <- mlistMetaName(f)
+    if(exists(mname, where = where))
+      get(mname, where)
+    else
+      NULL
+  }
 
+assignMethodsMetaData <-
+  ## assign value to be the methods metadata for generic f on database where.
+  function(f, value, where)
+  assign(mlistMetaName(f), value, where)
+
+mlistMetaName <-
+  ## name mangling to simulate metadata for a methods definition.
+  function(name)
+  methodsMetaName("R", name)

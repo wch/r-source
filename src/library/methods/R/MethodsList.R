@@ -410,37 +410,90 @@ showMlist <-
   ## Prints the contents of the MethodsList.  If `includeDefs' the signatures and the
   ## corresonding definitions will be printed; otherwise, only the signatures.
   ##
+  ## If `includeDefs' is `TRUE', the currently known inherited methods are included;
+  ## otherwise, only the directly defined methods.
+function(mlist, includeDefs = TRUE, inherited = TRUE) {
+  methods <- listFromMlistForPrint(mlist, inherited)
+  if(length(methods) == 0)
+    cat("<Empty Methods List>\n")
+  else {
+    labels <- names(methods)
+    for(i in seq(length=length(methods))) {
+      cat(labels[[i]])
+      if(includeDefs) {
+        cat(":\n")
+        print(methods[[i]])
+      }
+      cat("\n")
+    }
+  }
+}
+
+promptMethods <-
+  ## generate information in the style of `prompt' for the methods of the generic
+  ## named `f'.
+  ##
+  ## `file' can be a logical or the name of a file to print to.  If `file' is `FALSE',
+  ## the methods skeleton is returned, to be included in other printing (typically,
+  ## the output from `prompt'.
+  function(f, print = FALSE, inherited = FALSE, useArgName = TRUE) {
+    methods <- listFromMlistForPrint(getMethods(f), inherited, useArgName)
+    text <- paste("\\item{", names(methods), "}{ ~~describe this method here }")
+    text <- c(paste("\\alias{methods_", f, "}", sep=""), "\\describe{", text, "}")
+    if(identical(print, FALSE))
+      return(text)
+    name <- paste("methods", f, sep="_")
+    if(identical(print, TRUE))
+      file <- paste(f, ".Rd", sep="")
+    else
+      file <- as.character(print)
+    text <- c(paste("\\name{", name, "}", sep=""), "\\non_function{}",
+              paste("\\title{ ~~Methods for", f, "}"), text,
+              "\\keyword{methods}", "\\keyword{ ~~ other possible keyword(s)}")
+    cat(text, file = file, sep="\n")
+    file
+  }
+
+listFromMlistForPrint <-
+  ## Undo the recursive nature of the methods list, making a list of function
+  ## defintions, with the names of the list being the corresponding signatures
+  ## (designed for printing; for looping over the methods, use `listFromMlist' instead).
+  ##
   ## The function calls itself recursively.  `prev' is the previously selected classes.
-  function(mlist, includeDefs = TRUE, inherited = TRUE, prev = character())
-{
-    methods <- slot(mlist, "methods")
-    if(inherited) {
-        allMethods <- slot(mlist, "allMethods")
+  function(mlist, inherited = TRUE, useArgName = TRUE, prev = character()) {
+    methods <- mlist@methods
+    allMethods <- mlist@allMethods
+    if(inherited && length(allMethods) >= length(methods)) {
         anames <- names(allMethods)
         inh <- is.na(match(anames, names(methods)))
         anames[inh] <- paste(anames[inh], "(inherited)")
         names(allMethods) <- anames
         methods <- allMethods
     }
+    value <- list()
+    vnames <- character()
     cnames <- names(methods)
+    if(useArgName)
+      cnames <- paste(as.character(mlist@argument), cnames, sep = " = ")
     for(i in seq(along = cnames)) {
         mi <- el(methods, i)
         ci <- c(prev, el(cnames, i))
         if(is.function(mi)) {
-          cat(paste(ci, collapse=", "))
-          if(includeDefs) {
-            cat(":\n  ")
-            print(mi)
-          }
-          cat("\n")
+          value <- c(value, list(mi))
+          vnames <- c(vnames, paste(ci, collapse=", "))
         }
-        else if(is(mi, "MethodsList"))
-          Recall(mi, includeDefs, inherited, ci)
+        else if(is(mi, "MethodsList")) {
+          mi <- Recall(mi, inherited, useArgName, ci)
+          value <- c(value, mi)
+          vnames <- c(vnames, names(mi))
+        }
         else
-          cat(paste(ci, collapse = ", "),
-              ": <<Unexpected element of class \"", data.class(mi),
+          warning("Skipping methods list element ", paste(ci, collapse = ", "),
+              " of unexpected class \"", data.class(mi),
               "\"\n\n", sep="")
-    }
+      }
+    names(value) <- vnames
+    value
 }
 
 print.MethodsList <- function(x, ...)

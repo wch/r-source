@@ -9,6 +9,9 @@
 \alias{conformMethodArgs}
 \alias{getGeneric}
 \alias{getGroup}
+\alias{getMethodsMetaData}
+\alias{assignMethodsMetaData}
+\alias{mlistMetaName}
 %% Not for the user to know about!
 \alias{.ShortPrimitiveSkeletons} %% used from C code
 \alias{.EmptyPrimitiveSkeletons}
@@ -107,6 +110,11 @@ NULL according to the value of mustFind.
   If \code{recursive=TRUE}, also all the
 group(s) of these groups.
 }
+\item{\code{getMethodsMetaData}, \code{assignMethodsMetaData},
+  \code{mlistMetaName}:}{
+  utilities to manage methods list objects in a particular database.
+  Not to be called directly.
+  }
 }
 }
 \keyword{programming}
