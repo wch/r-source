@@ -100,8 +100,8 @@ help <-
                 zfile <- zip.file.extract(file, "Rhelp.zip")
                 ## end of experimental code
                 if(file.exists(zfile))
-                    file.show(zfile,
-                              header = paste("Help for `", topic, "'", sep=""),
+                    file.show(zfile, title = "",
+                              header = paste("`", topic, "' help", sep=""),
                               delete.file = (zfile!=file), pager = pager)
                 else
                     stop(paste("The help file for `", topic, "' is missing",
