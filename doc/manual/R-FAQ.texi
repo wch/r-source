@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-36, @value{FAQ-YEAR}-01-30
+@set FAQ-VERSION 1.8-38, @value{FAQ-YEAR}-02-02
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -1471,9 +1471,13 @@ the commands for users without writing CGI scripts.  Graphical output
 was possible in PostScript or GIF formats and the executed code was
 presented to the user for revision.  However, it is not clear if the
 project is still active and recent attempts to contact the author or
-find the package have failed.
+find the package have failed.  
 @c URL no longer seems to work ...
 @c See @uref{http://stats.mth.uea.ac.uk/Rcgi/} for more information.
+Currently, a modified version of @strong{Rcgi} by
+@email{mai@@ms.uky.edu, Mai Zhou} (actually, two versions: one with
+(bitmap) graphics and one without) as well as the original code are
+available from @uref{http://www.ms.uky.edu/~statweb}.
 
 @node R Add-On Packages, R and Emacs, R Web Interfaces, Top
 @chapter R Add-On Packages
@@ -1503,6 +1507,7 @@ find the package have failed.
 
 The R distribution comes with the following extra packages:
 
+@c <FIXME 1.9.0>
 @table @strong
 @item ctest
 A collection of Classical TESTs, including the Ansari-Bradley, Bartlett,
@@ -1511,22 +1516,18 @@ Wilcoxon tests.
 @item eda
 Exploratory Data Analysis.  Currently only contains functions for robust
 line fitting, and median polish and smoothing.
-@c <FIXME 1.9.0>
 @item grid
 A rewrite of the graphics layout capabilities, plus some support for
 interaction.
 (Added in R 1.8.0).
-@c </FIXME>
 @item lqs
 Resistant regression and covariance estimation.
 @item methods
 Formally defined methods and classes for R objects, plus other
 programming tools, as described in the Green Book.
-@c <FIXME 1.9.0>
 @item mle
 Generic (smooth) likelihood maximization and profiling.
 (Added in R 1.8.0).
-@c </FIXME>
 @item modreg
 MODern REGression: smoothing and local methods.
 @item mva
@@ -1547,6 +1548,13 @@ Tools for package development and administration.
 @item ts
 Time Series.
 @end table
+In R 1.9, @strong{base} will be split into the four packages
+@strong{base}, @strong{graphics}, @strong{stats}, and @strong{utils}.
+Packages @strong{ctest}, @strong{eda}, @strong{modreg}, @strong{mva},
+@strong{nls}, @strong{stepfun} and @strong{ts} will be merged into
+@strong{stats}, package @strong{lqs} returned to the recommended package
+@strong{MASS}, and package @strong{mle} moved to @strong{stats4}.
+@c </FIXME>
 
 @node Add-on packages from CRAN, Add-on packages from Omegahat, Add-on packages in R, Which add-on packages exist for R?
 @subsection Add-on packages from @acronym{CRAN}
@@ -1556,6 +1564,9 @@ area.  (Packages denoted as @emph{Recommended} are to be included in all
 binary distributions of R.)
 
 @table @strong
+@item AlgDesign
+Algorithmic experimental designs.  Calculates exact and approximate
+theory experimental designs for D, A, and I criteria.
 @item AnalyzeFMRI
 Functions for I/O, visualisation and analysis of functional Magnetic
 Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
@@ -1667,6 +1678,10 @@ generalisation of SVD also supporting non-identity metrics and
 penalisations.  Also includes some other multiway methods.
 @item R2HTML
 Functions for exporting R objects & graphics in an @HTML{} document.
+@item R2WinBUGS
+Running WinBUGS from R: call a BUGS model, summarize inferences and
+convergence in a table and graph, and save the simulations in arrays for
+easy access in R.
 @item RArcInfo
 Functions to import Arc/Info V7.x coverages and data.
 @item RColorBrewer
