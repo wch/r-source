@@ -21,7 +21,9 @@ FILES="$@"
 #Dbg> echo "FILES=$FILES"; echo ; echo; exit
 
 ## 1) ---- Header ----
-echo "postscript('All-Examples.ps'); iter <- 0; eigenval <- 1e-12"
+echo "postscript('All-Examples.ps')"
+echo '.pp <- par();.par.postscript <- .pp[-match(c("cin","cra","csi","din"),names(.pp))]'
+echo "iter <- 0; eigenval <- 1e-12"
 ## 2) ---- edit a few of these files:
 for file in $FILES
 do
@@ -52,6 +54,10 @@ do
  elif [ $bf = 'edit'   ];	then
     sed -e '/edit(/s/^/##INTERACTIVE> /; /^vi(/s/^/##INTERACTIVE> /' $file
  else cat $file
+ fi
+ if [ -n "`grep 'par(' $file`" ]
+ then
+    echo 'par(.par.postscript)'
  fi
 done
 ## 3) ---- Footer ----
