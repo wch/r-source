@@ -14,8 +14,10 @@ NEW FEATURES
     o	The entry points [dpq]norm no longer exist: the header file
 	R_ext/Mathlib.h must be used and such code re-compiled.
 
-    o	Header files in R_ext must be given explicitly as e.g. 
+    o	Header files in R_ext must be given explicitly as e.g.
 	"R_ext/Mathlib.h".
+
+    o	new function  log1p(x) := log(1 + x) , accurate for |x| << 1.
 
 
 BUG FIXES
@@ -26,7 +28,7 @@ BUG FIXES
     o	tempfile("") now works on all Unix platforms, and
 	tempfile("a b c") returns a single name (with spaces in).
 
-    o   The internal code for strsplit no longer destroys other
+    o	The internal code for strsplit no longer destroys other
 	internal structures, e.g. postscript file output on Linux.
 
     o	The search semantics of data() and example() have changed
