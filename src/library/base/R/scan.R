@@ -1,6 +1,7 @@
 scan <-
     function(file="", what= double(0), nmax=-1, n=-1, sep="",
-	     quote="'\"", dec=".", skip=0, nlines=0, 
+	     quote=if (sep=="\n") "" else "'\"",
+             dec=".", skip=0, nlines=0, 
 	     na.strings="NA", flush=FALSE, strip.white=FALSE, quiet=FALSE) {
 	if(!missing(sep) && missing(na.strings))
 	    na.strings <- c(na.strings,"")

@@ -120,7 +120,13 @@ BUG FIXES
     o	summary(.matrix | .data.frame) now respects a `digits' argument.
 
     o   scan() recognises quoted strings by default again. The default
-	for the quote= argument got set wrongly when it was introduced.
+	for the quote= argument got set wrongly when it was
+	introduced. They are, however, turned off when using sep="\n",
+	since you probably want unprocessed lines of text in that
+	case.
+
+    o   fixed buglet where scan() would double a character following a
+        terminating quote symbol.
 
     o	kmeans was failing on vector inputs (although not documented
 	to accept such).
