@@ -59,6 +59,8 @@ BUG FIXES
     o   R CMD INSTALL failed with versioned installs on packages which
 	save images (only).
 
+    o   dlogis() gave NaN not 0 for large negative arguments.
+
 
 
         *********************************************************

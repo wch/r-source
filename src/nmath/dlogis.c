@@ -31,7 +31,7 @@ double dlogis(double x, double location, double scale, int give_log)
     if (scale <= 0.0)
 	ML_ERR_return_NAN;
 
-    x = (x - location) / scale;
+    x = fabs((x - location) / scale);
     e = exp(-x);
     f = 1.0 + e;
     return give_log ? -(x + log(scale * f * f)) : e / (scale * f * f);
