@@ -433,189 +433,189 @@ msgstr "il secondo argomento deve essere di tipo list"
 #: src/include/Errormsg.h:42 src/main/eval.c:2602 src/main/subscript.c:203
 #: src/main/subscript.c:307 src/main/subscript.c:310 src/main/subscript.c:404
 msgid "subscript out of bounds"
-msgstr ""
+msgstr "indice fuori limite"
 
 #: src/include/Errormsg.h:43 src/main/subassign.c:1317
 #: src/main/subassign.c:1666
 msgid "object is not subsettable"
-msgstr ""
+msgstr "questo oggetto non è indicizzabile"
 
 #: src/include/Errormsg.h:44
 msgid "invalid 'mode' of argument"
-msgstr ""
+msgstr "'mode' non valido per questo argomento"
 
 #: src/include/Errormsg.h:45
 msgid "applies only to lists and vectors"
-msgstr ""
+msgstr "si applica solo a liste e vettori"
 
 #: src/main/CConverters.c:302
 msgid "no R-to-C converter found corresponding to identifier"
-msgstr ""
+msgstr "nessun convertitore R-to-C associato a questo identificatore"
 
 #: src/main/CommandLineArgs.c:167
 msgid "WARNING: no value given for --encoding given\n"
-msgstr ""
+msgstr "ATTENZIONE: nessun valore specificato per --encoding\n"
 
 #: src/main/CommandLineArgs.c:186
 #, c-format
 msgid "WARNING: option %s no longer supported\n"
-msgstr ""
+msgstr "ATTENZIONE: opzione %s non è più supportata\n"
 
 #: src/main/CommandLineArgs.c:197
 #, c-format
 msgid "WARNING: no value given for %s\n"
-msgstr ""
+msgstr "ATTENZIONE: nessun valore specificato per %s\n"
 
 #: src/main/CommandLineArgs.c:205
 #, c-format
 msgid "WARNING: %s value is invalid: ignored\n"
-msgstr ""
+msgstr "ATTENZIONE: il valore 5s non è valido: verrà ignorato"
 
 #: src/main/CommandLineArgs.c:209
 #, c-format
 msgid "WARNING: %s=%lu'%c': too large and ignored\n"
-msgstr ""
+msgstr "ATTENZIONE: %s=%lu'%c': tropo grande e quindi ingorato\n"
 
 #: src/main/CommandLineArgs.c:226
 msgid "WARNING: no value given for --max-ppsize given\n"
-msgstr ""
+msgstr "ATTENZIONE: nessun valore specificato per --max-ppsize\n"
 
 #: src/main/CommandLineArgs.c:231
 msgid "WARNING: -max-ppsize value is negative: ignored\n"
-msgstr ""
+msgstr "ATTENZIONE: il valore di -max-ppsize è negativo: verrà ignorato"
 
 #: src/main/CommandLineArgs.c:233
 msgid "WARNING: -max-ppsize value is too small: ignored\n"
-msgstr ""
+msgstr "ATTENZIONE: il valore di -max-ppsize è troppo piccolo: verrà ignorato\n"
 
 #: src/main/CommandLineArgs.c:236
 msgid "WARNING: -max-ppsize value is too large: ignored\n"
-msgstr ""
+msgstr "ATTENZIONE: il valore di -max-ppsize è troppo grande: verrà ignorato\n"
 
 #: src/main/CommandLineArgs.c:247
 msgid "WARNING: no vsize given\n"
-msgstr ""
+msgstr "ATTENZIONE: non è stato specificato un valore di vsize\n"
 
 #: src/main/CommandLineArgs.c:253
 #, c-format
 msgid "WARNING: --vsize value is invalid: ignored\n"
-msgstr ""
+msgstr "ATTENZIONE: il valore di --vsize non è valido: verrà ignorato\n"
 
 #: src/main/CommandLineArgs.c:255
 #, c-format
 msgid "WARNING: --vsize=%ld'%c': too large and ignored\n"
-msgstr ""
+msgstr "ATTENZIONE: --vsize=%ld'%c': troppo grande e quindi ignorato\n"
 
 #: src/main/CommandLineArgs.c:270
 msgid "WARNING: no nsize given\n"
-msgstr ""
+msgstr "ATTENZIONE: nessun valore di nsize specificato\n"
 
 #: src/main/CommandLineArgs.c:276
 #, c-format
 msgid "WARNING: --nsize value is invalid: ignored\n"
-msgstr ""
+msgstr "ATTENZIONE: il valore di --nsize non è valido: verrà ignorato"
 
 #: src/main/CommandLineArgs.c:278
 #, c-format
 msgid "WARNING: --nsize=%lu'%c': too large and ignored\n"
-msgstr ""
+msgstr "ATTENZIONE:  --nsize=%lu'%c': troppo grande e quindi ignorato\n"
 
 #: src/main/RNG.c:139
 #, c-format
 msgid "unif_rand: unimplemented RNG kind %d"
-msgstr ""
+msgstr "unif_rand: RNG di tipo $d non implementato"
 
 #: src/main/RNG.c:202
 #, c-format
 msgid "FixupSeeds: unimplemented RNG kind %d"
-msgstr ""
+msgstr "FixupSeeds: RNG di tipo $d non implementato"
 
 #: src/main/RNG.c:236
 msgid "'user_unif_rand' not in load table"
-msgstr ""
+msgstr "'user_unif_rand' non presente nella tabella di caricamento"
 
 #: src/main/RNG.c:244
 msgid "cannot read seeds unless 'user_unif_nseed' is supplied"
-msgstr ""
+msgstr "impossibile leggere i semi finché 'user_unif_nseed' non viene specificato"
 
 #: src/main/RNG.c:249
 msgid "seed length must be in 0...625; ignored"
-msgstr ""
+msgstr "la lunghezza del seme deve essere nell'intervallo 0...625: verrà ignorata"
 
 #: src/main/RNG.c:257
 #, c-format
 msgid "RNG_Init: unimplemented RNG kind %d"
-msgstr ""
+msgstr "RNG_Init: RNG di tipo $d non implementato"
 
 #: src/main/RNG.c:285
 msgid ".Random.seed is a missing argument with no default"
-msgstr ""
+msgstr "il parametro .Random.seed  non è specificato e non ha un valore di default"
 
 #: src/main/RNG.c:287
 msgid ".Random.seed is not a vector"
-msgstr ""
+msgstr ".Random.seed non è un vettore"
 
 #: src/main/RNG.c:290
 msgid ".Random.seed[1] is not a valid integer"
-msgstr ""
+msgstr ".Random.seed[1] non è un valore intero accettabile"
 
 #: src/main/RNG.c:298
 msgid ".Random.seed[0] is not a valid Normal type"
-msgstr ""
+msgstr ".Random.seed[0] non è un tipo Normale valido"
 
 #: src/main/RNG.c:309
 msgid ".Random.seed[1] = 5 but no user-supplied generator"
-msgstr ""
+msgstr ".Random.seed[1] = 5 ma manca un generatore definito dall'utente"
 
 #: src/main/RNG.c:312
 msgid ".Random.seed[1] is NOT a valid RNG kind (code)"
-msgstr ""
+msgstr ".Random.seed[1] non è un tipo di RNG ammissibile (code)"
 
 #: src/main/RNG.c:317
 msgid ".Random.seed has wrong length"
-msgstr ""
+msgstr ".Random.seed ha una lunghezza sbagliata"
 
 #: src/main/RNG.c:374
 #, c-format
 msgid "RNGkind: unimplemented RNG kind %d"
-msgstr ""
+msgstr "RNGkind: RNG di tipo $d non implementato"
 
 #: src/main/RNG.c:386
 msgid "invalid Normal type in RNGkind"
-msgstr ""
+msgstr "valore tipo Normale non accettabile in RNGkind"
 
 #: src/main/RNG.c:389
 msgid "'user_norm_rand' not in load table"
-msgstr ""
+msgstr "'user_norm_rand' non presente nella tavola di caricamento"
 
 #: src/main/RNG.c:431
 msgid "supplied seed is not a valid integer"
-msgstr ""
+msgstr "il seme specificato non è un numero intero valido"
 
 #: src/main/Rdynload.c:236
 msgid "R_RegisterRoutines called with invalid DllInfo object."
-msgstr ""
+msgstr "R_RegisterRoutines è stata chiamata con un oggetto DllInfo non appropriato"
 
 #: src/main/Rdynload.c:496
 msgid "Maximal number of DLLs reached..."
-msgstr ""
+msgstr "Numero massimo di DLL raggiunto..."
 
 #: src/main/Rdynload.c:548
 msgid "could not allocate space for 'path'"
-msgstr ""
+msgstr "non è possibile allocare memoria per 'path'"
 
 #: src/main/Rdynload.c:561
 #, c-format
 msgid "DLLname %s is too long"
-msgstr ""
+msgstr "nome DLL %s" troppo lungo"
 
 #: src/main/Rdynload.c:582
 msgid "could not allocate space for 'name'"
-msgstr ""
+msgstr "non è possibile allocare memoria per 'name'"
 
 #: src/main/Rdynload.c:842 src/main/Rdynload.c:858 src/main/util.c:999
 msgid "character argument expected"
-msgstr ""
+msgstr "il parametro deve essere di tipo carattere"
 
 #: src/main/Rdynload.c:847 src/main/Rdynload.c:876
 #, c-format
@@ -627,61 +627,61 @@ msgstr ""
 #: src/main/Rdynload.c:861
 #, c-format
 msgid "dynamic/shared library '%s' was not loaded"
-msgstr ""
+msgstr "libreria dinamica '%s' non caricata"
 
 #: src/main/Rdynload.c:1007
 msgid "must pass package name or DllInfo reference"
-msgstr ""
+msgstr "specificare nome pacchetto o una referenza a DllInfo"
 
 #: src/main/Rdynload.c:1088
 #, c-format
 msgid "Unimplemented type %d in createRSymbolObject"
-msgstr ""
+msgstr "Tipo %d non implementato in createRSymbolObject"
 
 #: src/main/Rdynload.c:1167
 msgid "R_getRegisteredRoutines() expects a DllInfo reference"
-msgstr ""
+msgstr "R_getRegisteredRoutines() necessita di una referenza di tipo DllInfo"
 
 #: src/main/Rdynload.c:1172
 msgid "NULL value passed for DllInfo"
-msgstr ""
+msgstr "Valore NULL specificato al posto di DllInfo"
 
 #: src/main/Rdynload.c:1209 src/main/Rdynload.c:1215 src/main/Rdynload.c:1222
 #: src/main/Rdynload.c:1228 src/main/Rdynload.c:1234
 msgid "no dyn.load support in this R version"
-msgstr ""
+msgstr "supporto librerie dinamiche non disponibile in questa versione di R"
 
 #: src/main/apply.c:39 src/main/envir.c:2336
 msgid "arguments must be symbolic"
-msgstr ""
+msgstr "l'argomento deve essere simbolico"
 
 #: src/main/apply.c:42 src/main/complex.c:601
 msgid "invalid length"
-msgstr ""
+msgstr "lunghezza non valida"
 
 #: src/main/apply.c:78
 msgid "First arg is not a matrix"
-msgstr ""
+msgstr "Il primo parametro non è una matrice"
 
 #: src/main/arithmetic.c:182
 msgid "probable complete loss of accuracy in modulus"
-msgstr ""
+msgstr "possibile perdita totale di precisione in modulo"
 
 #: src/main/arithmetic.c:291
 msgid "operator needs one or two arguments"
-msgstr ""
+msgstr "l'operatore necessita di uno o due argomenti"
 
 #: src/main/arithmetic.c:308
 msgid "non-numeric argument to binary operator"
-msgstr ""
+msgstr "argomento non numerico trasformato in operatore binario"
 
 #: src/main/arithmetic.c:366 src/main/relop.c:125
 msgid "non-conformable arrays"
-msgstr ""
+msgstr "matrici incompatibili"
 
 #: src/main/arithmetic.c:409
 msgid "Non-conformable time-series"
-msgstr ""
+msgstr "Serie storiche non compatibili"
 
 #: src/main/arithmetic.c:431 src/main/logic.c:119 src/main/relop.c:163
 msgid ""
@@ -691,41 +691,41 @@ msgstr ""
 
 #: src/main/arithmetic.c:495
 msgid "Invalid argument to unary operator"
-msgstr ""
+msgstr "Parametro non valido trasformato in operatore unario"
 
 #: src/main/arithmetic.c:519 src/main/arithmetic.c:538
 #, fuzzy
 msgid "invalid unary operator"
-msgstr "separatore decimali non valido"
+msgstr "operatore unario non valido"
 
 #: src/main/arithmetic.c:585
 msgid "NAs produced by integer overflow"
-msgstr ""
+msgstr "si è prodotto un NA per overflow di interi"
 
 #: src/main/arithmetic.c:902
 msgid "unimplemented real function (of 1 argument)"
-msgstr ""
+msgstr "funzione reale (di un argomento) non implementata"
 
 #: src/main/arithmetic.c:1092 src/main/arithmetic.c:1370
 #: src/main/arithmetic.c:1564 src/main/arithmetic.c:1693
 #, c-format
 msgid "unimplemented real function of %d numeric arguments"
-msgstr ""
+msgstr "funzione reale di %d argomenti numerici non implementata"
 
 #: src/main/arithmetic.c:1117
 #, c-format
 msgid "%d arguments passed to 'atan' which requires 1 or 2"
-msgstr ""
+msgstr "%d argomenti passati alla funzione 'atan' che ne richiede 1 o 2"
 
 #: src/main/arithmetic.c:1132 src/main/arithmetic.c:1151
 #, fuzzy
 msgid "invalid second argument of length 0"
-msgstr "argomento non valido"
+msgstr "secondo argomento di lunghezza 0 non valido"
 
 #: src/main/arithmetic.c:1157
 #, c-format
 msgid "%d arguments passed to 'log' which requires 1 or 2"
-msgstr ""
+msgstr "%d argomenti passati a 'log' che ne richiede 1 o 2"
 
 #: src/main/array.c:71
 msgid "matrix: invalid byrow value"
