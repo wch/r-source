@@ -140,7 +140,7 @@ BUG FIXES
 
 BUG FIXES
 
-    o	tcltk ... <<Peter, please fill in>>
+    o	tcltk back-compatibility fix for tcl8.0  <<Peter fixme>>
 
     o	hist.POSIXct(*, breaks) now works for `breaks = #{breaks}'
 
