@@ -623,6 +623,7 @@ residuals.glm <-
 {
     type <- match.arg(type)
     y <- object$y
+    r <- .Alias(object$residuals)
     mu	<- .Alias(object$fitted.values)
     wts <- .Alias(object$prior.weights)
     switch(type,
@@ -630,18 +631,14 @@ residuals.glm <-
 	       d.res <- sqrt(pmax((object$family$dev.resids)(y, mu, wts), 0))
 	       ifelse(y > mu, d.res, -d.res)
 	   } else rep(0, length(mu)),
-	   pearson = object$residuals * sqrt(object$weights),
-	   working = object$residuals,
+	   pearson = r * sqrt(object$weights),
+	   working = r,
 	   response = y - mu,
-	   partial = object$residuals + predict(object,type="terms")
+	   partial = r + predict(object,type="terms")
 	   )
 }
 
-## Commented by KH on 1998/06/22
-## update.default() should be more general now ...
-##update.glm <- function (glm.obj, formula, data, weights, subset, na.action,
-##			offset, family, x)
-##{ ...... }
+## KH on 1998/06/22: update.default() is now used ...
 
 model.frame.glm <-
     function (formula, data, na.action, ...)
