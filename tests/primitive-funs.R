@@ -10,6 +10,7 @@ nn <- ls(pos=bpos)
 length(nn) # 844  [R 0.62.0, March 25, 1998]
 
 is.primitive <- function (obj) is.function(obj) && is.null(args(obj))
+is.special <- function(obj) typeof(obj) == "special"
 
 Primf <- nn[sapply(nn, function(N) is.primitive(get(N, pos=bpos)))]
 length(Primf) ## 195  R 0.62.0, March 25, 1998
@@ -86,6 +87,13 @@ all(real.primitives %in% Primf)	  # TRUE
 prim.f <- Primf %w/o% real.primitives
 ## see below: contains the is.xxxx(.) funtions
 length(prim.f) == length(Primf) - length(real.primitives)# TRUE
+
+Specf <- Primf[iPsp <- sapply(Primf, function(N) is.special(get(N, pos=bpos)))]
+length(Specf) ## 36 [ R 0.63 ]
+Specf
+## the non-"special" ones:
+all("builtin" == sapply(Primf[!iPsp], function(N) typeof(get(N, pos=bpos))))
+
 
 ncpf <- nchar(prim.f)
 table(ncpf)

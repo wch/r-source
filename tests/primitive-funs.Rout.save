@@ -1,6 +1,6 @@
 
 R : Copyright 1998, The R Development Core Team
-Version 0.63.0 Unstable (October 10, 1998)
+Version 0.63.0 Unstable (November 10, 1998)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -22,13 +22,14 @@ Type	"demo()" for some demos, "help()" for on-line help, or
 > bpos <- match("package:base",search())
 > nn <- ls(pos=bpos)
 > length(nn) # 844  [R 0.62.0, March 25, 1998]
-[1] 937
+[1] 1017
 > 
 > is.primitive <- function (obj) is.function(obj) && is.null(args(obj))
+> is.special <- function(obj) typeof(obj) == "special"
 > 
 > Primf <- nn[sapply(nn, function(N) is.primitive(get(N, pos=bpos)))]
 > length(Primf) ## 195  R 0.62.0, March 25, 1998
-[1] 131
+[1] 132
 > ## 132	R 0.62.2+
 > Real.primitives <-
 +     list(
@@ -105,11 +106,28 @@ Type	"demo()" for some demos, "help()" for on-line help, or
 > ## see below: contains the is.xxxx(.) funtions
 > length(prim.f) == length(Primf) - length(real.primitives)# TRUE
 [1] TRUE
+> 
+> Specf <- Primf[iPsp <- sapply(Primf, function(N) is.special(get(N, pos=bpos)))]
+> length(Specf) ## 36 [ R 0.63 ]
+[1] 36
+> Specf
+ [1] "$"           "$<-"         "&&"          ".Internal"   "<-"         
+ [6] "<<-"         "UseMethod"   "["           "[<-"         "[["         
+[11] "[[<-"        "attr<-"      "break"       "browser"     "c"          
+[16] "call"        "dim"         "dim<-"       "dimnames"    "dimnames<-" 
+[21] "expression"  "for"         "function"    "if"          "interactive"
+[26] "missing"     "nargs"       "next"        "on.exit"     "repeat"     
+[31] "return"      "substitute"  "while"       "{"           "||"         
+[36] "~"          
+> ## the non-"special" ones:
+> all("builtin" == sapply(Primf[!iPsp], function(N) typeof(get(N, pos=bpos))))
+[1] TRUE
+> 
 > 
 > ncpf <- nchar(prim.f)
 > table(ncpf)
  5  6  7  8  9 10 11 12 13 14 
- 1  1  5  1  7  4  3  2  1  1 
+ 1  1  5  1  7  4  4  2  1  1 
 > prim.f[ncpf <= 6]#  only is.na, is.nan
 [1] "is.na"  "is.nan"
 > 
@@ -119,8 +137,8 @@ Type	"demo()" for some demos, "help()" for on-line help, or
  [9] "is.finite"      "is.function"    "is.infinite"    "is.integer"    
 [13] "is.language"    "is.list"        "is.loaded"      "is.logical"    
 [17] "is.matrix"      "is.na"          "is.name"        "is.nan"        
-[21] "is.null"        "is.numeric"     "is.object"      "is.real"       
-[25] "is.recursive"   "is.single"     
+[21] "is.null"        "is.numeric"     "is.object"      "is.pairlist"   
+[25] "is.real"        "is.recursive"   "is.single"     
 > 
 > length(prim.f2 <- prim.f[! p.isis]) # down to 87   [R 0.62.0, March 25, 1998]
 [1] 0
