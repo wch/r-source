@@ -93,6 +93,8 @@ Rcode: Rcode0 Dynlib
 Rcode0:
 	@$(MKDIR) -p $(DPKG) $(DPKG)/R
 	@$(CAT) $(PKGRFILES) > $(DPKG)/R/$(PKG)
+#	@cp -p $(DPKG)/R/$(PKG) $(DPKG)/R/all.R
+	@rm -f $(DPKG)/R/$(PKG).rdb  $(DPKG)/R/$(PKG).rdx
 	@if test -f ${SPKG}/NAMESPACE; then \
 	  $(CP) ${SPKG}/NAMESPACE $(DPKG)/NAMESPACE; \
 	fi
@@ -107,10 +109,13 @@ ifneq ($(strip $(PKGRFILES)),)
 ifeq ($(strip $(BUILD)),CROSS)
 	@$(ECHO) "tools:::.install_package_code_files('"$(SPKG)"', '"$(DPKG)"')" \
 	  | R_DEFAULT_PACKAGES=tools R_OSTYPE=windows LC_COLLATE=C $(R_EXE) --vanilla --slave > /dev/null
+#	cp $(DPKG)/R/$(PKG) $(DPKG)/R/all.R
 else
 	@$(ECHO) "tools:::.install_package_code_files('"$(SPKG)"', '"$(DPKG)"')" \
 	  | $(RHOME)/bin/rterm.exe --vanilla --slave \
 	    R_DEFAULT_PACKAGES=tools LC_COLLATE=C > /dev/null
+	@cp -p $(DPKG)/R/$(PKG) $(DPKG)/R/all.R
+	@rm -f $(DPKG)/R/$(PKG).rdb  $(DPKG)/R/$(PKG).rdx
 endif
 ## install halts here if collater failed
 	@sh $(RHOME)/src/gnuwin32/install-save.sh $(SAVE) $(RLIB) $(PKG) $(RHOME) $(BUILD) $(R_EXE)
@@ -301,3 +306,11 @@ else
 	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=tools LC_COLLATE=C > /dev/null
 endif
 endif
+
+lazyload:
+	@if ! test -f ../../library/$(PKG)/R/$(PKG).rdb ; then \
+	  $(ECHO)  "preparing package $(PKG) for lazy loading" ; \
+	  $(ECHO) "tools:::makeLazyLoading(\"$(PKG)\")" | \
+	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
+	  rm -f ../../library/$(PKG)/R/all.rda ; \
+	fi

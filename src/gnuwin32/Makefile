@@ -101,21 +101,34 @@ Rcode: fixed/fixdesc
 LAZY_PKGS = utils graphics stats methods grid
 
 baselazy:
-	(cat ../library/tools/R/makeLazyLoad.R ../../share/R/makebasedb.R; \
-	  echo "makeLazyLoading(\"base\")") | \
-	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null
+	@if ! test -f ../../library/base/R/base.rdb ; then \
+	  echo "preparing package base for lazy loading" ; \
+	  (cat ../library/tools/R/makeLazyLoad.R ../../share/R/makebasedb.R; \
+	    echo "makeLazyLoading(\"base\")") | \
+	    $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
+	fi
 
 rpackage: ../../library/R.css
 	@for pkg in $(PKGS); do \
 	  R_START_PACKAGES=NULL $(MAKE) --no-print-directory $${pkg}; \
 	done
-	@(cat ../library/tools/R/makeLazyLoad.R; \
-	  echo "makeLazyLoading(\"tools\")") | \
-	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null
+	@$(ECHO)
+	@if ! test -f ../../library/base/R/base.rdb ; then \
+	  echo "preparing package base for lazy loading" ; \
+	  (cat ../library/tools/R/makeLazyLoad.R ../../share/R/makebasedb.R; \
+	    echo "makeLazyLoading(\"base\")") | \
+	    $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
+	fi
+	@if ! test -f ../../library/tools/R/tools.rdb ; then \
+	  echo "preparing package tools for lazy loading" ; \
+	  (cat ../library/tools/R/makeLazyLoad.R; \
+	    echo "makeLazyLoading(\"tools\")") | \
+	    $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
+	fi
 	@for pkg in $(LAZY_PKGS); do \
-	  echo "tools:::makeLazyLoading(\"$${pkg}\")" | \
-	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
+	  $(MAKE) --no-print-directory PKG=$${pkg} RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg lazyload ; \
 	done
+	touch ../../library/methods/R/all.rda
 
 	@$(MAKE) --no-print-directory vignettes
 
@@ -330,6 +343,9 @@ pkgcheck-%:
 	    -f $(RHOME)/src/gnuwin32/check/PkgCheck tests;\
 	fi
 
+lazyload-%:
+	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg lazyload
+
 ziphelp-%:
 	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) ziphelp-$*
 
@@ -487,9 +503,10 @@ clean-recommended:
 
 recommended: unpack-recommended
 	@$(ECHO) "--- Making recommended packages"
-	@$(MAKE) --no-print-directory bundle-VR
+	@$(MAKE) --no-print-directory bundle-VR lazyload-MASS \
+	  lazyload-class lazyload-nnet lazyload-spatial
 	@for p in $(filter-out VR, $(R_PKGS_RECOMMENDED_SOURCES)); do \
-	  $(MAKE) --no-print-directory pkg-$$p; \
+	  $(MAKE) --no-print-directory pkg-$$p lazyload-$$p; \
 	done
 
 rinstaller:
