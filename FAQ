@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-17, 2002-07-30
+Version 1.5-18, 2002-08-09
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1287,6 +1287,9 @@ requirement for the user is a JavaScript capable browser.  See
      examples in "SAS System for Mixed Models" by R. C. Littell, G. A.
      Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 
+*StatDataML*
+     Read and write StatDataML.
+
 *SuppDists*
      Ten distributions supplementing those built into R (Inverse Gauss,
      Kruskal-Wallis, Kendall's Tau, Friedman's chi squared, Spearman's rho,
@@ -1853,9 +1856,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *RODBC*
      An ODBC database interface.
-
-*StatDataML*
-     Read and write StatDataML.
 
 *dopt*
      Finding D-optimal experimental designs.

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-17, 2002-07-30
+@set FAQ-VERSION 1.5-18, 2002-08-09
 @set REL-VERSION 1.5.1
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
@@ -1555,6 +1555,8 @@ and Bruno Torresani, 1998, Academic Press.
 Data sets and sample linear mixed effects analyses corresponding to the
 examples in ``SAS System for Mixed Models'' by R. C. Littell,
 G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
+@item StatDataML
+Read and write StatDataML.
 @item SuppDists
 Ten distributions supplementing those built into R (Inverse Gauss,
 Kruskal-Wallis, Kendall's Tau, Friedman's chi squared, Spearman's rho,
@@ -2041,8 +2043,6 @@ An @acronym{ODBC} database interface.
 @c @item Rdbi.PgSQL
 @c Provides methods for accessing data stored in PostgreSQL tables.
 @c </COMMENT>
-@item StatDataML
-Read and write StatDataML.
 @c <COMMENT>
 @c Moved to Attic for 1.5 (as this contains the summary functions).
 @c @item colSums
