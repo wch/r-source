@@ -997,7 +997,16 @@ static SEXP EvalSubassignArgs(SEXP el, SEXP rho)
 		}
 		el = CDR(el);
 	}
-	CDR(tail) = CONS(CAR(el), R_NilValue);
+
+	/* Danger Will Robinson!!! This is obscure code!!! */
+	/* The calling code may have wrapped the last value */
+	/* in a promise.  If this is the case, we must unwrap */
+	/* it here or we will be assigning a promise into the result!!! */
+
+	if (TYPEOF(CAR(el)) == PROMSXP)
+		CDR(tail) = CONS(PREXPR(CAR(el)), R_NilValue);
+	else
+		CDR(tail) = CONS(CAR(el), R_NilValue);
 	UNPROTECT(1);
 	return CDR(ans);
 }
@@ -1037,9 +1046,9 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 		/* to the default code below. */
 
 	CAR(args) = eval(CAR(args), rho);
-	PROTECT(CDR(args) = EvalSubassignArgs(CDR(args), rho));
 	if(isObject(CAR(args)) && CAR(call) != install("[<-.default")) {
 		/*SetArgsforUseMethod(args); */
+		CDR(args) = promiseArgs(CDR(args), rho);
 		begincontext(&cntxt,CTXT_RETURN, call, rho, rho, args);
 		if(usemethod("[<-", CAR(args), call, args, rho, &y)) {
 			endcontext(&cntxt);
@@ -1048,6 +1057,7 @@ SEXP do_subassign(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 		endcontext(&cntxt);
 	}
+	PROTECT(CDR(args) = EvalSubassignArgs(CDR(args), rho));
 
 		/* If there are multiple references to an */
 		/* object we must duplicate it so that only */
@@ -1114,6 +1124,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	CAR(args) = eval(CAR(args), rho);
 	if(isObject(CAR(args)) && CAR(call) != install("[[<-.default") ) {
 		/*SetArgsforUseMethod(args);*/
+		CDR(args) = promiseArgs(CDR(args), rho);
 		begincontext(&cntxt,CTXT_RETURN, call, rho, rho, args);
 		if(usemethod("[[<-", CAR(args), call, args, rho, &y)) {
 			endcontext(&cntxt);

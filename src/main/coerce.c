@@ -1016,7 +1016,7 @@ static SEXP coerceToComplex(SEXP v)
 static SEXP coerceToString(SEXP v)
 {
 	SEXP ans, tmpchar;
-	int i, j, n;
+	int i, j, n, savedigits;
 	char *strp;
 
 	PrintDefaults(R_NilValue);
@@ -1025,6 +1025,8 @@ static SEXP coerceToString(SEXP v)
 	ans = allocVector(STRSXP, n);
 	PROTECT(ans);
 	ATTRIB(ans) = duplicate(ATTRIB(v));
+	savedigits = print_digits;
+	print_digits = 7;
 	for (i = 0; i < n; i++) {
 		strp = EncodeElement( v, i, 0);
 		if (streql(strp, "NA"))
@@ -1035,6 +1037,7 @@ static SEXP coerceToString(SEXP v)
 			STRING(ans)[i] = tmpchar;
 		}
 	}
+	print_digits = savedigits;
 	UNPROTECT(1);
 	return (ans);
 }

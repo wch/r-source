@@ -99,11 +99,14 @@ SEXP duplicate(SEXP s)
 		UNPROTECT(2);
 		break;
 	case PROMSXP: /* duplication requires that we evaluate the promise */
+#ifdef OLD
 		if (PRVALUE(s) == R_UnboundValue) {
 			t = eval(PREXPR(s), PRENV(s));
 			PRVALUE(s) = t;
 		}
 		t = duplicate(PRVALUE(s));
+#endif
+		return s;
 		break;
 	default:
 		UNIMPLEMENTED("duplicate");
