@@ -65,7 +65,9 @@ $(top_builddir)/library/$(pkg)/R/all.rda: $(top_builddir)/$(subdir)/R/$(pkg)
 mostlyclean: clean
 clean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
-	@rm -rf R
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+	  rm -rf R; \
+	fi
 distclean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
 	@rm -f Makefile DESCRIPTION
