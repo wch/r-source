@@ -90,7 +90,11 @@ rank <- function(x, na.last = TRUE) {
 readline <- function().Internal(readline())
 search <- function().Internal(search())
 
-sink <- function(file).Internal(sink(file))# 0 or 1 arg.
+sink <- function (file = NULL) {
+  if (missing(file)) 
+    .Internal(sink())
+  else .Internal(sink(file))
+}    
 
 ##-- DANGER ! ---   substitute(list(...))  inside functions !!!
 ##substitute <- function(expr, env=NULL).Internal(substitute(expr, env))
