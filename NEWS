@@ -106,6 +106,10 @@ BUG FIXES
 	codes, but in fact re-coded into the alphabetical ordering of
 	the levels.
 
+    o	methods() finds methods if the generic dispatches on a name
+	other than its own.  (The cases of coefficients() and
+	fitted.values() were fixed in 1.7.1.)
+
 
 
 	**************************************************

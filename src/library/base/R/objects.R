@@ -14,7 +14,7 @@ methods <- function (generic.function, class)
           "flush.console", "format.char", "format.info", "format.pval",
           "influence.measures", "plot.new", "plot.window", "plot.xy",
           "print.coefmat", "rep.int", "split.screen", "update.packages",
-          "text.SAX", "solve.QP", "solve.QP.compact", "print.graph", 
+          "text.SAX", "solve.QP", "solve.QP.compact", "print.graph",
           "lag.plot")
     groupGenerics <- c("Ops", "Math", "Summary")
 
@@ -24,15 +24,22 @@ methods <- function (generic.function, class)
     if (!missing(generic.function)) {
 	if (!is.character(generic.function))
 	    generic.function <- deparse(substitute(generic.function))
-        ## <FIXME> generalize this later
-        if(generic.function == "coefficients") generic.function <- "coef"
-        if(generic.function == "fitted.values") generic.function <- "fitted"
+        genfun <- get(generic.function)
+        gf <- paste(deparse(genfun), collapse="\n")
+        if(!length(grep("UseMethod", gf)))
+            stop(generic.function, "does not contain a call to UseMethod")
+        truegf <- sub('(.*)UseMethod\\(\"([^"]*)(.*)', "\\2", gf)
+        if(truegf != generic.function) {
+            warning(paste("Generic `", generic.function,
+                          "' dispatches methods for generic `",
+                          truegf, "'", sep=""))
+            genfun <- get(generic.function <- truegf)
+        }
 	name <- paste("^", generic.function, ".", sep = "")
         ## also look for registered methods in namespaces
         if(generic.function %in% groupGenerics)
             defenv <- .BaseNamespaceEnv
         else {
-            genfun <- get(generic.function)
             defenv <- if (typeof(genfun) == "closure") environment(genfun)
             else .BaseNamespaceEnv
         }
