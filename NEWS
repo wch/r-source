@@ -11,6 +11,8 @@
 
 NEW FEATURES
 
+    o	offsets should work with lm as well as with glm now
+
     o	range() is now in the Summary group, trunc() back in the Math
 	group.
 
@@ -37,6 +39,8 @@ NEW FEATURES
     o	new function jitter()  [slightly more useful than S's].
 
 BUG FIXES
+
+    o   predict inconsistencies with offsets straightened out
 
     o	tapply goofed when FUN returned named scalar
 
