@@ -54,7 +54,7 @@ export(
        "getGrob", "setGrob", "addGrob", "removeGrob", "editGrob",
        "gEdit", "gEditList", "applyEdit", "applyEdits",
        "getNames", "childNames",
-       "grid.grab", 
+       "grid.grab", "grid.grabExpr",
        "setChildren",
 
        # Creating and drawing predefined grobs and gTrees

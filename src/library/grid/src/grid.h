@@ -273,6 +273,7 @@ SEXP L_text(SEXP label, SEXP x, SEXP y, SEXP just,
 SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size);
 SEXP L_pretty(SEXP scale);
 SEXP L_locator();
+SEXP L_nullDevice();
 SEXP L_convert(SEXP x, SEXP whatfrom,
 	       SEXP whatto, SEXP unitto);
 SEXP L_layoutRegion(SEXP layoutPosRow, SEXP layoutPosCol);

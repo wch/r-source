@@ -159,6 +159,13 @@ addToGList <- function(x, gList) {
   UseMethod("addToGList")
 }
 
+addToGList.default <- function(x, gList) {
+  if (is.null(x))
+    gList
+  else
+    stop("Invalid element to add to gList")
+}
+
 addToGList.grob <- function(x, gList) {
   if (is.null(gList))
     gList(x)

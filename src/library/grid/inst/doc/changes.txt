@@ -43,6 +43,20 @@ Changes from grid_2.0.1 to grid_2.1.0:
                     },
                     list())
 
+9.  New arguments "warn" and "wrap" for function grid.grab()
+    
+    If warn>0 will warn if know (or, if warn>1,  if even suspect) 
+    that the grab has not faithfully captured the output.  
+
+    If wrap=TRUE, will capture output by wrapping all non-grobs
+    on the display list in grobs.  Resulting gTree is less 
+    elegant and harder to work with, but should always faithfully
+    capture output.
+
+10. New function grid.grabExpr() which captures the output from
+    an expression (i.e., not from the current scene) without
+    doing any drawing (i.e., no impact on the current scene).
+  
 
 Changes from grid_2.0.0 to grid_2.0.1:
 ------------------------------------

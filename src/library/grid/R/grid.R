@@ -416,3 +416,8 @@ grid.record <- function(expr, list) {
   grid.draw(grob(expr=substitute(expr), list=list,
                  cl="recordedGrob"))
 }
+
+recordGrob <- function(expr, list) {
+  grob(expr=substitute(expr), list=list,
+       cl="recordedGrob")
+}

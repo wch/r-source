@@ -2180,3 +2180,7 @@ SEXP L_locator() {
     return answer;
 }
 
+SEXP L_nullDevice() {
+    GEnullDevice();
+    return R_NilValue;
+}

@@ -355,3 +355,4 @@ void GEcopyDisplayList(int fromDevice);
 SEXP GEcreateSnapshot(GEDevDesc *dd);
 void GEplaySnapshot(SEXP snapshot, GEDevDesc* dd);
 void GEonExit();
+void GEnullDevice();

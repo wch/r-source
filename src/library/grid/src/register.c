@@ -68,6 +68,7 @@ static const R_CallMethodDef callMethods[] = {
     {"L_points", (DL_FUNC) &L_points, 4},
     {"L_pretty", (DL_FUNC) &L_pretty, 1},
     {"L_locator", (DL_FUNC) &L_locator, 0},
+    {"L_nullDevice", (DL_FUNC) &L_nullDevice, 0},
     {"L_convert", (DL_FUNC) &L_convert, 4},
     {"L_layoutRegion", (DL_FUNC) &L_layoutRegion, 2},
     { NULL, NULL, 0 }
