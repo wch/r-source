@@ -46,7 +46,7 @@ AC_DEFINE_UNQUOTED(R_OS, "${host_os}")
 AC_MSG_RESULT([${host}])
 
 PACKAGE="R"
-VERSION=`${srcdir}/tools/GETVERSION`
+VERSION=`cat ${srcdir}/VERSION | cut -d' ' -f1`
 AC_SUBST(PACKAGE)
 AC_SUBST(VERSION)
 
@@ -396,9 +396,8 @@ R_GNOME
 AC_FUNC_ALLOCA
 AC_FUNC_VFORK
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS(acosh asinh atanh bcopy finite getcwd isfinite isnan \
-  matherr memcpy memmove regcomp rint siglongjmp sigsetjmp strcoll  \
-  strtod strtol system times)
+AC_CHECK_FUNCS(acosh asinh atanh bcopy finite getcwd isnan matherr \
+  memcpy memmove regcomp rint strcoll system times)
 R_FUNC___SETFPUCW
 R_FUNC_CALLOC
 R_FUNC_FINITE
@@ -417,7 +416,8 @@ AC_CHECK_HEADERS(dl.h dlfcn.h elf.h floatingpoint.h fpu_control.h \
 case "${host}" in
   *sunos4*)
     AC_DEFINE(SunOS4) ;;
-esac    
+esac
+R_HEADER_SETJMP
 
 ### Typedefs.
 
