@@ -1006,9 +1006,10 @@ static void figureExtent(int *minCol, int *maxCol, int *minRow, int *maxRow,
     int minr = -1;
     int maxr = -1;
     int i, j;
-    for (i = 0; i < Rf_gpptr(dd)->numrows; i++)
+    int nr = Rf_gpptr(dd)->numrows;
+    for (i = 0; i < nr; i++)
 	for (j = 0; j < Rf_gpptr(dd)->numcols; j++)
-	    if (Rf_gpptr(dd)->order[i][j] == figureNum) {
+	    if (Rf_gpptr(dd)->order[i + j*nr] == figureNum) {
 		if ((minc == -1) || (j < minc))
 		    minc = j;
 		if ((maxc == -1) || (j > maxc))
@@ -1121,14 +1122,15 @@ static void widthsRespectingHeights(double widths[],
     int respectedCols[MAX_LAYOUT_COLS];
     double widthLeft;
     double disrespectedWidth = 0;
+    int nr = Rf_gpptr(dd)->numrows;
     for (j = 0; j < Rf_gpptr(dd)->numcols; j++) {
 	respectedCols[j] = 0;
 	widths[j] = Rf_gpptr(dd)->widths[j];
     }
-    for (i = 0; i < Rf_gpptr(dd)->numrows; i++)
+    for (i = 0; i < nr; i++)
 	for (j = 0; j < Rf_gpptr(dd)->numcols; j++)
-	    if (Rf_gpptr(dd)->respect[i][j] && !Rf_gpptr(dd)->cmWidths[j])
-		respectedCols[j] = 1;
+	    if (Rf_gpptr(dd)->respect[i + j * nr] && 
+		!Rf_gpptr(dd)->cmWidths[j]) respectedCols[j] = 1;
     for (j = 0; j < Rf_gpptr(dd)->numcols; j++)
 	if (!respectedCols[j])
 	    disrespectedWidth += Rf_gpptr(dd)->widths[j];
@@ -1155,14 +1157,15 @@ static void heightsRespectingWidths(double heights[],
     int respectedRows[MAX_LAYOUT_ROWS];
     double heightLeft;
     double disrespectedHeight = 0;
-    for (i = 0; i < Rf_gpptr(dd)->numrows; i++) {
+    int nr = Rf_gpptr(dd)->numrows;
+    for (i = 0; i < nr; i++) {
 	respectedRows[i] = 0;
 	heights[i] = Rf_gpptr(dd)->heights[i];
     }
-    for (i = 0; i < Rf_gpptr(dd)->numrows; i++)
+    for (i = 0; i < nr; i++)
 	for (j = 0; j < Rf_gpptr(dd)->numcols; j++)
-	    if (Rf_gpptr(dd)->respect[i][j] && !Rf_gpptr(dd)->cmHeights[i])
-		respectedRows[i] = 1;
+	    if (Rf_gpptr(dd)->respect[i + j*nr] && 
+		!Rf_gpptr(dd)->cmHeights[i]) respectedRows[i] = 1;
     for (i = 0; i < Rf_gpptr(dd)->numrows; i++)
 	if (!respectedRows[i])
 	    disrespectedHeight += Rf_gpptr(dd)->heights[i];
@@ -2137,9 +2140,9 @@ void GInit(GPar *dp)
     dp->widths[0] = 1;
     dp->cmHeights[0] = 0;
     dp->cmWidths[0] = 0;
-    dp->order[0][0] = 1;
+    dp->order[0] = 1;
     dp->rspct = 0;
-    dp->respect[0][0] = 0;
+    dp->respect[0] = 0;
 
     /* Misc plotting parameters */
     dp->new = FALSE;
@@ -4790,7 +4793,7 @@ void restoredpSaved(DevDesc *dd)
     /* NOTE that not all params should be restored before playing */
     /* the display list (e.g., don't restore the device size) */
 
-    int i, j;
+    int i, j, nr, nc;
 
     /* do NOT restore basic device driver properties;  they are */
     /* either meant to be different (e.g., left, right, bottom, top */
@@ -4882,23 +4885,22 @@ void restoredpSaved(DevDesc *dd)
     Rf_dpptr(dd)->mai[3] = Rf_dpSavedptr(dd)->mai[3];
     Rf_dpptr(dd)->mUnits = Rf_dpSavedptr(dd)->mUnits;
     Rf_dpptr(dd)->mex = Rf_dpSavedptr(dd)->mex;
-    Rf_dpptr(dd)->numrows = Rf_dpSavedptr(dd)->numrows;
-    Rf_dpptr(dd)->numcols = Rf_dpSavedptr(dd)->numcols;
+    nr = Rf_dpptr(dd)->numrows = Rf_dpSavedptr(dd)->numrows;
+    nc = Rf_dpptr(dd)->numcols = Rf_dpSavedptr(dd)->numcols;
     Rf_dpptr(dd)->currentFigure = Rf_dpSavedptr(dd)->currentFigure;
     Rf_dpptr(dd)->lastFigure = Rf_dpSavedptr(dd)->lastFigure;
-    for (i = 0; i < Rf_dpSavedptr(dd)->numrows && i < MAX_LAYOUT_ROWS; i++) {
+    for (i = 0; i < nr && i < MAX_LAYOUT_ROWS; i++) {
 	Rf_dpptr(dd)->heights[i] = Rf_dpSavedptr(dd)->heights[i];
 	Rf_dpptr(dd)->cmHeights[i] = Rf_dpSavedptr(dd)->cmHeights[i];
     }
-    for (j = 0; j < Rf_dpSavedptr(dd)->numcols && j < MAX_LAYOUT_COLS; j++) {
+    for (j = 0; j < nc && j < MAX_LAYOUT_COLS; j++) {
 	Rf_dpptr(dd)->widths[j] = Rf_dpSavedptr(dd)->widths[j];
 	Rf_dpptr(dd)->cmWidths[j] = Rf_dpSavedptr(dd)->cmWidths[j];
     }
-    for (i = 0; i < Rf_dpSavedptr(dd)->numrows && i < MAX_LAYOUT_ROWS; i++)
-	for (j=0; j<Rf_dpSavedptr(dd)->numcols && j < MAX_LAYOUT_COLS; j++) {
-	    Rf_dpptr(dd)->order[i][j] = Rf_dpSavedptr(dd)->order[i][j];
-	    Rf_dpptr(dd)->respect[i][j] = Rf_dpSavedptr(dd)->respect[i][j];
-	}
+    for (i = 0; i < nr*nc && i < MAX_LAYOUT_CELLS; i++) {
+	Rf_dpptr(dd)->order[i] = Rf_dpSavedptr(dd)->order[i];
+	Rf_dpptr(dd)->respect[i] = Rf_dpSavedptr(dd)->respect[i];
+    }
     Rf_dpptr(dd)->rspct = Rf_dpSavedptr(dd)->rspct;
     Rf_dpptr(dd)->layout = Rf_dpSavedptr(dd)->layout;
     Rf_dpptr(dd)->mfind = Rf_dpSavedptr(dd)->mfind;

@@ -34,8 +34,10 @@
 
 #define COLOR_TABLE_SIZE 1024
 
-#define MAX_LAYOUT_ROWS 15
-#define MAX_LAYOUT_COLS 15
+#define MAX_LAYOUT_ROWS 50
+#define MAX_LAYOUT_COLS 50
+#define MAX_LAYOUT_CELLS 500 /* must be less than 65535, 
+				3 copies, 3bytes each */
 
 typedef unsigned int rcolor;
 
@@ -211,9 +213,9 @@ typedef struct {
     double widths[MAX_LAYOUT_COLS];
     int	cmHeights[MAX_LAYOUT_ROWS];
     int	cmWidths[MAX_LAYOUT_COLS];
-    int	order[MAX_LAYOUT_ROWS][MAX_LAYOUT_COLS];
+    unsigned short order[MAX_LAYOUT_CELLS];
     int	rspct;		/* 0 = none, 1 = full, 2 = see respect */
-    int	respect[MAX_LAYOUT_ROWS][MAX_LAYOUT_COLS];
+    unsigned char respect[MAX_LAYOUT_CELLS];
 
     int	mfind;		/* By row/col indicator */
 

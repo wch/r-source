@@ -42,8 +42,8 @@ lcm(x)
     The \code{respect} argument controls whether a unit column-width is
     the same physical measurement on the device as a unit row-height.
 
-    There is a limit, currently 15, for the numbers of rows and columns
-    in the layout.
+    There is a limit (currently 50) for the numbers of rows and columns
+    in the layout, and also for the total number of cells (500).
     
     \code{layout.show(n)} plots (part of) the current layout, namely the
     outlines of the next \code{n} figures.

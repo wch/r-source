@@ -204,7 +204,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	    R_DEV_2(widths[0]) = 1;
 	    R_DEV_2(cmHeights[0]) = 0;
 	    R_DEV_2(cmWidths[0]) = 0;
-	    R_DEV_2(order[0][0]) = 1;
+	    R_DEV_2(order[0]) = 1;
 	    R_DEV_2(currentFigure) = 1;
 	    R_DEV_2(lastFigure) = 1;
 	    R_DEV__(rspct) = 0;
@@ -234,7 +234,7 @@ static void Specify(char *what, SEXP value, DevDesc *dd, SEXP call)
 	R_DEV_2(widths[0]) = 1;
 	R_DEV_2(cmHeights[0]) = 0;
 	R_DEV_2(cmWidths[0]) = 0;
-	R_DEV_2(order[0][0]) = 1;
+	R_DEV_2(order[0]) = 1;
 	R_DEV_2(currentFigure) = 1;
 	R_DEV_2(lastFigure) = 1;
 	R_DEV__(rspct) = 0;
@@ -1141,33 +1141,39 @@ SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
     dd = CurrentDevice();
 
     /* num.rows: */
-    nrow = Rf_dpptr(dd)->numrows = Rf_gpptr(dd)->numrows = INTEGER(CAR(args))[0];
+    nrow = Rf_dpptr(dd)->numrows = Rf_gpptr(dd)->numrows = 
+	INTEGER(CAR(args))[0];
     if (nrow > MAX_LAYOUT_ROWS)
-	error("Too many rows in layout");
+	error("Too many rows in layout, limit %d", MAX_LAYOUT_ROWS);
     args = CDR(args);
     /* num.cols: */
-    ncol = Rf_dpptr(dd)->numcols = Rf_gpptr(dd)->numcols = INTEGER(CAR(args))[0];
+    ncol = Rf_dpptr(dd)->numcols = Rf_gpptr(dd)->numcols =
+	INTEGER(CAR(args))[0];
     if (ncol > MAX_LAYOUT_COLS)
-	error("Too many columns in layout");
+	error("Too many columns in layout, limit %d", MAX_LAYOUT_COLS);
+    if (nrow * ncol > MAX_LAYOUT_CELLS)
+	error("Too many cells in layout, limit %d", MAX_LAYOUT_CELLS);
     args = CDR(args);
-    /* mat[i,j] == order[i][j] : */
-    for (i = 0; i < nrow; i++)
-	for (j = 0; j < ncol; j++)
-	    Rf_dpptr(dd)->order[i][j] = Rf_gpptr(dd)->order[i][j] =
-		INTEGER(CAR(args))[i + j*nrow];
+    /* mat[i,j] == order[i+j*nrow] : */
+    for (i = 0; i < nrow * ncol; i++)
+	Rf_dpptr(dd)->order[i] = Rf_gpptr(dd)->order[i] =
+	    INTEGER(CAR(args))[i];
     args = CDR(args);
 
     /* num.figures: */
     Rf_dpptr(dd)->currentFigure = Rf_gpptr(dd)->currentFigure =
-	Rf_dpptr(dd)->lastFigure = Rf_gpptr(dd)->lastFigure = INTEGER(CAR(args))[0];
+	Rf_dpptr(dd)->lastFigure = Rf_gpptr(dd)->lastFigure = 
+	INTEGER(CAR(args))[0];
     args = CDR(args);
     /* col.widths: */
     for (j = 0; j < ncol; j++)
-	Rf_dpptr(dd)->widths[j] = Rf_gpptr(dd)->widths[j] = REAL(CAR(args))[j];
+	Rf_dpptr(dd)->widths[j] = Rf_gpptr(dd)->widths[j] = 
+	    REAL(CAR(args))[j];
     args = CDR(args);
     /* row.heights: */
     for (i = 0; i < nrow; i++)
-	Rf_dpptr(dd)->heights[i] = Rf_gpptr(dd)->heights[i] = REAL(CAR(args))[i];
+	Rf_dpptr(dd)->heights[i] = Rf_gpptr(dd)->heights[i] = 
+	    REAL(CAR(args))[i];
     args = CDR(args);
     /* cm.widths: */
     ncmcol = length(CAR(args));
@@ -1193,10 +1199,9 @@ SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
     Rf_dpptr(dd)->rspct = Rf_gpptr(dd)->rspct = INTEGER(CAR(args))[0];
     args = CDR(args);
     /* respect.mat */
-    for (i = 0; i < nrow; i++)
-	for (j = 0; j < ncol; j++)
-	    Rf_dpptr(dd)->respect[i][j] = Rf_gpptr(dd)->respect[i][j]
-		= INTEGER(CAR(args))[i + j * nrow];
+    for (i = 0; i < nrow * ncol; i++)
+	Rf_dpptr(dd)->respect[i] = Rf_gpptr(dd)->respect[i]
+		= INTEGER(CAR(args))[i];
 
     /*------------------------------------------------------*/
 

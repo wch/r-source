@@ -189,6 +189,10 @@ NEW FEATURES
     o	New function RSiteSearch() to query R-related resources 
 	on-line (contributed by Jonathan Baron and Andy Liaw).
 
+    o	The limits on the grid size in layout are now documented, and
+	have been raised somewhat by using more efficient internal
+	structures.
+
 
 UTILITIES
 
