@@ -65,10 +65,9 @@ function(pattern, fields = c("alias", "concept", "title"),
 	rebuild <- TRUE
     if(!rebuild) {
 	## Try using the saved help db.
-	## <FIXME>
-	## Shouldn't we unserialize instead?
-	load(file = help.db)
-	## </FIXME>
+        db <- try(.readRDS(file = help.db), silent = TRUE)
+        if(inherits(db, "try-error"))
+            load(file = help.db)
 	## If not a list (pre 1.7 format), rebuild.
 	if(!is.list(db)) rebuild <- TRUE
         ## If no information on concepts (pre 1.8 format), rebuild.
@@ -211,7 +210,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	## Shouldn't we serialize instead?
 	if(save.db) {
 	    attr(db, "LibPaths") <- lib.loc
-	    save(db, file = dbfile)
+	    .saveRDS(db, file = dbfile)
 	    options(help.db = dbfile)
 	}
 	## </FIXME>
