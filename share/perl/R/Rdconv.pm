@@ -993,7 +993,7 @@ sub rdoc2txt { # (filename); 0 for STDOUT
 
     $INDENT = 3;  # indent for \itemize and \enumerate first line
     $INDENTD = 0; # indent for \describe list first line
-    $INDENTDD = 7; # indent for \describe list bodies
+    $INDENTDD = 5; # indent for \describe list bodies
 
     if ($pkgname) {
 	my $pad = 75 - length($blocks{"name"}) - length($pkgname) - 30;
@@ -1135,8 +1135,8 @@ sub text2txt {
     # handle "\describe"
     $text = replace_command($text,
 			    "describe",
-			    "\n.in +$INDENTD\n",
-			    "\n.in -$INDENTD\n");
+			    "\n.in +$INDENTDD\n",
+			    "\n.in -$INDENTDD\n");
     while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
     {
 	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
@@ -1270,8 +1270,8 @@ sub txt_fill { # pre1, base, "text to be formatted"
 	}
 	# check for a item in describe etc
 	if ($para =~ s/^[\n]*\.tide ([^\n]+)\n//) {
-	    $indent1 = " " x $INDENT . txt_header($1);
-	    $indent2 = $indent . (" " x $INDENTDD);
+	    $indent1 = " " x ($INDENT - $INDENTDD) . txt_header($1);
+	    $indent2 = $indent;
 	}
         # check for .in or .inen command
 	if ($para =~ s/^[\n]*\.in([^\ ]*) (.*)/\2/) {
