@@ -21,7 +21,7 @@
 
 use Getopt::Long;
 
-my $revision = ' $Revision: 1.6 $ ';
+my $revision = ' $Revision: 1.7 $ ';
 my $version;
 my $name;
 
@@ -163,7 +163,7 @@ while (<>) {
   }
   if (/^\.WR/) {
     &section(0, "");
-    print("% Converted by $NAME version $VERSION.");
+    print("% Converted by $name version $version.");
   }
   if (/^\.AO/) {
     output("Arguments for function \\code\{$word[1]()\} can also be");
