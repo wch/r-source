@@ -49,14 +49,17 @@ double rbinom(double nin, double pp)
     static int nsave = -1;
 
     n = floor(nin + 0.5);
+    /* n=0, p=0, p=1 are not errors <TSL>*/
     if (
 #ifdef IEEE_754
 	!finite(n) || !finite(pp) ||
 #endif
-	n <= 0.0 || pp <= 0.0 || pp >= 1.0) {
+	n < 0.0 || pp < 0.0 || pp > 1.0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
+    if (n==0.0 || pp==0) return 0;
+    if (pp==1.0) return n;
 
     /* setup, perform only when parameters change */
 
