@@ -2575,7 +2575,7 @@ void GMetricInfo(int c, double *ascent, double *descent, double *width,
     if(dd->dp.metricInfo)
 	dd->dp.metricInfo(c, ascent, descent, width, dd);
     else
-	error("detailed character metric information unavailable\n");
+	error("detailed character metric information unavailable");
 #else
     dd->dp.metricInfo(c & 0xFF, ascent, descent, width, dd);
 #endif
@@ -4745,7 +4745,7 @@ unsigned int number2col(char *nm)
     int index;
     char *ptr;
     index = strtod(nm, &ptr);
-    if(*ptr) error("invalid color specification\n");
+    if(*ptr) error("invalid color specification");
     if(index == 0) return CurrentDevice()->dp.bg;
     else return R_ColorTable[(index-1) % R_ColorTableSize];
 }
@@ -4904,7 +4904,7 @@ unsigned int LTYpar(SEXP value, int index)
 	if(!R_FINITE(code) || code < 0)
 	    return NA_INTEGER;
         if (code > 0)
-	    code = (code-1) % nlinetype + 1; 
+	    code = (code-1) % nlinetype + 1;
 	return linetype[code].pattern;
     }
     else error("invalid line type");

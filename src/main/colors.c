@@ -187,7 +187,7 @@ SEXP do_gray(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0; i < nlev; i++) {
 	level = REAL(lev)[i];
 	if (ISNAN(level) || level < 0 || level > 1)
-	    errorcall(call, "invalid gray level, must be in [0,1].\n");
+	    errorcall(call, "invalid gray level, must be in [0,1].");
 	ilevel = 255 * level + 0.5;
 	STRING(ans)[i] = mkChar(RGB2rgb(ilevel, ilevel, ilevel));
     }

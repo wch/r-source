@@ -1081,7 +1081,7 @@ SEXP do_ascall(SEXP call, SEXP op, SEXP args, SEXP rho)
     case VECSXP:
     case EXPRSXP:
 	if(0 == (n = length(args)))
-	    errorcall(call,"illegal length 0 argument\n");
+	    errorcall(call,"illegal length 0 argument");
 	names = getAttrib(args, R_NamesSymbol);
 	PROTECT(ap = ans = allocList(n));
 	for (i = 0; i < n; i++) {

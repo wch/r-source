@@ -227,7 +227,7 @@ SEXP do_filecreate(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     fn = CAR(args);
     if (!isString(fn))
-        errorcall(call, "invalid filename argument\n");
+        errorcall(call, "invalid filename argument");
     n = length(fn);
     PROTECT(ans = allocVector(LGLSXP, n));
     for (i = 0; i < n; i++) {
@@ -504,6 +504,6 @@ SEXP do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
     if ((len = R_ChooseFile(new, buf, CHOOSEBUFSIZE)) == 0)
 	error("file choice cancelled");
     if (len >= CHOOSEBUFSIZE - 1)
-	errorcall(call, "file name too long\n");
+	errorcall(call, "file name too long");
     return mkString(R_ExpandFileName(buf));
 }

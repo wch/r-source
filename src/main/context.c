@@ -53,22 +53,22 @@
  *	CTXT_NEXT	target for "next"
  *	CTXT_LOOP	target for either "break" or "next"
  *	CTXT_RETURN	target for "return" (i.e. a closure)
- *	CTXT_BROWSER    target for "return" to exit from browser
+ *	CTXT_BROWSER	target for "return" to exit from browser
  *	CTXT_CCODE	other functions that need clean up if an error occurs
- *      CTXT_RESTART    a function call to restart was made inside the 
- *                      closure.
+ *	CTXT_RESTART	a function call to restart was made inside the
+ *			closure.
  *
- *      Code (such as the sys.xxx) that looks for CTXT_RETURN must also
- *      look for a CTXT_RESTART and CTXT_GENERIC. 
- *      The mechanism used by restart is to change
- *      the context type; error/errorcall then looks for a RESTART and does
- *      a long jump there if it finds one.
+ *	Code (such as the sys.xxx) that looks for CTXT_RETURN must also
+ *	look for a CTXT_RESTART and CTXT_GENERIC.
+ *	The mechanism used by restart is to change
+ *	the context type; error/errorcall then looks for a RESTART and does
+ *	a long jump there if it finds one.
  *
  *  A context is created with a call to
  *
  *	void begincontext(RCNTXT *cptr, int flags,
- *                        SEXP syscall, SEXP env, SEXP
- *                        sysp, SEXP promargs)
+ *			  SEXP syscall, SEXP env, SEXP
+ *			  sysp, SEXP promargs)
  *
  *  which sets up the context pointed to by cptr in the appropriate way.
  *  When the context goes "out-of-scope" a call to
@@ -202,7 +202,7 @@ SEXP R_sysframe(int n, RCNTXT *cptr)
 	return R_GlobalEnv;
     else
 	error("sys.frame: not that many enclosing functions");
-    return R_NilValue;     /* just for -Wall */
+    return R_NilValue;	   /* just for -Wall */
 }
 
 
@@ -278,7 +278,7 @@ SEXP R_syscall(int n, RCNTXT *cptr)
     if (n == 0 && cptr->nextcontext == NULL)
 	return (duplicate(cptr->call));
     errorcall(R_GlobalContext->call, "not that many enclosing functions");
-    return R_NilValue;  /* just for -Wall */
+    return R_NilValue;	/* just for -Wall */
 }
 
 SEXP R_sysfunction(int n, RCNTXT *cptr)
@@ -310,7 +310,7 @@ SEXP R_sysfunction(int n, RCNTXT *cptr)
     if (n == 0 && cptr->nextcontext == NULL)
 	return(findVar(CAR(cptr->call),cptr->sysparent));
     errorcall(R_GlobalContext->call, "not that many enclosing functions");
-    return R_NilValue;  /* just for -Wall */
+    return R_NilValue;	/* just for -Wall */
 }
 
 /* some real insanity to keep Duncan sane */
@@ -320,10 +320,10 @@ SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
     RCNTXT *cptr;
 
     checkArity(op, args);
-    
+
     if( !asLogical(CAR(args)) )
 	return(R_NilValue);
-    for(cptr = R_GlobalContext->nextcontext; cptr!= R_ToplevelContext; 
+    for(cptr = R_GlobalContext->nextcontext; cptr!= R_ToplevelContext;
 	    cptr = cptr->nextcontext) {
 	if (cptr->callflag & CTXT_FUNCTION) {
 		cptr->callflag = CTXT_RESTART;
@@ -331,7 +331,7 @@ SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     }
     if( cptr == R_ToplevelContext )
-	errorcall(call, "no function to restart\n");
+	errorcall(call, "no function to restart");
     return(R_NilValue);
 }
 

@@ -487,7 +487,7 @@ SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     subs = CDR(args);
     if(0 == (nsubs = length(subs)))
-	errorcall(call, "no index specified\n");
+	errorcall(call, "no index specified");
     type = TYPEOF(x);
     PROTECT(dim = getAttrib(x, R_DimSymbol));
     ndim = length(dim);
@@ -511,7 +511,7 @@ SEXP do_subset(SEXP call, SEXP op, SEXP args, SEXP rho)
     else PROTECT(ax = x);
 
     if(!isVector(ax))
-	errorcall(call, "object is not subsetable\n");
+	errorcall(call, "object is not subsetable");
 
     /* This is the actual subsetting code. */
     /* The separation of arrays and matrices is purely an optimization. */
@@ -590,7 +590,7 @@ SEXP do_subset2(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     subs = CDR(args);
     if(0 == (nsubs = length(subs)))
-	errorcall(call, "no index specified\n");
+	errorcall(call, "no index specified");
     dims = getAttrib(x, R_DimSymbol);
     ndims = length(dims);
     if(nsubs > 1 && nsubs != ndims)

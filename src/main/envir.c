@@ -64,7 +64,7 @@
 
   We use a basic se[parate chaining algorithm.  A hash table consists
   of SEXP (vector) which contains a number of SEXPs (lists).
-   
+
 */
 
 #define HASHSIZE(x)          LENGTH(x)
@@ -117,10 +117,10 @@ void R_HashSet(int hashcode, SEXP symbol, SEXP table, SEXP value)
 
     /* Do some checking */
     if (TYPEOF(table) != VECSXP) {
-	error("3rd arg (table) not of type VECSXP, from R_HashSet\n");
-    }  
+	error("3rd arg (table) not of type VECSXP, from R_HashSet");
+    }
     if (isNull(table)) {
-	error("Table is null, from R_HashSet\n");
+	error("Table is null, from R_HashSet");
     }
     /* Grab the chain from the hashtable */
     chain = VECTOR(table)[hashcode];
@@ -160,7 +160,7 @@ SEXP R_HashGet(int hashcode, SEXP symbol, SEXP table)
 	printf("3rd arg (table) not of type VECSXP, from R_HashGet\n");
     }
     if (isNull(table)) {
-	error("Table is null, from R_HashGet\n");
+	error("Table is null, from R_HashGet");
     }
     /* Grab the chain from the hashtable */
     chain = VECTOR(table)[hashcode];
@@ -195,7 +195,7 @@ SEXP R_HashGetLoc(int hashcode, SEXP symbol, SEXP table)
 	printf("3rd arg (table) not of type VECSXP, from R_HashGet\n");
     }
     if (isNull(table)) {
-	error("Table is null, from R_HashGet\n");
+	error("Table is null, from R_HashGet");
     }
     /* Grab the chain from the hashtable */
     chain = VECTOR(table)[hashcode];
@@ -212,21 +212,21 @@ SEXP R_HashGetLoc(int hashcode, SEXP symbol, SEXP table)
 
 
 /*----------------------------------------------------------------------
-  
+
   R_NewHashTable
-  
+
   Hash table initialisation function.  Creates a table of size 'size'
   that increases in size by 'growth_rate' after a threshold is met.
-  
+
 */
 
 SEXP R_NewHashTable(int size, int growth_rate)
 {
     SEXP table;
-  
+
     /* Some checking */
     if (growth_rate == 0) {
-	error("Hash table growth rate must be > 0\n");
+	error("Hash table growth rate must be > 0");
     }
     if (size == 0) {
 	size = HASHMINSIZE;
@@ -240,7 +240,7 @@ SEXP R_NewHashTable(int size, int growth_rate)
 }
 
 
- 
+
 /*----------------------------------------------------------------------
 
   R_HashDelete
@@ -287,9 +287,9 @@ SEXP R_HashResize(SEXP table)
 
     /* Do some checking */
     if (TYPEOF(table) != VECSXP) {
-	error("1st arg (table) not of type VECSXP,  from R_HashResize\n");
+	error("1st arg (table) not of type VECSXP,  from R_HashResize");
     }
-  
+
     /* This may have to change.  The growth rate should
        be independent of the size (not implemented yet) */
     /* hash_grow = HASHSIZE(table); */
@@ -318,9 +318,9 @@ SEXP R_HashResize(SEXP table)
     /* Some debugging statements */
 #ifdef MIKE_DEBUG
     fprintf(stdout, "Resized O.K.\n");
-    fprintf(stdout, "Old size: %d, New size: %d\n", 
+    fprintf(stdout, "Old size: %d, New size: %d\n",
 	    HASHSIZE(table), HASHSIZE(new_table));
-    fprintf(stdout, "Old pri: %d, New pri: %d\n", 
+    fprintf(stdout, "Old pri: %d, New pri: %d\n",
 	    HASHPRI(table), HASHPRI(new_table));
 #endif
     return new_table;
@@ -342,10 +342,10 @@ int R_HashSizeCheck(SEXP table)
 {
     int resize;
     double thresh_val;
-  
+
     /* Do some checking */
     if (TYPEOF(table) != VECSXP){
-	error("1st arg (table) not of type VECSXP, R_HashSizeCheck\n");
+	error("1st arg (table) not of type VECSXP, R_HashSizeCheck");
     }
     resize = 0; thresh_val = 0.85;
     if ((double)HASHPRI(table) > (double)HASHSIZE(table) * thresh_val)
@@ -370,15 +370,15 @@ SEXP R_HashFrame(SEXP rho)
 {
     int hashcode;
     SEXP frame, chain, tmp_chain, table;
-  
+
     /* Do some checking */
     if (TYPEOF(rho) != ENVSXP) {
-	error("1st arg (table) not of type ENVSXP, from R_HashVector2Hash\n");
+	error("1st arg (table) not of type ENVSXP, from R_HashVector2Hash");
     }
     table = HASHTAB(rho);
     frame = FRAME(rho);
     while (!isNull(frame)) {
-	hashcode = newhashpjw(CHAR(PRINTNAME(TAG(frame)))) % HASHSIZE(table); 
+	hashcode = newhashpjw(CHAR(PRINTNAME(TAG(frame)))) % HASHSIZE(table);
 	chain = VECTOR(table)[hashcode];
 	/* If using a primary slot then increase HASHPRI */
 	if (isNull(chain)) HASHPRI(table)++;
@@ -465,7 +465,7 @@ void InitGlobalEnv()
 /*----------------------------------------------------------------------
 
   unbindVar
-    
+
   Remove a value from an environment. This happens only in the frame
   of the specified frame.
 
@@ -517,7 +517,7 @@ SEXP findVarLocInFrame(SEXP rho, SEXP symbol)
 	    frame = CDR(frame);
 	return frame;
     }
-    else {    
+    else {
 	hashcode = newhashpjw(CHAR(PRINTNAME(symbol))) %
 	    HASHSIZE(HASHTAB(rho));
 	/* Will return 'R_NilValue' if not found */
@@ -551,7 +551,7 @@ SEXP findVarInFrame(SEXP rho, SEXP symbol)
 	    frame = CDR(frame);
 	}
     }
-    else {    
+    else {
 	hashcode = newhashpjw(CHAR(PRINTNAME(symbol))) %
 	    HASHSIZE(HASHTAB(rho));
 	/* Will return 'R_UnboundValue' if not found */
@@ -565,11 +565,11 @@ SEXP findVarInFrame(SEXP rho, SEXP symbol)
 /*----------------------------------------------------------------------
 
   findVar
-    
+
   Look up a symbol in an environment.
-    
+
   This needs to be changed so that the environment chain is searched
-  and then the searchpath is traversed.  
+  and then the searchpath is traversed.
 
 */
 
@@ -590,7 +590,7 @@ SEXP findVar(SEXP symbol, SEXP rho)
 /*----------------------------------------------------------------------
 
   findVar1
-    
+
   Look up a symbol in an environment.  Ignore any values which are
   not of the specified type.
 
@@ -603,8 +603,8 @@ SEXP findVar1(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits)
 {
     SEXP vl;
     while (rho != R_NilValue) {
-	vl = findVarInFrame(rho, symbol);	    
-	
+	vl = findVarInFrame(rho, symbol);
+
 	if (vl != R_UnboundValue) {
 	    if (mode == ANYSXP) return vl;
 	    if (TYPEOF(vl) == PROMSXP) {
@@ -901,7 +901,7 @@ static SEXP mfindVarInFrame(SEXP rho, SEXP symbol)
 
   do_assign
 
-  
+
  */
 
 SEXP do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -912,18 +912,18 @@ SEXP do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
     name = findVar(CAR(args), rho);
     PROTECT(args = evalList(args, rho));
     if (!isString(CAR(args)) || length(CAR(args)) == 0)
-	error("assign: invalid first argument\n");
+	error("assign: invalid first argument");
     else
 	name = install(CHAR(STRING(CAR(args))[0]));
     PROTECT(val = CADR(args));
     R_Visible = 0;
     aenv = CAR(CDDR(args));
     if (TYPEOF(aenv) != ENVSXP && aenv != R_NilValue)
-	error("invalid envir argument\n");
+	error("invalid envir argument");
     if (isLogical(CAR(nthcdr(args, 3))))
 	ginherits = LOGICAL(CAR(nthcdr(args, 3)))[0];
     else
-	error("get: invalid inherits argument\n");
+	error("get: invalid inherits argument");
     if (ginherits)
 	setVar(name, val, aenv);
     else
@@ -975,13 +975,13 @@ SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     name = CAR(args);
     if (!isString(name))
-	error("invalid first argument to remove.\n");
+	error("invalid first argument to remove.");
     args = CDR(args);
 
     envarg = CAR(args);
     if (envarg != R_NilValue) {
 	if (TYPEOF(envarg) != ENVSXP)
-	    error("invalid envir argument\n");
+	    error("invalid envir argument");
     }
     else envarg = R_GlobalContext->sysparent;
     args = CDR(args);
@@ -989,7 +989,7 @@ SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isLogical(CAR(args)))
 	ginherits = asLogical(CAR(args));
     else
-	error("get: invalid inherits argument\n");
+	error("get: invalid inherits argument");
 
     for (i = 0; i < LENGTH(name); i++) {
 	done = 0;
@@ -1050,7 +1050,7 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if (!isString(CAR(args)) || length(CAR(args)) < 1
 	|| strlen(CHAR(STRING(CAR(args))[0])) == 0) {
-	errorcall(call, "invalid first argument\n");
+	errorcall(call, "invalid first argument");
 	t1 = R_NilValue;
     }
     else
@@ -1065,7 +1065,7 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if (TYPEOF(CADR(args)) == ENVSXP || CADR(args) == R_NilValue)
 	genv = CADR(args);
     else {
-	errorcall(call,"invalid envir argument\n");
+	errorcall(call,"invalid envir argument");
 	genv = R_NilValue;  /* -Wall */
     }
 
@@ -1077,14 +1077,14 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    gmode = str2type(CHAR(STRING(CAR(CDDR(args)))[0]));
     } else {
-	errorcall(call,"invalid mode argument\n");
+	errorcall(call,"invalid mode argument");
 	gmode = FUNSXP;/* -Wall */
     }
 
     if (isLogical(CAR(nthcdr(args, 3))))
 	ginherits = LOGICAL(CAR(nthcdr(args, 3)))[0];
     else
-	errorcall(call,"invalid inherits argument\n");
+	errorcall(call,"invalid inherits argument");
 
     /* Search for the object */
     rval = findVar1(t1, genv, gmode, ginherits);
@@ -1126,12 +1126,12 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 static int isMissing(SEXP symbol, SEXP rho)
 {
     SEXP vl, s;
-  
+
     if (DDVAL(symbol))
 	s = R_DotsSymbol;
     else
 	s = symbol;
-  
+
     vl = mfindVarInFrame(rho, s);
     if (vl != R_NilValue) {
 	if (DDVAL(symbol)) {
@@ -1159,7 +1159,7 @@ SEXP do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     s = sym = CAR(args);
     if (!isSymbol(sym))
-	error("\"missing\" illegal use of missing\n");
+	error("\"missing\" illegal use of missing");
 
     if (DDVAL(sym)) {
 	sym = R_DotsSymbol;
@@ -1183,7 +1183,7 @@ SEXP do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else goto havebinding;
     }
     else  /* it wasn't an argument to the function */
-	error("\"missing\" illegal use of missing\n");
+	error("\"missing\" illegal use of missing");
 
  havebinding:
 
@@ -1240,7 +1240,7 @@ SEXP do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
 
     name = CADDR(args);
     if (!isString(name) || length(name) != 1)
-	error("attach: invalid object name\n");
+	error("attach: invalid object name");
 
     for (x = CAR(args); x != R_NilValue; x = CDR(x))
 	if (TAG(x) == R_NilValue)
@@ -1249,11 +1249,11 @@ SEXP do_attach(SEXP call, SEXP op, SEXP args, SEXP env)
     setAttrib(s, install("name"), name);
 
     FRAME(s) = duplicate(CAR(args));
-    
+
     /* Connect FRAME(s) into HASHTAB(s) */
     if (length(s) < HASHMINSIZE)
 	hsize = HASHMINSIZE;
-    else 
+    else
 	hsize = length(s);
 
     HASHTAB(s) = R_NewHashTable(hsize, HASHTABLEGROWTHRATE);
@@ -1535,7 +1535,7 @@ SEXP do_libfixup(SEXP call, SEXP op, SEXP args, SEXP rho)
     lib = CAR(args);
     env = CADR(args);
     if (TYPEOF(lib) != ENVSXP || !isEnvironment(env))
-	errorcall(call, "invalid arguments\n");
+	errorcall(call, "invalid arguments");
     if (HASHTAB(lib) != R_NilValue) {
 	int i, n;
 	n = length(HASHTAB(lib));
@@ -1577,14 +1577,14 @@ static SEXP pos2env(int pos, SEXP call)
     else if (pos == -1) {
 	env = R_GlobalContext->sysparent;
 	if (R_GlobalEnv != R_NilValue && env == R_NilValue)
-	    errorcall(call, "invalid argument\n");
+	    errorcall(call, "invalid argument");
     }
     else {
 	for (env = R_GlobalEnv; env != R_NilValue && pos > 1;
 	     env = ENCLOS(env))
 	    pos--;
 	if (pos != 1)
-	    error("invalid argument\n");
+	    error("invalid argument");
     }
     return env;
 }

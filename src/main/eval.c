@@ -448,7 +448,7 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     val = CADR(args);
     body = CADDR(args);
 
-    if ( !isSymbol(sym) ) errorcall(call, "non-symbol loop variable\n");
+    if ( !isSymbol(sym) ) errorcall(call, "non-symbol loop variable");
 
     PROTECT(args);
     PROTECT(rho);
@@ -1058,9 +1058,9 @@ void CheckFormals(SEXP ls)
 
 SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP encl;    
+    SEXP encl;
     volatile SEXP expr, env, tmp;
-    
+
     int nback;
     RCNTXT cntxt;
 
@@ -1156,7 +1156,7 @@ SEXP do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	cptr = cptr->nextcontext;
     }
     if (cptr == NULL)
-	error("Recall called from outside a closure\n");
+	error("Recall called from outside a closure");
     if( TYPEOF(CAR(cptr->call)) == SYMSXP)
 	PROTECT(s = findFun(CAR(cptr->call), cptr->sysparent));
     else

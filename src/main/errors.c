@@ -81,7 +81,7 @@ void warningcall(SEXP call, char *format, ...)
     s = GetOption(install("warning.expression"), R_NilValue);
     if( s!= R_NilValue ) {
         if( !isLanguage(s) &&  ! isExpression(s) )
-            error("invalid option \"warning.expression\"\n"); 
+            error("invalid option \"warning.expression\"");
         cptr = R_GlobalContext;
         while ( !(cptr->callflag & CTXT_FUNCTION) && cptr->callflag )
             cptr = cptr->nextcontext;
@@ -103,7 +103,7 @@ void warningcall(SEXP call, char *format, ...)
         va_list(ap);
         va_start(ap, format);
         slen = vsprintf(buf, format, ap);
-        va_end(ap); 
+        va_end(ap);
         errorcall(call, "(converted from warning) %s", buf);
     }
     else if(w==1) {	/* print as they happen */
@@ -122,21 +122,21 @@ void warningcall(SEXP call, char *format, ...)
     else if(w==0) {	/* collect them */
 	va_list(ap);
         va_start(ap, format);
-	if(!R_CollectWarnings) 
+	if(!R_CollectWarnings)
             setupwarnings();
-	if( R_CollectWarnings > 49 ) 
+	if( R_CollectWarnings > 49 )
 	    return;
         VECTOR(R_Warnings)[R_CollectWarnings] = call;
         slen = vsprintf(buf, format, ap);
-        va_end(ap); 
+        va_end(ap);
 	names = CAR(ATTRIB(R_Warnings));
 	STRING(names)[R_CollectWarnings++] = mkChar(buf);
-    } 
+    }
     /* else:  w <= -1 */
     inWarning = 0;
 }
 
-void PrintWarnings(void) 
+void PrintWarnings(void)
 {
     int i;
     SEXP names, s, t;
@@ -257,7 +257,7 @@ void jump_to_toplevel()
     SEXP s, t;
     int nback = 0;
 
-    if(!R_Error_Halt && R_Verbose) 
+    if(!R_Error_Halt && R_Verbose)
 	REprintf(" >ERR: jump_to_toplevel()\n");
     inError = 1;
 
@@ -300,7 +300,7 @@ void jump_to_toplevel()
     jump_now();
 }
 
-/* 
+/*
    Absolutely no allocation can be triggered in jump_now.
    The error could be an out of memory error and any allocation
    could result in an infinite-loop condition. All you can do
@@ -308,7 +308,7 @@ void jump_to_toplevel()
 */
 static void jump_now()
 {
-    if( inError == 2 ) 
+    if( inError == 2 )
 	REprintf("Lost warning messages\n");
     inError=0;
     inWarning=0;
@@ -317,7 +317,7 @@ static void jump_now()
     R_CollectWarnings = 0;
     if (R_Interactive || !R_Error_Halt)
 	LONGJMP(R_ToplevelContext->cjmpbuf, 0);
-    else 
+    else
 	REprintf("Execution halted\n");
     exit(1);
 }

@@ -156,7 +156,7 @@ int R_SetOptionWidth(int w)
 int R_SetOptionWarn(int w)
 {
     SEXP t, v;
- 
+
     t = install("warn");
     PROTECT(v = ScalarInteger(w));
     v = SetOption(t, v);
@@ -215,12 +215,12 @@ void InitOptions(void)
     CAR(v) = allocVector(LGLSXP, 1);
     LOGICAL(CAR(v))[0] = !R_Slave;
     v = CDR(v);
-    
+
     TAG(v) = install("check.bounds");
     CAR(v) = allocVector(LGLSXP, 1);
     LOGICAL(CAR(v))[0] = 0;	/* no checking */
     v = CDR(v);
-    
+
     TAG(v) = install("keep.source");
     CAR(v) = allocVector(LGLSXP, 1);
     LOGICAL(CAR(v))[0] = 0;	/* no storage of function source */
@@ -295,7 +295,7 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* The arguments to "options" can either be a sequence of name =
        value form, or can be a single list.  This means that we must
-       code so that both forms will work.  
+       code so that both forms will work.
        [ Vomits quietly onto shoes ... ]
        */
 
@@ -338,37 +338,37 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (streql(CHAR(namei), "width")) {
 		k = asInteger(argi);
 		if (k < MIN_WIDTH || k > MAX_WIDTH)
-		    errorcall(call, "invalid width parameter\n");
+		    errorcall(call, "invalid width parameter");
 		VECTOR(value)[i] = SetOption(tag, ScalarInteger(k));
 	    }
 	    else if (streql(CHAR(namei), "digits")) {
 		k = asInteger(argi);
 		if (k < MIN_DIGITS || k > MAX_DIGITS)
-		    errorcall(call, "invalid digits parameter\n");
+		    errorcall(call, "invalid digits parameter");
 		VECTOR(value)[i] = SetOption(tag, ScalarInteger(k));
 	    }
 	    else if (streql(CHAR(namei), "expressions")) {
 		k = asInteger(argi);
 		if (k < 25 || k > MAX_EXPRESSIONS)
-		    errorcall(call, "expressions parameter invalid\n");
+		    errorcall(call, "expressions parameter invalid");
 		VECTOR(value)[i] = SetOption(tag, ScalarInteger(k));
 	    }
 	    else if (streql(CHAR(namei), "editor")) {
 		s = asChar(argi);
 		if (s == NA_STRING || length(s) == 0)
-		    errorcall(call, "invalid editor parameter\n");
+		    errorcall(call, "invalid editor parameter");
 		VECTOR(value)[i] = SetOption(tag, ScalarString(s));
 	    }
 	    else if (streql(CHAR(namei), "continue")) {
 		s = asChar(argi);
 		if (s == NA_STRING || length(s) == 0)
-		    errorcall(call, "invalid continue parameter\n");
+		    errorcall(call, "invalid continue parameter");
 		VECTOR(value)[i] = SetOption(tag, ScalarString(s));
 	    }
 	    else if (streql(CHAR(namei), "prompt")) {
 		s = asChar(argi);
 		if (s == NA_STRING || length(s) == 0)
-		    errorcall(call, "prompt parameter invalid\n");
+		    errorcall(call, "prompt parameter invalid");
 		VECTOR(value)[i] = SetOption(tag, ScalarString(s));
 	    }
 	    else if (streql(CHAR(namei), "contrasts")) {
@@ -378,7 +378,7 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    else if (streql(CHAR(namei), "warn")) {
 		if (!isNumeric(argi) || length(argi) != 1)
-		    errorcall(call, "warn parameter invalid\n");
+		    errorcall(call, "warn parameter invalid");
                 VECTOR(value)[i] = SetOption(tag, argi);
 	    }
 	    else if (streql(CHAR(namei), "echo")) {
@@ -393,7 +393,7 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    else if (streql(CHAR(namei), "error.halt")) {
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
-		    errorcall(call, "error.halt parameter invalid\n");
+		    errorcall(call, "error.halt parameter invalid");
 		R_Error_Halt = asLogical(argi);
 		VECTOR(value)[i] = SetOption(tag, ScalarLogical(R_Error_Halt));
 	    }

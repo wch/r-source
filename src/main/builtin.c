@@ -161,7 +161,7 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     file = CAR(args);
     if (!isValidString(file))
-	errorcall(call, "invalid file= specification\n");
+	errorcall(call, "invalid file= specification");
     args = CDR(args);
 
     sepr = CAR(args);
@@ -521,7 +521,7 @@ SEXP do_switch(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP x, y, w;
     x = eval(CAR(args), rho);
     if (!isVector(x) || length(x) != 1)
-	error("switch: EXPR must return a length 1 vector\n");
+	error("switch: EXPR must return a length 1 vector");
     PROTECT(w = switchList(CDR(args), rho));
     if (isString(x)) {
 	for (y = w; y != R_NilValue; y = CDR(y))

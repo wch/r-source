@@ -394,13 +394,13 @@ SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 
     op = CAR(args);
     if (!isValidString(op))
-	errorcall(call, "function name must be a string (of length 1)\n");
+	errorcall(call, "function name must be a string (of length 1)");
     if (PkgSymbol == NULL) PkgSymbol = install("PACKAGE");
     strcpy(DLLname, "");
     args = pkgtrim(args);
 
     if (!(fun=R_FindSymbol(CHAR(STRING(op)[0]), DLLname)))
-	errorcall(call, "C function name not in load table\n");
+	errorcall(call, "C function name not in load table");
 
     retval = (SEXP)fun(args);
     vmaxset(vmax);
@@ -416,14 +416,14 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     char *vmax = vmaxget();
     op = CAR(args);
     if (!isValidString(op))
-	errorcall(call, "function name must be a string (of length 1)\n");
+	errorcall(call, "function name must be a string (of length 1)");
 
     if (PkgSymbol == NULL) PkgSymbol = install("PACKAGE");
     strcpy(DLLname, "");
     args = pkgtrim(args);
 
     if (!(fun=R_FindSymbol(CHAR(STRING(op)[0]), DLLname)))
-        errorcall(call, "C function name not in load table\n");
+        errorcall(call, "C function name not in load table");
     args = CDR(args);
 
     for(nargs = 0, pargs = args ; pargs != R_NilValue; pargs = CDR(pargs)) {

@@ -258,7 +258,7 @@ int R_ReplDLLdo1()
 	prompt_type = 1;
 	break;
     case PARSE_ERROR:
-	error("syntax error\n");
+	error("syntax error");
 	R_IoBufferWriteReset(&R_ConsoleIob);
 	prompt_type = 1;
 	break;
@@ -574,7 +574,7 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return R_NilValue;
     }
     if( !isString(CAR(args)) )
-	errorcall(call,"one of \"yes\", \"no\", \"ask\" or \"default\" expected.\n");
+	errorcall(call,"one of \"yes\", \"no\", \"ask\" or \"default\" expected.");
     tmp = CHAR(STRING(CAR(args))[0]);
     if( !strcmp(tmp, "ask") ) {
 	ask = SA_SAVEASK;
@@ -587,7 +587,7 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if( !strcmp(tmp, "default") )
 	ask = SA_DEFAULT;
     else
-	errorcall(call, "unrecognized value of save\n");
+	errorcall(call, "unrecognized value of save");
     /* run the .Last function. If it gives an error, will drop back to main
        loop. */
     R_CleanUp(ask);
