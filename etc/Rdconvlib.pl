@@ -20,7 +20,9 @@
 
 # Send any bug reports to Friedrich.Leisch@ci.tuwien.ac.at
 
-$VERSION = "0.2";
+$VERSION = "0.2.2";#MM
+# Bugs: still get ``\bsl{}'' in verbatim-like, see e.g. Examples of apropos.Rd
+
 
 # names of unique text blocks, these may NOT appear MORE THAN ONCE!
 @blocknames = ("name", "title", "usage", "arguments", "description",
@@ -455,8 +457,13 @@ sub text2html {
 
     $text = replace_command($text, "itemize", "<UL>", "</UL>");
     $text = replace_command($text, "enumerate", "<OL>", "</OL>");
-    $text =~ s/\\item\s+/<li>/go;
 
+    #$text = replace_command($text, "describe", "<DL>", "</DL>");
+    # If `\describe' is used, the  '\item' below will have an argument..
+    $text =~ s/\\item\s+/<li>/go;
+    # (and be translated to <DL> ..<DD>..
+
+    $text =~ s/\\([^\\])/$1/go;#-drop single "\" (as in ``\R'')
     $text =~ s/\\\\/\\/go;
     $text = html_unescape_codes($text);
     unmark_brackets($text);
