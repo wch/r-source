@@ -1,17 +1,17 @@
 lm <-
 function(formula, data = list(), subset, weights, na.action,
-         method = "qr", model = TRUE, x = FALSE, y = FALSE,
-         qr = TRUE, singular.ok = TRUE, contrasts = NULL, ...)
+	 method = "qr", model = TRUE, x = FALSE, y = FALSE,
+	 qr = TRUE, singular.ok = TRUE, contrasts = NULL, ...)
 {
-        ret.x <- x
-        ret.y <- y
-        mt <- terms(formula, data = data)
+	ret.x <- x
+	ret.y <- y
+	mt <- terms(formula, data = data)
 	mf <- match.call()
 	mf$singular.ok <- NULL
 	mf$model <- NULL
 	mf$method <- NULL
-        mf$x <- mf$y <- mf$qr <- mf$contrasts <- NULL
-        mf$drop.unused.levels <- TRUE
+	mf$x <- mf$y <- mf$qr <- mf$contrasts <- NULL
+	mf$drop.unused.levels <- TRUE
 	mf[[1]] <- as.name("model.frame")
 	mf <- eval(mf, sys.frame(sys.parent()))
 	if (method == "model.frame")
@@ -19,12 +19,12 @@ function(formula, data = list(), subset, weights, na.action,
 	else if (method != "qr")
 		warning(paste("method =", method,
 			      "is not supported. Using \"qr\"."))
-        xvars <- as.character(attr(mt, "variables"))[-1]
-        if(yvar <- attr(mt, "response") > 0) xvars <- xvars[-yvar]
-        if(length(xvars) > 0) {
-          xlev <- lapply(mf[xvars], levels)
-          xlev <- xlev[!sapply(xlev, is.null)]
-        } else xlev <- NULL
+	xvars <- as.character(attr(mt, "variables"))[-1]
+	if(yvar <- attr(mt, "response") > 0) xvars <- xvars[-yvar]
+	if(length(xvars) > 0) {
+	  xlev <- lapply(mf[xvars], levels)
+	  xlev <- xlev[!sapply(xlev, is.null)]
+	} else xlev <- NULL
 
 	if (length(list(...)))
 		warning(paste("Extra arguments", deparse(substitute(...)),
@@ -36,32 +36,32 @@ function(formula, data = list(), subset, weights, na.action,
 	y <- model.response(mf, "numeric")
 	w <- model.weights(mf)
 	if (is.empty.model(mt)) {
-                x <- NULL
+		x <- NULL
 		z <- list(coefficients = numeric(0), residuals = y,
 			fitted.values = 0 * y, weights = w, rank = 0,
 			df.residual = length(y))
 		class(z) <-
-                  if (is.matrix(y))
-                    c("mlm.null", "lm.null", "mlm", "lm")
-                  else c("lm.null", "lm")
+		  if (is.matrix(y))
+		    c("mlm.null", "lm.null", "mlm", "lm")
+		  else c("lm.null", "lm")
 	} else {
 		x <- model.matrix(mt, mf, contrasts)
 		z <-
-                  if (is.null(w))
-                        lm.fit(x, y)
-                  else lm.wfit(x, y, w)
+		  if (is.null(w))
+			lm.fit(x, y)
+		  else lm.wfit(x, y, w)
 		class(z) <- c(if (is.matrix(y)) "mlm", "lm")
 	}
-        z$contrasts <- attr(x, "contrasts")
-        z$xlevels <- xlev
+	z$contrasts <- attr(x, "contrasts")
+	z$xlevels <- xlev
 	z$call <- match.call()
 	z$terms <- mt
 	if (model)
 		z$model <- mf
-        if (ret.x)
-          z$x <- x
-        if (ret.y)
-          z$y <- y
+	if (ret.x)
+	  z$x <- x
+	if (ret.y)
+	  z$y <- y
 	z
 }
 
@@ -85,8 +85,8 @@ lm.fit <- function (x, y, method = "qr", tol = 1e-07, ...)
 	coef <- z$coefficients
 	pivot <- z$pivot
 	r1 <- 1:z$rank
-        dn <- colnames(x)
-        nmeffects <- c(dn[pivot[r1]], rep("", n - z$rank))
+	dn <- colnames(x)
+	nmeffects <- c(dn[pivot[r1]], rep("", n - z$rank))
 	if (is.matrix(y)) {
 		coef[-r1, ] <- NA
 		coef[pivot, ] <- coef
@@ -144,8 +144,8 @@ lm.wfit <- function (x, y, w, method = "qr", tol = 1e-7, ...)
 	coef <- z$coefficients
 	pivot <- z$pivot
 	r1 <- 1:z$rank
-        dn <- colnames(x)
-        nmeffects <- c(dn[pivot[r1]], rep("", n - z$rank))
+	dn <- colnames(x)
+	nmeffects <- c(dn[pivot[r1]], rep("", n - z$rank))
 	if (is.matrix(y)) {
 		coef[-r1, ] <- NA
 		coef[pivot, ] <- coef
@@ -199,10 +199,10 @@ print.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
 summary.lm <- function (object, correlation = FALSE)
 {
 	z <- .Alias(object)
-        Qr <- .Alias(object$qr)
+	Qr <- .Alias(object$qr)
 	n <- NROW(Qr$qr)
 	p <- z$rank
-        rdf <- n - p
+	rdf <- n - p
 	p1 <- 1:p
 	r <- resid(z)
 	f <- fitted(z)
@@ -241,7 +241,7 @@ summary.lm <- function (object, correlation = FALSE)
 		ans$adj.r.squared <- 1 - (1 - ans$r.squared) *
 			((n - df.int)/rdf)
 		ans$fstatistic <- c(value = (mss/(p - df.int))/resvar,
-                                    numdf = p - df.int, dendf = rdf)
+				    numdf = p - df.int, dendf = rdf)
 	}
 	ans$cov.unscaled <- R
 	dimnames(ans$cov.unscaled) <- dimnames(ans$coefficients)[c(1,1)]
@@ -275,39 +275,12 @@ print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
 		print(resid, digits = digits, ...)
 	}
 	if (nsingular <- df[3] - df[1])
-		cat("\nCoefficients: (", nsingular, " not defined because of singularities)\n",
-			sep = "")
+		cat("\nCoefficients: (", nsingular,
+		    " not defined because of singularities)\n", sep = "")
 	else cat("\nCoefficients:\n")
 
-	##- Splus3.{1-4}: Coefs <- format(round(x$coef, digits = digits))
-	##- ============   CANNOT be good for funny scales of Y
-	acs <- abs(coef.se <- x$coef[, 1:2, drop=FALSE])
-	digmin <- 1+floor(log10(range(acs[acs != 0], na.rm= TRUE)))
-	## = digits for rounding col 1:2
-	digt <- max(1, min(5, digits - 1))
-	## You need this, e.g., for   "rlm" class from MASS library:
-	has.Pval <- ncol(x$coef)>= 4# or any("Pr(>|t|)" == dimnames(x$coef)[[2]]
-	if(has.Pval)
-		Pv <- x$coef[, 4]
-	Coefs <-
-	  cbind(format(round(coef.se, max(1,digits - digmin)), digits=digits),
-		format(round(x$coef[, 3], dig=digt), digits=digits),# t- values
-		if(has.Pval) format.pval(Pv, digits = digt))
-	dimnames(Coefs) <- dimnames(x$coef)
-	if(any(not.both.0 <- (c(x$coef)==0)!=(as.numeric(Coefs)==0),na.rm=TRUE))
-	  ## not.both.0==T:  one is TRUE, one is FALSE : ==> x$coef != 0
-	  Coefs[not.both.0] <- format(x$coef[not.both.0], digits= min(1,digits-1))# =2
-	if(!has.Pval || !exists("symnum", mode = "function"))
-		signif.stars <- FALSE
-	else if(signif.stars) {
-		Signif <- symnum(Pv, corr = FALSE,
-				 cutpoints = c(0,  .001,.01,.05, .1, 1),
-				 symbols   =  c("***","**","*","."," "))
-		Coefs <- cbind(Coefs, Signif)
-	}
-	print(Coefs, quote = FALSE, ...)
-	if(signif.stars) cat("---\nSignif. codes: ",attr(Signif,"legend"),"\n")
-
+	print.coefmat(x$coef, digits=digits)
+	##
 	cat("\nResidual standard error:", format(signif(x$sigma,
 		digits)), "on", rdf, "degrees of freedom\n")
 	if (!is.null(x$fstatistic)) {
@@ -407,7 +380,7 @@ anova.lm <- function(object, ...)
 	table <- cbind(df,ss,ms,f,p)
 	table[length(p),4:5] <- NA
 	dimnames(table) <- list(c(attr(object$terms,"term.labels"), "Residual"),
-                                c("Df","Sum Sq", "Mean Sq", "F", "Pr(>F)"))
+				c("Df","Sum Sq", "Mean Sq", "F", "Pr(>F)"))
 	result <- list(table=table,
 		       title=paste("Analysis of Variance Table\nResponse:",
 			 formula(object)[[2]]))
@@ -481,7 +454,7 @@ predict.lm <- function(object, newdata,
   if(missing(newdata)) X <- model.matrix(object)
   else
     X <- model.matrix(delete.response(terms(object)), newdata,
-                      contrasts = object$contrasts, xlev = object$xlevels)
+		      contrasts = object$contrasts, xlev = object$xlevels)
   n <- NROW(object$qr$qr)
   p <- object$rank
   p1 <- 1:p
@@ -512,7 +485,7 @@ predict.lm <- function(object, newdata,
   {
     tfrac <- qt((1 - level)/2,df)
     w <- tfrac * switch(interval,
-      	confidence=sqrt(ip),
+	confidence=sqrt(ip),
 	prediction=sqrt(ip+res.var)
     )
     predictor<-cbind(predictor,predictor+

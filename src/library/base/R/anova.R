@@ -5,6 +5,10 @@ print.anova <- function(x, digits = max(.Options$digits - 2, 3),
   if (!is.null(heading)) cat(heading, sep = "\n")
   attr(x, "heading") <- NULL
   nn <- names(x)
+
+###-- we should be able to do withOUT for()
+###-- and use new   print.coefmat(.), instead ! -- MM.
+
   for (i in 1:NCOL(x)) {
     xr <- x[[i]]
     if (substr(nn[i],1,2) == "Pr") {
@@ -23,3 +27,4 @@ print.anova <- function(x, digits = max(.Options$digits - 2, 3),
   }
   print.data.frame(x)
 }
+## which (invisibly) returns the newly changed, instead of the original x !
