@@ -1341,7 +1341,9 @@ SEXP allocString(int length)
 
 SEXP allocVector(SEXPTYPE type, int length)
 {
-    SEXP s;
+    SEXP s;     /* For the generational collector it would be safer to
+		   work in terms of a VECSEXP here, but that would
+		   require several casts below... */
     int i;
     long size=0;
     int alloc_size;
@@ -1437,7 +1439,6 @@ SEXP allocVector(SEXPTYPE type, int length)
 
     if (size > 0) {
 #ifdef USE_GENERATIONAL_GC
-      VECREC *data;
       if (node_class < NUM_SMALL_NODE_CLASSES) {
 	CLASS_GET_FREE_NODE(node_class, s);
 	s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
@@ -1460,8 +1461,6 @@ SEXP allocVector(SEXPTYPE type, int length)
 	R_GenHeap[LARGE_NODE_CLASS].AllocCount++;
 	SNAP_NODE(s, R_GenHeap[LARGE_NODE_CLASS].New);
       }
-      data = (VECREC *) (((SEXPREC_ALIGN *) s) + 1);
-      TAG(s) = R_NilValue;
       ATTRIB(s) = R_NilValue;
       TYPEOF(s) = type;
 #else
@@ -1479,13 +1478,17 @@ SEXP allocVector(SEXPTYPE type, int length)
 
     /* The following prevents disaster in the case */
     /* that an uninitialised string vector is marked */
+    /* Direct assignment is OK since the node was just allocated and */
+    /* so is at least as new as R_NilValue and R_BlankString */
     if (type == EXPRSXP || type == VECSXP) {
+	SEXP *data = STRING_PTR(s);
 	for (i = 0; i < length; i++)
-	    SET_STRING_ELT(s, i, R_NilValue);
+	    data[i] = R_NilValue;
     }
     else if(type == STRSXP) {
+	SEXP *data = STRING_PTR(s);
 	for (i = 0; i < length; i++)
-	    SET_STRING_ELT(s, i, R_BlankString);
+	    data[i] = R_BlankString;
     }
     return s;
 }
