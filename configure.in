@@ -861,6 +861,19 @@ if test -z "${SHLIB_CXXLDFLAGS}"; then
   AC_MSG_WARN(${warn_shlib_cxxldflags})
 fi
 
+## Step 6.  We may need flags different from SHLIB_LDFLAGS and SHLIB_EXT
+## for building R as a shared library to link against (the SHLIB_* vars
+## just determined are really for loadable modules).  On ELF there is no
+## difference, but e.g. on Mach-O for Darwin there is.
+LIBR_EXT="${SHLIB_EXT}"
+LIBR_LDFLAGS="${SHLIB_LDFLAGS}"
+case "${host}" in
+  *-*-darwin*)
+    LIBR_EXT=".dylib"
+    LIBR_LDFLAGS="-dynamiclib"
+    ;;
+esac
+
 AC_SUBST(MAIN_LD)
 AC_SUBST(MAIN_LDFLAGS)
 AC_SUBST(CPICFLAGS)
@@ -874,6 +887,8 @@ AC_SUBST(SHLIB_LIBADD)
 AC_SUBST(SHLIB_EXT)
 AC_DEFINE_UNQUOTED(SHLIB_EXT, "${SHLIB_EXT}")
 AC_SUBST(EXPORTFILE)
+AC_SUBST(LIBR_EXT)
+AC_SUBST(LIBR_LDFLAGS)
 
 ### System services.
 

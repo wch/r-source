@@ -38,7 +38,8 @@ SOURCES_C = \
 
 SOURCES_F = \
 	xxxpr.f
-## FIXME: Need better names ...
+## <FIXME>
+## Need better names ...
 EXTRA_SOURCES_C = alloca.c strdup.c
 ## </FIXME>
 DEPENDS = $(SOURCES_C:.c=.d) $(EXTRA_SOURCES_C:.c=.d)
@@ -56,7 +57,7 @@ DISTFILES = Makefile.in Makefile.win \
 	$(SOURCES_F) \
 	gram.y
 
-## FIXME:
+## <FIXME>
 ## Names in here should use `$(top_builddir)' instead ...
 RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a 
 ## </FIXME>
@@ -64,27 +65,27 @@ RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libnmath.a
 Rexecbin_PROGRAMS = R.bin
 R_bin_SOURCES = $(SOURCES)
 R_bin_OBJECTS = $(OBJECTS)
-## FIXME:
+## <FIXME>
 ## This will not be good enough on AIX, where we need to play also with
 ## -export-symbols SYMFILE.
 @USE_LIBTOOL_TRUE@R_bin_LDFLAGS = -export-dynamic
 ## </FIXME>
 R_bin_LDADD = @LIBOBJS@ @ALLOCA@ $(RLIBS) $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
-## NOTE:
+## <NOTE>
 ## Automake would figure this out itself.
 R_bin_DEPENDENCIES = @LIBOBJS@ @ALLOCA@ $(RLIBS) @EXPORTFILE@
 ## </NOTE>
 
-## FIXME:
+## <FIXME>
 ## Change to `libR.la' when using libtool for shlibs.
 ## Remove when using automake ... also fix install then.
-libR_la = libR$(SHLIB_EXT)
+libR_la = libR$(LIBR_EXT)
 ## </FIXME>
 Rexeclib_LTLIBRARIES = $(libR_la)
 libR_la_SOURCES = $(SOURCES)
 libR_la_LDFLAGS = 
 libR_la_OBJECTS = $(OBJECTS:.o=.lo)
-## FIXME:
+## <FIXME>
 ## This should also have `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo`, but
 ## of course this will not work when the files do not exist yet :-)
 libR_la_LIBADD = @LTLIBOBJS@ @LTALLOCA@ $(BLAS_LIBS) $(FLIBS) $(R_XTRA_LIBS)
@@ -117,7 +118,8 @@ R: Makefile
 
 R.bin: $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
 	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) $(R_bin_LDADD) $(LIBS)
-## FIXME: Not sure if we want to do this ...
+## <FIXME>
+## Not sure if we want to do this ...
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install-bin
 ## </FIXME>
 
@@ -129,8 +131,16 @@ $(RLIBS):
 
 libR: $(libR_la)
 $(libR_la): $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
-	$(SHLIB_LINK) -o $@ $(libR_la_LDFLAGS) $(libR_la_OBJECTS) `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo  2>/dev/null` $(libR_la_LIBADD) $(LIBS)
-## FIXME: Not sure if we want to do this ...
+## <FIXME>
+## This used to have $(SHLIB_LINK), but this uses $(SHLIB_LDFLAGS) which
+## is really for loadable modules and not shared libraries for linking
+## against ... the definition of $(SHLIB_LINK) in the top level Makeconf
+## has a libtool conditional which we do not have here (as we currently
+## cannot use libtool anyway).
+	$(SHLIB_LD) $(LIBR_LDFLAGS) $(LDFLAGS) -o $@ $(libR_la_LDFLAGS) $(libR_la_OBJECTS) `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo  2>/dev/null` $(libR_la_LIBADD) $(LIBS)
+## </FIXME>
+## <FIXME>
+## Not sure if we want to do this ...
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install-lib
 ## </FIXME>
 
@@ -152,7 +162,7 @@ installdirs:
 install-bin:
 	@$(top_srcdir)/tools/copy-if-change R.bin $(Rexecbindir)/R.bin
 install-lib:
-@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(libR_la) $(Rexeclibdir)/libR$(SHLIB_EXT)
+@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(libR_la) $(Rexeclibdir)/$(libR_la)
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(libR_la) $(Rexeclibdir)
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
@@ -160,14 +170,14 @@ uninstall:
 	@rm -f $(Rexecbindir)/R.bin
 	@rmdir $(Rexecbindir) 2>/dev/null \
 	  || echo "  subdir $(Rexecbindir) not removed"
-	@rm -f $(Rexeclibdir)/libR.$(SHLIBEXT)
+	@rm -f $(Rexeclibdir)/libR$(LIBR_EXT)
 	@rmdir $(Rexeclibdir) 2>/dev/null \
 	  || echo "  subdir $(Rexeclibdir) not removed"
 
 mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f *core Makedeps *.d *.o *.lo *.la *$(SHLIB_EXT) \
+	@-rm -f *core Makedeps *.d *.o *.lo *.la *$(LIBR_EXT) \
 	  $(Rexecbin_PROGRAMS)
 distclean: clean
 	@-rm -f Makefile
