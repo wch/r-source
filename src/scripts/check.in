@@ -1242,14 +1242,14 @@ sub check_pkg {
 
     ## <FIXME>
     ## Does ISO C really require LF line endings?  (Reference?)
-    ## We definitely know that Solaris cc will not accept CRLF or CR
-    ## line endings.
+    ## We definitely know that some versions of Solaris cc and f77
+    ## will not accept CRLF or CR line endings.
     ## Note that we currently only check the CRLF part.
     ## </FIXME>
 
     if(!$is_base_pkg && (-d "src")) {
-	$log->checking("for CRLF line endings in C sources/headers");
-	my @src_files = &list_files_with_exts("src", "[ch]");
+	$log->checking("for CRLF line endings in C/C++/Fortran sources/headers");
+	my @src_files = &list_files_with_exts("src", "(c|h|f|cc|cpp)");
 	my @bad_files = ();
 	foreach my $file (@src_files) {
 	    open(FILE, "< $file")
@@ -1266,10 +1266,10 @@ sub check_pkg {
 	}
 	if(scalar(@bad_files) > 0) {
 	    $log->warning();
-	    $log->print("Found the following C sources/headers with " .
+	    $log->print("Found the following sources/headers with " .
 			"CRLF line endings:\n");
 	    $log->print("  " . join("\n  ", @bad_files) . "\n");
-	    $log->print("ISO C requires LF line endings.\n");
+	    $log->print("Some Unix compilers require LF line endings.\n");
 	}
 	else {
 	    $log->result("OK");
