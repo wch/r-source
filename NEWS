@@ -68,13 +68,18 @@ BUG FIXES
     o	anova.glmlist works correctly with decreasing models and
 	test="F" now gets the correct residual df.
 
-    o	functions created (not just edited) with fix() now get
+    o	Functions created (not just edited) with fix() now get
 	environment .GlobalEnv not the body of fix.
 
     o	Rdconv was ignoring OS-specific parts of the files with some
 	Perl versions. (This did not affect installing packages.)
 
     o	R CMD check  did not run more than one specific test.
+
+    o	keyword2html omitted items when changing up a level, so 
+	the HTML search engine keyword list was missing `data' and
+	`utilities', for example.
+
 
 
 		CHANGES IN R VERSION 1.1.0

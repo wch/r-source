@@ -50,6 +50,8 @@ for($k=0;$k<=$#key; $k++){
 		print "</ul>";
 	    }
 	    print "\n";
+	    print "<li>", searchKey($keywords[$#keywords]);
+	    print ": $desc</li>\n";
 	}
 	else{
 	    print "<li>", searchKey($keywords[$#keywords]);
