@@ -34,7 +34,8 @@ jitter(x, factor=1, amount = NULL)
 }
 \references{
     Chambers, J.M., Cleveland, W.~S., Kleiner, B. and Tukey, P.A. (1983).
-    \emph{Graphical Methods for Data Analysis}, Wadsworth.
+    \emph{Graphical Methods for Data Analysis}, Wadsworth; figures 2.8,
+    4.22, 5.4.
 }
 \author{Werner Stahel and Martin Maechler, ETH Zurich}
 \seealso{\code{\link{rug}} which you may want to combine with \code{jitter}.}
