@@ -81,6 +81,9 @@
 #endif
 #endif
 
+/* Printing Command */
+#define R_PRINTCMD	""
+
 #define R_PLATFORM	"UNKNOWN"
 #define R_CPU		"UNKNOWN"
 #define R_VENDOR	"UNKNOWN"
