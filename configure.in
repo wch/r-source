@@ -683,8 +683,8 @@ case "${host}" in
     cpicflags="-fno-common"
     cxxpicflags="-fno-common"
     fpicflags="-fno-common"
-    shlib_ldflags="-bundle -undefined suppress"
-    shlib_cxxldflags="-bundle -undefined suppress"
+    shlib_ldflags="-bundle -flat_namespace -undefined suppress"
+    shlib_cxxldflags="-bundle -flat_namespace -undefined suppress"
     ;;
   *freebsd[[3-4]].*)
     main_ldflags="-export-dynamic"
