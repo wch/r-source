@@ -15,9 +15,10 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 ## Partially included by the API (1) headers in .., but not part of the
 ## API per se. 
 R_EXT_HEADERS = \
-  Applic.h Arith.h Boolean.h Callbacks.h Complex.h Constants.h Error.h \
-  GetX11Image.h \
-  GraphicsDevice.h GraphicsEngine.h GraphicsBase.h Linpack.h Mathlib.h \
+  Applic.h Arith.h BLAS.h Boolean.h Callbacks.h Complex.h Constants.h \
+  Error.h GetX11Image.h \
+  GraphicsDevice.h GraphicsEngine.h GraphicsBase.h \
+  Lapack.h Linpack.h Mathlib.h \
   Memory.h Print.h PrtUtil.h R-ftp-http.h RS.h Random.h RConverters.h \
   Rdynload.h Utils.h eventloop.h libextern.h
 
