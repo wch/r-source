@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.74 $'
+revision='$Revision: 1.75 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -393,6 +393,14 @@ do_install () {
 
     if test -d man; then
       echo " help"
+      ## Install man sources ...
+      mkdir -p ${lib}/${pkg}/man
+      cp man/*.[Rr]d ${lib}/${pkg}/man
+      if test -f man/unix; then
+	cp man/unix/*.[Rr]d ${lib}/${pkg}/man
+      fi
+      chmod 644 ${lib}/${pkg}/man/*.[Rr]d
+      ## Maybe build preformatted help pages ...
       if ${build_help}; then
 	if ${NO_PERL5}; then
 	  echo "${NO_PERL5_MSG}"

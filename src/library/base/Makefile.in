@@ -13,31 +13,40 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = INDEX TITLE DESCRIPTION.in Makefile.in
 
+pkg = base
+
 all: Makefile DESCRIPTION
-	@echo "building package \`base'"
-	@$(MKINSTALLDIRS) $(top_builddir)/library/base/R
+	@echo "building package \`$(pkg)'"
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
 	  cat $(srcdir)/R/*.R $(srcdir)/R/unix/*.R >> $${f}; \
 	  $(top_srcdir)/tools/move-if-change $${f} \
-	    $(top_builddir)/library/base/R/base)
+	    $(top_builddir)/library/$(pkg)/R/$(pkg))
 	@for f in INDEX TITLE; do \
 	if test -f $(srcdir)/$${f}; then \
 	  $(INSTALL_DATA) $(srcdir)/$${f} \
-	    $(top_builddir)/library/base; \
+	    $(top_builddir)/library/$(pkg); \
 	fi; \
 	done
 	@if test -f $(top_builddir)/$(subdir)/DESCRIPTION; then \
 	  $(INSTALL_DATA) $(top_builddir)/$(subdir)/DESCRIPTION \
-	    $(top_builddir)/library/base; \
+	    $(top_builddir)/library/$(pkg); \
 	fi
-	@$(MKINSTALLDIRS) $(top_builddir)/library/base/data
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data
 	@for f in `ls -d $(srcdir)/data/* | sed '/CVS/d'`; do \
-	  $(INSTALL_DATA) $${f} $(top_builddir)/library/base/data; \
+	  $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
 	done
-	@$(MKINSTALLDIRS) $(top_builddir)/library/base/demo
+	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/demo
 	@for f in `ls -d $(srcdir)/demo/* | sed '/CVS/d'`; do \
-	  $(INSTALL_DATA) $${f} $(top_builddir)/library/base/demo; \
+	  $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/demo; \
 	done
+	@if test -d $(srcdir)/man; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
+	  for f in `ls -d $(srcdir)/man/*.[Rr]d \
+		          $(srcdir)/man/unix/*.[Rr]d`; do \
+	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/man; \
+	  done; \
+	fi
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && \

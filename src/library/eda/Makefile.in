@@ -44,6 +44,12 @@ all: Makefile DESCRIPTION
 	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/demo; \
 	  done; \
 	fi
+	@if test -d $(srcdir)/man; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
+	  for f in `ls -d $(srcdir)/man/*.[Rr]d`; do \
+	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/man; \
+	  done; \
+	fi
 	@if test -d src; then \
 	  (cd src && $(MAKE)) || exit 1; \
 	fi

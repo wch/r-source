@@ -30,12 +30,18 @@ all: Makefile DESCRIPTION
 	done
 	@if test -f $(top_builddir)/$(subdir)/DESCRIPTION; then \
 	  $(INSTALL_DATA)  $(top_builddir)/$(subdir)/DESCRIPTION \
-	    $(top_builddir)/library/nls; \
+	    $(top_builddir)/library/$(pkg); \
 	fi
 	@if test -d $(srcdir)/data; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data; \
 	  for f in `ls -d $(srcdir)/data/* | sed '/CVS/d'`; do \
 	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
+	  done; \
+	fi
+	@if test -d $(srcdir)/man; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
+	  for f in `ls -d $(srcdir)/man/*.[Rr]d`; do \
+	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/man; \
 	  done; \
 	fi
 	@if test -d src; then \
