@@ -20,7 +20,7 @@
 
 /* <UTF8>
 
-   char here is either ASCII or handled as a whole, apart from Rstrlen 
+   char here is either ASCII or handled as a whole, apart from Rstrlen
    and EncodeString.
 
    Octal representation of strings replaced by \u+6hex (can that be
@@ -245,7 +245,7 @@ int Rstrlen(SEXP s, int quote)
 		case '\'':
 		case '"':
 		    len += (quote == *p)? 2 : 1; break;
-		default: 
+		default:
 		    len++; break;
 		}
 	    } else switch(*p) {
@@ -268,7 +268,7 @@ int Rstrlen(SEXP s, int quote)
 	    int res; wchar_t wc;
 	    res = mbrtowc(&wc, p, MB_CUR_MAX, NULL);
 	    if(res > 0) {
-		len += iswprint((int)wc) ? 1 : (wc > 0xffff? 10 : 6);
+		len += iswprint((int)wc) ? 1 : (wc > 0xffff ? 10 : 6);
 		i += (res - 1);
 		p += res;
 	    } else {
@@ -352,7 +352,7 @@ char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 		    for(j = 0; j < res; j++) *q++ = *p++;
 		} else {
 #ifndef Win32
-		    if(wc > 0xfff) 
+		    if(wc > 0xffff)
 			snprintf(buf, 11, "\\U%08x", (unsigned int) wc);
 		    else
 #endif
