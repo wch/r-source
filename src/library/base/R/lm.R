@@ -35,8 +35,7 @@ function(formula, data = list(), subset, weights, na.action,
 		class(z) <- if (is.matrix(y))
 			c("mlm.null", "lm.null", "mlm", "lm")
 		else c("lm.null", "lm")
-	}
-	else {
+	} else {
 		x <- model.matrix(mt, mf)
 		z <- if (is.null(w))
 			lm.fit(x, y)
@@ -79,8 +78,7 @@ lm.fit <- function (x, y, method = "qr", tol = 1e-07, ...)
 		coef[pivot, ] <- coef
 		dimnames(coef) <- list(dimnames(x)[[2]], dimnames(y)[[2]])
 		rownames(z$effects) <- NULL
-	}
-	else {
+	} else {
 		coef[-r1] <- NA
 		coef[pivot] <- coef
 		names(coef) <- dimnames(x)[[2]]
@@ -370,18 +368,17 @@ function(formula, data, na.action, ...) {
 }
 
 variable.names.lm <-
-function(lm.obj, full=FALSE)
+function(obj, full=FALSE)
 {
-	if(full)dimnames(lm.obj$qr$qr)[[2]]
-	else	dimnames(lm.obj$qr$qr)[[2]][1:lm.obj$rank]
+	if(full)dimnames(obj$qr$qr)[[2]]
+	else	dimnames(obj$qr$qr)[[2]][1:obj$rank]
 }
 
-case.names.lm <-
-function(lm.obj, full=FALSE)
+case.names.lm <- function(obj, full=FALSE)
 {
-	w <- weights(lm.obj)
-	if(full && !is.null(w)) (dimnames(lm.obj$qr$qr)[[1]])[w!=0]
-	else dimnames(lm.obj$qr$qr)[[1]]
+	w <- weights(obj)
+	dn <- .Alias(dimnames(obj$qr$qr)[[1]])
+	if(full || is.null(w)) dn else dn[w!=0]
 }
 
 anova.lm <- function(object, ...)
@@ -394,7 +391,7 @@ anova.lm <- function(object, ...)
 	asgn <- object$assign[object$qr$pivot][1:object$rank]
 	dfr <- df.residual(object)
 	ss <- c(as.numeric(lapply(split(comp^2,asgn),sum)),ssr)
-	df <- c(as.numeric(lapply(split(asgn,asgn),length)), dfr)
+	df <- c(as.numeric(lapply(split(asgn,  asgn),length)), dfr)
 	if(attr(object$terms,"intercept")) {
 		ss <- ss[-1]
 		df <- df[-1]
@@ -484,10 +481,7 @@ predict.lm <- function (object, newdata = model.frame(object),
 	r <- resid(object)
 	f <- fitted(object)
 	w <- weights(object)
-	if (is.null(w))
-		rss <- sum(r^2)
-	else
-		rss <- sum(r^2*w)
+	rss <- sum(if(is.null(w)) r^2 else w*r^2)
 	R <- chol2inv(object$qr$qr[p1, p1, drop = FALSE])
 	est <- object$coefficients[piv]
 	predictor <- c(X[,piv,drop=F] %*% est)
@@ -501,7 +495,7 @@ predict.lm <- function (object, newdata = model.frame(object),
 	stderr1 <- sqrt(ip)
 	stderr2 <- sqrt(resvar + ip)
 	tt1 <- qt((1-conf.level)/2, n - p)
-	tt2 <- qt((1-tol.level)/2, n - p)
+	tt2 <- qt((1- tol.level)/2, n - p)
 	conf.l <- predictor + tt1 * stderr1
 	conf.u <- predictor - tt1 * stderr1
 	pred.l <- predictor + tt2 * stderr2
@@ -510,7 +504,11 @@ predict.lm <- function (object, newdata = model.frame(object),
 	pred.l=pred.l,pred.u=pred.u,row.names=rownames(newdata))
 }
 
+
+effects.lm <- function(...) .NotYetImplemented()
+
 ## Old version below, did it ever work?
+
 ## effects.lm <- function(z, term) {
 ##  term <- deparse(substitute(term))
 ##  k <- match(term,attr(z$terms,"term.labels"))
@@ -524,7 +522,5 @@ predict.lm <- function (object, newdata = model.frame(object),
 ##  effects <- yhat1-yhat0
 ##  tapply(effects,z$model.frame[factors & pattern!=0],mean,na.rm=TRUE)
 ##}
-
-effects.lm <- function(...) .NotYetImplemented()
 
 plot.lm <- function(...) .NotYetImplemented()
