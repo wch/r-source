@@ -740,18 +740,19 @@ void	resetdrawstate(void);
  */
 
 extern	font	SystemFont;	/* system font */
-extern	font	FixedFont;	/* fixed-width font */
 extern	font	Times;  	/* times roman font (serif) */
 extern	font	Helvetica;	/* helvetica font (sans serif) */
 extern	font	Courier;	/* courier font (fixed width) */
 
 #include <R_ext/libextern.h>
+LibExtern font		FixedFont;	/* fixed-width font */
 LibExtern cursor	ArrowCursor;	/* normal arrow cursor */
 LibExtern cursor	BlankCursor;	/* invisible cursor */
 LibExtern cursor	WatchCursor;	/* wait for the computer */
 LibExtern cursor	CaretCursor;	/* insert text */
 LibExtern cursor	TextCursor;	/* insert text */
 LibExtern cursor	HandCursor;	/* hand pointer */
+LibExtern cursor	CrossCursor;	/* cross pointer */
 #undef LibExtern
 #undef extern
 

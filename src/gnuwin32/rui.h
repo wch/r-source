@@ -23,11 +23,15 @@
 #define RW_STATUSBAR   0x0100
 #define RW_LARGEICONS   0x1000
 
-extern int RguiMDI;
 extern int MDIset;
 
+#include <R_ext/Boolean.h>
 #include <R_ext/libextern.h>
+LibExtern int RguiMDI;
 LibExtern window RConsole;
+LibExtern window RFrame;
+LibExtern int graphicsx, graphicsy;
+LibExtern Rboolean AllDevicesKilled;
 #undef LibExtern
 
 typedef struct {

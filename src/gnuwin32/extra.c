@@ -1243,7 +1243,7 @@ int getConsoleHandle(char *which)
     else return(0);
 }
 
-extern int getDeviceHandle(int); /* from devga.c */
+static int getDeviceHandle(int);
 
 SEXP do_getWindowHandle(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1266,3 +1266,77 @@ SEXP do_getWindowHandle(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     return result;
 }
+
+#include "devga.h"
+#include "Startup.h"
+extern UImode CharacterMode;
+
+SEXP do_bringtotop(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    int dev, stay;
+    GEDevDesc *gdd;
+    gadesc *xd;
+
+    checkArity(op, args);
+    dev = asInteger(CAR(args));
+    stay = asInteger(CADR(args));
+
+    if(dev == -1) { /* console */
+	if(CharacterMode == RGui) BringToTop(RConsole, stay);
+    } else {
+	if(dev < 1 || dev > R_MaxDevices || dev == NA_INTEGER)
+	    errorcall(call, "invalid value of 'which'");
+	gdd = (GEDevDesc *) GetDevice(dev - 1);
+	if(!gdd) errorcall(call, "invalid device");
+	xd = (gadesc *) gdd->dev->deviceSpecific;
+	if(!xd) errorcall(call, "invalid device");
+	if(stay && ismdi()) error("requires SDI mode");
+	BringToTop(xd->gawin, stay);
+    }
+    return R_NilValue;
+}
+
+static int getDeviceHandle(int dev)
+{
+    GEDevDesc *gdd;
+    gadesc *xd;
+
+    if (dev == -1) return(getHandle(RConsole));
+    if (dev < 1 || dev > R_MaxDevices || dev == NA_INTEGER) return(0);
+    gdd = (GEDevDesc *) GetDevice(dev - 1);
+    if (!gdd) return(0);
+    xd = (gadesc *) gdd->dev->deviceSpecific;
+    if (!xd) return(0);
+    return(getHandle(xd->gawin));
+}
+
+/* This assumes a menuname of the form $Graph<nn>Main, $Graph<nn>Popup, $Graph<nn>LocMain,
+   or $Graph<nn>LocPopup where <nn> is the
+   device number.  We've already checked the $Graph prefix. */
+
+menu getGraphMenu(char* menuname)
+{
+    int devnum;
+    GEDevDesc *gdd;
+    gadesc *xd;
+
+    menuname = menuname + 6;
+    devnum = atoi(menuname);
+    if(devnum < 1 || devnum > R_MaxDevices)
+    	error("invalid graph device number");
+
+    while (('0' <= *menuname) && (*menuname <= '9')) menuname++;
+
+    gdd = (GEDevDesc*) GetDevice(devnum - 1);
+
+    if(!gdd) error("invalid device");
+
+    xd = (gadesc *) gdd->dev->deviceSpecific;
+
+    if(!xd || xd->kind != SCREEN) error("bad device");
+
+    if (strcmp(menuname, "Main") == 0) return(xd->mbar);
+    else if (strcmp(menuname, "Popup") == 0) return(xd->grpopup);
+    else return(NULL);
+}
+

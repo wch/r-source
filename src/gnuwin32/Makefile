@@ -48,7 +48,7 @@ endif
 R-DLLLIBS =-L. $(FLIBS) -lRblas -lcomctl32 -lversion
 dllversion-RESFLAGS =--include-dir ../include
 SOURCES = \
-  console.c dataentry.c devga.c dynload.c edit.c editor.c extra.c \
+  console.c dataentry.c dynload.c edit.c editor.c extra.c \
   opt.c pager.c preferences.c psignal.c rhome.c rui.c run.c shext.c \
   sys-win32.c system.c
 OBJS = $(SOURCES:.c=.o) e_pow.o

@@ -42,6 +42,7 @@
 void CleanTempDir();		/* from extra.c */
 void editorcleanall();                  /* from editor.c */
 
+int graphicsx = -25, graphicsy = 0;
 
 R_size_t R_max_memory = INT_MAX;
 Rboolean UseInternet2 = FALSE;
@@ -49,11 +50,18 @@ Rboolean UseInternet2 = FALSE;
 extern SA_TYPE SaveAction; /* from ../main/startup.c */
 Rboolean DebugMenuitem = FALSE;  /* exported for rui.c */
 
+int RbitmapAlreadyLoaded = 0;
+HINSTANCE hRbitmapDll;
+
+static void UnLoad_Rbitmap_Dll()
+{
+    if (RbitmapAlreadyLoaded) FreeLibrary(hRbitmapDll);
+    RbitmapAlreadyLoaded = 0;
+}
+
 __declspec(dllexport) UImode  CharacterMode;
 int ConsoleAcceptCmd;
 void closeAllHlpFiles();
-void UnLoad_Unzip_Dll();
-void UnLoad_Rbitmap_Dll();
 void set_workspace_name(char *fn); /* ../unix/sys-common.c */
 
 /* used to avoid some flashing during cleaning up */
@@ -401,9 +409,6 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
     AllDevicesKilled = TRUE;
     if (R_Interactive && CharacterMode == RTerm)
 	SetConsoleTitle(oldtitle);
-#if 0
-    UnLoad_Unzip_Dll();
-#endif
     UnLoad_Rbitmap_Dll();
     if (R_CollectWarnings && saveact != SA_SUICIDE
 	&& CharacterMode == RTerm)

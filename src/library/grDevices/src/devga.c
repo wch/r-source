@@ -38,10 +38,6 @@
 #include "rui.h"
 #include "windows.h"
 
-extern console RConsole;
-extern window RFrame;
-extern Rboolean AllDevicesKilled;
-
 /* Drivers used by devga.c */
 
 Rboolean 
@@ -60,7 +56,6 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
 			double gamma, int xpos, int ypos, Rboolean buffered,
 			SEXP psenv);
 
-int graphicsx = -25, graphicsy = 0;
 
 /* a colour used to represent the background on png if transparent
    NB: used as RGB and BGR
@@ -126,80 +121,7 @@ static drawing _d;
 	/* specific structure					*/
 	/********************************************************/
 
-enum DeviceKinds {SCREEN=0, PRINTER, METAFILE, PNG, JPEG, BMP};
-
-typedef struct {
-    /* R Graphics Parameters */
-    /* local device copy so that we can detect */
-    /* when parameter changes */
-    int   col;			   /* Color */
-    int   bg;			   /* Background */
-    int   fontface;		   /* Typeface */
-    int   fontsize, basefontsize;  /* Size in points */
-    double fontangle;
-
-    /* devga Driver Specific */
-    /* parameters with copy per devga device */
-
-    enum DeviceKinds kind;
-    int   windowWidth;		/* Window width (pixels) */
-    int   windowHeight;		/* Window height (pixels) */
-    int   showWidth;		/* device width (pixels) */
-    int   showHeight;		/* device height (pixels) */
-    int   origWidth, origHeight, xshift, yshift;
-    Rboolean resize;		/* Window resized */
-    window gawin;		/* Graphics window */
-  /*FIXME: we should have union for this stuff and
-    maybe change gawin to canvas*/
-  /* SCREEN section*/
-    popup locpopup, grpopup;
-    button  stoploc;
-    menubar mbar, mbarloc, mbarconfirm;
-    menu  msubsave;
-    menuitem mpng, mbmp, mjpeg50, mjpeg75, mjpeg100;
-    menuitem mps, mpdf, mwm, mclpbm, mclpwm, mprint, mclose;
-    menuitem mrec, madd, mreplace, mprev, mnext, mclear, msvar, mgvar;
-    menuitem mR, mfit, mfix, grmenustayontop, mnextplot;
-    Rboolean recording, replaying, needsave;
-    bitmap bm;
-  /* PNG and JPEG section */
-    FILE *fp;
-    char filename[512];
-    int quality;
-    int npage;
-    double w, h;
-  /* Used to rescale font size so that bitmap devices have 72dpi */
-    int truedpi, wanteddpi;
-    rgb   fgcolor;		/* Foreground color */
-    rgb   bgcolor;		/* Background color */
-    rgb   canvascolor;		/* Canvas color */
-    rgb   outcolor;		/* Outside canvas color */
-    rect  clip;			/* The clipping rectangle */
-    Rboolean usefixed;
-    font  fixedfont;
-    font  font;
-    char fontfamily[50];
-
-    Rboolean locator;
-    Rboolean confirmation;
-    
-    int clicked; /* {0,1,2} */
-    int	px, py, lty, lwd;
-    int resizing; /* {1,2,3} */
-    double rescale_factor;
-    int fast; /* Use fast fixed-width lines? */
-    unsigned int pngtrans; /* what PNG_TRANS get mapped to */
-    Rboolean buffered;
-    int timeafter, timesince;
-    SEXP psenv;
-    double res_dpi;
-    R_GE_lineend lend;
-    R_GE_linejoin ljoin;
-    float lmitre;
-    Rboolean enterkey; /* Set true when enter key is hit */
-    SEXP eventRho;     /* Environment during event handling */
-    SEXP eventResult;  /* Result of event handler */
-} gadesc;
+#include "devga.h"
 
 static rect getregion(gadesc *xd)
 {
@@ -412,15 +334,15 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
 	    }
 	}
     }
-    /*if (PSDeviceDriver(ndd, fn, paper, family, afmpaths, encoding, bg, fg,
+    if (PSDeviceDriver(ndd, fn, paper, family, afmpaths, encoding, bg, fg,
 		       fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd),
 				       GE_INCHES, gdd),
 		       fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 		       (double)0, ((gadesc*) dd->deviceSpecific)->basefontsize,
-		       0, 1, 0, "", "R Graphics Output", R_NilValue)) */
+		       0, 1, 0, "", "R Graphics Output", R_NilValue))
 	/* horizontal=F, onefile=F, pagecentre=T, print.it=F */
-	/* PrivateCopyDevice(dd, ndd, "postscript"); */
+	PrivateCopyDevice(dd, ndd, "postscript");
 }
 
 
@@ -469,14 +391,14 @@ static void SaveAsPDF(NewDevDesc *dd, char *fn)
 	    }
 	}
     }
-    /* if (PDFDeviceDriver(ndd, fn, family, encoding, bg, fg,
+    if (PDFDeviceDriver(ndd, fn, family, encoding, bg, fg,
 			fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 			fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					 GE_INCHES, gdd),
 			((gadesc*) dd->deviceSpecific)->basefontsize,
 			1, "R Graphics Output", R_NilValue, 1, 4))
-			PrivateCopyDevice(dd, ndd, "PDF"); */
+	PrivateCopyDevice(dd, ndd, "PDF");
 }
 
 
@@ -2702,27 +2624,27 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
     return TRUE;
 }
 
-SEXP do_saveDevga(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP savePlot(SEXP args)
 {
     SEXP filename, type;
     char *fn, *tp, display[550];
     int device;
     NewDevDesc* dd;
 
-    checkArity(op, args);
+    args = CDR(args); /* skip entry point name */
     device = asInteger(CAR(args));
     if(device < 1 || device > NumDevices())
-	errorcall(call, "invalid device number");
+	error("invalid device number in savePlot");
     dd = ((GEDevDesc*) GetDevice(device - 1))->dev;
-    if(!dd) errorcall(call, "invalid device");
+    if(!dd) error("invalid device in savePlot");
     filename = CADR(args);
     if (!isString(filename) || LENGTH(filename) != 1)
-	errorcall(call, "invalid filename argument");
+	error("invalid filename argument in savePlot");
     fn = CHAR(STRING_ELT(filename, 0));
     fixslash(fn);
     type = CADDR(args);
     if (!isString(type) || LENGTH(type) != 1)
-	errorcall(call, "invalid type argument");
+	error("invalid type argument in savePlot");
     tp = CHAR(STRING_ELT(type, 0));
 
     if(!strcmp(tp, "png")) {
@@ -2744,7 +2666,7 @@ SEXP do_saveDevga(SEXP call, SEXP op, SEXP args, SEXP env)
     } else if (!strcmp(tp, "pdf")) {
 	SaveAsPDF(dd, fn);
     } else
-	errorcall(call, "unknown type");
+	error("unknown type in savePlot");
     return R_NilValue;
 }
 
@@ -2753,8 +2675,12 @@ SEXP do_saveDevga(SEXP call, SEXP op, SEXP args, SEXP env)
 #define BITMAP_DLL_NAME "\\BIN\\RBITMAP.DLL\0"
 typedef int (*R_SaveAsBitmap)();
 static R_SaveAsBitmap R_SaveAsPng, R_SaveAsJpeg, R_SaveAsBmp;
-static int RbitmapAlreadyLoaded = 0;
-static HINSTANCE hRbitmapDll;
+
+/* next two are in system.c */
+#include <R_ext/libextern.h>
+LibExtern int RbitmapAlreadyLoaded;
+LibExtern HINSTANCE hRbitmapDll;
+#undef LibExtern
 
 static int Load_Rbitmap_Dll()
 {
@@ -2779,12 +2705,6 @@ static int Load_Rbitmap_Dll()
 	}
     }
     return (RbitmapAlreadyLoaded>0);
-}
-
-void UnLoad_Rbitmap_Dll()
-{
-    if (RbitmapAlreadyLoaded) FreeLibrary(hRbitmapDll);
-    RbitmapAlreadyLoaded = 0;
 }
 
 static int png_rows = 0;
@@ -2931,7 +2851,7 @@ static void SaveAsBmp(NewDevDesc *dd,char *fn)
 
 /* This is Guido's devga device. */
 
-SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP devga(SEXP args)
 {
     NewDevDesc *dev;
     GEDevDesc* dd;
@@ -2940,8 +2860,8 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
     int recording = 0, resize = 1, bg, canvas, xpos, ypos, buffered;
     SEXP sc, psenv;
 
-    checkArity(op, args);
     vmax = vmaxget();
+    args = CDR(args); /* skip entry point name */
     display = CHAR(STRING_ELT(CAR(args), 0)); /* no longer need SaveString */
     args = CDR(args);
     width = asReal(CAR(args));
@@ -2949,16 +2869,16 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
     height = asReal(CAR(args));
     args = CDR(args);
     if (width <= 0 || height <= 0)
-	errorcall(call, "invalid width or height");
+	error("invalid width or height in devga");
     ps = asReal(CAR(args));
     args = CDR(args);
     recording = asLogical(CAR(args));
     if (recording == NA_LOGICAL)
-	errorcall(call, "invalid value of `recording'");
+	error("invalid value of 'recording' in devga");
     args = CDR(args);
     resize = asInteger(CAR(args));
     if (resize == NA_INTEGER)
-	errorcall(call, "invalid value of `resize'");
+	error("invalid value of 'resize' in devga");
     args = CDR(args);
     xpinch = asReal(CAR(args));
     args = CDR(args);
@@ -2966,7 +2886,7 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
     sc = CAR(args);
     if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
-	errorcall(call, "invalid value of `canvas'");
+	error("invalid value of 'canvas' in devga");
     canvas = RGBpar(sc, 0);
     args = CDR(args);
     gamma = asReal(CAR(args));
@@ -2977,13 +2897,13 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
     buffered = asLogical(CAR(args));
     if (buffered == NA_LOGICAL)
-	errorcall(call, "invalid value of `buffered'");
+	error("invalid value of 'buffered' in devga");
     args = CDR(args);
     psenv = CAR(args);
     args = CDR(args);
     sc = CAR(args);
     if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
-	errorcall(call, "invalid value of `bg'");
+	error("invalid value of 'bg' in devga");
     bg = RGBpar(sc, 0);
     
     R_CheckDeviceAvailable();
@@ -3002,7 +2922,7 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
 			    (Rboolean)recording, resize, bg, canvas, gamma,
 			    xpos, ypos, (Rboolean)buffered, psenv)) {
 	    free(dev);
-	    errorcall(call, "unable to start device devga");
+	    error("unable to start device devga");
 	}
 	gsetVar(install(".Device"),
 		mkString(display[0] ? display : "windows"), R_NilValue);
@@ -3012,78 +2932,6 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
     } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;
-}
-
-#include "Startup.h"
-extern UImode CharacterMode;
-
-SEXP do_bringtotop(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    int dev, stay;
-    GEDevDesc *gdd;
-    gadesc *xd;
-
-    checkArity(op, args);
-    dev = asInteger(CAR(args));
-    stay = asInteger(CADR(args));
-
-    if(dev == -1) { /* console */
-	if(CharacterMode == RGui) BringToTop(RConsole, stay);
-    } else {
-	if(dev < 1 || dev > R_MaxDevices || dev == NA_INTEGER)
-	    errorcall(call, "invalid value of `which'");
-	gdd = (GEDevDesc *) GetDevice(dev - 1);
-	if(!gdd) errorcall(call, "invalid device");
-	xd = (gadesc *) gdd->dev->deviceSpecific;
-	if(!xd) errorcall(call, "invalid device");
-	if(stay && ismdi()) error("requires SDI mode");
-	BringToTop(xd->gawin, stay);
-    }
-    return R_NilValue;
-}
-
-int getDeviceHandle(int dev)
-{
-    GEDevDesc *gdd;
-    gadesc *xd;
-
-    if (dev == -1) return(getHandle(RConsole));
-    if (dev < 1 || dev > R_MaxDevices || dev == NA_INTEGER) return(0);
-    gdd = (GEDevDesc *) GetDevice(dev - 1);
-    if (!gdd) return(0);
-    xd = (gadesc *) gdd->dev->deviceSpecific;
-    if (!xd) return(0);
-    return(getHandle(xd->gawin));
-}
-
-/* This assumes a menuname of the form $Graph<nn>Main, $Graph<nn>Popup, $Graph<nn>LocMain,
-   or $Graph<nn>LocPopup where <nn> is the
-   device number.  We've already checked the $Graph prefix. */
-
-menu getGraphMenu(char* menuname)
-{
-    int devnum;
-    GEDevDesc *gdd;
-    gadesc *xd;
-
-    menuname = menuname + 6;
-    devnum = atoi(menuname);
-    if(devnum < 1 || devnum > R_MaxDevices)
-    	error("invalid graph device number");
-
-    while (('0' <= *menuname) && (*menuname <= '9')) menuname++;
-
-    gdd = (GEDevDesc*) GetDevice(devnum - 1);
-
-    if(!gdd) error("invalid device");
-
-    xd = (gadesc *) gdd->dev->deviceSpecific;
-
-    if(!xd || xd->kind != SCREEN) error("bad device");
-
-    if (strcmp(menuname, "Main") == 0) return(xd->mbar);
-    else if (strcmp(menuname, "Popup") == 0) return(xd->grpopup);
-    else return(NULL);
 }
 
 static void GA_onExit(NewDevDesc *dd)
@@ -3103,6 +2951,7 @@ static void GA_onExit(NewDevDesc *dd)
     GA_Activate(dd);
 }
 
+#if 0
 Rboolean winNewFrameConfirm()
 {
     char msg[] = "Waiting to confirm page change...";
@@ -3139,6 +2988,7 @@ Rboolean winNewFrameConfirm()
 
     return TRUE;
 }
+#endif
 
 static SEXP GA_getEvent(SEXP eventRho, char* prompt)
 {

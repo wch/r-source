@@ -543,7 +543,6 @@ FUNTAB R_FunTab[] =
 {"show.help.item",do_helpitem,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"flush.console",do_flushconsole,0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
 {"win.version", do_winver,	0,	11,	0,	{PP_FUNCALL, PREC_FN,	0}},
-{"saveDevga",	do_saveDevga,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"shell.exec",	do_shellexec,	0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"winDialog",	do_windialog,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"winDialogString", do_windialogstring, 0, 11,	2,	{PP_FUNCALL, PREC_FN,	0}},
@@ -718,9 +717,6 @@ FUNTAB R_FunTab[] =
 
 /* Device Drivers */
 
-#ifdef Win32
-{"devga",	do_devga,	0,	111,   15,	{PP_FUNCALL, PREC_FN,	0}},
-#endif
 #ifdef Unix
 {"X11",		do_X11,		0,	111,	11,	{PP_FUNCALL, PREC_FN,	0}},
 {"Quartz",	do_Quartz,	0,	111,	7,	{PP_FUNCALL, PREC_FN,	0}},

@@ -42,7 +42,15 @@ WatchCursor
 CaretCursor
 TextCursor
 HandCursor
+CrossCursor
+FixedFont
+cam_image
+print_image
+console_image
+stop_image
 RConsole
+RFrame
+RguiMDI
 CharacterMode
 UserBreak
 R_standardGeneric_ptr
@@ -53,3 +61,8 @@ R_interrupts_suspended
 R_interrupts_pending
 R_Home
 R_TempDir
+AllDevicesKilled
+RbitmapAlreadyLoaded
+hRbitmapDll
+graphicsx
+graphicsy

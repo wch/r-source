@@ -56,5 +56,3 @@ void consoleclear(control c);
 extern int setWidthOnResize;
 int consolecols(console c);
 void pagerbclose(control m);
-
-int graphicsx, graphicsy;

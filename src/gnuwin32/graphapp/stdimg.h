@@ -1,17 +1,19 @@
-extern image cam_image;
-extern image color_image;
-extern image console_image;
-extern image console1_image;
-extern image copy_image;
-extern image copy1_image;
-extern image copypaste_image;
-extern image cut_image;
-extern image erase_image;
-extern image help_image;
-extern image open_image;
-extern image open1_image;
-extern image paste_image;
-extern image paste1_image;
-extern image print_image;
-extern image save_image;
-extern image stop_image;
+#include <R_ext/libextern.h>
+LibExtern image cam_image;
+LibExtern image color_image;
+LibExtern image console_image;
+LibExtern image console1_image;
+LibExtern image copy_image;
+LibExtern image copy1_image;
+LibExtern image copypaste_image;
+LibExtern image cut_image;
+LibExtern image erase_image;
+LibExtern image help_image;
+LibExtern image open_image;
+LibExtern image open1_image;
+LibExtern image paste_image;
+LibExtern image paste1_image;
+LibExtern image print_image;
+LibExtern image save_image;
+LibExtern image stop_image;
+#undef LibExtern

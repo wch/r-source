@@ -14,45 +14,50 @@ windows <- function(width = 7, height = 7, pointsize = 12,
     if(missing(ypinch))
         if(!length(ypinch <- getOption("ypinch"))) ypinch <- NA
     ypinch <- as.double(ypinch)
-    .Internal(devga("", width, height, pointsize, record, rescale,
-                    xpinch, ypinch, canvas,
-                    if(is.null(gamma)) 1 else gamma,
-                    as.integer(xpos), as.integer(ypos), buffered, .PSenv, bg
-                    ))
+    invisible(.External("devga", "", width, height, pointsize, record, rescale,
+                        xpinch, ypinch, canvas,
+                        if(is.null(gamma)) 1 else gamma,
+                        as.integer(xpos), as.integer(ypos), buffered,
+                        .PSenv, bg, PACKAGE = "grDevices"))
 }
 
 win.graph <- function(width = 7, height = 7, pointsize = 12)
-    .Internal(devga("", width, height, pointsize, FALSE, 1, NA, NA, "white",
-                    1, as.integer(NA), as.integer(NA), TRUE, .PSenv, NA))
+    invisible(.External("devga", "", width, height, pointsize, FALSE, 1,
+                        NA, NA, "white", 1, as.integer(NA), as.integer(NA),
+                        TRUE, .PSenv, NA, PACKAGE = "grDevices"))
 
 win.print <- function(width = 7, height = 7, pointsize = 12, printer = "")
-    .Internal(devga(paste("win.print:", printer, sep=""),
-                    width, height, pointsize, FALSE, 1,
-                    NA, NA, "white", 1, as.integer(NA), as.integer(NA),
-                    FALSE, .PSenv, NA))
+    invisible(.External("devga", paste("win.print:", printer, sep=""),
+                        width, height, pointsize, FALSE, 1,
+                        NA, NA, "white", 1, as.integer(NA), as.integer(NA),
+                        FALSE, .PSenv, NA, PACKAGE = "grDevices"))
 
 win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12)
-    .Internal(devga(paste("win.metafile:", filename, sep=""),
-                    width, height, pointsize, FALSE, 1, NA, NA, "white", 1,
-                    as.integer(NA), as.integer(NA), FALSE, .PSenv, NA))
+    invisible(.External("devga", paste("win.metafile:", filename, sep=""),
+                        width, height, pointsize, FALSE, 1, NA, NA, "white", 1,
+                        as.integer(NA), as.integer(NA), FALSE, .PSenv, NA,
+                        PACKAGE = "grDevices"))
 
 png <- function(filename = "Rplot%03d.png", width = 480, height = 480,
                 pointsize = 12, bg = "white", res = NA)
-    .Internal(devga(paste("png:", filename, sep=""),
-                    width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
-                    as.integer(res), as.integer(NA), FALSE, .PSenv, NA))
+    invisible(.External("devga", paste("png:", filename, sep=""),
+                        width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
+                        as.integer(res), as.integer(NA), FALSE, .PSenv, NA,
+                        PACKAGE = "grDevices"))
 
 bmp <- function(filename = "Rplot%03d.bmp", width = 480, height = 480,
                 pointsize = 12, bg = "white", res = NA)
-    .Internal(devga(paste("bmp:", filename, sep=""),
-                    width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
-                    as.integer(res), as.integer(NA), FALSE, .PSenv, NA))
+    invisible(.External("devga", paste("bmp:", filename, sep=""),
+                        width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
+                        as.integer(res), as.integer(NA), FALSE, .PSenv, NA,
+                        PACKAGE = "grDevices"))
 
 jpeg <- function(filename = "Rplot%03d.jpg", width = 480, height = 480,
                  pointsize = 12, quality=75, bg = "white", res = NA)
-    .Internal(devga(paste("jpeg:", quality, ":",filename, sep=""),
-                    width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
-                    as.integer(res), as.integer(NA), FALSE, .PSenv, NA))
+    invisible(.External("devga", paste("jpeg:", quality, ":",filename, sep=""),
+                        width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
+                        as.integer(res), as.integer(NA), FALSE, .PSenv, NA,
+                        PACKAGE = "grDevices"))
 
 bringToTop <- function(which = dev.cur(), stay = FALSE)
 {
@@ -76,7 +81,8 @@ savePlot <- function(filename = "Rplot",
     if(devname != "windows") stop("can only copy from `windows' devices")
     if(filename == "clipboard" && type == "wmf") filename <- ""
     if(nchar(filename) > 0) filename <- paste(filename, type, sep=".")
-    invisible(.Internal(saveDevga(device, filename, type)))
+    invisible(.External("savePlot", device, filename, type,
+                        PACKAGE = "grDevices"))
 }
 
 print.SavedPlots <- function(x, ...)
@@ -170,7 +176,7 @@ windowsFont <- function(family) {
   checkWindowsFont(family)
 }
 
-windowsFonts(# Default Serif font is Times 
+windowsFonts(# Default Serif font is Times
                 serif=windowsFont("TT Times New Roman"),
                 # Default Sans Serif font is Helvetica
                 sans=windowsFont("TT Arial"),
