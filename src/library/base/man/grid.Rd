@@ -8,7 +8,8 @@ grid(nx = NULL, ny = nx, col="lightgray", lty="dotted", lwd = NULL,
 \arguments{
   \item{nx,ny}{number of cells of the grid in x and y direction.  When
     \code{NULL}, as per default, the grid aligns with the tick marks on
-    the corresponding axis.}
+    the corresponding axis, when \code{\link{NA}}, no grid lines are
+    drawn in the corresponding direction.}
   \item{col}{character or (integer) numeric; color of the grid lines.}
   \item{lty}{character or (integer) numeric; line type of the grid lines.}
   \item{lwd}{non-negative numeric giving line width of the grid lines;
@@ -29,6 +30,9 @@ grid(nx = NULL, ny = nx, col="lightgray", lty="dotted", lwd = NULL,
   \code{\link{points}}.
 }
 \examples{
+plot(1:3)
+grid(NA,5, lwd = 2) # grid only in y-direction
+
 data(iris)
 ## maybe change the desired number of tick marks:  par(lab=c(mx,my,7))
 op <- par(mfcol = 1:2)
@@ -43,5 +47,6 @@ with(iris,
      }
     )
 par(op)
+
 }
 \keyword{aplot}

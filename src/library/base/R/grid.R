@@ -1,7 +1,7 @@
 grid <- function (nx = NULL, ny = nx, col="lightgray", lty="dotted", lwd = NULL,
                   equilogs = TRUE)
 {
-    if (is.null(nx)|| nx >= 1) {
+    if(is.null(nx) || (!is.na(nx) && nx >= 1)) {
         log <- par("xlog")
         if(is.null(nx)) { ## align to tickmarks
             ax <- par("xaxp")
@@ -14,7 +14,7 @@ grid <- function (nx = NULL, ny = nx, col="lightgray", lty="dotted", lwd = NULL,
         }
         abline(v = at, col = col, lty = lty, lwd = lwd)
     }
-    if (is.null(ny)|| ny >= 1) {
+    if(is.null(ny) || (!is.na(ny) && ny >= 1)) {
         log <- par("ylog")
         if(is.null(ny)) { ## align to tickmarks
             ax <- par("yaxp")

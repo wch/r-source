@@ -201,13 +201,13 @@ NEW FEATURES
 
     o	grid() has a more sensible default behavior.  Tick axis alignment
         only happens when no numbers of grid cells are specified.  New
-        arguments lwd and equilogs, see ?grid.
+        arguments lwd and equilogs; nx/ny = NA for not drawing, see ?grid.
 
     o	installed.packages() has a new argument `priority'.
 
     o   termplot() uses factor levels rather than 1,2,3... for x-axis.
 
-    o   Workaround for optimization bugs on gcc 3.1/2 on 32-bit Solaris.	
+    o   Workaround for optimization bugs on gcc 3.1/2 on 32-bit Solaris.
 
 
 DEPRECATED & DEFUNCT
@@ -229,7 +229,7 @@ DEPRECATED & DEFUNCT
 	removed in favor of the internal functions .dynLibs() and
 	.libPaths().
 
-    o   restart() is deprecated in preparation for proper exception 
+    o   restart() is deprecated in preparation for proper exception
 	handling.  Use try(), as has long been recommended.
 
 
@@ -449,7 +449,7 @@ BUG FIXES
 	two.
 
    o    On Unix, protect against broken pipes where popen calls succeed
-	even though the command does not exist (and the glibc manual 
+	even though the command does not exist (and the glibc manual
         says it should return NULL).  (PR#1959)
 
    o    data.frame was allowing explicit row.names with missing
