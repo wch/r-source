@@ -679,7 +679,7 @@ function(package, lib.loc = NULL)
 
     ## Build Rd data base.
     db <- Rddb(package, lib.loc = dirname(dir))
-    db <- lapply(db, function(f) paste(Rdpp(f), collapse = "\n"))
+    db <- lapply(db, Rdpp)
 
     ## Need some heuristics now.  When does an Rd object document just
     ## one S4 class so that we can compare (at least) the slot names?
@@ -690,23 +690,36 @@ function(package, lib.loc = NULL)
     ## * a non-empty user-defined section 'Slots'.
     
     ## As going through the db to extract sections can take some time,
-    ## we try to subscript whenever possible.
-    aliases <- lapply(db, getRdSection, "alias")
+    ## we do the vectorized metadata computations first, and try to
+    ## subscript whenever possible.
+
+    aliases <- lapply(db, .getRdMetaDataFromRdLines, "alias")    
     idx <- (sapply(aliases, length) == 1)
-    if(!length(idx)) return(badRdObjects)
+    if(!any(idx)) return(badRdObjects)
     db <- db[idx]; aliases <- aliases[idx]
-    idx <- sapply(lapply(db, getRdSection, "docType"),
+    idx <- sapply(lapply(db, .getRdMetaDataFromRdLines, "docType"),
                   identical, "class")
-    if(!length(idx)) return(badRdObjects)
+    if(!any(idx)) return(badRdObjects)
     db <- db[idx]; aliases <- aliases[idx]
+    ## Now collapse.
+    db <- lapply(db, paste, collapse = "\n")
     RdSlots <- lapply(db, getRdSection, "Slots", FALSE)
     idx <- !sapply(RdSlots, identical, character())
-    if(!length(idx)) return(badRdObjects)
+    if(!any(idx)) return(badRdObjects)
     db <- db[idx]
     aliases <- unlist(aliases[idx])
     RdSlots <- RdSlots[idx]
 
-    names(db) <- sapply(db, getRdSection, "name")
+    dbNames <- sapply(db, .getRdName)
+    if(length(dbNames) < length(db)) {
+        ## <FIXME>
+        ## What should we really do in this case?
+        ## (We cannot refer to the bad Rd objects because we do not know
+        ## their names, and have no idea which file they came from ...)
+        stop("cannot deal with Rd objects with missing/empty names")
+        ## </FIXME>
+    }
+    names(db) <- dbNames
 
     .getSlotNamesFromSlotSectionText <- function(txt) {
         ## Get \describe (inside user-defined section 'Slots'
@@ -729,13 +742,15 @@ function(package, lib.loc = NULL)
         if(length(idx) == 1) {
             ## Add sanity checking later ...
             S4classesChecked <- c(S4classesChecked, cl)
-            codeSlots <-
+            slotsInCode <-
                 sort(names(getClass(cl, where = codeEnv) @ slots))
-            docsSlots <-
+            slotsInDocs <-
                 sort(.getSlotNamesFromSlotSectionText(RdSlots[[idx]]))
-            if(!identical(codeSlots, docsSlots)) {
+            if(!identical(slotsInCode, slotsInDocs)) {
                 badRdObjects[[names(db)[idx]]] <-
-                    list(name = cl, code = codeSlots, docs = docsSlots)
+                    list(name = cl,
+                         code = slotsInCode,
+                         docs = slotsInDocs)
             }
         }
     }
@@ -804,7 +819,7 @@ function(package, lib.loc = NULL)
 
     ## Build Rd data base.
     db <- Rddb(package, lib.loc = dirname(dir))
-    db <- lapply(db, function(f) paste(Rdpp(f), collapse = "\n"))
+    db <- lapply(db, Rdpp)
 
     ## Need some heuristics now.  When does an Rd object document a
     ## data.frame (could add support for other classes later) variable
@@ -817,11 +832,14 @@ function(package, lib.loc = NULL)
     ##   one or more \describe sections inside.
 
     ## As going through the db to extract sections can take some time,
-    ## we try to subscript whenever possible.
-    aliases <- lapply(db, getRdSection, "alias")
+    ## we do the vectorized metadata computations first, and try to
+    ## subscript whenever possible.
+    aliases <- lapply(db, .getRdMetaDataFromRdLines, "alias")
     idx <- sapply(aliases, length) == 1
-    if(!length(idx)) return(badRdObjects)
+    if(!any(idx)) return(badRdObjects)
     db <- db[idx]; aliases <- aliases[idx]
+    ## Now collapse.
+    db <- lapply(db, paste, collapse = "\n")
     
     .getDataFrameVarNamesFromRdText <- function(txt) {
         txt <- getRdSection(txt, "format")
@@ -850,7 +868,15 @@ function(package, lib.loc = NULL)
     aliases <- unlist(aliases[idx])
     RdVarNames <- RdVarNames[idx]
 
-    names <- sapply(db[idx], getRdSection, "name")
+    dbNames <- sapply(db[idx], .getRdName)
+    if(length(dbNames) < length(aliases)) {
+        ## <FIXME>
+        ## What should we really do in this case?
+        ## (We cannot refer to the bad Rd objects because we do not know
+        ## their names, and have no idea which file they came from ...)
+        stop("cannot deal with Rd objects with missing/empty names")
+        ## </FIXME>
+    }
 
     .fileExt <- function(x) sub(".*\\.", "", x)
 
@@ -865,7 +891,7 @@ function(package, lib.loc = NULL)
     dataFramesChecked <- character()
     for(i in seq(along = aliases)) {
         ## Store the documented variable names.
-        docsVarNames <- sort(RdVarNames[[i]])
+        varNamesInDocs <- sort(RdVarNames[[i]])
         ## Try finding the variable or data set given by the alias.
         al <- aliases[i]
         if(exists(al, envir = codeEnv, mode = "list",
@@ -891,12 +917,12 @@ function(package, lib.loc = NULL)
         if(!is.data.frame(al)) next
         ## Now we should be ready:
         dataFramesChecked <- c(dataFramesChecked, aliases[i])
-        codeVarNames <- sort(variable.names(al))
-        if(!identical(codeVarNames, docsVarNames))
-            badRdObjects[[names[i]]] <-
+        varNamesInCode <- sort(variable.names(al))
+        if(!identical(varNamesInCode, varNamesInDocs))
+            badRdObjects[[dbNames[i]]] <-
                 list(name = aliases[i],
-                     code = codeVarNames,
-                     docs = docsVarNames)
+                     code = varNamesInCode,
+                     docs = varNamesInDocs)
     }
 
     attr(badRdObjects, "dataFramesChecked") <-
@@ -961,24 +987,32 @@ function(package, dir, lib.loc = NULL)
     else
         Rddb(dir = dir)
 
-    db <- lapply(db,
-                 function(f) paste(tools:::Rdpp(f), collapse = "\n"))
-    names(db) <- dbNames <- sapply(db, tools:::getRdSection, "name")
-
-    ## <FIXME>
-    ## If working on an installed package with 'Meta/Rd.rds', could
-    ## possibly speed things up by gettings aliases and keywords from
-    ## there.
-    ## </FIXME>
-
-    dbKeywords <- lapply(db, tools:::getRdSection, "keyword")
+    db <- lapply(db, Rdpp)
+    ## Do vectorized computations for metadata first.
+    dbAliases <- lapply(db, .getRdMetaDataFromRdLines, "alias")
+    dbKeywords <- lapply(db, .getRdMetaDataFromRdLines, "keyword")
+    ## Now collapse.
+    db <- lapply(db, paste, collapse = "\n")
+    dbNames <- sapply(db, .getRdName)
+    ## Safeguard against missing/empty names.
+    if(length(dbNames) < length(db)) {
+        ## <FIXME>
+        ## What should we really do in this case?
+        ## (We cannot refer to the bad Rd objects because we do not know
+        ## their names, and have no idea which file they came from ...)
+        stop("cannot deal with Rd objects with missing/empty names")
+        ## </FIXME>
+    }
     ind <- sapply(dbKeywords,
                   function(x) any(grep("^ *internal *$", x)))
     if(isBase)
         ind <- ind | dbNames %in% c("Defunct", "Deprecated", "Devices")
-    db <- db[!ind]
-    dbNames <- dbNames[!ind]
-    dbAliases <- lapply(db, tools:::getRdSection, "alias")
+    if(any(!ind)) {
+        db <- db[!ind]
+        dbNames <- dbNames[!ind]
+        dbAliases <- dbAliases[!ind]
+    }
+    names(db) <- names(dbAliases) <- dbNames
     dbUsageTexts <- lapply(db, tools:::getRdSection, "usage")
     dbUsages <-
         lapply(dbUsageTexts,
