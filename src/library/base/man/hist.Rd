@@ -66,11 +66,13 @@ hist.default(x, breaks, freq = NULL, probability = !freq,
   was a vector).}
   \item{counts}{\eqn{n} integers; for each cell, the number of
     \code{x[]} inside.}
-  \item{intensities}{values \eqn{\hat f(x_i)}{f^(x[i])}, as estimated
+  \item{density}{values \eqn{\hat f(x_i)}{f^(x[i])}, as estimated
     density values. If \code{all(diff(breaks) == 1)}, they are the
     relative frequencies \code{counts/n} and in general satisfy
     \eqn{\sum_i \hat f(x_i) (b_{i+1}-b_i) = 1}{sum[i; f^(x[i])
       (b[i+1]-b[i])] = 1}, where \eqn{b_i}{b[i]} = \code{breaks[i]}.}
+  \item{intensities}{same as \code{density}. Deprecated, but retained
+    for compatibility.}
   \item{mids}{the \eqn{n} cell midpoints.}
   \item{xname}{a character string with the actual \code{x} argument name.}
   \item{equidist}{logical, indicating if the distances between
@@ -91,9 +93,9 @@ str(hist(islands, col="gray", labels = TRUE))
 hist(sqrt(islands), br = 12, col="lightblue", border="pink")
 ##-- For non-equidistant breaks, counts should NOT be graphed unscaled:
 r <- hist(sqrt(islands), br = c(4* 0:5,10* 3:5,70,100,140), col='blue1')
-text(r$mids, r$intensities, r$counts, adj=c(.5,-.5), col='blue3')
+text(r$mids, r$density, r$counts, adj=c(.5,-.5), col='blue3')
 sapply(r[2:3],sum)
-sum(r$intensities * diff(r$breaks)) # == 1
+sum(r$density * diff(r$breaks)) # == 1
 lines(r, lty = 3, border = "purple") # -> lines.histogram(*)
 par(op)
 

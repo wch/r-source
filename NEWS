@@ -432,6 +432,10 @@ BUG FIXES
 
     o	glm() now follows lm() in dropping unused factor levels when fitting.
 
+    o   hist() now labels y-axis Density rather than Relative Frequency
+        if freq=FALSE. The `intensities' component of the result is
+	now deprecated and `density' should be used instead. 
+
     o	hsv() truncation bug fixed (hopefully correctly this time...)
 
     o	library.dynam() no longer fails if the library appears more than

@@ -63,16 +63,17 @@ hist.default <-
         } else TRUE
     } else if(!missing(probability) && any(probability == freq))
         stop("`probability' is an alias for `!freq', however they differ.")
-    intensities <- counts/(n*h)
+    density <- counts/(n*h)
     mids <- 0.5 * (breaks[-1] + breaks[-nB])
     equidist <- !use.br || diff(range(h)) < 1e-7 * mean(h)
     r <- structure(list(breaks = breaks, counts = counts,
-                        intensities = intensities, mids = mids,
+                        intensities = density, 
+			density = density, mids = mids,
                         xname = xname, equidist = equidist),
                    class="histogram")
     if (plot) {
 ##-         if(missing(ylim))
-##-             y <- if (freq) .Alias(counts) else .Alias(intensities)
+##-             y <- if (freq) .Alias(counts) else .Alias(density)
         plot(r, freq = freq, col = col, border = border,
              main = main, xlim = xlim, ylim = ylim, xlab = xlab, ylab = ylab,
              axes = axes, labels = labels, ...)
@@ -94,7 +95,7 @@ plot.histogram <-
     if(freq && !equidist)
         warning("the AREAS in the plot are wrong -- rather use `freq=FALSE'!")
 
-    y <- if (freq) x$counts else x$intensities
+    y <- if (freq) x$counts else x$density
     nB <- length(x$breaks)
     if(is.null(y) || 0 == nB) stop("`x' is wrongly structured")
 
@@ -102,7 +103,7 @@ plot.histogram <-
         if(is.null(ylim))
             ylim <- range(y, 0)
         if (missing(ylab))
-            ylab <- paste(if(!freq)"Relative ", "Frequency", sep="")
+            ylab <- if (!freq) "Density" else "Frequency"
         plot.new()
         plot.window(xlim, ylim, "")     #-> ylim's default from 'y'
         title(main = main, xlab = xlab, ylab = ylab, ...)
@@ -116,7 +117,7 @@ plot.histogram <-
     if((logl <- is.logical(labels) && labels) || is.character(labels))
         text(x$mids, y,
              labels = if(logl) {
-                 if(freq) x$counts else round(x$intensities,3)
+                 if(freq) x$counts else round(x$density,3)
              } else labels,
              adj = c(0.5, -0.5))
     invisible()
