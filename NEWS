@@ -69,6 +69,11 @@ USER-VISIBLE CHANGES
         a syntax error.  If this breaks existing code, just add
         parentheses -- or braces in the case of plotmath.
 
+    o   Objects created from a formally defined class now include the
+        name of the corresponding package as an attribute in the
+        object's class. This allows packages with namespaces to have
+        private (non-exported) classes.
+
 
 NEW FEATURES
 
@@ -8064,6 +8069,16 @@ NEW FEATURES
     o	Mathlib can be built as a standalone library: see directory
 	src/nmath/standalone.
 
+    o   The trace() function has two new features.  Giving where= as a
+        function name allows tracing of functions called from a
+        namespace.  A new argument edit= allows inserting arbitrary
+        tracing code in the function.  See the online help for
+        details.
+
+    o   Namespaces and S4 classes/methods should work better
+        together.  Generic function and class definition objects are
+        used in many places where the name of the function or class
+        was used before, which caused problems for non-exported objects.
 
 
 BUG FIXES
@@ -8308,6 +8323,17 @@ BUG FIXES
 	setMethod had been called.  Also fixed some situations that
 	prevented caching methods (and therfore slowed down dispatch
 	seriously) in similar cases.
+
+    o   Packages can now have non-exported classes.  Previously this
+        failed because computations could not find methods for objects
+        from private classes.  Adding a "package" attribute to an
+        object's class attribute (along with a large number of changes
+        to use the package information) fixes this for most cases.
+        (Methods for primitive functions still use global information
+        about classes because of imposed efficiency constraints on
+        primitives.)
+
+    o   untrace() now works with package::function-style references.
 
 
 	*********************************************************
