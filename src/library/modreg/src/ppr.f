@@ -702,6 +702,7 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
       ismethod = ism
       df = df1
       gcvpen = gcvpen1
+      return
       end
 
       subroutine BDRfsort(mu,n,f,t,sp)
@@ -803,6 +804,7 @@ c     subfit adds up to m  terms one at time; lm is the number fitted.
       implicit double precision (a-h, o-z)
       common /BDRspsmooth/ df, gcvpen, ismethod
       ismethod = 0
+      return
       end
 
       subroutine BDRsupsmu (n,x,y,w,iper,span,alpha,smo,sc,edf)
@@ -919,6 +921,7 @@ C     change by BDR
       call BDRsmooth (n,x,sc(1,4),w,spans(1),-jper,vsmlsq,smo,h)
       edf = 0
       endif
+      return
       end
 
       subroutine BDRsmooth (n,x,y,w,span,iper,vsmlsq,smo,acvr)
@@ -1123,6 +1126,7 @@ c      call dblepr('smoothed',8, dsmo, n)
         call dblepr('lambda', 6, lambda, 1)
         call dblepr('df', 2, s, 1)
       endif
+      return
       end
 
 
