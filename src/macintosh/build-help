@@ -60,7 +60,7 @@ if($opt_htmllists){
     %anindex = read_anindex("$R_HOME/library");
     %htmlindex = read_htmlindex("$R_HOME/library");
 
-    build_htmlfctlist("$R_HOME/library");
+    # build_htmlfctlist("$R_HOME/library");
 
     exit 0;
 }
@@ -114,7 +114,7 @@ print "\n";
 %anindex = read_anindex($lib);
 if($opt_html){
     %htmlindex = read_htmlindex($lib);
-    build_htmlfctlist($lib);
+#    build_htmlfctlist($lib);
 } elsif ($opt_chm) {
     %htmlindex = read_htmlindex($lib);
 }
