@@ -253,16 +253,24 @@ none
 
 Directory:  incoming
 
-* PR# 885 *
-Subject: Problems with R CMD COMPILE within Makefile
-From: Peter Holzer <holzer@stat.math.ethz.ch>
-Date: Mon, 26 Mar 2001 15:32:00 +0200
+* PR# 887 *
+Subject: axis(adj=anything) has no effect
+From: jhallman@frb.gov
+Date: Wed, 28 Mar 2001 20:51:05 +0200 (MET DST)
+* PR# 877 *
+Subject: segmentation fault of unknown cause
+From: Martin Schlather <Martin.Schlather@uni-bayreuth.de>
+Date: Wed, 14 Mar 2001 17:45:25 +0100
 * PR# 884 *
 * PR# 883 *
 Subject: cor(x,y) when is.null(y)
 From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
 Date: Fri, 23 Mar 2001 11:38:05 -0800 (PST)
-* PR# 877 *
-Subject: segmentation fault of unknown cause
-From: Martin Schlather <Martin.Schlather@uni-bayreuth.de>
-Date: Wed, 14 Mar 2001 17:45:25 +0100
+* PR# 886 *
+Subject: Error (?) in documentation of 'swiss' data in R base package
+From: k.j.mcconway@open.ac.uk
+Date: Wed, 28 Mar 2001 16:46:49 +0200 (MET DST)
+* PR# 885 *
+Subject: Problems with R CMD COMPILE within Makefile
+From: Peter Holzer <holzer@stat.math.ethz.ch>
+Date: Mon, 26 Mar 2001 15:32:00 +0200
