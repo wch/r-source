@@ -25,11 +25,6 @@ actual reference number, of course!).
 
 Directory:  Accuracy
 
-* PR# 1218 *
-Subject:  behavior of r* and d* functions at boundaries 
-From: Ben Bolker <bolker@zoo.ufl.edu>
-Date: Mon, 17 Dec 2001 11:04:27 -0500
---points 1 and 2 were fixed for 1.4.0
 * PR# 1228 *
 Subject: bug with var(rep(1e30, 3))
 From: Emmanuel Paradis <paradis@isem.univ-montp2.fr>
@@ -110,6 +105,10 @@ Date: Tue, 4 Dec 2001 11:29:58 -0500 (EST)
 Subject: [DOC] as.call 
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 05 Apr 2002 17:25:49 +0200
+* PR# 1442 *
+Subject: Undocumenten in: R INSTALL --help
+From: Peter Kleiweg <kleiweg@let.rug.nl>
+Date: Mon, 8 Apr 2002 17:19:20 +0200 (CEST)
 
 Directory:  Graphics
 
@@ -432,15 +431,7 @@ none
 
 Directory:  incoming
 
-* PR# 1240 *
-Subject:  R CMD check 
-From: hoffmann@wsl.ch
-Date: Fri, 4 Jan 2002 12:51:15 +0100 (MET)
 * PR# 1284 *
 Subject: make check fails when R_HOME env var set
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Fri, 25 Jan 2002 15:08:33 -0500
-* PR# 1442 *
-Subject: Undocumenten in: R INSTALL --help
-From: Peter Kleiweg <kleiweg@let.rug.nl>
-Date: Mon, 8 Apr 2002 17:19:20 +0200 (CEST)
