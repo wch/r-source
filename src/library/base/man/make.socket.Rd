@@ -2,10 +2,10 @@
 \title{Create a socket connection}
 \usage{
 make.socket(host="localhost", port, fail=TRUE, server=FALSE)
-close.socket(socket)
+print.socket(socket)
 }
 \alias{make.socket}
-
+\alias{print.socket}
 \arguments{
     \item{host}{name of remote host}
     \item{port}{port to connect to/listen on}
