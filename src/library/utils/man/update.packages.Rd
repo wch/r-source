@@ -64,7 +64,7 @@ install.packages(pkgs, lib, repos = CRAN,
     only the contrib section on a CD.  Overrides argument \code{repos}.}
   \item{CRAN}{character, an earlier way to specify \code{repos}.}
   \item{method}{Download method, see \code{\link{download.file}}.}
-  \item{pkgs}{character vector of the short names of packages whose
+  \item{pkgs}{character vector of the short names of packages/bundles whose
     current versions should be downloaded from \code{CRAN}.
     If \code{repos = NULL}, a vector of file names of
 #ifdef windows
@@ -104,7 +104,9 @@ install.packages(pkgs, lib, repos = CRAN,
 }
 \details{
   All of these functions work with the names of a package or bundle (and
-  not the component packages of a bundle).
+  not the component packages of a bundle, except for
+  \code{install.packages} if the repository provides the necessary
+  information).
   
   \code{CRAN.packages} returns a matrix of details corresponding to
   packages/bundles currently available in the \code{contrib} section of
