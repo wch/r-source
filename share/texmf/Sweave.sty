@@ -1,7 +1,18 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{Sweave}{}
+
+\RequirePackage{ifthen}
+\newboolean{Sweave@gin}
+\setboolean{Sweave@gin}{true}
+
+\DeclareOption{nogin}{\setboolean{Sweave@gin}{false}}
+\ProcessOptions
+
 \RequirePackage[T1]{fontenc}
 \RequirePackage{graphicx,ae,fancyvrb}
 \IfFileExists{upquote.sty}{\RequirePackage{upquote}}{}
-\setkeys{Gin}{width=0.8\textwidth}
+
+\ifthenelse{\boolean{Sweave@gin}}{\setkeys{Gin}{width=0.8\textwidth}}{}%
 
 \DefineVerbatimEnvironment{Sinput}{Verbatim}{fontshape=sl}
 \DefineVerbatimEnvironment{Soutput}{Verbatim}{}

@@ -516,6 +516,22 @@ UTILITIES
 
     o	package.skeleton() adds a bit more to DESCRIPTION.
 
+    o   Sweave changes:
+
+        - \usepackage[nogin]{Sweave} in the header of an Sweave file
+          supresses auto-setting of the graphical parameter like width
+          of graphics.
+
+	- The new \SweaveInput{} command works similar to LaTeX's
+          \input{} command.
+
+	- Option value strip.white=all strips all blank lines from the
+          output of a code chunk.
+
+	- Code chunks with eval=false are commented out by Stangle() and
+          hence no longer tested by R CMD check.
+	  
+
 
 DOCUMENTATION
 

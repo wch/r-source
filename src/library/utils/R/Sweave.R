@@ -15,18 +15,9 @@ Sweave <- function(file, driver=RweaveLatex(),
     drobj <- driver$setup(file=file, syntax=syntax, ...)
     on.exit(driver$finish(drobj, error=TRUE))
 
-    text <- readLines(file)
-
-    ## <FIXME>
-    ## This needs to be more refined eventually ...
-    if(any(is.na(nchar(text, "c")))) {
-        ## Ouch, invalid in the current locale.
-        ## (Can only happen in a MBCS locale.)
-        ## Try re-encoding from Latin1.
-        text <- iconv(text, "latin1", "")
-    }
-    ## </FIXME>
-
+    text <- SweaveReadFile(file, syntax)
+    syntax <- attr(text, "syntax")
+        
     mode <- "doc"
     chunknr <- 0
     chunk <- NULL
@@ -77,13 +68,7 @@ Sweave <- function(file, driver=RweaveLatex(),
                             domain = NA)
                 line <- namedchunks[[chunkref]]
             }
-            else if(mode=="doc" && any(grep(syntax$syntaxname, line))){
-                sname <- sub(syntax$syntaxname, "\\1", line)
-                syntax <- get(sname, mode = "list")
-                if(class(syntax) != "SweaveSyntax")
-                    stop(gettextf("object '%s' does not have class \"SweaveSyntax\"", sname), domain = NA)
-                drobj$syntax <- syntax
-            }
+            
             if(is.null(chunk))
                 chunk <- line
             else
@@ -99,16 +84,98 @@ Sweave <- function(file, driver=RweaveLatex(),
     driver$finish(drobj)
 }
 
+SweaveReadFile <- function(file, syntax)
+{
+    ## file can be a vector to keep track of recursive calls to
+    ## SweaveReadFile.  ## In this case only the first element is
+    ## tried to read in, the rest are forbidden names for further
+    ## SweaveInput
+    f <- file[1]
+
+    bf <- basename(f)
+    df <- dirname(f)
+    if(!file.exists(f)){
+        f <- list.files(df, full.names=TRUE,
+                        pattern=paste(bf, syntax$extension, sep=""))
+
+        if(length(f)==0){
+            stop(gettextf("no Sweave file with name '%s' found", file[1]),
+                 domain = NA)
+        }
+        else if(length(f)>1){
+            stop(paste(gettextf("%s Sweave files for basename '%s' found:",
+                                length(f), file),
+                       paste("\n         ", f, collapse="")),
+                 domain = NA)
+        }
+    }
+
+    text <- readLines(f[1])
+    ## <FIXME>
+    ## This needs to be more refined eventually ...
+    if(any(is.na(nchar(text, "c")))) {
+        ## Ouch, invalid in the current locale.
+        ## (Can only happen in a MBCS locale.)
+        ## Try re-encoding from Latin1.
+        text <- iconv(text, "latin1", "")
+    }
+    ## </FIXME>
+
+    pos <- grep(syntax$syntaxname, text)
+    
+    if(length(pos)>1){
+        warning(gettextf("more than one syntax specification found, using the first one"), domain = NA)
+    }
+    if(length(pos)>0){    
+        sname <- sub(syntax$syntaxname, "\\1", text[pos[1]])
+        syntax <- get(sname, mode = "list")
+        if(class(syntax) != "SweaveSyntax")
+            stop(gettextf("object '%s' does not have class \"SweaveSyntax\"",
+                          sname), domain = NA)
+
+        text <- text[-pos]
+    }
+
+    if(!is.null(syntax$input)){
+        while(any(pos <- grep(syntax$input, text))){
+
+            pos <- pos[1]
+            ifile <- file.path(df, sub(syntax$input, "\\1", text[pos]))
+            if(any(ifile==file)){
+                stop(paste(gettextf("recursive Sweave input '%s' in stack",
+                                    ifile),
+                           paste("\n         ", 1:length(file), ": ",
+                                 rev(file), collapse="")),
+                 domain = NA)
+            }
+            itext <- SweaveReadFile(c(ifile, file), syntax)
+        
+            if(pos==1)
+                text <- c(itext, text[-pos])
+            else if(pos==length(text))
+                text <- c(text[-pos], itext)
+            else
+                text <- c(text[1:(pos-1)], itext, text[(pos+1):length(text)])
+        }
+    }
+
+    attr(text, "syntax") <- syntax
+    text
+}
+   
+    
+
 ###**********************************************************
 
 SweaveSyntaxNoweb <-
     list(doc = "^@",
          code = "^<<(.*)>>=.*",
          coderef = "^<<(.*)>>.*",
-         docopt = "\\\\SweaveOpts\\{([^\\}]*)\\}",
+         docopt = "^[[:space:]]*\\\\SweaveOpts\\{([^\\}]*)\\}",
          docexpr = "\\\\Sexpr\\{([^\\}]*)\\}",
          extension = "\\.[rsRS]?nw$",
-         syntaxname = "\\\\SweaveSyntax\\{([^\\}]*)\\}",
+         syntaxname = "^[[:space:]]*\\\\SweaveSyntax\\{([^\\}]*)\\}",
+         input = "^[[:space:]]*\\\\SweaveInput\\{([^\\}]*)\\}",
          trans = list(
              doc = "@",
              code = "<<\\1>>=",
@@ -116,7 +183,8 @@ SweaveSyntaxNoweb <-
              docopt = "\\\\SweaveOpts{\\1}",
              docexpr = "\\\\Sexpr{\\1}",
              extension = ".Snw",
-             syntaxname = "\\\\SweaveSyntax{SweaveSyntaxNoweb}")
+             syntaxname = "\\\\SweaveSyntax{SweaveSyntaxNoweb}",
+             input = "\\\\SweaveInput{\\1}")
          )
 
 class(SweaveSyntaxNoweb) <- "SweaveSyntax"
@@ -392,9 +460,11 @@ RweaveLatexRuncode <- function(object, chunk, options)
             }
 
             output <- paste(output,collapse="\n")
-            if(options$strip.white){
+            if(options$strip.white %in% c("all", "true")){
                 output <- sub("^[[:space:]]*\n", "", output)
                 output <- sub("\n[[:space:]]*$", "", output)
+                if(options$strip.white=="all")
+                    output <- sub("\n[[:space:]]*\n", "\n", output)
             }
             cat(output, file=chunkout, append=TRUE)
             remove(output)
@@ -509,7 +579,7 @@ RweaveLatexOptions <- function(options)
 
     NUMOPTS <- c("width", "height")
     NOLOGOPTS <- c(NUMOPTS, "results", "prefix.string",
-                   "engine", "label")
+                   "engine", "label", "strip.white")
 
     for(opt in names(options)){
         if(! (opt %in% NOLOGOPTS)){
@@ -526,8 +596,13 @@ RweaveLatexOptions <- function(options)
         }
     }
 
+    options$results <- tolower(as.character(options$results))
     options$results <- match.arg(options$results,
                                  c("verbatim", "tex", "hide"))
+
+    options$strip.white <- tolower(as.character(options$strip.white))
+    options$strip.white <- match.arg(options$strip.white,
+                                     c("true", "false", "all"))
 
     options
 }
@@ -621,7 +696,7 @@ RtangleSetup <- function(file, syntax,
 
     options <- list(split=split, prefix=prefix,
                     prefix.string=prefix.string,
-                    engine="R")
+                    engine="R", eval=TRUE)
 
     list(output=output, annotate=annotate, options=options,
          chunkout=list(), quiet=quiet, syntax=syntax)
@@ -653,7 +728,8 @@ RtangleRuncode <-  function(object, chunk, options)
     if(object$annotate){
         cat("###################################################\n",
             "### chunk number ", options$chunknr,
-            ": ", options$label, "\n",
+            ": ", options$label,
+            ifelse(options$eval, "", " eval=FALSE"), "\n",
             "###################################################\n",
             file=chunkout, append=TRUE, sep="")
     }
@@ -663,6 +739,9 @@ RtangleRuncode <-  function(object, chunk, options)
         cat("getOption(\"SweaveHooks\")[[\"", k, "\"]]()\n",
             file=chunkout, append=TRUE, sep="")
 
+    if(!options$eval)
+        chunk <- paste("##", chunk)
+    
     cat(chunk,"\n", file=chunkout, append=TRUE, sep="\n")
 
     if(is.null(options$label) & options$split)

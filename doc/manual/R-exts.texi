@@ -1186,18 +1186,14 @@ A special case are documents in Sweave format, which we call
 and @R{} code and is contained in package @pkg{utils} which is part of
 the base @R{} distribution, see the @code{Sweave} help page for details
 on the document format.  Package vignettes found in directory
-@file{inst/doc} are tested by @code{R CMD check} by executing @emph{all}
-@R{} code chunks they contain to ensure consistency between code and
-documentation.  Note that even code chunks with option @code{eval=FALSE}
-are tested, if you want code in a vignette that should not be tested,
-move it to a normal @LaTeX{} verbatim environment. The reason for this
-policy is that users should be able to rely on code examples to be
-executable as seen in the vignette. The R working directory for all
-vignette tests in @code{R CMD check} is the @emph{installed} version of
-the @file{doc} subdirectory. Make sure all files needed by the vignette
-(data sets, @dots{}) are accessible by either placing them in the
-@file{inst/doc} hierarchy of the source package, or using calls to
-@code{system.file()}.
+@file{inst/doc} are tested by @code{R CMD check} by executing all @R{}
+code chunks they contain to ensure consistency between code and
+documentation.  Code chunks with option @code{eval=FALSE} are not
+tested. The R working directory for all vignette tests in @code{R CMD
+check} is the @emph{installed} version of the @file{doc}
+subdirectory. Make sure all files needed by the vignette (data sets,
+@dots{}) are accessible by either placing them in the @file{inst/doc}
+hierarchy of the source package, or using calls to @code{system.file()}.
 
 @code{R CMD build} will automatically create PDF versions of the
 vignettes for distribution with the package sources.  By including the
