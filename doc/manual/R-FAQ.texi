@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-18
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-20
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2055,6 +2055,8 @@ via linear programming.
 @item coda
 Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
 simulations.
+@item colorspace
+Mapping between assorted color spaces.
 @item combinat
 Combinatorics utilities.
 @item concor
