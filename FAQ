@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-7, 2002-10-21
+Version 1.6-8, 2002-10-23
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1620,7 +1620,10 @@ distributions of R.)
      approximations.
 
 *mclust*
-     Model-based cluster analysis.
+     Model-based cluster analysis: the 2002 version of MCLUST.
+
+*mclust1998*
+     Model-based cluster analysis: the 1998 version of MCLUST.
 
 *mda*
      Code for mixture discriminant analysis (MDA), flexible discriminant

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.6-7, 2002-10-21
+@set FAQ-VERSION 1.6-8, 2002-10-23
 @set REL-VERSION 1.6.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1815,7 +1815,9 @@ hierarchical clustering and classification and regression trees.
 Maximally selected rank and Gauss statistics with several p-value
 approximations.
 @item mclust
-Model-based cluster analysis.
+Model-based cluster analysis: the 2002 version of MCLUST.
+@item mclust1998
+Model-based cluster analysis: the 1998 version of MCLUST.
 @item mda
 Code for mixture discriminant analysis (MDA), flexible discriminant
 analysis (FDA), penalized discriminant analysis (PDA), multivariate
