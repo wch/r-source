@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2004-10-23
+Version 2.0.2004-10-27
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -521,7 +521,7 @@ To cite R in publications, use
        url          = {http://www.R-project.org}
      }
 
-   Citation strings (or BibTeX entroes) for R and R packages can also be
+   Citation strings (or BibTeX entries) for R and R packages can also be
 obtained by `citation()'.
 
 2.9 What mailing lists exist for R?
@@ -685,7 +685,7 @@ Bell Labs language `S' (*note What is S?::).
 The R Foundation is a not for profit organization working in the public
 interest.  It was founded by the members of the R Core Team in order to
 provide support for the R project and other innovations in statistical
-computing, provide a reference point for individuals, instititutions or
+computing, provide a reference point for individuals, institutions or
 commercial enterprises that want to support or interact with the R
 development community, and to hold and administer the copyright of R
 software and documentation.  See `http://www.R-project.org/foundation/' for
@@ -2522,6 +2522,9 @@ distributions of R.)
 
 *quantreg*
      Quantile regression and related methods.
+
+*qvalue*
+     Q-value estimation for false discovery rate control.
 
 *qvcalc*
      Functions to compute quasi-variances and associated measures of
