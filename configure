@@ -1122,6 +1122,9 @@ Optional Packages:
                           specify location of tclConfig.sh []
   --with-tk-config=TK_CONFIG
                           specify location of tkConfig.sh []
+  --with-recommended-packages
+                          use/install recommended R packages (if available)
+                          [yes]
   --with-gnu-ld           assume the C compiler uses GNU ld default=no
   --with-pic              try to use only PIC/non-PIC objects default=use both
   --with-x                use the X Window System
@@ -2166,6 +2169,30 @@ if test "x${use_libtool}" = xyes; then
 else
   USE_LIBTOOL_TRUE='#'
   USE_LIBTOOL_FALSE=
+fi
+
+## Recommended R packages.
+
+# Check whether --with-recommended-packages or --without-recommended-packages was given.
+if test "${with_recommended_packages+set}" = set; then
+  withval="$with_recommended_packages"
+  if test "${withval}" = no; then
+  use_recommended_packages=no
+else
+  use_recommended_packages=yes
+fi
+
+else
+  use_recommended_packages=yes
+fi;
+
+
+if test "x${use_recommended_packages}" = xyes; then
+  USE_RECOMMENDED_PACKAGES_TRUE=
+  USE_RECOMMENDED_PACKAGES_FALSE='#'
+else
+  USE_RECOMMENDED_PACKAGES_TRUE='#'
+  USE_RECOMMENDED_PACKAGES_FALSE=
 fi
 
 ### ** Precious variables.
@@ -5374,7 +5401,7 @@ test "x$enable_libtool_lock" != xno && enable_libtool_lock=yes
 case $host in
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 5377 "configure"' > conftest.$ac_ext
+  echo '#line 5404 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -5910,7 +5937,7 @@ chmod -w .
 save_CFLAGS="$CFLAGS"
 CFLAGS="$CFLAGS -o out/conftest2.$ac_objext"
 compiler_c_o=no
-if { (eval echo configure:5913: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>out/conftest.err; } && test -s out/conftest2.$ac_objext; then
+if { (eval echo configure:5940: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>out/conftest.err; } && test -s out/conftest2.$ac_objext; then
   # The compiler can only warn and ignore the option if not recognized
   # So say no if there are warnings
   if test -s out/conftest.err; then
@@ -7703,7 +7730,7 @@ else
     lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 7706 "configure"
+#line 7733 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -7801,7 +7828,7 @@ else
     lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 7804 "configure"
+#line 7831 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -9760,7 +9787,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:9763:" \
+echo "$as_me:9790:" \
      "checking for Fortran 77 compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
@@ -14140,7 +14167,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_verb"
-(eval echo $as_me:14143: \"$ac_link\") >&5
+(eval echo $as_me:14170: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -14219,7 +14246,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_cv_prog_f77_v"
-(eval echo $as_me:14222: \"$ac_link\") >&5
+(eval echo $as_me:14249: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -24239,6 +24266,8 @@ s,@MAINTAINER_MODE_TRUE@,$MAINTAINER_MODE_TRUE,;t t
 s,@MAINTAINER_MODE_FALSE@,$MAINTAINER_MODE_FALSE,;t t
 s,@USE_LIBTOOL_TRUE@,$USE_LIBTOOL_TRUE,;t t
 s,@USE_LIBTOOL_FALSE@,$USE_LIBTOOL_FALSE,;t t
+s,@USE_RECOMMENDED_PACKAGES_TRUE@,$USE_RECOMMENDED_PACKAGES_TRUE,;t t
+s,@USE_RECOMMENDED_PACKAGES_FALSE@,$USE_RECOMMENDED_PACKAGES_FALSE,;t t
 s,@R_PRINTCMD@,$R_PRINTCMD,;t t
 s,@R_PAPERSIZE@,$R_PAPERSIZE,;t t
 s,@R_BATCHSAVE@,$R_BATCHSAVE,;t t
