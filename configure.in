@@ -327,11 +327,6 @@ AC_SUBST(FC)
 AC_SUBST(F2C)
 AC_SUBST_FILE(f77_rules_frag)
 
-## C++ compiler.
-
-AC_PROG_CXX
-AC_PROG_CXXCPP
-
 ### Libraries.
 
 ## Make sure that non-standard directories specified via `-L' are really
@@ -355,6 +350,13 @@ else
   LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}:${LD_LIBRARY_PATH}"
 fi
 export LD_LIBRARY_PATH
+
+## C++ compiler.
+## needs to follow Libraries as -lstdc++ might well be in /usr/local/lib
+## and so not found at run time.
+
+AC_PROG_CXX
+AC_PROG_CXXCPP
 
 AC_CHECK_LIB(m, sin)
 if ${use_libmoto}; then
