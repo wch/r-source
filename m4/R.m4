@@ -474,6 +474,32 @@ if test "${r_cv_c_optieee}" = yes; then
 fi
 ])# R_C_OPTIEEE
 
+## R_C_INLINE
+## ----------
+## modified version of AC_C_INLINE to use R_INLINE not inline
+AC_DEFUN([R_C_INLINE],
+[AC_REQUIRE([AC_PROG_CC_STDC])dnl
+AC_CACHE_CHECK([for inline], r_cv_c_inline,
+[r_cv_c_inline=""
+for ac_kw in inline __inline__ __inline; do
+  AC_COMPILE_IFELSE([AC_LANG_SOURCE(
+[#ifndef __cplusplus
+static $ac_kw int static_foo () {return 0; }
+$ac_kw int foo () {return 0; }
+#endif
+])],
+                    [r_cv_c_inline=$ac_kw; break])
+done
+])
+case $r_cv_c_inline in
+  no) AC_DEFINE(R_INLINE,,
+                [Define as `inline', or `__inline__' or `__inline' 
+                 if that's what the C compiler calls it,
+                 or to nothing if it is not supported.]) ;;
+  *)  AC_DEFINE_UNQUOTED(R_INLINE, $r_cv_c_inline) ;;
+esac
+])# R_C_INLINE
+
 ### * C++ compiler and its characteristics.
 
 ## R_PROG_CXX_M
@@ -1377,6 +1403,38 @@ if test "x${r_cv_func_strptime_works}" = xyes; then
 fi
 ])# R_FUNC_STRPTIME
 
+## R_FUNC_FTELL
+## ------------
+AC_DEFUN([R_FUNC_FTELL],
+[AC_CACHE_CHECK([whether ftell works correctly on files opened for append],
+                [r_cv_working_ftell],
+[AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include <stdlib.h>
+#include <stdio.h>
+
+main() {
+    FILE *fp;
+    int pos;
+    
+    fp = fopen("testit", "wb");
+    fwrite("0123456789\n", 11, 1, fp);
+    fclose(fp);
+    fp = fopen("testit", "ab");
+    pos = ftell(fp);
+    fclose(fp);
+    unlink("testit");
+    exit(pos != 11);
+}
+]])],
+              [r_cv_working_ftell=yes],
+              [r_cv_working_ftell=no],
+              [r_cv_working_ftell=no])])
+if test "x${r_cv_working_ftell}" = xyes; then
+  AC_DEFINE(HAVE_WORKING_FTELL, 1,
+            [Define if your ftell works correctly on files opened for append.])
+fi
+])# R_FUNC_FTELL
+
 ### * Headers
 
 ## R_HEADER_SETJMP
@@ -1420,6 +1478,8 @@ if test "${r_cv_header_glibc2}" = yes; then
 fi
 ])# R_HEADER_GLIBC2
 
+### * Types
+
 ## R_TYPE_SOCKLEN
 ## --------------
 AC_DEFUN([R_TYPE_SOCKLEN],
@@ -1455,6 +1515,25 @@ fi
 AC_DEFINE_UNQUOTED(SOCKLEN_T, ${r_cv_type_socklen},
                    [Type for socket lengths: socklen_t, sock_t, int?])
 ])# R_TYPE_SOCKLEN
+
+## R_HAVE_KEYSYM
+## -------------
+## Check whether X11/X.h has KeySym typedef-ed.
+AC_DEFUN([R_TYPE_KEYSYM],
+[AC_REQUIRE([R_X11])
+if test "${use_X11}" = yes; then
+  r_save_CFLAGS="${CFLAGS}"
+  CFLAGS="${CFLAGS} ${X_CFLAGS}"
+  AC_CHECK_TYPE([KeySym],
+                r_cv_type_keysym=yes,
+                r_cv_type_keysym=no,
+		[#include <X11/X.h>])
+  CFLAGS="${r_save_CFLAGS}"
+  if test "${r_cv_have_keysym}" = yes; then
+    AC_DEFINE(HAVE_KEYSYM, 1,
+              [Define if you have KeySym defined in X11.])
+  fi
+fi])# R_TYPE_KEYSYM
 
 ### * System services
 
@@ -2463,83 +2542,6 @@ if test "x${r_cv_misc_recommended_packages}" = xno; then
   Use --without-recommended-packages if this was intentional])
 fi
 ])# R_RECOMMENDED_PACKAGES
-
-## R_HAVE_KEYSYM
-## -------------
-## check in X11 has KeySym typedef-ed
-AC_DEFUN([R_HAVE_KEYSYM],
-[
-  AC_CACHE_CHECK([for KeySym], r_cv_have_keysym,
-    [AC_TRY_LINK([#include <X11/X.h>],
-      [KeySym iokey;],
-      r_cv_have_keysym=yes,
-      r_cv_have_keysym=no)
-    ])
-  if test $r_cv_have_keysym = yes; then
-    AC_DEFINE(HAVE_KEYSYM, 1,
-      [Define if you have KeySym defined in X11.])
-  fi
-])# R_HAVE_KEYSYM
-
-## R_C_INLINE
-## ----------
-## modified version of AC_C_INLINE to use R_INLINE not inline
-AC_DEFUN([R_C_INLINE],
-[AC_REQUIRE([AC_PROG_CC_STDC])dnl
-AC_CACHE_CHECK([for inline], r_cv_c_inline,
-[r_cv_c_inline=""
-for ac_kw in inline __inline__ __inline; do
-  AC_COMPILE_IFELSE([AC_LANG_SOURCE(
-[#ifndef __cplusplus
-static $ac_kw int static_foo () {return 0; }
-$ac_kw int foo () {return 0; }
-#endif
-])],
-                    [r_cv_c_inline=$ac_kw; break])
-done
-])
-case $r_cv_c_inline in
-  no) AC_DEFINE(R_INLINE,,
-                [Define as `inline', or `__inline__' or `__inline' 
-                 if that's what the C compiler calls it,
-                 or to nothing if it is not supported.]) ;;
-  *)  AC_DEFINE_UNQUOTED(R_INLINE, $r_cv_c_inline) ;;
-esac
-])# R_C_INLINE
-
-## R_FUNC_FTELL
-## ------------
-## See if your system time functions do not count leap seconds, as
-## required by POSIX.
-AC_DEFUN([R_FUNC_FTELL],
-[AC_CACHE_CHECK([whether ftell works correctly on files opened for append],
-                [r_cv_working_ftell],
-[AC_RUN_IFELSE([AC_LANG_SOURCE([[
-#include <stdlib.h>
-#include <stdio.h>
-
-main() {
-    FILE *fp;
-    int pos;
-    
-    fp = fopen("testit", "wb");
-    fwrite("0123456789\n", 11, 1, fp);
-    fclose(fp);
-    fp = fopen("testit", "ab");
-    pos = ftell(fp);
-    fclose(fp);
-    unlink("testit");
-    exit(pos != 11);
-}
-]])],
-              [r_cv_working_ftell=yes],
-              [r_cv_working_ftell=no],
-              [r_cv_working_ftell=no])])
-if test "x${r_cv_working_ftell}" = xyes; then
-  AC_DEFINE(HAVE_WORKING_FTELL, 1,
-            [Define if your ftell works correctly on files opened for append.])
-fi
-])# R_FUNC_FTELL
 
 ## R_SIZE_MAX
 ## ----------
