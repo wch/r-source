@@ -614,28 +614,6 @@ function(expr)
     ## Try to run an expression, suppressing all 'output'.  In case of
     ## failure, stop with the error message and a "traceback" ...
 
-    tb <- function (tb)
-    {
-        if (!missing(tb))
-            .Traceback <- tb
-        else if (exists(".Traceback", env = .GlobalEnv))
-            .Traceback <- get(".Traceback", env = .GlobalEnv)
-        else .Traceback <- NULL
-        if (is.null(.Traceback) || length(.Traceback) == 0)
-            cat(gettext("No traceback available\n"))
-        else {
-            n <- length(.Traceback)
-            for (i in 1:n) {
-                label <- paste(n - i + 1, ": ", sep = "")
-                if ((m <- length(.Traceback[[i]])) > 1)
-                    label <- c(label, rep(substr("          ", 1,
-                                                 nchar(label)), m - 1))
-                cat(paste(label, .Traceback[[i]], sep = ""), sep = "\n")
-            }
-        }
-        invisible()
-    }
-
     oop <- options(warn = 1)
     on.exit(options(oop))
     outConn <- file(open = "w")         # anonymous tempfile
@@ -652,7 +630,7 @@ function(expr)
                                     tb <- lapply(calls, deparse)
                                     stop(conditionMessage(e),
                                          "\nCall sequence:\n",
-                                         paste(capture.output(tb(tb)),
+                                         paste(capture.output(traceback(tb)),
                                                collapse = "\n"),
                                          call. = FALSE)
                                 }),

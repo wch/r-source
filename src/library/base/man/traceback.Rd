@@ -1,14 +1,20 @@
 \name{traceback}
-\title{Print Call Stack of Last Error}
-\usage{
-traceback()
-}
 \alias{traceback}
 \alias{.Traceback}
+\title{Print Call Stacks}
 \description{
-  \code{traceback()} prints the call stack of the last uncaught error,
-  i.e., the sequence of calls that lead to the error.  This is useful when an
-  error occurs with an unidentifiable error message.
+  By default, \code{traceback()} prints the call stack of the last
+  uncaught error, i.e., the sequence of calls that lead to the error.
+  This is useful when an error occurs with an unidentifiable error
+  message.  It can also be used to print arbitrary lists of deparsed
+  calls.
+}
+\usage{
+traceback(x = NULL)
+}
+\arguments{
+  \item{x}{\code{NULL} (default), or a list or pairlist of deparsed
+    calls.}
 }
 \value{
   \code{traceback()} returns nothing, but prints the deparsed call stack
@@ -16,8 +22,9 @@ traceback()
   the first line is labelled by the frame number.
 }
 \details{
-  The stack is stored as a list in \code{.Traceback},
-  which \code{traceback} prints in a user-friendly format.
+  The stack of the last uncaught error is stored as a list of deparsed
+  calls in \code{.Traceback}, which \code{traceback} prints in a
+  user-friendly format.
 
   Errors which are caught \emph{via} \code{\link{try}} or
   \code{\link{tryCatch}} do not generate a traceback, so what is printed
