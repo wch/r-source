@@ -52,7 +52,7 @@ rwilcox(nn, m, n)
 }
 \author{Kurt Hornik \email{hornik@ci.tuwien.ac.at}}
 \seealso{
-  \code{\link{wilcox.test}} to calculate the statistic from data, find p
+  \code{\link[ctest]{wilcox.test}} to calculate the statistic from data, find p
   values and so on.
   
   \code{\link{dsignrank}} etc, for the distribution of the
