@@ -1,3 +1,16 @@
+		CHANGES IN R VERSION 0.62.2
+
+		CHANGES IN R VERSION 0.62.1
+
+BUG FIXES
+
+    o   Accidentally shipped R-0.62 without the tests and  etc/Rdoc 
+	directories.
+
+    o   R SHLIB was broken on some Solaris systems due to use of bash
+        syntax. 
+
+    
 		CHANGES IN R VERSION 0.62
 
 NEW FEATURES
