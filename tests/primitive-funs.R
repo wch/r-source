@@ -50,7 +50,7 @@ Real.primitives <-
            "as.character", "as.environment",
 	   ##maybe ? "gc", "gcinfo",
 	   ##
-	   "debug", "undebug", "trace", "untrace",
+	   "debug", "undebug", ".primTrace", ".primUntrace",
 	   "browser",  "proc.time", "gc.time", #"traceback",
 	   ),
 

@@ -95,3 +95,125 @@ recover <-
     else
         cat("No suitable frames for recover()\n")
 }
+
+
+trace <- function(what, tracer = NULL, exit = NULL, at = numeric(), print = TRUE, signature = NULL) {
+    if(is.function(what)) {
+        fname <- substitute(what)
+        if(is.name(fname))
+            what <- as.character(fname)
+        else
+            stop("Argument what should be the name of a function")
+    }
+    else {
+        what <- as.character(what)
+        if(length(what) != 1) {
+            for(f in what) {
+                if(nargs() == 1)
+                    trace(f)
+                else
+                    trace(f, tracer, exit, at, print, signature)
+            }
+            return(what)
+        }
+    }
+    if(nargs() == 1)
+        return(.primTrace(what)) # for back compatibility
+    needsAttach <- is.na(match("package:methods", search()))
+    if(needsAttach) {
+        cat("Tracing functions requires the methods package\n  (in rare cases this may change other results: see ?trace)\n")
+        require(methods)
+    }
+    if(is.null(signature)) {
+        def <- getFunction(what)
+        where <- findFunction(what)[[1]]
+    }
+    else {
+        whereM <- findMethod(what, signature)
+        if(length(whereM) == 0) {
+            def <- selectMethod(what, signature)
+            where <- findFunction(what)[[1]]
+        }
+        else {
+            whereM <- whereM[[1]]
+            def <- getMethod(what, signature, where = whereM)
+            where <- whereM
+        }
+    }
+    fBody <- body(def)
+    if(!is.null(exit)) {
+        if(is.function(exit)) {
+            tname <- substitute(exit)
+            if(is.name(tname))
+                exit <- tname
+            exit <- substitute(TRACE(), list(TRACE=exit))
+        }
+    }
+    if(!is.null(tracer)) {
+        if(is.function(tracer)) {
+            tname <- substitute(tracer)
+            if(is.name(tname))
+                tracer <- tname
+            tracer <- substitute(TRACE(), list(TRACE=tracer))
+        }
+    }
+    ## undo any current tracing
+    def <- .untracedFunction(def)
+    newFun <- new(.traceClassName(class(def)), def = def, tracer = tracer, exit = exit, at = at
+                  , print = print)
+    if(is.null(signature)) 
+        assign(what, newFun, where)
+    else
+        setMethod(what, signature, newFun, where = where)
+    what
+}
+
+
+untrace <- function(what, signature = NULL) {
+    if(is.function(what)) {
+        fname <- substitute(what)
+        if(is.name(fname))
+            what <- as.character(fname)
+        else
+            stop("Argument what should be the name of a function")
+    }
+    else {
+        what <- as.character(what)
+        if(length(what) != 1) {
+            for(f in what)
+                untrace(f, signature)
+            return(what)
+        }
+    }
+    if(is.na(match("package:methods", search())))
+        return(.primUntrace(what)) ## can't have called trace exc. in primitive form
+    if(is.null(signature)) {
+        where <- findFunction(what)
+        if(length(where) == 0)
+            warning("No function \"", what, "\" to untrace")
+        else {
+            f <- getFunction(what)
+            ## ensure that the version to assign is untraced (should be, but ...)
+            if(is(f, "traceable")) {
+                assign(what, .untracedFunction(f), where[[1]])
+            }
+            else
+                .primUntrace(what) # to be safe--no way to know if it's traced or not
+        }
+    }
+    else {
+        where <- findMethod(what, signature)
+        if(length(where) == 0)
+            warning("No method for \"", what, "\" for this signature to untrace")
+        else {
+            where <- where[[1]]
+            f <- getMethod(what, signature, where = where)
+            if(is(f, "traceable"))
+                setMethod(what, signature, .untracedFunction(f), where = where)
+            else
+                warning("The method for \"", what, "\" for this signature was not being traced")
+        }
+    }
+}
+        
+
