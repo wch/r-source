@@ -2,7 +2,7 @@ dump.frames <- function(dumpto = "last.dump", to.file = FALSE)
 {
     calls <- sys.calls()
     last.dump <- sys.frames()
-    names(last.dump) <- calls
+    names(last.dump) <- limitedLabels(calls)
     last.dump <- last.dump[-length(last.dump)] # remove this function
     attr(last.dump, "error.message") <- geterrmessage()
     class(last.dump) <- "dump.frames"
@@ -44,4 +44,54 @@ debugger <- function(dump = last.dump)
         if(ind == 0) return(invisible())
         debugger.look(ind)
     }
+}
+
+limitedLabels <- function(value, maxwidth = options()$width)
+{
+    value <- as.character(value)
+    if(is.null(maxwidth) || maxwidth < 40)
+        maxwidth <- 40
+    if(any(nchar(value) > maxwidth)) {
+        trim <- nchar(value) > maxwidth
+        value[trim] <- substr(value[trim], 1, maxwidth)
+    }
+    value
+}
+      
+recover <-
+  function()
+{
+    ## find an interesting environment to dump from
+    calls <- sys.calls()
+    from <- 0
+    n <- length(calls)
+    if(identical(sys.function(n), recover))
+        ## options(error=recover) produces a call to this function as an object
+        n <- n - 1
+    for(i in rev(seq(length=n))) {
+        calli <- calls[[i]]
+        fname <- calli[[1]]
+        if(!is.name(fname) ||
+           is.na(match(as.character(fname), c("recover", "stop", "Stop")))) {
+            from <- i
+            break
+        }
+    }
+    if(from > 0) {
+        if(!interactive()) {
+            try(dump.frames())
+            message("recover called non-interactively; frames dumped, use debugger() to view")
+            return(NULL)
+        }
+        calls <- limitedLabels(calls[1:from])
+        repeat {
+            which <- menu(calls, title="\nEnter a frame number, or 0 to exit  ")
+            if(which > 0)
+                eval(quote(browser()), envir = sys.frame(which))
+            else
+                break
+        }
+    }
+    else
+        cat("No suitable frames for recover()\n")
 }
