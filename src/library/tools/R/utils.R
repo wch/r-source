@@ -112,6 +112,22 @@ function(x, delim = c("\{", "\}"), syntax = "Rd")
 
 ### * Internal utility functions.
 
+### ** .getInternalS3generics
+
+.getInternalS3generics <-
+function()
+{
+    ## Get the list of R internal S3 generics (via DispatchOrEval(),
+    ## cf. zMethods.Rd).
+    c("[", "[[", "$", "[<-", "[[<-", "$<-", "length", "dimnames<-",
+      "dimnames", "dim<-", "dim", "c", "unlist", "as.character",
+      "as.vector", "is.array", "is.atomic", "is.call", "is.character",
+      "is.complex", "is.double", "is.environment", "is.function",
+      "is.integer", "is.language", "is.logical", "is.list", "is.matrix",
+      "is.na", "is.nan", "is.null", "is.numeric", "is.object",
+      "is.pairlist", "is.recursive", "is.single", "is.symbol")
+}
+
 ### ** .getNamespaceS3methodsList
 
 .getNamespaceS3methodsList <-
@@ -265,6 +281,7 @@ function(package)
              "update.packages"),
              Hmisc = "t.test.cluster",
              XML = "text.SAX",
+             ctest = "t.test",
              quadprog = c("solve.QP", "solve.QP.compact"),
              sm = "print.graph",
              ts = "lag.plot")
@@ -284,12 +301,13 @@ function(file, envir)
     ## as @code{sys.source(file, envir, keep.source = FALSE)}.
     oop <- options(keep.source = FALSE)
     on.exit(options(oop))
-    assignmentSymbol <- as.name("<-")
+    assignmentSymbolLM <- as.symbol("<-")
+    assignmentSymbolEq <- as.symbol("=")
     exprs <- try(parse(n = -1, file = file))
     if(length(exprs) == 0)
         return(invisible())
     for(e in exprs) {
-        if(e[[1]] == assignmentSymbol)
+        if(e[[1]] == assignmentSymbolLM || e[[1]] == assignmentSymbolEq)
             yy <- eval(e, envir)
     }
     invisible()
