@@ -1,8 +1,8 @@
 ### * File utilities.
 
-### ** filePathAsAbsolute
+### ** file_path_as_absolute
 
-filePathAsAbsolute <-
+file_path_as_absolute <-
 function(x)
 {
     ## Turn a possibly relative file path absolute, performing tilde
@@ -13,7 +13,7 @@ function(x)
         stop(paste("file", sQuote(x), "does not exist"))
     cwd <- getwd()
     on.exit(setwd(cwd))
-    if(fileTest("-d", epath)) {
+    if(file_test("-d", epath)) {
         ## Combining dirname and basename does not work for e.g. '.' or
         ## '..' on Unix ...
         setwd(epath)
@@ -25,9 +25,9 @@ function(x)
     }
 }
 
-### ** filePathSansExt
+### ** file_path_sans_ext
 
-filePathSansExt <-
+file_path_sans_ext <-
 function(x)
 {
     ## Return the file paths without extensions.
@@ -35,9 +35,9 @@ function(x)
     sub("\\.[[:alpha:]]+$", "", x)
 }
 
-### ** fileTest
+### ** file_test
 
-fileTest <-
+file_test <-
 function(op, x, y)
 {
     ## Provide shell-style '-f', '-d', '-nt' and '-ot' tests.
@@ -57,9 +57,9 @@ function(op, x, y)
            stop(paste("test", sQuote(op), "is not available")))
 }
 
-### ** listFilesWithExts
+### ** list_files_with_exts
 
-listFilesWithExts <-
+list_files_with_exts <-
 function(dir, exts, all.files = FALSE, full.names = TRUE)
 {
     ## Return the paths or names of the files in @code{dir} with
@@ -74,9 +74,9 @@ function(dir, exts, all.files = FALSE, full.names = TRUE)
     files
 }
 
-### ** listFilesWithType
+### ** list_files_with_type
 
-listFilesWithType <-
+list_files_with_type <-
 function(dir, type, all.files = FALSE, full.names = TRUE)
 {
     ## Return a character vector with the paths of the files in
@@ -85,14 +85,14 @@ function(dir, type, all.files = FALSE, full.names = TRUE)
     ## subdirectories are included if present.
     exts <- .make_file_exts(type)
     files <-
-        listFilesWithExts(dir, exts, all.files = all.files,
+        list_files_with_exts(dir, exts, all.files = all.files,
                           full.names = full.names)
 
     if(type %in% c("code", "docs")) {
         OSdir <- file.path(dir, .OStype())
-        if(fileTest("-d", OSdir)) {
+        if(file_test("-d", OSdir)) {
             OSfiles <-
-                listFilesWithExts(OSdir, exts, all.files = all.files,
+                list_files_with_exts(OSdir, exts, all.files = all.files,
                                   full.names = FALSE)
             OSfiles <-
                 file.path(if(full.names) OSdir else .OStype(),
@@ -147,6 +147,15 @@ function(file, pdf = FALSE, clean = FALSE,
 
 
 ### * Internal utility functions.
+
+### ** %w/o%
+
+"%w/o%" <-
+function(x, y)
+{
+    ## x without y, as in the examples of ?match.
+    x[!x %in% y]
+}
 
 ### ** .OStype
 
@@ -394,7 +403,7 @@ function(dfile)
     ## As we do not have character "frames", we return a named character
     ## vector.
     ## </NOTE>
-    if(!fileTest("-f", dfile))
+    if(!file_test("-f", dfile))
         stop(paste("file", sQuote(dfile), "does not exist"))
     db <- try(read.dcf(dfile)[1, ], silent = TRUE)
     if(inherits(db, "try-error"))

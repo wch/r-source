@@ -117,6 +117,8 @@ NEW FEATURES
     o	reorder.dendrogram() now has a 'agglo.FUN' argument for
 	specification of a weights agglomeration function.
 
+    o	heatmap() has got an argument 'reorderfun'.
+
     o	readChar() can now read strings with embedded nuls.
 
 
@@ -366,6 +368,9 @@ BUG FIXES
 
     o	Building standalone nmath did not support some of the DEBUG options.
 
+    o   mle() got confused if start value list was not in same order as
+        arguments of likelihood function (reported by Ben Bolker)
+
     o	backsolve(r, x, k) now allows k < nrow(x) - as its documentation
 	always claimed.
 
@@ -375,9 +380,11 @@ BUG FIXES
     o	stats:::as.dendrogram.hclust() is documented and no longer re-sorts
 	the two children at each node.	This fixes as.dendrogram(hh) for
 	the case where hh is a "reordered" hclust object.
-	plot.dendrogram(x) now draw leaves 'x' more sensibly.
+	plot.dendrogram(x) now draws leaves 'x' more sensibly.
 	reorder.dendrogram() now results in a dendrogram with correct
 	"midpoint"s, and hence reordered dendrograms are plotted correctly.
+	stats:::midcache.dendrogram() and hence the reorder() and rev()
+	dendrogram methods do not return bloated dendrograms.
 
     o	heatmap(*, labRow=., labCol=.) now also reorders the labels when
 	specified---not only when using default labels.
@@ -395,6 +402,7 @@ BUG FIXES
 	matches were missed.
 
     o	qbinom(*, prob = 0, lower.tail = FALSE) now properly gives 0 (PR#6972).
+
 
 
 		CHANGES IN R VERSION 1.9.0

@@ -138,7 +138,7 @@ function(RdFiles)
 {
     ## Compute contents db from Rd files.
 
-    RdFiles <- path.expand(RdFiles[fileTest("-f", RdFiles)])
+    RdFiles <- path.expand(RdFiles[file_test("-f", RdFiles)])
 
     if(length(RdFiles) == 0)
         return(data.frame(File = I(character(0)),
@@ -220,7 +220,7 @@ function(contents, packageName, outFile)
     ## This has 'html' hard-wired.
     ## Note that slashes etc. should be fine for URLs.
     URLs <- paste("../../../library/", packageName, "/html/",
-                  filePathSansExt(contents[ , "File"]),
+                  file_path_sans_ext(contents[ , "File"]),
                   ".html",
                   sep = "")
     ## </FIXME>
@@ -296,13 +296,13 @@ function(RdFiles, outFile = "", type = NULL,
     ##
     ## R version of defunct @code{R CMD Rdindex} (now removed).
 
-    if((length(RdFiles) == 1) && fileTest("-d", RdFiles)) {
+    if((length(RdFiles) == 1) && file_test("-d", RdFiles)) {
         ## Compatibility code for the former @code{R CMD Rdindex}
         ## interface.
         docsDir <- RdFiles
-        if(fileTest("-d", file.path(docsDir, "man")))
+        if(file_test("-d", file.path(docsDir, "man")))
             docsDir <- file.path(docsDir, "man")
-        RdFiles <- listFilesWithType(docsDir, "docs")
+        RdFiles <- list_files_with_type(docsDir, "docs")
     }
 
     if(outFile == "")
@@ -331,14 +331,14 @@ function(dir, outFile = "")
     ## (now removed).
     ## </NOTE>
 
-    if(!fileTest("-d", dir))
+    if(!file_test("-d", dir))
         stop(paste("directory", sQuote(dir), "does not exist"))
     else {
-        dir <- filePathAsAbsolute(dir)
+        dir <- file_path_as_absolute(dir)
         packageName <- basename(dir)
     }
     docsDir <- file.path(dir, "man")
-    if(!fileTest("-d", docsDir))
+    if(!file_test("-d", docsDir))
         stop(paste("directory", sQuote(dir),
                    "does not contain Rd sources"))
 
@@ -352,7 +352,7 @@ function(dir, outFile = "")
         stop(paste("argument", sQuote("outFile"),
                    "must be a character string or connection"))
 
-    contents <- Rdcontents(listFilesWithType(docsDir, "docs"))
+    contents <- Rdcontents(list_files_with_type(docsDir, "docs"))
 
     .write_contents_as_DCF(contents, packageName, outFile)
 }
@@ -374,10 +374,10 @@ function(package, dir, lib.loc = NULL)
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         docsDir <- file.path(dir, "man")
-        if(!fileTest("-d", docsDir))
+        if(!file_test("-d", docsDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd objects"))
-        docsFiles <- listFilesWithType(docsDir, "docs")
+        docsFiles <- list_files_with_type(docsDir, "docs")
         db <- list()
         for(f in docsFiles) {
             lines <- readLines(f)
@@ -394,15 +394,15 @@ function(package, dir, lib.loc = NULL)
             stop(paste("you must specify", sQuote("package"),
                        "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
-        if(!fileTest("-d", dir))
+        if(!file_test("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            dir <- filePathAsAbsolute(dir)
+            dir <- file_path_as_absolute(dir)
         docsDir <- file.path(dir, "man")
-        if(!fileTest("-d", docsDir))
+        if(!file_test("-d", docsDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd sources"))
-        docsFiles <- listFilesWithType(docsDir, "docs")
+        docsFiles <- list_files_with_type(docsDir, "docs")
         db <- lapply(docsFiles, readLines)
         names(db) <- docsFiles
     }
@@ -591,7 +591,8 @@ function(txt)
 .get_Rd_metadata_from_Rd_lines <-
 function(lines, kind) {
     pattern <- paste("^[[:space:]]*\\\\", kind,
-                     "{[[:space:]]*(.*)[[:space:]]*}.*", sep = "")
+                     "{[[:space:]]*([^}]*[^}[:space:]])[[:space:]]*}.*",
+                     sep = "")
     lines <- grep(pattern, lines, value = TRUE)
     lines <- sub(pattern, "\\1", lines)
     lines <- gsub("\\\\%", "%", lines)
