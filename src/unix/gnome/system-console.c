@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1998-1999   Lyndon Drake
+ *  Copyright (C) 1998-2000   Lyndon Drake
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -43,7 +43,7 @@ void R_gtk_terminal_line_event(GtkWidget *widget)
 }
 
 /* Fill a text buffer with user typed console input. */
-int R_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory)
+int Rgnome_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory)
 {
     if(!R_Interactive) {
 	if (!R_Slave)
@@ -70,25 +70,25 @@ int R_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory)
 
 /* Write a text buffer to the console. */
 /* All system output is filtered through this routine. */
-void R_WriteConsole(char *buf, int len)
+void Rgnome_WriteConsole(char *buf, int len)
 {
   gtk_console_write(GTK_CONSOLE(R_gtk_terminal_text), buf, len);
 }
 
 /* Indicate that input is coming from the console */
-void R_ResetConsole()
+void Rgnome_ResetConsole()
 {
 }
 
 /* Stdio support to ensure the console file buffer is flushed */
-void R_FlushConsole()
+void Rgnome_FlushConsole()
 {
   gtk_console_flush(GTK_CONSOLE(R_gtk_terminal_text));
 }
 
 
 /* Reset stdin if the user types EOF on the console. */
-void R_ClearerrConsole()
+void Rgnome_ClearerrConsole()
 {
 }
 

@@ -174,8 +174,9 @@
 /* Used for buffer-overflow in printutils.c if available */
 #undef HAVE_VSNPRINTF
 
-/* Should we default GUI to X11? */
+/* Which GUIs can we use? */
 #undef HAVE_X11
+#undef HAVE_GNOME
 
 /* for platform.c to put in .Platform */
 #ifdef Unix

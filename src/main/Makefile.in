@@ -108,10 +108,8 @@ DISTFILES = Makefile.in Makefile.win \
 	gram.y
 
 RLIBS = ../unix/libunix.a ../appl/libappl.a ../nmath/libmath.a
-RGNOMELIBS = ../unix/gnome/libRgnome.a ../appl/libappl.a ../nmath/libmath.a
 
 ALL_LIBS = $(RLIBS) $(FLIBS) $(R_XTRA_LIBS) $(LIBS)
-ALL_GNOME_LIBS = $(RGNOMELIBS) $(FLIBS) $(R_XTRA_LIBS) $(LIBS) $(GNOME_LIBDIR) $(GNOMEUI_LIBS) $(LIBGLADE_LIBS)
 
 all: Makefile Makedeps R
 
@@ -130,7 +128,7 @@ Makedeps: Makefile $(DEPENDS)
 	@touch $@
 
 R: Makefile
-	@for t in Makedeps $(top_builddir)/bin/R.X11 @RGNOMEBIN@; do \
+	@for t in Makedeps $(top_builddir)/bin/R.X11; do \
 	  $(MAKE) $${t}; \
 	done
 
@@ -144,10 +142,6 @@ R: Makefile
 $(top_builddir)/bin/R.X11: $(OBJECTS) $(RLIBS) @EXPORTFILE@
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
 	$(MAINLD) $(MAINLDFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(ALL_LIBS)
-
-$(top_builddir)/bin/R.GNOME: $(OBJECTS) $(RGNOMELIBS)
-	@$(MKINSTALLDIRS) $(top_builddir)/bin
-	$(MAINLD) $(MAINLDFLAGS) $(LDFLAGS) $(GNOME_LIBDIR) -o $@ $(OBJECTS) $(ALL_GNOME_LIBS)
 
 $(top_builddir)/etc/R.exp: $(OBJECTS) $(RLIBS)
 	@$(top_srcdir)/tools/ldAIX4 -o $@ $(OBJECTS) $(RLIBS)

@@ -56,18 +56,6 @@ int DebugInitFile = False;
 
 /* call pointers to allow interface switching */
 
-static void (*ptr_R_Suicide)(char *);
-static void (*ptr_R_ShowMessage)();
-static int  (*ptr_R_ReadConsole)(char *, unsigned char *, int, int);
-static void (*ptr_R_WriteConsole)(char *, int);
-static void (*ptr_R_ResetConsole)();
-static void (*ptr_R_FlushConsole)();
-static void (*ptr_R_ClearerrConsole)();
-static void (*ptr_R_Busy)(int);
-static void (*ptr_R_CleanUp)(int, int, int);
-static int  (*ptr_R_ShowFiles)(int, char **, char **, char *, int, char *);
-static int  (*ptr_R_ChooseFile)(int, char *, int);
-
 void R_Suicide(char *s) { ptr_R_Suicide(s); }
 void R_ShowMessage(char *s) { ptr_R_ShowMessage(s); }
 int R_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory)
@@ -84,14 +72,17 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 { return ptr_R_ShowFiles(nfile, file, headers, wtitle, del, pager); }
 int R_ChooseFile(int new, char *buf, int len)
 { return ptr_R_ChooseFile(new, buf, len); }
+void (*gnome_start)(int ac, char **av, Rstart Rp);
+
 void R_setStartTime(); /* in sys-unix.c */
 void R_load_X11_shlib(); /* in dynload.c */
+void R_load_gnome_shlib(); /* in dynload.c */
 
 
 int main(int ac, char **av)
 {
-    int value, ierr, useX11 = 1;
-    char *p, msg[1024];
+    int i, j, value, ierr, useX11 = 1, usegnome = 0;
+    char *p, msg[1024], **avv;
     structRstart rstart;
     Rstart Rp = &rstart;
 
@@ -110,7 +101,6 @@ int main(int ac, char **av)
 #ifdef HAVE_TIMES
     R_setStartTime();
 #endif
-
     R_DefParams(Rp);
     R_SizeFromEnv(Rp);
     /* Store the command line arguments before they are processed
@@ -119,33 +109,63 @@ int main(int ac, char **av)
      */
     R_set_command_line_arguments(ac, av, Rp);
 
+    /* first task is to select the GUI */
+    for(i = 0, avv = av; i < ac; i++, avv++) {
+	if(!strncmp(*avv, "--gui", 5)) {
+	    if(strlen(*avv) < 7) {
+		sprintf(msg, "WARNING: --gui with no value ignored\n");
+		R_ShowMessage(msg);
+	    } else {
+		p = &(*avv)[6];
+		if(!strcmp(p, "none")) {
+		    useX11 = 0;
+		} else if(!strcmp(p, "gnome") || !strcmp(p, "GNOME")) {
+		    usegnome = 1;
+		} else {
+#ifdef HAVE_X11
+		    sprintf(msg, "WARNING: unknown gui %s, using X11\n", p);
+#else
+		    sprintf(msg, "WARNING: unknown gui %s, using none\n", p);
+#endif
+		    R_ShowMessage(msg);
+		}
+	    }
+	    /* now remove it */
+	    for(j = i; j < ac; j++) av[i] = av[i+1];
+	    ac--;
+	    break;
+	}
+    }
+
+    X11ConnectionNumber = stub_X11ConnectionNumber;
+    pR_ProcessEvents = stub_R_ProcessEvents;
+    GnomeDeviceDriver = stub_GnomeDeviceDriver;
+    X11DeviceDriver = stub_X11DeviceDriver;
+    ptr_dataentry = stub_dataentry;
+#ifdef HAVE_X11
+    if(useX11) {
+	if(!usegnome) {
+	    R_load_X11_shlib();
+	} else {
+#ifndef HAVE_GNOME
+	    R_Suicide("GNOME GUI is not available in this version");
+#endif
+	    R_load_gnome_shlib();
+	    gnome_start(ac, av, Rp);
+	    /* this will never return, but for safety */
+	    return 0;
+	}
+    }
+#endif
+
     R_common_command_line(&ac, av, Rp);
     while (--ac) {
 	if (**++av == '-') {
 	    if(!strcmp(*av, "--no-readline")) {
 		UsingReadline = 0;
-	    } else if(!strncmp(*av, "--gui", 5)) {
-		if(strlen(*av) < 7) {
-		    sprintf(msg, "WARNING: --gui with no value ignored\n");
-		    R_ShowMessage(msg);
-		} else {
-		    p = &(*av)[6];
-		    if(!strcmp(p, "none")) {
-			useX11 = 0;
-		    } else {
-#ifdef HAVE_X11
-			sprintf(msg, "WARNING: unknown gui %s, using X11\n", p);
-#else
-			sprintf(msg, "WARNING: unknown gui %s, using none\n", p);
-#endif
-			R_ShowMessage(msg);
-		    }
-		}
-		break;
 	    } else {
 		sprintf(msg, "WARNING: unknown option %s\n", *av);
 		R_ShowMessage(msg);
-		break;
 	    }
 	} else {
 	    sprintf(msg, "ARGUMENT '%s' __ignored__\n", *av);
@@ -183,14 +203,6 @@ int main(int ac, char **av)
     Rstd_read_history(R_HistoryFile);
     fpu_setup(1);
 
-    X11ConnectionNumber = stub_X11ConnectionNumber;
-    pR_ProcessEvents = stub_R_ProcessEvents;
-    X11DeviceDriver = stub_X11DeviceDriver;
-    ptr_dataentry = stub_dataentry;
-#ifdef HAVE_X11
-    if(useX11)
-	R_load_X11_shlib();
-#endif
     
     mainloop();
     /*++++++  in ../main/main.c */

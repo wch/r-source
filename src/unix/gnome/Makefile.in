@@ -1,5 +1,5 @@
 #
-# ${R_HOME}/src/gnome/Makefile
+# ${R_HOME}/src/unix/gnome/Makefile
 
 VPATH = @srcdir@
 srcdir = @srcdir@
@@ -11,19 +11,16 @@ subdir = src/unix/gnome
 include $(top_builddir)/Makeconf
 
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(GNOME_INCLUDEDIR) $(LIBGLADE_CFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
+ALL_GNOME_LIBS = $(RGNOMELIBS) $(FLIBS) $(R_XTRA_LIBS) $(LIBS) $(GNOME_LIBDIR) $(GNOMEUI_LIBS) $(LIBGLADE_LIBS)
+ALL_X_LIBS = $(X_PRE_LIBS) $(X_LIBS) $(X_EXTRA_LIBS) -lm
 
-SOURCES = stubs.c \
-	  ../X11/dataentry.c \
-	  ../dynload.c \
-	  ../sys-unix.c \
-	  ../sys-common.c \
+SOURCES = ../X11/dataentry.c \
 	  system.c \
 	  system-choosefile.c \
 	  system-console.c \
 	  system-showfiles.c \
 	  devGNOME.c \
 	  devGTK.c \
-	  edit.c \
 	  gdkrotated.c \
 	  gtkconsole.c \
 	  gnome-find-dialog.c \
@@ -36,9 +33,7 @@ SOURCES = stubs.c \
 	  command-grep.c
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
-HEADERS = dataentry.h \
-	  devGNOME.h \
-	  devGTK.h \
+HEADERS = devGNOME.h \
 	  gdkrotated.h \
 	  gnome-find-dialog.h \
 	  gtkconsole.h \
@@ -52,13 +47,13 @@ HEADERS = dataentry.h \
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(SOURCES) $(HEADERS)
 
-LIB = libRgnome.a
+SHLIB = $(top_builddir)/bin/R_gnome.$(SHLIBEXT)
 
 all: Makefile Makedeps R
 
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
-  $(DEPENDS)
+  $(SOURCES)
 	@cd $(top_builddir) && \
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
@@ -69,16 +64,11 @@ Makedeps: Makefile $(DEPENDS)
 
 R: Makefile
 	@$(MAKE) Makedeps
-	@$(MAKE) $(LIB)
+	@$(MAKE) $(SHLIB)
 
-../include/Rversion.h:
-	(cd ../include; $(MAKE) $(@F))
-../include/FFDecl.h ../include/FFTab.h: $(top_srcdir)/src/appl/ROUTINES
-	(cd ../include; $(top_srcdir)/tools/GETSYMBOLS)
-
-$(LIB): $(OBJECTS)
-	$(AR) cr $(LIB) $(OBJECTS)
-	$(RANLIB) $(LIB)
+$(SHLIB): $(OBJECTS)
+	$(SHLIBLD) $(SHLIBLDFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) \
+	$(ALL_GNOME_LIBS) $(ALL_X_LIBS)
 
 mostlyclean: clean
 clean:

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1998-1999   Lyndon Drake
+ *  Copyright (C) 1998-2000   Lyndon Drake
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -143,8 +143,8 @@ static GnomeUIInfo pager_toolbar[] =
   GNOMEUIINFO_END
 };
 
-int R_ShowFiles(int nfile, char **file, char **title, char *wtitle,
-int del, char *pager) 
+int Rgnome_ShowFiles(int nfile, char **file, char **title, char *wtitle,
+		     int del, char *pager) 
 {
   pager_data_t *pager_data;
   GtkWidget *table, *vscrollbar;

@@ -77,8 +77,9 @@ NEW FEATURES
 	configure will report if X11 support has been included.
 	If R has been built without X11 the default GUI is "none".
 
-    o	GNOME support files have moved from src/gnome to src/unix/gnome:
-	x11() is currently unavailable under --gui=GNOME.
+    o	GNOME support files have moved from src/gnome to src/unix/gnome
+	and the code is now in a separate shared library.  Both
+	--gui=GNOME and --gui=gnome are allowed.
 
     o	New device xfig() to produce XFig files.
 

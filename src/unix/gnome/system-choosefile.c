@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1998-1999   Lyndon Drake
+ *  Copyright (C) 1998-2000   Lyndon Drake
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -50,7 +50,7 @@ void R_ChooseFile_destroy(GtkWidget *widget, gpointer data)
     gtk_main_quit();
 }
 
-int R_ChooseFile(int new, char *buf, int len)
+int Rgnome_ChooseFile(int new, char *buf, int len)
 {
   GtkWidget *fs;
   gchar *fname;
