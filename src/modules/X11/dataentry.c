@@ -296,7 +296,7 @@ SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	INTEGER(lens)[i] = len;
 	ymaxused = max(len, ymaxused);
 	type = TYPEOF(VECTOR_ELT(work, i));
-	if (!isNull(VECTOR_ELT(colmodes, i)))
+	if (LENGTH(colmodes) > 0 && !isNull(VECTOR_ELT(colmodes, i)))
 	    type = str2type(CHAR(STRING_ELT(VECTOR_ELT(colmodes, i), 0)));
 	if (type != STRSXP) type = REALSXP;
 	if (isNull(VECTOR_ELT(work, i))) {
