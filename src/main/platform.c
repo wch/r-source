@@ -56,7 +56,7 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 #ifndef macintosh    
     sprintf(tmp, ".%s", SHLIB_EXT);
-#else    /* Usually DLL under MacOS do not have are called "LibraryLib" withoud dot a "." */
+#else    /* Usually DLL under MacOS are called "LibraryLib" without a "." */
     sprintf(tmp, "%s", SHLIB_EXT);
 #endif    
     SET_VECTOR_ELT(value, 2, mkString(tmp));
@@ -287,8 +287,7 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifndef macintosh
 #include <sys/types.h>
 #else 
- #include <types.h>
- #include "dirent.h"
+# include <types.h>
 #endif /* mac */
 
 #if HAVE_DIRENT_H
@@ -528,20 +527,20 @@ SEXP do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #ifdef HAVE_STAT
-#ifndef macintosh
-#include <sys/types.h>
-#include <sys/stat.h>
-#else
-#include <types.h>
-#include <stat.h>
-#endif /* mac */
+# ifndef macintosh
+#  include <sys/types.h>
+#  include <sys/stat.h>
+# else
+#  include <types.h>
+#  include <stat.h>
+#  endif /* mac */
 
-#if defined(Unix) && defined(HAVE_PWD_H) && defined(HAVE_GRP_H) \
+# if defined(Unix) && defined(HAVE_PWD_H) && defined(HAVE_GRP_H) \
   && defined(HAVE_GETPWUID) && defined(HAVE_GETGRGID)
-#include <pwd.h>
-#include <grp.h>
-#define UNIX_EXTRAS 1
-#endif
+#  include <pwd.h>
+#  include <grp.h>
+#  define UNIX_EXTRAS 1
+# endif
 
 SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -639,9 +638,9 @@ SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
 #ifdef HAVE_ACCESS
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
+# ifdef HAVE_UNISTD_H
+#  include <unistd.h>
+# endif
 
 SEXP do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
