@@ -130,7 +130,6 @@ ziponly-%:
 	$(MAKE) -C ./help ziponlyhelp-$*
 	$(MAKE) -C ./help contents-$*
 
-integrate-DLLNM=adapt
 bootstrap-DLLNM=boott
 
 clean: cleanwin
