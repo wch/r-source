@@ -28,7 +28,7 @@ arima0 <- function(x, order=c(0,0,0),
     class(xreg) <- NULL
     if(include.mean && (nd==0)) {
         if(is.matrix(xreg) && is.null(colnames(xreg)))
-            colnames(x) <- paste("xreg", 1:ncxreg, sep="")
+            colnames(xreg) <- paste("xreg", 1:ncxreg, sep="")
         xreg <- cbind(intercept=rep(1, n), xreg=xreg)
         ncxreg <- ncxreg+1
     }
