@@ -60,6 +60,9 @@ Statistics
        ts		&	Time Series
        survival		&	Survival Analysis		       11
 
+				[actually, `survival4' rather than `survival',
+				 but do we want 'survival5' later ?]
+
        nonparametric	&	Nonparametric Statistics [w/o 'smooth']
        smooth		&	Curve (and Surface) Smoothing
        cluster		&	Clustering
@@ -73,11 +76,6 @@ MASS (2, 1997)
 
 add the following keywords :
 
-	classif		&	for the 'class' library
-	spatial		&	for the 'spatial' library
-	neural [net[s]] &	for the 'nnet'  library
-          (3 different KW versions!)
-
-
-	survival4	('4' : In S-plus 3.4, we also really have
-			       `survival4' rather than `survival'...)
+	classif		&	Classification  ['class' library]
+	spatial		&	Spatial Statistics ['spatial' library]
+	neural		&	Neural Networks ['nnet'  library]
