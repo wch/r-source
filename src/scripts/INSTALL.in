@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.78 $'
+revision='$Revision: 1.79 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -228,10 +228,23 @@ do_install () {
 
   mkdir -p ${lib}/${pkg} || exit 3
 
-  if test -d man; then
-    ## Assume this is a source package.
-    ## FIXME:  Do we have a better test?
-    echo "Installing source package \`${pkg}' ..."
+  ## Figure out whether this is a source or binary package.
+  if grep "^Built:" DESCRIPTION >/dev/null ; then
+    ## If DESCRIPTION has a 'Built:' entry this is a binary package.
+    ## This is the right test but available only for recently enough
+    ## installed packages.
+    is_source_package=false
+  elif test -d man; then
+    ## Versions of R prior to 1.4 did not install man pages.  Hence
+    ## assuming that source packages would have some documentation ...
+    is_source_package=true
+  else
+    is_source_package=false
+  fi
+
+  if ${is_source_package}; then
+    ## This is a source package ... hopefully.
+    echo "Installing *source* package \`${pkg}' ..."
 
     ## Make the destination directories available to the developer's
     ## installation scripts (e.g. configure, etc.)
@@ -453,8 +466,8 @@ do_install () {
     fi
 
   else  
-    ## Assume this is a binary package
-    echo "Installing binary package \`${pkg}' ..."
+    ## This is a binary package ... hopefully.
+    echo "Installing *binary* package \`${pkg}' ..."
     cp -r . ${lib}/${pkg}
   fi
 
