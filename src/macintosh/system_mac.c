@@ -23,6 +23,12 @@
  *  Implemented in R 1.2.2., Stefano M.Iacus, Feb 2001
  */
  
+#include <RCarbon.h>
+
+#ifdef __MRC__
+#include <CarbonStdCLib.h>
+#endif
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -138,8 +144,9 @@ int mkdir(char *x,int a){ return 0;}
 extern int chdir(char *);
 extern int getcwd(char *,int );
 
-
 #endif
+
+extern SInt32	systemVersion ;
 
 int R_ReadConsole(char *prompt, unsigned char *buf, int len,int addtohistory)
 {
@@ -278,7 +285,17 @@ FILE *R_OpenInitFile(void)
 FILE* R_OpenFile1(char *file)
 {
     FILE*                fp;
+#ifdef __MRC__    
+    char 			unixPath[400];
+#endif
     /* Max file length is 256 characters */
+    
+#ifdef __MRC__
+     ConvertHFSPathToUnixPath(file, unixPath) ;
+     strcpy(file,unixPath);
+#endif 
+   
+    
     fp = fopen(file, "r");
 
     return fp;
@@ -290,12 +307,9 @@ FILE *R_OpenLibraryFile(char *file)
 {
     char buf[256];
     FILE *fp;
-#ifdef __MRC__
-    sprintf(buf, ":library:base:R:%s", file);
-#else
     sprintf(buf, "%s:library:base:R:%s", R_Home, file);
-#endif
-    fp = R_fopen(buf, "r");
+	fp = R_fopen(buf, "r");
+
     return fp;
 }
 
@@ -309,6 +323,7 @@ void GetHomeLocation(void);
 
 void GetHomeLocation(void)
 {
+    R_HomeLocation[0] = '\0';
     getcwd(R_HomeLocation,MAC_FILE_SIZE); 
     R_HomeLocation[strlen(R_HomeLocation)-1]='\0';
 }
@@ -397,12 +412,13 @@ int Mac_initialize_R(int ac, char **av)
     char *p, msg[1024], **avv;
     structRstart rstart;
     Rstart Rp = &rstart;
+    OSErr err;
     
     GetHomeLocation(); /* should stay here because getenv depends on this */
     if((R_Home = R_HomeDir()) == NULL)
 		R_Suicide("R home directory is not defined");
     
-    if ( Initialize() == noErr ) {
+    if ( (err = Initialize()) == noErr ) {
 	gAppResFileRefNum = CurResFile();
 	doGetPreferences();
 	if((fileno(stdin)==0) || (fileno(stdout)==1)){
@@ -1186,14 +1202,15 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
    (Stefano M. Iacus) Jago Nov-00
 */
 
+#include <stat.h>
+
 SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  fn, ans;
     char *p, tmp[PATH_MAX], dir[PATH_MAX];
     int i, nfiles, failures = 0;
-#ifndef __MRC__
     struct stat sb;
-#endif
+
 
     checkArity(op, args);
     fn = CAR(args);
@@ -1205,14 +1222,16 @@ SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
 	strcpy(tmp, CHAR( STRING_ELT(fn,i) ));
 	for(p = tmp; *p != '\0'; p++)
 	    if(*p == '/') *p = ':';
-#ifndef __MRC__
+
 	if(stat(tmp, &sb) == 0)
 	    /* Is this a directory? */
 	    if(sb.st_mode & S_IFDIR) {
+#ifndef __MRC__
 		if(rmdir(tmp)) failures++;		
+#endif
 		continue;
 	    }
-#endif	    
+//#endif	    
 	/* Regular file (or more) */
 	strcpy(dir, tmp);
 	if ((p = strrchr(dir, ':'))) *(++p) = '\0'; else *dir = '\0';
@@ -1347,8 +1366,19 @@ Rboolean R_FileExists(char *path)
 
 FILE *R_fopen(const char *filename, const char *mode)
 {
+#ifdef __MRC__    
+    char			unixPath[400];
+
+	if(systemVersion >= 0x10008000){ /* On System X we have to take care of */
+	                                 /* Unix <-> HFS path differences       */	
+	 ConvertHFSPathToUnixPath(filename, (char *)&unixPath) ;
+	 return( fopen((const char *)&unixPath,mode) );
+    }
+#endif 
+
     return(filename ? fopen(filename, mode) : NULL );
 }
+
 
 
 /*
