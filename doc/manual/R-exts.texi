@@ -4597,7 +4597,8 @@ make no use of @R{} code, and hence are very different from the usual
 interpreted functions.  In particular, @code{args} and @code{body}
 return @code{NULL} for such objects.
 
-These ``primitive'' functions are fully specified as follows.
+The list of these ``primitive'' functions is subject to change:
+currently, it includes the following.
 
 @enumerate
 
