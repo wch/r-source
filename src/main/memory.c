@@ -1174,8 +1174,10 @@ static void RunGenCollect(int size_needed)
     for (i = 0; i < R_MaxDevices; i++) {   /* Device display lists */
 	dd = GetDevice(i);
 	if (dd) {
-	    if (dd->newDevStruct)
+	    if (dd->newDevStruct) {
 		FORWARD_NODE(((GEDevDesc*) dd)->dev->displayList);
+		FORWARD_NODE(((GEDevDesc*) dd)->dev->savedSnapshot);
+	    }
 	    else
 		FORWARD_NODE(dd->displayList);
 	}

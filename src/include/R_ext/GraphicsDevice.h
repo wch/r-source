@@ -81,6 +81,10 @@ typedef struct {
     void *deviceSpecific;	/* pointer to device specific parameters */
     Rboolean displayListOn;     /* toggle for display list status */
     SEXP displayList;           /* display list */
+    SEXP savedSnapshot;         /* The last value of the display list
+				 * just prior to when the display list
+				 * was last initialised
+				 */
     Rboolean ask;	        /* User confirmation of ``page eject'' */
     /********************************************************
      * Device procedures.

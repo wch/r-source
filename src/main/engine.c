@@ -1851,6 +1851,10 @@ void GENewPage(int fill, double gamma, GEDevDesc *dd)
 void GEinitDisplayList(GEDevDesc *dd)
 {
     int i;
+    /* Save the current dislpayList so that, for example, a device
+     * can maintain a plot history
+     */
+    dd->dev->savedSnapshot = GEcreateSnapshot(dd);
     /* Get each graphics system to save state required for 
      * replaying the display list
      */

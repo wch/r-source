@@ -1749,13 +1749,6 @@ static void invalidError(char* message, DevDesc *dd)
 }
 
 /*  GNewPlot -- Begin a new plot (advance to new frame if needed)  */
-#ifdef PLOTHISTORY
-void copyGPar(GPar *source, GPar *dest);
-SEXP savedDisplayList;
-GPar savedGPar;
-SEXP savedSnapshot;
-#endif
-
 DevDesc *GNewPlot(Rboolean recording)
 {
     DevDesc *dd;
@@ -1798,32 +1791,12 @@ DevDesc *GNewPlot(Rboolean recording)
 		    else
 			dd = CurrentDevice();
 		}
-#ifdef PLOTHISTORY
-		/* Remove savedDisplayList and savedGPar once
-		 * devga.c is working as new device
-		 */
-		if (dd->newDevStruct) {
-		    PROTECT(savedSnapshot = GEcreateSnapshot((GEDevDesc*) dd));
-		    PROTECT(savedDisplayList=((GEDevDesc*) dd)->dev->displayList); 
-		}
-		else
-		    PROTECT(savedDisplayList=dd->displayList);
-		copyGPar(Rf_dpSavedptr(dd), &(savedGPar));
-#endif
 		GEinitDisplayList((GEDevDesc*) dd);
 	    }
 	    if (dd->newDevStruct)
 		GENewPage(Rf_dpptr(dd)->bg, Rf_dpptr(dd)->gamma, (GEDevDesc*) dd);
 	    else
 		Rf_dpptr(dd)->newPage(dd);
-#ifdef PLOTHISTORY
-	    if (recording) {
-		if (dd->newDevStruct)
-		    UNPROTECT(2);
-		else
-		    UNPROTECT(1);
-	    }
-#endif
 	    Rf_dpptr(dd)->currentFigure = Rf_gpptr(dd)->currentFigure = 1;
 	}
 
