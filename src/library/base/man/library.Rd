@@ -80,13 +80,15 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \item{quietly}{a logical.  If \code{TRUE}, no message confirming
     package loading is printed.}
   \item{save}{logical or environment.  If \code{TRUE}, a call to
-  \code{require} from the source for a package will save the name of
-  the required package in the variable \code{".required"}, allowing
-  function \code{\link{detach}} to warn if a required package is
-  detached. See section \sQuote{Packages that require other packages} below.}
+    \code{require} from the source for a package will save the name of
+    the required package in the variable \code{".required"}, allowing
+    function \code{\link{detach}} to warn if a required package is
+    detached. See section \sQuote{Packages that require other packages} below.}
   \item{libname}{a character string giving the library directory where
     the package was found.}
-  \item{pkgname}{a character string giving the name of the package.}
+  \item{pkgname}{a character string giving the name of the package,
+    including the version number if the package was installed with
+    \code{--with-package-versions}.}
   \item{libpath}{a character string giving the complete path to the
     package.}
   \item{all.available}{logical; if \code{TRUE} return a character vector
@@ -250,7 +252,6 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   is issued if the user specifies a name which isn't a perfect match
   to the package name, because future versions of \R will require
   exact matches.
-
 }
 \author{
   R core;
