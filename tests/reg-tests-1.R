@@ -695,4 +695,11 @@ data(flower)
 hdfl <- hclust(dfl, method = "average")
 ddfl <- as.dendrogram(hdfl)
 cdfl <- cut(ddfl, h = 0.31311)## error in 1.5.0
+detach("package:cluster")# leave mva
 
+## predict.smooth.spline(*, deriv > 0) :
+require(modreg)
+x <- (1:200)/32
+ss <- smooth.spline(x, 10*sin(x))
+stopifnot(length(x) == length(predict(ss,deriv=1)$x))# not yet in 1.5.0
+detach("package:modreg")
