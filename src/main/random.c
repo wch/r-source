@@ -21,103 +21,77 @@
 #include "Defn.h"
 #include "Mathlib.h"
 
-static void FixupSeeds()
-{
-    /* Dependeing on RNG, set 0 values to non-0, etc. */
-    int j;
-    switch(RNG_kind) {
-    case WICHMANN_HILL:
-    case MARSAGLIA_MULTICARRY:
-    case SUPER_DUPER:
-/*
-    case MERSENNE_TWISTER:
-*/
-	if(!i1_seed) i1_seed++;
-	if(!i2_seed) i2_seed++;
-	for(j=0; j < RNG_Table[RNG_kind].n_seed - 2; j++)
-	    if(!i_seed[j]) i_seed[j]++;
+/* .Random.seed == (RNGkind, i1_seed, i_seed[0],i_seed[1],..,i_seed[n_seed-2])
+ *		                      i2_seed   i3_seed
+ * or           == (RNGkind)  [--> Randomize that one !]
+ */
 
-	break;
-
-    case RAND:/* no read-access to seed */
-
-    }
-}
-/* maybe put this into ../nmath/sunif.c -- since it is close to that code */
-static void Randomize()
-{
-    srand((int)time(NULL));
-    switch(RNG_kind) {
-    case WICHMANN_HILL:
-	i1_seed = abs(rand() % 30269);
-	i2_seed = abs(rand() % 30307);
-	i3_seed = abs(rand() % 30323);
-	break;
-    case MARSAGLIA_MULTICARRY:
-	break;
-    case SUPER_DUPER:
-	break;
-/*
-    case MERSENNE_TWISTER:
-	break;
-*/
-    case RAND:
-	break;
-    }
-    FixupSeeds();
-}
-
-static void GetSeeds()
+static void GetRNGstate()
 {
   /* Get  .Random.seed  into proper variables */
-    int len_seed, j;
+    int len_seed, j, seed_off;
     SEXP seeds;
     len_seed = RNG_Table[RNG_kind].n_seed;
 
     seeds = findVar(R_SeedsSymbol, R_GlobalEnv);
     if (seeds == R_UnboundValue) {
-	Randomize();
+	Randomize(RNG_kind);
     }
     else {
 	if (seeds == R_MissingArg)
 	    error(".Random.seed is a missing argument with no default\n");
-	if (!isVector(seeds) || LENGTH(seeds) < len_seed)
-	    error("missing or invalid random number seeds\n");
-	seeds = coerceVector(seeds, INTSXP);
-	switch(RNG_kind) {
-	case WICHMANN_HILL:
-	case MARSAGLIA_MULTICARRY:
-	case SUPER_DUPER:
-	case MERSENNE_TWISTER:
-	case RAND:
-	    i1_seed = INTEGER(seeds)[0];
-	    i2_seed = INTEGER(seeds)[1];
-	    for(j=2; j < len_seed; j++)
-		i_seed[j-2] = INTEGER(seeds)[j];
+	if (!isVector(seeds))
+	    error(".Random.seed is not a vector\n");
+	seed_off = 0;
+	if(LENGTH(seeds)!= 1 && LENGTH(seeds) < len_seed + 1) {
+	    if(LENGTH(seeds) == RNG_Table[WICHMANN_HILL].n_seed) {
+		/* BACKWARDS COMPATIBILITY: */
+		seed_off = 1;
+		warning("Wrong length .Random.seed; forgot initial RNGkind? set to Wichmann-Hill\n");
+		/* compatibility mode */
+		RNG_kind = WICHMANN_HILL;
+	    } else {
+		error(".Random.seed has wrong length.\n");
+	    }
 	}
-	FixupSeeds();
+	seeds = coerceVector(seeds, INTSXP);
+	if(!seed_off) RNG_kind = INTEGER(seeds)[0];
+
+ 	switch(RNG_kind) {
+ 	case WICHMANN_HILL:
+ 	case MARSAGLIA_MULTICARRY:
+ 	case SUPER_DUPER:
+ 	case RAND:
+	    break;
+ 	case MERSENNE_TWISTER:
+	    error("'Mersenne-Twister' not yet implemented\n"); break;
+	default:
+	    error(".Random.seed[1] is NOT a valid RNG kind (code)\n");
+	}
+	if(LENGTH(seeds) == 1)
+	    Randomize(RNG_kind);
+	else {
+	    RNG_Table[RNG_kind].i1_seed = INTEGER(seeds)[1- seed_off];
+	    for(j=2; j <= len_seed; j++)
+		RNG_Table[RNG_kind].i_seed[j-2] = INTEGER(seeds)[j - seed_off];
+	    FixupSeeds(RNG_kind);
+	}
     }
 }
 
-static void PutSeeds()
+static void PutRNGstate()
 {
     int len_seed, j;
     SEXP seeds;
     len_seed = RNG_Table[RNG_kind].n_seed;
 
-    PROTECT(seeds = allocVector(INTSXP, len_seed));
-    switch(RNG_kind) {
-    case WICHMANN_HILL:
-    case MARSAGLIA_MULTICARRY:
-    case SUPER_DUPER:
-    case MERSENNE_TWISTER:
-    case RAND:
-	
-	INTEGER(seeds)[0] = i1_seed;
-	INTEGER(seeds)[1] = i2_seed;
-	for(j=2; j < len_seed; j++)
-	    INTEGER(seeds)[j] = i_seed[j-2];
-    }
+    PROTECT(seeds = allocVector(INTSXP, len_seed + 1));
+
+    INTEGER(seeds)[0] = RNG_kind;
+    INTEGER(seeds)[1] = RNG_Table[RNG_kind].i1_seed;
+    for(j=2; j <= len_seed; j++)
+	INTEGER(seeds)[j] = RNG_Table[RNG_kind].i_seed[j-2];
+
     setVar(R_SeedsSymbol, seeds, R_GlobalEnv);
     UNPROTECT(1);
 }
@@ -125,26 +99,21 @@ static void PutSeeds()
 static void RNGkind(RNGtype newkind)
 {
 /* Choose a new kind of RNG.
- * Initialize its seed by calling the old RNG's sunif() 
+ * Initialize its seed by calling the old RNG's sunif()
  */
-    GetSeeds();
+    GetRNGstate();
+
+    RNG_Init(newkind, sunif() * UINT_MAX);
+
     switch(newkind) {
     case WICHMANN_HILL:
-	i1_seed = (int)(sunif() * 30269);
-	i2_seed = (int)(sunif() * 30307);
-	i3_seed = (int)(sunif() * 30323);
-      break;
     case MARSAGLIA_MULTICARRY:
-	/* ... */
-      break;
     case SUPER_DUPER:
-	/* ... */
       break;
     case MERSENNE_TWISTER:
 	/* ... */
 	error("RNGkind: \"Mersenne-Twister\" not yet available!\n");
       break;
-
 
     case RAND:
 	srand((unsigned int)sunif()*UINT_MAX);
@@ -153,8 +122,8 @@ static void RNGkind(RNGtype newkind)
       error("RNGkind: unimplemented RNG kind %d\n", newkind);
     }
     RNG_kind = newkind;
-    FixupSeeds();
-    PutSeeds();
+
+    PutRNGstate();
 }
 
 SEXP do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
@@ -173,7 +142,7 @@ SEXP do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
     INTEGER(r)[0] = oldkind;
     return r;
 }
-
+
 /*------ Part without RNGkind dependency ------------------------*/
 
 static int naflag = 0;
@@ -233,7 +202,7 @@ SEXP do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
     else {
 	PROTECT(a = coerceVector(CADR(args), REALSXP));
 	naflag = 0;
-	GetSeeds();
+	GetRNGstate();
 	switch (PRIMVAL(op)) {
 	    RAND1(0, rchisq);
 	    RAND1(1, rexp);
@@ -247,7 +216,7 @@ SEXP do_random1(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (naflag)
 	    warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
 
-	PutSeeds();
+	PutRNGstate();
 	UNPROTECT(1);
     }
     UNPROTECT(1);
@@ -308,7 +277,7 @@ SEXP do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(a = coerceVector(CADR(args), REALSXP));
 	PROTECT(b = coerceVector(CADDR(args), REALSXP));
 	naflag = 0;
-	GetSeeds();
+	GetRNGstate();
 	switch (PRIMVAL(op)) {
 	    RAND2(0, rbeta);
 	    RAND2(1, rbinom);
@@ -328,7 +297,7 @@ SEXP do_random2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (naflag)
 	    warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
 
-	PutSeeds();
+	PutRNGstate();
 	UNPROTECT(2);
     }
     UNPROTECT(1);
@@ -397,7 +366,7 @@ SEXP do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(b = coerceVector(b, REALSXP));
 	PROTECT(c = coerceVector(c, REALSXP));
 	naflag = 0;
-	GetSeeds();
+	GetRNGstate();
 	switch (PRIMVAL(op)) {
 	    RAND3(0, rhyper);
 	default:
@@ -406,7 +375,7 @@ SEXP do_random3(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (naflag)
 	    warning("NAs produced in function \"%s\"\n", PRIMNAME(op));
 
-	PutSeeds();
+	PutRNGstate();
 	UNPROTECT(3);
     }
     UNPROTECT(1);
@@ -554,7 +523,7 @@ SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "invalid second argument\n");
     if (!replace && k > n)
 	errorcall(call, "can't take a sample larger than the population\n when replace = FALSE\n");
-    GetSeeds();
+    GetRNGstate();
     PROTECT(y = allocVector(INTSXP, k));
     if (!isNull(prob)) {
 	prob = coerceVector(prob, REALSXP);
@@ -577,7 +546,7 @@ SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SampleNoReplace(k, n, INTEGER(y), INTEGER(x));
 	}
     }
-    PutSeeds();
+    PutRNGstate();
     UNPROTECT(1);
     return y;
 }
@@ -590,11 +559,11 @@ SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 void seed_in(long *ignored)
 {
-    GetSeeds();
+    GetRNGstate();
 }
 
 void seed_out(long *ignored)
 {
-    PutSeeds();
+    PutRNGstate();
 }
 /* unif_rand == sunif , norm_rand == snorm   via 'define' in Mathlib.h */
