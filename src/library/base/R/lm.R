@@ -557,8 +557,8 @@ predict.lm <- function(object, newdata,
             ip <- matrix(ncol=nterms, nrow=NROW(X))
             dimnames(ip) <- list(rownames(X), names(asgn))
             Q <- qr.Q(object$qr)
-            Rinv <- qr.solve(qr.R(object$qr))
-
+            #Rinv <- qr.solve(qr.R(object$qr))
+            Rinv <- chol2inv(qr.R(object$qr))
             p2 <- dim(Rinv)[2]
         }
         if(hasintercept){
@@ -568,12 +568,12 @@ predict.lm <- function(object, newdata,
         for (i in seq(1, nterms,length=nterms)){
             ii <- piv[asgn[[i]]]
             predictor[,i]  <- X[, ii, drop=FALSE] %*% (beta[ii])
-
+            
             if (se.fit || interval != "none"){
                 ii2 <- asgn[[i]]
-                vci <- R[ii2, ii2]*res.var
+                vci <- Rinv[ii2, ii2]*res.var
                 for(j in (1:NROW(X))){
-                    xi <- X[j, ii, drop=FALSE] # Do not multiply by beta[ii]
+                    xi <- X[j, ii, drop=FALSE] 
                     ip[j,i] <- sum(xi%*% vci %*%t(xi))
                 }
             }

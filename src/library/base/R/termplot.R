@@ -32,7 +32,9 @@ termplot<-function(model,data=model.frame(model),partial.resid=FALSE,rug=FALSE,t
     for (i in 1:NCOL(tms)){
         ylims<-range(tms[,i],na.rm=TRUE)
         if (se)
-            ylims<-range(c(ylims,tms[,i]+2*terms$se.fit[,i]),na.rm=TRUE)
+            ylims<-range(c(ylims,
+                           tms[,i]+2*terms$se.fit[,i],
+                           tms[,i]-2*terms$se.fit[,i]),na.rm=TRUE)
         if (partial.resid){
             ylims<-range(c(ylims,pres[,i]),na.rm=TRUE)
         }
