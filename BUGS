@@ -320,22 +320,30 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 975 *
-Subject: ?????®?þ¾?, ???¨ µ??µ?????? ????´?...
-From: webmaster@mrpcd.com
-Date: Sat, 09 Jun 2001 18:30:20 +0900
-* PR# 956 *
-Subject: unbelievable parser bug
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 29 May 2001 14:25:00 +0200
-* PR# 970 *
-Subject: error in dbeta
-From: pwolf@wiwi.uni-bielefeld.de
-Date: Wed, 6 Jun 2001 18:31:30 +0200 (MET DST)
+* PR# 976 *
+Subject: documentation and \sloppy
+From: Paulo Justiniano Ribeiro Jr <p.ribeiro@lancaster.ac.uk>
+Date: Sun, 10 Jun 2001 21:50:13 +0100 (BST)
 * PR# 968 *
 Subject: a bug?
 From: Michael Lavine <michael@stat.duke.edu>
 Date: Tue, 5 Jun 2001 10:15:13 -0400
+* PR# 956 *
+Subject: unbelievable parser bug
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 29 May 2001 14:25:00 +0200
+* PR# 972 *
+Subject: update.packages fails again
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 8 Jun 2001 21:25:08 +0100 (BST)
+* PR# 970 *
+Subject: error in dbeta
+From: pwolf@wiwi.uni-bielefeld.de
+Date: Wed, 6 Jun 2001 18:31:30 +0200 (MET DST)
+* PR# 975 *
+Subject: ?????®?þ¾?, ???¨ µ??µ?????? ????´?...
+From: webmaster@mrpcd.com
+Date: Sat, 09 Jun 2001 18:30:20 +0900
 * PR# 974 *
 Subject: Lattice: panel.superpose with ordered factor groups
 From: John Maindonald <john.maindonald@anu.edu.au>
@@ -344,7 +352,3 @@ Date: Sat, 9 Jun 2001 11:08:51 +1000 (EST)
 Subject: Searching for Partner of Scarves, Necties, Textiles, Silks
 From: hengdatie@sina.com
 Date: Wed, 13 Jun 2001 13:57:25 +0800
-* PR# 972 *
-Subject: update.packages fails again
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 8 Jun 2001 21:25:08 +0100 (BST)
