@@ -458,6 +458,10 @@ Date: Fri, 14 Feb 2003 15:36:15 -0500
 Subject: Default broswer for OS X
 From: james@freelancepropaganda.com
 Date: Fri, 4 Apr 2003 06:04:48 +0200 (MET DST)
+* PR# 2813 *
+Subject: Search Engine
+From: leroy@ucsd.edu
+Date: Tue, 22 Apr 2003 06:21:19 +0200 (MET DST)
 
 Directory:  Misc
 
@@ -602,14 +606,15 @@ From: socrates@mail.ru
 Date: Thu, 27 Jun 2002 10:30:51 +0200 (MET DST)
 ..A crash that is *very* hard to trigger (after several
 ..minutes of continuous resizing)
+* PR# 2798 *
+Subject: Re: [R] Keyboard problem using RWin 1.7.0
+From: DJNordlund@aol.com
+Date: Sat, 19 Apr 2003 18:56:25 EDT
+..Can't reproduce so far.
 * PR# 2801 *
 Subject: Rgui crashes after setting par(ask=TRUE) and using lattice
 From: smcnary@charm.net
 Date: Sun, 20 Apr 2003 21:01:40 +0200 (MET DST)
-* PR# 2816 *
-Subject: Handling of upper/lowercase in package names
-From: "Philippe Grosjean" <phgrosjean@sciviews.org>
-Date: Tue, 22 Apr 2003 14:33:04 +0200
 
 Directory:  incoming
 
@@ -639,14 +644,6 @@ Date: Sat, 1 Mar 2003 16:35:56 +1100 (EST)
 Subject: recursive default argument reference in debugger
 From: pburns@pburns.seanet.com
 Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
-* PR# 2793 *
-Subject: Problems with RMySQL in R 1.7.0 for Windows
-From: "Jonas Ranstam" <jonas@ranstam.dk>
-Date: Fri, 18 Apr 2003 09:13:56 +0200
-* PR# 2798 *
-Subject: Re: [R] Keyboard problem using RWin 1.7.0
-From: DJNordlund@aol.com
-Date: Sat, 19 Apr 2003 18:56:25 EDT
 * PR# 2808 *
 Subject: building R 1.7.0 under RH7.3
 From: Tim Hoar <thoar@cgd.ucar.edu>
@@ -655,10 +652,6 @@ Date: Mon, 21 Apr 2003 13:16:16 -0600 (MDT)
 Subject: sweave provoked segfault
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
 Date: Mon, 21 Apr 2003 17:01:53 -0400
-* PR# 2813 *
-Subject: Search Engine
-From: leroy@ucsd.edu
-Date: Tue, 22 Apr 2003 06:21:19 +0200 (MET DST)
 * PR# 2822 *
 Subject: "LAPACK routine DGESDD gave error code -12" with Debian
 From: Ramon Diaz <rdiaz@cnio.es>
@@ -672,11 +665,7 @@ Date: Tue, 22 Apr 2003 20:15:19 +0200
 Subject: coplot panels malrendered / 1653
 From: dmaszle@mendelbio.com
 Date: Wed, 23 Apr 2003 02:19:53 +0200 (MET DST)
-* PR# 2840 *
-Subject: FAQ/Website problems
-From: Ross Boylan <ross@biostat.ucsf.edu>
-Date: Thu, 24 Apr 2003 17:36:32 -0700
-* PR# 2849 *
-Subject: URGENT RESPONSE NEEDED
-From: LESLIE MABUZO <lesliemabuzo55@netscape.net>
-Date: Fri, 25 Apr 2003 23:30:20 +0200
+* PR# 2856 *
+Subject: AS SEEN ON NATIONAL TV
+From: <3popmexlux@hotmail.com>
+Date: Sat, 26 Apr 2003 11:50:29 +1000
