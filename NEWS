@@ -118,7 +118,10 @@ NEW FEATURES
 
     o	dir.create() now expands '~' in filenames.
 
-    o	dyn.load() and libary.dynam() return an object describing the
+    o	download.file() has a new progress meter (under Unix) if the
+	length of the file is known -- it uses 50 equals signs.
+
+    o	dyn.load() and library.dynam() return an object describing the
 	DLL that was loaded. For packages with namespaces, the DLL
 	objects are stored in a list within the namespace.
 

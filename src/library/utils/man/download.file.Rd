@@ -64,10 +64,14 @@ download.file(url, destfile, method, quiet = FALSE, mode="w",
   later installed.   You can use the flag \option{--internet2}, when
   the \sQuote{Internet Options} of the system are used to choose proxies
   and so on; these are set in the Control Panel and are those used for
-  Internet Explorer.
-  This version does not support \code{cacheOK = FALSE}.
-
+  Internet Explorer.  This version does not support \code{cacheOK = FALSE}.
 #endif
+#ifdef unix
+  A progress bar tracks the transfer. If the file length is known, an
+  equals represents 2\% of the transfer completed: otherwise a dot
+  represents 10Kb.
+#endif
+
   Method \code{"wget"} can be used with proxy firewalls which require
   user/password authentication if proper values are stored in the
   configuration file for \code{wget}.
