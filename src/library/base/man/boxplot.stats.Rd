@@ -10,8 +10,9 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
     and omitted).}
   \item{coef}{this determines how far the plot ``whiskers'' extend out
     from the box.  If \code{coef} is positive, the whiskers extend to the
-    most extreme data point which is no more than \code{coef} times the
-    interquartile coef from the box.  A value of zero causes the whiskers
+    most extreme data point which is no more than \code{coef} times
+    the length of the box away from the box. A value of zero causes
+    the whiskers
     to extend to the data extremes (and no outliers be returned).}
   \item{do.conf,do.out}{logicals; if \code{FALSE}, the \code{conf} or
     \code{out} component respectively will be empty in the result.}
@@ -36,7 +37,7 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
   \code{+- Inf} values.
 }
 \details{
-  The two ``hinge''s are versions of the first first and third quartile,
+  The two ``hinges'' are versions of the first first and third quartile,
   i.e. close to \code{\link{quantile}(x, c(1,3)/4)}.  The hinges equal
   the quartiles for odd \eqn{n} (where \code{n <- length(x)}) and
   differ for even \eqn{n}. Where the quartiles only equal observations
