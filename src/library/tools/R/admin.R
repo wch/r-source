@@ -25,15 +25,15 @@ function(dir, outDir)
                    paste(requiredFields[i], collapse = " ")))
     }
     ## </FIXME>
+    OS <- Sys.getenv("R_OSTYPE")
+    OStype <- if(nchar(OS) && OS == "windows") "i386-pc-mingw32" else R.version$platform
     writeLines(c(formatDL(names(db), db, style = "list"),
                  paste("Built: R ",
                        paste(R.version[c("major", "minor")],
                              collapse = "."),
                        "; ",
-                       if(fileTest("-d", file.path(dir, "src")))
-                           if(nchar(Sys.getenv("R_OSTYPE"))) "i386-pc-mingw32" else R.version$platform
-                       else
-                           "",
+                       if(fileTest("-d", file.path(dir, "src"))) OStype
+                       else "",
                        "; ",
                        ## Prefer date in ISO 8601 format.
                        ## Could also use
