@@ -4,7 +4,7 @@ TESTS   = ../tests
 Ex_Tests = $(TESTS)/Examples
 CleanMe1 = SHLIB COMPILE INSTALL REMOVE
 CleanMe2 = Rdconv Rdindex Rman2Rd Sd2Rd
-CleanMe3 = build-help build-htmlpkglist help.pretty html2dos
+CleanMe3 = build-help help.pretty html2dos
 CleanMe  = $(CleanMe1) $(CleanMe2) $(CleanMe3)
 
 MANSRC = ../src/library/*/man/*.Rd
