@@ -322,7 +322,7 @@ static void SaveAsWin(NewDevDesc *dd, char *display)
 		       fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 		       ((gadesc*) dd->deviceSpecific)->basefontsize,
-		       0, 1, White, 1, NA_INTEGER, NA_INTEGER, FALSE, 
+		       0, 1, White, 1, NA_INTEGER, NA_INTEGER, FALSE,
 		       R_GlobalEnv))
         PrivateCopyDevice(dd, ndd, display);
 }
@@ -347,7 +347,7 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
 	return;
     }
 
-    
+
     ndd->displayList = R_NilValue;
 
     /* Set default values... */
@@ -833,6 +833,20 @@ static void menuclpbm(control m)
     gsetcursor(xd->gawin, WatchCursor);
     copytoclipboard(xd->bm);
     gsetcursor(xd->gawin, ArrowCursor);
+}
+
+static void menustayontop(control m)
+{
+    NewDevDesc *dd = (NewDevDesc *) getdata(m);
+    gadesc *xd = (gadesc *) dd->deviceSpecific;
+
+    if (ischecked(m)) {
+	uncheck(m);
+	BringToTop(xd->gawin, 0);
+    } else {
+	check(m);
+	BringToTop(xd->gawin, 1);
+    }
 }
 
 static void menuprint(control m)
@@ -1426,6 +1440,11 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     setdata(m, (void *) dd);
     MCHECK(m = newmenuitem("Save as postscript...", 0, menups));
     setdata(m, (void *) dd);
+    if (!ismdi()) {
+	MCHECK(newmenuitem("-", 0, NULL));
+    	MCHECK(m = newmenuitem("Stay on top", 0, menustayontop));
+    	setdata(m, (void *) dd);
+    }
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(m = newmenuitem("Print...", 0, menuprint));
     setdata(m, (void *) dd);

@@ -288,6 +288,17 @@ static void menulazy(control m)
 /*    show(RConsole); */
 }
 
+static void menuconsolestayontop(control m)
+{
+    if (ischecked(m)) {
+	uncheck(m);
+	BringToTop(RConsole, 0);
+    } else {
+	check(m);
+	BringToTop(RConsole, 1);
+    }
+}
+
 static void menukill(control m)
 {
     /*  show(RConsole); */
@@ -791,6 +802,7 @@ static MenuItem ConsolePopup[] = {
     {"Select all", menuselectall, 0},
     {"-", 0, 0},
     {"Buffered output", menulazy, 0},
+    {"Stay on top", menuconsolestayontop, 0},
     LASTMENUITEM
 };
 
@@ -812,6 +824,10 @@ static void popupact(control m)
 	enable(ConsolePopup[1].m);
     else
 	disable(ConsolePopup[1].m);
+    if (ismdi())
+    	disable(ConsolePopup[9].m);
+    else
+    	enable(ConsolePopup[9].m);
 }
 
 int setupui()
