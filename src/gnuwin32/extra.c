@@ -1158,7 +1158,6 @@ static void longpathname(char *path)
         } else return; 
     }
     strcpy(path, tmpbuf);
-    return path;
 }
 
 
