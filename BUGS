@@ -354,3 +354,15 @@ Date: Thu, 18 Oct 2001 16:41:03 +0800
 Subject: Canceling close behaves incorrectly
 From: john_heumann@agilent.com
 Date: Sat, 20 Oct 2001 01:02:02 +0200 (MET DST)
+* PR# 1136 *
+Subject: cex/col/etc. in title(): documentation?
+From: Ben Bolker <ben@zoo.ufl.edu>
+Date: Mon, 22 Oct 2001 11:55:14 -0400 (EDT)
+* PR# 1137 *
+Subject: =?ks_c_5601-1987?B?W2luZm9dci1idWdztNQgvsiz58fPvcq0z7HuPw==?=
+From: =?ks_c_5601-1987?B?wMzH9r/s?= <olk@olk.co.kr>
+Date: Tue, 23 Oct 2001 06:50:44 +0900
+* PR# 1138 *
+Subject:  round() doesnt
+From: David Brahm  <a215020@onyx.fmr.com>
+Date: Mon, 22 Oct 2001 18:08:50 -0400 (EDT)
