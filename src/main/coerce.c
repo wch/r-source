@@ -1378,7 +1378,7 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* Same code for LISTSXP and VECSXP : */
 #define LIST_VEC_NA(s)							\
-	if (!isVector(s) || length(s) > 1)				\
+	if (!isVector(s) || length(s) != 1)				\
 		LOGICAL(ans)[i] = 0;					\
 	else {								\
 		switch (TYPEOF(s)) {					\
@@ -1476,7 +1476,7 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* Same code for LISTSXP and VECSXP : */
 
 #define LIST_VEC_NAN(s)							\
-	if (!isVector(s) || length(s) > 1)				\
+	if (!isVector(s) || length(s) != 1)				\
 		LOGICAL(ans)[i] = 0;					\
 	else {								\
 		switch (TYPEOF(s)) {					\

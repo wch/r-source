@@ -219,7 +219,9 @@ BUG FIXES
 
     o	calls to replacement functions ("f<-") lost argument names (PR#888)
 
- 
+    o   is.na and is.nan gave random result on lists containing zero-length 
+        objects
+
 
 		CHANGES IN R VERSION 1.2.2
 
