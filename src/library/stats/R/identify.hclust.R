@@ -38,7 +38,7 @@ rect.hclust <- function(tree, k=NULL, which=NULL,
     if(any(which>k))
         stop(paste("all elements of which must be between 1 and", k))
 
-    border <- rep(border, length=length(which))
+    border <- rep(border, length.out = length(which))
 
     retval <- list()
     for(n in 1:length(which)){

@@ -55,7 +55,7 @@ package.dependencies <- function(x, check = FALSE)
     }
 
     if(check){
-        z <- rep(TRUE, nrow(x))
+        z <- rep.int(TRUE, nrow(x))
         for(k in 1:nrow(x)){
             ## currently we only check the version of R itself
             if(!is.na(deps[[k]]) &&
@@ -97,7 +97,7 @@ package.description <- function(pkg, lib.loc=NULL, fields=NULL)
         warning(paste("DESCRIPTION file of package", pkg,
                       "missing or broken"))
         if(!is.null(fields)){
-            retval <- rep(NA, length(fields))
+            retval <- rep.int(NA, length(fields))
             names(retval) <- fields
         }
         else

@@ -133,8 +133,8 @@ de <- function(..., Modes=list(), Names=NULL)
 	    odata <- vector("list", length=length(Names))
 	    names(odata) <- Names
 	}
-	ncols <- rep(1, length(odata))
-	coltypes <- rep(1, length(odata))
+	ncols <- rep.int(1, length(odata))
+	coltypes <- rep.int(1, length(odata))
     }
     else {
 	ncols <- de.ncols(sdata)

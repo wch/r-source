@@ -98,7 +98,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 		 lty = axis.lty, cex.axis = cex.names, ...)
 	}
 	if(!is.null(legend.text)) {
-	    legend.col <- rep(col, length = length(legend.text))
+	    legend.col <- rep(col, length.out = length(legend.text))
 	    if((horiz & beside) || (!horiz & !beside)){
 		legend.text <- rev(legend.text)
 		legend.col <- rev(legend.col)

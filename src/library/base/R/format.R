@@ -236,7 +236,7 @@ format.data.frame <- function(x, ..., justify = "none")
                     rbind(rval[[i]], matrix(NA, nr-len, ncol(rval[[i]])))
                 else rval[[i]][1:nr,]
             } else {
-                rval[[i]] <- if(len < nr) c(rval[[i]], rep(NA, nr-len))
+                rval[[i]] <- if(len < nr) c(rval[[i]], rep.int(NA, nr-len))
                 else rval[[i]][1:nr]
             }
         }

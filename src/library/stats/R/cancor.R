@@ -11,24 +11,24 @@ cancor <- function(x, y, xcenter=TRUE, ycenter=TRUE)
     if(is.logical(xcenter)) {
 	if(xcenter) {
 	    xcenter <- colMeans(x,)
-	    x <- x - rep(xcenter, rep(nr, ncx))
+	    x <- x - rep(xcenter, rep.int(nr, ncx))
 	}
-	else xcenter <- rep(0, ncx)
+	else xcenter <- rep.int(0, ncx)
     }
     else {
-	xcenter <- rep(xcenter, length = ncx)
-	x <- x - rep(xcenter, rep(nr, ncx))
+	xcenter <- rep(xcenter, length.out = ncx)
+	x <- x - rep(xcenter, rep.int(nr, ncx))
     }
     if(is.logical(ycenter)) {
 	if(ycenter) {
 	    ycenter <- colMeans(y)
-	    y <- y - rep(ycenter, rep(nr, ncy))
+	    y <- y - rep(ycenter, rep.int(nr, ncy))
 	}
-	else ycenter <- rep(0, ncy)
+	else ycenter <- rep.int(0, ncy)
     }
     else {
-	ycenter <- rep(ycenter, length = ncy)
-	y <- y - rep(ycenter, rep(nr,ncy))
+	ycenter <- rep(ycenter, length.out = ncy)
+	y <- y - rep(ycenter, rep.int(nr,ncy))
     }
     qx <- qr(x)
     qy <- qr(y)

@@ -64,9 +64,9 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
     if(length(x) != length(y)) {
 	if(recycle) {
 	    if((nx <- length(x)) < (ny <- length(y)))
-		x <- rep(x, length= ny)
+		x <- rep(x, length.out = ny)
 	    else
-		y <- rep(y, length= nx)
+		y <- rep(y, length.out = nx)
 	}
 	else
 	    stop("x and y lengths differ")

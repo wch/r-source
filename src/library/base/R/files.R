@@ -57,12 +57,12 @@ file.copy <- function(from, to, overwrite=FALSE)
     if (nt == 1 && file.exists(to) && file.info(to)$isdir)
         to <- file.path(to, basename(from))
     else if (nf > nt) stop("more 'from' files than 'to' files")
-    if(nt > nf) from <- rep(from, length = nt)
+    if(nt > nf) from <- rep(from, length.out = nt)
     if (!overwrite) okay <- !file.exists(to)
-    else okay <- rep(TRUE, length(to))
+    else okay <- rep.int(TRUE, length(to))
     if (any(from[okay] %in% to[okay]))
         stop("file can't be copied both from and to")
-    if (any(okay)) { 
+    if (any(okay)) {
     	file.create(to[okay])
     	okay[okay] <- file.append(to[okay], from[okay])
     }
@@ -106,7 +106,7 @@ format.octmode <- function(x, ...)
         y <- floor(y/8)
         ans0 <- paste(z, ans0, sep="")
     }
-    ans <- rep(as.character(NA), length(x))
+    ans <- rep.int(as.character(NA), length(x))
     ans[!isna] <- ans0
     ans
 }

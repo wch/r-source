@@ -23,7 +23,7 @@ make.socket <- function(host = "localhost", port, fail = TRUE, server = FALSE)
 	if (host != "localhost")
 	    stop("Can only receive calls on local machine")
 	tmp <- .C("Rsockopen", port = port, PACKAGE="base")
-	buffer <- paste(rep("#",256), collapse = "")
+	buffer <- paste(rep.int("#",256), collapse = "")
 	tmp2 <- .C("Rsocklisten", port = tmp$port,
                    buffer = buffer, len = as.integer(256), PACKAGE="base")
 	host <- substr(tmp2$buffer, 1, tmp2$len)
@@ -50,7 +50,7 @@ read.socket <- function(socket, maxlen=256, loop=FALSE)
     if(length(port <- as.integer(socket$socket)) != 1)
 	stop("invalid `socket' argument")
     maxlen <- as.integer(maxlen)
-    buffer <- paste(rep("#",maxlen), collapse="")
+    buffer <- paste(rep.int("#",maxlen), collapse="")
     repeat {
 	tmp <- .C("Rsockread", port,
 		  buffer = buffer, len = maxlen, PACKAGE="base")

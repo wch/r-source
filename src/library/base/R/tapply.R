@@ -8,7 +8,7 @@ tapply <- function (X, INDEX, FUN=NULL, ..., simplify=TRUE)
     extent <- integer(nI)
     nx <- length(X)
     one <- as.integer(1)
-    group <- rep(one, nx)#- to contain the splitting vector
+    group <- rep.int(one, nx)#- to contain the splitting vector
     ngroup <- one
     for (i in seq(INDEX)) {
 	index <- as.factor(INDEX[[i]])

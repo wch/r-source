@@ -35,7 +35,7 @@ axis.POSIXct <- function(side, x, at, format, ...)
         zz$mday <- 1; zz$isdst <- zz$hour <- zz$min <- zz$sec <- 0
         zz$mon <- pretty(zz$mon)
         m <- length(zz$mon)
-        m <- rep(zz$year[1], m)
+        m <- rep.int(zz$year[1], m)
         zz$year <- c(m, m+1)
         z <- as.POSIXct(zz)
         if(missing(format)) format <- "%b"

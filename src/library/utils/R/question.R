@@ -60,7 +60,7 @@ topicName <- function(type, topic) {
         call <- match.call(fdef, expr)
         ## make the signature
         sigNames <- fdef@signature
-        sigClasses <- rep("missing", length(sigNames))
+        sigClasses <- rep.int("missing", length(sigNames))
         names(sigClasses) <- sigNames
         for(arg in sigNames) {
             argExpr <- elNamed(call, arg)

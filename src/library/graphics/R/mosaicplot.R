@@ -221,7 +221,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     if(is.null(ylab)) ylab <- nam.dn[2]
 
     if (is.null(off) || length(off) != dimd) { # Initialize spacing.
-        off <- rep(10, length=dimd)
+        off <- rep.int(10, dimd)
     }
     if (is.null(dir) || length(dir) != dimd) {# Initialize directions
         dir <- rep(c("v","h"), length=dimd)
@@ -244,7 +244,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
             else if (is.null(color) || (is.logical(color) && !color[1]))
                 rep.int(0, ncolors)
             else ## recycle
-                rep(color, length = ncolors)
+                rep(color, length.out = ncolors)
     }
 
     ##-- Plotting

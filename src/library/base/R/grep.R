@@ -2,14 +2,14 @@ grep <-
 function(pattern, x, ignore.case = FALSE, extended = TRUE, perl = FALSE,
          value = FALSE, fixed = FALSE)
 {
-  ## behaves like == for NA pattern 
+  ## behaves like == for NA pattern
   if (is.na(pattern)){
     if(value)
-      return(rep(as.character(NA),length(x)))
+      return(rep.int(as.character(NA), length(x)))
     else
-      return(rep(NA,length(x)))
+      return(rep.int(NA, length(x)))
   }
-  
+
   if(perl)
     .Internal(grep.perl(pattern, x, ignore.case, value))
   else
@@ -21,8 +21,8 @@ function(pattern, replacement, x, ignore.case = FALSE, extended = TRUE,
          perl = FALSE)
 {
   if (is.na(pattern))
-    return(rep(as.character(NA), length(x)))
-  
+    return(rep.int(as.character(NA), length(x)))
+
     if(perl)
         .Internal(sub.perl(pattern, replacement, x, ignore.case))
     else
@@ -34,7 +34,7 @@ function(pattern, replacement, x, ignore.case = FALSE, extended = TRUE,
          perl = FALSE)
 {
   if (is.na(pattern))
-    return(rep(as.character(NA), length(x)))
+    return(rep.int(as.character(NA), length(x)))
 
   if(perl)
         .Internal(gsub.perl(pattern, replacement, x, ignore.case))
@@ -55,14 +55,14 @@ agrep <-
 function(pattern, x, ignore.case = FALSE, value = FALSE,
          max.distance = 0.1)
 {
-  ## behaves like == for NA pattern 
+  ## behaves like == for NA pattern
    if (is.na(pattern)){
      if (value)
-       return(rep(as.character(NA), length(x)))
+       return(rep.int(as.character(NA), length(x)))
      else
-       return(rep(NA, length(x)))
+       return(rep.int(NA, length(x)))
    }
-  
+
     if(!is.character(pattern)
        || (length(pattern) < 1)
        || ((n <- nchar(pattern)) == 0))

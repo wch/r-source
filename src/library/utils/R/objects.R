@@ -301,7 +301,7 @@ getAnywhere <- function(x)
     if(length(pos <- find(x, numeric=TRUE))) {
         objs <- lapply(pos, function(pos, x) get(x, pos=pos), x=x)
         where <- names(pos)
-        visible <- rep(TRUE, length(pos))
+        visible <- rep.int(TRUE, length(pos))
     }
     ## next look for methods
     if(length(grep(".", x, fixed=TRUE))) {
@@ -333,7 +333,7 @@ getAnywhere <- function(x)
     }
     # now check for duplicates
     ln <- length(objs)
-    dups <- rep(FALSE, ln)
+    dups <- rep.int(FALSE, ln)
     objs2 <- lapply(objs, function(x) {
         if(is.function(x)) environment(x) <- NULL
         x

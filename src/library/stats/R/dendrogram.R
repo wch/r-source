@@ -251,7 +251,7 @@ plotNode <-
     }
 
     Xtract <- function(nam, L, default, indx)
-	rep(if(any(nam == names(L))) L[[nam]] else default, length = indx)[indx]
+	rep(if(any(nam == names(L))) L[[nam]] else default, length.out = indx)[indx]
 
     if(!is.null(nPar)) { ## draw this node
 	i <- if(inner || hasP) 1 else 2 # only 1 node specific par

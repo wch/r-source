@@ -90,7 +90,7 @@ plot.design <-
 	ylab <- paste(fname, "of", yname)
     ydata <- as.matrix(x[,i.num])
     if (!any(i.fac)) {
-	x <- data.frame(Intercept = rep(" ", nrow(x)))
+	x <- data.frame(Intercept = rep.int(" ", nrow(x)))
 	i.fac <- 1
     }
     xf <- x[, i.fac, drop = FALSE]

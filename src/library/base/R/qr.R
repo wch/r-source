@@ -57,7 +57,7 @@ qr.coef <- function(qr, y)
 	coef[qr$pivot,] <- .Call("qr_coef_real", qr, y, PACKAGE = "base")[1:p]
 	return(if(im) coef else c(coef))
     }
-    if (k==0) return( if (im) matrix(NA,p,ny) else rep(NA,p))
+    if (k==0) return( if (im) matrix(NA,p,ny) else rep.int(NA,p))
 
     storage.mode(y) <- "double"
     if( nrow(y) != n )
@@ -195,7 +195,7 @@ qr.fitted <- function(qr, y, k=qr$rank)
 
 ##---- The next three are from Doug Bates ('st849'):
 qr.Q <- function (qr, complete = FALSE,
-		  Dvec = rep(if (cmplx) 1 + 0i else 1,
+		  Dvec = rep.int(if (cmplx) 1 + 0i else 1,
 		  if (complete) dqr[1] else min(dqr)))
 {
     if(!is.qr(qr)) stop("argument is not a QR decomposition")

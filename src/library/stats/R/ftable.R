@@ -177,7 +177,7 @@ write.ftable <- function(x, file = "", quote = TRUE,
     makeNames <- function(x) {
         nmx <- names(x)
         if(is.null(nmx))
-            nmx <- rep("", length = length(x))
+            nmx <- rep("", length.out = length(x))
         nmx
     }
 
@@ -209,7 +209,7 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
     ## on the whole thing, so we could extend this to connections which
     ## can seek the origin (file connections only, it seems).
     ## </NOTE>
-    
+
     z <- count.fields(file, sep, quote, skip)
     n.row.vars <- z[max(which(z == max(z)))] - z[length(z)] + 1
     i <- which(z == n.row.vars)
@@ -218,7 +218,7 @@ read.ftable <- function(file, sep = "", quote = "\"", row.var.names,
     file <- file(file, "r")
     on.exit(close(file))
     readLines(file, skip)
-    
+
     if((length(i) != 1) || (i == 1)) {
         ## This is not really an ftable.
         if((z[1] == 1) && z[2] == max(z)) {

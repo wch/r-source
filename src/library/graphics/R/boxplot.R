@@ -11,7 +11,7 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
 	if(!is.null(attributes(args)$names))
 	    attributes(args)$names != ""
 	else
-	    rep(FALSE, length = length(args))
+	    rep(FALSE, length.out = length(args))
     pars <- c(args[namedargs], pars)
     groups <- if(is.list(x)) x else args[!namedargs]
     if(0 == (n <- length(groups)))

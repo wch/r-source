@@ -100,7 +100,7 @@ function(topic, device = getOption("device"),
     }
     cat("\n\n",
 	"\tdemo(", topic, ")\n",
-	"\t---- ", rep("~", nchar(topic)), "\n",
+	"\t---- ", rep.int("~", nchar(topic)), "\n",
 	sep="")
     if(interactive()) {
 	cat("\nType  <Return>	 to start : ")

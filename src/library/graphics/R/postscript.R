@@ -59,7 +59,7 @@ check.options <-
 	else { #- match(es) found:  substitute if appropriate
 	    i.match <- oldnames[matches]
 	    prev <- old[i.match]
-	    doubt <- rep(FALSE, length(prev))
+	    doubt <- rep.int(FALSE, length(prev))
 	    for(fn in check.attributes)
 		if(any(ii <- sapply(prev, fn) != sapply(new, fn))) {
 		    doubt <- doubt | ii

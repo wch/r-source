@@ -28,7 +28,7 @@ str.default <-
     function(object, max.level = 0, vec.len = 4, digits.d = 3,
 	     nchar.max = 128, give.attr = TRUE, give.length = TRUE,
 	     wid = getOption("width"), nest.lev = 0,
-	     indent.str = paste(rep(" ", max(0, nest.lev + 1)), collapse = ".."),
+	     indent.str = paste(rep.int(" ", max(0, nest.lev + 1)), collapse = ".."),
 	     ...)
 {
     ## Purpose: Display STRucture of any R - object (in a compact form).
@@ -82,7 +82,7 @@ str.default <-
 	    }
 	    if (max.level==0 || nest.lev < max.level) {
 		nam.ob <-
-		    if(is.null(nam.ob <- names(object))) rep("", le)
+		    if(is.null(nam.ob <- names(object))) rep.int("", le)
 		    else { max.ncnam <- max(nchar(nam.ob))
 			   format.char(nam.ob, width = max.ncnam, flag = '-')
 		       }

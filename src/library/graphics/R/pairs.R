@@ -60,7 +60,7 @@ function (x, labels, panel = points, ..., main = NULL, oma = NULL,
         oma <- c(4, 4, 4, 4)
         if (!is.null(main)) oma[3] <- 6
     }
-    opar <- par(mfrow = c(nc, nc), mar = rep(gap/2, 4), oma = oma)
+    opar <- par(mfrow = c(nc, nc), mar = rep.int(gap/2, 4), oma = oma)
     on.exit(par(opar))
 
     for (i in if(row1attop) 1:nc else nc:1)
