@@ -9,7 +9,7 @@ REXE = $(Rbinary) $(Rbase)
 Ex = ./Examples
 
 TESTsrc = simple-true.R simple-tests.R d-p-q-r-tests.R \
-	 print-tests.R is-things.R
+	 print-tests.R is-things.R primitive-funs.R
 
 TESTout = $(TESTsrc:.R=.Rout)
 
