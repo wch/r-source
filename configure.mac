@@ -88,4 +88,14 @@ echo "Interpreted Function Libraries"
 
 cd $RHOME/src/library/base/R
 cat `ls *.R | sed '/system.*/d'` system.mac.R > $MHOME/library/base/R/base
-cp $RHOME/src/library/profile/Rprofile.mac $MHOME/library/base/R/Rprofile
+cat $RHOME/src/library/profile/Common.R \
+    $RHOME/src/library/profile/Rprofile.mac >  $MHOME/library/base/R/Rprofile
+
+# (5) Manual entries etc (just grab the unix ones for now)
+
+cd $RHOME
+cp -R library/LibIndex Macintosh/library
+cp -R library/base/INDEX Macintosh/library/base
+cp -R library/base/help Macintosh/library/base
+cp -R library/base/data Macintosh/library/base
+cp -R library/base/R-ex Macintosh/library/base
