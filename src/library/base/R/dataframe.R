@@ -286,13 +286,13 @@ data.frame <-
 	if(length(xi)==1 && nrows[i] > 0 && nr%%nrows[i]==0) {
             xi1 <- xi[[1]]
             if(is.vector(xi1) || is.factor(xi1)) {
-                vlist[[i]] <- list(rep(xi1, length=nr))
+                vlist[[i]] <- list(rep(xi1, length.out = nr))
                 next
             }
             if(is.character(xi1) && class(xi1) == "AsIs") {
                 ## simple char vectors only
                 cl <- class(xi1) # `methods' adds a class -- Eh?
-                vlist[[i]] <- list(structure(rep(xi1, length=nr), class=cl))
+                vlist[[i]] <- list(structure(rep(xi1, length.out = nr), class=cl))
                 next
             }
         }
@@ -459,7 +459,7 @@ data.frame <-
                 ## allow replication of length(value) > 1 in 1.8.0
                 N <- length(value)
                 if(N > 0 && N < nreplace && (nreplace %% N) == 0)
-                    value <- rep(value, length = nreplace)
+                    value <- rep(value, length.out = nreplace)
                 if(length(value) != nreplace)
                     stop("rhs is the wrong length for indexing by a logical matrix")
                 n <- 0
@@ -555,7 +555,7 @@ data.frame <-
                 ## try to use the names of a list `value'
                 if(is.list(value) && !is.null(vnm <- names(value))) {
                     p <- length(jseq)
-                    if(length(vnm) < p) vnm <- rep(vnm, length = p)
+                    if(length(vnm) < p) vnm <- rep(vnm, length.out = p)
                     new.cols <- vnm[jseq > nvars]
                 }
 	    }
@@ -576,7 +576,7 @@ data.frame <-
                 stop(paste("replacement has", N, "rows, data has", n))
             if(N < n && N > 0)
                 if(n %% N == 0 && length(dim(value)) <= 1)
-                    value <- rep(value, length = n)
+                    value <- rep(value, length.out = n)
                 else
                     stop(paste("replacement has", N, "rows, data has", n))
             value <- list(value)
@@ -601,7 +601,7 @@ data.frame <-
                 stop(paste("replacement element", k, "has", N,
                            "rows, need", n))
             ## these fixing-ups will not work for matrices
-            if(N > 0 && N < n) value[[k]] <- rep(value[[k]], len=n)
+            if(N > 0 && N < n) value[[k]] <- rep(value[[k]], length.out = n)
             if(N > n) {
                 warning(paste("replacement element", k, "has", N,
                               "rows to replace", n, "rows"))
@@ -613,7 +613,7 @@ data.frame <-
     nrowv <- dimv[1]
     if(nrowv < n && nrowv > 0) {
 	if(n %% nrowv == 0)
-	    value <- value[rep(1:nrowv, length=n),,drop = FALSE]
+	    value <- value[rep(1:nrowv, length.out = n),,drop = FALSE]
 	else stop(paste(nrowv, "rows in value to replace", n, "rows"))
     }
     else if(nrowv > n)
@@ -621,7 +621,7 @@ data.frame <-
 		      n, "rows"))
     ncolv <- dimv[2]
     jvseq <- seq(len=p)
-    if(ncolv < p) jvseq <- rep(1:ncolv, length = p)
+    if(ncolv < p) jvseq <- rep(1:ncolv, length.out = p)
     else if(ncolv > p)
 	warning(paste("provided", ncolv, "variables to replace", p,
 		      "variables"))
@@ -672,7 +672,7 @@ data.frame <-
                 stop(paste("replacement has", N, "rows, data has", nrows))
             if(N < nrows && N > 0)
                 if(nrows %% N == 0 && length(dim(value)) <= 1)
-                    value <- rep(value, length = nrows)
+                    value <- rep(value, length.out = nrows)
                 else
                     stop(paste("replacement has", N, "rows, data has", nrows))
 	}
@@ -753,7 +753,7 @@ data.frame <-
             stop(paste("replacement has", N, "rows, data has", nrows))
         if(N < nrows && N > 0)
             if(nrows %% N == 0 && length(dim(value)) <= 1)
-                value <- rep(value, length = nrows)
+                value <- rep(value, length.out = nrows)
             else
                 stop(paste("replacement has", N, "rows, data has", nrows))
     }
@@ -943,7 +943,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	xi <- unclass(allargs[[i]])
 	if(!is.list(xi))
 	    if(length(xi) != nvar)
-		xi <- rep(xi, length = nvar)
+		xi <- rep(xi, length.out = nvar)
 	ri <- rows[[i]]
 	pi <- perm[[i]]
 	if(is.null(pi))
@@ -1107,7 +1107,7 @@ Ops.data.frame <- function(e1, e2 = NULL)
 		stop(paste("list of length", length(e2), "not meaningful"))
 	} else {
 	    if(!rscalar)
-		e2 <- split(rep(as.vector(e2), length = prod(dim(e1))),
+		e2 <- split(rep(as.vector(e2), length.out = prod(dim(e1))),
 			    rep.int(1:ncol(e1), rep.int(nrow(e1), ncol(e1))))
 	}
     } else {
@@ -1121,7 +1121,7 @@ Ops.data.frame <- function(e1, e2 = NULL)
 		stop(paste("list of length", length(e1), "not meaningful"))
 	} else {
 	    if(!lscalar)
-		e1 <- split(rep(as.vector(e1), length = prod(dim(e2))),
+		e1 <- split(rep(as.vector(e1), length.out = prod(dim(e2))),
 			    rep.int(1:ncol(e2), rep.int(nrow(e2), ncol(e2))))
 	}
     }
