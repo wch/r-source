@@ -1,6 +1,7 @@
 ansari.test              Ansari-Bradley Test
 bartlett.test            Bartlett Test for Homogeneity of Variances
 binom.test               Exact Binomial Test
+chisq.test               Pearson's Chi-square Test for Count Data
 cor.test                 Test for Zero Correlation
 fisher.test              Fisher's Exact Test for Count Data
 friedman.test            Friedman Rank Sum Test
@@ -9,6 +10,8 @@ ks.test                  Kolmogorov-Smirnov Tests
 mantelhaen.test          Mantel-Haenszel Chi-Square Test for Count Data
 mcnemar.test             McNemar's Chi-square Test for Count Data
 mood.test                Mood Two-Sample Test of Scale
+prop.test                Test for Equal or Given Proportions
 shapiro.test             Shapiro-Wilk Normality Test
+t.test                   Student's t-Test
 var.test                 F Test to Compare Two Variances
 wilcox.test              Wilcoxon Rank Sum and Signed Rank Tests
