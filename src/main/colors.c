@@ -137,7 +137,7 @@ SEXP do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
     ng = LENGTH(gm);
     na = LENGTH(a);
     if (nh <= 0 || ns <= 0 || nv <= 0 || ng <= 0 || na <= 0) {
-	UNPROTECT(4);
+	UNPROTECT(5);
 	return(allocVector(STRSXP, 0));
     }
     max = nh;
