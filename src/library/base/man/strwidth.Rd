@@ -26,7 +26,7 @@ strwidth(s, units = "user", cex = NULL)
 }
 \examples{
 str.ex <- c("W","w","I",".","WwI.")
-par(pty='s'); plot(1:100,1:100); par('usr')
+op <- par(pty='s'); plot(1:100,1:100); par('usr')
 sw <- strwidth(str.ex); sw
 sum(sw[1:4] == sw[5])#- since the last string contains the others
 sw / strwidth(str.ex, cex = .5)
@@ -50,4 +50,6 @@ lett.classes <- structure(vector("list", n.classes), names= names(tL))
 for(i in 1:n.classes)
   lett.classes[[i]] <- all.lett[swL == as.numeric(names(tL)[i])]
 lett.classes
+
+par(op)#- reset to previous setting
 }

@@ -181,6 +181,9 @@ par(\dots)
   graphic devices \code{\link{x11}}, \code{\link{postscript}}.
 }
 \examples{
-op <- par(mfrow = c(2, 2)) # 2 x 2 pictures on one plot
-par(pty = "s") # square plotting region, independent of device size
+op <- par(mfrow = c(2, 2), # 2 x 2 pictures on one plot
+          pty = "s")      # square plotting region, independent of device size
+
+## At end of plotting, reset to previous settings:
+par(op)	  
 }

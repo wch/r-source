@@ -45,7 +45,7 @@ spline(x, y, n = 3*length(x), method = "fmm",
 \examples{
 x <- 1:10
 y <- rnorm(10)
-par(mfrow = c(2,1))
+op <- par(mfrow = c(2,1), mgp = c(2,.8,0), mar = .1+c(3,3,3,1))
 plot(x, y, main = "spline[fun](.) through 10 points")
 lines(spline(x, y))
 lines(spline(x, y, n = 201), col = 2)
@@ -55,6 +55,7 @@ ls(envir = environment(f))
 splinecoef <- eval(expression(z), envir = environment(f))
 curve(f(x), 1, 10, col = "green", lwd = 1.5)
 points(splinecoef, col = "purple", cex = 2)
+par(op)
 }
 \keyword{math}
 \keyword{dplot}
