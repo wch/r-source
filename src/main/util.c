@@ -1119,6 +1119,7 @@ Rboolean utf8strIsASCII(char *str)
     return TRUE;
 }
 
+#ifdef SUPPORT_UTF8
 /* Number of additional bytes */
 static const unsigned char utf8_table4[] = {
   1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -1128,10 +1129,21 @@ static const unsigned char utf8_table4[] = {
 
 int utf8clen(char c)
 {
+    /* This allows through 8-bit chars 10xxxxxx, which are invalid */
     if ((c & 0xc0) != 0xc0) return 1;
     return 1 + utf8_table4[c & 0x3f];
 }
 
+size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps)
+{
+    size_t used;
+
+    if(n <= 0 || !*s) return (size_t)0;
+    used = mbrtowc(wc, s, n, ps);
+    if((int)used < 0) error("invalid multibyte string");
+    return used;
+}
+#endif
 
 void F77_SYMBOL(rexitc)(char *msg, int *nchar)
 {

@@ -264,12 +264,11 @@ int Rstrlen(SEXP s, int quote)
 	    }
 	    p++;
 #ifdef SUPPORT_UTF8
-	} else if(utf8locale) { /* beginning of multibyte UTF-8 char */
-	    int clen = utf8clen(*p);
-	    wchar_t wc;
-	    mbrtowc(&wc, p, clen, NULL);
+	} else if(utf8locale) { /* beginning of multibyte char */
+	    size_t res; wchar_t wc;
+	    used = Mbrtowc(&wc, p, MB_CUR_MAX, NULL);
 	    len += iswprint((int)wc) ? 1 : 8;
-	    i += (clen - 1);
+	    i += (used - 1);
 #endif
 	} else { /* 8 bit char */
 #ifdef Win32 /* It seems Windows does not know what is printable! */
@@ -339,17 +338,16 @@ char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	    }
 	    p++;
 #ifdef SUPPORT_UTF8
-	} else if(utf8locale) { /* beginning of multibyte UTF-8 char */
-	    int j, clen = utf8clen(*p);
-	    wchar_t wc;
-	    mbrtowc(&wc, p, clen, NULL);
+	} else if(utf8locale) { /* beginning of multibyte char */
+	    int j; size_t res; wchar_t wc;
+	    res = Mbrtowc(&wc, p, clen, NULL);
 	    if(iswprint(wc)) {
-		for(j = 0; j < clen; j++) *q++ = *p++;
+		for(j = 0; j < res; j++) *q++ = *p++;
 	    } else {
 		snprintf(buf, 9, "\\u%06x", (unsigned int) wc);
-		p += clen;
+		p += res;
 	    }
-	    i += (clen - 1);
+	    i += (res - 1);
 #endif
 	} else {  /* 8 bit char */
 #ifdef Win32 /* It seems Windows does not know what is printable! */

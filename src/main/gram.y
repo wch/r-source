@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2005  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -686,7 +686,7 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 		    } else { /* over-long line */
 			char *LongLine = (char *) malloc(nc);
 			if(!LongLine) 
-			    error("unable to allocate space to source line");
+			    error("unable to allocate space for source line");
 			strncpy(LongLine, (char *)p0, nc);
 			LongLine[nc] = '\0';
 			SET_STRING_ELT(source, lines++,
@@ -1343,7 +1343,7 @@ static int typeofnext(void)
 
 	s[0] = c; s[clen] = '\0';
 	for(i = 1; i < clen; i++) s[i] = xxgetc();
-	mbrtowc(&wc, s, clen, NULL);
+	Mbrtowc(&wc, s, clen, NULL);
  	if (iswdigit(wc))
 	    k = 1;
 	else if (iswalpha(wc) || c == '.')
@@ -1623,6 +1623,36 @@ static int StringValue(int c)
 		else xxungetc(c);
 		c = octal;
 	    }
+	    else if(c == 'x') {
+		int val = 0; int i, ext;
+		for(i = 0; i < 2; i++) {
+		    c = xxgetc();
+		    if(c >= '0' && c <= '9') ext = c - '0';
+		    else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
+		    else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
+		    else {xxungetc(c); break;}
+		    val = 16*val + ext;
+		}
+		c = val;
+	    }
+#ifdef SUPPORT_UTF8
+	    else if(utf8locale && (c == 'u' || c == 'U')) {
+		wint_t val = 0; int i, ext; size_t res;
+		char buff[9];
+		for(i = 0; i < 8; i++) { /* probably only ever 6 */
+		    c = xxgetc();
+		    if(c >= '0' && c <= '9') ext = c - '0';
+		    else if (c >= 'A' && c <= 'F') ext = c - 'A' + 10;
+		    else if (c >= 'a' && c <= 'f') ext = c - 'a' + 10;
+		    else {xxungetc(c); break;}
+		    val = 16*val + ext;
+		}
+		res = wcrtomb(buff, val, NULL); /* should always be valid */
+		if(res <= 0) error("invalid \\uxxxx sequence");
+		for(i = 0; i <  res - 1; i++) YYTEXT_PUSH(buff[i], yyp);
+		c = buff[res - 1]; /* pushed below */
+	    }
+#endif
 	    else {
 		switch (c) {
 		case 'a':
@@ -1697,13 +1727,13 @@ int isValidName(char *name)
 	   use the wchar variants */
 	int n = strlen(name), used;
 	wchar_t wc;
-	used = mbrtowc(&wc, p, n, NULL); p += used; n -= used;
+	used = Mbrtowc(&wc, p, n, NULL); p += used; n -= used;
 	if (wc != L'.' && !iswalpha(wc) ) return 0;
 	if (wc == L'.') {
-	    mbrtowc(&wc, p, n, NULL);
+	    Mbrtowc(&wc, p, n, NULL);
 	    if(iswdigit(wc)) return 0;
 	}
-	while((used = mbrtowc(&wc, p, n, NULL))) {
+	while((used = Mbrtowc(&wc, p, n, NULL))) {
 	    if (!(iswalnum(wc) || wc == L'.' || wc == L'_')) break;
 	    p += used; n -= used;
 	}
@@ -1742,12 +1772,13 @@ static int SymbolValue(int c)
             }
 	    if(c == R_EOF) break;
 	    if(c == '.' || c == '_') continue;
+	    /* FIXME add validity checks here */
 	    clen = utf8clen(c);
 	    if(clen > 1) {
 		s[0] = c; s[clen] = '\0';
 		for(i = 1; i < clen; i++) s[i] = xxgetc();
-		mbrtowc(&wc, s, clen, NULL);
-		for(i = clen - 1; i > 0; i--) xxungetc(s[i]);   
+		Mbrtowc(&wc, s, clen, NULL);
+		for(i = clen - 1; i > 0; i--) xxungetc(s[i]);
 		if(!iswalnum(wc)) break;
 	    } else 
 		if(!isalnum(c)) break;
@@ -1815,10 +1846,11 @@ static int token()
 
     if (c == '.') return NumericValue(c);
 #ifdef SUPPORT_UTF8
+    /* FIXME add validity checks here */
     if(utf8locale && (clen = utf8clen(c)) > 1) {
 	s[0] = c; s[clen] = '\0';
 	for(i = 1; i < clen; i++) s[i] = xxgetc();
-	mbrtowc(&wc, s, clen, NULL);
+	Mbrtowc(&wc, s, clen, NULL);
 	for(i = clen - 1; i > 0; i--) xxungetc(s[i]);   
  	if (iswdigit(wc)) return NumericValue(c);
     } else
@@ -1843,10 +1875,11 @@ static int token()
 
     if (c == '.') return SymbolValue(c);
 #ifdef SUPPORT_UTF8
+    /* FIXME add validity checks here */
     if(utf8locale && (clen = utf8clen(c)) > 1) {
 	s[0] = c; s[clen] = '\0';
 	for(i = 1; i < clen; i++) s[i] = xxgetc();
-	mbrtowc(&wc, s, clen, NULL);
+	Mbrtowc(&wc, s, clen, NULL);
 	for(i = clen - 1; i > 0; i--) xxungetc(s[i]);   
  	if (iswalpha(wc)) return SymbolValue(c);
     } else

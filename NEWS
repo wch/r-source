@@ -213,6 +213,9 @@ NEW FEATURES
     o   as.data.frame.table() has a new argument 'responseName'
 	(contributed by Bill Venables).
 
+    o   Characters can be entered in hexadecimal as e.g. \x9c, and in
+	UTF-8 locales as \uxxxx or \Uxxxx (with up to 8 hexadecimals).
+
 
 UTILITIES
 

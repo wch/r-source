@@ -50,6 +50,20 @@
   When the \pkg{methods} package is attached, \code{print} will call
   \code{\link{show}} for methods with formal classes if called
   with no optional arguments.
+
+  If a non-printable character is encountered during output, it is
+  represented as one of the ANSI escape sequences (\code{\a}, \code{\b},
+  \code{\f}, \code{\n}, \code{\r}, \code{\t}, \code{\v} and \code{\0}),
+  or failing that as a 3-digit octal code: for example the UK currency
+  pound is \code{\243}.  Which characters are non-printable depends on
+  the locale.
+#ifdef windows
+  (Because some versions of Windows get this wrong, all 8-bit characters
+  are regarded as printable on Windows.)
+#endif
+
+  In a Unicode locale, an escape sequence of the form \code{\uxxxxxx},
+  (in hexadecimal) is used instead of octal.
 }
 \seealso{
   The generic \code{\link{print}}, \code{\link{options}}.

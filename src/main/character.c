@@ -134,7 +134,8 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 		INTEGER(s)[i] = 2 /* NA_INTEGER */;
 	    } else {
 #ifdef SUPPORT_UTF8
-		INTEGER(s)[i] = mbstowcs(NULL, CHAR(STRING_ELT(x, i)), 0);
+		nc = mbstowcs(NULL, CHAR(STRING_ELT(x, i)), 0);
+		INTEGER(s)[i] = nc >= 0 ? nc : NA_INTEGER;
 #else
 		INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
 #endif
@@ -147,12 +148,15 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef HAVE_WCSWIDTH
 		xi = CHAR(STRING_ELT(x, i));
 		nc = mbstowcs(NULL, xi, 0);
-		AllocBuffer((nc+1)*sizeof(wchar_t));
-		wc = (wchar_t *) buff;
-		mbstowcs(wc, xi, nc + 1);
-		INTEGER(s)[i] = wcswidth(wc, 2147483647);
-		if(INTEGER(s)[i] < 1) INTEGER(s)[i] = nc;
+		if(nc >= 0) {
+		    AllocBuffer((nc+1)*sizeof(wchar_t));
+		    wc = (wchar_t *) buff;
+		    mbstowcs(wc, xi, nc + 1);
+		    INTEGER(s)[i] = wcswidth(wc, 2147483647);
+		    if(INTEGER(s)[i] < 1) INTEGER(s)[i] = nc;
+		} else 
 #endif
+		    INTEGER(s)[i] = NA_INTEGER;
 #else
 		INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
 #endif
@@ -177,9 +181,9 @@ static void substr(char *buf, char *str, int sa, int so)
 #ifdef SUPPORT_UTF8
     if(utf8locale && !utf8strIsASCII(buf)) {
 	int j, used;
-	for(i = 1; i < sa; i++) str += mbrtowc(NULL, str, MB_CUR_MAX, NULL);
+	for(i = 1; i < sa; i++) str += Mbrtowc(NULL, str, MB_CUR_MAX, NULL);
 	for(i = sa; i <= so; i++) {
-	    used = mbrtowc(NULL, str, MB_CUR_MAX, NULL);
+	    used = Mbrtowc(NULL, str, MB_CUR_MAX, NULL);
 	    for (j = 0; j < used; j++) *buf++ = *str++;
 	}
     } else
@@ -242,11 +246,11 @@ static void substrset(char *buf, char *str, int sa, int so)
     if(utf8locale) { /* probably not worth optimizing for non-utf8 strings */
 	int i, in = 0, out = 0;
 
-	for(i = 1; i < sa; i++) buf += mbrtowc(NULL, buf, MB_CUR_MAX, NULL);
+	for(i = 1; i < sa; i++) buf += Mbrtowc(NULL, buf, MB_CUR_MAX, NULL);
 	/* now work out how many bytes to replace by how many */
 	for(i = sa; i <= so; i++) {
-	    in += mbrtowc(NULL, str+in, MB_CUR_MAX, NULL);
-	    out += mbrtowc(NULL, buf+out, MB_CUR_MAX, NULL);
+	    in += Mbrtowc(NULL, str+in, MB_CUR_MAX, NULL);
+	    out += Mbrtowc(NULL, buf+out, MB_CUR_MAX, NULL);
 	}
 	if(in != out) memmove(buf+in, buf+out, strlen(buf+out)+1);
 	memcpy(buf, str, in);
@@ -515,6 +519,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		} else {
 		    PROTECT(t = allocVector(STRSXP, ntok));
 		    for (j = 0; j < ntok; j++, p += used) {
+			/* This is valid as we have already checked */
 			used = mbrtowc(NULL, p, MB_CUR_MAX, NULL);
 			memcpy(bf, p, used); bf[used] = '\0';
 			SET_STRING_ELT(t, j, mkChar(bf));
@@ -738,10 +743,10 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	    int nc = l, used;
 	    wchar_t wc;
 	    p = this;
-	    used = mbrtowc(&wc, p, nc, NULL); p += used; nc -= used;
+	    used = Mbrtowc(&wc, p, MB_CUR_MAX, NULL); p += used; nc -= used;
 	    if (wc == L'.') {
 		if (nc > 0) {
-		    mbrtowc(&wc, p, nc, NULL);
+		    Mbrtowc(&wc, p, MB_CUR_MAX, NULL);
 		    if(iswdigit(wc))  need_prefix = TRUE;
 		}
 	    } else if (!iswalpha(wc)) need_prefix = TRUE;
@@ -768,12 +773,14 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	     */
 	    int nc = mbstowcs(NULL, this, 0);
 	    wchar_t *wstr = Calloc(nc+1, wchar_t), *wc;
-	    mbstowcs(wstr, this, nc+1);
-	    for(wc = wstr; *wc; wc++)
-		if (!iswalnum(*wc) && *wc != L'.' && (allow_ && *wc != L'_'))
-		    *wc = L'.';
-	    wcstombs(this, wstr, strlen(this)+1);
-	    Free(wstr);
+	    if(nc >= 0) {
+		mbstowcs(wstr, this, nc+1);
+		for(wc = wstr; *wc; wc++)
+		    if (!iswalnum(*wc) && *wc != L'.' && 
+			(allow_ && *wc != L'_')) *wc = L'.';
+		wcstombs(this, wstr, strlen(this)+1);
+		Free(wstr);
+	    } else errorcall(call, "invalid multibyte string %d", i+1);
 	} else
 #endif
 	{
@@ -1171,13 +1178,17 @@ do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else {
 		xi = CHAR(STRING_ELT(x, i));
 		nc = mbstowcs(NULL, xi, 0);
-		AllocBuffer((nc+1)*sizeof(wchar_t));
-		wc = (wchar_t *) buff;
-		mbstowcs(wc, xi, nc + 1);
-		for(j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
-		nb = wcstombs(NULL, wc, 0);
-		SET_STRING_ELT(y, i, allocString(nb));
-		wcstombs(CHAR(STRING_ELT(y, i)), wc, nb + 1);
+		if(nc >= 0) {
+		    AllocBuffer((nc+1)*sizeof(wchar_t));
+		    wc = (wchar_t *) buff;
+		    mbstowcs(wc, xi, nc + 1);
+		    for(j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
+		    nb = wcstombs(NULL, wc, 0);
+		    SET_STRING_ELT(y, i, allocString(nb));
+		    wcstombs(CHAR(STRING_ELT(y, i)), wc, nb + 1);
+		} else {
+		    errorcall(call, "invalid multibyte string %d", i+1);
+		}
 	    }
 	}
 	AllocBuffer(-1);
@@ -1412,12 +1423,14 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	trs_new->next = NULL;
 	/* Build the old and new wtr_spec lists. */
 	nc = mbstowcs(NULL, CHAR(STRING_ELT(old, 0)), 0);
+	if(nc < 0) errorcall(call, "invalid multibyte string 'old'");
 	AllocBuffer((nc+1)*sizeof(wchar_t));
 	wc = (wchar_t *) buff;
 	mbstowcs(wc, CHAR(STRING_ELT(old, 0)), nc + 1);
 	wtr_build_spec(wc, trs_old);
 
 	nc = mbstowcs(NULL, CHAR(STRING_ELT(new, 0)), 0);
+	if(nc < 0) errorcall(call, "invalid multibyte string 'new'");
 	AllocBuffer((nc+1)*sizeof(wchar_t));
 	wc = (wchar_t *) buff;
 	mbstowcs(wc, CHAR(STRING_ELT(new, 0)), nc + 1);
@@ -1452,6 +1465,8 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else {
 		xi = CHAR(STRING_ELT(x, i));
 		nc = mbstowcs(NULL, xi, 0);
+		if(nc < 0) 
+		    errorcall(call, "invalid input multibyte string %d", i+1);
 		AllocBuffer((nc+1)*sizeof(wchar_t));
 		wc = (wchar_t *) buff;
 		mbstowcs(wc, xi, nc + 1);
@@ -1856,7 +1871,7 @@ SEXP do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
 #if defined(SUPPORT_UTF8) && defined(HAVE_WCWIDTH)
 	wsum = 0;
 	for(p = this, w0 = 0, q = buff; *p ;) {
-	    nb =  mbrtowc(&wc, p, MB_CUR_MAX, NULL);
+	    nb =  Mbrtowc(&wc, p, MB_CUR_MAX, NULL);
 	    w0 = wcwidth(wc);
 	    if(w0 < 0) { p += nb; continue; }/* skip non-printable chars */
 	    wsum += w0;

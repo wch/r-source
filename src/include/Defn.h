@@ -629,6 +629,7 @@ extern int R_dec_min_exponent		INI_as(-308);
 # define ParseBrowser	Rf_ParseBrowser
 # define mat2indsub		Rf_mat2indsub
 # define match			Rf_match
+# define Mbrtowc		Rf_mbrtowc
 # define mkCLOSXP		Rf_mkCLOSXP
 # define mkComplex              Rf_mkComplex
 # define mkFalse		Rf_mkFalse
@@ -869,12 +870,20 @@ int	Rstrlen(SEXP, int);
 char *EncodeRaw(Rbyte);
 char *EncodeString(SEXP, int, int, Rprt_adj);
 
+#if defined(HAVE_WCHAR_H) && defined(SUPPORT_UTF8)
+#define __USE_XOPEN 1 /* glibc needs this for wcwidth/wcswidth */
+#include <wchar.h>
+#undef __USE_XOPEN
+#endif
+
 /* main/util.c */
 void UNIMPLEMENTED_TYPE(char *s, SEXP x);
 void UNIMPLEMENTED_TYPEt(char *s, SEXPTYPE t);
 Rboolean utf8strIsASCII(char *str);
+#ifdef SUPPORT_UTF8
 int utf8clen(char c);
-
+size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, mbstate_t *ps);
+#endif
 
 /* Macros for suspending interrupts */
 #define BEGIN_SUSPEND_INTERRUPTS do { \
