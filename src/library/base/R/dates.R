@@ -14,11 +14,8 @@ as.Date.POSIXct <- function(x, ...) {
     structure(z, class="Date")
 }
 
-as.Date.factor <- function(x, ...)
-{
-    x <- as.character(x)
-    NextMethod()
-}
+as.Date.factor <- function(x, ...) as.Date(as.character(x))
+
 
 as.Date.character <- function(x, format="", ...)
 {

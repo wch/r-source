@@ -19,6 +19,8 @@ BUG FIXES
 
     o	makeARIMA() was not handling an ARMA(0, 0) model correctly.
 
+    o	as.Date() was failing on factors.  (PR#6779)
+
 
 
 		CHANGES IN R VERSION 1.9.0

@@ -2996,3 +2996,8 @@ stopifnot(6 == length(print(s1 <- summary(t1))),
           s1== summary(as.POSIXct(t1)),
           6 == length(print(format(as.Date(s1)))) )
 ## gave bizarre "NA's" entry in R 1.8.1 and 1.9.0alpha
+
+
+## as.Date on a factor
+as.Date(factor("2000-01-02"))
+## failed in 1.9.0
