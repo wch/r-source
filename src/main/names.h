@@ -142,6 +142,7 @@ SEXP do_erase(SEXP, SEXP, SEXP, SEXP);
 SEXP do_eval(SEXP, SEXP, SEXP, SEXP);
 SEXP do_expression(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fileappend(SEXP, SEXP, SEXP, SEXP);
+SEXP do_filechoose(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fileexists(SEXP, SEXP, SEXP, SEXP);
 SEXP do_filecreate(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fileremove(SEXP, SEXP, SEXP, SEXP);

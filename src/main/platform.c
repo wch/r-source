@@ -313,6 +313,12 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     allfiles = asLogical(CAR(args)); args = CDR(args);
     fullnames = asLogical(CAR(args));
     ndir = length(d);
+#ifdef HAVE_REGCOMP
+    if (pattern && regcomp(&reg, CHAR(STRING(p)[0]), REG_EXTENDED))
+        errorcall(call, "invalid pattern regular expression\n");
+#else
+	warning("pattern specification is not available in \"list.files\"\n");
+#endif
     for (i = 0; i < ndir ; i++) {
 	dnp = R_ExpandFileName(CHAR(STRING(d)[i]));
 	if (strlen(dnp) >= DIRNAMEBUFSIZE)
@@ -320,12 +326,6 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 	strcpy(dirname, dnp);
 	if ((dir = opendir(dirname)) == NULL)
 	    errorcall(call, "invalid directory/folder name\n");
-#ifdef HAVE_REGCOMP
-	if (pattern && regcomp(&reg, CHAR(STRING(p)[0]), REG_EXTENDED))
-	    errorcall(call, "invalid pattern regular expression\n");
-#else
-	warning("pattern specification is not available in \"list.files\"\n");
-#endif
 	count = 0;
 	while (de = readdir(dir)) {
 	    if (allfiles || !R_HiddenFile(de->d_name))
@@ -468,4 +468,19 @@ SEXP do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
 	fclose(fp);
     }
     return mkString("");
+}
+
+#define CHOOSEBUFSIZE 1024
+
+SEXP do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    int new, len;
+    char buf[CHOOSEBUFSIZE];
+    checkArity(op, args);
+    new = asLogical(CAR(args));
+    if ((len = R_ChooseFile(new, buf, CHOOSEBUFSIZE)) == 0)
+	return mkString("");
+    if (len >= CHOOSEBUFSIZE - 1)
+	errorcall(call, "file name too long\n");   
+    return mkString(R_ExpandFileName(buf));
 }

@@ -415,11 +415,11 @@ void mainloop(void)
     else
     	R_Suicide("unable to restore saved data\n (remove .RData or increase memory)\n");
 
-#ifndef Macintosh
     /* This is where we source the system-wide, the site's and the
        user's profile (in that order).  If there is an error, we
        drop through to further processing. */
     R_LoadProfile(R_OpenSysInitFile());
+#ifndef Macintosh
     R_LoadProfile(R_OpenSiteFile());
     R_LoadProfile(R_OpenInitFile());
 #endif

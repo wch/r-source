@@ -26,6 +26,10 @@ file.exists <- function(file)
 file.create <- function(file)
 .Internal(file.create(file))
 
+file.choose <- function(new=FALSE)
+.Internal(file.choose(new))
+
+
 system.file <- function (..., pkg = .packages(), lib = .lib.loc) 
 {
     FILES <- paste(t(outer(lib, pkg, paste, sep = .Platform$file.sep)), 

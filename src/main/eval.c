@@ -30,7 +30,7 @@ SEXP do_browser(SEXP, SEXP, SEXP, SEXP);
 /* This code places a limit on the depth to which eval can recurse. */
 
 #define EVAL_LIMIT 100
-extern void isintrpt();
+void isintrpt(){}
 
 #endif
 

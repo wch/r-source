@@ -551,6 +551,7 @@ FUNTAB R_FunTab[] =
 {"file.append",	do_fileappend,	0,	11,	2,	PP_FUNCALL},
 {"list.files",  do_listfiles,   0,      11,     4,      PP_FUNCALL},
 {"file.exists", do_fileexists,  0,      11,     1,      PP_FUNCALL},
+{"file.choose", do_filechoose,  0,      11,     1,      PP_FUNCALL},
 {"R.home",	do_Rhome,	0,	11,	0,	PP_FUNCALL},
 {"date",	do_date,	0,	11,	0,	PP_FUNCALL},
 {"Platform",	do_Platform,	0,	11,	0,	PP_FUNCALL},

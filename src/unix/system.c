@@ -940,6 +940,20 @@ char *R_HomeDir()
 	return getenv("RHOME");
 }
 
+/* Prompt the user for a file name.  Return the length of */
+/* the name typed.  On Gui platforms, this should bring up */
+/* a dialog box so a user can choos files that way. */
+
+int R_ChooseFile(int new, char *buf, int len)
+{
+    int namelen;
+    R_ReadConsole("Enter file name: ", buf, len, 0);
+    namelen = strlen(buf);
+    if (buf[namelen - 1] == '\n')
+	buf[namelen - 1] = '\0';
+    return strlen(buf);
+}
+
 /* Unix file names which begin with "." are invisible. */
 /* Macintosh file names which end with "\r" are invisible. */
 
