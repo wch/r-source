@@ -108,20 +108,22 @@ extern int isValidName(char*);
 typedef R_StringBuffer DeparseBuffer;
 
 typedef struct {
- int linenumber;
- int len;
- int incurly;
- int inlist;
- Rboolean startline; /* = TRUE; */
- int indent;
- SEXP strvec;
-
- DeparseBuffer buffer;
-
- int cutoff;
+    int linenumber;
+    int len;
+    int incurly;
+    int inlist;
+    Rboolean startline; /* = TRUE; */
+    int indent;
+    SEXP strvec;
+	
+    DeparseBuffer buffer;
+    
+    int cutoff;
+    int backtick;
 } LocalParseData;
 
-static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff);
+static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff, 
+			       Rboolean backtick);
 static void args2buff(SEXP, int, int, LocalParseData *);
 static void deparse2buff(SEXP, LocalParseData *);
 static void print2buff(char *, LocalParseData *);
@@ -173,7 +175,7 @@ void R_FreeStringBuffer(DeparseBuffer *buf)
 SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ca1;
-    int  cut0;
+    int  cut0, backtick;
     /*checkArity(op, args);*/
     if(length(args) < 1) errorcall(call, "too few arguments");
 
@@ -186,16 +188,22 @@ SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    cut0 = DEFAULT_Cutoff;
 	}
     }
-    ca1 = deparse1WithCutoff(ca1, 0, cut0);
+    args = CDR(args);
+    backtick = 0;
+    if(!isNull(CAR(args))) 
+	backtick = asLogical(CAR(args));
+    ca1 = deparse1WithCutoff(ca1, 0, cut0, backtick);
     return ca1;
 }
 
 SEXP deparse1(SEXP call, Rboolean abbrev)
 {
-    return(deparse1WithCutoff(call, abbrev, DEFAULT_Cutoff));
+    Rboolean backtick = TRUE;
+    return(deparse1WithCutoff(call, abbrev, DEFAULT_Cutoff, backtick));
 }
 
-static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff)
+static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff, 
+			       Rboolean backtick)
 {
 /* Arg. abbrev:
 	If abbrev is TRUE, then the returned value
@@ -213,9 +221,10 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff)
 	    {0, 0, 0, 0, /*startline = */TRUE, 0,
 	     NULL,
 	     /*DeparseBuffer=*/{NULL, 0, BUFSIZE},
-	     DEFAULT_Cutoff};
+	     DEFAULT_Cutoff, 0};
     DeparseBuffer *buffer = &localData.buffer;
     localData.cutoff = cutoff;
+    localData.backtick = backtick;
     localData.strvec = R_NilValue;
 
     PrintDefaults(R_NilValue);/* from global options() */
@@ -247,8 +256,9 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff)
 SEXP deparse1line(SEXP call, Rboolean abbrev)
 {
    SEXP temp;
+   Rboolean backtick=TRUE;
 
-   temp = deparse1WithCutoff(call, abbrev, MAX_Cutoff);
+   temp = deparse1WithCutoff(call, abbrev, MAX_Cutoff, backtick);
    return(temp);
 }
 
@@ -545,7 +555,6 @@ static void printcomment(SEXP s, LocalParseData *d)
     }
 }
 
-#if 0
 static char * backquotify(char *s)
 {
     static char buf[120];
@@ -569,7 +578,6 @@ static char * backquotify(char *s)
     *t = '\0';
     return buf;
 }
-#endif
 	
 /* This is the recursive part of deparsing. */
 
@@ -586,11 +594,10 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	print2buff("NULL", d);
 	break;
     case SYMSXP:
-#if 0
-	print2buff(backquotify(CHAR(PRINTNAME(s))), d);
-#else
-	print2buff(CHAR(PRINTNAME(s)), d);
-#endif
+	if (d->backtick)
+	    print2buff(backquotify(CHAR(PRINTNAME(s))), d);
+	else
+	    print2buff(CHAR(PRINTNAME(s)), d);
 	break;
     case CHARSXP:
 	print2buff(CHAR(s), d);
@@ -810,7 +817,7 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 		    deparse2buff(CAR(s), d);
 		    if (parens)
 			print2buff(")", d);
-		    deparse2buff(op, d);
+		    print2buff(CHAR(PRINTNAME(op)), d);
 		    /*temp fix to handle printing of x$a's */
 		    if( isString(CADR(s)) &&
 			isValidName(CHAR(STRING_ELT(CADR(s), 0))))

@@ -192,13 +192,15 @@ NEW FEATURES
 	packages in namespaces with DLLs if their namespaces are unloaded.
  
     o   Non-syntactic variable names can now be specified by inclusion
-        between back-quotes `Like this`. The deparse() code has been
-        changed to output non-syntactical names with this convention;
-        beware that as.character() and deparse() now act differently on
-        symbols.
+        between backticks `Like This`. The deparse() code has been
+        changed to output non-syntactical names with this convention,
+        when they occur as operands in expressions. This is controlled
+        by a `backtick' argument, which is by default TRUE for
+        composite expressions and FALSE for single symbols. This
+        should give minimal interference with existing code.
  
-    o   In the tcltk package, as.tclObj() has gained a 'drop' to decide
-	what should happen for vectors of length one.
+    o   In the tcltk package, as.tclObj() has gained a `drop' argument
+	to decide what should happen for vectors of length one.
  
     o	New argument grep(..., fixed = TRUE) to avoid the need to escape
 	strings to match.
@@ -384,6 +386,8 @@ BUG FIXES
 
     o	str(x) gives better output when x is of mode "(".
 
+    o   Printing `nls' objects misbehaved when `data' was a composite
+        expression. 
 
 
 		CHANGES IN R VERSION 1.7.1

@@ -76,7 +76,9 @@ dataentry <- function (data, modes) {
 }
 
 deparse <-
-    function(expr, width.cutoff = 60).Internal(deparse(expr, width.cutoff))
+    function(expr, width.cutoff = 60,
+	     backtick = mode(expr) %in% c("call","expression","("))
+	.Internal(deparse(expr, width.cutoff, backtick))
 
 
 do.call <- function(what,args).Internal(do.call(what,args))

@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.23 2003/05/05 11:20:17 ripley Exp $
+### $Id: nls.R,v 1.24 2003/07/02 20:26:03 pd Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -469,7 +469,7 @@ coef.nls <- function( object, ... ) object$m$getAllPars()
 print.nls <- function(x, ...) {
     cat( "Nonlinear regression model\n" )
     cat( "  model: ", deparse( formula(x) ), "\n" )
-    cat( "   data: ", as.character( x$data ), "\n" )
+    cat( "   data: ", deparse( x$data ), "\n" )
     print( x$m$getAllPars() )
     cat( " residual sum-of-squares: ", format( x$m$deviance() ), "\n" )
     invisible(x)
