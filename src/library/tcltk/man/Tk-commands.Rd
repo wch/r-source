@@ -90,25 +90,130 @@
 }
 \usage{
 tkcmd(...)
+tktitle(x)
+
+tktitle(x) <- value
+
+tkbell(...)
+tkbind(...)
+tkbindtags(...)
+tkfocus(...)
+tklower(...)
+tkraise(...)
+
+tkclipboard.append(...)
+tkclipboard.clear(...)
+
+tkevent.add(...)
+tkevent.delete(...)
+tkevent.generate(...)
+tkevent.info(...)
+
+tkfont.actual(...)
+tkfont.configure(...)
+tkfont.create(...)
+tkfont.delete(...)
+tkfont.families(...)
+tkfont.measure(...)
+tkfont.metrics(...)
+tkfont.names(...)
+
+tkgrab(...)
+tkgrab.current(...)
+tkgrab.release(...)
+tkgrab.set(...)
+tkgrab.status(...)
+
+## NB: some widgets also have a selection.clear command, hence the "X".
+
+tkXselection.clear(...)
+tkXselection.get(...)
+tkXselection.handle(...)
+tkXselection.own(...)
+
+## winfo actually has a large number of subcommands, but it's rarely
+## used, so use tkwinfo("atom", ...) etc. instead.
+
+tkwinfo(...)
+
+# Window manager interface
+
+tkwm.aspect(...)
+tkwm.client(...)
+tkwm.colormapwindows(...)
+tkwm.command(...)
+tkwm.deiconify(...)
+tkwm.focusmodel(...)
+tkwm.frame(...)
+tkwm.geometry(...)
+tkwm.grid(...)
+tkwm.group(...)
+tkwm.iconbitmap(...)
+tkwm.iconify(...)
+tkwm.iconmask(...)
+tkwm.iconname(...)
+tkwm.iconposition(...)
+tkwm.iconwindow(...)
+tkwm.maxsize(...)
+tkwm.minsize(...)
+tkwm.overrideredirect(...)
+tkwm.positionfrom(...)
+tkwm.protocol(...)
+tkwm.resizable(...)
+tkwm.sizefrom(...)
+tkwm.state(...)
+tkwm.title(...)
+tkwm.transient(...)
+tkwm.withdraw(...)
+
+
+### Geometry managers
+
+tkgrid(...)
+tkgrid.bbox(...)
+tkgrid.columnconfigure(...)
+tkgrid.configure(...)
+tkgrid.forget(...)
+tkgrid.info(...)
+tkgrid.location(...)
+tkgrid.propagate(...)
+tkgrid.rowconfigure(...)
+tkgrid.remove(...)
+tkgrid.size(...)
+tkgrid.slaves(...)
+
 tkpack(...)
 tkpack.configure(...)
-...many more...
+tkpack.forget(...)
+tkpack.info(...)
+tkpack.propagate(...)
+tkpack.slaves(...)
+
+tkplace(...)
+tkplace.configure(...)
+tkplace.forget(...)
+tkplace.info(...)
+tkplace.slaves(...)
+
 }
 \arguments{
   \item{\dots}{Handled via \code{.Tcl.args}}
 }
 \details{
   \code{tkcmd} provides a generic interface to calling any Tk or Tcl
-  command by simply running \code{.Tcl.args} on the arguments and
-  passing the result to \code{.Tcl}
+  command by simply running \code{.Tcl.args} on the arguments and passing the
+  result to \code{.Tcl}. Most of the other commands with a particular
+  first argument and sometimes also a second argument giving the
+  subcommand.
 
+  \code{tktitle} and its assignment form provides an alternate interface
+  to Tk's \code{wm title}
+  
   There are far too many of these commands to describe them and their
-  arguments in full.  Please refer to the Tcl/Tk documentation for
-  details.  Notice the general pattern for converting Tcl subcommands
-  like \code{pack configure} to function names.  The naming pattern
-  should be obvious with a few exceptions.  E.g.,
-  \code{tkXselection.clear} has been renamed to avoid confusion with a
-  similarly named widget command.
+  arguments in full. Please refer to the Tcl/Tk documentation for details.
+  Except for a few exceptions, the pattern is that  Tcl subcommands like
+  \code{pack configure} are converted to function names like
+  \code{tkpack.configure}. 
 }
 \seealso{\code{\link{Tcl-interface}}, \code{\link{Tk-widgets}},
   \code{\link{Tk-widgetcmd}}}

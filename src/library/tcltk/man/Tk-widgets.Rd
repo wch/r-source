@@ -20,13 +20,22 @@
 \alias{tktext}
 \alias{tktoplevel}
 \usage{
-tkwidget(parent, type, \dots)
-tkbutton(parent, \dots)
-
-  ...many more...
-
-tktext(parent, \dots)
-tktoplevel(parent=.TkRoot, \dots)
+tkwidget(parent, type, ...)
+tkbutton(parent, ...)
+tkcanvas(parent, ...)
+tkcheckbutton(parent, ...)
+tkentry(parent, ...)
+tkframe(parent, ...)
+tklabel(parent, ...)
+tklistbox(parent, ...)
+tkmenu(parent, ...)
+tkmenubutton(parent, ...)
+tkmessage(parent, ...)
+tkradiobutton(parent, ...)
+tkscale(parent, ...)
+tkscrollbar(parent, ...)
+tktext(parent, ...)
+tktoplevel(parent=.TkRoot, ...)
 }
 \arguments{
   \item{parent}{ Parent of widget window }

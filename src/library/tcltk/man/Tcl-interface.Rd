@@ -47,24 +47,24 @@ tclvar$name <- value
   Tcl objects.  At the lowest level \code{.Tcl} sends a command as a text
   string to the Tcl interpreter and returns the result as a text string.
 
-  \code{.Tcl.args} converts an \R argument list of
-  "tag=value" pairs  to the Tcl "-option value" style, thus
-  enabling a simple translation between the two languages.  To send a
+  \code{.Tcl.args} converts an R argument list of \code{tag=value} pairs
+  to the Tcl \code{-option value} style, thus
+  enabling a simple translation between the two languages. To send a
   value with no preceding option flag to Tcl, just use an untagged
-  argument.  In the rare case one needs an option with no subsequent
-  value "tag=NULL" can be used.  Most values are just converted to
+  argument. In the rare case one needs an option with no subsequent
+  value \code{tag=NULL} can be used. Most values are just converted to
   character mode and inserted in the command string, but window objects
   are passed using their ID string, and functions are passed via the
-  result of \code{.Tcl.callback}.  Tags are converted to option flags
+  result of \code{.Tcl.callback}. Tags are converted to option flags
   simply by prepending a \code{-}
 
   \code{.Tcl.callback} converts \R functions to Tcl command strings.  The
-  argument must be a function closure.  The return value is something of
-  the form \code{"\{ R_call 0x408b94d4 \}"} in which the hexadecimal
-  number is the memory address of the function.  \code{.Tcl.args} takes
-  special precautions to ensure that the function will exist at that
-  address by assigning the function into the relevant window environment
-  (see below).
+  argument must be a function closure.  The
+  return value is something of the form \code{\{ R_call 0x408b94d4 \}} in which
+  the hexadecimal number is the memory address of the function.  
+  \code{.Tcl.args} takes special precautions to ensure that the function
+  will exist at that address by assigning the function into the relevant
+  window environment (see below).
 
   Tk windows are represented as \R environments, all of which are
   enclosed in the \code{.TkWin} environment.  They contain initially just
@@ -94,8 +94,8 @@ tclvar$name <- value
 \note{ Strings containing unbalanced braces are currently not handled
   well in many circumstances.
 }
-\seealso{\code{\link{Tk-widgets}}, \code{\link{Tk-commands}}%,
-  %FIXME: not yet: \code{\link{Tk-widgetcmd}}
+\seealso{\code{\link{Tk-widgets}}, \code{\link{Tk-commands},
+    \code{\link{Tk-widgetcmd}} 
 }
 \examples{
 \dontrun{
