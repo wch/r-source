@@ -102,10 +102,10 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 CHTML:
 ifeq ($(strip $(HELP)),YES)
 ifeq ($(strip $(WINHELP)),CHM)
-	$(MAKE) -C ./help -f MkChmDLL
+	$(MAKE) -C ./help -f MkChmDll
 endif
 ifeq ($(strip $(WINHELP)),BOTH)
-	$(MAKE) -C ./help -f MkChmDLL
+	$(MAKE) -C ./help -f MkChmDll
 endif
 endif
 
