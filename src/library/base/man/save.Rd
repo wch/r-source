@@ -49,7 +49,6 @@ sys.save.image(name)
     extra disk space during the save.}
   \item{name}{name of image file to save or load.}
   \item{quiet}{logical specifying whether a message should be printed.}
-  }
 }
 \details{
   All \R platforms use the XDR representation of binary objects in
