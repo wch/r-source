@@ -37,6 +37,9 @@
 # include <locale.h>
 #endif
 
+#ifdef HAVE_AQUA
+extern void InitAquaIO(void);
+#endif
 
 /* The `real' main() program is in ../<SYSTEM>/system.c */
 /* e.g. ../unix/system.c */
@@ -445,7 +448,10 @@ void setup_Rmainloop(void)
     InitColors();
     InitGraphics();
     R_Is_Running = 1;
-
+#ifdef HAVE_AQUA 
+     if (strcmp(R_GUIType, "AQUA") == 0) 
+       InitAquaIO(); /* must be after InitTempDir() */
+#endif
     /* gc_inhibit_torture = 0; */
 
     /* Initialize the global context for error handling. */

@@ -165,6 +165,8 @@ WindowRef	ConsoleWindow=NULL;
 
 ProcessSerialNumber AquaPSN;
 void RAqua2Front(void);
+void SendReturnKey(void);
+
 
 #define	kCMDEventClass	'DCMD'  /* Event class command AE */
 #define	kCMDEvent    	'DCMD'  /* Event command          */
@@ -555,8 +557,20 @@ Boolean AlreadyRunning = false;
 
 FILE *RAquaStdout;
 FILE *RAquaStdoutBack;
-char StdoutFName[255];
+FILE *RAquaStderr;
+FILE *RAquaStderrBack;
+const char *StdoutFName;
+const char *StderrFName;
 
+void InitAquaIO(void);
+void InitAquaIO(void){
+    StdoutFName = R_tmpnam("RStdout", R_TempDir);
+    StderrFName = R_tmpnam("RStderr", R_TempDir);
+    RAquaStdout = freopen(StdoutFName, "w", stdout);
+    RAquaStdoutBack = fopen(StdoutFName, "r");
+    RAquaStderr = freopen(StderrFName, "w", stderr);
+    RAquaStderrBack = fopen(StderrFName, "r");
+}
  
 void Raqua_StartConsole(Rboolean OpenConsole)
 {
@@ -569,17 +583,13 @@ void Raqua_StartConsole(Rboolean OpenConsole)
     FSRef 	ref;
     //OpenConsole = FALSE;
    
+     
     if(OpenConsole){ 
      if(SetUpGUI() != noErr)
        goto noconsole;
     
      InitAboutWindow();
       
-    sprintf(StdoutFName,"%s",R_ExpandFileName("~/.R/RAqua.stdout"));  
-    RAquaStdout = freopen(StdoutFName, "w", stdout);
-    RAquaStdoutBack = fopen(StdoutFName, "r");
-
-
      GetRPrefs();
      
      InitCursor();
@@ -731,6 +741,10 @@ void CloseRAquaConsole(void){
     fclose(RAquaStdout);
   if(RAquaStdoutBack)
     fclose(RAquaStdoutBack);
+  if(RAquaStderr)
+    fclose(RAquaStderr);
+  if(RAquaStderrBack)
+    fclose(RAquaStderrBack);
 }
 
 void Aqua_RWrite(char *buf);
@@ -2261,19 +2275,22 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
 */               
 void consolecmd(char *cmd)
 {
-    EventRef	REvent;
-    UInt32	RKeyCode = 36;
 
     if(strlen(cmd) < 1)
 	return;
 
-   TXNSetData (RConsoleInObject, kTXNTextData, cmd, strlen(cmd), 0, TXNDataSize(RConsoleInObject));
-   CreateEvent(NULL, kEventClassKeyboard, kEventRawKeyDown, 0,kEventAttributeNone, &REvent);
-   SetEventParameter(REvent, kEventParamKeyCode, typeUInt32, sizeof(RKeyCode), &RKeyCode);
-   SendEventToEventTarget (REvent,GetWindowEventTarget(ConsoleWindow));
+    TXNSetData (RConsoleInObject, kTXNTextData, cmd, strlen(cmd), 0, TXNDataSize(RConsoleInObject));
+    SendReturnKey();
 }
 
- 
+void SendReturnKey(void){
+    EventRef	REvent;
+    UInt32	RKeyCode = 36;
+
+    CreateEvent(NULL, kEventClassKeyboard, kEventRawKeyDown, 0,kEventAttributeNone, &REvent);
+    SetEventParameter(REvent, kEventParamKeyCode, typeUInt32, sizeof(RKeyCode), &RKeyCode);
+    SendEventToEventTarget (REvent,GetWindowEventTarget(ConsoleWindow));
+} 
 
 
 OSErr DoSelectDirectory( char *buf, char *title )
@@ -3235,12 +3252,6 @@ pascal OSErr  HandleDoCommandLine (AppleEvent *theAppleEvent, AppleEvent* reply,
 }
 
 
-void Raqua_doIdle(void);
-void Raqua_doIdle(void){
-    if(ConsoleWindow != NULL)
-        IdleControls(ConsoleWindow);
-
-}
 
  void	Raqua_ProcessEvents(void)
 {
@@ -3278,23 +3289,47 @@ static	pascal	void	ReadStdoutTimer( EventLoopTimerRef inTimer, void *inUserData 
     int len;
     char *tmpbuf;
     
-    if( RAquaStdoutBack == NULL)
-        return;
- 
-    fseek(RAquaStdoutBack, 0L, SEEK_END);
-    len = ftell(RAquaStdoutBack);
-     if(len<1) return;
-    rewind(RAquaStdoutBack);
-    if( (tmpbuf = malloc(len+1)) != NULL){
-        fread(tmpbuf, 1, len, RAquaStdoutBack);
-        tmpbuf[len] = '\0';
-        Raqua_WriteConsole(tmpbuf,len);
-        Aqua_FlushBuffer();
-        free(tmpbuf);
-        fclose(RAquaStdout);
-        fclose(RAquaStdoutBack);
-        RAquaStdout = freopen(StdoutFName, "w", stdout);
-        RAquaStdoutBack = fopen(StdoutFName, "r");
+    if( RAquaStdoutBack != NULL){
+        fseek(RAquaStdoutBack, 0L, SEEK_END);
+        len = ftell(RAquaStdoutBack);
+        if(len>=1){
+            rewind(RAquaStdoutBack);
+            if( (tmpbuf = malloc(len+2)) != NULL){
+                fread(tmpbuf+1, 1, len, RAquaStdoutBack);
+                tmpbuf[0] = '\n';
+                tmpbuf[len+1] = '\0';
+                Raqua_WriteConsole(tmpbuf,len+1);
+                Aqua_FlushBuffer();
+                free(tmpbuf);
+                fclose(RAquaStdout);
+                fclose(RAquaStdoutBack);
+                RAquaStdout = freopen(StdoutFName, "w", stdout);
+                RAquaStdoutBack = fopen(StdoutFName, "r");
+                SendReturnKey();
+            }
+        }
+    }
+    
+    
+    if( RAquaStderrBack != NULL){
+        fseek(RAquaStderrBack, 0L, SEEK_END);
+        len = ftell(RAquaStderrBack);
+        if(len>=1){
+            rewind(RAquaStderrBack);
+            if( (tmpbuf = malloc(len+2)) != NULL){
+                fread(tmpbuf+1, 1, len, RAquaStderrBack);
+                tmpbuf[0] = '\n';
+                tmpbuf[len+1] = '\0';
+                Raqua_WriteConsole(tmpbuf,len+1);
+                Aqua_FlushBuffer();
+                free(tmpbuf);
+                fclose(RAquaStderr);
+                fclose(RAquaStderrBack);
+                RAquaStdout = freopen(StderrFName, "w", stderr);
+                RAquaStderrBack = fopen(StderrFName, "r");
+                SendReturnKey();
+            }
+        }
     }
 
 }   

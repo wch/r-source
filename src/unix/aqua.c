@@ -81,7 +81,7 @@ extern DL_FUNC 	ptr_R_ReadConsole, ptr_R_WriteConsole, ptr_R_ResetConsole,
 
 DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters, 
         ptr_Raqua_Edit, ptr_do_dataentry, ptr_do_browsepkgs, ptr_do_datamanger,
-  ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser, ptr_R_doIdle;
+        ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser, ptr_InitAquaIO;
 
 
 void R_ProcessEvents(void);
@@ -167,9 +167,8 @@ void R_load_aqua_shlib(void)
     if(!ptr_do_hsbrowser) R_Suicide("Cannot load Raqua_helpsearchbrowser");
     ptr_R_Busy = Rdlsym(handle, "Raqua_Busy");
     if(!ptr_R_Busy) R_Suicide("Cannot load Raqua_Busy");
-    ptr_R_doIdle = Rdlsym(handle, "Raqua_doIdle");
-    if(!ptr_R_doIdle) R_Suicide("Cannot load Raqua_doIdle");
-
+    ptr_InitAquaIO = Rdlsym(handle, "InitAquaIO");
+    if(!ptr_InitAquaIO) R_Suicide("Cannot load InitAquaIO");
 
 #ifdef AQUA_POLLED_EVENTS 
     otherPolledEventHandler = R_PolledEvents;
@@ -214,6 +213,11 @@ SEXP do_packagemanger(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     return(ptr_do_flushconsole(call, op, args, env));
+}
+
+void InitAquaIO(void);
+void InitAquaIO(void){
+ ptr_InitAquaIO();
 }
 
 void R_ProcessEvents(void)
