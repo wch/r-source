@@ -102,7 +102,7 @@ dev.copy <- function(device, ..., which = dev.next())
     dev.cur()
 }
 
-dev.print <- function(device = postscript,  ...)
+dev.print <- function(device = postscript, ...)
 {
     current.device <- dev.cur()
     nm <- names(current.device)[1]
@@ -115,8 +115,8 @@ dev.print <- function(device = postscript,  ...)
     din <- par("din"); w <- din[1]; h <- din[2]
     if(missing(device)) { ## safe way to recognize postscript
         if(is.null(oc$file)) oc$file <- ""
-        hz <- hz0 <- eval.parent(oc$horizontal)
-        if(is.null(hz)) hz <- ps.options()$horizontal
+        hz0 <- oc$horizontal
+        hz <- if(is.null(hz0)) ps.options()$horizontal else eval.parent(hz0)
         paper <- oc$paper
         if(is.null(paper)) paper <- ps.options()$paper
         if(paper == "default") paper <- getOption("papersize")
@@ -144,14 +144,14 @@ dev.print <- function(device = postscript,  ...)
             pt <- ps.options()$pointsize
             oc$pointsize <- pt * w/din[1]
         }
-        if(is.null(oc$horizontal)) oc$horizontal <- hz
+        if(is.null(hz0)) oc$horizontal <- hz
         if(is.null(oc$width)) oc$width <- w
         if(is.null(oc$height)) oc$height <- h
     } else {
         if(is.null(oc$width))
             oc$width <- if(!is.null(oc$height)) w/h * eval.parent(oc$height) else w
         if(is.null(oc$height))
-            oc$height <- if(!is.null(oc$height)) h/w * eval.parent(oc$width) else h
+            oc$height <- if(!is.null(oc$width)) h/w * eval.parent(oc$width) else h
     }
     dev.off(eval.parent(oc))
     dev.set(current.device)
@@ -174,7 +174,7 @@ dev.copy2eps <- function(...)
     if(is.null(oc$width))
         oc$width <- if(!is.null(oc$height)) w/h * eval.parent(oc$height) else w
     if(is.null(oc$height))
-        oc$height <- if(!is.null(oc$height)) h/w * eval.parent(oc$width) else h
+        oc$height <- if(!is.null(oc$width)) h/w * eval.parent(oc$width) else h
     if(is.null(oc$file)) oc$file <- "Rplot.eps"
     dev.off(eval.parent(oc))
     dev.set(current.device)
