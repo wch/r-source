@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2001 R Development Core Team
+# Copyright (C) 2001-3 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -79,6 +79,7 @@ Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "A
 [Icons]
 Name: "{group}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; $iconpars
 Name: "{group}\\R $RVER Help"; Filename: "{app}\\doc\\html\\Rwin.html"; Components: html
+Name: "{group}\\Uninstall R $RVER"; Filename: "{uninstallexe}"
 Name: "{userdesktop}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; MinVersion: 4,4; Tasks: desktopicon; $iconpars
 
 [Registry] 

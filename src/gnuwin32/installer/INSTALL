@@ -1,7 +1,7 @@
 You can make an install package (rw1???.exe) in the usual Windows
 style (by default in Windows 2000 style) by using the installer kit
-Inno Setup 2.0.x, x >= 17 from www.jrsoftware.org.  (Inno Setup 3 will
-also work.)
+Inno Setup 3.0.x, x >= 6 from www.jrsoftware.org.  (Inno Setup 2.0.x will
+not work as from this release.)
 
 You need the R installation built completely (see ../INSTALL: this
 includes making bitmap and Tcl/Tk support and the manuals).
