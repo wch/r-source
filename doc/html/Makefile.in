@@ -20,7 +20,6 @@ INSTFILES = \
 	resources.html \
 	template.html \
 	thanks.html
-## </FIXME>
 DISTFILES = Makefile.in $(INSTFILES) index-default.html
 SUBDIRS = search
 OBJECTS = index.html
