@@ -43,6 +43,7 @@ char * R_tmpnam(const char * prefix, const char * tempdir)
     HANDLE h;
 
     if(!prefix) prefix = "";	/* NULL */
+    if(strlen(tempdir) >= MAX_PATH) error("invalid 'tempdir' in R_tmpnam");
     strcpy(tmp1, tempdir);
     for (n = 0; n < 100; n++) {
 	/* try a random number at the end */
@@ -83,11 +84,12 @@ static int R_unlink_one(char *dir, char *name, int recursive)
 static int R_unlink(char *names, int recursive)
 {
     int failures = 0;
-    char *p, tmp[MAX_PATH], dir[MAX_PATH];
+    char *p, tmp[MAX_PATH], dir[MAX_PATH+2];
     WIN32_FIND_DATA find_data;
     HANDLE fh;
     struct stat sb;
 
+    if(strlen(names) >= MAX_PATH) error("invalid 'names' in R_unlink");
     strcpy(tmp, names);
     for(p = tmp; *p != '\0'; p++) if(*p == '/') *p = '\\';
     if(stat(tmp, &sb) == 0) {
@@ -410,6 +412,7 @@ int check_doc_file(char * file)
     home = getenv("R_HOME");
     if (home == NULL)
 	error("R_HOME not set");
+    if(strlen(home) + strlen(file) + 1 >= MAX_PATH) return(1); /* cannot exist */
     strcpy(path, home);
     strcat(path, "/");
     strcat(path, file);
@@ -952,7 +955,7 @@ void InitTempDir()
     if (hasspace)
 	GetShortPathName(tmp, tmp1, MAX_PATH);
     else
-	strcpy(tmp1, tmp);
+	strcpy(tmp1, tmp); /* length must be valid as access has been checked */
     /* now try a random addition */
     srand( (unsigned)time( NULL ) );
     for (n = 0; n < 100; n++) {
@@ -1056,7 +1059,7 @@ SEXP do_writeClipboard(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, def, caption, filters;
-    char *temp, *cfilters, list[65520];
+    char *temp, *cfilters, list[65520],*p;
     char path[MAX_PATH], filename[MAX_PATH];
     int multi, filterindex, i, count, lfilters, pathlen;
     checkArity(op, args);
@@ -1066,34 +1069,36 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     filters = CADDDR(args);
     filterindex = asInteger(CAD4R(args));
     if(length(def) != 1 )
-		errorcall(call, "default must be a character string");
-	strcpy(path, CHAR(STRING_ELT(def, 0)));
-	temp = strchr(path,'/');
-	while (temp) {
-		*temp = '\\';
-		temp = strchr(temp,'/');
-	}
+	errorcall(call, "default must be a character string");
+    p = CHAR(STRING_ELT(def, 0));
+    if(strlen(p) >= MAX_PATH) errorcall(call, "default is overlong");
+    strcpy(path, p);
+    temp = strchr(path,'/');
+    while (temp) {
+	*temp = '\\';
+	temp = strchr(temp,'/');
+    }
     if(length(caption) != 1 )
-		errorcall(call, "caption must be a character string");
-	if(multi == NA_LOGICAL)
-		errorcall(call, "multi must be a logical value");
-	if(filterindex == NA_INTEGER)
-		errorcall(call, "filterindex must be an integer value");
+	errorcall(call, "caption must be a character string");
+    if(multi == NA_LOGICAL)
+	errorcall(call, "multi must be a logical value");
+    if(filterindex == NA_INTEGER)
+	errorcall(call, "filterindex must be an integer value");
     lfilters = 1 + length(filters);
-    for (i=0; i < length(filters); i++) 
+    for (i = 0; i < length(filters); i++)
 	lfilters += strlen(CHAR(STRING_ELT(filters,i)));
     cfilters = R_alloc(lfilters, sizeof(char));
     temp = cfilters;
-    for (i=0; i<length(filters)/2; i++) {
-		strcpy(temp,CHAR(STRING_ELT(filters,i)));
-		temp += strlen(temp)+1;
-		strcpy(temp,CHAR(STRING_ELT(filters,i+length(filters)/2)));
-		temp += strlen(temp)+1;
-	}
-	*temp = 0;
+    for (i = 0; i < length(filters)/2; i++) {
+	strcpy(temp,CHAR(STRING_ELT(filters,i)));
+	temp += strlen(temp)+1;
+	strcpy(temp,CHAR(STRING_ELT(filters,i+length(filters)/2)));
+	temp += strlen(temp)+1;
+    }
+    *temp = 0;
 
     askfilenames(CHAR(STRING_ELT(caption, 0)), path,
-    			 multi, cfilters, filterindex,
+		 multi, cfilters, filterindex,
                  list, 65500);  /* list declared larger to protect against overwrites */
     Rwin_fpset();
     count = countFilenames(list);
@@ -1102,25 +1107,25 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     else PROTECT(ans = allocVector(STRSXP, count-1));
 
     switch (count) {
-	case 0: break;
-	case 1: SET_STRING_ELT(ans, 0, mkChar(list));
-			break;
-	default:
-		strncpy(path,list,sizeof(path));
-		pathlen = strlen(path);
-		if (path[pathlen-1] == '\\') path[--pathlen] = '\0';
+    case 0: break;
+    case 1: SET_STRING_ELT(ans, 0, mkChar(list));
+	break;
+    default:
+	strncpy(path,list,sizeof(path));
+	pathlen = strlen(path);
+	if (path[pathlen-1] == '\\') path[--pathlen] = '\0';
     	temp = list;
     	for (i = 0; i < count-1; i++) {
-			temp += strlen(temp) + 1;
-			if (strchr(temp,':') || *temp == '\\' || *temp == '/')
-				SET_STRING_ELT(ans, i, mkChar(temp));
-			else {
-				strncpy(filename,path,sizeof(filename));
-				filename[pathlen] = '\\';
-				strncpy(filename+pathlen+1,temp,sizeof(filename)-pathlen-1);
-				SET_STRING_ELT(ans, i, mkChar(filename));
-			}
-		}
+	    temp += strlen(temp) + 1;
+	    if (strchr(temp,':') || *temp == '\\' || *temp == '/')
+		SET_STRING_ELT(ans, i, mkChar(temp));
+	    else {
+		strncpy(filename, path, sizeof(filename));
+		filename[pathlen] = '\\';
+		strncpy(filename+pathlen+1, temp, sizeof(filename)-pathlen-1);
+		SET_STRING_ELT(ans, i, mkChar(filename));
+	    }
+	}
     }
     UNPROTECT(1);
     return ans;

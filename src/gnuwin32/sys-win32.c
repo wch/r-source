@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2000  Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -70,22 +70,22 @@ char *R_ExpandFileName(char *s)
     if(HaveHOME < 0) {
 	HaveHOME = 0;
  	p = getenv("HOME");
-	if(p && strlen(p)) {
+	if(p && strlen(p) && strlen(p) < PATH_MAX) {
 	    strcpy(UserHOME, p);
 	    HaveHOME = 1;
 	} else {
 	    p = getenv("HOMEDRIVE");
-	    if(p) {
+	    if(p && strlen(p) < PATH_MAX) {
 		strcpy(UserHOME, p);
 		p = getenv("HOMEPATH");
-		if(p) {
+		if(p && strlen(UserHOME) + strlen(p) < PATH_MAX) {
 		    strcat(UserHOME, p);
 		    HaveHOME = 1;
 		}
 	    }
 	}
     }
-    if(HaveHOME > 0) {
+    if(HaveHOME > 0 && strlen(UserHOME) + strlen(s+1) < PATH_MAX) {
 	strcpy(newFileName, UserHOME);
 	strcat(newFileName, s+1);
 	return newFileName;

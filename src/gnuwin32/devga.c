@@ -2,6 +2,7 @@
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 2004        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -350,12 +351,12 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
 
     ndd->displayList = R_NilValue;
 
-    /* Set default values... */
-    strcpy(family, "Helvetica");
+    /* Set default values and pad with zeroes ... */
+    strncpy(family, "Helvetica", 256);
     strcpy(encoding, "ISOLatin1.enc");
-    strcpy(paper, "default");
-    strcpy(bg, "transparent");
-    strcpy(fg, "black");
+    strncpy(paper, "default", 256);
+    strncpy(bg, "transparent", 256);
+    strncpy(fg, "black", 256);
     /* and then try to get it from .PostScript.Options */
     s = findVar(install(".PostScript.Options"), xd->psenv);
     if ((s != R_UnboundValue) && (s != R_NilValue)) {
@@ -363,19 +364,19 @@ static void SaveAsPostscript(NewDevDesc *dd, char *fn)
 	int i,done;
 	for (i=0, done=0; (done<4) && (i<length(s)) ; i++) {
 	    if(!strcmp("family", CHAR(STRING_ELT(names, i)))) {
-		strcpy(family, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)));
+		strncpy(family, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
 		done += 1;
 	    }
 	    if(!strcmp("paper", CHAR(STRING_ELT(names, i)))) {
-		strcpy(paper, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)));
+		strncpy(paper, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
 		done += 1;
 	    }
 	    if(!strcmp("bg", CHAR(STRING_ELT(names, i)))) {
-		strcpy(bg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)));
+		strncpy(bg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
 		done += 1;
 	    }
 	    if(!strcmp("fg", CHAR(STRING_ELT(names, i)))) {
-		strcpy(fg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)));
+		strncpy(fg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
 		done += 1;
 	    }
 	}
@@ -415,25 +416,25 @@ static void SaveAsPDF(NewDevDesc *dd, char *fn)
 
     /* Set default values... */
     s = findVar(install(".PostScript.Options"), xd->psenv);
-    strcpy(family, "Helvetica");
+    strncpy(family, "Helvetica", 256);
     strcpy(encoding, "ISOLatin1.enc");
-    strcpy(bg, "transparent");
-    strcpy(fg, "black");
+    strncpy(bg, "transparent", 256);
+    strncpy(fg, "black", 256);
     /* and then try to get it from .PostScript.Options */
     if ((s != R_UnboundValue) && (s != R_NilValue)) {
 	SEXP names = getAttrib(s, R_NamesSymbol);
 	int i,done;
-	for (i=0, done=0; (done<4) && (i<length(s)) ; i++) {
+	for (i=0, done=0; (done<3) && (i<length(s)) ; i++) {
 	    if(!strcmp("family", CHAR(STRING_ELT(names, i)))) {
-		strcpy(family, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)));
+		strncpy(family, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)),255);
 		done += 1;
 	    }
 	    if(!strcmp("bg", CHAR(STRING_ELT(names, i)))) {
-		strcpy(bg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)));
+		strncpy(bg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
 		done += 1;
 	    }
 	    if(!strcmp("fg", CHAR(STRING_ELT(names, i)))) {
-		strcpy(fg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)));
+		strncpy(fg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)), 255);
 		done += 1;
 	    }
 	}
