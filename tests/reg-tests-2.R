@@ -453,3 +453,12 @@ set.seed(123)
 y <- rpois(100, pmax(3*x, 0))
 glm(y ~ x, family = poisson(identity), start = c(1,0))
 warnings()
+
+
+## extending char arrrays
+x <- y <- LETTERS[1:2]
+x[5] <- "C"
+length(y) <- 5
+x
+y
+## x was filled with "", y with NA in 1.5.0
