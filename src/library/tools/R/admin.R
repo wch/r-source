@@ -160,7 +160,7 @@ function(dir, outDir)
 .installObjectsFile <- function(pkg, outDir)
 {
     require(pkg, character.only = TRUE)
-    pos <- match(paste("package", pkg, sep = ""), search())
+    pos <- match(paste("package", pkg, sep = ":"), search())
     ob <- objects(pos, all = TRUE)
     if( length(ob) > 0 ) {
         ex <- sapply(ob, function(f) {
