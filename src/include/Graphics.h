@@ -201,6 +201,7 @@ typedef struct {
 	double	cex;		/* Character expansion */
 	rcolor	col;		/* Plotting Color */
 	double	crt;		/* Character/string rotation */
+	double	din[2];		/* device size in inches */
 	int	err;		/* Error repporting level */
 	rcolor	fg;		/* **R ONLY** Foreground Color */
 	int	font;		/* Text font */

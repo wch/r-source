@@ -4,7 +4,7 @@
 "adj", "ann", "ask", "bg", "bty",
 "cex", "cex.axis", "cex.lab", "cex.main", "cex.sub", "cin",
 "col", "col.axis", "col.lab", "col.main", "col.sub", "cra", "crt", "csi",
-"err", "fg", "fig", "fin",
+"din", "err", "fg", "fig", "fin",
 "font", "font.axis", "font.lab", "font.main", "font.sub", "lab", "las",
 "lty", "lwd", "mai", "mar", "mex", "mfcol", "mfg", "mfrow", "mgp", "mkh",
 "new", "oma", "omd", "omi", "pch", "pin", "plt", "ps", "pty",
