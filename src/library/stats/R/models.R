@@ -60,7 +60,7 @@ as.formula <- function(object,env=parent.frame()){
     if(inherits(object, "formula"))
            object
     else{
-        rval<-formula(object,env=NULL)
+        rval<-formula(object,env=baseenv())
         if (is.null(environment(rval)) || !missing(env))
             environment(rval)<-env
         rval
