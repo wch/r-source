@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-24 11:41+0000\n"
+"POT-Creation-Date: 2005-04-01 11:04+0100\n"
 "PO-Revision-Date: 2005-03-19 00:03+0009\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -129,7 +129,7 @@ msgid "type not yet implemented"
 msgstr "未実装の型です"
 
 #: src/gnuwin32/extra.c:403 src/gnuwin32/extra.c:620 src/gnuwin32/extra.c:636
-#: src/main/platform.c:850 src/unix/sys-std.c:898 src/unix/sys-std.c:920
+#: src/main/platform.c:850 src/unix/sys-std.c:901 src/unix/sys-std.c:923
 msgid "invalid 'file' argument"
 msgstr "'environment' 引数が不正です"
 
@@ -190,7 +190,7 @@ msgstr "savehistory は Rgui または Rterm でのみ使えます"
 msgid "loadhistory can only be used in Rgui and Rterm"
 msgstr "loadhistory は Rgui と Rterm の中でだけ使えます"
 
-#: src/gnuwin32/extra.c:708 src/unix/sys-std.c:970
+#: src/gnuwin32/extra.c:708 src/unix/sys-std.c:973
 msgid "invalid 'time' value"
 msgstr "'time' の値が不正です"
 
@@ -344,12 +344,12 @@ msgstr "三番目の引数には文字列が期待されています"
 msgid "Fatal error: %s\n"
 msgstr "致命的なエラーです： %s\n"
 
-#: src/gnuwin32/system.c:292 src/unix/sys-std.c:588
+#: src/gnuwin32/system.c:292 src/unix/sys-std.c:591
 #, c-format
 msgid "encoding '%s' is not recognised"
 msgstr "'%s' というエンコーディングは認識できません"
 
-#: src/gnuwin32/system.c:298 src/unix/sys-std.c:594
+#: src/gnuwin32/system.c:298 src/unix/sys-std.c:597
 msgid "<ERROR: invalid input in encoding> "
 msgstr "<エラー : エンコード中の不正な入力>"
 
@@ -409,7 +409,7 @@ msgstr "NaN が生成されました"
 msgid "Non-numeric argument to mathematical function"
 msgstr "数学関数に非数値引数が渡されました"
 
-#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3668
+#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3673
 #: src/main/scan.c:1475
 msgid "invalid argument"
 msgstr "引数が不正です"
@@ -1140,157 +1140,157 @@ msgstr "'switch' 関数のパラメータが不正です"
 msgid "switch: EXPR must return a length 1 vector"
 msgstr "switch：EXPRは長さ1のベクトルを返すべきです"
 
-#: src/main/character.c:115
+#: src/main/character.c:117
 msgid "nchar() requires a character vector"
 msgstr "nchar 関数は文字ベクトルを必要とします"
 
-#: src/main/character.c:119
+#: src/main/character.c:121
 msgid "invalid 'type' arg"
 msgstr "'type' 引数が不正です"
 
-#: src/main/character.c:210
+#: src/main/character.c:212
 msgid "extracting substrings from a non-character object"
 msgstr "文字列でないオブジェクトから部分文字列を抽出しようとしました"
 
-#: src/main/character.c:215
+#: src/main/character.c:217
 msgid "invalid substring argument(s) in substr()"
 msgstr "substrt 関数の部分文字列引数(一つもしくは複数)が不正です"
 
-#: src/main/character.c:278
+#: src/main/character.c:280
 msgid "replacing substrings in a non-character object"
 msgstr "文字列でないオブジェクトの部分文字列の置き換えです"
 
-#: src/main/character.c:283
+#: src/main/character.c:285
 msgid "invalid substring argument(s) in substr<-()"
 msgstr "substrt <- () 関数の部分文字列引数(一つもしくは複数)が不正です"
 
-#: src/main/character.c:287
+#: src/main/character.c:289
 msgid "invalid right-hand side in substr<-()"
 msgstr "substr <- () において右辺が不正です"
 
-#: src/main/character.c:353
+#: src/main/character.c:355
 msgid "non-character argument in strsplit()"
 msgstr "strplit 関数の引数が文字列ではありません"
 
-#: src/main/character.c:361 src/main/pcre.c:114 src/main/pcre.c:253
-#: src/main/pcre.c:421
+#: src/main/character.c:363 src/main/pcre.c:114 src/main/pcre.c:253
+#: src/main/pcre.c:423
 msgid "perl = TRUE is only fully implemented in UTF-8 locales"
 msgstr "perl=TRUE は UTF-8 ロケールに対してのみ完全実装されています"
 
-#: src/main/character.c:414 src/main/character.c:436
+#: src/main/character.c:416 src/main/character.c:438
 #, c-format
 msgid "invalid split pattern '%s'"
 msgstr "分割パターン '%s' が不正です"
 
-#: src/main/character.c:702
+#: src/main/character.c:704
 msgid "the first argument must be a string"
 msgstr "最初の引数は文字列でなくてはいけません"
 
-#: src/main/character.c:717
+#: src/main/character.c:719
 msgid "abbreviate used with non-ASCII chars"
 msgstr "ASCII 文字でないものが省略名として使われました"
 
-#: src/main/character.c:733
+#: src/main/character.c:735
 msgid "non-character names"
 msgstr "名前が文字列ではありません"
 
-#: src/main/character.c:737
+#: src/main/character.c:739
 msgid "invalid value of 'allow_'"
 msgstr "'allow_' の値が不正です"
 
-#: src/main/character.c:790 src/main/character.c:1315
+#: src/main/character.c:792 src/main/character.c:1318
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr "%d は不正なマルチバイト文字です"
 
-#: src/main/character.c:869 src/main/character.c:1204 src/main/pcre.c:116
-#: src/main/pcre.c:426
+#: src/main/character.c:871 src/main/character.c:1207 src/main/pcre.c:116
+#: src/main/pcre.c:428
 msgid "regular expression is invalid in this locale"
 msgstr "このロケールでは，正規表現は無効です"
 
-#: src/main/character.c:891 src/main/character.c:1047
-#: src/main/character.c:1207 src/main/pcre.c:123 src/main/pcre.c:274
-#: src/main/pcre.c:431
+#: src/main/character.c:893 src/main/character.c:1049
+#: src/main/character.c:1210 src/main/pcre.c:123 src/main/pcre.c:274
+#: src/main/pcre.c:433
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "'%s' の正規表現が不正です"
 
-#: src/main/character.c:901 src/main/character.c:1222 src/main/pcre.c:138
-#: src/main/pcre.c:307 src/main/pcre.c:446
+#: src/main/character.c:903 src/main/character.c:1225 src/main/pcre.c:138
+#: src/main/pcre.c:307 src/main/pcre.c:448
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "入力文字列 %d はこのロケールでは不適切です"
 
-#: src/main/character.c:956 src/main/pcre.c:184
+#: src/main/character.c:958 src/main/pcre.c:184
 #, c-format
 msgid "invalid backreference %d in regular expression"
 msgstr "正規表現における後方参照 %d が不正です"
 
-#: src/main/character.c:1042 src/main/pcre.c:255
+#: src/main/character.c:1044 src/main/pcre.c:255
 msgid "'pattern' is invalid in this locale"
 msgstr "'pattern' は現在のロケールでは不正です"
 
-#: src/main/character.c:1044 src/main/pcre.c:257
+#: src/main/character.c:1046 src/main/pcre.c:257
 msgid "'replacement' is invalid in this locale"
 msgstr "'replacement' は現在のロケールでは不正です"
 
-#: src/main/character.c:1053
+#: src/main/character.c:1055
 msgid "zero-length pattern"
 msgstr "長さゼロのパターン"
 
-#: src/main/character.c:1291
+#: src/main/character.c:1294
 msgid "non-character argument to tolower()"
 msgstr "tolower 関数の引数が文字列ではありません"
 
-#: src/main/character.c:1365
+#: src/main/character.c:1368
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr "範囲指定を縮小します ('%lc-%lc') "
 
-#: src/main/character.c:1451
+#: src/main/character.c:1454
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr "範囲指定を縮小します ('%c-%c') "
 
-#: src/main/character.c:1529
+#: src/main/character.c:1532
 msgid "invalid (NA) arguments."
 msgstr "引数が不正(NA)です"
 
-#: src/main/character.c:1551
+#: src/main/character.c:1554
 msgid "invalid multibyte string 'old'"
 msgstr "'old' は不正なマルチバイト文字です"
 
-#: src/main/character.c:1558
+#: src/main/character.c:1561
 msgid "invalid multibyte string 'new'"
 msgstr "'new' は不正なマルチバイト文字です"
 
-#: src/main/character.c:1577 src/main/character.c:1638
+#: src/main/character.c:1580 src/main/character.c:1641
 msgid "'old' is longer than 'new'"
 msgstr "'old' が 'new' より長いです"
 
-#: src/main/character.c:1594
+#: src/main/character.c:1597
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "不正なマルチバイト文字列入力 %d です"
 
-#: src/main/character.c:1737
+#: src/main/character.c:1740
 msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr ""
 "UTF-8 ロケールにおける agrep 関数の使用は ASCII 文字列以外では保証されません"
 
-#: src/main/character.c:1746
+#: src/main/character.c:1749
 msgid "could not allocate memory for approximate matching"
 msgstr "近似マッチングのためのメモリを割り当てられませんでした"
 
-#: src/main/character.c:1770
+#: src/main/character.c:1773
 msgid "could not perform case insensitive matching"
 msgstr "大小文字を無視したマッチングを行なえませんでした"
 
-#: src/main/character.c:1812
+#: src/main/character.c:1815
 msgid "argument must be a character vector of length 1"
 msgstr "引数は長さ1の文字ベクトルでなくてはなりません"
 
-#: src/main/character.c:1814
+#: src/main/character.c:1817
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1298,45 +1298,45 @@ msgstr ""
 "引数は長さ1の文字ベクトルであるべきです\n"
 "最初の要素以外は無視されます"
 
-#: src/main/character.c:1829 src/main/character.c:1861
-#: src/main/character.c:1882
+#: src/main/character.c:1832 src/main/character.c:1864
+#: src/main/character.c:1885
 msgid "argument 'x' must be a raw vector"
 msgstr "引数 'x' は raw ベクトルでなくてはなりません"
 
-#: src/main/character.c:1832
+#: src/main/character.c:1835
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "引数 'multiple' は TRUE か FALSE でなくてはなりません"
 
-#: src/main/character.c:1863
+#: src/main/character.c:1866
 msgid "argument 'shift' must be a small integer"
 msgstr "引数 'shift' は小さな整数でなくてはなりません"
 
-#: src/main/character.c:1900
+#: src/main/character.c:1903
 msgid "argument 'x' must be a integer vector"
 msgstr "引数 'x' は整数ベクトルでなくてはなりません"
 
-#: src/main/character.c:1920
+#: src/main/character.c:1923
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "引数'x'は，raw, 整数，論理値でなくてはいけません"
 
-#: src/main/character.c:1922
+#: src/main/character.c:1925
 msgid "argument 'type' must be a character string"
 msgstr "引数 'type' は文字列でなくてはなりません"
 
-#: src/main/character.c:1926
+#: src/main/character.c:1929
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "引数 'x' は長さ %d の整数倍でなくてはなりません"
 
-#: src/main/character.c:1940 src/main/character.c:1955
+#: src/main/character.c:1943 src/main/character.c:1958
 msgid "argument 'x' must not contain NAs"
 msgstr "引数 'x' は，NA を含んではいけません"
 
-#: src/main/character.c:1980
+#: src/main/character.c:1983
 msgid "strtrim() requires a character vector"
 msgstr "strtrim 関数は文字ベクトルを要求します"
 
-#: src/main/character.c:1985 src/main/character.c:1989
+#: src/main/character.c:1988 src/main/character.c:1992
 msgid "invalid 'width' argument"
 msgstr "'width' 引数が不正です"
 
@@ -1690,7 +1690,7 @@ msgstr "'encoding' の引数が不正です"
 #: src/main/connections.c:737 src/main/connections.c:872
 #: src/main/connections.c:1053 src/main/connections.c:1231
 #: src/main/connections.c:1979 src/main/connections.c:2030
-#: src/main/connections.c:2077 src/main/connections.c:3378
+#: src/main/connections.c:2077 src/main/connections.c:3384
 msgid "unable to open connection"
 msgstr "コネクションを開くことができません"
 
@@ -1843,7 +1843,7 @@ msgstr "このシステムではソケットは使えません"
 #: src/main/connections.c:2126 src/main/connections.c:2175
 #: src/main/connections.c:2197 src/main/connections.c:2216
 #: src/main/connections.c:2228 src/main/connections.c:2331
-#: src/main/connections.c:2427 src/main/connections.c:3684
+#: src/main/connections.c:2427 src/main/connections.c:3690
 msgid "'con' is not a connection"
 msgstr "'con' はコネクションではありません"
 
@@ -1871,7 +1871,7 @@ msgstr "出力 sink コネクションを閉じることができません"
 msgid "cannot close messages sink connection"
 msgstr "メッセージ sink コネクションを閉じることができません"
 
-#: src/main/connections.c:2199 src/main/connections.c:3399
+#: src/main/connections.c:2199 src/main/connections.c:3405
 #: src/main/serialize.c:1578 src/main/serialize.c:1586
 msgid "connection is not open"
 msgstr "コネクションは開かれていません"
@@ -1921,7 +1921,7 @@ msgid "invalid 'sep' argument"
 msgstr "'sep' 引数が不正です"
 
 #: src/main/connections.c:2432 src/main/connections.c:2704
-#: src/main/connections.c:2967 src/main/connections.c:3400
+#: src/main/connections.c:2967 src/main/connections.c:3406
 #: src/main/scan.c:1725 src/main/serialize.c:1588
 msgid "cannot write to this connection"
 msgstr "このコネクションには書き出せません"
@@ -2046,77 +2046,82 @@ msgstr "'type' の値が不正です"
 msgid "invalid value for 'split'"
 msgstr "'split' の値が不正です"
 
-#: src/main/connections.c:3365 src/modules/internet/internet.c:439
+#: src/main/connections.c:3355
+msgid ""
+"file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
+msgstr ""
+
+#: src/main/connections.c:3371 src/modules/internet/internet.c:439
 msgid "unsupported URL scheme"
 msgstr "サポートされていないURLスキームです"
 
-#: src/main/connections.c:3452
+#: src/main/connections.c:3458
 msgid "file stream does not have gzip magic number"
 msgstr "ファイルストリームは gzip マジックナンバーを持っていません"
 
-#: src/main/connections.c:3463
+#: src/main/connections.c:3469
 msgid "file stream does not have valid gzip header"
 msgstr "ファイルストリームは適正な gzip ヘッダを持っていません"
 
-#: src/main/connections.c:3529
+#: src/main/connections.c:3535
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "'gzcon' コネクションのフラッシュ時に書き込みエラーが生じました"
 
-#: src/main/connections.c:3629
+#: src/main/connections.c:3635
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "crc エラー %x %x\n"
 
-#: src/main/connections.c:3654
+#: src/main/connections.c:3660
 msgid "write error on 'gzcon' connection"
 msgstr "'gzcon' コネクションに書き込みエラーが生じました"
 
-#: src/main/connections.c:3688
+#: src/main/connections.c:3694
 msgid "'level' must be one of 0 ... 9"
 msgstr "'level' は0〜9のいずれかでなくてはなりません"
 
-#: src/main/connections.c:3691
+#: src/main/connections.c:3697
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "'allowNonCompression' は TRUEまたは FALSEでなければなりません"
 
-#: src/main/connections.c:3694
+#: src/main/connections.c:3700
 msgid "this is already a gzcon connection"
 msgstr "これはすでに gzcon コネクションです"
 
-#: src/main/connections.c:3700
+#: src/main/connections.c:3706
 msgid "can only use read- or write- binary connections"
 msgstr "読み込み，または書き出しのためのバイナリコネクションのみが使えます"
 
-#: src/main/connections.c:3704 src/main/connections.c:3708
-#: src/main/connections.c:3715 src/main/connections.c:3729
+#: src/main/connections.c:3710 src/main/connections.c:3714
+#: src/main/connections.c:3721 src/main/connections.c:3735
 msgid "allocation of 'gzcon' connection failed"
 msgstr "'gzcon' コネクションで割り当てに失敗しました"
 
-#: src/main/connections.c:3774
+#: src/main/connections.c:3780
 msgid "R_compress1 requires a scalar string"
 msgstr "R_compress1 はスカラー文字列を要求します"
 
-#: src/main/connections.c:3781
+#: src/main/connections.c:3787
 msgid "internal error in R_compress1"
 msgstr "R_compress1 で内部エラーが起きました"
 
-#: src/main/connections.c:3796
+#: src/main/connections.c:3802
 msgid "R_decompress1 requires a scalar string"
 msgstr "R_decompress1 はスカラー文字列を要求します"
 
-#: src/main/connections.c:3801
+#: src/main/connections.c:3807
 msgid "internal error in R_decompress1"
 msgstr "R_decompress1 で内部エラーが起きました"
 
-#: src/main/connections.c:3818
+#: src/main/connections.c:3824
 msgid "not a list of sockets"
 msgstr "ソケットのリストではありません"
 
-#: src/main/connections.c:3823
+#: src/main/connections.c:3829
 msgid "bad write indicators"
 msgstr "不適切な書き込み指示子です"
 
-#: src/main/connections.c:3834
+#: src/main/connections.c:3840
 msgid "not a socket connection"
 msgstr "ソケットコネクションではありません"
 
@@ -2218,11 +2223,11 @@ msgstr "'read.dcf' のためのメモリを割り当てられませんでした"
 msgid "could not allocate memory in C function 'R_AllocStringBuffer'"
 msgstr ""
 
-#: src/main/deparse.c:184 src/main/plot.c:953 src/main/plot.c:1449
-#: src/main/plot.c:1735 src/main/plot.c:1800 src/main/plot.c:1888
-#: src/main/plot.c:2013 src/main/plot.c:2103 src/main/plot.c:2393
-#: src/main/plot.c:2593 src/main/plot.c:2836 src/main/plot.c:3430
-#: src/main/plot.c:3506 src/main/plot.c:3759 src/main/plot3d.c:1383
+#: src/main/deparse.c:184 src/main/plot.c:958 src/main/plot.c:1454
+#: src/main/plot.c:1740 src/main/plot.c:1805 src/main/plot.c:1893
+#: src/main/plot.c:2018 src/main/plot.c:2108 src/main/plot.c:2398
+#: src/main/plot.c:2598 src/main/plot.c:2841 src/main/plot.c:3435
+#: src/main/plot.c:3511 src/main/plot.c:3764 src/main/plot3d.c:1383
 #: src/main/sprintf.c:117
 msgid "too few arguments"
 msgstr "引数が足りません"
@@ -2591,48 +2596,48 @@ msgstr ""
 msgid "no graphics device is active"
 msgstr "有効なグラフィックスデバイスがありません"
 
-#: src/main/engine.c:2085
+#: src/main/engine.c:2098
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "pch の値 '%d' は未実装です"
 
-#: src/main/engine.c:2108
+#: src/main/engine.c:2121
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr "不正な軸範囲です [GEPretty(.,.,n=%d)"
 
-#: src/main/engine.c:2112
+#: src/main/engine.c:2125
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "無限に軸が伸ばされています [GEPretty(%g,%g,%d)] "
 
-#: src/main/engine.c:2150
+#: src/main/engine.c:2163
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr ".. GEPretty(.) : new *lo = %g < %g = x1 "
 
-#: src/main/engine.c:2152
+#: src/main/engine.c:2165
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr ".. GEPretty(.) : new *up = %g > %g = x2 "
 
-#: src/main/engine.c:2419
+#: src/main/engine.c:2432
 msgid "Display list redraw incomplete"
 msgstr "ディスプレイリストが不完全に再描画されました"
 
-#: src/main/engine.c:2598
+#: src/main/engine.c:2611
 msgid "'expr' argument must be an expression"
 msgstr "'expr' 引数は式でなくてはなりません"
 
-#: src/main/engine.c:2600
+#: src/main/engine.c:2613
 msgid "'list' argument must be a list"
 msgstr "'list' 引数はリストでなくてはなりません"
 
-#: src/main/engine.c:2602
+#: src/main/engine.c:2615
 msgid "'env' argument must be an environment"
 msgstr "'env' 引数は環境でなくてはなりません"
 
-#: src/main/engine.c:2624 src/main/graphics.c:2396
+#: src/main/engine.c:2637 src/main/graphics.c:2396
 msgid "invalid graphics state"
 msgstr "グラフィックスの状態が不正です"
 
@@ -4431,55 +4436,55 @@ msgstr "グラフィックスパラメータ \"%s\" に不正な値が設定さ�
 msgid "parameter \"%s\" has the wrong length"
 msgstr "パラメータ \"%s\" の長さが不正です"
 
-#: src/main/par.c:367
+#: src/main/par.c:373
 msgid "parameter \"mfg\" has the wrong length"
 msgstr "\"mfg\" の パラメータの長さが不正です"
 
-#: src/main/par.c:375
+#: src/main/par.c:381
 msgid "parameter \"i\" in \"mfg\" is out of range"
 msgstr "\"mfg\" の パラメータ \"i\" が範囲外です"
 
-#: src/main/par.c:377
+#: src/main/par.c:383
 msgid "parameter \"j\" in \"mfg\" is out of range"
 msgstr "\"mfg\" の パラメータ \"j\" が範囲外です"
 
-#: src/main/par.c:382
+#: src/main/par.c:388
 msgid "value of nr in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\" の中の nr の値は不正で無視されます"
 
-#: src/main/par.c:384
+#: src/main/par.c:390
 msgid "value of nc in \"mfg\" is wrong and will be ignored"
 msgstr "\"mfg\" の中の nc の値は不正で無視されます"
 
-#: src/main/par.c:422
+#: src/main/par.c:428
 msgid "calling par(new=) with no plot"
 msgstr "プロットなしで par(new=) を呼び出しました"
 
-#: src/main/par.c:572
+#: src/main/par.c:578
 #, c-format
 msgid "parameter \"%s\" cannot be set"
 msgstr "パラメータ \"%s\" を設定できません"
 
-#: src/main/par.c:619
+#: src/main/par.c:625
 #, c-format
 msgid "parameter \"%s\" could not be set in high-level plot() function"
 msgstr "高水準 plot 関数で，パラメータ \"%s\" を設定できません"
 
-#: src/main/par.c:1078
+#: src/main/par.c:1084
 msgid "invalid parameter passed to par()"
 msgstr "par 関数に不正なパラメータが渡されました"
 
-#: src/main/par.c:1148
+#: src/main/par.c:1154
 #, c-format
 msgid "too many rows in layout, limit %d"
 msgstr "layout の列数が多すぎます（限界値は %d）"
 
-#: src/main/par.c:1154
+#: src/main/par.c:1160
 #, c-format
 msgid "too many columns in layout, limit %d"
 msgstr "layout の列が多すぎます（限界は %d）"
 
-#: src/main/par.c:1156
+#: src/main/par.c:1162
 #, c-format
 msgid "too many cells in layout, limit %d"
 msgstr "layout のセルが多すぎます（限界は %d）"
@@ -4727,305 +4732,305 @@ msgstr "'vfont' の値が不正です [fontindex]"
 msgid "invalid graphics parameter"
 msgstr "グラフィックスパラメータが不正です"
 
-#: src/main/plot.c:581
+#: src/main/plot.c:586
 msgid "at least 3 arguments required"
 msgstr "少なくとも3つの引数が必要です"
 
-#: src/main/plot.c:585
+#: src/main/plot.c:590
 msgid "invalid 'xlim'"
 msgstr "'xlm' が不正です"
 
-#: src/main/plot.c:590
+#: src/main/plot.c:595
 msgid "invalid 'ylim'"
 msgstr "'ylim' が不正です"
 
-#: src/main/plot.c:596
+#: src/main/plot.c:601
 msgid "\"log=\" specification must be character"
 msgstr "\"log=\" の指定は文字でなくてはなりません"
 
-#: src/main/plot.c:607
+#: src/main/plot.c:612
 #, c-format
 msgid "invalid \"log=%s\" specification"
 msgstr "\"log=%s\" の指定が不正です"
 
-#: src/main/plot.c:621
+#: src/main/plot.c:626
 msgid "NAs not allowed in 'xlim'"
 msgstr "'xlin' に NA は許されていません"
 
-#: src/main/plot.c:627
+#: src/main/plot.c:632
 msgid "need finite 'xlim' values"
 msgstr "有限な 'xlim' の値が必要です"
 
-#: src/main/plot.c:633
+#: src/main/plot.c:638
 msgid "NAs not allowed in 'ylim'"
 msgstr "'ylin' に NA は許されていません"
 
-#: src/main/plot.c:639
+#: src/main/plot.c:644
 msgid "need finite 'ylim' values"
 msgstr "有限な 'ylim' の値が必要です"
 
-#: src/main/plot.c:645
+#: src/main/plot.c:650
 msgid "Logarithmic axis must have positive limits"
 msgstr "対数軸は正の限界を持たなければなりません"
 
-#: src/main/plot.c:758
+#: src/main/plot.c:763
 msgid "invalid type for axis labels"
 msgstr "軸のラベルの型が不正です"
 
-#: src/main/plot.c:962
+#: src/main/plot.c:967
 #, c-format
 msgid "invalid axis number %d"
 msgstr "軸の番号 %d が不正です"
 
-#: src/main/plot.c:1059 src/main/plot.c:2446
+#: src/main/plot.c:1064 src/main/plot.c:2451
 msgid "zero length 'padj' specified"
 msgstr "長さゼロの 'padj' が指定されています"
 
-#: src/main/plot.c:1110
+#: src/main/plot.c:1115
 #, c-format
 msgid "'at' and 'label' lengths differ, %d != %d"
 msgstr "'at' と 'label' の長さが違います。 %d != %d"
 
-#: src/main/plot.c:1128
+#: src/main/plot.c:1133
 msgid "no locations are finite"
 msgstr "どの位置も有限ではありません"
 
-#: src/main/plot.c:1465
+#: src/main/plot.c:1470
 msgid "invalid plotting structure"
 msgstr "不正なプロット構造です"
 
-#: src/main/plot.c:1467
+#: src/main/plot.c:1472
 #, c-format
 msgid "'x' and 'y' lengths differ in %s()"
 msgstr "%s() において 'x' と 'y' の長さが異なります"
 
-#: src/main/plot.c:1479
+#: src/main/plot.c:1484
 #, c-format
 msgid "plot type '%s' will be truncated to first character"
 msgstr "plot タイプ '%s' は最初の一文字に切りつめられます"
 
-#: src/main/plot.c:1483 src/main/plot.c:3096
+#: src/main/plot.c:1488 src/main/plot.c:3101
 msgid "invalid plot type"
 msgstr "プロットのタイプが不正です"
 
-#: src/main/plot.c:1659
+#: src/main/plot.c:1664
 #, c-format
 msgid "invalid plot type '%c'"
 msgstr "プロットのタイプ '%c' が不正です"
 
-#: src/main/plot.c:1700
+#: src/main/plot.c:1705
 msgid "first argument invalid"
 msgstr "最初の引数が不正です"
 
-#: src/main/plot.c:1706
+#: src/main/plot.c:1711
 msgid "second argument invalid"
 msgstr "二番目の引数が不正です"
 
-#: src/main/plot.c:1712
+#: src/main/plot.c:1717
 msgid "third argument invalid"
 msgstr "三番目の引数が不正です"
 
-#: src/main/plot.c:1718
+#: src/main/plot.c:1723
 msgid "fourth argument invalid"
 msgstr "4番目の引数が不正です"
 
-#: src/main/plot.c:1900
+#: src/main/plot.c:1905
 msgid "invalid arrow head length"
 msgstr "矢印のやじり部分の長さが不正です"
 
-#: src/main/plot.c:1905
+#: src/main/plot.c:1910
 msgid "invalid arrow head angle"
 msgstr "矢印のやじり部分の角度が不正です"
 
-#: src/main/plot.c:1910
+#: src/main/plot.c:1915
 msgid "invalid arrow head specification"
 msgstr "矢印のやじり部分の指定が不正です"
 
-#: src/main/plot.c:1930
+#: src/main/plot.c:1935
 msgid "'lwd' must be numeric of length >=1"
 msgstr "'lwd' は長さ1以上の数値でなくてはなりません"
 
-#: src/main/plot.c:2115
+#: src/main/plot.c:2120
 msgid "zero length 'labels'"
 msgstr "長さゼロの 'labels' が指定されています"
 
-#: src/main/plot.c:2143
+#: src/main/plot.c:2148
 msgid "invalid 'adj' value"
 msgstr "'adj' の値が不正です"
 
-#: src/main/plot.c:2150
+#: src/main/plot.c:2155
 msgid "invalid 'pos' value"
 msgstr "'pos' の値が不正です"
 
-#: src/main/plot.c:2193
+#: src/main/plot.c:2198
 msgid "no coordinates were supplied"
 msgstr "座標が提供されていません"
 
-#: src/main/plot.c:2404
+#: src/main/plot.c:2409
 msgid "zero length 'text' specified"
 msgstr "長さゼロの 'text' が指定されています"
 
-#: src/main/plot.c:2410
+#: src/main/plot.c:2415
 msgid "zero length 'side' specified"
 msgstr "長さゼロの 'side' が指定されています"
 
-#: src/main/plot.c:2417
+#: src/main/plot.c:2422
 msgid "zero length 'line' specified"
 msgstr "長さゼロの 'line' が指定されています"
 
-#: src/main/plot.c:2425
+#: src/main/plot.c:2430
 msgid "zero length 'outer' specified"
 msgstr "長さゼロの 'outer' が指定されています"
 
-#: src/main/plot.c:2432
+#: src/main/plot.c:2437
 msgid "zero length 'at' specified"
 msgstr "長さゼロの 'at' が指定されています"
 
-#: src/main/plot.c:2439
+#: src/main/plot.c:2444
 msgid "zero length 'adj' specified"
 msgstr "長さゼロの 'adj' が指定されています"
 
-#: src/main/plot.c:2453
+#: src/main/plot.c:2458
 msgid "zero length 'cex' specified"
 msgstr "長さゼロの 'cex' が指定されています"
 
-#: src/main/plot.c:2461
+#: src/main/plot.c:2466
 msgid "zero length 'col' specified"
 msgstr "長さゼロの 'col' が指定されています"
 
-#: src/main/plot.c:2468
+#: src/main/plot.c:2473
 msgid "zero length 'font' specified"
 msgstr "長さゼロの 'font' が指定されています"
 
-#: src/main/plot.c:2541
+#: src/main/plot.c:2546
 msgid "Hershey fonts not yet implemented for mtext()"
 msgstr "Hershey フォントはまだ mtext 関数に実装されていません"
 
-#: src/main/plot.c:2877
+#: src/main/plot.c:2882
 msgid "invalid a=, b= specification"
 msgstr "a=, b= 指定が不正です"
 
-#: src/main/plot.c:2886
+#: src/main/plot.c:2891
 msgid "'a' and 'b' must be finite"
 msgstr "'a' と 'b'  は有限でなければなりません"
 
-#: src/main/plot.c:3018
+#: src/main/plot.c:3023
 msgid "invalid 'which' specification"
 msgstr "'which' の指定が不正です"
 
-#: src/main/plot.c:3091
+#: src/main/plot.c:3096
 msgid "invalid number of points in locator()"
 msgstr "locator 関数の点の個数が不正です"
 
-#: src/main/plot.c:3212
+#: src/main/plot.c:3217
 msgid "invalid number of points in identify()"
 msgstr "identify 関数の点の個数が不正です"
 
-#: src/main/plot.c:3214
+#: src/main/plot.c:3219
 msgid "incorrect argument type"
 msgstr "正しくない引数の型です"
 
-#: src/main/plot.c:3216
+#: src/main/plot.c:3221
 msgid "different argument lengths"
 msgstr "引数の長さが違います"
 
-#: src/main/plot.c:3251
+#: src/main/plot.c:3256
 #, c-format
 msgid "warning: no point with %.2f inches\n"
 msgstr "警告：%.2f インチ内に点はありません\n"
 
-#: src/main/plot.c:3256
+#: src/main/plot.c:3261
 msgid "warning: nearest point already identified\n"
 msgstr "警告：近傍点がすでに同定（identify）されています\n"
 
-#: src/main/plot.c:3331
+#: src/main/plot.c:3336
 msgid "invalid units"
 msgstr "単位が不正です"
 
-#: src/main/plot.c:3337
+#: src/main/plot.c:3342
 msgid "invalid 'cex' value"
 msgstr "'cex' の値が不正です"
 
-#: src/main/plot.c:3490 src/main/plot.c:3599
+#: src/main/plot.c:3495 src/main/plot.c:3604
 msgid "invalid dendrogram input"
 msgstr "デンドログラムの入力が不正です"
 
-#: src/main/plot.c:3630
+#: src/main/plot.c:3635
 msgid "cannot take snapshot of old-style device"
 msgstr "古いデバイスではスナップショットはとれません"
 
-#: src/main/plot.c:3643
+#: src/main/plot.c:3648
 msgid "cannot play snapshot on old-style device"
 msgstr "古いスタイルのデバイスではスナップショット表示はできません"
 
-#: src/main/plot.c:3699
+#: src/main/plot.c:3704
 msgid "invalid graphics parameter list"
 msgstr "グラフィックスパラメータリストが不正です"
 
-#: src/main/plot.c:3741
+#: src/main/plot.c:3746
 msgid "invalid symbol parameter vector"
 msgstr "シンボル記号パラメータベクトルが不正です"
 
-#: src/main/plot.c:3764
+#: src/main/plot.c:3769
 msgid "invalid symbol coordinates"
 msgstr "シンボル記号の座標が不正です"
 
-#: src/main/plot.c:3772
+#: src/main/plot.c:3777
 msgid "x/y/parameter length mismatch"
 msgstr "x/y もしくはパラメータの長さが不整合です"
 
-#: src/main/plot.c:3791
+#: src/main/plot.c:3796
 msgid "invalid circles data"
 msgstr "円のデータが不正です"
 
-#: src/main/plot.c:3793 src/main/plot.c:3811 src/main/plot.c:3837
-#: src/main/plot.c:3866
+#: src/main/plot.c:3798 src/main/plot.c:3816 src/main/plot.c:3842
+#: src/main/plot.c:3871
 msgid "invalid symbol parameter"
 msgstr "シンボル記号パラメータが不正です"
 
-#: src/main/plot.c:3809
+#: src/main/plot.c:3814
 msgid "invalid squares data"
 msgstr "正方形データが不正です"
 
-#: src/main/plot.c:3835
+#: src/main/plot.c:3840
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "長方形データが不正です（2列必要です）"
 
-#: src/main/plot.c:3864
+#: src/main/plot.c:3869
 msgid "invalid stars data"
 msgstr "星形データが不正です"
 
-#: src/main/plot.c:3906
+#: src/main/plot.c:3911
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "thermometers データが不正です（3または4列必要です）"
 
-#: src/main/plot.c:3909
+#: src/main/plot.c:3914
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "thermometers [,%s] が不正です"
 
-#: src/main/plot.c:3913
+#: src/main/plot.c:3918
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr " thermometers[,%s] が [0,1] 範囲外 ‐ 奇妙に見えるかも知れません"
 
-#: src/main/plot.c:3916
+#: src/main/plot.c:3921
 msgid "invalid thermometers[,1:2]"
 msgstr "thermometers [,1:2] が不正です"
 
-#: src/main/plot.c:3955
+#: src/main/plot.c:3960
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "boxplot のデータが不正です（5列必要です）"
 
-#: src/main/plot.c:3965
+#: src/main/plot.c:3970
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "boxplots[,5] が [0,1] の範囲外にあるのは変です"
 
-#: src/main/plot.c:3967
+#: src/main/plot.c:3972
 msgid "invalid boxplots[, 1:4]"
 msgstr "boxplot[,1:4] が不正です"
 
-#: src/main/plot.c:4013
+#: src/main/plot.c:4018
 msgid "invalid symbol type"
 msgstr "シンボル記号の型が不正です"
 
@@ -6167,12 +6172,12 @@ msgstr "置き換えられる個数よりも多くの要素が与えられまし
 msgid "[[ ]] with missing subscript"
 msgstr "[[ ]] の添え字がありません"
 
-#: src/main/subassign.c:1441 src/main/subset.c:761
+#: src/main/subassign.c:1441 src/main/subset.c:767
 #, c-format
 msgid "recursive indexing failed at level %d\n"
 msgstr "再帰的な添字操作がレベル %d で失敗しました\n"
 
-#: src/main/subassign.c:1446 src/main/subset.c:765
+#: src/main/subassign.c:1446 src/main/subset.c:771
 #, c-format
 msgid "no such index at level %d\n"
 msgstr "レベル %d にはそのようなインデックスはありません\n"
@@ -6196,7 +6201,7 @@ msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "[[ ]] の添え字（%d）が範囲外です"
 
 #: src/main/subassign.c:1695 src/main/subscript.c:110 src/main/subscript.c:175
-#: src/main/subscript.c:552 src/main/subset.c:898
+#: src/main/subscript.c:552 src/main/subset.c:904
 msgid "invalid subscript type"
 msgstr "添え字の型が不正です"
 
@@ -7205,23 +7210,23 @@ msgstr ""
 "readline 入力のネスティング中に普通でない状況が起こりました。bug.report 関数"
 "を使って報告して下さい"
 
-#: src/unix/sys-std.c:598
+#: src/unix/sys-std.c:601
 msgid "re-encoding is not available on this system"
 msgstr "このシステムでは再エンコーディングできません"
 
-#: src/unix/sys-std.c:901 src/unix/sys-std.c:923
+#: src/unix/sys-std.c:904 src/unix/sys-std.c:926
 msgid "'file' argument is too long"
 msgstr "'file' 引数が長過ぎます"
 
-#: src/unix/sys-std.c:907 src/unix/sys-std.c:909
+#: src/unix/sys-std.c:910 src/unix/sys-std.c:912
 msgid "no history mechanism available"
 msgstr "利用できる履歴機構がありません"
 
-#: src/unix/sys-std.c:932 src/unix/sys-std.c:934
+#: src/unix/sys-std.c:935 src/unix/sys-std.c:937
 msgid "no history available to save"
 msgstr "保存すべき履歴がありません"
 
-#: src/unix/sys-std.c:999
+#: src/unix/sys-std.c:1002
 msgid "Sys.sleep is not implemented on this system"
 msgstr "Sys.sleep はこのシステムでは実装されていません"
 
