@@ -294,7 +294,7 @@ AC_CHECK_FUNCS(acosh asinh atanh bcopy finite isnan matherr memcpy \
 
 AC_HEADER_STDC
 AC_CHECK_HEADERS(dl.h dlfcn.h elf.h locale.h readline/history.h \
-  rpc/xdr.h sys/times.h time.h)
+  rpc/xdr.h sys/times.h time.h ieeefp.h ieee754.h)
 
 ### Typedefs
 
