@@ -1,6 +1,7 @@
 \name{files}
 \alias{files}
-\title{File Manipulation}
+\concept{directory}
+\title{File and Directory Manipulation}
 \usage{
 file.create(\dots)
 file.exists(\dots)
