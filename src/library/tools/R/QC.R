@@ -1658,7 +1658,23 @@ function(package, dir, file, lib.loc = NULL,
     if(useSaveImage) {
         if(verbose) writeLines("loading saved image ...")
         codeEnv <- new.env()
-        .tryQuietly(load(file, envir = codeEnv))
+        ## <FIXME>
+        ## If we 'just' load a saved image of the code in a package, the
+        ## packages required by the code are not attached automatically.
+        ## Hence, we repeat the part of the default startup code (the
+        ## copy of 'share/R/firstlib.R') which attempts to take care of
+        ## this via '.required' in the saved image.  Long term, it seems
+        ## that we should always *load* a given package ...
+        .tryQuietly({
+            load(file, envir = codeEnv)
+            if(exists(".required", envir = codeEnv, inherits = FALSE)) {
+                required <- get(".required", envir = codeEnv)
+                for(pkg in required)
+                    require(pkg, quietly = TRUE, character.only = TRUE,
+                            save = FALSE)
+            }
+        })
+        ## </FIXME>
         exprs <- lapply(ls(envir = codeEnv, all.names = TRUE),
                         function(f) {
                             f <- get(f, envir = codeEnv)

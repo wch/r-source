@@ -199,8 +199,9 @@ BUG FIXES
     o   filter() did not use init in reverse order as documented. (PR#5017)
 
     o	contrasts<-() and model.matrix() now have sanity checks that
-	factors having at least 2 levels: model.matrix() gave
-	nonsensical results for 0-level factors.
+	factors having at least 2 levels (or one level and a contrast
+	matrix): model.matrix() gave nonsensical results for 0-level
+	factors.
 
 
 
@@ -509,10 +510,6 @@ NEW FEATURES
 	can be disabled by calling gc.time(FALSE).  This can speed up
 	the garbage collector and reduce system calls on some
 	platforms.
-
-    o	textConnection() now has a local argument for use with output
-	connections. local = TRUE means the variable containing the output
-	is assigned in the frame of the caller.
 
 
 STANDARD PACKAGES

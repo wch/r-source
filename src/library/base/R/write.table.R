@@ -7,7 +7,8 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 
     if(!is.data.frame(x))
 	x <- data.frame(x)
-    else if(is.logical(quote) && quote)
+	
+    if(is.logical(quote) && quote)
 	quote <- which(unlist(lapply(x, function(x)
                                      is.character(x) || is.factor(x))))
     if(dec != ".") {
