@@ -67,7 +67,14 @@ R.iss: JRins.pl ../$(RPREFIX)b1.zip ../$(RPREFIX)b2.zip ../$(RPREFIX)h.zip \
 	zip -rmq foo.zip $(RPREFIX)/library/*/latex
 	unzip -qo foo -d $(RPREFIX)l
 	rm foo.zip
+	$(CAT) $(RPREFIX)/library/*/CONTENTS >  \
+	  $(RPREFIX)w/$(RPREFIX)/doc/html/search/index.txt
+	$(CP) $(RPREFIX)w/$(RPREFIX)/doc/html/packages-head.html $(RPREFIX)/doc/html
+	echo "make.packages.html(.Library)" | $(RPREFIX)/bin/rterm --vanilla --slave
+	$(CP) $(RPREFIX)/doc/html/packages.html $(RPREFIX)w/$(RPREFIX)/doc/html
+	$(RM) $(RPREFIX)/doc/html/packages*
 	perl JRins.pl $(RPREFIX)
+
 
 SetupR.exe: R.iss
 	"$(ISDIR)/iscc" R.iss > setupR.log
