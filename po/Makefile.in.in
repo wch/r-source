@@ -332,7 +332,7 @@ update-pkg-po: remove-potcdate.sed
 	  echo "updating R-$${pkg}.pot"; \
 	  src=$(top_srcdir)/src/library/$${pkg}; \
 	  echo "tools::xgettext2pot('$${src}', 'R-$${pkg}.po')" \
-	    | R_DEFAULT_PACKAGES= $(R_EXE) --slave > /dev/null ; \
+	    | R_DEFAULT_PACKAGES= LC_COLLATE=C $(R_EXE) --slave > /dev/null; \
 	    sed -f remove-potcdate.sed < $${src}/po/R-$${pkg}.pot > R-$${pkg}.1po && \
 	    sed -f remove-potcdate.sed < R-$${pkg}.po > R-$${pkg}.2po && \
 	    if cmp R-$${pkg}.1po R-$${pkg}.2po >/dev/null 2>&1; then \
