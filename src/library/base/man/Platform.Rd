@@ -38,8 +38,8 @@ Platform()
   }
 }
 \seealso{
-  \code{\link{machine}} for another view of the OS,
-  \code{\link{Sys.info}} which gives more details about the OS,
+  \code{\link{R.version}} and \code{\link{Sys.info}} give more details
+  about the OS.
   \code{\link{.Machine}} for details of the arithmetic used, and
   \code{\link{system}} for invoking platform-specific system commands.
 }

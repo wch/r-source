@@ -19,15 +19,25 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
         }
         ## which version was this package built under?
         if(!is.na(built <- fields[1, "Built"])) {
-            builtunder <- substring(strsplit(built, ";")[[1]][1], 3)
+            builtFields <- strsplit(built, ";")[[1]]
+            builtunder <- substring(builtFields[1], 3)
             if(nchar(builtunder) &&
                compareVersion(current, builtunder) < 0) {
                 warning(paste("package", fields[1, "Package"],
                               "was built under R version", builtunder),
                         call. = FALSE)
             }
+            if(.Platform$OS.type == "unix") {
+                platform <- builtFields[2]
+                ## allow for small mismatches, e.g. OS version number.
+                m <- agrep(platform, R.version$platform)
+                if(!length(m))
+                    error(paste("package", fields[1, "Package"],
+                                "was built for", platform),
+                          call. = FALSE)
+            }
         } else if(.Platform$OS.type == "mac")
-            warning("This package has not been installed properly\n  See the Note in ?library")
+            error("This package has not been installed properly\n  See the Note in ?library")
     }
 
     sQuote <- function(s) paste("`", s, "'", sep = "")

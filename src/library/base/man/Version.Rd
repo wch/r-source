@@ -35,7 +35,7 @@ R.version.string
   \item{language}{always \code{"R"}.}
 }
 \seealso{
-\code{\link{machine}}.
+\code{\link{.Platform}}.
 }
 \examples{
 R.version$os # to check how lucky you are ...

@@ -51,7 +51,6 @@ D <- function(expr, name) .Internal(D(expr, name))
 
 Machine <- function().Internal(Machine())
 R.Version <- function().Internal(Version())
-machine <- function().Internal(machine())
 colors <- function().Internal(colors())
 colours <- colors
 col2rgb <- function(col).Internal(col2rgb(col))

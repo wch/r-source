@@ -18,4 +18,9 @@ print.ordered <- function (x, ...)
     .Deprecated("print.factor")
     invisible(NextMethod("print", x))
 }
+
+machine <- function() {
+    .Deprecated(".Platform$OS.type")
+    .Internal(machine())
+}
 ## </entry>
