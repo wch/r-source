@@ -315,13 +315,11 @@ EOF
     AC_MSG_WARN([I found f2c but not libf2c, or libF77 and libI77])
   fi
   f77_rules_frag=Makefrag.f77
-  ## for some reason these can't be .f.c/.f.o, at least in GNU make
-  ## this probably makes *other* makes useless... (-pd)
-  ## FIXME: maybe use a shell script f2c wrapper and the FC rules
   cat << \EOF > ${f77_rules_frag}
-%.c: %.f
-	cat $< | $(F2C) $(F2CFLAGS) > $(@F)
-%.o: %.f
+.f.o:
+	cat $< | $(F2C) $(F2CFLAGS) > $*.c
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $*.c -o $@
+	@rm -f $*.c
 EOF
 else
   AC_MSG_ERROR([Neither an F77 compiler nor f2c found])
@@ -524,11 +522,10 @@ AC_MSG_RESULT(done)
 
 case "${host}" in
   *aix4.[[2-9]]*)
-    ldcmd="\$(top_srcdir)/tools/ldAIX4"
-    dllflags="f77 -bdynamic"
-    shlibld=f77
+    EXPORTFILE="\$(top_builddir)/etc/R.exp"
+    dllflags="-bdynamic -bE:${EXPORTFILE}"
     shlibldflags="-bM:SRE -H512 -T512 -bnoentry -bexpall \
-      -bI:\$(top_builddir)/src/main/lib.exp"
+      -bI:\$(R_HOME)/etc/R.exp"
     ;;
   alpha*osf*)
     cpicflags=
@@ -615,6 +612,7 @@ AC_SUBST(SHLIBLDFLAGS)
 AC_SUBST(SHLIBEXT)
 AC_SUBST(SHLIBLD)
 AC_DEFINE_UNQUOTED(SHLIBEXT, "${SHLIBEXT}")
+AC_SUBST(EXPORTFILE)
 
 ### System services.
 
@@ -656,20 +654,16 @@ AC_OUTPUT(Makeconf
   doc/Makefile
   doc/keyword-test
   doc/manual/Makefile
-  doc/manual/lib2tex
   doc/manual/Reference.tex
   doc/manual/Manual.tex
+  doc/manual/lib2tex
   etc/Makefile
   etc/Makeconf
   src/Makefile
   src/appl/Makefile
+  src/gnome/Makefile
   src/include/Makefile
   src/library/Makefile
-  src/main/Makefile
-  src/nmath/Makefile
-  src/scripts/Makefile
-  src/unix/Makefile
-  src/gnome/Makefile
   src/library/base/Makefile
   src/library/profile/Makefile
   src/library/eda/Makefile
@@ -681,6 +675,9 @@ AC_OUTPUT(Makeconf
   src/library/mva/Makefile
   src/library/mva/src/Makefile
   src/library/stepfun/Makefile
+  src/main/Makefile
+  src/nmath/Makefile
+  src/scripts/Makefile
   src/scripts/COMPILE
   src/scripts/INSTALL
   src/scripts/REMOVE
@@ -696,6 +693,7 @@ AC_OUTPUT(Makeconf
   src/scripts/fwf2table
   src/scripts/help.pretty
   src/scripts/html2dos
+  src/unix/Makefile
   tests/Makefile
   tests/Examples/Makefile
 )
