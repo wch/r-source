@@ -1,11 +1,17 @@
 write.table <-
-    function(x, file = "", append = FALSE, quote = TRUE, sep = " ", eol = "\n",
-	     na = NA, row.names = TRUE, col.names = TRUE)
+function (x, file = "", append = FALSE, quote = TRUE, sep = " ", 
+    eol = "\n", na = "NA", dec = ".", row.names = TRUE,
+    col.names = TRUE) 
 {
     if (!is.data.frame(x))
 	x <- data.frame(x)
     else if (is.logical(quote) && quote)
 	quote <- which(unlist(lapply(x, is.character)))
+    if (dec != "."){
+    	num <- which(unlist(lapply(x, is.numeric)))
+	x[num] <- lapply(x[num],
+	          function(z)gsub("\\.",",",as.character(z)))
+    }
     x <- as.matrix(x)
     p <- ncol(x)
     d <- dimnames(x)

@@ -25,6 +25,12 @@ NEW FEATURES
 	the locations of the tclConfig.sh and tkConfig.sh scripts via
 	the `--with-tcl-config' and `--with-tk-config' arguments.
 
+    o   prop.trend.test() - test for trend in proportions. 
+
+    o   write.table() has new argument `dec' for setting the decimal
+        separator (SPSS/Windows and probably others want commas in
+	continental European locales).
+
 
 BUG FIXES
 

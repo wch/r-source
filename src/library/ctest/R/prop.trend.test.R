@@ -1,0 +1,19 @@
+prop.trend.test <- function (x, n, score = 1:length(x)) 
+{
+    method <- "Chi Square Test for Trend in Proportions"
+    dname <- paste(deparse(substitute(x)), "out of", deparse(substitute(n)))
+    dname <- paste(dname, ",\n using scores:", paste(score, collapse = " "))
+    freq <- x/n
+    p <- sum(x)/sum(n)
+    w <- n/p/(1 - p)
+    a <- anova(lm(freq ~ score, weight = w))
+    chisq <- a["score", "Sum Sq"]
+    names(chisq) <- "X-squared"
+    df <- 1
+    names(df) <- "df"
+    pval <- 1 - pchisq(chisq, 1)
+    rval <- list(statistic = chisq, parameter = df, p.value = pval, 
+        method = method, data.name = dname)
+    class(rval) <- "htest"
+    return(rval)
+}
