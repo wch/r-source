@@ -21,8 +21,7 @@ duplicated.matrix <- duplicated.array <-
 	.NotYetUsed("incomparables != FALSE")
     ndim <- length(dim(x))
     if (length(MARGIN) > ndim || any(MARGIN > ndim))
-        stop(paste("MARGIN = ", MARGIN, " is invalid for dim = ",
-                   dim(x), sep = ""))
+        stop("MARGIN = ", MARGIN, " is invalid for dim = ", dim(x))
     temp <- apply(x, MARGIN, function(x) paste(x, collapse = "\r"))
     res <- duplicated(as.vector(temp))
     dim(res) <- dim(temp)
@@ -61,8 +60,7 @@ unique.matrix <- unique.array <-
 	.NotYetUsed("incomparables != FALSE")
     ndim <- length(dim(x))
     if (length(MARGIN) > 1 || any(MARGIN > ndim))
-        stop(paste("MARGIN = ", MARGIN, " is invalid for dim = ",
-                   dim(x), sep = ""))
+        stop("MARGIN = ", MARGIN, " is invalid for dim = ", dim(x))
     temp <- apply(x, MARGIN, function(x) paste(x, collapse = "\r"))
     args <- rep(alist(a=), ndim)
     names(args) <- NULL
