@@ -150,3 +150,8 @@ terms(form) # error in 1.2.2
 x <- dchisq(c(7.1, 7.2, 7.3), df=2,ncp=20)
 stopifnot(all(diff(x) > 0))
 ## on 1.2.2 on RH6.2 i686 Linux x = 0.01140512 0.00804528 0.01210514
+
+## PR 882 eigen segfaults on 0-diml matrices, 2001-03-23
+m <- matrix(1, 0, 0)  # 1 to force numeric not logical
+try(eigen(m))
+## segfaults on 1.2.2
