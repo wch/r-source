@@ -802,6 +802,10 @@ FUNTAB R_FunTab[] =
 {"bindingIsLocked",	do_bndIsLocked,	0,      11,     2,      PP_FUNCALL},
 {"makeActiveBinding", 	do_mkActiveBnd,	0,      11,     3,      PP_FUNCALL},
 {"bindingIsActive",	do_bndIsActive,	0,      11,     2,      PP_FUNCALL},
+{"mkUnbound",		do_mkUnbound,	0,      11,     1,      PP_FUNCALL},
+#endif
+#ifdef EXPERIMENTAL_NAMESPACES
+{"useNamespaceDispatch",do_useNSDisp,	0,      11,     1,      PP_FUNCALL},
 #endif
 
 {NULL,		NULL,		0,	0,	0,	0},

@@ -445,4 +445,8 @@ SEXP do_lockBnd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bndIsLocked(SEXP, SEXP, SEXP, SEXP);
 SEXP do_mkActiveBnd(SEXP, SEXP, SEXP, SEXP);
 SEXP do_bndIsActive(SEXP, SEXP, SEXP, SEXP);
+SEXP do_mkUnbound(SEXP, SEXP, SEXP, SEXP);
+#endif
+#ifdef EXPERIMENTAL_NAMESPACES
+SEXP do_useNSDisp(SEXP, SEXP, SEXP, SEXP);
 #endif

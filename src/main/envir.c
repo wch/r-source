@@ -2341,6 +2341,20 @@ SEXP do_bndIsActive(SEXP call, SEXP op, SEXP args, SEXP rho)
     env = CADR(args);
     return ScalarLogical(R_BindingIsActive(sym, env));
 }
+
+SEXP do_mkUnbound(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP sym;
+    checkArity(op, args);
+    sym = CAR(args);
+    if (TYPEOF(sym) != SYMSXP) error("not a symbol");
+    if (R_BindingIsLocked(sym, R_NilValue))
+        error("can't unbind a locked binding");
+    if (R_BindingIsActive(sym, R_NilValue))
+        error("can't unbind and active binding");
+    SET_SYMVALUE(sym, R_UnboundValue);
+    return R_NilValue;
+}
 #endif
 
 void R_RestoreHashCount(SEXP rho)
@@ -2457,5 +2471,12 @@ SEXP R_FindNamespace(SEXP info)
 	UNPROTECT(2);
 	return val;
     }
+}
+
+SEXP do_useNSDisp(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    checkArity(op, args);
+    R_SetUseNamespaceDispatch(asLogical(CAR(args)));
+    return R_NilValue;
 }
 #endif
