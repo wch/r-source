@@ -2,6 +2,13 @@
 
 NEW FEATURES
 
+    o   The graphics function "tck" now produces effects just like
+	like those in S (e.g. par(tck=1) now produces grid lines).
+	Since using "tck" produces nasty results in some circumstances
+	there is also an alternative parameter "tcl" which defines
+	the tick length in terms of lines of text.  The default
+	setting is par(tcl=-0.5).
+
     o   menu() now takes additional arguments `graphics' (currently
 	unused) and `title'.
 
