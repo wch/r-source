@@ -7,7 +7,6 @@ help <-
 {
     chmhelp <- is.logical(chmhelp) && chmhelp
     htmlhelp <- !chmhelp && is.logical(htmlhelp) && htmlhelp
-    winhelp <- !chmhelp && !htmlhelp && is.logical(winhelp) && winhelp
     if (!missing(package))
         if (is.name(y <- substitute(package)))
             package <- as.character(y)
