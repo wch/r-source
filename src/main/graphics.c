@@ -2320,6 +2320,23 @@ void GCheckState(DevDesc *dd)
  *
  */
 
+/* CLIPPING paradigm:
+   R uses both the clipping capabilities of the device (if present) 
+   and its own internal clipping algorithms.
+   If the device has no clipping capabilities (canClip = 0) then R
+   does all of the clipping internally.
+   If the device has clipping capabilities, R still does some internal
+   clipping (to the device extent).  This is to avoid "silly" values 
+   being sent to the device (e.g., X11 and Ghostview will barf if you
+   send a ridiculously large number to them).  Call this silly-clipping.
+       The problem with getting R to do some of the clipping is that it is
+       not necessarily as good as the device at clipping (e.g., R's text
+       clipping is very crude).  This is the motivation for leaving as much
+       of the clipping as possible to the device.
+       R does different amounts of silly-clipping for different primitives.
+       See the individual routines for more info.
+*/
+
 
 /* Draw a circle (radius is given in inches). */
 /* code down with GRect */
@@ -2536,26 +2553,58 @@ static void CScliplines(int n, double *x, double *y, int coords, DevDesc *dd)
     C_free((char *) yy);
 }
 
-
-/* Draw a line. */
-void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
+/* Clip the line
+   If toDevice = 1, clip to the device extent (i.e., temporarily ignore 
+   dd->gp.xpd) */
+static int clipLine(double *x1, double *y1, double *x2, double *y2, 
+		     int coords, int toDevice, DevDesc *dd)
 {
-    if (dd->gp.lty == LTY_BLANK) return;
-    if (dd->dp.canClip) {
-	GClip(dd);
-	dd->dp.line(x1, y1, x2, y2, coords, dd);
+    double temp;
+    int dummy1, dummy2, xpdsaved;
+    int result;
+    cliprect cr;
+
+    if (toDevice) {
+	xpdsaved = dd->gp.xpd;
+	dd->gp.xpd = 2;
     }
-    else {
-	double x[2];
-	double y[2];
-	x[0] = x1;
-	y[0] = y1;
-	x[1] = x2;
-	y[1] = y2;
-	CScliplines(2, x, y, coords, dd);
+
+    setClipRect(&cr.xl, &cr.yb, &cr.xr, &cr.yt, coords, dd);
+    if (cr.xr < cr.xl) {
+	temp = cr.xl;
+	cr.xl = cr.xr;
+	cr.xr = temp;
     }
+    if (cr.yt < cr.yb) {
+	temp = cr.yb;
+	cr.yb = cr.yt;
+	cr.yt = temp;
+    }
+
+    result = CSclipline(x1, y1, x2, y2, &dummy1, &dummy2, coords, &cr);
+
+    if (toDevice)
+	dd->gp.xpd = xpdsaved;
+    return result;
 }
 
+/* Draw a line. */
+/* If the device canClip, R clips line to device extent and 
+   device does all other clipping. */
+void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
+{
+    int result;
+    if (dd->gp.lty == LTY_BLANK) return;
+    if (dd->dp.canClip) {
+	result = clipLine(&x1, &y1, &x2, &y2, coords, 1, dd);
+	GClip(dd);
+    }
+    else {
+	result = clipLine(&x1, &y1, &x2, &y2, coords, 0, dd);
+    }
+    if (result)
+	dd->dp.line(x1, y1, x2, y2, coords, dd);
+}
 
 /* Read the current "pen" position. */
 int GLocator(double *x, double *y, int coords, DevDesc *dd)
@@ -2789,8 +2838,10 @@ int GClipPolygon(double *x, double *y, int n, int coords, int store,
 /* if bg not specified then draw as polyline rather than polygon
  * to avoid drawing line along border of clipping region
  */
+/* If mode = 0, clip according to dd->gp.xpd
+   If mode = 1, clip to the device extent */
 static void clipPolygon(int n, double *x, double *y, int coords,
-                        int bg, int fg, DevDesc *dd)
+                        int bg, int fg, int mode, DevDesc *dd)
 {
     static double *xc = NULL, *yc = NULL;
     double *tmp;
@@ -2811,6 +2862,12 @@ static void clipPolygon(int n, double *x, double *y, int coords,
     }
     else {
 	int npts;
+	int xpdsaved;
+	if (mode = 1) {
+	    xpdsaved = dd->gp.xpd;
+	    dd->gp.xpd = 2;
+	}
+	xc = yc = 0;		/* -Wall */
 	npts = GClipPolygon(x, y, n, coords, 0, xc, yc, dd);
 	if (npts > 1) {
 	    xc = (double*)malloc(npts * sizeof(double));
@@ -2818,6 +2875,8 @@ static void clipPolygon(int n, double *x, double *y, int coords,
 	    npts = GClipPolygon(x, y, n, coords, 1, xc, yc, dd);
 	    dd->dp.polygon(npts, xc, yc, coords, bg, fg, dd);
 	}
+	if (mode = 1)
+	    dd->gp.xpd = xpdsaved;
     }
     if (xc != NULL) {tmp = xc; xc = NULL; free(tmp);}
     if (yc != NULL) {tmp = yc; yc = NULL; free(tmp);}
@@ -2829,30 +2888,72 @@ void GPolygon(int n, double *x, double *y, int coords,
     if (dd->gp.lty == LTY_BLANK) return;
     if (dd->dp.canClip) {
 	GClip(dd);
-	dd->dp.polygon(n, x, y, coords, bg, fg, dd);
+	clipPolygon(n, x, y, coords, bg, fg, 1, dd);
     }
     else
-	clipPolygon(n, x, y, coords, bg, fg, dd);
+	clipPolygon(n, x, y, coords, bg, fg, 0, dd);
 }
 
 #include <stdio.h>
 
+/* Clip and draw the polyline.  
+   If clipToDevice = 0, clip according to dd->gp.xpd
+   If clipToDevice = 1, clip to the device extent */
+static void clipPolyline(int n, double *x, double *y, int coords,
+			 int clipToDevice, DevDesc *dd)
+{
+    int xpdsaved;
+    if (clipToDevice) {
+	xpdsaved = dd->gp.xpd;
+	dd->gp.xpd = 2;
+    }
+    CScliplines(n, x, y, coords, dd);
+    if (clipToDevice)
+	dd->gp.xpd = xpdsaved;
+}
+
 /* Draw a series of line segments. */
+/* If the device canClip, R clips to the device extent and the device
+   does all other clipping */
 void GPolyline(int n, double *x, double *y, int coords, DevDesc *dd)
 {
     if (dd->gp.lty == LTY_BLANK) return;
     if (dd->dp.canClip) {
-        GClip(dd);
-        dd->dp.polyline(n, x, y, coords, dd);
+        GClip(dd); /* sets up the device clipping */
+	clipPolyline(n, x, y, coords, 1, dd);  /* clips to device extent
+						  then draws */
     }
     else
-        CScliplines(n, x, y, coords, dd);
+	clipPolyline(n, x, y, coords, 0, dd);
 }
 
-/* draw a circle */
-static void clipCircle(double x, double y, int coords,
-	     double r, int bg, int fg, DevDesc *dd)
+/* Convert a circle into a polygon with specified number of vertices */
+static void convertCircle(double x, double y, int coords, double r,
+			  int numVertices, double *xc, double *yc,
+			  DevDesc *dd)
 {
+    int i;
+    double theta = 2*M_PI/numVertices;
+    for (i=0; i<numVertices; i++) {
+	xc[i] = x + r*sin(theta*i);
+	yc[i] = y + r*cos(theta*i);
+    }
+    xc[numVertices] = x;
+    yc[numVertices] = y+r;
+}
+
+/* Takes a specification of a circle as input and returns a code indicating
+   how the circle should be clipped.
+   The return value will be -1 if the circle is to
+   be totally clipped out of existence, -2 if the circle is to be
+   totally left alone, 0 and above if the circle has been converted 
+   into a polygon (in which case, the return value indicates the 
+   number of vertices of the polygon and the function convertCircle()
+   should be called to obtain the vertices of the polygon). */
+static int clipCircleCode(double x, double y, int coords, double r, 
+			  DevDesc *dd) 
+{
+    int result;
     /* determine clipping region */
     double xmin, xmax, ymin, ymax;
     setClipRect(&xmin, &ymin, &xmax, &ymax, DEVICE, dd);
@@ -2869,11 +2970,11 @@ static void clipCircle(double x, double y, int coords,
     }
     /* convert x & y to DEVICE (radius already DEVICE) */
     GConvert(&x, &y, coords, DEVICE, dd);
-    /* if circle is all within clipping rect draw all of it */
+    /* if circle is all within clipping rect */
     if (x-r > xmin && x+r < xmax && y-r > ymin && y+r < ymax) {
-	dd->dp.circle(x, y, DEVICE, r, bg, fg, dd);
+	result = -2;
     }
-    /* if circle is all outside clipping rect, draw nothing */
+    /* if circle is all outside clipping rect */
     else {
 	double distance = r*r;
 	if (x-r > xmax || x+r < xmin || y-r > ymax || y+r < ymin ||
@@ -2885,13 +2986,10 @@ static void clipCircle(double x, double y, int coords,
 	     ((x-xmin)*(x-xmin)+(y-ymax)*(y-ymax) > distance)) ||
 	    (x > xmax && y > ymax &&
 	     ((x-xmax)*(x-xmax)+(y-ymax)*(y-ymax) > distance))) {
+	    result = -1;
 	}
-        /* otherwise, convert circle to polygon and draw that */
+        /* otherwise, convert circle to polygon */
 	else {
-	    char *vmax;
-	    double *xc, *yc;
-	    int i;
-
 	    /* Replace circle with polygon.
 
 	       Heuristic for number of vertices is to use theta so
@@ -2899,37 +2997,55 @@ static void clipCircle(double x, double y, int coords,
 	       roughly const * sqrt(r) so there'd be little point in
 	       enforcing an upper limit. */
 
-	    int numvert = (r <= 6) ? 10 : 2 * M_PI/acos(1 - 1/r) ;
-	    double theta = 2*M_PI/numvert;
-	    vmax = vmaxget();
-	    xc = (double*)R_alloc(numvert+1, sizeof(double));
-	    yc = (double*)R_alloc(numvert+1, sizeof(double));
-	    for (i=0; i<numvert; i++) {
-		xc[i] = x + r*sin(theta*i);
-		yc[i] = y + r*cos(theta*i);
-	    }
-	    xc[numvert] = x;
-	    yc[numvert] = y+r;
-	    if (bg == NA_INTEGER) {
-		dd->gp.col = fg;
-		GPolyline(numvert+1, xc, yc, DEVICE, dd);
-	    }
-	    else {
-		int npts;
-		double *xcc, *ycc;
-		xcc = ycc = 0;	/* -Wall */
-		npts = GClipPolygon(xc, yc, numvert, coords, 0, xcc, ycc, dd);
-		if (npts > 1) {
-		    xcc = (double*)R_alloc(npts, sizeof(double));
-		    ycc = (double*)R_alloc(npts, sizeof(double));
-		    npts = GClipPolygon(xc, yc, numvert, coords, 1,
-                                        xcc, ycc, dd);
-		    dd->dp.polygon(npts, xcc, ycc, DEVICE, bg, fg, dd);
-		}
-	    }
-	    vmaxset(vmax);
+	    result = (r <= 6) ? 10 : 2 * M_PI/acos(1 - 1/r) ;
 	}
     }
+    return result;
+}
+
+static void clipCircle(double x, double y, int coords,
+	     double r, int bg, int fg, int clipToDevice, DevDesc *dd)
+{
+    char *vmax;
+    double *xc, *yc;
+    int result = clipCircleCode(x, y, coords, r, dd);
+    int xpdsaved;
+    if (clipToDevice) {
+	xpdsaved = dd->gp.xpd;
+	dd->gp.xpd = 2;
+    } 
+    switch (result) {
+    case -2: /* No clipping;  draw all of circle */
+	dd->dp.circle(x, y, coords, r, bg, fg, dd);
+	break;
+    case -1: /* Total clipping; draw nothing */
+	break;
+    default: /* Partial clipping; draw poly[line|gon] */
+	vmax = vmaxget();
+	xc = (double*)R_alloc(result+1, sizeof(double));
+	yc = (double*)R_alloc(result+1, sizeof(double));
+	convertCircle(x, y, coords, r, result, xc, yc, dd);
+	if (bg == NA_INTEGER) {
+	    dd->gp.col = fg;
+	    GPolyline(result+1, xc, yc, DEVICE, dd);
+	}
+	else {
+	    int npts;
+	    double *xcc, *ycc;
+	    xcc = ycc = 0;	/* -Wall */
+	    npts = GClipPolygon(xc, yc, result, coords, 0, xcc, ycc, dd);
+	    if (npts > 1) {
+		xcc = (double*)R_alloc(npts, sizeof(double));
+		ycc = (double*)R_alloc(npts, sizeof(double));
+		npts = GClipPolygon(xc, yc, result, coords, 1,
+				    xcc, ycc, dd);
+		dd->dp.polygon(npts, xcc, ycc, DEVICE, bg, fg, dd);
+	    }
+	}
+	vmaxset(vmax);
+    }
+    if (clipToDevice)
+	dd->gp.xpd = xpdsaved;
 }
 
 /* radius is specified in INCHES */
@@ -2944,57 +3060,110 @@ void GCircle(double x, double y, int coords,
     ir = (ir > 0) ? ir : 1;
     if (dd->dp.canClip) {
 	GClip(dd);
-	dd->dp.circle(x, y, coords, ir, col, border, dd);
+	clipCircle(x, y, coords, ir, col, border, 1, dd);
     }
     else
-	clipCircle(x, y, coords, ir, col, border, dd);
+	clipCircle(x, y, coords, ir, col, border, 0, dd);
 }
 
+/* Return a code indicating how the rectangle should be clipped.
+   0 means the rectangle is totally outside the clip region
+   1 means the rectangle is totally inside the clip region
+   2 means the rectangle intersects the clip region */
+static int clipRectCode(double x0, double y0, double x1, double y1, int coords,
+		     DevDesc *dd)
+{
+    int result;
+    /* determine clipping region */
+    double xmin, xmax, ymin, ymax;
+    setClipRect(&xmin, &ymin, &xmax, &ymax, DEVICE, dd);
+
+    if (xmax < xmin) {
+	double swap = xmax;
+	xmax = xmin;
+	xmin = swap;
+    }
+    if (ymax < ymin) {
+	double swap = ymax;
+	ymax = ymin;
+	ymin = swap;
+    }
+    /* convert x & y to DEVICE (radius already DEVICE) */
+    GConvert(&x0, &y0, coords, DEVICE, dd);
+    GConvert(&x1, &y1, coords, DEVICE, dd);
+
+    if ((x0 < xmin && x1 < xmin) || (x0 > xmax && x1 > xmax) ||
+	(y0 < ymin && y1 < ymin) || (y0 > ymax && y1 > ymax))
+	result = 0;
+    else if ((x0 > xmin && x0 < xmax) && (x1 > xmin && x1 < xmax) &&
+	     (y0 > ymin && y0 < ymax) && (y1 > ymin && y1 < ymax))
+	result = 1;
+    else
+	result = 2;
+
+    return result;
+}
+
+static void clipRect(double x0, double y0, double x1, double y1, int coords,
+	   int bg, int fg, int clipToDevice, DevDesc *dd)
+{
+    char *vmax;
+    double *xc, *yc;
+    int result = clipRectCode(x0, y0, x1, y1, coords, dd);
+    int xpdsaved;
+    if (clipToDevice) {
+	xpdsaved = dd->gp.xpd;
+	dd->gp.xpd = 2;
+    }
+    switch (result) {
+    case 0:  /* rectangle totally clipped; draw nothing */
+	break;
+    case 1:  /* rectangle totally inside;  draw all */
+	dd->dp.rect(x0, y0, x1, y1, coords, bg, fg, dd);
+	break;
+    case 2:  /* rectangle intersects clip region;  use polygon clipping */
+	vmax = vmaxget();
+	xc = (double*)R_alloc(5, sizeof(double));
+	yc = (double*)R_alloc(5, sizeof(double));
+	xc[0] = x0; yc[0] = y0;
+	xc[1] = x0; yc[1] = y1;
+	xc[2] = x1; yc[2] = y1;
+	xc[3] = x1; yc[3] = y0;
+	xc[4] = x0; yc[4] = y0;
+	if (bg == NA_INTEGER) {
+	    dd->gp.col = fg;
+	    GPolyline(5, xc, yc, coords, dd);
+	}
+	else {
+	    int npts;
+	    double *xcc, *ycc;
+	    xcc = ycc = 0;		/* -Wall */
+	    npts = GClipPolygon(xc, yc, 4, coords, 0, xcc, ycc, dd);
+	    if (npts > 1) {
+		xcc = (double*)R_alloc(npts, sizeof(double));
+		ycc = (double*)R_alloc(npts, sizeof(double));
+		npts = GClipPolygon(xc, yc, 4, coords, 1, xcc, ycc, dd);
+		dd->dp.polygon(npts, xcc, ycc, coords, bg, fg, dd);
+	    }
+	}
+	vmaxset(vmax);
+    }
+    if (clipToDevice)
+	dd->gp.xpd = xpdsaved;
+}
 
 /* Draw a rectangle	*/
 /* Filled with color bg and outlined with color fg  */
 /* These may both be NA_INTEGER	 */
-static void clipRect(double x0, double y0, double x1, double y1, int coords,
-	   int bg, int fg, DevDesc *dd)
-{
-    char *vmax;
-    double *xc, *yc;
-    vmax = vmaxget();
-    xc = (double*)R_alloc(5, sizeof(double));
-    yc = (double*)R_alloc(5, sizeof(double));
-    xc[0] = x0; yc[0] = y0;
-    xc[1] = x0; yc[1] = y1;
-    xc[2] = x1; yc[2] = y1;
-    xc[3] = x1; yc[3] = y0;
-    xc[4] = x0; yc[4] = y0;
-    if (bg == NA_INTEGER) {
-	dd->gp.col = fg;
-	GPolyline(5, xc, yc, coords, dd);
-    }
-    else {
-	int npts;
-	double *xcc, *ycc;
-	xcc = ycc = 0;		/* -Wall */
-	npts = GClipPolygon(xc, yc, 4, coords, 0, xcc, ycc, dd);
-	if (npts > 1) {
-	    xcc = (double*)R_alloc(npts, sizeof(double));
-	    ycc = (double*)R_alloc(npts, sizeof(double));
-	    npts = GClipPolygon(xc, yc, 4, coords, 1, xcc, ycc, dd);
-	    dd->dp.polygon(npts, xcc, ycc, coords, bg, fg, dd);
-	}
-    }
-    vmaxset(vmax);
-}
-
 void GRect(double x0, double y0, double x1, double y1, int coords,
 	   int bg, int fg, DevDesc *dd)
 {
     if (dd->dp.canClip) {
 	GClip(dd);
-	dd->dp.rect(x0, y0, x1, y1, coords, bg, fg, dd);
+	clipRect(x0, y0, x1, y1, coords, bg, fg, 1, dd);
     }
     else
-	clipRect(x0, y0, x1, y1, coords, bg, fg, dd);
+	clipRect(x0, y0, x1, y1, coords, bg, fg, 0, dd);
 }
 
 
@@ -3067,6 +3236,73 @@ double GStrHeight(char *str, int units, DevDesc *dd)
 	h = GConvertYUnits(h, DEVICE, units, dd);
 
     return h;
+}
+
+/* Return a code indicating how the text should be clipped 
+   NOTE that x, y indicate the bottom-left of the text 
+   NOTE also that x and y are in INCHES 
+   NOTE also also that this is a bit crude because it actually uses
+   a bounding box for the entire text to determine the clipping code.
+   This will mean that in certain (very rare ?) cases, a piece of 
+   text will be characterised as intersecting with the clipping region
+   when in fact it lies totally outside the clipping region.  But 
+   this is not a problem because the final output will still be correct.
+   0 means totally outside clip region 
+   1 means totally inside clip region 
+   2 means intersects clip region */
+static int clipTextCode(double x, double y, char *str,
+		     double rot, DevDesc *dd)
+{
+    double x0, x1, x2, x3, y0, y1, y2, y3, left, right, bottom, top;
+    double angle = DEG2RAD * rot;
+    double cos_rot = cos(angle);
+    double sin_rot = sin(angle);
+    double theta1 = M_PI/2 - angle;
+    double width = GStrWidth(str, INCHES, dd);
+    double height = GStrHeight(str, INCHES, dd);
+    double length = sqrt(width*width + height*height);
+    double theta2 = angle + atan2(height, width);
+    x0 = x + height*cos(theta1);
+    x1 = x;
+    x2 = x + length*cos(theta2);
+    x3 = x + width*cos(angle);
+    y0 = y + height*sin(theta1);
+    y1 = y;
+    y2 = y + length*sin(theta2);
+    y3 = y + width*sin(angle);
+    left = fmin2(fmin2(x0, x1), fmin2(x2, x3));
+    right = fmax2(fmax2(x0, x1), fmax2(x2, x3));
+    bottom = fmin2(fmin2(y0, y1), fmin2(y2, y3));
+    top = fmax2(fmax2(y0, y1), fmax2(y2, y3));
+    return clipRectCode(left, bottom, right, top, INCHES, dd);
+}
+
+static void clipText(double x, double y, char *str, double rot,
+		     int clipToDevice, DevDesc *dd)
+{
+    char *vmax;
+    double *xc, *yc;
+    int result = clipTextCode(x, y, str, rot, dd);
+    int xpdsaved;
+    if (clipToDevice) {
+	xpdsaved = dd->gp.xpd;
+	dd->gp.xpd = 2;
+    }
+    switch (result) {
+    case 0:  /* text totally clipped; draw nothing */
+	break;
+    case 1:  /* text totally inside;  draw all */
+	dd->dp.text(x, y, INCHES, str, rot, dd);
+	break;
+    case 2:  /* text intersects clip region 
+		act according to value of clipToDevice */
+	if (clipToDevice) /* Device will do clipping */
+	    dd->dp.text(x, y, INCHES, str, rot, dd);
+	else /* don't draw anything; this could be made less crude :) */
+	    ;
+    }
+    if (clipToDevice)
+	dd->gp.xpd = xpdsaved;
 }
 
 /* Draw text in a plot. */
@@ -3173,6 +3409,12 @@ void GText(double x, double y, int coords, char *str,
 		}
 		if(dd->dp.canClip) {
 		    GClip(dd);
+		    clipText(xleft, ybottom, sbuf, rot, 1, dd);
+		} else
+		    clipText(xleft, ybottom, sbuf, rot, 0, dd);
+#ifdef OLD	       
+		if(dd->dp.canClip) {
+		    GClip(dd);
 		    dd->dp.text(xleft, ybottom, INCHES, sbuf, rot, dd);
 		}
 		else {
@@ -3193,6 +3435,7 @@ void GText(double x, double y, int coords, char *str,
 			    return;
 		    dd->dp.text(xleft, ybottom, INCHES, sbuf, rot, dd);
 		}
+#endif	       
 		sb = sbuf;
 		i += 1;
 	    }
