@@ -673,7 +673,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	i = asLogical(CAR(args));
 	if(i == 0 || i == NA_LOGICAL)
 	    dolabels = 0;
-	PROTECT(CAR(args) = R_NilValue);
+	PROTECT(lab = R_NilValue);
     }
     else if (isExpression(CAR(args))) {
 	dolabels = 1;
@@ -795,20 +795,22 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	    x = REAL(at)[i];
 	    tempx = x; tempy = y;
 	    GConvert(&tempx, &tempy, USER, NFC, dd);
-	    if(isExpression(lab)) {
-		GMMathText(VECTOR(lab)[i], which, 
-			   dd->gp.mgp[1], 0, x, dd->gp.las, dd);
-	    }
-	    else {
-		labw = GStrWidth(CHAR(STRING(lab)[i]), NFC, dd);
-		tnew = tempx - 0.5 * labw;
-		/* check that there's room for labels */
-		if (dd->gp.las == 2 || tnew - tlast >= gap) {
-		    GMtext(CHAR(STRING(lab)[i]), which, 
-			   dd->gp.mgp[1], 0, x, 
-			   dd->gp.las, dd);
-		    tlast = tempx + 0.5 *labw;
-		}
+	    if (dolabels) {
+	        if(isExpression(lab)) {
+		    GMMathText(VECTOR(lab)[i], which, 
+			       dd->gp.mgp[1], 0, x, dd->gp.las, dd);
+	        }
+	        else {
+		    labw = GStrWidth(CHAR(STRING(lab)[i]), NFC, dd);
+		    tnew = tempx - 0.5 * labw;
+		    /* check that there's room for labels */
+		    if (dd->gp.las == 2 || tnew - tlast >= gap) {
+		        GMtext(CHAR(STRING(lab)[i]), which, 
+			       dd->gp.mgp[1], 0, x, 
+			       dd->gp.las, dd);
+		        tlast = tempx + 0.5 *labw;
+		    }
+	        }
 	    }
 	}
 	break;
@@ -835,21 +837,23 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	    y = REAL(at)[i];
 	    tempx = x; tempy = y;
 	    GConvert(&tempx, &tempy, USER, NFC, dd);
-	    if(isExpression(lab)) {
-		GMMathText(VECTOR(lab)[i], which, 
-			   dd->gp.mgp[1], 0, y, dd->gp.las, dd);
-	    }
-	    else {
-		labw = GStrWidth(CHAR(STRING(lab)[i]), 
-				 INCHES, dd);
-		labw = GConvertYUnits(labw, INCHES, NFC, dd);
-		tnew = tempy - 0.5 * labw;
-		if (dd->gp.las > 0 || tnew - tlast >= gap) {
-		    GMtext(CHAR(STRING(lab)[i]), which, 
-			   dd->gp.mgp[1], 0, y,
-			   dd->gp.las, dd);
-		    tlast = tempy + 0.5 *labw;
-		}
+	    if (dolabels) {
+	        if(isExpression(lab)) {
+		    GMMathText(VECTOR(lab)[i], which, 
+			       dd->gp.mgp[1], 0, y, dd->gp.las, dd);
+	        }
+	        else {
+		    labw = GStrWidth(CHAR(STRING(lab)[i]), 
+				     INCHES, dd);
+		    labw = GConvertYUnits(labw, INCHES, NFC, dd);
+		    tnew = tempy - 0.5 * labw;
+		    if (dd->gp.las > 0 || tnew - tlast >= gap) {
+		        GMtext(CHAR(STRING(lab)[i]), which, 
+			       dd->gp.mgp[1], 0, y,
+			       dd->gp.las, dd);
+		        tlast = tempy + 0.5 *labw;
+		    }
+	        }
 	    }
 	}
 	break;
