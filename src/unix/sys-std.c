@@ -310,34 +310,113 @@ getSelectedHandler(InputHandler *handlers, fd_set *readMask)
 #ifdef HAVE_LIBREADLINE
 /* callback for rl_callback_read_char */
 
-static int readline_gotaline;
-static int readline_addtohistory;
-static int readline_len;
-static int readline_eof;
-static unsigned char *readline_buf;
+
+/*
+
+There has been a general problem with asynchonous calls to browser and
+anything that uses the standard console reading facilties asynchronously
+(e.g. scan(), parse(), menu()).  The basic problem is as follows.  We
+are in the usual input loop awaiting characters typed by the user.  Then
+asynchronously, we enter the browser due to a callback that is invoked
+from the background event loop that is active while waiting for the user
+input.  At this point, we essentially are starting a new readline
+session and it is important that we restore the old one when we complete
+the browse-related one. But unfortunately, we are using global variables
+and restoring it is not currently being done.
+So this is an attempt to a) remove the global variables (which will
+help with threading), and b) ensure that the relevant readline handlers
+are restored when an asynchronous reader completes its task.
+
+Cleaning up after errors is still an issue that needs investigation
+and whether the current setup does the correct thing.
+Related to this is whether nested calls (e.g. within a browser, we
+do other calls to browser() or scan and whether these i)
+accumulate on our readline stack, and ii) are unwound correctly.
+If they don't accumulate, we need only keep  function pointers on
+this stack. 10 seems safe for most use and is an improvement
+over the abort's that we were getting due to the lack of 
+a readline handler being registered.
+DTL.
+*/
+
+typedef struct _R_ReadlineData R_ReadlineData;
+
+struct _R_ReadlineData {
+
+ int readline_gotaline;
+ int readline_addtohistory;
+ int readline_len;
+ int readline_eof;
+ unsigned char *readline_buf;
+ R_ReadlineData *prev;
+
+};
+
+R_ReadlineData *rl_top = NULL;
+
+#define MAX_READLINE_NESTING 10
+
+static struct {
+  int current;
+  int max;
+  rl_vcpfunc_t *fun[MAX_READLINE_NESTING];
+} ReadlineStack = {-1, MAX_READLINE_NESTING};
+
+
+/*
+  Registers the specified routine and prompt with readline
+  and keeps a record of it on the top of the R readline stack.
+ */
+void
+pushReadline(char *prompt, rl_vcpfunc_t f)
+{
+   if(ReadlineStack.current >= ReadlineStack.max) {
+     warning("An unusual circumstance has arisen in the nesting of readline input. Please report using bug.report()");
+   } else
+     ReadlineStack.fun[ReadlineStack.current++] = f; 
+
+   rl_callback_handler_install(prompt, f);
+}
+
+/*
+  Unregister the current readline handler and pop it from R's readline
+  stack, followed by re-registering the previous one.
+*/
+void
+popReadline()
+{
+  if(ReadlineStack.current > -1) {
+     rl_callback_handler_remove(); 
+     ReadlineStack.fun[ReadlineStack.current--] = NULL;
+     if(ReadlineStack.current > -1 && ReadlineStack.fun[ReadlineStack.current])
+        rl_callback_handler_install("", ReadlineStack.fun[ReadlineStack.current]);
+  }
+}
 
 static void readline_handler(char *line)
 {
     int l;
-    rl_callback_handler_remove();
-    if ((readline_eof = !line)) /* Yes, I don't mean ==...*/
+
+    popReadline();
+
+    if ((rl_top->readline_eof = !line)) /* Yes, I don't mean ==...*/
 	return;
     if (line[0]) {
 # ifdef HAVE_READLINE_HISTORY_H
-	if (strlen(line) && readline_addtohistory)
+	if (strlen(line) && rl_top->readline_addtohistory)
 	    add_history(line);
 # endif
-	l = (((readline_len-2) > strlen(line))?
-	     strlen(line): (readline_len-2));
-	strncpy((char *)readline_buf, line, l);
-	readline_buf[l] = '\n';
-	readline_buf[l+1] = '\0';
+	l = (((rl_top->readline_len-2) > strlen(line))?
+	     strlen(line): (rl_top->readline_len-2));
+	strncpy((char *)rl_top->readline_buf, line, l);
+	rl_top->readline_buf[l] = '\n';
+	rl_top->readline_buf[l+1] = '\0';
     }
     else {
-	readline_buf[0] = '\n';
-	readline_buf[1] = '\0';
+	rl_top->readline_buf[0] = '\n';
+	rl_top->readline_buf[1] = '\0';
     }
-    readline_gotaline = 1;
+    rl_top->readline_gotaline = 1;
 }
 #endif /* HAVE_LIBREADLINE */
 
@@ -368,14 +447,17 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	return 1;
     }
     else {
+        R_ReadlineData rl_data;
 #ifdef HAVE_LIBREADLINE
 	if (UsingReadline) {
-	    readline_gotaline = 0;
-	    readline_buf = buf;
-	    readline_addtohistory = addtohistory;
-	    readline_len = len;
-	    readline_eof = 0;
-	    rl_callback_handler_install(prompt, readline_handler);
+	    rl_data.readline_gotaline = 0;
+	    rl_data.readline_buf = buf;
+	    rl_data.readline_addtohistory = addtohistory;
+	    rl_data.readline_len = len;
+	    rl_data.readline_eof = 0;
+	    rl_data.prev = rl_top;
+	    rl_top = &rl_data;
+	    pushReadline(prompt, readline_handler);
 	}
 	else
 #endif /* HAVE_LIBREADLINE */
@@ -395,10 +477,10 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 #ifdef HAVE_LIBREADLINE
 		    if (UsingReadline) {
 			rl_callback_read_char();
-			if (readline_eof)
-			    return 0;
-			if (readline_gotaline)
-			    return 1;
+			if(rl_data.readline_eof || rl_data.readline_gotaline) {
+ 		            rl_top = rl_data.prev;
+			    return(rl_data.readline_eof ? 0 : 1);
+			}
 		    }
 		    else
 #endif /* HAVE_LIBREADLINE */
