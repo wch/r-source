@@ -3,12 +3,19 @@
 \usage{
 format(x, \dots)
 format.AsIs(x, width = 12, \dots)
-format.data.frame(x, \dots, justify = "none") 
+format.data.frame(x, \dots, justify = "none")
 format.default(x, trim = FALSE, digits = getOption("digits"),
-               nsmall = 0, justify = c("left", "right", "none"), \dots)
+               nsmall = 0, justify = c("left", "right", "none"),
+               big.mark = "", big.interval = 3,
+             small.mark = "", small.interval = 5,
+           decimal.mark = ".", \dots)
 format.factor(x, \dots)
 format.pval(pv, digits = max(1, getOption("digits") - 2),
             eps = .Machine$double.eps, na.form = "NA")
+
+prettyNum(x, big.mark = "", big.interval = 3,
+           small.mark = "", small.interval = 5,
+         decimal.mark = ".", ...)
 }
 \alias{format}
 \alias{format.AsIs}
@@ -16,6 +23,7 @@ format.pval(pv, digits = max(1, getOption("digits") - 2),
 \alias{format.default}
 \alias{format.factor}
 \alias{format.pval}
+\alias{prettyNum}
 \description{
   Format an \R object for pretty printing: \code{format.pval} is
   intended for formatting p-values.
@@ -34,6 +42,17 @@ format.pval(pv, digits = max(1, getOption("digits") - 2),
   \item{justify}{should character vector be left-justified,
     right-justified or left alone.  When justifying, the field width is
     that of the longest string.}
+
+  \item{big.mark}{character; if not empty used as mark between every
+    \code{big.interval} decimals \emph{before} (hence \code{big}) the
+    decimal point.}
+  \item{big.interval}{see \code{big.mark} above; defaults to 3.}
+  \item{small.mark}{character; if not empty used as mark between every
+    \code{small.interval} decimals \emph{after} (hence \code{small}) the
+    decimal point.}
+  \item{small.interval}{see \code{small.mark} above; defaults to 5.}
+  \item{decimal.mark}{ ~~Describe \code{decimal.mark} here~~ }
+
   \item{pv}{a numeric vector.}
   \item{eps}{a numerical tolerance: see Details.}
   \item{na.form}{character representation of \code{NA}s.}
@@ -43,7 +62,7 @@ format.pval(pv, digits = max(1, getOption("digits") - 2),
 \details{
   These functions convert their first argument to a vector (or array) of
   character strings which have a common format (as is done by
-  \code{\link{print}}), fulfilling \code{length(format*(x, *)) == 
+  \code{\link{print}}), fulfilling \code{length(format*(x, *)) ==
     length(x)}.  The trimming with \code{trim = TRUE} is useful
   when the strings are to be used for plot \code{\link{axis}} annotation.
 
@@ -60,6 +79,9 @@ format.pval(pv, digits = max(1, getOption("digits") - 2),
 
   \code{format.data.frame} formats the data frame column by column,
   applying the appropriate method of \code{format} for each column.
+
+  \code{prettyNum} is the utility function for prettifying its first
+  argument which is left unchanged if the other arguments are not changed.
 }
 \note{
   Currently \code{format} drops trailing zeroes, so \code{format(6.001,
@@ -82,6 +104,12 @@ format(zz, justify="left")
 ## use of nsmall
 format(13.7)
 format(13.7, nsmall=3)
+
+r <- c("76491283764.97430", "29.1234567890123", "-7.1234", "-100.1","1123")
+prettyNum(r, big.mark = "'")
+prettyNum(r, big.mark = "'", small.mark = " ", decimal.mark = ",")
+
+cbind(format(pnorm(1:7, lower = FALSE), small.mark = " ", digits = 15))
 
 ## handling of quotes
 zz <- data.frame(a=I("abc"), b=I("def\"gh"))

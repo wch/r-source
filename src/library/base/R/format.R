@@ -8,8 +8,12 @@ format <- function(x, ...) UseMethod("format")
 ### The new (1.2) switch "character" would be faster in .Internal()
 ### combine with "width = ", and format.char() below!
 
-format.default <- function(x, trim = FALSE, digits = NULL, nsmall = 0,
-			   justify = c("left", "right", "none"), ...)
+format.default <-
+    function(x, trim = FALSE, digits = NULL, nsmall = 0,
+             justify = c("left", "right", "none"),
+             big.mark = "", big.interval = 3,
+             small.mark = "", small.interval = 5, decimal.mark = ".",
+             ...)
 {
     f.char <- function(x, justify) {
 	if(length(x) <= 1) return(x)
@@ -36,7 +40,11 @@ format.default <- function(x, trim = FALSE, digits = NULL, nsmall = 0,
 			 paste, collapse=", "),
 	   call=, expression=, "function"=, "(" = deparse(x),
 	   ##else: numeric, complex, ??? :
-	   structure(.Internal(format(x, trim = trim, small=nsmall)),
+	   structure(prettyNum(.Internal(format(x, trim = trim, small=nsmall)),
+                               big.mark = big.mark, big.interval = big.interval,
+                               small.mark = small.mark,
+                               small.interval = small.interval,
+                               decimal.mark = decimal.mark),
                      names=names(x)))
 }
 ## NOTE: Currently need non-default format.dist() -> ../../mva/R/dist.R
@@ -116,7 +124,10 @@ format.pval <- function(pv, digits = max(1, getOption("digits")-2),
 
 ## Martin Maechler <maechler@stat.math.ethz.ch> , 1994-1998 :
 formatC <- function (x, digits = NULL, width = NULL,
-		     format = NULL, flag = "", mode = NULL)
+		     format = NULL, flag = "", mode = NULL,
+                     big.mark = "", big.interval = 3,
+                     small.mark = "", small.interval = 5,
+                     decimal.mark = ".")
 {
     blank.chars <- function(no)
 	sapply(no+1, function(n) paste(character(n), collapse=" "))
@@ -186,6 +197,12 @@ formatC <- function (x, digits = NULL, width = NULL,
 	    PACKAGE = "base")$result
     if (some.special)
 	r[!Ok] <- format.char(rQ, width=width, flag=flag)
+
+    if(big.mark != "" || small.mark != "" || decimal.mark != ".")
+        r <- prettyNum(r, big.mark = big.mark, big.interval = big.interval,
+                       small.mark = small.mark, small.interval = small.interval,
+                       decimal.mark = decimal.mark)
+
     if (!is.null(x.atr <- attributes(x)))
 	attributes(r) <- x.atr
     r
@@ -224,3 +241,38 @@ format.AsIs <- function(x, width = 12, ...)
     format.default(rvec, justify = "right")
 }
 
+prettyNum <-
+    function(x,
+             big.mark = "", big.interval = 3,
+             small.mark = "", small.interval = 5,
+             decimal.mark = ".", ...)
+{
+    ## be fast in trivial case:
+    if(!is.character(x))
+        x <- sapply(x,format, ...)
+    if(big.mark == "" && small.mark == "" && decimal.mark == ".")
+        return(x)
+    ## else
+    x.sp <- strsplit(x, "\\.")
+    P0 <- function(...) paste(..., sep="")
+    revStr <- function(cc)
+        sapply(lapply(strsplit(cc,NULL), rev), paste, collapse="")
+    B. <- sapply(x.sp, "[", 1)      # Before "."
+    A. <- sapply(x.sp, "[", 2)      # After  "." ; empty == NA
+    if(any(iN <- is.na(A.))) A.[iN] <- ""
+    if(nchar(big.mark) &&
+       length(i.big <- grep(P0("[0-9]{", big.interval + 1,",}"), B.))
+       ) { ## add `big.mark' in decimals before "." :
+        B.[i.big] <-
+            revStr(gsub(P0("([0-9]{",big.interval,"})"),
+                        P0("\\1",big.mark), revStr(B.[i.big])))
+    }
+    if(nchar(small.mark) &&
+       length(i.sml <- grep(P0("[0-9]{", small.interval + 1,",}"), A.))
+       ) { ## add `small.mark' in decimals after "." :
+        A.[i.sml] <- gsub(P0("([0-9]{",small.interval,"})"),
+                          P0("\\1",small.mark), A.[i.sml])
+    }
+    ## extraneous trailing dec.marks: paste(B., A., sep = decimal.mark)
+    P0(B., c("",decimal.mark)[2-iN], A.)
+}

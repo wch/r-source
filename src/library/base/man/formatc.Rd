@@ -2,7 +2,11 @@
 \title{Formatting Using C-style Formats}
 \usage{
 formatC(x, digits = NULL, width = NULL,
-        format = NULL, flag = "", mode = NULL)
+        format = NULL, flag = "", mode = NULL,
+        big.mark = "", big.interval = 3,
+      small.mark = "", small.interval = 5,
+    decimal.mark = ".")
+
 format.char(x, width = NULL, flag = "-")
 }
 \alias{formatC}
@@ -42,10 +46,15 @@ format.char(x, width = NULL, flag = "-")
   \item{flag}{format modifier as in Kernighan and Ritchie (1988, page 243).
     \code{"0"}  pads leading zeros; \code{"-"} does left adjustment,
     others are \code{"+"}, \code{" "}, and \code{"#"}.}
-  
+
   \item{mode}{\code{"double"} (or \code{"real"}), \code{"integer"} or
     \code{"character"}.
     Default: Determined from the storage mode of \code{x}.}
+
+  \item{big.mark, big.interval,
+    small.mark, small.interval,
+    decimal.mark}{used for prettying longer decimal sequences, passed to
+    \code{\link{prettyNum}} the help page explains details.}
 }
 \description{
     Formatting numbers individually and flexibly, using \code{C} style

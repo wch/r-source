@@ -179,6 +179,9 @@ NEW FEATURES
 
     o	experimental interface to quicksort sorting.
 
+    o	new prettyNum() function and new ``prettifying'' arguments to
+        formatC() and format.default().
+
 
 DEPRECATED & DEFUNCT
 
