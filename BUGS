@@ -159,10 +159,6 @@ Date: Sun, 28 Feb 1999 08:53:34 +0000 (GMT)
 
 Directory:  Installation
 
-* PR# 290 *
-Subject: Error compiling R on RS6000
-From: pgutwin@us.ibm.com
-Date: Thu, 30 Sep 1999 21:18:49 +0200 (MET DST)
 * PR# 324 *
 Subject: R 0.65.1 config bug
 From: "Dr K.M. Briggs" <kmb28@cus.cam.ac.uk>
@@ -188,11 +184,6 @@ From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
 Date: Wed, 1 Sep 1999 11:58:51 +0200 (MET DST)
 --There is a 128K limit on functions wirh keep.source set. Try modular
 --programming!
-* PR# 305 *
-Subject: bug in sample
-From: Robert Gentleman <rgentlem@jimmy.harvard.edu>
-Date: Mon, 1 Nov 1999 16:32:15 -0500
---Is this a bug? Seems to be as documented and as the prototype
 
 Directory:  Low-level
 
@@ -254,15 +245,7 @@ none
 
 Directory:  System-specific
 
-* PR# 246 *
-Subject: R-Coda on rs6000-ibm-aix4.2.1.0
-From: =?iso-8859-1?Q?Jette_Halkj=E6r_Jakobsen?=
-Date: Wed, 11 Aug 1999 08:49:47 +0200
---Problem with ps on AIX in 0.64.2. Try again with 0.65.0?
-* PR# 252 *
-Subject: bug: R says "Floating exception" on DEC-Alpha w/OSF1
-From: "Michael Thompson" <mlthomps@yayoi.mt.m-kagaku.co.jp>
-Date: Thu, 19 Aug 1999 06:03:06 +0900
+none
 
 Directory:  TooMuchAtOnce
 
