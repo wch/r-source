@@ -4,10 +4,8 @@
 system(command, intern=FALSE, wait=TRUE, input,
        show.output.on.console=FALSE
        invisible=FALSE, minimized=FALSE)
-.Platform
 }
 \alias{system}
-\alias{.Platform}
 \alias{unix}
 \arguments{
     \item{command}{the system command to be invoked, as a string.}
@@ -30,9 +28,6 @@ system(command, intern=FALSE, wait=TRUE, input,
 }
 \description{
     \code{system} invokes the system command specified by \code{command}.
-    
-    \code{.Platform} is a list with functions and variables as
-    components.
 }
 \value{
     If \code{intern=TRUE}, a character vector giving the output of the
