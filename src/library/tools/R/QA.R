@@ -2,6 +2,19 @@
 
 sQuote <- function(s) paste("'", s, "'", sep = "")
 
+.convertFilePathToAbsolute <- function(path) {
+    ## Turn a possibly relative file path absolute, performing tilde
+    ## expansion if necessary.
+    ## Seems the only way we can do this is 'temporarily' change the
+    ## working dir and see where this takes us.
+    if(!file.exists(epath <- path.expand(path)))
+        stop(paste("file", sQuote(path), "does not exist"))
+    cwd <- getwd()
+    on.exit(setwd(cwd))
+    setwd(dirname(epath))
+    file.path(getwd(), basename(epath))
+}
+
 .listFilesWithExts <- function(dir, exts, path = TRUE) {
     ## Return the paths or names of the files in @code{dir} with
     ## extension in @code{exts}.
@@ -103,8 +116,7 @@ function(package, dir, lib.loc = NULL)
         if(!file.exists(dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            ## maybe perform tilde expansion on @code{dir}
-            dir <- file.path(dirname(dir), basename(dir))
+            dir <- .convertFilePathToAbsolute(dir)
         if(!file.exists(docsDir <- file.path(dir, "man")))
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd sources"))
@@ -200,6 +212,24 @@ function(package, dir, lib.loc = NULL)
         ## (with names starting with '.__C__' or '.__M__'; well, as long
         ## as there are none in base).
         ## </FIXME>
+
+        ## <FIXME>
+        ## Need to do something about S4 generic functions 'created' by
+        ## setGeneric() or setMethod() on 'ordinary' functions.  Short
+        ## term, we do this by checking for S4 generics in a package
+        ## which come from another one.  Long term, we need dynamic
+        ## documentation ...
+        if(!is.na(match("package:methods", search()))) {
+            codeObjs <-
+                codeObjs[sapply(codeObjs, function(f) {
+                    f <- get(f, envir = codeEnv)
+                    fAttr <- attributes(f)[c("class", "package")]
+                    (length(fAttr) == 2
+                     && fAttr[1] == "genericFunction"
+                     && fAttr[2] != basename(dir))
+                } == FALSE)]
+        }
+        ## </FIXME>
     }
 
     undocObjs <- list(code = codeObjs[! codeObjs %in% allDocTopics],
@@ -265,8 +295,7 @@ function(package, dir, lib.loc = NULL,
         if(!file.exists(dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            ## maybe perform tilde expansion on @code{dir}
-            dir <- file.path(dirname(dir), basename(dir))
+            dir <- .convertFilePathToAbsolute(dir)
         if(!file.exists(codeDir <- file.path(dir, "R")))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
@@ -483,8 +512,7 @@ function(package, dir, lib.loc = NULL)
         if(!file.exists(dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            ## maybe perform tilde expansion on @code{dir}
-            dir <- file.path(dirname(dir), basename(dir))
+            dir <- .convertFilePathToAbsolute(dir)            
         if(!file.exists(codeDir <- file.path(dir, "R")))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
@@ -547,8 +575,7 @@ function(package, dir, lib.loc = NULL)
         if(!file.exists(dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            ## maybe perform tilde expansion on @code{dir}
-            dir <- file.path(dirname(dir), basename(dir))
+            dir <- .convertFilePathToAbsolute(dir)            
     }
 
     if(!file.exists(docsDir <- file.path(dir, "man")))
@@ -682,8 +709,7 @@ function(package, dir, lib.loc = NULL)
         if(!file.exists(dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            ## maybe perform tilde expansion on @code{dir}
-            dir <- file.path(dirname(dir), basename(dir))
+            dir <- .convertFilePathToAbsolute(dir)            
         if(!file.exists(codeDir <- file.path(dir, "R")))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
@@ -870,8 +896,7 @@ function(package, dir, file, lib.loc = NULL,
         if(!file.exists(dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            ## maybe perform tilde expansion on @code{dir}
-            dir <- file.path(dirname(dir), basename(dir))
+            dir <- .convertFilePathToAbsolute(dir)            
         if(!file.exists(codeDir <- file.path(dir, "R")))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
@@ -989,8 +1014,7 @@ function(package, dir, lib.loc = NULL)
         if(!file.exists(dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            ## maybe perform tilde expansion on 'dir'
-            dir <- file.path(dirname(dir), basename(dir))
+            dir <- .convertFilePathToAbsolute(dir)            
         if(!file.exists(codeDir <- file.path(dir, "R")))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
@@ -1133,8 +1157,7 @@ function(package, dir, file, lib.loc = NULL)
         if(!file.exists(dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            ## maybe perform tilde expansion on @code{dir}
-            dir <- file.path(dirname(dir), basename(dir))
+            dir <- .convertFilePathToAbsolute(dir)            
         if(!file.exists(codeDir <- file.path(dir, "R")))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))

@@ -1,5 +1,6 @@
 \name{tools-internal}
 \title{Internal tools functions}
+\alias{.convertFilePathToAbsolute}
 \alias{.listFilesWithExts}
 \alias{.loadPackageQuietly}
 \alias{.makeS3MethodsStopList}
@@ -24,6 +25,7 @@
 }
 \usage{
 sQuote(s)
+.convertFilePathToAbsolute(dir)
 .listFilesWithExts(dir, exts, path = TRUE)
 .loadPackageQuietly(package, lib.loc)
 .makeS3MethodsStopList(package)
