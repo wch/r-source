@@ -37,6 +37,11 @@ extern double	R_NegInf;		/* IEEE -Inf or -DBL_MAX */
 extern int   	R_NaInt;		/* NA_INTEGER etc */
 extern double	R_NaReal;		/* NA_REAL */
 
+#ifdef Win32
+extern int isnan(double);
+extern int finite(double);
+#endif
+
 #ifdef IEEE_754
 
 #define MATH_CHECK(call)	(call)
