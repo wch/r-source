@@ -31,6 +31,8 @@ MAKEINFO = @MAKEINFO@
 TEXI2DVI = $(top_srcdir)/tools/texi2dvi --texinfo="@set UseExternalXrefs"
 TEXI2PDF = $(TEXI2DVI) --pdf
 PDFLATEX = @PDFLATEX@
+PDFTEX = @PDFTEX@
+TEX = @TEX@
 
 infodir = @infodir@
 INSTALL_INFO = @INSTALL_INFO@
@@ -59,14 +61,30 @@ R:
 	fi
 
 .texi.dvi:
+	@if test "$(TEX)" = false; then \
+	  echo "ERROR: \`tex' needed but missing on your system."; \
+	  exit 1; \
+	fi
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2DVI) $<
 .texi.info:
+	@if test "$(MAKEINFO)" = false; then \
+	  echo "ERROR: \`makeinfo' v4 needed but missing on your system."; \
+	  exit 1; \
+	fi
 	$(MAKEINFO) -D UseExternalXrefs -I$(srcdir) $<
 .texi.pdf:
+	@if test "$(PDFTEX)" = false; then \
+	  echo "ERROR: \`pdftex' needed but missing on your system."; \
+	  exit 1; \
+	fi
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2PDF) $<
 
 dvi: refman.dvi $(OBJECTS_DVI)
 refman.dvi: version.tex $(srcdir)/Rd.sty stamp-refman-dvi
+	@if test "$(LATEX)" = false; then \
+	  echo "ERROR: \`latex' needed but missing on your system."; \
+	  exit 1; \
+	fi
 	@echo "DVI/LaTeX documentation: reference index ..."
 	@rm -f *.aux refman.toc refman.ind stamp-refman-dvi
 	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
@@ -78,7 +96,7 @@ refman.dvi: version.tex $(srcdir)/Rd.sty stamp-refman-dvi
 	  cat $(srcdir)/refman.bot) > refman.tex
 	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{refman.tex}'
-	@$(MAKEINDEX) refman
+	@-$(MAKEINDEX) refman
 	@TEXINPUTS="$(srcdir):$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{refman.tex}'
 	@touch stamp-refman-dvi
@@ -122,6 +140,10 @@ R-intro.info: $(texiincludes)
 
 pdf: refman.pdf $(OBJECTS_PDF)
 refman.pdf: version.tex $(srcdir)/Rd.sty stamp-refman-pdf
+	@if test "$(PDFLATEX)" = false; then \
+	  echo "ERROR: \`pdflatex' needed but missing on your system."; \
+	  exit 1; \
+	fi
 	@echo "PDF/LaTeX documentation: reference index ..."
 	@rm -f *.aux refman.toc refman.ind stamp-refman-pdf
 	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
@@ -134,7 +156,7 @@ refman.pdf: version.tex $(srcdir)/Rd.sty stamp-refman-pdf
 	@TEXINPUTS="$(srcdir):$(srcdir):$$TEXINPUTS" \
 	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
-	@$(MAKEINDEX) refman
+	@-$(MAKEINDEX) refman
 	@TEXINPUTS="$(srcdir):$(srcdir):$$TEXINPUTS" \
 	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
@@ -155,24 +177,24 @@ stamp-images-pdf:
 	@touch $@
 
 install: installdirs install-tex
-	@echo "installing doc/manual ..."
+	@echo "installing $(subdir) ..."
 installdirs:
-	@$(MKINSTALLDIRS) $(rhome)/doc/manual
+	@$(MKINSTALLDIRS) $(rhome)/$(subdir)
 install-strip: install
 install-dvi: dvi installdirs install-images-eps
 	@echo "installing R manuals in DVI format ..."
 	@for f in *.dvi; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/doc/manual; \
+	  $(INSTALL_DATA) $${f} $(rhome)/$(subdir); \
 	done
 install-images-eps:
-	@$(MKINSTALLDIRS) $(rhome)/doc/manual/images
+	@$(MKINSTALLDIRS) $(rhome)/$(subdir)/images
 	@-for f in $(srcdir)/images/*.eps; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/doc/manual/images; \
+	  $(INSTALL_DATA) $${f} $(rhome)/$(subdir)/images; \
 	done
 install-images-pdf:
-	@$(MKINSTALLDIRS) $(rhome)/doc/manual/images
+	@$(MKINSTALLDIRS) $(rhome)/$(subdir)/images
 	@-for f in $(srcdir)/images/*.pdf; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/doc/manual/images; \
+	  $(INSTALL_DATA) $${f} $(rhome)/$(subdir)/images; \
 	done
 install-info: info $(infodir)/dir
 	@echo "installing R info pages ..."
@@ -187,11 +209,11 @@ install-info: info $(infodir)/dir
 install-pdf: pdf installdirs
 	@echo "installing R manuals in PDF format ..."
 	@for f in *.pdf; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/doc/manual; \
+	  $(INSTALL_DATA) $${f} $(rhome)/$(subdir); \
 	done
 install-tex:
 	@for f in $(srcdir)/Rd.sty; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/doc/manual ; \
+	  $(INSTALL_DATA) $${f} $(rhome)/$(subdir) ; \
 	done
 
 $(infodir)/dir:
@@ -199,13 +221,13 @@ $(infodir)/dir:
 	$(INSTALL_DATA) $(srcdir)/dir $(infodir)
 
 uninstall:
-	@echo "uninstalling doc/manual ..."
-	@rm -rf $(rhome)/doc/manual
+	@echo "uninstalling $(subdir) ..."
+	@rm -rf $(rhome)/$(subdir)
 uninstall-dvi:
 	@echo "uninstalling R manuals in DVI format ..."
-	@-rm -f $(rhome)/doc/manual/images/*.eps
-	@-rmdir $(rhome)/doc/manual/images
-	@-rm -f $(rhome)/doc/manual/*.dvi
+	@-rm -f $(rhome)/$(subdir)/images/*.eps
+	@-rmdir $(rhome)/$(subdir)/images
+	@-rm -f $(rhome)/$(subdir)/*.dvi
 uninstall-info:
 	@echo "uninstalling R info pages ..."
 	@for f in $(OBJECTS_INFO); do \
@@ -217,11 +239,11 @@ uninstall-info:
 	done
 uninstall-pdf:
 	@echo "uninstalling R manuals in PDF format ..."
-	@-rm -f $(rhome)/doc/manual/*.pdf
+	@-rm -f $(rhome)/$(subdir)/*.pdf
 
 mostlyclean: clean
 clean:
-	@echo "cleaning in doc/manual"
+	@echo "cleaning in $(subdir)"
 	@if [ "$(srcdir)" != "." ]; then \
 	  rm -rf Rd.sty images; \
 	fi
@@ -238,8 +260,16 @@ MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
 MAKEINFO_HTML_OPTS = --number-sections --html
 maintainer-build: $(top_srcdir)/FAQ $(top_srcdir)/doc/html/faq.html
 $(top_srcdir)/FAQ: $(srcdir)/R-FAQ.texi
+	@if test "$(MAKEINFO)" = false; then \
+	  echo "ERROR: \`makeinfo' v4 needed but missing on your system."; \
+	  exit 1; \
+	fi
 	@$(MAKEINFO) $(MAKEINFO_TEXT_OPTS) $< -o $@
 $(top_srcdir)/doc/html/faq.html: $(srcdir)/R-FAQ.texi
+	@if test "$(MAKEINFO)" = false; then \
+	  echo "ERROR: \`makeinfo' v4 needed but missing on your system."; \
+	  exit 1; \
+	fi
 	@$(MAKEINFO) $(MAKEINFO_HTML_OPTS) $< -o $@
 
 distdir: $(DISTFILES)
