@@ -115,7 +115,8 @@ Installing packages
 
 Binary packages are retrieved from the bin/windows/contrib/1.7
 directory on CRAN, so each new version will have its own set of
-compatible packages.
+compatible packages.  The zip file names now include the version
+number, as in mda_0.2-16.zip.
 
 Files in the top-level directory of a source package are no longer
 installed automatically: files to be installed must be put in an `inst'
