@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-10 15:42\n"
+"POT-Creation-Date: 2005-02-10 18:31\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -647,9 +647,6 @@ msgstr ""
 msgid "'form' must be a two-sided formula"
 msgstr ""
 
-msgid "form must be a two-sided formula"
-msgstr ""
-
 msgid "value for \""
 msgstr ""
 
@@ -1091,10 +1088,7 @@ msgstr ""
 msgid "not all columns named in 'as.is' exist"
 msgstr ""
 
-msgid "'as.is' has the wrong length"
-msgstr ""
-
-msgid "!= cols ="
+msgid "'as.is' has the wrong length %d  != cols = %d"
 msgstr ""
 
 msgid "invalid 'row.names' specification"
@@ -1220,10 +1214,7 @@ msgstr ""
 msgid "nv must be 0 or ncol(x)"
 msgstr ""
 
-msgid "error"
-msgstr ""
-
-msgid "in dsvdc"
+msgid "error %d in 'dsvdc'"
 msgstr ""
 
 msgid "nothing to tabulate"
@@ -1277,7 +1268,7 @@ msgstr ""
 msgid "width must be positive"
 msgstr ""
 
-msgid "argument to \"which\" is not logical"
+msgid "argument to 'which' is not logical"
 msgstr ""
 
 msgid "invalid numbers in 'quote'"

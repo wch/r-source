@@ -166,8 +166,8 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
         as.is <- rep.int(FALSE, cols)
         as.is[i] <- TRUE
     } else if (length(as.is) != cols)
-	stop("'as.is' has the wrong length ",
-             length(as.is), " != cols = ", cols)
+	stop(sprintf(gettext("'as.is' has the wrong length %d  != cols = %d"),
+                     length(as.is), cols), domain = NA)
 
     do <- keep & !known # & !as.is
     if(rlabp) do[1] <- FALSE # don't convert "row.names"

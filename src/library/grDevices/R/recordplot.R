@@ -27,7 +27,8 @@ replayPlot <- function(x)
       if (is.null(version))
         warning("loading snapshot from pre-2.0.0 R version")
       else if (version != rversion())
-        warning("loading snapshot from different R version (", version, ")")
+        warning(gettext("loading snapshot from different R version"),
+                " (", version, ")", domain = NA)
       .Internal(playSnapshot(x))
     }
 }

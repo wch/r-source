@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-10 15:42\n"
+"POT-Creation-Date: 2005-02-10 18:35\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,25 +98,7 @@ msgstr ""
 msgid "invalid options in"
 msgstr ""
 
-msgid "("
-msgstr ""
-
-msgid ")"
-msgstr ""
-
-msgid "and"
-msgstr ""
-
-msgid "differ"
-msgstr ""
-
-msgid "s"
-msgstr ""
-
-msgid "between new and previous"
-msgstr ""
-
-msgid "==> NOT changing"
+msgid "NOT changing"
 msgstr ""
 
 msgid "&"
@@ -155,7 +137,7 @@ msgstr ""
 msgid "loading snapshot from pre-2.0.0 R version"
 msgstr ""
 
-msgid "loading snapshot from different R version ("
+msgid "loading snapshot from different R version"
 msgstr ""
 
 msgid "x log scale:  xinch() is non-sense"
@@ -229,5 +211,10 @@ msgstr ""
 
 msgid        "invalid argument name %s in '%s'"
 msgid_plural "invalid argument names %s in '%s'"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "differ between new and previous"
+msgid_plural "differs between new and previous"
 msgstr[0]    ""
 msgstr[1]    ""

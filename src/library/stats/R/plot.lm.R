@@ -11,7 +11,7 @@ function(x, which = 1:4,
     if (!inherits(x, "lm"))
 	stop("use only with \"lm\" objects")
     if(!is.numeric(which) || any(which < 1) || any(which > 4))
-        stop("`which' must be in 1:4")
+        stop("'which' must be in 1:4")
     isGlm <- inherits(x, "glm")
     show <- rep(FALSE, 4)
     show[which] <- TRUE
@@ -42,7 +42,8 @@ function(x, which = 1:4,
     else {
 	id.n <- as.integer(id.n)
 	if(id.n < 0 || id.n > n)
-	    stop("`id.n' must be in {1,..,",n,"}")
+	    stop(sprintf(gettext("'id.n' must be in {1,..,%d}"), n),
+                 domain = NA)
     }
     if(id.n > 0) { ## label the largest residuals
         if(is.null(labels.id))
@@ -107,7 +108,7 @@ function(x, which = 1:4,
             if(isGlm) cooks.distance(x)
             else cooks.distance(x, sd=s, res = r)
 	if(id.n > 0) {
-	    show.r <- order(-cook)[iid]# index of largest `id.n' ones
+	    show.r <- order(-cook)[iid]# index of largest 'id.n' ones
 	    ymx <- cook[show.r[1]] * 1.075
 	} else ymx <- max(cook)
 	plot(cook, type = "h", ylim = c(0, ymx), main = main,

@@ -226,7 +226,7 @@ glm.fit <-
             boundary <- FALSE
             if (!is.finite(dev)) {
                 if(is.null(coefold))
-                    stop("no valid set of coefficients has been found:please supply starting values", call. = FALSE)
+                    stop("no valid set of coefficients has been found: please supply starting values", call. = FALSE)
                 warning("step size truncated due to divergence", call. = FALSE)
                 ii <- 1
                 while (!is.finite(dev)) {

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-10 12:30\n"
+"POT-Creation-Date: 2005-02-10 18:32\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -959,7 +959,7 @@ msgstr ""
 msgid "observations"
 msgstr ""
 
-msgid "no valid set of coefficients has been found:please supply starting values"
+msgid "no valid set of coefficients has been found: please supply starting values"
 msgstr ""
 
 msgid "step size truncated due to divergence"
@@ -1158,6 +1158,9 @@ msgid "method ="
 msgstr ""
 
 msgid "is not supported. Using \"qr\"."
+msgstr ""
+
+msgid "number of offsets is %d, should equal %d (number of observations)"
 msgstr ""
 
 msgid "`x' must be a matrix"
@@ -1523,13 +1526,10 @@ msgstr ""
 msgid "use only with \"lm\" objects"
 msgstr ""
 
-msgid "`which' must be in 1:4"
+msgid "'which' must be in 1:4"
 msgstr ""
 
-msgid "`id.n' must be in {1,..,"
-msgstr ""
-
-msgid "}"
+msgid "'id.n' must be in {1,..,%d}"
 msgstr ""
 
 msgid "exactly one of n, delta, sd, power, and sig.level must be NULL"
@@ -1667,46 +1667,7 @@ msgstr ""
 msgid "bandwidth 'k' must be >= 1 and odd!"
 msgstr ""
 
-msgid "parameter(s)"
-msgstr ""
-
-msgid "do not occur in the model formula"
-msgstr ""
-
 msgid "argument 'object' has an impossible length"
-msgstr ""
-
-msgid "old-style self-starting model functions"
-msgstr ""
-
-msgid "are no longer supported."
-msgstr ""
-
-msgid "New selfStart functions are available."
-msgstr ""
-
-msgid "Use"
-msgstr ""
-
-msgid "SSfpl instead of fpl,"
-msgstr ""
-
-msgid "SSfol instead of first.order.log,"
-msgstr ""
-
-msgid "SSbiexp instead of biexp,"
-msgstr ""
-
-msgid "SSlogis instead of logistic."
-msgstr ""
-
-msgid "If writing your own selfStart model, see"
-msgstr ""
-
-msgid "\"help(selfStart)\""
-msgstr ""
-
-msgid "for the new form of the \"initial\" attribute."
 msgstr ""
 
 msgid "no 'getInitial' method found for"
@@ -1844,31 +1805,28 @@ msgstr ""
 msgid "unknown string value for s.window"
 msgstr ""
 
-msgid "'cutpoints' must be unique"
+msgid "'cutpoints' must be unique in 0 < cuts < 1, but are ="
 msgstr ""
 
-msgid "in 0 < cuts < 1"
+msgid "'cutpoints' must be unique, but are ="
 msgstr ""
 
-msgid ", but are ="
+msgid "'x' must be between -1 and 1"
 msgstr ""
 
-msgid "|"
+msgid "'x' must be between %s and %s"
 msgstr ""
 
 msgid "'symbols' must be unique, but are ="
 msgstr ""
 
-msgid "number of cutpoints must be  ONE"
+msgid "|"
 msgstr ""
 
-msgid "LESS"
+msgid "number of cutpoints must be one less than number of symbols"
 msgstr ""
 
-msgid "MORE"
-msgstr ""
-
-msgid "than number of symbols"
+msgid "number of cutpoints must be one more than number of symbols"
 msgstr ""
 
 msgid "'x' must be numeric or logical"
@@ -2062,3 +2020,8 @@ msgstr ""
 
 msgid "all x values must be non-negative to fit the Weibull growth model"
 msgstr ""
+
+msgid        "parameter %s does not occur in the model formula"
+msgid_plural "parameters %s do not occur in the model formula"
+msgstr[0]    ""
+msgstr[1]    ""

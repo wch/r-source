@@ -24,8 +24,8 @@ lm <- function (formula, data, subset, weights, na.action,
     w <- model.weights(mf)
     offset <- model.offset(mf)
     if(!is.null(offset) && length(offset) != NROW(y))
-	stop("number of offsets is ", length(offset),
-             ", should equal ", NROW(y), " (number of observations)")
+	stop(sprintf(gettext("number of offsets is %d, should equal %d (number of observations)"),
+                     length(offset), NROW(y)), domain = NA)
 
     if (is.empty.model(mt)) {
 	x <- NULL

@@ -68,17 +68,19 @@ check.options <-
 		if(any(ii <- sapply(prev, fn) != sapply(new, fn))) {
 		    doubt <- doubt | ii
 		    do.keep <- ii & !override.check
-		    warning(paste(paste(sQuote(paste(fn,"(",names(prev[ii]),")",
-					      sep="")),
-					collapse=" and "),
-				  " differ", if(sum(ii)==1) "s",
-				  " between new and previous",
-				  if(any(do.keep))
-				  paste("\n\t ==> NOT changing ",
-					paste(sQuote(names(prev[do.keep])),
-					      collapse=" & "),
-					collapse = ""),
-				  sep=""))
+		    warning(paste(sQuote(paste(fn,"(",names(prev[ii]),")",
+                                               sep="")),
+                                  collapse=" and "),
+                            ngettext(as.integer(sum(ii)),
+                                     "differ between new and previous",
+                                     "differs between new and previous"),
+                            if(any(do.keep)) {
+                                paste("\n\t ==> ",
+                                      gettext("NOT changing ",
+                                      paste(sQuote(names(prev[do.keep])),
+                                            collapse=" & "),
+                                      sep = ""))},
+                            domain = NA)
 		}
 	    names(new) <- NULL
 	    if(any(doubt)) {

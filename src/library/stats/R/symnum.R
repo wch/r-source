@@ -21,15 +21,15 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	if(corr) cutpoints <- c(0, cutpoints, 1)
 	if(any(duplicated(cutpoints)) ||
 	   (corr && (any(cutpoints > 1) || any(cutpoints < 0)) ))
-	    stop("'cutpoints' must be unique ",
-                 if(corr) "in 0 < cuts < 1", ", but are = ",
-                 paste(format(cutpoints), collapse="|"))
+	    stop(if(corr) gettext("'cutpoints' must be unique in 0 < cuts < 1, but are = ")
+                 else gettext("'cutpoints' must be unique, but are = "),
+                 paste(format(cutpoints), collapse="|"), domain = NA)
 	nc <- length(cutpoints)
 	minc <- cutpoints[1]
 	maxc <- cutpoints[nc]
-	range.msg <- paste("'x' must be between",
-			   if(corr) "-1" else format(minc),
-			   " and", if(corr) "1" else format(maxc)," !")
+	range.msg <- if(corr) gettext("'x' must be between -1 and 1")
+        else sprintf(gettext("'x' must be between %s and %s"),
+                     format(minc), format(maxc))
 	if(corr) x <- abs(x)
 	else
 	    if(any(x < minc - eps, na.rm=TRUE)) stop(range.msg)
@@ -41,8 +41,10 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	    stop("'symbols' must be unique, but are = ",
                  paste(symbols, collapse="|"))
 	if(nc != ns+1)
-	    stop("number of cutpoints must be  ONE ",
-                 if(corr)"LESS" else "MORE", " than number of symbols")
+            if(corr)
+                stop("number of cutpoints must be one less than number of symbols")
+            else
+                stop("number of cutpoints must be one more than number of symbols")
 
 	iS <- cut(x, breaks=cutpoints, include.lowest=TRUE, labels= FALSE)
 	if(any(ii <- is.na(iS))) {
