@@ -3320,14 +3320,34 @@ static void gzcon_close(Rconnection con)
     con->isopen = FALSE;
 }
 
+static int gzcon_byte(Rgzconn priv)
+{
+    Rconnection icon = priv->con;
+
+    if (priv->z_eof) return EOF;
+    if (priv->s.avail_in == 0) {
+	priv->s.avail_in = icon->read(priv->inbuf, 1, Z_BUFSIZE, icon);
+        if (priv->s.avail_in == 0) {
+            priv->z_eof = 1;
+            return EOF;
+        }
+        priv->s.next_in = priv->inbuf;
+    }
+    priv->s.avail_in--;
+    return *(priv->s.next_in)++;    
+}
+
+
 static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
 {
     Rgzconn priv = (Rgzconn)con->private;
     Rconnection icon = priv->con;
-    Bytef *start = (Bytef*)ptr, buf[4];
+    Bytef *start = (Bytef*)ptr;
     uLong crc;
     int n;
+
+    if (priv->z_err == Z_STREAM_END) return 0;  /* EOF */
 
     if (priv->nsaved >= 0) { /* non-compressed mode */
 	size_t len = size*nitems;
@@ -3367,11 +3387,17 @@ static size_t gzcon_read(void *ptr, size_t size, size_t nitems,
 	    priv->crc = crc32(priv->crc, start,
 			      (uInt)(priv->s.next_out - start));
 	    start = priv->s.next_out;
-	    /* CRC is little-endian on file */
-	    icon->read(&buf, 1, sizeof(uLong), icon);
 	    crc = 0;
-	    for (n = 0; n < 4; n++) {crc <<= 8; crc += buf[n];}
-	    if (crc != priv->crc) priv->z_err = Z_DATA_ERROR;
+	    for (n = 0; n < 4; n++) {
+		crc >>= 8; 
+		crc += ((uLong)gzcon_byte(priv) << 24);
+	    }
+	    if (crc != priv->crc) {
+		priv->z_err = Z_DATA_ERROR;
+		REprintf("crc error %x %x\n", crc, priv->crc);
+	    }
+	    /* finally, get (and ignore) length */
+	    for (n = 0; n < 4; n++) gzcon_byte(priv);
 	}
 	if (priv->z_err != Z_OK || priv->z_eof) break;
     }
