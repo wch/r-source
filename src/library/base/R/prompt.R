@@ -17,7 +17,10 @@ prompt.default <-
         file <- c(file,
                   paste0("\\alias{", name, "}"),
                   "%- Also NEED an `\\alias' for EACH other topic documented here.",
-                  "\\title{ ~~function to do ... ~~}")
+                  "\\title{ ~~function to do ... ~~}",
+                  "\\description{",
+		  " ~~ A concise (1-5 lines) description of what the function does. ~~",
+		  "}")
 	s <- seq(length = n <- length(argls <- formals(fn)))
 	if(n > 0) {
 	    arg.names <- arg.n <- names(argls)
@@ -41,9 +44,6 @@ prompt.default <-
 	if(any(br <- substr(fn.def,1,1) == "}"))
 	    fn.def[br] <- paste(" ", fn.def[br])
 	file <- c(file,
-		  "\\description{",
-		  " ~~ A concise (1-5 lines) description of what the function does. ~~",
-		  "}",
 		  "\\details{",
 		  " ~~ If necessary, more details than the __description__  above ~~",
 		  "}",

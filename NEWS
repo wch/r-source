@@ -6,6 +6,10 @@
 
 NEW FEATURES
 
+    o   html and text files have now a header line giving the name of
+        the help file and the package. the description section now
+        comes first.
+
     o	on.exit allows add=TRUE
 
     o	storage.mode<- can be used to set "single", and if setting
