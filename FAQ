@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.4-28, 2002-04-22
+Version 1.5-0, 2002-04-28
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -234,7 +234,7 @@ hppa-hp-hpux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current released version is 1.4.1.  Conforming to this
+   The current released version is 1.5.0.  Conforming to this
 `major.minor.patchlevel' numbering scheme, there are three development
 versions of R, working towards the next patch (`r-patched'), minor
 (`r-devel'), and major (`r-ng') releases of R, respectively.  Version
@@ -340,9 +340,8 @@ install-dvi', `make install-info' and `make install-pdf', respectively.
 distribution and a large number of add-on packages from CRAN to run on
 Windows 95, 98, ME, NT4, 2000, and XP (at least) on Intel and clones (but
 not on other platforms).  The Windows version of R was created by Robert
-Gentleman, and is now being developed and maintained by Guido Masarotto
-<Guido.Masarotto@r-project.org> and Brian D. Ripley
-<Brian.Ripley@r-project.org>.
+Gentleman, and is now being developed and maintained by Duncan Murdoch
+<murdoch@stats.uwo.ca> and Brian D. Ripley <Brian.Ripley@r-project.org>.
 
    For most installations the installer `SetupR.exe' will be the easiest
 tool to use.
@@ -711,7 +710,7 @@ models, and design of experiments.
 engine" (S version 4; S-PLUS 5.x and above), and R.  Given this
 understanding, asking for "the differences between R and S" really amounts
 to asking for the specifics of the R implementation of the S language,
-i.e., the difference between the R and S engines.
+i.e., the difference between the R and S _engines_.
 
    For the remainder of this section, "S" refers to the S engines and not
 the S language.
@@ -1215,19 +1214,11 @@ works, was published in the Journal of Statistical Software
      obtained from PDSIMUL in package PDAP) and phylogenetically-based
      analyses using GLS.
 
-*PTAk*
-     A multiway method to decompose a tensor (array) of any order, as a
-     generalisation of SVD also supporting non-identity metrics and
-     penalisations.  Also includes some other multiway methods.
-
 *RArcInfo*
      Functions to import Arc/Info V7.x coverages and data.
 
 *RMySQL*
      An interface between R and the MySQL database system.
-
-*RODBC*
-     An ODBC database interface.
 
 *ROracle*
      Oracle Database Interface driver for R.  Uses the ProC/C++ embedded
@@ -1251,11 +1242,13 @@ works, was published in the Journal of Statistical Software
      and wind profiles for data collected by radiosondes (the typical
      weather balloon-borne instrument).
 
-*RandomFields*
-     Creating random fields using various methods.
-
 *RmSQL*
      An interface between R and the mSQL database system.
+
+*Rmpi*
+     an interface (wrapper) to MPI (Message-Passing Interface) APIs.  It
+     also provides interactive R slave functionalities to make MPI
+     programming easier in R than in C(++) or FORTRAN.
 
 *Rwave*
      An environment for the time-frequency analysis of 1-D signals (and
@@ -1352,6 +1345,10 @@ works, was published in the Journal of Statistical Software
      Estimation, testing and regression modeling of subdistribution
      functions in competing risks.
 
+*cobs*
+     Constrained B-splines: qualitatively constrained (regression) smoothing
+     via linear programming.
+
 *coda*
      Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
      simulations.
@@ -1415,9 +1412,6 @@ works, was published in the Journal of Statistical Software
      and (for simulation) multivariate parametric extreme value
      distributions, and provides fitting functions which calculate maximum
      likelihood estimates for univariate and bivariate models.
-
-*event.chart*
-     Package for creating event charts.
 
 *exactRankTests*
      Computes exact p-values and quantiles using an implementation of the
@@ -1634,10 +1628,6 @@ works, was published in the Journal of Statistical Software
      Functions for import, export, plotting and other manipulations of
      bitmapped images.
 
-*polymars*
-     Polychotomous regression based on Multivariate Adaptive Regression
-     Splines.
-
 *polynom*
      A collection of functions to implement a class for univariate
      polynomial manipulations.
@@ -1670,6 +1660,10 @@ works, was published in the Journal of Statistical Software
 *rpvm*
      R interface to PVM (Parallel Virtual Machine).  Provides interface to
      PVM APIs, and examples and documentation for its use.
+
+*rsprng*
+     Provides interface to SPRNG (Scalable Parallel Random Number
+     Generators) APIs, and examples and documentation for its use.
 
 *scatterplot3d*
      Plots a three dimensional (3D) point cloud perspectively.
@@ -1716,25 +1710,11 @@ works, was published in the Journal of Statistical Software
      data analysis; a collection of tests for spatial autocorrelation,
      including global Moran's I and Geary's C, local Moran's I, saddlepoint
      approximations for global and local Moran's I; and functions for
-     estimating spatial simultaneous autoregressive (SAR) models.  Was
-     formerly the three packages: *spweights*, *sptests*, and *spsarlm*.
+     estimating spatial simultaneous autoregressive (SAR) models.  (Was
+     formerly the three packages: *spweights*, *sptests*, and *spsarlm*.)
 
 *splancs*
      Spatial and space-time point pattern analysis functions.
-
-*spsarlm*
-     Functions for estimating spatial simultaneous autoregressive (SAR)
-     models, including sparse matrix methods for computing the Jacobian.
-
-*sptests*
-     A collection of tests for spatial autocorrelation, including global
-     Moran's I and Geary's C.
-
-*spweights*
-     A collection of functions to create spatial weights matrix objects from
-     polygon contiguities, from point patterns by distance and tesselations,
-     for summarising these objects, and for permitting their use in spatial
-     data analysis.
 
 *strucchange*
      Various tests on structural change in linear regression models.
@@ -1794,26 +1774,28 @@ these a try, of course.  This area of CRAN currently contains
      classes in this package are virtual and need to be extended by the
      various DBMS implementations.
 
-*DBI.RODBC*
-     A simple DBI front-end to the RODBC package.
-
-*DBI.RPgSQL*
-     A simple DBI front-end to the RPgSQL package.
-
 *GRASS*
      Interface between the GRASS geographical information system and R,
      based on starting R from within the GRASS environment and chosen
      LOCATION and MAPSET.  Wrapper and helper functions are provided for a
      range of R functions to match the interface metadata structures.
 
+*PTAk*
+     A multiway method to decompose a tensor (array) of any order, as a
+     generalisation of SVD also supporting non-identity metrics and
+     penalisations.  Also includes some other multiway methods.
+
 *R2HTML*
      Functions for exporting R objects & graphics in an HTML document.
 
+*RODBC*
+     An ODBC database interface.
+
+*RandomFields*
+     Creating random fields using various methods.
+
 *StatDataML*
      Read and write StatDataML.
-
-*colSums*
-     Matrix summary functions in C.
 
 *cxx*
      A small C++ test package.
@@ -1827,6 +1809,9 @@ these a try, of course.  This area of CRAN currently contains
 
 *ensemble*
      Ensembles of tree classifiers.
+
+*event.chart*
+     Package for creating event charts.
 
 *hpower*
      A suite of functions to compute power and sample size for tests of the
@@ -1933,6 +1918,11 @@ has also started *dna*, a package with procedures for the analysis of DNA
 sequences.  Jim's packages can be obtained from
 `http://www.luc.ac.be/~jlindsey/rcode.html'.
 
+   Frank Harrell <fharrell@virginia.edu> has recently made an R port of his
+*Hmisc* package available via
+`http://hesweb1.med.virginia.edu/biostat/s/Hmisc.html'; a port of his
+*Design* package is currently under way.
+
    More code has been posted to the r-help mailing list, and can be
 obtained from the mailing list archive.
 
@@ -1948,7 +1938,7 @@ system, type
 
 at the shell prompt to install to the library tree rooted at the first
 directory given in `R_LIBS' (see below) if this is set and non-null, and to
-the default library (the `library' subdirectory of `R_HOME') otherwise.
+the default library (the `library' subdirectory of ``R_HOME'') otherwise.
 (Versions of R prior to 1.3.0 installed to the default library by default.)
 
    To install to another tree (e.g., your private one), use
@@ -2004,6 +1994,8 @@ at the R prompt.
      ctest         Classical Tests
      eda           Exploratory Data Analysis
      foreign       Read data stored by Minitab, S, SAS, SPSS, Stata, ...
+     grid          The Grid Graphics Package
+     lattice       Lattice Graphics
      lqs           Resistant Regression and Covariance Estimation
      mgcv          Multiple smoothing parameter estimation and GAMs by GCV
      modreg        Modern Regression: Smoothing and Local Methods
@@ -2018,6 +2010,7 @@ at the R prompt.
      stepfun       Step Functions, including Empirical Distributions
      survival      Survival analysis, including penalised likelihood
      tcltk         Interface to Tcl/Tk
+     tools         Tools for Package Development and Administration
      ts            Time series functions
 
    You can "load" the installed package PKG by
@@ -2104,7 +2097,8 @@ provides a standard interface between statistical programs and statistical
 processes.  It is intended to provide assistance for interactive
 statistical programming and data analysis.  Languages supported include: S
 dialects (S 3/4, S-PLUS 3.x/4.x/5.x, and R), LispStat dialects (XLispStat,
-ViSta), SAS, Stata, SPSS dialects (SPSS, Fiasco) and SCA.
+ViSta) and SAS.  Stata and SPSS dialect (SPSS, PSPP) support is being
+examined for possible future implementation
 
    ESS grew out of the need for bug fixes and extensions to S-mode 4.8
 (which was a GNU Emacs interface to S/S-PLUS version 3 only).  The current
@@ -2127,10 +2121,9 @@ to the help system), and transcript manipulation (recording and saving
 transcript files, manipulating and editing saved transcripts, and
 re-evaluating commands from transcript files).
 
-   The latest versions of ESS are available from
-`http://ess.stat.wisc.edu/pub/ESS/' or `ftp://ess.stat.wisc.edu/pub/ESS/',
-or via CRAN.  The HTML version of the documentation can be found at
-`http://stat.ethz.ch/ESS/'.
+   The latest stable version of ESS are available via CRAN or the ESS web
+page (http://software.biostat.washington.edu/statsoft/ess/).  The HTML
+version of the documentation can be found at `http://stat.ethz.ch/ESS/'.
 
    ESS comes with detailed installation instructions.
 
@@ -2168,9 +2161,10 @@ M-x R' for starting R.
    To debug R "from within Emacs", there are several possibilities.  To use
 the Emacs GUD (Grand Unified Debugger) library with the recommended
 debugger GDB, type `M-x gdb' and give the path to the R _binary_ as
-argument.  At the gdb prompt, set `R_HOME' and other environment variables
-as needed (using e.g. `set env R_HOME /path/to/R/', but see also below),
-and start the binary with the desired arguments (e.g., `run --vsize=12M').
+argument.  At the `gdb' prompt, set `R_HOME' and other environment
+variables as needed (using e.g.  `set env R_HOME /path/to/R/', but see also
+below), and start the binary with the desired arguments (e.g., `run
+--vsize=12M').
 
    If you have ESS, you can do `C-u M-x R <RET> - d <SPC> g d b <RET>' to
 start an inferior R process with arguments `-d gdb'.
@@ -2414,9 +2408,9 @@ to get the numbers back.  More efficient, but harder to remember, is
 7.13 Are Trellis displays implemented in R?
 ===========================================
 
-   An R package called *lattice* provides graphical functionality that is
-compatible with most Trellis commands.  It currently relies on another
-package called *grid* so you will need to download that as well.
+   The recommended package *lattice* (which is based on another recommended
+package, *grid*) provides graphical functionality that is compatible with
+most Trellis commands.
 
    You could also look at `coplot()' and `dotchart()' which might do at
 least some of what you want.  Note also that the R version of `pairs()' is
@@ -2619,8 +2613,8 @@ to time.
 
    There is no need to be agitated about the particular sums of squares
 that R reports.  You can compute your favorite sums of squares quite
-easily.  Any two models can be compared with `anova(model1, model2)', and
-`drop1(model1)' will show the sums of squares resulting from dropping
+easily.  Any two models can be compared with `anova(MODEL1, MODEL2)', and
+`drop1(MODEL1)' will show the sums of squares resulting from dropping
 single terms.
 
 8 R Programming
@@ -2629,7 +2623,7 @@ single terms.
 8.1 How should I write summary methods?
 =======================================
 
-   Suppose you want to provide a summary method for class `foo'.  Then
+   Suppose you want to provide a summary method for class `"foo"'.  Then
 `summary.foo()' should not print anything, but return an object of class
 `"summary.foo"', _and_ you should write a method `print.summary.foo()'
 which nicely prints the summary information and invisibly returns its

@@ -4,8 +4,8 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-28, 2002-04-22
-@set REL-VERSION 1.4.1
+@set FAQ-VERSION 1.5-0, 2002-04-28
+@set REL-VERSION 1.5.0
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
 
@@ -387,8 +387,8 @@ binaries for a base distribution and a large number of add-on packages
 from @acronym{CRAN} to run on Windows 95, 98, ME, NT4, 2000, and XP (at
 least) on Intel and clones (but not on other platforms).  The Windows
 version of R was created by Robert Gentleman, and is now being developed
-and maintained by @email{Guido.Masarotto@@r-project.org, Guido
-Masarotto} and @email{Brian.Ripley@@r-project.org, Brian D. Ripley}.
+and maintained by @email{murdoch@@stats.uwo.ca, Duncan Murdoch} and
+@email{Brian.Ripley@@r-project.org, Brian D. Ripley}.
 
 @c Note that when uncompressing the zip files, the pkunzip program needs to
 @c be invoked with the @samp{-D} flag to create subdirectories.  Also, be
@@ -871,7 +871,7 @@ We can regard S as a language with three current implementations or
 the ``new S engine'' (S version 4; @SPLUS{} 5.x and above), and R.
 Given this understanding, asking for ``the differences between R and S''
 really amounts to asking for the specifics of the R implementation of
-the S language, i.e., the difference between the R and S engines.
+the S language, i.e., the difference between the R and S @emph{engines}.
 
 For the remainder of this section, ``S'' refers to the S engines and not
 the S language.
@@ -1492,16 +1492,10 @@ Arrays with arbitrary offsets.
 Manipulation and analysis of phylogenetically simulated data sets (as
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
 analyses using GLS.
-@item PTAk
-A multiway method to decompose a tensor (array) of any order, as a
-generalisation of SVD also supporting non-identity metrics and
-penalisations.  Also includes some other multiway methods.
 @item RArcInfo
 Functions to import Arc/Info V7.x coverages and data.
 @item RMySQL
 An interface between R and the MySQL database system.
-@item RODBC
-An @acronym{ODBC} database interface.
 @item ROracle
 Oracle Database Interface driver for R.  Uses the ProC/C++ embedded SQL.
 @item RPgSQL
@@ -1518,11 +1512,12 @@ engine in R.
 A collection of programs for reading and plotting SKEW-T,log p diagrams
 and wind profiles for data collected by radiosondes (the typical weather
 balloon-borne instrument).
-@item RandomFields
-Creating random fields using various methods.
 @item RmSQL
 An interface between R and the mSQL database system.
-@c REMOVED
+@item Rmpi
+an interface (wrapper) to MPI (Message-Passing Interface) APIs.  It also
+provides interactive R slave functionalities to make MPI programming
+easier in R than in C(++) or FORTRAN.
 @c @item Rnotes
 @c The data sets for the exercises in ``An Introduction to R''
 @c (@pxref{What documentation exists for R?}).
@@ -1601,11 +1596,9 @@ Functions for cluster analysis.
 @item cmprsk
 Estimation, testing and regression modeling of subdistribution functions
 in competing risks.
-@c <FIXME-1.5.0>
-@c @item cobs
-@c Constrained B-splines: qualitatively constrained (regression) smoothing
-@c via linear programming.
-@c </FIXME-1.5.0>
+@item cobs
+Constrained B-splines: qualitatively constrained (regression) smoothing
+via linear programming.
 @item coda
 Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
 simulations.
@@ -1658,8 +1651,6 @@ distribution, quantile and density functions to univariate, bivariate
 and (for simulation) multivariate parametric extreme value
 distributions, and provides fitting functions which calculate maximum
 likelihood estimates for univariate and bivariate models.
-@item event.chart
-Package for creating event charts.
 @item exactRankTests
 Computes exact @math{p}-values and quantiles using an implementation of
 the Streitberg/Roehmel shift algorithm.
@@ -1820,9 +1811,13 @@ Converts S trees to @HTML{}/Perl files for interactive tree traversal.
 @item pixmap
 Functions for import, export, plotting and other manipulations of
 bitmapped images.
-@item polymars
-Polychotomous regression based on Multivariate Adaptive Regression
-Splines.
+@c <COMMENT>
+@c Outdated on CRAN along with 1.5.0 release as we do not have an active
+@c maintainer to fix outstanding QA problems.
+@c @item polymars
+@c Polychotomous regression based on Multivariate Adaptive Regression
+@c Splines.
+@c </COMMENT>
 @item polynom
 A collection of functions to implement a class for univariate polynomial
 manipulations.
@@ -1849,6 +1844,9 @@ Recursive PARTitioning and regression trees.
 @item rpvm
 R interface to PVM (Parallel Virtual Machine).  Provides interface to
 PVM APIs, and examples and documentation for its use.
+@item rsprng
+Provides interface to SPRNG (Scalable Parallel Random Number Generators)
+APIs, and examples and documentation for its use.
 @item scatterplot3d
 Plots a three dimensional (3D) point cloud perspectively.
 @item sem
@@ -1871,8 +1869,11 @@ A range of tools for social network analysis, including node and
 graph-level indices, structural distance and covariance methods,
 structural equivalence detection, p* modeling, and network
 visualization.
+@c <COMMENT>
+@c Removed ...
 @c @item snns
 @c An R interface to the Stuttgart Neural Networks Simulator (SNNS).
+@c </COMMENT>
 @item spatial
 Functions for kriging and point pattern analysis from ``Modern Applied
 Statistics with @SPLUS{}'' by W. Venables and B. Ripley.  Contained in
@@ -1887,28 +1888,34 @@ for summarising these objects, and for permitting their use in spatial
 data analysis; a collection of tests for spatial autocorrelation,
 including global Moran's I and Geary's C, local Moran's I, saddlepoint
 approximations for global and local Moran's I; and functions for
-estimating spatial simultaneous autoregressive (SAR) models.  Was
+estimating spatial simultaneous autoregressive (SAR) models.  (Was
 formerly the three packages: @strong{spweights}, @strong{sptests}, and
-@strong{spsarlm}.
+@strong{spsarlm}.)
 @item splancs
 Spatial and space-time point pattern analysis functions.
-@item spsarlm
-Functions for estimating spatial simultaneous autoregressive (SAR)
-models, including sparse matrix methods for computing the Jacobian.
-@item sptests
-A collection of tests for spatial autocorrelation, including global
-Moran's I and Geary's C.
-@item spweights
-A collection of functions to create spatial weights matrix objects from
-polygon contiguities, from point patterns by distance and tesselations,
-for summarising these objects, and for permitting their use in spatial
-data analysis.
+@c <COMMENT>
+@c Deprecated in favor of new @pkg{spdep} along with 1.5.0 release.
+@c @item spsarlm
+@c Functions for estimating spatial simultaneous autoregressive (SAR)
+@c models, including sparse matrix methods for computing the Jacobian.
+@c @item sptests
+@c A collection of tests for spatial autocorrelation, including global
+@c Moran's I and Geary's C.
+@c @item spweights
+@c A collection of functions to create spatial weights matrix objects from
+@c polygon contiguities, from point patterns by distance and tesselations,
+@c for summarising these objects, and for permitting their use in spatial
+@c data analysis.
+@c </COMMENT>
 @c @item stable
 @c Density, distribution, quantile and hazard functions of a stable
 @c variate; generalized linear models for the parameters of a stable
 @c distribution.
+@c <COMMENT>
+@c Merged into foreign.
 @c @item stataread
 @c Read and write Stata v5 and v6 @file{.dta} files.
+@c </COMMENT>
 @item strucchange
 Various tests on structural change in linear regression models.
 @item subselect
@@ -1960,25 +1967,41 @@ currently contains
 A common database interface (DBI) class and method definitions.  All
 classes in this package are virtual and need to be extended by the
 various DBMS implementations.
-@item DBI.RODBC
-A simple DBI front-end to the RODBC package.
-@item DBI.RPgSQL
-A simple DBI front-end to the RPgSQL package.
 @item GRASS
 Interface between the GRASS geographical information system and R, based
 on starting R from within the GRASS environment and chosen LOCATION and
 MAPSET.  Wrapper and helper functions are provided for a range of R
 functions to match the interface metadata structures.
+@c <NOTE>
+@c Moved to Devel for 1.5 as it fails R CMD check.
+@item PTAk
+A multiway method to decompose a tensor (array) of any order, as a
+generalisation of SVD also supporting non-identity metrics and
+penalisations.  Also includes some other multiway methods.
+@c </NOTE>
 @item R2HTML
 Functions for exporting R objects & graphics in an @HTML{} document.
-@c  @item Rdbi
-@c  Generic framework for database access in R.
-@c  @item Rdbi.PgSQL
-@c  Provides methods for accessing data stored in PostgreSQL tables.
+@c <NOTE>
+@c Moved to Devel for 1.5 as it fails R CMD check.
+@item RODBC
+An @acronym{ODBC} database interface.
+@item RandomFields
+Creating random fields using various methods.
+@c </NOTE>
+@c <FIXME>
+@c Tim Keitt should tell us what do to with these ...
+@c @item Rdbi
+@c Generic framework for database access in R.
+@c @item Rdbi.PgSQL
+@c Provides methods for accessing data stored in PostgreSQL tables.
+@c </FIXME>
 @item StatDataML
 Read and write StatDataML.
-@item colSums
-Matrix summary functions in C.
+@c <COMMENT>
+@c Moved to Archive for 1.5 (as this contains the summary functions).
+@c @item colSums
+@c Matrix summary functions in C.
+@c </COMMENT>
 @item cxx
 A small C++ test package.
 @item dopt
@@ -1988,6 +2011,11 @@ Extensions to @strong{dse}, the Dynamic Systems Estimation multivariate
 time series package.  Contains PADI, juice and monitoring extensions.
 @item ensemble
 Ensembles of tree classifiers.
+@c <NOTE>
+@c Moved to Devel for 1.5 as it fails R CMD check.
+@item event.chart
+Package for creating event charts.
+@c </NOTE>
 @item hpower
 A suite of functions to compute power and sample size for tests of the
 general linear hypothesis.
@@ -2083,6 +2111,11 @@ analysis of DNA sequences.  Jim's packages can be obtained from
 @c package for additive hazards regression, which can be obtained from
 @c @uref{http://www.med.uio.no/imb/stat/addreg/}.
 
+@email{fharrell@@virginia.edu, Frank Harrell} has recently made an R
+port of his @strong{Hmisc} package available via
+@uref{http://hesweb1.med.virginia.edu/biostat/s/Hmisc.html}; a port of
+his @strong{Design} package is currently under way.
+
 More code has been posted to the r-help mailing list, and can be
 obtained from the mailing list archive.
 
@@ -2102,8 +2135,8 @@ $ R CMD INSTALL /path/to/@var{pkg}_@var{version}.tar.gz
 at the shell prompt to install to the library tree rooted at the first
 directory given in @env{R_LIBS} (see below) if this is set and non-null,
 and to the default library (the @file{library} subdirectory of
-@file{R_HOME}) otherwise.  (Versions of R prior to 1.3.0 installed to
-the default library by default.)
+@file{@env{R_HOME}}) otherwise.  (Versions of R prior to 1.3.0 installed
+to the default library by default.)
 
 To install to another tree (e.g., your private one), use
 
@@ -2171,6 +2204,8 @@ cluster       Functions for clustering (by Rousseeuw et al.)
 ctest         Classical Tests
 eda           Exploratory Data Analysis
 foreign       Read data stored by Minitab, S, SAS, SPSS, Stata, ...
+grid          The Grid Graphics Package
+lattice       Lattice Graphics
 lqs           Resistant Regression and Covariance Estimation
 mgcv          Multiple smoothing parameter estimation and GAMs by GCV
 modreg        Modern Regression: Smoothing and Local Methods
@@ -2185,6 +2220,7 @@ splines       Regression Spline Functions and Classes
 stepfun       Step Functions, including Empirical Distributions
 survival      Survival analysis, including penalised likelihood
 tcltk         Interface to Tcl/Tk
+tools         Tools for Package Development and Administration
 ts            Time series functions
 @end smallexample
 
@@ -2299,8 +2335,9 @@ Statistics'') which provides a standard interface between statistical
 programs and statistical processes.  It is intended to provide
 assistance for interactive statistical programming and data analysis.
 Languages supported include: S dialects (S 3/4, @SPLUS{} 3.x/4.x/5.x,
-and R), LispStat dialects (XLispStat, ViSta), SAS, Stata, SPSS dialects
-(SPSS, Fiasco) and SCA.
+and R), LispStat dialects (XLispStat, ViSta) and SAS.  Stata and SPSS
+dialect (SPSS, PSPP) support is being examined for possible future
+implementation
 
 @acronym{ESS} grew out of the need for bug fixes and extensions to
 S-mode 4.8 (which was a @acronym{GNU} Emacs interface to S/@SPLUS{}
@@ -2325,10 +2362,10 @@ manipulation (recording and saving transcript files, manipulating and
 editing saved transcripts, and re-evaluating commands from transcript
 files).
 
-The latest versions of @acronym{ESS} are available from
-@uref{http://ess.stat.wisc.edu/pub/ESS/} or
-@uref{ftp://ess.stat.wisc.edu/pub/ESS/}, or via @acronym{CRAN}.  The
-@HTML{} version of the documentation can be found at
+The latest stable version of @acronym{ESS} are available via
+@acronym{CRAN} or the
+@uref{http://software.biostat.washington.edu/statsoft/ess/, ESS web
+page}.  The @HTML{} version of the documentation can be found at
 @uref{http://stat.ethz.ch/ESS/}.
 
 @acronym{ESS} comes with detailed installation instructions.
@@ -2372,10 +2409,10 @@ To specify command line arguments for the inferior R process, use
 To debug R ``from within Emacs'', there are several possibilities.  To
 use the Emacs GUD (Grand Unified Debugger) library with the recommended
 debugger GDB, type @kbd{M-x gdb} and give the path to the R
-@emph{binary} as argument.  At the gdb prompt, set @env{R_HOME} and
-other environment variables as needed (using e.g.@: @kbd{set env R_HOME
-/path/to/R/}, but see also below), and start the binary with the desired
-arguments (e.g., @kbd{run --vsize=12M}).
+@emph{binary} as argument.  At the @command{gdb} prompt, set
+@env{R_HOME} and other environment variables as needed (using e.g.@:
+@kbd{set env R_HOME /path/to/R/}, but see also below), and start the
+binary with the desired arguments (e.g., @kbd{run --vsize=12M}).
 
 If you have @acronym{ESS}, you can do @kbd{C-u M-x R @key{RET} - d
 @key{SPC} g d b @key{RET}} to start an inferior R process with arguments
@@ -2758,10 +2795,9 @@ In any case, do not call @code{as.numeric()} or their likes directly.
 @node Are Trellis displays implemented in R?, What are the enclosing and parent environments?, How do I convert factors to numeric?, R Miscellanea
 @section Are Trellis displays implemented in R?
 
-An R package called @strong{lattice} provides graphical functionality
-that is compatible with most Trellis commands.  It currently relies on
-another package called @strong{grid} so you will need to download that
-as well.
+The recommended package @strong{lattice} (which is based on another
+recommended package, @strong{grid}) provides graphical functionality
+that is compatible with most Trellis commands.
 
 You could also look at @code{coplot()} and @code{dotchart()} which might
 do at least some of what you want.  Note also that the R version of
@@ -3003,9 +3039,9 @@ r-help from time to time.
 
 There is no need to be agitated about the particular sums of squares
 that R reports.  You can compute your favorite sums of squares quite
-easily.  Any two models can be compared with @code{anova(model1,
-model2)}, and @code{drop1(model1)} will show the sums of squares
-resulting from dropping single terms.
+easily.  Any two models can be compared with @code{anova(@var{model1},
+@var{model2})}, and @code{drop1(@var{model1})} will show the sums of
+squares resulting from dropping single terms.
 
 
 @node R Programming, R Bugs, R Miscellanea, Top
@@ -3021,15 +3057,15 @@ resulting from dropping single terms.
 @node How should I write summary methods?, How can I debug dynamically loaded code?, R Programming, R Programming
 @section How should I write summary methods?
 
-Suppose you want to provide a summary method for class @code{foo}.  Then
-@code{summary.foo()} should not print anything, but return an object of
-class @code{"summary.foo"}, @emph{and} you should write a method
-@code{print.summary.foo()} which nicely prints the summary information
-and invisibly returns its object.  This approach is preferred over
-having @code{summary.foo()} print summary information and return
-something useful, as sometimes you need to grab something computed by
-@code{summary()} inside a function or similar.  In such cases you don't
-want anything printed.
+Suppose you want to provide a summary method for class @code{"foo"}.
+Then @code{summary.foo()} should not print anything, but return an
+object of class @code{"summary.foo"}, @emph{and} you should write a
+method @code{print.summary.foo()} which nicely prints the summary
+information and invisibly returns its object.  This approach is
+preferred over having @code{summary.foo()} print summary information and
+return something useful, as sometimes you need to grab something
+computed by @code{summary()} inside a function or similar.  In such
+cases you don't want anything printed.
 
 @node How can I debug dynamically loaded code?, How can I inspect R objects when debugging?, How should I write summary methods?, R Programming
 @section How can I debug dynamically loaded code?
