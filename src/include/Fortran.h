@@ -82,6 +82,7 @@
 
 #endif
 
+extern double DABS(double*);
 extern double DSIGN(double*, double*);
 extern double DLOG10(double*);
 extern double POW_DD(double*, double*);

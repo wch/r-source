@@ -21,8 +21,9 @@
 
 #include "Defn.h"
 #include "Rdefines.h" /* for CREATE_STRING_VECTOR */
-#include "R_ext/Constants.h"  /* Rboolean */
 #include "Random.h"  /* for the random number generation in samin() */
+
+#include "Applic.h"  /* setulb() */
 
 static SEXP getListElement(SEXP list, char *str)
 {
@@ -60,14 +61,14 @@ static void vmmin(int n, double *b, double *Fmin, int maxit, int trace,
 		  OptStruct OS, int *fncount, int *grcount, int *fail);
 static void nmmin(int n, double *Bvec, double *X, double *Fmin,
 		  int *fail, double abstol, double intol, OptStruct OS,
-		  double alpha, double beta, double gamma, int trace,
+		  double alpha, double beta, double gamm, int trace,
 		  int *fncount, int maxit);
 static void cgmin(int n, double *Bvec, double *X, double *Fmin,
 		  int *fail, double abstol, double intol, OptStruct OS,
 		  int type, int trace, int *fncount, int *grcount, int maxit);
 static void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 		   double *Fmin, int *fail, OptStruct OS,
-		   double factr, double pgtol, int *fncount, int *grcount, 
+		   double factr, double pgtol, int *fncount, int *grcount,
 		   int maxit, char *msg, int trace, int nREPORT);
 static void samin(int n, double *pb, double *yb, int maxit, int tmax,
 		  double ti, int trace, OptStruct OS);
@@ -224,13 +225,13 @@ SEXP do_optim(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (maxit == NA_INTEGER) error("maxit is not an integer");
 
     if (strcmp(tn, "Nelder-Mead") == 0) {
-	double alpha, beta, gamma;
+	double alpha, beta, gamm;
 
 	alpha = asReal(getListElement(options, "alpha"));
 	beta = asReal(getListElement(options, "beta"));
-	gamma = asReal(getListElement(options, "gamma"));
+	gamm = asReal(getListElement(options, "gamma"));
 	nmmin(npar, dpar, opar, &val, &ifail, abstol, reltol, OS,
-	      alpha, beta, gamma, trace, &fncount, maxit);
+	      alpha, beta, gamm, trace, &fncount, maxit);
 	for (i = 0; i < npar; i++)
 	    REAL(par)[i] = opar[i] * (OS->parscale[i]);
 	grcount = NA_INTEGER;
@@ -598,7 +599,7 @@ vmmin(int n0, double *b, double *Fmin, int maxit, int trace, int *mask,
 static
 void nmmin(int n, double *Bvec, double *X, double *Fmin,
 	   int *fail, double abstol, double intol, OptStruct OS,
-	   double alpha, double beta, double gamma, int trace,
+	   double alpha, double beta, double gamm, int trace,
 	   int *fncount, int maxit)
 {
     char action[50];
@@ -711,7 +712,7 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin,
 		if (VR < VL) {
 		    P[n1 - 1][C - 1] = f;
 		    for (i = 0; i < n; i++) {
-			f = gamma * Bvec[i] + (1 - gamma) * P[i][C - 1];
+			f = gamm * Bvec[i] + (1 - gamm) * P[i][C - 1];
 			P[i][C - 1] = Bvec[i];
 			Bvec[i] = f;
 		    }
@@ -952,17 +953,11 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
     *grcount = gradcount;
 }
 
-/* from ../appl/lbfgsb.c : */
-void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
-	    double *f, double *g, double factr, double *pgtol,
-	    double *wa, int * iwa, char *task, int iprint,
-	    int *lsave, int *isave, double *dsave);
-
 static
 void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 	    double *Fmin, int *fail, OptStruct OS,
 	    double factr, double pgtol,
-	    int *fncount, int *grcount, int maxit, char *msg, 
+	    int *fncount, int *grcount, int maxit, char *msg,
 	    int trace, int nREPORT)
 {
     char task[60];
@@ -979,14 +974,14 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
     case 6: tr = 101; break;
     default: tr = -1; break;
     }
-    
+
     *fail = 0;
     g = vect(n);
     wa = vect(2*m*n+4*n+11*m*m+8*m);
     iwa = (int *) R_alloc(3*n, sizeof(int));
     strcpy(task, "START");
     while(1) {
-	setulb(n, m, x, l, u, nbd, &f, g, factr, &pgtol, wa, iwa, task, 
+	setulb(n, m, x, l, u, nbd, &f, g, factr, &pgtol, wa, iwa, task,
 	       tr, lsave, isave, dsave);
 /*	Rprintf("in lbfgsb - %s\n", task);*/
 	if (strncmp(task, "FG", 2) == 0) {
@@ -1012,7 +1007,7 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 	    break;
 	} else { /* some other condition that is not supposed to happen */
 	    *fail = 52;
-	    break;	    
+	    break;
 	}
     }
     *Fmin = f;
@@ -1021,7 +1016,7 @@ void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
 	Rprintf("final  value %f \n", *Fmin);
 	if (iter < maxit && *fail == 0) Rprintf("converged\n");
 	else Rprintf("stopped after %i iterations\n", iter);
-    }    
+    }
     strcpy(msg, task);
 }
 
