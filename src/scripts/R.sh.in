@@ -69,9 +69,13 @@ Options:
   --silent              Same as --quiet
   --slave               Make R run as quietly as possible
   --verbose             Print more information about progress
-  -d, --debugger=NAME   Run R through debugger NAME
-  --gui=TYPE		Use TYPE as GUI; possible values are \`X11'
+  -d NAME, 
+     --debugger=NAME,
+     --debugger NAME    Run R through debugger NAME
+  --gui=TYPE, 
+     --gui type		Use TYPE as GUI; possible values are \`X11'
 			(default) and \`GNOME'
+  -g, --gnome           same as --gui=GNOME
 
 Commands:
   BATCH			Run R in batch mode
@@ -108,12 +112,15 @@ while test -n "${1}"; do
     CMD)
       shift; PATH="${R_HOME}/bin:${PATH}" exec "${@}" ;;
     -g|--gnome)
-      echo "option \`${1}' is defunct, use \`--gui=GNOME'"
-      exit 1
+      #echo "option \`${1}' is defunct, use \`--gui=GNOME'"
+      #exit 1
+      gui=GNOME
       ;;
     --gui=*)
       gui=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
-    -d)
+    --gui)
+      gui="${2}"; shift ;;
+    -d|--debugger)
       debugger="${2}"; shift ;;
     --debugger=*)
       debugger=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
@@ -131,6 +138,13 @@ while test -n "${1}"; do
   esac
   shift
 done
+
+# R_HOME may have moved, so check (or you get "GUI X11 is not supported")
+if [ ! -x  ${R_HOME} ]
+then
+  echo "R_HOME = \`${R_HOME}' not found"
+  exit 1
+fi
 
 if test -x ${R_HOME}/bin/R.${gui}; then
   R_binary="R.${gui}"
