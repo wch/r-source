@@ -267,7 +267,15 @@ par(\dots, no.readonly = FALSE)
     }
     \item{\code{xaxp}}{A vector of the form \code{c(x1, x2, n)} giving
       the coordinates of the extreme tick marks and the number of
-      intervals between tick-marks.}
+      intervals between tick-marks when \code{par("xlog")} is false.
+      Otherwise, when \emph{log} coordinates are active, the three
+      values have a different meaning: For a small range, \code{n} is
+      \emph{negative}, and the ticks are as in the linear case,
+      otherwise, \code{n} is in \code{1:3}, specifying a case number,
+      and \code{x1} and \code{x2} are the lowest and highest power of 10
+      inside the user coordinates, \code{par("usr")[1:2]}.  See
+      \code{\link{axTicks}()} for more details.
+      }
     \item{\code{xaxs}}{The style of axis interval calculation to be used
       for the x-axis.  Possible values are \code{"r"}, \code{"i"},
       \code{"e"}, \code{"s"}, \code{"d"}.  The styles are generally
@@ -301,7 +309,8 @@ par(\dots, no.readonly = FALSE)
       \code{NA}, all plotting is clipped to the device region.}
     \item{\code{yaxp}}{A vector of the form \code{c(y1, y2, n)} giving
       the coordinates of the extreme tick marks and the number of
-      intervals between tick-marks.}
+      intervals between tick-marks unless for log coordinates, see
+      \code{xaxp} above.}
     \item{\code{yaxs}}{The style of axis interval calculation to be used
       for the y-axis.  See \code{xaxs} above.}
     \item{\code{yaxt}}{A character which specifies the axis type.
