@@ -14,17 +14,20 @@ logLik(object, ...)
 }
 \description{
   This function is generic; method functions can be written to handle
-  specific classes of objects. Classes which already have methods for
+  specific classes of objects.  Classes which already have methods for
   this function include: \code{lm}, \code{nls} in package \bold{nls},
-  and (all in package \bold{nlme}) 
-  \code{corStruct}, \code{gls},
-  \code{lme}, \code{lmList}, \code{lmeStruct}, \code{reStruct}, and
-  \code{varFunc}. 
+  and \code{gls}, \code{lme} and others in package \bold{nlme}.
+%   \code{corStruct}, \code{lmList}, \code{lmeStruct}, \code{reStruct}, and
+%   \code{varFunc}. 
 }
 \value{
-  Returns an object of class \code{logLik} (for which there's a
-  \code{print} method); the details
-  depend on the method function used; see the appropriate documentation.  
+  Returns an object, say \code{r}, of class \code{logLik} which is a
+  number with attributes, \code{attr(r, "df")} (\bold{d}egrees of
+  \bold{f}reedom) giving the number of parameters in the model.
+  There's a simple \code{print} method for \code{logLik} objects.
+
+  The details depend on the method function used; see the appropriate
+  documentation.
 }
 \seealso{\code{\link{logLik.lm}}, \code{\link[nls]{logLik.nls}},
   \code{\link[nlme]{logLik.gls}}, \code{\link[nlme]{logLik.lme}}, etc.}
