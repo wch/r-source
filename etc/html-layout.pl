@@ -17,15 +17,11 @@ sub html_pagehead
 {
     my ($title, $top, $up, $uptext, $prev, $prevtext, $next, $nextext) = @_;
 
-    my $retval = "<HTML><HEAD><TITLE>R: $title</TITLE></HEAD>\n" .
-	"<BODY TEXT=\"#000000\" BGCOLOR=\"#FFFFFF\" " .
-	"LINK=\"#0000F0\" VLINK=\"#660066\" ALINK=\"#FF0000\" " .
-	"BACKGROUND=\"white\">\n" .
-	"<h1 align=center>\n" .
-        "<FONT COLOR=\"#999999\" " .
-        "size=\"+3\"><tt>\n" .
-        "$title\n" .
-        "</tt></FONT><img src=\"$top/logo.jpg\" alt=\"[R logo]\" align=center></h1>\n\n" .
+    my $retval = "<HTML><HEAD><TITLE>R: $title</TITLE>" .
+	"<LINK REL=STYLESHEET TYPE=\"text/css\" SRC=\"$top/R.css\">" .
+	"</HEAD><BODY>\n" .
+	"<h1>$title " .
+	"<img class=toplogo src=\"$top/logo.jpg\" alt=\"[R logo]\"></h1>\n\n" .
         "<hr>\n\n" .
         "<div align=center>\n";
 
@@ -55,10 +51,9 @@ sub html_functionhead
 {
     my ($title, $pkgname, $name) = @_;
 
-    my $retval = "<HTML><HEAD><TITLE>R: $title</TITLE></HEAD>\n" .
-	"<BODY TEXT=\"#000000\" BGCOLOR=\"#FFFFFF\" " .
-	"LINK=\"#0000F0\" VLINK=\"#660066\" ALINK=\"#FF0000\" " .
-	"BACKGROUND=\"white\">\n\n";
+    my $retval = "<HTML><HEAD><TITLE>R: $title</TITLE>\n" .
+	"<LINK REL=STYLESHEET TYPE=\"text/css\" SRC=\"../../../doc/html/R.css\">" .
+	"</HEAD><BODY>\n\n";
 
     if($pkgname){
 	$retval .= "<table width=100%><tr>" .
@@ -67,7 +62,6 @@ sub html_functionhead
     }
     
     $retval .= html_title2($title);
-
 }
 
 sub html_functionfoot
@@ -88,16 +82,14 @@ sub html_title2
 {
     my $title = $_[0];
 
-    "<h2 align=center><FONT COLOR=\"#999999\">" .
-	"<tt>$title</tt></FONT></h2>\n\n";
+    "<h2>$title</h2>\n\n";
 }
 
 sub html_title3
 {
     my $title = $_[0];
 
-    "<h2><FONT COLOR=\"#666666\">" .
-	"<tt>$title</tt></FONT></h2>\n\n";
+    "<h3>$title</h3>\n\n";
 }
 
 sub html_alphabet
