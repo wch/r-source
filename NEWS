@@ -259,8 +259,9 @@ NEW FEATURES
 	contribution by Bendix Carstensen.)
 
     o	dendrogam edge and node labels can now be expressions (to be
-	plotted via stats:::plotNode called from plot.dendrogram). The
-	diamond frames around edge labels are nicer scaled horizontally.
+	plotted via stats:::plotNode called from plot.dendrogram).
+	The diamond frames around edge labels are more nicely scaled
+	horizontally.
 
     o   Methods defined in the methods package can now include
         default expressions for arguments.  If these arguments are
