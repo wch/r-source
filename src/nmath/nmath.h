@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2003  The R Development Core Team
+ *  Copyright (C) 1998-2004  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -50,43 +50,25 @@ void R_CheckUserInterrupt(void);
 /* Mathlib standalone */
 
 #include <stdio.h>
-# define MATHLIB_ERROR(fmt,x)	{ printf(fmt,x); exit(1); }
-# define MATHLIB_WARNING(fmt,x)		printf(fmt,x)
-# define MATHLIB_WARNING2(fmt,x,x2)	printf(fmt,x,x2)
-# define MATHLIB_WARNING3(fmt,x,x2,x3)	printf(fmt,x,x2,x3)
-# define MATHLIB_WARNING4(fmt,x,x2,x3,x4) printf(fmt,x,x2,x3,x4)
+#define MATHLIB_ERROR(fmt,x)	{ printf(fmt,x); exit(1); }
+#define MATHLIB_WARNING(fmt,x)		printf(fmt,x)
+#define MATHLIB_WARNING2(fmt,x,x2)	printf(fmt,x,x2)
+#define MATHLIB_WARNING3(fmt,x,x2,x3)	printf(fmt,x,x2,x3)
+#define MATHLIB_WARNING4(fmt,x,x2,x3,x4) printf(fmt,x,x2,x3,x4)
 
-#ifdef IEEE_754
-# define ISNAN(x) (isnan(x)!=0)
-#else
-# define ISNAN(x)      R_IsNaNorNA(x)
-#endif
+#define ISNAN(x) (isnan(x)!=0)
 #define R_FINITE(x)    R_finite(x)
-int R_IsNaNorNA(double);
 int R_finite(double);
 
-#ifdef IEEE_754
 #define ML_POSINF	(1.0 / 0.0)
 #define ML_NEGINF	((-1.0) / 0.0)
 #define ML_NAN		(0.0 / 0.0)
-#else
-#define ML_POSINF	DBL_MAX
-#define ML_NEGINF	(-DBL_MAX)
-#define ML_NAN		(-DBL_MAX*(1-1e-15))
-#endif
 
 #endif /* standalone */
 
-#ifdef IEEE_754
 #define ML_ERROR(x)	/* nothing */
 #define ML_UNDERFLOW	(DBL_MIN * DBL_MIN)
 #define ML_VALID(x)	(!ISNAN(x))
-#else/*--- NO IEEE: No +/-Inf, NAN,... ---*/
-void ml_error(int n);
-#define ML_ERROR(x)	ml_error(x)
-#define ML_UNDERFLOW	0
-#define ML_VALID(x)	(errno == 0)
-#endif
 
 #define ME_NONE		0
 /*	no error */

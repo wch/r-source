@@ -63,8 +63,7 @@ versions of the macros and functions
 
     ISNAN, R_FINITE, R_log, R_pow and R_pow_di
 
-and (extern) constants R_PosInf, R_NegInf and NA_REAL. These
-facilities work best on IEEE 754 machines, but are available for all.
+and (extern) constants R_PosInf, R_NegInf and NA_REAL.
 
 There is no support for R's notion of missing values, in particular
 not for NA_INTEGER nor the distinction between NA and NaN for doubles.
