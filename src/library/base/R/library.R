@@ -180,8 +180,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 	       if (!(package %in% pkgDirs)) {
 		   ## Need to find the highest version available
 		   vers <- unlist(lapply(pkgDirs, libraryPkgVersion))
-		   pos <- libraryMaxVersPos(vers)
-		   if (length(pos) > 0) package <- pkgDirs[pos]
+		   vpos <- libraryMaxVersPos(vers)
+		   if (length(vpos) > 0) package <- pkgDirs[vpos]
                }
            }
         }
