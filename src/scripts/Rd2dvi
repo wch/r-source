@@ -2,8 +2,8 @@
 #  Rd2dvi -- 'check' man pages (help files) by  'LaTeX'..
 #
 # Example (in $RHOME):
-#    bin/Rd2dvi src/library/base/man/Normal
-#    bin/Rd2dvi `grep -l 'KEYWORD(distr' src/library/base/man/* |sort|uniq`
+#    bin/Rd2dvi src/library/base/man/Normal.Rd
+#    bin/Rd2dvi `grep -l 'KEYWORD(distr' src/library/base/man/*.Rd |sort|uniq`
 #
 Pwd=`dirname $0`
 RHOME=${Pwd}/..
@@ -23,7 +23,7 @@ echo "MANTEXDIR= '$MANTEXDIR'"
 if [ ! -f Rd2dvi.tex ]
 then
  ##ln -s ${MANTEXDIR}/Rd2dvi.tex . 
- R_P=`echo 'getenv("R_PAPERSIZE")'| R --vanilla --quiet|grep '"'|sed 's/ *//g;s/"//g'`
+ R_P=`echo 'getenv("R_PAPERSIZE")'| R --vanilla --quiet|grep -v getenv|grep '"'|sed 's/ *//g;s/"//g'`
  sed "s/a4paper/${R_P}paper/" ${MANTEXDIR}/Rd2dvi.tex > Rd2dvi.tex
 fi
 if [ ! -f Rd.sty ]; then
