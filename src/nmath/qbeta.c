@@ -154,7 +154,7 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
 		ML_ERR_return_NAN;
 
 	y = (y - a) *
-	    exp(logbeta + r * log(xinbta) + t * log(1 - xinbta));
+	    exp(logbeta + r * log(xinbta) + t * log1p(-xinbta));
 	if (y * yprev <= 0.)
 	    prev = fmax2(fabs(adj),fpu);
 	g = 1;

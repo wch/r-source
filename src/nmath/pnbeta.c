@@ -47,7 +47,7 @@ double pnbeta(double x, double a, double b, double lambda,
     a0 = a + x0;
     lbeta = lgammafn(a0) + lgammafn(b) - lgammafn(a0 + b);
     temp = pbeta_raw(x, a0, b, /* lower = */TRUE);
-    gx = exp(a0 * log(x) + b * log(1. - x) - lbeta - log(a0));
+    gx = exp(a0 * log(x) + b * log1p(-x) - lbeta - log(a0));
     if (a0 > a)
 	q = exp(-c + x0 * log(c) - lgammafn(x0 + 1.));
     else
