@@ -1,6 +1,6 @@
 #-*- perl -*-
 
-## Copyright (C) 2000, 2001 R Development Core Team
+## Copyright (C) 2000-2002 R Development Core Team
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -22,8 +22,9 @@
 use Getopt::Long;
 use R::Rdtools;
 use R::Utils;
+use R::Vars;
 
-my $revision = ' $Revision: 1.8 $ ';
+my $revision = ' $Revision: 1.9 $ ';
 my $version;
 my $name;
 
@@ -42,38 +43,41 @@ Options:
   -h, --help            print short help message and exit
   -v, --version         print version info and exit
       --mode=MODE       use operation mode MODE (codoc, args or style)
-      --os=NAME         use OS subdir \`NAME\' (unix, mac or windows)
-      --OS=NAME         the same as \`--os\'.
+      --os=NAME         use OS type NAME (unix, mac or windows)
+      --OS=NAME         the same as '--os'
+  -V, --verbose         print more information about progress
 
 Email bug reports to <r-bugs\@r-project.org>.
 END
   exit 0;
 }
 
-## <FIXME>
-## Currently, R_OSTYPE is always set on Unix/Windows.
-my $OSdir = R_getenv("R_OSTYPE", "mac");
-## </FIXME>
+my $opt_OS = $R::Vars::OSTYPE;
 my $opt_mode = "codoc";
-my $opt_v;
+my $opt_version;
+my $opt_verbose;
 
 GetOptions("h|help"    => \&usage,
-	   "v|version" => \$opt_v,
-	   "os|OS:s"   => \$OSdir,
-	   "mode=s"    => \$opt_mode
+	   "v|version" => \$opt_version,
+	   "os|OS:s"   => \$opt_OS,
+	   "mode=s"    => \$opt_mode,
+	   "V|verbose" => \$opt_verbose
 	  ) or &usage();
 
-&R_version($name, $version) if $opt_v;
+&R_version($name, $version) if $opt_version;
 
-open(INFILE, "< $ARGV[0]") or die "Can't open input file";
-open(OUTFILE, "> $ARGV[1]") or die "Can't open output file";
+open(INFILE, "< $ARGV[0]")
+    or die "Error: cannot open '$ARGV[0]' for reading\n";
+open(OUTFILE, "> $ARGV[1]")
+    or die "Error: cannot open '$ARGV[1]' for writing\n";
 
 while (<INFILE>) {
     chomp;
-    open RDFILE, "< $_";
+    open(RDFILE, "< $_")
+	or die "Error: cannot open '$_' for reading\n";
     ## <NOTE>
     ## This is really dangerous ...
-    my @chunks = split(/\\name/, &Rdpp($_, $OSdir));
+    my @chunks = split(/\\name/, &Rdpp($_, $opt_OS));
     ## </NOTE>
     foreach my $text (@chunks) {
 	next if($text !~ /^\s*{\s*([^}]*[^}\s])\s*}.*/);
@@ -87,7 +91,7 @@ while (<INFILE>) {
 
 	{
 	    local $/;		# unset for get_usages()
-	    %usages = get_usages($text, $opt_mode);
+	    %usages = get_usages($text, $opt_mode, $opt_verbose);
 	}
 
 	foreach my $key (keys(%usages)){
