@@ -267,11 +267,11 @@ tkread(...)
   \code{tcl} provides a generic interface to calling any Tk or Tcl
   command by simply running \code{.Tcl.args.objv} on the argument list
   and passing the
-  result to \code{.Tcl.objv}. Most of the other commands simply call
+  result to \code{.Tcl.objv}.  Most of the other commands simply call
   \code{tcl} with a particular
   first argument and sometimes also a second argument giving the
   subcommand.
-  Prior to \R{} 2.0.0, this function was called \code{tkcmd}, which will
+  Prior to \R 2.0.0, this function was called \code{tkcmd}, which will
   still work but will be deprecated in a later version. Also, the file
   commands used to be \code{tkopen}, \code{tkclose}, etc., but since
   \code{open} and \code{close} do not belong 
@@ -282,8 +282,8 @@ tkread(...)
   to Tk's \code{wm title}
   
   There are far too many of these commands to describe them and their
-  arguments in full. Please refer to the Tcl/Tk documentation for details.
-  With a few exceptions, the pattern is that  Tk subcommands like
+  arguments in full.  Please refer to the Tcl/Tk documentation for details.
+  With a few exceptions, the pattern is that Tk subcommands like
   \code{pack configure} are converted to function names like
   \code{tkpack.configure}, and Tcl subcommands are like
   \code{tclfile.dir}.  
@@ -297,8 +297,8 @@ tkread(...)
 ## into an interactive R session with the tcltk package loaded
 
 tt <- tktoplevel()
-tkpack(l1<-tklabel(tt,text="Heave"),l2<-tklabel(tt,text="Ho"))
-tkpack.configure(l1,side="left")
+tkpack(l1<-tklabel(tt,text="Heave"), l2<-tklabel(tt,text="Ho"))
+tkpack.configure(l1, side="left")
 
 ## Try stretching the window and then
 
@@ -306,4 +306,4 @@ tkdestroy(tt)
 }
 
 }
-\keyword{misc}%-- one or more ...
+\keyword{misc}
