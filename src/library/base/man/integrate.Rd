@@ -13,7 +13,7 @@ integrate(f, lower, upper, subdivisions=100,
 }
 \arguments{
   \item{f}{An \R function taking a numeric first argument and returning
-    a numeric vector the same length. Returning a non-finite will
+    a numeric vector the same length. Returning a non-finite element will
     generate an error.}
   \item{lower, upper}{The limits of integration. Can be infinite.}
   \item{subdivisions}{the maximum number of subintervals.}
