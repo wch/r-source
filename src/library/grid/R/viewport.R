@@ -151,6 +151,10 @@ depth.vpTree <- function(vp) {
   depth(vp$parent) + depth(vp$children[[length(vp$children)]])
 }
 
+depth.vpPath <- function(vp) {
+  vp$n
+}
+
 ####################
 # Accessors
 ####################
@@ -273,11 +277,12 @@ vpPathSep <- "::"
 
 vpPathFromVector <- function(names) {
   n <- length(names)
-  if (n < 2)
-    stop("A viewport path must contain at least two viewport names")
+  if (n < 1)
+    stop("A viewport path must contain at least one viewport name")
   if (!all(is.character(names)))
     stop("Invalid viewport name(s)")
-  path <- list(path=paste(names[1:(n-1)], collapse=vpPathSep),
+  path <- list(path=if (n==1) NULL else
+               paste(names[1:(n-1)], collapse=vpPathSep),
                name=names[n],
                n=n)
   class(path) <- "vpPath"
@@ -296,6 +301,9 @@ vpPathDirect <- function(path) {
 }
 
 print.vpPath <- function(x, ...) {
+  if (x$n == 1)
+    x$name
+  else
   print(paste(x$path, x$name, sep=vpPathSep))
 }
 

@@ -99,26 +99,19 @@ downViewport <- function(name, recording=TRUE) {
   UseMethod("downViewport")
 }
 
+# For interactive use, allow user to specify
+# vpPath directly (i.e., w/o calling vpPath)
 downViewport.default <- function(name, recording=TRUE) {
   name <- as.character(name)
-  # For interactive use, allow user to specify
-  # vpPath directly (i.e., w/o calling vpPath)
-  if (regexpr(vpPathSep, name) > 0) {
-    return(downViewport(vpPathDirect(name), recording=recording))
-  }
-  if (grid.Call.graphics("L_downviewport", name)) {
-    if (recording) {
-      class(name) <- "down"
-      record(name)
-    } 
-  } else {
-    stop(paste("Viewport", name, "was not found"))
-  }
-  current.viewport()
+  downViewport(vpPathDirect(name), recording=recording)
 }
 
 downViewport.vpPath <- function(name, recording=TRUE) {
-  if (grid.Call.graphics("L_downvppath", name$path, name$name)) {
+  if (name$n == 1)
+    result <- grid.Call.graphics("L_downviewport", name$name)
+  else
+    result <- grid.Call.graphics("L_downvppath", name$path, name$name)
+  if (result) {
     if (recording) {
       class(name) <- "down"
       record(name)

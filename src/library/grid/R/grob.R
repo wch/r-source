@@ -11,6 +11,16 @@
 # NOTE also that we stick class "glist" onto the list structure
 # so that we can do generic things with them too.
 grid.grob <- function(list.struct, cl=NULL, draw=TRUE) {
+  if (!is.null(list.struct$vp))
+    # vp can be a viewport, a viewport name, or a viewport path
+    if (!inherits(list.struct$vp, "viewport") &&
+        !inherits(list.struct$vp, "vpPath") &&
+        !is.character(list.struct$vp))
+      stop("Invalid vp slot")
+  # For interactive use, allow user to specify
+  # vpPath directly (i.e., w/o calling vpPath)
+  if (is.character(list.struct$vp))
+    list.struct$vp <- vpPathDirect(list.struct$vp)
   class(list.struct) <- c(cl, "glist")
   ptr <- .Call("L_CreateSEXPPtr", list.struct, PACKAGE="grid")
   grob <- list(ptr)
@@ -143,6 +153,31 @@ editDetails.default <- function(x, new.values) {
   x
 }
 
+pushgrobvp <- function(vp) {
+  UseMethod("pushgrobvp")
+}
+
+pushgrobvp.viewport <- function(vp) {
+  pushViewport(vp, recording=FALSE)
+}
+
+pushgrobvp.vpPath <- function(vp) {
+  downViewport(vp, recording=FALSE)
+}
+
+popgrobvp <- function(vp) {
+  UseMethod("popgrobvp")
+}
+
+popgrobvp.viewport <- function(vp) {
+  # NOTE that the grob's vp may be a vpStack/List/Tree
+  popViewport(depth(vp), recording=FALSE)
+}
+
+popgrobvp.vpPath <- function(vp) {
+  upViewport(depth(vp), recording=FALSE)
+}
+
 # Use generic function "draw" rather than generic function "print"
 # because want graphics functions to produce graphics output
 # without having to be evaluated at the command-line AND without having
@@ -164,7 +199,7 @@ grid.draw <- function(x, recording=TRUE) {
       list.struct <- get.value(x)
       # automatically push/pop the viewport and set/unset the gpar
       if (!is.null(list.struct$vp))
-        pushViewport(list.struct$vp, recording=FALSE)
+        pushgrobvp(list.struct$vp)
       if (!is.null(list.struct$gp)) {
         tempgpar <- get.gpar()
         set.gpar(list.struct$gp)
@@ -174,8 +209,7 @@ grid.draw <- function(x, recording=TRUE) {
       if (!is.null(list.struct$gp))
         set.gpar(tempgpar)
       if (!is.null(list.struct$vp))
-        # NOTE that the grob's vp may be a vpStack/List/Tree
-        popViewport(depth(list.struct$vp), recording=FALSE)
+        popgrobvp(list.struct$vp)
       if (recording)
         record(x)
   }
