@@ -2275,6 +2275,12 @@ distributions of R.)
      Various procedures used in psychometry: Kappa, ICC, Cronbach alpha,
      screeplot, PCA and related methods.
 
+*qcc*
+     Quality Control Charts.  Shewhart quality control charts for
+     continuous, attribute and count data.  Cusum and EWMA charts.
+     Operating characteristic curves.  Process capability analysis.  Pareto
+     chart and cause-and-effect chart.
+
 *qtl*
      Analysis of experimental crosses to identify QTLs.
 
