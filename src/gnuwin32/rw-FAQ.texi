@@ -731,12 +731,20 @@ you do need 8.4.x and not 8.3.x.  (If you build R from the sources
 yourself you can configure it to use 8.3.x.)
 
 
-@node  Hyperlinks in Compiled HTML do not work., update.packages() fails, Package TclTk does not work., Packages
-@section Hyperlinks in Compiled HTML sometimes do not work.
+@node  Hyperlinks in HTML do not work., update.packages() fails, Package TclTk does not work., Packages
+@section Hyperlinks in HTML sometimes do not work.
 
 They may well not work between packages installed in different
 libraries.  This is solved under Unix using symbolic links which Windows
 does not implement.
+
+With HTML, @code{help.start()} fixes up links to the most of the
+standard packages if it has write permission in the main library tree.
+Not even these work for Compiled HTML help.
+
+Currently links to the @code{base}, @code{datasets}, @code{utils},
+@code{grDevices}, @code{graphics} and @code{stats} packages are fixed.
+
 
 @node update.packages() fails,  , Hyperlinks in Compiled HTML do not work., Packages
 @section @code{update.packages()} fails
