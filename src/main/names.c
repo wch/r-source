@@ -719,7 +719,6 @@ FUNTAB R_FunTab[] =
 #endif
 #ifdef Unix
 {"X11",		do_X11,		0,	111,	10,	{PP_FUNCALL, PREC_FN,	0}},
-{"gnome",	do_Gnome,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"Quartz",	do_Quartz,	0,	111,	7,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 

@@ -139,6 +139,8 @@ DEPRECATED & DEFUNCT
 	removed.  It was used in a couple of packages, and should be
 	replaced by a call to the documented macro ISNAN.
 
+    o   The gnome/GNOME graphics device is now defunct.
+
 
 INSTALLATION CHANGES
 

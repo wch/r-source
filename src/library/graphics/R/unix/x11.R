@@ -15,8 +15,7 @@ X11 <- function(display = "", width = 7, height = 7, pointsize = 12,
 x11 <- X11
 
 gnome <- function(display = "", width = 7, height = 7, pointsize = 12) {
-    .Deprecated()
-    .Internal(gnome(display, width, height, pointsize))
+    .Defunct()
 }
 
 ## no Gnome <- .Alias(gnome)

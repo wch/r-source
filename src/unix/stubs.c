@@ -25,13 +25,6 @@
 #include "Rdevices.h"
 #include "devUI.h"
 
-Rboolean stub_GnomeDeviceDriver(DevDesc *dd, char *display, 
-			   double width, double height, double pointsize)
-{
-    error("the gnome device is not loaded in this version of R");
-    return FALSE;
-}
-
 SEXP stub_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     error("the data entry editor has not been loaded");
