@@ -24,6 +24,7 @@
 \alias{as.tclObj}
 \alias{is.tclObj}
 \alias{tclObj}
+\alias{print.tclObj}
 \alias{tclObj<-}
 \alias{tclObj.tclVar}
 \alias{tclObj<-.tclVar}
@@ -90,7 +91,8 @@ tclRequire(package, warn = TRUE)
   Many of these functions are not intended for general use but are used
   internally by the commands that create and manipulate Tk widgets and
   Tcl objects.  At the lowest level \code{.Tcl} sends a command as a text
-  string to the Tcl interpreter and returns the result as a text string.
+  string to the Tcl interpreter and returns the result as an object of
+  class \code{tclObj} (see below).
 
   \code{.Tcl.args} converts an R argument list of \code{tag=value} pairs
   to the Tcl \code{-option value} style, thus
@@ -118,7 +120,8 @@ tclRequire(package, warn = TRUE)
   \code{R_call_lang 0x8a95904 0x819bfd0}. For expressions, a sequence
   of similar items is generated, separated by
   semicolons. \code{.Tcl.args} takes special precautions to ensure
-  that the function will exist at that address by assigning the
+  that functions or calls will continue to exist at the specified
+  address by assigning the
   callback into the relevant window environment (see below).
 
   Tk windows are represented as objects of class \code{tkwin} which are
@@ -160,10 +163,12 @@ tclRequire(package, warn = TRUE)
   representation of such objects can be extracted (but not set) using
   \code{tclvalue} and conversion to vectors of mode \code{"character"},
   \code{"double"}, or \code{"integer"}. Conversely, such vectors can be
-  converted using \code{as.tclObj}. The object behind a Tcl variable
+  converted using \code{as.tclObj}. The object behind a \code{tclVar} object
   is extracted using \code{tclObj(x)} which also allows an assignment
   form, in which the right hand side of the assignment is automatically
-  converted using \code{as.tclObj}.  
+  converted using \code{as.tclObj}. There is a print method for
+  \code{tclObj} objects; it prints \code{<Tcl>} followed by the string
+  representation of the object.
   
   Tcl packages can be loaded with \code{tclRequire}; it may be necessary
   to add the directory where they are found to the Tcl search path with
