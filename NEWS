@@ -17,7 +17,11 @@ NEW FEATURES
 
 BUG FIXES
 
-    o
+    o   coplot() now has 'number' and 'overlap' arguments, and should work 
+	in more situations. [by John Maindonald and MM].
+
+    o   save(..ascii=TRUE) now uses "full precision" for numerics.
+
 
 		CHANGES IN R VERSION 0.63.2
 
