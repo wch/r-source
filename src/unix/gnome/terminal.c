@@ -55,10 +55,7 @@ void R_gtk_terminal_new()
   GtkWidget *table;
   GtkWidget *vscrollbar;
 
-  GtkStyle *textstyle;
-
   gint charw, winw, winh;
-
 
   /* Setup main window */
   R_gtk_main_window = gnome_app_new("R.gnome", "R Console");

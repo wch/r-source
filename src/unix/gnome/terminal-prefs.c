@@ -545,7 +545,6 @@ static void pager_page_apply(GladeXML *prefs_xml)
 static void startup_page_init(GtkWidget *prefs_dialog, GladeXML *prefs_xml)
 {
     GtkWidget *always_ws_radio, *never_ws_radio;
-    GtkWidget *vsize_entry, *nsize_entry;
 
     always_ws_radio = glade_xml_get_widget(prefs_xml, "prefs_always_restore_ws_radio");
     never_ws_radio = glade_xml_get_widget(prefs_xml, "prefs_never_restore_ws_radio");
@@ -570,7 +569,6 @@ static void startup_page_init(GtkWidget *prefs_dialog, GladeXML *prefs_xml)
 static void startup_page_apply(GladeXML *prefs_xml)
 {
     GtkWidget *always_ws_radio, *never_ws_radio;
-    GtkWidget *vsize_entry, *nsize_entry;
 
     always_ws_radio = glade_xml_get_widget(prefs_xml, "prefs_always_restore_ws_radio");
     never_ws_radio = glade_xml_get_widget(prefs_xml, "prefs_never_restore_ws_radio");

@@ -334,10 +334,8 @@ void find_process_result(GnomeFindDialog *find_dialog, int find_result)
 
 void R_gtk_terminal_find(GnomeFindDialog *find_dialog)
 {
-  int find_result, select_start, select_end;
+  int find_result;
   find_selection *find_select;
-
-  GtkWidget *message_dialog;
 
   if(find_dialog != NULL)
     g_return_if_fail(GNOME_IS_FIND_DIALOG(find_dialog));

@@ -47,6 +47,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+void fpu_setup(int);		/* in src/unix/sys-unix.c */
+
 
 	/*--- Initialization Code ---*/
 
