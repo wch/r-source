@@ -87,3 +87,10 @@ ppr()   [R]
 predict.ppr() [R]
  |
  pppred					(see above)
+
+-------
+
+Note that CRAN package "mda" also relies on these (identical) six files :
+
+bsplvd.f bvalue.f
+sgram.f sinerp.f sslvrg.f stxwx.f

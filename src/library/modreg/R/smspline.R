@@ -8,7 +8,7 @@ smooth.spline <-
 {
     sknotl <- function(x, nk = NULL)
     {
-        ## if (all.knots == FALSE)
+        ## if (!all.knots)
 	## return reasonable sized knot sequence for INcreasing x[]:
 	n.kn <- function(n) {
 	    ## Number of inner knots
@@ -94,8 +94,7 @@ smooth.spline <-
 	if(df > 1 && df <= nx) {
 	    icrit <- 3
 	    dofoff <- df
-	} else warning(paste("you must supply 1 < df <= n,  n = #{unique x} =",
-                             nx))
+	} else warning("you must supply 1 < df <= n,  n = #{unique x} = ", nx)
     }
     iparms <- as.integer(c(icrit,ispar, contr.sp$maxit))
     names(iparms) <- c("icrit", "ispar", "iter")
@@ -139,7 +138,7 @@ smooth.spline <-
         } else {
             fit$ty <- rep(mean(y), nx) ## would be df = 1
             df <- 1
-            warning(paste(wtxt,"setting df = 1  __use with care!__", sep="\n"))
+            warning(wtxt,"\nsetting df = 1  __use with care!__")
         }
     }
     cv.crit <-
@@ -262,7 +261,7 @@ supsmu <-
     xo <- x[ord]
     leno <- length(ord)
     if(diff <- n - leno)
-	warning(paste(diff, "observation(s) with NAs, NaNs and/or Infs deleted"))
+	warning(diff, " observation(s) with NAs, NaNs and/or Infs deleted")
     .Fortran("setsmu", PACKAGE = "modreg")
     smo <- .Fortran("supsmu",
 		    as.integer(leno),

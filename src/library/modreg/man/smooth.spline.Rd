@@ -50,7 +50,7 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
 
    \describe{
      \item{low:}{lower bound for \code{spar}; defaults to -1.5 (used to
-       implicitly default to 0 in R versions earlier than 1.4).}
+       implicitly default to 0 in \R versions earlier than 1.4).}
      \item{high:}{upper bound for \code{spar}; defaults to +1.5.}
      \item{tol:}{the absolute precision (\bold{tol}erance) used; defaults
      to 1e-4 (formerly 1e-3).}
@@ -125,9 +125,10 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
 \note{
   The default \code{all.knots = FALSE} and \code{nknots = NULL} entails
   using only \eqn{O(n^{0.2})}
-  knots instead of \eqn{n} for \eqn{n > 49}.  This cuts the memory
-  requirement which is \eqn{O({n_k} ^ 2) + O(n)}{O(nk^2) + O(n)} where
-  \eqn{n_k}{nk} is the number of knots.
+  knots instead of \eqn{n} for \eqn{n > 49}.  This cuts speed and memory
+  requirements, but not drastically anymore since \R version 1.5.1 where
+  it is only \eqn{O(n_k) + O(n)}{O(nk) + O(n)} where \eqn{n_k}{nk} is
+  the number of knots.
   In this case where not all unique \code{x} values are
   used as knots, the result is not a smoothing spline in the strict
   sense, but very close unless a small smoothing parameter (or large

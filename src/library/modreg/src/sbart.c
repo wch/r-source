@@ -80,8 +80,8 @@ void F77_SUB(sbart)
    xwy			X'Wy
    hs0,hs1,hs2,hs3	the diagonals of the X'WX matrix
    sg0,sg1,sg2,sg3	the diagonals of the Gram matrix SIGMA
-   abd(ld4,nk)		[ X'WX + lambda*SIGMA ] in diagonal form
-   p1ip(ld4,nk)	inner products between columns of L inverse
+   abd (ld4,nk)		[ X'WX + lambda*SIGMA ] in diagonal form
+   p1ip(ld4,nk)		inner products between columns of L inverse
    p2ip(ldnk,nk)	all inner products between columns of L inverse
                         where  L'L = [X'WX + lambda*SIGMA]  NOT REFERENCED
 */
@@ -250,7 +250,7 @@ void F77_SUB(sbart)
 		Rprintf("sbart (ratio = %15.8g) iterations;"
 			" initial tol1 = %12.6e :\n"
  			"%11s %14s  %9s %11s  Kind %11s %12s\n%s\n",
-			ratio, tol1, "x  ",
+			ratio, tol1, "spar",
 			((*icrit == 1) ? "GCV" :
 			 (*icrit == 2) ?  "CV" :
 			 (*icrit == 3) ?"(df0-df)^2" :
@@ -369,7 +369,7 @@ void F77_SUB(sbart)
     }/* end main loop -- goto L20; */
 
  L_End:
-    if(tracing) Rprintf(" >>> %11g => %11g\n", CRIT(fu), CRIT(fx));
+    if(tracing) Rprintf("  >>> %12g %12g\n", *lspar, CRIT(fx));
     *spar = x;
     *crit = fx;
     return;
