@@ -1578,6 +1578,10 @@ distributions of R.)
      Functions for reading and writing data stored by statistical software
      like Minitab, SAS, SPSS, Stata, etc.  _Recommended_.
 
+*forward*
+     Forward search approach to robust analysis in linear and generalized
+     linear regression models.
+
 *fpc*
      Fixed point clusters, clusterwise regression and discriminant plots.
 

@@ -1802,6 +1802,9 @@ used for spatial prediction.
 @item foreign
 Functions for reading and writing data stored by statistical software
 like Minitab, SAS, SPSS, Stata, etc.  @emph{Recommended}.
+@item forward
+Forward search approach to robust analysis in linear and generalized
+linear regression models.
 @item fpc
 Fixed point clusters, clusterwise regression and discriminant plots.
 @item fracdiff
