@@ -345,6 +345,14 @@ typedef struct SEXPREC *SEXP;
 #define EXTPTR_PROT(x)	CDR(x)
 #define EXTPTR_TAG(x)	TAG(x)
 
+#ifdef BYTECODE
+/* Bytecode access macros */
+#define BCODE_CODE(x)	CAR(x)
+#define BCODE_CONSTS(x) CDR(x)
+#define BCODE_EXPR(x)	TAG(x)
+#define isByteCode(x)	(TYPEOF(x)==BCODESXP)
+#endif
+
 /* Pointer Protection and Unprotection */
 #define PROTECT(s)	protect(s)
 #define UNPROTECT(n)	unprotect(n)

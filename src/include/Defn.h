@@ -310,6 +310,12 @@ typedef struct VECREC *VECP;
 #define PRIMPRINT(x)	(((R_FunTab[PRIMOFFSET(x)].eval)/100)%10)
 #endif
 
+#ifdef BYTECODE
+# ifdef BC_INT_STACK
+typedef union { void *p; int i; } IStackval;
+# endif
+#endif
+
 /* Evaluation Context Structure */
 typedef struct RCNTXT {
     struct RCNTXT *nextcontext;	/* The next context up the chain */
@@ -330,6 +336,12 @@ typedef struct RCNTXT {
 #ifdef NEW_CONDITION_HANDLING
     SEXP handlerstack;          /* condition handler stack */
     SEXP restartstack;          /* stack of available restarts */
+#endif
+#ifdef BYTECODE
+    SEXP *nodestack;
+# ifdef BC_INT_STACK
+    IStackval *intstack;
+# endif
 #endif
 } RCNTXT, *context;
 
@@ -515,6 +527,15 @@ extern SEXP	R_RestartStack;	/* Stack of available restarts */
 /* GUI type */
 
 extern char*	R_GUIType	INI_as("unknown");
+
+#ifdef BYTECODE
+#define R_BCNODESTACKSIZE 10000
+extern SEXP *R_BCNodeStackBase, *R_BCNodeStackTop, *R_BCNodeStackEnd;
+# ifdef BC_INT_STACK
+#define R_BCINTSTACKSIZE 10000
+extern IStackval *R_BCIntStackBase, *R_BCIntStackTop, *R_BCIntStackEnd;
+# endif
+#endif
 
 /* Pointer  type and utilities for dispatch in the methods package */
 typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP, SEXP); /* typedef */
