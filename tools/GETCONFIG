@@ -2,11 +2,9 @@
 #
 # ${RHOME}/tools/GETCONFIG
 
-echo "/* src/include/Rconfig.h.  Generated automatically */"
+echo "/* Rconfig.h.  Generated automatically */"
 echo "#ifndef R_VERSION_H"
 echo "#define R_VERSION_H"
-echo
-echo "#ifndef _CONFIG_H"
 echo
 us=`sed -n /HAVE_F77_UNDERSCORE/p config.h | sed -n 1p | sed -e s/\ HAVE_F77_UNDERSCORE.\*//`
 if [ "${us}" = "#define" ] ; then
@@ -22,8 +20,10 @@ if [ "${ieeea}" = "#define" -a "${ieeeb}" = "#define" ] ; then
 else
   echo "/* #undef IEEE_754 */"
 fi
+echo
+echo "#ifndef _CONFIG_H"
 endian=`grep "WORDS_BIGENDIAN" config.h`
 echo "${endian}"
+echo "#endif /* not _CONFIG_H */"
 echo
-echo "#endif"
-echo "#endif"
+echo "#endif /* not R_VERSION_H */"

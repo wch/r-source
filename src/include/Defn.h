@@ -39,23 +39,52 @@
 #include "config.h"
 #include "Rinternals.h"		/*-> Arith.h, Complex.h, Error.h, Memory.h
 				  PrtUtil.h, Utils.h */
+#include "Rconfig.h"
 #include "Errormsg.h"
 
 #ifndef USE_GENERATIONAL_GC
 # define ALLOW_OLD_SAVE
 #endif
 
+/* SunOS 4 is famous for broken header files. */
+#ifdef SunOS4
+# ifndef NULL
+#  define	NULL		0
+# endif
+# ifndef RAND_MAX
+#  define	RAND_MAX	32767
+# endif
+#endif /* SunOS4 */
+
 /* PSIGNAL may be defined on Win32 in config.h */
 #ifdef PSIGNAL
-#include <psignal.h>
+# include <psignal.h>
 #else
-#include <signal.h>
-#include <setjmp.h>
+# include <signal.h>
+# include <setjmp.h>
 #endif
+
 #include <time.h>
+
 #ifdef HAVE_LOCALE_H
-#include <locale.h>
+# include <locale.h>
 #endif
+
+#ifdef Unix
+# define OSTYPE      "unix"
+# define FILESEP     "/"
+# define DYNLOADEXT  "." ## SHLIB_EXT
+#endif /* Unix */
+#ifdef Macintosh
+# define OSTYPE      "mac"
+# define FILESEP     ":"
+# define DYNLOADEXT  ".dll"
+#endif /* Macintosh */
+#ifdef Win32
+# define OSTYPE      "windows"
+# define FILESEP     "/"
+# define DYNLOADEXT  ".dll"
+#endif /* Win32 */
 
 
 /*  Heap and Pointer Protection Stack Sizes.  */
@@ -94,25 +123,25 @@
 
 /* Getting the working directory */
 #if defined(HAVE_GETCWD)
-#define R_GETCWD(x, y) getcwd(x, y)
+# define R_GETCWD(x, y) getcwd(x, y)
 #elif defined(Win32)
-#define R_GETCWD(x, y) GetCurrentDirectory(y, x)
+# define R_GETCWD(x, y) GetCurrentDirectory(y, x)
 #else
-#undef R_GETCWD
+# undef R_GETCWD
 #endif
 
 /* Maximal length of an entire file name */
 #if !defined(PATH_MAX)
-#  if defined(HAVE_SYS_PARAM_H)
-#    include <sys/param.h>
-#  endif
-#  if defined(MAXPATHLEN) && !defined(PATH_MAX)
-#    define PATH_MAX MAXPATHLEN
-#  elif defined(Win32)
-#    define PATH_MAX 260
-#  else
-#    define PATH_MAX 255
-#  endif
+# if defined(HAVE_SYS_PARAM_H)
+#  include <sys/param.h>
+# endif
+# if defined(MAXPATHLEN) && !defined(PATH_MAX)
+#  define PATH_MAX MAXPATHLEN
+# elif defined(Win32)
+#  define PATH_MAX 260
+# else
+#  define PATH_MAX 255
+# endif
 #endif
 
 #ifdef HAVE_POSIX_SETJMP
@@ -172,9 +201,9 @@ typedef struct {
 #define PRVALUE(x)	((x)->u.promsxp.value)
 #define PRSEEN(x)	((x)->sxpinfo.gp)
 #ifndef USE_WRITE_BARRIER
-#define SET_PREXPR(x,v)	(((x)->u.promsxp.expr)=(v))
-#define SET_PRENV(x,v)	(((x)->u.promsxp.env)=(v))
-#define SET_PRVALUE(x,v)	(((x)->u.promsxp.value)=(v))
+# define SET_PREXPR(x,v)  (((x)->u.promsxp.expr)=(v))
+# define SET_PRENV(x,v)	  (((x)->u.promsxp.env)=(v))
+# define SET_PRVALUE(x,v) (((x)->u.promsxp.value)=(v))
 #endif
 #define SET_PRSEEN(x,v)	(((x)->sxpinfo.gp)=(v))
 

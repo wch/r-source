@@ -56,23 +56,36 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #include <string.h>
 #include <stdlib.h>
 #ifdef HAVE_UNISTD_H
-#include <unistd.h>
+# include <unistd.h>
 #endif
 
 #include "Defn.h"
 #include "Mathlib.h"
+
+#ifndef HAVE_NO_SYMBOL_UNDERSCORE
+# ifdef HAVE_ELF_H
+#  define HAVE_NO_SYMBOL_UNDERSCORE
+# endif
+#endif
 
 /* DL_FUNC is in Defn.h */
 typedef struct {
     char *name;
     DL_FUNC func;
 } CFunTabEntry;
+
+#include "Rconfig.h"		/* F77_SYMBOL */
+#ifdef HAVE_F77_UNDERSCORE
+# define F77_QSYMBOL(x)	 #x ## "_"
+#else
+# define F77_QSYMBOL(x)  #x
+#endif
 
 #include "FFDecl.h"
 

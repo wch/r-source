@@ -24,9 +24,6 @@
 /* Define if you have the GNU C library version >= 2 */
 #undef HAVE_GLIBC2
 
-/* (Long) Integers */
-#undef SIZEOF_LONG
-
 /* Byte order */
 #undef WORDS_BIGENDIAN
 
@@ -34,17 +31,10 @@
 #undef HAVE_MATHERR		/* System V */
 #undef HAVE_ISNAN		/* IEEE Arith indicator */
 #undef HAVE_FINITE
-
 #undef HAVE_FLOATINGPOINT_H
 #undef HAVE_FPU_CONTROL_H
 #undef HAVE_IEEEFP_H		/* "-Wall" */
 #undef HAVE_IEEE754_H		/* Linux */
-
-#ifdef HAVE_ISNAN
-# ifdef HAVE_FINITE
-#  define IEEE_754
-# endif
-#endif
 
 /* Signal Handler Type */
 #define RETSIGTYPE int
@@ -75,9 +65,6 @@
 /* XDR Library Available */
 #undef HAVE_RPC_RPC_H
 #undef HAVE_RPC_XDR_H
-
-/* HDF5 Library Available */
-#undef HAVE_HDF5
 
 /* General String Comparison */
 #undef HAVE_STRCOLL
@@ -113,14 +100,6 @@
 /* Fortran and C Links */
 #undef HAVE_F77_UNDERSCORE
 
-#ifdef HAVE_F77_UNDERSCORE
-# define F77_SYMBOL(x)	x ## _
-# define F77_QSYMBOL(x)	#x ## "_"
-#else
-# define F77_SYMBOL(x)	x
-# define F77_QSYMBOL(x)	#x
-#endif
-
 /* GNU Readline Library */
 #undef HAVE_LIBREADLINE
 #undef HAVE_READLINE_HISTORY_H
@@ -142,9 +121,9 @@
 #undef HAVE_PUTENV
 #undef HAVE_STRPTIME
 
-
-/* Define this to use the system regex rather than GNU regex included in R.
-   Intended only for use with special systems such as Condor */
+/* Define this to use the system regex rather than GNU regex included in
+   R.
+   Intended only for use with special systems such as Condor. */
 /* #undef USE_SYSTEM_REGEX */
 
 /* Dirent stuff */
@@ -169,25 +148,9 @@
 
 /* Some platforms other than ELF drop the leading _ */
 #undef HAVE_NO_SYMBOL_UNDERSCORE
-#ifndef HAVE_NO_SYMBOL_UNDERSCORE
-# ifdef HAVE_ELF_H
-#  define HAVE_NO_SYMBOL_UNDERSCORE
-# endif
-#endif
 
 /* SunOS 4 is famous for broken header files */
 #undef SunOS4
-#ifdef SunOS4
-# ifndef NULL
-#  define	NULL		0
-# endif
-# ifndef RAND_MAX
-#  define	RAND_MAX	32767
-# endif
-#endif /* SunOS4 */
-
-/* Printing Command */
-#define R_PRINTCMD	""
 
 /* Getting the working directory */
 #undef HAVE_GETCWD
@@ -205,29 +168,16 @@
 /* Write barrier testing */
 #undef TESTING_WRITE_BARRIER
 
-/* for platform.c to put in .Platform */
-#ifdef Unix
-# define OSTYPE      "unix"
-# define FILESEP     "/"
-# define SHLIB_EXT    ""
-# define DYNLOADEXT  "." ## SHLIB_EXT
-#endif
-
-#ifdef Macintosh
-# define OSTYPE      "mac"
-# define FILESEP     ":"
-# define DYNLOADEXT  ".dll"
-#endif
-
-#ifdef Win32
-# define OSTYPE      "windows"
-# define FILESEP     "/"
-# define DYNLOADEXT  ".dll"
-#endif
-
+/* Platform Information */
 #define R_PLATFORM	"UNKNOWN"
 #define R_CPU		"UNKNOWN"
 #define R_VENDOR	"UNKNOWN"
 #define R_OS		"UNKNOWN"
+
+/* Unix shlib file extension */
+#define SHLIB_EXT	""
+
+/* Printing Command */
+#define R_PRINTCMD	"UNKNOWN"
 
 #endif
