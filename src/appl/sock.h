@@ -46,6 +46,9 @@ ssize_t Sock_write(int fd, void *buf, size_t nbytes, Sock_error_t perr);
 void Rsockopen(int *port);
 void Rsocklisten(int *sock, char **buf, int *len);
 void Rsockconnect(int *port, char **host);
-void Rsockclose(int *sock);
-void Rsockread (int *sock, char **buf, int *maxlen);
-void Rsockwrite(int *sock, char **buf, int *start, int *end, int *len);
+void Rsockclose(int *sockp);
+void Rsockread (int *sockp, char **buf, int *maxlen);
+void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len);
+#ifndef Win32
+void Rsockfork(int *pidno);
+#endif
