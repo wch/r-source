@@ -63,11 +63,14 @@ tcl:
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H
 FFLAGS = $(OPTFLAGS)
 
-rbuild: fixfiles rlibs makeMakedeps ../../bin/R.dll \
+## cross-building needs an import library: native builds can use the DLL.
 ifeq ($(strip $(BUILD)),CROSS)
-	 libR.a \
-endif
+rbuild: fixfiles rlibs makeMakedeps ../../bin/R.dll libR.a \
 	 CHTML ../include/globalvar.h front-ends COPYRIGHTS rmodules
+else
+rbuild: fixfiles rlibs makeMakedeps ../../bin/R.dll \
+	 CHTML ../include/globalvar.h front-ends COPYRIGHTS rmodules
+endif
 
 rpackage: fixed/fixdesc ../../library/R.css
 	$(MAKE) STAMP=NO $(PKGS)
