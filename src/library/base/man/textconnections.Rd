@@ -27,7 +27,8 @@ textConnection(object, open = "r")
   times hold the completed lines of output to the connection, and
   \code{\link{isIncomplete}} will indicate if there is an incomplete
   final line.  Closing the connection will output the final line,
-  complete or not.
+  complete or not.  (A line is complete once it has been terminated by
+  end-of-line, represented by \code{"\n"} in \R.)
 
   Opening a text connection with \code{mode = "a"} will attempt to
   append to an existing character vector with the given name in the
@@ -38,9 +39,13 @@ textConnection(object, open = "r")
   You cannot \code{seek} on a text connection, and \code{seek} will
   always return zero as the position.
 }
+
 \value{
   A connection object of class \code{"textConnection"} which inherits
   from class \code{"connection"}.
+}
+\note{
+  Output text connections truncate lines longer than 8095 characters.
 }
 
 \seealso{

@@ -96,6 +96,9 @@ BUG FIXES
     o   Internal match function did not check for nor handle 0-length
 	vectors.  (The R function match() did.)
 
+    o   The line length limit in output text connections has been
+	raised to 8095 chars.
+
 
 
 		CHANGES IN R VERSION 1.6.1
