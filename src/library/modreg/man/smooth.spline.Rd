@@ -57,7 +57,7 @@ smooth.spline(x, y, w = rep(1, length(x)), df = 5, spar = 0,
   \item{df}{equivalent degrees of freedom used.}
   \item{spar}{the value of \eqn{\lambda} chosen.}
   \item{fit}{list for use by \code{predict.smooth.spline}.}
-  \item{call}{}
+  \item{call}{the matched call.}
 }
 \author{B.D. Ripley}
 \seealso{\code{\link{predict.smooth.spline}}}

@@ -33,6 +33,7 @@ loess.control(surface = c("interpolate", "direct"),
   \item{trace.hat}{}
   \item{cell}{}
   \item{iterations}{}
+  with meanings as explained under `Arguments'.
 }
 \author{B.D. Ripley}
 \seealso{\code{\link{loess}}}
