@@ -789,7 +789,7 @@ static void GTK_Polygon(int n, double *x, double *y, int coords,
 double deg2rad = 0.01745329251994329576;
 
 static void GTK_Text(double x, double y, int coords,
-		       char *str, double xc, double yc, double rot, DevDesc *dd)
+		     char *str, double xc, double yc, double rot, DevDesc *dd)
 {
   gtkDesc *gtkd = (gtkDesc *) dd->deviceSpecific;
   GdkColor gcol_fill;
@@ -814,16 +814,11 @@ static void GTK_Text(double x, double y, int coords,
       yc * y1 * cos(deg2rad * rot);
   }
 
-  /* FIXME: rotation */
-  gdk_draw_text(gtkd->drawing->window,
-                gtkd->font, gtkd->wgc,
-                (gint) x, (gint) y,
-                str, strlen(str));
-
-  /*  gdk_draw_text_rot(gtkd->drawing->window,
+  gdk_draw_text_rot(gtkd->drawing->window,
 		    gtkd->font, gtkd->wgc, 
-		    (gint) x, (gint) y,
-		    str, strlen(str), rot);*/
+		    (int) x, (int) y,
+		    gtkd->windowWidth, gtkd->windowHeight,
+		    str, strlen(str), deg2rad * rot);
 }
 
 static int GTK_Locator(double *x, double *y, DevDesc *dd)

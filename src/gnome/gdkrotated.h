@@ -26,6 +26,8 @@ void gdk_draw_text_rot	 (GdkDrawable  *drawable,
 			  GdkGC	       *gc,
 			  gint		x,
 			  gint		y,
+			  gint          maxx,
+			  gint          maxy,
 			  const gchar  *text,
 			  gint		text_length,
-			  double angle);
+			  double        angle);

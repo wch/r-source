@@ -24,6 +24,7 @@ SOURCES = \
 	devGNOME.c \
 	devGTK.c \
 	edit.c \
+	gdkrotated.c \
 	gtkconsole.c \
 	gnome-find-dialog.c \
 	terminal.c \
