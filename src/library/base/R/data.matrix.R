@@ -3,7 +3,7 @@ data.matrix <- function(frame)
     if(!is.data.frame(frame))
 	return(as.matrix(frame))
     d <- dim(frame)
-    if(d[1] > 0) {
+    if(all(d > 0)) {
 	log <- unlist(lapply(frame, is.logical))
 	num <- unlist(lapply(frame, is.numeric))
 	fac <- unlist(lapply(frame, is.factor))

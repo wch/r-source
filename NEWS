@@ -28,7 +28,8 @@ BUG FIXES
     o	stars(scale = TRUE) (the default) now works as documented (and
 	as S does).  Previously it only scaled the maximum to 1. (PR#1230)
 
-    o	data.matrix(data.frame(a=0)[0,0]) now works.
+    o	d0 <- data.frame(a=0); data.matrix(d0[0,0]) and data.matrix(d0[,0])
+	now work.
 
     o	plot(multiple time series, plot.type = "single") was computing
 	`ylim' from the first series only.
@@ -61,6 +62,9 @@ BUG FIXES
 
     o	La.eigen(*, only.values=TRUE) does not segfault anymore in one
 	branch (PR#1262).
+
+    o	cut() now produces correct default labels even when
+	include.lowest=TRUE (PR#1263).
 
 
 
