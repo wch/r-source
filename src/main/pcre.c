@@ -92,7 +92,6 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
     tables = pcre_maketables();
     re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), options, &errorptr, 
 			   &erroffset, tables);
-    pcre_free((void *)tables);
     if (!re_pcre) errorcall(call, "invalid regular expression");
 
     n = length(vec);
@@ -113,6 +112,7 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
 	else INTEGER(ind)[i] = 0;
     }
     (pcre_free)(re_pcre);
+    pcre_free((void *)tables);
     PROTECT(ind);
     if (value_opt) {
 	ans = allocVector(STRSXP, nmatches);
