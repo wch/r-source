@@ -16,7 +16,7 @@ NEW FEATURES
 	marginally but sometimes by double or more.  The workspace is
 	no longer statically sized and both the vector heap and the
 	number of nodes can grow as needed.  (They can shrink again,
-	but never below the initially allocated sizes.)  See ?Memory
+	but never below the initially allocated sizes.)	 See ?Memory
 	for a longer description, including the new command-line
 	options to manage the settings.
 
@@ -274,10 +274,10 @@ NEW FEATURES
     o	The header file R.h and those included from it are now usable
 	with C++ code.
 
-    o   Formatting (and printing) of data.frames with complex objects is
-        improved. toString was added as a new function.
+    o	Formatting (and printing) of data.frames with complex objects is
+	improved. toString was added as a new function.
 
-    o   scan() and read.table() have a new argument blank.lines.skip
+    o	scan() and read.table() have a new argument blank.lines.skip
 	to allow blank lines to be read.
 
     o	scan() now reads empty character fields as "" not "NA" unless
@@ -380,7 +380,7 @@ BUG FIXES
 	all(NULL == NULL) is now TRUE.
 
     o	dbinom() and dpois() now use a more accurate algorithm; e.g., 
-        1 - 2*sum(dbinom(0:999, 1999, 1/2)) is now zero instead of 1.0e-12.
+	1 - 2*sum(dbinom(0:999, 1999, 1/2)) is now zero instead of 1.0e-12.
 
     o	library.dynam no longer fails if the library appears more than
 	once in lib.loc.
@@ -460,7 +460,8 @@ BUG FIXES
 
     o	qt(*, log = TRUE) has a somewhat extended working range.
 
-    o	pnorm() should be somewhat more accurate (SIXTEN=16; PR#699).
+    o	pnorm() is somewhat more accurate (SIXTEN=16; PR#699) and
+	`infinitesimally faster' in some cases, thanks to James M. Rath.
 
     o	Specifying col.names in read.table() now overrides any header
 	line in the data file.
@@ -470,7 +471,7 @@ BUG FIXES
     o	make install could fail if there were no shared libraries to
 	install (e.g. on vanilla Solaris).
 
-    o   Nasty bug caused rpois to generate biased variables in some
+    o	Nasty bug caused rpois to generate biased variables in some
 	cases.
 
     o	median of empty vector is now NA.
