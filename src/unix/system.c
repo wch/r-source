@@ -314,29 +314,31 @@ char *R_ExpandFileName(char *s)
 
 FILE *R_OpenLibraryFile(char *file)
 {
-    char buf[256], *home;
+    char buf[256], *rhome;
     FILE *fp;
 
-    if((home = getenv("RHOME")) == NULL)
+    if((rhome = getenv("RHOME")) == NULL)
 	return NULL;
-    sprintf(buf, "%s/library/base/R/%s", home, file);
-    fp = R_fopen(buf,"r");
+    sprintf(buf, "%s/library/base/R/%s", rhome, file);
+    fp = R_fopen(buf, "r");
     return fp;
 }
 
 FILE *R_OpenSysInitFile(void)
 {
-    char buf[256];
+    char buf[256], *rhome;
     FILE *fp;
 
-    sprintf(buf, "%s/library/base/R/Rprofile", getenv("RHOME"));
+    if((rhome = getenv("RHOME")) == NULL)
+	return NULL;
+    sprintf(buf, "%s/library/base/R/Rprofile", rhome);
     fp = R_fopen(buf, "r");
     return fp;
 }
 
 FILE *R_OpenSiteFile(void)
 {
-    char buf[256];
+    char buf[256], *rhome;
     FILE *fp;
 
     fp = NULL;
@@ -344,7 +346,9 @@ FILE *R_OpenSiteFile(void)
     if (LoadSiteFile) {
 	if ((fp = R_fopen(getenv("RPROFILE"), "r")))
 	    return fp;
-	sprintf(buf, "%s/etc/Rprofile", getenv("RHOME"));
+	if ((rhome = getenv("RHOME")) == NULL)
+	    return NULL;
+	sprintf(buf, "%s/etc/Rprofile", rhome);
 	if ((fp = R_fopen(buf, "r")))
 	    return fp;
     }
@@ -354,7 +358,7 @@ FILE *R_OpenSiteFile(void)
 
 FILE *R_OpenInitFile(void)
 {
-    char buf[256];
+    char buf[256], *home;
     FILE *fp;
 
     fp = NULL;
@@ -362,7 +366,9 @@ FILE *R_OpenInitFile(void)
     if (LoadInitFile) {
 	if ((fp = R_fopen(".Rprofile", "r")))
 	    return fp;
-	sprintf(buf, "%s/.Rprofile", getenv("HOME"));
+	if ((home = getenv("HOME")) == NULL)
+	    return NULL;
+	sprintf(buf, "%s/.Rprofile", home);
 	if ((fp = R_fopen(buf, "r")))
 	    return fp;
     }
