@@ -11,43 +11,44 @@
 \alias{.External}
 \alias{.Call}
 \arguments{
-\item{name}{a character string giving the name of a C function or
-  Fortran subroutine.}
-\item{\dots}{arguments to be passed to the foreign function.}
-\item{NAOK}{if \code{TRUE} then any \code{NA} or \code{NaN} or
-  \code{Inf} values in the arguments are passed on to the foreign function.
-  If \code{FALSE}, the presence of \code{NA}  or \code{NaN} or
-  \code{Inf} values is regarded as an error.}
-\item{DUP}{if \code{TRUE} then arguments are ``duplicated'' before their
-  address is passed to C or Fortran.}
-\item{PACKAGE}{if supplied, confine the search for the \cdoe{name} to
+  \item{name}{a character string giving the name of a C function or
+    Fortran subroutine.}
+  \item{\dots}{arguments to be passed to the foreign function.}
+  \item{NAOK}{if \code{TRUE} then any \code{NA} or \code{NaN} or
+    \code{Inf} values in the arguments are passed on to the foreign
+    function.  If \code{FALSE}, the presence of \code{NA}  or \code{NaN}
+    or \code{Inf} values is regarded as an error.}
+  \item{DUP}{if \code{TRUE} then arguments are ``duplicated'' before
+    their address is passed to C or Fortran.}
+  \item{PACKAGE}{if supplied, confine the search for the \code{name} to
     the DLL given by this argument (plus the conventional extension,
-    \code{.so}, \code{.sl}, \code{.dll}, \dots).  This is intended to add
-    safety for packages, which can ensure that no other package can
-    override their external symbols by using this argument. Use
-    \code{PACKAGE="base"} for symbols linked in to \R.}
+    \code{.so}, \code{.sl}, \code{.dll}, \dots).  This is intended to
+    add safety for packages, which can ensure that no other package can
+    override their external symbols by using this argument.  Use
+    \code{PACKAGE="base"} for symbols linked in to \R.} 
 }
 \description{
-The functions \code{.C} and \code{.Fortran} can be used to
-make calls to C and Fortran code.
+  The functions \code{.C} and \code{.Fortran} can be used to make calls
+  to C and Fortran code.
 
-\code{.External} can be used to call
-compiled code that uses \R objects in the same way as internal \R
-functions. There is no documentation to help you write this sort of code.
+  \code{.External} can be used to call compiled code that uses \R
+  objects in the same way as internal \R functions.  There is no
+  documentation to help you write this sort of code. 
 
-\code{.Call} can be used call compiled code which makes use of internal
-\R objects.  The arguments are passed to the C code as a sequence of
-\R objects.  It is included to provide compatibility with S version 4.
+  \code{.Call} can be used call compiled code which makes use of
+  internal \R objects.  The arguments are passed to the C code as a
+  sequence of \R objects.  It is included to provide compatibility with
+  S version 4.
 }
 \value{
-The functions \code{.C} and \code{.Fortran} return a list similar to the \code{\dots}
-list of arguments passed in, but reflecting any
-changes made by the C or Fortran code.
+  The functions \code{.C} and \code{.Fortran} return a list similar to
+  the \code{\dots} list of arguments passed in, but reflecting any
+  changes made by the C or Fortran code.
 
-\code{.External} and \code{.Call} return an \R object.
+  \code{.External} and \code{.Call} return an \R object.
 
-These calls are typically made in conjunction with
-\code{\link{dyn.load}} which links DLLs to \R.
+  These calls are typically made in conjunction with
+  \code{\link{dyn.load}} which links DLLs to \R.
 }
 %%-- This note based on BDR's understanding
 %% edited TSL
