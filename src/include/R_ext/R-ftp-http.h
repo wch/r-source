@@ -33,5 +33,5 @@ int R_SockOpen(int port);
 int R_SockListen(int sockp, char *buf, int len);
 int R_SockConnect(int port, char *host);
 int R_SockClose(int sockp);
-int R_SockRead(int sockp, void *buf, int maxlen);
+int R_SockRead(int sockp, void *buf, int maxlen, int blocking);
 int R_SockWrite(int sockp, const void *buf, int len);

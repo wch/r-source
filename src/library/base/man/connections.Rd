@@ -32,7 +32,7 @@ pipe(description, open = "", encoding = getOption("encoding"))
 gzfile(description, open = "", encoding = getOption("encoding"),
        compression = 6)
 url(description, open = "", blocking = TRUE, encoding = getOption("encoding"))
-socketConnection(host = "localhost", port, server = FALSE, blocking = TRUE,
+socketConnection(host = "localhost", port, server = FALSE, blocking = FALSE,
                  open = "r", encoding = getOption("encoding"))
 
 \method{open}{connection}(con, open = "r", blocking = TRUE)
@@ -57,7 +57,7 @@ isSeekable(con)
   \item{open}{character.  A description of how to open the connection
     (if at all). See Details for possible values.}
   \item{blocking}{logical.  If false, operations return immediately without
-    waiting for input.}
+    waiting for further input.}
   \item{encoding}{An integer vector of length 256.}
   \item{compression}{integer in 0--9.  The amount of compression to be
     applied when writing, from none to maximal.  The default is a good
@@ -199,6 +199,24 @@ zz <- pipe(paste("sed s/\\\\./,/ >", "outfile"), "w")
 cat(format(round(rnorm(100), 4)), sep = "\n", file = zz)
 close(zz)
 file.show("outfile", delete.file=TRUE)}
+
+\dontrun{## example for Unix machine with a finger daemon
+
+con <- socketConnection("localhost", 79)
+writeLines(paste(system("whoami", intern=TRUE), "\r", sep=""), con)
+gsub(" *$", "", readLines(con))
+close(con)}
+
+\dontrun{## two R processes communicating via sockets
+# window 1
+con1 <- socketConnection("localhost", 6011, server=TRUE)
+writeLines(LETTERS, con1)
+close(con1)
+
+# window 2
+con2 <- socketConnection("localhost", 6011)
+readLines(con2)
+close(con2)}
 }
 \keyword{file}
 \keyword{connection}

@@ -1094,7 +1094,7 @@ SEXP do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 static void sock_open(Rconnection con)
 {
     Rsockconn this = (Rsockconn)con->private;
-    int sock, res, len = 256;
+    int sock, sock1;
     int timeout = asInteger(GetOption(install("timeout"), R_NilValue));
     char buf[256];
 
@@ -1103,14 +1103,20 @@ static void sock_open(Rconnection con)
 
     
     if(this->server) {
-	sock = R_SockOpen(this->port);
-	if(sock < 0) error("port %d cannot be opened", this->port);
-	res = R_SockListen(sock, buf, len);
-	if(res < 0) error("problem in listening on this socket");
+	sock1 = R_SockOpen(this->port);
+	if(sock1 < 0) error("port %d cannot be opened", this->port);
+	sock = R_SockListen(sock1, buf, 256);
+	if(sock < 0) error("problem in listening on this socket");
+	free(con->description);
+	con->description = (char *) malloc(strlen(buf) + 10);
+	sprintf(con->description, "<-%s:%d", buf, this->port);
+	R_SockClose(sock1);
     } else {
 	sock = R_SockConnect(this->port, con->description);
 	if(sock < 0) error("%s:%d cannot be opened", con->description,
 			   this->port);
+	sprintf(buf, "->%s:%d", con->description, this->port);
+	strcpy(con->description, buf);
     }
     this->fd = sock;
     
@@ -1133,7 +1139,7 @@ static int sock_fgetc(Rconnection con)
     unsigned char c;
     int n;
     
-    n = R_SockRead(this->fd, (char *)&c, 1);
+    n = R_SockRead(this->fd, (char *)&c, 1, con->blocking);
     return (n == 1) ? con->encoding[c] : R_EOF;
 }
 
@@ -1142,7 +1148,7 @@ static size_t sock_read(void *ptr, size_t size, size_t nitems,
 {
     Rsockconn this = (Rsockconn)con->private;
 
-    return R_SockRead(this->fd, ptr, size * nitems)/size;
+    return R_SockRead(this->fd, ptr, size * nitems, con->blocking)/size;
 }
 
 static size_t sock_write(const void *ptr, size_t size, size_t nitems,

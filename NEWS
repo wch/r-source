@@ -37,9 +37,9 @@ NEW FEATURES
 	   writing at the current position.
 
 	-  Socket connections via function socketConnection().
-	   [Not yet operational.]
 
-	-  The `blocking' argument for file connections is now operational.
+	-  The `blocking' argument for file adn socket connections
+	   is now operational.
 
     o	The default method for download.file() (and functions which use
 	it such as update.packages()) is now "internal", and uses code
@@ -222,6 +222,8 @@ NEW FEATURES
         level-3 BLAS routine dgemm.  When R is linked with the ATLAS
         library this can be substantially faster than the previous
         code.
+
+
 
 BUG FIXES
 

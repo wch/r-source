@@ -120,50 +120,7 @@ void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
     *len = (int) n;
 }
 
-/* for use in socket connections */
-
-static unsigned int timeout = 60;
-
-void R_SockTimeout(int delay)
-{
-    timeout = (unsigned int) delay;
-}
-
-int R_SockOpen(int port)
-{
-    check_init();
-    return Sock_open(port, NULL);
-}
-
-int R_SockListen(int sockp, char *buf, int len)
-{
-    check_init();
-    return Sock_listen(sockp, buf, len, NULL);
-}
-
-int R_SockConnect(int port, char *host)
-{
-    check_init();
-    return Sock_connect(port, host, NULL);
-}
-
-int R_SockClose(int sockp)
-{
-    return close_sock(sockp);
-}
-
-int R_SockRead(int sockp, void *buf, int maxlen)
-{
-    check_init();
-    return (int) Sock_read(sockp, buf, maxlen, NULL);
-}
-
-int R_SockWrite(int sockp, const void *buf, int len)
-{
-    check_init();
-    return (int) Sock_write(sockp, buf, len, NULL);
-}
-
+/* --------- unused ? ---------- */
 
 #ifdef Unix
 #include <signal.h>
@@ -190,3 +147,308 @@ void Rsockfork(int *pidno)
     *pidno = (int) pid;
 }
 #endif
+
+/* --------- for use in socket connections ---------- */
+
+#include <R_ext/R-ftp-http.h>
+
+#ifdef HAVE_BSD_NETWORKING
+#  include <netdb.h>
+#  include <sys/socket.h>
+#  include <netinet/in.h>
+#  include <netinet/tcp.h>
+#endif
+
+#ifdef HAVE_FCNTL_H
+#include <fcntl.h>
+#endif
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+#ifdef HAVE_SYS_TIME_H
+#include <sys/time.h>
+#endif
+#ifdef HAVE_SYS_SELECT_H
+#include <sys/select.h>
+#endif
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+
+
+#ifndef Win32
+#define closesocket(s) close(s)
+#define SOCKET int
+#endif
+
+static int socket_errno(void)
+{
+#ifdef Win32
+    return(WSAGetLastError());
+#else
+    return(errno);
+#endif
+}
+
+
+#ifdef Unix
+#include <R_ext/eventloop.h>
+
+/* modified from src/unix/sys-std.c  */
+static int
+setSelectMask(InputHandler *handlers, fd_set *readMask)
+{
+    int maxfd = -1;
+    InputHandler *tmp = handlers;
+    FD_ZERO(readMask);
+
+    while(tmp) {
+	if(tmp->fileDescriptor > 0) {
+	    FD_SET(tmp->fileDescriptor, readMask);
+	    maxfd = maxfd < tmp->fileDescriptor ? tmp->fileDescriptor : maxfd;
+	}
+	tmp = tmp->next;
+    }
+
+    return(maxfd);
+}
+#endif
+
+static unsigned int timeout = 60;
+
+static int R_SocketWait(int sockfd, int write)
+{
+    fd_set rfd, wfd;
+    struct timeval tv;
+    double used = 0.0;
+
+    while(1) {
+	int maxfd = 0, howmany;
+#ifdef Unix
+	InputHandler *what;
+
+	if(R_wait_usec > 0) {
+	    R_PolledEvents();
+	    tv.tv_sec = 0;
+	    tv.tv_usec = R_wait_usec;
+	} else {
+	    tv.tv_sec = timeout;
+	    tv.tv_usec = 0;
+	}
+#elif defined(Win32)
+	tv.tv_sec = 0;
+	tv.tv_usec = 2e5;
+	R_ProcessEvents();
+#else
+	tv.tv_sec = timeout;
+	tv.tv_usec = 0;
+#endif
+
+
+#ifdef Unix
+	maxfd = setSelectMask(R_InputHandlers, &rfd);
+#else
+	FD_ZERO(&rfd);
+#endif
+	FD_ZERO(&wfd);
+	if(write) FD_SET(sockfd, &wfd); else FD_SET(sockfd, &rfd);
+	if(maxfd < sockfd) maxfd = sockfd;
+
+	howmany = select(maxfd+1, &rfd, &wfd, NULL, &tv);
+
+	if (howmany < 0) {
+	    return -1;
+	}
+	if (howmany == 0) {
+	    used += tv.tv_sec + 1e-6 * tv.tv_usec;
+	    if(used >= timeout) return 1;
+	    continue;
+	}
+
+#ifdef Unix
+	if(!FD_ISSET(sockfd, &rfd) || howmany > 1) {
+	    /* was one of the extras */
+	    what = getSelectedHandler(R_InputHandlers, &rfd);
+	    if(what != NULL) what->handler((void*) NULL);
+	    continue;
+	}
+#endif
+	/* the socket was ready */
+	break;
+    }
+    return 0;
+}
+
+void R_SockTimeout(int delay)
+{
+    timeout = (unsigned int) delay;
+}
+
+static char inbuf[4096], *pstart, *pend;
+
+int R_SockConnect(int port, char *host)
+{
+    SOCKET s = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+    fd_set wfd, rfd;
+    struct timeval tv;
+    int status;
+    double used = 0.0;
+    struct sockaddr_in server;
+    struct hostent *hp;
+
+    check_init();
+    pend = pstart = inbuf;
+
+    if (s == -1)  return -1;
+
+#ifdef Win32
+    {
+	u_long one = 1;
+
+	status = ioctlsocket(s, FIONBIO, &one) == SOCKET_ERROR ? -1 : 0;
+    }
+#else
+    if ((status = fcntl(s, F_GETFL, 0)) != -1) {
+#ifdef O_NONBLOCK
+	status |= O_NONBLOCK;
+#else /* O_NONBLOCK */
+#ifdef F_NDELAY
+	status |= F_NDELAY;
+#endif /* F_NDELAY */
+#endif /* !O_NONBLOCK */
+	status = fcntl(s, F_SETFL, status);
+    }
+    if (status < 0) {
+	closesocket(s);
+	return(-1);
+    }
+#endif
+
+    if (! (hp = gethostbyname(host))) return -1;
+
+    memcpy((char *)&server.sin_addr, hp->h_addr_list[0], hp->h_length);
+    server.sin_port = htons((short)port);
+    server.sin_family = AF_INET;
+
+    if ((connect(s, (struct sockaddr *) &server, sizeof(server)) == -1)) {
+
+	switch (socket_errno()) {
+	case EINPROGRESS:
+	case EWOULDBLOCK:
+	    break;
+	default:
+	    closesocket(s);
+	    return(-1);
+	}
+    }
+
+    while(1) {
+	int maxfd = 0;
+#ifdef Unix
+	InputHandler *what;
+
+	if(R_wait_usec > 0) {
+	    R_PolledEvents();
+	    tv.tv_sec = 0;
+	    tv.tv_usec = R_wait_usec;
+	} else {
+	    tv.tv_sec = timeout;
+	    tv.tv_usec = 0;
+	}
+#elif defined(Win32)
+	tv.tv_sec = 0;
+	tv.tv_usec = 2e5;
+	R_ProcessEvents();
+#else
+	tv.tv_sec = timeout;
+	tv.tv_usec = 0;
+#endif
+
+
+#ifdef Unix
+	maxfd = setSelectMask(R_InputHandlers, &rfd);
+#else
+	FD_ZERO(&rfd);
+#endif
+	FD_ZERO(&wfd);
+	FD_SET(s, &wfd);
+	if(maxfd < s) maxfd = s;
+
+	switch(select(maxfd+1, &rfd, &wfd, NULL, &tv))
+	{
+	case 0:
+	    /* Time out */
+	    used += tv.tv_sec + 1e-6 * tv.tv_usec;
+	    if(used < timeout) continue;
+	    closesocket(s);
+	    return(-1);
+	case -1:
+	    /* Ermm.. ?? */
+	    closesocket(s);
+	    return(-1);
+	}
+
+	if ( FD_ISSET(s, &wfd) ) {
+	    SOCKLEN_T len;
+	    len = sizeof(status);
+	    if (getsockopt(s, SOL_SOCKET, SO_ERROR, (char*)&status, &len) < 0){
+		/* Solaris error code */
+		return (-1);
+	    }
+	    if ( status ) {
+		closesocket(s);
+		errno = status;
+		return (-1);
+	    } else return(s);
+#ifdef Unix
+	} else { /* some other handler needed */
+	    what = getSelectedHandler(R_InputHandlers, &rfd);
+	    if(what != NULL) what->handler((void*) NULL);
+	    continue;
+#endif
+	}
+    }
+    /* not reached */
+    return(-1);
+}
+
+int R_SockClose(int sockp)
+{
+    return closesocket(sockp);
+}
+
+int R_SockRead(int sockp, void *buf, int len, int blocking)
+{
+    int res;
+    if(pstart == pend){
+	pstart = pend = inbuf;
+	if(blocking && R_SocketWait(sockp, 0) != 0) return 0;
+	res = (int) recv(sockp, inbuf, 4096, 0);
+	if(res <= 0) return res;
+	pend = inbuf+res;
+    } else res = pend-pstart;
+    if(len < res) res = len;
+    memcpy(buf, pstart, res);
+    pstart += res;
+    /* Rprintf("returned %d/%d %c\n", res, len, *pstart); */
+    return res;
+}
+
+int R_SockOpen(int port)
+{
+    check_init();
+    return Sock_open(port, NULL);
+}
+
+int R_SockListen(int sockp, char *buf, int len)
+{
+    check_init();
+    return Sock_listen(sockp, buf, len, NULL);
+}
+
+int R_SockWrite(int sockp, const void *buf, int len)
+{
+    /* Rprintf("socket %d writing |%s|\n", sockp, buf); */
+    return (int) send(sockp, buf, len, 0);
+}
+

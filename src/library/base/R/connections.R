@@ -67,7 +67,7 @@ gzfile <- function(description, open = "",
     .Internal(gzfile(description, open, encoding, compression))
 
 socketConnection <- function(host= "localhost", port, server = FALSE,
-                             blocking = TRUE, open = "r",
+                             blocking = FALSE, open = "r",
                              encoding = getOption("encoding"))
     .Internal(socketConnection(host, port, server, blocking, open, encoding))
 
