@@ -111,7 +111,7 @@ BUG FIXES
     o	par adj now accepts values of integer mode (such as text(adj=0:1)).
 
     o	horizontal adj values outside the range [0, 1] are now
-	supported on devices with canHadj==1 (Windows devices, xfig).
+	supported on devices with canHAdj==1 (Windows devices, xfig).
 
     o	xtabs() without a response was ignoring drop.unused.levels=TRUE.
 
@@ -140,8 +140,11 @@ BUG FIXES
     o	attr(x, "class") <- character(0) was segfaulting.  Similar problem
 	with "comment" attribute also fixed.
 
-    o	loadings() results from PCA (as well as factor analysis) 
+    o	loadings() results from PCA (as well as from factor analysis) 
 	are now printed by print.loadings.
+
+    o	Using chol() on an non-positive-definite matrix gave an
+	misleading error message (PR#1061).
 
 
 
