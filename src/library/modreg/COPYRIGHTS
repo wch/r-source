@@ -1,9 +1,5 @@
 The following files are based on the work of others.
 
-src/dpbfa.f
-src/dpbsl.f  
-  Appear to be from LINPACK.
-
 src/ppr.f
   J. H. Friedman's (1984) SMART package.
   Converted to double precision and interface to smoothing splines by
@@ -44,4 +40,5 @@ src/loessf.f
   The files are unchanged apart from the insertion of that statement.
 
 
-All other files are copyright B. D. Ripley.
+All other files are copyright the R Core Developement Team and/or B. D. Ripley.
+

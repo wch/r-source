@@ -1,6 +1,3 @@
-## file modreg/R/ksmooth.R
-## copyright (C) 1998 B. D. Ripley
-##
 ksmooth <-
   function(x, y, kernel=c("box", "normal"), bandwidth=0.5, range.x=range(x),
 	   n.points=max(100, length(x)), x.points)

@@ -1,6 +1,3 @@
-% file modreg/man/predict.smooth.spline.Rd
-% copyright (C) 1998 B. D. Ripley
-%
 \name{predict.smooth.spline}
 \alias{predict.smooth.spline}
 %\alias{predict.smooth.spline.fit}
@@ -23,7 +20,6 @@
   \item{x}{The input \code{x}.}
   \item{y}{The fitted values or derivatives at \code{x}.}
 }
-\author{B.D. Ripley}
 \seealso{\code{\link{smooth.spline}}
 }
 \examples{

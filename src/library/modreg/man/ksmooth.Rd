@@ -1,6 +1,3 @@
-% file modreg/man/ksmooth.Rd
-% copyright (C) 1998 B. D. Ripley
-%
 \name{ksmooth}
 \alias{ksmooth}
 \title{Kernel Regression Smoother}
@@ -29,7 +26,6 @@ ksmooth(x, y, kernel = c("box", "normal"), bandwidth = 0.5,
     be in increasing order.}
   \item{y}{fitted values corresponding to \code{x}.}
 }
-\author{B. D. Ripley}
 \note{This function is implemented purely for compatibility with S,
   although it is nowhere near as slow as the S function. Better kernel
   smoothers are available in other packages.}

@@ -1,5 +1,8 @@
 /* sbart.f -- translated by f2c (version 20010821).
  * ------- and f2c-clean,v 1.9 2000/01/13
+ *
+ * According to the GAMFIT sources, this was derived from code by
+ * Finbarr O'Sullivan.
  */
 #include <R.h>
 #include <Rmath.h>
