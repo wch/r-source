@@ -526,6 +526,8 @@ FUNTAB R_FunTab[] =
 {"show.help.item",do_helpitem,	0,	11,	3,	PP_FUNCALL},
 {"int.unzip",	do_int_unzip,	0,	11,    -1,	PP_FUNCALL},
 {"dir.create",	do_dircreate,	0,	11,	1,	PP_FUNCALL},
+{"file.edit",	do_fileedit,	0,	11,	1,	PP_FUNCALL},
+{"new.file",	do_newfile,	0,	11,	1,	PP_FUNCALL},
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
 {"save",	do_save,	0,	111,	5,	PP_FUNCALL},
