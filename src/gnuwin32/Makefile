@@ -46,8 +46,7 @@ else
 R-DLLFLAGS = -mwindows
 endif
 
-## only need -lmsvcp60 if we use SUPPORT_UTF8
-R-DLLLIBS =-L. $(LIBUNICOWS) $(FLIBS) -lRblas -lcomctl32 -lversion -lmsvcp60
+R-DLLLIBS =-L. $(FLIBS) -lRblas -lcomctl32 -lversion $(LIBEXTRAS)
 dllversion-RESFLAGS =--include-dir ../include
 SOURCES = \
   console.c dataentry.c dynload.c edit.c editor.c extra.c \
@@ -73,6 +72,10 @@ endif
 
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H -DR_DLL_BUILD
 FFLAGS = $(FOPTFLAGS)
+
+ifdef SUPPORT_MBCS
+CFLAGS += -DSUPPORT_MBCS
+endif
 
 Rpwd.exe: front-ends/Rpwd.exe
 	$(CP) $< $@

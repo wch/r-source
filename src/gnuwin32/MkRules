@@ -13,8 +13,6 @@ else
 WINHELP = CHM # NO or CHM
 endif
 
-# SUPPORT_UTF8 = YES
-
 ## ============== configuration macros for building R ===================
 
 # Comment out if the msvcrt.dll malloc/free is required.
@@ -36,9 +34,15 @@ HHWDIR=C:/Program Files/HTML Help Workshop
 TCL_HOME = $(RHOME)/Tcl
 TCL_VERSION = 84
 
+# Internationalization support
+# Define if RGui is to support multi-byte characters.
+# SUPPORT_MBCS = YES
+# Define if R.dll is to have support of UTF-8 locales.
+# SUPPORT_UTF8 = YES
+
 ## ====== configuration macros for building installers ===========
 
-# location where Inno Setup 4.x or 5.x was installed
+# location where Inno Setup 5.x or 4.x was installed. Spaces allowed.
 ISDIR=C:/packages/Inno5
 
 ## =================== cross-compilation settings  =================
@@ -69,14 +73,17 @@ MINGW32CFLAG=-isystem $(HEADER)
 MINGW32LDFLAG=
 FLIBS=-lg2c
 AWK=awk
-## BDR's build of cross-compiler is 2.95.3
+## BDR's build of cross-compiler was 2.95.3
 DEPARG=-M
 endif
 
 ifdef SUPPORT_UTF8
-LIBUNICOWS=-lunicows
+LIBEXTRAS = -lunicows -lmsvcp60
+CFLAGS += -DSUPPORT_UTF8
 else
-LIBUNICOWS=
+ifdef SUPPORT_MBCS
+LIBEXTRAS = -lmsvcp60
+endif
 endif
 
 PERL=perl

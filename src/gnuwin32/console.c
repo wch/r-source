@@ -46,6 +46,7 @@ extern char *alloca(size_t);
 
 extern UImode  CharacterMode;
 
+#ifdef SUPPORT_MBCS
 static mbstate_t mb_st; /* use for char transpose as well */
 
 /* This is input from the keyboard, so we do not do validity checks.
@@ -61,7 +62,12 @@ int mb_char_len(char *buf, int clength)
 	mb_len = mbrlen(buf+i, MB_CUR_MAX, &mb_st);
     return mb_len;
 }
-
+#else
+int inline mb_char_len(char *buf, int clength)
+{
+    return 1;
+}
+#endif
 
 /* xbuf */
 
@@ -304,8 +310,13 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
 			    rgb fgr, rgb bgr, int j, int len, char *s)
 {
     rect  r;
-    int   i, used;
+#ifndef SUPPORT_MBCS
+    int last;
+    char ch, chf, chl;
+#else
+    int i, used;
     char *buff, *P = s, *q;
+#endif
 
     /* This is right, since columns are of fixed size */
     r = rect(BORDERX + fch * FW, BORDERY + j * FH, (lch - fch + 1) * FW, FH);
@@ -313,33 +324,19 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
 
     if (len > fch) {
 	/* Some of the string is visible: */
-#if 0
+#ifndef SUPPORT_MBCS
 	/* we don't know the string length, so modify it in place */
-	if (FC && (fch == 0)) {
-	    chf = s[0];
-	    s[0] = '$';
-	} else
-	    chf = '\0';
-	if ((len > COLS) && (lch == COLS - 1)) {
-	    chl = s[lch];
-	    s[lch] = '$';
-	} else
-	    chl = '\0';
+	if (FC && (fch == 0)) {chf = s[0]; s[0] = '$';} else chf = '\0';
+	if ((len > COLS) && (lch == COLS - 1)) {chl = s[lch]; s[lch] = '$';} 
+	else chl = '\0';
 	last = lch + 1;
-	if (len > last) {
-	    ch = s[last];
-	    s[last] = '\0';
-	} else
-	    ch = '\0';
+	if (len > last) {ch = s[last]; s[last] = '\0';} else ch = '\0';
 	gdrawstr(p->bm, p->f, fgr, pt(r.x, r.y), &s[fch]);
 	/* restore the string */
-	if (ch)
-	    s[last] = ch;
-	if (chl)
-	    s[lch] = chl;
-	if (chf)
-	    s[fch] = chf;
-#endif
+	if (ch) s[last] = ch;
+	if (chl) s[lch] = chl;
+	if (chf) s[fch] = chf;
+#else
 	buff = alloca(strlen(s)); /* overkill */
 	q = buff;
 	if (FC && (fch == 0)) {*q++ = '$'; fch++;}
@@ -356,6 +353,7 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
 	}
 	*q = '\0';
 	gdrawstr(p->bm, p->f, fgr, pt(r.x, r.y), buff);
+#endif
     }
 }
 
@@ -1214,7 +1212,11 @@ FBEGIN
 		{
 		    int j, l_len = mb_char_len(cur_line, cur_pos-1), r_len;
 		    /* we should not reset the state here */
+#ifdef SUPPORT_MBCS
 		    r_len = mbrlen(cur_line+cur_pos, MB_CUR_MAX, &mb_st);
+#else
+		    r_len = 1;
+#endif
 		    for (i = 0; i < r_len; i++)
 			for(j = 0; j < l_len; j++) {
 			    cur_char = cur_line[cur_pos+i-j];

@@ -7,6 +7,9 @@ else
 endif
 
 CFLAGS=-I. -I.. -I../../include -Wall $(DEBUGFLAG)  -O2 -DINDLL -DR_DLL_BUILD
+ifdef SUPPORT_MBCS
+CFLAGS += -DSUPPORT_MBCS
+endif
 SOURCES=$(filter-out graphappmain.c, $(wildcard *.c))
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 

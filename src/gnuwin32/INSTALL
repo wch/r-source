@@ -201,6 +201,28 @@ If everything is set up in directory bitmap,
 will work from this directory.
 
 
+Internationalization
+--------------------
+
+This version of R can be built with support for some multibyte
+character sets such as UTF and (some of) those used in Chinese,
+Japanese and Korean.
+
+Define SUPPORT_MBCS in MkRules to enable support for MBCS in the RGui
+console, pager, data and script editors (this is based on the
+Japanization patches by Nakama and Okada).
+
+Define SUPPORT_UTF8 in MkRules to enable support in the R engine for
+UTF-8 character sets.  [We need to supply a way to specify such a
+locale.]  This will also handle MBCSs which are strict supersets of
+ASCII, such as EUC-JP, but not [yet] Japanese in code page 932.
+
+If either of these is defined you need the DLL msvcp60.dll to be
+installed.  It is on recent versions of Windows, and can be obtained
+by an Internet search.
+
+
+
 Recommended packages
 ====================
 
