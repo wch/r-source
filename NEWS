@@ -122,6 +122,12 @@ BUG FIXES
 
     o	mode(as.formula(paste("~", paste(1:50, collapse="+")))[2]) now works.
 
+    o   glm() now handles cases with numerically 0 or 1 fitted values in
+	binomial and numerically 0 in poisson correctly. (Previously
+	these observations were dropped even though the variances were
+	also numerically 0.)
+
+
 		CHANGES IN R VERSION 0.90.1
 
 
