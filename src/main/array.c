@@ -64,7 +64,9 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     vals = CAR(args);
     snr = CADR(args);
     snc = CADDR(args);
-    byrow = asInteger(CADR(CDDR(args)));
+    byrow = asLogical(CADR(CDDR(args)));
+    if (byrow == NA_INTEGER)
+	error("matrix: invalid byrow value");
 
     /* R wrapper does as.vector
     if (isVector(vals) || isList(vals)) {
