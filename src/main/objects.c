@@ -261,7 +261,7 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
     PROTECT(matchedarg = cptr->promargs);
     PROTECT(newcall = duplicate(cptr->call));
 
-    PROTECT(class = R_data_class(obj, FALSE));
+    PROTECT(class = R_data_class2(obj));
     nclass = length(class);
     for (i = 0; i < nclass; i++) {
 	if(strlen(generic) + strlen(CHAR(STRING_ELT(class, i))) + 2 > 512)

@@ -135,6 +135,14 @@ NEW FEATURES
 	as USB flash drives.  There is a small (less than 2Mb)
 	increase in default memory usage.
 
+    o	The implicit class structure for numeric vectors has been
+	changed, so that integer/real vectors try first methods for
+	class "integer"/"double" and then those for class "numeric".
+
+	The implicit classes for matrices and arrays have been changed
+	to be "matrix"/"array" followed by the class(es) of the
+	underlying vector.
+
 
 UTILITIES
 

@@ -4327,3 +4327,23 @@ $"5"
      "A"      " "   "test"      " " "string" 
 > ## wrong results in 2.0.0
 > 
+> 
+> ## tests of changed S3 implicit classes in 2.1.0
+> foo <- function(x, ...) UseMethod("foo")
+> foo.numeric <- function(x) cat("numeric arg\n")
+> foo(1:10)
+numeric arg
+> foo(pi)
+numeric arg
+> foo(matrix(1:10, 2, 5))
+numeric arg
+> foo.integer <- function(x) cat("integer arg\n")
+> foo.double <- function(x) cat("double arg\n")
+> foo(1:10)
+integer arg
+> foo(pi)
+double arg
+> foo(matrix(1:10, 2, 5))
+integer arg
+> ##
+> 

@@ -1414,3 +1414,17 @@ split(as.list(1:3), c(1,1,2))
 (z <- split(y, rep(1:5, times=c(1,1,4,1,6))))
 sapply(z, rawToChar)
 ## wrong results in 2.0.0
+
+
+## tests of changed S3 implicit classes in 2.1.0
+foo <- function(x, ...) UseMethod("foo")
+foo.numeric <- function(x) cat("numeric arg\n")
+foo(1:10)
+foo(pi)
+foo(matrix(1:10, 2, 5))
+foo.integer <- function(x) cat("integer arg\n")
+foo.double <- function(x) cat("double arg\n")
+foo(1:10)
+foo(pi)
+foo(matrix(1:10, 2, 5))
+##

@@ -26,16 +26,20 @@ NextMethod(generic = NULL, object = NULL, \dots)
   A class attribute is a character vector giving the names of
   the classes which the object \dQuote{inherits} from.
   If the object does not have a class attribute, it has an implicit
-  class, \code{"matrix"}, \code{"array"} or the result of
-  \code{\link{mode}(x)}.
+  class.  Matrices and arrays have class \code{"matrix"}
+  or\code{"array"} followed by the class of the underlying vector.
+  Most vectors have class the result of \code{\link{mode}(x)}, expect
+  that integer vectors have class \code{c("integer", "numeric")} and
+  real vectors have class \code{c("double", "numeric")}.
 
-  When a generic
-  function \code{fun} is applied to an object with class attribute
-  \code{c("first", "second")}, the system searches for a function called
-  \code{fun.first} and, if it finds it, applied it to the object.  If no
-  such function is found a function called \code{fun.second} is tried.
-  If no class name produces a suitable function, the function
-  \code{fun.default} is used.
+  When a generic function \code{fun} is applied to an object with class
+  attribute \code{c("first", "second")}, the system searches for a
+  function called \code{fun.first} and, if it finds it, applied it to
+  the object.  If no such function is found a function called
+  \code{fun.second} is tried.  If no class name produces a suitable
+  function, the function \code{fun.default} is used, if it exists, or an
+  error results.
+  
 
   Function \code{\link{methods}} can be used to find out about the
   methods for a particular generic function or class.
@@ -50,7 +54,7 @@ NextMethod(generic = NULL, object = NULL, \dots)
   more than two arguments: a warning will be given and additional
   arguments ignored. (They are not completely ignored in S.)  If it is
   called with just one argument, the class of the first argument of the
-  enclosing function is used as \code{object}: unlike S this is the
+  enclosing function is used as \code{object}: unlike S this is the first
   actual argument passed and not the current value of the object of that
   name.
 
@@ -78,7 +82,6 @@ NextMethod(generic = NULL, object = NULL, \dots)
   environment of the call to the generic, or they must be registered.
   It does not matter whether they are visible in the environment in
   which the generic is defined.
-
 }
 \note{
   This scheme is called \emph{S3} (S version 3).  For new projects,

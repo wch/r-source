@@ -67,8 +67,9 @@ oldClass(x) <- value
   Functions \code{oldClass} and \code{oldClass<-} behave in the same way
   as functions of those names in S-PLUS 5/6, \emph{but} in \R
   \code{\link{UseMethod}} dispatches on the class as returned by
-  \code{class} rather than \code{oldClass}.  \emph{However},
-  \link{group generic}s dispatch on the \code{oldClass} for efficiency.
+  \code{class} (with some interpolated classes: see the link) rather
+  than \code{oldClass}.  \emph{However}, \link{group generic}s dispatch
+  on the \code{oldClass} for efficiency.
 }
 
 \section{Formal classes}{
