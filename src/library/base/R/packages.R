@@ -1,29 +1,21 @@
-compareVersion <- function(a, b){
-    if(is.na(a))
-        return(-1)
-    if(is.na(b))
-        return(1)
+compareVersion <- function(a, b)
+{
+    if(is.na(a)) return(-1)
+    if(is.na(b)) return(1)
     a <- as.integer(strsplit(a, "[\\.-]")[[1]])
     b <- as.integer(strsplit(b, "[\\.-]")[[1]])
-    for(k in 1:length(a)){
-        if(k <= length(b)){
-            if(a[k]>b[k])
-                return(1)
-            else if(a[k]<b[k])
-                return(-1)
-        }
-        else{
+    for(k in 1:length(a)) {
+        if(k <= length(b)) {
+            if(a[k] > b[k]) return(1) else if(a[k] < b[k]) return(-1)
+        } else {
             return(1)
         }
     }
-    if(length(b)>length(a))
-        return(-1)
-    else
-        return(0)
+    if(length(b) > length(a)) return(-1) else return(0)
 }
 
 package.dependencies <- function(x, check = FALSE,
-                                 depLevel=c("Depends", "Suggests"))
+                                 depLevel = c("Depends", "Suggests"))
 {
     depLevel <- match.arg(depLevel)
 
@@ -59,21 +51,30 @@ package.dependencies <- function(x, check = FALSE,
 
     if(check){
         z <- rep.int(TRUE, nrow(x))
-        for(k in 1:nrow(x)){
+        for(k in 1:nrow(x)) {
             ## currently we only check the version of R itself
             if(!is.na(deps[[k]]) &&
                any(ok <- deps[[k]][,1] == "R")) {
                 ## NOTE: currently operators must be `<=' or `>='.
                 if(!is.na(deps[[k]][ok, 2])
                    && deps[[k]][ok, 2] %in% c("<=", ">=")) {
-                    comptext <-
-                        paste('"', R.version$major, ".",
-                              R.version$minor, '" ',
-                              deps[[k]][ok,2], ' "',
-                              deps[[k]][ok,3], '"', sep = "")
+                    ## careful.  We don't want 1.9.1 < 1.50
+                    op <- deps[[k]][ok,2]
+                    x1 <- rep(0, 6)
+                    y <- c(R.version$major,
+                           strsplit(R.version$minor, ".", fixed=TRUE)[[1]])
+                    x1[seq(along=y)] <- y
+                    y <- strsplit(deps[[k]][ok,3], ".", fixed=TRUE)[[1]]
+                    x1[3+seq(along=y)] <- y
+                    x1 <- format(x1, justify="right")
+                    x2 <- paste(x1[4:6], collapse=".")
+                    x1 <- paste(x1[1:3], collapse=".")
+                    comptext <- paste("'", x1, "' ", op,
+                                      " '", x2, "'", sep = "")
                     compres <- try(eval(parse(text = comptext)))
-                    if(!inherits(compres, "try-error"))
+                    if(!inherits(compres, "try-error")) {
                         z[k] <- compres
+                    }
                 }
             }
         }
@@ -87,15 +88,15 @@ package.dependencies <- function(x, check = FALSE,
 }
 
 packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE)
-{ 
+{
     retval <- list()
     if(!is.null(fields)){
         fields <- as.character(fields)
         retval[fields] <- NA
     }
-    
+
     file <- system.file("DESCRIPTION", package = pkg, lib.loc = lib.loc)
-    
+
     if(file != "") {
         desc <- as.list(read.dcf(file=file)[1,])
         if(!is.null(fields)){
@@ -114,7 +115,7 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE)
 
     if(drop & length(fields)==1)
         return(retval[[1]])
-    
+
     class(retval) <- "packageDescription"
     if(!is.null(fields)) attr(retval, "fields") <- fields
     attr(retval, "file") <- file
@@ -221,12 +222,12 @@ function(x, ...)
 Ops.package_version <-
 function(e1, e2)
 {
-    if(nargs() == 1) 
+    if(nargs() == 1)
         stop(paste("unary", .Generic,
                    "not defined for package_version objects"))
-    boolean <- switch(.Generic, "<" = , ">" = , "==" = , "!=" = , 
+    boolean <- switch(.Generic, "<" = , ">" = , "==" = , "!=" = ,
         "<=" = , ">=" = TRUE, FALSE)
-    if(!boolean) 
+    if(!boolean)
         stop(paste(.Generic, "not defined for package_version objects"))
     if(!is.package_version(e1)) e1 <- as.package_version(e1)
     if(!is.package_version(e2)) e2 <- as.package_version(e2)
@@ -239,7 +240,7 @@ Summary.package_version <-
 function(x, ...)
 {
     ok <- switch(.Generic, max = , min = TRUE, FALSE)
-    if(!ok) 
+    if(!ok)
         stop(paste(.Generic, "not defined for package_version objects"))
     x <- list(x, ...)
     x$na.rm <- NULL

@@ -476,6 +476,8 @@ BUG FIXES
 
     o	Applying attributes() to a pairlist, e.g. .Options, could segfault.
 
+    o	The checking of R versions incorrectly assumed 1.9.1 >= 1.50.
+
 
 
 		CHANGES IN R VERSION 1.9.1
