@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.144 $'
+revision='$Revision: 1.145 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -540,7 +540,9 @@ do_install_source () {
       do_exit_on_error
     fi
     test -f NAMESPACE || mv .RData "${rda_file}"
-    mv "${code_file}" "${R_PACKAGE_DIR}/R/${pkg_name}.R"
+    ## we used to install the dumped code but this seems a waste of space
+    rm "${code_file}"
+    # mv "${code_file}" "${R_PACKAGE_DIR}/R/${pkg_name}.R"
     cat "${R_HOME}/share/R/${loader_file}" > "${code_file}"
     ## If install.R is non-empty, arrange to evaluate the R code it
     ## contains after the package source (maybe for some kind of

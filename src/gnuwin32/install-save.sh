@@ -35,7 +35,9 @@ if ${R_SAVE_IMAGE}; then
     if test ! -f NAMESPACE; then
         mv .RData ${rda_file}
     fi
-    mv "${code_file}" "${code_file}.R"
+    ## we used to install the dumped code but this seems a waste of space
+    rm "${code_file}"
+    # mv "${code_file}" "${code_file}.R"
     cat "${R_HOME}/share/R/${loader_file}" > "${code_file}"
     ## if install.R is non-empty, arrange to evaluate the R code it
     ## contains after the package source (maybe for some kind of
