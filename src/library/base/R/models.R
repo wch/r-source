@@ -114,9 +114,11 @@ coef.default <- function(x, ...) x$coefficients
 coefficients <- .Alias(coef)
 
 residuals <- function(x, ...) UseMethod("residuals")
+residuals.default <- function(x) x$residuals
 resid <- .Alias(residuals)
 
 deviance <- function(x, ...) UseMethod("deviance")
+deviance.default <- function(x) x$deviance
 
 fitted <- function(x, ...) UseMethod("fitted")
 fitted.default <- function(x) x$fitted
