@@ -13252,7 +13252,6 @@ trap 'rm -fr `echo "Makeconf
   Makefile
   afm/Makefile
   demos/Makefile
-  demos/dynload/Makefile
   doc/Makefile
   doc/html/Makefile
   doc/html/search/Makefile
@@ -13324,7 +13323,6 @@ trap 'rm -fr `echo "Makeconf
   tools/Makefile
   tools/Rdnewer
   tools/help2man
-  tools/keyword-test
   tools/install-info
   tools/pkg2tex
  src/include/config.h" | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
@@ -13549,7 +13547,6 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   Makefile
   afm/Makefile
   demos/Makefile
-  demos/dynload/Makefile
   doc/Makefile
   doc/html/Makefile
   doc/html/search/Makefile
@@ -13621,7 +13618,6 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   tools/Makefile
   tools/Rdnewer
   tools/help2man
-  tools/keyword-test
   tools/install-info
   tools/pkg2tex
 "}
@@ -13872,7 +13868,6 @@ chmod +x \
   tools/Rdnewer \
   tools/help2man \
   tools/install-info \
-  tools/keyword-test \
   tools/pkg2tex
   test -f src/include/stamp-h || echo timestamp > src/include/stamp-h
 
