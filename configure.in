@@ -484,6 +484,8 @@ esac
 ### Typedefs
 
 AC_TYPE_SIGNAL
+AC_TYPE_PID_T
+AC_TYPE_SIZE_T
 
 ### Compiler characteristics.
 

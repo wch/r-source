@@ -24,6 +24,11 @@
 /* Signal Handler Type */
 #define RETSIGTYPE int
 
+/* Process ID */
+#undef pid_t
+/* Object size */
+#undef size_t
+
 /* Dynamic Linking */
 #undef HAVE_DL_H		/* hpux */
 #undef HAVE_DLFCN_H		/* Everything else */
