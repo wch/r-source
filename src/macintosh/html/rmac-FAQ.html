@@ -5,91 +5,25 @@
 
 
 <h1 align="center">R for Macintosh FAQ/DOC</h1>
-<h2>Version for <tt>R 1.4.0</tt></h2>
+<h2>Version for <tt>R 1.5.0</tt></h2>
 <address>S. M. Iacus</address>
 <p>
 Changes and bug fixing specific to this version:
 <ul>
-<li> Added the Preferences pane. The settings in .Renviron
-  are now superseeded by the prefences settings
-  .Renviron can be still used to simulate the Environment
-  for the Sys.getenv() call.</li>
-<li>  Added the item "Link Packages Help" to the "Help" menu.</li>
-<li>  Fixed a bug that set the help menu items ghosted after
-  having used them.</li>
-<li>  Some MRC Apple's Compiler specific fixing.</li>
-<li>  Fixed problems with current working directory in different
-  points (.Rprofile, .Renviron, etc).</li>
-<li>  Solved the problem of line endings that are different from
-  MacOS and OS X. Now text files generated under both systems
-  are fine to R.</li>
-<li>  Makefiles and perl scripts have been fixed so that now R
-  builds via MPW shell scripts and help files are generated
-  as well.</li>
-<li>  A bug in the internal file viewer that suppressed the "_"
-  symbols from the text has been fixed.</li>
-<li>  This version of R is slower at startup but faster than
-  then previous release (by a factor of 10%) in calculations.</li>
-<li>  The initial window at startup has been suppressed in this
-  release
-  in the hope to provide am applescript analogous to pass
-  initial arguments to R. Anyway this option was mostly disturbing
-  R users then used by them.</li>
-  <li> The about box now reports informations on the current
-  release of R</li>  
-<li> Added the zlib capability so now R can manage gzipped files and 
-connections</li>  
-<li> Fixed some wrong links in html help files</li>
-<li>  Finally fixed copy and paste of graphic windows contents
-  and saving of them onto files. For some reason the previous
-  algorithm did not copy text characters under MacOS X.</li>
-<li> Fixed a bug that appear when trying to reading files or
-  directories on a different volume w.r.t. the current
-  working directory of R.
-  </li>  
-<li>  Added two functions file.edit() and new.file().
-  The file.edit() function is similar to file.show() but
-  let the user edit the opened file. It it the equivalent
-  to the menu command "OPen File for Editing..." while
-  new.file() is the equivalent to the "New Window" menu
-  command with the difference that you can specify the
-  name of the new file to edit. For more details see
-  man pages.
-</li>  
-<li> Added three functions to manipulate a User menu in the
-  R Console menubar. With add.menu.cmd(label,command) the
-  user can add menu item "label" to which is associated
-  an R command. Respectively with del.menu.cmd(label) and
-  get.menu.cmd(label) the user can remove or get the
-  command associated to the menu "label". See the help
-  pages for details and examples.
-  </li>
-  <li>
-   Added three functions to manipulate a User menu in the
-  R Console menubar. With del.usr.cmd() the whole user
-  menu is removed. Respectively with del.num.cmd(menunum) 
-  and get.num.cmd(menunum) the user can remove or get the
-  command associated to the menu numbered "menunum". See 
-  the help pages for details and examples.
-  </li>
-  <li>Fixed some problems with windows naming (duplicates and so forth)</li>
-<li>Windows (both text and graphic) now appears only after
-  repositioning</li>
-   <li>
-   <li> lwd parameter in graphic functions re-implemented even
-  if not yet perfectly working.</li>
-<li> lty & lwd paramter now works for all the graphic call
-  apart for Circle.
-</li>
-<li> Fixed a bug in the function edit(). Now it behaves 
-  correctly. If you call it without parameters, the
-  last temporary edited file will be shown. See man
-  pages of edit(). Consequently it is now fixed the
-  problem with the function fix().
-</li>
-<li>Refresh of graphic windows fixed. One time only and
-  the bottom part of the window is correctly redrawn.
-</li>
+<li>  using dev.off() when a user close a windows instead
+  of killing directly the device</li>
+<li>  changed MPWBuild to take care of changes in the src/include   
+  directory</li>
+<li>  fixed a bug with path length (Thanks to T.Lumley)    </li>
+<li> fixed a problem with building help files. In particular,
+  html help files now have correct links</li>
+<li> added system() functionality under MacOS X. When R is
+  running under MacOS X, it is now possibile to run BSD
+  shell commands via the system() R command. Very limited
+  at the moment but working.</li>
+<li> Fixed the problem with the error message: "negative length vectors 
+    are not allowed". Now you should not experiment this anymore.  </li>
+<li> MacZip is not needed anymore</li>    
   </ul>
 
 
@@ -887,9 +821,8 @@ Several functions to manipulate the user menu are previewed: <p>
 version  7.4.1 or newer that contains a S+/R mode. Alpha home page
 is
 <br><a href=" http://alpha.olm.net/"> http://alpha.olm.net</a>
-<br>* You also need MacZip to use the unzip feature of R. MacZip home page
-is
-<br> <a href="http://www.sitec.net/maczip">http://www.sitec.net/maczip</a>
+<br>
+
 <br> 
 <br> 
 <p><a NAME="REQUIREMENTS"></a><b>SYSTEM REQUIREMENTS</b>
@@ -912,26 +845,8 @@ binaries.
 <p><br><a NAME="KBUGS"></a><b>KNOWN BUGS</b>
 <br> 
 <ul>
-<li>
- In some situations R stops execution giving an error like this:</li>
-</ul>
-                    
-Error in plot.xy(xy.coords(x, y), type = type, pch = pch, col = col, bg
-= bg,  :
-<br>                           
-negative length vectors are not allowed
-<br>                
-To solve this problem you just need to resize the device window to a 
-bigger size with your mouse and resubmit the graphic command in R.
-<br> 
-<ul>
 
-<li>For some reason MacZip does not intercat too much with R under MacOS
-X.  Moreover MacZip has not yet been “carbonized” so when R calls
-it to  uncompress items it also starts up Classic Environment. We
-suggest to  uncompress the help and examples files directly by using
-Stuffit Expander  that is part of the utilities provided with System
-X.</li>
+<ul>
 
 <li> This version of R and Adobe ATM are incompatible. We are looking at 
 the problem. The solution is that you should switch ATM off before running 
@@ -960,15 +875,10 @@ mathemathic symbols are not rotated.</li>
 a "." (dot) in the filename. MacOS X conforms to this convention. So it 
 could happen that your preferred editor doesn't allow you to open and or 
 write files like .Rprofile or .Renviron under MacOS X (this is the case of 
-BBedit as reported by one user). You have to options. Edit a file 
-like "some_file" with your editor or R, and then go to the shell (that is 
-the Term application) and change the name in ".some_file" using the 
-command "mv some_file .some_file". 
-The second option is to edit the file directory with a unix editor like 
-"emacs". Again from the shell simply use "emacs .some_file", edit it and 
-save it (ctrl+x, ctrl+s) then exit (ctrl+x, ctrl+c).
-You will no longer see this file from 
-the shell unless you use commands like "ll".
+BBedit as reported by one user). You have several options: one of this is to
+a file like "some_file" with your editor or R, and then use the system() command
+to change its name as follows system("mv some_file .some_file"). Then use
+system("ls -al") to see if all went right. 
 </td>
 </tr>
 
@@ -1069,7 +979,7 @@ directions. So, <i>merci</i>, in random order, to  P. Macdonald, P. Flint, R. Gi
 J. DeLeeuw, G. Sawitzki and half of the R-Core.
 <p><hr WIDTH="100%">
 <address>
-Last edited 2001 December 4th, Stefano M. Iacus
+Last edited 2002 March 24th, Stefano M. Iacus
 <code><a
 href="mailto:stefano.iacus@unimi.it">stefano.iacus@unimi.it</a></code>
 </address>
