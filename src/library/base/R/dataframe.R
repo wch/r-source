@@ -385,6 +385,7 @@ data.frame <- function(..., row.names = NULL, check.rows = FALSE, check.names = 
     ## really ambiguous, but follow common use as if list
     if(is.matrix(i))
       stop("Matrix-subscripts not allowed in replacement")
+    value <- j
     j <- i
     i <- NULL
     has.i <- FALSE
