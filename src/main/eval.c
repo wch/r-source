@@ -2382,7 +2382,7 @@ struct { void *addr; int argc; } opinfo[OPCOUNT];
 #define LASTOP } value = R_NilValue; goto done
 #define INITIALIZE_MACHINE() if (body == NULL) goto init
 
-#define NEXT() goto *(*pc++).v
+#define NEXT() (__extension__ ({goto *(*pc++).v;}))
 #define GETOP() (*pc++).i
 
 #define BCCODE(e) (BCODE *) INTEGER(BCODE_CODE(e))
