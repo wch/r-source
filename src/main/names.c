@@ -883,6 +883,11 @@ void InitNames()
     SET_SYMVALUE(R_MissingArg, R_MissingArg);
     SET_PRINTNAME(R_MissingArg, mkChar(""));
     SET_ATTRIB(R_MissingArg, R_NilValue);
+    /* R_RestartToken */
+    R_RestartToken = allocSExp(SYMSXP);
+    SET_SYMVALUE(R_RestartToken, R_RestartToken);
+    SET_PRINTNAME(R_RestartToken, mkChar(""));
+    SET_ATTRIB(R_RestartToken, R_NilValue);
     /* Parser Structures */
     R_CommentSxp = R_NilValue;
     R_ParseText = R_NilValue;

@@ -354,6 +354,7 @@ extern SEXP	R_GlobalEnv;	    /* The "global" environment */
 extern SEXP	R_NilValue;	    /* The nil object */
 extern SEXP	R_UnboundValue;	    /* Unbound marker */
 extern SEXP	R_MissingArg;	    /* Missing argument marker */
+extern SEXP	R_RestartToken;     /* Marker for restarted function calls */
 
 /* Symbol Table Shortcuts */
 extern SEXP	R_Bracket2Symbol;   /* "[[" */
