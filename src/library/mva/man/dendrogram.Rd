@@ -47,14 +47,16 @@ plotNodeLimit(x1, x2, subtree, center)
     \item{\code{midpoint}}{Horizontal distance of the node from the left
       border of the branch}
     \item{\code{text}}{Text label of the node}
-    \item{edgetext}{Text label for the edge leading to the node}
+    \item{\code{edgetext}}{Text label for the edge leading to the node}
   }
   Terminal nodes (leaves of the tree) can have arbitrary value but must
   not be a list.
 
   \code{cut.dendrogram()} returns a list with components \code{$upper} and
   \code{$lower}, the first is a truncated version of the original tree,
-  the latter a list with the branches obtained from cutting the tree.
+  also of class \code{dendrogram},
+  the latter a list with the branches obtained from cutting the tree,
+  each a \code{dendrogram}.
 
   Objects of class \code{"hclust"} can be converted to class
   \code{"dendrogram"} using method \code{as.dendrogram}.
