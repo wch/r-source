@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.40 $'
+revision='$Revision: 1.41 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}"
 
@@ -190,6 +190,15 @@ do_install () {
 
   mkdir -p ${lib}/${pkg} || exit 3
   echo "Installing package \`${pkg}' ..."
+
+      # Make the destination directories available to the developer's
+      # installation scripts (e.g. configure, etc.)
+   R_PACKAGE_DIR=${lib}/${pkg}
+   R_LIBRARY_DIR=${lib}
+   R_PACKAGE_NAME=${pkg}
+   export R_LIBRARY_DIR
+   export R_PACKAGE_DIR
+   export R_PACKAGE_NAME
 
   if test -x ./configure ; then
     ./configure ${configure_args}
