@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.130 $ ';
+my $revision = ' $Revision: 1.131 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -286,8 +286,9 @@ sub check_pkg {
     ## What would really be needed is the following:
     ## * All dirs or files must be at least 555 or 444, respectively.
     ## * Everything that gets installed must be writeable.  This
-    ##   includes DESCRIPTION COPYING INDEX data/* demo/* exec/*
-    ##   and inst/*.
+    ##   includes
+    ##     DESCRIPTION COPYING INDEX NAMESPACE
+    ##     data/* demo/* exec/* inst/*.
     ## * All directories used for building 'objects' must be at least
     ##   755.  This includes '.' and src.
     ## Given time, the above could be implemented.
@@ -355,7 +356,7 @@ sub check_pkg {
 	   "\\.[Rr]d\$",	# Rd files
 	   "\\.([Ccfh]|cc|cpp)\$",
 				# C/C++/FORTRAN sources and headers
-	   "^(DESCRIPTION|INDEX|README)\$");
+	   "^(DESCRIPTION|COPYING|INDEX|NAMESPACE|README)\$");
 	sub find_wrong_perms_B {
 	    my $filename = $File::Find::name;
 	    $filename =~ s/^[^\/]*\///;
