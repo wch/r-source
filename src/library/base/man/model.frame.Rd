@@ -21,7 +21,10 @@ Methods for
     coercible to \code{data.frame} containing the variables in
     \code{formula}.}
 
-  \item{subset}{a specification of the rows to be used. Defaults to all rows.}
+  \item{subset}{a specification of the rows to be used: defaults to all
+    rows. This can be any valid indexing vector (see
+    \code{\link{[.data.frame}} for the rows of \code{data} or if that is not
+    supplied, a data frame made up of the variables used in \code{formula}.}
 
   \item{na.action}{how \code{NA}s are treated. The default is first,
     any \code{na.action} attribute of \code{data}, second
