@@ -37,4 +37,4 @@ The files are as follows.
 	* In AC_ARG_WITH(libglade-config), standardize doc strings.
 
   libtool.m4
-	is from libtool 1.4.2.
+	is from libtool 1.4.3.
