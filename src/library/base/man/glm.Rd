@@ -35,8 +35,10 @@ glm.fit.null(x, y, weights = rep(1, nrow(x)),
     The details of model specification are given below.}
 
   \item{family}{a description of the error distribution and link
-    function to be used in the model.
-    See \code{\link{family}} for details.}
+    function to be used in the model. This can be a character string
+    naming a family function, a family function or the result of a call
+    to a family function.  (See \code{\link{family}} for details of
+    family functions.)}
 
   \item{data}{an optional data frame containing the variables
     in the model.  By default the variables are taken from
