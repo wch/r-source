@@ -230,6 +230,9 @@
 /* Define if you have the rint function.  */
 #undef HAVE_RINT
 
+/* Define if you have the setenv function.  */
+#undef HAVE_SETENV
+
 /* Define if you have the setitimer function.  */
 #undef HAVE_SETITIMER
 
@@ -250,6 +253,9 @@
 
 /* Define if you have the times function.  */
 #undef HAVE_TIMES
+
+/* Define if you have the unsetenv function.  */
+#undef HAVE_UNSETENV
 
 /* Define if you have the vsnprintf function.  */
 #undef HAVE_VSNPRINTF
@@ -367,3 +373,10 @@
 
 /* Define if you have the z library (-lz).  */
 #undef HAVE_LIBZ
+
+/* Name of package */
+#undef PACKAGE
+
+/* Version number of package */
+#undef VERSION
+

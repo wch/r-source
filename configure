@@ -4374,7 +4374,7 @@ else
 #include "confdefs.h"
 #include <alloca.h>
 int main() {
-void *p = alloca(2 * sizeof(int));
+char *p = alloca(2 * sizeof(int));
 ; return 0; }
 EOF
 if { (eval echo configure:4381: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
@@ -5050,7 +5050,7 @@ fi
 
 for ac_func in access acosh asinh atanh bcopy finite getcwd getgrgid \
   getpwuid getuid hypot isnan matherr memcpy memmove popen putenv rint \
-  strcoll stat strptime system times vsnprintf
+  setenv strcoll stat strptime system times unsetenv vsnprintf
 do
 echo $ac_n "checking for $ac_func""... $ac_c" 1>&6
 echo "configure:5057: checking for $ac_func" >&5
@@ -6286,7 +6286,7 @@ else
 int main() {
 
 /* Ultrix mips cc rejects this.  */
-typedef int charset[2]; const charset x = {0,0};
+typedef int charset[2]; const charset x;
 /* SunOS 4.1.1 cc rejects this.  */
 char const *const *ccp;
 char **p;
