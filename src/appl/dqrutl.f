@@ -22,7 +22,7 @@ c dqr Utilities:  Interface to the different "switches" of  dqrsl().
 c
       subroutine dqrqty(x, n, k, qraux, y, ny, qty)
 
-c      implicit none
+      implicit none
       integer n, k, ny
       double precision x(n,k), qraux(k), y(n,ny), qty(n,ny)
       integer info, j
@@ -36,7 +36,7 @@ c      implicit none
 c
       subroutine dqrqy(x, n, k, qraux, y, ny, qy)
 
-c      implicit none
+      implicit none
       integer n, k, ny
       double precision x(n,k), qraux(k), y(n,ny), qy(n,ny)
       integer info, j
@@ -50,9 +50,9 @@ c      implicit none
 c
       subroutine dqrcf(x, n, k, qraux, y, ny, b, info)
 
-c      implicit none
-      double precision x(n,k), qraux(k), y(n,ny), b(k,ny)
+      implicit none
       integer n, k, ny, info
+      double precision x(n,k), qraux(k), y(n,ny), b(k,ny)
       integer j
       double precision dummy
       do 10 j = 1,ny
@@ -64,7 +64,7 @@ c      implicit none
 c
       subroutine dqrrsd(x, n, k, qraux, y, ny, rsd)
 
-c      implicit none
+      implicit none
       integer n, k, ny
       double precision x(n,k), qraux(k), y(n,ny), rsd(n,ny)
       integer info, j
@@ -78,7 +78,7 @@ c      implicit none
 c
       subroutine dqrxb(x, n, k, qraux, y, ny, xb)
 
-c      implicit none
+      implicit none
       integer n, k, ny
       double precision x(n,k), qraux(k), y(n,k), xb(n,ny)
       integer info, j
