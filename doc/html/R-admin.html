@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.9.1 (2004-07-11).
+   <p>The current version of this document is 1.9.1 (2004-07-24).
 
    ISBN 3-900051-02-X
 
@@ -70,8 +70,7 @@ users).
 
 <p>A patched version of the current release, <code>r-patched</code> and the
 current development version, <code>r-devel</code>, are available as daily
-tarballs and via rsync.  The development version is also available by
-anonymous CVS from <a href="http://anoncvs.r-project.org/">http://anoncvs.r-project.org/</a>.
+tarballs and via access to the R Subversion repository.
 
    <p>The tarballs are available from
 <a href="ftp://ftp.stat.math.ethz.ch/pub/Software/R/">ftp://ftp.stat.math.ethz.ch/pub/Software/R/</a>.  Download either
@@ -80,48 +79,61 @@ anonymous CVS from <a href="http://anoncvs.r-project.org/">http://anoncvs.r-proj
 section.
 
    <p>These versions do not contain the current sources for the recommended
-packages, which can be obtained by rsync (see the next section) or from
-CRAN.  Do ensure that you have the correct versions of the recommended
-packages: if the number in the file <code>VERSION</code> is
-<code></code><var>x</var><code>.</code><var>y</var><code>.</code><var>z</var><code></code> you need to download the contents of
-<code>http://cran.r-project.org/src/contrib/</code><var>x</var><code>.</code><var>y</var><code>.</code><var>z</var><code>/Recommended</code>
-to directory <code>src/library/Recommended</code> in the sources you have
-unpacked.  Normally <code>R-patched.tar.gz</code> will have the number of the
-last released version, and <code>R-devel.tar.gz</code> that of the next minor
-(<code></code><var>x</var><code>.</code><var>y</var><code>.0</code>) release.  After downloading manually you need
-to execute <code>tools/link-recommended</code> from the top level of the
-sources to make the requisite links in <code>src/library/Recommended</code>.
+packages, which can be obtained by rsync or from CRAN.  Do ensure that
+you have the correct versions of the recommended packages: if the number
+in the file <code>VERSION</code> is <code></code><var>x</var><code>.</code><var>y</var><code>.</code><var>z</var><code></code> you need to
+download the contents of
+<code>http://cran.r-project.org/src/contrib/</code><var>dir</var><code></code>, where <var>dir</var>
+is <code></code><var>x</var><code>.</code><var>y</var><code>.</code><var>z</var><code>/Recommended</code> for r-devel or
+<code></code><var>x</var><code>.</code><var>y</var><code>.</code><var>z</var><code>-patched/Recommended</code> for r-patched,
+respectively, to directory <code>src/library/Recommended</code> in the sources
+you have unpacked.  Normally <code>R-patched.tar.gz</code> will have the
+number of the last released version, and <code>R-devel.tar.gz</code> that of
+the next minor (<code></code><var>x</var><code>.</code><var>y</var><code>.0</code>) or major release.  After
+downloading manually you need to execute
+<code>tools/link-recommended</code> from the top level of the sources to
+make the requisite links in <code>src/library/Recommended</code>.
 
    <p>One way to download the package sources is to use <code>wget</code>.  A
 suitable incantation from the top level of the R sources might be
+
 <pre class="smallexample">     wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
-       http://cran.r-project.org/src/contrib/<var>x</var>.<var>y</var>.<var>z</var>/Recommended
-     tools/link-recommended
+       http://cran.r-project.org/src/contrib/<var>dir</var>
+     ./tools/link-recommended
      </pre>
 
-<a name="Using%20rsync"></a>
+   <p>Sources are also available via <a href="https://svn.R-project.org/R/">https://svn.R-project.org/R/</a>, the
+R Subversion repository.  If you have a Subversion client (see
+<a href="http://subversion.tigris.org/">http://subversion.tigris.org/</a>--those using Windows may also want
+to look at <a href="http://tortoiseSVN.tigris.org/">http://tortoiseSVN.tigris.org/</a>), you can check out and
+update the current r-devel from
+<a href="https://svn.r-project.org/R/trunk/">https://svn.r-project.org/R/trunk/</a> and the current r-patched from
+<code>https://svn.r-project.org/R/branches/R-</code><var>x</var><code>-</code><var>y</var><code>-patches/</code>
+(where <var>x</var> and <var>y</var> are the major and minor number of the current
+released version of R).  E.g., use
 
-<h3 class="section">1.3 Using rsync</h3>
-
-<p>Sources are also available via anonymous rsync.  Use
-
-<pre class="smallexample">     rsync -rC --delete rsync.r-project.org::<var>module</var> R
+<pre class="smallexample">     svn checkout https://svn.r-project.org/R/trunk/ <var>path</var>
      </pre>
 
-<p>to create a copy of the source tree specified by <var>module</var> in the
-subdirectory <code>R</code> of the current directory, where <var>module</var> can
-be one of <code>r-release</code> (current released version), <code>r-patched</code>
-(patched released version), and <code>r-devel</code> (development version). 
-The rsync trees are created directly from the master CVS archive and are
-updated hourly.  The <code>-C</code> option in the <code>rsync</code> command
-is to cause it to skip the CVS directories.  Further information on
-<code>rsync</code> is available at <a href="http://rsync.samba.org/rsync/">http://rsync.samba.org/rsync/</a>.
+<p>to check out r-devel into directory <var>path</var>.
 
-   <p>Note that the sources available via rsync do not include the recommended
-packages, whereas these are included in the tarballs of released
-versions.  To install the appropriate sources for the recommended
-packages, run <code>./tools/rsync-recommended</code> from the top-level of
-the R sources.
+   <p>Note that https is required, and that the SSL certificate for the
+Subversion server of the R project is
+
+<pre class="smallexample">     Certificate information:
+      - Hostname: svn.r-project.org
+      - Valid: from Jul 16 08:10:01 2004 GMT until Jul 14 08:10:01 2014 GMT
+      - Issuer: Department of Mathematics, ETH Zurich, Zurich, Switzerland, CH
+      - Fingerprint: c9:5d:eb:f9:f2:56:d1:04:ba:44:61:f8:64:6b:d9:33:3f:93:6e:ad
+     </pre>
+
+<p>(currently, there is no "trusted certificate").  You can accept this
+certificate permanently and will not be asked about it anymore.
+
+   <p>Note also that the recommended packages are only included in the
+tarballs of released versions.  To install the appropriate sources for
+the recommended packages, run <code>./tools/rsync-recommended</code> from
+the top-level of the R sources.
 
 <a name="Installing%20R%20under%20Unix"></a>
 
@@ -209,7 +221,8 @@ directory (say, <code></code><var>TOP_SRCDIR</var><code></code>).  To build in
 
 <p>and so on, as described further below.  This has the advantage of always
 keeping your source tree "clean".  (You may need GNU <code>make</code> to
-allow this.)
+allow this, and the pathname of the build directory should not contain
+spaces.)
 
    <p>Make will also build plain text help pages as well as <small>HTML</small> and
 LaTeX versions of the R object documentation (the three kinds can
@@ -359,10 +372,10 @@ path does not contain spaces</em>, and run something like
 
 <pre class="smallexample">     tar zxvf R-1.9.1.tgz
      cd R-1.9.1\src\gnuwin32
-     make
+     make all recommended
      </pre>
 
-<p>sit back and wait (for about 5 minutes on 1GHz PIII with a fast local
+<p>sit back and wait (for about 15 minutes on 1GHz PIII with a fast local
 disc).
 
    <p>For further details, including how to make the documentation and how to
@@ -397,7 +410,8 @@ expand the R sources and configure R appropriately, for example
      make
      </pre>
 
-<p>sit back and wait. The last option <code>--with-aqua</code> is needed only if you want a Console GUI. 
+<p>sit back and wait. The last option <code>--with-aqua</code> is needed only
+if you want a Console GUI. 
 The first two options are strongly recommended.
 
    <p>R is by default configured and installed as a framework called
@@ -405,6 +419,7 @@ The first two options are strongly recommended.
 <code>/Library/Frameworks</code> but this can be changed at configure time
 specifying the flag <code>--enable-R-framework[=DIR]</code> or at install
 time as
+
 <pre class="smallexample">     make prefix=/where/you/want/R.framework/to/go install
      </pre>
 
@@ -633,6 +648,7 @@ the wrong thread could result in segfaults.)  A remaining issue is that
 R profiling, which uses the <code>SIGPROF</code> signal, may cause
 problems.  You may want to disable profiling if you use a multi-threaded
 version of ATLAS.  You can use a multi-threaded ATLAS by specifying
+
 <pre class="smallexample">     --with-blas="-lptf77blas -lpthread -latlas"
      </pre>
 
@@ -640,18 +656,22 @@ version of ATLAS.  You can use a multi-threaded ATLAS by specifying
 by Kazushige Goto, currently available at
 <a href="http://www.cs.utexas.edu/users/flame/goto/">http://www.cs.utexas.edu/users/flame/goto/</a>.  Once this is is
 installed, it can be used by one of
+
 <pre class="smallexample">     --with-blas=goto
      --with-blas=-lgoto
      </pre>
-   Multi-threaded versions of Goto's BLAS are available, so please note the
+
+   <p>Multi-threaded versions of Goto's BLAS are available, so please note the
 <em>caveat</em> in the previous paragraph.
 
    <p>For Intel processors under Linux, Intel's Math Kernel Library
 <a href="http://www.intel.com/software/products/mkl/">http://www.intel.com/software/products/mkl/</a>
 can be used by
+
 <pre class="smallexample">     --with-blas="-lmkl -lguide -lpthread"
      </pre>
-   with the same caveat on multi-threading.  (Thanks to Andy Liaw for the
+
+<p>with the same caveat on multi-threading.  (Thanks to Andy Liaw for the
 information.)
 
    <p>Note that the BLAS library will be used for several add-on packages as
@@ -675,6 +695,7 @@ default for <code>--with-lapack</code> is to check the BLAS library and then
 look for an external library <code>-llapack</code>.  Sites searching for the
 fastest possible linear algebra may want to build a LAPACK library using
 the ATLAS-optimized subset of LAPACK.  To do so specify something like
+
 <pre class="smallexample">     --with-lapack="-L/path/to/libs -llapack -lcblas"
      </pre>
 
@@ -688,6 +709,7 @@ does not contain LAPACK.
 with bugs in the LAPACK 3.0 sources (or in the posted corrections to those
 sources).  In particular, bugs in <code>DGEEV</code> and <code>DGESDD</code> have
 resulted in error messages such as
+
 <pre class="smallexample">     DGEBRD gave error code -10
      </pre>
 
@@ -1049,6 +1071,7 @@ of the <code>png()</code> and <code>jpeg</code> devices.
 
    <p>The <code>vecLib</code> library of Mac OS X &gt;= 10.2.2 can be used <em>via</em> the
 configuration options
+
 <pre class="smallexample">     --with-blas="-framework vecLib" --with-lapack
      </pre>
 
@@ -1331,6 +1354,7 @@ used <code>--without-x --without-blas</code>.
 
    <p>Tim Hoar &lt;thoar at cgd dot ucar dot edu&gt; reported success building
 R 1.9.0 under AIX 5.1 in 64-bit mode with
+
 <pre class="smallexample">     OBJECT_MODE=64
      CC=/usr/bin/xlc_r
      F77=/usr/bin/xlf_r
@@ -1504,7 +1528,6 @@ of practice at porting R to new platforms <small class="enddots">....</small>
 <li><code>make</code>: <a href="#Using%20make">Using make</a>
 <li><code>R_HOME</code>: <a href="#Simple%20compilation">Simple compilation</a>
 <li><code>remove.packages</code>: <a href="#Removing%20packages">Removing packages</a>
-<li><code>rsync</code>: <a href="#Using%20rsync">Using rsync</a>
 <li><code>update.packages</code>: <a href="#Updating%20packages">Updating packages</a>
 </ul>
 <a name="Concept%20index"></a>
