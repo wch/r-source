@@ -60,6 +60,14 @@ end
 echo "Setting variables and file list..."
 echo " "
 
+if !{Stuffit}
+begin
+ Alert "Please identify Stuffit Expander"
+ set   Stuffit "`GetFilename`" 
+ {Stuffit} :res:R.rsrc.hqx
+end
+end
+
 
 if !{MFDir}
 begin
