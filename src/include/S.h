@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2001, The R Development Core Team.
+ *  Copyright (C) 1997--2003  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -47,10 +47,6 @@ extern "C" {
 #include <Rconfig.h>
 #include <R_ext/Constants.h>
 #include <R_ext/Memory.h>	/* S_alloc */
-
-/* Not quite full compatibility: beware! */
-/* void	call_R(char*, long, void**, char**, long*, char**, long, char**);*/
-#define call_S call_R
 
 /* subset of those in Random.h */
 extern void seed_in(long *);
