@@ -9,12 +9,10 @@
 RHOME=`dirname $0`/..           # relative
 RHOME=`cd ${RHOME}; pwd`        # absolute
 
-DVIDIR=${RHOME}/dvi
+#-- NEW: Everything latex is now in here..
+DVIDIR=${RHOME}/doc/manual
 
-cd ${RHOME}
-(cd mansrc/latex;
-    cp Man.tex Rd.sty plotmath.tex writing-Rd.tex ${DVIDIR})
-cd src/library/base/man
+cd ${RHOME}/src/library/base/man
 
 echo " >>> Converting Rd files to LaTeX"
 FILES=`ls *.Rd`
