@@ -1058,6 +1058,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i = 0;
 #ifdef Unix
     Rboolean X11 = (strcmp(R_GUIType, "X11") == 0) ||
+	(strcmp(R_GUIType, "Tk") == 0) ||
 	(strcmp(R_GUIType, "GNOME") == 0);
 #endif
 

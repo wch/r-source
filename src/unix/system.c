@@ -104,7 +104,7 @@ int main(int ac, char **av)
 int Rf_initialize_R(int ac, char **av)
 {
     int i, ioff = 1, j, value, ierr;
-    Rboolean useX11 = TRUE, usegnome = FALSE;
+    Rboolean useX11 = TRUE, usegnome = FALSE, useTk = FALSE;
     Rboolean useaqua = FALSE;
     char *p, msg[1024], **avv;
     structRstart rstart;
@@ -166,6 +166,8 @@ int Rf_initialize_R(int ac, char **av)
 		useaqua = TRUE;
 	    else if(!strcmp(p, "X11") || !strcmp(p, "x11"))
 		useX11 = TRUE;
+	    else if(!strcmp(p, "Tk") || !strcmp(p, "tk"))
+		useTk = TRUE;
 	    else {
 #ifdef HAVE_X11
 		sprintf(msg, "WARNING: unknown gui `%s', using X11\n", p);
@@ -206,6 +208,11 @@ int Rf_initialize_R(int ac, char **av)
     if(useaqua) {
 	    R_load_aqua_shlib();
 	    R_GUIType="AQUA";
+    }
+#endif
+#ifdef HAVE_TCLTK
+    if(useTk) {
+	    R_GUIType="Tk";
     }
 #endif
     R_common_command_line(&ac, av, Rp);

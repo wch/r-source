@@ -259,6 +259,12 @@ NEW FEATURES
 	value from the R function or expression is of class "tclObj"
 	then it will be returned to Tcl.
 
+    o	A new HIGHLY EXPERIMENTAL graphical user interface using the tcltk
+	package is provided. Currently, little more than a proof of concept.
+	It can be started by calling "R -g Tk" (this may change in later 
+	versions) or by evaluating tkStartGUI(). Only Unix-like systems 
+	for now.
+
     o	Logical matrix replacement indexing of data frames is now
 	implemented (interpreted as if the lhs was a matrix).
 

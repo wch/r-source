@@ -29,6 +29,7 @@
 #include "Graphics.h"
 #include "Rdevices.h"		/* for InitGraphics */
 #include "IOStuff.h"
+#include "Fileio.h"
 #include "Parse.h"
 #include "Startup.h"
 
@@ -500,14 +501,26 @@ void setup_Rmainloop(void)
     */
 
     R_LoadProfile(R_OpenSysInitFile(), baseEnv);
-    R_LoadProfile(R_OpenSiteFile(), baseEnv);
-    R_LoadProfile(R_OpenInitFile(), R_GlobalEnv);
+
+
+    if (R_GUIType == "Tk")
+    {
+	char buf[256];
+	FILE *fp;
+	
+	sprintf(buf, "%s/library/tcltk/exec/Tk-frontend.R", R_Home);
+	R_LoadProfile(R_fopen(buf, "r"), R_GlobalEnv);
+    }
+
 
     /* Print a platform and version dependent */
     /* greeting and a pointer to the copyleft. */
 
     if(!R_Quiet)
 	PrintGreeting();
+
+    R_LoadProfile(R_OpenSiteFile(), baseEnv);
+    R_LoadProfile(R_OpenInitFile(), R_GlobalEnv);
 
     /* This is where we try to load a user's saved data.
        The right thing to do here is very platform dependent.
