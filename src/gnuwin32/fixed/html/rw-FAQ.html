@@ -175,27 +175,30 @@ lines in the console or pager are truncated.</a></li>
 <li><a href="#How%20can%20I%20compile%20R%20from%20source%3f">7.1
 How can I compile R from source?</a></li>
 
-<li><a href="#How%20do%20I%20include%20compiled%20C%20code%3f">7.2
+<li><a href="#Can%20I%20use%20a%20fast%20BLAS%3f">7.2 Can I use a
+fast BLAS?</a></li>
+
+<li><a href="#How%20do%20I%20include%20compiled%20C%20code%3f">7.3
 How do I include compiled C code?</a></li>
 
 <li><a href=
 "#How%20do%20I%20debug%20code%20that%20I%20have%20compiled%20and%20dyn.load-ed%3f">
-7.3 How do I debug code that I have compiled and
+7.4 How do I debug code that I have compiled and
 dyn.load-ed?</a></li>
 
-<li><a href="#How%20do%20I%20include%20C++%20code%3f">7.4 How do I
+<li><a href="#How%20do%20I%20include%20C++%20code%3f">7.5 How do I
 include C++ code?</a></li>
 
 <li><a href="#The%20output%20from%20my%20C%20code%20disappears.">
-7.5 The output from my C code disappears. Why?</a></li>
+7.6 The output from my C code disappears. Why?</a></li>
 
 <li><a href=
-"#The%20output%20from%20my%20Fortran%20code%20disappears.">7.6 The
+"#The%20output%20from%20my%20Fortran%20code%20disappears.">7.7 The
 output from my Fortran code disappears. Why?</a></li>
 
 <li><a href=
 "#The%20console%20freezes%20when%20my%20compiled%20code%20is%20running">
-7.7 The console freezes when my compiled code is running.</a></li>
+7.8 The console freezes when my compiled code is running.</a></li>
 </ul>
 </li>
 </ul>
@@ -235,7 +238,7 @@ http://cran.r-project.org/mirrors.html</a> for a list), navigate to
 the <code>bin/windows/base</code> directory and collect the files
 you need. There are three versions of the distribution.</p>
 
-<p>1) <code>SetupR.exe</code>, is about 16Mb and gives a complete
+<p>1) <code>SetupR.exe</code>, is about 17Mb and gives a complete
 installation.</p>
 
 <p>2) Directory <code>miniR</code> contains <code>miniR.exe</code>
@@ -254,9 +257,8 @@ least the files</p>
 <p>and you may want <code>rw1040w.zip</code> (the HTML format help
 files), <code>rw1040l.zip</code> (the LaTeX format help files, used
 for offline printing), or <code>rw1040d?.zip</code> (the draft
-manuals, in PDF). Many (but not all) of these fit on a 1.4Mb floppy
-disk. <a name="How%20do%20I%20install%20R%20for%20Windows%3f">
-</a></p>
+manuals, in PDF). <a name=
+"How%20do%20I%20install%20R%20for%20Windows%3f"></a></p>
 
 <h2>2.2 How do I install R for Windows?</h2>
 
@@ -355,8 +357,8 @@ set to that containing the file. <a name=
 
 <ul>
 <li>You can print the graphics window from its menu or by using
-<code>dev.print</code> with suitable arguments (see its help
-page).</li>
+<code>dev.print</code> with suitable arguments (see its help page:
+most likely <code>dev.print(win.graph)</code> will work).</li>
 
 <li>You can print from the R console or pager by <code>File |
 Print</code>. (This will print the selection if there is one,
@@ -487,9 +489,10 @@ us on <em>all</em> of our machines. There are two known possible
 fixes.</p>
 
 <p>(a) Use the alternative <code>internet2.dll</code> by starting R
-with the flag <code>--internet2</code> which uses the Internet
-Explorer internals (and so need Internet Explorer 4 or later
-installed).</p>
+with the flag <code>--internet2</code> (see <a href=
+"#How%20do%20I%20install%20R%20for%20Windows%3f">How do I install R
+for Windows?</a>) which uses the Internet Explorer internals (and
+so needs Internet Explorer 4 or later installed).</p>
 
 <p>(b) A proxy needs to be set up: see <code>
 ?download.file</code>.</p>
@@ -536,7 +539,7 @@ just run <code>Rcmd INSTALL pkgname</code>. To check the package
 test suite, if any) use <code>Rcmd check pkgname</code>: see the
 <em>`Writing R Extensions'</em> manual.</p>
 
-<p>Note that msot of the last paragraph will only work if both the
+<p>Note that most of the last paragraph will only work if both the
 path to R and the path to the package are space-free. <a name=
 "I%20don't%20have%20permission%20to%20write%20to%20the%20rw1040%5clibrary%20directory">
 </a></p>
@@ -783,7 +786,8 @@ With argument <code>-1</code> it brings the console to the top and
 gives it focus.</p>
 
 <p>This works for <code>Rgui.exe</code> in MDI and SDI modes, and
-can be used for graphics windows from <code>Rterm.exe</code>.</p>
+can be used for graphics windows from <code>Rterm.exe</code>
+(although Windows may not always act on it).</p>
 
 <hr>
 <a name="Workspaces"></a> 
@@ -803,10 +807,10 @@ this?</h2>
 
 <h2>5.2 How do I store my workspace in a different place?</h2>
 
-<p>Use the `File | Change Dir' menu item to select a new working
+<p>Use the `File | Change Dir...' menu item to select a new working
 directory: this defaults to the last directory you loaded a file
 from. The workspace is saved in the working directory. You can also
-save a snapshot of the workspace from the `Save Workspace' menu
+save a snapshot of the workspace from the `Save Workspace...' menu
 item.</p>
 
 <p>From the command line you can change the working directory by
@@ -862,7 +866,7 @@ delayed.</h2>
 
 <p>This is deliberate: the console output is buffered and
 re-written in chunks to be faster and less distracting. You can
-turn buffering off or on from the Misc menu or the right-click
+turn buffering off or on from the `Misc' menu or the right-click
 menu: &lt;Ctrl-W&gt; toggles the setting.</p>
 
 <p>If you are sourcing R code or writing from a function, there is
@@ -904,9 +908,40 @@ local disc.)</p>
 <p>You may need to compile under a case-honouring file system: we
 found that a <code>samba</code>-mounted file system (which maps all
 file names to lower case) did not work. <a name=
-"How%20do%20I%20include%20compiled%20C%20code%3f"></a></p>
+"Can%20I%20use%20a%20fast%20BLAS%3f"></a></p>
 
-<h2>7.2 How do I include compiled C code?</h2>
+<h2>7.2 Can I use a fast BLAS?</h2>
+
+<p>Fast BLAS (Basic Linear Algebra Subprograms, <a href=
+"http://www.netlib.org/blas/faq.html">
+http://www.netlib.org/blas/faq.html</a>) routines are used to speed
+up numerical linear algebra. If you compile R from sources
+yourself, there is support for the `tuned' BLAS called ATLAS (<a
+href=
+"http://www.netlib.org/atlas/">http://www.netlib.org/atlas/</a>).
+The savings can be appreciable: on a 366MHz PIIM and a 1000 x 1000
+matrix <code>La.svd</code> took 182 sec with the standard BLAS and
+59 sec with ATLAS. Because ATLAS is tuned to a particular chip we
+can't use generally: the optimal routines for a PIII or an Athlon
+XP are quite different and neither will not run at all on a
+PII.</p>
+
+<p>In the main <code>Makefile</code> there are macros <code>
+USE_ATLAS</code> and <code>ATLAS_PATH</code>. Set <code>USE_ATLAS =
+YES</code> and <code>ATLAS_PATH</code> to where the ATLAS libraries
+are located. You will need to make the libraries yourself: none of
+the binaries we have seen are compiled for the correct
+compiler.</p>
+
+<p>Note that you may need to re-compile many of the packages to
+make use of the fast BLAS (and they will not work at all unless you
+do).</p>
+
+<p>We plan to make it easier to use a different BLAS in a future
+release by separating the functionality into a separate DLL. <a
+name="How%20do%20I%20include%20compiled%20C%20code%3f"></a></p>
+
+<h2>7.3 How do I include compiled C code?</h2>
 
 <p>We strongly encourage you to do this <em>via</em> building an R
 package: see the <em>`Writing R Extensions'</em> manual. In any
@@ -929,11 +964,13 @@ name=
 "How%20do%20I%20debug%20code%20that%20I%20have%20compiled%20and%20dyn.load-ed%3f">
 </a></p>
 
-<h2>7.3 How do I debug code that I have compiled and
+<h2>7.4 How do I debug code that I have compiled and
 dyn.load-ed?</h2>
 
 <p>You will need a suitable version of <code>gdb</code>: we
-normally use that from the Cygwin distribution.</p>
+normally use that from the Cygwin distribution. Debugging under
+Windows is often a fraught process, and sometimes does not work at
+all.</p>
 
 <p>First, build a version of the R system with debugging
 information by</p>
@@ -993,13 +1030,13 @@ tukeyline</code> in package <code>eda</code> might be
 <li>Windows has little support for signals, so the usual idea of
 running a program under a debugger and sending it a signal to
 interrupt it and drop control back to the debugger does not work
-with <code>mingw32</code> version of <code>gdb</code>. It does
+with a <code>mingw32</code> version of <code>gdb</code>. It does
 often work with the <code>cygwin</code> version.</li>
 </ul>
 
 <a name="How%20do%20I%20include%20C++%20code%3f"></a> 
 
-<h2>7.4 How do I include C++ code?</h2>
+<h2>7.5 How do I include C++ code?</h2>
 
 <p>You need to do two things:</p>
 
@@ -1042,7 +1079,7 @@ GUI console: see the next section.</p>
 compiled as a package in the usual way on Windows. <a name=
 "The%20output%20from%20my%20C%20code%20disappears."></a></p>
 
-<h2>7.5 The output from my C code disappears. Why?</h2>
+<h2>7.6 The output from my C code disappears. Why?</h2>
 
 <p>The <code>Rgui.exe</code> console is a Windows application:
 writing to <code>stdout</code> or <code>stderr</code> will not
@@ -1058,7 +1095,7 @@ will not normally see any output before returning to the R prompt.
 <a name="The%20output%20from%20my%20Fortran%20code%20disappears.">
 </a></p>
 
-<h2>7.6 The output from my Fortran code disappears. Why?</h2>
+<h2>7.7 The output from my Fortran code disappears. Why?</h2>
 
 <p>Writing to Fortran output writes to a file, not the <code>
 Rgui</code> console. Use one of the subroutines <code>
@@ -1073,7 +1110,7 @@ even when using the <code>xxxpr</code> subroutines. <a name=
 "The%20console%20freezes%20when%20my%20compiled%20code%20is%20running">
 </a></p>
 
-<h2>7.7 The console freezes when my compiled code is running.</h2>
+<h2>7.8 The console freezes when my compiled code is running.</h2>
 
 <p>The console, pagers and graphics window all run in the same
 thread as the R engine. To allow the console etc to respond to
@@ -1083,7 +1120,7 @@ console, call <code>R_FlushConsole()</code> and then <code>
 R_ProcessEvents()</code>.</p>
 
 <hr width="100%">
-<address>Last edited 2001 November 30 by Professor B. D. Ripley
+<address>Last edited 2001 December 7 by Professor B. D. Ripley
 <code><a href="mailto:ripley@stats.ox.ac.uk">
 ripley@stats.ox.ac.uk</a></code></address>
 </body>

@@ -124,7 +124,7 @@ for a list), navigate to the @code{bin/windows/base}
 directory and collect the files you need.  There are three versions of
 the distribution.
 
-1) @code{SetupR.exe}, is about 16Mb and gives a complete installation.
+1) @code{SetupR.exe}, is about 17Mb and gives a complete installation.
 
 2) Directory @code{miniR} contains @code{miniR.exe} and seven files
 @code{miniR-?.bin}.  You can put  @code{miniR.exe} and @code{miniR-1.bin}
@@ -139,9 +139,7 @@ files
 @noindent
 and you may want @code{@RWVER@w.zip} (the HTML format help files),
 @code{@RWVER@l.zip} (the LaTeX format help files, used for offline
-printing), or @code{@RWVER@d?.zip} (the draft manuals, in PDF).  Many
-(but not all) of these fit on a 1.4Mb floppy disk.
-
+printing), or @code{@RWVER@d?.zip} (the draft manuals, in PDF).
 
 @node How do I install R for Windows?, How do I run it?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
@@ -231,11 +229,15 @@ It depends what you want to print.
 
 @itemize @bullet
 @item You can print the graphics window from its menu or by using
-@code{dev.print} with suitable arguments (see its help page).
+@code{dev.print} with suitable arguments (see its help page: most likely
+@code{dev.print(win.graph)} will work).
+
 @item You can print from the R console or pager by @code{File | Print}.
-(This will print the selection if there is one,
-otherwise the whole console or pager contents.)
+(This will print the selection if there is one, otherwise the whole
+console or pager contents.)
+
 @item You can print help files from the pager or HTML browser.
+
 @item If you have configured @code{RHOME\bin\helpPRINT.bat} and have
 LaTeX installed you can print help files by @code{help(fn_name, offline=TRUE)}.
 @end itemize
@@ -344,8 +346,9 @@ We have had several reports of this, although they do work for us on
 @emph{all} of our machines.  There are two known possible fixes.
 
 (a) Use the alternative @code{internet2.dll} by starting R with the flag
-@code{--internet2} which uses the Internet Explorer internals (and so
-need Internet Explorer 4 or later installed).
+@code{--internet2} (@pxref{How do I install R for Windows?}) which uses
+the Internet Explorer internals (and so needs Internet Explorer 4 or
+later installed).
 
 (b)  A proxy needs to be set up: see @code{?download.file}.
 
@@ -395,7 +398,7 @@ running all the examples on its help pages and in its test suite, if
 any) use @code{Rcmd check pkgname}: see the @emph{`Writing R
 Extensions'} manual.
 
-Note that msot of the last paragraph will only work if both the path to
+Note that most of the last paragraph will only work if both the path to
 R and the path to the package are space-free.
 
 @node I don't have permission to write to the @RWVER@\library directory, The packages I installed do not appear in the HTML help system, Can I install packages (libraries) in this version?, Packages
@@ -618,7 +621,8 @@ graphics window to the top and gives it focus.  With argument @samp{-1}
 it brings the console to the top and gives it focus.
 
 This works for @samp{Rgui.exe} in MDI and SDI modes, and can be used for
-graphics windows from @samp{Rterm.exe}.
+graphics windows from @samp{Rterm.exe} (although Windows may not always
+act on it).
 
 @newchap{}
 @node Workspaces, The R Console and Fonts, Windows Features, Top
@@ -641,10 +645,10 @@ Have you changed the working directory?: see Q5.2.
 @node How do I store my workspace in a different place?, Can I load workspaces saved under Unix/GNU-Linux?, My workspace gets saved in a strange place.  How do I stop this?, Workspaces
 @section How do I store my workspace in a different place?
 
-Use the `File | Change Dir' menu item to select a new working
+Use the `File | Change Dir...' menu item to select a new working
 directory: this defaults to the last directory you loaded a file
 from.  The workspace is saved in the working directory.  You can also
-save a snapshot of the workspace from the `Save Workspace' menu item.
+save a snapshot of the workspace from the `Save Workspace...' menu item.
 
 From the command line you can change the working directory by the
 function @code{setwd}: see its help page.
@@ -703,8 +707,8 @@ non-Western European languages.
 
 This is deliberate: the console output is buffered and re-written in
 chunks to be faster and less distracting.  You can turn buffering off or
-on from the Misc menu or the right-click menu: @key{Ctrl-W} toggles the
-setting.
+on from the `Misc' menu or the right-click menu: @key{Ctrl-W} toggles
+the setting.
 
 If you are sourcing R code or writing from a function, there is another
 option.  A call to the R function @code{flush.console()} will write out
@@ -726,6 +730,7 @@ scrollbar or the @key{CTRL + left/right arrow} keys to scroll horizontally.
 
 @menu
 * How can I compile R from source?::  
+* Can I use a fast BLAS?::      
 * How do I include compiled C code?::  
 * How do I debug code that I have compiled and dyn.load-ed?::  
 * How do I include C++ code?::  
@@ -735,7 +740,7 @@ scrollbar or the @key{CTRL + left/right arrow} keys to scroll horizontally.
 @end menu
 
 
-@node How can I compile R from source?, How do I include compiled C code?, Building from Source, Building from Source
+@node How can I compile R from source?, Can I use a fast BLAS?, Building from Source, Building from Source
 @section How can I compile R from source?
 
 Get the R sources.  Suppose you want to compile R-@value{RVERSION}.
@@ -755,8 +760,33 @@ You may need to compile under a case-honouring file system: we found
 that a @code{samba}-mounted file system (which maps all file names to lower
 case) did not work.
 
+@node Can I use a fast BLAS?, How do I include compiled C code?, How can I compile R from source?, Building from Source
+@section  Can I use a fast BLAS?
 
-@node  How do I include compiled C code?, How do I debug code that I have compiled and dyn.load-ed?, How can I compile R from source?, Building from Source
+Fast BLAS (Basic Linear Algebra Subprograms,
+@uref{http://www.netlib.org/blas/faq.html}) routines are used to speed
+up numerical linear algebra.  If you compile R from sources yourself,
+there is support for the `tuned' BLAS called ATLAS
+(@uref{http://www.netlib.org/atlas/}).  The savings can be appreciable:
+on a 366MHz PIIM and a 1000 x 1000 matrix @code{La.svd} took 182 sec
+with the standard BLAS and 59 sec with ATLAS.  Because ATLAS is tuned to
+a particular chip we can't use generally: the optimal routines for a
+PIII or an Athlon XP are quite different and neither will not run at all
+on a PII.
+
+In the main @code{Makefile} there are macros @code{USE_ATLAS} and
+@code{ATLAS_PATH}.  Set @code{USE_ATLAS = YES} and @code{ATLAS_PATH} to
+where the ATLAS libraries are located.  You will need to make the
+libraries yourself: none of the binaries we have seen are compiled for
+the correct compiler.
+
+Note that you may need to re-compile many of the packages to make use of
+the fast BLAS (and they will not work at all unless you do).
+
+We plan to make it easier to use a different BLAS in a future release
+by separating the functionality into a separate DLL.
+
+@node  How do I include compiled C code?, How do I debug code that I have compiled and dyn.load-ed?, Can I use a fast BLAS?, Building from Source
 @section How do I include compiled C code?
 
 We strongly encourage you to do this @emph{via} building an R package:
@@ -781,7 +811,8 @@ appropriate section in @file{readme.packages}.
 @section How do I debug code that I have compiled and dyn.load-ed?
 
 You will need a suitable version of @code{gdb}: we normally use that
-from the Cygwin distribution.
+from the Cygwin distribution.  Debugging under Windows is often a
+fraught process, and sometimes does not work at all.
 
 First, build a version of the R system with debugging information by
 
@@ -843,7 +874,7 @@ Fortran symbols need an underline appended.
 @item
 Windows has little support for signals, so the usual idea of running a
 program under a debugger and sending it a signal to interrupt it and
-drop control back to the debugger does not work with @code{mingw32}
+drop control back to the debugger does not work with a @code{mingw32}
 version of @code{gdb}.  It does often work with the @code{cygwin} version.
 
 @end itemize
@@ -932,14 +963,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2001 November 30 by Professor B. D. Ripley
+Last edited 2001 December 7 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2001 November 30 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2001 December 7 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

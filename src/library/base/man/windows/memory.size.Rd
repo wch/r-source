@@ -17,7 +17,7 @@ memory.limit(size = NA)
 \arguments{
   \item{max}{logical. If true the maximum amount of memory obtained from
     the OS is reported, otherwise the amount currently in use.}
-  \item{max}{numeric. If \code{NA} report the memory size, otherwise
+  \item{size}{numeric. If \code{NA} report the memory size, otherwise
     request a new limit, in Mb.}
 }
 \details{
