@@ -2705,3 +2705,12 @@ stopifnot(crossprod(a) == 0)
 stopifnot(crossprod(a,a) == 0)
 stopifnot(crossprod(a+0i) == 0+0i)
 ## were random areas in <= 1.8.0
+
+
+
+## DF[[i, j]] should be row i, col j
+data(women)
+stopifnot(women[[2, 1]] == women[2, 1])
+women[[2, 1]] <- 77
+stopifnot(women[2, 1] == 77)
+## was reversed from May 2002 to Oct 2003
