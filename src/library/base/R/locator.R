@@ -1,16 +1,9 @@
-###-- 'msg' interface should be device dependent... -> "next" version
-locator <- function(n=512, msg = "Click left to locate points;  right to end")
+locator <- function(n = 512, type="n", ...)
 {
-    do.msg <- is.character(msg) && nchar(msg) > 0
-    if(do.msg) cat(msg,": ",sep="")
-    z <- .Internal(locator(n))# n <= 0 gives error
-    if(do.msg) cat("\n")
-    x <- z[[1]]
-    y <- z[[2]]
-    if((n <- z[[3]]) > 0) list(x=x[1:n], y=y[1:n])
-}
-locator <- function(n=512, type="n")
-{
+    if(length(extras <- list(...))) {
+        opar <- par(extras)
+        on.exit(par(opar))
+    }
     z <- .Internal(locator(n, type=type))# n <= 0 gives error
     x <- z[[1]]
     y <- z[[2]]

@@ -196,6 +196,9 @@ NEW FEATURES
 
     o	Rdconv allows an output file to be specified.
 
+    o	locator() allows inline graphics parameters (for the plotting
+	it does with type !="n").
+
 
 
 BUG FIXES

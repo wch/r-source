@@ -6,13 +6,15 @@
   button is pressed.
 }
 \usage{
-locator(n = 512, type = "n")
+locator(n = 512, type = "n", \dots)
 }
 \arguments{
   \item{n}{the maximum number of points to locate.}
   \item{type}{One of \code{"n"}, \code{"p"}, \code{"l"} or
     \code{"o"}. If \code{"p"} or \code{"o"} the points are
     plotted; if \code{"l"}  or \code{"o"} they are joined by lines.}
+  \item{\dots}{additional graphics parameters used if \code{type != "n"}
+    for plotting the locations.}
 }
 \value{
   A list containing \code{x} and \code{y} components which are the

@@ -3,8 +3,10 @@ identify <- function(x, ...) UseMethod("identify")
 identify.default <- function(x, y=NULL, labels=seq(along=x), pos=FALSE,
 			     n=length(x), plot=TRUE, offset=0.5, ...)
 {
-    opar <- par(list(...))
-    on.exit(par(opar))
+    if(length(extras <- list(...))) {
+        opar <- par(extras)
+        on.exit(par(opar))
+    }
     xy <- xy.coords(x, y)
     z <- .Internal(identify(xy$x, xy$y, as.character(labels),
 			    n, plot, offset))
