@@ -252,10 +252,13 @@ dev.off()              # send plot file to the printer
 # for URW PostScript devices
 postscript("foo.ps", family = "NimbusSan")
 
-# for inclusion in Computer Modern TeX documents, perhaps
+## for inclusion in Computer Modern TeX documents, perhaps
 postscript("cm_test.eps", width = 4.0, height = 3.0,
            horizontal = FALSE, onefile = FALSE, paper = "special",
            family = "ComputerModern")
+## The resultant postscript file can be used by dvips provided
+## font subsetting is disabled (by flag -j0)
+}
 \testonly{
 xx <- seq(0, 7, length=701)
 yy <- sin(xx)/xx; yy[1] <- 1
@@ -271,12 +274,5 @@ ps.options(width=0:12, onefile=0, bg=pi)
 # override the check for 'onefile', but not the others:
 str(ps.options(width=0:12, onefile=1, bg=pi,
                override.check = c(FALSE,TRUE,FALSE)))
-
-\dontrun{###  ---- Use TeX's Computer Modern fonts --- 
-## Only use alphanumeric chars here.
-postscript(family=paste("/myfonts/afm/",
-   c("cmr10", "cmbx10", "cmsl10", "cmbxsl10"), ".afm", sep=""))
-## The resultant postscript file can be used by dvips provided
-## font subsetting is disabled (by flag -j0)
-}}
+}
 \keyword{device}
