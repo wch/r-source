@@ -9,6 +9,8 @@
 
 NEW FEATURES
 
+    o	new target for R installation testing :	 make strict-tests
+
     o	symnum(x) now nicely codes logical x.
 
     o	convolve() has a new type = c("circular", "open", "filter")
