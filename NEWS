@@ -12,7 +12,9 @@ NEW FEATURES
 
     o   R CMD Rd2dvi has new options --pdf, --title and --output
 
-    o   new Date, URL and Title fields in DESCRIPTION file of packages.
+    o   new Date, URL and Title fields in DESCRIPTION file of
+        packages. The Title field preplaces the seperate TITLE file of
+        packages which is no longer necessary.
 
     o	residuals.lm() has "type" argument, as S does.
 
