@@ -50,20 +50,22 @@ La.eigen(x, symmetric, only.values = FALSE,
   Computing the eigenvectors is the slow part for large matrices.
 }
 \value{
-  The spectral decomposition of \code{x} is returned
-  as components of a list.
+  The spectral decomposition of \code{x} is returned as components of a
+  list with components
+  
   \item{values}{a vector containing the \eqn{p} eigenvalues of \code{x},
     sorted in \emph{decreasing} order, according to \code{Mod(values)}
-    if they are complex.
+    in the asymmetric case when they might be complex (even for real
+    matrices).  For real asymmetric matrices the vector will be
+    complex only if complex conjugate pairs of eigenvalues are detected.
   }
-  \item{vectors}{a \eqn{p\times p}{p * p} matrix whose columns contain the
-    eigenvectors of \code{x}, or \code{NULL} if \code{only.values} is
-    \code{TRUE}.
+  \item{vectors}{either a \eqn{p\times p}{p * p} matrix whose columns
+    contain the eigenvectors of \code{x}, or \code{NULL} if
+    \code{only.values} is \code{TRUE}.
     
-    For \code{eigen(, symmetric = FALSE, EISPACK =TRUE)}
-    the choice of length of the
-    eigenvectors is not defined by EISPACK. In all other cases the
-    vectors are normalized to unit length.
+    For \code{eigen(, symmetric = FALSE, EISPACK =TRUE)} the choice of
+    length of the eigenvectors is not defined by EISPACK. In all other
+    cases the vectors are normalized to unit length.
 
     Recall that the eigenvectors are only defined up to a constant: even
     when the length is specified they are still only defined up to a
