@@ -58,7 +58,7 @@ A negative value will cause the labels to hang down from 0.}
 }
 \value{
 An object of class \bold{hclust} which describes the
-tree produced by the clustering processs.
+tree produced by the clustering process.
 The object is a list with components:
 \item{merge}{an \eqn{n-1} by 2 matrix.
 Row \eqn{i} of \code{merge} describes the merging of clusters

@@ -15,7 +15,7 @@ Multidimensional scaling takes a set of dissimilarities
 and returns a set of points such that the distances between the points
 are approximately equal to the dissimilarities.
 
-The funtions \code{isomds} and \code{sammon} provide
+The functions \code{isomds} and \code{sammon} provide
 alternative ordination techniques.
 }
 \value{
@@ -34,7 +34,7 @@ New York: Wiley.
 }
 \note{
 The S version of this function provides for computing an additional
-``fiddle'' factor suggested by Togerson.  R does not provide this option.
+``fiddle'' factor suggested by Togerson.  \R does not provide this option.
 }
 \seealso{
 \code{\link{dist}},

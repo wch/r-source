@@ -65,7 +65,7 @@ summary(fn)
   Martin Maechler, \email{maechler@stat.math.ethz.ch} with some basic
   code from Thomas Lumley.
 }
-\seealso{\code{\link{ecdf}} for empiricial distribution functions as
+\seealso{\code{\link{ecdf}} for empirical distribution functions as
   special step functions and \code{\link{plot.stepfun}} for \emph{plotting}
   step functions.
 
