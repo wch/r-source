@@ -277,7 +277,7 @@ function(package)
              "influence.measures",
              "kappa.tri",
              "plot.new", "plot.window", "plot.xy",
-             "print.coefmat", "print.atomic",
+             "print.atomic", "print.coefmat", "print.design",
              "rep.int",
              "split.screen",
              "update.packages"),
