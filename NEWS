@@ -507,11 +507,13 @@ BUG FIXES
 
     o	stars() fix (for 0/NA columns) PR#739.
 	
-    o	match() does NOT use "as.character()" anymore, fixes PR#741.
+    o	match() does not always use "as.character()" anymore, fixes PR#741.
 
     o	Rd's \describe{} constructs are converted better to text
 	output, and \items of >=22 chars now work.
 
+    o	contour(.., labcex = 0.6, .. , vfont = c("sans serif", "plain"), ..)
+	now behaves as it has been documented, PR#740.
 
 
 	**************************************************
