@@ -230,6 +230,10 @@ Subject: foreign package:  reading epiinfo
 From: giles.crane@doh.state.nj.us
 Date: Wed, 19 May 2004 19:30:34 +0200 (CEST)
 ..request for example file met no response
+* PR# 6904 *
+Subject: Failure to preserve package attribute when coercing S4 objects
+From: "Swinton, Jonathan" <Jonathan.Swinton@astrazeneca.com>
+Date: Fri, 21 May 2004 15:04:10 +0100
 * PR# 6978 *
 Subject: inheritance problem in multcomp package
 From: "Richard M. Heiberger" <rmh@temple.edu>
@@ -283,6 +287,11 @@ From: Francis Clark <fc@maths.uq.edu.au>
 Date: Thu, 17 Jun 2004 20:00:31 +1000 (EST)
 ..From fisher.test!
 ..Probably just a poor error message
+* PR# 7037 *
+Subject: R crashes
+From: cornulier@cebc.cnrs.fr
+Date: Wed, 30 Jun 2004 22:06:27 +0200 (CEST)
+..crash in cor, reproducible on Linux
 
 Directory:  Documentation
 
@@ -444,6 +453,10 @@ Date: Tue, 13 Apr 2004 01:45:28 +0200 (CEST)
 Subject: postscript image problem
 From: jonathan_lees@unc.edu
 Date: Tue, 13 Apr 2004 23:38:56 +0200 (CEST)
+* PR# 7031 *
+Subject: vfont and title()
+From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
+Date: Tue, 29 Jun 2004 10:23:47 -0400
 
 Directory:  In-Out
 
@@ -631,6 +644,12 @@ Date: Fri, 27 Feb 2004 11:27:18 +0000
 Subject: Bug in parse(text = <long polynom>)
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Fri, 25 Jun 2004 09:19:32 +0200
+* PR# 7027 *
+Subject: Problem with hasArg and the ... argument
+From: j.j.goeman@lumc.nl
+Date: Mon, 28 Jun 2004 11:12:27 +0200 (CEST)
+..Problem is if sys.function() should be changed or its docs.  See further 
+..discussion on R-devel.
 
 Directory:  Macintosh
 
@@ -642,6 +661,15 @@ Date: Fri, 21 May 2004 15:24:05 +0200 (CEST)
 Subject: Crash in OSX
 From: murray.pung@studentmail.newcastle.edu.au
 Date: Sat,  5 Jun 2004 04:36:52 +0200 (CEST)
+* PR# 7030 *
+Subject: input file and console command size limit
+From: jerome.mutterer@ibmp-ulp.u-strasbg.fr
+Date: Tue, 29 Jun 2004 09:00:36 +0200 (CEST)
+..On R Aqua on MacOS X
+* PR# 7036 *
+Subject: Installation of R 1.9 on Mac OS X 10.3
+From: deejemon@eudoramail.com
+Date: Wed, 30 Jun 2004 03:26:05 +0200 (CEST)
 
 Directory:  Misc
 
@@ -891,59 +919,11 @@ Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 Subject: Re: [R] Error message during debug
 From: Duncan Murdoch <dmurdoch@pair.com>
 Date: Tue, 20 Apr 2004 14:15:05 -0400
-* PR# 6904 *
-Subject: Failure to preserve package attribute when coercing S4 objects
-From: "Swinton, Jonathan" <Jonathan.Swinton@astrazeneca.com>
-Date: Fri, 21 May 2004 15:04:10 +0100
-* PR# 7023 *
-Subject: legend lwd - feature request
-From: "Leslie Foldager" <Lfo@psykiatri.aaa.dk>
-Date: Fri, 25 Jun 2004 11:03:31 +0200
-* PR# 7026 *
-Subject: RE:znvvbi,UPTD - NEW stock pick - last pick up 200% - Set to explode on Monday
-From: "Kelvin " <sbekoau@tiscali.fr>
-Date: Sat, 26 Jun 2004 22:23:11 -0300
-* PR# 7027 *
-Subject: Problem with hasArg and the ... argument
-From: j.j.goeman@lumc.nl
-Date: Mon, 28 Jun 2004 11:12:27 +0200 (CEST)
-* PR# 7028 *
-Subject: how are you?
-From: "Katelyn Nova" <cfhqw8mctd@nni.com>
-Date: Tue, 29 Jun 2004 04:30:58 +0100
-* PR# 7029 *
-Subject: lowCost meds
-From: "Helen " <FGSBNMEWALIVBP@dallas.net>
-Date: Tue, 29 Jun 2004 11:03:17 +0600
-* PR# 7030 *
-Subject: input file and console command size limit
-From: jerome.mutterer@ibmp-ulp.u-strasbg.fr
-Date: Tue, 29 Jun 2004 09:00:36 +0200 (CEST)
-* PR# 7031 *
-Subject: vfont and title()
-From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
-Date: Tue, 29 Jun 2004 10:23:47 -0400
-* PR# 7032 *
-Subject: Best and very cheeap-warez 0ffers! Let's se our prices.. here. irreconcilable
-From: <Clara@cocolee.net>
-Date: Tue, 29 Jun 2004 22:10:48 +0400
-* PR# 7033 *
-Subject: WE SEND OUT ORIGINAL SOFTWARES AT CHEAP (FROM $20) TO WORLDWIDE let 
-From: "Valene Tanna" <zis4ps@ultimanet.com>
-Date: Tue, 29 Jun 2004 11:38:44 -0700
-* PR# 7034 *
-Subject: ky Windows 2003 Server Datacenter
-From: "Lacy Aragon" <Roafvss@ixpres.com>
-Date: Tue, 29 Jun 2004 14:44:02 -0600
-* PR# 7035 *
-Subject: how r u?
-From: "Keiko Ethelene" <wghv3uwlv@infi.net>
-Date: Wed, 30 Jun 2004 03:31:00 +0300
-* PR# 7036 *
-Subject: Installation of R 1.9 on Mac OS X 10.3
-From: deejemon@eudoramail.com
-Date: Wed, 30 Jun 2004 03:26:05 +0200 (CEST)
-* PR# 7037 *
-Subject: R crashes
-From: cornulier@cebc.cnrs.fr
-Date: Wed, 30 Jun 2004 22:06:27 +0200 (CEST)
+* PR# 7039 *
+Subject: segfault in apply with "==" and double
+From: chabrier@toulouse.inra.fr
+Date: Thu,  1 Jul 2004 12:26:26 +0200 (CEST)
+* PR# 7044 *
+Subject: =?iso-8859-1?B?Q29tZSBjaGVjayBvdXQgb3VyIGJlc3QgZGVhbHMgb24gbWVkaWNhdGlv?=
+From: "Impoverishment L. Mounties" <irreconcilable@aereated.com>
+Date: Thu, 01 Jul 2004 14:01:40 -0700
