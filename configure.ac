@@ -170,7 +170,8 @@ if test "${want_R_framework}" = yes; then
   ## given explicitly.
   want_R_shlib=yes
   ## </NOTE>
-  LIBR="-framework R"
+  ## -framework R should be only set after installation
+  ## LIBR="-framework R"
 fi
 AC_SUBST(R_FRAMEWORK_DIR)
 
