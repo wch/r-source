@@ -285,7 +285,7 @@ BUG FIXES
     o	predict.lm(*, se=TRUE) {w/ weights, w/o newdata} now gives correct
 	SE's.  (PR#3043)
 
-    o	cor.test(x, y, method="spearman") now also works for 
+    o	cor.test(x, y, method="spearman") now also works for
 	length(x) > 1290.
 
     o	Matrices were printed mis-aligned if right=TRUE and na.print
@@ -298,6 +298,9 @@ BUG FIXES
 
     o   tkpager() wasn't quite using its title and header arguments in
         the way prescribed by file.show()
+
+    o	legend(*, pch=p, lty=l) now works better when `p' or `l' have NAs.
+
 
 		CHANGES IN R VERSION 1.7.0
 
