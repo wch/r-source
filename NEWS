@@ -207,6 +207,8 @@ BUG FIXES
 	under some circumstances.  (PR#7350)
 
 
+    o	upgrade(x, ask = FALSE) was broken for a "packageStatus" object.
+
 
 	*********************************************************
 	*							*
