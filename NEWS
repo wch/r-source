@@ -572,6 +572,8 @@ BUG FIXES
     o	atop() and warning() now accept NULL, as they are documented
 	to do (although this seems of little use and is equivalent to "").
 
+    o   weighted.mean() now checks the length of the weight vector w.
+
 
 
 

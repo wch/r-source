@@ -39,6 +39,11 @@ tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
   returns an array of mode \code{\link{list}} whose components are the
   values of the individual calls to \code{FUN}, i.e., the result is a
   list with a \code{\link{dim}} attribute.
+
+  Note that optional arguments to \code{FUN} supplied by the
+  \code{...} argument are not divided into cells.  It is therefore
+  inappropriate for \code{FUN} to expect additional arguments with
+  the same length as \code{X}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
