@@ -1,0 +1,24 @@
+Notes for Windows Maintainers
+=============================
+
+1) fixed/h/config.h can almost be made automatically.  Some of this
+is achieved by overrides in the configure script.
+
+You will need a few more tools (ln, pwd, tr, ...), and I put a cygwin
+toolchain at the end of my path.  Then with the R sources in
+/R/rw1050, I used in /TEMP/R (any other directory will do, except the
+sources)
+
+/R/rw1050/configure --build=i386-pc-mingw32
+
+This ran fairly slowly, producing a src/include/config.h that differs only
+
+ - missing the Windows-specific section at the end.
+ - it found R_PRINTCMD = lpr on my system, but that is not used under Windows.
+ - watch out for local features: e.g. I have libz installed in my
+   mingw compiler system.
+
+Note that HAVE_TIMES should be defined even though times() is not found:
+it is used in R for the availabilty of timing.
+
+BDR 2002-03-14
