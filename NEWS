@@ -53,6 +53,8 @@ BUG FIXES
 
     o   extractAIC.survreg needed updating.
 
+    o   When using the header Rmath.h in standalone mode, the case where
+        TRUE, FALSE are already defined is now handled correctly.
 
 
 		CHANGES IN R VERSION 1.9.0
