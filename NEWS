@@ -315,6 +315,9 @@ NEW FEATURES
 
     o	New function runmed() for fast runnning medians (`modreg' package).
 
+    o   An attempt to open() an already open connection will be detected
+	and ignored with a warning.  This avoids improperly closing
+	some types of connections if they are opened repeatedly.
 
 
 INSTALLATION CHANGES
