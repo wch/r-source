@@ -55,9 +55,13 @@ sys.save.image(name)
   All \R platforms use the XDR representation of binary objects in
   binary save-d files, and these are portable across all \R platforms.
 
-  Default values for \code{save.image} options can be modified with
-  the \code{save.image.defaults} option.  This mechanism is experimental
-  and subject to change.
+  Default values for the \code{ascii}, \code{compress}, \code{safe} and
+  \code{version} arguments can be modified with
+  the \code{save.defaults} option (used both by \code{save} and
+  \code{save.image}). If a \code{save.image.defaults}
+  option is set it overrides \code{save.defaults} for function
+  \code{save.image} (which allows to have different defaults). This
+  mechanism is experimental and subject to change.
 
   \code{sys.save.image} is a system function that is called by \code{q()}
   and its GUI analogs; \code{sys.load.image} is called by the startup code.
@@ -86,8 +90,8 @@ save.image()
 unlink("xy.Rdata")
 unlink(".RData")
 
-# set save.image defaults using option:
-options(save.image.defaults=list(ascii=TRUE, safe=FALSE))
+# set save defaults using option:
+options(save.defaults=list(ascii=TRUE, safe=FALSE))
 save.image()
 unlink(".RData")
 }
