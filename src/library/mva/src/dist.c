@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 
 #include <float.h>
 #include "Arith.h"
+#include "Error.h"
 
 #define EUCLIDEAN 1
 #define MAXIMUM	  2
@@ -160,7 +161,7 @@ void dist(double *x, int *nr, int *nc, double *d, int *method)
 	distfun = binary;
 	break;
     default:
-	error("invalid distance");
+	error("dist(): invalid distance\n");
     }
 
     ij = 0;
@@ -168,3 +169,4 @@ void dist(double *x, int *nr, int *nc, double *d, int *method)
 	for(i=j+1 ; i<*nr ; i++)
 	    d[ij++] = distfun(x, *nr, *nc, i, j);
 }
+
