@@ -496,7 +496,7 @@ FUNTAB R_FunTab[] =
 {"unlink",	do_unlink,	0,	11,	1,	PP_FUNCALL},   
 {"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL},
 {"help.start",	do_helpstart,	0,	11,	0,	PP_FUNCALL},    
-{"show.help.item",do_helpitem,	0,	11,	1,	PP_FUNCALL},
+{"show.help.item",do_helpitem,	0,	11,	3,	PP_FUNCALL},
 {"flush.console",do_flushconsole,0,     11,     0,      PP_FUNCALL},
 {"int.unzip",   do_int_unzip,   0,      11,    -1,      PP_FUNCALL},
 {"win.version", do_winver,      0,      11,     0,      PP_FUNCALL},
