@@ -27067,21 +27067,63 @@ fi
 ### ** Platform-specific overrides for the C, Fortran 77 and C++ compilers.
 
 case "${host_cpu}" in
-  i*86)
-    cat >conftest.$ac_ext <<_ACEOF
+  i*86|x86_64)
+    echo "$as_me:$LINENO: checking whether C runtime needs -D__NO_MATH_INLINES" >&5
+echo $ECHO_N "checking whether C runtime needs -D__NO_MATH_INLINES... $ECHO_C" >&6
+if test "${r_cv_c_no_math_inlines+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test "$cross_compiling" = yes; then
+  r_cv_c_no_math_inlines=no
+else
+  cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
+
 #include <math.h>
 #if defined(__GLIBC__)
-  yes
+int main () {
+  double x, y;
+  x = -0./1.;
+  y = exp(x);
+  exit (y != 0.);
+}
+#else
+int main () {
+  exit(0);
+}
 #endif
 
 _ACEOF
-if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
-  $EGREP "yes" >/dev/null 2>&1; then
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  r_cv_c_no_math_inlines=yes
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+r_cv_c_no_math_inlines=no
+fi
+rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+fi
+echo "$as_me:$LINENO: result: $r_cv_c_no_math_inlines" >&5
+echo "${ECHO_T}$r_cv_c_no_math_inlines" >&6
+if test "${r_cv_c_no_math_inlines}" = yes; then
   separator=""
 test -z "${separator}" && separator=" "
 if test -z "${R_XTRA_CFLAGS}"; then
@@ -27090,10 +27132,9 @@ else
   R_XTRA_CFLAGS="${R_XTRA_CFLAGS}${separator}-D__NO_MATH_INLINES"
 fi
 fi
-rm -f conftest*
 
-
-    ac_safe=_mieee_fp
+    if test "${GCC}" = yes; then
+      ac_safe=_mieee_fp
 echo "$as_me:$LINENO: checking whether ${CC} accepts -mieee-fp" >&5
 echo $ECHO_N "checking whether ${CC} accepts -mieee-fp... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_cc_flag_${ac_safe}+set}\" = set"; then
@@ -27186,7 +27227,7 @@ else
 echo "${ECHO_T}no" >&6
 fi
 
-    ac_safe=_mieee_fp
+      ac_safe=_mieee_fp
 echo "$as_me:$LINENO: checking whether ${F77} accepts -mieee-fp" >&5
 echo $ECHO_N "checking whether ${F77} accepts -mieee-fp... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_f77_flag_${ac_safe}+set}\" = set"; then
@@ -27260,7 +27301,7 @@ else
 echo "${ECHO_T}no" >&6
 fi
 
-    ac_safe=_mieee_fp
+      ac_safe=_mieee_fp
 echo "$as_me:$LINENO: checking whether ${CXX-c++} accepts -mieee-fp" >&5
 echo $ECHO_N "checking whether ${CXX-c++} accepts -mieee-fp... $ECHO_C" >&6
 if eval "test \"\${r_cv_prog_cxx_flag_${ac_safe}+set}\" = set"; then
@@ -27353,6 +27394,7 @@ else
 echo "${ECHO_T}no" >&6
 fi
 
+    fi
     ;;
   alpha*)
     ## <NOTE>

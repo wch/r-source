@@ -11,8 +11,17 @@
 
 NEW FEATURES
 
-   o    Faster algorithm in summaryRprof.
+   o	Faster algorithm in summaryRprof.
 	
+
+INSTALLATION CHANGES
+
+   o	The gcc compilation flag -mieee-fp is used on x86_64 as well as
+	ix86 platforms.
+
+   o	-D__NO_MATH_INLINES is only used on older ix86 Linux systems
+	which need it (tested at configure time).
+
 
 BUG FIXES
 

@@ -621,14 +621,16 @@ R_PROG_CXX_MAKEFRAG
 ### ** Platform-specific overrides for the C, Fortran 77 and C++ compilers.
 
 case "${host_cpu}" in
-  i*86)
+  i*86|x86_64)
     R_PROG_CC_FLAG_D__NO_MATH_INLINES
-    R_PROG_CC_FLAG([-mieee-fp],
-                   R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mieee-fp]))
-    R_PROG_F77_FLAG([-mieee-fp],
-                    R_SH_VAR_ADD(R_XTRA_FFLAGS, [-mieee-fp]))
-    R_PROG_CXX_FLAG([-mieee-fp],
-                    R_SH_VAR_ADD(R_XTRA_CXXFLAGS, [-mieee-fp]))
+    if test "${GCC}" = yes; then
+      R_PROG_CC_FLAG([-mieee-fp],
+                     R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mieee-fp]))
+      R_PROG_F77_FLAG([-mieee-fp],
+                      R_SH_VAR_ADD(R_XTRA_FFLAGS, [-mieee-fp]))
+      R_PROG_CXX_FLAG([-mieee-fp],
+                      R_SH_VAR_ADD(R_XTRA_CXXFLAGS, [-mieee-fp]))
+    fi
     ;;
   alpha*)
     ## <NOTE>
