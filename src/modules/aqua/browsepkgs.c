@@ -93,7 +93,7 @@ Boolean *InstallPkg;
 
 
 extern bool		BrowsePkgFinished;
-void	Raqua_ProcessEvents(void);
+extern void	Raqua_ProcessEvents(void);
 
 extern TXNControlTag	RReadOnlyTag[];
 extern TXNControlData   RReadOnlyData[];

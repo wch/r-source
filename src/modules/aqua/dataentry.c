@@ -111,7 +111,7 @@ static double ssNA_REAL;
 
 static SEXP ssNewVector(SEXPTYPE, int);
 extern bool		DataEntryFinished;
-void Raqua_ProcessEvents(void);
+extern void Raqua_ProcessEvents(void);
 
 extern TXNControlTag	RReadOnlyTag[];
 extern TXNControlData   RReadOnlyData[];

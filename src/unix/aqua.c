@@ -58,6 +58,8 @@
 
 #if defined(HAVE_AQUA) && defined(HAVE_DYNAMIC_LOADING)
 
+#include <R_ext/eventloop.h>
+
 #include <Carbon/Carbon.h>
 static DL_FUNC Rdlsym(void *handle, char const *name)
 {
@@ -76,12 +78,19 @@ extern DL_FUNC 	ptr_R_ReadConsole, ptr_R_WriteConsole, ptr_R_ResetConsole,
                 ptr_R_ChooseFile, ptr_R_CleanUp, ptr_R_ShowMessage, ptr_R_Suicide;
 
 
-DL_FUNC ptr_do_wsbrowser, ptr_DoCloseHandler, ptr_GetQuartzParameters, 
+DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters, 
         ptr_Raqua_Edit, ptr_do_dataentry, ptr_do_browsepkgs, ptr_do_datamanger,
   ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser;
 
 
 void R_ProcessEvents(void);
+
+#define AQUA_POLLED_EVENTS 1
+ 
+#ifdef AQUA_POLLED_EVENTS 
+static void (* otherPolledEventHandler)(void);
+static void	Raqua_ProcessEvents2(void);
+#endif
 
 /* This is called too early to use moduleCdynload */
 void R_load_aqua_shlib(void)
@@ -127,8 +136,6 @@ void R_load_aqua_shlib(void)
     if(!ptr_R_ClearerrConsole) R_Suicide("Cannot load R_ClearerrConsole");
     ptr_do_wsbrowser = Rdlsym(handle, "Raqua_do_wsbrowser");
     if(!ptr_do_wsbrowser) R_Suicide("Cannot load do_wsbrowser");
-    ptr_DoCloseHandler = Rdlsym(handle, "DoCloseHandler");
-    if(!ptr_DoCloseHandler) R_Suicide("Cannot load DoCloseHandler");
     ptr_R_ShowFiles = Rdlsym(handle, "Raqua_ShowFiles");
     if(!ptr_R_ShowFiles) R_Suicide("Cannot load Raqua_R_ShowFiles");
     ptr_R_loadhistory = Rdlsym(handle, "Raqua_loadhistory");
@@ -157,14 +164,13 @@ void R_load_aqua_shlib(void)
     if(!ptr_do_flushconsole) R_Suicide("Cannot load Raqua_doflushconsole");
     ptr_do_hsbrowser = Rdlsym(handle, "Raqua_helpsearchbrowser");
     if(!ptr_do_hsbrowser) R_Suicide("Cannot load Raqua_helpsearchbrowser");
- 
 
+#ifdef AQUA_POLLED_EVENTS 
+    otherPolledEventHandler = R_PolledEvents;
+    R_PolledEvents = Raqua_ProcessEvents2;  
+#endif
 }
 
-OSStatus DoCloseHandler(EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData)
-{
- return((OSStatus)ptr_DoCloseHandler(inCallRef, inEvent, inUserData));
-}
 
 SEXP do_wsbrowser(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -209,6 +215,41 @@ void R_ProcessEvents(void)
    if(CheckEventQueueForUserCancel())
       onintr();
 }
+
+
+
+#ifdef AQUA_POLLED_EVENTS 
+     
+static void	Raqua_ProcessEvents2(void)
+{
+    EventRef theEvent;
+    EventRecord	outEvent;
+    EventTargetRef theTarget = GetEventDispatcherTarget();
+    bool	conv = false;
+     ProcessSerialNumber ourPSN;
+   
+   if(otherPolledEventHandler)
+      otherPolledEventHandler();
+
+/*    if (GetCurrentProcess(&ourPSN) == noErr)
+        (void)SetFrontProcess(&ourPSN);
+*/
+    if(CheckEventQueueForUserCancel())
+       onintr();
+
+
+    if(ReceiveNextEvent(0, NULL,kEventDurationNoWait,true,&theEvent)== noErr){
+        conv = ConvertEventRefToEventRecord(theEvent, &outEvent);
+    
+        if(conv && (outEvent.what == kHighLevelEvent))
+            AEProcessAppleEvent(&outEvent);
+         
+        SendEventToEventTarget (theEvent, theTarget);
+        ReleaseEvent(theEvent);
+            
+    }
+}
+#endif
 
 #else
 

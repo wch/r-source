@@ -48,7 +48,7 @@
 #define kDataBrowserListViewAppendColumn ULONG_MAX
 #endif
 
-void	Raqua_ProcessEvents(void);
+extern  void	Raqua_ProcessEvents(void);
 
 static void ConfigureDataManager(ControlRef);
 static void CreateDataManager(WindowRef, ControlRef*);

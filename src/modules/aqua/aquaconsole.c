@@ -174,8 +174,6 @@ extern FMFontFamilyInstance    instance;
 extern FMFontSize              fontSize;       
 
 
-void 	Raqua_ProcessEvents(void);
-
 void RSetTab(void);
 void RSetFontSize(void);
 void RSetFont(void);
@@ -287,6 +285,7 @@ int	Raqua_ChooseFile(int new, char *buf, int len);
 
 int 	Raqua_Edit(char *filename);
 void 	Raqua_StartConsole(Rboolean OpenConsole);
+void 	CloseRAquaConsole(void);
 void 	Raqua_WriteConsole(char *buf, int len);
 int 	Raqua_ReadConsole(char *prompt, unsigned char *buf, int len,
 		     int addtohistory);
@@ -527,6 +526,9 @@ OSStatus SetUPConsole(void){
 
 }
 
+void	Raqua_ProcessEvents(void);
+
+
 Boolean AlreadyRunning = false;           
 void Raqua_StartConsole(Rboolean OpenConsole)
 {
@@ -534,54 +536,69 @@ void Raqua_StartConsole(Rboolean OpenConsole)
     OSErr	err = noErr;
     CFURLRef    bundleURL = NULL;
     CFBundleRef RBundle = NULL;
+    ProcessSerialNumber ourPSN;
     
     char	buf[300];
     FSRef 	ref;
+    //OpenConsole = FALSE;
+   
+    if(OpenConsole){ 
+     if(SetUpGUI() != noErr)
+       goto noconsole;
     
-   if(SetUpGUI() != noErr)
-     goto noconsole;
-   else
-    InitAboutWindow();
+     InitAboutWindow();
   
-    GetRPrefs();
+     GetRPrefs();
      
-    InitCursor();
+     InitCursor();
     
-    if (TXNVersionInformation == (void*)kUnresolvedCFragSymbolAddress)
-        goto noconsole;
+     if (TXNVersionInformation == (void*)kUnresolvedCFragSymbolAddress)
+         goto noconsole;
 
-    if( InitMLTE() != noErr )
-     goto noconsole;
+     if( InitMLTE() != noErr )
+      goto noconsole;
 
-    err = SetUPConsole();
+     if( SetUPConsole() != noErr)
+      goto noconsole;
 	
-    if(err == noErr)
-         InstallPrefsHandlers();
-         
+     if(err == noErr)
+          InstallPrefsHandlers();
+    }
+           
     InstallAppHandlers();
     
-    if(ConsoleWindow!= NULL){
+    if(OpenConsole){
+     if(ConsoleWindow!= NULL){
         SelectWindow(ConsoleWindow);
         RSetTab();
         RSetFontSize();
         RSetFont();
         SetUpRAquaMenu();
-    }   
+     }   
        
-    chdir(R_ExpandFileName("~/"));
+     chdir(R_ExpandFileName("~/"));
        
-    if (R_RestoreHistory)
+     if (R_RestoreHistory)
 	Raqua_read_history(R_HistoryFile);
-        
+    }   
         
     InstallEventLoopTimer(GetCurrentEventLoop(), 0, 1, NewEventLoopTimerUPP(OtherEventLoops), NULL, NULL);
-        
+
+    if (GetCurrentProcess(&ourPSN) == noErr)
+        (void)SetFrontProcess(&ourPSN);
+    if(ConsoleWindow != NULL)
+     SelectWindow(ConsoleWindow);
+//    otherPolledEventHandler = R_PolledEvents;
+ //   R_PolledEvents = Raqua_ProcessEvents;  
+
+    return;
+            
 noconsole:
     if(bundleURL)
      CFRelease( bundleURL );
     if(RBundle)
      CFRelease( RBundle ); 
-	return;
+    CloseRAquaConsole();
 }
 
 OSStatus InstallAppHandlers(void){
@@ -659,7 +676,6 @@ static	pascal	void	OtherEventLoops( EventLoopTimerRef inTimer, void *inUserData 
 }
 
 
-void CloseRAquaConsole(void);
 void CloseRAquaConsole(void){
 
   DisposeWindow(RInputDialog);
@@ -2977,13 +2993,17 @@ pascal OSErr  HandleDoCommandLine (AppleEvent *theAppleEvent, AppleEvent* reply,
 
 
 
-void	Raqua_ProcessEvents(void)
+ void	Raqua_ProcessEvents(void)
 {
     EventRef theEvent;
     EventRecord	outEvent;
     EventTargetRef theTarget = GetEventDispatcherTarget();
     bool	conv = false;
 
+/*    if(WeHaveConsole)
+     if(otherPolledEventHandler)
+      otherPolledEventHandler();
+*/
     if(CheckEventQueueForUserCancel())
        onintr();
 

@@ -291,6 +291,7 @@ int Rf_initialize_R(int ac, char **av)
 }
 
 
+
 /*
   It would be better to enclose this routine within a conditional
     #ifdef R_EMBEDDED

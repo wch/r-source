@@ -85,7 +85,7 @@ DataBrowserItemID *PNameID;
 Boolean *LoadThese;
 
 extern bool	PackageManagerFinished;
-void	Raqua_ProcessEvents(void);
+extern void	Raqua_ProcessEvents(void);
 
 extern TXNControlTag	RReadOnlyTag[];
 extern TXNControlData   RReadOnlyData[];
