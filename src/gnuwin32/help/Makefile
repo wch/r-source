@@ -73,18 +73,18 @@ logo.bmp: $(RHOME)/src/gnuwin32/help/logo.bmp
 
 zipit: help/Rhelp.zip
 unzipit:
-	-$(MAKE) -C latex -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rhelp
+	-@$(MAKE) -C latex -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rhelp
 
 help/Rhelp.zip: $(wildcard ../../src/library/$(PKG)/man/*.Rd \
 ../../src/library/$(PKG)/man/windows/*.Rd)
-	-$(MAKE) -C help  -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rhelp
-	-$(MAKE) -C R-ex  -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rex
-	-$(MAKE) -C latex -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rhelp
+	-@$(MAKE) -C help  -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rhelp
+	-@$(MAKE) -C R-ex  -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rex
+	-@$(MAKE) -C latex -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rhelp
 	-$(MAKE) -C $(RHOME)/src/gnuwin32/help help-$(PKG)
-	$(RM) -f help/Rhelp.zip latex/Rhelp.zip R-ex/Rex.zip
+	@$(RM) -f help/Rhelp.zip latex/Rhelp.zip R-ex/Rex.zip
 	zip -${ZIPFLAGS} help/Rhelp help/* -x help/00Titles help/AnIndex
 	zip -${ZIPFLAGS} R-ex/Rex R-ex/*.R
 	zip -${ZIPFLAGS} latex/Rhelp latex/*.tex
 
 uz-%:
-	unzip -qou $*
+	@unzip -qou $*
