@@ -387,9 +387,9 @@ function(package)
     if(!length(thisPkg)) character(0) else thisPkg
 }
 
-### ** .packageApply
+### ** .package_apply
 
-.packageApply <-
+.package_apply <-
 function(packages = NULL, FUN, ...)
 {
     ## Apply FUN and extra '...' args to all given packages.
