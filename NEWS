@@ -255,9 +255,7 @@ NEW FEATURES
     o   list.files()/dir() have a new argument `recursive'.
 
     o	New function gzcon() which wraps a connection and provides
-	(de)compression compatible with gzip. [Not yet fully
-	operational on writing : open before use and close afterwards
-	for now.]
+	(de)compression compatible with gzip.
 
 
 INSTALLATION CHANGES

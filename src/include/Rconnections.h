@@ -111,7 +111,7 @@ typedef struct clpconn {
 #ifdef _ZLIB_H
 typedef struct gzconn {
     Rconnection con;
-    int cp;
+    int ncon, cp;
     z_stream s;
     int z_err, z_eof;
     uLong crc;
