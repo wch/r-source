@@ -4,8 +4,11 @@
 \alias{sunspot.month}
 \alias{sunspot.year}
 \title{
-  Yearly Sunspot Data, 1700--1988.
-  Monthly Sunspot Data, 1749--1997.
+  Yearly Sunspot Data, 1700--1988, and
+  Monthly Sunspot Data, 1749--1997
+}
+\description{
+  Monthly and yearly number of sunspots. 
 }
 \usage{
 data(sunspot)
@@ -14,9 +17,6 @@ data(sunspot)
   The univariate time series \code{sunspot.year} and
   \code{sunspot.month} contain 289 and 2988 observations, respectively.
   The objects are of class \code{"ts"}.
-}
-\description{
-  Monthly and yearly number of sunspots. 
 }
 \seealso{
   \code{sunspot.month} is a longer version of \code{\link{sunspots}}
@@ -50,5 +50,3 @@ cbind(i = i, sunspots = s1, ss.month = s2,
       perc.diff = round(100*2*abs(s1-s2)/(s1+s2), 1))
 }
 \keyword{datasets}
-
-
