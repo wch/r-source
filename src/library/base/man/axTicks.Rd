@@ -5,7 +5,7 @@
   Compute tickmark locations, the same way as \R does internally.
   This is only non-trivial when \bold{log} coordinates are active.
   By default, gives the \code{at} values which
-  \code{axis(side)} would use.
+  \code{\link{axis}(side)} would use.
 }
 \usage{
 axTicks(side, axp = NULL, usr = NULL, log = NULL)
@@ -19,19 +19,19 @@ axTicks(side, axp = NULL, usr = NULL, log = NULL)
     \code{\link{par}("usr")} giving horizontal (`x') and vertical (`y')
     user coordinate limits.}
   \item{log}{logical indicating if log coordinates are active; defaults to
-    \code{\link{par}("Zlog") where `Z' is as for the \code{axp} argument
+    \code{\link{par}("Zlog")} where `Z' is as for the \code{axp} argument
       above.}
 }
 \details{
-  in the case of mainly
-i.e. the \code{at} values which
-  \code{axis(side)} would use by default.  In other words,
-  \code{axis(side)} and \code{axis(side, at = axTicks(side))}
-  should be identical.
+  The \code{axp}, \code{usr}, and \code{log} arguments must be consistent
+  as their default values (the \code{par(..)} results) are.
+  Note that the meaning of \code{axp} alters very much when \code{log}
+  is \code{TRUE}, see the documentation on \code{\link{par}(xaxp=.)}.
 
-  using par("Xaxp") , par("usr") & par("Xlog") where X = x|y
-  an R version of internal CreateAtVector()
-
+  \code{axTicks()} can be regarded as an \R implementation  of the
+  C function \code{CreateAtVector()} in \file{..../src/main/graphics.c}
+  which is called by \code{\link{axis}(side,*)} when no argument
+  \code{at} is specified.
 }
 \value{
   numeric vector of coordinate values at which axis tickmarks can be
