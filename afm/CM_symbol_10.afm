@@ -140,8 +140,4 @@ C 222 ; WX 1000 ; N arrowdblright ; B 56 -25 942 525 ;
 C 223 ; WX 611.111 ; N arrowdbldown ; B 30 -194 580 694 ; 
 C 242 ; WX 416.667 ; N integral ; B 56 -216 471 716 ; 
 EndCharMetrics
-StartKernData
-StartKernPairs 0
-EndKernPairs
-EndKernData
 EndFontMetrics
