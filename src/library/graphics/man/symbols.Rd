@@ -1,6 +1,12 @@
 \name{symbols}
 \alias{symbols}
-\title{Draw symbols on a plot}
+\concept{circle}
+\concept{star}
+\concept{square}
+\concept{rectangle}
+\concept{thermometer}
+\concept{boxplot}
+\title{Draw Symbols (Circles, Squares, Stars, Thermometers, Boxplots) on a Plot}
 \description{
   This function draws symbols on a plot.  One of six symbols;
   \emph{circles}, \emph{squares}, \emph{rectangles}, \emph{stars},
