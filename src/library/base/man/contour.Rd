@@ -7,7 +7,8 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
         xlim = range(x, finite = TRUE),
         ylim = range(y, finite = TRUE),
         zlim = range(z, finite = TRUE),
-        labcex = 0.4, drawlabels = T, method = 3, vfont = NULL,
+        labcex = 0.6, drawlabels = T, method = "flattest", 
+	vfont = c("sans serif", "plain"),
         col = par("fg"), lty = par("lty"), lwd = par("lwd"),
 	add = FALSE, \dots)
 }
@@ -28,8 +29,9 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     lines.}
   \item{labcex}{\code{cex} for contour labelling.}
   \item{drawlabels}{logical.  Contours are labelled if \code{TRUE}.}
-  \item{method}{a numeric specifying where the labels will be located.}
-  \item{vfont}{if a numeric vector of length 2 is specified, then Hershey
+  \item{method}{character, specifying where the labels will be located 
+    (see below for possible values).}
+  \item{vfont}{if a character vector of length 2 is specified, then Hershey
     vector fonts are used.  The first element of the vector
     selects a typeface and the second element selects a fontindex 
     (see \code{help(text)} for more information).} 
@@ -46,11 +48,13 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
   There is currently no documentation about the algorithm.
   The source code is in \file{\$R\_HOME/src/main/plot3d.c}.
   For information about vector fonts, see \code{help(text)}.
-  The methods for positioning the labels on contours are: (1) draw on the
-  edge of the plot, overlaying the contour line; (2) draw on the edge of the
-  plot, embedded in the contour line, with no labels overlapping; (3) draw
+  The methods for positioning the labels on contours are "simple" (draw on the
+  edge of the plot, overlaying the contour line), "edge" (draw on the edge
+  of the
+  plot, embedded in the contour line, with no labels overlapping) and 
+  "flattest" (draw
   on the flattest section of the contour, embedded in the contour line,
-  with no labels overlapping.  Either of the second two may not draw a
+  with no labels overlapping).  Either of the second two may not draw a
   label on every contour line.
 }
 \seealso{
@@ -61,14 +65,15 @@ contour(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 \examples{
 x <- -6:16
 op <- par(mfrow = c(2, 2))
-contour(outer(x, x), method = 2, vfont = c(1,1))
+contour(outer(x, x), method = "edge", vfont = c("sans serif", "plain"))
 z <- outer(x, sqrt(abs(x)), FUN = "/")
 ## Should not be necessary:
 z[!is.finite(z)] <- NA
 image(x, x, z)
-contour(x, x, z, col = "pink", add = TRUE, method = 2, vfont = c(1,1))
-contour(x, x, z, ylim = c(1, 6), method = 1, labcex = 1)
-contour(x, x, z, ylim = c(-6, 6), nlev = 20, lty = 2, method = 1)
+contour(x, x, z, col = "pink", add = TRUE, method = "edge", 
+	vfont = c("sans serif", "plain"))
+contour(x, x, z, ylim = c(1, 6), method = "simple", labcex = 1)
+contour(x, x, z, ylim = c(-6, 6), nlev = 20, lty = 2, method = "simple")
 par(op)
 
 ## Persian Rug Art:
@@ -86,7 +91,8 @@ par(opar); par(mfrow=c(1,1)); opar <- par(pty = "s", bg = "lightcyan")
 plot(x = 0, y = 0,type = "n", xlim = rx, ylim = ry, xlab = "", ylab = "")
 u <- par("usr")
 rect(u[1], u[3], u[2], u[4], col = tcol[8], border = "red")
-contour(x, y, volcano, col = tcol[2], lty = "solid", add = TRUE, vfont = c(1,1))
+contour(x, y, volcano, col = tcol[2], lty = "solid", add = TRUE, 
+	vfont = c("sans serif", "plain"))
 title("A Topographic Map of Maunga Whau", font = 4)
 abline(h = 200*0:4, v = 200*0:4, col = "lightgray", lty = 2, lwd = 0.1)
 par(opar)

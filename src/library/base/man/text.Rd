@@ -56,25 +56,35 @@ text.default (x, y = NULL, labels = seq(along = x), adj = NULL,
   Text can be rotated by using graphical parameters \code{srt} (see
   \code{\link{par}}); this rotates about the centre set by \code{adj}.
 
-  Some useful values for (typeface, font index) for Hershey fonts are:
-    (0, 0) Serif Symbol;
-    (0, 1) Serif Plain;
-    (0, 2) Serif Italic;
-    (0, 3) Serif Bold;
-    (0, 4) Serif Bold Italic;
-    (1, 0) Sans Serif Symbol;
-    (1, 1) Sans Serif Plain;
-    (1, 2) Sans Serif Italic;
-    (1, 3) Sans Serif Bold;
-    (1, 4) Sans Serif Bold Italic;
-    (2, 1) Script Plain;
-    (3, 1) Gothic English;
-    (4, 1) Gothic German;
-    (5, 1) Gothic Italian;
-    (6, 2) Serif Symbol Italic;
-    (6, 3) Serif Symbol Bold;
-    (6, 4) Serif Symbol Bold Italic;
-    (7, 2) Sans Serif Symbol Italic.
+  The available values for (typeface, fontindex) for Hershey fonts are:
+    ("serif", "symbol")
+    ("serif", "plain")
+    ("serif", "italic")
+    ("serif", "bold")
+    ("serif", "bold italic")
+    ("sans serif", "symbol")
+    ("sans serif", "plain")
+    ("sans serif", "italic")
+    ("sans serif", "bold")
+    ("sans serif", "bold italic")
+    ("script", "symbol")
+    ("script", "plain")
+    ("script", "italic")
+    ("script", "bold")
+    ("gothic english", "symbol")
+    ("gothic english", "plain")
+    ("gothic german", "symbol")
+    ("gothic german, "plain")
+    ("gothic italian", "symbol")
+    ("gothic italian", "plain")
+    ("serif symbol", "symbol")
+    ("serif symbol", "plain")
+    ("serif symbol", "italic")
+    ("serif symbol", "bold")
+    ("serif symbol", "bold italic")
+    ("sans serif symbol", "symbol")
+    ("sans serif symbol", "plain")
+    ("sans serif symbol", "italic")
 }
 \seealso{
   \code{\link{mtext}}, \code{\link{title}};

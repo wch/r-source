@@ -5,7 +5,7 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
 	  xlim = range(x, finite = TRUE),
 	      ylim = range(y, finite = TRUE),
 	  zlim = range(z, finite = TRUE),
-	  labcex = 0.4, drawlabels = TRUE, method = 3, vfont = NULL,
+	  labcex = 0.4, drawlabels = TRUE, method = "flattest", vfont = NULL,
 	  col = par("fg"), lty = par("lty"), lwd = par("lwd"), 
 	  add = FALSE, ...)
 {
@@ -34,6 +34,16 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     }
     ##- don't lose  dim(.)
     if (!is.double(z)) storage.mode(z) <- "double"
+    method <- pmatch(method[1], c("simple", "edge", "flattest"))
+    if (!is.null(vfont)) {
+        typeface <- pmatch(vfont[1], c("serif", "sans serif", "script",
+		                       "gothic english", "gothic german",
+			      	       "gothic italian", "serif symbol",
+				       "sans serif symbol"))
+        fontindex <- pmatch(vfont[2], c("symbol", "plain", "italic", "bold",
+				        "bold italic"))
+        vfont <- c(typeface-1, fontindex-1)
+    }
     .Internal(contour(as.double(x), as.double(y), z, as.double(levels),
 		      labcex, drawlabels, method, vfont, 
 		      col = col, lty = lty, lwd = lwd))
