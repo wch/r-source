@@ -22,7 +22,7 @@ run: $(PKG)-Ex.R
 	@rm -f $(PKG)-Ex.Rout.fail
 	@$(ECHO) "Running examples in '$(PKG)-Ex.R' ..."
 	@$(R) R_LIBS='$(RLIB);$(R_LIBS)' < $(PKG)-Ex.R > $(PKG)-Ex.Rout 2>&1 \
-	  || mv  $(PKG)-Ex.Rout $(PKG)-Ex.Rout.fail
+	  || (mv  $(PKG)-Ex.Rout $(PKG)-Ex.Rout.fail && exit 1)
 	@if test -f $(PKG)-Ex.Rout.prev ; then \
 	  mv $(PKG)-Ex.Rout $(PKG)-Ex.Rout.fail; \
 	  echo -n "Comparing \`$(PKG)-Ex.Rout' to \`$(PKG)-Ex.Rout.prev' ..."; \
