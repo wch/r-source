@@ -1,0 +1,30 @@
+include ../gnuwin32/MkRules
+
+all: makeMakedeps ../gnuwin32/libmain.a
+
+CFLAGS=$(OPTFLAGS) -I../include -I../gnuwin32
+FFLAGS=$(OPTFLAGS)
+SOURCES=$(wildcard *.c *.f)
+OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
+
+gram.c: ;
+
+saveload-CFLAGS=-I../gnuwin32/xdr
+character-CFLAGS=-I../gnuwin32/regex
+platform-CFLAGS=-I../gnuwin32/regex
+
+../gnuwin32/libmain.a: $(OBJS)
+
+# Dependencies
+CSOURCES=$(wildcard *.c)
+DEPS=$(foreach i, $(CSOURCES), $(basename $i).d)
+
+.c.d:
+	@echo "making $@ from $<"
+	@$(CC)  -M $(CFLAGS) $($*-CFLAGS) $< -o $@
+
+makeMakedeps: $(DEPS)
+	@$(RM) Makedeps
+	@cat $(DEPS) >> Makedeps
+
+-include Makedeps
