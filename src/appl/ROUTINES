@@ -1,3 +1,12 @@
+##-*- R -*- (emacs font-lock)
+##--- Here are subroutines/functions that we want to be linked into R.binary
+##--- but are only called
+##	either as .C() or .Fortran() in R
+##	or     by e.g. mva.so or modreg.so when that one is loaded.
+##
+## This is the basis of the ../include/FFTab.h and  ../include/FFDecl.h  files
+## which are included by  ../unix/dynload.c
+##
 C_FUNCTION(approx)
 F77_SUBROUTINE(ch2inv)
 F77_SUBROUTINE(chol)
@@ -7,8 +16,13 @@ C_FUNCTION(bincode2)
 C_FUNCTION(bincount)
 F77_SUBROUTINE(cg)
 F77_SUBROUTINE(ch)
+F77_SUBROUTINE(rg)
+F77_SUBROUTINE(rs)
 C_FUNCTION(cumsum)
 C_FUNCTION(distance)
+#-- Linpack --
+F77_SUBROUTINE(dpbfa)
+F77_SUBROUTINE(dpbsl)
 F77_SUBROUTINE(dpoco)
 F77_SUBROUTINE(dpodi)
 F77_SUBROUTINE(dpofa)
@@ -26,6 +40,7 @@ F77_SUBROUTINE(dqrxb)
 F77_SUBROUTINE(dsvdc)
 F77_SUBROUTINE(dtrsl)
 F77_SUBROUTINE(dtrco)
+#
 C_FUNCTION(fft_factor)
 C_FUNCTION(fft_work)
 F77_SUBROUTINE(fdhess)
@@ -36,15 +51,14 @@ C_FUNCTION(lowess)
 C_FUNCTION(massdist)
 F77_SUBROUTINE(optif9)
 C_FUNCTION(pretty)
-F77_SUBROUTINE(rg)
 C_FUNCTION(rowsum)
 F77_SUBROUTINE(zeroin)
-F77_SUBROUTINE(rs)
 C_FUNCTION(spline_coef)
 C_FUNCTION(spline_eval)
 C_FUNCTION(stemleaf)
 C_FUNCTION(str_signif)
 C_FUNCTION(tabulate)
+# Sockets
 C_FUNCTION(Rsockconnect)
 C_FUNCTION(Rsockopen)
 C_FUNCTION(Rsocklisten)
