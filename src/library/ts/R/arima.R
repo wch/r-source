@@ -339,15 +339,15 @@ predict.Arima <-
     function (object, n.ahead = 1, newxreg = NULL, se.fit = TRUE, ...)
 {
     myNCOL <- function(x) if (is.null(x)) 0 else NCOL(x)
-    data <- eval.parent(parse(text = object$series))
+    rsd <- object$residuals
     xr <- object$call$xreg
     xreg <- if (!is.null(xr)) eval.parent(xr) else NULL
     ncxreg <- myNCOL(xreg)
     if (myNCOL(newxreg) != ncxreg)
         stop("xreg and newxreg have different numbers of columns")
     class(xreg) <- NULL
-    xtsp <- tsp(data)
-    n <- length(data)
+    xtsp <- tsp(rsd)
+    n <- length(rsd)
     arma <- object$arma
     coefs <- object$coef
     narma <- sum(arma[1:4])
@@ -357,7 +357,6 @@ predict.Arima <-
             newxreg <- cbind(intercept = rep(1, n.ahead), newxreg)
             ncxreg <- ncxreg + 1
         }
-        data <- data - as.matrix(xreg) %*% coefs[-(1:narma)]
         xm <- drop(as.matrix(newxreg) %*% coefs[-(1:narma)])
     }
     else xm <- 0
@@ -372,11 +371,11 @@ predict.Arima <-
             warning("seasonal ma part of model is not invertible")
     }
     z <- KalmanForecast(n.ahead, object$mod)
-    pred <- ts(z[[1]] + xm, start = xtsp[2] + deltat(data),
+    pred <- ts(z[[1]] + xm, start = xtsp[2] + deltat(rsd),
                frequency = xtsp[3])
     if (se.fit) {
         se <- ts(sqrt(z[[2]] * object$sigma2),
-                 start = xtsp[2] + deltat(data),
+                 start = xtsp[2] + deltat(rsd),
                  frequency = xtsp[3])
         return(pred, se)
     }
