@@ -232,11 +232,27 @@ none
 
 Directory:  incoming
 
-* PR# 862 *
-Subject: Wrong sign for Pearson residuals
-From: faraway@umich.edu
-Date: Mon, 5 Mar 2001 18:04:34 +0100 (MET)
+* PR# 867 *
+Subject: unable to open the base package
+From: Bruno Mendes <mendes@cse.ucsc.edu>
+Date: Wed, 7 Mar 2001 12:38:02 -0800 (PST)
 * PR# 861 *
 Subject: histogram of frequencies
 From: bernd.winkler@genedata.com
 Date: Mon, 5 Mar 2001 15:01:49 +0100 (MET)
+* PR# 863 *
+Subject: src/main/arithmetic.c on OpenBSD
+From: ian@darwinsys.com (Ian Darwin)
+Date: Tue,  6 Mar 2001 19:49:53 -0500 (EST)
+* PR# 862 *
+Subject: Wrong sign for Pearson residuals
+From: faraway@umich.edu
+Date: Mon, 5 Mar 2001 18:04:34 +0100 (MET)
+* PR# 866 *
+Subject: mkString
+From: Timothy.Keitt@StonyBrook.Edu
+Date: Wed, 7 Mar 2001 19:23:01 +0100 (MET)
+* PR# 865 *
+Subject:  axis(...,las=1) breaks postscript code in certain cases 
+From: maechler@stat.math.ethz.ch
+Date: Wed, 7 Mar 2001 18:08:58 +0100
