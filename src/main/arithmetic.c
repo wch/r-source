@@ -872,14 +872,6 @@ static SEXP real_binary(int code, SEXP s1, SEXP s2)
     return ans;
 }
 
-#ifdef IEEE_754
-# define NA_MSG		"NaNs produced"
-#else
-# define NA_MSG		"NAs produced"
-#endif
-
-#define NON_NUM_MSG "Non-numeric argument to mathematical function"
-
 
 /* Mathematical Functions of One Argument */
 
@@ -907,7 +899,7 @@ static SEXP math1(SEXP sa, double(*f)())
     int i, n;
 
     if (!isNumeric(sa))
-	errorcall(lcall, NON_NUM_MSG);
+	errorcall(lcall, R_MSG_NONNUM_MATH);
 
     n = length(sa);
     PROTECT(sa = coerceVector(sa, REALSXP));
@@ -924,7 +916,7 @@ static SEXP math1(SEXP sa, double(*f)())
 	}
     }
     if(naflag)
-	warningcall(lcall, NA_MSG);
+	warningcall(lcall, R_MSG_NA);
 
     ATTRIB(sy) = duplicate(ATTRIB(sa));
     OBJECT(sy) = OBJECT(sa);
@@ -997,7 +989,7 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)())
     double ai, bi, *a, *b, *y;
 
     if (!isNumeric(sa) || !isNumeric(sb))
-	errorcall(lcall, NON_NUM_MSG);
+	errorcall(lcall, R_MSG_NONNUM_MATH);
 
 #define SETUP_Math2				\
     na = LENGTH(sa);				\
@@ -1027,7 +1019,7 @@ static SEXP math2(SEXP sa, SEXP sb, double (*f)())
 
 #define FINISH_Math2				\
     if(naflag)					\
-	warningcall(lcall, NA_MSG);		\
+	warningcall(lcall, R_MSG_NA);		\
 						\
     if (n == na) {				\
 	ATTRIB(sy) = duplicate(ATTRIB(sa));	\
@@ -1052,7 +1044,7 @@ static SEXP math2_1(SEXP sa, SEXP sb, SEXP sI, double (*f)())
     int m_opt;
 
     if (!isNumeric(sa) || !isNumeric(sb))
-	errorcall(lcall, NON_NUM_MSG);
+	errorcall(lcall, R_MSG_NONNUM_MATH);
 
     SETUP_Math2;
     m_opt = asInteger(sI);
@@ -1078,7 +1070,7 @@ static SEXP math2_2(SEXP sa, SEXP sb, SEXP sI1, SEXP sI2, double (*f)())
     int i_1, i_2;
 
     if (!isNumeric(sa) || !isNumeric(sb))
-	errorcall(lcall, NON_NUM_MSG);
+	errorcall(lcall, R_MSG_NONNUM_MATH);
 
     SETUP_Math2;
     i_1 = asInteger(sI1);
@@ -1288,7 +1280,7 @@ static SEXP math3(SEXP sa, SEXP sb, SEXP sc, double (*f)())
 
 #define SETUP_Math3						\
     if (!isNumeric(sa) || !isNumeric(sb) || !isNumeric(sc))	\
-	errorcall(lcall, NON_NUM_MSG);				\
+	errorcall(lcall, R_MSG_NONNUM_MATH);			\
 								\
     na = LENGTH(sa);						\
     nb = LENGTH(sb);						\
@@ -1323,7 +1315,7 @@ static SEXP math3(SEXP sa, SEXP sb, SEXP sc, double (*f)())
 
 #define FINISH_Math3				\
     if(naflag)					\
-	warningcall(lcall, NA_MSG);		\
+	warningcall(lcall, R_MSG_NA);		\
 						\
     if (n == na) {				\
 	ATTRIB(sy) = duplicate(ATTRIB(sa));	\
@@ -1500,7 +1492,7 @@ static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
 
 #define SETUP_Math4							\
     if(!isNumeric(sa)|| !isNumeric(sb)|| !isNumeric(sc)|| !isNumeric(sd))\
-	errorcall(lcall, NON_NUM_MSG);					\
+	errorcall(lcall, R_MSG_NONNUM_MATH);				\
 									\
     na = LENGTH(sa);							\
     nb = LENGTH(sb);							\
@@ -1540,7 +1532,7 @@ static SEXP math4(SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
 
 #define FINISH_Math4				\
     if(naflag)					\
-	warningcall(lcall, NA_MSG);		\
+	warningcall(lcall, R_MSG_NA);		\
 						\
     if (n == na) {				\
 	ATTRIB(sy) = duplicate(ATTRIB(sa));	\
@@ -1695,7 +1687,7 @@ static SEXP math5(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se, double (*f)())
 #define SETUP_Math5							\
     if (!isNumeric(sa) || !isNumeric(sb) || !isNumeric(sc) ||		\
 	!isNumeric(sd) || !isNumeric(se))				\
-	errorcall(lcall, NON_NUM_MSG);					\
+	errorcall(lcall, R_MSG_NONNUM_MATH);				\
 									\
     na = LENGTH(sa);							\
     nb = LENGTH(sb);							\
@@ -1741,7 +1733,7 @@ static SEXP math5(SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se, double (*f)())
 
 #define FINISH_Math5				\
     if(naflag)					\
-	warningcall(lcall, NA_MSG);		\
+	warningcall(lcall, R_MSG_NA);		\
 						\
     if (n == na) {				\
 	ATTRIB(sy) = duplicate(ATTRIB(sa));	\

@@ -158,7 +158,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     x = CAR(args);
     tok = CADR(args);
     if (!isString(x) || !isString(tok))
-	errorcall(call,"non-character argument in strsplit()");
+	errorcall_return(call,"non-character argument in strsplit()");
     len = LENGTH(x);
     tlen = LENGTH(tok);
     PROTECT(s = allocVector(VECSXP, len));
@@ -353,7 +353,7 @@ SEXP do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op,args);
 
     if (!isString(CAR(args)))
-	errorcall(call, "the first argument must be a string");
+	errorcall_return(call, "the first argument must be a string");
     len = length(CAR(args));
 
     PROTECT(ans = allocVector(STRSXP, len));
@@ -419,7 +419,7 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (value_opt == NA_INTEGER) value_opt = 0;
 
     if (!isString(pat) || length(pat) < 1 || !isString(vec))
-	errorcall(call, "invalid argument");
+	errorcall(call, R_MSG_IA);
 
     eflags = 0;
 
@@ -544,7 +544,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(pat) || length(pat) < 1 ||
 	!isString(rep) || length(rep) < 1 ||
 	!isString(vec))
-	errorcall(call, "invalid argument");
+	errorcall(call, R_MSG_IA);
 
     eflags = 0;
     if (extended_opt) eflags = eflags | REG_EXTENDED;
@@ -623,7 +623,7 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (!isString(pat) || length(pat) < 1 ||
 	!isString(text) || length(text) < 1 )
-	errorcall(call, "invalid argument");
+	errorcall(call, R_MSG_IA);
 
     eflags = extended_opt ? REG_EXTENDED : 0;
 
@@ -635,7 +635,7 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for (i = 0 ; i < n ; i++) {
 	if(regexec(&reg, CHAR(STRING(text)[i]), 1, regmatch, 0) == 0) {
-	    st = regmatch[0].rm_so; 
+	    st = regmatch[0].rm_so;
 	    INTEGER(ans)[i] = st + 1; /* index from one */
 	    INTEGER(matchlen)[i] = regmatch[0].rm_eo - st;
 	} else {
@@ -665,7 +665,7 @@ do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 	STRING(y)[i] = allocString(strlen(CHAR(STRING(x)[i])));
 	strcpy(CHAR(STRING(y)[i]), CHAR(STRING(x)[i]));
     }
-    
+
     for(i = 0; i < n; i++) {
 	for(p = CHAR(STRING(y)[i]); *p != '\0'; p++) {
 	    *p = tolower(*p);
@@ -809,7 +809,7 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString(old) || (length(old) < 1) ||
        !isString(new) || (length(new) < 1) ||
        !isString(x))
-	errorcall(call, "invalid argument");
+	errorcall(call, R_MSG_IA);
 
     for(i = 0; i <= UCHAR_MAX; i++)
 	xtable[i] = i;

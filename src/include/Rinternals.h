@@ -551,6 +551,10 @@ SEXP substitute(SEXP,SEXP);
 void unprotect(int);
 void unprotect_ptr(SEXP);
 
+				/* return(.) NOT reached : for -Wall */
+#define error_return(msg)	{ error(msg);		return R_NilValue; }
+#define errorcall_return(cl,msg){ errorcall(cl, msg);	return R_NilValue; }
+
 #ifdef __MAIN__
 #undef extern
 #endif

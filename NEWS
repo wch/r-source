@@ -165,6 +165,8 @@ NEW FEATURES
     o	residuals.lm() also allows type = "partial" & "response"
 	as residuals.glm().
 
+    o	New functions which.min() & which.max().
+
 
 BUG FIXES
 

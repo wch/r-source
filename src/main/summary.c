@@ -26,9 +26,9 @@
 #include "Defn.h"
 #include "Mathlib.h"
 
-#define R_INT_MIN 1+INT_MIN
-#define Int2Real(i) (i == NA_INTEGER) ? NA_REAL : (double)i;
-
+#define R_INT_MIN	(1+INT_MIN)
+	/* since INT_MIN is the NA_INTEGER value ! */
+#define Int2Real(i)	((i == NA_INTEGER) ? NA_REAL : (double)i)
 
 #ifdef DEBUG_sum
 #define DbgP1(s) REprintf(s)
@@ -357,7 +357,7 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
 	zcum.r = NA_REAL;
 #endif
-	icum = R_INT_MIN;/* since INT_MIN is the NA_INTEGER value !! */
+	icum = R_INT_MIN;
 	break;
 
     case 4:/* prod */
@@ -553,10 +553,8 @@ na_answer: /* even for IEEE, for INT : */
     }
     return ans;
 
-
 badmode:
-    errorcall(call, "invalid \"mode\" of argument");
-    return R_NilValue;/*-Wall */
+    errorcall_return(call, R_MSG_mode);
 }/* do_summary */
 
 SEXP do_range(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -571,7 +569,58 @@ SEXP do_range(SEXP call, SEXP op, SEXP args, SEXP env)
     return(ans);
 }
 
+/* which.min(x) : The index (starting at 1), of the first min(x) in x */
+SEXP do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP sx, ans;
+    double s;
+    int i, n, index;
 
+    checkArity(op, args);
+
+    PROTECT(sx = coerceVector(CAR(args), REALSXP));
+    if (!isNumeric(sx))
+      errorcall(call, "non-numeric argument");
+    n = LENGTH(sx);
+    index = NA_INTEGER;
+    s = R_PosInf;
+    for (i = 0; i < n; i++)
+	if (!ISNAN(REAL(sx)[i]) && REAL(sx)[i] < s) {
+	    s = REAL(sx)[i]; index = i;
+	}
+    UNPROTECT(1);
+    ans = allocVector(INTSXP, 1);
+    INTEGER(ans)[0] = index + 1;
+    return ans;
+}
+
+/* which.max(x) : The index (starting at 1), of the first max(x) in x */
+SEXP do_first_max(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP sx, ans;
+    double s;
+    int i, n, index;
+
+    checkArity(op, args);
+
+    PROTECT(sx = coerceVector(CAR(args), REALSXP));
+    if (!isNumeric(sx))
+      errorcall(call, "non-numeric argument");
+    n = LENGTH(sx);
+    index = NA_INTEGER;
+    s = R_NegInf;
+    for (i = 0; i < n; i++)
+	if (!ISNAN(REAL(sx)[i]) && REAL(sx)[i] > s) {
+	    s = REAL(sx)[i]; index = i;
+	}
+    UNPROTECT(1);
+    ans = allocVector(INTSXP, 1);
+    INTEGER(ans)[0] = index + 1;
+    return ans;
+}
+
+
+/* complete.cases(.) */
 SEXP do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP s, t, u, rval;
@@ -743,10 +792,8 @@ SEXP do_compcases(SEXP call, SEXP op, SEXP args, SEXP rho)
     return rval;
 
  bad:
-    error("complete.cases: not all arguments have the same length");
+    errorcall(call,"not all arguments have the same length");
 
  bad_mode:
-    error("complete.cases: invalid mode of argument");
-
-    return R_NilValue;		/* NOTREACHED; for -Wall */
+    errorcall_return(call,R_MSG_mode);
 }

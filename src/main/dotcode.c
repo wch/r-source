@@ -346,7 +346,7 @@ SEXP do_symbol(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[128], *p, *q;
     checkArity(op, args);
     if(!isValidString(CAR(args)))
-	errorcall(call, "invalid argument");
+	errorcall(call, R_MSG_IA);
     p = CHAR(STRING(CAR(args))[0]);
     q = buf;
     while ((*q = *p) != '\0') {
@@ -370,7 +370,7 @@ SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
     int val;
     checkArity(op, args);
     if(!isValidString(CAR(args)))
-	errorcall(call, "invalid argument");
+	errorcall(call, R_MSG_IA);
     sym = CHAR(STRING(CAR(args))[0]);
     val = 1;
     if (!(fun = R_FindSymbol(sym, "")))

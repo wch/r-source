@@ -26,9 +26,11 @@ max.col(m)
   \emph{Modern Applied Statistics with S-PLUS.}
   New York: Springer (3nd ed).
 }
+\seealso{\code{\link{which.max}} for vectors.}
 \examples{
 data(swiss)
 table(mc <- max.col(swiss))# mostly "1" and "5", 5 x "2" and once "4"
 swiss[unique(print(mr <- max.col(t(swiss)))) , ] # 3 33 45 45 33 6
 }
 \keyword{utilities}
+\keyword{array}

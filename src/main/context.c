@@ -188,8 +188,7 @@ SEXP R_sysframe(int n, RCNTXT *cptr)
 	n = -n;
 
     if(n < 0)
-	errorcall(R_GlobalContext->call,
-		  "not that many enclosing environments");
+	errorcall(R_GlobalContext->call,"not that many enclosing environments");
 
     while (cptr->nextcontext != NULL) {
 	if (cptr->callflag & CTXT_FUNCTION ) {
@@ -220,8 +219,7 @@ int R_sysparent(int n, RCNTXT *cptr)
     int j;
     SEXP s;
     if(n <= 0)
-	errorcall( R_ToplevelContext->call,
-		   "only positive arguments are allowed");
+	errorcall(R_ToplevelContext->call,"only positive arguments are allowed");
     while (cptr->nextcontext != NULL && n > 1) {
 	if (cptr->callflag & CTXT_FUNCTION )
 	    n--;

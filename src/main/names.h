@@ -173,6 +173,8 @@ SEXP do_fileexists(SEXP, SEXP, SEXP, SEXP);
 SEXP do_filecreate(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fileremove(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fileshow(SEXP, SEXP, SEXP, SEXP);
+SEXP do_first_max(SEXP, SEXP, SEXP, SEXP);
+SEXP do_first_min(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fft(SEXP, SEXP, SEXP, SEXP);
 SEXP do_fmin(SEXP, SEXP, SEXP, SEXP);
 SEXP do_for(SEXP, SEXP, SEXP, SEXP);
