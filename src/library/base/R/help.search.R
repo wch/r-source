@@ -1,13 +1,13 @@
-help.search <- function(topic, fields = c("name", "title"),
+help.search <- function(pattern, fields = c("alias", "title"),
                         apropos, keyword, whatis, ignore.case = TRUE,
                         packages = NULL, lib.loc = .lib.loc,
                         help.db = getOption("help.db"),
                         verbose = getOption("verbose"),
                         rebuild = FALSE) {
     TABLE <- c("name", "alias", "title", "keyword")
-    if (!missing(topic)) {
-        if (!is.character(topic) || (length(topic) > 1))
-            stop("`topic' must be a single character string")
+    if (!missing(pattern)) {
+        if (!is.character(pattern) || (length(pattern) > 1))
+            stop("`pattern' must be a single character string")
         i <- pmatch(fields, TABLE)
         if (any(is.na(i)))
             stop("incorrect field specification")
@@ -17,22 +17,22 @@ help.search <- function(topic, fields = c("name", "title"),
         if (!is.character(apropos) || (length(apropos) > 1))
             stop("`apropos' must be a single character string")
         else {
-            topic <- apropos
-            fields <- c("name", "title")
+            pattern <- apropos
+            fields <- c("alias", "title")
         }
     } else if (!missing(keyword)) {
         if (!is.character(keyword) || (length(keyword) > 1))
             stop("`keyword' must be a single character string")
         else {
-            topic <- keyword
+            pattern <- keyword
             fields <- "keyword"
         }
     } else if (!missing(whatis)) {
         if (!is.character(whatis) || (length(whatis) > 1))
             stop("`whatis' must be a single character string")
         else {
-            topic <- whatis
-            fields <- "name"
+            pattern <- whatis
+            fields <- "alias"
         }
     } else {
         stop("don't know what to search")
@@ -102,7 +102,7 @@ help.search <- function(topic, fields = c("name", "title"),
     if(verbose) cat("\nDatabase of dimension", dim(db))
     i <- NULL
     for (f in fields)
-        i <- c(i, grep(topic, db[, f], ignore.case = ignore.case))
+        i <- c(i, grep(pattern, db[, f], ignore.case = ignore.case))
 
     db <- db[sort(unique(i)), , drop = FALSE]
     if(verbose) cat(", matched", NROW(db),"entries.\n")
@@ -111,7 +111,7 @@ help.search <- function(topic, fields = c("name", "title"),
     fields <- paste(fields, collapse = " or ")
     if (NROW(db) > 0) {
         FILE <- tempfile()
-        cat(paste("Help files with ", fields, " matching `", topic,
+        cat(paste("Help files with ", fields, " matching `", pattern,
                   "':\n\n", sep = ""),
             file = FILE)
         dbnam <- paste(db[ , "name"], "(", db[, "pkg"], ")", sep = "")
@@ -121,7 +121,7 @@ help.search <- function(topic, fields = c("name", "title"),
         file.show(FILE, delete.file = TRUE)
     } else {
         cat(paste("No help files found with ", fields, " matching `",
-                  topic, "'\n", sep = ""))
+                  pattern, "'\n", sep = ""))
     }
 
     return(invisible())
