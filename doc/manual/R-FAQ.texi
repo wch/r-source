@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.6-34, 2003-02-21
+@set FAQ-VERSION 1.6-35, 2003-02-27
 @set REL-VERSION 1.6.2
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1494,6 +1494,9 @@ Constrained Correspondence Analysis.
 A common database interface (DBI) class and method definitions.  All
 classes in this package are virtual and need to be extended by the
 various DBMS implementations.
+@item Davies
+Functions for the Davies quantile function and the Generalized Lambda
+distribution.
 @item Devore5
 Data sets and sample analyses from ``Probability and Statistics for
 Engineering and the Sciences (5th ed)'' by Jay L. Devore, 2000, Duxbury.
@@ -1831,6 +1834,9 @@ Score tests for association of traits with haplotypes when linkage phase
 is ambiguous.
 @item hdf5
 Interface to the @acronym{NCSA} HDF5 library.
+@item hier.part
+Hierarchical Partitioning: variance partition of a multivariate data
+set.
 @item ifs
 Iterated Function Systems distribution function estimator.
 @item ineq
