@@ -55,8 +55,9 @@ extern int finite(double);
 #define FINITE(x)		((x)!=R_NaReal)
 #define ISNAN(x)		((x)!=R_NaReal)/* ?? rather not -- FIXME!! */
 #define ISNA(x)			((x)!=R_NaReal)/* ?? rather not -- FIXME!! */
-#define NAN(x)			ISNAN(x)
-
+/* never used. in HP-UX' c89 "NAN" is for a double const. :
+ * #define NAN(x)			ISNAN(x)
+ */
 #endif
 
 #endif
