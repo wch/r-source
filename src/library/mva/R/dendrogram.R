@@ -1,31 +1,43 @@
 as.dendrogram <- function(object, ...) UseMethod("as.dendrogram")
 
-### FIXME: Consider  `hang = -1' or `= 0.1' argument
-### -----  as in plot.hclust() --- would be used for "height" construction!
-as.dendrogram.hclust <- function(object, ...)
+as.dendrogram.hclust <- function(object, hang = -1, ...)
+## hang = 0.1  is default for plot.hclust
 {
+
     if(is.null(object$labels))
         object$labels <- object$order
 
     z <- list()
-    for(k in 1:nrow(object$merge)) {
+    nMerge <- length(oHgt <- object$height)
+    if(nMerge != nrow(object$merge))
+        stop("`merge' and `height' do not fit!")
+    hMax <- oHgt[nMerge]
+    one <- 1:1 ; two <- 2:2 # integer!
+    for(k in 1:nMerge) {
         x <- sort(object$merge[k,])
-        if(all(x < 0)) {  # two leaves
+        if(any(neg <- x < 0))
+            h0 <- if(hang < 0) 0 else max(0, oHgt[k] - hang*hMax)
+        if(all(neg)) {  # two leaves
             zk <- as.list(object$labels[-x])
-            attr(zk,"members") <- 2
+            attr(zk,"members") <- two
             attr(zk,"midpoint") <- 0.5
-            attr(zk[[1]], "members") <- attr(zk[[2]], "members") <- 1
-            attr(zk[[1]], "height") <- attr(zk[[2]], "height") <- 0
-            attr(zk[[1]], "leaf") <- attr(zk[[2]], "leaf") <- TRUE 
+            attr(zk[[1]], "members") <- attr(zk[[2]], "members") <- one
+            attr(zk[[1]], "height") <- attr(zk[[2]], "height") <- h0
+            attr(zk[[1]], "leaf") <- attr(zk[[2]], "leaf") <- TRUE
         }
-        else if(x[1] < 0) { # one leaf, one node
+        else if(any(neg)) { # one leaf, one node
             X <- as.character(x)
-            zk <- list(object$labels[-x[1]], z[[X[2]]])
-            attr(zk,"members") <- attr(z[[X[2]]],"members") + 1
-            attr(zk, "midpoint") <- (1 + attr(z[[X[2]]],"midpoint"))/2
-            attr(zk[[1]], "members") <- 1
-            attr(zk[[1]], "height") <- 0
-            attr(zk[[1]], "leaf") <- TRUE 
+            ## For original "hclust" node ordering, the leaf is always left,
+            ## i.e. x[1]; don't want to assume this
+            isL <- x[1] < 0 # is leaf left?
+            zk <-
+                if(isL) list(object$labels[-x[1]], z[[X[2]]])
+                else    list(z[[X[1]]], object$labels[-x[2]])
+            attr(zk,"members") <- attr(z[[X[1+isL]]],"members") + one
+            attr(zk, "midpoint") <- (1 + attr(z[[X[1+isL]]],"midpoint"))/2
+            attr(zk[[2-isL]], "members") <- one
+            attr(zk[[2-isL]], "height") <- h0
+            attr(zk[[2-isL]], "leaf") <- TRUE
         }
         else { # two nodes
             x <- as.character(x)
@@ -37,7 +49,7 @@ as.dendrogram.hclust <- function(object, ...)
                  attr(z[[x[1]]], "midpoint")+
                  attr(z[[x[2]]], "midpoint"))/2
         }
-        attr(zk,"height") <- object$height[k]
+        attr(zk, "height") <- oHgt[k]
         z[[k <- as.character(k)]] <- zk
     }
     z <- z[[k]]
@@ -70,7 +82,7 @@ print.dendrogram <- function(x, digits = getOption("digits"), ...)
     cat("`dendrogram' ")
     if(inherits(x, "dendrogramLeaf"))
         cat("leaf", format(x, digits = digits))
-    else 
+    else
         cat("with", length(x), "branches and",
             attr(x,"members"), "members total")
 
@@ -104,12 +116,15 @@ function (object, max.level = 0, vec.len = 4, digits.d = 3, nchar.max = 128,
         }
     } else { ## leaf
         at <- attributes(object)
-        cat("leaf", format(object, digits=digits.d),"")
+        cat("leaf",
+            if(is.character(object)) paste("",object,"",sep='"') else
+            format(object, digits=digits.d),"")
         any.at <- (h <- at$height) != 0
         if(any.at) cat("(h=",format(h, digits=digits.d))
-        if((m <- at$members) != 1)
+        if((m <- at$members) != 1) #MM: when can this happen?
             cat(if(any.at)", " else {any.at <- TRUE; "("}, "memb= ", m, sep="")
-        at <- at[!(names(at) %in% c("class", "height", "members"))]
+        ## drop `leaf = TRUE' which we know here
+        at <- at[!(names(at) %in% c("class", "height", "leaf", "members"))]
         for(i in seq(along=at))
             cat(if(any.at) "," else {any.at <- TRUE; "("},
                 names(at)[i],"=", format(at[[i]], digits=digits.d,wid=wid))
@@ -129,14 +144,24 @@ function (object, max.level = 0, vec.len = 4, digits.d = 3, nchar.max = 128,
     val
 }
 
+
+## MM: new "flag"  `leaflab' = c("perpendicular", "textlike","none")
+
+### CARE : THIS starts labeling cluster dendrograms !!!
+### ==== : where it didn't before
+
+## Also: need larger par("mar")[1] or [4] for longish labels !
+## [probably don't change, just print a warnig or so !!
 plot.dendrogram <-
     function(x, type = c("rectangle", "triangle"),
              center = FALSE, edge.root= !is.null(attr(x,"edgetext")),
              nodePar = NULL, edgePar = list(),
+             leaflab = c("perpendicular", "textlike", "none"),
              xlab = "", ylab = "", horiz = FALSE,
              ...)
 {
     type <- match.arg(type)
+    leaflab <- match.arg(leaflab)
     hgt <- attr(x, "height")
     if(edge.root && is.logical(edge.root))
         edge.root <- 0.0625 * hgt
@@ -158,14 +183,14 @@ plot.dendrogram <-
             if(horiz) text(my,x0, et) else text(x0, my, et)
         }
     }
-    plotNode(x1, x2, x, type = type, center = center,
+    plotNode(x1, x2, x, type = type, center = center, leaflab = leaflab,
              nodePar = nodePar, edgePar = edgePar, horiz = horiz)
 }
 
-
 ### the work horse: plot node (if pch) and lines to all children
 plotNode <-
-    function(x1, x2, subtree, type, center, nodePar, edgePar, horiz = FALSE)
+    function(x1, x2, subtree, type, center, leaflab,
+             nodePar, edgePar, horiz = FALSE)
 {
     inner <- !isLeaf(subtree) && x1 != x2
     yTop <- attr(subtree, "height")
@@ -186,6 +211,7 @@ plotNode <-
 
     Xtract <- function(nam, L, default, indx)
         rep(if(any(nam == names(L))) L[[nam]] else default, length = indx)[indx]
+
     if(!is.null(nPar)) { ## draw this node
         i <- if(inner || hasP) 1 else 2 # only 1 node specific par
         pch <- Xtract("pch", nPar, default = 1:2,        i)
@@ -196,10 +222,20 @@ plotNode <-
                pch = pch, bg = bg, col = col, cex = cex)
     }
 
-    if(inner) {
+    if(isLeaf(subtree)) {
+        ## label leaf
+        if(leaflab == "perpendicular") { # somewhat like plot.hclust
+            text(if(horiz)cbind(yTop, xTop) else cbind(xTop, yTop),
+                 c(subtree), xpd = TRUE,
+                 srt = if(horiz) 0 else 90, adj = if(horiz) c(0,0.5) else 1)
+        }
+    }
+    else if(inner) {
         for(k in 1:length(subtree)) {
+            child <- subtree[[k]]
             ## draw lines to the children and draw themselves recursively
-            yBot <- attr(child <- subtree[[k]], "height")
+            yBot <- attr(child, "height")
+            if(getOption("verbose")) cat("ch.",k,"@ h=", yBot,"; ")
             if(is.null(yBot)) yBot <- 0
             xBot <-
                 if(center) mean(bx$limit[k:(k+1)])
@@ -226,16 +262,23 @@ plotNode <-
             }
 
             vln <- NULL
-            if(!is.null(attr(subtree[[k]],"text"))){
-                nodeText <- as.character(attr(subtree[[k]],"text"))
-                hln <- (1.2*strwidth(nodeText))/2          
+
+            if((isLeaf(child) && leaflab == "textlike") ||
+               !is.null(attr(child,"text"))) {
+                nodeText <-
+                    if(isLeaf(child)) c(child)
+                    else as.character(attr(child,"text"))
+                if(getOption("verbose")) cat('-- with "text"',nodeText)
+                hln <- (1.2*strwidth(nodeText))/2
                 vln <-1.5*strheight(nodeText)/2
-                rect(xBot-hln,yBot,xBot+hln,yBot+2*vln,col="white")
+                rect(xBot-hln,yBot,
+                     xBot+hln,yBot+2*vln,col="white")
                 text(xBot,yBot+vln,nodeText)
             }
 
-            if(!is.null(attr(subtree[[k]],"edgetext"))){
-                edgeText <- as.character(attr(subtree[[k]],"edgetext"))
+            if(!is.null(attr(child,"edgetext"))){
+                edgeText <- as.character(attr(child,"edgetext"))
+                if(getOption("verbose")) cat('-- with "edgetext"',edgeText)
                 hlm <- 1.2*strwidth(edgeText)/2
                 vlm <- 1.5*strheight(edgeText)/2
                 if(!is.null(vln)){
@@ -243,8 +286,8 @@ plotNode <-
                     my <- (yTop + yBot + 2*vln)/2
                 }
                 else{
-                    my <- (yTop + yBot)/2
                     mx <- (xTop + xBot)/2
+                    my <- (yTop + yBot)/2
                 }
                 if(type=="triangle"){
                     polygon(c(mx-hlm,mx-1.3*hlm,mx-hlm,
@@ -255,15 +298,15 @@ plotNode <-
                 }
                 else{
                     polygon(c(xBot-hlm,xBot-1.3*hlm,xBot-hlm,
-                              xBot+hlm,xBot+1.3*hlm,xBot+hlm),   
+                              xBot+hlm,xBot+1.3*hlm,xBot+hlm),
                             c(my-vlm,my,my+vlm,my+vlm,my,my-vlm),
-                            col="white") 
+                            col="white")
                     text(xBot,my,edgeText)
                 }
             }
-        
-            plotNode(bx$limit[k], bx$limit[k+1],
-                     subtree = child, type, center, nodePar, edgePar, horiz)
+
+            plotNode(bx$limit[k], bx$limit[k+1], subtree = child, type,
+                     center, leaflab, nodePar, edgePar, horiz)
         }
     }
 }
@@ -333,8 +376,5 @@ cut.dendrogram <- function(x, h, ...)
     list(upper = assignNodes(x, h), lower = LOWER)
 }## cut.dendrogram()
 
-isLeaf <- function(object){
-    (!is.null(attr(object, "leaf"))) && attr(object, "leaf")
-}
+isLeaf <- function(object) (is.logical(L <- attr(object, "leaf"))) && L
 
-    
