@@ -8,8 +8,8 @@ use R::Vars;
 
 @ISA = qw(Exporter);
 @EXPORT = qw(R_getenv R_version file_path env_path
-	     list_files_with_exts R_tempfile R_system
-	     R_runR);
+	     list_files list_files_with_exts
+	     R_tempfile R_system R_runR);
 
 #**********************************************************
 
@@ -74,6 +74,19 @@ sub env_path {
 }
 
 
+sub list_files {
+    my $dir = $_[0];
+    my @files;
+    opendir(DIR, $dir) or die "cannot opendir $dir: $!";
+    @files = grep { -f &file_path($dir, $_) } readdir(DIR);
+    closedir(DIR);
+    my @paths;
+    foreach my $file (@files) {
+	push @paths, &file_path($dir, $file);
+    }
+    @paths;
+}
+
 sub list_files_with_exts {
     my ($dir, $exts) = @_;
     my @files;
@@ -83,11 +96,11 @@ sub list_files_with_exts {
 	@files = grep { /\.$exts$/ && -f "$dir:$_" } readdir(DIR);
     }
     else{
-	@files = grep { /$exts$/ && -f "$dir/$_" } readdir(DIR);
+	@files = grep { /\.$exts$/ && -f "$dir/$_" } readdir(DIR);
     }
     closedir(DIR);
     ## We typically want the paths to the files, see also the R variant
-    ## listFilesWithExts() used in some of the QA tools.
+    ## .listFilesWithExts() used in some of the QA tools.
     my @paths;
     foreach my $file (@files) {
 	push @paths, &file_path($dir, $file);
