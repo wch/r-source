@@ -97,11 +97,12 @@ editing (see the file README.Rterm).
 Batch use: At its simplest, Rterm.exe can be used in a batch mode by
 commands like
 
-Rterm.exe --no-restore --no-save < infile > outfile
+Rterm.exe --no-restore --no-save < infile > outfile 2>&1
 
-although users will probably want to set up simple .bat or .cmd files
-to run batch jobs. You can also use it via Rcmd BATCH: see ?BATCH or
-Rcmd BATCH --help.  (You will Perl installed and in your path.)
+(users of Windows 95/98/ME should omit 2>&1) although users will
+probably want to set up simple .bat or .cmd files to run batch
+jobs. You can also use it via Rcmd BATCH: see ?BATCH or Rcmd BATCH
+--help.
 
 Use with ESS: You can use Rterm.exe to provide inferior R-mode in ESS
 under NTEmacs, for example with ess-5.1.20.  The pager is
