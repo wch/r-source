@@ -97,7 +97,7 @@ It provides a wide variety of statistical and graphical techniques
 analysis, classification, clustering, ...).
 
 This manual provides information on data types, programming elements,
-statistical modeling and graphics.
+statistical modelling and graphics.
 
 The current version of this document is @value{VERSION}.
 
@@ -497,7 +497,7 @@ statistical system FAQ}.
 @section Executing commands from or diverting output to a file
 @cindex Diverting input and output
 
-If commands are stored on an external file, say @file{commands.R} in the
+If commands are stored in an external file, say @file{commands.R} in the
 working directory @file{work}, they may be executed at any time in an
 @R{} session with the command
 
@@ -853,7 +853,7 @@ which will put five copies of @code{x} end-to-end in @code{s5}.
 @section Logical vectors
 
 As well as numerical vectors, @R{} allows manipulation of logical
-quantities.  The elements of a logical vectors can have the values
+quantities.  The elements of a logical vector can have the values
 @code{TRUE}, @code{FALSE}, and @code{NA} (for ``not available'', see
 below).  The first two are often abbreviated as @code{T} and @code{F},
 respectively.  Note however that @code{T} and @code{F} are just
@@ -999,9 +999,9 @@ c("X1", "Y2", "X3", "Y4", "X5", "Y6", "X7", "Y8", "X9", "Y10")
 Note particularly that recycling of short lists takes place here too;
 thus @code{c("X", "Y")} is repeated 5 times to match the sequence
 @code{1:10}.
-@footnote{@code{paste(..., collapse=@var{ss})} allows to collapse the
-arguments into a single character string putting @var{ss} in between, and
-there are more tools for character manipulation, see the help
+@footnote{@code{paste(..., collapse=@var{ss})} joins the
+arguments into a single character string putting @var{ss} in between.
+There are more tools for character manipulation, see the help
 for @code{sub} and @code{substring}.}
 
 @node Index vectors, Other types of objects, Character vectors, Simple manipulations numbers and vectors
@@ -1022,7 +1022,7 @@ Such index vectors can be any of four distinct types.
 @strong{A logical vector}.  In this case the index vector must be of the
 same length as the vector from which elements are to be selected.
 Values corresponding to @code{TRUE} in the index vector are selected and
-those corresponding to @code{FALSE} omitted.  For example
+those corresponding to @code{FALSE} are omitted.  For example
 
 @example
 > y <- x[!is.na(x)]
@@ -1045,7 +1045,7 @@ non-missing and positive.
 
 @item
 @strong{A vector of positive integral quantities}.  In this case the
-values in the index vector must lie in the the set @{1, 2, @dots{},
+values in the index vector must lie in the set @{1, 2, @dots{},
 @code{length(x)}@}.  The corresponding elements of the vector are
 selected and concatenated, @emph{in that order}, in the result.  The
 index vector can be of any length and the result is of the same length
@@ -1058,7 +1058,7 @@ as the index vector.  For example @code{x[6]} is the sixth component of
 
 @noindent
 selects the first 10 elements of @code{x} (assuming @code{length(x)} is
-no less than 10).  Also
+not less than 10).  Also
 
 @example
 > c("x","y")[rep(c(1,2,2,1), times=4)]
@@ -1296,7 +1296,7 @@ at all, provided the mode of the additional component(s) agrees with the
 mode of the object in the first place.
 
 This automatic adjustment of lengths of an object is used often, for
-example in the @code{scan()} function for input.  (See @ref{The scan()
+example in the @code{scan()} function for input.  (@pxref{The scan()
 function}.)
 
 Conversely to truncate the size of an object requires only an assignment
@@ -1386,7 +1386,7 @@ A @emph{factor} is a vector object used to specify a discrete
 classification (grouping) of the components of other vectors of the same length.
 @R{} provides both @emph{ordered} and @emph{unordered} factors.
 While the ``real'' application of factors is with model formulae
-(@pxref{Contrasts}), we here look at
+(@pxref{Contrasts}), we here look at a specific example.
 
 @section A specific example
 
@@ -1600,7 +1600,7 @@ The values in the data vector give the values in the array in the same
 order as they would occur in FORTRAN, that is ``column major order,''
 with the first subscript moving fastest and the last subscript slowest.
 
-For example if the dimension vector for an array, say @code{a} is
+For example if the dimension vector for an array, say @code{a}, is
 @code{c(3,4,2)} then there are @math{3 * 4 * 2 = 24} entries in @code{a}
 and the data vector holds them in the order @code{a[1,1,1], a[2,1,1],
 @dots{}, a[2,4,2], a[3,4,2]}.
@@ -1665,7 +1665,7 @@ the following:
 Extract elements @code{X[1,3]}, @code{X[2,2]} and @code{X[3,1]} as a
 vector structure, and
 @item
-Replace these entries in the array @code{X} by 0s.
+Replace these entries in the array @code{X} by zeroes.
 @end itemize
 In this case we need a @math{3} by @math{2} subscript array, as in the
 following example.
@@ -1755,7 +1755,7 @@ as
 > dim(Z) <- c(3,4,2)
 @end example
 
-However if @code{h} is shorter than 24, its values recycled from the
+However if @code{h} is shorter than 24, its values are recycled from the
 beginning again to make it up to size 24 (@pxref{The recycling rule}).
 As an extreme but common example
 
@@ -1772,7 +1772,7 @@ in @code{h}, and @code{Z[]} with an empty subscript or @code{Z} with no
 subscript stands for the entire array as an array.
 
 Arrays may be used in arithmetic expressions and the result is an array
-formed by element by element operations on the data vector.  The
+formed by element-by-element operations on the data vector.  The
 @code{dim} attributes of operands generally need to be the same, and
 this becomes the dimension vector of the result.  So if @code{A},
 @code{B} and @code{C} are all similar arrays, then
@@ -1782,8 +1782,8 @@ this becomes the dimension vector of the result.  So if @code{A},
 @end example
 
 @noindent
-makes @code{D} a similar array with data vector the result of the
-evident element by element operations.  However the precise rule
+makes @code{D} a similar array with its data vector being the result of
+the given element-by-element operations.  However the precise rule
 concerning mixed array and vector calculations has to be considered a
 little more carefully.
 
@@ -2686,7 +2686,7 @@ The first line of the file should have a @emph{name} for each variable
 in the data frame.
 
 @item
-Each additional line of the file has its first item a @emph{row label}
+Each additional line of the file has as its first item a @emph{row label}
 and the values for each variable.
 @end itemize
 
@@ -2760,7 +2760,7 @@ that no explicit row labels are given.
 @section The @code{scan()} function
 @findex scan
 
-Suppose the data vectors are of equal length and are to be read in in
+Suppose the data vectors are of equal length and are to be read in
 parallel.  Further suppose that there are three vectors, the first of
 mode character and the remaining two of mode numeric, and the file is
 @file{input.dat}.  The first step is to use @code{scan()} to read in the
@@ -2806,7 +2806,7 @@ dummy value.
 @end example
 
 There are more elaborate input facilities available and these are
-detailed in the manual.
+detailed in the manuals.
 
 @node Accessing builtin datasets, Editing data, The scan() function, Reading data from files
 @section Accessing builtin datasets
@@ -3040,7 +3040,7 @@ methods of bandwidth choice are implemented in packages @pkg{MASS} and
 @image{images/hist,9cm}
 @end iftex
 
-We can plot the empirical cumulative distribution function by using
+We can plot the empirical cumulative distribution function by using the
 function @code{ecdf} in the standard package @pkg{stepfun}.
 @findex ecdf
 @cindex Empirical CDFs
@@ -3090,7 +3090,7 @@ qqnorm(x); qqline(x)
 @end example
 
 @noindent
-which will usually (it is a random sample) show longer tails than
+which will usually (if it is a random sample) show longer tails than
 expected for a normal.  We can make a Q-Q plot against the generating
 distribution by
 
@@ -3100,7 +3100,7 @@ qqline(x)
 @end example
 
 Finally, we might want a more formal test of agreement with normality
-(or not).  Standard package @pkg{stats} provides the Shapiro-Wilk test
+(or not).  The standard package @pkg{stats} provides the Shapiro-Wilk test
 @cindex Shapiro-Wilk test
 @findex shapiro.test
 
@@ -3534,8 +3534,8 @@ is a generalized inverse of @math{X'X}.
 @}
 @end example
 
-After this object is created it is permanent, like all objects, and may
-be used in statements such as
+After this object is created it is permanent and may be used in
+statements such as
 
 @example
 > regcoeff <- bslash(Xmat, yvar)
@@ -3653,7 +3653,7 @@ user to pass on graphical parameters to @code{par()} to control the
 graphical output.  (@xref{The par() function}, for more details on the
 @code{par()} function.)  This can be done by including an extra
 argument, literally @samp{@dots{}}, of the function, which may then be
-passed on.  An outline example is given in the example below.
+passed on.  An outline example is given below.
 
 @example
 fun1 <- function(data, data.frame, graph=TRUE, limit=20, ...) @{
@@ -3790,7 +3790,7 @@ themselves.  Note, however, that such functions, or indeed variables,
 are not inherited by called functions in higher evaluation frames as
 they would be if they were on the search path.
 
-The example below shows a naive way of performing one dimensional
+The example below shows a naive way of performing one-dimensional
 numerical integration.  The integrand is evaluated at the end points of
 the range and in the middle.  If the one-panel trapezium rule answer is
 close enough to the two panel, then the latter is returned as the value.
@@ -3967,7 +3967,7 @@ special initialization file.  Finally, the special functions
 
 The location of the site initialization file is taken from the value of
 the @env{R_PROFILE} environment variable.  If that variable is unset,
-file @file{Rprofile.site} in the @R{} home subdirectory @file{etc} is
+the file @file{Rprofile.site} in the @R{} home subdirectory @file{etc} is
 used.  This file should contain the commands that you want to execute
 every time @R{} is started under your system.  A second, personal,
 profile file named @file{.Rprofile}@footnote{So it is hidden under
@@ -3975,7 +3975,7 @@ UNIX.} can be placed in any directory.  If @R{} is invoked in that
 directory then that file will be sourced.  This file gives individual
 users control over their workspace and allows for different startup
 procedures in different working directories.  If no @file{.Rprofile}
-file is found in the startup directory, than @R{} looks for a
+file is found in the startup directory, then @R{} looks for a
 @file{.Rprofile} file in the user's home directory and uses that (if it
 exists).
 
@@ -4383,7 +4383,7 @@ For example
 would fit a multiple regression model of @math{y} on @math{x1} and
 @math{x2} (with implicit intercept term).
 
-The important but technically optional parameter @code{data =
+The important (but technically optional) parameter @code{data =
 production} specifies that any variables needed to construct the model
 should come first from the @code{production} @emph{data frame}.
 @emph{This is the case regardless of whether data frame
@@ -4701,7 +4701,7 @@ function is implied by the response distribution.
 
 Each response distribution admits a variety of link functions to connect
 the mean with the linear predictor.  Those automatically available are
-as in the table below.
+shown in the following table:
 
 @quotation
 @multitable @columnfractions 0.25 0.55
@@ -5187,9 +5187,9 @@ user-contributed packages to @R{}.
 @c  newer functions.
 
 @item
-@cindex Tree based models
-@strong{Tree based models.} Rather than seek an explicit global linear
-model for prediction or interpretation, tree based models seek to
+@cindex Tree-based models
+@strong{Tree-based models.} Rather than seek an explicit global linear
+model for prediction or interpretation, tree-based models seek to
 bifurcate the data, recursively, at critical points of the determining
 variables in order to partition the data ultimately into groups that are
 as homogeneous as possible within, and as heterogeneous as possible
@@ -5297,9 +5297,9 @@ be produced by supplying one argument (second form) as either a list
 containing two elements @var{x} and @var{y} or a two-column matrix.
 
 @item plot(@var{x})
-If @var{x} is a time series, this produces a time-series plot, if
-@var{x} is a numeric vector, it produce a plot of the values in the
-vector against their index in the vector, and if @var{x} is a complex
+If @var{x} is a time series, this produces a time-series plot. If
+@var{x} is a numeric vector, it produces a plot of the values in the
+vector against their index in the vector.  If @var{x} is a complex
 vector, it produces a plot of imaginary versus real parts of the vector
 elements.
 
@@ -6010,7 +6010,7 @@ The graphical parameters relating to multiple figures are as follows:
 @table @code
 @item mfcol=c(3, 2)
 @itemx mfrow=c(2, 4)
-Set size of multiple figure array.  The first value is the number of
+Set the size of a multiple figure array.  The first value is the number of
 rows; the second is the number of columns.  The only difference between
 these two parameters is that setting @code{mfcol} causes figures to be
 filled by column; @code{mfrow} fills by rows.
@@ -6026,7 +6026,7 @@ factor of 0.83: if there are three or more of either rows or columns,
 the reduction factor is 0.66.
 
 @item mfg=c(2, 2, 3, 2)
-Position of current figure in a multiple figure environment.  The first
+Position of the current figure in a multiple figure environment.  The first
 two numbers are the row and column of the current figure; the last two
 are the number of rows and columns in the multiple figure array.  Set
 this parameter to jump between figures in the array.  You can even use
@@ -6930,7 +6930,7 @@ from within the GUI.
 When the @acronym{GNU} @strong{readline} library is available at the
 time @R{} is configured for compilation under UNIX, an inbuilt command
 line editor allowing recall, editing and re-submission of prior commands
-is used.  Note: this appendix does @strong{not} apply to @acronym{GNOME}
+is used.  Note: this appendix does @strong{not} apply to the @acronym{GNOME}
 interface under UNIX, only to the standard command-line interface.
 
 It can be disabled (useful for usage with @acronym{ESS}@footnote{The
@@ -7020,13 +7020,13 @@ instead of @kbd{C-b} and @kbd{C-f}, respectively.
 @item @var{text}
 Insert @var{text} at the cursor.
 @item C-f @var{text}
-Append @var{text} after cursor.
+Append @var{text} after the cursor.
 @item @key{DEL}
 Delete the previous character (left of the cursor).
 @item C-d
 Delete the character under the cursor.
 @item M-d
-Delete rest of the word under the cursor, and ``save'' it.
+Delete the rest of the word under the cursor, and ``save'' it.
 @item C-k
 Delete from cursor to end of command, and ``save'' it.
 @item C-y
