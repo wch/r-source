@@ -794,6 +794,22 @@ static SEXP MatrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	    }
 	}
 	break;
+    case 1919: /* vector <- vector */
+
+	for (j = 0; j < ncs; j++) {
+	    jj = INTEGER(sc)[j];
+	    if (jj == NA_INTEGER) continue;
+	    jj = jj - 1;
+	    for (i = 0; i < nrs; i++) {
+		ii = INTEGER(sr)[i];
+		if (ii == NA_INTEGER) continue;
+		ii = ii - 1;
+		ij = ii + jj * nr;
+		SET_VECTOR_ELT(x, ij, VECTOR_ELT(y, k));
+		k = (k + 1) % ny;
+	    }
+	}
+	break;
     default:
 	error("incompatible types in subset assignment");
     }
@@ -958,6 +974,14 @@ static SEXP ArrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 
 	    SET_STRING_ELT(x, ii, STRING_ELT(y, i % ny));
 	    break;
+
+	case 1919: /* vector <- vector */
+
+	    SET_VECTOR_ELT(x, ii, VECTOR_ELT(y, i % ny));
+	    break;
+
+	default:
+	    error("incompatible types in subset assignment");
 	}
 	if (n > 1) {
 	    j = 0;

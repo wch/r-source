@@ -334,6 +334,16 @@ m[,2]
 m[2,2]
 ## 1.4.1 returned null components: the case was missing from a switch.
 
+m <- list(a1=1:3, a2=4:6, a3=pi, a4=c("a","b","c"))
+matrix(m, 2, 2)
+## 1.4.1 gave `Unimplemented feature in copyVector'
+
+x <- vector("list",6)
+dim(x) <- c(2,3)
+x[1,2] <- list(letters[10:11])
+x
+## 1.4.1 gave `incompatible types in subset assignment'
+
 
 ## printing of matrix lists
 m <- list(as.integer(1), pi, 3+5i, "testit", TRUE, factor("foo"))
