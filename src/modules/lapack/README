@@ -7,13 +7,8 @@ routines, that are only used if COMPLEX*16 is supported by the Fortran
 compiler and compatible with the Rcomplex type (guaranteed for f2c users).
 They will not be compiled if an external LAPACK is used.
 
-blas2.f contains additional (to src/appl/blas.f) BLAS routines needed
-by double.f.
-
-cmplxblas.f contains BLAS routines needed by cmplx.f.
-
-blas2.f and cmplxblas.f are not used if a full BLAS implementation is
-found at configure time.
+cmplxblas.f contains BLAS routines needed by cmplx.f: it is not used
+if a full BLAS implementation is found at configure time.
 
 rgeev.f had to be corrected (lines 180-1) to allow LWORK queries to run.
 It calls dlange, which is missing in SunPerf, so a copy of that is

@@ -16,7 +16,6 @@ SOURCES_F = rgeev.f  \
    @USE_EXTERNAL_LAPACK_FALSE@ double.f \
    @COMPILE_DOUBLE_COMPLEX_FALSE@ cmplx.f
 
-SOURCES_BLAS_DOUBLE_COMPLEX = @USE_EXTERNAL_LAPACK_FALSE@ cmplxblas.f
 SOURCES_BLAS = @COMPILE_DOUBLE_COMPLEX_FALSE@ cmplxblas.f
 
 DEPENDS = $(SOURCES_C:.c=.d)
@@ -29,7 +28,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
 	README Makefile.in Makefile.win \
 	dllversion.rc $(HEADERS) $(SOURCES_C) \
-	blas2.f cmplx.f cmplxblas.f double.f rgeev.f rsyev.f rsyevr.f
+	cmplx.f cmplxblas.f double.f rgeev.f
 
 ## <FIXME>
 ## Change to 'lapack.la' when using libtool for shlibs.
