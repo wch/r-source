@@ -90,10 +90,10 @@ drop1.glm(object, scope, dispersion = 0, test = c("none", "Chisq", "F"),
   are used, not those of the authors of the models chapter of S.
 }
 \section{Warning}{
-  The model fitting must apply the models to the same dataset. This
-  may be a problem if there are missing values and \R's default of
-  \code{na.action = na.omit} is used, although it is not for the
-  \code{drop1} methods for \code{"lm"} and \code{"glm"}.  Only use
+  The model fitting must apply the models to the same dataset. Most
+  methods will attempt to use a subset of the data with no missing
+  values for any of the variables if \code{na.action=na.omit}, but
+  this may give biased results.  Only use
   these functions with data containing missing values with great care.
 }
 \seealso{\code{\link{step}}, \code{\link{aov}}, \code{\link{lm}},

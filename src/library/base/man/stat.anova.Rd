@@ -13,15 +13,15 @@ stat.anova(table, test, scale, df.scale, n)
  \item{df.scale}{degrees of freedom corresponding to scale.}
  \item{n}{number of observations.}
 }
-\description{This is a utility function, used in
-  \code{\link{anova.glm}(\dots, test != NULL)}
+\description{This is a utility function, used in \code{lm} and
+  \code{glm} methods for \code{\link{anova}(\dots, test != NULL)}
   and should not be used by the average user.
 }
 \value{
   A matrix which is the original \code{table}, augmented by a column
   of test statistics, depending on the \code{test} argument.
 }
-\seealso{\code{\link{anova.glm}}.}
+\seealso{\code{\link{anova.lm}}, \code{\link{anova.glm}}.}
 \examples{
 ##-- Continued from  ``?glm'':
 \testonly{example("glm", echo = FALSE)}

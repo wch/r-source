@@ -1,8 +1,6 @@
 \name{lm.summaries}
 \title{Accessing Linear Model Fits}
 \usage{
-anova(object, \dots)
-anovalist.lm(object, \dots, test = NULL)
 summary(object, correlation = FALSE)
 coefficients(object) ; coef(object)
 df.residual(object)
@@ -17,9 +15,6 @@ print(summary.lm.obj, digits = max(3, getOption("digits") - 3),
       symbolic.cor = p > 4,
       signif.stars= getOption("show.signif.stars"), \dots)
 }
-\alias{anova.lm}
-\alias{anova.lm.null}
-\alias{anovalist.lm}
 \alias{summary.lm}
 \alias{summary.lm.null}
 \alias{summary.mlm}% mlm is *not* mentioned at all
@@ -42,14 +37,12 @@ print(summary.lm.obj, digits = max(3, getOption("digits") - 3),
 }
 \description{
 All these functions are \code{\link{methods}} for class \code{lm} or
-\code{summary.lm} and \code{anova.lm} objects.
+\code{summary.lm} objects.
 }
 \details{
 \code{print.summary.lm} tries to be smart about formatting the
 coefficients, standard errors, etc. and additionally gives
 ``significance stars'' if \code{signif.stars} is \code{TRUE}.
-
-\code{anova.lm} produces an analysis of variance (\code{anova}) table.
 
 The generic accessor functions \code{coefficients}, \code{effects},
 \code{fitted.values} and \code{residuals} can be used to extract
@@ -84,21 +77,12 @@ various useful features of the value returned by \code{lm}.
     \emph{``adjusted''}, penalizing for higher \eqn{p}.}
   \item{cov.unscaled}{a \eqn{p \times p}{p x p} matrix of (unscaled)
     covariances of the \eqn{\hat\beta_j}{coef[j]}, \eqn{j=1, \dots, p}.}
-  %%-- Rdconv just deletes the following line. This IS a bug !
-  and if \code{correlation = TRUE} was specified,%- don't need anymore.
   \item{correlation}{the correlation matrix corresponding to the above
     \code{cov.unscaled}, if \code{correlation = TRUE} is specified.}
 }
-\section{Warning}{
-  The comparison between two or more models by \code{anova} or
-  \code{anovalist.lm} will only be valid if they
-  are fitted to the same dataset. This may be a problem if there are
-  missing values and \R's default of \code{na.action = na.omit} is used.
-}
 \seealso{
-  The model fitting function \code{\link{lm}}.
+  The model fitting function \code{\link{lm}}, \code{\link{anova.lm}}.
 
-  \code{\link{anova}} for the ANOVA table,
   \code{\link{coefficients}}, \code{\link{deviance}},
   \code{\link{effects}}, \code{\link{fitted.values}},
   \code{\link{glm}} for \bold{generalized} linear models,
@@ -122,3 +106,4 @@ abline(h=0, lty=2, col = 'gray')
 qqnorm(residuals(lm.D90))
 }
 \keyword{regression}
+\keyword{models}
