@@ -372,7 +372,7 @@ static void optcode(int code)
 	Rprintf("Last global step failed to locate a point lower than x.\n");
 	Rprintf("Either x is an approximate local minimum of the function,\n");
 	Rprintf("the function is too non-linear for this algorithm,\n");
-	Rprintf("or steptl is too large.\n");
+	Rprintf("or steptol is too large.\n");
 	break;
     case 4:
 	Rprintf("Iteration limit exceeded.  Algorithm failed.\n");
