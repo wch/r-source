@@ -125,7 +125,7 @@ temporary directory: the default is c:\TEMP.
 Using ATLAS
 -----------
 
-You can make use of ATLAS (http://www.netlib.org/atlas/) libraries by
+You can make use of ATLAS (http://math-atlas.sourceforge.net/) libraries by
 defining USE_ATLAS=YES in MkRules and specifying the path to the
 libraries in macro ATLAS_PATH.  
 
