@@ -1,5 +1,5 @@
 Package: ts
-Version: 0.1-1
+Version: 0.90.0
 Author: Collected by Brian Ripley. See SOURCES.
 Description: Time series functions.
 License: GPL Version 2 or later.
