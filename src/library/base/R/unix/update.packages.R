@@ -99,4 +99,10 @@ download.packages <- function(pkgs, destdir, available=NULL,
     retval
 }
 
-contrib.url <- function(CRAN) paste(CRAN,"/src/contrib",sep="")
+contrib.url <- function(CRAN, type=c("source","mac.binary")){
+  type<-match.arg(type)
+  switch(type, 
+         source=paste(CRAN,"/src/contrib",sep=""),
+         mac.binary=paste(CRAN,"/bin/macosx/",version$major, ".", substr(version$minor,1,1),sep="")
+         )
+}

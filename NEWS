@@ -264,8 +264,7 @@ NEW FEATURES
 	make the generic functions more self-contained (e.g., usable
 	in apply-type operations) and potentially to speed dispatch.
 
-
-    o	There is a GUI (RAqua) for Mac OS X
+    o	There is a GUI (RAqua) for Mac OS X, and support for binary packages
 
     o	The data editor is no longer limited to 65535 rows, and will
 	be substantially faster for large numbers of columns.

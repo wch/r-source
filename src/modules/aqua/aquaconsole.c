@@ -3087,8 +3087,10 @@ void Raqua_GetQuartzParameters(double *width, double *height, double *ps, char *
 
 void Raqua_CleanUp(SA_TYPE saveact, int status, int runLast)
 {
-    if(saveact == SA_DEFAULT) /* The normal case apart from R_Suicide */
-	saveact = SaveAction;
+  unsigned char buf[1024];
+  char * tmpdir;
+  if(saveact == SA_DEFAULT) /* The normal case apart from R_Suicide */
+    saveact = SaveAction;
 
     if(saveact == SA_SAVEASK) {
 	if(R_Interactive) {
@@ -3128,6 +3130,10 @@ void Raqua_CleanUp(SA_TYPE saveact, int status, int runLast)
     
     PrintWarnings();
     CloseRAquaConsole();
+    if((tmpdir = getenv("R_SESSION_TMPDIR"))) {
+	snprintf((char *)buf, 1024, "rm -rf %s", tmpdir);
+	system((char *)buf);
+    }
     exit(status);
 }
 

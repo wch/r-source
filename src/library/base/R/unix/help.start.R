@@ -39,7 +39,13 @@ browseURL <- function(url, browser = getOption("browser"))
        || !(length(browser) == 1)
        || (nchar(browser) == 0))
         stop("browser must be a non-empty character string")
-    isLocal <- length(grep("^(localhost|):", Sys.getenv("DISPLAY"))) > 0
+    
+    if (.Platform$GUI=="AQUA" ||
+        length(grep("^(localhost|):", Sys.getenv("DISPLAY"))) > 0)
+      isLocal <- TRUE
+    else
+      isLocal <- FALSE
+
     remoteCmd <- if(isLocal)
         switch(basename(browser),
                "gnome-moz-remote" =, "open" = url,
