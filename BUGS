@@ -303,3 +303,11 @@ Date: Tue, 23 Nov 1999 10:14:23 -0800 (PST)
 Subject: "outer" argument in mtext
 From: Douglas Bates <bates@stat.wisc.edu>
 Date: 23 Nov 1999 12:31:36 -0600
+* PR# 341 *
+Subject: Re: [R] problems with postscript device
+From: Chong Gu <chong@stat.purdue.edu>
+Date: Wed, 24 Nov 1999 00:18:55 -0500
+* PR# 342 *
+Subject: scan error
+From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
+Date: Wed, 24 Nov 1999 15:26:09 +0100 (MET)
