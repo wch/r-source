@@ -1514,9 +1514,8 @@ for simpler and more natural looking assignments, as we shall see in
 @ref{The array() function}.
 
 The values in the data vector give the values in the array in the same
-order as they would occur in @sc{Fortran}, that is ``column major
-order,'' with the first subscript moving fastest and the last subscript
-slowest.
+order as they would occur in FORTRAN, that is ``column major order,''
+with the first subscript moving fastest and the last subscript slowest.
 
 For example if the dimension vector for an array, say @code{a} is
 @code{c(3,4,2)} then there are @math{3 * 4 * 2 = 24} entries in @code{a}

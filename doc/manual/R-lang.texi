@@ -2519,7 +2519,7 @@ nice output for the results of any analysis.
 have the ability to modify or construct other subroutines and evaluate
 the result as an integral part of the language itself.  This is similar
 to Lisp and Scheme and other languages of the ``functional programming''
-variety, but in contrast to Fortran and the Algol family.  The Lisp
+variety, but in contrast to FORTRAN and the ALGOL family.  The Lisp
 family takes this feature to the extreme by the ``everything is a list''
 paradigm in which there is no distinction between programs and data.
 
@@ -3136,12 +3136,12 @@ platforms, although the information available may be limited there).
 
 These two functions provide a standard interface to compiled code that
 has been linked into @R{}, either at build time or via @code{dyn.load}
-(q.v.).  They are primarily intended for compiled @C{} and Fortran code
+(q.v.).  They are primarily intended for compiled @C{} and FORTRAN code
 respectively, but the @code{.C} function can be used with other
 languages which can generate C interfaces, for example C++.
 
 The first argument to each function is a character string given the
-symbol name as known to @C{} or Fortran, that is the function or
+symbol name as known to @C{} or FORTRAN, that is the function or
 subroutine name.  (The mapping to the symbol name in the load table is
 given by the functions @code{symbol.C} and @code{symbol.For};
 @findex symbol.C
@@ -3156,11 +3156,11 @@ the arguments are given names, these are used as names for the
 components in the returned list object.
 
 The following table gives the mapping between the modes of @R{} vectors
-and the types of arguments to a C function or Fortran subroutine.
+and the types of arguments to a C function or FORTRAN subroutine.
 
 @quotation
 @multitable @columnfractions 0.2 0.2 0.3
-@item @R{} storage mode @tab C type            @tab Fortran type
+@item @R{} storage mode @tab C type            @tab FORTRAN type
 @item @code{logical}    @tab @code{int *}      @tab @code{INTEGER}
 @item @code{integer}    @tab @code{int *}      @tab @code{INTEGER}
 @item @code{double}     @tab @code{double *}   @tab @code{DOUBLE PRECISION}
@@ -3171,17 +3171,17 @@ and the types of arguments to a C function or Fortran subroutine.
 
 C type @code{Rcomplex} is a structure with @code{double} members
 @code{r} and @code{i} defined in the header file @file{R_ext/Complex.h}.
-Only a single character string can be passed to or from Fortran, and the
+Only a single character string can be passed to or from FORTRAN, and the
 success of this is compiler-dependent.  Other @R{} objects can be passed
 to @code{.C}, but it is better to use one of the other interfaces.  An
 exception is passing an @R{} function for use with @code{call_R}, when
 the object can be handled as @code{void *} en route to @code{call_R}.
 
 It is possible to pass numeric vectors of storage mode @code{double} to
-C as @code{float *} or Fortran as @code{REAL} by setting the attribute
+C as @code{float *} or FORTRAN as @code{REAL} by setting the attribute
 @code{Csingle}, most conveniently by using the @R{} functions
 @code{as.single} and @code{single}.  This is intended only to be used to
-aid interfacing to existing C or Fortran code.
+aid interfacing to existing C or FORTRAN code.
 
 Unless formal argument @code{NAOK} is true, all the other arguments are
 checked for missing values @code{NA} and for the IEEE special values
@@ -3192,7 +3192,7 @@ Argument @code{DUP} can be used to suppress copying.  It is dangerous:
 see the on-line help for arguments against its use.
 
 Note that the compiled code should not return anything except through
-its arguments: C functions should be of type @code{void} and Fortran
+its arguments: C functions should be of type @code{void} and FORTRAN
 subprograms should be subroutines.
 
 @node dyn.load/dyn.unload, .Internal, .C/.Fortran, System and foreign language interfaces
@@ -3678,14 +3678,14 @@ at least) takes place prior to the syntactic analysis performed by the
 parser itself.
 
 @menu
-* Literal constants::
-* Identifiers::
-* Reserved words::
-* Special operators::
-* Separators::
-* Operator tokens::
-* Grouping symbols::
-* Indexing tokens::
+* Literal constants::           
+* Identifiers::                 
+* Reserved words::              
+* Special operators::           
+* Separators::                  
+* Operator tokens::             
+* Grouping symbols::            
+* Indexing tokens::             
 @end menu
 
 @node Literal constants, Identifiers, Tokens, Tokens

@@ -224,7 +224,7 @@ package needs to specify additional directories for searching header
 files (@samp{-I} options) or additional libraries for linking (@samp{-l}
 and @samp{-L} options), it should do this by setting the variables
 @code{PKG_CPPFLAGS} and @code{PKG_LIBS} in @file{src/Makevars}.
-(Additional flags to be passed to the C, C++, or Fortran compilers can
+(Additional flags to be passed to the C, C++, or FORTRAN compilers can
 be specified by the variables @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS},
 and @code{PKG_FFLAGS}, respectively.)  Note that this mechanism should
 be general enough to eliminate the need for a package-specific
@@ -330,7 +330,7 @@ INSTALL} if present and can be used to clean up the package source tree,
 especially remove files created by @file{configure}.
 
 As an example consider we want to use functionality provided by a (C or
-Fortran) library @code{foo}.  Using @code{autoconf}, we can write a
+FORTRAN) library @code{foo}.  Using @code{autoconf}, we can write a
 configure script which checks for the library, sets variable
 @code{HAVE_FOO} to @code{TRUE} if it was found and with @code{FALSE}
 otherwise, and then substitutes this value into output files (by
@@ -1380,12 +1380,12 @@ limited on non-Unix-like platforms).
 These two functions provide a standard interface to compiled code that
 has been linked into @R{}, either at build time or via @code{dyn.load}
 (@pxref{dyn.load and dyn.unload}).  They are primarily intended for
-compiled C and Fortran code respectively, but the @code{.C} function can
+compiled C and FORTRAN code respectively, but the @code{.C} function can
 be used with other languages which can generate C interfaces, for
 example C++ (@pxref{Interfacing C++ code}).
 
 The first argument to each function is a character string given the
-symbol name as known to C or Fortran, that is the function or subroutine
+symbol name as known to C or FORTRAN, that is the function or subroutine
 name.  (The mapping to the symbol name in the load table is given by the
 functions @code{symbol.C} and @code{symbol.For};
 @findex symbol.C
@@ -1401,12 +1401,12 @@ components in the returned list object (but not passed to the compiled
 code).
 
 The following table gives the mapping between the modes of @R{} vectors
-and the types of arguments to a C function or Fortran subroutine.
+and the types of arguments to a C function or FORTRAN subroutine.
 
 @quotation
 @multitable {RRR storage.mode} {RRR storage.mode} {DOUBLE PRECISION}
 
-@item @R{} storage mode @tab  C type  @tab   Fortran type
+@item @R{} storage mode @tab  C type  @tab   FORTRAN type
 
 @item @code{logical}   @tab @code{int *}     @tab @code{INTEGER}
 @item @code{integer}   @tab @code{int *}     @tab @code{INTEGER}
@@ -1420,7 +1420,7 @@ and the types of arguments to a C function or Fortran subroutine.
 C type @code{Rcomplex} is a structure with @code{double} members
 @code{r} and @code{i} defined in the header file @file{Complex.h}
 included by @file{R.h}.  Only a single character string can be passed to
-or from Fortran, and the success of this is compiler-dependent.  Other
+or from FORTRAN, and the success of this is compiler-dependent.  Other
 @R{} objects can be passed to @code{.C}, but it is better to use one of
 the other interfaces.  An exception is passing an @R{} function for use
 with @w{@code{call_R}}, when the object can be handled as @code{void *}
@@ -1428,10 +1428,10 @@ en route to @code{call_R}, but even there @code{.Call} is to be
 preferred.
 
 It is possible to pass numeric vectors of storage mode @code{double} to
-C as @code{float *} or Fortran as @code{REAL} by setting the attribute
+C as @code{float *} or FORTRAN as @code{REAL} by setting the attribute
 @code{Csingle}, most conveniently by using the @R{} functions
 @code{as.single}, @code{single} or @code{storage.mode}.  This is
-intended only to be used to aid interfacing to existing C or Fortran
+intended only to be used to aid interfacing to existing C or FORTRAN
 code.
 
 Unless formal argument @code{NAOK} is true, all the other arguments are
@@ -1451,7 +1451,7 @@ two package writers using the same symbol name, and such name clashes
 are normally sufficient to cause @R{} to crash.
 
 Note that the compiled code should not return anything except through
-its arguments: C functions should be of type @code{void} and Fortran
+its arguments: C functions should be of type @code{void} and FORTRAN
 subprograms should be subroutines.
 
 To fix ideas, let us consider a very simple example which convolves two
@@ -1550,7 +1550,7 @@ which occurrence is meant.
 
 Under Unix, shared libraries for loading into @R{} can be created using
 @code{R CMD SHLIB}.  This accepts as arguments a list of files which
-must be object files (with extension @file{.o}) or C, C++, or Fortran
+must be object files (with extension @file{.o}) or C, C++, or FORTRAN
 sources (with extensions @file{.c}, @file{.cc} or @file{.cpp} or
 @file{.C}, and @file{.f}, respectively).  See @kbd{R CMD SHLIB --help},
 or the on-line help for @code{SHLIB}, for usage information.  If
@@ -1558,7 +1558,7 @@ compiling the source files does not work ``out of the box'', you can
 specify additional flags by setting some of the variables
 @code{PKG_CPPFLAGS} (for the C preprocessor, typically @samp{-I} flags),
 @code{PKG_CFLAGS}, @code{PKG_CXXFLAGS}, and @code{PKG_FFLAGS} (for the
-C, C++, and Fortran compilers, respectively) in the file @file{Makevars}
+C, C++, and FORTRAN compilers, respectively) in the file @file{Makevars}
 in the compilation directory, or write a @file{Makefile} in the
 compilation directory containing the rules required (or, of course,
 create the object files directly from the command line).  Similarly,
@@ -1566,7 +1566,7 @@ variable @code{PKG_LIBS} in @file{Makevars} can be used for additional
 @samp{-l} and @samp{-L} flags to be passed to the linker when building
 the shared library.
 
-If an add-on package @var{pkg} contains C, C++, or Fortran code in its
+If an add-on package @var{pkg} contains C, C++, or FORTRAN code in its
 @file{src} subdirectory, @code{R CMD INSTALL} creates a shared library
 (for loading into @R{} in the @code{.First.lib} function of the package)
 either automatically using the above @code{R CMD SHLIB} mechanism, or
@@ -1574,7 +1574,7 @@ using @code{make} if directory @file{src} contains a @file{Makefile}.
 In both cases, if file @file{Makevars} exists it is read first when
 invoking @code{make}.  If a @file{Makefile} is really needed or
 provided, it needs to ensure that the shared library created is linked
-against all Fortran 77 intrinsic and run-time libraries that @R{} was
+against all FORTRAN 77 intrinsic and run-time libraries that @R{} was
 linked against; @code{make} variable @code{FLIBS} contains this
 information.
 
@@ -2935,7 +2935,7 @@ parameter value.
 
 @noindent
 Now, we compute the @code{i}'th column of the gradient matrix.  Note how
-it is accessed: @R{} stores matrices by column (like Fortran).
+it is accessed: @R{} stores matrices by column (like FORTRAN).
 
 @smallexample
   PROTECT(dimnames = allocVector(VECSXP, 2));
@@ -3139,7 +3139,7 @@ $7 = 5
 * Random numbers::              
 * Missing and IEEE values::     
 * Printing::                    
-* Calling C from Fortran and vice versa::  
+* Calling C from FORTRAN and vice versa::  
 * Numerical analysis subroutines::  
 * Distribution functions::      
 * Mathematical Utilities::      
@@ -3150,7 +3150,7 @@ $7 = 5
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
-can be called from C code (and some that can be called from Fortran
+can be called from C code (and some that can be called from FORTRAN
 code).  Only those documented here are stable enough that they will only
 be changed with considerable notice.
 
@@ -3390,7 +3390,7 @@ which could occur in ordinary computations which run out of control,
 so you may need to test that they have not been generated inadvertently.
 
 
-@node Printing, Calling C from Fortran and vice versa, Missing and IEEE values, The R API
+@node Printing, Calling C from FORTRAN and vice versa, Missing and IEEE values, The R API
 @section Printing
 @cindex Printing from C
 @findex Rprintf
@@ -3412,15 +3412,15 @@ analogues using the @code{vprintf} interface.
 These routines are declared in @file{R_ext/PrtUtil.h} which is not
 included by @file{R.h}.
 
-@subsection Printing from Fortran
-@cindex Printing from Fortran
+@subsection Printing from FORTRAN
+@cindex Printing from FORTRAN
 
-In theory Fortran @code{write} and @code{print} statements can be used,
+In theory FORTRAN @code{write} and @code{print} statements can be used,
 but the output may not interleave well with that of C, and will be
 invisible on GUI interfaces.  They are best avoided.
 
 Three subroutines are provided to ease the output of information from
-Fortran code.
+FORTRAN code.
 
 @example
 subroutine dblepr(@var{label}, @var{nchar}, @var{data}, @var{ndata})
@@ -3438,32 +3438,32 @@ line and then print @var{data} as if it were an @R{} vector on
 subsequent line(s).  They work with zero @var{ndata}, and so can be used
 to print a label alone.
 
-@node Calling C from Fortran and vice versa, Numerical analysis subroutines, Printing, The R API
-@section Calling C from Fortran and vice versa
-@cindex Calling C from Fortran and vice versa
+@node Calling C from FORTRAN and vice versa, Numerical analysis subroutines, Printing, The R API
+@section Calling C from FORTRAN and vice versa
+@cindex Calling C from FORTRAN and vice versa
 
-Naming conventions for symbols generated by Fortran differ by platform:
-it is not safe to assume that Fortran names appear to C with a trailing
+Naming conventions for symbols generated by FORTRAN differ by platform:
+it is not safe to assume that FORTRAN names appear to C with a trailing
 underscore.  To help cover up the platform-specific differences there is
 a set of macros that should be used.
 
 @table @code
 @item F77_SUB(@var{name})
-to define a function in C to be called from Fortran
+to define a function in C to be called from FORTRAN
 @item F77_NAME(@var{name})
-to declare a Fortran routine in C before use
+to declare a FORTRAN routine in C before use
 @item F77_CALL(@var{name})
-to call a Fortran routine from C
+to call a FORTRAN routine from C
 @item F77_COMDECL(@var{name})
-to declare a Fortran common block in C
+to declare a FORTRAN common block in C
 @item F77_COM(@var{name})
-to access a Fortran common block from C
+to access a FORTRAN common block from C
 @end table
 
 On most current platforms these are all the same, but it is unwise to
 rely on this.
 
-@node Numerical analysis subroutines, Distribution functions, Calling C from Fortran and vice versa, The R API
+@node Numerical analysis subroutines, Distribution functions, Calling C from FORTRAN and vice versa, The R API
 @section Numerical analysis subroutines
 @cindex Numerical analysis subroutines from C
 
@@ -3472,8 +3472,8 @@ for example numerical linear algebra computations and special functions.
 
 The header file @file{R_ext/Linpack.h} contains details of the LINPACK
 and EISPACK linear algebra functions include in @R{}.  These are
-expressed as calls to Fortran subroutines, and they will also be usable
-from users' Fortran code.  Although not part of the official API, this
+expressed as calls to FORTRAN subroutines, and they will also be usable
+from users' FORTRAN code.  Although not part of the official API, this
 set of subroutines is unlikely to change (but might be supplemented).
 
 The header file @file{R_ext/Mathlib.h} lists other undocumented calls
@@ -3544,8 +3544,8 @@ distributions.
 @item non-central beta @tab @code{nbeta} @tab @code{a, b, lambda}
 @item binomial @tab @code{binom} @tab @code{n, p}
 @item Cauchy @tab @code{cauchy} @tab @code{location, scale}
-@item chi-square @tab @code{chisq} @tab @code{df}
-@item non-central chi-square @tab @code{nchisq} @tab @code{df, lambda}
+@item chi-squared @tab @code{chisq} @tab @code{df}
+@item non-central chi-squared @tab @code{nchisq} @tab @code{df, lambda}
 @item exponential @tab @code{exp} @tab @code{scale}
 @item F @tab @code{f} @tab @code{n1, n2}
 @item non-central F @tab @code{@{p,q@}nf} @tab @code{n1, n2, ncp}
@@ -3758,7 +3758,7 @@ the left, larger ones to the right.
 @end deftypefun
 
 @deftypefun void R_max_col (double* @var{matrix}, int* @var{nr}, int* @var{nc}, int* @var{maxes})
-Given the @var{nr} by @var{ny} matrix @code{matrix} in row (``Fortran'')
+Given the @var{nr} by @var{ny} matrix @code{matrix} in row (``FORTRAN'')
 order, @code{R_max_col()} returns in @code{@var{maxes}[@var{i}-1]} the
 column number of the maximal element in the @var{i}-th row (the same as
 @R{}'s @code{max.col()} function).
