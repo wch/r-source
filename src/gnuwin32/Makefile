@@ -1,7 +1,7 @@
 include MkRules
 
 HELP = YES
-WINHELP = BOTH # NO, CHM, BOTH
+WINHELP = BITH # NO, CHM, BOTH
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
@@ -41,7 +41,7 @@ endif
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
 
-all: rbuild rdemo rpackage
+all: rbuild rpackage rdocs
 
 # separate as Tcl/Tk headers are needed.
 tcl: 
@@ -58,9 +58,6 @@ rpackage: fixed/fixdesc ../../library/R.css
 
 rinstaller:
 	$(MAKE) -C installer PREFIX=$(RPREFIX)
-
-rdemo:  libR.a
-	$(MAKE) -C ../../demos/dynload -f $(RHOME)/src/gnuwin32/MkDyndemo
 
 rlibs:
 	$(MAKE) -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
@@ -127,6 +124,8 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 ../../library/R.css: ../../doc/html/R.css
 	$(CP) $< $@
 
+rdocs:
+	@$(MAKE) -C ../../doc/manual -f Makefile.win html
 
 #                          ===== Packages ======
 
@@ -206,9 +205,7 @@ distclean veryclean: clean
 	$(RM) -f ../../doc/html/search/index.txt \
 	../../doc/html/function.html ../../doc/html/function-head.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
-	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html \
-	../../demos/dynload/findzero.def ../../demos/dynload/findzero.dll \
-	../../demos/dynload/zero.o
+	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html
 	$(RM) -f ../../etc/Rconsole ../../etc/Rdevga ../../etc/Rprofile \
 	../../etc/rgb.txt ../../etc/Makeconf-tests \
 	../include/FFDecl.h ../include/FFTab.h ../include/Platform.h \
@@ -271,8 +268,10 @@ INSTALL: INSTALL.in ../../VERSION
 FAQs: rw-faq fixed/r/rw-FAQ.html
 
 fixed/r/rw-FAQ.html: rw-FAQ.texi ../../VERSION
-	-$(SED) $(SEDVER) $< | \
-	  makeinfo --html --no-headers --number-sections | tidy > $@ 2> nul
+	@$(SED) $(SEDVER) $< > tmp.texi
+	makeinfo --html --no-headers --number-sections -o tmp.html tmp.texi
+	-tidy tmp.html > $@ 2> nul
+	@$(RM) tmp.texi tmp.html
 
 rw-faq: rw-FAQ.texi ../../VERSION
 	$(SED) $(SEDVER) $< | \
@@ -287,7 +286,6 @@ bindist: docfiles
 	$(CP) -pr ../../bin ../../afm ../../demos  ../../unzip $(RPREFIX)
 	$(MKDIR) $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
-	$(RM) $(RPREFIX)/demos/dynload/*.o $(RPREFIX)/demos/dynload/*.def
 	$(RM) $(RPREFIX)/*/Makefile.in
 	(cd $(RPREFIX)/bin; $(RM) Rcmd.exe INSTALL REMOVE SHLIB build check \
 	   massage-Examples.sh Rd2dvi.sh Rd2txt Rdconv Rdiff.sh Rdindex \
@@ -300,6 +298,7 @@ bindist: docfiles
 	$(MKDIR) $(RPREFIX)/doc $(RPREFIX)/doc/manual
 	$(CP) -pr ../../doc/html $(RPREFIX)/doc
 	$(CP) -p ../../doc/manual/Rd.sty $(RPREFIX)/doc/manual
+	$(CP) -p ../../doc/manual/*.html $(RPREFIX)/doc/manual
 	$(CP) -p ../../AUTHORS ../../COPYING COPYRIGHTS ../../FAQ ../../NEWS \
 		../../THANKS ../../Y2K $(RPREFIX)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
@@ -322,7 +321,9 @@ endif
 	zip -mr9X $(RPREFIX)h.zip $(RPREFIX)/library/*/help
 	unzip anindex.zip
 	$(RM) anindex.zip
+	$(RM) $(RPREFIX)/doc/manual/R-FAQ.html
 	zip -rm9X $(RPREFIX)w.zip $(RPREFIX)/doc/html \
+          $(RPREFIX)/doc/manual/*.html \
 	  $(RPREFIX)/library/*/html $(RPREFIX)/library/R.css
 	-zip -rm9X $(RPREFIX)ch.zip $(RPREFIX)/library/*/chtml \
 	  $(RPREFIX)/bin/Rchtml.dll
@@ -336,7 +337,7 @@ endif
 
 
 #taken from ../include/Makefile.in
-SRC_HEADERS = R.h S.h Rdefines.h Rgraphics.h Rinternals.h Rmath.h S_compat.h
+SRC_HEADERS = R.h S.h Rdefines.h Rgraphics.h Rinternals.h Rmath.h
 OBJ_HEADERS = Rconfig.h Rversion.h
 GW32_HEADERS = globalvar.h
 
@@ -370,7 +371,7 @@ packagedist:
 	zip -rX $(RPREFIX)sp.zip $(RPREFIX)
 	$(RM) -r $(RPREFIX)
 
-docsdist:
+docsdist: docs
 	$(RM) -rf $(RPREFIX)
 	$(RM) -f $(RPREFIX)d1.zip $(RPREFIX)d2.zip
 	$(MKDIR) $(RPREFIX) $(RPREFIX)/doc $(RPREFIX)/doc/manual
