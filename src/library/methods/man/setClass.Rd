@@ -42,95 +42,95 @@ unclass(x)
   \item{x}{an arbitrary object.}
 }
 
-\Details{
+\details{
 
   These are the functions that create and manipulate formal class
   definitions.  Brief documentation is provided below.  See the
   references for an introduction and for more details.
  
-\description{ 
-  \item{\code{setClass}:}{ 
-  Define Class to be an S-style class.  The effect is to create an
-  object, of class \code{"classRepEnvironment"}, and store this
-  (hidden) in the specified environment or database.  Objects can be
-  created from the class (e.g., by calling \code{\link{new}}),
-  manipulated (e.g., by accessing the object's slots), and methods
-  may be defined including the class name in the signature (see
-  \code{\link{setMethod}}).
+  \describe{ 
+    \item{\code{setClass}:}{ 
+      Define Class to be an S-style class.  The effect is to create an
+      object, of class \code{"classRepEnvironment"}, and store this
+      (hidden) in the specified environment or database.  Objects can be
+      created from the class (e.g., by calling \code{\link{new}}),
+      manipulated (e.g., by accessing the object's slots), and methods
+      may be defined including the class name in the signature (see
+      \code{\link{setMethod}}).
+    }
 
-
-  }
-  \item{\code{removeClass}:}{ 
-  Remove the definition of this class.  Calling this \emph{always}
-  resets the version of the class cached for the session.  If
-  \code{where=0}, that's all it does.  Otherwise, it removes the
-  version from the specified environment or database (from the global
-  environment by default).
-  }
+    \item{\code{removeClass}:}{ 
+      Remove the definition of this class.  Calling this \emph{always}
+      resets the version of the class cached for the session.  If
+      \code{where=0}, that's all it does.  Otherwise, it removes the
+      version from the specified environment or database (from the global
+      environment by default).
+    }
   
-  \item{\code{isClass}:}{ 
-  Is this a the name of a formally defined class? (Argument \code{formal} is for
-  compatibility and is ignored.)
+    \item{\code{isClass}:}{ 
+      Is this a the name of a formally defined class? (Argument \code{formal} is for
+      compatibility and is ignored.)
+    }
+
+    \item{\code{getClasses}:}{
+      The names of all the classes formally defined on `where'.
+      If called with no argument, all the classes currently known in the session
+      (which does not include classes that may be defined on one of the attached
+      libraries, but have not yet been used in the session).
+    }
+
+    \item{\code{unclass}:}{
+      Returns the object containing the values of all the slots in this object's
+      class definition (specifically, ithe returned object has attributes corresponding
+      to each slot), in the case that the object's class is formally defined with slots.  
+      
+      For classes that extend a single other class (e.g., a basic class
+      such as \code{"numeric"}) the result is a object of that class.
+    }
   }
-\item{\code{getClasses}:}{
- The names of all the classes formally defined on `where'.
- If called with no argument, all the classes currently known in the session
- (which does not include classes that may be defined on one of the attached
- libraries, but have not yet been used in the session).
- }
-  \item{\code{unclass}:}{
-  
- Returns the object containing the values of all the slots in this object's
- class definition (specifically, ithe returned object has attributes corresponding
- to each slot), in the case that the object's class is formally defined with slots.  
-
- For classes that extend a single other class (e.g., a basic class
- such as \code{"numeric"}) the result is a object of that class.
- }
-
-
 }
-
 \section{Inheritance and Prototypes}{
-Defining new classes that inherit from (``extend'') other classes is a
-powerful technique, but has to be used carefully and not over-used.
-Otherwise, you will often get unintended results when you start to
-compute with objects from the new class.
+  Defining new classes that inherit from (``extend'') other classes is a
+  powerful technique, but has to be used carefully and not over-used.
+  Otherwise, you will often get unintended results when you start to
+  compute with objects from the new class.
 
-As shown in the examples below, the simplest and safest form of
-inheritance is to start with an explicit class, with some slots, that
-does not extend anything else.  It only does what we say it does.
+  As shown in the examples below, the simplest and safest form of
+  inheritance is to start with an explicit class, with some slots, that
+  does not extend anything else.  It only does what we say it does.
 
-Then extensions will add some new slots and new behavior.
+  Then extensions will add some new slots and new behavior.
 
-Another variety of extension starts with one of the basic classes,
-perhaps with the intension of modifying R's standard behavior for that
-class.  Perfectly legal and sometimes quite helpful, but you may need
-to be more careful in this case:  your new class will inherit much of
-the behavior of the basic (informally defined) class, and the results
-can be surprising.  Just proceed with caution and plenty of testing.
+  Another variety of extension starts with one of the basic classes,
+  perhaps with the intension of modifying R's standard behavior for that
+  class.  Perfectly legal and sometimes quite helpful, but you may need
+  to be more careful in this case:  your new class will inherit much of
+  the behavior of the basic (informally defined) class, and the results
+  can be surprising.  Just proceed with caution and plenty of testing.
 
-As an example, the class \code{"matrix"} is included in the
-pre-defined classes, to behave essentially as matrices do without
-formal class definitions.  Suppose we don't like all of this; in
-particular, we want the default matrix to have 0 rows and columns (not
-1 by 1 as it is now).
-\begin{verbatim}
-setClass("myMatrix", "matrix", prototype = matrix(0,0,0))
-\end{verbatim}
-The arguments above illustrate two short-cuts relevant to such
-examples.  We abbreviated the \code{representation} argument to the
-single superclass, because the new class doesn't add anything to the
-representation of class \code{"matrix"}.  Also, we provided an object
-from the superclass as the prototype, not a list of slots.
+  As an example, the class \code{"matrix"} is included in the
+  pre-defined classes, to behave essentially as matrices do without
+  formal class definitions.  Suppose we don't like all of this; in
+  particular, we want the default matrix to have 0 rows and columns (not
+  1 by 1 as it is now).
+  
+  \code{setClass("myMatrix", "matrix", prototype = matrix(0,0,0))}
+  
+  The arguments above illustrate two short-cuts relevant to such
+  examples.  We abbreviated the \code{representation} argument to the
+  single superclass, because the new class doesn't add anything to the
+  representation of class \code{"matrix"}.  Also, we provided an object
+  from the superclass as the prototype, not a list of slots.
 }
 
 \references{
-The web page \url{http://www.omegahat.org/RSMethods/index.html} is the primary documentation.
+  The web page \url{http://www.omegahat.org/RSMethods/index.html}
+  is the primary documentation.
 
-The functions in this package emulate the facility for classes and methods described in
-\emph{Programming with Data}, (John M. Chambers, Springer, 1998).  See this book
-for further details and examples.
+  The functions in this package emulate the facility for classes
+  and methods described in
+  \emph{Programming with Data}, (John M. Chambers, Springer, 1998).
+  See this book for further details and examples.
 }
 \author{
   John Chambers

@@ -1,4 +1,5 @@
 \name{.BasicFunsList}
+\alias{.BasicFunsList}
 \non_function{}
 \title{List of Builtin and Special Functions}
 \description{
@@ -33,3 +34,5 @@
   list from \code{.BasicFunsList}.  If no entry exists, the argument
   list \code{(x, ...)}  is assumed.
 }
+\keyword{ programming }
+\keyword{ methods }

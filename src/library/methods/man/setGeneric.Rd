@@ -12,7 +12,8 @@ setGeneric(name, def, group=NULL, valueClass=NULL, where=1)
   \item{name}{ The character string name of the generic function.  In
     the simplest and most common case, a function of this name is
     already defined.  The existing function may be non-generic or
-    already a generic (see the details). }
+    already a generic (see the details).
+  }
   \item{def}{ An optional function object, defining the generic.  This
     argument is usually only needed (and is then required) if there is
     no current function of this name. In that case, the formal arguments
@@ -24,7 +25,8 @@ setGeneric(name, def, group=NULL, valueClass=NULL, where=1)
     defined for the corresponding group generic, and these will then
     define methods for this specific generic function, if no method has
     been explicitly defined for the corresponding signature.  See the
-    references for more discussion. }
+    references for more discussion.
+  }
   \item{valueClass}{ An optional character string defining the class to
     asserted to be given to the value returned by this generic
     function. By default, the generic function can return any object.
@@ -32,7 +34,8 @@ setGeneric(name, def, group=NULL, valueClass=NULL, where=1)
     enforced or checked.)
    }
   \item{where}{ Where to store the resulting generic function; by
-    default, stored into the global environment. }
+    default, stored into the global environment.
+  }
   \item{useAsDefault}{ Optional instructions as to the default method.
     Useful values include: \code{TRUE}, forcing argument \code{def} to be
     used as the default method; \code{NULL}, forcing the new generic to
@@ -41,7 +44,9 @@ setGeneric(name, def, group=NULL, valueClass=NULL, where=1)
     becomes the default method.
 
     See the Details section for more information on how generic
-    functions are set up, and on the rules for picking the default method.
+    functions are set up, and on the rules for picking the default
+    method.
+  }
 }
 \details{
   The \code{setGeneric} function is called to initialize a generic
@@ -74,16 +79,15 @@ The functions in this package emulate the facility for classes and methods descr
 \emph{Programming with Data}, (John M. Chambers, Springer, 1998).  See this book
 for further details and examples.
 }
+
 \author{
   John Chambers
 }
 
+\seealso{
+  \code{\link{Methods}} for a discussion of other functions to
+  specify and manipulate the methods of generic functions.
+}
 
- ~Make other sections like WARNING with \section{WARNING }{....} ~
-
-\seealso{  \code{\link{Methods}} for a discussion of other functions to
-  specify and manipulate the methods of generic functions. }
-
-\examples{
-\keyword{ programming }% at least one, from doc/KEYWORDS
-\keyword{ methods }% __ONLY ONE__ keyword per line
+\keyword{ programming }
+\keyword{ methods }

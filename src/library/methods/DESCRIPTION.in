@@ -1,4 +1,4 @@
-Package: Methods
+Package: methods
 Version: @VERSION@
 Priority: base
 Title:  Formal Methods and Classes
