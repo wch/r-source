@@ -149,7 +149,7 @@ plot.formula <- function(formula, data = NULL, subset, na.action,
     m <- match.call(expand.dots = FALSE)
     if (is.matrix(eval(m$data, sys.frame(sys.parent()))))
 	m$data <- as.data.frame(data)
-    m$... <- NULL
+    m$ylab <- m$... <- NULL
     m[[1]] <- as.name("model.frame")
     mf <- eval(m, sys.frame(sys.parent()))
     response <- attr(attr(mf, "terms"), "response")
@@ -160,8 +160,12 @@ plot.formula <- function(formula, data = NULL, subset, na.action,
 	    opar <- par(ask = ask)
 	    on.exit(par(opar))
 	}
-	for (i in varnames[-response])
-	    plot(mf[[i]], y, xlab = i, ylab = ylab, ...)
+        if (is.null(list(...)[["xlab"]])) {
+            for (i in varnames[-response]) plot(mf[[i]], y, xlab = i, 
+                                                ylab = ylab, ...)
+        } else {
+            for (i in varnames[-response]) plot(mf[[i]], y, ylab = ylab, ...)
+        }
     }
     else plot.data.frame(mf)
 }
