@@ -36,4 +36,11 @@ echo '#define R_FILEVERSION    '{maj}','{pl}','{sl}',0' >> :Rversion.h
 echo '#endif /* not R_VERSION_H */' >> :Rversion.h
 echo >> :Rversion.h
 
+echo "/* RVerDefs.h.  Generated automatically. */" > :res:RVerDefs.h
+echo '#define kMajorVersNumber	0x0'{maj} >> :res:RVerDefs.h
+echo '#define kMinorVersNumber	0x'{pl}{sl} >> :res:RVerDefs.h
+echo '#define kNonFinalRelease	0x0'{sl} >> :res:RVerDefs.h
+echo '#define kVersString			"'{maj}.{pl}.{sl}'"' >> :res:RVerDefs.h
+echo '#define kStatusString			"'{rev}'"' >> :res:RVerDefs.h
+
    
