@@ -2,7 +2,7 @@
 \title{Read Fixed Width Format Files}
 \usage{
 read.fwf(file, widths, sep="\t", as.is = FALSE,
-         skip = 0, row.names, col.names)
+         skip = 0, row.names, col.names, n = -1)
 }
 \alias{read.fwf}
 \arguments{
@@ -21,6 +21,8 @@ read.fwf(file, widths, sep="\t", as.is = FALSE,
   \item{skip}{number of initial lines to skip; see \code{\link{read.table}}.}
   \item{row.names}{see \code{\link{read.table}}.}
   \item{col.names}{see \code{\link{read.table}}.}
+  \item{n}{the maximum number of records (lines) to be read, defaulting
+    to no limit.}
 }
 \description{
   Read a ``table'' of \bold{f}ixed \bold{w}idth \bold{f}ormatted data

@@ -1,5 +1,5 @@
 read.fwf <- function(file, widths, sep = "\t", as.is = FALSE,
-		     skip = 0, row.names, col.names)
+		     skip = 0, row.names, col.names, n = -1)
 {
     doone <- function(x) {
         x <- substring(x, first, last)
@@ -8,7 +8,7 @@ read.fwf <- function(file, widths, sep = "\t", as.is = FALSE,
     }
     FILE <- tempfile("Rfwf.")
     on.exit(unlink(FILE))
-    raw <- scan(file, what="", sep="\n", quote="", quiet=TRUE)
+    raw <- scan(file, what="", sep="\n", quote="", quiet=TRUE, n=n)
     st <- c(1, 1+cumsum(widths))
     first <- st[-length(st)]
     last <- cumsum(widths)
