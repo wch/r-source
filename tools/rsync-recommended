@@ -4,16 +4,17 @@
 
 : ${CRAN_RSYNC='cran.r-project.org::CRAN'}
 
+## The intention here is infer TOOLS_DIR from an explicit path.
+## but the user might have called it from tools, so test that case
+## separately.
 TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
+if test ${TOOLS_DIR} = ${0} ; then
+  TOOLS_DIR="."
+fi
 (cd "${TOOLS_DIR}"/..
   version=`cut -f1 -d' ' VERSION`
   PKGS=`grep '^R_PKGS_RECOMMENDED *=' Makeconf.in | sed 's/.*=//'`
   cd src/library/Recommended
-
-  ## <FIXME>
-  ## Remove eventually.
-  rm -f *_tgz
-  ## </FIXME>
 
   ## The purpose of the rsync options is to get the timestamps on the
   ## downloaded files to reflect time of download.
@@ -23,15 +24,18 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
   ## files get their mtime changed whether updated or not.
   ## -C prevents -delete from removing the CVS subdirectory.
 
-  rsync -rcIzC --delete \
+  rsync -rcIzC --verbose --delete \
     --exclude=Makefile.in --exclude=Makefile --exclude=.cvsignore \
-    --include=*.tar.gz \
-    "${CRAN_RSYNC}"/src/contrib/${version}/Recommended/ .
+    --include=*.tar.gz --exclude *.tgz \
+    "${CRAN_RSYNC}"/src/contrib/${version}/Recommended/ . || \
+    echo "*** rsync failed to update Recommended files ***" && exit 1
 
   ## Link each package to a simplified name so that Make has an easier
   ## time.  Notice that as far as Make is concerned, the symlinks have
-  ## the same timestamp as the file they point to.
+  ## the same timestamp as the file they point to.  Don't remove the 
+  ## existing links until now in case rsync fails.
 
+  rm -f *.tgz
   for i in ${PKGS} ; do
     ln -s $i*.tar.gz ${i}.tgz
   done
