@@ -40,8 +40,6 @@ if(require(cluster)) {# is a required package
   plot(hc) ;  mtext("hclust", side=1)
   plot(hcag); mtext("agnes",  side=1)
 }
-stopifnot(identical(hc, hhc <- as.hclust(hc)),
-          identical(hhc, as.hclust(hhc)))
 }
 \keyword{multivariate}
 \keyword{cluster}
