@@ -44,6 +44,9 @@ BUG FIXES
     o	Overflow in deparse() in terms(formula) with very long left-hand
 	side fixed (PR#873)
 
+    o	lowess(c(1:3, 7:5)) now should give the same on different platforms,
+	since now in the C code (int)(f*n + 1e-7) is used.
+
     o	rt() could give different results on different platforms as
 	the order of evaluation of calls to random numbers was not
 	fully defined.  This affected the Mac port.
