@@ -63,8 +63,8 @@ write.ftable(x, file = "", quote = TRUE, digits = getOption("digits"))
   \code{\link{ftable}} for more information on flat contingency tables.
 }
 \references{
-  Agresti, A.  (1990)
-  \emph{Categorical data analysis.}
+  Agresti, A. (1990)
+  \emph{Categorical data analysis}.
   New York: Wiley.
 }  
 \examples{

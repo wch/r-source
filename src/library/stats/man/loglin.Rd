@@ -85,8 +85,8 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
   Log-linear fit for contingency tables---Algorithm AS51.
   \emph{Applied Statistics}, \bold{21}, 218--225.
 
-  Agresti, A.  (1990)
-  \emph{Categorical data analysis.}
+  Agresti, A. (1990)
+  \emph{Categorical data analysis}.
   New York: Wiley.
 }
 \author{Kurt Hornik}
