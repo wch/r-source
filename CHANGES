@@ -1,5 +1,5 @@
 
-		CHANGES IN VERSION R VERSION 0.60.1
+		CHANGES IN VERSION R VERSION 0.60.1++
 
 NEW FEATURES
 
@@ -7,6 +7,10 @@ NEW FEATURES
 	(contributed by Doug Bates).
 
     o	S compatible functions "all.names" and "all.vars" added.
+
+    o   The "noquote" functions are now documented.
+
+    o   A new `language' demo "is.things" has been provided.
 
 
 BUG FIXES
@@ -18,6 +22,8 @@ BUG FIXES
     o   The inclusion <readline/history.h> was causing problems with
 	some versions of readline because the file did not exist.
 	This is now detected by configure.
+
+    o   barplot(.) now also works for barplot(table(rpois(100,3))).
 
 
 
