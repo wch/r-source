@@ -1,12 +1,12 @@
-%% This should be a postscript fragment of an array of length exactly 256
-/ISOLatin1Encoding [
-/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
-/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
-/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
-/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+%% As used by PDF 1.3
+/WinAnsiEncoding [
+  /.notdef /.notdef   /.notdef   /.notdef /.notdef /.notdef  /.notdef /.notdef
+  /.notdef /.notdef   /.notdef   /.notdef /.notdef /.notdef  /.notdef /.notdef
+  /.notdef /.notdef   /.notdef   /.notdef /.notdef /.notdef  /.notdef /.notdef
+  /.notdef /.notdef   /.notdef   /.notdef /.notdef /.notdef  /.notdef /.notdef
 %%   040
 /space /exclam /quotedbl /numbersign /dollar /percent /ampersand 
-/quoteright /parenleft /parenright /asterisk /plus /comma /minus /period /slash
+/quoteright /parenleft /parenright /asterisk /plus /comma /hyphen /period /slash
 %%   060
 /zero /one /two /three /four /five /six /seven /eight /nine 
 /colon /semicolon /less /equal /greater /question
@@ -14,14 +14,14 @@
 /at /A /B /C /D /E /F /G /H /I /J /K /L /M /N /O /P /Q /R /S /T /U /V 
 /W /X /Y /Z /bracketleft /backslash /bracketright /asciicircum /underscore
 %%  0140
-/quoteleft /a /b /c /d /e /f /g /h /i /j /k /l /m /n /o /p /q /r /s /t 
-/u /v /w /x /y /z /braceleft /bar /braceright /asciitilde /.notdef
+/grave /a /b /c /d /e /f /g /h /i /j /k /l /m /n /o /p /q /r /s /t 
+/u /v /w /x /y /z /braceleft /bar /braceright /asciitilde /bullet
 %%  0200
-/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef 
-/.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
+/Euro /bullet /quotesinglbase /florin /quotedblbase /ellipsis /dagger /daggerdbl 
+/circumflex /perthousand /Scaron /guilsinglleft /OE /bullet /Zcaron /bullet
 %%  0220
-/dotlessi /grave /acute /circumflex /tilde /macron /breve /dotaccent
-/dieresis /.notdef /ring /cedilla /.notdef /hungarumlaut /ogonek /caron
+/bullet /quoteleft /quoteright /quotedblleft /quotedblright /bullet /endash /emdash
+/tilde /trademark /scaron /guilsinglright /oe /bullet /zcaron /Ydieresis
 %%  0240
 /space /exclamdown /cent /sterling /currency /yen /brokenbar /section
 /dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen /registered /macron

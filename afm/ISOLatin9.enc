@@ -1,5 +1,5 @@
-%% This should be a postscript fragment of an array of length exactly 256
-/ISOLatin1Encoding [
+%% ISO-8859-15 (draft?)  Has Euro in place of currency, scaron, zcaon, oe ...
+/ISOLatin9Encoding [
 /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
 /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
 /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
@@ -23,10 +23,10 @@
 /dotlessi /grave /acute /circumflex /tilde /macron /breve /dotaccent
 /dieresis /.notdef /ring /cedilla /.notdef /hungarumlaut /ogonek /caron
 %%  0240
-/space /exclamdown /cent /sterling /currency /yen /brokenbar /section
-/dieresis /copyright /ordfeminine /guillemotleft /logicalnot /hyphen /registered /macron
-/degree /plusminus /twosuperior /threesuperior /acute /mu /paragraph /periodcentered
-/cedilla /onesuperior /ordmasculine /guillemotright /onequarter /onehalf /threequarters /questiondown
+/space /exclamdown /cent /sterling /Euro /yen /Scaron /section
+/scaron /copyright /ordfeminine /guillemotleft /logicalnot /hyphen /registered /macron
+/degree /plusminus /twosuperior /threesuperior /Zcaron /mu /paragraph /periodcentered
+/zcaron /onesuperior /ordmasculine /guillemotright /OE /oe /Ydieresis /questiondown
 %%  0300
 /Agrave /Aacute /Acircumflex /Atilde /Adieresis /Aring /AE /Ccedilla
 /Egrave /Eacute /Ecircumflex /Edieresis /Igrave /Iacute /Icircumflex /Idieresis
