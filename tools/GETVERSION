@@ -3,7 +3,16 @@
 # ${RHOME}/tools/GETVERSION
 
 TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
-awk '{
-  if ($0 ~ /R_MAJOR/) printf "%s.", $3;
-  if ($0 ~ /R_MINOR/) printf "%s\n", $3;
-}' ${TOOLS_DIR}/../src/include/Rversion.h.in | sed -e 's/"//g'
+(cd ${TOOLS_DIR}/..
+  maj=`cat VERSION | sed 's/\([^ .]*\).\([^ ]*\) \(.*\)/\1/'`
+  min=`cat VERSION | sed 's/\([^ .]*\).\([^ ]*\) \(.*\)/\2/'`
+  rev=`cat VERSION | sed 's/\([^ .]*\).\([^ ]*\) \(.*\)/\3/'`
+  y=`cat date-stamp | cut -d/ -f1`
+  m=`cat date-stamp | cut -d/ -f2`
+  d=`cat date-stamp | cut -d/ -f3`
+  echo "#define R_MAJOR  \"${maj}\""
+  echo "#define R_MINOR  \"${min}\""
+  echo "#define R_STATUS \"${rev}\""
+  echo "#define R_YEAR   \"${y}\""
+  echo "#define R_MONTH  \"${m}\""
+  echo "#define R_DAY    \"${d}\"")
