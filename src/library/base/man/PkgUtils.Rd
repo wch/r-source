@@ -24,20 +24,31 @@ Rcmd check [options] pkgdirs
     obtaining information about usage and version of the utility.}
 }
 \details{
-  \code{R CMD check} checks \R add-on packages from their sources,
-  performing a wide variety of diagnostic checks.
-
-  \code{R CMD build} builds \R source or binary packages from their
-  sources.
-
 #ifdef unix
-  Use \code{R CMD foo --help} to obtained usage information on utility
-  \code{foo}.
+  \code{R CMD check}
 #endif
 #ifdef windows
-  Use \code{Rcmd foo --help} to obtained usage information on utility
-  \code{foo}.
+  \code{Rcmd check}
 #endif
+  checks \R add-on packages from their sources, performing a wide
+  variety of diagnostic checks.
+
+#ifdef unix
+  \code{R CMD build}
+#endif
+#ifdef windows
+  \code{Rcmd build}
+#endif
+  builds \R source or binary packages from their sources.
+
+  Use
+#ifdef unix
+  \code{R CMD foo --help}
+#endif
+#ifdef windows
+  \code{Rcmd foo --help}
+#endif
+  to obtain usage information on utility \code{foo}.
 }
 \seealso{
   The chapter ``Processing Rd format'' in ``Writing \R Extensions''

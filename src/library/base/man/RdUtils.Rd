@@ -47,14 +47,14 @@ Rcmd Sd2Rd [options] file
   \code{Sd2Rd} converts S version 3 documentation format to Rd
   format.
 
+  Use
 #ifdef unix
-  Use \code{R CMD foo --help} to obtained usage information on utility
-  \code{foo}.
+  \code{R CMD foo --help}
 #endif
 #ifdef windows
-  Use \code{Rcmd foo --help} to obtained usage information on utility
-  \code{foo}.
+  \code{Rcmd foo --help}
 #endif
+  to obtain usage information on utility \code{foo}.  
 }
 \seealso{
   The chapter ``Processing Rd format'' in ``Writing \R Extensions''
