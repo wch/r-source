@@ -37,12 +37,22 @@
 
 #include "Mathlib.h"
 
-/* Improvements by Martin Maechler, May 1997,
- * further ones, Feb.2000:
+/* Improvements by Martin Maechler, May 1997;
+   further ones, Feb.2000:
    Replace  pow(x, (double)i) by  R_pow_di(x, i) {and use  int dig} */
 
-/* DBL_DIG := digits of precision of a double, usually 15 : */
-#define MAXPLACES DBL_DIG
+#define MAX_DIGITS 22
+/* was till R 0.99: DBL_DIG := digits of precision of a double, usually 15 */
+/* FIXME: Hmm, have quite a host of these:
+
+       1) ./fround.c   uses much more (sensibly!) ``instead''
+       2) ../main/coerce.c   & ../main/deparse.c have  DBL_DIG	directly
+       3) ../main/options.c has	  #define MAX_DIGITS 22	 for options(digits)
+
+       Really should decide on a (config.h dependent?) global MAX_DIGITS.
+       --MM--
+     */
+
 
 double fprec(double x, double digits)
 {
@@ -62,7 +72,7 @@ double fprec(double x, double digits)
 #endif
     if(x == 0) return x;
     dig = (int)floor(digits+0.5);
-    if (dig > MAXPLACES) {
+    if (dig > MAX_DIGITS) {
 	return x;
     } else if (dig < 1)
 	dig = 1;
