@@ -1713,7 +1713,7 @@ fi
 ## <FIXME>
 ## Autoconf 2.50 or better recommends LDFLAGS for '-L' flags and LIBS for
 ## '-l' flags ...
-: ${LIBS="-L/usr/local/lib"}
+: ${LDFLAGS="-L/usr/local/lib"}
 ## </FIXME>
 
 ### ** Handle arguments to configure.
