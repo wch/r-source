@@ -40,6 +40,7 @@ valid.viewport <- function(x, y, width, height, just,
              cur.font = NULL,
              cur.fontsize = NULL,
              cur.lineheight = NULL,
+             cur.cex = NULL,
              # When L_setviewport is called, we also record
              # the transformation and layout for the viewport
              # so that we don't have to recalculate it every

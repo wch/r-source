@@ -25,6 +25,7 @@ push.vp <- function(vps, index, len, recording) {
   vp$cur.font <- get.gpar("font")
   vp$cur.fontsize <- get.gpar("fontsize")
   vp$cur.lineheight <- get.gpar("lineheight")
+  vp$cur.cex <- get.gpar("cex")
   # Calculate viewport transform
   # NOTE that we will have modified "vp" within L_setviewport
   # to record the current transformation and layout
