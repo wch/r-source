@@ -33,11 +33,12 @@ options(internet.info = 2)
 options(encoding = native.enc)
 options(show.error.messages = TRUE)
 local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
-       if(identical(dp, ""))
-#           dp <- c("methods", "ctest", "mva", "modreg", "nls", "ts")
-           dp <- c("methods", "ctest")
+       if(identical(dp, "")) # marginally faster to do methods last
+           dp <- c("ts", "nls", "modreg", "mva", "ctest", "methods")
+#           dp <- c("methods", "ctest")
        else if(identical(dp, "NULL")) dp <- character(0)
        else dp <- strsplit(dp, ",")[[1]]
+       dp <- sub("[[:blank:]]*([[:alnum:]]+)", "\\1", dp) # strip whitespace
        options(defaultPackages = dp)
     })
 .First.sys <- function()

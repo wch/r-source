@@ -16,10 +16,11 @@ USER-VISIBLE CHANGES
 	signs and normalization of eigen/singular vectors may change
 	from earlier versions.
 
-    o	The `methods' packages is now attached by default at startup.
-	The option "defaultPackages" has been added which contains the
-	initial list of packages.  See ?Startup and ?options for
-	details.  Note that .First() is no longer used by R itself.
+    o	The `methods', `modreg', `mva', `nls' and `ts' packages
+	are now attached by default at startup.  The option
+	"defaultPackages" has been added which contains the initial
+	list of packages.  See ?Startup and ?options for details.
+	Note that .First() is no longer used by R itself.
 
 	class() now always (not just when `methods' is attached) gives
 	a non-null class, and UseMethod() always dispatches on the
