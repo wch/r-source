@@ -48,6 +48,11 @@ if "{fileList}"
  end
 end
 
+Duplicate :tools:FF_CREATE :tools:FF_CREATE.ux
+translate ¶0x0a ¶0x0d <:tools:FF_CREATE.ux >:tools:FF_CREATE
+delete -y :tools:FF_CREATE.ux
+
+
 echo "Start creating MakeR"
 date
 echo " "
