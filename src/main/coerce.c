@@ -773,7 +773,7 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 		SET_STRING_ELT(rval, i, STRING_ELT(VECTOR_ELT(v, i), 0));
 	    else
 		SET_STRING_ELT(rval, i,
-			       STRING_ELT(deparse1(VECTOR_ELT(v, i), 0), 0));
+			       STRING_ELT(deparse1line(VECTOR_ELT(v, i), 0), 0));
 	}
     }
     else if (type == LISTSXP) {

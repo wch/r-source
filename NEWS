@@ -452,9 +452,11 @@ BUG FIXES
 	even though the command does not exist (and the glibc manual
         says it should return NULL).  (PR#1959)
 
-   o    data.frame was allowing explicit row.names with missing
+   o    data.frame() was allowing explicit row.names with missing
 	values, but row names are required to be unique.
 
+   o    as.character(expression) was silently truncating to 60
+	characters: the help page claimed 500 which is now true.
 
 
 		CHANGES IN R VERSION 1.5.1
