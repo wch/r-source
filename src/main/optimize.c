@@ -80,7 +80,7 @@ SEXP do_fmin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     v = CAR(args);
     if (!isFunction(v))
-	error("attempt to minimize non-function\n");
+	errorcall(call, "attempt to minimize non-function\n");
     args = CDR(args);
 
     /* xmin */
@@ -152,7 +152,7 @@ static double F77_SYMBOL(fcn2)(double *x)
 
 }
 
-/* zeroin(f, xmin, xmax tol) */
+/* zeroin(f, xmin, xmax, tol) */
 
 extern double F77_SYMBOL(zeroin)();
 
@@ -168,7 +168,7 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     v = CAR(args);
     if (!isFunction(v))
-	error("attempt to minimize non-function\n");
+	errorcall(call,"attempt to minimize non-function\n");
     args = CDR(args);
 
     /* xmin */
@@ -473,23 +473,23 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     wrk = (double*)R_alloc(8*n, sizeof(double));
 
     /*
-     *   Dennis + Schnabel Minimizer
+     *	 Dennis + Schnabel Minimizer
      *
-     *    SUBROUTINE OPTIF9(NR,N,X,FCN,D1FCN,D2FCN,TYPSIZ,FSCALE,
-     *   +	   METHOD,IEXP,MSG,NDIGIT,ITNLIM,IAGFLG,IAHFLG,IPR,
-     *   +	   DLT,GRADTL,STEPMX,STEPTL,
-     *   +	   XPLS,FPLS,GPLS,ITRMCD,A,WRK)
+     *	  SUBROUTINE OPTIF9(NR,N,X,FCN,D1FCN,D2FCN,TYPSIZ,FSCALE,
+     *	 +	   METHOD,IEXP,MSG,NDIGIT,ITNLIM,IAGFLG,IAHFLG,IPR,
+     *	 +	   DLT,GRADTL,STEPMX,STEPTL,
+     *	 +	   XPLS,FPLS,GPLS,ITRMCD,A,WRK)
      *
      *
-     *   Note: I have figured out what msg does.
-     *   It is actually a sum of bit flags as follows
-     *     1 = don't check/warn for 1-d problems
-     *     2 = don't check analytic gradients
-     *     4 = don't check analytic hessians
-     *     8 = don't print start and end info
-     *    16 = print at every iteration
-     *   Using msg=9 is absolutely minimal
-     *   I think we always check gradients and hessians
+     *	 Note: I have figured out what msg does.
+     *	 It is actually a sum of bit flags as follows
+     *	   1 = don't check/warn for 1-d problems
+     *	   2 = don't check analytic gradients
+     *	   4 = don't check analytic hessians
+     *	   8 = don't print start and end info
+     *	  16 = print at every iteration
+     *	 Using msg=9 is absolutely minimal
+     *	 I think we always check gradients and hessians
      */
 
     F77_SYMBOL(optif9)(&n, &n, x, F77_SYMBOL(fcn), F77_SYMBOL(d1fcn),
@@ -564,7 +564,7 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
 /*
  *  PURPOSE
  *
- *  Print information.  This code done in C to avoid the necessity
+ *  Print information.	This code done in C to avoid the necessity
  *  of having the (vast) Fortran I/O library loaded.
  *
  *  PARAMETERS
@@ -578,7 +578,7 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  p(n)   --> step taken
  *  itncnt --> iteration number k
  *  iflg   --> flag controlling info to print
- *  ipr    --> device to which to send output
+ *  ipr	   --> device to which to send output
  */
 
 int F77_SYMBOL(result)(int *nr, int *n, double *x, double *f, double *g,
