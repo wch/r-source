@@ -84,7 +84,11 @@ fixed/fixdesc:
 
 dllversion.o: ../include/Rversion.h
 
-R.dll: R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
+R1.a: R.a $(OBJS-EXTRA)
+	$(CP) R.a R1.a
+	$(AR) cr R1.a $(OBJS-EXTRA)
+
+R.dll: R1.a $(MAINLIBS) $(EXTRALIBS) dllversion.o
 
 Rdll: makeMakedeps ../../bin/R.dll
 
