@@ -45,12 +45,12 @@ function(x, n, p = 0.5, alternative = c("two.sided", "less", "greater"),
                            relErr <- 1 + 10 ^ (-7) 
                            d <- dbinom(x, n, p)
                            if(x / n < p) {
-                               i <- seq(from = x + 1, to = n)
+                               i <- seq(from = ceiling(n*p), to = n)
                                y <- sum(dbinom(i, n, p) <= d * relErr)
                                pbinom(x, n, p) +
                                    pbinom(n - y, n, p, lower = FALSE)
                            } else {
-                               i <- seq(from = 0, to = x - 1)
+                               i <- seq(from = 0, to = floor(n*p))
                                y <- sum(dbinom(i, n, p) <= d * relErr)
                                pbinom(y - 1, n, p) +
                                    pbinom(x - 1, n, p, lower = FALSE)

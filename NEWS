@@ -506,7 +506,9 @@ BUG FIXES
 
    o	t(x) behaves when x is a (multivariate) time series. (PR#1998)
 
-   o    parse(text=x) would parse from stdin if length(x) was zero
+   o    parse(text=x) no longer parses from stdin if length(x) is zero
+
+   o    binom.test() miscalculated p-value in some extreme cases 
 
 
 
