@@ -1,4 +1,4 @@
-####---- Master Makefile for R --- this is NOT made by configure ---
+###-*- Makefile -*- for R ---  is NOT made by configure; called by Makefile ---
 
 include Makeconf
 
@@ -41,13 +41,14 @@ moreclean: clean acclean
 distclean: realclean
 
 realclean:
-	@echo "Cleaning at top level"
+	@echo "Cleaning at top level (+ bin/, library/, cmd/, doc/)"
 	@-rm -f bin/R*
 	@-rm -rf `echo library/* | sed 's@library/CVS *@@'`
+	@-rm -f cmd/fwf2table
 	@-rm -f doc/manual/pkg-*
 	@-rm -f doc/html/packages* doc/html/function*
+	@cd tests; $(MAKE) $@
 	@cd demos/dynload; if [ -f Makefile ] ; then $(MAKE) $@ ; fi
-	@cd tests; $(MAKE) clean
 	@echo "Really cleaning ./etc/"; cd etc; $(MAKE) $@
 	@echo "Really cleaning the source tree"; cd src; $(MAKE) $@
 	$(MAKE) acclean
