@@ -1461,12 +1461,10 @@ function(package, dir, lib.loc = NULL)
         }
         else
             objects(envir = env, all.names = TRUE)
-        allGenerics <-
-            c(allGenerics,
-              objectsInEnv[sapply(objectsInEnv,
-                                  .isS3Generic,
-                                  env)
-                           == TRUE])
+        if(length(objectsInEnv))
+            allGenerics <-
+                c(allGenerics,
+                  objectsInEnv[sapply(objectsInEnv, .isS3Generic, env)==TRUE])
     }
     ## Add internal S3 generics and S3 group generics.
     allGenerics <-
@@ -1971,9 +1969,9 @@ function(package, dir, lib.loc = NULL)
         }
         else
             objects(envir = env, all.names = TRUE)
-        S3generics <-
-            objectsInEnv[sapply(objectsInEnv, .isS3Generic, env)
-                         == TRUE]
+        S3generics <- if(length(objectsInEnv))
+            objectsInEnv[sapply(objectsInEnv, .isS3Generic, env) == TRUE]
+        else character(0)
 
         ## For base, also add the internal S3 generics which are not
         ## .Primitive (as checkArgs() does not deal with these).

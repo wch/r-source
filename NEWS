@@ -110,6 +110,10 @@ BUG FIXES
     o	Package utils now exports several functions that are needed for
         writing Sweave drivers.
 
+    o	Comparison of two lists/expressions was giving nonsensical
+	(and often random) answers, and is now an error.
+
+
 
 		CHANGES IN R VERSION 1.9.0
 
