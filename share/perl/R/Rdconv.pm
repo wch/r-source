@@ -535,7 +535,7 @@ sub replace_prepend_command {
 	my ($id, $arg) = get_arguments($cmd, $text, 1);
 	$text =~ /\\$cmd$id(.*)$id/s;
 	$arg = $1;
-	if ($prepend == "" || $arg =~ /\n/m) {
+	if ($prepend eq "" || $arg =~ /\n/m) {
 	    $arg = "\n" . $arg unless $arg =~ /^\n/m;
 	    $arg =~ s/^/$prepend/gmo;# prepend at all line beginnings
 	    $arg =~ s/^$prepend//;   # but NOT the very beginning..
