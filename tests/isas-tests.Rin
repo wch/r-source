@@ -12,7 +12,8 @@ ex.list <- expression(integer(0), NULL, list(), 1:1, pi, "1.3", list(a=1),
 ##--- producing the real R script:
 sink("isas-tests.R")
 
-cat("isall.equal <- function(x,y)",
+cat(".proctime00 <- proc.time()\n",
+    "isall.equal <- function(x,y)",
     "typeof(x) == typeof(y) && is.logical(r <- all.equal(x,y, tol=0)) && r \n",
     sep="\n")
 
@@ -33,6 +34,4 @@ for(x in ex.list) {
     for(r in aroot)
         cat("f <- as.",r,"( x );  all.equal(f, as.",r,"( f ), tol=0)\n", sep="")
 }
-
-
-
+cat("cat('Time elapsed: ', proc.time() - .proctime00,'\\n')\n")

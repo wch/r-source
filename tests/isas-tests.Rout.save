@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.1.0 Under development (unstable) (May 22, 2000)
+Version 1.1.0 Under development (unstable) (June 7, 2000)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -13,6 +13,8 @@ Type	"demo()" for some demos, "help()" for on-line help, or
     	"help.start()" for a HTML browser interface to help.
 Type	"q()" to quit R.
 
+> .proctime00 <- proc.time()
+> 
 > isall.equal <- function(x,y)
 + typeof(x) == typeof(y) && is.logical(r <- all.equal(x,y, tol=0)) && r 
 > 
@@ -2189,5 +2191,7 @@ Error in ts(x) : ts object must have one or more observations
 [1] TRUE
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
+> cat('Time elapsed: ', proc.time() - .proctime00,'\n')
+Time elapsed:  1.76 0.04 1.8 0 0 
 > 
 > 
