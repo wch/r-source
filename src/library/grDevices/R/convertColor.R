@@ -3,13 +3,15 @@
 ## brucelindbloom uses XYZ in [0,1], so multiply by 100 to convert
 
 ## white points in xyY format (Y=1 omitted)
-white.points <- list(A = c(x = 0.44757, y = 0.40745),
-                     B = c(x = 0.34842, y = 0.35161),
-                     C = c(x = 0.31006, y = 0.31616),
-                     D50 = c(x = 0.34574, y = 0.35867),
-                     D55 = c(x = 0.33250, y = 0.34761),
-                     D65 = c(x = 0.3137, y = 0.3291),
-                     E = c(x = 1/3, y = 1/3))
+white.points <- cbind(A = c(x = 0.44757, y = 0.40745),
+                      B = c(x = 0.34842, y = 0.35161),
+                      C = c(x = 0.31006, y = 0.31616),
+                      D50 = c(x = 0.34574, y = 0.35867),
+                      D55 = c(x = 0.33250, y = 0.34761),
+                      D65 = c(x = 0.3137, y = 0.3291),
+                      E = c(x = 1/3, y = 1/3))
+## converting these:
+c2to3 <- function(col) c(col[1]/col[2], 1, (1 - sum(col))/col[2])
 
 ## http://www.brucelindbloom.com/index.html?Equations.html
 
@@ -17,15 +19,12 @@ white.points <- list(A = c(x = 0.44757, y = 0.40745),
 make.rgb <-
     function(red, green, blue, name = NULL, white = "D65", gamma = 2.2)
 {
-    white.color <- white.points[[white]]
-    whitexyz <- c(white.color[1]/white.color[2], 1,
-                  (1-sum(white.color))/white.color[2])
-
-    red <- c(red[1]/red[2], 1, (1-sum(red))/red[2])
-    green <- c(green[1]/green[2], 1, (1-sum(green))/green[2])
-    blue <- c(blue[1]/blue[2], 1, (1-sum(blue))/blue[2])
-    S <- drop(whitexyz %*% solve(rbind(red,green,blue)))
-    M <- S*rbind(red, green, blue)
+    whitexyz <- c2to3(white.points[, white])
+    rgb <- rbind(c2to3(red),
+                 c2to3(green),
+                 c2to3(blue))
+    S <- drop(whitexyz %*% solve(rgb))
+    M <- S * rgb
 
     if (is.numeric(gamma) && length(gamma) == 1) {
         dogamma <- function(x) x %^% gamma
@@ -52,7 +51,7 @@ make.rgb <-
 print.colorConverter <- function(x,...) {
     cat("Color space converter: ",x$name,"\n")
     if (!is.null(x$reference.white))
-        cat("Reference white: ",x$reference.white,"\n")
+        cat("Reference white: ", x$reference.white,"\n")
     invisible(x)
 }
 
@@ -63,28 +62,25 @@ print.RGBcolorConverter <- function(x,...) {
     invisible(x)
 }
 
-
-chromaticAdaptation <- function(xyz,from,to) {
+chromaticAdaptation <- function(xyz, from, to) {
     ## bradford scaling algorithm
     Ma <- matrix(c( 0.40024, -0.22630, 0.,
                     0.70760,  1.16532, 0.,
                    -0.08081,  0.04570, 0.91822), nrow = 3, byrow = TRUE)
-    from <- match.arg(from, names(white.points))
-    to <- match.arg(to, names(white.points))
-    from <- white.points[[from]]
-    to <- white.points[[to]]
-    from <- c(from[1]/from[2], 1, (1-sum(from))/from[2])
-    to <- c(to[1]/to[2], 1, (1-sum(to))/to[2])
+    nWhite <- colnames(white.points)
+    from <- c2to3(white.points[, match.arg(from, nWhite)])
+    to   <- c2to3(white.points[, match.arg(to,   nWhite)])
     from.cone <- drop(from %*% Ma)
-    to.cone <- drop(to %*% Ma)
-    M <- Ma %*% diag(to.cone/from.cone) %*% solve(Ma)
+    to.cone   <- drop(to %*% Ma)
+    ## M <- Ma %*% diag(to.cone/from.cone) %*% solve(Ma)
+    M <- (Ma * rep(to.cone/from.cone, each=3)) %*% solve(Ma)
     xyz %*% M
 }
 
 
-colorConverter <- function(toXYZ,fromXYZ,name,white = NULL) {
+colorConverter <- function(toXYZ, fromXYZ, name, white = NULL) {
     rval <- list(toXYZ = toXYZ, fromXYZ = fromXYZ,
-               name = name,white = white)
+                 name = name, white = white)
     class(rval) <- "colorConverter"
     rval
 }
@@ -224,10 +220,8 @@ convertColor <-
   if (is.null(from.ref.white))
       from.ref.white <- to.ref.white
 
-  w <- white.points[[from.ref.white]]
-  from.ref.white <- c(w[1]/w[2],1,(1-sum(w))/w[2])
-  w <- white.points[[to.ref.white]]
-  to.ref.white <- c(w[1]/w[2],1,(1-sum(w))/w[2])
+  from.ref.white <- c2to3(white.points[, from.ref.white])
+  to.ref.white   <- c2to3(white.points[, to.ref.white])
 
   if (is.null(nrow(color)))
     color <- matrix(color,nrow = 1)
@@ -255,7 +249,7 @@ convertColor <-
       mc <- match.call()
       if (is.null(mc$from.ref.white) || is.null(mc$to.ref.white))
           warning("color spaces use different reference whites.")
-      xyz <- chromaticAdaptation(xyz,from.ref.white,to.ref.white)
+      xyz <- chromaticAdaptation(xyz, from.ref.white, to.ref.white)
   }
 
   rval <- apply(xyz, 2, to$fromXYZ, to.ref.white)
