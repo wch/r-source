@@ -2,7 +2,7 @@
 ##
 ## Rd2txt -- Convert man pages (*.Rd help files) to plain text.
 
-revision='$Revision: 1.6 $'
+revision='$Revision: 1.7 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2txt ${version}
 
@@ -25,8 +25,6 @@ case "${1}" in
     echo "${usage}"; exit 0 ;;
   -v|--version)
     echo "${version}"; exit 0 ;;
-  *)
-    break ;;
 esac
 
 exec ${R_HOME}/bin/Rdconv -t txt ${1}
