@@ -371,7 +371,7 @@ FILE* R_OpenInitFile(void);
 static void handleInterrupt(int dummy)
 {
     if (R_interrupts_suspended)
-	R_interrupt_pending = TRUE;
+	R_interrupts_pending = 0;
     else 
 	onintr();
 }

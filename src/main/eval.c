@@ -258,6 +258,7 @@ SEXP do_Rprof(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP eval(SEXP e, SEXP rho)
 {
     SEXP op, tmp, val;
+    static int evalcount = 0;
 
     /* The use of depthsave below is necessary because of the
        possibility of non-local returns from evaluation.  Without this
@@ -267,15 +268,10 @@ SEXP eval(SEXP e, SEXP rho)
 
     if (R_EvalDepth > R_Expressions)
 	error("evaluation is nested too deeply: infinite recursion?");
-#ifdef Win32
-    if ((R_EvalCount++ % 100) == 0) {
-	R_ProcessEvents();
-/* Is this safe? R_EvalCount is not used in other part and
- * don't want to overflow it
-*/
-	R_EvalCount = 0 ;
+    if (++evalcount > 100) {
+	R_CheckUserInterrupt();
+	evalcount = 0 ;
     }
-#endif /* Win32 */
 
     tmp = R_NilValue;		/* -Wall */
 

@@ -431,7 +431,7 @@ FUNTAB	R_FunTab[];	    /* Built in functions */
 extern int	gc_inhibit_torture INI_as(1);
 
 LibExtern Rboolean R_interrupts_suspended INI_as(FALSE);
-LibExtern Rboolean R_interrupt_pending INI_as(FALSE);
+LibExtern int R_interrupts_pending INI_as(0);
 
 /* R Home Directory */
 extern char*	R_Home;		    /* Root of the R tree */
@@ -459,7 +459,6 @@ LibExtern RCNTXT* R_ToplevelContext;  /* The toplevel environment */
 LibExtern RCNTXT* R_GlobalContext;    /* The global environment */
 LibExtern int	R_Visible;	    /* Value visibility flag */
 LibExtern int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */
-extern int	R_EvalCount	INI_as(0);	/* Evaluation count */
 extern int	R_BrowseLevel	INI_as(0);	/* how deep the browser is */
 
 extern int	R_Expressions	INI_as(500);	/* options(expressions) */
@@ -789,8 +788,8 @@ int yywrap(void);
     Rboolean __oldsusp__ = R_interrupts_suspended; \
     R_interrupts_suspended = TRUE;
 #define END_SUSPEND_INTERRUPTS R_interrupts_suspended = __oldsusp__; \
-    if (R_interrupt_pending && ! R_interrupts_suspended) { \
-        R_interrupt_pending = FALSE; \
+    if (R_interrupts_pending && ! R_interrupts_suspended) { \
+        R_interrupts_pending = 0; \
         onintr(); \
     } \
 } while(0)

@@ -77,6 +77,8 @@ char *  R_tmpnam(const char *prefix, const char *tempdir);
 void	hsv2rgb(double *h, double *s, double *v,/* in */
 		double *r, double *g, double *b);/* out */
 
+void R_CheckUserInterrupt(void);
+
 #ifdef  __cplusplus
 }
 #endif
