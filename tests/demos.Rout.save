@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.0.0 Under development (unstable) (2004-09-07), ISBN 3-900051-07-0
+Version 2.0.0 beta (2004-10-01), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -865,7 +865,8 @@ flld.c> filled.contour(cos(r^2) * exp(-r/(2 * pi)), frame.plot = FALSE,
 
 > if (dev.cur() <= 1) get(getOption("device"))()
 
-> is.dev.interactive <- eval(body(dev.interactive)[[3]])
+> is.dev.interactive <- .Device %in% c("X11", "GTK", 
+    "gnome", "quartz", "windows", "JavaGD")
 
 > op <- par(ask = is.dev.interactive)
 
