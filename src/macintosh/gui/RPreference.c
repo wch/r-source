@@ -225,7 +225,7 @@ void setDefaultPrefs(void);
 
 
 #define kPrefsFileType 'pref'
-#define kPrefsCreatorType '????'
+#define kPrefsCreatorType R_ID
 #define kFinderMessageStrID -16397 /* ID of STR for default finder message */
 #define kPrefsResourceType 'Pref'
 #define kPrefsResourceID 128

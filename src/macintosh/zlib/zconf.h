@@ -3,7 +3,7 @@
  * For conditions of distribution and use, see copyright notice in zlib.h 
  */
 
-/* @(#) $Id: zconf.h,v 1.1 2001/11/11 13:55:16 iacus Exp $ */
+/* @(#) $Id: zconf.h,v 1.2 2001/11/24 22:27:58 iacus Exp $ */
 
 #ifndef _ZCONF_H
 #define _ZCONF_H
@@ -234,7 +234,11 @@ typedef uLong FAR uLongf;
 #endif
 
 #ifdef HAVE_UNISTD_H
-#  include <sys/types.h> /* for off_t */
+# ifdef __MRC__
+   include <sys/types.h>
+# else
+#  include <types.h> /* for off_t */
+# endif
 #  include <unistd.h>    /* for SEEK_* and off_t */
 #  define z_off_t  off_t
 #endif
