@@ -151,6 +151,7 @@ typedef struct SEXPREC {
     union {
 	struct {
 	    int	length;
+#ifndef USE_GENERATIONAL_GC
 	    union {
 		char		*c;
 		int		*i;
@@ -158,6 +159,7 @@ typedef struct SEXPREC {
 		Rcomplex	*z;
 		struct SEXPREC	**s;
 	    } type;
+#endif
 	    int	truelength;
 	} vecsxp;
 	struct {
@@ -210,17 +212,17 @@ typedef union { SEXPREC s; double align; } SEXPREC_ALIGN;
 /* Vector Access Macros */
 #define LENGTH(x)	((x)->u.vecsxp.length)
 #define TRUELENGTH(x)	((x)->u.vecsxp.truelength)
-#define CHAR(x)		((x)->u.vecsxp.type.c)
 #define SETLENGTH(x,v)		(((x)->u.vecsxp.length)=(v))
 #define SET_TRUELENGTH(x,v)	(((x)->u.vecsxp.truelength)=(v))
 #define LEVELS(x)	((x)->sxpinfo.gp)
 #define SETLEVELS(x,v)	(((x)->sxpinfo.gp)=(v))
 
 #ifdef USE_GENERATIONAL_GC
-#define DIRECT_POINTERS
-#endif
-#ifdef DIRECT_POINTERS
+/* Under the generational allocator the data for vector nodes comes
+   immediately after the node structure, so the data address is a
+   known ofset from the node SEXP. */
 #define DATAPTR(x)	(((SEXPREC_ALIGN *) (x)) + 1)
+#define CHAR(x)		((char *) DATAPTR(x))
 #define LOGICAL(x)	((int *) DATAPTR(x))
 #define COMPLEX(x)	((Rcomplex *) DATAPTR(x))
 #define INTEGER(x)	((int *) DATAPTR(x))
@@ -230,6 +232,7 @@ typedef union { SEXPREC s; double align; } SEXPREC_ALIGN;
 #define STRING_PTR(x)	((SEXP *) DATAPTR(x))
 #define VECTOR_PTR(x)	((SEXP *) DATAPTR(x))
 #else
+#define CHAR(x)		((x)->u.vecsxp.type.c)
 #define LOGICAL(x)	((x)->u.vecsxp.type.i)
 #define COMPLEX(x)	((x)->u.vecsxp.type.z)
 #define INTEGER(x)	((x)->u.vecsxp.type.i)

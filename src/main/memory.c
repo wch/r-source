@@ -1464,7 +1464,6 @@ SEXP allocVector(SEXPTYPE type, int length)
       TAG(s) = R_NilValue;
       ATTRIB(s) = R_NilValue;
       TYPEOF(s) = type;
-      CHAR(s) = (char *) data;
 #else
 	GC_PROT(s = allocSExpNonCons(type));
 	CHAR(s) = (char *) (R_VTop + 1);
@@ -1474,7 +1473,6 @@ SEXP allocVector(SEXPTYPE type, int length)
     }
     else {
 	GC_PROT(s = allocSExpNonCons(type));
-	CHAR(s) = (char*)0;
     }
     LENGTH(s) = length;
     NAMED(s) = 0;
