@@ -262,6 +262,19 @@ be included in every binary distribution of @R{}) have a @samp{Priority}
 field with value @samp{base} or @samp{recommended}, respectively.  These
 priorities must not be used by ``other'' packages.
 
+An optional @samp{Collate} field (or OS-specific variants
+@samp{Collate.@var{OStype}}, such as e.g.@: @samp{Collate.windows}) can
+be used for controlling the collation order for the R code files in a
+package when these are concatenated into a single file upon installation
+from source.  The default is to try collating according to the @samp{C}
+locale.  If present, the collate specification must list @emph{all} R
+code files in the package (taking possible OS-specific subdirectories
+into account, see @ref{Package subdirectories}) as a whitespace
+separated list of file paths relative to the @file{R} subdirectory.
+Paths containing white space or single or double quotes need to be
+quoted.  Applicable OS-specific collate specifications take precedence.
+
+
 @node The INDEX file, Package subdirectories, The DESCRIPTION file, Package structure
 @subsection The @file{INDEX} file
 
@@ -1563,7 +1576,11 @@ Structure of and special markup for documenting S4 classes and methods
 are still under development.  In any case, to allow for making full use
 of the potential of the on-line documentation system, all user-visible
 S4 classes and methods in a package should at least have a suitable
-@code{\alias} entry in one of the package's Rd files.
+@code{\alias} entry in one of the package's Rd files.  If a package has
+methods for a function defined originally somewhere else, and does not
+change the underlying default method for the function, the package is
+responsible for documenting the methods it creates, but not for the
+function itself or the default method.
 
 The topic names (@code{\alias} entries) for S4 classes and methods are
 of the form
