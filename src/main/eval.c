@@ -1132,7 +1132,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP expr, lhs, rhs, saverhs, tmp, tmp2;
     R_varloc_t tmploc;
-    char buf[512]; /* was 32, but I don't see that is guaranteed enough BDR */
+    char buf[32];
 
     expr = CAR(args);
 
@@ -1171,7 +1171,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(rhs); /* To get the loop right ... */
 
     while (isLanguage(CADR(expr))) {
-	snprintf(buf, 512, "%s<-", CHAR(PRINTNAME(CAR(expr))));
+	sprintf(buf, "%s<-", CHAR(PRINTNAME(CAR(expr))));
 	tmp = install(buf);
 	UNPROTECT(1);
 	R_SetVarLocValue(tmploc, CAR(lhs));
@@ -1185,7 +1185,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	lhs = CDR(lhs);
 	expr = CADR(expr);
     }
-    snprintf(buf, 512, "%s<-", CHAR(PRINTNAME(CAR(expr))));
+    sprintf(buf, "%s<-", CHAR(PRINTNAME(CAR(expr))));
     R_SetVarLocValue(tmploc, CAR(lhs));
     PROTECT(tmp = mkPROMISE(CADR(args), rho));
     SET_PRVALUE(tmp, rhs);
@@ -1745,9 +1745,7 @@ static void findmethod(SEXP class, char *group, char *generic,
 	}
 	sprintf(buf, "%s.%s", group, CHAR(STRING_ELT(class, whichclass)));
 	*meth = install(buf);
-	*sxp = findVar(*meth, rho);
-	if (TYPEOF(*sxp)==PROMSXP)
-	    *sxp = eval(*sxp, rho);
+	*sxp = R_LookupMethod(*meth, rho, rho, R_NilValue);
 	if (isFunction(*sxp)) {
 	    *gr = mkString(group);
 	    break;
