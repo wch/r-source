@@ -1,22 +1,21 @@
 zip.file.extract <- function(file, zipname="R.zip")
 {
-    ofile <- gsub("\\\\", "/", file)
-    path <- sub("[^/]*$","", ofile)
-    topic <- substr(ofile, nchar(path)+1, 1000)
+    path <- dirname(file)
+    topic <- basename(file)
     if(file.exists(file.path(path, zipname))) {
-        tempdir <- sub("[^\\]*$","", tempfile())
+        tempdir <- dirname(tempfile())
         if((unzip <- getOption("unzip")) != "internal") {
             if(!system(paste(unzip, ' -oq "',
                              file.path(path, zipname), '" ', topic,
                              " -d ", tempdir, sep=""), invisible = TRUE))
-                file <- paste(tempdir, topic, sep="")
+                file <- file.path(tempdir, topic)
         } else {
             rc <- .Internal(int.unzip(file.path(path, zipname), topic, tempdir))
             if (rc == 10)
                 warning(paste(R.home(),
                               "unzip\\unzip32.dll cannot be loaded", sep="\\"))
             if (rc == 0)
-                file <- paste(tempdir, topic, sep="")
+                file <- file.path(tempdir, topic)
         }
     }
     file
