@@ -34,7 +34,7 @@ This is the R language definition.
 
 @titlepage
 @title R Language Definition
-@subtitle Version @value{VERSION}
+@subtitle Version @value{VERSION} @b{DRAFT}
 @author R Development Core Team
 @page
 @vskip 0pt plus 1filll
@@ -65,18 +65,22 @@ This is the R language definition.
 @comment  node-name,  next,  previous,  up
 @chapter Introduction
 
-@R{} is a computer language and environment for statistics.  It
+@R{} is a system for statistical computation and graphics. It
 provides, among other things, a programming language, high level
 graphics, interfaces to other languages and debugging facilities.  This
 manual details and defines the @R{} language.
 
+The @R{} language is a dialect of @Sl{} which was designed in the 1980s
+and has been in widespread use in the statistical community since then.
+The principal designer, John M. Chambers was awarded the 1998 ACM
+Software Systems Award for @Sl{}.  
+
 The language syntax has a superficial similarity with C, but the
 semantics are of the FPL (functional programming language) variety with
-stronger affinities with Lisp and @acronym{APL}.  In particular, it
+stronger affinities with Lisp and @acronym{APL}. In particular, it
 allows ``computing on the language'', which in turn makes it possible to
-write functions that take expressions as input, something that often
-comes in handy when writing interface functions for statistical modeling
-and graphics.
+write functions that take expressions as input, something that is often
+useful for statistical modeling and graphics.
 
 It is possible to get quite far using @R{} interactively, executing
 simple expressions from the command line.  Some users may never need to
@@ -89,6 +93,10 @@ That is, the objects that it works on, and the details of the expression
 evaluation process, which are useful to know when programming @R{}
 functions.  Major subsystems for specific tasks, such as graphics, are
 only briefly described in this manual and will be documented separately.
+
+Although much of the text will equally apply to @Sl{}, there are also
+some substantial differences, and in order not to confuse the issue we
+shall concentrate on describing @R{}. 
 
 The design of the language contains a number of fine points and
 common pitfalls which may surprise the user.  Most of these are due to
@@ -753,7 +761,6 @@ Users can construct expressions and invoke the evaluator on them.
 * Elementary arithmetic operations::  
 * Indexing::                    
 * Scope of variables::          
-* Evaluation of calls::         
 @end menu
 
 @node Simple evaluation, Control structures, Evaluation of expressions, Evaluation of expressions
@@ -1568,7 +1575,7 @@ tries to avoid duplication as far as possible).
 @c  @end example
 
 
-@node Scope of variables, Evaluation of calls, Indexing, Evaluation of expressions
+@node Scope of variables,  , Indexing, Evaluation of expressions
 @section Scope of variables
 
 Almost every programming language has a set of scoping rules, allowing
@@ -1678,51 +1685,51 @@ last is the base package.  An @code{Autoloads} environment is used for
 holding proxy objects that may be loaded on demand.  Other environments
 are inserted in the path using @code{attach} or @code{library}.
 
-@node Evaluation of calls,  , Scope of variables, Evaluation of expressions
-@section Accessing and manipulating environments
+@node Evaluation of calls, Functions, Evaluation of expressions, Top
+@c  @section Accessing and manipulating environments
 
-@menu
-* ls::                          
-* Environment of a function::   
-* Accessing the call stack::    
-* Attaching lists and data frames::  
-@end menu
+@c  @menu
+@c  * ls::                          
+@c  * Environment of a function::   
+@c  * Accessing the call stack::    
+@c  * Attaching lists and data frames::  
+@c  @end menu
 
-@node ls, Environment of a function, Evaluation of calls, Evaluation of calls
-@subsection ls, get, assign
-@findex ls
-@findex get
-@findex assign
+@c  @node ls, Environment of a function, Evaluation of calls, Evaluation of calls
+@c  @subsection ls, get, assign
+@c  @findex ls
+@c  @findex get
+@c  @findex assign
 
-The @code{<<-} operator allows assignment to variables in enclosing
-environments.  It searches through the nested frames until a variable of
-the same name is found, and assigns the value to it (or creates a new
-variable in the global environment).
+@c  The @code{<<-} operator allows assignment to variables in enclosing
+@c  environments.  It searches through the nested frames until a variable of
+@c  the same name is found, and assigns the value to it (or creates a new
+@c  variable in the global environment).
 
-One can assign to a variable in a specific environment using
-@code{assign}, but there is no simple way of creating or accessing a
-variable in the enclosure of a given environment.
-@c FIXME: should there be?
+@c  One can assign to a variable in a specific environment using
+@c  @code{assign}, but there is no simple way of creating or accessing a
+@c  variable in the enclosure of a given environment.
+@c  @c FIXME: should there be?
 
-@node Environment of a function, Accessing the call stack, ls, Evaluation of calls
-@subsection Environment of a function
+@c  @node Environment of a function, Accessing the call stack, ls, Evaluation of calls
+@c  @subsection Environment of a function
 
-@node Accessing the call stack, Attaching lists and data frames, Environment of a function, Evaluation of calls
-@subsection Accessing the call stack
+@c  @node Accessing the call stack, Attaching lists and data frames, Environment of a function, Evaluation of calls
+@c  @subsection Accessing the call stack
 
-@menu
-* sys.frame::                   
-* match.call::                  
-@end menu
+@c  @menu
+@c  * sys.frame::                   
+@c  * match.call::                  
+@c  @end menu
 
-@node sys.frame, match.call, Accessing the call stack, Accessing the call stack
-@subsubsection sys.frame, etc.
+@c  @node sys.frame, match.call, Accessing the call stack, Accessing the call stack
+@c  @subsubsection sys.frame, etc.
 
-@node match.call,  , sys.frame, Accessing the call stack
-@subsubsection match.call
+@c  @node match.call,  , sys.frame, Accessing the call stack
+@c  @subsubsection match.call
 
-@node Attaching lists and data frames,  , Accessing the call stack, Evaluation of calls
-@subsection Attaching lists and data frames
+@c  @node Attaching lists and data frames,  , Accessing the call stack, Evaluation of calls
+@c  @subsection Attaching lists and data frames
 
 @node Functions, Object-oriented programming, Evaluation of expressions, Top
 @chapter Functions
@@ -1826,7 +1833,7 @@ the function was created.  This environment is associated with the
 function for the life of the function (unless it purposely removed).
 
 Functions are first class objects in @R{}.  This basically means that
-they can be used any where that an @R{} object is required.  In
+they can be used anywhere that an @R{} object is required.  In
 particular they can be passed as arguments to functions and returned as
 values from functions.
 
