@@ -3,7 +3,7 @@ all:
 	@cd profile; make
 
 libs:
-	@echo Building application libraries..
+	@echo Building application packages..
 	@sh LIBSETUP
 
 clean:
