@@ -1,21 +1,22 @@
-load <- function (file, envir = parent.frame()) {
+load <- function (file, envir = parent.frame())
+{
     if (is.character(file)) {
-        if (capabilities("libz"))
-            ## if zlib is available just open with gzfile, whether file
-            ## is compressed or not; zlib should work either way.
-            con <- gzfile(file, "rb")
-        else
-            con <- file(file, "rb")
+        ## As zlib is available just open with gzfile, whether file
+        ## is compressed or not; zlib works either way.
+        con <- gzfile(file)
         on.exit(close(con))
     }
-    else if (inherits(file, "connection"))
-        con <- file
+    else if (inherits(file, "connection")) con <- file
     else stop("bad file argument")
+    if(!isOpen(con)) {
+        ## code below assumes that the connection is open ...
+        open(con, "rb")
+    }
 
     magic <- readChar(con, 5)
 
     if (regexpr("RD[AX]2\n", magic) == -1) {
-        ## Not a verion 2 magic number, so try the old way.
+        ## Not a version 2 magic number, so try the old way.
         if (is.character(file)) {
             close(con)
             on.exit()
@@ -64,7 +65,7 @@ save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
     if (missing(version)) version <- opts$version
 
     if (safe) {
-        ## find a temporary file name in the same directory so we can 
+        ## find a temporary file name in the same directory so we can
         ## rename it to the final output file on success
         outfile <- paste(file, "Tmp", sep = "")
         i <- 0;

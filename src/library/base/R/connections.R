@@ -208,3 +208,5 @@ writeChar <- function(object, con, nchars = nchar(object), eos = "")
     }
     invisible(.Internal(writeChar(object, con, as.integer(nchars), eos)))
 }
+
+gzcon <- function(con, level = 6) .Internal(gzcon(con, level))

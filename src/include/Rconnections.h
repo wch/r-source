@@ -108,6 +108,17 @@ typedef struct clpconn {
 } *Rclpconn;
 #endif
 
+#ifdef _ZLIB_H
+typedef struct gzconn {
+    Rconnection con;
+    int cp;
+    z_stream s;
+    int z_err, z_eof;
+    uLong crc;
+    Byte *inbuf, *outbuf;
+} *Rgzconn;
+#endif
+
 int Rconn_fgetc(Rconnection con);
 int Rconn_ungetc(int c, Rconnection con);
 int Rconn_getline(Rconnection con, char *buf, int bufsize);
