@@ -959,3 +959,34 @@ Date: Mon, 05 Jul 2004 07:38:57 +0200
 Subject: R 1.9.1 on Linux RedHat 9
 From: jean.verella@verizon.net
 Date: Mon,  5 Jul 2004 19:51:09 +0200 (CEST)
+* PR# 7055 *
+Subject: Wrong object type produced - LANGSXP should be LISTSXP
+From: bauerda@ieee.org
+Date: Tue,  6 Jul 2004 20:25:04 +0200 (CEST)
+* PR# 7056 *
+Subject: 2.1.6.2
+From: "5.4.5.9" <vnnnysf@linuxmail.org>
+Date: Tue, 06 Jul 2004 13:40:17 -0600
+* PR# 7057 *
+Subject: failure notice
+Subject: Is that your password?
+From: MAILER-DAEMON@savba.sk
+From: r-bugs@biostat.ku.dk
+Date: 6 Jul 2004 19:55:42 -0000
+Date: Tue, 6 Jul 2004 22:00:48 +0200
+* PR# 7058 *
+Subject: RE:
+From: "Asley Annie" <ntdb25fse@4link.net>
+Date: Tue, 06 Jul 2004 15:09:06 -0600
+* PR# 7059 *
+Subject: 0FFICE 2003 $8O! XP PR0 $5O; AD0BE PH0TOSH0P $8O; NORT0N 2004 $15; 0FFICE XP $100 definitely 
+From: "Hyacinth Rubi" <jgc6rt@telpage.net>
+Date: Wed, 07 Jul 2004 03:16:55 +0500
+* PR# 7060 *
+Subject: 2nd sentence of ?attributes has a typo
+From: Stephen Weigand <Weigand.Stephen@mayo.edu>
+Date: Tue, 6 Jul 2004 16:24:05 -0500 (CDT)
+* PR# 7061 *
+Subject: bugs in summary.lm
+From: yangsu@rutchem.rutgers.edu
+Date: Wed,  7 Jul 2004 00:06:30 +0200 (CEST)
