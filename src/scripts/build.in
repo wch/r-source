@@ -30,6 +30,7 @@ use File::Basename;
 use File::Compare;
 use File::Find;
 use File::Path;
+use File::Copy;
 use Getopt::Long;
 use R::Dcf;
 use R::Logfile;
@@ -42,7 +43,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.57 $ ';
+my $revision = ' $Revision: 1.58 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -132,7 +133,11 @@ foreach my $pkg (@ARGV) {
 	    $log->message("Looks like '${pkg}' is a package bundle");
 	    $is_bundle = 1;
 	    my @bundlepkgs = split(/\s+/, $description->{"Contains"});
-	    $pkgs = join(" ", @bundlepkgs);
+	    ## JG: Get a copy of the bundle's DESCRIPTION file
+	    ##     and add it into the zip archive
+	    $log->message("Copying $pkg/DESCRIPTION");
+	    copy("$pkg/DESCRIPTION","DESCRIPTION");
+	    $pkgs = join(" ", @bundlepkgs, "DESCRIPTION");
 	}
 
 	if($WINDOWS) {

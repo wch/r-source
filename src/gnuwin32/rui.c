@@ -306,7 +306,7 @@ static void menupkgupdate(control m)
 static void menupkgupdatebioc(control m)
 {
     if (!ConsoleAcceptCmd) return;
-    consolecmd(RConsole, 
+    consolecmd(RConsole,
 	       "update.packages(CRAN=getOption(\"BIOC\"))");
 /*    show(RConsole); */
 }
@@ -835,7 +835,7 @@ int setupui()
     MCHECK(mpkgl = newmenuitem("Load package...", 0, menupkgload));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mpkgi = newmenuitem("Install package(s) from CRAN...", 0,
-			       menupkginstallcran));		       
+			       menupkginstallcran));
     MCHECK(mpkgil = newmenuitem("Install package(s) from local zip files...",
 				0, menupkginstalllocal));
     MCHECK(newmenuitem("-", 0, NULL));
@@ -843,7 +843,7 @@ int setupui()
 			       menupkgupdate));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mpkgi = newmenuitem("Install package(s) from Bioconductor...",
-			       0, menupkginstallbioc));	
+			       0, menupkginstallbioc));
     MCHECK(mpkgbu = newmenuitem("Update packages from Bioconductor",
 				0, menupkgupdatebioc));
 #ifdef USE_MDI
@@ -973,7 +973,7 @@ int winaddmenu(char * name, char *errmsg)
 	usermenus[nmenus] = m;
 	strcpy(usermenunames[nmenus], name);
 	nmenus++;
-/*	show(RConsole); */
+	show(RConsole);
 	return 0;
     } else {
 	strcpy(errmsg, "failed to allocate menu");
@@ -1048,7 +1048,7 @@ int winaddmenuitem(char * item, char * menu, char * action, char *errmsg)
 	    return 1;
 	}
     }
-/*    show(RConsole); */
+    show(RConsole);
     return 0;
 }
 
@@ -1069,7 +1069,7 @@ int windelmenu(char * menu, char *errmsg)
 	usermenus[j] = usermenus[j+1];
 	strcpy(usermenunames[j], usermenunames[j+1]);
     }
-/*    show(RConsole); */
+    show(RConsole);
     return 0;
 }
 
@@ -1093,6 +1093,6 @@ int windelmenuitem(char * item, char * menu, char *errmsg)
     delobj(umitems[i]->m);
     strcpy(umitems[i]->name, "invalid");
     free(umitems[i]->action);
-/*    show(RConsole); */
+    show(RConsole);
     return 0;
 }

@@ -85,6 +85,9 @@ double rgamma(double a, double scale)
 
     double e, p, q, r, t, u, v, w, x, ret_val;
 
+    if (!R_FINITE(a) || !R_FINITE(scale))
+	ML_ERR_return_NAN;
+
     if (a < 1.) { /* GS algorithm for parameters a < 1 */
 	e = 1.0 + exp_m1 * a;
 	repeat {

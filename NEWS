@@ -5,6 +5,42 @@
 	*						 *
 	**************************************************
 
+		CHANGES IN R VERSION 1.7.1
+
+
+BUG FIXES
+
+    o	print.table() has used too much white space in some cases
+	in 1.7.0.
+
+    o	selectMethod() failed if f was a non-generic and optional=TRUE, and
+	gave a confusing error message if optional=FALSE.
+
+    o	pchisq(*, ncp) and qchisq(*, ncp) work in more cases for large ncp
+	or quantile and give warning or error messages otherwise.
+
+    o	str(x) now also works when x is an "externalptr" (or "weakref").
+
+    o	rbeta(), rf(), and rt() now support infinite parameter values; 
+	other distributions return NaN instead of NA for such.
+
+    o   redefining a class is now safer if the new definition
+        generates an error (previously some invalid metadata could be
+        left behind).
+
+    o   A number of errors are now caught in setClass() that
+        previously either went unchecked or waited until new() to
+        appear:
+        - classes may not contain themselves, directly or indirectly;
+        - classes appearing either as slots or as superclasses must
+          themselves be defined;
+	- slot names (direct or inherited) must be unique.
+	In related changes, prototype() now works as documented, and is the
+        recommended way to provide prototype objects.
+
+    o	Sorting an ordered factor would return an unordered one.
+    	This caused some trouble with panel.superpose (PR#974).
+
 
 		CHANGES IN R VERSION 1.7.0
 
@@ -743,7 +779,7 @@ BUG FIXES
 
     o   read.socket() dropped certain non-alphanumeric characters. (PR#2639)
 
-    o   termplot() handles missing data better (PR#2687, 
+    o   termplot() handles missing data better (PR#2687,
          <Mark.Bravington@csiro.au>)
 
     o	Corrected MacRoman encoding for Icircumflex etc.

@@ -41,7 +41,6 @@ void selectfolder(char *folder)
     LPMALLOC g_pMalloc;
     HWND hwnd=0;
     BROWSEINFO bi;
-    LPITEMIDLIST pidlDesktop;
     LPITEMIDLIST pidlBrowse;
 
     /* Get the shell's allocator. */
@@ -61,6 +60,4 @@ void selectfolder(char *folder)
 	SHGetPathFromIDList(pidlBrowse, folder);
         g_pMalloc->lpVtbl->Free(g_pMalloc, pidlBrowse);
     }
-    /* Clean up. */
-    g_pMalloc->lpVtbl->Free(g_pMalloc, pidlDesktop);
 }

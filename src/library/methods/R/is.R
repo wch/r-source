@@ -70,28 +70,18 @@ setIs <-
   ## more elaborate one.  If the `replace' argument is supplied as an S replacement
   ## function, this function will be used to implement `as(obj, class2) <- value'.
   function(class1, class2, test = NULL, coerce = NULL,
-           replace = NULL, by = character(), where = 1, complete = TRUE)
+           replace = NULL, by = character(), where = 1, classDef = getClass(class1, TRUE))
 {
-    ## Technical detail:  optionally call getClassDef  (don't  complete the def'n),
-    ## because setIs is called
-    ## during the setClass computations to record simple contained classes &
-    ## completeClassDefinition may get into a loop then.
-    localGetClass <- if(complete) getClass else getClassDef
-    classDef1 <- localGetClass(class1)
-    ## But, we want at least a minimal definition to allow for relations with old-style
-    ## classes: so,
-    if(!is(classDef1, "classRepresentation"))
-        classDef1 <- getClass(class1, TRUE)
-    classDef2 <- localGetClass(class2)
-    if(!is(classDef2, "classRepresentation"))
-        classDef2 <- getClass(class2, TRUE)
+    complete <- missing(classDef) # else, called from setClass
+    ## class2 should exist
+    classDef2 <- getClass(class2, TRUE)
     ## check some requirements
-    .validExtends(class1, class2, classDef1,  classDef2, complete && is.null(coerce))
+    .validExtends(class1, class2, classDef,  classDef2, complete && is.null(coerce))
     
     obj <- makeExtends(class1, class2, coerce, test, replace, by,
-                       classDef1 = classDef1, classDef2 = classDef2)
-    setExtendsMetaData(classDef1, classDef2, obj, where = where)
-    subDef <- setSubclassMetaData(classDef2, classDef1, where = where)
+                       classDef1 = classDef, classDef2 = classDef2)
+    setExtendsMetaData(classDef, classDef2, obj, where = where)
+    subDef <- setSubclassMetaData(classDef2, classDef, where = where)
     resetClass(class1)
     ## Usually it would be OK to do:  resetClass(class2)
     ## However, resetting a basic class can throw us into a loop.

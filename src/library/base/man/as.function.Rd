@@ -36,4 +36,4 @@ as.function.default(x, envir = parent.frame(), \dots)
 as.function(alist(a=,b=2,a+b))
 as.function(alist(a=,b=2,a+b))(3)
 }
-\keyword{programming}%-- one or more ...
+\keyword{programming}

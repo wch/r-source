@@ -64,19 +64,20 @@ table <- function (..., exclude = c(NA, NaN),
 }
 
 ## From  1999-12-19 till 2003-03-27:
-print.table <-
-function(x, digits = getOption("digits"), quote = FALSE, na.print = "", ...)
-{
-    print.default(unclass(x), digits = digits, quote = quote,
-		  na.print = na.print, ...)
-    ## this does *not* return x !
-}
+## print.table <-
+## function(x, digits = getOption("digits"), quote = FALSE, na.print = "", ...)
+## {
+##     print.default(unclass(x), digits = digits, quote = quote,
+## 		  na.print = na.print, ...)
+##     ## this does *not* return x !
+## }
 
 ## Better (NA in dimnames *should* be printed):
 print.table <-
-function (x, digits = getOption("digits"), quote = FALSE, na.print = "", ...)
+function (x, digits = getOption("digits"), quote = FALSE, na.print = "",
+          justify = "none", ...)
 {
-    xx <- format(unclass(x), digits = digits)
+    xx <- format(unclass(x), digits = digits, justify = justify)
     ## na.print handled here
     if(any(ina <- is.na(x)))
         xx[ina] <- na.print

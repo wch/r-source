@@ -28,18 +28,12 @@ setClass <-
                                              validity, access, version, sealed)
         superClasses <- names(classDef@contains)
     }
+    ## confirm the validity of the class definition
+    .completeClassSlots(classDef)
+    completeExtends(classDef)
+    for(class2 in superClasses) # store the metadata for class relations
+        setIs(Class, class2, where = where, classDef = classDef)
     assignClassDef(Class, classDef, where)
-    for(class2 in superClasses)
-        setIs(Class, class2, where = where, complete = FALSE)
-    ## confirm the validity of the class definition (it may be incomplete)
-    msg <- trySilent(completeClassDefinition(Class, classDef))
-    if(is(msg, "try-error")) {
-        ## clean up message first
-        msg <- gsub("Error[^:]*:","", msg)
-        msg <- gsub("[\n\t]", "", msg)
-        warning("Cannot complete class definition for \"", Class, "\" (",
-                   msg, ") -- may conflict with previous definitions")
-    }
     Class
 }
 

@@ -1,9 +1,9 @@
-system <- function(command, intern = FALSE, wait = TRUE, input = "",
+system <- function(command, intern = FALSE, wait = TRUE, input = NULL,
                    show.output.on.console = FALSE, minimized = FALSE,
                    invisible = FALSE)
 {
     f <- ""
-    if (input!="") {
+    if (!is.null(input)) {
         f <- tempfile()
         on.exit(unlink(f))
         cat(input,file=f,sep="\n")
