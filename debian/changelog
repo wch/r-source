@@ -1,3 +1,19 @@
+r-base (0.64.1-1) unstable; urgency=low
+
+  * New upstream release
+  * Change definition of RHOME in /usr/lib/R/bin/R shell script (Bug#37339)
+  * Add links so /usr/lib/R/doc/manual .tex files can be LaTeX'd (Hubert Palme)
+  * Re-introduced md5sum's but with files that can change removed (Bug#35744)
+  * Removed arbitrary --vsize and --nsize flags in R script.
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Wed, 12 May 1999 11:48:22 -0500
+    
+r-base (0.64.0-2) unstable; urgency=low
+
+  * removed md5sums from control information (Bug#35744)
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Thu,  8 Apr 1999 08:48:32 -0500
+
 r-base (0.64.0-1) unstable; urgency=low
 
   * New upstream release
