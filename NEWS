@@ -136,6 +136,9 @@ DEPRECATED & DEFUNCT
 
     o	Capabilities "bzip2", "GNOME, "libz" and "PCRE" are deprecated.
 
+    o	The undocumented use of UseMethod() with no argument is now 
+	formally deprecated.
+
 
 INSTALLATION CHANGES
 
