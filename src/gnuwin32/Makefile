@@ -41,14 +41,15 @@ else
 R-DLLFLAGS = -mwindows
 endif
 R-DLLLIBS =-L. $(FLIBS) -lRblas -lcomctl32 -lversion
+dllversion-RESFLAGS =-I../include
 SOURCES = \
   console.c dataentry.c devga.c dodevga.c dynload.c edit.c editor.c extra.c \
   opt.c pager.c preferences.c psignal.c rhome.c rui.c run.c shext.c \
   sys-win32.c system.c
 OBJS = $(SOURCES:.c=.o) e_pow.o
 MAINLIBS = ../main/libmain.a ../appl/libappl.a ../nmath/libnmath.a
-EXTRALIBS = graphapp/ga.a getline/gl.a ../extra/xdr/xdr.a \
-   ../extra/zlib/libz.a ../extra/pcre/libRpcre.a ../extra/bzip2/libbz2.a
+EXTRALIBS = graphapp/ga.a getline/gl.a ../extra/xdr/libxdr.a \
+   ../extra/zlib/libz.a ../extra/pcre/libpcre.a ../extra/bzip2/libbz2.a
 
 PKGS = $(foreach i,$(R_PKGS_BASE) ,pkg-$i)
 PKGCLEAN = $(foreach i,$(R_PKGS_BASE),pkgclean-$i)
@@ -152,7 +153,7 @@ libR.a:  R.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib libR.a
 
 R.exp: R.exp1
-	@(diff R.exp R.exp1 > /dev/null) || $(CP) R.exp1 R.exp
+	@(diff R.exp R.exp1 > /dev/null 2>&1) || $(CP) R.exp1 R.exp
 
 R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 	@$(ECHO) EXPORTS > $@
