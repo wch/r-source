@@ -1,4 +1,4 @@
-\name{rbind}
+\name{cbind}
 \title{Combine Columns/Rows into a Matrix}
 \usage{
 cbind(\dots)
