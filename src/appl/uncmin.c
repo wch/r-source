@@ -63,59 +63,59 @@ void fdhess(int n, double *x, double fval, fcn_p fun, void *state,
 
  *	programmed by richard h. jones, january 11, 1989
 
- *	input to subroutine
+ * INPUT to subroutine
 
- *	   n......the number of parameters
- *	   x......vector of parameter values
- *	   fval...double precision value of function at x
- *	   fun....a function provided by the user which must be
- *	   declared as external in the calling program.	 its call must
- *	   be of the call fun(n,x,state,fval) where fval is the
- *	   computed value of the function
- *	   state..information other than x and n that fun requires.
- *	   state is not modified in fdhess (but can be modified by fun).
- *	   nfd... first dimension of h in the calling program
+ *	n      the number of parameters
+ *	x      vector of parameter values
+ *	fval   double precision value of function at x
+ *	fun    a function provided by the user which must be declared as 
+ *	       external in the calling program.	 its call must
+ *	       be of the call fun(n,x,state,fval) where fval is the
+ *	       computed value of the function
+ *	state  information other than x and n that fun requires.
+ *	       state is not modified in fdhess (but can be modified by fun).
+ *	nfd    first dimension of h in the calling program
 
- *	output from subroutine
+ * OUTPUT from subroutine
 
- *	    h.....an n by n matrix of the approximate hessian
+ *	h     an n by n matrix of the approximate hessian
 
- *	work space
+ * Work space :
 
- *	    step....a real array of length n
- *	    f.......a double precision array of length n
+ *	step	a real array of length n
+ *	f	a double precision array of length n
  */
 
-  int i, j;
-  double tempi, tempj, fii, eta, fij;
+    int i, j;
+    double tempi, tempj, fii, eta, fij;
 
-  eta = pow(10.0, -ndigit/3.0);
-  for (i = 0; i < n; ++i) {
-    step[i] = eta * fmax2(x[i], typx[i]);
-    if (typx[i] < 0.) {
-      step[i] = -step[i];
+    eta = pow(10.0, -ndigit/3.0);
+    for (i = 0; i < n; ++i) {
+	step[i] = eta * fmax2(x[i], typx[i]);
+	if (typx[i] < 0.)
+	    step[i] = -step[i];
+
+	tempi = x[i];
+	x[i] += step[i];
+	step[i] = x[i] - tempi;
+	(*fun)(n, x, &f[i], state);
+	x[i] = tempi;
     }
-    tempi = x[i];
-    x[i] += step[i];
-    step[i] = x[i] - tempi;
-    (*fun)(n, x, &f[i], state);
-    x[i] = tempi;
-  }
-  for (i = 0; i < n; ++i) {
-    tempi = x[i];
-    x[i] += step[i] * 2.;
-    (*fun)(n, x, &fii, state);
-    h[i + i * nfd] = (fval - f[i] + (fii - f[i]))/(step[i] * step[i]);
-    x[i] = tempi + step[i];
-    for (j = i + 1; j < n; ++j) {
-      tempj = x[j];
-      x[j] += step[j];
-      (*fun)(n, x, &fij, state);
-      h[i + j * nfd] = (fval - f[i] + (fij - f[j]))/(step[i] * step[j]);
-      x[j] = tempj;
+    for (i = 0; i < n; ++i) {
+	tempi = x[i];
+	x[i] += step[i] * 2.;
+	(*fun)(n, x, &fii, state);
+	h[i + i * nfd] = (fval - f[i] + (fii - f[i]))/(step[i] * step[i]);
+	x[i] = tempi + step[i];
+	for (j = i + 1; j < n; ++j) {
+	    tempj = x[j];
+	    x[j] += step[j];
+	    (*fun)(n, x, &fij, state);
+	    h[i + j * nfd] = (fval - f[i] + (fij - f[j]))/(step[i] * step[j]);
+	    x[j] = tempj;
+	}
+	x[i] = tempi;
     }
-    x[i] = tempi;
-  }
 } /* fdhess */
 
 static void d1fcn_dum(int n, double *x, double *g, void *state)
@@ -276,54 +276,49 @@ choldc(int nr, int n, double *a, double diagmx, double tol, double *addmax)
  *	instead.  this is equivalent to adding tol*diagmx-temp to a(i,i)
  */
 
-  double tmp1, tmp2;
-  int i, j, k;
-  double aminl, offmax, amnlsq;
-  double sum;
+    double tmp1, tmp2;
+    int i, j, k;
+    double aminl, offmax, amnlsq;
+    double sum;
 
-  *addmax = 0.0;
-  aminl = sqrt(diagmx * tol);
-  amnlsq = aminl * aminl;
+    *addmax = 0.0;
+    aminl = sqrt(diagmx * tol);
+    amnlsq = aminl * aminl;
 
-  /*	form row i of l */
+    /*	form row i of l */
 
-  for (i = 0; i < n; ++i) {
+    for (i = 0; i < n; ++i) {
+	/*	find diagonal elements of l */
+	sum = 0.;
+	for (k = 0; k < i; ++k)
+	    sum += a[i + k * nr] * a[i + k * nr];
 
-    /*	find diagonal elements of l */
+	tmp1 = a[i + i * nr] - sum;
+	if (tmp1 >= amnlsq) {
+	    a[i + i * nr] = sqrt(tmp1);
+	} 
+	else {
+	    /*	find maximum off-diagonal element in row */
+	    offmax = 0.;
+	    for (j = 0; j < i; ++j) {
+		if(offmax < (tmp2 = fabs(a[i + j * nr])))
+		    offmax = tmp2;
+	    }
+	    if (offmax <= amnlsq) offmax = amnlsq;
 
-    sum = 0.;
-    for (k = 0; k < i; ++k) {
-      sum += a[i + k * nr] * a[i + k * nr];
-    }
-    tmp1 = a[i + i * nr] - sum;
-    if (tmp1 >= amnlsq) {
-      a[i + i * nr] = sqrt(tmp1);
-    } else {
-      /*	find maximum off-diagonal element in row */
-      offmax = 0.;
-      for (j = 0; j < i; ++j) {
-	if ((tmp2 = fabs(a[i + j * nr])) > offmax) {
-	  offmax = tmp2;
+	    /* add to diagonal element to
+	     * allow cholesky decomposition to continue */
+	    a[i + i * nr] = sqrt(offmax);
+	    if(*addmax < (tmp2 = offmax - tmp1)) *addmax = tmp2;
 	}
-      }
-      if (offmax <= amnlsq) {
-	offmax = amnlsq;
-      }
-
-      /* add to diagonal element to allow cholesky decomposition to continue */
-
-      a[i + i * nr] = sqrt(offmax);
-      if((tmp2 = offmax - tmp1) > *addmax)
-	*addmax = tmp2;
+	/*	find i,j element of lower triangular matrix */
+	for (j = 0; j < i; ++j) {
+	    sum = 0.;
+	    for (k = 0; k < j; ++k)
+		sum += a[i + k * nr] * a[j + k * nr];
+	    a[i + j * nr] = (a[i + j * nr] - sum) / a[j + j * nr];
+	}
     }
-    /*	find i,j element of lower triangular matrix */
-    for (j = 0; j < i; ++j) {
-      sum = 0.;
-      for (k = 0; k < j; ++k)
-	sum += a[i + k * nr] * a[j + k * nr];
-      a[i + j * nr] = (a[i + j * nr] - sum) / a[j + j * nr];
-    }
-  }
 } /* choldc */
 
 static void qraux1(int nr, int n, double *r, int i)
@@ -371,6 +366,7 @@ static void qraux2(int nr, int n, double *r, int i, double a, double b)
   c = a / den;
   s = b / den;
 
+  /* pointer arithmetic : */
   r1 = r + i + i*nr;
   r2 = r1 + 1;
 
@@ -399,52 +395,51 @@ qrupdt(int nr, int n, double *a, double *u, double *v)
  *	u(n)	     --> vector
  *	v(n)	     --> vector */
 
-  int i, j, k;
-  double t1, t2;
-  int ii;
+    int i, j, k;
+    double t1, t2;
+    int ii;
 
-  /*	determine last non-zero in u(.) */
+    /*	determine last non-zero in u(.) */
 
-  for(k = n-1; k > 0 && u[k] == 0.0; k--)
-    ;
+    for(k = n-1; k > 0 && u[k] == 0.0; k--)
+	;
 
-  /*	(k-1) jacobi rotations transform
-   *	    r + u(v+) --> (r*) + (u(1)*e1)(v+)
-   *	which is upper hessenberg */
+    /*	(k-1) jacobi rotations transform
+     *	    r + u(v+) --> (r*) + (u(1)*e1)(v+)
+     *	which is upper hessenberg */
 
-  if (k > 0) {
-    ii = k;
-    while(ii > 0) {
-      i = ii - 1;
-      if (u[i] == 0.0) {
-	qraux1(nr, n, a, i);
-	u[i] = u[ii];
-      } else {
-	qraux2(nr, n, a, i, u[i], -u[ii]);
-	u[i] = hypot(u[i], u[ii]);
-      }
-      ii = i;
+    if (k > 0) {
+	ii = k;
+	while(ii > 0) {
+	    i = ii - 1;
+	    if (u[i] == 0.0) {
+		qraux1(nr, n, a, i);
+		u[i] = u[ii];
+	    } else {
+		qraux2(nr, n, a, i, u[i], -u[ii]);
+		u[i] = hypot(u[i], u[ii]);
+	    }
+	    ii = i;
+	}
     }
-  }
 
-  /*	r <-- r + (u(1)*e1)(v+) */
+    /*	r <-- r + (u(1)*e1)(v+) */
 
-  for (j = 0; j < n; ++j) {
-    a[j * nr] += u[0] * v[j];
-  }
+    for (j = 0; j < n; ++j)
+	a[j * nr] += u[0] * v[j];
 
-  /*	(k-1) jacobi rotations transform upper hessenberg r
-   *	to upper triangular (r*) */
+    /*	(k-1) jacobi rotations transform upper hessenberg r
+     *	to upper triangular (r*) */
 
-  for (i = 0; i < k; ++i) {
-    if (a[i + i * nr] == 0.) {
-      qraux1(nr, n, a, i);
-    } else {
-      t1 = a[i + i * nr];
-      t2 = -a[i + 1 + i * nr];
-      qraux2(nr, n, a, i, t1, t2);
+    for (i = 0; i < k; ++i) {
+	if (a[i + i * nr] == 0.)
+	    qraux1(nr, n, a, i);
+	else {
+	    t1 = a[i + i * nr];
+	    t2 = -a[i + 1 + i * nr];
+	    qraux2(nr, n, a, i, t1, t2);
+	}
     }
-  }
 } /* qrupdt */
 
 static void
@@ -456,7 +451,7 @@ tregup(int nr, int n, double *x, double f, double *g, double *a, fcn_p fcn,
        int method, double *udiag)
 {
 /* TRust REGion UPdating
- * ==     ==    ==
+ * ==	  ==	==
  * Decide whether to accept xpls = x+sc as the next iterate and
  * update the trust region radius dlt.
  * Used iff method == 2 or 3
@@ -850,7 +845,7 @@ dogdrv(int nr, int n, double *x, double f, double *g, double *a, double *p,
        double *sc, double *wrk1, double *wrk2, double *wrk3, int *itncnt)
 {
 /* Find a next newton iterate (xpls) by the double dogleg method
- * (iff  method == 2 ).
+ * (iff	 method == 2 ).
 
  * PARAMETERS :
 
@@ -917,7 +912,7 @@ hook_1step(int nr, int n, double *g, double *a, double *udiag, double *p,
        double *phi, double *phip0, Rboolean *fstime, double *sc,
        Rboolean *nwtake, double *wrk0, double epsm)
 {
-/* Find new step by more-hebdon algorithm  (iff  method == 3);
+/* Find new step by more-hebdon algorithm  (iff	 method == 3);
  * repeatedly called by hookdrv() only.
 
  * PARAMETERS :
@@ -954,7 +949,7 @@ hook_1step(int nr, int n, double *g, double *a, double *udiag, double *p,
     /*	 hi and alo are constants used in this routine. */
     /*	 change here if other values are to be substituted. */
 
-    /*  shall we take newton step ? */
+    /*	shall we take newton step ? */
     *nwtake = (rnwtln <= hi * *dlt);
 
     if (*nwtake) { /*	take newton step */
@@ -1048,7 +1043,7 @@ hookdrv(int nr, int n, double *x, double f, double *g, double *a,
 	double *wrk0, double epsm, int itncnt)
 {
 /* Find a next newton iterate (xpls) by the more-hebdon method.
- * (iff  method == 3)
+ * (iff	 method == 3)
 
  * PARAMETERS :
 
@@ -1783,10 +1778,10 @@ grdchk(int n, double *x, fcn_p fcn, void *state, double f, double *g,
  *			   on output: =-21, probable coding error of gradient
  */
     int i;
-    double gs, wrk, temp1, temp2;
+    double gs, wrk;
 
-    /*	compute first order finite difference gradient and compare to
-	analytic gradient. */
+    /*	compute first order finite difference gradient
+	and compare to analytic gradient. */
 
     fstofd(1, 1, n, x, (fcn_p)fcn, state, &f, wrk1, sx, rnf, &wrk, 1);
     for (i = 0; i < n; ++i) {
@@ -1914,7 +1909,7 @@ int opt_stop(int n, double *xpls, double fpls, double *gpls, double *x,
  *	msg	     --> if msg includes a term 8, suppress output
  *
  * VALUE :
- * 	`itrmcd' : termination code
+ *	`itrmcd' : termination code
  */
 
     int i, jtrmcd;
@@ -1974,7 +1969,7 @@ optchk(int n, double *x, double *typsiz, double *sx, double *fscale,
        int *msg)
 {
 /* Check input for reasonableness.
- * Return *msg in {-1,-2,..,-7}  if something is wrong
+ * Return *msg in {-1,-2,..,-7}	 if something is wrong
 
  * PARAMETERS :
 
@@ -2495,17 +2490,17 @@ dfault(int n, double *x,
 
   /* set tolerances */
 
-  epsm = d1mach(4);		/* for IEEE : = 2^-52     ~= 2.22  e-16 */
+  epsm = d1mach(4);		/* for IEEE : = 2^-52	  ~= 2.22  e-16 */
   *gradtl = pow(epsm, 1./3.);	/* for IEEE : = 2^(-52/3) ~= 6.055 e-6 */
-  *steptl = sqrt(epsm);		/* for IEEE : = 2^-26     ~= 1.490 e-8 */
+  *steptl = sqrt(epsm);		/* for IEEE : = 2^-26	  ~= 1.490 e-8 */
   *stepmx = 0.;
   *dlt = -1.;/* (not needed for method 1) */
 
   /* set flags */
 
   *method = 1;
-  *iexp   = 1;
-  *msg    = 0;
+  *iexp	  = 1;
+  *msg	  = 0;
   *ndigit = -1;/* -> compute default = floor(-log10(EPS)) in optchk() */
   *itnlim = 150;
   *iagflg = 0;/* no gradient */
