@@ -122,7 +122,7 @@ BUG FIXES
 	(often 0) for a 1D array.  This caused model.matrix to
 	misbehave (perhaps segfault) if a term was a 1D array.  (PR#6838)
 
-    o   The configure script now detects pdf viewers ggv and gpdf.
+    o   The configure script now finds the pdf viewers ggv and gpdf.
 
 
 		CHANGES IN R VERSION 1.9.0
