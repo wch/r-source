@@ -122,6 +122,7 @@ test: $(srcdir)/test.c
 mostlyclean: clean
 clean:
 	@-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
+	@-rm -rf .libs _libs
 distclean: clean
 	@-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 maintainer-clean: distclean
