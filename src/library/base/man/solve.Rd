@@ -22,9 +22,8 @@
 \details{
   As from \R version 1.3.0, \code{a} or \code{b} can be complex, in
   which case LAPACK routine \code{ZESV} is used.
-#ifdef windows
-  This uses double complex arithmetic not available on Windows.
-#endif
+  This uses double complex arithmetic which might not beavailable on all
+  platforms.
 }
 \seealso{
   \code{\link{backsolve}}, \code{\link{qr.solve}}.

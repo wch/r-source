@@ -18,10 +18,12 @@ FSOURCES= \
   dormbr.f dorml2.f dormlq.f dormqr.f drscl.f dsteqr.f dsterf.f dsyev.f \
   dsytd2.f dsytrd.f dtrevc.f dtrexc.f dtrsen.f dtrsna.f dtrsyl.f \
   ieeeck.f ilaenv.f \
-  dcabs1.f dsyr2.f dsyr2k.f dger.f dsymv.f dgemv.f dtrmm.f dtrsv.f dtrmv.f
+  dcabs1.f dsyr2.f dsyr2k.f dger.f dsymv.f dgemv.f dtrmm.f dtrsv.f dtrmv.f \
+  zgesv.f zgetf2.f zgetrf.f zgetrs.f zlaswp.f \
+  izamax.f zswap.f zscal.f zgeru.f zgemm.f ztrsm.f
 
 CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H -include ../../include/globalvar.h
-FFLAGS=$(OPTFLAGS)
+FFLAGS=$(FOPTFLAGS)
 OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
 
 ../../../modules/$(MODULE).dll: $(MODULE).dll

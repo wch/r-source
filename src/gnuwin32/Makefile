@@ -19,11 +19,14 @@ RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
 PKGD = $(shell perl pwd.pl $(PKGDIR))# must be absolute path
 
+OPTFLAGS=-O2 -Wall -pedantic
+## use FOPTFLAGS where complex*16 is used.
+FOPTFLAGS=-O2 -Wall
 ifdef DEBUG
- OPTFLAGS=-g -O2 -Wall
+ OPTFLAGS+=-g
+ FOPTFLAGS+=-g
  DLLFLAGS=
 else
- OPTFLAGS=-O2 -Wall -pedantic
  DLLFLAGS=-s
 endif
 
@@ -87,7 +90,7 @@ ifdef USE_LIBXML
 endif
 
 rmodules:
-	$(MAKE) -C ../modules OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
+	$(MAKE) -C ../modules OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' -f Makefile.win
 
 COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@

@@ -64,6 +64,10 @@
 #define Win32 1
 /* #undef Macintosh */
 
+/* Define if C's Rcomplex and Fortran's COMPLEX*16 can be intechanged,
+   and can do arithmetic on the latter */
+#define HAVE_DOUBLE_COMPLEX 1
+
 /* Define if calloc(0) does not return a null pointer. */
 #undef CALLOC_BROKEN
 
