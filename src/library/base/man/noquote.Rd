@@ -1,34 +1,37 @@
 \name{noquote}
-\title{Class for ``no quote'' Printing of Strings}
-\usage{
-noquote(obj)
-print.noquote(x, \dots)
-obj[j]
-}
 \alias{noquote}
-%> ./Extract.Rd for "[" and "[<-"
 \alias{print.noquote}
 \alias{as.matrix.noquote}
-\arguments{
- \item{obj, x}{any \R object; typically a vector of \code{\link{character}}
-   strings.}
- \item{\dots}{further options for \code{\link{print}}.}
-}
+\alias{[.noquote}
+\title{Class for ``no quote'' Printing of Character Strings}
 \description{
+  Print character strings without quotes.
+}
+\usage{
+noquote(obj)
+\method{print}{noquote}(x, \dots)
+}
+\arguments{
+  \item{obj}{any \R object, typically a vector of
+    \code{\link{character}} strings.}
+  \item{x}{an object of class \code{"noquote"}.}
+  \item{\dots}{further options for \code{\link{print}}.}
+}
+\details{
+  \code{noquote} returns its argument as an object of class
+  \code{"noquote"}.  There is a subscript method (\code{"[.noquote"})
+  which ensures that the class is not lost by subsetting.  The print
+  method (\code{print.noquote}) prints character stringss \emph{without}
+  quotes (\code{"\dots"}).
+
   These functions exist both as utilities and as an example of using
   \code{\link[base]{class}} and object orientation.
 }
-\value{
-  \code{noquote} returns its argument as an object of class
-  \code{"noquote"}.  The function \code{"[.noquote"} ensures that the
-  class is not lost by subsetting.
-
-  For (default) printing, \code{print.noquote} will be used which prints
-  characters \emph{without} quotes (\code{"\dots"}).
-}
 \author{Martin Maechler \email{maechler@stat.math.ethz.ch}}
 \seealso{
-  \code{\link{methods}}, \code{\link[base]{class}}, \code{\link{print}}.
+  \code{\link{methods}},
+  \code{\link[base]{class}},
+  \code{\link{print}}.
 }
 \examples{
 letters

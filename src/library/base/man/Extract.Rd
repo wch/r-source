@@ -11,7 +11,6 @@
 %- methods not documented elsewhere
 \alias{[.formula}
 \alias{[.ts}
-\alias{[.noquote}
 \alias{.subset}
 \alias{.subset2}
 \description{
@@ -101,8 +100,8 @@ x$name
 
   \code{\link{Syntax}} for operator precedence, and the
   \emph{R Language} reference manual about indexing details.
-%% Fixme: Link (to html in 'help.start()', pdf from 'ref manual', 'info' from ESS
-%%  , see \url{http://cran.R-project.org/manuals.html}.
+  %% Fixme: Link (to html in 'help.start()', pdf from 'ref manual',
+  %% 'info' from ESS, see \url{http://cran.R-project.org/manuals.html}.
 }
 \examples{
 x <- 1:12; m <- matrix(1:6,nr=2); li <- list(pi=pi, e = exp(1))
