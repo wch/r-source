@@ -8,13 +8,13 @@ This document concerns building and installing R from sources.  Pre-made
 binaries are made available for some systems with varying regularity and
 can be obtained from CRAN (see the RESOURCES file).
 
-R will configure and build under a number of common Unix-like
-platforms (including i386-freebsd, i386-linux, ppc-linux,
+R will configure and build under a number of common Unix-like platforms
+(including i386-freebsd, i386-linux, i386-sun-solaris, ppc-linux,
 mips-sgi-irix, alpha-linux, alpha-dec-osf4, rs6000-ibm-aix,
 hppa-hp-hpux, sparc-linux, and sparc-sun-solaris) and on Windows
 9x/NT/2000 (see `src/gnuwin32/INSTALL').  In general it is relatively
-easy to adapt R to new platforms.  See the section on new platforms
-for details.
+easy to adapt R to new platforms.  See the section on new platforms for
+details.
 
 
 GETTING AND UNPACKING THE SOURCES
