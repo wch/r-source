@@ -49,6 +49,12 @@
 
 #include "Runix.h"
 
+
+#ifdef HAVE_AQUA
+void R_StartConsole(void) { ptr_R_StartConsole(); }
+#endif
+
+
 SA_TYPE SaveAction = SA_SAVEASK;
 SA_TYPE	RestoreAction = SA_RESTORE;
 Rboolean UsingReadline = TRUE;
@@ -99,6 +105,7 @@ int Rf_initialize_R(int ac, char **av)
 {
     int i, ioff = 1, j, value, ierr;
     Rboolean useX11 = TRUE, usegnome = FALSE;
+    Rboolean useaqua = FALSE;
     char *p, msg[1024], **avv;
     structRstart rstart;
     Rstart Rp = &rstart;
@@ -155,6 +162,8 @@ int Rf_initialize_R(int ac, char **av)
 		useX11 = FALSE;
 	    else if(!strcmp(p, "gnome") || !strcmp(p, "GNOME"))
 		usegnome = TRUE;
+	    else if(!strcmp(p, "aqua") || !strcmp(p, "AQUA"))
+		useaqua = TRUE;
 	    else if(!strcmp(p, "X11") || !strcmp(p, "x11"))
 		useX11 = TRUE;
 	    else {
@@ -197,7 +206,12 @@ int Rf_initialize_R(int ac, char **av)
 	}
     }
 #endif /* HAVE_X11 */
-
+#ifdef HAVE_AQUA
+    if(useaqua) {
+	    R_load_aqua_shlib();
+	    R_GUIType="AQUA";
+    }
+#endif
     R_common_command_line(&ac, av, Rp);
     while (--ac) {
 	if (**++av == '-') {
@@ -221,8 +235,19 @@ int Rf_initialize_R(int ac, char **av)
     /* On Unix the console is a file; we just use stdio to write on it */
 
     R_Interactive = isatty(0);
-    R_Consolefile = stdout;
+#ifdef HAVE_AQUA
+    if(useaqua){
+     R_Outputfile = NULL;
+     R_Consolefile = NULL;
+    }else{ 
+#else
     R_Outputfile = stdout;
+    R_Consolefile = stdout;
+#endif 
+#ifdef HAVE_AQUA
+    }
+#endif 
+  
 /*
  *  Since users' expectations for save/no-save will differ, we decided
  *  that they should be forced to specify in the non-interactive case.
@@ -243,6 +268,10 @@ int Rf_initialize_R(int ac, char **av)
     if (R_RestoreHistory)
 	Rstd_read_history(R_HistoryFile);
     fpu_setup(1);
+
+#ifdef HAVE_AQUA    
+    R_StartConsole();
+#endif
 
  return(0);
 }
