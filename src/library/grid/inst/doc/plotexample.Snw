@@ -24,7 +24,7 @@
 \maketitle
 
 <<echo=FALSE, results=hide>>=
-library(graphics)
+library(grDevices)
 library(grid)
 ps.options(pointsize=12)
 options(width=60)

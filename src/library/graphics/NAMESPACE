@@ -1,5 +1,5 @@
 import(grDevices)
-export(dev.list) # temp measure for lattice
+export(dev.list, ps.options) # temp measure for lattice, user hooks
 
 export(Hershey, abline, arrows, assocplot, axTicks, axis, axis.Date,
        axis.POSIXct, barplot, barplot, box, boxplot, boxplot.stats,
