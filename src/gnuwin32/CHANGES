@@ -79,6 +79,8 @@ devices had been closed.
 
 getwd() returns paths separated by / not \.
 
+rproxy fixed so LAPACK gets loaded properly by (D)COM server.
+
 
 
 rw1071
