@@ -92,6 +92,18 @@ x$name
   methods dispatch does not take place.  This is to avoid expensive
   unclassing when applying the default method to an object.  They
   should not normally be invoked by end users.
+
+  As from \R 1.9.0 both \code{$} and \code{[[} can be applied to
+  environments. Only character arguments are allowed and no partial
+  matching is done (this is in contrast to the behavior for lists). The
+  semantics of these operations is basically that of \code{get(i, env=x,
+    inherits=FALSE)}. If no match is found then \code{NULL} is
+  returned. The assignment versions, \code{$<-} and
+  \code{[[<-}, can also be used. Again, only character arguments are
+  allowed and no partial matching is done. The semantics in this case
+  are those of \code{assign(i, value, env=x, inherits=FALSE)}. Such an
+  assignment will either create a new binding or change the existing
+  binding in \code{x}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -132,6 +144,14 @@ z[[c(1, 2)]]
 z[[c(1, 2, 1)]]  # both "hello"
 z[[c("a", "b")]] <- "new"
 unlist(z)
+
+##check $ and [[ for environments
+e1 <- new.env()
+e1$a <- 10
+e1[["a"]]
+e1[["b"]] <- 20
+e1$b
+ls(e1)
 }
 \keyword{array}
 \keyword{list}

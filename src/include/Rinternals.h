@@ -546,6 +546,7 @@ SEXP Rf_list2(SEXP, SEXP);
 SEXP Rf_list3(SEXP, SEXP, SEXP);
 SEXP Rf_list4(SEXP, SEXP, SEXP, SEXP);
 SEXP Rf_listAppend(SEXP, SEXP);
+SEXP R_lsInternal(SEXP, Rboolean);
 SEXP Rf_makeSubscript(SEXP, SEXP, int *);
 SEXP Rf_matchArg(SEXP, SEXP*);
 SEXP Rf_matchArgs(SEXP, SEXP);

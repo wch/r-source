@@ -2066,7 +2066,20 @@ SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     all = asLogical(CADR(args));
     if (all == NA_LOGICAL)
-	all = 0;
+      all = 0;
+
+    R_lsInternal(env, all);
+
+}
+
+/* takes a *list* of environments and a boolean indicating whether to get all
+   names */
+SEXP R_lsInternal(SEXP env, Rboolean all)
+{
+  int  i, k, n;
+  SEXP ans, envp;
+
+
     /* Step 1 : Compute the Vector Size */
     k = 0;
     n = length(env);
