@@ -10,6 +10,7 @@ cat("\nNumber of base objects:\t\t", length(ls.base),
 ## 0.50 : 33
 ## 0.60 : 34
 ## 0.62 : 35
+## 0.63 : 37
 
 ## This can be useful:	Which of the  builtin functions are "primitive" ?
 is.primitive <- function(obj)  is.function(obj) && is.null(args(obj))
@@ -31,12 +32,6 @@ is.ALL <- function(obj, func.names = ls(pos=length(search())),
     r <- if(true.only) character(0)
     else structure(vector("list", length= length(use.fn)), names= use.fn)
     for(f in use.fn) {
-	if(any(f == c("is.na", "is.finite"))) {
-	    if(!is.list(obj) && !is.vector(obj) && !is.array(obj)) {
-		if(!true.only) r[[f]] <- NA
-		next
-	    }
-	}
 	if(debug) cat(f,"")
 	fn <- get(f)
 	rr <- if(is.primitive(fn) || length(formals(fn))>0)  fn(obj) else fn()
@@ -56,32 +51,15 @@ print.isList <- function(r, ...)
     ## Arguments:
     ## -------------------------------------------------------------------------
     ## Author: Martin Maechler, Date: 12 Mar 97, 15:07
-    ## >>>>> needs  cmp.logical <<
     if(is.list(r)) {
 	nm <- format(names(r))
-	rr <- lapply(r,cmp.logical)
+	rr <- lapply(r, symnum)
 	for(i in seq(along=r)) cat(nm[i],":",rr[[i]],"\n", ...)
     } else NextMethod("print", ...)
 }
 
-cmp.logical <- function(log.v)
-{
-    ## Purpose: compact printing of logicals
-    ## -------------------------------------------------------------------------
-    ## Arguments: log.v : logical vector
-    ## -------------------------------------------------------------------------
-    ## Author: Martin Maechler, Date: 13 Dec 96, 16:28
-    if(!is.logical(log.v)) {
-	warning("coercing argument 'log.v' to logical")
-	log.v <- as.logical(log.v)
-    }
-    structure(if(length(log.v) == 0) "()" else c(".","|")[ 1+ log.v],
-	      class = "noquote")
-}
-
 
 is.ALL(NULL)
-##fails: is.ALL(NULL, not.using = c("is.single", "is.loaded"))
 is.ALL(NULL,   true.only = TRUE)
 is.ALL(list(), true.only = TRUE)
 
@@ -90,10 +68,7 @@ is.ALL(array(1:24, 2:4))
 is.ALL(1 + 3)
 e13 <- expression(1 + 3)
 is.ALL(e13)
-## fails (0.50-a) [is.loaded]
-##   is.ALL(e13, not.using=c("is.single", "is.finite", "is.na"))
-is.ALL(y ~ x) #--> (0.49):  NA	for 'is.na' (& is.finite)
-
+is.ALL(y ~ x)
 
 is0 <- is.ALL(numeric(0))
 is0.ok <- 1 == (lis0 <- sapply(is0, length))
@@ -111,6 +86,7 @@ is.ALL(structure(1:7, names = paste("a",1:7,sep="")))
 is.ALL(structure(1:7, names = paste("a",1:7,sep="")), true.only = TRUE)
 
 x <- 1:20 ; y <- 5 + 6*x + rnorm(20) ; lm.xy <- lm(y ~ x)
-					#now (0.62) fails: is.ALL(lm.xy)
+is.ALL(lm.xy, true.only = TRUE)
 is.ALL(structure(1:7, names = paste("a",1:7,sep="")))
 is.ALL(structure(1:7, names = paste("a",1:7,sep="")), true.only = TRUE)
+
