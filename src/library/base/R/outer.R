@@ -1,6 +1,5 @@
 outer <- function (X, Y, FUN = "*", ...)
 {
-    FUN <- match.fun(FUN)
     no.nx <- is.null(nx <- dimnames(X <- as.array(X))); dX <- dim(X)
     no.ny <- is.null(ny <- dimnames(Y <- as.array(Y))); dY <- dim(Y)
     if (is.character(FUN) && FUN=="*") {
