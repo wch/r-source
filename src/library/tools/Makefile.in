@@ -31,7 +31,7 @@ all: Makefile DESCRIPTION
 	      $(top_builddir)/library/$(pkg); \
 	  fi; \
 	done
-	@rm $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
+	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
 	@if test -f DESCRIPTION; then \
 	  $(INSTALL_DATA) DESCRIPTION $(top_builddir)/library/$(pkg); \
 	  (tmp="Built: R $(VERSION); "; \

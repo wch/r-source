@@ -32,7 +32,7 @@ all: Makefile DESCRIPTION
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change all.R \
 	  $(top_builddir)/library/$(pkg)/R/$(pkg) $${f}
 	@cat $(NSFILES) > $(top_builddir)/library/$(pkg)/NAMESPACE
-	@rm $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
+	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
 	@for f in COPYRIGHTS INDEX SOURCES; do \
 	  if test -f $(srcdir)/$${f}; then \
 	    $(INSTALL_DATA) $(srcdir)/$${f} \
