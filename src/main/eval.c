@@ -44,6 +44,89 @@ void isintrpt(){}
 extern void R_ProcessEvents();
 #endif
 
+#ifdef R_PROFILING
+/* A simple mechanism for profiling R code.  When R_PROFILING is
+   enabled, eval will write out the call stack every PROFSAMPLE
+   microseconds using the SIGPROF handler triggered by timer signals
+   from the ITIMER_PROF timer.  Since this is the same timer used by C
+   profiling, the two cannot be used together.  Output is written to
+   the file PROFOUTNAME.  This is a plain text file.  The first line
+   of the file contains the value of PROFSAMPLE.  The remaining lines
+   each give the call stack found at a sampling point with the inner
+   most function first.
+
+   To enable profiling, recompile eval.c with R_PROFILING defined.  It
+   would be possible to selectively turn profiling on and off from R
+   and to specify the file name from R as well, but for now I won't
+   bother.
+
+   The stack is traced by walking back along the context stack, just
+   like the traceback creation in jump_to_toplevel.  One drawback of
+   this approach is that it does not show BUILTIN's since they don't
+   get a context.  It should be possible to set a context around
+   BUILTIN's when profiling is enabled, and the context type
+   CTXT_BUILTIN has been added to allow this.  But at the moment there
+   are some problems, in particular with pos2env which assumes the
+   current context is a real one.  So for now BUILTIN tracing is
+   disabled; it may be possible to turn it on soon.
+
+   One possible advantage of not adding the BUILTIN tracing is that
+   then profiling adds no cost when the timer is turned off.  This
+   This would be useful if we want to allow profiling to be turned on
+   and off from within R.
+
+   One thing that makes interpreting profiling output tricky is lazy
+   evaluation.  When an expression f(g(x)) is profiled, lazy
+   evaluation will cause g to be called inside the call to f, so it
+   will appear as if g is called by f.
+
+   L. T.  */
+
+#include <sys/time.h>
+#include <signal.h>
+
+FILE *R_ProfileOutfile = NULL;
+#define PROFOUTNAME "R.profout"
+
+#define PROFSAMPLE 20000
+
+static void doprof(int sig)
+{
+  RCNTXT *cptr;
+  int newline = 0;
+  for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
+    if (((cptr->callflag & CTXT_FUNCTION) || (cptr->callflag & CTXT_BUILTIN))
+	&& TYPEOF(cptr->call) == LANGSXP) {
+      SEXP fun = CAR(cptr->call);
+      if (! newline)
+	newline = 1;
+      fprintf(R_ProfileOutfile, "\"%s\" ",
+	      TYPEOF(fun) == SYMSXP ? CHAR(PRINTNAME(fun)) : "<Anonymous>");
+    }
+  }
+  if (newline)
+    fprintf(R_ProfileOutfile, "\n");
+}
+
+static void R_InitProfiling(void)
+{	
+  struct itimerval itv;
+
+  R_ProfileOutfile = fopen(PROFOUTNAME, "w");
+  if (R_ProfileOutfile == NULL)
+    R_Suicide("can't open profile file");
+  fprintf(R_ProfileOutfile, "%d\n", PROFSAMPLE);
+  signal(SIGPROF, doprof);
+
+  itv.it_interval.tv_sec = 0;
+  itv.it_interval.tv_usec = PROFSAMPLE;
+  itv.it_value.tv_sec = 0;
+  itv.it_value.tv_usec = PROFSAMPLE;
+  if (setitimer(ITIMER_PROF, &itv, NULL) == -1)
+    R_Suicide("setting profile timer failed");
+}
+#endif
+
 /* NEEDED: A fixup is needed in browser, because it can trap errors,
  *	and currently does not reset the limit to the right value. */
 
@@ -158,6 +241,10 @@ SEXP eval(SEXP e, SEXP rho)
 	break;
 #endif
     case LANGSXP:
+#ifdef R_PROFILING
+	if (R_ProfileOutfile == NULL)
+	    R_InitProfiling();
+#endif
 	if (TYPEOF(CAR(e)) == SYMSXP)
 	    PROTECT(op = findFun(CAR(e), rho));
 	else
@@ -179,10 +266,18 @@ SEXP eval(SEXP e, SEXP rho)
 	}
 	else if (TYPEOF(op) == BUILTINSXP) {
 	    int save = R_PPStackTop;
+#ifdef R_PROFILING
+	    RCNTXT cntxt;
+	    begincontext(&cntxt, CTXT_BUILTIN, e,
+			 R_NilValue, R_NilValue, R_NilValue);
+#endif
 	    PROTECT(tmp = evalList(CDR(e), rho));
 	    R_Visible = 1 - PRIMPRINT(op);
 	    tmp = PRIMFUN(op) (e, op, tmp, rho);
 	    UNPROTECT(1);
+#ifdef R_PROFILING
+	    endcontext(&cntxt);
+#endif
 	    if(save != R_PPStackTop) {
 		Rprintf("stack imbalance in %s, %d then %d\n",
 			PRIMNAME(op), save, R_PPStackTop);
