@@ -20,10 +20,10 @@ BUT you cannot use type-1 postscript fonts with that setting.
 
 
 Support for making PDF versions of the manuals is currently
-experimental.  You will need pdf(la)tex and the hyperref package (and ae,
-see above).  Hyperref versions 6.56 and 6.67 are known to work.  If
-you want to avoid making the hyperlinks, you can set the environment
-variable R_RD4PDF to "ae" (or even to "").
+experimental.  You will need pdf(la)tex and the hyperref package (and
+ae, see above).  Hyperref versions 6.56, 6.67 and 6.69 are known to
+work.  If you want to avoid making the hyperlinks, you can set the
+environment variable R_RD4PDF to "ae" (or even to "").
 
 You may well have to increase the poolsize of your pdflatex to process
 the reference manual with hyperlinks, particularly with later versions
@@ -33,5 +33,5 @@ pdftex-0.14d you will also need to increase max_strings, for example
 to 50000.  The UNIX Makefile does this for you via environment variables,
 which should cover most UNIX TeX systems.
 
-pdftex-0.14d will warn (correctly) about missing hyperlinks in forming
-refman.pdf and R-exts.pdf.
+pdftex-0.14d and later will warn (correctly) about missing hyperlinks
+in forming refman.pdf and R-exts.pdf.
