@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.17 $'
+revision='$Revision: 1.18 $'
 version=`set - ${revision}; echo ${2}`
 version="R shared library builder ${version}
 
@@ -31,8 +31,6 @@ objs=
 MAKE=${MAKE-@MAKE@}
 makeargs=
 makefiles="-f ${R_HOME}/etc/Makeconf"
-SHLIB_CXXLD=@SHLIB_CXXLD@
-SHLIB_CXXLDFLAGS=@SHLIB_CXXLDFLAGS@
 with_cxx=false
 with_f77=false
 
@@ -76,13 +74,11 @@ fi
 
 makeargs="SHLIB=\"${lib}\" OBJS=\"${objs}\""
 if ${with_cxx}; then
-  makeargs="SHLIB_LDFLAGS=\"${SHLIB_CXXLDFLAGS}\" ${makeargs}"
-  makeargs="SHLIB_LD=\"${SHLIB_CXXLD}\" ${makeargs}"
+  makeargs="SHLIB_LDFLAGS='\$(SHLIB_CXXLDFLAGS)' ${makeargs}"
+  makeargs="SHLIB_LD='\$(SHLIB_CXXLD)' ${makeargs}"
 fi
 if ${with_f77}; then
-  :
-else
-  makeargs="${makeargs} FLIBS="
+  makeargs="${makeargs} SHLIB_LIBADD='\$(FLIBS)'"
 fi
 
 eval ${MAKE} ${makefiles} ${makeargs}
