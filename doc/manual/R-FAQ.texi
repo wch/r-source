@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-39, 2001-04-12
+@set FAQ-VERSION 1.2-40, 2001-04-13
 @set REL-VERSION 1.2.2
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1451,6 +1451,8 @@ simulations.
 @item conf.design
 A series of simple tools for constructing and manipulating confounded
 and fractional factorial designs.
+@item cramer
+Routine for the multivariate nonparametric Cramer test.
 @item date
 Functions for dealing with dates.  The most useful of them accepts a
 vector of input dates in any of the forms @samp{8/30/53},
