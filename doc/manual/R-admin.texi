@@ -184,12 +184,12 @@ certificate permanently and will not be asked about it anymore.
 
 The Subversion repository does not contain the current sources for the
 recommended packages, which can be obtained by @code{rsync} or
-downloaded from CRAN.  To use @code{rsync} to install the appropriate
-sources for the recommended packages, run
+downloaded from @acronym{CRAN}.  To use @code{rsync} to install the
+appropriate sources for the recommended packages, run
 @command{./tools/rsync-recommended} from the top-level of the @R{}
 sources.
 
-If downloading manually from CRAN, do ensure that you have the correct
+If downloading manually from @acronym{CRAN}, do ensure that you have the correct
 versions of the recommended packages: if the number in the file
 @file{VERSION} is @samp{@var{x}.@var{y}.@var{z}} you need to download
 the contents of @samp{http://CRAN.R-project.org/src/contrib/@var{dir}},
@@ -576,10 +576,10 @@ You need to collect the following sets of files:
 @itemize
 
 @item
-Get the @R{} source code @file{R-@value{VERSIONno}.tgz} from CRAN.  Open
-a commands window (or another shell) at a directory @emph{whose path
-does not contain spaces}.  We will call this directory @file{$R_HOME}
-below.  Run
+Get the @R{} source code @file{R-@value{VERSIONno}.tgz} from
+@acronym{CRAN}.  Open a commands window (or another shell) at a
+directory @emph{whose path does not contain spaces}.  We will call this
+directory @file{$R_HOME} below.  Run
 @example
 tar zxvf R-@value{VERSIONno}.tgz
 @end example
@@ -605,10 +605,10 @@ You will need files @file{libpng-1.2.8.tar.gz} and
 @file{jpegsrc.v6b.tar.gz} or later.
 
 @item
-You need to obtain copies of the recommended packages from CRAN.  Put
-the @file{.tar.gz} files in @file{$R_HOME/src/library/Recommended}.  If
-you have @code{rsync} and an Internet connection, you can do this
-automatically using
+You need to obtain copies of the recommended packages from
+@acronym{CRAN}.  Put the @file{.tar.gz} files in
+@file{$R_HOME/src/library/Recommended}.  If you have @code{rsync} and an
+Internet connection, you can do this automatically using
 @example
 make rsync-recommended
 @end example
@@ -618,7 +618,7 @@ Optionally, you can install an ATLAS
 (@url{http://math-atlas.sourceforge.net/}) tuned to your system for fast
 linear algebra routines. Prebuilt @code{Rblas.dll} for various Pentium
 and AthlonXP chips are available in the @file{windows/contrib/ATLAS}
-area on CRAN.
+area on @acronym{CRAN}.
 
 Another tuned BLAS which is available for some CPUs is by Kazushige
 Goto.  He does not allow redistribution: his builds are currently available
@@ -660,10 +660,10 @@ and sit back and wait while the basic compile takes place.
 Notes:
 @itemize
 @item
-The file @file{bin/Rchtml.dll} is only built if CHM help is
-specified in @file{MkRules}. Its source is the help directory, and you need
-the HTML Help Workshop files to build it.  You can just
-copy this from a binary distribution.
+The file @file{bin/Rchtml.dll} is only built if CHM help is specified in
+@file{MkRules}. Its source is the help directory, and you need the
+@HTML{} Help Workshop files to build it.  You can just copy this from a
+binary distribution.
 
 @item
 We have had reports that earlier versions of Norton Anti-Virus
@@ -703,6 +703,7 @@ If everything is set up in directory @file{bitmap},
 @example
 make bitmapdll
 @end example
+@noindent
 will work from this directory.
 
 @node Windows internationalization, Building the recommended packages, Building the bitmap files, Building from source
@@ -763,6 +764,7 @@ To make DVI versions of the manuals use
 cd ../../doc/manual
 make -f Makefile.win dvi
 @end example
+@noindent
 (all assuming you have @command{tex} and @command{latex} installed and
 in your path).
 
@@ -781,38 +783,40 @@ Once everything is set up
 make distribution
 make check-all
 @end example
+@noindent
 will make all the pieces and the installers and put them in the
 @file{gnuwin32/cran} subdirectory, then check the build.  This works by
 building all the parts in the sequence:
 
 @example
-Rpwd.exe (a utility needed in the build)
-rbuild-no-mbcs (the non-East Asian version of R.dll)
-rbuild (the executables, the FAQ docs etc.)
-rpackage (the base packages)
-htmldocs (the HTML documentation)
-bitmapdll (the bitmap support files)
-recommended (the recommended packages)
-vignettes (the vignettes in package grid:
-	   only need if building from svn checkout)
-manuals (the PDF manuals)
-rinstaller (the install program)
-crandir (the CRAN distribution directory)
+Rpwd.exe @r{(a utility needed in the build)}
+rbuild-no-mbcs @r{(the non-East Asian version of @file{R.dll})}
+rbuild @r{(the executables, the @acronym{FAQ} docs etc.)}
+rpackage @r{(the base packages)}
+htmldocs @r{(the @acronym{HTML} documentation)}
+bitmapdll @r{(the bitmap support files)}
+recommended @r{(the recommended packages)}
+vignettes @r{(the vignettes in package @strong{grid}:}
+	  @r{ only need if building from svn checkout)}
+manuals @r{(the PDF manuals)}
+rinstaller @r{(the install program)}
+crandir @r{(the @acronym{CRAN} distribution directory)}
 @end example
 
 The parts can be made individually if a full build is not needed, but
-earlier parts must be built before later ones.  (The @file{Makefile} doesn't
-enforce this dependency---some build targets force a lot of
-computation even if all files are up to date.)  The first, third,
-fourth and fifth targets are the default build if just "make" is run,
-but the second (which builds the default version of @file{R.dll}) needs to be
-run first.
+earlier parts must be built before later ones.  (The @file{Makefile}
+doesn't enforce this dependency---some build targets force a lot of
+computation even if all files are up to date.)  The first, third, fourth
+and fifth targets are the default build if just @samp{make} is run, but
+the second (which builds the default version of @file{R.dll}) needs to
+be run first.
 
 If you want to customize the installation by adding extra packages,
 replace @code{make rinstaller} by something like
 @example
 make rinstaller EXTRA_PKGS='pkg1 pkg2 pkg3'
 @end example
+@noindent
 (Note these packages will also be added to the miniR installer.)
 
 An alternative way to customize the installer starting with a binary
@@ -835,7 +839,7 @@ There is currently a complete set of tools at
 unpack this somewhere and put its @file{bin} directory in your path.)
 
 You will need @code{Perl}, @code{zip} and @code{unzip} installed
-and @code{makeinfo >= 4.5} (part of GNU @code{texinfo}).
+and @code{makeinfo} version 4.7 or later (part of GNU @code{texinfo}).
 
 You also need the R source (@file{R-2.x.y.tgz}).
 
@@ -1027,7 +1031,7 @@ interface to @code{install.packages}, @code{update.packages} and
 
 As from @R{} 2.1.0, @code{install.packages} can look in several
 repositories, specified as a character vector by the argument
-@code{repos}: these can include a CRAN mirror, Bioconductor, Omegahat,
+@code{repos}: these can include a @acronym{CRAN} mirror, Bioconductor, Omegahat,
 local archives, local files, @dots{}).
 
 @findex install.binaries
@@ -1040,9 +1044,10 @@ from @acronym{CRAN} or local files.
 
 @menu
 * Customising compilation in Windows::  
+* Customizing compilation under Unix::  
 @end menu
 
-@node Customising compilation in Windows,  , Installing packages, Installing packages
+@node Customising compilation in Windows, Customizing compilation under Unix, Installing packages, Installing packages
 @subsection Customising compilation in Windows
 @findex MakeDll
 @findex Makevars.win
@@ -1065,14 +1070,17 @@ include the line
 @example
 DLLLIBS+=-lodbc32
 @end example
+@noindent
 or, equivalently,
 @example
 RODBC-DLLLIBS=-lodbc32
 @end example
+@noindent
 but in fact contains the single line
 @example
 PKG_LIBS=-lodbc32
 @end example
+@noindent
 If you have a file @file{src/Makefile.win}, that will be used as the
 makefile for source compilation in place of our makefile and
 @file{MakeDll} and @file{src/Makevars.win} will be ignored.
@@ -1156,6 +1164,21 @@ For a complete list of variables, see the @file{M*} files in
 @file{$R_HOME/src/gnuwin32}.  The @code{PKG_*} files are those typically
 included in @file{Makevars} files.
 
+@node Customizing compilation under Unix,  , Customising compilation in Windows, Installing packages
+@subsection Customizing compilation under Unix
+
+The R system and package-specific compilation flags can be overridden or
+added to by setting the appropriate Make variables in the personal file
+@file{$HOME/.R/Makevars-$R_PLATFORM}, or if that does not exist,
+@file{$HOME/.R/Makevars}, where @samp{R_PLATFORM} is the platform for
+which R was built, as available in the @code{platform} component of the
+R variable @code{R.version}.
+
+Package developers are encouraged to use this mechanism to enable a
+reasonable amount of diagnostic messaging (``warnings'') when compiling,
+such as e.g.@: @option{-Wall -pedantic} for tools from GCC, the Gnu
+Compiler Collection.
+
 @node Updating packages, Removing packages, Installing packages, Add-on packages
 @section Updating packages
 @findex update.packages
@@ -1217,15 +1240,15 @@ for one or more of the following types of package distributions:
 @itemize
 @item 
 @code{"source"}: located at @code{src/contrib} and containing
-@code{.tar.gz} files.
+@file{.tar.gz} files.
 
 @item 
 @code{"win.binary"}: located at @code{bin/windows/contrib/x.y} for @R{}
-versions @code{x.y.z} and containing @code{.zip} files.
+versions @code{x.y.z} and containing @file{.zip} files.
 
 @item 
 @code{"mac.binary"}: located at @code{bin/macosx/x.y} for @R{} 
-versions @code{x.y.z} and containing @code{.tgz} files.
+versions @code{x.y.z} and containing @file{.tgz} files.
 @end itemize
 
 Each terminal directory must also contain a @file{PACKAGES} file.  This
@@ -1356,6 +1379,7 @@ to make this easier for users. See
 
 @uref{http://developer.apple.com/documentation/MacOSX/Conceptual/BPInternational/}
 
+@noindent
 for how users can set their locales. As with Windows, end users will
 generally only see lists of languages/territories.
 
@@ -1386,9 +1410,9 @@ following domains.
 Domain @code{R} for basic C-level error messages.
 
 @item
-Domain @code{R-@var{pkg}} for the R @code{stop} and @code{warning}
-messages in each package, including @code{R-base} for the @code{base}
-package.
+Domain @code{R-@var{pkg}} for the R @code{stop}, @code{warning} and
+@code{message} messages in each package, including @code{R-base} for the
+@code{base} package.
 
 @item
 Domain @code{@var{pkg}} for the C-level messages in each package.
@@ -1409,7 +1433,7 @@ to a generic German one (@code{de}) for an Austrian user.  However, if a
 specific translation catalogue exists but does not contain a
 translation, the less specific catalogues are consulted.  For example,
 @R{} has catalogues for @code{en_GB} that translate the Americanisms
-(e.g. @code{gray}) in the standard messages into English.
+(e.g., @code{gray}) in the standard messages into English.
 
 Translations in the right language but the wrong charset can generally
 be made use of by on-the-fly re-encoding.  The @code{LANGUAGE} variable
@@ -2427,10 +2451,10 @@ Many of the features of the console are currently stubs.
 
 Two graphics devices have been available but are currently unbundled.
 The @code{gtk()} graphics device is a port of the @code{x11()} device to
-@acronym{GDK} (the GIMP Drawing Kit), and is available from CRAN as
-package @pkg{gtkDevice}: this cooperates rather better with the console
-than the @code{x11()} device.  The @code{gnome()} device used the
-@acronym{GNOME} canvas, and is not currently available.
+@acronym{GDK} (the GIMP Drawing Kit), and is available from
+@acronym{CRAN} as package @pkg{gtkDevice}: this cooperates rather better
+with the console than the @code{x11()} device.  The @code{gnome()}
+device used the @acronym{GNOME} canvas, and is not currently available.
 
 The sources for the @acronym{GNOME} console for @R{} are currently
 available by
@@ -2502,7 +2526,7 @@ specify location of @command{libglade-config}
 @end table
 
 @node Enabling search in HTML help, The Windows toolset, Building the GNOME console, Top
-@appendix Enabling search in HTML help
+@appendix Enabling search in @HTML{} help
 
 There is a search engine available from the front page of the @HTML{}
 help system, the page that is displayed by @code{help.start()}.  The
@@ -2625,13 +2649,13 @@ The MinGW compilers
 For building simple packages containing data or @R{} source
 but no compiled code, only the first two of these are needed.
 
-A complete build of @R{} including compiled HTML help files and
+A complete build of @R{} including compiled @HTML{} help files and
 PDF manuals will also need the following:
 @itemize
 @item
-The Microsoft HTML Help Workshop
+The Microsoft @HTML{} Help Workshop
 @item
-LaTeX
+@LaTeX{}
 @end itemize
 
 All of these need to be installed and in your path, and the
@@ -2711,10 +2735,10 @@ As of January 2005: There is now a release candidate of
 @code{MinGW-3.2.0}: please use that.
 
 @node The Microsoft HTML Help Workshop, LaTeX, The MinGW compilers, The Windows toolset
-@section The Microsoft HTML Help Workshop
+@section The Microsoft @HTML{} Help Workshop
 
 To make compiled html (@file{.chm}) files you will need the
-Microsoft HTML Help Workshop, currently available for download at
+Microsoft @HTML{} Help Workshop, currently available for download at
 @url{http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwmicrosofthtmlhelpdownloads.asp}
 and @url{http://www.microsoft.com/office/ork/xp/appndx/appa06.htm}.
 
@@ -2722,7 +2746,7 @@ You may need this on the same drive as the other tools. (Although we
 have successfully used it elsewhere, others have reported problems).
 
 @node LaTeX, The Inno Setup installer, The Microsoft HTML Help Workshop, The Windows toolset
-@section LaTeX
+@section @LaTeX{}
 
 The @code{fptex} distribution of @LaTeX{} (via
 @url{http://www.fptex.org}) includes a suitable port of @code{pdftex}.
