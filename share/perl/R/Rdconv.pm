@@ -2497,7 +2497,7 @@ sub latex_preformat_cmd {
     my $code = $_[0];
 
     $code = latex_code_trans ($code);
-    $code = "\\begin\{verbatim\}" . $code . "\\end\{verbatim\}";
+    $code = "\\begin\{alltt\}" . $code . "\\end\{alltt\}";
     $code;
 }
 
