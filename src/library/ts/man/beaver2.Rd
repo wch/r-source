@@ -1,13 +1,13 @@
-% file MASS/beav1.d
+% file beaver2.Rd
 % copyright (C) 1994-9 W. N. Venables and B. D. Ripley
 %
-\name{beav1}
-\alias{beav1}
+\name{beaver2}
+\alias{beaver2}
 \title{
-Body Temperature Series of Beaver 1
+Body Temperature Series of Beaver 2
 }
 \description{
-The \code{beav1} data frame has 114 rows and 4 columns on body
+The \code{beaver2} data frame has 100 rows and 4 columns on body
 temperature measurements at 10 minute intervals.
 }
 \format{
@@ -24,7 +24,7 @@ This data frame contains the following columns:
 \arguments{
 \item{day}{
 Day of observation (in days since the beginning of 1990),
-December 12-13.
+November 3-4.
 }
 \item{time}{
 Time of observation, in the form \code{0330} for 3.30am
@@ -35,9 +35,6 @@ Measured body temperature in degrees Celcius
 \item{activ}{
 Indicator of activity outside the retreat
 }}
-\section{NOTE}{
-The observation at 22:20 is missing.
-}
 \source{
 P. S. Reynolds (1994) Time-series analyses of beaver body temperatures.
 Chapter 11 of
@@ -47,6 +44,6 @@ and Greenhouse, J. eds (1994)
 New York: John Wiley and Sons.
 }
 \seealso{
-\code{\link{beav2}}
+\code{\link{beaver1}}
 }
 \keyword{datasets}

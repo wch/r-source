@@ -32,7 +32,7 @@ ccf(x, y, lag.max = NULL, plot = TRUE,
  \item{acf.obj}{an object of class \code{acf}.}
 
  \item{ci}{coverage probability for confidence interval. Plotting of the
-     confidence interval is suppressed if \code{ci} <= 0.}
+     confidence interval is suppressed if \code{ci <= 0}.}
 
  \item{\dots}{graphical parameters.}
 }
@@ -47,7 +47,7 @@ ccf(x, y, lag.max = NULL, plot = TRUE,
     The generic function \code{plot} has a method for acf objects.
 }
 \details{
-    For \code{type} = "correlation" and "covariance", the
+    For \code{type} = \code{"correlation"} and \code{"covariance"}, the
     estimates are based on the sample covariance.
     
     The partial correlation coefficient is estimated by fitting

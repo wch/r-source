@@ -1,4 +1,4 @@
-% file MASS/accdeaths.d
+% file accdeaths.Rd
 % copyright (C) 1994-9 W. N. Venables and B. D. Ripley
 %
 \name{accdeaths}
@@ -8,7 +8,7 @@ Accidental Deaths in the US 1973-1978
 }
 \description{
 A regular time series giving the monthly totals of accidental
-deaths in the USA. The values for first six months of 1979 (p. 326) are 
+deaths in the USA. The values for first six months of 1979 are 
 7798 7406 8363 8460 9217 9316
 }
 \source{

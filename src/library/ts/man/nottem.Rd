@@ -1,4 +1,4 @@
-% file MASS/nottem.d
+% file nottem.Rd
 % copyright (C) 1994-9 W. N. Venables and B. D. Ripley
 %
 \name{nottem}
