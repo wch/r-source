@@ -7,7 +7,18 @@
 # (defaults are `${RHOME}/src/library/base' and the default library,
 # `${RHOME}/library', respectively). 
 
-$RHOME=$ENV{"RHOME"} or die("Environment variable RHOME not found\n");
+use File::Basename;
+use Cwd;
+
+$cwd=getcwd();
+if($ENV{"RHOME"}){
+    $RHOME=$ENV{"RHOME"};
+}
+else{
+    chdir(dirname($0) . "/..");
+    $RHOME=getcwd();
+}
+chdir($cwd);
 
 require "$RHOME/etc/Rdconvlib.pl";
 require "$RHOME/etc/buildlib.pl";

@@ -24,24 +24,33 @@
 
 use Getopt::Long;
 use NDBM_File;
-
-$RHOME=$ENV{"RHOME"} or die("Environment variable RHOME not found\n");
-
-require "$RHOME/etc/Rdconvlib.pl";
+use File::Basename;
+use Cwd;
 
 @knownoptions = ("debug|d", "type|t:s", "help|h");
 GetOptions (@knownoptions) || usage();
 
 usage() if $opt_help;
 
+$cwd=getcwd();
+if($ENV{"RHOME"}){
+    $RHOME=$ENV{"RHOME"};
+}
+else{
+    chdir(dirname($0) . "/..");
+    $RHOME=getcwd();
+}
+chdir($cwd);
+
+print stderr "RHOME: $RHOME\n" if $opt_debug;
+
+require "$RHOME/etc/Rdconvlib.pl";
+
 if($opt_type =~ /html/i){
-    tie %htmlindex, NDBM_File, "$RHOME/library/htmlindex", O_RDWR|O_CREAT, 0644;
-    open(htmlout, "|-");
+    open(htmlout, "| cat");
 }
 
 Rdconv($ARGV[0],$opt_type,$opt_debug);
-
-untie %htmlindex;
 
 
 
