@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-9, @value{FAQ-YEAR}-05-12
+@set FAQ-VERSION 1.7-10, @value{FAQ-YEAR}-05-17
 @set REL-VERSION 1.7.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1876,6 +1876,10 @@ backwards selection), and choose scaling (from among no scaling, scaling
 each column by its SD, or scaling each column by its MAD).  The finished
 classifier will consist of a classification tree with one such
 @math{k}-nn classifier in each leaf.
+@item lars
+Least Angle Regression, Lasso and Forward Stagewise: efficient
+procedures for fitting an entire lasso sequence with the cost of a
+single least squares fit.
 @item lasso2
 Routines and documentation for solving regression problems while
 imposing an L1 constraint on the estimates, based on the algorithm of
