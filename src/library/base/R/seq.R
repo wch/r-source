@@ -3,15 +3,17 @@ seq <- function(x, ...) UseMethod("seq")
 seq.default <- function(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
 			length.out = NULL, along.with = NULL)
 {
-    if(nargs() == 1 && !missing(from))
-	return(if(mode(from) == "numeric" && length(from) == 1)
-               1:from else seq(along.with = from))
-
-    if(!missing(along.with))
+    if((One <- nargs() == 1) && !missing(from)) {
+	lf <- length(from)
+	return(if(mode(from) == "numeric" && lf == 1) 1:from else
+	       if(lf) 1:lf else integer(0))
+    }
+    if(!missing(along.with)) {
 	length.out <- length(along.with)
+	if(One) return(if(length.out) 1:length.out else integer(0))
+    }
     else if(!missing(length.out))
 	length.out <- ceiling(length.out)
-
     if(is.null(length.out))
 	if(missing(by))
 	    from:to

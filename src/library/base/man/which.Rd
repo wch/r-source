@@ -5,7 +5,8 @@ which(x, arr.ind = FALSE)
 }
 \alias{which}
 \arguments{
- \item{x}{a logical vector or array.  \code{\link{NA}}s are allowed an omitted.}
+ \item{x}{a \code{\link{logical}} vector or array.  \code{\link{NA}}s
+     are allowed and omitted (treated as if \code{FALSE}).}
  \item{arr.ind}{logical; should \bold{arr}ay \bold{ind}ices be returned
      when \code{x} is an array?}
 }
@@ -29,7 +30,9 @@ which(x, arr.ind = FALSE)
 \seealso{\code{\link{Logic}}}
 \examples{
 which(LETTERS == "R")
-which(c(T,F,T,NA,F,F,T))#> 1 3 7
+which(ll <- c(T,F,T,NA,F,F,T))#> 1 3 7
+names(ll) <- letters[seq(ll)]
+which(ll)
 which((1:12)\%\%2 == 0) # which are even?
 str(which(1:10 > 3, arr.ind=TRUE))
 
