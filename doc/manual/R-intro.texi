@@ -1043,8 +1043,6 @@ has the same effect as
 Vectors are the most important type of object in @R{}, but there are
 several others which we will meet more formally in later sections.
 
-@c FIXME: add xrefs
-
 @itemize @bullet
 @item
 @emph{matrices} or more generally @emph{arrays} are multi-dimensional
