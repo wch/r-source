@@ -96,9 +96,10 @@ library.dynam <-
     if(missing(chname) || (LEN <- nchar(chname)) == 0)
 	return(.Dyn.libs)
     fsep <- .Platform$file.sep
-    if (substr(chname, LEN - 2, LEN) == file.ext) {
-	chname <- substr(chname, 1, LEN - 3)
-    }
+    nc.ext <- nchar(file.ext)
+    if (substr(chname, LEN - nc.ext+1, LEN) == file.ext)
+	chname <- substr(chname, 1, LEN - nc.ext)
+
     if (is.na(match(chname, .Dyn.libs))) {
 	file <- system.file(paste("libs", fsep, chname, file.ext, sep = ""),
 			    package, lib.loc)
