@@ -955,11 +955,12 @@ SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if(n > 1) {
 	/* +2 for terminator and rounding error */
-	buf = Calloc(maxlen +  strlen(csep) + log((double)n)/log(10.0) + 2, 
-		     char*);
+	buf = Calloc(maxlen + strlen(csep) + log((double)n)/log(10.0) + 2, 
+		     char);
 	data.nomatch = 0;
 	PROTECT(newx = allocVector(STRSXP, 1));
-	dup = duplicated2(names, &data);
+	PROTECT(dup = duplicated2(names, &data));
+	PROTECT(data.HashTable);
 	for(i = 1; i < n; i++) { /* first cannot be a duplicate */
 	    if(!LOGICAL(dup)[i]) continue;
 	    /* Try appending 1,2,3, ..., n-1 until it is not already in use */
@@ -972,7 +973,7 @@ SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 	    /* insert it */ (void) isDuplicated(ans, i, &data);
 	}
 	Free(buf);
-	UNPROTECT(1);
+	UNPROTECT(3);
     }
     UNPROTECT(1);
     return ans;
