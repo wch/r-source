@@ -239,3 +239,15 @@ Date: Wed, 22 Mar 2000 05:40:06 +0100 (MET)
 Subject:  segmentation fault with 1D array 
 From: J.C.Rougier@durham.ac.uk
 Date: Wed, 22 Mar 2000 18:25:24 GMT
+* PR# 501 *
+Subject: kernel {ts}, kernel.dirichlet calling with one arg
+From: santini@dsi.unimi.it
+Date: Fri, 24 Mar 2000 11:12:49 +0100 (MET)
+* PR# 502 *
+Subject: quantiles of the hypergeometric distribution
+From: Ludwig Baringhaus <lbaring@stochastik.uni-hannover.de>
+Date: Fri, 24 Mar 2000 14:21:20 +0100
+* PR# 503 *
+Subject: dmvnorm() bug in e1071
+From: "Gregory R. Warnes" <warnes@biostat.washington.edu>
+Date: Fri, 24 Mar 2000 03:24:45 +0000 (GMT)
