@@ -2334,6 +2334,9 @@ void putdots(int *pold, int new)
 	else if((i+1) % 10 == 0) REprintf(" ");
     }
     if(R_Consolefile) fflush(R_Consolefile);
+#ifdef Win32
+    R_FlushConsole();
+#endif
 }
 
 
@@ -2471,6 +2474,7 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #ifdef HAVE_LIBXML
 #define INTERNET 1
+/* <FIXME> put these in a header file */
 
 void *	xmlNanoHTTPOpen		(const char *URL, char **contentType);
 int	xmlNanoHTTPRead		(void *ctx, void *dest, int len);
@@ -2481,6 +2485,7 @@ void	xmlNanoHTTPTimeout	(int delay);
 void *	xmlNanoFTPOpen		(const char *URL);
 int	xmlNanoFTPRead		(void *ctx, void *dest, int len);
 void	xmlNanoFTPClose		(void *ctx);
+void	xmlNanoFTPTimeout	(int delay);
 
 void *R_HTTPOpen(const char *url)
 {
@@ -2513,6 +2518,10 @@ void R_HTTPClose(void *ctx)
 
 void *R_FTPOpen(const char *url)
 {
+    int timeout = asInteger(GetOption(install("timeout"), R_NilValue));
+
+    if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
+    xmlNanoFTPTimeout(timeout);
     return xmlNanoFTPOpen(url);
 }
 
@@ -2591,9 +2600,11 @@ void *R_HTTPOpen(const char *url)
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
     InternetSetStatusCallback(wictxt->hand,
 			      (INTERNET_STATUS_CALLBACK) InternetCallback);
-    if(!IDquiet) 
+    if(!IDquiet) {
 	Rprintf("using Asynchronous WinInet calls, timeout %d secs\n", 
 		timeout);
+	R_FlushConsole();
+    }
 
     callback_status = 0;
     InternetOpenUrl(wictxt->hand, url,
@@ -2617,7 +2628,10 @@ void *R_HTTPOpen(const char *url)
     
     wictxt->session = (HINTERNET) callback_res->dwResult;
 #else
-    if(!IDquiet) Rprintf("using Synchronous WinInet calls\n");
+    if(!IDquiet) {
+	Rprintf("using Synchronous WinInet calls\n");
+	R_FlushConsole();
+    }
     wictxt->session = InternetOpenUrl(wictxt->hand, url,
 				      NULL, 0,
         INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
@@ -2650,6 +2664,7 @@ void *R_HTTPOpen(const char *url)
 		      HTTP_QUERY_CONTENT_LENGTH | HTTP_QUERY_FLAG_NUMBER,
 		      &status, &d1, &d2);
 	Rprintf("Content type `%s' length %d bytes\n", buf, status);
+	R_FlushConsole();
     }
     
     return (void *)wictxt;
@@ -2707,9 +2722,11 @@ void *R_FTPOpen(const char *url)
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
     InternetSetStatusCallback(wictxt->hand,
 			      (INTERNET_STATUS_CALLBACK) InternetCallback);
-    if(!IDquiet) 
+    if(!IDquiet) {
 	Rprintf("using Asynchronous WinInet calls, timeout %d secs\n", 
 		timeout);
+	R_FlushConsole();
+    }
 
     callback_status = 0;
     InternetOpenUrl(wictxt->hand, url,
@@ -2732,7 +2749,10 @@ void *R_FTPOpen(const char *url)
 
     wictxt->session = (HINTERNET) callback_res->dwResult;
 #else
-    if(!IDquiet) Rprintf("using Synchronous WinInet calls\n");
+    if(!IDquiet) {
+	Rprintf("using Synchronous WinInet calls\n");
+	R_FlushConsole();
+    }
     wictxt->session = InternetOpenUrl(wictxt->hand, url,
 				      NULL, 0,
         INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
