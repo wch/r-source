@@ -882,7 +882,7 @@ typedef struct {
     double eps, epsneg, xmin, xmax;
 } AccuracyInfo;
 
-AccuracyInfo R_AccuracyInfo;
+extern AccuracyInfo R_AccuracyInfo; 
 
 #endif /* DEFN_H_ */
 /*

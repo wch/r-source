@@ -61,11 +61,12 @@ void Rf_callToplevelHandlers(SEXP expr, SEXP value, Rboolean succeeded, Rboolean
 
 int Rf_ParseBrowser(SEXP, SEXP);
 
-
+ 
 static void onpipe(int);
 
 extern void InitDynload();
 
+AccuracyInfo R_AccuracyInfo; /* This is declared here and delcared extern in Defn.h */
 
 	/* Read-Eval-Print Loop [ =: REPL = repl ] with input from a file */
 
