@@ -17,7 +17,161 @@
 <address>B. D. Ripley</address>
 
 <hr>
-<p>...Table of Contents... <a name="Top"></a> </p>
+<p></p>
+
+<h1>Table of Contents</h1>
+
+<ul>
+<li><a href="#Introduction">1 Introduction</a></li>
+
+<li><a href="#Installation%20and%20Usage">2 Installation and
+Usage</a> 
+
+<ul>
+<li><a href="#Where%20can%20I%20find%20the%20latest%20version%3f">
+2.1 Where can I find the latest version?</a></li>
+
+<li><a href="#How%20do%20I%20install%20R%20for%20Windows%3f">2.2
+How do I install R for Windows?</a></li>
+
+<li><a href="#How%20do%20I%20run%20it%3f">2.3 How do I run
+it?</a></li>
+
+<li><a href=
+"#How%20can%20I%20keep%20workspaces%20for%20different%20projects%20in%20different%20directories%3f">
+2.4 How can I keep workspaces for different projects in different
+directories?</a></li>
+
+<li><a href="#How%20do%20I%20print%20from%20R%3f">2.5 How do I
+print from R?</a></li>
+
+<li><a href="#Can%20I%20use%20R%20BATCH%3f">2.6 Can I use <code>R
+BATCH</code>?</a></li>
+
+<li><a href=
+"#Can%20I%20use%20rwXxxx%20with%20ESS%20and%20emacs%3f">2.7 Can I
+use rwXxxx with ESS and emacs?</a></li>
+
+<li><a href="#What%20are%20HOME%20and%20working%20directories%3f">
+2.8 What are HOME and working directories?</a></li>
+</ul>
+</li>
+
+<li><a href="#Packages">3 Packages</a> 
+
+<ul>
+<li><a href=
+"#Can%20I%20install%20packages%20(libraries)%20in%20this%20version%3f">
+3.1 Can I install packages (libraries) in this version?</a></li>
+
+<li><a href=
+"#I%20don't%20have%20permission%20to%20write%20to%20the%20rwXxxx%2flibrary%20directory">
+3.2 I don't have permission to write to the <code>
+rwXxxx/library</code> directory.</a></li>
+
+<li><a href=
+"#The%20packages%20I%20installed%20do%20not%20appear%20in%20the%20HTML%20help%20system">
+3.3 The packages I installed do not appear in the HTML help
+system.</a></li>
+
+<li><a href=
+"#My%20functions%20are%20not%20found%20by%20the%20HTML%20help%20search%20system.">
+3.4 My functions are not found by the HTML help search
+system.</a></li>
+
+<li><a href="#Loading%20a%20package%20fails.">3.5 Loading a package
+fails.</a></li>
+
+<li><a href="#Package%20TclTk%20does%20not%20work.">3.6 Package
+TclTk does not work.</a></li>
+</ul>
+</li>
+
+<li><a href="#Windows%20Features">4 Windows Features</a> 
+
+<ul>
+<li><a href=
+"#What%20should%20I%20expect%20to%20behave%20differently%20from%20the%20Unix%20version%20of%20R%3f">
+4.1 What should I expect to behave differently from the Unix
+version of R?</a></li>
+
+<li><a href=
+"#I%20hear%20about%20some%20nifty%20features.%20Please%20tell%20me%20about%20them!">
+4.2 I hear about some nifty features: please tell me about
+them!</a></li>
+</ul>
+</li>
+
+<li><a href="#Workspaces">5 Workspaces</a> 
+
+<ul>
+<li><a href=
+"#My%20workspace%20gets%20saved%20in%20a%20strange%20place.%20how%20do%20I%20stop%20this%3f">
+5.1 My workspace gets saved in a strange place: how do I stop
+this?</a></li>
+
+<li><a href=
+"#How%20do%20I%20store%20my%20workspace%20in%20a%20different%20place%3f">
+5.2 How do I store my workspace in a different place?</a></li>
+
+<li><a href=
+"#Can%20I%20load%20workspaces%20saved%20under%20Unix%2fGNU-Linux%3f">
+5.3 Can I load workspaces saved under Unix/GNU-Linux?</a></li>
+</ul>
+</li>
+
+<li><a href="#The%20R%20Console%20and%20Fonts">6 The R Console and
+Fonts</a> 
+
+<ul>
+<li><a href=
+"#I%20would%20like%20to%20be%20able%20to%20use%20Japanese%20fonts">
+6.1 I would like to be able to use Japanese fonts</a></li>
+
+<li><a href=
+"#I%20don't%20see%20characters%20with%20accents%20at%20the%20R%20console">
+6.2 I don't see characters with accents at the R console, for
+example in ?text.</a></li>
+
+<li><a href=
+"#The%20output%20to%20the%20console%20seems%20to%20be%20delayed">
+6.3 When using Rgui the output to the console seems to be
+delayed.</a></li>
+
+<li><a href="#Long%20lines%20seem%20to%20be%20truncated.">6.4 Long
+lines in the console or pager are truncated.</a></li>
+</ul>
+</li>
+
+<li><a href="#Building%20from%20Source">7 Building from Source</a> 
+
+<ul>
+<li><a href="#How%20can%20I%20compile%20R%20from%20source%3f">7.1
+How can I compile R from source?</a></li>
+
+<li><a href=
+"#How%20do%20I%20debug%20code%20that%20I%20have%20compiled%20and%20dyn.load-ed%3f">
+7.2 How do I debug code that I have compiled and
+dyn.load-ed?</a></li>
+
+<li><a href="#How%20do%20I%20include%20C++%20code%3f">7.3 How do I
+include C++ code?</a></li>
+
+<li><a href="#The%20output%20from%20my%20C%20code%20disappears.">
+7.4 The output from my C code disappears. Why?</a></li>
+
+<li><a href=
+"#The%20output%20from%20my%20Fortran%20code%20disappears.">7.5 The
+output from my Fortran code disappears. Why?</a></li>
+
+<li><a href=
+"#The%20console%20freezes%20when%20my%20compiled%20code%20is%20running">
+7.6 The console freezes when my compiled code is running.</a></li>
+</ul>
+</li>
+</ul>
+
+<a name="Top"></a>  
 
 <hr>
 <a name="Introduction"></a> 
@@ -49,8 +203,8 @@ officially).</p>
 <p>Go to any CRAN site (see <a href=
 "http://cran.r-project.org/mirrors.html">
 http://cran.r-project.org/mirrors.html</a> for a list), navigate to
-the <code>bin/windows/windows-NT/base</code> directory and collect
-the files you need. You will need at least the files</p>
+the <code>bin/windows/base</code> directory and collect the files
+you need. You will need at least the files</p>
 
 <pre>
       rwXxxxb1.zip rwXxxxb2.zip
@@ -197,12 +351,11 @@ Sys.getenv("R_USER")</code>.</p>
 
 <p>Yes, of course. The easy way is to see if a pre-compiled binary
 version of the package is available: look on CRAN at <code>
-bin/windows/windows-NT/contrib</code>. If there is, download the
-zip file and unpack it in the <code>rwXxxx\library</code>
-directory, using <code>unzip</code> or similar, or using the
-installer <code>rwinst.exe</code>. Perhaps even easier is to use
-the R function <code>install.packages()</code>: check out its help
-page.</p>
+bin/windows/contrib</code>. If there is, download the zip file and
+unpack it in the <code>rwXxxx\library</code> directory, using
+<code>unzip</code> or similar, or using the installer <code>
+rwinst.exe</code>. Perhaps even easier is to use the R function
+<code>install.packages()</code>: check out its help page.</p>
 
 <p>If there is not a binary version or that is not up-to-date or
 you prefer compiling from source, get <code>rwXxxxsp.zip</code>
@@ -248,7 +401,9 @@ library(MASS, lib.loc="p:/mylibs")
 Windows 9x you can set them in autoexec.bat or in an MS-DOS window
 from which you launch <code>Rgui</code> / <code>Rterm</code>. Under
 Windows NT/2000 you can use the control panel or the properties of
-`My Computer'. You can also set them on the command line, for
+`My Computer'. Under Windows Me you need to use the System
+Configuration Utility (under Programs, Accessories, System Tools on
+the Start menu). You can also set them on the command line, for
 example in the shortcut you could have</p>
 
 <pre>
@@ -313,9 +468,25 @@ after installing the package.</li>
 </ul>
 
 <p>If those all hold true, this works for us. <a name=
-"Package%20TclTk%20does%20not%20work."></a></p>
+"Loading%20a%20package%20fails."></a></p>
 
-<h2>3.5 Package TclTk does not work.</h2>
+<h2>3.5 Loading a package fails.</h2>
+
+<p>Is the package compiled for this version of R? Many of the
+packages need to be compiled for a fairly recent version, and in
+particular a substantial minority need to be re-compiled for <code>
+rw1020</code>.</p>
+
+<p>You can tell the version the package was compiled for by looking
+at the <code>Built:</code> line in its <code>DESCRIPTION</code>
+file or at the <code>Version</code> tab of its DLL (if it has one)
+in the <code>libs</code> directory. (Right-click on the DLL in
+Windows Explorer, and select <code>Properties</code> or use the
+<code>DLL.version</code> function inside R.) If there is no <code>
+Built:</code> line or version tab, the package was compiled too
+long ago. <a name="Package%20TclTk%20does%20not%20work."></a></p>
+
+<h2>3.6 Package TclTk does not work.</h2>
 
 <p>For package tcltk to work (try <code>demo(tkdensity)</code> or
 <code>demo(tkttest)</code>) you need to have Tcl installed.
@@ -680,7 +851,7 @@ console, call <code>R_FlushConsole()</code> and then <code>
 R_ProcessEvents()</code>.</p>
 
 <hr width="100%">
-<address>Last edited 2000 November 25 by Brian Ripley <code><a
+<address>Last edited 2000 November 30 by Brian Ripley <code><a
 href="mailto:ripley@stats.ox.ac.uk">
 ripley@stats.ox.ac.uk</a></code></address>
 </body>

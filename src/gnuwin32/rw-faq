@@ -25,7 +25,8 @@ Table of Contents
   3.2 I don't have permission to write to the `rwXxxx/library' directory.
   3.3 The packages I installed do not appear in the HTML help system.
   3.4 My functions are not found by the HTML help search system.
-  3.5 Package TclTk does not work.
+  3.5 Loading a package fails.
+  3.6 Package TclTk does not work.
 
 4 Windows Features
   4.1 What should I expect to behave differently from the Unix version of R?
@@ -73,8 +74,8 @@ The information here applies only to recent versions of R for Windows,
 ========================================
 
 Go to any CRAN site (see `http://cran.r-project.org/mirrors.html' for a
-list), navigate to the `bin/windows/windows-NT/base' directory and
-collect the files you need. You will need at least the files
+list), navigate to the `bin/windows/base' directory and collect the
+files you need. You will need at least the files
 
            rwXxxxb1.zip rwXxxxb2.zip
            rwXxxxh.zip (text help) or rwXxxxch.zip (Compiled HTML help)
@@ -90,13 +91,13 @@ Optionally, you can download the installer, `rwinst.exe'.
 ===================================
 
 First, you need Windows 95/98/ME/NT4/2000: Windows 3.11+win32s will not
-work. Your file system must allow long file names (as is likely except
+work.  Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
 The simplest way is to run the installer (double-click on the icon for
-`rwinst.exe' and navigate its wizard-like pages).  Alternatively, choose
-a location and unzip the zip files (with a tool that preserves long
-file names and the directory structure: we recommend the INFO-ZIP
+`rwinst.exe' and navigate its wizard-like pages).  Alternatively,
+choose a location and unzip the zip files (with a tool that preserves
+long file names and the directory structure: we recommend the INFO-ZIP
 project's `unzip'). All the files will unpack into a directory called
 `rwXxxx', for some `Xxxx'.
 
@@ -105,9 +106,9 @@ Choose a working directory for R. Make a shortcut to
 file tree. Right-click the shortcut, select Properties... and change
 the `Start in' field to your working directory.
 
-You may also want to add command-line arguments at the end of the
-Target field, for example `--max-mem-size=40M'. You can also set
-environment variables at the end of the Target field, for example
+You may also want to add command-line arguments at the end of the Target
+field, for example `--max-mem-size=40M'. You can also set environment
+variables at the end of the Target field, for example
 `R_LIBS=e:/R/library'.
 
 2.3 How do I run it?
@@ -191,11 +192,11 @@ You can find this from R code by `Sys.getenv("R_USER")'.
 =======================================================
 
 Yes, of course. The easy way is to see if a pre-compiled binary version
-of the package is available: look on CRAN at
-`bin/windows/windows-NT/contrib'. If there is, download the zip file
-and unpack it in the `rwXxxx\library' directory, using `unzip' or
-similar, or using the installer `rwinst.exe'.  Perhaps even easier is
-to use the R function `install.packages()': check out its help page.
+of the package is available: look on CRAN at `bin/windows/contrib'. If
+there is, download the zip file and unpack it in the `rwXxxx\library'
+directory, using `unzip' or similar, or using the installer
+`rwinst.exe'.  Perhaps even easier is to use the R function
+`install.packages()': check out its help page.
 
 If there is not a binary version or that is not up-to-date or you prefer
 compiling from source, get `rwXxxxsp.zip' from the distribution (see
@@ -227,9 +228,11 @@ OR use a package by, e.g.
 
 How you set an environment variable is system specific: in Windows 9x
 you can set them in autoexec.bat or in an MS-DOS window from which you
-launch `Rgui' / `Rterm'. Under Windows NT/2000 you can use the control
-panel or the properties of `My Computer'. You can also set them on the
-command line, for example in the shortcut you could have
+launch `Rgui' / `Rterm'.  Under Windows NT/2000 you can use the control
+panel or the properties of `My Computer'.  Under Windows Me you need to
+use the System Configuration Utility (under Programs, Accessories,
+System Tools on the Start menu).  You can also set them on the command
+line, for example in the shortcut you could have
 
      path_to_R\bin\Rgui.exe --vsize=10M R_LIBS=e:/R/library
 
@@ -277,14 +280,28 @@ installed.
 
 If those all hold true, this works for us.
 
-3.5 Package TclTk does not work.
+3.5 Loading a package fails.
+============================
+
+Is the package compiled for this version of R?  Many of the packages
+need to be compiled for a fairly recent version, and in particular a
+substantial minority need to be re-compiled for `rw1020'.
+
+You can tell the version the package was compiled for by looking at the
+`Built:' line in its `DESCRIPTION' file or at the `Version' tab of its
+DLL (if it has one) in the `libs' directory.  (Right-click on the DLL
+in Windows Explorer, and select `Properties' or use the `DLL.version'
+function inside R.)  If there is no `Built:' line or version tab, the
+package was compiled too long ago.
+
+3.6 Package TclTk does not work.
 ================================
 
 For package tcltk to work (try `demo(tkdensity)' or `demo(tkttest)')
 you need to have Tcl installed.  Download `tcl832.exe' (or use
 `tcl831.exe' if you already have it) from <dev.scriptics.com> and
 install it. (That will put the `bin' directory containing the Tcl and
-Tk DLLs in your path). You then need to set the environment variable
+Tk DLLs in your path).  You then need to set the environment variable
 `TCL_LIBRARY', to something like `c:/Program Files/Tcl/lib/tcl8.3'.
 (The startup code for the package will warn you if this is unset, and
 Q3.2 explains how to set them.)
@@ -561,5 +578,5 @@ then `R_ProcessEvents()'.
 
 
 
-Last edited 2000 November 25 by Brian Ripley <ripley@stats.ox.ac.uk>
+Last edited 2000 November 30 by Brian Ripley <ripley@stats.ox.ac.uk>
 

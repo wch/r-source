@@ -113,7 +113,7 @@ The information here applies only to recent versions of R for Windows,
 @section Where can I find the latest version?
 
 Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
-for a list), navigate to the @code{bin/windows/windows-NT/base}
+for a list), navigate to the @code{bin/windows/base}
 directory and collect the files you need. You will need at least the
 files
 
@@ -134,25 +134,25 @@ Optionally, you can download the installer, @code{rwinst.exe}.
 @section How do I install R for Windows?
 
 First, you need Windows 95/98/ME/NT4/2000: Windows 3.11+win32s will not
-work. Your file system must allow long file names (as is likely except
+work.  Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
 The simplest way is to run the installer (double-click on the icon for
-@code{rwinst.exe} and navigate its wizard-like pages).  Alternatively, choose
-a location and unzip the zip files (with a tool that preserves long
-file names and the directory structure: we recommend the INFO-ZIP
-project's @code{unzip}). All the files will unpack into a directory called
-@code{rwXxxx}, for some @code{Xxxx}.
+@code{rwinst.exe} and navigate its wizard-like pages).  Alternatively,
+choose a location and unzip the zip files (with a tool that preserves
+long file names and the directory structure: we recommend the INFO-ZIP
+project's @code{unzip}). All the files will unpack into a directory
+called @code{rwXxxx}, for some @code{Xxxx}.
 
 Choose a working directory for R. Make a shortcut to
-@code{rwXxxx\bin\Rgui.exe} on your desktop or somewhere on the Start menu
-file tree. Right-click the shortcut, select Properties... and change
-the `Start in' field to your working directory.
+@code{rwXxxx\bin\Rgui.exe} on your desktop or somewhere on the Start
+menu file tree. Right-click the shortcut, select Properties... and
+change the `Start in' field to your working directory.
 
-You may also want to add command-line arguments at the end of the
-Target field, for example @code{--max-mem-size=40M}. You can also set
-environment variables at the end of the Target field, for
-example @code{R_LIBS=e:/R/library}.
+You may also want to add command-line arguments at the end of the Target
+field, for example @code{--max-mem-size=40M}. You can also set
+environment variables at the end of the Target field, for example
+@code{R_LIBS=e:/R/library}.
 
 
 @node How do I run it?, How can I keep workspaces for different projects in different directories?, How do I install R for Windows?, Installation and Usage
@@ -225,8 +225,8 @@ from R code by the call @code{getwd()}.
 The home directory is set as follows:@*
 If environment variable @code{R_USER} is set, its value is used.@*
 Otherwise if environment variable @code{HOME} is set, its value is used.@*
-Otherwise if environment variables @code{HOMEDRIVE} and @code{HOMEPATH} are set,
-the value is @code{$@{HOMEDRIVE@}$@{HOMEPATH@}}.@*
+Otherwise if environment variables @code{HOMEDRIVE} and @code{HOMEPATH}
+are set, the value is @code{$@{HOMEDRIVE@}$@{HOMEPATH@}}.@*
 If all of these fail, the current working directory is used.
 
 You can find this from R code by @code{Sys.getenv("R_USER")}.
@@ -242,6 +242,7 @@ You can find this from R code by @code{Sys.getenv("R_USER")}.
 * I don't have permission to write to the rwXxxx/library directory::  
 * The packages I installed do not appear in the HTML help system::  
 * My functions are not found by the HTML help search system.::  
+* Loading a package fails.::    
 * Package TclTk does not work.::  
 @end menu
 
@@ -250,7 +251,7 @@ You can find this from R code by @code{Sys.getenv("R_USER")}.
 
 Yes, of course. The easy way is to see if a pre-compiled binary version
 of the package is available: look on CRAN at
-@code{bin/windows/windows-NT/contrib}. If there is, download the zip
+@code{bin/windows/contrib}. If there is, download the zip
 file and unpack it in the @code{rwXxxx\library} directory, using
 @code{unzip} or similar, or using the installer @code{rwinst.exe}.
 Perhaps even easier is to use the R function @code{install.packages()}:
@@ -292,9 +293,11 @@ library(MASS, lib.loc="p:/mylibs")
 
 How you set an environment variable is system specific: in Windows 9x
 you can set them in autoexec.bat or in an MS-DOS window from which you
-launch @code{Rgui} / @code{Rterm}. Under Windows NT/2000 you can use the
-control panel or the properties of `My Computer'. You can also set them
-on the command line, for example in the shortcut you could have
+launch @code{Rgui} / @code{Rterm}.  Under Windows NT/2000 you can use
+the control panel or the properties of `My Computer'.  Under Windows Me
+you need to use the System Configuration Utility (under Programs,
+Accessories, System Tools on the Start menu).  You can also set them on
+the command line, for example in the shortcut you could have
 
 @example
 path_to_R\bin\Rgui.exe --vsize=10M R_LIBS=e:/R/library
@@ -337,7 +340,7 @@ make indices
 instead.)
 
 
-@node My functions are not found by the HTML help search system., Package TclTk does not work., The packages I installed do not appear in the HTML help system, Packages
+@node My functions are not found by the HTML help search system., Loading a package fails., The packages I installed do not appear in the HTML help system, Packages
 @section My functions are not found by the HTML help search system.
 
 The following conditions need to hold for functions in a package you installed.
@@ -351,14 +354,30 @@ installing the package.
 @noindent
 If those all hold true, this works for us.
 
-@node Package TclTk does not work.,  , My functions are not found by the HTML help search system., Packages
+@node Loading a package fails., Package TclTk does not work., My functions are not found by the HTML help search system., Packages
+@section Loading a package fails.
+
+Is the package compiled for this version of R?  Many of the packages
+need to be compiled for a fairly recent version, and in particular a
+substantial minority need to be re-compiled for @code{rw1020}. 
+
+You can tell the version the package was compiled for by looking at the
+@code{Built:} line in its @file{DESCRIPTION} file or at the
+@code{Version} tab of its DLL (if it has one) in the @file{libs}
+directory.  (Right-click on the DLL in Windows Explorer, and select
+@code{Properties} or use the @code{DLL.version} function inside R.)
+If there is no @code{Built:} line or version tab, the package was
+compiled too long ago.
+
+
+@node Package TclTk does not work.,  , Loading a package fails., Packages
 @section Package TclTk does not work.
 
 For package tcltk to work (try @code{demo(tkdensity)} or @code{demo(tkttest)})
 you need to have Tcl installed.  Download @file{tcl832.exe} (or use
 @file{tcl831.exe} if you already have it) from @url{dev.scriptics.com}
 and install it. (That will put the @file{bin} directory containing the
-Tcl and Tk DLLs in your path). You then need to set the environment variable
+Tcl and Tk DLLs in your path).  You then need to set the environment variable
 @code{TCL_LIBRARY}, to something like @code{c:/Program
 Files/Tcl/lib/tcl8.3}.  (The startup code for the package will warn you
 if this is unset, and Q3.2 explains how to set them.)
@@ -707,14 +726,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2000 November 25 by Brian Ripley
+Last edited 2000 November 30 by Brian Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2000 November 25 by Brian Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2000 November 30 by Brian Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
