@@ -53,6 +53,6 @@ svd <- function(x, nu=min(n,p), nv=min(n,p))
     if(z$info)
 	stop(paste("error ",z$info," in dsvdc"))
     z$d <- z$d[1:mn]
-    if(nv && nv < p) z$v <- z$v[, 1:nv]
+    if(nv && nv < p) z$v <- z$v[, 1:nv, drop = FALSE]
     z[c("d", if(nu) "u", if(nv) "v")]
 }

@@ -354,6 +354,7 @@ BUG FIXES
     o	qr.X() was ignoring pivoting (which happens only in
 	rank-deficient cases).
 
+    o	svd(x)$v was not a matrix when x had only 1 row (PR#963).
 
 
 	**************************************************
