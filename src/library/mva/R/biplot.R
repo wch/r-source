@@ -24,7 +24,7 @@ biplot.default <-
     if(length(cex) == 1) cex <- c(cex, cex)
     if(missing(col)) {
 	col <- par("col")
-	if (!is.numeric(col)) col <- match(col, palette())
+	if (!is.numeric(col)) col <- match(col, palette(), nomatch=1)
 	col <- c(col, col + 1)
     }
     else if(length(col) == 1) col <- c(col, col)
@@ -37,7 +37,8 @@ biplot.default <-
 
     if(missing(xlim) && missing(ylim))
 	xlim <- ylim <- rangx1 <- rangx2 <- range(rangx1, rangx2)
-    else if(missing(xlim)) xlim <- rangx1 else ylim <- rangx2
+    else if(missing(xlim)) xlim <- rangx1
+    else if(missing(ylim)) ylim <- rangx2
     ratio <- max(rangy1/rangx1, rangy2/rangx2)/expand
     on.exit(par(op))
     op <- par(pty = "s")

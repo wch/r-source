@@ -156,6 +156,8 @@ BUG FIXES
     o   as.double(list()) etc was regarded as an error, because of a
 	bug in isVectorizable.
 
+    o   biplot.default() allows xlim and ylim to be set. (PR#3168)
+
 
 
 

@@ -20,7 +20,10 @@ biplot.default(x, y, var.axes = TRUE, col, cex = rep(par("cex"), 2),
     representing them as (unscaled) axes.}
   \item{col}{A vector of length 2 giving the colours for the first and
     second set of points respectively (and the corresponding axes). If a
-    single colour is specified it will be used for both sets.}
+    single colour is specified it will be used for both sets.  If
+    missing the default colour is looked for in the
+    \code{\link{palette}}: if there it and the next colour as used,
+    otherwise the first two colours of the paletter are used.}
   \item{cex}{The character expansion factor used for labelling the
     points. The labels can be of different sizes for the two sets by
     supplying a vector of length two.}
@@ -31,12 +34,14 @@ biplot.default(x, y, var.axes = TRUE, col, cex = rep(par("cex"), 2),
     points: the default is to use the row dimname of \code{y}, or
     \code{1:n} is the dimname is \code{NULL}.}
   \item{expand}{An expansion factor to apply when plotting the second set
-    of points relative to the first. This can be used to get the two sets
-    on to a physically comparable scale.}
+    of points relative to the first. This can be used to tweak the
+    scaling of the two sets to a physically comparable scale.}
   \item{arrow.len}{The length of the arrow heads on the axes plotted in
     \code{var.axes} is true. The arrow head can be suppressed by
     \code{arrow.len = 0}.}
-  \item{xlim, ylim, main, sub, xlab, ylab, \dots}{graphical parameters.}
+  \item{xlim, ylim}{Limits for the x and y axes in the units of the
+    first set of variables.}
+  \item{main, sub, xlab, ylab, \dots}{graphical parameters.}
 }
 \description{
   Plot a biplot on the current graphics device.
