@@ -849,7 +849,7 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(pat) || length(pat) < 1 || !isString(vec))
 	errorcall(call, R_MSG_IA);
 
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
     if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
 	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
@@ -879,7 +879,7 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0 ; i < n ; i++) {
 	    LOGICAL(ind)[i] = 0;
 	    if (STRING_ELT(vec, i) != NA_STRING) {
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 		if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(vec, i))))
 		    errorcall(call, 
 			      _("input string %d is invalid in this locale"),
@@ -1018,7 +1018,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (extended_opt) eflags = eflags | REG_EXTENDED;
     if (igcase_opt) eflags = eflags | REG_ICASE;
 
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
     if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
 	errorcall(call, _("'pattern' is invalid in this locale"));
     if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(rep, 0))))
@@ -1061,7 +1061,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	t = CHAR(STRING_ELT(rep, 0));
 	ns = strlen(s);
 
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 	if(mbcslocale && !mbcsValid(s))
 	    errorcall(call, ("input string %d is invalid in this locale"), i+1);
 #endif
@@ -1169,7 +1169,7 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     eflags = extended_opt ? REG_EXTENDED : 0;
 
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
     if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
 	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
@@ -1185,7 +1185,7 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (STRING_ELT(text, i) == NA_STRING) {
 	    INTEGER(matchlen)[i] = INTEGER(ans)[i] = R_NaInt;
 	} else {
-#ifdef SUPPORT_UTF8
+#ifdef SUPPORT_MBCS
 	    if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(text, i))))
 		errorcall(call,
 			  _("input string %d is invalid in this locale"), 
