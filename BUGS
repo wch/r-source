@@ -49,6 +49,9 @@ Date: Fri, 12 Dec 2003 11:18:12 +0100
 Subject: Accuracy: Correct sums in rowSums(), colSums()
 From: Nick.Efthymiou@Schwab.com
 Date: Tue, 30 Dec 2003 01:57:19 +0100 (CET)
+..no requested patch against the current sources forthcoming.
+..
+..Seems unlikely to be worthwhile for rowSums and not sum!
 
 Directory:  Add-ons
 
@@ -808,39 +811,18 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6652 *
-Subject: Bug in points.formula 
-From: Berwin A Turlach <berwin@maths.uwa.edu.au>
-Date: Mon, 08 Mar 2004 16:16:58 +0800
-* PR# 6656 *
-Subject: update forgets about offset()
-From: <Mark.Bravington@csiro.au>
-Date: Tue, 9 Mar 2004 16:51:06 +1100
-* PR# 6659 *
-Subject: Re: Here
-From: j.chapman@dailymail.co.uk
-Date: Wed, 10 Mar 2004 13:45:50 GMT
-* PR# 6660 *
-Subject: Hello
-From: sadijamarah1 <sadijamarah1@telstra.com>
-Date: Wed, 10 Mar 2004 15:05:26 -0800
-* PR# 6661 *
-Subject: Valium, Soma, Phentermine, Xanax, Cialias - All here
-From: "Jerome Moser" <ZJQDHZZ@cool.ne.jp>
-Date: Wed, 10 Mar 2004 17:27:23 -0600
 * PR# 6667 *
 Subject: Re: [R] No traceback available when using try(...)
 From: Duncan Murdoch <dmurdoch@pair.com>
 Date: Fri, 12 Mar 2004 09:07:20 -0500
+..works as intended: see 6669.  Docs updated for 1.9.0
 * PR# 6668 *
 Subject: Re: [R] No traceback available when using try(...)
 From: "Roger D. Peng" <rpeng@jhsph.edu>
 Date: Fri, 12 Mar 2004 11:44:14 -0500
+..part of 6667
 * PR# 6669 *
 Subject: Re: [R] No traceback available when using try(...)
 From: Duncan Murdoch <dmurdoch@pair.com>
 Date: Fri, 12 Mar 2004 15:38:33 -0500
-* PR# 6671 *
-Subject: Tired of all those aches and pains?
-From: " Thompson" <inbwduimv@biddeford.com>
-Date: Sun, 14 Mar 2004 20:28:47 +0200
+..part of 6667
