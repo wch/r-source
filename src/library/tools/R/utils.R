@@ -74,7 +74,10 @@ function(dir, exts, all.files = FALSE, full.names = TRUE)
     } else {
         files <- list.files(dir, all.files = all.files)
     }
-    files <- files[sub(".*\\.", "", files) %in% exts]
+    ## does not cope with exts with '.' in.
+    ## files <- files[sub(".*\\.", "", files) %in% exts]
+    patt <- paste("\\.(", paste(exts, collapse="|"), ")$", sep = "")
+    files <- grep(patt, files, value = TRUE)
     if(full.names)
         files <- if(length(files) > 0)
             file.path(dir, files)
@@ -378,7 +381,7 @@ function(type = c("code", "data", "demo", "docs", "vignette"))
                     "RData", "rdata", "rda",
                     "tab", "txt", "TXT", "csv", "CSV"),
            demo = c("R", "r"),
-           docs = c("Rd", "rd"),
+           docs = c("Rd", "rd", "Rd.gz", "rd.gz"),
            vignette = c(outer(c("R", "r", "S", "s"), c("nw", "tex"),
                               paste, sep = "")))
 }
@@ -447,6 +450,10 @@ function(con)
 {
     ## Read lines from a connection to an Rd file, trying to suppress
     ## "incomplete final line found by readLines" warnings.
+    if(is.character(con)) {
+        con <- if(length(grep("\\.gz$", con))) gzfile(con, "r") else file(con, "r")
+        on.exit(close(con))
+    }
     .try_quietly(readLines(con))
 }
 
