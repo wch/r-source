@@ -652,9 +652,9 @@ config_opts=${ac_configure_args}
 # Check whether --enable-R-profiling or --disable-R-profiling was given.
 if test "${enable_R_profiling+set}" = set; then
   enableval="$enable_R_profiling"
-   if test "${withval}" = no; then
+   if test "${enableval}" = no; then
       want_Rprof=no
-    elif test "${withval}" = yes; then
+    elif test "${enableval}" = yes; then
       want_Rprof=yes
     else
       want_Rprof=yes
