@@ -30,8 +30,8 @@ eval(e3)
 
 ## The first failed in 0.65.0 :
 attach(list(x=1))
-evalq(dim(x) <- 1,pos.to.env(2))
-dput(get("x", env=pos.to.env(2)))
+evalq(dim(x) <- 1,as.environment(2))
+dput(get("x", env=as.environment(2)))
 
 e <- local({x <- 1;environment()})
 evalq(dim(x) <- 1,e)

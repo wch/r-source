@@ -206,7 +206,7 @@ f2()
 ## The first case in f2() is broken in 1.3.0(-patched).
 
 ## on.exit() consistency check from Luke:
-g <- function() pos.to.env(-1)
+g <- function() as.environment(-1)
 f <- function(x) UseMethod("f")
 f.foo <- function(x) { on.exit(e <<- g()); NULL }
 f.bar <- function(x) { on.exit(e <<- g()); return(NULL) }
