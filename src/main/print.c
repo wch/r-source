@@ -81,14 +81,26 @@ void PrintDefaults(SEXP rho)
 SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     FILE *fp;
-    if(isNull(CAR(args))) {
+    SEXP file;
+    int  append;
+
+    file = CAR(args);
+    append = asLogical(CADR(args));
+    if (append == NA_LOGICAL)
+        errorcall(call, "invalid append specification\n");
+    
+    if(isNull(file)) {
 	if(R_Sinkfile) fclose(R_Sinkfile);
 	R_Sinkfile = NULL;
 	R_Outputfile = R_Consolefile;
     } else {
-	if(TYPEOF(CAR(args)) != STRSXP || LENGTH(CAR(args)) != 1)
+	if (!isString(file) || length(file) != 1)
 	    errorcall(call, "invalid file name\n");
-	if( !(fp=R_fopen(CHAR(STRING(CAR(args))[0]), "w")))
+	if (append)
+	    fp = R_fopen(R_ExpandFileName(CHAR(STRING(file)[0])), "a");
+	else
+	    fp = R_fopen(R_ExpandFileName(CHAR(STRING(file)[0])), "w");
+	if (!fp)
 	    errorcall(call, "unable to open file\n");
 	R_Sinkfile = fp;
 	R_Outputfile = fp;
