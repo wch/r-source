@@ -99,6 +99,8 @@ NEW FEATURES
 	is named in the message, for example
 	`unused argument(s) (xlabel ...)'.
 
+    o   Conversion from Rd to raw nroff is no longer available.
+
 
 BUG FIXES
 
