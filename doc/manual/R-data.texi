@@ -1264,12 +1264,12 @@ will need to be uploaded to the MySQL host.
               row.names = FALSE, col.names = FALSE)
 ## delete any existing table
 > if(!is.na(match("arrests", getTables(con)[[1]])))
-    dbExecStatement(con, "drop table arrests")
+    quickSQL(con, "drop table arrests")
 ## character string here needs to be on one line
-> dbExecStatement(con,
+> quickSQL(con,
     "create table arrests (Murder float, Assault float,
      UrbanPop float, Rape float)")
-> dbExecStatement(con,
+> quickSQL(con,
     'load data infile "/tmp/arrests.dat" into table arrests')
 > unlink("/tmp/arrests.dat")
 ## Select from the loaded database.
