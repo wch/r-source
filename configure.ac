@@ -1284,6 +1284,7 @@ AC_CONFIG_FILES(
   tests/Makefile
   tests/Embedding/Makefile
   tests/Examples/Makefile
+  tests/Native/Makefile
   tools/Makefile
 ])
 
