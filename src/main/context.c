@@ -168,10 +168,14 @@ static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
     R_restore_globals(cptr);
 
     R_ReturnedValue = val;
-    if (cptr != R_ToplevelContext)
-	R_GlobalContext = cptr->nextcontext;
-    else
-	R_GlobalContext = R_ToplevelContext;
+    R_GlobalContext = cptr; /* this used to be set to
+                               cptr->nextcontext for non-toplevel
+                               jumps (with the context set back at the
+                               SETJMP for restarts).  Changing this to
+                               always using cptr as the new global
+                               context should simplify some code and
+                               perhaps allow loops to be handled with
+                               fewer SETJMP's.  LT */
     LONGJMP(cptr->cjmpbuf, mask);
 }
 
@@ -201,8 +205,14 @@ void begincontext(RCNTXT * cptr, int flags,
 void endcontext(RCNTXT * cptr)
 {
     int savevis = R_Visible;
-    if (cptr->cloenv != R_NilValue && cptr->conexit != R_NilValue )
+    if (cptr->cloenv != R_NilValue && cptr->conexit != R_NilValue ) {
+	/* Reset global context so onexit gets esexuted in parent
+	   context.  Not sure this is really the right thing to do,
+	   but it preserves consistency with the way jumpfun used to
+	   work.  LT */
+	R_GlobalContext = cptr->nextcontext;
 	eval(cptr->conexit, cptr->cloenv);
+    }
     R_Visible = savevis;
     R_GlobalContext = cptr->nextcontext;
 }

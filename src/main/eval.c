@@ -574,7 +574,6 @@ SEXP applyClosure(SEXP call, SEXP op, SEXP arglist, SEXP rho, SEXP suppliedenv)
     if ((SETJMP(cntxt.cjmpbuf))) {
 	if (R_ReturnedValue == R_DollarSymbol) {
 	    cntxt.callflag = CTXT_RETURN;  /* turn restart off */
-	    R_GlobalContext = &cntxt;      /* put the context back */
 	    PROTECT(tmp = eval(body, newrho));
 	}
 	else
@@ -722,6 +721,7 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 	begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho,
 		     R_NilValue, R_NilValue);
 	if ((tmp = SETJMP(cntxt.cjmpbuf))) {
+	    endcontext(&cntxt);
 	    if (tmp == CTXT_BREAK) break;	/* break */
 	    else   continue;                       /* next  */
 
@@ -738,7 +738,7 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 		break;
 	    case INTSXP:
 		INTEGER(v)[0] = INTEGER(val)[i];
-		setVar(sym, v, rho);
+	setVar(sym, v, rho);
 		ans = eval(body, rho);
 		break;
 	    case REALSXP:
@@ -805,6 +805,7 @@ SEXP do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
 	begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho,
 		     R_NilValue, R_NilValue);
 	if ((cond = SETJMP(cntxt.cjmpbuf))) {
+	    endcontext(&cntxt);
 	    if (cond == CTXT_BREAK) break;	/* break */
 	    else continue;                      /* next  */
 	}
@@ -844,6 +845,7 @@ SEXP do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho,
 		     R_NilValue, R_NilValue);
 	if ((cond = SETJMP(cntxt.cjmpbuf))) {
+	    endcontext(&cntxt);
 	    if (cond == CTXT_BREAK) break;	/*break */
 	    else   continue;                    /* next  */
 	}
