@@ -18,7 +18,7 @@ Up:<a rel=up accesskey=u href="#dir">(dir)</a>
 <h2>R FAQ</h2>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.6-14, 2002-11-08</h2>
+<h2>Version 1.6-15, 2002-11-13</h2>
 <h2>ISBN 3-901167-51-X</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -1254,11 +1254,6 @@ variable is not evaluated.  Since the local frame is initialized with
 the actual arguments or the default expressions, this is usually
 equivalent to S, until assignment takes place.
 
-<li>In R, <code>eval(EXPR, sys.parent())</code> does not work.  Instead, one
-should use either <code>eval(EXPR, sys.frame(sys.parent())),</code> which also
-works in S, or <code>eval(EXPR, parent.frame())</code>, which is more
-efficient but does not work in S.
-
 <li>In S, the index variable in a <code>for()</code> loop is local to the inside
 of the loop.  In R it is local to the environment where the <code>for()</code>
 statement is executed.
@@ -1279,6 +1274,10 @@ subsequently modified; in R it doesn't.
 
 <li>From R version 1.3.0, <code>data.frame</code> strips <code>I()</code> when creating
 (column) names.
+
+<li>In R, the string <code>"NA"</code> is not treated as a missing value in a
+character variable.  Use <code>as.character(NA)</code> to create a missing
+character value.
 
 </ul>
 

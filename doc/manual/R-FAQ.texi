@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.6-14, 2002-11-08
+@set FAQ-VERSION 1.6-15, 2002-11-13
 @set REL-VERSION 1.6.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1315,12 +1315,6 @@ the actual arguments or the default expressions, this is usually
 equivalent to S, until assignment takes place.
 
 @item
-In R, @code{eval(EXPR, sys.parent())} does not work.  Instead, one
-should use either @code{eval(EXPR, sys.frame(sys.parent())),} which also
-works in S, or @code{eval(EXPR, parent.frame())}, which is more
-efficient but does not work in S.
-
-@item
 In S, the index variable in a @code{for()} loop is local to the inside
 of the loop.  In R it is local to the environment where the @code{for()}
 statement is executed.
@@ -1345,6 +1339,11 @@ subsequently modified; in R it doesn't.
 @item
 From R version 1.3.0, @code{data.frame} strips @code{I()} when creating
 (column) names.
+
+@item
+In R, the string @code{"NA"} is not treated as a missing value in a
+character variable.  Use @code{as.character(NA)} to create a missing
+character value.
 
 @end itemize
 
