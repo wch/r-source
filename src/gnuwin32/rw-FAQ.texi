@@ -475,10 +475,11 @@ password when HTTP downloads are first used.
 @node Entering certain characters crashes Rgui., Other strange crashes., The internet download functions fail., Installation and Usage
 @section Entering certain characters crashes Rgui.
 
-This used to happen occasionally, and all the occurrences we have
-solved have been traced to faulty versions of @samp{msvcrt.dll}.  
-We have installed a workaround as from @code{rw1051} that seems to
-avoid this.
+This used to happen occasionally, and all the occurrences we have solved
+have been traced to faulty versions of @samp{msvcrt.dll}.  We have
+installed a workaround as from @code{rw1051} that seems to avoid this.
+A few other people have discovered this was caused by keyboard macro
+programs, for example `Macro Magic'.
 
 If it still happens, try extracting the one to be found in the
 self-extracting archive
@@ -497,18 +498,19 @@ re-installing Windows.
 @node Other strange crashes.,  , Entering certain characters crashes Rgui., Installation and Usage
 @section Other strange crashes.
 
-Some users have found that @code{Rgui.exe} fails to start, exiting with a ``Floating-
-point invalid operation'' or other low level error.  This error may also happen in
-the middle of a session.  In some cases where we have tracked this down, it
-was due to bugs in the video driver on the system in question:  it makes
-changes to the floating point control word which are incompatible with R.
-(Good practice would restore the control word to the state it was in when
-the driver code was called.) For example, one user reported that the virtual
-screen manager JSP2 caused this crash.
+Some users have found that @code{Rgui.exe} fails to start, exiting with
+a ``Floating- point invalid operation'' or other low level error.  This
+error may also happen in the middle of a session.  In some cases where
+we have tracked this down, it was due to bugs in the video driver on the
+system in question: it makes changes to the floating point control word
+which are incompatible with R.  (Good practice would restore the control
+word to the state it was in when the driver code was called.) For
+example, one user reported that the virtual screen manager JSP2 caused
+this crash.
 
-These errors are essentially impossible for us to fix or work around.  The only 
-solution we know of is for the user to replace the buggy driver that is
-causing the error.
+These errors are essentially impossible for us to fix or work around.
+The only solution we know of is for the user to replace the buggy driver
+that is causing the error.
 
 
 
