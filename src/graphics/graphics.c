@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997 Robert Gentleman, Ross Ihaka and the R Core Team
+ *  Copyright (C) 1997--1998 Robert Gentleman, Ross Ihaka and the R Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -249,17 +249,16 @@ void GBox(int, DevDesc*);
 
 void GLPretty(double*, double*, int*);
 		/* return a "nice" min, max and number */
-		/* of intervals for a given range */
-		/* on a log scale */
-
-
-void GMtext(char*, int, double, int, double, int, DevDesc*);
-		/* draw text in margins */
+		/* of intervals for a given range on a -- log -- scale */
 
 
 void GPretty(double*, double*, int*);
 		/* return a "nice" min, max and number */
 		/* of intervals for a given range on a linear scale */
+
+
+void GMtext(char*, int, double, int, double, int, DevDesc*);
+		/* draw text in margins */
 
 
 void GSymbol(double, double, int, int, DevDesc*);
@@ -2036,37 +2035,38 @@ DevDesc *GNewPlot(int recording, int ask)
   /* IF we are replaying then draw a message in the output */
 
   dd->dp.valid = dd->gp.valid = 0;
-  if (!validOuterMargins(dd))
+  if (!validOuterMargins(dd)) {
     if (recording)
-      invalidError("Outer margins too large\n", dd);
+      invalidError(	"Outer margins too large (fig.region too small)\n", dd);
     else
-      GText(0.5, 0.5, NFC, "Outer margins too large",
-	    0.5, 0.5, 0, dd);
-  else if (!validFigureRegion(dd))
+      GText(0.5,0.5,NFC,"Outer margins too large (fig.region too small)",
+	    0.5,0.5, 0, dd);
+  } else if (!validFigureRegion(dd)) {
     if (recording)
-      invalidError("Figure region too large\n", dd);
+      invalidError(	"Figure region too large\n", dd);
     else
-      GText(0.5, 0.5, NFC, "Figure region too large",
-	    0.5, 0.5, 0, dd);
-  else if (!validFigureMargins(dd))
+      GText(0.5,0.5,NFC,"Figure region too large",
+	    0.5,0.5, 0, dd);
+  } else if (!validFigureMargins(dd)) {
     if (recording)
-      invalidError("Figure margins too large\n", dd);
+      invalidError(	"Figure margins too large\n", dd);
     else
-      GText(0.5, 0.5, NFC, "Figure margins too large",
-	    0.5, 0.5, 0, dd);
-  else if (!validPlotRegion(dd))
+      GText(0.5,0.5,NFC,"Figure margins too large",
+	    0.5,0.5, 0, dd);
+  } else if (!validPlotRegion(dd)) {
     if (recording)
-      invalidError("Plot region too large\n", dd);
+      invalidError(	"Plot region too large\n", dd);
     else
-      GText(0.5, 0.5, NFC, "Plot region too small / large",
-	    0.5, 0.5, 0, dd);
-  else
+      GText(0.5,0.5,NFC,"Plot region too large",
+	    0.5,0.5, 0, dd);
+  } else
     dd->dp.valid = dd->gp.valid = 1;
   return dd;
 }
 
-/* used to default axis information */
-/* i.e., if user hasn't specified par(usr=...) */
+/* GScale: used to default axis information
+ *	   i.e., if user has NOT specified par(usr=...)
+ */
 
 void GScale(double min, double max, int axis, DevDesc *dd)
 {
@@ -2120,22 +2120,19 @@ void GScale(double min, double max, int axis, DevDesc *dd)
       dd->gp.usr[1] = dd->dp.usr[1] = pow(10,max);
       dd->gp.logusr[0] = dd->dp.logusr[0] = min;
       dd->gp.logusr[1] = dd->dp.logusr[1] = max;
-    }
-    else {
+    } else {
       dd->gp.usr[0] = dd->dp.usr[0] = min;
       dd->gp.usr[1] = dd->dp.usr[1] = max;
       dd->gp.logusr[0] = dd->dp.logusr[0] = log10(min);
       dd->gp.logusr[1] = dd->dp.logusr[1] = log10(max);
     }
-  }
-  else {
+  } else {
     if (log) {
       dd->gp.usr[2] = dd->dp.usr[2] = pow(10,min);
       dd->gp.usr[3] = dd->dp.usr[3] = pow(10,max);
       dd->gp.logusr[2] = dd->dp.logusr[2] = min;
       dd->gp.logusr[3] = dd->dp.logusr[3] = max;
-    }
-    else {
+    } else {
       dd->gp.usr[2] = dd->dp.usr[2] = min;
       dd->gp.usr[3] = dd->dp.usr[3] = max;
       dd->gp.logusr[2] = dd->dp.logusr[2] = log10(min);
@@ -2177,9 +2174,10 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 }
 
 
-/*  GSetupAxis -- Set up the default axis information  */
-/*  called when user specifies par(usr=...) */
-/*  What should happen if logx = 1 or logy = 1 ? */
+/*  GSetupAxis -- Set up the default axis information
+ *		  called when user specifies	par(usr =...) */
+/*  What should happen if			------------
+ *   xlog or ylog = 1 ? */
 
 void GSetupAxis(int axis, DevDesc *dd)
 {
@@ -2218,11 +2216,10 @@ void GSetupAxis(int axis, DevDesc *dd)
 
 void GInit(GPar *gp)
 {
-  /*  Set default graphics parameter values in	*/
-  /*  a GPar This initialises the plot state,	*/
-  /*  plus the other graphical parameters that	*/
-  /*  are not the responsibility of the device	*/
-  /*  initialisation				*/
+  /* Set default graphics parameter values in a GPar.
+   * This initialises the plot state, plus the other graphical parameters
+   * that are not the responsibility of the device initialisation.
+   */
 
   gp->state = 0;
 
@@ -2883,7 +2880,7 @@ void GText(double x, double y, int coords, char *str,
 {
   /*  Draw text in a plot  */
 
-  if(str && *str)
+  if(str && *str) {
     if(dd->dp.canClip) {
       GClip(dd);
       dd->dp.text(x, y, coords, str, xc, yc, rot, dd);
@@ -2899,6 +2896,7 @@ void GText(double x, double y, int coords, char *str,
       }
       dd->dp.text(x, y, coords, str, xc, yc, rot, dd);
     }
+  }
 }
 
 
@@ -3190,6 +3188,10 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
     str[1] = '\0';
     GText(x, y, coords, str,
 	  dd->gp.xCharOffset, dd->gp.yCharOffset, 0.0, dd);
+    /*--- FIXME --- *MUST* adjust not only with [xy]CharOffset,
+     *--- ===== --- but also depending on  pch -- to *CENTER* the symbol!
+     *---  e.g. for  pch = '.'
+     */
   }
   else {
     ltysave = dd->gp.lty;
