@@ -6,14 +6,13 @@ srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 
 top_builddir = ../..
-subdir = src/unix
+subdir = src/gnome
+unixdir = $(top_srcdir)/src/unix
 
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = $(shell cd $(srcdir) && ls PSPAPER Makefile.in *.[cfh])
-
-GNOME_CFLAGS = -I/home/lyndon/include -DNEED_GNOMESUPPORT_H -I/home/lyndon/lib/gnome-libs/include -I/home/lyndon//include -I/usr/X11R6/include -I/home/lyndon/lib/glib/include
 
 OBJS = \
 	dataentry.o \
@@ -43,27 +42,41 @@ $(LIB): $(OBJS) $(GNOME_OBJS)
 	$(AR) cr $(LIB) $(OBJS) $(GNOME_OBJS)
 	$(RANLIB) $(LIB)
 
-dataentry.o: $(srcdir)/dataentry.c $(srcdir)/dataentry.h $(top_srcdir)/src/include/Defn.h
+dataentry.o: $(unixdir)/dataentry.c $(unixdir)/dataentry.h $(top_srcdir)/src/include/Defn.h
 	$(CC) $(CFLAGS) $(X_CFLAGS) $(CPPFLAGS) -c $<
-devPS.o: $(srcdir)/devPS.c $(top_srcdir)/src/include/Graphics.h $(top_srcdir)/src/include/Defn.h
-devPicTeX.o: $(srcdir)/devPicTeX.c $(top_srcdir)/src/include/Graphics.h $(top_srcdir)/src/include/Defn.h
 
-dynload.o: $(srcdir)/dynload.c ../include/FFTab.h ../include/FFDecl.h
+devPS.o: $(unixdir)/devPS.c $(top_srcdir)/src/include/Graphics.h $(top_srcdir)/src/include/Defn.h
+
+devPicTeX.o: $(unixdir)/devPicTeX.c $(top_srcdir)/src/include/Graphics.h $(top_srcdir)/src/include/Defn.h
+
+dynload.o: $(unixdir)/dynload.c ../include/FFTab.h ../include/FFDecl.h
+
 system.o: $(srcdir)/system.c $(top_srcdir)/src/include/Defn.h ../include/Platform.h
-	$(CC) $(CFLAGS) $(GNOME_CFLAGS) -c $<
+	$(CC) $(CFLAGS) $(GNOME_INCLUDEDIR) -c $<
 
-devGNOME.o: $(srcdir)/devGNOME.c $(srcdir)/devGNOME.h
-	$(CC) $(CFLAGS) $(GNOME_CFLAGS) -c $<
-gtkconsole.o: $(srcdir)/devGNOME.c $(srcdir)/gtkconsole.h
-	$(CC) $(CFLAGS) $(GNOME_CFLAGS) -c $<
-terminal.o: $(srcdir)/terminal.c $(srcdir)/terminal.h $(srcdir)/terminal-functions.ht $(srcdir)/terminal-menu.h $(srcdir)/terminal-toolbar.h
-	$(CC) $(CFLAGS) $(GNOME_CFLAGS) -c $<
-terminal-functions.o: $(srcdir)/terminal-functions.c $(srcdir)/terminal.h $(srcdir)/terminal-functions.ht $(srcdir)/terminal-menu.h $(srcdir)/terminal-toolbar.h
-	$(CC) $(CFLAGS) $(GNOME_CFLAGS) -c $<
-terminal-menu.o: $(srcdir)/terminal-menu.c $(srcdir)/terminal.h $(srcdir)/terminal-functions.ht $(srcdir)/terminal-menu.h $(srcdir)/terminal-toolbar.h
-	$(CC) $(CFLAGS) $(GNOME_CFLAGS) -c $<
-terminal-toolbar.o: $(srcdir)/terminal-toolbar.c $(srcdir)/terminal.h $(srcdir)/terminal-functions.ht $(srcdir)/terminal-menu.h $(srcdir)/terminal-toolbar.h
-	$(CC) $(CFLAGS) $(GNOME_CFLAGS) -c $<
+devGNOME.o: $(srcdir)/devGNOME.c $(srcdir)/devGNOME.h $(srcdir)/terminal.h $(top_srcdir)/src/include/Defn.h $(top_srcdir)/src/include/Graphics.h
+	$(CC) $(CFLAGS) $(GNOME_INCLUDEDIR) -c $<
+
+devGTK.o: $(srcdir)/devGTK.c $(srcdir)/devGTK.h $(srcdir)/terminal.h $(top_srcdir)/src/include/Defn.h $(top_srcdir)/src/include/Graphics.h
+	$(CC) $(CFLAGS) $(GNOME_INCLUDEDIR) -c $<
+
+gtkconsole.o: $(srcdir)/gtkconsole.c $(srcdir)/gtkconsole.h
+	$(CC) $(CFLAGS) $(GNOME_INCLUDEDIR) -c $<
+
+terminal.o: $(srcdir)/terminal.c $(srcdir)/terminal.h $(srcdir)/terminal-functions.ht $(srcdir)/terminal-menu.h $(srcdir)/terminal-prefs.h $(srcdir)/terminal-toolbar.h
+	$(CC) $(CFLAGS) $(GNOME_INCLUDEDIR) -c $<
+
+terminal-functions.o: $(srcdir)/terminal-functions.c $(srcdir)/terminal.h $(srcdir)/terminal-functions.ht $(srcdir)/terminal-menu.h $(srcdir)/terminal-prefs.h $(srcdir)/terminal-toolbar.h
+	$(CC) $(CFLAGS) $(GNOME_INCLUDEDIR) -c $<
+
+terminal-menu.o: $(srcdir)/terminal-menu.c $(srcdir)/terminal.h $(srcdir)/terminal-functions.ht $(srcdir)/terminal-menu.h $(srcdir)/terminal-prefs.h $(srcdir)/terminal-toolbar.h
+	$(CC) $(CFLAGS) $(GNOME_INCLUDEDIR) -c $<
+
+terminal-prefs.o: $(srcdir)/terminal-prefs.c $(srcdir)/terminal.h $(srcdir)/terminal-functions.ht $(srcdir)/terminal-menu.h $(srcdir)/terminal-prefs.h $(srcdir)/terminal-toolbar.h
+	$(CC) $(CFLAGS) $(GNOME_INCLUDEDIR) -c $<
+
+terminal-toolbar.o: $(srcdir)/terminal-toolbar.c $(srcdir)/terminal.h $(srcdir)/terminal-functions.ht $(srcdir)/terminal-menu.h $(srcdir)/terminal-prefs.h $(srcdir)/terminal-toolbar.h
+	$(CC) $(CFLAGS) $(GNOME_INCLUDEDIR) -c $<
 
 ../include/FFTab.h ../include/FFDecl.h::
 	(cd ../include; $(MAKE) $(@F))
