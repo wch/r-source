@@ -784,8 +784,7 @@ An ATLAS `tuned' BLAS can also be used on Windows: see
 @file{src/gnuwin32/INSTALL} for how to enable this when building from
 source, and @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, R Windows
 @acronym{FAQ}} for adding pre-compiled support to binary versions.
-(Goto's BLAS is compiled for unspecified but different calling
-conventions than those @R{} uses under Windows.)
+Goto's BLAS can also be used when building from source.
 
 Note that under Unix (but not under Windows) if @R{} is compiled
 against a non-default BLAS, then all BLAS-using packages must also be.

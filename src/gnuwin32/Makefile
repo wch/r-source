@@ -189,7 +189,8 @@ rdocs:
 Rblas: ../../bin/Rblas.dll
 
 Rblas-clean:
-	$(RM) ../../bin/Rblas.dll blas00.o blas00.d blas.o cmplxblas.o
+	$(RM) ../../bin/Rblas.dll blas00.o blas00.d blas.o cmplxblas.o \
+	  zgemm.o blasGoto.o libgoto.a
 
 Rblas-DLLLIBS=-L. -lR
 
@@ -197,25 +198,33 @@ libRblas.a:  Rblas.def
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname Rblas.dll \
 	  --def Rblas.def --output-lib libRblas.a
 
-ifeq ($(strip $(USE_ATLAS)),YES)
-../../bin/Rblas.dll: blas00.o dllversion.o
-	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L $(ATLAS_PATH) \
-	   -L. -lR -lg2c -lf77blas -latlas
 ## suppress lots of warnings: this is a dummy
 blas00.o: blas00.c
 	$(CC) -O2  -c $< -o $@
-else
-../../bin/Rblas.dll: blas.o cmplxblas.o zgemm.o dllversion.o
-	@$(ECHO) -------- Building $@ --------
-	$(DLL) -shared $(DLLFLAGS) -o $@ Rblas.def $^ -L. -lR
-
 blas.o: ../appl/blas.f
 	$(F77) $(FFLAGS) -c $< -o $@
 zgemm.o: ../appl/zgemm.f
 	$(F77) $(FOPTFLAGS) -c $< -o $@
 cmplxblas.o: ../modules/lapack/cmplxblas.f
 	$(F77) $(FOPTFLAGS) -c $< -o $@
+
+ifeq ($(strip $(USE_GOTO)),YES)
+libgoto.a:  libgoto.def
+	$(DLLTOOL) $(DLLTOOLFLAGS) --dllname $(GOTO_DLL) --def $< --output-lib $@
+../../bin/Rblas.dll: blas00.o blasGoto.o cmplxblas.o zgemm.o dllversion.o libgoto.a
+	@$(ECHO) -------- Building $@ --------
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L. -lR -lg2c -lgoto
+else
+ifeq ($(strip $(USE_ATLAS)),YES)
+../../bin/Rblas.dll: blas00.o dllversion.o
+	@$(ECHO) -------- Building $@ --------
+	$(DLL) -shared $(DLLFLAGS) -o $@ $^ Rblas.def -L $(ATLAS_PATH) \
+	   -L. -lR -lg2c -lf77blas -latlas
+else
+../../bin/Rblas.dll: blas.o cmplxblas.o zgemm.o dllversion.o
+	@$(ECHO) -------- Building $@ --------
+	$(DLL) -shared $(DLLFLAGS) -o $@ Rblas.def $^ -L. -lR
+endif
 endif
 
 

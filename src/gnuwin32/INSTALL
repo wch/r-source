@@ -142,8 +142,7 @@ BLAS libraries by defining USE_ATLAS=YES in MkRules and specifying the
 path to the libraries in macro ATLAS_PATH.
 
 You will need to build the libraries optimized for your architecture
-under the Cygwin compilers.  (The pre-compiled libraries on that site
-are for Compaq Visual Fortran, and you need to compile for g77.)
+under the Cygwin compilers.
 
 For convenience
 
@@ -154,6 +153,25 @@ configurations.
 
 Prebuilt Rblas.dll for various Pentium and AthlonXP chips are available
 in the windows/contrib/ATLAS area on CRAN.
+
+
+Using K. Goto's BLAS
+--------------------
+
+Another tuned BLAS which is available for some CPUs is by Kazushige
+Goto.  He does not allow redistribution: they are currently available
+via http://www.cs.utexas.edu/users/kgoto/signup_first.html.  To make
+use of this, put the DLL somewhere in your path or in R_HOME/bin, and
+edit MkRules to define USE_GOTO=YES and the name of the DLL (something
+like libgoto_p4_512-r0.9.dll).
+
+Goto's BLAS takes preference over ATLAS, and seems a little
+faster. However, as it is compiled for MSVC, we have been unable to
+make it work for complex arithmetic and so it is only used in for real
+linear algebra.
+
+Goto supplies DLLs for PIII, P4 and Opteron processors: that for PIIIs
+runs on AthlonXP as well.
 
 
 Building bitmap device support

@@ -52,9 +52,12 @@ of the host machine, but Perl and the cygwin-based tools used the
 ASCII collation order.)
 
 Parallel make (make -j2, say) can be used, but only usefully on
-dual-processor or hyperthreaded hosts with at least 384Mb of memory.
+dual-processor (or perhaps hyperthreaded) hosts with at least 384Mb of
+memory.
 
-The long-tested support for making Windows .hlp files has been withdrawn.
+The long-untested support for making Windows .hlp files has been withdrawn.
+
+There is support for using K. Goto's fast BLAS.
 
 
 Bug fixes

@@ -22,6 +22,10 @@ LEA_MALLOC=YES
 USE_ATLAS=NO
 ATLAS_PATH=/R/ATLAS/lib/WinNT_PIIISSE1
 
+# Set to YES and specify the DLL name if you want to use K. Goto's BLAS.
+USE_GOTO=NO
+GOTO_DLL=libgoto_p4_512-r0.9.dll
+
 # Where does 'HTML Help Workshop' live? (unused if compiled HTML help is
 # not requested. Spaces allowed.)
 HHWDIR=C:/Program Files/HTML Help Workshop
