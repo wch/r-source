@@ -1773,7 +1773,10 @@ Rboolean newX11DeviceDriver(DevDesc *dd,
     }
 
     Rf_setNewX11DeviceData((NewDevDesc*)(dd), xd);
+
+#if BUG
     R_ProcessEvents((void*) NULL);
+#endif
 
     return TRUE;
 }
