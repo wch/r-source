@@ -22,9 +22,11 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     unless it specifies an \emph{absolute} path.
     Tilde-expansion is performed where supported.
 
-    Alternatively, \code{file} can be a \code{\link{connection}}, which
-    will be opened if necessary, and if so closed at the end of the
-    function call.
+    Alternatively, \code{file} can be a \code{\link{connection}},
+    which will be opened if necessary, and if so closed at the end of
+    the function call.  Whatever mode the connection is opened in,
+    any of LF, CRLF or CR will be accepted as the EOL marker for a line
+    and so will match \code{sep = "\n"}.
 
     \code{file} can also be a complete URL.
   }
@@ -46,8 +48,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 
   \item{sep}{by default, scan expects to read white-space delimited
     input fields.  Alternatively, \code{sep} can be used to specify a
-    character which delimits fields.  A field is always delimited by a
-    newline unless it is quoted.} 
+    character which delimits fields.  A field is always delimited by an
+    end-of-line marker unless it is quoted.}
 
   \item{quote}{the set of quoting characters as a single character
     string.}

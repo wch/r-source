@@ -29,6 +29,9 @@ readLines(con = stdin(), n = -1, ok = TRUE)
   text-mode connection (or a non-text-mode connection) the line
   will be accepted, with a warning.  For a non-blocking text-mode
   connection the incomplete line is pushed back, silently.
+
+  Whatever mode the connection is opened in, any of LF, CRLF or CR will
+  be accepted as the EOL marker for a line.
 }
 \value{
   A character vector of length the number of lines read.
