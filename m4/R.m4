@@ -914,6 +914,13 @@ fi
 ##
 ## R_BITMAPS
 ##
+## Here we only need any old -lz, and don't need zlib.h
+## However, we do need recent enough libpng and jpeg, and
+## so check both the header versions and for key routines
+## in the library.
+## The png code will do a run-time check of the consistency of
+## libpng versions.
+##
 AC_DEFUN([R_BITMAPS], [
   BITMAP_LIBS=
   AC_CHECK_HEADER(jpeglib.h, [
@@ -1227,6 +1234,9 @@ AC_SUBST(BLAS_LIBS)
 
 ##
 ## Try finding zlib library and headers
+## we check that both are installed, and that the header >= 1.1.3
+## and that gzopen is in the library (which suggests the library
+## is also recent enough.
 ##
 ## R_ZLIB()
 ##
