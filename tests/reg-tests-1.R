@@ -56,6 +56,12 @@ stopifnot(append(1:5, 0:1, after=3) == append(1:3, c(0:1, 4:5)))
 ## end of moved from append.Rd
 
 
+## array
+# funny object, but whatever was the point of that?
+utils::str(array(1:3, 0))
+## end of moved from array.Rd
+
+
 ## as.POSIXlt
 z <- Sys.time()
 stopifnot(range(z) == z,
@@ -526,6 +532,19 @@ stopifnot(kronecker(4, M)==4 * M)
 # Block diagonal matrix:
 stopifnot(kronecker(diag(1, 3), M) == diag(1, 3) %x% M)
 ## end of moved from kronecker.Rd
+
+
+## list
+## These are all TRUE:
+stopifnot(is.list(pl) && is.pairlist(pl),
+          !is.null(list()),
+          is.null(pairlist()),
+          !is.list(NULL),
+          is.pairlist(pairlist()),
+          is.null(as.pairlist(list())),
+          is.null(as.pairlist(NULL))
+          )
+## end of moved from list.Rd
 
 
 ## log

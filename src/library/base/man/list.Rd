@@ -80,18 +80,7 @@ f <- function()x
 # Note the specification of a "..." argument:
 formals(f) <- al <- alist(x=, y=2, \dots=)
 f
-str(al)
-
-str(pl <- as.pairlist(ps.options()))
-
-## These are all TRUE:
-is.list(pl) && is.pairlist(pl)
-!is.null(list())
-is.null(pairlist())
-!is.list(NULL)
-is.pairlist(pairlist())
-is.null(as.pairlist(list()))
-is.null(as.pairlist(NULL))
+al
 }
 \keyword{list}
 \keyword{manip}
