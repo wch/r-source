@@ -11,6 +11,8 @@ exceed 10,000 square miles.}
 \examples{
 data(islands)
 dotplot(log(islands, 10),
-   main = "islands data: log10(area) (`log10(sq. miles))")
+   main = "islands data: log10(area) (log10(sq. miles))")
+dotplot(log(islands[order(islands)], 10),
+   main = "islands data: log10(area) (log10(sq. miles))")
 }
 \keyword{datasets}
