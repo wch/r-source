@@ -401,6 +401,45 @@ print.anova.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
 	cat("\n")
 }
 
+"predict.lm" <-
+function (object, newdata = model.frame(object)) 
+{
+	form<-formula(object)
+	form<-as.call(list(form[[1]],form[[3]])) # x~a+b becomes ~a+b
+	class(form)<-"formula"
+	X <- model.matrix(form,newdata)
+	n <- NROW(object$qr$qr)
+	p <- object$rank
+	p1 <- 1:p
+	piv <- object$qr$pivot[p1]
+	r <- resid(object)
+	f <- fitted(object)
+	w <- weights(object)
+	if (is.null(w)) 
+		rss <- sum(r^2)
+	else 
+		rss <- sum(r^2*w)
+	R <- chol2inv(object$qr$qr[p1, p1, drop = FALSE])
+	est <- object$coefficients[piv]
+	predictor <- c(X[,piv] %*% est)
+	ip <- real(NROW(X))
+	resvar <- rss/(n - p)
+	vcov <- resvar * R
+	for (i in (1:NROW(X))) {
+		xi <- X[i,piv]
+		ip[i] <- xi %*% vcov %*% xi
+	}
+	stderr1 <- sqrt(ip)
+	stderr2 <- sqrt(resvar + ip)
+	tt <- qt(0.975, n - p)
+	conf.l <- predictor - tt * stderr1
+	conf.u <- predictor + tt * stderr1
+	pred.l <- predictor - tt * stderr2
+	pred.u <- predictor + tt * stderr2
+	data.frame(predictor=predictor, conf.l=conf.l, conf.u=conf.u,
+	pred.l=pred.l,pred.u=pred.u,row.names=rownames(newdata))
+}
+
 effects.lm <- function(z, term) {
 	term <- deparse(substitute(term))
 	k <- match(term,attr(z$terms,"term.labels"))
