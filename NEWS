@@ -22,7 +22,7 @@ NEW FEATURES
     o   HTML searches can now select between any combination of
         titles, keywords and object names. The keyword list of
         SearchEngine.html is automatically built from KEYWORDS.db.
-
+        Missing links are now resolved using the search engine.
 
 
 BUG FIXES
