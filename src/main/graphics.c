@@ -2798,7 +2798,7 @@ void GMetricInfo(int c, double *ascent, double *descent, double *width,
 		 GUnit units, DevDesc *dd)
 {
     if (dd->newDevStruct)
-	((GEDevDesc*) dd)->dev->metricinfo(c & 0xFF, gpptr(dd)->font,
+	((GEDevDesc*) dd)->dev->metricInfo(c & 0xFF, gpptr(dd)->font,
 					   gpptr(dd)->cex, 
 					   (double) gpptr(dd)->ps,
 					   ascent, descent, width, 
@@ -3028,6 +3028,7 @@ static void clipPolygon(int n, double *x, double *y, int coords,
 #endif
     double *xc, *yc;
 #ifdef MALLOC_AWAY
+    double *tmp;
     if (xc != NULL) {tmp = xc; xc = NULL; free(tmp);}
     if (yc != NULL) {tmp = yc; yc = NULL; free(tmp);}
 #endif
@@ -5202,7 +5203,7 @@ unsigned int number2col(char *nm)
     char *ptr;
     indx = strtod(nm, &ptr);
     if(*ptr) error("invalid color specification");
-    if(indx == 0) return CurrentDevice()->dp.bg;
+    if(indx == 0) return dpptr(CurrentDevice())->bg;
     else return R_ColorTable[(indx-1) % R_ColorTableSize];
 }
 
