@@ -385,8 +385,10 @@ SEXP VectorToPairList(SEXP x)
     xptr = xnew;
     for (i = 0; i < len; i++) {
 	SETCAR(xptr, VECTOR_ELT(x, i));
-	if (named && CHAR(STRING_ELT(xnames, i))[0] != '\0')
+	if (named && CHAR(STRING_ELT(xnames, i))[0] != '\0') {
 	    SET_TAG(xptr, install(CHAR(STRING_ELT(xnames, i))));
+	    SET_NAMED(CAR(xptr), 2);
+	}
 	xptr = CDR(xptr);
     }
     copyMostAttrib(x, xnew);
