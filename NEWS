@@ -47,6 +47,9 @@ NEW FEATURES
     o   The data editor is no longer limited to 65535 rows, and will
 	be substantially faster for large numbers of columns.
 
+    o   prcomp() now accepts complex matrices, and there is biplot()
+	method for its output (in the real case).
+
 
 DEPRECATED & DEFUNCT
 

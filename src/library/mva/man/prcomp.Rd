@@ -12,8 +12,8 @@
 prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
 }
 \arguments{
-  \item{x}{a numeric matrix (or data frame) which provides the data for the
-    principal components analysis.}
+  \item{x}{a numeric or complex matrix (or data frame) which provides
+    the data for the principal components analysis.}
   \item{retx}{a logical value indicating whether the rotated variables
     should be returned.}
   \item{center}{a logical value indicating whether the variables
