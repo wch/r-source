@@ -12,7 +12,7 @@ stop <- function(..., call. = TRUE, domain = NULL)
         if (length(args) > 0) {
             args <- lapply(list(...), as.character)
             ## don't simplify this, as call sequence matters.
-            if(!is.na(domain))
+            if(is.null(domain) || !is.na(domain))
                 args <- .Internal(gettext(domain, unlist(args)))
             message <- paste(args, collapse = "")
         }
@@ -49,7 +49,7 @@ warning <- function(..., call. = TRUE, immediate. = FALSE, domain = NULL)
         if (length(args) > 0) {
             args <- lapply(list(...), as.character)
             ## don't simplify this, as call sequence matters.
-            if(!is.na(domain))
+            if(is.null(domain) || !is.na(domain))
                 args <- .Internal(gettext(domain, unlist(args)))
             message <- paste(args, collapse = "")
         } else message <- ""
