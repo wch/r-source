@@ -989,33 +989,45 @@ mirror, for example
 @end example
 
 @noindent
-Then download and install package @pkg{foo} by
+(You can also supply this as the @code{repos} argument.)  Then download
+and install packages @pkg{pkg1} and @pkg{pkg2} by
 
 @example
-> install.packages("foo")
+> install.packages(c("pkg1", "pkg2"))
 @end example
 
 @noindent
 Unless the library is specified (argument @code{lib}) the first library
-in the library search path is used.
+in the library search path is used.  If you want to fetch a package and
+all those it depends on that are not already installed, use e.g.
+@example
+> install.packages("Rcmdr", dependencies = TRUE)
+@end example
 
-What this does is different on Unix and Windows.  On Unix it consults
-the list of available source packages on @acronym{CRAN} (or other
-repository/ies), downloads the latest version of the @pkg{foo} sources,
-and installs it (via @code{R CMD INSTALL}).  On Windows it looks (by
-default) at the list of @emph{binary} versions of packages available for
-your version of @R{} and downloads the latest version (if any), although
-optionally it will also download and install a source package.
 
-On Unix @code{install.packages} can also install a source package from a
-local @file{.tar.gz} file by setting argument @code{repos} to
-@code{NULL}.
+What @code{install.packages} does is different on Unix and Windows.  On
+Unix-alikes (include MacOS X) it consults the list of available
+@emph{source} packages on @acronym{CRAN} (or other repository/ies),
+downloads the latest version of the package sources, and installs them
+(via @code{R CMD INSTALL}).  On Windows it looks (by default) at the
+list of @emph{binary} versions of packages available for your version of
+@R{} and downloads the latest versions (if any), although optionally it
+will also download and install a source package by setting the
+@code{type} argument.
+
+@code{install.packages} can install a source package from a local
+@file{.tar.gz} file by setting argument @code{repos} to @code{NULL}.
 
 On Windows @code{install.packages} can also install a binary package
 from a local @file{zip} file by setting argument @code{repos} to
 @code{NULL}.   @code{RGui.exe} has a menu @code{Packages} with a GUI
 interface to @code{install.packages}, @code{update.packages} and
 @code{library}.
+
+As from @R{} 2.1.0, @code{install.packages} can look in several
+repositories, specified as a character vector by the argument
+@code{repos}: these can include a CRAN mirror, Bioconductor, Omegahat,
+local archives, local files, @dots{}).
 
 @findex install.binaries
 On Mac OS X @code{install.packages} works as it does on other Unix-like
@@ -1149,19 +1161,18 @@ included in @file{Makevars} files.
 @cindex Packages, updating
 
 The command @code{update.packages()} is the simplest way to ensure that
-all the packages on your system are up to date.  Set the @code{CRAN}
-option as in the previous section.  The @code{update.packages()}
+all the packages on your system are up to date.  Set the @code{repos}
+argument as in the previous section.  The @code{update.packages()}
 downloads the list of available packages and their current versions,
 compares it with those installed and offers to fetch and install any
-that have later versions on @acronym{CRAN}.
+that have later versions on the repositories.
 
-An alternative way of keeping packages up-to-date is provided by the
-command @code{packageStatus()}, which returns an object with information
-on all installed packages and packages available at multiple
-repositories (CRAN, local archive, @dots{}). The @code{print} and
-@code{summary} methods give an overview of installed and available
-packages, the @code{upgrade} method offers to fetch and install the
-latest versions of outdated packages.
+An alternative interface to keeping packages up-to-date is provided by
+the command @code{packageStatus()}, which returns an object with
+information on all installed packages and packages available at multiple
+repositories.  The @code{print} and @code{summary} methods give an
+overview of installed and available packages, the @code{upgrade} method
+offers to fetch and install the latest versions of outdated packages.
 
 
 @node Removing packages,  , Updating packages, Add-on packages
@@ -1221,7 +1232,10 @@ separate section.  Fully internationalized versions can also handle most
 multi-byte locales, in which a single character is represented by one,
 two or more consecutive bytes: examples of such locales are those using
 UTF-8 (becoming standard under Linux) and those for Chinese, Japanese
-and Korean.
+and Korean.  Note that only some of the graphics devices can handle
+multi-byte or even non-Latin1 character sets: in particular
+@code{postscript} and @code{PDF} are in practice restricted to ISO
+Latin-1, -2 and -9.
 
 The other aspect of the internationalization is support of the
 translation of messages.  This is enabled in almost all builds of @R{}
