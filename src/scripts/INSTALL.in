@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.26 $'
+revision='$Revision: 1.27 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}"
 
@@ -26,6 +26,7 @@ Options:
 
 Report bugs to <R-bugs@lists.r-project.org>."
 
+R_VERSION='@VERSION@'
 INSTALL='@INSTALL@'
 MAKE=${MAKE-@MAKE@}
 NO_PERL5=@NO_PERL5@
@@ -40,11 +41,18 @@ tmpdir="${TMPDIR:-/tmp}/R.INSTALL.$$"
 
 umask 022
 
+# Get one field including all continuation lines from a DCF file.
+get_dcf_field () {
+  sed -n "/^${1}:/,/^[^[:space:]]/{p;}" ${2}  | \
+    sed -n "/^${1}:/{s/^${1}:[[:space:]]*//;p;} 
+            /^[[:space:]]/{s/^[[:space:]]*//;p;}"
+}
+  
+
 # get the full path names to all packages contained in $1; modzifies pkgs
 get_packages () {
   if grep -s "^Contains:" "${1}/DESCRIPTION"; then
-    bundlepkg=`grep -s "^Contains:" "${1}/DESCRIPTION" | \
-      sed "s/^Contains://; s/,/ /g"`
+    bundlepkg=`get_dcf_field Contains "${1}/DESCRIPTION"`
     for p in ${bundlepkg}; do
       pkgs="${pkgs} \"`cd "${1}/${p}"; pwd`\""
       if test -f "${1}/${p}/DESCRIPTION.in"; then
@@ -154,6 +162,20 @@ fi
 do_install () {
   cd "${1}"
   pkg=`basename "${1}"`
+
+  depends=`get_dcf_field Depends DESCRIPTION`
+  depends=`echo ${depends} | grep 'R *('`
+  if test "${depends}"; then
+    depends=`echo ${depends} | sed 's/.*R *(\([^)]*\)).*/\1/;s/=/= /'`
+    dep_operator=`set - ${depends}; echo ${1}`
+    dep_version=`set - ${depends}; echo ${2}`
+    dep_ok=`expr ${R_VERSION} ${dep_operator} ${dep_version} `
+    if test ${dep_ok} -eq 0; then
+      echo "ERROR: This R is version ${R_VERSION}"
+      echo "       package \`${pkg}' depends on R ${dep_version}"
+      exit 1;
+    fi
+  fi
 
   mkdir -p ${lib}/${pkg} || exit 3
   echo "Installing package \`${pkg}' ..."
