@@ -3,18 +3,18 @@
 \non_function{}
 \title{ Biochemical Oxygen Demand }
 \description{
-The \code{BOD} data frame has 6 rows and 2 columns giving the
-biochemical oxygen demand versus time in an evaluation of water quality.
+    The \code{BOD} data frame has 6 rows and 2 columns giving the
+    biochemical oxygen demand versus time in an evaluation of water quality.
 }
 \format{
-This data frame contains the following columns:
-}
-\arguments{
-\item{Time}{
-A numeric vector giving the time of the measurement (days).
-}
-\item{demand}{
-A numeric vector giving the biochemical oxygen demand (mg/l).
+    This data frame contains the following columns:
+    \describe{
+	\item{Time}{
+	    A numeric vector giving the time of the measurement (days).
+	}
+	\item{demand}{
+	    A numeric vector giving the biochemical oxygen demand (mg/l).
+    }
 }
 }
 \source{
