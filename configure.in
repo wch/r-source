@@ -456,6 +456,11 @@ if ${use_readline}; then
 fi
 
 GNOME_INIT_HOOK([],cont)
+if test "$GNOMEUI_LIBS" = ""; then
+  GNOME_ENABLED="no"
+else
+  GNOME_ENABLED="yes"
+fi
 
 ### Library functions.
 
@@ -703,4 +708,5 @@ R is now configured for ${host}
   Installation directory:   ${prefix}
   C compiler:               ${CC} ${CFLAGS}
   FORTRAN compiler:         ${FORT}
+  Gnome support enabled:    ${GNOME_ENABLED}
 ])
