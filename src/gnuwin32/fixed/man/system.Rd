@@ -21,7 +21,8 @@ system(command, intern=FALSE, wait=TRUE, input,
 	\code{command} is redirected to the file.}
     \item{show.output.on.console}{a logical, indicates whether to capture 
           the output of the command and show it on the \R console (not used
-	  by \code{Rterm}).}
+	  by \code{Rterm}, which captures the output unless \code{wait}
+	  is false).}
     \item{invisible}{a logical, indicates whether the command window
 	  should be visible on the screen.}
     \item{minimized}{a logical, indicates whether the command window
@@ -53,7 +54,7 @@ system(command, intern=FALSE, wait=TRUE, input,
 \details{
     The command is run directly as a Windows command by the Windows API
     call \code{CreateProcess}: extensions of \code{.exe}, \code{.com},
-    \code{cmd} and \code{.bat} are tried in turn if none
+    \code{.cmd} and \code{.bat} are tried in turn if none
     is supplied. (To use DOS internal commands use
     \code{command.com /c cmd}.) The search path for \code{command}
     may be system-dependent: it will include the \R \code{bin}
@@ -63,7 +64,8 @@ system(command, intern=FALSE, wait=TRUE, input,
     Precisely what is seen by the user depends on whether \code{Rgui} or
     \code{Rterm} is being used.  For \code{Rgui} a new console will
     always be used, so a commands window will appear for the duration of
-    console applications. For \code{Rterm} a separate commands window
+    console applications unless \code{invisible} is true. For
+    \code{Rterm} a separate commands window
     will appear for console applications only if \code{wait=FALSE}.
 
     \code{unix} is a \emph{deprecated} alternative, available for
@@ -74,9 +76,8 @@ system(command, intern=FALSE, wait=TRUE, input,
 
     Do not run console applications that require user
     input from \code{Rgui} setting \code{intern=TRUE} and/or
-    \code{show.output.on.console=TRUE}. 
-    They will not work, may hang and then will
-    probably hang \code{Rgui} too.
+    \code{show.output.on.console=TRUE}. They will not work,
+    may hang and then will probably hang \code{Rgui} too.
 }
 
 \author{Guido Masarotto and Brian Ripley}

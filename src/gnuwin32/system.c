@@ -337,7 +337,7 @@ void R_ResetConsole()
 
 void R_FlushConsole()
 {
-    if (CharacterMode == RTerm) fflush(stdin);
+    if (CharacterMode == RTerm && R_Interactive) fflush(stdin);
     else if (CharacterMode == RGui) consoleflush(RConsole);
 }
 
@@ -405,6 +405,7 @@ void R_CleanUp(int saveact)
 	    case CANCEL:
 		jump_to_toplevel();
 		break;
+
 	    }
 	} else saveact = SaveAction;
     }

@@ -41,12 +41,12 @@ only needs to be done once for each R release.
 
 
 For each package you want to install, unpack it to a directory, say
-mypkg, in RHOME\src\library,
+mypkg, in RHOME\src\library, and run
 
 	cd RHOME\src\gnuwin32
 	make pkg-mypkg
 
-The makefiles can be customized: in particular the name of the DLL can
+The Makefiles can be customized: in particular the name of the DLL can
 be set (see the line integrate-DLLNM=adapt) and the compile flags can
 be set (see the examples in MakeDll).
 
@@ -82,7 +82,7 @@ Using Visual C++
 ================
 
 You may if you prefer use Visual C++ to make the DLLs (unless they use
-Fortan source!). First build the import library R.lib by
+Fortran source!). First build the import library R.lib by
 
 	lib /def:R.exp /out:Rdll.lib
 

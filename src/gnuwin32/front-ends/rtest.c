@@ -43,8 +43,8 @@ int myReadConsole(char *prompt, char *buf, int len, int addtohistory)
 {
     fputs(prompt, stdout);
     fflush(stdout);
-    fgets(buf, len, stdin);
-    return 1;
+    if(fgets(buf, len, stdin)) return 1;
+    else return 0;
 }
 
 void myWriteConsole(char *buf, int len)
@@ -92,6 +92,7 @@ int main (int argc, char **argv)
 
     Rp->R_Quiet = 1;
     Rp->R_Interactive = 0;
+    Rp->RestoreAction = SA_RESTORE;
     Rp->SaveAction = SA_NOSAVE;
     Rp->nsize = 300000;
     Rp->vsize = 6e6;

@@ -1,19 +1,24 @@
 rw0650
 ======
 
+There are many changes `under the skin' which are not reflected in
+user-visible changes, but either improve performance or will allow
+future enhancements.
+
 The environment variables have been changed: R_HOME is now R's home
-and R_USER is the HOME for the user which will be used by R (and
-defaults to HOME, if set, then to ${HOMEDIR}${HOMEPATH}, if that is
-set). (There are many other such changes in R: for example RLIBS
-becomes R_LIBS.)
+directory and R_USER is the HOME for the user which will be used by R
+(and defaults to HOME, if set, then to ${HOMEDIR}${HOMEPATH}, if that
+is set, then the working directory). (There are many other such
+changes in R: for example RLIBS becomes R_LIBS, although for the time
+being RLIBS is also recognised.)
 
-Saving a plot as postscript will produce a portrait plot irrespective
-of the setting of ps.options().
+Saving a plot as postscript from the device menu will produce a
+portrait plot irrespective of the setting of ps.options().
 
-Saving a plot as a metafile should be more robust on machines which
-report wrong information on the size of the screen.
+Saving a plot as a metafile should be more reliable on machines which
+report incorrect information on the size of the screen.
 
-New flag --no-environ suppresses reading .Renviron and is implied by
+The new flag --no-environ suppresses reading .Renviron and is implied by
 --vanilla.
 
 When rterm is used non-interactively either --save or --no-save must be
@@ -21,15 +26,16 @@ specified: these is no longer a default of --no-save (for consistency
 with Unix).
 
 More support for building R into other applications: see the examples
-in the front-ends directory of the source distribution.
+in the front-ends directory of the source distribution.  Thomas Baier has 
+used this to link a version of R to an out-of-process ActiveX server.
 
-Internally interrupting by Esc or Ctrl-Break is handled by signals, so the
-`User Break' response will no longer appear, but in rterm ^C will be
-echoed.
+Interrupting by Esc or Ctrl-Break is handled internally by signals, so
+the `User Break' response will no longer appear, but in rterm ^C will
+be echoed.
 
-There is limited support for `tilde-expansion': file paths
-~/rest will be expanded to ${HOME}/rest if HOME is set, or to
-${HOMEDIR}${HOMEPATH}/rest if those vars are set.
+There is limited support for `tilde-expansion': file paths such as
+~/rest will be expanded to ${HOME}\rest if HOME is set, or to
+${HOMEDIR}${HOMEPATH}\rest if those variables are set.
 
 Using rterm either interactively or with --ess will be more responsive and
 use much less CPU time when waiting for input.  Interruptions by Ctrl-Break
@@ -37,7 +43,7 @@ or (under --ess, for use by ESS) Ctrl-C should happen immediately and be
 handled correctly.
 
 The installer can now install correctly in a top-level directory (e.g.
-C:\).
+C:\), fixing a bug in the unzio code used.
 
 
 rw0642
@@ -133,7 +139,7 @@ check', that is run all the examples in the help pages for that package.
 unlink can now handle wildcards and a vector argument of length more than
 one.
 
-The inverse hyperbolic tangent functions asinh acosh atanh are now
+The inverse hyperbolic tangent functions  asinh acosh atanh  are now
 available in this version.
 
 
@@ -240,7 +246,7 @@ rw0630
 
 - Fixed a couple of minor bugs in the graphics device. 
 
-- More control keys (some Emacs like (crtl+a, crtl+e, crtl+k), and, by
+- More control keys (some Emacs-like (crtl+a, crtl+e, crtl+k), and, by
 popular demand, crtl+c and crtl-v for copy and paste); take a look at
 the help/console menuitem.
 
@@ -248,7 +254,7 @@ the help/console menuitem.
 emulation layer)
 
 - Access of global variables in R.exe from a dll should work (all the
-orrible name-mangling needed by `gnuwin32' - `var' in R.exe becames
+horrible name-mangling needed by `gnuwin32' - `var' in R.exe becames
 `*__imp_var' in a dll - is done automatically).
 
 
@@ -258,7 +264,7 @@ rw0624
 New features:
 
 - The console can be configured (font, colours, dimensions).  No fancy
-dialog (yet), but look to the rw0624/etc/Rconsole file.
+dialog (yet), but look at the rw0624/etc/Rconsole file.
 
 - help.start() now is implemented. Of course, you need the html
 documentation.
