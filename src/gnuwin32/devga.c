@@ -806,8 +806,8 @@ extern SEXP savedSnapshot;
 
 /* NB: this puts .SavedPlots in package:base */
 #define GROWTH 4
-#define GETDL SEXP vDL=findVar(install(".SavedPlots"), R_NilValue)
-#define SETDL gsetVar(install(".SavedPlots"), vDL, R_NilValue)
+#define GETDL SEXP vDL=findVar(install(".SavedPlots"), R_GlobalEnv)
+#define SETDL defineVar(install(".SavedPlots"), vDL, R_GlobalEnv)
 /* altered in 1.4.0, as incompatible format */
 #define PLOTHISTORYMAGIC 31416
 #define pMAGIC      (INTEGER(VECTOR_ELT(vDL, 0))[0])
@@ -993,7 +993,7 @@ static void menuprev(control m)
 
 static void menuclear(control m)
 {
-    gsetVar(install(".SavedPlots"), R_NilValue, R_NilValue);
+    defineVar(install(".SavedPlots"), R_NilValue, R_GlobalEnv);
 }
 
 static void menugvar(control m)
@@ -1025,7 +1025,7 @@ static void menusvar(control m)
     v = askstring("Name of variable to save to", "");
     if (!v)
 	return;
-    setVar(install(v), vDL, R_GlobalEnv);
+    defineVar(install(v), vDL, R_GlobalEnv);
 }
 #endif
 

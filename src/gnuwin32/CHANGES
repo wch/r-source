@@ -20,10 +20,10 @@ XXXXX to 8001f", that's a sign of an internal bug somewhere else:
 The output from formatC uses e+/-0n not e+/-00n for compatibility with
 other platforms and with format.
 
-A new option to use file("clipboard") to read from or write to the
-clipboard.  As most input/output functions in R use file(), this makes
-it possible to read data from or write data to the clipboard in many
-ways, including direct use of read/writeClipboard().
+There is a new option to use file("clipboard") to read from or write
+to the clipboard.  As most input/output functions in R use file(),
+this makes it possible to read data from or write data to the
+clipboard in many ways, including direct use of read/writeClipboard().
 
 A site-wide environment file R_HOME/etc/Renviron.site (or as set by
 the `R_ENVIRON' environment variable) is now implemented on Windows.
@@ -41,6 +41,9 @@ stamp `fixedHTMLlinks' is placed in the package directory, and
 correction will only be done again if the R installation directory
 is changed.
 
+The variable .SavedPlots in which plots are stored has been moved from base
+to the user's workspace.
+
 Rcmd.exe and Rprof have been moved to the main distribution (although
 to use them you will need perl installed).
 
@@ -48,7 +51,7 @@ The default version of Tcl/Tk (and hence that used in the binary
 distribution) is 8.4.x.
 
 Files in the top-level directory of a source package are no longer
-installed sutomatically; files to be installed must be put in an `inst'
+installed automatically: files to be installed must be put in an `inst'
 sub-directory (as has long been recommended).
 
 
