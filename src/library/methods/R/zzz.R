@@ -63,7 +63,7 @@
         for(i in rev(seq(along = search()))) {            ev <- as.environment(i)
             if(!exists(".noGenerics", where = ev, inherits = FALSE) &&
                !identical(getPackageName(ev), "methods"))
-                cacheMetaData(ev, TRUE)
+                cacheMetaData(ev, TRUE, searchWhere = .GlobalEnv)
         }
     }
 }

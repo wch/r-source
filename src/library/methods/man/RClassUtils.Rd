@@ -67,14 +67,15 @@ getAllSuperClasses(ClassDef, simpleOnly = TRUE)
 
 superClassDepth(ClassDef, soFar, simpleOnly = TRUE)
 
-isVirtualClass(Class)
+isVirtualClass(Class, where)
 
 newBasic(Class, ...)
 
 makeExtends(Class, to, coerce, test, replace, by, package, slots,
                  classDef1, classDef2)
 
-reconcilePropertiesAndPrototype(name, properties, prototype, superClasses)
+reconcilePropertiesAndPrototype(name, properties, prototype, 
+       superClasses, where)
 
 tryNew(Class)
 
@@ -88,7 +89,7 @@ showExtends(ext, printTo = stdout())
 
 possibleExtends(class1, class2)
 
-completeExtends(ClassDef, class2, extensionDef)
+completeExtends(ClassDef, class2, extensionDef, where)
 
 classMetaName(name)
 

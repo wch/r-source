@@ -1,14 +1,14 @@
 \name{RMethodUtils}
 %% FIXME:  undocumented utilities (Sep. 23/02)
 \alias{asMethodDefinition}
+\alias{standardGeneric-class}
+\alias{standardGenericWithTrace-class}
 \alias{nonstandardGeneric-class}
 \alias{nonstandardGenericFunction-class}
 \alias{nonstandardGroupGenericFunction-class}
 \alias{OptionalFunction-class}
 \alias{PossibleMethod-class}
 \alias{derivedDefaultMethod-class}
-\alias{genericMethods-class}
-\alias{genericMethodsWithTrace-class}
 %%
 \alias{substituteFunctionArgs}
 \alias{makeGeneric}

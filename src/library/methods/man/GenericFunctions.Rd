@@ -27,7 +27,7 @@ dumpMethod(f, signature, file, where, def)
 findFunction(f, generic=TRUE, where)
 dumpMethods(f, file, signature, methods, where)
 signature(\dots)
-removeMethods(f, where)
+removeMethods(f, where, all)
 setReplaceMethod(f, \dots)
 getGenerics(where, searchForm = FALSE)
 allGenerics(where, searchForm = FALSE)
@@ -157,8 +157,12 @@ callGeneric(\dots)
 \arguments{
   \item{f}{ The character string naming the function. }
   \item{where}{ The environment, namespace, or search-list position
-  from which to search for objects.  By default, start at the global
-  environment, and proceed through the environments in the search list. }
+  from which to search for objects.  By default, start at the
+  top-level environment of the calling function, typically the global
+  environment (i.e., use the search list), or the namespace of a
+  package from which the call came.  It is important to supply this
+  argument when calling any of these functions indirectly.  With
+  package namespaces, the default is likely to be wrong in such calls.
 
   \item{signature}{ The class signature of the relevant method.  A
     signature is a named or unnamed vector of character strings.  If

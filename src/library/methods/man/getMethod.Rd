@@ -20,11 +20,11 @@
   The other functions are support functions: see the details below.
 }
 \usage{
-getMethod(f, signature=character(), where, optional=FALSE)
+getMethod(f, signature=character(), where, optional=FALSE, mlist)
 
 findMethod(f, signature, where)
 
-getMethods(f, where=-1)
+getMethods(f, where)
 
 existsMethod(f, signature = character(), where)
 
@@ -59,6 +59,12 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
     case, the value returned is either a \code{MethodsList} object, if
     more than one method matches this signature, or \code{NULL} if no
     method matches.}
+  \item{mlist}{Optionally, the list of methods in which to search.  By
+    default, the function finds the methods for the corresponding
+    generic function.  To restrict the search to a particular package
+    or environment, e.g., supply this argument as
+    \code{getMethodsMetaData(f,where)}.
+    }
 
   \item{mlist, fdef}{In \code{selectMethod}, the \code{MethodsList} object
     and/or the generic function object can be explicitly supplied.  (Unlikely to be used, except in the

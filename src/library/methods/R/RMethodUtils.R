@@ -560,14 +560,14 @@ cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(whe
         ## silently ignores all generics not visible from searchWhere
         ## (certainly reasonable for attach=FALSE, maybe for namespaces ?)
         if(is(fdef, "genericFunction")) {
-            getAllMethods(f, fdef, searchWhere)
-            cacheGenericsMetaData(f, fdef, attach, where)
+            methods <- getAllMethods(f, fdef, searchWhere)
+            cacheGenericsMetaData(f, fdef, attach, where, fdef@package, methods)
         }
     }
 }
 
 cacheGenericsMetaData <- function(f, fdef, attach = TRUE, where = topenv(parent.frame()),
-                                  package, methods = getMethods(f, where)) {
+                                  package, methods = getAllMethods(f, fdef, where)) {
     if(!is(fdef, "genericFunction")) {
         warning("No methods found for \"", f, "\"; cacheGenericsMetaData will have no effect")
         return(FALSE)

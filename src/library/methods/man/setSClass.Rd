@@ -10,7 +10,7 @@
 \usage{
 makeClassRepresentation(name, slots=list(), superClasses=character(),
                         prototype=NULL, package, validity, access,
-                        version, sealed, virtual=NA)
+                        version, sealed, virtual=NA, where)
 }
 \arguments{
   \item{name}{character string name for the class}
@@ -30,6 +30,10 @@ makeClassRepresentation(name, slots=list(), superClasses=character(),
     generated, but not used.}
   \item{sealed}{Is the class sealed? See \code{\link{setClass}}.}
   \item{virtual}{Is this known to be a virtual class?}
+
+  \item{where}{The environment from which to look for class
+      definitions needed (e.g., for slots or superclasses). See the
+      discussion of this argument under \link{GenericFunctions}.}
 }
 \references{
   The R package \pkg{methods} implements, with a few exceptions, the

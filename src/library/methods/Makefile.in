@@ -73,7 +73,7 @@ $(top_builddir)/library/$(pkg)/R/all.rda: all.R
 	@if test -f NAMESPACE; then \
 	  $(INSTALL_DATA) all.R  $(top_builddir)/library/$(pkg)/R/$(pkg) ; \
 	  cd $(top_builddir)/library/$(pkg); \
-	  echo "options(error=quote(dump.frames(to.file=TRUE))); loadNamespace(\"$(pkg)\")"  | R_DEFAULT_PACKAGES=NULL ../../bin/R  --slave; \
+	  echo "loadNamespace(\"$(pkg)\")"  | R_DEFAULT_PACKAGES=NULL ../../bin/R  --slave; \
 	  $(INSTALL_DATA) ../../share/R/nsrdaload.R  ../../library/$(pkg)/R/$(pkg) ; \
 	else R_DEFAULT_PACKAGES=NULL $(top_builddir)/bin/R  --slave < all.R ; \
 	  $(INSTALL_DATA) $(top_builddir)/share/R/firstlib.R $(top_builddir)/library/$(pkg)/R/$(pkg); \

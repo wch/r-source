@@ -3,6 +3,7 @@
 \alias{functionBody<-}
 \alias{allNames}
 \alias{getFunction}
+\alias{existsFunction}
 \alias{el}
 \alias{elNamed}
 \alias{el<-}

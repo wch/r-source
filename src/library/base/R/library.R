@@ -214,15 +214,14 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 			else stop("package/namespace load failed")
 		    else {
 			on.exit(do.call("detach", list(name = pkgname)))
-                        ##FIXME:  the next 3 expressions are duplicated in the
-                        ## non-namespace version.  Bad & dangerous style.
 			nogenerics <- checkNoGenerics(env)
 			if(warn.conflicts &&
 			   !exists(".conflicts.OK", envir = env, inherits = FALSE))
                             checkConflicts(package, pkgname, pkgpath, nogenerics)
 
                         if(!nogenerics && hadMethods &&
-                           !identical(pkgname, "package:methods")) cacheMetaData(env, TRUE)
+                           !identical(pkgname, "package:methods"))
+                            cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
 			on.exit()
 			if (logical.return)
 			    return(TRUE)
@@ -273,7 +272,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		    checkConflicts(package, pkgname, pkgpath, nogenerics)
 
 		if(!nogenerics && hadMethods &&
-		   !identical(pkgname, "package:methods")) cacheMetaData(env, TRUE)
+		   !identical(pkgname, "package:methods"))
+                    cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
 		on.exit()
 	    }
 	}
