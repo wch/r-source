@@ -43,7 +43,8 @@ The number of figures, \eqn{N}, see above, is returned.
 Chapter 5 of Paul Murrell's Ph.D. thesis.
 }
 \seealso{
-\code{\link{par}(mfrow=..)}, \code{(mfcol=..)} and \code{(mfg=..)}
+\code{\link{par}(mfrow=..)}, \code{\link{par}(mfcol=..)}
+and \code{\link{par}(mfg=..)}
 }
 \examples{
  def.par <- par()# save default, for resetting...
