@@ -40,12 +40,13 @@ $(RHOME)/library/base/R/Rprofile:  ../library/profile/Common.R \
 ## ------------- library -----------
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 DATA = base modreg mva nls ts
+DEMO = base eda
 
 fixdesc:
 	echo "creating DESCRIPTION files"
 	@sh ../gnuwin32/fixed/GETDESC $(PACKAGES)
 
-library: mainfiles datafiles help zipfiles
+library: mainfiles datafiles help zipfiles demofiles
 
 mainfiles: fixdesc
 	@mkdir -p $(RHOME)/library
@@ -70,6 +71,13 @@ datafiles:
 	    ../library/$${pkg}/data/*.* $(RHOME)/library/$${pkg}/data; \
 	done
 
+demofiles:
+	@for pkg in $(DEMO); do \
+	echo "installing demo files in $${pkg}"; \
+	mkdir -p $(RHOME)/library/$${pkg}/demo; \
+	cp ../library/$${pkg}/demo/00Index \
+         ../library/$${pkg}/demo/*.* $(RHOME)/library/$${pkg}/demo; \
+	done
 
 help:
 	@for pkg in $(PACKAGES); do \
