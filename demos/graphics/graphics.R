@@ -1,5 +1,5 @@
 opar <- par(ask = interactive() &&
-            (.Device == "X11" || .Device == "windows" || .Device == "GTK"))
+            (.Device %in% c("X11", "GTK", "windows", "Macintosh")))
 # For source
 
 ## Here is some code which illustrates some of the differences between
