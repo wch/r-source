@@ -489,9 +489,11 @@ int main(int ac, char **av)
   __setfpucw(_FPU_IEEE);
 #endif
 
+#ifdef HAVE_LIBREADLINE
 #ifdef HAVE_READLINE_HISTORY_H
   if(isatty(0) && UsingReadline)
     read_history(".Rhistory");
+#endif
 #endif
   mainloop();
   /*++++++  in ../main/main.c */
@@ -540,9 +542,11 @@ qask:
 		case 'y':
 		case 'Y':
 			R_SaveGlobalEnv();
+#ifdef HAVE_LIBREADLINE
 #ifdef HAVE_READLINE_HISTORY_H
 			if(isatty(0) && UsingReadline)
 				write_history(".Rhistory");
+#endif
 #endif
 			break;
 		case 'n':
