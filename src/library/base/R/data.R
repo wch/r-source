@@ -83,13 +83,15 @@ show.data <-
 function(package = .packages(), lib.loc = .lib.loc)
 {
     ## give `index' of all possible data sets
-    outFile <- tempfile("R.")
-    outConn <- file(outFile, open = "w")
-    first <- TRUE
-    nodata <- noindex <- character(0)
     paths <- system.file(pkg = package, lib = lib.loc)
     if(missing(lib.loc))
         paths <- unique(c(.path.package(package, TRUE), getwd(), paths))
+    
+    first <- TRUE
+    nodata <- noindex <- character(0)
+    outFile <- tempfile("Rdata.")
+    outConn <- file(outFile, open = "w")
+
     for (path in paths) {
         pkg <- basename(path)
         if(!file.exists(path)) next
@@ -116,9 +118,11 @@ function(package = .packages(), lib.loc = .lib.loc)
     close(outConn)
     if (first) {
         warning("no data listings found")
+        unlink(outFile)
     }
-    else
+    else {
         file.show(outFile, delete.file = TRUE, title = "R data sets")
+    }
     if(!missing(package)) {
         if(length(nodata) > 1)
             warning(paste("packages `", paste(nodata, collapse=", "),
