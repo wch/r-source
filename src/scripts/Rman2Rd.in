@@ -23,14 +23,44 @@
 
 use Getopt::Long;
 
-$revision = ' $Revision: 1.4 $ ';
+$revision = ' $Revision: 1.5 $ ';
 $revision =~ / ([\d\.]*) /;
 $version = $1;
 
-@knownoptions = ("debug|d", "help|h");
-GetOptions (@knownoptions) || usage();
+$revision =~ / ([\d\.]*) /;
+$version = $1;
+($name = $0) =~ s|.*/||;
 
-usage() if $opt_help;
+sub version {
+  print STDERR <<END;
+Rman2Rd $version
+Copyright (C) 1997 Fritz Leisch.
+This is free software; see the GNU General Public Licence version 2
+or later for copying conditions.  There is NO warranty.    
+END
+  exit 0;
+}
+
+sub usage {
+  print STDERR <<END;
+Usage: $name [options] FILE
+
+Convert old-style Rman documentation FILE to R documentation format.
+
+Options:
+  -h, --help            print short help message and exit
+  -v, --version         print version info and exit
+  -d, --debug		turn on debugging (increase verbosity)
+
+Email bug reports to <r-bugs\@lists.r-project.org>.
+END
+  exit 0; 
+}
+
+@knownoptions = ("d|debug", "h|help", "v|version");
+GetOptions (@knownoptions) || usage();
+&version() if $opt_v;
+&usage() if $opt_h;
 
 $max_parent = 0;
 $NP = "normal_parent";
@@ -295,15 +325,6 @@ sub replace_command_all {
 	replace_command($cmd, $newcmd);
     }
 	
-}
-
-
-sub usage {
-
-    print "Rman2Rd version $version\n";
-    print "Usage: Rman2Rd [--debug/-d] [--help/-h] file\n\n";
-
-    exit 0;
 }
 
 ### Local Variables: ***
