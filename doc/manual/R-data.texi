@@ -20,7 +20,7 @@
 @ifinfo
 This is a guide to importing and exporting data to and from R.
 
-@Rcopyright{}
+@Rcopyright{2000}
 
 @ignore
 Permission is granted to process this file through TeX and print the
@@ -42,7 +42,7 @@ notice identical to this one except for the removal of this paragraph
 @vskip 0pt plus 1fill
 @permission{}
 
-@Rcopyright{}
+@Rcopyright{2000}
 @end titlepage
 
 @ifnothtml

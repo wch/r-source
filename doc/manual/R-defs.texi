@@ -30,11 +30,8 @@ $\t\$%
 @end macro
 
 @c -- edit these here alone -- in order keep consistency
-@macro Rcopyright{}
-Copyright @copyright{} 2000--2001 R Development Core Team
-@end macro
-@macro RcopyrightN{}
-Copyright @copyright{} 1999--2001 R Development Core Team
+@macro Rcopyright{year}
+Copyright @copyright{} \year\--2001 R Development Core Team
 @end macro
 
 @macro permission{}
