@@ -177,7 +177,9 @@
    also some AIX systems.
    */
 #ifndef FD_SET
+#ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
+#endif
 #endif
 
 static int UsingReadline = 1;
