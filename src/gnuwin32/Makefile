@@ -94,7 +94,7 @@ Rcode: fixed/fixdesc
 	  if ! test -f $(RHOME)/library/$${pkg}/DESCRIPTION ; then \
 	  $(ECHO) "  --" $$pkg; \
 	  $(MAKE) --no-print-directory -C $(PKGDIR)/$${pkg} PKG=$${pkg} \
-	    RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg Rcode; \
+	    RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg BUILD=BUILD Rcode; \
 	  fi; \
 	done
 	@$(ECHO) "  ... done"
