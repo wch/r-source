@@ -431,7 +431,7 @@ AC_SUBST(F2CFLAGS)
 
 AC_OUTPUT(Makeconf cmd/fwf2table doc/keyword-test etc/INSTALL
   etc/Makeconf etc/REMOVE etc/Rdconv etc/Rdindex etc/Rman2Rd etc/SHLIB
-  etc/Sd2Rd etc/build-help etc/build-htmlpkglist etc/help.pretty
+  etc/Sd2Rd etc/build-help etc/help.pretty
   etc/html2dos src/front/R.sh demos/dynload/Makefile
 )
 
