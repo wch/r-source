@@ -2,13 +2,13 @@ vcov <- function(object, ...) UseMethod("vcov")
 
 vcov.glm <- function(object, ...)
 {
-    so <- summary(object, corr=FALSE, ...)
+    so <- summary.glm(object, corr=FALSE, ...)
     so$dispersion * so$cov.unscaled
 }
 
 vcov.lm <- function(object, ...)
 {
-    so <- summary(object, corr=FALSE)
+    so <- summary.lm(object, corr=FALSE)
     so$sigma^2 * so$cov.unscaled
 }
 
