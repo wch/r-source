@@ -25,7 +25,10 @@ BUG FIXES
     o   x <- list(a=1, b=2) ; x["c"] <- 3 now stretches the list
         rather than give a "subscript out of bounds" error.
 
-    o   models with response appearing on lhs could cause segfault.
+    o   models with response appearing on rhs could cause segfault.
+
+    o   as.data.frame.matrix will now ensure the columns added have
+	non-empty names.
 
 
 		CHANGES IN R VERSION 1.0.0
