@@ -38,6 +38,6 @@
 \input{pkg-ts}
 
 \cleardoublepage
-\addcontentsline{toc}{chapter}{Index}
+%\addcontentsline{toc}{chapter}{Index} % This may get the wrong page no
 \printindex
 \end{document}

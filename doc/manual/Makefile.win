@@ -1,3 +1,4 @@
+#-*-Makefile-*-
 #
 # ${R_HOME}/doc/manual/Makefile.win
 
@@ -5,6 +6,10 @@ PAPER = a4
 LATEX = pdflatex
 TEX = pdftex
 MAKEINDEX = makeindex
+RHOME=$(shell cd ../..; pwd)
+
+# set the next to `ae' to omit the hyperlinks
+PDF=pdf
 
 srcdir = .
 
@@ -42,19 +47,21 @@ pdf: Manual.pdf Reference.pdf R-external.pdf
 Manual.pdf: Manual.tex Version.tex $(mansrcs) $(srcdir)/Rd.sty
 	@echo "Making PDF LaTeX documentation ..."
 	@$(RM) -f *.aux Manual.toc
-	@TEXINPUTS="pdf;.;" \
+	@TEXINPUTS="$(PDF);.;" \
 	  $(LATEX) '\nonstopmode\input{Manual.tex}'
 	@$(MAKEINDEX) Manual
-	@TEXINPUTS="pdf;.;" \
+	@TEXINPUTS="$(PDF);.;" \
 	  $(LATEX) '\nonstopmode\input{Manual.tex}'
 
 Reference.pdf: Reference.tex Version.tex $(pkgsrcs) $(srcdir)/Rd.sty
 	@echo " PDF LaTeX documentation: Reference Index ..."
 	@$(RM) -f *.aux Reference.toc Reference.ind
-	@TEXINPUTS="pdf;.;" \
-	$(LATEX) '\nonstopmode\input{Reference.tex}'
-	  @$(MAKEINDEX) Reference
-	@TEXINPUTS="pdf;.;" \
+	@TEXINPUTS="$(PDF);.;" \
+	  $(LATEX) '\nonstopmode\input{Reference.tex}'
+	@$(MAKEINDEX) Reference
+	@TEXINPUTS="$(PDF);.;" \
+	  $(LATEX) '\nonstopmode\input{Reference.tex}'
+	@TEXINPUTS="$(PDF);.;" \
 	  $(LATEX) '\nonstopmode\input{Reference.tex}'
 
 R-external.pdf: R-external.texi
@@ -66,7 +73,7 @@ Version.tex: ../../bin/rterm.exe
 
 pkg-%.tex: FORCE
 	@echo "Collecting components of $@ ..."
-	cd ../../src/gnuwin32/help && $(MAKE) latex-$*
+	cd ../../src/gnuwin32/help && $(MAKE) RHOME=$(RHOME) latex-$*
 	perl lib2tex.pl $*
 FORCE:
 
@@ -78,6 +85,6 @@ clean:
 	  R-external.tmp R-external.tp R-external.vr
 distclean: clean
 	@-rm -f auto Version.tex pkg-*.tex lib2tex.pl \
-	  Manual.tex Reference.tex
+	  Manual.tex Reference.tex *.pdf
 maintainer-clean: distclean
 

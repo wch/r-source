@@ -12,6 +12,8 @@ include $(top_builddir)/Makeconf
 
 # set the next to `.' if your LaTeX lacks the ae font package
 AE=ae
+# set the next to `ae' to omit the hyperlinks
+PDF=pdf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Manual.tex.in Reference.tex.in \
@@ -122,23 +124,25 @@ PDFLATEX = pdflatex
 
 pdf: Manual.pdf Reference.pdf R-external.pdf
 
-Manual.pdf: Manual.tex Version.tex $(mansrcs) $(srcdir)/pdf/Rd.sty
+Manual.pdf: Manual.tex Version.tex $(mansrcs) $(srcdir)/$(PDF)/Rd.sty
 	@echo "Making PDF LaTeX documentation ..."
 	@$(RM) -f *.aux Manual.toc
-	@TEXINPUTS="$(srcdir)/pdf:$(srcdir):$$TEXINPUTS" \
-	$(PDFLATEX) '\nonstopmode\input{Manual.tex}'
+	@TEXINPUTS="$(srcdir)/$(PDF):$(srcdir):$$TEXINPUTS" \
+	  $(PDFLATEX) '\nonstopmode\input{Manual.tex}'
 	@$(MAKEINDEX) Manual
-	@TEXINPUTS="$(srcdir)/pdf:$(srcdir):$$TEXINPUTS" \
-	$(PDFLATEX) '\nonstopmode\input{Manual.tex}'
+	@TEXINPUTS="$(srcdir)/$(PDF):$(srcdir):$$TEXINPUTS" \
+	  $(PDFLATEX) '\nonstopmode\input{Manual.tex}'
 
-Reference.pdf: Reference.tex Version.tex $(pkgsrcs) $(srcdir)/pdf/Rd.sty
+Reference.pdf: Reference.tex Version.tex $(pkgsrcs) $(srcdir)/$(PDF)/Rd.sty
 	@echo "PDF LaTeX documentation: Reference Index ..."
 	@$(RM) -f *.aux Reference.toc Reference.ind
-	@TEXINPUTS="$(srcdir)/pdf:$(srcdir):$$TEXINPUTS" \
-	$(PDFLATEX) '\nonstopmode\input{Reference.tex}'
+	@TEXINPUTS="$(srcdir)/$(PDF):$(srcdir):$$TEXINPUTS" \
+	  $(PDFLATEX) '\nonstopmode\input{Reference.tex}'
 	@$(MAKEINDEX) Reference
-	@TEXINPUTS="$(srcdir)/pdf:$(srcdir):$$TEXINPUTS" \
-	$(PDFLATEX) '\nonstopmode\input{Reference.tex}'
+	@TEXINPUTS="$(srcdir)/$(PDF):$(srcdir):$$TEXINPUTS" \
+	  $(PDFLATEX) '\nonstopmode\input{Reference.tex}'
+	@TEXINPUTS="$(srcdir)/$(PDF):$(srcdir):$$TEXINPUTS" \
+	  $(PDFLATEX) '\nonstopmode\input{Reference.tex}'
 
 R-external.pdf: R-external.texi $(srcdir)/texinfo.tex
 
