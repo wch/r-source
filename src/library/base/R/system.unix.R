@@ -1,46 +1,54 @@
 data <- function(..., list = character(0), package =c(.packages(),.Autoloaded),
 		 lib.loc = .lib.loc) {
- names <- c(as.character(substitute(list(...))[-1]), list)
- if (!missing(package))
-	if (is.name(y <- substitute(package)))
-		package <- as.character(y)
- found <- FALSE
- if (length(names) == 0) { #-- give 'index' of all possible data sets
-	file <- tempfile("Rdata.")
-	on.exit(unlink(file))
-	for (lib in lib.loc)
-	  for (pkg in package) {
-		INDEX <- system.file(paste("data", "index.doc", sep = "/"),
-				     pkg, lib)
-		if (INDEX != "") {
-		  cat(paste(ifelse(found, "\n", ""),
-			    "Data sets in package `", pkg, "':\n\n", sep = ""),
-		      file = file, append = TRUE)
-		  system(paste("cat", INDEX, ">>", file, "2>/dev/null"))
-		  if(!found) found <- TRUE
-		}
-	}
-	if (found)
-		system(paste("$RHOME/cmd/pager", file))
- }
- else for (name in names) {
-	dn <- paste("data/", name, sep="")
-	files <- system.file(paste(dn, ".*",sep=""), package, lib.loc)
-	if (length(files)>1 || files != "") { #-- found >= 1
-	  for(file in files) {
-		nc <- nchar(file)
-		if((ext <- substr(file,nc-1,nc))== ".R" || ext== ".r") {
-		  found <- TRUE; source(file)
-		} else if(substr(file,nc-3,nc) == ".tab") {
-		  found <- TRUE
-		  assign(name, read.table(file, header=TRUE), env = .GlobalEnv)
-		}
-	  }
-	}
- }
- if(!found)
-	stop("No data sets found")
- invisible(names)
+  names <- c(as.character(substitute(list(...))[-1]), list)
+  if (!missing(package))
+    if (is.name(y <- substitute(package)))
+      package <- as.character(y)
+  found <- FALSE
+  if (length(names) == 0) { #-- give 'index' of all possible data sets
+    file <- tempfile("Rdata.")
+    on.exit(unlink(file))
+    for (lib in lib.loc)
+      for (pkg in package) {
+        INDEX <- system.file(paste("data", "index.doc", sep = "/"),
+                             pkg, lib)
+        if (INDEX != "") {
+          cat(paste(ifelse(found, "\n", ""),
+                    "Data sets in package `", pkg, "':\n\n", sep = ""),
+              file = file, append = TRUE)
+          system(paste("cat", INDEX, ">>", file, "2>/dev/null"))
+          if(!found) found <- TRUE
+        }
+      }
+    if (found)
+      system(paste("$RHOME/cmd/pager", file))
+  }
+  else for (name in names) {
+    dn <- paste("data/", name, sep="")
+    files <- system.file(paste(dn, ".*",sep=""), package, lib.loc)
+    if (length(files)>1 || files != "") { #-- found >= 1
+      for(file in files) {
+        nc <- nchar(file)
+        if((ext <- substr(file,nc-5,nc))== ".RData" ||
+           ext== ".rdata" || substr(file,nc-3,nc)== ".rda"){
+          found <- TRUE; load(file)
+        } else if((ext <- substr(file,nc-1,nc))== ".R" || ext== ".r") {
+          found <- TRUE; source(file)
+        } else if((ext <- substr(file,nc-3,nc)) == ".tab" ||
+                  ext==".txt" || ext==".TXT") {
+          found <- TRUE
+          assign(name, read.table(file, header=TRUE), env = .GlobalEnv)
+        } else if((ext <- substr(file,nc-3,nc)) == ".csv" || ext==".CSV"){
+          found <- TRUE
+          assign(name, read.table(file, header=TRUE, sep=";"),
+                 env = .GlobalEnv)
+        }
+      }
+    }
+  }
+  if(!found)
+    stop("No data sets found")
+  invisible(names)
 }
 
 getenv <- function(x) {

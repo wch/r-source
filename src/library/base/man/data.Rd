@@ -20,12 +20,17 @@ or character strings, or as the character vector \code{list}, or as both.
 
 If no data sets are specified, the available data sets are displayed.
 
-Currently, two formats of data files are supported:
+Currently, four formats of data files are supported:
 \enumerate{
-  \item{files ending \code{".R"} are simply \code{\link{source}()d} in.}
-  \item{\code{".tab"} files are read using
+  \item files ending \code{".RData"} or \code{".rda"} are
+  \code{\link{load}()ed}. 
+  \item files ending \code{".R"} are \code{\link{source}()d} in.
+  \item files ending \code{".tab"} or \code{".txt"} are read using
     \code{\link{read.table}(\dots, header = TRUE)}, and hence result in
-    a \code{\link{data.frame}}.}
+    a \code{\link{data.frame}}.
+  \item files ending \code{".csv"} are read using
+    \code{\link{read.table}(\dots, header = TRUE, sep=";")},
+    and also result in a \code{\link{data.frame}}.
 }
 }
 \value{

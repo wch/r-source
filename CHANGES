@@ -156,8 +156,10 @@ NEW FEATURES
     o   system.file()  [now documented] returns all files matched by
 	wildcards.
 
-    o   data() now supports the new .tab file format, for data to be
-	read by `read.table(file, header=TRUE)'.
+    o   data() now supports more file formats: .RData for binary
+        files, .txt or .tab for data to be read by
+        `read.table(file, header=TRUE)' and .csv for data to be read
+        by `read.table(file, header=TRUE, sep=";")'
 
     o	Rdconv: new tabular environment, new sections `\format' and
         `\source', new output format `-type Sd' for S documentation
