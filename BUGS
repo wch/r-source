@@ -260,3 +260,62 @@ Date: Mon, 15 Nov 1999 16:07:43 -0500 (EST)
 Subject: spikes in contour and persp
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Tue, 16 Nov 1999 08:56:57 +0100 (MET)
+* PR# 331 *
+Subject: continuous key press results in core dump
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Sun, 21 Nov 1999 14:43:07 -0500 (EST)
+* PR# 332 *
+Subject: compile error for mkString on alpha
+From: albrecht.gebhardt@uni-klu.ac.at
+Date: Tue, 23 Nov 1999 15:14:00 +0100 (MET)
+* PR# 333 *
+Subject: cpp problem on alpha
+From: albrecht.gebhardt@uni-klu.ac.at
+Date: Tue, 23 Nov 1999 15:23:38 +0100 (MET)
+* PR# 334 *
+Subject: Re: [R] problems with postscript device
+From: "Wolfgang Koller" <koller2@fgr.wu-wien.ac.at>
+Date: Tue, 23 Nov 1999 16:29:22 CET (+0100)
+* PR# 335 *
+Subject: (Fwd) [R] problems with postscript device
+Subject:       [R] problems with postscript device
+From: "Wolfgang Koller" <koller2@fgr.wu-wien.ac.at>
+From:          "Wolfgang Koller" <koller2@fgr.wu-wien.ac.at>
+Date: Tue, 23 Nov 1999 16:30:58 CET (+0100)
+Date:          Tue, 23 Nov 1999 15:14:23 CET (+0100)
+* PR# 336 *
+Subject: Re: [R] problems with postscript device
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 23 Nov 1999 16:47:45 +0100 (MET)
+* PR# 337 *
+Subject: as.name() is not idempotent
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 23 Nov 1999 17:42:25 +0100 (MET)
+* PR# 338 *
+Subject: rbind problem
+From: Matthew Wiener <mcw@ln.nimh.nih.gov>
+Date: Tue, 23 Nov 1999 11:42:44 -0500 (EST)
+* PR# 339 *
+Subject: cbind problem
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Tue, 23 Nov 1999 10:14:23 -0800 (PST)
+* PR# 340 *
+Subject: "outer" argument in mtext
+From: Douglas Bates <bates@stat.wisc.edu>
+Date: 23 Nov 1999 12:31:36 -0600
+* PR# 341 *
+Subject: Re: [R] problems with postscript device
+From: Chong Gu <chong@stat.purdue.edu>
+Date: Wed, 24 Nov 1999 00:18:55 -0500
+* PR# 342 *
+Subject: scan error
+From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
+Date: Wed, 24 Nov 1999 15:26:09 +0100 (MET)
+* PR# 343 *
+Subject: rbind invisible return value
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Wed, 24 Nov 1999 11:34:10 -0800 (PST)
+* PR# 344 *
+Subject: segfault in garbage collection
+From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
+Date: Thu, 25 Nov 1999 17:54:15 +0100
