@@ -1,6 +1,7 @@
 ## Perl script to create a TITLE file from the package DESCRIPTION.
 ##   Usage: [R CMD] perl /path/to/maketitle.pl FILE
 
+require 5.005;  # for Text::Wrap::fill in formatDL
 use R::Dcf;
 use R::Utils;
 

@@ -22,12 +22,13 @@
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
 # Suite 330, Boston, MA  02111-1307  USA.
 
+require 5.005;  # for Text::Wrap::fill in formatDL
 use Getopt::Long;
 use R::Utils;
 use R::Vars;
 use R::Rd;
 
-my $revision = ' $Revision: 1.16 $ ';
+my $revision = ' $Revision: 1.17 $ ';
 my $version;
 my $name;
 

@@ -362,6 +362,9 @@ UTILITIES
 	variables, or the header and library flags necessary for linking
 	against R.
 
+    o   Rdindex and maketitle.pl require perl 5.005, as Text::Wrap::fill
+	was only introduced at 5.004_05.
+
 
 C-LEVEL FACILITIES
 
