@@ -488,6 +488,10 @@ Date: Tue, 6 Aug 2002 16:57:54 +0800
 Subject: [R] CTRL-C suspends echo of shell (R versions 1.6.0 and 1.6.1)
 From: Wolfram Fischer - Z/I/M <wolfram@fischer-zim.ch>
 Date: Mon, 4 Nov 2002 10:18:48 +0100
+* PR# 4582 *
+Subject: NA %*% 0 == 0
+From: hosking@watson.ibm.com
+Date: Tue, 14 Oct 2003 21:44:09 +0200 (MET DST)
 
 Directory:  Macintosh
 
@@ -654,6 +658,10 @@ From: rgrubbfink@cox.net
 Date: Wed, 30 Apr 2003 22:33:24 +0200 (MET DST)
 ..Looks like an AIX bug, not an R one.
 ..Other people have succeeded on AIX 5.1.
+* PR# 4295 *
+Subject: Bugs compiling R-1.7.1 with Intel compilers icc and ifc
+From: <CanisMaior@web.de>
+Date: Thu, 25 Sep 2003 11:26:09 +0200
 
 Directory:  TooMuchAtOnce
 
@@ -735,10 +743,6 @@ Date: Wed, 17 Sep 2003 17:13:23 +0200 (MET DST)
 Subject: Calling C fn crashes
 From: ashenfluff@yahoo.com
 Date: Wed, 24 Sep 2003 17:54:21 +0200 (MET DST)
-* PR# 4295 *
-Subject: Bugs compiling R-1.7.1 with Intel compilers icc and ifc
-From: <CanisMaior@web.de>
-Date: Thu, 25 Sep 2003 11:26:09 +0200
 * PR# 4329 *
 Subject: (fwd) package inst directory copied too early?
 From: Duncan Murdoch <dmurdoch@pair.com>
@@ -759,196 +763,18 @@ Date: Tue, 7 Oct 2003 17:05:56 +0200
 Subject: Redhat 7.2 gcc optimisation 
 From: Paul Murrell <p.murrell@auckland.ac.nz>
 Date: Wed, 08 Oct 2003 15:28:11 +1300
-* PR# 4470 *
-Subject: US Doctors write your prescriptions rcokuj
-From: Harris <num1sxy@fortetrinity.co.uk>
-Date: Wed, 08 Oct 2003 09:08:17 -0400
-* PR# 4471 *
-Subject: urgent
-From: "paul dixon" <e_555us@excite.com>
-Date: Wed, 8 Oct 2003 07:04:02 -0700
-* PR# 4472 *
-Subject:  ASSISTANCE REQUIRED
-From: JOHNSON BONIDA <jonsonbonida_mac7@latinmail.com>
-Date: Wed, 08 Oct 2003 16:37:23 +0200
-* PR# 4473 *
-Subject:    Copy VHS tapes to CD too! 239802
-From: 239802@excite.com
-Date: Thu, 09 Oct 2003 01:38:26 -0500
 * PR# 4474 *
 Subject: Memmory Bugs
 From: "Eric R. Riehl" <eriehl@email.unc.edu>
 Date: Wed, 8 Oct 2003 14:30:57 -0400 (EDT)
-* PR# 4475 *
-Subject: Win a turbocharged Jaguar XP in our casino !  carbonic zv rqwbc
-From: "Mallory Keller" <b31geg@freeuk.com>
-Date: Wed, 08 Oct 2003 13:04:45 GMT
-* PR# 4476 *
-Subject: easy way to get sex on
-From: "Ruby Kinney" <b349vmr@hotmail.com>
-Date: Thu, 09 Oct 03 09:14:02 GMT
-* PR# 4477 *
-Subject: 8_ Prescriptions written and filled online! wcafwvrviybh
-From: "Krista Riley" <pp109iw@smtp.secureserver.net>
-Date: Thu, 09 Oct 03 04:23:56 GMT
-* PR# 4478 *
-Subject: Male Enhancer with Growth pstfntc
-From: Martinez <alura84@dbzmail.com>
-Date: Thu, 09 Oct 2003 02:13:38 -0400
-* PR# 4479 *
-Subject: Amazing Pill for enlarging your cock jgfgrbyhj vn  q
-From: "Bertie Case" <j64djgt@msn.com>
-Date: Fri, 10 Oct 03 03:35:34 GMT
-* PR# 4480 *
-Subject: 6_ Viagra, Paxil, Phentermine & More. Order Online With NO PRIOR PR wuyioiyzil
-From: "Jeanine Vargas" <eav8vbmh@smtp.secureserver.net>
-Date: Thu, 09 Oct 03 05:09:18 GMT
-* PR# 4481 *
-Subject:          Sick of deleting spam email !? Spam Remedy kills all spam automatically! 239827
-From: 239827@earthlink.net
-Date: Fri, 10 Oct 2003 08:51:37 -0500
-* PR# 4482 *
-Subject: President of South Korea need your help''''''''''''''''''''''''
-From: JANG DOO HWAN <jang22@123.com>
-Date: Thu, 09 Oct 2003 15:08:16 +0100
 * PR# 4483 *
 Subject: S4 group generic Complex not working
 From: Saikat DebRoy <saikat@stat.wisc.edu>
 Date: Thu, 9 Oct 2003 11:18:56 -0400
-* PR# 4484 *
-Subject: S,he w=ants mo=re, gi,ve i:t t=o ,her v.nbj
-From: Craig <jearem@whiff.co.uk>
-Date: Thu, 09 Oct 2003 11:33:58 -0400
-* PR# 4485 *
-Subject: R-1.8.0 on Sparc Solaris 8, gcc3.2.1, bus error and core dump
-From: William Annis <annis@biostat.wisc.edu>
-Date: Thu, 9 Oct 2003 12:41:55 -0500 (CDT)
 * PR# 4486 *
 Subject: Recursive indexing can cause R-1.8.0 (and R-1.7.1) to segment fault
 From: anaximander@gmx.de
 Date: Thu, 9 Oct 2003 22:34:38 +0200 (MEST)
-* PR# 4487 *
-Subject: A=ll Med/s tha"t y/ou )have .heard abo=ut yo-ev
-From: Kieran <num1sxy@textware.de>
-Date: Thu, 09 Oct 2003 19:58:25 -0400
-* PR# 4488 *
-Subject: Do you want to protect your family from nasty email?cranelike
-From: "Ethel Chaney" <jz75vdi@outgun.com>
-Date: Thu, 09 Oct 2003 23:08:33 GMT
-* PR# 4489 *
-Subject: (±¤°í)3¹Ú4ÀÏ ¹«·áÀåÂø ÀÌµ¿Ä«¸Þ¶óµµÀÏ¸² Çö´ëGPS@
-From: iiiu<pterutjgerererwekfjsk898@hananet.net>
-Date: Fri, 10 Oct 2003 12:39:24 +0900
-* PR# 4490 *
-Subject: Tired of pop up's? mf
-From: "Forest Massey" <v45z49o26gr@bigmailbox.com>
-Date: Thu, 09 Oct 03 23:32:04 GMT
-* PR# 4491 *
-Subject: Real Diplomas - No books or exams!
-From: "bthompson@email.com" <bgrayguy@juno.com>
-Date: Fri, 10 Oct 2003 13:26:40 +0800
-* PR# 4492 *
-Subject: I await your urgent response.
-From: "Mr.Tony Terry Kuka" <l_gumel@o2.pl>
-Date: Fri, 10 Oct 2003 06:44:34 +0100
-* PR# 4493 *
-Subject: Numbe:r "1 F"ormula =for (Men ( ;nsaobkml
-From: Harris <lonija52@yahoo.com>
-Date: Fri, 10 Oct 2003 01:56:00 -0400
-* PR# 4494 *
-Subject: what's that?  you pay money for v,ia-gra?  umm, why? wbcfeckhs
-From: "Cheryl Grimm" <eu8zwv3z3c0@bigmailbox.com>
-Date: Fri, 10 Oct 03 11:45:29 GMT
-* PR# 4495 *
-Subject: No Prescription Required Cheap Prices
-From: "Harriet Holland" <deomtffn7@uymail.com>
-Date: Fri, 10 Oct 03 03:49:00 GMT
-* PR# 4496 *
-Subject: Awarded Best DVD Copier Software 2003 ubzoz qv 
-From: "Duncan Zapata" <v3jnxbp@msn.com>
-Date: Fri, 10 Oct 03 09:16:45 GMT
-* PR# 4497 *
-Date: Fri, 10 Oct 2003 10:43:54 +0200 (added by postmaster@virgilio.it)
-* PR# 4498 *
-Subject:    Online Internet Pharmacy                  239824
-From: 239824@delphi.com
-Date: Fri, 10 Oct 2003 04:36:33 -0500
-* PR# 4499 *
-Subject: Eat yourself Thin! Free 2 Month Supply uj zunr r fcn
-From: "Manuela Faulk" <pwwij6@hotmail.com>
-Date: Fri, 10 Oct 03 13:58:00 GMT
-* PR# 4500 *
-Subject: Your High-School Reunion is WHEN??? Lose Weight Now! cl xm
-From: "Matilda Gay" <o0ufyakecu@hotmail.com>
-Date: Fri, 10 Oct 03 10:15:27 GMT
-* PR# 4501 *
-Subject: Eat yourself Thin! Free 2 Month Supply f
-From: "Leonardo Vargas" <huruvf7@hotmail.com>
-Date: Fri, 10 Oct 03 11:34:33 GMT
-* PR# 4502 *
-Subject: Sleep Guaranteed! 100% Natural! hiljmwd
-From: "Cole Keith" <290swkzc@hotmail.com>
-Date: Fri, 10 Oct 03 06:42:51 GMT
-* PR# 4503 *
-Subject: Eat Until You're Thin! 2 Months Free! gw  uqf   ncfalwrml
-From: "Kaitlin Hastings" <vwsbxw2@yahoo.com>
-Date: Fri, 10 Oct 03 06:19:42 GMT
-* PR# 4504 *
-Subject: Melt Away Body Fat while you are sleeping oxg rcli  b jnfp
-From: "Lyman Shaffer" <4csmoe@yahoo.com>
-Date: Fri, 10 Oct 03 16:44:49 GMT
-* PR# 4505 *
-Subject: Re: Why go to college when you can order your diploma?                we
-From: "blaura96@erols.com" <brdona01@email.com>
-Date: Thu, 9 Oct 2003 19:51:18 +0800
-* PR# 4506 *
-Subject: 
-From: "jonathan killam" <*@imessenger.com>
-Date: Fri, 10 Oct 03 11:44:35 GMT
-* PR# 4507 *
-Subject: Real Diplomas - No books or exams!
-From: "bculture@erols.com" <bltrimble@gte.net>
-Date: Fri, 10 Oct 2003 21:24:13 +0900
-* PR# 4508 *
-Subject: incorrect behaviour of formals
-From: polzehl@wias-berlin.de
-Date: Fri, 10 Oct 2003 14:25:49 +0200 (MET DST)
-* PR# 4509 *
-Subject: C;heck "out ou;r se(lection o=f grea:t -RX gu_jz
-From: Smith <malindra@rkshrine.zzn.com>
-Date: Fri, 10 Oct 2003 08:32:47 -0400
-* PR# 4510 *
-Subject: incorrect behaviour of formals
-From: polzehl@wias-berlin.de
-Date: Fri, 10 Oct 2003 14:27:26 +0200 (MET DST)
-* PR# 4511 *
-Subject: incorrect behaviour of formals
-From: polzehl@wias-berlin.de
-Date: Fri, 10 Oct 2003 14:29:12 +0200 (MET DST)
-* PR# 4512 *
-Subject:      Re: New Drug Facility Online wfrentbegm pigcY           239837
-From: 239837@yahoo.com
-Date: Fri, 10 Oct 2003 21:09:09 -0500
-* PR# 4513 *
-Subject: Re: College                                     .f.dps[
-From: "bfelix@email.com" <bdwalker@email.com>
-Date: Fri, 10 Oct 2003 20:49:26 +0800
-* PR# 4514 *
-Subject: ASSISTANCE
-From: MR TONY ABUDU <tonyabudu@netscape.net>
-Date: Fri, 10 Oct 2003 15:39:44 +0200
-* PR# 4515 *
-Subject: Discount pheromone store
-From: "Mickey Elder" <qq3wpjoceq@hotmail.com>
-Date: Sat, 11 Oct 03 11:13:57 GMT
-* PR# 4516 *
-Subject: IMUST LOTTO
-From: IMUST INTERNATIONAL LOTTO <imustlotto@yahoo.com>
-Date: Fri, 10 Oct 2003 10:56:02 +0200
-* PR# 4517 *
-Subject: compare and SEE the savings. jfuh vvknmbkxktc  ce
-From: "Sylvia Knapp" <xgro815gur@rmrisk.ch>
-Date: Sat, 11 Oct 2003 03:25:01 -0500
 * PR# 4518 *
 Subject: Re:Make some serious money. luqdoupi mtu
 From: "Daisy Keyes" <d2lrpkeyba@radcad.net>
@@ -1005,215 +831,67 @@ Date: Sat, 11 Oct 03 11:41:41 GMT
 Subject: Rodriguez She wants more, give it to her with their screws on several points of its circumference. ggkxf
 From: Clark <livenlearn13@tf.no>
 Date: Sat, 11 Oct 2003 06:04:04 -0400
-* PR# 4532 *
-Subject: FROM MASSAQUOE SESAY
-From: sesah massaquoe <sesmassaquoe@fsmail.net>
-Date: Sat, 11 Oct 2003 13:23:50 +0200 (CEST)
-* PR# 4533 *
-Subject: Greetings
-From: olusegun rhodes <olu77@123.com>
-Date: Sat, 11 Oct 2003 06:13:09 -0700
-* PR# 4534 *
-Subject: =US Doctor(s wri/te (your prescript(ions a_rlcej
-From: Martinez <aksenov073@yahoo.com>
-Date: Sat, 11 Oct 2003 10:12:08 -0400
-* PR# 4535 *
-Subject: your account                         odooafaa
-From: admin@biostat.ku.dk
-Date: Sat, 11 Oct 2003 16:42:41 +0200 (MET DST)
-* PR# 4536 *
-Subject: (±¤°í) Àúºñ¿ë °íÇ°°ÝÀÇ È¨ÆäÀÌÁö¸¦ Á¦ÀÛÇØµå¸³´Ï´Ù.@
-From: 2973-1012001821wtasg@hotmail.com
-Date: Sat, 11 Oct 2003 17:14:38 +0200 (MET DST)
-* PR# 4537 *
-Subject: We did NOT say, "BANKRUPTCY!"  sp
-From: "Nelson Tyson" <ejls4esom@credit.tin.it>
-Date: Sun, 12 Oct 2003 09:26:24 +0400
-* PR# 4538 *
-Subject: Whats been happening
-From: "Aurora Fernandez" <ak687gg@aol.com>
-Date: Sat, 11 Oct 03 13:22:27 GMT
-* PR# 4539 *
-Subject: 2003 has started - improved vision, speeds injury recovery and  s zp zjy fao
-From: "Tiffany Flint" <katheleenhigashi@yahoo.com>
-Date: Sat, 11 Oct 03 14:30:50 GMT
-* PR# 4540 *
-Subject: p_ .Free Overnight Fedex - SOMA $89 avb ofvrxrgtbw gammp
-From: "Olin Clifford" <tftnyprvt@smtp.secureserver.net>
-Date: Sat, 11 Oct 03 23:34:01 GMT
-* PR# 4541 *
-Subject: ^US )Doctors _write y)our prescr;iptions ulm_ychvy
-From: Williams <laziruth@keromail.com>
-Date: Sat, 11 Oct 2003 21:20:21 -0400
-* PR# 4542 *
-Subject: Holiday Toys!
-From: "marius van " <*@spinfinder.com>
-Date: Sun, 12 Oct 03 01:10:11 GMT
-* PR# 4543 *
-Subject: Your High-School Reunion is WHEN??? Lose Weight Now! oyykw
-From: "Rebecca Solomon" <6ndadulxfk@msn.com>
-Date: Sun, 12 Oct 03 10:13:58 GMT
-* PR# 4544 *
-Subject: ,you s:hould a_ttend ;this li/fe cha;nging 'event sn_wo
-From: Young <0005644986@msoc.mrc.gla.ac.uk>
-Date: Sun, 12 Oct 2003 06:09:07 -0400
-* PR# 4545 *
-Subject: Bad credit .. Need money?
-From: "Shanna Ouellette" <ixog3d@giantwebsoftware.com>
-Date: Sun, 12 Oct 03 04:59:38 GMT
-* PR# 4546 *
-Subject: Help me, help you. zsh ia
-From: "Dillon Vela" <225ytghdcn@hotmail.com>
-Date: Mon, 13 Oct 2003 12:15:49 -0300
-* PR# 4547 *
-Subject: your account                         trbttoat
-From: admin@biostat.ku.dk
-Date: Sun, 12 Oct 2003 17:43:39 +0100
-* PR# 4548 *
-Subject: RE:Break-through
-From: "gwen kistemaker " <*@hotmail.com>
-Date: Sun, 12 Oct 03 13:52:03 GMT
-* PR# 4549 *
-Subject: your account                         bwkbiiai
-From: admin@biostat.ku.dk
-Date: Sun, 12 Oct 2003 19:11:35 +0200 (MET DST)
-* PR# 4550 *
-Subject: Error openning file
-From: ajp2@alu.um.es
-Date: Sun, 12 Oct 2003 19:16:29 +0200 (MET DST)
-* PR# 4551 *
-Subject: your account                         apkadhad
-From: admin@biostat.ku.dk
-Date: Sun, 12 Oct 2003 19:20:45 +0200 (MET DST)
-* PR# 4552 *
-Subject: are you paying for your Vi,agra.? pu nzpyihi d trm
-From: "Lupe Grubbs" <duhiroy99r0j@weedmail.com>
-Date: Sun, 12 Oct 03 20:28:12 GMT
-* PR# 4553 *
-Subject: Men* Dont Miss This
-From: "Marquis Goldberg" <w10vnilq@netzero.com>
-Date: Sun, 12 Oct 2003 13:38:07 -0700
-* PR# 4554 *
-Subject: zapsmall with all values small
-From: Paul Murrell <p.murrell@auckland.ac.nz>
-Date: Mon, 13 Oct 2003 12:38:55 +1300
-* PR# 4555 *
-Subject: U/S Doctor^s wr'ite y'our prescription=s byizy:itr
-From: Karla <beccalynnxih@slamdunkfan.com>
-Date: Sun, 12 Oct 2003 20:27:41 -0400
-* PR# 4556 *
-Subject: cranat ascay
-From: "Elvin Mccall" <d14hfivnpn@aol.com>
-Date: Mon, 13 Oct 03 05:42:59 GMT
-* PR# 4557 *
-Subject: Develop a Larger Penis in Weeks  baptism
-From: "Harry Dowdy" <j5phkdih@263.net>
-Date: Mon, 13 Oct 03 09:26:08 GMT
 * PR# 4558 *
 Subject: R1.8.0 : seq.POSIXt() problems
 From: "Marsland, John" <John.Marsland@CommerzbankIB.com>
 Date: Mon, 13 Oct 2003 09:51:38 +0100
-* PR# 4559 *
-Subject: Jadon men a solution            I went to the headland and watched the bull-men, black against mvqjwtp
-From: Anita <0005644986@das-netz.de>
-Date: Mon, 13 Oct 2003 06:05:25 -0400
-* PR# 4560 *
-Subject: (±¤°í)°ÔÀÓ°ü·Ã ÀÚ°ÝÁõ Á¤º¸¸¦ ¹«·á·Î º¸³»µå¸³´Ï´Ù.
-From: ÀÚ°ÝÁõ<vcxlrt4ewri4er34@hotmail.com>
-Date: Mon, 13 Oct 2003 20:42:41 +0900
 * PR# 4561 *
 Subject: Infinite recursion in getGeneric
 From: Saikat DebRoy <saikat@stat.wisc.edu>
 Date: Mon, 13 Oct 2003 12:17:11 -0400
-* PR# 4562 *
-Subject: RE:Bachelors!
-From: "elaine abdul" <*@myownemail.com>
-Date: Mon, 13 Oct 03 22:37:56 GMT
-* PR# 4563 *
-Subject: Approved RX örder Here ykvt
-From: Melinda <nirothryn@uymail.com>
-Date: Mon, 13 Oct 2003 13:56:13 -0400
-* PR# 4564 *
-Subject: infinite loop in abbreviate()
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Mon, 13 Oct 2003 11:15:10 -0700 (PDT)
-* PR# 4565 *
-Subject: A PARTNER NEEDED.
-From: "mohamed aliu" <mohamed_unionbank@atlas.cz>
-Date: Mon, 13 Oct 2003 20:47:46 +0200
-* PR# 4566 *
-Subject:      Prescribe Your Medication For Free                 239903
-From: 239903@hotmail.com
-Date: Tue, 14 Oct 2003 05:28:26 -0600
-* PR# 4567 *
-Subject: taldalafil
-From: "eswary  sivalingam" <*@zworg.com>
-Date: Tue, 14 Oct 03 05:39:20 GMT
-* PR# 4568 *
-Subject: Message From Lawrence
-From: "LAWRENCE OBI" <kvlawkv@indiatimes.com>
-Date: Thu, 1 Nov 2001 09:33:01 -0800
-* PR# 4569 *
-Subject: Ce, Tired of expensive doctor visits?gxarfzry rjfreiv qlmspmjcmiowj kilc cvxchhuzzx nebbv
-From: "Audrey Duarte" <ixqu4dq@outgun.com>
-Date: Thu, 14 Oct 1999 11:46:09 GMT
-* PR# 4570 *
-Subject: 1_ EVER WANTED REAL PAIN PILLS??                                         >>5_ SOMA - Viagra - Phentermine - Ultram - Ambien - Diflucan ...Fr cf gxycichd mpy u
-From: "Loretta Stroud" <frigoxh@smtp.secureserver.net>
-Date: Mon, 13 Oct 03 21:23:22 GMT
-* PR# 4571 *
-Subject: Reply Soon
-From: "Jerry Williams" <jerrywilli29@hotmail.com>
-Date: Tue, 14 Oct 2003 01:14:14 -0700
-* PR# 4572 *
-Subject: AWARD NOTIFICATION
-From: "LUCKYDAY  INTERNATIONAL B.V" <proluckyday2003@netscape.net>
-Date: Tue, 14 Oct 2003 11:18:07 +0200
-* PR# 4573 *
-Subject: ASSISTANCE
-From: camarajones@handbag.com
-Date: Tue, 14 Oct 2003 12:01:00 +0200
-* PR# 4574 *
-Subject: We did NOT say, "Loans" jaxqosjwn zd  fibcj
-From: "Kenya Heath" <wespts@besam.se>
-Date: Tue, 14 Oct 2003 11:21:27 -0300
-* PR# 4575 *
-Subject: gtkDevice: configure error from install.packages("gtkDevice")
-From: WhiteG@dfo-mpo.gc.ca
-Date: Tue, 14 Oct 2003 13:50:15 +0200 (MET DST)
-* PR# 4576 *
-Subject: you can help
-From: jamestetex@netscape.net
-Date: Tue, 14 Oct 2003 11:40:53 GMT
-* PR# 4577 *
-Subject: Investment Offer !!
-From: "Olabisi Davies." <bisidav@123.com>
-Date: Thu, 7 Oct 1999 05:14:33 -0700
-* PR# 4578 *
-Subject: (±¤°í)3¹Ú4ÀÏ ¹«·áÀåÂøÀÌº¥Æ® Çö´ëGPSÀÔ´Ï´Ù.@ 
-From: ertetet<vnrugjdfgdfgh365@yahoo.com>
-Date: Tue, 14 Oct 2003 21:51:35 +0900
-* PR# 4579 *
-Subject: Malë Enhancër with Growth faopvq
-From: "Wilson" <reinna@guju.net>
-Date: Tue, 14 Oct 2003 09:55:19 -0400
-* PR# 4580 *
-Subject: Joe Michael
-From: Joe Michael <Bruno.Daems@pandora.be>
-Date: Tue, 14 Oct 2003 16:19:21 +0200
-* PR# 4581 *
-Subject: CONGRATULATIONS
-From: ROGER VAN DEAN <rogervandean@netscape.net>
-Date: Tue, 14 Oct 2003 08:08:34 +0200
-* PR# 4582 *
-Subject: NA %*% 0 == 0
-From: hosking@watson.ibm.com
-Date: Tue, 14 Oct 2003 21:44:09 +0200 (MET DST)
-* PR# 4583 *
-Subject:             Create DVDs in Your Own Home! 239922
-From: 239922@aol.com
-Date: Wed, 15 Oct 2003 05:34:18 -0600
-* PR# 4584 *
-Subject: 5_ Your RX order is Ready for REFILL ssgbcop wcjqafm
-From: "Archie Potts" <xyht8eyfyn@smtp.secureserver.net>
-Date: Wed, 15 Oct 03 02:21:24 GMT
+* PR# 4587 *
+Subject: 6_ .Voted BEST On-Line Pharmacy myvo 
+From: "Keith Norton" <342swx@smtp.secureserver.net>
+Date: Tue, 14 Oct 03 19:55:45 GMT
+* PR# 4588 *
+Subject: software from 15 bucks                                        peonyraisin    
+From: "Helene Rice" <zbqouacvm@hypersurf.com>
+Date: Wed, 15 Oct 03 08:28:37 GMT
+* PR# 4589 *
+Subject:            Kill Spam 239929
+From: 239929@email.com
+Date: Wed, 15 Oct 2003 14:08:45 -0600
+* PR# 4590 *
+Subject: PLEASE CONTACT ME
+From: "Mr. Basher Sese Seko" <basherseko@netscape.net>
+Date: Wed, 15 Oct 2003 13:16:35 +0200
+* PR# 4592 *
+Subject: Sustäín yöur Erëctíöns Löngër vryknec
+From: "Sofia" <horeoc@gawab.com>
+Date: Wed, 15 Oct 2003 09:20:33 -0400
+* PR# 4593 *
+Subject: URGENT
+From: mobutu joseph <mobutu_j2003@yahoo.com>
+Date: Wed, 15 Oct 2003 06:58:43 -0700 (PDT)
+* PR# 4594 *
+Subject: Reply please
+From: "Mr.Michael Williams" <malik.momoh@123.com>
+Date: Wed, 15 Oct 2003 16:37:07 +0100
+* PR# 4595 *
+Date: Wed, 15 Oct 2003 16:38:23 +0200 (added by postmaster@mail-2.tiscali.it)
+* PR# 4596 *
+Date: Wed, 15 Oct 2003 16:43:00 +0200 (added by postmaster@mail-2.tiscali.it)
+* PR# 4597 *
+Subject: Confidential
+From: "mike Eze" <mike_eze@wp.pl>
+Date: Wed, 15 Oct 2003 17:23:49 +0200
+* PR# 4598 *
+Subject: we can help v ewxv
+From: "Noemi Arellano" <em12omtb@forcesvives.ch>
+Date: Thu, 16 Oct 2003 02:20:49 -0400
+* PR# 4599 *
+Subject: healthy living
+From: "Jack Burns" <s6ynlbdd@prodigy.net>
+Date: Wed, 15 Oct 03 20:27:12 GMT
+* PR# 4600 *
+Subject: (±¤°í) ÀÌºê¿Í ¾Æ´ãÀÇ °Ç°­°ú Áñ°Å¿òÀ» À§ÇÏ¿©...??? @
+From: "ÀÌºê¿Í¾Æ´ã" <pcm5201@pluslife.net>
+Date: Thu, 16 Oct 2003 04:40:40 +0900
+* PR# 4601 *
+Subject: Ce, Say goodbye to long doctor visits!hh un b
+From: "Jim Cowan" <113evgdgax@prontomail.com>
+Date: Wed, 15 Oct 2003 23:01:01 GMT
+* PR# 4602 *
+Subject: You deserve to read this cvp   
+From: "Alvaro Mohr" <n310tuva@yahoo.com>
+Date: Thu, 16 Oct 2003 14:45:43 -0700
