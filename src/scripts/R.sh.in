@@ -9,9 +9,9 @@ case "${ARG}" in
     RHOME)
 	echo ${RHOME}; exit 0 ;;
     CMD)
-	shift; PATH="${PATH}:${RHOME}/cmd:${RHOME}/etc" exec "$@" ;;
+	shift; PATH="${PATH}:${RHOME}/bin" exec "$@" ;;
     BATCH|COMPILE|INSTALL|REMOVE|SHLIB)
-	shift; exec sh "${RHOME}/etc/${ARG}" "$@" ;;
+	shift; exec sh "${RHOME}/bin/${ARG}" "$@" ;;
     -d|--debugger)
 	exec "$2" ${RHOME}/bin/R.binary ;;
     -h|--help|-\?)
