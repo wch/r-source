@@ -69,21 +69,25 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
     resize = asInteger(CAR(args));
     if (resize == NA_INTEGER)
 	errorcall(call, "invalid value of `resize'");
-    /* Allocate and initialize the device driver data */
-    if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
-	return 0;
-    /* Do this for early redraw attempts */
-    dd->displayList = R_NilValue;
-    GInit(&dd->dp);
-    if (!GADeviceDriver(dd, display, width, height, ps, 
-			(Rboolean)recording, resize)) {
-	free(dd);
-	errorcall(call, "unable to start device devga");
-    }
-    gsetVar(install(".Device"),
-	    mkString(display[0] ? display : "windows"), R_NilValue);
-    addDevice(dd);
-    initDisplayList(dd);
+
+    R_CheckDeviceAvailable();
+    BEGIN_SUSPEND_INTERRUPTS {
+	/* Allocate and initialize the device driver data */
+	if (!(dd = (DevDesc *) malloc(sizeof(DevDesc))))
+	    return 0;
+	/* Do this for early redraw attempts */
+	dd->displayList = R_NilValue;
+	GInit(&dd->dp);
+	if (!GADeviceDriver(dd, display, width, height, ps, 
+			    (Rboolean)recording, resize)) {
+	    free(dd);
+	    errorcall(call, "unable to start device devga");
+	}
+	gsetVar(install(".Device"),
+		mkString(display[0] ? display : "windows"), R_NilValue);
+	addDevice(dd);
+	initDisplayList(dd);
+    } END_SUSPEND_INTERRUPTS;
     vmaxset(vmax);
     return R_NilValue;
 }
