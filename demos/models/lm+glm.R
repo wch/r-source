@@ -19,10 +19,12 @@ birthw <- c(2968, 2795, 3163, 2925, 2625, 2847, 3292, 3473, 2628, 3176,
             3421, 2975, 3317, 2729, 2935, 2754, 3210, 2817, 3126, 2539,
             2412, 2991, 2875, 3231)
 sex <- gl(2,12, labels=c("M","F"))
-plot(age,birthw, col=codes(sex), main="Dobson's Birth Weight Data")
-lines(lowess(age[sex=='M'],birthw[sex=='M']), col=1)
-lines(lowess(age[sex=='F'],birthw[sex=='F']), col=2)
-legend(40,2700,c("Male", "Female"),col=1:2,pch=1,lty=1)
+if(exists(".Device") && !is.null(.Device)) {
+        plot(age,birthw, col=codes(sex), main="Dobson's Birth Weight Data")
+        lines(lowess(age[sex=='M'],birthw[sex=='M']), col=1)
+        lines(lowess(age[sex=='F'],birthw[sex=='F']), col=2)
+        legend(40,2700,c("Male", "Female"),col=1:2,pch=1,lty=1)
+}
 
 summary(l1 <- lm(birthw ~ sex + age), cor=T)
 summary(l0 <- lm(birthw ~ sex + age -1), cor=T)
@@ -45,17 +47,16 @@ summary(glm(y~x,family=poisson(link="identity")))
 
 
 ## Calorie Data (Page 45)
-tmp <- matrix(c(
-33,33,100,14, 40,47, 92,15, 37,49,135,18, 27,35,144,12,
-30,46,140,15, 43,52,101,15, 34,62, 95,14, 48,23,101,17,
-30,32, 98,15, 38,42,105,14, 50,31,108,17, 51,61, 85,19,
-30,63,130,19, 36,40,127,20, 41,50,109,15, 42,64,107,16,
-46,56,117,18, 24,61,100,13, 35,48,118,18, 37,28,102,14),nc=4,byrow=T)
-carb <- tmp[,1]
-age <- tmp[,2]
-wgt <- tmp[,3]
-prot <- tmp[,4]
-summary(lm(carb~age+wgt+prot))
+calorie <- data.frame(
+	carb = c(33,40,37,27,30,43,34,48,30,38,
+                 50,51,30,36,41,42,46,24,35,37),
+        age  = c(33,47,49,35,46,52,62,23,32,42,
+                 31,61,63,40,50,64,56,61,48,28),
+        wgt  = c(100, 92,135,144,140,101, 95,101, 98,105,
+                 108, 85,130,127,109,107,117,100,118,102),
+        prot = c(14,15,18,12,15,15,14,17,15,14,
+                 17,19,19,20,15,16,18,13,18,14))
+summary(lmcal <- lm(carb~age+wgt+prot, data= calorie))
 
 
 ## Extended Plant Data (Page 59)
@@ -64,8 +65,10 @@ trtA <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
 trtB <- c(6.31,5.12,5.54,5.50,5.37,5.29,4.92,6.15,5.80,5.26)
 group <- gl(3, length(ctl), labels=c("Ctl","A","B"))
 weight <- c(ctl,trtA,trtB)
-anova(lm(weight~group))
-summary(lm(weight~group))
+anova(lmwg <- lm(weight~group))
+summary(lmwg)
+coef(lmwg)
+coef(summary(lmwg))#- incl.  std.err,  t- and P- values.
 
 
 ## Fictitious Anova Data (Page 64)
