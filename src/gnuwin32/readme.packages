@@ -223,7 +223,7 @@ Using Visual C++
 ================
 
 You may if you prefer use Visual C++ to make the DLLs (unless they use
-Fortran source!). First build the import library R.lib by
+Fortran source!). First build the import library Rdll.lib by
 
 	lib /def:R.exp /out:Rdll.lib
 
