@@ -119,7 +119,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
     }
 
     runUserHook <- function(pkgname, pkgpath) {
-        hook <- getUserAttachHook(pkgname) # might be list()
+        hook <- getHook(pkgEvent(pkgname, "attach")) # might be list()
         for(fun in hook) try(fun(pkgname, pkgpath))
     }
 

@@ -1,105 +1,80 @@
 .userHooksEnv <- new.env(hash = FALSE, parent = NULL)
 
-getUserOnLoadHook <- function(pkgname)
+pkgEvent <-
+    function(pkgname, event=c("onLoad", "attach", "detach", "onUnload"))
 {
-    nm <- paste(pkgname, "onLoad", sep = "::")
-    if (exists(nm, envir = .userHooksEnv, inherits = FALSE))
-        get(nm, envir = .userHooksEnv, inherits = FALSE)
+    event <- match.arg(event)
+    pkgname <- strsplit(pkgname, "_", fixed=TRUE)[[1]][1]
+    paste("UserHook", pkgname, event, sep = "::")
+}
+
+getHook <- function(hookName)
+{
+    if (exists(hookName, envir = .userHooksEnv, inherits = FALSE))
+        get(hookName, envir = .userHooksEnv, inherits = FALSE)
     else list()
 }
 
-setUserOnLoadHook <- function(pkgname, value,
-                              action = c("append", "prepend", "replace"))
+setHook <- function(hookName, value,
+                    action = c("append", "prepend", "replace"))
 {
     action <- match.arg(action)
-    nm <- paste(pkgname, "onLoad", sep = "::")
-    old <- getUserOnLoadHook(pkgname)
+    old <- getHook(hookName)
     new <- switch(action,
                   "append" = c(old, value),
                   "prepend" = c(value, old),
                   "replace" = value)
     if (length(new))
-        assign(nm, new, envir = .userHooksEnv, inherits = FALSE)
-    else if(exists(nm, envir = .userHooksEnv, inherits = FALSE))
-        remove(list=nm, envir = .userHooksEnv, inherits = FALSE)
+        assign(hookName, new, envir = .userHooksEnv, inherits = FALSE)
+    else if(exists(hookName, envir = .userHooksEnv, inherits = FALSE))
+        remove(list=hookName, envir = .userHooksEnv, inherits = FALSE)
     invisible()
+}
+
+getUserOnLoadHook <- function(pkgname)
+{
+    .Deprecated("getHook(pkgEvent())")
+    getHook(pkgEvent(pkgname, "onLoad"))
+}
+
+setUserOnLoadHook <- function(pkgname, value, action = "append")
+{
+    .Deprecated("setHook(pkgEvent())")
+    setHook(pkgEvent(pkgname, "onLoad"), value, action)
 }
 
 getUserAttachHook <- function(pkgname)
 {
-    pkgname <- strsplit(pkgname, "_", fixed=TRUE)[[1]][1]
-    nm <- paste(pkgname, "attach", sep = "::")
-    if (exists(nm, envir = .userHooksEnv, inherits = FALSE))
-        get(nm, envir = .userHooksEnv, inherits = FALSE)
-    else list()
+    .Deprecated("getHook(pkgEvent())")
+    getHook(pkgEvent(pkgname, "attach"))
 }
 
-setUserAttachHook <- function(pkgname, value,
-                              action = c("append", "prepend", "replace"))
+setUserAttachHook <- function(pkgname, value, action = "append")
 {
-    action <- match.arg(action)
-    pkgname <- strsplit(pkgname, "_", fixed=TRUE)[[1]][1]
-    nm <- paste(pkgname, "attach", sep = "::")
-    old <- getUserAttachHook(pkgname)
-    new <- switch(action,
-                  "append" = c(old, value),
-                  "prepend" = c(value, old),
-                  "replace" = value)
-    if (length(new))
-        assign(nm, new, envir = .userHooksEnv, inherits = FALSE)
-    else if(exists(nm, envir = .userHooksEnv, inherits = FALSE))
-        remove(list=nm, envir = .userHooksEnv, inherits = FALSE)
-    invisible()
+    .Deprecated("setHook(pkgEvent())")
+    setHook(pkgEvent(pkgname, "attach"), value, action)
 }
 
 getUserDetachHook <- function(pkgname)
 {
-    pkgname <- strsplit(pkgname, "_", fixed=TRUE)[[1]][1]
-    nm <- paste(pkgname, "detach", sep = "::")
-    if (exists(nm, envir = .userHooksEnv, inherits = FALSE))
-        get(nm, envir = .userHooksEnv, inherits = FALSE)
-    else list()
+    .Deprecated("getHook(pkgEvent())")
+    getHook(pkgEvent(pkgname, "detach"))
 }
 
-setUserDetachHook <- function(pkgname, value,
-                              action = c("prepend", "append", "replace"))
+setUserDetachHook <- function(pkgname, value, action = "prepend")
 {
-    action <- match.arg(action)
-    pkgname <- strsplit(pkgname, "_", fixed=TRUE)[[1]][1]
-    nm <- paste(pkgname, "detach", sep = "::")
-    old <- getUserDetachHook(pkgname)
-    new <- switch(action,
-                  "append" = c(old, value),
-                  "prepend" = c(value, old),
-                  "replace" = value)
-    if (length(new))
-        assign(nm, new, envir = .userHooksEnv, inherits = FALSE)
-    else if(exists(nm, envir = .userHooksEnv, inherits = FALSE))
-        remove(list=nm, envir = .userHooksEnv, inherits = FALSE)
-    invisible()
+    .Deprecated("setHook(pkgEvent())")
+    setHook(pkgEvent(pkgname, "detach"), value, action)
 }
 
 getUserOnUnloadHook <- function(pkgname)
 {
-    nm <- paste(pkgname, "onUnload", sep = "::")
-    if (exists(nm, envir = .userHooksEnv, inherits = FALSE))
-        get(nm, envir = .userHooksEnv, inherits = FALSE)
-    else list()
+    .Deprecated("getHook(pkgEvent())")
+    getHook(pkgEvent(pkgname, "onUnload"))
 }
 
-setUserOnUnloadHook <- function(pkgname, value,
-                               action = c("prepend", "append", "replace"))
+setUserOnUnloadHook <- function(pkgname, value, action = "prepend")
 {
-    action <- match.arg(action)
-    nm <- paste(pkgname, "onUnload", sep = "::")
-    old <- getUserOnUnloadHook(pkgname)
-    new <- switch(action,
-                  "append" = c(old, value),
-                  "prepend" = c(value, old),
-                  "replace" = value)
-    if (length(new))
-        assign(nm, new, envir = .userHooksEnv, inherits = FALSE)
-    else if(exists(nm, envir = .userHooksEnv, inherits = FALSE))
-        remove(list=nm, envir = .userHooksEnv, inherits = FALSE)
-    invisible()
+    .Deprecated("setHook(pkgEvent())")
+    setHook(pkgEvent(pkgname, "onUnload"), value, action)
 }

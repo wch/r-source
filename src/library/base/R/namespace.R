@@ -134,7 +134,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             }
         }
         runUserHook <- function(pkgname, pkgpath) {
-            hook <- getUserOnLoadHook(pkgname) # might be list()
+            hook <- getHook(pkgEvent(pkgname, "onLoad")) # might be list()
             for(fun in hook) try(fun(pkgname, pkgpath))
         }
         makeNamespace <- function(name, version = NULL, lib = NULL) {
@@ -351,7 +351,7 @@ unloadNamespace <- function(ns) {
     if (length(users) != 0)
         stop(paste("name space still used by:", paste(users, collapse = ", ")))
     nspath <- getNamespaceInfo(ns, "path")
-    hook <- getUserOnUnloadHook(nsname) # might be list()
+    hook <- getHook(pkgEvent(nsname, "onUnload")) # might be list()
     for(fun in hook) try(fun(nsname, nspath))
     try(runHook(".onUnload", ns, nspath))
     .Internal(unregisterNamespace(nsname))

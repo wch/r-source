@@ -339,7 +339,11 @@ plot.xy <- function(xy, type, pch = 1, lty = "solid", col = par("fg"),
     .Internal(plot.xy(xy, type, pch, lty, col, bg, cex, ...))
 }
 
-plot.new <- function() .Internal(plot.new())
+plot.new <- function()
+{
+    .Internal(plot.new())
+    for(fun in getHook("plot.new")) try(fun())
+}
 
 frame <- plot.new
 

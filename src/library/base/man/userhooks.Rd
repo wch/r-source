@@ -1,4 +1,7 @@
 \name{UserHooks}
+\alias{getHook}
+\alias{setHook}
+\alias{pkgEvent}
 \alias{getUserOnLoadHook}
 \alias{setUserOnLoadHook}
 \alias{getUserAttachHook}
@@ -14,29 +17,41 @@
   are attached/detached and namespaces are (un)loaded.
 }
 \usage{
+getHook(hookName)
+setHook(hookName, value, action = c("append", "prepend", "replace"))
+
+pkgEvent(pkgname, event=c("onLoad", "attach", "detach", "onUnload"))
+
 getUserOnLoadHook(pkgname)
-setUserOnLoadHook(pkgname, value,
-                  action = c("append", "prepend", "replace"))
+setUserOnLoadHook(pkgname, value, action = "append")
 
 getUserAttachHook(pkgname)
-setUserAttachHook(pkgname, value,
-                  action = c("append", "prepend", "replace"))
+setUserAttachHook(pkgname, value, action = "append")
 
 getUserDetachHook(pkgname)
-setUserDetachHook(pkgname, value,
-                  action = c("prepend", "append", "replace"))
+setUserDetachHook(pkgname, value, action = "prepend")
 
 getUserOnUnloadHook(pkgname)
-setUserOnUnloadHook(pkgname, value,
-                    action = c("prepend", "append", "replace"))
+setUserOnUnloadHook(pkgname, value, action = "prepend")
 }
 \arguments{
-  \item{pkgname}{character string: the package/namespace name}
+  \item{hookName}{character string: the hook name}
+  \item{pkgname}{character string: the package/namespace name.
+    If versioned install has been used, \code{pkgname} should the unversioned
+    name of the package and any version information will be stripped.}
+  \item{event}{character string: an event for the package}
   \item{value}{A function, or for \code{action="replace"}, \code{NULL}.}
-  \item{action}{The action to be taken.}
+  \item{action}{The action to be taken.  The names can be appreviated.}
 }
 
 \details{
+  \code{setHook} provides a general mechanism for users to register
+  hooks, a list of functions to be called from system (or user)
+  functions.  The initial set of hooks is associated with events on
+  packages/namespaces: these hooks are named via calls to \code{pkgEvent}.
+
+  To remove a hook completely, call \code{setHook(hookName, NULL, "replace")}.
+  
   When an \R package is attached by \code{\link{library}}, it can call
   initialization code via a function \code{.First.lib}, and when it is
   \code{\link{detach}}-ed it can tidy up via a function \code{.Last.lib}.
@@ -53,31 +68,29 @@ setUserOnUnloadHook(pkgname, value,
   package being on the search path, so objects in the package need to be
   referred to using the double colon operator as in the example.
 
-  To remove a hook completely, call
-  \code{setUserOnUnloadHook(pkgname, NULL, "replace")}.
-
   The hooks are run in the order shown by the \code{get*} functions, and
-  the default actions are to add new functions \sQuote{inside} existing ones.
+  the default actions for the wrapper functions are to add new functions
+  \sQuote{inside} existing ones.
   
   Note that when an \R is finished, packages are not detached and
   namespaces are not unloaded, so the corresponding hooks will not be
   run.
 
-  If versioned install has been used, \code{pkgname} is the unversioned
-  name of the package.
-
   The hooks are stored in the environment \code{.userHooksEnv} in the
-  base package.
+  base package. with \sQuote{mangled} names.
 }
 \value{
   For the \code{get*} functions, a list of functions (possible empty).
   For the \code{set*} functions, no return value.
 }
 \seealso{
-  \code{\link{library}}, \code{\link{detach}}, \code{\link{unloadNamespace}}
+  \code{\link{library}}, \code{\link{detach}}, \code{\link{loadNamespace}}.
+
+  Other hooks may be added later: \code{\link{plot.new}} and
+  \code{\link{persp}} already have them.
 }
 \examples{
-setUserOnLoadHook("graphics",
-   function(...) graphics::ps.options(horizontal=FALSE)) 
+setHook(pkgEvent("graphics", "onLoad"),
+        function(...) graphics::ps.options(horizontal=FALSE)) 
 }
 \keyword{utilities}

@@ -96,6 +96,11 @@ persp(x, \dots)
   the viewing direction is directly down the negative y axis.
   Changing \code{theta} will vary the azimuth and changing \code{phi}
   the colatitude.
+
+  There is a hook called \code{"persp"} (see \code{\link{setHook}})
+  called after the plot is completed, which is used in the
+  testing code to annotate the plot page.  The hook function(s) are
+  called with no argument.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
