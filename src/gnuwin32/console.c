@@ -23,6 +23,8 @@
 #include <config.h>
 #endif
 
+/* Use of strchr here is MBCS-safe */
+
 #ifdef Win32
 #define USE_MDI 1
 extern void R_ProcessEvents(void);
@@ -46,7 +48,7 @@ extern char *alloca(size_t);
 
 extern UImode  CharacterMode;
 
-#ifdef SUPPORT_MBCS
+#ifdef SUPPORT_GUI_MBCS
 #define mbs_init(x) memset(x, 0, sizeof(mbstate_t))
 static int wcwidth(wchar_t ucs)
 {
@@ -105,7 +107,7 @@ int inline mb_char_len(char *buf, int clength)
 
 void setCURCOL(ConsoleData p)
 {
-#ifdef SUPPORT_MBCS
+#ifdef SUPPORT_GUI_MBCS
     char *P = LINE(NUMLINES - 1) + prompt_len;
     int w0 = 0;
     wchar_t wc;
@@ -361,7 +363,7 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
 			    rgb fgr, rgb bgr, int j, int len, char *s)
 {
     rect  r;
-#ifndef SUPPORT_MBCS
+#ifndef SUPPORT_GUI_MBCS
     int last;
     char ch, chf, chl;
 #else
@@ -377,7 +379,7 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
 
     if (len > FC+fch) {
 	/* Some of the string is visible: */
-#ifndef SUPPORT_MBCS
+#ifndef SUPPORT_GUI_MBCS
 	/* we don't know the string length, so modify it in place */
 	if (FC && (fch == 0)) {chf = s[FC]; s[FC] = '$';} else chf = '\0';
 	if ((len > FC+COLS) && (lch == COLS - 1)) {
@@ -437,13 +439,13 @@ static int writeline(ConsoleData p, int i, int j)
     char *s;
     int   insel, len, col1, d;
     int   c1, c2, c3, x0, y0, x1, y1;
-#ifdef SUPPORT_MBCS
+#ifdef SUPPORT_GUI_MBCS
     rect r;
 #endif
 
     if ((i < 0) || (i >= NUMLINES)) return 0;
     s = LINE(i);
-#ifdef SUPPORT_MBCS
+#ifdef SUPPORT_GUI_MBCS
     len = mbswidth(s);
 #else
     len = strlen(s);
@@ -469,7 +471,7 @@ static int writeline(ConsoleData p, int i, int j)
     /* This is the cursor, and it may need to be variable-width */
     if ((p->r >= 0) && (CURCOL >= FC) && (CURCOL < FC + COLS) &&
 	(i == NUMLINES - 1)) {
-#ifdef SUPPORT_MBCS
+#ifdef SUPPORT_GUI_MBCS
 	{ /* determine the width of the current char */
 	    int w0, used = 0, ii;
 	    wchar_t wc;
@@ -595,7 +597,7 @@ void setfirstcol(control c, int newcol)
     ll = (NUMLINES < ROWS) ? NUMLINES : ROWS;
     if (newcol > 0) {
 	for (i = 0, ml = 0; i < ll; i++) {
-#ifdef SUPPORT_MBCS
+#ifdef SUPPORT_GUI_MBCS
  	    li = mbswidth(LINE(NEWFV + i));
 #else
  	    li = strlen(LINE(NEWFV + i));
@@ -880,7 +882,7 @@ static void consoletoclipboardHelper(control c, int x0, int y0, int x1, int y1)
     int ll, i, j;
     char *s;
 
-#ifdef SUPPORT_MBCS
+#ifdef SUPPORT_GUI_MBCS
     int w0 = 0 /* -Wall */, used=0, x00, x11=100000;
     wchar_t wc;
     char *P;
@@ -926,7 +928,7 @@ static void consoletoclipboardHelper(control c, int x0, int y0, int x1, int y1)
         R_ShowMessage("Insufficient memory: text not copied to the clipboard");
         return;
     }
-#ifdef SUPPORT_MBCS
+#ifdef SUPPORT_GUI_MBCS
     i = y0; x00 = x0; x11=100000;
     while (i <= y1) {
 	P = LINE(i);
@@ -1312,7 +1314,7 @@ int consolereads(control c, char *prompt, char *buf, int len, int addtohistory)
     if (!xbufmakeroom(p->lbuf, len + 1)) return 1;
     aLine = LINE(NUMLINES - 1);
     prompt_wid = prompt_len = strlen(aLine);
-#ifdef SUPPORT_MBCS
+#ifdef SUPPORT_GUI_MBCS
     prompt_wid = mbswidth(aLine);
 #endif
     if (NUMLINES > ROWS) {
@@ -1421,7 +1423,7 @@ int consolereads(control c, char *prompt, char *buf, int len, int addtohistory)
 		{
 		    int j, l_len = mb_char_len(cur_line, cur_byte-1), r_len;
 		    /* we should not reset the state here */
-#ifdef SUPPORT_MBCS
+#ifdef SUPPORT_GUI_MBCS
 		    r_len = mbrlen(cur_line+cur_byte, MB_CUR_MAX, &mb_st);
 #else
 		    r_len = 1;

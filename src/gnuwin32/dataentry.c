@@ -23,6 +23,8 @@
    - spreadsheet copy and paste?
  */
 
+/* Use of strchr here is MBCS-safe */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

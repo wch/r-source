@@ -208,8 +208,8 @@ This version of R can be built with support for some multibyte
 character sets such as UTF and (some of) those used in Chinese,
 Japanese and Korean.
 
-Define SUPPORT_MBCS in MkRules to enable support for MBCS in the RGui
-console, pager, data and script editors (this is based on the
+Define SUPPORT_GUI_MBCS in MkRules to enable support for MBCS in the
+RGui console, pager, data and script editors (this is based on the
 Japanization patches by Nakama and Okada).
 
 Define SUPPORT_UTF8 in MkRules to enable support in the R engine for

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998--2005  Guido Masarotto and Brian Ripley
  *  Copyright (C) 2004        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -20,6 +20,10 @@
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
+
+#ifdef SUPPORT_GUI_MBCS
+#define SUPPORT_MBCS 1
 #endif
 
 #include <Defn.h>
@@ -598,6 +602,7 @@ static void menuact(control m)
 
 #define MCHECK(m) {if(!(m)) {del(RConsole); return 0;}}
 
+/* This file will always be ASCII */
 void readconsolecfg()
 {
     int   consoler, consolec, consolex, consoley, pagerrow, pagercol,
@@ -823,17 +828,19 @@ static void dropconsole(control m, char *fn)
 {
     char *p;
 
-    p = strrchr(fn, '.');
+    p = Rf_strrchr(fn, '.');
     if(p) {
+	/* OK even in MBCS */
 	if(stricmp(p+1, "R") == 0) {
 	    if(ConsoleAcceptCmd) {
-		fixslash(fn);
+		R_fixslash(fn);
 		snprintf(cmd, 1024, "source(\"%s\")", fn);
 		consolecmd(RConsole, cmd);
 	    }
+	/* OK even in MBCS */
 	} else if(stricmp(p+1, "RData") == 0 || stricmp(p+1, "rda")) {
 	    if(ConsoleAcceptCmd) {
-		fixslash(fn);
+		R_fixslash(fn);
 		snprintf(cmd, 1024, "load(\"%s\")", fn);
 		consolecmd(RConsole, cmd);
 	    }
@@ -1264,11 +1271,11 @@ int winaddmenu(char * name, char *errmsg)
 	strcpy(errmsg, "`menu' is limited to 50 chars");
 	return 5;
     }
-    p = strrchr(name, '/');
+    p = Rf_strrchr(name, '/');
     if (p) {
 	submenu = p + 1;
 	strcpy(start, name);
-	*strrchr(start, '/') = '\0';
+	*Rf_strrchr(start, '/') = '\0';
 	parent = getMenu(start);
 	if (!parent) {
 	    strcpy(errmsg, "base menu does not exist");

@@ -26,6 +26,10 @@
 #include <config.h>
 #endif
 
+#ifdef SUPPORT_GUI_MBCS
+#define SUPPORT_MBCS 1
+#endif
+
 #include <stdio.h>
 #include "Defn.h"
 #include "Fileio.h"
@@ -108,7 +112,7 @@ static int R_unlink(char *names, int recursive)
 	    } else failures++; /* don't try to delete dirs */
 	} else {/* Regular file (or several) */
 	    strcpy(dir, tmp);
-	    if ((p = strrchr(dir, '\\'))) *(++p) = '\0'; else *dir = '\0';
+	    if ((p = Rf_strrchr(dir, '\\'))) *(++p) = '\0'; else *dir = '\0';
 	    /* check for wildcard matches */
 	    fh = FindFirstFile(tmp, &find_data);
 	    if (fh != INVALID_HANDLE_VALUE) {
@@ -1095,11 +1099,12 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     p = CHAR(STRING_ELT(def, 0));
     if(strlen(p) >= MAX_PATH) errorcall(call, "default is overlong");
     strcpy(path, R_ExpandFileName(p));
-    temp = strchr(path,'/');
+    R_fixbackslash(path);
+/*    temp = Rf_strchr(path,'/');
     while (temp) {
 	*temp = '\\';
 	temp = strchr(temp,'/');
-    }
+	}*/
     if(length(caption) != 1 )
 	errorcall(call, "caption must be a character string");
     if(multi == NA_LOGICAL)
@@ -1146,7 +1151,7 @@ SEXP do_chooseFiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     	temp = list;
     	for (i = 0; i < count-1; i++) {
 	    temp += strlen(temp) + 1;
-	    if (strchr(temp,':') || *temp == '\\' || *temp == '/')
+	    if (Rf_strchr(temp,':') || *temp == '\\' || *temp == '/')
 		SET_STRING_ELT(ans, i, mkChar(temp));
 	    else {
 		strncpy(filename, path, sizeof(filename));

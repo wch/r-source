@@ -73,8 +73,8 @@ endif
 CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H -DR_DLL_BUILD
 FFLAGS = $(FOPTFLAGS)
 
-ifdef SUPPORT_MBCS
-CFLAGS += -DSUPPORT_MBCS
+ifdef SUPPORT_GUI_MBCS
+CFLAGS += -DSUPPORT_GUI_MBCS
 endif
 
 Rpwd.exe: front-ends/Rpwd.exe

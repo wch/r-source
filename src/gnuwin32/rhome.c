@@ -31,6 +31,8 @@
 
 static char rhomebuf[MAX_PATH];
 
+/* <MBCS-FIXME> We can't just use Rf_strchr as this is called 
+   from front-ends */
 #define GOBACKONESLASH \
   p = strrchr(rhomebuf,'\\'); \
   if (!p) { \

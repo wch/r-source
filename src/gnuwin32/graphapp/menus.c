@@ -112,7 +112,7 @@ static int find_char(int ch, char *str)
 {
 	int where;
 
-#ifdef SUPPORT_MBCS
+#ifdef SUPPORT_GUI_MBCS
 	for (where=0; str[where] != '\0'; where++)
 	{
 	    int mb_len = 0;
