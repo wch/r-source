@@ -9,6 +9,9 @@ typeof(1:4) == "integer" #-- fails for 0.2, 0.3,.., 0.9
 all((0:6) == pi + ((-pi):pi))
 all((0:7) == (pi+seq(-pi,pi, len=8))*7/(2*pi))
 
+1 == as.integer(is.na(c(pi,NA)[2]))
+1 == as.integer(is.nan(0/0))
+
 ## This should be symmetric !!
 cc <- c(1:10,10:1) ;		all(cc == rev(cc))
 ##nomore:
