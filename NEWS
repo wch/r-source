@@ -32,10 +32,7 @@ USER-VISIBLE CHANGES
 	central place for statistical S4 classes and methods
 	distributed with base R.  Package mle remains as a stub.
 
-	A few user-contributed packages have made assumptions about
-	where functions were and so will need updating.
-
-	Users may notice that code in .Rprofile is run only with the
+	Users may notice that code in .Rprofile is run with only the
 	new base loaded and so functions may now not be found.	For
 	example, ps.options(horizontal = TRUE) should be preceded by
 	library(graphics) or called as graphics::ps.options or,
@@ -56,46 +53,80 @@ NEW FEATURES
         semantics are basically that of get/assign to the environment with
         inherits=FALSE.
 
-    o	The perl=TRUE argument to grep/regexpr/(g)sub() now uses
-	character tables prepared for the locale currently in use each
-	time it is used, rather than those of the C locale.
+    o	There are now print() and [ methods for "acf" objects.
 
-    o	sink() now has a split= argument to direct output to both the
-	sink and the current output connection.
+    o	arima() allows models with no free parameters to be fitted (to
+	find log-likelihood and AIC values, thanks to Rob Hyndman).
+
+    o	array() and matrix() now allow 0-length `data' arguments for
+	compatibility with S.
+
+    o	as.data.frame() now has a method for arrays.
+
+    o	as.matrix.data.frame() now coerces an all-logical data frame
+	to a logical matrix.
+
+    o	New function assignInNamespace() parallelling fixInNamespace.
+
+    o	There is a new function contourLines() to produce contour
+	lines (but not draw anything).	This makes the CRAN package
+	clines (with its clines() function) redundant.
+
+    o	D(), deriv(), etc now also differentiate asin(), acos(), atan(),
+	(thanks to a contribution of Kasper Kristensen).
 
     o	The `package' argument to data() is no longer allowed to be a
 	(unquoted) name and so can be a variable name or a quoted
 	character string.
 
+    o	There is a new class "Date" to represent dates (without times)
+	plus many utility functions similar to those for date-times.
+	See ?Date.
+
     o	Deparsing (including using dump() and dput()) an integer
 	vector now wraps it in as.integer() so it will be source()d
 	correctly.  (Related to PR#4361.)
 
-    o	Model fits now add a "dataClasses" attribute to the terms, which
-	can be used to check that the variables supplied for
-	prediction are of the same type as those used for fitting.
-	(It is currently used by predict() methods for classes "lm",
-	"mlm", "glm" and "ppr", as well as methods in packages MASS,
-	rpart and tree.)
+    o	The print() method for "difftime" objects now handles arrays.
 
-    o	read.table() now allows embedded newlines in quoted fields. (PR#4555)
+    o	dist() has a new method to calculate Minkowski distances.
 
-    o	New command-line argument --max-ppsize allows the size of the
-	pointer protection stack to be set higher than the previous
-	limit of 10000.
+    o	expand.grid() returns appropriate array dimensions and dimnames
+	in the attribute "out.attrs", and this is used by the
+	predict() method for loess to return a suitable array.
 
-    o	The fonts on an X11() device (also jpeg() and png() on Unix)
-	can be specified by a new argument `fonts' defaulting to the
-	value of a new option "X11fonts".
+    o	factanal(), loess() and princomp() now explicitly check for
+	numerical inputs; they might have silently coded factor
+	variables in formulae.
 
-    o	termplot() has an option to smooth the partial residuals.
-
-    o	strsplit() now has a `fixed' argument and split="" is optimized.
+    o	New functions factorial(x) defined as gamma(x+1) and for
+	S-PLUS compatibility, lfactorial(x) defined as lgamma(x+1).
 
     o	findInterval(x, v) now allows +/-Inf values, and NAs in x.
 
-    o	subset() now allows a `drop' argument to remove unused factor
-	levels.	 The default is still to keep them.
+    o	formula.default() now looks for a "terms" component before a
+	'formula' argument in the saved call: the component will have
+	`.' expanded and probably will have the original environment
+	set as its environment.	 And what it does is now documented.
+
+    o	glm() arguments `etastart' and `mustart' are now evaluated via
+	the model frame in the same way as `subset' and `weights'.
+
+    o	Functions grep(), regexpr(), sub() and gsub() now coerce their
+	arguments to character, rather than give an error.
+
+    	The perl=TRUE argument now uses character tables prepared for
+	the locale currently in use each time it is used, rather than
+	those of the C locale.
+
+    o	New functions head() and tail() in package `utils'.
+	(Based on a contribution by Patrick Burns.)
+
+    o	legend() has a new argument 'text.col'.
+
+    o	methods(class=) now checks for a matching generic, and so no
+	longer returns methods for non-visible generics (and
+	eliminates various mismatches).
 
     o	model.frame() methods, for example those for "lm" and "glm",
 	pass relevant parts of ... onto the default method.  (This has
@@ -105,95 +136,24 @@ NEW FEATURES
     o	nls() and ppr() have a `model' argument to allow the model frame
 	to be returned as part of the fitted object.
 
-    o	glm() arguments `etastart' and `mustart' are now evaluated via
-	the model frame in the same way as `subset' and `weights'.
-
-    o	factanal(), loess() and princomp() now explicitly check for
-	numerical inputs; they might have silently coded factor
-	variables in formulae.
-
-    o	ppr() now fully supports categorical explanatory variables,
-
-    o	On some OSes (including Windows and those using glibc)
-	strptime() does not validate dates correctly, so we have added
-	extra code to do so.  However, this cannot correct scanning
-	errors in the OS's strptime (although we have been able to
-	work around these on Windows).	Some examples are now tested for
-	during configuration.
-
-    o	There is a new function contourLines() to produce contour
-	lines (but not draw anything).	This makes the CRAN package
-	clines (with its clines() function) redundant.
+    o	"POSIXct" objects can now have a "tzone" attribute that
+	determines how they will be converted and printed.  This means
+	that date-time objects which have a timezone specified will
+	generally be regarded as in their original time zone.
 
     o	postscript() device output has been modified to work around
 	rounding errors in low-precision calculations in gs >= 8.11.
 	(PR#5285, which is not a bug in R.)
 
-    o	New functions in the tools package: pkgDepends, getDepList and
-	installFoundDepends.  These provide functionality for assessing
-	dependencies and the availability of them (either locally or
-	from on-line repositories).
+    o	ppr() now fully supports categorical explanatory variables,
 
-    o	ppr() is now interruptible at suitable places in the
+    	ppr() is now interruptible at suitable places in the
 	underlying FORTRAN code.
 
-    o	formula.default() now looks for a "terms" component before a
-	'formula' argument in the saved call: the component will have
-	`.' expanded and probably will have the original environment
-	set as its environment.	 And what it does is now documented.
+    o	princomp() now warns if both `x' and `covmat' are supplied,
+	and returns scores only if the centring used is known.
 
-    o	as.matrix.data.frame() now coerces an all-logical data frame
-	to a logical matrix.
-
-    o	New function assignInNamespace() parallelling fixInNamespace.
-
-    o	arima() allows models with no free parameters to be fitted (to
-	find log-likelihood and AIC values, thanks to Rob Hyndman).
-
-    o	The parsed contents of a NAMESPACE file are now stored at
-	installation and if available used to speed loading the
-	package, so packages with namespaces should be reinstalled.
-
-    o	Argument `asp' although not a graphics parameter is accepted
-	in the ... of graphics functions without a warning.  It now
-	works as expected in contour().
-
-    o	The "POSIXct" and "POSIXlt" methods for rep() now pass ... on
-	to the default method (as expected by PR#5818).
-
-    o	The print() method for "difftime" objects now handles arrays.
-
-    o	methods(class=) now checks for a matching generic, and so no
-	longer returns methods for non-visible generics (and
-	eliminates various mismatches).
-
-    o	User hooks can be set for onLoad, library, detach and
-	onUnload of packages/namespaces: see ?setHook.
-
-    o	New functions factorial(x) defined as gamma(x+1) and for
-	S-PLUS compatibility, lfactorial(x) defined as lgamma(x+1).
-
-    o	expand.grid() returns appropriate array dimensions and dimnames
-	in the attribute "out.attrs", and this is used by the
-	predict() method for loess to return a suitable array.
-
-    o	dist() has a new method to calculate Minkowski distances.
-
-    o	as.data.frame() now has a method for arrays.
-
-    o	There are now print() and [ methods for "acf" objects.
-
-    o	split.screen() now works for multiple devices at once.
-
-    o	Package stats4 exports generics for AIC() and BIC().
-
-    o	The Mac OS X version now produces an R framework for easier linking
-	of R into other programs.  As a result, R.app is now relocatable.
-
-    o	Command-line Mac OS X doesn't attempt to guess whether you are
-	running an X server: the default graphical device is now pdf().
-
-    o	Added experimental support for conditionals in NAMESPACE files.
+    o	read.table() now allows embedded newlines in quoted fields. (PR#4555)
 
     o	rep.default(0-length-vector, length.out=n) now gives a vector
 	of length n and not length 0, for compatibility with S.
@@ -205,36 +165,72 @@ NEW FEATURES
 	is now ignored for S compatibility.  (Previously padding with
 	NAs was used.)
 
-    o	array() and matrix() now allow 0-length `data' arguments for
-	compatibility with S.
+     	The "POSIXct" and "POSIXlt" methods for rep() now pass ... on
+	to the default method (as expected by PR#5818).
 
-    o	"POSIXct" objects can now have a "tzone" attribute that
-	determines how they will be converted and printed.  This means
-	that date-time objects which have a timezone specified will
-	generally be regarded as in their original time zone.
+    o	User hooks can be set for onLoad, library, detach and
+	onUnload of packages/namespaces: see ?setHook.
 
-    o	princomp() now warns if both `x' and `covmat' are supplied,
-	and returns scores only if the centring used is known.
+    o	sink() now has a split= argument to direct output to both the
+	sink and the current output connection.
 
-    o	New functions head() and tail() in package `utils'.
-	(Based on a contribution by Patrick Burns.)
+    o	split.screen() now works for multiple devices at once.
 
-    o	Functions grep(), regexpr(), sub() and gsub() now coerce their
-	arguments to character, rather than give an error.
+    o	On some OSes (including Windows and those using glibc)
+	strptime() did not validate dates correctly, so we have added
+	extra code to do so.  However, this cannot correct scanning
+	errors in the OS's strptime (although we have been able to
+	work around these on Windows).	Some examples are now tested for
+	during configuration.
 
-    o	D(), deriv(), etc now also differentiate asin(), acos(), atan(),
-	(thanks to a contribution of Kasper Kristensen).
+    o	strsplit() now has `fixed' and `perl' arguments and 
+	split="" is optimized.
 
-    o	There is a new class "Date" to represent dates (without times)
-	plus many utility functions similar to those for date-times.
-	See ?Date.
+    o	subset() now allows a `drop' argument to remove unused factor
+	levels.	 The default is still to keep them.
+
+    o	termplot() has an option to smooth the partial residuals.
 
     o	varimax() and promax() add class "loadings" to their loadings
 	component.
 
-    o	legend() has a new argument 'text.col'.
+    o	Model fits now add a "dataClasses" attribute to the terms, which
+	can be used to check that the variables supplied for
+	prediction are of the same type as those used for fitting.
+	(It is currently used by predict() methods for classes "lm",
+	"mlm", "glm" and "ppr", as well as methods in packages MASS,
+	rpart and tree.)
 
-    o	strsplit() has a new argument 'perl'.
+    o	New command-line argument --max-ppsize allows the size of the
+	pointer protection stack to be set higher than the previous
+	limit of 10000.
+
+    o	The fonts on an X11() device (also jpeg() and png() on Unix)
+	can be specified by a new argument `fonts' defaulting to the
+	value of a new option "X11fonts".
+
+    o	New functions in the tools package: pkgDepends, getDepList and
+	installFoundDepends.  These provide functionality for assessing
+	dependencies and the availability of them (either locally or
+	from on-line repositories).
+
+    o	The parsed contents of a NAMESPACE file are now stored at
+	installation and if available used to speed loading the
+	package, so packages with namespaces should be reinstalled.
+
+    o	Argument `asp' although not a graphics parameter is accepted
+	in the ... of graphics functions without a warning.  It now
+	works as expected in contour().
+
+    o	Package stats4 exports generics for AIC() and BIC().
+
+    o	The Mac OS X version now produces an R framework for easier linking
+	of R into other programs.  As a result, R.app is now relocatable.
+
+    o	Command-line Mac OS X doesn't attempt to guess whether you are
+	running an X server: the default graphical device is now pdf().
+
+    o	Added experimental support for conditionals in NAMESPACE files.
 
 
 UTILITIES
@@ -260,14 +256,15 @@ UTILITIES
         field for packages that are only used in examples or
         vignettes.
 
-    o   vignette dependencies can now be checked and obtained via
+    o	Added an option to package.dependencies() to handle the
+        'Suggests' levels of dependencies.
+
+    o   Vignette dependencies can now be checked and obtained via
 	vignetteDepends.
 
-    o   option 'repositories' to list URLs for package repositories
+    o   Option 'repositories' to list URLs for package repositories
         added.
 
-    o   added an option to package.dependencies to handle the 'Suggests'
-        levels of dependencies.
 
 C-LEVEL FACILITIES
 
@@ -303,9 +300,8 @@ DEPRECATED & DEFUNCT
 	recognized as synonyms for --min-nsize and --min-vsize (which
 	replaced them in 1.2.0).
 
-    o	Unnecessary methods coef.{g}lm and fitted.{g}lm
-	have been removed: they were each identical to the default
-	method.
+    o	Unnecessary methods coef.{g}lm and fitted.{g}lm have been
+	removed: they were each identical to the default method.
 
     o	La.eigen() is deprecated now eigen() uses LAPACK by default.
 
@@ -379,7 +375,8 @@ BUG FIXES
     o	postscript() could crash if given a font value outside the
 	valid range 1...5.
 
-    o	qchisq(1-e, .., ncp=.) did not terminate for small e (PR#6421 (PR#875))
+    o	qchisq(1-e, .., ncp=.) did not terminate for small e.
+	 (PR#6421 (PR#875))
 
     o	contrasts() turns a logical variable into a factor.  This now
 	always has levels c("FALSE", "TRUE") even if only one (or
@@ -487,9 +484,9 @@ BUG FIXES
 	report correctly that the number of elements specified was too
 	large (rather than reporting it as negative).
 
-    o   minor copy-paste error in example(names).  (PR#6594)
+    o   Minor copy-paste error in example(names).  (PR#6594)
 
-    o   length<- now works correctly on factors (and is now generic
+    o   length<-() now works correctly on factors (and is now generic
 	with a method for factors).
 
     o   x <- 2^32; x:(x+3) no longer generates an error (but gives a
