@@ -48,8 +48,9 @@ rect(100+i, 300+i, 150+i, 380+i, col=rainbow(11, start=.7,end=.1))
 rect(240-i, 320+i, 250-i, 410+i, col=heat.colors(11), lwd=i/5)
 ## Background alternating  ( transparent / "bg" ) :
 j <- 10*(0:5)
-rect(125+j, 360+j, 141+j, 405+j/2, col = c(NA,0), border = "gold", lwd = 2)
-mtext("+ 6 * rect(*, col = c(NA,0))")
+rect(125+j, 360+j,   141+j, 405+j/2, col = c(NA,0), border = "gold", lwd = 2)
+rect(125+j, 296+j/2, 141+j, 331+j/5, col = c(NA,"midnightblue"))
+mtext("+  2 x 6 rect(*, col = c(NA,0)) and  col = c(NA,\"m..blue\"))")
 par(op)
 }
 \keyword{aplot}
