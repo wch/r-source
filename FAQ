@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-52 2004-03-16
+Version 1.8-53 2004-03-18
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -454,14 +454,17 @@ available for web browsing at `http://stat.ethz.ch/R-manual/'.
 
      J. Fox (2002), "An R and S-PLUS Companion to Applied Regression", Sage
      Publications, ISBN 0-761-92280-6 (softcover) or 0-761-92279-2
-     (hardcover), `http://socserv.socsci.mcmaster.ca/jfox/Books/Companion/'.
+     (hardcover),
+     `http://socserv.socsci.mcmaster.ca/jfox/Books/Companion/'.
 
      J. Maindonald and J. Braun (2003), "Data Analysis and Graphics Using R:
      An Example-Based Approach", Cambridge University Press, ISBN
-     0-521-81336-0, `http://wwwmaths.anu.edu.au/~johnm/'.
+     0-521-81336-0,
+     `http://wwwmaths.anu.edu.au/~johnm/'.
 
-     S. M. Iacus and G. Masarotto (2002), "Laboratorio di statistica con R
-     ", McGraw-Hill, ISBN 88-386-6084-0 (in Italian).
+     S. M. Iacus and G. Masarotto (2002), "Laboratorio di statistica con
+     R", McGraw-Hill, ISBN 88-386-6084-0 (in Italian),
+     `http://www.ateneonline.it/LibroAteneo.asp?item_id=1436'.
 
 The book
 
