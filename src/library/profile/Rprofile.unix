@@ -47,13 +47,13 @@ if(.Platform$GUI == "AQUA") {
 ## this is to allow g77 compiler to work
  Sys.putenv("PATH" = paste(Sys.getenv("PATH"),":/usr/local/bin",sep=""))
 
-if( !file.exists("~/.R") )
- dir.create("~/.R")
+if( !file.exists("~/Library/R") )
+ dir.create("~/Library/R")
 
-if( !file.exists("~/.R/library") )
- dir.create("~/.R/library")
+if( !file.exists("~/Library/R/library") )
+ dir.create("~/Library/R/library")
 
-.libPaths("~/.R/library")
+.libPaths("~/Library/R/library")
 
 ## still undocumented, will be moved to base soon
 "browse.pkgs" <-
@@ -64,7 +64,7 @@ function(where = c("CRAN","BIOC"), type = c("binary","source"), global = FALSE) 
         x[,1] -> i.pkgs
         x[,3] -> i.vers
         if (type == "source")
-          CRAN.packages(getOption(where)) -> y
+         CRAN.packages(getOption(where)) -> y
         else
           CRAN.binaries(getOption(where)) -> y
         y[,1] -> c.pkgs
