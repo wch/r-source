@@ -44,6 +44,7 @@ OBJS = \
 	machar.o \
 	massdist.o \
 	pretty.o \
+	pythag.o \
 	splines.o \
 	stem.o \
 	strsignif.o \
