@@ -1,9 +1,9 @@
 data <-
 function(..., list = character(0), package =c(.packages(),.Autoloaded),
-         lib.loc = .lib.loc) {
+	 lib.loc = .lib.loc) {
   names <- c(as.character(substitute(list(...))[-1]), list)
   if (!missing(package))
-    if (is.name(y <- substitute(package)))
+    if (is.name(y <- substitute(package)))# && !is.character(package))
       package <- as.character(y)
   found <- FALSE
   if (length(names) == 0) { #-- give 'index' of all possible data sets
@@ -11,15 +11,15 @@ function(..., list = character(0), package =c(.packages(),.Autoloaded),
     on.exit(unlink(file))
     for (lib in lib.loc)
       for (pkg in package) {
-        INDEX <- system.file(paste("data", "index.doc", sep = "/"),
-                             pkg, lib)
-        if (INDEX != "") {
-          cat(paste(ifelse(found, "\n", ""),
-                    "Data sets in package `", pkg, "':\n\n", sep = ""),
-              file = file, append = TRUE)
-          system(paste("cat", INDEX, ">>", file, "2>/dev/null"))
-          if(!found) found <- TRUE
-        }
+	INDEX <- system.file(paste("data", "index.doc", sep = "/"),
+			     pkg, lib)
+	if (INDEX != "") {
+	  cat(paste(ifelse(found, "\n", ""),
+		    "Data sets in package `", pkg, "':\n\n", sep = ""),
+	      file = file, append = TRUE)
+	  system(paste("cat", INDEX, ">>", file, "2>/dev/null"))
+	  if(!found) found <- TRUE
+	}
       }
     if (found)
       system(paste("$RHOME/cmd/pager", file))
@@ -27,21 +27,22 @@ function(..., list = character(0), package =c(.packages(),.Autoloaded),
   else for (name in names) {
     dn <- paste("data/", name, sep = "")
     files <- system.file(paste(dn, ".*", sep = ""), package, lib.loc)
-    found <- FALSE    
+    found <- FALSE
     if (files != "") {
       for (file in files) {
-        if (found) break
-        found <- TRUE
-        switch(sub(".*\\.", "", file),
-               "R" =, "r" = source(file),                 
-               "RData" =, "rdata" =, "rda" = load(file),
-               "TXT" =, "txt" =, "tab" =
-               assign(name, read.table(file, header = TRUE),
-                      env = .GlobalEnv),
-               "CSV" =, "csv" =
-               assign(name, read.table(file, header = TRUE, sep = ";"),
-                      env = .GlobalEnv),
-               found <- FALSE)
+	if (found) break
+	found <- TRUE
+	switch(sub(".*\\.", "", file),
+	       "R" =, "r" = source(file),
+	       "RData" =, "rdata" =, "rda" = load(file),
+	       "TXT" =, "txt" =, "tab" =
+	       assign(name, read.table(file, header = TRUE),
+		      env = .GlobalEnv),
+	       "CSV" =, "csv" =
+	       assign(name, read.table(file, header = TRUE, sep = ";"),
+		      env = .GlobalEnv),
+	       ## otherwise
+	       found <- FALSE)
       }
     }
     if (!found)
@@ -67,7 +68,7 @@ getenv <- function(x) {
 help <-
 function(topic, package = c(.packages(),.Autoloaded), lib.loc =.lib.loc) {
   if (!missing(package))
-    if (is.name(y <- substitute(package)))
+    if (is.name(y <- substitute(package)))# && !is.character(package))
       package <- as.character(y)
   if (!missing(topic)) {
     topic <- substitute(topic)
@@ -83,14 +84,18 @@ function(topic, package = c(.packages(),.Autoloaded), lib.loc =.lib.loc) {
       topic <- "Extract"
     else if (!is.na(match(topic, c("&", "&&", "|", "||", "!"))))
       topic <- "Logic"
+    topic <- gsub("\\[","\\\\[", topic)#- for cmd/help ..
     INDICES <- paste(t(outer(lib.loc, package, paste, sep = "/")),
 		     "help", "AnIndex", sep = "/", collapse = " ")
-    file <- system(paste("${RHOME}/cmd/help", topic, INDICES),
+    file <- system(paste("${RHOME}/cmd/help '", topic, "' ", INDICES, sep=""),
 		   intern = TRUE)
-    if (file == "")
+    cat ("Help file [Xroff, not source]=\n\t",file,"\n")
+
+    if (file == "") { # try data .doc -- this is OUTDATED
       file <- system.file(paste("data", "/", topic, ".doc", sep = ""),
 			  package, lib.loc)
-    if (file != "")
+    }
+    if (length(file) && file != "")
       system(paste("${RHOME}/cmd/pager", file))
     else
       stop(paste("No documentation for `", topic, "'", sep = ""))
