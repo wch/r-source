@@ -15,24 +15,27 @@ ar.ols(x, aic=TRUE, order.max=NULL, na.action, demean = TRUE, series)
 predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE) 
 }
 \arguments{
- \item{x}{A univariate or multivariate time series.}
- \item{aic}{Logical flag. If \code{TRUE} then the Akaike Information
-     Criterion is used to choose the order of the autoregressive
-     model. If \code{FALSE}, the model of order \code{order.max} is fitted.}
- \item{order.max}{Maximum order (or order) of model to fit.
-     Defaults to 10*log10(N) where N is the number of observations.}
- \item{method}{Character string giving the method used to fit the model.
-     Must be one of \code{"yule-walker"} or \code{"burg"} (the first few
-     characters are sufficient). Defaults to \code{"yule-walker"}.}
- \item{na.action}{function called to remove missing values.}
- \item{demean}{should mean be removed before fitting?}
- \item{series}{name for the series. Defaults to
-     \code{deparse(substitute(x))}.}
- \item{ar.obj}{a fit from \code{ar}.}
- \item{newdata}{data to which to apply the prediction.}
- \item{n.ahead}{number of steps ahead at which to predict.}
- \item{se.fit}{logical: return estimated standard errors of the
-     prediction error?.}
+    \item{x}{A univariate or multivariate time series.}
+    \item{aic}{Logical flag.  If \code{TRUE} then the Akaike Information
+ 	Criterion is used to choose the order of the autoregressive
+	model. If \code{FALSE}, the model of order \code{order.max} is
+	fitted.}
+    \item{order.max}{Maximum order (or order) of model to fit. Defaults
+	to \eqn{10\log_{10}(N)}{10*log10(N)} where \eqn{N} is the number
+	of observations.}
+    \item{method}{Character string giving the method used to fit the
+	model.  Must be one of \code{"yule-walker"} or \code{"burg"}
+	(the first few characters are sufficient).  Defaults to
+	\code{"yule-walker"}.} 
+    \item{na.action}{function to be called to handle missing values.}
+    \item{demean}{should mean be removed before fitting?}
+    \item{series}{name for the series.  Defaults to
+     	\code{deparse(substitute(x))}.}
+    \item{ar.obj}{a fit from \code{ar}.}
+    \item{newdata}{data to which to apply the prediction.}
+    \item{n.ahead}{number of steps ahead at which to predict.}
+    \item{se.fit}{logical: return estimated standard errors of the
+     	prediction error?.}
 }
 \description{
     Fit an autoregressive time series model to the data, by default
@@ -65,7 +68,7 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
     For \code{ar} and its methods list of class \code{"ar"} with
     the following elements:
   \item{order}{The order of the fitted model.  This is chosen by
-     minimizing the AIC if \code{aic=TRUE}, otherise it is \code{order.max}.}
+     minimizing the AIC if \code{aic=TRUE}, otherwise it is \code{order.max}.}
   \item{ar}{Estimated autoregression coefficients for the fitted model.}
   \item{var.pred}{The prediction variance: an estimate of the portion of the
      variance of the time series that is not explained by the

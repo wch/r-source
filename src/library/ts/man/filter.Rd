@@ -22,9 +22,9 @@ filter(x, filter, method="convolution", sides=2,
 	filter should be odd, but if it is even, more of the filter
         is forward in time than backward.}
 
-    \item{circular}{for convolution filters only.  If \code{TRUE}, wrap the
-       filter  around  the  ends of the series, otherwise assume
-       `external values are missing (\code{NA}).}
+    \item{circular}{for convolution filters only.  If \code{TRUE}, wrap
+	the filter around the ends of the series, otherwise assume
+	external values are missing (\code{NA}).}
 
     \item{init}{for recursive filters only. Specifies the initial values
 	of the time series just prior to the start value, in reverse

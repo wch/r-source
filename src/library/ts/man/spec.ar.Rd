@@ -6,18 +6,18 @@ spec.ar(x, n.freq, order=NULL, plot=TRUE, na.action,
         method="yule-walker", ...)
 }
 \arguments{
- \item{x}{A univariate (not yet:or multivariate) time series or the
-     result of a fit by \code{\link{ar}}.}
- \item{n.freq}{The number of points at which to plot.}
- \item{order}{The order of the AR model to be fitted. If omitted, the
-     order is chosen by AIC.}
- \item{plot}{Plot the periodogram?}
- \item{na.action}{NA action function.}
- \item{method}{\code{method} for \code{ar} fit.}
- \item{\dots}{Graphical arguments passed to \code{\link{plot.spec}}.}
+    \item{x}{A univariate (not yet:or multivariate) time series or the
+	result of a fit by \code{\link{ar}}.}
+    \item{n.freq}{The number of points at which to plot.}
+    \item{order}{The order of the AR model to be fitted.  If omitted,
+	the order is chosen by AIC.}
+    \item{plot}{Plot the periodogram?}
+    \item{na.action}{NA action function.}
+    \item{method}{\code{method} for \code{ar} fit.}
+    \item{\dots}{Graphical arguments passed to \code{\link{plot.spec}}.}
 }
 \description{
-    Fits an R model to \code{x} (or uses the existing fit) and computes
+    Fits an AR model to \code{x} (or uses the existing fit) and computes
     (and by default plots) the spectral density of the fitted model.
 }
 \value{
@@ -30,7 +30,7 @@ spec.ar(x, n.freq, order=NULL, plot=TRUE, na.action,
 
     Venables, W.N. and Ripley, B.D. (1997) \emph{Modern Applied
 	Statistics with S-PLUS.} Second edition. Springer. (Especially
-        p. 448.)
+    p. 448.)
     }
 \section{Warning}{Some authors, for example Thomson (1990), warn strongly
     that AR spectra can be misleading.}

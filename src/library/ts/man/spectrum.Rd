@@ -28,7 +28,7 @@ plot.spec.phase(spec.obj, ci=0.95, ci.lty = 3, ci.col="blue", ...)
     existing plot.}
 
 \item{ci}{Coverage probability for confidence interval. Plotting of the
-    confidence bar is omitted if \code{ci} <= 0.}
+    confidence bar is omitted unless \code{ci} is positive.}
 
 \item{log}{If \code{"dB"}, plot on log10 (decibel) scale (as S-PLUS),
     otherwise use conventional log scale or linear scale. Logical values

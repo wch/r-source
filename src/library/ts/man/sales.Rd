@@ -13,8 +13,8 @@ data (sales)
 }
 \source{
     The data are given in Box & Jenkins (1976).
-  Obtained from the Time Series Data Library at
-  \url{http://www-personal.buseco.monash.edu.au/~hyndman/TSDL/}
+    Obtained from the Time Series Data Library at
+    \url{http://www-personal.buseco.monash.edu.au/~hyndman/TSDL/}
 }
 
 \references{
@@ -27,5 +27,3 @@ data (sales)
 }
 
 \keyword{datasets}
-
-

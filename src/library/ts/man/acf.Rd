@@ -16,34 +16,35 @@ ccf(x, y, lag.max = NULL, plot = TRUE,
 plot.acf(acf.obj, ci=0.95, ...)
 }
 \arguments{
- \item{x, y}{a univariate or multivariate (not \code{ccf}) time series
-     object or a numeric vector or matrix.}
+    \item{x, y}{a univariate or multivariate (not \code{ccf}) time
+	series object or a numeric vector or matrix.}
 
- \item{lag.max}{maximum lag at which to calculate the acf. Default is
-     10*log10(N) where N is the number of observations.}
+    \item{lag.max}{maximum lag at which to calculate the acf.  Default
+	is \eqn{10\log_{10}(N)}{10*log10(N)} where \eqn{N} is the number
+	of observations.}
 
- \item{plot}{logical. If \code{TRUE} the acf is plotted.}
+    \item{plot}{logical. If \code{TRUE} the acf is plotted.}
 
- \item{type}{character string giving type of acf. Allowed values are
-     "correlation" (the default), "covariance" or "partial".}
+    \item{type}{character string giving type of acf.  Allowed values are
+ 	"correlation" (the default), "covariance" or "partial".}
 
- \item{na.action}{function to be called to handle missing values.}
+    \item{na.action}{function to be called to handle missing values.}
 
- \item{acf.obj}{an object of class \code{acf}.}
+    \item{acf.obj}{an object of class \code{acf}.}
 
- \item{ci}{coverage probability for confidence interval. Plotting of the
-     confidence interval is suppressed if \code{ci <= 0}.}
+    \item{ci}{coverage probability for confidence interval.  Plotting of
+	the confidence interval is suppressed unless \code{ci} is
+	positive.}
 
- \item{\dots}{graphical parameters.}
+    \item{\dots}{graphical parameters.}
 }
 \description{
-    The function \code{acf} computes (and by default plots)
-    estimates of the autocovariance /
-    autocorrelation function. Function \code{pacf} is the function used
-    for the partial autocorrelations.
+    The function \code{acf} computes (and by default plots) estimates of
+    the autocovariance or autocorrelation function.  Function
+    \code{pacf} is the function used for the partial autocorrelations.
 
-    Function \code{ccf} computes the
-    cross-correlation or cross-covariance of two univariate series.
+    Function \code{ccf} computes the cross-correlation or
+    cross-covariance of two univariate series.
 
     The generic function \code{plot} has a method for acf objects.
 }
@@ -67,14 +68,14 @@ plot.acf(acf.obj, ci=0.95, ...)
   \item{series}{The name of the series \code{x}.}
   \item{snames}{The series names for a multivariate time series.}
 
-  The result is returned invisibly if \code{plot} is true.
+  The result is returned invisibly if \code{plot} is \code{TRUE}.
 }
-\author{Original: Paul Gilbert, Martyn Plummer.  Extensive modifications and
-univariate case of \code{pacf} by B.D. Ripley.}
+\author{Original: Paul Gilbert, Martyn Plummer.  Extensive modifications
+    and univariate case of \code{pacf} by B.D. Ripley.}
 
-\note{The confidence interval plotted in \code{plot.acf} is based on
-an \emph{uncorrelated} series and should be treated with appropriate
-caution.}
+\note{The confidence interval plotted in \code{plot.acf} is based on an
+    \emph{uncorrelated} series and should be treated with appropriate
+    caution.}
 
 %\seealso{\code{\link{ar.yw}}}
 

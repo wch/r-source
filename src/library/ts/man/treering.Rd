@@ -21,5 +21,3 @@ data (treering)
   \url{http://www-personal.buseco.monash.edu.au/~hyndman/TSDL/}
 }
 \keyword{datasets}
-
-
