@@ -1,11 +1,8 @@
 showDefault <-
   function(object, oldMethods = TRUE)
 {
-    printNoClass <-
-        function(x, digits = NULL,quote = TRUE, na.print = NULL,
-                 print.gap = NULL, right = FALSE, ...)
-        .Internal(print.default(x, digits, quote, na.print, print.gap,
-                                right, FALSE))
+    printNoClass <- function(x)
+        .Internal(print.default(x, NULL, TRUE, NULL, NULL, FALSE, FALSE))
 
     cl <- .class1(object)
     if(isClass(cl) && is.na(match(cl, .BasicClasses))) {
