@@ -13,4 +13,4 @@ options(X11colortype = "true")
 options(pager = "${RHOME}/bin/pager")
 options(browser = "netscape")
 options(unzip = "unzip")
-
+options(mailer = "mailx")

@@ -12,6 +12,8 @@ NEW FEATURES
     o   zip files can be used for storing help and example files. See
 	the help files for "help" and "example" for details.
 
+    o   New submission method "none" (for not sending email) in bug.report().
+
 
 BUG FIXES
 
