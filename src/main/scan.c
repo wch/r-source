@@ -27,7 +27,7 @@
 
 static char  ConsoleBuf[CONSOLE_BUFFER_SIZE];
 static char *ConsoleBufp;
-static char  ConsoleBufCnt;
+static int  ConsoleBufCnt;
 static char  ConsolePrompt[32];
 
 static void InitConsoleGetchar()
