@@ -66,6 +66,16 @@ function(op, x, y)
            stop(paste("test", sQuote(op), "is not available")))
 }
 
+### * .filePathSansExt
+
+.filePathSansExt <-
+function(x)
+{
+    ## Return the file paths without extensions.
+    ## (Only purely alphanumeric extensions are recognized.)
+    sub("\\.[[:alpha:]]+$", "", x)
+}
+
 ### * .isS3Generic
            
 .isS3Generic <-

@@ -219,7 +219,8 @@ function(vignetteDir)
         contents[i, ] <- vignetteInfo(vignetteFiles[i])
     colnames(contents) <- c("File", "Title", "Depends", "Keywords")
 
-    vignettePDFs <- gsub("\\.[[:alpha:]]+$", ".pdf", vignetteFiles)
+    ## (Note that paste(character(0), ".pdf") does not do what we want.)
+    vignettePDFs <- sub("$", ".pdf", .filePathSansExt(vignetteFiles))
 
     vignetteTitles <- unlist(contents[, "Title"])
 
@@ -273,15 +274,10 @@ function(x, ...)
     if(length(x) > 0) {
         writeLines(paste("Vignettes with missing or empty",
                          "\\VignetteIndexEntry:"))
-        print(gsub("\\.[[:alpha:]]+$", "", basename(unclass(x))), ...)
+        print(basename(.filePathSansExt(unclass(x))), ...)
     }
     invisible(x)
 }
-
-### Local variables: ***
-### mode: outline-minor ***
-### outline-regexp: "### [*]+" ***
-### End: ***
 
 ### Local variables: ***
 ### mode: outline-minor ***
