@@ -133,9 +133,9 @@ par(\dots, no.readonly = FALSE)
     \code{"13"} is dotted.}
   \item{lwd}{The line width, a \emph{positive} numerical, defaulting to
       \code{1}.} 
-  \item{mai}{A numerical vector of the form \code{c(xb, yl, xt, yr)}
+  \item{mai}{A numerical vector of the form \code{c(bottom, left, top, right)}
     which gives the margin size specified in inches.}
-  \item{mar}{A numerical vector of the form \code{c(xb, yl, xt, yr)}
+  \item{mar}{A numerical vector of the form \code{c(bottom, left, top, right)}
     which gives the lines of margin to be specified on the four sides of
     the plot.  The default is \code{c(5, 4, 4, 2) + 0.1}.}
   \item{mex}{\code{mex} is a character size expansion factor which is
@@ -159,12 +159,12 @@ par(\dots, no.readonly = FALSE)
     \code{TRUE}, the next high-level plotting command (actually
     \code{\link{plot.new}(.)} should \emph{not clean} the frame before
     drawing ``as if it was on a \bold{new} device''.}
-  \item{oma}{A vector of the form \code{c(xbot, yleft, xtop, yright)} giving the
+  \item{oma}{A vector of the form \code{c(bottom, left, top, right)} giving the
     size of the outer margins in lines of text.}
   \item{omd}{A vector of the form \code{c(x1, x2, y1, y2)} giving the
     NDC coordinates of the region where (multiple) figures will appear
     on the device.}
-  \item{omi}{A vector of the form \code{c(xbot, yleft, xtop, yright)} giving the
+  \item{omi}{A vector of the form \code{c(bottom, left, top, right)} giving the
     size of the outer margins in inches.}
   \item{pch}{Either an integer specifying a symbol or a single character
     to be used as the default in plotting.}
