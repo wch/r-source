@@ -14,7 +14,8 @@ use Text::Tabs;
 	     make_file_exts
 	     read_lines
 	     shell_quote_file_path
-	     sQuote dQuote);
+	     sQuote dQuote
+	     config_val_to_logical);
 
 ### ********************************************************************
 
@@ -272,6 +273,19 @@ sub dQuote {
     ## Double quote text.
     ## Currently does not work for lists.
     return('"' . $_[0] . '"');
+}
+
+### * config_val_to_logical
+
+sub config_val_to_logical {
+    my ($val) = @_;
+    if($val =~ /^(1|yes|true)$/i) {
+	return 1;
+    }
+    elsif($val =~ /^(0|no|false)$/i) {
+	return 0;
+    }
+    carp "Warning: cannot coerce '$val' to logical";
 }
 
 ### * Non-exported functions
