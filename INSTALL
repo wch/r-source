@@ -4,11 +4,46 @@
 
 GENERALITIES
 
+This document concerns building and installing R from sources.
+Pre-made binaries are made available for some systems with varying
+regularity and can be obtained from CRAN (see the RESOURCES file).
+
 R will configure and build under a number of common Unix platforms
 including dec-alpha-osf, freebsd, hpux, linux-elf, sgi-irix, solaris,
 and sunos.  In general it is relatively easy to adapt R to new
 platforms.  See below for details.
 
+GETTING AND UNPACKING THE SOURCES
+
+The simplest way is to download the most recent R-x.yy.z.tgz package,
+and unpack them with 
+
+	tar xvfz R-x.yy.z.tgz
+
+on systems that have GNU tar installed. On other systems you need at
+least to have the "gzip" program installed. Then you can do
+
+	gzip -dc | tar xvf -
+
+If you need to transport the sources on floppy disks, you can download the
+R-x.yy.z.tgz-split.* files. and paste them together at the destination
+with
+
+	cat R-x.yy.z.tgz-split.* > R-x.yy.z.tgz
+
+and proceed as above.
+
+Finally, for minor-minor releases (x.yy.z with z != 0), a patch
+against the preceding release is made available in
+R-x.yy.{z-1}-x.yy.z.diff.gz (e.g. R-0.63.2-0.63.3.diff.gz), which is
+generally a much shorter file that the .tgz files. Such a file can be
+applied to the sources of the previous version by changing to the top
+directory of it and
+
+	gzip -dc /path/to/it/R-x.yy.{z-1}-x.yy.z.diff.gz | patch -E -p1
+
+Notice that this does not necessarily work if the older sources have
+been modified (e.g. by building in their directories).
 
 SIMPLE COMPILATION
 
