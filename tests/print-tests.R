@@ -4,6 +4,7 @@
 ####
 ####	R < print-tests.R  >&  print-tests.out-__version__
 ####			   == (csh)
+opt.conformance <- 0
 
 if(!is.R())options(echo = T, warn = 1)#-- for Splus
 print(search())#---- for Splus
@@ -11,7 +12,7 @@ print(search())#---- for Splus
 DIG <- function(d) if(missing(d)) options('digits')$dig else
 				options(digits=as.integer(d))
 
-.Options$digits <- 7; DIG(7)#-- the default; just to make sure ...
+DIG(7)#-- the default; just to make sure ...
 options(width = 200)
 
 n1 <- 2^(4*1:7)
@@ -77,7 +78,7 @@ for(i in digs1) { DIG(i); cat(i,":", formatC(v2, digits=i, width=8),"\n") }
 
 for(i in digs1) { cat(i,":");  print(v2, digits=i) } #-- exponential all thru
 ##	 ^^^^^ digs2 (>= 18: PLATFORM dependent !!
-for(i in digs2) { cat(i,":", formatC(v2, digits=i, width=8),"\n") }
+for(i in digs1) { cat(i,":", formatC(v2, digits=i, width=8),"\n") }
 
 DIG(7)#-- the default; just to make sure ...
 
@@ -133,14 +134,16 @@ tx <- tx[is.finite(tx)] #-- all kept
 
 ##------ Use  Emacs screen width 134 ;	Courier 12 ----
 cat("dig|  formatC(txp, d=dig)\n")
-for(dig in 1:22)
+for(dig in 1:17)# about >= 18 is platform dependent [libc's printf()..].
     cat(formatC(dig,w=2), formatC(txp,		      dig=dig, wid=-29),"\n")
 cat("signif() behavior\n~~~~~~~~\n",
     "dig|  formatC(signif(txp, dig=dig), dig = dig+2\n")
 for(dig in 1:12)# 13:15 (not 16:18) is libc-dependent (Linux, see below)
     cat(formatC(dig,w=2), formatC(signif(txp, d=dig), dig=dig+2, wid=-26),"\n")
 
-noquote(cbind(formatC(txp, dig = 22)))
+if(opt.conformance >= 1) {
+    noquote(cbind(formatC(txp, dig = 22)))
+}
 
 cat("dig|  formatC(signif(txn, d=dig)\n")
 for(dig in 1:14)#15: Linux 2.1.120, libc-2.0.7 differs from Debian 2.0
