@@ -30,7 +30,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE) {
         Z[cbind(i2,i)] <- -1
         Z[ i, i2] <- -x
         Z[i2, i2] <- .C("dblcen", x = 2*d, as.integer(n), PACKAGE="stats")$x
-        e <- La.eigen(Z,symmetric = FALSE, only.val = TRUE)$values
+        e <- eigen(Z,symmetric = FALSE, only.val = TRUE)$values
         add.c <- max(Re(e))
 	x <- matrix(double(n*n), n, n)
         non.diag <- row(d) != col(d)

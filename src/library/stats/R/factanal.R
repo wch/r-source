@@ -151,7 +151,7 @@ factanal.fit.mle <-
     {
         sc <- diag(1/sqrt(Psi))
         Sstar <- sc %*% S %*% sc
-        E <- La.eigen(Sstar, symmetric = TRUE)
+        E <- eigen(Sstar, symmetric = TRUE)
         L <- E$vectors[, 1:q, drop = FALSE]
         load <- L %*% diag(sqrt(pmax(E$values[1:q] - 1, 0)), q)
         diag(sqrt(Psi)) %*% load
@@ -160,7 +160,7 @@ factanal.fit.mle <-
     {
         sc <- diag(1/sqrt(Psi))
         Sstar <- sc %*% S %*% sc
-        E <- La.eigen(Sstar, symmetric = TRUE, only.values = TRUE)
+        E <- eigen(Sstar, symmetric = TRUE, only.values = TRUE)
         e <- E$values[-(1:q)]
         e <- sum(log(e) - e) - q + nrow(S)
 ##        print(round(c(Psi, -e), 5))  # for tracing
@@ -170,7 +170,7 @@ factanal.fit.mle <-
     {
         sc <- diag(1/sqrt(Psi))
         Sstar <- sc %*% S %*% sc
-        E <- La.eigen(Sstar, symmetric = TRUE)
+        E <- eigen(Sstar, symmetric = TRUE)
         L <- E$vectors[, 1:q, drop = FALSE]
         load <- L %*% diag(sqrt(pmax(E$values[1:q] - 1, 0)), q)
         load <- diag(sqrt(Psi)) %*% load
@@ -266,8 +266,8 @@ varimax <- function(x, normalize = TRUE, eps = 1e-5)
     for(i in 1:1000) {
         z <- x %*% TT
         B  <- t(x) %*% (z^3 - z %*% diag(drop(rep(1, p) %*% z^2))/p)
-        sB <- La.svd(B)
-        TT <- sB$u %*% sB$vt
+        sB <- svd(B)
+        TT <- sB$u %*% t(sB$v)
         dpast <- d
         d <- sum(sB$d)
         if(d < dpast * (1 + eps)) break

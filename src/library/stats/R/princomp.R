@@ -61,7 +61,7 @@ princomp.default <-
         sds <- sqrt(diag(cv))
         cv <- cv/(sds %o% sds)
     }
-    edc <- La.eigen(cv, symmetric = TRUE)
+    edc <- eigen(cv, symmetric = TRUE)
     ev <- edc$values
     if (any(neg <- ev < 0)) { # S-PLUS sets all := 0
         ## 9 * : on Solaris found case where 5.59 was needed (MM)
