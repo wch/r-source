@@ -7,7 +7,7 @@
 
 /* AIX at least. */
 #ifndef _ALL_SOURCE
-#undef _ALL_SOURCE
+# undef _ALL_SOURCE
 #endif
 
 /* alloca */
@@ -20,6 +20,9 @@
 
 /* Define if you have the ANSI C header files.  */
 #undef STDC_HEADERS
+
+/* Define if you have the GNU C library version >= 2 */
+#undef HAVE_GLIBC2
 
 /* (Long) Integers */
 #undef SIZEOF_LONG
@@ -38,9 +41,9 @@
 #undef HAVE_IEEE754_H		/* Linux */
 
 #ifdef HAVE_ISNAN
-#ifdef HAVE_FINITE
-#define IEEE_754
-#endif
+# ifdef HAVE_FINITE
+#  define IEEE_754
+# endif
 #endif
 
 /* Signal Handler Type */
@@ -111,11 +114,11 @@
 #undef HAVE_F77_UNDERSCORE
 
 #ifdef HAVE_F77_UNDERSCORE
-#define F77_SYMBOL(x)	x ## _
-#define F77_QSYMBOL(x)	#x ## "_"
+# define F77_SYMBOL(x)	x ## _
+# define F77_QSYMBOL(x)	#x ## "_"
 #else
-#define F77_SYMBOL(x)	x
-#define F77_QSYMBOL(x)	#x
+# define F77_SYMBOL(x)	x
+# define F77_QSYMBOL(x)	#x
 #endif
 
 /* GNU Readline Library */
@@ -167,9 +170,9 @@
 /* Some platforms other than ELF drop the leading _ */
 #undef HAVE_NO_SYMBOL_UNDERSCORE
 #ifndef HAVE_NO_SYMBOL_UNDERSCORE
-#ifdef HAVE_ELF_H
-#define HAVE_NO_SYMBOL_UNDERSCORE
-#endif
+# ifdef HAVE_ELF_H
+#  define HAVE_NO_SYMBOL_UNDERSCORE
+# endif
 #endif
 
 /* SunOS 4 is famous for broken header files */
@@ -204,22 +207,22 @@
 
 /* for platform.c to put in .Platform */
 #ifdef Unix
-#define OSTYPE      "unix"
-#define FILESEP     "/"
-#define SHLIB_EXT    ""
-#define DYNLOADEXT  "." ## SHLIB_EXT
+# define OSTYPE      "unix"
+# define FILESEP     "/"
+# define SHLIB_EXT    ""
+# define DYNLOADEXT  "." ## SHLIB_EXT
 #endif
 
 #ifdef Macintosh
-#define OSTYPE      "mac"
-#define FILESEP     ":"
-#define DYNLOADEXT  ".dll"
+# define OSTYPE      "mac"
+# define FILESEP     ":"
+# define DYNLOADEXT  ".dll"
 #endif
 
 #ifdef Win32
-#define OSTYPE      "windows"
-#define FILESEP     "/"
-#define DYNLOADEXT  ".dll"
+# define OSTYPE      "windows"
+# define FILESEP     "/"
+# define DYNLOADEXT  ".dll"
 #endif
 
 #define R_PLATFORM	"UNKNOWN"

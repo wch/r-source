@@ -577,6 +577,27 @@ AC_DEFUN(R_HEADER_SETJMP,
     AC_DEFINE(HAVE_POSIX_SETJMP)
   fi])
 dnl
+dnl R_HEADER_GLIBC2
+dnl
+AC_DEFUN(R_HEADER_GLIBC2,
+ [AC_CACHE_CHECK([for GNU C library and its version],
+    r_cv_header_glibc2,
+    AC_EGREP_CPP(yes,
+      changequote(<<, >>)dnl
+      <<
+#include <stdio.h>
+#if defined __GLIBC__ && __GLIBC__ >= 2
+  yes
+#endif
+      >>,
+      changequote([, ])dnl
+      r_cv_header_glibc2=yes,
+      r_cv_header_glibc2=no,
+      r_cv_header_glibc2=no))
+  if test "${r_cv_header_glibc2}" = yes; then
+    AC_DEFINE(HAVE_GLIBC2)
+  fi])
+dnl
 dnl R_C_OPTIEEE
 dnl
 AC_DEFUN(R_C_OPTIEEE,

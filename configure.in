@@ -397,6 +397,7 @@ case "${host}" in
     AC_DEFINE(SunOS4) ;;
 esac
 R_HEADER_SETJMP
+R_HEADER_GLIBC2
 
 AC_MSG_CHECKING([for BSD networking])
 if test "${ac_cv_header_netdb_h}" = yes \

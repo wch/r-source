@@ -1,13 +1,18 @@
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
-#include "Defn.h"
 
-#include <time.h>
+#ifdef HAVE_GLIBC2
+# define _XOPEN_SOURCE		/* so that we get strptime() */
+# include <time.h>
+# undef _XOPEN_SOURCE		/* just to make sure */
+#endif
+
+#include "Defn.h"
 
 #ifndef HAVE_STRPTIME
 /* Substitute based on glibc code. */
-#include "Rstrptime.h"
+# include "Rstrptime.h"
 #endif
 
 static const int days_in_month[12] =
@@ -25,10 +30,10 @@ static const time_t leapseconds[] =
 #endif
 
 /*
-   Adjust a struct tm to be a valid date-time.
-   Return 0 if valid, -1 if invalid and uncorrectable, or a positive
-   integer approximating the number of corrections needed.
-*/
+  Adjust a struct tm to be a valid date-time.
+  Return 0 if valid, -1 if invalid and uncorrectable, or a positive
+  integer approximating the number of corrections needed.
+  */
 static int validate_tm (struct tm *tm)
 {
     int tmp, res = 0;
