@@ -1244,7 +1244,7 @@ static SEXP ReadItem (SEXP ref_table, R_inpstream_t stream)
 	UNPROTECT(1); /* s */
 	return s;
     default:
-	/* These break out of the swith to have their ATTR,
+	/* These break out of the switch to have their ATTR,
 	   LEVELS, and OBJECT fields filled in.  Each leaves the
 	   newly allocated value PROTECTed */
 	switch (type) {
