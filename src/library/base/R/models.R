@@ -179,13 +179,13 @@ na.omit.default <- function(object)
     if(!is.atomic(object)) return(object)
     d <- dim(object)
     if(length(d) > 2) return(object)
+    omit <- seq(along=object)[is.na(object)]
+    if (length(omit) == 0) return(object)
     if(length(d)){
-        omit <- seq(along=object)[is.na(object)]
         omit <- unique(((omit-1) %% d[1]) + 1)
         nm <- rownames(object)
         object <- object[-omit, , drop=FALSE]
     } else {
-	omit <- seq(along=object)[is.na(object)]
         nm <- names(object)
         object <- object[-omit]
     }
