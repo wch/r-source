@@ -1,3 +1,16 @@
+
+"limitedLabels" <- function(value, maxwidth = options()$width)
+{
+    value <- as.character(value)
+    if(is.null(maxwidth) || maxwidth < 40)
+        maxwidth <- 40
+    if(any(nchar(value) > maxwidth)) {
+        trim <- nchar(value) > maxwidth
+        value[trim] <- substr(value[trim], 1, maxwidth)
+    }
+    value
+}
+      
 recover <-
   function()
 {
@@ -18,12 +31,12 @@ recover <-
         }
     }
     if(from > 0) {
-        dump.frames(".RecoverFrames")
+        try(dump.frames(".RecoverFrames"))
         if(!interactive()) {
             message("Frames dumped to .RecoverFrames")
             return(NULL)
         }
-        names(frames) <- sys.calls()    ## why does this work?
+        names(frames) <- limitedLabels(sys.calls())
         flist <- as.list(frames)
         length(flist) <- from
         frames <- as.pairlist(flist)

@@ -1,5 +1,6 @@
 \name{recover}
 \alias{recover}
+\alias{safeNames<-}
 \title{Browsing on an Error }
 \description{
   This function allows the user to browse directly on any of the
@@ -40,6 +41,16 @@ recover()
   functions are essentially unrelated and interact quite differently
   with the user.
 }
+
+\section{safeNames}{
+  Included in the source with \code{recover} is an assignment function,
+  \code{safeNames<-}.  This function is used by \code{recover} in place
+  of the raw assignment of names, since the latter can cause another
+  error if the calls happen to be such that the names exceed a built-in
+  limit in R on the length of a name object.  (Lots of possible fixes
+  for this, but in any case what we don't want is to generate another
+  error in trying to invoke \code{recover}).
+  }
 
 \references{\emph{Programming with Data}, (John M. Chambers, Springer,
   1998).  See the compatibility note above, however.}
