@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-28 @value{FAQ-YEAR}-06-27
+@set FAQ-VERSION 1.9-31 @value{FAQ-YEAR}-07-09
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -1439,11 +1439,10 @@ R disallows repeated formal arguments in function calls.
 @item
 In S, @code{dump()}, @code{dput()} and @code{deparse()} are essentially
 different interfaces to the same code.  In R from version 2.0.0, this is
-only true if the same values are passed in the @code{forDisplay} and
-@code{useSource} arguments, but by default they are not.  By default
-@code{dump()} tries to write code that will evaluate to reproduce the
-object, whereas @code{dput()} and @code{deparse()} default to options
-for producing deparsed code that is readable.
+only true if the same @code{control} argument is used, but by default it
+is not.  By default @code{dump()} tries to write code that will evaluate
+to reproduce the object, whereas @code{dput()} and @code{deparse()}
+default to options for producing deparsed code that is readable.
 
 @end itemize
 
@@ -2026,6 +2025,19 @@ Monte Carlo exact tests for log-linear models.
 @item exactRankTests
 Computes exact @math{p}-values and quantiles using an implementation of
 the Streitberg/Roehmel shift algorithm.
+@item fBasics
+The Rmetrics module for ``Markets, basic statistics, and date and time
+management''.  Rmetrics is an environment and software collection for
+teaching financial engineering and computational finance
+(@uref{http://www.Rmetrics.org/}).
+@item fExtremes
+The Rmetrics module for ``Beyond the Sample, Dealing with Extreme
+Values''.
+@item fOptions
+The Rmetrics module for ``The Valuation of Options''.
+@item fSeries
+The Rmetrics module for ``The Dynamical Process Behind Financial
+Markets''.
 @item fastICA
 Implementation of FastICA algorithm to perform Independent Component
 Analysis (ICA) and Projection Pursuit.
@@ -2716,6 +2728,8 @@ Functions for optimal design of two-stage-studies using the Mean Score
 method.
 @item udunits
 Interface to Unidata's routines to convert units.
+@item urn
+Functions for sampling without replacement (simulated urns).
 @item urca
 Unit root and cointegration tests for time series data.
 @item vardiag

@@ -7,17 +7,15 @@
   or connection, or uses one to recreate the object.
 }
 \usage{
-dput(x, file = "", forDisplay = TRUE, useSource = FALSE)
+dput(x, file = "", control = "showAttributes")
 dget(file)
 }
 \arguments{
   \item{x}{an object.}
   \item{file}{either a character string naming a file or a
     connection. \code{""} indicates output to the console.}
-  \item{forDisplay}{logical indicating whether to make the representation 
-                    more readable}
-  \item{useSource}{logical indicating whether to use the saved source
-  		   when writing a function}
+  \item{control}{character vector indicating deparsing options.
+    See \code{\link{deparse}} for their description.}
 }
 \details{
   \code{dput} opens \code{file} and deparses the object \code{x} into
@@ -26,20 +24,17 @@ dget(file)
   Hence scoping information can be lost.
 
   Deparsing an object is difficult, and not always possible.  With the
-  default \code{forDisplay = TRUE}, \code{dput()} attempts to deparse in
+  default \code{control = c("showAttributes")}, \code{dput()} attempts to deparse in
   a way that is readable, but for more complex or unusual objects, not
-  likely to be parsed as identical to the original.  For example,
-  attributes are usually not shown.  The argument 
-  \code{forDisplay = FALSE} causes the deparsing to be more faithful to
-  the original, so this option should usually be used when \code{dget} is
-  planned:  but even in this case, some objects will not be reproduced
-  identically.
+  likely to be parsed as identical to the original.  Use \code{control = "all"} 
+  for the most complete deparsing; use \code{control = NULL}
+  for the simplest deparsing, not even including attributes.
 
   \code{dput} will warn if fewer characters were written to a file than
   expected, which may indicate a full or corrupt file system.
     
   To display saved source rather than deparsing the internal representation 
-  use \code{useSource = TRUE}.  \R currently saves source only for
+  include \code{"useSource"} in \code{control}.  \R currently saves source only for
   function definitions.
 }
 \note{
@@ -69,7 +64,7 @@ baz <- function(x) {
 ## and display it
 dput(baz)
 ## and now display the saved source
-dput(baz, useSource = TRUE)
+dput(baz, control = "useSource")
 }
 \keyword{file}
 \keyword{programming}

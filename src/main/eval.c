@@ -1125,7 +1125,12 @@ SEXP do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  out efficiently using previously computed components.
  */
 
-static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal, R_varloc_t tmploc)
+/*
+  For complex superassignment  x[y==z]<<-w
+  we want x required to be nonlocal, y,z, and w permitted to be local or nonlocal.
+*/
+
+static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal,  R_varloc_t tmploc)
 {
     SEXP val, nval, nexpr;
     if (isNull(expr))
@@ -1135,8 +1140,8 @@ static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal, R_varloc_t tmploc)
 	if(forcelocal) {
 	    nval = EnsureLocal(expr, rho);
 	}
-	else {
-	    nval = eval(expr, rho);
+	else {/* now we are down to the target symbol */
+	  nval = eval(expr, ENCLOS(rho));
 	}
 	UNPROTECT(1);
 	return CONS(nval, expr);

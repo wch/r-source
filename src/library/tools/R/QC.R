@@ -6,8 +6,7 @@ function(package, dir, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
+            stop(.wrong_args("package", "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         helpIndex <- file.path(dir, "help", "AnIndex")
@@ -337,8 +336,7 @@ function(package, dir, lib.loc = NULL,
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
+            stop(.wrong_args("package", "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         codeDir <- file.path(dir, "R")
@@ -786,8 +784,7 @@ function(package, lib.loc = NULL)
 
     ## Argument handling.
     if(length(package) != 1)
-        stop(paste("argument", sQuote("package"),
-                   "must be of length 1"))
+        stop(.wrong_args("package", "must be of length 1"))
     dir <- .find.package(package, lib.loc)
     if(!file_test("-d", file.path(dir, "R")))
         stop(paste("directory", sQuote(dir),
@@ -930,8 +927,7 @@ function(package, lib.loc = NULL)
 
     ## Argument handling.
     if(length(package) != 1)
-        stop(paste("argument", sQuote("package"),
-                   "must be of length 1"))
+        stop(.wrong_args("package", "must be of length 1"))
 
     dir <- .find.package(package, lib.loc)
     if(!file_test("-d", file.path(dir, "man")))
@@ -1080,8 +1076,7 @@ function(package, dir, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
+            stop(.wrong_args("package", "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
     }
@@ -1315,8 +1310,7 @@ function(package, dir, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
+            stop(.wrong_args("package", "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in 'dir' ...
         codeDir <- file.path(dir, "R")
@@ -1562,8 +1556,7 @@ function(package, dir, file, lib.loc = NULL,
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
+            stop(.wrong_args("package", "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         codeDir <- file.path(dir, "R")
@@ -1706,8 +1699,7 @@ function(package, dir, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
+            stop(.wrong_args("package", "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         codeDir <- file.path(dir, "R")
@@ -1995,8 +1987,7 @@ function(package, dir, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
+            stop(.wrong_args("package", "must be of length 1"))
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         codeDir <- file.path(dir, "R")
@@ -2148,8 +2139,7 @@ function(package, dir, file, lib.loc = NULL)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
-            stop(paste("argument", sQuote("package"),
-                       "must be of length 1"))
+            stop(.wrong_args("package", "must be of length 1"))
         ## Using package installed in @code{dir} ...
         dir <- .find.package(package, lib.loc)
         if(file.exists(file.path(dir, "R", "all.rda"))) {
@@ -2268,14 +2258,13 @@ function(x, ...)
 function(package)
 {
     if(length(package) != 1)
-        stop(paste("argument", sQuote("package"),
-                   "must be of length 1"))
+        stop(.wrong_args("package", "must be of length 1"))
     dir <- .find.package(package)
 
     ## We definitely need a valid DESCRIPTION file.
     db <- .read_description(file.path(dir, "DESCRIPTION"))
 
-    packageName <- basename(dir)
+    package_name <- basename(dir)
     ## (Should really use db["Package"], but then we need to check
     ## whether this is really there ...)
     if("Depends" %in% names(db)) {
@@ -2294,28 +2283,29 @@ function(package)
     else
         suggests <- character()
 
-    badDepends <- list()
+    standard_package_names <- .get_standard_package_names()
+
+    bad_depends <- list()
 
     ## Are all packages listed in Depends/Suggests installed?
     ## Need to treat specially the former stub packages.
     reqs <- unique(c(depends, suggests))
     reqs <- reqs %w/o% utils::installed.packages()[ , "Package"]
-    m <- reqs %in% c("ctest", "eda", "lqs", "mle", "modreg", "mva",
-                     "nls", "stepfun", "ts")
+    m <- reqs %in% standard_package_names$stubs
     if(length(reqs[!m]))
-        badDepends$requiredButNotInstalled <- reqs[!m]
+        bad_depends$required_but_not_installed <- reqs[!m]
     if(length(reqs[m]))
-        badDepends$requiredButStub <- reqs[m]
+        bad_depends$required_but_stub <- reqs[m]
 
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?
-    vignetteDir <- file.path(dir, "doc")
-    if(file_test("-d", vignetteDir)
-       && length(list_files_with_type(vignetteDir, "vignette"))) {
+    vignette_dir <- file.path(dir, "doc")
+    if(file_test("-d", vignette_dir)
+       && length(list_files_with_type(vignette_dir, "vignette"))) {
         reqs <- .build_vignette_index(dir)$Depends
-        reqs <- reqs %w/o% c(depends, suggests, packageName)
+        reqs <- reqs %w/o% c(depends, suggests, package_name)
         if(length(reqs))
-            badDepends$missingVignetteDepends <- reqs
+            bad_depends$missing_vignette_depends <- reqs
     }
 
     ## Are all namespace dependencies listed as package dependencies?
@@ -2325,35 +2315,35 @@ function(package)
         ## Not clear whether we want to require *all* namespace package
         ## dependencies listed in DESCRIPTION, or e.g. just the ones on
         ## non-base packages.  Do the latter for time being ...
-        basePackageNames <-
-            utils::installed.packages(priority = "base")[, "Package"]
-        reqs <- reqs %w/o% c(depends, basePackageNames)
+        reqs <- reqs %w/o% c(depends, standard_package_names$base)
         ## </FIXME>
         if(length(reqs))
-            badDepends$missingNamespaceDepends <- reqs
+            bad_depends$missing_namespace_depends <- reqs
     }
 
-    class(badDepends) <- "check_package_depends"
-    badDepends
+    class(bad_depends) <- "check_package_depends"
+    bad_depends
 }
 
-print.check_package_depends <- function(x, ...) {
-    if(length(bad <- x$requiredButNotInstalled)) {
+print.check_package_depends <-
+function(x, ...)
+{
+    if(length(bad <- x$required_but_not_installed)) {
         writeLines("Packages required but not available:")
         .pretty_print(bad)
         writeLines("")
     }
-    if(length(bad <- x$requiredButStub)) {
+    if(length(bad <- x$required_but_stub)) {
         writeLines("Former standard packages required but now defunct:")
         .pretty_print(bad)
         writeLines("")
     }
-    if(length(bad <- x$missingVignetteDepends)) {
+    if(length(bad <- x$missing_vignette_depends)) {
         writeLines("Vignette dependencies not required:")
         .pretty_print(bad)
         writeLines("")
     }
-    if(length(bad <- x$missingNamespaceDepends)) {
+    if(length(bad <- x$missing_namespace_depends)) {
         writeLines("Namespace dependencies not required:")
         .pretty_print(bad)
         writeLines("")
@@ -2402,7 +2392,12 @@ function(dir)
         ## Let's not worry about named sections for the time being ...
         bad_tags <- c(mandatory_tags %w/o% tags,
                       if(!length(x$meta$aliases)) "alias",
-                      if(!length(x$meta$keywords)) "keyword")
+                      ## Allow for empty keywords (these do not make it
+                      ## into the metadata).
+                      if(!(length(x$meta$keywords)
+                           || any(grep("^[[:space:]]*$",
+                                       x$data$vals[tags == "keyword"]))))
+                      "keyword")
         if(length(bad_tags))
             files_with_missing_mandatory_tags <-
                 rbind(files_with_missing_mandatory_tags,
@@ -2451,7 +2446,9 @@ function(dir)
     val
 }
 
-print.check_Rd_files_in_man_dir <- function(x, ...) {
+print.check_Rd_files_in_man_dir <-
+function(x, ...)
+{
     if(length(x$files_with_surely_bad_Rd)) {
         writeLines("Rd files with syntax errors:")
         bad <- x$files_with_surely_bad_Rd
@@ -2517,6 +2514,202 @@ print.check_Rd_files_in_man_dir <- function(x, ...) {
                      "R home directory).")
         writeLines(c(strwrap(msg), ""))
     }
+    invisible(x)
+}
+
+### * .check_package_description
+
+.check_package_description <-
+function(dfile)
+{
+    dfile <- file_path_as_absolute(dfile)
+    db <- .read_description(dfile)
+
+    standard_package_names <- .get_standard_package_names()
+
+    .valid_package_name_regexp <- "[[:alpha:]][[:alnum:].]*"
+    .valid_package_version_regexp <-
+        "([[:digit:]]+[.-]){1,}[[:digit:]]+"
+
+    is_base_package <-
+        !is.na(priority <- db["Priority"]) && priority == "base"
+
+    out <- list()                       # For the time being ...
+
+    ## Mandatory entries in DESCRIPTION:
+    ##   Package, Version, License, Description, Title, Author,
+    ##   Maintainer.
+    required_fields <- c("Package", "Version", "License", "Description",
+                         "Title", "Author", "Maintainer")
+    if(any(i <- which(is.na(match(required_fields, names(db))))))
+        out$missing_required_fields <- required_fields[i]
+    
+    val <- package_name <- db["Package"]
+    if(!is.na(val)) {
+        tmp <- character()
+        if(regexpr(paste("^", .valid_package_name_regexp, "$",
+                         sep = ""),
+                   val) == -1)
+            tmp <- c(tmp, "Malformed package name")
+        ## <FIXME>
+        ## Not clear if we really want to do this.  The Perl code still
+        ## seemed to assume that when checking a package, package name
+        ## and 'directory' (i.e., the base name of the directory with
+        ## the DESCRIPTION metadata) need to be the same.
+        if(val != basename(dirname(dfile)))
+            tmp <- c(tmp, "Package name differs from dir name.")
+        ## </FIXME>
+        if(!is_base_package) {
+            if(val %in% standard_package_names$base)
+                tmp <- c(tmp,
+                         c("Invalid package name.",
+                           "This is the name of a base package."))
+            else if(val %in% standard_package_names$stubs)
+                tmp <- c(tmp,
+                         c("Invalid package name.",
+                           paste("This name was used for a base",
+                                 "package and is remapped by",
+                                 "library().")))
+        }
+        if(length(tmp))
+            out$bad_package <- tmp
+    }
+    if(!is.na(val <- db["Version"])
+       && !is_base_package
+       && (regexpr(paste("^", .valid_package_version_regexp, "$",
+                         sep = ""),
+                   val) == -1))
+        out$bad_version <- val
+    if(!is.na(val <- db["Maintainer"])
+       && (regexpr("(^[^<>]*<[^<>@]+@[^<>@]+> *$|ORPHANED)", val)
+           == -1))
+        out$bad_maintainer <- val
+
+    ## Optional entries in DESCRIPTION:
+    ##   Depends/Suggests, Namespace, Priority.
+    ## These must be correct if present.
+
+    val <- db[match(c("Depends", "Suggests"), names(db), nomatch = 0)]
+    if(length(val)) {
+        depends <- .strip_whitespace(unlist(strsplit(val, ",")))
+        bad_dep_entry <- bad_dep_op <- bad_dep_version <- character()
+        dep_regexp <-
+            paste("^[[:space:]]*",
+                  paste("(", .valid_package_name_regexp, ")", sep = ""),
+                  "([[:space:]]*\\(([^) ]+)[[:space:]]+([^) ]+)\\))?",
+                  "[[:space:]]*$",
+                  sep = "")
+        for(dep in depends) {
+            if(regexpr(dep_regexp, dep) == -1) {
+                ## Entry does not match the regexp.
+                bad_dep_entry <- c(bad_dep_entry, dep)
+                next
+            }
+            if(nchar(sub(dep_regexp, "\\2", dep))) {
+                ## If not just a valid package name ...
+                if(!sub(dep_regexp, "\\3", dep) %in% c("<=", ">="))
+                    bad_dep_op <- c(bad_dep_op, dep)
+                else if(regexpr(paste("^",
+                                      .valid_package_version_regexp,
+                                      "$", sep = ""),
+                                sub(dep_regexp, "\\4", dep)) == -1)
+                    bad_dep_version <- c(bad_dep_version, dep)
+            }
+        }
+        if(length(c(bad_dep_entry, bad_dep_op, bad_dep_version)))
+            out$bad_depends_or_suggests <-
+                list(bad_dep_entry = bad_dep_entry,
+                     bad_dep_op = bad_dep_op,
+                     bad_dep_version = bad_dep_version)
+    }
+    if(!is.na(val <- db["Namespace"])
+       && !is.na(package_name)
+       && (val != package_name))
+        out$bad_namespace <- val
+    if(!is.na(val <- db["Priority"])
+       && !is.na(package_name)
+       && (tolower(val) %in% c("base", "recommended", "defunct-base"))
+       && !(package_name %in% unlist(standard_package_names)))
+        out$bad_priority <- val
+    
+    class(out) <- "check_package_description"             
+
+    out
+}
+
+print.check_package_description <-
+function(x, ...)
+{
+    if(length(x$missing_required_fields)) {
+        writeLines("Required fields missing:")
+        .pretty_print(x$missing_required_fields)
+        writeLines("")
+    }
+    if(length(x$bad_package))
+        writeLines(c(strwrap(x$bad_package), ""))
+    if(length(x$bad_version))
+       writeLines(c("Malformed package version.", ""))
+    if(length(x$bad_maintainer))
+        writeLines(c("Malformed maintainer field.", ""))
+
+    if(any(as.integer(sapply(x$bad_depends_or_suggests, length)))) {
+        bad <- x$bad_depends_or_suggests
+        writeLines("Malformed Depends or Suggests field.")
+        if(length(bad$bad_dep_entry)) {
+            tmp <- c("Offending entries:",
+                     paste(" ", bad$bad_dep_entry),
+                     strwrap(paste("Entries must be names of packages ",
+                                   "optionally followed by ",
+                                   sQuote("<="),
+                                   " or ",
+                                   sQuote(">="),
+                                   ", white space, and a valid ",
+                                   "version number in parentheses.",
+                                   sep = "")))
+            writeLines(tmp)
+        }
+        if(length(bad$bad_dep_op)) {
+            tmp <- c("Entries with infeasible comparison operator:",
+                     paste(" ", bad$bad_dep_entry),
+                     strwrap(paste("Only operators", sQuote("<="),
+                                   "and", sQuote(">="),
+                                   "are possible.")))
+            
+            writeLines(tmp)
+        }
+        if(length(bad$bad_dep_version)) {
+            tmp <- c("Entries with infeasible version number:",
+                     paste(" ", bad$bad_dep_version),
+                     strwrap(paste("Version numbers must be sequences ",
+                                   "of at least two non-negative ",
+                                   "integers, separated by single ",
+                                   sQuote("."),
+                                   " or ",
+                                   sQuote("-"),
+                                   ".",
+                                   sep = "")))
+            writeLines(tmp)
+        }
+        writeLines("")
+    }        
+    if(length(x$bad_namespace))
+        writeLines(c("Package name and namespace differ.", ""))
+    if(length(x$bad_priority))
+        writeLines(c("Invalid Priority field.",
+                     strwrap(paste("Packages with priorities 'base'",
+                                   "or 'recommended' or 'defunct-base'",
+                                   "must already be known to R.")),
+                     ""))
+
+    if(any(as.integer(sapply(x, length))))
+        writeLines(c(strwrap(paste("See the information on DESCRIPTION",
+                                   "files in section",
+                                   sQuote("Creating R packages"),
+                                   "of the",
+                                   sQuote("Writing R Extensions"),
+                                   "manual.")),
+                     ""))
+
     invisible(x)
 }
 

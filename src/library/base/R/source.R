@@ -49,8 +49,8 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	ei <- exprs[i]
 	if (echo) {
 	    # drop "expression("
-	    dep <- substr(paste(deparse(ei, useSource = TRUE), collapse = "\n"),
-			  12, 1e+06)
+	    dep <- substr(paste(deparse(ei, control = c("showAttributes","useSource")), 
+	    		  collapse = "\n"), 12, 1e+06)
 	    # -1: drop ")"
 	    nd <- nchar(dep) - 1
 	    do.trunc <- nd > max.deparse.length
@@ -77,7 +77,8 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	if (print.eval && yy$visible)
 	    print(yy$value)
 	if (verbose)
-	    cat(" .. after ", sQuote(deparse(ei, useSource = TRUE)), "\n", sep = "")
+	    cat(" .. after ", sQuote(deparse(ei, 
+	    	control = c("showAttributes","useSource"))), "\n", sep = "")
     }
     invisible(yy)
 }

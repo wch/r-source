@@ -670,6 +670,11 @@ Date: Tue, 29 Jun 2004 09:00:36 +0200 (CEST)
 Subject: Installation of R 1.9 on Mac OS X 10.3
 From: deejemon@eudoramail.com
 Date: Wed, 30 Jun 2004 03:26:05 +0200 (CEST)
+* PR# 7047 *
+Subject: DSTEIN error
+From: weigand.stephen@charter.net
+Date: Sat,  3 Jul 2004 05:09:36 +0200 (CEST)
+..Mac OS X BLAS problem
 
 Directory:  Misc
 
@@ -857,6 +862,10 @@ Subject: R fails to build on AFS
 From: Atro.Tossavainen+rproject@helsinki.fi
 Date: Wed, 28 Jan 2004 14:40:27 +0100 (CET)
 ..insufficent information: what was the error message?
+* PR# 7062 *
+Subject: fedora core 2 + bitmap() + ghostscript
+From: Piers Dunstan <Piers.Dunstan@csiro.au>
+Date: Wed, 07 Jul 2004 10:01:42 +1000
 
 Directory:  TooMuchAtOnce
 
@@ -923,7 +932,35 @@ Date: Tue, 20 Apr 2004 14:15:05 -0400
 Subject: segfault in apply with "==" and double
 From: chabrier@toulouse.inra.fr
 Date: Thu,  1 Jul 2004 12:26:26 +0200 (CEST)
-* PR# 7044 *
-Subject: =?iso-8859-1?B?Q29tZSBjaGVjayBvdXQgb3VyIGJlc3QgZGVhbHMgb24gbWVkaWNhdGlv?=
-From: "Impoverishment L. Mounties" <irreconcilable@aereated.com>
-Date: Thu, 01 Jul 2004 14:01:40 -0700
+* PR# 7052 *
+Subject: Rd2txt bug
+From: "Dorer, David" <DDORER@PARTNERS.ORG>
+Date: Mon, 5 Jul 2004 11:39:18 -0400 
+* PR# 7055 *
+Subject: Wrong object type produced - LANGSXP should be LISTSXP
+From: bauerda@ieee.org
+Date: Tue,  6 Jul 2004 20:25:04 +0200 (CEST)
+* PR# 7068 *
+Subject: Bug in Make or configure: spaces in path
+From: williams.elliot@bls.gov
+Date: Thu,  8 Jul 2004 01:50:10 +0200 (CEST)
+* PR# 7072 *
+Subject: Reproducible Rterm crash.
+From: "Richard M. Heiberger" <rmh@temple.edu>
+Date: Fri, 9 Jul 2004 15:27:56 -0400
+* PR# 7073 *
+Subject: i miss you
+From: "Lashawn Annamaria" <ibt8mdlqi@netsol.net>
+Date: Sat, 10 Jul 2004 19:36:21 +0300
+* PR# 7074 *
+Subject: Charge your Mobile Phone Anywhere, Anytime
+From: "Marne Denning" <Barnett_Lubach@achildscry.org>
+Date: Sun, 11 Jul 2004 01:14:23 +0400
+* PR# 7075 *
+Subject: read.table, read.fwf, and na.strings
+From: "Richard M. Heiberger" <rmh@temple.edu>
+Date: Sat, 10 Jul 2004 17:21:01 -0400
+* PR# 7076 *
+Subject: bug in xyplot xlab, etc
+From: "Richard M. Heiberger" <rmh@temple.edu>
+Date: Sat, 10 Jul 2004 17:28:03 -0400

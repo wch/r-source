@@ -2165,7 +2165,7 @@ SEXP do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     /* saveToConn(list, conn, ascii, version, environment) */
 
     SEXP s, t, source, list;
-    Rboolean ascii;
+    Rboolean ascii, wasopen;
     int len, j, version;
     Rconnection con;
     struct R_outpstream_st out;
@@ -2197,11 +2197,17 @@ SEXP do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     if (source != R_NilValue && TYPEOF(source) != ENVSXP)
 	error("bad environment");
 
+    wasopen = con->isopen;
+    if(!wasopen && !con->open(con)) error("cannot open the connection");
+    if(!con->canwrite) error("connection not open for writing");    
+
     if (ascii) {
 	magic = "RDA2\n";
 	type = R_pstream_ascii_format;
     }
     else {
+	if (con->text)
+	    error("cannot save XDR format to a text-mode connection");
 	magic = "RDX2\n";
 	type = R_pstream_xdr_format;
     }
@@ -2228,7 +2234,7 @@ SEXP do_saveToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     R_Serialize(s, &out);
-
+    if (!wasopen) con->close(con);
     UNPROTECT(1);
     return R_NilValue;
 }

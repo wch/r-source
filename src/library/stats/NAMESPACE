@@ -301,10 +301,13 @@ S3method(summary, ppr)
 
 ## from mva
 
-export(as.dendrogram, as.dist, as.hclust, biplot, cancor, cmdscale,
-       cophenetic, cutree, dist, factanal, hclust, heatmap, kmeans,
-       loadings, order.dendrogram, plclust, prcomp, princomp, promax,
-       rect.hclust, reorder, screeplot, varimax)
+export(as.dist, as.hclust, biplot, cancor, cmdscale,
+       cophenetic, cutree, dist, factanal, hclust, kmeans,
+       loadings, plclust, prcomp, princomp, promax,
+       rect.hclust, screeplot, varimax)
+## dendro*
+export(as.dendrogram, dendrapply, heatmap, is.leaf,
+       order.dendrogram, reorder)
 
 ## methods which are documented but not exported
 ## export(as.hclust.default, as.matrix.dist,
@@ -325,6 +328,7 @@ S3method(biplot, prcomp)
 S3method(cut, dendrogram)
 S3method(format, dist)
 S3method(identify, hclust)
+S3method(labels, dendrogram)
 S3method(names, dist)
 S3method("names<-", dist)
 S3method(plot, dendrogram)

@@ -26,6 +26,8 @@ The windows() device has new 'bg' argument to set the background colour
 C headers files are now installed into R_HOME/include rather than
 R_HOME/src/include (as on Unix).
 
+choose.files() now expands '~' to the user's home directory, as 
+most other file system functions do.
 
 
 rw1091

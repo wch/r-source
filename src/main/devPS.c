@@ -3981,12 +3981,20 @@ static int alphaVersion(PDFDesc *pd) {
 	    (pd->versionMajor == 1 && pd->versionMinor >= 4));
 }
 
+/*
+ * Do we need to bother with semi-transparency?
+ */
+static int semiTransparent(int col)
+{
+    return !(R_OPAQUE(col) || R_TRANSPARENT(col));
+}
+
 static void PDF_SetLineColor(int color, NewDevDesc *dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
 
     if(color != pd->current.col) {
-	if (alphaVersion(pd)) {
+	if (alphaVersion(pd) && semiTransparent(color)) {
 	    /* 
 	     * Apply graphics state parameter dictionary 
 	     * to set alpha
@@ -4006,7 +4014,7 @@ static void PDF_SetFill(int color, NewDevDesc *dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
     if(color != pd->current.fill) {
-	if (alphaVersion(pd)) {
+	if (alphaVersion(pd) && semiTransparent(color)) {
 	    /* 
 	     * Apply graphics state parameter dictionary 
 	     * to set alpha
@@ -4405,7 +4413,9 @@ static void PDF_Rect(double x0, double y0, double x1, double y1,
     /*
      * Only try to do real transparency if version at least 1.4
      */
-    if (alphaVersion(pd)) {
+    if ((semiTransparent(gc->col) ||
+	 semiTransparent(gc->fill)) &&
+	alphaVersion(pd)) {
 	if(pd->inText) textoff(pd);
 	PDF_SetFill(gc->fill, dd);
 	PDF_SetLineColor(gc->col, dd);
@@ -4443,13 +4453,18 @@ static void PDF_Circle(double x, double y, double r,
     /*
      * Only try to do real transparency if version at least 1.4
      */
-    if (alphaVersion(pd)) {
-	if(pd->inText) textoff(pd);
+    if ((semiTransparent(gc->col) ||
+	 semiTransparent(gc->fill)) &&
+	alphaVersion(pd)) {
 	PDF_SetFill(gc->fill, dd);
 	PDF_SetLineColor(gc->col, dd);
 	PDF_SetLineStyle(gc->lty, gc->lwd, dd);
-	if(r > 10) { /* somewhat arbitrary, use font up to 20pt */
-	    /* Use four Bezier curves, hand-fitted to quadrants */
+	/*
+	 * Due to possible bug in Acrobat Reader for rendering
+	 * semi-transparent text, only every draw Bezier curves
+	 * regardless of circle size.
+	 */
+	{ 
 	    double s = 0.55 * r;
 	    if(pd->inText) textoff(pd);
 	    fprintf(pd->pdffp, "  %.2f %.2f m\n", x - r, y);
@@ -4462,22 +4477,7 @@ static void PDF_Circle(double x, double y, double r,
 	    fprintf(pd->pdffp, "  %.2f %.2f %.2f %.2f %.2f %.2f c\n",
 		    x - s, y - r, x - r, y - s, x - r, y);
 	    fprintf(pd->pdffp, "B\n"); 
-	} else {
-	    /* Use char 108 in Dingbats, which is a solid disc
-	       afm is C 108 ; WX 791 ; N a71 ; B 35 -14 757 708 ;
-	       so diameter = 0.722 * size
-	       centre = (0.396, 0.347) * size
-	    */
-	    a = 2./0.722 * r;
-	    xx = x - 0.396*a;
-	    yy = y - 0.347*a;
-	    tr = 2;
-	    if(!pd->inText) texton(pd);
-	    fprintf(pd->pdffp,
-		    "/F1 1 Tf %d Tr %.2f 0 0 %.2f %.2f %.2f Tm",
-		    tr, a, a, xx, yy);
-	    fprintf(pd->pdffp, " (l) Tj 0 Tr\n");
-	}
+	} 
     } else {
 	code = 2 * (R_ALPHA(gc->fill) == 0) + (R_ALPHA(gc->col) == 0);
 	if (code) {
@@ -4535,7 +4535,7 @@ static void PDF_Line(double x1, double y1, double x2, double y2,
     /*
      * Only try to do real transparency if version at least 1.4
      */
-    if (alphaVersion(pd) || 
+    if ((semiTransparent(gc->col) && alphaVersion(pd)) ||
 	(R_ALPHA(gc->col) == 0)) {
 	PDF_SetLineColor(gc->col, dd);
 	PDF_SetLineStyle(gc->lty, gc->lwd, dd);
@@ -4555,7 +4555,9 @@ static void PDF_Polygon(int n, double *x, double *y,
     /*
      * Only try to do real transparency if version at least 1.4
      */
-    if (alphaVersion(pd)) {
+    if ((semiTransparent(gc->col) ||
+	 semiTransparent(gc->fill)) &&
+	alphaVersion(pd)) {
 	if(pd->inText) textoff(pd);
 	PDF_SetFill(gc->fill, dd);
 	PDF_SetLineColor(gc->col, dd);
@@ -4607,7 +4609,9 @@ static void PDF_Polyline(int n, double *x, double *y,
     /*
      * Only try to do real transparency if version at least 1.4
      */
-    if (alphaVersion(pd)) {
+    if ((semiTransparent(gc->col) ||
+	 semiTransparent(gc->fill)) &&
+	alphaVersion(pd)) {
 	if(pd->inText) textoff(pd);
 	PDF_SetLineColor(gc->col, dd);
 	PDF_SetLineStyle(gc->lty, gc->lwd, dd);

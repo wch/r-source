@@ -51,7 +51,7 @@ $(vfonts_la): $(vfonts_la_OBJECTS) $(vfonts_la_DEPENDENCIES)
 	$(SHLIB_LINK) -o $@ $(vfonts_la_LDFLAGS) $(vfonts_la_OBJECTS) $(vfonts_la_LIBADD) $(LIBS)
 ## <FIXME>
 ## Not sure if we want to do this ...
-	@$(MAKE) rhome=`cd $(top_builddir); pwd` install
+	@$(MAKE) rhome="$(abs_top_builddir)" install
 ## </FIXME>
 
 install: installdirs

@@ -34,18 +34,19 @@ function(object, filename = NULL, name = NULL,
         return(promptData(x, filename = filename, name = name))
     ## </FIXME>
 
-    s <- seq(length = n <- length(argls <- formals(x)))
+    n <- length(argls <- formals(x))
     if(n > 0) {
         arg.names <- arg.n <- names(argls)
         arg.n[arg.n == "..."] <- "\\dots"
     }
     ## Construct the 'call' for \usage.
     call <- paste0(name, "(")
-    for(i in s) {                       # i-th argument
+    for(i in seq(length = n)) {                       # i-th argument
         call <- paste0(call, arg.names[i],
                        if(!is.missing.arg(argls[[i]]))
                        paste0(" = ",
-                              deparse(argls[[i]], width.cutoff= 500)))
+                              paste(deparse(argls[[i]], width.cutoff= 500),
+                                    collapse="\n")))
         if(i != n) call <- paste0(call, ", ")
     }
 
@@ -103,13 +104,11 @@ function(object, filename = NULL, name = NULL,
              "from doc/KEYWORDS"),
              "\\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line"))
 
-    Rdtxt$arguments <- if(length(s))
+    Rdtxt$arguments <- if(n > 0)
         c("\\arguments{",
           paste0("  \\item{", arg.n, "}{",
                  " ~~Describe \\code{", arg.n, "} here~~ }"),
-          "}")
-    else
-        NULL
+          "}") ## else NULL
 
     if(is.na(filename)) return(Rdtxt)
 

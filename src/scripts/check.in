@@ -26,6 +26,7 @@ use File::Copy;
 use File::Find;
 use File::Path;
 use Getopt::Long;
+use IO::File;
 use R::Dcf;
 use R::Logfile;
 use R::Rdtools;
@@ -37,7 +38,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.190 $ ';
+my $revision = ' $Revision: 1.190.4.1 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -133,34 +134,6 @@ if($opt_latex) {
     unlink(<Rtextest$$.*>);
     chdir($startdir);
     $log->close();
-}
-
-## Get the valid keywords for later.
-my %standard_keywords = ();
-open(KEYWORDS,
-     "< " . &file_path(${R::Vars::R_HOME}, "doc", "KEYWORDS.db"))
-  or die "Error: cannot open file 'doc/KEYWORDS.db' for reading\n";
-while(<KEYWORDS>) {
-    if(/^.*\|([^:]*):.*/) {
-	$standard_keywords{$1} = 1;
-    }
-}
-close(KEYWORDS);
-
-## Get the names of base and recommended packages and stubs for later.
-my @R_pkgs_base = ();
-my @R_pkgs_recommended = ();
-my @R_pkgs_stubs = ();
-open(MAKEVARS,
-     "< " . &file_path(${R::Vars::R_HOME}, "share", "make", "vars.mk"))
-  or die "Error: cannot open file 'share/make/vars.mk' for reading\n";
-while(<MAKEVARS>) {
-    @R_pkgs_base =
-	split(/ +/, $2) if(/^(R_PKGS_BASE *=)(.*)/);
-    @R_pkgs_recommended =
-	split(/ +/, $2) if(/^(R_PKGS_RECOMMENDED *=)(.*)/);
-    @R_pkgs_stubs =
-	split(/ +/, $2) if(/^(R_PKGS_STUBS *=)(.*)/);
 }
 
 ## This is the main loop over all packages to be checked.
@@ -505,8 +478,6 @@ sub check_pkg {
 	exit(1);
     }
 
-    $log->result("OK");
-
     ## next check for name clashes on case-insensitive file systems
     ## (that is on Windows).
     my @seen = (), @duplicated = ();
@@ -536,6 +507,8 @@ sub check_pkg {
 			  "in manual 'Writing R Extensions'.\n")));
 	exit(1);
     }
+
+    $log->result("OK");
 
     ## Check for sufficient file permissions (Unix only).
 
@@ -625,201 +598,66 @@ sub check_pkg {
 
     ## Check DESCRIPTION meta-information.
 
-    if($in_bundle) {		# join DESCRIPTION and DESCRIPTION.in
-	$log->checking("for file 'DESCRIPTION.in'");
-        if(-r "DESCRIPTION.in") {
-	    my $description_in = new R::Dcf("DESCRIPTION.in");
-	    foreach my $key (keys(%$description)) {
-		$description_in->{$key} = $description->{$key};
-	    }
-	    ## From now on use $description_in instead of $description
-	    ## in this subroutine.
-	    $description = $description_in;
-	    $log->result("OK");
-	    $log->message("joining DESCRIPTION and DESCRIPTION.in");
+    ## If we just installed the package (via R CMD INSTALL), we already
+    ## validated the package DESCRIPTION metadata.  Otherwise, let us be
+    ## defensive about this ...
+
+    if(!$opt_install || ($opt_install eq "skip") || $is_base_pkg) {
+	my ($dfile, $dir);
+	if($is_base_pkg) {
+	    $dfile = "DESCRIPTION.in";
+	}
+	elsif(!$in_bundle) {
+	    $dfile = "DESCRIPTION";
 	}
 	else {
-	    $log->result("NO");
-	    exit(1);
-	}
-    }
-
-    my @msg_DESCRIPTION
-      = ("See the information on DESCRIPTION files",
-	 "in section 'Creating R packages'",
-	 "of the 'Writing R Extensions' manual.\n");
-
-    $log->checking("DESCRIPTION meta-information");
-
-    ## Mandatory entries in DESCRIPTION:
-    ##   Package, Version, License, Description, Title, Author,
-    ##   Maintainer.
-
-    foreach my $field (qw(Package Version License Description Title
-			  Author Maintainer)) {
-	if(!$description->{$field}) {
-	    $log->error();
-	    $log->print("No DESCRIPTION $field field found.\n");
-	    $log->print(wrap("", "", @msg_DESCRIPTION));
-	    exit(1);
-	}
-    }
-
-    if($description->{"Package"} !~ /^[a-z][a-z\d\.]*$/i) {
-	$log->error();
-	$log->print("Malformed package name.\n");
-	$log->print(wrap("", "", @msg_DESCRIPTION));
-	exit(1);
-    }
-    if($description->{"Package"} ne $pkgname) {
-	$log->error();
-	$log->print("DESCRIPTION Package field differs from dir	name.\n");
-	$log->print(wrap("", "", @msg_DESCRIPTION));
-	exit(1);
-    }
-    ## check if this is a name clash with an existing or past base package.
-    ## The stub packages are handled specially in library()
-    if(!$is_base_pkg) {
-        my $found = 0;
-        foreach my $p (@R_pkgs_base) {
-	    if($description->{"Package"} eq $p) {
-		$found = 1;
-		break;
+	    ## Bundles are a bit tricky, as their package (DESCRIPTION)
+	    ## metadata come from merging the bundle DESCRIPTION file
+	    ## with the package DESCRIPTION.in one.  Hence, we
+	    ## concatenate these files to a temporary one.
+	    $log->checking("for file 'DESCRIPTION.in'");
+	    if(-r "DESCRIPTION.in") {
+		$log->result("OK");
 	    }
-	}
-	if($found != 0) {
-	    $log->error();
-	    $log->print("Invalid package name.\n");
-	    $log->print("This is the name of a base package.\n");
-	    exit(1);
-	}
-        $found = 0;
-        foreach my $p (@R_pkgs_stubs) {
-	    if($description->{"Package"} eq $p) {
-		$found = 1;
-		break;
-	    }
-	}
-	if($found != 0) {
-	    $log->error();
-	    $log->print("Invalid package name.\n");
-	    $log->print(wrap("", "",
-			     ("This name was used for a base package",
-			      "and is remapped by library().\n")));
-	    exit(1);
-	}
-    }
-
-    if(($description->{"Version"} !~ /^\d+([.-]\d+)+$/)
-       && !$is_base_pkg) {
-	## Package sources from the R distribution have '@VERSION@' in
-	## their 'DESCRIPTION.in' files ...
-	$log->error();
-	$log->print("Malformed package version.\n");
-	$log->print(wrap("", "", @msg_DESCRIPTION));
-	exit(1);
-    }
-
-    if(($description->{"Maintainer"} !~ /^[^<>]*<[^<>@]+@[^<>@]+> *$/) &&
-       ($description->{"Maintainer"} !~ /ORPHANED/)) {
-	$log->error();
-	$log->print("Malformed Maintainer field.\n");
-	$log->print(wrap("", "", @msg_DESCRIPTION));
-	exit(1);
-    }
-
-    ## Optional entries in DESCRIPTION:
-    ##   Depends/Suggests, Namespace, Priority.
-    ## These must be correct if present.
-
-    if($description->{"Depends"} || $description->{"Suggests"}) {
-	my @dependencies = split(/\,\s*/, ($description->{"Depends"},
-					   $description->{"Suggests"}));
-	my @matches;
-	my ($is_bad_dep_op, $is_bad_dep_version);
-	my ($bad_dep_value, @bad_dep_error);
-	foreach my $dep (@dependencies) {
-	    @matches =
-	      ($dep =~ /^\s*([\w\.]+)(\s*\(([^) ]+)\s+([^) ]+)\))?\s*$/);
-            ## The entry is malformed if there is no match, or there is
-            ## a match but the dep_op is different from '<=' or '>', or
-	    ## the dep_version does not only consist of digits, '.' or
-	    ## '-'.
-	    $is_bad_dep_op =
-	      (($matches[2] ne "<=") && ($matches[2] ne ">="));
-	    $is_bad_dep_version = ($matches[3] =~ /[^\d\.\-]/);
-	    if(!($matches[0])
-	       || ($matches[1]
-		   && ($is_bad_dep_op || $is_bad_dep_version))) {
-		$bad_dep_entry = $dep;
-		if(!($matches[0])) {
-		    @bad_dep_error =
-		      ("Entries must be names of packages, optionally",
-		       "followed by '<=' or '>=', white space, and a",
-		       "valid version number in parentheses.\n");
-		}
-		elsif($is_bad_dep_op) {
-		    @bad_dep_error =
-			("Infeasible comparison operator '$matches[2]'.\n",
-			 "Only operators '<=' and '>=' are possible.\n");
-		}
-		elsif($is_bad_dep_version) {
-		    @bad_dep_error =
-			("Infeasible version number '$matches[3]'.\n",
-			 "Version numbers must only contain digits,",
-			 "'.' or '-'.\n");
-		}
-		break;
-	    }
-	}
-	if($bad_dep_entry) {
-	    $log->error();
-	    $log->print("Malformed Depends or Suggests field.\n");
-	    $log->print("Offending entry is: '$bad_dep_entry'.\n");
-	    $log->print(wrap("", "", @bad_dep_error));
-	    $log->print(wrap("", "", @msg_DESCRIPTION));
-	    exit(1);
-	}
-    }
-
-    if($description->{"Namespace"}) {
-	if($description->{"Namespace"} ne $description->{"Package"}) {
-	    $log->error();
-	    $log->print("Namespace and Package fields differ.\n");
-	    $log->print(wrap("", "", @msg_DESCRIPTION));
-	    exit(1);
-	}
-    }
-
-    if($description->{"Priority"}) {
-	if($description->{"Priority"}
-	   =~ /^(base|recommended|defunct-base)/i) {
-	    ## Simplify matters by treating high priority packages and
-	    ## base stubs together.
-	    my $found = 0;
-	    foreach my $p (@R_pkgs_base,
-			   @R_pkgs_recommended,
-			   @R_pkgs_stubs) {
-		if($description->{"Package"} eq $p) {
-		    $found = 1;
-		    break;
-		}
-	    }
-	    if(!$found) {
-		$log->error();
-		$log->print("Invalid Priority field.\n");
-		$log->print(wrap("", "",
-				 ("Packages with priorities 'base' or",
-				  "'recommended' or 'defunct-base'",
-				  "must already be known to R.\n")));
-		$log->print(wrap("", "", @msg_DESCRIPTION));
+	    else {
+		$log->result("NO");
 		exit(1);
 	    }
+	    ## Checking metadata currently also includes verifying that
+	    ## the package name and "directory name" are the same.
+	    $dir = &file_path(${R::Vars::TMPDIR}, "check$$");
+	    mkdir($dir, 0755)
+		or die ("Error: cannot create directory '$dir'\n");
+	    $dir = &file_path($dir, $pkgname);
+	    mkdir($dir, 0755)
+		or die ("Error: cannot create directory '$dir'\n");
+	    $dfile = &file_path($dir, "DESCRIPTION");
+	    my $fh = new IO::File($dfile, "w")
+		or die "Error: cannot open file '$dpath' for writing\n";
+	    my @lines = (&read_lines(&file_path(dirname($pkgdir),
+						"DESCRIPTION")),
+			 &read_lines("DESCRIPTION.in"));
+	    @lines = grep(!/^\s*$/, @lines); # Remove blank lines.
+	    $fh->print(join("\n", @lines), "\n");
+	    $fh->close();
 	}
+
+	$log->checking("DESCRIPTION meta-information");
+    
+	my $Rcmd = "tools:::.check_package_description(\"$dfile\")";
+	my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES='tools'");
+	rmtree(dirname($dir)) if($in_bundle);
+	@out = grep(!/^\>/, @out);
+	if(scalar(@out) > 0) {
+	    $log->error();
+	    $log->print(join("\n", @out) . "\n");
+	    exit(1);
+	}
+	
+	$log->result("OK");
     }
-
-    $log->result("OK");
-
+    
     ## Check package dependencies.
 
     ## Try figuring out whether the package dependencies can be resolved
@@ -1114,13 +952,12 @@ sub check_pkg {
     ## named 'value'.
 
     if(-d "R") {
-	$log->checking("for replacement functions with final arg not " .
-		       "named 'value'");
+	$log->checking("replacement functions");
 
 	my @msg_replace_funs =
 	  ("In R, the argument of a replacement function",
 	   "which corresponds to the right hand side",
-	   "must be named 'value'.");
+	   "must be named 'value'.\n");
 
 	my $Rcmd;
 	if($opt_install) {
@@ -1317,7 +1154,7 @@ sub check_pkg {
 	my @msg_doc_files =
 	  ("Functions with \\usage entries",
 	   "need to have the appropriate \\alias entries,",
-	   "and all their arguments documented.");
+	   "and all their arguments documented.\n");
 
 	my $Rcmd;
 	if($opt_install) {

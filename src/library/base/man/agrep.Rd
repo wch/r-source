@@ -47,10 +47,14 @@ agrep(pattern, x, ignore.case = FALSE, value = FALSE, max.distance = 0.1)
   Either a vector giving the indices of the elements that yielded a
   match, of, if \code{value} is \code{TRUE}, the matched elements.
 }
-\author{David Meyer \email{David.Meyer@ci.tuwien.ac.at} (based on C code
-  by Jarkko Hietaniemi); modifications by Kurt Hornik.
+\author{
+  David Meyer \email{David.Meyer@wu-wien.ac.at} (based on C code
+  by Jarkko Hietaniemi);
+  modifications by Kurt Hornik.
 }
-\seealso{\code{\link{grep}}}
+\seealso{
+  \code{\link{grep}}
+}
 \examples{
 agrep("lasy", "1 lazy 2")
 agrep("lasy", "1 lazy 2", max = list(sub = 0))

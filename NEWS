@@ -30,8 +30,13 @@ USER-VISIBLE CHANGES
 	gamma-corrected grey palette (rather than the heat color
 	palette) for coloring its output when given a matrix.
 
+    o	dir.create() now expands '~' in filenames.
+
 
 NEW FEATURES
+
+    o   'version' argument added to pdf() device.  If this is set
+	to "1.4", the device will support transparent colours.
 
     o	Function file.edit() function added: like file.show(), but
 	allows editing.
@@ -61,20 +66,13 @@ NEW FEATURES
 	been rationalized so a few more cases will now work -- see
 	?Comparison.
 
-    o	deparse(), dput() and dump() have a new 'forDisplay' argument
-	that indicates that the result is intended to be human-readable.
-	When TRUE, some details (e.g. attributes, quoting) are omitted.
-	When FALSE, the result is usually parseable to reproduce the
-	object.  dump() defaults to FALSE, the others default to TRUE.
+    o	deparse(), dput() and dump() have a new 'control' argument to
+    	control the level of detail when deparsing. dump() defaults to
+    	the most detail, the others default to less.  See ?deparse
+    	for the details.
 
-	deparse(), dput() and dump() have a new 'useSource' argument
-	that indicates they should used saved source for function
-	definitions (including comments and formatting) rather than
-	deparsing the internal representation.	dump() defaults to
-	TRUE, the others default to FALSE.
-
-    o	source() with 'echo = TRUE' uses 'useSource = TRUE' when
-	displaying commands as they are parsed.
+    o	source() with 'echo = TRUE' uses the function source attribute
+    	when displaying commands as they are parsed.
 
     o	The screen devices x11(), windows() and quartz() have a new
 	argument 'bg' to set the default background colour.
@@ -123,6 +121,13 @@ NEW FEATURES
     o	.Defunct() now has 'new' and 'package' arguments like those of
 	.Deprecated().
 
+    o	The plot() method for "dendrogram" objects now respects many more
+	nodePar and edgePar settings and for edge labeling computes the
+	extents of the diamond more correctly.
+
+    o	New functions is.leaf(), dendrapply() and a labels() method for
+	dendrogram objects.
+
     o	reorder.dendrogram() now has a 'agglo.FUN' argument for
 	specification of a weights agglomeration function.
 
@@ -155,17 +160,26 @@ NEW FEATURES
 
     o	rank() has two new 'ties.method's, "min" and "max".
 
+    o   power (x^y) is optimised for y==2
+
+    o   read.fwf reads multiline records, is faster for large files.
+
+    o   read.fortran reads Fortran-style fixed-format specifications.
 
 UTILITIES
 
     o   Package utils now contains a much improved citation function
-        which also has a package argument. By default the citation is
+        which also has a package argument.  By default the citation is
         auto-generated from the package DESCRIPTION, the file
-        `inst/CITATION' can be used to override this, see
+        'inst/CITATION' can be used to override this, see
         help(citation) and help(citEntry).
 
     o   R CMD check now checks for file names in a directory that
 	differ only by case.
+
+    o	R CMD INSTALL now fails for packages with incomplete/invalid
+        DESCRIPTION metadata, using new code from package tools which is
+        also used by R CMD check.
 
 
 C-LEVEL FACILITIES
@@ -246,6 +260,9 @@ INSTALLATION CHANGES
 
 BUG FIXES
 
+    o   Complex superassignments were wrong when a variable with the same
+    	 name existed locally, and were not documented in R-lang.
+
     o	rbind.data.frame() dropped names/rownames from columns in all
 	but the first data frame.
 
@@ -261,6 +278,15 @@ BUG FIXES
 	revision in July 2000.  It causes problems with LaTeX systems
 	based on e-TeX which are starting to appear.
 
+    o   save() to a connection did not check that the connection was
+	open for writing, nor that non-ascii saves cannot be made to a
+	text-mode connection.
+
+    o	phyper() uses a new algorithm based on Morten Welinder's bug
+	report (PR#6772).  This leads to faster code for large arguments
+	and more precise code, e.g. for phyper(59, 150,150, 60,	lower=FALSE).
+	This also fixes bug (PR#7064) about fisher.test().
+
 
 
 
@@ -271,7 +297,7 @@ BUG FIXES
 	**************************************************
 
 
-		CHANGES IN R VERSION 1.9.2
+		CHANGES IN R VERSION 1.9.1 Patched
 
 
 INSTALLATION ISSUES
@@ -295,6 +321,12 @@ BUG FIXES
 
     o	coplot(..) doesn't give an extraneous warning anymore when called
 	on a fresh device.
+
+    o	hasArg() used wrong logic to get the parent function. (sys.function()
+	behaves differently from what is documented
+
+    o	prompt(f) now gives proper \usage{..} for
+	f <- function(x, g = function(u) { v <- u^2 ; sin(v)/v }) { g(x) }
 
 
 

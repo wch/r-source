@@ -118,7 +118,7 @@ $(libRmath_la): $(libRmath_la_OBJECTS)
 
 test: $(srcdir)/test.c
 	$(CC) -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $(srcdir)/test.c \
-	  -L. -lRmath -lm
+	  -L. -lRmath $(LIBM)
 
 install: installdirs install-header
 	@!(test -f $(libRmath_la)) || $(SHELL) $(top_srcdir)/tools/copy-if-change $(libRmath_la) $(libdir)/$(libRmath_la)
