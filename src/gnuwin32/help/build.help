@@ -145,6 +145,7 @@ foreach $manfile (@mandir) {
     if($manfile =~ /\.[Rr]d$/) {
 	$manfilebase = basename($manfile, (".Rd", ".rd"));
 	$manage = (-M $manfile);
+	$manfiles{$manfilebase} = $manfile;
 
 	$textflag = $htmlflag = $latexflag = $exampleflag = $chmflag = "";
 
@@ -202,6 +203,70 @@ foreach $manfile (@mandir) {
 	print "     missing link(s): $misslink\n" 
 	    if $htmlflag && length($misslink);
     }
+}
+
+# remove files not in source directory
+if($opt_nroff){
+    my @destdir;
+    opendir dest,  "$dest/help";
+    @destdir = sort(readdir(dest));
+    closedir dest;
+    foreach $destfile (@destdir) {
+	if($destfile eq "." || $destfile eq ".." ||
+	   $destfile eq "AnIndex" || $destfile eq "00Titles") { next; }
+#	print "$dest/help/$destfile\n" unless defined $manfiles{$destfile};
+	unlink "$dest/help/$destfile" unless defined $manfiles{$destfile};
+    }
+}
+if($opt_html){
+    my @destdir;
+    opendir dest,  "$dest/html";
+    @destdir = sort(readdir(dest));
+    closedir dest;
+    foreach $destfile (@destdir) {
+	$destfilebase = basename($destfile, (".html"));
+	if($destfile eq "." || $destfile eq ".." ||
+	   $destfile eq "00Index.html") { next; }
+#	print "$dest/html/$destfile\n" unless defined $manfiles{$destfilebase};
+	unlink "$dest/html/$destfile" unless defined $manfiles{$destfilebase};
+    }
+}
+if($opt_latex){
+    my @destdir;
+    opendir dest,  "$dest/latex";
+    @destdir = sort(readdir(dest));
+    closedir dest;
+    foreach $destfile (@destdir) {
+	$destfilebase = basename($destfile, (".tex"));
+	if($destfile eq "." || $destfile eq "..") { next; }
+#	print "$dest/html/$destfile\n" unless defined $manfiles{$destfilebase};
+	unlink "$dest/html/$destfile" unless defined $manfiles{$destfilebase};
+    }
+}
+if($opt_example){
+    my @destdir;
+    opendir dest,  "$dest/R-ex";
+    @destdir = sort(readdir(dest));
+    closedir dest;
+    foreach $destfile (@destdir) {
+	$destfilebase = basename($destfile, (".R"));
+	if($destfile eq "." || $destfile eq "..") { next; }
+#	print "$dest/html/$destfile\n" unless defined $manfiles{$destfilebase};
+	unlink "$dest/html/$destfile" unless defined $manfiles{$destfilebase};
+    }
+if($opt_chm){
+    my @destdir;
+    opendir dest,  "../chm";
+    @destdir = sort(readdir(dest));
+    closedir dest;
+    foreach $destfile (@destdir) {
+	$destfilebase = basename($destfile, (".html"));
+	if($destfile eq "." || $destfile eq ".." ||
+	   $destfile eq "00Index.html" || $destfile eq "00Titles") { next; }
+#	print "../chm/$destfile\n" unless defined $manfiles{$destfilebase};
+	unlink "../chm/$destfile" unless defined $manfiles{$destfilebase};
+    }
+}
 }
 
 sub usage {

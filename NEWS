@@ -37,6 +37,9 @@ NEW FEATURES
 	and no longer requires nroff.  This makes the conversion 8-bit
 	clean and more accurate.
 
+    o	Building help for a package now removes help files that no
+	longer exist in the source.
+
 
 BUG FIXES
 
