@@ -457,16 +457,17 @@ extern int	R_ShowErrorMessages INI_as(1);	/* show error messages? */
 
 extern char*	R_GUIType	INI_as("unknown");
 
+/* Pointer for the dispatch utilitiy in package methods  */
+typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP);
+
+LibExtern R_stdGen_ptr_t R_standardGeneric_ptr;
+
 #ifdef __MAIN__
 #undef extern
 #undef LibExtern
 #endif
 #undef INI_as
 
-/* Pointer for the dispatch utilitiy in package methods  */
-typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP);
-
-extern R_stdGen_ptr_t R_standardGeneric_ptr;
 
 
 
