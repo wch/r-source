@@ -140,8 +140,8 @@ Reference.pdf: Reference.tex Version.tex $(pkgsrcs) $(srcdir)/Rd.sty
 	$(PDFLATEX) '\nonstopmode\input{Reference.tex}'
 
 R-external.pdf: R-external.texi
-	$(PDFTEX) R-external.texi
-	$(PDFTEX) R-external.texi
+	@TEXINPUTS="$(srcdir):$$TEXINPUTS" $(PDFTEX) R-external.texi
+	@TEXINPUTS="$(srcdir):$$TEXINPUTS" $(PDFTEX) R-external.texi
 
 
 install: installdirs
