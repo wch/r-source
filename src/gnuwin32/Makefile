@@ -129,6 +129,7 @@ rpackage: ../../library/R.css
 	  $(MAKE) --no-print-directory PKG=$${pkg} RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg lazyload ; \
 	done
 	@touch ../../library/methods/R/all.rda
+	@$(MAKE) --no-print-directory PKG=datasets RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg lazydata
 
 	@$(MAKE) --no-print-directory vignettes
 
@@ -262,6 +263,7 @@ endif
 endif
 
 base-HELP = ziponly
+datasets-HELP = ziponly
 graphics-HELP = ziponly
 methods-HELP = ziponly
 stats-HELP = ziponly
@@ -345,6 +347,9 @@ pkgcheck-%:
 
 lazyload-%:
 	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg lazyload
+
+lazydata-%:
+	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg lazydata
 
 ziphelp-%:
 	$(MAKE) --no-print-directory -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIB=$(RLIB) DPKG=$(DPKG) ziphelp-$*
