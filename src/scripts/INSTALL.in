@@ -426,7 +426,7 @@ do_install_source () {
   ## As from 1.7.0, packages without compiled code are not marked
   ## as being from any platform.
   echo "tools:::.install_package_description(\".\", \"${R_PACKAGE_DIR}\")" | \
-    R_DEFAULT_PACKAGES=tools LANG=C "${R_EXE}" --vanilla >/dev/null
+    R_DEFAULT_PACKAGES=NULL LANG=C "${R_EXE}" --vanilla >/dev/null
   if test ${?} -ne 0; then
     error "installing package DESCRIPTION failed"
     do_exit_on_error
@@ -472,7 +472,7 @@ do_install_source () {
       ${MKDIR_P} "${R_PACKAGE_DIR}/R"
       rm -f "${R_PACKAGE_DIR}/R/"*
       echo "tools:::.install_package_code_files(\".\", \"${R_PACKAGE_DIR}\")" | \
-        R_DEFAULT_PACKAGES=tools LANG=C "${R_EXE}" --vanilla >/dev/null
+        R_DEFAULT_PACKAGES=NULL LANG=C "${R_EXE}" --vanilla >/dev/null
       if test ${?} -ne 0; then
         error "unable to collate files for package '${pkg_name}'"
         do_exit_on_error
@@ -512,7 +512,7 @@ do_install_source () {
     if ${thislazy}; then
       message " moving datasets to lazyload DB"
       echo "tools:::data2LazyLoadDB(\"${pkg_name}\", \"${lib}\")" | \
-        R_DEFAULT_PACKAGES=tools LANG=C "${R_EXE}" --vanilla > /dev/null
+        R_DEFAULT_PACKAGES=NULL LANG=C "${R_EXE}" --vanilla > /dev/null
     else
       if test -n "${use_zip_data}" \
 	  && test -n "${R_UNZIPCMD}" \
@@ -696,7 +696,7 @@ do_install_source () {
   fi
 
   echo "tools:::.install_package_indices(\".\", \"${R_PACKAGE_DIR}\")" | \
-    R_DEFAULT_PACKAGES=tools LANG=C "${R_EXE}" --vanilla >/dev/null
+    R_DEFAULT_PACKAGES=NULL LANG=C "${R_EXE}" --vanilla >/dev/null
   if test ${?} -ne 0; then
     error "installing package indices failed"
     do_exit_on_error
@@ -705,7 +705,7 @@ do_install_source () {
   ## Install a dump of the parsed NAMESPACE file
   if test -f NAMESPACE && test "${fake}" != "true"; then
       echo "tools:::.install_package_namespace_info(\".\", \"${R_PACKAGE_DIR}\")" | \
-        R_DEFAULT_PACKAGES=tools LANG=C "${R_EXE}" --vanilla >/dev/null
+        R_DEFAULT_PACKAGES=NULL LANG=C "${R_EXE}" --vanilla >/dev/null
     if test ${?} -ne 0; then
       error "installing namespace metadata failed"
       do_exit_on_error

@@ -660,7 +660,7 @@ sub check_pkg {
     
 	my $Rcmd = "tools:::.check_package_description(\"$dfile\")";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES='tools'");
+			 "R_DEFAULT_PACKAGES=NULL");
 	rmtree(dirname($dir)) if($in_bundle);
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
@@ -700,7 +700,7 @@ sub check_pkg {
 	## Namespace imports must really be in Depends.
 	my $Rcmd = "tools:::.check_package_depends(\"${pkgname}\")\n";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES=tools");
+			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
 	    ## <FIXME>
@@ -750,7 +750,7 @@ sub check_pkg {
 	    my $dir = "demo";
 	    my $Rcmd = "options(warn=1)\ntools:::.check_demo_index(\"$dir\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES=tools");
+			     "R_DEFAULT_PACKAGES=NULL");
 	    @out = grep(!/^\>/, @out);
 	    if(scalar(@out) > 0) {
 		$log->warning() unless($any);
@@ -765,7 +765,7 @@ sub check_pkg {
 	my $dir = &file_path("inst", "doc");
 	my $Rcmd = "options(warn=1)\ntools:::.check_vignette_index(\"$dir\")\n";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES=tools");
+			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
 	    $log->warning() unless($any);
@@ -943,14 +943,14 @@ sub check_pkg {
 
 	my $Rcmd = "options(warn=1)\n";
 	if($opt_install) {
-	    $Rcmd .= "checkS3methods(package = \"${pkgname}\")\n";
+	    $Rcmd .= "tools::checkS3methods(package = \"${pkgname}\")\n";
 	}
         else {
-	    $Rcmd .= "checkS3methods(dir = \"${pkgdir}\")\n";
+	    $Rcmd .= "tools::checkS3methods(dir = \"${pkgdir}\")\n";
 	}
 
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
+			 "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
 	    $log->warning();
@@ -975,14 +975,14 @@ sub check_pkg {
 
 	my $Rcmd = "options(warn=1)\n";
 	if($opt_install) {
-	    $Rcmd .= "checkReplaceFuns(package = \"${pkgname}\")\n";
+	    $Rcmd .= "tools::checkReplaceFuns(package = \"${pkgname}\")\n";
 	}
 	else {
-	    $Rcmd .= "checkReplaceFuns(dir = \"${pkgdir}\")\n";
+	    $Rcmd .= "tools::checkReplaceFuns(dir = \"${pkgdir}\")\n";
 	}
 
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
+			 "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
         @out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
 	    ## <NOTE>
@@ -1010,14 +1010,14 @@ sub check_pkg {
 
 	my $Rcmd = "options(warn=1)\n";
 	if($opt_install) {
-	    $Rcmd .= "checkFF(package = \"${pkgname}\")\n";
+	    $Rcmd .= "tools::checkFF(package = \"${pkgname}\")\n";
 	}
         else {
-	    $Rcmd .= "checkFF(dir = \"${pkgdir}\")\n";
+	    $Rcmd .= "tools::checkFF(dir = \"${pkgdir}\")\n";
 	}
 
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
+			 "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
 	    $log->warning();
@@ -1040,7 +1040,7 @@ sub check_pkg {
 
 	my $Rcmd = "options(warn=1)\ntools:::check_Rd_files_in_man_dir(\"man\")\n";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES=tools");
+			 "R_DEFAULT_PACKAGES=NULL");
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
 	    ## Output may indicate warnings or errors ...
@@ -1069,14 +1069,14 @@ sub check_pkg {
 
 	my $Rcmd= "options(warn=1)\n";
 	if($opt_install) {
-	    $Rcmd .= "undoc(package = \"${pkgname}\")\n";
+	    $Rcmd .= "tools::undoc(package = \"${pkgname}\")\n";
 	}
 	else {
-	    $Rcmd .= "undoc(dir = \"${pkgdir}\")\n";
+	    $Rcmd .= "tools::undoc(dir = \"${pkgdir}\")\n";
 	}
 
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
-                         "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
+                         "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	my @err = grep(/^Error/, @out);
 	@out = grep(!/^\>/, @out);
 	if(scalar(@err) > 0) {
@@ -1112,13 +1112,13 @@ sub check_pkg {
 	if(-d "R") {
 	    my $Rcmd = "options(warn=1)\n";
 	    if($opt_install) {
-		$Rcmd .= "codoc(package = \"${pkgname}\")\n";
+		$Rcmd .= "tools::codoc(package = \"${pkgname}\")\n";
 	    }
 	    else {
-		$Rcmd .= "codoc(dir = \"${pkgdir}\")\n";
+		$Rcmd .= "tools::codoc(dir = \"${pkgdir}\")\n";
 	    }
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
+			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 
 	    @out = grep(!/^\>/, @out);
 	    if(scalar(@out) > 0) {
@@ -1130,9 +1130,9 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in data sets.
 	if($opt_install) {
-	    my $Rcmd = "options(warn=1)\ncodocData(package = \"${pkgname}\")\n";
+	    my $Rcmd = "options(warn=1)\ntools::codocData(package = \"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
+			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	    @out = grep(!/^\>/, @out);
 	    if(scalar(@out) > 0) {
 		$log->warning() unless($any);
@@ -1143,9 +1143,9 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in S4 classes.
 	if($opt_install && (-d "R")) {
-	    my $Rcmd = "options(warn=1)\ncodocClasses(package = \"${pkgname}\")\n";
+	    my $Rcmd = "options(warn=1)\ntools::codocClasses(package = \"${pkgname}\")\n";
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			     "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
+			     "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	    @out = grep(!/^\>/, @out);
 	    if(scalar(@out) > 0) {
 		$log->warning() unless($any);
@@ -1172,14 +1172,14 @@ sub check_pkg {
 
 	my $Rcmd = "options(warn=1)\n";
 	if($opt_install) {
-	    $Rcmd .= "checkDocFiles(package = \"${pkgname}\")\n";
+	    $Rcmd .= "tools::checkDocFiles(package = \"${pkgname}\")\n";
 	}
 	else {
-	    $Rcmd .= "checkDocFiles(dir = \"${pkgdir}\")\n";
+	    $Rcmd .= "tools::checkDocFiles(dir = \"${pkgdir}\")\n";
 	}
 
         my @out = R_runR($Rcmd, "${R_opts} --quiet",
-			 "R_DEFAULT_PACKAGES='utils,graphics,stats,tools'");
+			 "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
 	@out = grep(!/^\>/, @out);
 	if(scalar(@out) > 0) {
 	    $log->warning();
