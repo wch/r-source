@@ -32,7 +32,7 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
     \code{\link{polygon}} which draws each slice.}
   \item{main}{an overall title for the plot.}
   \item{\dots}{graphical parameters can be given as arguments to
-    \code{pie}.}
+    \code{pie}.  They will affect the main title and labels only.}
 }
 \note{
   Pie charts are a very bad way of displaying information.

@@ -37,7 +37,8 @@ pie <-
 	yc <- sin(t2p) * radius
         if(!is.na(lab <- labels[i]) && lab != "") {
             lines(c(1, 1.05)*xc, c(1, 1.05)*yc)
-            text(1.1*xc, 1.1*yc, lab, xpd = TRUE, adj = ifelse(xc < 0, 1, 0))
+            text(1.1*xc, 1.1*yc, lab, xpd = TRUE, adj = ifelse(xc < 0, 1, 0),
+                 ...)
         }
     }
     title(main = main, ...)

@@ -133,6 +133,9 @@ NEW FEATURES
 	is a vector.  (It either generated an error or had no effect,
 	depending how prettification of the range operated.)
 
+     o  pie(...) has always accepted graphical pars but only passed
+	them on to title().  Now pie(, cex=1.5) works.
+
 
 INSTALLATION CHANGES
 
