@@ -161,7 +161,7 @@ plot.factor <- function(x, y, legend.text=levels(y), ...)
 ##   - alternatively, and/or as default, type = "bar" ??!??
 ##   - if "h", make the default lwd depend on number of classes instead of lwd=2
 plot.table <-
-    function(x, type = "h", ylim = c(0, max(x)), lwd = NULL,
+    function(x, type = "h", ylim = c(0, max(x)), lwd = 2,
              xlab = NULL, ylab = NULL, frame.plot = is.num, ...)
 {
     xnam <- deparse(substitute(x))
@@ -179,13 +179,10 @@ plot.table <-
         x0 <- if(is.num) xx else seq(x)
 	plot(x0, unclass(x), type = type,
              ylim = ylim, xlab = xlab, ylab = ylab, frame.plot = frame.plot,
-             lwd = if(is.null(lwd)) 2 else lwd,
-             ..., xaxt = "n")
+             lwd = lwd, ..., xaxt = "n")
         axis(1, at = x0, labels = nx)
     } else
-	mosaicplot(x, xlab = xlab, ylab = ylab,
-                   lwd = if(is.null(lwd)) par("lwd"), ...)
-### FIXME : mosaicplot{.default}()  trashes the `lwd' silently
+	mosaicplot(x, xlab = xlab, ylab = ylab, ...)
 }
 
 plot.formula <-
