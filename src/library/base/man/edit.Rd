@@ -40,7 +40,7 @@ value is returned. Calling \code{edit()}, with no arguments, will
 result in the temporary file being reopened for further editing.
 }
 \seealso{
-\code{\link{data.entry}}, \code{fix}.
+\code{\link{data.entry}}, \code{\link{fix}}.
 }
 \examples{
 \dontrun{
