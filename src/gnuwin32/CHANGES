@@ -22,15 +22,17 @@ increased to 48: some people have much bigger screens these days.
 
 Rcmd BATCH in rw1070 incorrectly required the R::Utils Perl module.
 
-The data editor no longer takes close to all the CPU cycles when running.
+The data editor no longer takes almost all the CPU cycles when running.
 
-Fixed a bug in the data editor display that led to a failed shutdown.
+Fixed a bug in the data editor display that sometimes led to R failing
+to shutdown.
 
 Added some conditional compilation directives to the source so that the
 replacement malloc() (see INSTALL) need not be used.
 
 Changed the installer build code so that patch versions are named
 rwXXXXpat.exe and development versions are named rwXXXXdev.exe.
+
 
 
 rw1070
