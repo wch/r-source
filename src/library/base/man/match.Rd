@@ -16,8 +16,8 @@ match(x, table, nomatch = NA, incomparables = FALSE)
 x \%in\% table
 }
 \arguments{
-  \item{x}{the values to be matched.}
-  \item{table}{the values to be matched against.}
+  \item{x}{vector: the values to be matched.}
+  \item{table}{vector: the values to be matched against.}
   \item{nomatch}{the value to be returned in the case when no match is
     found.  Note that it is coerced to \code{integer}.}
   \item{incomparables}{a vector of values that cannot be matched.  Any
@@ -45,8 +45,11 @@ x \%in\% table
 
   Factors are converted to character vectors, and then \code{x} and
   \code{table} are coerced to a common type (the later of the two types
-  in R's ordering, logical < integer < numeric < complex < character)
+  in R's ordering, logical < integer < numeric < complex < character < list)
   before matching.
+
+  Matching for lists is potentially very slow and best avoided except in
+  simple cases.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

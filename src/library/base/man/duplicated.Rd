@@ -25,8 +25,8 @@ duplicated(x, incomparables = FALSE, \dots)
     \code{\link{apply}}.}
 }
 \details{
-  This is a generic function with methods for vectors, data frames and
-  arrays (including matrices).
+  This is a generic function with methods for vectors (including lists),
+  data frames and arrays (including matrices).
 
   The data frame method works by pasting together a character
   representation of the rows separated by \code{\\r}, so may be imperfect
