@@ -151,8 +151,8 @@
    problem with getting the prototype of strptime(). */
 /* #undef HAVE_GLIBC2 */
 
-/* Define if the GNOME headers and libraries are available, and want the GNOME
-   GUI to be built. */
+/* Define if you have the GNOME headers and libraries, and want the GNOME GUI
+   to be built. */
 /* #undef HAVE_GNOME */
 
 /* Define to 1 if you have the <grp.h> header file. */
@@ -181,6 +181,9 @@
 
 /* Define if you have the JPEG headers and libraries. */
 #define HAVE_JPEG 1
+
+/* Define if external LAPACK is available. */
+/* #undef HAVE_LAPACK */
 
 /* Define to 1 if you have the `dl' library (-ldl). */
 /* #undef HAVE_LIBDL */
@@ -524,7 +527,7 @@
 # define vsnprintf _vsnprintf
 # define isnan(a) _isnan(a)
 # define finite(a) _finite(a)
-/* 27/03/2000 win32-api needs this for ANSI compliance */
+/* 2000-03-27 win32-api needs this for ANSI compliance */
 # define NONAMELESSUNION
 #endif /* Win32 */
 
