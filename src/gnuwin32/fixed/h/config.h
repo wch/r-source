@@ -179,6 +179,9 @@
 /* Define if you have the JPEG headers and libraries. */
 #define HAVE_JPEG 1
 
+/* Define if you have KeySym defined in X11. */
+/* #undef HAVE_KEYSYM */
+
 /* Define if you have <langinfo.h> and nl_langinfo(CODESET). */
 /* #undef HAVE_LANGINFO_CODESET */
 

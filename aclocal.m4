@@ -1949,6 +1949,20 @@ done])
 use_recommended_packages=${r_cv_misc_recommended_packages}
 ])# R_RECOMMENDED_PACKAGES
 
+AC_DEFUN([R_HAVE_KEYSYM],
+[
+  AC_CACHE_CHECK([for KeySym], r_cv_have_keysym,
+    [AC_TRY_LINK([#include <X11/X.h>],
+      [KeySym iokey;],
+      r_cv_have_keysym=yes,
+      r_cv_have_keysym=no)
+    ])
+  if test $r_cv_have_keysym = yes; then
+    AC_DEFINE(HAVE_KEYSYM, 1,
+      [Define if you have KeySym defined in X11.])
+  fi
+])# R_HAVE_KEYSYM
+
 # codeset.m4 serial AM1 (gettext-0.10.40)
 dnl Copyright (C) 2000-2002 Free Software Foundation, Inc.
 dnl This file is free software, distributed under the terms of the GNU
