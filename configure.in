@@ -209,9 +209,9 @@ EOF
   f77_rules_frag=Makefrag.f77
   cat << \EOF > ${f77_rules_frag}
 
-%.c: %.f
+.f.c:
 
-%.o: %.f
+.f.o:
 	$(FC) $(FFLAGS) -c $< -o $@
 
 EOF
@@ -231,9 +231,10 @@ elif test -n "${F2C}"; then
   f77_rules_frag=Makefrag.f77
   cat << \EOF > ${f77_rules_frag}
 
-%.c: %.f
+.f.c:
 	cat $< | $(F2C) $(F2CFLAGS) > $(@F)
-%.o: %.f
+
+.f.o:
 
 EOF
 else
