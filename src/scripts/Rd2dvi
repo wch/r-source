@@ -73,7 +73,7 @@ while test -n "${1}"; do
     --pdf)
       out_ext="pdf";
       preview=false;
-      R_RD4DVI=${R_RD4PDF-"ae,hyper"};
+      R_RD4DVI=${R_RD4PDF-"times,hyper"};
       R_LATEXCMD=${PDFLATEX-pdflatex} ;;
     --title=*)
       title=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
