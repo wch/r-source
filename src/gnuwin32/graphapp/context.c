@@ -26,6 +26,8 @@
    See the file COPYLIB.TXT for details.
 */
 
+/* Changes for R:  allow 32 contexts not 4 */
+
 #include "internal.h"
 
 /*

@@ -25,6 +25,13 @@
    See the file COPYLIB.TXT for details.
 */
 
+/*  Changes for R:
+
+    sort out resize (confused screen and client coords)
+    add printer and metafile handling
+
+ */
+
 #include "internal.h"
 
 /*
@@ -877,6 +884,3 @@ void delobj(object obj)
 		break;
 	}
 }
-
-
-

@@ -430,8 +430,6 @@ int gdrawstr(drawing d, font f, rgb c, point p, char *s)
 /* This version aligns on baseline, and allows hadj = 0, 0.5, 1 */
 void gdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
 {
-    POINT curr_pos;
-    int width, h = floor(2*hadj + 0.5);
     HFONT old;
     HDC dc = GETHDC(d);
     UINT flags = TA_BASELINE | TA_UPDATECP;
@@ -440,13 +438,11 @@ void gdrawstr1(drawing d, font f, rgb c, point p, char *s, double hadj)
     old = SelectObject(dc, f->handle);
     MoveToEx(dc, p.x, p.y, NULL);
     SetBkMode(dc, TRANSPARENT);
-    if (h == 0) flags |= TA_LEFT;
-    else if (h == 1) flags |= TA_CENTER;
+    if (hadj < 0.25) flags |= TA_LEFT;
+    else if (hadj < 0.75) flags |= TA_CENTER;
     else flags |= TA_RIGHT;
     SetTextAlign(dc, flags);
-
     TextOut(dc, p.x, p.y, s, strlen(s));
-
     SelectObject(dc, old);
 }
 

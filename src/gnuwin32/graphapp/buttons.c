@@ -31,6 +31,14 @@
    See the file COPYLIB.TXT for details.
 */
 
+/* Changes for R:
+
+   set the system font for labels
+   add newscrollbar, field_no_border
+   add extended selections, pass on de-selections
+
+ */
+
 #include "internal.h"
 
 #define SHADOW_WIDTH 1

@@ -23,6 +23,12 @@
    See the file COPYLIB.TXT for details.
 */
 
+/* Changes for Windows:
+
+   add cross cursor
+
+ */
+
 #include "internal.h"
 
 cursor	ArrowCursor = NULL;

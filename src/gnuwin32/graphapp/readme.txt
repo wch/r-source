@@ -1,27 +1,27 @@
-This directory contains an extended version of GraphApp (version 2.45
+This directory contains an extended version of GraphApp
+(http://www.cs.usyd.edu.au/~loki/GraphApp) version 2.45
 for MsWindows). Extensions and changes are copyrighted by
 Guido Masarotto (guido@stat.unipd.it) and Brian D. Ripley
 (ripley@stats.ox.ac.uk).
 
 Extesion include:
-(1) Better support for MDI application (MDI clients can have
+(1) Better support for MDI applications (MDI clients can have
     menus, toolbar and status bar which are displayed, in the
     standard way, on the MDI frame).
-(2) Threaded safe drawing operation (essentially all the
+(2) Thread-safe drawing operation (essentially all the
     operation defined in drawing.c but without any reference
     to current[state,window]. In addition, there is support
-    for line styles (in all the fashion needed by R) and
-    rotated fonts).
+    for line styles (in the fashion needed by R) and rotated fonts).
 (3) Popup menus.
 (4) Windows printer and metafiles.
 (5) Tooltips.
 (6) bitmap -> image conversion.
 (7) Win32 Api memory allocation functions (C library free/realloc
-    don't release memory!!).
+    do not release memory!!).
 (8) Possibility to specify color by name.
 (9) A simple console/pager widget.
 
-All new function are defined in ga.h; include this file not graphapp.h.
+All new functions are defined in ga.h; include that file not graphapp.h.
 
 
 ORIGINAL README FILE FOR GRAPHAPP

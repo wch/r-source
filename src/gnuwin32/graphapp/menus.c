@@ -440,9 +440,3 @@ void handle_menu_key(WPARAM wParam)
 		activatecontrol(obj);
 	}
 }
-
-
-
-
-
-

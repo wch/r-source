@@ -22,6 +22,13 @@
    See the file COPYLIB.TXT for details.
 */
 
+/* Changes for R:
+
+   Use default GUI font
+   Do not delete FixedFont
+
+ */
+
 #include "internal.h"
 
 /*

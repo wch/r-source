@@ -20,6 +20,8 @@
    See the file COPYLIB.TXT for details.
 */
 
+/* Changes for R: use winmalloc etc not malloc (which does not free) */
+
 #include <stdlib.h>
 #include "internal.h"
 
@@ -172,8 +174,6 @@ char * memjoin(char *a, char *b)
 	}
 	return a;
 }
-
-
 
 
 

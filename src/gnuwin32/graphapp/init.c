@@ -108,11 +108,11 @@ int execapp(char *app)
 
 
 /*
- *  Beep the speaker:
+ *  Play error sound
  */
 void gabeep(void)
 {
-	MessageBeep(-1);
+	MessageBeep(MB_ICONASTERISK);
 }
 
 /*

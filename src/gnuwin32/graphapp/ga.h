@@ -28,18 +28,22 @@
 #include "graphapp.h"
 
 /* renamed functions */
-void gamainloop(void);
-void gabeep(void);
+void 	gamainloop(void);
+void 	gabeep(void);
+
+#define DblClick  	0x0010/* added for buttons.c*/
+
 
 /* windows.c */
 #define Border      	0x10100000L
-int ismdi();
+void	app_cleanup(void);
+int 	ismdi();
 
 /* gmenus.c */
 typedef struct {
-  char *nm;
-  menufn fn;
-  menuitem m;
+    char *nm;
+    menufn fn;
+    menuitem m;
 } MenuItem;
 
 #define STARTMENU {"#STARTMENU", 0, 0}
@@ -48,32 +52,34 @@ typedef struct {
 #define ENDSUBMENU {"#ENDSUBMENU", 0, 0}
 #define MDIMENU {"#MDIMENU", 0, 0}
 #define LASTMENUITEM {0, 0, 0}
-menu newmdimenu();
+menu 	newmdimenu();
 typedef menu popup;
-popup newpopup();
+popup 	newpopup();
 menubar gmenubar(actionfn fn, MenuItem []);
-popup gpopup(actionfn fn, MenuItem []);
-void gchangepopup(window w, popup p);
+popup 	gpopup(actionfn fn, MenuItem []);
+void 	gchangepopup(window w, popup p);
 /* next is limited to current window... */
-void gchangemenubar(menubar mb);
+void 	gchangemenubar(menubar mb);
 
 /* winalloc.c */
 #include <stddef.h> /* for size_t */
-void *winmalloc(size_t size);
-void  winfree(void *block);
-void *winrealloc(void *block, size_t newsize);
-char *winstrdup(char *s);
+void 	*winmalloc(size_t size);
+void  	winfree(void *block);
+void 	*winrealloc(void *block, size_t newsize);
+char 	*winstrdup(char *s);
 
 /* tooltips.c */
-int addtooltip(control c, char *tp);
+int 	addtooltip(control c, char *tp);
 
 /* status.c */
-int addstatusbar();
-void setstatus(char *text);
+int 	addstatusbar();
+void 	setstatus(char *text);
 
 /* dialogs.c */
-void setuserfilter(char *);
+void 	setuserfilter(char *);
 void    askchangedir();
+char *	askcdstring(char *question, char *default_string);
+char *	askfilesavewithdir(char *title, char *default_name, char *dir);
 
 /*  rgb.c */
 rgb     nametorgb(char *colourname);
@@ -153,20 +159,19 @@ int   devicepixelsy(drawing dev);
 #define HWINSB 0
 #define VWINSB 1
 #define CONTROLSB 2
-void gchangescrollbar(scrollbar sb, int which, int where, int max, 
-		      int pagesize, int disablenoscroll);
-void gsetcursor(drawing d, cursor c);
+void 	gchangescrollbar(scrollbar sb, int which, int where, int max, 
+			 int pagesize, int disablenoscroll);
+void 	gsetcursor(drawing d, cursor c);
 control newtoolbar(int height);
 button  newtoolbutton(image img, rect r, actionfn fn);
-void scrolltext(textbox c, int lines);
-int ggetkeystate();
+void 	scrolltext(textbox c, int lines);
+int 	ggetkeystate();
 
 /* cursor.c */
 extern cursor CrossCursor;
 
 /* menus.h */
-
-void remove_menu_item(menuitem obj);
+void 	remove_menu_item(menuitem obj);
 
 #endif /* __GA__VERSION */
 
