@@ -28,7 +28,8 @@ str.default <-
     function(object, max.level = 0, vec.len = 4, digits.d = 3,
 	     nchar.max = 128, give.attr = TRUE, give.length = TRUE,
 	     wid = getOption("width"), nest.lev = 0,
-	     indent.str = paste(rep.int(" ", max(0, nest.lev + 1)), collapse = ".."),
+	     indent.str= paste(rep.int(" ", max(0,nest.lev+1)), collapse= ".."),
+             comp.str="$ ", no.list = FALSE,
 	     ...)
 {
     ## Purpose: Display STRucture of any R - object (in a compact form).
@@ -54,7 +55,11 @@ str.default <-
     ## NON interesting attributes:
     std.attr <- "names"
 
-    has.class <- !is.null(cl <- attr(object, "class"))
+    #NOT yet:if(has.class <- !is.null(cl <- class(object)))
+    if(has.class <- !is.null(cl <- attr(object, "class")))# S3 or S4 class
+        S4 <- !is.null(attr(cl, "package"))## <<<'kludge' FIXME!
+        ##or length(methods::getSlots(cl)) > 0
+
     mod <- ""; char.like <- FALSE
     if(give.attr) a <- attributes(object)#-- save for later...
 
@@ -63,17 +68,32 @@ str.default <-
 	else { dp <- deparse(ao); paste(dp[-length(dp)], collapse="\n") },"\n")
     } else if (is.null(object))
 	cat(" NULL\n")
+    else if(has.class && S4) {
+        if(!give.attr) a <- attributes(object) # otherwise, have them
+        a <- a[names(a) != "class"]
+        cat("Formal class",
+            " '", paste(cl, collapse = "', '"),
+            "' [package \"", attr(cl,"package"), "\"] with ",
+            length(a)," slots\n", sep="")
+        str(a, no.list = TRUE, comp.str = "@ ", # instead of "$ "
+            max.level = max.level, vec.len = vec.len, digits.d = digits.d,
+            indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1,
+            nchar.max = nchar.max, give.attr = give.attr, wid=wid)
+        return(invisible())
+    }
     else if(is.list(object)) {
 	i.pl <- is.pairlist(object)
 	is.d.f <- is.data.frame(object)
-	if(is.d.f) std.attr <- c(std.attr, "class", if(is.d.f) "row.names")
+	##?if(is.d.f) std.attr <- c(std.attr, "class", if(is.d.f) "row.names")
 	if(le == 0) {
-	    if(!is.d.f) cat(" ", if(i.pl)"pair", "list()\n",sep="")
+            if(is.d.f) std.attr <- c(std.attr, "class", "row.names")
+	    else cat(" ", if(i.pl)"pair", "list()\n",sep="")
 	} else {
-	    if(has.class && any(sapply(paste("str", cl, sep="."),
+	    if(no.list || (has.class &&
+                           any(sapply(paste("str", cl, sep="."),
 					#use sys.function(.) ..
-					function(ob)exists(ob, mode= "function",
-							   inherits= TRUE)))) {
+                                      function(ob)exists(ob, mode= "function",
+                                                         inherits= TRUE))))) {
 		## str.default is a 'NextMethod' : omit the 'List of ..'
 		std.attr <- c(std.attr, "class", if(is.d.f) "row.names")
 	    } else {
@@ -87,7 +107,7 @@ str.default <-
 			   format.char(nam.ob, width = max.ncnam, flag = '-')
 		       }
 		for(i in 1:le) {
-		    cat(indent.str,"$ ", nam.ob[i], ":", sep="")
+		    cat(indent.str, comp.str, nam.ob[i], ":", sep="")
 		    str(object[[i]], nest.lev = nest.lev + 1,
 			indent.str= paste(indent.str,".."), nchar.max=nchar.max,
 			max.level=max.level, vec.len=vec.len, digits.d=digits.d,

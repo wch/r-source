@@ -54,7 +54,7 @@ NEW FEATURES
 	argument 'bg' to set the default background colour.
 
     o	data.frame() and its replacement methods remove the names from
-	vector columns.  Using I() will ensure that names are
+	vector columns.	 Using I() will ensure that names are
 	preserved.
 
     o	Indexing a vector by a character vector was slow if both the
@@ -71,6 +71,8 @@ NEW FEATURES
 	whole string, and non-printable characters are represented by
 	octal escape sequences.
 
+    o	str(obj) now more reasonably displays the STRucture of S4 objects.
+
 
 UTILITIES
 
@@ -79,10 +81,10 @@ UTILITIES
 
 C-LEVEL FACILITIES
 
-    o   The header Rmath.h contains a definition for R_VERSION_STRING
-        which can be used to track different versions of R and libRmath.
+    o	The header Rmath.h contains a definition for R_VERSION_STRING
+	which can be used to track different versions of R and libRmath.
 
-    o   The Makefile in src/nmath/standalone now has 'install' and
+    o	The Makefile in src/nmath/standalone now has 'install' and
 	'uninstall' targets -- see the README file in that directory.
 
 
@@ -96,7 +98,7 @@ DEPRECATED & DEFUNCT
 
     o	If --enable-R-shlib is specified, a copy of libR is still
 	installed in $R_HOME/bin, but this will be removed in the near
-	future.  Use that in R_HOME/lib instead.
+	future.	 Use that in R_HOME/lib instead.
 
 
 INSTALLATION CHANGES
@@ -118,17 +120,17 @@ INSTALLATION CHANGES
 
     o	When --enable-R-shlib is specified, the R executable is now a
 	small executable linked against libR: see the R-admin manual
-	for further discussion.  The 'extra' libraries bzip2, pcre,
+	for further discussion.	 The 'extra' libraries bzip2, pcre,
 	xdr and zlib are now compiled in a way that allows the code to
 	be included in a shared library only if this option is
 	specified, which might improve performance when it is not.
 
-    o   The main R executable is now R_HOME/exec/R not R_HOME/R.bin, to
-	ease issues on MacOS X.  (The location is needed when debugging
+    o	The main R executable is now R_HOME/exec/R not R_HOME/R.bin, to
+	ease issues on MacOS X.	 (The location is needed when debugging
 	core dumps, on other platforms.)
 
-    o	Configure now tests for 'inline' and alternatives, and the 
-	src/extra/bzip2 code now (potentially) uses inlining where 
+    o	Configure now tests for 'inline' and alternatives, and the
+	src/extra/bzip2 code now (potentially) uses inlining where
 	available and not just under gcc.
 
     o	The XPG4 sed is used on Solaris for forming dependencies,
