@@ -211,13 +211,13 @@ str.default <-
 		       if(ml < nl) P0(lsep,".."), ":")
 
 	    std.attr <- c("levels", "class")
-	} else if (typeof(x) %in% c("externalptr", "weakref")) {
+	} else if (typeof(object) %in% c("externalptr", "weakref")) {
             ## Careful here, we don't want to change pointer objects
             if(has.class)
                 cat("Class", if(length(cl) > 1) "es",
 		" '", paste(cl, collapse = "', '"), "' ", sep="")
             le <- v.len <- 0
-            str1 <- paste("<", typeof(x), ">", sep="")
+            str1 <- paste("<", typeof(object), ">", sep="")
             has.class <- TRUE # fake for later
 	    std.attr <- "class"
             ## ideally we would figure out if as.character has a
