@@ -382,32 +382,30 @@ static void menupkgupdatebioc(control m)
 }
 
 
-static void menupkginstallbioc(control m) {
+static void menupkginstallbioc(control m) 
+{
     if (!ConsoleAcceptCmd) return;
-    consolecmd(RConsole,
-	       "local({a<- CRAN.packages(CRAN=getOption(\"BIOC\"))\ninstall.packages(select.list(a[,1],,TRUE), .libPaths()[1], available=a, CRAN=getOption(\"BIOC\"), dependencies=TRUE)})");
+    consolecmd(RConsole, "utils:::menuInstallBioc()");
 }
 
 
 static void menupkgcranmirror(control m)
 {
     if (!ConsoleAcceptCmd) return;
-    consolecmd(RConsole,
-	       "local({m <- read.csv(file.path(R.home(), \"doc/CRAN_mirrors.csv\"), as.is=TRUE); URL <- m[m[, 1]==select.list(m[,1],,FALSE), 'URL']; if(!is.na(URL)) options(CRAN=URL)})");
+    consolecmd(RConsole, "utils:::chooseCRANmirror()");
 }
 
 static void menupkginstallcran(control m)
 {
     if (!ConsoleAcceptCmd) return;
-    consolecmd(RConsole,
-	       "local({a <- CRAN.packages()\ninstall.packages(select.list(a[,1],,TRUE), .libPaths()[1], available=a, dependencies=TRUE)})");
+    consolecmd(RConsole, "utils:::menuInstallCran()");
 /*    show(RConsole); */
 }
 
 static void menupkginstalllocal(control m)
 {
     if (!ConsoleAcceptCmd) return;
-    consolecmd(RConsole,"install.packages(choose.files('',filters=Filters[c('zip','All'),]), .libPaths()[1], CRAN = NULL)");
+    consolecmd(RConsole, "utils:::menuInstallLocal()");
 }
 
 static void menuconsolehelp(control m)

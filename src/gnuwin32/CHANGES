@@ -3,10 +3,15 @@
 
 See the file NEWS for changes that affect all versions of R.
 
+
 R 2.1.0
 =======
 
 Support for seek() on > 2Gb files has been added.
+
+You will be asked to select a CRAN mirror when downloading/updating
+packages unless options("CRAN") has already been set in your session,
+e.g. in your .Rprofile file.
 
 
 
@@ -29,7 +34,7 @@ working if `topic' was an alias.  (PR#7269)
 
 Recent changes caused (D)COM to sometimes go into infinite loops.
 
-Any change of in the GUI preferences via the dialog box changed font
+Any change in the GUI preferences via the dialog box changed font
 (even if to the same font as before).  This is causing problems in MDI
 mode with toolbars (PR#7277), where real font changes are not working
 properly.

@@ -21,6 +21,8 @@ options(width=80)
 options(windowsBuffered=TRUE)
 options(windowsTimeouts=as.integer(c(100,500)))
 
+options(CRAN = "")
+
 MacRoman <- as.integer(c(0:126, 32, 196, 197, 199, 201, 209, 214, 220,
 225, 224, 226, 228, 227, 229, 231, 233, 232, 234, 235, 237, 236, 238,
 239, 241, 243, 242, 244, 246, 245, 250, 249, 251, 252, 134, 176, 162,

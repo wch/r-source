@@ -228,7 +228,42 @@ download.packages <- function(pkgs, destdir, available=NULL,
     retval
 }
 
-contrib.url <- function(CRAN) {
+menuInstallCran <- function()
+{
+    a <- CRAN.packages()
+    install.packages(select.list(a[,1],,TRUE), .libPaths()[1], available=a,
+                     dependencies=TRUE)
+}
+
+menuInstallLocal <- function()
+{
+    install.packages(choose.files('',filters=Filters[c('zip','All'),]),
+                     .libPaths()[1], CRAN = NULL)
+}
+
+menuInstallBioc <- function()
+{
+    a<- CRAN.packages(CRAN=getOption("BIOC"))
+    install.packages(select.list(a[,1],,TRUE), .libPaths()[1],
+                     available=a, CRAN=getOption("BIOC"),
+                     dependencies=TRUE)
+}
+
+chooseCRANmirror <- function()
+{
+    m <- read.csv(file.path(R.home(), "doc/CRAN_mirrors.csv"), as.is=TRUE)
+    URL <- m[m[, 1] == select.list(m[,1],,FALSE), 'URL']
+    if(!is.na(URL)) options(CRAN=gsub("/$", "", URL))
+}
+
+contrib.url <- function(CRAN)
+{
+    if(!nchar(CRAN) && .Platform$OS.type == "windows") {
+        cat("--- Please select a CRAN mirror for use in this session ---\n")
+        flush.console()
+        chooseCRANmirror()
+        CRAN <- getOption("CRAN")
+    }
     ver <- paste(R.version$major, substring(R.version$minor,1,1), sep=".")
     file.path(CRAN, "bin", "windows", "contrib", ver)
 }
