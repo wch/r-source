@@ -102,7 +102,6 @@ int R_finite(double);
 #define bd0       	Rf_bd0
 #define chebyshev_eval	Rf_chebyshev_eval
 #define chebyshev_init	Rf_chebyshev_init
-#define fastchoose	Rf_fastchoose
 #define i1mach		Rf_i1mach
 #define gammalims	Rf_gammalims
 #define lfastchoose	Rf_lfastchoose
@@ -120,7 +119,6 @@ void	gammalims(double*, double*);
 double	lgammacor(double); /* log(gamma) correction */
 double  stirlerr(double);  /* Stirling expansion "error" */
 
-double	fastchoose(double, double);
 double	lfastchoose(double, double);
 
 double  bd0(double, double);
