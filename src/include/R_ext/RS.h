@@ -20,12 +20,12 @@
 #ifndef R_RS_H
 #define R_RS_H
 
-#include <string.h> /* for memcpy */
-#include "Rconfig.h" /* for F77_SYMBOL */
+#include <string.h>		/* for memcpy */
+#include "Rconfig.h"		/* for F77_APPEND_UNDERSCORE */
 
 /* S Like Error Handling */
 
-#include "R_ext/Error.h" /* for error and warning */
+#include "R_ext/Error.h"	/* for error and warning */
 
 #define R_PROBLEM_BUFSIZE	4096
 #define PROBLEM			{char R_problem_buf[R_PROBLEM_BUFSIZE];sprintf(R_problem_buf,
@@ -54,11 +54,15 @@ extern void R_chk_free(void *);
 /* These may not be adequate everywhere. Convex had _ prepending common
    blocks, and some compilers may need to specify Fortran linkage */
 
-#define F77_CALL(x)    F77_SYMBOL(x)
-#define F77_NAME(x)    F77_SYMBOL(x)
-#define F77_SUB(x)     F77_SYMBOL(x)
-#define F77_COM(x)     F77_SYMBOL(x)
-#define F77_COMDECL(x) F77_SYMBOL(x)
+#ifdef HAVE_F77_UNDERSCORE
+# define F77_CALL(x)	x ## _
+#else
+# define F77_CALL(x)	x
+#endif
+#define F77_NAME(x)    F77_CALL(x)
+#define F77_SUB(x)     F77_CALL(x)
+#define F77_COM(x)     F77_CALL(x)
+#define F77_COMDECL(x) F77_CALL(x)
 
 void	call_R(char*, long, void**, char**, long*, char**, long, char**);
 

@@ -25,8 +25,8 @@
 #ifndef R_APPLIC_H_
 #define R_APPLIC_H_
 
-#include "Rconfig.h"		/* F77... */
 #include "R_ext/Boolean.h"
+#include "R_ext/RS.h"		/* F77_... */
 
 void R_approx(double *, double *, int *, double *, int *,
 	      int *, double *, double *, double *);
@@ -78,16 +78,16 @@ enum { EUCLIDEAN=1, MAXIMUM, MANHATTAN, CANBERRA, BINARY };/* == 1,2,... */
 void R_distance(double *, int *, int *, double *, int *, int *);
 
 /* eigen.c */
-int F77_SYMBOL(cg)(int *nm, int *n, double *ar, double *ai,
-		   double *wr, double *wi, int *matz, double *zr, double *zi,
-		   double *fv1, double *fv2, double *fv3, int *ierr);
-int F77_SYMBOL(ch)(int *nm, int *n, double *ar, double *ai,
-		   double *w, int *matz, double *zr, double *zi,
-		   double *fv1, double *fv2, double *fm1, int *ierr);
-int F77_SYMBOL(rg)(int *nm, int *n, double *a, double *wr, double *wi,
-		   int *matz, double *z, int *iv1, double *fv1, int *ierr);
-int F77_SYMBOL(rs)(int *nm, int *n, double *a, double *w,
-		   int *matz, double *z, double *fv1, double *fv2, int *ierr);
+int F77_NAME(cg)(int *nm, int *n, double *ar, double *ai,
+		 double *wr, double *wi, int *matz, double *zr, double *zi,
+		 double *fv1, double *fv2, double *fv3, int *ierr);
+int F77_NAME(ch)(int *nm, int *n, double *ar, double *ai,
+		 double *w, int *matz, double *zr, double *zi,
+		 double *fv1, double *fv2, double *fm1, int *ierr);
+int F77_NAME(rg)(int *nm, int *n, double *a, double *wr, double *wi,
+		 int *matz, double *z, int *iv1, double *fv1, int *ierr);
+int F77_NAME(rs)(int *nm, int *n, double *a, double *w,
+		 int *matz, double *z, double *fv1, double *fv2, int *ierr);
 
 /* fft.c */
 /* NOTE:  The following functions use GLOBAL (static) variables !!
@@ -187,70 +187,70 @@ typedef double (*D_fp)();
 typedef /* Subroutine */ int (*S_fp)();
 
 /* ../appl/blas.f ---> see also ./Linpack.h - "extern"s all of BLAS+Linpack*/
-double F77_SYMBOL(dasum)(int *n, double *dx, int *incx);
-int F77_SYMBOL(daxpy)(int *n, double *da, double *dx, int *incx,
-		      double *dy, int *incy);
-int F77_SYMBOL(dcopy)(int *n, double *dx, int *incx, double *dy, int *incy);
-double F77_SYMBOL(ddot)(int *n, double *dx, int *incx, double *dy, int *incy);
-double F77_SYMBOL(dmach)(int *job);
-double F77_SYMBOL(dnrm2)(int *n, double *x, int *incx);
-int F77_SYMBOL(drot)(int *n, double *dx, int *incx, double *dy, int *incy,
-		     double *c__, double *s);
-int F77_SYMBOL(drotg)(double *da, double *db, double *c__, double *s);
-int F77_SYMBOL(dscal)(int *n, double *da, double *dx, int *incx);
-int F77_SYMBOL(dswap)(int *n, double *dx, int *incx, double *dy, int *incy);
-int F77_SYMBOL(idamax)(int *n, double *dx, int *incx);
+double F77_NAME(dasum)(int *n, double *dx, int *incx);
+int F77_NAME(daxpy)(int *n, double *da, double *dx, int *incx,
+		    double *dy, int *incy);
+int F77_NAME(dcopy)(int *n, double *dx, int *incx, double *dy, int *incy);
+double F77_NAME(ddot)(int *n, double *dx, int *incx, double *dy, int *incy);
+double F77_NAME(dmach)(int *job);
+double F77_NAME(dnrm2)(int *n, double *x, int *incx);
+int F77_NAME(drot)(int *n, double *dx, int *incx, double *dy, int *incy,
+		   double *c__, double *s);
+int F77_NAME(drotg)(double *da, double *db, double *c__, double *s);
+int F77_NAME(dscal)(int *n, double *da, double *dx, int *incx);
+int F77_NAME(dswap)(int *n, double *dx, int *incx, double *dy, int *incy);
+int F77_NAME(idamax)(int *n, double *dx, int *incx);
 /*----*/
-int F77_SYMBOL(ch2inv)(double *x, int *ldx, int *n, double *v, int *info);
-int F77_SYMBOL(chol)(double *a, int *lda, int *n, double *v, int *info);
+int F77_NAME(ch2inv)(double *x, int *ldx, int *n, double *v, int *info);
+int F77_NAME(chol)(double *a, int *lda, int *n, double *v, int *info);
 
-int F77_SYMBOL(dpoco)(double *a, int *lda, int *n, double *rcond,
-		      double *z__, int *info);
-int F77_SYMBOL(dpodi)(double *a, int *lda, int *n, double *det, int *job);
-int F77_SYMBOL(dpofa)(double *a, int *lda, int *n, int *info);
-int F77_SYMBOL(dposl)(double *a, int *lda, int *n, double *b);
+int F77_NAME(dpoco)(double *a, int *lda, int *n, double *rcond,
+		    double *z__, int *info);
+int F77_NAME(dpodi)(double *a, int *lda, int *n, double *det, int *job);
+int F77_NAME(dpofa)(double *a, int *lda, int *n, int *info);
+int F77_NAME(dposl)(double *a, int *lda, int *n, double *b);
 /* find qr decomposition, dqrdc2() is basis of R's qr() */
-int F77_SYMBOL(dqrdc)(double *x, int *ldx, int *n, int *p,
-		      double *qraux, int *jpvt, double *work, int *job);
-int F77_SYMBOL(dqrdc2)(double *x, int *ldx, int *n, int *p,
-		       double *tol, int *rank,
-		       double *qraux, int *pivot, double *work);
-int F77_SYMBOL(dqrls)(double *x, int *n, int *p, double *y, int *ny,
-		      double *tol, double *b, double *rsd,
-		      double *qty, int *k,
-		      int *jpvt, double *qraux, double *work);
+int F77_NAME(dqrdc)(double *x, int *ldx, int *n, int *p,
+		    double *qraux, int *jpvt, double *work, int *job);
+int F77_NAME(dqrdc2)(double *x, int *ldx, int *n, int *p,
+		     double *tol, int *rank,
+		     double *qraux, int *pivot, double *work);
+int F77_NAME(dqrls)(double *x, int *n, int *p, double *y, int *ny,
+		    double *tol, double *b, double *rsd,
+		    double *qty, int *k,
+		    int *jpvt, double *qraux, double *work);
 /* solve for QR coefficients */
-int F77_SYMBOL(dqrsl)(double *x, int *ldx, int *n, int *k,
-		      double *qraux, double *y,
-		      double *qy, double *qty, double *b,
-		      double *rsd, double *xb, int *job, int *info);
+int F77_NAME(dqrsl)(double *x, int *ldx, int *n, int *k,
+		    double *qraux, double *y,
+		    double *qy, double *qty, double *b,
+		    double *rsd, double *xb, int *job, int *info);
 
 /* ../appl/dqrutl.f */
-int F77_SYMBOL(dqrqty)(double *x, int *n, int *k, double *qraux,
-		       double *y, int *ny, double *qty);
-int F77_SYMBOL(dqrqy)(double *x, int *n, int *k, double *qraux,
-		      double *y, int *ny, double *qy);
-int F77_SYMBOL(dqrcf)(double *x, int *n, int *k, double *qraux,
-		      double *y, int *ny, double *b, int *info);
-int F77_SYMBOL(dqrrsd)(double *x, int *n, int *k, double *qraux,
-		       double *y, int *ny, double *rsd);
-int F77_SYMBOL(dqrxb)(double *x, int *n, int *k, double *qraux,
-		      double *y, int *ny, double *xb);
+int F77_NAME(dqrqty)(double *x, int *n, int *k, double *qraux,
+		     double *y, int *ny, double *qty);
+int F77_NAME(dqrqy)(double *x, int *n, int *k, double *qraux,
+		    double *y, int *ny, double *qy);
+int F77_NAME(dqrcf)(double *x, int *n, int *k, double *qraux,
+		    double *y, int *ny, double *b, int *info);
+int F77_NAME(dqrrsd)(double *x, int *n, int *k, double *qraux,
+		     double *y, int *ny, double *rsd);
+int F77_NAME(dqrxb)(double *x, int *n, int *k, double *qraux,
+		    double *y, int *ny, double *xb);
 /*---*/
 
-int F77_SYMBOL(dsvdc)(double *x, int *ldx, int *n, int *p,
-		      double *s, double *e,
-		      double *u, int *ldu, double *v, int *ldv,
-		      double *work, int *job, int *info);
-int F77_SYMBOL(dtrco)(double *t, int *ldt, int *n, double *rcond,
-		      double *z__, int *job);
-int F77_SYMBOL(dtrsl)(double *t, int *ldt, int *n, double *b, int *job,
-		      int *info);
+int F77_NAME(dsvdc)(double *x, int *ldx, int *n, int *p,
+		    double *s, double *e,
+		    double *u, int *ldu, double *v, int *ldv,
+		    double *work, int *job, int *info);
+int F77_NAME(dtrco)(double *t, int *ldt, int *n, double *rcond,
+		    double *z__, int *job);
+int F77_NAME(dtrsl)(double *t, int *ldt, int *n, double *b, int *job,
+		    int *info);
 
 double Brent_fmin(double ax, double bx, double (*f)(double, void *),
 		  void *info, double tol);
-int F77_SYMBOL(lminfl)(double *x, int *ldx, int *n, int *k, double *qraux,
-		       double *resid, double *hat, double *coef, double *sigma);
+int F77_NAME(lminfl)(double *x, int *ldx, int *n, int *k, double *qraux,
+		     double *resid, double *hat, double *coef, double *sigma);
 
 /* ../appl/zeroin.c */
 double R_zeroin(double ax, double bx, double (*f)(double, void *), void *info,

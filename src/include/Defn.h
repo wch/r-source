@@ -40,9 +40,8 @@
 
 #include "Rinternals.h"		/*-> Arith.h, Complex.h, Error.h, Memory.h
 				  PrtUtil.h, Utils.h */
-#include "Internal.h" /* do_FOO */
+#include "Internal.h"		/* do_FOO */
 
-#include "Rconfig.h"
 #include "Errormsg.h"
 
 #ifndef USE_GENERATIONAL_GC
@@ -90,6 +89,13 @@
 # define DYNLOADEXT  ".dll"
 #endif /* Win32 */
 
+#ifdef HAVE_F77_UNDERSCORE
+# define F77_SYMBOL(x)	x ## _
+# define F77_QSYMBOL(x)	#x ## "_"
+#else
+# define F77_SYMBOL(x)	x
+# define F77_QSYMBOL(x) #x
+#endif
 
 /*  Heap and Pointer Protection Stack Sizes.  */
 

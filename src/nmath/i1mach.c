@@ -51,7 +51,7 @@ int Rf_i1mach(int i)
     }
 }
 
-int F77_SYMBOL(i1mach)(int *i)
+int F77_NAME(i1mach)(int *i)
 {
     return Rf_i1mach(*i);
 }

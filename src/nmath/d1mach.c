@@ -51,7 +51,7 @@ double Rf_d1mach(int i)
     }
 }
 
-double F77_SYMBOL(d1mach)(int *i)
+double F77_NAME(d1mach)(int *i)
 {
     return Rf_d1mach(*i);
 }
