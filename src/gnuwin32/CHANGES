@@ -7,14 +7,6 @@ See the file NEWS for changes that affect all versions of R.
 rw1040
 ======
 
-[2001-12-05:  Temporarily, we hope:
-
-- the rproxy.dll does not work with StatConnector 0.99
-- cross-building of the the methods library fails (all.rda is
-  put in the wrong place).
-
-]
-
 If --max-mem-size is given a value greater than 256M, the requested
 maximum memory is reserved (but not allocated) initially.  This will
 enable the memory to be managed more efficiently, but does increase
@@ -39,18 +31,19 @@ window.  (It has long been applied to the foreground colours.)  Users
 of LCD screens may want to set something like gamma=2 when launching a
 graphics window.
 
-The canvas colour of a windows() window can now be specified.  This is
-is gamma-corrected, and defaults to "white".
-
 savePlot() now supports saving to PDF.
 
 There is support for transparency in the devga device (which
 encompasses screen windows, metafiles, printers and the bmp, jpeg and
-png devices).  The default background color is "transparent" for all
+png devices).  The default background colour is "transparent" for all
 but the bitmap devices: this means that backgrounds are omitted when
-plotting to/saving to most devices.  The png() device does support
-transparent backgrounds, but this is not accessible through the 
-menus nor the savePlot() function.
+plotting to/saving to most devices, and the colour that is visible is
+that of the canvas (see below).  The png() device does support
+transparent backgrounds, but this is not accessible through the menus
+nor the savePlot() function.
+
+The canvas colour of a windows() window can now be specified.  This is
+is gamma-corrected, and defaults to "white".
 
 There is a print method for saved plot histories, and individual
 plots can be replayed from the command line by subsetting a
