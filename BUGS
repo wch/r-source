@@ -105,11 +105,6 @@ Date: Mon, 27 Nov 2000 18:27:11 +0100
 
 Directory:  In-Out
 
-* PR# 746 *
-Subject: printing of lists
-From: David Firth <david.firth@nuffield.oxford.ac.uk>
-Date: Fri, 24 Nov 2000 12:31:33 +0000
---Still with us Dec 10 2000
 * PR# 649 *
 Subject: Unable to read.table with > 256? columns
 From: r@marksmucker.com
@@ -119,14 +114,14 @@ Date: Thu, 31 Aug 2000 07:28:02 +0200 (MET DST)
 
 Directory:  Installation
 
-* PR# 777 *
-Subject: Minor "make check" bug.
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Tue, 19 Dec 2000 15:11:24 +0100 (CET)
 * PR# 733 *
 Subject: gnome-support problems
 From: olav@melvin.jordforsk.no
 Date: Fri, 10 Nov 2000 10:55:31 +0100 (MET)
+--Very little to go on, for example no version numbers.
+--
+--Final para is almost certainly user error in using 
+--  bug.report(gnome-support problems)  without quotes
 * PR# 597 *
 Subject: multiply defined symbols
 From: plucas@csd.abdn.ac.uk
@@ -140,23 +135,30 @@ Subject: Bug in args with no defaults
 From: dmurdoch@pair.com (Duncan Murdoch)
 Date: Sun, 26 Nov 2000 20:14:30 GMT
 --Probably not a bug, but a logical consequence of "missing" semantics.
+* PR# 412 *
+Subject: anomalies with call objects
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 06 Feb 2000 01:18:50 +0100
 * PR# 408 *
 Subject: convolution bug
 From: wsimpson@gcal.ac.uk
 Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
-* PR# 645 *
-Subject: unlisting a list with names components
-From: Peter Perkins <pperkins@ucsd.edu>
-Date: Fri, 25 Aug 2000 23:07:47 -0700
+* PR# 669 *
+Subject: Bug(s) w/ rbind.data.frame(); fix also read.table(*, as.is = TRUE) ?
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 25 Sep 2000 10:17:15 +0200
+--status of AsIs columns
 * PR# 587 *
 Subject: dim(a <- ...) sets invisible flag erronously
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Fri, 30 Jun 2000 20:15:59 +0200 (MET DST)
 --Not specific to dim: R differs from S for most functions here.
-* PR# 412 *
-Subject: anomalies with call objects
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 06 Feb 2000 01:18:50 +0100
+* PR# 734 *
+Subject:  Assigning into a dataframe 
+From: J.C.Rougier@durham.ac.uk
+Date: Fri, 10 Nov 2000 16:00:31 GMT
+--$<- and [<- are not the same for data frames. Not a bug, I think, or at least
+--a compatible one.
 * PR# 694 *
 Subject:  syntax confusion with function/non-function objects 
 From: J.C.Rougier@durham.ac.uk
@@ -165,29 +167,6 @@ Date: Fri, 13 Oct 2000 12:07:41 +0100 (BST)
 Subject: all.equal.list() sometimes fails with unnamed and named components
 From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
 Date: Fri, 29 Sep 2000 14:20:47 -0700 (PDT)
-* PR# 669 *
-Subject: Bug(s) w/ rbind.data.frame(); fix also read.table(*, as.is = TRUE) ?
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 25 Sep 2000 10:17:15 +0200
---status of AsIs columns
-* PR# 715 *
-Subject: Printing list elements w/attributes
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 31 Oct 2000 12:15:09 +0100
-* PR# 698 *
-Subject:  print problem with data frames 
-From: J.C.Rougier@durham.ac.uk
-Date: Mon, 16 Oct 2000 14:01:43 +0100 (BST)
-* PR# 734 *
-Subject:  Assigning into a dataframe 
-From: J.C.Rougier@durham.ac.uk
-Date: Fri, 10 Nov 2000 16:00:31 GMT
---$<- and [<- are not the same for data frames. Not a bug, I think, or at least
---a compatible one.
-* PR# 731 *
-Subject: substitute(x$y)) corrupts 'y' component
-From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
-Date: Wed, 08 Nov 2000 11:01:48 -0800
 
 Directory:  Low-level
 
@@ -209,10 +188,7 @@ Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
 
 Directory:  Misc
 
-* PR# 772 *
-Subject: demo(is.things) fails
-From: B.Rowlingson@lancaster.ac.uk
-Date: Mon, 18 Dec 2000 13:46:02 +0100 (MET)
+none
 
 Directory:  Models
 
@@ -265,6 +241,10 @@ Subject: acepack, akima and tripack will not load
 From: mallen@tntech.edu
 Date: Thu, 4 May 2000 19:18:59 +0200 (MET DST)
 --related to PR#521: probably compiler-specific
+* PR# 732 *
+Subject: R with redhat 7
+From: hyu@stats.uwo.ca
+Date: Wed, 8 Nov 2000 22:32:48 +0100 (MET)
 * PR# 547 *
 Subject: system(.., ignore.stderr = TRUE)  problem on Solaris
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -276,15 +256,6 @@ Subject: eigen broken on AIX with R-devel?
 From: Thomas J Vogels <tov@ece.cmu.edu>
 Date: 08 May 2000 12:01:04 -0400
 --AIX, probably compiler-specific
-* PR# 732 *
-Subject: R with redhat 7
-From: hyu@stats.uwo.ca
-Date: Wed, 8 Nov 2000 22:32:48 +0100 (MET)
-* PR# 592 *
-Subject: tseries bug
-From: przemat@itti.com.pl
-Date: Tue, 4 Jul 2000 14:52:17 +0200 (MET DST)
---Still broken?
 
 Directory:  TooMuchAtOnce
 
@@ -292,14 +263,6 @@ none
 
 Directory:  Windows
 
-none
-
-Directory:  incoming
-
-* PR# 796 *
-Subject: aic in binomial models is often wrong
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 29 Dec 2000 11:38:48 +0000 (GMT)
 * PR# 795 *
 Subject: Re: [Rd] some (may be related) problems with windows(rescale=)
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
@@ -308,3 +271,10 @@ Date: Thu, 28 Dec 2000 20:22:51 +0000 (GMT)
 Subject: some (may be related) problems with windows(rescale=)
 From: =?iso-8859-1?Q?"Jens=20Oehlschl=E4gel"?= <joehl@web.de>
 Date: Thu, 28 Dec 2000 17:54:47 +0100
+
+Directory:  incoming
+
+* PR# 797 *
+Subject: editor in Windows doesn't like a data frame with row names
+From: John Fox <jfox@mcmaster.ca>
+Date: Sat, 30 Dec 2000 18:17:33 -0500
