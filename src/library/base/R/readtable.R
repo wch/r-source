@@ -163,7 +163,9 @@ read.table <-
         if(known[i]) next
         data[[i]] <-
             if (!is.na(colClasses[i])) as(data[[i]], colClasses[i])
-            else type.convert(data[[i]], as.is = as.is[i], dec = dec)
+            else type.convert(data[[i]], as.is = as.is[i], dec = dec,
+                              na.strings = character(0))
+        ## as na.strings have already be converted to <NA>
     }
 
     ##	now determine row names
