@@ -19,4 +19,4 @@
  */
 
 
-int GnomeDeviceDriver(DevDesc *, char *, double, double, double);
+Rboolean GnomeDeviceDriver(DevDesc *, char *, double, double, double);
