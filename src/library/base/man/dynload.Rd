@@ -138,9 +138,13 @@ symbol.For(name)
   The function \code{dyn.unload} unlinks the shared library.
 
   Functions \code{symbol.C} and \code{symbol.For} map function or
-  subroutine names to the symbol name in the compiled code:
+  subroutine names to the symbol name in the compiled code.  These are
+  no longer of much use in \R.
+
   \code{is.loaded} checks if the symbol name is loaded and hence
-  available for use in \code{.C} or \code{.Fortran}.
+  available for use in \code{.C} or \code{.Fortran}: nowadays it needs
+  the name you would give to \code{.C} or \code{.Fortran} and
+  \strong{not} that remapped by \code{symbol.C} and \code{symbol.For}.
 }
 \note{
   The creation of shared libraries and the runtime linking of them into
@@ -177,6 +181,6 @@ symbol.For(name)
   \code{\link{.Call}}.
 }
 \examples{
-is.loaded(symbol.For("hcass2")) #-> probably TRUE, as stats is loaded
+is.loaded("hcass2") #-> probably TRUE, as stats is loaded
 }
 \keyword{interface}

@@ -81,7 +81,6 @@ static const R_CMethodDef CEntries[]  = {
     {"Rsm_S", (DL_FUNC) &Rsm_S, 5},
     {"tukeyline", (DL_FUNC) &tukeyline, 6},
     {"dblcen", (DL_FUNC) &dblcen, 2},
-    {"R_cutree", (DL_FUNC) &R_cutree, 2},
     {"R_distance", (DL_FUNC) &R_distance, 7},
     {"acf", (DL_FUNC) &acf, 6},
     {"uni_pacf", (DL_FUNC) &uni_pacf, 3},
@@ -93,11 +92,12 @@ static const R_CMethodDef CEntries[]  = {
     {"filter1", (DL_FUNC) &filter1, 7},
     {"filter2", (DL_FUNC) &filter2, 5},
     {"R_pp_sum", (DL_FUNC) &R_pp_sum, 4},
-    {"HoltWinter", (DL_FUNC) &HoltWinters, 15},
+    {"HoltWinters", (DL_FUNC) &HoltWinters, 15},
     {NULL, NULL, 0}
 };
 
 static R_CallMethodDef CallEntries[] = {
+    {"R_cutree", (DL_FUNC) &R_cutree, 2},
     {"R_isoreg", (DL_FUNC) &R_isoreg, 1},
     {"numeric_deriv", (DL_FUNC)&numeric_deriv, 3},
     {"nls_iter", (DL_FUNC)&nls_iter, 3},
@@ -115,6 +115,7 @@ static R_CallMethodDef CallEntries[] = {
     {"ARMAtoMA", (DL_FUNC) &ARMAtoMA, 3},
     {"KalmanLike", (DL_FUNC) &KalmanLike, 10},
     {"KalmanFore", (DL_FUNC) &KalmanFore, 7},
+    {"KalmanSmooth", (DL_FUNC) &KalmanSmooth, 9},
     {"ARIMA_undoPars", (DL_FUNC) &ARIMA_undoPars, 2},
     {"ARIMA_transPars", (DL_FUNC) &ARIMA_transPars, 3},
     {"ARIMA_Invtrans", (DL_FUNC) &ARIMA_Invtrans, 2},
@@ -122,6 +123,7 @@ static R_CallMethodDef CallEntries[] = {
     {"ARIMA_Like", (DL_FUNC) &ARIMA_Like, 9},
     {"ARIMA_CSS", (DL_FUNC) &ARIMA_CSS, 6},
     {"TSconv", (DL_FUNC) &TSconv, 2},
+    {"getQ0", (DL_FUNC) &getQ0, 2},
     {NULL, NULL, 0}
 };
 
@@ -131,6 +133,7 @@ static R_FortranMethodDef FortEntries[] = {
     {"setppr", (DL_FUNC) &F77_SUB(setppr), 6},
     {"smart", (DL_FUNC) &F77_SUB(smart), 16},
     {"pppred", (DL_FUNC) &F77_SUB(pppred), 5},
+    {"setsmu", (DL_FUNC) &F77_SUB(setsmu), 0},
     {"qsbart", (DL_FUNC) &F77_SUB(qsbart), 21},
     {"bvalus", (DL_FUNC) &F77_SUB(bvalus), 7},
     {"supsmu", (DL_FUNC) &F77_SUB(supsmu), 10},
@@ -144,6 +147,6 @@ static R_FortranMethodDef FortEntries[] = {
 
 void R_init_stats(DllInfo *dll)
 {
-    R_useDynamicSymbols(dll, FALSE);
     R_registerRoutines(dll, CEntries, CallEntries, FortEntries, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }

@@ -219,7 +219,7 @@ SEXP L_setGPar(SEXP gpars)
     return R_NilValue;
 }
 
-SEXP L_getGPar(SEXP gpars) 
+SEXP L_getGPar(void) 
 {
     /* Get the value of the current gpars on the current device
      * Need to do this in here so that redrawing via R BASE display

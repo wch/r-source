@@ -559,4 +559,10 @@ void getViewportTransform(SEXP currentvp,
 			  double *vpWidthCM, double *vpHeightCM,
 			  LTransform transform, double *rotationAngle);
 
+/* From unit.c */
+SEXP validUnits(SEXP units);
 
+/* From gpar.c */
+SEXP L_getGPar(void);
+SEXP L_setGPar(SEXP gpars);
+    
