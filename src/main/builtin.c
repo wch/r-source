@@ -1,6 +1,6 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1995-1998  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -356,6 +356,7 @@ SEXP do_expression(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return ans;
 }
 
+/* vector(mode="logical", length=0) */
 SEXP do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	int len, i;
@@ -376,7 +377,8 @@ SEXP do_makevector(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else if (mode == LISTSXP)
 		s = allocList(len);
 	else
-		error("vector: cannot make a vector of the type specified\n");
+		error("vector: cannot make a vector of mode \"%s\".\n",
+		      CHAR(STRING(s)[0]));
 	if (mode == INTSXP || mode == LGLSXP)
 		for (i = 0; i < len; i++)
 			INTEGER(s)[i] = 0;
