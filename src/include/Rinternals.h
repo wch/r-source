@@ -686,6 +686,7 @@ SEXP (SETCADR)(SEXP x, SEXP y);
 SEXP (SETCADDR)(SEXP x, SEXP y);
 SEXP (SETCADDDR)(SEXP x, SEXP y);
 SEXP (SETCAD4R)(SEXP e, SEXP y);
+void (SET_MISSING)(SEXP x, int v);
 
 /* Closure Access Macros */
 SEXP (FORMALS)(SEXP x);
