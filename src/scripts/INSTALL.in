@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.117 $'
+revision='$Revision: 1.118 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -295,11 +295,10 @@ do_install_source () {
   fi  
   stars="**"
 
-  ## <FIXME>
-  ## Should really test for existence of DESCRIPTION file here, and
-  ## abort if there is none.  Once we do this, remove the existence test
-  ## when installing DESCRIPTION.
-  ## </FIXME>
+  if test -f DESCRIPTION; then :; else
+    echo "ERROR: no DESCRIPTION file found"
+    exit 1
+  fi 
 
   if ${use_configure} && test -x ./configure ; then
     eval ${configure_vars} ./configure ${configure_args}
@@ -396,13 +395,7 @@ do_install_source () {
 
   if test -d inst; then
     message "inst"
-    ## <FIXME>
-    ## When installing from a source directory under CVS control, we
-    ## should really exclude the CVS subdirs.  (In fact, we should also
-    ## exclude everything in @file{.Rbuildignore}, but that's another
-    ## story ...)
     cp -r inst/* "${R_PACKAGE_DIR}"
-    ## </FIXME>
   fi
 
   case ${save} in
@@ -450,24 +443,6 @@ do_install_source () {
     ## cleanup).
     if test -s install.R; then
       cat install.R >> "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
-    fi
-  fi
-
-  ## Copy DESCRIPTION file, stamp with build information, and remove
-  ## blank lines.  (Need to add an empty line to deal with missing
-  ## trailing newlines at EOF.)
-  ## As from 1.7.0, packages without compiled code are not marked
-  ## as being from any platform.
-  if test -f DESCRIPTION; then
-    ## <FIXME>
-    ## What if there is no DESCRIPTION file?
-    ## Shouldn't we fail right away then?
-    ## </FIXME>
-    echo ".installPackageDescription(\".\", \"${R_PACKAGE_DIR}\")" | \
-      R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null 2>&1
-    if test ${?} -ne 0; then
-      echo "ERROR: installing package DESCRIPTION failed"
-      exit 1
     fi
   fi
 
@@ -520,12 +495,33 @@ do_install_source () {
     echo "No man pages found in package '${pkg}'"
   fi
 
+  ## Copy DESCRIPTION file, stamp with build information, and remove
+  ## blank lines.  (Need to add an empty line to deal with missing
+  ## trailing newlines at EOF.)
+  ## As from 1.7.0, packages without compiled code are not marked
+  ## as being from any platform.
+  echo ".installPackageDescription(\".\", \"${R_PACKAGE_DIR}\")" | \
+    R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null 2>&1
+  if test ${?} -ne 0; then
+    echo "ERROR: installing package DESCRIPTION failed"
+    exit 1
+  fi
+
   echo ".installPackageIndices(\".\", \"${R_PACKAGE_DIR}\")" | \
     R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null 2>&1
   if test ${?} -ne 0; then
     echo "ERROR: installing package indices failed"
     exit 1
   fi
+
+  ## <FIXME>
+  ## Remove stuff we should not have installed in the first place.
+  ## When installing from a source directory under CVS control, we
+  ## should really exclude the CVS subdirs.  (In fact, we should also
+  ## exclude everything in @file{.Rbuildignore}, but that's another
+  ## story ...)
+  find "${R_PACKAGE_DIR}" -name CVS -exec rm -rf \{\} \;
+  ## </FIXME>
 
   if ${clean}; then
     if test -x ./cleanup ; then
