@@ -323,7 +323,7 @@ AC_DEFUN(R_PROG_F77_APPEND_UNDERSCORE,
       subroutine try
       end
 EOF
-      ${FC} -c ${FFLAGS} conftestf.f 1>&AC_FD_CC 2>&AC_FD_CC
+      ${F77} -c ${FFLAGS} conftestf.f 1>&AC_FD_CC 2>&AC_FD_CC
       cat > conftest.c <<EOF
 main() { try_(); }
 EOF
@@ -368,7 +368,7 @@ AC_DEFUN(R_PROG_F77_CC_COMPAT,
       y(3) = (x(2)/x(1)) ** a(1)
       end
 EOF
-      ${FC} ${FFLAGS} -c conftestf.f 1>&AC_FD_CC 2>&AC_FD_CC
+      ${F77} ${FFLAGS} -c conftestf.f 1>&AC_FD_CC 2>&AC_FD_CC
       changequote(, )
       cat > conftest.c <<EOF
 #include <math.h>
@@ -407,8 +407,8 @@ EOF
 	## FIXME
 	## This should really use MAIN_LD, and hence come after this is
 	## determined.  Or maybe we can always use ${CC} eventually?
-	if ${CC-cc} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest conftest.o conftestf.o \
-            ${FLIBS} -lm 1>&AC_FD_CC 2>&AC_FD_CC; then
+	if ${CC-cc} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest conftest.o \
+            conftestf.o ${FLIBS} -lm 1>&AC_FD_CC 2>&AC_FD_CC; then
           output=`./conftest 2>&1`
 	  if test ${?} = 0; then
 	    r_cv_prog_f77_cc_compat=yes
@@ -423,6 +423,28 @@ EOF
     AC_MSG_WARN([${F77-f77} and ${CC-cc} disagree on int and double])
     AC_MSG_ERROR([Maybe change CFLAGS or FFLAGS?])
   fi
+])
+dnl
+dnl See whether Fortran compiler supports -c -o FILE.lo
+dnl
+AC_DEFUN(R_PROG_F77_C_O_LO,
+[AC_CACHE_CHECK([whether ${F77} supports -c -o FILE.lo],
+  r_cv_prog_f77_c_o_lo,
+  [ test -d TMP || mkdir TMP
+    cat > conftest.f <<EOF
+      program conftest
+      end
+EOF
+    ac_try='${F77} ${FFLAGS} -c conftest.f -o TMP/conftest.lo 1>&AC_FD_CC'
+    if AC_TRY_EVAL(ac_try) \
+        && test -f TMP/conftest.lo \
+        && AC_TRY_EVAL(ac_try); then
+      r_cv_prog_f77_c_o_lo=yes
+    else
+      r_cv_prog_f77_c_o_lo=no
+    fi
+    rm -rf conftest* TMP
+  ])
 ])
 dnl
 dnl R_PROG_F2C_FLIBS
@@ -1185,14 +1207,6 @@ EOF
     AC_MSG_RESULT([no])
   fi
 ])
-dnl
-dnl configure related programs
-dnl
-missing_dir=`cd ${ac_aux_dir} && pwd`
-AM_MISSING_PROG(ACLOCAL, aclocal, ${missing_dir})
-AM_MISSING_PROG(AUTOCONF, autoconf, ${missing_dir})
-AM_MISSING_PROG(AUTOMAKE, automake, ${missing_dir})
-AM_MISSING_PROG(AUTOHEADER, autoheader, ${missing_dir})
 
 dnl Local Variables: ***
 dnl mode: sh ***

@@ -304,9 +304,20 @@ if test -n "${F77}"; then
 .f.c:
 .f.o:
 	$(FC) $(ALL_FFLAGS) -c $< -o $@
+EOF
+  R_PROG_F77_C_O_LO
+  if test "${r_cv_prog_f77_c_o_lo}" = yes; then
+    cat << \EOF >> ${f77_rules_frag}
 .f.lo:
 	$(FC) $(ALL_FFLAGS_LO) -c $< -o $@
 EOF
+  else
+    cat << \EOF >> ${f77_rules_frag}
+	@test -d .libs || mkdir .libs
+	$(FC) $(ALL_FFLAGS_LO) -c $< -o .libs/$*.o
+	mv .libs/$*.o $*.lo
+EOF
+  fi
 elif test -n "${F2C}"; then
   R_PROG_F2C_FLIBS
   f77_rules_frag=Makefrag.f77
