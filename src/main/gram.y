@@ -1245,6 +1245,7 @@ keywords[] = {
 	{ "TRUE",	NUM_CONST	},
 	{ "FALSE",	NUM_CONST	},
 	{ "GLOBAL.ENV",	NUM_CONST	},
+	{ "Inf",	NUM_CONST	},
 	{ "function",	FUNCTION	},
 	{ "while",	WHILE		},
 	{ "repeat",	REPEAT		},
@@ -1283,6 +1284,10 @@ static int KeywordLookup(char *s)
 					break;
 				case 4:
 					PROTECT(yylval = R_GlobalEnv);
+					break;
+				case 5:
+					PROTECT(yylval = allocVector(REALSXP, 1));
+					REAL(yylval)[0] = R_PosInf;
 				}
 				break;
 			case FUNCTION:
