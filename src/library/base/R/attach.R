@@ -4,12 +4,13 @@ attach <- function(what, pos=2, name=deparse(substitute(what)))
 detach <- function(name, pos=2)
 {
 	if(!missing(name)) {
-		name <- substitute(name)
-		if(!is.character(name))
-			name <- deparse(name)
-		pos <- match(name, search())
+		name <- substitute(name)# when a name..
+		pos <-
+		  if(is.numeric(name)) name
+		  else match(if(!is.character(name))deparse(name) else name,
+			     search())
 		if(is.na(pos))
-			stop("invalid name")
+		  stop("invalid name")
 	}
 	.Internal(detach(pos))
 }
