@@ -7,8 +7,8 @@ help <-
              pager = getOption("pager"))
 {
     chmhelp <- is.logical(chmhelp) && chmhelp
-    htmlhelp <- is.logical(htmlhelp) && htmlhelp
-    winhelp <- is.logical(winhelp) && winhelp
+    htmlhelp <- !chmhelp && is.logical(htmlhelp) && htmlhelp
+    winhelp <- !chmhelp && !htmlhelp && is.logical(winhelp) && winhelp
     if (!missing(package))
         if (is.name(y <- substitute(package)))
             package <- as.character(y)
