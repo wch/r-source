@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.6-13, 2002-11-05
+@set FAQ-VERSION 1.6-14, 2002-11-08
 @set REL-VERSION 1.6.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1843,6 +1843,11 @@ problems, including the Boston housing data.
 @item moc
 Fits a variety of mixtures models for multivariate observations with
 user-difined distributions and curves.
+@item msm
+Functions for fitting continuous-time Markov multi-state models to
+categorical processes observed at arbitrary times, optionally with
+misclassified responses, and covariates on transition or
+misclassification rates.
 @item muhaz
 Hazard function estimation in survival analysis.
 @item multcomp
