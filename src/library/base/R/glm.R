@@ -572,6 +572,7 @@ summary.glm <- function(object, dispersion = NULL,
 		  df=c(object$rank, df.r),
 		  cov.unscaled=covmat.unscaled,
 		  cov.scaled=covmat))
+    ans$df <- c(p, df.r, NCOL(Qr$qr))
 
     if(correlation) {
 	dd <- sqrt(diag(covmat.unscaled))
@@ -597,7 +598,11 @@ print.summary.glm <-
     }
     print.default(x$deviance.resid, digits=digits, na = "", print.gap = 2)
 
-    cat("\nCoefficients:\n")
+    ## df component added in 1.8.0
+    if (!is.null(df<- x$df) && (nsingular <- df[3] - df[1]))
+	cat("\nCoefficients: (", nsingular,
+	    " not defined because of singularities)\n", sep = "")
+    else cat("\nCoefficients:\n")
     print.coefmat(x$coef, digits=digits, signif.stars=signif.stars, ...)
     ##
     cat("\n(Dispersion parameter for ", x$family$family,

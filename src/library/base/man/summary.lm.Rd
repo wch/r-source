@@ -1,4 +1,4 @@
-\name{lm.summary}
+\name{summary/lm}
 \alias{summary.lm}
 \alias{summary.lm.null}
 \alias{summary.mlm}% mlm is *not* mentioned at all
@@ -48,13 +48,14 @@
     \code{lm}.}
   \item{coefficients}{a \eqn{p \times 4}{p x 4} matrix with columns for
     the estimated coefficient, its standard error, t-statistic and
-    corresponding (two-sided) p-value.}
+    corresponding (two-sided) p-value.  Aliased coefficients are omitted.}
   \item{sigma}{the square root of the estimated variance of the random
     error
     \deqn{\hat\sigma^2 = \frac{1}{n-p}\sum_i{R_i^2},}{%
       sigma^2 = 1/(n-p) Sum(R[i]^2),}
     where \eqn{R_i}{R[i]} is the \eqn{i}-th residual, \code{residuals[i]}.}
-  \item{df}{degrees of freedom, a 3-vector \eqn{(p, n-p, p*)}.}
+  \item{df}{degrees of freedom, a 3-vector \eqn{(p, n-p, p*)}, the last
+    being the number of non-aliased coefficients.}
   \item{fstatistic}{(for models including non-intercept terms)
     a 3-vector with the value of the F-statistic with
     its numerator and denominator degrees of freedom.}

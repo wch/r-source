@@ -19,6 +19,9 @@ NEW FEATURES
 	POSIXlt methods.  For efficiency, the base code uses rep.int()
 	rather than rep() where possible.
 
+    o	print.summary.glm() now reports omitted coefficients in the
+	same way as print.summary.lm().
+
 
 DEPRECATED & DEFUNCT
 

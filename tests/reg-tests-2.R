@@ -893,3 +893,14 @@ if(require(survival)) {
     detach("package:survival")
 }
 ## were different, the last one failed in 1.6.2 (at least)
+
+## wishlist PR#2776: aliased coefs in lm/glm
+set.seed(123)
+x2 <- x1 <- 1:10
+x3 <- 0.1*(1:10)^2
+y <- x1 + rnorm(10)
+(fit <- lm(y ~ x1 + x2 + x3))
+summary(fit, cor = TRUE)
+(fit <- glm(y ~ x1 + x2 + x3))
+summary(fit, cor = TRUE)
+## omitted silently in summary.glm < 1.8.0

@@ -1,4 +1,4 @@
-\name{glm.summary}
+\name{summary.glm}
 \alias{summary.glm}
 \alias{summary.glm.null}
 \alias{print.summary.glm}
@@ -52,10 +52,12 @@
   \item{df.residual}{the component from \code{object}.}
   \item{null.deviance}{the component from \code{object}.}
   \item{df.null}{the component from \code{object}.}
+  \item{df}{degrees of freedom, a 3-vector \eqn{(p, n-p, p*)}, the last
+    being the number of non-aliased coefficients.}
   \item{deviance.resid}{the deviance residuals:
     see \code{\link{residuals.glm}}.}
   \item{coefficients}{the matrix of coefficients, standard errors,
-    z-values and p-values.}
+    z-values and p-values.  Aliased coefficients are omitted.}
   \item{dispersion}{eother the supplied argument or the estimated
     dispersion if the latter in \code{NULL}}
   \item{df}{a 2-vector of the rank of the model and the number of

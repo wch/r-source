@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-04-08)
+Version 1.8.0 Under development (unstable) (2003-04-28)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -897,14 +897,14 @@ $B$subset
 > ## Marc Feldesman 2001-Feb-01.  Precision in summary.data.frame & *.matrix
 > data(attenu)
 > summary(attenu)
-     event              mag             station             dist        
- Min.   : 1.00     Min.   :5.000     117    :  5       Min.   :  0.50   
- 1st Qu.: 9.00     1st Qu.:5.300     1028   :  4       1st Qu.: 11.32   
- Median :18.00     Median :6.100     113    :  4       Median : 23.40   
- Mean   :14.74     Mean   :6.084     112    :  3       Mean   : 45.60   
- 3rd Qu.:20.00     3rd Qu.:6.600     135    :  3       3rd Qu.: 47.55   
- Max.   :23.00     Max.   :7.700     (Other):147       Max.   :370.00   
-                                     NA's   : 16                        
+     event            mag           station         dist       
+ Min.   : 1.00   Min.   :5.000   117    :  5   Min.   :  0.50  
+ 1st Qu.: 9.00   1st Qu.:5.300   1028   :  4   1st Qu.: 11.32  
+ Median :18.00   Median :6.100   113    :  4   Median : 23.40  
+ Mean   :14.74   Mean   :6.084   112    :  3   Mean   : 45.60  
+ 3rd Qu.:20.00   3rd Qu.:6.600   135    :  3   3rd Qu.: 47.55  
+ Max.   :23.00   Max.   :7.700   (Other):147   Max.   :370.00  
+                                 NA's   : 16                   
      accel        
  Min.   :0.00300  
  1st Qu.:0.04425  
@@ -914,14 +914,14 @@ $B$subset
  Max.   :0.81000  
                   
 > summary(attenu, digits = 5)
-     event              mag             station             dist        
- Min.   : 1.000    Min.   :5.0000    117    :  5       Min.   :  0.500  
- 1st Qu.: 9.000    1st Qu.:5.3000    1028   :  4       1st Qu.: 11.325  
- Median :18.000    Median :6.1000    113    :  4       Median : 23.400  
- Mean   :14.742    Mean   :6.0841    112    :  3       Mean   : 45.603  
- 3rd Qu.:20.000    3rd Qu.:6.6000    135    :  3       3rd Qu.: 47.550  
- Max.   :23.000    Max.   :7.7000    (Other):147       Max.   :370.000  
-                                     NA's   : 16                        
+     event             mag            station         dist        
+ Min.   : 1.000   Min.   :5.0000   117    :  5   Min.   :  0.500  
+ 1st Qu.: 9.000   1st Qu.:5.3000   1028   :  4   1st Qu.: 11.325  
+ Median :18.000   Median :6.1000   113    :  4   Median : 23.400  
+ Mean   :14.742   Mean   :6.0841   112    :  3   Mean   : 45.603  
+ 3rd Qu.:20.000   3rd Qu.:6.6000   135    :  3   3rd Qu.: 47.550  
+ Max.   :23.000   Max.   :7.7000   (Other):147   Max.   :370.000  
+                                   NA's   : 16                    
      accel        
  Min.   :0.00300  
  1st Qu.:0.04425  
@@ -931,14 +931,14 @@ $B$subset
  Max.   :0.81000  
                   
 > summary(data.matrix(attenu), digits = 5)# the same for matrix
-     event              mag             station             dist        
- Min.   : 1.000    Min.   :5.0000    Min.   :  1.000   Min.   :  0.500  
- 1st Qu.: 9.000    1st Qu.:5.3000    1st Qu.: 24.250   1st Qu.: 11.325  
- Median :18.000    Median :6.1000    Median : 56.500   Median : 23.400  
- Mean   :14.742    Mean   :6.0841    Mean   : 56.928   Mean   : 45.603  
- 3rd Qu.:20.000    3rd Qu.:6.6000    3rd Qu.: 86.750   3rd Qu.: 47.550  
- Max.   :23.000    Max.   :7.7000    Max.   :117.000   Max.   :370.000  
-                                     NA's   : 16.000                    
+     event             mag            station             dist        
+ Min.   : 1.000   Min.   :5.0000   Min.   :  1.000   Min.   :  0.500  
+ 1st Qu.: 9.000   1st Qu.:5.3000   1st Qu.: 24.250   1st Qu.: 11.325  
+ Median :18.000   Median :6.1000   Median : 56.500   Median : 23.400  
+ Mean   :14.742   Mean   :6.0841   Mean   : 56.928   Mean   : 45.603  
+ 3rd Qu.:20.000   3rd Qu.:6.6000   3rd Qu.: 86.750   3rd Qu.: 47.550  
+ Max.   :23.000   Max.   :7.7000   Max.   :117.000   Max.   :370.000  
+                                   NA's   : 16.000                    
      accel        
  Min.   :0.00300  
  1st Qu.:0.04425  
@@ -1923,13 +1923,13 @@ y    2    5 8
 > x <- data.frame(1:10)
 > x$z <- data.frame(x=1:10,yyy=11:20)
 > summary(x)
-     X1.10                              z.x             z.yyy     
- Min.   : 1.00                    Min.   : 1.00    Min.   :11.00  
- 1st Qu.: 3.25                    1st Qu.: 3.25    1st Qu.:13.25  
- Median : 5.50                    Median : 5.50    Median :15.50  
- Mean   : 5.50                    Mean   : 5.50    Mean   :15.50  
- 3rd Qu.: 7.75                    3rd Qu.: 7.75    3rd Qu.:17.75  
- Max.   :10.00                    Max.   :10.00    Max.   :20.00  
+     X1.10             z.x             z.yyy     
+ Min.   : 1.00   Min.   : 1.00    Min.   :11.00  
+ 1st Qu.: 3.25   1st Qu.: 3.25    1st Qu.:13.25  
+ Median : 5.50   Median : 5.50    Median :15.50  
+ Mean   : 5.50   Mean   : 5.50    Mean   :15.50  
+ 3rd Qu.: 7.75   3rd Qu.: 7.75    3rd Qu.:17.75  
+ Max.   :10.00   Max.   :10.00    Max.   :20.00  
 > ## 1.6.2 had NULL labels on output with z columns stacked.
 > 
 > 
@@ -2338,4 +2338,83 @@ Loading required package: survival
   ..$ : chr [1:2] "time" "status"
  - attr(*, "type")= chr "right"
 > ## were different, the last one failed in 1.6.2 (at least)
+> 
+> ## wishlist PR#2776: aliased coefs in lm/glm
+> set.seed(123)
+> x2 <- x1 <- 1:10
+> x3 <- 0.1*(1:10)^2
+> y <- x1 + rnorm(10)
+> (fit <- lm(y ~ x1 + x2 + x3))
+
+Call:
+lm(formula = y ~ x1 + x2 + x3)
+
+Coefficients:
+(Intercept)           x1           x2           x3  
+     1.4719       0.5867           NA       0.2587  
+
+> summary(fit, cor = TRUE)
+
+Call:
+lm(formula = y ~ x1 + x2 + x3)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.0572 -0.4836  0.0799  0.4424  1.2699 
+
+Coefficients: (1 not defined because of singularities)
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept)   1.4719     0.9484   1.552    0.165
+x1            0.5867     0.3961   1.481    0.182
+x3            0.2587     0.3509   0.737    0.485
+
+Residual standard error: 0.8063 on 7 degrees of freedom
+Multiple R-Squared: 0.9326,	Adjusted R-squared: 0.9134 
+F-statistic: 48.43 on 2 and 7 DF,  p-value: 7.946e-05 
+
+Correlation of Coefficients:
+   (Intercept) x1   
+x1 -0.91            
+x3  0.81       -0.97
+
+> (fit <- glm(y ~ x1 + x2 + x3))
+
+Call:  glm(formula = y ~ x1 + x2 + x3) 
+
+Coefficients:
+(Intercept)           x1           x2           x3  
+     1.4719       0.5867           NA       0.2587  
+
+Degrees of Freedom: 9 Total (i.e. Null);  7 Residual
+Null Deviance:	    67.53 
+Residual Deviance: 4.551 	AIC: 28.51 
+> summary(fit, cor = TRUE)
+
+Call:
+glm(formula = y ~ x1 + x2 + x3)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.0572  -0.4836   0.0799   0.4424   1.2699  
+
+Coefficients: (1 not defined because of singularities)
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept)   1.4719     0.9484   1.552    0.165
+x1            0.5867     0.3961   1.481    0.182
+x3            0.2587     0.3509   0.737    0.485
+
+(Dispersion parameter for gaussian family taken to be 0.6501753)
+
+    Null deviance: 67.5316  on 9  degrees of freedom
+Residual deviance:  4.5512  on 7  degrees of freedom
+AIC: 28.507
+
+Number of Fisher Scoring iterations: 2
+
+Correlation of Coefficients:
+   (Intercept) x1   
+x1 -0.91            
+x3  0.81       -0.97
+
+> ## omitted silently in summary.glm < 1.8.0
 > 
