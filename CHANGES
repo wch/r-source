@@ -1,3 +1,16 @@
+		CHANGES IN R VERSION 0.62.4
+BUG FIXES
+
+    o   ppoints() now behaves like S, and has additional argument 'a'
+
+    o   seq(1,6,by=3) and similar "by" calls now work okay
+
+    o   mahalanobis(.) now fixed; does *NOT* have default arguments for
+	center and cov anymore.
+
+    o   diag(.) doesn't return non-sensical dimnames anymore.
+
+
 		CHANGES IN R VERSION 0.62.3
 
 NEW FEATURES

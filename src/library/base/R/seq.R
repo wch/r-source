@@ -7,6 +7,7 @@ function(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
 		length.out <- length(along.with)
 	else if(!missing(length.out))
 		length.out <- ceiling(length.out)
+
 	if(nargs() == 1 && !missing(from)) {
 		if(mode(from) == "numeric" && length(from) == 1)
 			1:from
@@ -16,9 +17,25 @@ function(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
 		if(missing(by))
 			from:to
 		else {
-			n <- (to - from)/by + 0.4 # fuzz needed
-			if(n < 0)
+			n <- (del <- to - from)/by
+			if(is.na(n)) {
+				if(by == 0 && del == 0)
+					return(from)
+				else stop("invalid (to - from)/by in seq(.)")
+			} else if(abs(n) > .Machine$integer.max)
+				stop("'by' argument is much too small")
+			else if(n < 0)
 				stop("Wrong sign in by= argument")
+
+			eps <- .Machine$double.eps *
+				max(1, max(abs(to),abs(from)) / abs(del))
+			n <- as.integer(n * (1 + eps))
+			if(eps*2*n >= 1)
+				warning(paste("seq.default(f,t,by): n=",n,
+					      ": possibly imprecise intervals"))
+			if(by>0) while(from+ n*by > to) n <- n - 1
+			else	 while(from+ n*by < to) n <- n - 1
+
 			from + (0:n) * by
 		}
 	else if(length.out < 0)
