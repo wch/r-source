@@ -767,7 +767,7 @@ print.data.frame <-
       op <- options(digits = digits)
       on.exit(options(op))
     }
-    print(as.matrix(x), ..., quote = quote, right = right)
+    print.matrix(as.matrix(x), ..., quote = quote, right = right)
   }
   invisible(x)
 }
