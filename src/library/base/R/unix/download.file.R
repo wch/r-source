@@ -1,7 +1,8 @@
 download.file <- function(url, destfile, method = "internal", quiet = FALSE)
 {
-    method <- match.arg(method,
-                        c("internal", "wget", "lynx", "cp", "socket"))
+    method <- if(missing(method)) "internal" else
+    match.arg(method,
+              c("internal", "wget", "lynx", "cp", "socket"))
 
     if(method == "internal" || method == "wget")
 #    if(method == "internal")

@@ -2,6 +2,7 @@
 \alias{connection}
 \alias{file}
 \alias{pipe}
+\alias{url}
 \alias{open}
 \alias{open.connection}
 \alias{isOpen}
@@ -28,10 +29,10 @@ file(description, open = "", blocking = TRUE, encoding = getOption("encoding"))
 pipe(description, open = "", encoding = getOption("encoding"))
 url(description, open = "", encoding = getOption("encoding"))
 
-\method{open}{connection}(con, open = "rt", blocking = TRUE)
+\method{open}{connection}(con, open = "r", blocking = TRUE)
 \method{close}{connection}(con, type = "rw")
 \method{seek}{connection}(con, where = NA, origin="start", \dots)
-\method{truncate}{connection}(con)
+\method{truncate}{connection}(con, \dots)
 
 isOpen(con, rw = "")
 isIncomplete(con)

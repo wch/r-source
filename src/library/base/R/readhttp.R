@@ -50,7 +50,7 @@
 }
 
 "read.table.url" <-
-    function (url, method="internal", ...)
+    function (url, method, ...)
 {
     f<-tempfile()
     if (download.file(url, destfile=f ,method=method) == 0)
@@ -63,7 +63,7 @@
 }
 
 "scan.url" <-
-    function (url, file=tempfile(), method="internal", ...)
+    function (url, file=tempfile(), method, ...)
 {
     if (download.file(url, dest=file, method=method)!= 0) {
         unlink(file)
@@ -75,7 +75,7 @@
 }
 
 "source.url" <-
-    function (url, file=tempfile(), method="internal", ...)
+    function (url, file=tempfile(), method, ...)
 {
     if (download.file(url, dest=file, method=method) != 0) {
         unlink(file)
@@ -91,7 +91,7 @@
 }
 "url.show" <-
     function (url,  title = url, file = tempfile(),
-              delete.file = TRUE, method="internal",...)
+              delete.file = TRUE, method,...)
 {
     if (download.file(url, dest = file, method=method) != 0)
         stop("transfer failure")

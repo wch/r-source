@@ -6,7 +6,7 @@
   A graphics device for JPEG or PNG format bitmap files.
 }
 \usage{
-jpeg(filename = "Rplot.jpg", width = 480, height = 480, pointsize = 12,
+jpeg(filename = "Rplot.jpeg", width = 480, height = 480, pointsize = 12,
      quality = 75, \dots)
 png(filename ="Rplot.png", width = 480, height = 480, pointsize = 12, \dots)
 }
