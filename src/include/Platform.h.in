@@ -8,6 +8,12 @@
 #undef HAVE_ISNAN		/* IEEE Arith indicator */
 #undef HAVE_FINITE
 
+#ifdef HAVE_ISNAN
+#ifdef HAVE_FINITE
+#define IEEE_754
+#endif
+#endif
+
 /* Signal Handler Type */
 #define RETSIGTYPE int
 

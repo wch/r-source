@@ -978,7 +978,7 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (nback > 0 )
 			nback -= framedepth(R_GlobalContext);
 		nback = -nback;
-		PROTECT(env = sysframe(nback,R_GlobalContext));
+		PROTECT(env = R_sysframe(nback,R_GlobalContext));
 		break;
 	default:
 		errorcall(call, "invalid second argument\n");

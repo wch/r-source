@@ -37,25 +37,17 @@ extern double	R_NegInf;		/* IEEE -Inf or -DBL_MAX */
 extern int   	R_NaInt;		/* NA_INTEGER etc */
 extern double	R_NaReal;		/* NA_REAL */
 
-#ifdef HAVE_ISNAN
+#ifdef IEEE_754
 
-#define DOMAIN_ERROR {return R_NaN;}
-#define POS_RANGE_ERROR {return R_PosInf;}
-#define NEG_RANGE_ERROR {return R_NegInf;}
-#define MATH_CHECK(call) (R_tmp=call,finite(R_tmp)?R_tmp:R_NaN)
-#ifdef Macintosh
-#define FINITE(x) isfinite(x)
-#else
-#define FINITE(x) finite(x)
-#endif
+#define MATH_CHECK(call)	(call)
+#define FINITE(x)		finite(x)
+#define NAN(x)			((x)!=(x))
 
 #else
 
-#define DOMAIN_ERROR {errno=EDOM;return R_NaN;}
-#define POS_RANGE_ERROR {errno=ERANGE;return R_PosInf;}
-#define NEG_RANGE_ERROR {errno=ERANGE;return R_NegInf;}
-#define MATH_CHECK(call) (errno=0,R_tmp=call,(errno==0)?R_tmp:R_NaN)
-#define FINITE(x) ((x)!=NA_REAL)
+#define MATH_CHECK(call)	(errno=0,R_tmp=call,(errno==0)?R_tmp:R_NaN)
+#define FINITE(x)		((x)!=NA_REAL)
+#define NAN(x)			((x)!=NA_REAL)
 
 #endif
 

@@ -2,7 +2,7 @@ build:
 		@echo extracting foreign function symbols
 		@sh GETSYMBOLS
 		cd graphics; make
-		cd math; make
+		cd nmath; make
 		cd appl; make
 		cd unix; make
 		cd main; make
@@ -18,7 +18,7 @@ clean:
 		@cd graphics; make $@
 		@cd library; make $@
 		@cd main; make $@
-		@cd math; make $@
+		@cd nmath; make $@
 		@cd appl; make $@
 		@cd unix; make $@
 		@-rm -f lib/*.a
@@ -28,7 +28,7 @@ realclean:
 		@cd graphics; make $@
 		@cd library; make clean
 		@cd main; make $@
-		@cd math; make $@
+		@cd nmath; make $@
 		@cd appl; make $@
 		@cd unix; make $@
 		@cd include; make $@

@@ -396,7 +396,7 @@ AC_SUBST(NO_PERL5)
 AC_OUTPUT(
 src/main/Makefile
 src/graphics/Makefile
-src/math/Makefile
+src/nmath/Makefile
 src/appl/Makefile
 src/regex/Makefile
 src/unix/Makefile

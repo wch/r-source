@@ -874,7 +874,7 @@ unsigned RGBpar(SEXP x, int i)
 		else return ColorTable[abs(index) % ColorTableSize];
 	}
 	else if(isReal(x)) {
-		if(!FINITE(REAL(x)[i])) return NA_INTEGER;
+		if(NAN(REAL(x)[i])) return NA_INTEGER;
 		index = REAL(x)[i] - 1;
 		if(index < 0) return DP->bg;
 		else return ColorTable[abs(index) % ColorTableSize];
@@ -900,7 +900,7 @@ void InitColors()
 
 static unsigned int ScaleColor(double x)
 {
-	if(!FINITE(x) || x < 0.0 || x > 1.0)
+	if(NAN(x) || x < 0.0 || x > 1.0)
 		error("invalid color intensity\n");
 	return (unsigned int)(255*x);
 }
@@ -1051,7 +1051,7 @@ SEXP do_gray(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(ans = allocVector(STRSXP, nlev));
 	for(i=0 ; i<nlev ; i++) {
 		level = REAL(lev)[i];
-		if(!FINITE(level) || level < 0 || level > 1)
+		if(NAN(level) || level < 0 || level > 1)
 			errorcall(call, "invalid gray level\n");
 		ilevel = 255 * level;
 		STRING(ans)[i] = mkChar(RGB2rgb(ilevel, ilevel, ilevel));
@@ -1113,7 +1113,7 @@ unsigned int LTYpar(SEXP value, int index)
 	}
 	else if(isReal(value)) {
 		code = REAL(value)[index];
-		if(!FINITE(code) || code <= 0)
+		if(NAN(code) || code <= 0)
 			return NA_INTEGER;
 		code = (code-1) % nlinetype;
 		return linetype[code].pattern;

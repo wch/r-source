@@ -413,6 +413,7 @@ FUNTAB R_FunTab[] =
 
 {"is.vector",	do_isvector,	0,	11,	2,	PP_FUNCALL,	0},
 {"is.na",	do_isna,	0,	1,	1,	PP_FUNCALL,	0},
+{"is.finite",	do_isfinite,	0,	1,	1,	PP_FUNCALL,	0},
 
 
 /* Miscellaneous */

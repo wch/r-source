@@ -324,60 +324,60 @@ static SEXP real_relop(int code, SEXP s1, SEXP s2)
 		for (i = 0; i < n; i++) {
 			x1 = REAL(s1)[i % n1];
 			x2 = REAL(s2)[i % n2];
-			if (FINITE(x1) && FINITE(x2))
-				LOGICAL(ans)[i] = (x1 == x2);
-			else
+			if (NAN(x1) || NAN(x2))
 				LOGICAL(ans)[i] = NA_LOGICAL;
+			else
+				LOGICAL(ans)[i] = (x1 == x2);
 		}
 		break;
 	case NEOP:
 		for (i = 0; i < n; i++) {
 			x1 = REAL(s1)[i % n1];
 			x2 = REAL(s2)[i % n2];
-			if (FINITE(x1) && FINITE(x2))
-				LOGICAL(ans)[i] = (x1 != x2);
-			else
+			if (NAN(x1) || NAN(x2))
 				LOGICAL(ans)[i] = NA_LOGICAL;
+			else
+				LOGICAL(ans)[i] = (x1 != x2);
 		}
 		break;
 	case LTOP:
 		for (i = 0; i < n; i++) {
 			x1 = REAL(s1)[i % n1];
 			x2 = REAL(s2)[i % n2];
-			if (FINITE(x1) && FINITE(x2))
-				LOGICAL(ans)[i] = (x1 < x2);
-			else
+			if (NAN(x1) || NAN(x2))
 				LOGICAL(ans)[i] = NA_LOGICAL;
+			else
+				LOGICAL(ans)[i] = (x1 < x2);
 		}
 		break;
 	case GTOP:
 		for (i = 0; i < n; i++) {
 			x1 = REAL(s1)[i % n1];
 			x2 = REAL(s2)[i % n2];
-			if (FINITE(x1) && FINITE(x2))
-				LOGICAL(ans)[i] = (x1 > x2);
-			else
+			if (NAN(x1) || NAN(x2))
 				LOGICAL(ans)[i] = NA_LOGICAL;
+			else
+				LOGICAL(ans)[i] = (x1 > x2);
 		}
 		break;
 	case LEOP:
 		for (i = 0; i < n; i++) {
 			x1 = REAL(s1)[i % n1];
 			x2 = REAL(s2)[i % n2];
-			if (FINITE(x1) && FINITE(x2))
-				LOGICAL(ans)[i] = (x1 <= x2);
-			else
+			if (NAN(x1) || NAN(x2))
 				LOGICAL(ans)[i] = NA_LOGICAL;
+			else
+				LOGICAL(ans)[i] = (x1 <= x2);
 		}
 		break;
 	case GEOP:
 		for (i = 0; i < n; i++) {
 			x1 = REAL(s1)[i % n1];
 			x2 = REAL(s2)[i % n2];
-			if (FINITE(x1) && FINITE(x2))
-				LOGICAL(ans)[i] = (x1 >= x2);
-			else
+			if (NAN(x1) || NAN(x2))
 				LOGICAL(ans)[i] = NA_LOGICAL;
+			else
+				LOGICAL(ans)[i] = (x1 >= x2);
 		}
 		break;
 	}
@@ -408,20 +408,20 @@ static SEXP complex_relop(int code, SEXP s1, SEXP s2)
 		for (i = 0; i < n; i++) {
 			x1 = COMPLEX(s1)[i % n1];
 			x2 = COMPLEX(s2)[i % n2];
-			if (FINITE(x1.r) && FINITE(x1.i) && FINITE(x2.r) && FINITE(x2.i))
-				LOGICAL(ans)[i] = (x1.r == x2.r && x1.i == x2.i);
-			else
+			if (NAN(x1.r) || NAN(x1.i) || NAN(x2.r) || NAN(x2.i))
 				LOGICAL(ans)[i] = NA_LOGICAL;
+			else
+				LOGICAL(ans)[i] = (x1.r == x2.r && x1.i == x2.i);
 		}
 		break;
 	case NEOP:
 		for (i = 0; i < n; i++) {
 			x1 = COMPLEX(s1)[i % n1];
 			x2 = COMPLEX(s2)[i % n2];
-			if (FINITE(x1.r) && FINITE(x1.i) && FINITE(x2.r) && FINITE(x2.i))
-				LOGICAL(ans)[i] = (x1.r != x2.r || x1.i != x2.i);
-			else
+			if (NAN(x1.r) || NAN(x1.i) || NAN(x2.r) || NAN(x2.i))
 				LOGICAL(ans)[i] = NA_LOGICAL;
+			else
+				LOGICAL(ans)[i] = (x1.r != x2.r || x1.i != x2.i);
 		}
 		break;
 	}

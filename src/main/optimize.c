@@ -56,7 +56,7 @@ static double F77_SYMBOL(fcn1)(double *x)
 	case REALSXP:
 		if(length(s) != 1) goto badvalue;
 		if(!FINITE(REAL(s)[0])) {
-			REprintf("warning: NA replaced by maximum positive value\n");
+			REprintf("warning: NA/Inf replaced by maximum positive value\n");
 			return DBL_MAX;
 		}
 		else return REAL(s)[0];
@@ -143,7 +143,7 @@ static double F77_SYMBOL(fcn2)(double *x)
 	case REALSXP:
 		if(length(s) != 1) goto badvalue;
 		if(!FINITE(REAL(s)[0])) {
-			REprintf("warning: NA replaced by maximum positive value\n");
+			REprintf("warning: NA/Inf replaced by maximum positive value\n");
 			return DBL_MAX;
 		}
 		else return REAL(s)[0];
@@ -248,7 +248,7 @@ static int F77_SYMBOL(fcn)(int *n, double *x, double *f)
 	case REALSXP:
 		if(length(s) != 1) goto badvalue;
 		if(!FINITE(REAL(s)[0])) {
-			REprintf("warning: NA replaced by maximum positive value\n");
+			REprintf("warning: NA/Inf replaced by maximum positive value\n");
 			*f = DBL_MAX;
 		}
 		else *f = REAL(s)[0];

@@ -154,14 +154,14 @@ static void jumpfun(RCNTXT * cptr, int mask, SEXP val)
 }
 
 /*
- * sysframe - look back up the context stack until the nth closure 
+ * R_sysframe - look back up the context stack until the nth closure 
  * context and return that cloenv. 
- * sysframe(0) means the R_GlobalEnv environment
+ * R_sysframe(0) means the R_GlobalEnv environment
  * negative n counts back from the current frame
  * positive n counts up from the globalEnv
 */
  
-SEXP sysframe(int n, RCNTXT *cptr)
+SEXP R_sysframe(int n, RCNTXT *cptr)
 {
 	if (n == 0)
 		return(R_GlobalEnv);
@@ -198,7 +198,7 @@ SEXP sysframe(int n, RCNTXT *cptr)
 	but then we wouldn't be compatible with S.
 */
 
-int sysparent(int n, RCNTXT *cptr)
+int R_sysparent(int n, RCNTXT *cptr)
 {
 	int j;
 	SEXP s;
@@ -251,7 +251,7 @@ int framedepth(RCNTXT *cptr)
 	return nframe;
 }
 
-SEXP syscall(int n, RCNTXT *cptr)
+SEXP R_syscall(int n, RCNTXT *cptr)
 {
 	/* negative n counts back from the current frame 
 	   positive n counts up from the globalEnv
@@ -278,7 +278,7 @@ SEXP syscall(int n, RCNTXT *cptr)
 			"not that many enclosing functions\n");
 }
 
-SEXP sysfunction(int n, RCNTXT *cptr)
+SEXP R_sysfunction(int n, RCNTXT *cptr)
 {
 	SEXP s,t;
 
@@ -349,12 +349,12 @@ SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 	switch (PRIMVAL(op)) {
 		case 1: /* parent */
 			rval=allocVector(INTSXP,1);
-			INTEGER(rval)[0]=sysparent(n, cptr);
+			INTEGER(rval)[0]=R_sysparent(n, cptr);
 			return rval;
 		case 2: /* call */
-        		return syscall(n, cptr);
+        		return R_syscall(n, cptr);
 		case 3: /* frame */
-			return sysframe(n, cptr);
+			return R_sysframe(n, cptr);
 		case 4: /* sys.nframe */
 			rval=allocVector(INTSXP,1);
 			INTEGER(rval)[0]=framedepth(cptr);
@@ -364,7 +364,7 @@ SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 			PROTECT(rval=allocList(nframe));
 			t=rval;
 			for(i=1 ; i<=nframe; i++, t=CDR(t)) 
-				CAR(t)=syscall(i,cptr);
+				CAR(t)=R_syscall(i,cptr);
 			UNPROTECT(1);
 			return rval;
 		case 6: /* sys.frames */
@@ -372,7 +372,7 @@ SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 			PROTECT(rval=allocList(nframe));
 			t=rval;
 			for(i=1 ; i<=nframe ; i++, t=CDR(t))
-				CAR(t)=sysframe(i,cptr);
+				CAR(t)=R_sysframe(i,cptr);
 			UNPROTECT(1);
 			return rval;
 		case 7: /* sys.on.exit */
@@ -384,10 +384,10 @@ SEXP do_sys(SEXP call, SEXP op, SEXP args, SEXP rho)
 			nframe=framedepth(cptr);
 			rval=allocVector(INTSXP,nframe);
 			for(i=0; i<nframe ; i++ )
-				INTEGER(rval)[i]= sysparent(nframe-i,cptr);
+				INTEGER(rval)[i]= R_sysparent(nframe-i,cptr);
 			return rval;
 		case 9: /* sys.function */
-			return(sysfunction(n, cptr));
+			return(R_sysfunction(n, cptr));
 		default:
 			error("internal error in do_sys\n");
 	}

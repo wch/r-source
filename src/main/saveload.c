@@ -95,7 +95,11 @@ static int AsciiInInteger(FILE *fp)
 
 static void AsciiOutReal(FILE *fp, double x)
 {
-	if(!FINITE(x)) fprintf(fp, "NA");
+	if(!FINITE(x)) {
+		if(NAN(x)) fprintf(fp, "NA");
+		else if (x < 0) fprintf(fp, "-Inf");
+		else fprintf(fp, "Inf");
+	}
 	else fprintf(fp, "%g", x);
 }
 
@@ -104,13 +108,16 @@ static double AsciiInReal(FILE *fp)
 	double x;
 	fscanf(fp, "%s", buf);
 	if(strcmp(buf, "NA") == 0) x = NA_REAL;
+	else if(strcmp(buf, "Inf") == 0) x = R_PosInf;
+	else if(strcmp(buf, "-Inf") == 0) x = R_NegInf;
 	else sscanf(buf, "%lg", &x);
 	return x;
 }
 
 static void AsciiOutComplex(FILE *fp, complex x)
 {
-	if(!FINITE(x.r) || !FINITE(x.i)) fprintf(fp, "NA NA");
+	if(NAN(x.r) || NAN(x.i))
+		fprintf(fp, "NA NA");
 	else fprintf(fp, "%g %g", x.r, x.i);
 }
 
@@ -119,9 +126,14 @@ static complex AsciiInComplex(FILE *fp)
 	complex x;
 	fscanf(fp, "%s", buf);
 	if(strcmp(buf, "NA") == 0) x.r = NA_REAL;
+	else if(strcmp(buf, "Inf") == 0) x.r = R_PosInf;
+	else if(strcmp(buf, "-Inf") == 0) x.r = R_NegInf;
 	else sscanf(buf, "%lg", &x.r);
+
 	fscanf(fp, "%s", buf);
 	if(strcmp(buf, "NA") == 0) x.i = NA_REAL;
+	else if(strcmp(buf, "Inf") == 0) x.i = R_PosInf;
+	else if(strcmp(buf, "-Inf") == 0) x.i = R_NegInf;
 	else sscanf(buf, "%lg", &x.i);
 	return x;
 }

@@ -3599,7 +3599,7 @@ ac_given_srcdir=$srcdir
 
 trap 'rm -fr `echo "src/main/Makefile
 src/graphics/Makefile
-src/math/Makefile
+src/nmath/Makefile
 src/appl/Makefile
 src/regex/Makefile
 src/unix/Makefile
@@ -3718,7 +3718,7 @@ cat >> $CONFIG_STATUS <<EOF
 
 CONFIG_FILES=\${CONFIG_FILES-"src/main/Makefile
 src/graphics/Makefile
-src/math/Makefile
+src/nmath/Makefile
 src/appl/Makefile
 src/regex/Makefile
 src/unix/Makefile

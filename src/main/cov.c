@@ -35,7 +35,7 @@ static void cov_pairwise1(int n, int ncx, double *x, double *ans, int cor)
 			xmean = 0;
 			ymean = 0;
 			for(k=0 ; k<n ; k++) {
-				if(FINITE(xx[k]) && FINITE(yy[k])) {
+				if(!(NAN(xx[k]) || NAN(yy[k]))) {
 					nobs += 1;
 					xmean += xx[k];
 					ymean += yy[k];
@@ -48,7 +48,7 @@ static void cov_pairwise1(int n, int ncx, double *x, double *ans, int cor)
 				ysd = 0.0;
 				sum = 0.0;
 				for(k=0 ; k<n ; k++) {
-					if(FINITE(xx[k]) && FINITE(yy[k])) {
+					if(!(NAN(xx[k]) || NAN(yy[k]))) {
 						sum += (xx[k] - xmean)*(yy[k] - ymean);
 						if(cor) {
 							xsd += (xx[k] - xmean)*(xx[k] - xmean);
@@ -86,7 +86,7 @@ static void cov_pairwise2(int n, int ncx, int ncy, double *x, double *y, double 
 			xmean = 0;
 			ymean = 0;
 			for(k=0 ; k<n ; k++) {
-				if(FINITE(xx[k]) && FINITE(yy[k])) {
+				if(!(NAN(xx[k]) || NAN(yy[k]))) {
 					nobs += 1;
 					xmean += xx[k];
 					ymean += yy[k];
@@ -99,7 +99,7 @@ static void cov_pairwise2(int n, int ncx, int ncy, double *x, double *y, double 
 				ysd = 0.0;
 				sum = 0.0;
 				for(k=0 ; k<n ; k++) {
-					if(FINITE(xx[k]) && FINITE(yy[k])) {
+					if(!(NAN(xx[k]) || NAN(yy[k]))) {
 						sum += (xx[k] - xmean)*(yy[k] - ymean);
 						if(cor) {
 							xsd += (xx[k] - xmean)*(xx[k] - xmean);
@@ -280,7 +280,7 @@ static void complete1(int n, int ncx, double *x, int *ind)
 	for(j=0 ; j<ncx ; j++) {
 		z = &x[j*n];
 		for(i=0 ; i<n ; i++)
-			if(!FINITE(z[i])) {
+			if(NAN(z[i])) {
 				if(NaFail) error("missing observations in cov/cor\n");
 				else ind[i] = 0;
 			}
@@ -296,7 +296,7 @@ static void complete2(int n, int ncx, int ncy, double *x, double *y, int *ind)
 	for(j=0 ; j<ncx ; j++) {
 		z = &x[j*n];
 		for(i=0 ; i<n ; i++)
-			if(!FINITE(z[i])) {
+			if(NAN(z[i])) {
 				if(NaFail) error("missing observations in cov/cor\n");
 				else ind[i] = 0;
 			}
@@ -304,7 +304,7 @@ static void complete2(int n, int ncx, int ncy, double *x, double *y, int *ind)
 	for(j=0 ; j<ncy ; j++) {
 		z = &y[j*n];
 		for(i=0 ; i<n ; i++)
-			if(!FINITE(z[i])) {
+			if(NAN(z[i])) {
 				if(NaFail) error("missing observations in cov/cor\n");
 				else ind[i] = 0;
 			}

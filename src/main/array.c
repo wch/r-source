@@ -315,6 +315,8 @@ SEXP do_rowscols(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return ans;
 }
 
+/* FIXME - What about non IEEE overflow ??? */
+
 static void matprod(double *x, int nrx, int ncx, double *y, int nry, int ncy, double *z)
 {
 	int i, j, k;
@@ -327,8 +329,10 @@ static void matprod(double *x, int nrx, int ncx, double *y, int nry, int ncy, do
 			for (j = 0; j < ncx; j++) {
 				xij = x[i + j * nrx];
 				yjk = y[j + k * nry];
-				if (!FINITE(xij) || !FINITE(yjk))
+#ifndef IEEE_754
+				if (NAN(xij) || NAN(yjk))
 					goto next_ik;
+#endif
 				sum += xij * yjk;
 			}
 			z[i + k * nrx] = sum;
@@ -354,9 +358,11 @@ static void cmatprod(complex *x, int nrx, int ncx,
 				xij_i = x[i+j*nrx].i;
 				yjk_r = y[j+k*nry].r;
 				yjk_i = y[j+k*nry].i;
-				if (!FINITE(xij_r) || !FINITE(xij_i)
-						|| !FINITE(yjk_r) || !FINITE(yjk_i))
+#ifndef IEEE_754
+				if (NAN(xij_r) || NAN(xij_i)
+					|| NAN(yjk_r) || NAN(yjk_i))
 					goto next_ik;
+#endif
 				sum_r += (xij_r * yjk_r - xij_i * yjk_i);
 				sum_i += (xij_r * yjk_i + xij_i * yjk_r);
 			}
@@ -379,8 +385,10 @@ static void crossprod(double *x, int nrx, int ncx, double *y, int nry, int ncy, 
 			for (j = 0; j < nrx; j++) {
 				xji = x[j + i * nrx];
 				yjk = y[j + k * nry];
-				if (!FINITE(xji) || !FINITE(yjk))
+#ifndef IEEE_754
+				if (NAN(xji) || NAN(yjk))
 					goto next_ik;
+#endif
 				sum += xji * yjk;
 			}
 			z[i + k * ncx] = sum;
@@ -406,9 +414,11 @@ static void ccrossprod(complex *x, int nrx, int ncx, complex *y, int nry, int nc
 				xji_i = x[j + i * nrx].i;
 				yjk_r = y[j + k * nry].r;
 				yjk_i = y[j + k * nry].i;
-				if (!FINITE(xji_r) || !FINITE(xji_i)
-						|| !FINITE(yjk_r) || !FINITE(yjk_i))
+#ifndef IEEE_754
+				if (NAN(xji_r) || NAN(xji_i)
+					|| NAN(yjk_r) || NAN(yjk_i))
 					goto next_ik;
+#endif
 				sum_r += (xji_r * yjk_r - xji_i * yjk_i);
 				sum_i += (xji_r * yjk_i + xji_i * yjk_r);
 			}
