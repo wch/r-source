@@ -53,8 +53,8 @@ NEW FEATURES
 
     o   New str(.) [alternative to summary(.) for programmers] (MM).
 
-    o   New example data sets "esoph", "infert" and "anscombe" (TL) and
-	"iris3" (KH)
+    o   New example data sets "esoph", "infert" and "anscombe" (TL),
+	"iris3" (KH) and "stackloss" (MM).
 
     o   source(.) has several new arguments, notably ``echo = FALSE''.
 	This is applied in the new function  demo(.) which runs all the
@@ -63,9 +63,13 @@ NEW FEATURES
     o   strheight(.) is new, accompanying strwidth(.).
 	Both now work for mathematical expressions (Paul Murrell).
 
-    o   The LaTeX version of the Manual now has an Index.
+    o   The LaTeX version of the manual (-> doc/manual/) now has an index.
 
     o   EVERY *.Rd file in src/library/base/man/ has now at least one \keyword
+
+    o	New package (`library(.)') "stepfun" for step functions, incl.
+	empirical distributions.
+
 
 BUG FIXES
 
@@ -128,7 +132,7 @@ BUG FIXES
 
     o   Numerous other fixes of minor things ...
 
-
+
 
 		  CHANGES IN VERSION R VERSION 0.50
 
@@ -178,8 +182,8 @@ NEW FEATURES
  o  many help(.) pages have been updated with working examples,
 	and several new ones have been created.
 
- o  influence.measures() and ...  now allow to get at the usual
-    regression diagnostics. 
+ o  influence.measures() and lm.influence now allow to get at the usual
+    regression diagnostics.
 
 BUG FIXES
 
