@@ -439,8 +439,8 @@ BUG FIXES
     o   Some .Internal functions that were supposed to return invisibly
         did not. This was behind PR#7397 and PR#7466. 
 
-    o   eval(expr,NULL,encl) now looks up variables in encl, as 
-        eval(expr,list(),encl) always did
+    o   eval(expr, NULL, encl) now looks up variables in encl, as 
+        eval(expr, list(), encl) always did
 
     o   coercing as.data.frame(NULL) to a pairlist caused an error.
 
@@ -528,6 +528,10 @@ BUG FIXES
     o	gsub(perl=TRUE) returned a string which printed with trailing
 	garbage if there was a match at the beginning whose
 	replacement was shorter.  (PR#7479)
+
+    o	Some PDF readers do not define PDFDocEncoding, so pdf()'s
+	ISOLatin1 encoding is now derived from WinAnsi rather than
+	PDFDocEncoding.
 
 
 
