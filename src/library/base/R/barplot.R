@@ -14,9 +14,9 @@ barplot.default <-
 	space <- if (is.matrix(height) && beside) c(0, 1) else 0.2
     space <- space * mean(width)
 
-    if (missing(names.arg))
+    if (plot && missing(names.arg))
 	names.arg <-
-            if(is.matrix(height)) colnames(height) else names(height)
+	    if(is.matrix(height)) colnames(height) else names(height)
 
     if (is.vector(height)) {
 	height <- cbind(height)
@@ -49,7 +49,9 @@ barplot.default <-
 	if (missing(xlim)) xlim <- c(min(w.l), max(w.r))
 	if (missing(ylim)) ylim <- range(-0.01, height)
     }
-    if(plot) { ## -------- Plotting :
+    if (beside)
+	w.m <- matrix(w.m, nc = NC)
+    if(plot) { ##-------- Plotting :
 	opar <-
 	    if (horiz)	par(xaxs = "i", xpd = TRUE)
 	    else	par(yaxs = "i", xpd = TRUE)
@@ -59,9 +61,9 @@ barplot.default <-
 	plot.window(xlim, ylim, log = "")
 	xyrect <- function(x1,y1, x2,y2, horizontal=TRUE, ...) {
 	    if(horizontal)
-                rect(x1,y1, x2,y2, ...)
-            else
-                rect(y1,x1, y2,x2, ...)
+		rect(x1,y1, x2,y2, ...)
+	    else
+		rect(y1,x1, y2,x2, ...)
 	}
 	if (beside)
 	    xyrect(0, w.l, c(height), w.r, horizontal=horiz, col = col)
@@ -71,20 +73,15 @@ barplot.default <-
 		       horizontal=horiz, col = col)
 	    }
 	}
-    }
-    if (beside)
-        w.m <- matrix(w.m, nc = NC)
-    if (!is.null(names.arg)) {
-	at.l <- if (length(names.arg) != length(w.m)) {
-	    if (length(names.arg) == NC)
-		apply(matrix(w.m, nc = NC), 2, mean)
-	    else
-		stop("incorrect number of names")
-	} else w.m
-	if(plot)
-            axis(if(horiz) 2 else 1, at = at.l, labels = names.arg, lty = "66")
-    }
-    if(plot) {
+	if (!is.null(names.arg)) { # specified or from {col}names
+	    at.l <- if (length(names.arg) != length(w.m)) {
+		if (length(names.arg) == NC) # i.e. beside (!)
+		    apply(w.m, 2, mean)
+		else
+		    stop("incorrect number of names")
+	    } else w.m
+	    axis(if(horiz) 2 else 1, at = at.l, labels = names.arg, lty = "06")
+	}
 	if (!is.null(legend.text)) {
 	    legend.col <- col
 	    if((horiz & beside) | (!horiz & !beside)){
@@ -101,5 +98,3 @@ barplot.default <-
 	invisible(w.m)
     } else w.m
 }
-
-

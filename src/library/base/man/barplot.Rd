@@ -53,7 +53,7 @@ barplot(height, width = 1, space = NULL, names.arg = NULL,
     \item{xlim}{limits for the x axis.}
     \item{ylim}{limits for the y axis.}
     \item{axes}{logical.  If \code{TRUE}, a vertical axis is drawn.}
-    \item{plot}{logical.  If \code{FALSE}, only the bar midpoints are returned.}
+    \item{plot}{logical.  If \code{FALSE}, nothing is plotted.}
     \item{\dots}{further arguments are passed to \code{\link{title}()}.}
 }
 \description{
@@ -64,9 +64,12 @@ barplot(height, width = 1, space = NULL, names.arg = NULL,
   A formula interface may be added eventually.
 }
 \value{
-  A numeric vector (or matrix, when \code{beside = TRUE}), giving the
-  coordinates of \emph{all} the bar midpoints drawn ,
-  useful for adding to the graph.
+  A numeric vector (or matrix, when \code{beside = TRUE}), say
+  \code{mp}, giving the coordinates of \emph{all} the bar midpoints
+  drawn, useful for adding to the graph.
+
+  If \code{beside} is true, use \code{apply(mp, 2, mean)} for the
+  midpoints of each \emph{group} of bars, see example.
 }
 \seealso{
   \code{\link{plot}(\dots, type="h")}, \code{\link{dotplot}},
@@ -80,6 +83,7 @@ lines(r, tN, type='h', col='red', lwd=2)#- type = "h" plotting *is* `bar'plot
 data(VADeaths, package = "base")
 barplot(VADeaths, plot = FALSE)
 barplot(VADeaths, plot = FALSE, beside = TRUE)
+
 mp <- barplot(VADeaths) # default
 tot <- apply(VADeaths, 2, sum)
 text(mp, tot + 3, format(tot), xpd = NA, col = "blue")
@@ -96,8 +100,9 @@ mp <- barplot(hh, beside = TRUE,
                 "lightcyan", "lavender"),
         legend = colnames(VADeaths), ylim= c(0,100),
         main = "Death Rates in Virginia", font.main = 4,
-        sub = "Crude upper 2*sigma error bars", col.sub = mybarcol)
-segments(mp, hh, mp, hh+ 2*sqrt(hh/100*(1-hh/100)), col=mybarcol, lwd=1.5)
+        sub = "Faked upper 2*sigma error bars", col.sub = mybarcol)
+segments(mp, hh, mp, hh+ 2*sqrt(1000*hh/100), col=mybarcol, lwd=1.5)
 all(dim(mp) == dim(hh))# corresponding matrices
+#axis(3,apply(mp,2,mean))
 }
 \keyword{hplot}
