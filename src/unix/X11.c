@@ -63,9 +63,9 @@ static DL_FUNC Rdlsym(void *handle, char const *name)
 }
 
 
-R_X11DeviceDriverRoutine ptr_X11DeviceDriver;
-R_X11DataEntryRoutine    ptr_dataentry;
-R_GetX11ImageRoutine     ptr_R_GetX11Image;
+extern R_X11DeviceDriverRoutine ptr_X11DeviceDriver;
+extern R_X11DataEntryRoutine    ptr_dataentry;
+extern R_GetX11ImageRoutine     ptr_R_GetX11Image;
 
 /* This is called too early to use moduleCdynload */
 void R_load_X11_shlib(void)

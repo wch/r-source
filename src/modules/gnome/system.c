@@ -50,8 +50,8 @@
 
 	/*--- Initialization Code ---*/
 
-SA_TYPE SaveAction;
-SA_TYPE RestoreAction;
+extern SA_TYPE SaveAction;
+extern SA_TYPE RestoreAction;
 
 static gboolean R_gnome_initialised = FALSE; /* true once gnome_init has been called */
 
@@ -340,10 +340,4 @@ void gnome_start(int ac, char **av, Rstart Rp)
     /* start main loop */
     mainloop();
     /*++++++  in ../main/main.c */
-}
-
-SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
-{
-    error("Sys.sleep is not implemented on this system");
-    return R_NilValue;		/* -Wall */
 }

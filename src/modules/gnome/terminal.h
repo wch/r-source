@@ -18,12 +18,14 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#ifndef __GNOME_TERMINAL_H__
+#define __GNOME_TERMINAL_H__
+
 #include <gnome.h>
 #include <unistd.h>
 #include <sys/stat.h>
 
 #include "gtkconsole.h"
-
 
 #define GLADE_INTERFACE_FILE "%s/share/glade/gnome-interface.glade"
 
@@ -39,3 +41,4 @@ void terminal_set_style(void);
 
 void R_gtk_terminal_new();
 
+#endif /* __GNOME_TERMINAL_H__ */
