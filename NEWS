@@ -247,6 +247,11 @@ NEW FEATURES
 	on the original fitted values when using (with a warning) a
 	smaller set of cases for the expanded models.
 
+    o   The cov() function in the non-Pearson cases now ranks data after
+        removal of missing values, not before. The pairwise-complete method 
+        should now be consistent with cor.test. Code contributed by Shigenobu
+        Aoki. 
+
 
 INTERNATIONALIZATION
 
