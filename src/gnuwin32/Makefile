@@ -280,16 +280,14 @@ bindist: docfiles
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
 	$(RM) $(RPREFIX)/demos/dynload/*.o $(RPREFIX)/demos/dynload/*.def
 	$(RM) $(RPREFIX)/*/Makefile.in
-	$(RM) $(RPREFIX)/bin/INSTALL $(RPREFIX)/bin/REMOVE \
-	      $(RPREFIX)/bin/SHLIB\
-              $(RPREFIX)/bin/build $(RPREFIX)/bin/check \
-	      $(RPREFIX)/bin/massage-Examples.sh
+	(cd $(RPREFIX)/bin; $(RM) Rcmd.exe INSTALL REMOVE SHLIB build check \
+	   massage-Examples.sh Rd2dvi.sh Rd2txt Rdconv Rdindex \
+           extract-usage Sd2Rd)
 	$(MKDIR) $(RPREFIX)/etc
 	$(CP) -p ../../etc/Rprofile $(RPREFIX)/etc/Rprofile
 	$(CP) -p ../../etc/Rconsole $(RPREFIX)/etc/Rconsole
 	$(CP) -p ../../etc/Rdevga $(RPREFIX)/etc/Rdevga
 	$(CP) -p ../../etc/rgb.txt $(RPREFIX)/etc/rgb.txt
-	$(CP) -pr ../../share $(RPREFIX)
 	$(MKDIR) $(RPREFIX)/doc $(RPREFIX)/doc/manual
 	$(CP) -pr ../../doc/html $(RPREFIX)/doc
 	$(CP) -p ../../doc/manual/Rd.sty $(RPREFIX)/doc/manual
@@ -321,24 +319,6 @@ bindist: docfiles
 	zip -r9X $(RPREFIX)b1.zip $(RPREFIX)
 	$(RM) -rf $(RPREFIX)
 
-## currently unused
-srcdist:
-	$(RM) -r ../src src
-	$(MKDIR) ../src
-	$(MKDIR)  ../src/gnuwin32
-	$(CP)  -pr ./* ../src/gnuwin32
-	$(RM) -r ../src/gnuwin32/old ../src/gnuwin32/*.zip
-	$(RM) -r ../src/gnuwin32/installer/unzip
-	$(RM) -r ../src/gnuwin32/bitmap/jpeg-6b
-	$(RM) -r ../src/gnuwin32/bitmap/libpng
-	$(RM) -r ../src/gnuwin32/bitmap/zlib
-	$(RM) -f ../src/gnuwin32/unzip/*.dll
-	$(MAKE) -k -C ../src/gnuwin32 cleanwin
-	mv ../src .
-	$(RM) $(RPREFIX)s.zip
-	zip -rX  $(RPREFIX)s.zip src
-	$(RM) -r src
-
 
 #taken from ../include/Makefile.in
 SRC_HEADERS = R.h S.h Rdefines.h Rinternals.h S_compat.h
@@ -347,7 +327,7 @@ GW32_HEADERS = globalvar.h # psignal.h
 
 packagedist:
 	$(RM) -r $(RPREFIX)sp.zip $(RPREFIX)
-	$(MKDIR) $(RPREFIX) $(RPREFIX)/bin $(RPREFIX)/etc $(RPREFIX)/src \
+	$(MKDIR) $(RPREFIX) $(RPREFIX)/bin $(RPREFIX)/src \
 	  $(RPREFIX)/src/include $(RPREFIX)/src/library \
 	  $(RPREFIX)/src/gnuwin32 $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -p ../../COPYING exported-vars R.exp MkRules MakePkg MakeDll \
@@ -362,10 +342,14 @@ packagedist:
 	  ../include/$i) $(RPREFIX)/src/include
 	$(CP) -pr ../include/R_ext $(RPREFIX)/src/include
 	$(CP) readme.packages $(RPREFIX)
-	$(CP) ../../etc/Rdconvlib.pl ../../etc/buildlib.pl \
-	   ../../etc/html-layout.pl $(RPREFIX)/etc
-	$(CP) ../../bin/INSTALL ../../bin/SHLIB ../../bin/build \
-	   ../../bin/check ../../bin/massage-Examples.sh $(RPREFIX)/bin
+	$(MKDIR) $(RPREFIX)/share
+	$(CP) -r ../../share/perl $(RPREFIX)/share
+	$(CP) ../../bin/INSTALL ../../bin/REMOVE ../../bin/SHLIB \
+	  ../../bin/build ../../bin/check ../../bin/massage-Examples.sh \
+	  ../../bin/Rd2dvi.sh ../../bin/Rd2txt ../../bin/Rdconv \
+	  ../../bin/Rdindex ../../bin/Sd2Rd \
+	  ../../bin/Rcmd.exe \
+          $(RPREFIX)/bin
 	$(CP) -p graphapp/graphapp.h $(RPREFIX)/src/include
 	$(CP) -pr windlgs $(RPREFIX)/src/library
 	zip -rX $(RPREFIX)sp.zip $(RPREFIX)
