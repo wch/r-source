@@ -11,6 +11,11 @@ shell.exec(file)
   Opens the specified file using the application specified in the
   Windows file associations.
 }
+\details{
+  It is likely that \code{file} needs to be a complete path, e.g.
+  \file{"c:/R/results.html"} or \file{"c:\\R\\results.html"} as most
+  applications interpret files relative to \emph{their} working directory.
+}
 \value{
   No value.
 }
