@@ -625,6 +625,7 @@ case "${host}" in
     ;;
   *-*-darwin*)
     shlib_ldflags="-bundle -undefined suppress"
+    shlib_cxxldflags="-bundle -undefined suppress"
     ;;
   *freebsd[[3-4]].*)
     main_ldflags="-export-dynamic"
