@@ -3,14 +3,12 @@
 \alias{\%in\%}
 \title{Value Matching}
 \description{
-  \code{match}: If \code{x[i]} is found to equal \code{table[j]}
-  then the value returned in the \code{i}-th position of the return value is
-  \code{j}.  If no match is found, the value is \code{nomatch}.
-  
-  \code{\%in\%}: A utility function, currently defined as \cr
-  \code{"\%in\%" <- function(x, table) match(x, table, nomatch = 0) > 0}
-  allowing an intuitive usage and returning a logical vector of length
-  \code{length(x)}.
+  \code{match} returns a vector of the positions of (first) matches of
+  its first argument in its second.
+
+  \code{\%in\%} is a more intuitive interface as a binary operator,
+  which returns a logical vector indicating if there is a match or not
+  for its left operand.
 }
 \usage{
 match(x, table, nomatch = NA, incomparables = FALSE)
@@ -26,9 +24,35 @@ x \%in\% table
     \code{nomatch} value.  Currently, \code{FALSE} is the only possible
     value, meaning that all values can be matched.}
 }
+\value{
+  In both cases, a vector of the same length as \code{x}.
+  
+  \code{match}: A numeric vector giving the position in \code{table} of
+  the first match if there is a match, otherwise \code{nomatch}.
+  
+  If \code{x[i]} is found to equal \code{table[j]}
+  then the value returned in the \code{i}-th position of the return value is
+  \code{j}, for the smallest possible \code{j}.  If no match is found,
+  the value is \code{nomatch}.
+  
+  \code{\%in\%}: A logical vector, indicating if a match was located for
+  each element of \code{x}.
+}
+\details{
+  \code{\%in\%} is currently defined as \cr
+  \code{"\%in\%" <- function(x, table) match(x, table, nomatch = 0) > 0}
+
+  Factors are converted to character vectors, and then \code{x} and
+  \code{table} are coerced to a common type (the later of the two types
+  in R's ordering, logical < integer < numeric < complex < character)
+  before matching.
+}
 \seealso{
 \code{\link{pmatch}} and \code{\link{charmatch}} for (\emph{partial})
-string matching, \code{\link{match.arg}}, etc for function argument matching.
+string matching, \code{\link{match.arg}}, etc for function argument
+matching.
+
+\code{\link{is.element}} for an S-compatible equivalent of \code{\%in\%}.
 }
 \examples{
 ## The intersection of two sets :
