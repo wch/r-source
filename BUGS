@@ -215,13 +215,6 @@ Date: Thu, 18 Jan 2001 14:54:32 +0100
 ..mayhave side-effects in many other pieces of interpreted code 
 ..(ii) do_mtext ignores dd->gp.cexbase unlike, for example, do_plot_xy 
 ..and anything to do with cexbase needs extreme care.
-* PR# 820 *
-Subject: interaction.plot
-From: "Mark M. Span" <span@psy.uva.nl>
-Date: Mon, 22 Jan 2001 10:47:39 +0100
-..mtext is unscaled by default.  It is not clear if this should
-..use the par("cex") setting or an inline cex setting such as cex.axis.
-..It might make more sense to use axis rather than mtext, as boxplot does.
 * PR# 831 *
 Subject: screen can't go back to (split) screen with log="y" plot
 From: Thomas Vogels <tov@ece.cmu.edu>
@@ -273,11 +266,6 @@ Date: Thu, 3 Jan 2002 15:29:02 +0100 (MET)
 Subject: FW: layout and piechart diameter problem
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Thu, 7 Feb 2002 11:05:15 -0500 
-* PR# 1305 *
-Subject: interaction.plot (with misplaced legend)
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Fri, 08 Feb 2002 14:27:01 +0100
-..MM thinks this needs other fixes than axis() instead of mtext()
 * PR# 1395 *
 Subject: mgp parameter in par()
 From: mh.smith@niwa.cri.nz
@@ -310,10 +298,6 @@ Date: Wed, 12 Jun 2002 13:29:45 +1200 (NZST)
 Subject: close.screen
 From: Martin.Schlather@uni-bayreuth.de
 Date: Mon, 5 Aug 2002 22:35:02 +0200 (MET DST)
-* PR# 1899 *
-Subject: interaction.plot() legend too narrow when mfcol > 2
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 13 Aug 2002 09:36:15 +0200
 * PR# 1933 *
 Subject: dev2eps() prints ticks with wrong length!
 From: Timur Elzhov <Timur.Elzhov@jinr.ru>
@@ -641,3 +625,27 @@ Date: Wed, 2 Oct 2002 16:19:27 +0200 (MET DST)
 Subject: R -g gnome has graphics bugs
 From: chris-public@math.uu.se
 Date: Thu, 12 Dec 2002 14:19:43 +0100 (MET)
+* PR# 2406 *
+Subject: [±¤°í] °Ç°­ * ¹Ì¿ë * ´ÙÀÌ¾îÆ® & ½¬¿î ³×Æ®¿öÅ©
+From: ³ª´©³×<bigscale@bigscale.com>
+Date: Tue, 31 Dec 2002 11:34:13 +0900
+* PR# 2407 *
+Subject: pls confirm
+From: "PETER ABENI" <peterpatrick22@rediffmail.com>
+Date: Mon, 30 Dec 2002 22:47:04 +0100
+* PR# 2408 *
+Subject: pls confirm
+From: "PETER ABENI" <peterpatrick22@rediffmail.com>
+Date: Mon, 30 Dec 2002 23:10:29 +0100
+* PR# 2409 *
+Subject: ³Ì·s°ê»Ú¦æ¾Pemail¦W³æ  ¤T¤d¤C¦Ê¤­¤Q¸Uµ§
+From: 521g5e1v110c@detemobil.de
+Date: 31 Dec 2002 18:48:12 +0800
+* PR# 2410 *
+Subject: [±¤°í]»õÇØ¿¡ ¿©¼º¿¡°Ô µå¸®´Â ¼îÅ·!!Á¤º¸ÀÔ´Ï´Ù.
+From: ·º¼­½º<bigscale@bigscale.com>
+Date: Wed, 1 Jan 2003 02:42:34 +0900
+* PR# 2411 *
+Subject: This Movie will create Millions
+From: buildwithflash2003@aol.com
+Date: Wed, 01 Jan 2003 05:20:13 -1000
