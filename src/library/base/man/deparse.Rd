@@ -46,8 +46,7 @@ deparse(expr, width.cutoff = 60,
 require(stats)
 deparse(args(lm))
 deparse(args(lm), width = 500)
-myplot <-
-function(x, y)
+myplot <- function(x, y) {
     plot(x, y, xlab=deparse(substitute(x)),
         ylab=deparse(substitute(y)))
 }
@@ -56,6 +55,7 @@ deparse(e)
 deparse(e, backtick=TRUE)
 e <- quote(`foo bar`+1)
 deparse(e)
+}
 \keyword{programming}
 \keyword{manip}
 \keyword{data}
