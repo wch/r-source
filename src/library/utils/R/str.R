@@ -204,12 +204,7 @@ str.default <-
 		str1 <- paste(" atomic", le.str)
 	    }
 	} else if(typeof(object) == "promise") {
-	    cat(" promise to")
-	    object <- object # force() doesn't work
-	    str(object,
-		max.level = max.level, vec.len = vec.len, digits.d = digits.d,
-		indent.str = indent.str, nest.lev = nest.lev,
-		nchar.max = nchar.max, give.attr = give.attr, wid=wid)
+	    cat(" promise <...>\n")
 	    return(invisible())
 	} else {
 	    ##-- NOT-atomic / not-vector  "unclassified object" ---
