@@ -42,7 +42,8 @@ NEW FEATURES
     o   C-code: Many "-Wall" fixes (MM & DB).
 
     o   mva's dist() now takes arguments diag and upper which control
-        how the distance matrix is printed.
+        how the distance matrix is printed. plot.hclust() now takes a
+        labels argument.
 
     o	Attributes are now propagated correctly in binary operations.
         Changes from:

@@ -21,6 +21,7 @@
 #
 # Original author: F. Murtagh, May 1992
 # R Modifications: Ross Ihaka, Dec 1996
+#                  Friedrich Leisch, Apr 1998
 
 hclust <-
 function(d, method="complete")
@@ -73,23 +74,34 @@ function(d, method="complete")
 }
 
 plot.hclust <-
-function (tree, hang = 0.1, ...)
+function (tree, hang = 0.1, labels=NULL, ...)
 {
-	merge <- tree$merge
-	if (!is.matrix(merge) || ncol(merge) != 2)
-		stop("invalid dendrogram")
-	n <- nrow(merge)
-	height <- as.double(tree$height)
-	order <- as.double(order(tree$order))
-	labels <- tree$labels
-	if (is.null(labels))
-		labels <- 1:(n+1)
-	labels <- as.character(labels)
-	plot.new()
-	.Internal(dend.window(n, merge, height, order, hang,
-		labels, ...))
-	.Internal(dend(n, merge, height, order, hang, labels,
-		...))
-	axis(2, at=pretty(range(height)))
-	invisible()
+  merge <- tree$merge
+  if (!is.matrix(merge) || ncol(merge) != 2)
+    stop("invalid dendrogram")
+  n <- nrow(merge)
+  height <- as.double(tree$height)
+  order <- as.double(order(tree$order))
+
+  if(missing(labels)){
+    if (is.null(tree$labels))
+      labels <- paste(1:(n+1))
+    else
+      labels <- as.character(tree$labels)
+  }
+  else{
+    if(labels==FALSE)
+      labels <- character(n+1)
+    else
+      labels <- as.character(labels)
+  }
+  
+  plot.new()
+  .Internal(dend.window(n, merge, height, order, hang,
+                        labels, ...))
+  .Internal(dend(n, merge, height, order, hang, labels,
+                 ...))
+  axis(2, at=pretty(range(height)))
+  invisible()
 }
+  
