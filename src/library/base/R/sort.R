@@ -2,6 +2,7 @@ sort <- function(x, partial=NULL, na.last=NA, decreasing = FALSE,
                  method = c("shell", "quick"), index.return = FALSE)
 {
     if(isfact <- is.factor(x)) {
+        if(index.return) stop("index.return only for non-factors")
 	lev <- levels(x)
 	nlev <- nlevels(x)
         x <- c(x)
@@ -11,31 +12,19 @@ sort <- function(x, partial=NULL, na.last=NA, decreasing = FALSE,
         nas <- x[ina]
         x <-  x[!ina]
     }
+    if(index.return && !is.na(na.last))
+        stop("index.return only for na.last = NA")
     if(!is.null(partial)) {
         if(!all(is.finite(partial))) stop("non-finite `partial'")
 	y <- .Internal(psort(x, partial))
     }
     else {
         nms <- names(x)
-        meth <- if(is.numeric(x)) match.arg(method) else "shell"
-        ## work around sys.function() {called from match.arg(.)} bug :
-        if(is.character(meth) && length(meth)== 1)
-            method <- meth
-        else { ## Bug happened! -- e.g. example(mosaicplot)
-            if(missing(method) || substr(method,1,1)=="q")
-                method <- "quick"
-            else method <- "shell"
-            warning("`meth' is wrong -- bug from match.arg():",
-                    meth, "\n setting method to", method)
-        }
+        method <- if(is.numeric(x)) match.arg(method) else "shell"
         switch(method,
                "quick" = {
                    if(decreasing)
                        stop("qsort only handles increasing sort")
-                   if(index.return && !is.na(na.last))
-                       stop("index.return only for na.last = NA")
-                   if(index.return && isfact)
-                       stop("index.return only non-factors")
                    if(!is.null(nms)) {
                        y <- .Internal(qsort(x, TRUE))
                        names(y$x) <- nms[y$ix]
@@ -44,9 +33,9 @@ sort <- function(x, partial=NULL, na.last=NA, decreasing = FALSE,
                        y <- .Internal(qsort(x, index.return))
                },
                "shell" = {
-                   if(!is.null(nms)) {
+                   if(index.return || !is.null(nms)) {
                        o <- sort.list(x, decreasing = decreasing)
-                       y <- x[o]
+                       y <- if (index.return) list(x = x[o], ix = o) else x[o]
                        ## names(y) <- nms[o] # pointless!
                    }
                    else

@@ -4,7 +4,7 @@
 \title{Sorting or Ordering Vectors}
 \description{
   Sort (or \emph{order}) a numeric or complex vector (partially) into
-  ascending order.
+  ascending (or descending) order.
 }
 \usage{
 sort(x, partial = NULL, na.last = NA, decreasing = FALSE,
@@ -17,11 +17,12 @@ is.unsorted(x, na.rm = FALSE)
   \item{na.last}{for controlling the treatment of \code{NA}s.
     If \code{TRUE}, missing values in the data are put last; if
     \code{FALSE}, they are put first; if \code{NA}, they are removed.}
-  \item{decreasing}{logical. Should the sort be increasing or decreasing?}
+  \item{decreasing}{logical.  Should the sort be increasing or decreasing?}
   \item{method}{character specifying the algorithm used.}
   \item{index.return}{logical indicating if the ordering index vector should
-    be returned as well, for method \code{"quick"} only.}
-  \item{na.rm}{logical. Should missing values be removed?}
+    be returned as well; this is only available for the default
+  \code{na.last = NA}.}
+  \item{na.rm}{logical.  Should missing values be removed?}
 }
 \details{
   If \code{partial} is not \code{NULL}, it is taken to contain indices
@@ -41,22 +42,21 @@ is.unsorted(x, na.rm = FALSE)
 
   \code{method = "shell"} uses Shellsort and was the only method
   before \R version 1.5.x (although improved there to an
-  \eqn{O(n^{-4/3})} variant of Sedgewick (1996)).
+  \eqn{O(n^{4/3})} variant of Sedgewick (1996)).
 
   Method \code{"quick"} uses Singleton's Quicksort implementation and is
-  only available when \code{x} is numeric, the sort is increasing,
-  \code{partial} is \code{NULL} and \code{na.last = NA} or
-  \code{index.return = FALSE}.  It is normally
-  somewhat faster than Shellsort (perhaps twice as fast on vectors of
-  length a million) but has poor performance in the rare worst case.
+  only available when \code{x} is numeric, the sort is increasing and
+  \code{partial} is \code{NULL}.  It is normally somewhat faster than
+  Shellsort (perhaps twice as fast on vectors of length a million) but
+  has poor performance in the rare worst case.
 }
 \value{
   For \code{sort} the sorted vector unless
-  \code{method == "quick"} and \code{index.return} is true, when the result is
+  \code{index.return} is true, when the result is
   a list with components named \code{x} and \code{ix} containing the
   sorted numbers and the ordering index vector.  In the latter case,
-  ties may be reversed in the ordering, unlike \code{sort.list}, as
-  quicksort is not stable.
+  if \code{method == "quick"} ties may be reversed in the ordering,
+  unlike \code{sort.list}, as quicksort is not stable.
 }
 \references{
   Sedgewick, R. (1986)
@@ -79,6 +79,15 @@ median # shows you another example for `partial'
 stopifnot(!is.unsorted(sort(x)),
           !is.unsorted(LETTERS),
            is.unsorted(c(NA,1:3,2), na.rm = TRUE))
+
+## illustrate `stable' sorting (of ties):
+sort(c(10:3,2:12), method = "sh", index=TRUE) # is stable
+## $x : 2  3  3  4  4  5  5  6  6  7  7  8  8  9  9 10 10 11 12
+## $ix: 9  8 10  7 11  6 12  5 13  4 14  3 15  2 16  1 17 18 19
+sort(c(10:3,2:12), method = "qu", index=TRUE) # is not
+## $x : 2  3  3  4  4  5  5  6  6  7  7  8  8  9  9 10 10 11 12
+## $ix: 9 10  8  7 11  6 12  5 13  4 14  3 15 16  2 17  1 18 19
+##        ^^^^^
 
 \testonly{## consistency check
  for(n in 1:20) {
@@ -109,9 +118,10 @@ summary({qq <- c1 / c2; qq[is.finite(qq)]})
 
 ## A larger test
 x <- rnorm(1e6)
-system.time(sort(x, method = "shell"))
-system.time(sort(x, method = "quick"))}
-%%-- }
+system.time(x1 <- sort(x, method = "shell"))
+system.time(x2 <- sort(x, method = "quick"))
+stopifnot(identical(x1, x2))
+}
 }
 \keyword{univar}
 \keyword{manip}

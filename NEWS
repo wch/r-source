@@ -231,7 +231,7 @@ NEW FEATURES
 	   still preserving ties.
 
 	-  sort() has an option to use quicksort in some cases
-	   (currently numeric vectors without names and increasing order).
+	   (currently numeric vectors and increasing order).
 
 	-  The default Shell sort is Sedgewick's variant, around 20%
            faster, and pre-screening for NAs speeds cases without any
@@ -245,8 +245,8 @@ NEW FEATURES
 	tick mark.
 
     o   The tcltk package has gained several new functions that allow
-	access to C level Tcl objects. These are implemented using a new 
-	`tclObj' class, and this is now the class of the return value 
+	access to C level Tcl objects. These are implemented using a new
+	`tclObj' class, and this is now the class of the return value
 	from .Tcl() and tkcmd().
 
     o   min/max of integer(0) (or NULL) is now Inf/-Inf, not an
