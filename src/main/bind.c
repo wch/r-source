@@ -313,26 +313,6 @@ static void ComplexAnswer(SEXP x)
     }
 }
 
-static SEXP EnsureString(SEXP s)
-{
-    switch(TYPEOF(s)) {
-    case SYMSXP:
-	s = PRINTNAME(s);
-	break;
-    case STRSXP:
-	s = STRING(s)[0];
-	break;
-    case CHARSXP:
-	break;
-    case NILSXP:
-	s = R_BlankString;
-	break;
-    default:
-	error("invalid tag in name extraction\n");
-    }
-    return s;
-}
-
 static SEXP NewBase(SEXP base, SEXP tag)
 {
     SEXP ans;
