@@ -424,6 +424,13 @@ docs manuals:
 	@$(MAKE) --no-print-directory -C $(RHOME)/doc/manual -f Makefile.win BUILD=$(BUILD)
 #	@$(MAKE) --no-print-directory ziponly-base
 
+vignettes:
+	@for pkg in $(R_PKGS_BASE); do \
+	  if test -d "../library/$${pkg}/inst/doc"; then \
+	    echo "building/updating vignettes for package '$${pkg}' ..."; \
+	    (echo "tools:::.installPackageVignettes(\"../library/$${pkg}\", \"../../library/$${pkg}\")") | ../../bin/Rterm.exe --vanilla --slave R_DEFAULT_PACKAGES="utils,tools" > /dev/null; \
+	  fi; \
+	done
 
 ## ===================== Maintainer targets ========================
 
