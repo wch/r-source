@@ -373,6 +373,7 @@ static SEXP complex_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 	break;
     default:
 	/* never happens (-Wall) */
+	break;
     }
     UNPROTECT(2);
     return ans;
