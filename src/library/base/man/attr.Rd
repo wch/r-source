@@ -13,6 +13,7 @@ attr(x, which) <- value
   \item{x}{an object whose attributes are to be accessed.}
   \item{which}{a character string specifying which attribute is to be
     accessed.}
+  \item{value}{an object, the new value of the attribute.}
 }
 \value{
   This function provides access to a single object attribute.  The

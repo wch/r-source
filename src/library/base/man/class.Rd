@@ -22,7 +22,7 @@ oldClass(x) <- value
 }
 \arguments{
   \item{x}{a \R object}
-  \item{what}{a character vector naming classes.}
+  \item{what, value}{a character vector naming classes.}
   \item{which}{logical affecting return value: see Details.}
 }
 

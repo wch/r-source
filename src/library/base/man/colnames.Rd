@@ -20,13 +20,21 @@ colnames(x) <- value
   \item{do.NULL}{logical.  Should this create names if they are
     \code{NULL}?}
   \item{prefix}{for created names.}
-  \item{value}{}
+  \item{value}{a valid value for that component of
+    \code{\link{dimnames}(x)}.  For a matrix or array this is either
+    \code{NULL} or a character vector of length the appropriate
+    dimension.
 }
 \details{
   If \code{do.NULL} is \code{FALSE}, a character vector (of length
   \code{\link{NROW}(x)} or \code{\link{NCOL}(x)}) is returned in any
   case, prepending \code{prefix} to simple numbers, if
-  \code{dimnames(x)[[i]]} (\code{i =} 1 or 2) is \code{NULL}. 
+  \code{dimnames(x)[[i]]} (\code{i =} 1 or 2) is \code{NULL}.
+
+  For a data frame, \code{value} for \code{rownames} should be a
+  character vector of unique names, and for \code{colnames} a character
+  vector of unique syntactically-valid names.  (Note: uniqueness and
+  validity are not enforced.)
 }
 \seealso{
   \code{\link{dimnames}},
