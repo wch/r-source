@@ -76,10 +76,6 @@ Directory:  Graphics
 Subject:  las=1 with log axis 
 From: Peter Dalgaard BSA <pd@pubhealth.ku.dk>
 Date: Wed, 27 Jun 2001 11:54:06 +0200
-* PR# 660 *
-Subject: identify.default ignores any setting of cex.
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
 * PR# 202 *
 Subject: persp box occlusion bug
 From: wsi@gcal.ac.uk
@@ -87,22 +83,15 @@ Date: Wed, 2 Jun 1999 15:02:03 +0200 (MET DST)
 --The persp algorithm does not apply the occlusion rules to the frame, 
 --which is always plotted first. 
 --A bug, but not very simple to fix.
-* PR# 791 *
-Subject:  par(lab= *) / axis(*) bug 
-From: maechler@stat.math.ethz.ch
-Date: Fri, 22 Dec 2000 10:59:26 +0100
 * PR# 776 *
 Subject: strwidth does not take font into account
 From: Martyn Plummer <plummer@iarc.fr>
 Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
 --This needs a substantial redesign.
-* PR# 820 *
-Subject: interaction.plot
-From: "Mark M. Span" <span@psy.uva.nl>
-Date: Mon, 22 Jan 2001 10:47:39 +0100
---mtext is unscaled by default.  It is not clear if this should
---use the par("cex") setting or an inline cex setting such as cex.axis.
---It might make more sense to use axis rather than mtext, as boxplot does.
+* PR# 660 *
+Subject: identify.default ignores any setting of cex.
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
 * PR# 816 *
 Subject: dotplot: character size of labels
 From: RINNER Heinrich <H.RINNER@TIROL.GV.AT>
@@ -118,6 +107,10 @@ Date: Thu, 18 Jan 2001 14:54:32 +0100
 --mayhave side-effects in many other pieces of interpreted code 
 --(ii) do_mtext ignores dd->gp.cexbase unlike, for example, do_plot_xy 
 --and anything to do with cexbase needs extreme care.
+* PR# 791 *
+Subject:  par(lab= *) / axis(*) bug 
+From: maechler@stat.math.ethz.ch
+Date: Fri, 22 Dec 2000 10:59:26 +0100
 * PR# 831 *
 Subject: screen can't go back to (split) screen with log="y" plot
 From: Thomas Vogels <tov@ece.cmu.edu>
@@ -136,6 +129,13 @@ Date: Sat, 27 Jan 2001 11:57:37 +1100 (EST)
 --
 --The easy and unimportant part of this, the labels, is fixed in 1.2.2. Getting
 --the data right is a project for 1.3
+* PR# 820 *
+Subject: interaction.plot
+From: "Mark M. Span" <span@psy.uva.nl>
+Date: Mon, 22 Jan 2001 10:47:39 +0100
+--mtext is unscaled by default.  It is not clear if this should
+--use the par("cex") setting or an inline cex setting such as cex.axis.
+--It might make more sense to use axis rather than mtext, as boxplot does.
 * PR# 887 *
 Subject: axis(adj=anything) has no effect
 From: jhallman@frb.gov
@@ -156,10 +156,6 @@ Date: Tue, 15 May 01 23:34:17 +0100
 Subject:  par(mgp) bug 
 From: paul@stat.auckland.ac.nz
 Date: Fri, 20 Apr 2001 08:33:45 +1200 (NZST)
-* PR# 1039 *
-Subject: arrows()/log scale/clipping (?)
-From: Ben Bolker <ben@eno.princeton.edu>
-Date: Thu, 2 Aug 2001 10:14:56 -0400 (EDT)
 
 Directory:  In-Out
 
