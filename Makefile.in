@@ -53,7 +53,8 @@ install: all installdirs
 	@cat bin/R | sed "s@R_HOME=.*@R_HOME=$(rhome)@" > $(rhome)/bin/R
 	@cat bin/R | sed "s@R_HOME=.*@R_HOME=$(rhome)@" > $(bindir)/R
 	@chmod 755 $(bindir)/R $(rhome)/bin/R
-	@for f in `ls bin/* | grep -v '^bin/\(R\|R.binary\)\**$$'`; do \
+	@for f in `ls bin/* | grep -v '^bin/R\**$$' \
+                            | grep -v '^bin/R.binary\**$$'`; do \
 	  $(INSTALL) $${f} $(rhome)/bin; \
 	done
 	@for f in Rd2txt Rdconv Rdindex Sd2Rd; do \
