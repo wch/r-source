@@ -229,9 +229,11 @@ NEW FEATURES
     o	R CMD check now also checks the keyword entries against the list
 	of standard keywords, for code/documentation mismatches (this
 	can be turned off by the command line option `--no-codoc'), and
-	for sufficient file permissions (Unix only).  It also has a new
-	new command line option `--use-gct' to use `gctorture(TRUE)'
-	when running R code.
+	for sufficient file permissions (Unix only).  There is a new check
+	for the correct usage of library.dynam.
+
+	It also has a new command line option `--use-gct' to use 
+	`gctorture(TRUE)' when running R code.
 
     o	Matrix multiplication functions %*% and crossprod now use a
 	level-3 BLAS routine dgemm.  When R is linked with the ATLAS

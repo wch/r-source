@@ -32,7 +32,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.44 $ ';
+my $revision = ' $Revision: 1.45 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -379,6 +379,38 @@ sub check_pkg {
 	}
     }
     
+    ## check usage of library.dynam (if any)
+
+    if(-d "R"){
+	$log->checking("R files for library.dynam");
+	# only need to check the installed file
+	open Rfile, "< $library/$pkgname/R/$pkgname" ||
+	    die "cannot open \`$library/$pkgname/R/$pkgname' for reading\n";
+	my $any=0;
+	while(<Rfile>) {
+	    if(/library.dynam\(\"(.*?)\"/o) {
+		my $arg = $1;
+		if($arg =~ /\.so$/) {
+                    $any++;
+                    $log->error("  library.dynam used with extension .so");
+	            exit(1);
+                }
+		if($arg =~ /\.sl$/) {
+                    $any++;
+                    $log->error("  library.dynam used with extension .sl");
+	            exit(1);
+                }
+		if($arg =~ /\.dll$/) {
+                    $any++;
+                    $log->error("  library.dynam used with extension .dll");
+	            exit(1);
+                }
+	    }
+	}
+        close Rfile;
+	$log->result("OK") unless $any;
+    }
+
     ## check Rd documentation files
     
     if(-d "man"){
