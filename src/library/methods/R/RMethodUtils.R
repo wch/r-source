@@ -146,7 +146,9 @@ makeStandardGeneric <-
         fgen <- function(x, ...) {}
       }
       else {
-          .message("Making a generic for special function \"", f, "\"")
+          message(gettextf("Making a generic for special function \"%s\"",
+                           f),
+                  domain = NA)
           setPrimitiveMethods(f, fdef, "reset", fgen, NULL)
       }
       ## Note that the body of the function comes from the list.  In a few cases ("$"),

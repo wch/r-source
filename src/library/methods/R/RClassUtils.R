@@ -1376,10 +1376,13 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
         }
         names(ll) <- c(args, newArgs)
         body(def, envir = environment(def)) <- substituteDirect(bdy, ll)
-        if(!silent)
-            .message("Arguments in definition changed from (",
-                     paste(args, collapse = ", "), ") to (",
-                     paste(newArgs, collapse = ", "), ")")
+        if(!silent) {
+            msg <-
+                gettextf("Arguments in definition changed from (%s) to (%s)",
+                         paste(args, collapse = ", "),
+                         paste(newArgs, collapse = ", "))
+            message(strwrap(msg), domain = NA)
+        }
     }
     def
 }

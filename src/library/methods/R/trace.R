@@ -256,7 +256,7 @@
     if(!isGeneric("show", envir))
         setGeneric("show", where = envir)
     setMethod("show", "traceable", function(object) {
-        .message("Object of class \"", class(object), "\"")
+        cat("Object of class \"", class(object), "\"\n")
         show(object@original)
         cat("\n## (to see the tracing code, look at body(object))\n")
     }, where = envir)
@@ -289,9 +289,12 @@ trySilent <- function(expr) {
 
 .assignOverBinding <- function(what, value, where, verbose = TRUE) {
     pname <- getPackageName(where)
-    if(verbose)
-        .message("Assigning over the binding of symbol \"", what,
-                "\" in environment/package \"", pname, "\"")
+    if(verbose) {
+        msg <-
+            gettextf("Assigning over the binding of symbol \"%s\" in environment/package \"%s\"",
+                     what, pname)
+        message(strwrap(msg), domain = NA)
+    }
     warnOpt <- options(warn= -1) # kill the obsolete warning from R_LockBinding
     on.exit(options(warnOpt))
     if(is.function(value)) {
@@ -347,7 +350,7 @@ trySilent <- function(expr) {
 ### a table in this direction anywhere?
 .searchNamespaceNames <- function(env) {
     namespaces <- .Internal(getNamespaceRegistry())
-    names <- objects(namespaces, all=T)
+    names <- objects(namespaces, all = TRUE)
     for(what in names)
         if(identical(get(what, envir=namespaces), env))
             return(paste("namespace", what, sep=":"))

@@ -298,12 +298,14 @@ setMethod <-
             gwhere <- as.environment(allWhere[generics][[1]])
             if(.lockedForMethods(fdef, gwhere)) {
                 if(identical(as.environment(where), gwhere))
-                    stop("The `where' environment (", getPackageName(where),
+                    stop("The 'where' environment (", getPackageName(where),
                          ") is a locked namespace; can't assign methods there")
-                .message("Copying the generic function \"", f, "\" to environment \"",
-                        getPackageName(where),
-                        "\", because the previous version was in a sealed namespace (",
-                        getPackageName(gwhere), ")")
+                msg <-
+                    gettextf("Copying the generic function \"%s\" to environment \"%s\", because the previous version was in a sealed namespace (%s)",
+                             f,
+                             getPackageName(where),
+                             getPackageName(gwhere))
+                message(strwrap(msg), domain = NA)
                 assign(f, fdef, where)
                 gwhere <- where
             }
@@ -314,8 +316,9 @@ setMethod <-
     if(is.null(fdef))
       stop(paste("No existing definition for function \"",f,"\"", sep=""))
     if(!hasMethods) {
-        .message("Creating a new generic function for \"", f, "\" in \"",
-                    getPackageName(where), "\"")
+        message(gettextf("Creating a new generic function for \"%s\" in \"%s\"",
+                         f, getPackageName(where)),
+                domain = NA)
         ## create using the visible non-generic as a pattern and default method
         setGeneric(f, where = where)
         fdef <- getGeneric(f, where = where)
@@ -756,7 +759,9 @@ removeMethods <-
                 default <- as(default, "function") # strict, removes slots
                 rm(list=f, pos = db)
                 if(!existsFunction(f, FALSE, db)) {
-                    .message("Restoring default function definition of \"", f, "\"")
+                    message(gettextf("Restoring default function definition of \"%s\"",
+                                     f),
+                            domain = NA)
                     assign(f, default, db)
                 }
                 ## else the generic is removed, nongeneric will be found elsewhere
@@ -804,7 +809,9 @@ setGroupGeneric <-
         def <- getFunction(name, where = where)
         if(isGroup(name, fdef = def)) {
             if(nargs() == 1) {
-                .message("Function \"", name, "\" is already a group generic; no change")
+                message(gettextf("Function \"%s\" is already a group generic; no change",
+                                 name),
+                        domain = NA)
                 return(name)
             }
         }
