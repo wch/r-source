@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-14 07:40+0000\n"
+"POT-Creation-Date: 2005-03-15 21:18+0000\n"
 "PO-Revision-Date: 2005-03-05 16:03+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -497,8 +497,8 @@ msgstr ""
 "ATTENZIONE: il valore di -max-ppsize è troppo piccolo: verrà ignorato\n"
 
 #: src/main/CommandLineArgs.c:236
-msgid "WARNING: -max-ppsize value is too large: ignored\n"
-msgstr "ATTENZIONE: il valore di -max-ppsize è troppo grande: verrà ignorato\n"
+msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
+msgstr "ATTENZIONE: il valore di '-max-ppsize' è troppo grande: verrà ignorato\n"
 
 #: src/main/CommandLineArgs.c:247
 msgid "WARNING: no 'vsize' given\n"
@@ -800,8 +800,8 @@ msgid "allocMatrix: too many elements specified"
 msgstr "allocMatrix: troppi elementi specificati"
 
 #: src/main/array.c:198
-msgid "allocArray: too many elements specified by dims"
-msgstr "allocArray: troppi elementi specificati in dims"
+msgid "allocArray: too many elements specified by 'dims'"
+msgstr "allocArray: troppi elementi specificati in 'dims'"
 
 #: src/main/array.c:343
 msgid "incorrect number of args to 'length'"
@@ -1142,8 +1142,8 @@ msgid "... used in an incorrect context"
 msgstr "...usato in un contesto sbagliato"
 
 #: src/main/builtin.c:683
-msgid "invalid parameter in switch()"
-msgstr "parametro non valido in switch()"
+msgid "invalid parameter in 'switch()'"
+msgstr "parametro non valido in 'switch()'"
 
 #: src/main/builtin.c:694
 msgid "switch: EXPR must return a length 1 vector"
@@ -1284,7 +1284,8 @@ msgstr "stringa input multibyte %d non valida"
 
 #: src/main/character.c:1725
 msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
-msgstr "l'uso di agrep() in un locale UTF-8 può funzionare solo per stringhe ASCII"
+msgstr ""
+"l'uso di agrep() in un locale UTF-8 può funzionare solo per stringhe ASCII"
 
 #: src/main/character.c:1734
 msgid "could not allocate memory for approximate matching"
@@ -1292,7 +1293,8 @@ msgstr "non è possibile allocare memoria per match approssimato"
 
 #: src/main/character.c:1758
 msgid "could not perform case insensitive matching"
-msgstr "non posso eseguire accoppiamenti senza tener conto delle maiuscole/minuscole"
+msgstr ""
+"non posso eseguire accoppiamenti senza tener conto delle maiuscole/minuscole"
 
 #: src/main/character.c:1800
 msgid "argument must be a character vector of length 1"
@@ -1381,7 +1383,8 @@ msgstr "oggetto (list) non può essere converito in '%s'"
 
 #: src/main/coerce.c:1051
 msgid "environments cannot be coerced to other types"
-msgstr "gli environment non possono essere trasformati in altri tipi di oggetti"
+msgstr ""
+"gli environment non possono essere trasformati in altri tipi di oggetti"
 
 #: src/main/coerce.c:1061
 #, c-format
@@ -1447,7 +1450,8 @@ msgstr "oggetto sostitutivo non valido per essere di classe stringa"
 msgid ""
 "\"%s\" can only be set as the class if the object has this type; found \"%s\""
 msgstr ""
-"\"%s\" può essere impostato come classe se l'oggetto è di questo tipo; ho trovato \"%s\""
+"\"%s\" può essere impostato come classe se l'oggetto è di questo tipo; ho "
+"trovato \"%s\""
 
 #: src/main/coerce.c:2112
 #, c-format
@@ -2009,7 +2013,8 @@ msgstr "valore di 'sep' non valido"
 msgid ""
 "writeChar: more characters requested than are in the string - will zero-pad"
 msgstr ""
-"writeChar: sono necessari più caratteri di quelle presenti nella stringa - riempirò con spazi"
+"writeChar: sono necessari più caratteri di quelle presenti nella stringa - "
+"riempirò con spazi"
 
 #: src/main/connections.c:3061 src/main/connections.c:3064
 #: src/main/connections.c:3103 src/main/connections.c:3108
@@ -2221,7 +2226,7 @@ msgid "invalid 'usetz' argument"
 msgstr "argomento 'usetz' non valido"
 
 #: src/main/dcf.c:67 src/main/dcf.c:71 src/main/dcf.c:112 src/main/dcf.c:161
-msgid "could not allocate memory for read.dcf"
+msgid "could not allocate memory for 'read.dcf'"
 msgstr "non è possibile allocare memoria per 'read.dcf'"
 
 #: src/main/deparse.c:158
@@ -2308,7 +2313,8 @@ msgstr "valore NULL come indirizzo del simbolo"
 
 #: src/main/dotcode.c:106
 msgid "'name' must be a string (of length 1) or native symbol reference"
-msgstr "'name' deve essere unsta stringa (di lunghezza 1) o un riferimento simbolico"
+msgstr ""
+"'name' deve essere unsta stringa (di lunghezza 1) o un riferimento simbolico"
 
 #: src/main/dotcode.c:142
 msgid "invalid 'naok' value"
@@ -2338,8 +2344,8 @@ msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
 "is of the wrong type (%d != %d)"
 msgstr ""
-"richiesta esplicita di non duplicare gli argomenti nella chiamata a '%s', ma l'argomento %d "
-"è di tipo sbagliato (%d != %d)"
+"richiesta esplicita di non duplicare gli argomenti nella chiamata a '%s', ma "
+"l'argomento %d è di tipo sbagliato (%d != %d)"
 
 #: src/main/dotcode.c:254
 #, c-format
@@ -2362,7 +2368,8 @@ msgstr "le variabili di tipo character devono essere duplicate in .C/.Fortran"
 
 #: src/main/dotcode.c:306
 msgid "only first string in char vector used in .Fortran"
-msgstr "solo la prima stringa del vettore di caratteri verrà utilizzata in .Fortran"
+msgstr ""
+"solo la prima stringa del vettore di caratteri verrà utilizzata in .Fortran"
 
 #: src/main/dotcode.c:319 src/main/dotcode.c:436
 #, c-format
@@ -2662,7 +2669,8 @@ msgstr "il primo argomento ('table') non è di tipo VECSXP, in R_HashSizeCheck"
 
 #: src/main/envir.c:479
 msgid "first argument ('table') not of type ENVSXP, from R_HashVector2Hash"
-msgstr "il primo argomento ('table') non è di tipo ENVSXP, in R_HashVector2Hash"
+msgstr ""
+"il primo argomento ('table') non è di tipo ENVSXP, in R_HashVector2Hash"
 
 #: src/main/envir.c:667
 msgid "invalid cached value in R_GetGlobalCache"
@@ -3781,43 +3789,43 @@ msgstr "non è possibile allocare un vettore di lunghezza %d"
 msgid "invalid type/length (%d/%d) in vector allocation"
 msgstr ""
 
-#: src/main/memory.c:1846
+#: src/main/memory.c:1856
 #, c-format
 msgid "cannot allocate vector of size %lu Kb"
 msgstr ""
 
-#: src/main/memory.c:1927
+#: src/main/memory.c:1937
 msgid "gc.time() is not implemented on this system"
 msgstr "gc.time() non è implementata su questo sistema"
 
-#: src/main/memory.c:2113
+#: src/main/memory.c:2123
 msgid "protect(): protection stack overflow"
 msgstr ""
 
-#: src/main/memory.c:2129
+#: src/main/memory.c:2139
 msgid "unprotect(): stack imbalance"
 msgstr ""
 
-#: src/main/memory.c:2142
+#: src/main/memory.c:2152
 msgid "unprotect_ptr: pointer not found"
 msgstr ""
 
-#: src/main/memory.c:2185
+#: src/main/memory.c:2195
 #, c-format
 msgid "Calloc could not allocate (%d of %d) memory"
 msgstr "Calloc non può allocare memoria (%d di %d)"
 
-#: src/main/memory.c:2194
+#: src/main/memory.c:2204
 #, c-format
 msgid "Realloc could not re-allocate (size %d) memory"
 msgstr ""
 
-#: src/main/memory.c:2313
+#: src/main/memory.c:2323
 msgid "not safe to return vector pointer"
 msgstr ""
 
-#: src/main/memory.c:2341 src/main/memory.c:2350 src/main/memory.c:2361
-#: src/main/memory.c:2374 src/main/memory.c:2390 src/main/memory.c:2407
+#: src/main/memory.c:2351 src/main/memory.c:2360 src/main/memory.c:2371
+#: src/main/memory.c:2384 src/main/memory.c:2400 src/main/memory.c:2417
 msgid "bad value"
 msgstr ""
 
@@ -4007,11 +4015,11 @@ msgid "no applicable method for \"%s\""
 msgstr ""
 
 #: src/main/objects.c:459
-msgid "NextMethod called from outside a function"
+msgid "'NextMethod' called from outside a function"
 msgstr ""
 
 #: src/main/objects.c:465
-msgid "NextMethod called from an anonymous function"
+msgid "'NextMethod' called from an anonymous function"
 msgstr ""
 
 #: src/main/objects.c:495
@@ -7237,9 +7245,3 @@ msgstr "il modulo X11 non può essere caricato"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 non disponibile"
-
-#~ msgid "invalid sep value"
-#~ msgstr "valore 'sep' non valido"
-
-#~ msgid "Could not allocate memory for Encodebuf"
-#~ msgstr "non è possibile allocare memoria per Encodebuf"

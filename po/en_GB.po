@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-14 07:40+0000\n"
+"POT-Creation-Date: 2005-03-15 21:18+0000\n"
 "PO-Revision-Date: 2005-02-22 16:55+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -487,7 +487,7 @@ msgid "WARNING: '-max-ppsize' value is too small: ignored\n"
 msgstr ""
 
 #: src/main/CommandLineArgs.c:236
-msgid "WARNING: -max-ppsize value is too large: ignored\n"
+msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
 msgstr ""
 
 #: src/main/CommandLineArgs.c:247
@@ -778,7 +778,7 @@ msgid "allocMatrix: too many elements specified"
 msgstr ""
 
 #: src/main/array.c:198
-msgid "allocArray: too many elements specified by dims"
+msgid "allocArray: too many elements specified by 'dims'"
 msgstr ""
 
 #: src/main/array.c:343
@@ -1110,7 +1110,7 @@ msgid "... used in an incorrect context"
 msgstr ""
 
 #: src/main/builtin.c:683
-msgid "invalid parameter in switch()"
+msgid "invalid parameter in 'switch()'"
 msgstr ""
 
 #: src/main/builtin.c:694
@@ -2179,7 +2179,7 @@ msgid "invalid 'usetz' argument"
 msgstr ""
 
 #: src/main/dcf.c:67 src/main/dcf.c:71 src/main/dcf.c:112 src/main/dcf.c:161
-msgid "could not allocate memory for read.dcf"
+msgid "could not allocate memory for 'read.dcf'"
 msgstr ""
 
 #: src/main/deparse.c:158
@@ -3735,43 +3735,43 @@ msgstr ""
 msgid "invalid type/length (%d/%d) in vector allocation"
 msgstr ""
 
-#: src/main/memory.c:1846
+#: src/main/memory.c:1856
 #, c-format
 msgid "cannot allocate vector of size %lu Kb"
 msgstr ""
 
-#: src/main/memory.c:1927
+#: src/main/memory.c:1937
 msgid "gc.time() is not implemented on this system"
 msgstr ""
 
-#: src/main/memory.c:2113
+#: src/main/memory.c:2123
 msgid "protect(): protection stack overflow"
 msgstr ""
 
-#: src/main/memory.c:2129
+#: src/main/memory.c:2139
 msgid "unprotect(): stack imbalance"
 msgstr ""
 
-#: src/main/memory.c:2142
+#: src/main/memory.c:2152
 msgid "unprotect_ptr: pointer not found"
 msgstr ""
 
-#: src/main/memory.c:2185
+#: src/main/memory.c:2195
 #, c-format
 msgid "Calloc could not allocate (%d of %d) memory"
 msgstr ""
 
-#: src/main/memory.c:2194
+#: src/main/memory.c:2204
 #, c-format
 msgid "Realloc could not re-allocate (size %d) memory"
 msgstr ""
 
-#: src/main/memory.c:2313
+#: src/main/memory.c:2323
 msgid "not safe to return vector pointer"
 msgstr ""
 
-#: src/main/memory.c:2341 src/main/memory.c:2350 src/main/memory.c:2361
-#: src/main/memory.c:2374 src/main/memory.c:2390 src/main/memory.c:2407
+#: src/main/memory.c:2351 src/main/memory.c:2360 src/main/memory.c:2371
+#: src/main/memory.c:2384 src/main/memory.c:2400 src/main/memory.c:2417
 msgid "bad value"
 msgstr ""
 
@@ -3961,11 +3961,11 @@ msgid "no applicable method for \"%s\""
 msgstr ""
 
 #: src/main/objects.c:459
-msgid "NextMethod called from outside a function"
+msgid "'NextMethod' called from outside a function"
 msgstr ""
 
 #: src/main/objects.c:465
-msgid "NextMethod called from an anonymous function"
+msgid "'NextMethod' called from an anonymous function"
 msgstr ""
 
 #: src/main/objects.c:495

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-14 07:40+0000\n"
+"POT-Creation-Date: 2005-03-15 21:18+0000\n"
 "PO-Revision-Date: 2005-02-10 09:29+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -487,8 +487,8 @@ msgid "WARNING: '-max-ppsize' value is too small: ignored\n"
 msgstr "警告: '-max-ppsize'的值太小: 略过不用\n"
 
 #: src/main/CommandLineArgs.c:236
-msgid "WARNING: -max-ppsize value is too large: ignored\n"
-msgstr "警告: -max-ppsize的值太大: 略过不用\n"
+msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
+msgstr "警告: '-max-ppsize'的值太大: 略过不用\n"
 
 #: src/main/CommandLineArgs.c:247
 msgid "WARNING: no 'vsize' given\n"
@@ -780,8 +780,8 @@ msgid "allocMatrix: too many elements specified"
 msgstr "allocMatrix: 设定了太多的元素"
 
 #: src/main/array.c:198
-msgid "allocArray: too many elements specified by dims"
-msgstr "allocArray: dims设定了太多的元素"
+msgid "allocArray: too many elements specified by 'dims'"
+msgstr "allocArray: 'dims'设定了太多的元素"
 
 #: src/main/array.c:343
 msgid "incorrect number of args to 'length'"
@@ -1112,8 +1112,8 @@ msgid "... used in an incorrect context"
 msgstr "... 的上下文用得不对"
 
 #: src/main/builtin.c:683
-msgid "invalid parameter in switch()"
-msgstr "switch()的参数不对"
+msgid "invalid parameter in 'switch()'"
+msgstr "'switch()'的参数不对"
 
 #: src/main/builtin.c:694
 msgid "switch: EXPR must return a length 1 vector"
@@ -2183,8 +2183,8 @@ msgid "invalid 'usetz' argument"
 msgstr "'usetz'变元不对"
 
 #: src/main/dcf.c:67 src/main/dcf.c:71 src/main/dcf.c:112 src/main/dcf.c:161
-msgid "could not allocate memory for read.dcf"
-msgstr "无法为read.dcf分配内存"
+msgid "could not allocate memory for 'read.dcf'"
+msgstr "无法为'read.dcf'分配内存"
 
 #: src/main/deparse.c:158
 msgid "could not allocate memory in C function 'R_AllocStringBuffer'"
@@ -3738,43 +3738,43 @@ msgstr "无法分配长度为%d的向量"
 msgid "invalid type/length (%d/%d) in vector allocation"
 msgstr "向量分配的种类/长度(%d/%d)不对"
 
-#: src/main/memory.c:1846
+#: src/main/memory.c:1856
 #, c-format
 msgid "cannot allocate vector of size %lu Kb"
 msgstr "无法分配大小为%lu Kb的向量"
 
-#: src/main/memory.c:1927
+#: src/main/memory.c:1937
 msgid "gc.time() is not implemented on this system"
 msgstr "本系统没有实现gc.time()"
 
-#: src/main/memory.c:2113
+#: src/main/memory.c:2123
 msgid "protect(): protection stack overflow"
 msgstr "protect()：防护堆叠上溢"
 
-#: src/main/memory.c:2129
+#: src/main/memory.c:2139
 msgid "unprotect(): stack imbalance"
 msgstr "unprotect(): 堆叠不平衡"
 
-#: src/main/memory.c:2142
+#: src/main/memory.c:2152
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: 找不到这个指针"
 
-#: src/main/memory.c:2185
+#: src/main/memory.c:2195
 #, c-format
 msgid "Calloc could not allocate (%d of %d) memory"
 msgstr "调用oc时无法分配(%d的%d)内存"
 
-#: src/main/memory.c:2194
+#: src/main/memory.c:2204
 #, c-format
 msgid "Realloc could not re-allocate (size %d) memory"
 msgstr "Realloc 无法重新分配(大小为%d)的内存"
 
-#: src/main/memory.c:2313
+#: src/main/memory.c:2323
 msgid "not safe to return vector pointer"
 msgstr "回覆向量指针不是安全的做法"
 
-#: src/main/memory.c:2341 src/main/memory.c:2350 src/main/memory.c:2361
-#: src/main/memory.c:2374 src/main/memory.c:2390 src/main/memory.c:2407
+#: src/main/memory.c:2351 src/main/memory.c:2360 src/main/memory.c:2371
+#: src/main/memory.c:2384 src/main/memory.c:2400 src/main/memory.c:2417
 msgid "bad value"
 msgstr "值不对"
 
@@ -3964,12 +3964,12 @@ msgid "no applicable method for \"%s\""
 msgstr "\"%s\"没有适用的方法"
 
 #: src/main/objects.c:459
-msgid "NextMethod called from outside a function"
-msgstr "NextMethod不能在函数外调用"
+msgid "'NextMethod' called from outside a function"
+msgstr "'NextMethod'不能在函数外调用"
 
 #: src/main/objects.c:465
-msgid "NextMethod called from an anonymous function"
-msgstr "NextMethod不能在匿名函数内调用"
+msgid "'NextMethod' called from an anonymous function"
+msgstr "'NextMethod'不能在匿名函数内调用"
 
 #: src/main/objects.c:495
 msgid "no calling generic was found: was a method called directly?"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-08 13:31+0000\n"
+"POT-Creation-Date: 2005-03-15 21:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1006,14 +1006,17 @@ msgid "Jpeg"
 msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:1546
+#, c-format
 msgid "50% quality..."
 msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:1547
+#, c-format
 msgid "75% quality..."
 msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:1548
+#, c-format
 msgid "100% quality..."
 msgstr ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-14 07:40+0000\n"
+"POT-Creation-Date: 2005-03-15 21:18+0000\n"
 "PO-Revision-Date: 2005-02-26 18:12-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -490,8 +490,8 @@ msgid "WARNING: '-max-ppsize' value is too small: ignored\n"
 msgstr "ATENÇÃO: valor de '-max-ppsize' é muito pequeno: ignorado\n"
 
 #: src/main/CommandLineArgs.c:236
-msgid "WARNING: -max-ppsize value is too large: ignored\n"
-msgstr "ATENÇÃO: valor de -max-ppsize é muito grande: ignorado\n"
+msgid "WARNING: '-max-ppsize' value is too large: ignored\n"
+msgstr "ATENÇÃO: valor de '-max-ppsize' é muito grande: ignorado\n"
 
 #: src/main/CommandLineArgs.c:247
 msgid "WARNING: no 'vsize' given\n"
@@ -791,8 +791,8 @@ msgid "allocMatrix: too many elements specified"
 msgstr "allocMatrix: muitos elementos especificados"
 
 #: src/main/array.c:198
-msgid "allocArray: too many elements specified by dims"
-msgstr "allocArray: muitos elementos especificados pelas dimensões"
+msgid "allocArray: too many elements specified by 'dims'"
+msgstr "allocArray: muitos elementos especificados pelas 'dims'"
 
 #: src/main/array.c:343
 msgid "incorrect number of args to 'length'"
@@ -1131,8 +1131,8 @@ msgid "... used in an incorrect context"
 msgstr "... usado em um contexto incorreto"
 
 #: src/main/builtin.c:683
-msgid "invalid parameter in switch()"
-msgstr "parâmetro inválido em switch()"
+msgid "invalid parameter in 'switch()'"
+msgstr "parâmetro inválido em 'switch()'"
 
 #: src/main/builtin.c:694
 msgid "switch: EXPR must return a length 1 vector"
@@ -2219,8 +2219,8 @@ msgid "invalid 'usetz' argument"
 msgstr "argumento 'usetz' inválido"
 
 #: src/main/dcf.c:67 src/main/dcf.c:71 src/main/dcf.c:112 src/main/dcf.c:161
-msgid "could not allocate memory for read.dcf"
-msgstr "não foi possível alocar memória para read.dcf"
+msgid "could not allocate memory for 'read.dcf'"
+msgstr "não foi possível alocar memória para 'read.dcf'"
 
 #: src/main/deparse.c:158
 msgid "could not allocate memory in C function 'R_AllocStringBuffer'"
@@ -3798,43 +3798,43 @@ msgstr "não foi possível alocar vetor de comprimento %d"
 msgid "invalid type/length (%d/%d) in vector allocation"
 msgstr "tipo/comprimento inválido (%d/%d) na alocação de vetor"
 
-#: src/main/memory.c:1846
+#: src/main/memory.c:1856
 #, c-format
 msgid "cannot allocate vector of size %lu Kb"
 msgstr "não é possível alocar vetor de tamanho %lu Kb"
 
-#: src/main/memory.c:1927
+#: src/main/memory.c:1937
 msgid "gc.time() is not implemented on this system"
 msgstr "gc.time() não está implementado nesse sistema"
 
-#: src/main/memory.c:2113
+#: src/main/memory.c:2123
 msgid "protect(): protection stack overflow"
 msgstr "protect(): estouro da proteção de pilha"
 
-#: src/main/memory.c:2129
+#: src/main/memory.c:2139
 msgid "unprotect(): stack imbalance"
 msgstr "unprotect(): desbalanço de pilha"
 
-#: src/main/memory.c:2142
+#: src/main/memory.c:2152
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: ponteiro não encontrado"
 
-#: src/main/memory.c:2185
+#: src/main/memory.c:2195
 #, c-format
 msgid "Calloc could not allocate (%d of %d) memory"
 msgstr "Calloc não pôde alocar (%d de %d) memória"
 
-#: src/main/memory.c:2194
+#: src/main/memory.c:2204
 #, c-format
 msgid "Realloc could not re-allocate (size %d) memory"
 msgstr "Realloc não pôde re-alocar (tamanho %d) memória"
 
-#: src/main/memory.c:2313
+#: src/main/memory.c:2323
 msgid "not safe to return vector pointer"
 msgstr "não é seguro retornar um ponteiro de vetor"
 
-#: src/main/memory.c:2341 src/main/memory.c:2350 src/main/memory.c:2361
-#: src/main/memory.c:2374 src/main/memory.c:2390 src/main/memory.c:2407
+#: src/main/memory.c:2351 src/main/memory.c:2360 src/main/memory.c:2371
+#: src/main/memory.c:2384 src/main/memory.c:2400 src/main/memory.c:2417
 msgid "bad value"
 msgstr "valor inválido"
 
@@ -4025,12 +4025,12 @@ msgid "no applicable method for \"%s\""
 msgstr "nenhum método aplicável para \"%s\""
 
 #: src/main/objects.c:459
-msgid "NextMethod called from outside a function"
-msgstr "NextMethod chamado fora de uma função"
+msgid "'NextMethod' called from outside a function"
+msgstr "'NextMethod' chamado fora de uma função"
 
 #: src/main/objects.c:465
-msgid "NextMethod called from an anonymous function"
-msgstr "NextMethod chamado a partir de uma função anônima"
+msgid "'NextMethod' called from an anonymous function"
+msgstr "'NextMethod' chamado a partir de uma função anônima"
 
 #: src/main/objects.c:495
 msgid "no calling generic was found: was a method called directly?"
