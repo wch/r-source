@@ -199,7 +199,8 @@ To make HTML versions of the manuals (not the Reference Manual) use
 	cd ../../doc/manual
 	make -f Makefile.win html
 
-This makes use of tidy.exe, available via http://tidy.sourceforge.net/.
+This makes use of tidy.exe, available via http://tidy.sourceforge.net/,
+with a compiled version included in our tool set.
 
 The fptex distribution of TeX (via www.fptex.org) includes a suitable
 port of pdftex.
