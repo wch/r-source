@@ -374,3 +374,11 @@ Date: Mon, 22 Oct 2001 19:15:13 -0400 (EDT)
 Subject: Possible bug, Rprof() and scan(pipe())
 From: Don MacQueen <macq@llnl.gov>
 Date: Tue, 23 Oct 2001 13:50:26 -0700
+* PR# 1141 *
+Subject: broken build with LDFLAGS
+From: dks@phy.hr
+Date: Wed, 24 Oct 2001 11:28:09 +0200 (MET DST)
+* PR# 1142 *
+Subject: incompletely built html documentation
+From: dks@phy.hr
+Date: Wed, 24 Oct 2001 11:45:47 +0200 (MET DST)
