@@ -434,7 +434,7 @@ int Mac_initialize_R(int ac, char **av)
 	R_Suicide("you must specify `--save', `--no-save' or `--vanilla'");
     
     R_HistoryFile = R_DefHistFile;
-    sprintf(R_HistoryFile, "%s", mac_getenv("R_HISTFILE"));
+    strcpy(R_HistoryFile, ".Rhistory");
 
     R_HistorySize = 512;
     if ((p = mac_getenv("R_HISTSIZE"))) {
@@ -645,7 +645,7 @@ SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
     i = LENGTH(CAR(args));
     if (i == 0) {
     
-	sprintf(temp_path,"%s:etc:.Renviron",R_Home);
+	sprintf(temp_path,"%s:.Renviron",R_Home);
 
 	err = FSpLocationFromFullPath(strlen(temp_path),temp_path,&spec);
     

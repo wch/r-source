@@ -4,8 +4,9 @@ Macintosh porting of R
 In this directory you can find all the files needed to compile a
 specific version of R for MacOS.  The original code for MacOS was
 written by Ross Ihaka, Julian Harris and Wing Kwong (Tiki) Wan. More
-recently Stefan Iacus has modified or simply updated most of the files
-to work with current versions of R sources and the Waste Text Engine.
+recently Stefano M. Iacus has written new code, modified or simply updated 
+most of the older files to work with current versions of R sources 
+and the Waste Text Engine.
 
 Before building R
 =================
@@ -44,8 +45,9 @@ official Waste library site,  http://www.merzwaren.com/waste.
 You also need a fortran compiler or an F2C tool to compile the
 *.f fortran files in src/appl directory.
 The R.mcp project assumes that you have converted the files with F2C
-and put the *.c sources in /src/appl/mac_f2c directory.
-
+and put the *.c sources in /src/appl directory.
+The CW6 distribution includes Mac F2C. You just need to drag and drop
+fortran *.f files on the Mac F2C icon to convert files.
 
 Once you have built the R application, copy the "R" binary
 from "src/macintosh/bin" in the folder
@@ -72,17 +74,18 @@ Before building R :
 Building packages
 =================
 
-To build compiled code for the standard packages, refer to the
-respective "src/<pkg>/src/macintosh/" directory where you can find a
-CW project.  Once you have built a package you should move the
-resulting file to the "libs" directory in the "library/package"
+To build compiled code for the standard packages, expand the
+respective archives "src/<pkg>/src/<pkg>.mcp.hqx" that contain
+a CW project.  Once you have built a package you should move the
+resulting file to the "libs" directory in the "library/<pkg>"
 folder.
 
-There is still no "makefile" to build the R application, configure it,
-build help and doc files etc.  You can take the help and examples files
-from the Windows version by simply copying the whole directories
-{help, html, R-ex} from the Windows distribution to the pacakge
-directory here.
+Brian Ripley has written a "makefile" that you can run under MacOS X
+that automates most of the things needed to build the R application, configure it,
+build help and doc files etc.  If you are not able to run this "makefile" you 
+can take the help and examples files from the Windows version by simply 
+copying the whole directories {help, html, R-ex} from the Windows 
+distribution to the package directory here.
 
 At present this applies to the data and R directories too.
 
@@ -101,7 +104,7 @@ satisfactory to us, and we are working on improvements.
 ---------
 
 For comments and feedback, please contact either the
-R Core Development Team (and Stefano Iacus) at
+R Core Development Team (and Stefano M. Iacus) at
 
   R-core@R-project.org
 
