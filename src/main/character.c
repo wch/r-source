@@ -100,7 +100,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP s, t, x, tok, w;
 	int i, j, len, tlen, ntok;
-	char buff[MAXELTSIZE], *pt;
+	char buff[MAXELTSIZE], *pt, *split;
 
 	checkArity(op, args);
 	x = CAR(args);
@@ -116,19 +116,18 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0; i < len; i++) {
 		/* first find out how many splits there will be */
 		strcpy(buff, CHAR(STRING(x)[i]));
-		pt = strtok(buff, CHAR(STRING(tok)[i % tlen]));
-		if( pt == NULL )
-			ntok = 0;
-		else
-			ntok = 1;
-		while ((pt = strtok(NULL, CHAR(STRING(tok)[i % tlen]))) != NULL)
-			ntok++;
+		split = CHAR(STRING(tok)[i % tlen]);
+		ntok = 0;
+		if(strtok(buff, split) != NULL)
+		         do {
+		         	ntok++;
+		         } while (strtok(NULL, split) != NULL);
 		PROTECT(t = allocVector(STRSXP, ntok));
 		strcpy(buff, CHAR(STRING(x)[i]));
-		pt = strtok(buff, CHAR(STRING(tok)[i % tlen]));
+		pt = strtok(buff, split);
 		for (j = 0; j < ntok; j++) {
 			STRING(t)[j] = mkChar(pt);
-			pt = strtok(NULL, CHAR(STRING(tok)[i % tlen]));
+			pt = strtok(NULL, split);
 		}
 		CAR(w) = t;
 		UNPROTECT(1);
