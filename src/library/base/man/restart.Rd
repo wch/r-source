@@ -1,4 +1,4 @@
-\name{restart}
+\name{restart-deprecated}
 \alias{restart-deprecated}
 \title{Restart an Expression}
 \usage{
