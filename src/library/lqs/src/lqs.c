@@ -6,6 +6,9 @@
 #include <math.h>
 extern double R_PosInf;
 
+/*---- this is the same (a little smarter ?) as  rsort()  
+  ----  in ../../../main/sort.c -- */
+
 /* corrected from R. Sedgewick `Algorithms in C' */
 static void shellsort(double *a, int N)
 {
@@ -22,6 +25,7 @@ static void shellsort(double *a, int N)
     }
 }
 
+/*---- this is the same as  rFind()  in ../../../main/sort.c -- */
 /* 
    Partial sort so that a[k] is in the correct place, smaller to left,
    larger to right
