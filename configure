@@ -572,11 +572,11 @@ cat >> confdefs.h <<\EOF
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_MINOR "62.1"
+#define R_MINOR "62.2"
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_STATUS ""
+#define R_STATUS "in progress"
 EOF
 
 cat >> confdefs.h <<\EOF
@@ -584,7 +584,7 @@ cat >> confdefs.h <<\EOF
 EOF
 
 cat >> confdefs.h <<\EOF
-#define R_DAY "15"
+#define R_DAY "15ff"
 EOF
 
 cat >> confdefs.h <<\EOF
