@@ -255,6 +255,11 @@ conformMethod <-
     signature[omitted] <- "missing"
     ## there may have been some unspecified, but included, args; they go to "ANY"
     signature[nchar(signature) == 0] <- "ANY"
+    ## remove trailing "ANY"'s
+    n <- length(signature)
+    while(identical(signature[[n]], "ANY"))
+        n <- n - 1
+    length(signature) <- n
     signature
 }
 
