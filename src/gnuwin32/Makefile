@@ -356,6 +356,7 @@ packagedist:
 	  ../include/$i) $(RPREFIX)/src/include
 	$(CP) -pr ../include/R_ext $(RPREFIX)/src/include
 	$(SED) -e 3,5d readme.packages > $(RPREFIX)/readme.packages
+	$(CP) ../../COPYING.LIB $(RPREFIX)
 	$(MKDIR) $(RPREFIX)/share
 	$(CP) -r ../../share/perl $(RPREFIX)/share
 	$(CP) ../../bin/INSTALL ../../bin/REMOVE ../../bin/SHLIB \
