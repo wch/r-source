@@ -1570,11 +1570,11 @@ static void mapFigureRegion(DevDesc *dd)
 		int row, col;
 		if (dd->gp.mfind) {
 			col = (dd->gp.currentFigure-1) / dd->gp.numrows + 1;
-			row = dd->gp.currentFigure - (col-1)*dd->gp.numcols;
+			row = dd->gp.currentFigure - (col-1)*dd->gp.numrows;
 		}
 		else {
 			row = (dd->gp.currentFigure-1) / dd->gp.numcols + 1;
-			col = dd->gp.currentFigure - (row-1)*dd->gp.numrows;
+			col = dd->gp.currentFigure - (row-1)*dd->gp.numcols;
 		}
 		x0 = (double) (col-1) / dd->gp.numcols;
 		x1 = (double) col / dd->gp.numcols;
@@ -4697,7 +4697,7 @@ void removeDevice(int devNum)
 
 void initDisplayList();
 
-
+/*
 int SetDevice(SEXP name, SEXP cpars, int ncpars, SEXP npars, int nnpars)
 {
 	DevDesc *dd;
@@ -4740,9 +4740,6 @@ int SetDevice(SEXP name, SEXP cpars, int ncpars, SEXP npars, int nnpars)
 #endif
 #endif
 
-	/* Other Device Drivers Go Here */
-
-	/* Device not found */
 	return 0;
 	
 have_device:
@@ -4752,7 +4749,7 @@ have_device:
 
 	return 1;
 }
-
+*/
 
 void KillDevice(DevDesc *dd)
 {
