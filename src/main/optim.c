@@ -107,7 +107,7 @@ static void fmingr(int n, double *p, double *df, OptStruct OS)
     if (!isNull(OS->R_gcall)) { /* analytical derivatives */
 	PROTECT(x = allocVector(REALSXP, n));
 	for (i = 0; i < n; i++) {
-	    if (!R_FINITE(p[i])) error("non-finite value supplied by nlm");
+	    if (!R_FINITE(p[i])) error("non-finite value supplied by optim");
 	    REAL(x)[i] = p[i] * (OS->parscale[i]);
 	}
 	SETCADR(OS->R_gcall, x);
@@ -131,11 +131,15 @@ static void fmingr(int n, double *p, double *df, OptStruct OS)
 		s = coerceVector(eval(OS->R_fcall, OS->R_env), REALSXP);
 		val2 = REAL(s)[0]/(OS->fnscale);
 		df[i] = (val1 - val2)/(2 * eps);
-		if(!R_FINITE(df[i]))
-		    error("non-finite values encountered in finite-difference calculation");
-		REAL(x)[i] = p[i] * (OS->parscale[i]);
+#define DO_df_x 							\
+		if(!R_FINITE(df[i])) 					\
+		    error("non-finite finite-difference value [%d]", i);\
+		REAL(x)[i] = p[i] * (OS->parscale[i])
+
+		DO_df_x;
+
 	    }
-	} else {
+	} else { /* usebounds */
 	    for (i = 0; i < n; i++) {
 		epsused = eps = OS->ndeps[i];
 		tmp = p[i]  + eps;
@@ -157,9 +161,8 @@ static void fmingr(int n, double *p, double *df, OptStruct OS)
 		s = coerceVector(eval(OS->R_fcall, OS->R_env), REALSXP);
 		val2 = REAL(s)[0]/(OS->fnscale);
 		df[i] = (val1 - val2)/(epsused + eps);
-		if(!R_FINITE(df[i]))
-		    error("non-finite values encountered in finite-difference calculation");
-		REAL(x)[i] = p[i] * (OS->parscale[i]);
+
+		DO_df_x;
 	    }
 	}
 	UNPROTECT(1); /* x */
@@ -456,6 +459,8 @@ vmmin(int n0, double *b, double *Fmin, int maxit, int trace, int *mask,
     double D1, D2;
     int   n, *l;
 
+    if (nREPORT <= 0)
+	error("REPORT must be > 0 (method = \"BFGS\")");
     l = (int *) R_alloc(n0, sizeof(int));
     n = 0;
     for (i = 0; i < n0; i++) if (mask[i]) l[n++] = i;
@@ -466,7 +471,8 @@ vmmin(int n0, double *b, double *Fmin, int maxit, int trace, int *mask,
     c = vect(n);
     B = Lmatrix(n);
     f = fminfn(n, b, OS);
-    if (!R_FINITE(f)) error("initial value in vmmin is not finite");
+    if (!R_FINITE(f))
+	error("initial value in vmmin is not finite");
     if (trace) Rprintf("initial  value %f \n", f);
     *Fmin = f;
     funcount = gradcount = 1;
@@ -546,7 +552,8 @@ vmmin(int n0, double *b, double *Fmin, int maxit, int trace, int *mask,
 		    D2 = 1.0 + D2 / D1;
 		    for (i = 0; i < n; i++) {
 			for (j = 0; j <= i; j++)
-			    B[i][j] += (D2 * t[i] * t[j] - X[i] * t[j] - t[i] * X[j]) / D1;
+			    B[i][j] += (D2 * t[i] * t[j]
+					- X[i] * t[j] - t[i] * X[j]) / D1;
 		    }
 		} else {	/* D1 < 0 */
 		    ilast = gradcount;
@@ -563,9 +570,8 @@ vmmin(int n0, double *b, double *Fmin, int maxit, int trace, int *mask,
 	    else ilast = gradcount;
 	    /* Resets unless has just been reset */
 	}
-	if ((iter % nREPORT == 0) && trace) {
+	if (trace && (iter % nREPORT == 0))
 	    Rprintf("iter%4d value %f\n", iter, f);
-	}
 	if (iter >= maxit) break;
 	if (gradcount - ilast > 2 * n)
 	    ilast = gradcount;	/* periodic restart */
@@ -583,6 +589,7 @@ vmmin(int n0, double *b, double *Fmin, int maxit, int trace, int *mask,
 #define big             1.0e+35   /*a very large number*/
 
 
+/* Nelder-Mead */
 static
 void nmmin(int n, double *Bvec, double *X, double *Fmin,
 	   int *fail, double abstol, double intol, OptStruct OS,
@@ -634,8 +641,6 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin,
 	    strcpy(action, "BUILD          ");
 	    for (i = 0; i < n; i++)
 		P[i][j - 1] = Bvec[i];
-
-
 
 	    trystep = step;
 	    while (P[j - 2][j - 1] == Bvec[j - 2]) {
@@ -720,12 +725,12 @@ void nmmin(int n, double *Bvec, double *X, double *Fmin,
 			P[n1 - 1][H - 1] = VR;
 		    }
 		} else {
-		    strcpy(action, "HI-REDUCTION    ");
+		    strcpy(action, "HI-REDUCTION   ");
 		    if (VR < VH) {
 			for (i = 0; i < n; i++)
 			    P[i][H - 1] = Bvec[i];
 			P[n1 - 1][H - 1] = VR;
-			strcpy(action, "LO-REDUCTION    ");
+			strcpy(action, "LO-REDUCTION   ");
 		    }
 
 		    for (i = 0; i < n; i++)
@@ -794,29 +799,19 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
     double newstep, oldstep, setstep, steplength=1.0;
     double tol, TEMP;
 
-    if (trace) Rprintf("  Conjugate gradients function minimiser\n");
-
-    c = vect(n); g = vect(n); t = vect(n);
-
-    setstep = 1.7;
-    if (trace)
+    if (trace) {
+	Rprintf("  Conjugate gradients function minimiser\n");
 	switch (type) {
-
-	case 1:
-	    Rprintf("Method: Fletcher Reeves\n");
-	    break;
-
-	case 2:
-	    Rprintf("Method: Polak Ribiere\n");
-	    break;
-
-	case 3:
-	    Rprintf("Method: Beale Sorenson\n");
-	    break;
-
+	case 1:	    Rprintf("Method: Fletcher Reeves\n");	break;
+	case 2:	    Rprintf("Method: Polak Ribiere\n");		break;
+	case 3:	    Rprintf("Method: Beale Sorenson\n");	break;
 	default:
 	    error("unknown type in CG method of optim");
 	}
+    }
+    c = vect(n); g = vect(n); t = vect(n);
+
+    setstep = 1.7;
     *fail = 0;
     cyclimit = n;
     tol = intol * n * sqrt(intol);
@@ -844,9 +839,8 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
 		    Rprintf("parameters ");
 		    for (i = 1; i <= n; i++) {
 			Rprintf("%10.5f ", Bvec[i - 1]);
-			if (i / 7 * 7 == i && i < n) {
+			if (i / 7 * 7 == i && i < n)
 			    Rprintf("\n");
-			}
 		    }
 		    Rprintf("\n");
 		}
@@ -865,16 +859,13 @@ void cgmin(int n, double *Bvec, double *X, double *Fmin, int *fail,
 		    switch (type) {
 
 		    case 1: /* Fletcher-Reeves */
-			TEMP = g[i];
-			G1 += TEMP * TEMP;
-			TEMP = c[i];
-			G2 += TEMP * TEMP;
+			G1 += g[i] * g[i];
+			G2 += c[i] * c[i];
 			break;
 
 		    case 2: /* Polak-Ribiere */
 			G1 += g[i] * (g[i] - c[i]);
-			TEMP = c[i];
-			G2 += TEMP * TEMP;
+			G2 += c[i] * c[i];
 			break;
 
 		    case 3: /* Beale-Sorenson */
