@@ -185,15 +185,8 @@ R_PROG_PERL
 AC_SUBST(TAR)
 
 ## C compiler.
-##
-## If a C compiler is specified in the environment we use that.
-## Otherwise, we use the autoconfigure procedures for detecting one.
 
-if test -z "${CC}"; then
-  AC_PROG_CC
-else
-  AC_CHECK_PROG(CC, ${CC})
-fi
+AC_PROG_CC
 
 dnl FIXME: why is this needed here?
 dnl case ${host} in
@@ -205,7 +198,6 @@ dnl         CFLAGS="-D_HPUX_SOURCE ${CFLAGS}" ;;
 dnl     esac
 dnl esac
 
-dnl FIXME: put into R_PROG_CC_M
 AC_MSG_CHECKING([whether ${CC} accepts -M for generating dependencies])
 depend_rules_frag=Makefrag.dep
 echo "#include <math.h>" > conftest.${ac_ext}
