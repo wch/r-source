@@ -78,13 +78,14 @@ initMethodDispatch()
       Utility, used to enable \code{show} methods to be called by the
       automatic printing (via \code{print.default}).
     }
-  \item{\code{initMethodDispatch}:{
+    \item{\code{initMethodDispatch}:}{
         Turn on the internal method dispatch code.  Called on
         attaching the package.  Also, if dispatch has been turned off
         (by calling \code{.isMethodsDispatchOn(FALSE)}---a very gutsy
         thing to do), calling this function should turn dispatch back
         on again.
-        }
+      }
+    }
   }
 }
 \keyword{internal}
