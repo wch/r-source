@@ -10,11 +10,7 @@ export(as.polySpline, asVector, backSpline, bs, interpSpline, ns,
 #        predict.ppolySpline)
 
 importFrom(graphics, plot)
-importFrom(stats, predict)
-importFrom(stats, makepredictcall)
-importFrom(stats, as.formula)
-importFrom(stats, na.fail)
-importFrom(stats, coef)
+importFrom(stats, as.formula, coef, makepredictcall, na.fail, predict)
 
 S3method(as.data.frame, xyVector)
 S3method(asVector, xyVector)

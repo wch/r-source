@@ -246,7 +246,8 @@ loadNamespace <- function (package, lib.loc = NULL,
 
         for (p in nsInfo$exportPatterns)
             exports <- c(ls(env, pat = p, all = TRUE), exports)
-        if(.isMethodsDispatchOn()) {
+        if(.isMethodsDispatchOn() &&
+           exists(".noGenerics", envir = ns, inherits = FALSE)) {
             ## process class definition objects
             expClasses <- nsInfo$exportClasses
             if(length(expClasses) > 0) {
@@ -499,7 +500,7 @@ namespaceImportFrom <- function(self, ns, vars) {
     whichMethodMetaNames <- function(impvars) {
         if(!.isMethodsDispatchOn())
             return(numeric())
-        mm <- methods:::mlistMetaName()
+        mm <- ".__M__" # methods:::mlistMetaName() is slow
         seq(along = impvars)[substr(impvars, 1, nchar(mm)) == mm]
     }
     if (is.character(self))
