@@ -1,9 +1,9 @@
 library <-
-function(package, help, lib.loc = .lib.loc, character.only = FALSE,
-         logical.return = FALSE, warn.conflicts = package != "MASS",
-         keep.source = getOption("keep.source.pkgs"))
+    function(package, help, lib.loc = .lib.loc, character.only = FALSE,
+             logical.return = FALSE, warn.conflicts = TRUE,
+             keep.source = getOption("keep.source.pkgs"))
 {
-    fQuote <- function(s) paste("`", s, "'", sep = "")    
+    fQuote <- function(s) paste("`", s, "'", sep = "")
     if(!missing(package)) {
 	if(!character.only)
 	    package <- as.character(substitute(package))
@@ -86,7 +86,7 @@ function(package, help, lib.loc = .lib.loc, character.only = FALSE,
 	if(!character.only)
 	    help <- as.character(substitute(help))
         help <- help[1]                 # only give help on one package
-        
+
         pkgpath <- .find.package(help, lib.loc)
         outFile <- tempfile("Rlibrary")
         outConn <- file(outFile, open = "w")
@@ -215,21 +215,21 @@ require <- function(package, quietly = FALSE, warn.conflicts = TRUE,
 
 .find.package <-
 function(package, lib.loc = .lib.loc, use.attached, quiet = FALSE) {
-    
+
     if(missing(use.attached))
         use.attached <- missing(lib.loc)
     else if(is.null(use.attached))
         use.attached <- FALSE
     else if(!is.logical(use.attached))
         stop("incorrect value for `use.attached'")
-    
+
     fQuote <- function(s) paste("`", s, "'", sep = "")
 
     n <- length(package)
     if(n == 0)
         return(character(0))
 
-    bad <- character(0)                 # names of packages not found    
+    bad <- character(0)                 # names of packages not found
     paths <- character(0)               # paths to packages found
 
     for(pkg in package) {

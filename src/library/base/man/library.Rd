@@ -14,6 +14,7 @@
 \description{
   \code{library} and \code{require} load add-on packages.
   \code{.First.lib} is called when a package is loaded;
+  \code{.Last.lib} is called when a package is loaded.
   \code{.packages} returns information about package availability.
   \code{.path.package} returns information about where a package was
   loaded from.
@@ -93,11 +94,12 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \code{library}.  It is called with two arguments, the name of the
   library directory where the package was found (i.e., the corresponding
   element of \code{lib.loc}), and the name of the package (in that
-  order).  It is a good place to put calls to \code{library.dynam()}
+  order).  It is a good place to put calls to \code{\link{library.dynam}}
   which are needed when loading a package into this function (don't call
-  \code{library.dynam()} directly, as this will not work if the package
+  \code{library.dynam} directly, as this will not work if the package
   is not installed in a ``standard'' location).  \code{.First.lib}
-  is invoked after \code{search()} has been updated, so
+  is invoked after the search path interrogated by \code{search()}
+  has been updated, so
   \code{pos.to.env(match("package:name"), search())} will return the
   environment in which the package is stored.  If calling
   \code{.First.lib} gives an error the loading of the package is
@@ -139,8 +141,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   default library, the ``library'' subdirectory of \code{R_HOME}.
   \code{.lib.loc} is a character vector with the locations of all
   library trees that \R should use.  It is initialized at startup from
-  the environment variable \code{R_LIBS} (\code{RLIBS} as used by older
-  versions of \R is no longer accepted) (which should be a
+  the environment variable \code{R_LIBS} (which should be a
 #ifdef unix
   colon-separated
 #endif
@@ -162,10 +163,8 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \code{\link{attach}}, \code{\link{detach}}, \code{\link{search}},
   \code{\link{objects}}, \code{\link{autoload}},
   \code{\link{library.dynam}},
-  \code{\link{data}}, \code{\link{install.packages}}.
-#ifdef unix
-  \code{\link{INSTALL}}, \code{\link{REMOVE}}
-#endif
+  \code{\link{data}}, \code{\link{install.packages}},
+  \code{\link{INSTALL}}, \code{\link{REMOVE}}.
 }
 \examples{
 (.packages())		    # maybe just "base"
@@ -183,7 +182,7 @@ require(eda)                # the same
 .Library == .lib.loc[length(.lib.loc)]  # `by definition'
 
 require(nonexistent)        # FALSE
-\dontrun{## Suppose a package needs to call a shared library named `foo.EXT',
+\dontrun{## Suppose a package needs to call a shared library named `fooEXT',
 ## where `EXT' is the system-specific extension.  Then you should use
 .First.lib <- function(lib, pkg) {
   library.dynam("foo", pkg, lib)
