@@ -225,14 +225,14 @@
             <string name="title">Packages</string>
             <array count="9" name="items">
               <object class="IBCarbonMenuItem" id="218">
-                <string name="title">Installed Packages</string>
+                <string name="title">Package Manager</string>
                 <ostype name="command">ipkg</ostype>
-                <string name="helpTagText">Shows the list of currently installed packages</string>
+                <string name="helpTagText">Shows the list of currently installed packages and allow for loading them in the current session</string>
               </object>
               <object class="IBCarbonMenuItem" id="219">
-                <string name="title">Available Datasets</string>
+                <string name="title">Datasets Manager</string>
                 <ostype name="command">shdt</ostype>
-                <string name="helpTagText">Shows the lists of available datasets</string>
+                <string name="helpTagText">Shows the lists of available datasets and allow to the select dataset to load in the current session</string>
               </object>
               <object class="IBCarbonMenuItem" id="221">
                 <boolean name="separator">TRUE</boolean>
@@ -776,42 +776,42 @@
     <reference idRef="278"/>
     <reference idRef="279"/>
     <object class="IBCarbonUserPane" id="280">
-      <string name="bounds">9933 21932 10231 22372 </string>
+      <string name="bounds">30941 11240 31239 11680 </string>
       <array count="9" name="subviews">
         <object class="IBCarbonCheckBox" id="281">
-          <string name="bounds">30919 -32245 30921 -32245 </string>
+          <string name="bounds">24700 -10287 24702 -10283 </string>
           <string name="title">AntiAliasing</string>
         </object>
         <object class="IBCarbonCheckBox" id="282">
-          <string name="bounds">30919 25849 30921 25875 </string>
+          <string name="bounds">24700 -17725 24702 -17703 </string>
           <string name="title">Auto Refresh</string>
         </object>
         <object class="IBCarbonStaticText" id="284">
-          <string name="bounds">31019 25726 31035 26119 </string>
+          <string name="bounds">24586 -17850 24602 -17457 </string>
           <string name="title">Font Name</string>
         </object>
         <object class="IBCarbonButton" id="283">
-          <string name="bounds">30979 25965 30999 25973 </string>
+          <string name="bounds">24626 -17609 24646 -17605 </string>
           <string name="title">Choose Font</string>
         </object>
         <object class="IBCarbonEditText" id="285">
-          <string name="bounds">30991 26397 30987 26392 </string>
+          <string name="bounds">24633 -17181 24631 -17182 </string>
           <string name="title">12</string>
         </object>
         <object class="IBCarbonStaticText" id="286">
-          <string name="bounds">30981 26443 30997 26519 </string>
+          <string name="bounds">24624 -17133 24640 -17057 </string>
           <string name="title">Point Size</string>
         </object>
         <object class="IBCarbonEditText" id="287">
-          <string name="bounds">31120 26530 31116 26530 </string>
+          <string name="bounds">24504 -17043 24502 -17049 </string>
           <string name="title">5</string>
         </object>
         <object class="IBCarbonStaticText" id="288">
-          <string name="bounds">31109 26637 31125 26684 </string>
+          <string name="bounds">24496 -16939 24512 -16892 </string>
           <string name="title">Width:</string>
         </object>
         <object class="IBCarbonStaticText" id="290">
-          <string name="bounds">31109 26961 31125 27008 </string>
+          <string name="bounds">24496 -16615 24512 -16568 </string>
           <string name="title">Height:</string>
         </object>
       </array>

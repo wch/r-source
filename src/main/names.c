@@ -551,6 +551,8 @@ FUNTAB R_FunTab[] =
 #if defined(__APPLE_CC__) && defined(HAVE_AQUA)
 {"wsbrowser",	do_wsbrowser,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},
 {"pkgbrowser",	do_browsepkgs,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
+{"data.manager",	do_datamanger,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
+{"package.manager",	do_packagemanger,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 {"parse",	do_parse,	0,	11,	4,	{PP_FUNCALL, PREC_FN,	0}},
 {"save",	do_save,	0,	111,	5,	{PP_FUNCALL, PREC_FN,	0}},

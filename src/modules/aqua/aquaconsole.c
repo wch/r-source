@@ -288,6 +288,8 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
 
 extern void CloseDataEntry(void);
 extern void CloseBrowsePkg(void);
+extern void CloseDataManager(void);
+extern void ClosePackageManager(void);
 
 static  OSStatus GenContEventHandlerProc( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData );
 
@@ -973,8 +975,8 @@ NavUserAction WantToSave(WindowRef window, char *msg){
 }
 
 
-NavUserAction YesOrNot(WindowRef window, char *msg);
-NavUserAction YesOrNot(WindowRef window, char *msg){
+NavUserAction YesOrNot(char *title, char *msg);
+NavUserAction YesOrNot(char *title, char *msg){
     OSStatus			err = noErr;
     NavDialogCreationOptions	dialogOptions;
     NavAskSaveChangesAction	action 	= 0;
@@ -1299,11 +1301,11 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 /* Packages menu */
 
               case kRCmdInstalledPkgs:
-               consolecmd("library()");
+               consolecmd("package.manager()");
               break;
 
               case kRCmdAvailDatsets:
-               consolecmd("data()");
+               consolecmd("data.manager()");
               break;
 
               case kRCmdInstallFromCRAN:
@@ -1630,6 +1632,24 @@ OSStatus DoCloseHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* 
             
             if( GetWindowProperty(EventWindow, 'RMAC', 'PKGB', sizeof(browser), NULL, &browser) == noErr){
                     CloseBrowsePkg();
+                    QuitApplicationEventLoop();
+                    TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadWriteTag, RReadWriteData);
+                    EditingFinished = true;
+                    err= noErr; 
+
+            }
+
+            if( GetWindowProperty(EventWindow, 'RMAC', 'DMAN', sizeof(browser), NULL, &browser) == noErr){
+                    CloseDataManager();
+                    QuitApplicationEventLoop();
+                    TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadWriteTag, RReadWriteData);
+                    EditingFinished = true;
+                    err= noErr; 
+
+            }
+        
+            if( GetWindowProperty(EventWindow, 'RMAC', 'PMAN', sizeof(browser), NULL, &browser) == noErr){
+                    ClosePackageManager();
                     QuitApplicationEventLoop();
                     TXNSetTXNObjectControls(RConsoleInObject, false, 1, RReadWriteTag, RReadWriteData);
                     EditingFinished = true;
@@ -2641,7 +2661,7 @@ void CloseAllEditWindows(void){
                      GetWTitle( EditWindowsList[i], wintitle );
                      CopyPascalStringToC(wintitle, winname);
                      sprintf(msg, "Do you want to save changes for window %s?",winname);
-                     userAction = YesOrNot(EditWindowsList[i], msg);
+                     userAction = YesOrNot(NULL, msg);
                      if(userAction == kNavUserActionSaveChanges)
                         SaveWindow(EditWindowsList[i],false);
                     }

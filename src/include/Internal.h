@@ -40,6 +40,8 @@ SEXP do_Quartz(SEXP, SEXP, SEXP, SEXP);
 #if defined(__APPLE_CC__) && defined(HAVE_AQUA)
 SEXP do_wsbrowser(SEXP, SEXP, SEXP, SEXP);
 SEXP do_browsepkgs(SEXP, SEXP, SEXP, SEXP);
+SEXP do_datamanger(SEXP, SEXP, SEXP, SEXP);
+SEXP do_packagemanger(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 

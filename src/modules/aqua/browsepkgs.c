@@ -85,8 +85,8 @@ ControlRef BrowsePkgControl = NULL;
 
 #define MaxRows  65000
 #define MaxCols  65000 
-int NumOfPkgs=0;
-int *PkgID;
+DataBrowserItemID NumOfPkgs=0;
+DataBrowserItemID *PkgID;
 Boolean *InstallPkg;
 
 extern bool		EditingFinished;
@@ -181,8 +181,8 @@ Boolean OpenBrowsePkg(void)
 	
 	
    NumOfPkgs = LENGTH(cpkgs);	
-   PkgID = (int*)malloc(NumOfPkgs * sizeof(int));
-   InstallPkg = (int*)malloc(NumOfPkgs * sizeof(Boolean));
+   PkgID = (DataBrowserItemID*)malloc(NumOfPkgs * sizeof(DataBrowserItemID));
+   InstallPkg = (Boolean*)malloc(NumOfPkgs * sizeof(Boolean));
    for(i=1;i<=NumOfPkgs;i++){
     PkgID[i-1] = i;
     InstallPkg[i-1] = false;

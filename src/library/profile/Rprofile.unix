@@ -125,6 +125,38 @@ install.from.file <- function(pkg=file.choose()){
    cat("\tnpackage installation failed\n")
 }
 
+"data.manager" <- function(){
+  data() -> x
+  x$results[,3] -> dt
+  x$results[,1] -> pkg
+  x$results[,4] -> desc
+
+  load.idx <- which(.Internal(data.manager(dt,pkg,desc)))
+   
+  for(i in load.idx){
+   cat("loading dataset:", dt[i],"\n")
+   data(list = dt[i])       
+  } 
+}
+
+"package.manager" <- function(){
+  .packages() -> loaded.pkgs
+  library() -> x
+  x$results[,1] -> pkgs
+  x$results[,3] -> pkgs.desc
+
+  is.loaded <- !is.na(match(pkgs,loaded.pkgs))
+  pkgs.status <- character(length(is.loaded))
+  pkgs.status[which(is.loaded)] <- "loaded"
+  pkgs.status[which(!is.loaded)] <- " "
+  
+  load.idx <- which(.Internal(package.manager(pkgs.status,pkgs,pkgs.desc)))
+ 
+   for(i in load.idx){
+    cat("loading package:", pkgs[i],"\n")
+    library(pkgs[i],character.only = TRUE)
+   }
+}
 
 }
 
