@@ -244,9 +244,10 @@ all.equal.POSIXct <- function(target, current, ..., scale=1)
     NextMethod("all.equal")
 
 
-axis.POSIXct <- function(side, x, format, ...)
+axis.POSIXct <- function(side, x, at, format, ...)
 {
-    x <- as.POSIXct(x)
+    mat <- missing(at)
+    if(!mat) x <- as.POSIXct(at) else x <- as.POSIXct(x)
     range <- par("usr")[if(side %%2) 1:2 else 3:4]
     ## find out the scale involved
     d <- range[2] - range[1]
@@ -292,22 +293,23 @@ axis.POSIXct <- function(side, x, format, ...)
         z <- as.POSIXct(zz)
         if(missing(format)) format <- "%Y"
     }
+    if(!mat) z <- x[is.finite(x)] # override changes
     z <- z[z >= range[1] & z <= range[2]]
     labels <- format(z, format = format)
     axis(side, at = z, labels = labels, ...)
 }
 
-plot.POSIXct <- function(x, y, xlab = "", ...)
+plot.POSIXct <- function(x, y, xlab = "", xaxt = par("xaxt"), ...)
 {
     plot.default(x, y, xaxt = "n", xlab = xlab, ...)
-    axis.POSIXct(1, x)
+    if(xaxt != "n") axis.POSIXct(1, x)
 }
 
-plot.POSIXlt <- function(x, y, xlab = "", ...)
+plot.POSIXlt <- function(x, y, xlab = "",  xaxt = par("xaxt"), ...)
 {
     x <- as.POSIXct(x)
     plot.default(x, y, xaxt = "n", xlab = xlab, ...)
-    axis.POSIXct(1, x)
+    if(xaxt != "n") axis.POSIXct(1, x)
 }
 
 ISOdatetime <- function(year, month, day, hour, min, sec, tz="")

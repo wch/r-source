@@ -11,15 +11,21 @@
 \usage{
 plot.POSIXct(x, y, xlab = "", ...)
 plot.POSIXlt(x, y, xlab = "", ...)
-axis.POSIXct(side, x, format, ...)
+axis.POSIXct(side, x, at, format, ...)
+}
+\synopsis{
+plot.POSIXct(x, y, xlab = "", xaxt = par("xaxt"), ...)
+plot.POSIXlt(x, y, xlab = "", xaxt = par("xaxt"), ...)
+axis.POSIXct(side, x, at, format, ...)
 }
 \arguments{
-  \item{x}{A date-time object.}
+  \item{x, at}{A date-time object.}
   \item{y}{numeric values to be plotted against \code{x}.}
   \item{xlab}{a character string giving the label for the x axis.}
   \item{side}{See \code{\link{axis}}.}
   \item{format}{See \code{\link{strptime}}.}
-  \item{\dots}{Further arguments to be passed from or to other methods.}
+  \item{\dots}{Further arguments to be passed from or to other methods,
+    typically graphical parameters.}
 }
 \details{
   The functions plot against an x-axis of date-times.
@@ -27,21 +33,31 @@ axis.POSIXct(side, x, format, ...)
   (years, months, days, hours, minutes or seconds) and a sensible
   output format, but this can be overridden by supplying a \code{format}
   specification.
+
+  If \code{at} is supplied for \code{axis.POSIXct} it specifies the
+  locations of the ticks and labels: if \code{x} is specified a
+  suitable grid of labels is chosen. 
 }
 \seealso{
   \link{DateTimeClasses} for details of the classes.
 }
 \examples{
-\dontrun{library(MASS)
+if(require(MASS, quietly = TRUE)) {
 data(beav1)
 attach(beav1)
 time <- strptime(paste(day, time \%/\% 100, time \%\% 100),
                  "\%j \%H \%M")
 plot(time, temp, type="l") # axis at 4-hour intervals.
-detach("beav1")}
+# now label every hour on the time axis
+plot(time, temp, type="l", xaxt="n")
+r <- as.POSIXct(round(range(time), "hours"))
+axis.POSIXct(1, at=seq(r[1], r[2], by="hour"), format="\%H")
+detach(beav1)
+detach(package:MASS)
+}
 
 plot(.leap.seconds, 1:22, type="n", yaxt="n",
-     xlab="leap seconds", ylab="")
+     xlab="leap seconds", ylab="", bty="n")
 rug(.leap.seconds)
 }
 \keyword{utilities}

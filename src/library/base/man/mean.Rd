@@ -6,10 +6,11 @@ mean.default(x, trim = 0, na.rm = FALSE, \dots)
 }
 \alias{mean}
 \alias{mean.default}
+\alias{mean.data.frame}
 \arguments{
-  \item{x}{a numeric vector containing the values
-    whose mean is to be computed.  A complex vector is allowed for
-    \code{trim=0}, only.}
+  \item{x}{An \R object.  Currently there are methods for numeric data
+    frames, numeric vectors and dates.  A complex vector is allowed for
+    \code{trim = 0}, only.}
   \item{trim}{the fraction (0 to 0.5) of observations to be
     trimmed from each end of \code{x} before the mean is computed.}
   \item{na.rm}{a logical value indicating whether \code{NA}
@@ -20,6 +21,9 @@ mean.default(x, trim = 0, na.rm = FALSE, \dots)
   Generic function for the (trimmed) arithmetic mean.
 }
 \value{
+  For a data frame, a named vector with the appropriate method being
+  applied column by column.
+  
   If \code{trim} is zero (the default),
   the arithmetic mean of the values in \code{x} is computed.
 
@@ -28,14 +32,17 @@ mean.default(x, trim = 0, na.rm = FALSE, \dots)
   before the mean is computed.
 }
 \seealso{
-  \code{\link{weighted.mean}}
+  \code{\link{weighted.mean}}, \code{\link{mean.POSIXct}}
 }
 \examples{
 x <- c(0:10, 50)
 xm <- mean(x)
-c(xm, mean(x, trim = .10))
+c(xm, mean(x, trim = 0.10))
 
 all.equal(mean(x, trim = 0.5), median(x))
+
+data(USArrests)
+mean(USArrests, trim = 0.2)
 }
 \keyword{univar}
 

@@ -203,6 +203,13 @@ NEW FEATURES
 
     o   page() has a new `method' argument allowing `method = print'.
 
+    o   mean() has `data frame' method applying mean column-by-column.
+	When applied to non-numeric data mean() now returns NA rather
+	than a confusing error message (for compatibility with S4).
+
+    o   axis.POSIXct() allows the label date/times to be specified
+	via the news `at' argument.
+
 
 
 BUG FIXES
@@ -231,6 +238,8 @@ BUG FIXES
 
     o   rowsum() now gives character (not factor codes) as rownames.
 	(PR#1092)
+
+    o   plot.POSIX[cl]t now respect the `xaxt' parameter.
 
 
 
