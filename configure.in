@@ -567,6 +567,16 @@ case "${host}" in
     ;;
   *sgi*)
     SHLIBLDFLAGS="-shared"
+    if ${cc_is_gcc}; then
+      CPICFLAGS=-fPIC
+    else
+      CPICFLAGS=-KPIC
+    fi
+    if ${f77_is_g77}; then
+      FPICFLAGS=-fPIC
+    else
+      FPICFLAGS=-PIC
+    fi
     ;;
   *hpux*)
     AC_DEFINE(USE_BUILTIN_RINT)
