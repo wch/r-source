@@ -8,7 +8,7 @@ recycle.data <- function(data, data.per, max.n) {
   # consists of a check for mode="character" (i.e., a single
   # string) or mode="expression" (i.e., a single expression)
   # or class="grob" (i.e., a single grob)
-  if (is.character(data) || is.expression(data) || is.grob(data)) 
+  if (is.character(data) || is.expression(data) || is.grob(data))
     data <- list(data)
   if (data.per)
     n <- max.n
@@ -153,37 +153,41 @@ unit.arithmetic <- function(func.name, arg1, arg2=NULL) {
   ua
 }
 
-Ops.unit <- function(x, y) {
+Ops.unit <- function(e1, e2) {
   ok <- switch(.Generic, "+"=TRUE, "-"=TRUE, "*"=TRUE, FALSE)
   if (!ok)
     stop(paste("Operator", .Generic, "not meaningful for units"))
-  if (.Generic=="*")
+  if (.Generic == "*")
     # can only multiply a unit by a scalar
     if (nchar(.Method[1])) {
       if (nchar(.Method[2]))
         stop("Only one operand may be a unit")
-      else if (is.numeric(y))
+      else if (is.numeric(e2))
         # NOTE that we always put the scalar first
-        unit.arithmetic(.Generic, y, x)
+        unit.arithmetic(.Generic, e2, e1)
       else
         stop("Non-unit operand must be numeric")
     } else {
-      if (is.numeric(x))
-        unit.arithmetic(.Generic, x, y)
+      if (is.numeric(e1))
+        unit.arithmetic(.Generic, e1, e2)
       else
         stop("Non-unit operand must be numeric")
     }
   else
     # Check that both arguments are units
     if (nchar(.Method[1]) && nchar(.Method[2]))
-      unit.arithmetic(.Generic, x, y)
+      unit.arithmetic(.Generic, e1, e2)
     else
-      stop("Both operands must be units") 
-}    
+      stop("Both operands must be units")
+}
 
+## <FIXME>
+## The na.rm arg is ignored here, and the S3 groupGeneric is
+## Summary(x, ...)
+## </FIXME>
 Summary.unit <- function(..., na.rm=FALSE) {
   # NOTE that this call to unit.c makes sure that arg1 is
-  # a single unit object 
+  # a single unit object
   x <- unit.c(...)
   ok <- switch(.Generic, "max"=TRUE, "min"=TRUE, "sum"=TRUE, FALSE)
   if (!ok)
@@ -247,7 +251,7 @@ unit.pmin <- function(...) {
   result <- min(unit.list.from.list(lapply(x, select.i, 1)))
   for (i in 2:maxlength)
     result <- unit.c(result, min(unit.list.from.list(lapply(x, select.i, i))))
-  result  
+  result
 }
 
 #########################
@@ -262,7 +266,7 @@ unit.list <- function(unit) {
     unit
   else {
     l <- unit.length(unit)
-    result <- list() 
+    result <- list()
     for (i in 1:l)
       result[[i]] <- unit[i]
     class(result) <- c("unit.list", "unit")
@@ -273,7 +277,7 @@ unit.list <- function(unit) {
 is.unit.list <- function(x) {
   inherits(x, "unit.list")
 }
-  
+
 as.character.unit.list <- function(ul) {
   l <- unit.length(ul)
   result <- rep("", l)
@@ -360,7 +364,7 @@ print.unit <- function(x, ...) {
   result
 }
 
-# Write "[<-.unit" methods too ?? 
+# Write "[<-.unit" methods too ??
 
 #########################
 # "c"ombining unit objects
@@ -397,7 +401,7 @@ unit.c <- function(...) {
         data <- c(data, recycle.data(attr(x[[i]], "data"), TRUE,
                                      length(x[[i]])))
       }
-      else 
+      else
         stop("It is invalid to combine unit objects with other types")
     unit(values, units, data=data)
   }
@@ -422,7 +426,7 @@ function(x) {
     i <- i + 1
   }
   class(result) <- c("unit.list", "unit")
-  result 
+  result
 }
 
 #########################
@@ -449,13 +453,13 @@ unit.list.rep <- function(x, times) {
   "["(x, 1:(unit.length(x)*times), top=FALSE)
 }
 
-unit.rep <- function (x, times, length.out) 
+unit.rep <- function (x, times, length.out)
 {
-  if (unit.length(x) == 0) 
+  if (unit.length(x) == 0)
     return(x)
-  if (missing(times)) 
+  if (missing(times))
     times <- ceiling(length.out/length(x))
-  
+
   if (is.unit.list(x))
     unit <- unit.list.rep(x, times)
   else if (is.unit.arithmetic(x))
@@ -470,7 +474,7 @@ unit.rep <- function (x, times, length.out)
     data <- recycle.data(attr(x, "data"), TRUE, length(values))
     unit <- unit(values, unit, data=data)
   }
-  if (!missing(length.out)) 
+  if (!missing(length.out))
     return(unit[if (length.out > 0) 1:length.out else integer(0)])
   unit
 }
@@ -555,4 +559,4 @@ absolute.units.unit.arithmetic <- function(unit) {
          "sum"=unit.arithmetic("sum", absolute.units(unit$arg1)))
 }
 
-                 
+
