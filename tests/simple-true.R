@@ -68,7 +68,8 @@ all(l1 == as.logical(as.data.frame(l1)[,1]))
 
 ## empty data.frames :
 x <- data.frame(a=1:3)
-x30 <- x[, -1]; all(dim(x30) == c(3,0))
+x30 <- x[, -1]# not even possible in S+
+all(dim(x30) == c(3,0))
 x01 <- x[-(1:3), , drop = FALSE]
 all(dim(x01) == 0:1)
 all(dim(x) == dim(rbind(x, x01)))
