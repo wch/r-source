@@ -225,10 +225,10 @@ none
 
 Directory:  incoming
 
-* PR# 839 *
-Subject: clipped lines have wrong slope in log plot
-From: Jason Eisner <jason@cs.rochester.edu>
-Date: Sun, 4 Feb 2001 20:17:31 -0500 (EST)
+* PR# 840 *
+Subject: X11 warnings about "wrong" font sizes
+From: Thomas Vogels <tov@ece.cmu.edu>
+Date: 06 Feb 2001 09:50:44 -0500
 * PR# 831 *
 Subject: screen can't go back to (split) screen with log="y" plot
 From: Thomas Vogels <tov@ece.cmu.edu>
@@ -241,6 +241,10 @@ Date: 30 Jan 2001 00:27:13 -0500
 Subject: variables in nls
 From: baron@cattell.psych.upenn.edu
 Date: Sun, 28 Jan 2001 15:07:27 +0100 (MET)
+* PR# 835 *
+Subject: factors in data.frames
+From: Jim Lindsey <james.lindsey@luc.ac.be>
+Date: Thu, 1 Feb 2001 10:55:59 +0100 (MET)
 * PR# 834 *
 Subject:  inconsistent behaviour between class() and inherits() 
 From: adrian@olsen.ch
@@ -249,19 +253,19 @@ Date: Thu, 01 Feb 2001 10:07:13 +0100
 Subject: Rconsole documentation
 From: david.firth@nuffield.oxford.ac.uk
 Date: Tue, 30 Jan 2001 15:52:49 +0100 (MET)
-* PR# 836 *
-Subject: configure bug in R-1.2.1 and earlier
-From: Lars Hecking <lhecking@nmrc.ie>
-Date: Thu, 1 Feb 2001 18:41:09 +0000
-* PR# 835 *
-Subject: factors in data.frames
-From: Jim Lindsey <james.lindsey@luc.ac.be>
-Date: Thu, 1 Feb 2001 10:55:59 +0100 (MET)
-* PR# 838 *
-Subject: Linux shared library problem
-From: daniel.egloff@dplanet.ch
-Date: Sun, 4 Feb 2001 22:37:31 +0100 (MET)
 * PR# 837 *
 Subject: screen doesn't handle redrawing properly
 From: Thomas Vogels <tov@ece.cmu.edu>
 Date: 01 Feb 2001 14:20:52 -0500
+* PR# 836 *
+Subject: configure bug in R-1.2.1 and earlier
+From: Lars Hecking <lhecking@nmrc.ie>
+Date: Thu, 1 Feb 2001 18:41:09 +0000
+* PR# 839 *
+Subject: clipped lines have wrong slope in log plot
+From: Jason Eisner <jason@cs.rochester.edu>
+Date: Sun, 4 Feb 2001 20:17:31 -0500 (EST)
+* PR# 838 *
+Subject: Linux shared library problem
+From: daniel.egloff@dplanet.ch
+Date: Sun, 4 Feb 2001 22:37:31 +0100 (MET)
