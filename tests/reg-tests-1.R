@@ -756,6 +756,9 @@ ls.str(envir = environment(Fn))
 detach("package:stepfun")
 ## failed in 1.5.1
 
+
+## keep at end, as package `methods' has persistent side effects
+
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
 detach("package:methods")
