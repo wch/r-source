@@ -13,14 +13,13 @@ data(\dots, list = character(0), package = .packages(),
 \arguments{
   \item{\dots}{a sequence of names or literal character strings.}
   \item{list}{a character vector.}
-  \item{package}{a character vector giving the packages to look
+  \item{package}{a character vector giving the package(s) to look
     in for data sets.  By default, all packages in the search path are
-    used, then the \file{data} subdirectory (if present) of the current
+    used, after the \file{data} subdirectory (if present) of the current
     working directory.}
   \item{lib.loc}{a character vector of directory names of \R libraries,
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
-    libraries currently known.  If the default is used, the loaded
-    packages are searched before the libraries.}
+    libraries currently known.}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
   \item{envir}{the \link{environment} where the data should be loaded.}
@@ -74,15 +73,20 @@ data(\dots, list = character(0), package = .packages(),
   earlier versions of R, an empty character vector was returned along
   with listing available data sets.
 
-  If \code{lib.loc} is not specified, the data sets are searched for
-  amongst those packages already loaded, followed by the \file{data}
-  directory (if any) of the current working directory and then packages
-  in the specified libraries.  If \code{lib.loc} \emph{is} specified,
-  packages are searched for in the specified libraries, even if they are
+  If \code{lib.loc = NULL} (the default), the data sets are
+  searched for in the \file{data} directory (if any) of the current
+  working directory followed by those packages currently loaded (matching
+  \code{package}).  If \code{package} is specified, the search continues
+  amongst the specified packages in the default library/ies (see
+  \code{\link{.libPaths}}). 
+
+  If \code{lib.loc} \emph{is} specified (and not \code{NULL}), packages
+  are searched for in the specified library/ies, even if they are
   already loaded from another library.
 
   To just look in the \file{data} directory of the current working
-  directory, set \code{package = NULL}.
+  directory, set \code{package = character(0)} (and \code{lib.loc =
+    NULL}, the default).
 }
 \note{
   The data files can be many small files.  On some file systems it is
