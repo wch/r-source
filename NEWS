@@ -99,6 +99,8 @@ BUG FIXES
 	dxxxx(log=TRUE).  For binomial fits the value was wrong for
 	models specified via proportions and weights (PR#796).
 
+	Avoid NaN values where n = 0 occurs.
+
     o   Using non-integer numbers of successes in a binomial glm
 	(as formerly in demo(lm.glm)) now gives a warning, as the
 	theory and in particular the AIC value is not applicable.

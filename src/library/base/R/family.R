@@ -252,7 +252,8 @@ binomial <- function (link = "logit")
     aic <- function(y, n, mu, wt, dev) {
 #	-2*sum((lchoose(n, n*y) + n*(y*log(mu) + (1-y)*log(1-mu)))*wt/n)
         m <- if(any(n > 1)) n else wt
-	-2*sum((wt/m)*dbinom(round(m*y), round(m), mu, log=TRUE))
+	-2*sum(ifelse(m > 0, (wt/m), 0)*
+               dbinom(round(m*y), round(m), mu, log=TRUE))
     }
     initialize <- expression({
 	if (NCOL(y) == 1) {
