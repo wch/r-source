@@ -840,8 +840,8 @@ AC_DEFUN(R_TCLTK,
 	    if test -n "${TK_CONFIG}"; then
 	      . ${TK_CONFIG}	# get TK_VERSION
 	      AC_CHECK_LIB(tk${TK_VERSION}, Tk_Init,
-	        [ TCLTK_LIBS="${TCLTK_LIBS} -ltk${TK_VERSION}  ${TK_XLIBSW}"
-		  have_tcltk=yes ], , [${TCLTK_LIBS} ${TK_XLIBSW}] )
+	        [ TCLTK_LIBS="${TCLTK_LIBS} -ltk${TK_VERSION}  ${TK_LIBS}"
+		  have_tcltk=yes ], , [${TCLTK_LIBS} ${TK_LIBS}] )
 	    fi
 	  fi
 	fi
