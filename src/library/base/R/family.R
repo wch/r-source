@@ -24,28 +24,50 @@ make.link <- function (link)
         return(eval(parse(text = link)))
     else if(!is.character(link) && !is.na(lambda <- as.numeric(link))) {
         linkfun <- function(mu) mu^lambda
-        linkinv <- function(eta) eta^(1/lambda)
-        mu.eta <- function(eta) (1/lambda) * eta^(1/lambda - 1)
+        linkinv <- function(eta)
+            pmax(.Machine$double.eps, eta^(1/lambda))
+        mu.eta <- function(eta)
+            pmax(.Machine$double.eps, (1/lambda) * eta^(1/lambda - 1))
         valideta <- function(eta) all(eta>0)
     }
     else
         switch(link,
                "logit" = {
                    linkfun <- function(mu) log(mu/(1 - mu))
-                   linkinv <- function(eta) exp(eta)/(1 + exp(eta))
-                   mu.eta <- function(eta) exp(eta)/(1 + exp(eta))^2
+                   linkinv <- function(eta) {
+                       thresh <- -log(.Machine$double.eps)
+                       eta <- pmin(thresh, pmax(eta, -thresh))
+                       exp(eta)/(1 + exp(eta))
+                   }
+                   mu.eta <- function(eta) {
+                       thresh <- -log(.Machine$double.eps)
+                       res <- rep(.Machine$double.eps, length(eta))
+                       res[abs(eta) < thresh] <-
+                           (exp(eta)/(1 + exp(eta))^2)[abs(eta) < thresh]
+                       res
+                   }
                    valideta <- function(eta) TRUE
                },
                "probit" = {
                    linkfun <- function(mu) qnorm(mu)
-                   linkinv <- pnorm
-                   mu.eta <- function(eta) 0.3989422 * exp(-0.5 * eta^2)
+                   linkinv <- function(eta) {
+                       thresh <- - qnorm(.Machine$double.eps)
+                       eta <- pmin(thresh, pmax(eta, -thresh))
+                       pnorm(eta)
+                   }
+                   mu.eta <- function(eta)
+                       pmax(dnorm(eta),.Machine$double.eps)
                    valideta <- function(eta) TRUE
                },
                "cloglog" = {
                    linkfun <- function(mu) log(-log(1 - mu))
-                   linkinv <- function(eta) 1 - exp(-exp(eta))
-                   mu.eta <- function(eta) exp(eta) * exp(-exp(eta))
+                   linkinv <- function(eta)
+                       pmax(.Machine$double.eps,
+                            pmin(1 - .Machine$double.eps, 1 - exp(-exp(eta))))
+                   mu.eta <- function(eta) {
+                       eta <- pmin(eta, 700)
+                       pmax(.Machine$double.eps, exp(eta) * exp(-exp(eta)))
+                   }
                    valideta <- function(eta) TRUE
                },
                "identity" = {
@@ -56,8 +78,10 @@ make.link <- function (link)
                },
                "log" = {
                    linkfun <- function(mu) log(mu)
-                   linkinv <- function(eta) exp(eta)
-                   mu.eta <- function(eta) exp(eta)
+                   linkinv <- function(eta)
+                       pmax(.Machine$double.eps, exp(eta))
+                   mu.eta <- function(eta)
+                       pmax(.Machine$double.eps, exp(eta))
                    valideta <- function(eta) TRUE
                },
                "sqrt" = {
@@ -183,7 +207,7 @@ binomial <- function (link = "logit")
 	2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) +
 		  (1 - y) * log(ifelse(y == 1, 1, (1 - y)/(1 - mu))))
     aic <- function(y, n, mu, wt, dev)
-	-2*sum((lchoose(n,n*y)+n*(y*log(mu)+(1-y)*log(1-mu)))*wt/n)
+	-2*sum((lchoose(n, n*y) + n*(y*log(mu) + (1-y)*log(1-mu)))*wt/n)
     initialize <- expression({
 	if (NCOL(y) == 1) {
 	    ## allow factors as responses

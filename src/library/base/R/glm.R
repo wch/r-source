@@ -154,22 +154,26 @@ glm.fit <-
 
     ##------------- THE Iteratively Reweighting L.S. iteration -----------
     for (iter in 1:control$maxit) {
+	good <- weights > 0
+        varmu <- variance(mu)[good]
+	if (any(is.na(varmu)))
+	    stop("NAs in V(mu)")
+	if (any(varmu == 0))
+	    stop("0s in V(mu)")
 	mu.eta.val <- mu.eta(eta)
-	if (any(ina <- is.na(mu.eta.val)))
-	    mu.eta.val[ina] <- mu.eta(mu)[ina]
-	if (any(is.na(mu.eta.val)))
+	if (any(is.na(mu.eta.val[good])))
 	    stop("NAs in d(mu)/d(eta)")
+        ## drop observations for which w will be zero
+	good <- (weights > 0) & (mu.eta.val != 0)
 
-	## calculate z and w using only values where mu.eta != 0
-	good <- (mu.eta.val != 0) & (weights > 0)
 	if (all(!good)) {
 	    conv <- FALSE
 	    warning(paste("No observations informative at iteration",
 			  iter))
 	    break
 	}
-	z <- (eta-offset)[good] + (y - mu)[good]/mu.eta.val[good]
-	w <- sqrt((weights * mu.eta.val^2)[good]/variance(mu)[good])
+	z <- (eta - offset)[good] + (y - mu)[good]/mu.eta.val[good]
+	w <- sqrt((weights[good] * mu.eta.val[good]^2)/variance(mu)[good])
 	ngoodobs <- as.integer(nobs - sum(!good))
 	ncols <- as.integer(1)
 	## call linpack code
@@ -191,36 +195,22 @@ glm.fit <-
 	## calculate updated values of eta and mu with the new coef:
 	start <- coef <- fit$coefficients
 	start[fit$pivot] <- coef
-	eta[good] <-
-	    if (nvars == 1) x[good] * start else as.vector(x[good, ] %*% start)
+	eta[good] <- drop(x[good, , drop=FALSE] %*% start)
 	mu <- linkinv(eta <- eta + offset)
-	if (family$family == "binomial") {
-	    if (any(mu == 1) || any(mu == 0))
-		warning("fitted probabilities of 0 or 1 occurred")
-	    mu0 <- 0.5 * control$epsilon/length(mu)
-	    mu[mu == 1] <- 1 - mu0
-	    mu[mu == 0] <- mu0
-	}
-	else if (family$family == "poisson") {
-	    if (any(mu == 0))
-		warning("fitted rates of 0 occured")
-	    mu[mu == 0] <- 0.5 * control$epsilon/length(mu)^2
-	}
 	dev <- sum(dev.resids(y, mu, weights))
 	if (control$trace)
 	    cat("Deviance =", dev, "Iterations -", iter, "\n")
 	## check for divergence
 	boundary <- FALSE
-	if (any(is.na(dev)) || any(is.na(coef))) {
+	if (is.na(dev) || any(is.na(coef))) {
 	    warning("Step size truncated due to divergence")
 	    ii <- 1
-	    while ((any(is.na(dev)) || any(is.na(start)))) {
+	    while ((is.na(dev) || any(is.na(start)))) {
 		if (ii > control$maxit)
 		    stop("inner loop 1; can't correct step size")
 		ii <- ii+1
 		start <- (start + coefold)/2
-		eta[good] <-
-		    if (nvars == 1) x[good] * start else as.vector(x[good, ] %*% start)
+		eta[good] <- drop(x[good, , drop=FALSE] %*% start)
 		mu <- linkinv(eta <- eta + offset)
 		dev <- sum(dev.resids(y, mu, weights))
 	    }
@@ -238,8 +228,7 @@ glm.fit <-
 		    stop("inner loop 2; can't correct step size")
 		ii <- ii + 1
 		start <- (start + coefold)/2
-		eta[good] <-
-		    if (nvars == 1) x[good] * start else as.vector(x[good, ] %*% start)
+		eta[good] <- drop(x[good, , drop=FALSE] %*% start)
 		mu <- linkinv(eta <- eta + offset)
 	    }
 	    boundary <- TRUE
@@ -260,6 +249,15 @@ glm.fit <-
 
     if (!conv) warning("Algorithm did not converge")
     if (boundary) warning("Algorithm stopped at boundary value")
+    eps <- 10*.Machine$double.eps
+    if (family$family == "binomial") {
+        if (any(mu > 1 - eps) || any(mu < eps))
+            warning("fitted probabilities numerically 0 or 1 occurred")
+    }
+    if (family$family == "poisson") {
+        if (any(mu < eps))
+            warning("fitted rates numerically 0 occurred")
+    }
     ## If X matrix was not full rank then columns were pivoted,
     ## hence we need to re-label the names ...
     ## Original code changed as suggested by BDR---give NA rather
@@ -276,7 +274,7 @@ glm.fit <-
     nr <- min(sum(good), nvars)
     if (nr < nvars) {
 	Rmat <- diag(nvars)
-	Rmat[1:nr,1:nvars] <- fit$qr[1:nr,1:nvars]
+	Rmat[1:nr, 1:nvars] <- fit$qr[1:nr, 1:nvars]
     }
     else Rmat <- fit$qr[1:nvars, 1:nvars]
     Rmat <- as.matrix(Rmat)
@@ -295,7 +293,7 @@ glm.fit <-
     names(y) <- ynames
     names(fit$effects) <-
 	c(xxnames[seq(fit$rank)], rep("", sum(good) - fit$rank))
-    ## calculate null deviance
+    ## calculate null deviance -- corrected in glm() if offset and intercept
     wtdmu <-
 	if (intercept) sum(weights * y)/sum(weights) else linkinv(offset)
     nulldev <- sum(dev.resids(y, wtdmu, weights))
