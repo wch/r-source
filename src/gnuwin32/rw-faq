@@ -230,7 +230,7 @@ You can find this from R code by `Sys.getenv("R_USER")'.
 
 How did you specify it?  Backslashes have to be doubled in R character
 strings, so for example one needs
-`"d:\\rw1031\\library\\xgobi\\scripts\\xgobi.bat"'.  Make life easier
+`"d:\\rw1040\\library\\xgobi\\scripts\\xgobi.bat"'.  Make life easier
 for yourself by using forward slashes as path separators: they do work
 under Windows.
 
