@@ -32,14 +32,18 @@ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 ACLOCAL_DEPENDENCIES = \
 	configure.ac \
 	acinclude.m4
+## <FIXME>
+## This used to contain m4/am-fixes.m4 as well which was needed to set
+## up CDPATH properly.  As the current Automake CVS relies on Autoconf
+## to do this, apparently by requiring 2.50 or better, we do the same.
 ACINCLUDE_DEPENDENCIES = \
 	m4/R.m4 \
-	m4/am-fixes.m4 \
 	m4/gnome-gnorba-check.m4 \
 	m4/gnome-orbit-check.m4 \
 	m4/gnome.m4 \
 	m4/libglade.m4 \
 	m4/libtool.m4
+## </FIXME>
 CONFIGURE_DEPENDENCIES = $(srcdir)/VERSION
 config.status: $(srcdir)/configure
 	@$(SHELL) ./config.status --recheck
