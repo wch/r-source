@@ -44,6 +44,10 @@ WinAnsi <- as.integer(c(0:126, 32, 32, 32, 32, 32, 32, 32, 32, 32,
 ## non standard settings for the Aqua GUI of the Darwin port
 if(.Platform$GUI == "AQUA") {
 
+    ## this is set to let RAqua use both X11 device and
+    ## X11/TclTk
+    Sys.putenv("DISPLAY"=":0")
+
     ## sets initial current working directory to user's root
     ## as RAqua is installed at system level
 

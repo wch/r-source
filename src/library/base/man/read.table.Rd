@@ -151,7 +151,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   of input (or the whole file if it has less than five lines), or from
   the length of \code{col.names} if it is specified and
   is longer.  This could conceivably be wrong if \code{fill} or
-  \code{blank.lines.skip} are true.
+  \code{blank.lines.skip} are true, so specify \code{col.names} if necessary.
   
   \code{read.csv} and \code{read.csv2} are identical to
   \code{read.table} except for the defaults.  They are intended for
@@ -166,6 +166,9 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   complete comment lines are allowed provided \code{blank.lines.skip = TRUE}
   However, comment lines prior to the header must have
   the comment character in the first non-blank column.
+
+  Fields with embedded newlines are not supported (even if quoted or
+  commented).
 }
 \note{
   The columns referred to in \code{as.is} and \code{colClasses} include
