@@ -5,27 +5,39 @@ NEW FEATURES
     o	predict.lm() changed towards S-plus compatibility. Intervals are
 	still available via interval= argument.
 
-    o	polygon() now handles NAs 
+    o	zapsmall() function.
 
-    o   options(show.signif.stars = TRUE).  If FALSE,
+    o	polygon() now handles NAs
+
+    o	options(show.signif.stars = TRUE).  If FALSE,
 	summary.lm and similar functions do *not* print significance stars
 	anymore.
 
     o	poly() for [g]lm modelling.
 
-    o   ................ tons of other additions from BDR.................
+    o	aov()	for Analysis Of Variance [anova].
+
+    o	alias() for displaying ``aliased'' factor levels in (>=2)way anova.
+
+    o	biplot(), the well known ``enhanced plot of PC (principal components)''.
+
+    o	................ several other additions from BDR.................
 	..................................................................
 	..... These should get help pages !! ....
 
-    o   new  src/library/profile/Common.R   for  OS-independent intialization.
+    o	new  src/library/profile/Common.R   for	 OS-independent intialization.
 
 BUG FIXES
 
+    o	format() doesn't drop names anymore.
+
+    o	format.pval() works with NAs.
+
     o	print.[summary.][g]lm() functions print numbers better formatted.
 
-    o   legend() now also works properly in  log coordinates.
+    o	legend() now also works properly in  log coordinates.
 
-    o   backsolve() now working;  bakslv.c not depending on
+    o	backsolve() now working;  bakslv.c not depending on
 	Fortran_underscores.
 
     o   Tick marks acting up on log axes in postscript (fix from Martyn Plummer)
@@ -34,6 +46,8 @@ BUG FIXES
         Sd2Rd translation). \R was not understood for nroff
 	conversions, longer dashes (-- and --- in latex syntax) are
 	now converted properly.
+
+    o   prompt.default() now carries "\details{}".
 
     o   R [ SHLIB | COMPILE ] were broken on some Solaris systems
         due to use of bash syntax. R [ INSTALL | COMPILE | SHLIB ]
