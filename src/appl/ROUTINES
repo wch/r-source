@@ -1,7 +1,7 @@
 C_FUNCTION(approx)
 F77_SUBROUTINE(ch2inv)
 F77_SUBROUTINE(chol)
-F77_SUBROUTINE(bkslv)
+C_FUNCTION(bakslv)
 C_FUNCTION(bincode)
 C_FUNCTION(bincode2)
 C_FUNCTION(bincount)

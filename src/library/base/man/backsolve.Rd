@@ -24,7 +24,12 @@ Dongarra, J. J., J. R. Bunch, C. B. Moler and G. W. Stewart (1978).
 \code{\link{solve}}.
 }
 \examples{
-# no examples yet
+## upper triangular matrix 'r':
+r <- rbind(c(1,2,3),
+           c(0,1,1),
+           c(0,0,2))
+( y <- backsolve(r, x <- c(8,4,2)) ) # -1 3 1
+r \%*\% y # == x = (8,4,2)
 }
 \keyword{algebra}
 \keyword{array}
