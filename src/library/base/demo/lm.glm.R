@@ -108,8 +108,8 @@ x <- round(n*p)
 y <- cbind(x,n-x)
 f <- rep(c(40,150,350),2)
 (g <- gl(2,3))
-summary(glm(y~g*f, family=binomial(link="logit")))
-summary(glm(y~g+f, family=binomial(link="logit")))
+summary(glm(y ~ g*f, family=binomial(link="logit")))
+summary(glm(y ~ g + f, family=binomial(link="logit")))
 ## The "final model"
 summary(glm.p84 <- glm(y~g,  family=binomial(link="logit")))
 op <- par(mfrow = c(2,2), oma = c(0,0,1,0))
@@ -125,17 +125,17 @@ summary(z <- glm(counts ~ type + site, family=poisson()))
 
 ## Randomized Controlled Trial (Page 93)
 counts <- c(18,17,15, 20,10,20, 25,13,12)
-outcome   <- gl(3,1, length(counts))
-treatment <- gl(3,3)
-summary(z <- glm(counts ~ outcome + treatment,family=poisson()))
+outcome   <- gl(3, 1, length(counts))
+treatment <- gl(3, 3)
+summary(z <- glm(counts ~ outcome + treatment, family=poisson()))
 
 ## Peptic Ulcers and Blood Groups
-counts <- c(579,4219,911,4578,246,3775,361,4532,291,5261,396,6598)
-group <- gl(2,1, 12, labels=c("cases","controls"))
-blood <- gl(2,2, 12, labels=c("A","O"))
-city  <- gl(3,4, 12, labels=c("London","Manchester","Newcastle"))
-cbind(group,blood,city,counts) # same as  codes(*),codes(*),..
+counts <- c(579, 4219, 911, 4578, 246, 3775, 361, 4532, 291, 5261, 396, 6598)
+group <- gl(2, 1, 12, labels=c("cases","controls"))
+blood <- gl(2, 2, 12, labels=c("A","O"))
+city  <- gl(3, 4, 12, labels=c("London","Manchester","Newcastle"))
+cbind(group, blood, city, counts) # gives internal codes for the factors
 
 summary(z1 <- glm(counts ~ group*(city + blood), family=poisson()))
 summary(z2 <- glm(counts ~ group*city + blood, family=poisson()), corr = TRUE)
-anova(z2,z1, test = "Chisq")
+anova(z2, z1, test = "Chisq")

@@ -43,8 +43,8 @@ model1 <- glm(cbind(ncases, ncontrols) ~ agegp + tobgp * alcgp,
               data = esoph, family = binomial())
 anova(model1)
 ## Try a linear effect of alcohol and tobacco
-model2 <- glm(cbind(ncases, ncontrols) ~ agegp + codes(tobgp)
-                                         + codes(alcgp),
+model2 <- glm(cbind(ncases, ncontrols) ~ agegp + unclass(tobgp)
+                                         + unclass(alcgp),
               data = esoph, family = binomial())
 summary(model2)
 ## Re-arrange data for a mosaic plot

@@ -76,7 +76,7 @@ pairs.default(x, labels = colnames(x), panel = points, \dots,
 \examples{
 data(iris)
 pairs(iris[1:4], main = "Anderson's Iris Data -- 3 species", 
-      pch = 21, bg = c("red", "green3", "blue")[codes(iris$Species)])
+      pch = 21, bg = c("red", "green3", "blue")[unclass(iris$Species)])
 
 data(USJudgeRatings)
 pairs(USJudgeRatings)

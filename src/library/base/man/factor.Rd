@@ -122,8 +122,8 @@ as.ordered(x)
 \examples{
 ff <- factor(substring("statistics", 1:10, 1:10), levels=letters)
 ff
-codes(ff)
-factor(ff)# drops the levels that do not occur
+as.integer(ff) # the internal codes
+factor(ff) # drops the levels that do not occur
 factor(factor(letters[7:10])[2:3]) # exercise indexing and reduction
 factor(letters[1:20], label="letter")
 

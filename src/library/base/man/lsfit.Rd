@@ -51,7 +51,7 @@ the model (stated below).}
 \examples{
 \testonly{example("lm", echo = FALSE)}
 ##-- Using the same data as the lm(.) example:
-lsD9 <- lsfit(x = codes(gl(2,10)), y = weight)
+lsD9 <- lsfit(x = unclass(gl(2,10)), y = weight)
 ls.print(lsD9)
 }
 \keyword{regression}
