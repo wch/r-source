@@ -297,7 +297,7 @@ distclean veryclean: clean
 	$(RM) ../library/*/src/*.o ../library/*/src/*.a
 	$(RM) ../library/*/src/*.dll
 	$(RM) -r ../library/*/check
-	$(RM) ../../doc/html/search/index.txt \
+	$(RM) ../../doc/html/search/index.txt ../../doc/html/index.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
 	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html
 	$(RM) ../../etc/Rconsole ../../etc/Rdevga ../../etc/Rprofile \
