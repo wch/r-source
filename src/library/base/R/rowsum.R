@@ -14,7 +14,7 @@ rowsum.default <-function(x,group,reorder=TRUE,...){
     rval<-.Call("Rrowsum_matrix",x,NCOL(x),group,ugroup,PACKAGE="base")
     
     dimnames(rval)<-list(as.character(ugroup),dimnames(x)[[2]])
-    drop(rval)
+    rval
 }
 
 rowsum.data.frame<-function(x,group,reorder=TRUE,...){

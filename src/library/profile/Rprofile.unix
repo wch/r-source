@@ -57,7 +57,7 @@ if( !file.exists("~/.R/library") )
  
 # still undocumented, will be moved to base soon 
 "browse.pkgs" <-
-function(where=c("CRAN","BIOC"), type=c("binary","source")){
+function(where=c("CRAN","BIOC"), type=c("binary","source"), global=FALSE){
         where<-match.arg(where)
         type<-match.arg(type)
         installed.packages() -> x
@@ -86,13 +86,17 @@ function(where=c("CRAN","BIOC"), type=c("binary","source")){
             ui.pkgs <- ui.pkgs[-idx2]
             cat( paste(ui.packages,collapse="")," already up to date, not reinstalled\n")
           }
+        if (global)
+          locn <- file.path(R.home(),"library")
+        else
+          locn <- .libPaths()[1]
         if(length(ui.pkgs) > 0)
-          switch(type, source= install.packages(ui.pkgs, CRAN=getOption(where), lib=.libPaths()[[1]]),
-                 binary=cat("We don't have binary packages yet. Rome wasn't burnt in a day, you know.\n"))
+          switch(type, source= install.packages(ui.pkgs, CRAN=getOption(where), lib=.libPaths()[1]),
+                 binary=cat("We don't have binary packages yet.\n Rome wasn't burnt in a day, you know.\n"))
 }
 
 "browse.update.pkgs" <-
-function(where=c("CRAN", "BIOC"), type=c("binary", "source")){
+function(where=c("CRAN", "BIOC"), type=c("binary", "source"), in.place=TRUE){
 
         where<-match.arg(where)
         type<-match.arg(type)
@@ -100,7 +104,11 @@ function(where=c("CRAN", "BIOC"), type=c("binary", "source")){
         installed.packages() -> x
         x[,1] -> i.pkgs
         x[,3] -> i.vers
-        CRAN.packages(getOption(where)) -> y
+        x[,2] -> i.locn
+        if (type=="binary")
+          CRAN.binaries(getOption(where))->y
+        else  
+          CRAN.packages(getOption(where)) -> y
         y[,1] -> c.pkgs
         y[,2] -> c.vers
 		
@@ -124,10 +132,17 @@ function(where=c("CRAN", "BIOC"), type=c("binary", "source")){
         idx2 <- which(c.vers[inst.idx] == i.vers[inst.idx])
         if(length(idx2)>0) 
             ui.pkgs <- ui.pkgs[-idx2]
-        if(length(ui.pkgs) > 0)
-          switch(type, source= install.packages(ui.pkgs, CRAN=getOption(where), lib=.libPaths()[[1]]),
-                 binary=cat("We don't have binary packages yet. Rome wasn't burnt in a day, you know.\n"))
-}
+        if(length(ui.pkgs) > 0){
+          if (in.place)
+            locn <- i.locn[inst.idx][-idx2]
+          else
+            locn <- .libPaths()[1]
+          if (type=="source"){
+            mapply("install.packages", CRAN=getOption(where), lib=locn, pkgs=ui.pkgs)
+          } else 
+          cat("We don't have binary packages yet. Rome wasn't burnt in a day, you know.\n")
+        }
+      }
 
 
 install.from.file <- function(pkg=file.choose()){
