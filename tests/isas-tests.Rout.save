@@ -1,6 +1,6 @@
 
 R : Copyright 1999, The R Development Core Team
-Version 0.90.0 Patched (November 25, 1999)
+Version 0.90.0 Patched (November 26, 1999)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -48,7 +48,7 @@ Error in as.function.default(l, envir) : argument must have length at least 1
 > is.matrix(as.matrix( x ))
 [1] TRUE
 > is.name(as.name( x ))
-Error in as.name(x) : Invalid data of mode "H" (too short)
+Error in as.name(x) : Invalid data of mode "integer" (too short)
 > is.null(as.null( x ))
 [1] TRUE
 > is.numeric(as.numeric( x ))
@@ -109,7 +109,7 @@ IS: [1] TRUE
 [1] TRUE
 > if(is.name(x)) { cat('IS: ');all.equal(x, as.name( x ), tol=0)
 + } else   !isall.equal(x, as.name( x ))
-Error in as.name(x) : Invalid data of mode "H" (too short)
+Error in as.name(x) : Invalid data of mode "integer" (too short)
 > if(is.null(x)) { cat('IS: ');all.equal(x, as.null( x ), tol=0)
 + } else   !isall.equal(x, as.null( x ))
 [1] TRUE
@@ -262,7 +262,7 @@ Error in 1:p : NA/NaN argument
 > f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
 Error in NextMethod(generic, object, ...) : object not specified
 > f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
-Error in as.name(x) : Invalid data of mode "H" (too short)
+Error in as.name(x) : Invalid data of mode "integer" (too short)
 > f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
 [1] TRUE
 > f <- as.null.default( x );  all.equal(f, as.null.default( f ), tol=0)
