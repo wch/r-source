@@ -26,10 +26,10 @@
  *  provides the functionality of the "par" function in S.
  *
  *  "The horror, the horror ..."
- *      Marlon Brando in Apocalypse Now.
+ *	Marlon Brando in Apocalypse Now.
  *
  *  Main functions:
- *      do_par(.)	and
+ *	do_par(.)	and
  *	do_layout(.)	implement R's  par(.), layout()rely on
  *
  *	Specify(.)	[ par(what = value) ]
@@ -39,15 +39,12 @@
 
 #include "Defn.h"
 #include "Mathlib.h"
-#include "Graphics.h"  /* ../include/Graphics.h : "GPar" structure + COMMENTS */
+#include "Graphics.h" /* "GPar" structure + COMMENTS */
 
 
 /* par(.)'s call */
 
 static SEXP gcall;
-
-SEXP LTYget(int);
-char *col2name(unsigned int);
 
 
 static void par_error(char *what)
@@ -109,18 +106,33 @@ static void BoundsCheck(double x, double a, double b, char *s)
 /* par(...)) is modified, must call GReset() to update the layout and */
 /* the transformations between coordinate systems */
 
-/* If you ADD a NEW par then do NOT forget to update the code in */
-/* ../library/base/R/par.R */
+/* If you ADD a NEW par, then do NOT forget to update the code in
+ *			 ../library/base/R/par.R
 
+ * Parameters in Specify(),
+ * which can*not* be specified in high-level functions,
+ * i.e., by Specify2() [below]:
+ *	this list is in \details{.} of ../library/base/man/par.Rd
+ *	------------------------
+ *	"ask",
+ *	"fig", "fin",
+ *	"mai", "mar", "mex",
+ *	"mfrow", "mfcol", "mfg",
+ *	"new",
+ *	"oma", "omd", "omi",
+ *	"pin", "plt", "ps", "pty"
+ *	"usr",
+ *	"xlog", "ylog"
+ */
 static int Specify(char *what, SEXP value, DevDesc *dd)
 {
     double x;
-    int ix=0;
+    int ix = 0;
 
     if (streql(what, "adj")) {
 	lengthCheck(what, value, 1);	x = asReal(value);
 	if (0.0 <= x && x <= 1.0)
-	    dd->dp.adj = dd->gp.adj = x;
+	  dd->dp.adj = dd->gp.adj = x;
 	else par_error(what);
     }
     else if (streql(what, "ann")) {
@@ -140,11 +152,21 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	else par_error(what);
     }
     else if (streql(what, "bty")) {
-	if (!isString(value) || LENGTH(value) < 1)
+	lengthCheck(what, value, 1);
+	if (!isString(value))
 	    par_error(what);
 	ix = CHAR(STRING(value)[0])[0];
-	if (ix == 'o' || ix == 'l' || ix == '7' || ix == 'c' || ix == 'n') {
+	switch (ix) {
+	case 'o': case 'O':
+	case 'l': case 'L':
+	case '7':
+	case 'c': case 'C': case '[':
+	case ']':
+	case 'n':
 	    dd->dp.bty = dd->gp.bty = ix;
+	    break;
+	default:
+	    par_error(what);
 	}
     }
     else if (streql(what, "cex")) {
@@ -626,7 +648,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	else par_error(what);
     }
     /* NOTE: tck and tcl must be treated in parallel. */
-    /* If one is NA, the other must be non NA.  If tcl */
+    /* If one is NA, the other must be non NA.	If tcl */
     /* is NA then setting tck to NA will reset tck to its */
     /* initial default value.  See also graphics.c. */
     else if (streql(what, "tck")) {
@@ -773,7 +795,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	if (!isString(value) || LENGTH(value) < 1)
 	    par_error(what);
 	ix = CHAR(STRING(value)[0])[0];
-	if (ix == 's' || ix == 'l' || ix == 'n')
+	if (ix == 's' || ix == 'l' || ix == 't' || ix == 'n')
 	    dd->dp.yaxt = dd->gp.yaxt = ix;
 	else par_error(what);
     }
@@ -788,8 +810,11 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 }
 
 
-/* Specify2 -- parameters as arguments from higher-level graphics functions */
-
+/* Specify2 -- parameters as arguments from higher-level graphics functions
+ * --------
+ * Many things in PARALLEL to Specify(.)
+ * for par()s not valid here, see comment there.
+ */
 void Specify2(char *what, SEXP value, DevDesc *dd)
 {
     double x;
@@ -812,11 +837,21 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	else par_error(what);
     }
     else if (streql(what, "bty")) {
-	if (!isString(value) || LENGTH(value) < 1)
+	lengthCheck(what, value, 1);
+	if (!isString(value))
 	    par_error(what);
 	ix = CHAR(STRING(value)[0])[0];
-	if (ix == 'o' || ix == 'l' || ix == '7' || ix == 'c' || ix == 'n') {
+	switch (ix) {
+	case 'o': case 'O':
+	case 'l': case 'L':
+	case '7':
+	case 'c': case 'C': case '[':
+	case ']':
+	case 'n':
 	    dd->gp.bty = ix;
+	    break;
+	default:
+	    par_error(what);
 	}
     }
     else if (streql(what, "cex")) {
@@ -927,6 +962,13 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	lengthCheck(what, value, 1);	ix = asInteger(value);
 	if (ix != NA_INTEGER && ix > 0)
 	    dd->gp.fontaxis = ix;
+	else par_error(what);
+    }
+    else if(streql(what, "gamma")) {
+	lengthCheck(what, value, 1);
+	x = asReal(value);
+	if (FINITE(x) && x > 0)
+	    dd->gp.gamma = x;
 	else par_error(what);
     }
     else if (streql(what, "lab")) {
@@ -1540,20 +1582,20 @@ SEXP do_par(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /*
  *  Layout was written by Paul Murrell during 1997-1998 as a partial
- *  implementation of ideas in his PhD thesis.  The orginal was
+ *  implementation of ideas in his PhD thesis.	The orginal was
  *  written in common lisp provides rather more general capabilities.
  *
  *  layout(
- *      num.rows,
- *      num.cols,
- *      mat,
- *      num.figures,
- *      col.widths,
- *      row.heights,
- *      cm.widths,
- *      cm.heights,
- *      respect,
- *      respect.mat
+ *	num.rows,
+ *	num.cols,
+ *	mat,
+ *	num.figures,
+ *	col.widths,
+ *	row.heights,
+ *	cm.widths,
+ *	cm.heights,
+ *	respect,
+ *	respect.mat
  *  )
  */
 
@@ -1654,7 +1696,3 @@ SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
 	recordGraphicOperation(op, originalArgs, dd);
     return R_NilValue;
 }
-
-
-
-
