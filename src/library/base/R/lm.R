@@ -1,12 +1,16 @@
 lm <-
-function (formula, data = list(), subset, weights, na.action,
-	method = "qr", model = TRUE, singular.ok = TRUE, ...)
+function(formula, data = list(), subset, weights, na.action,
+         method = "qr", model = TRUE, x = FALSE, y = FALSE,
+         qr = TRUE, singular.ok = TRUE, ...)
 {
-	mt <- terms(formula, data = data)
+        ret.x <- x
+        ret.y <- y
+        mt <- terms(formula, data = data)
 	mf <- match.call()
 	mf$singular.ok <- NULL
 	mf$model <- NULL
 	mf$method <- NULL
+        mf$x <- mf$y <- mf$qr <- NULL
 	mf[[1]] <- as.name("model.frame")
 	mf <- eval(mf, sys.frame(sys.parent()))
 	if (method == "model.frame")
@@ -24,6 +28,7 @@ function (formula, data = list(), subset, weights, na.action,
 	y <- model.response(mf, "numeric")
 	w <- model.weights(mf)
 	if (is.empty.model(mt)) {
+                x <- NULL
 		z <- list(coefficients = numeric(0), residuals = y,
 			fitted.values = 0 * y, weights = w, rank = 0,
 			df.residual = length(y))
@@ -42,6 +47,10 @@ function (formula, data = list(), subset, weights, na.action,
 	z$terms <- mt
 	if (model)
 		z$model <- mf
+        if (ret.x)
+          z$x <- x
+        if (ret.y)
+          z$y <- y
 	z
 }
 
