@@ -1,5 +1,20 @@
+## use a wildcard as the set of functions is OS-dependent. 
 exportPattern("^[^\\.]")
 export(.helpForCall, .tryHelp)
 
-# S3method(str, data.frame)
+S3method("[", getAnywhere)
+S3method(edit, data.frame)
+S3method(edit, default)
+S3method(edit, matrix)
+S3method(print, getAnywhere)
+S3method(print, hsearch)
+S3method(print, MethodsFunction)
+S3method(print, packageStatus)
+S3method(print, socket)
+S3method(prompt, data.frame)
+S3method(prompt, default)
+S3method(str, data.frame)
 S3method(str, default)
+S3method(summary, packageStatus)
+S3method(upgrade, packageStatus)
+## can't register update as that is in stats and would create a cycle.
