@@ -480,6 +480,8 @@ reconcilePropertiesAndPrototype <-
               slot(realP, pnames[[i]], FALSE) <- elNamed(prototype, pnames[i])
           prototype <- realP
       }
+      if(is.null(prototype))
+          prototype <- StandardPrototype
       ## pnames will be the names explicitly defined in the prototype
       pnames <- allNames(attributes(prototype))
       ## now set the slots not yet in the prototype object.
