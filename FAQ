@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-24, 2003-12-04
+Version 1.8-26, 2003-12-10
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1871,6 +1871,9 @@ distributions of R.)
      Lattice graphics, an implementation of Trellis Graphics functions.
      _Recommended_.
 
+*lazy*
+     Lazy learning for local regression.
+
 *ldDesign*
      Design of experiments for detection of linkage disequilibrium,
 
@@ -2115,6 +2118,10 @@ distributions of R.)
      Functions intended to facilitate certain basic analyses of DNA array
      data, especially with regard to comparing expression levels between two
      types of tissue.
+
+*pheno*
+     Some easy-to-use functions for time series analyses of (plant-)
+     phenological data sets.
 
 *phyloarray*
      Software to process data from phylogenetic or identification
