@@ -1568,6 +1568,7 @@ checkFF <-
 function(package, dir, file, lib.loc = NULL,
          verbose = getOption("verbose"))
 {
+    hasNamespace <- FALSE
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
@@ -1580,9 +1581,10 @@ function(package, dir, file, lib.loc = NULL,
                        "does not contain R code"))
         if(basename(dir) != "base")
             .load_package_quietly(package, lib.loc)
-        code_env <- if(packageHasNamespace(package, dirname(dir)))
+        code_env <- if(packageHasNamespace(package, dirname(dir))) {
+            hasNamespace <- TRUE
             asNamespace(package)
-        else
+        } else
             .package_env(package)
     }
     else if(!missing(dir)) {
@@ -1633,7 +1635,7 @@ function(package, dir, file, lib.loc = NULL,
             ## BDR 2002-11-28
             ## </NOTE>
             if(as.character(e[[1]])[1] %in% FF_funs) {
-                parg <- if(is.null(e[["PACKAGE"]])) {
+                parg <- if(is.null(e[["PACKAGE"]]) && !hasNamespace) {
                     bad_exprs <<- c(bad_exprs, e)
                     "MISSING"
                 }
