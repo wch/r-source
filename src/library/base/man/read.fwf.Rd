@@ -27,17 +27,15 @@ read.fwf(file, widths, sep=" ", as.is = FALSE,
   which is called internally.
 }
 \note{This function currently relies on the \code{Perl} script
-  \file{\$RHOME/cmd/fwf2table}.
-  Therefore, it will probably only work in a U*ix environment with
+  \file{\$RHOME/bin/fwf2table}.
+  Therefore, it will only work in an environment with
   \code{Perl} installed.
 }
 \author{Kurt Hornik \email{hornik@ci.tuwien.ac.at}}
 \seealso{\code{\link{scan}} and \code{\link{read.table}}.}
 \examples{
 ff <- tempfile()
-##- May only work on Unix: --
-system(paste("echo '123456' >", ff))
-system(paste("echo '987654' >>", ff))
+cat(file=ff, "123456", "987654", sep="\n")
 read.fwf(ff, width=c(1,2,3))	#> 1 23 456 \\ 9 87 654
 unlink(ff)
 }
