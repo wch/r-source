@@ -15,7 +15,7 @@ rtest-CFLAGS=-I.. -I../../include -DWin32
 Rtest.exe: rtest.o R.dll
 	$(CC) -o $@ $^ -L.. -lR
 
-rtest.c: ../../include/Version.h
+rtest.c: ../../include/Rversion.h
 
 R.dll: ../R.dll
 	$(CP) -p $^ $@

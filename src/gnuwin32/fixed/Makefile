@@ -22,14 +22,14 @@ SED2='s/C_FUNCTION(\(.*\))/int \1();/'
 SED3='s/F77_SUBROUTINE(\(.*\))/	{ "\1_",	\1_},/'
 SED4='s/C_FUNCTION(\(.*\))/{ "\1",	\1 },/'
 
-fixh: h/platform.h.in ../../../date-stamp ../../appl/ROUTINES
-	$(CP) -p ./h/platform.h.in ../../include/Platform.h
-	cp ../../include/Version.h.in ../../include/Version.h
+fixh: h/Rconfig.h ../../../date-stamp ../../appl/ROUTINES
+	$(CP) -p ./h/Rconfig.h ../../include/Rconfig.h
+	cp ../../include/Rversion.h.in ../../include/Rversion.h
 	gawk -F/ '{ \
 	    printf "#define R_DAY\t\"%s\"\n",   $$3; \
 	    printf "#define R_MONTH\t\"%s\"\n", $$2; \
 	    printf "#define R_YEAR\t\"%s\"\n",  $$1 }' \
-	  ../../../date-stamp >> ../../include/Version.h
+	  ../../../date-stamp >> ../../include/Rversion.h
 	$(SED) -e $(SED0) -e $(SED01) -e $(SED1) -e $(SED2) ../../appl/ROUTINES > ../../include/FFDecl.h
 	$(SED) -e $(SED0) -e $(SED01) -e $(SED3) -e $(SED4) ../../appl/ROUTINES > ../../include/FFTab.h
 	$(ECHO) done > fixh
