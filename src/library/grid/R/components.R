@@ -37,7 +37,6 @@ drawDetails.xaxis <- function(x, recording=TRUE) {
     grid.draw(make.xaxis.ticks(at, x$main), recording=FALSE)
     if (x$label)
       grid.draw(make.xaxis.labels(at, x$main), recording=FALSE)
-    return(x)
   }
 }
 
@@ -49,7 +48,7 @@ editDetails.xaxis <- function(x, specs) {
     # NOTE that grid.edit has already set x$at to the new value
     # We might set at to NULL to get ticks recalculated at redraw
     if (is.null(x$at)) {
-      x <- removeGrob(x, "main", warn=FALSE)
+      x <- removeGrob(x, "major", warn=FALSE)
       x <- removeGrob(x, "ticks", warn=FALSE)
       x <- removeGrob(x, "labels", warn=FALSE)
     } else {
@@ -147,7 +146,6 @@ drawDetails.yaxis <- function(x, recording=TRUE) {
     grid.draw(make.yaxis.ticks(at, x$main), recording=FALSE)
     if (x$label)
       grid.draw(make.yaxis.labels(at, x$main), recording=FALSE)
-    return(x)
   }
 }
 
@@ -155,7 +153,7 @@ editDetails.yaxis <- function(x, specs) {
   slot.names <- names(specs)
   if (match("at", slot.names, nomatch=0)) {
     if (is.null(x$at)) {
-      x <- removeGrob(x, "main", warn=FALSE)
+      x <- removeGrob(x, "major", warn=FALSE)
       x <- removeGrob(x, "ticks", warn=FALSE)
       x <- removeGrob(x, "labels", warn=FALSE)
     } else {

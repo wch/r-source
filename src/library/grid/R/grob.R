@@ -1676,9 +1676,7 @@ grid.draw.grob <- function(x, recording=TRUE) {
   tempgpar <- grid.Call("L_getGPar")
   preDraw(x)
   # Do any class-specific drawing
-  temp <- drawDetails(x, recording)
-  if (is.grob(temp))
-    x <- temp
+  drawDetails(x, recording)
   postDraw(x)
   # Do not call set.gpar because set.gpar accumulates cex
   grid.Call.graphics("L_setGPar", tempgpar)
