@@ -16,8 +16,8 @@
 \alias{.TkRoot}
 \description{
   These functions and variables provide the basic glue between \R and the
-  Tcl interpreter and Tk GUI toolkit. A semi-OOP framework allows Tk
-  windows to be represented via \R objects. Tcl variables can be accessed
+  Tcl interpreter and Tk GUI toolkit. Tk
+  windows may be represented via \R objects. Tcl variables can be accessed
   via the pseudo-list \code{tclvar}.
 }
 \usage{
