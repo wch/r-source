@@ -1,16 +1,17 @@
-.PostScript.Options <- list(paper="default",
-			    horizontal = TRUE,
-			    width = 0,
-			    height = 0,
-			    family = "Helvetica",
-			    pointsize = 12,
-			    bg = "white",
-			    fg = "black",
-			    onefile = TRUE,
-			    print.it = FALSE,
-			    append = FALSE,
-                            pagecentre = TRUE,
-                            command = "default")
+.PostScript.Options <-
+    list(paper	= "default",
+	 horizontal = TRUE,
+	 width	= 0,
+	 height = 0,
+	 family = "Helvetica",
+	 pointsize  = 12,
+	 bg	= "white",
+	 fg	= "black",
+	 onefile    = TRUE,
+	 print.it   = FALSE,
+	 append	    = FALSE,
+	 pagecentre = TRUE,
+	 command    = "default")
 
 check.options <-
     function(new, name.opt, reset = FALSE, assign.opt = FALSE,
@@ -92,8 +93,10 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
     else old
 }
 
+##--> source in ../../../main/devices.c	 and ../../../main/devPS.c :
+
 postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
-                  onefile=TRUE, family, ...)
+                        onefile=TRUE, family, ...)
 {
     new <- list(onefile=onefile,...)# eval
     old <- check.options(new = new, name.opt = ".PostScript.Options",
@@ -108,7 +111,6 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
                  old$onefile, old$pagecentre, old$print.it, old$command))
 }
 
-##--> source in ../../../main/devices.c	 and ../../../main/devPS.c
 xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
                   onefile=FALSE, ...)
 {
