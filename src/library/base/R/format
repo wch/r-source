@@ -88,8 +88,9 @@ format.pval <- function(pv, digits = max(1, .Options$digits-2),
 formatC <- function (x, digits = NULL, width = NULL,
 		     format = NULL, flag = "", mode = NULL)
 {
-	## Martin Maechler <maechler@stat.math.ethz.ch> , 1994-1997
-	white.string <- function(no) paste(character(no+1), collapse =" ")
+	## Martin Maechler <maechler@stat.math.ethz.ch> , 1994-1998
+        blank.chars <- function(no)
+        	sapply(no+1, function(n) paste(character(n), collapse=" "))
 
 	if (is.null(x)) return("")
 	n <- length(x)
@@ -111,18 +112,36 @@ formatC <- function (x, digits = NULL, width = NULL,
 	if (missing(format) || is.null(format))
 	 format <- if (mode == "integer") "d" else "g"
 	else {
-	 if (any(format == c("f", "e", "E", "g", "G"))) {
-		 if (mode == "integer") mode <- storage.mode(x) <- "single"
+	 if (any(format == c("f", "e", "E", "g", "G", "fg"))) {
+		 if (mode == "integer") mode <- storage.mode(x) <- "real"
 	 }
 	 else if (format == "d") {
 		 if (mode != "integer") mode <- storage.mode(x) <- "integer"
 	 }
-	 else stop('"format" must be in {"f","e","E","g","G", "s"}')
+	 else stop('"format" must be in {"f","e","E","g","G", "fg", "s"}')
 	}
 	if (missing(digits) || is.null(digits))
 	  digits <- if (mode == "integer") 2 else 4
-	if(is.null(width)) width <- max(0, digits) + 1
-	else if (width == 0) stop("`width' must not be 0")
+        else if(digits<0)
+          digits <- 6
+	if(is.null(width)) width <- digits + 1
+	else if (width == 0) width <- digits##was stop("`width' must not be 0")
+        i.strlen <-
+          pmax(abs(width),
+               if(format == "fg"||format == "f") {
+                 xEx <- as.integer(floor(log10(abs(x+ifelse(x==0,1,0)))))
+                 as.integer(x < 0 | flag!="") + digits +
+                   if(format == "f") {
+                     2 + pmax(xEx,0)
+                   } else {# format == "fg"
+                     pmax(xEx, digits,digits+(-xEx)+1) +
+                       ifelse(flag!="",nchar(flag),0) + 1
+                   }
+               } else # format == "g" or "e":
+               rep(digits+8, n)
+               )
+        ##Dbg if(format=="fg"||format == "f")
+        ##Dbg   cat("formatC(,.): xEx=",xEx,"\n\t==> i.strlen=",i.strlen,"\n")
 	r <- .C("str_signif",
 		x = x,
 		n = n,
@@ -131,7 +150,11 @@ formatC <- function (x, digits = NULL, width = NULL,
 		digits = as.integer(digits),
 		format = as.character(format),
 		flag   = as.character(flag),
-		result = rep(white.string(abs(width) + 10), n))$result
+		result = blank.chars(i.strlen))$result
+        ##Dbg if(any(ii <- (nc.res <- nchar(r)) > i.strlen)) {
+        ##Dbg  cat("formatC: some  i.strlen[.] were too small:\n")
+        ##Dbg  print(cbind(ii=which(ii), strlen=i.strlen[ii], nchar=nc.res[ii]))
+        ##Dbg }
 	if (some.special)
 	  r[!Ok] <- format.char(rQ, width=width, flag=flag)
 	if (!is.null(x.atr <- attributes(x)))

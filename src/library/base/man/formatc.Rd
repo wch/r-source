@@ -11,18 +11,27 @@ format.char(x, width = NULL, flag = "-")
   \item{x}{an atomic numerical or character object, typically a vector
     of real numbers.}
   \item{digits}{the desired number of digits after the decimal
-    point. Default: 2 for integer, 4 for real numbers.  If less than 0,
+    point (\code{format = "f"}) or \emph{significant} digits
+    (\code{format = "g"}, \code{= "e"} or \code{= "fg"}).
+
+    Default: 2 for integer, 4 for real numbers.  If less than 0,
     the C default of 6 digits is used.}
   \item{width}{the total field width; \code{width < 0} means left
     justify the number in this field (equivalent to \code{flag ="-"}).
     It is possible that the result will be longer than this, but that
     should only happen in reasonable cases.}
   \item{format}{equal to \code{"d"}  (for integers), \code{"f"},
-    \code{"e"}, \code{"E"}, \code{"g"}, \code{"G"} (for reals), or
-    \code{"s"} (for strings).  \code{"f"} gives numbers in the usual
-    ``xxx.xxx'' format; \code{"e"} and \code{"E"} give ``n.dddenn'' or
+    \code{"e"}, \code{"E"}, \code{"g"}, \code{"G"}, \code{"fg"} (for
+    reals), or \code{"s"} (for strings).
+
+    \code{"f"} gives numbers in the usual
+    ``xxx.xxx'' format;  \code{"e"} and \code{"E"} give ``n.dddenn'' or
     ``n.dddEnn'' (scientific format); \code{"g"} and \code{"G"} put
-    \code{x[i]} into scientific format only if it saves space to do so.}
+    \code{x[i]} into scientific format only if it saves space to do so.
+
+    \code{"fg"} uses fixed format as \code{"f"}, but \code{digits} as
+    number of \emph{significant} digits.  Note that this can lead to
+    quite long result strings, see examples below.}
   \item{flag}{format modifier as in Kernighan and Ritchie, 2nd ed.,
     page 243.
     \code{"0"}  pads leading zeros; \code{"-"} does left adjustment,
@@ -54,8 +63,14 @@ cbind(formatC(xx, wid = 9, flag = "-"))
 cbind(formatC(xx, dig = 5, wid = 8, format = "f", flag = "0"))
 
 format.char(c("a", "Abc", "no way"), wid = -7)  # <=> flag = "-"
-formatC(c("a", "Abc", "no way"), wid = -7)  # <=> flag = "-"
+formatC(    c("a", "Abc", "no way"), wid = -7)  # <=> flag = "-"
 formatC(c((-1:1)/0,c(1,100)*pi), wid=8, dig=1)
+
+xx <- c(1e-12,-3.98765e-10,1.45645e-69,1e-70,pi*1e37,3.44e4)
+##       1        2             3        4      5       6
+formatC(xx)
+formatC(xx, format="fg")       # special "fixed" format.
+formatC(xx, format="f", dig=80)#>> also long strings
 }
 \keyword{character}
 \keyword{print}
