@@ -173,6 +173,8 @@ double  Rlog1p(double);
 #endif
 
 #ifdef MATHLIB_STANDALONE
+ #undef FALSE
+ #undef TRUE
  typedef enum { FALSE = 0, TRUE } Rboolean;
 #else
 # include <R_ext/Boolean.h>
