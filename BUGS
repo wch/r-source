@@ -180,6 +180,14 @@ none
 
 Directory:  incoming
 
+* PR# 518 *
+Subject: Re: [Rd] For wishlist: sanity checks for subsets in lm, glm (PR#
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Wed, 12 Apr 2000 13:54:57 +0100 (BST)
+* PR# 505 *
+Subject: interrupted save 
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
 * PR# 514 *
 Subject: aggregate.ts
 From: Martyn Plummer <plummer@iarc.fr>
@@ -188,7 +196,15 @@ Date: Tue, 11 Apr 2000 12:36:58 +0200 (CEST)
 Subject: start.ts, end.ts
 From: Martyn Plummer <plummer@iarc.fr>
 Date: Tue, 11 Apr 2000 12:32:49 +0200 (CEST)
-* PR# 505 *
-Subject: interrupted save 
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
+* PR# 517 *
+Subject: Re: [Rd] For wishlist: sanity checks for subsets in lm, glm (PR#
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 12 Apr 2000 13:18:37 +0200
+* PR# 516 *
+Subject: Re: [Rd] For wishlist: sanity checks for subsets in lm, glm (PR#
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Wed, 12 Apr 2000 12:55:55 +0200 (CEST)
+* PR# 515 *
+Subject: For wishlist: sanity checks for subsets in lm, glm
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Wed, 12 Apr 2000 12:05:07 +0200 (CEST)
