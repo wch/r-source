@@ -402,9 +402,10 @@ SEXP R_data_class(SEXP obj, int singleString)
     }
     else
 	class = asChar(class);
+    PROTECT(class);
     PROTECT(value = allocVector(STRSXP, 1));
     SET_STRING_ELT(value, 0, class);
-    UNPROTECT(1);
+    UNPROTECT(2);
     return value;
 }
 
