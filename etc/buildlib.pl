@@ -23,7 +23,7 @@
 use Cwd;
 use File::Basename;
 
-$dir_mod = 755;#- Permission ('mode') of newly created directories.
+$dir_mod = 0755;#- Permission ('mode') of newly created directories.
 
 # determine of pkg and lib directory are accessible; chdir to pkg man dir
 # and return pkg name, full path to lib dir and contents of mandir
