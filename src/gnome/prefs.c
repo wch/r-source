@@ -26,6 +26,9 @@
 #include "prefs.h"
 #include "rgnome.h"
 
+/* FIXME: add a set() function, used by the load and apply functions,
+   to do things like update the console style and allocate colors. */
+
 
 #define PREFS_BUF_SIZE 512
 
@@ -315,6 +318,41 @@ static void set_widgets_from_prefs (GladeXML *prefs_xml)
 				r_gnome_prefs.console_bg_color.blue, 0);
 
     /** Pager **/
+    widget = glade_xml_get_widget (prefs_xml,
+				   "pager_title_font");
+    gnome_font_picker_set_font_name (GNOME_FONT_PICKER (widget),
+				     r_gnome_prefs.pager_title_font_name);
+
+    widget = glade_xml_get_widget (prefs_xml,
+				   "pager_text_font");
+    gnome_font_picker_set_font_name (GNOME_FONT_PICKER (widget),
+				     r_gnome_prefs.pager_text_font_name);
+
+    widget = glade_xml_get_widget (prefs_xml,
+				   "pager_emphasis_font");
+    gnome_font_picker_set_font_name (GNOME_FONT_PICKER (widget),
+				     r_gnome_prefs.pager_emphasis_font_name);
+
+    widget = glade_xml_get_widget (prefs_xml,
+				   "pager_title_color");
+    gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (widget),
+				r_gnome_prefs.pager_title_color.red,
+				r_gnome_prefs.pager_title_color.green,
+				r_gnome_prefs.pager_title_color.blue, 0);
+
+    widget = glade_xml_get_widget (prefs_xml,
+				   "pager_text_color");
+    gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (widget),
+				r_gnome_prefs.pager_text_color.red,
+				r_gnome_prefs.pager_text_color.green,
+				r_gnome_prefs.pager_text_color.blue, 0);
+
+    widget = glade_xml_get_widget (prefs_xml,
+				   "pager_bg_color");
+    gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (widget),
+				r_gnome_prefs.pager_bg_color.red,
+				r_gnome_prefs.pager_bg_color.green,
+				r_gnome_prefs.pager_bg_color.blue, 0);
 
     /** Startup page **/
     switch (r_gnome_prefs.startup_restore_workspace) {
@@ -531,20 +569,134 @@ static void on_prefs_propertybox_apply (GnomePropertyBox *propertybox,
 {
     GladeXML *prefs_xml;
     GtkWidget *widget;
+    gushort dummy;
 
     prefs_xml = (GladeXML *) user_data;
 
     switch (pagenum) {
 	/** Console page **/
     case 0:
+        /* font */
+        widget = glade_xml_get_widget (prefs_xml,
+				       "console_font");
+
+	g_free (r_gnome_prefs.console_font_name);
+	r_gnome_prefs.console_font_name =
+	    gnome_font_picker_get_font_name (GNOME_FONT_PICKER (widget));
+
+	gdk_font_unref (r_gnome_prefs.console_font);
+	r_gnome_prefs.console_font =
+	    gnome_font_picker_get_font (GNOME_FONT_PICKER (widget));
+
+	/* bold user input */
+	widget = glade_xml_get_widget (prefs_xml,
+				       "console_bold_checkbutton");
+	r_gnome_prefs.console_bold_user_input =
+	    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+
+	/* color user input */
+	widget = glade_xml_get_widget (prefs_xml,
+				       "console_color_checkbutton");
+	r_gnome_prefs.console_color_user_input =
+	    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+
+	/* text color */
+	widget = glade_xml_get_widget (prefs_xml,
+				       "console_text_color");
+	gnome_color_picker_get_i16 (GNOME_COLOR_PICKER (widget),
+				    &r_gnome_prefs.console_text_color.red,
+				    &r_gnome_prefs.console_text_color.red,
+				    &r_gnome_prefs.console_text_color.red,
+				    &dummy);
+
+	/* input color */
+	widget = glade_xml_get_widget (prefs_xml,
+				       "console_input_color");
+	gnome_color_picker_get_i16 (GNOME_COLOR_PICKER (widget),
+				    &r_gnome_prefs.console_input_color.red,
+				    &r_gnome_prefs.console_input_color.red,
+				    &r_gnome_prefs.console_input_color.red,
+				    &dummy);
+
+	/* background color */
+	widget = glade_xml_get_widget (prefs_xml,
+				       "console_bg_color");
+	gnome_color_picker_get_i16 (GNOME_COLOR_PICKER (widget),
+				    &r_gnome_prefs.pager_bg_color.red,
+				    &r_gnome_prefs.pager_bg_color.red,
+				    &r_gnome_prefs.pager_bg_color.red,
+				    &dummy);
 	break;
 
 	/** Pager page **/
     case 1:
+        /* title font */
+        widget = glade_xml_get_widget (prefs_xml,
+				       "pager_title_font");
+
+	g_free (r_gnome_prefs.pager_title_font_name);
+	r_gnome_prefs.pager_title_font_name =
+	    gnome_font_picker_get_font_name (GNOME_FONT_PICKER (widget));
+
+	gdk_font_unref (r_gnome_prefs.pager_title_font);
+	r_gnome_prefs.pager_title_font = 
+	    gnome_font_picker_get_font (GNOME_FONT_PICKER (widget));
+
+	/* text font */
+	widget = glade_xml_get_widget (prefs_xml,
+				       "pager_text_font");
+
+	g_free (r_gnome_prefs.pager_text_font_name);
+	r_gnome_prefs.pager_text_font_name =
+	    gnome_font_picker_get_font_name (GNOME_FONT_PICKER (widget));
+
+	gdk_font_unref (r_gnome_prefs.pager_text_font);
+	r_gnome_prefs.pager_text_font =
+	    gnome_font_picker_get_font (GNOME_FONT_PICKER (widget));
+
+	/* emphasis font */
+	widget = glade_xml_get_widget (prefs_xml,
+				       "pager_emphasis_font");
+
+	g_free (r_gnome_prefs.pager_emphasis_font_name);
+	r_gnome_prefs.pager_emphasis_font_name =
+	    gnome_font_picker_get_font_name (GNOME_FONT_PICKER (widget));
+
+	gdk_font_unref (r_gnome_prefs.pager_emphasis_font);
+	r_gnome_prefs.pager_emphasis_font =
+	    gnome_font_picker_get_font (GNOME_FONT_PICKER (widget));
+
+	/* title color */
+	widget = glade_xml_get_widget (prefs_xml,
+				       "pager_title_color");
+	gnome_color_picker_get_i16 (GNOME_COLOR_PICKER (widget),
+				    &r_gnome_prefs.pager_title_color.red,
+				    &r_gnome_prefs.pager_title_color.red,
+				    &r_gnome_prefs.pager_title_color.red,
+				    &dummy);
+
+	/* text color */
+	widget = glade_xml_get_widget (prefs_xml,
+				       "pager_text_color");
+	gnome_color_picker_get_i16 (GNOME_COLOR_PICKER (widget),
+				    &r_gnome_prefs.pager_text_color.red,
+				    &r_gnome_prefs.pager_text_color.red,
+				    &r_gnome_prefs.pager_text_color.red,
+				    &dummy);
+
+	/* background color */
+	widget = glade_xml_get_widget (prefs_xml,
+				       "pager_bg_color");
+	gnome_color_picker_get_i16 (GNOME_COLOR_PICKER (widget),
+				    &r_gnome_prefs.pager_bg_color.red,
+				    &r_gnome_prefs.pager_bg_color.red,
+				    &r_gnome_prefs.pager_bg_color.red,
+				    &dummy);
 	break;
 
 	/** Startup page **/
     case 2:
+        /* restore workspace */
 	widget = glade_xml_get_widget (prefs_xml,
 				       "startup_always_restore_radio");
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget))) {
@@ -556,18 +708,16 @@ static void on_prefs_propertybox_apply (GnomePropertyBox *propertybox,
 	    r_gnome_prefs.startup_restore_workspace = SA_NORESTORE;
 	}
 
+	/* use readline */
 	widget = glade_xml_get_widget (prefs_xml,
 				       "startup_readline_checkbutton");
-	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget))) {
-	    r_gnome_prefs.startup_use_readline = TRUE;
-	}
-	else {
-	    r_gnome_prefs.startup_use_readline = FALSE;
-	}
+	r_gnome_prefs.startup_use_readline =
+	    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
 	break;
 
 	/** Exit page **/
     case 3:
+        /* save workspace */
 	widget = glade_xml_get_widget (prefs_xml,
 				       "exit_prompt_save_radio");
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget))) {
