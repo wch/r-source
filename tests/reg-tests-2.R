@@ -1028,3 +1028,11 @@ ARMAacf(ar=c(1.3,-0.6, -0.2, 0.1),lag.max=5) # failed in 1.7.1
 ARMAacf(ar=c(1.3,-0.6, -0.2, 0.1),lag.max=6)
 ARMAacf(ar=c(1.3,-0.6, -0.2, 0.1),lag.max=10)
 ##
+
+
+## Indexing non-existent columns in a data frame
+x <- data.frame(a = 1, b = 2)
+try(x[c("a", "c")])
+try(x[, c("a", "c")])
+try(x[1, c("a", "c")])
+## Second succeeded, third gave uniformative error message in 1.7.x.

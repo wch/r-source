@@ -387,8 +387,7 @@ data.frame <-
         ## handle the column only subsetting ...
         if(!missing(j)) x <- x[j]
 	cols <- names(x)
-	if(is.null(cols) || any(nchar(cols) == 0))
-	    stop("not all specified columns exist")
+	if(any(is.na(cols))) stop("undefined columns selected")
     }
     else { # df[i, j] or df[i , ]
 	if(is.character(i))
@@ -397,8 +396,7 @@ data.frame <-
 	if(!missing(j)) { # df[i, j]
 	    x <- x[j]
 	    cols <- names(x)
-	    if(is.null(cols) || any(nchar(cols) == 0))
-		stop("undefined columns selected")
+	    if(any(is.na(cols))) stop("undefined columns selected")
 	}
 	for(j in seq(along = x)) {
 	    xj <- x[[j]]

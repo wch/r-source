@@ -431,6 +431,9 @@ BUG FIXES
 
     o   Registered group generics were not being used. (PR#3536)
 
+    o   Subsetting data frames did not always correctly detect that
+	non-existent columns were specified.
+
 
 
 

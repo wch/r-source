@@ -1,17 +1,17 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.8.0 Under development (unstable) (2003-07-04)
+Version 1.8.0 Under development (unstable) (2003-08-02)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type `license()' or `licence()' for distribution details.
+Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type `contributors()' for more information.
+Type 'contributors()' for more information.
 
-Type `demo()' for some demos, `help()' for on-line help, or
-`help.start()' for a HTML browser interface to help.
-Type `q()' to quit R.
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
 
 > ## Regression tests for which the printed output is the issue
 > ### _and_ must work (no Recommended packages, please)
@@ -3213,4 +3213,17 @@ $wt.res
          7          8          9         10 
  0.0241137  0.2486313  0.3134551  0.2256408 
 > ##
+> 
+> 
+> ## Indexing non-existent columns in a data frame
+> x <- data.frame(a = 1, b = 2)
+> try(x[c("a", "c")])
+Error in "[.data.frame"(x, c("a", "c")) : undefined columns selected
+> try(x[, c("a", "c")])
+Error in "[.data.frame"(x, , c("a", "c")) : 
+	undefined columns selected
+> try(x[1, c("a", "c")])
+Error in "[.data.frame"(x, 1, c("a", "c")) : 
+	undefined columns selected
+> ## Second succeeded, third gave uniformative error message in 1.7.x.
 > 
