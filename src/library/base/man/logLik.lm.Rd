@@ -40,7 +40,7 @@ logLik(fm1, REML = TRUE)
 
 
 res <- try(data(Orthodont, package="nlme"))
-if(!inherits("res", "try-error")) {
+if(!inherits(res, "try-error")) {
   fm1 <- lm(distance ~ Sex * age, Orthodont)
   print(logLik(fm1))
   print(logLik(fm1, REML = TRUE))
