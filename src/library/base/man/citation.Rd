@@ -1,7 +1,6 @@
 \name{citation}
 \title{Citing R in Publications}
-\alias{license}
-\alias{licence}
+\alias{citation}
 \description{
   How to cite R in publications.
 }
