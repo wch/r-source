@@ -634,10 +634,6 @@ case "${host_cpu}" in
     ;;
   alpha*)
     ## <NOTE>
-    ## * ANSI C
-    ## The native C compiler needs @option{-std1}: AC_PROG_CC() passes
-    ## all ANSI C tests with no extra flags but then __STDC__ is
-    ## undefined which breaks compilation of the connections code.
     ## * IEEE math
     ## We really need to use @option{-ieee_with_inexact} (called
     ## @option{-mieee-with-inexact} for GCC) for the C compiler:
@@ -651,8 +647,6 @@ case "${host_cpu}" in
       R_PROG_CC_FLAG([-mieee-with-inexact],
                      R_SH_VAR_ADD(R_XTRA_CFLAGS, [-mieee-with-inexact]))
     else
-      R_PROG_CC_FLAG([-std1],
-                     R_SH_VAR_ADD(R_XTRA_CFLAGS, [-std1]))
       R_PROG_CC_FLAG([-ieee_with_inexact],
                      R_SH_VAR_ADD(R_XTRA_CFLAGS, [-ieee_with_inexact]))
     fi

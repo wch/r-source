@@ -61,6 +61,9 @@ BUG FIXES
 
     o   dlogis() gave NaN not 0 for large negative arguments.
 
+    o   Building on Alpha OSF/1 no longer forces the C flag -std1,
+	which appears to be no longer needed.  (PR#7257)
+
 
 
         *********************************************************
