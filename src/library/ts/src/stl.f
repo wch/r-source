@@ -13,7 +13,8 @@ c
       integer n, np, ns, nt, nl, isdeg, itdeg, ildeg, nsjump, ntjump, 
      &nljump, ni, no, i, k
       integer newns, newnt, newnl, newnp
-      double precision y(n), rw(n), season(n), trend(n), work(n+2*np,5)
+      double precision y(n), rw(n), season(n), trend(n), 
+     &work(n+2*np,5)
       logical userw
       userw = .false.
       k = 0
@@ -34,7 +35,7 @@ c
       newnl = newnl + 1
 23006 continue
 23008 continue
-      call onestp(y,n,newnp,newns,newnt,newnl,isdeg,itdeg,ildeg,nsjump,
+      call STL1stp(y,n,newnp,newns,newnt,newnl,isdeg,itdeg,ildeg,nsjump,
      &ntjump,nljump,ni,userw,rw,season, trend, work)
       k = k+1
       if(.not.(k .gt. no))goto 23011
@@ -43,7 +44,7 @@ c
       do 23013 i = 1,n
       work(i,1) = trend(i)+season(i)
 23013 continue
-      call rwts(y,n,work(1,1),rw)
+      call STLrwts(y,n,work(1,1),rw)
       userw = .true.
 23009 goto 23008
 23010 continue
@@ -55,7 +56,7 @@ c
       return
       end
 
-      subroutine ess(y,n,len,ideg,njump,userw,rw,ys,res)
+      subroutine STLess(y,n,len,ideg,njump,userw,rw,ys,res)
       integer n, len, ideg, njump, newnj, nleft, nright, nsh, k, i, j
       double precision y(n), rw(n), ys(n), res(n), delta
       logical ok, userw
@@ -68,7 +69,8 @@ c
       nleft = 1
       nright = n
       do 23023 i = 1,n,newnj 
-      call est(y,n,len,ideg,dble(i),ys(i),nleft,nright,res,userw,rw,ok)
+      call STLest(y,n,len,ideg,dble(i),ys(i),nleft,nright,res,
+     & userw,rw,ok)
       if(.not.( .not. ok))goto 23025
       ys(i) = y(i)
 23025 continue
@@ -84,7 +86,8 @@ c
       nleft = nleft+1
       nright = nright+1
 23031 continue
-      call est(y,n,len,ideg,dble(i),ys(i),nleft,nright,res,userw,rw,ok)
+      call STLest(y,n,len,ideg,dble(i),ys(i),nleft,nright,res,
+     &userw,rw,ok)
       if(.not.( .not. ok))goto 23033
       ys(i) = y(i)
 23033 continue
@@ -107,7 +110,8 @@ c
       nright = len+i-nsh
 23040 continue
 23038 continue
-      call est(y,n,len,ideg,dble(i),ys(i),nleft,nright,res,userw,rw,ok)
+      call STLest(y,n,len,ideg,dble(i),ys(i),nleft,nright,res,
+     &userw,rw,ok)
       if(.not.( .not. ok))goto 23041
       ys(i) = y(i)
 23041 continue
@@ -123,7 +127,8 @@ c
 23045 continue
       k = ((n-1)/newnj)*newnj+1
       if(.not.(k .ne. n))goto 23049
-      call est(y,n,len,ideg,dble(n),ys(n),nleft,nright,res,userw,rw,ok)
+      call STLest(y,n,len,ideg,dble(n),ys(n),nleft,nright,res,
+     &userw,rw,ok)
       if(.not.( .not. ok))goto 23051
       ys(n) = y(n)
 23051 continue
@@ -138,7 +143,8 @@ c
       return
       end
 
-      subroutine est(y,n,len,ideg,xs,ys,nleft,nright,w,userw,rw,ok)
+      subroutine STLest(y,n,len,ideg,xs,ys,nleft,nright,w,
+     &userw,rw,ok)
       integer n, len, ideg, nleft, nright, j
       double precision y(n), w(n), rw(n), xs, ys, range, h, h1, h9, 
      &a, b, c, r
@@ -200,16 +206,16 @@ c
       return
       end
 
-      subroutine fts(x,n,np,trend,work)
+      subroutine STLfts(x,n,np,trend,work)
       integer n, np
       double precision x(n), trend(n), work(n)
-      call ma(x,n,np,trend)
-      call ma(trend,n-np+1,np,work)
-      call ma(work,n-2*np+2,3,trend)
+      call STLma(x,n,np,trend)
+      call STLma(trend,n-np+1,np,work)
+      call STLma(work,n-2*np+2,3,trend)
       return
       end
 
-      subroutine ma(x, n, len, ave)
+      subroutine STLma(x, n, len, ave)
       integer n, len, i, j, k, m, newn
       double precision x(n), ave(n), flen, v
       newn = n-len+1
@@ -232,8 +238,8 @@ c
       return
       end
 
-      subroutine onestp(y,n,np,ns,nt,nl,isdeg,itdeg,ildeg,nsjump,ntjump,
-     &nljump,ni,userw,rw,season,trend,work)
+      subroutine STL1stp(y,n,np,ns,nt,nl,isdeg,itdeg,ildeg,nsjump,
+     &ntjump,nljump,ni,userw,rw,season,trend,work)
       integer n,ni,np,ns,nt,nsjump,ntjump,nl,nljump,isdeg,itdeg,ildeg
       integer i,j
       double precision y(n),rw(n),season(n),trend(n),work(n+2*np,5)
@@ -242,23 +248,24 @@ c
       do 23091 i = 1,n
       work(i,1) = y(i)-trend(i)
 23091 continue
-      call ss(work(1,1),n,np,ns,isdeg,nsjump,userw,rw,work(1,2),work(1,
-     &3),work(1,4),work(1,5),season)
-      call fts(work(1,2),n+2*np,np,work(1,3),work(1,1))
-      call ess(work(1,3),n,nl,ildeg,nljump,.false.,work(1,4),work(1,1),
-     &work(1,5))
+      call STLss(work(1,1),n,np,ns,isdeg,nsjump,userw,rw,work(1,2),
+     &work(1,3),work(1,4),work(1,5),season)
+      call STLfts(work(1,2),n+2*np,np,work(1,3),work(1,1))
+      call STLess(work(1,3),n,nl,ildeg,nljump,.false.,work(1,4),
+     &work(1,1),work(1,5))
       do 23093 i = 1,n
       season(i) = work(np+i,2)-work(i,1)
 23093 continue
       do 23095 i = 1,n
       work(i,1) = y(i)-season(i)
 23095 continue
-      call ess(work(1,1),n,nt,itdeg,ntjump,userw,rw,trend,work(1,3))
+      call STLess(work(1,1),n,nt,itdeg,ntjump,userw,rw,trend,
+     &work(1,3))
 23089 continue
       return
       end
 
-      subroutine rwts(y,n,fit,rw)
+      subroutine STLrwts(y,n,fit,rw)
       integer mid(2), n, i
       double precision y(n), fit(n), rw(n), cmad, c9, c1, r
       do 23097 i = 1,n
@@ -287,8 +294,8 @@ c
       return
       end
 
-      subroutine ss(y,n,np,ns,isdeg,nsjump,userw,rw,season,work1,work2,
-     &work3,work4)
+      subroutine STLss(y,n,np,ns,isdeg,nsjump,userw,rw,season,
+     &work1,work2,work3,work4)
       integer n, np, ns, isdeg, nsjump, nright, nleft, i, j, k, m
       double precision y(n), rw(n), season(n+2*np), work1(n), work2(n), 
      &work3(n), work4(n), xs
@@ -304,18 +311,18 @@ c
       work3(i) = rw((i-1)*np+j)
 23112 continue
 23110 continue
-      call ess(work1,k,ns,isdeg,nsjump,userw,work3,work2(2),work4)
+      call STLess(work1,k,ns,isdeg,nsjump,userw,work3,work2(2),work4)
       xs = 0
       nright = min0(ns,k)
-      call est(work1,k,ns,isdeg,xs,work2(1),1,nright,work4,userw,work3,
-     &ok)
+      call STLest(work1,k,ns,isdeg,xs,work2(1),1,nright,work4,
+     &userw,work3,ok)
       if(.not.( .not. ok))goto 23114
       work2(1) = work2(2)
 23114 continue
       xs = k+1
       nleft = max0(1,k-ns+1)
-      call est(work1,k,ns,isdeg,xs,work2(k+2),nleft,k,work4,userw,work3,
-     &ok)
+      call STLest(work1,k,ns,isdeg,xs,work2(k+2),nleft,k,work4,
+     &userw,work3,ok)
       if(.not.( .not. ok))goto 23116
       work2(k+2) = work2(k+1)
 23116 continue
@@ -363,7 +370,7 @@ c
       do 23128 i = 1,n
       trend(i) = 0.0
 23128 continue
-      call onestp(y,n,newnp,newns,nt,nl,isdeg,itdeg,ildeg,nsjump,
+      call STL1stp(y,n,newnp,newns,nt,nl,isdeg,itdeg,ildeg,nsjump,
      &ntjump,nljump,ni,.false.,rw,season,trend,work)
       no = 0
       if(.not.(robust))goto 23130
@@ -374,8 +381,8 @@ c
       work(i,7) = trend(i)
       work(i,1) = trend(i)+season(i)
 23135 continue
-      call rwts(y,n,work(1,1),rw)
-      call onestp(y, n, newnp, newns, nt, nl, isdeg, itdeg, ildeg, 
+      call STLrwts(y,n,work(1,1),rw)
+      call STL1stp(y, n, newnp, newns, nt, nl, isdeg, itdeg, ildeg, 
      &nsjump,ntjump, nljump, ni, .true., rw, season, trend, work)
       no = no+1
       maxs = work(1,6)
