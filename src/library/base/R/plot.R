@@ -6,8 +6,8 @@ xy.coords <- function(x, y, xlab=NULL, ylab=NULL, log=NULL, recycle = FALSE)
 	    if (inherits(x, "formula") && length(x) == 3) {
 		ylab <- deparse(x[[2]])
 		xlab <- deparse(x[[3]])
-		y <- eval(x[[2]], parent.frame())
-		x <- eval(x[[3]], parent.frame())
+		y <- eval(x[[2]], environment(x), parent.frame())
+		x <- eval(x[[3]], environment(x), parent.frame())
 	    }
 	    else stop("invalid first argument")
 	}
