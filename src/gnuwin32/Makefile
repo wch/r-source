@@ -174,6 +174,7 @@ cleanwin:
 	$(MAKE) -C front-ends clean
 	$(MAKE) -C xdr clean
 	$(MAKE) -C math clean
+	$(MAKE) -C bitmap clean
 	-$(MAKE) -C installer clean
 
 
@@ -227,6 +228,9 @@ srcdist:
 	$(CP)  -pr ./* ../src/gnuwin32
 	$(RM) -r ../src/gnuwin32/old ../src/gnuwin32/*.zip
 	$(RM) -r ../src/gnuwin32/installer/unzip
+	$(RM) -r ../src/gnuwin32/bitmap/jpeg-6b
+	$(RM) -r ../src/gnuwin32/bitmap/libpng
+	$(RM) -r ../src/gnuwin32/bitmap/zlib 
 	$(RM) -f ../src/gnuwin32/unzip/*.dll
 	$(MAKE) -C ../src/gnuwin32 cleanwin
 	mv ../src .
