@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-7, 2000-12-22
+Version 1.2-8, 2000-12-28
 Kurt Hornik
 
 
@@ -1425,8 +1425,8 @@ these a try, of course.  This area of CRAN currently contains
 *regexp*
      Simple regular expression interface.
 
-*timeslab*
-     Time series routines.
+*write.snns*
+     Function for writing a SNNS pattern file from a data frame or matrix.
 
    Directory `src/contrib/Omegahat' contains yet unreleased packages from
 the Omegahat Project for Statistical Computing (http://www.omegahat.org).
