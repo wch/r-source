@@ -483,9 +483,9 @@ to Mac OS 9.2.2.  This port of R for Macintosh is no longer supported.
 @c redhat
 @c   8.x     i386   1.9.1  Martyn Plummer <plummer@iarc.fr>
 @c   9       i386   1.9.1  Martyn Plummer <plummer@iarc.fr>
-@c   Fedora1 i386   1.9.1  Martyn Plummer <plummer@iarc.fr>
+@c   Fedora1 i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
 @c           x86_64 1.8.1  James Henstridge <james@daa.com.au>
-@c   Fedora2 i386   1.9.1  Martyn Plummer <plummer@iarc.fr>
+@c   Fedora2 i386   2.0.0  Martyn Plummer <plummer@iarc.fr>
 @c suse
 @c   7.3     i386   1.8.0  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
 @c   8.0     i386   1.8.1  Detlef Steuer <Detlef.Steuer@unibw-hamburg.de>
@@ -2213,9 +2213,13 @@ Precision library.
 @item gpclib
 General polygon clipping routines for R based on Alan Murta's C
 library.
-@item gpls
-Classification using generalized partial least squares for two-group and
-multi-group (more than 2 group) classification.
+@c <COMMENT>
+@c Moved to the Archive on 2004-10-08 as fails R CMD check.
+@c (In addition, email to the maintainer address bounces.)
+@c @item gpls
+@c Classification using generalized partial least squares for two-group and
+@c multi-group (more than 2 group) classification.
+@c </COMMENT>
 @item grasper
 Generalized Regression Analysis and Spatial Predictions for R.
 @item gregmisc
@@ -2436,9 +2440,12 @@ problems, including the Boston housing data.
 Mixed-mode latent class regression (also known as mixed-mode mixture
 model regression or mixed-mode mixture regression models) which can
 handle both longitudinal and one-time responses.
-@item moc
-Fits a variety of mixtures models for multivariate observations with
-user-difined distributions and curves.
+@c <COMMENT>
+@c Moved to the Archive on 2004-10-08 as fails R CMD check.
+@c @item moc
+@c Fits a variety of mixtures models for multivariate observations with
+@c user-difined distributions and curves.
+@c </COMMENT>
 @item mscalib
 Calibration and filtering of MALDI-TOF Peptide Mass Fingerprint data.
 @item msm
