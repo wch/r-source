@@ -16,7 +16,7 @@ Up:<a rel=up href="#(dir)">(dir)</a>
 <h1>R FAQ</h1>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.3-18, 2001-08-11</h2>
+<h2>Version 1.3-19, 2001-08-23</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -234,9 +234,10 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 systems.
 
 <p>The current version of R will configure and build under a number of
-common Unix platforms including i386-freebsd, i386-linux,
-i386-sun-solaris, ppc-linux, mips-sgi-irix, alpha-linux, alpha-dec-osf4,
-rs6000-ibm-aix, hppa-hp-hpux, sparc-linux, and sparc-sun-solaris.
+common Unix platforms including i386-freebsd, i386-linux-gnu,
+i386-sun-solaris, powerpc-linux-gnu, powerpc-apple-darwin,
+mips-sgi-irix, alpha-linux-gnu, alpha-dec-osf4, rs6000-ibm-aix,
+hppa-hp-hpux, sparc-linux-gnu, and sparc-sun-solaris.
 
 <p>If you know about other platforms, please drop us a note.
 
@@ -1785,6 +1786,8 @@ allowing one to call arbitrary Perl subroutines, classes and methods.
 <br><dt><strong>RSPython</strong>
 <dd>Allows Python programs to invoke S functions, methods, etc., and S code
 to call Python functionality. 
+<br><dt><strong>SASXML</strong>
+<dd>Example for reading XML files in SAS 8.2 manner. 
 <br><dt><strong>SJava</strong>
 <dd>An interface from R to Java to create and call Java objects and
 methods. 
@@ -1801,6 +1804,9 @@ dynamically substituting output from R.
 interfaces from S to that code, including the table of S-accessible
 native symbols, parameter count and type information, S constructors
 from C objects, call graphs, etc. 
+<br><dt><strong>Sxslt</strong>
+<dd>An extension module for libxslt, the XML-XSL document translator, that
+allows XSL functions to be implemented via R functions. 
 </dl>
 
 <a href="mailto:jlindsey@luc.ac.be">Jim Lindsey</a> has written a collection of R
