@@ -160,14 +160,6 @@ searchpaths <- function()
 t.default <- function(x).Internal(t.default(x))
 typeof <- function(x).Internal(typeof(x))
 
-unique <- function(x, incomparables = FALSE) {
-    if(!is.logical(incomparables) || incomparables)
-	.NotYetUsed("incomparables != FALSE")
-    z <- .Internal(unique(x))
-    if(is.factor(x))
-	z <- factor(z, levels = 1:nlevels(x), labels = levels(x))
-    z
-}
 
 memory.profile <- function() .Internal(memory.profile())
 
