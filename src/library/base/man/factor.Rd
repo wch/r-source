@@ -8,10 +8,13 @@
 \alias{as.ordered}
 \alias{is.na<-.factor}
 \concept{categorical variable}
+\concept{enumerated type}
+\concept{category}
 \description{
   The function \code{factor} is used to encode a vector as a factor (the
-  names category and enumerated type are also used for factors).  If
-  \code{ordered} is \code{TRUE}, the factor levels are assumed to be ordered.
+  terms \sQuote{category} and \sQuote{enumerated type} are also used for
+  factors).  If \code{ordered} is \code{TRUE}, the factor levels are
+  assumed to be ordered.
   For compatibility with S there is also a function \code{ordered}.
 
   \code{is.factor}, \code{is.ordered}, \code{as.factor} and \code{as.ordered}
@@ -46,7 +49,7 @@ as.ordered(x)
 }
 \value{
   \code{factor} returns an object of class \code{"factor"} which has a
-  set of numeric codes the length of \code{x} with a \code{"levels"}
+  set of integer codes the length of \code{x} with a \code{"levels"}
   attribute of mode \code{\link{character}}.  If \code{ordered} is true
   (or \code{ordered} is used) the result has class
   \code{c("ordered", "factor")}.
