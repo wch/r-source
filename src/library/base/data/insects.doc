@@ -1,0 +1,24 @@
+
+INSECTS - Effectiveness of Insect Sprays
+
+DESCRIPTION
+
+The counts of insects in agricultural experimental units
+treated with different insecticides
+
+FORMAT
+
+A data frame with 72 observations on 2 variables.
+
+  [,1]  count  numeric  Insect Count
+  [,2]  spray  factor   The type of spray (A, B, C, D, E, F).
+
+SOURCE
+
+Geoffrey Beall, (1942).  "The Transformation of Data from
+Entomological Field Experiments", Biometrika,  pages 243-262.
+
+REFERENCE
+
+McNeil, D. (1977).  Interactive Data Analysis.  New York: Wiley.
+

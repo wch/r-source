@@ -1,0 +1,20 @@
+
+RIVERS - Lengths of Major North American Rivers
+
+DESCRIPTION
+
+This data set gives the lengths  (in miles) of 141 "major" rivers
+in North America, as compiled by the US Geological Survey.
+
+FORMAT
+
+A vector containing 141 observations.
+
+SOURCE
+
+World Almanac and Book of Facts, 1975, page 406.
+
+REFERENCES
+
+McNeil, D. (1977).  Interactive Data Analysis.  New York: Wiley.
+
