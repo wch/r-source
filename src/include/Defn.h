@@ -151,13 +151,15 @@ extern int vsnprintf (char *str, size_t count, const char *fmt, va_list arg);
 # if defined(HAVE_SYS_PARAM_H)
 #  include <sys/param.h>
 # endif
-# if defined(MAXPATHLEN) && !defined(PATH_MAX)
-#  define PATH_MAX MAXPATHLEN
-# elif defined(Win32)
-#  define PATH_MAX 260
-# else 
+# if !defined(PATH_MAX)
+#  if defined(MAXPATHLEN) 
+#    define PATH_MAX MAXPATHLEN
+#  elif defined(Win32)
+#    define PATH_MAX 260
+#  else 
 /* quite possibly unlimited, so we make this large, and test when used */
-#  define PATH_MAX 5000
+#    define PATH_MAX 5000
+#  endif
 # endif
 #endif
 
