@@ -29,31 +29,32 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-R:
+R: Makefile
 	@if [ "$(srcdir)" != "." ]; then \
 	  $(MAKE) rhome=$(top_builddir) install-sources; \
 	fi
 
 install: install-message installdirs install-sources
 installdirs:
-	@$(MKINSTALLDIRS) $(rhome)/afm
+	@$(MKINSTALLDIRS) $(rhome)/$(subdir)
 install-message:
-	@echo "installing afm ..."
+	@echo "installing $(subdir) ..."
 install-sources:
 	@for f in $(INSTFILES); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/afm; \
+	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/$(subdir); \
 	done
 install-strip: install
+
 uninstall:
-	@echo "uninstalling afm ..."
-	@rm -rf $(rhome)/afm
+	@echo "uninstalling $(subdir) ..."
+	@rm -rf $(rhome)/$(subdir)
 
 mostlyclean:
 clean:
 	@if [ "$(srcdir)" != "." ]; then \
-	  rm -f *.afm *.lt1; \
+	  rm -f $(INSTFILES); \
 	fi
-distclean:
+distclean: clean
 	@rm -f Makefile
 maintainer-clean: distclean
 
