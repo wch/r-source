@@ -803,7 +803,6 @@ SEXP do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
     body = CADR(args);
     bgn = BodyHasBraces(body);
 
-	bgn = 1;
     t = R_NilValue;
     while (asLogicalNoNA(s, call)) {
 	DO_LOOP_DEBUG(call, op, args, rho, bgn);
