@@ -21,14 +21,14 @@ function(dataDir, contents)
     ## We could also have an interface like
     ##   .buildDataIndex(dir, contents = NULL)
     ## where @code{dir} is the path to a package's root source dir and
-    ## contents is Rdcontents(.listFilesWithType(file.path(dir, "man"),
+    ## contents is Rdcontents(listFilesWithType(file.path(dir, "man"),
     ## "docs")).
     ## </NOTE>
 
-    if(!.fileTest("-d", dataDir))
+    if(!fileTest("-d", dataDir))
         stop(paste("directory", sQuote(dataDir), "does not exist"))
-    dataFiles <- .listFilesWithType(dataDir, "data")
-    dataTopics <- unique(basename(.filePathSansExt(dataFiles)))
+    dataFiles <- listFilesWithType(dataDir, "data")
+    dataTopics <- unique(basename(filePathSansExt(dataFiles)))
     if(!length(dataTopics)) return(matrix("", 0, 2))
     dataIndex <- cbind(dataTopics, "")
     ## Note that NROW(contents) might be 0.
@@ -60,13 +60,13 @@ function(demoDir)
     ## docs are in sync.
     ## </NOTE>
 
-    if(!.fileTest("-d", demoDir))
+    if(!fileTest("-d", demoDir))
         stop(paste("directory", sQuote(demoDir), "does not exist"))
-    demoFiles <- .listFilesWithType(demoDir, "demo")
-    demoTopics <- unique(basename(.filePathSansExt(demoFiles)))
+    demoFiles <- listFilesWithType(demoDir, "demo")
+    demoTopics <- unique(basename(filePathSansExt(demoFiles)))
     if(!length(demoTopics)) return(matrix("", 0, 2))
     demoIndex <- cbind(demoTopics, "")
-    if(.fileTest("-f", INDEX <- file.path(demoDir, "00Index"))) {
+    if(fileTest("-f", INDEX <- file.path(demoDir, "00Index"))) {
         demoEntries <- try(read.00Index(INDEX))
         if(inherits(demoEntries, "try-error"))
             warning(paste("cannot read index information in file",
@@ -83,7 +83,7 @@ function(demoDir)
 .checkDemoIndex <-
 function(demoDir)
 {
-    if(!.fileTest("-d", demoDir))
+    if(!fileTest("-d", demoDir))
         stop(paste("directory", sQuote(demoDir), "does not exist"))
     infoFromBuild <- .buildDemoIndex(demoDir)
     infoFromIndex <- try(read.00Index(file.path(demoDir, "00Index")))

@@ -1,10 +1,12 @@
 useDynLib(tools)
 
-export( .installMD5sums, Rdindex, Rtangle, RtangleSetup, RweaveLatex,
+export(.installMD5sums, Rdindex, Rtangle, RtangleSetup, RweaveLatex,
        RweaveLatexSetup, Stangle, Sweave, SweaveSyntConv,
        SweaveSyntaxLatex, SweaveSyntaxNoweb, checkDocArgs,
        checkDocStyle, checkFF, checkMD5sums, checkMethods, 
-       checkReplaceFuns, checkTnF, checkVignettes, codoc, md5sum, undoc)
+       checkReplaceFuns, checkTnF, checkVignettes, codoc, md5sum, undoc,
+       filePathAsAbsolute, filePathSansExt, fileTest, listFilesWithExts,
+       listFilesWithType, delimMatch)
 
 ## documented as internal but called from scripts
 export(.installPackageDescription, .installPackageIndices, 

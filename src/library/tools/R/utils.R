@@ -1,19 +1,19 @@
-### Internal utility functions.
+### * File utilities.
 
-### * .convertFilePathToAbsolute
+### ** filePathAsAbsolute
 
-.convertFilePathToAbsolute <-
-function(path)
+filePathAsAbsolute <-
+function(x)
 {
     ## Turn a possibly relative file path absolute, performing tilde
     ## expansion if necessary.
     ## Seems the only way we can do this is 'temporarily' change the
     ## working dir and see where this takes us.
-    if(!file.exists(epath <- path.expand(path)))
-        stop(paste("file", sQuote(path), "does not exist"))
+    if(!file.exists(epath <- path.expand(x)))
+        stop(paste("file", sQuote(x), "does not exist"))
     cwd <- getwd()
     on.exit(setwd(cwd))
-    if(.fileTest("-d", epath)) {
+    if(fileTest("-d", epath)) {
         ## Combining dirname and basename does not work for e.g. '.' or
         ## '..' on Unix ...
         setwd(epath)
@@ -25,24 +25,19 @@ function(path)
     }
 }
 
-### * .delimMatch
+### ** filePathSansExt
 
-.delimMatch <-
-function(x, delim = c("\{", "\}"), syntax = "Rd")
+filePathSansExt <-
+function(x)
 {
-    if(!is.character(x))
-        stop("argument x must be a character vector")
-    if((length(delim) != 2) || any(nchar(delim) != 1))
-        stop("incorrect value for delim")
-    if(syntax != "Rd")
-        stop("only Rd syntax is currently supported")
-
-    .Call("delim_match", x, delim, PACKAGE = "tools")
+    ## Return the file paths without extensions.
+    ## (Only purely alphanumeric extensions are recognized.)
+    sub("\\.[[:alpha:]]+$", "", x)
 }
 
-### * .fileTest
+### ** fileTest
 
-.fileTest <-
+fileTest <-
 function(op, x, y)
 {
     ## Provide shell-style '-f', '-d', '-nt' and '-ot' tests.
@@ -62,17 +57,62 @@ function(op, x, y)
            stop(paste("test", sQuote(op), "is not available")))
 }
 
-### * .filePathSansExt
+### ** listFilesWithExts
 
-.filePathSansExt <-
-function(x)
+listFilesWithExts <-
+function(dir, exts, full.names = TRUE)
 {
-    ## Return the file paths without extensions.
-    ## (Only purely alphanumeric extensions are recognized.)
-    sub("\\.[[:alpha:]]+$", "", x)
+    ## Return the paths or names of the files in @code{dir} with
+    ## extension in @code{exts}.
+    files <- list.files(dir)
+    files <- files[sub(".*\\.", "", files) %in% exts]
+    if(full.names)
+        files <- if(length(files) > 0)
+            file.path(dir, files)
+        else
+            character(0)
+    files
 }
 
-### * .getNamespaceS3methodNames
+### ** listFilesWithType
+
+listFilesWithType <-
+function(dir, type)
+{
+    ## Return a character vector with the paths of the files in
+    ## @code{dir} of type @code{type} (as in .makeFileExts()).
+    ## When listing R code and documentation files, files in OS-specific
+    ## subdirectories are included if present.
+    exts <- .makeFileExts(type)
+    files <- listFilesWithExts(dir, exts)
+    if(type %in% c("code", "docs")) {
+        OSdir <- file.path(dir, .Platform$OS)
+        if(fileTest("-d", OSdir))
+            files <- c(files, listFilesWithExts(OSdir, exts))
+    }
+    files
+}
+
+### * Text utilities.
+
+### ** delimMatch
+
+delimMatch <-
+function(x, delim = c("\{", "\}"), syntax = "Rd")
+{
+    if(!is.character(x))
+        stop("argument x must be a character vector")
+    if((length(delim) != 2) || any(nchar(delim) != 1))
+        stop("incorrect value for delim")
+    if(syntax != "Rd")
+        stop("only Rd syntax is currently supported")
+
+    .Call("delim_match", x, delim, PACKAGE = "tools")
+}
+
+### * Internal utility functions.
+
+### ** .getNamespaceS3methodNames
 
 .getNamespaceS3methodNames <-
 function(ns, dir, nsInfo)
@@ -99,7 +139,7 @@ function(ns, dir, nsInfo)
     S3methods
 }
 
-### * .isS3Generic
+### ** .isS3Generic
 
 .isS3Generic <-
 function(fname, envir, mustMatch = TRUE) {
@@ -155,43 +195,7 @@ function(fname, envir, mustMatch = TRUE) {
     if(mustMatch) res == fname else nchar(res) > 0
 }
 
-### * .listFilesWithExts
-
-.listFilesWithExts <-
-function(dir, exts, path = TRUE)
-{
-    ## Return the paths or names of the files in @code{dir} with
-    ## extension in @code{exts}.
-    files <- list.files(dir)
-    files <- files[sub(".*\\.", "", files) %in% exts]
-    if(path)
-        files <- if(length(files) > 0)
-            file.path(dir, files)
-        else
-            character(0)
-    files
-}
-
-### * .listFilesWithType
-
-.listFilesWithType <-
-function(dir, type)
-{
-    ## Return a character vector with the paths of the files in
-    ## @code{dir} of type @code{type} (as in .makeFileExts()).
-    ## When listing R code and documentation files, files in OS-specific
-    ## subdirectories are included if present.
-    exts <- .makeFileExts(type)
-    files <- .listFilesWithExts(dir, exts)
-    if(type %in% c("code", "docs")) {
-        OSdir <- file.path(dir, .Platform$OS)
-        if(.fileTest("-d", OSdir))
-            files <- c(files, .listFilesWithExts(OSdir, exts))
-    }
-    files
-}
-
-### * .loadPackageQuietly
+### ** .loadPackageQuietly
 
 .loadPackageQuietly <-
 function(package, lib.loc)
@@ -217,7 +221,7 @@ function(package, lib.loc)
         stop(yy)
 }
 
-### * .makeFileExts
+### ** .makeFileExts
 
 .makeFileExts <-
 function(type = c("code", "data", "demo", "docs", "vignette"))
@@ -236,7 +240,7 @@ function(type = c("code", "data", "demo", "docs", "vignette"))
                               paste, sep = "")))
 }
 
-### * .makeS3MethodsStopList
+### ** .makeS3MethodsStopList
 
 .makeS3MethodsStopList <-
 function(package)
@@ -262,7 +266,7 @@ function(package)
     if(!length(thisPkg)) character(0) else thisPkg
 }
 
-### * .sourceAssignments
+### ** .sourceAssignments
 
 .sourceAssignments <-
 function(file, envir)

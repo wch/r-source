@@ -11,7 +11,7 @@ function(package, dir, lib.loc = NULL)
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         helpIndex <- file.path(dir, "help", "AnIndex")
-        if(!.fileTest("-f", helpIndex))
+        if(!fileTest("-f", helpIndex))
             stop(paste("directory", sQuote(dir),
                        "contains no help index"))
         isBase <- package == "base"
@@ -34,19 +34,19 @@ function(package, dir, lib.loc = NULL)
             stop(paste("you must specify", sQuote("package"),
                        "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
-        if(!.fileTest("-d", dir))
+        if(!fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            dir <- .convertFilePathToAbsolute(dir)
+            dir <- filePathAsAbsolute(dir)
         docsDir <- file.path(dir, "man")
-        if(!.fileTest("-d", docsDir))
+        if(!fileTest("-d", docsDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd sources"))
         isBase <- basename(dir) == "base"
 
         ## Find all documented topics from the Rd sources.
         aliases <- character(0)
-        for(f in .listFilesWithType(docsDir, "docs")) {
+        for(f in listFilesWithType(docsDir, "docs")) {
             aliases <- c(aliases,
                          grep("^\\\\alias", readLines(f), value = TRUE))
         }
@@ -57,12 +57,12 @@ function(package, dir, lib.loc = NULL)
 
         codeEnv <- new.env()
         codeDir <- file.path(dir, "R")
-        if(.fileTest("-d", codeDir)) {
+        if(fileTest("-d", codeDir)) {
             ## Collect code in codeFile.
             codeFile <- tempfile("Rcode")
             on.exit(unlink(codeFile))
             file.create(codeFile)
-            file.append(codeFile, .listFilesWithType(codeDir, "code"))
+            file.append(codeFile, listFilesWithType(codeDir, "code"))
             ## Read code from codeFile into codeEnv.
             yy <- try(.sourceAssignments(codeFile, env = codeEnv))
             if(inherits(yy, "try-error")) {
@@ -89,9 +89,9 @@ function(package, dir, lib.loc = NULL)
 
     dataObjs <- character(0)
     dataDir <- file.path(dir, "data")
-    if(.fileTest("-d", dataDir)) {
-        files <- .listFilesWithType(dataDir, "data")
-        files <- files[!duplicated(.filePathSansExt(files))]
+    if(fileTest("-d", dataDir)) {
+        files <- listFilesWithType(dataDir, "data")
+        files <- files[!duplicated(filePathSansExt(files))]
         dataEnv <- new.env()
         if(any(i <- grep("\\.\(R\|r\)$", files))) {
             for(f in files[i]) {
@@ -116,7 +116,7 @@ function(package, dir, lib.loc = NULL)
             files <- files[-i]
         }
         if(length(files) > 0)
-            dataObjs <- c(dataObjs, basename(.filePathSansExt(files)))
+            dataObjs <- c(dataObjs, basename(filePathSansExt(files)))
     }
 
     ## Undocumented objects?
@@ -218,11 +218,11 @@ function(package, dir, lib.loc = NULL,
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         codeDir <- file.path(dir, "R")
-        if(!.fileTest("-d", codeDir))
+        if(!fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         docsDir <- file.path(dir, "man")
-        if(!.fileTest("-d", docsDir))
+        if(!fileTest("-d", docsDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd sources"))
         isBase <- basename(dir) == "base"
@@ -248,16 +248,16 @@ function(package, dir, lib.loc = NULL,
             stop(paste("you must specify", sQuote("package"),
                        "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
-        if(!.fileTest("-d", dir))
+        if(!fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            dir <- .convertFilePathToAbsolute(dir)
+            dir <- filePathAsAbsolute(dir)
         codeDir <- file.path(dir, "R")
-        if(!.fileTest("-d", codeDir))
+        if(!fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         docsDir <- file.path(dir, "man")
-        if(!.fileTest("-d", docsDir))
+        if(!fileTest("-d", docsDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd sources"))
         isBase <- basename(dir) == "base"
@@ -266,7 +266,7 @@ function(package, dir, lib.loc = NULL,
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
         file.create(codeFile)
-        file.append(codeFile, .listFilesWithType(codeDir, "code"))
+        file.append(codeFile, listFilesWithType(codeDir, "code"))
 
         ## Read code from codeFile into codeEnv.
         codeEnv <- new.env()
@@ -347,7 +347,7 @@ function(package, dir, lib.loc = NULL,
     on.exit(unlink(docsFile), add = TRUE)
     docsList <- tempfile("Rdocs")
     on.exit(unlink(docsList), add = TRUE)
-    writeLines(.listFilesWithType(docsDir, "docs"), docsList)
+    writeLines(listFilesWithType(docsDir, "docs"), docsList)
     .Script("perl", "extract-usage.pl",
             paste(if(verbose) "--verbose", docsList, docsFile))
 
@@ -520,14 +520,14 @@ function(package, dir, lib.loc = NULL)
             stop(paste("you must specify", sQuote("package"),
                        "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
-        if(!.fileTest("-d", dir))
+        if(!fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            dir <- .convertFilePathToAbsolute(dir)
+            dir <- filePathAsAbsolute(dir)
     }
 
     docsDir <- file.path(dir, "man")
-    if(!.fileTest("-d", docsDir))
+    if(!fileTest("-d", docsDir))
         stop(paste("directory", sQuote(dir),
                    "does not contain Rd sources"))
     isBase <- basename(dir) == "base"
@@ -537,7 +537,7 @@ function(package, dir, lib.loc = NULL)
     on.exit(unlink(docsFile))
     docsList <- tempfile("Rdocs")
     on.exit(unlink(docsList), add = TRUE)
-    writeLines(.listFilesWithType(docsDir, "docs"), docsList)
+    writeLines(listFilesWithType(docsDir, "docs"), docsList)
     .Script("perl", "extract-usage.pl",
             paste("--mode=args", docsList, docsFile))
 
@@ -675,11 +675,11 @@ function(package, dir, lib.loc = NULL)
         dir <- .find.package(package, lib.loc)
         ## Using package installed in 'dir' ...
         codeDir <- file.path(dir, "R")
-        if(!.fileTest("-d", codeDir))
+        if(!fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         docsDir <- file.path(dir, "man")
-        if(!.fileTest("-d", docsDir))
+        if(!fileTest("-d", docsDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd sources"))
         isBase <- basename(dir) == "base"
@@ -704,16 +704,16 @@ function(package, dir, lib.loc = NULL)
             stop(paste("you must specify", sQuote("package"),
                        "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
-        if(!.fileTest("-d", dir))
+        if(!fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            dir <- .convertFilePathToAbsolute(dir)
+            dir <- filePathAsAbsolute(dir)
         codeDir <- file.path(dir, "R")
-        if(!.fileTest("-d", codeDir))
+        if(!fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         docsDir <- file.path(dir, "man")
-        if(!.fileTest("-d", docsDir))
+        if(!fileTest("-d", docsDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd sources"))
         isBase <- basename(dir) == "base"
@@ -722,7 +722,7 @@ function(package, dir, lib.loc = NULL)
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
         file.create(codeFile)
-        file.append(codeFile, .listFilesWithType(codeDir, "code"))
+        file.append(codeFile, listFilesWithType(codeDir, "code"))
 
         ## Read code from codeFile into codeEnv.
         codeEnv <- new.env()
@@ -770,7 +770,7 @@ function(package, dir, lib.loc = NULL)
     on.exit(unlink(docsFile), add = TRUE)
     docsList <- tempfile("Rdocs")
     on.exit(unlink(docsList), add = TRUE)
-    writeLines(.listFilesWithType(docsDir, "docs"), docsList)
+    writeLines(listFilesWithType(docsDir, "docs"), docsList)
     .Script("perl", "extract-usage.pl",
             paste("--mode=style", docsList, docsFile))
 
@@ -888,25 +888,25 @@ function(package, dir, file, lib.loc = NULL,
     }
     else if(!missing(dir)) {
         ## Using sources from directory @code{dir} ...
-        if(!.fileTest("-d", dir))
+        if(!fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            dir <- .convertFilePathToAbsolute(dir)
+            dir <- filePathAsAbsolute(dir)
         codeDir <- file.path(dir, "R")
-        if(!.fileTest("-d", codeDir))
+        if(!fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         file <- tempfile()
         on.exit(unlink(file))
         file.create(file)
-        file.append(file, .listFilesWithType(codeDir, "code"))
+        file.append(file, listFilesWithType(codeDir, "code"))
     }
     else if(missing(file)) {
         stop(paste("you must specify ", sQuote("package"), ", ",
                    sQuote("dir"), " or ", sQuote("file"), sep = ""))
     }
 
-    if(!.fileTest("-f", file))
+    if(!fileTest("-f", file))
         stop(paste("file", sQuote(file), "does not exist"))
 
     ## <FIXME>
@@ -1004,7 +1004,7 @@ function(package, dir, lib.loc = NULL)
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         codeDir <- file.path(dir, "R")
-        if(!.fileTest("-d", codeDir))
+        if(!fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         isBase <- basename(dir) == "base"
@@ -1029,12 +1029,12 @@ function(package, dir, lib.loc = NULL)
             stop(paste("you must specify", sQuote("package"),
                        "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
-        if(!.fileTest("-d", dir))
+        if(!fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            dir <- .convertFilePathToAbsolute(dir)
+            dir <- filePathAsAbsolute(dir)
         codeDir <- file.path(dir, "R")
-        if(!.fileTest("-d", codeDir))
+        if(!fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         isBase <- basename(dir) == "base"
@@ -1043,7 +1043,7 @@ function(package, dir, lib.loc = NULL)
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
         file.create(codeFile)
-        file.append(codeFile, .listFilesWithType(codeDir, "code"))
+        file.append(codeFile, listFilesWithType(codeDir, "code"))
 
         ## Read code from codeFile into codeEnv.
         codeEnv <- new.env()
@@ -1172,7 +1172,7 @@ function(package, dir, lib.loc = NULL)
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         codeDir <- file.path(dir, "R")
-        if(!.fileTest("-d", codeDir))
+        if(!fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         isBase <- basename(dir) == "base"
@@ -1206,12 +1206,12 @@ function(package, dir, lib.loc = NULL)
             stop(paste("you must specify", sQuote("package"),
                        "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
-        if(!.fileTest("-d", dir))
+        if(!fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            dir <- .convertFilePathToAbsolute(dir)
+            dir <- filePathAsAbsolute(dir)
         codeDir <- file.path(dir, "R")
-        if(!.fileTest("-d", codeDir))
+        if(!fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         isBase <- basename(dir) == "base"
@@ -1220,7 +1220,7 @@ function(package, dir, lib.loc = NULL)
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
         file.create(codeFile)
-        file.append(codeFile, .listFilesWithType(codeDir, "code"))
+        file.append(codeFile, listFilesWithType(codeDir, "code"))
 
         ## Read code from codeFile into codeEnv.
         codeEnv <- new.env()
@@ -1281,27 +1281,27 @@ function(package, dir, file, lib.loc = NULL)
         if(file.exists(codeFile))       # could be data-only
             codeFiles <- codeFile
         exampleDir <- file.path(dir, "R-ex")
-        if(.fileTest("-d", exampleDir)) {
+        if(fileTest("-d", exampleDir)) {
             codeFiles <- c(codeFiles,
-                           .listFilesWithExts(exampleDir, "R"))
+                           listFilesWithExts(exampleDir, "R"))
 
         }
     }
     else if(!missing(dir)) {
         ## Using sources from directory @code{dir} ...
-        if(!.fileTest("-d", dir))
+        if(!fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
-            dir <- .convertFilePathToAbsolute(dir)
+            dir <- filePathAsAbsolute(dir)
         codeDir <- file.path(dir, "R")
-        if(.fileTest("-d", codeDir))    # could be data-only
-            codeFiles <- .listFilesWithType(codeDir, "code")
+        if(fileTest("-d", codeDir))    # could be data-only
+            codeFiles <- listFilesWithType(codeDir, "code")
         docsDir <- file.path(dir, "man")
-        if(.fileTest("-d", docsDir))
-            docsFiles <- .listFilesWithType(docsDir, "docs")
+        if(fileTest("-d", docsDir))
+            docsFiles <- listFilesWithType(docsDir, "docs")
     }
     else if(!missing(file)) {
-        if(!.fileTest("-f", file))
+        if(!fileTest("-f", file))
             stop(paste("file", sQuote(file), "does not exist"))
         else
             codeFiles <- file

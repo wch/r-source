@@ -153,7 +153,7 @@ function(RdFiles)
 {
     ## Compute contents db from Rd files.
 
-    RdFiles <- path.expand(RdFiles[.fileTest("-f", RdFiles)])
+    RdFiles <- path.expand(RdFiles[fileTest("-f", RdFiles)])
 
     if(length(RdFiles) == 0)
         return(data.frame(File = I(character(0)),
@@ -233,7 +233,7 @@ function(contents, packageName, outFile)
     ## This has 'html' hard-wired.
     ## Note that slashes etc. should be fine for URLs.
     URLs <- paste("../../../library/", packageName, "/html/",
-                  .filePathSansExt(contents[ , "File"]),
+                  filePathSansExt(contents[ , "File"]),
                   ".html",
                   sep = "")
     ## </FIXME>
@@ -295,13 +295,13 @@ function(RdFiles, outFile = "", type = NULL,
     ##
     ## R version of defunct @code{R CMD Rdindex} (now removed).
 
-    if((length(RdFiles) == 1) && .fileTest("-d", RdFiles)) {
+    if((length(RdFiles) == 1) && fileTest("-d", RdFiles)) {
         ## Compatibility code for the former @code{R CMD Rdindex}
         ## interface.
         docsDir <- RdFiles
-        if(.fileTest("-d", file.path(docsDir, "man")))
+        if(fileTest("-d", file.path(docsDir, "man")))
             docsDir <- file.path(docsDir, "man")
-        RdFiles <- .listFilesWithType(docsDir, "docs")
+        RdFiles <- listFilesWithType(docsDir, "docs")
     }
 
     if(outFile == "")
@@ -329,14 +329,14 @@ function(dir, outFile = "")
     ## This is based on the Perl code in R_HOME/share/Rd2contents.pl.
     ## </NOTE>
 
-    if(!.fileTest("-d", dir))
+    if(!fileTest("-d", dir))
         stop(paste("directory", sQuote(dir), "does not exist"))
     else {
-        dir <- .convertFilePathToAbsolute(dir)
+        dir <- filePathAsAbsolute(dir)
         packageName <- basename(dir)
     }
     docsDir <- file.path(dir, "man")
-    if(!.fileTest("-d", docsDir))
+    if(!fileTest("-d", docsDir))
         stop(paste("directory", sQuote(dir),
                    "does not contain Rd sources"))
 
@@ -350,7 +350,7 @@ function(dir, outFile = "")
         stop(paste("argument", sQuote("outFile"),
                    "must be a character string or connection"))
 
-    contents <- Rdcontents(.listFilesWithType(docsDir, "docs"))
+    contents <- Rdcontents(listFilesWithType(docsDir, "docs"))
 
     .writeContentsDCF(contents, packageName, outFile)
 }

@@ -8,7 +8,7 @@ function(dir, outDir)
     ## 'Built:' fields added.  Note that from 1.7.0 on, packages without
     ## compiled code are not marked as being from any platform.
     dfile <- file.path(dir, "DESCRIPTION")
-    if(!.fileTest("-f", dfile))
+    if(!fileTest("-f", dfile))
         stop(paste("file", sQuote(dfile), "does not exist"))
     db <- try(read.dcf(dfile)[1, ])
     if(inherits(db, "try-error"))
@@ -30,7 +30,7 @@ function(dir, outDir)
                        paste(R.version[c("major", "minor")],
                              collapse = "."),
                        "; ",
-                       if(.fileTest("-d", file.path(dir, "src")))
+                       if(fileTest("-d", file.path(dir, "src")))
                            R.version$platform
                        else
                            "",
@@ -49,7 +49,7 @@ function(dir, outDir)
 .installPackageIndices <-
 function(dir, outDir)
 {
-    if(!.fileTest("-d", dir))
+    if(!fileTest("-d", dir))
         stop(paste("directory", sQuote(dir), "does not exist"))
     ## <FIXME>
     ## Should we do any checking on @code{outDir}?
@@ -57,13 +57,13 @@ function(dir, outDir)
 
     ## If there is an @file{INDEX} file in the package sources, we
     ## install this, and do not build it.
-    if(.fileTest("-f", file.path(dir, "INDEX")))
+    if(fileTest("-f", file.path(dir, "INDEX")))
         file.copy(file.path(dir, "INDEX"),
                   file.path(outDir, "INDEX"),
                   overwrite = TRUE)
 
     outMetaDir <- file.path(outDir, "Meta")
-    if(!.fileTest("-d", outMetaDir)) dir.create(outMetaDir)
+    if(!fileTest("-d", outMetaDir)) dir.create(outMetaDir)
 
     .installPackageRdIndices(dir, outDir)
     .installPackageVignetteIndex(dir, outDir)
@@ -76,27 +76,27 @@ function(dir, outDir)
 .installPackageRdIndices <-
 function(dir, outDir)
 {
-    dir <- .convertFilePathToAbsolute(dir)
+    dir <- filePathAsAbsolute(dir)
     docsDir <- file.path(dir, "man")
-    if(!.fileTest("-d", docsDir)) return(invisible())
+    if(!fileTest("-d", docsDir)) return(invisible())
 
     dataDir <- file.path(dir, "data")
     packageName <- basename(dir)
 
     indices <- c(file.path("Meta", "Rd.rds"), "CONTENTS", "INDEX")
-    upToDate <- .fileTest("-nt", file.path(outDir, indices), docsDir)
-    if(.fileTest("-d", dataDir)) {
+    upToDate <- fileTest("-nt", file.path(outDir, indices), docsDir)
+    if(fileTest("-d", dataDir)) {
         ## Note that the data index is computed from both the package's
         ## Rd files and the data sets actually available.
         upToDate <-
             c(upToDate,
-              .fileTest("-nt",
+              fileTest("-nt",
                         file.path(outDir, "Meta", "data.rds"),
                         c(dataDir, docsDir)))
     }
     if(all(upToDate)) return(invisible())
 
-    contents <- Rdcontents(.listFilesWithType(docsDir, "docs"))
+    contents <- Rdcontents(listFilesWithType(docsDir, "docs"))
 
     .writeContentsRDS(contents, file.path(outDir, "Meta", "Rd.rds"))
 
@@ -107,12 +107,12 @@ function(dir, outDir)
     ## build one.
     ## <FIXME>
     ## Maybe also save this in RDS format then?
-    if(!.fileTest("-f", file.path(dir, "INDEX")))
+    if(!fileTest("-f", file.path(dir, "INDEX")))
         writeLines(formatDL(.buildRdIndex(contents)),
                    file.path(outDir, "INDEX"))
     ## </FIXME>
 
-    if(.fileTest("-d", dataDir)) {
+    if(fileTest("-d", dataDir)) {
         .saveRDS(.buildDataIndex(dataDir, contents),
                  file.path(outDir, "Meta", "data.rds"))
     }
@@ -127,8 +127,8 @@ function(dir, outDir)
     vignetteDir <- file.path(dir, "inst", "doc")
     ## Create a vignette index only if the vignette dir exists and
     ## really contains vignettes.
-    if(!.fileTest("-d", vignetteDir)
-       || !length(.listFilesWithType(vignetteDir, "vignette")))
+    if(!fileTest("-d", vignetteDir)
+       || !length(listFilesWithType(vignetteDir, "vignette")))
         return(invisible())
 
     vignetteIndex <- .buildVignetteIndex(vignetteDir)
@@ -140,7 +140,7 @@ function(dir, outDir)
     ## Compatibility code for BioC vignette tools.
     ## Remove eventually ...
     outVignetteDir <- file.path(outDir, "doc")
-    if(!.fileTest("-d", outVignetteDir)) dir.create(outVignetteDir)
+    if(!fileTest("-d", outVignetteDir)) dir.create(outVignetteDir)
     vignetteIndex <-
         vignetteIndex[vignetteIndex$PDF != "", c("PDF", "Title")]
     writeLines(formatDL(vignetteIndex, style = "list"),
@@ -155,7 +155,7 @@ function(dir, outDir)
 function(dir, outDir)
 {
     demoDir <- file.path(dir, "demo")
-    if(!.fileTest("-d", demoDir)) return(invisible())
+    if(!fileTest("-d", demoDir)) return(invisible())
     demoIndex <- .buildDemoIndex(demoDir)
     .saveRDS(demoIndex,
              file = file.path(outDir, "Meta", "demo.rds"))

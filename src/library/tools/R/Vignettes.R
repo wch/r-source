@@ -50,7 +50,7 @@ function(package, dir, lib.loc = NULL,
     }
 
     if(tangle){
-        rfiles <- .listFilesWithExts(getwd(), c("r", "s", "R", "S"))
+        rfiles <- listFilesWithExts(getwd(), c("r", "s", "R", "S"))
         for(f in rfiles){
             yy <- try(source(f))
             if(inherits(yy, "try-error"))
@@ -100,16 +100,16 @@ pkgVignettes <- function(package, dir, lib.loc = NULL)
         if(missing(dir))
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
-        if(!.fileTest("-d", dir))
+        if(!fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
             ## maybe perform tilde expansion on @code{dir}
             docdir <- file.path(dirname(dir), basename(dir), "inst", "doc")
     }
 
-    if(!.fileTest("-d", docdir)) return(NULL)
+    if(!fileTest("-d", docdir)) return(NULL)
 
-    docs <- .listFilesWithType(docdir, "vignette")
+    docs <- listFilesWithType(docdir, "vignette")
 
     z <- list(docs=docs, dir=docdir)
     class(z) <- "pkgVignettes"
@@ -169,10 +169,10 @@ buildVignettes <-function(package, dir, lib.loc = NULL)
 .buildVignetteIndex <-
 function(vignetteDir)
 {
-    if(!.fileTest("-d", vignetteDir))
+    if(!fileTest("-d", vignetteDir))
         stop(paste("directory", sQuote(vignetteDir), "does not exist"))
     vignetteFiles <-
-        path.expand(.listFilesWithType(vignetteDir, "vignette"))
+        path.expand(listFilesWithType(vignetteDir, "vignette"))
 
     vignetteMetaRE <- function(tag)
         paste("[[:space:]]*%+[[:space:]]*\\\\Vignette", tag,
@@ -220,7 +220,7 @@ function(vignetteDir)
     colnames(contents) <- c("File", "Title", "Depends", "Keywords")
 
     ## (Note that paste(character(0), ".pdf") does not do what we want.)
-    vignettePDFs <- sub("$", ".pdf", .filePathSansExt(vignetteFiles))
+    vignettePDFs <- sub("$", ".pdf", filePathSansExt(vignetteFiles))
 
     vignetteTitles <- unlist(contents[, "Title"])
 
@@ -228,7 +228,7 @@ function(vignetteDir)
     ## indexing.  If we have @file{00Index.dcf}, use it when computing
     ## the vignette index, but let the index entries in the vignettes
     ## override the ones from the index file.
-    if(.fileTest("-f",
+    if(fileTest("-f",
                  INDEX <- file.path(vignetteDir, "00Index.dcf"))) {
         vignetteEntries <- try(read.dcf(INDEX))
         if(inherits(vignetteEntries, "try-error"))
@@ -243,7 +243,7 @@ function(vignetteDir)
             vignetteEntries[pos, 2][idx]
     }
 
-    vignettePDFs[!.fileTest("-f", vignettePDFs)] <- ""
+    vignettePDFs[!fileTest("-f", vignettePDFs)] <- ""
     vignettePDFs <- basename(vignettePDFs)
 
     data.frame(File = I(unlist(contents[, "File"])),
@@ -259,7 +259,7 @@ function(vignetteDir)
 .checkVignetteIndex <-
 function(vignetteDir)
 {
-    if(!.fileTest("-d", vignetteDir))
+    if(!fileTest("-d", vignetteDir))
         stop(paste("directory", sQuote(vignetteDir), "does not exist"))
     vignetteIndex <- .buildVignetteIndex(vignetteDir)
     badEntries <-
@@ -275,7 +275,7 @@ function(x, ...)
     if(length(x) > 0) {
         writeLines(paste("Vignettes with missing or empty",
                          "\\VignetteIndexEntry:"))
-        print(basename(.filePathSansExt(unclass(x))), ...)
+        print(basename(filePathSansExt(unclass(x))), ...)
     }
     invisible(x)
 }

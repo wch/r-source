@@ -1,10 +1,6 @@
 \name{tools-internal}
 \title{Internal tools Objects}
-% \alias{.convertFilePathToAbsolute}
-% \alias{.delimMatch}
-% \alias{.fileTest}
 % \alias{.isS3Generic}
-% \alias{.listFilesWithExts}
 % \alias{.loadPackageQuietly}
 % \alias{.makeFileExts}
 % \alias{.makeS3MethodsStopList}
@@ -47,12 +43,7 @@
   Internal tools functions.
 }
 \usage{
-% .convertFilePathToAbsolute(path)
-% .delimMatch(x, delim = c("{", "}"), syntax = "Rd")
-% .fileTest(op, x, y)
 % .isS3Generic(fname, envir)
-% .listFilesWithExts(dir, exts, path = TRUE)
-% .listFilesWithType(dir, type)
 % .loadPackageQuietly(package, lib.loc)
 % .makeFileExts(type)
 % .makeS3MethodsStopList(package)
