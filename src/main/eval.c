@@ -1186,7 +1186,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     if( nargs == 2 )
 	class = dominates(class, CADR(args));
 
-    sprintf(generic, "%s", CHAR(PRINTNAME(CAR(call))));
+    sprintf(generic, "%s", PRIMNAME(op) );
 
     j = length(class);
     sxp = R_NilValue;
