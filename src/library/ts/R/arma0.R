@@ -1,18 +1,20 @@
 arima0 <- function(x, order = c(0, 0, 0),
                    seasonal = list(order = c(0, 0, 0), period = NA),
                    xreg = NULL, include.mean = TRUE, delta = 0.01,
-                   transform.pars = 2, fixed = NULL)
+                   transform.pars = 2, fixed = NULL,
+                   method = c("ML", "CSS"), n.cond)
 {
     arma0f <- function(p)
     {
         par <- as.double(fixed)
         par[mask] <- p
-        .Call("arma0fa", par, PACKAGE = "ts")
+        .Call("arma0fa", G, par, PACKAGE = "ts")
     }
 
     series <- deparse(substitute(x))
     if(NCOL(x) > 1)
         stop("only implemented for univariate time series")
+    method <- match.arg(method)
     x <- as.ts(x)
     if(any(is.na(x))) delta <- -1 # only exact recursions handle NAs
     dim(x) <- NULL
@@ -27,6 +29,12 @@ arima0 <- function(x, order = c(0, 0, 0),
     tsp(x) <- NULL
     nd <- order[2] + seasonal$order[2]
     n.used <- length(x)
+    ncond <- n - n.used
+    if(method == "CSS") {
+        ncond1 <- order[1] + seasonal$period * seasonal$order[1]
+        ncond <- if(!missing(n.cond)) ncond + max(n.cond, ncond1)
+        else ncond + ncond1
+    }
     if(is.null(xreg)) {
         ncxreg <- 0
     } else {
@@ -47,9 +55,10 @@ arima0 <- function(x, order = c(0, 0, 0),
         if(qr(na.omit(xreg))$rank < ncol(xreg)) stop("xreg is collinear")
     }
     storage.mode(x) <- storage.mode(xreg) <- "double"
-    .Call("setup_starma", as.integer(arma), x, n.used, xreg, ncxreg, delta,
-          transform.pars > 0, PACKAGE = "ts")
-    on.exit(.Call("free_starma", PACKAGE = "ts"))
+    G <- .Call("setup_starma", as.integer(arma), x, n.used, xreg,
+               ncxreg, delta, transform.pars > 0, PACKAGE = "ts")
+    on.exit(.Call("free_starma", G, PACKAGE = "ts"))
+    .Call("Starma_method", G, method == "CSS")
     init <- rep(0, sum(arma[1:4]))
     if(ncxreg > 0)
         init <- c(init, coef(lm(x ~ xreg+0)))
@@ -64,14 +73,14 @@ arima0 <- function(x, order = c(0, 0, 0),
     coef <- res$par
 
     if(transform.pars)
-        coef <- .Call("Dotrans", as.double(coef), PACKAGE = "ts")
+        coef <- .Call("Dotrans", G, as.double(coef), PACKAGE = "ts")
     if(transform.pars == 2) {
-        .Call("set_trans", 0)
+        .Call("set_trans", G, 0)
         res <- optim(coef, arma0f, method = "BFGS", hessian = TRUE)
         coef <- res$par
     }
-    sigma2 <- .Call("get_s2", PACKAGE = "ts")
-    resid <- .Call("get_resid", PACKAGE = "ts")
+    sigma2 <- .Call("get_s2", G, PACKAGE = "ts")
+    resid <- .Call("get_resid", G, PACKAGE = "ts")
     tsp(resid) <- xtsp
     class(resid) <- "ts"
     nm <- NULL
@@ -94,11 +103,12 @@ arima0 <- function(x, order = c(0, 0, 0),
         } else var <- matrix(NA, 0, 0)
     }
     value <- 2 * n.used * res$value + n.used + n.used*log(2*pi)
-    aic <- value + 2*length(coef)
+    aic <- if(method == "ML") value + 2*length(coef) else NA
     res <- list(coef = fixed, sigma2 = sigma2, var.coef = var, mask = mask,
                 loglik = -0.5*value, aic = aic, arma = arma,
                 residuals = resid,
-                call = match.call(), series = series, code = res$convergence)
+                call = match.call(), series = series,
+                code = res$convergence, n.cond = ncond)
     class(res) <- "arima0"
     res
 }
@@ -116,11 +126,18 @@ print.arima0 <- function(x, digits = max(3, getOption("digits") - 3),
         cat("\nApprox standard errors:\n")
         print.default(ses, print.gap = 2)
     }
-    cat("\nsigma^2 estimated as ",
-        format(x$sigma2, digits = digits),
-        ":  log likelihood = ", format(round(x$loglik,2)),
-        ",  aic = ", format(round(x$aic,2)),
-        "\n", sep="")
+    cm <- x$call$method
+    if(is.null(cm) || cm == "ML")
+        cat("\nsigma^2 estimated as ",
+            format(x$sigma2, digits = digits),
+            ":  log likelihood = ", format(round(x$loglik,2)),
+            ",  aic = ", format(round(x$aic,2)),
+            "\n", sep="")
+    else
+        cat("\nsigma^2 estimated as ",
+            format(x$sigma2, digits = digits),
+            ":  half log mean square = ", format(round(x$loglik,2)),
+            "\n", sep="")
     invisible(x)
 }
 
@@ -160,11 +177,12 @@ predict.arima0 <-
         if(any(Mod(polyroot(c(1, ma)))) < 1)
             warning("seasonal ma part of model is not invertible")
     }
-    .Call("setup_starma", as.integer(arma), data, n, rep(0, n), 0, -1, 0,
-          PACKAGE = "ts")
-    on.exit(.Call("free_starma", PACKAGE = "ts"))
-    .Call("arma0fa", as.double(coefs), PACKAGE = "ts")
-    z <- .Call("arma0_kfore", arma[6], arma[7], n.ahead, PACKAGE = "ts")
+    G <- .Call("setup_starma", as.integer(arma), data, n, rep(0, n),
+               0, -1, 0, 0, PACKAGE = "ts")
+    on.exit(.Call("free_starma", G, PACKAGE = "ts"))
+    .Call("Starma_method", G, TRUE)
+    .Call("arma0fa", G, as.double(coefs), PACKAGE = "ts")
+    z <- .Call("arma0_kfore", G, arma[6], arma[7], n.ahead, PACKAGE = "ts")
     pred <- ts(z[[1]] + xm, start = xtsp[2] + deltat(data),
                frequency = xtsp[3])
     if(se.fit) {

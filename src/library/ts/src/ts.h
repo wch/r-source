@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001   The R Development Core Team.
+ *  Copyright (C) 2001-2   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -53,39 +53,28 @@ F77_SUB(stl)(double *y, int *n, int *np, int *ns,
 
 typedef struct
 {
-    int p, q, r, np, nrbar, n, m, trans;
+    int p, q, r, np, nrbar, n, m, trans, method;
     int mp, mq, msp, msq, ns;
     double delta, s2;
     double *params, *phi, *theta, *a, *P, *V;
     double *thetab, *xnext, *xrow, *rbar, *w, *wkeep, *resid, *reg;
 } starma_struct, *Starma;
 
-void starma(int p, int q, int r, int np, double *phi,
-	    double *theta, double *a,
-	    double *P, double *V, double *thetab, double *xnext,
-	    double *xrow, double *rbar, int nrbar, int *ifault);
+void starma(Starma G, int *ifault);
 
-void karma(int p, int q, int r, int np, double *phi,
-	   double *theta, double *a, double *P,
-	   double *V, int n, double *w, double *resid,
-	   double *sumlog, double *ssq, int iupd,
-	   double delta, int *nit);
+void karma(Starma G, double *sumlog, double *ssq, int iupd, int *nit);
 
-void forkal(int p, int q, int r, int np, int ird, 
-	    int il, int n, int nrbar, 
-	    double *phi, double *theta, double *delta, 
-	    double *w, double *y, double *amse,
-	    double *V, double *resid,
-	    double *xnext, double *xrow, double *rbar, 
-	    double *thetab, int *ifault);
+void forkal(Starma G, int id, int il, double *delta, double *y, 
+	    double *amse, int *ifault);
 
 SEXP setup_starma(SEXP na, SEXP x, SEXP pn, SEXP xreg, SEXP pm, 
 		  SEXP dt, SEXP ptrans);
-SEXP free_starma(void);
-SEXP set_trans(SEXP ptrans);
-SEXP arma0fa(SEXP inparams);
-SEXP get_s2(void);
-SEXP get_resid(void);
-SEXP Dotrans(SEXP x);
-SEXP arma0_kfore(SEXP pd, SEXP psd, SEXP n_ahead);
+SEXP free_starma(SEXP pG);
+SEXP set_trans(SEXP pG, SEXP ptrans);
+SEXP arma0fa(SEXP pG, SEXP inparams);
+SEXP get_s2(SEXP pG);
+SEXP get_resid(SEXP pG);
+SEXP Dotrans(SEXP pG, SEXP x);
+SEXP arma0_kfore(SEXP pG, SEXP pd, SEXP psd, SEXP n_ahead);
+SEXP Starma_method(SEXP pG, SEXP method);
 #endif

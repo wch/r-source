@@ -73,12 +73,12 @@ inclu2(int np, double *xnext, double *xrow, double ynext,
     }
 }
 
-void
-starma(int p, int q, int r, int np, double *phi,
-       double *theta, double *a, double *P, double *V,
-       double *thetab, double *xnext, double *xrow,
-       double *rbar, int nrbar, int *ifault)
+void starma(Starma G, int *ifault)
 {
+    int p = G->p, q = G->q, r = G->r, np = G->np, nrbar = G->nrbar;
+    double *phi = G->phi, *theta = G->theta, *a = G->a,
+	*P = G->P, *V = G->V, *thetab = G->thetab, *xnext = G->xnext,
+	*xrow = G->xrow, *rbar = G->rbar;
     int indi, indj, indn;
     double phii, phij, ynext, vj, bi;
     int i, j, k, ithisr, ind, npr, ind1, ind2, npr1, im, jm;
@@ -203,12 +203,12 @@ starma(int p, int q, int r, int np, double *phi,
     }
 }
 
-
-void
-karma(int p, int q, int r, int np, double *phi, double *theta,
-      double *a, double *P, double *V, int n, double *w, double *resid,
-      double *sumlog, double *ssq, int iupd, double delta, int *nit)
+void karma(Starma G, double *sumlog, double *ssq, int iupd, int *nit)
 {
+    int p = G->p, q = G->q, r = G->r, n = G->n;
+    double *phi = G->phi, *theta = G->theta, *a = G->a, *P = G->P,
+	*V = G->V, *w = G->w, *resid = G->resid;
+    
     int i, j, l, ii, ind, indn, indw;
     double a1, dt, et, ft, g, ut;
 
@@ -229,7 +229,7 @@ karma(int p, int q, int r, int np, double *phi, double *theta,
 /*        here dt = ft - 1.0 */
 
 		dt = (r > 1) ? P[r] : 0.0;
-		if (dt < delta) goto L610;
+		if (dt < G->delta) goto L610;
 		a1 = a[0];
 		for (j = 0; j < r - 1; j++) a[j] = a[j + 1];
 		a[r - 1] = 0.0;
@@ -290,13 +290,13 @@ karma(int p, int q, int r, int np, double *phi, double *theta,
 
 /*  start of as 182 */
 void
-forkal(int ip, int iq, int ir, int np, int id, int il, 
-       int n, int nrbar, double *phi, double *theta, double *delta,
-       double *w, double *y, double *amse, double *v, double *resid, 
-       double *xnext, double *xrow, double *rbar, double *thetab,
+forkal(Starma G, int id, int il, double *delta, double *y, double *amse,
        int *ifault)
 {
-    double *a, *p, *store;
+    int ip = G->p, iq = G->q, ir = G->r, n = G->n, np = G->np;
+    double *phi = G->phi, *v = G->V, *w = G->w, *xrow = G->xrow;
+    
+    double *a, *P, *store;
     int ird = ir + id, irz = ird*(ird + 1)/2;
     
     /* Local variables */
@@ -328,8 +328,6 @@ forkal(int ip, int iq, int ir, int np, int id, int il,
     --phi;
     --v;
     --delta;
-    --amse;
-    --y;
     --w;
 
     /* Function Body */
@@ -337,15 +335,16 @@ forkal(int ip, int iq, int ir, int np, int id, int il,
 /*     invoking this routine will calculate the finite sample predictions */
 /*     and their conditional mean square errors for any arima process. */
 
-/*     check for input faults. */
-
     a = (double *) R_alloc(ird, sizeof(double));
-    p = (double *) R_alloc(irz, sizeof(double));
+    P = (double *) R_alloc(irz, sizeof(double));
     store = (double *) R_alloc(ird, sizeof(double));
+    Free(G->a); G->a = a;
+    Free(G->P); G->P = P;
     --store;
     --a;
-    --p;
+    --P;
     
+/*     check for input faults. */
     *ifault = 0;
     if (ip < 0) *ifault = 1;
     if (iq < 0) *ifault += 2;
@@ -354,24 +353,19 @@ forkal(int ip, int iq, int ir, int np, int id, int il,
     if (k < ip) k = ip;
     if (ir != k) *ifault = 5;
     if (np != ir * (ir + 1) / 2) *ifault = 6;
-    if (nrbar < np * (np - 1) / 2) *ifault = 7;
     if (id < 0) *ifault = 8;
     if (ird != ir + id) *ifault = 9;
     if (irz != ird * (ird + 1) / 2) *ifault = 10;
     if (il < 1) *ifault = 11;
     if (*ifault != 0) return;
 
-/*     Calculate initial conditions for Kalman filter */
-
-    a[1] = 0.0;
-    v[1] = 1.0;
-
 /*     Find initial likelihood conditions. */
 
-    if (ir == 1) p[1] = 1.0 / (1.0 - phi[1] * phi[1]);
-    else
-	starma(ip, iq, ir, np, &phi[1], theta, &a[1], &p[1], &v[1],
-	       thetab, xnext, xrow, rbar, nrbar, ifault);
+    if (ir == 1) {
+	a[1] = 0.0;
+	v[1] = 1.0;
+	P[1] = 1.0 / (1.0 - phi[1] * phi[1]);
+    } else starma(G, ifault);
 
 /*     Calculate data transformations */
 
@@ -395,14 +389,14 @@ forkal(int ip, int iq, int ir, int np, int id, int il,
     sumlog = 0.0;
     ssq = 0.0;
     nit = 0;
-    karma(ip, iq, ir, np, &phi[1], theta, &a[1], &p[1], &v[1], nt, 
-	  &w[1], resid, &sumlog, &ssq, 1, -1.0, &nit);
+    G->n = nt;
+    karma(G, &sumlog, &ssq, 1, &nit);
 
 /*     Calculate m.l.e. of sigma squared */
 
     sigma = 0.0;
-    for (j = 1; j <= nt; j++) {
-	tmp = resid[j-1];
+    for (j = 0; j < nt; j++) {
+	tmp = G->resid[j];
 	sigma += tmp * tmp;
     }
     sigma /= nt;
@@ -410,12 +404,12 @@ forkal(int ip, int iq, int ir, int np, int id, int il,
 /*     reset the initial a and p when differencing occurs */
 
     if (id > 0) {
-	for (i = 1; i <= np; i++) xrow[i-1] = p[i];
-	for (i = 1; i <= irz; i++) p[i] = 0.0;
+	for (i = 1; i <= np; i++) xrow[i-1] = P[i];
+	for (i = 1; i <= irz; i++) P[i] = 0.0;
 	ind = 0;
 	for (j = 1; j <= ir; j++) {
 	    k = (j - 1) * (id + ir + 1) - (j - 1) * j / 2;
-	    for (i = j; i <= ir; i++) p[++k] = xrow[ind++];
+	    for (i = j; i <= ir; i++) P[++k] = xrow[ind++];
 	}
 	for (j = 1; j <= id; j++) a[ir + j] = store[j];
     }
@@ -436,7 +430,7 @@ forkal(int ip, int iq, int ir, int np, int id, int il,
     jkl1 = jkl + 1;
     id2r2 = id2r + 2;
     ibc = ir * (i45 - ir) / 2;
-    for (l = 1; l <= il; ++l) {
+    for (l = 0; l < il; ++l) {
 
 /*     predict a */
 
@@ -462,7 +456,7 @@ forkal(int ip, int iq, int ir, int np, int id, int il,
 		    ll = max(i,j);
 		    k = min(i,j);
 		    jj = jkl + (ll - k) + 1 + (k - 1) * (idd2 - k) / 2;
-		    store[i] += delta[j] * p[jj];
+		    store[i] += delta[j] * P[jj];
 		}
 	    }
 	    if (id > 1) {
@@ -470,23 +464,23 @@ forkal(int ip, int iq, int ir, int np, int id, int il,
 		    jj = id - j;
 		    lk = (jj - 1) * (idd2 - jj) / 2 + jkl;
 		    lk1 = jj * (idd1 - jj) / 2 + jkl;
-		    for (i = 1; i <= j; i++) p[++lk1] = p[++lk];
+		    for (i = 1; i <= j; i++) P[++lk1] = P[++lk];
 		}
 		for (j = 1; j <= id1; j++)
-		    p[jkl1 + j] = store[j] + p[ir + j];
+		    P[jkl1 + j] = store[j] + P[ir + j];
 	    }
-	    p[jkl1] = p[1];
+	    P[jkl1] = P[1];
 	    for (i = 1; i <= id; i++)
-		p[jkl1] += delta[i] * (store[i] + 2.0 * p[ir + i]);
-	    for (i = 1; i <= id; i++) store[i] = p[ir + i];
+		P[jkl1] += delta[i] * (store[i] + 2.0 * P[ir + i]);
+	    for (i = 1; i <= id; i++) store[i] = P[ir + i];
 	    for (j = 1; j <= ir; j++) {
 		kk1 = j * (id2r1 - j) / 2 + ir;
 		k1 = (j - 1) * (id2r - j) / 2 + ir;
 		for (i = 1; i <= id; i++) {
 		    kk = kk1 + i;
 		    k = k1 + i;
-		    p[k] = phi[j] * store[i];
-		    if (j != ir) p[k] += p[kk];
+		    P[k] = phi[j] * store[i];
+		    if (j != ir) P[k] += P[kk];
 		}
 	    }
 
@@ -494,25 +488,25 @@ forkal(int ip, int iq, int ir, int np, int id, int il,
 		store[j] = 0.0;
 		kkk = j * (i45 - j) / 2 - id;
 		for (i = 1; i <= id; i++)
-		    store[j] += delta[i] * p[++kkk];
+		    store[j] += delta[i] * P[++kkk];
 	    }
 	    for (j = 1; j <= ir; j++) {
 		k = j * idrr1 - j * (j + 1) / 2 + 1;
 		for (i = 1; i <= id1; i++) {
 		    --k;
-		    p[k] = p[k - 1];
+		    P[k] = P[k - 1];
 		}
 	    }
 	    for (j = 1; j <= ir; j++) {
 		k = (j - 1) * (id2r - j) / 2 + ir + 1;
-		p[k] = store[j] + phi[j] * p[1];
-		if (j < ir) p[k] += p[j + 1];
+		P[k] = store[j] + phi[j] * P[1];
+		if (j < ir) P[k] += P[j + 1];
 	    }
 	}
-	for (i = 1; i <= ir; i++) store[i] = p[i];
+	for (i = 1; i <= ir; i++) store[i] = P[i];
 
 	ind = 0;
-	dt = p[1];
+	dt = P[1];
 	for (j = 1; j <= ir; j++) {
 	    phij = phi[j];
 	    phijdt = phij * dt;
@@ -522,11 +516,11 @@ forkal(int ip, int iq, int ir, int np, int id, int il,
 		++ind;
 		++ind2;
 		phii = phi[i];
-		p[ind2] = v[ind] + phii * phijdt;
+		P[ind2] = v[ind] + phii * phijdt;
 		if (j < ir)
-		    p[ind2] += store[j + 1] * phii;
+		    P[ind2] += store[j + 1] * phii;
 		if (i < ir)
-		    p[ind2] = p[ind2] + store[i + 1] * phij + p[++ind1];
+		    P[ind2] = P[ind2] + store[i + 1] * phij + P[++ind1];
 	    }
 	}
 
@@ -537,18 +531,18 @@ forkal(int ip, int iq, int ir, int np, int id, int il,
 
 /*     calculate m.s.e. of y */
 
-	ams = p[1];
+	ams = P[1];
 	if (id > 0) {
 	    for (j = 1; j <= id; j++) {
 		jrj = ibc + (j - 1) * (idd2 - j) / 2;
 		tmp = delta[j];
-		ams = ams + 2.0 * delta[j] * p[ir + j] + p[jrj + 1] * tmp * tmp;
+		ams = ams + 2.0 * delta[j] * P[ir + j] + P[jrj + 1] * tmp * tmp;
 	    }
 	    for (j = 1; j <= id1; j++) {
 		j1 = j + 1;
 		jrk = ibc + 1 + (j - 1) * (idd2 - j) / 2;
 		for (i = j1; i <= id; i++)
-		    ams += 2.0 * delta[i] * delta[j] * p[++jrk];
+		    ams += 2.0 * delta[i] * delta[j] * P[++jrk];
 	    }
 	}
 	amse[l] = ams * sigma;

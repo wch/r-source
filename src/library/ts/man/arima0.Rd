@@ -8,7 +8,8 @@
 arima0(x, order = c(0, 0, 0),
        seasonal = list(order = c(0, 0, 0), period = NA),
        xreg = NULL, include.mean = TRUE,
-       delta = 0.01, transform.pars = 2, fixed = NULL)
+       delta = 0.01, transform.pars = 2, fixed = NULL,
+       method = c("ML", "CSS"), n.cond)
 
 \method{predict}{arima0}(object, n.ahead = 1, newxreg, se.fit = TRUE, ...)
 
@@ -37,13 +38,19 @@ arima0.diag(fit, gof.lag = 10)
 
   \item{transform.pars}{If greater than 0, the ARMA parameters are
     transformed to ensure that they remain in the region of
-    invertibility. If equal to 2, the optimization is rerun on
+    invertibility.  If equal to 2, the optimization is rerun on
     the original scale to find the Hessian.}
 
   \item{fixed}{optional numeric vector of the same length as the total
     number of parameters.  If supplied, only non-\code{NA} entries in
-    \code{fixed} will be varied.
-  }
+    \code{fixed} will be varied.}
+
+  \item{method}{Fitting method: maximum likelihood or minimize
+    conditional sum-of-squares.}
+
+  \item{n.cond}{Only used if fitting by conditional-sum-of-squares: the
+    number of initial observations to ignore.  It will be ignored if
+    less than the maximum lag of an AR term.}
 
   \item{object, fit}{The result of an \code{arima0} fit.}
 
@@ -63,28 +70,16 @@ arima0.diag(fit, gof.lag = 10)
   likelihood, and forecast from the fitted model.
 }
 \details{
-  Different definitions of ARIMA models have different signs for the
+  Different definitions of ARMA models have different signs for the
   AR and/or MA coefficients. The definition here has
 
   \deqn{X_t = a_1X_{t-1} + \cdots + a_pX_{t-p} + e_t + b_1e_{t-1} + \dots + b_qe_{t-q}}{\code{X[t] = a[1]X[t-1] + \dots + a[p]X[t-p] + e[t] + b[1]e[t-1] + \dots + b[q]e[t-q]}}
 
   and so the MA coefficients differ in sign from those of
-  S-PLUS. Further, if \code{include.mean} is true, this formula
-  applies to \eqn{X-m} rather than \eqn{X}.
+  S-PLUS.  Further, if \code{include.mean} is true, this formula
+  applies to \eqn{X-m} rather than \eqn{X}.  For ARIMA models with
+  differencing, the differenced series follows a zero-mean ARMA model. 
     
-  The exact likelihood is computed via a state-space representation of
-  the ARMA process, and the innovations and their variance found by a
-  Kalman filter based on Gardener \emph{et al.} (1980).  This has
-  the option to switch to `fast recursions' (assume
-  an effectively infinite past) if the innovations variance is close
-  enough to its asymptotic bound. The argument \code{delta} sets the
-  tolerance: at its default value the approximation is normally
-  negligible and the speed-up considerable. Exact computations can be
-  ensured by setting \code{delta} to a negative value.
-
-  As from \R 1.5.0 missing values are allowed, but any missing values
-  will force \code{delta} to be ignored and full recursions used.
-  
   The variance matrix of the estimates is found from the Hessian of
   the log-likelihood, and so may only be a rough guide, especially for
   fits close to the boundary of invertibility.
@@ -98,6 +93,30 @@ arima0.diag(fit, gof.lag = 10)
   \code{predict.arima0} will give a warning for non-invertible MA
   models.
 }
+\section{Fitting methods}{
+  The exact likelihood is computed via a state-space representation of
+  the ARMA process, and the innovations and their variance found by a
+  Kalman filter based on Gardener \emph{et al.} (1980).  This has
+  the option to switch to `fast recursions' (assume
+  an effectively infinite past) if the innovations variance is close
+  enough to its asymptotic bound. The argument \code{delta} sets the
+  tolerance: at its default value the approximation is normally
+  negligible and the speed-up considerable. Exact computations can be
+  ensured by setting \code{delta} to a negative value.
+
+  As from \R 1.5.0 missing values are allowed, but any missing values
+  will force \code{delta} to be ignored and full recursions used.
+
+  Conditional sum-of-squares is provided mainly for expositional
+  purposes.  This computes the sum of squares of the fitted innovations
+  from observation
+  \code{n.cond} on, (where \code{n.cond} is at least the maximum lag of
+  an AR term), treating all earlier innovations to be zero.  Argument
+  \code{n.cond} can be used to allow comparability between different
+  fits.  The ``log-likelihood'' is the first term, half the log of the
+  estimated mean square.  Missing values are allowed, but will cause
+  many of the innovations to be missing.
+}
 \value{
   For \code{arima0}, a list of class \code{"arima0"} with components:
 
@@ -109,14 +128,16 @@ arima0.diag(fit, gof.lag = 10)
     \code{coef}. If \code{transform.pars = 1}, only the portion
     corresponding to the untransformed parameters is returned.}
 
-  \item{loglik}{the maximized log-likelihood (of the differenced data).}
+  \item{loglik}{the maximized log-likelihood (of the differenced data),
+    or the approximation to it used.}
 
   \item{arma}{A compact form of the specification, as a vector giving
     the number of AR, MA, seasonal AR and seasonal MA coefficients,
     plus the period and the number of non-seasonal and seasonal
     differences.}
 
-  \item{aic}{the AIC value corresponding to the log-likelihood.}
+  \item{aic}{the AIC value corresponding to the log-likelihood. Only
+    valid for \code{method = "ML"} fits}
 
   \item{residuals}{the residuals. (Was \code{resid} prior to \R 1.5.0.)}
 
@@ -125,6 +146,8 @@ arima0.diag(fit, gof.lag = 10)
   \item{series}{the name of the series \code{x}.}
 
   \item{convergence}{the value returned by \code{\link{optim}}.}
+
+  \item{n.cond}{the number of initial observations not used in the fitting.}
 
   For \code{predict.arima0}, a time series of predictions, or if
   \code{se.fit = TRUE}, a list with components \code{pred}, the
@@ -141,7 +164,7 @@ arima0.diag(fit, gof.lag = 10)
     \emph{Applied Statistics} \bold{29}, 311--322.
 
     Harvey, A. C. (1993) \emph{Time Series Models},
-    2nd Edition, Harvester Wheatsheaf, section 4.4.
+    2nd Edition, Harvester Wheatsheaf, sections 3.3 and  4.4.
 
     Harvey, A. C. and McKenzie, C. R. (1982) Algorithm AS182.
     An algorithm for finite sample prediction from ARIMA processes.
@@ -165,18 +188,22 @@ arima0.diag(fit, gof.lag = 10)
 
 \examples{
 data(lh)
-arima0(lh, order=c(1,0,0))
-arima0(lh, order=c(3,0,0))
-arima0(lh, order=c(1,0,1))
-predict(arima0(lh, order=c(3,0,0)), n.ahead=12)
+arima0(lh, order = c(1,0,0))
+arima0(lh, order = c(3,0,0))
+arima0(lh, order = c(1,0,1))
+predict(arima0(lh, order = c(3,0,0)), n.ahead = 12)
+
+arima0(lh, order = c(3,0,0), method = "CSS")
 
 data(USAccDeaths)
 fit <- arima0(USAccDeaths, order=c(0,1,1), seasonal=list(order=c(0,1,1)))
 fit
-predict(fit, n.ahead=6)
+predict(fit, n.ahead = 6)
+arima0(USAccDeaths, order=c(0,1,1), seasonal=list(order=c(0,1,1)),
+       method = "CSS") # drops first 13 observations.
 
 data(LakeHuron)
-arima0(LakeHuron, order=c(2,0,0), xreg=1:98)
+arima0(LakeHuron, order = c(2,0,0), xreg = 1:98)
 \testonly{
 ## test fitting with NAs
 tmp <- LakeHuron

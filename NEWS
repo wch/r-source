@@ -44,7 +44,7 @@ NEW FEATURES
 
     o	New option by = "DSTday" for seq.POSIXt().
 
-    o	hist now has a method for date-time objects.
+    o	hist() now has a method for date-time objects.
 
     o	summary.princomp() now has a separate print() method, and
 	`digits' is now an argument to the print method and not to
@@ -73,8 +73,13 @@ NEW FEATURES
 
    o	arima0() now handles missing values internally so the `na.action'
 	argument has been removed: missing values are also accepted in
-	the `xreg' argument.  There is a new argument `fixed' to allow
-	some of the parameters to be held fixed.
+	the `xreg' argument.
+
+	There is a new argument `fixed' to allow some of the
+	parameters to be held fixed.
+
+	There is a new argument `method' giving the option to use
+	conditional-sum-of-squares estimation.
 
    o	library() now checks the dependence on R version (if any) and
 	warns if the package was built under a later version of R.
@@ -140,7 +145,7 @@ BUG FIXES
 	equal, yet not always distinguishing NA and NaN.  This was
 	very rare except for data imported as binary numbers.
 
-    o   the error handler recover protects itself against errors in
+    o   The error handler recover protects itself against errors in
         dump.frames and uses a new utility, limitedLabels, to generate
         names for the dump that don't inadvertently blow the limit on
         symbol length.  (TODO:  either fix dump.frames accordingly or

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001   The R Development Core Team.
+ *  Copyright (C) 2001-2   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,34 +22,35 @@
 #include "R_ext/Rdynload.h"
 
 R_CMethodDef CEntries[] = {
-    {"acf", (DL_FUNC) &acf, 6},  
-    {"uni_pacf", (DL_FUNC) &uni_pacf, 3},  
-    {"artoma", (DL_FUNC) &artoma, 4},  
-    {"burg", (DL_FUNC) &burg, 6},  
-    {"multi_burg", (DL_FUNC) &multi_burg, 11},  
-    {"multi_yw", (DL_FUNC) &multi_yw, 10},  
-    {"R_intgrt_vec", (DL_FUNC) &R_intgrt_vec, 4},  
-    {"filter1", (DL_FUNC) &filter1, 7},  
+    {"acf", (DL_FUNC) &acf, 6},
+    {"uni_pacf", (DL_FUNC) &uni_pacf, 3},
+    {"artoma", (DL_FUNC) &artoma, 4},
+    {"burg", (DL_FUNC) &burg, 6},
+    {"multi_burg", (DL_FUNC) &multi_burg, 11},
+    {"multi_yw", (DL_FUNC) &multi_yw, 10},
+    {"R_intgrt_vec", (DL_FUNC) &R_intgrt_vec, 4},
+    {"filter1", (DL_FUNC) &filter1, 7},
     {"filter2", (DL_FUNC) &filter2, 5},
-    {"R_pp_sum", (DL_FUNC) &R_pp_sum, 4},  
+    {"R_pp_sum", (DL_FUNC) &R_pp_sum, 4},
     {NULL, NULL, 0}
 };
 
 R_CallMethodDef CallEntries[] = {
-    {"setup_starma", (DL_FUNC) &setup_starma, 7},  
-    {"free_starma", (DL_FUNC) &free_starma, 0},  
-    {"set_trans", (DL_FUNC) &set_trans, 1},  
-    {"arma0fa", (DL_FUNC) &arma0fa, 1},  
-    {"get_s2", (DL_FUNC) &get_s2, 0},  
-    {"get_resid", (DL_FUNC) &get_resid, 0},  
-    {"Dotrans", (DL_FUNC) &Dotrans, 1},  
-    {"arma0_kfore", (DL_FUNC) &arma0_kfore, 3},  
+    {"setup_starma", (DL_FUNC) &setup_starma, 8},
+    {"free_starma", (DL_FUNC) &free_starma, 1},
+    {"set_trans", (DL_FUNC) &set_trans, 2},
+    {"arma0fa", (DL_FUNC) &arma0fa, 2},
+    {"get_s2", (DL_FUNC) &get_s2, 1},
+    {"get_resid", (DL_FUNC) &get_resid, 1},
+    {"Dotrans", (DL_FUNC) &Dotrans, 2},
+    {"arma0_kfore", (DL_FUNC) &arma0_kfore, 4},
+    {"Starma_method", (DL_FUNC) &Starma_method, 2},
     {NULL, NULL, 0}
 };
 
 R_FortranMethodDef FortEntries[] = {
-    {"eureka", (DL_FUNC) &F77_SUB(eureka), 6},  
-    {"stl", (DL_FUNC) &F77_SUB(stl), 18},  
+    {"eureka", (DL_FUNC) &F77_SUB(eureka), 6},
+    {"stl", (DL_FUNC) &F77_SUB(stl), 18},
     {NULL, NULL, 0}
 };
 
