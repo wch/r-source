@@ -161,8 +161,10 @@ NEW FEATURES
 	in the attribute "out.attrs", and this is used by the
 	predict() method for loess to return a suitable array.
 
+    o	dist() has a new method to calculate Minkowski distances.
 
-Utilities
+
+UTILITIES
 
     o	R CMD check  now runs the (Rd) examples with default RNGkind
 	(uniform & normal) and set.seed(1).

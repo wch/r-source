@@ -82,7 +82,7 @@ static const R_CMethodDef CEntries[]  = {
     {"tukeyline", (DL_FUNC) &tukeyline, 6},
     {"dblcen", (DL_FUNC) &dblcen, 2},
     {"R_cutree", (DL_FUNC) &R_cutree, 2},
-    {"R_distance", (DL_FUNC) &R_distance, 6},
+    {"R_distance", (DL_FUNC) &R_distance, 7},
     {"acf", (DL_FUNC) &acf, 6},
     {"uni_pacf", (DL_FUNC) &uni_pacf, 3},
     {"artoma", (DL_FUNC) &artoma, 4},

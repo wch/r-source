@@ -1,7 +1,7 @@
 \name{dist}
 \title{Distance Matrix Computation}
 \usage{
-dist(x, method = "euclidean", diag = FALSE, upper = FALSE)
+dist(x, method = "euclidean", diag = FALSE, upper = FALSE, p = 2)
 
 as.dist(m, diag = FALSE, upper = FALSE)
 
@@ -21,12 +21,13 @@ as.dist(m, diag = FALSE, upper = FALSE)
   \item{x}{a numeric matrix, data frame or \code{"dist"} object.}
   \item{method}{the distance measure to be used. This must be one of
     \code{"euclidean"}, \code{"maximum"}, \code{"manhattan"},
-    \code{"canberra"} or \code{"binary"}.
+    \code{"canberra"}, \code{"binary"} or \code{"minkowski"}.
     Any unambiguous substring can be given.}
   \item{diag}{logical value indicating whether the diagonal of the
     distance matrix should be printed by \code{print.dist}.}
   \item{upper}{logical value indicating whether the upper triangle of the
     distance matrix should be printed by \code{print.dist}.}
+  \item{p}{The power of the Minikowski distance.}
   \item{m}{A matrix of distances to be converted to a \code{"dist"}
     object (only the lower triangle is used, the rest is ignored).}
   \item{digits, justify}{passed to \code{\link{format}} inside of
@@ -63,6 +64,9 @@ as.dist(m, diag = FALSE, upper = FALSE)
       and zero elements are \sQuote{off}.  The distance is the
       \emph{proportion} of bits in which only one is on amongst those in
       which at least one is on.}
+
+    \item{\code{minkowki}:}{The \eqn{p} norm, the \eqn{p}th root of the
+      sum of the \eqn{p}th powers of the differences of the components.}
   }
 
   Missing values are allowed, and are excluded from all computations
@@ -70,9 +74,9 @@ as.dist(m, diag = FALSE, upper = FALSE)
   Further, when \code{Inf} values are involved, all pairs of values are
   excluded when their contribution to the distance gave \code{NaN} or
   \code{NA}.\cr
-  If some columns are excluded in calculating a Euclidean, Manhattan or
-  Canberra distance, the sum is scaled up proportionally to the number
-  of columns used.  If all pairs are excluded when calculating a
+  If some columns are excluded in calculating a Euclidean, Manhattan,
+  Canberra or Minkowski distance, the sum is scaled up proportionally
+  to the number of columns used.  If all pairs are excluded when calculating a
   particular distance, the value is \code{NA}.
 
   The functions \code{as.matrix.dist()} and \code{as.dist()} can be used
@@ -108,7 +112,11 @@ as.dist(m, diag = FALSE, upper = FALSE)
   Wadsworth \& Brooks/Cole.
 
   Mardia, K. V., Kent, J. T. and Bibby, J. M. (1979)
-  \emph{Multivariate Analysis.} London: Academic Press.
+  \emph{Multivariate Analysis.} Academic Press.
+
+  Borg, I. and Groenen, P. (1997)
+  \emph{Modern Multidimensional Scaling.  Theory and Applications.}
+  Springer.
 }
 \seealso{
   \code{\link[cluster]{daisy}} in the \pkg{cluster} package with more
