@@ -81,6 +81,9 @@ DOCUMENTATION
 	(If makeinfo >= 4.5 is not available, the version on CRAN is
 	linked to.)
 
+    o	Manual `Writing R Extensions' has further details on writing
+	new front-ends for R using the new public header files.
+
 
 C-LEVEL FACILITIES
 
@@ -155,6 +158,14 @@ NEW FEATURES
     o	Platform equivalence in library() is tested by a new function
 	testPlatformEquivalence() which ignores the 'vendor' field and
 	can be customized by cognescenti.
+
+
+DOCUMENTATION
+
+    o	Manual `Writing R Extensions' has new sections on writing
+	portable packages and on writing new front-ends for R -- the
+	latter will be more comprehensive in R 2.1.0 which has new
+	public header files. 
 
 
 DEPRECATED & DEFUNCT
