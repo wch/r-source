@@ -413,6 +413,7 @@ etc/build-help
 etc/build-htmlpkglist
 etc/help.pretty
 etc/html2dos
+doc/keyword-test
 demos/dynload/Makefile
 src/library/LIBCLEAN
 cmd/fwf2table
@@ -422,4 +423,5 @@ AC_OUTPUT_COMMANDS(
 (cd etc; chmod +x INSTALL REMOVE Rdconv Rdindex Rman2Rd Sd2Rd \
          build-help build-htmlpkglist help.pretty html2dos)
 (cd cmd; chmod +x fwf2table)
+(cd doc; chmod +x keyword-test)
 )
