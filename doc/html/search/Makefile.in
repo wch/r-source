@@ -34,7 +34,7 @@ OBJECTS = \
 .SUFFIXES: .class .java
 
 .java.class:
-	$(JAVAC) $<
+	(cd $(srcdir) && $(JAVAC) $(<F))
 
 all: Makefile R
 
