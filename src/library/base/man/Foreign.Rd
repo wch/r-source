@@ -71,7 +71,7 @@
 
 #ifdef windows
   For Windows-specific details on producing the external code, see the
-  file ``readme.packages''.
+  file \file{readme.packages}.
 #endif
 }
 %%-- This note based on BDR's understanding, edited TSL
