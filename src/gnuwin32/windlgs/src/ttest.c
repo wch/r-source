@@ -1,4 +1,4 @@
-#include "globalvar.h" /* for ArrowCursor */
+//#include "globalvar.h" /* for ArrowCursor */
 #include "graphapp.h"
 #include <stdlib.h> /* atof */
 #include <ctype.h> /* tolower */

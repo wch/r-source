@@ -24,7 +24,11 @@
 
 extern int RguiMDI;
 extern int MDIset;
-extern window RConsole;
+
+#include <R_ext/libextern.h>
+LibExtern window RConsole;
+#undef LibExtern
+
 void Rconsolecmd(char *);
 
 void R_ShowMessage(char *s);

@@ -7,7 +7,7 @@ all: makeMakedeps ../../../modules/$(MODULE).dll
 CSOURCES=g_alab_her.c g_cntrlify.c g_fontdb.c g_her_glyph.c
 FSOURCES=
 
-CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H -include ../../include/globalvar.h
+CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H
 FFLAGS=$(OPTFLAGS)
 OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
 

@@ -7,7 +7,7 @@ all: makeMakedeps ../../../modules/$(MODULE).dll
 CSOURCES = Lapack.c
 FSOURCES = double.f cmplx.f
 
-CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H -include ../../include/globalvar.h
+CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H
 FFLAGS=$(FOPTFLAGS)
 OBJS=$(CSOURCES:.c=.o) $(FSOURCES:.f=.o) dllversion.o
 

@@ -45,7 +45,7 @@ Rboolean LoadSiteFile = TRUE;
 Rboolean LoadInitFile = TRUE;
 Rboolean DebugInitFile = FALSE;
 
-UImode  CharacterMode;
+__declspec(dllexport) UImode  CharacterMode;
 int ConsoleAcceptCmd;
 void closeAllHlpFiles();
 void UnLoad_Unzip_Dll();
@@ -62,7 +62,7 @@ static DWORD mainThreadId;
 
 static char oldtitle[512];
 
-Rboolean UserBreak = FALSE;
+__declspec(dllexport) Rboolean UserBreak = FALSE;
 
 /* callbacks */
 static void (*R_CallBackHook) ();

@@ -735,13 +735,14 @@ extern	font	Times;  	/* times roman font (serif) */
 extern	font	Helvetica;	/* helvetica font (sans serif) */
 extern	font	Courier;	/* courier font (fixed width) */
 
-extern	cursor	ArrowCursor;	/* normal arrow cursor */
-extern	cursor	BlankCursor;	/* invisible cursor */
-extern	cursor	WatchCursor;	/* wait for the computer */
-extern	cursor	CaretCursor;	/* insert text */
-extern	cursor	TextCursor;	/* insert text */
-extern	cursor	HandCursor;	/* hand pointer */
-
+#include <R_ext/libextern.h>
+LibExtern cursor	ArrowCursor;	/* normal arrow cursor */
+LibExtern cursor	BlankCursor;	/* invisible cursor */
+LibExtern cursor	WatchCursor;	/* wait for the computer */
+LibExtern cursor	CaretCursor;	/* insert text */
+LibExtern cursor	TextCursor;	/* insert text */
+LibExtern cursor	HandCursor;	/* hand pointer */
+#undef LibExtern
 
 #ifdef __cplusplus
 }

@@ -319,7 +319,7 @@ static void R_LoadProfile(FILE *fparg, SEXP env)
 
 /* Use this to allow e.g. Win32 malloc to call warning.
    Don't use R-specific type, e.g. Rboolean */
-int R_Is_Running = 0;
+/* int R_Is_Running = 0; now in Defn.h */
 
 void setup_Rmainloop(void)
 {

@@ -60,16 +60,17 @@ endif
 tcl: 
 	$(MAKE) STAMP=NO pkg-tcltk
 
-CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H
+CFLAGS = $(OPTFLAGS) -I../include -I. -DHAVE_CONFIG_H -DR_DLL_BUILD
 FFLAGS = $(OPTFLAGS)
 
 ## cross-building needs an import library: native builds can use the DLL.
+## we do need to build R.exp to ship if for use with VC++ etc.
 ifeq ($(strip $(BUILD)),CROSS)
 rbuild: fixfiles rlibs makeMakedeps ../../bin/R.dll libR.a \
-	 CHTML ../include/globalvar.h front-ends COPYRIGHTS rmodules
+	 CHTML front-ends COPYRIGHTS rmodules
 else
-rbuild: fixfiles rlibs makeMakedeps ../../bin/R.dll \
-	 CHTML ../include/globalvar.h front-ends COPYRIGHTS rmodules
+rbuild: fixfiles rlibs makeMakedeps ../../bin/R.dll R.exp\
+	 CHTML front-ends COPYRIGHTS rmodules
 endif
 
 rpackage: fixed/fixdesc ../../library/R.css
@@ -158,8 +159,8 @@ Rm.exp1: R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) exported-vars
 
 
 # avoid building globalvar.h with errors
-../include/globalvar.h: exported-vars
-	perl -n makeimps.pl exported-vars > $@
+#../include/globalvar.h: exported-vars
+#	perl -n makeimps.pl exported-vars > $@
 
 ../../library/R.css: ../../doc/html/R.css
 	$(CP) $< $@
@@ -192,7 +193,7 @@ ts-ZIPDATA = zip
 bundle-%:
 	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
-pkg-%:  # libR.a ../include/globalvar.h
+pkg-%:
 	$(MAKE) DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" EXTRADOCS=$($*-EXTRADOCS) \
 	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg

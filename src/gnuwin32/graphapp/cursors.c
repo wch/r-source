@@ -29,15 +29,17 @@
 
  */
 
+#define __MAIN__
 #include "internal.h"
+#undef __MAIN__
 
-cursor	ArrowCursor = NULL;
-cursor	BlankCursor = NULL;
-cursor	WatchCursor = NULL;
-cursor	CaretCursor = NULL;
-cursor	TextCursor  = NULL;
-cursor	HandCursor  = NULL;
-cursor	CrossCursor  = NULL;
+__declspec(dllexport) cursor	ArrowCursor = NULL;
+__declspec(dllexport) cursor	BlankCursor = NULL;
+__declspec(dllexport) cursor	WatchCursor = NULL;
+__declspec(dllexport) cursor	CaretCursor = NULL;
+__declspec(dllexport) cursor	TextCursor  = NULL;
+__declspec(dllexport) cursor	HandCursor  = NULL;
+__declspec(dllexport) cursor	CrossCursor  = NULL;
 
 /*
  *  Define the 'Hand' image shape:

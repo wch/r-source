@@ -372,8 +372,9 @@ extern
 FUNTAB	R_FunTab[];	    /* Built in functions */
 
 
+#include <R_ext/libextern.h>
+
 #ifdef __MAIN__
-#define extern
 #define INI_as(v) = v
 #else
 #define INI_as(v)
@@ -399,7 +400,8 @@ extern int	R_VSize		INI_as(R_VSIZE);/* Size of the vector heap */
 extern SEXP	R_NHeap;	    /* Start of the cons cell heap */
 extern SEXP	R_FreeSEXP;	    /* Cons cell free list */
 extern long	R_Collected;	    /* Number of free cons cells (after gc) */
-extern SEXP	R_PreciousList;	    /* List of Persistent Objects */
+LibExtern SEXP	R_PreciousList;	    /* List of Persistent Objects */
+LibExtern int	R_Is_Running;	    /* for Windows memory manager */
 
 /* The Pointer Protection Stack */
 extern int	R_PPStackSize	INI_as(R_PPSSIZE); /* The stack size (elements) */
@@ -407,14 +409,14 @@ extern int	R_PPStackTop;	    /* The top of the stack */
 extern SEXP*	R_PPStack;	    /* The pointer protection stack */
 
 /* Evaluation Environment */
-extern SEXP	R_CurrentExpr;	    /* Currently evaluating expression */
+LibExtern SEXP	R_CurrentExpr;	    /* Currently evaluating expression */
 extern SEXP	R_ReturnedValue;    /* Slot for return-ing values */
 extern SEXP*	R_SymbolTable;	    /* The symbol table */
 extern RCNTXT	R_Toplevel;	    /* Storage for the toplevel environment */
 extern RCNTXT*	R_ToplevelContext;  /* The toplevel environment */
 extern RCNTXT*	R_GlobalContext;    /* The global environment */
-extern int	R_Visible;	    /* Value visibility flag */
-extern int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */
+LibExtern int	R_Visible;	    /* Value visibility flag */
+LibExtern int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */
 extern int	R_EvalCount	INI_as(0);	/* Evaluation count */
 extern int	R_BrowseLevel	INI_as(0);	/* how deep the browser is */
 
@@ -422,7 +424,7 @@ extern int	R_Expressions	INI_as(500);	/* options(expressions) */
 extern Rboolean	R_KeepSource	INI_as(FALSE);	/* options(keep.source) */
 
 /* File Input/Output */
-extern Rboolean	R_Interactive	INI_as(TRUE);	/* TRUE during interactive use*/
+LibExtern Rboolean R_Interactive	INI_as(TRUE);	/* TRUE during interactive use*/
 extern Rboolean	R_Quiet		INI_as(FALSE);	/* Be as quiet as possible */
 extern Rboolean	R_Slave		INI_as(FALSE);	/* Run as a slave process */
 extern Rboolean	R_Verbose	INI_as(FALSE);	/* Be verbose */
@@ -442,9 +444,9 @@ extern int	R_ParseError	INI_as(0); /* Line where parse error occured */
 extern int	R_DirtyImage	INI_as(0);	/* Current image dirty */
 
 /* History */
-extern char*	R_HistoryFile;	/* Name of the history file */
-extern int	R_HistorySize;	/* Size of the history file */
-extern int	R_RestoreHistory;	/* restore the history file? */
+LibExtern char*	R_HistoryFile;	/* Name of the history file */
+LibExtern int	R_HistorySize;	/* Size of the history file */
+LibExtern int	R_RestoreHistory;	/* restore the history file? */
 
 /* Warnings/Errors */
 extern int	R_CollectWarnings INI_as(0);	/* the number of warnings */
@@ -457,6 +459,7 @@ extern char*	R_GUIType	INI_as("unknown");
 
 #ifdef __MAIN__
 #undef extern
+#undef LibExtern
 #endif
 #undef INI_as
 
