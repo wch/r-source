@@ -83,18 +83,22 @@ isGeneric <-
   function(f, where = -1, fdef = NULL, getName = FALSE)
 {
     ## the fdef argument is not found in S4 but should be ;-)
-    if(is.null(fdef))
-          fdef <- getFunction(f, where=where, mustFind = FALSE)
+    if(is.null(fdef)) {
+        if(identical(where, -1)) {
+            where <- findFunction(f)
+            if(length(where) == 0)
+                return(FALSE)
+            where <- where[1]
+        }
+        fdef <- getFunction(f, where=where, mustFind = FALSE)
+    }
     if(is.null(fdef))
       return(FALSE)
     ## check primitives. These are never stored as explicit generic functions.
     ## The definition of isGeneric for them is that methods metadata exists,
     ## either on this database or anywhere (where == -1)
-    if(!identical(typeof(fdef), "closure")) {
-      if(is.null(getMethodsMetaData(f, where)))
-        return(FALSE)
-      else fdef <- getGeneric(f)
-    }
+    if(!identical(typeof(fdef), "closure"))
+      return(exists(mlistMetaName(f, "base"))) # all primitives are on package base
     if(!is(fdef, "genericFunction"))
         return(FALSE)
     gen <- fdef@generic
@@ -240,7 +244,7 @@ setMethod <-
                        signature <- fullSig
                    }
                    ## extra classes in method => use "..." to rematch
-                   definition <- rematchDefinition(definition, fdef, mnames, fnames)
+                   definition <- rematchDefinition(definition, fdef, mnames, fnames, signature)
                }
            },
            builtin = , special = {

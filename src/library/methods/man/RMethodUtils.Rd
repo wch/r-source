@@ -112,7 +112,7 @@ balanceMethodsList(mlist, args, check = TRUE)
 
 sigToEnv(signature)
 
-rematchDefinition(definition, generic, mnames, fnames)
+rematchDefinition(definition, generic, mnames, fnames, signature)
 unRematchDefinition(definition)
 
 asMethodDefinition(def, signature)

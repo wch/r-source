@@ -324,7 +324,7 @@ conformMethod <-
     signature
 }
 
-rematchDefinition <- function(definition, generic, mnames, fnames) {
+rematchDefinition <- function(definition, generic, mnames, fnames, signature) {
     added <- is.na(match(mnames, fnames))
     if(!any(added))
         return(definition)
@@ -357,6 +357,9 @@ rematchDefinition <- function(definition, generic, mnames, fnames) {
         names(newCall) <- newCallNames
     }
     newCall <- as.call(newCall)
+    ## promote the definition to a method (so it can contain callNextMethod, etc,
+    ## when it's assigned as .local
+    definition <- asMethodDefinition(definition, signature)
     newBody <- substitute({.local <- DEF; NEWCALL},
                           list(DEF = definition, NEWCALL = newCall))
     body(generic, envir = environment(definition)) <- newBody
@@ -474,13 +477,22 @@ assignMethodsMetaData <-
 
 mlistMetaName <-
   ## name mangling to simulate metadata for a methods definition.
-  function(name = "") {
+  function(name = "", package = "") {
       if(is(name, "genericFunction"))
           methodsPackageMetaName("M", paste(name@generic, name@package, sep=":"))
       else if(missing(name))
           methodsPackageMetaName("M","")
-      else if(is.character(name))
-          Recall(getGeneric(name))
+      else if(is.character(name)) {
+          if(nchar(package))
+             methodsPackageMetaName("M", paste(name, package, sep=":"))
+          else {
+              fdef <- getGeneric(name)
+              if(is(fdef, "genericFunction"))
+                  methodsPackageMetaName("M", paste(fdef@generic, fdef@package, sep=":"))
+              else
+                  stop("The methods object name for \"", name, "\" must include the name of the package that contains the generic function, but there is no generic function of this name")
+          }
+      }
       else
           stop(paste("No way to associate a generic function with an object of class \"",
                      class(name), "\"", sep=""))

@@ -21,10 +21,12 @@
 }
 
 callNextMethod <- function(...) {
-    envir <- parent.frame()
-    if(exists(".nextMethod", envir = envir, inherits = FALSE))
-        method <- get(".nextMethod", envir = envir)
-    else {
+    method <- NULL
+    i <- 1
+    while(is.null(method) && i < 3) {
+        ## Because of the .local mechanism used to allow variable argument lists
+        ## in methods (see rematchDefinition) may have to look back 2 frames
+        envir <- parent.frame(i)
         ## set up the nextMethod object, load it
         ## into the calling environment, and maybe cache it
         if(exists(".Method", envir = envir, inherits = FALSE)) {
@@ -35,14 +37,16 @@ callNextMethod <- function(...) {
         else { ## not in an ordinary method: must be in another NextMethod call
             env2 <- parent.frame(2)
             if(exists(".nextMethod", envir = env2, inherits = FALSE)) {
-               method <- get(".nextMethod", envir = env2, inherits = FALSE)
-               f <- get(".Generic", envir = env2)
-               cache <- FALSE
-           }
-            else
-                stop("call to NextMethod doesn't appear to be in a method or NextMethod context")
+                method <- get(".nextMethod", envir = env2, inherits = FALSE)
+                f <- get(".Generic", envir = env2)
+                cache <- FALSE
+            }
         }
-        if(is(method, "MethodDefinition")) {
+        i <- i+1
+    }
+    if(is.null(method))
+        stop("call to NextMethod doesn't appear to be in a method or NextMethod context")
+    if(is(method, "MethodDefinition")) {
             newMethod <- findNextMethod(method, f, getMethods(f), envir=envir)
             ## cache the method with the nextMethod included,
             ## so later calls will load this information.  But can't do this
@@ -53,9 +57,8 @@ callNextMethod <- function(...) {
             nextMethod <- newMethod@nextMethod
             assign(".nextMethod", nextMethod, envir = envir)
         }
-        else
-            stop("Can't use NextMethod:  the method isn't a MethodDefinition object")
-    }
+    else
+        stop("Can't use NextMethod:  the method isn't a MethodDefinition object")
     if(nargs()>0)
         eval(substitute(.nextMethod(...)), envir)
     else {
