@@ -121,9 +121,11 @@ function(pattern, fields = c("alias", "title"),
                           file.path(path, "CONTENTS.rda"))) {
                 load(contentsFile, envir = contentsEnv)
                 ## Could check on the version info here ...
-                contents <- get("contents", envir = contentsEnv)[ ,
-                                            c("Name", "Aliases",
-                                              "Title", "Keywords")]
+                contents <-
+                    get("contents", envir = contentsEnv)[ ,
+                                    c("Name", "Aliases", "Title",
+                                      "Keywords"),
+                                    drop = FALSE] 
             }
             else if(file.exists(contentsFile <-
                                 file.path(path, "CONTENTS")))
