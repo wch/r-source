@@ -209,7 +209,7 @@ FUNTAB R_FunTab[] =
 {"log",		do_log,		10003,	11,	1,	PP_FUNCALL},
 {"signif",	do_signif,	10004,	11,	1,	PP_FUNCALL},
 
-/* KH(1999/09/12) {"abs", do_math1, 0, 1, 1, PP_FUNCALL}, */
+/* KH(1999/09/12)-> complex: {"abs", do_math1, 0, 1, 1, PP_FUNCALL}, */
 {"floor",	do_math1,	1,	1,	1,	PP_FUNCALL},
 {"ceiling",	do_math1,	2,	1,	1,	PP_FUNCALL},
 {"sqrt",	do_math1,	3,	1,	1,	PP_FUNCALL},
@@ -217,6 +217,7 @@ FUNTAB R_FunTab[] =
 {"trunc",	do_math1,	5,	1,	1,	PP_FUNCALL},
 
 {"exp",		do_math1,	10,	1,	1,	PP_FUNCALL},
+{"log1p",	do_math1,	12,	11,	1,	PP_FUNCALL},
 
 {"cos",		do_math1,	20,	1,	1,	PP_FUNCALL},
 {"sin",		do_math1,	21,	1,	1,	PP_FUNCALL},

@@ -282,7 +282,7 @@ void ml_error(int n);
 #define lfastchoose	Rf_lfastchoose
 #define lgammacor	Rf_lgammacor
 #define lgammafn	Rf_lgammafn
-#define logrelerr	Rf_logrelerr
+#define log1p	Rf_log1p
 #define pbeta		Rf_pbeta
 #define pbeta_raw	Rf_pbeta_raw
 #define pbinom		Rf_pbinom
@@ -411,7 +411,7 @@ double	chebyshev_eval(double, double *, int);
 
 	/* Gamma and Related Functions */
 
-double	logrelerr(double); /* = log(1+x) {care for small x} */
+double	log1p(double); /* = log(1+x) {care for small x} */
 void	gammalims(double*, double*);
 double	lgammacor(double);
 double	gammafn(double);

@@ -6,8 +6,10 @@ log(x, base)
 log10(x)
 log2(x)
 exp(x)
+log1p(x)
 }
 \alias{log}
+\alias{log1p}
 \alias{log10}
 \alias{log2}
 \alias{exp}
@@ -22,6 +24,9 @@ exp(x)
   \code{log2} computes binary (i.e., base 2) logarithms.
   The general form \code{log(x, base)} computes logarithms with base
   \code{base} (\code{log10} and \code{log2} are only special cases).
+
+  \code{log1p(x)} computes log\eqn{1+x} precisely also for
+  \eqn{|x| \ll 1}{|x| << 1}.
 
   \code{exp} computes the exponential function.
 }
@@ -39,5 +44,8 @@ log10(1e7)# = 7
 log2(2^pi) == 2^log2(pi)
 Mod(pi - log(exp(pi*1i)) / 1i) < .Machine$double.eps
 Mod(1+exp(pi*1i)) < .Machine$double.eps
+
+x <- 10^-(1+2*1:9)
+cbind(x, log(1+x), log1p(x))
 }
 \keyword{math}
