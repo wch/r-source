@@ -4,14 +4,14 @@
 \alias{dev.control}
 \title{Copy Graphics Between Multiple Devices}
 \usage{
-dev.control(displaylist)
 dev.copy(device, \dots, which=dev.next())
 dev.print(device=postscript, \dots)
+dev.control(displaylist)
 }
 \arguments{
     \item{device}{A device function (e.g., \code{x11},
 	\code{postscript}, \ldots)}
-    \item{\dots}{Arguments to the device function}
+    \item{\dots}{Arguments to the \code{device} function above.}
     \item{which}{A device number specifying the device to copy to}
     \item{displaylist}{A character string}
 }
@@ -63,7 +63,7 @@ x11()
 plot(rnorm(10), main="Plot 1")
 dev.copy(device=x11)
 mtext("Copy 1", 3)
-dev.print(width=6, height=6, horizontal=F)
+dev.print(width=6, height=6, horizontal=FALSE)
 dev.off(dev.prev())
 dev.off()
 }
