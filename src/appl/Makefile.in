@@ -15,10 +15,11 @@ DISTFILES = $(shell cd $(srcdir); \
 	       ls COPYRIGHT COPYRIGHT.ftn Makefile.in ROUTINES *.[cfh])
 
 ## All functions/subroutines to be called via .C() or .Fortran() must
-## also have an entry in `ROUTINES' in order to be ``pre-dyn.loaded'';
+## also have an entry in `./ROUTINES' in order to be ``pre-dyn.loaded'';
 ## see `../unix/dynload.c'.
 
 OBJS = \
+	S_compat.o \
 	approx.o \
 	bakslv.o \
 	binning.o \
