@@ -13,6 +13,9 @@
         .C("tcltk_end", PACKAGE="tcltk")
         dyn.unload(file.path(libpath, "libs", "tcltk.dll"))
         num <- match("tcltk", .Dyn.libs)
-        assign(".Dyn.libs", .Dyn.libs[-num], envir=.AutoloadEnv)
+        ## <FIXME>
+        ## This used to assign to .AutoloadEnv?
+        assign(".Dyn.libs", .Dyn.libs[-num], envir=NULL)
+        ## </FIXME>
     }
 }

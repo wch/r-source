@@ -171,8 +171,8 @@ function(chname, package = .packages(), lib.loc = NULL, verbose =
 {
     if(!exists(".Dyn.libs")) {
         ## <FIXME>
-        ## Do we really want to assign to .AutoloadEnv?
-        assign(".Dyn.libs", character(0), envir = .AutoloadEnv)
+        ## This used to assign to .AutoloadEnv?
+        assign(".Dyn.libs", character(0), envir = NULL)
         ## </FIXME>
     }
     if(missing(chname) || (LEN <- nchar(chname)) == 0)
@@ -200,8 +200,8 @@ function(chname, package = .packages(), lib.loc = NULL, verbose =
             cat("now dyn.load(", file, ")..\n", sep = "")
         dyn.load(file, ...)
         ## <FIXME>
-        ## Do we really want to assign to .AutoloadEnv?
-        assign(".Dyn.libs", c(.Dyn.libs, chname), envir = .AutoloadEnv)
+        ## This used to assign to .AutoloadEnv?
+        assign(".Dyn.libs", c(.Dyn.libs, chname), envir = NULL)
         ## </FIXME>
     }
     invisible(.Dyn.libs)
