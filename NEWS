@@ -239,6 +239,9 @@ BUG FIXES
 
     o	System rint was never being used in fround.c.
 
+    o	round/trunc.POSIXt were erroneously retaining information on
+	DST. (PR#1543)
+
 
 
 		CHANGES IN R VERSION 1.5.0

@@ -36,8 +36,8 @@
   \code{\link{NA}} and \code{\link{NaN}} values in \code{probs} are
   propagated to the result.
 }
-\seealso{\code{\link[stepfun]{ecdf}} for empirical distributions of
-  which \code{quantile} is the "inverse".
+\seealso{\code{\link[stepfun]{ecdf}} (in the \code{stepfun} package) for
+  empirical distributions of which \code{quantile} is the "inverse".
   \code{\link{boxplot.stats}} and \code{\link{fivenum}} for computing
   ``versions'' of quartiles, etc.
 }
