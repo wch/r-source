@@ -23,6 +23,9 @@ is updated only when there has been no plotting for 0.1sec or if the
 plot has not been updated for 0.5sec. [Currently only enabled if
 BUFFERED is defined in src/gnuwin32/devga.c.]
 
+The search for a directory for temporary files now checks that TMP and
+TEMP point to actual writeable directories.
+
 
 
 rw1072

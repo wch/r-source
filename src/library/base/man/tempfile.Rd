@@ -40,7 +40,8 @@ tempdir()
 #ifdef windows
   By default, \code{tempdir()} gives a subdirectory of the first found of
   the environment variables \code{TMP}, \code{TEMP} and \code{R\_USER}
-  (see \code{\link{Rconsole}}). If the path to the directory contains
+  (see \code{\link{Rconsole}}) which points to a writeable directory.
+  If the path to the directory contains
   a space in any of the components, the path returned will use the
   shortnames version of the path. 
 #endif

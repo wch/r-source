@@ -902,7 +902,9 @@ void InitTempDir()
     HANDLE h;
 
     tmp = getenv("TMP");
+    if(access(tmp, W_OK) != 0) tmp = NULL;
     if (!tmp) tmp = getenv("TEMP");
+    if(access(tmp, W_OK) != 0) tmp = NULL;
     if (!tmp) tmp = getenv("R_USER"); /* this one will succeed */
     /* make sure no spaces in path */
     for (p = tmp; *p; p++)
