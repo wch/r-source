@@ -40,6 +40,12 @@ NEW FEATURES
     o	Attempting to restore (at startup) too large a .RData is now
 	a fatal error.
 
+    o	The loading of shared library on Unix now uses RTLD_NOW not
+	RTLD_LAZY.  This means that all symbols must be resolvable
+	when the library is loaded, and R will not terminate later
+	when a missing symbol is called.  Code which had missing symbols
+	(including some packages) will need to be re-compiled.
+
 
 
     o	New generic function all.equal();
@@ -109,7 +115,7 @@ NEW FEATURES
 	(and thereby in read.table)
 
     o	The presence of an object `.conflicts.OK' in a package suppresses
-	conflict checking in library().
+	conflict checking in library() for that package.
 
     o	uniroot() can now be used recursively.
 
