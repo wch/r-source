@@ -145,6 +145,20 @@ identical(t1@y[1:15], t11@y)
 ## S3 methods, with nextMethod
 form <- y ~ x
 form[1]
+
+## S3 arithmetic methods
+ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1)
+
+## arithmetic:  switch to an "Arith" method when this automatically
+## generates methods for its member functions.
+
+setMethod("-", c("track", "numeric"), function(e1, e2){e1@y <- e1@y -e2; e1})
+
+t1  - 100.
+
+## check it hasn't screwed up S3 methods
+ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1)
+
 }
 }
 

@@ -57,25 +57,28 @@ makeStandardGeneric <-
   ## Works (more or less) even if the actual definition, fdef, is not a proper function,
   ## that is, it's a primitive or internal
   function(f, fdef) {
+    fgen <- fdef
+    body(fgen) <- substitute(standardGeneric(FNAME), list(FNAME=f))
     ## detect R specials and builtins:  these don't provide an argument list
     if(typeof(fdef) != "closure") {
       ## Look in a list of pre-defined functions (and also of functions for which
       ## methods are prohibited)
-      fdef <- elNamed(.BasicFunsList, f)
-      if(identical(fdef, FALSE))
+      fgen <- elNamed(.BasicFunsList, f)
+      if(identical(fgen, FALSE))
         stop(paste("Special function \"", f, "\" is not permitted to have methods", sep=""))
-      if(is.null(fdef)) {
+      if(is.null(fgen)) {
         warning(paste("Special function \"", f, "\" has no known argument list; will assume \"(x, ...)\"", sep=""))
         ## unknown
-        fdef <- function(x, ...) {}
+        fgen <- function(x, ...) {}
       }
-      else
+      else {
         message("Making a generic for special function \"", f, "\"")
+        setPrimitiveMethods(f, fdef, "reset", fgen, NULL)
+      }
       ## Note that the body of the function comes from the list.  In a few cases ("$"),
       ## this body is not just a call to standardGeneric
     }
-    body(fdef) <- substitute(standardGeneric(FNAME), list(FNAME=f))
-    fdef
+    fgen
   }
 
 generic.skeleton <-
@@ -341,6 +344,11 @@ cacheMetaData <-
 cacheGenericsMetaData <-
   function(generics, attach = TRUE, envir = NULL) {
     for(f in generics) {
+      if(!isGeneric(f))
+          next
+      methods <- getMethods(f)@methods
+      if(length(methods)==0)
+          next ## don't cache if no methods defined
       if(!is.null(getFromMethodMetaData(f)))
         removeFromMethodMetaData(f)
       ## find the function.  It may be a generic, but will be a primitive
