@@ -252,6 +252,13 @@ Subject: Interrupts (was Re: [Rd] X11 protocol errors ...)
 From: "John W. Eaton" <jwe@bevo.che.wisc.edu>
 Date: Wed, 22 Aug 2001 21:56:33 -0500
 --part of PR#1068
+* PR# 1120 *
+Subject: bug in write.table?
+From: Ott Toomet <siim@obs.ee>
+Date: Sun, 7 Oct 2001 18:24:34 +0200 (CEST)
+--Traced down to an effect of read.dta in foreign interacting with do_paste. Fixed
+--in foreign, but do_paste may need to use strlen() rather than LENGTH().
+--
 
 Directory:  Macintosh
 
@@ -317,7 +324,15 @@ Date: Mon, 1 Oct 2001 15:43:36 +0200 (MET DST)
 
 Directory:  TooMuchAtOnce
 
-none
+* PR# 1110 *
+Subject: Several R vs S-Plus issues
+From: David Brahm  <a215020@agate.fmr.com>
+Date: Wed, 3 Oct 2001 11:35:58 -0400 (EDT)
+--1. is perhaps a bug -- the best handling of string NAs is under discussion
+--
+--2 & 4 are just S-PLUS incompatibilities
+--
+--3. May be a bug -- worth checking.
 
 Directory:  Windows
 
@@ -325,15 +340,7 @@ none
 
 Directory:  incoming
 
-* PR# 1110 *
-Subject: Several R vs S-Plus issues
-From: David Brahm  <a215020@agate.fmr.com>
-Date: Wed, 3 Oct 2001 11:35:58 -0400 (EDT)
-* PR# 1119 *
-Subject: Bug in Deriv?
-From: "Dieter Menne" <dieter.menne@menne-biomed.de>
-Date: Sun, 7 Oct 2001 12:25:47 +0200
-* PR# 1120 *
-Subject: bug in write.table?
-From: Ott Toomet <siim@obs.ee>
-Date: Sun, 7 Oct 2001 18:24:34 +0200 (CEST)
+* PR# 1127 *
+Subject: unary "-" doesn't convert logicals
+From: john_heumann@agilent.com
+Date: Fri, 12 Oct 2001 00:12:50 +0200 (MET DST)
