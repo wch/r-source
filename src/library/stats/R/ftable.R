@@ -188,7 +188,7 @@ write.ftable <- function(x, file = "", quote = TRUE,
                         makeLabels(xrv)),
                   c(charQuote(makeNames(xcv)),
                     rep("", times = nrow(x) + 1)))
-    DATA <- rbind(t(makeLabels(xcv)),
+    DATA <- rbind(if(length(xcv)) t(makeLabels(xcv)),
                   rep("", times = ncol(x)),
                   format(unclass(x), digits = digits))
     x <- cbind(apply(LABS, 2, format, justify = "left"),
