@@ -36,8 +36,8 @@ library.dynam.unload(chname, libpath,
   \item{\dots}{additional arguments needed by some libraries that
     are passed to the call to \code{\link{dyn.load}} to control
     how the library is loaded.}
-  \item{new}{a character vector of packages which have loaded shared
-    libraries.}
+  \item{new}{a list of DLLInfo objects corresponding to the shared
+    libraries loaded by packages.}
 }
 \details{
   \code{library.dynam} is designed to be used inside a package rather
@@ -52,30 +52,33 @@ library.dynam.unload(chname, libpath,
 #endif
   should not be added.
 
-  \code{library.dynam.unload} is designed for use in \code{\link{.Last.lib}} or
-  \code{\link{.onUnload}}.
+  \code{library.dynam.unload} is designed for use in
+  \code{\link{.Last.lib}} or \code{\link{.onUnload}}.
 
-  \code{.dynLibs} is used for getting or setting the packages that have
-  loaded shared libraries (using \code{library.dynam}).  Versions of \R
-  prior to 1.6.0 used an internal global variable \code{.Dyn.libs} for
-  storing this information: this variable is now defunct.
+  \code{.dynLibs} is used for getting or setting the shared libraries
+  which were loaded by packages (using \code{library.dynam}).  Versions
+  of \R prior to 2.1.0 simply recorded the (names of) packages which had
+  loaded shared libraries.  Versions of \R prior to 1.6.0 used an
+  internal global variable \code{.Dyn.libs} for storing this
+  information: this variable is now defunct.
 }
 \value{
-  If \code{chname} is not specified, \code{library.dynam} returns a
-  character vector with the names of packages which have used it in the
-  current \R session to load shared libraries. This vector is returned
-  as \code{\link{invisible}}, unless  the \code{chname} argument is
-  missing.
+  If \code{chname} is not specified, \code{library.dynam} returns an
+  object of class \code{"DLLInfoList"} corresponding to the shared
+  libraries loaded by packages.
 
-  If \code{chname} is specifed, the return value is an object
-  of class \code{DLLInfo} that identifies the DLL and can be used
-  in future calls.  For packages that have namespaces, a list
-  of these objects is stored in the namespace's environment for
-  use at run-time.
+  If \code{chname} is specifed, an object of class \code{"DLLInfo"} that
+  identifies the DLL and can be used in future calls is returned
+  invisibly.  For packages that have namespaces, a list of these objects
+  is stored in the namespace's environment for use at run-time.
 
-  \code{library.dynam.unload} returns the updated character vector, invisibly.
+  \code{library.dynam.unload} invisibly returns an object of class
+  \code{"DLLInfo"} identifying the DLL successfully unloaded.
 }
 \seealso{
+  \code{\link{getLoadedDLLs}} for information on DLLInfo and DLLInfoList
+  objects.
+  
   \code{\link{.First.lib}}, \code{\link{library}},
   \code{\link{dyn.load}}, \code{\link{.packages}},
   \code{\link{.libPaths}}
@@ -93,6 +96,7 @@ library.dynam.unload(chname, libpath,
   Wadsworth \& Brooks/Cole.
 }
 \examples{
-library.dynam() # which packages have been "dynamically loaded"
+## Which DLLs were "dynamically loaded" by packages?
+library.dynam() 
 }
 \keyword{data}
