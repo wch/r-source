@@ -27,6 +27,9 @@ BUG FIXES
 
     o	The "Complex" S4 group generic now works.
 
+    o   abbreviate() doesn't get into infinite loops on input that differs
+  	only by leading/trailing space
+
 
 
 		CHANGES IN R VERSION 1.8.0
