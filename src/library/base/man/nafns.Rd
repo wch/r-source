@@ -38,7 +38,8 @@ napredict(omit, x, \dots)
   have the same number of rows as the original data frame.
 
   Currently \code{naresid} and \code{napredict} are identical, but
-  future methods need not be.
+  future methods need not be.  \code{naresid} is used for residuals, and
+  \code{napredict} for fitted values and predictions.
 }
 \note{
   Packages \code{rpart} and \code{survival5} used to contain versions of

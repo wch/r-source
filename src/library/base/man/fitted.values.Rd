@@ -23,6 +23,10 @@ fitted.values(object, \dots)
   All object classes which are returned by model fitting functions
   should provide a \code{fitted} method.  (Note that the generic is
   \code{fitted} and not \code{fitted.values}.)
+
+  Methods can make use of \code{\link{napredict}} methods to compensate
+  for the omission of missing values.  The default, \code{lm} and
+  \code{glm} methods do.
 }
 \value{
   Fitted values extracted from the object \code{x}.

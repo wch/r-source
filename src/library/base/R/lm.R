@@ -363,21 +363,32 @@ residuals.lm <-
 {
     type <- match.arg(type)
     r <- .Alias(object$residuals)
-    switch(type,
-           working =, response = r,
-           deviance=,
-           pearson =if(is.null(object$weights)) r else r * sqrt(object$weights),
-	   partial = r + predict(object,type="terms")
+    res <- switch(type,
+                  working =, response = r,
+                  deviance=,
+                  pearson =if(is.null(object$weights)) r else r * sqrt(object$weights),
+                  partial = r + predict(object,type="terms")
            )
+    if(is.null(object$na.action)) res
+    else naresid(object$na.action, res)
 }
-fitted.lm <- function(object, ...) object$fitted.values
+fitted.lm <- function(object, ...)
+{
+    if(is.null(object$na.action)) object$fitted.values
+    else napredict(object$na.action, object$fitted.values)
+}
 coef.lm <- function(object, ...) object$coefficients
 ## need this for results of lm.fit() in drop1():
-weights.default <- function(object, ...) object$weights
+weights.default <- function(object, ...)
+{
+    if(is.null(object$na.action)) object$weights
+    else naresid(object$na.action, object$weights)
+}
+
 weights.lm <- .Alias(weights.default)
 df.residual.lm <- function(object, ...) object$df.residual
 deviance.lm <- function(object, ...) sum(weighted.residuals(object)^2)
-formula.lm <- function(object, ...) 
+formula.lm <- function(object, ...)
 {
     form <- object$formula
     if( !is.null(form) )
@@ -547,11 +558,12 @@ anovalist.lm <- function (object, ..., test = NULL)
 }
 
 ## code from John Maindonald 26Jul2000
-"predict.lm" <- function(object, newdata,
-		       se.fit = FALSE, scale = NULL, df = Inf,
-		       interval = c("none", "confidence", "prediction"),
-                       level = .95,  type = c("response", "terms"),
-                       terms = NULL, ...)
+predict.lm <-
+    function(object, newdata,
+             se.fit = FALSE, scale = NULL, df = Inf,
+             interval = c("none", "confidence", "prediction"),
+             level = .95,  type = c("response", "terms"),
+             terms = NULL, ...)
 {
 ## june 24 2000 (3 minor changes from JM's May 7 version)
     attrassign <- function (object, ...) UseMethod("attrassign")
@@ -669,7 +681,7 @@ anovalist.lm <- function (object, ..., test = NULL)
 			    confidence=sqrt(ip),
 			    prediction=sqrt(ip+res.var)
 			    )
-        if(type!="terms"){
+        if(type!="terms") {
             predictor <- cbind(predictor, predictor + w %o% c(1, -1))
             colnames(predictor) <- c("fit", "lwr", "upr")
         }
@@ -678,17 +690,22 @@ anovalist.lm <- function (object, ..., test = NULL)
             upr <- predictor - w
         }
     }
-    if(type=="terms" && interval!="none")
+    if(missing(newdata) && !is.null(na.act <- object$na.action)) {
+        predictor <- na.predict(na.act, predictor)
+        if(se.fit) se.fit <- na.predict(na.act, sqrt(ip))
+    }
+    if(type == "terms" && interval != "none") {
+        if(missing(newdata) && !is.null(na.act)) {
+            lwr <- na.predict(na.act, lwr)
+            upr <- na.predict(na.act, upr)
+        }
 	list(fit = predictor, se.fit = sqrt(ip), lwr=lwr,upr=upr,
 	     df = df, residual.scale = sqrt(res.var))
-    else if (se.fit)
-              list(fit = predictor, se.fit = sqrt(ip),
+    } else if (se.fit)
+        list(fit = predictor, se.fit = sqrt(ip),
 	     df = df, residual.scale = sqrt(res.var))
     else predictor
 }
-
-
-
 
 effects.lm <- function(object, set.sign = FALSE)
 {
