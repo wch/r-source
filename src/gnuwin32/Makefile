@@ -41,7 +41,7 @@ FFLAGS = $(OPTFLAGS)
 rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a CHTML \
 	../include/globalvar.h front-ends COPYRIGHTS
 
-rpackage: fixed/fixdesc $(PKGS)
+rpackage: fixed/fixdesc $(PKGS) ../../library/R.css
 
 rinstaller:
 	$(MAKE) -C installer PREFIX=$(RPREFIX)
@@ -115,6 +115,12 @@ tcl:
 	$(MAKE) pkg-tcltk
 
 
+../../library/R.css: ../../doc/html/R.css
+	$(CP) $< $@
+
+
+#                          ===== Packages ======
+
 CHTML:
 ifeq ($(strip $(HELP)),YES)
 ifeq ($(strip $(WINHELP)),CHM)
@@ -125,8 +131,10 @@ ifeq ($(strip $(WINHELP)),BOTH)
 endif
 endif
 
-
 base-HELP = ziponly
+
+bundle-%:
+	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:  libR.a #../include/globalvar.h
 	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) \
@@ -171,6 +179,9 @@ zipdata-%:
 
 bootstrap-DLLNM=boott
 
+
+#                          ===== cleaning ======
+
 clean: cleanwin $(PKGCLEAN)
 	$(RM) -f ../*/*.o $(WINOBJS) *.a ../*/*.d ../*/Makedeps fixed/fixdesc
 	-$(MAKE) -C ../../doc/manual -f Makefile.win distclean
@@ -203,7 +214,8 @@ cleanwin:
 	-$(MAKE) -C installer clean
 
 
-# tests
+#                          ===== testing ======
+
 check: all test
 test: test-Specific pkgtests
 
@@ -223,8 +235,8 @@ pkgcheck-base:
 	  -f ../../../gnuwin32/check/PkgCheck
 	@(cd ../../library/base/R-ex; rm -f *.R)
 
-bundle-%:
-	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
+
+#                          ===== documentation ======
 
 docs manuals:
 	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win clean
@@ -232,7 +244,7 @@ docs manuals:
 	@$(MAKE) ziponly-base
 
 
-## ============= Maintainer targets ========================
+## ===================== Maintainer targets ========================
 
 RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
 
