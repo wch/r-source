@@ -576,6 +576,8 @@ BUG FIXES
 
     o   poisson family now calculates correct AIC when outcome is a rate.
 
+    o   getAnywhere() was confused by names with leading or trailing dots
+        (spotted by Robert McGehee)
 
 
 
