@@ -1,25 +1,28 @@
 ## based on, especially multivariate case, code by Martyn Plummer
 ar <-
     function (x, aic = TRUE, order.max = NULL,
-              method=c("yule-walker","burg", "ols", "mle"),
+              method=c("yule-walker","burg", "ols", "mle", "yw",),
               na.action = na.fail, series = deparse(substitute(x)), ...)
 {
     res <- switch(match.arg(method),
         "yule-walker" = ar.yw(x, aic=aic, order.max=order.max,
-                              na.action = na.action, series=series, ...),
+                  na.action = na.action, series=series, ...),
 	"burg" = ar.burg(x, aic=aic, order.max=order.max,
                               na.action = na.action, series=series, ...),
 	"ols" = ar.ols(x, aic=aic, order.max=order.max,
                               na.action = na.action, series=series, ...),
  	"mle" = ar.mle(x, aic=aic, order.max=order.max,
-                              na.action = na.action, series=series, ...)
+                              na.action = na.action, series=series, ...),
+        "yw" = ar.yw(x, aic=aic, order.max=order.max,
+                  na.action = na.action, series=series, ...)
    )
     res$call <- match.call()
     res
 }
 
+ar.yw <- function(x, ...) UseMethod("ar.yw")
 
-ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
+ar.yw.ts <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
                    demean = TRUE, series = NULL, ...)
 {
     if(is.null(series)) series <- deparse(substitute(x))
@@ -102,6 +105,7 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
                            dimnames=list(NULL, snames, snames))
         dimnames(var.pred) <- list(snames, snames)
         dimnames(partialacf) <- list(1:order.max, snames, snames)
+        colnames(resid) <- colnames(x)
     } else {
         ## univariate case
         r <- as.double(drop(xacf))

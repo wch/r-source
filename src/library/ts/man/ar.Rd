@@ -1,7 +1,6 @@
 \name{ar}
 \alias{ar}
 \alias{ar.burg}
-\alias{ar.burg.R}
 \alias{ar.yw}
 \alias{ar.mle}
 \alias{print.ar}
@@ -9,7 +8,7 @@
 \title{Fit Autoregressive Models to Time Series}
 \usage{
 ar(x, aic = TRUE, order.max = NULL,
-   method=c("yule-walker", "burg", "ols", "mle"), na.action, series)
+   method=c("yule-walker", "burg", "ols", "mle", "yw"), na.action, series)
 ar.burg(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE, series,
         var.method = 1)
 ar.yw(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE, series)
@@ -81,7 +80,8 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
   on page 242), and follows S-PLUS. Method 2 is the mean of the sum
   of squares of the forward and backward prediction errors
   (as in Brockwell and Davis, 1996, page 145). Percival and Walden
-  (1998) discuss both.
+  (1998) discuss both. In the multivariate case the estimated
+  coefficients will depend (slightly) on the variance estimation method.
 
   Remember that \code{ar} includes by default a constant in the model, by
   removing the overall mean of \code{x} before fitting the AR model,
@@ -119,11 +119,10 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
   components are time series.
 }
 \author{Martyn Plummer. Univariate case of \code{ar.yw}, \code{ar.mle}
-    and C code for \code{ar.burg} by B.D. Ripley.}
+    and C code for univariate case of \code{ar.burg} by B.D. Ripley.}
 
 \note{
-    Only the univariate cases of \code{ar.burg} and \code{ar.mle} are
-    implemented.
+    Only the univariate case of \code{ar.mle} is implemented.
 
     Fitting by \code{method="mle"} to long series can be very slow.
 }
@@ -174,5 +173,7 @@ predict(sunspot.ar, n.ahead=25)
 
 data(BJsales)
 ar(ts.union(BJsales, BJsales.lead))
+## Burg is quite different here, as is OLS (see ar.ols)
+ar(ts.union(BJsales, BJsales.lead), method="burg")
 }
 \keyword{ts}

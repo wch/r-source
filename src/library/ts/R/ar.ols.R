@@ -114,7 +114,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
     }
     if(rescale) {
         xm <- xm * sc
-        xint <- xint * sc
+        if(!is.null(xint)) xint <- xint * sc
         aa <- outer(sc, 1/sc)
         if(nser > 1 && m > 0)
             for(i in 1:m) ar[i,,] <- ar[i,,]*aa
