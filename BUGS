@@ -320,3 +320,11 @@ Date: Mon, 24 Sep 2001 10:46:27 +0200 (MET DST)
 Subject: Bug in model.matrix.default (was: [R] predict incosistency ?)
 From: Duncan Murdoch <murdoch@stats.uwo.ca>
 Date: Tue, 25 Sep 2001 09:55:38 -0400
+* PR# 1101 *
+Subject: ugly in plotmath: frac(1, sqrt(...))
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Thu, 27 Sep 2001 10:37:07 +0200
+* PR# 1102 *
+Subject: Problem with merge()
+From: Don MacQueen <macq@llnl.gov>
+Date: Thu, 27 Sep 2001 09:20:54 -0700
