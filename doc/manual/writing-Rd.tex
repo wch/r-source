@@ -1,4 +1,3 @@
-\newcommand{\CMD}[1]{\texttt{{\char`\\}#1}}
 \newcommand*{\RHOMEdir}[1]{\file{\$RHOME/#1}}
 \newcommand{\pkg}[1]{{\textbf{#1}}}
 \newcommand{\var}[1]{{{\normalfont\textit{#1}}}}
@@ -6,6 +5,7 @@
   \hfill\makebox[.5\textwidth][l]{{\normalfont{\% #1}}}}
 \newcommand{\EXPLAIN}[1]{%
   \par\relax\qquad\parbox{0.8\textwidth}{#1}\\}
+\newcommand{\CMD}[1]{\texttt{{\char`\\}#1}}
 \newcommand{\LB}{\texttt{{\char`\{}}}
 \newcommand{\RB}{\texttt{{\char`\}}}}
 
@@ -232,8 +232,8 @@ escape all \LaTeX{} special characters, i.e.,
 besides `\%', `\{', and `\}', the four specials
 \ \$, \ \&, \ \# and \ \_ \ are simply produced by preceding with a
 `\bsl'.
-Further, `` $\hat{}$ '' by \verb|$\hat{}$|, and
-        `` $\tilde{}$ ''  by \verb|$\tilde{}$|.
+Further, `` $\hat{}$ '' by \verb|\eqn{\hat{}}{^}|, and
+       `` $\tilde{}$ '' by \verb|\eqn{\tilde{}}{~}|.
 Also \ $<$\ , \ $>$ \  and \ $|$ \ \ must only be used in math mode, i.e. within \CMD{[d]eqn}.
 
 %%% Local Variables:
