@@ -562,7 +562,7 @@ SEXP do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #define End_do_first							\
     i = (indx != NA_INTEGER);						\
-    ans = allocVector(INTSXP, i ? 1 : 0);				\
+    PROTECT(ans = allocVector(INTSXP, i ? 1 : 0));			\
     if (i) {								\
 	INTEGER(ans)[0] = indx + 1;					\
 	if (getAttrib(sx, R_NamesSymbol) != R_NilValue) { /* keep name */\
@@ -574,7 +574,7 @@ SEXP do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    UNPROTECT(1);						\
 	}								\
     }									\
-    UNPROTECT(1);							\
+    UNPROTECT(2);							\
     return ans;
 
     End_do_first
