@@ -3531,11 +3531,24 @@ eff.aovlist(test.aov)
                     list(Material=="A", Material=="B",
                          Material=="C", Material=="D"),
                     coef = c(1, 1, -1, -1), data = testdata))
+## failed in 2.0.1 as a matrix was 1 x 1.
+
 ## 2.0.1 also failed to check for orthogonal contrasts
+## in calculating the efficiencies (which are 1 here).
 options(contrasts = c("contr.treatment", "contr.poly"))
 (test2.aov <- aov(Measurement ~ Material + Error(Lab/Material),
                   data = testdata))
-z <- try(eff.aovlist(test2.aov))
-stopifnot(class(z) == "try-error")
+(res2 <- se.contrast(test2.aov,
+                     list(Material=="A", Material=="B",
+                          Material=="C", Material=="D"),
+                     coef = c(1, 1, -1, -1), data = testdata))
+stopifnot(all.equal(res, res2))
+
+## related checks on eff.aovlist
+example(eff.aovlist) # helmert contrasts
+eff1 <- eff.aovlist(fit)
+fit <- aov(Yield ~ A * B * C + Error(Block), data = aovdat)
+eff2 <- eff.aovlist(fit)
+stopifnot(all.equal(eff1, eff2)) # will have rounding-error differences
 options(contrasts = old)
-## 1) failed in 2.0.1 as a matrix was 1 x 1.
+## Were different in earlier versions

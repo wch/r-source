@@ -397,11 +397,29 @@ eff.aovlist <- function(aovlist)
     if(names(aovlist)[[1]] == "(Intercept)") aovlist <- aovlist[-1]
     pure.error.strata <- sapply(aovlist, function(x) is.null(x$qr))
     aovlist <- aovlist[!pure.error.strata]
-    proj.len <-
+    s.labs <- names(aovlist)
+    ## find which terms are in which strata
+    s.terms <-
+        lapply(aovlist, function(x) {
+            asgn <- x$assign[x$qr$pivot[1:x$rank]]
+            attr(terms(x), "term.labels")[asgn]
+        })
+    t.labs <- attr(Terms, "term.labels")
+    t.labs <- t.labs[t.labs %in% unlist(s.terms)]
+    eff <- matrix(0, ncol = length(t.labs), nrow = length(s.labs),
+		  dimnames = list(s.labs, t.labs))
+    for(i in names(s.terms)) eff[i, s.terms[[i]] ] <- 1
+    cs <- colSums(eff)
+    ## if all terms are in just one stratum we are done
+    if(all(cs <= 1)) return(eff[, cs > 0, drop = FALSE])
+
+    nm <- t.labs[ cs > 1]
+    pl <-
 	lapply(aovlist, function(x)
 	   {
 	       asgn <- x$assign[x$qr$pivot[1:x$rank]]
 	       sp <- split(seq(along=asgn), attr(terms(x), "term.labels")[asgn])
+               sp <- sp[names(sp) %in% nm]
 	       sapply(sp, function(x, y) {
                    y <- y[x, x, drop = FALSE]
                    res <- sum(diag(y)^2)
@@ -410,26 +428,10 @@ eff.aovlist <- function(aovlist)
                    res
                }, y=x$qr$qr)
 	   })
-    x.len <-
-	lapply(aovlist, function(x) {
-	    X <- as.matrix(qr.X(x$qr))
-	    asgn <- x$assign[x$qr$pivot[1:x$rank]]
-	    sp <- split(seq(along=asgn), attr(terms(x), "term.labels")[asgn])
-	    sapply(sp, function(x, y) sum(y[, x]), y=X^2)
-	})
-    t.labs <- attr(Terms, "term.labels")
-    s.labs <- names(aovlist)
-    eff <- matrix(0, ncol = length(t.labs), nrow = length(s.labs),
-		  dimnames = list(s.labs, t.labs))
-    ind <- NULL
-    for(i in names(proj.len))
-	ind <- rbind(ind, cbind(match(i, s.labs),
-				match(names(proj.len[[i]]), t.labs)))
-    eff[ind] <- unlist(x.len)
-    x.len <- colSums(eff)
-    eff[ind] <- unlist(proj.len)
-    eff <- eff/rep(x.len, each = nrow(eff))
-    eff[, x.len != 0, drop = FALSE]
+    for(i in names(pl)) eff[i, names(pl[[i]]) ] <- pl[[i]]
+    cs <- colSums(eff)
+    eff <- eff/rep(cs, each = nrow(eff))
+    eff[, cs != 0, drop = FALSE]
 }
 
 

@@ -295,9 +295,11 @@ NEW FEATURES
     o	For Windows and readline-based history, the saved file size is
 	re-read from R_HISTSIZE immediately before saving.
 
-    o	eff.aovlist() assumes orthogonal contrasts for any term
+    o	eff.aovlist() assumed orthogonal contrasts for any term
 	with more than one degree of freedom: this is now documented
-	and checked for.
+	and checked for.  Where each term only occurs in only one
+	stratum the efficiencies are all one: this is detected and 
+	orthogonal contrasts are not required.
 
     o	sys.function() now has argument 'which' (as has long been
 	presaged on its help page).

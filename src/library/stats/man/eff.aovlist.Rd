@@ -16,16 +16,21 @@ eff.aovlist(aovlist)
 \details{
   Fixed-effect terms in an analysis of variance model with multiple strata
   may be estimable in more than one stratum, in which case there is less
-  than complete information in each.  The efficiency is the fraction of
-  the maximum possible precision (inverse variance) obtainable by
-  estimating in just that stratum.
+  than complete information in each.  The efficiency for a term
+  is the fraction of the maximum possible precision (inverse variance)
+  obtainable by estimating in just that stratum.  Under the assumption
+  of balance, this is the same for all contrasts involving that term.
 
-  This is used to pick strata in which to estimate terms in
+  This function is used to pick strata in which to estimate terms in
   \code{\link{model.tables.aovlist}} and
   \code{\link{se.contrast.aovlist}}.
 
+  In many cases terms will only occur in one stratum, when all the
+  efficiencies will be one: this is detected and no further calculations
+  are done.
+
   The calculation used requires orthogonal contrasts for each term, and
-  will throw are error if non-orthogonal contrasts (e.g. treatment
+  will throw an error if non-orthogonal contrasts (e.g. treatment
   contrasts or an unbalanced design) are detected.
 }
 \value{
