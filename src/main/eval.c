@@ -194,7 +194,7 @@ static void R_InitProfiling(char * filename, int append, double dinterval)
     HANDLE Proc = GetCurrentProcess();
 #endif
     int interval;
-    
+
     /* according to man setitimer, it waits until the next clock
        tick, usually 10ms, so avoid too small intervals here */
 #if !defined(Win32) && defined(_R_HAVE_TIMING_)
@@ -282,7 +282,7 @@ SEXP eval(SEXP e, SEXP rho)
     int depthsave = R_EvalDepth++;
 
     if (R_EvalDepth > R_Expressions)
-	error("evaluation is nested too deeply: infinite recursion?");
+	error("evaluation nested too deeply: infinite recursion / options(expression=)?");
     if (++evalcount > 100) {
 	R_CheckUserInterrupt();
 	evalcount = 0 ;
@@ -824,7 +824,7 @@ static Rboolean asLogicalNoNA(SEXP s, SEXP call)
     }
     return cond;
 }
-    
+
 
 SEXP do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1184,7 +1184,7 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     tmploc = R_findVarLocInFrame(rho, R_TmpvalSymbol);
 
     /*  Do a partial evaluation down through the LHS. */
-    lhs = evalseq(CADR(expr), rho, 
+    lhs = evalseq(CADR(expr), rho,
                   PRIMVAL(op)==1 || PRIMVAL(op)==3, tmploc);
 
     PROTECT(lhs);
@@ -1512,7 +1512,7 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     case INTSXP:
     case REALSXP:
-	if (length(env) != 1) 
+	if (length(env) != 1)
 	    errorcall(call,"numeric envir arg not of length one");
 	frame = asInteger(env);
 	if (frame == NA_INTEGER)
@@ -1627,7 +1627,7 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
     SEXP x = R_NilValue;
     int dots = FALSE, nprotect = 0;;
 
-    if( argsevald ) 
+    if( argsevald )
         {PROTECT(x = CAR(args)); nprotect++;}
     else {
 	/* Find the object to dispatch on, dropping any leading
@@ -1776,7 +1776,7 @@ static void findmethod(SEXP class, char *group, char *generic,
     /* eg if class(x) is "foo" "bar" then x>3 should invoke */
     /* "Ops.foo" rather than ">.bar" */
     for (whichclass = 0 ; whichclass < len ; whichclass++) {
-	if(strlen(generic) + 
+	if(strlen(generic) +
 	   strlen(CHAR(STRING_ELT(class, whichclass))) + 2 > 512)
 	    error("class name too long in %s", generic);
 	sprintf(buf, "%s.%s", generic, CHAR(STRING_ELT(class, whichclass)));
@@ -1786,7 +1786,7 @@ static void findmethod(SEXP class, char *group, char *generic,
 	    *gr = mkString("");
 	    break;
 	}
-	if(strlen(group) + 
+	if(strlen(group) +
 	   strlen(CHAR(STRING_ELT(class, whichclass))) + 2 > 512)
 	    error("class name too long in %s", group);
 	sprintf(buf, "%s.%s", group, CHAR(STRING_ELT(class, whichclass)));
@@ -1850,7 +1850,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 
     if(!isObject(CAR(args)) && !isObject(CADR(args)))
 	return 0;
-    
+
     if(strlen(PRIMNAME(op)) >= 128)
 	error("generic name too long in %s", PRIMNAME(op));
     sprintf(generic, "%s", PRIMNAME(op) );
@@ -2378,7 +2378,7 @@ struct { void *addr; int argc; } opinfo[OPCOUNT];
     goto loop; \
     op_##name
 
-#define BEGIN_MACHINE  NEXT(); init: { int which = 0; loop: switch(which++) 
+#define BEGIN_MACHINE  NEXT(); init: { int which = 0; loop: switch(which++)
 #define LASTOP } value = R_NilValue; goto done
 #define INITIALIZE_MACHINE() if (body == NULL) goto init
 
@@ -2572,7 +2572,7 @@ static SEXP numMatElt(SEXP mat, SEXP idx, SEXP jdx)
 
     if (OBJECT(mat))
 	error("can only handle simple real vectors");
-    
+
     dim = getAttrib(mat, R_DimSymbol);
     if (mat == R_NilValue || TYPEOF(dim) != INTSXP || LENGTH(dim) != 2)
 	error("incorrect number of subscripts");
@@ -2620,7 +2620,7 @@ static SEXP setNumMatElt(SEXP mat, SEXP idx, SEXP jdx, SEXP value)
 
     if (OBJECT(mat))
 	error("can only handle simple real vectors");
-    
+
     dim = getAttrib(mat, R_DimSymbol);
     if (mat == R_NilValue || TYPEOF(dim) != INTSXP || LENGTH(dim) != 2)
 	error("incorrect number of subscripts");
@@ -2705,7 +2705,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	    pc = codebase + label;
 	}
 	NEXT();
-      }      
+      }
     OP(POP, 0): BCNPOP_IGNORE_VALUE(); NEXT();
     OP(DUP, 0): value = R_BCNodeStackTop[-1]; BCNPUSH(value); NEXT();
     OP(PRINTVALUE, 0): PrintValue(BCNPOP()); NEXT();
@@ -2723,7 +2723,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	SEXP seq = R_BCNodeStackTop[-1];
 	SEXP symbol = VECTOR_ELT(constants, GETOP());
 	int label = GETOP();
-	
+
 	defineVar(symbol, R_NilValue, rho);
 	BCNPUSH((SEXP) R_findVarLocInFrame(rho, symbol));
 
@@ -2751,7 +2751,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	  SEXP seq = R_BCNodeStackTop[-4];
 	  SEXP cell = R_BCNodeStackTop[-3];
 	  switch (TYPEOF(seq)) {
-	  case LGLSXP: 
+	  case LGLSXP:
 	  case INTSXP:
 	    value = allocVector(TYPEOF(seq), 1);
 	    INTEGER(value)[0] = INTEGER(seq)[i];
@@ -2793,9 +2793,9 @@ static SEXP bcEval(SEXP body, SEXP rho)
     OP(SETLOOPVAL, 0): value = BCNPOP(); R_BCNodeStackTop[-1] = value; NEXT();
     OP(INVISIBLE,0): R_Visible = 0; NEXT();
     OP(LDCONST, 1): DO_LDCONST(value); BCNPUSH(value); NEXT();
-    OP(LDNULL, 0):  BCNPUSH(R_NilValue); NEXT(); 
-    OP(LDTRUE, 0):  BCNPUSH(R_TrueValue); NEXT(); 
-    OP(LDFALSE, 0):  BCNPUSH(R_FalseValue); NEXT(); 
+    OP(LDNULL, 0):  BCNPUSH(R_NilValue); NEXT();
+    OP(LDTRUE, 0):  BCNPUSH(R_TrueValue); NEXT();
+    OP(LDFALSE, 0):  BCNPUSH(R_FalseValue); NEXT();
     OP(GETVAR, 1): DO_GETVAR(FALSE);
     OP(DDVAL, 1): DO_GETVAR(TRUE);
     OP(SETVAR, 1):
@@ -3245,7 +3245,7 @@ SEXP R_bcEncode(SEXP bytes)
 static int findOp(void *addr)
 {
   int i;
-  
+
   for (i = 0; i < OPCOUNT; i++)
     if (opinfo[i].addr == addr)
       return i;
@@ -3275,7 +3275,7 @@ SEXP R_bcDecode(SEXP code) {
     for (j = 0; j < argc; j++, i++)
       ipc[i] = pc[i].i;
   }
-  
+
   return bytes;
 }
 #else
@@ -3286,7 +3286,7 @@ SEXP R_bcDecode(SEXP x) { return duplicate(x); }
 SEXP do_mkcode(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP bytes, consts, ans;
-  
+
     checkArity(op, args);
     bytes = CAR(args);
     consts = CADR(args);
@@ -3298,7 +3298,7 @@ SEXP do_mkcode(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_bcclose(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP forms, body, env;
-  
+
     checkArity(op, args);
     forms = CAR(args);
     body = CADR(args);
@@ -3318,7 +3318,7 @@ SEXP do_bcclose(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_is_builtin_internal(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP symbol, i;
-  
+
     checkArity(op, args);
     symbol = CAR(args);
 
@@ -3355,15 +3355,15 @@ static SEXP disassemble(SEXP bc)
     else
       SET_VECTOR_ELT(dconsts, i, duplicate(c));
   }
-  
+
   UNPROTECT(1);
   return ans;
 }
-  
+
 SEXP do_disassemble(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
   SEXP code;
-  
+
   checkArity(op, args);
   code = CAR(args);
   if (! isByteCode(code))
@@ -3397,7 +3397,7 @@ SEXP do_loadfile(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "unable to open file for loading");
     s = R_LoadFromFile(fp, 0);
     fclose(fp);
-    
+
     UNPROTECT(1);
     return s;
 }
@@ -3430,7 +3430,7 @@ SEXP do_savefile(SEXP call, SEXP op, SEXP args, SEXP env)
 char *R_CompiledFileName(char *fname, char *buf, size_t bsize)
 {
     char *basename, *ext;
-    
+
     /* find the base name and the extension */
     basename = strrchr(fname, FILESEP[0]);
     if (basename == NULL) basename = fname;
@@ -3456,13 +3456,13 @@ char *R_CompiledFileName(char *fname, char *buf, size_t bsize)
 	return NULL;
     }
 }
-    
+
 FILE *R_OpenCompiledFile(char *fname, char *buf, size_t bsize)
 {
     char *cname = R_CompiledFileName(fname, buf, bsize);
 
     if (cname != NULL && R_FileExists(cname) &&
-	(strcmp(fname, cname) == 0 || 
+	(strcmp(fname, cname) == 0 ||
 	 ! R_FileExists(fname) ||
 	 R_FileMtime(cname) > R_FileMtime(fname)))
 	/* the compiled file cname exists, and either fname does not
@@ -3482,7 +3482,7 @@ SEXP do_putconst(SEXP call, SEXP op, SEXP args, SEXP env)
     if (TYPEOF(code) != VECSXP)
 	error("code must be a generic vector");
     c = CADR(args);
-    
+
     n = LENGTH(code);
     ans = allocVector(VECSXP, n + 1);
     for (i = 0; i < n; i++)
