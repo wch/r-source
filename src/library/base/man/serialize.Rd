@@ -60,8 +60,8 @@ unserialize(connection, refhook = NULL)
 \value{
   For \code{serialize}, \code{NULL} unless \code{connection=NULL}, when
   the result is stored in the first element of a character vector (but
-  is not a normal character string and should not be processed except by
-  \code{unserialize}.)
+  is not a normal character string unless \code{ascii = TRUE} and should
+  not be processed except by \code{unserialize}).
 
   For \code{unserialize} and \code{.readRDS}, an \R object.
 
