@@ -35,6 +35,10 @@ NEW FEATURES
 	pointer protection stack to be set higher than the previous
 	limit of 10000.
 
+    o	The fonts on an X11() device (also jpeg() and png() on Unix)
+	can be specified by a new argument `fonts' defaulting to the
+	value of a new option "X11fonts".
+
 
 UTILITIES
 
