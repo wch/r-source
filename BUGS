@@ -320,3 +320,11 @@ Directory:  incoming
 Subject: lab does not work
 From: puetsch@bigfoot.de
 Date: Mon, 17 Sep 2001 12:53:25 +0200 (MET DST)
+* PR# 1095 *
+Subject:  Bizarre clipping with abline and points 
+From: J.C.Rougier@durham.ac.uk
+Date: Wed, 19 Sep 2001 14:45:52 +0100
+* PR# 1096 *
+Subject: missing()
+From: hosking@watson.ibm.com
+Date: Wed, 19 Sep 2001 16:38:52 +0200 (MET DST)
