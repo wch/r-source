@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-06
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-09
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1808,6 +1808,9 @@ Functions to import Arc/Info V7.x coverages and data.
 @item RColorBrewer
 ColorBrewer palettes for drawing nice maps shaded according to a
 variable.
+@item RII
+Estimation of the relative index of inequality for interval-censored
+data using natural cubic splines.
 @item RMySQL
 An interface between R and the MySQL database system.
 @item RNetCDF
@@ -2991,12 +2994,8 @@ Interface to Unidata's routines to convert units.
 Unit root and cointegration tests for time series data.
 @item urn
 Functions for sampling without replacement (simulated urns).
-@c <COMMENT>
-@c Removed on 2004-12-23 as there are severe problems and email to the
-@c maintainer bounces.
-@c @item uroot
-@c Unit root tests and graphics for seasonal time series.
-@c </COMMENT>
+@item uroot
+Unit root tests and graphics for seasonal time series.
 @item vabayelMix
 Variational Bayesian mixture model.
 @item vardiag
