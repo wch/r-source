@@ -6,6 +6,9 @@
 ####	Functions for  ``d/p/q/r''
 
 .ptime <- proc.time()
+F <- FALSE
+T <- TRUE
+
 ###-- these are identical in ./arith-true.R ["fixme": use source(..)]
 opt.conformance <- 0
 Meps <- .Machine $ double.eps

@@ -43,7 +43,7 @@ all(dim(m <- rbind(1:2, diag(2))) == 3:2)
 all(m == c(1,1,0, 2,0,1))
 
 ## factor():
-is.factor(factor(list()))
+is.factor(factor(integer()))
 all(levels(ordered(rev(gl(3,4)))) == 1:3)# coercion to char
 all(levels(factor(factor(9:1)[3:5])) == 5:7)
 ## crossing bug PR#40

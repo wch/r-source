@@ -1,17 +1,17 @@
 
-R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-09-04)
+R : Copyright 2001, The R Development Core Team
+Version 1.3.0 Under development (unstable) (2001-03-27)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type	"?license" or "?licence" for distribution details.
+Type `license()' or `licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type	"?contributors" for a list.
+Type `contributors()' for more information.
 
-Type	"demo()" for some demos, "help()" for on-line help, or
-    	"help.start()" for a HTML browser interface to help.
-Type	"q()" to quit R.
+Type `demo()' for some demos, `help()' for on-line help, or
+`help.start()' for a HTML browser interface to help.
+Type `q()' to quit R.
 
 > 
 > ls.base <- ls(pos=length(search()))#- something more elegant ?
@@ -22,9 +22,9 @@ Type	"q()" to quit R.
 +     "\n\t starting with 'is.' :\t ",
 +     length(is.bi <- bi[substring(bi,1,3) == "is."]), "\n")
 
-Number of base objects:		 1286 
-Number of builtin functions:	 1261 
-	 starting with 'is.' :	  40 
+Number of base objects:		 1354 
+Number of builtin functions:	 1323 
+	 starting with 'is.' :	  41 
 > ## 0.14 : 31
 > ## 0.50 : 33
 > ## 0.60 : 34
@@ -117,6 +117,7 @@ is.recursive   : .
 is.symbol      : . 
 is.table       : . 
 is.ts          : . 
+is.unsorted    : . 
 is.vector      : . 
 > is.ALL(NULL,   true.only = TRUE)
 [1] "is.atomic"   "is.null"     "is.pairlist"
@@ -167,6 +168,7 @@ is.recursive   : .
 is.symbol      : . 
 is.table       : . 
 is.ts          : . 
+is.unsorted    : . 
 is.vector      : | 
 > is.ALL(array(1:24, 2:4))
 is.array       : | 
@@ -201,6 +203,7 @@ is.recursive   : .
 is.symbol      : . 
 is.table       : . 
 is.ts          : . 
+is.unsorted    : . 
 is.vector      : . 
 > is.ALL(1 + 3)
 is.array       : . 
@@ -235,6 +238,7 @@ is.recursive   : .
 is.symbol      : . 
 is.table       : . 
 is.ts          : . 
+is.unsorted    : . 
 is.vector      : | 
 > e13 <- expression(1 + 3)
 > is.ALL(e13)
@@ -270,6 +274,7 @@ is.recursive   : |
 is.symbol      : . 
 is.table       : . 
 is.ts          : . 
+is.unsorted    : ? 
 is.vector      : | 
 > is.ALL(substitute(expression(a + 3), list(a=1)), true.only = TRUE)
 [1] "is.call"      "is.language"  "is.recursive"
@@ -306,6 +311,7 @@ is.recursive   : |
 is.symbol      : . 
 is.table       : . 
 is.ts          : . 
+is.unsorted    : ? 
 is.vector      : . 
 > 
 > is0 <- is.ALL(numeric(0))
@@ -335,8 +341,8 @@ logical(0)
          FALSE          FALSE          FALSE           TRUE          FALSE 
     is.ordered    is.pairlist          is.qr        is.real   is.recursive 
          FALSE          FALSE          FALSE           TRUE          FALSE 
-     is.symbol       is.table          is.ts      is.vector 
-         FALSE          FALSE          FALSE           TRUE 
+     is.symbol       is.table          is.ts    is.unsorted      is.vector 
+         FALSE          FALSE          FALSE          FALSE           TRUE 
 > ispi <- unlist(is.ALL(pi))
 > all(ispi[is0.ok] == is0)
 [1] TRUE
@@ -381,6 +387,7 @@ is.recursive   : .
 is.symbol      : . 
 is.table       : . 
 is.ts          : . 
+is.unsorted    : . 
 is.vector      : | 
 > is.ALL(structure(1:7, names = paste("a",1:7,sep="")), true.only = TRUE)
 [1] "is.atomic"  "is.integer" "is.numeric" "is.vector" 
@@ -421,6 +428,7 @@ is.recursive   : .
 is.symbol      : . 
 is.table       : . 
 is.ts          : . 
+is.unsorted    : . 
 is.vector      : | 
 > is.ALL(structure(1:7, names = paste("a",1:7,sep="")), true.only = TRUE)
 [1] "is.atomic"  "is.integer" "is.numeric" "is.vector" 
