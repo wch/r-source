@@ -182,6 +182,7 @@ par(\dots)
   \code{"3313"} specifies three pixels on followed by three off followed
   by one on and finally three off.}
 \seealso{
+  \code{\link{plot.default}} for some high-level plotting parameters;
   \code{\link{colors}}, \code{\link{gray}}, \code{\link{rainbow}},
   \code{\link{rgb}};
   \code{\link{options}} for other setup parameters;
