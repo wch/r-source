@@ -548,87 +548,34 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
 		   CHAR_STAR(fsym), class_string(fdef));
     }
     switch(TYPEOF(mlist)) {
-    case LANGSXP:
-	/* a recursive call; picked up the skeleton call (to be used as
-	   the method) */
-	f = mlist; mlist = R_NilValue;
-	break;
-    case NILSXP:  {
-	/* call the S language function to merge generic
-	   information. First assign a special version to trap recursive
-	   calls to the same generic. */
-      if(prim_case) {
-	  do_set_prim_method(fdef, "suppress", NULL, NULL);
-	  PROTECT(mlist = R_S_getAllMethods(fname, fdef)); nprotect++;
-	  do_set_prim_method(fdef, "set", NULL, mlist);
-      }
-      else {
-	  defineVar(s_dot_Methods, get_skeleton(fsym, fdef), f_env);
-	  PROTECT(mlist = R_S_getAllMethods(fname, fdef)); nprotect++;
-	  defineVar(s_dot_Methods, mlist, f_env);
-      }
-      if(mlist == R_NilValue) {
-	error("\"%s\" has no defined methods", CHAR_STAR(fsym));
-	return R_NilValue; /* -Wall */
-      }
-	/* else, continue to the default case */
-    }
+    case NILSXP:
+    case CLOSXP:
+    case SPECIALSXP: case BUILTINSXP:
+	f = mlist; break;
     default:
-        f = do_dispatch(fname, ev, mlist, TRUE, TRUE);
-	if(isNull(f)) {
-		/* call the S language code to do a search with inheritance */
-		SEXP value = getOverride(mlist);
-		if(isNull(value)) {
-			/* Not a recursive call for  this methods list object:
-			   Do the search, but avoid possible recursive loop.
-			   Two cases:  fdef (the original function) is a primitive and
-			   then the default method is forced to be also; or
-			   the original function is a closure */
-			if(!prim_case) {
-				SEXP deflt;
-				PROTECT(deflt = R_find_method(mlist, "ANY", fname)); nprotect++;
-				if(isNull(deflt)) /* mark as bad default */
-					deflt = R_MissingArg;
-				setOverride(mlist, deflt);
-				defineVar(s_dot_Methods, get_skeleton(fsym, fdef), f_env);
-				PROTECT(value = R_S_MethodsListSelect(fname, ev, mlist, f_env)); nprotect++;
-				defineVar(s_dot_Methods, value, f_env);
-				setOverride(mlist, NULL); /* clear the stored default method */
-			}
-			else {
-				do_set_prim_method(fdef, "suppress", NULL, NULL);
-				PROTECT(value = R_S_MethodsListSelect(fname, ev, mlist, f_env)); nprotect++;
-				do_set_prim_method(fdef, "set", NULL, value);
-			}
-		} 
-		else if(value == R_MissingArg)
-			error("Recursive call to \"%s\" in methods search, but this function has no default method", CHAR_STAR(fname));
-		if(isNull(value))
-			error("No direct or inherited method for function \"%s\" for this call",
-			      CHAR_STAR(fname));
-		mlist = value;
-		/* now look again.  This time the necessary method should
-		   have been inserted in the MethodsList object */
-		f = do_dispatch(fname, ev, mlist, FALSE, TRUE);
-	}
+	f = do_dispatch(fname, ev, mlist, TRUE, TRUE);
     }
-    val = R_NilValue;
+    if(isNull(f)) {
+	SEXP value;
+	PROTECT(value = R_S_MethodsListSelect(fname, ev, mlist, f_env)); nprotect++;
+	if(isNull(value))
+	    error("No direct or inherited method for function \"%s\" for this call",
+		  CHAR_STAR(fname));
+	mlist = value;
+	/* now look again.  This time the necessary method should
+	   have been inserted in the MethodsList object */
+	f = do_dispatch(fname, ev, mlist, FALSE, TRUE);
+    }
     /* loadMethod methods */
     if(isObject(f))
 	f = R_loadMethod(f, fname, ev);
     switch(TYPEOF(f)) {
     case CLOSXP:
-#undef IGNORE_LEXICAL_SCOPE
-#ifdef IGNORE_LEXICAL_SCOPE
-      PROTECT(val = BODY(f)); nprotect++;
-	val =  eval(val, ev);
-#else
 	{
 	    SEXP R_execMethod(SEXP, SEXP);
 	    PROTECT(f); nprotect++; /* is this needed?? */
 	    val = R_execMethod(f, ev);
 	}
-#endif
 	break;
     case SPECIALSXP: case BUILTINSXP:
 	/* primitives  can't be methods; they arise only as the
@@ -637,24 +584,6 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
 	   with the internal computations. */
       val = R_deferred_default_method();
       break;
-    case LANGSXP:
-	if(mlist == R_NilValue) {
-	    primitive_type t;
-	    /* a recursive call: use the skeleton default call */
-	    call = f;
-	    f = CAR(f);
-	    t = primitive_case(fsym, f);
-	    if(t != STANDARD)
-		call = nonstandard_primitive(t, call, f, ev);
-	    else
-		/* the skeleton is almost surely a call to the same primitive, 
-		   but we don't need to assume that. */
-		SETCAR(call, f);
-	    PROTECT(call); nprotect++;
-	    val =  eval(call, ev);
-	    break;
-	}
-	/* else, it's an errror */
     default:
 	error("invalid object (non-function) used as method");
 	break;
@@ -827,7 +756,7 @@ SEXP R_nextMethodCall(SEXP matched_call, SEXP ev) {
 	    if(dotsDone)
 		error("In processing callNextMethod, found a \"...\" in the matched call, but no corresponding ... argument ");
 	}
-	else
+	else if(CAR(args) != R_MissingArg) /* "missing" only possible in primitive */
 	    SETCAR(args, this_sym);
 	args = CDR(args);
     }

@@ -79,6 +79,8 @@ tclRequire(package, warn = TRUE)
 \arguments{
   \item{win}{a window structure}
   \item{x}{an object}
+  \item{value}{For \code{tclvalue} assignments, a character string. For
+    \code{tclObj} assignments, an object of class \code{tclObj}}
   \item{ID}{a window ID}
   \item{parent}{a window which becomes the parent of the resulting window}
   \item{path}{path to a directory containing Tcl packages}

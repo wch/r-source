@@ -229,6 +229,7 @@ tkputs(...)
 }
 \arguments{
   \item{x}{A window object}
+  \item{value}{For \code{tktitle} assignments, a character string.}
   \item{\dots}{Handled via \code{.Tcl.args}}
 }
 \details{

@@ -71,7 +71,8 @@ prototype <- function(...)
     props <- list(...)
     names <- allNames(props)
     data <- nchar(names) == 0
-    if(any(data)) {
+    dataPart <- any(data)
+    if(dataPart) {
         if(sum(data) > 1)
             stop("only one data object (unnamed argument to prototype) allowed")
         obj <- props[[seq(along=data)[data] ]]
@@ -82,7 +83,7 @@ prototype <- function(...)
         obj <- list()
     for(i in seq(along = names))
         slot(obj, names[[i]], FALSE) <- props[[i]]
-    new("classPrototypeDef", object = obj, slots = names)
+    new("classPrototypeDef", object = obj, slots = names, dataPart = dataPart)
 }
 
 makeClassRepresentation <-

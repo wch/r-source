@@ -94,6 +94,10 @@ co.intervals(x, number = 6, overlap = 0.5)
   In the case of multiple \code{rows}, the \emph{order} of the panel
   plots is from the bottom and from the left (corresponding to
   increasing \code{a}, typically).
+
+  A panel function should not attempt to start a new plot, but just plot
+  within a given coordinate system: thus \code{plot} and \code{boxplot}
+  are not panel functions.
 }
 \value{
   \code{co.intervals(., number, .)} returns a (\code{number} \eqn{\times}{x}

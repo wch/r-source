@@ -373,9 +373,6 @@ rematchDefinition <- function(definition, generic, mnames, fnames, signature) {
         names(newCall) <- newCallNames
     }
     newCall <- as.call(newCall)
-    ## promote the definition to a method (so it can contain callNextMethod, etc,
-    ## when it's assigned as .local
-    definition <- asMethodDefinition(definition, signature)
     newBody <- substitute({.local <- DEF; NEWCALL},
                           list(DEF = definition, NEWCALL = newCall))
     body(generic, envir = environment(definition)) <- newBody
@@ -404,7 +401,7 @@ getGeneric <-
   ## NULL according to the value of mustFind.
 ### TO BE CHANGED:  Needs a package argument, which should be passed down to R_getGeneric
   function(f, mustFind = FALSE) {
-    if(is(f, "genericFunction"))
+    if(is.function(f) && is(f, "genericFunction"))
         return(f)
     value <- .Call("R_getGeneric", f, FALSE, PACKAGE = "methods")
     if(is.null(value) && exists(f, "package:base", inherits = FALSE)) {

@@ -167,29 +167,44 @@ MethodsListSelect <-
   ## a method specifically linked to class `"missing"'.  Once a function is found, it
   ## is returned as the value.  If matching fails,  NULL is returned.
     function(f, env,
-             mlist = getMethodsForDispatch(f, fdef),
+             mlist = .getMethodsForDispatch(f, fdef),
              fEnv = if(is(fdef, "genericFunction")) environment(fdef) else NULL,
-             finalDefault = finalDefaultMethod(mlist),
+             finalDefault = finalDefaultMethod(mlist, f),
              evalArgs = TRUE,
              useInherited = TRUE,  ## supplied when evalArgs is FALSE
-             fdef = getGeneric(f)
+             fdef = getGeneric(f) # MUST BE SAFE FROM RECUSIVE METHOD SELECTION
  )
 {
-    if(!is(mlist, "MethodsList")) {
-        if(is.null(f))
-            stop("Invalid method sublist")
-        else
-            stop(paste("\"", f, "\" is not a valid generic function", sep=""))
+    if(.setIfBase(f, fdef, mlist)) { # quickly protect against recursion -- see Methods.R
+        on.exit(.setMethodsForDispatch(f, fdef, mlist))
     }
-    on.exit({
-        ## the C level code turns off some recursive method selection during evaluation
-        ## of a call to this function.  Make sure it's turned back on if an error occurs.
-        .Call("R_clear_method_selection", PACKAGE = "methods")
-        ## and remove the function from the cached method data
-        resetGeneric(f, fdef)
-    })
+    if(is.null(mlist)) {
+        ## collect all the methods metadata visible on 1st call to generic
+        ## Cannot happen except for genericFunction objects, for which
+        ## getAllMethods will assign mlist in the environment of fdef
+        mlist <- getAllMethods(f, fdef)
+    }
+    if(!is(mlist, "MethodsList")) {
+        if(is.function(mlist)) # call to f, inside MethodsListSelect
+            return(mlist)
+        if(is.null(f)) # recursive recall of MethodsListSelect
+            stop("Invalid method sublist")
+        else if(!is.null(mlist)) # NULL => 1st call to genericFunction
+            stop("\"", f, "\" is not a valid generic function: methods list was an object of class \"",
+                 class(mlist), "\"")
+    }
     if(!is.logical(useInherited))
-        stop("useInherited must be TRUE, FALSE, or a named logical vector of T/F")
+        stop("useInherited must be TRUE, FALSE, or a named logical vector of those values; got an object of class \"",
+             class(useInherited), "\"")
+    if(identical(mlist, getMethodsForDispatch(f, fdef))) {
+        ## On the initial call:
+        ## turn off any further method dispatch on this function, to avoid recursive
+        ## loops if f is a function used in MethodsListSelect.
+        ## TODO: Using name spaces in the methods package would eliminate the need for this
+        .setMethodsForDispatch(f, fdef, finalDefault)
+        if(is(mlist, "MethodsList"))
+            on.exit(.setMethodsForDispatch(f, fdef, mlist))
+    }
     argName <- slot(mlist, "argument")
     arg <- NULL ## => don't use instance-specific inheritance
     if(evalArgs) {
@@ -276,13 +291,7 @@ MethodsListSelect <-
         ## top level
         if(is(value, "EmptyMethodsList")) ## selection failed
             value <- NULL
-        else if(!is.null(fEnv)) {
-            ## and later a test that this selection used no conditional inheritance
-            assign(".Methods", value, envir = fEnv)
-        }
     }
-    ## clear the error actions
-    on.exit()
     value
 }
 
@@ -442,6 +451,7 @@ matchSignature <-
 }
     n <- length(anames)
     value <- rep("ANY", n)
+    names(value) <- anames
     value[which] <- sigClasses
     unspec <- value == "ANY"
     ## remove the trailing unspecified classes

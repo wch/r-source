@@ -117,7 +117,7 @@ makePrototypeFromClassDef <-
             stop("In constructing the prototype for class \"", className, "\": ",
                  "Prototype has class \"",
                        .class1(prototype), "\", but the data part specifies class \"",
-                       dataPartClass,"\"",)
+                       dataPartClass,"\"")
         iData <- -match(".Data", snames)
         snames <- snames[iData]
         slots <- slots[iData]
@@ -484,7 +484,7 @@ assignClassDef <-
 }
 
 .initClassSupport <- function(where) {
-    setClass("classPrototypeDef", representation(object = "ANY", slots = "character"),
+    setClass("classPrototypeDef", representation(object = "ANY", slots = "character", dataPart = "logical"),
              sealed = TRUE, where = where)
 }
 
@@ -599,14 +599,28 @@ reconcilePropertiesAndPrototype <-
                       prototype <- new(dataPartClass)
               }
               else {
-                  if(is(prototype, "classPrototypeDef"))
-                      pobject <- prototype@object
-                  else
-                      pobject <- prototype
-                  if(!is(pobject, dataPartClass))
-                  stop(paste("Class of supplied prototype (\"",
-                             class(pobject), "\") conflicts with the class of ",
-                             " the data part (\"", dataPartClass, "\")",sep=""))
+                  if(is(prototype, "classPrototypeDef")) {
+                      hasDataPart <- identical(prototype@dataPart, TRUE)
+                      if(!hasDataPart) {
+                          newObject <- new(dataPartClass)
+                          pobject <- prototype@object
+                          ## small amount of head-standing to preserve
+                          ## any attributes in newObject & not in pobject
+                          anames <- names(attributes(pobject))
+                          attributes(newObject)[anames] <- attributes(pobject)
+                          prototype@object <- newObject
+                      }
+                      else if(!is(prototype@object, dataPartClass))
+                          stop("A prototype object was supplied with object slot of class \"",
+                           class(prototype@object),
+                           "\", but the class definition requires an object that is class \"",
+                           dataPartClass, "\"")
+                  }
+                  else if(!is(prototype, dataPartClass))
+                      stop("A prototype was supplied of class \"",
+                           class(prototype),
+                           "\", but the class definition requires an object that is class \"",
+                           dataPartClass, "\"")
               }
           }
           if(is.null(prototype)) { ## non-vector (may extend NULL)

@@ -88,7 +88,7 @@
               }, where = envir)
     setMethod("loadMethod", "MethodWithNext",
               function(method, fname, envir) {
-                  callNextMethod(method, fname, envir)
+                  callNextMethod()
                   assign(".nextMethod", method@nextMethod, envir = envir)
                   method
               }, where = envir)
@@ -142,6 +142,9 @@
     setGeneric("body<-", where = envir)
     setMethod("body<-", "MethodDefinition", function (fun, envir, value) {
         ff <- as(fun, "function")
+    setGeneric("body<-", where = envir)
+    setMethod("body<-", "MethodDefinition", function (f, envir, value) {
+        ff <- as(f, "function")
         body(ff, envir = envir) <- value
         fun@.Data <- ff
         fun
@@ -173,14 +176,18 @@
         sigArgs <- names(signature)
         if(is(def, "genericFunction"))
             formalNames <- def@signature
-        else if(is(def, "function"))
+        else if(is(def, "function")) {
             formalNames <- formalArgs(def)
-        if(length(sigArgs)< length(signature))
+            dots <- match("...", formalNames)
+            if(!is.na(dots))
+                formalNames <- formalNames[-dots]
+        }
+        if(is.null(sigArgs))
             names(signature) <- formalNames[seq(along = classes)]
         else if(length(sigArgs) > 0 && any(is.na(match(sigArgs, formalNames))))
-            stop(paste("names in signature (",
+            stop("The names in signature for method (",
                        paste(sigArgs, collapse = ", "), ") don't match function's arguments (",
-                       paste(formalNames, collapse = ", "),")", sep=""))
+                       paste(formalNames, collapse = ", "),")", sep="")
         ## the named classes become the signature object
         class(signature) <- class(object)
         signature
