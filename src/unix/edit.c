@@ -26,6 +26,10 @@
 # include <config.h>
 #endif
 
+#ifdef SUPPORT_GUI_MBCS
+#define SUPPORT_MBCS 1
+#endif
+
 #include "Defn.h"
 #include "Print.h"
 #include "Fileio.h"
@@ -146,7 +150,7 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     else {
 	/* Quote path if necessary */
-	if(cmd[0] != '"' && strchr(cmd, ' '))
+	if(cmd[0] != '"' && Rf_strchr(cmd, ' '))
 	    sprintf(editcmd, "\"%s\" \"%s\"", cmd, filename);
 	else
 	    sprintf(editcmd, "%s \"%s\"", cmd, filename);
