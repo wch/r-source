@@ -249,13 +249,10 @@ none
 
 Directory:  incoming
 
-* PR# 879 *
-From: Duncan Murdoch <murdoch@stats.uwo.ca>
-Date: Sun, 18 Mar 2001 07:45:13 -0500 (EST)
-* PR# 878 *
-Subject: sorry
-From: "Ian Stewart" <ians@connexus.net.au>
-Date: Sat, 17 Mar 2001 07:03:50 +1100
+* PR# 880 *
+Subject: A limitation for polyroot ?
+From: chyihung.hsu@pharma.Novartis.com
+Date: Mon, 19 Mar 2001 16:45:59 -0500
 * PR# 877 *
 Subject: segmentation fault of unknown cause
 From: Martin Schlather <Martin.Schlather@uni-bayreuth.de>
@@ -264,3 +261,10 @@ Date: Wed, 14 Mar 2001 17:45:25 +0100
 Subject: 
 From: Ian Wilson <I.Wilson@maths.abdn.ac.uk>
 Date: Tue, 13 Mar 2001 13:09:03 +0000
+* PR# 879 *
+From: Duncan Murdoch <murdoch@stats.uwo.ca>
+Date: Sun, 18 Mar 2001 07:45:13 -0500 (EST)
+* PR# 878 *
+Subject: sorry
+From: "Ian Stewart" <ians@connexus.net.au>
+Date: Sat, 17 Mar 2001 07:03:50 +1100
