@@ -958,6 +958,8 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP expr, env;
     int nback;
+    RCNTXT cntxt;
+
     checkArity(op, args);
     expr = CAR(args);
     env = CADR(args);
@@ -992,7 +994,9 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     if(isLanguage(expr) || isExpression(expr) || isSymbol(expr)) {
 	PROTECT(expr);
+	begincontext(&cntxt, CTXT_RETURN, call, env, rho, args);
 	expr = eval(expr, env);
+	endcontext(&cntxt);
 	UNPROTECT(1);
     }
     UNPROTECT(1);
