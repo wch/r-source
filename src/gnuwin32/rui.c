@@ -568,6 +568,14 @@ void readconsolecfg()
 		consoley = atoi(opt[1]);
 		done = 1;
 	    }
+	    if (!strcmp(opt[0], "xgraphics")) {
+		graphicsx = atoi(opt[1]);
+		done = 1;
+	    }
+	    if (!strcmp(opt[0], "ygraphics")) {
+		graphicsy = atoi(opt[1]);
+		done = 1;
+	    }
 	    if (!strcmp(opt[0], "pgrows")) {
 		pagerrow = atoi(opt[1]);
 		done = 1;

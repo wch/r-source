@@ -12,8 +12,8 @@ and correctly for more than 65535 columns.
 
 The initial size and position of the MDI frame can be set in Rconsole:
 see the comments in .../etc/Rconsole.  The initial position of the
-console window can be set in Rconsole and in the GUI Preferences
-editor.
+console window and graphics windows can be set in Rconsole and in the
+GUI Preferences editor.
 
 
 

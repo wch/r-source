@@ -40,6 +40,8 @@
 extern console RConsole;
 extern Rboolean AllDevicesKilled;
 
+int graphicsx = -25, graphicsy = 0;
+
 /* a colour used to represent the background on png if transparent
    NB: used as RGB and BGR
 */
@@ -1244,11 +1246,15 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     iw = dw + 0.5;
     ih = dh + 0.5;
     if (resize == 2) xd->rescale_factor = dw/dw0;
-    if (!(xd->gawin = newwindow("R Graphics",
-				rect(devicewidth(NULL) - iw - 25, 0, iw, ih),
-				Document | StandardWindow | Menubar |
-				VScrollbar | HScrollbar))) {
-	return 0;
+    {
+	int grx = graphicsx, gry = graphicsy;
+	if (grx < 0) grx = devicewidth(NULL)  - iw + grx;
+	if (gry < 0) gry = deviceheight(NULL) - ih + gry;
+	if (!(xd->gawin = newwindow("R Graphics",
+				    rect(grx, gry, iw, ih),
+				    Document | StandardWindow | Menubar |
+				    VScrollbar | HScrollbar)))
+	    return 0;
     }
     gchangescrollbar(xd->gawin, VWINSB, 0, ih/SF-1, ih/SF, 0);
     gchangescrollbar(xd->gawin, HWINSB, 0, iw/SF-1, iw/SF, 0);
