@@ -37,5 +37,5 @@ double pbinom(double x, double n, double p, int lower_tail, int log_p)
     x = floor(x);
     if (x < 0.0) return R_DT_0;
     if (n <= x) return R_DT_1;
-    return pbeta(1.0 - p, n - x, x + 1, lower_tail, log_p);
+    return pbeta(1 - p, n - x, x + 1, lower_tail, log_p);
 }
