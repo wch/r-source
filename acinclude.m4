@@ -1,6 +1,6 @@
 ### aclocal.m4 -- extra macros for configuring R
 ###
-### Copyright (C) 1998, 1999, 2000 R Core Team
+### Copyright (C) 1998, 1999, 2000, 2001 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -297,6 +297,67 @@ AC_DEFUN([R_PROG_CXX_FLAG],
       AC_MSG_RESULT(no)
     fi
   ])
+##
+## R_PROG_F77_OR_F2C
+##
+## Find a Fortran 77 compiler, or f2c.
+##
+## If we have not been forced to use a particular FORTRAN compiler, try
+## to find one using one of the several common names.  The list is based
+## on what the current autoconf CVS contains, and ordered by
+##  1. F77, F90, F95
+##  2. Good/tested native compilers, bad/untested native compilers
+##  3. Wrappers around f2c go last.
+##
+## `fort77' and `fc' are wrappers around `f2c', `fort77' being better.
+## It is believed that under HP-UX `fort77' is the name of the native
+## compiler.  On some Cray systems, fort77 is a native compiler.
+## cf77 and cft77 are (older) Cray F77 compilers.
+## pgf77 and pgf90 are the Portland Group F77 and F90 compilers.
+## xlf/xlf90/xlf95 are IBM (AIX) F77/F90/F95 compilers.
+## lf95 is the Lahey-Fujitsu compiler.
+## fl32 is the Microsoft Fortran "PowerStation" compiler.
+## af77 is the Apogee F77 compiler for Intergraph hardware running CLIX.
+## epcf90 is the "Edinburgh Portable Compiler" F90.
+##
+## The configure options `--with-g77', `--with-f77', or `--with-f2c'
+## force g77, f77, or f2c to be used (under *exactly* these names).  It
+## is also possible to use these options to specify the full path name
+## of the compiler.
+AC_DEFUN([R_PROG_F77_OR_F2C], [
+if test -n "${FC}"; then
+  F77=${FC}
+  AC_MSG_RESULT([defining F77 to be ${F77}])
+elif ${use_f77}; then
+  if test "${with_f77}" = yes; then
+    F77=f77
+  else
+    F77="${with_f77}"
+  fi
+  AC_MSG_RESULT([defining F77 to be ${F77}])
+elif ${use_g77}; then
+  if test "${with_g77}" = yes; then
+    F77=g77
+  else
+    F77="${with_g77}"
+  fi
+  AC_MSG_RESULT([defining F77 to be ${F77}])
+elif ${use_f2c}; then
+  F77=
+  if test "${with_f2c}" = yes; then
+    F2C=f2c
+  else
+    F2C="${with_f2c}"
+  fi
+  AC_MSG_RESULT([defining F2C to be ${F2C}])
+else
+  F77=
+  AC_CHECK_PROGS(F77, [g77 f77 xlf cf77 cft77 pgf77 fl32 af77 fort77 f90 xlf90 pgf90 epcf90 f95 xlf95 lf95 g95 fc])
+  if test -z "${F77}"; then
+    AC_CHECK_PROG(F2C, f2c, f2c, [])
+  fi
+fi
+])
 ##
 ## R_PROG_F77_WORKS
 ##
