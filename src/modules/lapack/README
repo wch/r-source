@@ -5,11 +5,19 @@ double.f are support routines for `real' LAPACK calls
 cmplx.f are support routines for LAPACK calls from complex arithmetic
 routines, that are only used if COMPLEX*16 is supported by the Fortran
 compiler and compatible with the Rcomplex type (guaranteed for f2c users).
-They will not be compiled if an external LAPACK is used.
+Neither will not be compiled if an external LAPACK is used.
 
 cmplxblas.f contains BLAS routines needed by cmplx.f: it is not used
 if a full BLAS implementation is found at configure time.
 
-rgeev.f had to be corrected (lines 180-1) to allow LWORK queries to run.
-It calls dlange, which is missing in SunPerf, so a copy of that is
-included.
+rgeev.f is a corrected (lines 180-1) version of dgeev.f, to allow
+LWORK queries to run.  It calls dlange, which is missing in
+libsunperf, so a copy of that is included.
+
+The routines dsyev and dsyevr have their names remapped to r* unless
+HAVE_LAPACK is defined.  This ensures that the versions in double.f
+are called even if an external BLAS library contains LAPACK.  This was
+necessary on 64-bit Solaris where the routines in libsunperf were
+picked up and used excessive amounts of memory.  In principle it might
+be necessary to extend this remapping to the other symbols used from
+LAPACK.
