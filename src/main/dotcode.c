@@ -88,7 +88,7 @@ checkValidSymbolId(SEXP op, SEXP call, DL_FUNC *fun)
 	/* This is illegal C */
 	if((*fun = R_ExternalPtrAddr(op)) == NULL)
 	    errorcall(call, "NULL value passed as symbol address.");
-	return(0);
+	return;
     } 
     else if(inherits(op, "NativeSymbolInfo")) {
 	checkValidSymbolId(VECTOR_ELT(op, 1), call, fun);
