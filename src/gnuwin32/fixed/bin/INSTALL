@@ -148,6 +148,7 @@ foreach $pkg (@ARGV){
 
     chdir($pkg) || die "Error: cannot change to directory \`$pkg'\n";;
     my $canonpkg = cwd();
+    $pkgname = basename($canonpkg);
     chdir("..");
     my $pkgdir = cwd();
     chdir($startdir);
@@ -190,7 +191,7 @@ foreach $pkg (@ARGV){
 	    close bundledesc;
 	    close pkgdesc;
 	}
-	$pkgdir = $pkg;
+	$pkgdir .= "/$pkgname";
 	$intname = $description->{"Bundle"};
     }
     print "\n";
