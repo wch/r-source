@@ -68,31 +68,6 @@ stopifnot( it[c(1,203)] == c(0, 100),
                     findInterval(tt, X),  tol = eps),
           findInterval(tt,X) ==  apply( outer(tt, X, ">="), 1, sum)
  )
-\testonly{
- ## CPU comparisons
- set.seed(91)
- n <- 200; nc <- 100
- cat("CPU used -- n = ",n,"; for(i in 1:",nc,") ... (in 0.01 sec) : \n",
-     "   N  | findInt.()|  N * Fn() | apply(outer(*,*, >=),1,sum)\n",
-     "------|-----------|-----------|----------------------------\n",sep="")
-##    1 3 5 7 9 1 3 5 7 9 1 3
- mform <- function(x) formatC(100 * x[1], wid = 10, digits = 0, format = "f")
- tt <- ind <- in2 <- matrix(NA, n,nc)
- for(N in as.integer(1000* 2^(-1:4))) {
-   X <- sort(rt(N, df =3))
-   Fn <- ecdf(X)
-   for(i in 1:nc) tt[,i] <- rt(n, df=1)
-   cat(formatC(N, wid=5),
-       mform(system.time(for(i in 1:nc) ind[,i] <- findInterval(tt[,i], X))),
-       mform(system.time(for(i in 1:nc) in2[,i] <- N * Fn (tt[,i]))),
-       ## only one instead of nc ( = 50 ) times -- and still slower!:
-       mform(nc*system.time(in1 <- apply(outer(tt[,1], X, ">="), 1, sum))),
-       sep=" |", "\n")
-   in2 <- round(in2) ; storage.mode(in2) <- "integer"
-   stopifnot(identical(ind,     in2),
-             identical(ind[,1], as.integer(round(in1))))
- }# for
-}%testonly
 }
 \keyword{arith}
 \keyword{utilities}
