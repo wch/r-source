@@ -691,7 +691,14 @@ BUG FIXES
     o   chisq.test(simulate.p.value = TRUE) was returning slightly
 	incorrect p values, notably p = 0 when the data gave the most
 	extreme value.
+
+    o   terms.formula(simplify = TRUE) was losing offset terms.
+	Multiple offset terms were not being removed correctly if two
+	of them appeared first or last in the formula.  (PR#6656)
  
+    o	Rd conversion to latex did not add a new line before
+	\end{Section} in more cases than were corrected in 1.8.1.
+
 
 
 

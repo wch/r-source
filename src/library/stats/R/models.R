@@ -145,7 +145,13 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
                           simplify = FALSE, ...)
 {
     fixFormulaObject <- function(object) {
-	tmp <- attr(terms(object), "term.labels")
+        Terms <- terms(object)
+	tmp <- attr(Terms, "term.labels")
+        ## need to add back any offsets
+        if(length(ind <- attr(Terms, "offset"))) {
+            tmp2 <- rownames(attr(Terms, "factors"))
+            tmp <- c(tmp, tmp2[ind])
+        }
 	form <- formula(object)
 	lhs <- if(length(form) == 2) NULL else paste(deparse(form[[2]]),collapse="")
 	rhs <- if(length(tmp)) paste(tmp, collapse = " + ") else "1"
