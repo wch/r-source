@@ -1731,7 +1731,7 @@ The structure of Rd files which document @R{} data sets is slightly
 different.  Whereas sections such as @code{\arguments} and @code{\value}
 are not needed, the format and source of the data should be explained.
 
-As an example, let us look at @file{src/library/base/man/rivers.Rd}
+As an example, let us look at @file{src/library/datasets/man/rivers.Rd}
 which documents the standard @R{} data set @code{rivers}.
 
 @quotation
