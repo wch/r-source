@@ -8,4 +8,5 @@ save <- function(..., list = character(0), file = "", ascii = FALSE) {
 }
 
 save.image <- function (f = ".RData")
-    eval(substitute(save(list = ls(), file = f)), .GlobalEnv)
+    eval(substitute(save(list = ls(all.names = TRUE), file = f)),
+         .GlobalEnv)
