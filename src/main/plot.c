@@ -1757,6 +1757,16 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
+static void drawPolygon(int n, double *x, double *y, 
+			int lty, int fill, int border, DevDesc *dd)
+{
+    if (lty == NA_INTEGER)
+	dd->gp.lty = dd->dp.lty;
+    else
+	dd->gp.lty = lty;
+    GPolygon(n, x, y, USER, fill, border, dd);
+}
+
 SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* polygon(x, y, col, border, lty, xpd, ...) */
@@ -1823,11 +1833,6 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 
     GMode(1, dd);
 
-    if (INTEGER(lty)[0] == NA_INTEGER)
-	dd->gp.lty = dd->dp.lty;
-    else
-	dd->gp.lty = INTEGER(lty)[0];
-
     x = REAL(sx);
     y = REAL(sy);
     xold = NA_REAL;
@@ -1842,14 +1847,18 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 	else if ((R_FINITE(xold) && R_FINITE(yold)) &&
 		 !(R_FINITE(xx) && R_FINITE(yy))) {
 	    if (i-start > 1) {
-		GPolygon(i-start, x+start, y+start, USER,
-			 INTEGER(col)[num%ncol], INTEGER(border)[0], dd);
+		drawPolygon(i-start, x+start, y+start, 
+			    INTEGER(lty)[num%nlty],
+			    INTEGER(col)[num%ncol], 
+			    INTEGER(border)[num%nborder], dd);
 		num++;
 	    }
 	}
 	else if ((R_FINITE(xold) && R_FINITE(yold)) && (i == nx-1)) { /* last */
-	    GPolygon(nx-start, x+start, y+start, USER,
-		     INTEGER(col)[num%ncol], INTEGER(border)[0], dd);
+	    drawPolygon(nx-start, x+start, y+start, 
+			INTEGER(lty)[num%nlty],
+			INTEGER(col)[num%ncol], 
+			INTEGER(border)[num%nborder], dd);
 	    num++;
 	}
 	xold = xx;
