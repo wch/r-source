@@ -109,18 +109,25 @@ help <- function(topic, offline = FALSE, package = .packages(),
                     file.append(FILE, zfile)
                     cat("\\end{document}\n",
                         file = FILE, append = TRUE)
+                    ## <NOTE>
+                    ## We now have help-print.sh in share/sh but we do
+                    ## not use the .Script mechanism because we play
+                    ## with the TEXINPUTS environment variable and not
+                    ## all systems can be assumed to support Sys.putenv().
                     system(paste(paste("TEXINPUTS=",
                                        file.path(R.home(), "share",
                                                  "texmf"),
                                        ":",
                                        "$TEXINPUTS",
                                        sep = ""),
-                                 file.path(R.home(), "bin", "help"),
-                                 "PRINT",
+                                 "/bin/sh",
+                                 file.path(R.home(), "share", "sh",
+                                           "help-print.sh"),
                                  FILE,
                                  topic,
                                  getOption("latexcmd"),
                                  getOption("dvipscmd")))
+                    ## </NOTE>
                     return(invisible())
                 }
                 else

@@ -10,7 +10,7 @@ subdir = src/scripts
 
 include $(top_builddir)/Makeconf
 
-SCRIPTS_S = BATCH LINK Rcmd Rdiff Rd2dvi Rd2txt config help pager texi2dvi
+SCRIPTS_S = BATCH LINK Rcmd Rdiff Rd2dvi Rd2txt config pager texi2dvi
 SCRIPTS_B_IN = COMPILE.in INSTALL.in REMOVE.in Rdconv.in Rdindex.in \
 	Rprof.in SHLIB.in Sd2Rd.in build.in check.in f77.in
 SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
