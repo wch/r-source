@@ -15,7 +15,7 @@ chol <- function(x, pivot = FALSE, LINPACK = pivot)
 	    stop("non-matrix argument to chol")
 	n <- as.integer(1)
     }
-    if(!pivot && !LINPACK) return(.Call("La_chol", x, PACKAGE = "base"))
+    if(!pivot && !LINPACK) return(.Call("La_chol", as.matrix(x), PACKAGE = "base"))
 
     if(!is.double(x)) storage.mode(x) <- "double"
 
