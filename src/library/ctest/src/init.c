@@ -29,8 +29,8 @@ static R_NativePrimitiveArgType dansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP}
 static R_NativePrimitiveArgType pansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
 static R_NativePrimitiveArgType qansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP};
 
-static R_NativePrimitiveArgType fexact_t[10] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP,
-					 REALSXP, REALSXP, REALSXP, REALSXP, INTSXP};
+static R_NativePrimitiveArgType fexact_t[11] = {INTSXP, INTSXP, INTSXP, INTSXP, REALSXP,
+					 REALSXP, REALSXP, REALSXP, REALSXP, INTSXP, INTSXP};
 
 static R_NativePrimitiveArgType pkendall_t[3] = {INTSXP, REALSXP, INTSXP};
 
@@ -46,7 +46,7 @@ static const R_CMethodDef cMethods[]  = {
   {"chisqsim", (DL_FUNC) &chisqsim, 11, chisqsim_t},
   {"d2x2xk", (DL_FUNC) &d2x2xk, 5, d2_t},
   {"dansari", (DL_FUNC) &dansari, 4, dansari_t},
-  {"fexact",   (DL_FUNC) &fexact, 10, fexact_t},
+  {"fexact",   (DL_FUNC) &fexact, 11, fexact_t},
   {"pansari",  (DL_FUNC)&pansari, 4, pansari_t},
   {"pkendall", (DL_FUNC)  &pkendall, 3, pkendall_t},
   {"pkstwo", (DL_FUNC) &pkstwo, 3, pkstwo_t},

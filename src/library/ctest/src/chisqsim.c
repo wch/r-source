@@ -15,13 +15,13 @@ chisqsim(int *nrow, int *ncol, int *nrowt, int *ncolt, int *n,
 	 int *b, double *expected, int *observed, double *fact,
 	 int *jwork, double *results)
 {
-    int i, j, iter;
+    int i, j, ii, iter;
     double chisq, e, o;
 
-    /* Calculate log-factorials. */
-    fact[0] = 0.;
-    for(i = 1; i <= *n; i++)
-	fact[i] = lgammafn((double) (i + 1));
+    /* Calculate log-factorials.  fact[i] = lgamma(i+1) */
+    fact[0] = fact[1] = 0.;
+    for(i = 2; i <= *n; i++)
+	fact[i] = fact[i - 1] + log(i);
 
     GetRNGstate();
 
@@ -29,10 +29,10 @@ chisqsim(int *nrow, int *ncol, int *nrowt, int *ncolt, int *n,
 	rcont2(nrow, ncol, nrowt, ncolt, n, fact, jwork, observed);
 	/* Calculate chi-squared value from the random table. */
 	chisq = 0.;
-	for (i = 0; i < *nrow; ++i) {
-	    for (j = 0; j < *ncol; ++j) {
-		e = expected[i + j * *nrow];
-		o = observed[i + j * *nrow];
+	for (j = 0; j < *ncol; ++j) {
+	    for (i = 0, ii = j * *nrow; i < *nrow;  i++, ii++) {
+		e = expected[ii];
+		o = observed[ii];
 		chisq += (o - e) * (o - e) / e;
 	    }
 	}
