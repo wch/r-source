@@ -86,8 +86,15 @@ insertMethod <-
 {
     ## Checks for assertions about valid calls.
     ## See rev. 1.17 for the code before the assertions added.
-    if(identical(args[1], "..."))
-        stop("inserting method with invalid signature containing \"...\"")
+    if(identical(args[1], "...")) {
+        if(!identical(signature[[1]], "ANY"))
+           stop("inserting method with invalid signature matching argument \"...\" to class \"",
+                signature[[1]], "\"")
+        args <- args[-1]
+        signature <- signature[-1]
+        if(length(signature) == 0)
+            return(mlist)
+    }
     if(length(signature) == 0)
         stop("inserting method corresponding to empty signature")
     if(!is(mlist, "MethodsList"))
@@ -161,7 +168,7 @@ MethodsListSelect <-
   ## is returned as the value.  If matching fails,  NULL is returned.
     function(f, env,
              mlist = getMethodsForDispatch(f, fdef),
-             fEnv = NULL,  ## supplied ONLY to save results in session metadata
+             fEnv = if(is(fdef, "genericFunction")) environment(fdef) else NULL,
              finalDefault = finalDefaultMethod(mlist),
              evalArgs = TRUE,
              useInherited = TRUE,  ## supplied when evalArgs is FALSE
