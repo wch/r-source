@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-47, 2003-10-01
+Version 1.7-48, 2003-10-02
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1516,6 +1516,9 @@ distributions of R.)
      regession, linear models, and generalized linear models, with an
      emphasis on regression diagnostics, particularly graphical diagnostic
      methods.
+
+*cat*
+     Analysis of categorical-variable datasets with missing values.
 
 *cclust*
      Convex clustering methods, including k-means algorithm, on-line update

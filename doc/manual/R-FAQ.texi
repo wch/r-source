@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-47, @value{FAQ-YEAR}-10-01
+@set FAQ-VERSION 1.7-48, @value{FAQ-YEAR}-10-02
 @set REL-VERSION 1.7.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1768,6 +1768,8 @@ Companion to Applied Regression, containing functions for applied
 regession, linear models, and generalized linear models, with an
 emphasis on regression diagnostics, particularly graphical diagnostic
 methods.
+@item cat
+Analysis of categorical-variable datasets with missing values.
 @item cclust
 Convex clustering methods, including @math{k}-means algorithm, on-line
 update algorithm (Hard Competitive Learning) and Neural Gas algorithm
