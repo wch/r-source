@@ -1315,8 +1315,10 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (length(x) == 0) {
 	if (length(y) > 1)
 	    x = coerceVector(x, VECSXP);
-	else if (length(y) == 1)
-	    x = coerceVector(x, TYPEOF(y));
+	else if (length(y) == 1) {
+	    if (TYPEOF(x) != VECSXP)
+		x = coerceVector(x, TYPEOF(y));
+	}
 	else {
 	    UNPROTECT(1);
 	    return(x);
