@@ -6,6 +6,22 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.5.1
+
+
+BUG FIXES
+
+    o	Rdconv now skips CRs in input files, even on Unix.
+
+    o	readBin() had a (very slow) memory leak if changing size or reading
+	character strings.  writeChar() had a memory leak.
+
+    o	polygon() and rect() with lty = "blank" were omitting the fill
+	colour (if present).  symbols(circles=, lty="blank") was
+	drawing the border of the disks.
+
+
+
 		CHANGES IN R VERSION 1.5.0
 
 
@@ -634,7 +650,7 @@ BUG FIXES
 
     o   rect(lty = "blank") was incorrectly drawing with a dashed line.
 
-    o   type.convert() was not reporting incorrectly formatting complex 
+    o   type.convert() was not reporting incorrectly formatted complex 
 	inputs. (PR#1477)
 
     o   readChar() was not resetting vmax, so causing memory build-up.

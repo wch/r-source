@@ -3099,13 +3099,9 @@ void GPolygon(int n, double *x, double *y, int coords,
     double *xx;
     double *yy;
 
-    /*  FIXME:
-     *  This omits polygons entirely if lty="blank", even if
-     *  a fill colour is specified.  Probably the right way to
-     *  do this is to reset fg to transparent.
-     */
-    if (Rf_gpptr(dd)->lty == LTY_BLANK) return;
-
+    if (Rf_gpptr(dd)->lty == LTY_BLANK)
+	fg = NA_INTEGER; /* transparent for the border */
+    
     /* Work in device coordinates because then it is easier to
      * work with both old and new devices.
      */
@@ -3250,9 +3246,8 @@ void GCircle(double x, double y, int coords,
     ir = radius/Rf_gpptr(dd)->ipr[0];
     ir = (ir > 0) ? ir : 1;
 
-    /*  FIXME:
-     *  lty="blank" is not handled here
-     */
+    if (Rf_gpptr(dd)->lty == LTY_BLANK)
+	fg = NA_INTEGER; /* transparent for the border */
 
     /* Work in device coordinates because then it is easier to
      * work with both old and new devices.
@@ -3399,12 +3394,8 @@ void GRect(double x0, double y0, double x1, double y1, int coords,
     int result;
     int xpdsaved = Rf_gpptr(dd)->xpd; /* -Wall */
 
-    /*  FIXME:
-     *  This omits rectangle entirely if lty="blank", even if
-     *  a fill colour is specified.  Probably the right way to
-     *  do this is to reset fg to transparent.
-     */
-    if (Rf_gpptr(dd)->lty == LTY_BLANK) return;
+    if (Rf_gpptr(dd)->lty == LTY_BLANK)
+	fg = NA_INTEGER; /* transparent for the border */
 
     /* Work in device coordinates because then it is easier to
      * work with both old and new devices.
