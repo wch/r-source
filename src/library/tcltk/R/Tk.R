@@ -144,7 +144,7 @@ tclObj.tclVar <- function(x){
 
 "tclObj<-.tclVar" <- function(x, value){
     value <- as.tclObj(value)
-    .External("RTcl_AssignObjToVar", ls(x$env), value)
+    .External("RTcl_AssignObjToVar", ls(x$env), value, PACKAGE="tcltk")
     x
 }
 
@@ -177,9 +177,12 @@ is.tclObj <- function(x) inherits(x, "tclObj")
 as.tclObj <- function(x) {
     if (is.tclObj(x)) return(x)
     z <- switch (storage.mode(x),
-                 character = .External("RTcl_ObjFromCharVector", x),
-                 double = .External("RTcl_ObjFromDoubleVector", x),
-                 integer = .External("RTcl_ObjFromIntVector", x),
+                 character =
+                 .External("RTcl_ObjFromCharVector", x, PACKAGE="tcltk"),
+                 double =
+                 .External("RTcl_ObjFromDoubleVector", x, PACKAGE="tcltk"),
+                 integer =
+                 .External("RTcl_ObjFromIntVector", x, PACKAGE="tcltk"),
                  stop(paste("Cannot handle object of mode ", storage.mode(x))))
     class(z) <- "tclObj"
     z
