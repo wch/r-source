@@ -251,6 +251,8 @@ SEXP tspgets(SEXP vec, SEXP val)
     if (frequency <= 0) badtsp();
     n = nrows(vec);
     if (n == 0) error("cannot assign `tsp' to zero-length vector");
+
+    /* FIXME:  1.e-5 should rather be == option('ts.eps') !! */
     if (fabs(end - start - (n - 1)/frequency) > 1.e-5)
 	badtsp();
 
@@ -351,7 +353,7 @@ static SEXP lang2str(SEXP obj, SEXPTYPE t)
   }
   if(isSymbol(symb)) {
     if(symb == if_sym || symb == for_sym || symb == while_sym ||
-       symb == lpar_sym || symb == lbrace_sym || 
+       symb == lpar_sym || symb == lbrace_sym ||
        symb == eq_sym || symb == gets_sym)
       return PRINTNAME(symb);
   }
@@ -759,11 +761,11 @@ SEXP do_attributesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /*  This code replaces an R function defined as
 
-    attr <- function (x, which) 
+    attr <- function (x, which)
     {
-        if (!is.character(which)) 
+        if (!is.character(which))
             stop("attribute name must be of mode character")
-        if (length(which) != 1) 
+        if (length(which) != 1)
             stop("exactly one attribute name must be given")
         attributes(x)[[which]]
    }
@@ -837,7 +839,7 @@ SEXP do_attr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (match == NONE)
 	return R_NilValue;
-    else 
+    else
 	return getAttrib(s, tag);
 }
 
@@ -912,7 +914,7 @@ static void init_pseudo_NULL() {
   /* create and preserve an object that is NOT R_NilValue, and is used
      to represent slots that are NULL (which an attribute can not
      be).  The point is not just to store NULL as a slot, but also to
-     provide a check on invalid slot names (see get_slot below). 
+     provide a check on invalid slot names (see get_slot below).
 
      The object has to be a symbol if we're going to check identity by
      just looking at referential equality. */
@@ -925,7 +927,7 @@ SEXP R_do_slot(SEXP obj, SEXP name) {
      of name, dimnames, etc carray over.)  Probably reasonable for
      back compatibility. */
   SEXP value = getAttrib(obj, name);
-  if(value == R_NilValue) 
+  if(value == R_NilValue)
     /* not there.  But since even NULL really does get stored, this
        implies that there is no slot of this name.  Or somebody
        screwed up by using atttr(..) <- NULL */
@@ -985,7 +987,7 @@ SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_AT_assign(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP nlist, object, ans, value; 
+    SEXP nlist, object, ans, value;
     PROTECT(object = eval(CAR(args), env));
     nlist = CADR(args);
     if(!(isSymbol(nlist) || isString(nlist)))
