@@ -30,7 +30,7 @@
 #include "Graphics.h"
 #include "R_ext/Error.h"
 #include "Fileio.h"
-#include "Devices.h"
+#include "Rdevices.h"
 
 /* Define this to use hyphen except in -[0-9] */
 #undef USE_HYPHEN

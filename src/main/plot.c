@@ -26,7 +26,7 @@
 #include <Defn.h>
 #include <Rmath.h>
 #include <Graphics.h>
-#include <Devices.h>
+#include <Rdevices.h>
 #include <Print.h>
 
 #ifndef HAVE_HYPOT

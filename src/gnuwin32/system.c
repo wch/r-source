@@ -27,7 +27,7 @@
 
 #include "Defn.h"
 #include "Fileio.h"
-#include "Devices.h"		/* KillAllDevices() [nothing else?] */
+#include "Rdevices.h"		/* KillAllDevices() [nothing else?] */
 #include "graphapp/ga.h"
 #include "console.h"
 #include "rui.h"

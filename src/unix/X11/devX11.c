@@ -48,7 +48,7 @@
 /* For the input handlers of the event loop mechanism: */
 #include "R_ext/eventloop.h" 
 #include "R_ext/Memory.h" /* vmaxget */
-#include "Devices.h"
+#include "Rdevices.h"
 
 #include "devX11.h"
 

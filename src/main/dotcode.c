@@ -27,7 +27,7 @@
 
 #include <Defn.h>
 #include <Rmath.h>
-#include <Devices.h>
+#include <Rdevices.h>
 
 #ifdef macintosh
 #include "Graphics.h"

@@ -27,7 +27,7 @@
 
 #include "Defn.h"
 #include "Fileio.h"
-#include "Devices.h"		/* for KillAllDevices */
+#include "Rdevices.h"		/* for KillAllDevices */
 #include "Runix.h"
 #include "Startup.h"
 

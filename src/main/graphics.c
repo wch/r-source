@@ -33,18 +33,12 @@
 
 #include <Defn.h>
 #include <Graphics.h>
-#include <Devices.h>		/* KillAllDevices */
+#include <Rdevices.h>		/* KillAllDevices */
 #include <Rmath.h>		/* eg. fmax2() */
 #include <R_ext/Applic.h>	/* pretty0() */
 
 #include <string.h>
 #include <stdlib.h>
-
-/* defined in Devices.h
-#ifdef macintosh
-void killDevice(int);
-#endif
-*/
 
 static char HexDigits[] = "0123456789ABCDEF";
 

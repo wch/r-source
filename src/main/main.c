@@ -25,7 +25,7 @@
 #define __MAIN__
 #include "Defn.h"
 #include "Graphics.h"
-#include "Devices.h"		/* for InitGraphics */
+#include "Rdevices.h"		/* for InitGraphics */
 #include "IOStuff.h"
 #include "Parse.h"
 #include "Startup.h"
