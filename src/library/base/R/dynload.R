@@ -1,15 +1,3 @@
-##dyn.load <- function(x)
-##{
-##	x <- as.character(x)
-##	y <- substr(x, 1, 1)
-##	if (y == "/") {
-##		.Internal(dyn.load(x))
-##	}
-##	else {
-##		.Internal(dyn.load(
-##		paste(system("pwd", intern = TRUE), x, sep = "/", collapse="")))
-##	}
-##}
 dyn.load <- function(x, local=TRUE, now=TRUE)
     .Internal(dyn.load(x, as.logical(local), as.logical(now)))
 
@@ -21,17 +9,17 @@ getNativeSymbolInfo <- function(name, PACKAGE)
     if(missing(PACKAGE)) PACKAGE <- ""
 
     if(is.character(PACKAGE))
-      pkgName <- PACKAGE
+        pkgName <- PACKAGE
     else if(inherits(PACKAGE, "DLLInfo")) {
-      pkgName <- PACKAGE$path
-      PACKAGE <- PACKAGE$info
+        pkgName <- PACKAGE$path
+        PACKAGE <- PACKAGE$info
     } else if(inherits(PACKAGE, "DLLInfoReference")) {
-      pkgName <- character()
+        pkgName <- character()
     } else
-      stop("must pass a package name, DLLInfo or DllInfoReference object")
+    stop("must pass a package name, DLLInfo or DllInfoReference object")
 
-    v <- .Call("R_getSymbolInfo", as.character(name), PACKAGE, PACKAGE = "base")
-
+    v <- .Call("R_getSymbolInfo", as.character(name), PACKAGE,
+               PACKAGE = "base")
     if(is.null(v)) {
         msg <- paste("no such symbol", name)
         if(length(pkgName) && nchar(pkgName))
@@ -42,69 +30,58 @@ getNativeSymbolInfo <- function(name, PACKAGE)
     v
 }
 
-
 getLoadedDLLs <- function()
 {
-    els = .Call("R_getDllTable", PACKAGE = "base")
+    els <- .Call("R_getDllTable", PACKAGE = "base")
     names(els) = sapply(els, function(x) x[["name"]])
     els
 }
 
 
-getDLLRegisteredRoutines <-
-function(dll)
-{
+getDLLRegisteredRoutines <- function(dll)
     UseMethod("getDLLRegisteredRoutines")
+
+
+getDLLRegisteredRoutines.character <- function(dll)
+{
+    dlls <- getLoadeddDLLs()
+    w <- sapply(dlls, function(x) x$name == dll || x$path == dll)
+
+    if(!any(w))
+        stop("No DLL currently loaded with name or path ", dll)
+
+    dll <- which(w)[1]
+    if(sum(w) > 1)
+        warning("Multiple DLLs match ", dll, ". Using ", dll$path)
+
+    getDLLRegisteredRoutines(dll)
 }
 
 
-getDLLRegisteredRoutines.character <-
-function(dll)
+getDLLRegisteredRoutines.DLLInfo <- function(dll)
 {
-  dlls = getLoadeddDLLs()
-  w = sapply(dlls, function(x) x$name == dll || x$path == dll)
+    ## Provide methods for the different types.
+    if(!inherits(dll, "DLLInfo"))
+        stop("Must specify DLL via a DLLInfo object. See getLoadedDLLs()")
 
-  if(!any(w))
-    stop("No DLL currently loaded with name or path ", dll)
-
-  dll = which(w)[1]
-  if(sum(w) > 1)
-    warning("Multiple DLLs match ", dll, ". Using ", dll$path)
-
-  getDLLRegisteredRoutines(dll)
-}
-
-
-getDLLRegisteredRoutines.DLLInfo <-
-function(dll)
-{
-   # Provide methods for the different types.
- if(!inherits(dll, "DLLInfo"))
-   stop("Must specify DLL via a DLLInfo object. See getLoadedDLLs()")
-
- info <- dll$info
-
- els = .Call("R_getRegisteredRoutines", info, PACKAGE = "base")
-   # Put names on the elements by getting the names from each element.
- els <- lapply(els, function(x) {
-                        if(length(x))
-                           names(x) <- sapply(x, function(z) z$name)
-
-                        x
-                    })
-
- class(els) <- "DLLRegisteredRoutines"
-
- els
+    info <- dll$info
+    els <- .Call("R_getRegisteredRoutines", info, PACKAGE = "base")
+    ## Put names on the elements by getting the names from each element.
+    els <- lapply(els, function(x) {
+        if(length(x))
+            names(x) <- sapply(x, function(z) z$name)
+        x
+    })
+    class(els) <- "DLLRegisteredRoutines"
+    els
 }
 
 
 print.NativeRoutineList <-
 function(x, ...)
 {
-
-    m = data.frame(numParameters = sapply(x, function(x) x$numParameters),
-                   row.names = sapply(x, function(x) x$name))
+    m <- data.frame(numParameters = sapply(x, function(x) x$numParameters),
+                    row.names = sapply(x, function(x) x$name))
     print(m, ...)
     invisible(x)
 }
@@ -161,14 +138,10 @@ function(f = sys.function(1), doStop = FALSE)
         else
             NULL
     }
-
     NULL
 }
 
-
-
-print.DLLInfo <-
-function(x, ...)
+print.DLLInfo <- function(x, ...)
 {
     tmp <- as.data.frame.list(x[c("name", "path", "dynamicLookup")])
     names(tmp) <- c("DLL name", "Filename", "Dynamic lookup")
@@ -176,11 +149,11 @@ function(x, ...)
     invisible(x)
 }
 
-print.DLLInfoList <-
-function(x, ...)
+print.DLLInfoList <- function(x, ...)
 {
     m <- data.frame(Filename = sapply(x, function(x) x[["path"]]),
-                    "Dynamic Lookup" = sapply(x, function(x) x[["dynamicLookup"]]))
+                    "Dynamic Lookup" =
+                    sapply(x, function(x) x[["dynamicLookup"]]))
     print(m, ...)
     invisible(x)
 }
