@@ -11,9 +11,6 @@ development, that described here. It is often called something like rw0640
 Windows in the Venables & Ripley `R Complements' at
 http://www.stats.ox.ac.uk/pub/MASS2.
 
-This version of the FAQ describes some features only in rw0641 that is due
-for release by mid-May.
-
   ------------------------------------------------------------------------
 
 1. Installation and Usage
@@ -204,7 +201,7 @@ them in autoexec.bat or in an MS-DOS window from which you launch
 Rgui/Rterm. Under NT you can use the control panel. You can also set them on
 the command line, for example in the shortcut you could have
 
-      path_to_R\bin\rgui.exe --vsize 10M --nsize 250k RLIBS=e:/R/library
+      path_to_R\bin\rgui.exe --vsize 10M --nsize 300k RLIBS=e:/R/library
 
 and from rw0641 you can set variables in a file .Renviron in your home
 directory, for example
@@ -222,11 +219,11 @@ simpler to install a private copy of R to do the building.
 HTML help only works for packages installed in rw06xx\library.
 
 (Information for rw0633 or later) To update the HTML help files after you
-have installed a binary package, run
+have installed a binary package, run at the R prompt.
 
       > link.html.help()
 
-at the R prompt. (The source-code installation does this automatically, and
+(The source-code installation does this automatically, and
 if you have that installed you can use (preferably)
 
       cd rw06xx\src\gnuwin32\help
@@ -369,12 +366,10 @@ and so update the console.
 
 6.1) How can I compile R from source?
 
-Get the R sources and the corresponding file rw06xxs.zip from the
-distribution (see Q1.1). Suppose you want to compile R-0.64.0.
+Get the R sources. Suppose you want to compile R-0.64.1.
 
-      tar zxvf R-0.64.0.tgz (ignore warnings about aux)
-      cd R-0.64.0
-      unzip ...\rw0640s
+      tar zxvf R-0.64.1.tgz (ignore warnings about aux)
+      cd R-0.64.1
       cd src\gnuwin32
 
 Now read the README and set up all the tools needed. Then you can just use
@@ -438,4 +433,4 @@ http://sourceware.cygnus.com/cygwin) and provides a graphical user
 interface to gdb.
 
   ------------------------------------------------------------------------
-Last edited 20 May 1999 by Brian Ripley ripley@stats.ox.ac.uk
+Last edited 26 May 1999 by Brian Ripley ripley@stats.ox.ac.uk
