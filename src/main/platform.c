@@ -795,8 +795,8 @@ SEXP do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     fn = CAR(args);
     if (!isString(fn))
-        errorcall(fn, "invalid path argument");
-    n = length(ans);
+        errorcall(call, "invalid path argument");
+    n = length(fn);
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++)
 	SET_STRING_ELT(ans, i, 
