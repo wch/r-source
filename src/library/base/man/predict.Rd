@@ -15,7 +15,7 @@ predict (object, \dots)
   the first argument.
 }
 \details{
-  Most prediction methods which similar to like fitting linear models have an
+  Most prediction methods which similar to fitting linear models have an
   argument \code{newdata} specifiying the explanatory variables to be
   used for prediction.  Some considerable attempts are made to match up
   the columns in \code{newdata} to those used for fitting, for example
