@@ -19,6 +19,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#undef USE_NEW_SAVE_FORMAT
+
 #ifdef HAVE_CONFIG_H
 #include <Rconfig.h>
 #endif
@@ -27,11 +29,11 @@
 #include "Mathlib.h"
 #include "Fileio.h"
 
-#ifdef HAVE_HDF5
-#include <hdf5.h>
-#endif
+#define R_MAGIC_ASCII_V1   1001
+#define R_MAGIC_BINARY_V1  1002
+#define R_MAGIC_XDR_V1     1003
 
-/* Static Globals */
+/* Static Globals, DIE, DIE, DIE! */
 
 static char smbuf[512];		/* Small buffer for temp use */
 static char *buf=NULL;		/* Buffer for character strings */
@@ -73,14 +75,14 @@ static void AllocBuffer(int len)
 }
 
 
-/* I/O Function Pointers */
+/* ----- I / O -- F u n c t i o n -- P o i n t e r s ----- */
 
 static void	(*OutInit)(FILE*);
 static void	(*OutInteger)(FILE*, int);
 static void	(*OutReal)(FILE*, double);
 static void	(*OutComplex)(FILE*, complex);
 static void	(*OutString)(FILE*, char*);
-static void	(*OutSpace)(FILE*);
+static void	(*OutSpace)(FILE*, int);
 static void	(*OutNewline)(FILE*);
 static void	(*OutTerm)(FILE*);
 
@@ -93,14 +95,26 @@ static void	(*InTerm)(FILE*);
 
 
 
-/* Dummy Placeholder Routine */
+/* ----- D u m m y -- P l a c e h o l d e r -- R o u t i n e s ----- */
 
-static void Dummy(FILE *fp)
+static void DummyInit(FILE *fp)
+{
+}
+
+static void DummyOutSpace(FILE *fp, int nspace)
+{
+}
+
+static void DummyOutNewline(FILE *fp)
+{
+}
+
+static void DummyTerm(FILE *fp)
 {
 }
 
 
-/* Functions for Ascii Pickling */
+/* ----- L o w l e v e l -- A s c i i -- I / O ----- */
 
 static void AsciiOutInteger(FILE *fp, int i)
 {
@@ -132,7 +146,8 @@ static void AsciiOutReal(FILE *fp, double x)
 	else
 	    fprintf(fp, "Inf");
     }
-    else fprintf(fp, "%.16g", x);/* 16: full precision; 17 gives 999, 000 &c */
+    else fprintf(fp, "%.16g", x);
+    /* 16: full precision; 17 gives 999, 000 &c */
 }
 
 static double AsciiInReal(FILE *fp)
@@ -183,7 +198,7 @@ static complex AsciiInComplex(FILE *fp)
     return x;
 }
 
-static void AsciiOutSpace(FILE *fp)
+static void AsciiOutSpace(FILE *fp, int nspace)
 {
 	fputc(' ', fp);
 }
@@ -253,45 +268,44 @@ static char *AsciiInString(FILE *fp)
 
 void AsciiSave(SEXP s, FILE *fp)
 {
-    OutInit = Dummy;
+    OutInit = DummyInit;
     OutInteger = AsciiOutInteger;
     OutReal = AsciiOutReal;
     OutComplex = AsciiOutComplex;
     OutString = AsciiOutString;
     OutSpace = AsciiOutSpace;
     OutNewline = AsciiOutNewline;
-    OutTerm = Dummy;
+    OutTerm = DummyTerm;
     DataSave(s, fp);
 }
 
 SEXP AsciiLoad(FILE *fp)
 {
     VersionId = 0;
-    InInit = Dummy;
+    InInit = DummyInit;
     InInteger = AsciiInInteger;
     InReal = AsciiInReal;
     InComplex = AsciiInComplex;
     InString = AsciiInString;
-    InTerm = Dummy;
+    InTerm = DummyTerm;
     return DataLoad(fp);
 }
 
 SEXP AsciiLoadOld(FILE *fp, int version)
 {
     VersionId = version;
-    InInit = Dummy;
+    InInit = DummyInit;
     InInteger = AsciiInInteger;
     InReal = AsciiInReal;
     InComplex = AsciiInComplex;
     InString = AsciiInString;
-    InTerm = Dummy;
+    InTerm = DummyTerm;
     return DataLoad(fp);
 }
 
+/* ----- L o w l e v e l -- X D R -- I / O ----- */
 
 #ifdef HAVE_RPC_XDR_H
-
-/* Functions for Binary Pickling Using XDR */
 
 #include <rpc/rpc.h>
 
@@ -389,10 +403,6 @@ static char *XdrInString(FILE *fp)
     return buf;
 }
 
-#ifdef EXPERIMENTAL
-#include "saveload-x.c"
-#endif
-
 static void XdrSave(SEXP s, FILE *fp)
 {
     OutInit = XdrOutInit;
@@ -400,14 +410,10 @@ static void XdrSave(SEXP s, FILE *fp)
     OutReal = XdrOutReal;
     OutComplex = XdrOutComplex;
     OutString = XdrOutString;
-    OutSpace = Dummy;
-    OutNewline = Dummy;
+    OutSpace = DummyOutSpace;
+    OutNewline = DummyOutNewline;
     OutTerm = XdrOutTerm;
-#ifdef EXPERIMENTAL
-    cky_DataSave(s, fp);
-#else
     DataSave(s, fp);
-#endif
 }
 
 static SEXP XdrLoad(FILE *fp)
@@ -419,15 +425,12 @@ static SEXP XdrLoad(FILE *fp)
     InComplex = XdrInComplex;
     InString = XdrInString;
     InTerm = XdrInTerm;
-#ifdef EXPERIMENTAL
-    return cky_DataLoad(fp);
-#else
     return DataLoad(fp);
-#endif
 }
 #endif
 
-/* Functions for Binary Pickling */
+
+/* ----- L o w l e v e l -- B i n a r y -- I / O ----- */
 
 static void BinaryOutInteger(FILE *fp, int i)
 {
@@ -490,66 +493,39 @@ static char *BinaryInString(FILE *fp)
 
 void BinarySave(SEXP s, FILE *fp)
 {
-    OutInit = Dummy;
+    OutInit = DummyInit;
     OutInteger = BinaryOutInteger;
     OutReal = BinaryOutReal;
     OutComplex = BinaryOutComplex;
     OutString = BinaryOutString;
-    OutSpace = Dummy;
-    OutNewline = Dummy;
-    OutTerm = Dummy;
+    OutSpace = DummyOutSpace;
+    OutNewline = DummyOutNewline;
+    OutTerm = DummyTerm;
     DataSave(s, fp);
 }
 
 SEXP BinaryLoad(FILE *fp)
 {
     VersionId = 0;
-    InInit = Dummy;
+    InInit = DummyInit;
     InInteger = BinaryInInteger;
     InReal = BinaryInReal;
     InComplex = BinaryInComplex;
     InString = BinaryInString;
-    InTerm = Dummy;
+    InTerm = DummyTerm;
     return DataLoad(fp);
 }
 
 SEXP BinaryLoadOld(FILE *fp, int version)
 {
     VersionId = version;
-    InInit = Dummy;
+    InInit = DummyInit;
     InInteger = BinaryInInteger;
     InReal = BinaryInReal;
     InComplex = BinaryInComplex;
     InString = BinaryInString;
-    InTerm = Dummy;
+    InTerm = DummyTerm;
     return DataLoad(fp);
-}
-
-/*   Magic Numbers for R Save File Types   */
-
-void R_WriteMagic(FILE *fp, int number)
-{
-    unsigned char buf[5];
-    number = abs(number);
-    buf[0] = (number/1000) % 10 + '0';
-    buf[1] = (number/100) % 10 + '0';
-    buf[2] = (number/10) % 10 + '0';
-    buf[3] = number % 10 + '0';
-    buf[4] = '\n';
-    fwrite((char*)buf, sizeof(char), 5, fp);
-}
-
-int R_ReadMagic(FILE *fp)
-{
-    unsigned char buf[6];
-    int d1, d2, d3, d4, d1234;
-    fread((char*)buf, sizeof(char), 5, fp);
-    /* Intel gcc seems to screw up a single expression here */
-    d1 = (buf[3]-'0') % 10;
-    d2 = (buf[2]-'0') % 10;
-    d3 = (buf[1]-'0') % 10;
-    d4 = (buf[0]-'0') % 10;
-    return d1234 = d1 + 10 * d2 + 100 * d3 + 1000 * d4;
 }
 
 static void ReallocVector(SEXP s, int length)
@@ -729,8 +705,8 @@ static void DataSave(SEXP s, FILE *fp)
 
     OutInit(fp);
 
-    OutInteger(fp, NSymbol); OutSpace(fp);
-    OutInteger(fp, NSave); OutSpace(fp);
+    OutInteger(fp, NSymbol); OutSpace(fp, 1);
+    OutInteger(fp, NSave); OutSpace(fp, 1);
     OutInteger(fp, NVSize); OutNewline(fp);
 
     /* write out any required symbols */
@@ -740,9 +716,9 @@ static void DataSave(SEXP s, FILE *fp)
 	if (MARK(&R_NHeap[i])) {
 	    if (TYPEOF(&R_NHeap[i]) == SYMSXP) {
 		OutInteger(fp, n);
-		OutSpace(fp);
+		OutSpace(fp, 1);
 		OutInteger(fp, NodeToOffset(&R_NHeap[i]));
-		OutSpace(fp);
+		OutSpace(fp, 1);
 		OutString(fp, CHAR(PRINTNAME(&R_NHeap[i])));
 		OutNewline(fp);
 		k++;
@@ -760,7 +736,7 @@ static void DataSave(SEXP s, FILE *fp)
 	if (MARK(&R_NHeap[i])) {
 	    if (TYPEOF(&R_NHeap[i]) != SYMSXP) {
 		OutInteger(fp, n);
-		OutSpace(fp);
+		OutSpace(fp, 1);
 		OutInteger(fp, NodeToOffset(&R_NHeap[i]));
 		OutNewline(fp);
 		k++;
@@ -777,15 +753,15 @@ static void DataSave(SEXP s, FILE *fp)
 	    if (TYPEOF(&R_NHeap[i]) != SYMSXP) {
 
 		OutInteger(fp, n);
-		OutSpace(fp);
+		OutSpace(fp, 1);
 		OutInteger(fp, TYPEOF(&R_NHeap[i]));
-		OutSpace(fp);
+		OutSpace(fp, 1);
 		OutInteger(fp, OBJECT(&R_NHeap[i]));
-		OutSpace(fp);
+		OutSpace(fp, 1);
 		OutInteger(fp,	LEVELS(&R_NHeap[i]));
-		OutSpace(fp);
+		OutSpace(fp, 1);
 		OutInteger(fp,	NodeToOffset(ATTRIB(&R_NHeap[i])));
-		OutSpace(fp);
+		OutSpace(fp, 1);
 
 		switch (TYPEOF(&R_NHeap[i])) {
 		case LISTSXP:
@@ -794,22 +770,22 @@ static void DataSave(SEXP s, FILE *fp)
 		case PROMSXP:
 		case ENVSXP:
 		    OutInteger(fp, NodeToOffset(CAR(&R_NHeap[i])));
-		    OutSpace(fp);
+		    OutSpace(fp, 1);
 		    OutInteger(fp, NodeToOffset(CDR(&R_NHeap[i])));
-		    OutSpace(fp);
+		    OutSpace(fp, 1);
 		    OutInteger(fp, NodeToOffset(TAG(&R_NHeap[i])));
 		    OutNewline(fp);
 		    break;
 		case SPECIALSXP:
 		case BUILTINSXP:
 		    OutInteger(fp, strlen(PRIMNAME(&R_NHeap[i])));
-		    OutSpace(fp);
+		    OutSpace(fp, 1);
 		    OutString(fp, PRIMNAME(&R_NHeap[i]));
 		    OutNewline(fp);
 		    break;
 		case CHARSXP:
 		    OutInteger(fp, LENGTH(&R_NHeap[i]));
-		    OutSpace(fp);
+		    OutSpace(fp, 1);
 		    OutString(fp, CHAR(&R_NHeap[i]));
 		    OutNewline(fp);
 		    break;
@@ -822,7 +798,7 @@ static void DataSave(SEXP s, FILE *fp)
 			if ((j + 1) % 10 == 0 || j == l - 1)
 			    OutNewline(fp);
 			else
-			    OutSpace(fp);
+			    OutSpace(fp, 1);
 		    }
 		    break;
 		case CPLXSXP:
@@ -834,7 +810,7 @@ static void DataSave(SEXP s, FILE *fp)
 			if ((j + 1) % 10 == 0 || j == l - 1)
 			    OutNewline(fp);
 			else
-			    OutSpace(fp);
+			    OutSpace(fp, 1);
 		    }
 		    break;
 		case INTSXP:
@@ -847,7 +823,7 @@ static void DataSave(SEXP s, FILE *fp)
 			if ((j + 1) % 10 == 0 || j == l - 1)
 			    OutNewline(fp);
 			else
-			    OutSpace(fp);
+			    OutSpace(fp, 1);
 		    }
 		    break;
 		case STRSXP:
@@ -861,7 +837,7 @@ static void DataSave(SEXP s, FILE *fp)
 			if ((j + 1) % 10 == 0 || j == l - 1)
 			    OutNewline(fp);
 			else
-			    OutSpace(fp);
+			    OutSpace(fp, 1);
 		    }
 		}
 		k++;
@@ -1065,87 +1041,6 @@ static SEXP DataLoad(FILE *fp)
     return OffsetToNode(i);
 }
 
-void R_SaveToFile(SEXP obj, FILE *fp, int ascii)
-{
-    if (ascii) {
-	R_WriteMagic(fp, R_MAGIC_ASCII);
-	AsciiSave(obj, fp);
-    }
-    else {
-#ifdef HAVE_RPC_XDR_H
-	R_WriteMagic(fp, R_MAGIC_XDR);
-	XdrSave(obj, fp);
-#else
-	R_WriteMagic(fp, R_MAGIC_BINARY);
-	BinarySave(obj, fp);
-#endif
-    }
-}
-
-SEXP R_LoadFromFile(FILE *fp, int startup)
-{
-    DLstartup = startup; /* different handling of errors */
-    switch(R_ReadMagic(fp)) {
-#ifdef HAVE_RPC_XDR_H
-    case R_MAGIC_XDR:
-	return(XdrLoad(fp));
-#endif
-    case R_MAGIC_BINARY:
-	return(BinaryLoad(fp));
-    case R_MAGIC_ASCII:
-	return(AsciiLoad(fp));
-    case R_MAGIC_BINARY_VERSION16:
-	return(BinaryLoadOld(fp, 16));
-    case R_MAGIC_ASCII_VERSION16:
-	return(AsciiLoadOld(fp, 16));
-    default:
-	fclose(fp);
-	error("restore file corrupted -- no data loaded");
-	return(R_NilValue);/* for -Wall */
-    }
-}
-
-
-/* Interpreter Interface Functions */
-
-SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP s, t;
-    int len, j;
-    FILE *fp;
-
-    checkArity(op, args);
-
-
-    if (TYPEOF(CAR(args)) != STRSXP)
-	errorcall(call, "first argument must be a character vector");
-    if (TYPEOF(CADR(args)) != STRSXP)
-	errorcall(call, "second argument must be a string");
-    if (TYPEOF(CADDR(args)) != LGLSXP)
-	errorcall(call, "third argument must be a logical vector");
-
-    fp = R_fopen(R_ExpandFileName(CHAR(STRING(CADR(args))[0])), "wb");
-    if (!fp)
-	errorcall(call, "unable to open file");
-
-    len = length(CAR(args));
-    PROTECT(s = allocList(len));
-
-    t = s;
-    for (j = 0; j < len; j++, t = CDR(t)) {
-	TAG(t) = install(CHAR(STRING(CAR(args))[j]));
-	CAR(t) = findVar(TAG(t), R_GlobalContext->sysparent);
-	if (CAR(t) == R_UnboundValue)
-	    error("Object \"%s\" not found", CHAR(PRINTNAME(TAG(t))));
-    }
-
-    R_SaveToFile(s, fp, INTEGER(CADDR(args))[0]);
-
-    UNPROTECT(1);
-    fclose(fp);
-    return R_NilValue;
-}
-
 /* These functions convert old (pairlist) lists into new */
 /* (vectorlist) lists.	The conversion can be defeated by */
 /* hiding things inside closures, but it is doubtful that */
@@ -1198,6 +1093,988 @@ static SEXP ConvertPairToVector(SEXP obj)
     }
     ATTRIB(obj) = ConvertAttributes(ATTRIB(obj));
     return obj;
+}
+
+#ifdef USE_NEW_SAVE_FORMAT
+
+/* ----- V e r s i o n -- O n e -- S a v e / R e s t o r e ----- */
+
+/*  Code Developed by  Chris K. Young <cky@pobox.com>
+ *  and Ross Ihaka for Chris' Honours project -- 1999.
+ *  Copyright Assigned to the R Project.
+ */
+
+/*  An assert function which doesn't crash the program.
+ *  Something like this might be useful in an R header file
+ */
+
+#ifdef NDEBUG
+#define R_assert(e) ((void) 0)
+#else
+/* The line below requires an ANSI C preprocessor (stringify operator) */
+#define R_assert(e) ((e) ? (void) 0 : error("assertion `%s' failed: file `%s', line %d\n", #e, __FILE__, __LINE__))
+#endif
+
+
+static void NewWriteItem (SEXP s, SEXP sym_list, SEXP env_list, FILE *fp);
+static SEXP NewReadItem (SEXP sym_table, SEXP env_table, FILE *fp);
+
+
+/*  We use special (negative) type codes to indicate the special
+ *  values: R_NilValue, R_GlobalEnv, R_UnboundValue, R_MissingArg.
+ *  The following routines handle these conversions (both
+ *  directions). */
+
+static int NewSaveSpecialHook (SEXP item)
+{
+    if (item == R_NilValue)     return -1;
+    if (item == R_GlobalEnv)    return -2;
+    if (item == R_UnboundValue) return -3;
+    if (item == R_MissingArg)   return -4;
+    return 0;
+}
+
+static SEXP NewLoadSpecialHook (SEXPTYPE type)
+{
+    switch (type) {
+    case -1: return R_NilValue;
+    case -2: return R_GlobalEnv;
+    case -3: return R_UnboundValue;
+    case -4: return R_MissingArg;
+    }
+    return (SEXP) 0;	/* not strictly legal... */
+}
+
+
+/*  If "item" is a special value (as defined in "NewSaveSpecialHook")
+ *  then a negative value is returned.
+ *
+ *  If "item" is present in "list" the a positive value is returned
+ *  (the 1-based offset into the list).
+ *
+ *   Otherwise, a value of zero is returned.  */
+
+static int NewLookup (SEXP item, SEXP list)
+{
+    SEXP iterator = list;
+    int count;
+
+    if ((count = NewSaveSpecialHook(item)))	/* variable reuse :-) */
+	return count;
+    /* now `count' is zero */
+    while (iterator != R_NilValue) {
+	R_assert(TYPEOF(list) == LISTSXP);
+	++count;
+	if (CAR(iterator) == item)
+	    return count;
+	iterator = CDR(iterator);
+    }
+    return 0;
+}
+
+/*  This code carries out the basic inspection of an object, building
+ *  the tables of symbols and environments.
+ *
+ *  We don't really need to build a table of symbols here, but it does
+ *  prevent repeated "install"s.  On the other hand there will generally
+ *  be huge delays because of disk or network latency ... 
+ *
+ *  CKY: One thing I've found out is that you have to build all the
+ *  lists together or you risk getting infinite loops.  Of course, the
+ *  method used here somehow shoots functional programming in the
+ *  head --- sorry.  */
+
+static void NewMakeLists (SEXP obj, SEXP *sym_list, SEXP *env_list)
+{
+    int count, length;
+
+    if (NewSaveSpecialHook(obj))
+	return;
+    switch (TYPEOF(obj)) {
+    case SYMSXP:
+	if (NewLookup(obj, *sym_list))
+	    return;
+	*sym_list = CONS(obj, *sym_list);
+	break;
+    case ENVSXP:
+	if (NewLookup(obj, *env_list))
+	    return;
+	*env_list = CONS(obj, *env_list);
+	/* FALLTHROUGH */
+    case LISTSXP:
+    case LANGSXP:
+    case CLOSXP:
+    case PROMSXP:
+	NewMakeLists(TAG(obj), sym_list, env_list);
+	NewMakeLists(CAR(obj), sym_list, env_list);
+	NewMakeLists(CDR(obj), sym_list, env_list);
+	break;
+    case VECSXP:
+    case EXPRSXP:
+	length = LENGTH(obj);
+	for (count = 0; count < length; ++count)
+	    NewMakeLists(VECTOR(obj)[count], sym_list, env_list);
+	break;
+    }
+    NewMakeLists(ATTRIB(obj), sym_list, env_list);
+}
+
+/* e.g., OutVec(fp, obj, INTEGER, OutInteger) */
+#define OutVec(fp, obj, accessor, outfunc)	 			\
+	do { 								\
+		int count;						\
+		for (count = 0; count < LENGTH(obj); ++count) {		\
+			OutSpace(fp, 1);			       	\
+			outfunc(fp, accessor(obj)[count]);		\
+                        OutNewline(fp);                                 \
+		}							\
+	} while (0)
+
+/* Simply outputs the string associated with a CHARSXP, one day this
+ * will handle null characters in CHARSXPs and not just blindly call
+ * OutString.  */
+static void OutCHARSXP (FILE *fp, SEXP s)
+{
+    R_assert(TYPEOF(s) == CHARSXP);
+    OutString(fp, CHAR(s));
+}
+
+static void NewWriteVec (SEXP s, SEXP sym_list, SEXP env_list, FILE *fp)
+{
+    int count;
+
+    /* I can assert here that `s' is one of the vector types, but
+     * it'll turn out to be one big ugly statement... so I'll do it at
+     * the bottom.  */
+
+    OutInteger(fp, LENGTH(s));
+    OutNewline(fp);
+    switch (TYPEOF(s)) {
+    case CHARSXP:
+	OutSpace(fp, 1);
+	OutCHARSXP(fp, s);
+	break;
+    case LGLSXP:
+    case INTSXP:
+	OutVec(fp, s, INTEGER, OutInteger);
+	break;
+    case REALSXP:
+	OutVec(fp, s, REAL, OutReal);
+	break;
+    case CPLXSXP:
+	OutVec(fp, s, COMPLEX, OutComplex);
+	break;
+    case STRSXP:
+	OutVec(fp, s, STRING, OutCHARSXP);
+	break;
+    case VECSXP:
+    case EXPRSXP:
+	for (count = 0; count < LENGTH(s); ++count) {
+	    /* OutSpace(fp, 1); */
+	    NewWriteItem(VECTOR(s)[count], sym_list, env_list, fp);
+	    OutNewline(fp);
+	}
+	break;
+    default:
+	error("NewWriteVec called with non-vector type");
+    }
+}
+
+static void NewWriteItem (SEXP s, SEXP sym_list, SEXP env_list, FILE *fp)
+{
+    int i;
+
+    if ((i = NewSaveSpecialHook(s))) {
+	OutInteger(fp, i);
+	OutNewline(fp);
+    }
+    else {
+	OutInteger(fp, TYPEOF(s));
+	OutSpace(fp, 1); OutInteger(fp, LEVELS(s));
+	OutSpace(fp, 1); OutInteger(fp, OBJECT(s));
+	OutNewline(fp);
+	switch (TYPEOF(s)) {
+	    /* Note : NILSXP can't occur here */
+	case SYMSXP:
+	    i = NewLookup(s, sym_list);
+	    R_assert(i);
+	    OutInteger(fp, i); OutNewline(fp);
+	    break;
+	case ENVSXP:
+	    i = NewLookup(s, env_list);
+	    R_assert(i);
+	    OutInteger(fp, i); OutNewline(fp);
+	    break;
+	case LISTSXP:
+	case LANGSXP:
+	case CLOSXP:
+	case PROMSXP:
+	    /* Dotted pair objects */
+	    NewWriteItem(TAG(s), sym_list, env_list, fp);
+	    NewWriteItem(CAR(s), sym_list, env_list, fp);
+	    NewWriteItem(CDR(s), sym_list, env_list, fp);
+	    break;
+	case SPECIALSXP:
+	case BUILTINSXP:
+	    /* Builtin functions */
+	    OutString(fp, PRIMNAME(s)); OutNewline(fp);
+	    break;
+	case CHARSXP:
+	case LGLSXP:
+	case INTSXP:
+	case REALSXP:
+	case CPLXSXP:
+	case STRSXP:
+	case VECSXP:
+	case EXPRSXP:
+	    /* Vector Objects */
+	    NewWriteVec(s, sym_list, env_list, fp);
+	    break;
+	default:
+	    error("NewWriteItem: unknown type %i", TYPEOF(s));
+	}
+	NewWriteItem(ATTRIB(s), sym_list, env_list, fp);
+    }
+}
+
+/*  General format: the total number of symbols, then the total number
+ *  of environments.  Then all the symbol names get written out,
+ *  followed by the environments, then the items to be saved.  If
+ *  symbols or environments are encountered, references to them are
+ *  made instead of writing them out totally.  */
+
+void NewDataSave (SEXP s, FILE *fp)
+{
+    SEXP the_sym_list = R_NilValue, the_env_list = R_NilValue, iterator;
+    int sym_count, env_count;
+
+    NewMakeLists(s, &the_sym_list, &the_env_list);
+    OutInit(fp);
+    OutInteger(fp, sym_count = length(the_sym_list)); OutSpace(fp, 1);
+    OutInteger(fp, env_count = length(the_env_list)); OutNewline(fp);
+    for (iterator = the_sym_list; sym_count--; iterator = CDR(iterator)) {
+	R_assert(TYPEOF(CAR(iterator)) == SYMSXP);
+	OutString(fp, CHAR(PRINTNAME(CAR(iterator))));
+	OutNewline(fp);
+    }
+    for (iterator = the_env_list; env_count--; iterator = CDR(iterator)) {
+	R_assert(TYPEOF(CAR(iterator)) == ENVSXP);
+	NewWriteItem(ENCLOS(CAR(iterator)), the_sym_list, the_env_list, fp);
+	NewWriteItem(FRAME(CAR(iterator)), the_sym_list, the_env_list, fp);
+	NewWriteItem(TAG(CAR(iterator)), the_sym_list, the_env_list, fp);
+    }
+    NewWriteItem(s, the_sym_list, the_env_list, fp);
+    OutTerm(fp);
+}
+
+#define InVec(fp, obj, accessor, infunc, length)			\
+	do {								\
+		int count;						\
+		for (count = 0; count < length; ++count)		\
+			accessor(obj)[count] = infunc(fp);		\
+	} while (0)
+
+static SEXP InCHARSXP (FILE *fp)
+{
+    SEXP s;
+    char *tmp;
+
+    AllocBuffer(MAXELTSIZE - 1);
+    /* FIXME: rather than use strlen, use actual length of string when
+     * sized strings get implemented in R's save/load code.  */
+    tmp = InString(fp);
+    s = allocVector(CHARSXP, strlen(tmp));
+    memcpy(CHAR(s), tmp, strlen(tmp));
+    return s;
+}
+
+static SEXP NewReadVec(SEXPTYPE type, SEXP sym_table, SEXP env_table, FILE *fp)
+{
+    int length, count;
+    SEXP my_vec;
+
+    length = InInteger(fp);
+    my_vec = allocVector(type, length);
+    switch(type) {
+    case CHARSXP:
+	my_vec = InCHARSXP(fp);
+	break;
+    case LGLSXP:
+    case INTSXP:
+	InVec(fp, my_vec, INTEGER, InInteger, length);
+	break;
+    case REALSXP:
+	InVec(fp, my_vec, REAL, InReal, length);
+	break;
+    case CPLXSXP:
+	InVec(fp, my_vec, COMPLEX, InComplex, length);
+	break;
+    case STRSXP:
+	InVec(fp, my_vec, STRING, InCHARSXP, length);
+	break;
+    case VECSXP:
+    case EXPRSXP:
+	for (count = 0; count < length; ++count)
+	    VECTOR(my_vec)[count] = NewReadItem(sym_table, env_table, fp);
+	break;
+    default:
+	error("NewReadVec called with non-vector type");
+    }
+    return my_vec;
+}
+
+static SEXP NewReadItem (SEXP sym_table, SEXP env_table, FILE *fp)
+{
+    SEXPTYPE type;
+    SEXP s;
+    int pos, levs, objf;
+
+    R_assert(TYPEOF(sym_table) == VECSXP && TYPEOF(env_table) == VECSXP);
+    type = InInteger(fp);
+    if ((s = NewLoadSpecialHook(type)))
+	return s;
+    levs = InInteger(fp);
+    objf = InInteger(fp);
+    switch (type) {
+    case SYMSXP:
+	pos = InInteger(fp);
+	s = pos ? VECTOR(sym_table)[pos - 1] : R_NilValue;
+	break;
+    case ENVSXP:
+	pos = InInteger(fp);
+	s = pos ? VECTOR(env_table)[pos - 1] : R_NilValue;
+	break;
+    case LISTSXP:
+    case LANGSXP:
+    case CLOSXP:
+    case PROMSXP:
+	PROTECT(s = allocSExp(type));
+	TAG(s) = NewReadItem(sym_table, env_table, fp);
+	CAR(s) = NewReadItem(sym_table, env_table, fp);
+	CDR(s) = NewReadItem(sym_table, env_table, fp);
+	UNPROTECT(1);
+	break;
+    case SPECIALSXP:
+    case BUILTINSXP:
+	AllocBuffer(MAXELTSIZE - 1);
+	s = mkPRIMSXP(StrToInternal(InString(fp)), type == BUILTINSXP);
+	break;
+    case CHARSXP:
+    case LGLSXP:
+    case INTSXP:
+    case REALSXP:
+    case CPLXSXP:
+    case STRSXP:
+    case VECSXP:
+    case EXPRSXP:
+	s = NewReadVec(type, sym_table, env_table, fp);
+	break;
+    default:
+	error("NewReadItem: unknown type %i", type);
+    }
+    LEVELS(s) = levs;
+    OBJECT(s) = objf;
+    ATTRIB(s) = NewReadItem(sym_table, env_table, fp);
+    return s;
+}
+
+SEXP NewDataLoad (FILE *fp)
+{
+    int sym_count, env_count, count;
+    SEXP sym_table, env_table, obj;
+
+    InInit(fp);
+
+    /* Read the table sizes */
+    sym_count = InInteger(fp);
+    env_count = InInteger(fp);
+
+    /* Allocate the symbol and environment tables */
+    PROTECT(sym_table = allocVector(VECSXP, sym_count));
+    PROTECT(env_table = allocVector(VECSXP, env_count));
+
+    /* Read back and install symbols */
+    for (count = 0; count < sym_count; ++count) {
+	VECTOR(sym_table)[count] = install(InString(fp));
+    }
+    /* Allocate the environments */
+    for (count = 0; count < env_count; ++count)
+	VECTOR(env_table)[count] = allocSExp(ENVSXP);
+
+    /* Now fill them in  */
+    for (count = 0; count < env_count; ++count) {
+	obj = VECTOR(env_table)[count];
+	ENCLOS(obj) = NewReadItem(sym_table, env_table, fp);
+	FRAME(obj) = NewReadItem(sym_table, env_table, fp);
+	TAG(obj) = NewReadItem(sym_table, env_table, fp);
+    }
+
+    /* Read the actual object back */
+    obj =  NewReadItem(sym_table, env_table, fp);
+
+    /* Wrap up */
+    InTerm(fp);
+    UNPROTECT(2);
+    return obj;
+}
+
+/* ----- L o w l e v e l -- A s c i i -- I / O ------ */
+
+static void OutSpaceAscii(FILE *fp, int nspace)
+{
+    while(--nspace >= 0)
+	fputc(' ', fp);
+}
+static void OutNewlineAscii(FILE *fp)
+{
+    fputc('\n', fp);
+}
+
+static void OutIntegerAscii(FILE *fp, int x)
+{
+    if (x == NA_INTEGER) fprintf(fp, "NA");
+    else fprintf(fp, "%d", x);
+}
+
+static int InIntegerAscii(FILE *fp)
+{
+    char buf[128];
+    int x;
+    fscanf(fp, "%s", buf);
+    if (strcmp(buf, "NA") == 0)
+	return NA_INTEGER;
+    else
+	sscanf(buf, "%d", &x);
+    return x;
+}
+
+static void OutStringAscii(FILE *fp, char *x)
+{
+    int i, nbytes;
+    nbytes = strlen(x);
+    fprintf(fp, "%d ", nbytes);
+    for (i = 0; i < nbytes; i++) {
+        if (x[i] <= 32 || x[i] > 126) {
+            switch(x[i]) {
+            case '\n': fprintf(fp, "\\n");  break;
+            case '\t': fprintf(fp, "\\t");  break;
+            case '\v': fprintf(fp, "\\v");  break;
+            case '\b': fprintf(fp, "\\b");  break;
+            case '\r': fprintf(fp, "\\r");  break;
+            case '\f': fprintf(fp, "\\f");  break;
+            case '\a': fprintf(fp, "\\a");  break;
+            case '\\': fprintf(fp, "\\\\"); break;
+            case '\?': fprintf(fp, "\\?");  break;
+            case '\'': fprintf(fp, "\\'");  break;
+            case '\"': fprintf(fp, "\\\""); break;
+            default  : fprintf(fp, "\\%o", x[i]); break;
+            }
+        }
+        else fputc(x[i], fp);
+    }
+}
+
+static char *InStringAscii(FILE *fp)
+{
+    static char *buf = NULL;
+    static int buflen = 0;
+    int c, d, i, j;
+    int nbytes;
+    fscanf(fp, "%d", &nbytes);
+    /* FIXME : Ultimately we need to replace */
+    /* this with a real string allocation. */
+    /* All buffers must die! */
+    if (nbytes >= buflen) {
+	char *newbuf = realloc(buf, nbytes + 1);
+	if (newbuf == NULL)
+	    error("out of memory reading ascii string\n");
+	buf = newbuf;
+	buflen = nbytes + 1;
+    }
+    while(isspace(c = fgetc(fp)))
+        ;
+    ungetc(c, fp);
+    for (i = 0; i < nbytes; i++) {
+        if ((c =  fgetc(fp)) == '\\') {
+            switch(c = fgetc(fp)) {
+            case 'n' : buf[i] = '\n'; break;
+            case 't' : buf[i] = '\t'; break;
+            case 'v' : buf[i] = '\v'; break;
+            case 'b' : buf[i] = '\b'; break;
+            case 'r' : buf[i] = '\r'; break;
+            case 'f' : buf[i] = '\f'; break;
+            case 'a' : buf[i] = '\a'; break;
+            case '\\': buf[i] = '\\'; break;
+            case '?' : buf[i] = '\?'; break;
+            case '\'': buf[i] = '\''; break;
+            case '\"': buf[i] = '\"'; break;
+            case '0': case '1': case '2': case '3':
+            case '4': case '5': case '6': case '7':
+                d = 0; j = 0;
+                while('0' <= c && c < '8' && j < 3) {
+                    d = d * 8 + (c - '0');
+                    c = fgetc(fp);
+                    j++;
+                }
+                buf[i] = d;
+                ungetc(c, fp);
+                break;
+            default  : buf[i] = c;
+            }
+        }
+        else buf[i] = c;
+    }
+    buf[i] = '\0';
+    return buf;
+}
+
+static void OutDoubleAscii(FILE *fp, double x)
+{
+    if (!R_FINITE(x)) {
+	if (ISNAN(x)) fprintf(fp, "NA");
+	else if (x < 0) fprintf(fp, "-Inf");
+	else fprintf(fp, "Inf");
+    }
+    /* 16: full precision; 17 gives 999, 000 &c */
+    else fprintf(fp, "%.16g", x);
+}
+
+static double InDoubleAscii(FILE *fp)
+{
+    char buf[128];
+    double x;
+    fscanf(fp, "%s", buf);
+    if (strcmp(buf, "NA") == 0)
+	x = NA_REAL;
+    else if (strcmp(buf, "Inf") == 0)
+	x = R_PosInf;
+    else if (strcmp(buf, "-Inf") == 0)
+	x = R_NegInf;
+    else
+	sscanf(buf, "%lg", &x);
+    return x;
+}
+
+static void OutComplexAscii(FILE *fp, complex x)
+{
+    if (ISNAN(x.r) || ISNAN(x.i))
+	fprintf(fp, "NA NA");
+    else {
+	OutDoubleAscii(fp, x.r);
+	OutSpaceAscii(fp, 1);
+	OutDoubleAscii(fp, x.i);
+    }
+}
+
+static complex InComplexAscii(FILE *fp)
+{
+    complex x;
+    x.r = InDoubleAscii(fp);
+    x.i = InDoubleAscii(fp);
+    return x;
+}
+
+void NewAsciiSave(SEXP s, FILE *fp)
+{
+    OutInit = DummyInit;
+    OutInteger = OutIntegerAscii;
+    OutReal = OutDoubleAscii;
+    OutComplex = OutComplexAscii;
+    OutString = OutStringAscii;
+    OutSpace = OutSpaceAscii;
+    OutNewline = OutNewlineAscii;
+    OutTerm = DummyTerm;
+    NewDataSave(s, fp);
+}
+
+SEXP NewAsciiLoad(FILE *fp)
+{
+    InInit = DummyInit;
+    InInteger = InIntegerAscii;
+    InReal = InDoubleAscii;
+    InComplex = InComplexAscii;
+    InString = InStringAscii;
+    InTerm = DummyTerm;
+    return NewDataLoad(fp);
+}
+
+/* ----- L o w l e v e l -- B i n a r y -- I / O ----- */
+
+static void OutIntegerBinary(FILE *fp, int i)
+{
+    if (fwrite(&i, sizeof(int), 1, fp) != 1)
+	error("a binary write error occured");
+}
+
+static int InIntegerBinary(FILE * fp)
+{
+    int i;
+    if (fread(&i, sizeof(int), 1, fp) != 1)
+	error("a binary read error occured");
+    return i;
+}
+
+static void OutStringBinary(FILE *fp, char *s)
+{
+    int n = strlen(s);
+    OutIntegerBinary(fp, n);
+    if (fwrite(s, sizeof(char), n, fp) != n)
+	error("a binary string write error occured");
+}
+
+static char *InStringBinary(FILE *fp)
+{
+    static char *buf = NULL;
+    static int buflen = 0;
+    int nbytes = InIntegerBinary(fp);
+    if (nbytes >= buflen) {
+	char *newbuf = realloc(buf, nbytes + 1);
+	if (newbuf == NULL)
+	    error("out of memory reading binary string\n");
+	buf = newbuf;
+	buflen = nbytes + 1;
+    }
+    if (fread(buf, sizeof(char), nbytes, fp) != nbytes)
+	error("a binary string read error occured");
+    buf[nbytes] = '\0';
+    return buf;
+}
+
+static void OutRealBinary(FILE *fp, double x)
+{
+    if (fwrite(&x, sizeof(double), 1, fp) != 1)
+	error("a write error occured");
+}
+
+static double InRealBinary(FILE * fp)
+{
+    double x;
+    if (fread(&x, sizeof(double), 1, fp) != 1)
+	error("a read error occured");
+    return x;
+}
+
+static void OutComplexBinary(FILE *fp, complex x)
+{
+	if (fwrite(&x, sizeof(complex), 1, fp) != 1)
+		error("a write error occured");
+}
+
+static complex InComplexBinary(FILE * fp)
+{
+    complex x;
+    if (fread(&x, sizeof(complex), 1, fp) != 1)
+	error("a read error occured");
+    return x;
+}
+
+void NewBinarySave(SEXP s, FILE *fp)
+{
+    OutInit = DummyInit;
+    OutInteger = OutIntegerBinary;
+    OutReal = OutRealBinary;
+    OutComplex = OutComplexBinary;
+    OutString = OutStringBinary;
+    OutSpace = DummyOutSpace;
+    OutNewline = DummyOutNewline;
+    OutTerm = DummyTerm;
+    NewDataSave(s, fp);
+}
+
+SEXP NewBinaryLoad(FILE *fp)
+{
+    VersionId = 0;
+    InInit = DummyInit;
+    InInteger = InIntegerBinary;
+    InReal = InRealBinary;
+    InComplex = InComplexBinary;
+    InString = InStringBinary;
+    InTerm = DummyTerm;
+    return NewDataLoad(fp);
+}
+
+/* ----- L o w l e v e l -- X D R -- I / O ----- */
+
+static void InInitXdr(FILE *fp)
+{
+    xdrstdio_create(&xdrs, fp, XDR_DECODE);
+}
+
+static void OutInitXdr(FILE *fp)
+{
+    xdrstdio_create(&xdrs, fp, XDR_ENCODE);
+}
+
+static void InTermXdr(FILE *fp)
+{
+    xdr_destroy(&xdrs);
+}
+
+static void OutTermXdr(FILE *fp)
+{
+    xdr_destroy(&xdrs);
+}
+
+static void OutIntegerXdr(FILE *fp, int i)
+{
+    if (!xdr_int(&xdrs, &i)) {
+	xdr_destroy(&xdrs);
+	error("an xdr integer data write error occured");
+    }
+}
+
+static int InIntegerXdr(FILE *fp)
+{
+    int i;
+    if (!xdr_int(&xdrs, &i)) {
+	xdr_destroy(&xdrs);
+	error("an xdr integer data read error occured");
+    }
+    return i;
+}
+
+static void OutStringXdr(FILE *fp, char *s)
+{
+    int n = strlen(s);
+    OutIntegerXdr(fp, n);
+    if (!xdr_bytes(&xdrs, &s, &n, n)) {
+	xdr_destroy(&xdrs);
+	error("an xdr string data write error occured");
+    }
+}
+
+static char *InStringXdr(FILE *fp)
+{
+    static char *buf = NULL;
+    static int buflen = 0;
+    int nbytes = InIntegerXdr(fp);
+    if (nbytes >= buflen) {
+	char *newbuf = realloc(buf, nbytes + 1);
+	if (newbuf == NULL)
+	    error("out of memory reading binary string\n");
+	buf = newbuf;
+	buflen = nbytes + 1;
+    }
+    if (!xdr_bytes(&xdrs, &buf, &nbytes, nbytes)) {
+	xdr_destroy(&xdrs);
+	error("an xdr string data write error occured");
+    }
+    buf[nbytes] = '\0';
+    return buf;
+}
+
+static void OutRealXdr(FILE *fp, double x)
+{
+    if (!xdr_double(&xdrs, &x)) {
+	xdr_destroy(&xdrs);
+	error("an xdr real data write error occured");
+    }
+}
+
+static double InRealXdr(FILE * fp)
+{
+    double x;
+    if (!xdr_double(&xdrs, &x)) {
+	xdr_destroy(&xdrs);
+	error("an xdr real data read error occured");
+    }
+    return x;
+}
+
+static void OutComplexXdr(FILE *fp, complex x)
+{
+    if (!xdr_double(&xdrs, &(x.r)) || !xdr_double(&xdrs, &(x.i))) {
+	xdr_destroy(&xdrs);
+	error("an xdr complex data write error occured");
+    }
+}
+
+static complex InComplexXdr(FILE * fp)
+{
+    complex x;
+    if (!xdr_double(&xdrs, &(x.r)) || !xdr_double(&xdrs, &(x.i))) {
+	xdr_destroy(&xdrs);
+	error("an xdr complex data read error occured");
+    }
+    return x;
+}
+
+void NewXdrSave(SEXP s, FILE *fp)
+{
+    OutInit = OutInitXdr;
+    OutInteger = OutIntegerXdr;
+    OutReal = OutRealXdr;
+    OutComplex = OutComplexXdr;
+    OutString = OutStringXdr;
+    OutSpace = DummyOutSpace;
+    OutNewline = DummyOutNewline;
+    OutTerm = OutTermXdr;
+    NewDataSave(s, fp);
+}
+
+SEXP NewXdrLoad(FILE *fp)
+{
+    InInit = InInitXdr;
+    InInteger = InIntegerXdr;
+    InReal = InRealXdr;
+    InComplex = InComplexXdr;
+    InString = InStringXdr;
+    InTerm = InTermXdr;
+    return NewDataLoad(fp);
+}
+#endif
+
+/* ----- F i l e -- M a g i c -- N u m b e r s ----- */
+
+void R_WriteMagic(FILE *fp, int number)
+{
+    unsigned char buf[5];
+    number = abs(number);
+    switch (number) {
+    case R_MAGIC_ASCII_V1:   /* Version 1 - R Data, ASCII Format */
+	strcpy(buf, "RDA1");
+	break;
+    case R_MAGIC_BINARY_V1:  /* Version 1 - R Data, Binary Format */
+	strcpy(buf, "RDB1");
+	break;
+    case R_MAGIC_XDR_V1:     /* Version 1 - R Data, XDR Binary Format */
+	strcpy(buf, "RDX1");
+	break;
+    default:
+	buf[0] = (number/1000) % 10 + '0';
+	buf[1] = (number/100) % 10 + '0';
+	buf[2] = (number/10) % 10 + '0';
+	buf[3] = number % 10 + '0';
+    }
+    buf[4] = '\n';
+    fwrite((char*)buf, sizeof(char), 5, fp);
+}
+
+int R_ReadMagic(FILE *fp)
+{
+    unsigned char buf[6];
+    int d1, d2, d3, d4, d1234;
+    fread((char*)buf, sizeof(char), 5, fp);
+    if (strncmp(buf, "RDA1\n", 5) == 0) {
+	return R_MAGIC_ASCII_V1;
+    }
+    else if (strncmp(buf, "RDB1\n", 5) == 0) {
+	return R_MAGIC_BINARY_V1;
+    }
+    else if (strncmp(buf, "RDX1\n", 5) == 0) {
+	return R_MAGIC_XDR_V1;
+    }
+    /* Intel gcc seems to screw up a single expression here */
+    d1 = (buf[3]-'0') % 10;
+    d2 = (buf[2]-'0') % 10;
+    d3 = (buf[1]-'0') % 10;
+    d4 = (buf[0]-'0') % 10;
+    return d1234 = d1 + 10 * d2 + 100 * d3 + 1000 * d4;
+}
+
+/* ----- E x t e r n a l -- I n t e r f a c e s ----- */
+
+void R_SaveToFile(SEXP obj, FILE *fp, int ascii)
+{
+#ifdef USE_NEW_SAVE_FORMAT
+    if (ascii) {
+	R_WriteMagic(fp, R_MAGIC_ASCII_V1);
+	NewAsciiSave(obj, fp);
+    }
+    else {
+#ifdef HAVE_RPC_XDR_H
+	R_WriteMagic(fp, R_MAGIC_XDR_V1);
+	NewXdrSave(obj, fp);
+#else
+	R_WriteMagic(fp, R_MAGIC_BINARY_V1);
+	NewBinarySave(obj, fp);
+#endif
+#else
+    if (ascii) {
+	R_WriteMagic(fp, R_MAGIC_ASCII);
+	AsciiSave(obj, fp);
+    }
+    else {
+#ifdef HAVE_RPC_XDR_H
+	R_WriteMagic(fp, R_MAGIC_XDR);
+	XdrSave(obj, fp);
+#else
+	R_WriteMagic(fp, R_MAGIC_BINARY);
+	BinarySave(obj, fp);
+#endif
+#endif
+    }
+}
+
+SEXP R_LoadFromFile(FILE *fp, int startup)
+{
+    DLstartup = startup; /* different handling of errors */
+    switch(R_ReadMagic(fp)) {
+#ifdef HAVE_RPC_XDR_H
+    case R_MAGIC_XDR:
+	return(XdrLoad(fp));
+#endif
+    case R_MAGIC_BINARY:
+	return(BinaryLoad(fp));
+    case R_MAGIC_ASCII:
+	return(AsciiLoad(fp));
+    case R_MAGIC_BINARY_VERSION16:
+	return(BinaryLoadOld(fp, 16));
+    case R_MAGIC_ASCII_VERSION16:
+	return(AsciiLoadOld(fp, 16));
+#ifdef USE_NEW_SAVE_FORMAT
+    case R_MAGIC_ASCII_V1:
+	return(NewAsciiLoad(fp));
+    case R_MAGIC_BINARY_V1:
+	return(NewBinaryLoad(fp));
+#ifdef HAVE_RPC_XDR_H
+    case R_MAGIC_XDR_V1:
+	return(NewXdrLoad(fp));
+#endif
+#endif
+    default:
+	fclose(fp);
+	error("restore file corrupted -- no data loaded");
+	return(R_NilValue);/* for -Wall */
+    }
+}
+
+SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP s, t;
+    int len, j;
+    FILE *fp;
+
+    checkArity(op, args);
+
+
+    if (TYPEOF(CAR(args)) != STRSXP)
+	errorcall(call, "first argument must be a character vector");
+    if (TYPEOF(CADR(args)) != STRSXP)
+	errorcall(call, "second argument must be a string");
+    if (TYPEOF(CADDR(args)) != LGLSXP)
+	errorcall(call, "third argument must be a logical vector");
+
+    fp = R_fopen(R_ExpandFileName(CHAR(STRING(CADR(args))[0])), "wb");
+    if (!fp)
+	errorcall(call, "unable to open file");
+
+    len = length(CAR(args));
+    PROTECT(s = allocList(len));
+
+    t = s;
+    for (j = 0; j < len; j++, t = CDR(t)) {
+	TAG(t) = install(CHAR(STRING(CAR(args))[j]));
+	CAR(t) = findVar(TAG(t), R_GlobalContext->sysparent);
+	if (CAR(t) == R_UnboundValue)
+	    error("Object \"%s\" not found", CHAR(PRINTNAME(TAG(t))));
+    }
+
+    R_SaveToFile(s, fp, INTEGER(CADDR(args))[0]);
+
+    UNPROTECT(1);
+    fclose(fp);
+    return R_NilValue;
 }
 
 void R_LoadSavedData(FILE *fp, SEXP aenv)
@@ -1264,1248 +2141,3 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
     fclose(fp);
     return R_NilValue;
 }
-
-#ifdef HAVE_HDF5
-
-#define STRING2REF_CONV "string->ref"
-#define REF2STRING_CONV "ref->string"
-#define ROWNAMES "row.names"
-
-static herr_t
-ref_string (hid_t sid, hid_t did, H5T_cdata_t *cdata,
-	    size_t count, size_t stride,
-	    void *buf, void *bkg,
-	    hid_t dset_xfer_plid)
-{
-  if (cdata->command == H5T_CONV_CONV)
-    {
-      SEXPREC *srcbuf[count];
-      char *destbuf = buf;
-      SEXPREC **recptr = srcbuf;
-      size_t i;
-      size_t maxlen = H5Tget_size (did);
-
-      memcpy (srcbuf, buf, sizeof (srcbuf));
-
-      for (i = 0; i < count; i++)
-	{
-	  strncpy (destbuf, CHAR (*recptr), maxlen);
-	  recptr++;
-	  destbuf += maxlen;
-	}
-    }
-  return 0;
-}
-
-static herr_t
-string_ref (hid_t sid, hid_t did, H5T_cdata_t *cdata,
-	    size_t count, size_t stride,
-	    void *buf, void *bkg,
-	    hid_t dset_xfer_plid)
-{
-  if (cdata->command == H5T_CONV_CONV)
-    {
-      size_t size = H5Tget_size (sid);
-      unsigned char srcbuf[size * count], *srcptr = srcbuf;
-      size_t i;
-
-      memcpy (srcbuf, buf, sizeof (srcbuf));
-      for (i = 0; i < count;i ++)
-	{
-	  ((SEXPREC **)buf)[i] = mkChar (srcptr);
-	  srcptr += size;
-	}
-    }
-  return 0;
-}
-
-struct permute_info {
-  SEXP call;
-  int writeflag;
-  SEXPTYPE type;
-  unsigned rank;
-  hssize_t *dims;
-  hssize_t *coord;
-  hid_t dataset;
-  hid_t memtid;
-  hid_t space;
-  hid_t mspace;
-  void *buf;
-};
-
-static void
-permute (struct permute_info *pinfo, unsigned dimnum)
-{
-  hssize_t i;
-
-  if (dimnum < pinfo->rank)
-    {
-      for (i = 0; i < pinfo->dims[dimnum]; i++)
-	{
-	  pinfo->coord[dimnum] = i;
-	  permute (pinfo, dimnum + 1);
-	}
-    }
-  else
-    {
-      unsigned offset, mult;
-
-      if (H5Sselect_elements (pinfo->space, H5S_SELECT_SET, 1,
-			      (const hssize_t **) pinfo->coord) < 0)
-	errorcall (pinfo->call, "Unable to select file elements");
-
-      offset = pinfo->coord[0];
-      mult = 1;
-      for (i = 1; i < pinfo->rank; i++)
-	{
-	  mult *= pinfo->dims[i - 1];
-	  offset += pinfo->coord[i] * mult;
-	}
-
-      {
-	void *pointaddr;
-
-	switch (pinfo->type)
-	  {
-	  case STRSXP: case VECSXP:
-	    pointaddr = &((SEXPREC **)pinfo->buf)[offset];
-	    break;
-	  case REALSXP:
-	    pointaddr = &((double *)pinfo->buf)[offset];
-	    break;
-	  case INTSXP: case LGLSXP:
-	    pointaddr = &((int *)pinfo->buf)[offset];
-	    break;
-	  default:
-	    errorcall (pinfo->call, "No support for R type: %d", pinfo->type);
-	    pointaddr = &offset;/* unreached; -Wall */
-	  }
-
-	if (pinfo->writeflag)
-	  {
-	    if (H5Dwrite (pinfo->dataset,
-			  pinfo->memtid,
-			  pinfo->mspace,
-			  pinfo->space,
-			  H5P_DEFAULT,
-			  pointaddr) < 0)
-	      errorcall (pinfo->call, "Unable to write dataset");
-	  }
-	else
-	  {
-	    if (H5Dread (pinfo->dataset,
-			 pinfo->memtid,
-			 pinfo->mspace,
-			 pinfo->space,
-			 H5P_DEFAULT,
-			 pointaddr) < 0)
-	      errorcall (pinfo->call, "Unable to read dataset");
-	  }
-      }
-    }
-}
-
-static hid_t
-make_sexp_ref_type (SEXP call)
-{
-  hid_t memtid;
-
-  if ((memtid = H5Tcopy (H5T_STD_REF_OBJ)) < 0)
-    errorcall (call, "Unable to copy H5T_STD_REF_OBJ");
-  if (H5Tset_size (memtid, sizeof (SEXPREC *)) < 0)
-    errorcall (call, "unable to set size of reference type");
-  return memtid;
-}
-
-static hid_t
-get_string_type (SEXP call, SEXP vec)
-{
-  hid_t stid;
-  unsigned vecpos;
-  size_t maxstrlen = 0;
-
-  for (vecpos = 0; vecpos < LENGTH (vec); vecpos++)
-    {
-      SEXP stritem = STRING (vec)[vecpos];
-
-      if (LENGTH (stritem) > maxstrlen)
-	maxstrlen = LENGTH (stritem);
-    }
-
-  if ((stid = H5Tcopy (H5T_C_S1)) < 0)
-    errorcall (call, "Cannot copy string type");
-
-  if (H5Tset_size (stid, maxstrlen + 1) < 0)
-    errorcall (call, "Cannot set size of string type");
-
-  return stid;
-}
-
-
-static void
-vector_io (SEXP call, int writeflag, hid_t dataset, hid_t space, SEXP obj)
-{
-  int rank = H5Sget_simple_extent_ndims (space);
-  hsize_t mdims[1] = {1};
-  hsize_t dims[rank], maxdims[rank];
-  SEXPTYPE type = TYPEOF (obj);
-  hid_t memtid, tid, mspace;
-  void *buf;
-
-  if ((tid = H5Dget_type (dataset)) < 0)
-    errorcall (call, "Unable to get type for dataset");
-
-  switch (type) {
-
-  case STRSXP:
-      memtid = make_sexp_ref_type (call);
-      buf = STRING (obj);
-      break;
-  case REALSXP:
-      memtid = H5T_NATIVE_DOUBLE;
-      buf = REAL (obj);
-      break;
-  case INTSXP:
-      memtid = H5T_NATIVE_INT;
-      buf = INTEGER (obj);
-      break;
-  case LGLSXP:
-      memtid = H5T_NATIVE_UINT;
-      buf = INTEGER (obj);
-      break;
-  default:
-      errorcall (call, "Can't get type for R type: %d (IO)", type);
-      /* unreached (-Wall): */ memtid = tid;  buf = &tid;
-  }
-
-  if (H5Sget_simple_extent_dims (space, dims, maxdims) < 0)
-    errorcall (call, "Unable to get dimensions of space");
-
-  if ((mspace = H5Screate_simple (1, mdims, NULL)) < 0)
-    errorcall (call, "Unable to create point space");
-
-  {
-    struct permute_info pinfo;
-    hssize_t coord[rank];
-
-    pinfo.call = call;
-    pinfo.writeflag = writeflag;
-    pinfo.type = type;
-    pinfo.rank = rank;
-    pinfo.coord = coord;
-    pinfo.dims = dims;
-    pinfo.dataset = dataset;
-    pinfo.memtid = memtid;
-    pinfo.space = space;
-    pinfo.mspace = mspace;
-    pinfo.buf = buf;
-
-    permute (&pinfo, 0);
-  }
-
-  if (H5Sclose (mspace) < 0)
-    errorcall (call, "Unable to close point space");
-
-  if (type == STRSXP) {
-      if (H5Tclose (memtid) < 0)
-	errorcall (call, "Unable to close string reference type");
-    }
-}
-
-static void
-hdf5_save_attributes (SEXP call, hid_t loc_id, SEXP val)
-{
-  SEXP l;
-
-  for (l = ATTRIB (val); l != R_NilValue; l = CDR (l))
-    {
-      SEXP attr = CAR (l);
-      SEXPTYPE type = TYPEOF (attr);
-      const char *name = CHAR (PRINTNAME (TAG (l)));
-      void *buf;
-      hid_t tid, memtid;
-      hid_t sid, aid;
-      unsigned count = LENGTH (attr);
-      /*SEXPREC *stringptrs[count];*/
-
-      if (TAG (l) == R_RowNamesSymbol
-	  || TAG (l) == R_ClassSymbol
-	  || TAG (l) == R_NamesSymbol
-	  || TAG (l) == R_DimNamesSymbol)
-	continue;
-      {
-	hsize_t dims[1];
-
-	dims[0] = count;
-
-	if ((sid = H5Screate_simple (1, dims, NULL)) < 0)
-	  errorcall (call,
-		     "unable to create vector space for attribute `%s'", name);
-      }
-
-      if (type == STRSXP)
-	{
-	  memtid = make_sexp_ref_type (call);
-	  tid = get_string_type (call, attr);
-	  buf = STRING (attr);
-	}
-      else if (type == LGLSXP)
-	{
-	  memtid = H5T_NATIVE_INT;
-	  tid = H5Tcopy (H5T_NATIVE_UINT);
-	  H5Tset_precision (tid, 1);
-	  H5Tset_size (tid, 1);
-	  buf = INTEGER (attr);
-	}
-     else if (type == INTSXP)
-	{
-	  memtid = H5T_NATIVE_INT;
-	  tid = H5T_NATIVE_INT;
-	  buf = INTEGER (attr);
-	}
-      else if (type == REALSXP)
-	{
-	  memtid = H5T_NATIVE_DOUBLE;
-	  tid = H5T_NATIVE_DOUBLE;
-	  buf = REAL (attr);
-	}
-      else
-	abort ();
-
-      if ((aid = H5Acreate (loc_id, name, tid, sid, H5P_DEFAULT)) < 0)
-	errorcall (call, "unable to create attribute `%s'", name);
-
-      if (H5Awrite (aid, memtid, buf) < 0)
-	errorcall (call, "unable to write attribute `%s'", name);
-
-      if (H5Aclose (aid) < 0)
-	errorcall (call, "unable to close attribute `%s'", name);
-
-      if (type == STRSXP)
-	{
-	  if (H5Tclose (memtid) < 0)
-	    errorcall (call,
-		       "unable to close string reference type `%s'",
-		       name);
-	}
-      if (type == LGLSXP || type == STRSXP)
-	{
-	  if (H5Tclose (tid) < 0)
-	    errorcall (call, "unable to close output type `%s'", name);
-	}
-      if (H5Sclose (sid) < 0)
-	errorcall (call, "unable to close space for attribute `%s'", name);
-    }
-}
-
-static void
-hdf5_write_vector (SEXP call, hid_t id, const char *symname, SEXP val)
-{
-  unsigned i, rank;
-  SEXP dimvec;
-  hid_t space, dataset;
-  SEXPTYPE type = TYPEOF (val);
-  hid_t tid;
-
-  dimvec = getAttrib (val, R_DimSymbol);
-  rank = (dimvec == R_NilValue) ? 1 : LENGTH (dimvec);
-
-  {
-    hsize_t dims[rank];
-
-    if (rank > 1)
-      for (i = 0; i < rank; i++)
-	dims[i] = INTEGER (dimvec)[i];
-    else
-      dims[0] = length(val);
-
-    if ((space = H5Screate_simple (rank, dims, NULL)) < 0)
-      errorcall (call, "Unable to create file dataspace");
-
-    if (type == STRSXP)
-      tid = get_string_type (call, val);
-    else if (type == LGLSXP)
-      {
-	tid = H5Tcopy (H5T_NATIVE_UINT);
-	H5Tset_precision (tid, 1);
-	H5Tset_size (tid, 1);
-      }
-    else if (type == INTSXP)
-      tid = H5T_NATIVE_INT;
-    else if (type == REALSXP)
-      tid = H5T_NATIVE_DOUBLE;
-    else {
-      errorcall (call, "Can't get type for R type: %d (Creating)", type);
-      tid = H5T_NATIVE_INT;/*unreached; -Wall*/
-    }
-
-    if ((dataset = H5Dcreate (id,
-			      symname,
-			      tid,
-			      space,
-			      H5P_DEFAULT)) < 0)
-      errorcall (call, "Unable to create dataset");
-
-    vector_io (call, TRUE, dataset, space, val);
-    hdf5_save_attributes (call, dataset, val);
-
-    if (type == LGLSXP || type == STRSXP)
-      if (H5Tclose (tid) < 0)
-	errorcall (call, "Unable to close type");
-
-    if (H5Dclose (dataset) < 0)
-      errorcall (call, "Unable to close dataset");
-    if (H5Sclose (space) < 0)
-      errorcall (call, "Unable to close space");
-  }
-}
-
-static void
-hdf5_write_string (SEXP call, hid_t fid, const char *symname, const char *str)
-{
-  hid_t stringtype;
-  hid_t dataset;
-  hid_t dataspace;
-
-  dataspace = H5Screate (H5S_SCALAR);
-
-  stringtype = H5Tcopy (H5T_C_S1);
-  H5Tset_size (stringtype, strlen (str) + 1);
-
-  if ((dataset = H5Dcreate (fid,
-			    symname,
-			    stringtype,
-			    dataspace,
-			    H5P_DEFAULT)) < 0)
-    errorcall (call, "Unable to create dataset");
-
-  if (H5Dwrite (dataset,
-		stringtype,
-		H5S_ALL,
-		H5S_ALL,
-		H5P_DEFAULT,
-		str) < 0)
-    errorcall (call, "Unable to write dataset");
-
-  H5Dclose (dataset);
-  H5Sclose (dataspace);
-  H5Tclose (stringtype);
-}
-
-static unsigned
-align (unsigned offset, unsigned alignto)
-{
-#if 0
-  unsigned mask = alignto - 1;
-
-  if ((offset & mask) == 0)
-    return offset;
-  else
-    return (offset + alignto) & ~mask;
-#else
-  return offset;
-#endif
-}
-
-static void
-create_rownames_dataset_attribute (SEXP call, hid_t dataset, SEXP rownames)
-{
-  hid_t stringtid = get_string_type (call, rownames);
-  hid_t rtid = make_sexp_ref_type (call);
-  hid_t rnattrib, rndataspace;
-  unsigned rowcount = LENGTH (rownames);
-  hsize_t dims[1];
-
-  dims[0] = rowcount;
-
-  if ((rndataspace = H5Screate_simple (1, dims, NULL)) < 0)
-    errorcall (call, "Unable to create row names vector space");
-
-  if ((rnattrib = H5Acreate (dataset, ROWNAMES,
-			     stringtid, rndataspace, H5P_DEFAULT)) < 0)
-    errorcall (call, "unable to create row names dataset");
-
-  if (H5Awrite (rnattrib, rtid, STRING (rownames)) < 0)
-    errorcall (call, "unable to write row names dataset");
-
-  if (H5Aclose (rnattrib) < 0)
-    errorcall (call, "unable to close row names dataset");
-
-  if (H5Sclose (rndataspace) < 0)
-    errorcall (call, "unable to close row names dataspace");
-
-  if (H5Tclose (stringtid) < 0)
-    errorcall (call, "unable to close row names string type");
-
-  if (H5Tclose (rtid) < 0)
-    errorcall (call, "unable to close reference type");
-}
-
-static void
-hdf5_save_object (SEXP call, hid_t fid, const char *symname, SEXP val)
-{
-  if (isFrame (val))
-    {
-      unsigned colcount = length (val), pos;
-      size_t offsets[colcount];
-      hid_t hdftypes[colcount];
-      hid_t hdfbooltype;
-      size_t size = 0;
-
-      if ((hdfbooltype = H5Tcopy (H5T_NATIVE_UINT)) < 0)
-	errorcall (call, "Cannot copy unsigned integer type");
-      if (H5Tset_precision (hdfbooltype, 1) < 0)
-	errorcall (call, "Cannot set precision of boolean type");
-      if (H5Tset_size (hdfbooltype, 1) < 0)
-	errorcall (call, "Cannot set size of boolean type");
-
-      for (pos = 0; pos < colcount; pos++)
-	{
-	  SEXPTYPE type = TYPEOF (VECTOR (val)[pos]);
-
-	  switch (type)
-	    {
-	    case REALSXP:
-	      hdftypes[pos] = H5T_NATIVE_DOUBLE;
-	      break;
-	    case INTSXP:
-	      hdftypes[pos] = H5T_NATIVE_INT;
-	      break;
-	    case STRSXP:
-	      hdftypes[pos] = get_string_type (call, VECTOR (val)[pos]);
-	      break;
-	    case LGLSXP:
-	      hdftypes[pos] = hdfbooltype;
-	      break;
-	    default:
-	      errorcall (call,
-			 "No support for converting R type: %d to HDF5",
-			 type);
-	      break;
-	    }
-	  if (H5Tget_class (hdftypes[pos]) == H5T_STRING)
-	    size = align (size, 8);
-	  else
-	    size = align (size, H5Tget_size (hdftypes[pos]));
-	  offsets[pos] = size;
-	  size += H5Tget_size (hdftypes[pos]);
-	}
-      size = align (size, H5Tget_size (hdftypes[0]));
-      {
-	hid_t ctid;
-	hid_t dataset;
-	hid_t dataspace;
-	unsigned rowcount = length (VECTOR (val)[0]);
-	{
-	  hsize_t dims[1];
-
-	  dims[0] = rowcount;
-	  if ((dataspace = H5Screate_simple (1, dims, NULL)) < 0)
-	    errorcall (call, "Unable to create dataframe vector space");
-	}
-
-	{
-	  SEXP colnames = getAttrib (val, R_NamesSymbol);
-
-	  if ((ctid = H5Tcreate (H5T_COMPOUND, size)) < 0)
-	    errorcall (call, "unable to create compound type");
-
-	  for (pos = 0; pos < colcount; pos++)
-	    if (H5Tinsert (ctid,
-			   CHAR (STRING (colnames)[pos]),
-			   offsets[pos],
-			   hdftypes[pos]) < 0)
-	      errorcall (call, "unable to insert type into compound type");
-	}
-	if (H5Tpack (ctid) < 0)
-	  errorcall (call, "Unable to pack type");
-
-	if (H5Tlock (ctid) < 0)
-	  errorcall (call, "Unable to lock type");
-
-	if ((dataset = H5Dcreate (fid, symname,
-				  ctid, dataspace, H5P_DEFAULT)) < 0)
-	  errorcall (call, "unable to create dataframe dataset");
-
-	{
-	  unsigned ri;
-	  unsigned char buf[rowcount][size];
-
-	  for (ri = 0; ri < rowcount; ri++)
-	    for (pos = 0; pos < colcount; pos++)
-	      {
-		SEXP item = VECTOR (val)[pos];
-		SEXPTYPE type = TYPEOF (item);
-		void *ptr = &buf[ri][offsets[pos]];
-
-		switch (type)
-		  {
-		  case REALSXP:
-		    memcpy (ptr, &REAL (item)[ri], sizeof (double));
-		    break;
-		  case INTSXP:
-		    memcpy (ptr, &INTEGER (item)[ri], sizeof (int));
-		    break;
-		  case STRSXP:
-		    {
-		      SEXP stritem = STRING (item)[ri];
-		      /*size_t len = LENGTH (stritem);*/
-
-		      memset (ptr, 0, H5Tget_size (hdftypes[pos]));
-		      strcpy ((char *)ptr, CHAR (stritem));
-		    }
-		    break;
-		  case LGLSXP:
-		    *(unsigned char *)ptr = INTEGER (item)[ri];
-		    break;
-		  default:
-		    abort ();
-		  }
-	      }
-	  if (H5Dwrite (dataset,
-			ctid,
-			dataspace,
-			dataspace,
-			H5P_DEFAULT,
-			buf) < 0)
-	    errorcall (call, "Unable to write dataframe");
-	}
-	hdf5_save_attributes (call, dataset, val);
-	{
-	  SEXP rownames = getAttrib (val, R_RowNamesSymbol);
-
-	  if (rownames != R_NilValue)
-	    create_rownames_dataset_attribute (call, dataset, rownames);
-	}
-	if (H5Dclose (dataset) < 0)
-	  errorcall (call, "Cannot close dataset");
-	if (H5Sclose (dataspace) < 0)
-	  errorcall (call, "Cannot close dataspace");
-      }
-
-      for (pos = 0; pos < colcount; pos++)
-	if (H5Tget_class (hdftypes[pos]) == H5T_STRING)
-	  if (H5Tclose (hdftypes[pos]) < 0)
-	    errorcall (call, "Cannot close string type");
-      if (H5Tclose (hdfbooltype) < 0)
-	errorcall (call, "Cannot close boolean type");
-
-    }
-  else if (isNull (val))
-    {
-    }
-  else
-    {
-      SEXPTYPE type = TYPEOF (val);
-
-      switch (type)
-	{
-	case LGLSXP: case INTSXP: case REALSXP: case STRSXP:
-	  hdf5_write_vector (call, fid, symname, val);
-	  break;
-	case LISTSXP: case VECSXP:
-	  {
-	    unsigned len = length (val);
-	    hid_t gid;
-	    unsigned pos;
-	    char buf[(sizeof (pos) * 8 / 3 + 1) + 1];
-
-	    if ((gid = H5Gcreate (fid, symname, len * 8)) < 0)
-	      errorcall (call, "unable to create group");
-
-	    if (type == LISTSXP)
-	      {
-		SEXP l;
-
-		for (l = val, pos = 0; l != R_NilValue; l = CDR (l), pos++)
-		  {
-		    SEXP s = CAR (l);
-
-		    if (!isNull (TAG (l)))
-		      hdf5_save_object (call, gid,
-				       CHAR (PRINTNAME (TAG (l))), s);
-		    else
-		      {
-			sprintf (buf, "%u", pos);
-			hdf5_save_object (call, gid, buf, s);
-		      }
-		  }
-	      }
-	    else
-	      {
-		for (pos = 0; pos < len; pos++)
-		  {
-		    SEXP s = VECTOR (val)[pos];
-		    SEXP names = getAttrib (val, R_NamesSymbol);
-
-		    if (!isNull (names))
-		      hdf5_save_object (call, gid,
-				       CHAR (STRING (names) [pos]),
-				       s);
-		    else
-		      {
-			sprintf (buf, "%u", pos);
-			hdf5_save_object (call, gid, buf, s);
-		      }
-		  }
-	      }
-	    hdf5_save_attributes (call, gid, val);
-
-	    if (H5Gclose (gid) < 0)
-	      errorcall (call, "unable to close group");
-	  }
-	  break;
-	case SYMSXP:
-	  {
-	    const char *pn = CHAR (PRINTNAME (val));
-
-	    hdf5_write_string (call, fid, symname, pn);
-	  }
-	  break;
-	default:
-	  errorcall (call, "unhandled type: %d", type);
-	  break;
-	}
-    }
-}
-
-
-static void
-hdf5_save_symbol (SEXP call, hid_t fid, SEXP sym, SEXP env)
-{
-  SEXP val;
-
-  val = findVar (sym, env);
-
-  hdf5_save_object (call, fid, CHAR (PRINTNAME (sym)), val);
-}
-
-SEXP do_hdf5save (SEXP call, SEXP op, SEXP args, SEXP env)
-{
-  const char *path;
-  hid_t fid;
-  SEXP s;
-
-  checkArity (op, args);
-
-  if (length (args) < 2)
-    errorcall (call, "Two arguments are required: HDF-path and an object");
-
-  if (TYPEOF (CAR (args)) != STRSXP)
-    errorcall (call, "first argument must be a pathname");
-
-  path = CHAR (STRING (CAR (args))[0]);
-
-  H5dont_atexit ();
-
-  if (H5Tregister (H5T_PERS_SOFT,
-		   REF2STRING_CONV,
-		   H5T_STD_REF_OBJ,
-		   H5T_C_S1, ref_string) < 0)
-    errorcall (call, "Unable to register ref->string converter");
-
-  if ((fid = H5Fcreate (path, H5F_ACC_TRUNC, H5P_DEFAULT, H5P_DEFAULT)) < 0)
-    errorcall (call, "unable to create HDF file: %s", path);
-
-  for (s = CDR (args); s != R_NilValue; s = CDR (s))
-    hdf5_save_symbol (call, fid, CAR (s), env);
-
-  if (H5Fclose (fid) < 0)
-    errorcall (call, "unable to close HDF file: %s", path);
-
-  if (H5Tunregister (H5T_PERS_SOFT, REF2STRING_CONV, -1, -1, ref_string) < 0)
-    errorcall (call, "Unable to unregister ref->string converter");
-
-  return R_NilValue;
-}
-
-struct hdf5_iterate_info {
-  SEXP call;
-  void (*add) (struct hdf5_iterate_info *, const char *, SEXP);
-  SEXP env;
-  SEXP ret;
-};
-
-static void
-add_to_list (struct hdf5_iterate_info *iinfo, const char *name, SEXP obj)
-{
-  PROTECT (iinfo->ret);
-  iinfo->ret = CONS (obj, iinfo->ret);
-  TAG (iinfo->ret) = install ((char *) name);
-  UNPROTECT (1);
-}
-
-
-static SEXP
-collect (SEXP call, hid_t id, H5G_iterate_t iterate_func, SEXP env)
-{
-  struct hdf5_iterate_info iinfo;
-
-  iinfo.call = call;
-  iinfo.add = add_to_list;
-  iinfo.ret = R_NilValue;
-  iinfo.env = env;
-
-  if (H5Giterate (id, ".", NULL, iterate_func, &iinfo) < 0)
-    errorcall (call, "unable to collect HDF group");
-
-  {
-    SEXP nl = R_NilValue, l;
-    SEXP rl = iinfo.ret;
-
-    PROTECT (rl);
-    l = rl;
-    while (l != R_NilValue)
-      {
-	PROTECT (nl);
-	nl = CONS (CAR (l), nl);
-	TAG (nl) = TAG (l);
-	UNPROTECT (1);
-	l = CDR (l);
-      }
-    UNPROTECT (1);
-    return nl;
-  }
-}
-
-static void
-load_rownames_dataset_attribute (SEXP call, hid_t dataset, SEXP vec)
-{
-  hid_t rnattrib, rnspace, rntid;
-  unsigned rowcount;
-  SEXP rownames;
-  H5E_auto_t errfunc;
-  void *client_data;
-
-  H5Eset_auto (NULL, NULL);
-  rnattrib = H5Aopen_name (dataset, ROWNAMES);
-  H5Eget_auto (&errfunc, &client_data);
-  H5Eset_auto (errfunc, client_data);
-
-  if (rnattrib < 0)
-    return;
-
-  if ((rnspace = H5Aget_space (rnattrib)) < 0)
-    errorcall (call, "could not get space for rownames attribute");
-
-  if ((rntid = H5Aget_type (rnattrib)) < 0)
-    errorcall (call, "could not get element type of rownames attribute");
-
-  if (H5Sget_simple_extent_ndims (rnspace) != 1)
-    errorcall (call, "rownames space should be of rank 1");
-
-  {
-    hsize_t dims[1], maxdims[1];
-
-    if (H5Sget_simple_extent_dims (rnspace, dims, maxdims)< 0)
-      errorcall (call, "can't get attribute space dims");
-    rowcount = dims[0];
-  }
-  PROTECT (rownames = allocVector (STRSXP, rowcount));
-  {
-    SEXPREC *strptrs[rowcount];
-    unsigned ri;
-    hid_t rtid = make_sexp_ref_type (call);
-
-    for (ri = 0; ri < rowcount; ri++)
-      strptrs[ri] = STRING (rownames)[ri];
-
-    if (H5Aread (rnattrib, rtid, strptrs) < 0)
-      errorcall (call, "can't read rownames");
-
-    for (ri = 0; ri < rowcount; ri++)
-      STRING (rownames)[ri] = strptrs [ri];
-  }
-  setAttrib (vec, R_RowNamesSymbol, rownames);
-  UNPROTECT (1);
-}
-
-struct hdf5_attribute_info {
-  SEXP call;
-  SEXP obj;
-  const char *name;
-};
-
-static herr_t
-hdf5_process_attribute (hid_t loc_id, const char *attrName, void *data)
-{
-  struct hdf5_attribute_info *ainfo = data;
-  hid_t aid, sid, tid;
-  H5T_class_t class;
-  size_t tid_size;
-
-  if ((aid = H5Aopen_name (loc_id, attrName)) < 0)
-    errorcall (ainfo->call, "could not open attribute `%s'", attrName);
-
-  if ((sid = H5Aget_space (aid)) < 0)
-    errorcall (ainfo->call, "could not open space of attribute `%s'",
-	       attrName);
-
-  if ((tid = H5Aget_type (aid)) < 0)
-    errorcall (ainfo->call, "could not get type of attribute `%s'", attrName);
-
-  if ((tid_size = H5Tget_size (tid)) < 0)
-    errorcall (ainfo->call, "could not get size of attribute `%s' tid",
-	       attrName);
-
-  if ((class = H5Tget_class (tid)) < 0)
-    errorcall (ainfo->call, "could not get type class of attribute `%s'",
-	       attrName);
-
-  {
-    int rank;
-
-    if ((rank = H5Sget_simple_extent_ndims (sid)) < 0)
-      errorcall (ainfo->call,
-		 "could not get rank of attribute space `%s'",
-		 attrName);
-    {
-      hsize_t dims[rank];
-
-      if (H5Sget_simple_extent_dims (sid, dims, NULL) < 0)
-	errorcall (ainfo->call,
-		   "could not get extent of attribute space `%s'",
-		   attrName);
-
-      if (rank == 1)
-	{
-	  unsigned count = dims[0];
-	  SEXPTYPE type;
-	  hid_t memtid;
-	  SEXP vec;
-	  void *buf;
-
-	  switch (class)
-	    {
-	    case H5T_INTEGER:
-	      type = (tid_size == 1) ? LGLSXP : INTSXP;
-	      memtid = H5Tcopy (H5T_NATIVE_INT);
-	      break;
-	    case H5T_FLOAT:
-	      type = REALSXP;
-	      memtid = H5Tcopy (H5T_NATIVE_DOUBLE);
-	      break;
-	    case H5T_STRING:
-	      type = STRSXP;
-	      memtid = make_sexp_ref_type (ainfo->call);
-	      break;
-	    default:
-	      warningcall (ainfo->call, "skipping attribute `%s' due to type",
-			   attrName);
-	      goto done;
-	    }
-	  PROTECT (vec = allocVector (type, count));
-	  switch (class)
-	    {
-	    case H5T_INTEGER:
-	      buf = INTEGER (vec);
-	      break;
-	    case H5T_FLOAT:
-	      buf = REAL (vec);
-	      break;
-	    case H5T_STRING:
-	      buf = STRING (vec);
-	      break;
-	    default:
-	      abort ();
-	    }
-	  if (H5Aread (aid, memtid, buf) < 0)
-	    errorcall (ainfo->call, "unable to read attribute `%s'", attrName);
-
-	  if (!isNull (ainfo->obj))
-	    setAttrib (ainfo->obj, install ((char *) attrName), vec);
-
-	  UNPROTECT (1);
-
-	  if (H5Tclose (memtid) < 0)
-	    errorcall (ainfo->call,
-		       "unable to close reference type in attribute `%s'",
-		       attrName);
-	}
-      else
-	warningcall (ainfo->call, "skipping attribute `%s' due to rank",
-		     attrName);
-    }
-  }
- done:
-  if (H5Sclose (sid) < 0)
-    errorcall (ainfo->call, "unable to close attribute `%s' space", attrName);
-  if (H5Tclose (tid) < 0)
-    errorcall (ainfo->call, "unable to close attribute `%s' type", attrName);
-  if (H5Aclose (aid) < 0)
-    errorcall (ainfo->call, "unable to close attribute `%s'", attrName);
-  return 0;
-}
-
-static void
-hdf5_load_attributes (SEXP call, hid_t id, SEXP obj, const char *name)
-{
-  unsigned idx = 0;
-  struct hdf5_attribute_info ainfo;
-
-  ainfo.call = call;
-  ainfo.obj = obj;
-  ainfo.name = name;
-
-  if (H5Aiterate (id, &idx, hdf5_process_attribute, &ainfo) < 0)
-    errorcall (call, "unable to iterate over attributes");
-}
-
-static herr_t
-hdf5_process_object (hid_t id, const char *name, void *client_data)
-{
-  struct hdf5_iterate_info *iinfo = client_data;
-
-  H5G_stat_t statbuf;
-
-  if (H5Gget_objinfo (id, name, 1, &statbuf) < 0)
-    errorcall (iinfo->call, "Cannot query object `%s'", name);
-
-  if (statbuf.type == H5G_GROUP)
-    {
-      SEXP l;
-      hid_t gid = H5Gopen (id, name);
-
-      if (gid < 0)
-	errorcall (iinfo->call, "unable to open group `%s'", name);
-
-      PROTECT (l = collect (iinfo->call, gid, hdf5_process_object, iinfo->env));
-      iinfo->add (iinfo, name, l);
-
-      hdf5_load_attributes (iinfo->call, gid, l, name);
-      UNPROTECT (1);
-
-      if (H5Gclose (gid) < 0)
-	errorcall (iinfo->call, "unable to close group");
-    }
-  else if (statbuf.type == H5G_DATASET)
-    {
-      hid_t dataset, space, tid;
-      int rank;
-      SEXPTYPE type = NILSXP;
-      /*H5T_class_t class;*/
-
-      if ((dataset = H5Dopen (id, name)) < 0)
-	errorcall (iinfo->call, "unable to load dataset `%s'", name);
-
-      if ((tid = H5Dget_type (dataset)) < 0)
-	errorcall (iinfo->call, "unable to get dataset type");
-
-      switch (H5Tget_class (tid))
-	{
-	case H5T_INTEGER:
-	  if (H5Tget_precision (tid) == 1)
-	    type = LGLSXP;
-	  else
-	    type = INTSXP;
-	  break;
-	case H5T_FLOAT:
-	  type = REALSXP;
-	  break;
-	case H5T_STRING:
-	  type = STRSXP;
-	  break;
-	case H5T_COMPOUND:
-	  type = VECSXP;
-	  break;
-	default:
-	  errorcall (iinfo->call, "can't handle hdf type %d", tid);
-	  break;
-	}
-
-      if ((space = H5Dget_space (dataset)) < 0)
-	errorcall (iinfo->call, "unable to get dataset space");
-
-      if (H5Sis_simple (space) != TRUE)
-	errorcall (iinfo->call, "space not simple");
-
-      if ((rank = H5Sget_simple_extent_ndims (space)) < 0)
-	errorcall (iinfo->call, "unable to get space rank");
-
-      {
-	hsize_t dims[rank];
-	hsize_t maxdims[rank];
-
-	if (H5Sget_simple_extent_dims (space, dims, maxdims) < 0)
-	  errorcall (iinfo->call, "unable to get space extent");
-
-	if (type == VECSXP && rank == 1)
-	  {
-	    unsigned colcount = H5Tget_nmembers (tid), ci;
-	    SEXP vec;
-	    size_t size = H5Tget_size (tid);
-	    unsigned ri, rowcount = dims[0];
-	    char buf[rowcount][size];
-	    hid_t rtid = make_sexp_ref_type (iinfo->call);
-	    SEXP names;
-
-	    if (H5Dread (dataset, tid, space, space, H5P_DEFAULT,
-			 buf) < 0)
-	      errorcall (iinfo->call, "can't read compound data vector");
-
-	    PROTECT (vec = allocVector (VECSXP, colcount));
-	    PROTECT (names = allocVector (STRSXP, colcount));
-
-	    for (ci = 0; ci < colcount; ci++)
-	      {
-		hid_t ctid = H5Tget_member_type (tid, ci);
-		H5T_class_t class = H5Tget_class (ctid);
-		size_t csize = H5Tget_size (ctid);
-		size_t coffset = H5Tget_member_offset (tid, ci);
-		SEXPREC **rowptr = &VECTOR (vec)[ci];
-		unsigned char itembuf[size]; /* for overrun */
-
-#define VECLOOP(vectype, vecref, dtid) \
-  { \
-    size_t dsize = H5Tget_size (dtid); \
-    for (ri = 0; ri < rowcount; ri++) \
-      { \
-	memcpy (itembuf, &buf[ri][coffset], csize); \
-	if (H5Tconvert (ctid, dtid, 1, itembuf, NULL, H5P_DEFAULT) < 0) \
-	  errorcall (iinfo->call, "type conversion failed"); \
-	memcpy (&vecref (*rowptr)[ri], itembuf, dsize); \
-      } \
-  }
-
-		{
-		  char *colname = H5Tget_member_name (tid, ci);
-
-		  if (colname)
-		    STRING (names)[ci] = mkChar (colname);
-		}
-		switch (class) {
-		  case H5T_INTEGER:
-		    {
-		      SEXPTYPE type = (csize == 1) ? LGLSXP : INTSXP;
-
-		      *rowptr = allocVector (type, rowcount);
-		      VECLOOP (type, INTEGER, H5T_NATIVE_INT);
-		    }
-		    break;
-		  case H5T_FLOAT:
-		    *rowptr = allocVector (REALSXP, rowcount);
-		    VECLOOP (REALSXP, REAL, H5T_NATIVE_DOUBLE);
-		    break;
-		  case H5T_STRING:
-		    *rowptr = allocVector (STRSXP, rowcount);
-		    VECLOOP (STRSXP, STRING, rtid);
-		    break;
-		  default:
-		    errorcall (iinfo->call, "can't handle hdf class %d",
-			       class);
-		  }
-	      }
-	    load_rownames_dataset_attribute (iinfo->call, dataset, vec);
-	    setAttrib (vec, R_NamesSymbol, names);
-	    UNPROTECT (1);
-	    setAttrib (vec, R_ClassSymbol, mkString ("data.frame"));
-	    iinfo->add (iinfo, name, vec);
-	    hdf5_load_attributes (iinfo->call, dataset, vec, name);
-	    UNPROTECT (1);
-	    if (H5Tclose (rtid) < 0)
-	      errorcall (iinfo->call, "could not close reference type");
-	  }
-	else
-	  {
-	    SEXP obj;
-
-	    PROTECT (obj = ((rank == 1)
-			    ? allocVector (type, dims[0])
-			    : allocMatrix (type, dims[0], dims[1])));
-	    vector_io (iinfo->call, FALSE, dataset, space, obj);
-	    iinfo->add (iinfo, name, obj);
-	    hdf5_load_attributes (iinfo->call, dataset, obj, name);
-	    UNPROTECT (1);
-	  }
-      }
-      if (H5Sclose (space) < 0)
-	errorcall (iinfo->call, "unable to close dataspace");
-      if (H5Tclose (tid) < 0)
-	errorcall (iinfo->call, "unable to close datatype");
-      if (H5Dclose (dataset) < 0)
-	errorcall (iinfo->call, "unable to close dataset");
-    }
-  else
-    errorcall (iinfo->call, "no support for HDF object type: %d",
-	       statbuf.type);
-  return 0;
-}
-
-static void
-add_to_symbol_table (struct hdf5_iterate_info *iinfo,
-		     const char *name,
-		     SEXP obj)
-{
-  setVar (install ((char *)name), obj, iinfo->env);
-}
-
-static void
-add_to_return_list (struct hdf5_iterate_info *iinfo,
-		    const char *name,
-		    SEXP obj)
-{
-  PROTECT (iinfo->ret);
-  iinfo->ret = CONS (obj, iinfo->ret);
-  TAG (iinfo->ret) = install ((char *) name);
-  UNPROTECT (1);
-}
-
-SEXP do_hdf5load (SEXP call, SEXP op, SEXP args, SEXP env)
-{
-  const char *path;
-  hid_t fid;
-  int restore_syms;
-  struct hdf5_iterate_info iinfo;
-
-  checkArity (op, args);
-
-  if (!isValidString(CAR(args)))
-    errorcall (call, "first argument must be a pathname\n");
-
-  if (TYPEOF (CADR (args)) != LGLSXP)
-    errorcall (call, "second argument must be a logical vector");
-
-  path = CHAR(STRING (CAR(args))[0]);
-  restore_syms = INTEGER (CADR(args))[0];
-
-  H5dont_atexit ();
-
-  if ((fid = H5Fopen (path, H5F_ACC_RDONLY, H5P_DEFAULT)) < 0)
-    errorcall (call, "unable to open HDF file: %s", path);
-
-  if (H5Tregister (H5T_PERS_SOFT,
-		   STRING2REF_CONV,
-		   H5T_C_S1,
-		   H5T_STD_REF_OBJ, string_ref) < 0)
-    errorcall (call, "Unable to register string->ref converter");
-
-  iinfo.call = call;
-  iinfo.add = restore_syms ? add_to_symbol_table : add_to_return_list;
-  iinfo.env = env;
-  iinfo.ret = R_NilValue;
-
-  if (H5Giterate (fid, "/", NULL, hdf5_process_object, &iinfo) < 0)
-    errorcall (call, "unable to iterate over HDF file: %s", path);
-
-  if (H5Tunregister (H5T_PERS_SOFT, STRING2REF_CONV, -1, -1, string_ref) < 0)
-    errorcall (call, "Unable to unregister string->ref converter");
-
-  if (H5Fclose (fid) < 0)
-    errorcall (call, "unable to close HDF file");
-
-  return iinfo.ret;
-}
-
-#else
-
-SEXP do_hdf5save (SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    errorcall(call, "HDF5 support unavailable");
-    return(R_NilValue);/* -Wall */
-}
-SEXP do_hdf5load (SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    errorcall(call, "HDF5 support unavailable");
-    return(R_NilValue);/* -Wall */
-}
-#endif
