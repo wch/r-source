@@ -39,8 +39,8 @@ Nnlme <- is.na(match("package:nlme", search()))
 if(require(nlme)) {
   data(Orthodont)
   fm1 <- lm(distance ~ Sex * age, Orthodont)
-  logLik(fm1)
-  logLik(fm1, REML = TRUE)
+  print(logLik(fm1))
+  print(logLik(fm1, REML = TRUE))
   if(Nnlme) detach( "package:nlme")
 }
 }
