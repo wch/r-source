@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-12-14
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-12-21
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2119,6 +2119,8 @@ Fitting and testing probabilistic choice models, especially the BTL,
 elimination-by-aspects (EBA), and preference tree (Pretree) models.
 @item ebayesthresh
 Empirical Bayes thresholding and related methods.
+@item eco
+Fitting Bayesian models of ecological inference in 2 by 2 tables.
 @item edci
 Edge Detection and Clustering in Images.
 @item effects
