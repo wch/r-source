@@ -7,7 +7,6 @@
 \alias{Compare}
 \alias{Complex}
 \alias{.makeBasicFunsList}
-\alias{.BasicFunsList}
 
 %- Also NEED an `\alias' for EACH other topic documented here.
 \title{ Group Generic Functions }
