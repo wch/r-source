@@ -1,3 +1,6 @@
+Making the standard installer
+=============================
+
 You can make an install package (rw????.exe) in the current Windows
 style by using the installer kit Inno Setup 4.1.5 or later from
 jrsoftware.org.
@@ -11,7 +14,28 @@ Go to the parent of this directory and edit ISDIR in ../MkRules and run
 make distribution
 make clean
 
-You will have rw1???.exe and a set of files miniR* for the floppy-sized
+You will have rw????.exe and a set of files miniR* for the floppy-sized
 distribution, both in the ../cran directory.
 
-Note that building the installer need ca 85Mb of free memory.
+Note that building the installers need ca 85Mb of free memory.
+
+
+Making a custom installer
+=========================
+
+1) If you want to customize the installation by adding extra packages,
+replace `make distribution' by something like
+
+	make distribution EXTRA_PKGS='pkg1 pkg2 pkg3'
+
+(Note these packages will also be added to the miniR installer.)
+
+
+2) If you don't want to make R from the sources yourself, make a full
+installation of R from the standard installer, then add packages and
+make other customizations.  In this directory run
+
+	make myR IMAGEDIR=rootdir
+
+where `rootdir' is the path to the root of the customized installation
+(forward slashes and no spaces, please).

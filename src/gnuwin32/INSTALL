@@ -300,6 +300,9 @@ replace `make rinstaller' by something like
 
 (Note these packages will also be added to the miniR installer.)
 
+An alternative way to customize the installer starting with a binary
+distribution is given in file installer/INSTALL.
+
 
 Cross-building on ix86 Linux
 ============================

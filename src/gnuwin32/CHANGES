@@ -45,7 +45,8 @@ printable by attempting to print all non-control characters when using
 print().
 
 There are now facilities (documented in file src/gnuwin32/INSTALL) to
-add packages when building the R installer.
+add packages when building the R installer, and to rebuild a
+customized installer from the existing binary distribution.
 
 
 

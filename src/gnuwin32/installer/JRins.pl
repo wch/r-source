@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2001-3 R Development Core Team
+# Copyright (C) 2001-4 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,6 +25,8 @@ my $fn, $component, $mini, $path;
 my $startdir=cwd();
 my $RVER;
 my $RW=$ARGV[0];
+my $SRCDIR=$ARGV[1];
+$SRCDIR =~ s+/+\\+g; # need DOS-style paths
 my $iconpars="WorkingDir: \"{app}\"" ;
 ## add to the target command line as in the next example
 # my $iconpars="Parameters: \"--sdi\"; WorkingDir: \"{app}\"" ;
@@ -60,7 +62,7 @@ AppVersion=${RVER}
 DefaultDirName={pf}\\R\\${RW}
 DefaultGroupName=R
 AllowNoIcons=yes
-LicenseFile=${RW}\\COPYING
+LicenseFile=${SRCDIR}\\COPYING
 DisableReadyPage=yes
 DisableStartupPrompt=yes
 OutputDir=.
@@ -154,7 +156,7 @@ my %develfiles=("doc\\html\\logo.jpg" => 1,
 		"bin\\Rdiff.sh" => 1,
 		"bin\\Sd2Rd" => 1);
 		
-$path="${RW}";chdir($path);
+$path="${SRCDIR}";chdir($path);
 find(\&listFiles, ".");
 
 close insfile;
