@@ -491,17 +491,11 @@ AC_SUBST(LIBM)
 ## the following as well.
 AC_CHECK_LIB(m, sin)
 case "${host_os}" in
-  darwin[1234567].*)
+  darwin*)
     AM_CONDITIONAL(BUILD_DLFCN_DARWIN, true)
     ## SI says we want '-lcc_dynamic' on Darwin, although currently
     ## http://developer.apple.com /documentation/MacOSX/ has nothing
     ## official.
-    AC_CHECK_LIB(cc_dynamic, main)
-    ;;
-  darwin*)
-    ## 'Tiger' = 10.4 is darwin8 and includes dl*
-    ## We assume darwin9.*, 10.* etc will too.
-    AM_CONDITIONAL(BUILD_DLFCN_DARWIN, false)
     AC_CHECK_LIB(cc_dynamic, main)
     ;;
   *)
