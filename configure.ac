@@ -1343,6 +1343,9 @@ fi
 if test -n "${warn_pager}"; then
   AC_MSG_WARN([${warn_pager}])
 fi
+if test -n "${warn_browser}"; then
+  AC_MSG_WARN([${warn_browser}])
+fi
 
 ### Local variables: ***
 ### mode: outline-minor ***
