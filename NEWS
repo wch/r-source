@@ -114,8 +114,9 @@ NEW FEATURES
 
 	-  New function arima.sim().
 
-	-  New datasets Nile, UKgas and WWWusage, and a expanded
-           version of UKDriverDeaths (as a multiple time series Seatbelts).
+	-  New datasets AirPassengers, Nile, UKgas and WWWusage, 
+	   and a expanded version of UKDriverDeaths (as a multiple 
+	   time series Seatbelts).
 
 	-  New generic function tsdiag() and methods for arima and arima0,
 	   to produce diagnostic plots.  Supersedes arima0.diag().
