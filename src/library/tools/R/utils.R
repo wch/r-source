@@ -291,6 +291,21 @@ function(package)
     if(!length(thisPkg)) character(0) else thisPkg
 }
 
+### ** .packageApply
+
+.packageApply <-
+function(packages = NULL, FUN, ...)
+{
+    ## Apply FUN and extra '...' args to all given packages.
+    ## The default corresponds to all installed packages with high
+    ## priority.
+    if(is.null(packages))
+        packages <- installed.packages(priority = "high")[ , 1]
+    out <- lapply(packages, FUN, ...)
+    names(out) <- packages
+    out
+}
+
 ### ** .sourceAssignments
 
 .sourceAssignments <-
