@@ -9695,7 +9695,7 @@ fi
         ## A. Gebhardt <albrecht.gebhardt@uni-klu.ac.at> says that on
         ## Unixware 7 we need -lsocket; -lnsl in addition is ok but not
         ## needed.
-        if test "${ac_cv_lib_nls_gethostbyname}" = no; then
+        if test "${ac_cv_lib_nsl_gethostbyname}" = no; then
           echo $ac_n "checking for gethostbyname in -lsocket""... $ac_c" 1>&6
 echo "configure:9701: checking for gethostbyname in -lsocket" >&5
 ac_lib_var=`echo socket'_'gethostbyname | sed 'y%./+-%__p_%'`

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.3-9, 2001-07-11
+@set FAQ-VERSION 1.3-10, 2001-07-12
 @set REL-VERSION 1.3.0
 @set DEV-VERSION 1.4.0
 @c %**end of header
@@ -1437,6 +1437,12 @@ An interface between R and the mSQL database system.
 @c (@pxref{What documentation exists for R?}).
 @item Rstreams
 Binary file stream support functions.
+@item Rwave
+An environment for the time-frequency analysis of 1-D signals (and
+especially for the wavelet and Gabor transforms of noisy signals), based
+on the book ``Practical Time-Frequency Analysis: Gabor and Wavelet
+Transforms with an Implementation in S'' by Rene Carmona, Wen L. Hwang
+and Bruno Torresani, 1998, Academic Press.
 @item SASmixed
 Data sets and sample linear mixed effects analyses corresponding to the
 examples in ``SAS System for Mixed Models'' by R. C. Littell,

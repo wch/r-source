@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-9, 2001-07-11
+Version 1.3-10, 2001-07-12
 Kurt Hornik
 
 
@@ -1165,6 +1165,13 @@ works, was published in the Journal of Statistical Software
 
 *Rstreams*
      Binary file stream support functions.
+
+*Rwave*
+     An environment for the time-frequency analysis of 1-D signals (and
+     especially for the wavelet and Gabor transforms of noisy signals),
+     based on the book "Practical Time-Frequency Analysis: Gabor and Wavelet
+     Transforms with an Implementation in S" by Rene Carmona, Wen L. Hwang
+     and Bruno Torresani, 1998, Academic Press.
 
 *SASmixed*
      Data sets and sample linear mixed effects analyses corresponding to the

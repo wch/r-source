@@ -676,7 +676,7 @@ AC_DEFUN([R_FUNC_GETHOSTBYNAME],
         ## A. Gebhardt <albrecht.gebhardt@uni-klu.ac.at> says that on
         ## Unixware 7 we need -lsocket; -lnsl in addition is ok but not
         ## needed.
-        if test "${ac_cv_lib_nls_gethostbyname}" = no; then
+        if test "${ac_cv_lib_nsl_gethostbyname}" = no; then
           AC_CHECK_LIB(socket, gethostbyname)
         fi
       fi
