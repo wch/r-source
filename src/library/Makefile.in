@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
-SUBDIRS = profile $(R_PKGS)
+SUBDIRS = profile $(R_PKGS) Recommended
 
 PKGS = $(R_PKGS)
 
@@ -33,7 +33,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
-	@for pkg in $(SUBDIRS); do \
+	@for pkg in profile $(R_PKGS); do \
 	  (cd $${pkg} && $(MAKE)) || exit 1; \
 	done
 	@$(INSTALL_DATA) $(top_srcdir)/doc/html/R.css \
@@ -88,14 +88,12 @@ uninstall:
 
 mostlyclean: clean
 clean:
-	@for d in $(SUBDIRS); do \
-	  (cd $${d} && $(MAKE) $@); \
-	done
+	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
+	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	-@rm -f stamp-*
 distclean:
-	@for d in $(SUBDIRS); do \
-	  (cd $${d} && $(MAKE) $@); \
-	done
+	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
+	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	-@rm -f Makefile
 maintainer-clean: distclean
 

@@ -22,8 +22,7 @@ SUBDIRS_WITH_NO_BUILD = debian
 
 GZIP = --best
 
-all: Makefile Makeconf R docs
-	@cd src/library/Recommended && $(MAKE) $@
+all: Makefile Makeconf R docs @USE_RECOMMENDED_PACKAGES_TRUE@ stamp-recommended
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $@
@@ -73,6 +72,9 @@ docs: FORCE
 help html latex examples: FORCE
 	-@(cd src/library && $(MAKE) $@)
 FORCE:
+
+stamp-recommended: FORCE
+	-@(cd src/library/Recommended && $(MAKE) $@)
 
 install: installdirs
 	@for d in $(SUBDIRS); do \
@@ -154,8 +156,6 @@ uninstall-dvi uninstall-info uninstall-pdf:
 check:
 	@(cd tests && $(MAKE) $@)
 
-rsync-recommended:
-	@(cd src/library/Recommended && $(MAKE) rsync-update)
 reset-recommended:
 	@(cd src/library/Recommended && rm -f Timestamp && $(MAKE) Timestamp)
 

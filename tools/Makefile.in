@@ -29,7 +29,8 @@ DISTFILES = README \
 	missing \
 	mkinstalldirs \
 	move-if-change \
-	pkg2tex.pl
+	pkg2tex.pl \
+	rsync-recommended
 
 all: Makefile R
 
