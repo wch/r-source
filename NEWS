@@ -128,7 +128,7 @@ BUG FIXES
 	set, as documented.  Previously it was read unless R_ENVIRON
 	pointed to an actual file.
 
-    o	Startup.Rd described the proceesing under Unix-alikes but
+    o	Startup.Rd described the processing under Unix-alikes but
 	incorrectly implied it happened that way on the Windows and
 	MacOS ports.  Neither use Renviron.site, for example.
 
@@ -153,7 +153,7 @@ BUG FIXES
 
     o	as.POSIXct.dates had a sign error for the origin (PR#2222)
 
-    o	The claim that pie charts should be avoiden (in pie.Rd) is now
+    o	The claim that pie charts should be avoided (in pie.Rd) is now
 	supported by a quote from Cleveland (1985).
 
     o	The vsnprintf() functions supplied for systems that don't
