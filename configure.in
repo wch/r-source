@@ -603,6 +603,7 @@ case "${host}" in
     ;;
   alpha*linux)
     CFLAGS="-mieee ${CFLAGS}"
+    FFLAGS="-mieee ${FFLAGS}"
     DLLFLAGS=-export-dynamic
     ;;
   *freebsd3.*)
