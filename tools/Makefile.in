@@ -29,8 +29,7 @@ DISTFILES = README \
 	missing \
 	mkinstalldirs \
 	move-if-change \
-	pkg2tex.pl \
-	texi2dvi
+	pkg2tex.pl
 
 all: Makefile R
 

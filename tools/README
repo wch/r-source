@@ -62,7 +62,3 @@ The files are as follows.
 	create a single `PKGNAME-pkg.tex' file from the package docs in
 	LaTeX format.
 
-  texi2dvi
-	run Texinfo or LaTeX files through TeX in turn until all
-	cross-references are resolved, building all indices.  Taken from
-	the GNU texinfo package (http://texinfo.org/).
