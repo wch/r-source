@@ -3,6 +3,6 @@
 
 R_PKGS_BASE = base tools utils graphics stats methods grid mle splines tcltk
 R_PKGS_STUBS = ctest eda lqs modreg mva nls stepfun ts
-R_PKGS_RECOMMENDED_SOURCES = survival boot cluster foreign lattice KernSmooth mgcv nlme rpart VR
-R_PKGS_RECOMMENDED = survival boot cluster foreign lattice KernSmooth mgcv nlme rpart MASS class nnet spatial
+R_PKGS_RECOMMENDED_SOURCES = survival boot cluster foreign KernSmooth lattice mgcv nlme rpart VR
+R_PKGS_RECOMMENDED = survival boot cluster foreign KernSmooth lattice mgcv nlme rpart MASS class nnet spatial
 
