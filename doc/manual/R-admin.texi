@@ -707,6 +707,7 @@ An ATLAS `tuned' BLAS can also be used on Windows: see
 * Using FORTRAN::               
 * Compile and load flags::      
 * Building the GNOME interface::  
+* Platform notes::
 @end menu
 
 @node Configuration options, Configuration variables, Configuration on Unix, Configuration on Unix
@@ -902,7 +903,7 @@ possible issue is the alignment of doubles, another is the way
 structures are passed.
 
 
-@node Building the GNOME interface,  , Compile and load flags, Configuration on Unix
+@node Building the GNOME interface,  Platform notes, Compile and load flags, Configuration on Unix
 @section Building the @acronym{GNOME} interface
 
 This interface is experimental and incomplete.  It provides a console
@@ -967,6 +968,103 @@ specify location of @acronym{GNOME} libs
 @item  --with-libglade-config=@var{LIBGLADE_CONFIG}
 specify location of @command{libglade-config}
 @end table
+
+
+@node Platform notes,  , Building the GNOME interface, Configuration on Unix
+@section Platform notes
+This section provides some notes on building R on different Unix
+platforms.  These notes are based on tests a run on one or two systems
+in each case with particular sets of compilers and support libraries.
+Success in building R depends on the proper installation and functioning
+of support software; your results may differ if you have other versions
+of compilers and support libraries,
+
+@menu
+* HPUX::                      
+* IRIX::              
+* Alpha/OSF1::
+* Alpha/FreeBSD::
+@end menu
+
+@node HPUX, IRIX, Platform notes, Platform notes, Platform notes
+@subsection HPUX
+R has been built successfully on HPUX 10.2 and HPUX 11.0 using both
+native compilers and @code{gcc}.  By default, R is configured to use
+@code{gcc} and @code{g77} on HPUX.  Some installations of @code{g77}
+only install a static version of the @code{g2c} library that cannot be
+linked into a shared library since its files have not been compiled with
+the appropriate flag for producing position independent code
+(@acronym{PIC}).  This will result in @code{make} failing with a linker
+error complaining that code needs to be compiled with a @code{+z} or
+@code{+Z} flag, the native @code{cc} @acronym{PIC} flag.  If this is the
+case you either need to modify your @code{g77} installation or configure
+with the
+@smallexample
+--with-f77=fort77
+@end smallexample
+@noindent
+flag to specify use of the native @acronym{POSIX}-compliant FORTRAN 77
+compiler.
+
+You may find that @code{configure} detects other libraries, such as
+BLAS, that R needs to use as shared libraries but are only available as
+static libraries.  If you cannot install shared versions you will need to
+tell @code{configure} not to use these libraries.
+
+Some versions of @code{gcc} may contain what appears to be a bug at the
+@code{-O2} optimization level that causes
+@smallexample
+> 2 %/% 2
+[1] 1
+> 1:2 %/% 2
+[1] 0 0     # wrong!!
+@end smallexample
+@noindent
+which will cause @code{make check} to fail.  If this is the case, you
+should use @code{CFLAGS} to specify @code{-O} as the optimization level
+to use.
+
+Some systems running HPUX 11.0 may have a @code{gcc} that was installed
+under HPUX 10.2.  Between versions 10.2 and 11.0 HPUX changed its
+support functions for @acronym{IEEE} arithmetic from the recommended
+functions of the @acronym{IEEE} standard to the ones specified in the
+C9x draft standard.  In particular, this means that @code{finite} has
+been replaced by @code{isfinite}.  A @code{gcc} configured for HPUX 10.2
+run on 11.0 will not find @code{isfinite}, and as a result
+@code{configure} does not recognize the machine as fully supporting IEEE
+arithmetic and does not define @code{IEEE_754} when compiling C code.
+This results in a failure in @code{make check}.  The best solution is to
+install a properly configures @code{gcc}.  An alternative work-around is
+to add @code{-DIEEE_754} to the @code{CFLAGS} variable.
+
+You can configure R to use both the native @code{cc} and @code{fort77}
+with (assuming you are using a @code{csh} shell)
+@smallexample
+env CC=cc ./configure --with-f77=fort77
+@end smallexample
+
+
+@node IRIX,  Alpha/OSF1, HPUX, Platform notes
+@subsection IRIX
+
+R has been built successfully on IRIX64 6.5 using both the GNU compilers
+and the native compilers for 32-bit executables and the native compilers
+for a 64-bit executable.  The command
+@smallexample
+env CC="cc -64" ./configure --with-f77="f77 -64" --with-tcltk=no
+@end smallexample
+@noindent
+was used to create the 64-bit executable.  It was necessary to
+explicitly omit Tcl/Tk because @code{configure} would find the 32-bit
+version but not detect that is was incompatible with a 64-bit build.
+
+
+@node Alpha/OSF1,  Alpha/FreeBSD, IRIX, Platform notes
+@subsection Alpha/OSF1
+
+@node Alpha/FreeBSD,  , Alpha/OSF1, Platform notes
+@subsection Alpha/FreeBSD
+
 
 
 @node New platforms, Function and variable index, Configuration on Unix, Top
