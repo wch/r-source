@@ -315,7 +315,41 @@ R_PKGS_PO= base grDevices graphics grid methods splines stats stats4 tcltk tools
 R_PKGS_SRC_PO= grDevices grid methods splines stats tools
 R_EXE = $(top_builddir)/bin/R --vanilla
 
-update-pkg-po: remove-potcdate.sed
+update-pkg-po: Makefile update-pkg-R-trs update-pkg-trs
+
+update-pkg-R-trs: update-pkg-pot
+	@for pkg in $(R_PKGS_PO); do \
+	  echo "updating translations of R-$${pkg}.pot"; \
+	  test "$(srcdir)" = . && cdcmd="../src/library/$${pkg}/po" || cdcmd="cd $(top_srcdir)/src/library/$${pkg}/po && "; \
+	  trs=`$${cdcmd} && ls R-*.po 2> /dev/null`; \
+	  if test -n "$${trs}"; then \
+	    for tr in $${trs}; do \
+	      lang=`echo $${tr} | sed -e 's/^R-//' -e 's/.po$$//'`; \
+	      echo $(ECHO_N) "$$lang:$(ECHO_C)"; \
+	      $${cdcmd} && $(MSGMERGE_UPDATE) $${tr} R-$${pkg}.pot; \
+	      mkdir -p $(srcdir)/../src/library/$${pkg}/inst/po/$$lang/LC_MESSAGES; \
+	      $${cdcmd} && $(MSGFMT) -c -o ../inst/po/$$lang/LC_MESSAGES/R-$${pkg}.mo $${tr} ; \
+	    done; \
+	  fi ; \
+	done
+update-pkg-trs: update-pkg-pot
+	@for pkg in $(R_PKGS_SRC_PO); do \
+	  echo "updating translations of $${pkg}.pot"; \
+	  test "$(srcdir)" = . && cdcmd="../src/library/$${pkg}/po" || cdcmd="cd $(top_srcdir)/src/library/$${pkg}/po && "; \
+	  trs=`$${cdcmd} && ls *.po 2> /dev/null`; \
+	  trs=`echo $${trs} | sed -e 's/R-[^.]*\.po//'`; \
+	  if test -n "$${trs}"; then \
+	    for tr in $${trs}; do \
+	      lang=`echo $${tr} | sed -e 's/^R-//' -e 's/.po$$//'`; \
+	      echo $(ECHO_N) "$$lang:$(ECHO_C)"; \
+	      $${cdcmd} && $(MSGMERGE_UPDATE) $${tr} $${pkg}.pot; \
+	      mkdir -p $(srcdir)/../src/library/$${pkg}/inst/po/$$lang/LC_MESSAGES; \
+	      $${cdcmd} && $(MSGFMT) -c -o ../inst/po/$$lang/LC_MESSAGES/$${pkg}.mo $${tr} ; \
+	    done; \
+	  fi ; \
+	done
+
+update-pkg-pot: remove-potcdate.sed
 	@for pkg in $(R_PKGS_SRC_PO); do \
 	  echo "updating $${pkg}.pot"; \
 	  src=$(top_srcdir)/src/library/$${pkg}; \

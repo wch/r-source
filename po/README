@@ -12,7 +12,9 @@ Target
 
 make update-pkg-po
 
-updates the message catalogs for the C and R code in the standard packages.
+updates the message catalogs for the C and R code in the standard packages,
+uses msgmerge --update to update the translations and then re-makes the 
+compiled (.mo) files.
 
 
 To add a new translation, add the lang.po file to this directory and add

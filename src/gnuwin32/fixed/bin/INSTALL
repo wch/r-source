@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2000-4  R Development Core Team
+# Copyright (C) 2000-5  R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -155,6 +155,27 @@ foreach $pkg (@ARGV){
     my $pkgdir = cwd();
     chdir($startdir);
 
+    $description = new R::Dcf("$pkg/DESCRIPTION");
+    my $intname = $description->{"Package"};
+    my $Type = $description->{"Type"};
+
+    if($Type && $Type ne "Package") {
+	if($Type eq "Translation") {
+	    chdir($pkg);
+	    system("cp -r ./share $R_HOME") if -d "share";
+	    system("cp -r ./library $R_HOME") if -d "library";
+	    if($opt_build) {
+		my $filename = "${pkgname}_" . $description->{"Version"};
+		$startdir = Win32::GetShortPathName($startdir) if $startdir =~ / /;
+		chdir($pkgdir);
+		system("rm -f  $startdir/$filename.zip");
+		system("zip -r9Xq $startdir/$filename.zip $pkgname");
+	    }
+	    next;
+	}
+	die "cannot install package '${pkgname}' of type '$Type'\n"
+    }
+ 
     die "no valid package name found\n" unless length($pkgname) > 0;
     my $pkgoutdir = "$library/$pkgname";
     die "  *** can't install into source directory ***\n"
@@ -163,8 +184,6 @@ foreach $pkg (@ARGV){
 
     my $makecmd = "pkg";
     $makecmd = "pkgfake" if $opt_fake;
-    $description = new R::Dcf("$pkg/DESCRIPTION");
-    my $intname = $description->{"Package"};
 
     ## do we have a package bundle?
     my $zippkgs = $pkgname;

@@ -2092,7 +2092,7 @@ static BBOX RenderDelim(int which, double dist, int draw, mathContext *mc,
 	break;
     default:
 	error(_("group is incomplete"));
-	return ansBBox;/*never reached*/
+	return NullBBox();/*never reached*/
     }
     topBBox = GlyphBBox(top, gc, dd);
     extBBox = GlyphBBox(ext, gc, dd);

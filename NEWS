@@ -500,7 +500,7 @@ INSTALLATION CHANGES
     o	Files FAQ, RESOURCES, doc/html/resources.html are no longer in
 	the SVN sources but are made by 'make dist'.
 
-    o	The GNOME GUI is unbundled, currently available by Subversion only.
+    o	The GNOME GUI is unbundled as a package on CRAN.
 
     o	Configuring without having the recommended packages is now an
 	error unless --with-recommended-packages=no (or equivalent) is used.
@@ -524,6 +524,11 @@ INSTALLATION CHANGES
 
 
 PACKAGE INSTALLATION CHANGES
+
+    o	There are new types of packages, identified by the Type field
+	in the DESCRIPTION file.  For example the GNOME console is now
+	a separate package (on CRAN), and translations can be
+	distributed as packages.
 
     o	There is now support of installing from within R both source and
 	binary packages on MacOS X and Windows.  Most of the R

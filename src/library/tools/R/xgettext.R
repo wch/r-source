@@ -20,7 +20,7 @@ xgettext <- function(dir, verbose = FALSE, asCall = TRUE)
                    && (as.character(e[[1]])
                        %in% c("gettext", "gettextf"))) {
                     domain <- e[["domain"]]
-                    suppress <- !is.null(domain) && is.na(domain)
+                    suppress <- !is.null(domain) && !is.name(domain) && is.na(domain)
                 }
                 for(i in seq(along = e)) find_strings2(e[[i]], suppress)
             }
@@ -31,7 +31,7 @@ xgettext <- function(dir, verbose = FALSE, asCall = TRUE)
                %in% c("warning", "stop", "message",
                       "gettext", "gettextf"))) {
              domain <- e[["domain"]]
-             suppress <- !is.null(domain) && is.na(domain)
+             suppress <- !is.null(domain) && !is.name(domain) && is.na(domain)
              ## remove named args
              if(!is.null(names(e)))
                  e <- e[!names(e) %in% c("call.", "immediate.", "domain")]

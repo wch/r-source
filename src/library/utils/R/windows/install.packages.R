@@ -27,7 +27,7 @@
         ## Check to see if this is a bundle or a single package
         if (file.exists("DESCRIPTION")) {
             ## Bundle
-            conts <- read.dcf("DESCRIPTION",fields="Contains")[1,]
+            conts <- read.dcf("DESCRIPTION", fields="Contains")[1,]
             if (is.na(conts))
                 stop("malformed bundle DESCRIPTION file, no Contains field")
             else
@@ -44,30 +44,76 @@
 
         for (curPkg in pkgs) {
             desc <- read.dcf(file.path(curPkg, "DESCRIPTION"),
-                             c("Package", "Version"))
-            if (installWithVers) {
-                instPath <- file.path(lib, paste(desc[1,1], desc[1,2], sep="_"))
-            }
-            else instPath <- file.path(lib, desc[1,1])
+                             c("Package", "Version", "Type"))
+            if(desc[1, "Type"] %in% "Translation") {
+                fp <- file.path(curPkg, "share", "locale")
+                if(file.exists(fp)) {
+                    langs <- dir(fp)
+                    for(lang in langs) {
+                        path0 <- file.path(fp, lang, "LC_MESSAGES")
+                        mos <- dir(path0, full.names = TRUE)
+                        path <- file.path(R.home(), "share", "locale", lang,
+                                          "LC_MESSAGES")
+                        if(!file.exists(path))
+                            if(!dir.create(path, FALSE, TRUE))
+                                warning(gettextf("failed to create '%s'", path),
+                                        domain = NA)
+                        res <- file.copy(mos, path, overwrite = TRUE)
+                        if(any(!res))
+                            warning(gettextf("failed to create '%s'",
+                                             paste(mos[!res], collapse=",")),
+                                    domain = NA)
+                    }
+                }
+                fp <- file.path(curPkg, "library")
+                if(file.exists(fp)) {
+                    spkgs <- dir(fp)
+                    for(spkg in spkgs) {
+                        langs <- dir(file.path(fp, spkg, "po"))
+                        for(lang in langs) {
+                            path0 <- file.path(fp, spkg, "po", lang,
+                                               "LC_MESSAGES")
+                            mos <- dir(path0, full.names = TRUE)
+                            path <- file.path(R.home(), "library", spkg, "po",
+                                              lang, "LC_MESSAGES")
+                            if(!file.exists(path))
+                                if(!dir.create(path, FALSE, TRUE))
+                                    warning(gettextf("failed to create '%s'", path),
+                                            domain = NA)
+                            res <- file.copy(mos, path, overwrite = TRUE)
+                        if(any(!res))
+                            warning(gettextf("failed to create '%s'",
+                                             paste(mos[!res], collapse=",")),
+                                    domain = NA)
+                        }
+                    }
+                }
+             } else {
+                if (installWithVers) {
+                    instPath <- file.path(lib,
+                                          paste(desc[1,1], desc[1,2], sep="_"))
+                }
+                else instPath <- file.path(lib, desc[1,1])
 
-            ## If the package is already installed w/ this
-            ## instName, remove it.  If it isn't there, the unlink call will
-            ## still return success.
-            ret <- unlink(instPath, recursive=TRUE)
-            if (ret == 0) {
-                ## Move the new package to the install lib and
-                ## remove our temp dir
-                ret <- file.rename(file.path(tmpDir, curPkg), instPath)
-                if(!ret)
-                    warning(sprintf(gettext(
-                   "unable to move temp installation '%d' to '%s'"),
-                                    file.path(tmpDir, curPkg), instPath),
-                            domain = NA, call. = FALSE)
-            } else
+                ## If the package is already installed w/ this
+                ## instName, remove it.  If it isn't there, the unlink call will
+                ## still return success.
+                ret <- unlink(instPath, recursive=TRUE)
+                if (ret == 0) {
+                    ## Move the new package to the install lib and
+                    ## remove our temp dir
+                    ret <- file.rename(file.path(tmpDir, curPkg), instPath)
+                    if(!ret)
+                        warning(sprintf(gettext(
+                             "unable to move temp installation '%d' to '%s'"),
+                                        file.path(tmpDir, curPkg), instPath),
+                                domain = NA, call. = FALSE)
+                } else
                 stop(sprintf(gettext(
                      "cannot remove prior installation of package '%s'"),
                              curPkg),
                      domain = NA, call. = FALSE)
+            }
         }
         setwd(cDir)
         unlink(tmpDir, recursive=TRUE)

@@ -368,7 +368,13 @@ static int scanchar(Rboolean inQuote, LocalData *d)
 	    }
 		break;
 	    default:
-		/* Any other char and even EOF escapes to itself */
+		/* Any other char and even EOF escapes to itself, but we
+		   need to preserve \" etc inside quotes.
+		 */
+		if(inQuote && strchr(d->quoteset, next)) {
+		    unscanchar(next, d);
+		    next = '\\';
+		}
 		break;
 	    }
     }
@@ -413,6 +419,10 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 		if (m >= nbuf - 3) {
 		    nbuf *= 2;
 		    R_AllocStringBuffer(nbuf, buffer);
+		}
+		if (c == '\\') {
+		    c = scanchar(TRUE, d);
+		    if (c == R_EOF) break;
 		}
 		buffer->data[m++] = c;
 #ifdef SUPPORT_MBCS

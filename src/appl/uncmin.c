@@ -878,7 +878,7 @@ dogdrv(int nr, int n, double *x, double f, double *g, double *a, double *p,
 
     Rboolean fstdog, nwtake;
     int i;
-    double fplsp, rnwtln, eta, cln, tmp;
+    double fplsp, rnwtln, eta = 0.0, cln = 0.0, tmp; /* -Wall */
 
     *iretcd = 4;
     fstdog = TRUE;

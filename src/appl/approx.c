@@ -98,7 +98,7 @@ void R_approx(double *x, double *y, int *nxy, double *xout, int *nout,
 	      int *method, double *yleft, double *yright, double *f)
 {
     int i;
-    appr_meth M;
+    appr_meth M = {0.0, 0.0, 0.0, 0.0, 0}; /* -Wall */
 
     /* check interpolation method */
 

@@ -797,8 +797,11 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
 	    warning("CreateAtVector \"log\"(from axis()): "
 		    "usr[0] = %g > %g = usr[1] !", umin, umax);
 	dn = axp[0];
-	if (dn < DBL_MIN)/* was 1e-300; now seems too cautious */
+	if (dn < DBL_MIN) {/* was 1e-300; now seems too cautious */
 	    warning("CreateAtVector \"log\"(from axis()): axp[0] = %g !", dn);
+	    if (dn <= 0) /* real trouble (once for Solaris) later on */
+		error("CreateAtVector [log-axis()]: axp[0] = %g < 0!", dn);
+	}
 
 	/* You get the 3 cases below by
 	 *  for (y in 1e-5*c(1,2,8))  plot(y, log = "y")
@@ -2993,7 +2996,8 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
     if (GRecording(call, dd))
 	recordGraphicOperation(op, originalArgs, dd);
     return R_NilValue;
-}/* do_title */
+} /* do_abline */
+
 
 SEXP do_box(SEXP call, SEXP op, SEXP args, SEXP env)
 {

@@ -1636,7 +1636,7 @@ SEXP do_recall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	cptr = cptr->nextcontext;
     }
     if (cptr == NULL)
-	error(_("Recall called from outside a closure"));
+	error(_("'Recall' called from outside a closure"));
     if( TYPEOF(CAR(cptr->call)) == SYMSXP)
 	PROTECT(s = findFun(CAR(cptr->call), cptr->sysparent));
     else

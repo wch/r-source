@@ -12,8 +12,16 @@ tk_select.list <-
         lab <- tklabel(dlg, text = title, fg = "blue")
         tkgrid.configure(lab, columnspan = 2)
     }
-    winfo <- as.numeric(tclvalue(tkwinfo("screenheight", dlg)))
-    ht <- min(length(list), winfo %/% 20) # a guess of font height
+    scht <- as.numeric(tclvalue(tkwinfo("screenheight", dlg))) - 100
+                                        # allow for win furniture and buttons
+    ht <- min(length(list), scht %/% 20) # a guess of font height
+    box <- tklistbox(dlg, height = ht,
+                     listvariable = lvar, bg = "white",
+                     selectmode = ifelse(multiple, "multiple", "single"))
+    tmp <- tcl("font", "metrics", tkcget(box, font=NULL))
+    tmp <- as.numeric(sub(".*linespace ([0-9]+) .*", "\\1", tclvalue(tmp)))+1
+    ht <- min(length(list), scht %/% tmp)
+    tkdestroy(box)
     if(ht < length(list)) {
         scr <- tkscrollbar(dlg, repeatinterval = 5,
                            command = function(...) tkyview(box, ...))
@@ -49,6 +57,7 @@ tk_select.list <-
     Cancel <- tkbutton(dlg, text = "Cancel", command = onCancel)
     tkgrid(OK, Cancel)
     tkbind(dlg, "<Destroy>", onCancel)
+    tkfocus(box)
     tkwait.window(dlg)
     if(!multiple && !length(ans.select_list)) ans.select_list <- ""
     ans.select_list
