@@ -1,6 +1,7 @@
 source <-
     function(file, local=FALSE, echo = verbose, print.eval=echo,
-             verbose= .Options$verbose, max.deparse.length=150)
+             verbose= .Options$verbose, prompt.echo = .Options$prompt,
+             max.deparse.length=150)
 {
     envir <- if (local) sys.frame(sys.parent()) else .GlobalEnv
     if(!missing(echo)) {
@@ -18,9 +19,9 @@ source <-
     ass1 <- expression(y <- x)[[1]][[1]] #-- ass1 :  the  '<-' symbol/name
     if(echo) {
         ## Reg.exps for string delimiter/ NO-string-del / odd-number-of-str.del
-        ## need them when truncating below..
-        sd <- "\""; nos <- "[^\"]*"; noss <- paste(nos,sd,sep="")
-        oddsd <- paste("^",noss,"(",noss,noss,")*",nos,"$", sep="")
+        ## needed, when truncating below
+        sd <- "\""; nos <- "[^\"]*"
+        oddsd <- paste("^",nos,sd,"(",nos,sd,nos,sd,")*",nos,"$", sep="")
     }
     for (i in 1:Ne) {
 	if(verbose)
@@ -32,7 +33,7 @@ source <-
 	    nd <- nchar(dep) -1 # -1: drop ")"
 	    do.trunc <- nd > max.deparse.length
             dep <- substr(dep, 1, if(do.trunc)max.deparse.length else nd)
-            cat("\n> ", dep,
+            cat("\n", prompt.echo, dep,
                 if(do.trunc)
                 paste(if(length(grep(sd,dep)) && length(grep(oddsd,dep)))
                       " ...\" ..." else " ....", "[TRUNCATED] "),
@@ -109,6 +110,7 @@ demo <- function(topic, device = x11, directory.sep = "/")
 
 example <- function(topic, package= .packages(), lib.loc = .lib.loc,
                     echo = TRUE, verbose = .Options$verbose,
+                    prompt.echo = paste(abbreviate(topic, 6),"> ", sep=""),
                     directory.sep = "/")
 {
     topic <- substitute(topic)
@@ -120,8 +122,9 @@ example <- function(topic, package= .packages(), lib.loc = .lib.loc,
                                 pkg = pkg, lib = lib)
             if(file != "") break
         }
-    if(file == "") stop(paste("Couldn't find", topic, " example"))
+    if(file == "") stop(paste("Couldn't find '", topic, "' example", sep=""))
     if(pkg != "base") library(pkg, lib = lib, character.only = TRUE)
-    source(file, echo = echo, verbose = verbose, max.deparse.length=10000)
+    source(file, echo = echo, prompt.echo = prompt.echo,
+           verbose = verbose, max.deparse.length=10000)
 }
 

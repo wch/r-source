@@ -2,7 +2,8 @@
 \title{Redirect Input}
 \usage{
 source(file, local = FALSE, echo = verbose, print.eval = echo,
-       verbose = .Options$verbose, max.deparse.length = 150)
+       verbose = .Options$verbose,  prompt.echo = .Options$prompt,
+       max.deparse.length = 150)
 }
 \alias{source}
 \arguments{
@@ -18,6 +19,8 @@ source(file, local = FALSE, echo = verbose, print.eval = echo,
   \item{verbose}{if \code{TRUE}, more diagnostics (than just \code{echo = TRUE})
       are printed during parsing and evaluation of input, including
       extra info for \bold{each} expression.}
+ \item{prompt.echo}{character; gives the prompt to be used if
+     \code{echo = TRUE}.}
   \item{max.deparse.length}{integer; is used only if \code{echo} is
     \code{TRUE} and gives the maximal length of the ``echo'' of a single
     expression.}

@@ -2,7 +2,9 @@
 \title{Run an Examples section from the online help}
 \usage{
 example(topic, package= .packages(), lib=.lib.loc,
-        echo=TRUE, verbose=.Options$verbose, directory.sep="/")
+        echo=TRUE, verbose=.Options$verbose,
+        prompt.echo = paste(abbreviate(topic, 6),"> ", sep=""),
+        directory.sep= "/")
 }
 \alias{example}
 \arguments{
@@ -13,6 +15,8 @@ example(topic, package= .packages(), lib=.lib.loc,
  \item{echo}{logical;  if \code{TRUE}, show the \R input when sourcing.}
  \item{verbose}{logical;  if \code{TRUE}, show even more when running
      example code.}
+ \item{prompt.echo}{character; gives the prompt to be used if
+     \code{echo = TRUE}.}
  \item{directory.sep}{character; the directory separating character (an
      idea to make this OS independent).}
 }
