@@ -612,18 +612,58 @@ function(x)
 function(expr)
 {
     ## Try to run an expression, suppressing all 'output'.  In case of
-    ## failure, stop with the error message.
+    ## failure, stop with the error message and a "traceback" ...
+
+    tb <- function (tb)
+    {
+        if (!missing(tb))
+            .Traceback <- tb
+        else if (exists(".Traceback", env = .GlobalEnv))
+            .Traceback <- get(".Traceback", env = .GlobalEnv)
+        else .Traceback <- NULL
+        if (is.null(.Traceback) || length(.Traceback) == 0)
+            cat("No traceback available\n")
+        else {
+            n <- length(.Traceback)
+            for (i in 1:n) {
+                label <- paste(n - i + 1, ": ", sep = "")
+                if ((m <- length(.Traceback[[i]])) > 1)
+                    label <- c(label, rep(substr("          ", 1,
+                                                 nchar(label)), m - 1))
+                cat(paste(label, .Traceback[[i]], sep = ""), sep = "\n")
+            }
+        }
+        invisible()
+    }
+
     oop <- options(warn = 1)
     on.exit(options(oop))
     outConn <- file(open = "w")         # anonymous tempfile
     sink(outConn, type = "output")
     sink(outConn, type = "message")
-    yy <- try(expr, silent = TRUE)
-    sink(type = "message")
-    sink(type = "output")
-    close(outConn)
-    if(inherits(yy, "try-error"))
-        stop(yy)
+    yy <- tryCatch(withRestarts(withCallingHandlers(expr, error = {
+        function(e) invokeRestart("grmbl", e, sys.calls())
+    }),
+                                grmbl = function(e, calls) {
+                                    n <- length(sys.calls())
+                                    ## Chop things off as needed ...
+                                    calls <- calls[-seq(length = n - 1)]
+                                    calls <- rev(calls)[-c(1, 2)]
+                                    tb <- lapply(calls, deparse)
+                                    stop(conditionMessage(e),
+                                         "\nCall sequence:\n",
+                                         paste(capture.output(tb(tb)),
+                                               collapse = "\n"),
+                                         call. = FALSE)
+                                }),
+                   error = function(e) e,
+                   finally = {
+                       sink(type = "message")
+                       sink(type = "output")
+                       close(outConn)
+                   })
+    if(inherits(yy, "error"))
+        stop(yy, call. = FALSE)
     yy
 }
 
