@@ -260,7 +260,7 @@ void GetRNGstate()
 	    error(".Random.seed is not a vector");
 	tmp = INTEGER(seeds)[0];
 	if (tmp == NA_INTEGER)
-	    error(".Random.seed[0] is not a valid integer");
+	    error(".Random.seed[1] is not a valid integer");
 	newRNG = tmp % 100;
 	newN01 = tmp / 100;
 	/*if (RNG_kind > USER || RNG_kind < 0) {
