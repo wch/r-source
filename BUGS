@@ -580,11 +580,6 @@ Subject: svd() very slow for wide matrix X but not for t(X)
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Tue, 9 Jul 2002 11:39:15 -0400 
 --Doesn't happen with the now preferred La.svd.
-* PR# 1981 *
-Subject: FIX FOR OLD AND NEW PROBLEMS with order(): order fails with na.last=NA
-From: oehl_list@gmx.de
-Date: Tue, 3 Sep 2002 21:12:47 +0200 (MEST)
---1 and 2 were already fixed for 1.6.0
 * PR# 2003 *
 Subject: rhome.c: getRHOME() fails, if R is called from SJava
 From: grimm.heinz@rcc.ch
@@ -605,11 +600,24 @@ Date: Sat, 14 Sep 2002 13:48:34 -0400
 Subject: mosaicplot enhancements
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 Date: Mon, 16 Sep 2002 12:00:26 +0200
-* PR# 2032 *
-Subject: Earn THOUSAND US$ in Multi-Level Email Reports 
-From: moneyforu@money.com
-Date: Tue, 17 Sep 2002 09:07:18 -0600
 * PR# 2033 *
 Subject: switch
 From: rwehrens@sci.kun.nl
 Date: Tue, 17 Sep 2002 23:25:39 +0200 (MET DST)
+--not a bug; but worth a documentation hint
+* PR# 2034 *
+Subject: Data between machines.
+From: gshoema <gshoema@sandia.gov>
+Date: Wed, 18 Sep 2002 05:26:59 -0400 (EDT)
+* PR# 2035 *
+Subject: Fundraising Answers
+From: NonProfit <fndraiser@hotmail.com>
+Date: Wed, 18 Sep 2002 21:06:01 +0800
+* PR# 2036 *
+Subject: URGENT ASSISTANCE
+From: "nguema seseseko" <sese_seko4000@lycos.com>
+Date: Wed, 18 Sep 2002 15:12:28 -0500
+* PR# 2037 *
+Subject: contrasts in lm~-1+(numeric.variable)/(factor)
+From: hosking@watson.ibm.com
+Date: Wed, 18 Sep 2002 23:06:12 +0200 (MET DST)
