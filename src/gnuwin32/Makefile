@@ -103,7 +103,7 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 
 # avoid building globalvar.h with errors
 ../include/globalvar.h: exported-vars
-	$(AWK) -- '//{if ($$1 != "") print "#define " $$1 " (*__imp_" $$1 ")"}' \
+	$(AWK) -- '//{if ($$1 != "") print "#define " $$1 " (*_imp__" $$1 ")"}' \
 	           exported-vars > ../include/globalvar.h
 
 CHTML:
@@ -275,11 +275,11 @@ distribution: bindist packagedist docsdist
 
 # tests
 check: all test
-test: stricttests pkgtests
+test: test-Specific pkgtests
 
-stricttests:
+test-Specific:
 	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests clean
-	-@$(MAKE) -k -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests
+	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests
 
 PKGS-CHK=$(foreach i, $(PACKAGES), pkgcheck-$i)
 pkgtests: $(PKGS-CHK)

@@ -21,13 +21,15 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_impl.c,v 1.4 1999/12/15 17:20:28 pd Exp $
+ *  $Id: rproxy_impl.c,v 1.5 2000/01/12 20:57:31 ripley Exp $
  */
 
 #include <windows.h>
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "globalvar.h"
+#undef CharacterMode
 #include "Rconfig.h"
 #include "Rversion.h"
 #include "Startup.h"
@@ -37,10 +39,10 @@
 #include "IOStuff.h"
 #include "Parse.h"
 
-#define R_GlobalEnv (*__imp_R_GlobalEnv)
-#define R_Visible (*__imp_R_Visible)
-#define R_EvalDepth (*__imp_R_EvalDepth)
-#define R_DimSymbol (*__imp_R_DimSymbol)
+/* #define R_GlobalEnv (*_imp__R_GlobalEnv)
+#define R_Visible (*_imp__R_Visible)
+#define R_EvalDepth (*_imp__R_EvalDepth)
+#define R_DimSymbol (*_imp__R_DimSymbol) */
 
 extern SEXP R_GlobalEnv;
 extern int R_Visible;
