@@ -111,6 +111,7 @@ The information here applies only to recent versions of R for Windows,
 * What are HOME and working directories?::  
 * R can't find my file::        
 * Does R use the Registry?::    
+* Entering certain characters crashes Rgui.::  
 @end menu
 
 
@@ -124,7 +125,7 @@ possibilities.
 
 1) @code{SetupR.exe}, is about 15Mb and gives a complete installation.
 
-2) Directory @code{miniR} contains @code{miniR.exe} and several files
+2) Directory @code{miniR} contains @code{miniR.exe} and six files
 @code{miniR-?.bin}.  You can put  @code{miniR.exe} and @code{miniR-1.bin}
 on one floppy and the remaining @code{miniR-?.bin} on a floppy each.
 
@@ -166,7 +167,7 @@ change the `Start in' field to your working directory.
 You may also want to add command-line arguments at the end of the Target
 field, for example @code{--sdi --max-mem-size=40M}.  You can also set
 environment variables at the end of the Target field, for example
-@code{R_LIBS=e:/R/library}.
+@code{R_LIBS=p:/R/library}.
 
 
 @node How do I run it?, There seems to be a limit on the memory it uses!, How do I install R for Windows?, Installation and Usage
@@ -288,24 +289,38 @@ Another possible source of grief is spaces in folder names.  We have
 tried to make R work on paths with spaces in, but lots of people writing
 packages for Unix do not bother.  So it is worth trying the alternative
 short name (something like @code{PROGRA~1}; you can get it as the
-`MS-DOS name' from the Properties on most versions of Windows).
+`MS-DOS name' from the Properties of the file on most versions of Windows).
 
 
-@node Does R use the Registry?,  , R can't find my file, Installation and Usage
+@node Does R use the Registry?, Entering certain characters crashes Rgui., R can't find my file, Installation and Usage
 @section Does R use the Registry?
 
-Not itself.  The installers set some entries to allow uninstallation.
-In addition they set a Registry key
-@code{LOCAL_MACHINE\Software\R-core\R} giving the version and install
-path.  Again, this is not used by R itself, but it will be used by the
-DCOM interface (@uref{http://cran.r-project.org/other-software.html}).
-Finally, a file association for extension @code{.RData} is set in the
-Registry.
+Not itself.  
+
+The installers set some entries to allow uninstallation.  In addition
+they set a Registry key @code{LOCAL_MACHINE\Software\R-core\R} giving
+the version and install path.  Again, this is not used by R itself, but
+it will be used by the DCOM interface
+(@uref{http://cran.r-project.org/other-software.html}).  Finally, a file
+association for extension @code{.RData} is set in the Registry.
 
 You can add the Registry entries by running @code{RSetReg.exe} in the
 @code{bin} folder, and remove them by running this with argument
 @code{/U}.  Note that the settings are all per machine and not per user,
 and that this neither sets up nor removes the file associations.
+
+@node Entering certain characters crashes Rgui.,  , Does R use the Registry?, Installation and Usage
+@section Entering certain characters crashes Rgui.
+
+This seems to happen occasionally, and all the occurrences we have
+solved have been traced to faulty versions of @samp{msvcrt.dll}.  Try
+extracting the one to be found in the self-extracting archive
+@uref{ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe}
+and put it in the @code{@RWVER@\bin} directory.  Removing
+@samp{msvcrt.dll} from that directory reverts to the standard behaviour.
+
+This fix has solved other problems too, for example incorrect results in
+the date-time functions.
 
 
 
@@ -349,7 +364,7 @@ read the file @file{readme.packages}.  You will need to collect and
 install several tools to use this.  Once you have done so, just run
 @code{Rcmd INSTALL pkgname}.  To check the package (including running
 all the examples on its help pages and in its test suite, if any) use
-@code{Rcmd check pkgname}: see the `Writing R Extensions' manual.
+@code{Rcmd check pkgname}: see the @emph{`Writing R Extensions'} manual.
 
 
 @node I don't have permission to write to the @RWVER@\library directory, The packages I installed do not appear in the HTML help system, Can I install packages (libraries) in this version?, Packages
@@ -488,6 +503,7 @@ the package to cure this.
 * What should I expect to behave differently from the Unix version::  
 * I hear about some nifty features.::  
 * Circles appear as ovals on screen::  
+* How do I more focus to a graphics window or the console?::  
 @end menu
 
 
@@ -553,7 +569,7 @@ There is a Preferences editor invoked from the @code{Edit} menu which
 can be used to edit the file @file{Rconsole}.
 
 
-@node Circles appear as ovals on screen,  , I hear about some nifty features., Windows Features
+@node Circles appear as ovals on screen, How do I more focus to a graphics window or the console?, I hear about some nifty features., Windows Features
 @section Circles appear as ovals on screen
 
 The graphics system asks Windows for the number of pixels per inch in
@@ -568,7 +584,17 @@ On one of our systems, the screen height is reported as 240mm, and the
 width as 300mm in 1280 x 1024 mode and 320mm in 1280 x 960 and 1600 x 1200
 modes.  In fact it is a 21" monitor and 400mm x 300mm!
 
+@node How do I more focus to a graphics window or the console?,  , Circles appear as ovals on screen, Windows Features
+@section How do I more focus to a graphics window or the console?
 
+You may want to do this from within a function, for example when calling
+@samp{idenitfy} or @samp{readline}.  Use the function
+@samp{bringToTop()}.  With its default argument it brings the active
+graphics window to the top and gives it focus.  With argument @samp{-1}
+it brings the console to the top and gives it focus.
+
+This works for @samp{Rgui.exe} in MDI and SDI modes, and can be used for
+graphics windows from @samp{Rterm.exe}.
 
 @newchap{}
 @node Workspaces, The R Console and Fonts, Windows Features, Top
@@ -710,7 +736,7 @@ case) did not work.
 @section How do I include compiled C code?
 
 We strongly encourage you to do this @emph{via} building an R package:
-see the @emph{Writing R Extensions} manual.  In any event you should
+see the @emph{`Writing R Extensions'} manual.  In any event you should
 install the parts of the R system for building R packages (in
 @code{SetupR.exe} or @code{@RWVER@sp.zip}), and get and install the
 tools (including Perl) and compilers mentioned in the file
@@ -812,7 +838,7 @@ You need to do two things:
 
 (b) Include the C++ libraries in the link to make the DLL.  Suppose
 @file{X.cc} contains your C++ code, and @file{X_main.cc} is the wrapper,
-as in the example in `@emph{Writing R Extensions}'.  Then build the DLL by
+as in the example in @emph{`Writing R Extensions'}.  Then build the DLL by
 (@code{gcc})
 
 @example
@@ -888,14 +914,14 @@ version (5.6.1, build 626 was current at the time of writing).
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2001 June 18 by Professor B. D. Ripley
+Last edited 2001 June 21 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2001 June 18 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2001 June 21 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

@@ -64,6 +64,9 @@ file, but I know it is there!</a></li>
 
 <li><a href="#Does%20R%20use%20the%20Registry%3f">2.11 Does R use
 the Registry?</a></li>
+
+<li><a href="#Entering%20certain%20characters%20crashes%20Rgui.">
+2.12 Entering certain characters crashes Rgui.</a></li>
 </ul>
 </li>
 
@@ -114,6 +117,11 @@ hear about some nifty features: please tell me about them!</a></li>
 
 <li><a href="#Circles%20appear%20as%20ovals%20on%20screen">4.3
 Circles appear as ovals on screen</a></li>
+
+<li><a href=
+"#How%20do%20I%20more%20focus%20to%20a%20graphics%20window%20or%20the%20console%3f">
+4.4 How do I more focus to a graphics window or the
+console?</a></li>
 </ul>
 </li>
 
@@ -233,7 +241,7 @@ you need. There are three possibilities.</p>
 installation.</p>
 
 <p>2) Directory <code>miniR</code> contains <code>miniR.exe</code>
-and several files <code>miniR-?.bin</code>. You can put <code>
+and six files <code>miniR-?.bin</code>. You can put <code>
 miniR.exe</code> and <code>miniR-1.bin</code> on one floppy and the
 remaining <code>miniR-?.bin</code> on a floppy each.</p>
 
@@ -279,7 +287,7 @@ to your working directory.</p>
 the Target field, for example <code>--sdi
 --max-mem-size=40M</code>. You can also set environment variables
 at the end of the Target field, for example <code>
-R_LIBS=e:/R/library</code>. <a name="How%20do%20I%20run%20it%3f">
+R_LIBS=p:/R/library</code>. <a name="How%20do%20I%20run%20it%3f">
 </a></p>
 
 <h2>2.3 How do I run it?</h2>
@@ -416,13 +424,15 @@ have tried to make R work on paths with spaces in, but lots of
 people writing packages for Unix do not bother. So it is worth
 trying the alternative short name (something like <code>
 PROGRA~1</code>; you can get it as the `MS-DOS name' from the
-Properties on most versions of Windows). <a name=
+Properties of the file on most versions of Windows). <a name=
 "Does%20R%20use%20the%20Registry%3f"></a></p>
 
 <h2>2.11 Does R use the Registry?</h2>
 
-<p>Not itself. The installers set some entries to allow
-uninstallation. In addition they set a Registry key <code>
+<p>Not itself.</p>
+
+<p>The installers set some entries to allow uninstallation. In
+addition they set a Registry key <code>
 LOCAL_MACHINE\Software\R-core\R</code> giving the version and
 install path. Again, this is not used by R itself, but it will be
 used by the DCOM interface (<a href=
@@ -434,7 +444,23 @@ set in the Registry.</p>
 RSetReg.exe</code> in the <code>bin</code> folder, and remove them
 by running this with argument <code>/U</code>. Note that the
 settings are all per machine and not per user, and that this
-neither sets up nor removes the file associations.</p>
+neither sets up nor removes the file associations. <a name=
+"Entering%20certain%20characters%20crashes%20Rgui."></a></p>
+
+<h2>2.12 Entering certain characters crashes Rgui.</h2>
+
+<p>This seems to happen occasionally, and all the occurrences we
+have solved have been traced to faulty versions of <code>
+msvcrt.dll</code>. Try extracting the one to be found in the
+self-extracting archive <a href=
+"ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe">
+ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe</a> and put it
+in the <code>rw1030\bin</code> directory. Removing <code>
+msvcrt.dll</code> from that directory reverts to the standard
+behaviour.</p>
+
+<p>This fix has solved other problems too, for example incorrect
+results in the date-time functions.</p>
 
 <hr>
 <a name="Packages"></a> 
@@ -471,8 +497,8 @@ readme.packages</code>. You will need to collect and install
 several tools to use this. Once you have done so, just run <code>
 Rcmd INSTALL pkgname</code>. To check the package (including
 running all the examples on its help pages and in its test suite,
-if any) use <code>Rcmd check pkgname</code>: see the `Writing R
-Extensions' manual. <a name=
+if any) use <code>Rcmd check pkgname</code>: see the <em>`Writing R
+Extensions'</em> manual. <a name=
 "I%20don't%20have%20permission%20to%20write%20to%20the%20rw1030%5clibrary%20directory">
 </a></p>
 
@@ -708,7 +734,22 @@ these are of the order of 80.)</p>
 <p>On one of our systems, the screen height is reported as 240mm,
 and the width as 300mm in 1280 x 1024 mode and 320mm in 1280 x 960
 and 1600 x 1200 modes. In fact it is a 21" monitor and 400mm x
-300mm!</p>
+300mm! <a name=
+"How%20do%20I%20more%20focus%20to%20a%20graphics%20window%20or%20the%20console%3f">
+</a></p>
+
+<h2>4.4 How do I more focus to a graphics window or the
+console?</h2>
+
+<p>You may want to do this from within a function, for example when
+calling <code>idenitfy</code> or <code>readline</code>. Use the
+function <code>bringToTop()</code>. With its default argument it
+brings the active graphics window to the top and gives it focus.
+With argument <code>-1</code> it brings the console to the top and
+gives it focus.</p>
+
+<p>This works for <code>Rgui.exe</code> in MDI and SDI modes, and
+can be used for graphics windows from <code>Rterm.exe</code>.</p>
 
 <hr>
 <a name="Workspaces"></a> 
@@ -834,8 +875,8 @@ file names to lower case) did not work. <a name=
 <h2>7.2 How do I include compiled C code?</h2>
 
 <p>We strongly encourage you to do this <em>via</em> building an R
-package: see the <em>Writing R Extensions</em> manual. In any event
-you should install the parts of the R system for building R
+package: see the <em>`Writing R Extensions'</em> manual. In any
+event you should install the parts of the R system for building R
 packages (in <code>SetupR.exe</code> or <code>rw1030sp.zip</code>),
 and get and install the tools (including Perl) and compilers
 mentioned in the file <code>readme.packages</code> contained
@@ -941,8 +982,8 @@ R as <code>extern "C"</code>.</p>
 
 <p>(b) Include the C++ libraries in the link to make the DLL.
 Suppose <code>X.cc</code> contains your C++ code, and <code>
-X_main.cc</code> is the wrapper, as in the example in `<em>Writing
-R Extensions</em>'. Then build the DLL by (<code>gcc</code>)</p>
+X_main.cc</code> is the wrapper, as in the example in <em>`Writing
+R Extensions'</em>. Then build the DLL by (<code>gcc</code>)</p>
 
 <pre>
 ...\bin\Rcmd SHLIB X.cc X_main.cc
@@ -1021,7 +1062,7 @@ upgrade your Perl version (5.6.1, build 626 was current at the time
 of writing).</p>
 
 <hr width="100%">
-<address>Last edited 2001 June 18 by Professor B. D. Ripley <code>
+<address>Last edited 2001 June 21 by Professor B. D. Ripley <code>
 <a href="mailto:ripley@stats.ox.ac.uk">
 ripley@stats.ox.ac.uk</a></code></address>
 </body>

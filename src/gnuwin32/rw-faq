@@ -22,6 +22,7 @@ Table of Contents
   2.9 What are HOME and working directories?
   2.10 R can't find my file, but I know it is there!
   2.11 Does R use the Registry?
+  2.12 Entering certain characters crashes Rgui.
 
 3 Packages
   3.1 Can I install packages (libraries) in this version?
@@ -36,6 +37,7 @@ Table of Contents
   4.1 What should I expect to behave differently from the Unix version of R?
   4.2 I hear about some nifty features: please tell me about them!
   4.3 Circles appear as ovals on screen
+  4.4 How do I more focus to a graphics window or the console?
 
 5 Workspaces
   5.1 My workspace gets saved in a strange place: how do I stop this?
@@ -86,9 +88,9 @@ files you need.  There are three possibilities.
 
 1) `SetupR.exe', is about 15Mb and gives a complete installation.
 
-2) Directory `miniR' contains `miniR.exe' and several files
-`miniR-?.bin'.  You can put  `miniR.exe' and `miniR-1.bin' on one
-floppy and the remaining `miniR-?.bin' on a floppy each.
+2) Directory `miniR' contains `miniR.exe' and six files `miniR-?.bin'.
+You can put  `miniR.exe' and `miniR-1.bin' on one floppy and the
+remaining `miniR-?.bin' on a floppy each.
 
 3) Via zip files in directory `zip'.  You will need at least the files
            rw1030b1.zip rw1030b2.zip
@@ -124,7 +126,7 @@ the `Start in' field to your working directory.
 You may also want to add command-line arguments at the end of the Target
 field, for example `--sdi --max-mem-size=40M'.  You can also set
 environment variables at the end of the Target field, for example
-`R_LIBS=e:/R/library'.
+`R_LIBS=p:/R/library'.
 
 2.3 How do I run it?
 ====================
@@ -236,15 +238,17 @@ Another possible source of grief is spaces in folder names.  We have
 tried to make R work on paths with spaces in, but lots of people writing
 packages for Unix do not bother.  So it is worth trying the alternative
 short name (something like `PROGRA~1'; you can get it as the `MS-DOS
-name' from the Properties on most versions of Windows).
+name' from the Properties of the file on most versions of Windows).
 
 2.11 Does R use the Registry?
 =============================
 
-Not itself.  The installers set some entries to allow uninstallation.
-In addition they set a Registry key `LOCAL_MACHINE\Software\R-core\R'
-giving the version and install path.  Again, this is not used by R
-itself, but it will be used by the DCOM interface
+Not itself.
+
+The installers set some entries to allow uninstallation.  In addition
+they set a Registry key `LOCAL_MACHINE\Software\R-core\R' giving the
+version and install path.  Again, this is not used by R itself, but it
+will be used by the DCOM interface
 (`http://cran.r-project.org/other-software.html').  Finally, a file
 association for extension `.RData' is set in the Registry.
 
@@ -252,6 +256,19 @@ You can add the Registry entries by running `RSetReg.exe' in the `bin'
 folder, and remove them by running this with argument `/U'.  Note that
 the settings are all per machine and not per user, and that this
 neither sets up nor removes the file associations.
+
+2.12 Entering certain characters crashes Rgui.
+==============================================
+
+This seems to happen occasionally, and all the occurrences we have
+solved have been traced to faulty versions of `msvcrt.dll'.  Try
+extracting the one to be found in the self-extracting archive
+`ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe' and put it in the
+`rw1030\bin' directory.  Removing `msvcrt.dll' from that directory
+reverts to the standard behaviour.
+
+This fix has solved other problems too, for example incorrect results in
+the date-time functions.
 
 
 3 Packages
@@ -280,7 +297,7 @@ unpack it in the parent of `rw1030'.  Then read the file
 to use this.  Once you have done so, just run `Rcmd INSTALL pkgname'.
 To check the package (including running all the examples on its help
 pages and in its test suite, if any) use `Rcmd check pkgname': see the
-`Writing R Extensions' manual.
+_`Writing R Extensions'_ manual.
 
 3.2 I don't have permission to write to the `rw1030\library' directory.
 =======================================================================
@@ -463,6 +480,18 @@ On one of our systems, the screen height is reported as 240mm, and the
 width as 300mm in 1280 x 1024 mode and 320mm in 1280 x 960 and 1600 x
 1200 modes.  In fact it is a 21" monitor and 400mm x 300mm!
 
+4.4 How do I more focus to a graphics window or the console?
+============================================================
+
+You may want to do this from within a function, for example when calling
+`idenitfy' or `readline'.  Use the function `bringToTop()'.  With its
+default argument it brings the active graphics window to the top and
+gives it focus.  With argument `-1' it brings the console to the top
+and gives it focus.
+
+This works for `Rgui.exe' in MDI and SDI modes, and can be used for
+graphics windows from `Rterm.exe'.
+
 
 5 Workspaces
 ************
@@ -560,8 +589,8 @@ case) did not work.
 =====================================
 
 We strongly encourage you to do this _via_ building an R package: see
-the _Writing R Extensions_ manual.  In any event you should install the
-parts of the R system for building R packages (in `SetupR.exe' or
+the _`Writing R Extensions'_ manual.  In any event you should install
+the parts of the R system for building R packages (in `SetupR.exe' or
 `rw1030sp.zip'), and get and install the tools (including Perl) and
 compilers mentioned in the file `readme.packages' contained therein.
 Then you can use
@@ -645,7 +674,7 @@ You need to do two things:
 
 (b) Include the C++ libraries in the link to make the DLL.  Suppose
 `X.cc' contains your C++ code, and `X_main.cc' is the wrapper, as in
-the example in `_Writing R Extensions_'.  Then build the DLL by (`gcc')
+the example in _`Writing R Extensions'_.  Then build the DLL by (`gcc')
 
      ...\bin\Rcmd SHLIB X.cc X_main.cc
 
@@ -707,6 +736,6 @@ more robust in this respect: it _may_ help to upgrade your Perl version
 
 
 
-Last edited 2001 June 18 by Professor B. D. Ripley
+Last edited 2001 June 21 by Professor B. D. Ripley
 <ripley@stats.ox.ac.uk>
 
