@@ -13,53 +13,31 @@
 \alias{signature}
 \alias{setReplaceMethod}
 \alias{callGeneric}
+%% FIXME:  These are basically not documented at all:
+%% -----  isGroup, setReplaceMethod, allGenerics
 \title{Tools for Managing Generic Functions}
 \description{
   The functions documented here manage collections of methods associated
   with a generic function, as well as providing information about the
   generic functions themselves.
 }
-\synopsis{
-isGeneric(f, where, fdef, getName = FALSE)
-isGroup(f, where, fdef)
-removeGeneric(f, where)
-dumpMethod(f, signature, file, where, def)
-findFunction(f, generic=TRUE, where)
-dumpMethods(f, file, signature, methods, where)
-signature(\dots)
-removeMethods(f, where, all)
-setReplaceMethod(f, \dots, where)
-getGenerics(where, searchForm = FALSE)
-allGenerics(where, searchForm = FALSE)
-callGeneric(\dots)
-}
 \usage{
 isGeneric(f, where, fdef, getName = FALSE)
-
 isGroup(f, where, fdef)
-
 removeGeneric(f, where)
-
 standardGeneric(f)
 
 dumpMethod(f, signature, file, where, def)
-
 findFunction(f, generic=TRUE)
-
 dumpMethods(f, file, signature, methods, where)
-
 signature(\dots)
 
 removeMethods(f, where)
-
 setReplaceMethod(f, \dots)
 
 getGenerics(where, searchForm = FALSE)
-
 allGenerics(where, searchForm = FALSE)
-
 callGeneric(\dots)
-
 }
 \section{Summary of Functions}{
   \describe{
@@ -96,9 +74,6 @@ callGeneric(\dots)
       \code{standardGeneric} anywhere except in the body of the
       corresponding generic function.
     }
-    \item{\code{getMethods}:}{
-      The list of methods for the specified generic.
-    }
     \item{\code{dumpMethod}:}{
       Dump the method for this generic function and signature.
     }
@@ -115,14 +90,6 @@ callGeneric(\dots)
       \code{findFunction} works correctly in the code for a package
       when attaching the package via a call to \code{\link{library}}.
     }
-    \item{\code{selectMethod}:}{
-      Returns the method (a function) that R would use to evaluate a
-      call to this generic, with arguments corresponding to the
-      specified signature.
-
-      \code{f} = the name of the generic function, \code{signature} is
-      the signature of classes to match to the arguments of \code{f}.
-    }
     \item{\code{dumpMethods}:}{
       Dump all the methods for this generic.
     }
@@ -130,20 +97,20 @@ callGeneric(\dots)
       Returns a named list of classes to be matched to arguments of a
       generic function.
     }
-      \item{\code{getGenerics}:}{ Returns the names of the generic
-          functions that have methods defined on \code{where}; this
-          argument can be an environment or an index into the search
-          list.  By default, the whole search list is used.
+    \item{\code{getGenerics}:}{ Returns the names of the generic
+      functions that have methods defined on \code{where}; this
+      argument can be an environment or an index into the search
+      list.  By default, the whole search list is used.
 
-          The methods definitions are stored with
-          package qualifiers; for example, methods for function
-          \code{"initialize"} might refer to two different functions
-          of that name, on different packages.  The package names
-          corresponding to the method list object are contained in the
-           slot \code{package} of the returned object.  The form of
-           the returned name can be plain (e.g., \code{"base"}), or in
-           the form used in the search list (\code{"package:base"})
-           according to the value of \code{searchForm}}
+      The methods definitions are stored with
+      package qualifiers; for example, methods for function
+      \code{"initialize"} might refer to two different functions
+      of that name, on different packages.  The package names
+      corresponding to the method list object are contained in the
+      slot \code{package} of the returned object.  The form of
+      the returned name can be plain (e.g., \code{"base"}), or in
+      the form used in the search list (\code{"package:base"})
+      according to the value of \code{searchForm}}
     \item{\code{callGeneric}:}{
       In the body of a method, this function will make a call to the
       current generic function.  If no arguments are passed to
@@ -236,29 +203,11 @@ callGeneric(\dots)
       \code{setMethod}) creates a function with a call to
       \code{standardGeneric}.
     }
-    \item{\code{getMethods}:}{
-      If the function is not a generic function, returns \code{NULL}.
-      The \code{f} argument can be either the character string name of
-      the generic or the object itself.
-
-      The \code{where} argument optionally says where to look for the
-      function, if \code{f} is given as the name.
-    }
     \item{\code{dumpMethod}:}{
       The resulting source file will recreate the method.
     }
     \item{\code{findFunction}:}{
       If \code{generic} is \code{FALSE}, ignore generic functions.
-    }
-    \item{\code{selectMethod}:}{
-      The vector of strings for the classes can be named or not.  If
-      named, the names must match formal argument names of \code{f}.  If
-      not named, the signature is assumed to apply to the arguments of
-      \code{f} in order.
-
-      If \code{mustFind} is \code{TRUE}, an error results if there is no
-      method (or no unique method) corresponding to this signature.
-      Otherwise may return \code{NULL} or a MethodsList object.
     }
     \item{\code{dumpMethods}:}{
       If \code{signature} is supplied only the methods matching this
@@ -301,6 +250,7 @@ callGeneric(\dots)
   pointers from that page.
 }
 \seealso{
+  \code{\link{getMethod}} (also for \code{selectMethod}),
   \code{\link{setGeneric}},
   \code{\link{setClass}},
   \code{\link{showMethods}}
