@@ -7,7 +7,7 @@
   (optionally) the expression or function from which it was called.
 }
 \usage{
-warning(\dots, call. = TRUE, immediate. = FALSE)
+warning(\dots, call. = TRUE, immediate. = FALSE, domain = NULL)
 suppressWarnings(expr)
 }
 \arguments{
@@ -18,6 +18,7 @@ suppressWarnings(expr)
   \item{immediate.}{logical, indicating if the call should be output
     immediately, even if \code{\link{getOption}(warn) = 0}.}
   \item{expr}{expression to evaluate.}
+  \item{domain}{see \code{\link{gettext}}.}
 }
 \details{
   The result \emph{depends} on the value of

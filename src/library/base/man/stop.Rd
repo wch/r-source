@@ -1,7 +1,7 @@
 \name{stop}
 \title{Stop Function Execution}
 \usage{
-stop(\dots, call. = TRUE)
+stop(\dots, call. = TRUE, domain = NULL)
 geterrmessage()
 }
 \alias{stop}
@@ -11,6 +11,7 @@ geterrmessage()
     separator), a condition object, or \code{NULL}.}
   \item{call.}{logical, indicating if the call should become part of the
     error message.}
+  \item{domain}{see \code{\link{gettext}}.}
 }
 \description{
   \code{stop} stops execution of the current expression and executes

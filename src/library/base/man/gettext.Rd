@@ -18,8 +18,8 @@ bindtextdomain(domain, dirname = NULL)
 }
 \details{
   If \code{domain} is \code{NULL} or \code{""}, a domain is searched for
-  based on the package or namespace which contains the function calling
-  \code{gettext}. If a suitable domain can be found, each character
+  based on the namespace which contains the function calling
+  \code{gettext}.  If a suitable domain can be found, each character
   string is offered for translation, and replaced by its translation
   into the current language if one is found.
 
