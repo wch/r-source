@@ -21,10 +21,13 @@ FILES="$@"
 #Dbg> echo "FILES=$FILES"; echo ; echo; exit
 
 ## 1) ---- Header ----
-echo ".ptime <- proc.time()"
-echo "postscript('All-Examples.ps')"
-echo '.pp <- par();.par.postscript <- .pp[-match(c("cin","cra","csi","din"),names(.pp))]'
-echo "iter <- 0; eigenval <- 1e-12"
+cat <<_EOF_
+.ptime <- proc.time()
+postscript('All-Examples.ps')
+.pp <- par()
+.par.postscript <- .pp[-match(c("cin","cra","csi","din"),names(.pp))]
+iter <- 0; eigenval <- 1e-12
+_EOF_
 ## 2) ---- edit a few of these files:
 for file in $FILES
 do
@@ -42,6 +45,7 @@ do
  if   [ $bf = 'on.exit' ];	then sed -e '$s/$/par(opar)/' $file
  elif [ $bf = 'alias' ];	then sed -e '/^library(/s/^/##Test: /' $file
  elif [ $bf = 'help' ];		then sed -e '/^help(topi/s/^/##Test: /' $file
+ elif [ $bf = 'help.start' ];	then sed -e '/^help/s/^/##Test: /' $file
  elif [ $bf = 'match.arg' ];	then sed -e '/^cent.*Error/s/^/##Test: /' $file
  elif [ $bf = 'menu'  ];	then sed -e '6,$s/^/##INTERACTIVE> /' $file
  elif [ $bf = 'na.fail' ];	then sed -e '/^na\.fail/s/^/##Test: /' $file
@@ -62,5 +66,7 @@ do
  fi
 done
 ## 3) ---- Footer ----
-echo 'cat("Time elapsed:\t", proc.time() - .ptime,"\n")'
-echo "dev.off(); quit('no')"
+cat <<_EOF_
+cat("Time elapsed:\t", proc.time() - .ptime,"\n")
+dev.off(); quit('no')
+_EOF_
