@@ -13,7 +13,7 @@ else
 all: Rpwd.exe rbuild rpackage rdocs
 endif
 
-PACKAGES = base ctest eda lqs methods modreg mva nls splines stepfun tools ts
+PACKAGES = base ctest eda grid lqs methods modreg mva nls splines stepfun tools ts
 ALLPACKAGES = $(PACKAGES) tcltk
 
 ## must be absolute and space-free paths
