@@ -6,6 +6,18 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
         lib <- .libPaths()[1]
         warning(paste("argument `lib' is missing: using", lib))
     }
+    inuse <- search()
+    inuse <- sub("^package:", "", inuse[grep("^package:", inuse)])
+    inuse <- pkgs %in% inuse
+    if(any(inuse)) {
+        if(sum(inuse) == 1)
+            warning("packages", pkgs[inuse],
+                    "is in use and will not be installed", call. = FALSE)
+        else
+            warning("packages", paste(pkgs[inuse], sep=", "),
+                    "are in use and will not be installed", call. = FALSE)
+        pkgs <- pkgs[!inuse]
+    }
     if(is.null(CRAN) & missing(contriburl)) {
         for(pkg in pkgs) zip.unpack(pkg, lib)
         link.html.help(verbose=TRUE)
