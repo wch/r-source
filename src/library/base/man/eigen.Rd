@@ -20,7 +20,8 @@ This function provides an interface to the EISPACK routines
 \value{
 The spectral decomposition of \code{x} is returned
 as components of a list. 
-\item{values}{a vector containing the eigenvalues of \code{x}.}
+\item{values}{a vector containing the eigenvalues of \code{x}, sorted
+  \emph{decreasingly}, according to \code{Mod(values)} if they are complex.}
 \item{vectors}{a matrix whose columns contain the eigenvectors of \code{x}.}
 }
 \references{
@@ -30,5 +31,19 @@ V. Klema, C. B. Moler (1976).
 Springer-Verlag Lecture Notes in Computer Science.
 }
 \seealso{
-\code{\link{svd}}, \code{\link{qr}}.
+\code{\link{svd}}, a generalization of \code{eigen}; \code{\link{qr}}, and
+\code{\link{chol}} for related decompositions.
 }
+\examples{
+eigen(cbind(c(1,-1),c(-1,1)))
+eigen(cbind(c(1,-1),c(-1,1)), symmetric = FALSE)# same (different algorithm).
+
+eigen(cbind(1,c(1,-1)), only.values = TRUE)
+eigen(cbind(-1,2:1)) # complex values
+eigen(print(cbind(c(0,1i), c(-1i,0))))# Hermite ==> real Eigen values
+## 3 x 3:
+eigen(cbind( 1,3:1,1:3))
+eigen(cbind(-1,c(1:2,0),0:2)) # complex values
+}
+\keyword{algebra}
+\keyword{array}
