@@ -750,11 +750,9 @@ void PrintValueEnv(SEXP s, SEXP env)
     if(isObject(s)) {
 	/* The intention here is call show() on S4 objects, otherwise
 	   print(), so S4 methods for show() have precedence over those for
-	   print().  Some S3 classes extend oldClass and so will be 
-	   sent to show, but those which do not are not handled correctly
-	   as yet.
+	   print(). We decided not to do this, at least for now
 	*/
-        /* if(isMethodsDispatchOn()) {
+        /*if(isMethodsDispatchOn()) {
 	    SEXP class = getAttrib(s, R_ClassSymbol);
 	    if(length(class) == 1) {
 		char str[201];
@@ -762,7 +760,7 @@ void PrintValueEnv(SEXP s, SEXP env)
 		if(findVar(install(str), env) != R_UnboundValue)
 		    autoprint = "show";
 	    }
-	} */
+	}*/
 	PROTECT(call = lang2(install(autoprint), s));
 	eval(call, env);
 	UNPROTECT(1);
