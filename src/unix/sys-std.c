@@ -676,7 +676,7 @@ static int OldTimeout;
 static void (* OldHandler)(void);
 
 
-#ifdef HAVE_TIMES
+#ifdef _R_HAVE_TIMING_
 # include <time.h>
 # ifdef HAVE_SYS_TIMES_H
 #  include <sys/times.h>
@@ -733,10 +733,10 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-#else /* not HAVE_TIMES */
+#else /* not _R_HAVE_TIMING_ */
 SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     error("Sys.sleep is not implemented on this system");
     return R_NilValue;		/* -Wall */
 }
-#endif /* not HAVE_TIMES */
+#endif /* not _R_HAVE_TIMING_ */

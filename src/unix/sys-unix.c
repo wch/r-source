@@ -125,7 +125,7 @@ SEXP do_machine(SEXP call, SEXP op, SEXP args, SEXP env)
     return mkString("Unix");
 }
 
-#ifdef HAVE_TIMES
+#ifdef _R_HAVE_TIMING_
 # include <time.h>
 # ifdef HAVE_SYS_TIMES_H
 #  include <sys/times.h>
@@ -170,7 +170,13 @@ SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
     R_getProcTime(REAL(ans));
     return ans;
 }
-#endif /* HAVE_TIMES */
+#else /* not _R_HAVE_TIMING_ */
+SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    error("proc.time is not implemented on this system");
+    return R_NilValue;		/* -Wall */
+}
+#endif /* not _R_HAVE_TIMING_ */
 
 
 SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)

@@ -103,7 +103,7 @@ SEXP do_machine(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #include <windows.h>
 
-#ifdef HAVE_TIMES
+#ifdef _R_HAVE_TIMING_
 
 static DWORD StartTime;
 
@@ -162,7 +162,7 @@ SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
     R_getProcTime(REAL(ans));
     return ans;
 }
-#endif /* HAVE_TIMES */
+#endif /* _R_HAVE_TIMING_ */
 
 /*
  * flag =0 don't wait/ignore stdout

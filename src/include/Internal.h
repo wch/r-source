@@ -199,6 +199,7 @@ SEXP do_formals(SEXP, SEXP, SEXP, SEXP);
 SEXP do_function(SEXP, SEXP, SEXP, SEXP);
 SEXP do_gc(SEXP, SEXP, SEXP, SEXP);
 SEXP do_gcinfo(SEXP, SEXP, SEXP, SEXP);
+SEXP do_gctime(SEXP, SEXP, SEXP, SEXP);
 SEXP do_gctorture(SEXP, SEXP, SEXP, SEXP);
 SEXP do_get(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
@@ -302,10 +303,7 @@ SEXP do_primitive(SEXP, SEXP, SEXP, SEXP);
 SEXP do_printdefault(SEXP, SEXP, SEXP, SEXP);
 SEXP do_printdf(SEXP, SEXP, SEXP, SEXP);
 SEXP do_printmatrix(SEXP, SEXP, SEXP, SEXP);
-#ifdef HAVE_TIMES
 SEXP do_proctime(SEXP, SEXP, SEXP, SEXP);
-SEXP do_gctime(SEXP, SEXP, SEXP, SEXP);
-#endif
 SEXP do_putenv(SEXP, SEXP, SEXP, SEXP);
 SEXP do_psort(SEXP, SEXP, SEXP, SEXP);
 SEXP do_qsort(SEXP, SEXP, SEXP, SEXP);

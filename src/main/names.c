@@ -490,10 +490,8 @@ FUNTAB R_FunTab[] =
 
 /* Miscellaneous */
 
-#ifdef HAVE_TIMES
 {"proc.time",	do_proctime,	0,	1,	0,	PP_FUNCALL},
 {"gc.time",	do_gctime,	0,	1,	0,	PP_FUNCALL},
-#endif
 {"Version",	do_version,	0,	11,	0,	PP_FUNCALL},
 {"machine",	do_machine,	0,	11,	0,	PP_FUNCALL},
 {"Machine",	do_Machine,	0,	11,	0,	PP_FUNCALL},

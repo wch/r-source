@@ -482,7 +482,7 @@ int Mac_initialize_R(int ac, char **av)
 
     IsFrameWorkLoaded = CanLoadFrameWork();
 
-#ifdef HAVE_TIMES
+#ifdef _R_HAVE_TIMING_
     R_setStartTime();
 #endif
     R_DefParams(Rp);
@@ -675,7 +675,7 @@ void R_RestoreGlobalEnv(void)
 
 
 	/*--- Platform Dependent Functions ---*/
-#ifdef HAVE_TIMES
+#ifdef _R_HAVE_TIMING_
 #include <time.h>
 
 static clock_t StartTime;
@@ -707,7 +707,7 @@ SEXP do_proctime(SEXP call, SEXP op, SEXP args, SEXP env)
     R_getProcTime(REAL(ans));
     return ans;
 }
-#endif /* HAVE_TIMES */   
+#endif /* _R_HAVE_TIMING_ */
    
 SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
 {

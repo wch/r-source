@@ -167,6 +167,13 @@ extern int vsnprintf (char *str, size_t count, const char *fmt, va_list arg);
 # define LONGJMP(x,i) longjmp(x,i)
 #endif
 
+/* Availability of timing: on Unix, we need times(2).
+   On Windows and the Mac, we can do without.
+*/
+#if (defined(HAVE_TIMES) || defined(Win32) || defined(Macintosh))
+# define _R_HAVE_TIMING_ 1
+#endif
+
 #include "R_ext/Rdynload.h"
 
 #define HSIZE	   4119	/* The size of the hash table for symbols */
@@ -381,9 +388,9 @@ FUNTAB	R_FunTab[];	    /* Built in functions */
 #include <R_ext/libextern.h>
 
 #ifdef __MAIN__
-#define INI_as(v) = v
+# define INI_as(v) = v
 #else
-#define INI_as(v)
+# define INI_as(v)
 #endif
 
 /* Formerly in Arith.h */
@@ -480,102 +487,100 @@ SEXP R_do_slot(SEXP obj, SEXP name);
 SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value);
 
 #ifdef __MAIN__
-#undef extern
-#undef LibExtern
+# undef extern
+# undef LibExtern
 #endif
 #undef INI_as
-
-
 
 
 /*--- FUNCTIONS ------------------------------------------------------ */
 
 #ifndef R_NO_REMAP
-#define begincontext		Rf_begincontext
-#define checkArity		Rf_checkArity
-#define CheckFormals		Rf_CheckFormals
-#define CleanEd			Rf_CleanEd
-#define DataFrameClass		Rf_DataFrameClass
-#define ddfindVar		Rf_ddfindVar
-#define deparse1		Rf_deparse1
-#define deparse1line		Rf_deparse1line
-#define DispatchGroup		Rf_DispatchGroup
-#define DispatchOrEval		Rf_DispatchOrEval
-#define duplicated		Rf_duplicated
-#define dynamicfindVar		Rf_dynamicfindVar
-#define endcontext		Rf_endcontext
-#define errorcall		Rf_errorcall
-#define ErrorMessage		Rf_ErrorMessage
-#define factorsConform		Rf_factorsConform
-#define FetchMethod		Rf_FetchMethod
-#define findcontext		Rf_findcontext
-#define findVar1		Rf_findVar1
-#define FrameClassFix		Rf_FrameClassFix
-#define framedepth		Rf_framedepth
-#define frameSubscript		Rf_frameSubscript
-#define get1index		Rf_get1index
-#define getVar			Rf_getVar
-#define getVarInFrame		Rf_getVarInFrame
-#define hashpjw			Rf_hashpjw
-#define InheritsClass		Rf_InheritsClass
-#define InitArithmetic		Rf_InitArithmetic
-#define InitColors		Rf_InitColors
-#define InitConnections		Rf_InitConnections
-#define InitEd			Rf_InitEd
-#define InitFunctionHashing	Rf_InitFunctionHashing
-#define InitGlobalEnv		Rf_InitGlobalEnv
-#define InitMemory		Rf_InitMemory
-#define InitNames		Rf_InitNames
-#define InitOptions		Rf_InitOptions
-#define initStack		Rf_initStack
-#define internalTypeCheck	Rf_internalTypeCheck
-#define isValidName		Rf_isValidName
-#define jump_to_toplevel	Rf_jump_to_toplevel
-#define levelsgets		Rf_levelsgets
-#define mainloop		Rf_mainloop
-#define mat2indsub		Rf_mat2indsub
-#define match			Rf_match
-#define mkCLOSXP		Rf_mkCLOSXP
-#define mkComplex              	Rf_mkComplex
-#define mkFalse			Rf_mkFalse
-#define mkFloat			Rf_mkFloat
-#define mkNA			Rf_mkNA
-#define mkPROMISE		Rf_mkPROMISE
-#define mkQUOTE			Rf_mkQUOTE
-#define mkSYMSXP		Rf_mkSYMSXP
-#define mkTrue			Rf_mkTrue
-#define NewEnvironment		Rf_NewEnvironment
-#define OneIndex		Rf_OneIndex
-#define onintr			Rf_onintr
-#define onsigusr1               Rf_onsigusr1
-#define onsigusr2               Rf_onsigusr2
-#define parse			Rf_parse
-#define PrintGreeting		Rf_PrintGreeting
-#define PrintVersion		Rf_PrintVersion
-#define PrintWarnings		Rf_PrintWarnings
-#define promiseArgs		Rf_promiseArgs
-#define RemoveClass		Rf_RemoveClass
-#define setVarInFrame		Rf_setVarInFrame
-#define sortVector		Rf_sortVector
-#define ssort			Rf_ssort
-#define str2type		Rf_str2type
-#define StrToInternal		Rf_StrToInternal
-#define substituteList		Rf_substituteList
-#define tsConform		Rf_tsConform
-#define tspgets			Rf_tspgets
-#define type2str		Rf_type2str
-#define type2symbol		Rf_type2symbol
-#define unbindVar		Rf_unbindVar
-#define usemethod		Rf_usemethod
-#define warningcall		Rf_warningcall
-#define WarningMessage		Rf_WarningMessage
-#define yyerror			Rf_yyerror
-#define yyinit			Rf_yyinit
-#define yylex			Rf_yylex
-#define yyparse			Rf_yyparse
-#define yyprompt		Rf_yyprompt
-#define yywrap			Rf_yywrap
-#endif
+# define begincontext		Rf_begincontext
+# define checkArity		Rf_checkArity
+# define CheckFormals		Rf_CheckFormals
+# define CleanEd		Rf_CleanEd
+# define DataFrameClass		Rf_DataFrameClass
+# define ddfindVar		Rf_ddfindVar
+# define deparse1		Rf_deparse1
+# define deparse1line		Rf_deparse1line
+# define DispatchGroup		Rf_DispatchGroup
+# define DispatchOrEval		Rf_DispatchOrEval
+# define duplicated		Rf_duplicated
+# define dynamicfindVar		Rf_dynamicfindVar
+# define endcontext		Rf_endcontext
+# define errorcall		Rf_errorcall
+# define ErrorMessage		Rf_ErrorMessage
+# define factorsConform		Rf_factorsConform
+# define FetchMethod		Rf_FetchMethod
+# define findcontext		Rf_findcontext
+# define findVar1		Rf_findVar1
+# define FrameClassFix		Rf_FrameClassFix
+# define framedepth		Rf_framedepth
+# define frameSubscript		Rf_frameSubscript
+# define get1index		Rf_get1index
+# define getVar			Rf_getVar
+# define getVarInFrame		Rf_getVarInFrame
+# define hashpjw		Rf_hashpjw
+# define InheritsClass		Rf_InheritsClass
+# define InitArithmetic		Rf_InitArithmetic
+# define InitColors		Rf_InitColors
+# define InitConnections	Rf_InitConnections
+# define InitEd			Rf_InitEd
+# define InitFunctionHashing	Rf_InitFunctionHashing
+# define InitGlobalEnv		Rf_InitGlobalEnv
+# define InitMemory		Rf_InitMemory
+# define InitNames		Rf_InitNames
+# define InitOptions		Rf_InitOptions
+# define initStack		Rf_initStack
+# define internalTypeCheck	Rf_internalTypeCheck
+# define isValidName		Rf_isValidName
+# define jump_to_toplevel	Rf_jump_to_toplevel
+# define levelsgets		Rf_levelsgets
+# define mainloop		Rf_mainloop
+# define mat2indsub		Rf_mat2indsub
+# define match			Rf_match
+# define mkCLOSXP		Rf_mkCLOSXP
+# define mkComplex              Rf_mkComplex
+# define mkFalse		Rf_mkFalse
+# define mkFloat		Rf_mkFloat
+# define mkNA			Rf_mkNA
+# define mkPROMISE		Rf_mkPROMISE
+# define mkQUOTE		Rf_mkQUOTE
+# define mkSYMSXP		Rf_mkSYMSXP
+# define mkTrue			Rf_mkTrue
+# define NewEnvironment		Rf_NewEnvironment
+# define OneIndex		Rf_OneIndex
+# define onintr			Rf_onintr
+# define onsigusr1              Rf_onsigusr1
+# define onsigusr2              Rf_onsigusr2
+# define parse			Rf_parse
+# define PrintGreeting		Rf_PrintGreeting
+# define PrintVersion		Rf_PrintVersion
+# define PrintWarnings		Rf_PrintWarnings
+# define promiseArgs		Rf_promiseArgs
+# define RemoveClass		Rf_RemoveClass
+# define setVarInFrame		Rf_setVarInFrame
+# define sortVector		Rf_sortVector
+# define ssort			Rf_ssort
+# define str2type		Rf_str2type
+# define StrToInternal		Rf_StrToInternal
+# define substituteList		Rf_substituteList
+# define tsConform		Rf_tsConform
+# define tspgets		Rf_tspgets
+# define type2str		Rf_type2str
+# define type2symbol		Rf_type2symbol
+# define unbindVar		Rf_unbindVar
+# define usemethod		Rf_usemethod
+# define warningcall		Rf_warningcall
+# define WarningMessage		Rf_WarningMessage
+# define yyerror		Rf_yyerror
+# define yyinit			Rf_yyinit
+# define yylex			Rf_yylex
+# define yyparse		Rf_yyparse
+# define yyprompt		Rf_yyprompt
+# define yywrap			Rf_yywrap
+#endif /* not R_NO_REMAP */
 
 /* Platform Dependent Gui Hooks */
 
@@ -749,10 +754,10 @@ int yywrap(void);
     sigprocmask(SIG_BLOCK, &mask, &omask);
 # define END_SUSPEND_INTERRUPTS sigprocmask(SIG_SETMASK, &omask, &mask); \
     } while(0)
-#else
+#else /* not HAVE_POSIX_SETJMP */
 # define BEGIN_SUSPEND_INTERRUPTS do {
 # define END_SUSPEND_INTERRUPTS } while (0)
-#endif /* HAVE_POSIX_SETJMP */
+#endif /* not HAVE_POSIX_SETJMP */
 
 #endif /* DEFN_H_ */
 /*

@@ -1791,7 +1791,7 @@ void R_gc(void)
     R_gc_internal(0);
 }
 
-#ifdef HAVE_TIMES
+#ifdef _R_HAVE_TIMING_
 double R_getClockIncrement(void);
 void R_getProcTime(double *data);
 
@@ -1799,27 +1799,33 @@ static double gctimes[5], gcstarttimes[5];
 
 SEXP do_gctime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-  SEXP ans;
-  ans = allocVector(REALSXP, 5);
-  REAL(ans)[0] = gctimes[0];
-  REAL(ans)[1] = gctimes[1];
-  REAL(ans)[2] = gctimes[2];
-  REAL(ans)[3] = gctimes[3];
-  REAL(ans)[4] = gctimes[4];
-  return ans;
+    SEXP ans;
+    ans = allocVector(REALSXP, 5);
+    REAL(ans)[0] = gctimes[0];
+    REAL(ans)[1] = gctimes[1];
+    REAL(ans)[2] = gctimes[2];
+    REAL(ans)[3] = gctimes[3];
+    REAL(ans)[4] = gctimes[4];
+    return ans;
 }
-#endif /* HAVE_TIMES */
+#else /* not _R_HAVE_TIMING_ */
+SEXP do_gctime(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    error("gc.time is not implemented on this system");
+    return R_NilValue;		/* -Wall */
+}
+#endif /* not _R_HAVE_TIMING_ */
 
 static void gc_start_timing(void)
 {
-#ifdef HAVE_TIMES
+#ifdef _R_HAVE_TIMING_
     R_getProcTime(gcstarttimes);
-#endif /* HAVE_TIMES */
+#endif /* _R_HAVE_TIMING_ */
 }
 
 static void gc_end_timing(void)
 {
-#ifdef HAVE_TIMES
+#ifdef _R_HAVE_TIMING_
     double times[5], delta;
     R_getProcTime(times);
     delta = R_getClockIncrement();
@@ -1830,7 +1836,7 @@ static void gc_end_timing(void)
     gctimes[2] += times[2] - gcstarttimes[2] + delta;
     gctimes[3] += times[3] - gcstarttimes[3];
     gctimes[4] += times[4] - gcstarttimes[4];
-#endif /* HAVE_TIMES */
+#endif /* _R_HAVE_TIMING_ */
 }
 
 static void R_gc_internal(int size_needed)

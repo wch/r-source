@@ -345,7 +345,7 @@
 #undef HAVE_TCLTK
 
 /* Define if you have the `times' function. */
-#define HAVE_TIMES 1
+#undef HAVE_TIMES
 
 /* Define if you have the <unistd.h> header file. */
 #ifndef __MRC__

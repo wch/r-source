@@ -339,8 +339,7 @@
 #define HAVE_TCLTK 1
 
 /* Define if you have the `times' function. */
-#define HAVE_TIMES 1
-/* really means have timing capabilities */
+/* #undef HAVE_TIMES */
 
 /* Define if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1

@@ -126,7 +126,7 @@ int Rf_initialize_R(int ac, char **av)
 
     process_system_Renviron();
 
-#ifdef HAVE_TIMES
+#ifdef _R_HAVE_TIMING_
     R_setStartTime();
 #endif
     R_DefParams(Rp);
