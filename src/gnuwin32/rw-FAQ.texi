@@ -90,7 +90,7 @@ that version. The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@code{rw1000} or later); the current version is often called something like
+(@code{rw1020} or later); the current version is often called something like
 @code{@value{VERSION}} (although not officially).
 
 
@@ -181,7 +181,7 @@ It depends what you want to print.
 @item You can print the graphics window from its menu or by using
 @code{dev.print()}.
 @item You can print from the R console or pager by @code{File | Print}.
-(As of @code{rw1020} this will print the selection if there is one,
+(This will print the selection if there is one,
 otherwise the whole console or pager contents.)
 @item You can print help files from the pager or HTML browser.
 @item If you have configured @code{RHOME\bin\helpPRINT.bat} and have
@@ -204,7 +204,7 @@ path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out
 @node Can I use rwXxxx with ESS and emacs?, What are HOME and working directories?, Can I use R BATCH?, Installation and Usage
 @section Can I use rwXxxx with ESS and emacs?
 
-Yes. The latest versions of ESS (e.g. 5.1.16) come with support for this
+Yes. The latest versions of ESS (e.g. 5.1.18) come with support for this
 version of R, and there is support for interrupting the R process from
 ESS (by @code{C-c C-c}).
 
@@ -242,7 +242,7 @@ You can find this from R code by @code{Sys.getenv("R_USER")}.
 * I don't have permission to write to the rwXxxx/library directory::  
 * The packages I installed do not appear in the HTML help system::  
 * My functions are not found by the HTML help search system.::  
-* Package TclTk does not work::  
+* Package TclTk does not work.::  
 @end menu
 
 @node Can I install packages (libraries) in this version?, I don't have permission to write to the rwXxxx/library directory, Packages, Packages
@@ -337,23 +337,22 @@ make indices
 instead.)
 
 
-@node My functions are not found by the HTML help search system., Package TclTk does not work, The packages I installed do not appear in the HTML help system, Packages
+@node My functions are not found by the HTML help search system., Package TclTk does not work., The packages I installed do not appear in the HTML help system, Packages
 @section My functions are not found by the HTML help search system.
 
 The following conditions need to hold for functions in a package you installed.
 
 @itemize @bullet
 @item the package is installed in @file{rwXxxx\library}.
-@item the package contains a @file{CONTENTS} file in top-level directory
-(a few of the binary distributions do not).
+@item the package contains a @file{CONTENTS} file in top-level directory.
 @item you updated the indices as described in the answer to Q3.3 after
 installing the package.
 @end itemize
 @noindent
 If those all hold true, this works for us.
 
-@node Package TclTk does not work,  , My functions are not found by the HTML help search system., Packages
-@section Package TclTk does not work
+@node Package TclTk does not work.,  , My functions are not found by the HTML help search system., Packages
+@section Package TclTk does not work.
 
 For package tcltk to work (try @code{demo(tkdensity)} or @code{demo(tkttest)})
 you need to have Tcl installed.  Download @file{tcl832.exe} (or use
@@ -430,8 +429,8 @@ The R console and graphics windows have configuration files stored in
 the @file{RHOME\etc} directory called @file{Rconsole} and @file{Rdevga};
 you can keep personal copies in your @file{HOME} directory. They contain
 comments which should suffice for you to edit them to your
-preferences. For more details see @code{?Rconsole}.  From @code{rw1010}
-there is a Preferences editor invoked from the @code{Edit} menu which
+preferences. For more details see @code{?Rconsole}.
+There is a Preferences editor invoked from the @code{Edit} menu which
 can be used to edit the file @file{Rconsole}.
 
 @newchap{}
@@ -707,14 +706,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2000 November 1 by Brian Ripley
+Last edited 2000 November 18 by Brian Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2000 November 1 by Brian Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2000 November 18 by Brian Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

@@ -18,9 +18,8 @@ cygwin distribution (http://sources.redhat.com/cygwin/mirrors.html) or
 (gzip, tar) compiled from the sources.
 
 BEWARE: `Native' ports of make are _not_ suitable (including that at
-the mingw32 site), and the 18 Jan 2000 cygwin port of make crashes
-when building packages.  There are also problems with several earlier
-versions of the cygwin1.dll and we have used version 1.1.4.  To avoid
+the mingw32 site).  There are also problems with several earlier
+versions of the cygwin1.dll and we have used version 1.1.6.  To avoid
 frustration, please use our tool set.
 
 
@@ -31,11 +30,14 @@ gives more precise instructions.)  As R itself is built against
 msvcrt.dll, we recommend that you use that version of the compilers.
 
 It may also be possible to use the compilers from the cygwin 1.1 net
-release with the -mno-cygwin flag.  (You will need the cygwin*, gcc*
-and binutils* bundles. You will need to ensure that you have only one
-version of cygwin1.dll in your path, and there is one in our tools
-distribution.)  You can no longer use earlier versions of cygwin,
-and you cannot take advantage of msvcrt.dll this way.
+release with the -mno-cygwin flag.  (You will need the cygwin, gcc,
+mingw32, w32api and binutils bundles. You will need to ensure that
+you have only one version of cygwin1.dll in your path, and there is
+one in our tools distribution.)  You can no longer use earlier
+versions (e.g. b20) of cygwin, and you cannot take advantage of
+msvcrt.dll this way.  You most likely cannot build addons using C++
+with cygwin, as cygwin does not provide mingw versions of the C++
+libraries.
 
 
 perl5, available via http://www.activestate.com/Products/ActivePerl/
@@ -60,6 +62,8 @@ All of these need to be installed and in your path, and the
 appropriate environment variables set.  Edit MkRules to set BUILD and
 the appropriate paths as needed.  (IMPORTANT: if you use cygwin you
 must edit MkRules and set BUILD=CYGWIN.)
+
+BEWARE: if you have Norton Anti-Virus you may need to disable it.
 
 Then
 
@@ -256,7 +260,7 @@ they must be equivalent to the C type char** and null-terminated.  Not
 even the mingw32 g77 Fortran uses null-terminated strings.
 
 WARNING: DLLs made with some compilers reset the FPU in their startup
-code (Delphi is one), and this will cause operations such as 0./0.  to
+code (Delphi is one), and this will cause operations such as 0./0. to
 crash R.  You can re-set the FPU to the correct values by a call to
 the C entry point Rwin_fpset().
 
@@ -269,8 +273,9 @@ can be omitted.
 
 You will need 
 
-suitable versions of make, sh, rm, sed, awk, mkdir, echo, cp and cat;
-we have packaged a set at http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
+suitable versions of Unix tools including make, sh, rm, sed, awk,
+mkdir, echo, cp and cat; we have packaged a set at
+http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
 
 perl5, available via http://www.activestate.com/Products/ActivePerl/
 
