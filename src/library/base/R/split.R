@@ -33,8 +33,8 @@ split.data.frame <- function(x, f) {
     x
 }
 
-unsplit <- function(v, f) {
-    x <- vector(mode=typeof(v[[1]]), length=length(f))
-    split(x, f) <- v
+unsplit <- function(value, f) {
+    x <- vector(mode=typeof(value[[1]]), length=length(f))
+    split(x, f) <- value
     x
 }
