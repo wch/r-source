@@ -95,7 +95,7 @@ install: installdirs
 ## Add gnome/*.la when using libtool for shlibs
 	@if test -f gnome/R_gnome.$(SHLIB_EXT); then \
 	  $(MKINSTALLDIRS) $(rhome)/gnome; \
-	  for f in `ls gnome/*.$(SHLIB_EXT) gnome/*.la`; do \
+	  for f in `ls gnome/*.$(SHLIB_EXT)`; do \
 	    $(INSTALL_PROGRAM) $${f} $(rhome)/gnome; \
 	  done; \
 	fi
