@@ -64,7 +64,7 @@ lm.fit <- function (x, y, method = "qr", tol = 1e-07, ...)
 		coef[-r1, ] <- NA
 		coef[pivot, ] <- coef
 		dimnames(coef) <- list(dimnames(x)[[2]], dimnames(y)[[2]])
-		dimnames(z$effects)[1] <- list(NULL)
+                rownames(z$effects) <- NULL
 	}
 	else {
 		coef[-r1] <- NA
