@@ -1,4 +1,4 @@
-p\input texinfo
+\input texinfo
 @c %**start of header
 @setfilename R-data.info
 @settitle R Data Import/Export
