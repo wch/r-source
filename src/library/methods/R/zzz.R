@@ -1,5 +1,3 @@
-.conflicts.OK <- TRUE
-
 .First.lib  <-
   ## Initialize the methods library:  the session table of method
   ## definitions.
