@@ -347,7 +347,7 @@ SEXP duplicated(SEXP x)
     HashData data;
 
     if (!isVector(x)) 
-	error(_("duplicatd applies only to vectors"));
+	error(_("'duplicated' applies only to vectors"));
 
     n = LENGTH(x);
     HashTableSetup(x, &data);
