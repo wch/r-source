@@ -65,7 +65,7 @@ extern double	R_NaReal;	/* NA_REAL */
 #define NA_REAL		R_NaReal
 #define NA_STRING	R_NaString
 
-#ifdef IEEE_754
+#ifdef IEEE_754    /* -----  Assuming have IEEE 754 ---------------- */
 
  int R_IsNA(double);		/* True for Real NA only */
  int R_IsNaN(double);		/* True for special NaN, *not* for NA */
@@ -81,7 +81,8 @@ extern double	R_NaReal;	/* NA_REAL */
         return FINITE(x);	/* NOTE: macro does not work.  */
     }
 #  else
-#   define R_FINITE(x)		((x) != R_NaReal)
+static int R_FINITE(double x) {
+    return !isnan(x) & (x != R_PosInf) & (x != R_NegInf);}
 #  endif
 # endif
 
@@ -91,7 +92,7 @@ extern double	R_NaReal;	/* NA_REAL */
 				   TRUE. */
 # define ISNA(x)		R_IsNA(x) /* from ../main/arithmetic.c */
 
-#else
+#else    /* ---------------- NOT IEEE 754 ---------------- */
 
 # define MATH_CHECK(call)	(errno=0,R_tmp=call,(errno==0)?R_tmp:R_NaN)
 /* /usr/include/sys/errno.h (Solaris 2.5) has
@@ -113,6 +114,6 @@ extern double	R_NaReal;	/* NA_REAL */
 
 # define ISNA(x)		((x) == R_NaReal)
 
-# endif
+# endif    /* ---------------- End of  IEEE 754 or not ---------------- */
 
 #endif
