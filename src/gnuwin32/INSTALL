@@ -245,9 +245,7 @@ will not be able to cross-build .chm or .hlp files, nor Rchtml.dll,
 so set WINHELP to NO.)
 
 Packages can be made in the same way as natively: see the file
-readme.packages.  You will need to set STAMP=NO, e.g.
-
-	make STAMP=NO pkg-foo
+readme.packages.
 
 Note that cross-building does still need libR.a, and that to
 cross-build the methods package you need a working copy of this

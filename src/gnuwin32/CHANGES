@@ -13,6 +13,8 @@ quantreg amongst those on CRAN) need to be re-built.  The advantage is
 that less space is taken up overall, and ATLAS can be used just by
 rebuilding Rblas.dll.
 
+Cross-building automatically uses STAMP=NO for packages.
+
 
 
 rw1040
