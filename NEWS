@@ -6,6 +6,11 @@
 	**************************************************
 
 
+BUG FIXES   in  VERSION "1.1.1 patched"
+
+    o	symbols() now allows user specification of xlim or ylim
+
+
 		CHANGES IN R VERSION 1.1.1
 
 
@@ -36,7 +41,7 @@ NEW FEATURES
 
     o   Symbols can now be coerced to expressions, making
 	as.expression(quote(a)) work
-        
+
 
 BUG FIXES
 
