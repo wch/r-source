@@ -37,6 +37,6 @@ diag <- function(x = 1, nrow, ncol = n)
     i <- seq(length=min(dx))
     if(length(value) != 1 && length(value) != length(i))
 	stop("replacement diagonal has wrong length")
-    x[cbind(i, i)] <- value
+    if(length(i) > 0) x[cbind(i, i)] <- value
     x
 }
