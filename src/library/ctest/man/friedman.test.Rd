@@ -46,6 +46,9 @@ friedman.test(y, groups, blocks)
   New York: John Wiley & Sons.
   Pages 139--146.
 }
+\seealso{
+  \code{\link{quade.test}}.
+}
 \examples{
 ## Hollander & Wolfe (1973), p. 140ff.
 ## Comparison of three methods (``round out'', ``narrow angle'', and
