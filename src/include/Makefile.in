@@ -20,10 +20,12 @@ R_EXT_HEADERS = Applic.h Arith.h Complex.h Constants.h Error.h \
 OBJ_HEADERS = Rconfig.h Rversion.h # config.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+## FIXME: get this right when restructuring is done!
 DISTFILES = Makefile.in README \
 	Defn.h Fileio.h Graphics.h IOStuff.h Parse.h Print.h Startup.h \
 	$(SRC_HEADERS) \
 	config.h.in
+SUBDIRS = R_ext
 
 all: Makefile R
 
@@ -33,12 +35,14 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  $(SHELL) ./config.status
 
 R: Makefile config.h Rconfig.h Rversion.h FFDecl.h FFTab.h
-	@$(MKINSTALLDIRS) $(top_builddir)/include $(top_builddir)/include/R_ext
+	@$(MKINSTALLDIRS) $(top_builddir)/include
+	@$(MKINSTALLDIRS) $(top_builddir)/include/R_ext
 	@for f in $(SRC_HEADERS); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} $(top_builddir)/include; \
 	done
 	@for f in $(R_EXT_HEADERS); do \
-	  $(INSTALL_DATA) $(srcdir)/R_ext/$$f $(top_builddir)/include/R_ext; \
+	  $(INSTALL_DATA) $(srcdir)/R_ext/$${f} \
+	    $(top_builddir)/include/R_ext; \
 	done
 	@for f in $(OBJ_HEADERS); do \
 	  $(INSTALL_DATA) $${f} $(top_builddir)/include; \
@@ -49,7 +53,6 @@ config.h: $(top_srcdir)/configure $(srcdir)/config.h.in
 	@touch $@
 Rconfig.h: $(top_srcdir)/VERSION config.h
 	@$(top_srcdir)/tools/GETCONFIG > $@
-
 Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	@$(top_srcdir)/tools/GETVERSION > $@
 
@@ -70,4 +73,11 @@ distdir: $(DISTFILES)
 	  test -f $(distdir)/$${f} \
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+	@for d in $(SUBDIRS); do \
+	  if test -d $(srcdir)/$${d}; then \
+	    ((cd $(srcdir); $(TAR) -c -f - --exclude=CVS $${d}) \
+	        | (cd $(distdir); $(TAR) -x -f -)) \
+	      || exit 1; \
+	  fi; \
 	done
