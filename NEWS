@@ -68,7 +68,7 @@ NEW FEATURES
     o	New command-line option --no-restore-history implied by --vanilla.
 
     o	Command-line option --no-restore is now --no-restore-data and
-	--no-restore implies --no-restory-* (currently `data' and
+	--no-restore implies --no-restore-* (currently `data' and
 	`history').
 
     o	The `mode' argument of exists() and get() is interpreted
@@ -85,7 +85,7 @@ NEW FEATURES
 	Configure tries to get these right in typical cases (GNU tools
 	and/or common platforms).
 	C++ source suffixes `.cpp' and `.C' are now recognized in
-	adddition to `.cc'.
+	addition to `.cc'.
 
     o	.Platform has new component "endian", useful for binary file
 	manipulations.
