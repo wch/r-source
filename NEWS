@@ -52,6 +52,8 @@ BUG FIXES
     o   TclInterface.Rd incorrectly used \synopsis for \usage so that
         the usage section wasn't output.
 
+    o   Readline stack off-by-one error (PR#2165)
+    
 
 		CHANGES IN R VERSION 1.6.0
 
