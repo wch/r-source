@@ -18,12 +18,12 @@ diffinv(x, lag = 1, differences = 1,
 \description{
   Computes the inverse function of the lagged differences
   \code{\link{diff}}. 
-
-  Missing values are not handled.
 }
 \details{
   \code{diffinv} is a generic function with methods for class \code{"ts"}
   and \code{default} for vectors and matrices.
+
+  Missing values are not handled.
 }
 \value{
     A numeric vector, matrix, or time series representing the discrete
