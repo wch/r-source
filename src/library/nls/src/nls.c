@@ -1,5 +1,5 @@
 /*
- *  $Id: nls.c,v 1.17 2003/07/30 15:22:11 ripley Exp $
+ *  $Id: nls.c,v 1.18 2003/08/26 21:35:05 tlumley Exp $
  *
  *  Routines used in calculating least squares solutions in a
  *  nonlinear model in nls library for R.
@@ -204,7 +204,11 @@ numeric_deriv(SEXP expr, SEXP theta, SEXP rho)
 
     PROTECT(pars = allocVector(VECSXP, LENGTH(theta)));
 
-    PROTECT(ans = eval(expr, rho));
+    if (TYPEOF(expr)==SYMSXP)
+	    PROTECT(ans=duplicate(eval(expr,rho)));
+    else
+	    PROTECT(ans = eval(expr, rho));
+
     if(!isReal(ans)) {
 	SEXP temp;
 	temp = coerceVector(ans, REALSXP);

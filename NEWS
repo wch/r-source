@@ -430,6 +430,9 @@ UTILITIES
 
 BUG FIXES
 
+    o   numericDeriv() was failing if the first argument was a name 
+	rather than a call (PR#3746)
+
     o	cut.POSIXt() now passes on ... to cut.default(), as documented.
 
     o	seq.POSIXt(from, to, by="DSTday") was failing or calculating
