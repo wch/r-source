@@ -55,7 +55,8 @@ static EditorData neweditordata (int file, char *filename)
     p->filename = (char *) malloc(_MAX_PATH*sizeof(char));
     if (filename)
 	strncpy(p->filename, filename, _MAX_PATH);
-    p->title = NULL;
+    p->title = (char *) malloc((EDITORMAXTITLE + 1)*sizeof(char));
+    p->title[EDITORMAXTITLE] = p->title[0] = '\0';
     return p;
 }
 
@@ -71,9 +72,8 @@ static void editor_set_title(editor c, char *title) {
     char wtitle[EDITORMAXTITLE+1];
     textbox t = getdata(c);
     EditorData p = getdata(t);
-    free(p->title);
     strncpy(wtitle, title, EDITORMAXTITLE);
-    p->title = (char *) malloc(strlen(wtitle)+1);
+    wtitle[EDITORMAXTITLE] = '\0';
     strcpy(p->title, wtitle);
     strncat(wtitle, " - R Editor", EDITORMAXTITLE);
     settext(c, wtitle);
@@ -244,12 +244,14 @@ static void editorupdateglobals(editor c) {
     --neditors;
 }
 
-/* Hook called when editor window is destroyed */
+/* Hooks called when editor window is destroyed */
 
 static void editordel(editor c) {
-    textbox t = getdata(c);
-    EditorData p = getdata(t);
     editorupdateglobals(c);
+}
+
+static void textboxdel(textbox t) {
+    EditorData p = getdata(t);
     deleditordata(p);
 }
 
@@ -716,6 +718,7 @@ static editor neweditor()
     setresize(c, editorresize);
     setclose(c, editorclose);
     setdel(c, editordel);
+    setdel(t, textboxdel);
     setonfocus(c, editorfocus);
     setkeyaction(t, editorcontrolkeydown);
     setkeydown(t, editorasciikeydown);

@@ -129,10 +129,10 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (!isString(ti))
 	    error("title must be a string");
 	if (LENGTH(STRING_ELT(ti, 0)) > 0) {
-	    title = R_alloc(strlen(CHAR(STRING_ELT(ti, 0))), sizeof(char));
+	    title = R_alloc(strlen(CHAR(STRING_ELT(ti, 0)))+1, sizeof(char));
 	    strcpy(title, CHAR(STRING_ELT(ti, 0)));
 	} else {
-	    title = R_alloc(strlen(filename), sizeof(char));
+	    title = R_alloc(strlen(filename)+1, sizeof(char));
 	    strcpy(title, filename);
 	}
 	Rgui_Edit(filename, title, 1);
