@@ -27,9 +27,9 @@ as.dendrogram(object, \dots)
 \method{as.dendrogram}{hclust}(object, hang = -1, \dots)
 
 \method{plot}{dendrogram}(x, type = c("rectangle", "triangle"),
-         center = FALSE, edge.root = !is.null(attr(x,"edgetext")),
-         nodePar = NULL, edgePar = list(), xlab = "", ylab = "",
-         horiz = FALSE, frame.plot = FALSE, \dots)
+      center = FALSE, edge.root = isLeaf(x) || !is.null(attr(x,"edgetext")),
+      nodePar = NULL, edgePar = list(), xlab = "", ylab = "",
+      horiz = FALSE, frame.plot = FALSE, \dots)
 
 \method{cut}{dendrogram}(x, h, \dots)
 
@@ -93,8 +93,8 @@ as.dendrogram(object, \dots)
     \item{\code{height}}{numeric non-negative height at which the node
       is plotted.}
     \item{\code{midpoint}}{numeric horizontal distance of the node from
-      the left border of the branch.  This is needed at least for
-    \code{plot(*, center=FALSE)}.}
+      the left border (the leftmost leaf) of the branch (unit 1 between
+      all leaves).  This is used for \code{plot(*, center=FALSE)}.}
     \item{\code{label}}{character; the label of the node}
     \item{\code{edgetext}}{character; the label for the edge leading to
       the node}
