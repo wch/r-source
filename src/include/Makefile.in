@@ -17,11 +17,11 @@ SRC_HEADERS = R.h S.h Rdefines.h Rgraphics.h Rinternals.h Rmath.h
 ## API(2) {these are built, system-dependently}:
 OBJ_HEADERS = Rconfig.h Rversion.h
 ## Non-API internal ones:
-INT_HEADERS = Defn.h Rdevices.h Errormsg.h Fileio.h Graphics.h \
-	IOStuff.h Internal.h Parse.h Print.h Rconnections.h Startup.h 
+INT_HEADERS = Defn.h Rdevices.h Errormsg.h Fileio.h Graphics.h IOStuff.h \
+  Internal.h Parse.h Print.h Rconnections.h Rdynpriv.h Startup.h
 
 DISTFILES = Makefile.in README $(INT_HEADERS) $(SRC_HEADERS) \
-	config.h.in stamp-h.in
+  config.h.in stamp-h.in
 
 SUBDIRS = R_ext
 

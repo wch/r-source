@@ -84,7 +84,7 @@
 #include "Defn.h"
 #include "Rmath.h"
 
-#include "R_ext/Rdynpriv.h"
+#include <Rdynpriv.h>
 
 #ifdef Unix
 # ifndef HAVE_NO_SYMBOL_UNDERSCORE

@@ -21,8 +21,8 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "R_ext/Rdynpriv.h"
+#include <Defn.h>
+#include <Rdynpriv.h>
 
 #include "Runix.h"
 #include <sys/types.h>
@@ -35,14 +35,13 @@
 #endif
 
 #ifdef HAVE_DLFCN_H
-#include <dlfcn.h>
+# include <dlfcn.h>
 #else
-#ifdef HAVE_DL_H
-#include "hpdlfcn.c"
-#define HAVE_DLFCN_H
+# ifdef HAVE_DL_H
+#  include "hpdlfcn.c"
+# define HAVE_DLFCN_H
+# endif
 #endif
-#endif
-
 
 #if defined(HAVE_X11) && defined(HAVE_DLFCN_H)
 
@@ -98,12 +97,14 @@ void R_load_X11_shlib(void)
     if(f)
 	f((DllInfo *) NULL);
 
-    /* Perhaps do error checking to see all the routines have been set and R_Suicide
-       if not, as in the semantics before switching to self-registering modules. */
+    /* Perhaps do error checking to see all the routines have been set
+       and R_Suicide if not, as in the semantics before switching to
+       self-registering modules.
+    */
 }
 
 
-#include "R_ext/RX11.h"
+#include <R_ext/RX11.h>
 
 void
 R_setX11Routines(R_X11DeviceDriverRoutine dev, R_X11DataEntryRoutine dataEntry, R_GetX11ImageRoutine image)

@@ -23,11 +23,9 @@
 
 #include <Defn.h>
 #include <Rconnections.h>
+#include <Rdynpriv.h>
 #include <R_ext/R-ftp-http.h>
-#include "R_ext/Rdynpriv.h"
-
-
-#include "R_ext/Rinternet.h"
+#include <R_ext/Rinternet.h>
 
 static R_InternetRoutines routines, *ptr = &routines;
 

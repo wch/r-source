@@ -66,8 +66,8 @@
 #include <direct.h>
 #include <windows.h>
 
-#include "R_ext/Rdynload.h"
-#include "R_ext/Rdynpriv.h"
+#include <R_ext/Rdynload.h>
+#include <Rdynpriv.h>
 
 #include "FFDecl.h"
 

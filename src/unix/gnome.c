@@ -21,8 +21,8 @@
 #include <config.h>
 #endif
 
-#include "Defn.h"
-#include "R_ext/Rdynpriv.h"
+#include <Defn.h>
+#include <Rdynpriv.h>
 
 #include "Runix.h"
 #include <sys/types.h>
@@ -35,12 +35,12 @@
 #endif
 
 #ifdef HAVE_DLFCN_H
-#include <dlfcn.h>
+# include <dlfcn.h>
 #else
-#ifdef HAVE_DL_H
-#include "hpdlfcn.c"
-#define HAVE_DLFCN_H
-#endif
+# ifdef HAVE_DL_H
+#  include "hpdlfcn.c"
+# define HAVE_DLFCN_H
+# endif
 #endif
 
 #if defined(HAVE_GNOME) && defined(HAVE_DLFCN_H)

@@ -22,9 +22,8 @@
 #endif
 
 #include <Defn.h>
-#include "R_ext/Rdynpriv.h"
-
-#include "R_ext/Rlapack.h"
+#include <Rdynpriv.h>
+#include <R_ext/Rlapack.h>
 
 static R_LapackRoutines *ptr;
 

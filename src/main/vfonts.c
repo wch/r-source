@@ -22,8 +22,8 @@
 #endif
 
 #include <Defn.h>
+#include <Rdynpriv.h>
 #include <Rgraphics.h>
-#include "R_ext/Rdynpriv.h"
 
 typedef struct {
     GVTextRoutine GVText;
