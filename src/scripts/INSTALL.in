@@ -533,7 +533,7 @@ do_install_source () {
       R_SAVE_IMAGE=${save} ;;
   esac
   ## sanity check
-  if ! test -d R ; then
+  if test ! -d R ; then
     R_SAVE_IMAGE=false
   fi
   export R_SAVE_IMAGE
@@ -592,7 +592,7 @@ do_install_source () {
       thislazy=false
     fi
   fi
-  if ! test -d R ; then
+  if test ! -d R ; then
     thislazy=false
   fi
   ## this test is designed to fail if a loader is used.
