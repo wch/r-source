@@ -384,6 +384,8 @@ BUG FIXES
     o   The png(), jpeg(), png() and win.metafile() devices now 
 	enforce the limit of 512 chars(!) on the filename.  (PR#3466)
 
+    o   step() adds a fuzz for reduction in AIC for 0-df terms.  (PR#3491)
+
 
 
 

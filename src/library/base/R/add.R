@@ -579,12 +579,6 @@ step <- function(object, scope, scale = 0,
 	fit
     }
 
-    ## need to fix up . in formulae in R
-#     object$formula <- fixFormulaObject(object)
-#     Terms <- object$formula
-#     object$call$formula <- object$formula
-#     attributes(Terms) <- attributes(object$terms)
-#     object$terms <- Terms
     Terms <- terms(object)
     object$call$formula <- object$formula <- Terms
     md <- missing(direction)
@@ -611,10 +605,7 @@ step <- function(object, scope, scale = 0,
 	}
     }
     models <- vector("list", steps)
-    if(!is.null(keep)) {
-	keep.list <- vector("list", steps)
-	nv <- 1
-    }
+    if(!is.null(keep)) keep.list <- vector("list", steps)
     n <- length(object$residuals)
     fit <- object
     bAIC <- extractAIC(fit, scale, k = k, ...)
@@ -680,10 +671,6 @@ step <- function(object, scope, scale = 0,
         fit <- eval.parent(fit)
         if(length(fit$residuals) != n)
             stop("number of rows in use has changed: remove missing values?")
-## 	fit$formula <- fixFormulaObject(fit)
-## 	Terms <- fit$formula
-## 	attributes(Terms) <- attributes(fit$terms)
-## 	fit$terms <- Terms
         Terms <- terms(fit)
 	bAIC <- extractAIC(fit, scale, k = k, ...)
 	edf <- bAIC[1]
@@ -691,7 +678,8 @@ step <- function(object, scope, scale = 0,
 	if(trace)
 	    cat("\nStep:  AIC=", format(round(bAIC, 2)), "\n",
 		cut.string(deparse(as.vector(formula(fit)))), "\n\n")
-	if(bAIC >= AIC) break
+        ## add a tolerance as dropping 0-df terms might increase AIC slightly
+	if(bAIC >= AIC + 1e-7) break
 	nm <- nm + 1
 	models[[nm]] <-
 	    list(deviance = mydeviance(fit), df.resid = n - edf,
