@@ -90,10 +90,6 @@
 #define M_PI		3.141592653589793238462643383280	/* pi */
 #endif
 
-#ifndef M_2PI
-#define M_2PI		6.283185307179586476925286766559	/* 2*pi */
-#endif
-
 #ifndef M_PI_2
 #define M_PI_2		1.570796326794896619231321691640	/* pi/2 */
 #endif
@@ -544,8 +540,6 @@ double	ftrunc(double);
 
 double	d1mach(int);
 double	gamma_cody(double);
-double	dbinom_raw(double, double, double, double, int);
-double	dpois_raw(double, double, int);
 
 #endif /* MATHLIB_PRIVATE */
 
