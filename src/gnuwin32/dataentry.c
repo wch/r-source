@@ -38,7 +38,9 @@
 static dataeditor de;
 static ConsoleData p;
 
-static int R_de_up;
+typedef enum {UNKNOWNN, NUMERIC, CHARACTER} CellType;
+
+static Rboolean R_de_up;
 
 #ifndef max
 #define max(a, b) (((a)>(b))?(a):(b))
@@ -55,16 +57,16 @@ static int R_de_up;
 static void advancerect(int);
 static void bell();
 static void cleararea(int, int, int, int, rgb);
-static void clearrect();
-static void closerect();
-static void clearwindow();
-static void de_closewin();
+static void clearrect(void);
+static void closerect(void);
+static void clearwindow(void);
+static void de_closewin(void);
 static void copyarea(int, int, int, int);
 static void copyH(int, int, int);
-static void deredraw();
-static void eventloop();
-static void downlightrect();
-static void drawwindow();
+static void deredraw(void);
+static void eventloop(void);
+static void downlightrect(void);
+static void drawwindow(void);
 static void drawcol(int);
 /* static void de_drawline(int, int, int, int);*/
 static void de_drawtext(int, int, char *);
@@ -72,16 +74,16 @@ static void drawrectangle(int, int, int, int, int, int);
 static void drawrow(int);
 static void find_coords(int, int, int*, int*);
 static void handlechar(char*);
-static void highlightrect();
-static int  initwin();
+static void highlightrect(void);
+static Rboolean initwin(void);
 static void jumppage(int);
 static void jumpwin(int, int);
 static void de_popupmenu(int, int, int);
-static void printlabs();
+static void printlabs(void);
 static void printrect(int, int);
 static void printstring(char*, int, int, int, int);
 static void printelt(SEXP, int, int, int);
-static void setcellwidths();
+static void setcellwidths(void);
 
 static dataeditor newdataeditor();
 static void de_copy(control c);
@@ -94,25 +96,10 @@ static PROTECT_INDEX wpi, npi, lpi;
 static SEXP ssNA_STRING;
 static double ssNA_REAL;
 
-
-static SEXP ssNewVector(SEXPTYPE type, int vlen)
-{
-    SEXP tvec;
-    int j;
-
-    tvec = allocVector(type, vlen);
-    for (j = 0; j < vlen; j++)
-	if (type == REALSXP)
-	    REAL(tvec)[j] = ssNA_REAL;
-	else if (type == STRSXP)
-	    SET_STRING_ELT(tvec, j, STRING_ELT(ssNA_STRING, 0));
-    SETLEVELS(tvec, 0);
-    return (tvec);
-}
 /* Global variables needed for the graphics */
 
 static int box_w;                       /* width of a box */
-static int boxw[100];                   /* widthes of cells */
+static int boxw[100];                   /* widths of cells */
 static int box_h;                       /* height of a box */
 static int windowWidth;                 /* current width of the window */
 static int windowHeight;                /* current height of the window */
@@ -141,6 +128,44 @@ static int xScrollbarScale=1, yScrollbarScale=1;
 
 #include <windows.h> /* for Sleep */
 
+ /*
+  Underlying assumptions (for this version R >= 1.8.0)
+
+  The data are stored in a list `work', with unused columns having
+  NULL entries.  The names for the list are in `names', which should
+  have a name for all displayable columns (up to xmaxused). 
+  The *used* lengths of the columns are in `lens': this needs only be
+  set for non-NULL columns.
+
+  If the list was originally length(0), that should work with 
+  0 pre-defined cols.  (It used to have 1 pre-defined numeric column.)
+
+  All row and col numbers are 1-based.
+
+  BDR May 2003
+ */
+
+/*
+   ssNewVector is just an interface to allocVector but it lets us
+   set the fields to NA. We need to have a special NA for reals and
+   strings so that we can differentiate between uninitialized elements
+   in the vectors and user supplied NA's; hence ssNA_REAL and ssNA_STRING
+ */
+
+static SEXP ssNewVector(SEXPTYPE type, int vlen)
+{
+    SEXP tvec;
+    int j;
+
+    tvec = allocVector(type, vlen);
+    for (j = 0; j < vlen; j++)
+	if (type == REALSXP)
+	    REAL(tvec)[j] = ssNA_REAL;
+	else if (type == STRSXP)
+	    SET_STRING_ELT(tvec, j, STRING_ELT(ssNA_STRING, 0));
+    SETLEVELS(tvec, 0);
+    return (tvec);
+}
 static void eventloop()
 {
     while (R_de_up) {
@@ -154,23 +179,6 @@ static void de_closewin_cend(void *data)
 {
     de_closewin();
 }
-
-/*
-  Underlying assumptions (for this version R >= 1.8.0)
-
-  The data are stored in a list `work', with unused columns having
-  NULL entries.  The names for the list are in `names', which should
-  have a name for all displayable columns (up to xmaxused). 
-  The *used* lengths of the columns are in `lens': this needs only be
-  set for non-NULL columns.
-
-  If the list was originally length(0), that should work with 
-  0 pre-defined rows.  (It used to have 1 pre-defined numeric column.)
-
-  All row and col numbers are 1-based.
-
-  BDR May 2003
- */
 
 SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -310,7 +318,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 static rgb bbg;
 
-static void setcellwidths()
+static void setcellwidths(void)
 {
     int i, w, dw;
 
@@ -327,7 +335,7 @@ static void setcellwidths()
 }
 
 
-static void drawwindow()
+static void drawwindow(void)
 {
     /* might have resized */
     setcellwidths();
@@ -495,8 +503,6 @@ static int get_col_width(int col)
     return fw;
 }
 
-typedef enum {UNKNOWNN, NUMERIC, CHARACTER} CellType;
-
 static CellType get_col_type(int col)
 {
     SEXP tmp;
@@ -566,7 +572,6 @@ static void drawrow(int whichrow)
 		printelt(tvec, whichrow - 1, row, i - colmin + 1);
     }
 }
-
 
 /* printelt: print the correct value from vector[vrow] into the
    spreadsheet in row ssrow and col sscol */
@@ -672,13 +677,13 @@ static void printrect(int lwd, int fore)
 		  box_h - lwd + 1, lwd, fore);
 }
 
-static void downlightrect()
+static void downlightrect(void)
 {
     printrect(2, 0);
     printrect(1, 1);
 }
 
-static void highlightrect()
+static void highlightrect(void)
 {
     printrect(2, 1);
 }
@@ -732,7 +737,7 @@ static void getccol()
 /* close up the entry to a cell, put the value that has been entered
    into the correct place and as the correct type */
 
-static void closerect()
+static void closerect(void)
 {
     SEXP cvec;
     int wcol = ccol + colmin - 1, wrow = rowmin + crow - 1, wrow0;
@@ -792,6 +797,8 @@ static void closerect()
    the print area and print it, left adjusted if necessary; clear the
    area of previous text; */
 
+/* This version will only display 200 chars, but the maximum col width
+   will not allow that many */
 static void printstring(char *ibuf, int buflen, int row, int col, int left)
 {
     int x_pos, y_pos, bw, fw, bufw;
@@ -818,9 +825,10 @@ static void printstring(char *ibuf, int buflen, int row, int col, int left)
     de_drawtext(x_pos + text_xoffset, y_pos - text_yoffset, buf);
 }
 
-static void clearrect()
+static void clearrect(void)
 {
     int x_pos, y_pos;
+
     find_coords(crow, ccol, &x_pos, &y_pos);
     cleararea(x_pos, y_pos, BOXW(ccol+colmin-1), box_h, p->bg);
 }
@@ -901,7 +909,7 @@ static void handlechar(char *text)
     bell();
 }
 
-static void printlabs()
+static void printlabs(void)
 {
     char clab[15], *p;
     int i;
@@ -918,7 +926,7 @@ static void printlabs()
 
               /* ================ GraphApp-specific ================ */
 
-static void bell()
+static void bell(void)
 {
     gabeep();
 }
@@ -928,7 +936,7 @@ static void cleararea(int xpos, int ypos, int width, int height, rgb col)
     gfillrect(de, col, rect(xpos, ypos, width, height));
 }
 
-static void clearwindow()
+static void clearwindow(void)
 {
     gfillrect(de, p->bg, rect(0, 0, WIDTH, HEIGHT));
 }
@@ -1083,7 +1091,7 @@ static void de_ctrlkeyin(control c, int key)
 
 /* mouse callbacks */
 
-static char *get_cell_text()
+static char *get_cell_text(void)
 {
     int  wrow = rowmin + crow - 2, wcol = colmin + ccol - 1;
     char *prev = "";
@@ -1227,7 +1235,7 @@ static void de_redraw(control c, rect r)
     else deredraw();
 }
 
-static void deredraw()
+static void deredraw(void)
 {
     int i;
 
@@ -1248,7 +1256,7 @@ static void deredraw()
     highlightrect();
 }
 
-static void de_closewin()
+static void de_closewin(void)
 {
     closerect();
     hide(de);
@@ -1268,13 +1276,13 @@ static void copyH(int src_x, int dest_x, int width)
 	     rect(src_x, hwidth, width, windowHeight - hwidth));
 }
 
-static int initwin()
+static Rboolean initwin(void)
 {
     int i;
     rect r;
 
     de = newdataeditor();
-    if(!de) return 1;
+    if(!de) return TRUE;
     p = getdata(de);
 
     nboxchars = asInteger(GetOption(install("de.cellwidth"), R_GlobalEnv));
@@ -1313,8 +1321,8 @@ static int initwin()
     show(de);
     show(de); /* a precaution, as PD reports transparent windows */
     BringToTop(de);
-    R_de_up = 1;
-    return 0;
+    R_de_up = TRUE;
+    return FALSE;
 }
 
 /* Menus */
@@ -1351,12 +1359,12 @@ static void popupclose(control c)
     tvec = VECTOR_ELT(work, popupcol - 1);
     if(ischecked(rb_num) && !isnumeric) {
 	if (isNull(tvec)) 
-	    SET_VECTOR_ELT(tvec, popupcol - 1, ssNewVector(REALSXP, 100));
+	    SET_VECTOR_ELT(work, popupcol - 1, ssNewVector(REALSXP, 100));
 	else
 	    SET_VECTOR_ELT(work, popupcol - 1, coerceVector(tvec, REALSXP));
     } else if(ischecked(rb_char) && isnumeric) {
 	if (isNull(tvec)) 
-	    SET_VECTOR_ELT(tvec, popupcol - 1, ssNewVector(STRSXP, 100));
+	    SET_VECTOR_ELT(work, popupcol - 1, ssNewVector(STRSXP, 100));
 	else
 	    SET_VECTOR_ELT(work, popupcol - 1, coerceVector(tvec, STRSXP));
     }
@@ -1479,7 +1487,7 @@ static void vw_callback(control c)
 }
 
 
-static void de_popup_vw()
+static void de_popup_vw(void)
 {
     char blah[25];
 
@@ -1514,7 +1522,7 @@ static void declose(control m)
 {
     de_closewin();
     show(RConsole);
-    R_de_up =0;
+    R_de_up = FALSE;
 }
 
 static void deresize(console c, rect r)
@@ -1558,7 +1566,7 @@ static void depopupact(control m)
 
 #define MCHECK(a) if (!(a)) {del(c);return NULL;}
 
-static dataeditor newdataeditor()
+static dataeditor newdataeditor(void)
 {
     ConsoleData p;
     int w, h, x, y;
