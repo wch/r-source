@@ -237,7 +237,13 @@ int Rf_initialize_R(int ac, char **av)
 
     /* On Unix the console is a file; we just use stdio to write on it */
 
+#ifdef HAVE_AQUA
+    if(useaqua) 
+      R_Interactive = useaqua;
+    else
+#endif
     R_Interactive = isatty(0);
+
 #ifdef HAVE_AQUA
     if(useaqua){
      R_Outputfile = NULL;
