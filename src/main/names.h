@@ -90,7 +90,9 @@ SEXP do_assign(SEXP, SEXP, SEXP, SEXP);
 SEXP do_asvector(SEXP, SEXP, SEXP, SEXP);
 SEXP do_atan(SEXP, SEXP, SEXP, SEXP);
 SEXP do_attach(SEXP,SEXP,SEXP,SEXP);
+#ifdef USE_do_attr
 SEXP do_attr(SEXP, SEXP, SEXP, SEXP);
+#endif
 SEXP do_attrgets(SEXP, SEXP, SEXP, SEXP);
 SEXP do_attributes(SEXP, SEXP, SEXP, SEXP);
 SEXP do_attributesgets(SEXP, SEXP, SEXP, SEXP);
