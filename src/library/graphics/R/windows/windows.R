@@ -22,7 +22,7 @@ windows <- function(width = 7, height = 7, pointsize = 12,
 
 win.graph <- function(width = 7, height = 7, pointsize = 12)
     .Internal(devga("", width, height, pointsize, FALSE, 1, NA, NA, "white",
-                    1, as.integer(NA), as.integer(NA), TRUE))
+                    1, as.integer(NA), as.integer(NA), TRUE, .PSenv))
 
 win.print <- function(width = 7, height = 7, pointsize = 12, printer = "")
     .Internal(devga(paste("win.print:", printer, sep=""),
@@ -32,7 +32,7 @@ win.print <- function(width = 7, height = 7, pointsize = 12, printer = "")
 
 win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12)
     .Internal(devga(paste("win.metafile:", filename, sep=""),
-                  width, height, pointsize, FALSE, 1, NA, NA, "white", 1,
+                    width, height, pointsize, FALSE, 1, NA, NA, "white", 1,
                     as.integer(NA), as.integer(NA), FALSE, .PSenv))
 
 png <- function(filename = "Rplot%03d.png", width = 480, height = 480,
