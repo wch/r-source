@@ -19,13 +19,15 @@ mean.default <- function(x, trim = 0, na.rm = FALSE, ...)
 	x <- sort(x, partial=unique(c(lo, hi)))[lo:hi]
 	n <- hi-lo+1
     }
-    sum(x)/n
+    ## sum(int) can overflow, so convert here.
+    if(is.integer(x)) sum(as.numeric(x))/n else sum(x)/n
 }
 
 mean.data.frame <- function(x, ...) sapply(x, mean, ...)
 
 weighted.mean <- function(x, w, na.rm = FALSE) {
     if(missing(w)) w <- rep(1,length(x))
+    if(is.integer(w)) w <- as.numeric(w)  # avoid overflow in sum.
     if (na.rm) {
 	w <- w[i <- !is.na(x)]
 	x <- x[i]

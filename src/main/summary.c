@@ -319,7 +319,7 @@ static void cprod(Rcomplex *x, int n, Rcomplex *value)
 SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, a;
-    double tmp;
+    double tmp, s;
     Rcomplex z, ztmp, zcum;
     int itmp, icum=0, int_a, empty;
     short iop;
@@ -336,8 +336,20 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     iop = PRIMVAL(op);
     switch(iop) {
     case 0:/* sum */
-	ans_type = INTSXP;/* try to keep if possible.. */
-	zcum.r = zcum.i = 0.; icum = 0; break;
+    /* we need to find out if _all_ the arguments are integer in advance, 
+       as we might overflow before we find out */
+	a = args;
+	int_a = 1;
+	while (a != R_NilValue) {
+	    if(!isInteger(CAR(a))) {
+		int_a = 0;
+		break;
+	    }
+	    a = CDR(a);
+	}
+	ans_type = int_a ? INTSXP: REALSXP; /* try to keep if possible.. */
+	zcum.r = zcum.i = 0.; icum = 0; 
+	break;
 
     case 2:/* min */
 	DbgP2("do_summary: min(.. na.rm=%d) ", narm);
@@ -347,7 +359,8 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 #else
 	zcum.r = NA_REAL;
 #endif
-	icum = INT_MAX; break;
+	icum = INT_MAX; 
+	break;
 
     case 3:/* max */
 	DbgP2("do_summary: max(.. na.rm=%d) ", narm);
@@ -440,9 +453,14 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		    isum(INTEGER(a), length(a), &itmp);
 		    if(updated) {
 			if(itmp == NA_INTEGER) goto na_answer;
-			if(ans_type == INTSXP)
-			    icum += itmp;
-			else
+			if(ans_type == INTSXP) {
+			    s = (double) icum + (double) itmp;
+			    if(s > INT_MAX || s < R_INT_MIN){
+				warning("Integer overflow in sum(.); use sum(as.numeric(.))");
+				goto na_answer;
+			    }
+			    else icum += itmp;
+			} else
 			    zcum.r += Int2Real(itmp);
 		    }
 		    break;

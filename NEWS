@@ -177,9 +177,9 @@ NEW FEATURES
 	separately (by accepting y = NULL).  This gives a small
 	performance gain (suggestion of Jonathan Rougier).
 
-    o	experimental interface to quicksort sorting.
+    o	Experimental interface to quicksort sorting.
 
-    o	new prettyNum() function and new ``prettifying'' arguments to
+    o	New prettyNum() function and new ``prettifying'' arguments to
         formatC() and format.default().
 
 
@@ -201,7 +201,7 @@ DOCUMENTATION CHANGES
 INSTALLATION CHANGES
 
     o	The configure script used when building R from source under Unix
-	is now generated using Autoconf 2.50 or better, which has the
+	is now generated using Autoconf 2.50 or later, which has the
 	following 'visible' consequences:
 
 	- By default, configure no longer uses a cache file.  Use the
@@ -291,8 +291,9 @@ C-LEVEL FACILITIES
 	socket option.  This allows a server to create simultanous
 	connections to several clients.
 
-    o	New quicksort sorting (for numeric no-NA data), accessible from C
-        as R_qsort() and R_qsorti() and from Fortran as qsort4() and qsort3().
+    o	New quicksort sorting (for numeric no-NA data), accessible from
+        C as R_qsort() and R_qsorti() and from Fortran as qsort4() and
+        qsort3().
 
 
 BUG FIXES
@@ -334,7 +335,7 @@ BUG FIXES
     o	optim(method="BFGS") was not reporting reaching `maxit'
 	iterations in the convergence component of the return value.
 
-    o	aov and model.tables were failing on multistrata models with
+    o	aov() and model.tables() were failing on multistrata models with
 	excessively long Error formula. (PR#1315)
 
     o	Transparent backgrounds on png() devices on Unix-alikes had
@@ -388,9 +389,9 @@ BUG FIXES
     o   Inheritance in formal classes (the methods package) works
         breadth-first as intuition would expect.
 
-    o   The new() function works better (maybe even correctly?) for
-        the various combinations of super-classes and prototypes that
-        can be supplied as unnamed arguments.
+    o	The new() function in package `methods' works better (maybe even
+        correctly?) for the various combinations of super-classes and
+        prototypes that can be supplied as unnamed arguments.
 
     o	Internal code allowed one more connection to be allocated than
 	the table size, leading to segfaults. (PR#1333)
@@ -421,7 +422,7 @@ BUG FIXES
 
     o	Fixed socket writing code to block until all data is written.
 
-    o	levels<-.factor() was using correctly list values longer than
+    o	levels<-.factor() was using incorrectly list values longer than
 	the number of levels (PR#1394), and incorrectly documented
 	that a character value could not be longer than the existing
 	levels.
@@ -429,7 +430,16 @@ BUG FIXES
     o   The pdf() device was running out of objects before the
 	documented 500 page limit.  Now there is no limit.
 
-    o   legend() did not yet correctly deal with `angle' arguments. (PR#1404)
+    o   legend() did not deal correctly with `angle' arguments. (PR#1404)
+
+    o   sum() tried to give an integer result for integer arguments, 
+	but (PR#140)
+	- this was not documented
+	- it sometimes warned on overflow, sometimes not
+	- it was order-dependent for a mixture of integer and numeric args.
+
+    o	mean() gave (numeric) NA if integer overflow occurred in sum(),
+	but now always works with numeric (or complex) numbers.
 
 
 

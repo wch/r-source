@@ -1,6 +1,6 @@
 
 R : Copyright 2002, The R Development Core Team
-Version 1.5.0 Under development (unstable) (2002-03-19)
+Version 1.5.0 Under development (unstable) (2002-03-22)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -854,4 +854,20 @@ Eye:Sex   3    23.08 201.83
 [1] A B
 Levels:  C A B 
 > ## was  [1] C A; Levels:  C A  in 1.4.1
+> 
+> 
+> ## PR#1408 Inconsistencies in sum()
+> x <- as.integer(2^30)
+> sum(x, x)    # did not warn in 1.4.1
+[1] NA
+Warning message: 
+Integer overflow in sum(.); use sum(as.numeric(.)) 
+> sum(c(x, x)) # did warn
+[1] NA
+Warning message: 
+Integer overflow in sum(.); use sum(as.numeric(.)) 
+> (z <- sum(x, x, 0.0)) # was NA in 1.4.1
+[1] 2147483648
+> typeof(z)
+[1] "double"
 > 
