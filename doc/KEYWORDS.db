@@ -16,14 +16,14 @@ Graphics|aplot: Add to Existing Plot / internal plot
 Graphics|dplot: Computations Related to Plotting
 Graphics|hplot: High-Level Plots
 Graphics|iplot: Interacting with Plots
-Graphics|color: Color, Palettes etc.
+Graphics|color: Color, Palettes etc
 Graphics|dynamic: Dynamic Graphics
 Graphics|device: Graphical Devices
 Mathematics: Mathematics
 Mathematics|array: Matrices and Arrays
 Mathematics|array|algebra: Linear Algebra
 Mathematics|arith: Basic Arithmetic and Sorting	# != S
-Mathematics|math: Mathematical Calculus etc. # != S
+Mathematics|math: Mathematical Calculus etc # != S
 Mathematics|logic: Logical Operators
 Mathematics|optimize: Optimization
 Mathematics|symbolmath: `Symbolic Math', as polynomials, fractions
@@ -33,7 +33,7 @@ Programming|programming|interface: Interfaces to Other Languages
 Programming|IO:  Input/output
 Programming|IO|file: Input/Output Files
 Programming|IO|connection: Input/Output Connections
-Programming|IO|database: Interfaces to databases.
+Programming|IO|database: Interfaces to databases
 Programming|iteration: Looping and Iteration
 Programming|methods: Methods and Generic Functions
 Programming|print: Printing

@@ -2,13 +2,13 @@ GROUPED Keywords
 ----------------
 
 Graphics
-	aplot		&	Add to Existing Plot / internal plot.
+	aplot		&	Add to Existing Plot / internal plot
 	dplot		&	Computations Related to Plotting
 	hplot		&	High-Level Plots
 	iplot		&	Interacting with Plots
-	color		&	Color, Palettes etc.
+	color		&	Color, Palettes etc
 	dynamic		&	Dynamic Graphics
-	device		&	Graphical Devices			7
+	device		&	Graphical Devices
 
 Basics
 	sysdata		&	Basic System Variables		[!= S]
@@ -22,7 +22,7 @@ Basics
 	    & category	&	Categorical Data
 	    & NA	&	Missing Values			[!= S]
 	list		&	Lists
-	chron		&	Dates and Times				12
+	chron		&	Dates and Times
 
 Mathematics
 	array		&	Matrices and Arrays
@@ -30,7 +30,7 @@ Mathematics
 	arith		&	Basic Arithmetic and Sorting	[!= S]
 	math		&	Mathematical Calculus etc.	[!= S]
 	logic		&	Logical Operators
-	optimize	&	Optimization				6
+	optimize	&	Optimization
 	symbolmath	&	"Symbolic Math", as polynomials, fractions
 
 
@@ -38,17 +38,19 @@ Programming, Input/Ouput, and Miscellaneous
 
 	programming	&	Programming
 	     & interface&	Interfaces to Other Languages
+	IO		&	Input/output
+	     & file	&	Files
+	     & connection&	Connections
+	     & database	&	Interfaces to databases
 	iteration	&	Looping and Iteration
 	methods		&	Methods and Generic Functions
 	print		&	Printing
-	file		&	Input/Output--Files
-	connection	&	Input/Output--Connections
-	error		&	Error Handling				8
+	error		&	Error Handling
 
 	environment	&	Session Environment
 	utilities	&	Utilities
 	misc		&	Miscellaneous
-	documentation	&	Documentation				4
+	documentation	&	Documentation
 
 Statistics
 
@@ -62,18 +64,15 @@ Statistics
 	design		&	Designed Experiments
 	multivariate	&	Multivariate Techniques
 	ts		&	Time Series
-	survival	&	Survival Analysis			11
+	survival	&	Survival Analysis
 
-				 [actually, `survival4' rather than `survival',
-				  but do we want 'survival5' later ?]
 
 	nonparametric	&	Nonparametric Statistics [w/o 'smooth']
 	smooth		&	Curve (and Surface) Smoothing
+	     & loess	&	Loess Objects
 	cluster		&	Clustering
-	loess		&	Loess Objects
-	tree		&	Regression and Classification Trees	5
-								      ---
-								       52
+	tree		&	Regression and Classification Trees
+
 
 MASS (2, 1997)
 --------------
