@@ -30,10 +30,12 @@ GetOptions (@knownoptions) || usage();
 
 usage() if $opt_help;
 
-# names of unique text blocks, these may nor appear more than once! 
+# names of unique text blocks, these may NOT appear MORE THAN ONCE! 
 @blocknames = ("name", "title", "usage", "arguments", "description", 
-	       "value", "references", "seealso", "examples", "keyword",
-	       "author", "note");
+	       "value", "references", "seealso", "examples", "author", "note");
+# These may appear multiply but are of simple structure:
+@multiblocknames = ("alias", "keyword");
+
 
 $max_bracket = 0;
 $max_section = 0;
@@ -57,9 +59,16 @@ while(<>){
 mark_brackets();
 escape_codes();
 
-rdoc2html() if $opt_type =~/html/i;
-rdoc2nroff() if $opt_type =~/nroff/i;
-rdoc2latex() if $opt_type =~/tex/i;
+if($opt_type) {
+    #-- These may be used in all cases :
+    @aliases = get_multi($complete_text,"alias");
+    @keywords= get_multi($complete_text,"keyword");
+}
+
+rdoc2html()  if $opt_type =~ /html/i;
+rdoc2nroff() if $opt_type =~ /nroff/i;
+rdoc2latex() if $opt_type =~ /tex/i;
+rdoc2ex()    if $opt_type =~ /examp/i;
 
 
 
@@ -115,13 +124,39 @@ sub get_blocks {
 	if($text =~ /\\($block)($ID)/){
 	    ($id, $blocks{$block}) = get_arguments($block, $text, 1);
 	    print stderr "found: $block\n" if $opt_debug;
-	    if(! (($block =~ /usage/) || ($block =~ /examples/))){
+	    if((($block =~ /usage/) || ($block =~ /examples/))){
+		$blocks{$block} =~ s/^[ \t]+$//; #- multiple empty lines to one
+		$blocks{$block} =~ s/\n\n/\n/gom;
+	    } else {
 		$blocks{$block} =~ s/^\s*(\S)/$1/;
 		$blocks{$block} =~ s/\n[ \t]*(\S)/\n$1/g;
 	    }
 	}	    
     }
     print stderr "---\n" if $opt_debug;
+}
+
+# Get  ALL  multiblock things -- their simple arg. is put in array:
+#
+sub get_multi {
+   
+    my $text = $_[0];
+    my $name = $_[1]; # "alias" or "keyword"
+    my @res, $k=0;
+    print stderr "--- Multi: $name\n" if $opt_debug;
+    while($text =~ /\\$name($ID)/) {
+	my $id = $1;
+	my ($endid, $arg) = 
+	    get_arguments($name, $text, 1);
+	print stderr "found:" if $opt_debug && $k==0;
+	print stderr " $k:$arg" if $opt_debug;
+	$arg =~ s/^\s*(\S)/$1/;
+	$arg =~ s/\n[ \t]*(\S)/\n$1/g;
+	$res[$k++] = $arg;
+	$text =~ s/\\$name//s;
+    }
+    print stderr "\n---\n" if $opt_debug;
+    @res;
 }
 
 # Write the user defined sections into the 
@@ -171,6 +206,18 @@ sub get_arguments {
     $retval[0] = $id;
     @retval;
 }
+
+# Print a short vector of strings  (utility).
+sub print_vec {
+    my($F, $nam, $do_nam, $sep, $end) = @_;    
+    my($i)=0;
+    $sep = ', '  unless $sep;
+    $end = ".\n" unless $end;
+    print $F "\@$nam = " if $do_nam;
+    foreach (@$nam) { print $F ($i>0 ? $sep : '') . "'$_'"; $i++ }
+    print $F $end;
+}
+
 	    
 	
 # Print the hash %blocks ... for debugging only (I just insert this
@@ -191,7 +238,7 @@ sub usage {
 
     print "Rdconv version $VERSION\n";
     print "Usage: Rdconv [--debug/-d] [--help/-h]";
-    print " [--type/-t html|nroff|latex] file\n\n";
+    print " [--type/-t html|nroff|latex|examp] file\n\n";
 
     exit 0;
 }
@@ -211,7 +258,7 @@ sub undefined_command {
 }
     
 
-
+
 #************************** HTML ********************************
 
 sub rdoc2html {
@@ -429,6 +476,7 @@ sub html_unescape_codes {
 }
 
 
+
 #**************************** nroff ******************************
 
 
@@ -642,6 +690,64 @@ sub nroff_unescape_codes {
     }
     $text;
 }
+
+
+#*********************** Example ***********************************
+
+
+sub rdoc2ex {
+
+    get_blocks($complete_text);
+
+    ##--- Here, I should also put everything which belongs to 
+    ##--- ./massage-Examples ---- depending on 'name' !!!
+
+    print "###--- >>> `"; print $blocks{"name"};
+    print "' <<<----- "; print $blocks{"title"};
+    print "\n\n";
+    if(@aliases) {
+	foreach (@aliases) {
+	    print "\t## alias\t help($_)\n";
+	}
+	print "\n";
+    }
+
+    ex_print_exampleblock("examples", "Examples");
+    
+    if(@keywords) {
+	print "## Keywords: ";
+	&print_vec(STDOUT, 'keywords');
+    }
+    print "\n\n";
+}
+
+sub ex_print_exampleblock {
+    
+    my $block = $_[0];
+    my $env = $_[1];
+
+    if(defined $blocks{$block}){
+	print "##___ Examples ___:\n";
+	print  code2examp($blocks{$block});
+	print "\n";
+    }
+}
+
+sub code2examp {
+    #-  currently identical to   `code2latex'.
+    my $text = $_[0];
+
+    $text =~ s/\\%/%/go;
+    $text =~ s/\\ldots/.../go;
+    $text =~ s/\\dots/.../go;
+
+    $text = undefined_command("link", $text);
+    unmark_brackets($text);
+}
+    
+
+
+
 
 #*********************** LaTeX ***********************************
 

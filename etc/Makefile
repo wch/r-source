@@ -22,12 +22,14 @@ MANbaseDIR = ../src/library/base/man
 #> Rd_files:sh = ./Rd.files
 ##-- GNU make
 Rd_files := $(shell ./Rd.files)
-#________in future_______  (for ALL 'make' versions):
+#Rd_files := $(wildcard $(MANbaseDIR)/*.Rd)
+#________in future_______  (for ALL 'make' versions)
+# FAILS: has directory/. _AND_ is not expanded
 #Rd_files = $(MANbaseDIR)/*.Rd
-
-Ex_Tests_src = $(Rd_files:%=$(Ex_Tests)/%.R)
-#________in future_______:
-#Ex_Tests_src = $(Rd_files:%.Rd=$(Ex_Tests)/%.R)
+# 
+Ex_Tests_src = $(Rd_files:%.Rd=$(Ex_Tests)/%.R)
+#________in future_______: (FAILS!)
+#Ex_Tests_src = $(Rd_files:$(MANbaseDIR)/%.Rd=$(Ex_Tests)/%.R)
 
 
 ##--------------------------------- TARGETS ------------------------------
@@ -42,9 +44,12 @@ show-R: ; @-(cd ../include; echo "R = '$(R)'")
 show-Rd:
 	@-echo 'R help() files = "Rd files" :'
 	@-echo $(Rd_files)
+show-Ex:
+	@-echo 'Ex_Tests-src [targets of  help() files] :'
+	@-echo $(Ex_Tests_src)
 
-$(Ex_Tests)/%.R: $(MANbaseDIR)/%
-	./doc2EX < $< > $@
+$(Ex_Tests)/%.R: $(MANbaseDIR)/%.Rd
+	./Rdconv -t examp < $< > $@
 
 
 stamp-help: $(MANSRC)
@@ -53,13 +58,13 @@ stamp-help: $(MANSRC)
 	@touch $@
 ##future:
 #stamp-html: $(MANSRC)
-stamp-html: $(MANbaseDIR)/*
+stamp-html: $(MANbaseDIR)/*.Rd
 	@echo "Building R Base Reference Manual (in HTML)"
 	./build-html
 	@touch $@
 ##future:
 #stamp-latex: $(MANSRC)
-stamp-latex: $(MANbaseDIR)/*
+stamp-latex: $(MANbaseDIR)/*.Rd
 	@echo "Building R Base Reference Manual (in LaTeX/dvi)"
 	./build-latex
 	@touch $@
