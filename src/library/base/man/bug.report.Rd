@@ -2,15 +2,19 @@
 \title{Send a bug report}
 \usage{
 bug.report(subject="", ccaddress=getenv("USER"),
-           method=.Options$mailer, address="r-bugs@biostat.ku.dk")
+           method=.Options$mailer, address="r-bugs@biostat.ku.dk",
+           file="R.bug.report")
 }
 \alias{bug.report}
 \arguments{
     \item{subject}{Subject of the email}
     \item{ccaddress}{Optional email address for copies (default is
 	current user). Use \code{ccaddress=FALSE} for no copies.} 
-    \item{method}{Submission method, one of "mailx", "gnuclient" or "none".}
+    \item{method}{Submission method, one of "mailx", "gnuclient", "none"
+	or "ess".}
     \item{address}{Recipient's email address.}
+    \item{file}{File to use for setting up the email (or storing it when
+	method is \code{"none"} or sending mail fails).}
 }
 \description{
     Invokes an editor to write a bug report and optionally mail it to
@@ -31,6 +35,9 @@ bug.report(subject="", ccaddress=getenv("USER"),
     Windows systems), then only an editor is opened to help writing the
     bug report. The report can then be copied to your favorite email
     program and be sent to the R-bugs list.
+
+    If method is \code{"ess"} the body of the mail is simply sent to
+    stdout.
 }
 \value{
 nothing useful
