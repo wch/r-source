@@ -6,6 +6,10 @@ export RHOME
 
 RBINARY="R.binary"
 
+R_UNZIPCMD=${R_UNZIPCMD:-@R_UNZIPCMD@}
+R_ZIPCMD=${R_ZIPCMD:-@R_ZIPCMD@}
+export R_UNZIPCMD R_ZIPCMD
+
 ARG="$1"
 case "${ARG}" in
     RHOME)

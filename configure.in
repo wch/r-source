@@ -170,6 +170,9 @@ AC_PATH_PROG(LATEX, latex, false)
 AC_PATH_PROG(DVIPS, dvips, false)
 AC_PATH_PROG(MAKEINDEX, makeindex, false)
 
+AC_PATH_PROG(R_UNZIPCMD, unzip, "")
+AC_PATH_PROG(R_ZIPCMD, zip, "")
+
 ## Make.
 
 MAKE=${MAKE-make}
