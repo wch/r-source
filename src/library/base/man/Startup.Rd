@@ -10,15 +10,20 @@
 \alias{.Rprofile}
 \alias{.First}
 \description{
-  In \R, the startup mechanism is as follows. If a file
-  \file{.Renviron}, or a file pointed to by \file{R\_ENVIRON} or
-  \file{\eqn{\sim}{~}/.Renviron}, exists, it is processed
-  to set environmental variables. (This is suppressed
-  by the flag \code{--no-environ}.)  Then \R searches for
-  the site-wide startup profile unless the command line option
-  \code{--no-site-file} was given.  The name of this file is taken
-  from the value of the \code{R\_PROFILE} environment variable.  If that
-  variable is unset, the default is \file{\$R\_HOME/etc/Rprofile}.
+  In \R, the startup mechanism is as follows.  If a file
+  \file{.Renviron}, or a file pointed to by \code{R\_ENVIRON} or
+  \file{\eqn{\sim}{~}/.Renviron}, exists, it is processed to set
+  environmental variables.  (This is suppressed by the flag
+  \code{--no-environ}.)   The lines in these files must be comment lines
+  starting with a \code{#}, or of the form \code{name=value} where
+  \code{value} is subject to shell parameter expansion; in particular,
+  the form \code{${foo-"bar"}} can be used for providing default values
+  (this construction can be nested as well).
+
+  Then \R searches for the site-wide startup profile unless the command
+  line option \code{--no-site-file} was given.  The name of this file is
+  taken from the value of the \code{R\_PROFILE} environment variable.
+  If this variable is unset, the default is \file{\$R\_HOME/etc/Rprofile}.
   This code is loaded into package \code{base}.
 
   Then, unless \code{--no-init-file} was given, \R searches for a file
