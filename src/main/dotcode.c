@@ -301,7 +301,6 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup)
 {
     SEXP s, prev;
     int nargs=0, naokused=0, dupused=0, pkgused=0;
-
     *naok = 0;
     *dup = 1;
     *len = 0;
@@ -321,15 +320,16 @@ static SEXP naokfind(SEXP args, int * len, int *naok, int *dup)
                any additional arguments and not insist that PACKAGE
                be the last argument.
              */
-             if(s == args) 
-		 args = s = CDR(s);
-             else 
-		 SETCDR(prev, s = CDR(s));
-             continue;
-	} 
-        nargs++;
-	prev = s;
-	s = CDR(s);
+	} else {
+	    nargs++;
+	    prev = s;
+	    s = CDR(s);
+	    continue;
+	}
+	if(s == args) 
+	    args = s = CDR(s);
+	else 
+	    SETCDR(prev, s = CDR(s));
     }
     *len = nargs;
     return args;

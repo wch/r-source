@@ -36,7 +36,7 @@ cut.default <- function (x, breaks, labels=NULL, include.lowest = FALSE,
                nb,
 	       code= 	integer(length(x)),
                right=	as.logical(right),
-	       include= as.logical(include.lowest),
+	       include= as.logical(include.lowest), naok = TRUE,
 	       NAOK= TRUE, DUP = FALSE, PACKAGE = "base") $code
     ## NB this relies on passing NAOK in that position!
     if(codes.only) code

@@ -92,13 +92,15 @@ C-LEVEL FACILITIES
     o	Substitutes for (v)snprintf will be used if the OS does not
 	supply one, so tests for HAVE_(V)SNPRINTF are no longer needed.
 
+    o	The DUP and NAOK arguments in a .C() call are not passed on
+	to the native routine being invoked.  Any code that relied on
+	the old behaviour will need to be modified.
+	
 
 BUG FIXES
 
     o	Options by = "month" and "year" to seq.POSIXt() take account
 	of changes to/from daylight savings time.
-
-
 
 	**************************************************
 	*						 *

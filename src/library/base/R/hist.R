@@ -82,7 +82,7 @@ hist.default <-
                  nB,
                  counts = integer(nB - 1),
                  right = as.logical(right),
-                 include= as.logical(include.lowest),
+                 include= as.logical(include.lowest), naok = FALSE,
                  NAOK = FALSE, DUP = FALSE, PACKAGE = "base") $counts
     if (any(counts < 0))
         stop("negative `counts'. Internal Error in C-code for \"bincount\"")
