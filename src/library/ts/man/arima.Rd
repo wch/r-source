@@ -1,9 +1,9 @@
 \name{arima}
 \alias{arima}
-\alias{print.Arima}
-\alias{coef.Arima}
-\alias{vcov.Arima}
-\alias{logLik.Arima}
+%\alias{print.Arima}
+%\alias{coef.Arima}
+%\alias{vcov.Arima}
+%\alias{logLik.Arima}
 \title{ARIMA Modelling of Time Series}
 \description{
   Fit an ARIMA model to a univariate time series.

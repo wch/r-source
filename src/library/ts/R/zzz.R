@@ -1,6 +1,6 @@
-.First.lib <- function(lib, pkg)
+.onLoad <- function(lib, pkg)
 {
-    library.dynam("ts", pkg, lib)
+#    library.dynam("ts", pkg, lib)
     options(ts.S.compat = FALSE)
 }
 

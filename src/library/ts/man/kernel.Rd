@@ -3,9 +3,9 @@
 \alias{bandwidth.kernel}
 \alias{df.kernel}
 \alias{is.tskernel}
-\alias{print.tskernel}
-\alias{plot.tskernel}
-\alias{[.tskernel}
+%\alias{print.tskernel}
+%\alias{plot.tskernel}
+%\alias{[.tskernel}
 \title{Smoothing Kernel Objects}
 \description{
   The \code{"tskernel"} class is designed to represent discrete
@@ -18,9 +18,9 @@ kernel(coef, m, r, name)
 df.kernel(k)
 bandwidth.kernel(k)
 is.tskernel(k)
-
-\method{print}{tskernel}(x, digits = max(3,getOption("digits")-3), ...)
-\method{plot}{tskernel}(x, ...)
+%
+%\method{print}{tskernel}(x, digits = max(3,getOption("digits")-3), ...)
+%\method{plot}{tskernel}(x, ...)
 }
 \arguments{
   \item{coef}{the upper half of the smoothing kernel coefficients
@@ -31,9 +31,9 @@ is.tskernel(k)
     \code{2*m+1}.}
   \item{name}{the name of the kernel.}
   \item{r}{the kernel order for a Fejer kernel.}
-  \item{digits}{the number of digits to format real numbers.}
-  \item{k, x}{a \code{"tskernel"} object.}
-  \item{\dots}{arguments passed to or from other methods.}
+%  \item{digits}{the number of digits to format real numbers.}
+  \item{k}{a \code{"tskernel"} object.}
+%  \item{\dots}{arguments passed to or from other methods.}
 }
 \details{
   \code{kernel} is used to construct a general kernel or

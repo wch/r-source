@@ -1,7 +1,7 @@
 \name{HoltWinters}
 \alias{HoltWinters}
-\alias{print.HoltWinters}
-\alias{residuals.HoltWinters}
+%\alias{print.HoltWinters}
+%\alias{residuals.HoltWinters}
 \title{Holt-Winters Filtering}
 \description{
   Computes Holt-Winters Filtering of a given time series.
