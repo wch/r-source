@@ -73,8 +73,8 @@ The current version of this document is @value{VERSION}.
 * Configuration on Unix::       
 * Building the GNOME console::  
 * Enabling search in HTML help::  
-* New platforms:: 
-* The Windows toolset::
+* The Windows toolset::         
+* New platforms::               
 * Function and variable index::  
 * Concept index::               
 @end menu
@@ -340,7 +340,7 @@ make vignettes
 @end example
 
 @noindent
-which makes the @samp{grid} vignettes (which are contained in the tarballs): 
+which makes the @samp{grid} vignettes (which are contained in the tarballs):
 it takes several minutes.
 
 Now @code{rehash} if necessary, type @kbd{R}, and read the @R{} manuals
@@ -428,7 +428,7 @@ so readable on-screen as the other three options.
 A package to use composites of Computer Modern fonts.  This works well
 most of the time, and its PDF is more readable on-screen than the
 previous two options.  There are three fonts for which it will need to
-use bitmapped fonts, @file{tctt0900.600pk}, @file{tctt1000.600pk} and 
+use bitmapped fonts, @file{tctt0900.600pk}, @file{tctt1000.600pk} and
 @file{tcrm1000.600pk}.  Unfortunately, if those files are not available,
 Acrobat Reader will substitute completely incorrect glyphs so you need
 to examine the logs carefully.  This was the default in @R{} version
@@ -547,16 +547,16 @@ See the @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
 @section Building from source
 
 @menu
-* Getting the tools::
-* Getting the source files::
-* Building the core files::
-* Building the bitmap files::
-* Windows internationalization::
-* Building the recommended packages::
-* Building the manuals::
-* Building the installers::
-* Checking the build::
-* Cross-building on ix86 Linux::
+* Getting the tools::           
+* Getting the source files::    
+* Building the core files::     
+* Building the bitmap files::   
+* Windows internationalization::  
+* Building the recommended packages::  
+* Building the manuals::        
+* Building the installers::     
+* Checking the build::          
+* Cross-building on ix86 Linux::  
 @end menu
 
 @node Getting the tools, Getting the source files, Building from source, Building from source
@@ -564,8 +564,8 @@ See the @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
 
 If you want to build @R{} from the sources, you will first need
 to collect, install and test an extensive set of tools.  See
-@ref{The Windows toolset} (and updates in 
-@url{http://www.murdoch-sutherland.com/Rtools/}) for details.  
+@ref{The Windows toolset} (and updates in
+@url{http://www.murdoch-sutherland.com/Rtools/}) for details.
 
 Be sure to set your path in the order given in the appendix.
 
@@ -575,42 +575,50 @@ Be sure to set your path in the order given in the appendix.
 You need to collect the following sets of files:
 @itemize
 
-  @item Get the @R{} source code @file{R-@value{VERSIONno}.tgz} from CRAN.  
-Open a commands window at a directory @emph{whose path does not 
-contain spaces}.  We will call this directory @file{$R_HOME} below.  Run
-  @example
+@item
+Get the @R{} source code @file{R-@value{VERSIONno}.tgz} from CRAN.  Open
+a commands window (or another shell) at a directory @emph{whose path
+does not contain spaces}.  We will call this directory @file{$R_HOME}
+below.  Run
+@example
 tar zxvf R-@value{VERSIONno}.tgz
-  @end example
-to create the source tree in @file{$R_HOME}.  BEWARE: do use tar to extract
-the sources rather than broken tools such as
+@end example
+to create the source tree in @file{$R_HOME}.  @strong{Beware}: do use
+@code{tar} to extract the sources rather than broken tools such as
 WinZip that don't understand about symbolic links.
 
-  @item Extract the international character support file @file{iconv.dll}
-from @url{http://www.murdoch-sutherland.com/Rtools/iconv.zip} and 
-put it in @file{R_HOME/src/gnuwin32/unicode}.
+@item
+Extract the international character support file @file{iconv.dll} from
+@url{http://www.murdoch-sutherland.com/Rtools/iconv.zip} and put it in
+@file{R_HOME/src/gnuwin32/unicode}.
 
-  @item The TclTk support files are in
+@item
+The TclTk support files are in
 @url{http://www.murdoch-sutherland.com/Rtools/R_Tcl.zip}: unzip this in
 @file{$R_HOME}, and it will add directories @file{$R_HOME/Tcl},
 @file{$R_HOME/Tcl/bin}, etc.
 
-  @item You need @code{libpng} and @code{jpeg} sources (available, e.g., from
+@item
+You need @code{libpng} and @code{jpeg} sources (available, e.g., from
 @url{http://www.libpng.org}, @url{ftp://ftp.uu.net/graphics/}[png,jpeg].
-You will need files @file{libpng-1.2.5.tar.gz} and @file{jpegsrc.v6b.tar.gz} 
-or later. 
+You will need files @file{libpng-1.2.5.tar.gz} and
+@file{jpegsrc.v6b.tar.gz} or later.
 
-  @item You need to obtain copies of the recommended packages from CRAN.
-Put the @file{.tar.gz} files in @file{$R_HOME/src/library/Recommended}.
-If you have @code{rsync} and an Internet connection, you can do this 
+@item
+You need to obtain copies of the recommended packages from CRAN.  Put
+the @file{.tar.gz} files in @file{$R_HOME/src/library/Recommended}.  If
+you have @code{rsync} and an Internet connection, you can do this
 automatically using
 @example
 make rsync-recommended
 @end example
 
-  @item Optionally, you can install an ATLAS (@url{http://math-
-atlas.sourceforge.net/}) tuned to your system for fast linear algebra
-routines. Prebuilt Rblas.dll for various Pentium and AthlonXP chips
-are available in the windows/contrib/ATLAS area on CRAN.
+@item
+Optionally, you can install an ATLAS
+(@url{http://math-atlas.sourceforge.net/}) tuned to your system for fast
+linear algebra routines. Prebuilt @code{Rblas.dll} for various Pentium
+and AthlonXP chips are available in the @file{windows/contrib/ATLAS}
+area on CRAN.
 
 Another tuned BLAS which is available for some CPUs is by Kazushige
 Goto.  He does not allow redistribution: his builds are currently available
@@ -619,12 +627,12 @@ make use of this, put the @file{DLL} somewhere in your path or in
 @file{$R_HOME/bin}, and edit @file{$R_HOME/src/gnuwin32/MkRules} to
 define @code{USE_GOTO=YES} and the name of the @file{DLL} (something like
 @file{libgoto_p4_512-r0.9.dll}).
-  
+
 Goto's BLAS takes preference over ATLAS, and seems a little faster.
 However, as it is compiled for MSVC, we have been unable to make it
 work for complex arithmetic and so it is only used in for real linear
 algebra.
-  
+
 Dr. Goto supplies DLLs for PIII, P4 and Opteron processors: that for
 PIIIs runs on AthlonXP as well.
 
@@ -637,14 +645,13 @@ You may need to compile under a case-honouring file system: we found
 that a @command{samba}-mounted file system (which maps all file names to
 lower case) did not work.
 
-  Open a commands window at @file{$R_HOME/src/gnuwin32}.
-Edit @file{MkRules} to set the appropriate paths as needed and to
-set the type(s) of help that you want built.  BEWARE: @file{MkRules} contains
-tabs and some editors (e.g. WinEdt) silently remove them.  
-  
-Then run
+Open a commands window at @file{$R_HOME/src/gnuwin32}.  Edit
+@file{MkRules} to set the appropriate paths as needed and to set the
+type(s) of help that you want built.  @strong{Beware}: @file{MkRules}
+contains tabs and some editors (e.g. WinEdt) silently remove them.  Then
+run
 @example
-make 
+make
 @end example
 
 @noindent
@@ -658,12 +665,12 @@ specified in @file{MkRules}. Its source is the help directory, and you need
 the HTML Help Workshop files to build it.  You can just
 copy this from a binary distribution.
 
-@item 
+@item
 We have had reports that earlier versions of Norton Anti-Virus
 lock up the machine when @code{windres} is run, so you may need to disable
 it. (Norton Anti-Virus 2002 causes no problems.)
 
-@item 
+@item
 By default Doug Lea's @code{malloc} in the file
 @file{$R_HOME/src/gnuwin32/malloc.c} is used for R's internal memory
 allocations.  You can opt out of this by commenting the line
@@ -676,6 +683,7 @@ You can run a parallel make by e.g.
 @example
 make -j2
 @end example
+@noindent
 but this is only likely to be worthwhile on a dual-processor (or
 perhaps a hyperthreaded P4) machine with ample (at least 384Mb) of
 memory.  On a dual AthlonXP it reduced the build time by about 30%
@@ -719,8 +727,8 @@ Define both @code{SUPPORT_MBCS} and @code{SUPPORT_UTF8} in
 @file{config.h} to enable support in the R engine and in the Windows
 graphics device for UTF-8 character sets.  Since there are no UTF-8
 locales on Windows, this sets the locale to be UTF-8 and expects
-input/output in UTF-8 so is
-only useful with a customized front-end to @file{R.dll}.
+input/output in UTF-8 so is only useful with a customized front-end to
+@file{R.dll}.
 
 If any of these is defined you need the DLL @file{msvcp60.dll} to be
 installed.  It is on recent versions of Windows, and can be obtained
@@ -755,9 +763,10 @@ To make DVI versions of the manuals use
 cd ../../doc/manual
 make -f Makefile.win dvi
 @end example
-(all assuming you have tex and latex installed and in your path).
+(all assuming you have @command{tex} and @command{latex} installed and
+in your path).
 
-See the @ref{Making the manuals} section in the Unix section for 
+See the @ref{Making the manuals} section in the Unix section for
 setting options such as the paper size.
 
 @node Building the installers, Checking the build, Building the manuals, Building from source
@@ -773,8 +782,8 @@ make distribution
 make check-all
 @end example
 will make all the pieces and the installers and put them in the
-@file{gnuwin32/cran} subdirectory, then check the build.  This works by building
-all the parts in the sequence:
+@file{gnuwin32/cran} subdirectory, then check the build.  This works by
+building all the parts in the sequence:
 
 @example
 Rpwd.exe (a utility needed in the build)
@@ -796,7 +805,7 @@ earlier parts must be built before later ones.  (The @file{Makefile} doesn't
 enforce this dependency---some build targets force a lot of
 computation even if all files are up to date.)  The first, third,
 fourth and fifth targets are the default build if just "make" is run,
-but the second (which builds the default version of R.dll) needs to be
+but the second (which builds the default version of @file{R.dll}) needs to be
 run first.
 
 If you want to customize the installation by adding extra packages,
@@ -822,12 +831,10 @@ the absolute path to a suitable temporary directory: the default is
 
 You will need i386-mingw32 cross-compilers installed and in your path.
 There is currently a complete set of tools at
+@url{http://www.stats.ox.ac.uk/pub/Rtools/mingw-cross4.tar.bz2} (Just
+unpack this somewhere and put its @file{bin} directory in your path.)
 
-@url{http://www.stats.ox.ac.uk/pub/Rtools/mingw-cross4.tar.bz2}
-
-(Just unpack this somewhere and put its @file{bin} directory in your path.)
-
-You will need @code{Perl}, @code{zip} and @code{unzip} installed 
+You will need @code{Perl}, @code{zip} and @code{unzip} installed
 and @code{makeinfo >= 4.5} (part of GNU @code{texinfo}).
 
 You also need the R source (@file{R-2.x.y.tgz}).
@@ -837,11 +844,11 @@ Then: untar @file{R-2.x.y.tgz} somewhere, and
 @example
 cd /somewhere/R-2.x.y/src/gnuwin32
 @end example
-Edit @file{MkRules} to set @code{BUILD=CROSS} and the appropriate 
+Edit @file{MkRules} to set @code{BUILD=CROSS} and the appropriate
 paths (including @code{HEADER}) as needed.
 
 Edit @file{MkRules} to set the type(s) of help that you want built. (You will
-not be able to cross-build @file{.chm} files, so @code{WINHELP} is 
+not be able to cross-build @file{.chm} files, so @code{WINHELP} is
 automatically set to @code{NO}.)
 
 You also need a working copy of @emph{this version} of R on Linux:
@@ -859,7 +866,7 @@ for testing) use
 @example
 cd installer
 make imagedir
-zip -r9X rw2000.zip rw2000  # or something similar
+zip -r9X rw2010.zip rw2010  # or something similar
 @end example
 Currently we have not found a reliable way to convert base to lazy-loading
 when cross-building, so it is left in the old format.
@@ -897,14 +904,14 @@ expand the @R{} sources and configure @R{} appropriately, for example
 @example
 tar zxvf R-@value{VERSIONno}.tgz
 cd R-@value{VERSIONno}
-./configure --with-blas='-framework vecLib' --with-lapack --with-aqua 
+./configure --with-blas='-framework vecLib' --with-lapack --with-aqua
 make
 @end example
 
 @noindent
 sit back and wait. The last option @option{--with-aqua} is needed only
-if you want a Console GUI. 
-The first two options are strongly recommended. 
+if you want a Console GUI.
+The first two options are strongly recommended.
 
 @R{} is by default configured and installed as a framework called
 @file{R.framework}. The default path for @file{R.framework} is
@@ -970,7 +977,7 @@ CMD INSTALL --help} to see the current list.
 
 The same command works in Windows if you have the source-code package
 files (option ``Source Package Installation Files'' in the installer)
-and toolset (see @ref{The Windows toolset}) installed.  
+and toolset (see @ref{The Windows toolset}) installed.
 
 @findex install.packages
 Alternatively, packages can be downloaded and installed from within
@@ -1019,7 +1026,7 @@ Aqua GUI provides for installation of either binary or source packages,
 from @acronym{CRAN} or local files.
 
 @menu
-* Customising compilation in Windows::
+* Customising compilation in Windows::  
 @end menu
 
 @node Customising compilation in Windows, , Installing packages, Installing packages
@@ -1041,24 +1048,24 @@ types of help (if any) to be generated can be chosen (variables
 compilation steps is to set variables in a file
 @file{src/Makevars.win}, which will automatically be included by
 @file{MakeDLL}. For example, for RODBC @file{src/Makevars.win} could
-include the line 
-@example 
-DLLLIBS+=-lodbc32 
-@end example 
-or, equivalently, 
-@example 
-RODBC-DLLLIBS=-lodbc32 
-@end example 
+include the line
+@example
+DLLLIBS+=-lodbc32
+@end example
+or, equivalently,
+@example
+RODBC-DLLLIBS=-lodbc32
+@end example
 If you have a file @file{src/Makefile.win}, that will be used as the
 makefile for source compilation in place of our makefile
 @file{MakeDll}.
 
-BEWARE: files @file{src/Makefile} or @file{src/Makevars} will be used
+@strong{Beware}: files @file{src/Makefile} or @file{src/Makevars} will be used
 if they exist and the @file{.win} equivalents do not.  Such files
 included in package sources are usually designed for use under Unix
 and are best removed.
 
-BEWARE: references to variables in @file{R.dll} are converted to the
+@strong{Beware}: references to variables in @file{R.dll} are converted to the
 right form by using the header files.  You must include them.
 
 For additional control, @file{$R_HOME/src/gnuwin32/Makefile} contains
@@ -1073,9 +1080,9 @@ directory).  Other targets are
 compress the help files after building the package.
 @item @code{ziphelp-foo} to both compress the help
 files and to keep the originals.
-@item @code{zipdata-foo} to compress the data files.  This is 
+@item @code{zipdata-foo} to compress the data files.  This is
 recommended if you have either many small
-data files (as in package @code{Devore5}) or a few large data files.
+data files (as in package @pkg{Devore5}) or a few large data files.
 @item @code{pkgcheck-foo} to check the package (like @code{R CMD CHECK foo}).
 @end itemize
 Using this approach allows variables to be set during the build, e.g.
@@ -1193,7 +1200,7 @@ as from version 2.1.0.
 
 A @emph{locale} is a description of the local environment of the user,
 including the preferred language, the encoding of characters, the
-currency used and its conventions, and so on.  Aspects of the locale are 
+currency used and its conventions, and so on.  Aspects of the locale are
 accessed by the @R{} functions @code{Sys.getlocale} and
 @code{Sys.localeconv}.
 
@@ -2480,11 +2487,11 @@ to collect, install and test an extensive set of tools.  See
 @url{http://www.murdoch-sutherland.com/Rtools/} for the current locations
 and other updates to these instructions.
 
-Some of these tools are also necessary for building add-on packages from 
+Some of these tools are also necessary for building add-on packages from
 source.  (Most Windows users will not need to do that; see @ref{Add-on packages}
 for details.)  We have found that the build process for @R{} is quite
-sensitive to the choice of tools:  please follow our instructions 
-@emph{exactly}, even to the choice of particular versions of the tools.
+sensitive to the choice of tools:  please follow our instructions
+@strong{exactly}, even to the choice of particular versions of the tools.
 The build process for add-on packages is somewhat more forgiving, but we
 recommend using the exact toolset at first, and only substituting other
 tools once you are familiar with the process.
@@ -2500,7 +2507,7 @@ of @R{}:
 The command line tools
 @item
 Perl
-@item 
+@item
 The MinGW compilers
 @end itemize
 For building simple packages containing data or @R{} source
@@ -2515,12 +2522,6 @@ The Microsoft HTML Help Workshop
 LaTeX
 @end itemize
 
-To build the standalone installer for @R{} you will also need
-@itemize
-@item
-The Inno Setup installer
-@end itemize
-
 All of these need to be installed and in your path, and the
 appropriate environment variables set.  You also need `.' in your
 path.  Do not use filepaths containing spaces: you can always use the
@@ -2528,28 +2529,28 @@ short forms (found by @code{dir /x} at the Windows command line).  The
 path should include them with `.' first, and the remainder in the
 order listed above.  It is essential that the directory containing the
 command line tools comes first or second in the path:  there are
-typically like-named tools in other directories, and they will 
-@emph{not} work.  
+typically like-named tools in other directories, and they will
+@strong{not} work.
 
-Edit @file{$R_home/src/gnuwin32/MkRules} to set the appropriate paths
-as needed and to set the type(s) of help that you want built.  BEWARE:
-@file{MkRules} contains tabs and some editors (e.g. WinEdt) silently
-remove them.
+Edit @file{$R_home/src/gnuwin32/MkRules} to set the appropriate paths as
+needed and to set the type(s) of help that you want built.
+@strong{Beware}: @file{MkRules} contains tabs and some editors
+(e.g. WinEdt) silently remove them.
 
 Our toolset contains copies of Cygwin dlls that may conflict
-with other ones on your system if both are in the path 
+with other ones on your system if both are in the path
 at once.  The normal recommendation is to delete the older ones;
 however, at one time we found our tools did not work with a newer
-version of the Cygwin dlls, so it is safest not to have 
+version of the Cygwin dlls, so it is safest not to have
 any other version of the Cygwin dlls in your path.
 
 @menu
-* The command line tools ::
-* Perl ::
-* The MinGW compilers ::
-* The Microsoft HTML Help Workshop ::
-* LaTeX ::
-* The Inno Setup installer ::
+* The command line tools::      
+* Perl::                        
+* The MinGW compilers::         
+* The Microsoft HTML Help Workshop::  
+* LaTeX::                       
+* The Inno Setup installer::    
 @end menu
 
 @node The command line tools, Perl, The Windows toolset, The Windows toolset
@@ -2563,15 +2564,15 @@ cygwin distribution (@url{http://www.cygwin.com/mirrors.html}) or
 (@code{gzip,} @code{makeinfo,} @code{texindex}) compiled from the
 sources.  You will also need @code{zip} and @code{unzip} from the
 Info-ZIP project (@url{http://www.info-zip.org}).  We have packaged a
-set of all of these tools at 
+set of all of these tools at
 @url{http://www.murdoch-sutherland.com/Rtools/tools.zip}.
 
-BEWARE: `Native' ports of make are @emph{not} suitable (including that at
-the mingw site).  There were also problems with several earlier
-versions of the cygwin tools and dll.  To avoid frustration, please
-use our tool set, and make sure it is at the front of your path
-(including before the Windows system directories).  If you are using a
-Windows shell, type PATH at the prompt to find out.
+@strong{Beware}: `Native' ports of make are @strong{not} suitable
+(including that at the mingw site).  There were also problems with
+several earlier versions of the cygwin tools and dll.  To avoid
+frustration, please use our tool set, and make sure it is at the front
+of your path (including before the Windows system directories).  If you
+are using a Windows shell, type @code{PATH} at the prompt to find out.
 
 @node Perl, The MinGW compilers, The command line tools, The Windows toolset
 @section Perl
@@ -2579,7 +2580,8 @@ Windows shell, type PATH at the prompt to find out.
 You will need the Windows port of @code{perl5}.  A package containing
 this is available from
 @url{http://www.activestate.com/Products/ActivePerl/}.
-BEWARE: you do need the @emph{Windows} port and not the Cygwin one.
+
+@strong{Beware}: you do need the @emph{Windows} port and not the Cygwin one.
 
 @node The MinGW compilers, The Microsoft HTML Help Workshop, Perl, The Windows toolset
 @section The MinGW compilers
@@ -2587,10 +2589,12 @@ BEWARE: you do need the @emph{Windows} port and not the Cygwin one.
 You need a recent version of the Mingw port of @code{gcc} from
 @url{http://sourceforge.net/projects/mingw/}.  There will be a
 distribution called something like @file{MinGW-3.1.0-1.exe} (which is
-built from @code{gcc-3.2.3}).  This needs updating with 
+built from @code{gcc-3.2.3}).  This needs updating with
 @code{mingw-runtime >= 3.7} and @code{w32api >= 3.1}.  The releases of
 @code{gcc-3.3.1}, @code{3.4.1} and @code{3.4.2} have also been tested
-successfully. As of January 2005: There is now a release candidate of
+successfully. 
+
+As of January 2005: There is now a release candidate of
 @code{MinGW-3.2.0}: please use that.
 
 @node The Microsoft HTML Help Workshop, LaTeX, The MinGW compilers, The Windows toolset
@@ -2610,7 +2614,7 @@ have successfully used it elsewhere, others have reported problems).
 The @code{fptex} distribution of @LaTeX{} (via
 @url{http://www.fptex.org}) includes a suitable port of @code{pdftex}.
 We have also used @code{miktex} (@url{http://www.miktex.org}), which
-needs some customization:  see 
+needs some customization:  see
 @url{http://www.murdoch-sutherland.com/Rtools/miktex.html}.
 
 Please read @ref{Making the manuals} about how to
@@ -2620,8 +2624,8 @@ make @file{refman.pdf} and set the environment variables @code{R_RD4DVI} and
 @node The Inno Setup installer, , LaTeX, The Windows toolset
 @section The Inno Setup installer
 
-To make the install package (@file{@value{RWVERSION}.exe}) in the current Windows
-style we require Inno Setup 4.1.5 or later (preferably
+To make the install package (@file{@value{RWVERSION}.exe}) in the
+current Windows style we require Inno Setup 4.1.5 or later (preferably
 5.0.6 or later) from @url{http://jrsoftware.org}.
 
 
