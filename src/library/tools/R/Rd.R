@@ -408,6 +408,86 @@ function(package, dir, lib.loc = NULL)
 
 }
 
+### * Rd_parse
+
+Rd_parse <-
+function(file)
+{
+    if(is.character(file)) {
+        file <- file(file)
+        on.exit(close(file))
+    }
+    if(!inherits(file, "connection"))
+        stop(paste("argument", sQuote("file"),
+                   "must be a character string or connection"))
+    lines <- Rdpp(readLines(file))
+    ## Get meta data (need to agree on what precisely these are), and
+    ## remove the corresponding lines (assuming that these entries are
+    ## all one-liners).  We mostly do this because \alias (see Paren.Rd)
+    ## has non-standard syntax.
+    meta <-
+        list(aliases = .getRdMetaDataFromRdLines(lines, "alias"),
+             concepts = .getRdMetaDataFromRdLines(lines, "concept"),
+             keywords = .getRdMetaDataFromRdLines(lines, "keyword"),
+             doc_type = .getRdMetaDataFromRdLines(lines, "docType"))
+    ## (Use the same regexp as in .getRdMetaDataFromRdLines().)
+    i <- grep(paste("^[[:space:]]*\\\\",
+                    "(alias|concept|keyword|docType)",
+                    "{[[:space:]]*(.*)[[:space:]]*}.*", sep = ""),
+              lines)
+    if(any(i)) lines <- lines[-i]
+    ## Collapse into one character string.
+    txt <- paste(lines, collapse = "\n")
+    ## Initialize for extraction loop.
+    tag <- ""
+    tags <- list()
+    rest <- vals <- character()
+    ## Note that what we do here is not quite the same as what the code
+    ## in R CMD check for checking Rd files does (which e.g. takes all
+    ## lines starting with a command tag as top-level).  Also, it is not
+    ## clear whether this is what we *really* want (or what Rdconv()
+    ## should do).
+    pattern <- "(^|\n)[[:space:]]*\\\\([[:alpha:]])+{"
+    while((pos <- regexpr(pattern, txt)) != -1) {
+        otag <- tag
+        start <- substring(txt, 1, pos + attr(pos, "match.length") - 2)
+        txt <- substring(txt, pos + attr(pos, "match.length") - 1)
+        pos <- regexpr("\\\\([[:alpha:]])+$", start)
+        tag <- substring(start, pos + 1)
+        start <- substring(start, 1, pos - 1)
+        pos <- delimMatch(txt)
+        if(pos == -1)
+            stop(paste("unterminated section", sQuote(tag)))
+        if(tag == "section") {
+            tmp <- substring(txt, 2, attr(pos, "match.length") - 1)
+            txt <- substring(txt, pos + attr(pos, "match.length"))
+            ## Should 'txt' now really start with an open brace?
+            if(substring(txt, 1, 1) != "{")
+                stop("incomplete section", sQuote(tag))
+            pos <- delimMatch(txt)
+            if(pos == -1)
+                stop(paste("unterminated section", sQuote(tag)))
+            tag <- c(tag, tmp)
+        }
+        if(regexpr("^[[:space:]]*(^|\n)[[:space:]]*$", start) == -1) {
+            names(start) <- paste(otag, collapse = " ")
+            rest <- c(rest, start)
+        }
+        tags <- c(tags, list(tag))
+        vals <- c(vals, substring(txt,
+                                  pos + 1,
+                                  pos + attr(pos, "match.length") - 2))
+        txt <- substring(txt, pos + attr(pos, "match.length"))
+    }
+    if(regexpr("^[[:space:]]*(^|\n)[[:space:]]*$", txt) == -1) {
+        names(txt) <- paste(tag, collapse = " ")
+        rest <- c(rest, txt)
+    }
+    list(meta = meta,
+         data = data.frame(tags = I(tags), vals = I(vals)),
+         rest = rest)
+}
+
 ### * getRdSection
 
 getRdSection <-
