@@ -159,6 +159,8 @@ NEW FEATURES
 
 	-  New function monthplot() (contributed by Duncan Murdoch).
 
+	-  New function HoltWinters() (contributed by David Meyer).
+
     o   Much improved printing of matrices and arrays of type "list".
 
     o   deriv/deriv3() can now handle expressions involving pnorm and

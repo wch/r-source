@@ -38,7 +38,9 @@ void filter1(double *x, int *n, double *filter, int *nfilt, int *sides,
 	     int *circular, double *out);
 void filter2(double *x, int *n, double *filter, int *nfilt, double *out);
 void R_pp_sum (double *u, int *n, int *l, double *sum);
-
+void HoltWinters (double *x, int *xl, double *alpha, double *beta,
+		  double *gamma, int *start_time, int *seasonal, int *period,
+		  double *a, double *b, double *s, double *SSE, double *xhat);
 
 void
 F77_SUB(eureka)(int *lr, double *r__, double *g,
@@ -64,10 +66,10 @@ void starma(Starma G, int *ifault);
 
 void karma(Starma G, double *sumlog, double *ssq, int iupd, int *nit);
 
-void forkal(Starma G, int id, int il, double *delta, double *y, 
+void forkal(Starma G, int id, int il, double *delta, double *y,
 	    double *amse, int *ifault);
 
-SEXP setup_starma(SEXP na, SEXP x, SEXP pn, SEXP xreg, SEXP pm, 
+SEXP setup_starma(SEXP na, SEXP x, SEXP pn, SEXP xreg, SEXP pm,
 		  SEXP dt, SEXP ptrans, SEXP sncond);
 SEXP free_starma(SEXP pG);
 SEXP set_trans(SEXP pG, SEXP ptrans);
@@ -82,17 +84,17 @@ SEXP Invtrans(SEXP pG, SEXP x);
 
 SEXP ARMAtoMA(SEXP ar, SEXP ma, SEXP lag_max);
 
-SEXP KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT, SEXP sV, 
+SEXP KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT, SEXP sV,
 		SEXP sh, SEXP sPn, SEXP sUP, SEXP op);
-SEXP KalmanFore(SEXP nahead, SEXP sZ, SEXP sa0, SEXP sP0, SEXP sT, 
+SEXP KalmanFore(SEXP nahead, SEXP sZ, SEXP sa0, SEXP sP0, SEXP sT,
 		SEXP sV, SEXP sh);
 SEXP ARIMA_undoPars(SEXP sin, SEXP sarma);
 SEXP ARIMA_transPars(SEXP sin, SEXP sarma, SEXP strans);
 SEXP ARIMA_Invtrans(SEXP in, SEXP sarma);
 SEXP ARIMA_Gradtrans(SEXP in, SEXP sarma);
-SEXP ARIMA_Like(SEXP sy, SEXP sPhi, SEXP sTheta, SEXP sDelta, SEXP sa, 
+SEXP ARIMA_Like(SEXP sy, SEXP sPhi, SEXP sTheta, SEXP sDelta, SEXP sa,
 		SEXP sP, SEXP sPn, SEXP sUP, SEXP giveResid);
-SEXP ARIMA_CSS(SEXP sy, SEXP sarma, SEXP sPhi, SEXP sTheta, SEXP sncond, 
+SEXP ARIMA_CSS(SEXP sy, SEXP sarma, SEXP sPhi, SEXP sTheta, SEXP sncond,
 	       SEXP giveResid);
 SEXP convolve(SEXP a, SEXP b);
 #endif
