@@ -1763,7 +1763,7 @@ static int token()
     }
 }
 
-int yylex()
+int yylex(void)
 {
     int tok;
 
