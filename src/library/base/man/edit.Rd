@@ -31,7 +31,7 @@ xedit(name = NULL, file = "")
 \details{
   \code{edit} invokes the text editor specified by \code{editor} with
   the object \code{name} to be edited.  It is a generic function,
-  currently with a default method and one for data frames.
+  currently with a default method and one for data frames and matrices.
 
   \code{data.entry} can be used to edit data, and is used by \code{edit}
   to edit matrices and data frames on systems for which
