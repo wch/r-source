@@ -41,7 +41,7 @@
  * so that the same code produces both declarations and definitions.
  *
  * This does not include user interface symbols which are included
- * in separate platform dependent modules. 
+ * in separate platform dependent modules.
  */
 
 
@@ -219,10 +219,10 @@ int R_ReplDLLdo1()
 {
     int c, status;
     SEXP rho = R_GlobalEnv;
-    
+
     if(!*DLLbufp) {
 	R_Busy(0);
-	if (R_ReadConsole(R_PromptString(0, prompt_type), DLLbuf, 1024, 1) == 0) 
+	if (R_ReadConsole(R_PromptString(0, prompt_type), DLLbuf, 1024, 1) == 0)
 	    return -1;
 	DLLbufp = DLLbuf;
     }
@@ -438,7 +438,7 @@ void run_Rmainloop(void)
     SETJMP(R_Toplevel.cjmpbuf);
     R_GlobalContext = R_ToplevelContext = &R_Toplevel;
     signal(SIGINT, onintr);
-    
+
     R_ReplConsole(R_GlobalEnv, 0, 0);
 }
 
@@ -576,16 +576,18 @@ SEXP do_quit(SEXP call, SEXP op, SEXP args, SEXP rho)
     if( !isString(CAR(args)) )
 	errorcall(call,"one of \"yes\", \"no\", \"ask\" or \"default\" expected.\n");
     tmp = CHAR(STRING(CAR(args))[0]);
-    if( !strcmp(tmp, "ask") )
+    if( !strcmp(tmp, "ask") ) {
 	ask = SA_SAVEASK;
-    else if( !strcmp(tmp, "no") )
+	if(!R_Interactive)
+	    warningcall(call, "save=\"ask\" in non-interactive use: command-line default will be used");
+    } else if( !strcmp(tmp, "no") )
 	ask = SA_NOSAVE;
     else if( !strcmp(tmp, "yes") )
 	ask = SA_SAVE;
     else if( !strcmp(tmp, "default") )
 	ask = SA_DEFAULT;
     else
-	errorcall(call,"unrecognized value of ask\n");
+	errorcall(call, "unrecognized value of save\n");
     /* run the .Last function. If it gives an error, will drop back to main
        loop. */
     R_CleanUp(ask);
