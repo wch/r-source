@@ -80,8 +80,8 @@ pairs(x, \dots)
 
   For the default method, missing values are passed to the panel
   functions and will often be ignored within a panel.  However, for the
-  formula method and the default value of \code{\link{na.action}}, all
-  cases which contain a missing values for any of the variables are
+  formula method and the default value of \code{\link[stats]{na.action}},
+  all cases which contain a missing values for any of the variables are
   omitted completely (including when the scales are selected).  [The
   behaviour of the formula method will be changed in R 2.0.0.]
 }
