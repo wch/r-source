@@ -6,14 +6,17 @@ $(DPKG)/R:
 
 $(DPKG)/R/methods.rdb: all.R
 	@echo "  dumping R code in package \`$(PKG)'"
+	@cp all.R $(RHOME)/library/methods/R/methods
 ifeq ($(strip $(BUILD)),CROSS)
 	@ cp `$(R_EXE) RHOME`/library/methods/libs/methods.so $(RHOME)/library/methods/libs
-	@ (cp $< $(RHOME)/library/methods/R/methods; cd $(RHOME)/library/methods; echo "loadNamespace(\"methods\", \"..\")" | R_DEFAULT_PACKAGES=NULL $(R_EXE) --vanilla --slave)
+	@echo "loadNamespace(\"methods\", \"$(RHOME)/library\")" | \
+          R_DEFAULT_PACKAGES=NULL $(R_EXE) --vanilla --slave
 	@ rm $(RHOME)/library/methods/libs/methods.so
 else
-	(cp all.R $(RHOME)/library/methods/R/methods; echo "loadNamespace(\"methods\")" | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=NULL)
+	@echo "loadNamespace(\"methods\")" | \
+          $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=NULL
 endif
-	$(ECHO)  "preparing package $(PKG) for lazy loading"
+	@$(ECHO)  "preparing package $(PKG) for lazy loading"
 	@$(CP) -p $(RHOME)/share/R/nspackloader.R $(DPKG)/R/$(PKG)
 
 all.R: $(PKGRFILES)
