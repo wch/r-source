@@ -353,7 +353,7 @@ extern SEXP X11_do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho); /* from s
 
 SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-	if(useaqua)
+	if(useaqua | useCocoa)
 		return(ptr_do_dataentry(call, op, args, env));
 #if defined(HAVE_X11)
 	else
