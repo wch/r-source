@@ -18,11 +18,8 @@
  */
 
 #include "Mathlib.h"
-#include "Errormsg.h"
-/* instead of #include "Defn.h" : */
-#define NA_INTEGER	R_NaInt
-
-
+#include "Error.h"
+#include "Arith.h"
 
 /* bincode  cuts up the data using half open intervals defined as [a,b)
    bincode2 cuts up the data using half open intervals defined as (a,b]
@@ -35,64 +32,64 @@ int
 bincode(double *x, int *pn, double *breaks, int *pnb, int *code,
 	int *include_border, int *naok)
 {
-	int i, lo, hi;
-	int n, nb1, new;
+    int i, lo, hi;
+    int n, nb1, new;
 
-	n = *pn;
-	nb1 = *pnb - 1;
+    n = *pn;
+    nb1 = *pnb - 1;
 
-	for(i=0 ; i<n ; i++)
-	 if(FINITE(x[i])) {
-		lo = 0;
-		hi = nb1;
-		if(x[i] <  breaks[lo] || breaks[hi] < x[i] ||
-		   (x[i] == breaks[hi] && ! *include_border))
-			code[i] = NA_INTEGER;
-		else {
-			while(hi-lo >= 2) {
-				new = (hi+lo)/2;
-				if(x[i] >= breaks[new])
-					lo = new;
-				else
-					hi = new;
-			}
-			code[i] = lo+1;
+    for(i=0 ; i<n ; i++)
+	if(FINITE(x[i])) {
+	    lo = 0;
+	    hi = nb1;
+	    if(x[i] <  breaks[lo] || breaks[hi] < x[i] ||
+	       (x[i] == breaks[hi] && ! *include_border))
+		code[i] = NA_INTEGER;
+	    else {
+		while(hi-lo >= 2) {
+		    new = (hi+lo)/2;
+		    if(x[i] >= breaks[new])
+			lo = new;
+		    else
+			hi = new;
 		}
-	 } else if (! *naok)
-		error("NA's in .C(\"bincode\",... NAOK=FALSE)");
-	return 0;
+		code[i] = lo+1;
+	    }
+	} else if (! *naok)
+	    error("NA's in .C(\"bincode\",... NAOK=FALSE)");
+    return 0;
 }
 
 int
 bincode2(double *x, int *pn, double *breaks, int *pnb, int *code,
 	 int *include_border, int *naok)
 {
-	int i, lo, hi;
-	int n, nb1, new;
+    int i, lo, hi;
+    int n, nb1, new;
 
-	n = *pn;
-	nb1 = *pnb - 1;
+    n = *pn;
+    nb1 = *pnb - 1;
 
-	for(i=0 ; i<n ; i++)
-	 if(FINITE(x[i])) {
-		lo = 0;
-		hi = nb1;
-		if(x[i] <  breaks[lo] || breaks[hi] < x[i] ||
-		   (x[i] == breaks[lo] && ! *include_border))
-			code[i] = NA_INTEGER;
-		else {
-			while(hi-lo >= 2) {
-				new = (hi+lo)/2;
-				if(x[i] > breaks[new])
-					lo = new;
-				else
-					hi = new;
-			}
-			code[i] = lo+1;
+    for(i=0 ; i<n ; i++)
+	if(FINITE(x[i])) {
+	    lo = 0;
+	    hi = nb1;
+	    if(x[i] <  breaks[lo] || breaks[hi] < x[i] ||
+	       (x[i] == breaks[lo] && ! *include_border))
+		code[i] = NA_INTEGER;
+	    else {
+		while(hi-lo >= 2) {
+		    new = (hi+lo)/2;
+		    if(x[i] > breaks[new])
+			lo = new;
+		    else
+			hi = new;
 		}
-	 } else if (! *naok)
-		error("NA's in .C(\"bincode\",... NAOK=FALSE)");
-	return 0;
+		code[i] = lo+1;
+	    }
+	} else if (! *naok)
+	    error("NA's in .C(\"bincode\",... NAOK=FALSE)");
+    return 0;
 }
 
 
@@ -104,32 +101,32 @@ int
 bincount(double *x, int *pn, double *breaks, int *pnb, int *count,
 	 int *include_border, int *naok)
 {
-	int i, lo, hi;
-	int n, nb1, new;
+    int i, lo, hi;
+    int n, nb1, new;
 
-	n = *pn;
-	nb1 = *pnb - 1;
+    n = *pn;
+    nb1 = *pnb - 1;
 
-	for(i=0; i<nb1; i++)
-		count[i] = 0;
+    for(i=0; i<nb1; i++)
+	count[i] = 0;
 
-	for(i=0 ; i<n ; i++)
-	 if(FINITE(x[i])) {
-		lo = 0;
-		hi = nb1;
-		if(breaks[lo] <= x[i] &&
-		   (x[i] < breaks[hi] ||
-		    (x[i]==breaks[hi] && *include_border))) {
-			while(hi-lo >= 2) {
-				new = (hi+lo)/2;
-				if(x[i] > breaks[new])
-					lo = new;
-				else
-					hi = new;
-			}
-			count[lo] += 1;
+    for(i=0 ; i<n ; i++)
+	if(FINITE(x[i])) {
+	    lo = 0;
+	    hi = nb1;
+	    if(breaks[lo] <= x[i] &&
+	       (x[i] < breaks[hi] ||
+		(x[i]==breaks[hi] && *include_border))) {
+		while(hi-lo >= 2) {
+		    new = (hi+lo)/2;
+		    if(x[i] > breaks[new])
+			lo = new;
+		    else
+			hi = new;
 		}
-	 } else if (! *naok)
-		error("NA's in .C(\"bincode\",... NAOK=FALSE)");
-	return 0;
+		count[lo] += 1;
+	    }
+	} else if (! *naok)
+	    error("NA's in .C(\"bincode\",... NAOK=FALSE)");
+    return 0;
 }
