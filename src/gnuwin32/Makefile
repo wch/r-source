@@ -5,7 +5,7 @@ WINHELP = BOTH# NO, CHM, BOTH
 
 PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
 ALLPACKAGES = $(PACKAGES) tcltk
-RPREFIX = rw1021
+RPREFIX = rw1022
 
 RHOME = $(shell perl pwd.pl ../..)# must be absolute path
 RLIB = $(RHOME)/library

@@ -14,8 +14,8 @@ current links at http://www.stats.ox.ac.uk/pub/Rtools/.
 You will need suitable versions of at least make, sh, cat, cp, diff,
 echo, g(awk), mkdir, mv, rm, sed; we have packaged a set at
 http://www.stats.ox.ac.uk/pub/Rtools/tools.zip extracted from the
-cygwin distribution (http://sources.redhat.com/cygwin/mirrors.html) or
-(gzip, tar) compiled from the sources.
+cygwin distribution (http://www.cygwin.com/mirrors.html) or (gzip,
+tar) compiled from the sources.
 
 BEWARE: `Native' ports of make are _not_ suitable (including that at
 the mingw32 site).  There are also problems with several earlier

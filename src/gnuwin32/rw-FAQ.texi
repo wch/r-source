@@ -692,10 +692,9 @@ the @code{cygwin gdb} was able to catch but which terminated the
 
 If you have an X server available on the PC, there is a version of
 @code{DDD} available that runs under the cygwin emulation layer (follow
-the links at @uref{http://sources.redhat.com/cygwin}) and provides a
-graphical user interface to @code{gdb}.  Another (Windows-native) GUI
-for @code{gdb} is @code{Insight}, part of the latest @code{cygwin}
-version of @code{gdb}
+the links at @uref{http://www.cygwin.com}) and provides a graphical user
+interface to @code{gdb}.  Another (Windows-native) GUI for @code{gdb} is
+@code{Insight}, part of the latest @code{cygwin} version of @code{gdb}
 
 
 
