@@ -57,9 +57,10 @@ as.ordered(x)
   \code{\link{levels}} and \code{\link{nlevels}} for accessing the
   levels,  and \code{\link{codes}} to get integer codes.
 }
-\keyword{category}
 \examples{
 ff <- factor(substring("statistics",1:10,1:10), levels=letters)
 ff
 codes(ff)
 }
+\keyword{category}
+\keyword{NA}
