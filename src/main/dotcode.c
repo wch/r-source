@@ -53,11 +53,13 @@ DL_FUNC R_FindSymbol(char *);
 static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort)
 {
     int *iptr;
+    float *sptr;
     double *rptr;
     char **cptr, *fptr;
     complex *zptr;
-    SEXP *lptr;
+    SEXP *lptr, CSingSymbol=install("Csingle");
     int i, l, n;
+    
     switch(TYPEOF(s)) {
     case LGLSXP:
     case INTSXP:
@@ -82,11 +84,19 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort)
 		error("NA/NaN/Inf in foreign function call (arg %d)", narg);
 	}
 	if (dup) {
-	    rptr = (double*)R_alloc(n, sizeof(double));
-	    for (i = 0 ; i < n ; i++)
-		rptr[i] = REAL(s)[i];
-	}
-	return (void*)rptr;
+	    if(asLogical(getAttrib(s, CSingSymbol)) == 1) {
+		sptr = (float*)R_alloc(n, sizeof(float));
+		for (i = 0 ; i < n ; i++)
+		    sptr[i] = (float) REAL(s)[i];
+		return (void*)sptr;
+	    } else {
+		rptr = (double*)R_alloc(n, sizeof(double));
+		for (i = 0 ; i < n ; i++)
+		    rptr[i] = REAL(s)[i];
+		return (void*)rptr;
+	    }
+	} else
+	    return (void*)rptr;
 	break;
     case CPLXSXP:
 	n = LENGTH(s);
@@ -149,15 +159,18 @@ static void *RObjToCPtr(SEXP s, int naok, int dup, int narg, int Fort)
     }
 }
 
-static SEXP CPtrToRObj(void *p, int n, SEXPTYPE type, int Fort)
+static SEXP CPtrToRObj(void *p, SEXP arg, int Fort)
 {
-    int *iptr;
+    int *iptr, n=length(arg);
+    float *sptr;
     double *rptr;
     char **cptr, buf[256];
     complex *zptr;
-    SEXP *lptr;
+    SEXP *lptr, CSingSymbol = install("Csingle");
     int i;
     SEXP s, t;
+    SEXPTYPE type =TYPEOF(arg);
+    
     switch(type) {
     case LGLSXP:
     case INTSXP:
@@ -169,9 +182,12 @@ static SEXP CPtrToRObj(void *p, int n, SEXPTYPE type, int Fort)
 	break;
     case REALSXP:
 	s = allocVector(type, n);
-	rptr = (double*)p;
-	for(i=0 ; i<n ; i++) {
-	    REAL(s)[i] = rptr[i];
+	if(asLogical(getAttrib(arg, CSingSymbol)) == 1) {
+	    sptr = (float*) p;
+	    for(i=0 ; i<n ; i++) REAL(s)[i] = (double) sptr[i];
+	} else {
+	    rptr = (double*) p;
+	    for(i=0 ; i<n ; i++) REAL(s)[i] = rptr[i];
 	}
 	break;
     case CPLXSXP:
@@ -295,26 +311,19 @@ SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
 {
       DL_FUNC fun;
-      /*      char buf[128], *p, *q;  */
       SEXP retval;
-
       /* I don't like this messing with vmax <TSL> */
-      /* vmax = vmaxget(); */
+      /* But it is needed for clearing R_alloc and to be like .Call <BDR>*/
+      char *vmax = vmaxget();
+
       op = CAR(args);
       if (!isString(op))
 	  errorcall(call,"function name must be a string");
-
-      /* make up load symbol & look it up */
-      /*      p = CHAR(STRING(op)[0]);
-      q = buf; while ((*q = *p) != '\0') { p++; q++; }
-
-      if (!(fun=R_FindSymbol(buf))) */
       if (!(fun=R_FindSymbol(CHAR(STRING(op)[0]))))
 	  errorcall(call, "C-R function not in load table");
 
       retval = (SEXP)fun(args);
-
-      /* vmaxset(vmax); */
+      vmaxset(vmax);
       return retval;
 }
 
@@ -1014,7 +1023,7 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "function name must be a string");
 
     /* The following code modifies the argument list */
-    /* We know this is ok because do_dotcode is entered */
+    /* We know this is ok because do_dotCode is entered */
     /* with its arguments evaluated. */
 
     args = naoktrim(CDR(args), &nargs, &naok, &dup);
@@ -1650,8 +1659,7 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     if (dup) {
 	nargs = 0;
 	for (pargs = args ; pargs != R_NilValue ; pargs = CDR(pargs)) {
-	    PROTECT(s = CPtrToRObj(cargs[nargs], LENGTH(CAR(pargs)),
-				   TYPEOF(CAR(pargs)), which));
+	    PROTECT(s = CPtrToRObj(cargs[nargs], CAR(pargs), which));
 	    ATTRIB(s) = duplicate(ATTRIB(CAR(pargs)));
 	    if (TAG(pargs) != R_NilValue)
 		havenames = 1;

@@ -43,39 +43,50 @@ changes made by the C or Fortran code.
 These calls are typically made in conjunction with
 \code{\link{dyn.load}} which links DLLs to \R.
 }
-%%-- This note based on BDR's understanding
-%% edited TSL
+%%-- This note based on BDR's understanding, edited TSL
 \section{Argument types}{
     The mapping of the types of \R arguments to C or Fortran arguments
     in \code{.C} or \code{.Fortran} is
     \tabular{lll}{
 \    R \tab     C \tab     Fortran\cr
 integer \tab int * \tab integer\cr
-real \tab double * \tab double precision\cr
+numeric \tab double * \tab double precision\cr
+-- or -- \tab float * \tab real\cr
 complex \tab complex * \tab double complex\cr
 logical \tab int * \tab integer \cr
 character \tab char ** \tab [see below]\cr
-list \tab void * (SEXP *)\tab not allowed\cr
-other \tab void * (SEXP)\tab not allowed\cr
+list \tab SEXP *\tab not allowed\cr
+other \tab SEXP\tab not allowed\cr
 }
-    The C type \code{complex} is defined in \file{Complex.h} as a
-    \code{typedef struct {double r; double i;}}. Fortran type
-    \code{double complex} is an extension to the Fortran standard, and
-    the availability of a mapping of \code{complex} to Fortran may be
-    compiler dependent.
+Numeric vectors in \R will be passed as type \code{double *} to C
+(and as \code{double precision} to Fortran) unless (i) \code{.C} or
+\code{.Fortran} is used, (ii) \code{DUP} is false and (iii) the argument
+has attribute \code{Csingle} set to \code{TRUE} (use \code{\link{as.single}}
+or \code{\link{single}}).  This mechanism is only intended to be use to
+facilitate the interfacing of existing C and Fortran code.
 
-    \emph{Note:} The C types corresponding to \code{integer} and
-    \code{logical} are \code{int}, not \code{long} as in S.
+The C type \code{complex} is defined in \file{Complex.h} as a
+\code{typedef struct {double r; double i;}}. Fortran type
+\code{double complex} is an extension to the Fortran standard, and
+the availability of a mapping of \code{complex} to Fortran may be
+compiler dependent.
 
-    The first character string of a character vector is passed as a C
-    character array to Fortran: that string may be usable
-    as \code{character*255} if its true length is passed separately. Only up
-    to 255 characters of the string are passed.
+\emph{Note:} The C types corresponding to \code{integer} and
+\code{logical} are \code{int}, not \code{long} as in S.
 
-    Lists, functions, expressions, environments and other language
-elements are passed as generic pointers (\code{void *}). R functions can
-be invoked using \code{call_S} or \code{call_R} and can be passed
-lists or the simple types as arguments.
+The first character string of a character vector is passed as a C
+character array to Fortran: that string may be usable
+as \code{character*255} if its true length is passed separately. Only up
+to 255 characters of the string are passed.
+
+Functions, expressions, environments and other language
+elements are passed as the internal \R pointer type \code{SEXP}. This type is
+defined in \code{Rinternals.h} or the arguments can be declared
+as generic pointers, \code{void *}. Lists are passed as C arrays of
+\code{SEXP} and can be declared as \code{void *} or \code{SEXP *}.
+
+R functions can be invoked using \code{call_S} or \code{call_R} and can
+be passed lists or the simple types as arguments.
 }
 %%-- This note by Thomas Lumley, (minimally edited by MM):
 \note{\emph{\code{DUP=FALSE} is dangerous.}

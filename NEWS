@@ -7,9 +7,13 @@
 
 NEW FEATURES
 
-    o	Character strings can now, on most compilers, be passed
+    o	Character strings can now, with most compilers, be passed
 	on and from Fortran. See ?Foreign for details.
 
+    o	Functions as.single and single now have the effect with
+	.C and .Fortran of passing a numeric argument as float/REAL
+	rather than as double/DOUBLE PRECISION, by setting the
+	attribute "Csingle".
 
 BUG FIXES
 

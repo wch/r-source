@@ -13,8 +13,7 @@ as.complex.default <- function(x) .Internal(as.vector(x, "complex"))
 
 as.single <- function(x,...) UseMethod("as.single")
 as.single.default <- function(x) {
-    warning("type single is not supported in R")
-    .Internal(as.vector(x,"double"))
+    structure(.Internal(as.vector(x,"double")), Csingle=TRUE)
 }
 as.character<- function(x,...) UseMethod("as.character")
 as.character.default <- function(x) .Internal(as.vector(x,"character"))

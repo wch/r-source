@@ -106,7 +106,13 @@
 
 /* S Like Fortran Interface */
 
+/* These may not be adequate everywhere. Convex had _ prepending common
+   blocks, and some compilers may need to specify Fortran linkage */
+
 #define F77_CALL(x)    F77_SYMBOL(x)
 #define F77_NAME(x)    F77_SYMBOL(x)
+#define F77_SUB(x)     F77_SYMBOL(x)
+#define F77_COM(x)     F77_SYMBOL(x)
+#define F77_COMDECL(x) F77_SYMBOL(x)
 
 #endif
