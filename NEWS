@@ -314,7 +314,7 @@ NEW FEATURES
 	- New function topenv() to determine the nearest top level
 	  environment (usually .GlobalEnv or a name space environment).
 
-	- Added name space support for packages that do no use methods.
+	- Added name space support for packages that do not use methods.
 
     o	lm.influence() has a new `do.coef' argument allowing *not* to
 	compute casewise changed coefficients.	This makes plot.lm() much
@@ -622,6 +622,9 @@ BUG FIXES
 
     o	sys.function() now returns the actual function being evaluated in
 	the specified frame rather than one inferred from the call.
+
+    o	match.call() now uses the definition of the actual function being
+	evaluated  rather than one inferred from the call.
 
     o	abbreviate(*, dot = TRUE) now only adds a "." where abbreviations
 	did happen.

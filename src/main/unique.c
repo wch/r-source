@@ -683,7 +683,34 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 	    sysp = R_GlobalEnv;
 	else
 	    sysp = cptr->sysparent;
-	if ( TYPEOF(CAR(funcall)) == SYMSXP )
+	if (cptr != NULL)
+	    /* Changed to use the function from which match.call was
+	       called as recorded in the context.  This change is
+	       needed in case the current function is computed in a
+	       way that cannot be reproduced by a second computation,
+	       or if it is a registered S3 method that is not
+	       lexically visible at the call site.
+
+	       There is one particular case where this represents a
+	       change from previous semantics: The definition is NULL,
+	       the call is supplied explicitly, and the function in
+	       the call is NOT the current function.  The new behavior
+	       is to ignore the function in the call and use the
+	       current function.  This is consistent with (my reading
+	       of) the documentation in both R and Splus.  However,
+	       the old behavior of R was consistent with the behavior
+	       of Splus (and inconsistent with the documentation in
+	       both cases).
+
+	       The previous semantics for this case can be restored by
+	       having the .Internal receive an additional argument
+	       that indicates whether the call was supplied explicitly
+	       or missing, and using the function recorded in the
+	       context only if the call was not supplied explicitly.
+	       The documentation should also be changed to be
+	       consistent with this behavior.  LT */
+	    PROTECT(b = duplicate(cptr->callfun));
+	else if ( TYPEOF(CAR(funcall)) == SYMSXP )
 	    PROTECT(b = findFun(CAR(funcall), sysp));
 	else
 	    PROTECT(b = eval(CAR(funcall), sysp));
