@@ -64,6 +64,8 @@ typedef struct
   char          CRANmirror[255];
   char          BIOCmirror[255];
   int           GlobalPackages;
+  int		GrabStdout;
+  int		GrabStderr;
 }  RAquaPrefs, *RAquaPrefsPointer, **RAquaPrefsHandle;
 
 

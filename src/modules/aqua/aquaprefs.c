@@ -66,7 +66,7 @@ void CallFontPanel(void);
         
 
 /* R Preferences version */                
-#define RAquaPrefsVer	2L
+#define RAquaPrefsVer	3L
 
 /* button ID for Preferences panel */
 #define kConsoleFontButton  	1002
@@ -93,6 +93,8 @@ void CallFontPanel(void);
 #define kBIOCmirrorText         4502
 #define kGlobalPackagesBox      4503
 
+#define kGrabStdoutBox		6000
+#define kGrabStderrBox		6001
 
 #define kApplyPrefsButton	5000
 #define kCancelPrefsButton	5001 
@@ -105,7 +107,7 @@ void CallFontPanel(void);
 #define	kTabPaneSig		'PRTB'
 #define	kPrefControlsSig	'PREF'
 #define kDummyValue		0
-#define kMaxNumTabs		3
+#define kMaxNumTabs		4
 
 ControlID	MainControlID = { kPrefControlsSig, kConsoleFontText };
 ControlID	ConsoleFontTextID = { kPrefControlsSig, kConsoleFontText };
@@ -123,14 +125,16 @@ ControlID	BufferSizeID = { kPrefControlsSig, kBufferSizeSlider };
 ControlID	CRANmirrorID = { kPrefControlsSig, kCRANmirrorText };
 ControlID	BIOCmirrorID = { kPrefControlsSig, kBIOCmirrorText };
 ControlID       GlobalPackagesID = {kPrefControlsSig, kGlobalPackagesBox };
+ControlID       GrabStdoutID = {kPrefControlsSig, kGrabStdoutBox };
+ControlID       GrabStderrID = {kPrefControlsSig, kGrabStderrBox };
 
 static	char		DefaultConsoleFontName[] = "Courier";
 static	int		DefaultConsoleFontSize = 14;
 static	int		DefaultTabSize = 10;
-static	RGBColor	DefaultFGInputColor = {0xffff, 0xffff, 0x0000};
-static	RGBColor	DefaultBGInputColor = {0x0000, 0x0000, 0xffff};
-static	RGBColor	DefaultFGOutputColor = {0x0000, 0xffff, 0x0000};
-static	RGBColor	DefaultBGOutputColor = {0x0000, 0x0000, 0x0000};
+static	RGBColor	DefaultFGInputColor = {0xffff, 0x0000, 0x0000};
+static	RGBColor	DefaultBGInputColor = {0xffff, 0xffff, 0xffff};
+static	RGBColor	DefaultFGOutputColor = {0x0000, 0x0000, 0xffff};
+static	RGBColor	DefaultBGOutputColor = {0xffff, 0xffff, 0xffff};
 static	char 		DefaultDeviceFontName[] = "Helvetica";
 static	int		DefaultDevicePointSize = 12;
 static	double 		DefaultDeviceWidth = 5.0;
@@ -143,6 +147,8 @@ static  int             DefaultBufferSize = 10;
 static  char            DefaultCRANmirror[] ="http://cran.r-project.org";
 static  char            DefaultBIOCmirror[] ="http://www.bioconductor.org";
 static  int             DefaultGlobalPackages = 0;
+static  int             DefaultGrabStdout = 0;
+static  int             DefaultGrabStderr = 0;
 
 ControlRef GrabCRef(WindowRef theWindow,OSType theSig, SInt32 theNum);
 
@@ -152,10 +158,15 @@ Boolean isConsoleFont = true;
 OSStatus MySetFontSelection(void);                              
 OSStatus MyGetFontSelection(EventRef event);
 void RSetPackagePrefs(void);
-       
+void RSetPipes(void);
+        
 /* external symbols from aquaconsole.c */                                   
 extern void RSetColors(void);
 extern void consolecmd(char* cmd);
+extern	void	OpenStdoutPipe();
+extern	void	OpenStderrPipe();
+extern	void	CloseStdoutPipe();
+extern	void	CloseStderrPipe();
 
                     
 
@@ -187,7 +198,7 @@ CFStringRef appName, tabsizeKey, fontsizeKey, consolefontKey, devicefontKey;
 CFStringRef outfgKey, outbgKey, infgKey, inbgKey, bufferingKey, bufferSizeKey;
 CFStringRef devWidthKey, devHeightKey, devPSizeKey;
 CFStringRef devAutoRefreshKey, devAntialiasingKey, devOverrideRDefKey;
-CFStringRef CRANmirrorKey, BIOCmirrorKey, GlobalPackagesKey;
+CFStringRef CRANmirrorKey, BIOCmirrorKey, GlobalPackagesKey, GrabStderrKey, GrabStdoutKey;
            
          
              
@@ -216,6 +227,8 @@ void	SetUpPrefSymbols(void){
     CRANmirrorKey = CFSTR("CRAN mirror");
     BIOCmirrorKey = CFSTR("BIOC mirror");
     GlobalPackagesKey = CFSTR("Global Packages");
+    GrabStdoutKey = CFSTR("Grab Stdout");
+    GrabStderrKey = CFSTR("Grab Stderr");
 }
 
 OSStatus InstallPrefsHandlers(void){
@@ -316,6 +329,8 @@ void SetDefaultPrefs(void)
     strcpy(DefaultPrefs.CRANmirror,DefaultCRANmirror);
     strcpy(DefaultPrefs.BIOCmirror,DefaultBIOCmirror);
     DefaultPrefs.GlobalPackages = DefaultGlobalPackages;
+    DefaultPrefs.GrabStdout = DefaultGrabStdout;
+    DefaultPrefs.GrabStderr = DefaultGrabStderr;
 }
 
 void CopyPrefs(RAquaPrefsPointer From, RAquaPrefsPointer To)
@@ -340,6 +355,8 @@ void CopyPrefs(RAquaPrefsPointer From, RAquaPrefsPointer To)
     strcpy(To->CRANmirror, From->CRANmirror);
     strcpy(To->BIOCmirror, From->BIOCmirror);
     To->GlobalPackages = From->GlobalPackages;
+    To->GrabStdout = From->GrabStdout;
+    To->GrabStderr = From->GrabStderr;
 }
 
     
@@ -353,7 +370,8 @@ void GetRPrefs(void)
     CFDataRef	color;
     RGBColor    fgout,bgout,fgin,bgin;
     char consolefont[255], devicefont[255], CRANmirror[255], BIOCmirror[255];
-    int	autorefresh, antialiasing, overrideRdef, buffering, buffersize, globalpackages;
+    int	autorefresh, antialiasing, overrideRdef, buffering, buffersize;
+    int	grabstdout, grabstderr, globalpackages;
     
     
     SetUpPrefSymbols();
@@ -569,7 +587,24 @@ void GetRPrefs(void)
 
     CurrentPrefs.GlobalPackages = globalpackages;
 
+    value = CFPreferencesCopyAppValue(GrabStdoutKey, appName);   
+    if (value) {
+	if (!CFNumberGetValue(value, kCFNumberIntType, &grabstdout)) grabstdout = DefaultPrefs.GrabStdout;
+	CFRelease(value);
+    } else 
+	grabstdout = DefaultPrefs.GrabStdout; /* set default value */
+
+    CurrentPrefs.GrabStdout = grabstdout;
     
+    value = CFPreferencesCopyAppValue(GrabStderrKey, appName);   
+    if (value) {
+	if (!CFNumberGetValue(value, kCFNumberIntType, &grabstderr)) grabstderr = DefaultPrefs.GrabStderr;
+	CFRelease(value);
+    } else 
+	grabstderr = DefaultPrefs.GrabStderr; /* set default value */
+
+    CurrentPrefs.GrabStderr = grabstderr;
+ 
     SetUpPrefsWindow(&CurrentPrefs);
 
 }
@@ -660,6 +695,11 @@ void SetUpPrefsWindow(RAquaPrefsPointer Settings)
     GetControlByID(RPrefsWindow, &GlobalPackagesID, &myControl);
     SetControl32BitValue(myControl, Settings->GlobalPackages);
 
+    GetControlByID(RPrefsWindow, &GrabStdoutID, &myControl);
+    SetControl32BitValue(myControl, Settings->GrabStdout);
+
+    GetControlByID(RPrefsWindow, &GrabStderrID, &myControl);
+    SetControl32BitValue(myControl, Settings->GrabStderr);
 
 }
 
@@ -674,7 +714,8 @@ void SaveRPrefs(void)
     CFDataRef	color;
     RGBColor    fgout,bgout,fgin,bgin;
     char 	consolefont[255], devicefont[255], cran[255], bioc[255];
-    int	autorefresh, antialiasing, overrideRdef, buffering, buffersize, globalpackages;
+    int	autorefresh, antialiasing, overrideRdef, buffering, buffersize;
+    int	grabstdout, grabstderr, globalpackages;
 
     
     tabsize = CurrentPrefs.TabSize;
@@ -695,6 +736,8 @@ void SaveRPrefs(void)
     buffering = CurrentPrefs.Buffering;
     buffersize = CurrentPrefs.BufferSize;
     globalpackages = CurrentPrefs.GlobalPackages;
+    grabstdout = CurrentPrefs.GrabStdout;
+    grabstderr = CurrentPrefs.GrabStderr;
     strcpy(bioc, CurrentPrefs.BIOCmirror);
     strcpy(cran, CurrentPrefs.CRANmirror);
        
@@ -775,6 +818,14 @@ void SaveRPrefs(void)
     CFPreferencesSetAppValue(GlobalPackagesKey, value, appName);
     CFRelease(value);
 
+    value = CFNumberCreate(NULL, kCFNumberIntType, &grabstdout); 
+    CFPreferencesSetAppValue(GrabStdoutKey, value, appName);
+    CFRelease(value);
+    
+    value = CFNumberCreate(NULL, kCFNumberIntType, &grabstderr); 
+    CFPreferencesSetAppValue(GrabStderrKey, value, appName);
+    CFRelease(value);
+
     /* colors */
     color = CFDataCreate (NULL, (UInt8*)&fgout, sizeof(fgout));
     if(color){
@@ -825,7 +876,7 @@ static pascal OSStatus PrefsTabEventHandlerProc( EventHandlerCallRef inCallRef, 
         // Hide the current pane and make the user selected pane the active one
         // our 3 tab pane IDs.  Put a dummy in so we can index without subtracting 1 (this array is zero based, 
         // control values are 1 based).
-      int tabList[] = {kDummyValue, kTabMasterID,kTabMasterID+1, kTabMasterID+2};
+      int tabList[] = {kDummyValue, kTabMasterID,kTabMasterID+1, kTabMasterID+2, kTabMasterID+3};
                                                                                     
         // hide the current one, and set the new one
         SetControlVisibility( GrabCRef(  theWindow, kTabPaneSig,  tabList[lastPaneSelected]), false, true );
@@ -842,7 +893,7 @@ static pascal OSStatus PrefsTabEventHandlerProc( EventHandlerCallRef inCallRef, 
 
 static void SetInitialTabState(WindowRef theWindow)
 {
-  int tabList[] = {kTabMasterID,kTabMasterID+1,kTabMasterID+2}; 
+  int tabList[] = {kTabMasterID,kTabMasterID+1,kTabMasterID+2,kTabMasterID+3 }; 
     short qq=0;
     // If we just run without setting the initial state, then the tab control
     // will have both (or all) sets of controls overlapping each other.
@@ -897,6 +948,7 @@ static  OSStatus GenContEventHandlerProc( EventHandlerCallRef inCallRef, EventRe
             RSetFontSize();
             RSetFont();
 	    RSetPackagePrefs();
+            RSetPipes();
         break;
         
         case kCancelPrefsButton: 
@@ -910,6 +962,7 @@ static  OSStatus GenContEventHandlerProc( EventHandlerCallRef inCallRef, EventRe
          RSetFontSize();
          RSetFont();
 	 RSetPackagePrefs();
+         RSetPipes();
          SaveRPrefs();
          HideWindow(theWindow);
         break;
@@ -1127,7 +1180,11 @@ void GetDialogPrefs(void)
     GetControlByID( RPrefsWindow, &GlobalPackagesID, &controlField );
     CurrentPrefs.GlobalPackages = GetControl32BitValue(controlField);
  
+    GetControlByID( RPrefsWindow, &GrabStdoutID, &controlField );
+    CurrentPrefs.GrabStdout = GetControl32BitValue(controlField);
 
+    GetControlByID( RPrefsWindow, &GrabStderrID, &controlField );
+    CurrentPrefs.GrabStderr = GetControl32BitValue(controlField);
     
 }
 
@@ -1143,6 +1200,18 @@ void pickColor(RGBColor inColour, RGBColor *outColor){
 
 }
 
+void RSetPipes(void){
+    if(CurrentPrefs.GrabStdout==1)
+        OpenStdoutPipe();
+    else
+        CloseStdoutPipe();
+            
+    if(CurrentPrefs.GrabStderr==1)
+        OpenStderrPipe();
+    else
+        CloseStderrPipe();
+
+}
 /* sets options from Packages pane of Preferences */
 void RSetPackagePrefs(void){
   char cmd[600];
