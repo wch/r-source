@@ -2,7 +2,7 @@
 
 # ${R_HOME}/bin/check for checking installed add-on packages
 
-revision='$Revision: 1.12 $'
+revision='$Revision: 1.13 $'
 version=`set - ${revision}; echo ${2}`
 version="R package checker ${version}
 
@@ -122,7 +122,7 @@ checkpkg () {
   ${R_HOME}/bin/massage-Examples ${pkg} ${lib}/${pkg}/R-ex/*.R \
     > ${pkg}-Ex.R
   echo " Running examples in package \`${pkg}' ..."
-  R_LIBS=${R_LIBS} ${R_HOME}/bin/R --vanilla < ${pkg}-Ex.R \
+  R_LIBS=${R_LIBS} ${R_HOME}/bin/R --vanilla ${R_opts} < ${pkg}-Ex.R \
     > ${pkg}-Ex.Rout
   if test ${?} -eq 0; then
     echo " OK"
