@@ -6,11 +6,12 @@
 
 # @configure_input@
 
-VERSION="0.1-4"
+VERSION="0.1-5"
 USAGE_MSG="Usage:  R INSTALL [options] [-l lib] pkg_1 ... pkg_n"
 
 CLEAN=false
 DEBUG=false
+ERROR=false
 BUILD_TEXT=true
 BUILD_HTML=true
 BUILD_LATEX=true
@@ -126,17 +127,20 @@ for pkg in ${PKGS}; do
     if test -f src/Makefile; then
       (cd src;
 	${MAKE} -f ${R_HOME}/etc/Makeconf -f Makefile \
-	  && cp *.@SHLIBEXT@ ${lib}/${pkg}/libs; \
+	  && cp *.@SHLIBEXT@ ${lib}/${pkg}/libs \
+	  || ERROR=true; \
 	if ${CLEAN}; then ${MAKE} clean; fi)
     else
       (cd src;
 	sh ${R_HOME}/bin/SHLIB ${SHLIB_OPTS} \
-	   -o ${lib}/${pkg}/libs/${pkg}.@SHLIBEXT@ *.[cf]; \
+	   -o ${lib}/${pkg}/libs/${pkg}.@SHLIBEXT@ *.[cf] \
+	  || ERROR=true; \
 	if ${CLEAN}; then rm -f *.o; fi)
-    fi || {
+    fi
+    if ${ERROR}; then
       echo "ERROR: Compilation failed for package \`${pkg}'"
       exit 4
-    }
+    fi
     if ${DEBUG}; then set +x; fi
   fi
 
