@@ -2624,6 +2624,12 @@ stopifnot(identical(predict(basis), predict(basis, newx=wh)),
           identical(predict(nbase), predict(nbase, newx=wh)))
 ## end of moved from predict.bs.Rd
 
+## internal coerceVector() was too lenient
+plot(1)
+r <- try(strwidth(plot))## Error: cannot coerce
+stopifnot(inherits(r, "try-error"),
+          grep("cannot coerce", r) == 1)
+## gave seg.fault or memory allocation error before 1.8.0
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)

@@ -882,8 +882,7 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
 	 * people tend to split using as.character(), modify, and
 	 * paste() back together. However, we might as well
 	 * special-case all symbolic operators here. */
-	if (TYPEOF(op) == SYMSXP)
-	{
+	if (TYPEOF(op) == SYMSXP) {
 	    SET_STRING_ELT(ans, i, PRINTNAME(op));
 	    i++;
 	    v = CDR(v);
@@ -912,38 +911,41 @@ SEXP coerceVector(SEXP v, SEXPTYPE type)
     case REALSXP:
     case CPLXSXP:
     case STRSXP:
+
+#define COERCE_ERROR						\
+	error("cannot coerce type %s to %s vector",		\
+	      CHAR(type2str(TYPEOF(v))), CHAR(type2str(type)))
+
 	switch (type) {
 	case SYMSXP:
-	    ans = coerceToSymbol(v);
-	    break;
+	    ans = coerceToSymbol(v);	    break;
 	case LGLSXP:
-	    ans = coerceToLogical(v);
-	    break;
+	    ans = coerceToLogical(v);	    break;
 	case INTSXP:
-	    ans = coerceToInteger(v);
-	    break;
+	    ans = coerceToInteger(v);	    break;
 	case REALSXP:
-	    ans = coerceToReal(v);
-	    break;
+	    ans = coerceToReal(v);	    break;
 	case CPLXSXP:
-	    ans = coerceToComplex(v);
-	    break;
+	    ans = coerceToComplex(v);	    break;
 	case STRSXP:
-	    ans = coerceToString(v);
-	    break;
+	    ans = coerceToString(v);	    break;
 	case EXPRSXP:
-	    ans = coerceToExpression(v);
-	    break;
+	    ans = coerceToExpression(v);    break;
 	case VECSXP:
-	    ans = coerceToVectorList(v);
-	    break;
+	    ans = coerceToVectorList(v);    break;
 	case LISTSXP:
-	    ans = coerceToPairList(v);
-	    break;
+	    ans = coerceToPairList(v);	    break;
+	default:
+	    COERCE_ERROR;
 	}
+	break;
+    default:
+	COERCE_ERROR;
     }
     return ans;
 }
+#undef COERCE_ERROR
+
 
 SEXP CreateTag(SEXP x)
 {
@@ -994,10 +996,10 @@ static SEXP asFunction(SEXP x)
     return f;
 }
 
-static SEXP ascommon(SEXP call, SEXP u, int type)
+SEXP ascommon(SEXP call, SEXP u, SEXPTYPE type)
 {
     /* -> as.vector(..) or as.XXX(.) : coerce 'u' to 'type' : */
-    SEXP  v;
+    SEXP v;
     if (type == CLOSXP) {
 	return asFunction(u);
     }
@@ -1867,7 +1869,7 @@ static classType classTable[] = {
     { (char *)0,	(SEXPTYPE)-1, FALSE}
 };
 
-static int class2type(char *s) 
+static int class2type(char *s)
 {
     /* return the type if the class string is one of the basic types, else -1.
        Note that this is NOT str2type:  only certain types are defined to be basic

@@ -44,7 +44,7 @@ CHANGES TO THE LANGUAGE
 	variable b in name space a).
 
     o	Non-syntactic variable names can now be specified by inclusion
-	between backticks `Like This`.  The deparse() code has been
+	between backticks `Like This`.	The deparse() code has been
 	changed to output non-syntactical names with this convention,
 	when they occur as operands in expressions. This is controlled
 	by a `backtick' argument, which is by default TRUE for
@@ -54,14 +54,14 @@ CHANGES TO THE LANGUAGE
     o	Variables in formulae can be quoted by backticks, and such
 	formulae can be used in the common model-fitting functions.
 	terms.formula() will quote (by backticks) non-syntactic names
-	in its "term.labels" attribute.  [Note that other code using
+	in its "term.labels" attribute.	 [Note that other code using
 	terms objects may expect syntactic names and/or not accept
 	quoted names: such code will still work if the new feature is
 	not used.]
 
 
 NEW FEATURES
-    
+
     o	New function bquote() does partial substitution like LISP backquote.
 
     o	capture.output() takes arbitrary connections for `file' argument.
@@ -89,7 +89,7 @@ NEW FEATURES
 
     o	dump() only quotes object names in the file where necessary.
 
-    o	eval() of a promise forces the promise 
+    o	eval() of a promise forces the promise
 
     o	file.path() now returns an empty character vector if given at
 	least one zero-length argument.
@@ -149,7 +149,7 @@ NEW FEATURES
 	(Contributed by David Brahm.)
 
     o	plot.formula() now accepts horizontal=TRUE and works correctly
-	when boxplots are produced.  (Wishlist PR#1207)  The code has
+	when boxplots are produced.  (Wishlist PR#1207)	 The code has
 	been much simplified and corrected.
 
     o	polygon() and rect() now interpret density < 0 or NA to mean
@@ -247,7 +247,7 @@ NEW FEATURES
 
 	- adf[x] <- list() failed if x was of length zero.
 
- 
+
     o	Setting dimnames to a factor now coerces to character, as S
 	does.  (Earlier versions of R used the internal codes.)
 
@@ -282,7 +282,7 @@ STANDARD PACKAGES
 
     o	Changes in package 'mva':
 
-    	- factanal() now returns the test statistic and P-value formerly
+	- factanal() now returns the test statistic and P-value formerly
 	  computed in the print method.
 
 	- Arguments `unit' and `hmin' of plclust() are now implemented.
@@ -292,12 +292,12 @@ STANDARD PACKAGES
 
     o	Changes in package 'tcltk':
 
-    	- The package is now in a namespace.  To remove it you will
- 	  now need to use unloadNamespace("tcltk").
+	- The package is now in a namespace.  To remove it you will
+	  now need to use unloadNamespace("tcltk").
 
 	- The interface to Tcl has been made much more efficient by
-          evaluating Tcl commands via a vector of Tcl objects rather
-          than by constructing the string representation. 
+	  evaluating Tcl commands via a vector of Tcl objects rather
+	  than by constructing the string representation.
 
 	- An interface to Tcl arrays has been introduced.
 
@@ -337,7 +337,7 @@ STANDARD PACKAGES
 	- plot.ts() has a new argument `nc' controlling the number of
 	  columns (with default the old behaviour for plot.mts).
 
-        - StructTS() now allows the first value of the series to be
+	- StructTS() now allows the first value of the series to be
 	  missing (although it is better to omit leading NAs). (PR#3990)
 
 
@@ -363,8 +363,8 @@ USING PACKAGES
 	online help.
 
     o	Users can specify the collation order for files in the R source
-        directory of a package. The order is specified in the
-        DESCRIPTION file.
+	directory of a package. The order is specified in the
+	DESCRIPTION file.
 
 
 DOCUMENTATION CHANGES
@@ -421,10 +421,10 @@ C-LEVEL FACILITIES
 	unexported header Parse.h in earlier versions, and is not
 	guaranteed to remain unchanged.)
 
-    o   The header R_ext/Mathlib.h has been removed.  It was replaced by
+    o	The header R_ext/Mathlib.h has been removed.  It was replaced by
 	Rmath.h in R 1.2.0.
 
-    o   PREXPR has been replaced by two macros, PREXPR for obteining the
+    o	PREXPR has been replaced by two macros, PREXPR for obteining the
 	expression and PRCODE for obtaining the code for use in eval.  This
 	is to support byte compiled promises.
 
@@ -496,7 +496,7 @@ DEPRECATED & DEFUNCT
 
 BUG FIXES
 
-    o   numericDeriv() was failing if the first argument was a name 
+    o	numericDeriv() was failing if the first argument was a name
 	rather than a call.  (PR#3746)
 
     o	cut.POSIXt() now passes on ... to cut.default(), as documented.
@@ -662,21 +662,27 @@ BUG FIXES
     o	boxplot() was ignoring cex.axis.  (PR#2628)
 
     o	Erroneously calling par(new=TRUE) with no plot was not caught
-	and so could result in invalid graphics files.  (PR#4037)
+	and so could result in invalid graphics files.	(PR#4037)
 
     o	par(tck=) was being interpreted incorrectly.  It is now
 	documented in the same way as S, and now behaves as
 	documented.  (PR#3504)
-    
-    o	readBin(what = "foo") didn't convert `what' to its type. 
+
+    o	readBin(what = "foo") didn't convert `what' to its type.
 	(PR#4043)
-    
-    o   Using lty=as.integer(NA) and as.double(NA) was being accepted
-	but giving nonsensical results.  Those are not documented
+
+    o	Using lty=as.integer(NA) and as.double(NA) was being accepted
+	but giving nonsensical results.	 Those are not documented
 	valid values for lty. (PR#3217)
-    
-    o   Internals for complex assignment did not check that function name
+
+    o	Internals for complex assignment did not check that function name
 	was a symbol, which could cause a segfault.
+
+    o	strwidth(f) and strheight(f) could seg.fault when `f' was a
+	function.  The fix [to C-level coerceVector()] now gives an error
+	instead of passing through. This may catch other potential
+	problems.
+
 
 
 
