@@ -4,6 +4,7 @@
 \alias{bw.ucv}
 \alias{bw.bcv}
 \alias{bw.SJ}
+\concept{bandwidth}
 \title{Bandwidth Selectors for Kernel Density Estimation}
 \synopsis{
 bw.nrd0(x)
