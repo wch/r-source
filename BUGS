@@ -365,3 +365,11 @@ Date: Tue, 7 Sep 1999 20:59:05 -0700
 Subject: R with Windows 95
 From: pascal.grandeau@wanadoo.fr
 Date: Wed, 8 Sep 1999 17:56:12 +0200 (MET DST)
+* PR# 272 *
+Subject:  problem in R.sh.in script 
+From: "Mitsuru Oka" <oka@debian.or.jp>
+Date: 10 Sep 1999 06:53:01 -0000
+* PR# 273 *
+Subject: Re: problem in R.sh.in script 
+From: Mitsuru Oka <oka@debian.or.jp>
+Date: Fri, 10 Sep 1999 16:08:39 +0900
