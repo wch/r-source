@@ -1,3 +1,4 @@
+
 #
 # ${RHOME}/src/library/Makefile
 
@@ -11,14 +12,16 @@ include $(top_builddir)/Makeconf
 
 MANSRC = $(srcdir)/*/man/*.Rd
 
+sed_d = '/^CVS/d; /Makefile/d; /^stamp-/d; /^profile/d;'
+sed_db= '/^CVS/d; /Makefile/d; /^stamp-/d; /^profile/d; /^base/d'
+
 all: R
 
 R:
 	@$(MKINSTALLDIRS) $(top_builddir)/library
 	@cd base; $(MAKE)
 	@cd profile; $(MAKE)
-	@for pkg in `ls $(srcdir) | \
-	    sed '/CVS/d; /Makefile.in/d; /base/d; /profile/d'`; do \
+	@for pkg in `ls $(srcdir) | sed $(sed_db)`; do \
 	  RHOME=`cd $(top_builddir); pwd`; export RHOME; \
 	  $(SHELL) $${RHOME}/bin/INSTALL --no-docs $(srcdir)/$${pkg}; \
 	done
@@ -51,8 +54,7 @@ $(top_builddir)/library/LibIndex:
 	@if [ ! -f $@ ]; then touch $@; fi
 
 DOCS:
-	@for pkg in `ls $(srcdir) | \
-	    sed '/CVS/d; /Makefile.in/d; /profile/d'`; do \
+	@for pkg in `ls $(srcdir) | sed $(sed_d)`; do \
 	  RHOME=`cd $(top_builddir); pwd`; export RHOME; \
 	  $${RHOME}/bin/build-help $${OPTS} $(srcdir)/$${pkg}; \
 	done
@@ -60,8 +62,7 @@ DOCS:
 mostlyclean: clean
 clean:
 	@echo Cleaning in src/library
-	@for pkg in `ls $(srcdir) | \
-	    sed '/CVS/d; /Makefile.in/d; /base/d; /profile/d'`; do \
+	@for pkg in `ls $(srcdir) | sed $(sed_db)`; do \
 	  if test -d $${pkg}/src; then \
 	    (cd $${pkg}/src; rm -f *.o *.so); \
 	  fi; \
