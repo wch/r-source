@@ -1,6 +1,6 @@
-### * Rdpp
+### * Rd_pp
 
-Rdpp <-
+Rd_pp <-
 function(lines)
 {
     ## Preprocess lines with Rd markup according to .Platform$OS.type.
@@ -83,7 +83,7 @@ function(file)
     ## <NOTE>
     ## This is based on the Perl code in R::Rd::info().
     ## It seems that matches for aliases and keywords are only single
-    ## line.  Hence, as we get the lines from @code{Rdpp()}, we get
+    ## line.  Hence, as we get the lines from @code{Rd_pp()}, we get
     ## aliases and keywords directly from them before collapsing them to
     ## one string (which also allows us to avoid looping as in the Perl
     ## code).
@@ -97,7 +97,7 @@ function(file)
         stop(.wrong_args("file",
                          "must be a character string or connection"))
 
-    lines <- Rdpp(.read_Rd_lines_quietly(file))
+    lines <- Rd_pp(.read_Rd_lines_quietly(file))
 
     aliases <- .get_Rd_metadata_from_Rd_lines(lines, "alias")
     concepts <- .get_Rd_metadata_from_Rd_lines(lines, "concept")
@@ -321,9 +321,9 @@ function(RdFiles, outFile = "", type = NULL,
                outFile)
 }
 
-### * Rddb
+### * Rd_db
 
-Rddb <-
+Rd_db <-
 function(package, dir, lib.loc = NULL)
 {
     ## Build an Rd 'data base' from an installed package or the unpacked
@@ -393,7 +393,7 @@ function(file, text = NULL)
     ## vector with the text to parse (elements are treated as if they
     ## were lines of a file).
     if(!is.null(text))
-        lines <- Rdpp(text)
+        lines <- Rd_pp(text)
     else {
         if(is.character(file)) {
             file <- file(file)
@@ -402,7 +402,7 @@ function(file, text = NULL)
         if(!inherits(file, "connection"))
             stop(.wrong_args("file",
                              "must be a character string or connection"))
-        lines <- Rdpp(.read_Rd_lines_quietly(file))
+        lines <- Rd_pp(.read_Rd_lines_quietly(file))
     }
     
     ## Get meta data (need to agree on what precisely these are), and
