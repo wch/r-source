@@ -3,20 +3,20 @@
 
 include MkRules
 
-HELP=YES
-WINHELP=NO # Use one of NO, CHM, BOTH (chm and winhelp)
+HELP = YES
+WINHELP = NO # Use one of NO, CHM, BOTH (chm and winhelp)
 
-RHOME=$(shell perl pwd.pl ../..)# must be absolute path
-RLIB=$(RHOME)/library
-PKGDIR=$(RHOME)/src/library
-PKGD=$(shell perl pwd.pl $(PKGDIR))# must be absolute path
+RHOME = $(shell perl pwd.pl ../..)# must be absolute path
+RLIB = $(RHOME)/library
+PKGDIR = $(RHOME)/src/library
+PKGD = $(shell perl pwd.pl $(PKGDIR))# must be absolute path
 
 ifdef DEBUG
- OPTFLAGS=-g -O2 -Wall
- DLLFLAGS=
+ OPTFLAGS = -g -O2 -Wall
+ DLLFLAGS =
 else
- OPTFLAGS=-O2 -Wall
- DLLFLAGS=-s 
+ OPTFLAGS = -O2 -Wall -pedantic
+ DLLFLAGS = -s
 endif
 
 libR.a:  R.exp

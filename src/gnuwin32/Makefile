@@ -1,41 +1,41 @@
 include MkRules
 
-HELP=YES
-WINHELP=BOTH # NO, CHM, BOTH
+HELP = YES
+WINHELP = BOTH # NO, CHM, BOTH
 
-PACKAGES=base ctest eda lqs modreg mva nls splines stepfun ts
-RPREFIX=rw1010
+PACKAGES = base ctest eda lqs modreg mva nls splines stepfun ts
+RPREFIX = rw1010
 
-RHOME=$(shell perl pwd.pl ../..)# must be absolute path
-RLIB=$(RHOME)/library
-PKGDIR=$(RHOME)/src/library
-PKGD=$(shell perl pwd.pl $(PKGDIR))# must be absolute path
+RHOME = $(shell perl pwd.pl ../..)# must be absolute path
+RLIB = $(RHOME)/library
+PKGDIR = $(RHOME)/src/library
+PKGD = $(shell perl pwd.pl $(PKGDIR))# must be absolute path
 
 ifdef DEBUG
- OPTFLAGS=-g -O2 -Wall
- DLLFLAGS=
+ OPTFLAGS = -g -O2 -Wall
+ DLLFLAGS =
 else
- OPTFLAGS=-O2 -Wall -pedantic
- DLLFLAGS=-s 
+ OPTFLAGS = -O2 -Wall -pedantic
+ DLLFLAGS = -s
 endif
 
-R-DLLFLAGS= $(STRIPFLAG) -mwindows
-R-DLLLIBS=-L. $(FLIBS) -lwsock32 -lcomctl32 -lversion
-SOURCES=$(wildcard *.c *.f)
-OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
-MAINLIBS=libmain.a libappl.a libmath.a
-EXTRALIBS=ga.a gl.a xdr.a em.a
+R-DLLFLAGS =  $(STRIPFLAG) -mwindows
+R-DLLLIBS = -L. $(FLIBS) -lwsock32 -lcomctl32 -lversion
+SOURCES = $(wildcard *.c *.f)
+OBJS = $(foreach i, $(SOURCES), $(basename $i).o)
+MAINLIBS = libmain.a libappl.a libmath.a
+EXTRALIBS = ga.a gl.a xdr.a em.a
 
-LIBFILES=$(foreach i, $(PACKAGES), ../../library/$i)
-PKGS=$(foreach i, $(PACKAGES), pkg-$i)
-PKGCLEAN=$(foreach i, $(PACKAGES), pkgclean-$i)
+LIBFILES = $(foreach i, $(PACKAGES), ../../library/$i)
+PKGS = $(foreach i, $(PACKAGES), pkg-$i)
+PKGCLEAN = $(foreach i, $(PACKAGES), pkgclean-$i)
 
 .PHONY:  clean veryclean  rlibs fixfiles front-ends
 
 all: rbuild rdemo rpackage
 
-CFLAGS=$(OPTFLAGS) -I../include -I../include/R_ext -I. -DHAVE_CONFIG_H
-FFLAGS=$(OPTFLAGS)
+CFLAGS = $(OPTFLAGS) -I../include -I../include/R_ext -I. -DHAVE_CONFIG_H
+FFLAGS = $(OPTFLAGS)
 
 rbuild: fixfiles makeMakedeps rlibs ../../bin/R.dll libR.a CHTML \
 	../include/globalvar.h front-ends COPYRIGHTS
@@ -48,7 +48,7 @@ rinstaller:
 rdemo:  libR.a
 	make -C ../../demos/dynload -f $(RHOME)/src/gnuwin32/MkDyndemo
 
-rlibs: 
+rlibs:
 	$(MAKE) -C ../appl OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
 	$(MAKE) -C ../main OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
 	$(MAKE) -C ../nmath OPTFLAGS="$(OPTFLAGS)" -f Makefile.win
@@ -63,7 +63,7 @@ COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 
 
 fixfiles:
-	$(MKDIR) -p ../../bin 
+	$(MKDIR) -p ../../bin
 	$(MAKE) -C ./fixed
 	$(CP) -pr unzip ../..
 	$(RM) ../../unzip/*.h
@@ -126,7 +126,7 @@ endif
 endif
 
 
-base-HELP=ziponly
+base-HELP = ziponly
 
 pkg-%:  libR.a #../include/globalvar.h
 	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) \
@@ -174,6 +174,7 @@ bootstrap-DLLNM=boott
 clean: cleanwin $(PKGCLEAN)
 	$(RM) -f ../*/*.o $(WINOBJS) *.a ../*/*.d ../*/Makedeps fixed/fixdesc
 	-$(MAKE) -C ../../doc/manual -f Makefile.win distclean
+	-$(MAKE) -C ../nmath/standalone -f Makefile.win distclean
 
 distclean veryclean: clean
 	$(RM) -rf R.exp ../../bin ../../library
@@ -210,7 +211,7 @@ test-Specific:
 	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests clean
 	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests RHOME=$(RHOME)
 
-PKGS-CHK=$(foreach i, $(PACKAGES), pkgcheck-$i)
+PKGS-CHK = $(foreach i, $(PACKAGES), pkgcheck-$i)
 pkgtests: $(PKGS-CHK)
 
 pkgcheck-base:
@@ -233,10 +234,10 @@ docs manuals:
 
 ## ============= Maintainer targets ========================
 
-RVER=$(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
+RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
 
 docfiles: INSTALL FAQs
-SEDVER= -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
+SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
 
 INSTALL: INSTALL.in ../../VERSION
 	$(SED) $(SEDVER) INSTALL.in > INSTALL
@@ -283,7 +284,7 @@ bindist: docfiles
 	   $(RPREFIX)w.zip $(RPREFIX)l.zip $(RPREFIX)ch.zip
 	$(RM) anindex.zip
 	zip -mrX anindex.zip $(RPREFIX)/library/*/help/AnIndex $(RPREFIX)/library/*/help/00Titles
-	zip -mr9X $(RPREFIX)h.zip $(RPREFIX)/library/*/help 
+	zip -mr9X $(RPREFIX)h.zip $(RPREFIX)/library/*/help
 	unzip anindex.zip
 	$(RM) anindex.zip
 	zip -rm9X $(RPREFIX)w.zip $(RPREFIX)/doc/html $(RPREFIX)/library/*/html
@@ -306,7 +307,7 @@ srcdist:
 	$(RM) -r ../src/gnuwin32/installer/unzip
 	$(RM) -r ../src/gnuwin32/bitmap/jpeg-6b
 	$(RM) -r ../src/gnuwin32/bitmap/libpng
-	$(RM) -r ../src/gnuwin32/bitmap/zlib 
+	$(RM) -r ../src/gnuwin32/bitmap/zlib
 	$(RM) -f ../src/gnuwin32/unzip/*.dll
 	$(MAKE) -k -C ../src/gnuwin32 cleanwin
 	mv ../src .
@@ -357,8 +358,8 @@ docsdist:
 ## ============= End of maintainer targets ========================
 
 # Dependencies
-CSOURCES=$(wildcard *.c)
-DEPS=$(foreach i, $(CSOURCES), $(basename $i).d)
+CSOURCES = $(wildcard *.c)
+DEPS = $(foreach i, $(CSOURCES), $(basename $i).d)
 
 .c.d:
 	@echo "making $@ from $<"

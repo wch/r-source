@@ -25,11 +25,11 @@ endif
 
 ifeq ($(strip $(BUILD)),MINGW32)
 BINPREF=
-MINGW32CFLAG= 
-MINGW32LDFLAG= 
+MINGW32CFLAG=
+MINGW32LDFLAG=
 FLIBS=-lg2c
 AWK=gawk
-endif 
+endif
 
 ifeq ($(strip $(BUILD)),CROSS)
 # Next two might be i586- if a pre-built cross-compiler is used.
@@ -37,10 +37,10 @@ BINPREF=i386-mingw32-
 # Set this to where the mingw32 include files are
 HEADER=/packages/R-X/i386-mingw32/include
 MINGW32CFLAG=-isystem $(HEADER)
-MINGW32LDFLAG= 
+MINGW32LDFLAG=
 FLIBS=-lg2c
 AWK=awk
-endif 
+endif
 
 PERL=perl
 RM=rm -f
@@ -49,17 +49,17 @@ ECHO=echo
 CP=cp
 MKDIR=mkdir
 CAT=cat
-CC=$(BINPREF)gcc $(MINGW32CFLAG) 
+CC=$(BINPREF)gcc $(MINGW32CFLAG)
 F77=$(BINPREF)g77
 AS=$(BINPREF)as
 DLL=$(BINPREF)gcc $(MINGW32LDFLAG)
 DLLTOOL=$(BINPREF)dlltool -k --as $(AS)
-LINKER=$(BINPREF)gcc $(MINGW32LDFLAG) 
+LINKER=$(BINPREF)gcc $(MINGW32LDFLAG)
 AR=$(BINPREF)ar
 RANLIB=$(BINPREF)ranlib
 NM=$(BINPREF)nm
 CPP=$(CC) -E
-RESCOMP=$(BINPREF)windres 
+RESCOMP=$(BINPREF)windres
 
 .c.o:
 	$(CC)  $(CFLAGS) $($*-CFLAGS) -c $< -o $@
@@ -67,11 +67,11 @@ RESCOMP=$(BINPREF)windres
 .f.o:
 	$(F77) $(FFLAGS) $($*-FFLAGS) -c $< -o $@
 
-%.exe:  
+%.exe:
 	$(LINKER)  $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LIBS)
 
 
-%.dll %.def:   
+%.dll %.def:
 	@$(ECHO) ------- Building $@ from $^ --------
 	$(ECHO) LIBRARY $* > $*.def
 	$(ECHO) EXPORTS >> $*.def
@@ -84,8 +84,8 @@ else
 	$(DLL) -mdll -Wl,--base-file,$*.b $(DLLFLAGS) $($*-DLLFLAGS) -o $@  $^ $($*-DLLLIBS) $(DLLLIBS)
 	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $@  --base-file $*.b --output-exp $*.e --def $*.def
 	$(DLL) -mdll -Wl,--base-file,$*.b $(DLLFLAGS) $($*-DLLFLAGS) -o $@ $*.e $^ $($*-DLLLIBS) $(DLLLIBS)
-	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $@ --base-file $*.b --output-exp $*.e --def $*.def 
-	$(DLL) -mdll $(DLLFLAGS) $($*-DLLFLAGS) -o $@  $*.e $^ $($*-DLLLIBS) $(DLLLIBS)	     
+	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $@ --base-file $*.b --output-exp $*.e --def $*.def
+	$(DLL) -mdll $(DLLFLAGS) $($*-DLLFLAGS) -o $@  $*.e $^ $($*-DLLLIBS) $(DLLLIBS)
 	$(RM)  $*.b $*.e
 endif
 
@@ -94,7 +94,7 @@ lib%.a: %.def
 	@$(ECHO) -------- Building $@ from $^ --------
 	$(DLLTOOL) $(DLLTOOLFLAGS) $($*-DLLTOOLFLAGS) --dllname $*.dll --def $*.def --output-lib lib$*.a
 
-%.a:    
+%.a:
 	@$(ECHO) -------- Building $@ from $^ --------
 	$(AR) cr $@ $^
 	$(RANLIB) $@
