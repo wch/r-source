@@ -208,7 +208,7 @@ sub build_htmlpkglist {
     print htmlfile html_pagehead("Package Index", ".",
 				 "index.$HTML", "Top",
 				 "", "",
-				 "", "");
+				 "", "", "./R.css");
 
     print htmlfile "<table align=\"center\" summary=\"R Package list\">\n";
 
@@ -345,7 +345,7 @@ sub build_index { # lib, dest
     print htmlfile html_pagehead("$title", "../../../doc/html",
 				 "../../../doc/html/index.$HTML", "Top",
 				 "../../../doc/html/packages.$HTML",
-				 "Package List");
+				 "Package List", "../../R.css");
 
     if($main::opt_chm) {
 	print chmfile chm_pagehead("$title");
@@ -449,10 +449,11 @@ sub html_alphabet
 
 sub html_pagehead
 {
-    my ($title, $top, $up, $uptext, $prev, $prevtext, $next, $nextext) = @_;
+    my ($title, $top, $up, $uptext, $prev, $prevtext, $next, $nextext, 
+	$cssloc) = @_;
 
     my $retval = "<html><head><title>R: $title</title>\n" .
-	"<link rel=\"stylesheet\" type=\"text/css\" href=\"../../R.css\">\n" .
+	"<link rel=\"stylesheet\" type=\"text/css\" href=\"$cssloc\">\n" .
 	"</head><body>\n" .
 	"<h1>$title " .
 	"<img class=\"toplogo\" src=\"$top/logo.jpg\" alt=\"[R logo]\"></h1>\n\n" .

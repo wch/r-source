@@ -248,3 +248,6 @@ as.numeric(as.character(NaN))
 as.numeric(as.character(Inf))
 ## were NA on Windows at least under 1.3.0.
 
+## PR#1092 (rowsum dimnames)
+rowsum(matrix(1:12, 3,4), c("Y","X","Y"))
+## rownames were 1,2 in <= 1.3.1.

@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-09-14)
+Version 1.4.0 Under development (unstable) (2001-09-16)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -501,7 +501,7 @@ NULL
 > f(structure(1,class = "bar"))
 NULL
 > e # == .GlobalEnv (in R 1.3.[01]  but not (yet?!) in 1.4.0).
-<environment: d39958>
+<environment: d3995c>
 > 
 > 
 > ## some tests that R supports logical variables in formula
@@ -622,4 +622,10 @@ Frequency = 1
 [1] Inf
 > ## were NA on Windows at least under 1.3.0.
 > 
+> ## PR#1092 (rowsum dimnames)
+> rowsum(matrix(1:12, 3,4), c("Y","X","Y"))
+  [,1] [,2] [,3] [,4]
+X    2    5    8   11
+Y    4   10   16   22
+> ## rownames were 1,2 in <= 1.3.1.
 > 

@@ -217,6 +217,12 @@ BUG FIXES
 
     o   substr<- was misbehaving if the replacement was too short.
 
+    o   The version of packages.html generated when building R or
+	installing packages had an incorrect link to the style sheet.
+	The version used by help.start() was correct. (PR#1090)
+
+    o   rowsum() now gives character (not factor codes) as rownames.
+	(PR#1092)
 
 
 
