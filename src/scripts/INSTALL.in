@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.141 $'
+revision='$Revision: 1.142 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -636,11 +636,19 @@ do_install () {
   pkg_name=`get_dcf_field Package DESCRIPTION`
   ## (The basename of ${pkg_dir} might be different from ${pkg_name},
   ## e.g., when building Debian packages from R packages.)
+  if test -z "${pkg_name}"; then
+    echo "ERROR: no 'Package' field in 'DESCRIPTION'"
+    do_exit_on_error no
+  fi
 
   ## Set R_PACKAGE_DIR here at the top level.  If a version is being
   ## specified, tack that on.
   if ${with_package_versions}; then
     version=`get_dcf_field Version DESCRIPTION`
+    if test -z "${version}"; then
+      echo "ERROR: no 'Version' field in 'DESCRIPTION'"
+      do_exit_on_error no
+    fi
     R_PACKAGE_NAME="${pkg_name}_${version}"
     R_PACKAGE_DIR="${lib}/${pkg_name}_${version}"
   else
@@ -665,7 +673,7 @@ do_install () {
       if test ${dep_ok} -eq 0; then
         echo "ERROR: This R is version ${R_VERSION}"
         echo "       package '${pkg_name}' depends on R ${dep_version}"
-        do_exit_on_error;
+        do_exit_on_error
       fi
     else
       echo "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
@@ -724,11 +732,13 @@ do_install () {
 
 do_exit_on_error () {
   remove_R_package_dir=${1-yes}
-  if test "${remove_R_package_dir}" = yes; then
+  if test "${remove_R_package_dir}" = yes \
+      && test -n "${R_PACKAGE_DIR}"; then
     message "Removing '${R_PACKAGE_DIR}'"
     rm -rf "${R_PACKAGE_DIR}"
   fi
-  if test -d "${lockdir}/${R_PACKAGE_NAME}"; then
+  if test -n "${R_PACKAGE_NAME}" \
+      && test -d "${lockdir}/${R_PACKAGE_NAME}"; then
     message "Restoring previous '${R_PACKAGE_DIR}'"
     mv "${lockdir}/${R_PACKAGE_NAME}" "${R_PACKAGE_DIR}"
   fi
