@@ -625,7 +625,7 @@ Rcomplex asComplex(SEXP);
 int asInteger(SEXP);
 int asLogical(SEXP);
 double asReal(SEXP);
-SEXP arraySubscript(int, SEXP, SEXP, SEXP(SEXP,SEXP), SEXP);
+SEXP arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP), SEXP);
 SEXP classgets(SEXP, SEXP);
 Rboolean conformable(SEXP, SEXP);
 SEXP cons(SEXP, SEXP);
@@ -744,7 +744,7 @@ Rboolean StringBlank(SEXP);
 SEXP substitute(SEXP,SEXP);
 void unprotect(int);
 void unprotect_ptr(SEXP);
-SEXP vectorSubscript(int, SEXP, int*, SEXP(SEXP,SEXP), SEXP);
+SEXP vectorSubscript(int, SEXP, int*, SEXP (*)(SEXP,SEXP), SEXP);
 
 void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
