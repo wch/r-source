@@ -10,7 +10,7 @@ Copyright (C) 2000--2003 The R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty."
 
-opts="--restore --save --no-readline --gui=none"
+opts="--restore --save --no-readline"
 
 usage="Usage: R CMD BATCH [options] infile [outfile]
 

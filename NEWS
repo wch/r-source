@@ -23,6 +23,9 @@ NEW FEATURES
     o	Plotmath now allows underline in expressions.  (PR#7286,
 	contributed by Uwe Ligges.)
 
+    o	BATCH on Unix no longer sets --gui="none" as the X11 module
+	is only loaded if needed.
+
 
 DOCUMENTATION
 

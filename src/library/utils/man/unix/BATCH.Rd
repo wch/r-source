@@ -26,9 +26,6 @@ R CMD BATCH [options] infile [outfile]
   The \code{infile} can have end of line marked by LF or CRLF (but not
   just CR), and files with an incomplete last line (missing end of line
   (EOL) mark) are processed correctly.
-
-  Using \code{R CMD BATCH} sets the GUI to \code{"none"}, so none of
-  \code{\link{x11}}, \code{\link{jpeg}} and \code{\link{png}} are available.
 }
 \note{
   Unlike \code{Splus BATCH}, this does not run the \R process in the
