@@ -33,7 +33,7 @@ use R::Rd;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.29 $ ';
+my $revision = ' $Revision: 1.30 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -182,7 +182,7 @@ foreach my $pkg (@ARGV) {
 	    open(RBUILDIGNORE, "$pkg/.Rbuildignore");
 	    while(<RBUILDIGNORE>) {
 		chop;
-		push(@excludepatterns, $_);
+		push(@excludepatterns, $_) if $_;
 	    }
 	    close(RBUILDIGNORE);
 	}
