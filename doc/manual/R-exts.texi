@@ -2694,8 +2694,8 @@ language.
 @subsection Zero-finding
 @cindex Zero-finding
 
-In this section we re-work the example in @file{demos/dynload} of
-@code{call_R} (based on that for @code{call_S} in Becker, Chambers &
+In this section we re-work the example formerly in @file{demos/dynload}
+of @code{call_R} (based on that for @code{call_S} in Becker, Chambers &
 Wilks (1988)) on finding a zero of a univariate function.  The @R{} code
 and an example are
 
