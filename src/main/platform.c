@@ -101,6 +101,7 @@ SEXP do_date(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  version, write down a pipe to a pager.
  */
 
+#ifdef OLD
 SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP fn, tl;
@@ -116,6 +117,44 @@ SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error("unable to display file \"%s\"\n", CHAR(STRING(fn)[0]));
     return R_NilValue;
 }
+#else
+SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP fn, tl, hd;
+    char **f, **h, *t, *vm;
+    int i, n;
+    checkArity(op, args);
+    vm = vmaxget();
+    fn = CAR(args);
+    hd = CADR(args);
+    tl = CADDR(args);
+    if (!isString(fn) || (n = length(fn)) < 1)
+	errorcall(call, "invalid filename specification\n");
+    if (!isString(hd) || length(hd) != n)
+	errorcall(call, "invalid headers\n");
+    if (!isString(tl))
+	errorcall(call, "invalid filename\n");
+    f = (char**)R_alloc(n, sizeof(char*));
+    h = (char**)R_alloc(n, sizeof(char*));
+    for (i = 0; i < n; i++) {
+	if (!isNull(STRING(fn)[i]))
+	    f[i] = CHAR(STRING(fn)[i]);
+	else
+	    f[i] = CHAR(R_BlankString);
+	if (!isNull(STRING(hd)[i]))
+	    h[i] = CHAR(STRING(hd)[i]);
+	else
+	    h[i] = CHAR(R_BlankString);
+    }
+    if (length(tl) >= 1 || !isNull(STRING(tl)[0]))
+	t = CHAR(STRING(tl)[0]);
+    else
+	t = CHAR(R_BlankString);
+    R_ShowFiles(n, f, h, t);
+    vmaxset(vm);
+    return R_NilValue;
+}
+#endif
 
 
 /*  append.file

@@ -4,8 +4,9 @@ Platform <- function()
 R.home <- function()
 .Internal(R.home())
 
-file.show <- function(file, title="R Information")
-.Internal(file.show(file, title))
+file.show <-
+function (file, header=rep("", length(file)), title = "R Information") 
+.Internal(file.show(file, header, title))
 
 file.append <- function(file1, file2)
 .Internal(file.append(file1, file2))

@@ -906,26 +906,31 @@ int R_ShowFile(char *file, char *title)
 int R_ShowFiles(int nfile, char **file, char **title, char *wtitle)
 {
     int c, i;
-    char *pager;
-    FILE *fp, *fpg;
+    char *pager, *filename;
+    FILE *fp, *tfp;
+    char buf[1024];
     if (nfile > 0) {
         pager = getenv("PAGER");
         if (pager == NULL) pager = "more";
-        if ((fpg = fopen(pager, "w")) != NULL) {
+	filename = tmpnam(NULL);
+        if ((tfp = fopen(filename, "w")) != NULL) {
 	    for(i = 0; i < nfile; i++) {
 		if (title[i])
-		    fprintf(fpg, "%s\n\n", title[i]);
+		    fprintf(tfp, "%s\n\n", title[i]);
 		if ((fp = fopen(file[i], "r")) != NULL) {
 		    while ((c = fgetc(fp)) != EOF)
-			fputc(c, fpg);
-		    fprintf(fpg, "\n");
-		    fclose(fpg);
+			fputc(c, tfp);
+		    fprintf(tfp, "\n");
+		    fclose(fp);
 		}
 		else
-		    fprintf(fpg, "NO FILE %s\n\n", file[i]);
+		    fprintf(tfp, "NO FILE %s\n\n", file[i]);
 	    }
+	    fclose(tfp);
 	}
-	else return 0;
+	sprintf(buf, "%s %s", pager, filename);
+	if (system(buf) != 0) return 0;
+	else return 1;
     }
     return 1;
 }
