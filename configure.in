@@ -158,7 +158,7 @@ AC_ARG_WITH(gnome,
 AC_PROG_AWK
 
 AC_PROG_INSTALL
-warn_install="redefining INSTALL to be ${srcdir}/tools/install-sh -c"
+warn_install="redefining INSTALL to be `pwd`/tools/install-sh -c"
 case "${INSTALL}" in
   [[!/]]*install-sh*)
     ## Fix a bug in older versions of autoconf---the path of the install
@@ -167,14 +167,12 @@ case "${INSTALL}" in
     INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
     AC_MSG_WARN([${warn_install}])
     ;;
-  *installbsd*)
+esac
+case "${host}" in
+  *aix*|*hpux*)
     ## installbsd on AIX does not seem to work?
-    case "${host}" in
-      *aix*)
-	INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
-	AC_MSG_WARN([${warn_install}])
-	;;
-    esac
+    INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
+    AC_MSG_WARN([${warn_install}])
     ;;
 esac
 
@@ -218,7 +216,7 @@ case "${host}" in
   *hpux*)
     LIBS="-L/lib/pa1.1 ${LIBS}"
     case "${CC}" in
-      c89)
+      cc|c89)
 	AC_DEFINE(_HPUX_SOURCE)
 	;;
     esac
@@ -482,6 +480,9 @@ case "${host}" in
   *hpux*)
     AC_DEFINE(USE_BUILTIN_RINT)
     case "${CC}" in
+      cc)
+	R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -Aa -D_HPUX_SOURCE"
+	;;
       c89)
 	R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D_HPUX_SOURCE"
 	;;
@@ -571,6 +572,20 @@ case "${host}" in
     dllflags=-export-dynamic
     shlibldflags="-shared"
     ;;
+  *hpux*)
+    case "${CC}" in
+      cc|c89)
+        cpicflags="+z" ;;
+    esac
+    case "${FC}" in
+      f77)
+        fpicflags="+z" ;;
+    esac
+    dllflags="-Wl,-E"
+    shlibld=ld
+    shlibldflags="-b"
+    SHLIBEXT=sl
+    ;;
   *linuxaout)
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
     ;;
@@ -597,16 +612,6 @@ case "${host}" in
       fpicflags=-KPIC
     fi
     shlibldflags="-shared"
-    ;;
-  *hpux*)
-    case "${CC}" in
-      c89*)
-        cpicflags="+z" ;;
-    esac
-    dllflags="-Wl,-E"
-    shlibld=ld
-    shlibldflags="-b"
-    SHLIBEXT=sl
     ;;
   *solaris*)
     if test "${GCC}" = yes; then
