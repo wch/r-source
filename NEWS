@@ -374,6 +374,9 @@ BUG FIXES
     o	sapply() for matrix result does not return list(NULL,NULL) dimnames
 	anymore.
 
+    o	lm.influence() called on a 0-rank fit either crashed or produced
+	incorrect output.
+
 
 
 		CHANGES IN R VERSION 1.7.1
