@@ -17,7 +17,7 @@ getNamespace <- function(name) {
                                   call. = FALSE)
                           return(getNamespace("stats"))
                       }
-                      else stop(e)
+                      else stop(e, domain = NA)
                   })
 }
 
@@ -64,9 +64,9 @@ getExportedValue <- function(ns, name) {
     getInternalExportName <- function(name, ns) {
         exports <- getNamespaceInfo(ns, "exports")
         if (! exists(name, env = exports, inherits = FALSE))
-            stop(sQuote(name), " is not an exported object from ",
+            stop(sQuote(name), gettext(" is not an exported object from "),
                  sQuote(paste("namespace", getNamespaceName(ns), sep=":")),
-                 call. = FALSE)
+                 call. = FALSE, domain = NA)
         get(name, env = exports, inherits = FALSE)
     }
     ns <- asNamespace(ns)
@@ -402,8 +402,9 @@ unloadNamespace <- function(ns) {
         if (exists(hookname, envir = env, inherits = FALSE)) {
             fun <- get(hookname, envir = env, inherits = FALSE)
             if (! is.null(try({ fun(...); NULL})))
-                stop(hookname, " failed in unloadNamespace(", ns, ")",
-                     call. = FALSE)
+                stop(hookname, " ", gettext("failed in"),
+                     " unloadNamespace(", ns, ")",
+                     call. = FALSE, domain = NA)
         }
     }
     ns <- asNamespace(ns, base.OK = FALSE)
@@ -629,8 +630,8 @@ namespaceImportMethods <- function(self, ns, vars) {
     allVars <- character()
     allMlists <- methods:::.getGenerics(ns)
     if(any(is.na(match(vars, allMlists))))
-        stop("Requested methods objects not found in environment/package \"",
-                methods:::getPackageName(ns), "\": ",
+        stop("Requested methods objects not found in environment/package ",
+                sQuote(methods:::getPackageName(ns)), ": ",
                 paste(vars[is.na(match(vars, allMlists))], collapse = ", "))
     for(i in seq(along = allMlists)) {
         ## import methods list objects if asked for

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-09 09:06\n"
+"POT-Creation-Date: 2005-02-10 12:25\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,31 +11,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 
-msgid "is defunct."
+msgid "'%s' is defunct."
 msgstr ""
 
-msgid "Use"
+msgid "Use '%s' instead,"
 msgstr ""
 
-msgid "instead."
+msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
 msgstr ""
 
-msgid "See help(\"Defunct\")"
+msgid "'%s' is deprecated."
 msgstr ""
 
-msgid "and help(\""
-msgstr ""
-
-msgid "-defunct\")."
-msgstr ""
-
-msgid "is deprecated."
-msgstr ""
-
-msgid "See help(\"Deprecated\")"
-msgstr ""
-
-msgid "-deprecated\")."
+msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
 msgstr ""
 
 msgid "argument to La.svd must be numeric or complex"
@@ -51,15 +39,6 @@ msgid "nu must be 0, nrow(x) or ncol(x)"
 msgstr ""
 
 msgid "nv must be 0, nrow(x) or ncol(x)"
-msgstr ""
-
-msgid "deparse options"
-msgstr ""
-
-msgid "\""
-msgstr ""
-
-msgid "not recognized"
 msgstr ""
 
 msgid "all can not be used with other deparse options"
@@ -548,16 +527,13 @@ msgstr ""
 msgid "No DLL currently loaded with name or path"
 msgstr ""
 
-msgid "multiple DLLs match"
-msgstr ""
-
-msgid ". Using"
+msgid "multiple DLLs match '%s'. Using %s"
 msgstr ""
 
 msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
 msgstr ""
 
-msgid "function is not in a namespace, so can't locate associated DLL"
+msgid "function is not in a namespace, so cannot locate associated DLL"
 msgstr ""
 
 msgid "looking for DLL for native routine call, but no DLLs in namespace of call"
@@ -689,13 +665,7 @@ msgstr ""
 msgid "matrix should be square"
 msgstr ""
 
-msgid "This is R"
-msgstr ""
-
-msgid ", package"
-msgstr ""
-
-msgid "needs"
+msgid "This is R %s, package '%s' needs %s %s"
 msgstr ""
 
 msgid "package"
@@ -767,13 +737,10 @@ msgstr ""
 msgid "was not loaded"
 msgstr ""
 
+msgid "Loading required package: %s"
+msgstr ""
+
 msgid "none of the packages are loaded"
-msgstr ""
-
-msgid "package(s)"
-msgstr ""
-
-msgid "are not loaded"
 msgstr ""
 
 msgid "found more than once,"
@@ -890,12 +857,6 @@ msgstr ""
 msgid "is not an exported object from"
 msgstr ""
 
-msgid "namespace"
-msgstr ""
-
-msgid ":"
-msgstr ""
-
 msgid "failed in attachNamespace"
 msgstr ""
 
@@ -906,6 +867,9 @@ msgid "cyclic name space dependencies are not supported"
 msgstr ""
 
 msgid "failed in loadNamespace for"
+msgstr ""
+
+msgid "namespace"
 msgstr ""
 
 msgid "is already sealed in loadNamespace"
@@ -938,10 +902,7 @@ msgstr ""
 msgid "is loaded"
 msgstr ""
 
-msgid "failed in unloadNamespace("
-msgstr ""
-
-msgid ")"
+msgid "failed in"
 msgstr ""
 
 msgid "is still used by:"
@@ -971,10 +932,10 @@ msgstr ""
 msgid "invalid import target"
 msgstr ""
 
-msgid "Requested methods objects not found in environment/package \""
+msgid "Requested methods objects not found in environment/package"
 msgstr ""
 
-msgid "\":"
+msgid ":"
 msgstr ""
 
 msgid "object(s)"
@@ -1112,19 +1073,13 @@ msgstr ""
 msgid "first five rows are empty: giving up"
 msgstr ""
 
-msgid "not all columns named in colClasses exist"
+msgid "not all columns named in 'colClasses' exist"
 msgstr ""
 
-msgid "cols ="
+msgid "invalid numeric 'as.is' expression"
 msgstr ""
 
-msgid "!= length(data) ="
-msgstr ""
-
-msgid "invalid numeric as.is expression"
-msgstr ""
-
-msgid "not all columns named in as.is exist"
+msgid "not all columns named in 'as.is' exist"
 msgstr ""
 
 msgid "'as.is' has the wrong length"
@@ -1133,7 +1088,7 @@ msgstr ""
 msgid "!= cols ="
 msgstr ""
 
-msgid "invalid row.names specification"
+msgid "invalid 'row.names' specification"
 msgstr ""
 
 msgid "x must be a vector"
@@ -1316,9 +1271,6 @@ msgstr ""
 msgid "invalid 'quote' specification"
 msgstr ""
 
-msgid "invalid 'row.names' specification"
-msgstr ""
-
 msgid "invalid 'col.names' specification"
 msgstr ""
 
@@ -1340,7 +1292,17 @@ msgstr ""
 msgid "cmd execution failed with error code"
 msgstr ""
 
+msgid        "deparse option %s is not recognized"
+msgid_plural "deparse options %s are not recognized"
+msgstr[0]    ""
+msgstr[1]    ""
+
 msgid        "library %s contains no packages"
 msgid_plural "libraries %s contain no packages"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "package %s is not loaded"
+msgid_plural "packages %s are not loaded"
 msgstr[0]    ""
 msgstr[1]    ""

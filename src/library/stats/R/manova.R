@@ -124,7 +124,8 @@ summary.manova <-
                                    "Pr(>F)"))
         rss.qr <- qr(ss[[nt]])
         if(rss.qr$rank < ncol(resid))
-            stop("residuals have rank ", rss.qr$rank," < ", ncol(resid))
+            stop(gettext("residuals have rank"), " ",
+                 rss.qr$rank," < ", ncol(resid), domain = NA)
         if(!is.null(rss.qr))
             for(i in seq(len=nterms)[ok]) {
                 eigs[i, ] <- Re(eigen(qr.coef(rss.qr, ss[[i]]),

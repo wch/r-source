@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-06 11:41\n"
+"POT-Creation-Date: 2005-02-10 12:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -89,15 +89,6 @@ msgstr ""
 msgid "invalid options in"
 msgstr ""
 
-msgid "invalid argument name(s)"
-msgstr ""
-
-msgid ","
-msgstr ""
-
-msgid "in"
-msgstr ""
-
 msgid "("
 msgstr ""
 
@@ -122,7 +113,7 @@ msgstr ""
 msgid "&"
 msgstr ""
 
-msgid "invalid family argument"
+msgid "invalid 'family' argument"
 msgstr ""
 
 msgid "invalid PDF version"
@@ -226,3 +217,8 @@ msgstr ""
 
 msgid "invalid arguments in windowsFonts (need named args)"
 msgstr ""
+
+msgid        "invalid argument name %s in '%s'"
+msgid_plural "invalid argument names %s in '%s'"
+msgstr[0]    ""
+msgstr[1]    ""

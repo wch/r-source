@@ -22,9 +22,9 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             target <- Rdeps$version
             res <- eval(parse(text=paste("current", Rdeps$op, "target")))
             if(!res)
-                stop("This is R ", current, ", package ",
-                     sQuote(pkgname), " needs ", Rdeps$op, " ", target,
-                     call. = FALSE)
+                stop(sprintf(gettext("This is R %s, package '%s' needs %s %s"),
+                             current, pkgname, Rdeps$op, target),
+                     call. = FALSE, domain = NA)
         }
         ## which version was this package built under?
         if(!is.null(built <- pkgInfo$Built)) {
@@ -554,7 +554,8 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
     }
 
     if (!loaded) {
-	if (!quietly) cat("Loading required package:", package, "\n")
+	if (!quietly)
+            cat(sprintf(gettext("Loading required package: %s\n"), package))
 	value <- library(package, character.only = TRUE, logical = TRUE,
 		warn.conflicts = warn.conflicts, keep.source = keep.source,
                 version = version)
@@ -668,9 +669,11 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
             if(all(m))
                 stop("none of the packages are loaded")
             else
-                warning("package(s) ",
-                        paste(package[m], collapse=", "),
-                        " are not loaded")
+                warning(sprintf(ngettext(sum(m),
+                                         "package %s is not loaded",
+                                         "packages %s are not loaded"),
+                                paste(package[m], collapse=", ")),
+                        domain = NA)
         }
         pos <- pos[!m]
     }
@@ -889,7 +892,8 @@ manglePackageName <- function(pkgName, pkgVersion)
                              call. = FALSE)
                 }
 
-                if (!quietly) cat("Loading required package:", pkg, "\n")
+                if (!quietly)
+                    cat(sprintf(gettext("Loading required package: %s\n"), pkg))
                 library(pkg, character.only = TRUE, logical = TRUE,
                         lib.loc = lib.loc) ||
                 stop("package ", sQuote(pkg), " could not be loaded",

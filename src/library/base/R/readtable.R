@@ -111,7 +111,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
             names(tmp) <- col.names
             i <- match(nmColClasses, col.names, 0)
             if(any(i <= 0))
-                warning("not all columns named in colClasses exist")
+                warning("not all columns named in 'colClasses' exist")
             tmp[ i[i > 0] ] <- colClasses
             colClasses <- tmp
         }
@@ -145,7 +145,8 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     ##	we do this here so that columns match up
 
     if(cols != length(data)) { # this should never happen
-	warning("cols = ", cols, " != length(data) = ", length(data))
+	warning("cols = ", cols, " != length(data) = ", length(data),
+                domain = NA)
 	cols <- length(data)
     }
 
@@ -153,14 +154,14 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
 	as.is <- rep(as.is, length.out=cols)
     } else if(is.numeric(as.is)) {
 	if(any(as.is < 1 | as.is > cols))
-	    stop("invalid numeric as.is expression")
+	    stop("invalid numeric 'as.is' expression")
 	i <- rep.int(FALSE, cols)
 	i[as.is] <- TRUE
 	as.is <- i
     } else if(is.character(as.is)) {
         i <- match(as.is, col.names, 0)
         if(any(i <= 0))
-            warning("not all columns named in as.is exist")
+            warning("not all columns named in 'as.is' exist")
         i <- i[i > 0]
         as.is <- rep.int(FALSE, cols)
         as.is[i] <- TRUE
@@ -205,7 +206,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
 	row.names <- data[[rlabp]]
 	data <- data[-rlabp]
         keep <- keep[-rlabp]
-    } else stop("invalid row.names specification")
+    } else stop("invalid 'row.names' specification")
     data <- data[keep]
 
     ##	this is extremely underhanded

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-02-06 11:41\n"
+"POT-Creation-Date: 2005-02-10 12:25\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,30 +51,6 @@ msgid "formula missing or incorrect"
 msgstr ""
 
 msgid "'coef' must not be negative"
-msgstr ""
-
-msgid "Outlier ("
-msgstr ""
-
-msgid ","
-msgstr ""
-
-msgid ") in"
-msgstr ""
-
-msgid "st"
-msgstr ""
-
-msgid "nd"
-msgstr ""
-
-msgid "rd"
-msgstr ""
-
-msgid "th"
-msgstr ""
-
-msgid "boxplot are NOT drawn"
 msgstr ""
 
 msgid "'at' must have same length as 'z$n', i.e."
@@ -233,6 +209,9 @@ msgstr ""
 msgid "extra argument(s)"
 msgstr ""
 
+msgid ","
+msgstr ""
+
 msgid "will be disregarded"
 msgstr ""
 
@@ -255,18 +234,6 @@ msgid "'x' values must be positive."
 msgstr ""
 
 msgid "x and y lengths differ"
-msgstr ""
-
-msgid "x value"
-msgstr ""
-
-msgid "s"
-msgstr ""
-
-msgid "<= 0 omitted from logarithmic plot"
-msgstr ""
-
-msgid "y value"
 msgstr ""
 
 msgid "invalid table 'x'"
@@ -371,5 +338,29 @@ msgstr ""
 msgid "x, y and z lengths differ"
 msgstr ""
 
+msgid "x value"
+msgstr ""
+
+msgid "s"
+msgstr ""
+
+msgid "y value"
+msgstr ""
+
 msgid "z value"
 msgstr ""
+
+msgid        "Outlier (%s) in boxplot %d is not drawn"
+msgid_plural "Outliers (%s) in boxplot %d are not drawn"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "one x value <= 0 omitted from logarithmic plot"
+msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+msgstr[0]    ""
+msgstr[1]    ""
+
+msgid        "one y value <= 0 omitted from logarithmic plot"
+msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+msgstr[0]    ""
+msgstr[1]    ""

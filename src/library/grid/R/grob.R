@@ -605,7 +605,7 @@ fullPathMatch <- function(pathsofar, gPath, strict, grep) {
       npe <- length(pathElts)
       if (npe > npsfe) {
         match <- FALSE
-      } else { 
+      } else {
         match <- TRUE
         index <- 1
         if (strict) {# pathSoFar same length as gPath
@@ -940,14 +940,14 @@ editThisGrob <- function(grob, specs) {
         else
           grob$gp <- mod.gpar(grob$gp, specs$gp)
       # If there is no slot with the argument name, just ignore that argument
-      else if (match(i, names(grob), nomatch=0)) 
+      else if (match(i, names(grob), nomatch=0))
         # Handle NULL as special case
         if (is.null(specs[[i]]))
           grob[i] <- eval(substitute(list(i=NULL)))
         else
           grob[[i]] <- specs[[i]]
       else
-        warning(paste("Slot", i, "not found"))
+        warning(sprintf(gettext("Slot %d not found"), i), domain = NA)
   # Check grob slots are ok before trying to do anything with them
   # in editDetails
   # grob$childrenvp may be non-NULL for a gTree
@@ -1093,12 +1093,12 @@ editDLfromGPath <- function(gPath, specs, strict, grep, global, redraw) {
     }
     index <- index + 1
   }
-  if (!found) 
+  if (!found)
     stop(paste("gPath (", gPath, ") not found"))
   else if (redraw)
     draw.all()
 }
-  
+
 #####
 ##### Add support
 #####
@@ -1257,12 +1257,12 @@ addDLfromGPath <- function(gPath, child, strict, grep, global, redraw) {
     }
     index <- index + 1
   }
-  if (!found) 
+  if (!found)
     stop(paste("gPath (", gPath, ") not found"))
   else if (redraw)
     draw.all()
 }
-  
+
 #####
 ##### Remove support
 #####
@@ -1431,12 +1431,12 @@ removeDLFromGPath <- function(gPath, name, strict, grep, grepname, global,
     }
     index <- index + 1
   }
-  if (!found) 
+  if (!found)
     stop(paste("gPath (", gPath, ") not found"))
   else if (redraw)
     draw.all()
 }
-  
+
 #####
 ##### Remove NAME support
 #####
@@ -1467,7 +1467,7 @@ removeName <- function(gTree, name, strict, grep, global, warn) {
     } else if (strict) {
       NULL
     } else {
-      if (!is.null(newChild <- removeGrobFromName(child, name, 
+      if (!is.null(newChild <- removeGrobFromName(child, name,
                                                   grep, global, warn))) {
         gTree$children[[childName]] <- newChild
         found <- TRUE
@@ -1489,7 +1489,7 @@ removeGrobFromName.gTree <- function(grob, name, grep, global, warn) {
     grob
   } else {
     removeName(grob, name, FALSE, grep, global, warn)
-  } 
+  }
 }
 
 removeNameFromDL <- function(name, strict, grep, global, warn, redraw) {
@@ -1668,7 +1668,7 @@ preDraw.gTree <- function(x) {
   # grobwidth/height units via gPath
   # Do this as a .Call.graphics to get it onto the base display list
   grid.Call.graphics("L_setCurrentGrob", x)
-  # automatically push/pop the viewport 
+  # automatically push/pop the viewport
   pushvpgp(x)
   # Push then "up" childrenvp
   if (!is.null(x$childrenvp)) {
@@ -1718,7 +1718,7 @@ drawGrob <- function(x) {
 
 grid.draw.grob <- function(x, recording=TRUE) {
   engineDLon <- grid.Call("L_getEngineDLon")
-  if (engineDLon)   
+  if (engineDLon)
     recordGraphics(drawGrob(x),
                    list(x=x),
                    getNamespace("grid"))
@@ -1741,7 +1741,7 @@ drawGList <- function(x) {
 
 grid.draw.gList <- function(x, recording=TRUE) {
   engineDLon <- grid.Call("L_getEngineDLon")
-  if (engineDLon) 
+  if (engineDLon)
     recordGraphics(drawGList(x),
                    list(x=x),
                    getNamespace("grid"))
@@ -1780,11 +1780,11 @@ drawGTree <- function(x) {
 
 grid.draw.gTree <- function(x, recording=TRUE) {
   engineDLon <- grid.Call("L_getEngineDLon")
-  if (engineDLon) 
+  if (engineDLon)
     recordGraphics(drawGTree(x),
                    list(x=x),
                    getNamespace("grid"))
-  else 
+  else
     drawGTree(x)
   if (recording)
     record(x)

@@ -48,9 +48,13 @@ check.options <-
     if(lnew > 0) {
 	matches <- pmatch(newnames, oldnames)
 	if(any(is.na(matches)))
-	    stop("invalid argument name(s) ",
-                 sQuote(paste(newnames[is.na(matches)], collapse=", ")),
-                 " in ", sQuote( deparse(sys.call(sys.parent()))) )
+	    stop(sprintf(ngettext(sum(is.na(matches)),
+                                 "invalid argument name %s in '%s'",
+                                 "invalid argument names %s in '%s'"),
+                         paste(sQuote(newnames[is.na(matches)]),
+                               collapse=", "),
+                         deparse(sys.call(sys.parent()))),
+                 domain = NA)
 ##-- This does not happen: ambiguities are plain "NA" here:
 ##-	else if(any(matches==0))
 ##-	    stop(paste("ambiguous argument name(s) '",
@@ -171,7 +175,7 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
                                "ISOLatin1.enc")
     if(!missing(family)) {
         if (!is.character(family) || length(family) != 1)
-            stop("invalid family argument")
+            stop("invalid 'family' argument")
         # If family has been defined as device-independent
         # R graphics family (i.e., it can be found in postscriptFonts)
         # then map to postscript font family

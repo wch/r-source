@@ -32,7 +32,8 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
             if(ni != nfilt)
                 stop("length of 'init' must equal length of 'filter'")
             if(NCOL(init) != 1 && NCOL(init) != nser)
-                stop("'init; must have 1 or ", nser, " cols")
+                stop(sprintf(gettext("'init; must have 1 or %d cols", nser)),
+                     domain = NA)
             if(!is.matrix(init)) init <- matrix(init, nfilt, nser)
         }
         for (i in 1:nser)

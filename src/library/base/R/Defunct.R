@@ -1,13 +1,12 @@
 .Defunct <- function(new, package=NULL) {
-    stop(paste(sQuote(as.character(sys.call(sys.parent())[[1]])),
-	       " is defunct.\n",
-               if (!missing(new))
-               paste("Use", sQuote(new), "instead.\n"),
-	       "See help(\"Defunct\")",
-               if(!is.null(package))
-               paste(" and help(\"", package, "-defunct\").", sep=""),
-	       sep = ""),
-         call. = FALSE)
+    msg <- sprintf(gettext("'%s' is defunct.\n"),
+                   as.character(sys.call(sys.parent())[[1]]))
+    if(!missing(new))
+        msg <- c(msg, sprintf(gettext("Use '%s' instead,\n"), new))
+    if(!is.null(package))
+        msg <- c(msg,
+                 sprintf(gettext("See help(\"Defunct\") and help(\"%s-defunct\")."), package))
+    stop(paste(msg, collapse=""), call. = FALSE, domain = NA)
 }
 
 Version <- function() .Defunct("R.Version")

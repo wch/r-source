@@ -1,15 +1,14 @@
 ###----- NOTE:	../man/Deprecated.Rd   must be synchronized with this!
 ###		--------------------
 .Deprecated <- function(new, package=NULL) {
-    warning(paste(sQuote(as.character(sys.call(sys.parent())[[1]])),
-		  " is deprecated.\n",
-		  if (!missing(new))
-		  paste("Use", sQuote(new), "instead.\n"),
-		  "See help(\"Deprecated\") ",
-                  if(!is.null(package))
-                  paste("and help(\"", package, "-deprecated\").", sep=""),
-		  sep = ""),
-            call. = FALSE)
+    msg <- sprintf(gettext("'%s' is deprecated.\n"),
+                   as.character(sys.call(sys.parent())[[1]]))
+    if(!missing(new))
+        msg <- c(msg, sprintf(gettext("Use '%s' instead,\n"), new))
+    if(!is.null(package))
+        msg <- c(msg,
+                 sprintf(gettext("See help(\"Deprecated\") and help(\"%s-deprecated\")."), package))
+    warning(paste(msg, collapse=""), call. = FALSE, domain = NA)
 }
 
 ## consider keeping one (commented) entry here, for easier additions

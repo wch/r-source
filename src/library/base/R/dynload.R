@@ -52,7 +52,9 @@ getDLLRegisteredRoutines.character <- function(dll)
 
     dll <- which(w)[1]
     if(sum(w) > 1)
-        warning("multiple DLLs match ", dll, ". Using ", dll$path)
+        warning(sprintf(gettext("multiple DLLs match '%s'. Using %s"),
+                        dll, dll$path),
+                domain = NA)
 
     getDLLRegisteredRoutines(dlls[[dll]])
 }
@@ -124,7 +126,7 @@ function(f = sys.function(1), doStop = FALSE)
 
     if(!isNamespace(e)) {
         if(doStop)
-            stop("function is not in a namespace, so can't locate associated DLL")
+            stop("function is not in a namespace, so cannot locate associated DLL")
         else
             return(NULL)
     }

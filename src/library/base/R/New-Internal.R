@@ -72,9 +72,12 @@ rbind <- function(..., deparse.level=1) {
 .deparseOpts <- function(control) {
     opts <- pmatch(as.character(control), c("keepInteger", "quoteExpressions",
       "showAttributes", "useSource", "warnIncomplete", "all", "delayPromises"))
-    if (any(is.na(opts))) stop(paste("deparse options ",
-                               paste('"',control[is.na(opts)],'"', sep=""),
-     			       collapse=" "), " not recognized", call. = FALSE)
+    if (any(is.na(opts)))
+        stop(sprintf(ngettext(length(is.na(opts)),
+                              "deparse option %s is not recognized",
+                              "deparse options %s are not recognized"),
+                     paste(sQuote(control[is.na(opts)]), collapse=", ")),
+             call. = FALSE, domain = NA)
     if (any(opts == 6)) {
 	if (length(opts) != 1)
 	    stop("all can not be used with other deparse options",

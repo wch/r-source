@@ -147,11 +147,11 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 
 	    if(any(inf <- !is.finite(out))) {
 		## FIXME: should MARK on plot !! (S-plus doesn't either)
-		warning("Outlier (",
-                        paste(unique(out[inf]),collapse=", "),
-                        ") in ",
-                        paste(x,c("st","nd","rd","th") [pmin(4,x)], sep=""),
-                        " boxplot are NOT drawn")
+                warning(sprintf(ngettext(length(unique(out[inf])),
+                                 "Outlier (%s) in boxplot %d is not drawn",
+                                 "Outliers (%s) in boxplot %d are not drawn"),
+                                paste(unique(out[inf]), collapse=", "), x),
+                        domain = NA)
 	    }
 	}
     } ## bplt

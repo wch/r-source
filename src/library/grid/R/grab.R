@@ -37,16 +37,10 @@ current.vpNames <-function() {
 
 grabWarn <- function(msg, certain, wrapFix) {
   warning(msg, " (grab ",
-          if (certain)
-            "WILL"
-          else
-            "MAY",
-          " not be faithful",
-          if (wrapFix)
-            "; try wrap=TRUE)"
-          else
-            ")",
-          call.=FALSE)
+          if (certain) gettext("WILL not be faithful")
+          else gettext("MAY not be faithful"),
+          if (wrapFix) "; try wrap=TRUE)" else ")",
+          call.=FALSE, domain = NA)
 }
 
 warn1 <- function(msg, wrapFix) {
@@ -125,7 +119,7 @@ grabDL <- function(warn, wrap, ...) {
       names <- getNames()
       # Check for overwriting existing grob
       if (length(unique(names)) != length(names))
-        warn1("grob(s) overwritten", TRUE)
+        warn1(gettext("grob(s) overwritten"), TRUE)
     }
     grid.newpage(recording=FALSE)
     # Start at 2 because first element is viewport[ROOT]
