@@ -18,7 +18,7 @@ Up:<a rel=up accesskey=u href="#dir">(dir)</a>
 <h2>R FAQ</h2>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.5-24, 2002-09-22</h2>
+<h2>Version 1.6-0, 2002-09-29</h2>
 <h2>ISBN 3-901167-51-X</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -259,7 +259,7 @@ Up:<a rel=up accesskey=u href="#R%20Basics">R Basics</a>
 
 <h3>2.3 What is the current version of R?</h3>
 
-<p>The current released version is 1.5.1.  Based on this
+<p>The current released version is 1.6.0.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
 versions of R, working towards the next patch (`r-patched') and minor or
 eventually major (`r-devel') releases of R, respectively.  Version
@@ -1427,7 +1427,8 @@ distribution functions.
 </dl>
 
 <p>The following packages are available from the <small>CRAN</small>
-<code>src/contrib</code> area.
+<code>src/contrib</code> area.  (Packages denoted as <em>Recommended</em> are to
+be included in all binary distributions of R.)
 
 <dl>
 <dt><strong>AnalyzeFMRI</strong>
@@ -1466,10 +1467,11 @@ and Truncated Data" by Klein and Moeschberger, 1997, Springer.
 <br><dt><strong>KernSmooth</strong>
 <dd>Functions for kernel smoothing (and density estimation) corresponding to
 the book "Kernel Smoothing" by M. P. Wand and M. C. Jones, 1995. 
+<em>Recommended</em>. 
 <br><dt><strong>MASS</strong>
 <dd>Functions and datasets from the main package of Venables and Ripley,
-"Modern Applied Statistics with <small>S-PLUS</small>".  Contained in the <code>VR</code>
-bundle. 
+"Modern Applied Statistics with S".  Contained in the <code>VR</code>
+bundle.  <em>Recommended</em>. 
 <br><dt><strong>Matrix</strong>
 <dd>A Matrix package. 
 <br><dt><strong>NISTnls</strong>
@@ -1477,10 +1479,6 @@ bundle.
 U.S. National Institute for Standards and Technology. 
 <br><dt><strong>Oarray</strong>
 <dd>Arrays with arbitrary offsets. 
-<br><dt><strong>PHYLOGR</strong>
-<dd>Manipulation and analysis of phylogenetically simulated data sets (as
-obtained from PDSIMUL in package PDAP) and phylogenetically-based
-analyses using GLS. 
 <br><dt><strong>PTAk</strong>
 <dd>A multiway method to decompose a tensor (array) of any order, as a
 generalisation of SVD also supporting non-identity metrics and
@@ -1491,8 +1489,6 @@ penalisations.  Also includes some other multiway methods.
 <dd>An interface between R and the MySQL database system. 
 <br><dt><strong>ROracle</strong>
 <dd>Oracle Database Interface driver for R.  Uses the ProC/C++ embedded SQL. 
-<br><dt><strong>RPgSQL</strong>
-<dd>Provides methods for accessing data stored in PostgreSQL tables. 
 <br><dt><strong>RQuantLib</strong>
 <dd>Provides access to (some) of the QuantLib functions from within R;
 currently limited to some Option pricing and analysis functions.  The
@@ -1501,10 +1497,6 @@ quantitative finance.
 <br><dt><strong>RSQLite</strong>
 <dd>Database Interface R driver for SQLite.  Embeds the SQLite database
 engine in R. 
-<br><dt><strong>RadioSonde</strong>
-<dd>A collection of programs for reading and plotting SKEW-T,log p diagrams
-and wind profiles for data collected by radiosondes (the typical weather
-balloon-borne instrument). 
 <br><dt><strong>RandomFields</strong>
 <dd>Creating random fields using various methods. 
 <br><dt><strong>RmSQL</strong>
@@ -1566,7 +1558,7 @@ various approaches.
 <br><dt><strong>boot</strong>
 <dd>Functions and datasets for bootstrapping from the book "Bootstrap
 Methods and Their Applications" by A. C. Davison and D. V. Hinkley,
-1997, Cambridge University Press. 
+1997, Cambridge University Press.  <em>Recommended</em>. 
 <br><dt><strong>bootstrap</strong>
 <dd>Software (bootstrap, cross-validation, jackknife), data and errata for
 the book "An Introduction to the Bootstrap" by B. Efron and
@@ -1593,9 +1585,9 @@ finding the number of clusters in a data set.
 <dd>A package for working with chronological objects (times and dates). 
 <br><dt><strong>class</strong>
 <dd>Functions for classification (k-nearest neighbor and LVQ). 
-Contained in the <code>VR</code> bundle. 
+Contained in the <code>VR</code> bundle.  <em>Recommended</em>. 
 <br><dt><strong>cluster</strong>
-<dd>Functions for cluster analysis. 
+<dd>Functions for cluster analysis.  <em>Recommended</em>. 
 <br><dt><strong>cmprsk</strong>
 <dd>Estimation, testing and regression modeling of subdistribution functions
 in competing risks. 
@@ -1676,7 +1668,7 @@ main feature is that any covariance function implemented in R can be
 used for spatial prediction. 
 <br><dt><strong>foreign</strong>
 <dd>Functions for reading and writing data stored by statistical software
-like Minitab, SAS, SPSS, Stata, etc. 
+like Minitab, SAS, SPSS, Stata, etc.  <em>Recommended</em>. 
 <br><dt><strong>fracdiff</strong>
 <dd>Maximum likelihood estimation of the parameters of a fractionally
 differenced ARIMA(p,d,q) model (Haslett and Raftery, Applied
@@ -1706,7 +1698,7 @@ including some latent class models via EM and Fisher scoring approaches.
 <dd>Miscellaneous functions written/maintained by Gregory R. Warnes. 
 <br><dt><strong>grid</strong>
 <dd>The Grid graphics package, a rewrite of the graphics layout
-capabilities, plus some support for interaction. 
+capabilities, plus some support for interaction.  <em>Recommended</em>. 
 <br><dt><strong>gss</strong>
 <dd>A comprehensive package for structural multivariate function estimation
 using smoothing splines. 
@@ -1741,6 +1733,7 @@ imposing an L1 constraint on the estimates, based on the algorithm of
 Osborne et al. (1998)
 <br><dt><strong>lattice</strong>
 <dd>Lattice graphics, an implementation of Trellis Graphics functions. 
+<em>Recommended</em>. 
 <br><dt><strong>leaps</strong>
 <dd>A package which performs an exhaustive search for the best subsets of a
 given set of potential regressors, using a branch-and-bound algorithm,
@@ -1752,8 +1745,6 @@ techniques.
 <dd>A collection of tests on the assumptions of linear regression models
 from the book "The linear regression model under test" by W. Kraemer
 and H. Sonnberger, 1986, Physica. 
-<br><dt><strong>locfit</strong>
-<dd>Local Regression, likelihood and density estimation. 
 <br><dt><strong>logspline</strong>
 <dd>Logspline density estimation. 
 <br><dt><strong>lokern</strong>
@@ -1767,8 +1758,6 @@ hierarchical clustering and classification and regression trees.
 <br><dt><strong>maxstat</strong>
 <dd>Maximally selected rank and Gauss statistics with several p-value
 approximations. 
-<br><dt><strong>mclust</strong>
-<dd>Model-based cluster analysis. 
 <br><dt><strong>mda</strong>
 <dd>Code for mixture discriminant analysis (MDA), flexible discriminant
 analysis (FDA), penalized discriminant analysis (PDA), multivariate
@@ -1780,6 +1769,7 @@ models.
 <br><dt><strong>mgcv</strong>
 <dd>Routines for GAMs and other genralized ridge regression problems with
 multiple smoothing parameter selection by GCV or UBRE. 
+<em>Recommended</em>. 
 <br><dt><strong>mlbench</strong>
 <dd>A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data. 
@@ -1801,12 +1791,13 @@ algorithm, Sammon mapping, PCA and correspondence analysis.
 <dd>Read data from netCDF files. 
 <br><dt><strong>nlme</strong>
 <dd>Fit and compare Gaussian linear and nonlinear mixed-effects models. 
+<em>Recommended</em>. 
 <br><dt><strong>nlrq</strong>
 <dd>Nonlinear quantile regression. 
 <br><dt><strong>nnet</strong>
 <dd>Software for single hidden layer perceptrons ("feed-forward neural
 networks"), and for multinomial log-linear models.  Contained in the
-<code>VR</code> bundle. 
+<code>VR</code> bundle.  <em>Recommended</em>. 
 <br><dt><strong>norm</strong>
 <dd>Analysis of multivariate normal datasets with missing values. 
 <br><dt><strong>normix</strong>
@@ -1867,7 +1858,7 @@ predictors in a linear or generalized linear model.
 <dd>Functions for simple fixed and random effects meta-analysis for
 two-sample comparison of binary outcomes. 
 <br><dt><strong>rpart</strong>
-<dd>Recursive PARTitioning and regression trees. 
+<dd>Recursive PARTitioning and regression trees.  <em>Recommended</em>. 
 <br><dt><strong>rpvm</strong>
 <dd>R interface to PVM (Parallel Virtual Machine).  Provides interface to
 PVM APIs, and examples and documentation for its use. 
@@ -1888,8 +1879,6 @@ using the RAM approach.
 <dd>Software linked to the book "Applied Smoothing Techniques for Data
 Analysis:  The Kernel Approach with <small>S-PLUS</small> Illustrations" by
 A. W. Bowman and A. Azzalini (1997), Oxford University Press. 
-<br><dt><strong>sma</strong>
-<dd>Functions for exploratory (statistical) microarray analysis. 
 <br><dt><strong>sn</strong>
 <dd>Functions for manipulating skew-normal probability distributions and for
 fitting them to data, in the scalar and the multivariate case. 
@@ -1903,8 +1892,8 @@ visualization.
 files and sound samples. 
 <br><dt><strong>spatial</strong>
 <dd>Functions for kriging and point pattern analysis from "Modern Applied
-Statistics with <small>S-PLUS</small>" by W. Venables and B. Ripley.  Contained in
-the <code>VR</code> bundle. 
+Statistics with S" by W. Venables and B. Ripley.  Contained in the
+<code>VR</code> bundle.  <em>Recommended</em>. 
 <br><dt><strong>spatstat</strong>
 <dd>Data analysis and modelling of two-dimensional point patterns, including
 multitype points and spatial covariates. 
@@ -1928,6 +1917,7 @@ as surrogates for a full data set, and search for subsets which are
 optimal under various criteria. 
 <br><dt><strong>survival</strong>
 <dd>Functions for survival analysis, including penalised likelihood. 
+<em>Recommended</em>. 
 <br><dt><strong>systemfit</strong>
 <dd>Contains functions for fitting simultaneous systems of equations using
 Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
@@ -1976,15 +1966,29 @@ currently contains
 on starting R from within the GRASS environment and chosen LOCATION and
 MAPSET.  Wrapper and helper functions are provided for a range of R
 functions to match the interface metadata structures. 
+<br><dt><strong>PHYLOGR</strong>
+<dd>Manipulation and analysis of phylogenetically simulated data sets (as
+obtained from PDSIMUL in package PDAP) and phylogenetically-based
+analyses using GLS. 
 <br><dt><strong>R2HTML</strong>
 <dd>Functions for exporting R objects &amp; graphics in an <small>HTML</small> document. 
 <br><dt><strong>RODBC</strong>
 <dd>An <small>ODBC</small> database interface. 
+<br><dt><strong>RPgSQL</strong>
+<dd>Provides methods for accessing data stored in PostgreSQL tables. 
+<br><dt><strong>RadioSonde</strong>
+<dd>A collection of programs for reading and plotting SKEW-T,log p diagrams
+and wind profiles for data collected by radiosondes (the typical weather
+balloon-borne instrument). 
 <br><dt><strong>dseplus</strong>
 <dd>Extensions to <strong>dse</strong>, the Dynamic Systems Estimation multivariate
 time series package.  Contains PADI, juice and monitoring extensions. 
 <br><dt><strong>ensemble</strong>
 <dd>Ensembles of tree classifiers. 
+<br><dt><strong>locfit</strong>
+<dd>Local Regression, likelihood and density estimation. 
+<br><dt><strong>mclust</strong>
+<dd>Model-based cluster analysis. 
 <br><dt><strong>multidim</strong>
 <dd>Code for correspondence analysis and other multidimensional descriptive
 statistics. 
@@ -1992,6 +1996,8 @@ statistics.
 <dd>Univariate Partial Least Squares Regression. 
 <br><dt><strong>runStat</strong>
 <dd>Running median and mean. 
+<br><dt><strong>sma</strong>
+<dd>Functions for exploratory (statistical) microarray analysis. 
 <br><dt><strong>write.snns</strong>
 <dd>Function for writing a <small>SNNS</small> pattern file from a data frame or
 matrix. 
@@ -2063,7 +2069,7 @@ statisticians working in bioinformatics, with primary emphasis on
 inference using DNA microarrays.  Currently, the following R packages
 can be obtained from
 &lt;<code>http://www.bioconductor.org/packages/devel/html/</code>&gt;, with more
-packages in development.
+packages under development.
 
 <dl>
 <dt><strong>AnnBuilder</strong>

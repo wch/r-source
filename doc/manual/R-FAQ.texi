@@ -4,8 +4,8 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-24, 2002-09-22
-@set REL-VERSION 1.5.1
+@set FAQ-VERSION 1.6-0, 2002-09-29
+@set REL-VERSION 1.6.0
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
 
@@ -1461,7 +1461,8 @@ Time Series.
 @end table
 
 The following packages are available from the @acronym{CRAN}
-@file{src/contrib} area.
+@file{src/contrib} area.  (Packages denoted as @emph{Recommended} are to
+be included in all binary distributions of R.)
 
 @table @strong
 @item AnalyzeFMRI
@@ -1500,10 +1501,11 @@ and Truncated Data'' by Klein and Moeschberger, 1997, Springer.
 @item KernSmooth
 Functions for kernel smoothing (and density estimation) corresponding to
 the book ``Kernel Smoothing'' by M. P. Wand and M. C. Jones, 1995.
+@emph{Recommended}.
 @item MASS
 Functions and datasets from the main package of Venables and Ripley,
-``Modern Applied Statistics with @SPLUS{}''.  Contained in the @file{VR}
-bundle.
+``Modern Applied Statistics with S''.  Contained in the @file{VR}
+bundle.  @emph{Recommended}.
 @item Matrix
 A Matrix package.
 @item NISTnls
@@ -1511,10 +1513,6 @@ A set of test nonlinear least squares examples from @acronym{NIST}, the
 U.S. National Institute for Standards and Technology.
 @item Oarray
 Arrays with arbitrary offsets.
-@item PHYLOGR
-Manipulation and analysis of phylogenetically simulated data sets (as
-obtained from PDSIMUL in package PDAP) and phylogenetically-based
-analyses using GLS.
 @item PTAk
 A multiway method to decompose a tensor (array) of any order, as a
 generalisation of SVD also supporting non-identity metrics and
@@ -1525,8 +1523,6 @@ Functions to import Arc/Info V7.x coverages and data.
 An interface between R and the MySQL database system.
 @item ROracle
 Oracle Database Interface driver for R.  Uses the ProC/C++ embedded SQL.
-@item RPgSQL
-Provides methods for accessing data stored in PostgreSQL tables.
 @item RQuantLib
 Provides access to (some) of the QuantLib functions from within R;
 currently limited to some Option pricing and analysis functions.  The
@@ -1535,10 +1531,6 @@ quantitative finance.
 @item RSQLite
 Database Interface R driver for SQLite.  Embeds the SQLite database
 engine in R.
-@item RadioSonde
-A collection of programs for reading and plotting SKEW-T,log p diagrams
-and wind profiles for data collected by radiosondes (the typical weather
-balloon-borne instrument).
 @item RandomFields
 Creating random fields using various methods.
 @item RmSQL
@@ -1606,7 +1598,7 @@ Function for drawing the coastline of the United Kingdom.
 @item boot
 Functions and datasets for bootstrapping from the book ``Bootstrap
 Methods and Their Applications'' by A. C. Davison and D. V. Hinkley,
-1997, Cambridge University Press.
+1997, Cambridge University Press.  @emph{Recommended}.
 @item bootstrap
 Software (bootstrap, cross-validation, jackknife), data and errata for
 the book ``An Introduction to the Bootstrap'' by B. Efron and
@@ -1633,9 +1625,9 @@ Analysis of configuration frequencies.
 A package for working with chronological objects (times and dates).
 @item class
 Functions for classification (@math{k}-nearest neighbor and LVQ).
-Contained in the @file{VR} bundle.
+Contained in the @file{VR} bundle.  @emph{Recommended}.
 @item cluster
-Functions for cluster analysis.
+Functions for cluster analysis.  @emph{Recommended}.
 @item cmprsk
 Estimation, testing and regression modeling of subdistribution functions
 in competing risks.
@@ -1716,7 +1708,7 @@ main feature is that any covariance function implemented in R can be
 used for spatial prediction.
 @item foreign
 Functions for reading and writing data stored by statistical software
-like Minitab, SAS, SPSS, Stata, etc.
+like Minitab, SAS, SPSS, Stata, etc.  @emph{Recommended}.
 @item fracdiff
 Maximum likelihood estimation of the parameters of a fractionally
 differenced ARIMA(@math{p,d,q}) model (Haslett and Raftery, Applied
@@ -1746,7 +1738,7 @@ including some latent class models via EM and Fisher scoring approaches.
 Miscellaneous functions written/maintained by Gregory R. Warnes.
 @item grid
 The Grid graphics package, a rewrite of the graphics layout
-capabilities, plus some support for interaction.
+capabilities, plus some support for interaction.  @emph{Recommended}.
 @item gss
 A comprehensive package for structural multivariate function estimation
 using smoothing splines.
@@ -1783,6 +1775,7 @@ imposing an L1 constraint on the estimates, based on the algorithm of
 Osborne et al.@: (1998)
 @item lattice
 Lattice graphics, an implementation of Trellis Graphics functions.
+@emph{Recommended}.
 @item leaps
 A package which performs an exhaustive search for the best subsets of a
 given set of potential regressors, using a branch-and-bound algorithm,
@@ -1794,8 +1787,6 @@ A set of methods for longitudinal data objects.
 A collection of tests on the assumptions of linear regression models
 from the book ``The linear regression model under test'' by W. Kraemer
 and H. Sonnberger, 1986, Physica.
-@item locfit
-Local Regression, likelihood and density estimation.
 @item logspline
 Logspline density estimation.
 @item lokern
@@ -1809,8 +1800,6 @@ hierarchical clustering and classification and regression trees.
 @item maxstat
 Maximally selected rank and Gauss statistics with several p-value
 approximations.
-@item mclust
-Model-based cluster analysis.
 @item mda
 Code for mixture discriminant analysis (MDA), flexible discriminant
 analysis (FDA), penalized discriminant analysis (PDA), multivariate
@@ -1822,6 +1811,7 @@ models.
 @item mgcv
 Routines for GAMs and other genralized ridge regression problems with
 multiple smoothing parameter selection by GCV or UBRE.
+@emph{Recommended}.
 @item mlbench
 A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data.
@@ -1843,12 +1833,13 @@ Multivariate normal and @math{t} distributions.
 Read data from netCDF files.
 @item nlme
 Fit and compare Gaussian linear and nonlinear mixed-effects models.
+@emph{Recommended}.
 @item nlrq
 Nonlinear quantile regression.
 @item nnet
 Software for single hidden layer perceptrons (``feed-forward neural
 networks''), and for multinomial log-linear models.  Contained in the
-@file{VR} bundle.
+@file{VR} bundle.  @emph{Recommended}.
 @item norm
 Analysis of multivariate normal datasets with missing values.
 @item normix
@@ -1919,7 +1910,7 @@ predictors in a linear or generalized linear model.
 Functions for simple fixed and random effects meta-analysis for
 two-sample comparison of binary outcomes.
 @item rpart
-Recursive PARTitioning and regression trees.
+Recursive PARTitioning and regression trees.  @emph{Recommended}.
 @item rpvm
 R interface to PVM (Parallel Virtual Machine).  Provides interface to
 PVM APIs, and examples and documentation for its use.
@@ -1940,8 +1931,6 @@ An object-oriented framework for geostatistical modeling.
 Software linked to the book ``Applied Smoothing Techniques for Data
 Analysis:  The Kernel Approach with @SPLUS{} Illustrations'' by
 A. W. Bowman and A. Azzalini (1997), Oxford University Press.
-@item sma
-Functions for exploratory (statistical) microarray analysis.
 @item sn
 Functions for manipulating skew-normal probability distributions and for
 fitting them to data, in the scalar and the multivariate case.
@@ -1960,8 +1949,8 @@ A sound interface for R: Basic functions for dealing with @file{.wav}
 files and sound samples.
 @item spatial
 Functions for kriging and point pattern analysis from ``Modern Applied
-Statistics with @SPLUS{}'' by W. Venables and B. Ripley.  Contained in
-the @file{VR} bundle.
+Statistics with S'' by W. Venables and B. Ripley.  Contained in the
+@file{VR} bundle.  @emph{Recommended}.
 @item spatstat
 Data analysis and modelling of two-dimensional point patterns, including
 multitype points and spatial covariates.
@@ -2011,6 +2000,7 @@ optimal under various criteria.
 @c @strong{splines}).
 @item survival
 Functions for survival analysis, including penalised likelihood.
+@emph{Recommended}.
 @item systemfit
 Contains functions for fitting simultaneous systems of equations using
 Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
@@ -2060,12 +2050,31 @@ Interface between the GRASS geographical information system and R, based
 on starting R from within the GRASS environment and chosen LOCATION and
 MAPSET.  Wrapper and helper functions are provided for a range of R
 functions to match the interface metadata structures.
+@c <NOTE>
+@c Moved to Devel for 1.6 as it fails R CMD check.
+@item PHYLOGR
+Manipulation and analysis of phylogenetically simulated data sets (as
+obtained from PDSIMUL in package PDAP) and phylogenetically-based
+analyses using GLS.
+@c </NOTE>
 @item R2HTML
 Functions for exporting R objects & graphics in an @HTML{} document.
 @c <NOTE>
 @c Moved to Devel for 1.5 as it fails R CMD check.
 @item RODBC
 An @acronym{ODBC} database interface.
+@c </NOTE>
+@c <NOTE>
+@c Moved to Devel for 1.6 as it fails R CMD check.
+@item RPgSQL
+Provides methods for accessing data stored in PostgreSQL tables.
+@c </NOTE>
+@c <NOTE>
+@c Moved to Devel for 1.6 as it fails R CMD check.
+@item RadioSonde
+A collection of programs for reading and plotting SKEW-T,log p diagrams
+and wind profiles for data collected by radiosondes (the typical weather
+balloon-borne instrument).
 @c </NOTE>
 @c <COMMENT>
 @c Moved to Attic for 1.5.1 as no longer needed.
@@ -2103,6 +2112,16 @@ Ensembles of tree classifiers.
 @c A suite of functions to compute power and sample size for tests of the
 @c general linear hypothesis.
 @c </COMMENT>
+@c <NOTE>
+@c Moved to Devel for 1.6 as it fails R CMD check.
+@item locfit
+Local Regression, likelihood and density estimation.
+@c </NOTE>
+@c <NOTE>
+@c Moved to Devel for 1.6 as it fails R CMD check.
+@item mclust
+Model-based cluster analysis.
+@c </NOTE>
 @item multidim
 Code for correspondence analysis and other multidimensional descriptive
 statistics.
@@ -2115,6 +2134,11 @@ Univariate Partial Least Squares Regression.
 @c </COMMENT>
 @item runStat
 Running median and mean.
+@c <NOTE>
+@c Moved to Devel for 1.6 as it fails R CMD check.
+@item sma
+Functions for exploratory (statistical) microarray analysis.
+@c </NOTE>
 @item write.snns
 Function for writing a @acronym{SNNS} pattern file from a data frame or
 matrix.
@@ -2187,7 +2211,7 @@ statisticians working in bioinformatics, with primary emphasis on
 inference using DNA microarrays.  Currently, the following R packages
 can be obtained from
 @url{http://www.bioconductor.org/packages/devel/html/}, with more
-packages in development.
+packages under development.
 
 @table @strong
 @item AnnBuilder

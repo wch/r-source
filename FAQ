@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-24, 2002-09-22
+Version 1.6-0, 2002-09-29
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -238,7 +238,7 @@ hppa-hp-hpux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current released version is 1.5.1.  Based on this
+   The current released version is 1.6.0.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
 versions of R, working towards the next patch (`r-patched') and minor or
 eventually major (`r-devel') releases of R, respectively.  Version
@@ -1173,6 +1173,8 @@ requirement for the user is a JavaScript capable browser.  See
      Time Series.
 
    The following packages are available from the CRAN `src/contrib' area.
+(Packages denoted as _Recommended_ are to be included in all binary
+distributions of R.)
 
 *AnalyzeFMRI*
      Functions for I/O, visualisation and analysis of functional Magnetic
@@ -1222,10 +1224,12 @@ requirement for the user is a JavaScript capable browser.  See
 *KernSmooth*
      Functions for kernel smoothing (and density estimation) corresponding
      to the book "Kernel Smoothing" by M. P. Wand and M. C. Jones, 1995.
+     _Recommended_.
 
 *MASS*
      Functions and datasets from the main package of Venables and Ripley,
-     "Modern Applied Statistics with S-PLUS".  Contained in the `VR' bundle.
+     "Modern Applied Statistics with S".  Contained in the `VR' bundle.
+     _Recommended_.
 
 *Matrix*
      A Matrix package.
@@ -1236,11 +1240,6 @@ requirement for the user is a JavaScript capable browser.  See
 
 *Oarray*
      Arrays with arbitrary offsets.
-
-*PHYLOGR*
-     Manipulation and analysis of phylogenetically simulated data sets (as
-     obtained from PDSIMUL in package PDAP) and phylogenetically-based
-     analyses using GLS.
 
 *PTAk*
      A multiway method to decompose a tensor (array) of any order, as a
@@ -1257,9 +1256,6 @@ requirement for the user is a JavaScript capable browser.  See
      Oracle Database Interface driver for R.  Uses the ProC/C++ embedded
      SQL.
 
-*RPgSQL*
-     Provides methods for accessing data stored in PostgreSQL tables.
-
 *RQuantLib*
      Provides access to (some) of the QuantLib functions from within R;
      currently limited to some Option pricing and analysis functions.  The
@@ -1269,11 +1265,6 @@ requirement for the user is a JavaScript capable browser.  See
 *RSQLite*
      Database Interface R driver for SQLite.  Embeds the SQLite database
      engine in R.
-
-*RadioSonde*
-     A collection of programs for reading and plotting SKEW-T,log p diagrams
-     and wind profiles for data collected by radiosondes (the typical
-     weather balloon-borne instrument).
 
 *RandomFields*
      Creating random fields using various methods.
@@ -1354,7 +1345,7 @@ requirement for the user is a JavaScript capable browser.  See
 *boot*
      Functions and datasets for bootstrapping from the book "Bootstrap
      Methods and Their Applications" by A. C. Davison and D. V. Hinkley,
-     1997, Cambridge University Press.
+     1997, Cambridge University Press.  _Recommended_.
 
 *bootstrap*
      Software (bootstrap, cross-validation, jackknife), data and errata for
@@ -1389,10 +1380,10 @@ requirement for the user is a JavaScript capable browser.  See
 
 *class*
      Functions for classification (k-nearest neighbor and LVQ).  Contained
-     in the `VR' bundle.
+     in the `VR' bundle.  _Recommended_.
 
 *cluster*
-     Functions for cluster analysis.
+     Functions for cluster analysis.  _Recommended_.
 
 *cmprsk*
      Estimation, testing and regression modeling of subdistribution
@@ -1494,7 +1485,7 @@ requirement for the user is a JavaScript capable browser.  See
 
 *foreign*
      Functions for reading and writing data stored by statistical software
-     like Minitab, SAS, SPSS, Stata, etc.
+     like Minitab, SAS, SPSS, Stata, etc.  _Recommended_.
 
 *fracdiff*
      Maximum likelihood estimation of the parameters of a fractionally
@@ -1536,7 +1527,7 @@ requirement for the user is a JavaScript capable browser.  See
 
 *grid*
      The Grid graphics package, a rewrite of the graphics layout
-     capabilities, plus some support for interaction.
+     capabilities, plus some support for interaction.  _Recommended_.
 
 *gss*
      A comprehensive package for structural multivariate function estimation
@@ -1581,6 +1572,7 @@ requirement for the user is a JavaScript capable browser.  See
 
 *lattice*
      Lattice graphics, an implementation of Trellis Graphics functions.
+     _Recommended_.
 
 *leaps*
      A package which performs an exhaustive search for the best subsets of a
@@ -1595,9 +1587,6 @@ requirement for the user is a JavaScript capable browser.  See
      A collection of tests on the assumptions of linear regression models
      from the book "The linear regression model under test" by W. Kraemer
      and H. Sonnberger, 1986, Physica.
-
-*locfit*
-     Local Regression, likelihood and density estimation.
 
 *logspline*
      Logspline density estimation.
@@ -1617,9 +1606,6 @@ requirement for the user is a JavaScript capable browser.  See
      Maximally selected rank and Gauss statistics with several p-value
      approximations.
 
-*mclust*
-     Model-based cluster analysis.
-
 *mda*
      Code for mixture discriminant analysis (MDA), flexible discriminant
      analysis (FDA), penalized discriminant analysis (PDA), multivariate
@@ -1632,7 +1618,7 @@ requirement for the user is a JavaScript capable browser.  See
 
 *mgcv*
      Routines for GAMs and other genralized ridge regression problems with
-     multiple smoothing parameter selection by GCV or UBRE.
+     multiple smoothing parameter selection by GCV or UBRE.  _Recommended_.
 
 *mlbench*
      A collection of artificial and real-world machine learning benchmark
@@ -1663,6 +1649,7 @@ requirement for the user is a JavaScript capable browser.  See
 
 *nlme*
      Fit and compare Gaussian linear and nonlinear mixed-effects models.
+     _Recommended_.
 
 *nlrq*
      Nonlinear quantile regression.
@@ -1670,7 +1657,7 @@ requirement for the user is a JavaScript capable browser.  See
 *nnet*
      Software for single hidden layer perceptrons ("feed-forward neural
      networks"), and for multinomial log-linear models.  Contained in the
-     `VR' bundle.
+     `VR' bundle.  _Recommended_.
 
 *norm*
      Analysis of multivariate normal datasets with missing values.
@@ -1754,7 +1741,7 @@ requirement for the user is a JavaScript capable browser.  See
      two-sample comparison of binary outcomes.
 
 *rpart*
-     Recursive PARTitioning and regression trees.
+     Recursive PARTitioning and regression trees.  _Recommended_.
 
 *rpvm*
      R interface to PVM (Parallel Virtual Machine).  Provides interface to
@@ -1783,9 +1770,6 @@ requirement for the user is a JavaScript capable browser.  See
      Analysis:  The Kernel Approach with S-PLUS Illustrations" by A. W.
      Bowman and A. Azzalini (1997), Oxford University Press.
 
-*sma*
-     Functions for exploratory (statistical) microarray analysis.
-
 *sn*
      Functions for manipulating skew-normal probability distributions and
      for fitting them to data, in the scalar and the multivariate case.
@@ -1802,8 +1786,8 @@ requirement for the user is a JavaScript capable browser.  See
 
 *spatial*
      Functions for kriging and point pattern analysis from "Modern Applied
-     Statistics with S-PLUS" by W. Venables and B. Ripley.  Contained in
-     the `VR' bundle.
+     Statistics with S" by W. Venables and B. Ripley.  Contained in the
+     `VR' bundle.  _Recommended_.
 
 *spatstat*
      Data analysis and modelling of two-dimensional point patterns,
@@ -1832,6 +1816,7 @@ requirement for the user is a JavaScript capable browser.  See
 
 *survival*
      Functions for survival analysis, including penalised likelihood.
+     _Recommended_.
 
 *systemfit*
      Contains functions for fitting simultaneous systems of equations using
@@ -1892,11 +1877,24 @@ these a try, of course.  This area of CRAN currently contains
      LOCATION and MAPSET.  Wrapper and helper functions are provided for a
      range of R functions to match the interface metadata structures.
 
+*PHYLOGR*
+     Manipulation and analysis of phylogenetically simulated data sets (as
+     obtained from PDSIMUL in package PDAP) and phylogenetically-based
+     analyses using GLS.
+
 *R2HTML*
      Functions for exporting R objects & graphics in an HTML document.
 
 *RODBC*
      An ODBC database interface.
+
+*RPgSQL*
+     Provides methods for accessing data stored in PostgreSQL tables.
+
+*RadioSonde*
+     A collection of programs for reading and plotting SKEW-T,log p diagrams
+     and wind profiles for data collected by radiosondes (the typical
+     weather balloon-borne instrument).
 
 *dseplus*
      Extensions to *dse*, the Dynamic Systems Estimation multivariate time
@@ -1904,6 +1902,12 @@ these a try, of course.  This area of CRAN currently contains
 
 *ensemble*
      Ensembles of tree classifiers.
+
+*locfit*
+     Local Regression, likelihood and density estimation.
+
+*mclust*
+     Model-based cluster analysis.
 
 *multidim*
      Code for correspondence analysis and other multidimensional descriptive
@@ -1914,6 +1918,9 @@ these a try, of course.  This area of CRAN currently contains
 
 *runStat*
      Running median and mean.
+
+*sma*
+     Functions for exploratory (statistical) microarray analysis.
 
 *write.snns*
      Function for writing a SNNS pattern file from a data frame or matrix.
@@ -1996,8 +2003,8 @@ Currently, there are
 source software framework that will assist biologists and statisticians
 working in bioinformatics, with primary emphasis on inference using DNA
 microarrays.  Currently, the following R packages can be obtained from
-<http://www.bioconductor.org/packages/devel/html/>, with more packages in
-development.
+<http://www.bioconductor.org/packages/devel/html/>, with more packages
+under development.
 
 *AnnBuilder*
      Processing information from Unigene, LocusLink, and Gene Ontology
