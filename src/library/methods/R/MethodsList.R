@@ -402,7 +402,7 @@ matchSignature <-
         stop("signature argument doesn't look like a legitimate signature (vector of single class names)")
     if(any(unknown)) {
         unknown <- unique(sigClasses[unknown])
-        warning("Class ", paste("\"", unknown, "\"", sep="", collapse = ", "), "not defined")
+        warning("Class ", paste("\"", unknown, "\"", sep="", collapse = ", "), " not defined")
     }
     ## construct a function call with the same naming pattern as signature
     fcall <- do.call("call", c("fun", signature))
