@@ -236,6 +236,11 @@ static R_CallMethodDef callMethods [] = {
     CALLDEF(R_serialize, 4),
     CALLDEF(R_unserialize, 2),
 
+    /* lazy loading support */
+    CALLDEF(R_getVarsFromFrame, 3),
+    CALLDEF(R_lazyLoadDBinsertValue, 5),
+    CALLDEF(R_lazyLoadDBfetch, 4),
+
     {NULL, NULL, 0}
 };
 

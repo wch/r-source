@@ -1650,3 +1650,159 @@ SEXP R_unserialize(SEXP icon, SEXP fun)
 	return R_Unserialize(&in);
     }
 }
+
+
+/*
+ * Support Code for Lazy Loading of Packages
+ */
+
+/* This include is to bring in declarations of R_compress1 and
+   R_decompress1 */
+#include "basedecl.h"
+
+#define IS_PROPER_STRING(s) (TYPEOF(s) == STRSXP && LENGTH(s) > 0)
+
+/* Appends a scalar string to the end of a file using binary mode.
+   Returns an integer vector of the initial offset of the string in
+   the file and the length of the string. */
+
+static SEXP appendStringToFile(SEXP file, SEXP string)
+{
+    FILE *fp;
+    size_t len, out;
+    long pos;
+    SEXP val;
+
+    if (! IS_PROPER_STRING(file))
+	error("not a proper file name");
+    if (! IS_PROPER_STRING(string))
+	error("not a proper string");
+
+    if ((fp = fopen(CHAR(STRING_ELT(file, 0)), "ab")) == NULL)
+	error("file open failed");
+    
+    len = LENGTH(STRING_ELT(string, 0));
+    pos = ftell(fp);
+    out = fwrite(CHAR(STRING_ELT(string, 0)), 1, len, fp);
+    fclose(fp);
+
+    if (out != len) error("write failed");
+    if (pos == -1) error("could not determine file position");
+
+    val = allocVector(INTSXP, 2);
+    INTEGER(val)[0] = pos;
+    INTEGER(val)[1] = len;
+    return val;
+}
+
+/* Reads, in binary mode, the bytes in the range specified by a
+   position/length vector and returns them as a scalar string. */
+
+static SEXP readStringFromFile(SEXP file, SEXP key)
+{
+    FILE *fp;
+    int offset, len, in;
+    SEXP val;
+
+    if (! IS_PROPER_STRING(file))
+	error("not a proper file name");
+    if (TYPEOF(key) != INTSXP || LENGTH(key) != 2)
+	error("bad offset/length argument");
+
+    offset = INTEGER(key)[0];
+    len = INTEGER(key)[1];
+
+    val = allocVector(CHARSXP, len);
+    val = ScalarString(val);
+
+    if ((fp = fopen(CHAR(STRING_ELT(file, 0)), "rb")) == NULL)
+	error("file open failed");
+    if (fseek(fp, offset, SEEK_SET) != 0) {
+	fclose(fp);
+	error("seek failed");
+    }
+    in = fread(CHAR(STRING_ELT(val, 0)), 1, len, fp);
+    fclose(fp);
+
+    if (len != in) error("read failed");
+    
+    return val;
+}
+
+/* Gets the vinding values of variables from a frame and returns them
+   as a list.  If the force argument is true, promises are forced;
+   otherwise they are not. */
+
+SEXP R_getVarsFromFrame(SEXP vars, SEXP env, SEXP forcesxp)
+{
+    SEXP val;
+    Rboolean force;
+    int i, len;
+
+    if (TYPEOF(env) != NILSXP && TYPEOF(env) != ENVSXP)
+        error("bad environment");
+    if (TYPEOF(vars) != STRSXP)
+        error("bad varaible names");
+    force = asLogical(forcesxp);
+
+    len = LENGTH(vars);
+    PROTECT(val = allocVector(VECSXP, len));
+    for (i = 0; i < len; i++) {
+        SEXP tmp = findVarInFrame(env, install(CHAR(STRING_ELT(vars, i))));
+        if (force && TYPEOF(tmp) == PROMSXP) {
+            PROTECT(tmp);
+            tmp = eval(tmp, R_GlobalEnv);
+            SET_NAMED(tmp, 2);
+            UNPROTECT(1);
+        }
+        else if (TYPEOF(tmp) != NILSXP && NAMED(tmp) < 1)
+            SET_NAMED(tmp, 1);
+	SET_VECTOR_ELT(val, i, tmp);
+    }
+    UNPROTECT(1);
+
+    return val;
+}
+
+/* Serializes and, optionally, compresses a value and appends the
+   result to a file.  Returns the key position/length key for
+   retrieving the value */
+
+SEXP R_lazyLoadDBinsertValue(SEXP value, SEXP file, SEXP ascii,
+			     SEXP compsxp, SEXP hook)
+{
+    PROTECT_INDEX vpi;
+    Rboolean compress = asLogical(compsxp);
+    SEXP key;
+
+    value = R_serialize(value, R_NilValue, ascii, hook);
+    PROTECT_WITH_INDEX(value, &vpi);
+    if (compress)
+	REPROTECT(value = R_compress1(value), vpi);
+    key = appendStringToFile(file, value);
+    UNPROTECT(1);
+    return key;
+}
+
+/* Retireves a sequence of bytes as specified by a position/length key
+   from a file, optionally decompresses, and unserializes the bytes.
+   If the result is a promise, then the promise ir forced. */
+
+SEXP R_lazyLoadDBfetch(SEXP key, SEXP file, SEXP compsxp, SEXP hook)
+{
+    PROTECT_INDEX vpi;
+    Rboolean compressed = asLogical(compsxp);
+    SEXP val;
+
+    PROTECT_WITH_INDEX(val = readStringFromFile(file, key), &vpi);
+    if (compressed)
+	REPROTECT(val = R_decompress1(val), vpi);
+    val = R_unserialize(val, hook);
+    if (TYPEOF(val) == PROMSXP) {
+        REPROTECT(val, vpi);
+        val = eval(val, R_GlobalEnv);
+        SET_NAMED(val, 2);
+    }
+    UNPROTECT(1);
+    return val;
+}
