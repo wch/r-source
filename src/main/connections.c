@@ -148,7 +148,7 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 	b = R_alloc(10*BUFSIZE, sizeof(char));
 	res = vsnprintf(b, 10*BUFSIZE, format, ap);
 	if (res < 0) {
-	    *(b + 10*BUFSIZE) = '\0';
+	    *(b + 10*BUFSIZE - 1) = '\0';
 	    warning("printing of extremely long output is truncated");
 	    res = 10*BUFSIZE;
 	}
@@ -323,7 +323,7 @@ static long file_seek(Rconnection con, int where, int origin, int rw)
     default: whence = SEEK_SET;
     }
     fseek(fp, where, whence);
-    if(this->last_was_write) this->wpos = ftell(this->fp); 
+    if(this->last_was_write) this->wpos = ftell(this->fp);
     else this->rpos = ftell(this->fp);
     return pos;
 }
@@ -490,7 +490,7 @@ static Rboolean fifo_open(Rconnection con)
 	else warning("cannot open fifo `%s'", name);
 	return FALSE;
     }
-    
+
     this->fd = fd;
     con->isopen = TRUE;
 
@@ -511,7 +511,7 @@ static int fifo_fgetc(Rconnection con)
     Rfifoconn this = (Rfifoconn)con->private;
     unsigned char c;
     int n;
-  
+
     n = read(this->fd, (char *)&c, 1);
     return (n == 1) ? con->encoding[c] : R_EOF;
 }
@@ -966,7 +966,7 @@ static Rboolean bzfile_open(Rconnection con)
 	    fclose(fp);
 	    warning("file `%s' appears no tot be compressed by bzip2",
 		    R_ExpandFileName(con->description));
-	    return FALSE;	
+	    return FALSE;
 	}
     } else {
 	bfp = BZ2_bzWriteOpen(&bzerror, fp, 9, 0, 0);
@@ -975,8 +975,8 @@ static Rboolean bzfile_open(Rconnection con)
 	    fclose(fp);
 	    warning("file `%s' appears no tot be compressed by bzip2",
 		    R_ExpandFileName(con->description));
-	    return FALSE;	
-	}	
+	    return FALSE;
+	}
     }
     ((Rbzfileconn)(con->private))->fp = fp;
     ((Rbzfileconn)(con->private))->bfp = bfp;
@@ -1375,11 +1375,19 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 	already = strlen(this->lastline);
     SEXP tmp;
 
-    strcpy(b, this->lastline);
-    p = b + already;
-    buffree = BUFSIZE - already;
+    if(already >= BUFSIZE) {
+	/* This will fail so just call vsnprintf to get the length of
+	   the new piece */
+	res = vsnprintf(buf, 0, format, ap);
+	if(res > 0) res += already;
+	buffree = 0;
+    } else {
+	strcpy(b, this->lastline);
+	p = b + already;
+	buffree = BUFSIZE - already;
+	res = vsnprintf(p, buffree, format, ap);
+    }
 
-    res = vsnprintf(p, buffree, format, ap);
     if(res >= buffree) { /* res is the desired output length */
 	usedRalloc = TRUE;
 	b = R_alloc(res + already + 1, sizeof(char));
@@ -1400,7 +1408,7 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
     }
 
     /* copy buf line-by-line to object */
-    for(p = buf; ; p = q+1) {
+    for(p = b; ; p = q+1) {
 	q = strchr(p, '\n');
 	if(q) {
 	    *q = '\0';
@@ -1570,7 +1578,7 @@ SEXP do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
     for(i = 0; i < 256; i++)
 	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
     con->blocking = blocking;
-    
+
     /* open it if desired */
     if(strlen(open)) {
 	Rboolean success = con->open(con);
@@ -1838,7 +1846,7 @@ int Rconn_ungetc(int c, Rconnection con)
 int Rconn_getline(Rconnection con, char *buf, int bufsize)
 {
     int c, nbuf = -1;
-    
+
     while((c = Rconn_fgetc(con)) != R_EOF) {
 	if(nbuf >= bufsize) {
 	    error("Line longer than buffer size");
@@ -1896,7 +1904,7 @@ SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	    con->seek(con, con->seek(con, -1, 1, 1), 1, 1);
     }
     con->incomplete = FALSE;
-    
+
     buf = (char *) malloc(buf_size);
     if(!buf)
 	error("cannot allocate buffer in readLines");
@@ -2803,7 +2811,7 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error("unsupported URL scheme");
 	}
     }
-    
+
     Connections[ncon] = con;
     for(i = 0; i < 256; i++)
 	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
