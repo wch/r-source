@@ -296,7 +296,8 @@ print.summary.lm <-
     resid <- x$residuals
     df <- x$df
     rdf <- df[2]
-    cat("Residuals:\n")
+    cat(if(!is.null(x$w) && diff(range(x$w))) "Weighted",
+        "Residuals:\n")
     if (rdf > 5) {
 	nam <- c("Min", "1Q", "Median", "3Q", "Max")
 	rq <- if (length(dim(resid)) == 2)
@@ -331,14 +332,14 @@ print.summary.lm <-
     }
     correl <- x$correlation
     if (!is.null(correl)) {
-	p <- dim(correl)[2]
+	p <- NCOL(correl)
 	if (p > 1) {
 	    cat("\nCorrelation of Coefficients:\n")
 	    if(symbolic.cor)
 		print(symnum(correl)[-1,-p])
 	    else {
 		correl[!lower.tri(correl)] <- NA
-		print(correl[-1, -p],
+		print(correl[-1, -p, drop=FALSE],
 		      digits = digits, na = "")
 	    }
 	}
