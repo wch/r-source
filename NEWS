@@ -297,6 +297,9 @@ NEW FEATURES
 
     o	read.fwf() reads multiline records, is faster for large files.
 
+    o	read.table() now accepts "NULL", "factor", "Date" and
+	"POSIXct" as possible values of colClasses.
+
     o	readChar() can now read strings with embedded nuls.
 
     o	reorder.dendrogram() now has a 'agglo.FUN' argument for

@@ -1354,3 +1354,19 @@ x <- data.frame("test string with \"" = c("a \" and a '"), check.names=FALSE)
 write.table(x)
 write.table(x, qmethod = "double")
 ## Quote in col name was unescaped in 1.9.1.
+
+
+## extensions to read.table
+Mat <- matrix(
+              c(1:3, letters[1:3], 1:3, LETTERS[1:3],
+                c("2004-01-01", "2004-02-01", "2004-03-01"),
+                c("2004-01-01 12:00", "2004-02-01 12:00", "2004-03-01 12:00")),
+              3, 6)
+foo <- tempfile()
+write.table(Mat, foo, col.names=FALSE, row.names=F)
+read.table(foo, colClasses=c(NA, NA, "NULL", "character", "Date", "POSIXct"))
+unlist(sapply(.Last.value, class))
+read.table(foo, colClasses=c("factor",NA,"NULL","factor","Date","POSIXct"))
+unlist(sapply(.Last.value, class))
+unlink(foo)
+## added in 2.0.0

@@ -118,6 +118,8 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     known <- colClasses %in%
                 c("logical", "integer", "numeric", "complex", "character")
     what[known] <- sapply(colClasses[known], do.call, list(0))
+    what[colClasses %in% "NULL"] <- list(NULL)
+    keep <- !sapply(what, is.null)
 
     data <- scan(file = file, what = what, sep = sep, quote = quote,
                  dec = dec, nmax = nrows, skip = 0,
@@ -126,7 +128,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
                  blank.lines.skip = blank.lines.skip, multi.line = FALSE,
                  comment.char = comment.char)
 
-    nlines <- length(data[[1]])
+    nlines <- length(data[[ which(keep)[1] ]])
 
     ##	now we have the data;
     ##	convert to numeric or factor variables
@@ -158,12 +160,16 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
 		   length(as.is),"!= cols =", cols))
     for (i in 1:cols) {
 #        if(known[i] || as.is[i]) next
-        if(known[i]) next
+        if(known[i] || !keep[i]) next
         data[[i]] <-
-            if (!is.na(colClasses[i])) as(data[[i]], colClasses[i])
-            else type.convert(data[[i]], as.is = as.is[i], dec = dec,
-                              na.strings = character(0))
+            if (is.na(colClasses[i]))
+                type.convert(data[[i]], as.is = as.is[i], dec = dec,
+                             na.strings = character(0))
         ## as na.strings have already be converted to <NA>
+            else if (colClasses[i] == "factor") as.factor(data[[i]])
+            else if (colClasses[i] == "Date") as.Date(data[[i]])
+            else if (colClasses[i] == "POSIXct") as.POSIXct(data[[i]])
+            else as(data[[i]], colClasses[i])
     }
 
     ##	now determine row names
@@ -172,6 +178,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
 	if (rlabp) {
 	    row.names <- data[[1]]
 	    data <- data[-1]
+            keep <- keep[-1]
 	}
 	else row.names <- as.character(seq(len=nlines))
     } else if (is.null(row.names)) {
@@ -181,12 +188,15 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
 	    rowvar <- (1:cols)[match(col.names, row.names, 0) == 1]
 	    row.names <- data[[rowvar]]
 	    data <- data[-rowvar]
+            keep <- keep[-rowvar]
 	}
     } else if (is.numeric(row.names) && length(row.names) == 1) {
 	rlabp <- row.names
 	row.names <- data[[rlabp]]
 	data <- data[-rlabp]
+        keep <- keep[-rlabp]
     } else stop("invalid row.names specification")
+    data <- data[keep]
 
     ##	this is extremely underhanded
     ##	we should use the constructor function ...
