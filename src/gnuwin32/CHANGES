@@ -70,7 +70,7 @@ There is an example package `windlgs' in the package sources
 distribution that shows how to use graphapp to build dialog boxes to
 be called from menus, with a worked example of a t test done in three
 ways.  More details of graphapp, including a tutorial and a reference
-manual, are at http://www.cs.usyd.edu.au/~loki/GraphApp.
+manual, are at http://www.cs.usyd.edu.au/~loki/graphapp.
 
 Optional support for the Tcl/Tk interface.  To use this you need to
 install tcl831.exe from dev.scriptics.com, and you will need the Tcl
