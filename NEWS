@@ -51,11 +51,6 @@ NEW FEATURES
 	consists of only alphanumeric characters, whitespace or a dash,
 	approximate matching is used.
 
-    o	Memory sizes specified by flags are now computed as unsigned
-	longs rather than ints, and so are only limited by the OS.
-	The size of the heap is no longer limited to 16Gb on 64-bit
-	platforms.
-
     o	axis() has three new optional arguments `col', `lty', and `lwd'
 	all for drawing the axis line and tick marks.
 

@@ -299,25 +299,24 @@ void R_DefParams(Rstart Rp)
     Rp->DebugInitFile = FALSE;
     Rp->vsize = R_VSIZE;
     Rp->nsize = R_NSIZE;
-    Rp->max_vsize = ULONG_MAX;
-    Rp->max_nsize = ULONG_MAX;
+    Rp->max_vsize = INT_MAX;
+    Rp->max_nsize = INT_MAX;
     Rp->NoRenviron = FALSE;
 }
 
-#define Max_Nsize 50000000	/* must be < ULONG_MAX, 2^32 - 1 = 4.3e9 */
+#define Max_Nsize 50000000	/* must be < LONG_MAX (= 2^32 - 1 =)
+				   2147483647 = 2.1e9 */
                                 /* limit was 2e7, changed to 5e7, which gives
                                    nearly 2Gb of cons cells */
-#define Max_Vsize (4000*Mega)	/* 4000*Mega = 2^(11+20) must be < ULONG_MAX */
+#define Max_Vsize (2048*Mega)	/* 2048*Mega = 2^(11+20) must be < LONG_MAX */
 
 #define Min_Nsize 160000
 #define Min_Vsize (1*Mega)
 
 void R_SizeFromEnv(Rstart Rp)
 {
-    int ierr;
-    unsigned long value;
+    int value, ierr;
     char *p;
-
     if((p = getenv("R_VSIZE"))) {
 	value = Decode2Long(p, &ierr);
 	if(ierr != 0 || value > Max_Vsize || value < Min_Vsize)
@@ -334,7 +333,7 @@ void R_SizeFromEnv(Rstart Rp)
     }
 }
 
-static void SetSize(unsigned long vsize, unsigned long nsize)
+static void SetSize(int vsize, int nsize)
 {
     char msg[1024];
 
@@ -344,14 +343,14 @@ static void SetSize(unsigned long vsize, unsigned long nsize)
 	vsize *= Mega;
     }
     if(vsize < Min_Vsize || vsize > Max_Vsize) {
-	sprintf(msg, "WARNING: invalid v(ector heap)size `%lu' ignored\n"
+	sprintf(msg, "WARNING: invalid v(ector heap)size `%d' ignored\n"
 		 "using default = %gM\n", vsize, R_VSIZE / Mega);
 	R_ShowMessage(msg);
 	R_VSize = R_VSIZE;
     } else
 	R_VSize = vsize;
     if(nsize < Min_Nsize || nsize > Max_Nsize) {
-	sprintf(msg, "WARNING: invalid language heap (n)size `%lu' ignored,"
+	sprintf(msg, "WARNING: invalid language heap (n)size `%d' ignored,"
 		 " using default = %ld\n", nsize, R_NSIZE);
 	R_ShowMessage(msg);
 	R_NSize = R_NSIZE;

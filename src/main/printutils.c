@@ -74,9 +74,9 @@ static R_StringBuffer *buffer = &gBuffer; /*XX Add appropriate const here
                                             and in the routines that use it. */
 
 
-unsigned long Decode2Long(char *p, int *ierr)
+long Decode2Long(char *p, int *ierr)
 {
-    unsigned long v = strtol(p, &p, 10);
+    long v = strtol(p, &p, 10);
     *ierr = 0;
     if(p[0] == '\0') return v;
     /* else look for letter-code ending : */
