@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2001   Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1998-2002   Robert Gentleman, Ross Ihaka
  *                             and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -276,6 +276,30 @@ void loglin(int *nvar, int *dim, int *ncon, int *config, int *ntab,
 	    double *table, double *fit, int *locmar, int *nmar, double *marg,
 	    int *nu, double *u, double *maxdev, int *maxit,
 	    double *dev, int *nlast, int *ifault);
+
+/* ../main/optim.c */
+typedef double optimfn(int, double *, void *);
+typedef void optimgr(int, double *, double *, void *);
+
+void vmmin(int n, double *b, double *Fmin, 
+	   optimfn fn, optimgr gr, int maxit, int trace,
+	   int *mask, double abstol, double reltol, int nREPORT,
+	   void *ex, int *fncount, int *grcount, int *fail);
+void nmmin(int n, double *Bvec, double *X, double *Fmin, optimfn fn, 
+	   int *fail, double abstol, double intol, void *ex,
+	   double alpha, double beta, double gamm, int trace,
+	   int *fncount, int maxit);
+void cgmin(int n, double *Bvec, double *X, double *Fmin,
+	   optimfn fn, optimgr gr, 
+	   int *fail, double abstol, double intol, void *ex,
+	   int type, int trace, int *fncount, int *grcount, int maxit);
+void lbfgsb(int n, int m, double *x, double *l, double *u, int *nbd,
+	    double *Fmin, optimfn fn, optimgr gr, int *fail, void *ex,
+	    double factr, double pgtol, int *fncount, int *grcount,
+	    int maxit, char *msg, int trace, int nREPORT);
+void samin(int n, double *pb, double *yb, optimfn fn, int maxit, 
+	   int tmax, double ti, int trace, void *ex);
+
 #ifdef  __cplusplus
 }
 #endif

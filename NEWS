@@ -92,7 +92,7 @@ DOCUMENTATION CHANGES
 UTILITIES
 
     o	Sweave(), Stangle() and friends in package tools. Sweave allows
-	to mix latex documentation and R code in a single source file,
+	mixing latex documentation and R code in a single source file:
 	the R code can be replaced by its output (text, figures) to
 	allow automatic report generation.
 
@@ -118,6 +118,11 @@ C-LEVEL FACILITIES
 	platform, in which case its name is not remapped, but a
 	back-compatibility entry point Rf_log1p is provided.
 	Applications using libRmath may need to be re-compiled.
+
+    o	The methods used by optim() have entry points in R_ext/Applic.h
+	and have a more general interface.  This has been done for
+	future internal use, and they should not yet be regarded as
+	part of the API.
 
 
 BUG FIXES
