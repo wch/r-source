@@ -93,6 +93,16 @@ static SEXP FindTaggedItem(SEXP lst, SEXP tag)
     return R_NilValue;
 }
 
+static SEXP makeErrorCall(SEXP fun)
+{
+  SEXP call;
+  PROTECT(call = allocList(1));
+  SET_TYPEOF(call, LANGSXP);
+  SETCAR(call, fun);
+  UNPROTECT(1);
+  return call;
+}
+
 SEXP GetOption(SEXP tag, SEXP rho)
 {
     SEXP opt = findVar(Options(), R_NilValue);
@@ -414,7 +424,9 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
 	    else if ( streql(CHAR(namei), "error") ) {
-		if( !isLanguage(argi) &&  !isExpression(argi) )
+	        if(isFunction(argi))
+		  argi = makeErrorCall(argi);
+	        else if( !isLanguage(argi) &&  !isExpression(argi) )
 		    errorcall(call, "error parameter invalid");
 		SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }

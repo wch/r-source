@@ -162,6 +162,10 @@ NEW FEATURES
     o   [dpqr]nbinom also accept an alternative parametrization via the
 	mean and the dispersion parameter (thanks to Ben Bolker).
 
+    o   A function is allowed as the error option, as an alternative to an
+	expression.  (The blue book only allows a function; current
+	S-Plus a function or an expression.)
+
 
 
 BUG FIXES
