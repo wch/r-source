@@ -117,11 +117,11 @@ example <- function(topic, package= .packages(), lib.loc = .lib.loc,
     for (lib in lib.loc)
         for (pkg in package) {
             file <- system.file(paste("R-ex",directory.sep,topic,".R", sep=""),
-                                pkg = package, lib = lib)
+                                pkg = pkg, lib = lib)
             if(file != "") break
         }
     if(file == "") stop(paste("Couldn't find", topic, " example"))
-    if(pkg != "base") library(pkg, lib = lib)
+    if(pkg != "base") library(pkg, lib = lib, character.only = TRUE)
     source(file, echo = echo, verbose = verbose, max.deparse.length=10000)
 }
 
