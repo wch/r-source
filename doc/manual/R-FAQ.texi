@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-1, @value{FAQ-YEAR}-10-07
+@set FAQ-VERSION 1.8-2, @value{FAQ-YEAR}-10-08
 @set REL-VERSION 1.8.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1492,7 +1492,7 @@ Wilcoxon tests.
 @item eda
 Exploratory Data Analysis.  Currently only contains functions for robust
 line fitting, and median polish and smoothing.
-@c <FIXME 1.8.0>
+@c <FIXME 1.9.0>
 @item grid
 A rewrite of the graphics layout capabilities, plus some support for
 interaction.
@@ -1503,7 +1503,7 @@ Resistant regression and covariance estimation.
 @item methods
 Formally defined methods and classes for R objects, plus other
 programming tools, as described in the Green Book.
-@c <FIXME 1.8.0>
+@c <FIXME 1.9.0>
 @item mle
 Generic (smooth) likelihood maximization and profiling.
 (Added in R 1.8.0).
@@ -1577,11 +1577,6 @@ Engineering and the Sciences (5th ed)'' by Jay L. Devore, 2000, Duxbury.
 @item Devore6
 Data sets and sample analyses from ``Probability and Statistics for
 Engineering and the Sciences (6th ed)'' by Jay L. Devore, 2003, Duxbury.
-@item EMV
-Estimation of missing values in a matrix by a @math{k}-th nearest
-neighboors algorithm.
-@item GLMMGibbs
-Generalised Linear Mixed Models by Gibbs sampling.
 @item GRASS
 An interface between the GRASS geographical information system and R,
 based on starting R from within the GRASS environment and chosen
@@ -1942,17 +1937,8 @@ library.
 Generalized Regression Analysis and Spatial Predictions for R.
 @item gregmisc
 Miscellaneous functions written/maintained by Gregory R. Warnes.
-@item grid
-The Grid graphics package, a rewrite of the graphics layout
-capabilities, plus some support for interaction.
-@c <FIXME 1.8.0>
-@emph{Recommended}
-(will be integrated into the R distribution for version 1.8.0).
-@c </FIXME>
-@c <FIXME 1.8.0>
-@c @item gridBase
-@c Integration of base and grid graphics.
-@c </FIXME>
+@item gridBase
+Integration of base and grid graphics.
 @item gss
 A comprehensive package for structural multivariate function estimation
 using smoothing splines.
@@ -2069,9 +2055,6 @@ Code for mixture discriminant analysis (MDA), flexible discriminant
 analysis (FDA), penalized discriminant analysis (PDA), multivariate
 additive regression splines (MARS), adaptive back-fitting splines
 (BRUTO), and penalized regression.
-@item meanscore
-Mean Score method for missing covariate data in logistic regression
-models.
 @item merror
 Accuracy and precision of measurements.
 @item mgcv
@@ -2388,9 +2371,6 @@ Classification and regression trees.
 A constrained two-dimensional Delaunay triangulation package.
 @item tseries
 Package for time series analysis with emphasis on non-linear modelling.
-@item twostage
-Functions for optimal design of two-stage-studies using the Mean Score
-method.
 @item udunits
 Interface to Unidata's routines to convert units.
 @item vardiag
@@ -2426,11 +2406,24 @@ contains
 @item Dopt
 Finding D-optimal experimental designs.
 
-@c <NOTE>
+@c <COMMENT>
+@c Moved to Devel for 1.8 as it fails R CMD check.
+@item EMV
+Estimation of missing values in a matrix by a @math{k}-th nearest
+neighboors algorithm.
+@c </COMMENT>
+
+@c <COMMENT>
+@c Moved to Devel for 1.8 as it fails R CMD check.
+@item GLMMGibbs
+Generalised Linear Mixed Models by Gibbs sampling.
+@c </COMMENT>
+
+@c <COMMENT>
 @c Moved to Devel for 1.6 as it fails R CMD check.
 @item RPgSQL
 Provides methods for accessing data stored in PostgreSQL tables.
-@c </NOTE>
+@c </COMMENT>
 
 @c <COMMENT>
 @c Moved to Attic for 1.5.1 as no longer needed.
@@ -2441,13 +2434,13 @@ Provides methods for accessing data stored in PostgreSQL tables.
 @c Provides methods for accessing data stored in PostgreSQL tables.
 @c </COMMENT>
 
-@c <NOTE>
+@c <COMMENT>
 @c Moved to Devel for 1.7 as it fails R CMD check.
 @item Rmpi
 An interface (wrapper) to MPI (Message-Passing Interface) APIs.  It also
 provides interactive R slave functionalities to make MPI programming
 easier in R than in C(++) or FORTRAN.
-@c </NOTE>
+@c </COMMENT>
 
 @c <COMMENT>
 @c Moved to Attic for 1.5 (as this contains the summary functions).
@@ -2476,18 +2469,25 @@ Ensembles of tree classifiers.
 @c Package for creating event charts.
 @c </COMMENT>
 
-@c <NOTE>
+@c <COMMENT>
 @c Moved to Devel for 1.7 as it fails R CMD check.
 @item gllm
 Routines for log-linear models of incomplete contingency tables,
 including some latent class models via EM and Fisher scoring approaches.
-@c </NOTE>
+@c </COMMENT>
 
 @c <COMMENT>
 @c Moved to Attic for 1.5.1 as no longer maintained.
 @c @item hpower
 @c A suite of functions to compute power and sample size for tests of the
 @c general linear hypothesis.
+@c </COMMENT>
+
+@c <COMMENT>
+@c Moved to Devel for 1.8 as it fails R CMD check.
+@item meanscore
+Mean Score method for missing covariate data in logistic regression
+models.
 @c </COMMENT>
 
 @c <COMMENT>
@@ -2505,6 +2505,13 @@ including some latent class models via EM and Fisher scoring approaches.
 
 @item runStat
 Running median and mean.
+
+@c <COMMENT>
+@c Moved to Devel for 1.8 as it fails R CMD check.
+@item twostage
+Functions for optimal design of two-stage-studies using the Mean Score
+method.
+@c </COMMENT>
 
 @item write.snns
 Function for writing a @acronym{SNNS} pattern file from a data frame or
