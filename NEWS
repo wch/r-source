@@ -2135,6 +2135,13 @@ INSTALLATION CHANGES
 	install a package with a NAMESPACE file using --save signals an
 	error; this is a temporary measure.
 
+    o	The defaults for configure for Darwin systems is
+	--with-blas='-framework vecLib' --with-lapack --with-aqua
+	that by default builds R as a framework and installs it in
+	/Library/Frameworks as R.framework. Then, make install just
+	installs the R.framework in /Library/Frameworks unless specified
+	at configure time using the -enable-R-framework=[DIR] or using
+	the --prefix flag at installation time.
 
 DEPRECATED & DEFUNCT
 
@@ -2221,6 +2228,11 @@ C-LEVEL FACILITIES
 
 
 BUG FIXES
+
+    o   The redefinition of the internal do_dataentry by both the aqua and X11
+	modules, casued a bus error when launching R without the --gui=aqua option
+	under X11 using a version of R built to use the aqua module. This has
+	now been fixed. (PR#6438)
 
     o	Sys.sleep() on Unix was having trouble with waits of less than 0.5s
 
