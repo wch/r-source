@@ -59,8 +59,8 @@ edit.data.frame <-
             if (any(!ok)) {
                 warning(paste("invalid factor levels in", names(out)[i]))
                 o[!ok] <- NA
-                attributes(o) <- a
             }
+	    attributes(o) <- a
         } else {
             o <- out[[i]]
             if (any(new <- is.na(match(o, c(a$levels, NA))))) {

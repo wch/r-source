@@ -132,6 +132,8 @@ BUG FIXES
     o   data editor froze on empty data frame, and more generally on
 	zero-length cols.
 
+    o   data editor did not handle factors properly in numeric-edit
+        mode. 
 
 		CHANGES IN R VERSION 1.1.0
 
