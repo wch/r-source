@@ -16,4 +16,7 @@ writeClipboard{str}
   For \code{readClipboard}, a character vector.
   For \code{writeClipboard} a invisible logical indicating success or failure.
 }
+\seealso{
+  \code{\link{file}} which can be used to set up a connection to a clipboard.
+}
 \keyword{utility}
