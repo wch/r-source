@@ -391,7 +391,7 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    continue;
 	}
 #ifdef SUPPORT_UTF8
-	if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(text, i))))
+	if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(text, i)))) {
 	    warningcall(call, _("input string %d is invalid in this locale"),
 			i+1);
 	    INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
