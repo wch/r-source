@@ -7,14 +7,15 @@ print.default <-
 
 print.atomic <- function(x,quote=TRUE,...) print.default(x,quote=quote)
 
-print.matrix <- function (x, rowlab = character(0), collab =
-			  character(0), quote = TRUE, right = FALSE) {
+print.matrix <- function (x, rowlab = dn[[1]], collab = dn[[2]],
+                          quote = TRUE, right = FALSE) {
     x <- as.matrix(x)
+    dn <- dimnames(x)
     .Internal(print.matrix(x, rowlab, collab, quote, right))
 }
 prmatrix <- .Alias(print.matrix)
 
-## This should be replaced by  print.anova() [ currently in ./anova.R ], soon..
+## This is not used anymore [replaced by  print.anova() -> ./anova.R ]
 print.tabular <-
     function(x, digits = max(3, .Options$digits - 3), na.print = "")
 {
@@ -49,7 +50,8 @@ print.noquote <- function(obj,...) {
     NextMethod("print", obj, quote = FALSE, ...)
 }
 ## used for version:
-print.simple.list <- function(x, ...) print(noquote(cbind("_"=unlist(x))), ...)
+print.simple.list <- function(x, ...)
+    print(noquote(cbind("_simple.list_"=unlist(x))), ...)
 
 print.coefmat <-
     function(x, digits = max(3, .Options$digits - 2),
