@@ -59,16 +59,16 @@ The current version of this document is @value{VERSION}.
 @end ifnottex
 
 @menu
-* Obtaining R::
-* Installing R under Unix::
-* Installing R under Windows::
-* Installing R on Classic MacOS::
-* Add-on packages::
-* Essential and useful other programs::
-* Configuration on Unix::
-* New platforms::
-* Function and variable index::
-* Concept index::
+* Obtaining R::                 
+* Installing R under Unix::     
+* Installing R under Windows::  
+* Installing R on Classic MacOS::  
+* Add-on packages::             
+* Essential and useful other programs::  
+* Configuration on Unix::       
+* New platforms::               
+* Function and variable index::  
+* Concept index::               
 @end menu
 
 @node Obtaining R, Installing R under Unix, Top, Top
@@ -77,11 +77,12 @@ The current version of this document is @value{VERSION}.
 
 Sources, binaries and documentation for @R{} can be obtained via
 @acronym{CRAN}, the ``Comprehensive R Archive Network''.  See the file
-@file{RESOURCES} for information on @acronym{CRAN}.
+@file{RESOURCES} in the R distribution for information on
+@acronym{CRAN}.
 
 @menu
-* Getting and unpacking the sources::
-* Using rsync::
+* Getting and unpacking the sources::  
+* Using rsync::                 
 @end menu
 
 @node Getting and unpacking the sources, Using rsync, Obtaining R, Obtaining R
@@ -119,9 +120,8 @@ readable by the target group (e.g., @code{umask 022} to be usable by all
 users).
 
 @cindex Patch files
-Finally, for minor-minor releases (@samp{@var{x}.@var{y}.@var{z}} with
-@var{z} != 0), a patch against the preceding release is made available
-in
+Finally, for patch releases (@samp{@var{x}.@var{y}.@var{z}} with @var{z}
+!= 0), a patch against the preceding release is made available in
 @file{R-@var{x}.@var{y}.@var{@{z-1@}}-@var{x}.@var{y}.@var{z}.diff.gz}
 (e.g., @file{R-1.2.2-1.2.3.diff.gz}), which is generally a much smaller
 file that the @file{.tgz} files.  Such a file can be applied to the
@@ -142,9 +142,9 @@ been modified (e.g., by building in their directories).
 
 Sources are also available via anonymous rsync.  Use
 
-@example
+@smallexample
 rsync -rC rsync.r-project.org::@var{module} R
-@end example
+@end smallexample
 
 @noindent
 to create a copy of the source tree specified by @var{module} in the
@@ -180,11 +180,10 @@ are installed in platform-specific ways.  So for the rest of this
 chapter we consider only building from the sources.
 
 @menu
-* Simple compilation::
-* Making the manuals::
-* Installation::
+* Simple compilation::          
+* Making the manuals::          
+* Installation::                
 @end menu
-
 
 @node Simple compilation, Making the manuals, Installing R under Unix, Installing R under Unix
 @section Simple compilation
@@ -196,7 +195,7 @@ need.
 @findex R_HOME
 Choose a place to install the @R{} tree (@R{} is not just a binary, but
 has additional data sets, help files, font metrics etc).  Let us call
-this place @file{R_HOME}.  Untar the source code.  This should create
+this place @var{R_HOME}.  Untar the source code.  This should create
 directories @file{src}, @file{doc}, and several more.  Issue the
 following commands:
 
@@ -220,13 +219,13 @@ make check
 Failures are not necessarily problems as they might be caused by missing
 functionality, but you should look carefully at any reported
 discrepancies.  To re-run the tests you would need
+
 @smallexample
 make check FORCE=FORCE
 @end smallexample
 
-
 If these commands execute successfully, the @R{} binary will be copied
-to the @file{$@{R_HOME@}/bin} directory.  In addition, a shell-script
+to the @file{@var{R_HOME}/bin} directory.  In addition, a shell-script
 front-end called @file{R} will be created and copied to the same
 directory.  You can copy this script to a place where users can invoke
 it, for example to @file{/usr/local/bin/R}.  You could also copy the man
@@ -273,7 +272,7 @@ the latest version).
 
 There is a set of manuals that can be built from the sources,
 
-@table @code
+@table @samp
 @item refman
 Printed versions of all the help pages.
 @item R-FAQ
@@ -296,7 +295,7 @@ To make these, use
 @smallexample
 make dvi      @r{to create DVI versions}
 make pdf      @r{to create PDF versions}
-make info     @r{to create info files (not @code{refman}).}
+make info     @r{to create info files (not @samp{refman}).}
 @end smallexample
 
 You will not be able to build the info files unless you have
@@ -334,16 +333,16 @@ make install
 This will install to the following directories:
 
 @table @file
-@item $@{prefix@}/bin
+@item @var{prefix}/bin
 the front-end shell script
-@item $@{prefix@}/man/man1
+@item @var{prefix}/man/man1
 the man page
-@item $@{prefix@}/lib/R
+@item @var{prefix}/lib/R
 all the rest (libraries, on-line help system, @dots{})
 @end table
 
 @noindent
-where @code{prefix} is determined during configuration (typically
+where @var{prefix} is determined during configuration (typically
 @file{/usr/local}) and can be set by running @command{configure} with
 the option @option{--prefix}, as in
 
@@ -375,9 +374,8 @@ make install-pdf
 
 @noindent
 To ensure that the installed tree is usable by the right group of users,
-set @code{umask} appropriately (perhaps to @code{022}) before unpacking
+set @code{umask} appropriately (perhaps to @samp{022}) before unpacking
 the sources and throughout the build process.
-
 
 @node Installing R under Windows, Installing R on Classic MacOS, Installing R under Unix, Top
 @chapter Installing R under Windows
@@ -403,7 +401,7 @@ See the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, R Windows
 @acronym{FAQ}} for more details.
 
 @menu
-* Building from source::
+* Building from source::        
 @end menu
 
 @node Building from source,  , Installing R under Windows, Installing R under Windows
@@ -453,19 +451,19 @@ of a @acronym{CRAN} site.
 @cindex Packages
 
 @menu
-* Installing packages::
-* Updating packages::
-* Removing packages::
+* Installing packages::         
+* Updating packages::           
+* Removing packages::           
 @end menu
 
 This chapter applies to Unix-like and Windows versions of @R{}, but not
 to the Classic MacOS port.
 
 It is helpful to use the correct terminology.  A @emph{package} is
-loaded from a @emph{library} by the function @code{library}.  Thus a
+loaded from a @emph{library} by the function @code{library()}.  Thus a
 library is a directory containing installed packages; the main library
-is @file{R_HOME/library}, but others can be used, for example by setting
-the environment variable @env{R_LIBS} or using the @R{} function
+is @file{@var{R_HOME}/library}, but others can be used, for example by
+setting the environment variable @env{R_LIBS} or using the @R{} function
 @code{.libPaths()}.
 
 @node Installing packages, Updating packages, Add-on packages, Add-on packages
@@ -485,7 +483,7 @@ R CMD INSTALL -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
 @noindent
 The part @samp{-l /path/to/library} can be omitted, when the first
 library in @env{R_LIBS} is used if set, otherwise the main library
-@file{R_HOME/library}.
+@file{@var{R_HOME}/library}.
 
 The Windows equivalent is@footnote{if you have Perl and the source-code
 package files installed}
@@ -579,23 +577,27 @@ From a running @R{} process they can be removed by
 Finally, in most installations one can just remove the package directory
 from the library.
 
+@strong{Note:} whereas it is currently possible to install package
+@emph{bundles}, one cannot remove these as such---the packages contained
+in the bundle have to removed individually.
+
 @node Essential and useful other programs, Configuration on Unix, Add-on packages, Top
 @appendix Essential and useful other programs
 
 This appendix gives details of programs you will need to build @R{} on
 Unix-like platforms, or which will be used by @R{} if found by
-@code{./configure}.
+@command{configure}.
 
 @menu
-* Essential programs::
-* Useful libraries and programs::
+* Essential programs::          
+* Useful libraries and programs::  
 @end menu
 
 @node Essential programs, Useful libraries and programs, Essential and useful other programs, Essential and useful other programs
 @section Essential programs
 
-You need a means of compiling C and FORTRAN (see @ref{Using FORTRAN}).
-Some add-on packages also need a C++ compiler.
+You need a means of compiling C and FORTRAN 77 (see @ref{Using
+FORTRAN}).  Some add-on packages also need a C++ compiler.
 
 You will need Perl version 5.004 or later, available via
 @uref{http://www.perl.com/CPAN/}, to build any of the on-line
@@ -631,8 +633,8 @@ The @code{bitmap} and @code{dev2bitmap} devices make use of ghostscript
 @code{bzip2} (@uref{http://sources.redhat.com/bzip2}).
 
 @menu
-* Tcl/Tk::
-* Linear algebra::
+* Tcl/Tk::                      
+* Linear algebra::              
 @end menu
 
 @node Tcl/Tk, Linear algebra, Useful libraries and programs, Useful libraries and programs
@@ -651,6 +653,12 @@ specify location of @file{tclConfig.sh}
 specify location of @file{tkConfig.sh}
 @end table
 
+@noindent
+or use the configure variables @code{TCLTK_LIBS} and
+@code{TCLTK_CPPFLAGS} to specify the flags needed for linking against
+the Tcl and Tk libraries and for finding the @file{tcl.h} and
+@file{tk.h} headers, respectively.
+
 @node Linear algebra,  , Tcl/Tk, Useful libraries and programs
 @subsection Linear algebra
 
@@ -659,7 +667,7 @@ Linear Algebra Subprograms, @uref{http://www.netlib.org/blas/faq.html})
 routines.  Some are compiler-system-specific (@code{libsunperf} on Sun
 Sparc@footnote{Using the SunPro @command{cc} and @command{f95}
 compilers}, @code{libessl} on IBM) but ATLAS
-(@uref{http://www.netlib.org/atlas/}) is a `tuned' BLAS that runs on a
+(@uref{http://www.netlib.org/atlas/}) is a ``tuned'' BLAS that runs on a
 wide range of Unix-alike platforms.  If no more specific library is
 found, a @code{libblas} library in the library path will be used.  You
 can specify a specific BLAS library by the configuration option
@@ -696,13 +704,13 @@ re-installed.
 @appendix Configuration on Unix
 
 @menu
-* Configuration options::
-* Configuration variables::
-* Using make::
-* Using FORTRAN::
-* Compile and load flags::
-* Building the GNOME interface::
-* Platform notes::
+* Configuration options::       
+* Configuration variables::     
+* Using make::                  
+* Using FORTRAN::               
+* Compile and load flags::      
+* Building the GNOME interface::  
+* Platform notes::              
 @end menu
 
 @node Configuration options, Configuration variables, Configuration on Unix, Configuration on Unix
@@ -755,29 +763,40 @@ other than their default, you can do that by either editing the file
 set) or on the command line as
 
 @smallexample
-VAR="..." ./configure              @r{# Bourne shell compatibles}
-(setenv VAR "..."; ./configure)	   @r{# C shell}
+./configure VAR=@var{value}
 @end smallexample
 
 @noindent
+These variables are @emph{precious}, implying that they do not have to
+be exported to the environment, are kept in the cache even if not
+specified on the command line and checked for consistency between two
+configure runs (provided that caching is used), and are kept during
+automatic reconfiguration as if having been passed as command line
+arguments, even if no cache is used.
+
+See the variable output section of @code{configure --help} for a list of
+all these variables.
+
 One common variable to change is @env{R_PAPERSIZE}, which defaults to
 @samp{a4}, not @samp{letter}.
 
 If you have libraries and header files, e.g., for GNU readline, in
-non-system directories, use the variables @code{LIBS} (for libraries)
-and @code{CPPFLAGS} (for header files), respectively, to specify these
-locations.  These default to @file{/usr/local/lib} and
-@file{/usr/local/include} to catch the most common cases.  If libraries
-are still not found, then maybe your compiler/linker does not support
-re-ordering of @option{-L} and @option{-l} flags (this has been reported
-to be a problem on HP-UX with the native @command{cc}).  In this case,
-use a different compiler (or a front end shell script which does the
-re-ordering).
+non-system directories, use the variables @code{LDFLAGS} (for libraries,
+using @samp{-L} flags to be passed to the linker) and @code{CPPFLAGS}
+(for header files, using @samp{-I} flags to be passed to the C/C++
+preprocessors), respectively, to specify these locations.  These default
+to @file{/usr/local/lib} and @file{/usr/local/include} to catch the most
+common cases.  If libraries are still not found, then maybe your
+compiler/linker does not support re-ordering of @option{-L} and
+@option{-l} flags (this has been reported to be a problem on HP-UX with
+the native @command{cc}).  In this case, use a different compiler (or a
+front end shell script which does the re-ordering).
 
 If you find you need to alter configure variables, it is worth noting
-that some settings may be cached in the file @file{config.cache}, and
-it is a good idea to remove that file (if it exists) before
-re-configuring.
+that some settings may be cached in the file @file{config.cache}, and it
+is a good idea to remove that file (if it exists) before re-configuring.
+Note that caching is turned @emph{off} by default; use the command line
+option @option{--config-cache} (or @option{-C}) to enable caching.
 
 @node Using make, Using FORTRAN, Configuration variables, Configuration on Unix
 @section Using make
@@ -794,13 +813,12 @@ To build in a separate directory you need a @command{make} that uses the
 @command{make} on Solaris 2.7/8 (but not earlier).
 
 If you want to use a @command{make} by another name, for example if your
-GNU @command{make} is called @code{gmake}, you need to set the
-environment variable @env{MAKE} at configure time, for example
+GNU @command{make} is called @samp{gmake}, you need to set the variable
+@code{MAKE} at configure time, for example
 
 @findex configure
 @smallexample
-MAKE=gmake ./configure        @r{(sh, bash)}
-env MAKE=gmake ./configure    @r{(csh)}
+./configure MAKE=gmake
 @end smallexample
 
 @node Using FORTRAN, Compile and load flags, Using make, Configuration on Unix
@@ -821,7 +839,8 @@ found, @R{} cannot be compiled.  The search mechanism can be changed
 using the @option{--with-f77} and @option{--with-f2c} command line
 options to @command{configure}.  If your FORTRAN compiler is in a
 non-standard location, you should set the environment variable
-@env{PATH} accordingly before running @command{configure}.
+@env{PATH} accordingly before running @command{configure}, or use the
+configure variable @code{F77} to specify its full path.
 
 If your FORTRAN libraries are in slightly peculiar places, you should
 also look at @env{LD_LIBRARY_PATH} or your system's equivalent to make
@@ -845,20 +864,22 @@ Sun/Sparc} you may want to choose a FORTRAN 90/95 compiler.
 
 If you use @command{f2c} you may need to ensure that the FORTRAN type
 @code{integer} is translated to the C type @code{int}.  Normally
-@file{f2c.h} contains @command{typedef long int integer;}, which will
-work on a 32-bit platform but not on a 64-bit platform.
+@file{f2c.h} contains @samp{typedef long int integer;}, which will work
+on a 32-bit platform but not on a 64-bit platform.
 
 @node Compile and load flags, Building the GNOME interface, Using FORTRAN, Configuration on Unix
 @section Compile and load flags
 
-A wide range of flags can be set in the file @file{config.site} or via
-environment variables.  We have already mentioned
+A wide range of flags can be set in the file @file{config.site} or as
+configure variables on the command line.  We have already mentioned
 
 @table @code
-@item	CPPFLAGS
-extra include flags
-@item	LIBS
-libraries and @option{-L/lib/path} flags
+@item CPPFLAGS
+header file search directory (@option{-I}) and any other miscellaneous
+options for the C and C++ preprocessors and compilers
+@item LDFLAGS
+path (@option{-L}), stripping (@option{-s}) and any other miscellaneous
+options for the linker
 @end table
 
 @noindent
@@ -884,7 +905,7 @@ additional flags for linking the shared libraries
 @end table
 
 @noindent
-Library paths specified as @option{-L/lib/path} in @code{LIBS} are
+Library paths specified as @option{-L/lib/path} in @code{LDFLAGS} are
 collected together and prepended to @env{LD_LIBRARY_PATH} (or your
 system's equivalent), so there should be no need for @option{-R} or
 @option{-rpath} flags.
@@ -922,7 +943,7 @@ run
 @end smallexample
 
 @noindent
-but please check you have all the requirements first. The
+but please check you have all the requirements first.  The
 @acronym{GNOME} interface for @R{} is currently being developed under
 @acronym{GNOME} 1.4, and is not guaranteed to work with previous
 versions.  You therefore need at least the following libraries installed
@@ -948,41 +969,42 @@ popular Linux distributions and for Solaris.
 
 Remember that some package management systems (such as @acronym{RPM} and
 deb) make a distinction between the user version of a package and the
-developer version. The latter usually has the same name but with the
-extension "-devel". If you use a pre-packaged version of @acronym{GNOME}
-then you must have the developer versions of the above packages in order
-to compile the R-GNOME interface.
+developer version.  The latter usually has the same name but with the
+extension @samp{-devel}.  If you use a pre-packaged version of
+@acronym{GNOME} then you must have the developer versions of the above
+packages in order to compile the R-GNOME interface.
 
 The full list of @acronym{GNOME} options to configure is
 
 @table @option
-@item  --with-gnome
+@item --with-gnome
 use @acronym{GNOME}, or specify its prefix [no]
-@item  --with-gnome-includes=@var{DIR}
+@item --with-gnome-includes=@var{DIR}
 specify location of @acronym{GNOME} headers
-@item  --with-gnome-libs=@var{DIR}
+@item --with-gnome-libs=@var{DIR}
 specify location of @acronym{GNOME} libs
-@item  --with-libglade-config=@var{LIBGLADE_CONFIG}
+@item --with-libglade-config=@var{LIBGLADE_CONFIG}
 specify location of @command{libglade-config}
 @end table
 
 
 @node Platform notes,  , Building the GNOME interface, Configuration on Unix
 @section Platform notes
+
 This section provides some notes on building R on different Unix-like
-platforms.  These notes are based on tests run on one or two systems
-in each case with particular sets of compilers and support libraries.
+platforms.  These notes are based on tests run on one or two systems in
+each case with particular sets of compilers and support libraries.
 Success in building R depends on the proper installation and functioning
 of support software; your results may differ if you have other versions
 of compilers and support libraries.
 
 @menu
-* MacOS X::
-* Solaris::
-* HPUX::
-* IRIX::
-* Alpha/OSF1::
-* Alpha/FreeBSD::
+* MacOS X::                     
+* Solaris::                     
+* HPUX::                        
+* IRIX::                        
+* Alpha/OSF1::                  
+* Alpha/FreeBSD::               
 @end menu
 
 @node MacOS X, Solaris, Platform notes, Platform notes
@@ -999,14 +1021,15 @@ and support libraries are available from the Fink project
 @command{f2c} and @command{g77} were not available as part of the Fink
 binary distribution and needed to be installed directly; for example for
 @command{g77} use
+
 @smallexample
 fink install g77
 @end smallexample
 
-Fink prefers to install in @file{/sw} so @code{CPPFLAGS}, @code{LDFLAGS}
-need to be set accordingly.  If you want to use Tcl/Tk, also available
-from Fink, then you will also need to use the @command{configure}
-options to specify the Tcl and Tk config locations.
+Fink prefers to install in @file{/sw} so @code{CPPFLAGS} and
+@code{LDFLAGS} need to be set accordingly.  If you want to use Tcl/Tk,
+also available from Fink, then you will also need to use the
+@command{configure} options to specify the Tcl and Tk config locations.
 
 
 @node Solaris, HPUX, MacOS X, Platform notes
@@ -1032,34 +1055,36 @@ compiler: the @command{gcc}/@command{f77} combination works well.
 
 To compile for a 64-bit target on Solaris (which needs an UltraSparc
 chip and for support to be enabled in the OS) we used
+
 @smallexample
 CC="cc -xarch=v9"
 CFLAGS="-xO5 -xlibmil -dalign"
-FC="f95 -xarch=v9"
+F77="f95 -xarch=v9"
 FFLAGS="-xO5 -xlibmil -dalign"
 CXX=CC
 CXXFLAGS="-xO5 -xlibmil -dalign -xarch=v9"
 @end smallexample
+
 @noindent
 in @file{config.site}.  Note that using @command{f95} allows the Sun
 performance library to be selected: it will not work with @command{f77},
 nor with @command{g77}.
 
-Some care is needed to ensure that libraries found by @command{configure}
-are compatible with the R executable and modules, as the testing
-process will not detect many of the possible problems.  For 32-bit
-builds under @command{cc} the flag @option{-dalign} is needed for some of
-the Sun libraries: fortunately the equivalent flag for @command{gcc},
-@option{-munaligned-doubles}, is the default.  In theory, libraries such
-as @code{libpng}, @code{libjpeg}, @code{zlib} and the ATLAS libraries
-need to be built with a @code{pic} or @code{PIC} flag, which could be
-a problem if static libraries are used.  In practice this seems to
-give little problem for 32-bit builds, but seems essential for 64-bit
-builds.
+Some care is needed to ensure that libraries found by
+@command{configure} are compatible with the R executable and modules, as
+the testing process will not detect many of the possible problems.  For
+32-bit builds under @command{cc} the flag @option{-dalign} is needed for
+some of the Sun libraries: fortunately the equivalent flag for
+@command{gcc}, @option{-munaligned-doubles}, is the default.  In theory,
+libraries such as @code{libpng}, @code{libjpeg}, @code{zlib} and the
+ATLAS libraries need to be built with a @code{pic} or @code{PIC} flag,
+which could be a problem if static libraries are used.  In practice this
+seems to give little problem for 32-bit builds, but seems essential for
+64-bit builds.
 
-For a 64-bit build, 64-bit libraries must be used.  As the
-configuration process starts with @code{LIBS=/usr/local/lib} you may
-need to reset it to avoid finding 32-bit addons.
+For a 64-bit build, 64-bit libraries must be used.  As the configuration
+process starts by default sets @code{LDFLAGS} to @samp{-L/usr/local/lib}
+you may need to reset it to avoid finding 32-bit addons.
 
 @node HPUX, IRIX, Solaris, Platform notes
 @subsection HPUX
@@ -1074,14 +1099,14 @@ position independent code (@acronym{PIC}).  This will result in
 @command{make} failing with a linker error complaining that code needs
 to be compiled with a @option{+z} or @option{+Z} flag, the native
 @command{cc} @acronym{PIC} flag.  If this is the case you either need to
-modify your @command{g77} installation or configure with the
+modify your @command{g77} installation or configure with
 
 @smallexample
---with-f77=fort77
+F77=fort77
 @end smallexample
 
 @noindent
-flag to specify use of the native @acronym{POSIX}-compliant FORTRAN 77
+to specify use of the native @acronym{POSIX}-compliant FORTRAN 77
 compiler.
 
 You may find that @command{configure} detects other libraries, such as
@@ -1091,12 +1116,14 @@ to tell @command{configure} not to use these libraries.
 
 Some versions of @command{gcc} may contain what appears to be a bug at
 the @option{-O2} optimization level that causes
+
 @smallexample
 > 2 %/% 2
 [1] 1
 > 1:2 %/% 2
 [1] 0 0     # wrong!!
 @end smallexample
+
 @noindent
 which will cause @command{make check} to fail.  If this is the case, you
 should use @code{CFLAGS} to specify @option{-O} as the optimization
@@ -1117,10 +1144,18 @@ alternative work-around is to add @option{-DIEEE_754} to the
 @code{CFLAGS} variable.
 
 You can configure @R{} to use both the native @command{cc} and
-@command{fort77} with (assuming you are using a @command{csh} shell)
+@command{fort77} with
+
 @smallexample
-env CC=cc ./configure --with-f77=fort77
+./configure CC=cc F77=fort77
 @end smallexample
+
+@command{f90} insists on linking against a static @file{libF90.a} which
+typically resides in a non-standard directory (e.g.,
+@file{/opt/fortran90/lib}).  Hence, to use @command{f90} one needs to
+add this directory to the linker path via the configure variable
+@code{LDFLAGS} (e.g., @code{./configure F77=f90
+LDFLAGS=/opt/fortran90/lib}).
 
 
 @node IRIX, Alpha/OSF1, HPUX, Platform notes
@@ -1130,9 +1165,11 @@ env CC=cc ./configure --with-f77=fort77
 @command{gcc}/@command{f77} or @command{cc}/@command{f77} for 32-bit
 executables and the native compilers for a 64-bit executable.  The
 command
+
 @smallexample
-env CC="cc -64" ./configure --with-f77="f77 -64" --with-tcltk=no
+./configure CC="cc -64" F77="f77 -64" --with-tcltk=no
 @end smallexample
+
 @noindent
 was used to create the 64-bit executable.  It was necessary to
 explicitly omit Tcl/Tk because @command{configure} would find the 32-bit
@@ -1160,6 +1197,7 @@ test-all-extras} in the @file{tests} directory fails at the end of
 @code{reg-tests-1.R} since this system does not have @code{vsnprintf}.
 As currently written, the test at the end of @code{reg-tests-1.R} causes
 a segfault in this case.  You can complete the tests by executing
+
 @smallexample
 touch reg-tests-1.Rout
 @end smallexample
@@ -1209,9 +1247,9 @@ first interrogate the X window system about what it does (using
 @command{xmkmf}), and then override this in situations where we know
 better (for tools from the GNU Compiler Collection and/or platforms we
 know about).  This typically works, but you may have to manually
-override the results.  Scanning the @command{cc(1)} and @command{ld(1)}
-manual entries usually reveals the correct incantation.  Once you know
-the recipe you can modify the file @file{config.site} (following the
+override the results.  Scanning the manual entries for @command{cc} and
+@command{ld} usually reveals the correct incantation.  Once you know the
+recipe you can modify the file @file{config.site} (following the
 instructions therein) so that the build will use these options.
 
 If you do manage to get @R{} running on a new platform please let us
@@ -1219,7 +1257,7 @@ know about it so we can modify the configuration procedures to include
 that platform.
 
 If you are having trouble getting @R{} to work on your platform please
-feel free to get in touch to ask questions.  We've had a fair amount
+feel free to get in touch to ask questions.  We have had a fair amount
 of practice at porting R to new platforms @enddots{}
 
 
