@@ -2132,6 +2132,31 @@ B <- data.frame(a=2, b=I("B"))
 stopifnot(cl[2] == "factor")
 ##
 
+## hclust(), as.hclust.twins(), agnes()  consistency
+x <- matrix(rnorm(30), ncol=3)  # no observation names
+xn <- x; rownames(xn) <- letters[10:1]# has obs. names
+hc  <- hclust(dist(x),  method="complete")
+hcn <- hclust(dist(xn), method="complete")
+iC1 <- !names(hc) %in% c("labels", "call")
+stopifnot(identical(hc, hhc <- as.hclust(hc)),
+          identical(hhc, as.hclust(hhc)),
+          identical(hc[iC1], hcn[iC1]),
+          identical(hcn$labels, rownames(xn))
+          )
+if(require(cluster)) {# is a required package
+  ag <- agnes(x, method="complete")
+  hcag <- as.hclust(ag)
+  agn <- agnes(xn, method="complete")
+  hcagn <- as.hclust(agn)
+  iC2 <- !names(hcag) %in% c("labels", "call")
+  stopifnot(identical(hcagn[iC2], hcag[iC2]),
+            identical(hcagn$labels, hcn$labels),
+            all.equal(hc$height, hcag$height, tol = 1e-12),
+            all(hc$merge == hcag$merge | hc$merge == hcag$merge[ ,2:1])
+            )
+}
+## as.hclust.twins() lost labels and more till (incl) 1.6.2
+
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
