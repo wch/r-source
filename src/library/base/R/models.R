@@ -182,15 +182,16 @@ na.fail.default <- function(object)
 }
 
 na.omit <- function(object, ...)UseMethod("na.omit")
+
 na.omit.default <- function(object)
 {
     ## only handle vectors and matrices
-    if(!is.atomic(object)) return(object)
+    if (!is.atomic(object)) return(object)
     d <- dim(object)
-    if(length(d) > 2) return(object)
+    if (length(d) > 2) return(object)
     omit <- seq(along=object)[is.na(object)]
     if (length(omit) == 0) return(object)
-    if(length(d)){
+    if (length(d)){
         omit <- unique(((omit-1) %% d[1]) + 1)
         nm <- rownames(object)
         object <- object[-omit, , drop=FALSE]
@@ -199,10 +200,9 @@ na.omit.default <- function(object)
         object <- object[-omit]
     }
     if (any(omit)) {
-	temp <- seq(omit)[omit]
-	names(temp) <- nm[omit]
-	attr(temp, "class") <- "omit"
-	attr(object, "na.action") <- temp
+	names(omit) <- nm[omit]
+	attr(omit, "class") <- "omit"
+	attr(object, "na.action") <- omit
     }
     object
 }
