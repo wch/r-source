@@ -43,8 +43,10 @@
 #endif
 
 #include "Defn.h"
+#include "Graphics.h"
 #include "Fileio.h"
 #include "Rdevices.h"		/* KillAllDevices() [nothing else?] */
+
 
 #define __SYSTEM__
 #include "../../unix/devUI.h" /* includes Startup.h */
@@ -56,6 +58,29 @@
 #ifdef HAVE_AQUA
 #include <Carbon/Carbon.h>
 
+typedef struct {
+    int cex;
+    int windowWidth;
+    int windowHeight;
+    Boolean resize;
+    int Text_Font;          /* 0 is system font and 4 is monaco */
+    int fontface;           /* Typeface */
+    int fontsize;           /* Size in points */
+    int usefixed;
+	int color;		        /* color */
+	int fill;	        	/* fill color */
+    WindowPtr window;
+    int	lineType;
+    int lineWidth;
+    Boolean Antialias;		/* Use Antialiasing */
+    Boolean Autorefresh;
+    char	*family;
+    CGContextRef context;  /* This is the Contetx used by Quartz */
+    double	xscale;
+    double	yscale;
+}
+QuartzDesc;
+
 OSStatus 	InitMLTE(void);
 TXNObject	RConsoleOutObject = NULL;
 TXNObject	RConsoleInObject = NULL;
@@ -66,7 +91,7 @@ TXNFrameID		InframeID	= 0;
 
 WindowRef	RAboutWindow=NULL;
 pascal void RAboutHandler(WindowRef window);
-#define kRAppSignature '????'
+#define kRAppSignature '0FFF'
 
 /* Items for the Tools menu */
 #define kRCmdShowWSpace		'dols'
@@ -636,21 +661,40 @@ void RescaleInOut(double prop)
              
 }
 
+
 static pascal OSStatus
 RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 {
 	OSStatus 	err = eventNotHandledErr;
 	HICommand	command;
-	UInt32		eventKind = GetEventKind( inEvent );
+	UInt32		eventKind = GetEventKind( inEvent ), RWinCode, devsize;
+        int		devnum;
         Rect		ROutRect;
         Point           MouseLoc;
         RgnHandle       CursorRgn;
- 
+        NewDevDesc 	*dd;
+        QuartzDesc 	*xd = NULL;
+        
 	switch ( GetEventClass( inEvent ) )
 	{
          case kEventClassWindow:
-            if ( eventKind == kEventWindowBoundsChanged){ 
-              RescaleInOut( 0.8);
+            GetEventParameter (inEvent, kEventParamAttributes, typeUInt32, NULL, sizeof(RWinCode), NULL, &RWinCode);
+            if ( (eventKind == kEventWindowBoundsChanged) && (RWinCode != 9)){ 
+            if( GetUserFocusWindow() == ConsoleWindow)
+              RescaleInOut(0.8);
+            else{
+             err = GetWindowProperty(GetUserFocusWindow(),kRAppSignature,1,sizeof(int),devsize,&devnum);
+             if(err == noErr){
+              dd = ((GEDevDesc*) GetDevice(devnum))->dev;
+              if(dd) {
+               xd = (QuartzDesc*)dd->deviceSpecific;
+               if(xd){
+                 dd->size(&(dd->left), &(dd->right), &(dd->bottom), &(dd->top), dd);
+                 GEplayDisplayList((GEDevDesc*) GetDevice(devnum));       
+               }
+              }
+              }
+             } 
          }
          break;
             
