@@ -2692,7 +2692,6 @@ if test "${ac_cv_header_iconv_h}" = yes; then
   ## libiconv, e.g. in MacOS X, has iconv as a macro and needs -liconv.
   AC_CHECK_DECLS([iconv, iconvlist], , , [#include <iconv.h>])
   AC_CHECK_LIB(iconv, libiconv)
-  AC_CHECK_FUNCS(
 fi
 ])# R_ICONV
 

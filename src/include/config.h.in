@@ -422,6 +422,9 @@
 /* Define to 1 if you have the `wcscoll' function. */
 #undef HAVE_WCSCOLL
 
+/* Define to 1 if you have the `wcsftime' function. */
+#undef HAVE_WCSFTIME
+
 /* Define to 1 if you have the `wcstombs' function. */
 #undef HAVE_WCSTOMBS
 

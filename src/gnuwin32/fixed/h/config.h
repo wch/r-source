@@ -420,6 +420,9 @@
 /* Define to 1 if you have the `wcscoll' function. */
 #define HAVE_WCSCOLL 1
 
+/* Define to 1 if you have the `wcsftime' function. */
+#define HAVE_WCSFTIME 1
+
 /* Define to 1 if you have the `wcstombs' function. */
 #define HAVE_WCSTOMBS 1
 

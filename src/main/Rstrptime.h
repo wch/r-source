@@ -1076,7 +1076,7 @@ strptime (const char *buf, const char *format, struct tm *tm)
 #ifdef SUPPORT_UTF8
     if(utf8locale) {
 	wchar_t wbuf[1001], wfmt[1001]; size_t n;
-#ifdef HAVE_LOCALE_H
+#if defined(HAVE_LOCALE_H) && defined(HAVE_WCSFTIME)
 	get_locale_w_strings();
 #endif
 	n = mbstowcs(NULL, buf, 1000);
@@ -1131,7 +1131,7 @@ static void get_locale_strings(void)
     if(strlen(buff)) strcpy(am_pm[1], buff);
 }
 
-#ifdef SUPPORT_UTF8
+#if defined(SUPPORT_UTF8) && defined(HAVE_WCSFTIME)
 static void get_locale_w_strings(void)
 {
     int i;

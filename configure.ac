@@ -1230,7 +1230,7 @@ AC_CHECK_DECLS([isfinite, isnan], , , [#include <math.h>])
 
 ## Wide character support -- need to include headers in case of macros?
 AC_CHECK_HEADERS(wchar.h wctype.h)
-AC_CHECK_FUNCS(mbrtowc mbstowcs wcrtomb wcscoll wcstombs wcswidth \
+AC_CHECK_FUNCS(mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs wcswidth \
 	       wctrans wcwidth)
 
 if test $ac_cv_type_off_t=yes -a $ac_cv_func_fseeko=yes -a $ac_cv_func_ftello=yes; then
