@@ -124,7 +124,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
         dyadic <- dyadic[order(apply(dyadic, 1, sum)), ]
 
         for (i in 2 : parlen) {
-            vars <- (1 : nvar)[dyadic[i - 1, ] > 0]
+            vars <- which(dyadic[i - 1, ] > 0)
             parval[[i]] <- apply(fit, vars, mean)
             parnam[i] <- paste(varnames[vars], collapse = ".")
             fit <- sweep(fit, vars, parval[[i]])
