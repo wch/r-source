@@ -69,7 +69,7 @@ static Rboolean have_broken_mktime(void)
     return TRUE;
 #elif defined(__GLIBC__) && defined(__GLIBC_MINOR__) && __GLIBC__ >= 2 && __GLIBC_MINOR__ >= 2
     static int test_result = -1;
-    
+
     if (test_result == -1) {
 	struct tm t;
 	time_t res;
@@ -261,6 +261,7 @@ static double guess_offset (struct tm *tm)
 static double mktime0 (struct tm *tm, const int local)
 {
     double res;
+    Rboolean OK;
 #ifndef HAVE_POSIX_LEAPSECONDS
     int i;
 #endif
@@ -268,9 +269,14 @@ static double mktime0 (struct tm *tm, const int local)
     if(validate_tm(tm) < 0) return (double)(-1);
     if(!local) return mktime00(tm);
 
-    if(tm->tm_year < 138 &&
-       tm->tm_year >= (have_broken_mktime() ? 70 : 02))
-    {   res = (double) mktime(tm);
+    OK = tm->tm_year < 138 && tm->tm_year >= (have_broken_mktime() ? 70 : 02);
+#ifdef Win32
+    /* Microsoft's mktime regards times before 1970-01-01 00:00:00 GMT as
+       invalid! */
+    if(tm->tm_year == 70 && tm->tm_mon == 0 && tm->tm_mday <= 1) OK = FALSE;
+#endif
+    if(OK) {
+	res = (double) mktime(tm);
 #ifndef HAVE_POSIX_LEAPSECONDS
         for(i = 0; i < 22; i++)
             if(res > leapseconds[i]) res -= 1.0;
@@ -754,13 +760,13 @@ SEXP do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 		for ( ; day >= (tmp = days_in_year(y)); day -= tmp, y++);
 	    else
 		for ( ; day < 0; --y, day += days_in_year(y) );
-	    
+
 	    y = tm.tm_year = y - 1900;
 	    tm.tm_yday = day;
 
 	    /* month within year */
 	    for (mon = 0;
-		 day >= (tmp = (days_in_month[mon]) + 
+		 day >= (tmp = (days_in_month[mon]) +
 			 ((mon==1 && isleap(y+1900))?1:0));
 		 day -= tmp, mon++);
 	    tm.tm_mon = mon;
@@ -815,7 +821,7 @@ SEXP do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
 	tm.tm_year  = INTEGER(VECTOR_ELT(x, 5))[i%nlen[5]];
 	/* mktime ignores tm.tm_wday and tm.tm_yday */
 	tm.tm_isdst = 0;
-	if(tm.tm_mday == NA_INTEGER || tm.tm_mon == NA_INTEGER || 
+	if(tm.tm_mday == NA_INTEGER || tm.tm_mon == NA_INTEGER ||
 	   tm.tm_year == NA_INTEGER || validate_tm(&tm) < 0)
 	    REAL(ans)[i] = NA_REAL;
 	else REAL(ans)[i] = mktime00(&tm)/86400;

@@ -138,6 +138,10 @@ over-estimate.
 
 Rproxy.dll would cause a crash when transferring large amounts of data.
 
+Workaround for Microsoft's esoteric idea that date-times in 1970 before
+1970-01-01 00:00:00 GMT are invalid, so as.POSIXct("1970-01-01
+00:00:00") failed in timezones ahead of GMT.
+
 
 
 rw1081
