@@ -6565,6 +6565,7 @@ want to save it.
 @menu
 * Invoking R from the command line::       
 * Invoking R under Windows::    
+* Invoking R under Mac OS X::    
 @end menu
 
 @node Invoking R from the command line, Invoking R under Windows, Invoking R, Invoking R
@@ -6817,7 +6818,7 @@ R CMD @var{command} --help
 to obtain usage information for each of the tools accessible via the
 @code{R CMD} interface.
 
-@node Invoking R under Windows,  , Invoking R from the command line, Invoking R
+@node Invoking R under Windows, Invoking R under Mac OS X, Invoking R from the command line, Invoking R
 @appendixsec Invoking R under Windows
 
 There are two ways to run @R{} under Windows.  Within a terminal window
@@ -6869,6 +6870,21 @@ R CMD latex.exe mydoc
 @noindent
 will run LaTeX on mydoc.tex, with the path to @R{}'s @code{share/texmf} macros 
 added to @code{TEXINPUTS}.
+
+@node Invoking R under Mac OS X,  , Invoking R under Windows, Invoking R
+@appendixsec Invoking R under Mac OS X
+
+There are two ways to run @R{} under Mac OS X.  Within a Terminal.app window
+by invoking @code{R}. The methods described in the previous sections apply.
+There is also console-based GUI (@code{R.app}) that by default
+is installed in the @code{Applications} folder on your system. It is a standard
+double-clickable Mac OS X application.
+
+The startup procedure under Mac OS X is very similar to that under UNIX.
+The `home directory' is the one inside the R.framework. But the startup
+and current working directory is set as the user's home directory unless
+a different startup directory is given in the Preferences window accessible
+from within the GUI. 
 
 @node The command line editor, Function and variable index, Invoking R, Top
 @appendix The command line editor
