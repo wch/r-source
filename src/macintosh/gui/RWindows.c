@@ -130,8 +130,8 @@ extern 	Str255	PostFont, UserFont;
 extern	char 	*mac_getenv(const char *name);
 extern SInt32		systemVersion ;
 
-void UniqueWinTitle(void);
-void RemWinMenuItem(void);
+void UniqueWinTitle(WindowPtr window);
+void RemWinMenuItem(WindowPtr window);
 
 
     
@@ -1146,9 +1146,11 @@ WindowPtr CreateGraphicWindow (int wid, int h)
 		screenBits.bounds.top +24, screenBits.bounds.right -4,
 		screenBits.bounds.bottom -4);
 	MoveWindow(Working_Window, theWholeScreen.right - wid - 5, theWholeScreen.top + 20, true);
-	ShowWindow(Working_Window);
     if(Current_Window>2)
-      RepositionWindow(FrontWindow(), Graphic_Window[Current_Window-2],kWindowCascadeOnParentWindow);
+      RepositionWindow(Working_Window, Graphic_Window[Current_Window-2],kWindowCascadeOnParentWindow);
+
+	ShowWindow(Working_Window);
+
     }
     else{
 	GWdoErrorAlert(eGWin);
@@ -1256,12 +1258,13 @@ OSStatus newWindow ( const FSSpec * pFileSpec, WindowRef * outWindow, int graphi
 	
 	case 0:
 	( * hDocument ) -> docType = kTypeText ;
-
-	 err = CreateNewWindow ( kDocumentWindowClass,
-		kWindowCloseBoxAttribute | kWindowVerticalZoomAttribute | kWindowCollapseBoxAttribute | kWindowResizableAttribute, 
+	    err = CreateNewWindow ( kDocumentWindowClass,
+		kWindowCloseBoxAttribute|kWindowVerticalZoomAttribute | kWindowCollapseBoxAttribute | kWindowResizableAttribute, 
 		& initialWindowBounds, & window);
 	break;
 	
+	 
+	 
 	default:
     window = GetNewCWindow ( kWindowTemplateID, nil, ( WindowPtr ) -1L ) ;
     if ( window == nil )
@@ -1269,10 +1272,6 @@ OSStatus newWindow ( const FSSpec * pFileSpec, WindowRef * outWindow, int graphi
 	err = memFullErr ;
 	goto cleanup ;
     }
-  /*
-	err = CreateNewWindow ( kDocumentWindowClass,
-		kWindowCloseBoxAttribute | kWindowResizableAttribute, & initialWindowBounds, & window );
-	*/
 	break;
 	}
 	
@@ -1396,7 +1395,7 @@ OSStatus newWindow ( const FSSpec * pFileSpec, WindowRef * outWindow, int graphi
 		{
 			case kTypeText :
 			{
-				if ( ( err = ReadTextFile ( pFileSpec, we ) ) != noErr )
+				if ( ( err = ReadTextFile ( pFileSpec, window ) ) != noErr )
 				{
 					goto cleanup ;
 				}
@@ -1460,6 +1459,7 @@ OSStatus newWindow ( const FSSpec * pFileSpec, WindowRef * outWindow, int graphi
 	RepositionWindow ( window, FrontWindow ( ), kWindowCascadeOnParentWindow ) ;
 
 	//	finally!  show the document window
+	if(!Have_Console)
 	TransitionWindow ( window, kWindowZoomTransitionEffect, kWindowShowTransitionAction, transitionSrcRect ) ;
 
 	//	copy window ref for caller
@@ -1493,6 +1493,7 @@ OSStatus newWindow ( const FSSpec * pFileSpec, WindowRef * outWindow, int graphi
 		    screenBits.bounds.bottom -4);
         GetWindowPortBounds ( window, & portRect ) ;
         MoveWindow(window, theWholeScreen.right - (portRect.right + 5), theWholeScreen.top + 20, true);
+//        ShowWindow(window);
 	}
     }
     if (graphic){
@@ -1665,12 +1666,13 @@ int R_ShowFiles(int nfile, char **fileName, char **title,
     if (readErr != noErr)
 	return 1;
 	
-	RemWinMenuItem();
+	RemWinMenuItem(Edit_Windows[Edit_Window-1]);
 
     Help_Windows[Help_Window] = Edit_Windows[Edit_Window-1];
 
     if(Help_Window>1)
      RepositionWindow ( Help_Windows[Help_Window], Help_Windows[Help_Window-1], kWindowCascadeOnParentWindow ) ;
+//    ShowWindow(Help_Windows[Help_Window]);
 
     Edit_Window --;
     Edit_Number --;
@@ -1686,17 +1688,19 @@ int R_ShowFiles(int nfile, char **fileName, char **title,
         name[0] = strlen(fileName[i]);
         strncpy( (char *)(&name[1]),fileName[i], name[0] );
         FSMakeFSSpec(0,0,name,&fsspec);
-        readErr = ReadTextFile ( &fsspec, we );
+        readErr = ReadTextFile ( &fsspec, Help_Windows[Help_Window-1] );
 
 
         if (readErr) {
 	    DoClose(0, savingNo, Help_Windows[Help_Window-1]);
 	    if(readErr == -43)
 		warning("File not found");
+		return;
         }
         
-	UniqueWinTitle();
+	UniqueWinTitle(Help_Windows[Help_Window-1]);
 		
+    ShowWindow(Help_Windows[Help_Window-1]);
 
     }
     // Handle Error about reading
@@ -1708,7 +1712,7 @@ int R_ShowFiles(int nfile, char **fileName, char **title,
 	Jago April 2001, Stefano M. Iacus
 */
 
-void UniqueWinTitle(void)
+void UniqueWinTitle(WindowPtr window)
 {
 	Str255 		pWTitle, ptestString, pcurString;
 	char 		cWTitle[265], ctestString[265];
@@ -1716,8 +1720,10 @@ void UniqueWinTitle(void)
 	Boolean		unique = false, EqString;
 	int    		w_number = 1, i;
     
-	
-    GetWTitle(FrontWindow(), pWTitle);
+	if(!window)
+	 return;
+	 
+    GetWTitle(window, pWTitle);
     windowsMenu = GetMenuHandle(kMenuWindows);
            	
     CopyPascalStringToC(pWTitle, cWTitle);
@@ -1745,7 +1751,7 @@ void UniqueWinTitle(void)
     	  
     	CopyPascalStringToC(ptestString, ctestString);
         AppendMenu(windowsMenu, ptestString); 
-        SetWTitle(FrontWindow(),ptestString);
+        SetWTitle(window,ptestString);
         
 }
 
@@ -1754,14 +1760,14 @@ void UniqueWinTitle(void)
    Jago April 2001, Stefano M. Iacus
 */
    
-void RemWinMenuItem(void)
+void RemWinMenuItem(WindowPtr window)
 {
   Str255		pWTitle, pcurString;
   int			i;
   MenuHandle	windowsMenu = NULL;
   Boolean		EqString;	
   char 			cWTitle[260],ccurString[260];
-  GetWTitle(FrontWindow(),pWTitle);
+  GetWTitle(window,pWTitle);
   CopyPascalStringToC(pWTitle,cWTitle);
   
   windowsMenu = GetMenuHandle(kMenuWindows);

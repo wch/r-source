@@ -1079,7 +1079,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 /*  This routine has been completely rewritten. This is the unix equivalent to
-    what is found src/unix/edit.c file adn adpted for the Macintosh.
+    what is found src/unix/edit.c file and adpted for the Macintosh.
     For the time beeing the internal editor is used, next step is to allow the 
     user to use an external editor.
     Jago April 2001, Stefano M. Iacus
@@ -1141,20 +1141,15 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
     
     DoNew(true);
        
-    RemWinMenuItem();
+    RemWinMenuItem(Edit_Windows[Edit_Window-1]);
    
-    err = ReadTextFile(&tempeditFSS,
-		       GetWindowWE(Edit_Windows[Edit_Window-1]));
-    
-    
-//    if(err != noErr)
-//	 REprintf("\n ReadTextFile error: %d\n",err);
-   	
-   	UniqueWinTitle();
+    err = ReadTextFile(&tempeditFSS,Edit_Windows[Edit_Window-1]);
+
+   	UniqueWinTitle(Edit_Windows[Edit_Window-1] );
 	if(Edit_Window>2)
     	RepositionWindow(Edit_Windows[Edit_Window - 1], 
         Edit_Windows[Edit_Window - 2],kWindowCascadeOnParentWindow);
-
+    ShowWindow(Edit_Windows[Edit_Window - 1]);
     finished=false;
     while(!finished)
 	{
