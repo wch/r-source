@@ -10,7 +10,7 @@
 factanal(x, factors, data = NULL, covmat = NULL, n.obs = NA,
          subset, na.action,
          start = NULL, scores = c("none", "regression", "Bartlett"),
-         rotation = "varimax", control = NULL, ...)
+         rotation = "varimax", control = NULL, \dots)
 }
 \arguments{
   \item{x}{Either a formula or a numeric matrix or an object that can be

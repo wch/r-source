@@ -2,7 +2,7 @@
 \alias{page}
 \title{Invoke a Pager on an R Object}
 \usage{
-page(x, method = c("dput", "print"), ...)
+page(x, method = c("dput", "print"), \dots)
 }
 \arguments{
   \item{x}{the name of an \R object.}

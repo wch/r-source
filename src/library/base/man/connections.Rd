@@ -43,8 +43,8 @@ socketConnection(host = "localhost", port, server = FALSE,
                  blocking = FALSE, open = "a+",
                  encoding = getOption("encoding"))
 
-\method{open}{connection}(con, open = "r", blocking = TRUE, ...)
-\method{close}{connection}(con, type = "rw", ...)
+\method{open}{connection}(con, open = "r", blocking = TRUE, \dots)
+\method{close}{connection}(con, type = "rw", \dots)
 \method{flush}{connection}(con)
 
 isOpen(con, rw = "")

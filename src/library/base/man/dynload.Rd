@@ -163,7 +163,7 @@ symbol.For(name)
   \code{\link{.First.lib}} initialization.
 
 #ifdef unix
-  \code{\link{SHLIB}} for how to create suitable shared libraries.
+  \code{\link{SHLIB}} for how to create suitable shared objects.
 #endif
 #ifdef windows
   \code{\link{SHLIB}} for how to create suitable DLLs.
@@ -175,9 +175,6 @@ symbol.For(name)
   \code{\link{.Call}}.
 }
 \examples{
-is.loaded(symbol.For("hcass2")) #-> probably  FALSE
-library(mva)
-is.loaded(symbol.For("hcass2")) #-> TRUE
-\testonly{detach("package:mva")}
+is.loaded(symbol.For("hcass2")) #-> probably TRUE, as mva is loaded
 }
 \keyword{interface}

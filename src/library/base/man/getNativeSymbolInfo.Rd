@@ -99,10 +99,10 @@ getNativeSymbolInfo(name, PACKAGE)
 }
 
 \examples{
+library(ctest) # normally loaded
 getNativeSymbolInfo("dansari")
 
-library(mva)
+library(mva)   # normally loaded
 getNativeSymbolInfo(symbol.For("hcass2"))
-\testonly{detach("package:mva")}
 }
 \keyword{interface}

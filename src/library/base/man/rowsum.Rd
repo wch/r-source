@@ -11,7 +11,7 @@ Give row sums of a matrix or data frame, based on a grouping variable
   frames.
 }
 \usage{
-rowsum(x, group, reorder = TRUE,...)
+rowsum(x, group, reorder = TRUE, \dots)
 }
 \arguments{
   \item{x}{a matrix, data frame or vector of numeric data.  Missing

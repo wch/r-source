@@ -9,8 +9,8 @@
   supplied vector, maintaining the constraints on the dendrogram.
 }
 \usage{
-reorder(x, ...)
-reorder.dendrogram(x, wts, ...)
+reorder(x, \dots)
+reorder.dendrogram(x, wts, \dots)
 }
 \arguments{
   \item{x}{The object to be reordered}

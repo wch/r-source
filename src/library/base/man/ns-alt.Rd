@@ -7,13 +7,13 @@
 \alias{.S3method}
 
 \usage{
-  .Export(...)
-  .Import(...)
-  .ImportFrom(name, ...)
+  .Export(\dots)
+  .Import(\dots)
+  .ImportFrom(name, \dots)
   .S3method(generic, class, method)
 }
 \arguments{
-  \item{...}{unevaluated character or name arguments.}
+  \item{\dots}{unevaluated character or name arguments.}
   \item{name}{unevaluated character or name.}
   \item{generic}{unevaluated character or name.}
   \item{class}{unevaluated character or name.}

@@ -2,7 +2,7 @@
 \name{logLik}
 \title{Extract Log-Likelihood}
 \usage{
-logLik(object, ...)
+logLik(object, \dots)
 
 \method{as.data.frame}{logLik}(x, row.names = NULL, optional = FALSE)
 %notyet print(logLik(*), ...)

@@ -15,7 +15,7 @@ de(\dots, Modes = list(), Names = NULL)
   A spreadsheet-like editor for entering or editing data.
 }
 \arguments{
-  \item{...}{A list of variables: currently these should be numeric or
+  \item{\dots}{A list of variables: currently these should be numeric or
     character vectors or list containing such vectors.}
   \item{Modes}{The modes to be used for the variables.}
   \item{Names}{The names to be used for the variables.}

@@ -24,7 +24,7 @@ as.environment(object)
 \examples{
 as.environment(1) ## the global environment
 identical(globalenv(), as.environment(1)) ## is TRUE
-as.environment("package:ctest")
+try(as.environment("package:ctest"))      ## ctest need not be loaded
 }
 \keyword{data}
 \keyword{environment}

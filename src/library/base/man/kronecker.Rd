@@ -3,7 +3,7 @@
 \title{Kronecker products on arrays}
 
 \usage{
-kronecker(X, Y, FUN = "*", make.dimnames = FALSE, ...)
+kronecker(X, Y, FUN = "*", make.dimnames = FALSE, \dots)
 X \%x\% Y
 }
 
@@ -34,8 +34,10 @@ taking \code{X} one term at a time and expanding that term as
 \code{FUN} is hardwired to \code{"*"}).
 }
 
-\references{Matrix Algebra Useful for Statistics, Shayle
-R. Searle, John Wiley and Sons, 1982.}
+\references{
+  Shayle R. Searle (1982)
+  \emph{Matrix Algebra Useful for Statistics.} John Wiley and Sons.
+}
 
 \author{Jonathan Rougier, \email{J.C.Rougier@durham.ac.uk}}
 

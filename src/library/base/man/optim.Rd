@@ -248,8 +248,8 @@ res
 points(r2$par, r2$val, pch = 8, col = "red", cex = 2)
 
 ## Combinatorial optimization: Traveling salesman problem
-library(mva)
-library(ts) # for embed
+library(mva) # normally loaded
+library(ts)  # for embed, normally loaded
 
 data(eurodist)
 eurodistmat <- as.matrix(eurodist)
@@ -294,7 +294,6 @@ plot(x, y, type="n", asp=1, xlab="", ylab="",
 arrows(tspres[s,1], -tspres[s,2], tspres[s+1,1], -tspres[s+1,2],
        angle=10, col="red")
 text(x, y, names(eurodist), cex=0.8)
-\testonly{detach("package:mva"); detach("package:ts")}
 }}
 \keyword{nonlinear}
 \keyword{optimize}

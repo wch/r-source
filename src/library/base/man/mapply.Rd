@@ -8,7 +8,7 @@
   Arguments are recycled if necessary. 
 }
 \usage{
-mapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
+mapply(FUN, \dots, MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
 }
 \arguments{
   \item{FUN}{Function to apply }
