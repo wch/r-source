@@ -746,7 +746,11 @@ only).
 The @file{DESCRIPTION} file is checked for completeness, and some of its
 entries for correctness.  Unless installation tests are skipped,
 checking is aborted if the package dependencies cannot be resolved at
-run time.
+run time.  One check is that the package name is not that of a standard
+package, nor of the defunct standard packages (@code{ctest}, @code{eda},
+@code{lqs}, @code{mle}, @code{modreg}, @code{mva}, @code{nls},
+@code{stepfun} and @code{ts}) which are handled specially by
+@code{library}.
 
 @item
 Available index information (in particular, for demos and vignettes) is
