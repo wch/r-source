@@ -15,8 +15,11 @@
   Copyright 1997 \\ by Robert Gentleman and Ross Ihaka and the \R\ core team.
 }
 \maketitle
-\cleardoublepage%-- for ``2 pages on 1'' printing (make Manbooks)
+\pagestyle{empty}
+%%-- for ``2 pages on 1'' printing (make Manbooks):
+\ \ \clearpage \ \ \clearpage
 
+\pagestyle{headings}
 \pagenumbering{roman}
 \tableofcontents
 \cleardoublepage
@@ -44,6 +47,7 @@
 \input{pkg-mva}
 \input{pkg-stepfun}
 
+\cleardoublepage
 \addcontentsline{toc}{chapter}{Index}
 \printindex
 \end{document}
