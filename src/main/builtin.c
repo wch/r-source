@@ -536,15 +536,17 @@ SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 /*
- * do_get returns the SEXP associated with the character argument, do_get
- * needs the environment of the calling function as a default,
- *
+ * do_get returns the SEXP associated with the character argument,
+ * do_get needs the environment of the calling function as a default,
  */
 
 #define FUNSXP 999
 
 SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+  /*	get(x, envir, mode, inherits)
+   * exists(x, envir, mode, inherits)
+   */
 	SEXP rval, genv, t1;
 	SEXPTYPE gmode;
 	int ginherits=0, where;
@@ -553,8 +555,8 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	/* Grab the environment off the first arg */
 	/* for use as the default environment. */
-	/* TODO: Don't we have a better way of doing this */
-	/* using sys.xxx now? */
+
+ /* TODO: Don't we have a better way of doing this using sys.xxx now? */
 
 	rval = findVar(CAR(args), rho);
 	if (TYPEOF(rval) == PROMSXP)
@@ -575,7 +577,7 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 		t1 = install(CHAR(STRING(CAR(args))[0]));
 
-	/* Now we get the where= argument */
+	/* envir :  originally, the "where=" argument */
 
 	if (TYPEOF(CADR(args)) == REALSXP || TYPEOF(CADR(args)) == INTSXP) {
 		where = asInteger(CADR(args));
@@ -588,7 +590,7 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 		genv = R_NilValue;/* -Wall */
 	}
 
-	/* The mode of the object being sought */
+	/* mode :  The mode of the object being sought */
 
 	if (isString(CAR(CDDR(args)))) {
 		if(!strcmp(CHAR(STRING(CAR(CDDR(args)))[0]),"function"))
@@ -608,7 +610,7 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 		/* Search for the object */
 	rval = findVar1(t1, genv, gmode, ginherits);
 
-	if (PRIMVAL(op)) {	/* we have a get */
+	if (PRIMVAL(op)) { /* have get(.) */
 		if (rval == R_UnboundValue)
 			errorcall(call,"variable \"%s\" was not found\n", CHAR(PRINTNAME(t1)));
 		/* We need to evaluate if it is a promise */
@@ -617,15 +619,14 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 			rval = eval(rval, genv);
 		NAMED(rval) = 1;
 		return rval;
-	}
-	else {
+	} else { /* exists(.) */
 		if (rval == R_UnboundValue)
 			ginherits = 0;
 		else
 			ginherits = 1;
 		rval = allocVector(LGLSXP, 1);
 		LOGICAL(rval)[0] = ginherits;
-		return (rval);
+		return rval;
 	}
 }
 
