@@ -3,8 +3,8 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-12-22
+@set FAQ-YEAR 2005
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-01
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2027,6 +2027,8 @@ test their homogeneity, plus functions to draw wind-rose and
 Walter&Lieth diagrams. 
 @item clines
 Calculates Contour Lines.
+@item clue
+CLUster Ensembles.
 @item cluster
 Functions for cluster analysis.  @emph{Recommended}.
 @item cmprsk
