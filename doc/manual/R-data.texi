@@ -135,7 +135,7 @@ allow functionality developed in languages such as @code{Java},
 @code{perl} and @code{python} to be directly integrated with @R{} code,
 making the use of facilities in these languages even more
 appropriate.  (See the @pkg{SJava}, @pkg{RSPerl} and @pkg{RSPython}
-packages from the Omegahat project, @uref{http://www.omeghat.org}.)
+packages from the Omegahat project, @uref{http://www.omegahat.org}.)
 
 
 
